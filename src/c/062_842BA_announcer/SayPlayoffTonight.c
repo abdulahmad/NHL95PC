@@ -7,11 +7,11 @@
 int SayPlayoffTonight(char *rnk, char *away, char *home, int game, unsigned conf, unsigned round)
 {
     char a[16];
+    char g[16];
     char r[16];
     char num[16];
-    char g[16];
-    char h[16];
     char rc[16];
+    char h[16];
 
     if (!speechinit) return 0;
     if (!SpeechIdle()) return 0;

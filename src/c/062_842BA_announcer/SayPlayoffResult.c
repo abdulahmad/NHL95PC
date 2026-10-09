@@ -7,9 +7,9 @@
 int SayPlayoffResult(char *team, int game, unsigned conf, unsigned round, int ot, int final)
 {
     char t[16];
-    char num[16];
-    char g[16];
     char rc[16];
+    char g[16];
+    char num[16];
 
     if (!speechinit) return 0;
     if (!SpeechIdle()) return 0;

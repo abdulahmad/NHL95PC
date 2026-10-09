@@ -3,10 +3,10 @@
 
 /* PaGoal (59AD0) - with music and announcer speech on and gmode bit 4 clear: reset the music channel and announce
    the goal (SayGoal, arguments passed through). */
-void PaGoal(int a, int b, int c, int d, int e)
+void PaGoal(char *team, int nast, int scorer, int a1, int a2)
 {
     if (musicon && gameopts.speech && (gmode & 0x10) == 0) {
         MusicChanReset();
-        SayGoal(a, b, c, d, e);
+        SayGoal(team, nast, scorer, a1, a2);
     }
 }

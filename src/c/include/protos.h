@@ -670,8 +670,8 @@ void IndexPhotoBank(int b);  /* 13867 */
 int __cdecl sub_B30BB(int bank, char *name);  /* graphics library: find art (second entry) */
 void LoadPhotoBankF(void);  /* 138D2 */
 void LoadPlayerPhotos(void);  /* 1395F */
-void SayGoal(int a, int b, int c, int d, int e);  /* 8531F */
-void PaGoal(int a, int b, int c, int d, int e);  /* 59AD0 */
+int SayGoal(char *team, int nast, int scorer, int a1, int a2);  /* 8531F */
+void PaGoal(char *team, int nast, int scorer, int a1, int a2);  /* 59AD0 */
 void PaPlayoffTonight(int home, int away, int game, unsigned conf, unsigned round);  /* 59D16 */
 void PrintTextCopy(char *s, int x, int y);  /* 2C135 */
 void SaveScheduleDB(char *buf);  /* 89223 */

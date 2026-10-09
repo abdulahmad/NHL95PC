@@ -587,6 +587,10 @@ add esp, byte 30h	; 84908
 pop ecx	; 8490B
 ret	; 8490C
 %endif ; C
+; C: src/c/062_842BA_announcer/SayPlayoffResult.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/SayPlayoffResult.inc"
+%else
 SayPlayoffResult:
 push dword 64h	; 8490D
 call __CHK	; 84912
@@ -683,6 +687,7 @@ pop ebp	; 84A66
 pop edi	; 84A67
 pop esi	; 84A68
 ret 8	; 84A69
+%endif ; C
 SayTheGame:
 push dword 4	; 84A6C
 call __CHK	; 84A71
@@ -1360,6 +1365,10 @@ pop esi	; 8531C
 pop ecx	; 8531D
 ret	; 8531E
 %endif ; C
+; C: src/c/062_842BA_announcer/SayGoal.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/SayGoal.inc"
+%else
 SayGoal:
 push dword 5Ch	; 8531F
 call __CHK	; 85324
@@ -1467,6 +1476,7 @@ add esp, byte 40h	; 854A4
 pop ebp	; 854A7
 pop esi	; 854A8
 ret 4	; 854A9
+%endif ; C
 ; C: src/c/062_842BA_announcer/SayOneMinuteLeft.c
 %ifdef CBUILD
 %include "c/062_842BA_announcer/SayOneMinuteLeft.inc"
