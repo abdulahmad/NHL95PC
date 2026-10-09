@@ -657,6 +657,10 @@ pop edx	; 5125B
 pop ecx	; 5125C
 pop ebx	; 5125D
 ret	; 5125E
+; C: src/c/039_50AFE_engine_assign_faceoff/ForceStartLineup.c
+%ifdef CBUILD
+%include "c/039_50AFE_engine_assign_faceoff/ForceStartLineup.inc"
+%else
 ForceStartLineup:
 push dword 8	; 5125F
 call __CHK	; 51264
@@ -677,6 +681,7 @@ call forcepldata	; 512A0
 .x:
 pop edx	; 512A5
 ret	; 512A6
+%endif ; C
 ; PenShotAssign: PC-new penalty shot set-up: shooter (penshotplayer) -> assignment 27h, other skaters -> 2Dh
 ;   (asspsclear: wait by the side boards).
 PenShotAssign:
@@ -815,6 +820,10 @@ pop edx	; 5143C
 pop ecx	; 5143D
 pop ebx	; 5143E
 ret	; 5143F
+; C: src/c/039_50AFE_engine_assign_faceoff/AllInPlace.c
+%ifdef CBUILD
+%include "c/039_50AFE_engine_assign_faceoff/AllInPlace.inc"
+%else
 AllInPlace:
 push dword 0Ch	; 51440
 call __CHK	; 51445
@@ -842,6 +851,7 @@ mov eax, 1	; 51475
 pop edx	; 5147A
 pop ebx	; 5147B
 ret	; 5147C
+%endif ; C
 assleavebox:
 push dword 14h	; 5147D
 call __CHK	; 51482

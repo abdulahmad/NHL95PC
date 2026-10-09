@@ -770,7 +770,6 @@ extern void assfaceoff(); /* 4D4F0 */
 extern void assfaceoffp1(); /* 4D528 */
 extern void pucknorm_body(); /* 4D6B4 */
 extern void RequestLineChange(); /* 4D938 */
-extern void StartFaceoffLineChange(); /* 4DA37 */
 extern void Endfaceoff(); /* 4DA7B */
 extern void a2offsides(); /* 4DCDD */
 extern void ChkTwoLinePass(); /* 4DD51 */
@@ -817,9 +816,7 @@ extern void TakePlayerFromBox(); /* 51115 */
 extern void TakePlayerFromBox_ret6(); /* 511AD */
 extern void TakePlayerFromBox_ret5(); /* 511AE */
 extern void PenShotStart(); /* 511B4 */
-extern void ForceStartLineup(); /* 5125F */
 extern void PenShotAssign(); /* 512A7 */
-extern void AllInPlace(); /* 51440 */
 extern void assleavebox(); /* 5147D */
 extern void puckfaceoff(); /* 516E1 */
 extern void puckfaceoff2(); /* 51BDB */

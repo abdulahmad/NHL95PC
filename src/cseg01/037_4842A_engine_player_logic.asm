@@ -6985,6 +6985,10 @@ pop edx	; 4DA34
 pop ebx	; 4DA35
 ret	; 4DA36
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/StartFaceoffLineChange.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/StartFaceoffLineChange.inc"
+%else
 StartFaceoffLineChange:
 push dword 8	; 4DA37
 call __CHK	; 4DA3C
@@ -7009,6 +7013,7 @@ mov word [byte ebx+temp3], dx	; 4DA75
 .x:
 pop ebx	; 4DA79
 ret	; 4DA7A
+%endif ; C
 Endfaceoff:
 push dword 18h	; 4DA7B
 call __CHK	; 4DA80

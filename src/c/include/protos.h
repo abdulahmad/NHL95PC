@@ -43,6 +43,9 @@ void SetupTeamForIntermission(void);                       /* 5DDDA */
 void GiveControl(short pl);                                /* 5B1CE */
 void setupice(void);                                       /* 5D7F7 */
 void updatecrowdf(void);                                    /* 5C248 */
+int AllInPlace(void);                                      /* 51440 */
+void ForceStartLineup(short team);                          /* 5125F */
+void StartFaceoffLineChange(struct Player *r, struct Player *p); /* 4DA37 */
 void reenergizeteam(struct Team *t);                      /* 5B826 */
 void RestBench(void);                                     /* 5C1E2 */
 void restoreteams(void);                                  /* 5B97A */
