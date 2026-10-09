@@ -909,11 +909,16 @@ pop edx	; 32707
 pop ecx	; 32708
 pop ebx	; 32709
 ret	; 3270A
+; C: src/c/024_31AB5_main_desk/MenuExit.c
+%ifdef CBUILD
+%include "c/024_31AB5_main_desk/MenuExit.inc"
+%else
 MenuExit:
 push dword 4	; 3270B
 call __CHK	; 32710
 mov eax, 1	; 32715
 ret	; 3271A
+%endif ; C
 ; C: src/c/024_31AB5_main_desk/SaveModeState.c
 %ifdef CBUILD
 %include "c/024_31AB5_main_desk/SaveModeState.inc"

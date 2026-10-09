@@ -9434,10 +9434,15 @@ mov eax, ebx	; 4F97F
 call SetSPA	; 4F981
 mov edx, 20h	; 4F986
 jmp near ass_replace_popx	; 4F98B
+; C: src/c/037_4842A_engine_player_logic/rtss.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/rtss.inc"
+%else
 rtss:
 push dword 4	; 4F990
 call __CHK	; 4F995
 ret	; 4F99A
+%endif ; C
 ; C: src/c/037_4842A_engine_player_logic/NextPathPoint.c
 %ifdef CBUILD
 %include "c/037_4842A_engine_player_logic/NextPathPoint.inc"

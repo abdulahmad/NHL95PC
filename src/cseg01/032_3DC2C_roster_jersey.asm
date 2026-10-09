@@ -1458,11 +1458,16 @@ mov dword [traderesult], 1	; 3EF16
 add esp, byte 10h	; 3EF20
 pop esi	; 3EF23
 ret 14h	; 3EF24
+; C: src/c/032_3DC2C_roster_jersey/TradeCancel.c
+%ifdef CBUILD
+%include "c/032_3DC2C_roster_jersey/TradeCancel.inc"
+%else
 TradeCancel:
 push dword 4	; 3EF27
 call __CHK	; 3EF2C
 mov dword [traderesult], 0FFFFFFFFh	; 3EF31
 ret	; 3EF3B
+%endif ; C
 FindTradeSlot:
 push dword 14h	; 3EF3C
 call __CHK	; 3EF41

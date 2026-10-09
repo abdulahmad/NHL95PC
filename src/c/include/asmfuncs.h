@@ -144,7 +144,6 @@ extern void IntermissionDesk(); /* 190BE */
 extern void PostGameDesk(); /* 1920F */
 extern void SportsDesk(); /* 1935D */
 extern void DeskReloadGame(); /* 1A534 */
-extern void DeskBackToGame(); /* 1A5A1 */
 extern void DeskReturnConfirm(); /* 1A5D4 */
 extern void DeskExitGame(); /* 1A6A7 */
 extern void DeskGoToReplay(); /* 1A817 */
@@ -301,8 +300,6 @@ extern void DrawSprite_b4(); /* 1CFF1 */
 extern void DrawSprite_b5(); /* 1CFFB */
 extern void DrawSprite_b6(); /* 1D005 */
 extern void DrawSprite_b7(); /* 1D00F */
-extern void NullBlit(); /* 1D019 */
-extern void NullFunc_1D024(); /* 1D024 */
 extern void AddDirtyRect(); /* 1D02F */
 extern void SetupStatsSourceMenu_jt(); /* 1D0F0 */
 extern void SetupStatsSourceMenu(); /* 1D100 */
@@ -496,7 +493,6 @@ extern void PrintClampedText(); /* 2F580 */
 extern void GameStatsScreen(); /* 2F5EE */
 extern void AskDatabaseChoice(); /* 2FDD1 */
 extern void DrawBevelRect(); /* 2FE49 */
-extern void DlgReturnZero(); /* 2FED2 */
 extern void TextInputDialog(); /* 2FEDF */
 extern void DlgNullCallback(); /* 30203 */
 extern void SetListItemColors(); /* 30209 */
@@ -521,7 +517,6 @@ extern void GrowToButton(); /* 30F5F */
 extern void GrowToButtons(); /* 30FB4 */
 extern void MessageBox(); /* 31013 */
 extern void RunMessageBox(); /* 31250 */
-extern void CritErrHandler(); /* 3149D */
 extern void DrawEditCursor(); /* 314B4 */
 extern void DrawEditCursor_x(); /* 3158C */
 extern void DrawEditCursor_ret(); /* 3158F */
@@ -530,7 +525,6 @@ extern void EditTextField(); /* 3170D */
 extern void MainDeskLoop(); /* 31AB5 */
 extern void MainDeskLoop_x(); /* 32704 */
 extern void MainDeskLoop_x2(); /* 32705 */
-extern void MenuExit(); /* 3270B */
 extern void LoadModeState(); /* 327A1 */
 extern void WriteModeState(); /* 32B1D */
 extern void CopyGameSettings(); /* 32C9E */
@@ -552,7 +546,6 @@ extern void MenuNextLeagueGame(); /* 33559 */
 extern void MenuLeagueHilights(); /* 3366F */
 extern void MenuImportDbs(); /* 336BE */
 extern void MenuExportDbs(); /* 336E6 */
-extern void DemoSetupStub(); /* 3371C */
 extern void FreeRinkGfx(); /* 33727 */
 extern void LoadRink(); /* 3377C */
 extern void BlitTileMap(); /* 33C08 */
@@ -578,8 +571,6 @@ extern void DrawTeamGrid(); /* 37FBA */
 extern void ChooseLeagueController(); /* 380E9 */
 extern void AskExportToFloppy(); /* 38386 */
 extern void BuildStandingsGrid(); /* 384B8 */
-extern void TeamSelDone(); /* 38B25 */
-extern void TeamSelCancel(); /* 38B3A */
 extern void LeagueTeamSelect(); /* 38B4F */
 extern void WriteSeasonRec(); /* 3A24F */
 extern void WriteSeasonRec_common(); /* 3A25F */
@@ -634,7 +625,6 @@ extern void DrawTradeScreen(); /* 3E9CF */
 extern void TradeHitTest(); /* 3ECAE */
 extern void TradeHitTest_ret(); /* 3EDA4 */
 extern void TradeDone(); /* 3EDAA */
-extern void TradeCancel(); /* 3EF27 */
 extern void FindTradeSlot(); /* 3EF3C */
 extern void TradeScreenLoop(); /* 3EF89 */
 extern void TradeRosterCmp(); /* 3FEF0 */
@@ -648,7 +638,6 @@ extern void RemoveHumanTeam(); /* 40C29 */
 extern void CheckMasterPassword(); /* 40F4E */
 extern void FmtFromLeague(); /* 41171 */
 extern void BuildLeagueList(); /* 411C8 */
-extern void LeagueCheckStub(); /* 41337 */
 extern void GetLeagueId(); /* 41344 */
 extern void WriteLeagueInfo(); /* 413CD */
 extern void MsgCopyingDatabases(); /* 414E0 */
@@ -764,7 +753,6 @@ extern void assrefsignal(); /* 4EB04 */
 extern void assrefgoalpa(); /* 4ED7C */
 extern void assrefdrop(); /* 4F5BF */
 extern void assrefgoalline(); /* 4F7D0 */
-extern void rtss(); /* 4F990 */
 extern void StartShotPath(); /* 4F9EF */
 extern void asspenshooter(); /* 4FAE8 */
 extern void joyq_pop(); /* 4FCE8 */
@@ -1230,7 +1218,6 @@ extern void DrawRosterList(); /* 6CF6F */
 extern void DrawDatabaseName(); /* 6D256 */
 extern void DrawRosterPanel(); /* 6D299 */
 extern void DrawEditRosters(); /* 6D2F8 */
-extern void EditRostersReturn(); /* 6D5BB */
 extern void SelectRosterTeam(); /* 6D5D0 */
 extern void ShowFreeAgents(); /* 6D6DB */
 extern void ComparePlayerEntry(); /* 6D78B */
@@ -1255,7 +1242,6 @@ extern void CheckDatabases(); /* 6EF84 */
 extern void SplitPlayerName(); /* 6F159 */
 extern void MoveToOtherRoster(); /* 6F29C */
 extern void RandomizeNewRatings(); /* 6F6D4 */
-extern void CreatePlayerNop(); /* 6FA72 */
 extern void DrawShootsField(); /* 6FA7D */
 extern void DrawShootsField_tail(); /* 6FB2B */
 extern void DrawShootsField_pop(); /* 6FB2E */
@@ -1369,7 +1355,6 @@ extern void MenuSaveDefaultLines_pop(); /* 797AE */
 extern void MenuSaveTheseLines(); /* 797B4 */
 extern void MenuSaveTheseLines_x(); /* 797FE */
 extern void MenuGameShowPlayerStats(); /* 79AC9 */
-extern void MenuReturnToLineEditor(); /* 79DD1 */
 extern void GameScratchPlayer(); /* 79DE1 */
 extern void GameDressPlayer(); /* 79F41 */
 extern void BlitJerseyDigit(); /* 7A017 */
@@ -1386,7 +1371,6 @@ extern void MenuLeagueSettingsEdit(); /* 7A335 */
 extern void MenuShowLeagueSettings(); /* 7A39F */
 extern void MenuShowLeagueSettings2(); /* 7A404 */
 extern void DrawLeagueSetDlgSel(); /* 7A57E */
-extern void SetLeagueSetImage(); /* 7A6AD */
 extern void DrawLeagueSetDlg(); /* 7A6BD */
 extern void LeagueOptsToBits_jt(); /* 7A872 */
 extern void LeagueOptsToBits(); /* 7A88E */
@@ -1399,7 +1383,6 @@ extern void LeagueSetHitTest(); /* 7A9C8 */
 extern void DrawLeagueSetChecks(); /* 7AAAA */
 extern void LeagueSetViewLoop(); /* 7AC31 */
 extern void LeagueSetEditLoop(); /* 7ADD3 */
-extern void SettingsStub(); /* 7B39C */
 extern void MenuModeSettings(); /* 7B3A7 */
 extern void ModeSettings_epilogue(); /* 7B4E5 */
 extern void DrawModeSetDlg(); /* 7B4EC */
@@ -1450,7 +1433,6 @@ extern void LoadRockMusic(); /* 7DC8B */
 extern void LoadRockMusic_ret(); /* 7DEC2 */
 extern void FreeRockMusic(); /* 7DEC8 */
 extern void DrawGadgetByType(); /* 7DF4E */
-extern void GadgetStub0(); /* 7E032 */
 extern void sub_7E03F(); /* 7E03F */
 extern void bothneitherstrs(); /* 7E05F */
 extern void DrawGadgetButton(); /* 7E067 */
@@ -1585,8 +1567,6 @@ extern void MenuSaveGame(); /* 85924 */
 extern void SaveGameStub(); /* 85D65 */
 extern void SaveGameNameDlg(); /* 85D6C */
 extern void savenamedefault(); /* 86616 */
-extern void MenuPlayNextGame(); /* 86627 */
-extern void MenuReturnToSportsCentral(); /* 86637 */
 extern void ViewPlayoffHilights(); /* 86647 */
 extern void CreatePlayoffs(); /* 86696 */
 extern void POSeedTeams(); /* 86E8B */
@@ -1615,7 +1595,6 @@ extern void LoadScheduleDB(); /* 891B2 */
 extern void LoadScheduleDB_x(); /* 8921B */
 extern void SaveScheduleDB(); /* 89223 */
 extern void PlayoffModeLoop(); /* 89268 */
-extern void POReturnZero(); /* 89B5C */
 extern void POHiliteSlot(); /* 89B69 */
 extern void PlayoffTreeMenu(); /* 89BD2 */
 extern void DrawPlayoffTree(); /* 8A652 */
@@ -1625,14 +1604,9 @@ extern void ClearPlayerFromLines(); /* 8B96D */
 extern void InitFileLocations(); /* 8BAAF */
 extern void CoachCutScene(); /* 8BC15 */
 extern void PlayMVI(); /* 8BEDB */
-extern void stub_8C1B7(); /* 8C1B7 */
 extern void SelectScreenBM(); /* 8C1C2 */
 extern void SelectScreenBM_set(); /* 8C1D5 */
 extern void SelectRinkBM(); /* 8C1E2 */
-extern void stub_8C1F7(); /* 8C1F7 */
-extern void stub_8C202(); /* 8C202 */
-extern void stub_8C20D(); /* 8C20D */
-extern void stub_8C218(); /* 8C218 */
 extern void stub_8C223(); /* 8C223 */
 extern void vgacopy_bg(); /* 8C290 */
 extern void vgacopy_rect(); /* 8C36F */

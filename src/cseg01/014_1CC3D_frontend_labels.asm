@@ -350,14 +350,24 @@ push edi	; 1D010
 push esi	; 1D011
 call sub_B5AC8	; 1D012
 jmp short DrawSprite_b0.1	; 1D017
+; C: src/c/014_1CC3D_frontend_labels/NullBlit.c
+%ifdef CBUILD
+%include "c/014_1CC3D_frontend_labels/NullBlit.inc"
+%else
 NullBlit:
 push dword 4	; 1D019
 call __CHK	; 1D01E
 ret	; 1D023
+%endif ; C
+; C: src/c/014_1CC3D_frontend_labels/NullFunc_1D024.c
+%ifdef CBUILD
+%include "c/014_1CC3D_frontend_labels/NullFunc_1D024.inc"
+%else
 NullFunc_1D024:
 push dword 4	; 1D024
 call __CHK	; 1D029
 ret	; 1D02E
+%endif ; C
 AddDirtyRect:	;IDA: code_1D02F
 push dword 0Ch	; 1D02F
 call __CHK	; 1D034

@@ -491,11 +491,16 @@ pop edx	; 7A6A9
 pop ecx	; 7A6AA
 pop ebx	; 7A6AB
 ret	; 7A6AC
+; C: src/c/056_7A13A_settings_dialogs/SetLeagueSetImage.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/SetLeagueSetImage.inc"
+%else
 SetLeagueSetImage:
 push dword 4	; 7A6AD
 call __CHK	; 7A6B2
 mov dword [leaguesetimg], eax	; 7A6B7
 ret	; 7A6BC
+%endif ; C
 DrawLeagueSetDlg:
 push dword 144h	; 7A6BD
 call __CHK	; 7A6C2
@@ -1588,10 +1593,15 @@ push eax	; 7B38F
 mov ebx, dword [pointerspr]	; 7B390
 push ebx	; 7B396
 jmp near LeagueSetEditLoop.6	; 7B397
+; C: src/c/056_7A13A_settings_dialogs/SettingsStub.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/SettingsStub.inc"
+%else
 SettingsStub:
 push dword 4	; 7B39C
 call __CHK	; 7B3A1
 ret	; 7B3A6
+%endif ; C
 MenuModeSettings:
 push dword 28h	; 7B3A7
 call __CHK	; 7B3AC

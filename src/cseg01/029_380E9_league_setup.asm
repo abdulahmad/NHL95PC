@@ -735,16 +735,26 @@ pop esi	; 38B21
 pop ecx	; 38B22
 pop ebx	; 38B23
 ret	; 38B24
+; C: src/c/029_380E9_league_setup/TeamSelDone.c
+%ifdef CBUILD
+%include "c/029_380E9_league_setup/TeamSelDone.inc"
+%else
 TeamSelDone:
 push dword 4	; 38B25
 call __CHK	; 38B2A
 mov dword [teamselresult], 1	; 38B2F
 ret	; 38B39
+%endif ; C
+; C: src/c/029_380E9_league_setup/TeamSelCancel.c
+%ifdef CBUILD
+%include "c/029_380E9_league_setup/TeamSelCancel.inc"
+%else
 TeamSelCancel:
 push dword 4	; 38B3A
 call __CHK	; 38B3F
 mov dword [teamselresult], 0FFFFFFFFh	; 38B44
 ret	; 38B4E
+%endif ; C
 LeagueTeamSelect:
 push dword 2B4h	; 38B4F
 call __CHK	; 38B54

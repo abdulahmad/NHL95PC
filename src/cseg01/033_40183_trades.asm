@@ -1325,11 +1325,16 @@ pop edi	; 41333
 pop esi	; 41334
 pop ecx	; 41335
 ret	; 41336
+; C: src/c/033_40183_trades/LeagueCheckStub.c
+%ifdef CBUILD
+%include "c/033_40183_trades/LeagueCheckStub.inc"
+%else
 LeagueCheckStub:
 push dword 4	; 41337
 call __CHK	; 4133C
 xor eax, eax	; 41341
 ret	; 41343
+%endif ; C
 GetLeagueId:
 push dword 38h	; 41344
 call __CHK	; 41349

@@ -2136,11 +2136,16 @@ call FadePalStep	; 79DBF
 xor eax, eax	; 79DC4
 add esp, 324h	; 79DC6
 jmp near MenuSaveDefaultLines_pop	; 79DCC
+; C: src/c/055_78346_team_select/MenuReturnToLineEditor.c
+%ifdef CBUILD
+%include "c/055_78346_team_select/MenuReturnToLineEditor.inc"
+%else
 MenuReturnToLineEditor:
 push dword 4	; 79DD1
 call __CHK	; 79DD6
 mov eax, 1	; 79DDB
 ret	; 79DE0
+%endif ; C
 GameScratchPlayer:
 push dword 48h	; 79DE1
 call __CHK	; 79DE6

@@ -367,11 +367,16 @@ pop ebp	; 7E02C
 pop edi	; 7E02D
 pop esi	; 7E02E
 ret 8	; 7E02F
+; C: src/c/057_7DC8B_gadgets_replay/GadgetStub0.c
+%ifdef CBUILD
+%include "c/057_7DC8B_gadgets_replay/GadgetStub0.inc"
+%else
 GadgetStub0:
 push dword 4	; 7E032
 call __CHK	; 7E037
 xor eax, eax	; 7E03C
 ret	; 7E03E
+%endif ; C
 sub_7E03F:
 push dword 14h	; 7E03F
 call __CHK	; 7E044

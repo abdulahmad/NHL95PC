@@ -241,11 +241,16 @@ call sub_9121C	; 6D5AB
 add esp, byte 4	; 6D5B0
 add esp, byte 54h	; 6D5B3
 jmp near RunEditRosters_ret5	; 6D5B6
+; C: src/c/052_6D2F8_create_player/EditRostersReturn.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/EditRostersReturn.inc"
+%else
 EditRostersReturn:
 push dword 4	; 6D5BB
 call __CHK	; 6D5C0
 mov dword [editrosters_exit], 0FFFFFFFFh	; 6D5C5
 ret	; 6D5CF
+%endif ; C
 SelectRosterTeam:
 push dword 20h	; 6D5D0
 call __CHK	; 6D5D5
@@ -3339,10 +3344,15 @@ pop edi	; 6FA6E
 pop esi	; 6FA6F
 pop ecx	; 6FA70
 ret	; 6FA71
+; C: src/c/052_6D2F8_create_player/CreatePlayerNop.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/CreatePlayerNop.inc"
+%else
 CreatePlayerNop:
 push dword 4	; 6FA72
 call __CHK	; 6FA77
 ret	; 6FA7C
+%endif ; C
 DrawShootsField:
 push dword 24h	; 6FA7D
 call __CHK	; 6FA82

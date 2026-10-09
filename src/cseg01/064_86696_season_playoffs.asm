@@ -4334,11 +4334,16 @@ mov eax, exhstate	; 89B48
 call LoadModeState	; 89B4D
 mov eax, 2	; 89B52
 jmp near POSeedRound2_x30	; 89B57
+; C: src/c/064_86696_season_playoffs/POReturnZero.c
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POReturnZero.inc"
+%else
 POReturnZero:
 push dword 4	; 89B5C
 call __CHK	; 89B61
 xor eax, eax	; 89B66
 ret	; 89B68
+%endif ; C
 POHiliteSlot:
 push dword 30h	; 89B69
 call __CHK	; 89B6E

@@ -671,10 +671,15 @@ mov eax, 3	; 33708
 call SetupStatsSourceMenu	; 3370D
 call ExportDbs	; 33712
 jmp near MenuAddTeam_common	; 33717
+; C: src/c/025_32DA9_temp_files/DemoSetupStub.c
+%ifdef CBUILD
+%include "c/025_32DA9_temp_files/DemoSetupStub.inc"
+%else
 DemoSetupStub:
 push dword 4	; 3371C
 call __CHK	; 33721
 ret	; 33726
+%endif ; C
 FreeRinkGfx:
 push dword 1Ch	; 33727
 call __CHK	; 3372C

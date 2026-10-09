@@ -1011,16 +1011,26 @@ jmp near SaveGameStub	; 86611
 savenamedefault:
 db 02Eh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h
+; C: src/c/063_85924_demo_savegame/MenuPlayNextGame.c
+%ifdef CBUILD
+%include "c/063_85924_demo_savegame/MenuPlayNextGame.inc"
+%else
 MenuPlayNextGame:
 push dword 4	; 86627
 call __CHK	; 8662C
 mov eax, 4	; 86631
 ret	; 86636
+%endif ; C
+; C: src/c/063_85924_demo_savegame/MenuReturnToSportsCentral.c
+%ifdef CBUILD
+%include "c/063_85924_demo_savegame/MenuReturnToSportsCentral.inc"
+%else
 MenuReturnToSportsCentral:
 push dword 4	; 86637
 call __CHK	; 8663C
 mov eax, 1	; 86641
 ret	; 86646
+%endif ; C
 ViewPlayoffHilights:
 push dword 8	; 86647
 call __CHK	; 8664C

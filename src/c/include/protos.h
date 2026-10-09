@@ -144,5 +144,31 @@ void GoalieToPuckVec(Player *p);  /* 4B467 */
 void TryBlockShot(Player *p);
 int CanBlockShot(Player *p);  /* 4FFEE */                 
 void BlockShotDive(Player *p, int how);  /* 53387 */      
+void NullBlit(void);  /* 1D019 */                         
+void NullFunc_1D024(void);  /* 1D024 */                   
+void DemoSetupStub(void);  /* 3371C */                    
+void rtss(void);  /* 4F990 */                             
+void CreatePlayerNop(void);  /* 6FA72 */                  
+void SettingsStub(void);  /* 7B39C */                     
+void stub_8C1B7(void);  /* 8C1B7 */                       
+void stub_8C1F7(void);  /* 8C1F7 */                       
+void stub_8C202(void);  /* 8C202 */                       
+void stub_8C20D(void);  /* 8C20D */                       
+void stub_8C218(void);  /* 8C218 */                       
+int DlgReturnZero(void);  /* 2FED2 */                     
+int GadgetStub0(void);  /* 7E032 */                       
+int LeagueCheckStub(void);  /* 41337 */                   
+int POReturnZero(void);  /* 89B5C */                      
+int DeskBackToGame(void);  /* 1A5A1 */                    
+int MenuExit(void);  /* 3270B */                          
+int MenuReturnToLineEditor(void);  /* 79DD1 */            
+int MenuPlayNextGame(void);  /* 86627 */                  
+int MenuReturnToSportsCentral(void);  /* 86637 */         
+void TeamSelCancel(void);  /* 38B3A */                    
+void TeamSelDone(void);  /* 38B25 */                      
+void TradeCancel(void);  /* 3EF27 */                      
+void EditRostersReturn(void);  /* 6D5BB */                
+void SetLeagueSetImage(int img);  /* 7A6AD */             
+int CritErrHandler(void);  /* 3149D */                    
 
 #endif

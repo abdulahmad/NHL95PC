@@ -253,10 +253,15 @@ pop ecx	; 8C1B5
 ret	; 8C1B6
 ; stub_8C1B7..stub_8C223: empty functions (__CHK; ret).  Only stub_8C218
 ; has a caller (line_editor_rosters, 6 stack args): removed routines.
+; C: src/c/066_8BEDB_asm_helpers/stub_8C1B7.c
+%ifdef CBUILD
+%include "c/066_8BEDB_asm_helpers/stub_8C1B7.inc"
+%else
 stub_8C1B7:
 push dword 4	; 8C1B7
 call __CHK	; 8C1BC
 ret	; 8C1C1
+%endif ; C
 ; SelectScreenBM / SelectRinkBM: SetDrawBitmap(*screenbm / *rinkbm),
 ; i.e. make that 48-byte bitmap descriptor the current draw target.
 SelectScreenBM:
@@ -282,22 +287,42 @@ push ecx	; 8C1ED
 push edx	; 8C1EE
 mov edx, dword [rinkbm]	; 8C1EF
 jmp short SelectScreenBM_set	; 8C1F5
+; C: src/c/066_8BEDB_asm_helpers/stub_8C1F7.c
+%ifdef CBUILD
+%include "c/066_8BEDB_asm_helpers/stub_8C1F7.inc"
+%else
 stub_8C1F7:
 push dword 4	; 8C1F7
 call __CHK	; 8C1FC
 ret	; 8C201
+%endif ; C
+; C: src/c/066_8BEDB_asm_helpers/stub_8C202.c
+%ifdef CBUILD
+%include "c/066_8BEDB_asm_helpers/stub_8C202.inc"
+%else
 stub_8C202:
 push dword 4	; 8C202
 call __CHK	; 8C207
 ret	; 8C20C
+%endif ; C
+; C: src/c/066_8BEDB_asm_helpers/stub_8C20D.c
+%ifdef CBUILD
+%include "c/066_8BEDB_asm_helpers/stub_8C20D.inc"
+%else
 stub_8C20D:
 push dword 4	; 8C20D
 call __CHK	; 8C212
 ret	; 8C217
+%endif ; C
+; C: src/c/066_8BEDB_asm_helpers/stub_8C218.c
+%ifdef CBUILD
+%include "c/066_8BEDB_asm_helpers/stub_8C218.inc"
+%else
 stub_8C218:
 push dword 4	; 8C218
 call __CHK	; 8C21D
 ret	; 8C222
+%endif ; C
 stub_8C223:
 push dword 4	; 8C223
 call __CHK	; 8C228

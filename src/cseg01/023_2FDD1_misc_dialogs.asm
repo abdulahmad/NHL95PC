@@ -119,11 +119,16 @@ pop ebp	; 2FECC
 pop edi	; 2FECD
 pop esi	; 2FECE
 ret 0Ch	; 2FECF
+; C: src/c/023_2FDD1_misc_dialogs/DlgReturnZero.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/DlgReturnZero.inc"
+%else
 DlgReturnZero:
 push dword 4	; 2FED2
 call __CHK	; 2FED7
 xor eax, eax	; 2FEDC
 ret	; 2FEDE
+%endif ; C
 TextInputDialog:
 push dword 138h	; 2FEDF
 call __CHK	; 2FEE4
@@ -2073,12 +2078,17 @@ pop ebp	; 31499
 pop edi	; 3149A
 pop esi	; 3149B
 ret	; 3149C
+; C: src/c/023_2FDD1_misc_dialogs/CritErrHandler.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/CritErrHandler.inc"
+%else
 CritErrHandler:
 push dword 4	; 3149D
 call __CHK	; 314A2
 mov dword [criterrflag], 0FFFFFFFFh	; 314A7
 xor eax, eax	; 314B1
 ret	; 314B3
+%endif ; C
 DrawEditCursor:
 push dword 34h	; 314B4
 call __CHK	; 314B9
