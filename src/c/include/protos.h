@@ -28,6 +28,7 @@ void PaPlayerNumber(char *team, int phrase, int number);  /* 59B0F */
 void PaOpenBank(void);                                    /* 59D54 */
 void CrowdNoiseReset(void);                               /* 59863 */
 /* 042_59D9A_engine_core */
+void changeplayer(struct Player *p, short cont);              /* 59E69 */
 short restorepl(short newpl, short oldpl);                /* 59FE1 */
 void AvgCline(struct Team *t);                            /* 5A03B */
 void calcpuckcross(void);                                 /* 5A341 */
@@ -38,6 +39,7 @@ void SetLCmode(struct Player *p);                         /* 4D9FC */
 void assdopen(struct Player *p);                          /* 4AFFB */
 int TryAddPlayerToList(struct Team *t, short pl, short slot); /* 5BB9E */
 void defaultsprites2(void);                                 /* 5BA89 */
+void ResetBench(void);                                     /* 5DF86 */
 void setpersonel(struct Team *t);                          /* 5BEF4 */
 void StartPer(void);                                       /* 5C010 */
 void SetupTeamForIntermission(void);                       /* 5DDDA */

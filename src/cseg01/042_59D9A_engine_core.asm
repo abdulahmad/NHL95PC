@@ -5359,6 +5359,10 @@ pop ebx	; 5DF84
 ret	; 5DF85
 ; ResetBench: 93G hockey93_05 ResetBench. Per team: PBnum = players with penalty time left (tmpdst > 0), all others
 ;   not dressed back to the bench (tmpdst -2, roster status 3).
+; C: src/c/042_59D9A_engine_core/calcpuckcross.c (ResetBench)
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/calcpuckcross.ResetBench.inc"
+%else
 ResetBench:
 push dword 18h	; 5DF86
 call __CHK	; 5DF8B
@@ -5415,6 +5419,7 @@ inc edi	; 5E00E
 cmp di, byte 2	; 5E00F
 jl short ResetBench.1	; 5E013
 jmp near calcpuckcross_ret5	; 5E015
+%endif ; C
 resetplstuff:
 push dword 14h	; 5E01A
 call __CHK	; 5E01F

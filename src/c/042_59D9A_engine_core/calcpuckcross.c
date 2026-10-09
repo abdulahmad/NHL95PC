@@ -251,3 +251,29 @@ void StartPer(void)
     rinkscrollx += 1000;
     rinkscrolly += 1000;
 }
+
+/* ResetBench (5DF86) - 93G hockey93_05 ResetBench. Per team (home, then visitors): PBnum[team] = the players
+   still in the box (tmpdst > 0; a time with bit 1000h set counts only while its low 11 bits are nonzero);
+   every other player not on the ice or in a pending state (tmpdst > -3) goes back to the bench
+   (tmpdst -2, roster status byte 3). */
+void ResetBench(void)
+{
+    short i;
+    Team *tm;
+    short t;
+
+    t = 0;
+    tm = &hmtmstruct;
+    for (; t < 2; t++) {
+        PBnum[t] = 0;
+        for (i = 27; i >= 0; i--) {
+            if (tm->tmpdst[i] > 0) {
+                if (!(HIBYTE(tm->tmpdst[i]) & 0x10) || (tm->tmpdst[i] & 0x7FF)) PBnum[t]++;
+            } else if (tm->tmpdst[i] > -3) {
+                tm->tmpdst[i] = PDbench;        /* on bench */
+                tm->tmroster[i * 0x27] = 3;     /* roster status: bench */
+            }
+        }
+        tm = &awtmstruct;
+    }
+}

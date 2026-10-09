@@ -911,7 +911,6 @@ extern void PaPlayoffTonight(); /* 59D16 */
 extern void PaPreloadClips(); /* 59D71 */
 extern void SprSort_loop(); /* 59DBB */
 extern void SprSort_test(); /* 59DDD */
-extern void changeplayer(); /* 59E69 */
 extern void changeplayer_ret5(); /* 59FDB */
 extern void CompLine(); /* 5A0A3 */
 extern void getlinee_pp(); /* 5A288 */
