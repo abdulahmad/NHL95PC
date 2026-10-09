@@ -8,7 +8,7 @@ extern lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5, byte_CCCA0, music
 extern byte_DB7EC, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byte_DF7CA, byte_DF7E6
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
 extern byte_E0074, PlList, byte_E038A, byte_E9A16, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
-extern sub_580F5, sub_65D01, collflag, doinput, joysampling, gameopts, dword_C7444, dword_C7448
+extern checkcoll, sub_65D01, collflag, doinput, joysampling, gameopts, dword_C7444, dword_C7448
 extern dword_C90B0, dword_C90C0, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, dword_CC0DC, dword_CC0F4
 extern dword_CC0F8, dword_CC0FC, dword_CC104, dword_CC110, dword_CC114, dword_CC118, dword_CC11C, dword_CC120
 extern dword_CC124, dword_CC128, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D302C
@@ -21,7 +21,7 @@ extern dword_E009C, dword_E039C, dword_E03A8, dword_E03AE
 extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
 extern off_C9078, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
 extern passspeed, randomd0, sfx, vecdist, sub_10F6D, sub_11005, sub_110E0, sub_11136
-extern sub_14A20, sub_14AFE, sub_15C30, Readjoy1, Readjoy2, sub_510A9, sub_55D28, sub_59265
+extern sub_14A20, sub_14AFE, sub_15C30, Readjoy1, Readjoy2, sub_510A9, ChkShotStat, ChkGoalies
 extern sub_59A11, sub_59A7E, sub_61576, sub_615A2, sub_61862, sub_63BF8, sub_63C73, sub_63D3C
 extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, sub_67564, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, unk_DABF0, unk_DAC40, unk_DAC70, unk_DACA0
@@ -31,20 +31,20 @@ extern camy, lastplayer, xc1, yc1, word_C90B2, word_C90B4, fodir1, fodir2
 extern c1playernum, c2playernum, cont1team, word_C90CE, word_C90D4, gsp, gameclock, clockticks
 extern word_CBC44, exitgame, gameover, PerTimeTab, word_CBC52, word_CBC54, lcblink, word_CBC58
 extern lcline, word_CBC64, lcboxon, word_CBC6C, word_CBEC0, word_CBEC4, word_CBEC6, word_CBEC8
-extern word_CBECC, word_CC0B0, lldispodd, word_CC0DA, word_CC0DE, word_CCCA8, hmscore, hmtmline
+extern word_CBECC, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CCCA8, hmscore, hmtmline
 extern hmtmlcnt, word_DF64C, word_DF656, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
 extern word_DF74C, word_DF756, word_DF80E, puckcross
 extern word_E0036, word_E0052, lcrequest, word_E0306
 extern word_E03A0, regd2, regd3, word_E03B8, regd0, regd1, Ylist, OOlistpos
-extern joysampling_save, word_E9AA4, word_E9AA6, CwdExciteLvl, periodendtime, word_E9AB0, PerTimeTotal, word_E9AC2
+extern joysampling_save, word_E9AA4, word_E9AA6, CwdExciteLvl, periodendtime, word_E9AB0, PerTimeTotal, lasttouch
 extern word_E9AC4
 global AvgCline, DoGameFrame, GetHot, ResetBench, SetSPA, Setplass, forcepldata
 global SprSort_test
 global changeplayer_ret5
-global LineEnergy_sum
+global getlinee_sum
 global calcpuckcross_ret6, calcpuckcross_ret5
 global reenergizeteam, PenTeamScored, resetplstuff, setpersonel
-global SprSort_loop, changeplayer, restorepl, chk4lc, LineEnergy_pp, TeamLineEnergy, LineEnergy, calcpuckcross
+global SprSort_loop, changeplayer, restorepl, CompLine, getlinee_pp, TeamLineEnergy, getlinee, calcpuckcross
 global GetHotStick, GetHotOrStick, SetCoachMode, InitCoachModes, UpdateCoachModes, Goal, GiveControl, setplayer
 global clearteams, restoreteams, GetPeriodTime, ResetClock, ClearSortCords, defaultsprites2, TryAddPlayerToList, SetPlList
 global StartPer, RestBench, updatecrowdf, periodicevents, LockScroll, cleargamevars, DrawRinkOverlays, setupice
@@ -327,9 +327,10 @@ pop edx	; 5A09F
 pop ecx	; 5A0A0
 pop ebx	; 5A0A1
 ret	; 5A0A2
-; chk4lc: 93G logic93_3 chk4lc. Should the team change lines? Compares the energy of the line on the ice (AvgCline)
-;   with the next line (LineEnergy); tmline/tmlcnt pick the next line, sub_14AFE opens the line change box.
-chk4lc:
+; CompLine: 93G logic93_4 CompLine (find good line for comp to switch to). eax = other team, edx = team.
+;   tmap difference picks the power-play / penalty-kill lines, getlinee compares line energies, tmline/tmlcnt take
+;   the result (sub_14AFE is called on a change). Callers: chk4lc (54AF9) and puckfaceoff.
+CompLine:
 push dword 1Ch	; 5A0A3
 call __CHK	; 5A0A8
 push ebx	; 5A0AD
@@ -349,7 +350,7 @@ mov ecx, 6	; 5A0CC
 .1:
 movsx edx, cx	; 5A0D1
 mov eax, ebx	; 5A0D4
-call LineEnergy	; 5A0D6
+call getlinee	; 5A0D6
 mov esi, eax	; 5A0DB
 cmp ax, 0F33h	; 5A0DD
 jge short .2	; 5A0E1
@@ -357,7 +358,7 @@ mov edi, ecx	; 5A0E3
 inc edi	; 5A0E5
 movsx edx, di	; 5A0E6
 mov eax, ebx	; 5A0E9
-call LineEnergy	; 5A0EB
+call getlinee	; 5A0EB
 cmp si, ax	; 5A0F0
 jge short .2	; 5A0F3
 mov ecx, edi	; 5A0F5
@@ -432,7 +433,7 @@ mov word [esp], ax	; 5A1CB
 mov edx, dword [byte esp-02h]	; 5A1CF
 sar edx, 10h	; 5A1D3
 mov eax, ebx	; 5A1D6
-call LineEnergy	; 5A1D8
+call getlinee	; 5A1D8
 mov dword [byte esp+04h], eax	; 5A1DD
 xor edi, edi	; 5A1E1
 jmp short .15	; 5A1E3
@@ -443,7 +444,7 @@ test cx, cx	; 5A1EA
 jl short .16	; 5A1ED
 movsx edx, cx	; 5A1EF
 mov eax, ebx	; 5A1F2
-call LineEnergy	; 5A1F4
+call getlinee	; 5A1F4
 movsx edx, ax	; 5A1F9
 cmp edx, dword [dword ebx+0D6h]	; 5A1FC
 ja short .16	; 5A202
@@ -456,7 +457,7 @@ mov ecx, 0FFFFFFFFh	; 5A213
 inc edi	; 5A218
 .15:
 cmp di, byte 4	; 5A219
-jl short chk4lc.13	; 5A21D
+jl short CompLine.13	; 5A21D
 .16:
 test cx, cx	; 5A21F
 jge short .17	; 5A222
@@ -496,7 +497,7 @@ pop esi	; 5A284
 pop ecx	; 5A285
 pop ebx	; 5A286
 ret	; 5A287
-LineEnergy_pp:
+getlinee_pp:
 cmp dx, byte 6	; 5A288
 jge short .1	; 5A28C
 mov ebx, dword [dword eax+tmlines]	; 5A28E
@@ -508,7 +509,7 @@ add eax, edx	; 5A29F
 add ebx, byte 12h	; 5A2A1
 add eax, ebx	; 5A2A4
 mov edi, 5	; 5A2A6
-jmp short LineEnergy_sum	; 5A2AB
+jmp short getlinee_sum	; 5A2AB
 .1:
 mov edx, dword [dword eax+tmlines]	; 5A2AD
 movsx eax, cx	; 5A2B3
@@ -517,7 +518,7 @@ sub eax, byte 18h	; 5A2B9
 add edx, byte 1Ch	; 5A2BC
 add eax, edx	; 5A2BF
 mov edi, 4	; 5A2C1
-LineEnergy_sum:
+getlinee_sum:
 xor ecx, ecx	; 5A2C6
 xor edx, edx	; 5A2C8
 jmp short .2	; 5A2CA
@@ -529,7 +530,7 @@ add cx, word [byte esi+ebx*2+046h]	; 5A2D1
 inc edx	; 5A2D6
 .2:
 cmp dx, di	; 5A2D7
-jl short LineEnergy_sum.1	; 5A2DA
+jl short getlinee_sum.1	; 5A2DA
 movsx edx, cx	; 5A2DC
 movsx ebx, di	; 5A2DF
 mov eax, edx	; 5A2E2
@@ -551,7 +552,7 @@ jmp short .2	; 5A302
 mov eax, hmtmstruct	; 5A304
 .2:
 movsx edx, dx	; 5A309
-LineEnergy:
+getlinee:
 push dword 14h	; 5A30C
 call __CHK	; 5A311
 push ebx	; 5A316
@@ -561,7 +562,7 @@ push edi	; 5A319
 mov esi, eax	; 5A31A
 mov ecx, edx	; 5A31C
 cmp dx, byte 4	; 5A31E
-jge near LineEnergy_pp	; 5A322
+jge near getlinee_pp	; 5A322
 movsx edx, dx	; 5A328
 mov eax, edx	; 5A32B
 shl eax, 2	; 5A32D
@@ -569,7 +570,7 @@ sub eax, edx	; 5A330
 mov edx, dword [dword esi+tmlines]	; 5A332
 add eax, edx	; 5A338
 mov edi, 3	; 5A33A
-jmp short LineEnergy_sum	; 5A33F
+jmp short getlinee_sum	; 5A33F
 calcpuckcross:
 push dword 20h	; 5A341
 call __CHK	; 5A346
@@ -1133,7 +1134,7 @@ test byte [gmode], 2	; 5AADA
 setne al	; 5AAE1
 and eax, 0FFh	; 5AAE4
 xor eax, edx	; 5AAE9
-cmp word [word_E9AC2], byte 6	; 5AAEB
+cmp word [lasttouch], byte 6	; 5AAEB
 setl dl	; 5AAF3
 and edx, 0FFh	; 5AAF6
 xor edx, eax	; 5AAFC
@@ -1269,7 +1270,7 @@ call sub_64439	; 5AC87
 jmp near .60	; 5AC8C
 .12:
 inc word [byte esi+tmscore]	; 5AC91
-mov cx, word [word_E9AC2]	; 5AC95
+mov cx, word [lasttouch]	; 5AC95
 cmp cx, byte 6	; 5AC9C
 setl al	; 5ACA0
 mov edx, eax	; 5ACA3
@@ -1281,27 +1282,27 @@ je short .13	; 5ACB4
 or byte [gmode2], 10h	; 5ACB6
 mov word [lastplayer], cx	; 5ACBD
 .13:
-call sub_55D28	; 5ACC4
+call ChkShotStat	; 5ACC4
 mov eax, 9Ch	; 5ACC9
 call sfx	; 5ACCE
 call LockScroll	; 5ACD3
 cmp word [byte esp+04h], byte 0	; 5ACD8
 jne short .15	; 5ACDE
-mov cx, word [word_CC0DE]	; 5ACE0
+mov cx, word [crowdlevel]	; 5ACE0
 add ecx, 320h	; 5ACE7
-mov word [word_CC0DE], cx	; 5ACED
+mov word [crowdlevel], cx	; 5ACED
 cmp cx, 7D0h	; 5ACF4
 jle short .14	; 5ACF9
-mov word [word_CC0DE], 7D0h	; 5ACFB
+mov word [crowdlevel], 7D0h	; 5ACFB
 .14:
-cmp word [word_CC0DE], 708h	; 5AD04
+cmp word [crowdlevel], 708h	; 5AD04
 jge short .16	; 5AD0D
-mov word [word_CC0DE], 708h	; 5AD0F
+mov word [crowdlevel], 708h	; 5AD0F
 jmp short .16	; 5AD18
 .15:
-cmp word [word_CC0DE], 320h	; 5AD1A
+cmp word [crowdlevel], 320h	; 5AD1A
 jge short .16	; 5AD23
-mov word [word_CC0DE], 320h	; 5AD25
+mov word [crowdlevel], 320h	; 5AD25
 .16:
 mov eax, dword [byte esp+02h]	; 5AD2E
 sar eax, 10h	; 5AD32
@@ -2934,7 +2935,7 @@ mov eax, puckstruct	; 5C115
 call assreplace	; 5C11A
 cmp word [gsp], byte 0	; 5C11F
 je short .6	; 5C127
-mov word [word_CC0DE], cx	; 5C129
+mov word [crowdlevel], cx	; 5C129
 .6:
 or byte [gmode2], 4	; 5C130
 and byte [sflags], 0AFh	; 5C137
@@ -3036,7 +3037,7 @@ mov word [CwdExciteLvl], di	; 5C295
 .2:
 test byte [gmode], 1	; 5C29C
 je short .x	; 5C2A3
-cmp word [word_CC0DE], 258h	; 5C2A5
+cmp word [crowdlevel], 258h	; 5C2A5
 jle short .x	; 5C2AE
 mov edx, dword [dword_CC0DC]	; 5C2B0
 sar edx, 10h	; 5C2B6
@@ -3101,7 +3102,7 @@ mov bl, dl	; 5C36D
 add bl, 18h	; 5C36F
 mov byte [lldisp], bl	; 5C372
 xor byte [lldispodd], 1	; 5C378
-call sub_59265	; 5C37F
+call ChkGoalies	; 5C37F
 call updatecrowdf	; 5C384
 call RestBench	; 5C389
 test byte [gmode], 1	; 5C38E
@@ -3588,7 +3589,7 @@ sar ebx, 10h	; 5C9ED
 mov edx, dword [regd2-2]	; 5C9F0
 sar edx, 10h	; 5C9F6
 mov eax, esi	; 5C9F9
-call sub_580F5	; 5C9FB
+call checkcoll	; 5C9FB
 .47:
 mov di, word [byte esi+018h]	; 5CA00
 sub edi, byte 2	; 5CA04
@@ -4789,15 +4790,15 @@ jne near .7	; 5D8DE
 test byte [byte_C5400], 2	; 5D8E4
 je near .7	; 5D8EB
 call sub_63D3C	; 5D8F1
-mov di, word [word_CC0DE]	; 5D8F6
+mov di, word [crowdlevel]	; 5D8F6
 cmp di, 4B0h	; 5D8FD
 jg short .3	; 5D902
 mov eax, edi	; 5D904
 add eax, 384h	; 5D906
-mov word [word_CC0DE], ax	; 5D90B
+mov word [crowdlevel], ax	; 5D90B
 cmp ax, 4B0h	; 5D911
 jle short .3	; 5D915
-mov word [word_CC0DE], 4B0h	; 5D917
+mov word [crowdlevel], 4B0h	; 5D917
 .3:
 or byte [gmode], 41h	; 5D920
 xor esi, esi	; 5D927
@@ -4972,24 +4973,24 @@ call sub_63D3C	; 5DB88
 mov ax, word [hmscore]	; 5DB8D
 cmp ax, word [awscore]	; 5DB93
 jle short .29	; 5DB9A
-mov ax, word [word_CC0DE]	; 5DB9C
+mov ax, word [crowdlevel]	; 5DB9C
 cmp ax, 5DCh	; 5DBA2
 jg short .28	; 5DBA6
 mov edx, eax	; 5DBA8
 add edx, 3E8h	; 5DBAA
-mov word [word_CC0DE], dx	; 5DBB0
+mov word [crowdlevel], dx	; 5DBB0
 cmp dx, 5DCh	; 5DBB7
 jle short .28	; 5DBBC
-mov word [word_CC0DE], 5DCh	; 5DBBE
+mov word [crowdlevel], 5DCh	; 5DBBE
 .28:
 cmp word [regd0], byte 8	; 5DBC7
 jne short .30	; 5DBCF
-add word [word_CC0DE], 320h	; 5DBD1
+add word [crowdlevel], 320h	; 5DBD1
 jmp short .30	; 5DBDA
 .29:
-cmp word [word_CC0DE], 320h	; 5DBDC
+cmp word [crowdlevel], 320h	; 5DBDC
 jge short .30	; 5DBE5
-mov word [word_CC0DE], 320h	; 5DBE7
+mov word [crowdlevel], 320h	; 5DBE7
 .30:
 or byte [gmode], 41h	; 5DBF0
 add word [CwdExciteLvl], byte 28h	; 5DBF7

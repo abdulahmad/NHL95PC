@@ -5,9 +5,9 @@ section s_4FCE8 progbits alloc exec nowrite align=1
 extern SetLCmode, SetSPA, SetShotMode, ShotMode, __CHK, burst, sflags, gmode2
 extern lchoicetab, byte_DFF3A, checkob, doplayeracc, joysampling, joyqhead, joyqcount, joyqtick
 extern joyrec, gameopts, cont2team, dword_CC0F0, dword_CC0F4, dword_CC118
-extern dword_CC128, dword_CCC9C, dword_DF812, dword_E9A9E, gmode, lcreqchoice, puckstruct
+extern dword_CC128, dword_CCC9C, puckcross_m2, dword_E9A9E, gmode, lcreqchoice, puckstruct
 extern sub_4D938, puckx, pucky, puckvy, puckc, setpassmode, setpersonel, vecdist
-extern sub_14AFE, sub_53387, passmode, changeplayer, restorepl, MouseSetPos, joyqueue, SortCords
+extern sub_14AFE, BlockShotDive, passmode, changeplayer, restorepl, MouseSetPos, joyqueue, SortCords
 extern vtoa, lastplayer, passdir, passplayer, fodir1, fodir2, c1playernum
 extern c2playernum, cont1team, lcblink, lcblinktime, lcsel, word_CBC60, lcline
 extern lctimer, lcboxon, linenext, word_DFF42, lcrequest, regd2, regd3, regd0
@@ -270,7 +270,7 @@ ret	; 4FFED
 ; CanBlockShot (PC only): may this player dive to block a shot?  Shooter = puck carrier, or
 ; lastplayer if the puck is loose and heading at his goal; shooter must be in a shooting SPA, the
 ; player between him and the puck, facing him, and closer than the puck.  Returns 0, or the dive
-; direction+1 (0Ah = straight), direction also in [esi+4Ah]; holdplayer passes it to sub_53387.
+; direction+1 (0Ah = straight), direction also in [esi+4Ah]; holdplayer passes it to BlockShotDive.
 CanBlockShot:
 push dword 34h	; 4FFEE
 call __CHK	; 4FFF3
@@ -332,7 +332,7 @@ jmp short .4	; 5009A
 .3:
 mov eax, 1	; 5009C
 .4:
-mov eax, dword [nosplit eax*2+dword_DF812]	; 500A1
+mov eax, dword [nosplit eax*2+puckcross_m2]	; 500A1
 sar eax, 10h	; 500A8
 cmp eax, byte 0Ah	; 500AB
 jl near .no	; 500AE
@@ -623,7 +623,7 @@ jl short OppInReach.loop	; 503C4
 xor eax, eax	; 503C6
 jmp near CanBlockShot_ret6	; 503C8
 ; holdplayer = 93G holdplayer (A button, not the puck carrier) with two PC checks first:
-;   OppInReach -> hold anim 873h;  CanBlockShot -> dive (sub_53387);  else Acheck on SortCords[impactp].
+;   OppInReach -> hold anim 873h;  CanBlockShot -> dive (BlockShotDive);  else Acheck on SortCords[impactp].
 holdplayer:
 push dword 0Ch	; 503CD
 call __CHK	; 503D2
@@ -651,7 +651,7 @@ call CanBlockShot	; 50408
 test eax, eax	; 5040D
 je short .acheck	; 5040F
 mov eax, ebx	; 50411
-call sub_53387	; 50413
+call BlockShotDive	; 50413
 pop edx	; 50418
 pop ebx	; 50419
 ret	; 5041A

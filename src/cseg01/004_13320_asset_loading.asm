@@ -27,7 +27,7 @@ extern refsignal, word_C90D4, word_C90D6, word_C90D8, gsp, word_CBC44, exitgame,
 extern word_CBC52, word_CBC54, lcblink, word_CBC58, lcblinktime, lcsel, word_CBC60
 extern lcline, word_CBC64, lctimer, word_CBC68, lcboxon, word_CBC6C, word_CBE8C, word_CBE8E
 extern word_CBEC0, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0B0
-extern word_CC0DE, word_DEE94, word_DF64A, word_DF74A, word_E024E, lcrequest, word_E0306, lcreqchoice
+extern crowdlevel, word_DEE94, hmtmap, awtmap, word_E024E, lcrequest, word_E0306, lcreqchoice
 extern word_E0382, regd2, regd0, regd1, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4
 extern word_E9AA6, CwdExciteLvl, word_E9AAA, word_E9AAE, word_E9B2C
 global LoadTransparentRinkEndOverlay, loc_13384, loc_133A7, loc_133D4, loc_13405, loc_13407, loc_134A2, loc_134A4
@@ -827,10 +827,10 @@ cmp word [regd1], byte 0	; 13CEF
 jl near loc_13E6F	; 13CF7
 test byte [byte ebx+044h], 40h	; 13CFD
 je short loc_13D0B	; 13D01
-mov ax, word [word_DF74A]	; 13D03
+mov ax, word [awtmap]	; 13D03
 jmp short loc_13D11	; 13D09
 loc_13D0B:
-mov ax, word [word_DF64A]	; 13D0B
+mov ax, word [hmtmap]	; 13D0B
 loc_13D11:
 neg eax	; 13D11
 mov word [regd4], ax	; 13D13
@@ -947,7 +947,7 @@ mov eax, 1	; 13EA9
 call sub_658F3	; 13EAE
 mov word [gsp], 0FFFFh	; 13EB3
 xor ebx, ebx	; 13EBC
-mov word [word_CC0DE], bx	; 13EBE
+mov word [crowdlevel], bx	; 13EBE
 call sub_59863	; 13EC5
 xor edx, edx	; 13ECA
 mov dword [dword_CC0F0], edx	; 13ECC
@@ -960,7 +960,7 @@ mov ecx, 1	; 13EE8
 mov ebx, ecx	; 13EED
 call sub_150C6	; 13EEF
 xor ecx, ecx	; 13EF4
-mov word [word_CC0DE], cx	; 13EF6
+mov word [crowdlevel], cx	; 13EF6
 xor ebx, ebx	; 13EFD
 mov dword [dword_CCC88], ebx	; 13EFF
 xor edx, edx	; 13F05
@@ -1030,13 +1030,13 @@ mov eax, 1	; 13FC1
 call sub_658F3	; 13FC6
 mov word [gsp], 0FFFFh	; 13FCB
 xor ebx, ebx	; 13FD4
-mov word [word_CC0DE], bx	; 13FD6
+mov word [crowdlevel], bx	; 13FD6
 call sub_59863	; 13FDD
 xor edx, edx	; 13FE2
 mov dword [dword_CC0F0], edx	; 13FE4
 call sub_14056	; 13FEA
 xor ecx, ecx	; 13FEF
-mov word [word_CC0DE], cx	; 13FF1
+mov word [crowdlevel], cx	; 13FF1
 mov dword [dword_CCC88], edx	; 13FF8
 xor eax, eax	; 13FFE
 call sub_4830E	; 14000

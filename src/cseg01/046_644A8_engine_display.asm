@@ -24,7 +24,7 @@ extern sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80, unk_DABF0, unk_DACA0, unk_DC2
 extern unk_E001C, unk_E9CEC, unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE
 extern unk_E9EE0, camx, camy, xc1, yc1, word_C90B2, word_C90B4, c1playernum
 extern c2playernum, cont1team, word_C90CE, word_C90D4, gsp, gameclock, clockticks, word_CBEC0
-extern word_CBEC8, word_CBECC, word_CBECE, word_CC054, word_CC0B0, word_CC0DE, word_CCEF8, word_CD4FC
+extern word_CBEC8, word_CBECC, word_CBECE, word_CC054, word_CC0B0, crowdlevel, word_CCEF8, word_CD4FC
 extern word_CD4FE, word_CD500, scrolly, scrollx, word_DEE94, word_DF64C, word_E001E, word_E0022
 extern word_E0046, regd2, regd3, regd0, regd1, joysampling_save, word_E9AB2, word_E9AB4
 extern word_E9F12, word_E9F14, word_E9F18, word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A
@@ -3177,7 +3177,7 @@ jne near loc_66D81	; 66982
 cmp word [word_CBECE], byte 2	; 66988
 jne near loc_66D81	; 66990
 add word [byte esp+01Ch], byte 23h	; 66996
-cmp word [word_CC0DE], 2EEh	; 6699C
+cmp word [crowdlevel], 2EEh	; 6699C
 jle short loc_669F5	; 669A5
 mov eax, dword [dword_CC0DC]	; 669A7
 sar eax, 10h	; 669AC
@@ -3202,7 +3202,7 @@ sar ebx, 10h	; 669EA
 movsx eax, si	; 669ED
 call sub_65CA8	; 669F0
 loc_669F5:
-cmp word [word_CC0DE], 3B6h	; 669F5
+cmp word [crowdlevel], 3B6h	; 669F5
 jle short loc_66A51	; 669FE
 mov eax, dword [dword_CC0DC]	; 66A00
 sar eax, 10h	; 66A05
@@ -3228,7 +3228,7 @@ sar ebx, 10h	; 66A46
 movsx eax, si	; 66A49
 call sub_65CA8	; 66A4C
 loc_66A51:
-cmp word [word_CC0DE], 47Eh	; 66A51
+cmp word [crowdlevel], 47Eh	; 66A51
 jle near loc_66D81	; 66A5A
 mov eax, dword [dword_CC0DC]	; 66A60
 sar eax, 10h	; 66A65
@@ -3536,14 +3536,14 @@ cmp word [word_CBECC], byte 0	; 66E45
 jne near loc_66EB9	; 66E4D
 cmp word [word_CBECE], byte 5	; 66E53
 jge short loc_66EB9	; 66E5B
-mov ax, word [word_CC0DE]	; 66E5D
+mov ax, word [crowdlevel]	; 66E5D
 cmp ax, 5DCh	; 66E63
 jge short loc_66EB9	; 66E67
 cmp word [word_E9AB4], byte 1	; 66E69
 jne short loc_66E82	; 66E71
 cmp ax, 280h	; 66E73
 jge short loc_66E82	; 66E77
-mov word [word_CC0DE], 280h	; 66E79
+mov word [crowdlevel], 280h	; 66E79
 loc_66E82:
 mov si, word [word_E9AB4]	; 66E82
 cmp si, byte 1	; 66E89
@@ -3560,7 +3560,7 @@ loc_66EA7:
 cmp word [word_E9AB4], byte 10h	; 66EA7
 jle short loc_66EB9	; 66EAF
 loc_66EB1:
-add word [word_CC0DE], byte 8	; 66EB1
+add word [crowdlevel], byte 8	; 66EB1
 loc_66EB9:
 cmp word [word_CBEC0], byte 10h	; 66EB9
 jne near loc_66F89	; 66EC1
@@ -4297,7 +4297,7 @@ mov word [eax], dx	; 67838
 mov ecx, dword [dword_E039C]	; 6783B
 add ecx, byte 2	; 67841
 mov dword [dword_E039C], ecx	; 67844
-mov dx, word [word_CC0DE]	; 6784A
+mov dx, word [crowdlevel]	; 6784A
 mov word [ecx], dx	; 67851
 xor edx, edx	; 67854
 add dword [dword_E039C], byte 2	; 67856
@@ -4624,7 +4624,7 @@ add eax, byte 2	; 67CB0
 mov dword [dword_E03A4], eax	; 67CB3
 mov edx, eax	; 67CB8
 mov ax, word [eax]	; 67CBA
-mov word [word_CC0DE], ax	; 67CBD
+mov word [crowdlevel], ax	; 67CBD
 xor eax, eax	; 67CC3
 add edx, byte 2	; 67CC5
 mov dword [dword_E03A4], edx	; 67CC8

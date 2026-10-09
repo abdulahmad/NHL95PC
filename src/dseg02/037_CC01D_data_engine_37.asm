@@ -14,7 +14,7 @@ global dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CC
 global dword_CCC84, dword_CCC88, dword_CCC8C, dword_CCC90, dword_CCC94, dword_CCC98, dword_CCC9C, dword_CCC9D
 global dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, doplayeracc_ftab, MaxSpeed, dword_CCEF6, dword_CD2F8
 global off_CC01D, off_CCA0A, shotsets, unk_CCCC8, word_CC054, word_CC0B0, lldispodd, word_CC0DA
-global word_CC0DE, word_CC10C, word_CC9CC, word_CC9EA, word_CC9EC, word_CCA18, word_CCA1A, word_CCA1C
+global crowdlevel, word_CC10C, word_CC9CC, word_CC9EA, word_CC9EC, word_CCA18, word_CCA1A, word_CCA1C
 global word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E, word_CCA70, word_CCA9C
 global linenext, word_CCBCC, word_CCBDC, word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, word_CCC30
 global word_CCC32, word_CCC62, word_CCCA8, word_CCEF8
@@ -56,7 +56,7 @@ word_CC0DA:
 db 00h,00h
 dword_CC0DC:
 db 0FFh,0FFh
-word_CC0DE:
+crowdlevel:
 db 00h,00h
 dword_CC0E0:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h

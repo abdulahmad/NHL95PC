@@ -5,20 +5,20 @@ section s_50AFE progbits alloc exec nowrite align=1
 extern Endfaceoff, Findhittype, ResetBench, SetSPA, Setplass, StartFaceoffLineChange, Stop4Pen, __CHK
 extern a2touchpuck, assexit, assinsert, assreplace, sflags, gmode2, byte_CBEA8, byte_CCBBA
 extern byte_CCBBB, byte_DB3A8, byte_DF658, byte_DF758, byte_E0250, byte_E028C, puckcross
-extern byte_E02C8, byte_E0308, byte_E0344, byte_E0393, byte_E0397, byte_E9AC0, sub_65D01, sub_57C0B
+extern byte_E02C8, byte_E0308, byte_E0344, byte_E0393, byte_E0397, iflags, sub_65D01, doshot
 extern joysampling, gameopts, dword_C90B0, dword_C90C0, cont2team, dword_CBECA, dword_CC0EC, dword_CC0F0
 extern dword_CC0F4, dword_CC0FA, dword_CC0FC, dword_CC104, dword_CC118, dword_CC11C, hmtmstruct, awtmstruct
 extern dword_E0244, dword_E9A9E, forcepldata, puckvx, gmode
 extern jctime, CanBlockShot_ret5, ltx, puckx, pucky, puckvy, puckz, puckc
 extern puckvz, randomd0, resetplstuff, setpersonel, sfx, skateto, skatetopuck, sub_14AFE
-extern sub_4A80E, sub_4E292, lcfound, CenterMouse, sub_59352, sub_59981, sub_59AAD, changeplayer
-extern restorepl, chk4lc, setplayer, clockcont_0, SprSortVert, SprSort, SetExitGame, EvadePC
+extern sub_4A80E, sub_4E292, lcfound, CenterMouse, ReturnGoalies, sub_59981, sub_59AAD, changeplayer
+extern restorepl, CompLine, setplayer, clockcont_0, SprSortVert, SprSort, SetExitGame, EvadePC
 extern sub_61B85, sub_63F72, threat, SortCords, unk_DFB1C, unk_DFE1C, unk_E001C, updateanim
 extern vtoa, regd4, camx, camy, passdir, word_C90A6, passplayer, xc1
 extern yc1, word_C90B2, word_C90B4, fodir1, fodir2, c1playernum, c2playernum, cont1team
 extern refsignal, word_C90D4, word_C90D6, word_C90D8, gsp, gameclock, clockticks, word_CBC44
 extern word_CBC52, word_CBC54, lcblink, word_CBC58, lcboxon, word_CBC6C, word_CBE8C, word_CBE8E
-extern word_CBEC0, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0DE, hmscore
+extern word_CBEC0, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, hmscore
 extern hmtmline, hmtmlcnt, word_DF692, awscore, awtmline, awtmlcnt, word_DF836, word_DF84A
 extern word_DF85A, word_DFE1E, word_DFE22, word_DFE28, word_DFE2A, word_DFF70, puckstruct, sortobj15
 extern word_DFFD4, word_DFFF0, word_E001E, word_E0052, word_E0390, word_E0392, word_E0394, word_E0396
@@ -235,11 +235,11 @@ mov eax, ebx	; 50D45
 call updateanim	; 50D47
 mov eax, dword [byte ebx+06Ch]	; 50D4C
 inc word [byte eax+018h]	; 50D4F
-add word [word_CC0DE], byte 64h	; 50D53
+add word [crowdlevel], byte 64h	; 50D53
 mov eax, ebx	; 50D5B
 call a2touchpuck	; 50D5D
 mov eax, ebx	; 50D62
-call sub_57C0B	; 50D64
+call doshot	; 50D64
 mov eax, ebx	; 50D69
 call sub_50AFE	; 50D6B
 and byte [byte ebx+pflags], 0FEh	; 50D70
@@ -1230,7 +1230,7 @@ loc_5191C:
 cmp dl, 6	; 5191C
 jl short loc_518D9	; 5191F
 loc_51921:
-call sub_59352	; 51921
+call ReturnGoalies	; 51921
 test byte [gameopts], 4	; 51926
 jne short loc_51943	; 5192D
 mov eax, hmtmstruct	; 5192F
@@ -1304,7 +1304,7 @@ cmp ax, word [cont2team]	; 51A37
 je short loc_51A63	; 51A3E
 mov edx, awtmstruct	; 51A40
 mov eax, hmtmstruct	; 51A45
-call chk4lc	; 51A4A
+call CompLine	; 51A4A
 mov eax, awtmstruct	; 51A4F
 call setpersonel	; 51A54
 mov eax, 1	; 51A59
@@ -1380,7 +1380,7 @@ cmp ax, word [cont2team]	; 51B5C
 je short loc_51B85	; 51B63
 mov edx, hmtmstruct	; 51B65
 mov eax, awtmstruct	; 51B6A
-call chk4lc	; 51B6F
+call CompLine	; 51B6F
 mov eax, hmtmstruct	; 51B74
 call setpersonel	; 51B79
 xor eax, eax	; 51B7E
@@ -1523,7 +1523,7 @@ mov word [word_CBEC6], cx	; 51DA1
 and byte [sflags], 0FEh	; 51DA8
 and byte [dword_C90C0], 0FEh	; 51DAF
 xor dl, dl	; 51DB6
-mov byte [byte_E9AC0], dl	; 51DB8
+mov byte [iflags], dl	; 51DB8
 xor edi, edi	; 51DBE
 mov word [refsignal], di	; 51DC0
 mov dh, 0FFh	; 51DC7

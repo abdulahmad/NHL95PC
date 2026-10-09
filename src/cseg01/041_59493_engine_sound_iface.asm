@@ -8,7 +8,7 @@ extern dword_ED374, dword_ED7A4, gmode, off_C5439, rand_, randomd0, sub_836E4, s
 extern sub_846B4, sub_846C8, sub_846DC, sub_847BA, sub_847CE, sub_8490D, sub_84A7D, sub_84B0D
 extern sub_84C38, sub_84F7B, sub_8511E, sub_85213, sub_8531F, sub_854AC, sub_85507, sub_8579E
 extern sub_8E8B8, sub_8E908, sub_8F270, sub_8F61D, sub_8F67D, sub_8F7AE, sub_8F80E, sub_8FD84
-extern sub_8FDB2, sub_8FDE5, sub_8FE1C, sub_8FE4F, sub_B3989, sub_B3999, word_CC0DE
+extern sub_8FDB2, sub_8FDE5, sub_8FE1C, sub_8FE4F, sub_B3989, sub_B3999, crowdlevel
 global loc_594AC, loc_59518, loc_5951A, loc_59524, loc_5952C, loc_59539, loc_5954B, loc_59575
 global loc_5958D, loc_59597, loc_595B7, loc_595C1, loc_595CB, loc_59603, loc_59652, loc_59677
 global loc_59689, loc_5968B, loc_596A3, loc_596E2, loc_59716, loc_59718, loc_5972C, loc_59743
@@ -309,18 +309,18 @@ je short loc_5985D	; 59802
 test byte [dword_C541F], 2Ah	; 59804
 je short loc_5985D	; 5980B
 loc_5980D:
-cmp word [word_CC0DE], byte 0	; 5980D
+cmp word [crowdlevel], byte 0	; 5980D
 jle short loc_59851	; 59815
 push byte 1	; 59817
 call sub_B3989	; 59819
 add esp, byte 4	; 5981E
-mov bx, word [word_CC0DE]	; 59821
+mov bx, word [crowdlevel]	; 59821
 sub ebx, byte 32h	; 59828
-mov word [word_CC0DE], bx	; 5982B
+mov word [crowdlevel], bx	; 5982B
 test bx, bx	; 59832
 jge short loc_59840	; 59835
 xor edi, edi	; 59837
-mov word [word_CC0DE], di	; 59839
+mov word [crowdlevel], di	; 59839
 loc_59840:
 mov eax, 2	; 59840
 call sub_594CD	; 59845
@@ -328,7 +328,7 @@ call sub_B3999	; 5984A
 jmp short loc_5980D	; 5984F
 loc_59851:
 call sub_59748	; 59851
-mov word [word_CC0DE], si	; 59856
+mov word [crowdlevel], si	; 59856
 loc_5985D:
 pop edi	; 5985D
 pop esi	; 5985E
@@ -376,7 +376,7 @@ je short loc_59942	; 598E5
 loc_598E7:
 cmp edx, byte 7Dh	; 598E7
 jne short loc_598F8	; 598EA
-add word [word_CC0DE], 1F4h	; 598EC
+add word [crowdlevel], 1F4h	; 598EC
 pop edx	; 598F5
 pop ecx	; 598F6
 ret	; 598F7

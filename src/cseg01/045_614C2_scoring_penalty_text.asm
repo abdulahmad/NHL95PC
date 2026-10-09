@@ -28,8 +28,8 @@ extern unk_C1C5E, unk_C1C61, unk_C1C64, unk_C1C67, unk_C1CB0, unk_C5423, unk_C54
 extern SortCords, unk_E001C, unk_E9B4C, word_C5428, word_C90B2, word_C90B4, c1playernum, c2playernum
 extern cont1team, word_C90CC, word_C90CE, word_C90D0, refsignal, word_C90D4, word_C90D6, word_C90D8
 extern gsp, gameclock, clockticks, word_CBC44, word_CBEC0, word_CBEC6, word_CBEC8, word_CBECC
-extern word_CC0B0, word_CC0DE, word_CCEF8, word_CD39C, word_DEE94, hmscore, word_DF644, word_DF64A
-extern word_DF64C, awscore, word_DF74A, word_DFF42, regd2, regd3, regd1
+extern word_CC0B0, crowdlevel, word_CCEF8, word_CD39C, word_DEE94, hmscore, word_DF644, hmtmap
+extern word_DF64C, awscore, awtmap, word_DFF42, regd2, regd3, regd1
 extern joysampling_save, CwdExciteLvl, periodendtime, word_E9AAE, PerTimeTotal, word_E9AC4, word_E9B2C
 global AddPenalty, AddPenalty2, Stop4Pen, loc_61591, loc_6159B, loc_615D0, loc_615E3, loc_6161F
 global loc_6162A, loc_61679, loc_61696, loc_616BF, loc_616CB, loc_6170E, loc_61722, loc_61742
@@ -157,34 +157,34 @@ push edx	; 615AE
 push esi	; 615AF
 push edi	; 615B0
 sub esp, byte 4	; 615B1
-mov dx, word [word_CC0DE]	; 615B4
+mov dx, word [crowdlevel]	; 615B4
 cmp dx, 2BCh	; 615BB
 jle short loc_615D0	; 615C0
 mov esi, edx	; 615C2
 sub esi, byte 2	; 615C4
-mov word [word_CC0DE], si	; 615C7
+mov word [crowdlevel], si	; 615C7
 jmp short loc_615E3	; 615CE
 loc_615D0:
 cmp dx, 15Eh	; 615D0
 jle short loc_615E3	; 615D5
 mov ecx, edx	; 615D7
 sub ecx, byte 3	; 615D9
-mov word [word_CC0DE], cx	; 615DC
+mov word [crowdlevel], cx	; 615DC
 loc_615E3:
-mov di, word [word_CC0DE]	; 615E3
+mov di, word [crowdlevel]	; 615E3
 dec edi	; 615EA
-mov word [word_CC0DE], di	; 615EB
+mov word [crowdlevel], di	; 615EB
 test di, di	; 615F2
 jge short loc_6161F	; 615F5
 xor edx, edx	; 615F7
-mov word [word_CC0DE], dx	; 615F9
+mov word [crowdlevel], dx	; 615F9
 mov eax, 10h	; 61600
 call randomd0	; 61605
 test ax, ax	; 6160A
 jne short loc_6161F	; 6160D
 mov eax, 20h	; 6160F
 call randomd0	; 61614
-mov word [word_CC0DE], ax	; 61619
+mov word [crowdlevel], ax	; 61619
 loc_6161F:
 xor ebx, ebx	; 6161F
 mov word [esp], bx	; 61621
@@ -1479,9 +1479,9 @@ mov ax, word [joysampling]	; 625E9
 mov word [joysampling_save], ax	; 625EF
 xor eax, eax	; 625F5
 mov dword [joysampling], eax	; 625F7
-cmp word [word_CC0DE], 190h	; 625FC
+cmp word [crowdlevel], 190h	; 625FC
 jle short loc_62610	; 62605
-mov word [word_CC0DE], 190h	; 62607
+mov word [crowdlevel], 190h	; 62607
 loc_62610:
 cmp dword [byte esp+04h], byte 0	; 62610
 je short loc_6261F	; 62615
@@ -2125,15 +2125,15 @@ mov word [dword_CBECA], 50h	; 62DEE
 loc_62DF7:
 cmp cx, byte 7	; 62DF7
 jl short loc_62E47	; 62DFB
-mov ax, word [word_CC0DE]	; 62DFD
+mov ax, word [crowdlevel]	; 62DFD
 cmp ax, 320h	; 62E03
 jg short loc_62E28	; 62E07
 mov edx, eax	; 62E09
 add edx, 190h	; 62E0B
-mov word [word_CC0DE], dx	; 62E11
+mov word [crowdlevel], dx	; 62E11
 cmp dx, 320h	; 62E18
 jle short loc_62E28	; 62E1D
-mov word [word_CC0DE], 320h	; 62E1F
+mov word [crowdlevel], 320h	; 62E1F
 loc_62E28:
 test byte [byte ebx+044h], 40h	; 62E28
 je short loc_62E3D	; 62E2C
@@ -3234,8 +3234,8 @@ push ebx	; 63C7D
 push ecx	; 63C7E
 push edx	; 63C7F
 mov eax, awtmstruct	; 63C80
-mov dx, word [word_DF64A]	; 63C85
-mov bx, word [word_DF74A]	; 63C8C
+mov dx, word [hmtmap]	; 63C85
+mov bx, word [awtmap]	; 63C8C
 sub dx, bx	; 63C93
 mov ebx, edx	; 63C96
 jne short loc_63CA5	; 63C98
@@ -3564,7 +3564,7 @@ mov ax, word [byte ebx+034h]	; 640BD
 mov word [byte ebx+Wallsin], ax	; 640C1
 mov word [byte ebx+Wallcos], ax	; 640C5
 mov edx, dword [puckc]	; 640C9
-add word [word_CC0DE], byte 64h	; 640CF
+add word [crowdlevel], byte 64h	; 640CF
 mov al, byte [dword_CC0FC]	; 640D7
 mov byte [edx], al	; 640DC
 mov esi, 1	; 640DE
@@ -3792,7 +3792,7 @@ mov eax, dword [dword_CC124]	; 64348
 mov dword [dword_CC0F8], eax	; 6434D
 test eax, eax	; 64352
 je short loc_64392	; 64354
-add word [word_CC0DE], byte 64h	; 64356
+add word [crowdlevel], byte 64h	; 64356
 cmp dword [dword_CC118], byte 0	; 6435E
 jne short loc_64392	; 64365
 mov eax, dword [puckc]	; 64367
@@ -3835,8 +3835,8 @@ mov eax, hmtmstruct	; 643D0
 loc_643D5:
 inc word [byte eax+020h]	; 643D5
 mov ebx, 1	; 643D9
-mov word [word_DF64A], bx	; 643DE
-mov word [word_DF74A], bx	; 643E5
+mov word [hmtmap], bx	; 643DE
+mov word [awtmap], bx	; 643E5
 mov eax, dword [dword_CC0FC]	; 643EC
 shl eax, 7	; 643F1
 mov eax, dword [dword eax+SortCords+44h]	; 643F4

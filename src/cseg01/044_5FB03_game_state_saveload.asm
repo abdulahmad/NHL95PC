@@ -4,7 +4,7 @@ bits 32
 section s_5FB03 progbits alloc exec nowrite align=1
 extern PBnum, StanleyCupTimer, __CHK, __STOSB, __STOSD, asc_CCDD8, asc_CCDEC, byte_C4D1C
 extern byte_C4D1D, sflags, gmode2, byte_CCE00, byte_DB3A8, byte_DB7EC, byte_DC264, byte_DC265
-extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, byte_E9A16, byte_E9AC0, byte_E9AC8
+extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, byte_E9A16, iflags, byte_E9AC8
 extern byte_E9AD3, OOlist, collflag, dword_C530D, dword_C5382, dword_C53FB, dword_C5403, dword_C5407
 extern dword_C540B, dword_C540F, dword_C5413, dword_C5704, dword_C5708, dword_C570C, dword_C5840, dword_C66D0
 extern dword_C66D4, dword_C90B0, dword_C90C0, cont2team, dword_C90CA, dword_CBC3E, dword_CBECA, dword_CC0AC
@@ -26,11 +26,11 @@ extern refsignal, word_C90D4, word_C90D6, word_C90D8, gsp, gameclock, clockticks
 extern exitgame, gameover, word_CBC52, word_CBC54, lcblink, word_CBC58, lcblinktime
 extern lcsel, word_CBC60, lcline, word_CBC64, lctimer, word_CBC68, lcboxon, word_CBC6C
 extern word_CBD64, word_CBD66, word_CBEC0, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC
-extern word_CBECE, word_CC0B0, lldispodd, word_CC0DA, word_CC0DE, word_CC10C, word_CCEF8, word_DEE94
+extern word_CBECE, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CC10C, word_CCEF8, word_DEE94
 extern word_DEE96, word_DEF84, word_DEF88, puckcross, word_E024E, lcrequest, word_E0306, lcreqchoice
 extern word_E0382, word_E0390, OOlistpos, word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, CwdExciteLvl
 extern word_E9AAA, periodendtime, word_E9AAE, word_E9AB0, word_E9AB2, word_E9AB4, PerTimeTotal, lj2
-extern lj1, word_E9AC2, word_E9AC4, word_E9B2C
+extern lj1, lasttouch, word_E9AC4, word_E9B2C
 global loc_5FB3F, loc_5FB41, loc_5FB6F, loc_5FB77, loc_5FBA5, loc_5FBD3, loc_5FBFB, loc_5FC36
 global loc_5FC9A, loc_5FEFF, loc_5FF05, loc_60245, loc_6024B, loc_603D0, loc_603F8, loc_60420
 global loc_60448, loc_60470, loc_60498, loc_604C0, loc_604E8, loc_604F0, loc_6051C, loc_60522
@@ -172,7 +172,7 @@ add eax, byte 2	; 5FCB8
 mov dx, word [lj2]	; 5FCBB
 mov word [eax], dx	; 5FCC2
 add eax, byte 2	; 5FCC5
-mov dx, word [word_E9AC2]	; 5FCC8
+mov dx, word [lasttouch]	; 5FCC8
 mov word [eax], dx	; 5FCCF
 add eax, byte 2	; 5FCD2
 mov dx, word [ltx]	; 5FCD5
@@ -292,7 +292,7 @@ add eax, byte 4	; 5FEBE
 mov dx, word [PBnum]	; 5FEC1
 mov word [eax], dx	; 5FEC8
 add eax, byte 2	; 5FECB
-mov dx, word [byte_E9AC0]	; 5FECE
+mov dx, word [iflags]	; 5FECE
 mov word [eax], dx	; 5FED5
 mov ecx, 80h	; 5FED8
 mov ebx, 0FFFFFFFFh	; 5FEDD
@@ -417,7 +417,7 @@ add eax, byte 2	; 600C4
 mov dx, word [word_E9A9C]	; 600C7
 mov word [eax], dx	; 600CE
 add eax, byte 2	; 600D1
-mov dx, word [word_CC0DE]	; 600D4
+mov dx, word [crowdlevel]	; 600D4
 mov word [eax], dx	; 600DB
 add eax, byte 2	; 600DE
 mov dx, word [word_E9AAA]	; 600E1
@@ -950,7 +950,7 @@ mov ax, word [ebx]	; 6083D
 mov word [lj2], ax	; 60840
 add ebx, byte 2	; 60846
 mov ax, word [ebx]	; 60849
-mov word [word_E9AC2], ax	; 6084C
+mov word [lasttouch], ax	; 6084C
 add ebx, byte 2	; 60852
 mov ax, word [ebx]	; 60855
 mov word [ltx], ax	; 60858
@@ -1070,7 +1070,7 @@ mov ax, word [ebx]	; 60A19
 mov word [PBnum], ax	; 60A1C
 add ebx, byte 2	; 60A22
 mov ax, word [ebx]	; 60A25
-mov word [byte_E9AC0], ax	; 60A28
+mov word [iflags], ax	; 60A28
 mov ecx, 80h	; 60A2E
 mov ebx, 0FFFFFFFFh	; 60A33
 mov edx, esp	; 60A38
@@ -1198,7 +1198,7 @@ mov ax, word [ebx]	; 60C08
 mov word [word_E9A9C], ax	; 60C0B
 add ebx, byte 2	; 60C11
 mov ax, word [ebx]	; 60C14
-mov word [word_CC0DE], ax	; 60C17
+mov word [crowdlevel], ax	; 60C17
 mov eax, dword [dword_CC0DC]	; 60C1D
 sar eax, 10h	; 60C22
 mov dword [dword_CCC88], eax	; 60C25

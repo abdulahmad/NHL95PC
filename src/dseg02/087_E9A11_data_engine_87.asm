@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_E9A11 nobits alloc noexec write align=1
 global Ylist_m2, PBnum, byte_E9A15, byte_E9A16, byte_E9A17, byte_E9ABB
-global byte_E9AC0, byte_E9AC1, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD
+global iflags, byte_E9AC1, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD
 global byte_E9ACE, byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, byte_E9AD4, byte_E9AD5
 global byte_E9AD6, byte_E9AD7, OOlist, byte_E9DB4, byte_E9E18, byte_E9E31, byte_E9E4A
 global byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC, byte_E9FAD, byte_E9FAE
@@ -16,7 +16,7 @@ global dword_E9FA5, dword_E9FA8, dword_E9FAA, dword_E9FD9, dword_E9FF0, ltx, unk
 global unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE, unk_E9EE0, Ylist
 global OOlistpos, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4, word_E9AA6, CwdExciteLvl, word_E9AAA
 global periodendtime, word_E9AAE, word_E9AB0, word_E9AB2, word_E9AB4, PerTimeTotal, lj2, lj1
-global word_E9AC2, word_E9AC4, word_E9AF8, word_E9AFA, word_E9B28, word_E9B2C, word_E9F12, word_E9F14
+global lasttouch, word_E9AC4, word_E9AF8, word_E9AFA, word_E9B28, word_E9B2C, word_E9F12, word_E9F14
 global word_E9F18, word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A, word_E9FA7, word_E9FA9
 global word_E9FB0, word_E9FB2, word_E9FB4
 dword_E9A11:
@@ -77,11 +77,11 @@ lj2:
 resb 2
 lj1:
 resb 2
-byte_E9AC0:
+iflags:
 resb 1
 byte_E9AC1:
 resb 1
-word_E9AC2:
+lasttouch:
 resb 2
 word_E9AC4:
 resb 2

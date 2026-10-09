@@ -19,7 +19,7 @@ extern sub_7FA10, sub_7FC12, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0,
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
 extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B396E, sub_B3989, sub_B3999, sub_B4BA8, sub_B4BC4
 extern sub_B4CD8, sub_B4FAC, sub_B500C, sub_B5DB0, unk_C33F8, unk_C3403, unk_DF014, unk_DF314
-extern camx, camy, word_CC0DE, word_CD4FC, word_CD500, scrolly, word_E9F18, word_E9F3A
+extern camx, camy, crowdlevel, word_CD4FC, word_CD500, scrolly, word_E9F18, word_E9F3A
 extern word_ED758
 global jpt_7F09F, loc_7DCC0, loc_7DCC2, loc_7DCFC, loc_7DCFE, loc_7DD15, loc_7DD1E, loc_7DD26
 global loc_7DD4A, loc_7DD6A, loc_7DD6B, loc_7DD74, loc_7DD78, loc_7DD87, loc_7DD88, loc_7DD90
@@ -575,7 +575,7 @@ mov dword [byte esp+020h], eax	; 7E280
 mov di, word [dword_D8C7C]	; 7E284
 mov ax, word [dword_D8C74]	; 7E28B
 mov word [byte esp+018h], ax	; 7E291
-mov si, word [word_CC0DE]	; 7E296
+mov si, word [crowdlevel]	; 7E296
 xor ecx, ecx	; 7E29D
 mov dword [dword_ED70C], ecx	; 7E29F
 mov word [word_CD4FC], 0FFFFh	; 7E2A5
@@ -939,7 +939,7 @@ mov dword [dword_D8C7C], eax	; 7E85D
 mov eax, dword [byte esp+016h]	; 7E862
 sar eax, 10h	; 7E866
 mov dword [dword_D8C74], eax	; 7E869
-mov word [word_CC0DE], si	; 7E86E
+mov word [crowdlevel], si	; 7E86E
 movsx eax, si	; 7E875
 mov dword [dword_CCC88], eax	; 7E878
 mov eax, 1	; 7E87D

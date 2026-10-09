@@ -18,7 +18,7 @@ extern unk_CDCD0, unk_CEE4F, unk_CEEAF, unk_DABF0, unk_DAC40, unk_DACA0, unk_DBC
 extern unk_DBF18, unk_DBFD4, unk_DC200, unk_DC240, unknown_libname_1, word_C5428, word_C571C, word_C571E
 extern word_C5720, word_C5722, word_C575C, word_C575E, word_C5760, word_C5762, word_C90CC, word_DB08A
 extern word_DB08C, word_DB08E, word_DB090, word_DB092, word_DB094, word_DB096, word_DC242, word_DC244
-extern word_DF64A, word_DF64C, word_DF74A, word_DF74C
+extern hmtmap, word_DF64C, awtmap, word_DF74C
 global loc_1BC16, loc_1BC34, loc_1BC52, loc_1BC8A, loc_1BCB3, loc_1BCF3, loc_1BD11, loc_1BD2F
 global loc_1BD67, loc_1BD90, loc_1BE08, loc_1BE77, loc_1BE83, loc_1BEA5, loc_1BEA9, loc_1BECB
 global loc_1BEEE, loc_1BF73, loc_1BF95, loc_1BFBD, loc_1BFE5, loc_1C02F, loc_1C031, loc_1C07A
@@ -1174,7 +1174,7 @@ jge short loc_1C9DB	; 1C9D4
 mov eax, dword [byte esi+050h]	; 1C9D6
 jmp short loc_1C9EA	; 1C9D9
 loc_1C9DB:
-mov eax, dword [word_DF64A]	; 1C9DB
+mov eax, dword [hmtmap]	; 1C9DB
 sar eax, 10h	; 1C9E0
 shl eax, 5	; 1C9E3
 mov eax, dword [byte esi+eax+010h]	; 1C9E6
@@ -1306,7 +1306,7 @@ jge short loc_1CB65	; 1CB5E
 mov eax, dword [byte esi+050h]	; 1CB60
 jmp short loc_1CB74	; 1CB63
 loc_1CB65:
-mov eax, dword [word_DF74A]	; 1CB65
+mov eax, dword [awtmap]	; 1CB65
 sar eax, 10h	; 1CB6A
 shl eax, 5	; 1CB6D
 mov eax, dword [byte esi+eax+010h]	; 1CB70

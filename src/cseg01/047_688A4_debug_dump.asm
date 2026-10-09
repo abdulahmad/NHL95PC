@@ -18,7 +18,7 @@ extern camx_m2, off_CD6E4, off_CD8C4, off_CD984, puckvz, sprintf_, joyq_flush, s
 extern sub_935E0, sub_93E38, sub_B39ED, sub_B3A18, threat, unk_C234B, unk_C234D, unk_C2478
 extern unk_C247A, unk_C247C, unk_C2485, unk_C24A0, SortCords, camx, xc1, c1playernum
 extern c2playernum, cont1team, word_C90CC, word_C90D0, refsignal, gsp, gameclock, word_CBC42
-extern word_CBC44, exitgame, word_DF64A, word_DF74A
+extern word_CBC44, exitgame, hmtmap, awtmap
 global loc_688E0, loc_688E5, loc_68B33, loc_68C39, loc_68C3E, loc_68CC1, loc_68D06, loc_68D21
 global loc_68D3A, loc_68D4D, loc_68D53, loc_68D6C, loc_68D7A, loc_68D98, loc_68DCC, loc_68DEB
 global loc_68DEC, loc_68DF6, loc_68E07, loc_68E0C, loc_68E27, loc_68E34, loc_68E46, loc_68E5B
@@ -141,10 +141,10 @@ push eax	; 68A06
 call sprintf_	; 68A07
 add esp, byte 10h	; 68A0C
 add esi, eax	; 68A0F
-mov eax, dword [word_DF74A]	; 68A11
+mov eax, dword [awtmap]	; 68A11
 sar eax, 10h	; 68A16
 push eax	; 68A19
-mov eax, dword [word_DF64A]	; 68A1A
+mov eax, dword [hmtmap]	; 68A1A
 sar eax, 10h	; 68A1F
 push eax	; 68A22
 push asc_C23D1	; 68A23

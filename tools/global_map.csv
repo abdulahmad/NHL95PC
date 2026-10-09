@@ -116,3 +116,9 @@ hmtmlines,DF6EE,"home team line table pointer (hmtmstruct+DAh); clearteams sets 
 awtmlines,DF7EE,visitor line table pointer (awtmstruct+DAh)
 hmtmptrF2,DF706,"home team struct +F2h data pointer (clearteams sets unk_DBC30, game_state_saveload too); role not identified"
 awtmptrF2,DF806,visitor team struct +F2h data pointer (clearteams sets unk_DBF18); role not identified
+iflags,E9AC0,"93G iflags (icing): puckIChk tests bit 2 ifok, bit 0 ifcgl, bit 1 ifdir; player logic sets them when the puck crosses the red line. Also the -5r alias of lasttouch (dword [lasttouch-2])"
+lasttouch,E9AC2,"SCnum of the player who last touched the puck (written by the player logic puck code); Goal / PenTeamScored compare it with 6 for the team, ChkDelayedOffside penalizes SortCords[lasttouch]"
+crowdlevel,CC0DE,"93G crowdlevel: ChkShotStat +100 (64h), setInjuryType +12Ch, capped at 3E8h; the sound interface decays it"
+puckcross_m2,DF812,"puckcross-2: the -5r load dword [edx*2+puckcross_m2] / sar 10h reads puckcross[edx]; nosplit use, so not folded"
+hmtmap,DF64A,"home tmap (hmtmstruct+36h), players in the penalty box count (6 = none in restoreteams)"
+awtmap,DF74A,visitor tmap (awtmstruct+36h)

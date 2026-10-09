@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_69336 progbits alloc exec nowrite align=1
 extern DoGameFrame, ResetBench, __CHK, assreplace, byte_C5400, sflags, gmode2, musicon
-extern byte_E9AC0, byte_E9AC1, joysampling, dword_C4E10, dword_C4E14, dword_C5130, gameopts, dword_C5704
+extern iflags, byte_E9AC1, joysampling, dword_C4E10, dword_C4E14, dword_C5130, gameopts, dword_C5704
 extern dword_C5708, dword_C570C, dword_C7444, dword_C7448, dword_C90B0, dword_C90C0, cont2team, dword_C90CA
 extern dword_CBECA, dword_CC0DC, dword_CCC88, dword_CCC98, dword_CD9A0, dword_D8C40, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC28C, dword_DD6A8, dword_DD6AE, dword_DD6B0
@@ -19,9 +19,9 @@ extern SortCords, unk_E001C, vtoa, camx, camy, passplayer, xc1, yc1
 extern c1playernum, c2playernum, cont1team, word_C90CC, word_C90CE, refsignal, word_C90D4, word_C90D6
 extern word_C90D8, gsp, gameclock, clockticks, word_CBC44, exitgame, gameover, word_CBC52
 extern word_CBC54, lcblink, word_CBC58, lcline, word_CBC64, lcboxon, word_CBC6C, word_CBEC0
-extern word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0DE, scrolly, hmscore
-extern hmtmline, word_DF644, word_DF64A, word_DF64C, awscore, awtmline, word_DF744, word_DF746
-extern word_DF74A, word_DF74C, word_DF816, word_DF81A, word_DFF1E, word_DFF28
+extern word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, scrolly, hmscore
+extern hmtmline, word_DF644, hmtmap, word_DF64C, awscore, awtmline, word_DF744, word_DF746
+extern awtmap, word_DF74C, word_DF816, word_DF81A, word_DFF1E, word_DFF28
 extern word_DFF2A, word_DFF44, word_DFF70, word_E001E, word_E0022, word_E0028, word_E002A
 extern word_E0052, regd1, joysampling_save, CwdExciteLvl
 global StartHL2, loc_69406, loc_69416, loc_694B6, loc_695EB, loc_695F3, loc_69641, loc_69648
@@ -69,10 +69,10 @@ add eax, byte 2	; 693C0
 mov dx, word [gsp]	; 693C3
 mov word [eax], dx	; 693CA
 add eax, byte 2	; 693CD
-mov dx, word [word_DF64A]	; 693D0
+mov dx, word [hmtmap]	; 693D0
 mov word [eax], dx	; 693D7
 add eax, byte 2	; 693DA
-mov dx, word [word_DF74A]	; 693DD
+mov dx, word [awtmap]	; 693DD
 mov word [eax], dx	; 693E4
 add eax, byte 2	; 693E7
 mov dx, word [hmscore]	; 693EA
@@ -241,7 +241,7 @@ mov word [gmode2], 4	; 6967A
 xor ch, ch	; 69683
 mov byte [byte_E9AC1], ch	; 69685
 xor al, al	; 6968B
-mov byte [byte_E9AC0], al	; 6968D
+mov byte [iflags], al	; 6968D
 mov esi, 0FFFFFFFFh	; 69692
 mov word [passplayer], si	; 69697
 xor edi, edi	; 6969E
@@ -263,7 +263,7 @@ xor ecx, esi	; 696EE
 mov word [dword_CBECA], cx	; 696F0
 xor esi, esi	; 696F7
 mov word [word_CBEC6], si	; 696F9
-mov word [word_CC0DE], si	; 69700
+mov word [crowdlevel], si	; 69700
 xor esi, esi	; 69707
 mov dword [dword_CCC88], esi	; 69709
 mov word [word_DF81A], ax	; 6970F
@@ -604,7 +604,7 @@ mov word [word_CBEC4], si	; 69C72
 mov eax, 0C8h	; 69C79
 call randomd0	; 69C7E
 add eax, 64h	; 69C83
-mov word [word_CC0DE], ax	; 69C88
+mov word [crowdlevel], ax	; 69C88
 mov eax, dword [dword_CC0DC]	; 69C8E
 sar eax, 10h	; 69C93
 mov dword [dword_CCC88], eax	; 69C96
@@ -657,7 +657,7 @@ mov eax, 1	; 69D48
 call sub_11598	; 69D4D
 call sub_597E3	; 69D52
 xor ebx, ebx	; 69D57
-mov word [word_CC0DE], bx	; 69D59
+mov word [crowdlevel], bx	; 69D59
 xor edi, edi	; 69D60
 mov dword [dword_CCC88], edi	; 69D62
 cmp byte [musicon], 0	; 69D68
@@ -712,10 +712,10 @@ mov dx, word [eax]	; 69E2F
 mov word [gsp], dx	; 69E32
 add eax, byte 2	; 69E39
 mov dx, word [eax]	; 69E3C
-mov word [word_DF64A], dx	; 69E3F
+mov word [hmtmap], dx	; 69E3F
 add eax, byte 2	; 69E46
 mov dx, word [eax]	; 69E49
-mov word [word_DF74A], dx	; 69E4C
+mov word [awtmap], dx	; 69E4C
 mov edx, dword [hmscore-2]	; 69E53
 sar edx, 10h	; 69E59
 mov ebx, dword [esp]	; 69E5C
