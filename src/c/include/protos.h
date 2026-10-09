@@ -741,5 +741,8 @@ void LoadScoreboardGfx(void);  /* 1CC3D */
 void ShowGoalieBanner(short side);  /* 671E8 */
 int CopyFile(char *name, char *srcext, char *dstext, char *srcdir, char *dstdir);  /* 1466B */
 int WriteLeagueInfo(char *dir, void *teams, char *pw, int b, short a, short d, short c, char *name);  /* 413CD */
+int SeriesWinner(unsigned char *s, unsigned games);  /* 87760 */
+void SimulateGame(char *dir, char *ext, int a, unsigned char *game, int rwfh, int rdfh, int mode);  /* 452C5 */
+void POSimSeriesTo(unsigned char *lg, int n, int upto);  /* 88625 */
 
 #endif

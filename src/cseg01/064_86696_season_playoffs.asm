@@ -2747,6 +2747,10 @@ call jctime	; 88615
 add esp, byte 4	; 8861A
 add esp, byte 70h	; 8861D
 jmp near POCreateSchedule_x	; 88620
+; C: src/c/064_86696_season_playoffs/POSimSeriesTo.c
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POSimSeriesTo.inc"
+%else
 POSimSeriesTo:
 push dword 4Ch	; 88625
 call __CHK	; 8862A
@@ -2841,6 +2845,7 @@ pop edi	; 88738
 pop esi	; 88739
 pop ecx	; 8873A
 ret	; 8873B
+%endif ; C
 POAfterGame:
 push dword 90h	; 8873C
 call __CHK	; 88741

@@ -492,7 +492,6 @@ extern void FinishPlayoffs_r3(); /* 44952 */
 extern void FinishPlayoffs_r4(); /* 4499D */
 extern void AdvancePlayoffs(); /* 44A41 */
 extern void CreateNewLeague(); /* 44DCF */
-extern void SimulateGame(); /* 452C5 */
 extern void PreGameIntro(); /* 47CD6 */
 extern void PreGameIntro_scroll(); /* 480CC */
 extern void PreGameIntro_frameloop(); /* 480D8 */
@@ -1141,7 +1140,6 @@ extern void POPickConfTeams(); /* 870B6 */
 extern void POCreateSchedule(); /* 8721F */
 extern void POCreateSchedule_x(); /* 8751A */
 extern void POInitSchedule(); /* 875A3 */
-extern void SeriesWinner(); /* 87760 */
 extern void POSeedRound2(); /* 87863 */
 extern void POSeedRound2_x30(); /* 87B29 */
 extern void POSeedRound2_x(); /* 87B2C */
@@ -1150,7 +1148,6 @@ extern void POSeedConfFinals_pair(); /* 87C7C */
 extern void POSeedConfFinals_x(); /* 87C90 */
 extern void POSeedFinal(); /* 87C9E */
 extern void POHandleElimination(); /* 88096 */
-extern void POSimSeriesTo(); /* 88625 */
 extern void POAfterGame(); /* 8873C */
 extern void LoadScheduleDB_x(); /* 8921B */
 extern void PlayoffModeLoop(); /* 89268 */
