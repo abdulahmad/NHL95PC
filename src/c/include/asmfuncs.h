@@ -66,7 +66,6 @@ extern void UpdateHudPanel(); /* 14CF1 */
 extern void UpdateHudPanel_x(); /* 14F2A */
 extern void DrawPanelClock(); /* 14F31 */
 extern void DrawHudPanel(); /* 150C6 */
-extern void TickPanelClock(); /* 15374 */
 extern void DrawPanelClockDigits(); /* 1540A */
 extern void TickPanelPenalties(); /* 15655 */
 extern void DrawEnergyBar(); /* 15707 */
@@ -371,7 +370,6 @@ extern void TeamStatsScreen_colDefense(); /* 242C7 */
 extern void TeamStatsScreen_colPK(); /* 24317 */
 extern void TeamStatsScreen_colPP(); /* 2437E */
 extern void TeamStatsScreen_colPen(); /* 243A2 */
-extern void PlayerFromMouseY(); /* 24453 */
 extern void TeamRosterScreen(); /* 244E2 */
 extern void CmpGoals(); /* 25144 */
 extern void CmpAssists(); /* 25237 */
@@ -409,7 +407,6 @@ extern void LoadPlayoffModeTree(); /* 2970A */
 extern void TreeSeriesWinner(); /* 2991C */
 extern void OpenStatsSchedule(); /* 29A97 */
 extern void LoadLeagueTree(); /* 29B07 */
-extern void FitPlayerName(); /* 29C75 */
 extern void DrawBevelBox(); /* 29D00 */
 extern void PreGameScreen_jt(); /* 29F18 */
 extern void PreGameScreen(); /* 29F28 */
@@ -563,8 +560,6 @@ extern void ImportPlayerTeam(); /* 3C6E2 */
 extern void ImportDbs(); /* 3CF5B */
 extern void ExportDbs(); /* 3D108 */
 extern void SelectFloppyDrive(); /* 3D46D */
-extern void FindLeagueFloppy(); /* 3D694 */
-extern void WaitLeagueFloppy(); /* 3D84F */
 extern void ReadLeagueInfo(); /* 3D8DD */
 extern void ReadTeamNames(); /* 3DAB9 */
 extern void LoadNhlCfg(); /* 3DB41 */
@@ -760,11 +755,9 @@ extern void FallDown(); /* 562DB */
 extern void Bcheck(); /* 56A54 */
 extern void holdcheck(); /* 56B79 */
 extern void puckbody(); /* 56D06 */
-extern void puckshadow(); /* 56ECF */
 extern void puckglue(); /* 56F5A */
 extern void puckgoalie(); /* 57096 */
 extern void puckstick(); /* 57483 */
-extern void SetShotMode(); /* 5786E */
 extern void ShotMode(); /* 578FA */
 extern void deflect(); /* 57A3E */
 extern void checkgoalp_CalcGoalShotDir(); /* 57A98 */
@@ -1152,7 +1145,6 @@ extern void DrawCreatePlayer(); /* 7025B */
 extern void CreatePlayerLoop(); /* 704A6 */
 extern void CreateFreeAgent(); /* 706E2 */
 extern void MoveToFreeAgents(); /* 70E8D */
-extern void RemovePlayerFromTeam(); /* 71043 */
 extern void LoadTempDatabases(); /* 710D8 */
 extern void DeleteTempDatabases(); /* 7125C */
 extern void SwapSelectedPlayers(); /* 71333 */

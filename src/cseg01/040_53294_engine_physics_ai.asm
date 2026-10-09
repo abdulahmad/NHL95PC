@@ -4926,6 +4926,10 @@ or byte [iflags], 1	; 56EC6
 .x:
 pop ebx	; 56ECD
 ret	; 56ECE
+; C: src/c/040_53294_engine_physics_ai/puckshadow.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/puckshadow.inc"
+%else
 puckshadow:
 push dword 8	; 56ECF
 call __CHK	; 56ED4
@@ -4967,6 +4971,7 @@ dec word [byte eax+0Ah]	; 56F54
 .x:
 pop edx	; 56F58
 ret	; 56F59
+%endif ; C
 puckglue:
 push dword 14h	; 56F5A
 call __CHK	; 56F5F

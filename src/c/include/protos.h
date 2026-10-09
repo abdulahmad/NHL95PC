@@ -362,5 +362,13 @@ void puckIChk(void);  /* 56E52 */
 int DiskSpaceShort(int drive, int *kb);  /* 14825 */      
 void DrawTradeRow(int side);  /* 3E7B3 */                 
 int __cdecl sub_93170(int x, int y, char *fmt, ...);  /* graphics library: printf at x / y */
+void puckshadow(Player *p);  /* 56ECF */                  
+void SetShotMode(Player *p);  /* 5786E */                 
+void FitPlayerName(char *dst, char *first, char *last, int maxw);  /* 29C75 */
+int WaitLeagueFloppy(char *file, char *name, char *dir);  /* 3D84F */
+int FindLeagueFloppy(char *file, char *name, char *dir);
+int PlayerFromMouseY(int x, int y, int *idx);  /* 24453 */
+void RemovePlayerFromTeam(unsigned char team, int key);  /* 71043 */
+int TickPanelClock(int hund);  /* 15374 */                
 
 #endif

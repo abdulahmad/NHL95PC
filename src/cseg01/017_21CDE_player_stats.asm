@@ -3062,6 +3062,10 @@ pop edx	; 2444F
 pop ecx	; 24450
 pop ebx	; 24451
 ret	; 24452
+; C: src/c/017_21CDE_player_stats/PlayerFromMouseY.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/PlayerFromMouseY.inc"
+%else
 PlayerFromMouseY:
 push dword 8	; 24453
 call __CHK	; 24458
@@ -3113,6 +3117,7 @@ jmp short PlayerFromMouseY.1	; 244DC
 xor eax, eax	; 244DE
 pop ecx	; 244E0
 ret	; 244E1
+%endif ; C
 TeamRosterScreen:
 push dword 43Ch	; 244E2
 call __CHK	; 244E7

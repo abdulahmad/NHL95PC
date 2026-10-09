@@ -5026,6 +5026,10 @@ pop edi	; 7103F
 pop esi	; 71040
 pop ecx	; 71041
 ret	; 71042
+; C: src/c/052_6D2F8_create_player/RemovePlayerFromTeam.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/RemovePlayerFromTeam.inc"
+%else
 RemovePlayerFromTeam:
 push dword 14h	; 71043
 call __CHK	; 71048
@@ -5092,6 +5096,7 @@ pop esi	; 710D4
 pop ecx	; 710D5
 pop ebx	; 710D6
 ret	; 710D7
+%endif ; C
 LoadTempDatabases:
 push dword 18h	; 710D8
 call __CHK	; 710DD

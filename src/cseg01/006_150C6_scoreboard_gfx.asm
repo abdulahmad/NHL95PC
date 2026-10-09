@@ -223,6 +223,10 @@ pop ebp	; 15370
 pop edi	; 15371
 pop esi	; 15372
 ret	; 15373
+; C: src/c/006_150C6_scoreboard_gfx/TickPanelClock.c
+%ifdef CBUILD
+%include "c/006_150C6_scoreboard_gfx/TickPanelClock.inc"
+%else
 TickPanelClock:
 push dword 14h	; 15374
 call __CHK	; 15379
@@ -270,6 +274,7 @@ pop edx	; 15406
 pop ecx	; 15407
 pop ebx	; 15408
 ret	; 15409
+%endif ; C
 DrawPanelClockDigits:
 push dword 28h	; 1540A
 call __CHK	; 1540F

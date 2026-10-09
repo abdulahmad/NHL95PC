@@ -502,6 +502,10 @@ pop esi	; 29C71
 pop ecx	; 29C72
 pop ebx	; 29C73
 ret	; 29C74
+; C: src/c/019_2970A_league_schedule/FitPlayerName.c
+%ifdef CBUILD
+%include "c/019_2970A_league_schedule/FitPlayerName.inc"
+%else
 FitPlayerName:
 push dword 18h	; 29C75
 call __CHK	; 29C7A
@@ -556,6 +560,7 @@ pop ebp	; 29CFC
 pop edi	; 29CFD
 pop esi	; 29CFE
 ret	; 29CFF
+%endif ; C
 DrawBevelBox:
 push dword 38h	; 29D00
 call __CHK	; 29D05
