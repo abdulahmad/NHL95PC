@@ -25,6 +25,10 @@ global SetScreenTitle_central
 global SetScreenTitle_calendar, SetScreenTitle_tree, SetScreenTitle_booth, SetScreenTitle_desk, SetScreenTitle_rink
 global LoadScoreboardGfx, DrawSprite, NullBlit, NullFunc_1D024, SetupStatsSourceMenu, BuildSavedGameLabels
 global StrLenToDot, SetScreenTitle, StrPrefixDiffers
+; C: src/c/014_1CC3D_frontend_labels/LoadScoreboardGfx.c
+%ifdef CBUILD
+%include "c/014_1CC3D_frontend_labels/LoadScoreboardGfx.inc"
+%else
 LoadScoreboardGfx:
 push dword 38h	; 1CC3D
 call __CHK	; 1CC42
@@ -107,6 +111,7 @@ pop edx	; 1CD4F
 pop ecx	; 1CD50
 pop ebx	; 1CD51
 ret	; 1CD52
+%endif ; C
 DrawSprite_jt:
 dd DrawSprite_b0
 dd DrawSprite_b1

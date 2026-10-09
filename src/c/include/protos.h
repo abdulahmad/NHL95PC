@@ -735,5 +735,9 @@ int SayPlayerNumber(char *team, int phrase, int number);  /* 85213 */
 void LoadCrestsPalette(void);  /* 33F02 */
 int __cdecl sub_B3CC8(char *path);  /* file library: check a file */
 int ReadGameSettings(unsigned char *set, char *dir, int direct);  /* 2D260 */
+void DrawPanelScore(short side, short score);  /* 14A20 */
+void __cdecl sub_90B80(int bank, char *names, int *out);  /* graphics library: look up shapes by name list */
+void LoadScoreboardGfx(void);  /* 1CC3D */
+void ShowGoalieBanner(short side);  /* 671E8 */
 
 #endif

@@ -41,7 +41,6 @@ extern void ReadTeamRec(); /* 147C9 */
 extern void ReadTeamRec_x(); /* 147F6 */
 extern void ReadGSummaryRec(); /* 147FF */
 extern void CheckGameDiskSpace(); /* 148A5 */
-extern void DrawPanelScore(); /* 14A20 */
 extern void DrawPanelLine_x(); /* 14BE9 */
 extern void UpdateHudPanel(); /* 14CF1 */
 extern void UpdateHudPanel_x(); /* 14F2A */
@@ -678,7 +677,6 @@ extern void LoadTeamPPV(); /* 66497 */
 extern void DrawTextOverlay(); /* 665AD */
 extern void UpdateTextOverlay(); /* 66E06 */
 extern void DrawCallBanner(); /* 66FE2 */
-extern void ShowGoalieBanner(); /* 671E8 */
 extern void updatereplay(); /* 675D6 */
 extern void ReplayStep(); /* 67900 */
 extern void ReplayStep_popx(); /* 67DC6 */
@@ -1767,7 +1765,6 @@ extern void loc_90ABD(); /* 90ABD */
 extern void sub_90B50(); /* 90B50 */
 extern void loc_90B64(); /* 90B64 */
 extern void loc_90B7B(); /* 90B7B */
-extern void sub_90B80(); /* 90B80 */
 extern void loc_90B94(); /* 90B94 */
 extern void loc_90BAB(); /* 90BAB */
 extern void sub_90BE9(); /* 90BE9 */
