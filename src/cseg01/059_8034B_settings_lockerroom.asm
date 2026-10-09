@@ -22,7 +22,7 @@ extern dword_D8B68, dword_D8B74, dword_DC230, dword_DC238, dword_DD64C, dword_EA
 extern dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C
 extern dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794, dword_ED798, dword_ED79C
 extern dword_ED7A0, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
-extern sprintf_, strcpy_, strncpy_, MakePath, sub_174C2, sub_175E2, sub_17636, sub_479E9
+extern sprintf_, strcpy_, strncpy_, MakePath, SetTextColors, PrintShadowText, PrintOutlinedText, sub_479E9
 extern FadeOutPalCycle, sub_6B391, sub_6B3D7, sub_76429, sub_8291E, WriteCurModeState, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_912C8, sub_91400
@@ -922,7 +922,7 @@ call jctime	; 80E37
 add esp, byte 4	; 80E3C
 mov edx, 62h	; 80E3F
 mov eax, 77h	; 80E44
-call sub_174C2	; 80E49
+call SetTextColors	; 80E49
 mov dword [dword esp+0350h], 2	; 80E4E
 loc_80E59:
 push byte 70h	; 80E59
@@ -1014,7 +1014,7 @@ sub ebp, eax	; 80F95
 lea eax, [byte ebp+02h]	; 80F97
 mov ebx, esi	; 80F9A
 mov edx, edi	; 80F9C
-call sub_175E2	; 80F9E
+call PrintShadowText	; 80F9E
 cmp dword [gamemode], byte 0	; 80FA3
 jne short loc_80FEF	; 80FAA
 mov eax, dword [cont2team]	; 80FAC
@@ -1073,7 +1073,7 @@ sub ebp, eax	; 8106B
 lea eax, [byte ebp+02h]	; 8106D
 mov ebx, esi	; 81070
 mov edx, edi	; 81072
-call sub_175E2	; 81074
+call PrintShadowText	; 81074
 cmp dword [gamemode], byte 0	; 81079
 jne short loc_810C9	; 81080
 mov eax, dword [HomeTeam]	; 81082
@@ -1133,7 +1133,7 @@ sub ebp, eax	; 8114D
 lea eax, [byte ebp+02h]	; 8114F
 mov ebx, esi	; 81152
 mov edx, edi	; 81154
-call sub_175E2	; 81156
+call PrintShadowText	; 81156
 cmp dword [gamemode], byte 0	; 8115B
 jne short loc_811A7	; 81162
 mov eax, dword [HomeTeam]	; 81164
@@ -1193,7 +1193,7 @@ sub ebp, eax	; 81227
 lea eax, [byte ebp+02h]	; 81229
 mov ebx, esi	; 8122C
 mov edx, edi	; 8122E
-call sub_175E2	; 81230
+call PrintShadowText	; 81230
 mov eax, dword [cont2team]	; 81235
 sar eax, 10h	; 8123A
 mov edx, dword [nosplit eax*4+teamcitynames]	; 8123D
@@ -1208,29 +1208,29 @@ sar eax, 10h	; 81260
 mov ebx, dword [nosplit eax*4+teamcitynames]	; 81263
 mov edx, 2Ch	; 8126A
 mov eax, dword [dword esp+0350h]	; 8126F
-call sub_17636	; 81276
+call PrintOutlinedText	; 81276
 mov ebx, unk_C35E9	; 8127B
 mov edx, 2Ch	; 81280
 mov eax, 13Ah	; 81285
-call sub_17636	; 8128A
+call PrintOutlinedText	; 8128A
 mov ebx, dword [HomeTeam]	; 8128F
 sar ebx, 10h	; 81295
 mov ebx, dword [nosplit ebx*4+teamcitynames]	; 81298
 mov edx, 2Ch	; 8129F
 mov eax, 154h	; 812A4
-call sub_17636	; 812A9
+call PrintOutlinedText	; 812A9
 mov edx, dword [dword_D22E0]	; 812AE
 add edx, byte 3	; 812B4
 mov eax, dword [dword_D22DC]	; 812B7
 add eax, byte 12h	; 812BC
 mov ebx, asc_C35EC	; 812BF
-call sub_175E2	; 812C4
+call PrintShadowText	; 812C4
 mov edx, dword [dword_D22F0]	; 812C9
 add edx, byte 3	; 812CF
 mov eax, dword [dword_D22EC]	; 812D2
 add eax, byte 12h	; 812D7
 mov ebx, asc_C35F3	; 812DA
-call sub_175E2	; 812DF
+call PrintShadowText	; 812DF
 mov esi, dword [dword_D22A8]	; 812E4
 add esi, byte 5	; 812EA
 mov edi, dword [dword_D229C]	; 812ED
@@ -1244,7 +1244,7 @@ sub edi, eax	; 8130A
 lea eax, [byte edi+02h]	; 8130C
 mov ebx, asc_C35FA	; 8130F
 mov edx, esi	; 81314
-call sub_175E2	; 81316
+call PrintShadowText	; 81316
 mov esi, dword [dword_D22C8]	; 8131B
 add esi, byte 5	; 81321
 mov edi, dword [dword_D22BC]	; 81324
@@ -1258,7 +1258,7 @@ sub edi, eax	; 81341
 lea eax, [byte edi+02h]	; 81343
 mov ebx, asc_C3604	; 81346
 mov edx, esi	; 8134B
-call sub_175E2	; 8134D
+call PrintShadowText	; 8134D
 mov esi, dword [dword_D8B68]	; 81352
 push esi	; 81358
 call sub_8EA18	; 81359
@@ -1299,7 +1299,7 @@ sar eax, 1	; 813D8
 mov ebx, asc_C3612	; 813DA
 loc_813DF:
 mov edx, 12h	; 813DF
-call sub_17636	; 813E4
+call PrintOutlinedText	; 813E4
 mov eax, dword [dword_D8B74]	; 813E9
 push eax	; 813EE
 call sub_8EA18	; 813EF
@@ -1548,7 +1548,7 @@ call sub_8E9C0	; 81734
 add esp, byte 8	; 81739
 mov edx, 62h	; 8173C
 mov eax, 77h	; 81741
-call sub_174C2	; 81746
+call SetTextColors	; 81746
 cmp dword [gamemode], byte 1	; 8174B
 jne short loc_817BA	; 81752
 push byte 11h	; 81754
@@ -1575,7 +1575,7 @@ LD sub, eax, edx	; 8179C
 sar eax, 1	; 8179E
 mov ebx, esi	; 817A0
 mov edx, 12h	; 817A2
-call sub_17636	; 817A7
+call PrintOutlinedText	; 817A7
 mov eax, dword [dword_D8B74]	; 817AC
 push eax	; 817B1
 call sub_8EA18	; 817B2
@@ -1641,7 +1641,7 @@ sub edx, eax	; 81862
 lea eax, [byte edx+02h]	; 81864
 mov ebx, esi	; 81867
 mov edx, dword [byte ebp-010h]	; 81869
-call sub_175E2	; 8186C
+call PrintShadowText	; 8186C
 mov edx, dword [byte ebp+010h]	; 81871
 inc edx	; 81874
 mov ebx, 1Ch	; 81875
@@ -1676,13 +1676,13 @@ sub edx, eax	; 818C8
 lea eax, [byte edx+02h]	; 818CA
 mov ebx, esi	; 818CD
 mov edx, dword [byte ebp-010h]	; 818CF
-call sub_175E2	; 818D2
+call PrintShadowText	; 818D2
 mov eax, dword [byte ebp+010h]	; 818D7
 mov eax, dword [nosplit eax*4+dword_D2150]	; 818DA
 mov ebx, dword [nosplit eax*4+teamcitynames]	; 818E1
 mov edx, 2Ch	; 818E8
 mov eax, 154h	; 818ED
-call sub_17636	; 818F2
+call PrintOutlinedText	; 818F2
 lea edx, [byte edi+01Bh]	; 818F7
 mov ebx, 1Ch	; 818FA
 mov eax, edx	; 818FF
@@ -1717,7 +1717,7 @@ sub edx, eax	; 81950
 lea eax, [byte edx+02h]	; 81952
 mov ebx, esi	; 81955
 mov edx, dword [byte ebp-010h]	; 81957
-call sub_175E2	; 8195A
+call PrintShadowText	; 8195A
 lea edx, [byte edi+01h]	; 8195F
 mov ebx, 1Ch	; 81962
 mov eax, edx	; 81967
@@ -1753,7 +1753,7 @@ sub edx, eax	; 819BD
 lea eax, [byte edx+02h]	; 819BF
 mov ebx, esi	; 819C2
 mov edx, dword [byte ebp-010h]	; 819C4
-call sub_175E2	; 819C7
+call PrintShadowText	; 819C7
 mov eax, dword [nosplit edi*4+dword_D2150]	; 819CC
 mov esi, dword [nosplit eax*4+teamcitynames]	; 819D3
 push esi	; 819DA
@@ -1821,7 +1821,7 @@ sub edx, eax	; 81A93
 lea eax, [byte edx+02h]	; 81A95
 mov ebx, esi	; 81A98
 mov edx, dword [byte ebp-010h]	; 81A9A
-call sub_175E2	; 81A9D
+call PrintShadowText	; 81A9D
 mov edx, dword [byte ebp+010h]	; 81AA2
 inc edx	; 81AA5
 mov ebx, 1Ah	; 81AA6
@@ -1854,13 +1854,13 @@ sub edx, eax	; 81AF4
 lea eax, [byte edx+02h]	; 81AF6
 mov ebx, esi	; 81AF9
 mov edx, dword [byte ebp-010h]	; 81AFB
-call sub_175E2	; 81AFE
+call PrintShadowText	; 81AFE
 mov eax, dword [byte ebp+010h]	; 81B03
 mov eax, dword [nosplit eax*4+dword_D2150]	; 81B06
 mov ebx, dword [nosplit eax*4+teamcitynames]	; 81B0D
 mov edx, 2Ch	; 81B14
 mov eax, 154h	; 81B19
-call sub_17636	; 81B1E
+call PrintOutlinedText	; 81B1E
 lea edx, [byte edi+019h]	; 81B23
 mov ebx, 1Ah	; 81B26
 mov eax, edx	; 81B2B
@@ -1893,7 +1893,7 @@ sub edx, eax	; 81B77
 lea eax, [byte edx+02h]	; 81B79
 mov ebx, esi	; 81B7C
 mov edx, dword [byte ebp-010h]	; 81B7E
-call sub_175E2	; 81B81
+call PrintShadowText	; 81B81
 lea edx, [byte edi+01h]	; 81B86
 mov ebx, 1Ah	; 81B89
 mov eax, edx	; 81B8E
@@ -1927,7 +1927,7 @@ sub edx, eax	; 81BDF
 lea eax, [byte edx+02h]	; 81BE1
 mov ebx, esi	; 81BE4
 mov edx, dword [byte ebp-0Ch]	; 81BE6
-call sub_175E2	; 81BE9
+call PrintShadowText	; 81BE9
 mov eax, dword [nosplit edi*4+dword_D2150]	; 81BEE
 mov esi, dword [nosplit eax*4+teamcitynames]	; 81BF5
 push esi	; 81BFC
@@ -1940,7 +1940,7 @@ mov ebx, dword [nosplit ebx*4+teamcitynames]	; 81C13
 loc_81C1A:
 mov edx, 2Ch	; 81C1A
 mov eax, esi	; 81C1F
-call sub_17636	; 81C21
+call PrintOutlinedText	; 81C21
 mov esp, ebp	; 81C26
 jmp near loc_8082A	; 81C28
 db 090h

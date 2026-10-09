@@ -17,7 +17,7 @@ extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8
 extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84, photoptrs, dword_DC230
 extern dword_DC238, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
-extern DrawHudPanel, sub_1672A, sub_16F9A, sub_190BE, sub_1BAF3, sub_1CD73, sub_3149D, sub_31AB5
+extern DrawHudPanel, RunIntro, ShowCredits, sub_190BE, sub_1BAF3, sub_1CD73, sub_3149D, sub_31AB5
 extern LoadModeState, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
 extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
 extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
@@ -349,7 +349,7 @@ add esp, byte 4	; 10420
 mov eax, exhstate	; 10423
 call LoadModeState	; 10428
 call sub_3DB41	; 1042D
-call sub_1672A	; 10432
+call RunIntro	; 10432
 call sub_B30F4	; 10437
 mov dword [byte esp+054h], eax	; 1043C
 mov al, byte [byte_D416A]	; 10440
@@ -512,7 +512,7 @@ mov dword [songdata], ebx	; 1069F
 .35:
 call sub_479E9	; 106A5
 call sub_6B410	; 106AA
-call sub_16F9A	; 106AF
+call ShowCredits	; 106AF
 call sub_B4B58	; 106B4
 call dword [bailout_vec]	; 106B9
 main_x:

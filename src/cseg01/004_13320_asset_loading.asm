@@ -16,7 +16,7 @@ extern dword_D8B68, numshapes, dword_D8C4C, rinkendbank, frameaccum, rinkendart,
 extern dword_D8C84, photobanks, photoptrs, dword_DF00C, dword_DF010, dword_E009C, photoptrsf
 extern dword_E9A9E, dword_E9AB6, hilightfont, jctime, PickAwardWinners_x, memcpy_, nullsub_2
 extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, PickAwardWinners, ShowAwardScreens
-extern DrawAwardsSummary, MakePath, FileOpenRead, FileClose, DrawHudPanel, sub_174C2, sub_1CBD8, sub_33E6A
+extern DrawAwardsSummary, MakePath, FileOpenRead, FileClose, DrawHudPanel, SetTextColors, sub_1CBD8, sub_33E6A
 extern StartPreGame, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
 extern sub_64614, SetupTeamLines, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
@@ -351,7 +351,7 @@ call sub_6B3D7	; 13758
 call sub_B4BA8	; 1375D
 xor edx, edx	; 13762
 mov eax, 1	; 13764
-call sub_174C2	; 13769
+call SetTextColors	; 13769
 push str_Scrn	; 1376E
 push esi	; 13773
 call sub_B30B4	; 13774

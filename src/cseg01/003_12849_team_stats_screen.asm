@@ -6,8 +6,8 @@ extern __CHK, str_ANA, str_Cal, str_Flo, str_SS, str_Min, str_GAA, str_Shots
 extern str_Pct, str_PIM, str_PlusMinus, str_PPG, str_SHG, str_Pal3, str_Palmem, str_D02d
 extern str_D01d, awardtype, byte_D42C3, awardwinners, byte_ED7CC, dword_C513C, dword_C5168
 extern dword_D2C6B, fputchar, jctime, PickAwardWinners_x, awardart, awardnames, awardtitles, off_C524F
-extern off_C527B, sprintf_, strcat_, strcpy_, strnicmp_, MakePath, sub_174C2, sub_175E2
-extern sub_176AE, sub_176DB, sub_29C75, sub_33E6A, sub_6B3D7, sub_76429, sub_8CCA8, sub_8E83C
+extern off_C527B, sprintf_, strcat_, strcpy_, strnicmp_, MakePath, SetTextColors, PrintShadowText
+extern PrintFmt1, PrintFmt2, sub_29C75, sub_33E6A, sub_6B3D7, sub_76429, sub_8CCA8, sub_8E83C
 extern sub_8FFB0, sub_9035C, sub_9061C, sub_B30B4, sub_B395C, str_MightyDucks, unk_C03C4, unk_C03C6
 extern str_GP, str_W, str_L, str_T, str_SO, str_EN, str_G, str_A
 extern str_Pt, str_fmtpd, cupteam, presidentsteam, unk_DDAC4
@@ -30,7 +30,7 @@ jmp near .27	; 12867
 mov esi, ebx	; 1286C
 mov eax, dword [nosplit ebx*4+dword_C513C]	; 1286E
 xor edx, edx	; 12875
-call sub_174C2	; 12877
+call SetTextColors	; 12877
 call sub_B395C	; 1287C
 xor ecx, ecx	; 12881
 mov ebx, dword [nosplit esi*4+awardart]	; 12883
@@ -86,7 +86,7 @@ mov ebx, str_MightyDucks	; 1292B
 .6:
 mov edx, ebp	; 12930
 mov eax, esi	; 12932
-call sub_175E2	; 12934
+call PrintShadowText	; 12934
 jmp near .25	; 12939
 .7:
 cmp dword [byte esp+038h], byte 0Ah	; 1293E
@@ -155,7 +155,7 @@ sub esi, eax	; 129EF
 mov ebx, esp	; 129F1
 mov edx, ebp	; 129F3
 mov eax, esi	; 129F5
-call sub_175E2	; 129F7
+call PrintShadowText	; 129F7
 xor edx, edx	; 129FC
 mov dl, byte [dword edi+awardwinners]	; 129FE
 mov eax, edx	; 12A04
@@ -209,7 +209,7 @@ add ebp, eax	; 12A87
 mov ebx, esp	; 12A89
 mov edx, ebp	; 12A8B
 mov eax, esi	; 12A8D
-call sub_175E2	; 12A8F
+call PrintShadowText	; 12A8F
 mov esi, 1A4h	; 12A94
 add ebp, byte 2Ch	; 12A99
 mov edi, dword [byte esp+038h]	; 12A9C
@@ -221,20 +221,20 @@ jne near .21	; 12AAF
 mov ebx, str_GP	; 12AB5
 mov edx, ebp	; 12ABA
 mov eax, esi	; 12ABC
-call sub_175E2	; 12ABE
+call PrintShadowText	; 12ABE
 xor edx, edx	; 12AC3
 mov dl, byte [byte_D42C3]	; 12AC5
 add edx, ebp	; 12ACB
 mov ebx, str_Min	; 12ACD
 mov eax, esi	; 12AD2
-call sub_175E2	; 12AD4
+call PrintShadowText	; 12AD4
 xor edx, edx	; 12AD9
 mov dl, byte [byte_D42C3]	; 12ADB
 add edx, edx	; 12AE1
 add edx, ebp	; 12AE3
 mov ebx, str_GAA	; 12AE5
 mov eax, esi	; 12AEA
-call sub_175E2	; 12AEC
+call PrintShadowText	; 12AEC
 xor edx, edx	; 12AF1
 mov dl, byte [byte_D42C3]	; 12AF3
 mov eax, edx	; 12AF9
@@ -243,14 +243,14 @@ sub eax, edx	; 12AFE
 lea edx, [eax+ebp]	; 12B00
 mov ebx, str_W	; 12B03
 mov eax, esi	; 12B08
-call sub_175E2	; 12B0A
+call PrintShadowText	; 12B0A
 xor eax, eax	; 12B0F
 mov al, byte [byte_D42C3]	; 12B11
 shl eax, 2	; 12B16
 lea edx, [eax+ebp]	; 12B19
 mov ebx, str_L	; 12B1C
 mov eax, esi	; 12B21
-call sub_175E2	; 12B23
+call PrintShadowText	; 12B23
 xor edx, edx	; 12B28
 mov dl, byte [byte_D42C3]	; 12B2A
 mov eax, edx	; 12B30
@@ -259,7 +259,7 @@ add eax, edx	; 12B35
 lea edx, [eax+ebp]	; 12B37
 mov ebx, str_T	; 12B3A
 mov eax, esi	; 12B3F
-call sub_175E2	; 12B41
+call PrintShadowText	; 12B41
 xor edx, edx	; 12B46
 mov dl, byte [byte_D42C3]	; 12B48
 mov eax, edx	; 12B4E
@@ -269,7 +269,7 @@ add eax, eax	; 12B55
 lea edx, [eax+ebp]	; 12B57
 mov ebx, str_SO	; 12B5A
 mov eax, esi	; 12B5F
-call sub_175E2	; 12B61
+call PrintShadowText	; 12B61
 xor edx, edx	; 12B66
 mov dl, byte [byte_D42C3]	; 12B68
 mov eax, edx	; 12B6E
@@ -278,14 +278,14 @@ sub eax, edx	; 12B73
 lea edx, [eax+ebp]	; 12B75
 mov ebx, str_EN	; 12B78
 mov eax, esi	; 12B7D
-call sub_175E2	; 12B7F
+call PrintShadowText	; 12B7F
 xor edx, edx	; 12B84
 mov dl, byte [byte_D42C3]	; 12B86
 shl edx, 3	; 12B8C
 add edx, ebp	; 12B8F
 mov ebx, str_Shots	; 12B91
 mov eax, esi	; 12B96
-call sub_175E2	; 12B98
+call PrintShadowText	; 12B98
 xor edx, edx	; 12B9D
 mov dl, byte [byte_D42C3]	; 12B9F
 mov eax, edx	; 12BA5
@@ -294,7 +294,7 @@ add eax, edx	; 12BAA
 lea edx, [eax+ebp]	; 12BAC
 mov ebx, str_Pct	; 12BAF
 mov eax, esi	; 12BB4
-call sub_175E2	; 12BB6
+call PrintShadowText	; 12BB6
 mov eax, dword [dword edi+off_C524F]	; 12BBB
 mov dword [byte esp+034h], eax	; 12BC1
 mov edi, eax	; 12BC5
@@ -310,13 +310,13 @@ mov ecx, ebp	; 12BE3
 sub ecx, edx	; 12BE5
 mov edx, ecx	; 12BE7
 add esi, byte 50h	; 12BE9
-call sub_175E2	; 12BEC
+call PrintShadowText	; 12BEC
 xor ecx, ecx	; 12BF1
 mov cx, word [edi]	; 12BF3
 mov ebx, str_fmtpd	; 12BF6
 mov edx, ebp	; 12BFB
 mov eax, esi	; 12BFD
-call sub_176AE	; 12BFF
+call PrintFmt1	; 12BFF
 xor ecx, ecx	; 12C04
 mov cx, word [byte edi+0Ch]	; 12C06
 xor edx, edx	; 12C0A
@@ -324,7 +324,7 @@ mov dl, byte [byte_D42C3]	; 12C0C
 add edx, ebp	; 12C12
 mov ebx, str_fmtpd	; 12C14
 mov eax, esi	; 12C19
-call sub_176AE	; 12C1B
+call PrintFmt1	; 12C1B
 xor ebx, ebx	; 12C20
 mov bx, word [byte edi+010h]	; 12C22
 mov ecx, 64h	; 12C26
@@ -344,7 +344,7 @@ add edx, ebp	; 12C48
 mov ecx, eax	; 12C4A
 mov ebx, str_D02d	; 12C4C
 mov eax, esi	; 12C51
-call sub_176DB	; 12C53
+call PrintFmt2	; 12C53
 xor ecx, ecx	; 12C58
 mov cx, word [byte edi+02h]	; 12C5A
 xor edx, edx	; 12C5E
@@ -355,7 +355,7 @@ sub eax, edx	; 12C6B
 lea edx, [eax+ebp]	; 12C6D
 mov ebx, str_fmtpd	; 12C70
 mov eax, esi	; 12C75
-call sub_176AE	; 12C77
+call PrintFmt1	; 12C77
 xor ecx, ecx	; 12C7C
 mov cx, word [byte edi+04h]	; 12C7E
 xor edx, edx	; 12C82
@@ -364,7 +364,7 @@ shl edx, 2	; 12C8A
 add edx, ebp	; 12C8D
 mov ebx, str_fmtpd	; 12C8F
 mov eax, esi	; 12C94
-call sub_176AE	; 12C96
+call PrintFmt1	; 12C96
 mov edx, dword [byte esp+03Ch]	; 12C9B
 test edx, edx	; 12C9F
 jne short .20	; 12CA1
@@ -377,7 +377,7 @@ add eax, edx	; 12CB4
 lea edx, [eax+ebp]	; 12CB6
 mov ebx, str_fmtpd	; 12CB9
 mov eax, esi	; 12CBE
-call sub_176AE	; 12CC0
+call PrintFmt1	; 12CC0
 .20:
 xor ecx, ecx	; 12CC5
 mov cx, word [byte edi+08h]	; 12CC7
@@ -390,7 +390,7 @@ add eax, eax	; 12CDA
 lea edx, [eax+ebp]	; 12CDC
 mov ebx, str_fmtpd	; 12CDF
 mov eax, esi	; 12CE4
-call sub_176AE	; 12CE6
+call PrintFmt1	; 12CE6
 xor ecx, ecx	; 12CEB
 mov cx, word [byte edi+0Ah]	; 12CED
 xor edx, edx	; 12CF1
@@ -401,7 +401,7 @@ sub eax, edx	; 12CFE
 lea edx, [eax+ebp]	; 12D00
 mov ebx, str_fmtpd	; 12D03
 mov eax, esi	; 12D08
-call sub_176AE	; 12D0A
+call PrintFmt1	; 12D0A
 xor ecx, ecx	; 12D0F
 mov cx, word [byte edi+012h]	; 12D11
 xor edx, edx	; 12D15
@@ -410,7 +410,7 @@ shl edx, 3	; 12D1D
 add edx, ebp	; 12D20
 mov ebx, str_fmtpd	; 12D22
 mov eax, esi	; 12D27
-call sub_176AE	; 12D29
+call PrintFmt1	; 12D29
 xor ebx, ebx	; 12D2E
 mov bx, word [byte edi+014h]	; 12D30
 mov ecx, 0Ah	; 12D34
@@ -432,7 +432,7 @@ add eax, edx	; 12D5B
 lea edx, [eax+ebp]	; 12D5D
 mov ebx, str_D01d	; 12D60
 mov eax, esi	; 12D65
-call sub_176DB	; 12D67
+call PrintFmt2	; 12D67
 mov edi, dword [byte esp+034h]	; 12D6C
 add edi, byte 16h	; 12D70
 mov ebx, dword [byte esp+03Ch]	; 12D73
@@ -447,20 +447,20 @@ jne near .25	; 12D8D
 mov ebx, str_GP	; 12D93
 mov edx, ebp	; 12D98
 mov eax, esi	; 12D9A
-call sub_175E2	; 12D9C
+call PrintShadowText	; 12D9C
 xor edx, edx	; 12DA1
 mov dl, byte [byte_D42C3]	; 12DA3
 add edx, ebp	; 12DA9
 mov ebx, str_G	; 12DAB
 mov eax, esi	; 12DB0
-call sub_175E2	; 12DB2
+call PrintShadowText	; 12DB2
 xor edx, edx	; 12DB7
 mov dl, byte [byte_D42C3]	; 12DB9
 add edx, edx	; 12DBF
 add edx, ebp	; 12DC1
 mov ebx, str_A	; 12DC3
 mov eax, esi	; 12DC8
-call sub_175E2	; 12DCA
+call PrintShadowText	; 12DCA
 xor edx, edx	; 12DCF
 mov dl, byte [byte_D42C3]	; 12DD1
 mov eax, edx	; 12DD7
@@ -469,14 +469,14 @@ sub eax, edx	; 12DDC
 lea edx, [eax+ebp]	; 12DDE
 mov ebx, str_Pt	; 12DE1
 mov eax, esi	; 12DE6
-call sub_175E2	; 12DE8
+call PrintShadowText	; 12DE8
 xor edx, edx	; 12DED
 mov dl, byte [byte_D42C3]	; 12DEF
 shl edx, 2	; 12DF5
 add edx, ebp	; 12DF8
 mov ebx, str_PIM	; 12DFA
 mov eax, esi	; 12DFF
-call sub_175E2	; 12E01
+call PrintShadowText	; 12E01
 xor edx, edx	; 12E06
 mov dl, byte [byte_D42C3]	; 12E08
 mov eax, edx	; 12E0E
@@ -485,7 +485,7 @@ add eax, edx	; 12E13
 lea edx, [eax+ebp]	; 12E15
 mov ebx, str_PlusMinus	; 12E18
 mov eax, esi	; 12E1D
-call sub_175E2	; 12E1F
+call PrintShadowText	; 12E1F
 xor edx, edx	; 12E24
 mov dl, byte [byte_D42C3]	; 12E26
 mov eax, edx	; 12E2C
@@ -495,7 +495,7 @@ add eax, eax	; 12E33
 lea edx, [eax+ebp]	; 12E35
 mov ebx, str_PPG	; 12E38
 mov eax, esi	; 12E3D
-call sub_175E2	; 12E3F
+call PrintShadowText	; 12E3F
 xor edx, edx	; 12E44
 mov dl, byte [byte_D42C3]	; 12E46
 mov eax, edx	; 12E4C
@@ -504,14 +504,14 @@ sub eax, edx	; 12E51
 lea edx, [eax+ebp]	; 12E53
 mov ebx, str_SHG	; 12E56
 mov eax, esi	; 12E5B
-call sub_175E2	; 12E5D
+call PrintShadowText	; 12E5D
 xor edx, edx	; 12E62
 mov dl, byte [byte_D42C3]	; 12E64
 shl edx, 3	; 12E6A
 add edx, ebp	; 12E6D
 mov ebx, str_Shots	; 12E6F
 mov eax, esi	; 12E74
-call sub_175E2	; 12E76
+call PrintShadowText	; 12E76
 xor edx, edx	; 12E7B
 mov dl, byte [byte_D42C3]	; 12E7D
 mov eax, edx	; 12E83
@@ -520,7 +520,7 @@ add eax, edx	; 12E88
 lea edx, [eax+ebp]	; 12E8A
 mov ebx, str_Pct	; 12E8D
 mov eax, esi	; 12E92
-call sub_175E2	; 12E94
+call PrintShadowText	; 12E94
 mov eax, dword [dword edi+off_C524F]	; 12E99
 mov dword [byte esp+030h], eax	; 12E9F
 mov edi, eax	; 12EA3
@@ -536,13 +536,13 @@ mov ecx, ebp	; 12EC1
 sub ecx, edx	; 12EC3
 mov edx, ecx	; 12EC5
 add esi, byte 50h	; 12EC7
-call sub_175E2	; 12ECA
+call PrintShadowText	; 12ECA
 xor ecx, ecx	; 12ECF
 mov cx, word [edi]	; 12ED1
 mov ebx, str_fmtpd	; 12ED4
 mov edx, ebp	; 12ED9
 mov eax, esi	; 12EDB
-call sub_176AE	; 12EDD
+call PrintFmt1	; 12EDD
 xor ecx, ecx	; 12EE2
 mov cx, word [byte edi+02h]	; 12EE4
 xor edx, edx	; 12EE8
@@ -550,7 +550,7 @@ mov dl, byte [byte_D42C3]	; 12EEA
 add edx, ebp	; 12EF0
 mov ebx, str_fmtpd	; 12EF2
 mov eax, esi	; 12EF7
-call sub_176AE	; 12EF9
+call PrintFmt1	; 12EF9
 xor ecx, ecx	; 12EFE
 mov cx, word [byte edi+04h]	; 12F00
 xor eax, eax	; 12F04
@@ -559,7 +559,7 @@ add eax, eax	; 12F0B
 lea edx, [eax+ebp]	; 12F0D
 mov ebx, str_fmtpd	; 12F10
 mov eax, esi	; 12F15
-call sub_176AE	; 12F17
+call PrintFmt1	; 12F17
 xor ecx, ecx	; 12F1C
 mov cx, word [byte edi+06h]	; 12F1E
 xor edx, edx	; 12F22
@@ -570,7 +570,7 @@ sub eax, edx	; 12F2F
 lea edx, [eax+ebp]	; 12F31
 mov ebx, str_fmtpd	; 12F34
 mov eax, esi	; 12F39
-call sub_176AE	; 12F3B
+call PrintFmt1	; 12F3B
 xor ecx, ecx	; 12F40
 mov cx, word [byte edi+0Ch]	; 12F42
 xor edx, edx	; 12F46
@@ -579,7 +579,7 @@ shl edx, 2	; 12F4E
 add edx, ebp	; 12F51
 mov ebx, str_fmtpd	; 12F53
 mov eax, esi	; 12F58
-call sub_176AE	; 12F5A
+call PrintFmt1	; 12F5A
 mov ecx, dword [byte edi+0Eh]	; 12F5F
 sar ecx, 10h	; 12F62
 xor edx, edx	; 12F65
@@ -590,7 +590,7 @@ add eax, edx	; 12F72
 lea edx, [eax+ebp]	; 12F74
 mov ebx, str_fmtpd	; 12F77
 mov eax, esi	; 12F7C
-call sub_176AE	; 12F7E
+call PrintFmt1	; 12F7E
 xor ecx, ecx	; 12F83
 mov cx, word [byte edi+08h]	; 12F85
 xor edx, edx	; 12F89
@@ -602,7 +602,7 @@ add eax, eax	; 12F98
 lea edx, [eax+ebp]	; 12F9A
 mov ebx, str_fmtpd	; 12F9D
 mov eax, esi	; 12FA2
-call sub_176AE	; 12FA4
+call PrintFmt1	; 12FA4
 xor ecx, ecx	; 12FA9
 mov cx, word [byte edi+0Ah]	; 12FAB
 xor edx, edx	; 12FAF
@@ -613,7 +613,7 @@ sub eax, edx	; 12FBC
 lea edx, [eax+ebp]	; 12FBE
 mov ebx, str_fmtpd	; 12FC1
 mov eax, esi	; 12FC6
-call sub_176AE	; 12FC8
+call PrintFmt1	; 12FC8
 xor ecx, ecx	; 12FCD
 mov cx, word [byte edi+0Eh]	; 12FCF
 xor eax, eax	; 12FD3
@@ -622,7 +622,7 @@ shl eax, 3	; 12FDA
 lea edx, [eax+ebp]	; 12FDD
 mov ebx, str_fmtpd	; 12FE0
 mov eax, esi	; 12FE5
-call sub_176AE	; 12FE7
+call PrintFmt1	; 12FE7
 cmp word [byte edi+0Eh], byte 0	; 12FEC
 je short .23	; 12FF1
 xor edx, edx	; 12FF3
@@ -668,7 +668,7 @@ add eax, edx	; 13050
 lea edx, [eax+ebp]	; 13052
 mov ebx, str_D01d	; 13055
 mov eax, esi	; 1305A
-call sub_176DB	; 1305C
+call PrintFmt2	; 1305C
 mov edi, dword [byte esp+030h]	; 13061
 add edi, byte 12h	; 13065
 mov ecx, dword [byte esp+03Ch]	; 13068
@@ -692,7 +692,7 @@ sub esi, eax	; 130A0
 mov ebx, dword [dword edi+awardtitles+4]	; 130A2
 mov edx, ebp	; 130A8
 mov eax, esi	; 130AA
-call sub_175E2	; 130AC
+call PrintShadowText	; 130AC
 movzx ebp, byte [byte_D42C3]	; 130B1
 mov eax, 1BAh	; 130B8
 sub eax, ebp	; 130BD
@@ -709,7 +709,7 @@ sub esi, eax	; 130DC
 mov ebx, dword [nosplit edi*8+awardtitles]	; 130DE
 mov edx, ebp	; 130E5
 mov eax, esi	; 130E7
-call sub_175E2	; 130E9
+call PrintShadowText	; 130E9
 push str_Pal3	; 130EE
 mov edx, dword [byte esp+030h]	; 130F3
 push edx	; 130F7
@@ -778,7 +778,7 @@ lea ebp, [dword eax+08Ch]	; 131B1
 mov ebx, dword [nosplit esi*4+awardnames]	; 131B7
 mov edx, ebp	; 131BE
 mov eax, 14h	; 131C0
-call sub_175E2	; 131C5
+call PrintShadowText	; 131C5
 cmp byte [dword esi+awardtype], 2	; 131CA
 jne near .8	; 131D1
 mov ebx, 3	; 131D7
@@ -838,7 +838,7 @@ call sub_29C75	; 13275
 mov ebx, esp	; 1327A
 mov edx, ebp	; 1327C
 mov eax, 0B4h	; 1327E
-call sub_175E2	; 13283
+call PrintShadowText	; 13283
 xor edx, edx	; 13288
 mov dl, byte [dword esi+awardwinners]	; 1328A
 mov eax, edx	; 13290
@@ -883,7 +883,7 @@ mov ebx, esp	; 132F8
 .14:
 mov edx, ebp	; 132FA
 mov eax, 190h	; 132FC
-call sub_175E2	; 13301
+call PrintShadowText	; 13301
 mov ecx, dword [byte esp+02Ch]	; 13306
 inc ecx	; 1330A
 mov dword [byte esp+02Ch], ecx	; 1330B

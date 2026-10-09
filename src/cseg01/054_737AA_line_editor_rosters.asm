@@ -21,8 +21,8 @@ extern dword_DC73C, dword_DC754, dword_DD11C, dword_EA0DC, dword_EA2B4, rosterte
 extern msglines, dword_EBE9C, dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0
 extern vgapage, fputchar, j___close_, j___delay_, jctime, lseek_, memcpy_, off_CF223
 extern off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443, off_D056C, off_D058C
-extern open_, qsort_, read_, sprintf_, strcmp_, MakePath, sub_174C2, sub_17573
-extern sub_175E2, sub_176AE, sub_176DB, sub_1D6E8, sub_29C75, MessageBox, sub_479E9, FadeOutPalCycle
+extern open_, qsort_, read_, sprintf_, strcmp_, MakePath, SetTextColors, PrintCenteredText
+extern PrintShadowText, PrintFmt1, PrintFmt2, sub_1D6E8, sub_29C75, MessageBox, sub_479E9, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, KeyDbPtr
 extern sub_6CBE8, sub_6CBFD, sub_78366, sub_78500, sub_78A87, sub_79188, sub_79DE1, sub_79F41
 extern sub_7A099, sub_836E4, sub_8373E, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0
@@ -3504,7 +3504,7 @@ mov eax, unk_D075E	; 75E8B
 call sub_6B5E4	; 75E90
 mov edx, dword [esp]	; 75E95
 mov eax, dword [byte esp+0Ch]	; 75E98
-call sub_174C2	; 75E9C
+call SetTextColors	; 75E9C
 xor eax, eax	; 75EA1
 mov al, byte [byte_EC7E0]	; 75EA3
 mov eax, dword [nosplit eax*4+rosterteamrec]	; 75EA8
@@ -3517,47 +3517,47 @@ call sprintf_	; 75EBD
 add esp, byte 0Ch	; 75EC2
 lea edx, [byte esp+050h]	; 75EC5
 mov eax, 19h	; 75EC9
-call sub_17573	; 75ECE
+call PrintCenteredText	; 75ECE
 mov ebx, asc_C313F	; 75ED3
 mov edx, 30h	; 75ED8
 mov eax, 14h	; 75EDD
-call sub_175E2	; 75EE2
+call PrintShadowText	; 75EE2
 mov ebx, unk_C3143	; 75EE7
 mov edx, 30h	; 75EEC
 mov eax, 42h	; 75EF1
-call sub_175E2	; 75EF6
+call PrintShadowText	; 75EF6
 mov ebx, asc_C3146	; 75EFB
 mov edx, 30h	; 75F00
 mov eax, 60h	; 75F05
-call sub_175E2	; 75F0A
+call PrintShadowText	; 75F0A
 mov ebx, unk_C314B	; 75F0F
 mov edx, 30h	; 75F14
 mov eax, 10Eh	; 75F19
-call sub_175E2	; 75F1E
+call PrintShadowText	; 75F1E
 mov ebx, asc_C314E	; 75F23
 mov edx, 30h	; 75F28
 mov eax, 136h	; 75F2D
-call sub_175E2	; 75F32
+call PrintShadowText	; 75F32
 mov ebx, asc_C3152	; 75F37
 mov edx, 30h	; 75F3C
 mov eax, 15Eh	; 75F41
-call sub_175E2	; 75F46
+call PrintShadowText	; 75F46
 mov ebx, asc_C3156	; 75F4B
 mov edx, 30h	; 75F50
 mov eax, 186h	; 75F55
-call sub_175E2	; 75F5A
+call PrintShadowText	; 75F5A
 mov ebx, asc_C315A	; 75F5F
 mov edx, 30h	; 75F64
 mov eax, 1AEh	; 75F69
-call sub_175E2	; 75F6E
+call PrintShadowText	; 75F6E
 mov ebx, asc_C3160	; 75F73
 mov edx, 30h	; 75F78
 mov eax, 1E8h	; 75F7D
-call sub_175E2	; 75F82
+call PrintShadowText	; 75F82
 mov ebx, asc_C3164	; 75F87
 mov edx, 30h	; 75F8C
 mov eax, 210h	; 75F91
-call sub_175E2	; 75F96
+call PrintShadowText	; 75F96
 xor ebp, ebp	; 75F9B
 mov esi, 40h	; 75F9D
 jmp near loc_7610C	; 75FA2
@@ -3583,7 +3583,7 @@ add esp, byte 0Ch	; 75FE6
 lea ebx, [byte esp+050h]	; 75FE9
 mov edx, esi	; 75FED
 mov eax, 14h	; 75FEF
-call sub_175E2	; 75FF4
+call PrintShadowText	; 75FF4
 mov dh, byte [byte edi+01h]	; 75FF9
 cmp dh, 64h	; 75FFC
 jae short loc_76016	; 75FFF
@@ -3592,7 +3592,7 @@ mov cl, dh	; 76003
 mov ebx, str_fmt2d	; 76005
 mov edx, esi	; 7600A
 mov eax, 42h	; 7600C
-call sub_176AE	; 76011
+call PrintFmt1	; 76011
 loc_76016:
 lea ebx, [byte edi+013h]	; 76016
 lea edx, [byte edi+03h]	; 76019
@@ -3602,7 +3602,7 @@ call sub_29C75	; 76025
 lea ebx, [byte esp+050h]	; 7602A
 mov edx, esi	; 7602E
 mov eax, 60h	; 76030
-call sub_175E2	; 76035
+call PrintShadowText	; 76035
 mov eax, dword [dword esp+09Ch]	; 7603A
 mov ebx, eax	; 76041
 shl ebx, 2	; 76043
@@ -3623,43 +3623,43 @@ mov cx, word [edi]	; 7606A
 mov ebx, str_fmt2d	; 7606D
 mov edx, esi	; 76072
 mov eax, 10Eh	; 76074
-call sub_176AE	; 76079
+call PrintFmt1	; 76079
 xor ecx, ecx	; 7607E
 mov cx, word [byte edi+02h]	; 76080
 mov ebx, str_fmt3d	; 76084
 mov edx, esi	; 76089
 mov eax, 136h	; 7608B
-call sub_176AE	; 76090
+call PrintFmt1	; 76090
 xor ecx, ecx	; 76095
 mov cx, word [byte edi+04h]	; 76097
 mov ebx, str_fmt3d	; 7609B
 mov edx, esi	; 760A0
 mov eax, 15Eh	; 760A2
-call sub_176AE	; 760A7
+call PrintFmt1	; 760A7
 xor ecx, ecx	; 760AC
 mov cx, word [byte edi+06h]	; 760AE
 mov ebx, str_fmt3d	; 760B2
 mov edx, esi	; 760B7
 mov eax, 186h	; 760B9
-call sub_176AE	; 760BE
+call PrintFmt1	; 760BE
 xor ecx, ecx	; 760C3
 mov cx, word [byte edi+0Eh]	; 760C5
 mov ebx, asc_C690B	; 760C9
 mov edx, esi	; 760CE
 mov eax, 1AEh	; 760D0
-call sub_176AE	; 760D5
+call PrintFmt1	; 760D5
 xor ecx, ecx	; 760DA
 mov cx, word [byte edi+0Ch]	; 760DC
 mov ebx, str_fmt3d	; 760E0
 mov edx, esi	; 760E5
 mov eax, 1E8h	; 760E7
-call sub_176AE	; 760EC
+call PrintFmt1	; 760EC
 mov ecx, dword [byte edi+0Eh]	; 760F1
 sar ecx, 10h	; 760F4
 mov ebx, asc_C690B	; 760F7
 mov edx, esi	; 760FC
 mov eax, 210h	; 760FE
-call sub_176AE	; 76103
+call PrintFmt1	; 76103
 add esi, byte 0Dh	; 76108
 inc ebp	; 7610B
 loc_7610C:
@@ -3669,54 +3669,54 @@ mov esi, 195h	; 76119
 mov ebx, asc_C313F	; 7611E
 mov edx, esi	; 76123
 mov eax, 14h	; 76125
-call sub_175E2	; 7612A
+call PrintShadowText	; 7612A
 mov ebx, unk_C3143	; 7612F
 mov edx, esi	; 76134
 mov eax, 42h	; 76136
-call sub_175E2	; 7613B
+call PrintShadowText	; 7613B
 mov ebx, asc_C3146	; 76140
 mov edx, esi	; 76145
 mov eax, 60h	; 76147
-call sub_175E2	; 7614C
+call PrintShadowText	; 7614C
 mov ebx, unk_C314B	; 76151
 mov edx, esi	; 76156
 mov eax, 10Eh	; 76158
-call sub_175E2	; 7615D
+call PrintShadowText	; 7615D
 mov ebx, asc_C316C	; 76162
 mov edx, esi	; 76167
 mov eax, 136h	; 76169
-call sub_175E2	; 7616E
+call PrintShadowText	; 7616E
 mov ebx, asc_C3171	; 76173
 mov edx, esi	; 76178
 mov eax, 15Eh	; 7617A
-call sub_175E2	; 7617F
+call PrintShadowText	; 7617F
 mov ebx, unk_C3177	; 76184
 mov edx, esi	; 76189
 mov eax, 190h	; 7618B
-call sub_175E2	; 76190
+call PrintShadowText	; 76190
 mov ebx, unk_C317A	; 76195
 mov edx, esi	; 7619A
 mov eax, 1AEh	; 7619C
-call sub_175E2	; 761A1
+call PrintShadowText	; 761A1
 cmp dword [dword_C6956], byte 0	; 761A6
 jne short loc_761C0	; 761AD
 mov ebx, unk_C317D	; 761AF
 mov edx, esi	; 761B4
 mov eax, 1CCh	; 761B6
-call sub_175E2	; 761BB
+call PrintShadowText	; 761BB
 loc_761C0:
 mov ebx, asc_C3180	; 761C0
 mov edx, esi	; 761C5
 mov eax, 1EAh	; 761C7
-call sub_175E2	; 761CC
+call PrintShadowText	; 761CC
 mov ebx, asc_C3184	; 761D1
 mov edx, esi	; 761D6
 mov eax, 20Eh	; 761D8
-call sub_175E2	; 761DD
+call PrintShadowText	; 761DD
 mov ebx, asc_C3189	; 761E2
 mov edx, esi	; 761E7
 mov eax, 240h	; 761E9
-call sub_175E2	; 761EE
+call PrintShadowText	; 761EE
 xor ebp, ebp	; 761F3
 add esi, byte 10h	; 761F5
 jmp near loc_763ED	; 761F8
@@ -3742,7 +3742,7 @@ add esp, byte 0Ch	; 7623D
 lea ebx, [byte esp+050h]	; 76240
 mov edx, esi	; 76244
 mov eax, 14h	; 76246
-call sub_175E2	; 7624B
+call PrintShadowText	; 7624B
 mov bl, byte [byte edi+01h]	; 76250
 cmp bl, 64h	; 76253
 jae short loc_7626D	; 76256
@@ -3751,7 +3751,7 @@ mov cl, bl	; 7625A
 mov ebx, str_fmt2d	; 7625C
 mov edx, esi	; 76261
 mov eax, 42h	; 76263
-call sub_176AE	; 76268
+call PrintFmt1	; 76268
 loc_7626D:
 lea ebx, [byte edi+013h]	; 7626D
 lea edx, [byte edi+03h]	; 76270
@@ -3761,7 +3761,7 @@ call sub_29C75	; 7627C
 lea ebx, [byte esp+050h]	; 76281
 mov edx, esi	; 76285
 mov eax, 60h	; 76287
-call sub_175E2	; 7628C
+call PrintShadowText	; 7628C
 mov eax, dword [dword esp+09Ch]	; 76291
 mov edi, eax	; 76298
 shl edi, 2	; 7629A
@@ -3785,13 +3785,13 @@ mov cx, word [edi]	; 762CC
 mov ebx, str_fmt2d	; 762CF
 mov edx, esi	; 762D4
 mov eax, 10Eh	; 762D6
-call sub_176AE	; 762DB
+call PrintFmt1	; 762DB
 xor ecx, ecx	; 762E0
 mov cx, word [byte edi+0Ch]	; 762E2
 mov ebx, asc_C690B	; 762E6
 mov edx, esi	; 762EB
 mov eax, 136h	; 762ED
-call sub_176AE	; 762F2
+call PrintFmt1	; 762F2
 xor ebx, ebx	; 762F7
 mov bx, word [byte edi+010h]	; 762F9
 mov ecx, 64h	; 762FD
@@ -3808,19 +3808,19 @@ mov ecx, eax	; 76315
 mov ebx, asc_C692B	; 76317
 mov edx, esi	; 7631C
 mov eax, 15Eh	; 7631E
-call sub_176DB	; 76323
+call PrintFmt2	; 76323
 xor ecx, ecx	; 76328
 mov cx, word [byte edi+02h]	; 7632A
 mov ebx, str_fmt2d	; 7632E
 mov edx, esi	; 76333
 mov eax, 190h	; 76335
-call sub_176AE	; 7633A
+call PrintFmt1	; 7633A
 xor ecx, ecx	; 7633F
 mov cx, word [byte edi+04h]	; 76341
 mov ebx, str_fmt2d	; 76345
 mov edx, esi	; 7634A
 mov eax, 1AEh	; 7634C
-call sub_176AE	; 76351
+call PrintFmt1	; 76351
 mov ecx, dword [dword_C6956]	; 76356
 test ecx, ecx	; 7635C
 jne short loc_76375	; 7635E
@@ -3828,7 +3828,7 @@ mov cx, word [byte edi+06h]	; 76360
 mov ebx, str_fmt2d	; 76364
 mov edx, esi	; 76369
 mov eax, 1CCh	; 7636B
-call sub_176AE	; 76370
+call PrintFmt1	; 76370
 loc_76375:
 xor ecx, ecx	; 76375
 mov eax, dword [dword esp+098h]	; 76377
@@ -3836,14 +3836,14 @@ mov cx, word [byte eax+0Eh]	; 7637E
 mov ebx, str_fmt3d	; 76382
 mov edx, esi	; 76387
 mov eax, 1EAh	; 76389
-call sub_176AE	; 7638E
+call PrintFmt1	; 7638E
 xor ecx, ecx	; 76393
 mov eax, dword [dword esp+098h]	; 76395
 mov cx, word [byte eax+012h]	; 7639C
 mov ebx, asc_C690B	; 763A0
 mov edx, esi	; 763A5
 mov eax, 20Eh	; 763A7
-call sub_176AE	; 763AC
+call PrintFmt1	; 763AC
 xor edi, edi	; 763B1
 mov eax, dword [dword esp+098h]	; 763B3
 mov di, word [byte eax+014h]	; 763BA
@@ -3861,7 +3861,7 @@ mov ecx, eax	; 763D6
 mov ebx, asc_C6913	; 763D8
 mov edx, esi	; 763DD
 mov eax, 240h	; 763DF
-call sub_176DB	; 763E4
+call PrintFmt2	; 763E4
 add esi, byte 0Dh	; 763E9
 inc ebp	; 763EC
 loc_763ED:

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_91370 progbits alloc exec nowrite align=1
 extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, dword_D30A4, dword_D30A8, dword_D30B0
-extern dword_D30B8, dword_D30C8, dword_D30D0, dword_D3104, dword_D42A8, dword_D42B0, dword_D42B4, dword_D42BC
+extern dword_D30B8, dword_D30C8, dword_D30D0, dword_D3104, fontcolor, dword_D42B0, dword_D42B4, dword_D42BC
 extern dword_D42C8, dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, dword_D43E4
 extern loc_91260, off_D42A4, sub_8E9D4, sub_903F0, sub_B3ABC, sub_B4BC4, sub_B5D80, sub_B5E00
 extern sub_B69E4, sub_B6B3F
@@ -221,7 +221,7 @@ mov esi, dword [esp]	; 915A5
 mov al, byte [byte esi+03h]	; 915A8
 sub eax, byte 30h	; 915AB
 mov dword [byte esp+08h], eax	; 915AE
-mov eax, dword [dword_D42A8]	; 915B2
+mov eax, dword [fontcolor]	; 915B2
 mov dword [byte esp+038h], eax	; 915B7
 cmp dword [dword_D42BC], 464E544Dh	; 915BB
 sete al	; 915C5

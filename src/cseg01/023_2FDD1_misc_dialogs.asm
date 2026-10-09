@@ -4,10 +4,10 @@ bits 32
 section s_2FDD1 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1710, asc_C1718, str_extDB, asc_C811E, byte_C4B6C, byte_D42C3, byte_D42C5
 extern dword_C4B69, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, dword_C71E4, dword_C71E8
-extern dword_C71EC, dword_C71F0, dword_C71F4, dword_C71FC, dword_C7208, dword_C7210, dword_D42A8, dword_D42AC
+extern dword_C71EC, dword_C71F0, dword_C71F4, dword_C71FC, dword_C7208, dword_C7210, fontcolor, dword_D42AC
 extern dword_DC238, dword_DD678, dword_DD688, dword_DD68C, dword_DD690, dword_DD694, dword_DD698, dword_DD69C
 extern dword_DD6A0, dword_DD6A4, dword_DD770, dword_DD7A4, dword_EA0DC, fputchar, jctime, off_C74AB
-extern strlen_, sub_174C2, sub_175E2, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B88E
+extern strlen_, SetTextColors, PrintShadowText, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B88E
 extern sub_8CCA8, sub_8E9C0, sub_903F0, sub_90A40, sub_90D20, sub_90EC0, sub_91044, sub_91370
 extern sub_91400, sub_92CD0, sub_B2CBE, MouseSetPos, sub_B2DCA, sub_B3989, sub_B39A7, PollKey
 extern sub_B3D46, sub_B3D64, sub_B4BA8, sub_B4FAC, unk_C1720, unk_C1722, unk_C74B7, unknown_libname_4
@@ -214,7 +214,7 @@ mov eax, dword [dword esp+0110h]	; 2FFAF
 call sub_30E66	; 2FFB6
 mov edx, dword [dword_C71DC]	; 2FFBB
 mov eax, dword [dword_C71D8]	; 2FFC1
-call sub_174C2	; 2FFC6
+call SetTextColors	; 2FFC6
 mov edx, dword [dword_C71D4]	; 2FFCB
 push edx	; 2FFD1
 mov ebx, dword [dword_C71D0]	; 2FFD2
@@ -249,7 +249,7 @@ mov ecx, dword [dword esp+0110h]	; 3003B
 add eax, ecx	; 30042
 mov ebx, dword [esp]	; 30044
 mov edx, dword [dword esp+0108h]	; 30047
-call sub_175E2	; 3004E
+call PrintShadowText	; 3004E
 mov eax, dword [dword esp+0114h]	; 30053
 mov edx, ebp	; 3005A
 sub edx, eax	; 3005C
@@ -745,7 +745,7 @@ mov eax, dword [byte esp+03Ch]	; 305FE
 call sub_2FE49	; 30602
 mov edx, dword [dword_C71DC]	; 30607
 mov eax, dword [dword_C71D8]	; 3060D
-call sub_174C2	; 30612
+call SetTextColors	; 30612
 mov ecx, dword [byte esp+02Ch]	; 30617
 add ecx, byte 6	; 3061B
 mov edx, dword [byte esp+028h]	; 3061E
@@ -757,7 +757,7 @@ sar eax, 1	; 3062B
 add eax, dword [byte esp+030h]	; 3062D
 mov ebx, dword [byte esp+01Ch]	; 30631
 mov edx, ecx	; 30635
-call sub_175E2	; 30637
+call PrintShadowText	; 30637
 mov eax, dword [dword_C71D0]	; 3063C
 push eax	; 30641
 mov edx, dword [dword_C71D4]	; 30642
@@ -1274,7 +1274,7 @@ sar eax, 1	; 30BDF
 add eax, dword [esi]	; 30BE1
 mov ebx, edi	; 30BE3
 mov edx, ebp	; 30BE5
-call sub_175E2	; 30BE7
+call PrintShadowText	; 30BE7
 loc_30BEC:
 pop ebp	; 30BEC
 pop edi	; 30BED
@@ -1761,7 +1761,7 @@ add eax, byte 8	; 31109
 mov dword [byte esp+018h], eax	; 3110C
 mov edx, dword [dword_C71DC]	; 31110
 mov eax, dword [dword_C71D8]	; 31116
-call sub_174C2	; 3111B
+call SetTextColors	; 3111B
 xor esi, esi	; 31120
 jmp short loc_3115F	; 31122
 loc_31124:
@@ -1781,7 +1781,7 @@ sar eax, 1	; 31146
 mov ebx, dword [byte ebp+00h]	; 31148
 add eax, edi	; 3114B
 mov edx, dword [byte esp+018h]	; 3114D
-call sub_175E2	; 31151
+call PrintShadowText	; 31151
 mov eax, dword [byte esp+014h]	; 31156
 add dword [byte esp+018h], eax	; 3115A
 inc esi	; 3115E
@@ -2162,7 +2162,7 @@ add edi, dword [dword_DD6A0]	; 3156B
 mov ebp, dword [dword_DD68C]	; 31571
 sub edi, ebp	; 31577
 sub edi, byte 2	; 31579
-mov edx, dword [dword_D42A8]	; 3157C
+mov edx, dword [fontcolor]	; 3157C
 push edx	; 31582
 push ebp	; 31583
 push esi	; 31584

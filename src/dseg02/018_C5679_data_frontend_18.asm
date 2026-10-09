@@ -37,7 +37,7 @@ global byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, b
 global byte_C6F6C, byte_C7218, dword_C56C4, dword_C56E4, hudclockmin, hudclocksec, hudclockhund, dword_C5710
 global dword_C5714, dword_C5718, dword_C583C, dword_C5840, dword_C5844, dword_C5848, hudhomeline, hudawayline
 global dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862, dword_C5886, dword_C588A
-global dword_C6410, dword_C6414, dword_C6418, dword_C641C, dword_C6420, dword_C6430, dword_C65A8, dword_C65AC
+global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, dword_C65A8, dword_C65AC
 global dword_C65B0, dword_C65B4, dword_C65B8, dword_C65BC, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC
 global dword_C65D0, dword_C65F4, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dword_C66C8, dword_C66D0
 global dword_C66D4, dword_C6718, dword_C679D, dword_C67B9, dword_C67BD, dword_C6956, dword_C695A, dword_C6A60
@@ -737,17 +737,17 @@ dd unk_C62D3
 dd unk_C6363
 dd unk_C638C
 db 00h,00h,00h
-dword_C6410:
+textgrid:
 db 00h,00h,00h,00h
-dword_C6414:
+textgridon:
 db 00h,00h,00h,00h
-dword_C6418:
+textcolor:
 db 0Fh,00h,00h,00h
-dword_C641C:
+textshadow:
 db 00h,00h,00h,00h
-dword_C6420:
+textoutlinedx:
 db 0FFh,0FFh,0FFh,0FFh,01h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_C6430:
+textoutlinedy:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh,01h,00h,00h,00h
 unk_C6440:
 db 054h,068h,065h,020h,066h,069h,06Ch,065h,020h,079h,06Fh,075h,020h,073h,070h,065h

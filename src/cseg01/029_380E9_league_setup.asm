@@ -9,7 +9,7 @@ extern divisionteams, musicon, leagueflags, savedname, byte_ED858, byte_ED979, b
 extern songdata, dword_C786C, dword_C7A34, dword_C87B0, musichandle, dword_D2C6B, dword_D8B74, musicslot
 extern dword_DC238, dword_DD798, leaguemaster, leaguesaved, dword_EA0DC, jctime, memcpy_, memset_
 extern off_C8055, strcat_, strcmp_, strcpy_, stricmp_, strlen_, MakePath, leaguedbnames
-extern FileOpenRead, FileClose, FileReadAt, FileWriteAt, ReadTeamRec, sub_174C2, sub_2FEDF, sub_303FB
+extern FileOpenRead, FileClose, FileReadAt, FileWriteAt, ReadTeamRec, SetTextColors, sub_2FEDF, sub_303FB
 extern sub_30A0C, MessageBox, sub_37B92, sub_37C53, sub_37D6A, sub_37E5B, sub_37EA6, sub_37FBA
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
 extern sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E
@@ -925,7 +925,7 @@ call sub_B392C	; 38DD1
 add esp, byte 4	; 38DD6
 mov edx, 43h	; 38DD9
 mov eax, 40h	; 38DDE
-call sub_174C2	; 38DE3
+call SetTextColors	; 38DE3
 push byte 0	; 38DE8
 push byte 0	; 38DEA
 push esi	; 38DEC

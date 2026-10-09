@@ -28,7 +28,7 @@ extern memset_, teamcitynames, leaguedbnames
 extern menu_r1_freeagents, menu_r2_freeagents, menu_r1_editlines, menu_r2_editlines, off_D0880, off_D08B9, off_D09DB, off_D0A04
 extern off_D0AC2, off_D1077, off_D3078, qword_C2CE0, qword_C2CE8, randomd0, sprintf_, strcat_
 extern strcmp_, strcpy_, strlen_, strlwr_, strupr_, MakePath, FileOpenWrite, FileClose
-extern FileWriteAt, sub_174C2, sub_17573, sub_175E2, sub_17636, sub_176AE, sub_303FB, sub_30A39
+extern FileWriteAt, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, sub_303FB, sub_30A39
 extern sub_30AE2, sub_30BF3, sub_30D0E, MessageBox, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
 extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_6BF4A, sub_6C043, sub_6C96C, sub_6CA8F, CarTeamRecPtr
 extern TeamRecPtr, KeyDbPtr, sub_6D299, InputDialog, sub_737E1, sub_76429, sub_78BE7, sub_8CCA8
@@ -66,7 +66,7 @@ call SetDrawBitmap	; 6D311
 add esp, byte 4	; 6D316
 mov edx, 43h	; 6D319
 mov eax, 40h	; 6D31E
-call sub_174C2	; 6D323
+call SetTextColors	; 6D323
 push byte 42h	; 6D328
 mov ecx, 41h	; 6D32A
 mov ebx, 40h	; 6D32F
@@ -201,7 +201,7 @@ sar eax, 1	; 6D51B
 add eax, 0B4h	; 6D51D
 mov ebx, esp	; 6D522
 mov edx, 99h	; 6D524
-call sub_175E2	; 6D529
+call PrintShadowText	; 6D529
 mov edi, dword [rosterteamrec]	; 6D52E
 add edi, 2DCh	; 6D534
 mov esi, 0B0h	; 6D53A
@@ -210,7 +210,7 @@ xor ecx, ecx	; 6D53F
 mov ebx, dword [nosplit ecx*4+off_D0AC2]	; 6D541
 mov edx, esi	; 6D548
 mov eax, 0D2h	; 6D54A
-call sub_175E2	; 6D54F
+call PrintShadowText	; 6D54F
 xor eax, eax	; 6D554
 mov al, byte [dword ecx+byte_D0AE6]	; 6D556
 mov al, byte [edi+eax]	; 6D55C
@@ -224,7 +224,7 @@ add esp, byte 0Ch	; 6D574
 mov ebx, esp	; 6D577
 mov edx, esi	; 6D579
 mov eax, 1A9h	; 6D57B
-call sub_175E2	; 6D580
+call PrintShadowText	; 6D580
 inc ecx	; 6D585
 add esi, byte 0Dh	; 6D586
 cmp ecx, byte 9	; 6D589
@@ -2196,7 +2196,7 @@ shl eax, 2	; 6ED19
 add eax, edx	; 6ED1C
 add eax, byte 1Fh	; 6ED1E
 mov edx, str_ErrorsFoundInDatabases	; 6ED21
-call sub_17573	; 6ED26
+call PrintCenteredText	; 6ED26
 add dword [esi], byte 2	; 6ED2B
 mov dword [edi], 0	; 6ED2E
 .x:
@@ -2366,7 +2366,7 @@ shl ecx, 2	; 6EF25
 add ecx, eax	; 6EF28
 lea eax, [byte ecx+01Fh]	; 6EF2A
 mov edx, esp	; 6EF2D
-call sub_17573	; 6EF2F
+call PrintCenteredText	; 6EF2F
 mov ecx, dword [byte ebp+00h]	; 6EF34
 inc ecx	; 6EF37
 mov dword [byte ebp+00h], ecx	; 6EF38
@@ -3353,7 +3353,7 @@ mov dword [byte esp+04h], byte_D0F94	; 6FA95
 mov ebx, str_Shoots	; 6FA9D
 mov edx, esi	; 6FAA2
 mov eax, 1Eh	; 6FAA4
-call sub_175E2	; 6FAA9
+call PrintShadowText	; 6FAA9
 cmp byte [byte_D0F94], 0	; 6FAAE
 je short .1	; 6FAB5
 mov ebx, str_spL	; 6FAB7
@@ -3363,7 +3363,7 @@ mov ebx, str_spR	; 6FABE
 .2:
 mov edx, esi	; 6FAC3
 mov eax, 0C8h	; 6FAC5
-call sub_175E2	; 6FACA
+call PrintShadowText	; 6FACA
 xor ebp, ebp	; 6FACF
 mov edi, 1	; 6FAD1
 add esi, byte 0Dh	; 6FAD6
@@ -3376,7 +3376,7 @@ sub esi, byte 68h	; 6FAE3
 mov ebx, dword [nosplit edi*4+off_D0880]	; 6FAE6
 lea eax, [byte ebp+01Eh]	; 6FAED
 mov edx, esi	; 6FAF0
-call sub_175E2	; 6FAF2
+call PrintShadowText	; 6FAF2
 mov eax, dword [byte esp+04h]	; 6FAF7
 xor ebx, ebx	; 6FAFB
 mov bl, byte [edi+eax]	; 6FAFD
@@ -3389,7 +3389,7 @@ mov dword [esp], ebx	; 6FB10
 mov ebx, str_fmt3d	; 6FB13
 mov edx, esi	; 6FB18
 mov eax, dword [esp]	; 6FB1A
-call sub_176AE	; 6FB1D
+call PrintFmt1	; 6FB1D
 add esi, byte 0Dh	; 6FB22
 inc edi	; 6FB25
 cmp edi, byte 0Fh	; 6FB26
@@ -3419,7 +3419,7 @@ mov dword [byte esp+04h], byte_D0FE0	; 6FB4D
 mov ebx, str_GloveHand	; 6FB55
 mov edx, esi	; 6FB5A
 mov eax, 1Eh	; 6FB5C
-call sub_175E2	; 6FB61
+call PrintShadowText	; 6FB61
 cmp byte [byte_D0FE0], 0	; 6FB66
 je short .1	; 6FB6D
 mov ebx, str_spL	; 6FB6F
@@ -3429,7 +3429,7 @@ mov ebx, str_spR	; 6FB76
 .2:
 mov edx, esi	; 6FB7B
 mov eax, 0C8h	; 6FB7D
-call sub_175E2	; 6FB82
+call PrintShadowText	; 6FB82
 xor ebp, ebp	; 6FB87
 mov edi, 1	; 6FB89
 add esi, byte 0Dh	; 6FB8E
@@ -3442,7 +3442,7 @@ sub esi, byte 4Eh	; 6FB9B
 mov ebx, dword [nosplit edi*4+off_D09DB]	; 6FB9E
 lea eax, [byte ebp+01Eh]	; 6FBA5
 mov edx, esi	; 6FBA8
-call sub_175E2	; 6FBAA
+call PrintShadowText	; 6FBAA
 mov eax, dword [byte esp+04h]	; 6FBAF
 xor ebx, ebx	; 6FBB3
 mov bl, byte [edi+eax]	; 6FBB5
@@ -3455,7 +3455,7 @@ mov dword [esp], ebx	; 6FBC8
 mov ebx, str_fmt3d	; 6FBCB
 mov edx, esi	; 6FBD0
 mov eax, dword [esp]	; 6FBD2
-call sub_176AE	; 6FBD5
+call PrintFmt1	; 6FBD5
 add esi, byte 0Dh	; 6FBDA
 inc edi	; 6FBDD
 cmp edi, byte 0Bh	; 6FBDE
@@ -4073,7 +4073,7 @@ call sub_8EA18	; 7034D
 add esp, byte 4	; 70352
 mov edx, 42h	; 70355
 mov eax, 40h	; 7035A
-call sub_174C2	; 7035F
+call SetTextColors	; 7035F
 mov edi, esp	; 70364
 mov esi, str_FreeAgent	; 70366
 movsd	; 7036B
@@ -4090,10 +4090,10 @@ sub edx, eax	; 70382
 mov eax, edx	; 70384
 mov ebx, esp	; 70386
 mov edx, 52h	; 70388
-call sub_17636	; 7038D
+call PrintOutlinedText	; 7038D
 mov edx, 42h	; 70392
 mov eax, 40h	; 70397
-call sub_174C2	; 7039C
+call SetTextColors	; 7039C
 lea eax, [byte ebp+013h]	; 703A1
 push eax	; 703A4
 lea eax, [byte ebp+03h]	; 703A5
@@ -4105,7 +4105,7 @@ call sprintf_	; 703B3
 add esp, byte 10h	; 703B8
 mov edx, esp	; 703BB
 mov eax, 98h	; 703BD
-call sub_17573	; 703C2
+call PrintCenteredText	; 703C2
 xor eax, eax	; 703C7
 mov al, byte [byte ebp+01h]	; 703C9
 push eax	; 703CC
@@ -4151,7 +4151,7 @@ call strcat_	; 70423
 .12:
 mov edx, esp	; 70428
 mov eax, 0B2h	; 7042A
-call sub_17573	; 7042F
+call PrintCenteredText	; 7042F
 mov ecx, dword [dword_D8B74]	; 70434
 push ecx	; 7043A
 call sub_8EA18	; 7043B
@@ -4172,7 +4172,7 @@ call sprintf_	; 70464
 add esp, byte 0Ch	; 70469
 mov edx, esp	; 7046C
 mov eax, 110h	; 7046E
-call sub_17573	; 70473
+call PrintCenteredText	; 70473
 mov edx, 2	; 70478
 mov eax, unk_D0C5C	; 7047D
 call sub_30AE2	; 70482

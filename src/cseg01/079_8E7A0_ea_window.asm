@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_8E7A0 progbits alloc exec nowrite align=1
 extern asc_C3F74, asc_C3F80, byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, byte_D42C5
-extern byte_D42C6, dword_D42A8, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42BC, dword_D42C8
+extern byte_D42C6, fontcolor, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42BC, dword_D42C8
 extern dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, off_D42A4, sub_8CCA8
 extern sub_8CD04, sub_8D728, sub_98D20, sub_98E50, FatalError, sub_B3B19, sub_B3C60, sub_B3C74
 extern sub_B3FC2
@@ -229,7 +229,7 @@ ret	; 8E9B9
 db 00h,00h,00h,00h,00h,00h
 sub_8E9C0:
 mov eax, dword [byte esp+04h]	; 8E9C0
-mov dword [dword_D42A8], eax	; 8E9C4
+mov dword [fontcolor], eax	; 8E9C4
 mov eax, dword [byte esp+08h]	; 8E9C9
 mov dword [dword_D42AC], eax	; 8E9CD
 ret	; 8E9D2

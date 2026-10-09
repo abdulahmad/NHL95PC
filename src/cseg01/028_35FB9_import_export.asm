@@ -15,7 +15,7 @@ extern dword_DDD6C, awtmlines, startm_m2, hmtmlines, hmtmstruct
 extern fputchar, jctime, memset_, crestnames, off_C800C, leaguedbnames
 extern sprintf_, strcat_, strcpy_, SetupControllers, PlayGame, FileExists, MakePath
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, ReadKeyRec, ReadSeasonRec
-extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, sub_174C2, sub_17573, sub_175E2, sub_1BEFD
+extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, SetTextColors, PrintCenteredText, PrintShadowText, sub_1BEFD
 extern sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A, sub_29F28, sub_30A0C, sub_30F12
 extern MessageBox, sub_34821, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, WriteSchedGame, WriteTeamRec
 extern sub_3A31E, AskTeamPassword, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, ReadLeagueInfo, sub_3DAB9
@@ -2056,7 +2056,7 @@ push ebx	; 37C65
 push ecx	; 37C66
 mov edx, dword [dword_C71DC]	; 37C67
 mov eax, dword [dword_C71D8]	; 37C6D
-call sub_174C2	; 37C72
+call SetTextColors	; 37C72
 xor edx, edx	; 37C77
 mov dword [byte esp+014h], edx	; 37C79
 loc_37C7D:
@@ -2132,7 +2132,7 @@ sub esi, eax	; 37D38
 mov ebx, dword [byte esp+010h]	; 37D3A
 mov edx, ebp	; 37D3E
 mov eax, esi	; 37D40
-call sub_175E2	; 37D42
+call PrintShadowText	; 37D42
 loc_37D47:
 inc edi	; 37D47
 cmp edi, byte 7	; 37D48
@@ -2385,7 +2385,7 @@ lea eax, [byte esp+074h]	; 37FD0
 call strcpy_	; 37FD4
 lea edx, [byte esp+074h]	; 37FD9
 mov eax, 28h	; 37FDD
-call sub_17573	; 37FE2
+call PrintCenteredText	; 37FE2
 xor ecx, ecx	; 37FE7
 mov ebx, asc_C1885	; 37FE9
 cmp byte [byte_ED98E], 1	; 37FEE

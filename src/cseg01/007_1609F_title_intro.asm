@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_1609F progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, _dos_gettime_, _nfree_, _nmalloc_, asc_C085A, asc_C0861, asc_C0866
-extern asc_C086B, asc_C0870, asc_C0875, asc_C087A, asc_C0882, asc_C088A, asc_C0892, asc_C0897
-extern asc_C089D, asc_C08A6, asc_C08AB, asc_C08B0, asc_C08B5, asc_C08BE, asc_C08C7, asc_C08D0
-extern asc_C08D6, asc_C08DB, asc_C08E0, asc_C08E7, asc_C08F0, asc_C08F8, asc_C0900, asc_C0909
-extern asc_C8140, musicon, byte_D42C3, byte_ED7F0, byte_ED833, byte_ED834, byte_ED8D0, byte_ED8F3
+extern __CHK, __STOSB, _dos_gettime_, _nfree_, _nmalloc_, str_Eascrn, str_Pal4, str_Scrn2
+extern str_Msk1, str_MASK, str_Iff2, str_Title30, str_Mttitle, str_Adtitle, str_Cmv, str_Title
+extern str_Pioneer1, str_Pl2, str_Pl1, str_Bkgd3, str_Pioneer2, str_Pioneer4, str_Pioneer3, str_FlaD
+extern str_Pion, str_Pio, str_Eaopen, str_Easports, str_Backwin, str_Credits, str_Rockditi, str_Shp0
+extern str_KMS, musicon, byte_D42C3, byte_ED7F0, byte_ED833, byte_ED834, byte_ED8D0, byte_ED8F3
 extern byte_ED8F4, byte_ED8F6, byte_ED8F7, byte_ED8F8, byte_ED92D, byte_ED9A6, byte_ED9A8, byte_ED9AD
-extern byte_ED9E9, byte_ED9EA, dword_C4CFC, demomode, dword_C541F, dword_C588A, dword_C6410, dword_C6414
-extern dword_C6418, dword_C641C, dword_C6420, dword_C6430, songdata, dword_CC0EC, dword_CCC94, musicslot
-extern musichandle, dword_D2C6B, dword_D42A8, dword_D8B68, dword_D8B74, dword_DC238, dword_DC33C, dword_ED7B0
+extern byte_ED9E9, byte_ED9EA, dword_C4CFC, demomode, dword_C541F, dword_C588A, textgrid, textgridon
+extern textcolor, textshadow, textoutlinedx, textoutlinedy, songdata, dword_CC0EC, dword_CCC94, musicslot
+extern musichandle, dword_D2C6B, fontcolor, dword_D8B68, dword_D8B74, dword_DC238, dword_DC33C, dword_ED7B0
 extern fputchar, jctime, RunDemoGame_x, memcpy_, memset_, off_C6399, rand_, sprintf_
 extern srand_, strlen_, MakePath, RunDemoGame, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
@@ -21,25 +21,10 @@ extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903
 extern sub_9087C, sub_9121C, sub_91284, sub_912C8, sub_9132C, sub_91370, sub_913B4, sub_91400
 extern sub_91964, sub_B30B4, sub_B392C, sub_B395C, sub_B396E, sub_B3989, sub_B3999, sub_B39A7
 extern sub_B3A88, sub_B3AA1, sub_B4B88, sub_B4BA8, SetDrawBitmap, sub_B4F8C, unk_C4E30, unk_C638C
-global loc_160EA, loc_160EC, loc_16132, loc_16144, loc_16147, loc_16201, loc_16203, loc_16222
-global loc_16246, loc_1624A, loc_16265, loc_16267, loc_16284, loc_1629F, loc_162A1, loc_162ED
-global loc_162FD, loc_16341, loc_16359, loc_16369, loc_16381, loc_163AF, loc_163D4, loc_16401
-global loc_16411, loc_16493, loc_164CE, loc_164E8, loc_16521, loc_165BD, loc_165C6, loc_165CB
-global loc_16619, loc_16634, loc_16639, loc_16649, loc_1665B, loc_1666F, loc_166AC, loc_166CF
-global loc_166FE, loc_1670D, loc_16766, loc_167B7, loc_167B9, loc_16850, loc_16852, loc_168A7
-global loc_168A9, loc_168E3, loc_168E5, loc_1691F, loc_16921, loc_1695E, loc_1697D, loc_16988
-global loc_169AC, loc_169BF, loc_169C7, loc_169E3, loc_169F1, loc_16A21, loc_16A3B, loc_16A89
-global loc_16A91, loc_16AA9, loc_16AD9, loc_16B4A, loc_16B4F, loc_16B95, loc_16B9D, loc_16BB3
-global loc_16BE3, loc_16C1D, loc_16C22, loc_16C41, loc_16CE9, loc_16CFD, loc_16D0A, loc_16D1D
-global loc_16D33, loc_16D49, loc_16D7A, loc_16D8E, loc_16DA2, loc_16DC7, loc_16DFC, loc_16E14
-global loc_16E16, loc_16EA0, loc_16EA2, loc_16ED8, loc_16F0A, loc_16F37, loc_16F6D, loc_17018
-global loc_1701A, loc_170FA, loc_170FC, loc_1713B, loc_1715F, loc_17163, loc_1717E, loc_17180
-global loc_171BA, loc_171BC, loc_171E7, loc_1720A, loc_17223, loc_17258, loc_17297, loc_17299
-global loc_1731E, loc_17335, loc_17367, loc_1739D, loc_173C0, loc_173D8, loc_17415, loc_1743D
-global loc_1746B, loc_17488, loc_1765A, loc_17735, loc_17773, loc_17813, sub_1609F, sub_1672A
-global sub_16F9A, sub_174C2, sub_174D8, sub_17573, sub_175E2, sub_17636, sub_176AE, sub_176DB
-global sub_17711, sub_17756, sub_1777E, sub_17793
-sub_1609F:
+global TitleScreen, RunIntro
+global ShowCredits, SetTextColors, RenderTextLine, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2
+global TextGridOpen, TextGridFree, TextGridOff, TextGridPut
+TitleScreen:
 push dword 378h	; 1609F
 call __CHK	; 160A4
 push ebx	; 160A9
@@ -57,14 +42,14 @@ push byte 0	; 160C8
 call sub_B392C	; 160CA
 add esp, byte 4	; 160CF
 xor ecx, ecx	; 160D2
-mov ebx, asc_C085A	; 160D4
+mov ebx, str_Eascrn	; 160D4
 cmp byte [byte_ED834], 1	; 160D9
-jne short loc_160EA	; 160E0
+jne short .1	; 160E0
 mov edx, dword [dword_D2C6B]	; 160E2
-jmp short loc_160EC	; 160E8
-loc_160EA:
+jmp short .2	; 160E8
+.1:
 xor edx, edx	; 160EA
-loc_160EC:
+.2:
 lea eax, [dword esp+0300h]	; 160EC
 call MakePath	; 160F3
 push byte 0	; 160F8
@@ -73,7 +58,7 @@ push eax	; 16101
 call sub_8E83C	; 16102
 add esp, byte 8	; 16107
 mov dword [dword esp+0320h], eax	; 1610A
-push asc_C0861	; 16111
+push str_Pal4	; 16111
 push eax	; 16116
 call sub_B30B4	; 16117
 add esp, byte 8	; 1611C
@@ -83,21 +68,21 @@ mov eax, esp	; 16127
 call memcpy_	; 16129
 xor eax, eax	; 1612E
 mov dh, 3Fh	; 16130
-loc_16132:
+.3:
 mov dl, byte [esp+eax]	; 16132
 cmp dl, 3Bh	; 16135
-jge short loc_16144	; 16138
+jge short .4	; 16138
 mov bl, dl	; 1613A
 add bl, 5	; 1613C
 mov byte [esp+eax], bl	; 1613F
-jmp short loc_16147	; 16142
-loc_16144:
+jmp short .5	; 16142
+.4:
 mov byte [esp+eax], dh	; 16144
-loc_16147:
+.5:
 inc eax	; 16147
 cmp eax, 300h	; 16148
-jl short loc_16132	; 1614D
-push asc_C0866	; 1614F
+jl short TitleScreen.3	; 1614D
+push str_Scrn2	; 1614F
 mov ebx, dword [dword esp+0324h]	; 16154
 push ebx	; 1615B
 call sub_B30B4	; 1615C
@@ -105,7 +90,7 @@ add esp, byte 8	; 16161
 push eax	; 16164
 call sub_9121C	; 16165
 add esp, byte 4	; 1616A
-push asc_C086B	; 1616D
+push str_Msk1	; 1616D
 mov ecx, dword [dword esp+0324h]	; 16172
 push ecx	; 16179
 call sub_B30B4	; 1617A
@@ -113,7 +98,7 @@ mov ebp, eax	; 1617F
 add esp, byte 8	; 16181
 push byte 20h	; 16184
 push dword 9C51h	; 16186
-push asc_C0870	; 1618B
+push str_MASK	; 1618B
 call sub_8CCA8	; 16190
 add esp, byte 0Ch	; 16195
 mov dword [dword esp+033Ch], eax	; 16198
@@ -135,61 +120,61 @@ push esi	; 161CB
 call jctime	; 161CC
 add esp, byte 4	; 161D1
 cmp byte [musicon], 0	; 161D4
-je short loc_16222	; 161DB
+je short .8	; 161DB
 cmp dword [songdata], byte 0	; 161DD
-jne short loc_16222	; 161E4
-mov ecx, asc_C0875	; 161E6
-mov ebx, asc_C087A	; 161EB
+jne short .8	; 161E4
+mov ecx, str_Iff2	; 161E6
+mov ebx, str_Title30	; 161EB
 cmp byte [byte_ED9A6], 1	; 161F0
-jne short loc_16201	; 161F7
+jne short .6	; 161F7
 mov edx, dword [dword_D2C6B]	; 161F9
-jmp short loc_16203	; 161FF
-loc_16201:
+jmp short .7	; 161FF
+.6:
 xor edx, edx	; 16201
-loc_16203:
+.7:
 lea eax, [dword esp+0300h]	; 16203
 call MakePath	; 1620A
 lea eax, [dword esp+0300h]	; 1620F
 call sub_8F98F	; 16216
 mov dword [songdata], eax	; 1621B
-jmp short loc_16284	; 16220
-loc_16222:
+jmp short .13	; 16220
+.8:
 cmp dword [dword_C541F], byte 8	; 16222
-jne short loc_1624A	; 16229
-mov ecx, asc_C8140	; 1622B
-mov ebx, asc_C0882	; 16230
+jne short .10	; 16229
+mov ecx, str_KMS	; 1622B
+mov ebx, str_Mttitle	; 16230
 cmp byte [byte_ED8D0], 1	; 16235
-jne short loc_16246	; 1623C
+jne short .9	; 1623C
 mov edx, dword [dword_D2C6B]	; 1623E
-jmp short loc_16267	; 16244
-loc_16246:
+jmp short .12	; 16244
+.9:
 xor edx, edx	; 16246
-jmp short loc_16267	; 16248
-loc_1624A:
-mov ecx, asc_C8140	; 1624A
-mov ebx, asc_C088A	; 1624F
+jmp short .12	; 16248
+.10:
+mov ecx, str_KMS	; 1624A
+mov ebx, str_Adtitle	; 1624F
 cmp byte [byte_ED8D0], 1	; 16254
-jne short loc_16265	; 1625B
+jne short .11	; 1625B
 mov edx, dword [dword_D2C6B]	; 1625D
-jmp short loc_16267	; 16263
-loc_16265:
+jmp short .12	; 16263
+.11:
 xor edx, edx	; 16265
-loc_16267:
+.12:
 lea eax, [dword esp+0300h]	; 16267
 call MakePath	; 1626E
 lea eax, [dword esp+0300h]	; 16273
 call sub_8F13B	; 1627A
 mov dword [dword_DC33C], eax	; 1627F
-loc_16284:
-mov ecx, asc_C0892	; 16284
-mov ebx, asc_C0897	; 16289
+.13:
+mov ecx, str_Cmv	; 16284
+mov ebx, str_Title	; 16289
 cmp byte [byte_ED7F0], 1	; 1628E
-jne short loc_1629F	; 16295
+jne short .14	; 16295
 mov edx, dword [dword_D2C6B]	; 16297
-jmp short loc_162A1	; 1629D
-loc_1629F:
+jmp short .15	; 1629D
+.14:
 xor edx, edx	; 1629F
-loc_162A1:
+.15:
 lea eax, [dword esp+0300h]	; 162A1
 call MakePath	; 162A8
 push byte 20h	; 162AD
@@ -208,28 +193,28 @@ mov edi, eax	; 162DE
 push dword 96h	; 162E0
 call sub_B3989	; 162E5
 add esp, byte 4	; 162EA
-loc_162ED:
+.16:
 call sub_B39A7	; 162ED
 test eax, eax	; 162F2
-jne short loc_162FD	; 162F4
+jne short .17	; 162F4
 call sub_1B2A7	; 162F6
-jmp short loc_162ED	; 162FB
-loc_162FD:
+jmp short TitleScreen.16	; 162FB
+.17:
 mov dword [dword esp+0334h], 0Ah	; 162FD
 xor bl, bl	; 16308
 mov byte [esp], bl	; 1630A
 mov byte [byte esp+01h], bl	; 1630D
 mov byte [byte esp+02h], bl	; 16311
 cmp byte [musicon], 0	; 16315
-je short loc_16369	; 1631C
+je short .20	; 1631C
 cmp dword [songdata], byte 0	; 1631E
-je short loc_16341	; 16325
+je short .18	; 16325
 mov edx, dword [musichandle]	; 16327
 mov eax, dword [songdata]	; 1632D
 mov ecx, 4Ch	; 16332
 mov ebx, 3	; 16337
 call sub_8FB8E	; 1633C
-loc_16341:
+.18:
 mov ebx, 10h	; 16341
 mov edx, esp	; 16346
 xor eax, eax	; 16348
@@ -237,20 +222,20 @@ call sub_76429	; 1634A
 push byte 5Ah	; 1634F
 call sub_B3989	; 16351
 add esp, byte 4	; 16356
-loc_16359:
+.19:
 call sub_B39A7	; 16359
 test eax, eax	; 1635E
-jne short loc_16381	; 16360
+jne short .21	; 16360
 call sub_1B2A7	; 16362
-jmp short loc_16359	; 16367
-loc_16369:
+jmp short TitleScreen.19	; 16367
+.20:
 mov eax, dword [dword_DC33C]	; 16369
 call PlayDigiSample	; 1636E
 mov ebx, 10h	; 16373
 mov edx, esp	; 16378
 xor eax, eax	; 1637A
 call sub_76429	; 1637C
-loc_16381:
+.21:
 xor esi, esi	; 16381
 call sub_B395C	; 16383
 mov dword [dword esp+0344h], eax	; 16388
@@ -259,7 +244,7 @@ mov dword [dword esp+0338h], 1	; 16396
 xor ebp, ebp	; 163A1
 call sub_B396E	; 163A3
 mov dword [dword esp+0348h], esi	; 163A8
-loc_163AF:
+.22:
 mov edx, dword [dword esp+0340h]	; 163AF
 push edx	; 163B6
 call sub_1B8AC	; 163B7
@@ -267,25 +252,25 @@ mov edx, eax	; 163BC
 add esp, byte 4	; 163BE
 mov dword [dword esp+0324h], eax	; 163C1
 cmp eax, byte 0FFFFFFFFh	; 163C8
-jne short loc_163D4	; 163CB
+jne short .23	; 163CB
 mov esi, eax	; 163CD
-jmp near loc_16639	; 163CF
-loc_163D4:
+jmp near .35	; 163CF
+.23:
 test eax, eax	; 163D4
-je near loc_16634	; 163D6
+je near .34	; 163D6
 call ReadBE32	; 163DC
 mov dword [dword esp+0330h], eax	; 163E1
 cmp eax, 4D564966h	; 163E8
-jb short loc_16401	; 163ED
-jbe short loc_16411	; 163EF
+jb short .24	; 163ED
+jbe short .25	; 163EF
 cmp eax, 4D564968h	; 163F1
-je near loc_164E8	; 163F6
-jmp near loc_165C6	; 163FC
-loc_16401:
+je near .28	; 163F6
+jmp near .31	; 163FC
+.24:
 cmp eax, 4D564965h	; 16401
-je near loc_165BD	; 16406
-jmp near loc_165C6	; 1640C
-loc_16411:
+je near .30	; 16406
+jmp near .31	; 1640C
+.25:
 mov eax, dword [dword esp+0334h]	; 16411
 add dword [dword esp+034Ch], eax	; 16418
 inc ebp	; 1641F
@@ -295,7 +280,7 @@ mov dword [dword esp+0328h], eax	; 16427
 call sub_B395C	; 1642E
 sub eax, dword [dword esp+0344h]	; 16433
 cmp eax, dword [dword esp+034Ch]	; 1643A
-jge short loc_16493	; 16441
+jge short .26	; 16441
 mov ecx, dword [dword esp+032Ch]	; 16443
 push ecx	; 1644A
 call SetDrawBitmap	; 1644B
@@ -318,32 +303,32 @@ mov ebx, dword [byte eax+02Ch]	; 16487
 push ebx	; 1648A
 call sub_91284	; 1648B
 add esp, byte 0Ch	; 16490
-loc_16493:
+.26:
 cmp dword [dword esp+0338h], byte 1	; 16493
-jne near loc_165CB	; 1649B
+jne near .32	; 1649B
 cmp dword [dword esp+0348h], byte 0	; 164A1
-jne near loc_165CB	; 164A9
+jne near .32	; 164A9
 cmp byte [musicon], 0	; 164AF
-je short loc_164CE	; 164B6
+je short .27	; 164B6
 cmp dword [dword_C588A], byte 0	; 164B8
-je short loc_164CE	; 164BF
+je short .27	; 164BF
 xor ebx, ebx	; 164C1
 mov dword [dword_C588A], ebx	; 164C3
 call sub_59C1D	; 164C9
-loc_164CE:
+.27:
 xor ecx, ecx	; 164CE
 mov dword [dword esp+0338h], ecx	; 164D0
 call sub_B395C	; 164D7
 mov dword [dword esp+0344h], eax	; 164DC
-jmp near loc_165CB	; 164E3
-loc_164E8:
+jmp near .32	; 164E3
+.28:
 mov eax, edi	; 164E8
 call sub_1AD16	; 164EA
 mov eax, edi	; 164EF
 call sub_1B092	; 164F1
 mov ebx, dword [dword esp+032Ch]	; 164F6
 test ebx, ebx	; 164FD
-jne short loc_16521	; 164FF
+jne short .29	; 164FF
 push ebx	; 16501
 mov eax, edi	; 16502
 call sub_1B0AD	; 16504
@@ -354,7 +339,7 @@ push eax	; 16511
 call sub_B4F8C	; 16512
 add esp, byte 0Ch	; 16517
 mov dword [dword esp+032Ch], eax	; 1651A
-loc_16521:
+.29:
 mov ecx, dword [dword esp+032Ch]	; 16521
 push ecx	; 16528
 call SetDrawBitmap	; 16529
@@ -402,13 +387,13 @@ mov edx, eax	; 165AD
 sar edx, 1Fh	; 165AF
 idiv ebx	; 165B2
 mov dword [dword esp+0334h], eax	; 165B4
-jmp short loc_165CB	; 165BB
-loc_165BD:
+jmp short .32	; 165BB
+.30:
 inc dword [dword esp+0348h]	; 165BD
-jmp short loc_165CB	; 165C4
-loc_165C6:
+jmp short .32	; 165C4
+.31:
 mov esi, 0FFFFFFFFh	; 165C6
-loc_165CB:
+.32:
 mov edx, dword [dword esp+0324h]	; 165CB
 push edx	; 165D2
 mov ebx, dword [dword esp+0344h]	; 165D3
@@ -417,50 +402,50 @@ call sub_1B92E	; 165DB
 add esp, byte 8	; 165E0
 call sub_1B2A7	; 165E3
 cmp dword [dword esp+0330h], 4D564966h	; 165E8
-jne short loc_16639	; 165F3
+jne short .35	; 165F3
 call sub_B395C	; 165F5
 sub eax, dword [dword esp+0344h]	; 165FA
 mov ebx, dword [dword esp+034Ch]	; 16601
 cmp eax, ebx	; 16608
-jge short loc_16639	; 1660A
+jge short .35	; 1660A
 mov edx, ebx	; 1660C
 sub edx, eax	; 1660E
 push edx	; 16610
 call sub_B3989	; 16611
 add esp, byte 4	; 16616
-loc_16619:
+.33:
 call sub_B39A7	; 16619
 test eax, eax	; 1661E
-jne short loc_16639	; 16620
+jne short .35	; 16620
 test esi, esi	; 16622
-jne short loc_16639	; 16624
+jne short .35	; 16624
 cmp ebp, byte 23h	; 16626
-jle short loc_16619	; 16629
+jle short TitleScreen.33	; 16629
 call AnyInputPressed	; 1662B
 mov esi, eax	; 16630
-jmp short loc_16619	; 16632
-loc_16634:
+jmp short TitleScreen.33	; 16632
+.34:
 call sub_1B2A7	; 16634
-loc_16639:
+.35:
 test esi, esi	; 16639
-jne short loc_16649	; 1663B
+jne short .36	; 1663B
 cmp ebp, byte 23h	; 1663D
-jle short loc_16649	; 16640
+jle short .36	; 16640
 call AnyInputPressed	; 16642
 mov esi, eax	; 16647
-loc_16649:
+.36:
 test esi, esi	; 16649
-jne short loc_1665B	; 1664B
+jne short .37	; 1664B
 cmp dword [dword esp+0348h], byte 2	; 1664D
-jl near loc_163AF	; 16655
-loc_1665B:
+jl near TitleScreen.22	; 16655
+.37:
 mov ebp, dword [dword esp+032Ch]	; 1665B
 test ebp, ebp	; 16662
-je short loc_1666F	; 16664
+je short .38	; 16664
 push ebp	; 16666
 call sub_9132C	; 16667
 add esp, byte 4	; 1666C
-loc_1666F:
+.38:
 mov eax, edi	; 1666F
 call sub_1ACF1	; 16671
 mov edx, dword [dword esp+0340h]	; 16676
@@ -468,41 +453,41 @@ push edx	; 1667D
 call sub_1B18B	; 1667E
 add esp, byte 4	; 16683
 cmp byte [musicon], 0	; 16686
-je short loc_166AC	; 1668D
+je short .39	; 1668D
 cmp dword [songdata], byte 0	; 1668F
-je short loc_166AC	; 16696
+je short .39	; 16696
 mov eax, dword [musichandle]	; 16698
 mov ebx, 64h	; 1669D
 mov edx, 3	; 166A2
 call sub_8FCDF	; 166A7
-loc_166AC:
+.39:
 mov ebx, 10h	; 166AC
 mov edx, esp	; 166B1
 mov eax, 1	; 166B3
 call sub_76429	; 166B8
 cmp byte [musicon], 0	; 166BD
-je short loc_166FE	; 166C4
+je short .41	; 166C4
 cmp dword [songdata], byte 0	; 166C6
-je short loc_166FE	; 166CD
-loc_166CF:
+je short .41	; 166CD
+.40:
 mov eax, dword [musicslot-3]	; 166CF
 sar eax, 18h	; 166D4
 mov edx, 3	; 166D7
 call sub_8FC8A	; 166DC
 test eax, eax	; 166E1
-je short loc_166CF	; 166E3
+je short TitleScreen.40	; 166E3
 mov edi, dword [songdata]	; 166E5
 push edi	; 166EB
 call sub_8D2F0	; 166EC
 add esp, byte 4	; 166F1
 xor ebp, ebp	; 166F4
 mov dword [songdata], ebp	; 166F6
-jmp short loc_1670D	; 166FC
-loc_166FE:
+jmp short .42	; 166FC
+.41:
 call StopDigiSample	; 166FE
 mov eax, dword [dword_DC33C]	; 16703
 call sub_8F1FE	; 16708
-loc_1670D:
+.42:
 mov eax, dword [dword esp+033Ch]	; 1670D
 push eax	; 16714
 call jctime	; 16715
@@ -510,7 +495,7 @@ add esp, byte 4	; 1671A
 mov eax, esi	; 1671D
 add esp, 350h	; 1671F
 jmp near RunDemoGame_x	; 16725
-sub_1672A:
+RunIntro:
 push dword 674h	; 1672A
 call __CHK	; 1672F
 push ebx	; 16734
@@ -523,13 +508,13 @@ sub esp, 64Ch	; 1673A
 xor edx, edx	; 16740
 mov dword [dword esp+0638h], edx	; 16742
 cmp byte [musicon], 0	; 16749
-je short loc_16766	; 16750
+je short .1	; 16750
 mov eax, dword [dword_ED7B0]	; 16752
 mov ebx, dword [dword eax+03B60h]	; 16757
 push ebx	; 1675D
 call sub_8D2F0	; 1675E
 add esp, byte 4	; 16763
-loc_16766:
+.1:
 call sub_6B3D7	; 16766
 call sub_B4BA8	; 1676B
 push byte 0	; 16770
@@ -545,14 +530,14 @@ push byte 0	; 16795
 call sub_B4B88	; 16797
 add esp, byte 0Ch	; 1679C
 xor ecx, ecx	; 1679F
-mov ebx, asc_C089D	; 167A1
+mov ebx, str_Pioneer1	; 167A1
 cmp byte [byte_ED8F3], 1	; 167A6
-jne short loc_167B7	; 167AD
+jne short .2	; 167AD
 mov edx, dword [dword_D2C6B]	; 167AF
-jmp short loc_167B9	; 167B5
-loc_167B7:
+jmp short .3	; 167B5
+.2:
 xor edx, edx	; 167B7
-loc_167B9:
+.3:
 lea eax, [dword esp+0600h]	; 167B9
 call MakePath	; 167C0
 push byte 0	; 167C5
@@ -561,7 +546,7 @@ push eax	; 167CE
 call sub_8E83C	; 167CF
 mov esi, eax	; 167D4
 add esp, byte 8	; 167D6
-push asc_C08A6	; 167D9
+push str_Pl2	; 167D9
 push eax	; 167DE
 call sub_B30B4	; 167DF
 add esp, byte 8	; 167E4
@@ -569,7 +554,7 @@ lea edx, [byte eax+010h]	; 167E7
 mov ebx, 300h	; 167EA
 lea eax, [dword esp+0300h]	; 167EF
 call memcpy_	; 167F6
-push asc_C08AB	; 167FB
+push str_Pl1	; 167FB
 push esi	; 16800
 call sub_B30B4	; 16801
 add esp, byte 8	; 16806
@@ -577,7 +562,7 @@ lea edx, [byte eax+010h]	; 16809
 mov ebx, 300h	; 1680C
 mov eax, esp	; 16811
 call memcpy_	; 16813
-push asc_C08B0	; 16818
+push str_Bkgd3	; 16818
 push esi	; 1681D
 call sub_B30B4	; 1681E
 add esp, byte 8	; 16823
@@ -588,14 +573,14 @@ push esi	; 1682F
 call jctime	; 16830
 add esp, byte 4	; 16835
 xor ecx, ecx	; 16838
-mov ebx, asc_C08B5	; 1683A
+mov ebx, str_Pioneer2	; 1683A
 cmp byte [byte_ED8F4], 1	; 1683F
-jne short loc_16850	; 16846
+jne short .4	; 16846
 mov edx, dword [dword_D2C6B]	; 16848
-jmp short loc_16852	; 1684E
-loc_16850:
+jmp short .5	; 1684E
+.4:
 xor edx, edx	; 16850
-loc_16852:
+.5:
 lea eax, [dword esp+0600h]	; 16852
 call MakePath	; 16859
 push byte 0	; 1685E
@@ -605,46 +590,46 @@ call sub_8E83C	; 16868
 add esp, byte 8	; 1686D
 mov ebp, eax	; 16870
 cmp byte [musicon], 0	; 16872
-je near loc_1697D	; 16879
+je near .13	; 16879
 cmp dword [songdata], byte 0	; 1687F
-jne near loc_1697D	; 16886
-mov ecx, asc_C0875	; 1688C
-mov ebx, asc_C08BE	; 16891
+jne near .13	; 16886
+mov ecx, str_Iff2	; 1688C
+mov ebx, str_Pioneer4	; 16891
 cmp byte [byte_ED8F8], 1	; 16896
-jne short loc_168A7	; 1689D
+jne short .6	; 1689D
 mov edx, dword [dword_D2C6B]	; 1689F
-jmp short loc_168A9	; 168A5
-loc_168A7:
+jmp short .7	; 168A5
+.6:
 xor edx, edx	; 168A7
-loc_168A9:
+.7:
 lea eax, [dword esp+0600h]	; 168A9
 call MakePath	; 168B0
 lea eax, [dword esp+0600h]	; 168B5
 call sub_8F98F	; 168BC
 mov dword [dword esp+0644h], eax	; 168C1
-mov ecx, asc_C0875	; 168C8
-mov ebx, asc_C08C7	; 168CD
+mov ecx, str_Iff2	; 168C8
+mov ebx, str_Pioneer3	; 168CD
 cmp byte [byte_ED8F7], 1	; 168D2
-jne short loc_168E3	; 168D9
+jne short .8	; 168D9
 mov edx, dword [dword_D2C6B]	; 168DB
-jmp short loc_168E5	; 168E1
-loc_168E3:
+jmp short .9	; 168E1
+.8:
 xor edx, edx	; 168E3
-loc_168E5:
+.9:
 lea eax, [dword esp+0600h]	; 168E5
 call MakePath	; 168EC
 lea eax, [dword esp+0600h]	; 168F1
 call sub_8F98F	; 168F8
 mov dword [dword esp+0648h], eax	; 168FD
-mov ecx, asc_C0875	; 16904
-mov ebx, asc_C08B5	; 16909
+mov ecx, str_Iff2	; 16904
+mov ebx, str_Pioneer2	; 16909
 cmp byte [byte_ED8F6], 1	; 1690E
-jne short loc_1691F	; 16915
+jne short .10	; 16915
 mov edx, dword [dword_D2C6B]	; 16917
-jmp short loc_16921	; 1691D
-loc_1691F:
+jmp short .11	; 1691D
+.10:
 xor edx, edx	; 1691F
-loc_16921:
+.11:
 lea eax, [dword esp+0600h]	; 16921
 call MakePath	; 16928
 lea eax, [dword esp+0600h]	; 1692D
@@ -652,84 +637,84 @@ call sub_8F98F	; 16934
 mov dword [dword esp+0640h], eax	; 16939
 mov dword [songdata], eax	; 16940
 test eax, eax	; 16945
-je short loc_1695E	; 16947
+je short .12	; 16947
 mov edx, dword [musichandle]	; 16949
 mov ecx, 7Fh	; 1694F
 mov ebx, 1	; 16954
 call sub_8FB8E	; 16959
-loc_1695E:
+.12:
 push dword 104h	; 1695E
 call sub_B3989	; 16963
 add esp, byte 4	; 16968
 call sub_B3999	; 1696B
 mov dword [dword esp+063Ch], 50h	; 16970
-jmp short loc_16988	; 1697B
-loc_1697D:
+jmp short .14	; 1697B
+.13:
 mov dword [dword esp+063Ch], 0C8h	; 1697D
-loc_16988:
+.14:
 cmp byte [musicon], 0	; 16988
-je short loc_169AC	; 1698F
+je short .15	; 1698F
 mov eax, dword [songdata]	; 16991
 test eax, eax	; 16996
-je short loc_169AC	; 16998
+je short .15	; 16998
 mov edx, dword [musichandle]	; 1699A
 mov ecx, 64h	; 169A0
 xor ebx, ebx	; 169A5
 call sub_8FB8E	; 169A7
-loc_169AC:
+.15:
 mov ebx, 5Ah	; 169AC
 mov edx, esp	; 169B1
 xor eax, eax	; 169B3
 call sub_76429	; 169B5
 mov edi, 1	; 169BA
-loc_169BF:
+.16:
 test edi, edi	; 169BF
-je short loc_16A21	; 169C1
+je short .20	; 169C1
 xor edi, edi	; 169C3
 xor esi, esi	; 169C5
-loc_169C7:
+.17:
 mov al, byte [esp+esi]	; 169C7
 mov bl, byte [dword esp+esi+0300h]	; 169CA
 cmp al, bl	; 169D1
-jge short loc_169E3	; 169D3
+jge short .18	; 169D3
 mov edi, 1	; 169D5
 mov ch, al	; 169DA
 inc ch	; 169DC
 mov byte [esp+esi], ch	; 169DE
-jmp short loc_169F1	; 169E1
-loc_169E3:
-jle short loc_169F1	; 169E3
+jmp short .19	; 169E1
+.18:
+jle short .19	; 169E3
 mov edi, 1	; 169E5
 mov cl, al	; 169EA
 dec cl	; 169EC
 mov byte [esp+esi], cl	; 169EE
-loc_169F1:
+.19:
 inc esi	; 169F1
 cmp esi, 300h	; 169F2
-jl short loc_169C7	; 169F8
+jl short RunIntro.17	; 169F8
 push byte 2	; 169FA
 call sub_B3989	; 169FC
 add esp, byte 4	; 16A01
 call sub_B3999	; 16A04
 test edi, edi	; 16A09
-je short loc_169BF	; 16A0B
+je short RunIntro.16	; 16A0B
 mov eax, esp	; 16A0D
 push eax	; 16A0F
 push dword 100h	; 16A10
 push byte 0	; 16A15
 call sub_B4B88	; 16A17
 add esp, byte 0Ch	; 16A1C
-jmp short loc_169BF	; 16A1F
-loc_16A21:
+jmp short RunIntro.16	; 16A1F
+.20:
 mov edx, dword [dword esp+063Ch]	; 16A21
 push edx	; 16A28
 call sub_B3989	; 16A29
 add esp, byte 4	; 16A2E
 call sub_B3999	; 16A31
 mov esi, 1	; 16A36
-loc_16A3B:
+.21:
 push esi	; 16A3B
-push asc_C08D0	; 16A3C
+push str_FlaD	; 16A3C
 lea eax, [dword esp+0608h]	; 16A41
 push eax	; 16A48
 call sprintf_	; 16A49
@@ -742,49 +727,49 @@ add esp, byte 8	; 16A5F
 mov dword [dword esp+esi*4+0620h], eax	; 16A62
 inc esi	; 16A69
 cmp esi, byte 5	; 16A6A
-jl short loc_16A3B	; 16A6D
-push asc_C08D6	; 16A6F
+jl short RunIntro.21	; 16A6D
+push str_Pion	; 16A6F
 push ebp	; 16A74
 call sub_B30B4	; 16A75
 add esp, byte 8	; 16A7A
 mov dword [dword esp+0620h], eax	; 16A7D
 mov edi, 1	; 16A84
-loc_16A89:
+.22:
 test edi, edi	; 16A89
-je short loc_16AD9	; 16A8B
+je short .25	; 16A8B
 xor edi, edi	; 16A8D
 xor esi, esi	; 16A8F
-loc_16A91:
+.23:
 mov al, byte [esp+esi]	; 16A91
 cmp al, byte [dword esp+esi+0300h]	; 16A94
-jge short loc_16AA9	; 16A9B
+jge short .24	; 16A9B
 mov edi, 1	; 16A9D
 mov dl, al	; 16AA2
 inc dl	; 16AA4
 mov byte [esp+esi], dl	; 16AA6
-loc_16AA9:
+.24:
 inc esi	; 16AA9
 cmp esi, 270h	; 16AAA
-jl short loc_16A91	; 16AB0
+jl short RunIntro.23	; 16AB0
 push byte 5	; 16AB2
 call sub_B3989	; 16AB4
 add esp, byte 4	; 16AB9
 call sub_B3999	; 16ABC
 test edi, edi	; 16AC1
-je short loc_16A89	; 16AC3
+je short RunIntro.22	; 16AC3
 mov eax, esp	; 16AC5
 push eax	; 16AC7
 push dword 100h	; 16AC8
 push byte 0	; 16ACD
 call sub_B4B88	; 16ACF
 add esp, byte 0Ch	; 16AD4
-jmp short loc_16A89	; 16AD7
-loc_16AD9:
+jmp short RunIntro.22	; 16AD7
+.25:
 mov ebx, 300h	; 16AD9
 mov edx, 3Fh	; 16ADE
 mov eax, esp	; 16AE3
 call memset_	; 16AE5
-push asc_C08DB	; 16AEA
+push str_Pio	; 16AEA
 push ebp	; 16AEF
 call sub_B30B4	; 16AF0
 add esp, byte 8	; 16AF5
@@ -797,24 +782,24 @@ call sub_B3989	; 16B0E
 add esp, byte 4	; 16B13
 call sub_B3999	; 16B16
 cmp byte [musicon], 0	; 16B1B
-je short loc_16B4A	; 16B22
+je short .26	; 16B22
 cmp dword [dword esp+0648h], byte 0	; 16B24
-je short loc_16B4A	; 16B2C
+je short .26	; 16B2C
 mov edx, dword [musichandle]	; 16B2E
 mov ecx, 7Fh	; 16B34
 mov ebx, 2	; 16B39
 mov eax, dword [dword esp+0648h]	; 16B3E
 call sub_8FB8E	; 16B45
-loc_16B4A:
+.26:
 mov esi, 1	; 16B4A
-loc_16B4F:
+.27:
 mov ecx, dword [dword esp+esi*4+0620h]	; 16B4F
 push ecx	; 16B56
 call sub_913B4	; 16B57
 add esp, byte 4	; 16B5C
 inc esi	; 16B5F
 cmp esi, byte 5	; 16B60
-jl short loc_16B4F	; 16B63
+jl short RunIntro.27	; 16B63
 mov eax, esp	; 16B65
 push eax	; 16B67
 push dword 100h	; 16B68
@@ -829,55 +814,55 @@ push ebp	; 16B87
 call jctime	; 16B88
 add esp, byte 4	; 16B8D
 mov edi, 1	; 16B90
-loc_16B95:
+.28:
 test edi, edi	; 16B95
-je short loc_16BE3	; 16B97
+je short .31	; 16B97
 xor edi, edi	; 16B99
 xor esi, esi	; 16B9B
-loc_16B9D:
+.29:
 mov al, byte [esp+esi]	; 16B9D
 cmp al, byte [dword esp+esi+0300h]	; 16BA0
-jle short loc_16BB3	; 16BA7
+jle short .30	; 16BA7
 mov edi, 1	; 16BA9
 dec al	; 16BAE
 mov byte [esp+esi], al	; 16BB0
-loc_16BB3:
+.30:
 inc esi	; 16BB3
 cmp esi, 300h	; 16BB4
-jl short loc_16B9D	; 16BBA
+jl short RunIntro.29	; 16BBA
 push byte 5	; 16BBC
 call sub_B3989	; 16BBE
 add esp, byte 4	; 16BC3
 call sub_B3999	; 16BC6
 test edi, edi	; 16BCB
-je short loc_16B95	; 16BCD
+je short RunIntro.28	; 16BCD
 mov eax, esp	; 16BCF
 push eax	; 16BD1
 push dword 100h	; 16BD2
 push byte 0	; 16BD7
 call sub_B4B88	; 16BD9
 add esp, byte 0Ch	; 16BDE
-jmp short loc_16B95	; 16BE1
-loc_16BE3:
+jmp short RunIntro.28	; 16BE1
+.31:
 push byte 28h	; 16BE3
 call sub_B3989	; 16BE5
 add esp, byte 4	; 16BEA
 call sub_B3999	; 16BED
 cmp byte [musicon], 0	; 16BF2
-je short loc_16C1D	; 16BF9
+je short .32	; 16BF9
 mov edi, dword [dword esp+0644h]	; 16BFB
 test edi, edi	; 16C02
-je short loc_16C1D	; 16C04
+je short .32	; 16C04
 mov edx, dword [musichandle]	; 16C06
 mov ecx, 7Fh	; 16C0C
 mov ebx, 3	; 16C11
 mov eax, edi	; 16C16
 call sub_8FB8E	; 16C18
-loc_16C1D:
+.32:
 mov esi, 0E0h	; 16C1D
-loc_16C22:
+.33:
 cmp esi, 0E0h	; 16C22
-jle short loc_16C41	; 16C28
+jle short .34	; 16C28
 lea edx, [byte esi-01h]	; 16C2A
 mov eax, edx	; 16C2D
 shl eax, 2	; 16C2F
@@ -886,7 +871,7 @@ xor bl, bl	; 16C34
 mov byte [esp+eax], bl	; 16C36
 mov byte [byte esp+eax+01h], bl	; 16C39
 mov byte [byte esp+eax+02h], bl	; 16C3D
-loc_16C41:
+.34:
 mov eax, esi	; 16C41
 shl eax, 2	; 16C43
 sub eax, esi	; 16C46
@@ -906,13 +891,13 @@ call sub_B4B88	; 16C6E
 add esp, byte 0Ch	; 16C73
 inc esi	; 16C76
 cmp esi, 0F0h	; 16C77
-jl short loc_16C22	; 16C7D
+jl short RunIntro.33	; 16C7D
 push dword 0C8h	; 16C7F
 call sub_B3989	; 16C84
 add esp, byte 4	; 16C89
 call sub_B3999	; 16C8C
 cmp byte [musicon], 0	; 16C91
-je short loc_16CE9	; 16C98
+je short .35	; 16C98
 mov eax, dword [musichandle]	; 16C9A
 mov ebx, 64h	; 16C9F
 xor edx, edx	; 16CA4
@@ -929,74 +914,74 @@ mov eax, dword [musichandle]	; 16CD3
 mov ebx, 64h	; 16CD8
 mov edx, 3	; 16CDD
 call sub_8FCDF	; 16CE2
-jmp short loc_16CFD	; 16CE7
-loc_16CE9:
+jmp short .36	; 16CE7
+.35:
 cmp dword [dword esp+0638h], byte 0	; 16CE9
-jne short loc_16CFD	; 16CF1
+jne short .36	; 16CF1
 mov eax, 78h	; 16CF3
 call sub_33E6A	; 16CF8
-loc_16CFD:
+.36:
 cmp byte [musicon], 0	; 16CFD
-je near loc_16DA2	; 16D04
-loc_16D0A:
+je near .43	; 16D04
+.37:
 mov eax, dword [musicslot-3]	; 16D0A
 sar eax, 18h	; 16D0F
 xor edx, edx	; 16D12
 call sub_8FC8A	; 16D14
 test eax, eax	; 16D19
-je short loc_16D0A	; 16D1B
-loc_16D1D:
+je short RunIntro.37	; 16D1B
+.38:
 mov eax, dword [musicslot-3]	; 16D1D
 sar eax, 18h	; 16D22
 mov edx, 1	; 16D25
 call sub_8FC8A	; 16D2A
 test eax, eax	; 16D2F
-je short loc_16D1D	; 16D31
-loc_16D33:
+je short RunIntro.38	; 16D31
+.39:
 mov eax, dword [musicslot-3]	; 16D33
 sar eax, 18h	; 16D38
 mov edx, 2	; 16D3B
 call sub_8FC8A	; 16D40
 test eax, eax	; 16D45
-je short loc_16D33	; 16D47
-loc_16D49:
+je short RunIntro.39	; 16D47
+.40:
 mov eax, dword [musicslot-3]	; 16D49
 sar eax, 18h	; 16D4E
 mov edx, 3	; 16D51
 call sub_8FC8A	; 16D56
 test eax, eax	; 16D5B
-je short loc_16D49	; 16D5D
+je short RunIntro.40	; 16D5D
 xor eax, eax	; 16D5F
 mov dword [songdata], eax	; 16D61
 mov edx, dword [dword esp+0640h]	; 16D66
 test edx, edx	; 16D6D
-je short loc_16D7A	; 16D6F
+je short .41	; 16D6F
 push edx	; 16D71
 call sub_8D2F0	; 16D72
 add esp, byte 4	; 16D77
-loc_16D7A:
+.41:
 mov ecx, dword [dword esp+0648h]	; 16D7A
 test ecx, ecx	; 16D81
-je short loc_16D8E	; 16D83
+je short .42	; 16D83
 push ecx	; 16D85
 call sub_8D2F0	; 16D86
 add esp, byte 4	; 16D8B
-loc_16D8E:
+.42:
 mov edi, dword [dword esp+0644h]	; 16D8E
 test edi, edi	; 16D95
-je short loc_16DA2	; 16D97
+je short .43	; 16D97
 push edi	; 16D99
 call sub_8D2F0	; 16D9A
 add esp, byte 4	; 16D9F
-loc_16DA2:
+.43:
 cmp byte [musicon], 0	; 16DA2
-je short loc_16DC7	; 16DA9
+je short .44	; 16DA9
 mov dword [dword_CCC94], 20h	; 16DAB
 mov eax, dword [dword_C4CFC]	; 16DB5
 call sub_83459	; 16DBA
 xor edx, edx	; 16DBF
 mov dword [dword_CCC94], edx	; 16DC1
-loc_16DC7:
+.44:
 call sub_59D54	; 16DC7
 mov ebx, 10h	; 16DCC
 lea edx, [dword esp+0300h]	; 16DD1
@@ -1007,16 +992,16 @@ call _dos_gettime_	; 16DE9
 xor eax, eax	; 16DEE
 mov al, byte [dword esp+0637h]	; 16DF0
 call srand_	; 16DF7
-loc_16DFC:
+.45:
 xor ecx, ecx	; 16DFC
-mov ebx, asc_C08E0	; 16DFE
+mov ebx, str_Eaopen	; 16DFE
 cmp byte [byte_ED833], 1	; 16E03
-jne short loc_16E14	; 16E0A
+jne short .46	; 16E0A
 mov edx, dword [dword_D2C6B]	; 16E0C
-jmp short loc_16E16	; 16E12
-loc_16E14:
+jmp short .47	; 16E12
+.46:
 xor edx, edx	; 16E14
-loc_16E16:
+.47:
 lea eax, [dword esp+0600h]	; 16E16
 call MakePath	; 16E1D
 push byte 0	; 16E22
@@ -1025,7 +1010,7 @@ push eax	; 16E2B
 call sub_8E83C	; 16E2C
 mov esi, eax	; 16E31
 add esp, byte 8	; 16E33
-push asc_C0861	; 16E36
+push str_Pal4	; 16E36
 push eax	; 16E3B
 call sub_B30B4	; 16E3C
 add esp, byte 8	; 16E41
@@ -1033,7 +1018,7 @@ lea edx, [byte eax+010h]	; 16E44
 mov ebx, 300h	; 16E47
 mov eax, esp	; 16E4C
 call memcpy_	; 16E4E
-push asc_C0866	; 16E53
+push str_Scrn2	; 16E53
 push esi	; 16E58
 call sub_B30B4	; 16E59
 add esp, byte 8	; 16E5E
@@ -1044,30 +1029,30 @@ push esi	; 16E6A
 call jctime	; 16E6B
 add esp, byte 4	; 16E70
 cmp byte [musicon], 0	; 16E73
-je short loc_16ED8	; 16E7A
+je short .50	; 16E7A
 cmp dword [songdata], byte 0	; 16E7C
-jne short loc_16ED8	; 16E83
-mov ecx, asc_C0875	; 16E85
-mov ebx, asc_C08E7	; 16E8A
+jne short .50	; 16E83
+mov ecx, str_Iff2	; 16E85
+mov ebx, str_Easports	; 16E8A
 cmp byte [byte_ED9A8], 1	; 16E8F
-jne short loc_16EA0	; 16E96
+jne short .48	; 16E96
 mov edx, dword [dword_D2C6B]	; 16E98
-jmp short loc_16EA2	; 16E9E
-loc_16EA0:
+jmp short .49	; 16E9E
+.48:
 xor edx, edx	; 16EA0
-loc_16EA2:
+.49:
 lea eax, [dword esp+0600h]	; 16EA2
 call MakePath	; 16EA9
 lea eax, [dword esp+0600h]	; 16EAE
 call sub_8F98F	; 16EB5
 mov dword [songdata], eax	; 16EBA
 test eax, eax	; 16EBF
-je short loc_16ED8	; 16EC1
+je short .50	; 16EC1
 mov edx, dword [musichandle]	; 16EC3
 mov ecx, 4Ch	; 16EC9
 mov ebx, 3	; 16ECE
 call sub_8FB8E	; 16ED3
-loc_16ED8:
+.50:
 mov ebx, 10h	; 16ED8
 mov edx, esp	; 16EDD
 xor eax, eax	; 16EDF
@@ -1077,23 +1062,23 @@ call sub_B3989	; 16EEB
 add esp, byte 4	; 16EF0
 call sub_B3999	; 16EF3
 cmp byte [musicon], 0	; 16EF8
-je short loc_16F37	; 16EFF
+je short .52	; 16EFF
 cmp dword [songdata], byte 0	; 16F01
-je short loc_16F37	; 16F08
-loc_16F0A:
+je short .52	; 16F08
+.51:
 mov eax, dword [musicslot-3]	; 16F0A
 sar eax, 18h	; 16F0F
 mov edx, 3	; 16F12
 call sub_8FC8A	; 16F17
 test eax, eax	; 16F1C
-je short loc_16F0A	; 16F1E
+je short RunIntro.51	; 16F1E
 mov esi, dword [songdata]	; 16F20
 push esi	; 16F26
 call sub_8D2F0	; 16F27
 add esp, byte 4	; 16F2C
 xor edi, edi	; 16F2F
 mov dword [songdata], edi	; 16F31
-loc_16F37:
+.52:
 mov ebx, 10h	; 16F37
 mov edx, esp	; 16F3C
 mov eax, 1	; 16F3E
@@ -1102,13 +1087,13 @@ call sub_B4BA8	; 16F48
 push byte 0	; 16F4D
 call sub_B392C	; 16F4F
 add esp, byte 4	; 16F54
-call sub_1609F	; 16F57
+call TitleScreen	; 16F57
 test eax, eax	; 16F5C
-jne short loc_16F6D	; 16F5E
+jne short .53	; 16F5E
 call RunDemoGame	; 16F60
 test eax, eax	; 16F65
-je near loc_16DFC	; 16F67
-loc_16F6D:
+je near RunIntro.45	; 16F67
+.53:
 call sub_B4BA8	; 16F6D
 push byte 0	; 16F72
 call sub_B392C	; 16F74
@@ -1119,7 +1104,7 @@ mov dword [dword_CC0EC], ebp	; 16F83
 mov dword [demomode], ebp	; 16F89
 add esp, 64Ch	; 16F8F
 jmp near RunDemoGame_x	; 16F95
-sub_16F9A:
+ShowCredits:
 push dword 394h	; 16F9A
 call __CHK	; 16F9F
 push ebx	; 16FA4
@@ -1129,7 +1114,7 @@ push esi	; 16FA7
 push edi	; 16FA8
 push ebp	; 16FA9
 sub esp, 36Ch	; 16FAA
-call sub_17756	; 16FB0
+call TextGridFree	; 16FB0
 call sub_59D54	; 16FB5
 lea eax, [dword esp+0300h]	; 16FBA
 push eax	; 16FC1
@@ -1141,22 +1126,22 @@ call sub_8EA18	; 16FD1
 add esp, byte 4	; 16FD6
 xor edx, edx	; 16FD9
 mov eax, 7Fh	; 16FDB
-call sub_174C2	; 16FE0
+call SetTextColors	; 16FE0
 push byte 0	; 16FE5
 push dword 19337h	; 16FE7
-push asc_C08F0	; 16FEC
+push str_Backwin	; 16FEC
 call sub_8CCA8	; 16FF1
 add esp, byte 0Ch	; 16FF6
 mov dword [dword esp+0360h], eax	; 16FF9
 xor ecx, ecx	; 17000
-mov ebx, asc_C08F8	; 17002
+mov ebx, str_Credits	; 17002
 cmp byte [byte_ED9E9], 1	; 17007
-jne short loc_17018	; 1700E
+jne short .1	; 1700E
 mov edx, dword [dword_D2C6B]	; 17010
-jmp short loc_1701A	; 17016
-loc_17018:
+jmp short .2	; 17016
+.1:
 xor edx, edx	; 17018
-loc_1701A:
+.2:
 lea eax, [dword esp+0340h]	; 1701A
 call MakePath	; 17021
 push byte 0	; 17026
@@ -1165,7 +1150,7 @@ push eax	; 1702F
 call sub_8E83C	; 17030
 mov ebp, eax	; 17035
 add esp, byte 8	; 17037
-push asc_C0861	; 1703A
+push str_Pal4	; 1703A
 push eax	; 1703F
 call sub_B30B4	; 17040
 add esp, byte 8	; 17045
@@ -1178,7 +1163,7 @@ mov ebx, 300h	; 17059
 mov edx, ecx	; 1705E
 mov eax, unk_C4E30	; 17060
 call memcpy_	; 17065
-push asc_C08B0	; 1706A
+push str_Bkgd3	; 1706A
 push ebp	; 1706F
 call sub_B30B4	; 17070
 mov edx, eax	; 17075
@@ -1207,66 +1192,66 @@ push ebx	; 170C4
 call sub_91400	; 170C5
 add esp, byte 0Ch	; 170CA
 cmp byte [musicon], 0	; 170CD
-je short loc_1713B	; 170D4
+je short .5	; 170D4
 cmp dword [songdata], byte 0	; 170D6
-jne short loc_1713B	; 170DD
-mov ecx, asc_C0875	; 170DF
-mov ebx, asc_C08F8	; 170E4
+jne short .5	; 170DD
+mov ecx, str_Iff2	; 170DF
+mov ebx, str_Credits	; 170E4
 cmp byte [byte_ED9AD], 1	; 170E9
-jne short loc_170FA	; 170F0
+jne short .3	; 170F0
 mov edx, dword [dword_D2C6B]	; 170F2
-jmp short loc_170FC	; 170F8
-loc_170FA:
+jmp short .4	; 170F8
+.3:
 xor edx, edx	; 170FA
-loc_170FC:
+.4:
 lea eax, [dword esp+0340h]	; 170FC
 call MakePath	; 17103
 lea eax, [dword esp+0340h]	; 17108
 call sub_8F98F	; 1710F
 mov dword [songdata], eax	; 17114
 test eax, eax	; 17119
-je near loc_171E7	; 1711B
+je near .12	; 1711B
 mov edx, dword [musichandle]	; 17121
 mov ecx, 4Ch	; 17127
 mov ebx, 3	; 1712C
 call sub_8FB8E	; 17131
-jmp near loc_171E7	; 17136
-loc_1713B:
+jmp near .12	; 17136
+.5:
 cmp dword [dword_C541F], byte 8	; 1713B
-jne short loc_17163	; 17142
-mov ecx, asc_C8140	; 17144
-mov ebx, asc_C088A	; 17149
+jne short .7	; 17142
+mov ecx, str_KMS	; 17144
+mov ebx, str_Adtitle	; 17149
 cmp byte [byte_ED8D0], 1	; 1714E
-jne short loc_1715F	; 17155
+jne short .6	; 17155
 mov edx, dword [dword_D2C6B]	; 17157
-jmp short loc_17180	; 1715D
-loc_1715F:
+jmp short .9	; 1715D
+.6:
 xor edx, edx	; 1715F
-jmp short loc_17180	; 17161
-loc_17163:
-mov ecx, asc_C8140	; 17163
-mov ebx, asc_C088A	; 17168
+jmp short .9	; 17161
+.7:
+mov ecx, str_KMS	; 17163
+mov ebx, str_Adtitle	; 17168
 cmp byte [byte_ED8D0], 1	; 1716D
-jne short loc_1717E	; 17174
+jne short .8	; 17174
 mov edx, dword [dword_D2C6B]	; 17176
-jmp short loc_17180	; 1717C
-loc_1717E:
+jmp short .9	; 1717C
+.8:
 xor edx, edx	; 1717E
-loc_17180:
+.9:
 lea eax, [dword esp+0340h]	; 17180
 call MakePath	; 17187
 lea eax, [dword esp+0340h]	; 1718C
 call sub_8F13B	; 17193
 mov dword [dword esp+0354h], eax	; 17198
-mov ecx, asc_C8140	; 1719F
-mov ebx, asc_C0900	; 171A4
+mov ecx, str_KMS	; 1719F
+mov ebx, str_Rockditi	; 171A4
 cmp byte [byte_ED92D], 1	; 171A9
-jne short loc_171BA	; 171B0
+jne short .10	; 171B0
 mov edx, dword [dword_D2C6B]	; 171B2
-jmp short loc_171BC	; 171B8
-loc_171BA:
+jmp short .11	; 171B8
+.10:
 xor edx, edx	; 171BA
-loc_171BC:
+.11:
 lea eax, [dword esp+0340h]	; 171BC
 call MakePath	; 171C3
 lea eax, [dword esp+0340h]	; 171C8
@@ -1274,7 +1259,7 @@ call sub_8F13B	; 171CF
 mov dword [dword esp+0350h], eax	; 171D4
 mov eax, dword [dword esp+0354h]	; 171DB
 call PlayDigiSample	; 171E2
-loc_171E7:
+.12:
 mov ebx, 10h	; 171E7
 mov edx, esp	; 171EC
 xor eax, eax	; 171EE
@@ -1283,40 +1268,40 @@ call sub_59C3E	; 171F5
 xor edi, edi	; 171FA
 mov dword [dword esp+035Ch], edi	; 171FC
 mov dword [dword esp+0364h], edi	; 17203
-loc_1720A:
+.13:
 cmp dword [dword esp+0364h], byte 7	; 1720A
-jne short loc_17223	; 17212
+jne short .14	; 17212
 mov edx, dword [dword_D8B68]	; 17214
 push edx	; 1721A
 call sub_8EA18	; 1721B
 add esp, byte 4	; 17220
-loc_17223:
+.14:
 mov eax, dword [dword esp+0364h]	; 17223
 mov eax, dword [nosplit eax*4+off_C6399]	; 1722A
 mov dword [dword esp+0368h], eax	; 17231
 call sub_6B3D7	; 17238
 cmp dword [dword esp+0364h], byte 0	; 1723D
-je short loc_17258	; 17245
+je short .15	; 17245
 mov eax, 62h	; 17247
 call sub_33E6A	; 1724C
 mov dword [dword esp+035Ch], eax	; 17251
-loc_17258:
+.15:
 mov ecx, dword [dword esp+035Ch]	; 17258
 test ecx, ecx	; 1725F
-jne near loc_173D8	; 17261
+jne near .23	; 17261
 mov esi, dword [dword esp+0368h]	; 17267
 cmp esi, unk_C638C	; 1726E
-je near loc_173C0	; 17274
+je near .22	; 17274
 mov eax, dword [byte esi+05h]	; 1727A
 cmp byte [eax], 0	; 1727D
-je near loc_1731E	; 17280
+je near .18	; 17280
 cmp byte [byte_ED9EA], 1	; 17286
-jne short loc_17297	; 1728D
+jne short .16	; 1728D
 mov edx, dword [dword_D2C6B]	; 1728F
-jmp short loc_17299	; 17295
-loc_17297:
+jmp short .17	; 17295
+.16:
 xor edx, edx	; 17297
-loc_17299:
+.17:
 mov ebx, eax	; 17299
 lea eax, [dword esp+0340h]	; 1729B
 call MakePath	; 172A2
@@ -1326,7 +1311,7 @@ push eax	; 172B0
 call sub_8E83C	; 172B1
 mov esi, eax	; 172B6
 add esp, byte 8	; 172B8
-push asc_C0909	; 172BB
+push str_Shp0	; 172BB
 push eax	; 172C0
 call sub_B30B4	; 172C1
 mov edi, eax	; 172C6
@@ -1356,15 +1341,15 @@ add esp, byte 0Ch	; 17310
 push esi	; 17313
 call jctime	; 17314
 add esp, byte 4	; 17319
-jmp short loc_17335	; 1731C
-loc_1731E:
+jmp short .19	; 1731C
+.18:
 push byte 3Fh	; 1731E
 push dword 14Ah	; 17320
 mov edi, dword [dword esp+0368h]	; 17325
 push edi	; 1732C
 call sub_903F0	; 1732D
 add esp, byte 0Ch	; 17332
-loc_17335:
+.19:
 mov eax, dword [dword esp+0368h]	; 17335
 mov eax, dword [byte eax+01h]	; 1733C
 mov dword [dword esp+0358h], eax	; 1733F
@@ -1377,8 +1362,8 @@ sar eax, 1	; 1735A
 mov edi, 0DAh	; 1735C
 sub edi, eax	; 17361
 xor esi, esi	; 17363
-jmp short loc_1739D	; 17365
-loc_17367:
+jmp short .21	; 17365
+.20:
 mov ebp, esi	; 17367
 shl ebp, 2	; 17369
 add ebp, dword [dword esp+0368h]	; 1736C
@@ -1392,28 +1377,28 @@ sub edx, eax	; 17386
 mov eax, edx	; 17388
 mov ebx, ebp	; 1738A
 mov edx, edi	; 1738C
-call sub_174D8	; 1738E
+call RenderTextLine	; 1738E
 xor eax, eax	; 17393
 mov al, byte [byte_D42C3]	; 17395
 add edi, eax	; 1739A
 inc esi	; 1739C
-loc_1739D:
+.21:
 mov eax, dword [dword esp+0368h]	; 1739D
 movsx eax, byte [eax]	; 173A4
 cmp esi, eax	; 173A7
-jl short loc_17367	; 173A9
+jl short ShowCredits.20	; 173A9
 call sub_6B3D7	; 173AB
 mov eax, dword [dword esp+0358h]	; 173B0
 call sub_33E6A	; 173B7
 test eax, eax	; 173BC
-jne short loc_173D8	; 173BE
-loc_173C0:
+jne short .23	; 173BE
+.22:
 mov edx, dword [dword esp+0364h]	; 173C0
 inc edx	; 173C7
 mov dword [dword esp+0364h], edx	; 173C8
 cmp edx, byte 1Dh	; 173CF
-jl near loc_1720A	; 173D2
-loc_173D8:
+jl near ShowCredits.13	; 173D2
+.23:
 push byte 3Fh	; 173D8
 push dword 14Ah	; 173DA
 mov ecx, dword [dword esp+0368h]	; 173DF
@@ -1421,44 +1406,44 @@ push ecx	; 173E6
 call sub_903F0	; 173E7
 add esp, byte 0Ch	; 173EC
 cmp byte [musicon], 0	; 173EF
-je short loc_17415	; 173F6
+je short .24	; 173F6
 cmp dword [songdata], byte 0	; 173F8
-je short loc_17415	; 173FF
+je short .24	; 173FF
 mov eax, dword [musichandle]	; 17401
 mov ebx, 64h	; 17406
 mov edx, 3	; 1740B
 call sub_8FCDF	; 17410
-loc_17415:
+.24:
 call sub_8374D	; 17415
 mov ebx, 10h	; 1741A
 mov edx, esp	; 1741F
 mov eax, 1	; 17421
 call sub_76429	; 17426
 cmp byte [musicon], 0	; 1742B
-je short loc_1746B	; 17432
+je short .26	; 17432
 cmp dword [songdata], byte 0	; 17434
-je short loc_1746B	; 1743B
-loc_1743D:
+je short .26	; 1743B
+.25:
 mov eax, dword [musicslot-3]	; 1743D
 sar eax, 18h	; 17442
 mov edx, 3	; 17445
 call sub_8FC8A	; 1744A
 test eax, eax	; 1744F
-je short loc_1743D	; 17451
+je short ShowCredits.25	; 17451
 mov ebp, dword [songdata]	; 17453
 push ebp	; 17459
 call sub_8D2F0	; 1745A
 add esp, byte 4	; 1745F
 xor eax, eax	; 17462
 mov dword [songdata], eax	; 17464
-jmp short loc_17488	; 17469
-loc_1746B:
+jmp short .27	; 17469
+.26:
 call StopDigiSample	; 1746B
 mov eax, dword [dword esp+0354h]	; 17470
 call sub_8F1FE	; 17477
 mov eax, dword [dword esp+0350h]	; 1747C
 call sub_8F1FE	; 17483
-loc_17488:
+.27:
 lea eax, [dword esp+0300h]	; 17488
 push eax	; 1748F
 call sub_8EA00	; 17490
@@ -1473,13 +1458,13 @@ call sub_B392C	; 174AF
 add esp, byte 4	; 174B4
 add esp, 36Ch	; 174B7
 jmp near RunDemoGame_x	; 174BD
-sub_174C2:
+SetTextColors:
 push dword 4	; 174C2
 call __CHK	; 174C7
-mov dword [dword_C6418], eax	; 174CC
-mov dword [dword_C641C], edx	; 174D1
+mov dword [textcolor], eax	; 174CC
+mov dword [textshadow], edx	; 174D1
 ret	; 174D7
-sub_174D8:
+RenderTextLine:
 push dword 84h	; 174D8
 call __CHK	; 174DD
 push ecx	; 174E2
@@ -1517,7 +1502,7 @@ add esp, byte 4	; 17535
 mov ebx, edi	; 17538
 xor edx, edx	; 1753A
 xor eax, eax	; 1753C
-call sub_175E2	; 1753E
+call PrintShadowText	; 1753E
 lea eax, [byte esp+04h]	; 17543
 push eax	; 17547
 call sub_B3AA1	; 17548
@@ -1538,7 +1523,7 @@ pop edi	; 1756F
 pop esi	; 17570
 pop ecx	; 17571
 ret	; 17572
-sub_17573:
+PrintCenteredText:
 push dword 24h	; 17573
 call __CHK	; 17578
 push ebx	; 1757D
@@ -1558,8 +1543,8 @@ sar edx, 1Fh	; 17598
 LD sub, eax, edx	; 1759B
 sar eax, 1	; 1759D
 mov edi, eax	; 1759F
-mov eax, dword [dword_C641C]	; 175A1
-mov dword [dword_D42A8], eax	; 175A6
+mov eax, dword [textshadow]	; 175A1
+mov dword [fontcolor], eax	; 175A6
 lea eax, [byte ebp+01h]	; 175AB
 push eax	; 175AE
 lea eax, [byte edi+01h]	; 175AF
@@ -1567,8 +1552,8 @@ push eax	; 175B2
 push esi	; 175B3
 call sub_91964	; 175B4
 add esp, byte 0Ch	; 175B9
-mov eax, dword [dword_C6418]	; 175BC
-mov dword [dword_D42A8], eax	; 175C1
+mov eax, dword [textcolor]	; 175BC
+mov dword [fontcolor], eax	; 175C1
 push ebp	; 175C6
 push edi	; 175C7
 push esi	; 175C8
@@ -1577,14 +1562,14 @@ add esp, byte 0Ch	; 175CE
 mov ebx, esi	; 175D1
 mov edx, ebp	; 175D3
 mov eax, edi	; 175D5
-call sub_17793	; 175D7
+call TextGridPut	; 175D7
 pop ebp	; 175DC
 pop edi	; 175DD
 pop esi	; 175DE
 pop ecx	; 175DF
 pop ebx	; 175E0
 ret	; 175E1
-sub_175E2:
+PrintShadowText:
 push dword 20h	; 175E2
 call __CHK	; 175E7
 push ecx	; 175EC
@@ -1594,8 +1579,8 @@ push ebp	; 175EF
 mov edi, eax	; 175F0
 mov ebp, edx	; 175F2
 mov esi, ebx	; 175F4
-mov eax, dword [dword_C641C]	; 175F6
-mov dword [dword_D42A8], eax	; 175FB
+mov eax, dword [textshadow]	; 175F6
+mov dword [fontcolor], eax	; 175FB
 lea eax, [byte edx+01h]	; 17600
 push eax	; 17603
 lea eax, [byte edi+01h]	; 17604
@@ -1603,8 +1588,8 @@ push eax	; 17607
 push ebx	; 17608
 call sub_91964	; 17609
 add esp, byte 0Ch	; 1760E
-mov eax, dword [dword_C6418]	; 17611
-mov dword [dword_D42A8], eax	; 17616
+mov eax, dword [textcolor]	; 17611
+mov dword [fontcolor], eax	; 17616
 push ebp	; 1761B
 push edi	; 1761C
 push esi	; 1761D
@@ -1613,13 +1598,13 @@ add esp, byte 0Ch	; 17623
 mov ebx, esi	; 17626
 mov edx, ebp	; 17628
 mov eax, edi	; 1762A
-call sub_17793	; 1762C
+call TextGridPut	; 1762C
 pop ebp	; 17631
 pop edi	; 17632
 pop esi	; 17633
 pop ecx	; 17634
 ret	; 17635
-sub_17636:
+PrintOutlinedText:
 push dword 24h	; 17636
 call __CHK	; 1763B
 push ecx	; 17640
@@ -1630,14 +1615,14 @@ sub esp, byte 4	; 17644
 mov edi, eax	; 17647
 mov ebp, edx	; 17649
 mov dword [esp], ebx	; 1764B
-mov eax, dword [dword_C641C]	; 1764E
-mov dword [dword_D42A8], eax	; 17653
+mov eax, dword [textshadow]	; 1764E
+mov dword [fontcolor], eax	; 17653
 xor esi, esi	; 17658
-loc_1765A:
-mov edx, dword [nosplit esi*4+dword_C6430]	; 1765A
+.1:
+mov edx, dword [nosplit esi*4+textoutlinedy]	; 1765A
 add edx, ebp	; 17661
 push edx	; 17663
-mov eax, dword [nosplit esi*4+dword_C6420]	; 17664
+mov eax, dword [nosplit esi*4+textoutlinedx]	; 17664
 add eax, edi	; 1766B
 push eax	; 1766D
 mov edx, dword [byte esp+08h]	; 1766E
@@ -1646,9 +1631,9 @@ call sub_91964	; 17673
 add esp, byte 0Ch	; 17678
 inc esi	; 1767B
 cmp esi, byte 4	; 1767C
-jl short loc_1765A	; 1767F
-mov eax, dword [dword_C6418]	; 17681
-mov dword [dword_D42A8], eax	; 17686
+jl short PrintOutlinedText.1	; 1767F
+mov eax, dword [textcolor]	; 17681
+mov dword [fontcolor], eax	; 17686
 push ebp	; 1768B
 push edi	; 1768C
 mov ebx, dword [byte esp+08h]	; 1768D
@@ -1658,14 +1643,14 @@ add esp, byte 0Ch	; 17697
 mov ebx, dword [esp]	; 1769A
 mov edx, ebp	; 1769D
 mov eax, edi	; 1769F
-call sub_17793	; 176A1
+call TextGridPut	; 176A1
 add esp, byte 4	; 176A6
 pop ebp	; 176A9
 pop edi	; 176AA
 pop esi	; 176AB
 pop ecx	; 176AC
 ret	; 176AD
-sub_176AE:
+PrintFmt1:
 push dword 68h	; 176AE
 call __CHK	; 176B3
 push esi	; 176B8
@@ -1679,11 +1664,11 @@ call sprintf_	; 176C5
 add esp, byte 0Ch	; 176CA
 mov ebx, esp	; 176CD
 mov eax, esi	; 176CF
-call sub_175E2	; 176D1
+call PrintShadowText	; 176D1
 add esp, byte 54h	; 176D6
 pop esi	; 176D9
 ret	; 176DA
-sub_176DB:
+PrintFmt2:
 push dword 70h	; 176DB
 call __CHK	; 176E0
 push esi	; 176E5
@@ -1700,65 +1685,65 @@ call sprintf_	; 176F8
 add esp, byte 10h	; 176FD
 mov ebx, esp	; 17700
 mov eax, esi	; 17702
-call sub_175E2	; 17704
+call PrintShadowText	; 17704
 add esp, byte 54h	; 17709
 pop edi	; 1770C
 pop esi	; 1770D
 ret 4	; 1770E
-sub_17711:
+TextGridOpen:
 push dword 0Ch	; 17711
 call __CHK	; 17716
 push ebx	; 1771B
 push edx	; 1771C
-cmp dword [dword_C6410], byte 0	; 1771D
-jne short loc_17735	; 17724
+cmp dword [textgrid], byte 0	; 1771D
+jne short .1	; 17724
 mov eax, 0E74h	; 17726
 call _nmalloc_	; 1772B
-mov dword [dword_C6410], eax	; 17730
-loc_17735:
-mov dword [dword_C6414], 1	; 17735
-mov eax, dword [dword_C6410]	; 1773F
+mov dword [textgrid], eax	; 17730
+.1:
+mov dword [textgridon], 1	; 17735
+mov eax, dword [textgrid]	; 1773F
 mov ebx, 0E10h	; 17744
 mov edx, 20h	; 17749
 call memset_	; 1774E
 pop edx	; 17753
 pop ebx	; 17754
 ret	; 17755
-sub_17756:
+TextGridFree:
 push dword 0Ch	; 17756
 call __CHK	; 1775B
 push ebx	; 17760
 push edx	; 17761
-mov edx, dword [dword_C6410]	; 17762
+mov edx, dword [textgrid]	; 17762
 test edx, edx	; 17768
-je short loc_17773	; 1776A
+je short .1	; 1776A
 mov eax, edx	; 1776C
 call _nfree_	; 1776E
-loc_17773:
+.1:
 xor ebx, ebx	; 17773
-mov dword [dword_C6410], ebx	; 17775
+mov dword [textgrid], ebx	; 17775
 pop edx	; 1777B
 pop ebx	; 1777C
 ret	; 1777D
-sub_1777E:
+TextGridOff:
 push dword 8	; 1777E
 call __CHK	; 17783
 push edx	; 17788
 xor edx, edx	; 17789
-mov dword [dword_C6414], edx	; 1778B
+mov dword [textgridon], edx	; 1778B
 pop edx	; 17791
 ret	; 17792
-sub_17793:
+TextGridPut:
 push dword 0Ch	; 17793
 call __CHK	; 17798
 push ecx	; 1779D
 push esi	; 1779E
 mov esi, edx	; 1779F
 mov ecx, ebx	; 177A1
-cmp dword [dword_C6410], byte 0	; 177A3
-je short loc_17813	; 177AA
-cmp dword [dword_C6414], byte 1	; 177AC
-jne short loc_17813	; 177B3
+cmp dword [textgrid], byte 0	; 177A3
+je short .x	; 177AA
+cmp dword [textgridon], byte 1	; 177AC
+jne short .x	; 177B3
 mov edx, eax	; 177B5
 shl eax, 2	; 177B7
 sub eax, edx	; 177BA
@@ -1778,7 +1763,7 @@ mov esi, 1E0h	; 177DC
 mov eax, edx	; 177E1
 sar edx, 1Fh	; 177E3
 idiv esi	; 177E6
-mov esi, dword [dword_C6410]	; 177E8
+mov esi, dword [textgrid]	; 177E8
 mov edx, eax	; 177EE
 shl eax, 2	; 177F0
 sub eax, edx	; 177F3
@@ -1793,7 +1778,7 @@ mov ebx, eax	; 17808
 mov edx, ecx	; 1780A
 mov eax, esi	; 1780C
 call memcpy_	; 1780E
-loc_17813:
+.x:
 pop esi	; 17813
 pop ecx	; 17814
 ret	; 17815

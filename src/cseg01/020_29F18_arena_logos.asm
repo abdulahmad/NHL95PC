@@ -12,7 +12,7 @@ extern teamconf, dword_C71CC, dword_C71D0, dword_C71D4, songdata, cont2team, Hom
 extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, dword_DC238, dword_EA0DC
 extern fputchar, jctime, memcpy_, off_C5439, crestnames, off_C6F48, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
-extern sub_174C2, sub_175E2, sub_17636, sub_29C75, sub_29D00, sub_30A0C, sub_30A39, sub_30AE2
+extern SetTextColors, PrintShadowText, PrintOutlinedText, sub_29C75, sub_29D00, sub_30A0C, sub_30A39, sub_30AE2
 extern sub_33E6A, sub_479E9, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, sub_6B391
 extern sub_6B3D7, sub_76429, sub_767D0, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
@@ -60,7 +60,7 @@ mov eax, 0F9h	; 29F6C
 call sub_30A0C	; 29F71
 mov edx, 0F7h	; 29F76
 mov eax, 0FAh	; 29F7B
-call sub_174C2	; 29F80
+call SetTextColors	; 29F80
 push byte 20h	; 29F85
 push dword 300h	; 29F87
 push asc_C1370	; 29F8C
@@ -273,7 +273,7 @@ LD sub, eax, edx	; 2A27F
 sar eax, 1	; 2A281
 lea ebx, [dword esp+0610h]	; 2A283
 mov edx, 93h	; 2A28A
-call sub_17636	; 2A28F
+call PrintOutlinedText	; 2A28F
 mov ecx, dword [dword_C71CC]	; 2A294
 push ecx	; 2A29A
 push byte 5	; 2A29B
@@ -349,7 +349,7 @@ LD sub, eax, edx	; 2A386
 sar eax, 1	; 2A388
 mov ebx, ebp	; 2A38A
 mov edx, edi	; 2A38C
-call sub_17636	; 2A38E
+call PrintOutlinedText	; 2A38E
 inc esi	; 2A393
 cmp esi, byte 9	; 2A394
 jl near loc_2A2F3	; 2A397
@@ -387,7 +387,7 @@ add edi, byte 0Ch	; 2A408
 loc_2A40B:
 mov edx, 0F7h	; 2A40B
 mov eax, ebp	; 2A410
-call sub_174C2	; 2A412
+call SetTextColors	; 2A412
 xor eax, eax	; 2A417
 mov al, byte [dword esi+byte_C6F6C]	; 2A419
 add eax, dword [dword esp+065Ch]	; 2A41F
@@ -402,10 +402,10 @@ add esp, byte 0Ch	; 2A440
 lea ebx, [dword esp+0610h]	; 2A443
 mov edx, edi	; 2A44A
 mov eax, 6Eh	; 2A44C
-call sub_17636	; 2A451
+call PrintOutlinedText	; 2A451
 mov edx, 0F7h	; 2A456
 mov eax, ecx	; 2A45B
-call sub_174C2	; 2A45D
+call SetTextColors	; 2A45D
 xor eax, eax	; 2A462
 mov al, byte [dword esi+byte_C6F6C]	; 2A464
 add eax, dword [dword esp+0658h]	; 2A46A
@@ -420,13 +420,13 @@ add esp, byte 0Ch	; 2A48B
 lea ebx, [dword esp+0610h]	; 2A48E
 mov edx, edi	; 2A495
 mov eax, 212h	; 2A497
-call sub_17636	; 2A49C
+call PrintOutlinedText	; 2A49C
 inc esi	; 2A4A1
 cmp esi, byte 9	; 2A4A2
 jl near loc_2A3BB	; 2A4A5
 mov edx, 0F7h	; 2A4AB
 mov eax, 0FAh	; 2A4B0
-call sub_174C2	; 2A4B5
+call SetTextColors	; 2A4B5
 mov ebx, dword [dword esp+0648h]	; 2A4BA
 push ebx	; 2A4C1
 call sub_8EA18	; 2A4C2
@@ -793,7 +793,7 @@ xor eax, eax	; 2AA25
 call sub_76429	; 2AA27
 mov edx, 0F7h	; 2AA2C
 mov eax, 0FAh	; 2AA31
-call sub_174C2	; 2AA36
+call SetTextColors	; 2AA36
 loc_2AA3B:
 call sub_B4BA8	; 2AA3B
 loc_2AA40:
@@ -1121,7 +1121,7 @@ call sub_8EA18	; 2AEE4
 add esp, byte 4	; 2AEE9
 xor edx, edx	; 2AEEC
 mov eax, 40h	; 2AEEE
-call sub_174C2	; 2AEF3
+call SetTextColors	; 2AEF3
 test ebp, ebp	; 2AEF8
 jne short loc_2AF23	; 2AEFA
 mov ebx, dword [leaguedbnames]	; 2AEFC
@@ -1295,7 +1295,7 @@ call sub_913D0	; 2B168
 add esp, byte 0Ch	; 2B16D
 xor edx, edx	; 2B170
 mov eax, 40h	; 2B172
-call sub_174C2	; 2B177
+call SetTextColors	; 2B177
 push dword 154h	; 2B17C
 push byte 0	; 2B181
 push dword 280h	; 2B183
@@ -1365,7 +1365,7 @@ add eax, 91h	; 2B250
 add eax, ebx	; 2B255
 mov ebx, esp	; 2B257
 mov edx, edi	; 2B259
-call sub_175E2	; 2B25B
+call PrintShadowText	; 2B25B
 loc_2B260:
 inc esi	; 2B260
 loc_2B261:
@@ -1498,7 +1498,7 @@ add eax, 91h	; 2B437
 add eax, edx	; 2B43C
 mov ebx, esp	; 2B43E
 mov edx, edi	; 2B440
-call sub_175E2	; 2B442
+call PrintShadowText	; 2B442
 loc_2B447:
 inc esi	; 2B447
 loc_2B448:
@@ -1609,7 +1609,7 @@ call sub_29C75	; 2B5D8
 mov ebx, esp	; 2B5DD
 mov edx, edi	; 2B5DF
 mov eax, 0B4h	; 2B5E1
-call sub_175E2	; 2B5E6
+call PrintShadowText	; 2B5E6
 mov edx, dword [dword esp+0114h]	; 2B5EB
 mov ebx, edx	; 2B5F2
 shl ebx, 4	; 2B5F4
@@ -1628,7 +1628,7 @@ jne short loc_2B62F	; 2B61C
 mov ebx, asc_C1428	; 2B61E
 mov edx, edi	; 2B623
 mov eax, 226h	; 2B625
-call sub_175E2	; 2B62A
+call PrintShadowText	; 2B62A
 loc_2B62F:
 xor eax, eax	; 2B62F
 mov al, byte [byte_D42C3]	; 2B631

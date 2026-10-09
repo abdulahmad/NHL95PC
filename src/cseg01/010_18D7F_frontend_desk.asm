@@ -12,7 +12,7 @@ extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, bai
 extern dword_D8C84, dword_DC230, schedgameidx, dword_DC238, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
 extern dword_EA0DC, jctime, off_CEE5F, off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF
 extern off_CEF23, off_D3078, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
-extern MakePath, sub_16F9A, sub_17816, sub_1B982, sub_1BAF3, sub_1D610, sub_2D35A, sub_2F2B1
+extern MakePath, ShowCredits, sub_17816, sub_1B982, sub_1BAF3, sub_1D610, sub_2D35A, sub_2F2B1
 extern sub_2F3D7, sub_2F5EE, sub_2FEDF, sub_30A0C, MessageBox, sub_3377C, sub_33E6A, sub_479E9
 extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB
@@ -1783,7 +1783,7 @@ mov dword [songdata], ebp	; 1A7C4
 loc_1A7CA:
 call sub_479E9	; 1A7CA
 call sub_1B982	; 1A7CF
-call sub_16F9A	; 1A7D4
+call ShowCredits	; 1A7D4
 push unk_DF014	; 1A7D9
 push dword 100h	; 1A7DE
 push byte 0	; 1A7E3

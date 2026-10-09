@@ -12,7 +12,7 @@ extern dword_D0C18, dword_D0C20, musichandle, dword_D8B74, dword_DC238, dword_EA
 extern dword_EA988, dword_EBC68, msglines, dword_EBCA4, dword_EBE9C, editrosters_exit, fputchar, jctime
 extern loc_6C03C, mkdir_, leaguedbnames
 extern off_CFB1C, off_CFB8A, rmdir_, sprintf_, strcat_, strcpy_, strlen_, strupr_
-extern MakePath, DeleteDir, sub_17573, sub_175E2, sub_29C75, sub_2FEDF, sub_30AE2, sub_30C3D
+extern MakePath, DeleteDir, PrintCenteredText, PrintShadowText, sub_29C75, sub_2FEDF, sub_30AE2, sub_30C3D
 extern sub_30F12, MessageBox, sub_6C19B, DrawEditRosters, EditRosters, CheckDatabases, sub_76429, sub_8CCA8
 extern sub_8D2F0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90F38
 extern sub_91964, sub_932D0, FatalError, MouseSetPos, sub_B4BA8, sub_B4F8C, unk_6BF3D, unk_C28A9
@@ -1006,7 +1006,7 @@ loc_6CF5C:
 mov ebx, asc_C28AC	; 6CF5C
 loc_6CF61:
 mov eax, edi	; 6CF61
-call sub_175E2	; 6CF63
+call PrintShadowText	; 6CF63
 add esp, byte 54h	; 6CF68
 pop edi	; 6CF6B
 pop esi	; 6CF6C
@@ -1283,7 +1283,7 @@ mov eax, esp	; 6D27F
 call strcat_	; 6D281
 mov edx, esp	; 6D286
 mov eax, 18h	; 6D288
-call sub_17573	; 6D28D
+call PrintCenteredText	; 6D28D
 add esp, byte 34h	; 6D292
 pop edi	; 6D295
 pop esi	; 6D296

@@ -17,7 +17,7 @@ extern dword_DD660, dword_DD664, dword_EA0DC, dword_EBC68, dword_EC6B8, dword_EC
 extern dword_EC6C8, dword_EC710, dword_EC714, dword_EC718, dword_EC71C, dword_EC720, dword_EC768, dword_EC76C
 extern dword_EC770, dword_EC774, dword_EC778, fputchar, jctime, leaguedbnames
 extern off_D1184, qsort_, strcat_, strcpy_, strlen_
-extern MakePath, DeleteDir, sub_175E2, sub_2BEEA, sub_2C135, sub_2C3FF, sub_2FED2, sub_309E4
+extern MakePath, DeleteDir, PrintShadowText, sub_2BEEA, sub_2C135, sub_2C3FF, sub_2FED2, sub_309E4
 extern MessageBox, sub_3170D, sub_6B391, sub_6B3D7, sub_6CA8F, DrawEditRosters, LoadBothRosterLists, sub_78BE7
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284
 extern sub_91370, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_B2CBE, sub_B2DCA, sub_B30B4
@@ -186,7 +186,7 @@ sar eax, 1	; 720A3
 mov ebx, dword [edi]	; 720A5
 add eax, dword [byte esp+060h]	; 720A7
 mov edx, dword [byte esp+064h]	; 720AB
-call sub_175E2	; 720AF
+call PrintShadowText	; 720AF
 mov eax, dword [byte esp+058h]	; 720B4
 add dword [byte esp+064h], eax	; 720B8
 inc esi	; 720BC

@@ -9,11 +9,11 @@ global str_GAA, str_Shots, str_Pct, str_PIM, str_PlusMinus, str_PPG, str_SHG, st
 global str_Palmem, str_Awardsi, str_Scrn, str_Titl, str_Iff, str_Awards, str_Mtafan, str_Adafan
 global str_Awasong, str_Mtawards, str_Adawards, str_Summ, str_04d, str_F000149, str_D50D99, str_D00D49
 global str_D50_D99, str_D00_D49, str_Trinknd, str_0000, str_HILIGHT, str_Numshp, str_GfxIdList, str_ErrDiskFree4
-global str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_Scrbrd2, str_Srb3, str_Crests4, str_Stanley, asc_C085A
-global asc_C0861, asc_C0866, asc_C086B, asc_C0870, asc_C0875, asc_C087A, asc_C0882, asc_C088A
-global asc_C0892, asc_C0897, asc_C089D, asc_C08A6, asc_C08AB, asc_C08B0, asc_C08B5, asc_C08BE
-global asc_C08C7, asc_C08D0, asc_C08D6, asc_C08DB, asc_C08E0, asc_C08E7, asc_C08F0, asc_C08F8
-global asc_C0900, asc_C0909, asc_C0910, asc_C0915, asc_C0944, asc_C094B, asc_C0952, asc_C0970
+global str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_Scrbrd2, str_Srb3, str_Crests4, str_Stanley, str_Eascrn
+global str_Pal4, str_Scrn2, str_Msk1, str_MASK, str_Iff2, str_Title30, str_Mttitle, str_Adtitle
+global str_Cmv, str_Title, str_Pioneer1, str_Pl2, str_Pl1, str_Bkgd3, str_Pioneer2, str_Pioneer4
+global str_Pioneer3, str_FlaD, str_Pion, str_Pio, str_Eaopen, str_Easports, str_Backwin, str_Credits
+global str_Rockditi, str_Shp0, asc_C0910, asc_C0915, asc_C0944, asc_C094B, asc_C0952, asc_C0970
 global asc_C097A, asc_C097F, asc_C0984, asc_C098C, asc_C0991, asc_C0997, unk_C020C, str_S1
 global str_errd3, str_errd4, str_backslash, unk_C0211, unk_C0216, unk_C021B, unk_C0220, unk_C0225
 global unk_C022A, unk_C022F, unk_C0234, unk_C0239, unk_C023E, unk_C0243, unk_C0248, unk_C0251
@@ -534,59 +534,59 @@ unk_C0848:
 db 063h,072h,065h,064h,069h,074h,030h,034h,00h
 unk_C0851:
 db 063h,072h,065h,064h,069h,074h,030h,033h,00h
-asc_C085A:
+str_Eascrn:
 db 065h,061h,073h,063h,072h,06Eh,00h
-asc_C0861:
+str_Pal4:
 db 021h,070h,061h,06Ch,00h
-asc_C0866:
+str_Scrn2:
 db 073h,063h,072h,06Eh,00h
-asc_C086B:
+str_Msk1:
 db 06Dh,073h,06Bh,031h,00h
-asc_C0870:
+str_MASK:
 db 04Dh,041h,053h,04Bh,00h
-asc_C0875:
+str_Iff2:
 db 02Eh,069h,066h,066h,00h
-asc_C087A:
+str_Title30:
 db 074h,069h,074h,06Ch,065h,033h,030h,00h
-asc_C0882:
+str_Mttitle:
 db 06Dh,074h,074h,069h,074h,06Ch,065h,00h
-asc_C088A:
+str_Adtitle:
 db 061h,064h,074h,069h,074h,06Ch,065h,00h
-asc_C0892:
+str_Cmv:
 db 02Eh,063h,06Dh,076h,00h
-asc_C0897:
+str_Title:
 db 074h,069h,074h,06Ch,065h,00h
-asc_C089D:
+str_Pioneer1:
 db 070h,069h,06Fh,06Eh,065h,065h,072h,031h,00h
-asc_C08A6:
+str_Pl2:
 db 021h,070h,06Ch,032h,00h
-asc_C08AB:
+str_Pl1:
 db 021h,070h,06Ch,031h,00h
-asc_C08B0:
+str_Bkgd3:
 db 062h,06Bh,067h,064h,00h
-asc_C08B5:
+str_Pioneer2:
 db 070h,069h,06Fh,06Eh,065h,065h,072h,032h,00h
-asc_C08BE:
+str_Pioneer4:
 db 070h,069h,06Fh,06Eh,065h,065h,072h,034h,00h
-asc_C08C7:
+str_Pioneer3:
 db 070h,069h,06Fh,06Eh,065h,065h,072h,033h,00h
-asc_C08D0:
+str_FlaD:
 db 066h,06Ch,061h,025h,064h,00h
-asc_C08D6:
+str_Pion:
 db 070h,069h,06Fh,06Eh,00h
-asc_C08DB:
+str_Pio:
 db 021h,070h,069h,06Fh,00h
-asc_C08E0:
+str_Eaopen:
 db 065h,061h,06Fh,070h,065h,06Eh,00h
-asc_C08E7:
+str_Easports:
 db 065h,061h,073h,070h,06Fh,072h,074h,073h,00h
-asc_C08F0:
+str_Backwin:
 db 062h,061h,063h,06Bh,077h,069h,06Eh,00h
-asc_C08F8:
+str_Credits:
 db 063h,072h,065h,064h,069h,074h,073h,00h
-asc_C0900:
+str_Rockditi:
 db 072h,06Fh,063h,06Bh,064h,069h,074h,069h,00h
-asc_C0909:
+str_Shp0:
 db 073h,068h,070h,030h,00h,00h,00h
 asc_C0910:
 db 02Eh,04Fh,055h,054h,00h

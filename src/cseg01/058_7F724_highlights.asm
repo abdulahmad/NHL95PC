@@ -6,7 +6,7 @@ extern __CHK, _dos_getdiskfree_, asc_C342E, asc_C3436, asc_C3449, asc_C3450, asc
 extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, curleague, sflags, musicon
 extern byte_DB3AD, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
 extern byte_E03E3, byte_E03E4, hudclockmin, hudclocksec, hudclockhund, songdata, dword_C7444, dword_C7448
-extern cont2team, HomeTeam, musichandle, dword_D42A8, rinkendbank, numshpbank, dword_D8C84, musicslot
+extern cont2team, HomeTeam, musichandle, fontcolor, rinkendbank, numshpbank, dword_D8C84, musicslot
 extern dword_DC230, dword_DC2F0, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
 extern dword_ED6F8, hilightfont, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, teamcitynames
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, SetScreenSize
@@ -124,7 +124,7 @@ add esi, byte 11h	; 7F826
 loc_7F829:
 cmp dword [byte esp+04Ch], byte 4	; 7F829
 jl short loc_7F7B3	; 7F82E
-mov dword [dword_D42A8], 10h	; 7F830
+mov dword [fontcolor], 10h	; 7F830
 push byte 6Dh	; 7F83A
 push byte 0Eh	; 7F83C
 push asc_C342E	; 7F83E
@@ -198,7 +198,7 @@ mov edx, dword [byte esp+04Ch]	; 7F911
 push edx	; 7F915
 call sub_91964	; 7F916
 add esp, byte 0Ch	; 7F91B
-mov dword [dword_D42A8], 59h	; 7F91E
+mov dword [fontcolor], 59h	; 7F91E
 push byte 6Ch	; 7F928
 push byte 0Dh	; 7F92A
 push asc_C342E	; 7F92C

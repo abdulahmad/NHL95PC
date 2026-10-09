@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_17816 progbits alloc exec nowrite align=1
 extern __CHK, asc_C0910, asc_C0915, asc_C6570, byte_C671C, byte_C672F, postate, lgstate
-extern byte_C6745, byte_C6759, byte_C6777, dword_C6410, dword_C65B0, dword_C65B4, dword_C65B8, dword_C65BC
+extern byte_C6745, byte_C6759, byte_C6777, textgrid, dword_C65B0, dword_C65B4, dword_C65B8, dword_C65BC
 extern dword_C6956, dword_C695A, dword_C6A60, dword_DC6B4, dword_DC738, dword_DD120, fclose_, fopen_
 extern fputs_, off_C648E, off_C659A, sprintf_, strcat_, strcmp_, strcpy_, strncpy_
 extern FileExists, DiskSpaceShort, MessageBox, sub_76429, sub_8FFB0, unk_C093C, unk_C093F, exhstate
@@ -22,7 +22,7 @@ push edx	; 17822
 push esi	; 17823
 push edi	; 17824
 sub esp, 8Ch	; 17825
-cmp dword [dword_C6410], byte 0	; 1782B
+cmp dword [textgrid], byte 0	; 1782B
 je near loc_179AA	; 17832
 mov dword [byte esp+07Ch], 4	; 17838
 xor ecx, ecx	; 17840
@@ -90,7 +90,7 @@ call fopen_	; 17919
 mov edi, eax	; 1791E
 test eax, eax	; 17920
 je short loc_17980	; 17922
-mov ecx, dword [dword_C6410]	; 17924
+mov ecx, dword [textgrid]	; 17924
 xor esi, esi	; 1792A
 loc_1792C:
 mov ebx, 64h	; 1792C

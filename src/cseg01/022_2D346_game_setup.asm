@@ -19,7 +19,7 @@ extern hmtmstruct, dword_DF61A
 extern dword_DF626, dword_DF62A, dword_DF636, fputchar, jctime, memcpy_
 extern crestnames, off_C719C, leaguedbnames, off_CD304, rand_, sprintf_
 extern strcat_, strcpy_, FadePalette, MakePath, FileOpenRead, FileOpenRW, FileClose, ReadKeyRec
-extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, sub_174C2, sub_175E2, sub_1BAF3, sub_29C75, sub_33E6A
+extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, SetTextColors, PrintShadowText, sub_1BAF3, sub_29C75, sub_33E6A
 extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
 extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
@@ -422,7 +422,7 @@ mov dword [dword esp+0694h], eax	; 2D8A7
 loc_2D8AE:
 xor edx, edx	; 2D8AE
 mov eax, 40h	; 2D8B0
-call sub_174C2	; 2D8B5
+call SetTextColors	; 2D8B5
 mov ecx, str_extDB	; 2D8BA
 mov ebx, asc_C15EC	; 2D8BF
 mov edx, curleague	; 2D8C4
@@ -734,7 +734,7 @@ call strcpy_	; 2DE47
 lea ebx, [dword esp+05D4h]	; 2DE4C
 mov edx, 0D2h	; 2DE53
 mov eax, 74h	; 2DE58
-call sub_175E2	; 2DE5D
+call PrintShadowText	; 2DE5D
 xor eax, eax	; 2DE62
 mov al, byte [dword esp+07D1h]	; 2DE64
 push eax	; 2DE6B
@@ -746,14 +746,14 @@ add esp, byte 0Ch	; 2DE7E
 lea ebx, [dword esp+05D4h]	; 2DE81
 mov edx, 0D2h	; 2DE88
 mov eax, 118h	; 2DE8D
-call sub_175E2	; 2DE92
+call PrintShadowText	; 2DE92
 lea edx, [byte esp+01Eh]	; 2DE97
 lea eax, [dword esp+05D4h]	; 2DE9B
 call strcpy_	; 2DEA2
 lea ebx, [dword esp+05D4h]	; 2DEA7
 mov edx, 114h	; 2DEAE
 mov eax, 74h	; 2DEB3
-call sub_175E2	; 2DEB8
+call PrintShadowText	; 2DEB8
 xor eax, eax	; 2DEBD
 mov al, byte [dword esp+07D0h]	; 2DEBF
 push eax	; 2DEC6
@@ -765,7 +765,7 @@ add esp, byte 0Ch	; 2DED9
 lea ebx, [dword esp+05D4h]	; 2DEDC
 mov edx, 114h	; 2DEE3
 mov eax, 118h	; 2DEE8
-call sub_175E2	; 2DEED
+call PrintShadowText	; 2DEED
 mov edi, 0F3h	; 2DEF2
 mov al, byte [dword esp+07D8h]	; 2DEF7
 dec al	; 2DEFE
@@ -804,7 +804,7 @@ loc_2DF64:
 lea ebx, [dword esp+05D4h]	; 2DF64
 mov edx, edi	; 2DF6B
 mov eax, 190h	; 2DF6D
-call sub_175E2	; 2DF72
+call PrintShadowText	; 2DF72
 cmp dword [dword esp+07A4h], byte 0	; 2DF77
 je short loc_2DF8F	; 2DF7F
 call sub_59C80	; 2DF81
@@ -904,7 +904,7 @@ call sub_29C75	; 2E101
 lea ebx, [dword esp+05D4h]	; 2E106
 mov edx, edi	; 2E10D
 mov eax, 0B4h	; 2E10F
-call sub_175E2	; 2E114
+call PrintShadowText	; 2E114
 mov eax, esi	; 2E119
 shl eax, 4	; 2E11B
 add eax, esi	; 2E11E
@@ -921,7 +921,7 @@ jne short loc_2E158	; 2E145
 mov ebx, asc_C1639	; 2E147
 mov edx, edi	; 2E14C
 mov eax, 226h	; 2E14E
-call sub_175E2	; 2E153
+call PrintShadowText	; 2E153
 loc_2E158:
 xor eax, eax	; 2E158
 mov al, byte [byte_D42C3]	; 2E15A
@@ -1208,7 +1208,7 @@ add esp, byte 0Ch	; 2E57C
 lea ebx, [dword esp+05D4h]	; 2E57F
 mov edx, edi	; 2E586
 mov eax, 96h	; 2E588
-call sub_175E2	; 2E58D
+call PrintShadowText	; 2E58D
 mov ecx, 0C8h	; 2E592
 lea ebx, [dword esp+06AFh]	; 2E597
 xor edx, edx	; 2E59E
@@ -1305,7 +1305,7 @@ loc_2E6D2:
 lea ebx, [dword esp+05D4h]	; 2E6D2
 mov edx, edi	; 2E6D9
 mov eax, 0E6h	; 2E6DB
-call sub_175E2	; 2E6E0
+call PrintShadowText	; 2E6E0
 mov byte [dword esp+07ECh], 0FFh	; 2E6E5
 xor eax, eax	; 2E6ED
 mov al, byte [byte ebp+07h]	; 2E6EF
@@ -1321,7 +1321,7 @@ add esp, byte 10h	; 2E70B
 lea ebx, [dword esp+05D4h]	; 2E70E
 mov edx, edi	; 2E715
 mov eax, 20Dh	; 2E717
-call sub_175E2	; 2E71C
+call PrintShadowText	; 2E71C
 xor eax, eax	; 2E721
 mov al, byte [byte_D42C3]	; 2E723
 add edi, eax	; 2E728
@@ -1408,7 +1408,7 @@ call strcat_	; 2E86B
 lea ebx, [dword esp+05D4h]	; 2E870
 mov edx, edi	; 2E877
 mov eax, 0E6h	; 2E879
-call sub_175E2	; 2E87E
+call PrintShadowText	; 2E87E
 loc_2E883:
 xor eax, eax	; 2E883
 mov al, byte [byte_D42C3]	; 2E885
@@ -1442,7 +1442,7 @@ add esp, byte 0Ch	; 2E8E6
 lea ebx, [dword esp+05D4h]	; 2E8E9
 mov edx, edi	; 2E8F0
 mov eax, 91h	; 2E8F2
-call sub_175E2	; 2E8F7
+call PrintShadowText	; 2E8F7
 xor eax, eax	; 2E8FC
 mov al, byte [byte esi+01h]	; 2E8FE
 mov dword [dword esp+07C4h], eax	; 2E901
@@ -1468,7 +1468,7 @@ jne near loc_2EA52	; 2E949
 lea ebx, [dword esp+06AFh]	; 2E94F
 mov edx, edi	; 2E956
 mov eax, 0DCh	; 2E958
-call sub_175E2	; 2E95D
+call PrintShadowText	; 2E95D
 xor eax, eax	; 2E962
 mov al, byte [byte esi+06h]	; 2E964
 push eax	; 2E967
@@ -1483,7 +1483,7 @@ add esp, byte 10h	; 2E980
 lea ebx, [dword esp+05D4h]	; 2E983
 mov edx, edi	; 2E98A
 mov eax, 229h	; 2E98C
-call sub_175E2	; 2E991
+call PrintShadowText	; 2E991
 xor eax, eax	; 2E996
 mov al, byte [byte_D42C3]	; 2E998
 add edi, eax	; 2E99D
@@ -1517,7 +1517,7 @@ loc_2E9F2:
 lea ebx, [dword esp+05D4h]	; 2E9F2
 mov edx, edi	; 2E9F9
 mov eax, 0DCh	; 2E9FB
-call sub_175E2	; 2EA00
+call PrintShadowText	; 2EA00
 xor eax, eax	; 2EA05
 mov al, byte [byte_D42C3]	; 2EA07
 add edi, eax	; 2EA0C
@@ -1598,7 +1598,7 @@ sar eax, 1	; 2EB34
 add eax, 86h	; 2EB36
 lea ebx, [dword esp+05D4h]	; 2EB3B
 mov edx, 190h	; 2EB42
-call sub_175E2	; 2EB47
+call PrintShadowText	; 2EB47
 movzx edi, byte [byte_D42C3]	; 2EB4C
 add edi, 190h	; 2EB53
 xor eax, eax	; 2EB59
@@ -1627,7 +1627,7 @@ sub edx, eax	; 2EBAA
 lea eax, [byte edx-01Eh]	; 2EBAC
 lea ebx, [dword esp+05D4h]	; 2EBAF
 mov edx, edi	; 2EBB6
-call sub_175E2	; 2EBB8
+call PrintShadowText	; 2EBB8
 xor eax, eax	; 2EBBD
 mov al, byte [dword esp+07C9h]	; 2EBBF
 push eax	; 2EBC6
@@ -1645,7 +1645,7 @@ add esp, byte 14h	; 2EBED
 lea ebx, [dword esp+05D4h]	; 2EBF0
 mov edx, edi	; 2EBF7
 mov eax, 1A5h	; 2EBF9
-call sub_175E2	; 2EBFE
+call PrintShadowText	; 2EBFE
 loc_2EC03:
 cmp dword [dword esp+0790h], byte 0	; 2EC03
 jne near loc_2ECC4	; 2EC0B
@@ -1766,7 +1766,7 @@ sar eax, 1	; 2ED87
 add eax, 8Ch	; 2ED89
 mov ebx, asc_C70EC	; 2ED8E
 mov edx, 10Bh	; 2ED93
-call sub_175E2	; 2ED98
+call PrintShadowText	; 2ED98
 loc_2ED9D:
 cmp byte [dword esp+07E8h], 0	; 2ED9D
 jne short loc_2EDDE	; 2EDA5
@@ -1784,7 +1784,7 @@ sar eax, 1	; 2EDC8
 add eax, 8Ch	; 2EDCA
 mov ebx, asc_C70F8	; 2EDCF
 mov edx, 10Bh	; 2EDD4
-call sub_175E2	; 2EDD9
+call PrintShadowText	; 2EDD9
 loc_2EDDE:
 mov al, byte [dword esp+07D8h]	; 2EDDE
 cmp al, byte [dword esp+07DCh]	; 2EDE5
@@ -2366,7 +2366,7 @@ loc_2F5DE:
 mov ebx, edi	; 2F5DE
 mov edx, ebp	; 2F5E0
 mov eax, esi	; 2F5E2
-call sub_175E2	; 2F5E4
+call PrintShadowText	; 2F5E4
 pop ebp	; 2F5E9
 pop edi	; 2F5EA
 pop esi	; 2F5EB
@@ -2505,7 +2505,7 @@ call sub_8EA18	; 2F777
 add esp, byte 4	; 2F77C
 xor edx, edx	; 2F77F
 mov eax, 40h	; 2F781
-call sub_174C2	; 2F786
+call SetTextColors	; 2F786
 mov dword [byte ebp-0Ch], 0B0h	; 2F78B
 xor edi, edi	; 2F792
 loc_2F794:
@@ -2521,7 +2521,7 @@ LD sub, eax, edx	; 2F7B0
 sar eax, 1	; 2F7B2
 mov ebx, dword [nosplit edi*4+off_C719C]	; 2F7B4
 mov edx, dword [byte ebp-0Ch]	; 2F7BB
-call sub_175E2	; 2F7BE
+call PrintShadowText	; 2F7BE
 add dword [byte ebp-0Ch], byte 18h	; 2F7C3
 inc edi	; 2F7C7
 cmp edi, byte 0Ch	; 2F7C8
@@ -2575,7 +2575,7 @@ sub edx, eax	; 2F843
 mov eax, edx	; 2F845
 mov ebx, esi	; 2F847
 mov edx, 8Ah	; 2F849
-call sub_175E2	; 2F84E
+call PrintShadowText	; 2F84E
 mov esi, edi	; 2F853
 shl esi, 8	; 2F855
 mov eax, dword [dword esi+hmscore-2]	; 2F858

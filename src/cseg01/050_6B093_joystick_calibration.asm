@@ -11,8 +11,8 @@ extern facount, seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_
 extern careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D2FD8, dword_D302C, dword_D3030
 extern dword_D3034, dword_EA0DC, dword_EA0F8, dword_EA101, dword_EA298, dword_EA29C, dword_EA2A0, dword_EA2A9
 extern dword_ED7B0, jctime, memcpy_, memset_, leaguedbnames
-extern off_D3078, off_D45B4, off_D45B8, strcat_, MakePath, sub_174C2
-extern sub_175E2, sub_6CA8F, TeamRecPtr, KeyDbPtr, sub_6CC20, sub_76429, sub_83459, sub_8CCA8
+extern off_D3078, off_D45B4, off_D45B8, strcat_, MakePath, SetTextColors
+extern PrintShadowText, sub_6CA8F, TeamRecPtr, KeyDbPtr, sub_6CC20, sub_76429, sub_83459, sub_8CCA8
 extern sub_8D2F0, sub_8E4C0, sub_8E4F8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_90D20, sub_910E0, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_91964
 extern sub_92CD0, sub_92DE0, sub_B29F0, sub_B2CBE, MouseSetPos, sub_B2F22, sub_B30B4, sub_B30F4
@@ -475,7 +475,7 @@ call sub_8E9C0	; 6B602
 add esp, byte 8	; 6B607
 xor edx, edx	; 6B60A
 mov eax, ebp	; 6B60C
-call sub_174C2	; 6B60E
+call SetTextColors	; 6B60E
 xor edi, edi	; 6B613
 jmp short loc_6B64D	; 6B615
 loc_6B617:
@@ -561,7 +561,7 @@ call sub_8E9C0	; 6B6F0
 add esp, byte 8	; 6B6F5
 xor edx, edx	; 6B6F8
 mov eax, edi	; 6B6FA
-call sub_174C2	; 6B6FC
+call SetTextColors	; 6B6FC
 mov ebx, dword [byte ebp+010h]	; 6B701
 mov edx, dword [byte ebp+04h]	; 6B704
 add edx, byte 2	; 6B707
@@ -579,7 +579,7 @@ call sub_8E9C0	; 6B727
 add esp, byte 8	; 6B72C
 xor edx, edx	; 6B72F
 mov eax, dword [byte esp+01Ch]	; 6B731
-call sub_174C2	; 6B735
+call SetTextColors	; 6B735
 mov ebx, dword [byte ebp+010h]	; 6B73A
 mov edx, dword [byte ebp+04h]	; 6B73D
 add edx, byte 2	; 6B740
@@ -606,7 +606,7 @@ call sub_8E9C0	; 6B77D
 add esp, byte 8	; 6B782
 xor edx, edx	; 6B785
 mov eax, dword [byte esp+024h]	; 6B787
-call sub_174C2	; 6B78B
+call SetTextColors	; 6B78B
 mov ebx, dword [byte esi+010h]	; 6B790
 mov edx, dword [byte esi+04h]	; 6B793
 inc edx	; 6B796
@@ -624,7 +624,7 @@ call sub_8E9C0	; 6B7B5
 add esp, byte 8	; 6B7BA
 xor edx, edx	; 6B7BD
 mov eax, dword [byte esp+01Ch]	; 6B7BF
-call sub_174C2	; 6B7C3
+call SetTextColors	; 6B7C3
 mov esi, edi	; 6B7C8
 shl esi, 5	; 6B7CA
 mov ebx, dword [byte esi+ebp+010h]	; 6B7CD
@@ -738,7 +738,7 @@ mov byte [esp+eax], dl	; 6B8BB
 mov ebx, esp	; 6B8BE
 mov edx, esi	; 6B8C0
 mov eax, ecx	; 6B8C2
-call sub_175E2	; 6B8C4
+call PrintShadowText	; 6B8C4
 jmp short loc_6B90A	; 6B8C9
 sub_6B8CB:
 push dword 68h	; 6B8CB
@@ -856,7 +856,7 @@ call sub_8E9C0	; 6B9C2
 add esp, byte 8	; 6B9C7
 xor edx, edx	; 6B9CA
 mov eax, dword [esp]	; 6B9CC
-call sub_174C2	; 6B9CF
+call SetTextColors	; 6B9CF
 mov ebx, dword [byte esi+010h]	; 6B9D4
 lea edx, [byte ebp+01h]	; 6B9D7
 lea eax, [byte edi+02h]	; 6B9DA

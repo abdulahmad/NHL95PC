@@ -6,7 +6,7 @@ extern __CHK, asc_C17F4, asc_C17F9, asc_C17FE, asc_C1803, asc_C180B, asc_C1810, 
 extern asc_C1827, asc_C182C, asc_C1835, asc_C183D, asc_C1842, asc_C184A, monthdays, byte_C845D
 extern byte_C845E, musicon, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, dword_C65C0
 extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, songdata, dword_C895E, dword_C8976, dword_C897A
-extern dword_C898E, dword_C8992, musichandle, dword_D2C6B, dword_D42A8, dword_D8B74, dword_DC238, musicslot
+extern dword_C898E, dword_C8992, musichandle, dword_D2C6B, fontcolor, dword_D8B74, dword_DC238, musicslot
 extern dword_DD780, dword_DD794, dword_DD7A0, dword_DDD28, dword_DDD2C, dword_DDD30, dword_EA0DC, fputchar
 extern jctime, crestnames, off_C85F6, off_C8616, sprintf_, MakePath, FileOpenRead, leaguedbnames
 extern FileClose, FileReadAt, ReadSchedGame, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
@@ -105,7 +105,7 @@ mov edi, dword [dword esp+0C0h]	; 340E4
 push edi	; 340EB
 call sub_8EA18	; 340EC
 add esp, byte 4	; 340F1
-mov dword [dword_D42A8], 0C0h	; 340F4
+mov dword [fontcolor], 0C0h	; 340F4
 mov eax, dword [byte esp+08h]	; 340FE
 cmp byte [dword eax+byte_C845E], 0	; 34102
 je short loc_3411C	; 34109
@@ -119,13 +119,13 @@ add esi, byte 7	; 34122
 mov edi, dword [dword_C898E]	; 34125
 loc_3412B:
 add edi, byte 5	; 3412B
-mov dword [dword_D42A8], 0B6h	; 3412E
+mov dword [fontcolor], 0B6h	; 3412E
 push edi	; 34138
 push esi	; 34139
 push asc_C180B	; 3413A
 call sub_91964	; 3413F
 add esp, byte 0Ch	; 34144
-mov dword [dword_D42A8], 0B7h	; 34147
+mov dword [fontcolor], 0B7h	; 34147
 add edi, byte 0Ch	; 34151
 push edi	; 34154
 push esi	; 34155
@@ -161,14 +161,14 @@ lea eax, [byte esp+054h]	; 341AF
 push eax	; 341B3
 call sprintf_	; 341B4
 add esp, byte 0Ch	; 341B9
-mov dword [dword_D42A8], 0C0h	; 341BC
+mov dword [fontcolor], 0C0h	; 341BC
 push edi	; 341C6
 push esi	; 341C7
 lea eax, [byte esp+054h]	; 341C8
 push eax	; 341CC
 call sub_91964	; 341CD
 add esp, byte 0Ch	; 341D2
-mov dword [dword_D42A8], 0FFh	; 341D5
+mov dword [fontcolor], 0FFh	; 341D5
 dec edi	; 341DF
 push edi	; 341E0
 dec esi	; 341E1
@@ -335,7 +335,7 @@ lea eax, [byte esp+054h]	; 343A5
 push eax	; 343A9
 call sprintf_	; 343AA
 add esp, byte 0Ch	; 343AF
-mov dword [dword_D42A8], 0FFh	; 343B2
+mov dword [fontcolor], 0FFh	; 343B2
 lea eax, [byte edi+01h]	; 343BC
 push eax	; 343BF
 lea eax, [byte esi+04h]	; 343C0
@@ -344,7 +344,7 @@ lea eax, [byte esp+054h]	; 343C4
 push eax	; 343C8
 call sub_91964	; 343C9
 add esp, byte 0Ch	; 343CE
-mov dword [dword_D42A8], 0C0h	; 343D1
+mov dword [fontcolor], 0C0h	; 343D1
 push edi	; 343DB
 add esi, byte 3	; 343DC
 push esi	; 343DF
@@ -369,7 +369,7 @@ lea eax, [byte esp+054h]	; 34416
 push eax	; 3441A
 call sprintf_	; 3441B
 add esp, byte 0Ch	; 34420
-mov dword [dword_D42A8], 0C0h	; 34423
+mov dword [fontcolor], 0C0h	; 34423
 lea eax, [byte edi+01h]	; 3442D
 push eax	; 34430
 lea eax, [byte esi+04h]	; 34431
@@ -378,7 +378,7 @@ lea eax, [byte esp+054h]	; 34435
 push eax	; 34439
 call sub_91964	; 3443A
 add esp, byte 0Ch	; 3443F
-mov dword [dword_D42A8], 0FFh	; 34442
+mov dword [fontcolor], 0FFh	; 34442
 push edi	; 3444C
 lea eax, [byte esi+03h]	; 3444D
 push eax	; 34450
@@ -392,7 +392,7 @@ mov ebx, dword [dword esp+0A4h]	; 34460
 push ebx	; 34467
 call sub_91370	; 34468
 add esp, byte 0Ch	; 3446D
-mov dword [dword_D42A8], 0FFh	; 34470
+mov dword [fontcolor], 0FFh	; 34470
 lea eax, [byte edi+031h]	; 3447A
 push eax	; 3447D
 lea eax, [byte esp+070h]	; 3447E
@@ -407,7 +407,7 @@ lea eax, [byte esp+074h]	; 34493
 push eax	; 34497
 call sub_91964	; 34498
 add esp, byte 0Ch	; 3449D
-mov dword [dword_D42A8], 0C0h	; 344A0
+mov dword [fontcolor], 0C0h	; 344A0
 add edi, byte 30h	; 344AA
 push edi	; 344AD
 lea eax, [byte esp+070h]	; 344AE

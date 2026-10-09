@@ -23,8 +23,8 @@ extern fputchar, j___close_, jctime, lseek_, memcpy_, off_C68CC, off_C68E4, off_
 extern off_C68F4, off_C68F8, off_C6A64, off_C6A99, off_C6AAC, off_C6AD1, off_C6AE0, off_C6B68
 extern off_C6B6C, off_C6B70, off_C6B88, off_C6B8C, off_C6B90, off_C6B94, off_C6BE8, off_C6C14
 extern off_C6C40, off_C6C44, off_C6C48, off_C6C4C, off_C6C50, open_, qsort_, read_
-extern sprintf_, strcat_, strnicmp_, MakePath, sub_174C2, sub_17573, sub_175E2, sub_17636
-extern sub_176AE, sub_176DB, sub_17711, sub_1777E, sub_1FB7F, sub_1FC8F, sub_1FF86, sub_21C04
+extern sprintf_, strcat_, strnicmp_, MakePath, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText
+extern PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff, sub_1FB7F, sub_1FC8F, sub_1FF86, sub_21C04
 extern sub_29A97, sub_29C75, sub_8CCA8, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_91370
 extern sub_913B4, sub_B30B4, sub_B30BB, sub_B4BA8, sub_B4BC4, unk_C0DA6, unk_C0E9A, unk_C0EA8
 extern unk_C0EAB, unk_C0EAE, unk_C0EB1, unk_C0EB4, unk_C0FD4, unk_C1055, unk_C107F, unk_C1087
@@ -401,7 +401,7 @@ call sub_8EA18	; 22101
 add esp, byte 4	; 22106
 mov edx, 43h	; 22109
 mov eax, 40h	; 2210E
-call sub_174C2	; 22113
+call SetTextColors	; 22113
 mov edi, unk_DD0D8	; 22118
 mov esi, asc_C0D6B	; 2211D
 movsd	; 22122
@@ -417,11 +417,11 @@ sub edx, eax	; 2213A
 mov eax, edx	; 2213C
 mov ebx, unk_DD0D8	; 2213E
 mov edx, 52h	; 22143
-call sub_17636	; 22148
-call sub_17711	; 2214D
+call PrintOutlinedText	; 22148
+call TextGridOpen	; 2214D
 mov edx, 43h	; 22152
 mov eax, 40h	; 22157
-call sub_174C2	; 2215C
+call SetTextColors	; 2215C
 lea eax, [byte ebp+013h]	; 22161
 push eax	; 22164
 lea eax, [byte ebp+03h]	; 22165
@@ -432,7 +432,7 @@ call sprintf_	; 22173
 add esp, byte 10h	; 22178
 mov edx, unk_DD0D8	; 2217B
 mov eax, 98h	; 22180
-call sub_17573	; 22185
+call PrintCenteredText	; 22185
 xor eax, eax	; 2218A
 mov al, byte [byte ebp+01h]	; 2218C
 push eax	; 2218F
@@ -469,7 +469,7 @@ call strcat_	; 221DA
 loc_221DF:
 mov edx, unk_DD0D8	; 221DF
 mov eax, 0B2h	; 221E4
-call sub_17573	; 221E9
+call PrintCenteredText	; 221E9
 mov esi, dword [dword esp+0F8h]	; 221EE
 push esi	; 221F5
 call sub_8EA18	; 221F6
@@ -480,43 +480,43 @@ sar ecx, 10h	; 22210
 mov ebx, unk_C0DA6	; 22213
 mov edx, ecx	; 22218
 mov eax, 82h	; 2221A
-call sub_175E2	; 2221F
+call PrintShadowText	; 2221F
 mov ebx, asc_C0DA9	; 22224
 mov edx, ecx	; 22229
 mov eax, 0AAh	; 2222B
-call sub_175E2	; 22230
+call PrintShadowText	; 22230
 mov ebx, asc_C0DAD	; 22235
 mov edx, ecx	; 2223A
 mov eax, 0D2h	; 2223C
-call sub_175E2	; 22241
+call PrintShadowText	; 22241
 mov ebx, asc_C0DB1	; 22246
 mov edx, ecx	; 2224B
 mov eax, 0FAh	; 2224D
-call sub_175E2	; 22252
+call PrintShadowText	; 22252
 mov ebx, asc_C0DB5	; 22257
 mov edx, ecx	; 2225C
 mov eax, 122h	; 2225E
-call sub_175E2	; 22263
+call PrintShadowText	; 22263
 mov ebx, asc_C0DB9	; 22268
 mov edx, ecx	; 2226D
 mov eax, 14Ah	; 2226F
-call sub_175E2	; 22274
+call PrintShadowText	; 22274
 mov ebx, asc_C0DBE	; 22279
 mov edx, ecx	; 2227E
 mov eax, 186h	; 22280
-call sub_175E2	; 22285
+call PrintShadowText	; 22285
 mov ebx, asc_C0DC2	; 2228A
 mov edx, ecx	; 2228F
 mov eax, 1AEh	; 22291
-call sub_175E2	; 22296
+call PrintShadowText	; 22296
 mov ebx, asc_C0DC6	; 2229B
 mov edx, ecx	; 222A0
 mov eax, 1D6h	; 222A2
-call sub_175E2	; 222A7
+call PrintShadowText	; 222A7
 mov ebx, asc_C0DCC	; 222AC
 mov edx, ecx	; 222B1
 mov eax, 212h	; 222B3
-call sub_175E2	; 222B8
+call PrintShadowText	; 222B8
 lea esi, [dword esp+090h]	; 222BD
 xor ebp, ebp	; 222C4
 mov dword [dword esp+0F4h], 103h	; 222C6
@@ -526,60 +526,60 @@ mov edi, dword [dword esp+0F2h]	; 222D8
 sar edi, 10h	; 222DF
 mov edx, edi	; 222E2
 mov eax, 32h	; 222E4
-call sub_175E2	; 222E9
+call PrintShadowText	; 222E9
 movsx ecx, word [esi]	; 222EE
 mov ebx, str_fmt2d	; 222F1
 mov edx, edi	; 222F6
 mov eax, 82h	; 222F8
-call sub_176AE	; 222FD
+call PrintFmt1	; 222FD
 mov ecx, dword [esi]	; 22302
 sar ecx, 10h	; 22304
 mov ebx, str_fmt3d	; 22307
 mov edx, edi	; 2230C
 mov eax, 0AAh	; 2230E
-call sub_176AE	; 22313
+call PrintFmt1	; 22313
 mov ecx, dword [byte esi+02h]	; 22318
 sar ecx, 10h	; 2231B
 mov ebx, str_fmt3d	; 2231E
 mov edx, edi	; 22323
 mov eax, 0D2h	; 22325
-call sub_176AE	; 2232A
+call PrintFmt1	; 2232A
 mov ecx, dword [byte esi+04h]	; 2232F
 sar ecx, 10h	; 22332
 mov ebx, str_fmt3d	; 22335
 mov edx, edi	; 2233A
 mov eax, 0FAh	; 2233C
-call sub_176AE	; 22341
+call PrintFmt1	; 22341
 mov ecx, dword [byte esi+0Ah]	; 22346
 sar ecx, 10h	; 22349
 mov ebx, str_fmt3d	; 2234C
 mov edx, edi	; 22351
 mov eax, 122h	; 22353
-call sub_176AE	; 22358
+call PrintFmt1	; 22358
 mov ecx, dword [byte esi+0Eh]	; 2235D
 sar ecx, 10h	; 22360
 mov ebx, asc_C690B	; 22363
 mov edx, edi	; 22368
 mov eax, 14Ah	; 2236A
-call sub_176AE	; 2236F
+call PrintFmt1	; 2236F
 mov ecx, dword [byte esi+06h]	; 22374
 sar ecx, 10h	; 22377
 mov ebx, str_fmt3d	; 2237A
 mov edx, edi	; 2237F
 mov eax, 186h	; 22381
-call sub_176AE	; 22386
+call PrintFmt1	; 22386
 mov ecx, dword [byte esi+08h]	; 2238B
 sar ecx, 10h	; 2238E
 mov ebx, str_fmt3d	; 22391
 mov edx, edi	; 22396
 mov eax, 1AEh	; 22398
-call sub_176AE	; 2239D
+call PrintFmt1	; 2239D
 mov ecx, dword [byte esi+0Ch]	; 223A2
 sar ecx, 10h	; 223A5
 mov ebx, asc_C690F	; 223A8
 mov edx, edi	; 223AD
 mov eax, 1D6h	; 223AF
-call sub_176AE	; 223B4
+call PrintFmt1	; 223B4
 cmp word [byte esi+0Eh], byte 0	; 223B9
 je short loc_223F8	; 223BE
 xor edx, edx	; 223C0
@@ -622,7 +622,7 @@ mov edx, dword [dword esp+0F6h]	; 22418
 sar edx, 10h	; 2241F
 mov ebx, asc_C6913	; 22422
 mov eax, 212h	; 22427
-call sub_176DB	; 2242C
+call PrintFmt2	; 2242C
 lea esi, [dword esp+0A2h]	; 22431
 add dword [dword esp+0F4h], byte 0Dh	; 22438
 inc ebp	; 22440
@@ -632,7 +632,7 @@ mov dword [dword esp+0F4h], 131h	; 2244A
 mov eax, dword [dword esp+0F2h]	; 22455
 sar eax, 10h	; 2245C
 mov edx, asc_C0DD2	; 2245F
-call sub_17573	; 22464
+call PrintCenteredText	; 22464
 lea eax, [dword esp+0D8h]	; 22469
 mov dword [dword esp+0104h], eax	; 22470
 mov dword [dword esp+0F4h], 143h	; 22477
@@ -641,7 +641,7 @@ sar ecx, 10h	; 22489
 mov ebx, asc_C0DDB	; 2248C
 mov edx, ecx	; 22491
 mov eax, 1Eh	; 22493
-call sub_175E2	; 22498
+call PrintShadowText	; 22498
 cmp byte [dword esp+0D8h], 0	; 2249D
 je short loc_224AE	; 224A5
 mov ebx, asc_C0DE2	; 224A7
@@ -651,7 +651,7 @@ mov ebx, asc_C0DE6	; 224AE
 loc_224B3:
 mov edx, ecx	; 224B3
 mov eax, 10Eh	; 224B5
-call sub_175E2	; 224BA
+call PrintShadowText	; 224BA
 xor esi, esi	; 224BF
 mov dword [dword esp+0108h], esi	; 224C1
 xor ebp, ebp	; 224C8
@@ -669,7 +669,7 @@ mov eax, dword [dword esp+0108h]	; 224FB
 add eax, 1Eh	; 22502
 cwde	; 22507
 mov edx, edi	; 22508
-call sub_175E2	; 2250A
+call PrintShadowText	; 2250A
 mov edx, dword [dword ebp+off_C6A99]	; 2250F
 sar edx, 18h	; 22515
 add edx, dword [dword esp+0104h]	; 22518
@@ -685,7 +685,7 @@ add eax, 10Eh	; 22537
 cwde	; 2253C
 mov ebx, str_fmt3d	; 2253D
 mov edx, edi	; 22542
-call sub_176AE	; 22544
+call PrintFmt1	; 22544
 add dword [dword esp+0F4h], byte 0Dh	; 22549
 inc ebp	; 22551
 cmp ebp, byte 0Eh	; 22552
@@ -694,7 +694,7 @@ lea eax, [byte esp+050h]	; 2255B
 push eax	; 2255F
 call sub_8EA00	; 22560
 add esp, byte 4	; 22565
-call sub_1777E	; 22568
+call TextGridOff	; 22568
 mov eax, dword [dword esp+0FCh]	; 2256D
 add esp, 10Ch	; 22574
 pop ebp	; 2257A
@@ -996,7 +996,7 @@ push esi	; 2297C
 loc_2297D:
 call jctime	; 2297D
 add esp, byte 4	; 22982
-call sub_17711	; 22985
+call TextGridOpen	; 22985
 lea eax, [byte esp+050h]	; 2298A
 push eax	; 2298E
 call sub_8E9E8	; 2298F
@@ -1007,7 +1007,7 @@ call sub_8EA18	; 2299F
 add esp, byte 4	; 229A4
 mov edx, 43h	; 229A7
 mov eax, 40h	; 229AC
-call sub_174C2	; 229B1
+call SetTextColors	; 229B1
 mov edi, unk_DD0D8	; 229B6
 mov esi, asc_C0E7D	; 229BB
 movsd	; 229C0
@@ -1023,10 +1023,10 @@ sub edx, eax	; 229D8
 mov eax, edx	; 229DA
 mov ebx, unk_DD0D8	; 229DC
 mov edx, 52h	; 229E1
-call sub_17636	; 229E6
+call PrintOutlinedText	; 229E6
 mov edx, 43h	; 229EB
 mov eax, 40h	; 229F0
-call sub_174C2	; 229F5
+call SetTextColors	; 229F5
 lea eax, [byte ebp+013h]	; 229FA
 push eax	; 229FD
 lea eax, [byte ebp+03h]	; 229FE
@@ -1037,7 +1037,7 @@ call sprintf_	; 22A0C
 add esp, byte 10h	; 22A11
 mov edx, unk_DD0D8	; 22A14
 mov eax, 98h	; 22A19
-call sub_17573	; 22A1E
+call PrintCenteredText	; 22A1E
 xor eax, eax	; 22A23
 mov al, byte [byte ebp+01h]	; 22A25
 push eax	; 22A28
@@ -1047,7 +1047,7 @@ call sprintf_	; 22A33
 add esp, byte 0Ch	; 22A38
 mov edx, unk_DD0D8	; 22A3B
 mov eax, 0B2h	; 22A40
-call sub_17573	; 22A45
+call PrintCenteredText	; 22A45
 mov edx, dword [dword esp+0104h]	; 22A4A
 push edx	; 22A51
 call sub_8EA18	; 22A52
@@ -1058,43 +1058,43 @@ sar ecx, 10h	; 22A6C
 mov ebx, unk_C0E9A	; 22A6F
 mov edx, ecx	; 22A74
 mov eax, 82h	; 22A76
-call sub_175E2	; 22A7B
+call PrintShadowText	; 22A7B
 mov ebx, asc_C0E9D	; 22A80
 mov edx, ecx	; 22A85
 mov eax, 0AAh	; 22A87
-call sub_175E2	; 22A8C
+call PrintShadowText	; 22A8C
 mov ebx, asc_C0EA2	; 22A91
 mov edx, ecx	; 22A96
 mov eax, 0D2h	; 22A98
-call sub_175E2	; 22A9D
+call PrintShadowText	; 22A9D
 mov ebx, unk_C0EA8	; 22AA2
 mov edx, ecx	; 22AA7
 mov eax, 10Eh	; 22AA9
-call sub_175E2	; 22AAE
+call PrintShadowText	; 22AAE
 mov ebx, unk_C0EAB	; 22AB3
 mov edx, ecx	; 22AB8
 mov eax, 136h	; 22ABA
-call sub_175E2	; 22ABF
+call PrintShadowText	; 22ABF
 mov ebx, unk_C0EAE	; 22AC4
 mov edx, ecx	; 22AC9
 mov eax, 15Eh	; 22ACB
-call sub_175E2	; 22AD0
+call PrintShadowText	; 22AD0
 mov ebx, unk_C0EB1	; 22AD5
 mov edx, ecx	; 22ADA
 mov eax, 186h	; 22ADC
-call sub_175E2	; 22AE1
+call PrintShadowText	; 22AE1
 mov ebx, unk_C0EB4	; 22AE6
 mov edx, ecx	; 22AEB
 mov eax, 1AEh	; 22AED
-call sub_175E2	; 22AF2
+call PrintShadowText	; 22AF2
 mov ebx, asc_C0EB7	; 22AF7
 mov edx, ecx	; 22AFC
 mov eax, 1D6h	; 22AFE
-call sub_175E2	; 22B03
+call PrintShadowText	; 22B03
 mov ebx, asc_C0EBD	; 22B08
 mov edx, ecx	; 22B0D
 mov eax, 212h	; 22B0F
-call sub_175E2	; 22B14
+call PrintShadowText	; 22B14
 lea esi, [dword esp+090h]	; 22B19
 xor ebp, ebp	; 22B20
 mov dword [dword esp+0100h], 103h	; 22B22
@@ -1104,18 +1104,18 @@ mov edi, dword [dword esp+0FEh]	; 22B34
 sar edi, 10h	; 22B3B
 mov edx, edi	; 22B3E
 mov eax, 32h	; 22B40
-call sub_175E2	; 22B45
+call PrintShadowText	; 22B45
 movsx ecx, word [esi]	; 22B4A
 mov ebx, str_fmt2d	; 22B4D
 mov edx, edi	; 22B52
 mov eax, 82h	; 22B54
-call sub_176AE	; 22B59
+call PrintFmt1	; 22B59
 mov ecx, dword [byte esi+0Ah]	; 22B5E
 sar ecx, 10h	; 22B61
 mov ebx, asc_C690B	; 22B64
 mov edx, edi	; 22B69
 mov eax, 0AAh	; 22B6B
-call sub_176AE	; 22B70
+call PrintFmt1	; 22B70
 xor ebx, ebx	; 22B75
 mov bx, word [byte esi+010h]	; 22B77
 mov ecx, 64h	; 22B7B
@@ -1133,43 +1133,43 @@ movsx ecx, ax	; 22B96
 mov ebx, asc_C692B	; 22B99
 mov edx, edi	; 22B9E
 mov eax, 0D2h	; 22BA0
-call sub_176DB	; 22BA5
+call PrintFmt2	; 22BA5
 mov ecx, dword [esi]	; 22BAA
 sar ecx, 10h	; 22BAC
 mov ebx, str_fmt2d	; 22BAF
 mov edx, edi	; 22BB4
 mov eax, 10Eh	; 22BB6
-call sub_176AE	; 22BBB
+call PrintFmt1	; 22BBB
 mov ecx, dword [byte esi+02h]	; 22BC0
 sar ecx, 10h	; 22BC3
 mov ebx, str_fmt2d	; 22BC6
 mov edx, edi	; 22BCB
 mov eax, 136h	; 22BCD
-call sub_176AE	; 22BD2
+call PrintFmt1	; 22BD2
 mov ecx, dword [byte esi+04h]	; 22BD7
 sar ecx, 10h	; 22BDA
 mov ebx, str_fmt2d	; 22BDD
 mov edx, edi	; 22BE2
 mov eax, 15Eh	; 22BE4
-call sub_176AE	; 22BE9
+call PrintFmt1	; 22BE9
 mov ecx, dword [byte esi+06h]	; 22BEE
 sar ecx, 10h	; 22BF1
 mov ebx, str_fmt2d	; 22BF4
 mov edx, edi	; 22BF9
 mov eax, 186h	; 22BFB
-call sub_176AE	; 22C00
+call PrintFmt1	; 22C00
 mov ecx, dword [byte esi+08h]	; 22C05
 sar ecx, 10h	; 22C08
 mov ebx, str_fmt2d	; 22C0B
 mov edx, edi	; 22C10
 mov eax, 1AEh	; 22C12
-call sub_176AE	; 22C17
+call PrintFmt1	; 22C17
 mov ecx, dword [byte esi+010h]	; 22C1C
 sar ecx, 10h	; 22C1F
 mov ebx, asc_C690F	; 22C22
 mov edx, edi	; 22C27
 mov eax, 1D6h	; 22C29
-call sub_176AE	; 22C2E
+call PrintFmt1	; 22C2E
 mov dx, word [byte esi+014h]	; 22C33
 cmp dx, 3E8h	; 22C37
 jae short loc_22C66	; 22C3C
@@ -1183,7 +1183,7 @@ movsx ecx, dx	; 22C50
 mov ebx, asc_C6924	; 22C53
 mov edx, edi	; 22C58
 mov eax, 212h	; 22C5A
-call sub_176AE	; 22C5F
+call PrintFmt1	; 22C5F
 jmp short loc_22C9D	; 22C64
 loc_22C66:
 mov esi, edx	; 22C66
@@ -1203,7 +1203,7 @@ movsx ecx, ax	; 22C89
 mov ebx, asc_C691B	; 22C8C
 mov edx, edi	; 22C91
 mov eax, 212h	; 22C93
-call sub_176DB	; 22C98
+call PrintFmt2	; 22C98
 loc_22C9D:
 lea esi, [dword esp+0A6h]	; 22C9D
 add dword [dword esp+0100h], byte 0Dh	; 22CA4
@@ -1214,7 +1214,7 @@ mov dword [dword esp+0100h], 131h	; 22CB6
 mov eax, dword [dword esp+0FEh]	; 22CC1
 sar eax, 10h	; 22CC8
 mov edx, asc_C0EC3	; 22CCB
-call sub_17573	; 22CD0
+call PrintCenteredText	; 22CD0
 lea eax, [dword esp+0E8h]	; 22CD5
 mov dword [dword esp+010Ch], eax	; 22CDC
 mov dword [dword esp+0100h], 143h	; 22CE3
@@ -1223,7 +1223,7 @@ sar ecx, 10h	; 22CF5
 mov ebx, asc_C0ECC	; 22CF8
 mov edx, ecx	; 22CFD
 mov eax, 14h	; 22CFF
-call sub_175E2	; 22D04
+call PrintShadowText	; 22D04
 cmp byte [dword esp+0E8h], 0	; 22D09
 je short loc_22D1A	; 22D11
 mov ebx, asc_C0ED7	; 22D13
@@ -1233,7 +1233,7 @@ mov ebx, asc_C0EDB	; 22D1A
 loc_22D1F:
 mov edx, ecx	; 22D1F
 mov eax, 104h	; 22D21
-call sub_175E2	; 22D26
+call PrintShadowText	; 22D26
 xor edi, edi	; 22D2B
 xor ebp, ebp	; 22D2D
 add dword [dword esp+0100h], byte 0Dh	; 22D2F
@@ -1256,7 +1256,7 @@ mov eax, edi	; 22D69
 add eax, 14h	; 22D6B
 cwde	; 22D70
 mov edx, esi	; 22D71
-call sub_175E2	; 22D73
+call PrintShadowText	; 22D73
 mov edx, dword [dword ebp+off_C6AD1]	; 22D78
 sar edx, 18h	; 22D7E
 add edx, dword [dword esp+010Ch]	; 22D81
@@ -1272,7 +1272,7 @@ add eax, 104h	; 22D9B
 cwde	; 22DA0
 mov ebx, str_fmt3d	; 22DA1
 mov edx, esi	; 22DA6
-call sub_176AE	; 22DA8
+call PrintFmt1	; 22DA8
 add dword [dword esp+0100h], byte 0Dh	; 22DAD
 inc ebp	; 22DB5
 cmp ebp, byte 0Ah	; 22DB6
@@ -1281,7 +1281,7 @@ lea eax, [byte esp+050h]	; 22DBF
 push eax	; 22DC3
 call sub_8EA00	; 22DC4
 add esp, byte 4	; 22DC9
-call sub_1777E	; 22DCC
+call TextGridOff	; 22DCC
 add esp, 110h	; 22DD1
 pop ebp	; 22DD7
 pop edi	; 22DD8
@@ -2539,10 +2539,10 @@ add esp, byte 4	; 23C05
 push edi	; 23C08
 call sub_8EA18	; 23C09
 add esp, byte 4	; 23C0E
-call sub_17711	; 23C11
+call TextGridOpen	; 23C11
 mov edx, 43h	; 23C16
 mov eax, 40h	; 23C1B
-call sub_174C2	; 23C20
+call SetTextColors	; 23C20
 mov edx, dword [esp]	; 23C25
 mov edx, dword [nosplit edx*4+off_C6B70]	; 23C28
 lea eax, [dword esp+0144h]	; 23C2F
@@ -2557,7 +2557,7 @@ sub edx, eax	; 23C52
 mov eax, edx	; 23C54
 lea ebx, [dword esp+0144h]	; 23C56
 mov edx, 31h	; 23C5D
-call sub_17636	; 23C62
+call PrintOutlinedText	; 23C62
 cmp dword [dword esp+0258h], byte 0	; 23C67
 jne short loc_23C97	; 23C6F
 push edi	; 23C71
@@ -2565,7 +2565,7 @@ call sub_8EA18	; 23C72
 add esp, byte 4	; 23C77
 mov edx, asc_C0FC2	; 23C7A
 mov eax, 0EBh	; 23C7F
-call sub_17573	; 23C84
+call PrintCenteredText	; 23C84
 push esi	; 23C89
 call sub_8EA18	; 23C8A
 add esp, byte 4	; 23C8F
@@ -2590,7 +2590,7 @@ sub edx, eax	; 23CD7
 movsx eax, dx	; 23CD9
 mov ebx, edi	; 23CDC
 mov edx, esi	; 23CDE
-call sub_175E2	; 23CE0
+call PrintShadowText	; 23CE0
 mov edi, dword [off_C6B6C]	; 23CE5
 push edi	; 23CEB
 call fputchar	; 23CEC
@@ -2601,18 +2601,18 @@ sub edx, eax	; 23CFB
 movsx eax, dx	; 23CFD
 mov ebx, edi	; 23D00
 mov edx, esi	; 23D02
-call sub_175E2	; 23D04
+call PrintShadowText	; 23D04
 mov dword [dword esp+0260h], 73h	; 23D09
 mov ecx, dword [dword esp+025Eh]	; 23D14
 sar ecx, 10h	; 23D1B
 mov ebx, unk_C0FD4	; 23D1E
 mov edx, ecx	; 23D23
 mov eax, 0ECh	; 23D25
-call sub_175E2	; 23D2A
+call PrintShadowText	; 23D2A
 mov ebx, unk_C0FD4	; 23D2F
 mov edx, ecx	; 23D34
 mov eax, 21Ch	; 23D36
-call sub_175E2	; 23D3B
+call PrintShadowText	; 23D3B
 cmp dword [dword_C6956], byte 0	; 23D40
 setne al	; 23D47
 mov edx, eax	; 23D4A
@@ -2624,7 +2624,7 @@ mov ebx, dword [dword edx+eax+off_C6B88]	; 23D5B
 mov edx, dword [dword esp+025Eh]	; 23D62
 sar edx, 10h	; 23D69
 mov eax, 114h	; 23D6C
-call sub_175E2	; 23D71
+call PrintShadowText	; 23D71
 cmp dword [dword_C6956], byte 0	; 23D76
 setne al	; 23D7D
 and eax, 0FFh	; 23D80
@@ -2641,17 +2641,17 @@ sar ecx, 10h	; 23DAD
 mov ebx, unk_C0FD4	; 23DB0
 mov edx, ecx	; 23DB5
 mov eax, 154h	; 23DB7
-call sub_175E2	; 23DBC
+call PrintShadowText	; 23DBC
 mov esi, edi	; 23DC1
 shl esi, 4	; 23DC3
 mov ebx, dword [dword esi+off_C6B88]	; 23DC6
 mov edx, ecx	; 23DCC
 mov eax, 186h	; 23DCE
-call sub_175E2	; 23DD3
+call PrintShadowText	; 23DD3
 mov ebx, dword [dword esi+off_C6B8C]	; 23DD8
 mov edx, ecx	; 23DDE
 mov eax, 1B8h	; 23DE0
-call sub_175E2	; 23DE5
+call PrintShadowText	; 23DE5
 cmp dword [dword_C6956], byte 0	; 23DEA
 je short loc_23DFC	; 23DF1
 cmp edi, byte 1	; 23DF3
@@ -2665,7 +2665,7 @@ mov ebx, dword [dword ebx+off_C6B90]	; 23E02
 mov edx, dword [dword esp+025Eh]	; 23E08
 sar edx, 10h	; 23E0F
 mov eax, 1EAh	; 23E12
-call sub_175E2	; 23E17
+call PrintShadowText	; 23E17
 loc_23E1C:
 mov eax, dword [esp]	; 23E1C
 shl eax, 4	; 23E1F
@@ -2674,7 +2674,7 @@ mov edx, dword [dword esp+025Eh]	; 23E28
 sar edx, 10h	; 23E2F
 mov eax, 21Ch	; 23E32
 loc_23E37:
-call sub_175E2	; 23E37
+call PrintShadowText	; 23E37
 mov dword [dword esp+025Ch], 1	; 23E3C
 add dword [dword esp+0260h], byte 10h	; 23E47
 cmp dword [esp], byte 5	; 23E4F
@@ -2721,7 +2721,7 @@ add eax, 1Eh	; 23EEA
 cwde	; 23EEF
 mov ebx, str_fmt2d	; 23EF0
 mov edx, edi	; 23EF5
-call sub_176AE	; 23EF7
+call PrintFmt1	; 23EF7
 mov ebx, 3	; 23EFC
 mov edx, asc_C0FD7	; 23F01
 lea eax, [dword esp+0198h]	; 23F06
@@ -2739,7 +2739,7 @@ cwde	; 23F2C
 lea ebx, [dword esp+019Dh]	; 23F2D
 loc_23F34:
 mov edx, edi	; 23F34
-call sub_175E2	; 23F36
+call PrintShadowText	; 23F36
 xor ecx, ecx	; 23F3B
 mov cl, byte [esi]	; 23F3D
 mov edi, dword [dword esp+025Eh]	; 23F3F
@@ -2749,7 +2749,7 @@ add eax, 0ECh	; 23F50
 cwde	; 23F55
 mov ebx, str_fmt2d	; 23F56
 mov edx, edi	; 23F5B
-call sub_176AE	; 23F5D
+call PrintFmt1	; 23F5D
 mov eax, dword [dword esp+0248h]	; 23F62
 add eax, 114h	; 23F69
 cmp dword [dword_C6956], byte 0	; 23F6E
@@ -2772,7 +2772,7 @@ cwde	; 23F97
 mov ebx, str_fmt2d	; 23F98
 loc_23F9D:
 mov edx, edi	; 23F9D
-call sub_176AE	; 23F9F
+call PrintFmt1	; 23F9F
 loc_23FA4:
 mov dword [dword esp+0248h], 140h	; 23FA4
 mov eax, dword [byte esp+ebp*4+03Ch]	; 23FAF
@@ -2810,7 +2810,7 @@ add eax, 1Eh	; 24027
 cwde	; 2402C
 mov ebx, str_fmt2d	; 2402D
 mov edx, edi	; 24032
-call sub_176AE	; 24034
+call PrintFmt1	; 24034
 mov ebx, 3	; 24039
 mov edx, asc_C0FD7	; 2403E
 lea eax, [dword esp+0198h]	; 24043
@@ -2827,7 +2827,7 @@ movsx eax, dx	; 24067
 lea ebx, [dword esp+019Dh]	; 2406A
 loc_24071:
 mov edx, edi	; 24071
-call sub_175E2	; 24073
+call PrintShadowText	; 24073
 xor ecx, ecx	; 24078
 mov cl, byte [esi]	; 2407A
 mov edi, dword [dword esp+025Eh]	; 2407C
@@ -2837,7 +2837,7 @@ add eax, 0DCh	; 2408D
 cwde	; 24092
 mov ebx, str_fmt2d	; 24093
 mov edx, edi	; 24098
-call sub_176AE	; 2409A
+call PrintFmt1	; 2409A
 mov eax, dword [dword esp+0248h]	; 2409F
 add eax, 104h	; 240A6
 cmp dword [dword_C6956], byte 0	; 240AB
@@ -2859,7 +2859,7 @@ cwde	; 240D2
 mov ebx, str_fmt2d	; 240D3
 loc_240D8:
 mov edx, edi	; 240D8
-call sub_176AE	; 240DA
+call PrintFmt1	; 240DA
 mov ebx, dword [dword esp+025Ch]	; 240DF
 inc ebx	; 240E6
 mov dword [dword esp+025Ch], ebx	; 240E7
@@ -2873,11 +2873,11 @@ sar esi, 10h	; 2410B
 mov ebx, asc_C0FF3	; 2410E
 mov edx, esi	; 24113
 mov eax, 1Eh	; 24115
-call sub_175E2	; 2411A
+call PrintShadowText	; 2411A
 mov ebx, asc_C101B	; 2411F
 mov edx, esi	; 24124
 mov eax, 15Eh	; 24126
-call sub_175E2	; 2412B
+call PrintShadowText	; 2412B
 loc_24130:
 add dword [dword esp+0260h], byte 0Dh	; 24130
 loc_24138:
@@ -2924,7 +2924,7 @@ inc dword [dword esp+025Ch]	; 241C6
 mov ebx, str_fmt2d	; 241CD
 mov edx, edi	; 241D2
 mov eax, 50h	; 241D4
-call sub_176AE	; 241D9
+call PrintFmt1	; 241D9
 mov ebx, 3	; 241DE
 mov edx, asc_C0FD7	; 241E3
 lea eax, [dword esp+0198h]	; 241E8
@@ -2938,7 +2938,7 @@ lea ebx, [dword esp+019Dh]	; 241FF
 loc_24206:
 mov edx, edi	; 24206
 mov eax, 6Eh	; 24208
-call sub_175E2	; 2420D
+call PrintShadowText	; 2420D
 xor ecx, ecx	; 24212
 mov cl, byte [esi]	; 24214
 mov edi, dword [dword esp+025Eh]	; 24216
@@ -2946,7 +2946,7 @@ sar edi, 10h	; 2421D
 mov ebx, str_fmt2d	; 24220
 mov edx, edi	; 24225
 mov eax, 154h	; 24227
-call sub_176AE	; 2422C
+call PrintFmt1	; 2422C
 mov edx, dword [esp]	; 24231
 cmp edx, byte 4	; 24234
 ja near loc_243F5	; 24237
@@ -2961,13 +2961,13 @@ mov cl, byte [byte esi+01h]	; 2425A
 mov ebx, str_fmt2d	; 2425D
 mov edx, edi	; 24262
 mov eax, 186h	; 24264
-call sub_176AE	; 24269
+call PrintFmt1	; 24269
 xor ecx, ecx	; 2426E
 mov cl, byte [byte esi+02h]	; 24270
 mov ebx, str_fmt2d	; 24273
 mov edx, edi	; 24278
 mov eax, 1B8h	; 2427A
-call sub_176AE	; 2427F
+call PrintFmt1	; 2427F
 cmp dword [dword_C6956], byte 0	; 24284
 jne short loc_242A3	; 2428B
 xor ecx, ecx	; 2428D
@@ -2975,7 +2975,7 @@ mov cl, byte [byte esi+03h]	; 2428F
 mov ebx, str_fmt2d	; 24292
 mov edx, edi	; 24297
 mov eax, 1EAh	; 24299
-call sub_176AE	; 2429E
+call PrintFmt1	; 2429E
 loc_242A3:
 mov ecx, dword [byte esi+02h]	; 242A3
 loc_242A6:
@@ -2984,7 +2984,7 @@ mov edx, dword [dword esp+025Eh]	; 242A9
 sar edx, 10h	; 242B0
 mov ebx, str_fmt3d	; 242B3
 mov eax, 21Ch	; 242B8
-call sub_176AE	; 242BD
+call PrintFmt1	; 242BD
 jmp near loc_243F5	; 242C2
 loc_242C7:
 xor ecx, ecx	; 242C7
@@ -2992,13 +2992,13 @@ mov cl, byte [byte esi+01h]	; 242C9
 mov ebx, str_fmt2d	; 242CC
 mov edx, edi	; 242D1
 mov eax, 186h	; 242D3
-call sub_176AE	; 242D8
+call PrintFmt1	; 242D8
 xor ecx, ecx	; 242DD
 mov cl, byte [byte esi+02h]	; 242DF
 mov ebx, str_fmt2d	; 242E2
 mov edx, edi	; 242E7
 mov eax, 1B8h	; 242E9
-call sub_176AE	; 242EE
+call PrintFmt1	; 242EE
 cmp dword [dword_C6956], byte 0	; 242F3
 jne short loc_24312	; 242FA
 xor ecx, ecx	; 242FC
@@ -3006,7 +3006,7 @@ mov cl, byte [byte esi+03h]	; 242FE
 mov ebx, str_fmt2d	; 24301
 mov edx, edi	; 24306
 mov eax, 1EAh	; 24308
-call sub_176AE	; 2430D
+call PrintFmt1	; 2430D
 loc_24312:
 mov ecx, dword [byte esi+04h]	; 24312
 jmp short loc_242A6	; 24315
@@ -3016,14 +3016,14 @@ sar ecx, 10h	; 2431A
 mov ebx, str_fmt3d	; 2431D
 mov edx, edi	; 24322
 mov eax, 186h	; 24324
-call sub_176AE	; 24329
+call PrintFmt1	; 24329
 mov ecx, dword [byte esi+0Ah]	; 2432E
 sar ecx, 10h	; 24331
 mov ebx, asc_C690B	; 24334
 loc_24339:
 mov edx, edi	; 24339
 mov eax, 1B8h	; 2433B
-call sub_176AE	; 24340
+call PrintFmt1	; 24340
 mov esi, dword [dword_DD118]	; 24345
 add esi, dword [dword esp+024Ch]	; 2434B
 mov ebx, 0Ah	; 24352
@@ -3048,7 +3048,7 @@ sar ecx, 10h	; 24381
 mov ebx, str_fmt3d	; 24384
 mov edx, edi	; 24389
 mov eax, 186h	; 2438B
-call sub_176AE	; 24390
+call PrintFmt1	; 24390
 mov ecx, dword [byte esi+06h]	; 24395
 sar ecx, 10h	; 24398
 mov ebx, str_fmt3d	; 2439B
@@ -3059,7 +3059,7 @@ sar ecx, 10h	; 243A5
 mov ebx, str_fmt3d	; 243A8
 mov edx, edi	; 243AD
 mov eax, 186h	; 243AF
-call sub_176AE	; 243B4
+call PrintFmt1	; 243B4
 mov esi, dword [dword_DD118]	; 243B9
 add esi, dword [dword esp+024Ch]	; 243BF
 mov ebx, 0Ah	; 243C6
@@ -3078,7 +3078,7 @@ mov ebx, asc_C6913	; 243E4
 mov edx, edi	; 243E9
 mov eax, 1B8h	; 243EB
 loc_243F0:
-call sub_176DB	; 243F0
+call PrintFmt2	; 243F0
 loc_243F5:
 add dword [dword esp+0260h], byte 0Dh	; 243F5
 loc_243FD:
@@ -3087,7 +3087,7 @@ loc_243FE:
 cmp ebp, dword [dword esp+0258h]	; 243FE
 jl near loc_24152	; 24405
 loc_2440B:
-call sub_1777E	; 2440B
+call TextGridOff	; 2440B
 lea eax, [dword esp+01E4h]	; 24410
 push eax	; 24417
 call sub_8EA00	; 24418
@@ -3462,7 +3462,7 @@ mov edx, dword [dword esp+03FCh]	; 24968
 push edx	; 2496F
 call sub_8EA18	; 24970
 add esp, byte 4	; 24975
-call sub_17711	; 24978
+call TextGridOpen	; 24978
 cmp dword [dword_DC734], byte 0	; 2497D
 je short loc_24992	; 24984
 mov edx, 0C3h	; 24986
@@ -3472,14 +3472,14 @@ loc_24992:
 mov edx, 43h	; 24992
 mov eax, 40h	; 24997
 loc_2499C:
-call sub_174C2	; 2499C
+call SetTextColors	; 2499C
 mov ecx, dword [dword esp+03F8h]	; 249A1
 push ecx	; 249A8
 call sub_8EA18	; 249A9
 add esp, byte 4	; 249AE
 mov edx, 43h	; 249B1
 mov eax, 40h	; 249B6
-call sub_174C2	; 249BB
+call SetTextColors	; 249BB
 mov esi, 1Bh	; 249C0
 mov dword [dword esp+040Ch], esi	; 249C5
 mov edi, dword [esp]	; 249CC
@@ -3500,7 +3500,7 @@ sub edx, eax	; 24A03
 mov eax, edx	; 24A05
 mov ebx, unk_DD0D8	; 24A07
 mov edx, esi	; 24A0C
-call sub_17636	; 24A0E
+call PrintOutlinedText	; 24A0E
 cmp edi, byte 2	; 24A13
 je short loc_24A22	; 24A16
 cmp edi, byte 18h	; 24A18
@@ -3546,7 +3546,7 @@ sub edx, eax	; 24A98
 mov eax, edx	; 24A9A
 mov ebx, unk_DD0D8	; 24A9C
 mov edx, esi	; 24AA1
-call sub_17636	; 24AA3
+call PrintOutlinedText	; 24AA3
 push asc_C1058	; 24AA8
 mov ebp, dword [dword_DD104]	; 24AAD
 push ebp	; 24AB3
@@ -3569,50 +3569,50 @@ call sub_8EA18	; 24AE7
 add esp, byte 4	; 24AEC
 mov edx, 43h	; 24AEF
 mov eax, 40h	; 24AF4
-call sub_174C2	; 24AF9
+call SetTextColors	; 24AF9
 mov dword [dword esp+040Ch], 30h	; 24AFE
 mov ecx, dword [dword esp+040Ah]	; 24B09
 sar ecx, 10h	; 24B10
 mov ebx, asc_C107B	; 24B13
 mov edx, ecx	; 24B18
 mov eax, 14h	; 24B1A
-call sub_175E2	; 24B1F
+call PrintShadowText	; 24B1F
 mov ebx, unk_C107F	; 24B24
 mov edx, ecx	; 24B29
 mov eax, 42h	; 24B2B
-call sub_175E2	; 24B30
+call PrintShadowText	; 24B30
 mov ebx, asc_C1082	; 24B35
 mov edx, ecx	; 24B3A
 mov eax, 60h	; 24B3C
-call sub_175E2	; 24B41
+call PrintShadowText	; 24B41
 mov ebx, unk_C1087	; 24B46
 mov edx, ecx	; 24B4B
 mov eax, 10Eh	; 24B4D
-call sub_175E2	; 24B52
+call PrintShadowText	; 24B52
 mov ebx, asc_C108A	; 24B57
 mov edx, ecx	; 24B5C
 mov eax, 136h	; 24B5E
-call sub_175E2	; 24B63
+call PrintShadowText	; 24B63
 mov ebx, asc_C108E	; 24B68
 mov edx, ecx	; 24B6D
 mov eax, 15Eh	; 24B6F
-call sub_175E2	; 24B74
+call PrintShadowText	; 24B74
 mov ebx, asc_C1092	; 24B79
 mov edx, ecx	; 24B7E
 mov eax, 186h	; 24B80
-call sub_175E2	; 24B85
+call PrintShadowText	; 24B85
 mov ebx, asc_C1096	; 24B8A
 mov edx, ecx	; 24B8F
 mov eax, 1AEh	; 24B91
-call sub_175E2	; 24B96
+call PrintShadowText	; 24B96
 mov ebx, asc_C109C	; 24B9B
 mov edx, ecx	; 24BA0
 mov eax, 1E8h	; 24BA2
-call sub_175E2	; 24BA7
+call PrintShadowText	; 24BA7
 mov ebx, asc_C10A0	; 24BAC
 mov edx, ecx	; 24BB1
 mov eax, 210h	; 24BB3
-call sub_175E2	; 24BB8
+call PrintShadowText	; 24BB8
 xor ebp, ebp	; 24BBD
 mov dword [dword esp+040Ch], 40h	; 24BBF
 jmp near loc_24D77	; 24BCA
@@ -3643,7 +3643,7 @@ sar esi, 10h	; 24C2D
 mov ebx, unk_DD0D8	; 24C30
 mov edx, esi	; 24C35
 mov eax, 14h	; 24C37
-call sub_175E2	; 24C3C
+call PrintShadowText	; 24C3C
 mov bl, byte [dword esp+0365h]	; 24C41
 cmp bl, 64h	; 24C48
 jae short loc_24C62	; 24C4B
@@ -3652,7 +3652,7 @@ mov cl, bl	; 24C4F
 mov ebx, str_fmt2d	; 24C51
 mov edx, esi	; 24C56
 mov eax, 42h	; 24C58
-call sub_176AE	; 24C5D
+call PrintFmt1	; 24C5D
 loc_24C62:
 mov ecx, 0A6h	; 24C62
 lea ebx, [dword esp+0377h]	; 24C67
@@ -3663,7 +3663,7 @@ mov edx, dword [dword esp+040Ah]	; 24C7F
 sar edx, 10h	; 24C86
 mov ebx, unk_DD0D8	; 24C89
 mov eax, 60h	; 24C8E
-call sub_175E2	; 24C93
+call PrintShadowText	; 24C93
 mov edx, dword [dword esp+0404h]	; 24C98
 mov esi, edx	; 24C9F
 shl esi, 2	; 24CA1
@@ -3686,43 +3686,43 @@ sar edi, 10h	; 24CD1
 mov ebx, str_fmt2d	; 24CD4
 mov edx, edi	; 24CD9
 mov eax, 10Eh	; 24CDB
-call sub_176AE	; 24CE0
+call PrintFmt1	; 24CE0
 mov ecx, dword [esi]	; 24CE5
 sar ecx, 10h	; 24CE7
 mov ebx, str_fmt3d	; 24CEA
 mov edx, edi	; 24CEF
 mov eax, 136h	; 24CF1
-call sub_176AE	; 24CF6
+call PrintFmt1	; 24CF6
 mov ecx, dword [byte esi+02h]	; 24CFB
 sar ecx, 10h	; 24CFE
 mov ebx, str_fmt3d	; 24D01
 mov edx, edi	; 24D06
 mov eax, 15Eh	; 24D08
-call sub_176AE	; 24D0D
+call PrintFmt1	; 24D0D
 mov ecx, dword [byte esi+04h]	; 24D12
 sar ecx, 10h	; 24D15
 mov ebx, str_fmt3d	; 24D18
 mov edx, edi	; 24D1D
 mov eax, 186h	; 24D1F
-call sub_176AE	; 24D24
+call PrintFmt1	; 24D24
 mov ecx, dword [byte esi+0Ch]	; 24D29
 sar ecx, 10h	; 24D2C
 mov ebx, asc_C690F	; 24D2F
 mov edx, edi	; 24D34
 mov eax, 1AEh	; 24D36
-call sub_176AE	; 24D3B
+call PrintFmt1	; 24D3B
 mov ecx, dword [byte esi+0Ah]	; 24D40
 sar ecx, 10h	; 24D43
 mov ebx, str_fmt3d	; 24D46
 mov edx, edi	; 24D4B
 mov eax, 1E8h	; 24D4D
-call sub_176AE	; 24D52
+call PrintFmt1	; 24D52
 mov ecx, dword [byte esi+0Eh]	; 24D57
 sar ecx, 10h	; 24D5A
 mov ebx, asc_C690B	; 24D5D
 mov edx, edi	; 24D62
 mov eax, 210h	; 24D64
-call sub_176AE	; 24D69
+call PrintFmt1	; 24D69
 add dword [dword esp+040Ch], byte 0Dh	; 24D6E
 inc ebp	; 24D76
 loc_24D77:
@@ -3734,56 +3734,56 @@ sar ecx, 10h	; 24D96
 mov ebx, asc_C107B	; 24D99
 mov edx, ecx	; 24D9E
 mov eax, 14h	; 24DA0
-call sub_175E2	; 24DA5
+call PrintShadowText	; 24DA5
 mov ebx, unk_C107F	; 24DAA
 mov edx, ecx	; 24DAF
 mov eax, 42h	; 24DB1
-call sub_175E2	; 24DB6
+call PrintShadowText	; 24DB6
 mov ebx, asc_C1082	; 24DBB
 mov edx, ecx	; 24DC0
 mov eax, 60h	; 24DC2
-call sub_175E2	; 24DC7
+call PrintShadowText	; 24DC7
 mov ebx, unk_C1087	; 24DCC
 mov edx, ecx	; 24DD1
 mov eax, 10Eh	; 24DD3
-call sub_175E2	; 24DD8
+call PrintShadowText	; 24DD8
 mov ebx, asc_C10A8	; 24DDD
 mov edx, ecx	; 24DE2
 mov eax, 136h	; 24DE4
-call sub_175E2	; 24DE9
+call PrintShadowText	; 24DE9
 mov ebx, asc_C10AD	; 24DEE
 mov edx, ecx	; 24DF3
 mov eax, 15Eh	; 24DF5
-call sub_175E2	; 24DFA
+call PrintShadowText	; 24DFA
 mov ebx, unk_C10B3	; 24DFF
 mov edx, ecx	; 24E04
 mov eax, 190h	; 24E06
-call sub_175E2	; 24E0B
+call PrintShadowText	; 24E0B
 mov ebx, unk_C10B6	; 24E10
 mov edx, ecx	; 24E15
 mov eax, 1AEh	; 24E17
-call sub_175E2	; 24E1C
+call PrintShadowText	; 24E1C
 cmp dword [dword_C6956], byte 0	; 24E21
 jne short loc_24E3B	; 24E28
 mov ebx, unk_C10B9	; 24E2A
 mov edx, ecx	; 24E2F
 mov eax, 1CCh	; 24E31
-call sub_175E2	; 24E36
+call PrintShadowText	; 24E36
 loc_24E3B:
 mov ecx, dword [dword esp+040Ah]	; 24E3B
 sar ecx, 10h	; 24E42
 mov ebx, asc_C10BC	; 24E45
 mov edx, ecx	; 24E4A
 mov eax, 1EAh	; 24E4C
-call sub_175E2	; 24E51
+call PrintShadowText	; 24E51
 mov ebx, asc_C10C0	; 24E56
 mov edx, ecx	; 24E5B
 mov eax, 20Eh	; 24E5D
-call sub_175E2	; 24E62
+call PrintShadowText	; 24E62
 mov ebx, asc_C10C5	; 24E67
 mov edx, ecx	; 24E6C
 mov eax, 240h	; 24E6E
-call sub_175E2	; 24E73
+call PrintShadowText	; 24E73
 xor ebp, ebp	; 24E78
 add dword [dword esp+040Ch], byte 10h	; 24E7A
 jmp near loc_250FB	; 24E82
@@ -3814,7 +3814,7 @@ sar esi, 10h	; 24EE4
 mov ebx, unk_DD0D8	; 24EE7
 mov edx, esi	; 24EEC
 mov eax, 14h	; 24EEE
-call sub_175E2	; 24EF3
+call PrintShadowText	; 24EF3
 mov bh, byte [dword esp+0365h]	; 24EF8
 cmp bh, 64h	; 24EFF
 jae short loc_24F19	; 24F02
@@ -3823,7 +3823,7 @@ mov cl, bh	; 24F06
 mov ebx, str_fmt2d	; 24F08
 mov edx, esi	; 24F0D
 mov eax, 42h	; 24F0F
-call sub_176AE	; 24F14
+call PrintFmt1	; 24F14
 loc_24F19:
 mov ecx, 0A6h	; 24F19
 lea ebx, [dword esp+0377h]	; 24F1E
@@ -3834,7 +3834,7 @@ mov edx, dword [dword esp+040Ah]	; 24F36
 sar edx, 10h	; 24F3D
 mov ebx, unk_DD0D8	; 24F40
 mov eax, 60h	; 24F45
-call sub_175E2	; 24F4A
+call PrintShadowText	; 24F4A
 mov edx, dword [dword esp+0404h]	; 24F4F
 mov esi, edx	; 24F56
 shl esi, 3	; 24F58
@@ -3859,13 +3859,13 @@ sar edi, 10h	; 24F91
 mov ebx, str_fmt2d	; 24F94
 mov edx, edi	; 24F99
 mov eax, 10Eh	; 24F9B
-call sub_176AE	; 24FA0
+call PrintFmt1	; 24FA0
 mov ecx, dword [byte esi+0Ah]	; 24FA5
 sar ecx, 10h	; 24FA8
 mov ebx, asc_C690B	; 24FAB
 mov edx, edi	; 24FB0
 mov eax, 136h	; 24FB2
-call sub_176AE	; 24FB7
+call PrintFmt1	; 24FB7
 xor ebx, ebx	; 24FBC
 mov bx, word [byte esi+010h]	; 24FBE
 mov ecx, 64h	; 24FC2
@@ -3883,19 +3883,19 @@ movsx ecx, ax	; 24FDD
 mov ebx, asc_C692B	; 24FE0
 mov edx, edi	; 24FE5
 mov eax, 15Eh	; 24FE7
-call sub_176DB	; 24FEC
+call PrintFmt2	; 24FEC
 mov ecx, dword [esi]	; 24FF1
 sar ecx, 10h	; 24FF3
 mov ebx, str_fmt2d	; 24FF6
 mov edx, edi	; 24FFB
 mov eax, 190h	; 24FFD
-call sub_176AE	; 25002
+call PrintFmt1	; 25002
 mov ecx, dword [byte esi+02h]	; 25007
 sar ecx, 10h	; 2500A
 mov ebx, str_fmt2d	; 2500D
 mov edx, edi	; 25012
 mov eax, 1AEh	; 25014
-call sub_176AE	; 25019
+call PrintFmt1	; 25019
 cmp dword [dword_C6956], byte 0	; 2501E
 jne short loc_2503E	; 25025
 mov ecx, dword [byte esi+04h]	; 25027
@@ -3903,7 +3903,7 @@ sar ecx, 10h	; 2502A
 mov ebx, str_fmt2d	; 2502D
 mov edx, edi	; 25032
 mov eax, 1CCh	; 25034
-call sub_176AE	; 25039
+call PrintFmt1	; 25039
 loc_2503E:
 mov ecx, dword [dword esp+0400h]	; 2503E
 mov ecx, dword [byte ecx+0Ch]	; 25045
@@ -3913,14 +3913,14 @@ sar edi, 10h	; 25052
 mov ebx, str_fmt3d	; 25055
 mov edx, edi	; 2505A
 mov eax, 1EAh	; 2505C
-call sub_176AE	; 25061
+call PrintFmt1	; 25061
 mov ecx, dword [dword esp+0400h]	; 25066
 mov ecx, dword [byte ecx+010h]	; 2506D
 sar ecx, 10h	; 25070
 mov ebx, asc_C690B	; 25073
 mov edx, edi	; 25078
 mov eax, 20Eh	; 2507A
-call sub_176AE	; 2507F
+call PrintFmt1	; 2507F
 mov eax, dword [dword esp+0400h]	; 25084
 mov dx, word [byte eax+014h]	; 2508B
 cmp dx, 3E8h	; 2508F
@@ -3935,7 +3935,7 @@ movsx ecx, dx	; 250A8
 mov ebx, asc_C6924	; 250AB
 mov edx, edi	; 250B0
 mov eax, 240h	; 250B2
-call sub_176AE	; 250B7
+call PrintFmt1	; 250B7
 jmp short loc_250F2	; 250BC
 loc_250BE:
 xor esi, esi	; 250BE
@@ -3955,14 +3955,14 @@ movsx ecx, ax	; 250DE
 mov ebx, asc_C691B	; 250E1
 mov edx, edi	; 250E6
 mov eax, 240h	; 250E8
-call sub_176DB	; 250ED
+call PrintFmt2	; 250ED
 loc_250F2:
 add dword [dword esp+040Ch], byte 0Dh	; 250F2
 inc ebp	; 250FA
 loc_250FB:
 cmp ebp, dword [dword esp+0408h]	; 250FB
 jl near loc_24E87	; 25102
-call sub_1777E	; 25108
+call TextGridOff	; 25108
 lea eax, [dword esp+02ECh]	; 2510D
 push eax	; 25114
 call sub_8EA00	; 25115
@@ -5582,10 +5582,10 @@ add esp, byte 4	; 26327
 push esi	; 2632A
 call sub_8EA18	; 2632B
 add esp, byte 4	; 26330
-call sub_17711	; 26333
+call TextGridOpen	; 26333
 mov edx, 43h	; 26338
 mov eax, 40h	; 2633D
-call sub_174C2	; 26342
+call SetTextColors	; 26342
 mov eax, dword [esp]	; 26347
 mov edx, dword [nosplit eax*4+off_C6C14]	; 2634A
 lea eax, [byte esp+06Ch]	; 26351
@@ -5600,7 +5600,7 @@ sub edx, eax	; 2636E
 mov eax, edx	; 26370
 lea ebx, [byte esp+06Ch]	; 26372
 mov edx, 31h	; 26376
-call sub_17636	; 2637B
+call PrintOutlinedText	; 2637B
 push edi	; 26380
 call sub_8EA18	; 26381
 add esp, byte 4	; 26386
@@ -5611,7 +5611,7 @@ call sub_8EA18	; 26394
 add esp, byte 4	; 26399
 mov edx, asc_C123F	; 2639C
 mov eax, 0EBh	; 263A1
-call sub_17573	; 263A6
+call PrintCenteredText	; 263A6
 push edi	; 263AB
 call sub_8EA18	; 263AC
 add esp, byte 4	; 263B1
@@ -5623,23 +5623,23 @@ sar ecx, 10h	; 263CB
 mov ebx, asc_C1251	; 263CE
 mov edx, ecx	; 263D3
 mov eax, 0Ah	; 263D5
-call sub_175E2	; 263DA
+call PrintShadowText	; 263DA
 mov ebx, unk_C1255	; 263DF
 mov edx, ecx	; 263E4
 mov eax, 32h	; 263E6
-call sub_175E2	; 263EB
+call PrintShadowText	; 263EB
 mov ebx, asc_C1258	; 263F0
 mov edx, ecx	; 263F5
 mov eax, 50h	; 263F7
-call sub_175E2	; 263FC
+call PrintShadowText	; 263FC
 mov ebx, asc_C125F	; 26401
 mov edx, ecx	; 26406
 mov eax, 0FAh	; 26408
-call sub_175E2	; 2640D
+call PrintShadowText	; 2640D
 mov ebx, unk_C1264	; 26412
 mov edx, ecx	; 26417
 mov eax, 172h	; 26419
-call sub_175E2	; 2641E
+call PrintShadowText	; 2641E
 mov edx, dword [esp]	; 26423
 mov esi, edx	; 26426
 shl esi, 2	; 26428
@@ -5648,15 +5648,15 @@ shl esi, 2	; 2642D
 mov ebx, dword [dword esi+off_C6C40]	; 26430
 mov edx, ecx	; 26436
 mov eax, 19Ah	; 26438
-call sub_175E2	; 2643D
+call PrintShadowText	; 2643D
 mov ebx, dword [dword esi+off_C6C44]	; 26442
 mov edx, ecx	; 26448
 mov eax, 1CCh	; 2644A
-call sub_175E2	; 2644F
+call PrintShadowText	; 2644F
 mov ebx, dword [dword esi+off_C6C48]	; 26454
 mov edx, ecx	; 2645A
 mov eax, 1F4h	; 2645C
-call sub_175E2	; 26461
+call PrintShadowText	; 26461
 cmp dword [esp], byte 9	; 26466
 jne short loc_26475	; 2646A
 cmp dword [dword_C6956], byte 1	; 2646C
@@ -5670,7 +5670,7 @@ mov ebx, dword [nosplit eax*4+off_C6C4C]	; 2647F
 mov edx, dword [dword esp+0262h]	; 26486
 sar edx, 10h	; 2648D
 mov eax, 21Ch	; 26490
-call sub_175E2	; 26495
+call PrintShadowText	; 26495
 loc_2649A:
 mov edx, dword [esp]	; 2649A
 mov eax, edx	; 2649D
@@ -5680,7 +5680,7 @@ mov ebx, dword [nosplit eax*4+off_C6C50]	; 264A4
 mov edx, dword [dword esp+0262h]	; 264AB
 sar edx, 10h	; 264B2
 mov eax, 24Eh	; 264B5
-call sub_175E2	; 264BA
+call PrintShadowText	; 264BA
 xor edx, edx	; 264BF
 mov dword [dword esp+026Ch], edx	; 264C1
 add dword [dword esp+0264h], byte 10h	; 264C8
@@ -5711,7 +5711,7 @@ sar esi, 10h	; 2652C
 mov ebx, unk_DD0D8	; 2652F
 mov edx, esi	; 26534
 mov eax, 0Ah	; 26536
-call sub_175E2	; 2653B
+call PrintShadowText	; 2653B
 mov bh, byte [dword esp+01D5h]	; 26540
 cmp bh, 64h	; 26547
 jae short loc_26561	; 2654A
@@ -5720,7 +5720,7 @@ mov cl, bh	; 2654E
 mov ebx, str_fmt2d	; 26550
 mov edx, esi	; 26555
 mov eax, 32h	; 26557
-call sub_176AE	; 2655C
+call PrintFmt1	; 2655C
 loc_26561:
 mov ecx, 0A0h	; 26561
 lea ebx, [dword esp+01E7h]	; 26566
@@ -5732,7 +5732,7 @@ sar edi, 10h	; 26585
 mov ebx, unk_DD0D8	; 26588
 mov edx, edi	; 2658D
 mov eax, 50h	; 2658F
-call sub_175E2	; 26594
+call PrintShadowText	; 26594
 mov ebx, dword [off_C68F4]	; 26599
 xor ecx, ecx	; 2659F
 mov edx, unk_C65D4	; 265A1
@@ -5765,7 +5765,7 @@ call j___close_	; 26601
 lea ebx, [dword esp+012Ah]	; 26606
 mov edx, edi	; 2660D
 mov eax, 0FAh	; 2660F
-call sub_175E2	; 26614
+call PrintShadowText	; 26614
 cmp dword [esp], byte 8	; 26619
 jge near loc_266BA	; 2661D
 mov edx, dword [dword esp+0270h]	; 26623
@@ -5791,19 +5791,19 @@ sar edi, 10h	; 26665
 mov ebx, str_fmt2d	; 26668
 mov edx, edi	; 2666D
 mov eax, 172h	; 2666F
-call sub_176AE	; 26674
+call PrintFmt1	; 26674
 mov ecx, dword [esi]	; 26679
 sar ecx, 10h	; 2667B
 mov ebx, str_fmt3d	; 2667E
 mov edx, edi	; 26683
 mov eax, 19Ah	; 26685
-call sub_176AE	; 2668A
+call PrintFmt1	; 2668A
 mov ecx, dword [byte esi+02h]	; 2668F
 sar ecx, 10h	; 26692
 mov ebx, str_fmt3d	; 26695
 mov edx, edi	; 2669A
 mov eax, 1CCh	; 2669C
-call sub_176AE	; 266A1
+call PrintFmt1	; 266A1
 mov ecx, dword [byte esi+04h]	; 266A6
 sar ecx, 10h	; 266A9
 mov ebx, str_fmt3d	; 266AC
@@ -5835,14 +5835,14 @@ sar edi, 10h	; 266F9
 mov ebx, str_fmt2d	; 266FC
 mov edx, edi	; 26701
 mov eax, 172h	; 26703
-call sub_176AE	; 26708
+call PrintFmt1	; 26708
 mov ecx, dword [byte esi+0Ah]	; 2670D
 sar ecx, 10h	; 26710
 mov ebx, asc_C690B	; 26713
 mov edx, edi	; 26718
 mov eax, 19Ah	; 2671A
 loc_2671F:
-call sub_176AE	; 2671F
+call PrintFmt1	; 2671F
 mov edi, dword [esp]	; 26724
 cmp edi, byte 0Ah	; 26727
 ja near loc_26811	; 2672A
@@ -5886,7 +5886,7 @@ sar edi, 10h	; 267BD
 mov ebx, asc_C690F	; 267C0
 mov edx, edi	; 267C5
 mov eax, 21Ch	; 267C7
-call sub_176AE	; 267CC
+call PrintFmt1	; 267CC
 mov esi, dword [dword esp+0270h]	; 267D1
 shl esi, 2	; 267D8
 mov eax, dword [dword_DD118]	; 267DB
@@ -5907,7 +5907,7 @@ mov ebx, asc_C6913	; 26800
 mov edx, edi	; 26805
 mov eax, 24Eh	; 26807
 loc_2680C:
-call sub_176DB	; 2680C
+call PrintFmt2	; 2680C
 loc_26811:
 add dword [dword esp+0264h], byte 0Dh	; 26811
 inc dword [dword esp+026Ch]	; 26819
@@ -5916,7 +5916,7 @@ mov eax, dword [dword esp+026Ch]	; 26820
 cmp eax, dword [dword esp+0258h]	; 26827
 jl near loc_264D5	; 2682E
 loc_26834:
-call sub_1777E	; 26834
+call TextGridOff	; 26834
 lea eax, [dword esp+015Ch]	; 26839
 push eax	; 26840
 call sub_8EA00	; 26841
@@ -5941,7 +5941,7 @@ sar edi, 10h	; 26880
 mov ebx, str_fmt3d	; 26883
 mov edx, edi	; 26888
 mov eax, 1CCh	; 2688A
-call sub_176AE	; 2688F
+call PrintFmt1	; 2688F
 xor esi, esi	; 26894
 mov si, word [byte ebp+010h]	; 26896
 mov ebx, 64h	; 2689A
@@ -5968,13 +5968,13 @@ sar esi, 10h	; 268D6
 mov ebx, str_fmt2d	; 268D9
 mov edx, esi	; 268DE
 mov eax, 1CCh	; 268E0
-call sub_176AE	; 268E5
+call PrintFmt1	; 268E5
 mov ecx, dword [byte ebp+02h]	; 268EA
 sar ecx, 10h	; 268ED
 mov ebx, str_fmt2d	; 268F0
 mov edx, esi	; 268F5
 mov eax, 1F4h	; 268F7
-call sub_176AE	; 268FC
+call PrintFmt1	; 268FC
 cmp dword [dword_C6956], byte 0	; 26901
 jne near loc_26811	; 26908
 mov ecx, dword [byte ebp+04h]	; 2690E
@@ -5984,7 +5984,7 @@ loc_26919:
 mov edx, esi	; 26919
 loc_2691B:
 mov eax, 21Ch	; 2691B
-call sub_176AE	; 26920
+call PrintFmt1	; 26920
 jmp near loc_26811	; 26925
 loc_2692A:
 mov ecx, dword [byte ebp+0Ch]	; 2692A
@@ -5994,13 +5994,13 @@ sar esi, 10h	; 26937
 mov ebx, str_fmt3d	; 2693A
 mov edx, esi	; 2693F
 mov eax, 1CCh	; 26941
-call sub_176AE	; 26946
+call PrintFmt1	; 26946
 mov ecx, dword [byte ebp+010h]	; 2694B
 sar ecx, 10h	; 2694E
 mov ebx, asc_C690B	; 26951
 mov edx, esi	; 26956
 mov eax, 1F4h	; 26958
-call sub_176AE	; 2695D
+call PrintFmt1	; 2695D
 mov dx, word [byte ebp+014h]	; 26962
 cmp dx, 3E8h	; 26966
 jae short loc_26989	; 2696B

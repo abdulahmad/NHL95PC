@@ -27,7 +27,7 @@ global dword_D4204, dword_D4208, dword_D420C, dword_D4210, dword_D4214, dword_D4
 global dword_D4224, dword_D4228, dword_D422C, dword_D4230, dword_D4234, dword_D4238, dword_D423C, dword_D4240
 global dword_D4248, dword_D424C, dword_D4250, dword_D4254, dword_D4258, dword_D425C, dword_D4260, dword_D4264
 global dword_D4268, dword_D426C, dword_D4270, dword_D4274, dword_D4278, dword_D427C, dword_D4294, dword_D4298
-global dword_D429C, dword_D42A8, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42BC, dword_D42C8
+global dword_D429C, fontcolor, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42BC, dword_D42C8
 global dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, dword_D43E4, dword_D43E8
 global dword_D43EC, dword_D43F0, dword_D4438, dword_D443C, dword_D4440, dword_D4444, dword_D44AC, dword_D4530
 global dword_D4534, dword_D453C, dword_D4540, dword_D4548, dword_D457C, dword_D4580, dword_D4584, dword_D4588
@@ -720,7 +720,7 @@ off_D42A0:
 dd sub_B40BF
 off_D42A4:
 dd unk_D45D8
-dword_D42A8:
+fontcolor:
 db 0Fh,00h,00h,00h
 dword_D42AC:
 db 00h,00h,00h,00h
