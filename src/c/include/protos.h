@@ -697,5 +697,9 @@ int PostInjuryEvent(unsigned char a, unsigned char b, unsigned char c, unsigned 
 void BuildEventLines(void);  /* 61E99 */
 short Readjoy1(void);  /* 50A05 */
 short Readjoy2(void);  /* 50A84 */
+void QueueDeferredCall(void (*fn)(int, int, int, int, int, int, int), int a, int b, int c, int d, int e, int f, int g);  /* 619C8 */
+void DrawBevelRect(int x, int y, int w, int h, int fill, int light, int dark);  /* 2FE49 */
+void DrawGadgetButton(int n);  /* 7E067 */
+int ReadTeamNames(char *path, char *out, int full);  /* 3DAB9 */
 
 #endif

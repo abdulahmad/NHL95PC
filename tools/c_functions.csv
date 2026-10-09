@@ -110,6 +110,7 @@ UpdateOtherScores,2F3D7,425,022_2D346_game_setup,src/c/022_2D346_game_setup/Upda
 AskDatabaseChoice,2FDD1,120,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/AskDatabaseChoice.c,nonmatching,"draft: addresses built in edx, asm uses eax"
 CritErrHandler,3149D,23,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/CritErrHandler.c,matched,
 DlgReturnZero,2FED2,13,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DlgReturnZero.c,matched,
+DrawBevelRect,2FE49,137,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawBevelRect.c,matched,
 DrawButtons,30AE2,52,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawButtons.c,matched,
 GrowToButton,30F5F,85,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButton.c,nonmatching,same blocks; original keeps w in edx and v in ecx (then edx / eax in the second half); this draft moves w to ecx. 10-min cap
 GrowToButtons,30FB4,95,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButtons.c,nonmatching,registers: asm sums in edx and builds each width in esi; C swaps them
@@ -145,6 +146,7 @@ TeamSelCancel,38B3A,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamS
 TeamSelDone,38B25,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelDone.c,matched,
 WriteTeamRec,3A2B8,54,029_380E9_league_setup,src/c/029_380E9_league_setup/WriteTeamRec.c,matched,
 ImportDbs,3CF5B,429,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ImportDbs.c,matched,
+ReadTeamNames,3DAB9,136,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ReadTeamNames.c,matched,
 WaitLeagueFloppy,3D84F,142,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/WaitLeagueFloppy.c,nonmatching,"draft: file/name params in edi/esi swapped, local order and MessageBox result kept in eax not edx"
 DrawTradeRow,3E7B3,130,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/DrawTradeRow.c,nonmatching,"draft: row offset in ecx vs eax, add order; 1 byte longer"
 FindTradeSlot,3EF3C,77,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/FindTradeSlot.c,matched,
@@ -196,7 +198,7 @@ puckunflip,4D907,49,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_
 rtss,4F990,11,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/rtss.c,matched,
 Acheck,4FFAE,64,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/Acheck.c,matched,
 CenterMouse,50ADE,32,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CenterMouse.c,matched,
-Readjoy1,50A05,127,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/Readjoy1.c,nonmatching,
+Readjoy1,50A05,127,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/Readjoy1.c,nonmatching,registers: asm keeps the held buttons in eax and does regd1 = held & changed in ecx (saves ecx); C reuses eax/ebx; Readjoy2 is the clone (shared tail)
 faceoffinput,4FF0D,161,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/faceoffinput.c,nonmatching,draft: pflags2 kept in al (ours) vs cl then copied to al
 getlchoice,50908,109,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/getlchoice.c,nonmatching,draft: asm loads tmptr into edx first and computes the tmap difference in ax; ours keeps p in eax
 holdplayer,503CD,103,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/holdplayer.c,matched,
@@ -311,6 +313,7 @@ EndPenaltyShot,64439,111,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_
 FlushGSumQueue,61B85,58,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/FlushGSumQueue.c,matched,
 GameTimeStamp,62CD7,34,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/GameTimeStamp.c,matched,
 PostInjuryEvent,62764,148,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/PostInjuryEvent.c,matched,
+QueueDeferredCall,619C8,95,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QueueDeferredCall.c,matched,
 QueueGoalieNote,62C37,160,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QueueGoalieNote.c,nonmatching,"draft: only the tail differs: ours keeps 1 in esi for deferpending and the result, asm stores immediates"
 QuickShotChk,6427F,185,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QuickShotChk.c,nonmatching,"asm keeps facedir in bx and si (2 saved regs, frame 10h); C saves only edx"
 ReadGSumHeader,61BBF,99,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/ReadGSumHeader.c,matched,
@@ -394,6 +397,7 @@ ModeSetHitTest,7B734,138,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dia
 SetCtlTeams,7DB67,292,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SetCtlTeams.c,matched,
 SetLeagueSetImage,7A6AD,16,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SetLeagueSetImage.c,matched,
 SettingsStub,7B39C,11,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SettingsStub.c,matched,
+DrawGadgetButton,7E067,147,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/DrawGadgetButton.c,matched,
 GadgetHitTest,7E8E5,89,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/GadgetHitTest.c,matched,
 GadgetStub0,7E032,13,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/GadgetStub0.c,matched,
 FormatHilightDesc,7FCA2,86,058_7F724_highlights,src/c/058_7F724_highlights/FormatHilightDesc.c,matched,

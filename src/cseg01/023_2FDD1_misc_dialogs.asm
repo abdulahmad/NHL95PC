@@ -59,6 +59,10 @@ pop edx	; 2FE45
 pop ecx	; 2FE46
 pop ebx	; 2FE47
 ret	; 2FE48
+; C: src/c/023_2FDD1_misc_dialogs/DrawBevelRect.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/DrawBevelRect.inc"
+%else
 DrawBevelRect:
 push dword 28h	; 2FE49
 call __CHK	; 2FE4E
@@ -119,6 +123,7 @@ pop ebp	; 2FECC
 pop edi	; 2FECD
 pop esi	; 2FECE
 ret 0Ch	; 2FECF
+%endif ; C
 ; C: src/c/023_2FDD1_misc_dialogs/DlgReturnZero.c
 %ifdef CBUILD
 %include "c/023_2FDD1_misc_dialogs/DlgReturnZero.inc"

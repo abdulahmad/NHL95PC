@@ -478,6 +478,10 @@ jge near DrawRinkObjects.4	; 619BA
 mov esp, ebp	; 619C0
 pop ebp	; 619C2
 jmp near sfxslots_popx	; 619C3
+; C: src/c/045_614C2_scoring_penalty_text/QueueDeferredCall.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/QueueDeferredCall.inc"
+%else
 QueueDeferredCall:
 push dword 8	; 619C8
 call __CHK	; 619CD
@@ -500,6 +504,7 @@ mov dword [dword eax+dword_E9BBC], edx	; 61A17
 inc dword [defercount]	; 61A1D
 pop esi	; 61A23
 ret 10h	; 61A24
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/RunDeferredCalls.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/RunDeferredCalls.inc"

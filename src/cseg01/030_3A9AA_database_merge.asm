@@ -3624,6 +3624,10 @@ pop ebp	; 3DAB3
 pop edi	; 3DAB4
 pop esi	; 3DAB5
 ret 10h	; 3DAB6
+; C: src/c/030_3A9AA_database_merge/ReadTeamNames.c
+%ifdef CBUILD
+%include "c/030_3A9AA_database_merge/ReadTeamNames.inc"
+%else
 ReadTeamNames:
 push dword 18h	; 3DAB9
 call __CHK	; 3DABE
@@ -3684,3 +3688,4 @@ pop edi	; 3DB3D
 pop esi	; 3DB3E
 pop ecx	; 3DB3F
 ret	; 3DB40
+%endif ; C

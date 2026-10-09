@@ -382,7 +382,6 @@ extern void GameSummaryScreen_final(); /* 2DF34 */
 extern void GameSummaryScreen_period(); /* 2DF39 */
 extern void UpdateOtherScores_x(); /* 2F579 */
 extern void GameStatsScreen(); /* 2F5EE */
-extern void DrawBevelRect(); /* 2FE49 */
 extern void TextInputDialog(); /* 2FEDF */
 extern void DlgNullCallback(); /* 30203 */
 extern void DrawListItem(); /* 302B9 */
@@ -460,7 +459,6 @@ extern void CopyLeagueFiles(); /* 3C310 */
 extern void ImportMasterLeague_ret(); /* 3C6DB */
 extern void ExportDbs(); /* 3D108 */
 extern void ReadLeagueInfo(); /* 3D8DD */
-extern void ReadTeamNames(); /* 3DAB9 */
 extern void LoadNhlCfg(); /* 3DB41 */
 extern void negone_3DC28(); /* 3DC28 */
 extern void BuildTradeRoster(); /* 3DC2C */
@@ -1087,7 +1085,6 @@ extern void FreeRockMusic(); /* 7DEC8 */
 extern void DrawGadgetByType(); /* 7DF4E */
 extern void sub_7E03F(); /* 7E03F */
 extern void bothneitherstrs(); /* 7E05F */
-extern void DrawGadgetButton(); /* 7E067 */
 extern void DrawGadgetButton_ret(); /* 7E0F3 */
 extern void InstantReplay(); /* 7E0FA */
 extern void PickNearestPlayer(); /* 7E93E */

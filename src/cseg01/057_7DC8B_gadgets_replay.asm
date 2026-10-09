@@ -394,6 +394,10 @@ ret	; 7E05E
 bothneitherstrs:
 dd str_BothTeams
 dd str_NeitherTeams
+; C: src/c/057_7DC8B_gadgets_replay/DrawGadgetButton.c
+%ifdef CBUILD
+%include "c/057_7DC8B_gadgets_replay/DrawGadgetButton.inc"
+%else
 DrawGadgetButton:
 push dword 34h	; 7E067
 call __CHK	; 7E06C
@@ -454,6 +458,7 @@ pop edx	; 7E0F6
 pop ecx	; 7E0F7
 pop ebx	; 7E0F8
 ret	; 7E0F9
+%endif ; C
 InstantReplay:
 push dword 50h	; 7E0FA
 call __CHK	; 7E0FF
