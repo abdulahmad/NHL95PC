@@ -14,7 +14,7 @@ extern fputchar, jctime, memcpy_, teamabbrevs, crestnames, scoutcatnames, league
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, SetDialogColors, TrackButtons, DrawButtons
 extern WaitClickTimeout, ShowLoadingScreen, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, GetInputEvent
-extern ClearInputQueue, FadePalStep, GameLineEditor, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
+extern ClearInputQueue, FadePalStep, GameLineEditor, sub_7DF4E, SpeechBusy, MusicChanReset2, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_91370, sub_913D0, sub_91400
 extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4FAC, str_D4
@@ -845,9 +845,9 @@ cmp byte [musicon], 0	; 2AB1F
 je short .12	; 2AB26
 test byte [gameopts+1], 1	; 2AB28
 je short .12	; 2AB2F
-call sub_8373E	; 2AB31
+call MusicChanReset2	; 2AB31
 .11:
-call sub_836E4	; 2AB36
+call SpeechBusy	; 2AB36
 test eax, eax	; 2AB3B
 jne short PreGameScreen_homelines.11	; 2AB3D
 .12:

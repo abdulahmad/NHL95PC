@@ -8,10 +8,10 @@ extern str_SBDAC2, str_PCBEEP2, str_SoundBlaster2, str_Adlib, str_MT323, str_ULT
 extern musicslot, musicon, byte_D2439, byte_ED8C3, byte_ED95B, byte_ED9A7, dword_C4CFC, gameopts
 extern sounddev, songdata, dword_CCC94, dword_D2350, dword_D2423, dword_D2427, dword_D242B
 extern musichandle, dword_D2435, sounddevids, sndcardname, dword_D27B2, speechinit, dword_D2C6B, pointerspr
-extern ptrupdatefn, setbits, dword_ED7A4, dword_ED7A8, speechq, dword_ED7B0, fclose_, fopen_
-extern fprintf_, jctime, loc_836C4, msg_InitMT32, strcpy_, MakePath, SetDialogColors, RestoreDialogBg
+extern ptrupdatefn, setbits, dword_ED7A4, dword_ED7A8, speechq, speechbank, fclose_, fopen_
+extern fprintf_, jctime, ShutdownSpeech_ret5, msg_InitMT32, strcpy_, MakePath, SetDialogColors, RestoreDialogBg
 extern MessageBox, PlayDigiSample, WaitDigiSample, GetInputEvent, ClearInputQueue, DrawSelBoxOn, DrawSelBoxOff, SoundCardHitTest
-extern RedrawSoundCardOpts, sub_8357A, sub_8363C, sub_8CCA8, sub_8D2F0, sub_8EB5B, sub_8EB93, sub_8ECC0
+extern RedrawSoundCardOpts, InitSpeech, ShutdownSpeech, sub_8CCA8, sub_8D2F0, sub_8EB5B, sub_8EB93, sub_8ECC0
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_91370, sub_91400, sub_97079, FatalError, sub_B2DCA, sub_B3989, sub_B3999
 extern sub_B4BA8, unk_C36AC, str_PC, unk_D2403, unk_D2413, unk_D249C
@@ -392,7 +392,7 @@ je short .1	; 82DAB
 cmp ecx, byte 20h	; 82DAD
 jne short .2	; 82DB0
 .1:
-call sub_8363C	; 82DB2
+call ShutdownSpeech	; 82DB2
 mov edx, dword [dword_ED7A8]	; 82DB7
 push edx	; 82DBD
 call jctime	; 82DBE
@@ -732,7 +732,7 @@ movzx esi, byte [musicslot]	; 83292
 mov ecx, 400h	; 83299
 mov ebx, eax	; 8329E
 mov eax, esi	; 832A0
-call sub_8357A	; 832A2
+call InitSpeech	; 832A2
 .41:
 xor ecx, ecx	; 832A7
 mov dword [dword_CCC94], ecx	; 832A9
@@ -748,7 +748,7 @@ push edx	; 832C8
 push esi	; 832C9
 push edi	; 832CA
 cmp dword [speechinit], byte 0	; 832CB
-je near loc_836C4	; 832D2
+je near ShutdownSpeech_ret5	; 832D2
 mov eax, dword [speechq]	; 832D8
 mov ebx, dword [byte eax+05Ch]	; 832DD
 test ebx, ebx	; 832E0
@@ -758,13 +758,13 @@ mov dword [byte eax+05Ch], ecx	; 832E7
 .1:
 mov eax, dword [speechq]	; 832EA
 cmp dword [byte eax+060h], byte 0	; 832EF
-je near loc_836C4	; 832F3
+je near ShutdownSpeech_ret5	; 832F3
 mov edi, dword [byte eax+050h]	; 832F9
 test edi, edi	; 832FC
 je short .2	; 832FE
 lea ecx, [byte edi-01h]	; 83300
 mov dword [byte eax+050h], ecx	; 83303
-jmp near loc_836C4	; 83306
+jmp near ShutdownSpeech_ret5	; 83306
 .2:
 mov ecx, dword [byte eax+058h]	; 8330B
 lea edx, [byte ecx+01h]	; 8330E
@@ -777,7 +777,7 @@ mov ecx, dword [edx+eax*4]	; 83325
 cmp ecx, byte 0FFFFFFFFh	; 83328
 jne short .3	; 8332B
 mov dword [byte edx+060h], edi	; 8332D
-jmp near loc_836C4	; 83330
+jmp near ShutdownSpeech_ret5	; 83330
 .3:
 mov eax, ecx	; 83335
 shl eax, 2	; 83337
@@ -785,7 +785,7 @@ add eax, ecx	; 8333A
 shl eax, 2	; 8333C
 sub eax, ecx	; 8333F
 add eax, eax	; 83341
-mov ebx, dword [dword_ED7B0]	; 83343
+mov ebx, dword [speechbank]	; 83343
 add eax, ebx	; 83349
 mov esi, dword [byte eax+0Eh]	; 8334B
 mov ecx, dword [byte eax+016h]	; 8334E
@@ -804,7 +804,7 @@ push dword 2B11h	; 83377
 mov edx, dword [musichandle]	; 8337C
 mov eax, esi	; 83382
 call sub_8FBE5	; 83384
-jmp near loc_836C4	; 83389
+jmp near ShutdownSpeech_ret5	; 83389
 .4:
 add ecx, ecx	; 8338E
 push byte 7Fh	; 83390
@@ -812,14 +812,14 @@ push dword 2B11h	; 83392
 mov edx, dword [musichandle]	; 83397
 mov eax, esi	; 8339D
 call sub_8FC37	; 8339F
-jmp near loc_836C4	; 833A4
+jmp near ShutdownSpeech_ret5	; 833A4
 .5:
 mov dword [byte edx+060h], edi	; 833A9
-mov eax, dword [dword_ED7B0]	; 833AC
+mov eax, dword [speechbank]	; 833AC
 mov edx, dword [speechq]	; 833B1
 mov eax, dword [dword eax+03B70h]	; 833B7
 mov dword [byte edx+05Ch], eax	; 833BD
-jmp near loc_836C4	; 833C0
+jmp near ShutdownSpeech_ret5	; 833C0
 ClearSpeechSlot:
 push dword 4	; 833C5
 call __CHK	; 833CA

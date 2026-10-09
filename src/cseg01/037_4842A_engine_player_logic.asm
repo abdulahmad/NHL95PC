@@ -24,7 +24,7 @@ extern sprintf_, vecdist, FadePalette, IsCupClinched, ThreeStarsLoop, joyq_flush
 extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
 extern sub_59AAD, sub_59AD0, sub_59B0F, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
 extern EvadePC, sub_61576, sub_61D48, sub_62343, sub_62807, sub_62C37, sub_64102, sub_64439
-extern RemoveFromLines, sub_66497, sub_66DDA, sub_837A8, sub_8F633, sub_8FFB0, imul32, threat
+extern RemoveFromLines, sub_66497, sub_66DDA, MusicChanReset, sub_8F633, sub_8FFB0, imul32, threat
 extern unk_C1B3E, unk_DACA0, hmteamrec, unk_DC240, unk_DF014, SortCords, updateanim
 extern vtoa, regd4, camx, camy, lastplayer, passdir, word_C90A6, xc1
 extern yc1, word_C90B2, word_C90B4, fodir1, fodir2, c1playernum, c2playernum, VisTeam
@@ -1190,7 +1190,7 @@ xor ebx, ebx	; 4923A
 mov word [crowdlevel], bx	; 4923C
 cmp byte [musicon], 0	; 49243
 je short .4	; 4924A
-call sub_837A8	; 4924C
+call MusicChanReset	; 4924C
 jmp near PreGameIntro_popx	; 49251
 .4:
 call sub_8F633	; 49256

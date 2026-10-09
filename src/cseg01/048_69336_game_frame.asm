@@ -13,8 +13,8 @@ extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSi
 extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, DrawHudPanel, sub_1BAF3, LoadGameTeams, LoadRink, SetRinkScroll
 extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
 extern sub_59CA9, sub_59D54, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
-extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_836E4
-extern sub_8373E, sub_8F633, sub_8FFB0, sub_B396E, awlinetab, hmlinetab, unk_DF014, unk_DF314
+extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, SpeechBusy
+extern MusicChanReset2, sub_8F633, sub_8FFB0, sub_B396E, awlinetab, hmlinetab, unk_DF014, unk_DF314
 extern SortCords, vtoa, camx, camy, passplayer, xc1, yc1
 extern c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, refsignal, RefStep, RefPen
 extern word_C90D8, gsp, gameclock, clockticks, word_CBC44, exitgame, gameover, word_CBC52
@@ -660,9 +660,9 @@ cmp byte [musicon], 0	; 69D68
 je short .29	; 69D6F
 test byte [gameopts+1], 1	; 69D71
 je short .29	; 69D78
-call sub_8373E	; 69D7A
+call MusicChanReset2	; 69D7A
 .28:
-call sub_836E4	; 69D7F
+call SpeechBusy	; 69D7F
 test eax, eax	; 69D84
 jne short StartHL2.28	; 69D86
 jmp short .30	; 69D88

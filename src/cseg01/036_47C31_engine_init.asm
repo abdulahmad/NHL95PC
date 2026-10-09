@@ -11,7 +11,7 @@ extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, 
 extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, UpdateHudPanel, SetRinkScroll
 extern LoadScreenPalTick, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
 extern PlayCrowdSample, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
-extern sub_6B008, sub_8374D, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
+extern sub_6B008, SpeechStopQueue, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
 extern unk_DF014, unk_DF314, unk_DFD9C, camx, camy, xc1, yc1, SortCords
 extern word_C90B2, word_C90B4, c1playernum, c2playernum, RefStep, exitgame, word_CBC52, word_CBC54
 extern lcblink, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly
@@ -454,7 +454,7 @@ mov eax, 1	; 482A3
 call FadePalette	; 482A8
 call CrowdFadeOut	; 482AD
 call StopDigiSample	; 482B2
-call sub_8374D	; 482B7
+call SpeechStopQueue	; 482B7
 xor edx, edx	; 482BC
 mov dword [escrequest], edx	; 482BE
 mov eax, 0FFFFFFFFh	; 482C4
@@ -473,7 +473,7 @@ mov eax, 1	; 482F1
 call FadePalette	; 482F6
 .3:
 call StopDigiSample	; 482FB
-call sub_8374D	; 48300
+call SpeechStopQueue	; 48300
 xor eax, eax	; 48305
 PreGameIntro_popebp:
 pop ebp	; 48307

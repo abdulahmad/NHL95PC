@@ -12,9 +12,9 @@ extern asc_D2587, asc_D259F, asc_D25AB, asc_D25B8, asc_D25CD, asc_D2608, asc_D26
 extern asc_D2628, asc_D2635, asc_D2641, asc_D2672, asc_D267F, asc_D26A4, asc_D26B1, asc_D26BE
 extern asc_D26CB, asc_D26D7, asc_D26E4, asc_D26F1, asc_D26FE, asc_D270B, asc_D2718, asc_D2725
 extern asc_D2732, asc_D27BF, byte_ED98C, dword_CCC98, dword_D27A2, speechinit, dword_D2C6B, speechq
-extern dword_ED7B0, itoa_, loc_836C3, off_D273E, off_D2776, sprintf_, strcpy_, strncpy_
-extern MakePath, ResetSpeechQueue, sub_83520, sub_83711, sub_83897, sub_83CAE, sub_83D78, sub_83E6D
-extern sub_83EEB, sub_83F35, sub_83FAF, sub_8426F
+extern speechbank, itoa_, ShutdownSpeech_ret6, off_D273E, off_D2776, sprintf_, strcpy_, strncpy_
+extern MakePath, ResetSpeechQueue, ResetSampleReq, SpeechIdle, OpenSpeechBank, LoadSpeechSlot, PlaceSpeechSlot, FindFreeSpeechSlot
+extern FindSpeechSlot, SpeechSlotLoaded, RequestSample, EnsureSampleRoom
 global loc_842D7, loc_842DE, loc_842E5, loc_842FA, loc_842FF, loc_84327, loc_8433E, loc_84349
 global loc_84350, loc_84357, loc_84365, loc_84371, loc_84378, loc_8437F, loc_84384, loc_8438D
 global loc_843B0, loc_843C7, loc_843D2, loc_843D9, loc_843E0, loc_843EE, loc_843FA, loc_84401
@@ -210,7 +210,7 @@ mov dword [byte esp+030h], ecx	; 84435
 lea ebx, [byte ecx+01h]	; 84439
 mov dword [byte eax+054h], ebx	; 8443C
 mov eax, edx	; 8443F
-call sub_83EEB	; 84441
+call FindSpeechSlot	; 84441
 mov ebx, eax	; 84446
 cmp eax, byte 0FFFFFFFFh	; 84448
 jne short loc_8445D	; 8444B
@@ -220,14 +220,14 @@ xor eax, eax	; 84453
 dec dword [byte edx+054h]	; 84455
 jmp near loc_84531	; 84458
 loc_8445D:
-call sub_83F35	; 8445D
+call SpeechSlotLoaded	; 8445D
 test eax, eax	; 84462
 je short loc_84473	; 84464
 mov eax, dword [speechq]	; 84466
 mov dword [eax+ecx*4], ebx	; 8446B
 jmp near loc_8452C	; 8446E
 loc_84473:
-call sub_83E6D	; 84473
+call FindFreeSpeechSlot	; 84473
 mov edx, eax	; 84478
 mov dword [byte esp+034h], eax	; 8447A
 cmp eax, byte 0FFFFFFFFh	; 8447E
@@ -238,7 +238,7 @@ shl eax, 2	; 84488
 sub eax, edx	; 8448B
 add eax, eax	; 8448D
 mov dword [byte esp+028h], eax	; 8448F
-mov eax, dword [dword_ED7B0]	; 84493
+mov eax, dword [speechbank]	; 84493
 mov dword [byte esp+02Ch], eax	; 84498
 mov ecx, dword [byte esp+028h]	; 8449C
 lea ebp, [eax+ecx]	; 844A0
@@ -259,13 +259,13 @@ mov ecx, 9	; 844C4
 mov edi, ebp	; 844C9
 rep movsd	; 844CB
 movsw	; 844CD
-mov edi, dword [dword_ED7B0]	; 844CF
+mov edi, dword [speechbank]	; 844CF
 add edi, eax	; 844D5
 mov ecx, 9	; 844D7
 mov esi, esp	; 844DC
 rep movsd	; 844DE
 movsw	; 844E0
-mov eax, dword [dword_ED7B0]	; 844E2
+mov eax, dword [speechbank]	; 844E2
 mov ebx, dword [byte esp+028h]	; 844E7
 add ebx, eax	; 844EB
 mov ecx, dword [dword eax+03B6Ch]	; 844ED
@@ -275,11 +275,11 @@ ja near loc_8444D	; 844FC
 cmp byte [byte ebx+0Dh], 47h	; 84502
 jne short loc_84511	; 84506
 mov eax, edx	; 84508
-call sub_83CAE	; 8450A
+call LoadSpeechSlot	; 8450A
 jmp short loc_84518	; 8450F
 loc_84511:
 mov eax, edx	; 84511
-call sub_83D78	; 84513
+call PlaceSpeechSlot	; 84513
 loc_84518:
 mov edx, dword [byte esp+030h]	; 84518
 shl edx, 2	; 8451C
@@ -291,7 +291,7 @@ loc_8452C:
 mov eax, 1	; 8452C
 loc_84531:
 add esp, byte 38h	; 84531
-jmp near loc_836C3	; 84534
+jmp near ShutdownSpeech_ret6	; 84534
 sub_84539:
 push dword 48h	; 84539
 call __CHK	; 8453E
@@ -302,7 +302,7 @@ push esi	; 84546
 push edi	; 84547
 push ebp	; 84548
 sub esp, byte 2Ch	; 84549
-call sub_83EEB	; 8454C
+call FindSpeechSlot	; 8454C
 mov ebx, eax	; 84551
 cmp eax, byte 0FFFFFFFFh	; 84553
 jne short loc_8455F	; 84556
@@ -310,10 +310,10 @@ loc_84558:
 xor eax, eax	; 84558
 jmp near loc_84607	; 8455A
 loc_8455F:
-call sub_83F35	; 8455F
+call SpeechSlotLoaded	; 8455F
 test eax, eax	; 84564
 jne near loc_84602	; 84566
-call sub_83E6D	; 8456C
+call FindFreeSpeechSlot	; 8456C
 mov edx, eax	; 84571
 cmp eax, byte 0FFFFFFFFh	; 84573
 je short loc_84558	; 84576
@@ -324,7 +324,7 @@ shl eax, 2	; 8457F
 sub eax, ebx	; 84582
 add eax, eax	; 84584
 mov dword [byte esp+028h], eax	; 84586
-mov ebx, dword [dword_ED7B0]	; 8458A
+mov ebx, dword [speechbank]	; 8458A
 lea ebp, [eax+ebx]	; 84590
 mov eax, dword [dword ebx+03B6Ch]	; 84593
 add eax, dword [byte ebp+016h]	; 84599
@@ -348,37 +348,37 @@ mov edi, ebx	; 845C8
 mov esi, ebp	; 845CA
 rep movsd	; 845CC
 movsw	; 845CE
-mov edi, dword [dword_ED7B0]	; 845D0
+mov edi, dword [speechbank]	; 845D0
 add edi, dword [byte esp+028h]	; 845D6
 mov ecx, 9	; 845DA
 mov esi, esp	; 845DF
 rep movsd	; 845E1
 movsw	; 845E3
-mov ebx, dword [dword_ED7B0]	; 845E5
+mov ebx, dword [speechbank]	; 845E5
 cmp byte [byte ebx+eax+0Dh], 47h	; 845EB
 jne short loc_845FB	; 845F0
 mov eax, edx	; 845F2
-call sub_83CAE	; 845F4
+call LoadSpeechSlot	; 845F4
 jmp short loc_84602	; 845F9
 loc_845FB:
 mov eax, edx	; 845FB
-call sub_83D78	; 845FD
+call PlaceSpeechSlot	; 845FD
 loc_84602:
 mov eax, 1	; 84602
 loc_84607:
 add esp, byte 2Ch	; 84607
-jmp near loc_836C3	; 8460A
+jmp near ShutdownSpeech_ret6	; 8460A
 loc_8460F:
-call sub_83711	; 8460F
+call SpeechIdle	; 8460F
 test eax, eax	; 84614
 je short loc_84655	; 84616
 call ResetSpeechQueue	; 84618
-call sub_83520	; 8461D
-mov eax, dword [dword_ED7B0]	; 84622
+call ResetSampleReq	; 8461D
+mov eax, dword [speechbank]	; 84622
 mov dword [dword eax+03B70h], 0	; 84627
 mov eax, edx	; 84631
-call sub_83FAF	; 84633
-call sub_8426F	; 84638
+call RequestSample	; 84633
+call EnsureSampleRoom	; 84638
 mov eax, edx	; 8463D
 call sub_84418	; 8463F
 mov eax, dword [speechq]	; 84644
@@ -398,14 +398,14 @@ xor eax, eax	; 8466D
 pop edx	; 8466F
 ret	; 84670
 loc_84671:
-call sub_83711	; 84671
+call SpeechIdle	; 84671
 test eax, eax	; 84676
 je short loc_846B2	; 84678
 call ResetSpeechQueue	; 8467A
-call sub_83520	; 8467F
+call ResetSampleReq	; 8467F
 mov eax, dword [nosplit edx*4+off_D2776]	; 84684
-call sub_83FAF	; 8468B
-call sub_8426F	; 84690
+call RequestSample	; 8468B
+call EnsureSampleRoom	; 84690
 mov eax, dword [nosplit edx*4+off_D2776]	; 84695
 call sub_84418	; 8469C
 mov eax, dword [speechq]	; 846A1
@@ -463,7 +463,7 @@ push dword 0Ch	; 8475D
 call __CHK	; 84762
 push ebx	; 84767
 push edx	; 84768
-call sub_83EEB	; 84769
+call FindSpeechSlot	; 84769
 cmp eax, byte 0FFFFFFFFh	; 8476E
 je short loc_847B7	; 84771
 mov edx, eax	; 84773
@@ -472,18 +472,18 @@ add eax, edx	; 84778
 shl eax, 2	; 8477A
 sub eax, edx	; 8477D
 lea edx, [eax+eax]	; 8477F
-mov eax, dword [dword_ED7B0]	; 84782
+mov eax, dword [speechbank]	; 84782
 add eax, edx	; 84787
 mov ebx, dword [byte eax+022h]	; 84789
 cmp ebx, byte 1	; 8478C
 jne short loc_847B7	; 8478F
 mov dword [byte eax+022h], 0	; 84791
-mov eax, dword [dword_ED7B0]	; 84798
+mov eax, dword [speechbank]	; 84798
 mov edx, dword [byte edx+eax+016h]	; 8479D
 sub dword [dword eax+03B6Ch], edx	; 847A1
-mov eax, dword [dword_ED7B0]	; 847A7
+mov eax, dword [speechbank]	; 847A7
 sub dword [dword eax+03B74h], ebx	; 847AC
-call sub_8426F	; 847B2
+call EnsureSampleRoom	; 847B2
 loc_847B7:
 pop edx	; 847B7
 pop ebx	; 847B8
@@ -506,10 +506,10 @@ add esp, byte 30h	; 847E9
 pop ecx	; 847EC
 ret	; 847ED
 loc_847EE:
-call sub_83711	; 847EE
+call SpeechIdle	; 847EE
 test eax, eax	; 847F3
 je near loc_84908	; 847F5
-mov eax, dword [dword_ED7B0]	; 847FB
+mov eax, dword [speechbank]	; 847FB
 mov dword [dword eax+03B70h], 0	; 84800
 push asc_C38B2	; 8480A
 push ecx	; 8480F
@@ -533,24 +533,24 @@ push eax	; 84849
 call sprintf_	; 8484A
 add esp, byte 10h	; 8484F
 call ResetSpeechQueue	; 84852
-call sub_83520	; 84857
+call ResetSampleReq	; 84857
 mov eax, asc_D26A4	; 8485C
-call sub_83FAF	; 84861
+call RequestSample	; 84861
 lea eax, [byte esp+020h]	; 84866
-call sub_83FAF	; 8486A
+call RequestSample	; 8486A
 mov eax, asc_D26B1	; 8486F
-call sub_83FAF	; 84874
+call RequestSample	; 84874
 mov eax, asc_D25CD	; 84879
-call sub_83FAF	; 8487E
+call RequestSample	; 8487E
 mov eax, asc_D2641	; 84883
-call sub_83FAF	; 84888
+call RequestSample	; 84888
 lea eax, [byte esp+010h]	; 8488D
-call sub_83FAF	; 84891
+call RequestSample	; 84891
 mov eax, asc_D2608	; 84896
-call sub_83FAF	; 8489B
+call RequestSample	; 8489B
 mov eax, esp	; 848A0
-call sub_83FAF	; 848A2
-call sub_8426F	; 848A7
+call RequestSample	; 848A2
+call EnsureSampleRoom	; 848A7
 mov eax, asc_D26A4	; 848AC
 call sub_84418	; 848B1
 lea eax, [byte esp+020h]	; 848B6
@@ -589,10 +589,10 @@ jne short loc_84933	; 8492A
 xor eax, eax	; 8492C
 jmp near loc_84A63	; 8492E
 loc_84933:
-call sub_83711	; 84933
+call SpeechIdle	; 84933
 test eax, eax	; 84938
 je near loc_84A63	; 8493A
-mov eax, dword [dword_ED7B0]	; 84940
+mov eax, dword [speechbank]	; 84940
 mov dword [dword eax+03B70h], 0	; 84945
 push asc_C38B6	; 8494F
 push ebp	; 84954
@@ -618,29 +618,29 @@ mov ebx, ecx	; 84998
 mov edx, edi	; 8499A
 lea eax, [byte esp+010h]	; 8499C
 call sub_84306	; 849A0
-call sub_83520	; 849A5
+call ResetSampleReq	; 849A5
 call ResetSpeechQueue	; 849AA
 cmp dword [byte esp+050h], byte 0	; 849AF
 je short loc_849C0	; 849B4
 mov eax, asc_D26BE	; 849B6
-call sub_83FAF	; 849BB
+call RequestSample	; 849BB
 loc_849C0:
 lea eax, [byte esp+030h]	; 849C0
-call sub_83FAF	; 849C4
+call RequestSample	; 849C4
 mov eax, asc_D26CB	; 849C9
-call sub_83FAF	; 849CE
+call RequestSample	; 849CE
 cmp dword [byte esp+054h], byte 0	; 849D3
 jne short loc_849F5	; 849D8
 mov eax, asc_D261C	; 849DA
-call sub_83FAF	; 849DF
+call RequestSample	; 849DF
 mov eax, esp	; 849E4
-call sub_83FAF	; 849E6
+call RequestSample	; 849E6
 mov eax, asc_D25CD	; 849EB
-call sub_83FAF	; 849F0
+call RequestSample	; 849F0
 loc_849F5:
 lea eax, [byte esp+010h]	; 849F5
-call sub_83FAF	; 849F9
-call sub_8426F	; 849FE
+call RequestSample	; 849F9
+call EnsureSampleRoom	; 849FE
 cmp dword [byte esp+050h], byte 0	; 84A03
 je short loc_84A14	; 84A08
 mov eax, asc_D26BE	; 84A0A
@@ -749,10 +749,10 @@ add esp, byte 30h	; 84B28
 pop ecx	; 84B2B
 ret	; 84B2C
 loc_84B2D:
-call sub_83711	; 84B2D
+call SpeechIdle	; 84B2D
 test eax, eax	; 84B32
 je near loc_84C33	; 84B34
-mov eax, dword [dword_ED7B0]	; 84B3A
+mov eax, dword [speechbank]	; 84B3A
 mov dword [dword eax+03B70h], 0	; 84B3F
 push asc_C38B2	; 84B49
 push ecx	; 84B4E
@@ -776,22 +776,22 @@ push eax	; 84B88
 call sprintf_	; 84B89
 add esp, byte 10h	; 84B8E
 call ResetSpeechQueue	; 84B91
-call sub_83520	; 84B96
+call ResetSampleReq	; 84B96
 mov eax, asc_D2635	; 84B9B
-call sub_83FAF	; 84BA0
+call RequestSample	; 84BA0
 lea eax, [byte esp+020h]	; 84BA5
-call sub_83FAF	; 84BA9
+call RequestSample	; 84BA9
 mov eax, asc_D2628	; 84BAE
-call sub_83FAF	; 84BB3
+call RequestSample	; 84BB3
 mov eax, asc_D2641	; 84BB8
-call sub_83FAF	; 84BBD
+call RequestSample	; 84BBD
 lea eax, [byte esp+010h]	; 84BC2
-call sub_83FAF	; 84BC6
+call RequestSample	; 84BC6
 mov eax, asc_D2608	; 84BCB
-call sub_83FAF	; 84BD0
+call RequestSample	; 84BD0
 mov eax, esp	; 84BD5
-call sub_83FAF	; 84BD7
-call sub_8426F	; 84BDC
+call RequestSample	; 84BD7
+call EnsureSampleRoom	; 84BDC
 mov eax, asc_D2635	; 84BE1
 call sub_84418	; 84BE6
 lea eax, [byte esp+020h]	; 84BEB
@@ -824,10 +824,10 @@ jne short loc_84C58	; 84C4F
 xor eax, eax	; 84C51
 jmp near loc_84DD6	; 84C53
 loc_84C58:
-call sub_83711	; 84C58
+call SpeechIdle	; 84C58
 test eax, eax	; 84C5D
 je near loc_84DD6	; 84C5F
-mov eax, dword [dword_ED7B0]	; 84C65
+mov eax, dword [speechbank]	; 84C65
 mov dword [dword eax+03B70h], 0	; 84C6A
 push asc_C38B2	; 84C74
 push esi	; 84C79
@@ -868,28 +868,28 @@ mov edx, dword [byte esp+068h]	; 84CF1
 mov eax, esp	; 84CF5
 call sub_8438F	; 84CF7
 call ResetSpeechQueue	; 84CFC
-call sub_83520	; 84D01
+call ResetSampleReq	; 84D01
 mov eax, asc_D2635	; 84D06
-call sub_83FAF	; 84D0B
+call RequestSample	; 84D0B
 lea eax, [byte esp+040h]	; 84D10
-call sub_83FAF	; 84D14
+call RequestSample	; 84D14
 mov eax, asc_D2628	; 84D19
-call sub_83FAF	; 84D1E
+call RequestSample	; 84D1E
 lea eax, [byte esp+020h]	; 84D23
-call sub_83FAF	; 84D27
+call RequestSample	; 84D27
 mov eax, asc_D25CD	; 84D2C
-call sub_83FAF	; 84D31
+call RequestSample	; 84D31
 mov eax, esp	; 84D36
-call sub_83FAF	; 84D38
+call RequestSample	; 84D38
 mov eax, asc_D2610	; 84D3D
-call sub_83FAF	; 84D42
+call RequestSample	; 84D42
 lea eax, [byte esp+050h]	; 84D47
-call sub_83FAF	; 84D4B
+call RequestSample	; 84D4B
 mov eax, asc_D2608	; 84D50
-call sub_83FAF	; 84D55
+call RequestSample	; 84D55
 lea eax, [byte esp+010h]	; 84D5A
-call sub_83FAF	; 84D5E
-call sub_8426F	; 84D63
+call RequestSample	; 84D5E
+call EnsureSampleRoom	; 84D63
 mov eax, asc_D2635	; 84D68
 call sub_84418	; 84D6D
 lea eax, [byte esp+040h]	; 84D72
@@ -938,9 +938,9 @@ push eax	; 84E14
 call sprintf_	; 84E15
 add esp, byte 10h	; 84E1A
 mov eax, asc_D24EC	; 84E1D
-call sub_83FAF	; 84E22
+call RequestSample	; 84E22
 mov eax, asc_D24E2	; 84E27
-call sub_83FAF	; 84E2C
+call RequestSample	; 84E2C
 test ebx, ebx	; 84E31
 je short loc_84E5E	; 84E33
 test edx, edx	; 84E35
@@ -951,13 +951,13 @@ mov eax, asc_D24F3	; 84E3E
 jmp short loc_84E59	; 84E43
 loc_84E45:
 lea eax, [byte esp+010h]	; 84E45
-call sub_83FAF	; 84E49
+call RequestSample	; 84E49
 mov eax, asc_D24FF	; 84E4E
 jmp short loc_84E59	; 84E53
 loc_84E55:
 lea eax, [byte esp+010h]	; 84E55
 loc_84E59:
-call sub_83FAF	; 84E59
+call RequestSample	; 84E59
 loc_84E5E:
 cmp edx, byte 1	; 84E5E
 jne short loc_84E72	; 84E61
@@ -981,13 +981,13 @@ push eax	; 84E89
 call sprintf_	; 84E8A
 add esp, byte 10h	; 84E8F
 mov eax, esp	; 84E92
-call sub_83FAF	; 84E94
+call RequestSample	; 84E94
 mov eax, asc_D2517	; 84E99
 jmp short loc_84EA2	; 84E9E
 loc_84EA0:
 mov eax, esp	; 84EA0
 loc_84EA2:
-call sub_83FAF	; 84EA2
+call RequestSample	; 84EA2
 loc_84EA7:
 add esp, byte 20h	; 84EA7
 pop ebx	; 84EAA
@@ -1080,10 +1080,10 @@ mov ebp, dword [byte esp+054h]	; 84F91
 mov eax, dword [speechinit]	; 84F95
 test eax, eax	; 84F9A
 je near loc_85115	; 84F9C
-call sub_83711	; 84FA2
+call SpeechIdle	; 84FA2
 test eax, eax	; 84FA7
 je near loc_85115	; 84FA9
-mov eax, dword [dword_ED7B0]	; 84FAF
+mov eax, dword [speechbank]	; 84FAF
 mov dword [dword eax+03B70h], 1Ah	; 84FB4
 push asc_C38E4	; 84FBE
 push esi	; 84FC3
@@ -1109,15 +1109,15 @@ lea eax, [byte esp+01Ch]	; 85004
 push eax	; 85008
 call sprintf_	; 85009
 add esp, byte 10h	; 8500E
-call sub_83520	; 85011
+call ResetSampleReq	; 85011
 call ResetSpeechQueue	; 85016
 mov eax, asc_D2569	; 8501B
-call sub_83FAF	; 85020
+call RequestSample	; 85020
 mov edx, dword [byte esp+058h]	; 85025
 cmp edx, byte 1	; 85029
 jne short loc_85049	; 8502C
 mov eax, esp	; 8502E
-call sub_83FAF	; 85030
+call RequestSample	; 85030
 cmp edx, dword [byte esp+05Ch]	; 85035
 jge short loc_85042	; 85039
 mov eax, asc_D252E	; 8503B
@@ -1128,24 +1128,24 @@ jmp short loc_8504E	; 85047
 loc_85049:
 mov eax, asc_D255E	; 85049
 loc_8504E:
-call sub_83FAF	; 8504E
+call RequestSample	; 8504E
 lea eax, [byte esp+030h]	; 85053
-call sub_83FAF	; 85057
+call RequestSample	; 85057
 mov eax, asc_D24E2	; 8505C
-call sub_83FAF	; 85061
+call RequestSample	; 85061
 lea eax, [byte esp+020h]	; 85066
-call sub_83FAF	; 8506A
+call RequestSample	; 8506A
 lea eax, [byte esp+010h]	; 8506F
-call sub_83FAF	; 85073
+call RequestSample	; 85073
 mov eax, asc_D24E2	; 85078
-call sub_83FAF	; 8507D
+call RequestSample	; 8507D
 cmp dword [byte esp+060h], byte 0	; 85082
 je short loc_85092	; 85087
 mov edx, ebp	; 85089
 mov eax, edi	; 8508B
 call sub_84DDD	; 8508D
 loc_85092:
-call sub_8426F	; 85092
+call EnsureSampleRoom	; 85092
 mov esi, dword [byte esp+058h]	; 85097
 cmp esi, byte 1	; 8509B
 jne short loc_850BB	; 8509E
@@ -1200,10 +1200,10 @@ add esp, byte 20h	; 85139
 pop esi	; 8513C
 ret	; 8513D
 loc_8513E:
-call sub_83711	; 8513E
+call SpeechIdle	; 8513E
 test eax, eax	; 85143
 je near loc_8520E	; 85145
-mov eax, dword [dword_ED7B0]	; 8514B
+mov eax, dword [speechbank]	; 8514B
 mov dword [dword eax+03B70h], 1Ah	; 85150
 push asc_C38E4	; 8515A
 push esi	; 8515F
@@ -1219,22 +1219,22 @@ lea eax, [byte esp+0Ch]	; 8517D
 push eax	; 85181
 call sprintf_	; 85182
 add esp, byte 10h	; 85187
-call sub_83520	; 8518A
+call ResetSampleReq	; 8518A
 call ResetSpeechQueue	; 8518F
 mov eax, asc_D2569	; 85194
-call sub_83FAF	; 85199
+call RequestSample	; 85199
 lea eax, [byte esp+010h]	; 8519E
-call sub_83FAF	; 851A2
+call RequestSample	; 851A2
 mov eax, asc_D253A	; 851A7
-call sub_83FAF	; 851AC
+call RequestSample	; 851AC
 mov eax, esp	; 851B1
-call sub_83FAF	; 851B3
+call RequestSample	; 851B3
 mov eax, asc_D24E2	; 851B8
-call sub_83FAF	; 851BD
+call RequestSample	; 851BD
 mov edx, ecx	; 851C2
 mov eax, ebx	; 851C4
 call sub_84DDD	; 851C6
-call sub_8426F	; 851CB
+call EnsureSampleRoom	; 851CB
 lea eax, [byte esp+010h]	; 851D0
 call sub_84418	; 851D4
 mov eax, asc_D253A	; 851D9
@@ -1266,10 +1266,10 @@ jne short loc_85236	; 8522D
 xor eax, eax	; 8522F
 jmp near loc_85319	; 85231
 loc_85236:
-call sub_83711	; 85236
+call SpeechIdle	; 85236
 test eax, eax	; 8523B
 je near loc_85319	; 8523D
-mov eax, dword [dword_ED7B0]	; 85243
+mov eax, dword [speechbank]	; 85243
 mov dword [dword eax+03B70h], 1Ah	; 85248
 push asc_C38EC	; 85252
 push ecx	; 85257
@@ -1289,21 +1289,21 @@ lea eax, [byte esp+01Ch]	; 85288
 push eax	; 8528C
 call sprintf_	; 8528D
 add esp, byte 10h	; 85292
-call sub_83520	; 85295
+call ResetSampleReq	; 85295
 call ResetSpeechQueue	; 8529A
 mov eax, asc_D2569	; 8529F
-call sub_83FAF	; 852A4
+call RequestSample	; 852A4
 mov eax, esp	; 852A9
-call sub_83FAF	; 852AB
+call RequestSample	; 852AB
 lea eax, [byte esp+020h]	; 852B0
-call sub_83FAF	; 852B4
+call RequestSample	; 852B4
 mov eax, asc_D24E2	; 852B9
-call sub_83FAF	; 852BE
+call RequestSample	; 852BE
 mov eax, asc_D2587	; 852C3
-call sub_83FAF	; 852C8
+call RequestSample	; 852C8
 lea eax, [byte esp+010h]	; 852CD
-call sub_83FAF	; 852D1
-call sub_8426F	; 852D6
+call RequestSample	; 852D1
+call EnsureSampleRoom	; 852D6
 mov eax, esp	; 852DB
 call sub_84418	; 852DD
 lea eax, [byte esp+020h]	; 852E2
@@ -1334,10 +1334,10 @@ jne short loc_85340	; 85337
 xor eax, eax	; 85339
 jmp near loc_854A4	; 8533B
 loc_85340:
-call sub_83711	; 85340
+call SpeechIdle	; 85340
 test eax, eax	; 85345
 je near loc_854A4	; 85347
-mov eax, dword [dword_ED7B0]	; 8534D
+mov eax, dword [speechbank]	; 8534D
 mov dword [dword eax+03B70h], 1Ah	; 85352
 push asc_C38E4	; 8535C
 push esi	; 85361
@@ -1368,35 +1368,35 @@ lea eax, [byte esp+01Ch]	; 853B3
 push eax	; 853B7
 call sprintf_	; 853B8
 add esp, byte 10h	; 853BD
-call sub_83520	; 853C0
+call ResetSampleReq	; 853C0
 call ResetSpeechQueue	; 853C5
 mov eax, asc_D2569	; 853CA
-call sub_83FAF	; 853CF
+call RequestSample	; 853CF
 lea eax, [byte esp+030h]	; 853D4
-call sub_83FAF	; 853D8
+call RequestSample	; 853D8
 mov eax, asc_D2546	; 853DD
-call sub_83FAF	; 853E2
+call RequestSample	; 853E2
 mov eax, esp	; 853E7
-call sub_83FAF	; 853E9
+call RequestSample	; 853E9
 test edx, edx	; 853EE
 jle short loc_8540F	; 853F0
 mov eax, asc_D24E2	; 853F2
-call sub_83FAF	; 853F7
+call RequestSample	; 853F7
 mov eax, asc_D2552	; 853FC
-call sub_83FAF	; 85401
+call RequestSample	; 85401
 lea eax, [byte esp+020h]	; 85406
-call sub_83FAF	; 8540A
+call RequestSample	; 8540A
 loc_8540F:
 cmp edx, byte 1	; 8540F
 jle short loc_85431	; 85412
 mov eax, asc_D24E2	; 85414
-call sub_83FAF	; 85419
+call RequestSample	; 85419
 mov eax, asc_D255E	; 8541E
-call sub_83FAF	; 85423
+call RequestSample	; 85423
 lea eax, [byte esp+010h]	; 85428
-call sub_83FAF	; 8542C
+call RequestSample	; 8542C
 loc_85431:
-call sub_8426F	; 85431
+call EnsureSampleRoom	; 85431
 lea eax, [byte esp+030h]	; 85436
 call sub_84418	; 8543A
 mov eax, asc_D2546	; 8543F
@@ -1439,14 +1439,14 @@ xor eax, eax	; 854C0
 pop ebx	; 854C2
 ret	; 854C3
 loc_854C4:
-call sub_83711	; 854C4
+call SpeechIdle	; 854C4
 test eax, eax	; 854C9
 je short loc_85505	; 854CB
-call sub_83520	; 854CD
+call ResetSampleReq	; 854CD
 call ResetSpeechQueue	; 854D2
 mov eax, asc_D2569	; 854D7
-call sub_83FAF	; 854DC
-call sub_8426F	; 854E1
+call RequestSample	; 854DC
+call EnsureSampleRoom	; 854E1
 mov eax, asc_D2569	; 854E6
 call sub_84418	; 854EB
 mov ebx, 1	; 854F0
@@ -1469,10 +1469,10 @@ jne short loc_85524	; 8551E
 xor eax, eax	; 85520
 jmp short loc_85569	; 85522
 loc_85524:
-call sub_83711	; 85524
+call SpeechIdle	; 85524
 test eax, eax	; 85529
 je short loc_85569	; 8552B
-call sub_83520	; 8552D
+call ResetSampleReq	; 8552D
 call ResetSpeechQueue	; 85532
 mov ecx, asc_D27BF	; 85537
 mov ebx, asc_C38F0	; 8553C
@@ -1487,7 +1487,7 @@ mov eax, esp	; 85554
 call MakePath	; 85556
 xor edx, edx	; 8555B
 mov eax, esp	; 8555D
-call sub_83897	; 8555F
+call OpenSpeechBank	; 8555F
 mov eax, 1	; 85564
 loc_85569:
 add esp, byte 10h	; 85569
@@ -1500,12 +1500,12 @@ push dword 28h	; 85570
 call __CHK	; 85575
 push edx	; 8557A
 sub esp, byte 10h	; 8557B
-mov eax, dword [dword_ED7B0]	; 8557E
+mov eax, dword [speechbank]	; 8557E
 mov edx, dword [dword eax+03B68h]	; 85583
 sub edx, dword [dword eax+03B6Ch]	; 85589
 cmp edx, 186A0h	; 8558F
 jbe short loc_855EF	; 85595
-call sub_83520	; 85597
+call ResetSampleReq	; 85597
 call ResetSpeechQueue	; 8559C
 xor edx, edx	; 855A1
 loc_855A3:
@@ -1517,7 +1517,7 @@ push eax	; 855B2
 call sprintf_	; 855B3
 add esp, byte 10h	; 855B8
 mov eax, esp	; 855BB
-call sub_83FAF	; 855BD
+call RequestSample	; 855BD
 inc edx	; 855C2
 cmp edx, byte 0Ah	; 855C3
 jl short loc_855A3	; 855C6
@@ -1536,12 +1536,12 @@ inc edx	; 855E9
 cmp edx, byte 0Ah	; 855EA
 jl short loc_855CA	; 855ED
 loc_855EF:
-mov eax, dword [dword_ED7B0]	; 855EF
+mov eax, dword [speechbank]	; 855EF
 mov edx, dword [dword eax+03B68h]	; 855F4
 sub edx, dword [dword eax+03B6Ch]	; 855FA
 cmp edx, 186A0h	; 85600
 jbe short loc_85666	; 85606
-call sub_83520	; 85608
+call ResetSampleReq	; 85608
 call ResetSpeechQueue	; 8560D
 mov edx, 0Ah	; 85612
 loc_85617:
@@ -1553,7 +1553,7 @@ push eax	; 85626
 call sprintf_	; 85627
 add esp, byte 10h	; 8562C
 mov eax, esp	; 8562F
-call sub_83FAF	; 85631
+call RequestSample	; 85631
 inc edx	; 85636
 cmp edx, byte 14h	; 85637
 jl short loc_85617	; 8563A
@@ -1572,12 +1572,12 @@ inc edx	; 85660
 cmp edx, byte 14h	; 85661
 jl short loc_85641	; 85664
 loc_85666:
-mov eax, dword [dword_ED7B0]	; 85666
+mov eax, dword [speechbank]	; 85666
 mov edx, dword [dword eax+03B68h]	; 8566B
 sub edx, dword [dword eax+03B6Ch]	; 85671
 cmp edx, 186A0h	; 85677
 jbe short loc_856DD	; 8567D
-call sub_83520	; 8567F
+call ResetSampleReq	; 8567F
 call ResetSpeechQueue	; 85684
 mov edx, 14h	; 85689
 loc_8568E:
@@ -1589,7 +1589,7 @@ push eax	; 8569D
 call sprintf_	; 8569E
 add esp, byte 10h	; 856A3
 mov eax, esp	; 856A6
-call sub_83FAF	; 856A8
+call RequestSample	; 856A8
 inc edx	; 856AD
 cmp edx, byte 1Eh	; 856AE
 jl short loc_8568E	; 856B1
@@ -1608,12 +1608,12 @@ inc edx	; 856D7
 cmp edx, byte 1Eh	; 856D8
 jl short loc_856B8	; 856DB
 loc_856DD:
-mov eax, dword [dword_ED7B0]	; 856DD
+mov eax, dword [speechbank]	; 856DD
 mov edx, dword [dword eax+03B68h]	; 856E2
 sub edx, dword [dword eax+03B6Ch]	; 856E8
 cmp edx, 186A0h	; 856EE
 jbe short loc_8574E	; 856F4
-call sub_83520	; 856F6
+call ResetSampleReq	; 856F6
 call ResetSpeechQueue	; 856FB
 xor edx, edx	; 85700
 loc_85702:
@@ -1625,7 +1625,7 @@ push eax	; 85711
 call sprintf_	; 85712
 add esp, byte 10h	; 85717
 mov eax, esp	; 8571A
-call sub_83FAF	; 8571C
+call RequestSample	; 8571C
 inc edx	; 85721
 cmp edx, byte 0Ah	; 85722
 jl short loc_85702	; 85725
@@ -1644,17 +1644,17 @@ inc edx	; 85748
 cmp edx, byte 0Ah	; 85749
 jl short loc_85729	; 8574C
 loc_8574E:
-mov eax, dword [dword_ED7B0]	; 8574E
+mov eax, dword [speechbank]	; 8574E
 mov edx, dword [dword eax+03B68h]	; 85753
 sub edx, dword [dword eax+03B6Ch]	; 85759
 cmp edx, 249F0h	; 8575F
 jbe short loc_85799	; 85765
-call sub_83520	; 85767
+call ResetSampleReq	; 85767
 call ResetSpeechQueue	; 8576C
 xor edx, edx	; 85771
 loc_85773:
 mov eax, dword [nosplit edx*4+off_D273E]	; 85773
-call sub_83FAF	; 8577A
+call RequestSample	; 8577A
 inc edx	; 8577F
 cmp edx, byte 0Eh	; 85780
 jl short loc_85773	; 85783
@@ -1684,10 +1684,10 @@ jne short loc_857C3	; 857BA
 xor eax, eax	; 857BC
 jmp near loc_8591C	; 857BE
 loc_857C3:
-call sub_83711	; 857C3
+call SpeechIdle	; 857C3
 test eax, eax	; 857C8
 je near loc_8591C	; 857CA
-call sub_83520	; 857D0
+call ResetSampleReq	; 857D0
 call ResetSpeechQueue	; 857D5
 mov ecx, asc_D27BF	; 857DA
 mov ebx, asc_C38F0	; 857DF
@@ -1702,7 +1702,7 @@ mov eax, esp	; 857F7
 call MakePath	; 857F9
 mov edx, 1Ah	; 857FE
 mov eax, esp	; 85803
-call sub_83897	; 85805
+call OpenSpeechBank	; 85805
 push asc_C38E4	; 8580A
 push esi	; 8580F
 push asc_D24DC	; 85810
@@ -1718,27 +1718,27 @@ push eax	; 85831
 call sprintf_	; 85832
 add esp, byte 10h	; 85837
 mov eax, asc_D2569	; 8583A
-call sub_83FAF	; 8583F
+call RequestSample	; 8583F
 mov eax, asc_D24E2	; 85844
-call sub_83FAF	; 85849
+call RequestSample	; 85849
 lea eax, [byte esp+020h]	; 8584E
-call sub_83FAF	; 85852
+call RequestSample	; 85852
 lea eax, [byte esp+010h]	; 85857
-call sub_83FAF	; 8585B
+call RequestSample	; 8585B
 mov eax, asc_D2546	; 85860
-call sub_83FAF	; 85865
+call RequestSample	; 85865
 mov eax, asc_D2552	; 8586A
-call sub_83FAF	; 8586F
+call RequestSample	; 8586F
 mov eax, asc_D255E	; 85874
-call sub_83FAF	; 85879
+call RequestSample	; 85879
 mov eax, asc_D2523	; 8587E
-call sub_83FAF	; 85883
+call RequestSample	; 85883
 mov eax, asc_D252E	; 85888
-call sub_83FAF	; 8588D
+call RequestSample	; 8588D
 mov eax, asc_D2575	; 85892
-call sub_83FAF	; 85897
+call RequestSample	; 85897
 mov eax, asc_D24EC	; 8589C
-call sub_83FAF	; 858A1
+call RequestSample	; 858A1
 mov eax, asc_D2569	; 858A6
 call sub_84418	; 858AB
 mov eax, asc_D24E2	; 858B0

@@ -10,13 +10,13 @@ extern str_KMS, musicon, byte_D42C3, byte_ED7F0, byte_ED833, byte_ED834, byte_ED
 extern byte_ED8F4, byte_ED8F6, byte_ED8F7, byte_ED8F8, byte_ED92D, byte_ED9A6, byte_ED9A8, byte_ED9AD
 extern byte_ED9E9, byte_ED9EA, dword_C4CFC, demomode, sounddev, dword_C588A, textgrid, textgridon
 extern textcolor, textshadow, textoutlinedx, textoutlinedy, songdata, dword_CC0EC, dword_CCC94, musicslot
-extern musichandle, dword_D2C6B, fontcolor, dword_D8B68, dword_D8B74, pointerspr, dword_DC33C, dword_ED7B0
+extern musichandle, dword_D2C6B, fontcolor, dword_D8B68, dword_D8B74, pointerspr, dword_DC33C, speechbank
 extern fputchar, jctime, RunDemoGame_x, memcpy_, memset_, off_C6399, rand_, sprintf_
 extern srand_, strlen_, MakePath, RunDemoGame, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
 extern sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2, sub_1B2A7, sub_1B8AC, sub_1B92E, WaitClickTimeout
 extern FadeOutPalCycle, StopDigiSample, PlayDigiSample, sub_59C1D, sub_59C3E, sub_59D54, ClearInputQueue, FadePalStep
-extern sub_83459, sub_8374D, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18
+extern InitSpeechSlots, SpeechStopQueue, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C
 extern sub_9087C, sub_9121C, sub_91284, sub_912C8, sub_9132C, sub_91370, sub_913B4, sub_91400
 extern sub_91964, sub_B30B4, sub_B392C, sub_B395C, sub_B396E, sub_B3989, sub_B3999, sub_B39A7
@@ -509,7 +509,7 @@ xor edx, edx	; 16740
 mov dword [dword esp+0638h], edx	; 16742
 cmp byte [musicon], 0	; 16749
 je short .1	; 16750
-mov eax, dword [dword_ED7B0]	; 16752
+mov eax, dword [speechbank]	; 16752
 mov ebx, dword [dword eax+03B60h]	; 16757
 push ebx	; 1675D
 call sub_8D2F0	; 1675E
@@ -978,7 +978,7 @@ cmp byte [musicon], 0	; 16DA2
 je short .44	; 16DA9
 mov dword [dword_CCC94], 20h	; 16DAB
 mov eax, dword [dword_C4CFC]	; 16DB5
-call sub_83459	; 16DBA
+call InitSpeechSlots	; 16DBA
 xor edx, edx	; 16DBF
 mov dword [dword_CCC94], edx	; 16DC1
 .44:
@@ -1414,7 +1414,7 @@ mov ebx, 64h	; 17406
 mov edx, 3	; 1740B
 call sub_8FCDF	; 17410
 .24:
-call sub_8374D	; 17415
+call SpeechStopQueue	; 17415
 mov ebx, 10h	; 1741A
 mov edx, esp	; 1741F
 mov eax, 1	; 17421

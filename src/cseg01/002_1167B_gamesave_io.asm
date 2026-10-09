@@ -17,7 +17,7 @@ extern DrawHudPanel, LoadCupFinalSeries, PostGameDesk, SportsDesk, sub_1B982, Ma
 extern LoadRink, SetRinkScroll, ReadGoalieSeasonRec, ReadTeamNames, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71, DrawRinkOverlays, PeriodOver, LoadGameState
 extern sub_61A27, sub_61B85, sub_64614, SetupTeamLines, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
-extern sub_6AF97, sub_6B008, LoadRockMusic, sub_8374D, sub_837A8, SelectScreenBM, sub_8E8A0, sub_8EA18
+extern sub_6AF97, sub_6B008, LoadRockMusic, SpeechStopQueue, MusicChanReset, SelectScreenBM, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8FFB0, sub_90354, sub_9035C, MouseSetPos, sub_B396E, sub_B4BA8, str_backslash
 extern cupteam, presidentsteam, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690
 extern unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, treeteamnames, unk_DF014, unk_DF314, camx
@@ -250,13 +250,13 @@ mov dword [dword_DF010], eax	; 119C2
 call CrowdFadeOut	; 119C7
 cmp byte [musicon], 0	; 119CC
 je short .14	; 119D3
-call sub_837A8	; 119D5
+call MusicChanReset	; 119D5
 jmp short .15	; 119DA
 .14:
 call sub_8F633	; 119DC
 .15:
 call StopDigiSample	; 119E1
-call sub_8374D	; 119E6
+call SpeechStopQueue	; 119E6
 call sub_61B85	; 119EB
 mov ecx, dword [dword_DC230]	; 119F0
 push ecx	; 119F6

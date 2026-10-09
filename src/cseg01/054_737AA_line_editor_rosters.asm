@@ -25,7 +25,7 @@ extern open_, qsort_, read_, sprintf_, strcmp_, MakePath, SetTextColors, PrintCe
 extern PrintShadowText, PrintFmt1, PrintFmt2, RunMenu, FitPlayerName, MessageBox, ShowLoadingScreen, FadeOutPalCycle
 extern GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, KeyDbPtr
 extern CareerDbPtr, CareerDbPtr2, DrawGameLineJerseys, DrawLineEditorScreen, LoadJerseyColours, MenuUseTheseLines, GameScratchPlayer, GameDressPlayer
-extern MakeJerseyShape, sub_836E4, sub_8373E, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0
+extern MakeJerseyShape, SpeechBusy, MusicChanReset2, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C
 extern sub_90D20, sub_9121C, sub_913B4, sub_91400, sub_91964, sub_91FE0, sub_931FC, FatalError
 extern MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4BC4
@@ -4240,9 +4240,9 @@ cmp byte [musicon], 0	; 76881
 je short .4	; 76888
 test byte [gameopts+1], 1	; 7688A
 je short .4	; 76891
-call sub_8373E	; 76893
+call MusicChanReset2	; 76893
 .3:
-call sub_836E4	; 76898
+call SpeechBusy	; 76898
 test eax, eax	; 7689D
 jne short GameLineEditor.3	; 7689F
 .4:

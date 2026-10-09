@@ -4,7 +4,7 @@ bits 32
 section s_59493 progbits alloc exec nowrite align=1
 extern __CHK, musicon, byte_D2439, gameopts, sounddev, lastsfx, digihandle
 extern crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_D2427, leaguesetimg, rockteamcues
-extern dword_ED374, dword_ED7A4, gmode, teamabbrevs, rand_, randomd0, sub_836E4, sub_837A8
+extern dword_ED374, dword_ED7A4, gmode, teamabbrevs, rand_, randomd0, SpeechBusy, MusicChanReset
 extern sub_846B4, sub_846C8, sub_846DC, sub_847BA, sub_847CE, sub_8490D, sub_84A7D, sub_84B0D
 extern sub_84C38, sub_84F7B, sub_8511E, sub_85213, sub_8531F, sub_854AC, sub_85507, sub_8579E
 extern sub_8E8B8, sub_8E908, sub_8F270, sub_8F61D, sub_8F67D, sub_8F7AE, sub_8F80E, sub_8FD84
@@ -523,7 +523,7 @@ test byte [gameopts+1], 1	; 59A91
 je short PlayCrowdSample_ret	; 59A98
 test byte [gmode], 10h	; 59A9A
 jne short PlayCrowdSample_ret	; 59AA1
-call sub_837A8	; 59AA3
+call MusicChanReset	; 59AA3
 jmp near sub_854AC	; 59AA8
 sub_59AAD:
 push dword 4	; 59AAD
@@ -531,7 +531,7 @@ call __CHK	; 59AB2
 cmp byte [musicon], 0	; 59AB7
 je short .1	; 59ABE
 test byte [gameopts+1], 1	; 59AC0
-jne near sub_836E4	; 59AC7
+jne near SpeechBusy	; 59AC7
 .1:
 xor eax, eax	; 59ACD
 ret	; 59ACF
@@ -547,7 +547,7 @@ test byte [gameopts+1], 1	; 59AE7
 je short .x	; 59AEE
 test byte [gmode], 10h	; 59AF0
 jne short .x	; 59AF7
-call sub_837A8	; 59AF9
+call MusicChanReset	; 59AF9
 mov edi, dword [byte esp+0Ch]	; 59AFE
 push edi	; 59B02
 mov eax, esi	; 59B03
@@ -565,7 +565,7 @@ cmp byte [musicon], 0	; 59B1C
 je short .x	; 59B23
 test byte [gameopts+1], 1	; 59B25
 je short .x	; 59B2C
-call sub_837A8	; 59B2E
+call MusicChanReset	; 59B2E
 mov eax, ecx	; 59B33
 call sub_85213	; 59B35
 .x:
@@ -582,7 +582,7 @@ cmp byte [musicon], 0	; 59B4B
 je short .x	; 59B52
 test byte [gameopts+1], 1	; 59B54
 je short .x	; 59B5B
-call sub_837A8	; 59B5D
+call MusicChanReset	; 59B5D
 mov edi, dword [byte esp+020h]	; 59B62
 push edi	; 59B66
 mov ebp, dword [byte esp+020h]	; 59B67
@@ -609,7 +609,7 @@ cmp byte [musicon], 0	; 59B95
 je short .x	; 59B9C
 test byte [gameopts+1], 1	; 59B9E
 je short .x	; 59BA5
-call sub_837A8	; 59BA7
+call MusicChanReset	; 59BA7
 mov eax, esi	; 59BAC
 call sub_8511E	; 59BAE
 .x:

@@ -21,7 +21,7 @@ extern crestnames, gamestatlabels, leaguedbnames, penaltynames, rand_, sprintf_
 extern strcat_, strcpy_, FadePalette, MakePath, FileOpenRead, FileOpenRW, FileClose, ReadKeyRec
 extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, SetTextColors, PrintShadowText, sub_1BAF3, FitPlayerName, WaitClickTimeout
 extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, ClearInputQueue
-extern FadePalStep, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
+extern FadePalStep, sub_7DF4E, MusicChanCmd3, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_913B4, sub_913D0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, SetDrawBitmap, sub_B4F8C, gsuminitff, str_D6, str_OT, str_S3
@@ -2869,7 +2869,7 @@ add esp, byte 4	; 2FC34
 xor eax, eax	; 2FC37
 mov dword [songdata], eax	; 2FC39
 .13:
-call sub_8378C	; 2FC3E
+call MusicChanCmd3	; 2FC3E
 mov ecx, str_Iff7	; 2FC43
 mov ebx, str_Leaguetm	; 2FC48
 cmp byte [byte_ED9AC], 1	; 2FC4D

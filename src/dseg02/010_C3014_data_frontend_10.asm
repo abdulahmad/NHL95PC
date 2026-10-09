@@ -26,7 +26,7 @@ global str_VisNameBck, str_TitleBck, str_Lockroom, str_P01, str_Room, str_JERSH,
 global str_Accept, str_Cancel2, str_HomeTeam, str_VisitingTeam, str_ExhibitionGame, str_Iff11, str_Jersey, str_Pointer20
 global str_Temp8, str_Buffer, str_Sound4, str_Dbx2, str_PCSpeaker, str_SoundBlaster, str_ADLib, str_MT32
 global str_UltraSound, str_Pointer21, str_Iff12, str_Maindesk2, str_Slapshot, str_MT32HOCK, str_NHL3, str_CantOpenNhlCfg
-global asc_C36C3, str_Emmcopybuf, asc_C3782, asc_C378C, asc_C3795, asc_C37A4, asc_C37D8, asc_C37DC
+global asc_C36C3, str_Emmcopybuf, str_Speechbuf, str_Sentence, str_SampleMemMan, str_SpeechBank, asc_C37D8, asc_C37DC
 global asc_C37E8, asc_C37F5, asc_C3802, asc_C380F, asc_C381C, asc_C3829, asc_C3836, asc_C3843
 global asc_C3850, asc_C385D, asc_C386A, asc_C3877, asc_C3884, asc_C3891, asc_C389E, asc_C38A6
 global asc_C38B2, asc_C38B6, asc_C38BA, asc_C38BE, asc_C38C2, asc_C38CA, asc_C38D2, asc_C38D6
@@ -600,13 +600,13 @@ unk_C3769:
 db 068h,069h,073h,074h,069h,063h,06Bh,02Eh,070h,065h,06Eh,00h
 unk_C3775:
 db 073h,070h,065h,061h,072h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-asc_C3782:
+str_Speechbuf:
 db 073h,070h,065h,065h,063h,068h,062h,075h,066h,00h
-asc_C378C:
+str_Sentence:
 db 073h,065h,06Eh,074h,065h,06Eh,063h,065h,00h
-asc_C3795:
+str_SampleMemMan:
 db 073h,061h,06Dh,070h,06Ch,065h,020h,06Dh,065h,06Dh,020h,06Dh,061h,06Eh,00h
-asc_C37A4:
+str_SpeechBank:
 db 073h,070h,065h,065h,063h,068h,020h,062h,061h,06Eh,06Bh,00h
 qword_C37B0:
 db 00h,00h,00h,00h,00h,00h,059h,040h

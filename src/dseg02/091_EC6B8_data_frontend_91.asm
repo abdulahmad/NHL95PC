@@ -24,8 +24,8 @@ global gadgetptry, gadgetptrx, gadgetshape, dword_ED6E8, dword_ED6EC, dword_ED6F
 global dword_ED6FC, hilightfont, dword_ED704, dword_ED708, dword_ED70C, dword_ED74C, dword_ED750, dword_ED754
 global dword_ED756, pl20spr, pl05spr, pl10spr, pg07spr, na05spr, pg01spr, acptspr
 global na03spr, pg03spr, chkoffspr, pg05spr, chkonspr, na01spr, titlebckspr, homebckspr
-global homenamebckspr, visbckspr, visnamebckspr, dword_ED7A4, dword_ED7A8, speechq, dword_ED7B0, dword_ED7B4
-global dword_ED7B8, vgapage, memlist1, memlist0, curdbname, unk_ED7BC, word_ED758
+global homenamebckspr, visbckspr, visnamebckspr, dword_ED7A4, dword_ED7A8, speechq, speechbank, samplereq
+global speechcopybuf, vgapage, memlist1, memlist0, curdbname, unk_ED7BC, word_ED758
 dblistcur:
 resb 4
 resb 4
@@ -178,11 +178,11 @@ dword_ED7A8:
 resb 4
 speechq:
 resb 4
-dword_ED7B0:
+speechbank:
 resb 4
-dword_ED7B4:
+samplereq:
 resb 4
-dword_ED7B8:
+speechcopybuf:
 resb 4
 unk_ED7BC:
 resb 16

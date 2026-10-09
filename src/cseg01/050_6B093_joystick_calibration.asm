@@ -10,9 +10,9 @@ extern dword_CDA38, joybtnheld, enterheld, lastmousebtns, lastmousex, lastmousey
 extern facount, seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size
 extern careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, joycalactive, mousex, mousey
 extern mousebtns, ptrupdatefn, inputqueue, lastinputdir, inputrepeat, inputev
-extern dword_ED7B0, jctime, memcpy_, memset_, leaguedbnames
+extern speechbank, jctime, memcpy_, memset_, leaguedbnames
 extern mousepollfn, joycalprehook, joycalposthook, strcat_, MakePath, SetTextColors
-extern PrintShadowText, FreeLeagueDbsMem, TeamRecPtr, KeyDbPtr, RunEditRosters, FadePalStep, sub_83459, sub_8CCA8
+extern PrintShadowText, FreeLeagueDbsMem, TeamRecPtr, KeyDbPtr, RunEditRosters, FadePalStep, InitSpeechSlots, sub_8CCA8
 extern sub_8D2F0, sub_8E4C0, sub_8E4F8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_90D20, sub_910E0, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_91964
 extern sub_92CD0, sub_92DE0, sub_B29F0, sub_B2CBE, MouseSetPos, sub_B2F22, sub_B30B4, sub_B30F4
@@ -1301,7 +1301,7 @@ push esi	; 6BEA2
 push ebp	; 6BEA3
 cmp byte [musicon], 0	; 6BEA4
 je short .1	; 6BEAB
-mov eax, dword [dword_ED7B0]	; 6BEAD
+mov eax, dword [speechbank]	; 6BEAD
 mov edx, dword [dword eax+03B60h]	; 6BEB2
 push edx	; 6BEB8
 call sub_8D2F0	; 6BEB9
@@ -1333,7 +1333,7 @@ cmp byte [musicon], 0	; 6BF0D
 je short .4	; 6BF14
 mov dword [dword_CCC94], 20h	; 6BF16
 mov eax, dword [dword_C4CFC]	; 6BF20
-call sub_83459	; 6BF25
+call InitSpeechSlots	; 6BF25
 xor esi, esi	; 6BF2A
 mov dword [dword_CCC94], esi	; 6BF2C
 .4:

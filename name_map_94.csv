@@ -950,6 +950,38 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000832BC,sub_832BC,SpeechTimerTick,PC-new,,,,medium,timer callback installed by InitSpeech (sub_8E4C0): counts down and starts next queued speech sample,sound_config,manual-trace
 000833C5,sub_833C5,ClearSpeechSlot,PC-new,,,,low,"zeroes fields 0,0Dh,0Eh..22h of a speech slot struct",sound_config,manual-trace
 000833FA,sub_833FA,ResetSpeechQueue,PC-new,,,,medium,fills 20 queue entries with -1 and clears counters +50h..+60h,sound_config,manual-trace
+00083459,sub_83459,InitSpeechSlots,PC-new,,,,medium,"clears 400 38-byte slots in speechbank, sets mem limit (arg-1388h), allocs 'speechbuf'",speech,manual-trace
+00083520,sub_83520,ResetSampleReq,PC-new,,,,medium,clears 20 13-byte names and counters +104h..+10Ch of samplereq,speech,manual-trace
+0008357A,sub_8357A,InitSpeech,PC-new,,,,medium,"allocs 'sentence' queue, 'sample mem man', 'speech bank', InitSpeechSlots, installs SpeechTimerTick, sets speechinit",speech,manual-trace
+0008363C,sub_8363C,ShutdownSpeech,PC-new,,,,medium,"removes timer callback, closes bank file, frees buffers, clears speechinit; called by SetSoundDevice",speech,manual-trace
+000836CA,sub_836CA,SpeechIsInit,PC-new,,,,medium,returns speechinit != 0,speech,manual-trace
+000836E4,sub_836E4,SpeechBusy,PC-new,,,,medium,speechinit and (queue active or delay pending),speech,manual-trace
+00083711,sub_83711,SpeechIdle,PC-new,,,,medium,speechinit and queue idle,speech,manual-trace
+0008373E,sub_8373E,MusicChanReset2,PC-new,,,,low,wrapper around MusicChanReset,speech,manual-trace
+0008374D,sub_8374D,SpeechStopQueue,PC-new,,,,low,"clears queue active flag, sets hold delay from bank +3B70h",speech,manual-trace
+0008378C,sub_8378C,MusicChanCmd3,PC-new,,,,low,"sub_8FCAC(musichandle, 3)",speech,manual-trace
+000837A8,sub_837A8,MusicChanReset,PC-new,,,,low,"when speechinit: sub_8FCAC(musichandle,0) then (musichandle,1)",speech,manual-trace
+000837D9,sub_837D9,Swap16,PC-new,,,,medium,byte-swap 16-bit value,speech,manual-trace
+000837FB,sub_837FB,ReadBE24,PC-new,,,,medium,reads three bytes big-endian from a DOS handle,speech,manual-trace
+0008385F,sub_8385F,ReadCString,PC-new,,,,medium,reads bytes from a DOS handle until NUL,speech,manual-trace
+00083897,sub_83897,OpenSpeechBank,PC-new,,,,medium,"opens bank file (skips if same name), reads index of sample names / offsets / sizes into speechbank slots",speech,manual-trace
+00083BC7,sub_83BC7,SpeechSlotSize,PC-new,,,,medium,"size field (+16h) of slot, 0 for -1",speech,manual-trace
+00083BF3,sub_83BF3,ReadSpeechSample,PC-new,,,,medium,seeks bank file and reads sample bytes into speech buffer,speech,manual-trace
+00083CAE,sub_83CAE,LoadSpeechSlot,PC-new,,,,medium,places slot after previous one and reads its data,speech,manual-trace
+00083D78,sub_83D78,PlaceSpeechSlot,PC-new,,,,low,places slot after previous one and reads header,speech,manual-trace
+00083E32,sub_83E32,StrEqNoCase,PC-new,,,,medium,case-insensitive string equality (1 = equal),speech,manual-trace
+00083E6D,sub_83E6D,FindFreeSpeechSlot,PC-new,,,,medium,"first slot from index with state 0, else -1",speech,manual-trace
+00083EAC,sub_83EAC,FindLoadedSpeechSlot,PC-new,,,,medium,"first slot from index with state 1, else -1",speech,manual-trace
+00083EEB,sub_83EEB,FindSpeechSlot,PC-new,,,,medium,"slot index by sample name, else -1",speech,manual-trace
+00083F35,sub_83F35,SpeechSlotLoaded,PC-new,,,,medium,slot state == 1,speech,manual-trace
+00083F61,sub_83F61,IsSampleRequested,PC-new,,,,medium,name present in samplereq list,speech,manual-trace
+00083FAF,sub_83FAF,RequestSample,PC-new,,,,medium,"adds name to samplereq, loads it if not resident",speech,manual-trace
+00084036,sub_84036,FreeUnrequestedSamples,PC-new,,,,medium,"frees loaded slots no longer requested, updates used size",speech,manual-trace
+000840A9,sub_840A9,MoveSampleMem,PC-new,,,,medium,chunked move through speechcopybuf (speechcopylen bytes per step),speech,manual-trace
+00084125,sub_84125,CompactSpeechSlot,PC-new,,,,medium,moves a slot's data down next to the previous slot,speech,manual-trace
+00084205,sub_84205,MakeSampleRoom,PC-new,,,,medium,frees unrequested samples until used + requested fits the limit,speech,manual-trace
+0008426F,sub_8426F,EnsureSampleRoom,PC-new,,,,medium,__CHK wrapper of MakeSampleRoom,speech,manual-trace
+0008427E,sub_8427E,CompactSpeechMem,PC-new,,,,medium,walks free/loaded slots compacting data,speech,manual-trace
 00086637,sub_86637,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),demo_savegame,unmatched
 00086696,sub_86696,CreatePlayoffs,PC-new,,,,high,"main-menu handler (frontend menu table CDxxx dd entry): asks 'Please Enter New Play-Off Name' (sub_2FEDF), confirms replacing an existing .PO dir (msg 'There is already a Play-Off with that name!'), mkdir <name>.PO, checks free disk space ('Insufficient disk space to setup a Playoff Series'), copies the 7 league DBs, seeds 16 teams (POSeedTeams), builds schedule.db (POCreateSchedule) and installs PlayoffModeLoop as the mode loop (dword_CE583)",season_playoffs,manual-trace
 00086E8B,sub_86E8B,POSeedTeams,PC-new,,,,medium,"fills the 16 seed slots: 8 placeholders per conference (-3 west / -12 east, random slots), puts HomeTeam and VisTeam into their conference's slots (opposite ends if same conference), then POPickConfTeams fills the remaining placeholders with random teams of each conference",season_playoffs,manual-trace

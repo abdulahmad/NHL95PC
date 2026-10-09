@@ -1918,22 +1918,30 @@ sndcardname,D24A0,card name string pointer (SoundBlaster/Adlib/MT32/ULTRASOUND)
 msg_InitMT32,D24D1,message 'Initializing the MT32 card.' / 'Please wait.'
 speechq,ED7AC,speech queue struct (20 entries + counters at +50h..+60h)
 speechinit,D27BB,"1 after InitSpeech, 0 after shutdown"
-str_Pointer21,C3680,"string 'Pointer'"
-str_Iff12,C3688,"string '.iff'"
-str_Maindesk2,C368D,"string 'maindesk'"
-str_Slapshot,C3696,"string 'slapshot'"
-str_MT32HOCK,C369F,"string 'MT32HOCK'"
-str_NHL3,C36A8,"string 'NHL'"
-str_CantOpenNhlCfg,C36AF,"string 'cannot open nhl.cfg'"
-str_Emmcopybuf,C36C9,"string 'emmcopybuf'"
-str_PCBEEP,D236F,"string 'PCBEEP'"
-str_SBDAC,D2379,"string 'SBDAC'"
-str_ADLIB,D2382,"string 'ADLIB'"
-str_MT322,D238B,"string 'MT32'"
-str_SBDAC2,D2390,"string 'SBDAC'"
-str_PCBEEP2,D2399,"string 'PCBEEP'"
-str_SoundBlaster2,D2479,"string 'SoundBlaster'"
-str_Adlib,D2486,"string 'Adlib'"
-str_MT323,D248C,"string 'MT32'"
-str_ULTRASOUND,D2491,"string 'ULTRASOUND'"
-str_PC,D23A0,"string 'PC'"
+str_Pointer21,C3680,string 'Pointer'
+str_Iff12,C3688,string '.iff'
+str_Maindesk2,C368D,string 'maindesk'
+str_Slapshot,C3696,string 'slapshot'
+str_MT32HOCK,C369F,string 'MT32HOCK'
+str_NHL3,C36A8,string 'NHL'
+str_CantOpenNhlCfg,C36AF,string 'cannot open nhl.cfg'
+str_Emmcopybuf,C36C9,string 'emmcopybuf'
+str_PCBEEP,D236F,string 'PCBEEP'
+str_SBDAC,D2379,string 'SBDAC'
+str_ADLIB,D2382,string 'ADLIB'
+str_MT322,D238B,string 'MT32'
+str_SBDAC2,D2390,string 'SBDAC'
+str_PCBEEP2,D2399,string 'PCBEEP'
+str_SoundBlaster2,D2479,string 'SoundBlaster'
+str_Adlib,D2486,string 'Adlib'
+str_MT323,D248C,string 'MT32'
+str_ULTRASOUND,D2491,string 'ULTRASOUND'
+str_PC,D23A0,string 'PC'
+speechbank,ED7B0,400 x 26h slot table + header at +3B60h..+3B80h
+samplereq,ED7B4,'sample mem man': 20 requested names + counters
+speechcopybuf,ED7B8,copy buffer for MoveSampleMem
+speechcopylen,D27B7,copy buffer size
+str_Speechbuf,C3782,"string 'speechbuf'"
+str_Sentence,C378C,"string 'sentence'"
+str_SampleMemMan,C3795,"string 'sample mem man'"
+str_SpeechBank,C37A4,"string 'speech bank'"

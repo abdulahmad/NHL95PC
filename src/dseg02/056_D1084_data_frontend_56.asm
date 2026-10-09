@@ -28,7 +28,7 @@ global settingsfile, dword_D20E0, dword_D2150, dword_D223C, lockerrects
 global dword_D22DC, dword_D22E0
 global dword_D22EC, dword_D22F0, dword_D2350, soundcardrects, dword_D2423
 global dword_D2427, dword_D242B, musichandle, dword_D2435, sounddevids, sndcardname, dword_D27A2
-global dword_D27B2, dword_D27B7, speechinit, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
+global dword_D27B2, speechcopylen, speechinit, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
 global off_D21C0, off_D2230, msg_InitMT32, off_D273E, off_D2776, off_D27EF, off_D27F7, off_D2855
 global unk_D1190, deldbmsg, unk_D12C8, unk_D16A0, unk_D19CC, unk_D19DC, unk_D19F0, unk_D19F5
 global unk_D19FA, unk_D19FF, unk_D1A05, unk_D1A0A, unk_D1A0F, unk_D1A14, unk_D1A19, unk_D1A1F
@@ -882,7 +882,7 @@ dword_D27B2:
 db 00h,00h,00h,00h
 byte_D27B6:
 db 00h
-dword_D27B7:
+speechcopylen:
 db 00h,00h,00h,00h
 speechinit:
 db 00h,00h,00h,00h
