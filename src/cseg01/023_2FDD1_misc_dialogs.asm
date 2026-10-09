@@ -1212,6 +1212,10 @@ pop esi	; 30B13
 pop ecx	; 30B14
 ret	; 30B15
 %endif ; C
+; C: src/c/023_2FDD1_misc_dialogs/DrawButton.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/DrawButton.inc"
+%else
 DrawButton:
 push dword 28h	; 30B16
 call __CHK	; 30B1B
@@ -1294,6 +1298,7 @@ pop edx	; 30BEF
 pop ecx	; 30BF0
 pop ebx	; 30BF1
 ret	; 30BF2
+%endif ; C
 ; C: src/c/023_2FDD1_misc_dialogs/InitScrollBar.c
 %ifdef CBUILD
 %include "c/023_2FDD1_misc_dialogs/InitScrollBar.inc"

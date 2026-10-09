@@ -6,8 +6,8 @@
 
 void UpdateOtherScores(int period)
 {
-    int last;
     int i;
+    int last;
     int p;
 
     for (i = 0; i < 6; i++) {

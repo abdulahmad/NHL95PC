@@ -2180,6 +2180,10 @@ pop esi	; 2F3D3
 pop ecx	; 2F3D4
 pop ebx	; 2F3D5
 ret	; 2F3D6
+; C: src/c/022_2D346_game_setup/UpdateOtherScores.c
+%ifdef CBUILD
+%include "c/022_2D346_game_setup/UpdateOtherScores.inc"
+%else
 UpdateOtherScores:
 push dword 24h	; 2F3D7
 call __CHK	; 2F3DC
@@ -2308,6 +2312,7 @@ pop edx	; 2F57C
 pop ecx	; 2F57D
 pop ebx	; 2F57E
 ret	; 2F57F
+%endif ; C
 ; C: src/c/022_2D346_game_setup/PrintClampedText.c
 %ifdef CBUILD
 %include "c/022_2D346_game_setup/PrintClampedText.inc"
