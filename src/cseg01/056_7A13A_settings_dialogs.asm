@@ -14,7 +14,7 @@ extern dword_D14F0, dword_D14F4, dword_D14F8, dword_D14FC, dword_D16AC, dword_D1
 extern dword_D17EC, dword_D17F0, dword_D17F4, dword_D17F8, dword_D195C, dword_D1960, dword_D1964, dword_D1968
 extern dword_D196C, dword_D1970, dword_D1974, dword_D1978, dword_D197C, dword_D1980, dword_D198C, dword_D1990
 extern dword_D199C, dword_D19A0, dword_D19AC, dword_D19B0, dword_D19EC, dword_D20A8, musichandle, musicslot
-extern seriesgameno, dword_D2C6B, pointerspr, dword_DD64C, hmtmstruct, dword_DF648, hmscore
+extern seriesgameno, dword_D2C6B, pointerspr, fdlg_cancel, hmtmstruct, dword_DF648, hmscore
 extern dword_EA0DC, dword_ED35C, dword_ED360, dword_ED364, dword_ED75C, dword_ED760, dword_ED764, puckstruct
 extern dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C, dword_ED780, dword_ED784
 extern dword_ED788, dword_ED78C, puckvx, gmode, jctime, teamcitynames, puckx, pucky
@@ -1560,7 +1560,7 @@ jmp short loc_7B2F0	; 7B2D5
 loc_7B2D7:
 push dword 148h	; 7B2D7
 push dword 89h	; 7B2DC
-mov edi, dword [dword_DD64C]	; 7B2E1
+mov edi, dword [fdlg_cancel]	; 7B2E1
 push edi	; 7B2E7
 call sub_91FE0	; 7B2E8
 loc_7B2ED:
@@ -2537,7 +2537,7 @@ jmp short loc_7BE90	; 7BE75
 loc_7BE77:
 push dword 0F8h	; 7BE77
 push dword 81h	; 7BE7C
-mov edx, dword [dword_DD64C]	; 7BE81
+mov edx, dword [fdlg_cancel]	; 7BE81
 push edx	; 7BE87
 loc_7BE88:
 call sub_903F0	; 7BE88
@@ -3304,7 +3304,7 @@ jmp short loc_7C79E	; 7C783
 loc_7C785:
 push dword 120h	; 7C785
 push dword 81h	; 7C78A
-mov edx, dword [dword_DD64C]	; 7C78F
+mov edx, dword [fdlg_cancel]	; 7C78F
 push edx	; 7C795
 loc_7C796:
 call sub_903F0	; 7C796

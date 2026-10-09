@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_31AB5 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1724, asc_C172C, asc_C1731, asc_C173A, asc_C1743, asc_C174C, asc_C1751
-extern asc_C1756, asc_C175F, asc_C1768, asc_C176D, asc_CDB75, asc_CDB7C, byte_C7218, curleague
-extern byte_CDB77, byte_CDB7E, musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED836, byte_ED9A7
+extern asc_C1756, asc_C175F, asc_C1768, asc_C176D, str_LAAtMTL, byte_C7218, curleague
+extern musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED836, byte_ED9A7
 extern byte_ED9AB, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
 extern ctl2side, teamstatscb, skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dword_C7219, songdata
 extern cont2team, HomeTeam, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
@@ -1174,14 +1174,14 @@ mov edx, dword [nosplit edx*4+off_C5439]	; 32AA4
 cmp byte [byte edx+02h], 0	; 32AAB
 je short loc_32AC2	; 32AAF
 mov ebx, 3	; 32AB1
-mov eax, asc_CDB7C	; 32AB6
+mov eax, str_LAAtMTL+7	; 32AB6
 call strncpy_	; 32ABB
 jmp short loc_32AD8	; 32AC0
 loc_32AC2:
 mov ebx, 2	; 32AC2
-mov eax, asc_CDB7C	; 32AC7
+mov eax, str_LAAtMTL+7	; 32AC7
 call strncpy_	; 32ACC
-mov byte [byte_CDB7E], 20h	; 32AD1
+mov byte [str_LAAtMTL+9], 20h	; 32AD1
 loc_32AD8:
 mov edx, dword [HomeTeam]	; 32AD8
 sar edx, 10h	; 32ADE
@@ -1189,14 +1189,14 @@ mov edx, dword [nosplit edx*4+off_C5439]	; 32AE1
 cmp byte [byte edx+02h], 0	; 32AE8
 je short loc_32B02	; 32AEC
 mov ebx, 3	; 32AEE
-mov eax, asc_CDB75	; 32AF3
+mov eax, str_LAAtMTL	; 32AF3
 call strncpy_	; 32AF8
 jmp near loc_32704	; 32AFD
 loc_32B02:
 mov ebx, 2	; 32B02
-mov eax, asc_CDB75	; 32B07
+mov eax, str_LAAtMTL	; 32B07
 call strncpy_	; 32B0C
-mov byte [byte_CDB77], 20h	; 32B11
+mov byte [str_LAAtMTL+2], 20h	; 32B11
 jmp near loc_32704	; 32B18
 WriteModeState:
 push dword 5Ch	; 32B1D

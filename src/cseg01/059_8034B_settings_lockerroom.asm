@@ -7,9 +7,9 @@ extern asc_C34A7, asc_C34AC, asc_C34B1, asc_C34B6, asc_C34BB, asc_C34C0, asc_C34
 extern asc_C3594, asc_C359C, asc_C35A3, asc_C35AF, asc_C35BA, asc_C35C3, asc_C35CC, asc_C35D1
 extern asc_C35D6, asc_C35DD, asc_C35E2, asc_C35EC, asc_C35F3, asc_C35FA, asc_C3604, asc_C3612
 extern asc_C3622, asc_C3627, asc_C362E, asc_C3638, asc_C363D, asc_C3644, asc_C364A, asc_C364F
-extern asc_C365A, asc_C3668, asc_C366F, asc_C3675, asc_CDB75, asc_CDB7C, asc_CDBDC, asc_CDBE3
+extern asc_C365A, asc_C3668, asc_C366F, asc_C3675, str_LAAtMTL, asc_CDBDC, asc_CDBE3
 extern asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_CDD5E, asc_CDD6B, asc_D20AC, asc_D20B7, asc_D20BF
-extern asc_D20C6, asc_D20D2, byte_C541B, byte_CDB77, byte_CDB7E, musicon, byte_DC9D8, byte_DC9DD
+extern asc_D20C6, asc_D20D2, byte_C541B, musicon, byte_DC9D8, byte_DC9DD
 extern byte_DC9DF, byte_DC9E8, byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA21, byte_DCA28
 extern byte_DCA29, byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_ED7CC, byte_ED8B5
 extern byte_ED95D, byte_ED991, byte_ED9A9, gamemode, gameopts, ctl1team, ctl2team, ctl1side
@@ -18,7 +18,7 @@ extern dword_D2150, dword_D223C, dword_D227C, dword_D2280, dword_D2284, dword_D2
 extern dword_D22A4, dword_D22A8, dword_D22AC, dword_D22B0, dword_D22B4, dword_D22BC, dword_D22C0, dword_D22C4
 extern dword_D22C8, dword_D22CC, dword_D22D0, dword_D22D4, dword_D22DC, dword_D22E0, dword_D22EC, dword_D22F0
 extern dword_D23A3, dword_D23A7, dword_D23AB, dword_D23AF, musichandle, dword_D2435, dword_D2C6B, musicslot
-extern dword_D8B68, dword_D8B74, dword_DC230, pointerspr, dword_DD64C, dword_EA0DC, dword_ED360, dword_ED75C
+extern dword_D8B68, dword_D8B74, dword_DC230, pointerspr, fdlg_cancel, dword_EA0DC, dword_ED360, dword_ED75C
 extern dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C
 extern dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794, dword_ED798, dword_ED79C
 extern dword_ED7A0, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
@@ -99,7 +99,7 @@ mov esi, dword [dword_D20A8]	; 803E7
 push esi	; 803ED
 call sub_B30B4	; 803EE
 add esp, byte 8	; 803F3
-mov dword [dword_DD64C], eax	; 803F6
+mov dword [fdlg_cancel], eax	; 803F6
 push asc_C349D	; 803FB
 mov edi, dword [dword_D20A8]	; 80400
 push edi	; 80406
@@ -2336,28 +2336,28 @@ mov edx, dword [dword edx+off_D21C0]	; 821B8
 cmp byte [byte edx+02h], 0	; 821BE
 je short loc_821D5	; 821C2
 mov ebx, 3	; 821C4
-mov eax, asc_CDB7C	; 821C9
+mov eax, str_LAAtMTL+7	; 821C9
 call strncpy_	; 821CE
 jmp short loc_821EB	; 821D3
 loc_821D5:
 mov ebx, 2	; 821D5
-mov eax, asc_CDB7C	; 821DA
+mov eax, str_LAAtMTL+7	; 821DA
 call strncpy_	; 821DF
-mov byte [byte_CDB7E], 20h	; 821E4
+mov byte [str_LAAtMTL+9], 20h	; 821E4
 loc_821EB:
 mov edx, dword [dword esp+031Ch]	; 821EB
 mov edx, dword [nosplit edx*4+off_D21C0]	; 821F2
 cmp byte [byte edx+02h], 0	; 821F9
 je short loc_82210	; 821FD
 mov ebx, 3	; 821FF
-mov eax, asc_CDB75	; 82204
+mov eax, str_LAAtMTL	; 82204
 call strncpy_	; 82209
 jmp short loc_82226	; 8220E
 loc_82210:
 mov ebx, 2	; 82210
-mov eax, asc_CDB75	; 82215
+mov eax, str_LAAtMTL	; 82215
 call strncpy_	; 8221A
-mov byte [byte_CDB77], 20h	; 8221F
+mov byte [str_LAAtMTL+2], 20h	; 8221F
 loc_82226:
 cmp dword [ctl1team], byte 0	; 82226
 jl short loc_8224C	; 8222D

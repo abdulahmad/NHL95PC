@@ -4,14 +4,14 @@ bits 32
 section s_CD9D0 progbits alloc noexec write align=1
 extern StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense, StatsMenuPenaltyKilling, StatsMenuPowerPlay, StatsMenuTeamPenalties, StatsMenuPoints, StatsMenuGoals
 extern StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus, StatsMenuPIM, StatsMenuShootPct, StatsMenuGAA, StatsMenuGoalieWins
-extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, sub_2B944, sub_3270B, sub_32DA9
+extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, MenuOpenSaved, sub_3270B, sub_32DA9
 extern sub_32FF4, sub_3322A, sub_332C0, sub_332F6, sub_3339D, sub_333D7, sub_33469, sub_334FB
 extern sub_33523, sub_3366F, sub_336BE, sub_6BE95, sub_7BEBB, sub_7C993, sub_7C9A1, sub_7CAF7
 extern sub_7CB9F, sub_80830, sub_82579, sub_85924, CreatePlayoffs, EasnStandingsMenu, unk_C67B1, unk_CEF0F
 extern unk_CEF2F, unk_CEF6F, unk_CEFEF
-global asc_CDB75, asc_CDB7C, asc_CDBDC, asc_CDBE3, asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_CDD5E
-global asc_CDD6B, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide, byte_CDB77
-global byte_CDB7E, dword_CD9D0, dword_CD9F4, dword_CDA1C, dword_CDA20, dword_CDA24, dword_CDA28, dword_CDA2C
+global str_LAAtMTL, asc_CDBDC, asc_CDBE3, asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_CDD5E
+global asc_CDD6B, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide
+global dword_CD9D0, dword_CD9F4, dword_CDA1C, dword_CDA20, dword_CDA24, dword_CDA28, dword_CDA2C
 global dword_CDA30, dword_CDA34, dword_CDA38, dword_CDA3C, dword_CDA40, dword_CDA44, dword_CDA48, dword_CDA4C
 global dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, dword_CE4E3, dword_CE503, dword_CE527, dword_CE583
 global dword_CE5A3, dword_CE5C3, dword_CE8EB, off_CECFF, off_CED3F, unk_CDA50, unk_CDA55, unk_CDA5A
@@ -114,13 +114,10 @@ unk_CDB6A:
 db 045h,078h,069h,074h,00h
 unk_CDB6F:
 db 047h,061h,06Dh,065h,03Ah,020h
-asc_CDB75:
+str_LAAtMTL:
 db 04Ch,041h
-byte_CDB77:
 db 020h,020h,061h,074h,020h
-asc_CDB7C:
 db 04Dh,054h
-byte_CDB7E:
 db 04Ch,020h,02Eh,02Eh,02Eh,00h
 unk_CDB84:
 db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
@@ -461,7 +458,7 @@ db 05h,00h,00h,00h
 unk_CE40F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0A5h,00h,00h,00h,011h,00h,00h,00h
 dd unk_CDA65
-dd sub_2B944
+dd MenuOpenSaved
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 0A5h,00h,00h,00h,023h,00h,00h,00h
 dd unk_CDA6E

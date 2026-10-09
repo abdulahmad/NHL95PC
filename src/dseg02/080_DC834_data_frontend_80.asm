@@ -5,16 +5,16 @@ section s_DC834 nobits alloc noexec write align=1
 global byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DC9DD, byte_DC9DF, byte_DC9E8
 global byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA1B, byte_DCA21, byte_DCA28, byte_DCA29
 global byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_DCAD7, menuremap, menuremap2
-global byte_DD2D4, byte_DD2DC, byte_DD668, byte_DD669, leaguedbfmt2, leaguedbfmt, byte_DD774, byte_DD775
+global savefname, fdlgmask, leaguedbfmt2, leaguedbfmt, byte_DD774, byte_DD775
 global byte_DD788, byte_DD789, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname
 global byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_DDD8C, byte_DDD8D, byte_DDD8E
 global byte_DE268, byte_DE26C, byte_DEB70, byte_DEB71, dword_DC85C, dword_DC860, dword_DC868, dword_DC888
 global dword_DC88C, dword_DC8A0, dword_DC8C8, dirtyrectptr, statspalshape, statsbgshapes, statsteamrecs, statsteambuf
-global statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf, statspal, dword_DD124, dword_DD128, dword_DD12C
-global dword_DD130, dword_DD134, dword_DD1B4, dword_DD1B8, dword_DD1BC, dword_DD1C0, dword_DD1C4, dword_DD244
-global dword_DD248, dword_DD24C, dword_DD250, dword_DD254, dword_DD634, dword_DD638, dword_DD63C, dword_DD640
-global dword_DD644, dword_DD648, dword_DD64C, dword_DD650, dword_DD654, dword_DD658, dword_DD65C, dword_DD660
-global dword_DD664, dword_DD66C, dword_DD670, dword_DD678, dword_DD688, dword_DD68C, dword_DD690, dword_DD694
+global statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf, statspal, exhfiles
+global exhfilenames, pofiles, pofilenames, lgfiles
+global lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open
+global fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp
+global fdlg_noarrow, dword_DD66C, dword_DD670, dword_DD678, dword_DD688, dword_DD68C, dword_DD690, dword_DD694
 global dword_DD698, dword_DD69C, dword_DD6A0, dword_DD6A4, dword_DD6A6, dword_DD6A8, dword_DD6AE, dword_DD6B0
 global dword_DD730, dword_DD748, dword_DD74C, dword_DD770, dword_DD780, dword_DD784, dword_DD794, dword_DD798
 global dword_DD79C, dword_DD7A0, dword_DD7A4, leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD28
@@ -117,69 +117,58 @@ statsplayerbuf:
 resb 4
 statspal:
 resb 4
-dword_DD124:
+exhfiles:
 resb 4
-dword_DD128:
 resb 4
-dword_DD12C:
 resb 4
-dword_DD130:
 resb 4
-dword_DD134:
+exhfilenames:
 resb 128
-dword_DD1B4:
+pofiles:
 resb 4
-dword_DD1B8:
 resb 4
-dword_DD1BC:
 resb 4
-dword_DD1C0:
 resb 4
-dword_DD1C4:
+pofilenames:
 resb 128
-dword_DD244:
+lgfiles:
 resb 4
-dword_DD248:
 resb 4
-dword_DD24C:
 resb 4
-dword_DD250:
 resb 4
-dword_DD254:
+lgfilenames:
 resb 128
-byte_DD2D4:
+savefname:
 resb 8
-byte_DD2DC:
 resb 856
-dword_DD634:
+fdlg_tabexh:
 resb 4
-dword_DD638:
+fdlg_none:
 resb 4
-dword_DD63C:
+fdlg_tabpo:
 resb 4
-dword_DD640:
+fdlg_open:
 resb 4
-dword_DD644:
+fdlg_del:
 resb 4
-dword_DD648:
+fdlg_up:
 resb 4
-dword_DD64C:
+fdlg_cancel:
 resb 4
-dword_DD650:
+fdlg_tabnone:
 resb 4
-dword_DD654:
+fdlg_down:
 resb 4
-dword_DD658:
+fdlgtab:
 resb 4
-dword_DD65C:
+fdlg_arrow:
 resb 4
-dword_DD660:
+fdlg_tablp:
 resb 4
-dword_DD664:
+fdlg_noarrow:
 resb 4
-byte_DD668:
+fdlgmask:
 resb 1
-byte_DD669:
 resb 3
 dword_DD66C:
 resb 4
