@@ -1473,6 +1473,10 @@ call __CHK	; 3EF2C
 mov dword [traderesult], 0FFFFFFFFh	; 3EF31
 ret	; 3EF3B
 %endif ; C
+; C: src/c/032_3DC2C_roster_jersey/FindTradeSlot.c
+%ifdef CBUILD
+%include "c/032_3DC2C_roster_jersey/FindTradeSlot.inc"
+%else
 FindTradeSlot:
 push dword 14h	; 3EF3C
 call __CHK	; 3EF41
@@ -1507,6 +1511,7 @@ pop edi	; 3EF85
 pop esi	; 3EF86
 pop ecx	; 3EF87
 ret	; 3EF88
+%endif ; C
 TradeScreenLoop:
 push dword 140h	; 3EF89
 call __CHK	; 3EF8E

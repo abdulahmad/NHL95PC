@@ -16,7 +16,6 @@ extern void ReadHotKeys(); /* 10AC6 */
 extern void ReadSkipKeys(); /* 10C7F */
 extern void SampleInputTick(); /* 10DCD */
 extern void DrawSpriteNumber(); /* 11005 */
-extern void DrawFrameSprite(); /* 110E0 */
 extern void HandleHotKey_ret(); /* 113E9 */
 extern void SetFullPalette(); /* 11550 */
 extern void GameLoop(); /* 1167B */
@@ -352,7 +351,6 @@ extern void MenuOpenSaved(); /* 2B944 */
 extern void DrawFileDlgTabs(); /* 2BD16 */
 extern void CmpFileNames(); /* 2BEEA */
 extern void ScanSavedGames(); /* 2BEFD */
-extern void PrintTextCopy(); /* 2C135 */
 extern void DrawFileDlg_jt(); /* 2C177 */
 extern void DrawFileDlg(); /* 2C18F */
 extern void DrawFileDlg_n6(); /* 2C3CD */
@@ -423,7 +421,6 @@ extern void MenuUpdateTeamDbs(); /* 334FB */
 extern void MenuTradePlayers(); /* 33523 */
 extern void MenuImportDbs(); /* 336BE */
 extern void MenuExportDbs(); /* 336E6 */
-extern void FreeRinkGfx(); /* 33727 */
 extern void BlitTileMap(); /* 33C08 */
 extern void LoadCrestsPalette(); /* 33F02 */
 extern void DrawCalendarDay(); /* 33FFD */
@@ -476,7 +473,6 @@ extern void DrawTradeScreen(); /* 3E9CF */
 extern void TradeHitTest(); /* 3ECAE */
 extern void TradeHitTest_ret(); /* 3EDA4 */
 extern void TradeDone(); /* 3EDAA */
-extern void FindTradeSlot(); /* 3EF3C */
 extern void TradeScreenLoop(); /* 3EF89 */
 extern void TradeScreen(); /* 3FF52 */
 extern void TradePlayers(); /* 40183 */
@@ -634,8 +630,6 @@ extern void SndLoadFile2(); /* 594B2 */
 extern void CrowdNoiseUpdate(); /* 594CD */
 extern void PlayCrowdSample_ret(); /* 59A7D */
 extern void PaOneMinuteLeft(); /* 59A7E */
-extern void PaGoal(); /* 59AD0 */
-extern void PaPenalty(); /* 59B3C */
 extern void PaTonightIntro(); /* 59BB5 */
 extern void nullsub_5(); /* 59BFB */
 extern void PaScoringPeriod(); /* 59BFC */
@@ -644,7 +638,6 @@ extern void PaGoodnight(); /* 59C3E */
 extern void PaLineups(); /* 59C5F */
 extern void PaElseNhl(); /* 59C80 */
 extern void PaPlayoffResult(); /* 59CDD */
-extern void PaPlayoffTonight(); /* 59D16 */
 extern void SprSort_loop(); /* 59DBB */
 extern void SprSort_test(); /* 59DDD */
 extern void changeplayer_ret5(); /* 59FDB */
@@ -1180,7 +1173,6 @@ extern void SayScoringPeriod_ot3(); /* 84AD3 */
 extern void SayScoringPeriod_ott(); /* 84ADA */
 extern void SayScoringPeriod_reg(); /* 84AE1 */
 extern void SayPlayerNumber(); /* 85213 */
-extern void SayGoal(); /* 8531F */
 extern void MenuSaveGame(); /* 85924 */
 extern void SaveGameStub(); /* 85D65 */
 extern void SaveGameNameDlg(); /* 85D6C */
@@ -1204,7 +1196,6 @@ extern void POHandleElimination(); /* 88096 */
 extern void POSimSeriesTo(); /* 88625 */
 extern void POAfterGame(); /* 8873C */
 extern void LoadScheduleDB_x(); /* 8921B */
-extern void SaveScheduleDB(); /* 89223 */
 extern void PlayoffModeLoop(); /* 89268 */
 extern void POHiliteSlot(); /* 89B69 */
 extern void PlayoffTreeMenu(); /* 89BD2 */

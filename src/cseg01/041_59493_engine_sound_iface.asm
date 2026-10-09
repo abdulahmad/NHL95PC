@@ -575,6 +575,10 @@ jne near SpeechBusy	; 59AC7
 xor eax, eax	; 59ACD
 ret	; 59ACF
 %endif ; C
+; C: src/c/041_59493_engine_sound_iface/PaGoal.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PaGoal.inc"
+%else
 PaGoal:
 push dword 10h	; 59AD0
 call __CHK	; 59AD5
@@ -596,6 +600,7 @@ call SayGoal	; 59B05
 pop edi	; 59B0A
 pop esi	; 59B0B
 ret 4	; 59B0C
+%endif ; C
 ; C: src/c/041_59493_engine_sound_iface/PaPlayerNumber.c
 %ifdef CBUILD
 %include "c/041_59493_engine_sound_iface/PaPlayerNumber.inc"
@@ -616,6 +621,10 @@ call SayPlayerNumber	; 59B35
 pop ecx	; 59B3A
 ret	; 59B3B
 %endif ; C
+; C: src/c/041_59493_engine_sound_iface/PaPenalty.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PaPenalty.inc"
+%else
 PaPenalty:
 push dword 24h	; 59B3C
 call __CHK	; 59B41
@@ -645,6 +654,7 @@ pop ebp	; 59B82
 pop edi	; 59B83
 pop esi	; 59B84
 ret 14h	; 59B85
+%endif ; C
 PaPenaltyShot:
 push dword 8	; 59B88
 call __CHK	; 59B8D
@@ -762,6 +772,10 @@ call SayPlayoffResult	; 59D0C
 pop edi	; 59D11
 pop esi	; 59D12
 ret 8	; 59D13
+; C: src/c/041_59493_engine_sound_iface/PaPlayoffTonight.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PaPlayoffTonight.inc"
+%else
 PaPlayoffTonight:
 push dword 10h	; 59D16
 call __CHK	; 59D1B
@@ -781,6 +795,7 @@ call SayPlayoffTonight	; 59D4B
 .x:
 pop esi	; 59D50
 ret 4	; 59D51
+%endif ; C
 ; C: src/c/041_59493_engine_sound_iface/PaOpenBank.c
 %ifdef CBUILD
 %include "c/041_59493_engine_sound_iface/PaOpenBank.inc"

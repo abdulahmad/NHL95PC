@@ -756,6 +756,10 @@ mov dword [lgfiles+0Ch], eax	; 2C128
 .21:
 add esp, byte 2Ch	; 2C12D
 jmp near LoadFileDlgShapes_x	; 2C130
+; C: src/c/021_2B7B7_file_dialogs/PrintTextCopy.c
+%ifdef CBUILD
+%include "c/021_2B7B7_file_dialogs/PrintTextCopy.inc"
+%else
 PrintTextCopy:
 push dword 58h	; 2C135
 call __CHK	; 2C13A
@@ -786,6 +790,7 @@ add esp, byte 40h	; 2C16E
 pop esi	; 2C171
 pop ecx	; 2C172
 ret	; 2C173
+%endif ; C
 db 08Dh,040h,00h
 DrawFileDlg_jt:
 dd DrawFileDlg_n1

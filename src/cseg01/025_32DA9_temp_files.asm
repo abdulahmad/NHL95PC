@@ -695,6 +695,10 @@ push dword 4	; 3371C
 call __CHK	; 33721
 ret	; 33726
 %endif ; C
+; C: src/c/025_32DA9_temp_files/FreeRinkGfx.c
+%ifdef CBUILD
+%include "c/025_32DA9_temp_files/FreeRinkGfx.inc"
+%else
 FreeRinkGfx:
 push dword 1Ch	; 33727
 call __CHK	; 3372C
@@ -728,3 +732,4 @@ pop edx	; 33778
 pop ecx	; 33779
 pop ebx	; 3377A
 ret	; 3377B
+%endif ; C

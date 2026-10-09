@@ -1,5 +1,6 @@
 function,address,size,segment,c_file,status,notes
 DiskFreeBytes,106C8,74,001_10010_main_startup,src/c/001_10010_main_startup/DiskFreeBytes.c,matched,
+DrawFrameSprite,110E0,86,001_10010_main_startup,src/c/001_10010_main_startup/DrawFrameSprite.c,nonmatching,
 DrawRinkEndArt,11136,43,001_10010_main_startup,src/c/001_10010_main_startup/DrawRinkEndArt.c,matched,
 GetMemListHead,10010,26,001_10010_main_startup,src/c/001_10010_main_startup/GetMemListHead.c,matched,
 GetMemStats,1002A,106,001_10010_main_startup,src/c/001_10010_main_startup/GetMemStats.c,matched,
@@ -99,6 +100,7 @@ CmpTeamStandings,22DDE,336,017_21CDE_player_stats,src/c/017_21CDE_player_stats/C
 PlayerFromMouseY,24453,143,017_21CDE_player_stats,src/c/017_21CDE_player_stats/PlayerFromMouseY.c,matched,
 FitPlayerName,29C75,139,019_2970A_league_schedule,src/c/019_2970A_league_schedule/FitPlayerName.c,matched,
 LoadFileDlgShapes,2B7C3,385,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/LoadFileDlgShapes.c,matched,
+PrintTextCopy,2C135,63,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/PrintTextCopy.c,matched,
 SelectSavedFile,2D099,455,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/SelectSavedFile.c,nonmatching,
 PickOtherGames,2F2B1,294,022_2D346_game_setup,src/c/022_2D346_game_setup/PickOtherGames.c,nonmatching,
 PrintClampedText,2F580,110,022_2D346_game_setup,src/c/022_2D346_game_setup/PrintClampedText.c,matched,
@@ -117,6 +119,7 @@ CopyGameSettings,32C9E,267,024_31AB5_main_desk,src/c/024_31AB5_main_desk/CopyGam
 MenuExit,3270B,16,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MenuExit.c,matched,
 SaveModeState,3271B,134,024_31AB5_main_desk,src/c/024_31AB5_main_desk/SaveModeState.c,matched,
 DemoSetupStub,3371C,11,025_32DA9_temp_files,src/c/025_32DA9_temp_files/DemoSetupStub.c,matched,
+FreeRinkGfx,33727,85,025_32DA9_temp_files,src/c/025_32DA9_temp_files/FreeRinkGfx.c,matched,
 MenuLeagueHilights,3366F,79,025_32DA9_temp_files,src/c/025_32DA9_temp_files/MenuLeagueHilights.c,matched,
 MenuMergeLeagueFiles,33469,146,025_32DA9_temp_files,src/c/025_32DA9_temp_files/MenuMergeLeagueFiles.c,matched,
 MenuNextLeagueGame,33559,278,025_32DA9_temp_files,src/c/025_32DA9_temp_files/MenuNextLeagueGame.c,matched,
@@ -140,6 +143,7 @@ WriteTeamRec,3A2B8,54,029_380E9_league_setup,src/c/029_380E9_league_setup/WriteT
 ImportDbs,3CF5B,429,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ImportDbs.c,matched,
 WaitLeagueFloppy,3D84F,142,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/WaitLeagueFloppy.c,nonmatching,"draft: file/name params in edi/esi swapped, local order and MessageBox result kept in eax not edx"
 DrawTradeRow,3E7B3,130,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/DrawTradeRow.c,nonmatching,"draft: row offset in ecx vs eax, add order; 1 byte longer"
+FindTradeSlot,3EF3C,77,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/FindTradeSlot.c,matched,
 LoadTradeTeamPals,3E835,410,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/LoadTradeTeamPals.c,matched,
 TradeCancel,3EF27,21,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeCancel.c,matched,
 TradeRosterCmp,3FEF0,98,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeRosterCmp.c,matched,
@@ -233,10 +237,13 @@ CrowdFadeOut,597E3,128,041_59493_engine_sound_iface,src/c/041_59493_engine_sound
 CrowdNoiseOff,59748,155,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/CrowdNoiseOff.c,matched,
 CrowdNoiseReset,59863,33,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/CrowdNoiseReset.c,matched,
 FreeDigiSample,59945,60,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/FreeDigiSample.c,nonmatching,same as StopDigiSample: handle in ebx (argument kept in edx). 10-min cap
+PaGoal,59AD0,63,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaGoal.c,matched,
 PaHighlightIntro,59CA9,52,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaHighlightIntro.c,matched,
 PaOpenBank,59D54,29,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaOpenBank.c,matched,
+PaPenalty,59B3C,76,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPenalty.c,matched,
 PaPenaltyShot,59B88,45,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPenaltyShot.c,nonmatching,"registers only: original saves the argument in esi, this draft in edx. 10-min cap"
 PaPlayerNumber,59B0F,45,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPlayerNumber.c,matched,
+PaPlayoffTonight,59D16,62,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPlayoffTonight.c,matched,
 PaPreloadClips,59D71,41,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPreloadClips.c,matched,
 PaSpeechBusy,59AAD,35,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaSpeechBusy.c,matched,
 PlayCrowdSample,59A11,109,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PlayCrowdSample.c,matched,
@@ -435,6 +442,7 @@ POPreSimRound2,87FE0,91,064_86696_season_playoffs,src/c/064_86696_season_playoff
 POReturnZero,89B5C,13,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POReturnZero.c,matched,
 POSeriesScore,877E9,122,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeriesScore.c,nonmatching,"registers/layout: asm returns through one exit (result in ecx), keeps *aw+1 in ebp on one arm and inc edi on the other; C merges the two arms"
 POSetSeriesTeams,87520,131,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSetSeriesTeams.c,nonmatching,original keeps s in eax and ORs the flags into ecx; this draft moves s to ecx. 10-min cap
+SaveScheduleDB,89223,69,064_86696_season_playoffs,src/c/064_86696_season_playoffs/SaveScheduleDB.c,nonmatching,
 SetSideControls,8B85B,212,064_86696_season_playoffs,src/c/064_86696_season_playoffs/SetSideControls.c,matched,
 InitFileLocations,8BAAF,358,065_8BAAF_allfiles_coach,src/c/065_8BAAF_allfiles_coach/InitFileLocations.c,matched,
 stub_8C1B7,8C1B7,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C1B7.c,matched,
