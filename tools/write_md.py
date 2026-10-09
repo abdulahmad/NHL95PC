@@ -90,12 +90,14 @@ P('## 7. Name map (`name_map_94.csv`)\n')
 c = collections.Counter((r['source_game'], r['confidence']) for r in rows)
 P('Rows: %d. By source game / confidence:\n' % len(rows))
 for k, v in sorted(c.items()): P('* %s / %s: %d' % (k[0], k[1], v))
-P('\nColumns: pc_address, ida_name, proposed_name, source_game (93G/94G/95G/PC-new/library), source_file, 94_source_file, other_game_names, confidence, evidence, fm95_status, fm95_name (+ fact-check notes), segment.\n')
-P('### FUNCTION_MAPPINGS95.md cross-check\n')
-P('%d claims parsed. Confirmed (all cited facts - callees, strings, file names, Genesis label existence - found in the listing): %d. Unverifiable (no checkable fact; description-only names): %d. Wrong: %d. Of its %d "Genesis equivalent" claims, %d use names that do not exist in any of the 92/93/94/95 Genesis sources; the 4 real ones (Begin, setvideo, Opening x2) are role analogies for PC-new front-end code. The file title says it maps to NHL92/NHLPA93 names.\n' % (
-    ST['fm95_rows'], ST['fm95_status'].get('confirmed', 0), ST['fm95_status'].get('unverified', 0), ST['fm95_status'].get('conflict', 0), ST['fm95_genesis_claims'], ST['fm95_genesis_claims_invalid_name']))
-P('Examples of wrong claims:\n')
-for w in ST['wrong_examples'][:8]: P('* `%s` → %s: %s' % (w[0], w[1], w[3]))
+P('\nColumns: pc_address, ida_name, proposed_name, source_game (93G/94G/95G/PC-new/library), source_file, 94_source_file, other_game_names, confidence, evidence, segment, method.\n')
+# Optional local cross-check of FUNCTION_MAPPINGS95.md (not in the repo): written to FM95_CHECK.md (gitignored), never into this file.
+if os.path.isfile('tools/fm95_check.json'):
+    FC = json.load(open('tools/fm95_check.json')); Q = ['# FUNCTION_MAPPINGS95.md cross-check (local only)\n']
+    Q.append('%d claims parsed. Confirmed: %d. Unverifiable: %d. Wrong: %d. Genesis-equivalent claims: %d, of which %d use names not in the 92/93/94/95 Genesis sources.\n' % (
+        FC['fm95_rows'], FC['fm95_status'].get('confirmed', 0), FC['fm95_status'].get('unverified', 0), FC['fm95_status'].get('conflict', 0), FC['fm95_genesis_claims'], FC['fm95_genesis_claims_invalid_name']))
+    Q += ['* `%s` → %s: %s' % (w[0], w[1], w[3]) for w in FC['wrong_examples']]
+    open('FM95_CHECK.md', 'w').write('\n'.join(Q) + '\n')
 # ---------------- deep semantic pass ----------------
 P('\n### Deep semantic matching pass (tools/sem_features.py, fieldmap.py, data_tables.py, sem_match.py)\n')
 P('Methods: (1) player-struct field correspondence learned by aligning 68k field-access sequences with x86 [reg+disp] sequences of content-verified anchors (tools/struct_fieldmap.csv); (2) global RAM/data correspondences by aligning global-access sequences plus byte-compared data tables (tools/global_map.csv, tools/data_matches.json); (3) tf-idf cosine over mapped fields, globals, named callees and distinctive immediates plus an LCS over the ordered field-access stream; (4) call-graph propagation by aligning callee sequences of matched pairs (votes across callers) and caller propagation; (5) control-flow/size shape gate. Matches are accepted only as mutual best with a margin; front-end functions need a shared call/global token as well as fields. Iterated to a fixed point.\n')

@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Produce name_map_94.csv: evidence-based NHL94 name mapping + verification of FUNCTION_MAPPINGS95.md claims.
+"""Produce name_map_94.csv: evidence-based NHL94 name mapping.
+Optional: if a local FUNCTION_MAPPINGS95.md is present (it is not in the repo), its claims are fact-checked
+against the listing and written to tools/fm95_check.json (gitignored); its function addresses without a Genesis
+match are also listed in the CSV as unmatched rows. The CSV itself has no FUNCTION_MAPPINGS95 columns.
 Run after build_segmap.py.  Writes name_map_94.csv and tools/matcher_stats.json"""
 import os, re, csv, json, pickle, bisect
 from collections import Counter
@@ -60,9 +63,10 @@ DATA = [(0xC9161, 'asstab', 'data94.asm', 'medium', 'code-pointer table (47 dseg
         (0xC053C, 'TeamList city names', 'teamdata94.asm', 'medium', 'team city string table incl. ANAHEIM/FLORIDA (26-team 94G list; 93G TeamList has 24)', '94G', 'teamdata94.asm'),
         (0xC020C, 'awards names (95G awards95 role)', '', 'low', 'award name strings (Conn Smythe ...) - same role as 95G awards95 table; PC text/case differs', '95G', 'awards95')]
 
-# ---------------- FUNCTION_MAPPINGS95 ----------------
+# ---------------- FUNCTION_MAPPINGS95 (optional, local only) ----------------
+FM95 = 'FUNCTION_MAPPINGS95.md'
 rows95 = []
-for ln in open('FUNCTION_MAPPINGS95.md', encoding='utf-8', errors='replace'):
+for ln in (open(FM95, encoding='utf-8', errors='replace') if os.path.isfile(FM95) else []):
     if not ln.startswith('| `'): continue
     c = [x.strip() for x in ln.strip().strip('|').split('|')]
     if len(c) < 5: continue
@@ -116,7 +120,7 @@ for r in rows95:
     fm[a] = dict(status=st, name=r['sugg'], gen=g, note='; '.join(bad + good)[:300], fname=r['name'])
 
 # ---------------- write CSV ----------------
-cols = ['pc_address', 'ida_name', 'proposed_name', 'source_game', 'source_file', '94_source_file', 'other_game_names', 'confidence', 'evidence', 'fm95_status', 'fm95_name', 'segment', 'method']
+cols = ['pc_address', 'ida_name', 'proposed_name', 'source_game', 'source_file', '94_source_file', 'other_game_names', 'confidence', 'evidence', 'segment', 'method']
 def alt(n):
     k = n.lower(); o = []
     l94 = {'rtss': 'rtss2', 'assgoalie': 'assgoaliecpu', 'pucknothing': 'puckunflip'}
@@ -126,28 +130,18 @@ def alt(n):
     return '; '.join(o)
 out = []
 done = set()
-def fmcol(a, proposed):
-    x = fm.get(a)
-    if not x: return 'not_in_fm95', ''
-    if x['status'] == 'conflict': s = 'conflicts_with_fm95'
-    elif proposed and x['gen'] and x['gen'].lower() == proposed.lower(): s = 'agrees_with_fm95'
-    elif proposed: s = 'fm95_role_only(' + x['status'] + ')'
-    else: s = 'from_fm95(' + x['status'] + ')'
-    return s, (x['name'] + (' [gen=%s]' % x['gen'] if x['gen'] else '') + ((' {' + x['note'] + '}') if x['note'] else ''))
 for a in sorted(M):
     n, c, e, meth, src = M[a]
     i = byaddr.get(a); ida = F[i]['name'] if i is not None else ''
-    s, fn = fmcol(a, n)
     g, gf = lineage(n.replace('_body', ''))
     if src == 'PC-new': g, gf = 'PC-new', ''
     n94 = {'rtss': 'rtss2', 'assgoalie': 'assgoaliecpu', 'pucknothing': 'puckunflip'}.get(n, n)
-    out.append(['%08X' % a, ida, n, g, gf, f94(n94.replace('_body', '')), alt(n), c, e, s, fn, segof(a), meth]); done.add(a)
+    out.append(['%08X' % a, ida, n, g, gf, f94(n94.replace('_body', '')), alt(n), c, e, segof(a), meth]); done.add(a)
 for a, n, fl, c, e, g, gf in DATA:
-    out.append(['%08X' % a, '', n, g, gf, fl, '', c, e, 'not_in_fm95', '', 'dseg02', 'data']); done.add(a)
+    out.append(['%08X' % a, '', n, g, gf, fl, '', c, e, 'dseg02', 'data']); done.add(a)
 for i, f in enumerate(F):
     if f['kind'] == 'collapsed' or (f['kind'] == 'proc' and not f['name'].startswith(('sub_', 'nullsub', 'j_'))):
         if f['start'] in done: continue
-        s, fn = fmcol(f['start'], f['name'])
         lib = 'watcom_clib' if f['kind'] == 'collapsed' else ('watcom_cstart' if f['name'] == 'start' else '')
         conf = 'high'
         ev = 'IDA FLIRT Watcom library signature (collapsed body %d bytes)' % (f['end'] - f['start']) if f['kind'] == 'collapsed' else 'IDA name from entry point / Watcom main_'
@@ -155,9 +149,9 @@ for i, f in enumerate(F):
         if f['name'] == 'main_':
             p94 = 'main94.asm'; ev += '; role of 94 Begin (program entry -> front end), PC-specific body'
         if f['name'] == 'main_':
-            out.append(['%08X' % f['start'], f['name'], 'main_ (role: Begin)', '93G', 'hockey93_01.asm', 'hockey94.asm', '94G Begin', 'low', ev, s, fn, segof(f['start']), 'role'])
+            out.append(['%08X' % f['start'], f['name'], 'main_ (role: Begin)', '93G', 'hockey93_01.asm', 'hockey94.asm', '94G Begin', 'low', ev, segof(f['start']), 'role'])
         else:
-            out.append(['%08X' % f['start'], f['name'], f['name'], 'library', lib, '', '', conf, ev, s, fn, segof(f['start']), 'flirt'])
+            out.append(['%08X' % f['start'], f['name'], f['name'], 'library', lib, '', '', conf, ev, segof(f['start']), 'flirt'])
         done.add(f['start'])
 for a, x in sorted(fm.items(), key=lambda t: t[0] or 0):
     if a in done: continue
@@ -166,19 +160,19 @@ for a, x in sorted(fm.items(), key=lambda t: t[0] or 0):
     seggrp = next((q['group'] for q in segs if q['module'] == sg), '')
     sgame = 'library' if seggrp in ('watcom', 'dos4gw', 'ealib', 'eacsndf', 'sounddrv', 'eagfx') else 'PC-new'
     out.append(['%08X' % a if a is not None else '', F[i]['name'] if i is not None else x['fname'], '', sgame, '', '', '', 'none',
-                'no Genesis counterpart established (front end/menus/PC libs are PC-original); FM95 candidate name listed for reference', 
-                {'conflict': 'conflicts_with_fm95', 'confirmed': 'from_fm95(confirmed)', 'unverified': 'from_fm95(unverified)'}[x['status']],
-                x['name'] + (' [gen=%s]' % x['gen'] if x['gen'] else '') + ((' {' + x['note'] + '}') if x['note'] else ''), segof(a) if a else '', 'fm95-only'])
+                'no Genesis counterpart established (front end/menus/PC libs are PC-original)', segof(a) if a else '', 'unmatched'])
 out.sort(key=lambda r: r[0])
 with open('name_map_94.csv', 'w', newline='') as fh:
     w = csv.writer(fh); w.writerow(cols); w.writerows(out)
 conf = Counter((r[3], r[7]) for r in out)
 conf = {'%s/%s' % k: v for k, v in sorted(conf.items())}
 gen_rows = [r for r in rows95 if r['gen'] not in ('(PC-specific)', 'Unknown')]
-st = dict(fm95_rows=len(rows95), fm95_status=dict(stat), fm95_genesis_claims=len(gen_rows),
-          fm95_genesis_claims_invalid_name=sum(1 for r in gen_rows if re.findall(r'`([^`]+)`', r['gen']) and not L94.get(re.findall(r'`([^`]+)`', r['gen'])[0].lower())),
-          wrong_examples=wrong[:40], csv_rows=len(out), mapping_conf_94=dict(conf),
+st = dict(csv_rows=len(out), mapping_conf_94=dict(conf),
           library_rows=sum(1 for r in out if r[3] == 'library' and r[7] == 'high'))
 json.dump(st, open('tools/matcher_stats.json', 'w'), indent=1)
+if rows95:   # local-only cross-check of FUNCTION_MAPPINGS95.md (gitignored output)
+    json.dump(dict(fm95_rows=len(rows95), fm95_status=dict(stat), fm95_genesis_claims=len(gen_rows),
+                   fm95_genesis_claims_invalid_name=sum(1 for r in gen_rows if re.findall(r'`([^`]+)`', r['gen']) and not L94.get(re.findall(r'`([^`]+)`', r['gen'])[0].lower())),
+                   wrong_examples=wrong[:40]), open('tools/fm95_check.json', 'w'), indent=1)
 print(json.dumps({k: v for k, v in st.items() if k != 'wrong_examples'}, indent=1))
 for w_ in wrong[:25]: print(w_)

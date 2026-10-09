@@ -392,22 +392,8 @@ Rows: 949. By source game / confidence:
 * library / high: 240
 * library / none: 111
 
-Columns: pc_address, ida_name, proposed_name, source_game (93G/94G/95G/PC-new/library), source_file, 94_source_file, other_game_names, confidence, evidence, fm95_status, fm95_name (+ fact-check notes), segment.
+Columns: pc_address, ida_name, proposed_name, source_game (93G/94G/95G/PC-new/library), source_file, 94_source_file, other_game_names, confidence, evidence, segment, method.
 
-### FUNCTION_MAPPINGS95.md cross-check
-
-651 claims parsed. Confirmed (all cited facts - callees, strings, file names, Genesis label existence - found in the listing): 24. Unverifiable (no checkable fact; description-only names): 607. Wrong: 20. Of its 24 "Genesis equivalent" claims, 20 use names that do not exist in any of the 92/93/94/95 Genesis sources; the 4 real ones (Begin, setvideo, Opening x2) are role analogies for PC-new front-end code. The file title says it maps to NHL92/NHLPA93 names.
-
-Examples of wrong claims:
-
-* `sub_499D8` → `HandlePlayerBounceResponse`: Genesis name "HandlePlayerBounceResponse" does not exist in the 92/93/94/95 Genesis sources; evidence maps this to ass_pc_slot42
-* `sub_49BC2` → `TransitionToIdleState`: Genesis name "TransitionToIdleState" does not exist in the 92/93/94/95 Genesis sources; evidence maps this to ass_pc_slot43
-* `sub_49CDD` → `UpdatePlayerHorizontalPursuit`: Genesis name "UpdatePlayerHorizontalPursuit" does not exist in the 92/93/94/95 Genesis sources; evidence maps this to assdefo
-* `sub_49E3A` → `UpdatePlayerVerticalPursuit`: Genesis name "UpdatePlayerVerticalPursuit" does not exist in the 92/93/94/95 Genesis sources; evidence maps this to assdefd
-* `sub_4A1A6` → `UpdatePlayerRandomizedPursuit`: Genesis name "UpdatePlayerRandomizedPursuit" does not exist in the 92/93/94/95 Genesis sources; evidence maps this to asswingd
-* `sub_4A343` → `DecidePlayerAIAction`: Genesis name "DecidePlayerAIAction" does not exist in the 92/93/94/95 Genesis sources; evidence maps this to asswingo
-* `sub_4A53A` → `UpdateAdvancedPlayerAI`: Genesis name "UpdateAdvancedPlayerAI" does not exist in the 92/93/94/95 Genesis sources; evidence maps this to asscenterd
-* `sub_4A65C` → `UpdatePlayerSemanticState`: Genesis name "UpdatePlayerSemanticState" does not exist in the 92/93/94/95 Genesis sources; evidence maps this to asscentero
 
 ### Deep semantic matching pass (tools/sem_features.py, fieldmap.py, data_tables.py, sem_match.py)
 
