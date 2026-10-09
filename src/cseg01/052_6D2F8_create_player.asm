@@ -2167,6 +2167,10 @@ pop ebp	; 6EC91
 pop edi	; 6EC92
 pop esi	; 6EC93
 ret	; 6EC94
+; C: src/c/052_6D2F8_create_player/DrawDBErrorsScreen.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/DrawDBErrorsScreen.inc"
+%else
 DrawDBErrorsScreen:
 push dword 28h	; 6EC95
 call __CHK	; 6EC9A
@@ -2220,6 +2224,7 @@ pop edi	; 6ED35
 pop esi	; 6ED36
 pop ecx	; 6ED37
 ret	; 6ED38
+%endif ; C
 ; C: src/c/052_6D2F8_create_player/ShowDBError.c
 %ifdef CBUILD
 %include "c/052_6D2F8_create_player/ShowDBError.inc"

@@ -2388,6 +2388,10 @@ pop ebp	; 7A093
 pop edi	; 7A094
 pop esi	; 7A095
 ret 4	; 7A096
+; C: src/c/055_78346_team_select/MakeJerseyShape.c
+%ifdef CBUILD
+%include "c/055_78346_team_select/MakeJerseyShape.inc"
+%else
 MakeJerseyShape:
 push dword 18h	; 7A099
 call __CHK	; 7A09E
@@ -2456,3 +2460,4 @@ pop ebp	; 7A136
 pop edi	; 7A137
 pop esi	; 7A138
 ret	; 7A139
+%endif ; C

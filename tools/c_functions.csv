@@ -10,6 +10,7 @@ assinsert,12011,35,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/assinsert.c
 assreplace,11FF4,29,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/assreplace.c,matched,
 FileExists,142E7,55,004_13320_asset_loading,src/c/004_13320_asset_loading/FileExists.c,matched,
 LoadTransparentRinkEndOverlay,13A2F,98,004_13320_asset_loading,src/c/004_13320_asset_loading/LoadTransparentRinkEndOverlay.c,matched,
+SetupDemoGame,13FA7,175,004_13320_asset_loading,src/c/004_13320_asset_loading/SetupDemoGame.c,matched,
 DiskSpaceShort,14825,128,005_1431E_file_utils,src/c/005_1431E_file_utils/DiskSpaceShort.c,matched,
 FileClose,1457C,38,005_1431E_file_utils,src/c/005_1431E_file_utils/FileClose.c,matched,
 FileCreate,14566,22,005_1431E_file_utils,src/c/005_1431E_file_utils/FileCreate.c,matched,
@@ -55,6 +56,7 @@ GrowToButton,30F5F,85,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowTo
 InitScrollBar,30BF3,74,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/InitScrollBar.c,matched,
 MeasureTextLine,309E4,40,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/MeasureTextLine.c,matched,
 RestoreDialogBg,30F12,77,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/RestoreDialogBg.c,matched,
+SaveDialogBg,30E66,172,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/SaveDialogBg.c,matched,
 SetListItemColors,30209,53,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/SetListItemColors.c,matched,
 MenuExit,3270B,16,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MenuExit.c,matched,
 SaveModeState,3271B,134,024_31AB5_main_desk,src/c/024_31AB5_main_desk/SaveModeState.c,matched,
@@ -84,6 +86,7 @@ SwapInt,42F19,41,034_41B80_schedule,src/c/034_41B80_schedule/SwapInt.c,matched,
 LoadScreenPalTick,47951,152,035_45282_options_settings,src/c/035_45282_options_settings/LoadScreenPalTick.c,matched,
 RandMod,45282,36,035_45282_options_settings,src/c/035_45282_options_settings/RandMod.c,matched,
 SimAddPair,452A6,31,035_45282_options_settings,src/c/035_45282_options_settings/SimAddPair.c,nonmatching,original keeps pairs in edx and the count in esi; this draft swaps them (with or without a count local). 10-min cap
+FadeOutPalCycle,47C31,165,036_47C31_engine_init,src/c/036_47C31_engine_init/FadeOutPalCycle.c,nonmatching,draft: asm keeps the byte in bl and writes bl-1 from bh; ours decrements bl in place
 AddStar,48789,80,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/AddStar.c,matched,
 ClampYPosition,4B6F4,128,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/ClampYPosition.c,matched,
 GoalieToPuckVec,4B467,130,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/GoalieToPuckVec.c,matched,
@@ -95,6 +98,7 @@ StopIfFree,4A80E,36,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_
 a2offsides,4DCDD,116,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/a2offsides.c,matched,
 assdopen,4AFFB,50,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assdopen.c,matched,
 assexit,4D509,31,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assexit.c,matched,
+assintrostand,4842A,176,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assintrostand.c,matched,
 puckflip,4DFA4,83,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/puckflip.c,matched,
 pucknorm,4D8C7,54,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/pucknorm.c,matched,
 pucknothing puckunflip,4D8FD,59,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/pucknothing.c,matched,
@@ -102,17 +106,21 @@ puckunflip,4D907,49,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_
 rtss,4F990,11,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/rtss.c,matched,
 Acheck,4FFAE,64,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/Acheck.c,matched,
 CenterMouse,50ADE,32,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CenterMouse.c,matched,
+faceoffinput,4FF0D,161,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/faceoffinput.c,nonmatching,draft: pflags2 kept in al (ours) vs cl then copied to al
 getlchoice,50908,109,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/getlchoice.c,nonmatching,draft: asm loads tmptr into edx first and computes the tmap difference in ax; ours keeps p in eax
 holdplayer,503CD,103,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/holdplayer.c,matched,
 joyq_flush,4FD47,27,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/joyq_flush.c,matched,
 joyq_peek,4FD62,44,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/joyq_peek.c,matched,
 joyq_pop,4FCE8,95,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/joyq_pop.c,nonmatching,draft: asm saves ebx/ecx/edx/esi and keeps count in edx (eax untouched until end; maybe returns joysampling)
+lcselect,50434,166,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/lcselect.c,matched,
 AllInPlace,51440,61,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/AllInPlace.c,matched,
 ForceStartLineup,5125F,72,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/ForceStartLineup.c,matched,
 PassCompleted,50AFE,87,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/PassCompleted.c,matched,
+PenShotStart,511B4,171,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/PenShotStart.c,matched,
 SetPenaltyStrength,510A9,108,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/SetPenaltyStrength.c,matched,
 assbenchwait,526ED,51,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/assbenchwait.c,matched,
 CompShoot,55A35,106,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/CompShoot.c,matched,
+FacingBoards,5378D,159,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/FacingBoards.c,matched,
 Findhittype,579FF,63,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/Findhittype.c,matched,
 ScatterPass,54D63,145,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ScatterPass.c,matched,
 SetShotMode,5786E,140,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/SetShotMode.c,nonmatching,"draft: vtoa result copied to edx before the regd0 store; asm stores ax then movsx edx,ax after word_C90A6"
@@ -181,8 +189,11 @@ CountShotOnGoal,64338,96,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_
 EndPenaltyShot,64439,111,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/EndPenaltyShot.c,matched,
 FlushGSumQueue,61B85,58,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/FlushGSumQueue.c,matched,
 GameTimeStamp,62CD7,34,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/GameTimeStamp.c,matched,
+QueueGoalieNote,62C37,160,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QueueGoalieNote.c,nonmatching,"draft: only the tail differs: ours keeps 1 in esi for deferpending and the result, asm stores immediates"
 SetBoxDoorObject,61576,44,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetBoxDoorObject.c,matched,
 SetPA,62EA2,71,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetPA.c,matched,
+SetRinkObject,614C2,180,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetRinkObject.c,matched,
+StartPenaltyShot,64398,161,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/StartPenaltyShot.c,matched,
 chkatop,639A4,85,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/chkatop.c,nonmatching,original reads the puck y into dx (push edx) and t into ax; this draft uses ax for y. 10-min cap
 releasepl,6392A,122,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/releasepl.c,matched,
 updatePPTeamTime,63B57,46,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/updatePPTeamTime.c,matched,
@@ -205,6 +216,7 @@ ComparePlayerEntry,6D78B,98,052_6D2F8_create_player,src/c/052_6D2F8_create_playe
 CopyRoster1Rec,6DE4C,50,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CopyRoster1Rec.c,matched,
 CountSelected,6DA88,59,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CountSelected.c,nonmatching,original keeps the list pointer in edx and the count in eax; this draft swaps them. 10-min cap
 CreatePlayerNop,6FA72,11,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CreatePlayerNop.c,matched,
+DrawDBErrorsScreen,6EC95,164,052_6D2F8_create_player,src/c/052_6D2F8_create_player/DrawDBErrorsScreen.c,matched,
 EditRostersReturn,6D5BB,21,052_6D2F8_create_player,src/c/052_6D2F8_create_player/EditRostersReturn.c,matched,
 RatingToFloat,6F6AD,39,052_6D2F8_create_player,src/c/052_6D2F8_create_player/RatingToFloat.c,matched,
 RemovePlayerFromTeam,71043,149,052_6D2F8_create_player,src/c/052_6D2F8_create_player/RemovePlayerFromTeam.c,matched,
@@ -214,6 +226,7 @@ GameRosterCmp,76A93,98,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor
 PrintLineEdStatus,76771,95,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/PrintLineEdStatus.c,matched,
 RandLfsrByte,7665E,47,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/RandLfsrByte.c,nonmatching,"original does byte ops (dl = bit, dh = *s shr 1, bl = dh ^ B8h, push ebx too); this draft widens to 32 bits. 10-min cap"
 SetPalette768,76614,74,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/SetPalette768.c,matched,
+MakeJerseyShape,7A099,161,055_78346_team_select,src/c/055_78346_team_select/MakeJerseyShape.c,matched,
 MenuReturnToLineEditor,79DD1,16,055_78346_team_select,src/c/055_78346_team_select/MenuReturnToLineEditor.c,matched,
 CtlDlgHitTest,7D61F,82,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlDlgHitTest.c,matched,
 CtlSwapTeamFlag,7CC8A,91,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlSwapTeamFlag.c,matched,
@@ -227,6 +240,7 @@ GadgetHitTest,7E8E5,89,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/G
 GadgetStub0,7E032,13,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/GadgetStub0.c,matched,
 NudgeRinkScroll,7FC12,31,058_7F724_highlights,src/c/058_7F724_highlights/NudgeRinkScroll.c,matched,
 TeamFromHiName,7FC5C,70,058_7F724_highlights,src/c/058_7F724_highlights/TeamFromHiName.c,matched,
+ViewHilights,80075,167,058_7F724_highlights,src/c/058_7F724_highlights/ViewHilights.c,matched,
 DrawSoundCardDlg,8261C,116,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/DrawSoundCardDlg.c,matched,
 LockerHitTest,81520,79,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerHitTest.c,matched,
 SoundCardHitTest,827B3,82,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/SoundCardHitTest.c,matched,

@@ -43,6 +43,10 @@ global BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCa
 global SetPA, InProgress, chkprogress_go, checkfornewpen, releasepl, chkatop, CheckAndReleasePlayer, ProcessPenaltyList
 global updatePPTeamTime, updatepentime, PenaltyManager, chkprogress, UpdatePowerPlayFlags, ClearPenaltyBuffer, PenGoalStuff, SetupPenaltyShot
 global ShotLaneOpen, QuickShotChk, CountShotOnGoal, StartPenaltyShot, EndPenaltyShot
+; C: src/c/045_614C2_scoring_penalty_text/SetRinkObject.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/SetRinkObject.inc"
+%else
 SetRinkObject:
 push dword 14h	; 614C2
 call __CHK	; 614C7
@@ -101,6 +105,7 @@ pop esi	; 61572
 pop ecx	; 61573
 pop ebx	; 61574
 ret	; 61575
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/SetBoxDoorObject.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/SetBoxDoorObject.inc"
@@ -3829,6 +3834,10 @@ mov eax, edx	; 64394
 pop edx	; 64396
 ret	; 64397
 %endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/StartPenaltyShot.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/StartPenaltyShot.inc"
+%else
 StartPenaltyShot:
 push dword 0Ch	; 64398
 call __CHK	; 6439D
@@ -3870,6 +3879,7 @@ mov word [foy], si	; 6442F
 pop esi	; 64436
 pop ebx	; 64437
 ret	; 64438
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/EndPenaltyShot.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/EndPenaltyShot.inc"

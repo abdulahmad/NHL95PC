@@ -55,6 +55,10 @@ global puckflip, pucknorm, pucknorm_body, pucknothing, puckunflip, rtss
 global StartShotPath, AddStar, StarEligible, StarCompare, PickThreeStars, StartThreeStars, MoveInDir, SteerToTarget
 global StopIfFree, GoalieToPuckVec, AdjustFacingDirection, CountPuckThreat, sub_4C8BD, asspuckc_chkdir, ChkTwoLinePass, SkateToSpot
 global CrowdOnStoppage, NextPathPoint
+; C: src/c/037_4842A_engine_player_logic/assintrostand.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assintrostand.inc"
+%else
 assintrostand:
 push dword 10h	; 4842A
 call __CHK	; 4842F
@@ -114,6 +118,7 @@ pop edx	; 484D6
 pop ecx	; 484D7
 pop ebx	; 484D8
 ret	; 484D9
+%endif ; C
 assintroline:
 push dword 14h	; 484DA
 call __CHK	; 484DF

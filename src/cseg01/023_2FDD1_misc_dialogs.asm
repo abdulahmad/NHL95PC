@@ -1495,6 +1495,10 @@ jl near TrackScrollBars.1	; 30E54
 mov eax, dword [byte esp+08h]	; 30E5A
 add esp, byte 10h	; 30E5E
 jmp near TrackButtons_x	; 30E61
+; C: src/c/023_2FDD1_misc_dialogs/SaveDialogBg.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/SaveDialogBg.inc"
+%else
 SaveDialogBg:
 push dword 28h	; 30E66
 call __CHK	; 30E6B
@@ -1556,6 +1560,7 @@ pop ebp	; 30F0E
 pop edi	; 30F0F
 pop esi	; 30F10
 ret	; 30F11
+%endif ; C
 ; C: src/c/023_2FDD1_misc_dialogs/RestoreDialogBg.c
 %ifdef CBUILD
 %include "c/023_2FDD1_misc_dialogs/RestoreDialogBg.inc"

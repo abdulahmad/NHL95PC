@@ -38,8 +38,6 @@ extern void LoadGameGfx_common(); /* 13B56 */
 extern void ReloadGameGfx(); /* 13BB4 */
 extern void PlacePlayersAtStart(); /* 13C79 */
 extern void SetupGame(); /* 13E8F */
-extern void SetupDemoGame(); /* 13FA7 */
-extern void ResetGameVars(); /* 14056 */
 extern void DeleteFiles(); /* 14368 */
 extern void DeleteDir(); /* 14442 */
 extern void FileOpenRead_x(); /* 14537 */
@@ -56,7 +54,6 @@ extern void ReadTeamRec_x(); /* 147F6 */
 extern void ReadGSummaryRec(); /* 147FF */
 extern void CheckGameDiskSpace(); /* 148A5 */
 extern void DrawPanelScore(); /* 14A20 */
-extern void DrawPanelLine(); /* 14AFE */
 extern void DrawPanelLine_x(); /* 14BE9 */
 extern void PanelAddPenalty(); /* 14C22 */
 extern void UpdateHudPanel(); /* 14CF1 */
@@ -460,13 +457,11 @@ extern void DrawListItem(); /* 302B9 */
 extern void DrawListItem_x(); /* 30396 */
 extern void DrawListItems(); /* 3039C */
 extern void ListDialog(); /* 303FB */
-extern void SetDialogColors(); /* 30A0C */
 extern void TrackButtons(); /* 30A39 */
 extern void TrackButtons_x(); /* 30ADC */
 extern void DrawButton_x(); /* 30BEC */
 extern void DrawScrollBar(); /* 30C3D */
 extern void TrackScrollBars(); /* 30D0E */
-extern void SaveDialogBg(); /* 30E66 */
 extern void GrowToButtons(); /* 30FB4 */
 extern void RunMessageBox(); /* 31250 */
 extern void DrawEditCursor(); /* 314B4 */
@@ -614,17 +609,14 @@ extern void AdvancePlayoffs(); /* 44A41 */
 extern void CreateNewLeague(); /* 44DCF */
 extern void SimulateGame(); /* 452C5 */
 extern void ShowLoadingScreen(); /* 479E9 */
-extern void FadeOutPalCycle(); /* 47C31 */
 extern void PreGameIntro(); /* 47CD6 */
 extern void PreGameIntro_scroll(); /* 480CC */
 extern void PreGameIntro_frameloop(); /* 480D8 */
 extern void PreGameIntro_end(); /* 4824E */
 extern void PreGameIntro_popebp(); /* 48307 */
 extern void PreGameIntro_popx(); /* 48308 */
-extern void StartPreGame(); /* 4830E */
 extern void ThreeStarsLoop(); /* 48333 */
 extern void ThreeStarsLoop_tick(); /* 4836E */
-extern void assintrostand(); /* 4842A */
 extern void assintroline(); /* 484DA */
 extern void StarEligible(); /* 487D9 */
 extern void StarCompare(); /* 4883B */
@@ -684,10 +676,8 @@ extern void assrefgoalline(); /* 4F7D0 */
 extern void StartShotPath(); /* 4F9EF */
 extern void asspenshooter(); /* 4FAE8 */
 extern void lineinput(); /* 4FD8E */
-extern void faceoffinput(); /* 4FF0D */
 extern void CanBlockShot_ret6(); /* 50336 */
 extern void CanBlockShot_ret5(); /* 50337 */
-extern void lcselect(); /* 50434 */
 extern void doinput(); /* 504DA */
 extern void lcfound(); /* 50975 */
 extern void Readjoy1(); /* 50A05 */
@@ -699,7 +689,6 @@ extern void asspassrec(); /* 50F3F */
 extern void TakePlayerFromBox(); /* 51115 */
 extern void TakePlayerFromBox_ret6(); /* 511AD */
 extern void TakePlayerFromBox_ret5(); /* 511AE */
-extern void PenShotStart(); /* 511B4 */
 extern void PenShotAssign(); /* 512A7 */
 extern void assleavebox(); /* 5147D */
 extern void puckfaceoff(); /* 516E1 */
@@ -710,7 +699,6 @@ extern void assrefpenshot(); /* 52FB0 */
 extern void burst(); /* 532BD */
 extern void check4check(); /* 53537 */
 extern void checkagr(); /* 5369F */
-extern void FacingBoards(); /* 5378D */
 extern void checkcheck(); /* 5382C */
 extern void checkgoalp(); /* 53CE5 */
 extern void checkint(); /* 53E6A */
@@ -818,7 +806,6 @@ extern void LoadGameState(); /* 60612 */
 extern void DecayCrowdLevel(); /* 615A2 */
 extern void sfxslots_popx(); /* 6185C */
 extern void DrawRinkObjects(); /* 61862 */
-extern void QueueDeferredCall(); /* 619C8 */
 extern void RunDeferredCalls(); /* 61A27 */
 extern void fileio_popebpx(); /* 61A83 */
 extern void ReadGSumHeader(); /* 61BBF */
@@ -834,7 +821,6 @@ extern void PostPenaltyEvent(); /* 624B9 */
 extern void PostInjuryEvent(); /* 62764 */
 extern void NullCallback0C(); /* 627F8 */
 extern void ChkScorerMilestone(); /* 62807 */
-extern void QueueGoalieNote(); /* 62C37 */
 extern void InProgress(); /* 62EE9 */
 extern void InProgress_popebp(); /* 6346E */
 extern void InProgress_popx(); /* 6346F */
@@ -850,10 +836,8 @@ extern void UpdatePowerPlayFlags(); /* 63C73 */
 extern void PenGoalStuff(); /* 63D69 */
 extern void SetupPenaltyShot(); /* 63F72 */
 extern void QuickShotChk(); /* 6427F */
-extern void StartPenaltyShot(); /* 64398 */
 extern void SortPlayersByPos(); /* 644A8 */
 extern void SortNonDefPlayers(); /* 6455F */
-extern void BuildDefaultLines(); /* 64614 */
 extern void lines_popx(); /* 64A04 */
 extern void CanFillLineSlot(); /* 64A0B */
 extern void lines_addesp10_x(); /* 64CA0 */
@@ -864,7 +848,6 @@ extern void PickGoalie(); /* 652D6 */
 extern void PickExtraSkater(); /* 653BE */
 extern void RefillLineSlots(); /* 6552E */
 extern void RemoveFromLines(); /* 655CC */
-extern void SetupTeamLines(); /* 658F3 */
 extern void CanRemovePlayer(); /* 65B83 */
 extern void DitherRect(); /* 65CA8 */
 extern void checkwindow(); /* 65D01 */
@@ -1059,7 +1042,6 @@ extern void CalLeftJoystick_common(); /* 6B371 */
 extern void CalRightJoystick(); /* 6B37A */
 extern void InputInstall(); /* 6B410 */
 extern void EventToPointer(); /* 6B4BB */
-extern void DrawMenuBar(); /* 6B5E4 */
 extern void DrawMenuDropdown(); /* 6B684 */
 extern void DrawMenuDropdown_ret(); /* 6B7F6 */
 extern void DrawMenuBox(); /* 6B7FC */
@@ -1111,7 +1093,6 @@ extern void LoadBothRosterLists(); /* 6DE7E */
 extern void LoadRosterList(); /* 6DE94 */
 extern void EditTeamLines(); /* 6DF06 */
 extern void EditRosters(); /* 6E089 */
-extern void DrawDBErrorsScreen(); /* 6EC95 */
 extern void CheckTeamLines(); /* 6ED8F */
 extern void CheckDatabases(); /* 6EF84 */
 extern void SplitPlayerName(); /* 6F159 */
@@ -1223,8 +1204,6 @@ extern void MenuSaveTheseLines_x(); /* 797FE */
 extern void MenuGameShowPlayerStats(); /* 79AC9 */
 extern void GameScratchPlayer(); /* 79DE1 */
 extern void GameDressPlayer(); /* 79F41 */
-extern void BlitJerseyDigit(); /* 7A017 */
-extern void MakeJerseyShape(); /* 7A099 */
 extern void LeagueSettingsDlg(); /* 7A13A */
 extern void LeagueSettingsDlg_ret4(); /* 7A1F2 */
 extern void LeagueSettingsDlg_ret(); /* 7A1F5 */
@@ -1307,8 +1286,6 @@ extern void HilightSaveToDlg(); /* 7F724 */
 extern void SaveHilight(); /* 7FA10 */
 extern void CmpInt(); /* 7FC31 */
 extern void FormatHilightDesc(); /* 7FCA2 */
-extern void SelectHilight(); /* 7FCF8 */
-extern void PlayHilight(); /* 8011C */
 extern void LoadSettingsShapes(); /* 8034B */
 extern void DrawSettingsHeading_jt(); /* 804FF */
 extern void DrawSettingsHeading(); /* 8050F */
@@ -2107,7 +2084,6 @@ extern void sub_91310(); /* 91310 */
 extern void loc_91391(); /* 91391 */
 extern void sub_913B4(); /* 913B4 */
 extern void sub_913D0(); /* 913D0 */
-extern void sub_91400(); /* 91400 */
 extern void loc_9142B(); /* 9142B */
 extern void loc_9148A(); /* 9148A */
 extern void loc_914E6(); /* 914E6 */

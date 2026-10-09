@@ -687,6 +687,10 @@ ret	; 50433
 %endif ; C
 ; lcselect (PC only): line change by number (lcrequest/lcreqchoice from the PC keys).  Same tail
 ; as lcfound, but the line comes from the choice directly (+4 / +6 for PP / PK) instead of lchoicetab.
+; C: src/c/038_4FCE8_engine_input/lcselect.c
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/lcselect.inc"
+%else
 lcselect:
 push dword 14h	; 50434
 call __CHK	; 50439
@@ -759,6 +763,7 @@ pop esi	; 504D6
 pop ecx	; 504D7
 pop ebx	; 504D8
 ret	; 504D9
+%endif ; C
 ; doinput = 93G doinput from .0 on (the PC reads the pads in Readjoy1/2 and calls this per
 ; controlled player; regd0 dpad, regd1 new presses, regd2 changes, regd3 held; bit 4 B, 5 C, 6 A):
 ;   PC line change request -> lcselect; faceoff -> faceoffinput; pf2lcm -> lineinput; pfjoycon;

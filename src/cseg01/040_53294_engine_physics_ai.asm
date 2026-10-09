@@ -477,6 +477,10 @@ pop edx	; 53789
 pop ecx	; 5378A
 pop ebx	; 5378B
 ret	; 5378C
+; C: src/c/040_53294_engine_physics_ai/FacingBoards.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/FacingBoards.inc"
+%else
 FacingBoards:
 push dword 10h	; 5378D
 call __CHK	; 53792
@@ -540,6 +544,7 @@ pop edx	; 53828
 pop ecx	; 53829
 pop ebx	; 5382A
 ret	; 5382B
+%endif ; C
 ; checkcheck: 93G hockey93_03 checkcheck. Two players in contact: hold (holdcheck), B-check (Bcheck), hits into
 ;   the boards (FacingBoards), penalties (checkagr, AddPenalty), FallDown.
 checkcheck:

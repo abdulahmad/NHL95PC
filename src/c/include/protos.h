@@ -408,5 +408,30 @@ void __cdecl sub_B392C(int col);  /* graphics library: clear */
 void __cdecl sub_B3AA1(void *save);  /* graphics library: restore draw state */
 void __cdecl sub_91370(int art, int x, int y);  /* graphics library: draw art */
 void __cdecl sub_9132C(int bmp);  /* graphics library: free bitmap */
+int FacingBoards(Player *p);  /* 5378D */                 
+int QueueGoalieNote(void);  /* 62C37 */                   
+void QueueDeferredCall(void *fn, int a, int b, int c, int d, int e, int f, int g);
+void faceoffinput(Player *p);  /* 4FF0D */                
+void StartPenaltyShot(void);  /* 64398 */                 
+void MakeJerseyShape(unsigned char *buf, unsigned num, unsigned char c1, unsigned char c2);  /* 7A099 */
+void BlitJerseyDigit(unsigned char *dst, unsigned d, int c1, int c2, int right);
+void DrawDBErrorsScreen(int *sel, int *line, int *first);  /* 6EC95 */
+void DrawMenuBar(void *bar, int n, int col1, int col2, int col3);
+void FadeOutPalCycle(void);  /* 47C31 */                  
+int lcselect(Player *p, int n);  /* 50434 */              
+void DrawPanelLine(int side, int line);
+void SetDialogColors(int a, int b, int c, int d, int e);
+int SelectHilight(char *name, int *idx, unsigned char *league, int a, int b);
+void PlayHilight(void);
+void PenShotStart(short side);  /* 511B4 */               
+void SaveDialogBg(int x, int y, int w, int h);  /* 30E66 */
+void __cdecl sub_91400(int buf, int x, int y);  /* graphics library: grab screen rect */
+int SetupDemoGame(void);  /* 13FA7 */                     
+void BuildDefaultLines(void);
+void SetupTeamLines(int side);
+void ResetGameVars(void);
+int StartPreGame(int mode);
+void assintrostand(Player *p);  /* 4842A */               
+void SetRinkObject(int i, int v);  /* 614C2 */            
 
 #endif

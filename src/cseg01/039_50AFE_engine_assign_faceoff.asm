@@ -607,6 +607,10 @@ pop edx	; 511B0
 pop ecx	; 511B1
 pop ebx	; 511B2
 ret	; 511B3
+; C: src/c/039_50AFE_engine_assign_faceoff/PenShotStart.c
+%ifdef CBUILD
+%include "c/039_50AFE_engine_assign_faceoff/PenShotStart.inc"
+%else
 PenShotStart:
 push dword 10h	; 511B4
 call __CHK	; 511B9
@@ -667,6 +671,7 @@ pop edx	; 5125B
 pop ecx	; 5125C
 pop ebx	; 5125D
 ret	; 5125E
+%endif ; C
 ; C: src/c/039_50AFE_engine_assign_faceoff/ForceStartLineup.c
 %ifdef CBUILD
 %include "c/039_50AFE_engine_assign_faceoff/ForceStartLineup.inc"

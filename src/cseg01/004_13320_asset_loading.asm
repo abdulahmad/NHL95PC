@@ -1013,6 +1013,10 @@ pop edx	; 13FA3
 pop ecx	; 13FA4
 pop ebx	; 13FA5
 ret	; 13FA6
+; C: src/c/004_13320_asset_loading/SetupDemoGame.c
+%ifdef CBUILD
+%include "c/004_13320_asset_loading/SetupDemoGame.inc"
+%else
 SetupDemoGame:
 push dword 14h	; 13FA7
 call __CHK	; 13FAC
@@ -1068,6 +1072,7 @@ pop edx	; 14052
 pop ecx	; 14053
 pop ebx	; 14054
 ret	; 14055
+%endif ; C
 ResetGameVars:
 push dword 20h	; 14056
 call __CHK	; 1405B

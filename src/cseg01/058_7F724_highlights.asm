@@ -777,6 +777,10 @@ pop ebp	; 8006F
 pop edi	; 80070
 pop esi	; 80071
 ret 4	; 80072
+; C: src/c/058_7F724_highlights/ViewHilights.c
+%ifdef CBUILD
+%include "c/058_7F724_highlights/ViewHilights.inc"
+%else
 ViewHilights:
 push dword 4Ch	; 80075
 call __CHK	; 8007A
@@ -831,6 +835,7 @@ pop edx	; 80118
 pop ecx	; 80119
 pop ebx	; 8011A
 ret	; 8011B
+%endif ; C
 PlayHilight:
 push dword 328h	; 8011C
 call __CHK	; 80121
