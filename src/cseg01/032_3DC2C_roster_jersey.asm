@@ -2771,6 +2771,10 @@ pop ebp	; 3FEEA
 pop edi	; 3FEEB
 pop esi	; 3FEEC
 ret 10h	; 3FEED
+; C: src/c/032_3DC2C_roster_jersey/TradeRosterCmp.c
+%ifdef CBUILD
+%include "c/032_3DC2C_roster_jersey/TradeRosterCmp.inc"
+%else
 TradeRosterCmp:
 push dword 8	; 3FEF0
 call __CHK	; 3FEF5
@@ -2818,6 +2822,7 @@ je short TradeRosterCmp.3	; 3FF49
 mov eax, 1	; 3FF4B
 pop ebx	; 3FF50
 ret	; 3FF51
+%endif ; C
 TradeScreen:
 push dword 654h	; 3FF52
 call __CHK	; 3FF57

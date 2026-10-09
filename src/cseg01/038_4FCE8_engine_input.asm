@@ -639,6 +639,10 @@ xor eax, eax	; 503C6
 jmp near CanBlockShot_ret6	; 503C8
 ; holdplayer = 93G holdplayer (A button, not the puck carrier) with two PC checks first:
 ;   OppInReach -> hold anim 873h;  CanBlockShot -> dive (BlockShotDive);  else Acheck on SortCords[impactp].
+; C: src/c/038_4FCE8_engine_input/holdplayer.c
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/holdplayer.inc"
+%else
 holdplayer:
 push dword 0Ch	; 503CD
 call __CHK	; 503D2
@@ -680,6 +684,7 @@ call Acheck	; 5042C
 pop edx	; 50431
 pop ebx	; 50432
 ret	; 50433
+%endif ; C
 ; lcselect (PC only): line change by number (lcrequest/lcreqchoice from the PC keys).  Same tail
 ; as lcfound, but the line comes from the choice directly (+4 / +6 for PP / PK) instead of lchoicetab.
 lcselect:

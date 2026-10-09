@@ -385,6 +385,10 @@ mov eax, edi	; 6D77A
 call LoadRosterList	; 6D77C
 call DrawEditRosters	; 6D781
 jmp near RunEditRosters_ret5	; 6D786
+; C: src/c/052_6D2F8_create_player/ComparePlayerEntry.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/ComparePlayerEntry.inc"
+%else
 ComparePlayerEntry:
 push dword 8	; 6D78B
 call __CHK	; 6D790
@@ -432,6 +436,7 @@ je short ComparePlayerEntry.3	; 6D7E4
 mov eax, 1	; 6D7E6
 pop ebx	; 6D7EB
 ret	; 6D7EC
+%endif ; C
 ShellSortBytes:
 push dword 28h	; 6D7ED
 call __CHK	; 6D7F2
@@ -2215,6 +2220,10 @@ pop edi	; 6ED35
 pop esi	; 6ED36
 pop ecx	; 6ED37
 ret	; 6ED38
+; C: src/c/052_6D2F8_create_player/ShowDBError.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/ShowDBError.inc"
+%else
 ShowDBError:
 push dword 18h	; 6ED39
 call __CHK	; 6ED3E
@@ -2244,6 +2253,7 @@ pop ebp	; 6ED8B
 pop edi	; 6ED8C
 pop esi	; 6ED8D
 ret	; 6ED8E
+%endif ; C
 CheckTeamLines:
 push dword 78h	; 6ED8F
 call __CHK	; 6ED94

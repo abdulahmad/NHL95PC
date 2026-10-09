@@ -1,4 +1,5 @@
 function,address,size,segment,c_file,status,notes
+DiskFreeBytes,106C8,74,001_10010_main_startup,src/c/001_10010_main_startup/DiskFreeBytes.c,matched,
 DrawRinkEndArt,11136,43,001_10010_main_startup,src/c/001_10010_main_startup/DrawRinkEndArt.c,matched,
 GetMemListHead,10010,26,001_10010_main_startup,src/c/001_10010_main_startup/GetMemListHead.c,matched,
 ResetInputSampling,1145F,59,001_10010_main_startup,src/c/001_10010_main_startup/ResetInputSampling.c,matched,
@@ -7,8 +8,10 @@ ReplayIsEmpty,12034,41,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/ReplayI
 assinsert,12011,35,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/assinsert.c,matched,
 assreplace,11FF4,29,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/assreplace.c,matched,
 FileExists,142E7,55,004_13320_asset_loading,src/c/004_13320_asset_loading/FileExists.c,matched,
+LoadTransparentRinkEndOverlay,13A2F,98,004_13320_asset_loading,src/c/004_13320_asset_loading/LoadTransparentRinkEndOverlay.c,matched,
 FileClose,1457C,38,005_1431E_file_utils,src/c/005_1431E_file_utils/FileClose.c,matched,
 FileCreate,14566,22,005_1431E_file_utils,src/c/005_1431E_file_utils/FileCreate.c,matched,
+GetLeagueDBSizes,149BF,97,005_1431E_file_utils,src/c/005_1431E_file_utils/GetLeagueDBSizes.c,matched,
 GetLineEnergies,14BEF,51,005_1431E_file_utils,src/c/005_1431E_file_utils/GetLineEnergies.c,matched,
 MakePath,1431E,74,005_1431E_file_utils,src/c/005_1431E_file_utils/MakePath.c,matched,
 PanelRemovePenalty,14CA0,81,005_1431E_file_utils,src/c/005_1431E_file_utils/PanelRemovePenalty.c,matched,
@@ -38,6 +41,7 @@ DlgReturnZero,2FED2,13,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DlgRe
 DrawButtons,30AE2,52,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawButtons.c,matched,
 GrowToButton,30F5F,85,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButton.c,nonmatching,same blocks; original keeps w in edx and v in ecx (then edx / eax in the second half); this draft moves w to ecx. 10-min cap
 InitScrollBar,30BF3,74,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/InitScrollBar.c,matched,
+MeasureTextLine,309E4,40,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/MeasureTextLine.c,matched,
 RestoreDialogBg,30F12,77,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/RestoreDialogBg.c,matched,
 SetListItemColors,30209,53,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/SetListItemColors.c,matched,
 MenuExit,3270B,16,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MenuExit.c,matched,
@@ -51,8 +55,13 @@ TeamSelCancel,38B3A,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamS
 TeamSelDone,38B25,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelDone.c,matched,
 WriteTeamRec,3A2B8,54,029_380E9_league_setup,src/c/029_380E9_league_setup/WriteTeamRec.c,matched,
 TradeCancel,3EF27,21,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeCancel.c,matched,
+TradeRosterCmp,3FEF0,98,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeRosterCmp.c,matched,
+FmtFromLeague,41171,87,033_40183_trades,src/c/033_40183_trades/FmtFromLeague.c,matched,
 LeagueCheckStub,41337,13,033_40183_trades,src/c/033_40183_trades/LeagueCheckStub.c,matched,
+MsgCopyingDatabases,414E0,54,033_40183_trades,src/c/033_40183_trades/MsgCopyingDatabases.c,matched,
 DateKey,41C79,34,034_41B80_schedule,src/c/034_41B80_schedule/DateKey.c,nonmatching,"original keeps day in edx and builds the month in ebx (lea ebx,[eax+0Ch] / mov ebx,eax); this draft moves day to ebx. 10-min cap"
+NormalizeDate,41C9B,41,034_41B80_schedule,src/c/034_41B80_schedule/NormalizeDate.c,matched,
+SwapInt,42F19,41,034_41B80_schedule,src/c/034_41B80_schedule/SwapInt.c,matched,
 RandMod,45282,36,035_45282_options_settings,src/c/035_45282_options_settings/RandMod.c,matched,
 SimAddPair,452A6,31,035_45282_options_settings,src/c/035_45282_options_settings/SimAddPair.c,nonmatching,original keeps pairs in edx and the count in esi; this draft swaps them (with or without a count local). 10-min cap
 AddStar,48789,80,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/AddStar.c,matched,
@@ -71,12 +80,14 @@ puckunflip,4D907,49,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_
 rtss,4F990,11,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/rtss.c,matched,
 Acheck,4FFAE,64,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/Acheck.c,matched,
 CenterMouse,50ADE,32,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CenterMouse.c,matched,
+holdplayer,503CD,103,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/holdplayer.c,matched,
 joyq_flush,4FD47,27,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/joyq_flush.c,matched,
 joyq_peek,4FD62,44,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/joyq_peek.c,matched,
 joyq_pop,4FCE8,95,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/joyq_pop.c,nonmatching,draft: asm saves ebx/ecx/edx/esi and keeps count in edx (eax untouched until end; maybe returns joysampling)
 AllInPlace,51440,61,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/AllInPlace.c,matched,
 ForceStartLineup,5125F,72,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/ForceStartLineup.c,matched,
 PassCompleted,50AFE,87,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/PassCompleted.c,matched,
+SetPenaltyStrength,510A9,108,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/SetPenaltyStrength.c,matched,
 assbenchwait,526ED,51,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/assbenchwait.c,matched,
 CompShoot,55A35,106,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/CompShoot.c,matched,
 Findhittype,579FF,63,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/Findhittype.c,matched,
@@ -152,16 +163,22 @@ ClearInputQueue,6B3D7,57,050_6B093_joystick_calibration,src/c/050_6B093_joystick
 GetInputEvent,6B391,70,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/GetInputEvent.c,matched,
 InputRemove,6B47C,63,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/InputRemove.c,matched,
 CarTeamRecPtr,6CB6B,37,051_6C2F9_database_save,src/c/051_6C2F9_database_save/CarTeamRecPtr.c,matched,
+DrawDatabaseName,6D256,67,051_6C2F9_database_save,src/c/051_6C2F9_database_save/DrawDatabaseName.c,matched,
 DrawRosterPanel,6D299,95,051_6C2F9_database_save,src/c/051_6C2F9_database_save/DrawRosterPanel.c,matched,
 KeyDbPtr,6CBB7,21,051_6C2F9_database_save,src/c/051_6C2F9_database_save/KeyDbPtr.c,matched,
 TeamRecPtr,6CB90,39,051_6C2F9_database_save,src/c/051_6C2F9_database_save/TeamRecPtr.c,matched,
+ComparePlayerEntry,6D78B,98,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ComparePlayerEntry.c,matched,
 CopyRoster1Rec,6DE4C,50,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CopyRoster1Rec.c,matched,
 CountSelected,6DA88,59,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CountSelected.c,nonmatching,original keeps the list pointer in edx and the count in eax; this draft swaps them. 10-min cap
 CreatePlayerNop,6FA72,11,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CreatePlayerNop.c,matched,
 EditRostersReturn,6D5BB,21,052_6D2F8_create_player,src/c/052_6D2F8_create_player/EditRostersReturn.c,matched,
 RatingToFloat,6F6AD,39,052_6D2F8_create_player,src/c/052_6D2F8_create_player/RatingToFloat.c,matched,
+ShowDBError,6ED39,86,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShowDBError.c,matched,
 DbDialogHitTest,72A5C,106,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/DbDialogHitTest.c,nonmatching,C matches the code; the asm block also holds the DrawDbList jump table after the ret (size 82 vs 106); mark with an end label or move the table
+GameRosterCmp,76A93,98,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/GameRosterCmp.c,matched,
+PrintLineEdStatus,76771,95,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/PrintLineEdStatus.c,matched,
 RandLfsrByte,7665E,47,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/RandLfsrByte.c,nonmatching,"original does byte ops (dl = bit, dh = *s shr 1, bl = dh ^ B8h, push ebx too); this draft widens to 32 bits. 10-min cap"
+SetPalette768,76614,74,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/SetPalette768.c,matched,
 MenuReturnToLineEditor,79DD1,16,055_78346_team_select,src/c/055_78346_team_select/MenuReturnToLineEditor.c,matched,
 CtlDlgHitTest,7D61F,82,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlDlgHitTest.c,matched,
 CtlSwapTeamFlag,7CC8A,91,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlSwapTeamFlag.c,matched,
@@ -178,6 +195,7 @@ ClearSpeechSlot,833C5,53,060_8291E_sound_config,src/c/060_8291E_sound_config/Cle
 FindFreeSpeechSlot,83E6D,63,061_83459_speech,src/c/061_83459_speech/FindFreeSpeechSlot.c,nonmatching,"registers only: speechbank in ebx in the original, ecx here. 10-min cap"
 FindLoadedSpeechSlot,83EAC,63,061_83459_speech,src/c/061_83459_speech/FindLoadedSpeechSlot.c,nonmatching,"registers only: speechbank in ebx in the original, ecx here. 10-min cap"
 FindSpeechSlot,83EEB,74,061_83459_speech,src/c/061_83459_speech/FindSpeechSlot.c,matched,
+MakeSampleRoom,84205,106,061_83459_speech,src/c/061_83459_speech/MakeSampleRoom.c,matched,
 MusicChanCmd3,8378C,28,061_83459_speech,src/c/061_83459_speech/MusicChanCmd3.c,matched,
 ReadCString,8385F,56,061_83459_speech,src/c/061_83459_speech/ReadCString.c,matched,
 ResetSampleReq,83520,90,061_83459_speech,src/c/061_83459_speech/ResetSampleReq.c,matched,
@@ -193,6 +211,9 @@ SayOneMinuteLeft,854AC,91,062_842BA_announcer,src/c/062_842BA_announcer/SayOneMi
 SayScorePeriod,84657,93,062_842BA_announcer,src/c/062_842BA_announcer/SayScorePeriod.c,matched,
 MenuPlayNextGame,86627,16,063_85924_demo_savegame,src/c/063_85924_demo_savegame/MenuPlayNextGame.c,matched,
 MenuReturnToSportsCentral,86637,16,063_85924_demo_savegame,src/c/063_85924_demo_savegame/MenuReturnToSportsCentral.c,matched,
+POPreSimConfFinals,8803B,91,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POPreSimConfFinals.c,matched,
+POPreSimRound1,87F85,91,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POPreSimRound1.c,matched,
+POPreSimRound2,87FE0,91,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POPreSimRound2.c,matched,
 POReturnZero,89B5C,13,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POReturnZero.c,matched,
 POSetSeriesTeams,87520,131,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSetSeriesTeams.c,nonmatching,original keeps s in eax and ORs the flags into ecx; this draft moves s to ecx. 10-min cap
 stub_8C1B7,8C1B7,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C1B7.c,matched,

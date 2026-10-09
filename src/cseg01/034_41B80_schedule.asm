@@ -124,6 +124,10 @@ sub eax, ebx	; 41C95
 add eax, edx	; 41C97
 pop ebx	; 41C99
 ret	; 41C9A
+; C: src/c/034_41B80_schedule/NormalizeDate.c
+%ifdef CBUILD
+%include "c/034_41B80_schedule/NormalizeDate.inc"
+%else
 NormalizeDate:
 push dword 0Ch	; 41C9B
 call __CHK	; 41CA0
@@ -145,6 +149,7 @@ jmp short NormalizeDate.1	; 41CBF
 pop ecx	; 41CC1
 pop ebx	; 41CC2
 ret	; 41CC3
+%endif ; C
 UpdateSeasonSchedule:
 push dword 60h	; 41CC4
 call __CHK	; 41CC9
@@ -1590,6 +1595,10 @@ cmp esi, eax	; 42F09
 jl near SortStandings.1	; 42F0B
 add esp, byte 28h	; 42F11
 jmp near UpdateSeasonSchedule_pop3	; 42F14
+; C: src/c/034_41B80_schedule/SwapInt.c
+%ifdef CBUILD
+%include "c/034_41B80_schedule/SwapInt.inc"
+%else
 SwapInt:
 push dword 0Ch	; 42F19
 call __CHK	; 42F1E
@@ -1610,6 +1619,7 @@ xor dword [eax], esi	; 42F3D
 pop esi	; 42F3F
 pop ecx	; 42F40
 ret	; 42F41
+%endif ; C
 SetSeriesTeams:
 push dword 8	; 42F42
 call __CHK	; 42F47

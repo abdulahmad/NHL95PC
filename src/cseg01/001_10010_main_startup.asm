@@ -528,6 +528,10 @@ pop edx	; 106C4
 pop ecx	; 106C5
 pop ebx	; 106C6
 ret	; 106C7
+; C: src/c/001_10010_main_startup/DiskFreeBytes.c
+%ifdef CBUILD
+%include "c/001_10010_main_startup/DiskFreeBytes.inc"
+%else
 DiskFreeBytes:
 push dword 1Ch	; 106C8
 call __CHK	; 106CD
@@ -556,6 +560,7 @@ pop edx	; 1070E
 pop ecx	; 1070F
 pop ebx	; 10710
 ret	; 10711
+%endif ; C
 SetupControllers:
 push dword 1Ch	; 10712
 call __CHK	; 10717

@@ -4008,6 +4008,10 @@ sar eax, 18h	; 76608
 cmp ecx, eax	; 7660B
 jne short FadePalStepSlow.8	; 7660D
 jmp near FadePalStep_ret	; 7660F
+; C: src/c/054_737AA_line_editor_rosters/SetPalette768.c
+%ifdef CBUILD
+%include "c/054_737AA_line_editor_rosters/SetPalette768.inc"
+%else
 SetPalette768:
 push dword 28h	; 76614
 call __CHK	; 76619
@@ -4041,6 +4045,7 @@ pop edx	; 7665A
 pop ecx	; 7665B
 pop ebx	; 7665C
 ret	; 7665D
+%endif ; C
 RandLfsrByte:
 push dword 0Ch	; 7665E
 call __CHK	; 76663
@@ -4142,6 +4147,10 @@ db 047h,06Fh,061h,06Ch,069h,065h,00h
 str_RosterIncomplete2:
 db 059h,06Fh,075h,072h,020h,072h,06Fh,073h,074h,065h,072h,020h,069h,073h,020h,069h
 db 06Eh,063h,06Fh,06Dh,070h,06Ch,065h,074h,065h,02Eh,00h
+; C: src/c/054_737AA_line_editor_rosters/PrintLineEdStatus.c
+%ifdef CBUILD
+%include "c/054_737AA_line_editor_rosters/PrintLineEdStatus.inc"
+%else
 PrintLineEdStatus:
 push dword 28h	; 76771
 call __CHK	; 76776
@@ -4185,6 +4194,7 @@ pop edi	; 767CC
 pop esi	; 767CD
 pop ecx	; 767CE
 ret	; 767CF
+%endif ; C
 GameLineEditor:
 push dword 68h	; 767D0
 call __CHK	; 767D5
@@ -4371,6 +4381,10 @@ pop ebp	; 76A8F
 pop edi	; 76A90
 pop esi	; 76A91
 ret	; 76A92
+; C: src/c/054_737AA_line_editor_rosters/GameRosterCmp.c
+%ifdef CBUILD
+%include "c/054_737AA_line_editor_rosters/GameRosterCmp.inc"
+%else
 GameRosterCmp:
 push dword 8	; 76A93
 call __CHK	; 76A98
@@ -4418,6 +4432,7 @@ je short GameRosterCmp.3	; 76AEC
 mov eax, 1	; 76AEE
 pop ebx	; 76AF3
 ret	; 76AF4
+%endif ; C
 GameLineEditorLoop:
 push dword 148h	; 76AF5
 call __CHK	; 76AFA

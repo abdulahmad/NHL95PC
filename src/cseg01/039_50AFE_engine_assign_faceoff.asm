@@ -492,6 +492,10 @@ mov word [passplayer], 0FFFFh	; 5109B
 jmp near CanBlockShot_ret5	; 510A4
 ; SetPenaltyStrength: PC-new. Each penalized roster player (tmpdst > 0) removes one skater slot (from slot 5
 ;   down): position -1, temp5 -100; tmap = skaters left.
+; C: src/c/039_50AFE_engine_assign_faceoff/SetPenaltyStrength.c
+%ifdef CBUILD
+%include "c/039_50AFE_engine_assign_faceoff/SetPenaltyStrength.inc"
+%else
 SetPenaltyStrength:
 push dword 14h	; 510A9
 call __CHK	; 510AE
@@ -537,6 +541,7 @@ pop esi	; 51111
 pop edx	; 51112
 pop ebx	; 51113
 ret	; 51114
+%endif ; C
 ; TakePlayerFromBox: PC-new. Sort object eax takes the first roster player whose status is 7 (penalty over):
 ;   leaves the box (SPA 7BFh, temp1 5Ah), roster status 3, tmpdst -2.
 TakePlayerFromBox:

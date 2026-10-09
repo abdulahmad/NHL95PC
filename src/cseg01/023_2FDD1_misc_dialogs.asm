@@ -1067,6 +1067,10 @@ pop ebp	; 309DE
 pop edi	; 309DF
 pop esi	; 309E0
 ret 8	; 309E1
+; C: src/c/023_2FDD1_misc_dialogs/MeasureTextLine.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/MeasureTextLine.inc"
+%else
 MeasureTextLine:
 push dword 14h	; 309E4
 call __CHK	; 309E9
@@ -1088,6 +1092,7 @@ pop ebp	; 30A08
 pop edi	; 30A09
 pop esi	; 30A0A
 ret	; 30A0B
+%endif ; C
 SetDialogColors:
 push dword 4	; 30A0C
 call __CHK	; 30A11

@@ -291,5 +291,46 @@ int sub_B3464(void);  /* joystick library: read both pads */
 void CompShoot(Player *p);  /* 55A35 */                   
 void passmode(Player *p);  /* 5514E */                    
 void dopass(Player *p);  /* 54DF4 */                      
+void MeasureTextLine(char *s, int *maxw, int *total, int add);  /* 309E4 */
+int __cdecl fputchar(char *s);  /* text library at 90AC4 (label kept): text width in pixels, stack arg */
+void NormalizeDate(unsigned char *month, unsigned char *day);  /* 41C9B */
+void SwapInt(int a, int b, int *arr);  /* 42F19 */        
+void MsgCopyingDatabases(int arg);  /* 414E0 */           
+int MessageBox(int x, int y, char *msg, int type, int a, int b, int c, int d, int e);  /* 31013 */
+char *strupr(char *s);  /* Watcom CRT strupr_ */          
+void PrintCenteredText(int y, char *s);  /* 17573 */      
+unsigned DiskFreeBytes(int drive);  /* 106C8 */           
+unsigned _dos_getdiskfree(unsigned drive, void *d);  /* Watcom CRT _dos_getdiskfree_ */
+void __cdecl FatalError(char *msg);  /* B2CD8 */          
+void SetPalette768(unsigned char *pal);  /* 76614 */      
+void __cdecl sub_B4C84(void);  /* video library: wait for retrace */
+void __cdecl sub_B4B88(int first, int count, unsigned char *rgb);  /* video library: set palette entries */
+void ShowDBError(int *sel, int *state, int msg, int arg);  /* 6ED39 */
+void __cdecl sub_B4BA8(void);  /* video library */        
+void __cdecl sub_9121C(int buf);  /* graphics library */  
+void ErrorScreenWait(int msg, int arg, char *title, int type);  /* 6EAB5 */
+void FmtFromLeague(char *dst, char *name, char *file);  /* 41171 */
+unsigned _fstrcspn(const char __far *s, const char __far *set);  /* Watcom CRT _fstrcspn_ */
+void POPreSimRound1(unsigned char *po, int a, int b);  /* 87F85 */
+void POSimSeriesTeamWins(unsigned char *s, int team);
+void POSimSeries(unsigned char *s, int games);
+void POPreSimRound2(unsigned char *po, int a, int b);  /* 87FE0 */
+void POPreSimConfFinals(unsigned char *po, int a, int b);  /* 8803B */
+int TradeRosterCmp(unsigned char *a, unsigned char *b);  /* 3FEF0 */
+int strcmp(const char *a, const char *b);  /* Watcom CRT strcmp_ */
+int ComparePlayerEntry(unsigned char *a, unsigned char *b);  /* 6D78B */
+int GameRosterCmp(unsigned char *a, unsigned char *b);  /* 76A93 */
+void holdplayer(Player *p);  /* 503CD */         
+int OppInReach(Player *p);
+void SetPenaltyStrength(void);  /* 510A9 */               
+void MakeSampleRoom(void);  /* 84205 */                   
+void FreeUnrequestedSamples(void);
+void LoadTransparentRinkEndOverlay(void);  /* 13A2F */    
+int __cdecl sub_8E8A0(char *path, int flags);  /* graphics library: load bank */
+int __cdecl sub_B30B4(int bank, char *name);  /* graphics library: find art */
+void PrintLineEdStatus(int x, int y, char *s);  /* 76771 */
+void __cdecl sub_90D20(int x, int y, int w, int h, int col);  /* graphics library: fill rect */
+int GetLeagueDBSizes(char *drive, int *kb, char *ext);  /* 149BF */
+unsigned unknown_libname_1(const char *path, unsigned attr, void *ft);  /* Watcom CRT _dos_findfirst */
 
 #endif

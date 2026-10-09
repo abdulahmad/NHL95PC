@@ -645,6 +645,10 @@ pop edx	; 149BB
 pop ecx	; 149BC
 pop ebx	; 149BD
 ret	; 149BE
+; C: src/c/005_1431E_file_utils/GetLeagueDBSizes.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/GetLeagueDBSizes.inc"
+%else
 GetLeagueDBSizes:
 push dword 68h	; 149BF
 call __CHK	; 149C4
@@ -684,6 +688,7 @@ pop edi	; 14A1C
 pop esi	; 14A1D
 pop ecx	; 14A1E
 ret	; 14A1F
+%endif ; C
 DrawPanelScore:
 push dword 1Ch	; 14A20
 call __CHK	; 14A25

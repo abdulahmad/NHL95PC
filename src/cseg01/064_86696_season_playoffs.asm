@@ -2162,6 +2162,10 @@ lea eax, [byte esp+040h]	; 87F74
 call FileClose	; 87F78
 add esp, byte 50h	; 87F7D
 jmp near POCreateSchedule_x	; 87F80
+; C: src/c/064_86696_season_playoffs/POPreSimRound1.c
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POPreSimRound1.inc"
+%else
 POPreSimRound1:
 push dword 10h	; 87F85
 call __CHK	; 87F8A
@@ -2208,6 +2212,11 @@ pop edi	; 87FDC
 pop esi	; 87FDD
 pop ecx	; 87FDE
 ret	; 87FDF
+%endif ; C
+; C: src/c/064_86696_season_playoffs/POPreSimRound2.c
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POPreSimRound2.inc"
+%else
 POPreSimRound2:
 push dword 10h	; 87FE0
 call __CHK	; 87FE5
@@ -2254,6 +2263,11 @@ pop edi	; 88037
 pop esi	; 88038
 pop ecx	; 88039
 ret	; 8803A
+%endif ; C
+; C: src/c/064_86696_season_playoffs/POPreSimConfFinals.c
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POPreSimConfFinals.inc"
+%else
 POPreSimConfFinals:
 push dword 10h	; 8803B
 call __CHK	; 88040
@@ -2300,6 +2314,7 @@ pop edi	; 88092
 pop esi	; 88093
 pop ecx	; 88094
 ret	; 88095
+%endif ; C
 POHandleElimination:
 push dword 9Ch	; 88096
 call __CHK	; 8809B

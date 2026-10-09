@@ -1154,6 +1154,10 @@ pop edx	; 4116D
 pop ecx	; 4116E
 pop ebx	; 4116F
 ret	; 41170
+; C: src/c/033_40183_trades/FmtFromLeague.c
+%ifdef CBUILD
+%include "c/033_40183_trades/FmtFromLeague.inc"
+%else
 FmtFromLeague:
 push dword 20h	; 41171
 call __CHK	; 41176
@@ -1187,6 +1191,7 @@ pop edi	; 411C4
 pop esi	; 411C5
 pop ecx	; 411C6
 ret	; 411C7
+%endif ; C
 BuildLeagueList:
 push dword 70h	; 411C8
 call __CHK	; 411CD
@@ -1470,6 +1475,10 @@ add esp, byte 28h	; 414D8
 pop edi	; 414DB
 pop esi	; 414DC
 ret 10h	; 414DD
+; C: src/c/033_40183_trades/MsgCopyingDatabases.c
+%ifdef CBUILD
+%include "c/033_40183_trades/MsgCopyingDatabases.inc"
+%else
 MsgCopyingDatabases:
 push dword 24h	; 414E0
 call __CHK	; 414E5
@@ -1491,6 +1500,7 @@ pop edx	; 41512
 pop ecx	; 41513
 pop ebx	; 41514
 ret	; 41515
+%endif ; C
 CopyHumanTeamDBs:
 push dword 0E4h	; 41516
 call __CHK	; 4151B

@@ -603,6 +603,10 @@ cmp esi, byte 17h	; 13A1C
 jl near LoadPlayerPhotos.1	; 13A1F
 call LoadPhotoBankF	; 13A25
 jmp near LoadPhotoBankF_x	; 13A2A
+; C: src/c/004_13320_asset_loading/LoadTransparentRinkEndOverlay.c
+%ifdef CBUILD
+%include "c/004_13320_asset_loading/LoadTransparentRinkEndOverlay.inc"
+%else
 LoadTransparentRinkEndOverlay:
 push dword 28h	; 13A2F
 call __CHK	; 13A34
@@ -637,6 +641,7 @@ pop edx	; 13A8D
 pop ecx	; 13A8E
 pop ebx	; 13A8F
 ret	; 13A90
+%endif ; C
 LoadGameGfx:
 push dword 3Ch	; 13A91
 call __CHK	; 13A96

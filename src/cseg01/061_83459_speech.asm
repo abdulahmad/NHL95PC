@@ -1237,6 +1237,10 @@ add eax, ebx	; 841F4
 mov dword [byte eax+022h], 0	; 841F6
 add esp, byte 2Ch	; 841FD
 jmp near OpenSpeechBank_ret	; 84200
+; C: src/c/061_83459_speech/MakeSampleRoom.c
+%ifdef CBUILD
+%include "c/061_83459_speech/MakeSampleRoom.inc"
+%else
 MakeSampleRoom:
 push dword 14h	; 84205
 call __CHK	; 8420A
@@ -1274,6 +1278,7 @@ pop edx	; 8426B
 pop ecx	; 8426C
 pop ebx	; 8426D
 ret	; 8426E
+%endif ; C
 EnsureSampleRoom:
 push dword 4	; 8426F
 call __CHK	; 84274
