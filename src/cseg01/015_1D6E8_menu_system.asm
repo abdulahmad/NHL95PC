@@ -4,11 +4,11 @@ bits 32
 section s_1D6E8 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, asc_C0B54, asc_C0B5C, asc_C0C28, asc_C0C2C, asc_C671E, asc_C6731
 extern asc_C6747, asc_C675B, asc_C6779, mi_9394Season, mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode
-extern byte_DC836, byte_DCFD8, byte_DD058, dword_C65B0, dword_C65B4, statsplayoffs, dword_C6A60, dword_DC238
+extern byte_DC836, byte_DCFD8, byte_DD058, statscategory, dword_C65B4, statsplayoffs, dword_C6A60, dword_DC238
 extern dword_DC640, dword_DC6B8, dword_DC6BC, dword_DC720, dword_DC73C, dword_DC750, dword_DC754, playofftree
 extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD120, dword_EA0DC, jctime, memcmp_
 extern memcpy_, off_D3078, sprintf_, strcat_, strlen_, strncpy_, FileOpenRead, FileClose
-extern FileReadAt, sub_18D03, sub_18D0D, sub_1D6BE, sub_24453, sub_26B5A, sub_27BC3, sub_27F9C
+extern FileReadAt, DeskSetExit3b, ShowPlayerStatsItem, sub_1D6BE, sub_24453, sub_26B5A, sub_27BC3, sub_27F9C
 extern sub_29681, sub_6B391, sub_6B3D7, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_8CCA8
 extern sub_903F0, sub_90F38, sub_91370, sub_91400, sub_91964, MouseSetPos, sub_B2E1B, sub_B4DD4
 extern unk_DC834, unk_DC837, unk_DC847, unk_DD0D8
@@ -1044,11 +1044,11 @@ cmp dword [statsplayoffs], byte 0	; 1E3E6
 jne short loc_1E400	; 1E3ED
 mov eax, dword [dword eax+dword_DC640]	; 1E3EF
 mov dword [byte esp+074h], eax	; 1E3F5
-mov dword [dword_C65B0], eax	; 1E3F9
+mov dword [statscategory], eax	; 1E3F9
 jmp short loc_1E40F	; 1E3FE
 loc_1E400:
 mov eax, dword [dword eax+playofftree]	; 1E400
-mov dword [dword_C65B0], eax	; 1E406
+mov dword [statscategory], eax	; 1E406
 mov eax, dword [byte esp+070h]	; 1E40B
 loc_1E40F:
 mov dword [dword_C65B4], eax	; 1E40F
@@ -1715,15 +1715,15 @@ cmp dword [statsplayoffs], byte 0	; 1EC6D
 jne short loc_1EC87	; 1EC74
 mov eax, dword [dword eax+dword_DC640]	; 1EC76
 mov dword [byte esp+074h], eax	; 1EC7C
-mov dword [dword_C65B0], eax	; 1EC80
+mov dword [statscategory], eax	; 1EC80
 jmp short loc_1EC96	; 1EC85
 loc_1EC87:
 mov eax, dword [dword eax+playofftree]	; 1EC87
-mov dword [dword_C65B0], eax	; 1EC8D
+mov dword [statscategory], eax	; 1EC8D
 mov eax, dword [byte esp+070h]	; 1EC92
 loc_1EC96:
 mov dword [dword_C65B4], eax	; 1EC96
-call sub_18D03	; 1EC9B
+call DeskSetExit3b	; 1EC9B
 xor edi, edi	; 1ECA0
 mov dword [byte esp+064h], edi	; 1ECA2
 mov dword [byte esp+060h], edi	; 1ECA6
@@ -2746,7 +2746,7 @@ rep movsd	; 1F98B
 xor edx, edx	; 1F98D
 mov dword [dword_C6A60], edx	; 1F98F
 mov dword [dword_DD120], edx	; 1F995
-call sub_18D0D	; 1F99B
+call ShowPlayerStatsItem	; 1F99B
 mov dword [byte esp+034h], edx	; 1F9A0
 mov dword [byte esp+030h], edx	; 1F9A4
 mov dword [byte esp+02Ch], edx	; 1F9A8

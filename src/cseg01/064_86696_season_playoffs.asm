@@ -13,8 +13,8 @@ extern byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, byte_C6DB2, s
 extern musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A
 extern code_1A8AA, code_1A922, postate
 extern lgstate, gameresult, gamemode, gameopts, ctl1team
-extern ctl2team, ctl1side, ctl2side, teamdivflags, teamconf, confteams, dword_C65AC, dword_C65C0
-extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C6D26, dword_C6DBA, dword_C71CC, dword_C71D0
+extern ctl2team, ctl1side, ctl2side, teamdivflags, teamconf, confteams, dword_C65AC, teamstatscb
+extern skaterstatscb, goaliestatscb, dword_C65CC, dword_C65D0, dword_C6D26, dword_C6DBA, dword_C71CC, dword_C71D0
 extern dword_C71D4, dword_C71D8, dword_C71DC, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
 extern dword_CE5C3, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
 extern keydb_size, musichandle, dword_D2884, dword_D288C, seriesgameno, dword_D2B70, dword_D2BEC, musicslot
@@ -3834,16 +3834,16 @@ mov dword [byte esp+024h], 1	; 893EB
 call sub_479E9	; 893F3
 call SetSideControls	; 893F8
 call SetupControllers	; 893FD
-mov dword [dword_C65C0], sub_20016	; 89402
-mov dword [dword_C65C4], sub_20171	; 8940C
-mov dword [dword_C65C8], sub_202E5	; 89416
+mov dword [teamstatscb], sub_20016	; 89402
+mov dword [skaterstatscb], sub_20171	; 8940C
+mov dword [goaliestatscb], sub_202E5	; 89416
 mov dword [dword_C65CC], sub_203FA	; 89420
 mov dword [dword_C65D0], sub_2051A	; 8942A
 mov eax, ebp	; 89434
 call PlayGame	; 89436
-mov dword [dword_C65C0], unk_208EF	; 8943B
-mov dword [dword_C65C4], unk_20A46	; 89445
-mov dword [dword_C65C8], unk_20BBD	; 8944F
+mov dword [teamstatscb], unk_208EF	; 8943B
+mov dword [skaterstatscb], unk_20A46	; 89445
+mov dword [goaliestatscb], unk_20BBD	; 8944F
 mov dword [dword_C65CC], sub_20D97	; 89459
 mov dword [dword_C65D0], unk_20EB7	; 89463
 mov word [scrpitch], 50h	; 8946D
@@ -4177,16 +4177,16 @@ xor edi, edi	; 898E9
 mov dword [byte esp+020h], edi	; 898EB
 test byte [byte esp+02Ch], 4	; 898EF
 jne short .29	; 898F4
-mov dword [dword_C65C0], sub_20016	; 898F6
-mov dword [dword_C65C4], sub_20171	; 89900
-mov dword [dword_C65C8], sub_202E5	; 8990A
+mov dword [teamstatscb], sub_20016	; 898F6
+mov dword [skaterstatscb], sub_20171	; 89900
+mov dword [goaliestatscb], sub_202E5	; 8990A
 mov dword [dword_C65CC], sub_203FA	; 89914
 mov dword [dword_C65D0], sub_2051A	; 8991E
 mov eax, ebp	; 89928
 call PlayGame	; 8992A
-mov dword [dword_C65C0], unk_208EF	; 8992F
-mov dword [dword_C65C4], unk_20A46	; 89939
-mov dword [dword_C65C8], unk_20BBD	; 89943
+mov dword [teamstatscb], unk_208EF	; 8992F
+mov dword [skaterstatscb], unk_20A46	; 89939
+mov dword [goaliestatscb], unk_20BBD	; 89943
 mov dword [dword_C65CC], sub_20D97	; 8994D
 mov dword [dword_C65D0], unk_20EB7	; 89957
 .29:

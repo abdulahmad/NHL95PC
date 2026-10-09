@@ -6,7 +6,7 @@ extern __CHK, asc_C1724, asc_C172C, asc_C1731, asc_C173A, asc_C1743, asc_C174C, 
 extern asc_C1756, asc_C175F, asc_C1768, asc_C176D, asc_CDB75, asc_CDB7C, byte_C7218, curleague
 extern byte_CDB77, byte_CDB7E, musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED836, byte_ED9A7
 extern byte_ED9AB, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
-extern ctl2side, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C7219, songdata
+extern ctl2side, teamstatscb, skaterstatscb, goaliestatscb, dword_C65CC, dword_C65D0, dword_C7219, songdata
 extern cont2team, HomeTeam, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
 extern dword_D2C6B, dword_DC238, dword_EA0DC, jctime, memcpy_, off_C5439, off_C7282, off_D3078
 extern strcpy_, strncpy_, DiskFreeBytes, FileExists, MakePath, FileOpenRead, FileOpenRW, FileCreate
@@ -95,9 +95,9 @@ call dword [off_D3078]	; 31B9F
 call SetSideControls	; 31BA5
 xor eax, eax	; 31BAA
 call sub_1D100	; 31BAC
-mov dword [dword_C65C0], unk_208EF	; 31BB1
-mov dword [dword_C65C4], unk_20A46	; 31BBB
-mov dword [dword_C65C8], unk_20BBD	; 31BC5
+mov dword [teamstatscb], unk_208EF	; 31BB1
+mov dword [skaterstatscb], unk_20A46	; 31BBB
+mov dword [goaliestatscb], unk_20BBD	; 31BC5
 mov dword [dword_C65CC], sub_20D97	; 31BCF
 mov dword [dword_C65D0], unk_20EB7	; 31BD9
 mov eax, dword [dword_DC238]	; 31BE3

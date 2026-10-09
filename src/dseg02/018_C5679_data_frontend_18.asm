@@ -38,7 +38,7 @@ global byte_C6F6C, byte_C7218, dword_C56C4, dword_C56E4, hudclockmin, hudclockse
 global dword_C5714, dword_C5718, dword_C583C, dword_C5840, dword_C5844, dword_C5848, hudhomeline, hudawayline
 global dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862, dword_C5886, dword_C588A
 global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, dword_C65A8, dword_C65AC
-global dword_C65B0, dword_C65B4, dword_C65B8, deskexit, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC
+global statscategory, dword_C65B4, statsredrawcb, deskexit, teamstatscb, skaterstatscb, goaliestatscb, dword_C65CC
 global dword_C65D0, dword_C65F4, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dword_C66C8, dword_C66D0
 global dword_C66D4, dword_C6718, dword_C679D, dword_C67B9, dword_C67BD, statsplayoffs, statsfromleague, dword_C6A60
 global dword_C6AF8, dword_C6B30, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32, dword_C6E3A, dword_C6E4A
@@ -803,19 +803,19 @@ dword_C65A8:
 db 00h,00h,00h,00h
 dword_C65AC:
 db 00h,00h,00h,00h
-dword_C65B0:
+statscategory:
 db 00h,00h,00h,00h
 dword_C65B4:
 db 00h,00h,00h,00h
-dword_C65B8:
+statsredrawcb:
 db 00h,00h,00h,00h
 deskexit:
 db 00h,00h,00h,00h
-dword_C65C0:
+teamstatscb:
 db 00h,00h,00h,00h
-dword_C65C4:
+skaterstatscb:
 db 00h,00h,00h,00h
-dword_C65C8:
+goaliestatscb:
 db 00h,00h,00h,00h
 dword_C65CC:
 db 00h,00h,00h,00h

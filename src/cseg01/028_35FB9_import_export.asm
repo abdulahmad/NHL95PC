@@ -7,7 +7,7 @@ extern asc_C186B, asc_C1874, asc_C1879, asc_C1880, asc_C1885, asc_C78A8, asc_C7A
 extern str_PINFO, str_extDB, str_extxx, asc_C8158, str_dot, str_floppydrv, curleague, gameopts
 extern musicon, byte_D42C3, byte_DC267, byte_DC268, leaguedbfmt2, leaguedbfmt, leagueflags, byte_DD7CA
 extern byte_DD7CB, savedname, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_ED836
-extern byte_ED98E, gameresult, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C71D8
+extern byte_ED98E, gameresult, teamstatscb, skaterstatscb, goaliestatscb, dword_C65CC, dword_C65D0, dword_C71D8
 extern dword_C71DC, songdata, msg_InsertDisk_arg, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7E42, dword_C7F0B
 extern dword_C8998, HomeTeam, musichandle, dword_D2C6B, dword_DB088, schedgameidx, dword_DC23E, musicslot
 extern leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
@@ -1444,9 +1444,9 @@ mov esi, 4	; 37447
 loc_3744C:
 cmp esi, byte 4	; 3744C
 je short loc_374B3	; 3744F
-mov dword [dword_C65C0], sub_20016	; 37451
-mov dword [dword_C65C4], sub_20171	; 3745B
-mov dword [dword_C65C8], sub_202E5	; 37465
+mov dword [teamstatscb], sub_20016	; 37451
+mov dword [skaterstatscb], sub_20171	; 3745B
+mov dword [goaliestatscb], sub_202E5	; 37465
 mov dword [dword_C65CC], sub_203FA	; 3746F
 mov dword [dword_C65D0], sub_2051A	; 37479
 call sub_6B47C	; 37483

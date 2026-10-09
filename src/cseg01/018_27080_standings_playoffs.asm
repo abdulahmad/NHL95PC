@@ -14,7 +14,7 @@ extern dword_C6E3A, dword_C6E4A, dword_D2C6B, dword_D8B68, dword_D8B74, playofft
 extern dword_DD120, fputchar, j___close_, jctime, lseek_, memcpy_, off_C68BC, off_C68E4
 extern off_C68F4, off_CF6A3, open_, qsort_, read_, sprintf_, strcat_, MakePath
 extern SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff
-extern sub_18D03, sub_1FF86, sub_269F4, sub_2970A, sub_29A97, sub_29B07, LoadScheduleDB, sub_8E83C
+extern DeskSetExit3b, sub_1FF86, sub_269F4, sub_2970A, sub_29A97, sub_29B07, LoadScheduleDB, sub_8E83C
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_91044, sub_91370, sub_913B4, sub_B30B4, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, unk_269EA, unk_269FE, unk_C12BB, unk_C12BE, unk_C12C1, unk_C12C4
 extern unk_C1344, unk_C135B, statsleague, unk_DDAC4, word_C6E22
@@ -73,7 +73,7 @@ mov esi, sub_269F4	; 270AC
 movsd	; 270B1
 movsd	; 270B2
 movsw	; 270B3
-mov dword [off_CF6A3], sub_18D03	; 270B5
+mov dword [off_CF6A3], DeskSetExit3b	; 270B5
 mov eax, dword [dword_D8B74]	; 270BF
 mov dword [byte ebp-08h], eax	; 270C4
 mov eax, dword [dword_D8B68]	; 270C7
@@ -1351,7 +1351,7 @@ jne short loc_27FE0	; 27FD2
 mov dword [off_CF6A3], 0	; 27FD4
 jmp short loc_27FEA	; 27FDE
 loc_27FE0:
-mov dword [off_CF6A3], sub_18D03	; 27FE0
+mov dword [off_CF6A3], DeskSetExit3b	; 27FE0
 loc_27FEA:
 call sub_B4BA8	; 27FEA
 cmp dword [dword_C65AC], byte 0	; 27FEF

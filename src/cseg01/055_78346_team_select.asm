@@ -7,8 +7,8 @@ extern asc_C3214, asc_C321B, asc_C3222, asc_C3229, asc_C322F, asc_C3236, asc_C32
 extern asc_C324C, asc_C3253, asc_C325B, asc_C3267, asc_C326D, asc_C3277, asc_C3288, asc_C328E
 extern asc_C32A4, asc_C32AA, asc_C32AF, asc_C32B5, str_extBIN, byte_D11BC, byte_D1238, byte_D12DE
 extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, byte_DB3AD, leaguedbfmt2, leaguedbfmt
-extern byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED83C, byte_ED86D, byte_ED9E7, dword_C65B0
-extern dword_C65B8, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
+extern byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED83C, byte_ED86D, byte_ED9E7, statscategory
+extern statsredrawcb, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
 extern dword_D0B2A, dword_D1338, dword_D133C, dword_D1478, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
 extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, exit_, j___close_, jctime, lseek_
 extern crestnames, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
@@ -1949,7 +1949,7 @@ mov esi, ecx	; 79AE5
 mov edx, 1	; 79AE7
 mov dword [dword_DC738], edx	; 79AEC
 mov dword [dword_DC734], edx	; 79AF2
-mov dword [dword_C65B8], sub_244E2	; 79AF8
+mov dword [statsredrawcb], sub_244E2	; 79AF8
 test bl, bl	; 79B02
 je short loc_79B0D	; 79B04
 mov eax, dword [HomeTeam]	; 79B06
@@ -1958,7 +1958,7 @@ loc_79B0D:
 mov eax, dword [cont2team]	; 79B0D
 loc_79B12:
 sar eax, 10h	; 79B12
-mov dword [dword_C65B0], eax	; 79B15
+mov dword [statscategory], eax	; 79B15
 push byte 20h	; 79B1A
 push dword 2A4h	; 79B1C
 push asc_C32A4	; 79B21
@@ -2044,7 +2044,7 @@ cmp eax, 300h	; 79C4E
 jl short loc_79C44	; 79C53
 xor edi, edi	; 79C55
 mov dword [dword_DC738], edi	; 79C57
-mov dword [dword_C65B8], edi	; 79C5D
+mov dword [statsredrawcb], edi	; 79C5D
 mov edx, dword [dword_DD10C]	; 79C63
 push edx	; 79C69
 call jctime	; 79C6A

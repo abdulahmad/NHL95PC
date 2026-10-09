@@ -4,8 +4,8 @@ bits 32
 section s_33FFD progbits alloc exec nowrite align=1
 extern __CHK, asc_C17F4, asc_C17F9, asc_C17FE, asc_C1803, asc_C180B, asc_C1810, asc_C181A
 extern asc_C1827, asc_C182C, asc_C1835, asc_C183D, asc_C1842, asc_C184A, monthdays, byte_C845D
-extern byte_C845E, musicon, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, dword_C65C0
-extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, songdata, dword_C895E, dword_C8976, dword_C897A
+extern byte_C845E, musicon, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, teamstatscb
+extern skaterstatscb, goaliestatscb, dword_C65CC, dword_C65D0, songdata, dword_C895E, dword_C8976, dword_C897A
 extern dword_C898E, dword_C8992, musichandle, dword_D2C6B, fontcolor, dword_D8B74, dword_DC238, musicslot
 extern dword_DD780, dword_DD794, dword_DD7A0, dword_DDD28, dword_DDD2C, dword_DDD30, dword_EA0DC, fputchar
 extern jctime, crestnames, off_C85F6, off_C8616, sprintf_, MakePath, FileOpenRead, leaguedbnames
@@ -746,9 +746,9 @@ xor esi, esi	; 34903
 mov dword [songdata], esi	; 34905
 loc_3490B:
 call sub_479E9	; 3490B
-mov dword [dword_C65C0], sub_21350	; 34910
-mov dword [dword_C65C4], sub_214B1	; 3491A
-mov dword [dword_C65C8], sub_215C4	; 34924
+mov dword [teamstatscb], sub_21350	; 34910
+mov dword [skaterstatscb], sub_214B1	; 3491A
+mov dword [goaliestatscb], sub_215C4	; 34924
 mov dword [dword_C65CC], sub_216D7	; 3492E
 mov dword [dword_C65D0], sub_217FE	; 34938
 push dword 0FFh	; 34942
@@ -2069,9 +2069,9 @@ call jctime	; 35F41
 add esp, byte 4	; 35F46
 xor edx, edx	; 35F49
 mov dword [dword_C8992], edx	; 35F4B
-mov dword [dword_C65C0], sub_20016	; 35F51
-mov dword [dword_C65C4], sub_20171	; 35F5B
-mov dword [dword_C65C8], sub_202E5	; 35F65
+mov dword [teamstatscb], sub_20016	; 35F51
+mov dword [skaterstatscb], sub_20171	; 35F5B
+mov dword [goaliestatscb], sub_202E5	; 35F65
 mov dword [dword_C65CC], sub_203FA	; 35F6F
 mov dword [dword_C65D0], sub_2051A	; 35F79
 cmp byte [musicon], 0	; 35F83

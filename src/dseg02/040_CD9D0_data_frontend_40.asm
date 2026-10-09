@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_CD9D0 progbits alloc noexec write align=1
-extern sub_17DFC, sub_17EDF, sub_17FBC, sub_1809F, sub_18182, sub_18265, sub_18348, sub_18425
-extern sub_18508, sub_185EB, sub_186CE, sub_187B1, sub_18894, sub_18977, sub_18A5A, sub_18B3D
-extern sub_18C20, sub_1A5A1, sub_1A5B1, sub_1A5D4, sub_1A6A7, sub_2B944, sub_3270B, sub_32DA9
+extern StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense, StatsMenuPenaltyKilling, StatsMenuPowerPlay, StatsMenuTeamPenalties, StatsMenuPoints, StatsMenuGoals
+extern StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus, StatsMenuPIM, StatsMenuShootPct, StatsMenuGAA, StatsMenuGoalieWins
+extern StatsMenuSavePct, sub_1A5A1, sub_1A5B1, sub_1A5D4, sub_1A6A7, sub_2B944, sub_3270B, sub_32DA9
 extern sub_32FF4, sub_3322A, sub_332C0, sub_332F6, sub_3339D, sub_333D7, sub_33469, sub_334FB
 extern sub_33523, sub_3366F, sub_336BE, sub_6BE95, sub_7BEBB, sub_7C993, sub_7C9A1, sub_7CAF7
 extern sub_7CB9F, sub_80830, sub_82579, sub_85924, CreatePlayoffs, unk_20EB7, unk_C67B1, unk_CEF0F
@@ -632,73 +632,73 @@ db 03h,00h,00h,00h
 unk_CE96F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,07Ch,00h,00h,00h,011h,00h,00h,00h
 dd unk_CDF56
-dd sub_17DFC
+dd StatsMenuStandings
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 07Ch,00h,00h,00h,023h,00h,00h,00h
 dd unk_CDF9E
-dd sub_17EDF
+dd StatsMenuTeamScoring
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 07Ch,00h,00h,00h,035h,00h,00h,00h
 dd unk_CDFAA
-dd sub_17FBC
+dd StatsMenuTeamDefense
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 07Ch,00h,00h,00h,047h,00h,00h,00h
 dd unk_CDFB6
-dd sub_1809F
+dd StatsMenuPenaltyKilling
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
 db 07Ch,00h,00h,00h,059h,00h,00h,00h
 dd unk_CDFCA
-dd sub_18182
+dd StatsMenuPowerPlay
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 07Ch,00h,00h,00h,06Ch,00h,00h,00h
 dd unk_CDFD9
-dd sub_18265
+dd StatsMenuTeamPenalties
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CEA2F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,09Fh,00h,00h,00h,011h,00h,00h,00h
 dd unk_CDFE7
-dd sub_18348
+dd StatsMenuPoints
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 09Fh,00h,00h,00h,023h,00h,00h,00h
 dd unk_CDFF2
-dd sub_18425
+dd StatsMenuGoals
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 09Fh,00h,00h,00h,035h,00h,00h,00h
 dd unk_CDFFC
-dd sub_18508
+dd StatsMenuAssists
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 09Fh,00h,00h,00h,047h,00h,00h,00h
 dd unk_CE008
-dd sub_185EB
+dd StatsMenuPPGoals
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
 db 09Fh,00h,00h,00h,059h,00h,00h,00h
 dd unk_CE01D
-dd sub_186CE
+dd StatsMenuSHGoals
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 09Fh,00h,00h,00h,06Bh,00h,00h,00h
 dd unk_CE033
-dd sub_187B1
+dd StatsMenuPlusMinus
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,06Ch,00h,00h,00h
 db 09Fh,00h,00h,00h,07Dh,00h,00h,00h
 dd unk_CE042
-dd sub_18894
+dd StatsMenuPIM
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,07Eh,00h,00h,00h
 db 09Fh,00h,00h,00h,090h,00h,00h,00h
 dd unk_CE056
-dd sub_18977
+dd StatsMenuShootPct
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CEB2F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0ABh,00h,00h,00h,011h,00h,00h,00h
 dd unk_CE06E
-dd sub_18A5A
+dd StatsMenuGAA
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 0ABh,00h,00h,00h,023h,00h,00h,00h
 dd unk_CE088
-dd sub_18B3D
+dd StatsMenuGoalieWins
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 0ABh,00h,00h,00h,036h,00h,00h,00h
 dd unk_CE091
-dd sub_18C20
+dd StatsMenuSavePct
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CEB8F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,02Eh,00h,00h,00h,012h,00h,00h,00h

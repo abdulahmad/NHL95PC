@@ -8,7 +8,7 @@ extern asc_C19FF, asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, str_extDB, str_VFN
 extern str_space, str_dot, curleague, byte_D11BC, byte_D1238, byte_D12DE, byte_D1333, byte_D1334
 extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, leaguedbfmt2, leaguedbfmt, byte_DDD8C
 extern byte_DDD8D, byte_DDD8E, byte_ED7F7, byte_ED858, byte_ED85A, byte_ED86D, byte_ED8B3, byte_ED8B4
-extern dword_C65B0, dword_C65B8, dword_C8B7C, dword_C8B80, HomeTeam, dword_D2C6B, dword_D8C84, dword_DC238
+extern statscategory, statsredrawcb, dword_C8B7C, dword_C8B80, HomeTeam, dword_D2C6B, dword_D8C84, dword_DC238
 extern dword_DC738, dword_DD100, dword_DD104, dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD79C
 extern dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C, dword_DE260
 extern dword_DE264, dword_EA0DC, jctime, memcpy_, leaguedbnames, off_C8BDD, off_CF2A3
@@ -242,10 +242,10 @@ push byte 0	; 3DE61
 call sub_B392C	; 3DE63
 add esp, byte 4	; 3DE68
 mov dword [dword_DC738], 1	; 3DE6B
-mov dword [dword_C65B8], sub_244E2	; 3DE75
+mov dword [statsredrawcb], sub_244E2	; 3DE75
 xor eax, eax	; 3DE7F
 mov al, byte [byte esp+018h]	; 3DE81
-mov dword [dword_C65B0], eax	; 3DE85
+mov dword [statscategory], eax	; 3DE85
 push byte 20h	; 3DE8A
 push dword 2A4h	; 3DE8C
 push asc_C1969	; 3DE91
@@ -321,7 +321,7 @@ mov eax, unk_C88E2	; 3DF95
 call sub_1D6E8	; 3DF9A
 xor ecx, ecx	; 3DF9F
 mov dword [dword_DC738], ecx	; 3DFA1
-mov dword [dword_C65B8], ecx	; 3DFA7
+mov dword [statsredrawcb], ecx	; 3DFA7
 mov eax, dword [dword_DD10C]	; 3DFAD
 push eax	; 3DFB2
 call jctime	; 3DFB3

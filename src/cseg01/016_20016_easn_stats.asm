@@ -5,11 +5,11 @@ section s_20016 progbits alloc exec nowrite align=1
 extern __CHK, asc_C0C34, asc_C0C3B, asc_C0C40, asc_C0C46, asc_C0C4B, asc_C0C51, asc_C0C58
 extern asc_C0C5F, asc_C0C64, asc_C0C6D, asc_C0C73, asc_C0C78, asc_C0C7E, asc_C0C84, asc_C0C8D
 extern asc_C0C94, asc_C0C99, asc_C0C9F, asc_C0CA4, asc_C0CAA, asc_C6940, byte_DC836, byte_ED836
-extern byte_ED858, byte_ED859, byte_ED85A, byte_ED98D, gamemode, dword_C65A8, dword_C65AC, dword_C65B0
-extern dword_C65B4, dword_C65B8, deskexit, dword_C65CC, statsplayoffs, dword_C6A60, dword_C6D26, dword_C7219
+extern byte_ED858, byte_ED859, byte_ED85A, byte_ED98D, gamemode, dword_C65A8, dword_C65AC, statscategory
+extern dword_C65B4, statsredrawcb, deskexit, dword_C65CC, statsplayoffs, dword_C6A60, dword_C6D26, dword_C7219
 extern dword_C8992, dword_D2C6B, dword_DC640, dword_DC6B4, dword_DC734, dword_DC738, playofftree, dword_DD100
 extern dword_DD104, dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD120, dword_DDD2C, jctime
-extern memcpy_, off_C68E4, MakePath, sub_18D33, sub_1D6E8, sub_1DF03, sub_1ED96, sub_1FAA7
+extern memcpy_, off_C68E4, MakePath, FreeDeskBuffers, sub_1D6E8, sub_1DF03, sub_1ED96, sub_1FAA7
 extern sub_21CDE, sub_22581, sub_235BE, sub_244E2, sub_25B24, sub_27080, sub_296BA, sub_6B5E4
 extern sub_76429, sub_8CCA8, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_91FE0, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, unk_C6960, unk_CF54F, unk_CF6AF, unk_CF74F
@@ -40,8 +40,8 @@ push esi	; 20023
 sub esp, 310h	; 20024
 mov esi, eax	; 2002A
 mov dword [dword_DC738], 1	; 2002C
-mov dword [dword_C65B0], eax	; 20036
-mov dword [dword_C65B8], sub_235BE	; 2003B
+mov dword [statscategory], eax	; 20036
+mov dword [statsredrawcb], sub_235BE	; 2003B
 mov eax, esp	; 20045
 push eax	; 20047
 push dword 100h	; 20048
@@ -116,7 +116,7 @@ mov eax, 1	; 20149
 call sub_76429	; 2014E
 xor esi, esi	; 20153
 mov dword [dword_DC738], esi	; 20155
-mov dword [dword_C65B8], esi	; 2015B
+mov dword [statsredrawcb], esi	; 2015B
 mov eax, 2	; 20161
 add esp, 310h	; 20166
 pop esi	; 2016C
@@ -136,8 +136,8 @@ sub esp, 310h	; 20180
 mov esi, eax	; 20186
 mov edx, 1	; 20188
 mov dword [dword_DC738], edx	; 2018D
-mov dword [dword_C65B0], eax	; 20193
-mov dword [dword_C65B8], sub_25B24	; 20198
+mov dword [statscategory], eax	; 20193
+mov dword [statsredrawcb], sub_25B24	; 20198
 mov dword [dword_C6A60], edx	; 201A2
 mov eax, esp	; 201A8
 mov dword [dword_DD120], eax	; 201AA
@@ -215,7 +215,7 @@ mov edx, esp	; 202BC
 mov eax, 1	; 202BE
 call sub_76429	; 202C3
 mov dword [dword_DC738], edi	; 202C8
-mov dword [dword_C65B8], edi	; 202CE
+mov dword [statsredrawcb], edi	; 202CE
 mov eax, 2	; 202D4
 add esp, 310h	; 202D9
 loc_202DF:
@@ -235,8 +235,8 @@ push esi	; 202F2
 sub esp, 310h	; 202F3
 mov esi, eax	; 202F9
 mov dword [dword_DC738], 1	; 202FB
-mov dword [dword_C65B0], eax	; 20305
-mov dword [dword_C65B8], sub_25B24	; 2030A
+mov dword [statscategory], eax	; 20305
+mov dword [statsredrawcb], sub_25B24	; 2030A
 mov eax, esp	; 20314
 push eax	; 20316
 push dword 100h	; 20317
@@ -359,7 +359,7 @@ mov eax, unk_CF54F	; 204BE
 call sub_6B5E4	; 204C3
 jmp short loc_204FE	; 204C8
 loc_204CA:
-call sub_18D33	; 204CA
+call FreeDeskBuffers	; 204CA
 call sub_B4BA8	; 204CF
 push byte 42h	; 204D4
 mov ecx, 41h	; 204D6
@@ -395,10 +395,10 @@ push ebp	; 20529
 sub esp, 310h	; 2052A
 mov dword [dword_DC738], 1	; 20530
 mov eax, dword [dword_C65CC]	; 2053A
-mov dword [dword_C65B8], eax	; 2053F
+mov dword [statsredrawcb], eax	; 2053F
 xor ebx, ebx	; 20544
 mov dword [dword_C65B4], ebx	; 20546
-mov dword [dword_C65B0], ebx	; 2054C
+mov dword [statscategory], ebx	; 2054C
 xor ah, ah	; 20552
 mov byte [byte_DC836], ah	; 20554
 mov eax, esp	; 2055A
@@ -451,7 +451,7 @@ mov ebx, 40h	; 20610
 mov edx, 4	; 20615
 mov eax, unk_CF54F	; 2061A
 call sub_6B5E4	; 2061F
-mov dword [dword_C65B0], esi	; 20624
+mov dword [statscategory], esi	; 20624
 mov dword [dword_C65B4], esi	; 2062A
 xor ecx, ecx	; 20630
 mov ebx, asc_C0C34	; 20632
@@ -491,7 +491,7 @@ mov ebx, 40h	; 206A8
 mov edx, 4	; 206AD
 mov eax, unk_CF54F	; 206B2
 call sub_1DF03	; 206B7
-call sub_18D33	; 206BC
+call FreeDeskBuffers	; 206BC
 mov edi, sub_22581	; 206C1
 mov esi, 1	; 206C6
 loc_206CB:
@@ -504,7 +504,7 @@ ja short loc_206CB	; 206E0
 jmp dword [nosplit cs:eax*4+jpt_2050A]	; 206E2
 loc_206EA:
 mov eax, dword [dword_C65CC]	; 206EA
-mov dword [dword_C65B8], eax	; 206EF
+mov dword [statsredrawcb], eax	; 206EF
 xor eax, eax	; 206F4
 call dword [dword_C65CC]	; 206F6
 push byte 42h	; 206FC
@@ -521,7 +521,7 @@ mov eax, unk_CF54F	; 20728
 call sub_1DF03	; 2072D
 cmp dword [statsplayoffs], byte 0	; 20732
 je short loc_20740	; 20739
-call sub_18D33	; 2073B
+call FreeDeskBuffers	; 2073B
 loc_20740:
 xor ecx, ecx	; 20740
 mov dword [dword_C6D26], ecx	; 20742
@@ -529,8 +529,8 @@ jmp short loc_206CB	; 20748
 loc_2074A:
 xor eax, eax	; 2074A
 mov dword [dword_DC734], eax	; 2074C
-mov dword [dword_C65B8], sub_244E2	; 20751
-mov eax, dword [dword_C65B0]	; 2075B
+mov dword [statsredrawcb], sub_244E2	; 20751
+mov eax, dword [statscategory]	; 2075B
 call sub_244E2	; 20760
 push byte 42h	; 20765
 mov ecx, 41h	; 20767
@@ -546,7 +546,7 @@ mov eax, unk_CF6AF	; 20791
 call sub_1ED96	; 20796
 jmp near loc_206CB	; 2079B
 loc_207A0:
-mov dword [dword_C65B8], edi	; 207A0
+mov dword [statsredrawcb], edi	; 207A0
 xor ebp, ebp	; 207A6
 mov dword [dword_DC6B4], ebp	; 207A8
 mov eax, unk_DC834	; 207AE
@@ -565,7 +565,7 @@ mov eax, unk_CF74F	; 207E4
 call sub_1D6E8	; 207E9
 jmp near loc_206CB	; 207EE
 loc_207F3:
-mov dword [dword_C65B8], sub_21CDE	; 207F3
+mov dword [statsredrawcb], sub_21CDE	; 207F3
 xor ecx, ecx	; 207FD
 mov dword [dword_DC6B4], ecx	; 207FF
 mov eax, unk_DC834	; 20805
@@ -597,7 +597,7 @@ mov ebx, 10h	; 20869
 mov edx, esp	; 2086E
 mov eax, 1	; 20870
 call sub_76429	; 20875
-call sub_18D33	; 2087A
+call FreeDeskBuffers	; 2087A
 mov edi, dword [dword_DD10C]	; 2087F
 push edi	; 20885
 call jctime	; 20886
@@ -619,7 +619,7 @@ mov dword [dword_DD10C], esi	; 208C0
 mov dword [dword_DD114], esi	; 208C6
 mov dword [dword_DD110], esi	; 208CC
 mov dword [dword_DC738], esi	; 208D2
-mov dword [dword_C65B8], esi	; 208D8
+mov dword [statsredrawcb], esi	; 208D8
 mov eax, 2	; 208DE
 add esp, 310h	; 208E3
 pop ebp	; 208E9
@@ -644,8 +644,8 @@ add esp, byte 0Ch	; 20915
 mov edx, 1	; 20918
 mov dword [dword_C7219], edx	; 2091D
 mov dword [dword_DC738], edx	; 20923
-mov dword [dword_C65B0], esi	; 20929
-mov dword [dword_C65B8], sub_235BE	; 2092F
+mov dword [statscategory], esi	; 20929
+mov dword [statsredrawcb], sub_235BE	; 2092F
 call sub_B4BA8	; 20939
 mov eax, 1	; 2093E
 call sub_1FAA7	; 20943
@@ -709,7 +709,7 @@ mov eax, 1	; 20A1D
 call sub_76429	; 20A22
 xor edi, edi	; 20A27
 mov dword [dword_DC738], edi	; 20A29
-mov dword [dword_C65B8], edi	; 20A2F
+mov dword [statsredrawcb], edi	; 20A2F
 mov eax, 2	; 20A35
 add esp, 310h	; 20A3A
 loc_20A40:
@@ -737,8 +737,8 @@ push byte 0	; 20A6F
 call sub_8FFB0	; 20A71
 add esp, byte 0Ch	; 20A76
 mov dword [dword_DC738], 1	; 20A79
-mov dword [dword_C65B0], esi	; 20A83
-mov dword [dword_C65B8], sub_25B24	; 20A89
+mov dword [statscategory], esi	; 20A83
+mov dword [statsredrawcb], sub_25B24	; 20A89
 call sub_B4BA8	; 20A93
 mov eax, 1	; 20A98
 call sub_1FAA7	; 20A9D
@@ -836,8 +836,8 @@ push byte 0	; 20BE6
 call sub_8FFB0	; 20BE8
 add esp, byte 0Ch	; 20BED
 mov dword [dword_DC738], 1	; 20BF0
-mov dword [dword_C65B0], esi	; 20BFA
-mov dword [dword_C65B8], sub_25B24	; 20C00
+mov dword [statscategory], esi	; 20BFA
+mov dword [statsredrawcb], sub_25B24	; 20C00
 call sub_B4BA8	; 20C0A
 mov eax, 1	; 20C0F
 call sub_1FAA7	; 20C14
@@ -928,7 +928,7 @@ call jctime	; 20D5B
 add esp, byte 4	; 20D60
 xor eax, eax	; 20D63
 mov dword [dword_DC738], eax	; 20D65
-mov dword [dword_C65B8], eax	; 20D6A
+mov dword [statsredrawcb], eax	; 20D6A
 mov eax, 2	; 20D6F
 add esp, 310h	; 20D74
 pop ebp	; 20D7A
@@ -1007,7 +1007,7 @@ mov eax, unk_CF54F	; 20E5B
 call sub_6B5E4	; 20E60
 jmp short loc_20E9B	; 20E65
 loc_20E67:
-call sub_18D33	; 20E67
+call FreeDeskBuffers	; 20E67
 call sub_B4BA8	; 20E6C
 push byte 42h	; 20E71
 mov ecx, 41h	; 20E73
@@ -1052,10 +1052,10 @@ jl short loc_20ECF	; 20EE1
 mov edx, 1	; 20EE3
 mov dword [dword_DC738], edx	; 20EE8
 mov eax, dword [dword_C65CC]	; 20EEE
-mov dword [dword_C65B8], eax	; 20EF3
+mov dword [statsredrawcb], eax	; 20EF3
 xor ebx, ebx	; 20EF8
 mov dword [dword_C65B4], ebx	; 20EFA
-mov dword [dword_C65B0], ebx	; 20F00
+mov dword [statscategory], ebx	; 20F00
 mov dword [dword_C6D26], ebx	; 20F06
 mov edi, edx	; 20F0C
 mov dword [dword_C7219], edx	; 20F0E
@@ -1106,7 +1106,7 @@ mov edx, 4	; 20FBA
 mov eax, unk_CF54F	; 20FBF
 call sub_6B5E4	; 20FC4
 xor ebp, ebp	; 20FC9
-mov dword [dword_C65B0], ebp	; 20FCB
+mov dword [statscategory], ebp	; 20FCB
 mov dword [dword_C65B4], ebp	; 20FD1
 xor ecx, ecx	; 20FD7
 mov ebx, asc_C0C58	; 20FD9
@@ -1144,7 +1144,7 @@ mov ebx, 40h	; 2104C
 mov edx, 4	; 21051
 mov eax, unk_CF54F	; 21056
 call sub_1DF03	; 2105B
-call sub_18D33	; 21060
+call FreeDeskBuffers	; 21060
 call sub_B4BA8	; 21065
 mov edi, sub_22581	; 2106A
 mov esi, 1	; 2106F
@@ -1158,7 +1158,7 @@ ja short loc_21074	; 21089
 jmp dword [nosplit cs:eax*4+jpt_20EA7]	; 2108B
 loc_21093:
 mov eax, dword [dword_C65CC]	; 21093
-mov dword [dword_C65B8], eax	; 21098
+mov dword [statsredrawcb], eax	; 21098
 xor eax, eax	; 2109D
 call dword [dword_C65CC]	; 2109F
 push byte 42h	; 210A5
@@ -1175,7 +1175,7 @@ mov eax, unk_CF54F	; 210D1
 call sub_1DF03	; 210D6
 cmp dword [statsplayoffs], byte 0	; 210DB
 je short loc_210EE	; 210E2
-call sub_18D33	; 210E4
+call FreeDeskBuffers	; 210E4
 call sub_B4BA8	; 210E9
 loc_210EE:
 xor ecx, ecx	; 210EE
@@ -1184,8 +1184,8 @@ jmp near loc_21074	; 210F6
 loc_210FB:
 xor eax, eax	; 210FB
 mov dword [dword_DC734], eax	; 210FD
-mov dword [dword_C65B8], sub_244E2	; 21102
-mov eax, dword [dword_C65B0]	; 2110C
+mov dword [statsredrawcb], sub_244E2	; 21102
+mov eax, dword [statscategory]	; 2110C
 call sub_244E2	; 21111
 push byte 42h	; 21116
 mov ecx, 41h	; 21118
@@ -1201,7 +1201,7 @@ mov eax, unk_CF6AF	; 21142
 call sub_1ED96	; 21147
 jmp near loc_21074	; 2114C
 loc_21151:
-mov dword [dword_C65B8], edi	; 21151
+mov dword [statsredrawcb], edi	; 21151
 xor ebp, ebp	; 21157
 mov dword [dword_DC6B4], ebp	; 21159
 mov eax, unk_DC834	; 2115F
@@ -1220,7 +1220,7 @@ mov eax, unk_CF74F	; 21195
 call sub_1D6E8	; 2119A
 jmp near loc_21074	; 2119F
 loc_211A4:
-mov dword [dword_C65B8], sub_21CDE	; 211A4
+mov dword [statsredrawcb], sub_21CDE	; 211A4
 xor edx, edx	; 211AE
 mov dword [dword_DC6B4], edx	; 211B0
 mov dword [dword_C6A60], edx	; 211B6
@@ -1244,7 +1244,7 @@ jmp near loc_21074	; 21208
 loc_2120D:
 xor ecx, ecx	; 2120D
 mov dword [dword_C6D26], ecx	; 2120F
-call sub_18D33	; 21215
+call FreeDeskBuffers	; 21215
 mov esi, dword [dword_DD10C]	; 2121A
 push esi	; 21220
 call jctime	; 21221
@@ -1278,7 +1278,7 @@ mov eax, 1	; 21287
 call sub_76429	; 2128C
 xor edi, edi	; 21291
 mov dword [dword_DC738], edi	; 21293
-mov dword [dword_C65B8], edi	; 21299
+mov dword [statsredrawcb], edi	; 21299
 xor eax, eax	; 2129F
 loc_212A1:
 mov ebx, dword [dword esp+eax*4+0300h]	; 212A1
@@ -1360,8 +1360,8 @@ push byte 0	; 2136F
 call sub_8FFB0	; 21371
 add esp, byte 0Ch	; 21376
 mov dword [dword_DC738], 1	; 21379
-mov dword [dword_C65B0], esi	; 21383
-mov dword [dword_C65B8], sub_235BE	; 21389
+mov dword [statscategory], esi	; 21383
+mov dword [statsredrawcb], sub_235BE	; 21389
 call sub_B4BA8	; 21393
 mov eax, 1	; 21398
 call sub_1FAA7	; 2139D
@@ -1429,7 +1429,7 @@ mov dword [dword_DDD2C], 0FFFFFFFFh	; 21486
 call sub_212FE	; 21490
 xor edi, edi	; 21495
 mov dword [dword_DC738], edi	; 21497
-mov dword [dword_C65B8], edi	; 2149D
+mov dword [statsredrawcb], edi	; 2149D
 xor eax, eax	; 214A3
 add esp, 310h	; 214A5
 loc_214AB:
@@ -1456,8 +1456,8 @@ push byte 0	; 214D0
 call sub_8FFB0	; 214D2
 add esp, byte 0Ch	; 214D7
 mov dword [dword_DC738], 1	; 214DA
-mov dword [dword_C65B0], esi	; 214E4
-mov dword [dword_C65B8], sub_25B24	; 214EA
+mov dword [statscategory], esi	; 214E4
+mov dword [statsredrawcb], sub_25B24	; 214EA
 call sub_B4BA8	; 214F4
 mov eax, 1	; 214F9
 call sub_1FAA7	; 214FE
@@ -1527,8 +1527,8 @@ push byte 0	; 215E3
 call sub_8FFB0	; 215E5
 add esp, byte 0Ch	; 215EA
 mov dword [dword_DC738], 1	; 215ED
-mov dword [dword_C65B0], esi	; 215F7
-mov dword [dword_C65B8], sub_25B24	; 215FD
+mov dword [statscategory], esi	; 215F7
+mov dword [statsredrawcb], sub_25B24	; 215FD
 call sub_B4BA8	; 21607
 mov eax, 1	; 2160C
 call sub_1FAA7	; 21611
@@ -1644,7 +1644,7 @@ mov eax, unk_CF54F	; 217A0
 call sub_6B5E4	; 217A5
 jmp short loc_217E0	; 217AA
 loc_217AC:
-call sub_18D33	; 217AC
+call FreeDeskBuffers	; 217AC
 call sub_B4BA8	; 217B1
 push byte 42h	; 217B6
 mov ecx, 41h	; 217B8
@@ -1687,10 +1687,10 @@ cmp eax, byte 1Fh	; 21825
 jl short loc_21816	; 21828
 mov dword [dword_DC738], 1	; 2182A
 mov eax, dword [dword_C65CC]	; 21834
-mov dword [dword_C65B8], eax	; 21839
+mov dword [statsredrawcb], eax	; 21839
 xor ebx, ebx	; 2183E
 mov dword [dword_C65B4], ebx	; 21840
-mov dword [dword_C65B0], ebx	; 21846
+mov dword [statscategory], ebx	; 21846
 xor ah, ah	; 2184C
 mov byte [byte_DC836], ah	; 2184E
 mov eax, esp	; 21854
@@ -1740,7 +1740,7 @@ mov ebx, 40h	; 21900
 mov edx, 4	; 21905
 mov eax, unk_CF54F	; 2190A
 call sub_6B5E4	; 2190F
-mov dword [dword_C65B0], esi	; 21914
+mov dword [statscategory], esi	; 21914
 mov dword [dword_C65B4], esi	; 2191A
 xor ecx, ecx	; 21920
 mov ebx, asc_C0C8D	; 21922
@@ -1778,7 +1778,7 @@ mov ebx, 40h	; 21994
 mov edx, 4	; 21999
 mov eax, unk_CF54F	; 2199E
 call sub_1DF03	; 219A3
-call sub_18D33	; 219A8
+call FreeDeskBuffers	; 219A8
 call sub_B4BA8	; 219AD
 mov edi, sub_244E2	; 219B2
 loc_219B7:
@@ -1791,7 +1791,7 @@ ja short loc_219B7	; 219CC
 jmp dword [nosplit cs:eax*4+jpt_217EE]	; 219CE
 loc_219D6:
 mov eax, dword [dword_C65CC]	; 219D6
-mov dword [dword_C65B8], eax	; 219DB
+mov dword [statsredrawcb], eax	; 219DB
 xor eax, eax	; 219E0
 call dword [dword_C65CC]	; 219E2
 push byte 42h	; 219E8
@@ -1808,7 +1808,7 @@ mov eax, unk_CF54F	; 21A14
 call sub_1DF03	; 21A19
 cmp dword [statsplayoffs], byte 0	; 21A1E
 je short loc_21A31	; 21A25
-call sub_18D33	; 21A27
+call FreeDeskBuffers	; 21A27
 call sub_B4BA8	; 21A2C
 loc_21A31:
 xor eax, eax	; 21A31
@@ -1817,8 +1817,8 @@ jmp near loc_219B7	; 21A38
 loc_21A3D:
 xor esi, esi	; 21A3D
 mov dword [dword_DC734], esi	; 21A3F
-mov dword [dword_C65B8], edi	; 21A45
-mov eax, dword [dword_C65B0]	; 21A4B
+mov dword [statsredrawcb], edi	; 21A45
+mov eax, dword [statscategory]	; 21A4B
 call sub_244E2	; 21A50
 push byte 42h	; 21A55
 mov ecx, 41h	; 21A57
@@ -1834,7 +1834,7 @@ mov eax, unk_CF6AF	; 21A81
 call sub_1ED96	; 21A86
 jmp near loc_219B7	; 21A8B
 loc_21A90:
-mov dword [dword_C65B8], sub_22581	; 21A90
+mov dword [statsredrawcb], sub_22581	; 21A90
 xor ecx, ecx	; 21A9A
 mov dword [dword_DC6B4], ecx	; 21A9C
 mov eax, unk_DC834	; 21AA2
@@ -1853,7 +1853,7 @@ mov eax, unk_CF74F	; 21AD8
 call sub_1D6E8	; 21ADD
 jmp near loc_219B7	; 21AE2
 loc_21AE7:
-mov dword [dword_C65B8], sub_21CDE	; 21AE7
+mov dword [statsredrawcb], sub_21CDE	; 21AE7
 xor eax, eax	; 21AF1
 mov dword [dword_DC6B4], eax	; 21AF3
 mov eax, unk_DC834	; 21AF8
@@ -1875,7 +1875,7 @@ jmp near loc_219B7	; 21B42
 loc_21B47:
 xor ebx, ebx	; 21B47
 mov dword [dword_C6D26], ebx	; 21B49
-call sub_18D33	; 21B4F
+call FreeDeskBuffers	; 21B4F
 mov ecx, dword [dword_DD10C]	; 21B54
 push ecx	; 21B5A
 call jctime	; 21B5B
@@ -1898,7 +1898,7 @@ mov dword [dword_DD10C], eax	; 21B97
 mov dword [dword_DD114], eax	; 21B9C
 mov dword [dword_DD110], eax	; 21BA1
 mov dword [dword_DC738], eax	; 21BA6
-mov dword [dword_C65B8], eax	; 21BAB
+mov dword [statsredrawcb], eax	; 21BAB
 loc_21BB0:
 mov ebx, dword [dword esp+eax*4+0300h]	; 21BB0
 mov dword [nosplit eax*4+playofftree], ebx	; 21BB7
