@@ -17,10 +17,10 @@ extern dword_D8C84, dword_DB086, dword_DB088, hmtmstruct, dword_DF642, dword_DF6
 extern dword_DF690, awtmstruct, dword_DF748, dword_DF752, dword_DF848, puckstruct
 extern sortobj15, dword_E0244, dword_E038E, dword_E03AE
 extern dword_E9A9E, dword_E9AB6, dword_E9AB7, gwgteam, gwgplayer, startm_m2
-extern dword_E9B04, puckvx, gmode, goalieacc, jctime, loc_48307, loc_48308, ltx
+extern seqtimer, puckvx, gmode, goalieacc, jctime, PreGameIntro_popebp, PreGameIntro_popx, ltx
 extern off_C5439, puckx, pucky, puckvy, puckz, puckc, camx_m2, starordtab
 extern playeracc, puckshadow, puckvz, qsort_, randomd0, sfx, skateto, skatetopuck
-extern sprintf_, vecdist, sub_11598, sub_15C30, sub_48333, joyq_flush, getlchoice, PenShotAssign
+extern sprintf_, vecdist, sub_11598, sub_15C30, ThreeStarsLoop, joyq_flush, getlchoice, PenShotAssign
 extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
 extern sub_59AAD, sub_59AD0, sub_59B0F, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
 extern EvadePC, sub_61576, sub_61D48, sub_62343, sub_62807, sub_62C37, sub_64102, sub_64439
@@ -128,7 +128,7 @@ mov eax, dword [byte ebx+temp5-2]	; 484F4
 sar eax, 10h	; 484F7
 cmp eax, byte 0FFFFFF9Ch	; 484FA
 jne short .3	; 484FD
-cmp dword [dword_E9B04], byte 0Ah	; 484FF
+cmp dword [seqtimer], byte 0Ah	; 484FF
 jle near .x	; 48506
 xor eax, eax	; 4850C
 jmp short .2	; 4850E
@@ -143,7 +143,7 @@ inc eax	; 48527
 .2:
 cmp eax, byte 0Ch	; 48528
 jl short sub_484DA.1	; 4852B
-mov dword [dword_E9B04], 0Ah	; 4852D
+mov dword [seqtimer], 0Ah	; 4852D
 pop edi	; 48537
 pop edx	; 48538
 pop ecx	; 48539
@@ -987,7 +987,7 @@ cmp cx, word [dword esp+0D4h]	; 48EA9
 jl short .23	; 48EB1
 .20:
 add esp, 0D8h	; 48EB3
-jmp near loc_48307	; 48EB9
+jmp near PreGameIntro_popebp	; 48EB9
 .21:
 inc ecx	; 48EBE
 .22:
@@ -1029,7 +1029,7 @@ push esi	; 48F18
 push edi	; 48F19
 mov edx, dword [dword_CC0EC]	; 48F1A
 test edx, edx	; 48F20
-jne near loc_48308	; 48F22
+jne near PreGameIntro_popx	; 48F22
 mov esi, dword [dword_D8C84]	; 48F28
 mov dword [joysampling], edx	; 48F2E
 call joyq_flush	; 48F34
@@ -1089,7 +1089,7 @@ mov byte [gmode], ch	; 49052
 mov al, ch	; 49058
 and al, 7Fh	; 4905A
 mov byte [gmode], al	; 4905C
-mov dword [dword_E9B04], 2EE0h	; 49061
+mov dword [seqtimer], 2EE0h	; 49061
 mov edx, 0FFFFFFFFh	; 4906B
 mov word [c2playernum], dx	; 49070
 mov word [c1playernum], dx	; 49077
@@ -1179,7 +1179,7 @@ mov word [xc1], bx	; 49205
 mov word [camy], cx	; 4920C
 mov word [yc1], cx	; 49213
 call sub_66DDA	; 4921A
-call sub_48333	; 4921F
+call ThreeStarsLoop	; 4921F
 test eax, eax	; 49224
 jge short .3	; 49226
 mov word [crowdlevel], cx	; 49228
@@ -1191,10 +1191,10 @@ mov word [crowdlevel], bx	; 4923C
 cmp byte [musicon], 0	; 49243
 je short .4	; 4924A
 call sub_837A8	; 4924C
-jmp near loc_48308	; 49251
+jmp near PreGameIntro_popx	; 49251
 .4:
 call sub_8F633	; 49256
-jmp near loc_48308	; 4925B
+jmp near PreGameIntro_popx	; 4925B
 sub_49260:
 push dword 8	; 49260
 call __CHK	; 49265
@@ -1620,7 +1620,7 @@ jg near .16	; 49763
 cmp word [byte ebp+temp1], byte 0	; 49769
 jge short .6	; 4976E
 xor edx, edx	; 49770
-mov dword [dword_E9B04], edx	; 49772
+mov dword [seqtimer], edx	; 49772
 mov ebx, 1	; 49778
 mov word [exitgame], bx	; 4977D
 mov word [gameover], bx	; 49784
@@ -1792,7 +1792,7 @@ mov eax, ebx	; 499C9
 call assinsert	; 499CB
 .16:
 add esp, byte 4	; 499D0
-jmp near loc_48307	; 499D3
+jmp near PreGameIntro_popebp	; 499D3
 sub_499D8:
 push dword 14h	; 499D8
 call __CHK	; 499DD

@@ -17,7 +17,7 @@ extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E0
 extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, loc_12842, memcpy_, nullsub_2
 extern puckx, pucky, passspeed, randomd0, sprintf_, sub_11598, sub_1205D, sub_12849
 extern sub_13188, sub_1431E, sub_14525, sub_1457C, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
-extern sub_4830E, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
+extern StartPreGame, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
 extern sub_64614, SetupTeamLines, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, MouseSetPos, sub_B30B4, sub_B30BB
@@ -965,7 +965,7 @@ xor ebx, ebx	; 13EFD
 mov dword [crowdsmooth], ebx	; 13EFF
 xor edx, edx	; 13F05
 xor eax, eax	; 13F07
-call sub_4830E	; 13F09
+call StartPreGame	; 13F09
 test eax, eax	; 13F0E
 jge short loc_13F1C	; 13F10
 mov eax, 0FFFFFFFFh	; 13F12
@@ -1039,7 +1039,7 @@ xor ecx, ecx	; 13FEF
 mov word [crowdlevel], cx	; 13FF1
 mov dword [crowdsmooth], edx	; 13FF8
 xor eax, eax	; 13FFE
-call sub_4830E	; 14000
+call StartPreGame	; 14000
 test eax, eax	; 14005
 jge short loc_14013	; 14007
 mov eax, 0FFFFFFFFh	; 14009

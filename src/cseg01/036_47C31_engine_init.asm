@@ -7,7 +7,7 @@ extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, 
 extern dword_C7444, dword_C7448, dword_C9074, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
 extern dword_CC0F0, dword_CC9AD, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
 extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, hmtmstruct, awtmstruct, puckstruct
-extern dword_E0244, dword_E9A9E, dword_E9B04, forcepldata, jctime, puckc, camx_m2, randomd0
+extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, randomd0
 extern reenergizeteam, resetplstuff, setpersonel, sub_1145F, sub_1149A, sub_11598, sub_14CF1, sub_33DD3
 extern sub_47951, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
 extern PlayCrowdSample, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
@@ -17,13 +17,11 @@ extern word_C90B2, word_C90B4, c1playernum, c2playernum, RefStep, exitgame, word
 extern lcblink, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly
 extern word_E0022, word_E0028, word_E002A, word_E002E
 extern word_E0042, word_E0046, word_E0048, word_E004A, regd1, joysampling_save
-global loc_47C4F, loc_47C60, loc_47C62, loc_47C89, loc_47CB1, loc_47CD0, loc_47E01, loc_47E05
-global loc_47E0E, loc_47E1B, loc_47E39, loc_47E3E, loc_47E64, loc_47E69, loc_47E7E, loc_47E8A
-global loc_47EA4, loc_47EE0, loc_47EE5, loc_47F35, loc_47F48, loc_47F56, loc_4809C, loc_480CC
-global loc_480D8, loc_480F2, loc_480FE, loc_481F4, loc_4821A, loc_4822F, loc_4824E, loc_4827B
-global loc_482CB, loc_482FB, loc_48307, loc_48308, loc_48324, loc_4832E, loc_4836E, loc_483E5
-global sub_47C31, sub_47CD6, sub_4830E, sub_48333
-sub_47C31:
+global PreGameIntro_scroll
+global PreGameIntro_frameloop, PreGameIntro_end
+global PreGameIntro_popebp, PreGameIntro_popx, ThreeStarsLoop_tick
+global FadeOutPalCycle, PreGameIntro, StartPreGame, ThreeStarsLoop
+FadeOutPalCycle:
 push dword 1Ch	; 47C31
 call __CHK	; 47C36
 push ebx	; 47C3B
@@ -32,17 +30,17 @@ push edx	; 47C3D
 push esi	; 47C3E
 push ebp	; 47C3F
 cmp dword [dword_C9074], byte 0	; 47C40
-je near loc_47CD0	; 47C47
+je near .x	; 47C47
 xor esi, esi	; 47C4D
-loc_47C4F:
+.1:
 test esi, esi	; 47C4F
-jne short loc_47CB1	; 47C51
+jne short .5	; 47C51
 mov esi, 1	; 47C53
 mov dword [dword_DEB6C], esi	; 47C58
 xor ecx, ecx	; 47C5E
-loc_47C60:
+.2:
 xor edx, edx	; 47C60
-loc_47C62:
+.3:
 mov eax, ecx	; 47C62
 shl eax, 2	; 47C64
 sub eax, ecx	; 47C67
@@ -50,42 +48,42 @@ shl eax, 8	; 47C69
 add eax, edx	; 47C6C
 mov bl, byte [dword eax+byte_DE26C]	; 47C6E
 test bl, bl	; 47C74
-jle short loc_47C89	; 47C76
+jle short .4	; 47C76
 mov bh, bl	; 47C78
 dec bh	; 47C7A
 mov byte [dword eax+byte_DE26C], bh	; 47C7C
 cmp esi, byte 1	; 47C82
-jne short loc_47C89	; 47C85
+jne short .4	; 47C85
 xor esi, esi	; 47C87
-loc_47C89:
+.4:
 inc edx	; 47C89
 cmp edx, 300h	; 47C8A
-jl short loc_47C62	; 47C90
+jl short FadeOutPalCycle.3	; 47C90
 inc ecx	; 47C92
 cmp ecx, byte 3	; 47C93
-jl short loc_47C60	; 47C96
+jl short FadeOutPalCycle.2	; 47C96
 xor ebp, ebp	; 47C98
 mov dword [dword_DEB6C], ebp	; 47C9A
 push byte 2	; 47CA0
 call sub_B3989	; 47CA2
 add esp, byte 4	; 47CA7
 call sub_B3999	; 47CAA
-jmp short loc_47C4F	; 47CAF
-loc_47CB1:
+jmp short FadeOutPalCycle.1	; 47CAF
+.5:
 mov dword [dword_DEB6C], 1	; 47CB1
 push sub_47951	; 47CBB
 call sub_8E4F8	; 47CC0
 add esp, byte 4	; 47CC5
 xor ecx, ecx	; 47CC8
 mov dword [dword_C9074], ecx	; 47CCA
-loc_47CD0:
+.x:
 pop ebp	; 47CD0
 pop esi	; 47CD1
 pop edx	; 47CD2
 pop ecx	; 47CD3
 pop ebx	; 47CD4
 ret	; 47CD5
-sub_47CD6:
+PreGameIntro:
 push dword 28h	; 47CD6
 call __CHK	; 47CDB
 push ebx	; 47CE0
@@ -130,7 +128,7 @@ add eax, edx	; 47D7E
 add dword [StanleyCupTimer], eax	; 47D80
 xor ecx, ecx	; 47D86
 mov dword [dword_CBC3E], ecx	; 47D88
-mov dword [dword_E9B04], 708h	; 47D8E
+mov dword [seqtimer], 708h	; 47D8E
 xor esi, esi	; 47D98
 mov word [exitgame], si	; 47D9A
 mov eax, 0FFFFFFFFh	; 47DA1
@@ -151,33 +149,33 @@ call forcepldata	; 47DE9
 call resetplstuff	; 47DEE
 mov ebx, unk_DFD9C	; 47DF3
 mov dword [byte esp+0Ch], esi	; 47DF8
-jmp near loc_47F56	; 47DFC
-loc_47E01:
+jmp near .16	; 47DFC
+.1:
 xor esi, esi	; 47E01
-jmp short loc_47E0E	; 47E03
-loc_47E05:
+jmp short .3	; 47E03
+.2:
 movsx eax, si	; 47E05
 xor ch, ch	; 47E08
 mov byte [esp+eax], ch	; 47E0A
 inc esi	; 47E0D
-loc_47E0E:
+.3:
 cmp si, byte 5	; 47E0E
-jl short loc_47E05	; 47E12
+jl short PreGameIntro.2	; 47E12
 xor esi, esi	; 47E14
-jmp near loc_47F48	; 47E16
-loc_47E1B:
+jmp near .15	; 47E16
+.4:
 mov ax, word [byte ebx+position]	; 47E1B
 test ax, ax	; 47E1F
-jne short loc_47E7E	; 47E22
+jne short .9	; 47E22
 mov word [byte ebx+Xpos+2], ax	; 47E24
 mov word [byte ebx+temp3], ax	; 47E28
 test byte [byte ebx+pflags], 80h	; 47E2C
-je short loc_47E39	; 47E30
+je short .5	; 47E30
 mov eax, 0FFFFFF24h	; 47E32
-jmp short loc_47E3E	; 47E37
-loc_47E39:
+jmp short .6	; 47E37
+.5:
 mov eax, 0DCh	; 47E39
-loc_47E3E:
+.6:
 mov word [byte ebx+Ypos+2], ax	; 47E3E
 mov word [byte ebx+temp4], ax	; 47E42
 mov word [byte ebx+temp5], 0FF9Ch	; 47E46
@@ -185,32 +183,32 @@ mov word [byte ebx+Yvel], 0	; 47E4C
 mov ax, word [byte ebx+Yvel]	; 47E52
 mov word [byte ebx+Xvel], ax	; 47E56
 test byte [byte ebx+pflags], 80h	; 47E5A
-je short loc_47E64	; 47E5E
+je short .7	; 47E5E
 xor eax, eax	; 47E60
-jmp short loc_47E69	; 47E62
-loc_47E64:
+jmp short .8	; 47E62
+.7:
 mov eax, 4	; 47E64
-loc_47E69:
+.8:
 mov word [byte ebx+facedir], ax	; 47E69
 mov edx, 99h	; 47E6D
 mov eax, ebx	; 47E72
 call SetSPA	; 47E74
-jmp near loc_47F35	; 47E79
-loc_47E7E:
+jmp near .14	; 47E79
+.9:
 mov eax, 5	; 47E7E
 call randomd0	; 47E83
 mov edx, eax	; 47E88
-loc_47E8A:
+.10:
 movsx eax, dx	; 47E8A
 cmp byte [esp+eax], 0	; 47E8D
-je short loc_47EA4	; 47E91
+je short .11	; 47E91
 lea edx, [byte eax+01h]	; 47E93
 mov ecx, 5	; 47E96
 mov eax, edx	; 47E9B
 sar edx, 1Fh	; 47E9D
 idiv ecx	; 47EA0
-jmp short loc_47E8A	; 47EA2
-loc_47EA4:
+jmp short PreGameIntro.10	; 47EA2
+.11:
 mov byte [esp+eax], 1	; 47EA4
 imul edx, byte 28h	; 47EA8
 sub edx, byte 50h	; 47EAB
@@ -224,12 +222,12 @@ mov eax, 2	; 47EC5
 call randomd0	; 47ECA
 add word [byte ebx+Xpos+2], ax	; 47ECF
 test byte [byte ebx+pflags], 80h	; 47ED3
-je short loc_47EE0	; 47ED7
+je short .12	; 47ED7
 mov edx, 0FFFFFFC6h	; 47ED9
-jmp short loc_47EE5	; 47EDE
-loc_47EE0:
+jmp short .13	; 47EDE
+.12:
 mov edx, 30h	; 47EE0
-loc_47EE5:
+.13:
 mov eax, 4	; 47EE5
 call randomd0	; 47EEA
 cwde	; 47EEF
@@ -251,19 +249,19 @@ xor edx, edx	; 47F26
 mov eax, ebx	; 47F28
 call SetSPA	; 47F2A
 mov word [byte ebx+012h], 171h	; 47F2F
-loc_47F35:
+.14:
 mov edx, 25h	; 47F35
 mov eax, ebx	; 47F3A
 call assreplace	; 47F3C
 inc esi	; 47F41
 sub ebx, 80h	; 47F42
-loc_47F48:
+.15:
 cmp si, byte 6	; 47F48
-jl near loc_47E1B	; 47F4C
+jl near PreGameIntro.4	; 47F4C
 inc dword [byte esp+0Ch]	; 47F52
-loc_47F56:
+.16:
 cmp word [byte esp+0Ch], byte 2	; 47F56
-jl near loc_47E01	; 47F5C
+jl near PreGameIntro.1	; 47F5C
 mov word [puckstruct+28h], 78h	; 47F62
 mov word [puckstruct+2], 0C8h	; 47F6B
 mov word [puckstruct+6], 0FED4h	; 47F74
@@ -317,9 +315,9 @@ mov dword [dword_D8C74], 0ECh	; 48080
 mov eax, dword [dword_CBECA]	; 4808A
 sar eax, 10h	; 4808F
 cmp eax, byte 0FFFFFFFFh	; 48092
-je short loc_4809C	; 48095
+je short .17	; 48095
 call sub_66DDA	; 48097
-loc_4809C:
+.17:
 call SelectScreenBM	; 4809C
 xor ebx, ebx	; 480A1
 mov word [word_CBC58], bx	; 480A3
@@ -328,24 +326,24 @@ mov word [word_CBC54], bx	; 480B1
 mov word [word_CBC52], bx	; 480B8
 call sub_14CF1	; 480BF
 add esp, byte 10h	; 480C4
-jmp near loc_48308	; 480C7
-loc_480CC:
+jmp near PreGameIntro_popx	; 480C7
+PreGameIntro_scroll:
 test ecx, ecx	; 480CC
-jge short loc_480D8	; 480CE
+jge short PreGameIntro_frameloop	; 480CE
 xor ebp, ebp	; 480D0
 mov dword [dword_D8C7C], ebp	; 480D2
-loc_480D8:
+PreGameIntro_frameloop:
 mov edx, dword [dword_D8C74]	; 480D8
 cmp edx, 1A8h	; 480DE
-jle short loc_480F2	; 480E4
+jle short .1	; 480E4
 mov dword [dword_D8C74], 1A8h	; 480E6
-jmp short loc_480FE	; 480F0
-loc_480F2:
+jmp short .2	; 480F0
+.1:
 test edx, edx	; 480F2
-jge short loc_480FE	; 480F4
+jge short .2	; 480F4
 xor ecx, ecx	; 480F6
 mov dword [dword_D8C74], ecx	; 480F8
-loc_480FE:
+.2:
 xor edx, edx	; 480FE
 xor eax, eax	; 48100
 call sub_6AF97	; 48102
@@ -392,7 +390,7 @@ neg eax	; 481A5
 call sub_6AF97	; 481A7
 call sub_6ADA7	; 481AC
 cmp word [word_CBEC4], byte 0	; 481B1
-je short loc_481F4	; 481B9
+je short .3	; 481B9
 mov ax, word [joysampling]	; 481BB
 mov word [joysampling_save], ax	; 481C1
 xor eax, eax	; 481C7
@@ -405,46 +403,46 @@ mov word [word_CBEC4], bx	; 481E0
 mov eax, dword [dword_E9A9E]	; 481E7
 sar eax, 10h	; 481EC
 mov dword [joysampling], eax	; 481EF
-loc_481F4:
+.3:
 movsx eax, si	; 481F4
 call CrowdNoiseUpdate	; 481F7
 cmp dword [dword_C4E14], byte 0	; 481FC
-jne short loc_4824E	; 48203
+jne short PreGameIntro_end	; 48203
 call Readjoy1	; 48205
 mov ah, byte [regd1]	; 4820A
 test ah, 10h	; 48210
-jne short loc_4821A	; 48213
+jne short .4	; 48213
 test ah, 20h	; 48215
-je short loc_4822F	; 48218
-loc_4821A:
+je short .5	; 48218
+.4:
 mov dword [dword_CC0F0], 1	; 4821A
 mov word [word_CBEC4], 1	; 48224
-jmp short loc_4824E	; 4822D
-loc_4822F:
+jmp short PreGameIntro_end	; 4822D
+.5:
 call Readjoy2	; 4822F
 mov dh, byte [regd1]	; 48234
 test dh, 10h	; 4823A
-jne short loc_4821A	; 4823D
+jne short PreGameIntro_frameloop.4	; 4823D
 test dh, 20h	; 4823F
-jne short loc_4821A	; 48242
+jne short PreGameIntro_frameloop.4	; 48242
 call sub_B3999	; 48244
-jmp near loc_4836E	; 48249
-loc_4824E:
+jmp near ThreeStarsLoop_tick	; 48249
+PreGameIntro_end:
 xor esi, esi	; 4824E
 mov dword [joysampling], esi	; 48250
 mov eax, dword [dword_CBECA]	; 48256
 sar eax, 10h	; 4825B
 cmp eax, byte 0FFFFFFFFh	; 4825E
-je short loc_4827B	; 48261
+je short .1	; 48261
 mov edi, dword [dword_E0244]	; 48263
 push edi	; 48269
 call jctime	; 4826A
 add esp, byte 4	; 4826F
 mov word [word_CBECC], 0FFFFh	; 48272
-loc_4827B:
+.1:
 mov ebp, dword [dword_C4E14]	; 4827B
 test ebp, ebp	; 48281
-je short loc_482CB	; 48283
+je short .2	; 48283
 push unk_DF014	; 48285
 push dword 100h	; 4828A
 push byte 0	; 4828F
@@ -460,10 +458,10 @@ call sub_8374D	; 482B7
 xor edx, edx	; 482BC
 mov dword [dword_C4E14], edx	; 482BE
 mov eax, 0FFFFFFFFh	; 482C4
-jmp short loc_48307	; 482C9
-loc_482CB:
+jmp short PreGameIntro_popebp	; 482C9
+.2:
 cmp dword [dword_CC0F0], byte 0	; 482CB
-je short loc_482FB	; 482D2
+je short .3	; 482D2
 push unk_DF014	; 482D4
 push dword 100h	; 482D9
 push ebp	; 482DE
@@ -473,33 +471,33 @@ mov ebx, 10h	; 482E7
 mov edx, unk_DF014	; 482EC
 mov eax, 1	; 482F1
 call sub_11598	; 482F6
-loc_482FB:
+.3:
 call StopDigiSample	; 482FB
 call sub_8374D	; 48300
 xor eax, eax	; 48305
-loc_48307:
+PreGameIntro_popebp:
 pop ebp	; 48307
-loc_48308:
+PreGameIntro_popx:
 pop edi	; 48308
 pop esi	; 48309
 pop edx	; 4830A
 pop ecx	; 4830B
 pop ebx	; 4830C
 ret	; 4830D
-sub_4830E:
+StartPreGame:
 push dword 4	; 4830E
 call __CHK	; 48313
 cmp dword [dword_CC0EC], byte 0	; 48318
-je short loc_48324	; 4831F
+je short .1	; 4831F
 xor eax, eax	; 48321
 ret	; 48323
-loc_48324:
+.1:
 test ax, ax	; 48324
-jne short loc_4832E	; 48327
-call sub_47CD6	; 48329
-loc_4832E:
+jne short .2	; 48327
+call PreGameIntro	; 48329
+.2:
 call CrowdNoiseReset	; 4832E
-sub_48333:
+ThreeStarsLoop:
 push dword 28h	; 48333
 call __CHK	; 48338
 push ebx	; 4833D
@@ -514,9 +512,9 @@ xor ebx, ebx	; 48352
 mov dword [dword_C4E14], ebx	; 48354
 add dword [dword_C7444], 3E8h	; 4835A
 add dword [dword_C7448], 3E8h	; 48364
-loc_4836E:
-cmp dword [dword_E9B04], byte 0	; 4836E
-je near loc_4824E	; 48375
+ThreeStarsLoop_tick:
+cmp dword [seqtimer], byte 0	; 4836E
+je near PreGameIntro_end	; 48375
 push byte 4	; 4837B
 call sub_B3989	; 4837D
 add esp, byte 4	; 48382
@@ -543,14 +541,14 @@ mov dword [dword_D8C6C], edx	; 483BD
 movsx edx, si	; 483C3
 mov eax, edx	; 483C6
 call sub_1149A	; 483C8
-mov eax, dword [dword_E9B04]	; 483CD
+mov eax, dword [seqtimer]	; 483CD
 sub eax, edx	; 483D2
-mov dword [dword_E9B04], eax	; 483D4
+mov dword [seqtimer], eax	; 483D4
 test eax, eax	; 483D9
-jge short loc_483E5	; 483DB
+jge short .1	; 483DB
 xor ebx, ebx	; 483DD
-mov dword [dword_E9B04], ebx	; 483DF
-loc_483E5:
+mov dword [seqtimer], ebx	; 483DF
+.1:
 mov eax, dword [camx_m2]	; 483E5
 sar eax, 10h	; 483EA
 add eax, byte 20h	; 483ED
@@ -563,6 +561,6 @@ lea eax, [byte edx-054h]	; 48404
 mov dword [dword_D8C74], eax	; 48407
 mov ecx, dword [dword_D8C7C]	; 4840C
 cmp ecx, byte 40h	; 48412
-jle near loc_480CC	; 48415
+jle near PreGameIntro_scroll	; 48415
 mov dword [dword_D8C7C], 40h	; 4841B
-jmp near loc_480D8	; 48425
+jmp near PreGameIntro_frameloop	; 48425

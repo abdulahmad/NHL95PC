@@ -14,7 +14,7 @@ extern dword_EA0DC, jctime, off_CEE5F, off_CEE7F, off_CEE9F, off_CEEBF, off_CEED
 extern off_CEF23, off_D3078, randomd0, sprintf_, sub_10E9F, sub_11598, sub_12034, sub_1395F
 extern sub_1431E, sub_16F9A, sub_17816, sub_1B982, sub_1BAF3, sub_1D610, sub_2D35A, sub_2F2B1
 extern sub_2F3D7, sub_2F5EE, sub_2FEDF, sub_30A0C, sub_31013, sub_3377C, sub_33E6A, sub_479E9
-extern sub_47C31, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
+extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB
 extern sub_6BA4D, sub_76429, sub_767D0, sub_7E0FA, sub_805C4, sub_836E4, sub_837A8, sub_846F0
 extern sub_84704, sub_84715, sub_84729, sub_8BC15, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
@@ -368,7 +368,7 @@ call sub_2D35A	; 191B8
 call sub_6B47C	; 191BD
 jmp short loc_191C9	; 191C2
 loc_191C4:
-call sub_47C31	; 191C4
+call FadeOutPalCycle	; 191C4
 loc_191C9:
 mov word [exitgame], 0FFFFh	; 191C9
 mov eax, 1	; 191D2

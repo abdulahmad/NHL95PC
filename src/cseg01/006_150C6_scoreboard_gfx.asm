@@ -13,7 +13,7 @@ extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, dword_DF
 extern dword_DF73C, jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C8, off_C57CC
 extern off_D3078, rand_, randomd0, sub_10712, sub_10E9F, sub_1167B, sub_13BB4, sub_13FA7
 extern sub_1431E, sub_14A20, sub_14F31, sub_1BEFD, sub_327A1, sub_3371C, sub_3377C, sub_42221
-extern sub_479E9, sub_47C31, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
+extern sub_479E9, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
 extern sub_7DC8B, sub_891B2, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
 extern sub_B39ED, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, unk_C5298, unk_DF314, PerTimeTab
 extern word_CBC52, lcblink, word_CBC60, lcboxon
@@ -1254,7 +1254,7 @@ loc_15F32:
 call sub_3377C	; 15F32
 call sub_7DC8B	; 15F37
 call sub_13BB4	; 15F3C
-call sub_47C31	; 15F41
+call FadeOutPalCycle	; 15F41
 mov ebp, 1	; 15F46
 mov dword [dword_CC0EC], ebp	; 15F4B
 call sub_13FA7	; 15F51

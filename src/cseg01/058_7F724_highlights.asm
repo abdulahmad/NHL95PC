@@ -11,7 +11,7 @@ extern dword_DC230, dword_DC2F0, recbpr, dword_E0400, dword_E0404, dword_E0408, 
 extern dword_ED6F8, dword_ED700, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, off_C54A9
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, sub_10E9F
 extern sub_13A91, sub_1431E, sub_14525, sub_1453E, sub_14566, sub_1457C, sub_145A2, sub_145F9
-extern sub_1BAB1, sub_303FB, sub_30A0C, sub_31013, sub_33727, sub_3377C, sub_479E9, sub_47C31
+extern sub_1BAB1, sub_303FB, sub_30A0C, sub_31013, sub_33727, sub_3377C, sub_479E9, FadeOutPalCycle
 extern sub_673C5, sub_6B3D7, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
 extern sub_93000, sub_B2CD8, sub_B2DCA, sub_B4FAC, sub_B5DB0, unk_7E05F, unk_C3444, unk_C3447
@@ -920,7 +920,7 @@ mov ebx, unk_DF314	; 80270
 call sub_673C5	; 80275
 call sub_7DC8B	; 8027A
 call sub_13A91	; 8027F
-call sub_47C31	; 80284
+call FadeOutPalCycle	; 80284
 mov edx, 0C8h	; 80289
 mov eax, 140h	; 8028E
 call sub_10E9F	; 80293

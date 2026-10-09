@@ -22,7 +22,7 @@ extern dword_EBC74, dword_EBC78, dword_EBC7C, dword_EBE9C, dword_ECDE4, dword_EC
 extern vgapage, fputchar, j___close_, j___delay_, jctime, lseek_, memcpy_, off_CF223
 extern off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443, off_D056C, off_D058C
 extern open_, qsort_, read_, sprintf_, strcmp_, sub_1431E, sub_174C2, sub_17573
-extern sub_175E2, sub_176AE, sub_176DB, sub_1D6E8, sub_29C75, sub_31013, sub_479E9, sub_47C31
+extern sub_175E2, sub_176AE, sub_176DB, sub_1D6E8, sub_29C75, sub_31013, sub_479E9, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_6CBB7
 extern sub_6CBE8, sub_6CBFD, sub_78366, sub_78500, sub_78A87, sub_79188, sub_79DE1, sub_79F41
 extern sub_7A099, sub_836E4, sub_8373E, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0
@@ -192,7 +192,7 @@ xor ebx, ebx	; 73932
 mov edx, eax	; 73934
 mov eax, ebp	; 73936
 call sub_78500	; 73938
-call sub_47C31	; 7393D
+call FadeOutPalCycle	; 7393D
 call sub_B4BA8	; 73942
 mov edx, dword [dword_EA2B4]	; 73947
 mov ecx, dword [byte edx+02Ch]	; 7394D
@@ -4363,7 +4363,7 @@ push eax	; 769C2
 call sub_B30B4	; 769C3
 mov edi, eax	; 769C8
 add esp, byte 8	; 769CA
-call sub_47C31	; 769CD
+call FadeOutPalCycle	; 769CD
 mov ecx, dword [byte esp+040h]	; 769D2
 push ecx	; 769D6
 mov ecx, dword [byte esp+048h]	; 769D7

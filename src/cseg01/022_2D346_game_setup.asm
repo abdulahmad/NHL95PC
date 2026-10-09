@@ -20,7 +20,7 @@ extern dword_DF626, dword_DF62A, dword_DF636, dword_DF638, dword_DF63A, fputchar
 extern off_C57CC, off_C719C, off_C80D7, off_C80E7, off_C80EB, off_CD304, rand_, sprintf_
 extern strcat_, strcpy_, sub_11598, sub_1431E, sub_14525, sub_14552, sub_1457C, sub_1463D
 extern sub_1478B, sub_147C9, sub_147FF, sub_174C2, sub_175E2, sub_1BAF3, sub_29C75, sub_33E6A
-extern sub_47C31, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
+extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
 extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_913B4, sub_913D0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88
@@ -534,7 +534,7 @@ xor ecx, ecx	; 2DAD8
 mov dword [dword esp+076Ch], ecx	; 2DADA
 test byte [esp], 20h	; 2DAE1
 jne near loc_2DBE0	; 2DAE5
-call sub_47C31	; 2DAEB
+call FadeOutPalCycle	; 2DAEB
 cmp byte [musicon], 0	; 2DAF0
 je short loc_2DB6B	; 2DAF7
 cmp dword [songdata], byte 0	; 2DAF9
@@ -708,7 +708,7 @@ push esi	; 2DDDB
 loc_2DDDC:
 call sub_B4BC4	; 2DDDC
 add esp, byte 10h	; 2DDE1
-call sub_47C31	; 2DDE4
+call FadeOutPalCycle	; 2DDE4
 mov ebp, dword [dword esp+079Ch]	; 2DDE9
 push ebp	; 2DDF0
 call sub_913B4	; 2DDF1

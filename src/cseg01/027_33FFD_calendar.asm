@@ -10,7 +10,7 @@ extern dword_C898E, dword_C8992, musichandle, dword_D2C6B, dword_D42A8, dword_D8
 extern dword_DD780, dword_DD794, dword_DD7A0, dword_DDD28, dword_DDD2C, dword_DDD30, dword_EA0DC, fputchar
 extern jctime, off_C57CC, off_C80EF, off_C85F6, off_C8616, sprintf_, sub_1431E, sub_14525
 extern sub_1457C, sub_145A2, sub_147A0, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
-extern sub_21350, sub_214B1, sub_215C4, sub_216D7, sub_217FE, sub_30A0C, sub_479E9, sub_47C31
+extern sub_21350, sub_214B1, sub_215C4, sub_216D7, sub_217FE, sub_30A0C, sub_479E9, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
 extern sub_7DB67, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
 extern sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_91370, sub_913D0
@@ -975,7 +975,7 @@ mov dword [dword_DD7A0], eax	; 34CDD
 loc_34CE2:
 test si, si	; 34CE2
 je short loc_34CEC	; 34CE5
-call sub_47C31	; 34CE7
+call FadeOutPalCycle	; 34CE7
 loc_34CEC:
 lea eax, [dword esp+0780h]	; 34CEC
 call sub_1457C	; 34CF3
@@ -1036,7 +1036,7 @@ mov dword [dword esp+0754h], eax	; 34DDE
 mov dword [dword esp+0758h], eax	; 34DE5
 mov dword [dword esp+0718h], eax	; 34DEC
 mov dword [dword esp+071Ch], eax	; 34DF3
-call sub_47C31	; 34DFA
+call FadeOutPalCycle	; 34DFA
 call sub_B4BA8	; 34DFF
 mov edx, dword [dword esp+07A0h]	; 34E04
 push edx	; 34E0B

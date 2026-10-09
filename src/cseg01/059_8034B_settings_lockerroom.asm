@@ -23,7 +23,7 @@ extern dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED
 extern dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794, dword_ED798, dword_ED79C
 extern dword_ED7A0, fputchar, jctime, off_C54A9, off_CECFF, off_CED3F, off_D21C0, off_D2230
 extern sprintf_, strcpy_, strncpy_, sub_1431E, sub_174C2, sub_175E2, sub_17636, sub_479E9
-extern sub_47C31, sub_6B391, sub_6B3D7, sub_76429, sub_8291E, sub_8B92F, sub_8CCA8, sub_8D2F0
+extern FadeOutPalCycle, sub_6B391, sub_6B3D7, sub_76429, sub_8291E, sub_8B92F, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_912C8, sub_91400
 extern sub_91964, sub_91FE0, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8, sub_B4DD4
@@ -722,7 +722,7 @@ inc edi	; 80B4B
 mov dword [dword esp+0350h], edi	; 80B4C
 cmp edi, 180h	; 80B53
 jl short loc_80B15	; 80B59
-call sub_47C31	; 80B5B
+call FadeOutPalCycle	; 80B5B
 push asc_C35D1	; 80B60
 push esi	; 80B65
 call sub_B30B4	; 80B66

@@ -15,7 +15,7 @@ extern fputchar, jctime, loc_16005, memcpy_, memset_, off_C6399, rand_, sprintf_
 extern srand_, strlen_, sub_1431E, sub_15D6B, sub_1600C, sub_16072, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
 extern sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2, sub_1B2A7, sub_1B8AC, sub_1B92E, sub_33E6A
-extern sub_47C31, StopDigiSample, PlayDigiSample, sub_59C1D, sub_59C3E, sub_59D54, sub_6B3D7, sub_76429
+extern FadeOutPalCycle, StopDigiSample, PlayDigiSample, sub_59C1D, sub_59C3E, sub_59D54, sub_6B3D7, sub_76429
 extern sub_83459, sub_8374D, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C
 extern sub_9087C, sub_9121C, sub_91284, sub_912C8, sub_9132C, sub_91370, sub_913B4, sub_91400
@@ -1193,7 +1193,7 @@ movsb	; 1708B
 mov eax, dword [dword esp+0360h]	; 1708C
 mov word [byte eax+04h], 135h	; 17093
 mov word [byte eax+06h], 14Eh	; 17099
-call sub_47C31	; 1709F
+call FadeOutPalCycle	; 1709F
 push edx	; 170A4
 call sub_9061C	; 170A5
 add esp, byte 4	; 170AA

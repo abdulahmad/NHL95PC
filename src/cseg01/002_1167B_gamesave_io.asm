@@ -14,7 +14,7 @@ extern off_C526F, off_C5273, off_C5439, off_C80D7, off_C80E7, off_C80EB, replays
 extern off_CBED0, strcat_, strcpy_, sub_10E9F, sub_1145F, sub_1149A, sub_11598, sub_13A91
 extern sub_13E8F, sub_1431E, sub_14525, sub_1457C, sub_1463D, sub_1478B, sub_147C9, sub_14CF1
 extern sub_150C6, sub_15B76, sub_1920F, sub_1935D, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
-extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, sub_47C31, StartThreeStars, joyq_flush, CrowdNoiseUpdate
+extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71, DrawRinkOverlays, PeriodOver, sub_60612
 extern sub_61A27, sub_61B85, sub_64614, SetupTeamLines, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
 extern sub_6AF97, sub_6B008, sub_7DC8B, sub_8374D, sub_837A8, SelectScreenBM, sub_8E8A0, sub_8EA18
@@ -477,7 +477,7 @@ mov eax, dword [cont2team]	; 11D3A
 sar eax, 10h	; 11D3F
 mov ebx, unk_DF314	; 11D42
 call sub_673C5	; 11D47
-call sub_47C31	; 11D4C
+call FadeOutPalCycle	; 11D4C
 mov edx, 0C8h	; 11D51
 mov eax, 140h	; 11D56
 call sub_10E9F	; 11D5B
@@ -526,7 +526,7 @@ mov eax, dword [word_CBC44]	; 11E04
 sar eax, 10h	; 11E09
 cmp eax, byte 0FFFFFFFFh	; 11E0C
 je near loc_11F74	; 11E0F
-call sub_47C31	; 11E15
+call FadeOutPalCycle	; 11E15
 xor ecx, ecx	; 11E1A
 mov dword [dword_C53F7], ecx	; 11E1C
 xor eax, eax	; 11E22

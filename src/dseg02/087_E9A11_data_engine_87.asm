@@ -8,7 +8,7 @@ global byte_E9ACE, byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, b
 global byte_E9AD6, byte_E9AD7, OOlist, byte_E9DB4, byte_E9E18, byte_E9E31, byte_E9E4A
 global byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC, byte_E9FAD, byte_E9FAE
 global byte_E9FAF, byte_E9FDC, byte_E9FDD, PenBuf_m5, dword_E9A14, dword_E9A9E, dword_E9AB6
-global dword_E9AB7, gwgteam, gwgplayer, startm_m2, dword_E9B04
+global dword_E9AB7, gwgteam, gwgplayer, startm_m2, seqtimer
 global dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9BAC, dword_E9BB0, dword_E9BB4, dword_E9BB8, dword_E9BBC
 global dword_E9BC0, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38
 global dword_E9F54, dword_E9F56, dword_E9F5A, dword_E9F76, dword_E9F78, dword_E9F7B, dword_E9F8C, dword_E9F98
@@ -135,7 +135,7 @@ startm:
 resb 2
 starpl:
 resb 10
-dword_E9B04:
+seqtimer:
 resb 36
 word_E9B28:
 resb 2

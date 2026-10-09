@@ -10,7 +10,7 @@ extern dword_C5417, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C6
 extern cont2team, HomeTeam, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
 extern dword_D2C6B, dword_DC238, dword_EA0DC, jctime, memcpy_, off_C5439, off_C7282, off_D3078
 extern strcpy_, strncpy_, sub_106C8, sub_142E7, sub_1431E, sub_14525, sub_14552, sub_14566
-extern sub_1457C, sub_145A2, sub_145F9, sub_1D100, sub_1D610, sub_20D97, sub_31013, sub_47C31
+extern sub_1457C, sub_145A2, sub_145F9, sub_1D100, sub_1D610, sub_20D97, sub_31013, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D
 extern sub_76429, sub_8B85B, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C, sub_91370
@@ -186,7 +186,7 @@ call sub_8E83C	; 31CF6
 mov esi, eax	; 31CFB
 add esp, byte 8	; 31CFD
 mov ebp, eax	; 31D00
-call sub_47C31	; 31D02
+call FadeOutPalCycle	; 31D02
 call sub_B4BA8	; 31D07
 push asc_C174C	; 31D0C
 push esi	; 31D11

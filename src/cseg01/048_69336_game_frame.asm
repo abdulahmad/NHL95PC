@@ -11,7 +11,7 @@ extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
 extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, sub_10E9F, sub_1145F, sub_1149A
 extern sub_11598, sub_1395F, sub_14CF1, sub_150C6, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
-extern sub_479E9, sub_47C31, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
+extern sub_479E9, FadeOutPalCycle, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
 extern sub_59CA9, sub_59D54, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
 extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_836E4
 extern sub_8373E, sub_8F633, sub_8FFB0, sub_B396E, awlinetab, hmlinetab, unk_DF014, unk_DF314
@@ -186,7 +186,7 @@ mov eax, edx	; 695B8
 sar edx, 1Fh	; 695BA
 idiv ebx	; 695BD
 mov word [awtmline], dx	; 695BF
-call sub_47C31	; 695C6
+call FadeOutPalCycle	; 695C6
 mov edx, 0C8h	; 695CB
 mov eax, 140h	; 695D0
 call sub_10E9F	; 695D5

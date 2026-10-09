@@ -346,11 +346,11 @@
 ;  452C5  sub_452C5                                cseg01/035_45282_options_settings.asm        2
 ;  47951  sub_47951                                cseg01/035_45282_options_settings.asm        1
 ;  479E9  sub_479E9                                cseg01/035_45282_options_settings.asm        12
-;  47C31  sub_47C31                                cseg01/036_47C31_engine_init.asm             12
-;  48307  loc_48307                                cseg01/036_47C31_engine_init.asm             1
-;  48308  loc_48308                                cseg01/036_47C31_engine_init.asm             1
-;  4830E  sub_4830E                                cseg01/036_47C31_engine_init.asm             1
-;  48333  sub_48333                                cseg01/036_47C31_engine_init.asm             1
+;  47C31  FadeOutPalCycle                          cseg01/036_47C31_engine_init.asm             12
+;  48307  PreGameIntro_popebp                      cseg01/036_47C31_engine_init.asm             1
+;  48308  PreGameIntro_popx                        cseg01/036_47C31_engine_init.asm             1
+;  4830E  StartPreGame                             cseg01/036_47C31_engine_init.asm             1
+;  48333  ThreeStarsLoop                           cseg01/036_47C31_engine_init.asm             1
 ;  4842A  sub_4842A                                cseg01/037_4842A_engine_player_logic.asm     1
 ;  484DA  sub_484DA                                cseg01/037_4842A_engine_player_logic.asm     1
 ;  48F0B  StartThreeStars                          cseg01/037_4842A_engine_player_logic.asm     1
@@ -6160,7 +6160,7 @@
 ;  E9AF6  startm_m2                                dseg02/087_E9A11_data_engine_87.asm          2
 ;  E9AF8  startm                                   dseg02/087_E9A11_data_engine_87.asm          2
 ;  E9AFA  starpl                                   dseg02/087_E9A11_data_engine_87.asm          1
-;  E9B04  dword_E9B04                              dseg02/087_E9A11_data_engine_87.asm          2
+;  E9B04  seqtimer                                 dseg02/087_E9A11_data_engine_87.asm          2
 ;  E9B28  word_E9B28                               dseg02/087_E9A11_data_engine_87.asm          1
 ;  E9B2A  dword_E9B2A                              dseg02/087_E9A11_data_engine_87.asm          2
 ;  E9B2C  word_E9B2C                               dseg02/087_E9A11_data_engine_87.asm          3
