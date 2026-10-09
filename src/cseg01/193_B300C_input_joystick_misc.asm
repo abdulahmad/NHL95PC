@@ -4,7 +4,7 @@ bits 32
 section s_B300C progbits alloc exec nowrite align=1
 extern atexit_, byte_D3040, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, byte_D41B7
 extern byte_D4244, byte_D4245, byte_D4246, byte_D4280, dword_D2C84, dword_D2FDC, dword_D3090, dword_D3096
-extern dword_D30A4, dword_D30AC, dword_D30B0, dword_D30B4, dword_D30B8, dword_D4158, dword_D415C, dword_D4160
+extern dword_D30A4, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1, dword_D4158, dword_D415C, dword_D4160
 extern dword_D4164, dword_D416C, dword_D4170, dword_D4177, dword_D417B, dword_D417F, dword_D4183, dword_D4187
 extern dword_D418B, dword_D418F, dword_D4193, dword_D4197, dword_D419B, dword_D419F, dword_D41A3, dword_D41A7
 extern dword_D41AB, dword_D41AF, dword_D41B3, dword_D41FC, dword_D4200, dword_D4204, dword_D4208, dword_D420C
@@ -759,11 +759,11 @@ db 00h,00h
 sub_B392C:
 mov eax, dword [byte esp+04h]	; B392C
 push eax	; B3930
-mov edx, dword [dword_D30B8]	; B3931
-mov ebx, dword [dword_D30B0]	; B3937
+mov edx, dword [cliprect_y1]	; B3931
+mov ebx, dword [cliprect_y0]	; B3937
 LD sub, edx, ebx	; B393D
-mov eax, dword [dword_D30B4]	; B393F
-mov ecx, dword [dword_D30AC]	; B3944
+mov eax, dword [cliprect_x1]	; B393F
+mov ecx, dword [cliprect_x0]	; B3944
 LD sub, eax, ecx	; B394A
 push edx	; B394C
 push eax	; B394D

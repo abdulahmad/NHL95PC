@@ -10,7 +10,7 @@ extern sub_33523, sub_3366F, sub_336BE, sub_6BE95, sub_7BEBB, sub_7C993, sub_7C9
 extern sub_7CB9F, sub_80830, sub_82579, sub_85924, CreatePlayoffs, unk_20EB7, unk_C67B1, unk_CEF0F
 extern unk_CEF2F, unk_CEF6F, unk_CEFEF
 global asc_CDB75, asc_CDB7C, asc_CDBDC, asc_CDBE3, asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_CDD5E
-global asc_CDD6B, asc_CE20B, asc_CE21A, asc_CE22A, asc_CE237, asc_CE247, asc_CE259, byte_CDB77
+global asc_CDD6B, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide, byte_CDB77
 global byte_CDB7E, dword_CD9D0, dword_CD9F4, dword_CDA1C, dword_CDA20, dword_CDA24, dword_CDA28, dword_CDA2C
 global dword_CDA30, dword_CDA34, dword_CDA38, dword_CDA3C, dword_CDA40, dword_CDA44, dword_CDA48, dword_CDA4C
 global dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, dword_CE4E3, dword_CE503, dword_CE527, dword_CE583
@@ -375,18 +375,18 @@ unk_CE1F5:
 db 052h,065h,074h,075h,072h,06Eh,020h,054h,06Fh,00h
 unk_CE1FF:
 db 053h,070h,06Fh,072h,074h,073h,020h,044h,065h,073h,06Bh,00h
-asc_CE20B:
+str_SportsCentral:
 db 053h,070h,06Fh,072h,074h,073h,020h,043h,065h,06Eh,074h,072h,061h,06Ch,00h
-asc_CE21A:
+str_LeagueCalendar:
 db 04Ch,065h,061h,067h,075h,065h,020h,043h,061h,06Ch,065h,06Eh,064h,061h,072h,00h
-asc_CE22A:
+str_PlayoffTree:
 db 050h,06Ch,061h,079h,06Fh,066h,066h,020h,054h,072h,065h,065h,00h
-asc_CE237:
+str_BroadcastBooth:
 db 042h,072h,06Fh,061h,064h,063h,061h,073h,074h,020h,042h,06Fh,06Fh,074h,068h,00h
-asc_CE247:
+str_IntermissionDesk:
 db 049h,06Eh,074h,065h,072h,06Dh,069h,073h,073h,069h,06Fh,06Eh,020h,044h,065h,073h
 db 06Bh,00h
-asc_CE259:
+str_RinkSide:
 db 052h,069h,06Eh,06Bh,020h,053h,069h,064h,065h,00h
 unk_CE263:
 db 052h,065h,074h,075h,072h,06Eh,020h,054h,06Fh,00h

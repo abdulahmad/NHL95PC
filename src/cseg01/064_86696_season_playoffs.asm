@@ -25,7 +25,7 @@ extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpa
 extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers, PlayGame
 extern FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
 extern CopyFile, DiskSpaceShort, CheckGameDiskSpace, GetLeagueDBSizes, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText
-extern TextGridOpen, TextGridOff, InitGameSummary, sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171
+extern TextGridOpen, TextGridOff, InitGameSummary, SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, sub_20016, sub_20171
 extern sub_202E5, sub_203FA, sub_2051A, sub_20D97, sub_27C34, sub_29F28, sub_2FDD1, sub_2FEDF
 extern sub_30A0C, sub_30F12, MessageBox, SaveModeState, LoadModeState, WriteModeState, sub_3626D, SimulateGame
 extern sub_479E9, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E
@@ -519,9 +519,9 @@ call sub_30F12	; 86D8F
 .26:
 mov eax, postate	; 86D94
 call WriteModeState	; 86D99
-call sub_1D518	; 86D9E
+call BuildSavedGameLabels	; 86D9E
 xor eax, eax	; 86DA3
-call sub_1D100	; 86DA5
+call SetupStatsSourceMenu	; 86DA5
 mov dword [dword_CE583], PlayoffModeLoop	; 86DAA
 mov dword [dword_CE5A3], sub_7A29C	; 86DB4
 mov dword [dword_CE5C3], sub_86647	; 86DBE
@@ -3742,9 +3742,9 @@ call SaveModeState	; 89290
 mov eax, postate	; 89295
 call LoadModeState	; 8929A
 mov eax, 2	; 8929F
-call sub_1D100	; 892A4
+call SetupStatsSourceMenu	; 892A4
 mov eax, 1	; 892A9
-call sub_1D610	; 892AE
+call SetScreenTitle	; 892AE
 cmp dword [byte ebp+00h], byte 0	; 892B3
 jge short .1	; 892B7
 xor ecx, ecx	; 892B9
@@ -4328,7 +4328,7 @@ push esi	; 89B2E
 call jctime	; 89B2F
 add esp, byte 4	; 89B34
 xor eax, eax	; 89B37
-call sub_1D100	; 89B39
+call SetupStatsSourceMenu	; 89B39
 mov eax, postate	; 89B3E
 call WriteModeState	; 89B43
 mov eax, exhstate	; 89B48

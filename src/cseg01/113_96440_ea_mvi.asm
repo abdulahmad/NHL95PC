@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_96440 progbits alloc exec nowrite align=1
-extern _os_handle_3, asc_C4730, asc_C4760, asc_C4780, asc_C47A4, asc_C47AC, dword_D30A4, dword_D30AC
-extern dword_D30B0, dword_D30B4, dword_D30B8, dword_D30C8, dword_D30D0, dword_D3104, jctime, sub_8CC70
+extern _os_handle_3, asc_C4730, asc_C4760, asc_C4780, asc_C47A4, asc_C47AC, dword_D30A4, cliprect_x0
+extern cliprect_y0, cliprect_x1, cliprect_y1, dword_D30C8, dword_D30D0, dword_D3104, jctime, sub_8CC70
 extern sub_8CCA8, sub_8CCC4, sub_8D2F0, sub_8DBD4, sub_8E8F0, sub_9132C, DebugPrintf, sub_B3A88
 extern sub_B3AA1, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, sub_B4BA8, sub_B4BC4
 extern sub_B4F8C, sub_B5E00, sub_B6DF7
@@ -40,7 +40,7 @@ mov edx, dword [dword_D30D0]	; 96486
 mov dword [byte esp+08h], edx	; 9648C
 xor ecx, ecx	; 96490
 mov dword [byte esp+04h], ecx	; 96492
-mov edx, dword [dword_D30B0]	; 96496
+mov edx, dword [cliprect_y0]	; 96496
 sub edx, eax	; 9649C
 test edx, edx	; 9649E
 jle short loc_964AB	; 964A0
@@ -50,12 +50,12 @@ sub ebp, edx	; 964A7
 add eax, edx	; 964A9
 loc_964AB:
 lea edx, [eax+ebp]	; 964AB
-sub edx, dword [dword_D30B8]	; 964AE
+sub edx, dword [cliprect_y1]	; 964AE
 test edx, edx	; 964B4
 jle short loc_964BA	; 964B6
 sub ebp, edx	; 964B8
 loc_964BA:
-mov edx, dword [dword_D30AC]	; 964BA
+mov edx, dword [cliprect_x0]	; 964BA
 sub edx, edi	; 964C0
 test edx, edx	; 964C2
 jle short loc_964D2	; 964C4
@@ -66,7 +66,7 @@ add dword [byte esp+04h], edx	; 964CE
 loc_964D2:
 mov edx, dword [byte esp+010h]	; 964D2
 add edx, edi	; 964D6
-sub edx, dword [dword_D30B4]	; 964D8
+sub edx, dword [cliprect_x1]	; 964D8
 test edx, edx	; 964DE
 jle short loc_964EA	; 964E0
 add dword [byte esp+04h], edx	; 964E2

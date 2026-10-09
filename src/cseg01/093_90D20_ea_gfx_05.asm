@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_90D20 progbits alloc exec nowrite align=1
-extern dword_D30A4, dword_D30AC, dword_D30B0, dword_D30B4, dword_D30B8, dword_D30C8, dword_D30D0, dword_D3104
+extern dword_D30A4, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1, dword_D30C8, dword_D30D0, dword_D3104
 extern dword_D4108, dword_D43E4, jctime, sub_8D2F0, sub_98DD8, sub_B392C, sub_B3A88, sub_B3AA1
 extern sub_B3ABC, sub_B3FB0, sub_B4BA8, sub_B5E00, sub_B6665, sub_B677D, sub_B6887, sub_B693C
 global loc_90D65, loc_90DB4, loc_90DCD, loc_90DD9, loc_90DF5, loc_90E20, loc_90E71, loc_90E82
@@ -162,7 +162,7 @@ mov esi, dword [byte esp+08h]	; 90EC1
 mov ecx, dword [byte esp+0Ch]	; 90EC5
 mov eax, dword [byte esp+010h]	; 90EC9
 mov edx, dword [byte esp+014h]	; 90ECD
-mov ebx, dword [dword_D30B0]	; 90ED1
+mov ebx, dword [cliprect_y0]	; 90ED1
 sub ebx, ecx	; 90ED7
 test ebx, ebx	; 90ED9
 jle short loc_90EE1	; 90EDB
@@ -170,12 +170,12 @@ sub edx, ebx	; 90EDD
 add ecx, ebx	; 90EDF
 loc_90EE1:
 lea ebx, [ecx+edx]	; 90EE1
-sub ebx, dword [dword_D30B8]	; 90EE4
+sub ebx, dword [cliprect_y1]	; 90EE4
 test ebx, ebx	; 90EEA
 jle short loc_90EF0	; 90EEC
 sub edx, ebx	; 90EEE
 loc_90EF0:
-mov ebx, dword [dword_D30AC]	; 90EF0
+mov ebx, dword [cliprect_x0]	; 90EF0
 sub ebx, esi	; 90EF6
 test ebx, ebx	; 90EF8
 jle short loc_90F00	; 90EFA
@@ -183,7 +183,7 @@ sub eax, ebx	; 90EFC
 add esi, ebx	; 90EFE
 loc_90F00:
 lea ebx, [esi+eax]	; 90F00
-sub ebx, dword [dword_D30B4]	; 90F03
+sub ebx, dword [cliprect_x1]	; 90F03
 test ebx, ebx	; 90F09
 jle short loc_90F0F	; 90F0B
 sub eax, ebx	; 90F0D
@@ -311,7 +311,7 @@ mov esi, dword [byte esp+08h]	; 91045
 mov ecx, dword [byte esp+0Ch]	; 91049
 mov eax, dword [byte esp+010h]	; 9104D
 mov edx, dword [byte esp+014h]	; 91051
-mov ebx, dword [dword_D30B0]	; 91055
+mov ebx, dword [cliprect_y0]	; 91055
 sub ebx, ecx	; 9105B
 test ebx, ebx	; 9105D
 jle short loc_91065	; 9105F
@@ -319,12 +319,12 @@ sub edx, ebx	; 91061
 add ecx, ebx	; 91063
 loc_91065:
 lea ebx, [ecx+edx]	; 91065
-sub ebx, dword [dword_D30B8]	; 91068
+sub ebx, dword [cliprect_y1]	; 91068
 test ebx, ebx	; 9106E
 jle short loc_91074	; 91070
 sub edx, ebx	; 91072
 loc_91074:
-mov ebx, dword [dword_D30AC]	; 91074
+mov ebx, dword [cliprect_x0]	; 91074
 sub ebx, esi	; 9107A
 test ebx, ebx	; 9107C
 jle short loc_91084	; 9107E
@@ -332,7 +332,7 @@ sub eax, ebx	; 91080
 add esi, ebx	; 91082
 loc_91084:
 lea ebx, [esi+eax]	; 91084
-sub ebx, dword [dword_D30B4]	; 91087
+sub ebx, dword [cliprect_x1]	; 91087
 test ebx, ebx	; 9108D
 jle short loc_91093	; 9108F
 sub eax, ebx	; 91091

@@ -14,7 +14,7 @@ extern dword_DDD70, dword_DE265, mkdir_, off_C7905, off_C7C1D, off_C7C59, off_C7
 extern leaguedbnames, off_C89DE, off_C8A85, off_C8AB9, off_C8B37
 extern sprintf_, strcmp_, strcpy_, stricmp_, FileExists, MakePath, DeleteFiles, DeleteDir
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt, ReadKeyRec
-extern CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, sub_1D100, sub_1D518, sub_30A0C, sub_30F12
+extern CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, SetupStatsSourceMenu, BuildSavedGameLabels, sub_30A0C, sub_30F12
 extern MessageBox, LoadModeState, sub_32C9E, sub_33559, sub_336E6, sub_38B4F, sub_3A24F, sub_3A266
 extern sub_3A27D, WriteSchedGame, WriteTeamRec, sub_3A31E, WriteLeagueTeamEntry, AskTeamPassword, AskMasterPassword, sub_3A5FC
 extern sub_3A71C, sub_3A826, FmtFromLeague, LeagueCheckStub, GetLeagueId, MsgCopyingDatabases, CopyHumanTeamDBs, UpdateSeasonSchedule
@@ -2873,9 +2873,9 @@ add esp, byte 4	; 3D088
 loc_3D08B:
 mov eax, lgstate	; 3D08B
 call LoadModeState	; 3D090
-call sub_1D518	; 3D095
+call BuildSavedGameLabels	; 3D095
 xor eax, eax	; 3D09A
-call sub_1D100	; 3D09C
+call SetupStatsSourceMenu	; 3D09C
 mov dword [dword_CE4E3], sub_336E6	; 3D0A1
 mov dword [dword_CE503], sub_33559	; 3D0AB
 mov dword [dword_CE527], unk_CE64F	; 3D0B5
@@ -2883,9 +2883,9 @@ jmp short loc_3D0E9	; 3D0BF
 loc_3D0C1:
 xor ah, ah	; 3D0C1
 mov byte [lgstate+4], ah	; 3D0C3
-call sub_1D518	; 3D0C9
+call BuildSavedGameLabels	; 3D0C9
 xor eax, eax	; 3D0CE
-call sub_1D100	; 3D0D0
+call SetupStatsSourceMenu	; 3D0D0
 xor ebx, ebx	; 3D0D5
 mov dword [dword_CE4E3], ebx	; 3D0D7
 mov dword [dword_CE503], ebx	; 3D0DD

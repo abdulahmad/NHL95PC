@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9C594 progbits alloc exec nowrite align=1
-extern asc_C48FC, asc_C4904, byte_D506C, dword_D30AC, dword_D30B4, dword_D5064, dword_D5068, fputchar
+extern asc_C48FC, asc_C4904, byte_D506C, cliprect_x0, cliprect_x1, dword_D5064, dword_D5068, fputchar
 extern jctime, off_D516C, sub_8CCA8, sub_8FFB0, sub_91FA4, sub_92CD0, DebugPrintf, sub_A2FD0
 extern sub_A3050, sub_A30D0, sub_B3ABC, sub_B7218
 global loc_9C5A4, loc_9C611, loc_9C62B, loc_9C689, loc_9C6BE, loc_9C70C, loc_9C71B, loc_9C72B
@@ -237,8 +237,8 @@ db 00h,00h,00h,00h
 sub_9C890:
 push esi	; 9C890
 push edi	; 9C891
-mov esi, dword [dword_D30B4]	; 9C892
-sub esi, dword [dword_D30AC]	; 9C898
+mov esi, dword [cliprect_x1]	; 9C892
+sub esi, dword [cliprect_x0]	; 9C898
 mov ebx, dword [byte esp+0Ch]	; 9C89E
 push ebx	; 9C8A2
 call fputchar	; 9C8A3
@@ -246,7 +246,7 @@ add esp, byte 4	; 9C8A8
 sub esi, eax	; 9C8AB
 mov eax, esi	; 9C8AD
 sar eax, 1	; 9C8AF
-add eax, dword [dword_D30AC]	; 9C8B1
+add eax, dword [cliprect_x0]	; 9C8B1
 mov esi, dword [byte esp+010h]	; 9C8B7
 push esi	; 9C8BB
 inc eax	; 9C8BC

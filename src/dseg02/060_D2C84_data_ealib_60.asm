@@ -16,8 +16,8 @@ global dword_D2F78, dword_D2F7A, dword_D2F7C, dword_D2F80, dword_D2F84, dword_D2
 global dword_D2FD8, dword_D2FDC, dword_D2FE0, dword_D2FE4, dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8
 global dword_D2FFC, dword_D3000, dword_D301C, dword_D3024, dword_D3028, dword_D302C, dword_D3030, dword_D3034
 global dword_D3038, dword_D303C, dword_D3044, dword_D3048, dword_D304C, dword_D3050, dword_D3054, dword_D3058
-global dword_D305C, dword_D3060, dword_D3090, dword_D3096, dword_D30A4, dword_D30A8, dword_D30AC, dword_D30B0
-global dword_D30B4, dword_D30B8, dword_D30BC, dword_D30C0, dword_D30C4, dword_D30C8, dword_D30CC, dword_D30D0
+global dword_D305C, dword_D3060, dword_D3090, dword_D3096, dword_D30A4, dword_D30A8, cliprect_x0, cliprect_y0
+global cliprect_x1, cliprect_y1, dword_D30BC, dword_D30C0, dword_D30C4, dword_D30C8, dword_D30CC, dword_D30D0
 global dword_D30D4, dword_D30D8, dword_D30DC, dword_D30E0, dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0
 global dword_D30F4, dword_D30F8, dword_D3104, dword_D4108, dword_D4158, dword_D415C, dword_D4160, dword_D4164
 global dword_D416C, dword_D4170, dword_D4177, dword_D417B, dword_D417F, dword_D4183, dword_D4187, dword_D418B
@@ -253,13 +253,13 @@ dword_D30A4:
 db 080h,02h,00h,00h
 dword_D30A8:
 db 0E0h,01h,00h,00h
-dword_D30AC:
+cliprect_x0:
 db 00h,00h,00h,00h
-dword_D30B0:
+cliprect_y0:
 db 00h,00h,00h,00h
-dword_D30B4:
+cliprect_x1:
 db 080h,02h,00h,00h
-dword_D30B8:
+cliprect_y1:
 db 0E0h,01h,00h,00h
 dword_D30BC:
 db 00h,00h,00h,00h

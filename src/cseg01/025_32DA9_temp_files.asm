@@ -8,7 +8,7 @@ extern gamemode, teamstatscb, skaterstatscb, goaliestatscb
 extern dword_C65CC, dword_C65D0, songdata, dword_C73D0, rinkbm, dword_C7440, cont2team, HomeTeam
 extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, schedgameidx, jctime, loc_32704, musicslot
 extern loc_32705, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRead, CheckGameDiskSpace, InitGameSummary
-extern sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
+extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
 extern sub_20D97, sub_29F28, SaveModeState, LoadModeState, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
 extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
 extern sub_479E9, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
@@ -61,7 +61,7 @@ loc_32E3A:
 test dl, 4	; 32E3A
 jne near loc_32F0E	; 32E3D
 mov eax, 1	; 32E43
-call sub_1D100	; 32E48
+call SetupStatsSourceMenu	; 32E48
 cmp dword [esi], byte 0	; 32E4D
 jl near loc_32F00	; 32E50
 push byte 20h	; 32E56
@@ -114,7 +114,7 @@ loc_32F00:
 mov eax, esi	; 32F00
 call PlayGame	; 32F02
 xor eax, eax	; 32F07
-call sub_1D100	; 32F09
+call SetupStatsSourceMenu	; 32F09
 loc_32F0E:
 push byte 20h	; 32F0E
 push dword 300h	; 32F10
@@ -238,17 +238,17 @@ call CreateNewLeague	; 3310F
 call sub_7B39C	; 33114
 cmp byte [lgstate+4], 0	; 33119
 je short loc_3314E	; 33120
-call sub_1D518	; 33122
+call BuildSavedGameLabels	; 33122
 xor eax, eax	; 33127
-call sub_1D100	; 33129
+call SetupStatsSourceMenu	; 33129
 mov dword [dword_CE4E3], sub_336E6	; 3312E
 mov dword [dword_CE503], sub_33559	; 33138
 mov dword [dword_CE527], unk_CE64F	; 33142
 jmp short loc_3316E	; 3314C
 loc_3314E:
-call sub_1D518	; 3314E
+call BuildSavedGameLabels	; 3314E
 xor eax, eax	; 33153
-call sub_1D100	; 33155
+call SetupStatsSourceMenu	; 33155
 xor ebx, ebx	; 3315A
 mov dword [dword_CE4E3], ebx	; 3315C
 mov dword [dword_CE503], ebx	; 33162
@@ -313,11 +313,11 @@ call SaveModeState	; 3323D
 mov eax, lgstate	; 33242
 call LoadModeState	; 33247
 mov eax, 3	; 3324C
-call sub_1D100	; 33251
+call SetupStatsSourceMenu	; 33251
 call AddHumanTeam	; 33256
 loc_3325B:
 xor eax, eax	; 3325B
-call sub_1D100	; 3325D
+call SetupStatsSourceMenu	; 3325D
 mov eax, lgstate	; 33262
 call SaveModeState	; 33267
 mov eax, exhstate	; 3326C
@@ -359,7 +359,7 @@ call SaveModeState	; 332D3
 mov eax, lgstate	; 332D8
 call LoadModeState	; 332DD
 mov eax, 3	; 332E2
-call sub_1D100	; 332E7
+call SetupStatsSourceMenu	; 332E7
 call RemoveHumanTeam	; 332EC
 jmp near loc_3325B	; 332F1
 sub_332F6:
@@ -550,7 +550,7 @@ call SaveModeState	; 33536
 mov eax, lgstate	; 3353B
 call LoadModeState	; 33540
 mov eax, 3	; 33545
-call sub_1D100	; 3354A
+call SetupStatsSourceMenu	; 3354A
 call TradePlayers	; 3354F
 jmp near loc_3325B	; 33554
 sub_33559:
@@ -567,11 +567,11 @@ call SaveModeState	; 33571
 mov eax, lgstate	; 33576
 call LoadModeState	; 3357B
 mov eax, 3	; 33580
-call sub_1D100	; 33585
+call SetupStatsSourceMenu	; 33585
 mov eax, 1	; 3358A
 call sub_7A6AD	; 3358F
 mov eax, 2	; 33594
-call sub_1D610	; 33599
+call SetScreenTitle	; 33599
 cmp dword [ebx], byte 0	; 3359E
 jge short loc_335CE	; 335A1
 mov edx, curleague	; 335A3
@@ -595,7 +595,7 @@ mov dword [goaliestatscb], unk_20BBD	; 335E9
 mov dword [dword_C65CC], sub_20D97	; 335F3
 mov dword [dword_C65D0], unk_20EB7	; 335FD
 xor eax, eax	; 33607
-call sub_1D100	; 33609
+call SetupStatsSourceMenu	; 33609
 mov eax, lgstate	; 3360E
 call SaveModeState	; 33613
 mov eax, exhstate	; 33618
@@ -670,7 +670,7 @@ call SaveModeState	; 336F9
 mov eax, lgstate	; 336FE
 call LoadModeState	; 33703
 mov eax, 3	; 33708
-call sub_1D100	; 3370D
+call SetupStatsSourceMenu	; 3370D
 call sub_3D108	; 33712
 jmp near loc_3325B	; 33717
 sub_3371C:

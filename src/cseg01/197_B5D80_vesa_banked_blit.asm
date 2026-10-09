@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B5D80 progbits alloc exec nowrite align=1
-extern byte_D42E4, byte_D4F54, byte_D89E4, dword_D30AC, dword_D30B0, dword_D30B4, dword_D30B8, dword_D30BC
+extern byte_D42E4, byte_D4F54, byte_D89E4, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1, dword_D30BC
 extern dword_D30C0, dword_D30C4, dword_D30C8, dword_D30CC, dword_D30D0, dword_D3104, dword_D4F4C, dword_D4F50
 extern dword_D86B8, dword_D86BC
 global jpt_B5E1F, jpt_B66B3, jpt_B67CB, jpt_B708F, loc_B5DAC, loc_B5DBC, loc_B5DD8, loc_B5DE0
@@ -53,9 +53,9 @@ cmp eax, dword [dword_D30BC]	; B5D8C
 jl short loc_B5DAC	; B5D92
 cmp eax, dword [dword_D30C0]	; B5D94
 jge short loc_B5DAC	; B5D9A
-cmp edx, dword [dword_D30B0]	; B5D9C
+cmp edx, dword [cliprect_y0]	; B5D9C
 jl short loc_B5DAC	; B5DA2
-cmp edx, dword [dword_D30B8]	; B5DA4
+cmp edx, dword [cliprect_y1]	; B5DA4
 jl short loc_B5DBC	; B5DAA
 loc_B5DAC:
 ret	; B5DAC
@@ -249,10 +249,10 @@ mov ebx, dword [byte ebp-08h]	; B5F41
 movsx ecx, word [byte esi+06h]	; B5F44
 lea edx, [byte esi+010h]	; B5F48
 LD mov, eax, ebx	; B5F4B
-cmp eax, dword [dword_D30B0]	; B5F4D
+cmp eax, dword [cliprect_y0]	; B5F4D
 jl short loc_B5F67	; B5F53
 LD add, eax, ecx	; B5F55
-sub eax, dword [dword_D30B8]	; B5F57
+sub eax, dword [cliprect_y1]	; B5F57
 jle short loc_B5F94	; B5F5D
 LD sub, ecx, eax	; B5F5F
 jg short loc_B5F94	; B5F61
@@ -262,7 +262,7 @@ pop esi	; B5F64
 leave	; B5F65
 ret	; B5F66
 loc_B5F67:
-mov ebx, dword [dword_D30B0]	; B5F67
+mov ebx, dword [cliprect_y0]	; B5F67
 LD add, eax, ecx	; B5F6D
 LD sub, eax, ebx	; B5F6F
 jle short loc_B5F63	; B5F71
@@ -275,7 +275,7 @@ mov edx, dword [byte ebp-010h]	; B5F7F
 LD add, edx, eax	; B5F82
 LD mov, eax, ebx	; B5F84
 LD add, eax, ecx	; B5F86
-sub eax, dword [dword_D30B8]	; B5F88
+sub eax, dword [cliprect_y1]	; B5F88
 jle short loc_B5F94	; B5F8E
 LD sub, ecx, eax	; B5F90
 jle short loc_B5F63	; B5F92
@@ -419,10 +419,10 @@ mov ebx, dword [byte ebp-08h]	; B60BD
 movsx ecx, word [byte esi+06h]	; B60C0
 lea edx, [byte esi+010h]	; B60C4
 LD mov, eax, ebx	; B60C7
-cmp eax, dword [dword_D30B0]	; B60C9
+cmp eax, dword [cliprect_y0]	; B60C9
 jl short loc_B60E3	; B60CF
 LD add, eax, ecx	; B60D1
-sub eax, dword [dword_D30B8]	; B60D3
+sub eax, dword [cliprect_y1]	; B60D3
 jle short loc_B6110	; B60D9
 LD sub, ecx, eax	; B60DB
 jg short loc_B6110	; B60DD
@@ -432,7 +432,7 @@ pop esi	; B60E0
 leave	; B60E1
 ret	; B60E2
 loc_B60E3:
-mov ebx, dword [dword_D30B0]	; B60E3
+mov ebx, dword [cliprect_y0]	; B60E3
 LD add, eax, ecx	; B60E9
 LD sub, eax, ebx	; B60EB
 jle short loc_B60DF	; B60ED
@@ -445,7 +445,7 @@ mov edx, dword [byte ebp-010h]	; B60FB
 LD add, edx, eax	; B60FE
 LD mov, eax, ebx	; B6100
 LD add, eax, ecx	; B6102
-sub eax, dword [dword_D30B8]	; B6104
+sub eax, dword [cliprect_y1]	; B6104
 jle short loc_B6110	; B610A
 LD sub, ecx, eax	; B610C
 jle short loc_B60DF	; B610E
@@ -598,10 +598,10 @@ mov ebx, dword [byte ebp-08h]	; B6249
 movsx ecx, word [byte esi+06h]	; B624C
 lea edx, [byte esi+010h]	; B6250
 LD mov, eax, ebx	; B6253
-cmp eax, dword [dword_D30B0]	; B6255
+cmp eax, dword [cliprect_y0]	; B6255
 jl short loc_B626F	; B625B
 LD add, eax, ecx	; B625D
-sub eax, dword [dword_D30B8]	; B625F
+sub eax, dword [cliprect_y1]	; B625F
 jle short loc_B629C	; B6265
 LD sub, ecx, eax	; B6267
 jg short loc_B629C	; B6269
@@ -611,7 +611,7 @@ pop esi	; B626C
 leave	; B626D
 ret	; B626E
 loc_B626F:
-mov ebx, dword [dword_D30B0]	; B626F
+mov ebx, dword [cliprect_y0]	; B626F
 LD add, eax, ecx	; B6275
 LD sub, eax, ebx	; B6277
 jle short loc_B626B	; B6279
@@ -624,7 +624,7 @@ mov edx, dword [byte ebp-010h]	; B6287
 LD add, edx, eax	; B628A
 LD mov, eax, ebx	; B628C
 LD add, eax, ecx	; B628E
-sub eax, dword [dword_D30B8]	; B6290
+sub eax, dword [cliprect_y1]	; B6290
 jle short loc_B629C	; B6296
 LD sub, ecx, eax	; B6298
 jle short loc_B626B	; B629A
@@ -742,9 +742,9 @@ cmp eax, dword [dword_D30BC]	; B6388
 jl short loc_B63A8	; B638E
 cmp eax, dword [dword_D30C0]	; B6390
 jge short loc_B63A8	; B6396
-cmp edx, dword [dword_D30B0]	; B6398
+cmp edx, dword [cliprect_y0]	; B6398
 jl short loc_B63A8	; B639E
-cmp edx, dword [dword_D30B8]	; B63A0
+cmp edx, dword [cliprect_y1]	; B63A0
 jl short loc_B63B8	; B63A6
 loc_B63A8:
 ret	; B63A8
@@ -819,10 +819,10 @@ mov ebx, dword [byte ebp-08h]	; B6455
 movsx ecx, word [byte esi+06h]	; B6458
 lea edx, [byte esi+010h]	; B645C
 LD mov, eax, ebx	; B645F
-cmp eax, dword [dword_D30B0]	; B6461
+cmp eax, dword [cliprect_y0]	; B6461
 jl short loc_B647B	; B6467
 LD add, eax, ecx	; B6469
-sub eax, dword [dword_D30B8]	; B646B
+sub eax, dword [cliprect_y1]	; B646B
 jle short loc_B64A8	; B6471
 LD sub, ecx, eax	; B6473
 jg short loc_B64A8	; B6475
@@ -832,7 +832,7 @@ pop esi	; B6478
 leave	; B6479
 ret	; B647A
 loc_B647B:
-mov ebx, dword [dword_D30B0]	; B647B
+mov ebx, dword [cliprect_y0]	; B647B
 LD add, eax, ecx	; B6481
 LD sub, eax, ebx	; B6483
 jle short loc_B6477	; B6485
@@ -845,7 +845,7 @@ mov edx, dword [byte ebp-010h]	; B6493
 LD add, edx, eax	; B6496
 LD mov, eax, ebx	; B6498
 LD add, eax, ecx	; B649A
-sub eax, dword [dword_D30B8]	; B649C
+sub eax, dword [cliprect_y1]	; B649C
 jle short loc_B64A8	; B64A2
 LD sub, ecx, eax	; B64A4
 jle short loc_B6477	; B64A6
@@ -963,9 +963,9 @@ cmp eax, dword [dword_D30BC]	; B6594
 jl short loc_B65B4	; B659A
 cmp eax, dword [dword_D30C0]	; B659C
 jge short loc_B65B4	; B65A2
-cmp edx, dword [dword_D30B0]	; B65A4
+cmp edx, dword [cliprect_y0]	; B65A4
 jl short loc_B65B4	; B65AA
-cmp edx, dword [dword_D30B8]	; B65AC
+cmp edx, dword [cliprect_y1]	; B65AC
 jl short loc_B65C4	; B65B2
 loc_B65B4:
 ret	; B65B4
@@ -1001,7 +1001,7 @@ sub_B6608:
 push ebp	; B6608
 LD mov, ebp, esp	; B6609
 push edi	; B660B
-mov edx, dword [dword_D30AC]	; B660C
+mov edx, dword [cliprect_x0]	; B660C
 LD mov, eax, edx	; B6612
 sub eax, dword [byte ebp+08h]	; B6614
 jle short loc_B6621	; B6617
@@ -1011,22 +1011,22 @@ jle short loc_B6662	; B661F
 loc_B6621:
 mov eax, dword [byte ebp+08h]	; B6621
 add eax, dword [byte ebp+010h]	; B6624
-sub eax, dword [dword_D30B4]	; B6627
+sub eax, dword [cliprect_x1]	; B6627
 jle short loc_B6634	; B662D
 sub dword [byte ebp+010h], eax	; B662F
 jle short loc_B6662	; B6632
 loc_B6634:
-mov eax, dword [dword_D30B0]	; B6634
+mov eax, dword [cliprect_y0]	; B6634
 sub eax, dword [byte ebp+0Ch]	; B6639
 jle short loc_B664B	; B663C
 sub dword [byte ebp+014h], eax	; B663E
 jle short loc_B6662	; B6641
-mov eax, dword [dword_D30B0]	; B6643
+mov eax, dword [cliprect_y0]	; B6643
 mov dword [byte ebp+0Ch], eax	; B6648
 loc_B664B:
 mov eax, dword [byte ebp+0Ch]	; B664B
 add eax, dword [byte ebp+014h]	; B664E
-mov ebx, dword [dword_D30B8]	; B6651
+mov ebx, dword [cliprect_y1]	; B6651
 LD sub, eax, ebx	; B6657
 jle short loc_B6669	; B6659
 sub dword [byte ebp+014h], eax	; B665B
@@ -1133,7 +1133,7 @@ sub_B6720:
 push ebp	; B6720
 LD mov, ebp, esp	; B6721
 push edi	; B6723
-mov edx, dword [dword_D30AC]	; B6724
+mov edx, dword [cliprect_x0]	; B6724
 LD mov, eax, edx	; B672A
 sub eax, dword [byte ebp+08h]	; B672C
 jle short loc_B6739	; B672F
@@ -1143,22 +1143,22 @@ jle short loc_B677A	; B6737
 loc_B6739:
 mov eax, dword [byte ebp+08h]	; B6739
 add eax, dword [byte ebp+010h]	; B673C
-sub eax, dword [dword_D30B4]	; B673F
+sub eax, dword [cliprect_x1]	; B673F
 jle short loc_B674C	; B6745
 sub dword [byte ebp+010h], eax	; B6747
 jle short loc_B677A	; B674A
 loc_B674C:
-mov eax, dword [dword_D30B0]	; B674C
+mov eax, dword [cliprect_y0]	; B674C
 sub eax, dword [byte ebp+0Ch]	; B6751
 jle short loc_B6763	; B6754
 sub dword [byte ebp+014h], eax	; B6756
 jle short loc_B677A	; B6759
-mov eax, dword [dword_D30B0]	; B675B
+mov eax, dword [cliprect_y0]	; B675B
 mov dword [byte ebp+0Ch], eax	; B6760
 loc_B6763:
 mov eax, dword [byte ebp+0Ch]	; B6763
 add eax, dword [byte ebp+014h]	; B6766
-mov ebx, dword [dword_D30B8]	; B6769
+mov ebx, dword [cliprect_y1]	; B6769
 LD sub, eax, ebx	; B676F
 jle short loc_B6781	; B6771
 sub dword [byte ebp+014h], eax	; B6773
@@ -1500,10 +1500,10 @@ mov ebx, dword [byte ebp-08h]	; B6A18
 movsx ecx, word [byte esi+06h]	; B6A1B
 lea edx, [byte esi+010h]	; B6A1F
 LD mov, eax, ebx	; B6A22
-cmp eax, dword [dword_D30B0]	; B6A24
+cmp eax, dword [cliprect_y0]	; B6A24
 jl short loc_B6A3F	; B6A2A
 LD add, eax, ecx	; B6A2C
-sub eax, dword [dword_D30B8]	; B6A2E
+sub eax, dword [cliprect_y1]	; B6A2E
 jle short loc_B6A6C	; B6A34
 LD sub, ecx, eax	; B6A36
 jg short loc_B6A6C	; B6A38
@@ -1514,7 +1514,7 @@ pop ds	; B6A3C
 leave	; B6A3D
 ret	; B6A3E
 loc_B6A3F:
-mov ebx, dword [dword_D30B0]	; B6A3F
+mov ebx, dword [cliprect_y0]	; B6A3F
 LD add, eax, ecx	; B6A45
 LD sub, eax, ebx	; B6A47
 jle short loc_B6A3A	; B6A49
@@ -1527,7 +1527,7 @@ mov edx, dword [byte ebp-018h]	; B6A57
 LD add, edx, eax	; B6A5A
 LD mov, eax, ebx	; B6A5C
 LD add, eax, ecx	; B6A5E
-sub eax, dword [dword_D30B8]	; B6A60
+sub eax, dword [cliprect_y1]	; B6A60
 jle short loc_B6A6C	; B6A66
 LD sub, ecx, eax	; B6A68
 jle short loc_B6A3A	; B6A6A
@@ -1728,10 +1728,10 @@ mov ebx, dword [byte ebp-08h]	; B6C1B
 movsx ecx, word [byte esi+06h]	; B6C1E
 lea edx, [byte esi+010h]	; B6C22
 LD mov, eax, ebx	; B6C25
-cmp eax, dword [dword_D30B0]	; B6C27
+cmp eax, dword [cliprect_y0]	; B6C27
 jl short loc_B6C43	; B6C2D
 LD add, eax, ecx	; B6C2F
-sub eax, dword [dword_D30B8]	; B6C31
+sub eax, dword [cliprect_y1]	; B6C31
 jle short loc_B6C70	; B6C37
 LD sub, ecx, eax	; B6C39
 jg short loc_B6C70	; B6C3B
@@ -1743,7 +1743,7 @@ pop es	; B6C40
 leave	; B6C41
 ret	; B6C42
 loc_B6C43:
-mov ebx, dword [dword_D30B0]	; B6C43
+mov ebx, dword [cliprect_y0]	; B6C43
 LD add, eax, ecx	; B6C49
 LD sub, eax, ebx	; B6C4B
 jle short loc_B6C3D	; B6C4D
@@ -1756,7 +1756,7 @@ mov edx, dword [byte ebp-018h]	; B6C5B
 LD add, edx, eax	; B6C5E
 LD mov, eax, ebx	; B6C60
 LD add, eax, ecx	; B6C62
-sub eax, dword [dword_D30B8]	; B6C64
+sub eax, dword [cliprect_y1]	; B6C64
 jle short loc_B6C70	; B6C6A
 LD sub, ecx, eax	; B6C6C
 jle short loc_B6C3D	; B6C6E
@@ -1961,10 +1961,10 @@ mov ebx, dword [byte ebp-08h]	; B6E31
 movsx ecx, word [byte edi+06h]	; B6E34
 lea edx, [byte edi+010h]	; B6E38
 LD mov, eax, ebx	; B6E3B
-cmp eax, dword [dword_D30B0]	; B6E3D
+cmp eax, dword [cliprect_y0]	; B6E3D
 jl short loc_B6E57	; B6E43
 LD add, eax, ecx	; B6E45
-sub eax, dword [dword_D30B8]	; B6E47
+sub eax, dword [cliprect_y1]	; B6E47
 jle short loc_B6E84	; B6E4D
 LD sub, ecx, eax	; B6E4F
 jg short loc_B6E84	; B6E51
@@ -1974,7 +1974,7 @@ pop edi	; B6E54
 leave	; B6E55
 ret	; B6E56
 loc_B6E57:
-mov ebx, dword [dword_D30B0]	; B6E57
+mov ebx, dword [cliprect_y0]	; B6E57
 LD add, eax, ecx	; B6E5D
 LD sub, eax, ebx	; B6E5F
 jle short loc_B6E53	; B6E61
@@ -1987,7 +1987,7 @@ mov edx, dword [byte ebp-010h]	; B6E6F
 LD add, edx, eax	; B6E72
 LD mov, eax, ebx	; B6E74
 LD add, eax, ecx	; B6E76
-sub eax, dword [dword_D30B8]	; B6E78
+sub eax, dword [cliprect_y1]	; B6E78
 jle short loc_B6E84	; B6E7E
 LD sub, ecx, eax	; B6E80
 jle short loc_B6E53	; B6E82
@@ -1999,24 +1999,24 @@ movsx ecx, word [byte edi+04h]	; B6E8D
 LD xor, edx, edx	; B6E91
 mov ebx, dword [byte ebp-04h]	; B6E93
 LD mov, eax, ebx	; B6E96
-cmp eax, dword [dword_D30AC]	; B6E98
+cmp eax, dword [cliprect_x0]	; B6E98
 jl short loc_B6EB2	; B6E9E
 LD add, eax, ecx	; B6EA0
-sub eax, dword [dword_D30B4]	; B6EA2
+sub eax, dword [cliprect_x1]	; B6EA2
 jl short loc_B6EDB	; B6EA8
 LD sub, ecx, eax	; B6EAA
 jle short loc_B6E53	; B6EAC
 LD mov, edx, eax	; B6EAE
 jmp short loc_B6EDB	; B6EB0
 loc_B6EB2:
-mov ebx, dword [dword_D30AC]	; B6EB2
+mov ebx, dword [cliprect_x0]	; B6EB2
 LD add, eax, ecx	; B6EB8
 LD sub, eax, ebx	; B6EBA
 jle short loc_B6E53	; B6EBC
 LD mov, edi, ecx	; B6EBE
 LD sub, edi, eax	; B6EC0
 add dword [byte ebp-018h], edi	; B6EC2
-mov edi, dword [dword_D30B4]	; B6EC5
+mov edi, dword [cliprect_x1]	; B6EC5
 LD sub, edi, ebx	; B6ECB
 jle short loc_B6E53	; B6ECD
 LD cmp, eax, edi	; B6ECF
@@ -2132,10 +2132,10 @@ mov dword [byte esi+08h], eax	; B6FC3
 mov dword [byte esi+010h], edx	; B6FC6
 mov dword [byte esi+0Ch], ecx	; B6FC9
 mov dword [byte esi+014h], ebx	; B6FCC
-mov dword [dword_D30AC], eax	; B6FCF
-mov dword [dword_D30B4], edx	; B6FD4
-mov dword [dword_D30B0], ecx	; B6FDA
-mov dword [dword_D30B8], ebx	; B6FE0
+mov dword [cliprect_x0], eax	; B6FCF
+mov dword [cliprect_x1], edx	; B6FD4
+mov dword [cliprect_y0], ecx	; B6FDA
+mov dword [cliprect_y1], ebx	; B6FE0
 mov dword [byte esi+018h], eax	; B6FE6
 mov dword [byte esi+01Ch], edx	; B6FE9
 mov dword [dword_D30BC], eax	; B6FEC
@@ -2859,10 +2859,10 @@ mov ebx, dword [byte ebp-08h]	; B766D
 movsx ecx, word [byte esi+06h]	; B7670
 lea edx, [byte esi+010h]	; B7674
 LD mov, eax, ebx	; B7677
-cmp eax, dword [dword_D30B0]	; B7679
+cmp eax, dword [cliprect_y0]	; B7679
 jl short loc_B7693	; B767F
 LD add, eax, ecx	; B7681
-sub eax, dword [dword_D30B8]	; B7683
+sub eax, dword [cliprect_y1]	; B7683
 jle short loc_B76C0	; B7689
 LD sub, ecx, eax	; B768B
 jg short loc_B76C0	; B768D
@@ -2872,7 +2872,7 @@ pop esi	; B7690
 leave	; B7691
 ret	; B7692
 loc_B7693:
-mov ebx, dword [dword_D30B0]	; B7693
+mov ebx, dword [cliprect_y0]	; B7693
 LD add, eax, ecx	; B7699
 LD sub, eax, ebx	; B769B
 jle short loc_B768F	; B769D
@@ -2885,7 +2885,7 @@ mov edx, dword [byte ebp-018h]	; B76AB
 LD add, edx, eax	; B76AE
 LD mov, eax, ebx	; B76B0
 LD add, eax, ecx	; B76B2
-sub eax, dword [dword_D30B8]	; B76B4
+sub eax, dword [cliprect_y1]	; B76B4
 jle short loc_B76C0	; B76BA
 LD sub, ecx, eax	; B76BC
 jle short loc_B768F	; B76BE

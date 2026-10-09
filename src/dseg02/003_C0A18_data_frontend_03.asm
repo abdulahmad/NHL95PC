@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_C0A18 progbits alloc noexec write align=1
-global str_teams, str_key, str_att, str_season, str_career, str_GsummaryDb2, asc_C0A80, asc_C0A88
+global str_teams, str_key, str_att, str_season, str_career, str_GsummaryDb2, str_scrbrd1, asc_C0A88
 global asc_C0AB5, asc_C0AE2, asc_C0B0F, asc_C0B1C, asc_C0B29, asc_C0B2E, asc_C0B33, asc_C0B54
 global asc_C0B5C, asc_C0C28, asc_C0C2C, asc_C0C34, asc_C0C3B, asc_C0C40, asc_C0C46, asc_C0C4B
 global asc_C0C51, asc_C0C58, asc_C0C5F, asc_C0C64, asc_C0C6D, asc_C0C73, asc_C0C78, asc_C0C7E
@@ -142,7 +142,7 @@ str_backslash3:
 db 05Ch,00h
 str_GsummaryDb2:
 db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,02Eh,064h,062h,00h,00h,00h,00h
-asc_C0A80:
+str_scrbrd1:
 db 073h,063h,072h,062h,072h,064h,031h,00h
 asc_C0A88:
 db 030h,030h,030h,030h,030h,030h,030h,031h,030h,030h,030h,032h,030h,030h,030h,033h

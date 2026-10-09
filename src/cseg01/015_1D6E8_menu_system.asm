@@ -8,7 +8,7 @@ extern byte_DC836, byte_DCFD8, byte_DD058, statscategory, dword_C65B4, statsplay
 extern dword_DC640, dword_DC6B8, dword_DC6BC, dword_DC720, dword_DC73C, dword_DC750, dword_DC754, playofftree
 extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD120, dword_EA0DC, jctime, memcmp_
 extern memcpy_, off_D3078, sprintf_, strcat_, strlen_, strncpy_, FileOpenRead, FileClose
-extern FileReadAt, DeskSetExit3b, ShowPlayerStatsItem, sub_1D6BE, sub_24453, sub_26B5A, sub_27BC3, sub_27F9C
+extern FileReadAt, DeskSetExit3b, ShowPlayerStatsItem, StrPrefixDiffers, sub_24453, sub_26B5A, sub_27BC3, sub_27F9C
 extern sub_29681, sub_6B391, sub_6B3D7, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_8CCA8
 extern sub_903F0, sub_90F38, sub_91370, sub_91400, sub_91964, MouseSetPos, sub_B2E1B, sub_B4DD4
 extern unk_DC834, unk_DC837, unk_DC847, unk_DD0D8
@@ -1901,14 +1901,14 @@ mov edx, dword [dword_DD11C]	; 1EED4
 add edx, ebx	; 1EEDA
 add edx, byte 3	; 1EEDC
 mov eax, unk_DC837	; 1EEDF
-call sub_1D6BE	; 1EEE4
+call StrPrefixDiffers	; 1EEE4
 test eax, eax	; 1EEE9
 jne short loc_1EF18	; 1EEEB
 mov eax, dword [dword_DD11C]	; 1EEED
 add eax, ebx	; 1EEF2
 lea edx, [byte eax+013h]	; 1EEF4
 mov eax, unk_DC847	; 1EEF7
-call sub_1D6BE	; 1EEFC
+call StrPrefixDiffers	; 1EEFC
 test eax, eax	; 1EF01
 jne short loc_1EF18	; 1EF03
 mov eax, dword [dword_DC750]	; 1EF05
@@ -1939,14 +1939,14 @@ mov edx, dword [dword_DD11C]	; 1EF4B
 add edx, ebx	; 1EF51
 add edx, byte 3	; 1EF53
 mov eax, unk_DC837	; 1EF56
-call sub_1D6BE	; 1EF5B
+call StrPrefixDiffers	; 1EF5B
 test eax, eax	; 1EF60
 jne short loc_1EF85	; 1EF62
 mov eax, dword [dword_DD11C]	; 1EF64
 add eax, ebx	; 1EF69
 lea edx, [byte eax+013h]	; 1EF6B
 mov eax, unk_DC847	; 1EF6E
-call sub_1D6BE	; 1EF73
+call StrPrefixDiffers	; 1EF73
 test eax, eax	; 1EF78
 jne short loc_1EF85	; 1EF7A
 mov dword [dword esp+094h], esi	; 1EF7C
@@ -2223,14 +2223,14 @@ mov eax, dword [dword_DD11C]	; 1F2EA
 add eax, ebx	; 1F2EF
 lea edx, [byte eax+03h]	; 1F2F1
 mov eax, unk_DC837	; 1F2F4
-call sub_1D6BE	; 1F2F9
+call StrPrefixDiffers	; 1F2F9
 test eax, eax	; 1F2FE
 jne short loc_1F32E	; 1F300
 mov edx, dword [dword_DD11C]	; 1F302
 add edx, ebx	; 1F308
 add edx, byte 13h	; 1F30A
 mov eax, unk_DC847	; 1F30D
-call sub_1D6BE	; 1F312
+call StrPrefixDiffers	; 1F312
 test eax, eax	; 1F317
 jne short loc_1F32E	; 1F319
 mov eax, dword [dword_DC750]	; 1F31B
@@ -2261,14 +2261,14 @@ mov eax, dword [dword_DD11C]	; 1F361
 add eax, ebx	; 1F366
 lea edx, [byte eax+03h]	; 1F368
 mov eax, unk_DC837	; 1F36B
-call sub_1D6BE	; 1F370
+call StrPrefixDiffers	; 1F370
 test eax, eax	; 1F375
 jne short loc_1F39B	; 1F377
 mov edx, dword [dword_DD11C]	; 1F379
 add edx, ebx	; 1F37F
 add edx, byte 13h	; 1F381
 mov eax, unk_DC847	; 1F384
-call sub_1D6BE	; 1F389
+call StrPrefixDiffers	; 1F389
 test eax, eax	; 1F38E
 jne short loc_1F39B	; 1F390
 mov dword [dword esp+094h], esi	; 1F392

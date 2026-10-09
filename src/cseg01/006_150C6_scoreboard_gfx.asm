@@ -9,7 +9,7 @@ extern gameresult, gamemode, gameopts, teamdivflags, hudclockmin
 extern hudclocksec, hudclockhund, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern hudhomeline, hudawayline, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
 extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, linesprites
-extern dword_DC290, dword_DC2B8, clockdigits, clockcolon, cupseries, hmscore, awscore, hmtmstruct
+extern penaltydigits, dword_DC2B8, clockdigits, clockcolon, cupseries, hmscore, awscore, hmtmstruct
 extern jctime, DrawPanelLine_x, UpdateHudPanel_x, off_C5439, perioddigits, off_C57C8, crestnames, awtmstruct
 extern off_D3078, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, ReloadGameGfx, SetupDemoGame
 extern MakePath, DrawPanelScore, DrawPanelClock, InitGameSummary, LoadModeState, sub_3371C, sub_3377C, SeriesLength
@@ -794,7 +794,7 @@ mov ebx, 0Ah	; 159E7
 mov eax, edx	; 159EC
 sar edx, 1Fh	; 159EE
 idiv ebx	; 159F1
-mov edx, dword [nosplit eax*4+dword_DC290]	; 159F3
+mov edx, dword [nosplit eax*4+penaltydigits]	; 159F3
 push edx	; 159FA
 .3:
 call sub_B4CD8	; 159FB
@@ -810,7 +810,7 @@ mov ebx, 0Ah	; 15A17
 mov eax, edx	; 15A1C
 sar edx, 1Fh	; 15A1E
 idiv ebx	; 15A21
-mov edx, dword [nosplit edx*4+dword_DC290]	; 15A23
+mov edx, dword [nosplit edx*4+penaltydigits]	; 15A23
 push edx	; 15A2A
 call sub_B4CD8	; 15A2B
 add esp, byte 0Ch	; 15A30
@@ -831,7 +831,7 @@ mov ebx, 0Ah	; 15A50
 mov eax, edx	; 15A55
 sar edx, 1Fh	; 15A57
 idiv ebx	; 15A5A
-mov ebx, dword [nosplit eax*4+dword_DC290]	; 15A5C
+mov ebx, dword [nosplit eax*4+penaltydigits]	; 15A5C
 push ebx	; 15A63
 .5:
 call sub_B4CD8	; 15A64
@@ -848,7 +848,7 @@ mov ebx, 0Ah	; 15A82
 mov eax, edx	; 15A87
 sar edx, 1Fh	; 15A89
 idiv ebx	; 15A8C
-mov edx, dword [nosplit edx*4+dword_DC290]	; 15A8E
+mov edx, dword [nosplit edx*4+penaltydigits]	; 15A8E
 push edx	; 15A95
 call sub_B4CD8	; 15A96
 add esp, byte 0Ch	; 15A9B
@@ -861,7 +861,7 @@ mov ebx, 0Ah	; 15AA9
 mov eax, edx	; 15AAE
 sar edx, 1Fh	; 15AB0
 idiv ebx	; 15AB3
-mov ebx, dword [nosplit eax*4+dword_DC290]	; 15AB5
+mov ebx, dword [nosplit eax*4+penaltydigits]	; 15AB5
 push ebx	; 15ABC
 call sub_B4CD8	; 15ABD
 add esp, byte 0Ch	; 15AC2
@@ -874,7 +874,7 @@ mov ebx, 0Ah	; 15AD0
 mov eax, edx	; 15AD5
 sar edx, 1Fh	; 15AD7
 idiv ebx	; 15ADA
-mov ecx, dword [nosplit edx*4+dword_DC290]	; 15ADC
+mov ecx, dword [nosplit edx*4+penaltydigits]	; 15ADC
 push ecx	; 15AE3
 jmp short .7	; 15AE4
 .6:

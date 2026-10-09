@@ -12,7 +12,7 @@ extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, dword_C
 extern dword_C90B0, sflags3, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
 extern dword_CC0F8, penshotplayer, dword_CC104, dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer
 extern dword_CC124, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D302C
-extern dword_D3030, dword_D30B0, dword_D30B8, dword_D30BC, dword_D30C0, dword_D8C84, dword_DB088, hmtmstruct
+extern dword_D3030, cliprect_y0, cliprect_y1, dword_D30BC, dword_D30C0, dword_D8C84, dword_DB088, hmtmstruct
 extern dword_DF642, dword_DF652, dword_DF6EA, dword_DF6F2, dword_DF6F6, hmtmplstats
 extern dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort, awtmstruct, dword_DF752, dword_DF7EA
 extern awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2, awtmsort
@@ -3981,10 +3981,10 @@ mov eax, dword [camx]	; 5CF0E
 sar eax, 10h	; 5CF13
 cmp eax, 0FFFFFF50h	; 5CF16
 jge short .9	; 5CF1B
-mov ax, word [dword_D30B8]	; 5CF1D
+mov ax, word [cliprect_y1]	; 5CF1D
 mov word [byte ebp-04h], ax	; 5CF23
 push dword 244h	; 5CF27
-mov ebx, dword [dword_D30B0]	; 5CF2C
+mov ebx, dword [cliprect_y0]	; 5CF2C
 push ebx	; 5CF32
 mov ecx, dword [dword_D30C0]	; 5CF33
 push ecx	; 5CF39
@@ -4545,7 +4545,7 @@ jge short .62	; 5D595
 mov eax, dword [byte ebp-06h]	; 5D597
 sar eax, 10h	; 5D59A
 push eax	; 5D59D
-mov edi, dword [dword_D30B0]	; 5D59E
+mov edi, dword [cliprect_y0]	; 5D59E
 push edi	; 5D5A4
 mov eax, dword [dword_D30C0]	; 5D5A5
 push eax	; 5D5AA

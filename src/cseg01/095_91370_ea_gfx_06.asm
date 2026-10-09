@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_91370 progbits alloc exec nowrite align=1
-extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, dword_D30A4, dword_D30A8, dword_D30B0
-extern dword_D30B8, dword_D30C8, dword_D30D0, dword_D3104, fontcolor, dword_D42B0, dword_D42B4, dword_D42BC
+extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, dword_D30A4, dword_D30A8, cliprect_y0
+extern cliprect_y1, dword_D30C8, dword_D30D0, dword_D3104, fontcolor, dword_D42B0, dword_D42B4, dword_D42BC
 extern dword_D42C8, dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, dword_D43E4
 extern loc_91260, off_D42A4, sub_8E9D4, sub_903F0, sub_B3ABC, sub_B4BC4, sub_B5D80, sub_B5E00
 extern sub_B69E4, sub_B6B3F
@@ -360,9 +360,9 @@ dec edx	; 91769
 mov dword [byte esp+034h], edx	; 9176A
 cmp edx, byte 0FFFFFFFFh	; 9176E
 je near loc_91946	; 91771
-cmp ebp, dword [dword_D30B0]	; 91777
+cmp ebp, dword [cliprect_y0]	; 91777
 jl short loc_91787	; 9177D
-cmp ebp, dword [dword_D30B8]	; 9177F
+cmp ebp, dword [cliprect_y1]	; 9177F
 jl short loc_91790	; 91785
 loc_91787:
 add edi, dword [byte esp+010h]	; 91787
@@ -474,9 +474,9 @@ dec ebx	; 91875
 mov dword [byte esp+034h], ebx	; 91876
 cmp ebx, byte 0FFFFFFFFh	; 9187A
 je near loc_91946	; 9187D
-cmp ebp, dword [dword_D30B0]	; 91883
+cmp ebp, dword [cliprect_y0]	; 91883
 jl short loc_91893	; 91889
-cmp ebp, dword [dword_D30B8]	; 9188B
+cmp ebp, dword [cliprect_y1]	; 9188B
 jl short loc_91899	; 91891
 loc_91893:
 add edi, dword [byte esp+0Ch]	; 91893
@@ -553,9 +553,9 @@ dec esi	; 91926
 mov dword [byte esp+034h], esi	; 91927
 cmp esi, byte 0FFFFFFFFh	; 9192B
 je short loc_91946	; 9192E
-cmp ebp, dword [dword_D30B0]	; 91930
+cmp ebp, dword [cliprect_y0]	; 91930
 jl short loc_91940	; 91936
-cmp ebp, dword [dword_D30B8]	; 91938
+cmp ebp, dword [cliprect_y1]	; 91938
 jl short loc_918EF	; 9193E
 loc_91940:
 add edi, dword [byte esp+014h]	; 91940

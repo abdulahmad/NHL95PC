@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_B3E4A progbits alloc exec nowrite align=1
 extern byte_D3064, byte_D3068, byte_D4F44, byte_D4F45, byte_D4F48, byte_D4FE8, byte_D545C, byte_D54DC
-extern byte_D6074, dword_D3024, dword_D305C, dword_D3060, dword_D30A4, dword_D30A8, dword_D30AC, dword_D30B0
-extern dword_D30B4, dword_D30B8, dword_D30BC, dword_D30C0, dword_D30D4, dword_D429C, dword_D4F2C, dword_D4F30
+extern byte_D6074, dword_D3024, dword_D305C, dword_D3060, dword_D30A4, dword_D30A8, cliprect_x0, cliprect_y0
+extern cliprect_x1, cliprect_y1, dword_D30BC, dword_D30C0, dword_D30D4, dword_D429C, dword_D4F2C, dword_D4F30
 extern dword_D4F34, dword_D4F38, dword_D4F3C, dword_D4F40, dword_D4FA0, dword_D4FA4, dword_D4FEB, dword_D5562
 extern dword_D5566, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, loc_B4D0C, off_D3078
 extern off_D567C, printf_, sub_910B0, sub_B3168, sub_B3454, sub_B395C, sub_B3962, sub_B39D0
@@ -297,8 +297,8 @@ LD xor, edx, edx	; B413C
 cmp byte [byte ebp-05h], 0	; B413E
 jne short loc_B41B3	; B4142
 mov eax, dword [byte esi+0Ch]	; B4144
-mov ebx, dword [dword_D30B0]	; B4147
-mov ecx, dword [dword_D30B8]	; B414D
+mov ebx, dword [cliprect_y0]	; B4147
+mov ecx, dword [cliprect_y1]	; B414D
 LD cmp, eax, ecx	; B4153
 jl short loc_B415E	; B4155
 mov dl, 8	; B4157
@@ -318,8 +318,8 @@ LD cmp, eax, ecx	; B4173
 jl short loc_B417A	; B4175
 or dl, 8	; B4177
 loc_B417A:
-mov ebx, dword [dword_D30AC]	; B417A
-mov ecx, dword [dword_D30B4]	; B4180
+mov ebx, dword [cliprect_x0]	; B417A
+mov ecx, dword [cliprect_x1]	; B4180
 mov eax, dword [byte esi+04h]	; B4186
 LD cmp, eax, ebx	; B4189
 jge short loc_B4190	; B418B
@@ -440,7 +440,7 @@ leave	; B4297
 ret	; B4298
 loc_B4299:
 mov eax, dword [byte esi+0Ch]	; B4299
-mov ecx, dword [dword_D30B0]	; B429C
+mov ecx, dword [cliprect_y0]	; B429C
 mov dword [byte esi+0Ch], ecx	; B42A2
 LD sub, ecx, eax	; B42A5
 mov bl, byte [byte esi+034h]	; B42A7
@@ -497,7 +497,7 @@ adc dword [byte esi+0Ch], edx	; B4339
 jmp near loc_B47B3	; B433C
 loc_B4341:
 mov dword [byte esi+018h], 1	; B4341
-mov eax, dword [dword_D30B0]	; B4348
+mov eax, dword [cliprect_y0]	; B4348
 mov dword [byte esi+0Ch], eax	; B434D
 mov eax, dword [byte esi+010h]	; B4350
 mov dword [byte esi+04h], eax	; B4353
@@ -520,7 +520,7 @@ adc dword [byte esi+0Ch], edx	; B437C
 jmp near loc_B47B3	; B437F
 loc_B4384:
 mov ecx, dword [byte esi+014h]	; B4384
-mov edx, dword [dword_D30B8]	; B4387
+mov edx, dword [cliprect_y1]	; B4387
 dec edx	; B438D
 mov dword [byte esi+014h], edx	; B438E
 LD sub, ecx, edx	; B4391
@@ -623,7 +623,7 @@ dd loc_B4521
 dd loc_B455A
 dd loc_B458F
 loc_B44AC:
-mov ecx, dword [dword_D30AC]	; B44AC
+mov ecx, dword [cliprect_x0]	; B44AC
 mov eax, dword [byte esi+010h]	; B44B2
 mov dword [byte esi+010h], ecx	; B44B5
 LD sub, ecx, eax	; B44B8
@@ -633,7 +633,7 @@ sub dword [byte esi+014h], ecx	; B44C0
 jmp near loc_B481A	; B44C3
 loc_B44C8:
 mov eax, dword [byte esi+04h]	; B44C8
-mov ecx, dword [dword_D30AC]	; B44CB
+mov ecx, dword [cliprect_x0]	; B44CB
 mov dword [byte esi+04h], ecx	; B44D1
 LD sub, ecx, eax	; B44D4
 add dword [byte esi+020h], ecx	; B44D6
@@ -643,7 +643,7 @@ jmp near loc_B481A	; B44DF
 loc_B44E4:
 mov eax, dword [esi]	; B44E4
 mov edx, dword [byte esi+04h]	; B44E6
-mov ecx, dword [dword_D30AC]	; B44E9
+mov ecx, dword [cliprect_x0]	; B44E9
 mov dword [byte esi+010h], ecx	; B44EF
 LD sub, edx, ecx	; B44F2
 jl short loc_B451A	; B44F4
@@ -666,7 +666,7 @@ loc_B451A:
 mov eax, 1	; B451A
 jmp short loc_B4503	; B451F
 loc_B4521:
-mov edx, dword [dword_D30AC]	; B4521
+mov edx, dword [cliprect_x0]	; B4521
 LD xor, eax, eax	; B4527
 sub eax, dword [esi]	; B4529
 sbb edx, dword [byte esi+04h]	; B452B
@@ -688,7 +688,7 @@ loc_B4558:
 jmp short loc_B45CD	; B4558
 loc_B455A:
 mov eax, dword [byte esi+04h]	; B455A
-mov edx, dword [dword_D30AC]	; B455D
+mov edx, dword [cliprect_x0]	; B455D
 mov dword [byte esi+010h], edx	; B4563
 LD sub, eax, edx	; B4566
 LD mov, ecx, eax	; B4568
@@ -706,7 +706,7 @@ add dword [byte esi+024h], eax	; B4587
 jmp near loc_B481A	; B458A
 loc_B458F:
 mov ecx, dword [byte esi+04h]	; B458F
-mov eax, dword [dword_D30AC]	; B4592
+mov eax, dword [cliprect_x0]	; B4592
 mov dword [byte esi+04h], eax	; B4597
 LD sub, eax, ecx	; B459A
 sub dword [byte esi+018h], eax	; B459C
@@ -732,7 +732,7 @@ mov dword [byte esi+018h], 0	; B45D5
 mov al, byte [byte esi+035h]	; B45DC
 test al, 4	; B45DF
 je short loc_B45F9	; B45E1
-mov ebx, dword [dword_D30B0]	; B45E3
+mov ebx, dword [cliprect_y0]	; B45E3
 mov dword [byte esi+0Ch], ebx	; B45E9
 mov dword [byte esi+08h], 0	; B45EC
 dec ebx	; B45F3
@@ -741,24 +741,24 @@ jmp short loc_B465B	; B45F7
 loc_B45F9:
 test al, 8	; B45F9
 je short loc_B460F	; B45FB
-mov ebx, dword [dword_D30B8]	; B45FD
+mov ebx, dword [cliprect_y1]	; B45FD
 mov dword [byte esi+0Ch], ebx	; B4603
 mov dword [byte esi+08h], 0	; B4606
 jmp short loc_B465B	; B460D
 loc_B460F:
 mov ecx, dword [byte esi+014h]	; B460F
-cmp ecx, dword [dword_D30B8]	; B4612
+cmp ecx, dword [cliprect_y1]	; B4612
 jl short loc_B4621	; B4618
-mov ecx, dword [dword_D30B8]	; B461A
+mov ecx, dword [cliprect_y1]	; B461A
 dec ecx	; B4620
 loc_B4621:
 mov edx, dword [byte esi+0Ch]	; B4621
 mov ebx, dword [byte esi+08h]	; B4624
 add ebx, 80000000h	; B4627
 adc edx, byte 0	; B462D
-cmp edx, dword [dword_D30B0]	; B4630
+cmp edx, dword [cliprect_y0]	; B4630
 jge short loc_B463E	; B4636
-mov edx, dword [dword_D30B0]	; B4638
+mov edx, dword [cliprect_y0]	; B4638
 loc_B463E:
 mov dword [byte esi+0Ch], edx	; B463E
 mov dword [byte esi+08h], 0	; B4641
@@ -795,7 +795,7 @@ mov edx, 1	; B4692
 jmp near loc_B45D2	; B4697
 loc_B469C:
 mov ecx, dword [byte esi+04h]	; B469C
-mov eax, dword [dword_D30B4]	; B469F
+mov eax, dword [cliprect_x1]	; B469F
 dec eax	; B46A4
 mov dword [byte esi+04h], eax	; B46A5
 LD sub, ecx, eax	; B46A8
@@ -804,7 +804,7 @@ sub dword [byte esi+018h], ecx	; B46AD
 add dword [byte esi+028h], ecx	; B46B0
 jmp near loc_B4293	; B46B3
 loc_B46B8:
-mov ecx, dword [dword_D30B4]	; B46B8
+mov ecx, dword [cliprect_x1]	; B46B8
 dec ecx	; B46BE
 mov eax, dword [byte esi+010h]	; B46BF
 mov dword [byte esi+010h], ecx	; B46C2
@@ -816,7 +816,7 @@ jmp near loc_B4293	; B46D0
 loc_B46D5:
 mov eax, dword [esi]	; B46D5
 mov edx, dword [byte esi+04h]	; B46D7
-sub edx, dword [dword_D30B4]	; B46DA
+sub edx, dword [cliprect_x1]	; B46DA
 inc edx	; B46E0
 mov ecx, dword [byte esi+030h]	; B46E1
 div ecx	; B46E4
@@ -832,7 +832,7 @@ sub dword [esi], eax	; B46FB
 sbb dword [byte esi+04h], edx	; B46FD
 jmp near loc_B4293	; B4700
 loc_B4705:
-mov edx, dword [dword_D30B4]	; B4705
+mov edx, dword [cliprect_x1]	; B4705
 dec edx	; B470B
 mov dword [byte esi+010h], edx	; B470C
 LD xor, eax, eax	; B470F
@@ -855,7 +855,7 @@ mov dword [byte esi+014h], eax	; B4738
 jmp near loc_B4293	; B473B
 loc_B4740:
 mov eax, dword [byte esi+04h]	; B4740
-mov ecx, dword [dword_D30B4]	; B4743
+mov ecx, dword [cliprect_x1]	; B4743
 dec ecx	; B4749
 LD sub, eax, ecx	; B474A
 mov dword [byte esi+04h], ecx	; B474C
@@ -875,7 +875,7 @@ LD sub, edx, ecx	; B4776
 add dword [byte esi+028h], edx	; B4778
 jmp near loc_B4293	; B477B
 loc_B4780:
-mov eax, dword [dword_D30B4]	; B4780
+mov eax, dword [cliprect_x1]	; B4780
 LD mov, ecx, eax	; B4785
 dec ecx	; B4787
 mov dword [byte esi+010h], ecx	; B4788
@@ -899,23 +899,23 @@ jmp near loc_B4384	; B47BC
 loc_B47C1:
 LD xor, edx, edx	; B47C1
 mov eax, dword [byte esi+04h]	; B47C3
-cmp eax, dword [dword_D30AC]	; B47C6
+cmp eax, dword [cliprect_x0]	; B47C6
 jge short loc_B47D1	; B47CC
 or dh, 2	; B47CE
 loc_B47D1:
 mov ebx, dword [esi]	; B47D1
 add ebx, 80000000h	; B47D3
 adc eax, byte 0	; B47D9
-cmp eax, dword [dword_D30B4]	; B47DC
+cmp eax, dword [cliprect_x1]	; B47DC
 jl short loc_B47E7	; B47E2
 or dh, 1	; B47E4
 loc_B47E7:
 mov eax, dword [byte esi+010h]	; B47E7
-cmp eax, dword [dword_D30AC]	; B47EA
+cmp eax, dword [cliprect_x0]	; B47EA
 jge short loc_B47F5	; B47F0
 or dl, 2	; B47F2
 loc_B47F5:
-cmp eax, dword [dword_D30B4]	; B47F5
+cmp eax, dword [cliprect_x1]	; B47F5
 jl short loc_B4800	; B47FB
 or dl, 1	; B47FD
 loc_B4800:
@@ -949,7 +949,7 @@ db 087h,0CAh	; B4845 xchg ecx,edx
 loc_B4847:
 cmp byte [byte ebp-05h], 0	; B4847
 jne short loc_B4870	; B484B
-mov ebx, dword [dword_D30B0]	; B484D
+mov ebx, dword [cliprect_y0]	; B484D
 LD cmp, eax, ebx	; B4853
 jge short loc_B487B	; B4855
 mov al, 4	; B4857
@@ -969,7 +969,7 @@ inc edx	; B4872
 mov dword [byte esi+018h], edx	; B4873
 jmp near loc_B4293	; B4876
 loc_B487B:
-mov ebx, dword [dword_D30B8]	; B487B
+mov ebx, dword [cliprect_y1]	; B487B
 LD cmp, eax, ebx	; B4881
 jl short loc_B488F	; B4883
 mov al, 8	; B4885
@@ -981,21 +981,21 @@ LD mov, eax, edx	; B488F
 LD sub, eax, ecx	; B4891
 inc eax	; B4893
 mov dword [byte esi+018h], eax	; B4894
-cmp edx, dword [dword_D30AC]	; B4897
+cmp edx, dword [cliprect_x0]	; B4897
 jge short loc_B48AD	; B489D
 dec dword [byte esi+014h]	; B489F
 mov dword [byte esi+024h], 1	; B48A2
 mov al, 2	; B48A9
 jmp short loc_B485F	; B48AB
 loc_B48AD:
-cmp ecx, dword [dword_D30B4]	; B48AD
+cmp ecx, dword [cliprect_x1]	; B48AD
 jl short loc_B48C3	; B48B3
 dec dword [byte esi+014h]	; B48B5
 mov dword [byte esi+02Ch], 1	; B48B8
 mov al, 1	; B48BF
 jmp short loc_B485F	; B48C1
 loc_B48C3:
-mov eax, dword [dword_D30AC]	; B48C3
+mov eax, dword [cliprect_x0]	; B48C3
 LD mov, ebx, eax	; B48C8
 LD sub, eax, ecx	; B48CA
 jle short loc_B48D4	; B48CC
@@ -1003,7 +1003,7 @@ mov dword [byte esi+04h], ebx	; B48CE
 sub dword [byte esi+018h], eax	; B48D1
 loc_B48D4:
 LD mov, eax, edx	; B48D4
-mov ebx, dword [dword_D30B4]	; B48D6
+mov ebx, dword [cliprect_x1]	; B48D6
 dec ebx	; B48DC
 LD sub, eax, ebx	; B48DD
 jle short loc_B48E7	; B48DF
@@ -1032,19 +1032,19 @@ mov eax, dword [byte esi+0Ch]	; B4911
 LD add, eax, ecx	; B4914
 mov dword [byte esi+0Ch], eax	; B4916
 LD mov, ebx, eax	; B4919
-sub eax, dword [dword_D30B0]	; B491B
+sub eax, dword [cliprect_y0]	; B491B
 jle short loc_B4948	; B4921
 LD cmp, eax, ecx	; B4923
 jle short loc_B4929	; B4925
 LD mov, eax, ecx	; B4927
 loc_B4929:
-sub ebx, dword [dword_D30B8]	; B4929
+sub ebx, dword [cliprect_y1]	; B4929
 jle short loc_B4935	; B492F
 LD sub, eax, ebx	; B4931
 jle short loc_B4948	; B4933
 loc_B4935:
 mov ebx, dword [byte esi+04h]	; B4935
-cmp ebx, dword [dword_D30AC]	; B4938
+cmp ebx, dword [cliprect_x0]	; B4938
 jge short loc_B4945	; B493E
 add dword [byte esi+020h], eax	; B4940
 jmp short loc_B4948	; B4943
@@ -1070,7 +1070,7 @@ mov eax, dword [byte esi+014h]	; B497F
 LD sub, eax, ecx	; B4982
 mov dword [byte esi+014h], eax	; B4984
 LD mov, ebx, eax	; B4987
-sub eax, dword [dword_D30B8]	; B4989
+sub eax, dword [cliprect_y1]	; B4989
 inc eax	; B498F
 jge short loc_B49BA	; B4990
 neg eax	; B4992
@@ -1078,14 +1078,14 @@ LD cmp, eax, ecx	; B4994
 jle short loc_B499A	; B4996
 LD mov, eax, ecx	; B4998
 loc_B499A:
-sub ebx, dword [dword_D30B0]	; B499A
+sub ebx, dword [cliprect_y0]	; B499A
 inc ebx	; B49A0
 jge short loc_B49A7	; B49A1
 LD add, eax, ebx	; B49A3
 jle short loc_B49BA	; B49A5
 loc_B49A7:
 mov ebx, dword [byte esi+010h]	; B49A7
-cmp ebx, dword [dword_D30AC]	; B49AA
+cmp ebx, dword [cliprect_x0]	; B49AA
 jge short loc_B49B7	; B49B0
 add dword [byte esi+024h], eax	; B49B2
 jmp short loc_B49BA	; B49B5
@@ -1339,10 +1339,10 @@ cmp ebx, dword [dword_D30A8]	; B4BF6
 jle short loc_B4C04	; B4BFC
 mov ebx, dword [dword_D30A8]	; B4BFE
 loc_B4C04:
-mov dword [dword_D30AC], eax	; B4C04
-mov dword [dword_D30B0], ecx	; B4C09
-mov dword [dword_D30B4], edx	; B4C0F
-mov dword [dword_D30B8], ebx	; B4C15
+mov dword [cliprect_x0], eax	; B4C04
+mov dword [cliprect_y0], ecx	; B4C09
+mov dword [cliprect_x1], edx	; B4C0F
+mov dword [cliprect_y1], ebx	; B4C15
 mov dword [dword_D30BC], eax	; B4C1B
 mov dword [dword_D30C0], edx	; B4C20
 ret	; B4C26

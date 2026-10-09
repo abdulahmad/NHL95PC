@@ -22,7 +22,7 @@ extern dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, fputchar, puckvx, gmo
 extern lseek_, ltx, off_C5439, puckx, pucky, puckvy, puckz, puckc
 extern off_CD304, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
 extern strcpy_, strlen_, DrawFrameSprite, FileOpenRW, FileClose, FileWriteAt, PanelAddPenalty, PanelRemovePenalty
-extern MenuCallbackTrue, sub_1CD73, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
+extern MenuCallbackTrue, DrawSprite, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
 extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, FatalError, unk_C1B49, unk_C1C58, unk_C1C5B
 extern unk_C1C5E, unk_C1C61, unk_C1C64, unk_C1C67, unk_C1CB0, unk_C5423, unk_C542E, hmteamrec
 extern SortCords, unk_E9B4C, word_C5428, word_C90B2, word_C90B4, c1playernum, c2playernum
@@ -380,7 +380,7 @@ mov eax, dword [byte esi+01h]	; 618A5
 sar eax, 18h	; 618A8
 mov eax, dword [nosplit eax*4+photoptrsf]	; 618AB
 mov ecx, dword [byte ebp-010h]	; 618B2
-call sub_1CD73	; 618B5
+call DrawSprite	; 618B5
 .2:
 inc edi	; 618BA
 add esi, byte 0Ch	; 618BB
@@ -416,7 +416,7 @@ sar ebx, 10h	; 61912
 mov eax, dword [dword_E0220]	; 61915
 xor ecx, ecx	; 6191A
 mov edx, 4	; 6191C
-call sub_1CD73	; 61921
+call DrawSprite	; 61921
 .8:
 cmp word [byte ebp-0Ch], byte 0	; 61926
 jl short .9	; 6192B
@@ -431,7 +431,7 @@ mov eax, dword [byte ebp-0Eh]	; 6193F
 sar eax, 10h	; 61942
 mov eax, dword [nosplit eax*4+photoptrsf]	; 61945
 xor ecx, ecx	; 6194C
-call sub_1CD73	; 6194E
+call DrawSprite	; 6194E
 .9:
 test di, di	; 61953
 jne short .10	; 61956
@@ -443,7 +443,7 @@ sar ebx, 10h	; 61966
 mov eax, dword [dword_E0230]	; 61969
 xor ecx, ecx	; 6196E
 mov edx, 4	; 61970
-call sub_1CD73	; 61975
+call DrawSprite	; 61975
 jmp short .11	; 6197A
 .10:
 test byte [gmode], 80h	; 6197C

@@ -12,7 +12,7 @@ extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, bai
 extern dword_D8C84, dword_DC230, schedgameidx, dword_DC238, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
 extern dword_EA0DC, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
 extern off_CEF23, off_D3078, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
-extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, sub_1D610, sub_2D35A, sub_2F2B1
+extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, sub_2D35A, sub_2F2B1
 extern sub_2F3D7, sub_2F5EE, sub_2FEDF, sub_30A0C, MessageBox, sub_3377C, sub_33E6A, sub_479E9
 extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB
@@ -476,7 +476,7 @@ mov eax, dword [gamemode]	; 1938F
 call sub_805C4	; 19394
 mov eax, dword [esp]	; 19399
 add eax, byte 3	; 1939C
-call sub_1D610	; 1939F
+call SetScreenTitle	; 1939F
 call ReplayIsEmpty	; 193A4
 test eax, eax	; 193A9
 je short .1	; 193AB
@@ -858,7 +858,7 @@ lea edx, [byte esp+04h]	; 1996F
 mov eax, 1	; 19973
 call sub_76429	; 19978
 mov eax, dword [gamemode]	; 1997D
-call sub_1D610	; 19982
+call SetScreenTitle	; 19982
 mov ebp, dword [dword esp+03F8h]	; 19987
 push ebp	; 1998E
 call jctime	; 1998F
@@ -1118,7 +1118,7 @@ je short .42	; 19DC8
 mov dword [gameresult], 2	; 19DCA
 .42:
 mov eax, dword [gamemode]	; 19DD4
-call sub_1D610	; 19DD9
+call SetScreenTitle	; 19DD9
 mov ecx, dword [dword esp+03F8h]	; 19DDE
 test ecx, ecx	; 19DE5
 je short .43	; 19DE7

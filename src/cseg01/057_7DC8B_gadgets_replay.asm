@@ -7,7 +7,7 @@ extern asc_C3426, str_PPV, musicon, byte_ED7CC, byte_ED7EB, byte_ED862, byte_ED8
 extern byte_ED932, byte_ED9EF, gamemode, ctl1team, ctl2team, dword_C541F, dword_C66D0, dword_C66D4
 extern dword_C7444, dword_C7448, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, dword_D1C8B
 extern dword_D1CE6, dword_D1CEE, dword_D1DC8, dword_D1DCC, dword_D1DD0, dword_D1DD4, dword_D2C6B, dword_D8B74
-extern dword_D8C40, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, dword_DC238, dword_DD6A8, dword_DD6AE
+extern spritedrawcount, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, dword_DC238, dword_DD6A8, dword_DD6AE
 extern dword_DD6B0, replayplay, dword_E9F16, dword_E9F38, dword_EA0DC, dword_ED368, dword_ED380, dword_ED384
 extern dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8, dword_ED6DC, dword_ED6E0, dword_ED6E4
 extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED6FC, dword_ED704, dword_ED708
@@ -649,7 +649,7 @@ add eax, ebx	; 7E3C4
 lea ebx, [dword eax+0140h]	; 7E3C6
 call sub_6AF52	; 7E3CC
 xor ecx, ecx	; 7E3D1
-mov dword [dword_D8C40], ecx	; 7E3D3
+mov dword [spritedrawcount], ecx	; 7E3D3
 mov edx, dword [dword_D8C72]	; 7E3D9
 sar edx, 10h	; 7E3DF
 mov eax, dword [dword_D8C7A]	; 7E3E2
@@ -829,7 +829,7 @@ add eax, ebx	; 7E69C
 lea ebx, [dword eax+0140h]	; 7E69E
 call sub_6AF52	; 7E6A4
 xor ebp, ebp	; 7E6A9
-mov dword [dword_D8C40], ebp	; 7E6AB
+mov dword [spritedrawcount], ebp	; 7E6AB
 mov edx, dword [dword_D8C72]	; 7E6B1
 sar edx, 10h	; 7E6B7
 mov eax, dword [dword_D8C7A]	; 7E6BA

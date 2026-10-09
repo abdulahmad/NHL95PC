@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A2000 progbits alloc exec nowrite align=1
-extern _os_handle_0, _os_handle_1, asc_D544C, dword_D30AC, dword_D30B0, dword_D30B4, dword_D30B8, dword_D30CC
+extern _os_handle_0, _os_handle_1, asc_D544C, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1, dword_D30CC
 extern dword_F6138, strncpy_, strrchr_, sub_8CD04, sub_8D15C, sub_8D728, sub_9762C, sub_97EB8
 extern sub_98A40, sub_B0100, sub_B0148, sub_B3ABC, sub_B3B19, sub_B3C60, sub_B3C74, sub_B3CB3
 extern sub_B72D4, sub_B72E9
@@ -306,7 +306,7 @@ jge near loc_A242C	; A236B
 lea eax, [nosplit esi*4+00h]	; A2371
 mov dword [byte esp+058h], eax	; A2378
 loc_A237C:
-cmp esi, dword [dword_D30B8]	; A237C
+cmp esi, dword [cliprect_y1]	; A237C
 jge near loc_A25FB	; A2382
 mov ebx, dword [byte esp+064h]	; A2388
 sar ebx, 10h	; A238C
@@ -315,12 +315,12 @@ sar eax, 10h	; A2391
 sub eax, ebx	; A2394
 inc eax	; A2396
 lea edx, [ebx+eax]	; A2397
-sub edx, dword [dword_D30B4]	; A239A
+sub edx, dword [cliprect_x1]	; A239A
 test edx, edx	; A23A0
 jle short loc_A23A6	; A23A2
 sub eax, edx	; A23A4
 loc_A23A6:
-mov edx, dword [dword_D30AC]	; A23A6
+mov edx, dword [cliprect_x0]	; A23A6
 sub edx, ebx	; A23AC
 test edx, edx	; A23AE
 jle short loc_A23C4	; A23B0
@@ -334,7 +334,7 @@ xor edx, edx	; A23C4
 loc_A23C6:
 test eax, eax	; A23C6
 jle short loc_A2404	; A23C8
-cmp esi, dword [dword_D30B0]	; A23CA
+cmp esi, dword [cliprect_y0]	; A23CA
 jle short loc_A2404	; A23D0
 push eax	; A23D2
 mov eax, dword [byte esp+064h]	; A23D3
@@ -455,7 +455,7 @@ mov dword [byte esp+050h], eax	; A2546
 loc_A254A:
 cmp esi, dword [byte esp+05Ch]	; A254A
 jge near loc_A25FB	; A254E
-cmp esi, dword [dword_D30B8]	; A2554
+cmp esi, dword [cliprect_y1]	; A2554
 jge near loc_A25FB	; A255A
 mov edx, dword [byte esp+064h]	; A2560
 sar edx, 10h	; A2564
@@ -464,12 +464,12 @@ sar eax, 10h	; A2569
 sub eax, edx	; A256C
 inc eax	; A256E
 lea ebx, [edx+eax]	; A256F
-sub ebx, dword [dword_D30B4]	; A2572
+sub ebx, dword [cliprect_x1]	; A2572
 test ebx, ebx	; A2578
 jle short loc_A257E	; A257A
 sub eax, ebx	; A257C
 loc_A257E:
-mov ebx, dword [dword_D30AC]	; A257E
+mov ebx, dword [cliprect_x0]	; A257E
 sub ebx, edx	; A2584
 test ebx, ebx	; A2586
 jle short loc_A2598	; A2588
@@ -483,7 +483,7 @@ xor ebx, ebx	; A2598
 loc_A259A:
 test eax, eax	; A259A
 jle short loc_A25D8	; A259C
-cmp esi, dword [dword_D30B0]	; A259E
+cmp esi, dword [cliprect_y0]	; A259E
 jl short loc_A25D8	; A25A4
 push eax	; A25A6
 mov eax, dword [byte esp+064h]	; A25A7

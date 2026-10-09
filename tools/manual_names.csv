@@ -155,6 +155,16 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0001C852,sub_1C852,SetupGoalieMenu,PC-new,,,,medium,"fills the goalie menu items (mi_HomeGoalie1/2, mi_AwayGoalie1/2) with ""nn X. Name"" for each side's two goalies (hmgoalieidx / awgoalieidx in hmroster / awroster), sizes the menu columns and marks the goalie in net (hmtmgoalie, NONE when pulled); called from PlayGame",key_team_db,manual-trace
 0001CB7F,sub_1CB7F,ResetGoalieMenu,PC-new,,,,high,"copies the ""00 X. XXXXXXXXXXXXXXXX"" template back into the four goalie items and unmarks the NONE items; called at the end of PlayGame",key_team_db,manual-trace
 0001CBD8,sub_1CBD8,ClearPanelPenalties,PC-new,,,,medium,"empties the 8-entry hudpenhome / hudpenaway lists (-1, times 0), then sub_1CC3D; LoadGameGfx_common",key_team_db,manual-trace
+0001CC3D,sub_1CC3D,LoadScoreboardGfx,PC-new,,,,high,"loads scrbrd1.PPV, gets scoredigits/clockdigits/penalty digits, line indicator and visp/homp sprites; called from LoadGameTeams",frontend_labels,manual-trace
+0001CD73,sub_1CD73,DrawSprite,PC-new,,,,medium,"233 callers; clips sprite rect against cliprect_*, optional hflip, team palette remap, dispatches to 8 blitters B4CD8..B5AC8",frontend_labels,manual-trace
+0001D019,sub_1D019,NullBlit,PC-new,,,,medium,empty fn filling first 8 slots of the blitter table at C66D8,frontend_labels,manual-trace
+0001D024,sub_1D024,NullFunc_1D024,PC-new,,,,low,"empty fn, no refs",frontend_labels,manual-trace
+0001D02F,code_1D02F,AddDirtyRect,PC-new,,,,low,"appends x/4,y,w/4,h 16-byte rect to dirtyrectptr[page], bumps dirtyrectcount[page]; no direct refs",frontend_labels,manual-trace
+0001D100,sub_1D100,SetupStatsSourceMenu,PC-new,,,,medium,"picks Exhibition/League/Playoffs stats source items from lgstate/postate, copies name to statsleague, sets item count",frontend_labels,manual-trace
+0001D518,sub_1D518,BuildSavedGameLabels,PC-new,,,,high,copies postate/lgstate names (dot-stripped) into the label strings and appends Play-Offs / Season suffixes to mi_ items,frontend_labels,manual-trace
+0001D5D5,sub_1D5D5,StrLenToDot,PC-new,,,,high,counts chars until NUL or '.',frontend_labels,manual-trace
+0001D610,sub_1D610,SetScreenTitle,PC-new,,,,high,mode 0-5 -> Sports Central/Playoff Tree/League Calendar/Broadcast Booth/Intermission Desk/Rink Side title + width into screen headers,frontend_labels,manual-trace
+0001D6BE,sub_1D6BE,StrPrefixDiffers,PC-new,,,,high,returns 1 on first mismatching char before either NUL,frontend_labels,manual-trace
 00031013,sub_31013,MessageBox,PC-new,,,,medium,"(x, y (-1 = centred), message line table, line count, buttons, button count, ...): the league/front-end message dialog used for every 'Copying databases' / 'Insert disk' / error box",misc_dialogs,manual-trace
 0003271B,sub_3271B,SaveModeState,PC-new,,,,high,"copies the current league name, DB path formats, HomeTeam/VisTeam, gameopts and controller teams/devices/sides into a 75h-byte mode state block",main_desk,manual-trace
 000327A1,sub_327A1,LoadModeState,PC-new,,,,high,"the reverse of SaveModeState: sets gamemode (+0), curleague, paths, HomeTeam/VisTeam, gameopts and controller fields from a mode state block",main_desk,manual-trace

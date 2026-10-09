@@ -17,7 +17,7 @@ extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8
 extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84, photoptrs, dword_DC230
 extern dword_DC238, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
-extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, sub_1CD73, sub_3149D, sub_31AB5
+extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, sub_3149D, sub_31AB5
 extern LoadModeState, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
 extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
 extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
@@ -1436,7 +1436,7 @@ movsx edx, si	; 1106D
 cwde	; 11070
 mov eax, dword [nosplit eax*4+numshapes]	; 11071
 xor ecx, ecx	; 11078
-call sub_1CD73	; 1107A
+call DrawSprite	; 1107A
 mov ebx, 0Ah	; 1107F
 mov eax, edi	; 11084
 mov edx, edi	; 11086
@@ -1454,7 +1454,7 @@ cwde	; 110A0
 mov eax, dword [nosplit eax*4+numshapes]	; 110A1
 xor ecx, ecx	; 110A8
 mov ebx, edi	; 110AA
-call sub_1CD73	; 110AC
+call DrawSprite	; 110AC
 cmp word [byte esp+04h], byte 0	; 110B1
 jle short .x	; 110B7
 push byte 0	; 110B9
@@ -1466,7 +1466,7 @@ sar eax, 10h	; 110C7
 mov eax, dword [nosplit eax*4+dword_D8C4C]	; 110CA
 xor ecx, ecx	; 110D1
 mov ebx, edi	; 110D3
-call sub_1CD73	; 110D5
+call DrawSprite	; 110D5
 .x:
 add esp, byte 8	; 110DA
 pop edi	; 110DD
@@ -1497,7 +1497,7 @@ movsx ecx, cx	; 1111E
 movsx ebx, bx	; 11121
 movsx edx, si	; 11124
 mov eax, dword [dword eax+photoptrs]	; 11127
-call sub_1CD73	; 1112D
+call DrawSprite	; 1112D
 .x:
 pop esi	; 11132
 ret 4	; 11133
@@ -1513,7 +1513,7 @@ mov eax, dword [rinkendart]	; 11147
 xor ecx, ecx	; 1114C
 mov ebx, 225h	; 1114E
 mov edx, 37h	; 11153
-call sub_1CD73	; 11158
+call DrawSprite	; 11158
 pop edx	; 1115D
 pop ecx	; 1115E
 pop ebx	; 1115F

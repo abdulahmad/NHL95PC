@@ -9,7 +9,7 @@ extern byte_DB3AE, awroster, hmgoalieidx, hmscratch, byte_DC267, byte_DC268, lea
 extern leaguedbfmt, cont2team, HomeTeam, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
 extern dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_m2, dword_DF6C2, fputchar, lseek_, mi_HomeGoalie1
 extern mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone, sprintf_, strcat_, strcpy_
-extern strncpy_, FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, LoadCupFinalSeries, sub_1CC3D
+extern strncpy_, FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, LoadCupFinalSeries, LoadScoreboardGfx
 extern FatalError, str_fe1, str_fe2, str_fe3, str_fe4, str_fe5, str_fe7, str_fe8
 extern str_feB1, str_feB5, str_feB8, str_feD, str_feE, str_feF, str_feG, str_feH
 extern str_feI, str_feL, str_feM, str_feN, str_feO, str_feP, str_feQ, str_fe9
@@ -1351,7 +1351,7 @@ mov word [nosplit edx*8+word_C571E], cx	; 1CC26
 inc edx	; 1CC2E
 cmp edx, byte 8	; 1CC2F
 jl short ClearPanelPenalties.1	; 1CC32
-call sub_1CC3D	; 1CC34
+call LoadScoreboardGfx	; 1CC34
 pop edx	; 1CC39
 pop ecx	; 1CC3A
 pop ebx	; 1CC3B

@@ -7,7 +7,7 @@ extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, curleague, sflags,
 extern byte_DB3AD, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
 extern byte_E03E3, byte_E03E4, hudclockmin, hudclocksec, hudclockhund, songdata, dword_C7444, dword_C7448
 extern cont2team, HomeTeam, musichandle, fontcolor, rinkendbank, numshpbank, dword_D8C84, musicslot
-extern dword_DC230, dword_DC2F0, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
+extern dword_DC230, scrbrdshapes, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
 extern dword_ED6F8, hilightfont, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, teamcitynames
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, SetScreenSize
 extern LoadGameGfx, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
@@ -954,7 +954,7 @@ mov eax, dword [rinkendbank]	; 802F4
 push eax	; 802F9
 call jctime	; 802FA
 add esp, byte 4	; 802FF
-mov edx, dword [dword_DC2F0]	; 80302
+mov edx, dword [scrbrdshapes]	; 80302
 push edx	; 80308
 call jctime	; 80309
 add esp, byte 4	; 8030E

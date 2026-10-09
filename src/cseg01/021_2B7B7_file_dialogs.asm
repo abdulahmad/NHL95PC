@@ -19,7 +19,7 @@ extern dword_DD250, dword_DD254, dword_DD634, dword_DD638, dword_DD63C, dword_DD
 extern dword_DD64C, dword_DD650, dword_DD654, dword_DD658, dword_DD65C, dword_DD660, dword_DD664, dword_DD730
 extern dword_EA0DC, j_unlink_, jctime, off_C5439, off_C5441, off_C6F7C, off_C6F80, off_C6F84
 extern qsort_, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, MakePath, DeleteDir
-extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, CopyFile, sub_1D100, sub_1D518
+extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, CopyFile, SetupStatsSourceMenu, BuildSavedGameLabels
 extern sub_30A0C, MessageBox, LoadModeState, sub_32DA9, sub_33559, sub_336E6, sub_6B391, sub_6B3D7
 extern sub_7A29C, sub_86647, PlayoffModeLoop, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0
 extern sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400, sub_91964, sub_92CD0, FatalError
@@ -215,9 +215,9 @@ call jctime	; 2B9CA
 add esp, byte 4	; 2B9CF
 xor ebx, ebx	; 2B9D2
 mov dword [dword_C6F78], ebx	; 2B9D4
-call sub_1D518	; 2B9DA
+call BuildSavedGameLabels	; 2B9DA
 xor eax, eax	; 2B9DF
-call sub_1D100	; 2B9E1
+call SetupStatsSourceMenu	; 2B9E1
 test esi, esi	; 2B9E6
 je near loc_2BD0B	; 2B9E8
 mov eax, dword [dword_DD658]	; 2B9EE
@@ -231,7 +231,7 @@ loc_2BA0C:
 test eax, eax	; 2BA0C
 jne near loc_2BD0B	; 2BA0E
 mov eax, 1	; 2BA14
-call sub_1D100	; 2BA19
+call SetupStatsSourceMenu	; 2BA19
 mov eax, dword [dword_DD248]	; 2BA1E
 mov edx, dword [nosplit eax*4+dword_DD254]	; 2BA23
 mov eax, esp	; 2BA2A
@@ -350,7 +350,7 @@ lea eax, [byte esp+030h]	; 2BBB3
 call sub_32DA9	; 2BBB7
 mov edx, eax	; 2BBBC
 xor eax, eax	; 2BBBE
-call sub_1D100	; 2BBC0
+call SetupStatsSourceMenu	; 2BBC0
 mov eax, edx	; 2BBC5
 jmp near loc_2BD0D	; 2BBC7
 loc_2BBCC:
@@ -367,7 +367,7 @@ call FatalError	; 2BBF3
 add esp, byte 4	; 2BBF8
 loc_2BBFB:
 mov eax, 2	; 2BBFB
-call sub_1D100	; 2BC00
+call SetupStatsSourceMenu	; 2BC00
 mov eax, dword [dword_DD1B8]	; 2BC05
 mov edx, dword [nosplit eax*4+dword_DD1C4]	; 2BC0A
 mov eax, esp	; 2BC11
@@ -397,7 +397,7 @@ mov eax, esp	; 2BC64
 call j_unlink_	; 2BC66
 loc_2BC6B:
 xor eax, eax	; 2BC6B
-call sub_1D100	; 2BC6D
+call SetupStatsSourceMenu	; 2BC6D
 mov eax, edi	; 2BC72
 jmp near loc_2BD0D	; 2BC74
 loc_2BC79:
@@ -414,7 +414,7 @@ call FatalError	; 2BCA0
 add esp, byte 4	; 2BCA5
 loc_2BCA8:
 mov eax, 3	; 2BCA8
-call sub_1D100	; 2BCAD
+call SetupStatsSourceMenu	; 2BCAD
 mov eax, dword [dword_DD128]	; 2BCB2
 mov edx, dword [nosplit eax*4+dword_DD134]	; 2BCB7
 mov eax, esp	; 2BCBE

@@ -5,7 +5,7 @@ section s_47C31 progbits alloc exec nowrite align=1
 extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, byte_DE26C
 extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, inputframes, escrequest
 extern dword_C7444, dword_C7448, dword_C9074, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
-extern dword_CC0F0, dword_CC9AD, dword_D8C40, frameaccum, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
+extern dword_CC0F0, dword_CC9AD, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
 extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, randomd0
 extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, UpdateHudPanel, sub_33DD3
@@ -367,7 +367,7 @@ add eax, ebx	; 4814C
 lea ebx, [dword eax+0140h]	; 4814E
 call sub_6AF52	; 48154
 xor ebp, ebp	; 48159
-mov dword [dword_D8C40], ebp	; 4815B
+mov dword [spritedrawcount], ebp	; 4815B
 mov edx, dword [dword_D8C72]	; 48161
 sar edx, 10h	; 48167
 mov eax, dword [dword_D8C7A]	; 4816A

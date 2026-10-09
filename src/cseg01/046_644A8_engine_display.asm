@@ -9,8 +9,8 @@ extern byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E03C1, byte_E9DB4, b
 extern byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC
 extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, byte_ED7CC, byte_ED7F7, byte_ED86D
 extern byte_ED92B, joysampling, dword_C90B0, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, lastsfx
-extern dword_CCEF6, dword_CD41E, dword_CD4B0, dword_D2C6B, dword_D30AC, dword_D30B0, dword_D30B4, dword_D30B8
-extern dword_D30BC, dword_D30C0, dword_D8B70, dword_D8B78, dword_D8C40, dword_D8C84, dword_DEF8C, dword_DEFE0
+extern dword_CCEF6, dword_CD41E, dword_CD4B0, dword_D2C6B, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1
+extern dword_D30BC, dword_D30C0, dword_D8B70, dword_D8B78, spritedrawcount, dword_D8C84, dword_DEF8C, dword_DEFE0
 extern dword_DF004, hmtmstruct, puckstruct, photoptrsf, dword_E0220, dword_E0230, dword_E0244, dword_E0248
 extern recbpr, replayplay, dword_E03AE, dword_E03B9, dword_E03BD
 extern dword_E9A9E, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38
@@ -18,7 +18,7 @@ extern dword_E9F54, dword_E9F56, dword_E9F5A, dword_E9F76, dword_E9F78, dword_E9
 extern dword_E9FA5, dword_E9FA8, dword_E9FAA, dword_E9FD9, dword_E9FF0, dword_ED74C, fputchar, gmode
 extern jctime, replaystart, puckz, puckc, camx_m2, off_CBED0, off_CC01D, off_CD498
 extern off_CD4A0, off_CD4DC, setpersonel, sfx, sprintf_, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
-extern MakePath, sub_1CD73, CrowdNoiseUpdate, CrowdNoiseOff, sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0
+extern MakePath, DrawSprite, CrowdNoiseUpdate, CrowdNoiseOff, sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8EA18, sub_90354, sub_90D20, sub_90EC0, sub_91964, sub_93540, sub_B30B4
 extern sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80, awlinetab, unk_DACA0, hmlinetab, SortCords
 extern unk_E9CEC, unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE
@@ -2873,13 +2873,13 @@ shl edx, 4	; 6663E
 LD sbb, eax, edx	; 66641
 sar eax, 4	; 66643
 mov dword [byte esp+02Ch], eax	; 66646
-mov ax, word [dword_D30AC]	; 6664A
+mov ax, word [cliprect_x0]	; 6664A
 mov word [byte esp+028h], ax	; 66650
-mov ax, word [dword_D30B4]	; 66655
+mov ax, word [cliprect_x1]	; 66655
 mov word [byte esp+0Ch], ax	; 6665B
-mov ax, word [dword_D30B0]	; 66660
+mov ax, word [cliprect_y0]	; 66660
 mov word [byte esp+020h], ax	; 66666
-mov ax, word [dword_D30B8]	; 6666B
+mov ax, word [cliprect_y1]	; 6666B
 mov word [byte esp+010h], ax	; 66671
 mov si, word [scrollx]	; 66676
 add esi, byte 4Ah	; 6667D
@@ -2901,11 +2901,11 @@ mov word [byte esp+01Ch], ax	; 666B6
 add eax, edx	; 666BB
 add edx, eax	; 666BD
 mov word [byte esp+014h], dx	; 666BF
-mov ax, word [dword_D30AC]	; 666C4
+mov ax, word [cliprect_x0]	; 666C4
 sub ax, word [scrollx]	; 666CA
 add esi, eax	; 666D1
 add word [byte esp+024h], ax	; 666D3
-mov ax, word [dword_D30B0]	; 666D8
+mov ax, word [cliprect_y0]	; 666D8
 sub ax, word [scrolly]	; 666DE
 add word [byte esp+01Ch], ax	; 666E5
 add word [byte esp+014h], ax	; 666EA
@@ -2938,11 +2938,11 @@ mov word [byte esp+024h], ax	; 66744
 mov ax, word [scrolly]	; 66749
 add eax, 57h	; 6674F
 mov word [byte esp+014h], ax	; 66754
-mov ax, word [dword_D30AC]	; 66759
+mov ax, word [cliprect_x0]	; 66759
 sub ax, word [scrollx]	; 6675F
 add esi, eax	; 66766
 add word [byte esp+024h], ax	; 66768
-mov ax, word [dword_D30B0]	; 6676D
+mov ax, word [cliprect_y0]	; 6676D
 sub ax, word [scrolly]	; 66773
 add word [byte esp+01Ch], ax	; 6677A
 add word [byte esp+014h], ax	; 6677F
@@ -3422,13 +3422,13 @@ push byte_E0344	; 66D74
 call sub_91964	; 66D79
 add esp, byte 0Ch	; 66D7E
 .33:
-mov si, word [dword_D30AC]	; 66D81
+mov si, word [cliprect_x0]	; 66D81
 add esi, byte 8	; 66D88
 cmp word [gsp], byte 4	; 66D8B
 jne short .34	; 66D93
 add esi, 0ACh	; 66D95
 .34:
-mov ax, word [dword_D30B0]	; 66D9B
+mov ax, word [cliprect_y0]	; 66D9B
 add eax, 8	; 66DA1
 mov word [byte esp+01Ch], ax	; 66DA6
 mov ebx, dword [byte esp+01Ah]	; 66DAB
@@ -3437,9 +3437,9 @@ lea eax, [byte ebx+053h]	; 66DB2
 push eax	; 66DB5
 movsx edx, si	; 66DB6
 lea ecx, [dword edx+083h]	; 66DB9
-mov eax, dword [dword_D8C40]	; 66DBF
+mov eax, dword [spritedrawcount]	; 66DBF
 lea edi, [byte eax+01h]	; 66DC4
-mov dword [dword_D8C40], edi	; 66DC7
+mov dword [spritedrawcount], edi	; 66DC7
 call sub_6AB7C	; 66DCD
 add esp, byte 30h	; 66DD2
 jmp near checkwindow_popebp	; 66DD5
@@ -3602,11 +3602,11 @@ add esp, byte 4	; 67042
 add eax, 4	; 67045
 mov word [byte esp+018h], ax	; 6704A
 add eax, esi	; 6704F
-mov di, word [dword_D30AC]	; 67051
+mov di, word [cliprect_x0]	; 67051
 sub di, word [scrollx]	; 67058
 add esi, edi	; 6705F
 add eax, edi	; 67061
-mov di, word [dword_D30B0]	; 67063
+mov di, word [cliprect_y0]	; 67063
 sub di, word [scrolly]	; 6706A
 add word [byte esp+01Ch], di	; 67071
 add word [byte esp+020h], di	; 67076
@@ -3722,9 +3722,9 @@ push eax	; 671C3
 movsx edx, si	; 671C4
 mov ecx, dword [byte esp+018h]	; 671C7
 add ecx, edx	; 671CB
-mov eax, dword [dword_D8C40]	; 671CD
+mov eax, dword [spritedrawcount]	; 671CD
 lea edi, [byte eax+01h]	; 671D2
-mov dword [dword_D8C40], edi	; 671D5
+mov dword [spritedrawcount], edi	; 671D5
 call sub_6AB7C	; 671DB
 add esp, byte 24h	; 671E0
 jmp near checkwindow_popebp	; 671E3
@@ -4760,7 +4760,7 @@ sar edx, 10h	; 67F11
 mov eax, dword [byte ebp-0Ah]	; 67F14
 sar eax, 10h	; 67F17
 mov eax, dword [nosplit eax*4+photoptrsf]	; 67F1A
-call sub_1CD73	; 67F21
+call DrawSprite	; 67F21
 .9:
 inc esi	; 67F26
 .10:
@@ -4815,7 +4815,7 @@ mov eax, 12Dh	; 67FC1
 movsx ebx, ax	; 67FC6
 mov eax, dword [dword_E0220]	; 67FC9
 mov edx, 4	; 67FCE
-call sub_1CD73	; 67FD3
+call DrawSprite	; 67FD3
 .17:
 cmp word [byte ebp-08h], byte 0	; 67FD8
 jl short .18	; 67FDD
@@ -4833,7 +4833,7 @@ mov eax, dword [byte ebp-0Ah]	; 67FF8
 sar eax, 10h	; 67FFB
 mov eax, dword [nosplit eax*4+photoptrsf]	; 67FFE
 xor ecx, ecx	; 68005
-call sub_1CD73	; 68007
+call DrawSprite	; 68007
 .18:
 cmp si, byte 12h	; 6800C
 jne short .21	; 68010
@@ -4850,7 +4850,7 @@ mov eax, 12Dh	; 68024
 movsx ebx, ax	; 68029
 mov eax, dword [dword_E0230]	; 6802C
 mov edx, 4	; 68031
-call sub_1CD73	; 68036
+call DrawSprite	; 68036
 jmp short .22	; 6803B
 .21:
 mov ax, word [word_E9F7A]	; 6803D
@@ -4875,10 +4875,10 @@ mov eax, dword [camx]	; 68079
 sar eax, 10h	; 6807E
 cmp eax, 0FFFFFF50h	; 68081
 jge short .24	; 68086
-mov ax, word [dword_D30B8]	; 68088
+mov ax, word [cliprect_y1]	; 68088
 mov word [byte ebp-010h], ax	; 6808E
 push dword 244h	; 68092
-mov edx, dword [dword_D30B0]	; 68097
+mov edx, dword [cliprect_y0]	; 68097
 push edx	; 6809D
 mov ebx, dword [dword_D30C0]	; 6809E
 push ebx	; 680A4
@@ -5426,7 +5426,7 @@ jge short .72	; 687C2
 mov eax, dword [byte ebp-012h]	; 687C4
 sar eax, 10h	; 687C7
 push eax	; 687CA
-mov esi, dword [dword_D30B0]	; 687CB
+mov esi, dword [cliprect_y0]	; 687CB
 push esi	; 687D1
 mov edi, dword [dword_D30C0]	; 687D2
 push edi	; 687D8

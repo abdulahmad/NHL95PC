@@ -10,7 +10,7 @@ extern ctl2side, teamstatscb, skaterstatscb, goaliestatscb, dword_C65CC, dword_C
 extern cont2team, HomeTeam, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
 extern dword_D2C6B, dword_DC238, dword_EA0DC, jctime, memcpy_, off_C5439, off_C7282, off_D3078
 extern strcpy_, strncpy_, DiskFreeBytes, FileExists, MakePath, FileOpenRead, FileOpenRW, FileCreate
-extern FileClose, FileReadAt, FileWriteAt, sub_1D100, sub_1D610, sub_20D97, MessageBox, FadeOutPalCycle
+extern FileClose, FileReadAt, FileWriteAt, SetupStatsSourceMenu, SetScreenTitle, sub_20D97, MessageBox, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D
 extern sub_76429, SetSideControls, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C, sub_91370
@@ -43,7 +43,7 @@ mov dword [dword esp+080h], 0FFFFFFFFh	; 31ACB
 xor ebx, ebx	; 31AD6
 mov dword [dword esp+09Ch], ebx	; 31AD8
 xor eax, eax	; 31ADF
-call sub_1D610	; 31AE1
+call SetScreenTitle	; 31AE1
 mov dword [byte esp+030h], dword_CE3AF	; 31AE6
 mov dword [byte esp+060h], 3	; 31AEE
 mov dword [byte esp+03Ch], ebx	; 31AF6
@@ -94,7 +94,7 @@ add esp, byte 8	; 31B9C
 call dword [off_D3078]	; 31B9F
 call SetSideControls	; 31BA5
 xor eax, eax	; 31BAA
-call sub_1D100	; 31BAC
+call SetupStatsSourceMenu	; 31BAC
 mov dword [teamstatscb], unk_208EF	; 31BB1
 mov dword [skaterstatscb], unk_20A46	; 31BBB
 mov dword [goaliestatscb], unk_20BBD	; 31BC5
@@ -557,7 +557,7 @@ call jctime	; 32240
 add esp, byte 4	; 32245
 loc_32248:
 xor eax, eax	; 32248
-call sub_1D610	; 3224A
+call SetScreenTitle	; 3224A
 mov ecx, dword [dword esp+098h]	; 3224F
 push ecx	; 32256
 mov esi, dword [dword esp+098h]	; 32257

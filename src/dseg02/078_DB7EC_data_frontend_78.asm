@@ -4,11 +4,11 @@ bits 32
 section s_DB7EC nobits alloc noexec write align=1
 global awroster, byte_DB7F1, hmgoalieidx, hmscratch, byte_DC264, byte_DC265, byte_DC266
 global byte_DC267, byte_DC268, dword_DBC7C, dword_DBCE0, dword_DC230, schedgameidx, dword_DC238, dword_DC23E
-global linesprites, dword_DC28C, dword_DC290, dword_DC2B8, dword_DC2BC, dword_DC2C0, scoredigits, dword_DC2F0
+global linesprites, dword_DC28C, penaltydigits, dword_DC2B8, hmpanelspr, awpanelspr, scoredigits, scrbrdshapes
 global clockdigits, clockcolon, cupseries, dword_DC33C, dword_DC640, dword_DC6A8, sfpal2, sfpal1
 global dword_DC6B4, dword_DC6B8, dword_DC6BC, dword_DC720, dword_DC734, dword_DC738, dword_DC73C, dword_DC750
 global dword_DC754, playofftree, hmteamrec, unk_DBD1C, awteamrec
-global hmlinetab, unk_DC240, unk_DC252, unk_DC2F4, unk_DC300, unk_DC340, word_DC242
+global hmlinetab, unk_DC240, unk_DC252, hmlineind, awlineind, unk_DC340, word_DC242
 global word_DC244, word_DC248, word_DC24E
 awroster:
 resb 5
@@ -69,21 +69,21 @@ linesprites:
 resb 32
 dword_DC28C:
 resb 4
-dword_DC290:
+penaltydigits:
 resb 40
 dword_DC2B8:
 resb 4
-dword_DC2BC:
+hmpanelspr:
 resb 4
-dword_DC2C0:
+awpanelspr:
 resb 4
 scoredigits:
 resb 44
-dword_DC2F0:
+scrbrdshapes:
 resb 4
-unk_DC2F4:
+hmlineind:
 resb 12
-unk_DC300:
+awlineind:
 resb 12
 clockdigits:
 resb 40

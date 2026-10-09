@@ -9,7 +9,7 @@ global byte_DD2D4, byte_DD2DC, byte_DD668, byte_DD669, leaguedbfmt2, leaguedbfmt
 global byte_DD788, byte_DD789, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname
 global byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_DDD8C, byte_DDD8D, byte_DDD8E
 global byte_DE268, byte_DE26C, byte_DEB70, byte_DEB71, dword_DC85C, dword_DC860, dword_DC868, dword_DC888
-global dword_DC88C, dword_DC8A0, dword_DC8C8, dword_DC8D0, dword_DD100, dword_DD104, dword_DD108, dword_DD10C
+global dword_DC88C, dword_DC8A0, dword_DC8C8, dirtyrectptr, dword_DD100, dword_DD104, dword_DD108, dword_DD10C
 global dword_DD110, dword_DD114, dword_DD118, dword_DD11C, dword_DD120, dword_DD124, dword_DD128, dword_DD12C
 global dword_DD130, dword_DD134, dword_DD1B4, dword_DD1B8, dword_DD1BC, dword_DD1C0, dword_DD1C4, dword_DD244
 global dword_DD248, dword_DD24C, dword_DD250, dword_DD254, dword_DD634, dword_DD638, dword_DD63C, dword_DD640
@@ -48,7 +48,7 @@ dword_DC8A0:
 resb 40
 dword_DC8C8:
 resb 8
-dword_DC8D0:
+dirtyrectptr:
 resb 8
 byte_DC8D8:
 resb 67

@@ -6,11 +6,11 @@ extern __CHK, _dos_close_, _dos_creat_, _dos_getdiskfree_, _dos_open_, _dos_read
 extern str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, msg_NeedKbytes, str_dot, curleague, dword_C56C4, dword_C56E4
 extern hudclockmin, hudclocksec, hudclockhund, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844
 extern dword_C5848, hudhomeline, hudawayline, dword_C5854, dword_C5858, dword_C585C, dword_C5860, linesprites
-extern dword_DC28C, dword_DC2BC, dword_DC2C0, scoredigits, clockdigits, clockcolon, gmode, j_unlink_
+extern dword_DC28C, hmpanelspr, awpanelspr, scoredigits, clockdigits, clockcolon, gmode, j_unlink_
 extern lseek_, off_C56B5, leaguedbnames, rmdir_, sprintf_, strcat_, strcpy_, TickPanelClock
 extern DrawPanelClockDigits, TickPanelPenalties, DrawEnergyBar, DrawLineGroupBars, DrawPanelPenalties, MessageBox, TeamLineEnergy, SelectScreenBM
-extern SelectRinkBM, FatalError, MouseSetPos, sub_B4CD8, sub_B4CF2, str_star, str_backslash2, unk_DC2F4
-extern unk_DC300, unknown_libname_1, unknown_libname_2, hudpenhome, hudpenaway, lcboxon, word_CBC6C
+extern SelectRinkBM, FatalError, MouseSetPos, sub_B4CD8, sub_B4CF2, str_star, str_backslash2, hmlineind
+extern awlineind, unknown_libname_1, unknown_libname_2, hudpenhome, hudpenaway, lcboxon, word_CBC6C
 global FileOpenRead_x, FileReadAt_x, FileReadAt_x2
 global ReadKeyRec_x, ReadTeamRec_x
 global DrawPanelLine_x
@@ -999,7 +999,7 @@ je short .3	; 14DD2
 push byte 4Ah	; 14DD4
 mov ebx, dword [hudhomeline]	; 14DD6
 mov ecx, dword_C56E4	; 14DDC
-mov edx, unk_DC2F4	; 14DE1
+mov edx, hmlineind	; 14DE1
 mov eax, dword_C585C	; 14DE6
 call DrawLineGroupBars	; 14DEB
 xor ecx, ecx	; 14DF0
@@ -1012,7 +1012,7 @@ mov dword [dword_C5844], 1	; 14E04
 push byte 4Ah	; 14E0E
 mov ebx, dword [hudhomeline]	; 14E10
 mov ecx, dword_C56E4	; 14E16
-mov edx, unk_DC2F4	; 14E1B
+mov edx, hmlineind	; 14E1B
 mov eax, dword_C585C	; 14E20
 call DrawLineGroupBars	; 14E25
 xor ebx, ebx	; 14E2A
@@ -1021,7 +1021,7 @@ jmp short .6	; 14E32
 .4:
 cmp dword [dword_C5854], byte 0	; 14E34
 jne short .5	; 14E3B
-mov edi, dword [dword_DC2BC]	; 14E3D
+mov edi, dword [hmpanelspr]	; 14E3D
 push edi	; 14E43
 call sub_B4CF2	; 14E44
 add esp, byte 4	; 14E49
@@ -1043,7 +1043,7 @@ je short .8	; 14E86
 push dword 0C1h	; 14E88
 mov ebx, dword [hudawayline]	; 14E8D
 mov ecx, dword_C56C4	; 14E93
-mov edx, unk_DC300	; 14E98
+mov edx, awlineind	; 14E98
 mov eax, dword_C5860	; 14E9D
 call DrawLineGroupBars	; 14EA2
 xor esi, esi	; 14EA7
@@ -1056,7 +1056,7 @@ mov dword [dword_C5848], 1	; 14EBE
 push dword 0C1h	; 14EC8
 mov ebx, dword [hudawayline]	; 14ECD
 mov ecx, dword_C56C4	; 14ED3
-mov edx, unk_DC300	; 14ED8
+mov edx, awlineind	; 14ED8
 mov eax, dword_C5860	; 14EDD
 call DrawLineGroupBars	; 14EE2
 xor ecx, ecx	; 14EE7
@@ -1065,7 +1065,7 @@ jmp short UpdateHudPanel_x	; 14EEF
 .9:
 cmp dword [dword_C5858], byte 0	; 14EF1
 jne short .10	; 14EF8
-mov ebp, dword [dword_DC2C0]	; 14EFA
+mov ebp, dword [awpanelspr]	; 14EFA
 push ebp	; 14F00
 call sub_B4CF2	; 14F01
 add esp, byte 4	; 14F06

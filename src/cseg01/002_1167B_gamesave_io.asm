@@ -6,7 +6,7 @@ extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, award
 extern curleague, sflags, musicon, byte_D9299, awardwinners, byte_ED7CC, joysampling, gameopts
 extern inputframes, escrequest, demomode, gameresult, gamemode, hudclockmin, hudclocksec, hudclockhund
 extern dword_C5840, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
-extern penshotlive, dword_D2C6B, dword_D302C, dword_D3030, dword_D8C40, frameaccum, dword_D8C72, dword_D8C74
+extern penshotlive, dword_D2C6B, dword_D302C, dword_D3030, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, dword_DD6A8, dword_DD6AE
 extern dword_DD6B0, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, dword_E9A9E, j_unlink_
 extern HandleHotKey_ret, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
@@ -120,7 +120,7 @@ add eax, ebx	; 117B7
 lea ebx, [dword eax+0140h]	; 117B9
 call sub_6AF52	; 117BF
 xor ebx, ebx	; 117C4
-mov dword [dword_D8C40], ebx	; 117C6
+mov dword [spritedrawcount], ebx	; 117C6
 mov edx, dword [dword_D8C72]	; 117CC
 sar edx, 10h	; 117D2
 mov eax, dword [dword_D8C7A]	; 117D5

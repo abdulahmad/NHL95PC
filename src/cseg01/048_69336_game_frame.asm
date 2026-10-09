@@ -5,7 +5,7 @@ section s_69336 progbits alloc exec nowrite align=1
 extern DoGameFrame, ResetBench, __CHK, assreplace, sflags, gmode2, musicon
 extern iflags, byte_E9AC1, joysampling, inputframes, escrequest, demomode, gameopts, hudclockmin
 extern hudclocksec, hudclockhund, dword_C7444, dword_C7448, dword_C90B0, sflags3, cont2team, HomeTeam
-extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, dword_D8C40, dword_D8C72, dword_D8C74
+extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, spritedrawcount, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC28C, dword_DD6A8, dword_DD6AE, dword_DD6B0
 extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
@@ -498,7 +498,7 @@ add eax, ebx	; 69AE7
 lea ebx, [dword eax+0140h]	; 69AE9
 call sub_6AF52	; 69AEF
 xor ebx, ebx	; 69AF4
-mov dword [dword_D8C40], ebx	; 69AF6
+mov dword [spritedrawcount], ebx	; 69AF6
 mov edx, dword [dword_D8C72]	; 69AFC
 sar edx, 10h	; 69B02
 mov eax, dword [dword_D8C7A]	; 69B05

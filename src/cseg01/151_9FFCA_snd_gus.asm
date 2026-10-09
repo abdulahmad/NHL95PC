@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9FFCA progbits alloc exec nowrite align=1
 extern __CHK, asc_C4A9C, asc_C4AA1, asc_C4AAA, asc_D53B8, byte_F5320, byte_F5321, dword_D30A4
-extern dword_D30A8, dword_D30AC, dword_D30B4, dword_D4F9A, dword_D53A0, dword_D53A4, dword_D53A8, dword_D53AC
+extern dword_D30A8, cliprect_x0, cliprect_x1, dword_D4F9A, dword_D53A0, dword_D53A4, dword_D53A8, dword_D53AC
 extern dword_D53B0, dword_D53B4, dword_D5424, dword_D543C, dword_F371E, dword_F532A, dword_F5332, dword_F558C
 extern dword_F55E4, dword_F55E8, dword_F55EC, dword_F55F0, dword_F55F4, dword_F58D0, fputchar, getenv_
 extern int386x_, memcpy_, memset_, strcat_, strcpy_, sub_8F0D7, sub_902A0, sub_91964
@@ -2190,8 +2190,8 @@ ret	; A17FF
 sub_A1800:
 push esi	; A1800
 push edi	; A1801
-mov esi, dword [dword_D30B4]	; A1802
-sub esi, dword [dword_D30AC]	; A1808
+mov esi, dword [cliprect_x1]	; A1802
+sub esi, dword [cliprect_x0]	; A1808
 mov ebx, dword [byte esp+0Ch]	; A180E
 push ebx	; A1812
 call fputchar	; A1813
@@ -2199,7 +2199,7 @@ add esp, byte 4	; A1818
 sub esi, eax	; A181B
 mov eax, esi	; A181D
 sar eax, 1	; A181F
-add eax, dword [dword_D30AC]	; A1821
+add eax, dword [cliprect_x0]	; A1821
 mov esi, dword [byte esp+010h]	; A1827
 push esi	; A182B
 inc eax	; A182C
