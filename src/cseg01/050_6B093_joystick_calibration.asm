@@ -356,6 +356,10 @@ pop ecx	; 6B4B8
 pop ebx	; 6B4B9
 ret	; 6B4BA
 %endif ; C
+; C: src/c/050_6B093_joystick_calibration/EventToPointer.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/EventToPointer.inc"
+%else
 EventToPointer:
 push dword 1Ch	; 6B4BB
 call __CHK	; 6B4C0
@@ -464,6 +468,7 @@ pop edi	; 6B5E0
 pop esi	; 6B5E1
 pop ecx	; 6B5E2
 ret	; 6B5E3
+%endif ; C
 DrawMenuBar:
 push dword 28h	; 6B5E4
 call __CHK	; 6B5E9
@@ -1576,6 +1581,10 @@ pop edi	; 6C197
 pop esi	; 6C198
 pop ecx	; 6C199
 ret	; 6C19A
+; C: src/c/050_6B093_joystick_calibration/LoadLeagueDbsMem.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/LoadLeagueDbsMem.inc"
+%else
 LoadLeagueDbsMem:
 push dword 3Ch	; 6C19B
 call __CHK	; 6C1A0
@@ -1688,3 +1697,4 @@ pop edx	; 6C2F5
 pop ecx	; 6C2F6
 pop ebx	; 6C2F7
 ret	; 6C2F8
+%endif ; C

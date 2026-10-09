@@ -1786,6 +1786,10 @@ pop edi	; 73457
 pop esi	; 73458
 pop edx	; 73459
 ret	; 7345A
+; C: src/c/053_71F0C_database_dialogs/LoadDbsFromDir.c
+%ifdef CBUILD
+%include "c/053_71F0C_database_dialogs/LoadDbsFromDir.inc"
+%else
 LoadDbsFromDir:
 push dword 3Ch	; 7345B
 call __CHK	; 73460
@@ -1901,6 +1905,7 @@ pop esi	; 735BF
 pop ecx	; 735C0
 pop ebx	; 735C1
 ret	; 735C2
+%endif ; C
 DeleteSelectedDb:
 push dword 70h	; 735C3
 call __CHK	; 735C8

@@ -6,6 +6,6 @@
 void PaPreloadClips(int a, int b)
 {
     if (musicon) {
-        while (!PreloadAnnouncerClips(a, b));
+        while (!PreloadAnnouncerClips((char *)a, (char *)b));
     }
 }

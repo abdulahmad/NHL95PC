@@ -86,6 +86,10 @@ pop edx	; 18E3F
 pop ecx	; 18E40
 pop ebx	; 18E41
 ret	; 18E42
+; C: src/c/010_18D7F_frontend_desk/DrawDeskFrames.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/DrawDeskFrames.inc"
+%else
 DrawDeskFrames:
 push dword 24h	; 18E43
 call __CHK	; 18E48
@@ -180,6 +184,7 @@ pop edx	; 18F70
 pop ecx	; 18F71
 pop ebx	; 18F72
 ret	; 18F73
+%endif ; C
 MenuCallbackTrue:
 push dword 4	; 18F74
 .1:
@@ -189,6 +194,10 @@ ret 0Ch	; 18F83
 MenuCallbackTrue2:
 push dword 4	; 18F86
 jmp short MenuCallbackTrue.1	; 18F8B
+; C: src/c/010_18D7F_frontend_desk/PlayRandomHighlight.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/PlayRandomHighlight.inc"
+%else
 PlayRandomHighlight:
 push dword 2Ch	; 18F8D
 call __CHK	; 18F92
@@ -289,6 +298,11 @@ pop edx	; 190BA
 pop ecx	; 190BB
 pop ebx	; 190BC
 ret	; 190BD
+%endif ; C
+; C: src/c/010_18D7F_frontend_desk/IntermissionDesk.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/IntermissionDesk.inc"
+%else
 IntermissionDesk:
 push dword 14h	; 190BE
 call __CHK	; 190C3
@@ -375,6 +389,7 @@ pop edx	; 1920B
 pop ecx	; 1920C
 pop ebx	; 1920D
 ret	; 1920E
+%endif ; C
 PostGameDesk:
 push dword 1Ch	; 1920F
 call __CHK	; 19214
@@ -1704,6 +1719,10 @@ pop edx	; 1A6A3
 pop ecx	; 1A6A4
 pop ebx	; 1A6A5
 ret	; 1A6A6
+; C: src/c/010_18D7F_frontend_desk/DeskExitGame.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/DeskExitGame.inc"
+%else
 DeskExitGame:
 push dword 38h	; 1A6A7
 call __CHK	; 1A6AC
@@ -1807,6 +1826,7 @@ pop edx	; 1A813
 pop ecx	; 1A814
 pop ebx	; 1A815
 ret	; 1A816
+%endif ; C
 DeskGoToReplay:	;IDA: code_1A817
 push dword 1Ch	; 1A817
 call __CHK	; 1A81C

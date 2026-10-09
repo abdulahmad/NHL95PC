@@ -496,6 +496,10 @@ push dword 4	; 847BA
 call __CHK	; 847BF
 mov eax, str_ElsenhlInt	; 847C4
 jmp near SayClip	; 847C9
+; C: src/c/062_842BA_announcer/SayHighlightIntro.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/SayHighlightIntro.inc"
+%else
 SayHighlightIntro:
 push dword 48h	; 847CE
 call __CHK	; 847D3
@@ -577,6 +581,7 @@ mov eax, 1	; 84903
 add esp, byte 30h	; 84908
 pop ecx	; 8490B
 ret	; 8490C
+%endif ; C
 SayPlayoffResult:
 push dword 64h	; 8490D
 call __CHK	; 84912
@@ -739,6 +744,10 @@ jmp short SayClip	; 84B08
 .4:
 xor eax, eax	; 84B0A
 ret	; 84B0C
+; C: src/c/062_842BA_announcer/SayTonightIntro.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/SayTonightIntro.inc"
+%else
 SayTonightIntro:
 push dword 48h	; 84B0D
 call __CHK	; 84B12
@@ -816,6 +825,7 @@ mov eax, 1	; 84C2E
 add esp, byte 30h	; 84C33
 pop ecx	; 84C36
 ret	; 84C37
+%endif ; C
 SayPlayoffTonight:
 push dword 7Ch	; 84C38
 call __CHK	; 84C3D
@@ -1677,6 +1687,10 @@ jl short QueuePenaltyType.14	; 85797
 add esp, byte 10h	; 85799
 pop edx	; 8579C
 ret	; 8579D
+; C: src/c/062_842BA_announcer/PreloadAnnouncerClips.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/PreloadAnnouncerClips.inc"
+%else
 PreloadAnnouncerClips:
 push dword 54h	; 8579E
 call __CHK	; 857A3
@@ -1778,3 +1792,4 @@ pop esi	; 85920
 pop ecx	; 85921
 pop ebx	; 85922
 ret	; 85923
+%endif ; C

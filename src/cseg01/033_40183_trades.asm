@@ -403,6 +403,10 @@ pop edx	; 4078E
 pop ecx	; 4078F
 pop ebx	; 40790
 ret	; 40791
+; C: src/c/033_40183_trades/LoadHomePals.c
+%ifdef CBUILD
+%include "c/033_40183_trades/LoadHomePals.inc"
+%else
 LoadHomePals:
 push dword 1B0h	; 40792
 call __CHK	; 40797
@@ -508,6 +512,7 @@ pop esi	; 408F1
 pop ecx	; 408F2
 pop ebx	; 408F3
 ret	; 408F4
+%endif ; C
 AddHumanTeam:
 push dword 74h	; 408F5
 call __CHK	; 408FA

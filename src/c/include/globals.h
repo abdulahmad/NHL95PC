@@ -4739,7 +4739,6 @@ extern int statspalshape; /* DD100 */
 extern int statsbgshapes; /* DD104 */
 extern int statsteamrecs; /* DD108 */
 extern int statsteambuf; /* DD10C */
-extern int statsgoaliebuf; /* DD114 */
 extern int statsplayerbuf; /* DD11C */
 extern int statspal; /* DD120 */
 extern int exhfiles[]; /* DD124 */
@@ -5183,7 +5182,6 @@ extern unsigned char byte_EAF99[]; /* EAF99 */
 extern unsigned char byte_EAFB5[]; /* EAFB5 */
 extern unsigned char unk_EAFB8[]; /* EAFB8 */
 extern int dbdirty; /* EBC68 */
-extern int rostergstat; /* EBC6C */
 extern int rosterpstat; /* EBC70 */
 extern int msglines[]; /* EBC74 */
 extern int dword_EBCA4; /* EBCA4 */

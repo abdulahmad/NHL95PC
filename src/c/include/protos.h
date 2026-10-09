@@ -135,7 +135,6 @@ void CrowdFadeOut(void);
 void __cdecl sub_B3989(int n);  /* timer library, stack args */
 void __cdecl sub_B3999(void);  /* timer library */        
 void PaPreloadClips(int a, int b);
-int PreloadAnnouncerClips(int a, int b);  /* 8579E: 0 = not done yet */
 void TextGridPut(int x, int y, char *s);
 void *memcpy(void *d, const void *s, unsigned n);  /* Watcom CRT memcpy_ */
 unsigned strlen(const char *s);  /* Watcom CRT strlen_ */ 
@@ -195,7 +194,6 @@ short TeamLineEnergy(short team, short line);  /* 5A2EE */
 void DrawButtons(Button *b, int n);  /* 30AE2 */          
 void DrawButton(Button *b);  /* 30B16 */                  
 void PaHighlightIntro(int home, int vis);  /* 59CA9 */    
-void SayHighlightIntro(int a, int b, int c);  /* 847CE */ 
 void SetListItemColors(int sel, int item);  /* 30209 */   
 void __cdecl sub_8E9C0(int fg, int bg);  /* graphics library: set text colours */
 void PlayDigiSample(void *s);  /* 599B9 */                
@@ -526,5 +524,71 @@ void SetScreenTitle(int title);
 void PlayLeagueGame(int *fh);
 void SetRosterTeamMenus(int side, int team);  /* 7183D */ 
 void CtlSwapScoreFix(int side);  /* 7CBB3 */              
+void ModeOptsToBits(void);  /* 7B604 */                   
+void ExhOptsToBits(void);  /* 7BF56 */                    
+void LeagueOptsToBits(void);  /* 7A88E */                 
+int CmpSavePct(int *a, int *b);  /* 259C0 */              
+int CmpGoalieWins(int *a, int *b);  /* 2586A */           
+void PostGameDesk(void);  /* 1920F */                     
+
+int GameSummaryScreen(int mode, int period, int arg3, int arg4);
+void PickOtherGames(int home, int vis);
+void UpdateOtherScores(int period);
+int PlayRandomHighlight(void);
+void SportsDesk(int mode);
+void ShowLoadingScreen(void);
+void ReadGSumTail(void);
+void ReadGSumHeader(void);
+void WriteGSumHeader(void);
+void InputInstall(void);
+void sub_1B982(void);
+int CoachCutScene(void);
+int WaitClickTimeout(int secs);
+void DrawExhSetChecks(void);
+void DrawLeagueSetChecks(void);
+void DrawDeskFrames(void);  /* 18E43 */                   
+void __cdecl sub_B4FAC(int x1, int y1, int x2, int y2, int colour);
+int StartHL2(int home, int vis, int *homescore, int *visscore, int period);
+int SayTonightIntro(char *rnk, char *away, char *home);  /* 84B0D */
+char *itoa(int v, char *buf, int radix);
+int SayHighlightIntro(char *rnk, char *away, char *home);  /* 847CE */
+int SayPlayoffResult(char *team, int game, unsigned conf, unsigned round, int ot, int final);  /* 8490D */
+void DrawSoundCardOpts(void);  /* 82690 */                
+void DrawSelBoxOn(Rect4 *r);
+void DrawSelBoxOff(Rect4 *r);
+void RedrawSoundCardOpts(void);  /* 82805 */              
+void ClearPlayerFromLines(unsigned char p, unsigned char *lines);  /* 8B96D */
+void AskExportToFloppy(unsigned char *teams, unsigned char *orig, int mode, int n);  /* 38386 */
+void SplitPlayerName(char *name, char *first, char *last);  /* 6F159 */
+int EventToPointer(unsigned char *ev, int *x, int *y);  /* 6B4BB */
+void DrawTeamGrid(unsigned char *teams, char *title, unsigned char *grid, int arg4);  /* 37FBA */
+void DrawTeamGridName(int team, unsigned char *teams, int arg4, unsigned char *grid);
+void MergeGoalieRecDelta(unsigned short *old, unsigned short *cur, unsigned short *dst, int a, int b);  /* 3A826 */
+int CmpGAA(int *a, int *b);  /* 1FC8F */                  
+int CmpRosterGoalies(int *a, int *b);  /* 75A37 */        
+void LoadTempDatabases(void);  /* 710D8 */                
+void FreeLeagueDbsMem(void);
+int __cdecl sub_92DE0(char *path);
+int PreloadAnnouncerClips(char *home, char *vis);  /* 8579E */
+void OpenSpeechBank(char *path, int n);
+void QueuePenaltyType(void);
+int DeskExitGame(void);  /* 1A6A7 */                      
+void sub_8FCDF(int handle, int a, int b);
+int sub_8FC8A(int slot, int a);
+void __cdecl sub_8D2F0(int p);
+void sub_B4B58(void);
+void ShowCredits(void);
+void noturn0(struct Player *p, short chg, short dir);  /* 5F98A */
+void LoadLeagueDbsMem(char *ext);  /* 6C19B */            
+void InitFileLocations(void);  /* 8BAAF */                
+void *fopen(const char *name, const char *mode);
+char *fgets(char *s, int n, void *fp);
+int fscanf(void *fp, const char *fmt, ...);
+int fclose(void *fp);
+void LoadHomePals(int home, int vis);  /* 40792 */        
+void LoadJerseyColours(int away, int unused, unsigned char *dst);  /* 78A87 */
+void LoadDbsFromDir(char *dir, char *ext);  /* 7345B */   
+void LoadTradeTeamPals(int t1, int t2, unsigned char *pal);  /* 3E835 */
+int SayPlayoffTonight(char *rnk, char *away, char *home, int game, unsigned conf, unsigned round);  /* 84C38 */
 
 #endif

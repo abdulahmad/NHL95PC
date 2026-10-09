@@ -2729,6 +2729,10 @@ pop ecx	; 8268D
 pop ebx	; 8268E
 ret	; 8268F
 %endif ; C
+; C: src/c/059_8034B_settings_lockerroom/DrawSoundCardOpts.c
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/DrawSoundCardOpts.inc"
+%else
 DrawSoundCardOpts:
 push dword 20h	; 82690
 call __CHK	; 82695
@@ -2830,6 +2834,7 @@ pop edx	; 827AF
 pop ecx	; 827B0
 pop ebx	; 827B1
 ret	; 827B2
+%endif ; C
 ; C: src/c/059_8034B_settings_lockerroom/SoundCardHitTest.c
 %ifdef CBUILD
 %include "c/059_8034B_settings_lockerroom/SoundCardHitTest.inc"
@@ -2869,6 +2874,10 @@ pop esi	; 82802
 pop ecx	; 82803
 ret	; 82804
 %endif ; C
+; C: src/c/059_8034B_settings_lockerroom/RedrawSoundCardOpts.c
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/RedrawSoundCardOpts.inc"
+%else
 RedrawSoundCardOpts:
 push dword 20h	; 82805
 call __CHK	; 8280A
@@ -2968,3 +2977,4 @@ pop edx	; 8291A
 pop ecx	; 8291B
 pop ebx	; 8291C
 ret	; 8291D
+%endif ; C

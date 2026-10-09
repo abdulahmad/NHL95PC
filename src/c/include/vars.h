@@ -16,7 +16,8 @@ typedef struct GameOpts {
     unsigned speech:1;          /* bit 8: announcer speech on (the Pa* wrappers) */
     unsigned fullot:1;          /* bit 9: overtime periods are full length (GetPeriodTime) */
     unsigned pertime:2;         /* bits 10-11: period length option, PerTimeTab index */
-    unsigned optrest:20;
+    unsigned optbits12:3;       /* bits 12-14: league option, 1/3/5/7 -> league dialog checks (LeagueOptsToBits) */
+    unsigned optrest:17;
 } GameOpts;
 extern GameOpts gameopts;
 struct Team;
@@ -69,5 +70,7 @@ typedef struct Rect4 {
 } Rect4;
 extern unsigned char *samplereq;  /* ED7B4: sample request block (20 names of 13 bytes, counters at +104h..+10Ch) */
 extern unsigned char *statsskaterbuf;  /* DD110: skater stats records, 2Fh bytes each (season, playoffs at +12h) */
+extern unsigned char *statsgoaliebuf;  /* DD114: goalie stats records, 36h bytes each (season, playoffs at +16h) */
+extern unsigned char *rostergstat;  /* EBC6C: roster goalie stats records, 2Ch bytes each (season, playoffs at +16h) */
 extern int *statssortkeys;  /* DD118: per-player sort keys for the stats leaders (CmpShootPct compares them first) */
 #endif

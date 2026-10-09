@@ -10,6 +10,10 @@ extern strcat_, stricmp_, FadePalette, MakePath, WaitClickTimeout, FadeOutPalCyc
 extern SpeechBusy, MusicChanReset2, SayCoachClip, FreeCoachClip, PlayMVI, sub_8D2F0, sub_8E83C, sub_8F98F
 extern sub_8FC8A, sub_8FFB0, sub_9061C, FatalError, sub_B30B4, sub_B4BA8, unk_C3B0C
 global InitFileLocations, CoachCutScene
+; C: src/c/065_8BAAF_allfiles_coach/InitFileLocations.c
+%ifdef CBUILD
+%include "c/065_8BAAF_allfiles_coach/InitFileLocations.inc"
+%else
 InitFileLocations:
 push dword 22B0h	; 8BAAF
 call __CHK	; 8BAB4
@@ -125,6 +129,7 @@ pop edx	; 8BC11
 pop ecx	; 8BC12
 pop ebx	; 8BC13
 ret	; 8BC14
+%endif ; C
 CoachCutScene:
 push dword 358h	; 8BC15
 call __CHK	; 8BC1A

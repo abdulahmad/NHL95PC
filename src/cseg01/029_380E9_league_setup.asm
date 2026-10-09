@@ -2744,6 +2744,10 @@ pop edi	; 3A821
 pop esi	; 3A822
 ret 4	; 3A823
 %endif ; C
+; C: src/c/029_380E9_league_setup/MergeGoalieRecDelta.c
+%ifdef CBUILD
+%include "c/029_380E9_league_setup/MergeGoalieRecDelta.inc"
+%else
 MergeGoalieRecDelta:
 push dword 0Ch	; 3A826
 call __CHK	; 3A82B
@@ -2865,3 +2869,4 @@ mov byte [byte ebx+02Fh], al	; 3A9A2
 pop edi	; 3A9A5
 pop esi	; 3A9A6
 ret 4	; 3A9A7
+%endif ; C

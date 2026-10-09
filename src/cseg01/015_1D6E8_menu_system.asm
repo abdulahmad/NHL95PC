@@ -2998,6 +2998,10 @@ pop esi	; 1FC8B
 pop ecx	; 1FC8C
 pop ebx	; 1FC8D
 ret	; 1FC8E
+; C: src/c/015_1D6E8_menu_system/CmpGAA.c
+%ifdef CBUILD
+%include "c/015_1D6E8_menu_system/CmpGAA.inc"
+%else
 CmpGAA:
 push dword 14h	; 1FC8F
 call __CHK	; 1FC94
@@ -3144,6 +3148,7 @@ pop esi	; 1FDFA
 pop ecx	; 1FDFB
 pop ebx	; 1FDFC
 ret	; 1FDFD
+%endif ; C
 LoadShapeByTag:
 push dword 54h	; 1FDFE
 call __CHK	; 1FE03

@@ -3086,6 +3086,10 @@ pop esi	; 75A33
 pop ecx	; 75A34
 pop ebx	; 75A35
 ret	; 75A36
+; C: src/c/054_737AA_line_editor_rosters/CmpRosterGoalies.c
+%ifdef CBUILD
+%include "c/054_737AA_line_editor_rosters/CmpRosterGoalies.inc"
+%else
 CmpRosterGoalies:
 push dword 14h	; 75A37
 call __CHK	; 75A3C
@@ -3232,6 +3236,7 @@ pop esi	; 75BA6
 pop ecx	; 75BA7
 pop ebx	; 75BA8
 ret	; 75BA9
+%endif ; C
 MenuRegSeasonStats:
 push dword 10h	; 75BAA
 call __CHK	; 75BAF

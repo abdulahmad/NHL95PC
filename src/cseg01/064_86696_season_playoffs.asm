@@ -6418,6 +6418,10 @@ jmp near WriteModeState	; 8B95E
 .3:
 mov eax, lgstate	; 8B963
 jmp near WriteModeState	; 8B968
+; C: src/c/064_86696_season_playoffs/ClearPlayerFromLines.c
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/ClearPlayerFromLines.inc"
+%else
 ClearPlayerFromLines:
 push dword 0Ch	; 8B96D
 call __CHK	; 8B972
@@ -6568,3 +6572,4 @@ mov byte [byte edx+027h], 64h	; 8BAA8
 pop ecx	; 8BAAC
 pop ebx	; 8BAAD
 ret	; 8BAAE
+%endif ; C

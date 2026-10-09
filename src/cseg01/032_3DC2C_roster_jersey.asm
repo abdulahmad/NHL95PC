@@ -894,6 +894,10 @@ pop edx	; 3E831
 pop ecx	; 3E832
 pop ebx	; 3E833
 ret	; 3E834
+; C: src/c/032_3DC2C_roster_jersey/LoadTradeTeamPals.c
+%ifdef CBUILD
+%include "c/032_3DC2C_roster_jersey/LoadTradeTeamPals.inc"
+%else
 LoadTradeTeamPals:
 push dword 2Ch	; 3E835
 call __CHK	; 3E83A
@@ -1017,6 +1021,7 @@ pop edi	; 3E9CB
 pop esi	; 3E9CC
 pop ecx	; 3E9CD
 ret	; 3E9CE
+%endif ; C
 DrawTradeScreen:
 push dword 60h	; 3E9CF
 call __CHK	; 3E9D4

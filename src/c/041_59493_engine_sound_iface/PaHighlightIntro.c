@@ -6,6 +6,6 @@
 void PaHighlightIntro(int home, int vis)
 {
     if (musicon && gameopts.speech) {
-        SayHighlightIntro(teamabbrevs[home], teamabbrevs[vis], teamabbrevs[home]);
+        SayHighlightIntro((char *)teamabbrevs[home], (char *)teamabbrevs[vis], (char *)teamabbrevs[home]);
     }
 }

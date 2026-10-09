@@ -1797,6 +1797,10 @@ pop edx	; 7B600
 pop ecx	; 7B601
 pop ebx	; 7B602
 ret	; 7B603
+; C: src/c/056_7A13A_settings_dialogs/ModeOptsToBits.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/ModeOptsToBits.inc"
+%else
 ModeOptsToBits:
 push dword 1Ch	; 7B604
 call __CHK	; 7B609
@@ -1895,6 +1899,7 @@ pop edx	; 7B730
 pop ecx	; 7B731
 pop ebx	; 7B732
 ret	; 7B733
+%endif ; C
 ; C: src/c/056_7A13A_settings_dialogs/ModeSetHitTest.c
 %ifdef CBUILD
 %include "c/056_7A13A_settings_dialogs/ModeSetHitTest.inc"
@@ -2596,6 +2601,10 @@ pop edx	; 7BF52
 pop ecx	; 7BF53
 pop ebx	; 7BF54
 ret	; 7BF55
+; C: src/c/056_7A13A_settings_dialogs/ExhOptsToBits.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/ExhOptsToBits.inc"
+%else
 ExhOptsToBits:
 push dword 1Ch	; 7BF56
 call __CHK	; 7BF5B
@@ -2715,6 +2724,7 @@ pop edx	; 7C0B5
 pop ecx	; 7C0B6
 pop ebx	; 7C0B7
 ret	; 7C0B8
+%endif ; C
 DrawExhSetChecks:
 push dword 2Ch	; 7C0B9
 call __CHK	; 7C0BE

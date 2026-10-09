@@ -62,7 +62,6 @@ extern void RunDemoGame(); /* 15D6B */
 extern void RunDemoGame_x(); /* 16005 */
 extern void TitleScreen(); /* 1609F */
 extern void RunIntro(); /* 1672A */
-extern void ShowCredits(); /* 16F9A */
 extern void PrintOutlinedText(); /* 17636 */
 extern void PrintFmt1(); /* 176AE */
 extern void PrintFmt2(); /* 176DB */
@@ -81,14 +80,9 @@ extern void DeskSetExit3b(); /* 18D03 */
 extern void ShowPlayerStatsItem(); /* 18D0D */
 extern void FreeDeskBuffers(); /* 18D33 */
 extern void OutputCurrentData(); /* 18D7F */
-extern void DrawDeskFrames(); /* 18E43 */
 extern void MenuCallbackTrue(); /* 18F74 */
 extern void MenuCallbackTrue2(); /* 18F86 */
-extern void PlayRandomHighlight(); /* 18F8D */
-extern void PostGameDesk(); /* 1920F */
-extern void SportsDesk(); /* 1935D */
 extern void DeskReturnConfirm(); /* 1A5D4 */
-extern void DeskExitGame(); /* 1A6A7 */
 extern void DeskGoToReplay(); /* 1A817 */
 extern void DeskHomeLines(); /* 1A8AA */
 extern void DeskLines_common(); /* 1A8F0 */
@@ -199,7 +193,6 @@ extern void loc_1B94C(); /* 1B94C */
 extern void loc_1B963(); /* 1B963 */
 extern void loc_1B972(); /* 1B972 */
 extern void loc_1B977(); /* 1B977 */
-extern void sub_1B982(); /* 1B982 */
 extern void loc_1B9C4(); /* 1B9C4 */
 extern void loc_1B9E4(); /* 1B9E4 */
 extern void loc_1B9FE(); /* 1B9FE */
@@ -256,7 +249,6 @@ extern void RunTeamPickMenu(); /* 1DF03 */
 extern void RunPlayerPickMenu(); /* 1ED96 */
 extern void TextPrintf(); /* 1FB1C */
 extern void TextPrintf2(); /* 1FB49 */
-extern void CmpGAA(); /* 1FC8F */
 extern void LoadShapeByTag(); /* 1FDFE */
 extern void LoadShapeByTag_x(); /* 1FF80 */
 extern void MakeStatsTitle(); /* 1FF86 */
@@ -329,8 +321,6 @@ extern void TeamStatsScreen_colPK(); /* 24317 */
 extern void TeamStatsScreen_colPP(); /* 2437E */
 extern void TeamStatsScreen_colPen(); /* 243A2 */
 extern void TeamRosterScreen(); /* 244E2 */
-extern void CmpGoalieWins(); /* 2586A */
-extern void CmpSavePct(); /* 259C0 */
 extern void LeadersScreen_coljt(); /* 25AF8 */
 extern void LeadersScreen_colPPG(); /* 2673A */
 extern void LeadersScreen_colSHG(); /* 2675B */
@@ -397,7 +387,6 @@ extern void SelectSavedFile(); /* 2D099 */
 extern void ReadGameSettings(); /* 2D260 */
 extern void gsuminitff(); /* 2D33E */
 extern void GameSummaryScreen_jt(); /* 2D346 */
-extern void GameSummaryScreen(); /* 2D35A */
 extern void GameSummaryScreen_p1(); /* 2DF11 */
 extern void GameSummaryScreen_p2(); /* 2DF18 */
 extern void GameSummaryScreen_p3(); /* 2DF1F */
@@ -405,8 +394,6 @@ extern void GameSummaryScreen_ot(); /* 2DF26 */
 extern void GameSummaryScreen_finalot(); /* 2DF2D */
 extern void GameSummaryScreen_final(); /* 2DF34 */
 extern void GameSummaryScreen_period(); /* 2DF39 */
-extern void PickOtherGames(); /* 2F2B1 */
-extern void UpdateOtherScores(); /* 2F3D7 */
 extern void UpdateOtherScores_x(); /* 2F579 */
 extern void GameStatsScreen(); /* 2F5EE */
 extern void DrawBevelRect(); /* 2FE49 */
@@ -450,7 +437,6 @@ extern void MenuImportDbs(); /* 336BE */
 extern void MenuExportDbs(); /* 336E6 */
 extern void FreeRinkGfx(); /* 33727 */
 extern void BlitTileMap(); /* 33C08 */
-extern void WaitClickTimeout(); /* 33E6A */
 extern void LoadCrestsPalette(); /* 33F02 */
 extern void DrawCalendarDay(); /* 33FFD */
 extern void ApplyShapePalette(); /* 34789 */
@@ -459,12 +445,9 @@ extern void CheckLeagueDiskSync(); /* 35FB9 */
 extern void MakeTeamDbFmt(); /* 36207 */
 extern void PostGameToTeamDb(); /* 3626D */
 extern void TeamGridHitTest(); /* 37B92 */
-extern void DrawTeamGridName(); /* 37C53 */
 extern void SaveGridCellBg(); /* 37D6A */
 extern void HighlightGridCell(); /* 37EA6 */
-extern void DrawTeamGrid(); /* 37FBA */
 extern void ChooseLeagueController(); /* 380E9 */
-extern void AskExportToFloppy(); /* 38386 */
 extern void BuildStandingsGrid(); /* 384B8 */
 extern void LeagueTeamSelect(); /* 38B4F */
 extern void WriteSeasonRec(); /* 3A24F */
@@ -482,7 +465,6 @@ extern void AskTeamPassword(); /* 3A395 */
 extern void AskTeamPassword_ret(); /* 3A498 */
 extern void AskMasterPassword(); /* 3A49E */
 extern void EncryptPassword(); /* 3A597 */
-extern void MergeGoalieRecDelta(); /* 3A826 */
 extern void MergeTeamDbs(); /* 3A9AA */
 extern void MergeTeamDbs_ret(); /* 3AE18 */
 extern void MergeScheduleDb(); /* 3AE1E */
@@ -507,7 +489,6 @@ extern void BuildTradeRoster(); /* 3DC2C */
 extern void TradeShowStats(); /* 3DE05 */
 extern void FixJerseyConflict(); /* 3E055 */
 extern void ExecuteTrade(); /* 3E390 */
-extern void LoadTradeTeamPals(); /* 3E835 */
 extern void DrawTradeScreen(); /* 3E9CF */
 extern void TradeHitTest(); /* 3ECAE */
 extern void TradeHitTest_ret(); /* 3EDA4 */
@@ -516,7 +497,6 @@ extern void FindTradeSlot(); /* 3EF3C */
 extern void TradeScreenLoop(); /* 3EF89 */
 extern void TradeScreen(); /* 3FF52 */
 extern void TradePlayers(); /* 40183 */
-extern void LoadHomePals(); /* 40792 */
 extern void AddHumanTeam(); /* 408F5 */
 extern void AddHumanTeam_msgbox(); /* 40C13 */
 extern void AddHumanTeam_exit(); /* 40C1F */
@@ -562,7 +542,6 @@ extern void FinishPlayoffs_r4(); /* 4499D */
 extern void AdvancePlayoffs(); /* 44A41 */
 extern void CreateNewLeague(); /* 44DCF */
 extern void SimulateGame(); /* 452C5 */
-extern void ShowLoadingScreen(); /* 479E9 */
 extern void PreGameIntro(); /* 47CD6 */
 extern void PreGameIntro_scroll(); /* 480CC */
 extern void PreGameIntro_frameloop(); /* 480D8 */
@@ -729,7 +708,6 @@ extern void EvadePC_x(); /* 5E933 */
 extern void skatetopuck(); /* 5EB17 */
 extern void avdgoal_box(); /* 5F04E */
 extern void avdgoal_jt(); /* 5F11D */
-extern void noturn0(); /* 5F98A */
 extern void SaveGameState(); /* 5FB03 */
 extern void SaveGameState_popx(); /* 6060B */
 extern void LoadGameState(); /* 60612 */
@@ -737,12 +715,9 @@ extern void sfxslots_popx(); /* 6185C */
 extern void DrawRinkObjects(); /* 61862 */
 extern void RunDeferredCalls(); /* 61A27 */
 extern void fileio_popebpx(); /* 61A83 */
-extern void ReadGSumHeader(); /* 61BBF */
 extern void fileio_tail_a(); /* 61BFB */
 extern void fileio_tail_b(); /* 61C0C */
 extern void fileio_tail_c(); /* 61C14 */
-extern void ReadGSumTail(); /* 61C22 */
-extern void WriteGSumHeader(); /* 61C86 */
 extern void FormatPlayerName(); /* 61D48 */
 extern void BuildEventLines(); /* 61E99 */
 extern void PostGoalEvent(); /* 62343 */
@@ -790,7 +765,6 @@ extern void DrawRinkSideObjects(); /* 67DCC */
 extern void DebugMonitor(); /* 688A4 */
 extern void DebugMonitor_pop(); /* 68E74 */
 extern void DumpStatsLog(); /* 68E7B */
-extern void StartHL2(); /* 69336 */
 extern void sub_6A044(); /* 6A044 */
 extern void sub_6A057(); /* 6A057 */
 extern void sub_6A068(); /* 6A068 */
@@ -963,8 +937,6 @@ extern void JoystickCalScreen(); /* 6B093 */
 extern void CalLeftJoystick(); /* 6B35C */
 extern void CalLeftJoystick_common(); /* 6B371 */
 extern void CalRightJoystick(); /* 6B37A */
-extern void InputInstall(); /* 6B410 */
-extern void EventToPointer(); /* 6B4BB */
 extern void DrawMenuDropdown(); /* 6B684 */
 extern void DrawMenuDropdown_ret(); /* 6B7F6 */
 extern void DrawMenuBox(); /* 6B7FC */
@@ -986,12 +958,10 @@ extern void unk13_6BF3D(); /* 6BF3D */
 extern void BuildFreeAgentList(); /* 6BF4A */
 extern void BuildFreeAgentList_ret(); /* 6C03C */
 extern void BuildTeamRosterList(); /* 6C043 */
-extern void LoadLeagueDbsMem(); /* 6C19B */
 extern void MenuSaveDbs(); /* 6C2F9 */
 extern void MenuSaveDbsAs(); /* 6C3BB */
 extern void SaveDbsToDir(); /* 6C4BA */
 extern void WriteLeagueDbsMem(); /* 6C96C */
-extern void FreeLeagueDbsMem(); /* 6CA8F */
 extern void SeasonDbPtr(); /* 6CBCC */
 extern void SeasonDbPtr_common(); /* 6CBD1 */
 extern void SeasonDbPtr2(); /* 6CBE1 */
@@ -1018,7 +988,6 @@ extern void EditTeamLines(); /* 6DF06 */
 extern void EditRosters(); /* 6E089 */
 extern void CheckTeamLines(); /* 6ED8F */
 extern void CheckDatabases(); /* 6EF84 */
-extern void SplitPlayerName(); /* 6F159 */
 extern void MoveToOtherRoster(); /* 6F29C */
 extern void RandomizeNewRatings(); /* 6F6D4 */
 extern void DrawShootsField(); /* 6FA7D */
@@ -1032,7 +1001,6 @@ extern void DrawCreatePlayer(); /* 7025B */
 extern void CreatePlayerLoop(); /* 704A6 */
 extern void CreateFreeAgent(); /* 706E2 */
 extern void MoveToFreeAgents(); /* 70E8D */
-extern void LoadTempDatabases(); /* 710D8 */
 extern void SwapSelectedPlayers(); /* 71333 */
 extern void SelectMatchingPlayers(); /* 71690 */
 extern void FindPlayer(); /* 71961 */
@@ -1060,7 +1028,6 @@ extern void DrawDbList_n2(); /* 72CD1 */
 extern void DrawDbList_n1(); /* 72CD8 */
 extern void DbDialogLoop(); /* 72DE7 */
 extern void OpenSelectedDb(); /* 733C4 */
-extern void LoadDbsFromDir(); /* 7345B */
 extern void DeleteSelectedDb(); /* 735C3 */
 extern void MenuOpenDatabase(); /* 73703 */
 extern void str_RosterIncomplete(); /* 737AA */
@@ -1080,7 +1047,6 @@ extern void MenuShowPlayerStats_ret(); /* 7576A */
 extern void ScratchPlayer(); /* 75770 */
 extern void DressPlayer(); /* 75868 */
 extern void CmpRosterSkaters(); /* 75931 */
-extern void CmpRosterGoalies(); /* 75A37 */
 extern void MenuRegSeasonStats(); /* 75BAA */
 extern void MenuRegSeasonStats_common(); /* 75BBF */
 extern void MenuPlayoffStats(); /* 75BDE */
@@ -1105,7 +1071,6 @@ extern void DrawGameLineJerseys_st0(); /* 7847E */
 extern void DrawGameLineJerseys_join(); /* 78483 */
 extern void DrawLineEditorScreen(); /* 78500 */
 extern void StubRet4a(); /* 78A81 */
-extern void LoadJerseyColours(); /* 78A87 */
 extern void DrawDlgFrame(); /* 78BE7 */
 extern void StubRet4b(); /* 78E29 */
 extern void CheckGameRosterComplete(); /* 78E36 */
@@ -1139,26 +1104,21 @@ extern void MenuShowLeagueSettings2(); /* 7A404 */
 extern void DrawLeagueSetDlgSel(); /* 7A57E */
 extern void DrawLeagueSetDlg(); /* 7A6BD */
 extern void LeagueOptsToBits_jt(); /* 7A872 */
-extern void LeagueOptsToBits(); /* 7A88E */
 extern void LeagueOptsToBits_n1(); /* 7A99F */
 extern void LeagueOptsToBits_n2(); /* 7A9A8 */
 extern void LeagueOptsToBits_n3(); /* 7A9B1 */
 extern void LeagueOptsToBits_n4(); /* 7A9BA */
 extern void LeagueOptsToBits_n0(); /* 7A9C1 */
 extern void LeagueSetHitTest(); /* 7A9C8 */
-extern void DrawLeagueSetChecks(); /* 7AAAA */
 extern void LeagueSetViewLoop(); /* 7AC31 */
 extern void LeagueSetEditLoop(); /* 7ADD3 */
 extern void MenuModeSettings(); /* 7B3A7 */
 extern void ModeSettings_epilogue(); /* 7B4E5 */
 extern void DrawModeSetDlg(); /* 7B4EC */
-extern void ModeOptsToBits(); /* 7B604 */
 extern void ModeSetViewLoop(); /* 7B846 */
 extern void ModeSetEditLoop(); /* 7B9E8 */
 extern void MenuExhibitionSettings(); /* 7BEBB */
 extern void ExhSettings_ret(); /* 7BF4F */
-extern void ExhOptsToBits(); /* 7BF56 */
-extern void DrawExhSetChecks(); /* 7C0B9 */
 extern void DrawExhSetDlg(); /* 7C1AC */
 extern void ExhSetEditLoop(); /* 7C317 */
 extern void DrawCtlBox_common(); /* 7C8DF */
@@ -1226,12 +1186,8 @@ extern void LockerRoomLoop_n4(); /* 8204D */
 extern void LockerRoomLoop_n1(); /* 820E7 */
 extern void LockerRoomLoop_n6(); /* 82188 */
 extern void LockerRoomLoop_n7(); /* 8231C */
-extern void DrawSelBoxOn(); /* 8245A */
 extern void DrawSelBox_common(); /* 824D6 */
-extern void DrawSelBoxOff(); /* 824F8 */
 extern void MenuSoundSettings(); /* 82579 */
-extern void DrawSoundCardOpts(); /* 82690 */
-extern void RedrawSoundCardOpts(); /* 82805 */
 extern void SoundCardDlgLoop(); /* 8291E */
 extern void SoundCardDlgLoop_poll(); /* 82A5B */
 extern void SoundCardDlgLoop_next(); /* 82D45 */
@@ -1245,7 +1201,6 @@ extern void ShutdownSpeech_ret5(); /* 836C4 */
 extern void MusicChanReset2(); /* 8373E */
 extern void ReadBE24(); /* 837FB */
 extern void ReadBE24_ret(); /* 83857 */
-extern void OpenSpeechBank(); /* 83897 */
 extern void OpenSpeechBank_ret(); /* 83BC1 */
 extern void ReadSpeechSample(); /* 83BF3 */
 extern void LoadSpeechSlot(); /* 83CAE */
@@ -1267,7 +1222,6 @@ extern void FreeCoachClip(); /* 8474E */
 extern void FreeClip(); /* 8475D */
 extern void FreeClip_ret(); /* 847B7 */
 extern void SayElseNhl(); /* 847BA */
-extern void SayPlayoffResult(); /* 8490D */
 extern void SayTheGame(); /* 84A6C */
 extern void SayScoringPeriod(); /* 84A7D */
 extern void SayClip(); /* 84AAE */
@@ -1275,14 +1229,11 @@ extern void SayScoringPeriod_ot2(); /* 84ACC */
 extern void SayScoringPeriod_ot3(); /* 84AD3 */
 extern void SayScoringPeriod_ott(); /* 84ADA */
 extern void SayScoringPeriod_reg(); /* 84AE1 */
-extern void SayTonightIntro(); /* 84B0D */
-extern void SayPlayoffTonight(); /* 84C38 */
 extern void RequestTimeClips(); /* 84DDD */
 extern void QueueTimeClips(); /* 84EAC */
 extern void SayPenalty(); /* 84F7B */
 extern void SayPlayerNumber(); /* 85213 */
 extern void SayGoal(); /* 8531F */
-extern void QueuePenaltyType(); /* 85570 */
 extern void MenuSaveGame(); /* 85924 */
 extern void SaveGameStub(); /* 85D65 */
 extern void SaveGameNameDlg(); /* 85D6C */
@@ -1313,9 +1264,6 @@ extern void POHiliteSlot(); /* 89B69 */
 extern void PlayoffTreeMenu(); /* 89BD2 */
 extern void DrawPlayoffTree(); /* 8A652 */
 extern void WriteCurModeState(); /* 8B92F */
-extern void ClearPlayerFromLines(); /* 8B96D */
-extern void InitFileLocations(); /* 8BAAF */
-extern void CoachCutScene(); /* 8BC15 */
 extern void PlayMVI(); /* 8BEDB */
 extern void SelectScreenBM(); /* 8C1C2 */
 extern void SelectScreenBM_set(); /* 8C1D5 */
@@ -1397,7 +1345,6 @@ extern void sub_8D2A0(); /* 8D2A0 */
 extern void loc_8D2AE(); /* 8D2AE */
 extern void loc_8D2B9(); /* 8D2B9 */
 extern void sub_8D2D2(); /* 8D2D2 */
-extern void sub_8D2F0(); /* 8D2F0 */
 extern void sub_8D31C(); /* 8D31C */
 extern void loc_8D340(); /* 8D340 */
 extern void sub_8D344(); /* 8D344 */
@@ -1788,11 +1735,9 @@ extern void sub_8FBE5(); /* 8FBE5 */
 extern void loc_8FC2E(); /* 8FC2E */
 extern void loc_8FC31(); /* 8FC31 */
 extern void sub_8FC37(); /* 8FC37 */
-extern void sub_8FC8A(); /* 8FC8A */
 extern void loc_8FC96(); /* 8FC96 */
 extern void loc_8FC9C(); /* 8FC9C */
 extern void loc_8FCDC(); /* 8FCDC */
-extern void sub_8FCDF(); /* 8FCDF */
 extern void loc_8FCF8(); /* 8FCF8 */
 extern void loc_8FD5F(); /* 8FD5F */
 extern void sub_8FD67(); /* 8FD67 */
@@ -2277,7 +2222,6 @@ extern void loc_92DA2(); /* 92DA2 */
 extern void loc_92DA4(); /* 92DA4 */
 extern void loc_92DC6(); /* 92DC6 */
 extern void loc_92DCD(); /* 92DCD */
-extern void sub_92DE0(); /* 92DE0 */
 extern void sub_92DF0(); /* 92DF0 */
 extern void sub_92E00(); /* 92E00 */
 extern void sub_92E40(); /* 92E40 */
@@ -6854,7 +6798,6 @@ extern void loc_B4B20(); /* B4B20 */
 extern void loc_B4B27(); /* B4B27 */
 extern void loc_B4B39(); /* B4B39 */
 extern void loc_B4B3B(); /* B4B3B */
-extern void sub_B4B58(); /* B4B58 */
 extern void loc_B4BA0(); /* B4BA0 */
 extern void sub_B4BC4(); /* B4BC4 */
 extern void loc_B4BDE(); /* B4BDE */
@@ -6903,7 +6846,6 @@ extern void loc_B4F2A(); /* B4F2A */
 extern void loc_B4F3C(); /* B4F3C */
 extern void loc_B4F40(); /* B4F40 */
 extern void sub_B4FA6(); /* B4FA6 */
-extern void sub_B4FAC(); /* B4FAC */
 extern void loc_B4FE6(); /* B4FE6 */
 extern void sub_B4FE8(); /* B4FE8 */
 extern void sub_B500C(); /* B500C */

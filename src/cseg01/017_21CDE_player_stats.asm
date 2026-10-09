@@ -4732,6 +4732,10 @@ pop esi	; 25866
 pop ecx	; 25867
 pop ebx	; 25868
 ret	; 25869
+; C: src/c/017_21CDE_player_stats/CmpGoalieWins.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/CmpGoalieWins.inc"
+%else
 CmpGoalieWins:
 push dword 14h	; 2586A
 call __CHK	; 2586F
@@ -4871,6 +4875,7 @@ pop esi	; 259BC
 pop ecx	; 259BD
 pop ebx	; 259BE
 ret	; 259BF
+%endif ; C
 CmpSavePct:
 push dword 14h	; 259C0
 call __CHK	; 259C5

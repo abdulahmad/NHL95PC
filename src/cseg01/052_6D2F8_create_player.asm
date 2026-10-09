@@ -5102,6 +5102,10 @@ pop ecx	; 710D5
 pop ebx	; 710D6
 ret	; 710D7
 %endif ; C
+; C: src/c/052_6D2F8_create_player/LoadTempDatabases.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/LoadTempDatabases.inc"
+%else
 LoadTempDatabases:
 push dword 18h	; 710D8
 call __CHK	; 710DD
@@ -5197,6 +5201,7 @@ pop edx	; 71258
 pop ecx	; 71259
 pop ebx	; 7125A
 ret	; 7125B
+%endif ; C
 ; C: src/c/052_6D2F8_create_player/DeleteTempDatabases.c
 %ifdef CBUILD
 %include "c/052_6D2F8_create_player/DeleteTempDatabases.inc"

@@ -9,6 +9,12 @@
 #define SPArefstop      0xAEB   /* referee stop */
 #define SPArefglidesig  0xB4B   /* referee glide, signalling */
 #define SPArefstopsig   0xBDB   /* referee stop, signalling */
+#define SPAskate        0x2E9   /* 93G $5F0 */
+#define SPAskatewp      0x2A1   /* 93G $55E: skating with the puck */
+#define SPAglideback    0x529   /* 93G $A80 */
+#define SPAskateback    0x541   /* 93G $AB2 */
+#define SPArefskate     0xA73   /* referee skate */
+#define SPArefskatesig  0xB63   /* referee skate, signalling */
 
 /* player structure flag bits */
 #define pfrev           0x10    /* pflags bit 4: skating backwards (93G pfrev) */
