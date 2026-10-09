@@ -9,8 +9,8 @@ extern musicslot, musicon, byte_D2439, byte_ED8C3, byte_ED95B, byte_ED9A7, dword
 extern dword_C541F, songdata, dword_CCC94, dword_D2350, dword_D2423, dword_D2427, dword_D242B
 extern musichandle, dword_D2435, dword_D243A, dword_D24A0, dword_D27B2, dword_D27BB, dword_D2C6B, dword_DC238
 extern dword_EA0DC, dword_ED360, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, fclose_, fopen_
-extern fprintf_, jctime, loc_836C4, off_D24D1, strcpy_, sub_1431E, sub_30A0C, sub_30F12
-extern sub_31013, PlayDigiSample, WaitDigiSample, sub_6B391, sub_6B3D7, sub_8245A, sub_824F8, sub_827B3
+extern fprintf_, jctime, loc_836C4, off_D24D1, strcpy_, MakePath, sub_30A0C, sub_30F12
+extern MessageBox, PlayDigiSample, WaitDigiSample, sub_6B391, sub_6B3D7, sub_8245A, sub_824F8, sub_827B3
 extern sub_82805, sub_8357A, sub_8363C, sub_8CCA8, sub_8D2F0, sub_8EB5B, sub_8EB93, sub_8ECC0
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_91370, sub_91400, sub_97079, sub_B2CD8, sub_B2DCA, sub_B3989, sub_B3999
@@ -273,7 +273,7 @@ loc_82C2C:
 xor edx, edx	; 82C2C
 loc_82C2E:
 mov eax, esp	; 82C2E
-call sub_1431E	; 82C30
+call MakePath	; 82C30
 mov eax, esp	; 82C35
 call sub_8F98F	; 82C37
 mov dword [songdata], eax	; 82C3C
@@ -312,7 +312,7 @@ loc_82CC6:
 xor edx, edx	; 82CC6
 loc_82CC8:
 mov eax, esp	; 82CC8
-call sub_1431E	; 82CCA
+call MakePath	; 82CCA
 mov eax, esp	; 82CCF
 call sub_8F98F	; 82CD1
 mov dword [songdata], eax	; 82CD6
@@ -547,7 +547,7 @@ loc_83012:
 xor edx, edx	; 83012
 loc_83014:
 mov eax, esp	; 83014
-call sub_1431E	; 83016
+call MakePath	; 83016
 mov eax, esp	; 8301B
 call sub_8F13B	; 8301D
 mov dword [dword_ED7A4], eax	; 83022
@@ -568,7 +568,7 @@ mov ecx, 2	; 8304B
 mov ebx, off_D24D1	; 83050
 mov edx, 0FFFFFFFFh	; 83055
 mov eax, edx	; 8305A
-call sub_31013	; 8305C
+call MessageBox	; 8305C
 xor ecx, ecx	; 83061
 mov ebx, asc_C369F	; 83063
 cmp byte [byte_ED8C3], 1	; 83068
@@ -579,7 +579,7 @@ loc_83079:
 xor edx, edx	; 83079
 loc_8307B:
 mov eax, esp	; 8307B
-call sub_1431E	; 8307D
+call MakePath	; 8307D
 mov eax, esp	; 83082
 call sub_8F13B	; 83084
 mov edx, eax	; 83089
@@ -608,7 +608,7 @@ mov ecx, asc_C8145	; 830E4
 mov ebx, asc_C36A8	; 830E9
 xor edx, edx	; 830EE
 mov eax, esp	; 830F0
-call sub_1431E	; 830F2
+call MakePath	; 830F2
 mov edx, unk_C36AC	; 830F7
 mov eax, esp	; 830FC
 call fopen_	; 830FE
@@ -696,7 +696,7 @@ mov ecx, 3	; 831F4
 mov ebx, unk_D249C	; 831F9
 mov edx, 0FFFFFFFFh	; 831FE
 mov eax, edx	; 83203
-call sub_31013	; 83205
+call MessageBox	; 83205
 loc_8320A:
 call sub_6B391	; 8320A
 test eax, eax	; 8320F

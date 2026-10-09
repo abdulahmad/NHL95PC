@@ -5,7 +5,7 @@ section s_45282 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1AAF, asc_C1AB4, asc_C1AB8, asc_C1AC4, asc_C1AC9, asc_C1ACD, asc_C1AD4
 extern asc_C1AD9, byte_DE26C, byte_DEB70, byte_DEB71, byte_ED9EE, gameopts, dword_C900C, dword_C905C
 extern dword_C9074, dword_D07BB, dword_D2C6B, dword_DEB6C, jctime, memcpy_, memset_, rand_
-extern sub_1431E, sub_147C9, sub_3A2B8, sub_3A2EE, sub_6CBB7, sub_6CBCC, sub_6CBE1, sub_6CBE8
+extern MakePath, sub_147C9, sub_3A2B8, sub_3A2EE, sub_6CBB7, sub_6CBCC, sub_6CBE1, sub_6CBE8
 extern sub_6CBFD, sub_76429, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E83C, sub_8FFB0, sub_910E0
 extern sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4C61, unk_C1AA4
 extern unk_C1AA6, unk_C1AA9, unk_C1AAC, unk_C1ABE, unk_C1AC1
@@ -2748,7 +2748,7 @@ loc_47A7B:
 xor edx, edx	; 47A7B
 loc_47A7D:
 lea eax, [dword esp+0900h]	; 47A7D
-call sub_1431E	; 47A84
+call MakePath	; 47A84
 push byte 0	; 47A89
 lea eax, [dword esp+0904h]	; 47A8B
 push eax	; 47A92

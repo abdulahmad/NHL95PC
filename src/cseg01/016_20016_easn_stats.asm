@@ -9,7 +9,7 @@ extern byte_ED858, byte_ED859, byte_ED85A, byte_ED98D, dword_C53FB, dword_C65A8,
 extern dword_C65B4, dword_C65B8, dword_C65BC, dword_C65CC, dword_C6956, dword_C6A60, dword_C6D26, dword_C7219
 extern dword_C8992, dword_D2C6B, dword_DC640, dword_DC6B4, dword_DC734, dword_DC738, dword_DC7B8, dword_DD100
 extern dword_DD104, dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD120, dword_DDD2C, jctime
-extern memcpy_, off_C68E4, sub_1431E, sub_18D33, sub_1D6E8, sub_1DF03, sub_1ED96, sub_1FAA7
+extern memcpy_, off_C68E4, MakePath, sub_18D33, sub_1D6E8, sub_1DF03, sub_1ED96, sub_1FAA7
 extern sub_21CDE, sub_22581, sub_235BE, sub_244E2, sub_25B24, sub_27080, sub_296BA, sub_6B5E4
 extern sub_76429, sub_8CCA8, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_91FE0, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, unk_C6960, unk_CF54F, unk_CF6AF, unk_CF74F
@@ -73,7 +73,7 @@ loc_200B1:
 xor edx, edx	; 200B1
 loc_200B3:
 lea eax, [dword esp+0300h]	; 200B3
-call sub_1431E	; 200BA
+call MakePath	; 200BA
 push byte 0	; 200BF
 lea eax, [dword esp+0304h]	; 200C1
 push eax	; 200C8
@@ -171,7 +171,7 @@ loc_20219:
 xor edx, edx	; 20219
 loc_2021B:
 lea eax, [dword esp+0300h]	; 2021B
-call sub_1431E	; 20222
+call MakePath	; 20222
 push byte 0	; 20227
 lea eax, [dword esp+0304h]	; 20229
 push eax	; 20230
@@ -267,7 +267,7 @@ loc_2037B:
 xor edx, edx	; 2037B
 loc_2037D:
 lea eax, [dword esp+0300h]	; 2037D
-call sub_1431E	; 20384
+call MakePath	; 20384
 push byte 0	; 20389
 lea eax, [dword esp+0304h]	; 2038B
 push eax	; 20392
@@ -340,7 +340,7 @@ loc_20481:
 xor edx, edx	; 20481
 loc_20483:
 mov eax, esp	; 20483
-call sub_1431E	; 20485
+call MakePath	; 20485
 push byte 0	; 2048A
 lea eax, [byte esp+04h]	; 2048C
 push eax	; 20490
@@ -463,7 +463,7 @@ loc_20648:
 xor edx, edx	; 20648
 loc_2064A:
 lea eax, [dword esp+0300h]	; 2064A
-call sub_1431E	; 20651
+call MakePath	; 20651
 push byte 0	; 20656
 lea eax, [dword esp+0304h]	; 20658
 push eax	; 2065F
@@ -671,7 +671,7 @@ loc_20993:
 xor edx, edx	; 20993
 loc_20995:
 lea eax, [dword esp+0300h]	; 20995
-call sub_1431E	; 2099C
+call MakePath	; 2099C
 push byte 0	; 209A1
 lea eax, [dword esp+0304h]	; 209A3
 push eax	; 209AA
@@ -764,7 +764,7 @@ loc_20AED:
 xor edx, edx	; 20AED
 loc_20AEF:
 lea eax, [dword esp+0300h]	; 20AEF
-call sub_1431E	; 20AF6
+call MakePath	; 20AF6
 push byte 0	; 20AFB
 lea eax, [dword esp+0304h]	; 20AFD
 push eax	; 20B04
@@ -863,7 +863,7 @@ loc_20C64:
 xor edx, edx	; 20C64
 loc_20C66:
 lea eax, [dword esp+0300h]	; 20C66
-call sub_1431E	; 20C6D
+call MakePath	; 20C6D
 push byte 0	; 20C72
 lea eax, [dword esp+0304h]	; 20C74
 push eax	; 20C7B
@@ -905,7 +905,7 @@ jne short loc_20D80	; 20D02
 mov edx, dword [dword_D2C6B]	; 20D04
 loc_20D0A:
 lea eax, [dword esp+0300h]	; 20D0A
-call sub_1431E	; 20D11
+call MakePath	; 20D11
 push byte 0	; 20D16
 lea eax, [dword esp+0304h]	; 20D18
 push eax	; 20D1F
@@ -988,7 +988,7 @@ loc_20E1E:
 xor edx, edx	; 20E1E
 loc_20E20:
 mov eax, esp	; 20E20
-call sub_1431E	; 20E22
+call MakePath	; 20E22
 push byte 0	; 20E27
 lea eax, [byte esp+04h]	; 20E29
 push eax	; 20E2D
@@ -1118,7 +1118,7 @@ loc_20FEF:
 xor edx, edx	; 20FEF
 loc_20FF1:
 lea eax, [dword esp+037Ch]	; 20FF1
-call sub_1431E	; 20FF8
+call MakePath	; 20FF8
 push byte 0	; 20FFD
 lea eax, [dword esp+0380h]	; 20FFF
 push eax	; 21006
@@ -1330,7 +1330,7 @@ jne short loc_2132E	; 21326
 mov edx, dword [dword_D2C6B]	; 21328
 loc_2132E:
 mov eax, esp	; 2132E
-call sub_1431E	; 21330
+call MakePath	; 21330
 push byte 20h	; 21335
 lea eax, [byte esp+04h]	; 21337
 push eax	; 2133B
@@ -1388,7 +1388,7 @@ loc_213F2:
 xor edx, edx	; 213F2
 loc_213F4:
 lea eax, [dword esp+0300h]	; 213F4
-call sub_1431E	; 213FB
+call MakePath	; 213FB
 push byte 0	; 21400
 lea eax, [dword esp+0304h]	; 21402
 push eax	; 21409
@@ -1484,7 +1484,7 @@ loc_21553:
 xor edx, edx	; 21553
 loc_21555:
 lea eax, [dword esp+0300h]	; 21555
-call sub_1431E	; 2155C
+call MakePath	; 2155C
 push byte 0	; 21561
 lea eax, [dword esp+0304h]	; 21563
 push eax	; 2156A
@@ -1555,7 +1555,7 @@ loc_21666:
 xor edx, edx	; 21666
 loc_21668:
 lea eax, [dword esp+0300h]	; 21668
-call sub_1431E	; 2166F
+call MakePath	; 2166F
 push byte 0	; 21674
 lea eax, [dword esp+0304h]	; 21676
 push eax	; 2167D
@@ -1625,7 +1625,7 @@ loc_21763:
 xor edx, edx	; 21763
 loc_21765:
 mov eax, esp	; 21765
-call sub_1431E	; 21767
+call MakePath	; 21767
 push byte 0	; 2176C
 lea eax, [byte esp+04h]	; 2176E
 push eax	; 21772
@@ -1752,7 +1752,7 @@ loc_21938:
 xor edx, edx	; 21938
 loc_2193A:
 lea eax, [dword esp+037Ch]	; 2193A
-call sub_1431E	; 21941
+call MakePath	; 21941
 push byte 0	; 21946
 lea eax, [dword esp+0380h]	; 21948
 push eax	; 2194F

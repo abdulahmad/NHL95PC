@@ -16,7 +16,7 @@ extern musichandle, dword_D2C6B, dword_D302C, dword_D3030, dword_D3034, dword_D3
 extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
 extern dword_D8B7C, dword_D8C18, dword_D8C4C, dword_D8C70, dword_D8C78, dword_D8C84, dword_D9A38, dword_DC230
 extern dword_DC238, dword_DF00C, dword_DF010, dword_E9A9E, dword_EDA08, dword_EDA0C, exit_, gmode
-extern int386_, off_D3078, printf_, srand_, sub_1431E, sub_14525, sub_1457C, sub_145A2
+extern int386_, off_D3078, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
 extern sub_150C6, sub_1672A, sub_16F9A, sub_190BE, sub_1BAF3, sub_1CD73, sub_3149D, sub_31AB5
 extern sub_327A1, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
 extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
@@ -284,7 +284,7 @@ loc_102F5:
 xor edx, edx	; 102F5
 loc_102F7:
 lea eax, [byte esp+038h]	; 102F7
-call sub_1431E	; 102FB
+call MakePath	; 102FB
 push byte 0	; 10300
 lea eax, [byte esp+03Ch]	; 10302
 push eax	; 10306
@@ -306,7 +306,7 @@ loc_10342:
 xor edx, edx	; 10342
 loc_10344:
 lea eax, [byte esp+038h]	; 10344
-call sub_1431E	; 10348
+call MakePath	; 10348
 push byte 20h	; 1034D
 lea eax, [byte esp+03Ch]	; 1034F
 push eax	; 10353
@@ -324,7 +324,7 @@ loc_10381:
 xor edx, edx	; 10381
 loc_10383:
 lea eax, [byte esp+038h]	; 10383
-call sub_1431E	; 10387
+call MakePath	; 10387
 push byte 20h	; 1038C
 lea eax, [byte esp+03Ch]	; 1038E
 push eax	; 10392
@@ -341,7 +341,7 @@ loc_103BB:
 xor edx, edx	; 103BB
 loc_103BD:
 lea eax, [byte esp+038h]	; 103BD
-call sub_1431E	; 103C1
+call MakePath	; 103C1
 push byte 20h	; 103C6
 lea eax, [byte esp+03Ch]	; 103C8
 push eax	; 103CC
@@ -358,7 +358,7 @@ loc_103F5:
 xor edx, edx	; 103F5
 loc_103F7:
 lea eax, [byte esp+038h]	; 103F7
-call sub_1431E	; 103FB
+call MakePath	; 103FB
 push byte 20h	; 10400
 lea eax, [byte esp+03Ch]	; 10402
 push eax	; 10406
@@ -422,14 +422,14 @@ mov dword [dword_C4D04], 1	; 104E1
 loc_104EB:
 lea edx, [byte esp+068h]	; 104EB
 mov eax, asc_C01CB	; 104EF
-call sub_14525	; 104F4
+call FileOpenRead	; 104F4
 test eax, eax	; 104F9
 jne short loc_10549	; 104FB
 mov ecx, 75h	; 104FD
 mov ebx, 0FFFFFFFFh	; 10502
 mov edx, unk_C5298	; 10507
 mov eax, dword [byte esp+068h]	; 1050C
-call sub_145A2	; 10510
+call FileReadAt	; 10510
 test eax, eax	; 10515
 je short loc_10526	; 10517
 push unk_C01D4	; 10519
@@ -437,7 +437,7 @@ call sub_B2CD8	; 1051E
 add esp, byte 4	; 10523
 loc_10526:
 lea eax, [byte esp+068h]	; 10526
-call sub_1457C	; 1052A
+call FileClose	; 1052A
 test eax, eax	; 1052F
 je near loc_105E1	; 10531
 push unk_C01D7	; 10537

@@ -15,7 +15,7 @@ extern dword_D8C78, dword_D8C84, dword_D9980, dword_DB088, dword_DC28C, dword_DF
 extern dword_DF6F2, dword_DF6F6, hmtmplstats, dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
 extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2
 extern awtmsort, dword_E009C, dword_E0248, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
-extern ltx, replaystart, off_CC01D, passspeed, sub_13A91, sub_145A2, sub_145F9, sub_1BBCC
+extern ltx, replaystart, off_CC01D, passspeed, sub_13A91, FileReadAt, FileWriteAt, sub_1BBCC
 extern sub_3271B, sub_327A1, GetPeriodTime, SprSort, sub_61E99, sub_673C5, ReplayRecordReset, sub_7DC8B
 extern sub_B2CD8, MouseSetPos, threat, unk_C5298, unk_C5423, unk_C542E, awlinetab, unk_DAC40
 extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, hmlinetab, unk_DC240
@@ -46,7 +46,7 @@ push eax	; 5FB19
 mov ecx, 4	; 5FB1A
 mov ebx, 0FFFFFFFFh	; 5FB1F
 mov edx, dword_C5413	; 5FB24
-call sub_145F9	; 5FB29
+call FileWriteAt	; 5FB29
 test eax, eax	; 5FB2E
 je short .1	; 5FB30
 push str_ErrSaveGame	; 5FB32
@@ -61,7 +61,7 @@ add edx, SortCords	; 5FB46
 mov ecx, 66h	; 5FB4C
 mov ebx, 0FFFFFFFFh	; 5FB51
 mov eax, dword [esp]	; 5FB56
-call sub_145F9	; 5FB59
+call FileWriteAt	; 5FB59
 test eax, eax	; 5FB5E
 je short .3	; 5FB60
 push str_ErrSaveGame	; 5FB62
@@ -79,7 +79,7 @@ add edx, hmtmstruct	; 5FB7C
 mov ecx, 0D4h	; 5FB82
 mov ebx, 0FFFFFFFFh	; 5FB87
 mov eax, dword [esp]	; 5FB8C
-call sub_145F9	; 5FB8F
+call FileWriteAt	; 5FB8F
 test eax, eax	; 5FB94
 je short .5	; 5FB96
 push str_ErrSaveGame	; 5FB98
@@ -93,7 +93,7 @@ mov ecx, 30h	; 5FBAB
 mov ebx, 0FFFFFFFFh	; 5FBB0
 mov edx, hmlinetab	; 5FBB5
 mov eax, dword [esp]	; 5FBBA
-call sub_145F9	; 5FBBD
+call FileWriteAt	; 5FBBD
 test eax, eax	; 5FBC2
 je short .6	; 5FBC4
 push str_ErrSaveGame	; 5FBC6
@@ -104,7 +104,7 @@ mov ecx, 30h	; 5FBD3
 mov ebx, 0FFFFFFFFh	; 5FBD8
 mov edx, awlinetab	; 5FBDD
 mov eax, dword [esp]	; 5FBE2
-call sub_145F9	; 5FBE5
+call FileWriteAt	; 5FBE5
 test eax, eax	; 5FBEA
 je short .7	; 5FBEC
 push str_ErrSaveGame	; 5FBEE
@@ -290,7 +290,7 @@ mov ecx, 80h	; 5FED8
 mov ebx, 0FFFFFFFFh	; 5FEDD
 lea edx, [byte esp+04h]	; 5FEE2
 mov eax, dword [esp]	; 5FEE6
-call sub_145F9	; 5FEE9
+call FileWriteAt	; 5FEE9
 test eax, eax	; 5FEEE
 je short .10	; 5FEF0
 push str_ErrSaveGame	; 5FEF2
@@ -490,7 +490,7 @@ mov ecx, 80h	; 6021E
 mov ebx, 0FFFFFFFFh	; 60223
 lea edx, [byte esp+04h]	; 60228
 mov eax, dword [esp]	; 6022C
-call sub_145F9	; 6022F
+call FileWriteAt	; 6022F
 test eax, eax	; 60234
 je short .12	; 60236
 push str_ErrSaveGame	; 60238
@@ -587,7 +587,7 @@ mov ecx, 80h	; 603A9
 mov ebx, 0FFFFFFFFh	; 603AE
 lea edx, [byte esp+04h]	; 603B3
 mov eax, dword [esp]	; 603B7
-call sub_145F9	; 603BA
+call FileWriteAt	; 603BA
 test eax, eax	; 603BF
 je short .14	; 603C1
 push str_ErrSaveGame	; 603C3
@@ -598,7 +598,7 @@ mov ecx, 42h	; 603D0
 mov ebx, 0FFFFFFFFh	; 603D5
 mov edx, PenBuf	; 603DA
 mov eax, dword [esp]	; 603DF
-call sub_145F9	; 603E2
+call FileWriteAt	; 603E2
 test eax, eax	; 603E7
 je short .15	; 603E9
 push str_ErrSaveGame	; 603EB
@@ -609,7 +609,7 @@ mov ecx, 0Bh	; 603F8
 mov ebx, 0FFFFFFFFh	; 603FD
 mov edx, byte_E9AC8	; 60402
 mov eax, dword [esp]	; 60407
-call sub_145F9	; 6040A
+call FileWriteAt	; 6040A
 test eax, eax	; 6040F
 je short .16	; 60411
 push str_ErrSaveGame	; 60413
@@ -620,7 +620,7 @@ mov ecx, 0Bh	; 60420
 mov ebx, 0FFFFFFFFh	; 60425
 mov edx, byte_E9AD3	; 6042A
 mov eax, dword [esp]	; 6042F
-call sub_145F9	; 60432
+call FileWriteAt	; 60432
 test eax, eax	; 60437
 je short .17	; 60439
 push str_ErrSaveGame	; 6043B
@@ -631,7 +631,7 @@ mov ecx, 0Bh	; 60448
 mov ebx, 0FFFFFFFFh	; 6044D
 mov edx, unk_C5423	; 60452
 mov eax, dword [esp]	; 60457
-call sub_145F9	; 6045A
+call FileWriteAt	; 6045A
 test eax, eax	; 6045F
 je short .18	; 60461
 push str_ErrSaveGame	; 60463
@@ -642,7 +642,7 @@ mov ecx, 0Bh	; 60470
 mov ebx, 0FFFFFFFFh	; 60475
 mov edx, unk_C542E	; 6047A
 mov eax, dword [esp]	; 6047F
-call sub_145F9	; 60482
+call FileWriteAt	; 60482
 test eax, eax	; 60487
 je short .19	; 60489
 push str_ErrSaveGame	; 6048B
@@ -653,7 +653,7 @@ mov ecx, 40h	; 60498
 mov ebx, 0FFFFFFFFh	; 6049D
 mov edx, word_C571C	; 604A2
 mov eax, dword [esp]	; 604A7
-call sub_145F9	; 604AA
+call FileWriteAt	; 604AA
 test eax, eax	; 604AF
 je short .20	; 604B1
 push str_ErrSaveGame	; 604B3
@@ -664,7 +664,7 @@ mov ecx, 40h	; 604C0
 mov ebx, 0FFFFFFFFh	; 604C5
 mov edx, word_C575C	; 604CA
 mov eax, dword [esp]	; 604CF
-call sub_145F9	; 604D2
+call FileWriteAt	; 604D2
 test eax, eax	; 604D7
 je short .21	; 604D9
 push str_ErrSaveGame	; 604DB
@@ -681,7 +681,7 @@ jbe short .24	; 604F8
 mov ebx, 0FFFFFFFFh	; 604FA
 lea edx, [byte esp+04h]	; 604FF
 mov eax, dword [esp]	; 60503
-call sub_145F9	; 60506
+call FileWriteAt	; 60506
 test eax, eax	; 6050B
 je short .23	; 6050D
 push str_ErrSaveGame	; 6050F
@@ -727,7 +727,7 @@ jbe short .27	; 60570
 mov ebx, 0FFFFFFFFh	; 60572
 lea edx, [byte esp+04h]	; 60577
 mov eax, dword [esp]	; 6057B
-call sub_145F9	; 6057E
+call FileWriteAt	; 6057E
 test eax, eax	; 60583
 je short .26	; 60585
 push str_ErrSaveGame	; 60587
@@ -769,7 +769,7 @@ je short .28	; 605DF
 mov ebx, 0FFFFFFFFh	; 605E1
 lea edx, [byte esp+04h]	; 605E6
 mov eax, dword [esp]	; 605EA
-call sub_145F9	; 605ED
+call FileWriteAt	; 605ED
 test eax, eax	; 605F2
 je short .28	; 605F4
 push str_ErrSaveGame	; 605F6
@@ -800,7 +800,7 @@ mov ebp, eax	; 60628
 mov ecx, 4	; 6062A
 mov ebx, 0FFFFFFFFh	; 6062F
 mov edx, dword_C5413	; 60634
-call sub_145A2	; 60639
+call FileReadAt	; 60639
 test eax, eax	; 6063E
 je short .1	; 60640
 push str_ErrSaveGame	; 60642
@@ -816,7 +816,7 @@ add edx, SortCords	; 60662
 mov ecx, 66h	; 60668
 mov ebx, 0FFFFFFFFh	; 6066D
 mov eax, ebp	; 60672
-call sub_145A2	; 60674
+call FileReadAt	; 60674
 test eax, eax	; 60679
 je short .3	; 6067B
 push str_ErrLoadGame	; 6067D
@@ -837,7 +837,7 @@ add edx, hmtmstruct	; 606B1
 mov ecx, 0D4h	; 606B7
 mov ebx, 0FFFFFFFFh	; 606BC
 mov eax, ebp	; 606C1
-call sub_145A2	; 606C3
+call FileReadAt	; 606C3
 test eax, eax	; 606C8
 je short .5	; 606CA
 push str_ErrLoadGame	; 606CC
@@ -853,7 +853,7 @@ mov ecx, 30h	; 606ED
 mov ebx, 0FFFFFFFFh	; 606F2
 mov edx, hmlinetab	; 606F7
 mov eax, ebp	; 606FC
-call sub_145A2	; 606FE
+call FileReadAt	; 606FE
 test eax, eax	; 60703
 je short .6	; 60705
 push str_ErrLoadGame	; 60707
@@ -864,7 +864,7 @@ mov ecx, 30h	; 60714
 mov ebx, 0FFFFFFFFh	; 60719
 mov edx, awlinetab	; 6071E
 mov eax, ebp	; 60723
-call sub_145A2	; 60725
+call FileReadAt	; 60725
 test eax, eax	; 6072A
 je short .7	; 6072C
 push str_ErrLoadGame	; 6072E
@@ -875,7 +875,7 @@ mov ecx, 80h	; 6073B
 mov ebx, 0FFFFFFFFh	; 60740
 mov edx, esp	; 60745
 mov eax, ebp	; 60747
-call sub_145A2	; 60749
+call FileReadAt	; 60749
 test eax, eax	; 6074E
 je short .8	; 60750
 push str_ErrLoadGame	; 60752
@@ -1067,7 +1067,7 @@ mov ecx, 80h	; 60A2E
 mov ebx, 0FFFFFFFFh	; 60A33
 mov edx, esp	; 60A38
 mov eax, ebp	; 60A3A
-call sub_145A2	; 60A3C
+call FileReadAt	; 60A3C
 test eax, eax	; 60A41
 je short .11	; 60A43
 push str_ErrLoadGame	; 60A45
@@ -1273,7 +1273,7 @@ mov ecx, 80h	; 60D45
 mov ebx, 0FFFFFFFFh	; 60D4A
 mov edx, esp	; 60D4F
 mov eax, ebp	; 60D51
-call sub_145A2	; 60D53
+call FileReadAt	; 60D53
 test eax, eax	; 60D58
 je short .13	; 60D5A
 push str_ErrLoadGame	; 60D5C
@@ -1428,7 +1428,7 @@ mov ecx, 42h	; 60F82
 mov ebx, 0FFFFFFFFh	; 60F87
 mov edx, PenBuf	; 60F8C
 mov eax, ebp	; 60F91
-call sub_145A2	; 60F93
+call FileReadAt	; 60F93
 test eax, eax	; 60F98
 je short .16	; 60F9A
 push str_ErrLoadGame	; 60F9C
@@ -1439,7 +1439,7 @@ mov ecx, 0Bh	; 60FA9
 mov ebx, 0FFFFFFFFh	; 60FAE
 mov edx, byte_E9AC8	; 60FB3
 mov eax, ebp	; 60FB8
-call sub_145A2	; 60FBA
+call FileReadAt	; 60FBA
 test eax, eax	; 60FBF
 je short .17	; 60FC1
 push str_ErrLoadGame	; 60FC3
@@ -1450,7 +1450,7 @@ mov ecx, 0Bh	; 60FD0
 mov ebx, 0FFFFFFFFh	; 60FD5
 mov edx, byte_E9AD3	; 60FDA
 mov eax, ebp	; 60FDF
-call sub_145A2	; 60FE1
+call FileReadAt	; 60FE1
 test eax, eax	; 60FE6
 je short .18	; 60FE8
 push str_ErrLoadGame	; 60FEA
@@ -1461,7 +1461,7 @@ mov ecx, 0Bh	; 60FF7
 mov ebx, 0FFFFFFFFh	; 60FFC
 mov edx, unk_C5423	; 61001
 mov eax, ebp	; 61006
-call sub_145A2	; 61008
+call FileReadAt	; 61008
 test eax, eax	; 6100D
 je short .19	; 6100F
 push str_ErrLoadGame	; 61011
@@ -1472,7 +1472,7 @@ mov ecx, 0Bh	; 6101E
 mov ebx, 0FFFFFFFFh	; 61023
 mov edx, unk_C542E	; 61028
 mov eax, ebp	; 6102D
-call sub_145A2	; 6102F
+call FileReadAt	; 6102F
 test eax, eax	; 61034
 je short .20	; 61036
 push str_ErrLoadGame	; 61038
@@ -1483,7 +1483,7 @@ mov ecx, 40h	; 61045
 mov ebx, 0FFFFFFFFh	; 6104A
 lea edx, [dword esp+0C0h]	; 6104F
 mov eax, ebp	; 61056
-call sub_145A2	; 61058
+call FileReadAt	; 61058
 test eax, eax	; 6105D
 je short .21	; 6105F
 push str_ErrLoadGame	; 61061
@@ -1494,7 +1494,7 @@ mov ecx, 40h	; 6106E
 mov ebx, 0FFFFFFFFh	; 61073
 lea edx, [dword esp+080h]	; 61078
 mov eax, ebp	; 6107F
-call sub_145A2	; 61081
+call FileReadAt	; 61081
 test eax, eax	; 61086
 je short .22	; 61088
 push str_ErrLoadGame	; 6108A
@@ -1516,7 +1516,7 @@ mov ecx, dword [dword esp+0108h]	; 610D1
 mov ebx, 0FFFFFFFFh	; 610D8
 mov edx, esp	; 610DD
 mov eax, ebp	; 610DF
-call sub_145A2	; 610E1
+call FileReadAt	; 610E1
 test eax, eax	; 610E6
 je short .25	; 610E8
 push str_ErrLoadGame	; 610EA

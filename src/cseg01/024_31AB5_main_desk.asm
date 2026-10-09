@@ -3,14 +3,14 @@ bits 32
 %include "hockey.inc"
 section s_31AB5 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1724, asc_C172C, asc_C1731, asc_C173A, asc_C1743, asc_C174C, asc_C1751
-extern asc_C1756, asc_C175F, asc_C1768, asc_C176D, asc_CDB75, asc_CDB7C, byte_C7218, byte_C8451
+extern asc_C1756, asc_C175F, asc_C1768, asc_C176D, asc_CDB75, asc_CDB7C, byte_C7218, curleague
 extern byte_CDB77, byte_CDB7E, musicon, byte_DD710, byte_DD750, byte_EA0F4, byte_ED836, byte_ED9A7
 extern byte_ED9AB, dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413
 extern dword_C5417, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C7219, songdata
 extern cont2team, HomeTeam, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
 extern dword_D2C6B, dword_DC238, dword_EA0DC, jctime, memcpy_, off_C5439, off_C7282, off_D3078
-extern strcpy_, strncpy_, sub_106C8, sub_142E7, sub_1431E, sub_14525, sub_14552, sub_14566
-extern sub_1457C, sub_145A2, sub_145F9, sub_1D100, sub_1D610, sub_20D97, sub_31013, FadeOutPalCycle
+extern strcpy_, strncpy_, sub_106C8, sub_142E7, MakePath, FileOpenRead, FileOpenRW, FileCreate
+extern FileClose, FileReadAt, FileWriteAt, sub_1D100, sub_1D610, sub_20D97, MessageBox, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D
 extern sub_76429, sub_8B85B, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C, sub_91370
@@ -146,7 +146,7 @@ loc_31C7C:
 xor edx, edx	; 31C7C
 loc_31C7E:
 lea eax, [byte esp+020h]	; 31C7E
-call sub_1431E	; 31C82
+call MakePath	; 31C82
 xor ah, ah	; 31C87
 mov byte [byte_C7218], ah	; 31C89
 jmp short loc_31CBE	; 31C8F
@@ -161,7 +161,7 @@ loc_31CAC:
 xor edx, edx	; 31CAC
 loc_31CAE:
 lea eax, [byte esp+020h]	; 31CAE
-call sub_1431E	; 31CB2
+call MakePath	; 31CB2
 mov byte [byte_C7218], 1	; 31CB7
 loc_31CBE:
 lea eax, [byte esp+020h]	; 31CBE
@@ -178,7 +178,7 @@ loc_31CE4:
 xor edx, edx	; 31CE4
 loc_31CE6:
 lea eax, [byte esp+020h]	; 31CE6
-call sub_1431E	; 31CEA
+call MakePath	; 31CEA
 push byte 0	; 31CEF
 lea eax, [byte esp+024h]	; 31CF1
 push eax	; 31CF5
@@ -374,7 +374,7 @@ lea eax, [dword esp+080h]	; 31FB1
 call dword [byte edx+ebx+014h]	; 31FB8
 mov ebp, eax	; 31FBC
 lea eax, [dword esp+080h]	; 31FBE
-call sub_1457C	; 31FC5
+call FileClose	; 31FC5
 mov eax, dword [dword_DC238]	; 31FCA
 mov edx, dword [byte eax+02h]	; 31FCF
 sar edx, 10h	; 31FD2
@@ -472,7 +472,7 @@ loc_3211D:
 xor edx, edx	; 3211D
 loc_3211F:
 lea eax, [byte esp+020h]	; 3211F
-call sub_1431E	; 32123
+call MakePath	; 32123
 xor dh, dh	; 32128
 mov byte [byte_C7218], dh	; 3212A
 jmp short loc_3215B	; 32130
@@ -484,7 +484,7 @@ jne short loc_3214B	; 32143
 mov edx, dword [dword_D2C6B]	; 32145
 loc_3214B:
 lea eax, [byte esp+020h]	; 3214B
-call sub_1431E	; 3214F
+call MakePath	; 3214F
 mov byte [byte_C7218], 1	; 32154
 loc_3215B:
 lea eax, [byte esp+020h]	; 3215B
@@ -507,7 +507,7 @@ loc_32197:
 xor edx, edx	; 32197
 loc_32199:
 lea eax, [byte esp+020h]	; 32199
-call sub_1431E	; 3219D
+call MakePath	; 3219D
 push byte 0	; 321A2
 lea eax, [byte esp+024h]	; 321A4
 push eax	; 321A8
@@ -932,7 +932,7 @@ push ebx	; 32725
 push edx	; 32726
 mov ebx, eax	; 32727
 add eax, byte 4	; 32729
-mov edx, byte_C8451	; 3272C
+mov edx, curleague	; 3272C
 call strcpy_	; 32731
 lea eax, [byte ebx+011h]	; 32736
 mov edx, byte_DD750	; 32739
@@ -974,7 +974,7 @@ push edi	; 327AF
 push ebp	; 327B0
 mov ebx, eax	; 327B1
 lea edx, [byte eax+04h]	; 327B3
-mov eax, byte_C8451	; 327B6
+mov eax, curleague	; 327B6
 call strcpy_	; 327BB
 lea edx, [byte ebx+011h]	; 327C0
 mov eax, byte_DD750	; 327C3
@@ -1220,9 +1220,9 @@ jmp short loc_32B5D	; 32B45
 loc_32B47:
 mov ecx, asc_C176D	; 32B47
 mov ebx, asc_C1768	; 32B4C
-mov edx, byte_C8451	; 32B51
+mov edx, curleague	; 32B51
 mov eax, esp	; 32B56
-call sub_1431E	; 32B58
+call MakePath	; 32B58
 loc_32B5D:
 mov eax, esp	; 32B5D
 call sub_142E7	; 32B5F
@@ -1233,7 +1233,7 @@ cmp eax, byte 75h	; 32B6D
 jb near loc_32C51	; 32B70
 loc_32B76:
 lea eax, [byte ebp+04h]	; 32B76
-mov edx, byte_C8451	; 32B79
+mov edx, curleague	; 32B79
 call strcpy_	; 32B7E
 lea eax, [byte ebp+011h]	; 32B83
 mov edx, byte_DD750	; 32B86
@@ -1265,7 +1265,7 @@ mov eax, dword [dword_C5417]	; 32BEB
 mov dword [byte ebp+071h], eax	; 32BF0
 lea edx, [byte esp+020h]	; 32BF3
 mov eax, esp	; 32BF7
-call sub_14566	; 32BF9
+call FileCreate	; 32BF9
 test eax, eax	; 32BFE
 je short loc_32C0F	; 32C00
 push unk_C1772	; 32C02
@@ -1276,7 +1276,7 @@ mov ecx, 75h	; 32C0F
 mov ebx, 0FFFFFFFFh	; 32C14
 mov edx, ebp	; 32C19
 mov eax, dword [byte esp+020h]	; 32C1B
-call sub_145F9	; 32C1F
+call FileWriteAt	; 32C1F
 test eax, eax	; 32C24
 je short loc_32C35	; 32C26
 push unk_C1775	; 32C28
@@ -1284,7 +1284,7 @@ call sub_B2CD8	; 32C2D
 add esp, byte 4	; 32C32
 loc_32C35:
 lea eax, [byte esp+020h]	; 32C35
-call sub_1457C	; 32C39
+call FileClose	; 32C39
 test eax, eax	; 32C3E
 je short loc_32C96	; 32C40
 push unk_C1778	; 32C42
@@ -1311,7 +1311,7 @@ mov ecx, 3	; 32C80
 mov ebx, off_C7282	; 32C85
 mov edx, 0FFFFFFFFh	; 32C8A
 mov eax, edx	; 32C8F
-call sub_31013	; 32C91
+call MessageBox	; 32C91
 loc_32C96:
 add esp, byte 2Ch	; 32C96
 jmp near loc_32704	; 32C99
@@ -1325,7 +1325,7 @@ push edi	; 32CAB
 sub esp, 0F4h	; 32CAC
 mov esi, edx	; 32CB2
 lea edx, [dword esp+0F0h]	; 32CB4
-call sub_14525	; 32CBB
+call FileOpenRead	; 32CBB
 test eax, eax	; 32CC0
 je short loc_32CCE	; 32CC2
 loc_32CC4:
@@ -1336,21 +1336,21 @@ mov ecx, 75h	; 32CCE
 mov ebx, 0FFFFFFFFh	; 32CD3
 lea edx, [byte esp+078h]	; 32CD8
 mov eax, dword [dword esp+0F0h]	; 32CDC
-call sub_145A2	; 32CE3
+call FileReadAt	; 32CE3
 test eax, eax	; 32CE8
 jne short loc_32CC4	; 32CEA
 lea eax, [dword esp+0F0h]	; 32CEC
-call sub_1457C	; 32CF3
+call FileClose	; 32CF3
 test eax, eax	; 32CF8
 jne short loc_32CC4	; 32CFA
 lea edx, [dword esp+0F0h]	; 32CFC
 mov eax, esi	; 32D03
-call sub_14552	; 32D05
+call FileOpenRW	; 32D05
 test eax, eax	; 32D0A
 je short loc_32D30	; 32D0C
 lea edx, [dword esp+0F0h]	; 32D0E
 mov eax, esi	; 32D15
-call sub_14566	; 32D17
+call FileCreate	; 32D17
 test eax, eax	; 32D1C
 jne short loc_32CC4	; 32D1E
 mov ecx, 1Dh	; 32D20
@@ -1364,7 +1364,7 @@ mov ecx, 75h	; 32D30
 mov ebx, 0FFFFFFFFh	; 32D35
 mov edx, esp	; 32D3A
 mov eax, dword [dword esp+0F0h]	; 32D3C
-call sub_145A2	; 32D43
+call FileReadAt	; 32D43
 test eax, eax	; 32D48
 jne near loc_32CC4	; 32D4A
 mov eax, dword [dword esp+0D1h]	; 32D50
@@ -1378,11 +1378,11 @@ mov ecx, 75h	; 32D6D
 xor ebx, ebx	; 32D72
 mov edx, esp	; 32D74
 mov eax, dword [dword esp+0F0h]	; 32D76
-call sub_145F9	; 32D7D
+call FileWriteAt	; 32D7D
 test eax, eax	; 32D82
 jne near loc_32CC4	; 32D84
 lea eax, [dword esp+0F0h]	; 32D8A
-call sub_1457C	; 32D91
+call FileClose	; 32D91
 test eax, eax	; 32D96
 jne near loc_32CC4	; 32D98
 loc_32D9E:

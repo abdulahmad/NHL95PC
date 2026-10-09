@@ -3,12 +3,12 @@ bits 32
 %include "hockey.inc"
 section s_85924 progbits alloc exec nowrite align=1
 extern __CHK, asc_C38F8, asc_C3904, asc_C3923, asc_C3932, asc_C3947, asc_C3966, asc_C3972
-extern asc_C3976, asc_C397E, asc_C3986, asc_C398F, asc_C3994, asc_C399B, asc_C39A0, asc_C811A
-extern asc_D281F, byte_C52F2, byte_C5367, byte_C53DC, byte_C5400, byte_C8451, byte_DD774, byte_DD788
+extern asc_C3976, asc_C397E, asc_C3986, asc_C398F, asc_C3994, asc_C399B, asc_C39A0, str_extDB
+extern asc_D281F, byte_C52F2, byte_C5367, byte_C53DC, byte_C5400, curleague, byte_DD774, byte_DD788
 extern byte_ED92F, dword_C5130, dword_C530D, dword_C5382, dword_C53FB, dword_D2C6B, dword_D8B74, dword_DC238
 extern dword_DC888, dword_DC88C, dword_DD730, dword_EA0DC, jctime, off_D27EF, off_D27F7, off_D2855
-extern sprintf_, strcat_, sub_1431E, sub_14566, sub_1457C, sub_145F9, sub_1466B, sub_14825
-extern sub_30A0C, sub_30F12, sub_31013, sub_3170D, sub_3271B, sub_327A1, sub_32B1D, sub_41978
+extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, sub_1466B, sub_14825
+extern sub_30A0C, sub_30F12, MessageBox, sub_3170D, sub_3271B, sub_327A1, sub_32B1D, SaveLeagueGameRef
 extern SaveGameState, sub_6B391, sub_6B3D7, sub_80075, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_903F0, sub_910E0, sub_91284, sub_91370, sub_91400
 extern sub_92CD0, sub_92DE0, sub_B2CD8, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3989, sub_B3999
@@ -41,9 +41,9 @@ call sub_8EA18	; 8594C
 add esp, byte 4	; 85951
 xor ecx, ecx	; 85954
 mov ebx, asc_C38F8	; 85956
-mov edx, byte_C8451	; 8595B
+mov edx, curleague	; 8595B
 lea eax, [byte esp+06Ch]	; 85960
-call sub_1431E	; 85964
+call MakePath	; 85964
 lea ebx, [byte esp+040h]	; 85969
 xor edx, edx	; 8596D
 lea eax, [byte esp+06Ch]	; 8596F
@@ -89,7 +89,7 @@ mov ecx, 3	; 85A0B
 mov ebx, off_D2855	; 85A10
 mov edx, 0FFFFFFFFh	; 85A15
 mov eax, edx	; 85A1A
-call sub_31013	; 85A1C
+call MessageBox	; 85A1C
 jmp near loc_85D52	; 85A21
 loc_85A26:
 cmp dword [dword_C5130], byte 0	; 85A26
@@ -118,7 +118,7 @@ mov eax, unk_C5298	; 85A6A
 call sub_32B1D	; 85A6F
 lea edx, [dword esp+098h]	; 85A74
 lea eax, [byte esp+06Ch]	; 85A7B
-call sub_14566	; 85A7F
+call FileCreate	; 85A7F
 test eax, eax	; 85A84
 je short loc_85A95	; 85A86
 push unk_C392C	; 85A88
@@ -129,18 +129,18 @@ mov ecx, 75h	; 85A95
 mov ebx, 0FFFFFFFFh	; 85A9A
 mov edx, unk_C5298	; 85A9F
 mov eax, dword [dword esp+098h]	; 85AA4
-call sub_145F9	; 85AAB
+call FileWriteAt	; 85AAB
 test eax, eax	; 85AB0
 je short loc_85AC1	; 85AB2
 push unk_C392F	; 85AB4
 call sub_B2CD8	; 85AB9
 add esp, byte 4	; 85ABE
 loc_85AC1:
-mov ecx, asc_C811A	; 85AC1
+mov ecx, str_extDB	; 85AC1
 mov ebx, asc_C3932	; 85AC6
 xor edx, edx	; 85ACB
 lea eax, [byte esp+06Ch]	; 85ACD
-call sub_1431E	; 85AD1
+call MakePath	; 85AD1
 push byte 0	; 85AD6
 lea eax, [byte esp+070h]	; 85AD8
 push eax	; 85ADC
@@ -156,7 +156,7 @@ mov ecx, eax	; 85AF6
 mov ebx, 0FFFFFFFFh	; 85AF8
 mov edx, esi	; 85AFD
 mov eax, dword [dword esp+098h]	; 85AFF
-call sub_145F9	; 85B06
+call FileWriteAt	; 85B06
 test eax, eax	; 85B0B
 je short loc_85B1C	; 85B0D
 push unk_C393B	; 85B0F
@@ -170,7 +170,7 @@ mov ecx, 0Ch	; 85B25
 mov ebx, 0FFFFFFFFh	; 85B2A
 mov edx, byte_DD774	; 85B2F
 mov eax, dword [dword esp+098h]	; 85B34
-call sub_145F9	; 85B3B
+call FileWriteAt	; 85B3B
 test eax, eax	; 85B40
 je short loc_85B51	; 85B42
 push unk_C393E	; 85B44
@@ -181,7 +181,7 @@ mov ecx, 0Ch	; 85B51
 mov ebx, 0FFFFFFFFh	; 85B56
 mov edx, byte_DD788	; 85B5B
 mov eax, dword [dword esp+098h]	; 85B60
-call sub_145F9	; 85B67
+call FileWriteAt	; 85B67
 test eax, eax	; 85B6C
 je short loc_85B7D	; 85B6E
 push unk_C3941	; 85B70
@@ -192,7 +192,7 @@ mov ecx, 18h	; 85B7D
 mov ebx, 0FFFFFFFFh	; 85B82
 mov edx, dword_DD730	; 85B87
 mov eax, dword [dword esp+098h]	; 85B8C
-call sub_145F9	; 85B93
+call FileWriteAt	; 85B93
 test eax, eax	; 85B98
 je short loc_85BA9	; 85B9A
 push unk_C3944	; 85B9C
@@ -202,7 +202,7 @@ loc_85BA9:
 mov eax, dword [dword esp+098h]	; 85BA9
 call SaveGameState	; 85BB0
 lea eax, [dword esp+098h]	; 85BB5
-call sub_1457C	; 85BBC
+call FileClose	; 85BBC
 jmp near loc_85D52	; 85BC1
 loc_85BC6:
 lea edx, [dword eax+03FFh]	; 85BC6
@@ -240,12 +240,12 @@ mov eax, 0F9h	; 85C3B
 call sub_30A0C	; 85C40
 xor ecx, ecx	; 85C45
 mov ebx, asc_C3966	; 85C47
-mov edx, byte_C8451	; 85C4C
+mov edx, curleague	; 85C4C
 lea eax, [byte esp+06Ch]	; 85C51
-call sub_1431E	; 85C55
+call MakePath	; 85C55
 lea edx, [dword esp+098h]	; 85C5A
 lea eax, [byte esp+06Ch]	; 85C61
-call sub_14566	; 85C65
+call FileCreate	; 85C65
 test eax, eax	; 85C6A
 je short loc_85C7B	; 85C6C
 push unk_C396F	; 85C6E
@@ -264,13 +264,13 @@ mov ecx, edi	; 85C90
 mov ebx, off_D27EF	; 85C92
 mov edx, 0FFFFFFFFh	; 85C97
 mov eax, edx	; 85C9C
-call sub_31013	; 85C9E
+call MessageBox	; 85C9E
 or byte [byte_C53DC], 80h	; 85CA3
 or byte [byte_C5400], 80h	; 85CAA
 mov eax, dword_C5382	; 85CB1
 call sub_32B1D	; 85CB6
 mov eax, dword [dword esp+098h]	; 85CBB
-call sub_41978	; 85CC2
+call SaveLeagueGameRef	; 85CC2
 jmp short loc_85D01	; 85CC7
 loc_85CC9:
 push byte 0	; 85CC9
@@ -282,7 +282,7 @@ mov ecx, 2	; 85CD3
 mov ebx, off_D27F7	; 85CD8
 mov edx, 0FFFFFFFFh	; 85CDD
 mov eax, edx	; 85CE2
-call sub_31013	; 85CE4
+call MessageBox	; 85CE4
 or byte [byte_C5367], 80h	; 85CE9
 or byte [byte_C5400], 80h	; 85CF0
 mov eax, dword_C530D	; 85CF7
@@ -291,9 +291,9 @@ loc_85D01:
 mov eax, dword [dword esp+098h]	; 85D01
 call SaveGameState	; 85D08
 lea eax, [dword esp+098h]	; 85D0D
-call sub_1457C	; 85D14
-push byte_C8451	; 85D19
-mov ecx, byte_C8451	; 85D1E
+call FileClose	; 85D14
+push curleague	; 85D19
+mov ecx, curleague	; 85D1E
 mov ebx, asc_C3976	; 85D23
 mov edx, asc_C3972	; 85D28
 mov eax, asc_C3932	; 85D2D
@@ -393,7 +393,7 @@ loc_85E34:
 xor edx, edx	; 85E34
 loc_85E36:
 lea eax, [byte esp+04h]	; 85E36
-call sub_1431E	; 85E3A
+call MakePath	; 85E3A
 push byte 0	; 85E3F
 lea eax, [byte esp+08h]	; 85E41
 push eax	; 85E45

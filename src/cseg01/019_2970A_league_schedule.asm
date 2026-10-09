@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_2970A progbits alloc exec nowrite align=1
-extern __CHK, asc_C8100, asc_C811A, byte_C5386, byte_C8111, dword_C695A, dword_C71CC, dword_C71D0
-extern dword_C71D4, dword_DC7B8, dword_DC7BC, dword_DC830, fputchar, jctime, off_C54A9, off_C80E7
-extern off_C80EF, strcat_, strcmp_, strcpy_, strlen_, sub_1431E, sub_14525, sub_1457C
+extern __CHK, asc_C8100, str_extDB, byte_C5386, byte_C8111, dword_C695A, dword_C71CC, dword_C71D0
+extern dword_C71D4, dword_DC7B8, dword_DC7BC, dword_DC830, fputchar, jctime, teamcitynames, leaguedbnames
+extern strcat_, strcmp_, strcpy_, strlen_, MakePath, FileOpenRead, FileClose
 extern sub_147A0, sub_27F9C, sub_3DAB9, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, unk_C136D
 extern unk_C65D4, unk_DDAC4, unk_DDCE6
 global loc_29781, loc_2978F, loc_2979D, loc_2979F, loc_297A5, loc_297F4, loc_29808, loc_29816
@@ -30,11 +30,11 @@ sub esp, 98h	; 2971B
 mov dword [byte ebp-030h], eax	; 29721
 mov dword [byte ebp-028h], edx	; 29724
 mov dword [byte ebp-08h], 0FFFFFFFFh	; 29727
-mov ecx, asc_C811A	; 2972E
-mov ebx, dword [off_C80E7]	; 29733
+mov ecx, str_extDB	; 2972E
+mov ebx, dword [leaguedbnames+10h]	; 29733
 mov edx, unk_C65D4	; 29739
 lea eax, [byte ebp-058h]	; 2973E
-call sub_1431E	; 29741
+call MakePath	; 29741
 xor ebx, ebx	; 29746
 mov edx, unk_DDAC4	; 29748
 lea eax, [byte ebp-058h]	; 2974D
@@ -42,14 +42,14 @@ call sub_3DAB9	; 29750
 mov dword [byte ebp-020h], eax	; 29755
 cmp word [byte ebp-020h], byte 0	; 29758
 jne short loc_29781	; 2975D
-mov ecx, asc_C811A	; 2975F
+mov ecx, str_extDB	; 2975F
 mov ebx, asc_C8100	; 29764
 xor edx, edx	; 29769
 lea eax, [byte ebp-058h]	; 2976B
-call sub_1431E	; 2976E
+call MakePath	; 2976E
 lea edx, [byte ebp-08h]	; 29773
 lea eax, [byte ebp-058h]	; 29776
-call sub_14525	; 29779
+call FileOpenRead	; 29779
 mov dword [byte ebp-020h], eax	; 2977E
 loc_29781:
 mov dword [byte ebp-014h], 0	; 29781
@@ -188,7 +188,7 @@ loc_298F1:
 jmp near loc_2981B	; 298F1
 loc_298F6:
 lea eax, [byte ebp-08h]	; 298F6
-call sub_1457C	; 298F9
+call FileClose	; 298F9
 cmp word [byte ebp-020h], byte 0	; 298FE
 jne short loc_2990A	; 29903
 call sub_27F9C	; 29905
@@ -370,18 +370,18 @@ sub esp, 24h	; 29AA9
 mov dword [byte ebp-04h], eax	; 29AAF
 cmp dword [dword_C695A], byte 0	; 29AB2
 je short loc_29AD5	; 29AB9
-mov ecx, asc_C811A	; 29ABB
-mov ebx, dword [off_C80EF]	; 29AC0
+mov ecx, str_extDB	; 29ABB
+mov ebx, dword [leaguedbnames+18h]	; 29AC0
 mov edx, unk_C65D4	; 29AC6
 lea eax, [byte ebp-024h]	; 29ACB
-call sub_1431E	; 29ACE
+call MakePath	; 29ACE
 jmp short loc_29AE9	; 29AD3
 loc_29AD5:
-mov ecx, asc_C811A	; 29AD5
+mov ecx, str_extDB	; 29AD5
 mov ebx, asc_C8100	; 29ADA
 xor edx, edx	; 29ADF
 lea eax, [byte ebp-024h]	; 29AE1
-call sub_1431E	; 29AE4
+call MakePath	; 29AE4
 loc_29AE9:
 push byte 20h	; 29AE9
 lea eax, [byte ebp-024h]	; 29AEB
@@ -426,7 +426,7 @@ jmp short loc_29B3D	; 29B48
 loc_29B4A:
 mov eax, dword [byte ebp-04h]	; 29B4A
 shl eax, 2	; 29B4D
-mov edx, dword [dword eax+off_C54A9]	; 29B50
+mov edx, dword [dword eax+teamcitynames]	; 29B50
 imul eax, dword [byte ebp-04h], byte 15h	; 29B56
 mov ebx, unk_DDAC4	; 29B5A
 add eax, ebx	; 29B5F

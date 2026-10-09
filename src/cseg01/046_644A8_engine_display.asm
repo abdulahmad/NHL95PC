@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_644A8 progbits alloc exec nowrite align=1
 extern PBnum, __CHK, asc_C1DB6, asc_C1DBC, asc_C1DC5, asc_C1DCE, asc_C1DD6, asc_C8136
-extern asc_C814F, sflags, gmode2, byte_CC049, byte_CCE00, byte_CD418, byte_CD421, byte_CD473
+extern str_extBIN, sflags, gmode2, byte_CC049, byte_CCE00, byte_CD418, byte_CD421, byte_CD473
 extern hmroster, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byte_DFFA6, byte_E0250
 extern byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E03C1, byte_E9DB4, byte_E9E18
 extern byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC
@@ -18,7 +18,7 @@ extern dword_E9F54, dword_E9F56, dword_E9F5A, dword_E9F76, dword_E9F78, dword_E9
 extern dword_E9FA5, dword_E9FA8, dword_E9FAA, dword_E9FD9, dword_E9FF0, dword_ED74C, fputchar, gmode
 extern jctime, replaystart, puckz, puckc, camx_m2, off_CBED0, off_CC01D, off_CD498
 extern off_CD4A0, off_CD4DC, setpersonel, sfx, sprintf_, sub_11005, sub_110E0, sub_11136
-extern sub_1431E, sub_1CD73, CrowdNoiseUpdate, CrowdNoiseOff, sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0
+extern MakePath, sub_1CD73, CrowdNoiseUpdate, CrowdNoiseOff, sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8EA18, sub_90354, sub_90D20, sub_90EC0, sub_91964, sub_93540, sub_B30B4
 extern sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80, awlinetab, unk_DACA0, hmlinetab, SortCords
 extern unk_E9CEC, unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE
@@ -2770,7 +2770,7 @@ jmp short .2	; 664F7
 xor edx, edx	; 664F9
 .2:
 mov eax, esp	; 664FB
-call sub_1431E	; 664FD
+call MakePath	; 664FD
 push byte 20h	; 66502
 lea eax, [byte esp+04h]	; 66504
 push eax	; 66508
@@ -3892,7 +3892,7 @@ sub esp, byte 14h	; 673D3
 mov edi, eax	; 673D6
 mov dword [byte esp+010h], edx	; 673D8
 mov esi, ebx	; 673DC
-mov ecx, asc_C814F	; 673DE
+mov ecx, str_extBIN	; 673DE
 mov ebx, asc_C1DBC	; 673E3
 cmp byte [byte_ED86D], 1	; 673E8
 jne short .1	; 673EF
@@ -3902,7 +3902,7 @@ jmp short .2	; 673F7
 xor edx, edx	; 673F9
 .2:
 mov eax, esp	; 673FB
-call sub_1431E	; 673FD
+call MakePath	; 673FD
 push byte 0	; 67402
 lea eax, [byte esp+04h]	; 67404
 push eax	; 67408
@@ -3933,7 +3933,7 @@ jl short sub_673C5.4	; 6744C
 push ebp	; 6744E
 call jctime	; 6744F
 add esp, byte 4	; 67454
-mov ecx, asc_C814F	; 67457
+mov ecx, str_extBIN	; 67457
 mov ebx, asc_C1DC5	; 6745C
 cmp byte [byte_ED7F7], 1	; 67461
 jne short .5	; 67468
@@ -3943,7 +3943,7 @@ jmp short .6	; 67470
 xor edx, edx	; 67472
 .6:
 mov eax, esp	; 67474
-call sub_1431E	; 67476
+call MakePath	; 67476
 push byte 0	; 6747B
 lea eax, [byte esp+04h]	; 6747D
 push eax	; 67481
@@ -3993,7 +3993,7 @@ jmp short .11	; 67503
 xor edx, edx	; 67505
 .11:
 mov eax, esp	; 67507
-call sub_1431E	; 67509
+call MakePath	; 67509
 push byte 0	; 6750E
 lea eax, [byte esp+04h]	; 67510
 push eax	; 67514

@@ -13,7 +13,7 @@ extern dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8, dword_ED
 extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED6FC, dword_ED704, dword_ED708
 extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, jctime, camx_m2, off_CD4FA
 extern off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25, rand_, sub_10E9F, sub_110E0, sub_11598
-extern sub_1431E, sub_30A0C, sub_30F12, sub_31013, sub_33DD3, CrowdNoiseOff, ReplayFirstFrame, ReplayStep
+extern MakePath, sub_30A0C, sub_30F12, MessageBox, sub_33DD3, CrowdNoiseOff, ReplayFirstFrame, ReplayStep
 extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_6B391, sub_6B3D7, sub_7F724
 extern sub_7FA10, sub_7FC12, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
@@ -83,7 +83,7 @@ loc_7DCFC:
 xor edx, edx	; 7DCFC
 loc_7DCFE:
 mov eax, esp	; 7DCFE
-call sub_1431E	; 7DD00
+call MakePath	; 7DD00
 mov eax, esp	; 7DD05
 call sub_8F13B	; 7DD07
 mov dword [nosplit edi*4+dword_ED368], eax	; 7DD0C
@@ -156,7 +156,7 @@ loc_7DDC0:
 xor edx, edx	; 7DDC0
 loc_7DDC2:
 mov eax, esp	; 7DDC2
-call sub_1431E	; 7DDC4
+call MakePath	; 7DDC4
 mov eax, esp	; 7DDC9
 call sub_8F13B	; 7DDCB
 mov dword [nosplit edi*4+dword_ED38C], eax	; 7DDD0
@@ -191,7 +191,7 @@ loc_7DE2F:
 xor edx, edx	; 7DE2F
 loc_7DE31:
 mov eax, esp	; 7DE31
-call sub_1431E	; 7DE33
+call MakePath	; 7DE33
 mov eax, esp	; 7DE38
 call sub_8F13B	; 7DE3A
 mov dword [dword_ED380], eax	; 7DE3F
@@ -210,7 +210,7 @@ loc_7DE76:
 xor edx, edx	; 7DE76
 loc_7DE78:
 mov eax, esp	; 7DE78
-call sub_1431E	; 7DE7A
+call MakePath	; 7DE7A
 mov eax, esp	; 7DE7F
 call sub_8F13B	; 7DE81
 mov dword [dword_ED384], eax	; 7DE86
@@ -224,7 +224,7 @@ loc_7DEA3:
 xor edx, edx	; 7DEA3
 loc_7DEA5:
 mov eax, esp	; 7DEA5
-call sub_1431E	; 7DEA7
+call MakePath	; 7DEA7
 mov eax, esp	; 7DEAC
 call sub_8F13B	; 7DEAE
 mov dword [dword_ED388], eax	; 7DEB3
@@ -535,7 +535,7 @@ loc_7E1EC:
 xor edx, edx	; 7E1EC
 loc_7E1EE:
 lea eax, [byte esp+04h]	; 7E1EE
-call sub_1431E	; 7E1F2
+call MakePath	; 7E1F2
 push byte 0	; 7E1F7
 lea eax, [byte esp+08h]	; 7E1F9
 push eax	; 7E1FD
@@ -1632,7 +1632,7 @@ mov ecx, 3	; 7F188
 mov ebx, off_D1F25	; 7F18D
 xor edx, edx	; 7F192
 xor eax, eax	; 7F194
-call sub_31013	; 7F196
+call MessageBox	; 7F196
 lea eax, [byte esp+08h]	; 7F19B
 push eax	; 7F19F
 call sub_8EA00	; 7F1A0
@@ -1651,7 +1651,7 @@ loc_7F1D2:
 xor edx, edx	; 7F1D2
 loc_7F1D4:
 lea eax, [byte esp+048h]	; 7F1D4
-call sub_1431E	; 7F1D8
+call MakePath	; 7F1D8
 push byte 0	; 7F1DD
 lea eax, [byte esp+04Ch]	; 7F1DF
 push eax	; 7F1E3
@@ -1960,7 +1960,7 @@ mov ecx, 3	; 7F5E8
 mov ebx, off_D1F25	; 7F5ED
 xor edx, edx	; 7F5F2
 xor eax, eax	; 7F5F4
-call sub_31013	; 7F5F6
+call MessageBox	; 7F5F6
 mov esi, dword [dword_ED6D8]	; 7F5FB
 push esi	; 7F601
 call jctime	; 7F602
@@ -1975,7 +1975,7 @@ loc_7F625:
 xor edx, edx	; 7F625
 loc_7F627:
 lea eax, [byte esp+048h]	; 7F627
-call sub_1431E	; 7F62B
+call MakePath	; 7F62B
 push byte 0	; 7F630
 lea eax, [byte esp+04Ch]	; 7F632
 push eax	; 7F636
@@ -2024,7 +2024,7 @@ mov ecx, 3	; 7F6C7
 mov ebx, off_D1F25	; 7F6CC
 mov edx, 0FFFFFFFFh	; 7F6D1
 mov eax, edx	; 7F6D6
-call sub_31013	; 7F6D8
+call MessageBox	; 7F6D8
 call sub_B3999	; 7F6DD
 call sub_30F12	; 7F6E2
 loc_7F6E7:

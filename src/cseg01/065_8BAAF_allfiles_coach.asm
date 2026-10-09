@@ -6,7 +6,7 @@ extern __CHK, asc_C3B0E, asc_C3B16, asc_C3B2A, asc_C3B38, asc_C3B45, asc_C3B67, 
 extern asc_C3B75, asc_C3B7A, asc_C3B7F, asc_C3B84, asc_C3B8A, asc_C3B93, byte_C5400, musicon
 extern byte_D2C68, byte_ED7CC, byte_ED9B2, byte_ED9B3, byte_ED9EB, songdata, dword_D2C6B, musicslot
 extern fclose_, fgets_, fopen_, fscanf_, jctime, memcpy_, rand_, sprintf_
-extern strcat_, stricmp_, sub_11598, sub_1431E, sub_33E6A, FadeOutPalCycle, sub_6B410, sub_6B47C
+extern strcat_, stricmp_, sub_11598, MakePath, sub_33E6A, FadeOutPalCycle, sub_6B410, sub_6B47C
 extern sub_836E4, sub_8373E, sub_8473A, sub_8474E, PlayMVI, sub_8D2F0, sub_8E83C, sub_8F98F
 extern sub_8FC8A, sub_8FFB0, sub_9061C, sub_B2CD8, sub_B30B4, sub_B4BA8, unk_C3B0C
 global loc_8BAE6, loc_8BB72, loc_8BB76, loc_8BBA7, loc_8BBB0, loc_8BBCF, loc_8BBFF, loc_8BC02
@@ -150,7 +150,7 @@ loc_8BC4D:
 xor edx, edx	; 8BC4D
 loc_8BC4F:
 lea eax, [dword esp+0300h]	; 8BC4F
-call sub_1431E	; 8BC56
+call MakePath	; 8BC56
 push byte 0	; 8BC5B
 lea eax, [dword esp+0304h]	; 8BC5D
 push eax	; 8BC64
@@ -200,7 +200,7 @@ loc_8BD01:
 xor edx, edx	; 8BD01
 loc_8BD03:
 lea eax, [dword esp+0300h]	; 8BD03
-call sub_1431E	; 8BD0A
+call MakePath	; 8BD0A
 lea eax, [dword esp+0300h]	; 8BD0F
 call sub_8F98F	; 8BD16
 mov dword [songdata], eax	; 8BD1B
@@ -246,7 +246,7 @@ loc_8BDA9:
 xor edx, edx	; 8BDA9
 loc_8BDAB:
 lea eax, [dword esp+0300h]	; 8BDAB
-call sub_1431E	; 8BDB2
+call MakePath	; 8BDB2
 cmp byte [musicon], 0	; 8BDB7
 je short loc_8BDD2	; 8BDBE
 test byte [byte_C5400], 1	; 8BDC0

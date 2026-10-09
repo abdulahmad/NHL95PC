@@ -4,7 +4,7 @@ bits 32
 section s_C772B progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450, unk_C76D4, unk_C76FE
 global off_C772B, unk_C7733, unk_C776B, unk_C7792, unk_C77A3, unk_C77AA, unk_C77AE, unk_C77E6
-global unk_C7805, unk_C7809, unk_C7826, unk_C782A, unk_C7847, unk_C784B
+global unk_C7805, unk_C7809, unk_C7826, unk_C782A, msg_TradeError, unk_C784B
 off_C772B:
 dd unk_C76D4
 dd unk_C76FE
@@ -46,7 +46,7 @@ dd unk_C7809
 unk_C782A:
 db 045h,072h,072h,06Fh,072h,020h,077h,068h,069h,06Ch,065h,020h,074h,072h,061h,064h
 db 069h,06Eh,067h,020h,070h,06Ch,061h,079h,065h,072h,073h,021h,00h
-unk_C7847:
+msg_TradeError:
 dd unk_C782A
 unk_C784B:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,072h,065h,061h,06Ch,06Ch,079h,020h,077h,061h

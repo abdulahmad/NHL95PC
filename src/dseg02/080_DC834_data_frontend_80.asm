@@ -6,7 +6,7 @@ global byte_DC836, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DC9DD, b
 global byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA1B, byte_DCA21, byte_DCA28, byte_DCA29
 global byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_DCAD7, byte_DCFD8, byte_DD058
 global byte_DD2D4, byte_DD2DC, byte_DD668, byte_DD669, byte_DD710, byte_DD750, byte_DD774, byte_DD775
-global byte_DD788, byte_DD789, byte_DD7B0, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, byte_DDD10
+global byte_DD788, byte_DD789, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname
 global byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_DDD8C, byte_DDD8D, byte_DDD8E
 global byte_DE268, byte_DE26C, byte_DEB70, byte_DEB71, dword_DC85C, dword_DC860, dword_DC868, dword_DC888
 global dword_DC88C, dword_DC8A0, dword_DC8C8, dword_DC8D0, dword_DD100, dword_DD104, dword_DD108, dword_DD10C
@@ -17,12 +17,12 @@ global dword_DD644, dword_DD648, dword_DD64C, dword_DD650, dword_DD654, dword_DD
 global dword_DD664, dword_DD66C, dword_DD670, dword_DD678, dword_DD688, dword_DD68C, dword_DD690, dword_DD694
 global dword_DD698, dword_DD69C, dword_DD6A0, dword_DD6A4, dword_DD6A6, dword_DD6A8, dword_DD6AE, dword_DD6B0
 global dword_DD730, dword_DD748, dword_DD74C, dword_DD770, dword_DD780, dword_DD784, dword_DD794, dword_DD798
-global dword_DD79C, dword_DD7A0, dword_DD7A4, dword_DD7A8, dword_DD7AC, dword_DD7CE, dword_DDAC0, dword_DDD28
+global dword_DD79C, dword_DD7A0, dword_DD7A4, leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD28
 global dword_DDD2C, dword_DDD30, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68, dword_DDD6C
 global dword_DDD70, dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C
 global dword_DE260, dword_DE264, dword_DE265, dword_DEB6C, dword_DEB74, unk_DC834, unk_DC837, unk_DC847
-global unk_DC890, unk_DC998, unk_DCA98, unk_DD0D8, unk_DD7B4, unk_DDAC4, unk_DDCE6, unk_DDCFB
-global unk_DDD1D, unk_DDD4C, unk_DDD59, unk_DDFF4, scrolly, scrollx, bgscrollx, bgscrolly8
+global unk_DC890, unk_DC998, unk_DCA98, unk_DD0D8, leagueteams, unk_DDAC4, unk_DDCE6, unk_DDCFB
+global masterpw, savleague1, savleague2, unk_DDFF4, scrolly, scrollx, bgscrollx, bgscrolly8
 global word_DD7D0, word_DDD46, word_DDD48, word_DDD4A
 unk_DC834:
 resb 2
@@ -256,13 +256,13 @@ dword_DD7A0:
 resb 4
 dword_DD7A4:
 resb 4
-dword_DD7A8:
+leaguemaster:
 resb 4
-dword_DD7AC:
+leaguesaved:
 resb 4
-byte_DD7B0:
+leagueflags:
 resb 4
-unk_DD7B4:
+leagueteams:
 resb 22
 byte_DD7CA:
 resb 1
@@ -276,7 +276,7 @@ dword_DD7CE:
 resb 2
 word_DD7D0:
 resb 752
-dword_DDAC0:
+humancount:
 resb 4
 unk_DDAC4:
 resb 546
@@ -284,9 +284,9 @@ unk_DDCE6:
 resb 21
 unk_DDCFB:
 resb 21
-byte_DDD10:
+savedname:
 resb 13
-unk_DDD1D:
+masterpw:
 resb 11
 dword_DDD28:
 resb 4
@@ -318,9 +318,9 @@ word_DDD48:
 resb 2
 word_DDD4A:
 resb 2
-unk_DDD4C:
+savleague1:
 resb 13
-unk_DDD59:
+savleague2:
 resb 15
 dword_DDD68:
 resb 4

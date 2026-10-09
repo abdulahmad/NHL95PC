@@ -21,8 +21,8 @@ extern dword_DC73C, dword_DC754, dword_DD11C, dword_EA0DC, dword_EA2B4, dword_EA
 extern dword_EBC74, dword_EBC78, dword_EBC7C, dword_EBE9C, dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0
 extern vgapage, fputchar, j___close_, j___delay_, jctime, lseek_, memcpy_, off_CF223
 extern off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443, off_D056C, off_D058C
-extern open_, qsort_, read_, sprintf_, strcmp_, sub_1431E, sub_174C2, sub_17573
-extern sub_175E2, sub_176AE, sub_176DB, sub_1D6E8, sub_29C75, sub_31013, sub_479E9, FadeOutPalCycle
+extern open_, qsort_, read_, sprintf_, strcmp_, MakePath, sub_174C2, sub_17573
+extern sub_175E2, sub_176AE, sub_176DB, sub_1D6E8, sub_29C75, MessageBox, sub_479E9, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_6CBB7
 extern sub_6CBE8, sub_6CBFD, sub_78366, sub_78500, sub_78A87, sub_79188, sub_79DE1, sub_79F41
 extern sub_7A099, sub_836E4, sub_8373E, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0
@@ -172,7 +172,7 @@ loc_738FA:
 xor edx, edx	; 738FA
 loc_738FC:
 mov eax, esp	; 738FC
-call sub_1431E	; 738FE
+call MakePath	; 738FE
 push byte 0	; 73903
 lea eax, [byte esp+04h]	; 73905
 push eax	; 73909
@@ -464,7 +464,7 @@ loc_73C4F:
 xor edx, edx	; 73C4F
 loc_73C51:
 lea eax, [byte ebp-05Eh]	; 73C51
-call sub_1431E	; 73C54
+call MakePath	; 73C54
 push byte 0	; 73C59
 lea eax, [byte ebp-05Eh]	; 73C5B
 push eax	; 73C5E
@@ -513,7 +513,7 @@ loc_73CFC:
 xor edx, edx	; 73CFC
 loc_73CFE:
 lea eax, [byte ebp-05Eh]	; 73CFE
-call sub_1431E	; 73D01
+call MakePath	; 73D01
 push byte 0	; 73D06
 lea eax, [byte ebp-05Eh]	; 73D08
 push eax	; 73D0B
@@ -2594,7 +2594,7 @@ loc_75431:
 mov ebx, dword_EBC74	; 75431
 mov edx, 0FFFFFFFFh	; 75436
 mov eax, edx	; 7543B
-call sub_31013	; 7543D
+call MessageBox	; 7543D
 mov eax, 1	; 75442
 jmp short loc_7544B	; 75447
 loc_75449:
@@ -3457,7 +3457,7 @@ loc_75DF4:
 xor edx, edx	; 75DF4
 loc_75DF6:
 lea eax, [byte esp+078h]	; 75DF6
-call sub_1431E	; 75DFA
+call MakePath	; 75DFA
 push byte 0	; 75DFF
 lea eax, [byte esp+07Ch]	; 75E01
 push eax	; 75E05
@@ -4351,7 +4351,7 @@ loc_769A3:
 xor edx, edx	; 769A3
 loc_769A5:
 mov eax, esp	; 769A5
-call sub_1431E	; 769A7
+call MakePath	; 769A7
 push byte 0	; 769AC
 lea eax, [byte esp+04h]	; 769AE
 push eax	; 769B2
@@ -4679,7 +4679,7 @@ loc_76D6F:
 xor edx, edx	; 76D6F
 loc_76D71:
 lea eax, [byte ebp-032h]	; 76D71
-call sub_1431E	; 76D74
+call MakePath	; 76D74
 push byte 0	; 76D79
 lea eax, [byte ebp-032h]	; 76D7B
 push eax	; 76D7E
@@ -4734,7 +4734,7 @@ loc_76E2A:
 xor edx, edx	; 76E2A
 loc_76E2C:
 lea eax, [byte ebp-032h]	; 76E2C
-call sub_1431E	; 76E2F
+call MakePath	; 76E2F
 push byte 0	; 76E34
 lea eax, [byte ebp-032h]	; 76E36
 push eax	; 76E39

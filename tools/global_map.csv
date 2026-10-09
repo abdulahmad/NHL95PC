@@ -184,3 +184,105 @@ dbg_assnames,CD8C4,"pointer table of assignment-name strings: DebugMonitor index
 dbg_spalist,CD504,78h dword SPA values: DebugMonitor searches it for the object's SPA to find its name in dbg_spanames
 dbg_spanames,CD6E4,"78h names parallel to dbg_spalist; DebugMonitor prints the match, else ""spa=%d"""
 bailout_vec,D41F0,"called on the debug 'bail' key in DebugMonitor, from main_startup and from the keyboard handler; exit/abort vector"
+curleague,C8451,"current league path: every league routine builds <curleague>\PINFO.DB, TEAMS.DB, SCHEDULE.DB from it and strips it at '.' for message text"
+humancount,DDAC0,"PINFO +0: 'only one human controlled team' when 1, 'All the teams are already human' when >= 1Ah"
+leaguemaster,DD7A8,PINFO +2: team index CheckMasterPassword passes to AskMasterPassword
+leaguesaved,DD7AC,PINFO +4: non-zero gives 'There is a saved game in the league'; SaveLeagueGameRef writes -1
+leagueflags,DD7B0,PINFO +13h: bit 2 set skips the 'Master databases for' prompt
+leagueteams,DD7B4,"PINFO +20h: 1Ah team entries of 1Eh bytes (name, +16h copied flag, +17h human, +18h on disk)"
+savedname,DDD10,PINFO +6 (0Dh bytes): SaveLeagueGameRef writes 'saved'
+masterpw,DDD1D,PINFO +15h (0Bh bytes): AskMasterPassword strcmp's the input with it
+savleague1,DDD4C,saved-game league path (0Dh): SaveLeagueGameRef writes it and opens its PINFO.DB
+savleague2,DDD59,"second saved-game league path (0Dh), used when dword_DDD3C is set"
+leaguedbnames,C80D7,"7 league database names KEY, CAREER, ATT, CARTEAMS, TEAMS, SEASON, SCHEDULE; CopyHumanTeamDBs copies all 7"
+str_dbgClin,C234F,string '------------------------clin=%d %d '
+str_dbgPenShot,C2373,string 'ps<%d %d %d %d %d> f(%d %d %d %d) b(%d %d)'
+str_dbgLip,C239E,string 'lip %d '
+str_dbgHVpos,C23A6,"string 'HVpos<%d %d, %d %d> '"
+str_dbgRef,C23BB,string 'ref<%d %d> '
+str_dbgPb,C23C7,string 'pb[%d %d]'
+str_dbgG,C23D1,string 'G<%d %d> '
+str_dbgGO,C23DB,string 'GO=%d PO=%d go=%d gs=%d '
+str_dbgGsp,C23F4,string 'g=%d %d '
+str_dbgC12,C23FD,string 'c12(%d %d)(%d %d) '
+str_dbgPuckc,C2410,string 'puckc = %d gmclock%d gmpen%d pcdwn=%d\n'
+str_dbgIdx,C2437,string '%d) '
+str_dbgD,C243C,string '%d '
+str_dbgLbD,C2440,string '[%d '
+str_dbgDRb,C2445,string '%d] '
+str_dbgDS,C244A,string '%d %s '
+str_dbgPosVel,C2451,string '@(%d %d) v(%d %d) %d(%d %d)'
+str_dbgVz,C246D,string 'vz%d '
+str_dbgAss,C2473,string 'A%s '
+str_dbgSpa,C247E,string 'spa=%d'
+str_debError,C2488,string 'debError: %d frame %d \n'
+str_dbgBail,C24A2,string 'bail\n'
+str_statslog,C24A8,string 'stats.log'
+str_fmode_at,C24B2,string 'a+t'
+str_ErrDumpStats,C24B6,string 'error dump stats\n'
+str_dumpPool,C24C8,string '===== pool(%d %d) gm%d ====\n'
+str_dumpTmstructs,C24E5,string '===== tmstructs ====\n'
+str_dumpHex,C24FB,string '%x '
+str_dumpSortcords,C24FF,string '===== sortcords ====\n'
+str_dumpSortLine,C2515,string '%d:%d[%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %x]\n'
+str_dumpRule,C2550,string '==================================================\n'
+str_dumpTeamHdrH,C2584,string '       shts score [shots score] ppg pp pen penmin atop pass passcomp\n'
+str_dumpHome,C25CA,string 'home : %d %d [%d %d] %d %d %d %d %d %d %d\n'
+str_dumpPlHdrH,C25F5,string '   i pnum g  a  pen +/- ppg shg eng sht status\n'
+str_dumpPlLineH,C2625,string '%3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d\n'
+str_dumpGlHdrH,C2652,string '   i pnum min sht sav status\n'
+str_dumpGlLine,C2670,string '%3d %3d %5d %3d %3d %3d\n'
+str_dumpTeamHdrA,C2689,string '       shts score [shots score] ppg pp pen penmin atop pass passcomp\n'
+str_dumpAway,C26CF,string 'away : %d %d [%d %d] %d %d %d %d %d %d %d\n'
+str_dumpPlHdrA,C26FA,string '   i pnum g  a  pen +/- ppg shg eng sht status\n'
+str_dumpPlLineA,C272A,string '%3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d\n'
+str_dumpGlHdrA,C2757,string '   i pnum min sht sav status\n'
+str_dbgO,C234B,string 'O'
+str_dbgDash,C234D,string '-'
+str_dbgL,C2478,string 'L'
+str_dbgI,C247A,string 'I'
+str_dbgSpace,C247C,string ' '
+str_dbgS,C2485,string '%s'
+str_newline,C24A0,string '\n'
+msg_MasterDB,C7DEA,message box line table
+msg_MasterDB_arg,C7DEE,msg_MasterDB fill-in string pointer for the message box
+msg_SavedGame,C809D,message box line table
+msg_SavedGame_arg,C80A1,msg_SavedGame fill-in string pointer for the message box
+msg_Copying,C7BD1,message box line table
+msg_Copying_arg,C7BD5,msg_Copying fill-in string pointer for the message box
+msg_InsertDisk,C7611,message box line table
+msg_InsertDisk_arg,C7615,msg_InsertDisk fill-in string pointer for the message box
+msg_WrongDisk,C766B,message box line table
+msg_WrongDisk_arg,C766F,msg_WrongDisk fill-in string pointer for the message box
+msg_AllHuman,C750F,message box line table
+msg_OneHuman,C753C,message box line table
+msg_TradeError,C7847,message box line table
+msg_TradeDeadline,C8C26,message box line table
+str_Show,C1A26,string 'Show '
+str_Statistics,C1A2C,string ' Statistics...'
+str_HOMEPALS,C1A3C,string 'HOMEPALS'
+str_easndesk,C1A48,string 'easndesk'
+str_bangpal,C1A51,string '!pal'
+str_LLST,C1A58,string 'LLST'
+str_LLSN,C1A5D,string 'LLSN'
+str_extnum,C1A62,string '.%02d'
+str_saved,C1A68,string 'saved'
+str_FromLeague,C7632,string ' from the league '
+str_PINFO,C80F3,string 'PINFO'
+str_PLAYER,C80F9,string 'PLAYER'
+str_extDB,C811A,string '.DB'
+str_extBIN,C814F,string '.BIN'
+str_extxx,C8154,string '.xx'
+str_extLP,C815C,string '.LP'
+str_extID,C8166,string '.ID'
+str_dot,C8164,string '.'
+str_floppydrv,C816A,string '?:'
+str_star,C8113,string '*'
+str_SelNewHuman,C818B,string 'Select new human controlled team'
+str_SelRemoveHuman,C81AC,string 'Select human controlled team to remove'
+str_SelTradeTeams,C81D3,string 'Select two teams for trading players'
+str_pen,C223B,string pen (DebugMonitor prints it for an object in the penalty box)
+teamcitynames,C54A9,"pointer table of team city names ('BOSTON', 'BUFFALO', 'CALGARY', ...); TradePlayers builds 'Show <city> Statistics...' from it"
+btn_MasterDB,C7E4E,"two-button table (Yes at +18h, No at +34h) for the 'Master databases for' message box"
+btn_WrongDisk,C7677,"two-button table (Yes/No) for the 'That disk is for' message box in CopyHumanTeamDBs"
+btn_TradeStats,C885C,"button table for the TradePlayers team picker (the two 'Show <city> Statistics...' buttons)"

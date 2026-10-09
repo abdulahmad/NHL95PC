@@ -3,13 +3,13 @@ bits 32
 %include "hockey.inc"
 section s_1431E progbits alloc exec nowrite align=1
 extern __CHK, _dos_close_, _dos_creat_, _dos_getdiskfree_, _dos_open_, _dos_read_, _dos_write_, asc_C064C
-extern asc_C066B, asc_C068A, asc_C0696, asc_C5679, byte_C8164, byte_C8451, dword_C56C4, dword_C56E4
+extern asc_C066B, asc_C068A, asc_C0696, asc_C5679, str_dot, curleague, dword_C56C4, dword_C56E4
 extern dword_C5704, dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844
 extern dword_C5848, dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_DC26C
 extern dword_DC28C, dword_DC2BC, dword_DC2C0, dword_DC2C4, dword_DC30C, dword_DC334, gmode, j_unlink_
-extern lseek_, off_C56B5, off_C80D7, rmdir_, sprintf_, strcat_, strcpy_, sub_15374
-extern sub_1540A, sub_15655, sub_15707, sub_157BD, sub_15995, sub_31013, TeamLineEnergy, SelectScreenBM
-extern SelectRinkBM, sub_B2CD8, MouseSetPos, sub_B4CD8, sub_B4CF2, unk_C8113, unk_C8115, unk_DC2F4
+extern lseek_, off_C56B5, leaguedbnames, rmdir_, sprintf_, strcat_, strcpy_, sub_15374
+extern sub_1540A, sub_15655, sub_15707, sub_157BD, sub_15995, MessageBox, TeamLineEnergy, SelectScreenBM
+extern SelectRinkBM, sub_B2CD8, MouseSetPos, sub_B4CD8, sub_B4CF2, str_star, unk_C8115, unk_DC2F4
 extern unk_DC300, unknown_libname_1, unknown_libname_2, word_C571C, word_C575C, lcboxon, word_CBC6C
 global loc_14349, loc_1434C, loc_14359, loc_14366, loc_143FA, loc_14436, loc_1443A, loc_144D7
 global loc_14513, loc_14517, loc_14537, loc_14599, loc_145D0, loc_145E4, loc_145E6, loc_145F0
@@ -20,12 +20,12 @@ global loc_14B5B, loc_14B63, loc_14B7C, loc_14BC0, loc_14BC8, loc_14BDC, loc_14B
 global loc_14C4F, loc_14C54, loc_14C58, loc_14C86, loc_14C92, loc_14C96, loc_14CBA, loc_14CBF
 global loc_14CC5, loc_14CCE, loc_14CD2, loc_14CD8, loc_14CEE, loc_14D57, loc_14DD4, loc_14DFA
 global loc_14E34, loc_14E56, loc_14E6C, loc_14E88, loc_14EB4, loc_14EF1, loc_14F13, loc_14F2A
-global loc_14F7E, loc_14F9E, loc_14FF3, loc_15008, loc_15023, loc_1509B, sub_1431E, sub_14368
-global sub_14442, sub_14525, sub_1453E, sub_14552, sub_14566, sub_1457C, sub_145A2, sub_145F9
+global loc_14F7E, loc_14F9E, loc_14FF3, loc_15008, loc_15023, loc_1509B, MakePath, sub_14368
+global sub_14442, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
 global sub_1463D, sub_14654, sub_1466B, sub_1478B, sub_147A0, sub_147C9, sub_147FF, sub_14825
 global sub_148A5, sub_149BF, sub_14A20, sub_14AFE, sub_14BEF, sub_14C22, sub_14CA0, sub_14CF1
 global sub_14F31
-sub_1431E:
+MakePath:
 push dword 8	; 1431E
 call __CHK	; 14323
 push esi	; 14328
@@ -74,7 +74,7 @@ call strcat_	; 1438F
 mov edx, esi	; 14394
 lea eax, [byte esp+02Ch]	; 14396
 call strcat_	; 1439A
-mov edx, byte_C8164	; 1439F
+mov edx, str_dot	; 1439F
 lea eax, [byte esp+02Ch]	; 143A4
 call strcat_	; 143A8
 mov edx, ebx	; 143AD
@@ -138,13 +138,13 @@ call strcpy_	; 1445A
 mov edx, unk_C8115	; 1445F
 lea eax, [byte esp+02Ch]	; 14464
 call strcat_	; 14468
-mov edx, unk_C8113	; 1446D
+mov edx, str_star	; 1446D
 lea eax, [byte esp+02Ch]	; 14472
 call strcat_	; 14476
-mov edx, byte_C8164	; 1447B
+mov edx, str_dot	; 1447B
 lea eax, [byte esp+02Ch]	; 14480
 call strcat_	; 14484
-mov edx, unk_C8113	; 14489
+mov edx, str_star	; 14489
 lea eax, [byte esp+02Ch]	; 1448E
 call strcat_	; 14492
 mov ebx, esp	; 14497
@@ -192,7 +192,7 @@ pop edx	; 14521
 pop ecx	; 14522
 pop ebx	; 14523
 ret	; 14524
-sub_14525:
+FileOpenRead:
 push dword 8	; 14525
 call __CHK	; 1452A
 push ebx	; 1452F
@@ -202,21 +202,21 @@ loc_14537:
 call _dos_open_	; 14537
 pop ebx	; 1453C
 ret	; 1453D
-sub_1453E:
+FileOpenWrite:
 push dword 8	; 1453E
 call __CHK	; 14543
 push ebx	; 14548
 mov ebx, edx	; 14549
 mov edx, 41h	; 1454B
 jmp short loc_14537	; 14550
-sub_14552:
+FileOpenRW:
 push dword 8	; 14552
 call __CHK	; 14557
 push ebx	; 1455C
 mov ebx, edx	; 1455D
 mov edx, 42h	; 1455F
 jmp short loc_14537	; 14564
-sub_14566:
+FileCreate:
 push dword 8	; 14566
 call __CHK	; 1456B
 push ebx	; 14570
@@ -225,7 +225,7 @@ xor edx, edx	; 14573
 call _dos_creat_	; 14575
 pop ebx	; 1457A
 ret	; 1457B
-sub_1457C:
+FileClose:
 push dword 0Ch	; 1457C
 call __CHK	; 14581
 push ebx	; 14586
@@ -242,7 +242,7 @@ mov dword [edx], 0FFFFFFFFh	; 14599
 pop edx	; 1459F
 pop ebx	; 145A0
 ret	; 145A1
-sub_145A2:
+FileReadAt:
 push dword 18h	; 145A2
 call __CHK	; 145A7
 push esi	; 145AC
@@ -284,7 +284,7 @@ pop ebp	; 145F5
 pop edi	; 145F6
 pop esi	; 145F7
 ret	; 145F8
-sub_145F9:
+FileWriteAt:
 push dword 18h	; 145F9
 call __CHK	; 145FE
 push esi	; 14603
@@ -320,7 +320,7 @@ call __CHK	; 14642
 push ecx	; 14647
 mov ecx, 34h	; 14648
 loc_1464D:
-call sub_145A2	; 1464D
+call FileReadAt	; 1464D
 pop ecx	; 14652
 ret	; 14653
 sub_14654:
@@ -328,7 +328,7 @@ push dword 8	; 14654
 call __CHK	; 14659
 push ecx	; 1465E
 mov ecx, 34h	; 1465F
-call sub_145F9	; 14664
+call FileWriteAt	; 14664
 pop ecx	; 14669
 ret	; 1466A
 sub_1466B:
@@ -347,10 +347,10 @@ mov ecx, edx	; 14696
 mov ebx, esi	; 14698
 mov edx, eax	; 1469A
 lea eax, [dword esp+0400h]	; 1469C
-call sub_1431E	; 146A3
+call MakePath	; 146A3
 lea edx, [dword esp+0444h]	; 146A8
 lea eax, [dword esp+0400h]	; 146AF
-call sub_14525	; 146B6
+call FileOpenRead	; 146B6
 mov edx, eax	; 146BB
 test eax, eax	; 146BD
 jne short loc_146ED	; 146BF
@@ -358,10 +358,10 @@ mov ecx, edi	; 146C1
 mov ebx, esi	; 146C3
 mov edx, dword [dword esp+045Ch]	; 146C5
 lea eax, [dword esp+0420h]	; 146CC
-call sub_1431E	; 146D3
+call MakePath	; 146D3
 lea edx, [dword esp+044Ch]	; 146D8
 lea eax, [dword esp+0420h]	; 146DF
-call sub_14566	; 146E6
+call FileCreate	; 146E6
 mov edx, eax	; 146EB
 loc_146ED:
 test edx, edx	; 146ED
@@ -399,9 +399,9 @@ test edx, edx	; 14762
 je short loc_146F5	; 14764
 loc_14766:
 lea eax, [dword esp+044Ch]	; 14766
-call sub_1457C	; 1476D
+call FileClose	; 1476D
 lea eax, [dword esp+0444h]	; 14772
-call sub_1457C	; 14779
+call FileClose	; 14779
 mov eax, edx	; 1477E
 add esp, 450h	; 14780
 pop edi	; 14786
@@ -426,7 +426,7 @@ add eax, eax	; 147B5
 lea ebx, [byte eax+02h]	; 147B7
 mov ecx, 6	; 147BA
 mov eax, esi	; 147BF
-call sub_145A2	; 147C1
+call FileReadAt	; 147C1
 pop esi	; 147C6
 pop ecx	; 147C7
 ret	; 147C8
@@ -450,7 +450,7 @@ mov ecx, 2E8h	; 147ED
 mov edx, esi	; 147F2
 mov eax, edi	; 147F4
 loc_147F6:
-call sub_145A2	; 147F6
+call FileReadAt	; 147F6
 pop edi	; 147FB
 pop esi	; 147FC
 pop ecx	; 147FD
@@ -561,9 +561,9 @@ idiv esi	; 148FF
 mov edi, eax	; 14901
 xor ecx, ecx	; 14903
 mov ebx, asc_C068A	; 14905
-mov edx, byte_C8451	; 1490A
+mov edx, curleague	; 1490A
 lea eax, [byte esp+02Ch]	; 1490F
-call sub_1431E	; 14913
+call MakePath	; 14913
 mov ebx, esp	; 14918
 xor edx, edx	; 1491A
 lea eax, [byte esp+02Ch]	; 1491C
@@ -615,7 +615,7 @@ mov ecx, 3	; 1499B
 mov ebx, off_C56B5	; 149A0
 mov edx, 0FFFFFFFFh	; 149A5
 mov eax, edx	; 149AA
-call sub_31013	; 149AC
+call MessageBox	; 149AC
 mov eax, 1	; 149B1
 loc_149B6:
 add esp, byte 5Ch	; 149B6
@@ -640,11 +640,11 @@ xor esi, esi	; 149D4
 loc_149D6:
 mov edi, esi	; 149D6
 shl edi, 2	; 149D8
-mov ebx, dword [dword edi+off_C80D7]	; 149DB
+mov ebx, dword [dword edi+leaguedbnames]	; 149DB
 mov ecx, ebp	; 149E1
 mov edx, dword [byte esp+04h]	; 149E3
 lea eax, [byte esp+034h]	; 149E7
-call sub_1431E	; 149EB
+call MakePath	; 149EB
 lea ebx, [byte esp+08h]	; 149F0
 xor edx, edx	; 149F4
 lea eax, [byte esp+034h]	; 149F6

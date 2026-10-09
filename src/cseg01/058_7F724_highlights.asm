@@ -3,19 +3,19 @@ bits 32
 %include "hockey.inc"
 section s_7F724 progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, asc_C342E, asc_C3436, asc_C3449, asc_C3450, asc_C3472, asc_C3477
-extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, byte_C8451, sflags, musicon
+extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, curleague, sflags, musicon
 extern byte_DB3AD, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
 extern byte_E03E3, byte_E03E4, dword_C5704, dword_C5708, dword_C570C, songdata, dword_C7444, dword_C7448
 extern cont2team, HomeTeam, musichandle, dword_D42A8, dword_D8C68, dword_D8C80, dword_D8C84, musicslot
 extern dword_DC230, dword_DC2F0, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
-extern dword_ED6F8, dword_ED700, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, off_C54A9
+extern dword_ED6F8, dword_ED700, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, teamcitynames
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, sub_10E9F
-extern sub_13A91, sub_1431E, sub_14525, sub_1453E, sub_14566, sub_1457C, sub_145A2, sub_145F9
-extern sub_1BAB1, sub_303FB, sub_30A0C, sub_31013, sub_33727, sub_3377C, sub_479E9, FadeOutPalCycle
+extern sub_13A91, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
+extern sub_1BAB1, sub_303FB, sub_30A0C, MessageBox, sub_33727, sub_3377C, sub_479E9, FadeOutPalCycle
 extern sub_673C5, sub_6B3D7, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
 extern sub_93000, sub_B2CD8, sub_B2DCA, sub_B4FAC, sub_B5DB0, unk_7E05F, unk_C3444, unk_C3447
-extern unk_C344D, unk_C3468, unk_C346B, unk_C3470, unk_C8113, unk_D1F4B, unk_DBC30, unk_DBC35
+extern unk_C344D, unk_C3468, unk_C346B, unk_C3470, str_star, unk_D1F4B, unk_DBC30, unk_DBC35
 extern unk_DBF1D, unk_DF314, unknown_libname_1, unknown_libname_2, VisTeam, word_E0410
 global loc_7F7B3, loc_7F829, loc_7FA3F, loc_7FA7C, loc_7FAEC, loc_7FB92, loc_7FBB5, loc_7FBEE
 global loc_7FC08, loc_7FC0A, loc_7FC4F, loc_7FC56, loc_7FC81, loc_7FC95, loc_7FD76, loc_7FD99
@@ -347,7 +347,7 @@ mov byte [dword edx+byte_E03E4], al	; 7FB0A
 inc edx	; 7FB10
 cmp edx, byte 1Ch	; 7FB11
 jl short loc_7FAEC	; 7FB14
-mov edx, byte_C8451	; 7FB16
+mov edx, curleague	; 7FB16
 lea eax, [byte esp+02Ch]	; 7FB1B
 call strcpy_	; 7FB1F
 mov edx, unk_C3447	; 7FB24
@@ -375,7 +375,7 @@ test eax, eax	; 7FB6E
 je short loc_7FB92	; 7FB70
 lea edx, [byte esp+054h]	; 7FB72
 lea eax, [byte esp+02Ch]	; 7FB76
-call sub_14566	; 7FB7A
+call FileCreate	; 7FB7A
 test eax, eax	; 7FB7F
 je short loc_7FBB5	; 7FB81
 push unk_C344D	; 7FB83
@@ -385,7 +385,7 @@ jmp short loc_7FBB5	; 7FB90
 loc_7FB92:
 lea edx, [byte esp+054h]	; 7FB92
 lea eax, [byte esp+02Ch]	; 7FB96
-call sub_1453E	; 7FB9A
+call FileOpenWrite	; 7FB9A
 test eax, eax	; 7FB9F
 je short loc_7FBB5	; 7FBA1
 lea eax, [byte esp+02Ch]	; 7FBA3
@@ -402,7 +402,7 @@ mov ecx, 9652h	; 7FBC5
 mov ebx, 0FFFFFFFFh	; 7FBCA
 mov edx, byte_E03C4	; 7FBCF
 mov eax, dword [byte esp+054h]	; 7FBD4
-call sub_145F9	; 7FBD8
+call FileWriteAt	; 7FBD8
 test eax, eax	; 7FBDD
 je short loc_7FBEE	; 7FBDF
 push unk_C3468	; 7FBE1
@@ -410,7 +410,7 @@ call sub_B2CD8	; 7FBE6
 add esp, byte 4	; 7FBEB
 loc_7FBEE:
 lea eax, [byte esp+054h]	; 7FBEE
-call sub_1457C	; 7FBF2
+call FileClose	; 7FBF2
 test eax, eax	; 7FBF7
 je short loc_7FC08	; 7FBF9
 push unk_C346B	; 7FBFB
@@ -500,11 +500,11 @@ mov edi, dword [byte edx+03Ch]	; 7FCBB
 push edi	; 7FCBE
 xor eax, eax	; 7FCBF
 mov al, byte [byte edx+01Fh]	; 7FCC1
-mov ebp, dword [nosplit eax*4+off_C54A9]	; 7FCC4
+mov ebp, dword [nosplit eax*4+teamcitynames]	; 7FCC4
 push ebp	; 7FCCB
 xor eax, eax	; 7FCCC
 mov al, byte [byte edx+02h]	; 7FCCE
-mov ecx, dword [nosplit eax*4+off_C54A9]	; 7FCD1
+mov ecx, dword [nosplit eax*4+teamcitynames]	; 7FCD1
 push ecx	; 7FCD8
 xor eax, eax	; 7FCD9
 mov al, byte [byte edx+01h]	; 7FCDB
@@ -537,10 +537,10 @@ mov ebp, dword [dword esp+01F0h]	; 7FD0F
 mov dword [dword esp+01C8h], 0FFFFFFFFh	; 7FD16
 xor esi, esi	; 7FD21
 mov ecx, asc_C812D	; 7FD23
-mov ebx, unk_C8113	; 7FD28
+mov ebx, str_star	; 7FD28
 mov edx, dword [byte esp+04h]	; 7FD2D
 lea eax, [dword esp+0E0h]	; 7FD31
-call sub_1431E	; 7FD38
+call MakePath	; 7FD38
 lea ebx, [dword esp+0180h]	; 7FD3D
 xor edx, edx	; 7FD44
 lea eax, [dword esp+0E0h]	; 7FD46
@@ -550,7 +550,7 @@ jne short loc_7FD9D	; 7FD54
 lea eax, [dword esp+019Eh]	; 7FD56
 call sub_7FC5C	; 7FD5D
 mov dword [byte esp+078h], eax	; 7FD62
-mov eax, dword [nosplit eax*4+off_C54A9]	; 7FD66
+mov eax, dword [nosplit eax*4+teamcitynames]	; 7FD66
 mov dword [byte esp+010h], eax	; 7FD6D
 mov esi, 1	; 7FD71
 loc_7FD76:
@@ -578,7 +578,7 @@ xor ebx, ebx	; 7FDBA
 jmp short loc_7FDD0	; 7FDBC
 loc_7FDBE:
 mov edx, dword [byte esp+ecx*4+078h]	; 7FDBE
-mov edx, dword [nosplit edx*4+off_C54A9]	; 7FDC2
+mov edx, dword [nosplit edx*4+teamcitynames]	; 7FDC2
 mov dword [byte esp+ecx*4+010h], edx	; 7FDC9
 lea ebx, [byte ecx+01h]	; 7FDCD
 loc_7FDD0:
@@ -601,12 +601,12 @@ mov ebx, dword [nosplit ebx*4+off_C5439]	; 7FE0D
 mov ecx, asc_C812D	; 7FE14
 xor edx, edx	; 7FE19
 mov eax, dword [byte esp+0Ch]	; 7FE1B
-call sub_1431E	; 7FE1F
+call MakePath	; 7FE1F
 xor ecx, ecx	; 7FE24
 mov ebx, dword [byte esp+0Ch]	; 7FE26
 mov edx, dword [byte esp+04h]	; 7FE2A
 lea eax, [dword esp+0E0h]	; 7FE2E
-call sub_1431E	; 7FE35
+call MakePath	; 7FE35
 lea eax, [dword esp+0E0h]	; 7FE3A
 push eax	; 7FE41
 call sub_92DE0	; 7FE42
@@ -614,7 +614,7 @@ mov ebx, eax	; 7FE47
 add esp, byte 4	; 7FE49
 lea edx, [dword esp+01C8h]	; 7FE4C
 lea eax, [dword esp+0E0h]	; 7FE53
-call sub_14525	; 7FE5A
+call FileOpenRead	; 7FE5A
 mov edi, eax	; 7FE5F
 test eax, eax	; 7FE61
 jne near loc_8000A	; 7FE63
@@ -674,7 +674,7 @@ imul ebx, eax, dword 9652h	; 7FF08
 mov ecx, 4Ch	; 7FF0E
 lea edx, [dword esp+0134h]	; 7FF13
 mov eax, dword [dword esp+01C8h]	; 7FF1A
-call sub_145A2	; 7FF21
+call FileReadAt	; 7FF21
 mov edi, eax	; 7FF26
 mov edx, dword [dword esp+01D4h]	; 7FF28
 mov eax, edx	; 7FF2F
@@ -740,7 +740,7 @@ call jctime	; 80002
 add esp, byte 4	; 80007
 loc_8000A:
 lea eax, [dword esp+01C8h]	; 8000A
-call sub_1457C	; 80011
+call FileClose	; 80011
 jmp short loc_80067	; 80016
 loc_80018:
 lea eax, [dword esp+01CCh]	; 80018
@@ -762,7 +762,7 @@ mov ecx, 1	; 8004C
 mov ebx, unk_D1F4B	; 80051
 mov edx, 0FFFFFFFFh	; 80056
 mov eax, edx	; 8005B
-call sub_31013	; 8005D
+call MessageBox	; 8005D
 loc_80062:
 mov edi, 0FFFFFFFFh	; 80062
 loc_80067:
@@ -788,7 +788,7 @@ mov eax, 0F9h	; 8009B
 call sub_30A0C	; 800A0
 push byte 0	; 800A5
 xor ecx, ecx	; 800A7
-mov ebx, byte_C8451	; 800A9
+mov ebx, curleague	; 800A9
 lea edx, [byte esp+034h]	; 800AE
 lea eax, [byte esp+024h]	; 800B2
 call sub_7FCF8	; 800B6
@@ -797,12 +797,12 @@ test eax, eax	; 800BD
 jne short loc_800E0	; 800BF
 xor ecx, ecx	; 800C1
 lea ebx, [byte esp+020h]	; 800C3
-mov edx, byte_C8451	; 800C7
+mov edx, curleague	; 800C7
 mov eax, esp	; 800CC
-call sub_1431E	; 800CE
+call MakePath	; 800CE
 lea edx, [byte esp+034h]	; 800D3
 mov eax, esp	; 800D7
-call sub_14525	; 800D9
+call FileOpenRead	; 800D9
 mov edx, eax	; 800DE
 loc_800E0:
 test edx, edx	; 800E0
@@ -811,11 +811,11 @@ imul ebx, dword [byte esp+030h], dword 9652h	; 800E4
 mov ecx, 9652h	; 800EC
 mov edx, byte_E03C4	; 800F1
 mov eax, dword [byte esp+034h]	; 800F6
-call sub_145A2	; 800FA
+call FileReadAt	; 800FA
 mov edx, eax	; 800FF
 loc_80101:
 lea eax, [byte esp+034h]	; 80101
-call sub_1457C	; 80105
+call FileClose	; 80105
 test edx, edx	; 8010A
 jne short loc_80113	; 8010C
 call sub_8011C	; 8010E

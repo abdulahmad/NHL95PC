@@ -5,7 +5,7 @@ section s_71F0C progbits alloc exec nowrite align=1
 extern __CHK, asc_C3014, asc_C301C, asc_C3023, asc_C3028, asc_C302D, asc_C3032, asc_C3037
 extern asc_C303C, asc_C3041, asc_C3046, asc_C304B, asc_C3050, asc_C3055, asc_C305A, asc_C305F
 extern asc_C3064, asc_C306C, asc_C3072, asc_C307B, asc_C3081, asc_C3086, asc_C308D, asc_C3092
-extern asc_C309A, asc_C30A3, asc_C30AD, asc_C30B6, asc_C30BB, asc_C30C3, asc_C30C8, asc_C811A
+extern asc_C309A, asc_C30A3, asc_C30AD, asc_C30B6, asc_C30BB, asc_C30C3, asc_C30C8, str_extDB
 extern asc_C811E, byte_C4B6C, byte_D42C3, byte_DD2D4, byte_DD2DC, byte_DD668, byte_DD669, byte_ED993
 extern byte_ED994, dword_C6F78, dword_D07BB, dword_D07BF, dword_D07C3, dword_D07C7, dword_D07CB, dword_D07CF
 extern dword_D07D3, dword_D07D7, dword_D07DB, dword_D07DF, dword_D07E3, dword_D07E7, dword_D0B16, dword_D0B1A
@@ -15,10 +15,10 @@ extern dword_D1130, dword_D11B6, dword_D2C6B, dword_D42AC, dword_DC238, dword_DD
 extern dword_DD640, dword_DD644, dword_DD648, dword_DD64C, dword_DD650, dword_DD654, dword_DD658, dword_DD65C
 extern dword_DD660, dword_DD664, dword_EA0DC, dword_EBC68, dword_EC6B8, dword_EC6BC, dword_EC6C0, dword_EC6C4
 extern dword_EC6C8, dword_EC710, dword_EC714, dword_EC718, dword_EC71C, dword_EC720, dword_EC768, dword_EC76C
-extern dword_EC770, dword_EC774, dword_EC778, fputchar, jctime, off_C80D7, off_C80DB, off_C80DF
-extern off_C80E3, off_C80E7, off_C80EB, off_D1184, qsort_, strcat_, strcpy_, strlen_
-extern sub_1431E, sub_14442, sub_175E2, sub_2BEEA, sub_2C135, sub_2C3FF, sub_2FED2, sub_309E4
-extern sub_31013, sub_3170D, sub_6B391, sub_6B3D7, sub_6CA8F, sub_6D2F8, sub_6DE7E, sub_78BE7
+extern dword_EC770, dword_EC774, dword_EC778, fputchar, jctime, leaguedbnames
+extern off_D1184, qsort_, strcat_, strcpy_, strlen_
+extern MakePath, sub_14442, sub_175E2, sub_2BEEA, sub_2C135, sub_2C3FF, sub_2FED2, sub_309E4
+extern MessageBox, sub_3170D, sub_6B391, sub_6B3D7, sub_6CA8F, sub_6D2F8, sub_6DE7E, sub_78BE7
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284
 extern sub_91370, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_B2CBE, sub_B2DCA, sub_B30B4
 extern sub_B4BA8, sub_B4FAC, unk_D11B2, unk_D2B38, unk_EC7C0, unknown_libname_1, unknown_libname_2, unknown_libname_4
@@ -401,7 +401,7 @@ jne short loc_72342	; 7233A
 mov edx, dword [dword_D2C6B]	; 7233C
 loc_72342:
 mov eax, esp	; 72342
-call sub_1431E	; 72344
+call MakePath	; 72344
 push byte 0	; 72349
 lea eax, [byte esp+04h]	; 7234B
 push eax	; 7234F
@@ -766,7 +766,7 @@ loc_7281E:
 xor edx, edx	; 7281E
 loc_72820:
 mov eax, esp	; 72820
-call sub_1431E	; 72822
+call MakePath	; 72822
 push byte 0	; 72827
 lea eax, [byte esp+04h]	; 72829
 push eax	; 7282D
@@ -1769,7 +1769,7 @@ mov edi, unk_EC7C0	; 733F6
 mov esi, asc_C3092	; 733FB
 movsd	; 73400
 movsd	; 73401
-mov edx, asc_C811A	; 73402
+mov edx, str_extDB	; 73402
 jmp short loc_7344D	; 73407
 loc_73409:
 mov edi, unk_EC7C0	; 73409
@@ -1790,7 +1790,7 @@ call strcpy_	; 73437
 mov edx, asc_C30C3	; 7343C
 mov eax, esp	; 73441
 call strcat_	; 73443
-mov edx, asc_C811A	; 73448
+mov edx, str_extDB	; 73448
 loc_7344D:
 mov eax, esp	; 7344D
 call sub_7345B	; 7344F
@@ -1811,11 +1811,11 @@ sub esp, byte 20h	; 73469
 mov edi, eax	; 7346C
 mov esi, edx	; 7346E
 call sub_6CA8F	; 73470
-mov ebx, dword [off_C80EB]	; 73475
+mov ebx, dword [leaguedbnames+14h]	; 73475
 mov ecx, edx	; 7347B
 mov edx, edi	; 7347D
 mov eax, esp	; 7347F
-call sub_1431E	; 73481
+call MakePath	; 73481
 push byte 20h	; 73486
 lea eax, [byte esp+04h]	; 73488
 push eax	; 7348C
@@ -1827,11 +1827,11 @@ push eax	; 7349C
 call sub_92DE0	; 7349D
 add esp, byte 4	; 734A2
 mov dword [dword_D07D3], eax	; 734A5
-mov ebx, dword [off_C80DB]	; 734AA
+mov ebx, dword [leaguedbnames+4]	; 734AA
 mov ecx, esi	; 734B0
 mov edx, edi	; 734B2
 mov eax, esp	; 734B4
-call sub_1431E	; 734B6
+call MakePath	; 734B6
 push byte 20h	; 734BB
 lea eax, [byte esp+04h]	; 734BD
 push eax	; 734C1
@@ -1843,11 +1843,11 @@ push eax	; 734D1
 call sub_92DE0	; 734D2
 add esp, byte 4	; 734D7
 mov dword [dword_D07D7], eax	; 734DA
-mov ebx, dword [off_C80E3]	; 734DF
+mov ebx, dword [leaguedbnames+0Ch]	; 734DF
 mov ecx, esi	; 734E5
 mov edx, edi	; 734E7
 mov eax, esp	; 734E9
-call sub_1431E	; 734EB
+call MakePath	; 734EB
 push byte 20h	; 734F0
 lea eax, [byte esp+04h]	; 734F2
 push eax	; 734F6
@@ -1859,11 +1859,11 @@ push eax	; 73506
 call sub_92DE0	; 73507
 add esp, byte 4	; 7350C
 mov dword [dword_D07DB], eax	; 7350F
-mov ebx, dword [off_C80D7]	; 73514
+mov ebx, dword [leaguedbnames]	; 73514
 mov ecx, esi	; 7351A
 mov edx, edi	; 7351C
 mov eax, esp	; 7351E
-call sub_1431E	; 73520
+call MakePath	; 73520
 push byte 20h	; 73525
 lea eax, [byte esp+04h]	; 73527
 push eax	; 7352B
@@ -1875,11 +1875,11 @@ push eax	; 7353B
 call sub_92DE0	; 7353C
 add esp, byte 4	; 73541
 mov dword [dword_D07DF], eax	; 73544
-mov ebx, dword [off_C80E7]	; 73549
+mov ebx, dword [leaguedbnames+10h]	; 73549
 mov ecx, esi	; 7354F
 mov edx, edi	; 73551
 mov eax, esp	; 73553
-call sub_1431E	; 73555
+call MakePath	; 73555
 push byte 20h	; 7355A
 lea eax, [byte esp+04h]	; 7355C
 push eax	; 73560
@@ -1891,11 +1891,11 @@ push eax	; 73570
 call sub_92DE0	; 73571
 add esp, byte 4	; 73576
 mov dword [dword_D07E3], eax	; 73579
-mov ebx, dword [off_C80DF]	; 7357E
+mov ebx, dword [leaguedbnames+8]	; 7357E
 mov ecx, esi	; 73584
 mov edx, edi	; 73586
 mov eax, esp	; 73588
-call sub_1431E	; 7358A
+call MakePath	; 7358A
 push byte 20h	; 7358F
 lea eax, [byte esp+04h]	; 73591
 push eax	; 73595
@@ -1941,7 +1941,7 @@ mov ecx, 2	; 73606
 mov ebx, unk_D11B2	; 7360B
 mov edx, 0FFFFFFFFh	; 73610
 mov eax, edx	; 73615
-call sub_31013	; 73617
+call MessageBox	; 73617
 cmp eax, byte 1	; 7361C
 jne near loc_736F9	; 7361F
 mov edx, dword [byte esi+04h]	; 73625

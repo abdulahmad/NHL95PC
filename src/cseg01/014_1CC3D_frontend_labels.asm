@@ -12,7 +12,7 @@ extern dword_CF5D7, dword_CF5F7, dword_CF617, dword_CF637, dword_CF657, dword_CF
 extern dword_CF84B, dword_CF8CB, dword_CFA4B, dword_D2C6B, dword_D30AC, dword_D30B0, dword_D30B4, dword_D30B8
 extern dword_D8C40, dword_DC26C, dword_DC290, dword_DC2BC, dword_DC2C0, dword_DC2C4, dword_DC2F0, dword_DC30C
 extern dword_DC8D0, vgapage, off_C6821, off_C6825, off_C6841, off_C6845, off_C6881, off_C6885
-extern off_CF51F, off_CF5DF, off_CF61F, off_CF67F, strcpy_, strncpy_, sub_1431E, sub_17BE7
+extern off_CF51F, off_CF5DF, off_CF61F, off_CF67F, strcpy_, strncpy_, MakePath, sub_17BE7
 extern sub_17CE0, sub_17D6E, sub_6AB7C, sub_8E8A0, sub_90B80, sub_B30B4, sub_B4CD8, sub_B4DD4
 extern sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8, sub_B5974, sub_B5AC8, unk_C529C
 extern unk_C65D4, unk_DC2F4, unk_DC300, unk_DC998, unk_DCA98
@@ -48,7 +48,7 @@ loc_1CC6B:
 xor edx, edx	; 1CC6B
 loc_1CC6D:
 mov eax, esp	; 1CC6D
-call sub_1431E	; 1CC6F
+call MakePath	; 1CC6F
 push byte 20h	; 1CC74
 lea eax, [byte esp+04h]	; 1CC76
 push eax	; 1CC7A

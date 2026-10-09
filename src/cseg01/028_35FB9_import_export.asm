@@ -4,27 +4,27 @@ bits 32
 section s_35FB9 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _fstrcspn_, asc_C1827, asc_C1853, asc_C1859, asc_C1862, asc_C1866
 extern asc_C186B, asc_C1874, asc_C1879, asc_C1880, asc_C1885, asc_C78A8, asc_C7A9C, asc_C7ABF
-extern asc_C80F3, asc_C811A, asc_C8154, asc_C8158, byte_C5400, byte_C8164, byte_C816A, byte_C8451
-extern musicon, byte_D42C3, byte_DC267, byte_DC268, byte_DD710, byte_DD750, byte_DD7B0, byte_DD7CA
-extern byte_DD7CB, byte_DDD10, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_ED836
+extern str_PINFO, str_extDB, str_extxx, asc_C8158, byte_C5400, str_dot, str_floppydrv, curleague
+extern musicon, byte_D42C3, byte_DC267, byte_DC268, byte_DD710, byte_DD750, leagueflags, byte_DD7CA
+extern byte_DD7CB, savedname, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_ED836
 extern byte_ED98E, dword_C53F7, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C71D8
-extern dword_C71DC, songdata, dword_C7615, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7E42, dword_C7F0B
+extern dword_C71DC, songdata, msg_InsertDisk_arg, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7E42, dword_C7F0B
 extern dword_C8998, HomeTeam, musichandle, dword_D2C6B, dword_DB088, dword_DC234, dword_DC23E, musicslot
-extern dword_DD7A8, dword_DD7AC, dword_DDAC0, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
+extern leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
 extern dword_DDD6C, awtmlines, startm_m2, hmtmlines, hmtmstruct
-extern fputchar, jctime, memset_, off_C57CC, off_C800C, off_C80D7, off_C80E7, off_C80EB
-extern off_C80EF, sprintf_, strcat_, strcpy_, sub_10712, sub_11D09, sub_142E7, sub_1431E
-extern sub_14525, sub_1453E, sub_14552, sub_1457C, sub_145A2, sub_145F9, sub_1463D, sub_1478B
+extern fputchar, jctime, memset_, off_C57CC, off_C800C, leaguedbnames
+extern sprintf_, strcat_, strcpy_, sub_10712, sub_11D09, sub_142E7, MakePath
+extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, sub_1463D, sub_1478B
 extern sub_147A0, sub_147C9, sub_147FF, sub_148A5, sub_174C2, sub_17573, sub_175E2, sub_1BEFD
 extern sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A, sub_29F28, sub_30A0C, sub_30F12
-extern sub_31013, sub_34821, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, sub_3A28F, sub_3A2B8
-extern sub_3A31E, sub_3A395, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, sub_3D8DD, sub_3DAB9
-extern sub_41171, sub_41337, sub_41344, sub_41B80, sub_41CC4, sub_41F64, sub_479E9, sub_6B410
+extern MessageBox, sub_34821, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, sub_3A28F, sub_3A2B8
+extern sub_3A31E, AskTeamPassword, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, ReadLeagueInfo, sub_3DAB9
+extern FmtFromLeague, LeagueCheckStub, GetLeagueId, sub_41B80, sub_41CC4, sub_41F64, sub_479E9, sub_6B410
 extern sub_6B47C, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_903F0, sub_91370, sub_91400, sub_92F50, sub_93000, sub_B2DCA, sub_B2E1B, sub_B30B4
-extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, unk_C7AE0, unk_C7E3E, unk_C7E4E, unk_C7F07
-extern unk_C7F1B, unk_C7F8E, unk_C8115, unk_C8117, awlinetab, hmlinetab, unk_DC240, unk_DD7B4
-extern unk_DDAC4, unk_DDD1D, unk_DDD4C, unk_DDD59, VisTeam, word_DB08A, word_DB08C, word_DB08E
+extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, unk_C7AE0, unk_C7E3E, btn_MasterDB, unk_C7F07
+extern unk_C7F1B, unk_C7F8E, unk_C8115, unk_C8117, awlinetab, hmlinetab, unk_DC240, leagueteams
+extern unk_DDAC4, masterpw, savleague1, savleague2, VisTeam, word_DB08A, word_DB08C, word_DB08E
 extern word_DB090, word_DB092, word_DB096, word_DC242, word_DC244, word_DDD46, word_DDD48, word_DDD4A
 extern word_DF618, hmscore, hmtmgoalie, awscore, awtmgoalie, startm
 global loc_3602E, loc_36047, loc_3607B, loc_36089, loc_360DA, loc_360FD, loc_36149, loc_3614E
@@ -71,7 +71,7 @@ add esi, edx	; 35FF5
 mov dword [dword_C7AE8], ebp	; 35FF7
 lea edx, [dword esp+09Ch]	; 35FFD
 mov eax, edi	; 36004
-call sub_41344	; 36006
+call GetLeagueId	; 36006
 mov dl, byte [byte esi+017h]	; 3600B
 cmp dl, 1	; 3600E
 jne near loc_3614E	; 36011
@@ -96,9 +96,9 @@ je short loc_3607B	; 36057
 mov ebx, edi	; 36059
 mov edx, esi	; 3605B
 mov eax, esp	; 3605D
-call sub_41171	; 3605F
+call FmtFromLeague	; 3605F
 mov eax, esp	; 36064
-mov dword [dword_C7615], eax	; 36066
+mov dword [msg_InsertDisk_arg], eax	; 36066
 mov ebx, 0FFFFFFFFh	; 3606B
 mov edx, esi	; 36070
 mov eax, edi	; 36072
@@ -113,14 +113,14 @@ loc_36089:
 mov ebp, eax	; 36089
 test ebp, ebp	; 3608B
 jne near loc_3614E	; 3608D
-mov ecx, asc_C811A	; 36093
-mov ebx, asc_C80F3	; 36098
-mov edx, byte_C816A	; 3609D
+mov ecx, str_extDB	; 36093
+mov ebx, str_PINFO	; 36098
+mov edx, str_floppydrv	; 3609D
 lea eax, [byte esp+040h]	; 360A2
-call sub_1431E	; 360A6
+call MakePath	; 360A6
 lea edx, [dword esp+0ACh]	; 360AB
 lea eax, [byte esp+040h]	; 360B2
-call sub_14525	; 360B6
+call FileOpenRead	; 360B6
 mov ebp, eax	; 360BB
 test eax, eax	; 360BD
 jne short loc_360DA	; 360BF
@@ -131,7 +131,7 @@ call sub_3A31E	; 360D3
 mov ebp, eax	; 360D8
 loc_360DA:
 lea eax, [dword esp+0ACh]	; 360DA
-call sub_1457C	; 360E1
+call FileClose	; 360E1
 test ebp, ebp	; 360E6
 jne short loc_3614E	; 360E8
 test byte [byte esp+076h], 1	; 360EA
@@ -158,7 +158,7 @@ mov ecx, 2	; 36133
 mov ebx, off_C800C	; 36138
 mov edx, 0FFFFFFFFh	; 3613D
 mov eax, edx	; 36142
-call sub_31013	; 36144
+call MessageBox	; 36144
 loc_36149:
 mov ebp, 4	; 36149
 loc_3614E:
@@ -168,7 +168,7 @@ mov edx, edi	; 3615B
 lea eax, [dword esp+080h]	; 3615D
 call strcpy_	; 36164
 mov ecx, ds	; 36169
-mov ebx, byte_C8164	; 3616B
+mov ebx, str_dot	; 3616B
 mov edx, ds	; 36170
 lea eax, [dword esp+080h]	; 36172
 call _fstrcspn_	; 36179
@@ -200,7 +200,7 @@ mov ecx, 5	; 361E3
 mov ebx, unk_C7AE0	; 361E8
 mov edx, 0FFFFFFFFh	; 361ED
 mov eax, edx	; 361F2
-call sub_31013	; 361F4
+call MessageBox	; 361F4
 loc_361F9:
 mov eax, ebp	; 361F9
 add esp, 0B4h	; 361FB
@@ -275,49 +275,49 @@ mov dword [dword esp+03FCh], eax	; 362E8
 lea edi, [dword esp+0372h]	; 362EF
 lea esi, [dword esp+030Ah]	; 362F6
 loc_362FD:
-mov ebx, dword [off_C80E7]	; 362FD
+mov ebx, dword [leaguedbnames+10h]	; 362FD
 mov ecx, dword [byte esp+04h]	; 36303
 mov edx, dword [byte esp+08h]	; 36307
 lea eax, [dword esp+0390h]	; 3630B
-call sub_1431E	; 36312
+call MakePath	; 36312
 lea edx, [dword esp+03ECh]	; 36317
 lea eax, [dword esp+0390h]	; 3631E
-call sub_14552	; 36325
+call FileOpenRW	; 36325
 mov ebx, eax	; 3632A
 test eax, eax	; 3632C
 jne short loc_3635F	; 3632E
-mov ebx, dword [off_C80D7]	; 36330
+mov ebx, dword [leaguedbnames]	; 36330
 mov ecx, dword [byte esp+04h]	; 36336
 mov edx, dword [byte esp+08h]	; 3633A
 lea eax, [dword esp+0390h]	; 3633E
-call sub_1431E	; 36345
+call MakePath	; 36345
 lea edx, [dword esp+03E8h]	; 3634A
 lea eax, [dword esp+0390h]	; 36351
-call sub_14525	; 36358
+call FileOpenRead	; 36358
 mov ebx, eax	; 3635D
 loc_3635F:
 test ebx, ebx	; 3635F
 jne short loc_36392	; 36361
-mov ebx, dword [off_C80EB]	; 36363
+mov ebx, dword [leaguedbnames+14h]	; 36363
 mov ecx, dword [byte esp+04h]	; 36369
 mov edx, dword [byte esp+08h]	; 3636D
 lea eax, [dword esp+0390h]	; 36371
-call sub_1431E	; 36378
+call MakePath	; 36378
 lea edx, [dword esp+03E4h]	; 3637D
 lea eax, [dword esp+0390h]	; 36384
-call sub_14552	; 3638B
+call FileOpenRW	; 3638B
 mov ebx, eax	; 36390
 loc_36392:
 test ebx, ebx	; 36392
 jne short loc_363C8	; 36394
-mov ecx, asc_C811A	; 36396
+mov ecx, str_extDB	; 36396
 mov ebx, asc_C1859	; 3639B
 mov edx, dword [dword esp+0424h]	; 363A0
 lea eax, [dword esp+0390h]	; 363A7
-call sub_1431E	; 363AE
+call MakePath	; 363AE
 lea edx, [dword esp+03E0h]	; 363B3
 lea eax, [dword esp+0390h]	; 363BA
-call sub_14552	; 363C1
+call FileOpenRW	; 363C1
 mov ebx, eax	; 363C6
 loc_363C8:
 test ebx, ebx	; 363C8
@@ -824,13 +824,13 @@ call sub_3A2B8	; 36B4E
 mov ebx, eax	; 36B53
 loc_36B55:
 lea eax, [dword esp+03E0h]	; 36B55
-call sub_1457C	; 36B5C
+call FileClose	; 36B5C
 lea eax, [dword esp+03E4h]	; 36B61
-call sub_1457C	; 36B68
+call FileClose	; 36B68
 lea eax, [dword esp+03E8h]	; 36B6D
-call sub_1457C	; 36B74
+call FileClose	; 36B74
 lea eax, [dword esp+03ECh]	; 36B79
-call sub_1457C	; 36B80
+call FileClose	; 36B80
 mov eax, ebx	; 36B85
 add esp, 410h	; 36B87
 pop ebp	; 36B8D
@@ -873,38 +873,38 @@ mov eax, esi	; 36BFA
 call sub_41B80	; 36BFC
 loc_36C01:
 mov edx, 3	; 36C01
-mov eax, byte_C8451	; 36C06
-call sub_41337	; 36C0B
+mov eax, curleague	; 36C06
+call LeagueCheckStub	; 36C0B
 mov esi, eax	; 36C10
 loc_36C12:
 xor eax, eax	; 36C12
 mov dword [dword esp+090h], eax	; 36C14
 test esi, esi	; 36C1B
 jne short loc_36C4E	; 36C1D
-push byte_DDD10	; 36C1F
-push dword_DD7AC	; 36C24
-push byte_DD7B0	; 36C29
-push dword_DDAC0	; 36C2E
-mov ecx, dword_DD7A8	; 36C33
-mov ebx, unk_DDD1D	; 36C38
-mov edx, unk_DD7B4	; 36C3D
-mov eax, byte_C8451	; 36C42
-call sub_3D8DD	; 36C47
+push savedname	; 36C1F
+push leaguesaved	; 36C24
+push leagueflags	; 36C29
+push humancount	; 36C2E
+mov ecx, leaguemaster	; 36C33
+mov ebx, masterpw	; 36C38
+mov edx, leagueteams	; 36C3D
+mov eax, curleague	; 36C42
+call ReadLeagueInfo	; 36C47
 mov esi, eax	; 36C4C
 loc_36C4E:
 test esi, esi	; 36C4E
 jne near loc_36D76	; 36C50
-mov edx, byte_C8451	; 36C56
+mov edx, curleague	; 36C56
 lea eax, [byte esp+020h]	; 36C5B
 call strcpy_	; 36C5F
 mov ecx, ds	; 36C64
-mov ebx, byte_C8164	; 36C66
+mov ebx, str_dot	; 36C66
 mov edx, ds	; 36C6B
 lea eax, [byte esp+020h]	; 36C6D
 call _fstrcspn_	; 36C71
 xor dl, dl	; 36C76
 mov byte [byte esp+eax+020h], dl	; 36C78
-test byte [byte_DD7B0], 0Ch	; 36C7C
+test byte [leagueflags], 0Ch	; 36C7C
 je near loc_36D4C	; 36C83
 lea eax, [byte esp+04Ch]	; 36C89
 push eax	; 36C8D
@@ -920,7 +920,7 @@ mov ebx, 0F8h	; 36CA6
 mov edx, ecx	; 36CAB
 mov eax, 0F9h	; 36CAD
 call sub_30A0C	; 36CB2
-test byte [byte_DD7B0], 8	; 36CB7
+test byte [leagueflags], 8	; 36CB7
 je short loc_36CE8	; 36CBE
 lea eax, [byte esp+020h]	; 36CC0
 mov dword [dword_C7F0B], eax	; 36CC4
@@ -943,17 +943,17 @@ push eax	; 36CF7
 lea eax, [byte esp+058h]	; 36CF8
 push eax	; 36CFC
 push byte 2	; 36CFD
-push unk_C7E4E	; 36CFF
+push btn_MasterDB	; 36CFF
 mov ecx, 4	; 36D04
 mov ebx, unk_C7E3E	; 36D09
 loc_36D0E:
 mov edx, 0FFFFFFFFh	; 36D0E
 mov eax, edx	; 36D13
-call sub_31013	; 36D15
+call MessageBox	; 36D15
 mov dword [byte esp+054h], eax	; 36D1A
 cmp dword [byte esp+054h], byte 0	; 36D1E
 jne short loc_36D45	; 36D23
-test byte [byte_DD7B0], 8	; 36D25
+test byte [leagueflags], 8	; 36D25
 je short loc_36D33	; 36D2C
 call sub_3B25A	; 36D2E
 loc_36D33:
@@ -964,11 +964,11 @@ loc_36D45:
 mov esi, 0FFFFFFFFh	; 36D45
 jmp short loc_36D76	; 36D4A
 loc_36D4C:
-mov ebx, dword [off_C80E7]	; 36D4C
-mov ecx, asc_C811A	; 36D52
-mov edx, byte_C8451	; 36D57
+mov ebx, dword [leaguedbnames+10h]	; 36D4C
+mov ecx, str_extDB	; 36D52
+mov edx, curleague	; 36D57
 mov eax, esp	; 36D5C
-call sub_1431E	; 36D5E
+call MakePath	; 36D5E
 mov ebx, 1	; 36D63
 mov edx, unk_DDAC4	; 36D68
 mov eax, esp	; 36D6D
@@ -990,8 +990,8 @@ mov edx, ecx	; 36DA4
 mov eax, 0F9h	; 36DA6
 call sub_30A0C	; 36DAB
 lea edx, [byte esp+044h]	; 36DB0
-mov eax, byte_C8451	; 36DB4
-call sub_41344	; 36DB9
+mov eax, curleague	; 36DB4
+call GetLeagueId	; 36DB9
 mov dword [dword_DDD38], eax	; 36DBE
 loc_36DC3:
 test esi, esi	; 36DC3
@@ -1001,10 +1001,10 @@ jge short loc_36E00	; 36DCE
 push dword_DDD38	; 36DD0
 push asc_C78A8	; 36DD5
 push byte 8	; 36DDA
-mov ecx, unk_DD7B4	; 36DDC
+mov ecx, leagueteams	; 36DDC
 mov ebx, unk_DDAC4	; 36DE1
-mov edx, dword_DDAC0	; 36DE6
-mov eax, byte_C8451	; 36DEB
+mov edx, humancount	; 36DE6
+mov eax, curleague	; 36DEB
 call sub_38B4F	; 36DF0
 mov dword [dword esp+088h], 0FFFFFFFFh	; 36DF5
 loc_36E00:
@@ -1015,8 +1015,8 @@ test ebx, ebx	; 36E0E
 jl near loc_36EFC	; 36E10
 push esi	; 36E16
 xor ecx, ecx	; 36E17
-mov edx, unk_DD7B4	; 36E19
-mov eax, byte_C8451	; 36E1E
+mov edx, leagueteams	; 36E19
+mov eax, curleague	; 36E1E
 call sub_35FB9	; 36E23
 mov esi, eax	; 36E28
 test eax, eax	; 36E2A
@@ -1029,7 +1029,7 @@ push eax	; 36E42
 call sprintf_	; 36E43
 add esp, byte 0Ch	; 36E48
 lea edx, [byte esp+060h]	; 36E4B
-mov eax, asc_C8154	; 36E4F
+mov eax, str_extxx	; 36E4F
 call strcpy_	; 36E54
 mov edx, dword [dword_DDD38]	; 36E59
 mov eax, edx	; 36E5F
@@ -1037,14 +1037,14 @@ shl eax, 4	; 36E61
 sub eax, edx	; 36E64
 test byte [nosplit eax*2+byte_DD7CA], 1	; 36E66
 je short loc_36E77	; 36E6E
-mov edx, byte_C8451	; 36E70
+mov edx, curleague	; 36E70
 jmp short loc_36E7C	; 36E75
 loc_36E77:
-mov edx, byte_C816A	; 36E77
+mov edx, str_floppydrv	; 36E77
 loc_36E7C:
-mov eax, unk_DDD4C	; 36E7C
+mov eax, savleague1	; 36E7C
 call strcpy_	; 36E81
-cmp dword [dword_DDAC0], byte 1	; 36E86
+cmp dword [humancount], byte 1	; 36E86
 je short loc_36E99	; 36E8D
 cmp dword [dword esp+088h], byte 0	; 36E8F
 jne short loc_36EB1	; 36E97
@@ -1057,17 +1057,17 @@ mov eax, 0F9h	; 36EA7
 call sub_30A0C	; 36EAC
 loc_36EB1:
 mov eax, dword [dword_DDD38]	; 36EB1
-mov edx, unk_DD7B4	; 36EB6
-call sub_3A395	; 36EBB
+mov edx, leagueteams	; 36EB6
+call AskTeamPassword	; 36EBB
 mov esi, eax	; 36EC0
 loc_36EC2:
 test esi, esi	; 36EC2
 jne short loc_36EED	; 36EC4
-mov ebx, dword [off_C80E7]	; 36EC6
-mov ecx, asc_C811A	; 36ECC
-mov edx, byte_C8451	; 36ED1
+mov ebx, dword [leaguedbnames+10h]	; 36EC6
+mov ecx, str_extDB	; 36ECC
+mov edx, curleague	; 36ED1
 mov eax, esp	; 36ED6
-call sub_1431E	; 36ED8
+call MakePath	; 36ED8
 xor ebx, ebx	; 36EDD
 mov edx, unk_DDAC4	; 36EDF
 mov eax, esp	; 36EE4
@@ -1140,11 +1140,11 @@ push eax	; 36FEA
 call sprintf_	; 36FEB
 add esp, byte 0Ch	; 36FF0
 lea edx, [byte esp+060h]	; 36FF3
-mov eax, asc_C8154	; 36FF7
+mov eax, str_extxx	; 36FF7
 call strcpy_	; 36FFC
 mov eax, dword [dword_DDD38]	; 37001
-mov edx, unk_DD7B4	; 37006
-call sub_3A395	; 3700B
+mov edx, leagueteams	; 37006
+call AskTeamPassword	; 3700B
 mov esi, eax	; 37010
 test eax, eax	; 37012
 jne short loc_37021	; 37014
@@ -1164,21 +1164,21 @@ cmp dword [byte esp+070h], byte 0	; 37041
 je short loc_37063	; 37046
 loc_37048:
 mov ebx, dword [dword_DDD38]	; 37048
-mov edx, asc_C8154	; 3704E
-mov eax, unk_DDD4C	; 37053
+mov edx, str_extxx	; 3704E
+mov eax, savleague1	; 37053
 call sub_34821	; 37058
 mov word [word_DDD46], ax	; 3705D
 loc_37063:
 cmp word [word_DDD46], byte 0	; 37063
 jl near loc_37A6B	; 3706B
-mov ebx, dword [off_C80EF]	; 37071
-mov ecx, asc_C8154	; 37077
-mov edx, unk_DDD4C	; 3707C
+mov ebx, dword [leaguedbnames+18h]	; 37071
+mov ecx, str_extxx	; 37077
+mov edx, savleague1	; 3707C
 mov eax, esp	; 37081
-call sub_1431E	; 37083
+call MakePath	; 37083
 lea edx, [byte esp+06Ch]	; 37088
 mov eax, esp	; 3708C
-call sub_14552	; 3708E
+call FileOpenRW	; 3708E
 mov esi, eax	; 37093
 cmp dword [edi], byte 0	; 37095
 jge near loc_37120	; 37098
@@ -1188,7 +1188,7 @@ mov ecx, 2	; 370A2
 xor ebx, ebx	; 370A7
 mov edx, word_DDD48	; 370A9
 mov eax, dword [byte esp+06Ch]	; 370AE
-call sub_145A2	; 370B2
+call FileReadAt	; 370B2
 mov esi, eax	; 370B7
 loc_370B9:
 test esi, esi	; 370B9
@@ -1222,7 +1222,7 @@ xor ecx, ecx	; 37118
 mov dword [dword_DDD3C], ecx	; 3711A
 loc_37120:
 lea eax, [byte esp+06Ch]	; 37120
-call sub_1457C	; 37124
+call FileClose	; 37124
 cmp dword [dword_DDD3C], byte 0	; 37129
 je near loc_37256	; 37130
 test esi, esi	; 37136
@@ -1230,8 +1230,8 @@ jne near loc_371BD	; 37138
 push esi	; 3713E
 mov ebx, dword [dword_DDD34]	; 3713F
 mov ecx, 0FFFFFFFFh	; 37145
-mov edx, unk_DD7B4	; 3714A
-mov eax, byte_C8451	; 3714F
+mov edx, leagueteams	; 3714A
+mov eax, curleague	; 3714F
 call sub_35FB9	; 37154
 mov esi, eax	; 37159
 test eax, eax	; 3715B
@@ -1254,24 +1254,24 @@ test byte [nosplit eax*2+byte_DD7CA], 1	; 37193
 je short loc_371AE	; 3719B
 cmp dword [dword esp+088h], byte 0	; 3719D
 je short loc_371AE	; 371A5
-mov edx, byte_C8451	; 371A7
+mov edx, curleague	; 371A7
 jmp short loc_371B3	; 371AC
 loc_371AE:
-mov edx, byte_C816A	; 371AE
+mov edx, str_floppydrv	; 371AE
 loc_371B3:
-mov eax, unk_DDD59	; 371B3
+mov eax, savleague2	; 371B3
 call strcpy_	; 371B8
 loc_371BD:
 test esi, esi	; 371BD
 jne short loc_371E5	; 371BF
-mov ebx, dword [off_C80EF]	; 371C1
+mov ebx, dword [leaguedbnames+18h]	; 371C1
 mov ecx, asc_C8158	; 371C7
-mov edx, unk_DDD59	; 371CC
+mov edx, savleague2	; 371CC
 mov eax, esp	; 371D1
-call sub_1431E	; 371D3
+call MakePath	; 371D3
 lea edx, [byte esp+05Ch]	; 371D8
 mov eax, esp	; 371DC
-call sub_14552	; 371DE
+call FileOpenRW	; 371DE
 mov esi, eax	; 371E3
 loc_371E5:
 cmp dword [edi], byte 0	; 371E5
@@ -1282,11 +1282,11 @@ mov ecx, 2	; 371EE
 xor ebx, ebx	; 371F3
 mov edx, word_DDD4A	; 371F5
 mov eax, dword [byte esp+05Ch]	; 371FA
-call sub_145A2	; 371FE
+call FileReadAt	; 371FE
 mov esi, eax	; 37203
 loc_37205:
 lea eax, [byte esp+05Ch]	; 37205
-call sub_1457C	; 37209
+call FileClose	; 37209
 test esi, esi	; 3720E
 jne short loc_37256	; 37210
 mov esi, dword [dword_DDD34]	; 37212
@@ -1300,8 +1300,8 @@ lea edx, [byte esp+060h]	; 3722B
 mov eax, asc_C8158	; 3722F
 call strcpy_	; 37234
 mov eax, dword [dword_DDD34]	; 37239
-mov edx, unk_DD7B4	; 3723E
-call sub_3A395	; 37243
+mov edx, leagueteams	; 3723E
+call AskTeamPassword	; 37243
 mov esi, eax	; 37248
 test eax, eax	; 3724A
 je short loc_37256	; 3724C
@@ -1363,26 +1363,26 @@ jne short loc_37343	; 3730E
 xor ebx, ebx	; 37310
 mov dword [byte esp+074h], ebx	; 37312
 mov ebp, 1	; 37316
-mov ebx, unk_DD7B4	; 3731B
-mov edx, unk_DDD4C	; 37320
+mov ebx, leagueteams	; 3731B
+mov edx, savleague1	; 37320
 mov eax, byte_DD750	; 37325
 call sub_36207	; 3732A
 xor ecx, ecx	; 3732F
 mov cl, byte [byte_DDD43]	; 37331
-mov ebx, unk_DD7B4	; 37337
-mov edx, unk_DDD59	; 3733C
+mov ebx, leagueteams	; 37337
+mov edx, savleague2	; 3733C
 jmp short loc_37373	; 37341
 loc_37343:
 mov dword [byte esp+074h], 1	; 37343
 xor ebp, ebp	; 3734B
-mov ebx, unk_DD7B4	; 3734D
-mov edx, unk_DDD59	; 37352
+mov ebx, leagueteams	; 3734D
+mov edx, savleague2	; 37352
 mov eax, byte_DD750	; 37357
 call sub_36207	; 3735C
 xor ecx, ecx	; 37361
 mov cl, byte [byte_DDD43]	; 37363
-mov ebx, unk_DD7B4	; 37369
-mov edx, unk_DDD4C	; 3736E
+mov ebx, leagueteams	; 37369
+mov edx, savleague1	; 3736E
 loc_37373:
 mov eax, byte_DD710	; 37373
 call sub_36207	; 37378
@@ -1483,7 +1483,7 @@ loc_374FF:
 xor edx, edx	; 374FF
 loc_37501:
 mov eax, esp	; 37501
-call sub_1431E	; 37503
+call MakePath	; 37503
 push byte 0	; 37508
 lea eax, [byte esp+04h]	; 3750A
 push eax	; 3750E
@@ -1545,8 +1545,8 @@ je near loc_37653	; 375CE
 push byte 0FFFFFFFFh	; 375D4
 mov ebx, dword [dword_DDD34]	; 375D6
 mov ecx, 0FFFFFFFFh	; 375DC
-mov edx, unk_DD7B4	; 375E1
-mov eax, byte_C8451	; 375E6
+mov edx, leagueteams	; 375E1
+mov eax, curleague	; 375E6
 call sub_35FB9	; 375EB
 mov esi, eax	; 375F0
 test eax, eax	; 375F2
@@ -1569,37 +1569,37 @@ test byte [nosplit eax*2+byte_DD7CA], 1	; 37629
 je short loc_37644	; 37631
 cmp dword [dword esp+088h], byte 0	; 37633
 je short loc_37644	; 3763B
-mov edx, byte_C8451	; 3763D
+mov edx, curleague	; 3763D
 jmp short loc_37649	; 37642
 loc_37644:
-mov edx, byte_C816A	; 37644
+mov edx, str_floppydrv	; 37644
 loc_37649:
-mov eax, unk_DDD59	; 37649
+mov eax, savleague2	; 37649
 call strcpy_	; 3764E
 loc_37653:
 test esi, esi	; 37653
 jne short loc_376AC	; 37655
-mov ebx, dword [off_C80EF]	; 37657
-mov ecx, asc_C8154	; 3765D
-mov edx, unk_DDD4C	; 37662
+mov ebx, dword [leaguedbnames+18h]	; 37657
+mov ecx, str_extxx	; 3765D
+mov edx, savleague1	; 37662
 mov eax, esp	; 37667
-call sub_1431E	; 37669
+call MakePath	; 37669
 lea edx, [byte esp+06Ch]	; 3766E
 mov eax, esp	; 37672
-call sub_14552	; 37674
+call FileOpenRW	; 37674
 mov esi, eax	; 37679
 cmp dword [dword_DDD3C], byte 0	; 3767B
 je short loc_376AC	; 37682
 test eax, eax	; 37684
 jne short loc_376AC	; 37686
-mov ebx, dword [off_C80EF]	; 37688
+mov ebx, dword [leaguedbnames+18h]	; 37688
 mov ecx, asc_C8158	; 3768E
-mov edx, unk_DDD59	; 37693
+mov edx, savleague2	; 37693
 mov eax, esp	; 37698
-call sub_1431E	; 3769A
+call MakePath	; 3769A
 lea edx, [byte esp+05Ch]	; 3769F
 mov eax, esp	; 376A3
-call sub_14552	; 376A5
+call FileOpenRW	; 376A5
 mov esi, eax	; 376AA
 loc_376AC:
 test esi, esi	; 376AC
@@ -1613,21 +1613,21 @@ mov ecx, 1	; 376B5
 mov ebx, unk_C7F8E	; 376BA
 mov edx, 0FFFFFFFFh	; 376BF
 mov eax, edx	; 376C4
-call sub_31013	; 376C6
+call MessageBox	; 376C6
 mov dword [byte esp+048h], esi	; 376CB
 xor bl, bl	; 376CF
 mov byte [byte esp+030h], bl	; 376D1
 loc_376D5:
 test esi, esi	; 376D5
 jne short loc_376FC	; 376D7
-mov ecx, asc_C811A	; 376D9
-mov ebx, asc_C80F3	; 376DE
-mov edx, unk_DDD4C	; 376E3
+mov ecx, str_extDB	; 376D9
+mov ebx, str_PINFO	; 376DE
+mov edx, savleague1	; 376E3
 mov eax, esp	; 376E8
-call sub_1431E	; 376EA
+call MakePath	; 376EA
 lea edx, [byte esp+064h]	; 376EF
 mov eax, esp	; 376F3
-call sub_1453E	; 376F5
+call FileOpenWrite	; 376F5
 mov esi, eax	; 376FA
 loc_376FC:
 test esi, esi	; 376FC
@@ -1636,7 +1636,7 @@ mov ecx, 2	; 37700
 mov ebx, 4	; 37705
 lea edx, [byte esp+048h]	; 3770A
 mov eax, dword [byte esp+064h]	; 3770E
-call sub_145F9	; 37712
+call FileWriteAt	; 37712
 mov esi, eax	; 37717
 loc_37719:
 test esi, esi	; 37719
@@ -1645,23 +1645,23 @@ mov ecx, 0Dh	; 3771D
 mov ebx, 6	; 37722
 lea edx, [byte esp+030h]	; 37727
 mov eax, dword [byte esp+064h]	; 3772B
-call sub_145F9	; 3772F
+call FileWriteAt	; 3772F
 mov esi, eax	; 37734
 loc_37736:
 lea eax, [byte esp+064h]	; 37736
-call sub_1457C	; 3773A
+call FileClose	; 3773A
 cmp dword [dword_DDD3C], byte 0	; 3773F
 je short loc_377B2	; 37746
 test esi, esi	; 37748
 jne short loc_3776F	; 3774A
-mov ecx, asc_C811A	; 3774C
-mov ebx, asc_C80F3	; 37751
-mov edx, unk_DDD59	; 37756
+mov ecx, str_extDB	; 3774C
+mov ebx, str_PINFO	; 37751
+mov edx, savleague2	; 37756
 mov eax, esp	; 3775B
-call sub_1431E	; 3775D
+call MakePath	; 3775D
 lea edx, [byte esp+064h]	; 37762
 mov eax, esp	; 37766
-call sub_1453E	; 37768
+call FileOpenWrite	; 37768
 mov esi, eax	; 3776D
 loc_3776F:
 test esi, esi	; 3776F
@@ -1670,7 +1670,7 @@ mov ecx, 2	; 37773
 mov ebx, 4	; 37778
 lea edx, [byte esp+048h]	; 3777D
 mov eax, dword [byte esp+064h]	; 37781
-call sub_145F9	; 37785
+call FileWriteAt	; 37785
 mov esi, eax	; 3778A
 loc_3778C:
 test esi, esi	; 3778C
@@ -1679,11 +1679,11 @@ mov ecx, 0Dh	; 37790
 mov ebx, 6	; 37795
 lea edx, [byte esp+030h]	; 3779A
 mov eax, dword [byte esp+064h]	; 3779E
-call sub_145F9	; 377A2
+call FileWriteAt	; 377A2
 mov esi, eax	; 377A7
 loc_377A9:
 lea eax, [byte esp+064h]	; 377A9
-call sub_1457C	; 377AD
+call FileClose	; 377AD
 loc_377B2:
 test esi, esi	; 377B2
 jne short loc_377CF	; 377B4
@@ -1710,14 +1710,14 @@ jne near loc_37913	; 377F7
 mov ax, word [word_DDD46]	; 377FD
 cmp ax, 444h	; 37803
 jl near loc_378B6	; 37807
-mov ebx, dword [off_C80E7]	; 3780D
-mov ecx, asc_C8154	; 37813
-mov edx, unk_DDD4C	; 37818
+mov ebx, dword [leaguedbnames+10h]	; 3780D
+mov ecx, str_extxx	; 37813
+mov edx, savleague1	; 37818
 mov eax, esp	; 3781D
-call sub_1431E	; 3781F
+call MakePath	; 3781F
 lea edx, [byte esp+058h]	; 37824
 mov eax, esp	; 37828
-call sub_14552	; 3782A
+call FileOpenRW	; 3782A
 mov esi, eax	; 3782F
 test eax, eax	; 37831
 jne short loc_3784D	; 37833
@@ -1729,19 +1729,19 @@ call sub_41F64	; 37846
 mov esi, eax	; 3784B
 loc_3784D:
 lea eax, [byte esp+058h]	; 3784D
-call sub_1457C	; 37851
+call FileClose	; 37851
 test esi, esi	; 37856
 jne near loc_37913	; 37858
 cmp dword [dword_DDD3C], byte 0	; 3785E
 je near loc_37913	; 37865
-mov ebx, dword [off_C80E7]	; 3786B
+mov ebx, dword [leaguedbnames+10h]	; 3786B
 mov ecx, asc_C8158	; 37871
-mov edx, unk_DDD59	; 37876
+mov edx, savleague2	; 37876
 mov eax, esp	; 3787B
-call sub_1431E	; 3787D
+call MakePath	; 3787D
 lea edx, [byte esp+040h]	; 37882
 mov eax, esp	; 37886
-call sub_14552	; 37888
+call FileOpenRW	; 37888
 mov esi, eax	; 3788D
 test eax, eax	; 3788F
 jne short loc_378AB	; 37891
@@ -1753,7 +1753,7 @@ call sub_41F64	; 378A4
 mov esi, eax	; 378A9
 loc_378AB:
 lea eax, [byte esp+040h]	; 378AB
-call sub_1457C	; 378AF
+call FileClose	; 378AF
 jmp short loc_37913	; 378B4
 loc_378B6:
 mov edx, eax	; 378B6
@@ -1765,7 +1765,7 @@ mov ecx, 2	; 378C9
 xor ebx, ebx	; 378CE
 mov edx, word_DDD46	; 378D0
 mov eax, dword [byte esp+06Ch]	; 378D5
-call sub_145F9	; 378D9
+call FileWriteAt	; 378D9
 mov esi, eax	; 378DE
 loc_378E0:
 test esi, esi	; 378E0
@@ -1779,7 +1779,7 @@ mov ecx, 2	; 378FC
 xor ebx, ebx	; 37901
 mov edx, word_DDD46	; 37903
 mov eax, dword [byte esp+05Ch]	; 37908
-call sub_145F9	; 3790C
+call FileWriteAt	; 3790C
 mov esi, eax	; 37911
 loc_37913:
 test esi, esi	; 37913
@@ -1790,20 +1790,20 @@ push esi	; 37923
 mov ebx, dword [dword_DDD44]	; 37924
 sar ebx, 10h	; 3792A
 dec ebx	; 3792D
-mov ecx, unk_DD7B4	; 3792E
-mov edx, asc_C8154	; 37933
-mov eax, unk_DDD4C	; 37938
+mov ecx, leagueteams	; 3792E
+mov edx, str_extxx	; 37933
+mov eax, savleague1	; 37938
 call sub_41CC4	; 3793D
 mov esi, eax	; 37942
 test eax, eax	; 37944
 jne short loc_37970	; 37946
-push unk_DDD4C	; 37948
+push savleague1	; 37948
 mov eax, dword [dword esp+080h]	; 3794D
 push eax	; 37954
 mov ebx, dword [dword_DDD38]	; 37955
 mov ecx, dword [byte esp+07Ch]	; 3795B
-mov edx, asc_C8154	; 3795F
-mov eax, unk_DDD4C	; 37964
+mov edx, str_extxx	; 3795F
+mov eax, savleague1	; 37964
 call sub_3626D	; 37969
 mov esi, eax	; 3796E
 loc_37970:
@@ -1816,29 +1816,29 @@ mov ecx, dword [dword_DDD34]	; 37983
 push ecx	; 37989
 mov ebx, dword [dword_DDD44]	; 3798A
 sar ebx, 10h	; 37990
-mov ecx, unk_DD7B4	; 37993
+mov ecx, leagueteams	; 37993
 mov edx, asc_C8158	; 37998
-mov eax, unk_DDD59	; 3799D
+mov eax, savleague2	; 3799D
 call sub_41CC4	; 379A2
 mov esi, eax	; 379A7
 test eax, eax	; 379A9
 jne short loc_379F4	; 379AB
-push unk_DDD4C	; 379AD
+push savleague1	; 379AD
 mov esi, dword [dword esp+080h]	; 379B2
 push esi	; 379B9
 mov ebx, dword [dword_DDD34]	; 379BA
 mov ecx, ebp	; 379C0
 mov edx, asc_C8158	; 379C2
-mov eax, unk_DDD59	; 379C7
+mov eax, savleague2	; 379C7
 jmp short loc_379ED	; 379CC
 loc_379CE:
-push unk_DDD4C	; 379CE
+push savleague1	; 379CE
 mov ebx, dword [dword esp+080h]	; 379D3
 push ebx	; 379DA
 mov ebx, dword [dword_DDD34]	; 379DB
 mov ecx, ebp	; 379E1
-mov edx, asc_C8154	; 379E3
-mov eax, unk_DDD4C	; 379E8
+mov edx, str_extxx	; 379E3
+mov eax, savleague1	; 379E8
 loc_379ED:
 call sub_3626D	; 379ED
 mov esi, eax	; 379F2
@@ -1873,15 +1873,15 @@ mov ecx, 1	; 37A3A
 mov ebx, unk_C7805	; 37A3F
 mov edx, 0FFFFFFFFh	; 37A44
 mov eax, edx	; 37A49
-call sub_31013	; 37A4B
+call MessageBox	; 37A4B
 loc_37A50:
 cmp dword [dword_DDD3C], byte 0	; 37A50
 je short loc_37A62	; 37A57
 lea eax, [byte esp+05Ch]	; 37A59
-call sub_1457C	; 37A5D
+call FileClose	; 37A5D
 loc_37A62:
 lea eax, [byte esp+06Ch]	; 37A62
-call sub_1457C	; 37A66
+call FileClose	; 37A66
 loc_37A6B:
 push byte 20h	; 37A6B
 push dword 300h	; 37A6D
@@ -1938,9 +1938,9 @@ xor esi, esi	; 37B3A
 loc_37B3C:
 mov ecx, asc_C1879	; 37B3C
 mov ebx, asc_C1874	; 37B41
-mov edx, byte_C8451	; 37B46
+mov edx, curleague	; 37B46
 mov eax, esp	; 37B4B
-call sub_1431E	; 37B4D
+call MakePath	; 37B4D
 cmp word [word_DDD46], byte 0	; 37B52
 jl short loc_37B6F	; 37B5A
 test esi, esi	; 37B5C
@@ -2396,7 +2396,7 @@ loc_37FFF:
 xor edx, edx	; 37FFF
 loc_38001:
 lea eax, [byte esp+074h]	; 38001
-call sub_1431E	; 38005
+call MakePath	; 38005
 push byte 0	; 3800A
 lea eax, [byte esp+078h]	; 3800C
 push eax	; 38010

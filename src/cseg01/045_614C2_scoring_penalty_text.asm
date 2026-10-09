@@ -21,7 +21,7 @@ extern dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9
 extern dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, fputchar, puckvx, gmode, loc_18F86
 extern lseek_, ltx, off_C5439, puckx, pucky, puckvy, puckz, puckc
 extern off_CD304, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
-extern strcpy_, strlen_, sub_110E0, sub_14552, sub_1457C, sub_145F9, sub_14C22, sub_14CA0
+extern strcpy_, strlen_, sub_110E0, FileOpenRW, FileClose, FileWriteAt, sub_14C22, sub_14CA0
 extern sub_18F74, sub_1CD73, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
 extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, sub_B2CD8, unk_C1B49, unk_C1C58, unk_C1C5B
 extern unk_C1C5E, unk_C1C61, unk_C1C64, unk_C1C67, unk_C1CB0, unk_C5423, unk_C542E, unk_DBC30
@@ -541,7 +541,7 @@ mov esi, eax	; 61A9B
 inc word [word_C5428]	; 61A9D
 mov edx, esp	; 61AA4
 mov eax, byte_DAC20	; 61AA6
-call sub_14552	; 61AAB
+call FileOpenRW	; 61AAB
 test eax, eax	; 61AB0
 je short .1	; 61AB2
 push unk_C1C58	; 61AB4
@@ -562,7 +562,7 @@ mov ecx, 0Bh	; 61ADE
 mov ebx, 0FFFFFFFFh	; 61AE3
 mov edx, unk_C5423	; 61AE8
 mov eax, dword [esp]	; 61AED
-call sub_145F9	; 61AF0
+call FileWriteAt	; 61AF0
 test eax, eax	; 61AF5
 je short .3	; 61AF7
 push unk_C1C5E	; 61AF9
@@ -583,7 +583,7 @@ mov ecx, 0Bh	; 61B29
 mov ebx, 0FFFFFFFFh	; 61B2E
 mov edx, esi	; 61B33
 mov eax, dword [esp]	; 61B35
-call sub_145F9	; 61B38
+call FileWriteAt	; 61B38
 test eax, eax	; 61B3D
 je short .5	; 61B3F
 push unk_C1C64	; 61B41
@@ -594,7 +594,7 @@ mov ecx, 0Bh	; 61B4E
 mov ebx, 0FFFFFFFFh	; 61B53
 mov edx, unk_C542E	; 61B58
 mov eax, dword [esp]	; 61B5D
-call sub_145F9	; 61B60
+call FileWriteAt	; 61B60
 test eax, eax	; 61B65
 je short .6	; 61B67
 push unk_C1C67	; 61B69
@@ -602,7 +602,7 @@ call sub_B2CD8	; 61B6E
 add esp, byte 4	; 61B73
 .6:
 mov eax, esp	; 61B76
-call sub_1457C	; 61B78
+call FileClose	; 61B78
 add esp, byte 4	; 61B7D
 pop esi	; 61B80
 pop edx	; 61B81
@@ -642,7 +642,7 @@ push edx	; 61BCB
 sub esp, byte 4	; 61BCC
 mov edx, esp	; 61BCF
 mov eax, byte_DAC20	; 61BD1
-call sub_14552	; 61BD6
+call FileOpenRW	; 61BD6
 test eax, eax	; 61BDB
 je short .1	; 61BDD
 push unk_C1C58	; 61BDF
@@ -654,7 +654,7 @@ mov ebx, 0FFFFFFFFh	; 61BF1
 mov edx, unk_C5423	; 61BF6
 fileio_tail_a:
 mov eax, dword [esp]	; 61BFB
-call sub_145F9	; 61BFE
+call FileWriteAt	; 61BFE
 test eax, eax	; 61C03
 je short fileio_tail_c	; 61C05
 push unk_C1C5B	; 61C07
@@ -663,7 +663,7 @@ call sub_B2CD8	; 61C0C
 add esp, byte 4	; 61C11
 fileio_tail_c:
 mov eax, esp	; 61C14
-call sub_1457C	; 61C16
+call FileClose	; 61C16
 add esp, byte 4	; 61C1B
 pop edx	; 61C1E
 pop ecx	; 61C1F
@@ -678,7 +678,7 @@ push edx	; 61C2E
 sub esp, byte 4	; 61C2F
 mov edx, esp	; 61C32
 mov eax, byte_DAC20	; 61C34
-call sub_14552	; 61C39
+call FileOpenRW	; 61C39
 test eax, eax	; 61C3E
 je short .1	; 61C40
 push unk_C1C58	; 61C42
@@ -709,7 +709,7 @@ sub esp, byte 4	; 61C93
 inc word [word_C5428]	; 61C96
 mov edx, esp	; 61C9D
 mov eax, byte_DAC20	; 61C9F
-call sub_14552	; 61CA4
+call FileOpenRW	; 61CA4
 test eax, eax	; 61CA9
 je short .1	; 61CAB
 push unk_C1C58	; 61CAD
@@ -730,7 +730,7 @@ mov ecx, 0Bh	; 61CD7
 mov ebx, 0FFFFFFFFh	; 61CDC
 mov edx, unk_C5423	; 61CE1
 mov eax, dword [esp]	; 61CE6
-call sub_145F9	; 61CE9
+call FileWriteAt	; 61CE9
 test eax, eax	; 61CEE
 je short .3	; 61CF0
 push unk_C1C5E	; 61CF2
@@ -751,7 +751,7 @@ mov ecx, 0Bh	; 61D1F
 mov ebx, 0FFFFFFFFh	; 61D24
 mov edx, unk_C542E	; 61D29
 mov eax, dword [esp]	; 61D2E
-call sub_145F9	; 61D31
+call FileWriteAt	; 61D31
 test eax, eax	; 61D36
 je near fileio_tail_c	; 61D38
 push unk_C1C67	; 61D3E

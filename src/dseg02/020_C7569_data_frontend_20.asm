@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_C7569 progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450, unk_C7544
-global asc_C7632, dword_C756D, dword_C760D, dword_C7615, dword_C766F, unk_C7569, unk_C7571, unk_C7592
-global unk_C7596, unk_C75A1, unk_C75C0, unk_C75DC, unk_C75EC, unk_C75FD, unk_C7609, unk_C7611
-global unk_C7621, unk_C7644, unk_C766B, unk_C7677, unk_C76BA, unk_C76D4, unk_C76FE
+global str_FromLeague, dword_C756D, dword_C760D, msg_InsertDisk_arg, msg_WrongDisk_arg, unk_C7569, unk_C7571, unk_C7592
+global unk_C7596, unk_C75A1, unk_C75C0, unk_C75DC, unk_C75EC, unk_C75FD, unk_C7609, msg_InsertDisk
+global unk_C7621, unk_C7644, msg_WrongDisk, btn_WrongDisk, unk_C76BA, unk_C76D4, unk_C76FE
 unk_C7569:
 dd unk_C7544
 dword_C756D:
@@ -37,28 +37,28 @@ unk_C7609:
 dd unk_C75C0
 dword_C760D:
 db 00h,00h,00h,00h
-unk_C7611:
+msg_InsertDisk:
 dd unk_C75DC
-dword_C7615:
+msg_InsertDisk_arg:
 db 00h,00h,00h,00h
 dd unk_C75EC
 dd unk_C75FD
 unk_C7621:
 db 054h,068h,061h,074h,020h,064h,069h,073h,06Bh,020h,069h,073h,020h,066h,06Fh,072h
 db 00h
-asc_C7632:
+str_FromLeague:
 db 020h,066h,072h,06Fh,06Dh,020h,074h,068h,065h,020h,06Ch,065h,061h,067h,075h,065h
 db 020h,00h
 unk_C7644:
 db 041h,072h,065h,020h,079h,06Fh,075h,020h,073h,075h,072h,065h,020h,079h,06Fh,075h
 db 020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,06Fh,076h,065h,072h,077h,072h,069h
 db 074h,065h,020h,069h,074h,03Fh,00h
-unk_C766B:
+msg_WrongDisk:
 dd unk_C7621
-dword_C766F:
+msg_WrongDisk_arg:
 db 00h,00h,00h,00h
 dd unk_C7644
-unk_C7677:
+btn_WrongDisk:
 db 010h,00h,00h,00h,050h,00h,00h,00h,060h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd unk_C744C

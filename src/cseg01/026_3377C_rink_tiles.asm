@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_3377C progbits alloc exec nowrite align=1
 extern __CHK, asc_C1794, asc_C1799, asc_C179E, asc_C17B9, asc_C17BF, asc_C17D8, asc_C17E0
-extern asc_C17E8, asc_C7298, asc_C814F, byte_ED7CC, byte_ED7CD, byte_ED821, byte_ED927, dword_C729A
+extern asc_C17E8, asc_C7298, str_extBIN, byte_ED7CC, byte_ED7CD, byte_ED821, byte_ED927, dword_C729A
 extern dword_C729C, dword_C729E, dword_C72A0, dword_C73D0, rinkbm, dword_C73D8, dword_C7440, dword_C7444
 extern dword_C7448, dword_D2C6B, dword_DD6A6, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_EA0DC, jctime
-extern sub_1431E, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52, sub_6AF97
+extern MakePath, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52, sub_6AF97
 extern sub_6B391, sub_76429, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_913B4
 extern sub_92DE0, sub_92EE4, sub_B2CD8, sub_B30B4, sub_B395C, SetDrawBitmap, sub_B4F8C, unk_DC890
 extern scrolly, scrollx, bgscrollx
@@ -81,7 +81,7 @@ loc_33843:
 xor edx, edx	; 33843
 loc_33845:
 mov eax, esp	; 33845
-call sub_1431E	; 33847
+call MakePath	; 33847
 push byte 0	; 3384C
 lea eax, [byte esp+04h]	; 3384E
 push eax	; 33852
@@ -120,7 +120,7 @@ loc_338CB:
 xor edx, edx	; 338CB
 loc_338CD:
 mov eax, esp	; 338CD
-call sub_1431E	; 338CF
+call MakePath	; 338CF
 mov eax, esp	; 338D4
 push eax	; 338D6
 call sub_92DE0	; 338D7
@@ -178,7 +178,7 @@ loc_33977:
 xor edx, edx	; 33977
 loc_33979:
 mov eax, esp	; 33979
-call sub_1431E	; 3397B
+call MakePath	; 3397B
 push byte 0	; 33980
 lea eax, [byte esp+04h]	; 33982
 push eax	; 33986
@@ -669,7 +669,7 @@ mov ebx, 10h	; 33F28
 mov edx, esp	; 33F2D
 mov eax, 1	; 33F2F
 call sub_76429	; 33F34
-mov ecx, asc_C814F	; 33F39
+mov ecx, str_extBIN	; 33F39
 mov ebx, asc_C17E0	; 33F3E
 cmp byte [byte_ED821], 1	; 33F43
 jne short loc_33F54	; 33F4A
@@ -679,7 +679,7 @@ loc_33F54:
 xor edx, edx	; 33F54
 loc_33F56:
 lea eax, [dword esp+0300h]	; 33F56
-call sub_1431E	; 33F5D
+call MakePath	; 33F5D
 push byte 0	; 33F62
 lea eax, [dword esp+0304h]	; 33F64
 push eax	; 33F6B

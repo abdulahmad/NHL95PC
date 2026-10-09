@@ -2,25 +2,25 @@
 bits 32
 %include "hockey.inc"
 section s_C1A26 progbits alloc noexec write align=1
-global asc_C1A26, asc_C1A2C, asc_C1A3C, asc_C1A48, asc_C1A51, asc_C1A58, asc_C1A5D, asc_C1A62
-global asc_C1A68, asc_C1A70, asc_C1A75, asc_C1A7C, asc_C1A85
-asc_C1A26:
+global str_Show, str_Statistics, str_HOMEPALS, str_easndesk, str_bangpal, str_LLST, str_LLSN, str_extnum
+global str_saved, asc_C1A70, asc_C1A75, asc_C1A7C, asc_C1A85
+str_Show:
 db 053h,068h,06Fh,077h,020h,00h
-asc_C1A2C:
+str_Statistics:
 db 020h,053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,02Eh,02Eh,02Eh,00h,00h
-asc_C1A3C:
+str_HOMEPALS:
 db 048h,04Fh,04Dh,045h,050h,041h,04Ch,053h,00h,00h,00h,00h
-asc_C1A48:
+str_easndesk:
 db 065h,061h,073h,06Eh,064h,065h,073h,06Bh,00h
-asc_C1A51:
+str_bangpal:
 db 021h,070h,061h,06Ch,00h,00h,00h
-asc_C1A58:
+str_LLST:
 db 04Ch,04Ch,053h,054h,00h
-asc_C1A5D:
+str_LLSN:
 db 04Ch,04Ch,053h,04Eh,00h
-asc_C1A62:
+str_extnum:
 db 02Eh,025h,030h,032h,064h,00h
-asc_C1A68:
+str_saved:
 db 073h,061h,076h,065h,064h,00h,00h,00h
 asc_C1A70:
 db 073h,063h,068h,065h,00h

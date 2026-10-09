@@ -12,7 +12,7 @@ extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, 
 extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, hmscore, awscore, hmtmstruct
 extern jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C8, off_C57CC, awtmstruct
 extern off_D3078, rand_, randomd0, sub_10712, sub_10E9F, sub_1167B, sub_13BB4, sub_13FA7
-extern sub_1431E, sub_14A20, sub_14F31, sub_1BEFD, sub_327A1, sub_3371C, sub_3377C, sub_42221
+extern MakePath, sub_14A20, sub_14F31, sub_1BEFD, sub_327A1, sub_3371C, sub_3377C, sub_42221
 extern sub_479E9, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
 extern sub_7DC8B, sub_891B2, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
 extern PollKey, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, unk_C5298, unk_DF314, PerTimeTab
@@ -84,7 +84,7 @@ loc_15180:
 xor edx, edx	; 15180
 loc_15182:
 lea eax, [byte esp+04h]	; 15182
-call sub_1431E	; 15186
+call MakePath	; 15186
 push byte 0	; 1518B
 lea eax, [byte esp+08h]	; 1518D
 push eax	; 15191
@@ -167,7 +167,7 @@ loc_1528C:
 xor edx, edx	; 1528C
 loc_1528E:
 lea eax, [byte esp+04h]	; 1528E
-call sub_1431E	; 15292
+call MakePath	; 15292
 push byte 0	; 15297
 lea eax, [byte esp+08h]	; 15299
 push eax	; 1529D

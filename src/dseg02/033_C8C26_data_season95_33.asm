@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_C8C26 progbits alloc noexec write align=1
 extern unk_C8BE9, unk_C8C0A
-global asc_C8CA4, dword_C8C61, dword_C8D06, dword_C9002, off_C8C26, off_C8C59, off_C8CC8, unk_C8C30
+global asc_C8CA4, dword_C8C61, dword_C8D06, dword_C9002, msg_TradeDeadline, off_C8C59, off_C8CC8, unk_C8C30
 global unk_C8C4C, unk_C8C68, unk_C8C89, unk_C8CD4, unk_C8D02
-off_C8C26:
+msg_TradeDeadline:
 dd unk_C8BE9
 dd unk_C8C0A
 db 00h,00h

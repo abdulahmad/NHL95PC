@@ -4,7 +4,7 @@ bits 32
 section s_C87C0 progbits alloc noexec write align=1
 extern sub_3DE05, sub_3EDAA, sub_3EF27, sub_79DD1, unk_C17F0, unk_C87B8
 global dword_C87C0, dword_C87C8, dword_C87E0, dword_C87E8, unk_C87F8, unk_C87FD, unk_C8804, unk_C8844
-global unk_C884A, unk_C885C, unk_C88BC, unk_C88C2
+global unk_C884A, btn_TradeStats, unk_C88BC, unk_C88C2
 dword_C87C0:
 db 0BAh,00h,00h,00h,011h,00h,00h,00h
 dword_C87C8:
@@ -35,7 +35,7 @@ db 054h,072h,061h,064h,065h,00h
 unk_C884A:
 db 050h,06Ch,061h,079h,065h,072h,020h,053h,074h,061h,074h,069h,073h,074h,069h,063h
 db 073h,00h
-unk_C885C:
+btn_TradeStats:
 db 0BFh,00h,00h,00h,00h,00h,00h,00h,0EFh,00h,00h,00h,012h,00h,00h,00h
 dd unk_C17F0
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0F0h,00h,00h,00h

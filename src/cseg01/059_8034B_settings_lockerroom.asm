@@ -21,8 +21,8 @@ extern dword_D23A3, dword_D23A7, dword_D23AB, dword_D23AF, musichandle, dword_D2
 extern dword_D8B68, dword_D8B74, dword_DC230, dword_DC238, dword_DD64C, dword_EA0DC, dword_ED360, dword_ED75C
 extern dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C
 extern dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794, dword_ED798, dword_ED79C
-extern dword_ED7A0, fputchar, jctime, off_C54A9, off_CECFF, off_CED3F, off_D21C0, off_D2230
-extern sprintf_, strcpy_, strncpy_, sub_1431E, sub_174C2, sub_175E2, sub_17636, sub_479E9
+extern dword_ED7A0, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
+extern sprintf_, strcpy_, strncpy_, MakePath, sub_174C2, sub_175E2, sub_17636, sub_479E9
 extern FadeOutPalCycle, sub_6B391, sub_6B3D7, sub_76429, sub_8291E, sub_8B92F, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_912C8, sub_91400
@@ -70,7 +70,7 @@ jne short loc_80382	; 8037A
 mov edx, dword [dword_D2C6B]	; 8037C
 loc_80382:
 mov eax, esp	; 80382
-call sub_1431E	; 80384
+call MakePath	; 80384
 push byte 0	; 80389
 lea eax, [byte esp+04h]	; 8038B
 push eax	; 8038F
@@ -682,7 +682,7 @@ loc_80AD7:
 xor edx, edx	; 80AD7
 loc_80AD9:
 lea eax, [dword esp+0300h]	; 80AD9
-call sub_1431E	; 80AE0
+call MakePath	; 80AE0
 push byte 0	; 80AE5
 lea eax, [dword esp+0304h]	; 80AE7
 push eax	; 80AEE
@@ -809,7 +809,7 @@ loc_80CA3:
 xor edx, edx	; 80CA3
 loc_80CA5:
 lea eax, [dword esp+0300h]	; 80CA5
-call sub_1431E	; 80CAC
+call MakePath	; 80CAC
 push byte 0	; 80CB1
 lea eax, [dword esp+0304h]	; 80CB3
 push eax	; 80CBA
@@ -877,7 +877,7 @@ loc_80D9F:
 xor edx, edx	; 80D9F
 loc_80DA1:
 lea eax, [dword esp+0300h]	; 80DA1
-call sub_1431E	; 80DA8
+call MakePath	; 80DA8
 push byte 0	; 80DAD
 lea eax, [dword esp+0304h]	; 80DAF
 push eax	; 80DB6
@@ -1196,7 +1196,7 @@ mov edx, edi	; 8122E
 call sub_175E2	; 81230
 mov eax, dword [cont2team]	; 81235
 sar eax, 10h	; 8123A
-mov edx, dword [nosplit eax*4+off_C54A9]	; 8123D
+mov edx, dword [nosplit eax*4+teamcitynames]	; 8123D
 push edx	; 81244
 call fputchar	; 81245
 add esp, byte 4	; 8124A
@@ -1205,7 +1205,7 @@ sub edx, eax	; 81252
 mov dword [dword esp+0350h], edx	; 81254
 mov eax, dword [cont2team]	; 8125B
 sar eax, 10h	; 81260
-mov ebx, dword [nosplit eax*4+off_C54A9]	; 81263
+mov ebx, dword [nosplit eax*4+teamcitynames]	; 81263
 mov edx, 2Ch	; 8126A
 mov eax, dword [dword esp+0350h]	; 8126F
 call sub_17636	; 81276
@@ -1215,7 +1215,7 @@ mov eax, 13Ah	; 81285
 call sub_17636	; 8128A
 mov ebx, dword [HomeTeam]	; 8128F
 sar ebx, 10h	; 81295
-mov ebx, dword [nosplit ebx*4+off_C54A9]	; 81298
+mov ebx, dword [nosplit ebx*4+teamcitynames]	; 81298
 mov edx, 2Ch	; 8129F
 mov eax, 154h	; 812A4
 call sub_17636	; 812A9
@@ -1316,7 +1316,7 @@ jne short loc_81423	; 8141B
 mov edx, dword [dword_D2C6B]	; 8141D
 loc_81423:
 lea eax, [dword esp+0300h]	; 81423
-call sub_1431E	; 8142A
+call MakePath	; 8142A
 lea eax, [dword esp+0300h]	; 8142F
 call sub_8F98F	; 81436
 mov dword [songdata], eax	; 8143B
@@ -1440,7 +1440,7 @@ loc_815EF:
 xor edx, edx	; 815EF
 loc_815F1:
 lea eax, [byte ebp-060h]	; 815F1
-call sub_1431E	; 815F4
+call MakePath	; 815F4
 push byte 0	; 815F9
 lea eax, [byte ebp-060h]	; 815FB
 push eax	; 815FE
@@ -1679,7 +1679,7 @@ mov edx, dword [byte ebp-010h]	; 818CF
 call sub_175E2	; 818D2
 mov eax, dword [byte ebp+010h]	; 818D7
 mov eax, dword [nosplit eax*4+dword_D2150]	; 818DA
-mov ebx, dword [nosplit eax*4+off_C54A9]	; 818E1
+mov ebx, dword [nosplit eax*4+teamcitynames]	; 818E1
 mov edx, 2Ch	; 818E8
 mov eax, 154h	; 818ED
 call sub_17636	; 818F2
@@ -1755,14 +1755,14 @@ mov ebx, esi	; 819C2
 mov edx, dword [byte ebp-010h]	; 819C4
 call sub_175E2	; 819C7
 mov eax, dword [nosplit edi*4+dword_D2150]	; 819CC
-mov esi, dword [nosplit eax*4+off_C54A9]	; 819D3
+mov esi, dword [nosplit eax*4+teamcitynames]	; 819D3
 push esi	; 819DA
 call fputchar	; 819DB
 add esp, byte 4	; 819E0
 mov esi, 12Dh	; 819E3
 sub esi, eax	; 819E8
 mov eax, dword [nosplit edi*4+dword_D2150]	; 819EA
-mov ebx, dword [nosplit eax*4+off_C54A9]	; 819F1
+mov ebx, dword [nosplit eax*4+teamcitynames]	; 819F1
 jmp near loc_81C1A	; 819F8
 loc_819FD:
 mov esi, 2	; 819FD
@@ -1857,7 +1857,7 @@ mov edx, dword [byte ebp-010h]	; 81AFB
 call sub_175E2	; 81AFE
 mov eax, dword [byte ebp+010h]	; 81B03
 mov eax, dword [nosplit eax*4+dword_D2150]	; 81B06
-mov ebx, dword [nosplit eax*4+off_C54A9]	; 81B0D
+mov ebx, dword [nosplit eax*4+teamcitynames]	; 81B0D
 mov edx, 2Ch	; 81B14
 mov eax, 154h	; 81B19
 call sub_17636	; 81B1E
@@ -1929,14 +1929,14 @@ mov ebx, esi	; 81BE4
 mov edx, dword [byte ebp-0Ch]	; 81BE6
 call sub_175E2	; 81BE9
 mov eax, dword [nosplit edi*4+dword_D2150]	; 81BEE
-mov esi, dword [nosplit eax*4+off_C54A9]	; 81BF5
+mov esi, dword [nosplit eax*4+teamcitynames]	; 81BF5
 push esi	; 81BFC
 call fputchar	; 81BFD
 add esp, byte 4	; 81C02
 mov esi, 12Dh	; 81C05
 sub esi, eax	; 81C0A
 mov ebx, dword [nosplit edi*4+dword_D2150]	; 81C0C
-mov ebx, dword [nosplit ebx*4+off_C54A9]	; 81C13
+mov ebx, dword [nosplit ebx*4+teamcitynames]	; 81C13
 loc_81C1A:
 mov edx, 2Ch	; 81C1A
 mov eax, esi	; 81C1F
@@ -2707,7 +2707,7 @@ loc_8264A:
 xor edx, edx	; 8264A
 loc_8264C:
 mov eax, esp	; 8264C
-call sub_1431E	; 8264E
+call MakePath	; 8264E
 push byte 0	; 82653
 lea eax, [byte esp+04h]	; 82655
 push eax	; 82659

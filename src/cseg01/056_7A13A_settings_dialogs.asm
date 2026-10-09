@@ -17,8 +17,8 @@ extern dword_D199C, dword_D19A0, dword_D19AC, dword_D19B0, dword_D19EC, dword_D2
 extern dword_D29FB, dword_D2C6B, dword_DC238, dword_DD64C, hmtmstruct, dword_DF648, hmscore
 extern dword_EA0DC, dword_ED35C, dword_ED360, dword_ED364, dword_ED75C, dword_ED760, dword_ED764, puckstruct
 extern dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C, dword_ED780, dword_ED784
-extern dword_ED788, dword_ED78C, puckvx, gmode, jctime, off_C54A9, puckx, pucky
-extern puckvy, puckc, off_CD498, off_CD4A0, setpersonel, sub_1431E, sub_3271B, sub_327A1
+extern dword_ED788, dword_ED78C, puckvx, gmode, jctime, teamcitynames, puckx, pucky
+extern puckvy, puckc, off_CD498, off_CD4A0, setpersonel, MakePath, sub_3271B, sub_327A1
 extern sub_32B1D, CrowdNoiseOff, CrowdNoiseReset, restorepl, sub_6B391, sub_6B3D7, sub_8034B, sub_8050F
 extern sub_8B85B, sub_8B92F, sub_8CCA8, sub_8E83C, sub_8E9C0, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_90D20, sub_91284, sub_91370
@@ -340,7 +340,7 @@ loc_7A439:
 xor edx, edx	; 7A439
 loc_7A43B:
 mov eax, esp	; 7A43B
-call sub_1431E	; 7A43D
+call MakePath	; 7A43D
 push byte 0	; 7A442
 lea eax, [byte esp+04h]	; 7A444
 push eax	; 7A448
@@ -468,7 +468,7 @@ jne short loc_7A5D3	; 7A5CB
 mov edx, dword [dword_D2C6B]	; 7A5CD
 loc_7A5D3:
 lea eax, [byte ebp-020h]	; 7A5D3
-call sub_1431E	; 7A5D6
+call MakePath	; 7A5D6
 push byte 0	; 7A5DB
 lea eax, [byte ebp-020h]	; 7A5DD
 push eax	; 7A5E0
@@ -576,7 +576,7 @@ loc_7A72D:
 xor edx, edx	; 7A72D
 loc_7A72F:
 lea eax, [dword esp+0100h]	; 7A72F
-call sub_1431E	; 7A736
+call MakePath	; 7A736
 push byte 0	; 7A73B
 lea eax, [dword esp+0104h]	; 7A73D
 push eax	; 7A744
@@ -1772,7 +1772,7 @@ loc_7B53A:
 xor edx, edx	; 7B53A
 loc_7B53C:
 mov eax, esp	; 7B53C
-call sub_1431E	; 7B53E
+call MakePath	; 7B53E
 push byte 0	; 7B543
 lea eax, [byte esp+04h]	; 7B545
 push eax	; 7B549
@@ -2854,7 +2854,7 @@ loc_7C1DA:
 xor edx, edx	; 7C1DA
 loc_7C1DC:
 mov eax, esp	; 7C1DC
-call sub_1431E	; 7C1DE
+call MakePath	; 7C1DE
 push byte 0	; 7C1E3
 lea eax, [byte esp+04h]	; 7C1E5
 push eax	; 7C1E9
@@ -4297,7 +4297,7 @@ loc_7D2CA:
 xor edx, edx	; 7D2CA
 loc_7D2CC:
 lea eax, [dword esp+0100h]	; 7D2CC
-call sub_1431E	; 7D2D3
+call MakePath	; 7D2D3
 push byte 0	; 7D2D8
 lea eax, [dword esp+0104h]	; 7D2DA
 push eax	; 7D2E1
@@ -4351,7 +4351,7 @@ add edi, byte 3	; 7D36E
 push edi	; 7D371
 mov eax, dword [cont2team]	; 7D372
 sar eax, 10h	; 7D377
-mov edx, dword [nosplit eax*4+off_C54A9]	; 7D37A
+mov edx, dword [nosplit eax*4+teamcitynames]	; 7D37A
 push edx	; 7D381
 call sub_91964	; 7D382
 add esp, byte 0Ch	; 7D387
@@ -4379,7 +4379,7 @@ add edi, byte 3	; 7D3C9
 push edi	; 7D3CC
 mov eax, dword [HomeTeam]	; 7D3CD
 sar eax, 10h	; 7D3D2
-mov ebx, dword [nosplit eax*4+off_C54A9]	; 7D3D5
+mov ebx, dword [nosplit eax*4+teamcitynames]	; 7D3D5
 push ebx	; 7D3DC
 call sub_91964	; 7D3DD
 add esp, byte 0Ch	; 7D3E2

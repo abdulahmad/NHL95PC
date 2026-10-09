@@ -8,8 +8,8 @@ extern byte_C845E, musicon, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, game
 extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, songdata, dword_C895E, dword_C8976, dword_C897A
 extern dword_C898E, dword_C8992, musichandle, dword_D2C6B, dword_D42A8, dword_D8B74, dword_DC238, musicslot
 extern dword_DD780, dword_DD794, dword_DD7A0, dword_DDD28, dword_DDD2C, dword_DDD30, dword_EA0DC, fputchar
-extern jctime, off_C57CC, off_C80EF, off_C85F6, off_C8616, sprintf_, sub_1431E, sub_14525
-extern sub_1457C, sub_145A2, sub_147A0, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
+extern jctime, off_C57CC, off_C85F6, off_C8616, sprintf_, MakePath, FileOpenRead, leaguedbnames
+extern FileClose, FileReadAt, sub_147A0, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
 extern sub_21350, sub_214B1, sub_215C4, sub_216D7, sub_217FE, sub_30A0C, sub_479E9, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
 extern sub_7DB67, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
@@ -775,7 +775,7 @@ loc_349A3:
 xor edx, edx	; 349A3
 loc_349A5:
 lea eax, [dword esp+06F8h]	; 349A5
-call sub_1431E	; 349AC
+call MakePath	; 349AC
 push byte 20h	; 349B1
 lea eax, [dword esp+06FCh]	; 349B3
 push eax	; 349BA
@@ -792,7 +792,7 @@ loc_349E0:
 xor edx, edx	; 349E0
 loc_349E2:
 lea eax, [dword esp+06F8h]	; 349E2
-call sub_1431E	; 349E9
+call MakePath	; 349E9
 push byte 20h	; 349EE
 lea eax, [dword esp+06FCh]	; 349F0
 push eax	; 349F7
@@ -835,14 +835,14 @@ inc word [dword esp+07CCh]	; 34A83
 loc_34A8B:
 cmp word [dword esp+07CCh], byte 1Ah	; 34A8B
 jl short loc_34A5A	; 34A94
-mov ebx, dword [off_C80EF]	; 34A96
+mov ebx, dword [leaguedbnames+18h]	; 34A96
 mov ecx, edi	; 34A9C
 mov edx, dword [esp]	; 34A9E
 lea eax, [dword esp+06F8h]	; 34AA1
-call sub_1431E	; 34AA8
+call MakePath	; 34AA8
 lea edx, [dword esp+0780h]	; 34AAD
 lea eax, [dword esp+06F8h]	; 34AB4
-call sub_14525	; 34ABB
+call FileOpenRead	; 34ABB
 mov esi, eax	; 34AC0
 test ax, ax	; 34AC2
 jne short loc_34AE3	; 34AC5
@@ -850,7 +850,7 @@ mov ecx, 2	; 34AC7
 xor ebx, ebx	; 34ACC
 lea edx, [dword esp+07C0h]	; 34ACE
 mov eax, dword [dword esp+0780h]	; 34AD5
-call sub_145A2	; 34ADC
+call FileReadAt	; 34ADC
 mov esi, eax	; 34AE1
 loc_34AE3:
 test si, si	; 34AE3
@@ -978,7 +978,7 @@ je short loc_34CEC	; 34CE5
 call FadeOutPalCycle	; 34CE7
 loc_34CEC:
 lea eax, [dword esp+0780h]	; 34CEC
-call sub_1457C	; 34CF3
+call FileClose	; 34CF3
 cmp word [dword esp+07BCh], byte 0	; 34CF8
 jl short loc_34D5A	; 34D01
 test si, si	; 34D03
@@ -1072,7 +1072,7 @@ loc_34E8A:
 xor edx, edx	; 34E8A
 loc_34E8C:
 lea eax, [dword esp+06F8h]	; 34E8C
-call sub_1431E	; 34E93
+call MakePath	; 34E93
 lea eax, [dword esp+06F8h]	; 34E98
 call sub_8F98F	; 34E9F
 mov dword [songdata], eax	; 34EA4

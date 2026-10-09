@@ -12,7 +12,7 @@ extern byte_ED9E9, byte_ED9EA, dword_C4CFC, dword_C5130, dword_C541F, dword_C588
 extern dword_C6418, dword_C641C, dword_C6420, dword_C6430, songdata, dword_CC0EC, dword_CCC94, musicslot
 extern musichandle, dword_D2C6B, dword_D42A8, dword_D8B68, dword_D8B74, dword_DC238, dword_DC33C, dword_ED7B0
 extern fputchar, jctime, loc_16005, memcpy_, memset_, off_C6399, rand_, sprintf_
-extern srand_, strlen_, sub_1431E, sub_15D6B, sub_1600C, sub_16072, sub_1AC25, sub_1ACF1
+extern srand_, strlen_, MakePath, sub_15D6B, sub_1600C, sub_16072, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
 extern sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2, sub_1B2A7, sub_1B8AC, sub_1B92E, sub_33E6A
 extern FadeOutPalCycle, StopDigiSample, PlayDigiSample, sub_59C1D, sub_59C3E, sub_59D54, sub_6B3D7, sub_76429
@@ -66,7 +66,7 @@ loc_160EA:
 xor edx, edx	; 160EA
 loc_160EC:
 lea eax, [dword esp+0300h]	; 160EC
-call sub_1431E	; 160F3
+call MakePath	; 160F3
 push byte 0	; 160F8
 lea eax, [dword esp+0304h]	; 160FA
 push eax	; 16101
@@ -148,7 +148,7 @@ loc_16201:
 xor edx, edx	; 16201
 loc_16203:
 lea eax, [dword esp+0300h]	; 16203
-call sub_1431E	; 1620A
+call MakePath	; 1620A
 lea eax, [dword esp+0300h]	; 1620F
 call sub_8F98F	; 16216
 mov dword [songdata], eax	; 1621B
@@ -176,7 +176,7 @@ loc_16265:
 xor edx, edx	; 16265
 loc_16267:
 lea eax, [dword esp+0300h]	; 16267
-call sub_1431E	; 1626E
+call MakePath	; 1626E
 lea eax, [dword esp+0300h]	; 16273
 call sub_8F13B	; 1627A
 mov dword [dword_DC33C], eax	; 1627F
@@ -191,7 +191,7 @@ loc_1629F:
 xor edx, edx	; 1629F
 loc_162A1:
 lea eax, [dword esp+0300h]	; 162A1
-call sub_1431E	; 162A8
+call MakePath	; 162A8
 push byte 20h	; 162AD
 push dword 2000h	; 162AF
 push dword 493E0h	; 162B4
@@ -554,7 +554,7 @@ loc_167B7:
 xor edx, edx	; 167B7
 loc_167B9:
 lea eax, [dword esp+0600h]	; 167B9
-call sub_1431E	; 167C0
+call MakePath	; 167C0
 push byte 0	; 167C5
 lea eax, [dword esp+0604h]	; 167C7
 push eax	; 167CE
@@ -597,7 +597,7 @@ loc_16850:
 xor edx, edx	; 16850
 loc_16852:
 lea eax, [dword esp+0600h]	; 16852
-call sub_1431E	; 16859
+call MakePath	; 16859
 push byte 0	; 1685E
 lea eax, [dword esp+0604h]	; 16860
 push eax	; 16867
@@ -618,7 +618,7 @@ loc_168A7:
 xor edx, edx	; 168A7
 loc_168A9:
 lea eax, [dword esp+0600h]	; 168A9
-call sub_1431E	; 168B0
+call MakePath	; 168B0
 lea eax, [dword esp+0600h]	; 168B5
 call sub_8F98F	; 168BC
 mov dword [dword esp+0644h], eax	; 168C1
@@ -632,7 +632,7 @@ loc_168E3:
 xor edx, edx	; 168E3
 loc_168E5:
 lea eax, [dword esp+0600h]	; 168E5
-call sub_1431E	; 168EC
+call MakePath	; 168EC
 lea eax, [dword esp+0600h]	; 168F1
 call sub_8F98F	; 168F8
 mov dword [dword esp+0648h], eax	; 168FD
@@ -646,7 +646,7 @@ loc_1691F:
 xor edx, edx	; 1691F
 loc_16921:
 lea eax, [dword esp+0600h]	; 16921
-call sub_1431E	; 16928
+call MakePath	; 16928
 lea eax, [dword esp+0600h]	; 1692D
 call sub_8F98F	; 16934
 mov dword [dword esp+0640h], eax	; 16939
@@ -1018,7 +1018,7 @@ loc_16E14:
 xor edx, edx	; 16E14
 loc_16E16:
 lea eax, [dword esp+0600h]	; 16E16
-call sub_1431E	; 16E1D
+call MakePath	; 16E1D
 push byte 0	; 16E22
 lea eax, [dword esp+0604h]	; 16E24
 push eax	; 16E2B
@@ -1057,7 +1057,7 @@ loc_16EA0:
 xor edx, edx	; 16EA0
 loc_16EA2:
 lea eax, [dword esp+0600h]	; 16EA2
-call sub_1431E	; 16EA9
+call MakePath	; 16EA9
 lea eax, [dword esp+0600h]	; 16EAE
 call sub_8F98F	; 16EB5
 mov dword [songdata], eax	; 16EBA
@@ -1158,7 +1158,7 @@ loc_17018:
 xor edx, edx	; 17018
 loc_1701A:
 lea eax, [dword esp+0340h]	; 1701A
-call sub_1431E	; 17021
+call MakePath	; 17021
 push byte 0	; 17026
 lea eax, [dword esp+0344h]	; 17028
 push eax	; 1702F
@@ -1220,7 +1220,7 @@ loc_170FA:
 xor edx, edx	; 170FA
 loc_170FC:
 lea eax, [dword esp+0340h]	; 170FC
-call sub_1431E	; 17103
+call MakePath	; 17103
 lea eax, [dword esp+0340h]	; 17108
 call sub_8F98F	; 1710F
 mov dword [songdata], eax	; 17114
@@ -1254,7 +1254,7 @@ loc_1717E:
 xor edx, edx	; 1717E
 loc_17180:
 lea eax, [dword esp+0340h]	; 17180
-call sub_1431E	; 17187
+call MakePath	; 17187
 lea eax, [dword esp+0340h]	; 1718C
 call sub_8F13B	; 17193
 mov dword [dword esp+0354h], eax	; 17198
@@ -1268,7 +1268,7 @@ loc_171BA:
 xor edx, edx	; 171BA
 loc_171BC:
 lea eax, [dword esp+0340h]	; 171BC
-call sub_1431E	; 171C3
+call MakePath	; 171C3
 lea eax, [dword esp+0340h]	; 171C8
 call sub_8F13B	; 171CF
 mov dword [dword esp+0350h], eax	; 171D4
@@ -1319,7 +1319,7 @@ xor edx, edx	; 17297
 loc_17299:
 mov ebx, eax	; 17299
 lea eax, [dword esp+0340h]	; 1729B
-call sub_1431E	; 172A2
+call MakePath	; 172A2
 push byte 0	; 172A7
 lea eax, [dword esp+0344h]	; 172A9
 push eax	; 172B0

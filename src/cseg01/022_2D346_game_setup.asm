@@ -10,15 +10,15 @@ extern asc_C1639, asc_C1641, asc_C1646, asc_C164E, asc_C1653, asc_C1657, asc_C16
 extern asc_C1663, asc_C1667, asc_C166B, asc_C1675, asc_C167E, asc_C1687, asc_C1693, asc_C16A1
 extern asc_C16AC, asc_C16B3, asc_C16B8, asc_C16BD, asc_C16C6, asc_C16CB, asc_C16D0, asc_C16DA
 extern asc_C16E0, asc_C16E8, asc_C16F5, asc_C16FA, asc_C1703, asc_C1709, asc_C70EC, asc_C70F8
-extern asc_C811A, asc_C814A, byte_C5400, byte_C8451, byte_C8922, musicon, byte_D42C3, hmroster
+extern str_extDB, asc_C814A, byte_C5400, curleague, byte_C8922, musicon, byte_D42C3, hmroster
 extern byte_DD710, byte_DD750, byte_DD774, byte_DD775, byte_DD788, byte_DD789, byte_ED7ED, byte_ED824
 extern byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED8CE, byte_ED9AC, byte_ED9B0, byte_ED9E6
 extern dword_C53F7, gameopts, dword_C541F, songdata, cont2team, HomeTeam, dword_CCC94, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_DBC7C, dword_DC234, dword_DD66C, dword_DD670, dword_DD730
 extern hmtmstruct, dword_DF61A
 extern dword_DF626, dword_DF62A, dword_DF636, fputchar, jctime, memcpy_
-extern off_C57CC, off_C719C, off_C80D7, off_C80E7, off_C80EB, off_CD304, rand_, sprintf_
-extern strcat_, strcpy_, sub_11598, sub_1431E, sub_14525, sub_14552, sub_1457C, sub_1463D
+extern off_C57CC, off_C719C, leaguedbnames, off_CD304, rand_, sprintf_
+extern strcat_, strcpy_, sub_11598, MakePath, FileOpenRead, FileOpenRW, FileClose, sub_1463D
 extern sub_1478B, sub_147C9, sub_147FF, sub_174C2, sub_175E2, sub_1BAF3, sub_29C75, sub_33E6A
 extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
 extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
@@ -165,7 +165,7 @@ loc_2D509:
 xor edx, edx	; 2D509
 loc_2D50B:
 lea eax, [dword esp+05D4h]	; 2D50B
-call sub_1431E	; 2D512
+call MakePath	; 2D512
 push byte 20h	; 2D517
 lea eax, [dword esp+05D8h]	; 2D519
 push eax	; 2D520
@@ -185,7 +185,7 @@ loc_2D551:
 xor edx, edx	; 2D551
 loc_2D553:
 lea eax, [dword esp+0734h]	; 2D553
-call sub_1431E	; 2D55A
+call MakePath	; 2D55A
 push byte 0	; 2D55F
 lea eax, [dword esp+0738h]	; 2D561
 push eax	; 2D568
@@ -274,7 +274,7 @@ loc_2D675:
 xor edx, edx	; 2D675
 loc_2D677:
 lea eax, [dword esp+0734h]	; 2D677
-call sub_1431E	; 2D67E
+call MakePath	; 2D67E
 push byte 0	; 2D683
 lea eax, [dword esp+0738h]	; 2D685
 push eax	; 2D68C
@@ -306,7 +306,7 @@ loc_2D6EF:
 xor edx, edx	; 2D6EF
 loc_2D6F1:
 lea eax, [dword esp+0734h]	; 2D6F1
-call sub_1431E	; 2D6F8
+call MakePath	; 2D6F8
 push byte 0	; 2D6FD
 lea eax, [dword esp+0738h]	; 2D6FF
 push eax	; 2D706
@@ -359,7 +359,7 @@ loc_2D7BC:
 xor edx, edx	; 2D7BC
 loc_2D7BE:
 lea eax, [dword esp+0734h]	; 2D7BE
-call sub_1431E	; 2D7C5
+call MakePath	; 2D7C5
 push byte 0	; 2D7CA
 lea eax, [dword esp+0738h]	; 2D7CC
 push eax	; 2D7D3
@@ -401,7 +401,7 @@ loc_2D85B:
 xor edx, edx	; 2D85B
 loc_2D85D:
 lea eax, [dword esp+0734h]	; 2D85D
-call sub_1431E	; 2D864
+call MakePath	; 2D864
 push byte 0	; 2D869
 lea eax, [dword esp+0738h]	; 2D86B
 push eax	; 2D872
@@ -423,14 +423,14 @@ loc_2D8AE:
 xor edx, edx	; 2D8AE
 mov eax, 40h	; 2D8B0
 call sub_174C2	; 2D8B5
-mov ecx, asc_C811A	; 2D8BA
+mov ecx, str_extDB	; 2D8BA
 mov ebx, asc_C15EC	; 2D8BF
-mov edx, byte_C8451	; 2D8C4
+mov edx, curleague	; 2D8C4
 lea eax, [dword esp+05D4h]	; 2D8C9
-call sub_1431E	; 2D8D0
+call MakePath	; 2D8D0
 lea edx, [dword esp+0760h]	; 2D8D5
 lea eax, [dword esp+05D4h]	; 2D8DC
-call sub_14525	; 2D8E3
+call FileOpenRead	; 2D8E3
 mov dword [dword esp+0788h], eax	; 2D8E8
 test eax, eax	; 2D8EF
 jne short loc_2D90F	; 2D8F1
@@ -451,14 +451,14 @@ mov al, byte [dword esp+0747h]	; 2D934
 mov byte [dword esp+07D4h], al	; 2D93B
 mov al, byte [dword esp+0748h]	; 2D942
 mov byte [dword esp+07E4h], al	; 2D949
-mov ebx, dword [off_C80E7]	; 2D950
-mov ecx, asc_C811A	; 2D956
-mov edx, byte_C8451	; 2D95B
+mov ebx, dword [leaguedbnames+10h]	; 2D950
+mov ecx, str_extDB	; 2D956
+mov edx, curleague	; 2D95B
 lea eax, [dword esp+05D4h]	; 2D960
-call sub_1431E	; 2D967
+call MakePath	; 2D967
 lea edx, [dword esp+0768h]	; 2D96C
 lea eax, [dword esp+05D4h]	; 2D973
-call sub_14525	; 2D97A
+call FileOpenRead	; 2D97A
 mov dword [dword esp+0788h], eax	; 2D97F
 loc_2D986:
 cmp dword [dword esp+0788h], byte 0	; 2D986
@@ -480,23 +480,23 @@ call sub_147C9	; 2D9D1
 mov dword [dword esp+0788h], eax	; 2D9D6
 loc_2D9DD:
 lea eax, [dword esp+0768h]	; 2D9DD
-call sub_1457C	; 2D9E4
+call FileClose	; 2D9E4
 loc_2D9E9:
 cmp dword [dword esp+0788h], byte 0	; 2D9E9
 jne short loc_2DA29	; 2D9F1
-mov ebx, dword [off_C80D7]	; 2D9F3
-mov ecx, asc_C811A	; 2D9F9
-mov edx, byte_C8451	; 2D9FE
+mov ebx, dword [leaguedbnames]	; 2D9F3
+mov ecx, str_extDB	; 2D9F9
+mov edx, curleague	; 2D9FE
 lea eax, [dword esp+05D4h]	; 2DA03
-call sub_1431E	; 2DA0A
+call MakePath	; 2DA0A
 lea edx, [dword esp+0764h]	; 2DA0F
 lea eax, [dword esp+05D4h]	; 2DA16
-call sub_14525	; 2DA1D
+call FileOpenRead	; 2DA1D
 mov dword [dword esp+0788h], eax	; 2DA22
 loc_2DA29:
 cmp dword [dword esp+0788h], byte 0	; 2DA29
 jne short loc_2DA7C	; 2DA31
-mov edx, dword [off_C80EB]	; 2DA33
+mov edx, dword [leaguedbnames+14h]	; 2DA33
 lea eax, [dword esp+0734h]	; 2DA39
 call strcpy_	; 2DA40
 lea eax, [dword esp+0734h]	; 2DA45
@@ -508,12 +508,12 @@ call sprintf_	; 2DA5A
 add esp, byte 0Ch	; 2DA5F
 lea edx, [dword esp+0758h]	; 2DA62
 lea eax, [dword esp+05D4h]	; 2DA69
-call sub_14552	; 2DA70
+call FileOpenRW	; 2DA70
 mov dword [dword esp+0788h], eax	; 2DA75
 loc_2DA7C:
 cmp dword [dword esp+0788h], byte 0	; 2DA7C
 jne short loc_2DACF	; 2DA84
-mov edx, dword [off_C80EB]	; 2DA86
+mov edx, dword [leaguedbnames+14h]	; 2DA86
 lea eax, [dword esp+0734h]	; 2DA8C
 call strcpy_	; 2DA93
 lea eax, [dword esp+0734h]	; 2DA98
@@ -525,7 +525,7 @@ call sprintf_	; 2DAAD
 add esp, byte 0Ch	; 2DAB2
 lea edx, [dword esp+075Ch]	; 2DAB5
 lea eax, [dword esp+05D4h]	; 2DABC
-call sub_14552	; 2DAC3
+call FileOpenRW	; 2DAC3
 mov dword [dword esp+0788h], eax	; 2DAC8
 loc_2DACF:
 test byte [esp], 1Ch	; 2DACF
@@ -549,7 +549,7 @@ loc_2DB1D:
 xor edx, edx	; 2DB1D
 loc_2DB1F:
 lea eax, [dword esp+05D4h]	; 2DB1F
-call sub_1431E	; 2DB26
+call MakePath	; 2DB26
 lea eax, [dword esp+05D4h]	; 2DB2B
 call sub_8F98F	; 2DB32
 mov dword [songdata], eax	; 2DB37
@@ -585,7 +585,7 @@ loc_2DBA8:
 xor edx, edx	; 2DBA8
 loc_2DBAA:
 lea eax, [dword esp+05D4h]	; 2DBAA
-call sub_1431E	; 2DBB1
+call MakePath	; 2DBB1
 mov dword [dword_CCC94], 20h	; 2DBB6
 lea eax, [dword esp+05D4h]	; 2DBC0
 call sub_8F13B	; 2DBC7
@@ -660,14 +660,14 @@ mov byte [dword esp+07D0h], al	; 2DCF5
 mov al, byte [nosplit ecx*2+byte_DD789]	; 2DCFC
 mov byte [dword esp+07D1h], al	; 2DD03
 jne short loc_2DD42	; 2DD0A
-mov ebx, dword [off_C80E7]	; 2DD0C
-mov ecx, asc_C811A	; 2DD12
-mov edx, byte_C8451	; 2DD17
+mov ebx, dword [leaguedbnames+10h]	; 2DD0C
+mov ecx, str_extDB	; 2DD12
+mov edx, curleague	; 2DD17
 lea eax, [dword esp+05D4h]	; 2DD1C
-call sub_1431E	; 2DD23
+call MakePath	; 2DD23
 lea edx, [dword esp+0768h]	; 2DD28
 lea eax, [dword esp+05D4h]	; 2DD2F
-call sub_14525	; 2DD36
+call FileOpenRead	; 2DD36
 mov dword [dword esp+0788h], eax	; 2DD3B
 loc_2DD42:
 mov ebx, dword [dword esp+0788h]	; 2DD42
@@ -689,7 +689,7 @@ call sub_147C9	; 2DD8C
 mov dword [dword esp+0788h], eax	; 2DD91
 loc_2DD98:
 lea eax, [dword esp+0768h]	; 2DD98
-call sub_1457C	; 2DD9F
+call FileClose	; 2DD9F
 mov esi, dword [dword esp+0788h]	; 2DDA4
 test esi, esi	; 2DDAB
 jne near loc_2DFBD	; 2DDAD
@@ -2038,13 +2038,13 @@ call jctime	; 2F1DB
 add esp, byte 4	; 2F1E0
 loc_2F1E3:
 lea eax, [dword esp+075Ch]	; 2F1E3
-call sub_1457C	; 2F1EA
+call FileClose	; 2F1EA
 lea eax, [dword esp+0758h]	; 2F1EF
-call sub_1457C	; 2F1F6
+call FileClose	; 2F1F6
 lea eax, [dword esp+0764h]	; 2F1FB
-call sub_1457C	; 2F202
+call FileClose	; 2F202
 lea eax, [dword esp+0760h]	; 2F207
-call sub_1457C	; 2F20E
+call FileClose	; 2F20E
 lea eax, [dword esp+0628h]	; 2F213
 push eax	; 2F21A
 call sub_8EA00	; 2F21B
@@ -2419,7 +2419,7 @@ loc_2F66D:
 xor edx, edx	; 2F66D
 loc_2F66F:
 lea eax, [byte ebp-034h]	; 2F66F
-call sub_1431E	; 2F672
+call MakePath	; 2F672
 push byte 0	; 2F677
 lea eax, [byte ebp-034h]	; 2F679
 push eax	; 2F67C
@@ -2454,7 +2454,7 @@ loc_2F6E0:
 xor edx, edx	; 2F6E0
 loc_2F6E2:
 lea eax, [byte ebp-034h]	; 2F6E2
-call sub_1431E	; 2F6E5
+call MakePath	; 2F6E5
 push byte 0	; 2F6EA
 lea eax, [byte ebp-034h]	; 2F6EC
 push eax	; 2F6EF
@@ -2488,7 +2488,7 @@ loc_2F749:
 xor edx, edx	; 2F749
 loc_2F74B:
 lea eax, [byte ebp-034h]	; 2F74B
-call sub_1431E	; 2F74E
+call MakePath	; 2F74E
 push byte 0	; 2F753
 lea eax, [byte ebp-034h]	; 2F755
 push eax	; 2F758
@@ -2900,7 +2900,7 @@ loc_2FC5E:
 xor edx, edx	; 2FC5E
 loc_2FC60:
 lea eax, [byte ebp-034h]	; 2FC60
-call sub_1431E	; 2FC63
+call MakePath	; 2FC63
 lea eax, [byte ebp-034h]	; 2FC68
 call sub_8F98F	; 2FC6B
 mov dword [songdata], eax	; 2FC70
@@ -2936,7 +2936,7 @@ loc_2FCE1:
 xor edx, edx	; 2FCE1
 loc_2FCE3:
 lea eax, [byte ebp-034h]	; 2FCE3
-call sub_1431E	; 2FCE6
+call MakePath	; 2FCE6
 mov dword [dword_CCC94], 20h	; 2FCEB
 lea eax, [byte ebp-034h]	; 2FCF5
 call sub_8F13B	; 2FCF8

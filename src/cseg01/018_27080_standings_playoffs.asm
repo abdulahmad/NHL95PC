@@ -12,7 +12,7 @@ extern byte_C6DAD, byte_C6DB2, byte_ED858, byte_ED859, byte_ED85A, byte_ED908, b
 extern dword_C65AC, dword_C6956, dword_C695A, dword_C6A60, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32
 extern dword_C6E3A, dword_C6E4A, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DC7B8, dword_DD100, dword_DD104
 extern dword_DD120, fputchar, j___close_, jctime, lseek_, memcpy_, off_C68BC, off_C68E4
-extern off_C68F4, off_CF6A3, open_, qsort_, read_, sprintf_, strcat_, sub_1431E
+extern off_C68F4, off_CF6A3, open_, qsort_, read_, sprintf_, strcat_, MakePath
 extern sub_174C2, sub_17573, sub_175E2, sub_17636, sub_176AE, sub_176DB, sub_17711, sub_1777E
 extern sub_18D03, sub_1FF86, sub_269F4, sub_2970A, sub_29A97, sub_29B07, sub_891B2, sub_8E83C
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_91044, sub_91370, sub_913B4, sub_B30B4, sub_B4B88
@@ -84,7 +84,7 @@ shl eax, 2	; 270D6
 mov ebx, dword [dword eax+off_C68F4]	; 270D9
 mov edx, unk_C65D4	; 270DF
 lea eax, [byte ebp-074h]	; 270E4
-call sub_1431E	; 270E7
+call MakePath	; 270E7
 push dword 200h	; 270EC
 lea eax, [byte ebp-074h]	; 270F1
 push eax	; 270F4
@@ -198,7 +198,7 @@ mov edx, dword [dword ebp-0434h]	; 27267
 lea eax, [byte ebp-074h]	; 2726D
 mov ecx, dword [dword ebp-042Ch]	; 27270
 mov ebx, dword [dword ebp-0430h]	; 27276
-call sub_1431E	; 2727C
+call MakePath	; 2727C
 push byte 0	; 27281
 lea eax, [byte ebp-074h]	; 27283
 push eax	; 27286
@@ -244,7 +244,7 @@ mov edx, dword [dword ebp-0440h]	; 2732A
 lea eax, [byte ebp-074h]	; 27330
 mov ecx, dword [dword ebp-0438h]	; 27333
 mov ebx, dword [dword ebp-043Ch]	; 27339
-call sub_1431E	; 2733F
+call MakePath	; 2733F
 push byte 0	; 27344
 lea eax, [byte ebp-074h]	; 27346
 push eax	; 27349
@@ -1373,7 +1373,7 @@ mov edx, dword [dword ebp-01D4h]	; 2803A
 lea eax, [byte ebp-05Ch]	; 28040
 mov ecx, dword [dword ebp-01CCh]	; 28043
 mov ebx, dword [dword ebp-01D0h]	; 28049
-call sub_1431E	; 2804F
+call MakePath	; 2804F
 push byte 0	; 28054
 lea eax, [byte ebp-05Ch]	; 28056
 push eax	; 28059
@@ -1445,7 +1445,7 @@ mov edx, dword [dword ebp-01E0h]	; 2815F
 lea eax, [byte ebp-05Ch]	; 28165
 mov ecx, dword [dword ebp-01D8h]	; 28168
 mov ebx, dword [dword ebp-01DCh]	; 2816E
-call sub_1431E	; 28174
+call MakePath	; 28174
 push byte 0	; 28179
 lea eax, [byte ebp-05Ch]	; 2817B
 push eax	; 2817E
@@ -1533,7 +1533,7 @@ mov edx, dword [dword ebp-01ECh]	; 282BE
 lea eax, [byte ebp-05Ch]	; 282C4
 mov ecx, dword [dword ebp-01E4h]	; 282C7
 mov ebx, dword [dword ebp-01E8h]	; 282CD
-call sub_1431E	; 282D3
+call MakePath	; 282D3
 push byte 0	; 282D8
 lea eax, [byte ebp-05Ch]	; 282DA
 push eax	; 282DD
@@ -1580,7 +1580,7 @@ mov edx, dword [dword ebp-01F8h]	; 28387
 lea eax, [byte ebp-05Ch]	; 2838D
 mov ecx, dword [dword ebp-01F0h]	; 28390
 mov ebx, dword [dword ebp-01F4h]	; 28396
-call sub_1431E	; 2839C
+call MakePath	; 2839C
 push byte 0	; 283A1
 lea eax, [byte ebp-05Ch]	; 283A3
 push eax	; 283A6

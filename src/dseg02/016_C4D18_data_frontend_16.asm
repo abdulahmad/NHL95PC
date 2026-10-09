@@ -26,7 +26,7 @@ global dword_C53D3, dword_C53D7, dword_C53DF, dword_C53E3, dword_C53E7, dword_C5
 global dword_C53F7, dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413
 global dword_C5417, dword_C541F, off_C5194, off_C51C0, off_C51EC, off_C524F, off_C5253, off_C5257
 global off_C525B, off_C525F, off_C5263, off_C5267, off_C526F, off_C5273, off_C527B, off_C5439
-global off_C5441, off_C54A9, unk_C4E30, unk_C5283, unk_C5298, unk_C529C, unk_C5423, unk_C542E
+global off_C5441, teamcitynames, unk_C4E30, unk_C5283, unk_C5298, unk_C529C, unk_C5423, unk_C542E
 global word_C5366, word_C53DB, word_C5428
 joyqtick:
 db 00h,00h,00h,00h
@@ -370,7 +370,7 @@ dd unk_C052C
 dd unk_C0530
 dd unk_C0534
 dd unk_C0538
-off_C54A9:
+teamcitynames:
 dd TeamList
 dd unk_C0543
 dd unk_C054B

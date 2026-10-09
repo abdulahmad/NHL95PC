@@ -16,7 +16,7 @@ extern dword_D8B68, dword_D8C18, dword_D8C4C, dword_D8C68, dword_D8C6C, dword_D8
 extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E009C, dword_E00A0
 extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, loc_12842, memcpy_, nullsub_2
 extern puckx, pucky, passspeed, randomd0, sprintf_, sub_11598, sub_1205D, sub_12849
-extern sub_13188, sub_1431E, sub_14525, sub_1457C, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
+extern sub_13188, MakePath, FileOpenRead, FileClose, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
 extern StartPreGame, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
 extern sub_64614, SetupTeamLines, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
@@ -114,7 +114,7 @@ loc_13405:
 xor edx, edx	; 13405
 loc_13407:
 lea eax, [byte esp+040h]	; 13407
-call sub_1431E	; 1340B
+call MakePath	; 1340B
 push byte 0	; 13410
 lea eax, [byte esp+044h]	; 13412
 push eax	; 13416
@@ -160,7 +160,7 @@ loc_134A2:
 xor edx, edx	; 134A2
 loc_134A4:
 lea eax, [byte esp+040h]	; 134A4
-call sub_1431E	; 134A8
+call MakePath	; 134A8
 lea eax, [byte esp+040h]	; 134AD
 call sub_8F98F	; 134B1
 mov dword [songdata], eax	; 134B6
@@ -199,7 +199,7 @@ loc_1352B:
 xor edx, edx	; 1352B
 loc_1352D:
 lea eax, [byte esp+040h]	; 1352D
-call sub_1431E	; 13531
+call MakePath	; 13531
 lea eax, [byte esp+040h]	; 13536
 call sub_8F13B	; 1353A
 mov edi, eax	; 1353F
@@ -291,7 +291,7 @@ loc_13671:
 xor edx, edx	; 13671
 loc_13673:
 lea eax, [byte esp+040h]	; 13673
-call sub_1431E	; 13677
+call MakePath	; 13677
 lea eax, [byte esp+040h]	; 1367C
 call sub_8F98F	; 13680
 mov dword [songdata], eax	; 13685
@@ -327,7 +327,7 @@ loc_136F3:
 xor edx, edx	; 136F3
 loc_136F5:
 lea eax, [byte esp+040h]	; 136F5
-call sub_1431E	; 136F9
+call MakePath	; 136F9
 lea eax, [byte esp+040h]	; 136FE
 call sub_8F13B	; 13702
 mov edi, eax	; 13707
@@ -348,7 +348,7 @@ loc_1373C:
 xor edx, edx	; 1373C
 loc_1373E:
 lea eax, [byte esp+040h]	; 1373E
-call sub_1431E	; 13742
+call MakePath	; 13742
 push byte 0	; 13747
 lea eax, [byte esp+044h]	; 13749
 push eax	; 1374D
@@ -500,7 +500,7 @@ jne short loc_13906	; 138FE
 mov edx, dword [dword_D2C6B]	; 13900
 loc_13906:
 mov eax, esp	; 13906
-call sub_1431E	; 13908
+call MakePath	; 13908
 push byte 20h	; 1390D
 lea eax, [byte esp+04h]	; 1390F
 push eax	; 13913
@@ -595,7 +595,7 @@ loc_139F3:
 xor edx, edx	; 139F3
 loc_139F5:
 mov eax, esp	; 139F5
-call sub_1431E	; 139F7
+call MakePath	; 139F7
 push byte 20h	; 139FC
 lea eax, [byte esp+04h]	; 139FE
 push eax	; 13A02
@@ -628,7 +628,7 @@ loc_13A5A:
 xor edx, edx	; 13A5A
 loc_13A5C:
 mov eax, esp	; 13A5C
-call sub_1431E	; 13A5E
+call MakePath	; 13A5E
 push byte 20h	; 13A63
 lea eax, [byte esp+04h]	; 13A65
 push eax	; 13A69
@@ -665,7 +665,7 @@ loc_13ACB:
 xor edx, edx	; 13ACB
 loc_13ACD:
 mov eax, esp	; 13ACD
-call sub_1431E	; 13ACF
+call MakePath	; 13ACF
 push byte 20h	; 13AD4
 lea eax, [byte esp+04h]	; 13AD6
 push eax	; 13ADA
@@ -682,7 +682,7 @@ loc_13B03:
 xor edx, edx	; 13B03
 loc_13B05:
 mov eax, esp	; 13B05
-call sub_1431E	; 13B07
+call MakePath	; 13B07
 push byte 20h	; 13B0C
 lea eax, [byte esp+04h]	; 13B0E
 push eax	; 13B12
@@ -751,7 +751,7 @@ loc_13BE9:
 xor edx, edx	; 13BE9
 loc_13BEB:
 mov eax, esp	; 13BEB
-call sub_1431E	; 13BED
+call MakePath	; 13BED
 push byte 20h	; 13BF2
 lea eax, [byte esp+04h]	; 13BF4
 push eax	; 13BF8
@@ -768,7 +768,7 @@ loc_13C21:
 xor edx, edx	; 13C21
 loc_13C23:
 mov eax, esp	; 13C23
-call sub_1431E	; 13C25
+call MakePath	; 13C25
 push byte 20h	; 13C2A
 lea eax, [byte esp+04h]	; 13C2C
 push eax	; 13C30
@@ -1217,13 +1217,13 @@ sub esp, byte 4	; 142F3
 mov dword [esp], 0FFFFFFFFh	; 142F6
 xor ebx, ebx	; 142FD
 mov edx, esp	; 142FF
-call sub_14525	; 14301
+call FileOpenRead	; 14301
 test eax, eax	; 14306
 jne short loc_1430F	; 14308
 mov ebx, 1	; 1430A
 loc_1430F:
 mov eax, esp	; 1430F
-call sub_1457C	; 14311
+call FileClose	; 14311
 mov eax, ebx	; 14316
 add esp, byte 4	; 14318
 pop edx	; 1431B

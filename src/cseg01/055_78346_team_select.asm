@@ -5,14 +5,14 @@ section s_78346 progbits alloc exec nowrite align=1
 extern __CHK, asc_C31BB, asc_C31CB, asc_C31F1, asc_C31F7, asc_C3200, asc_C3205, asc_C320D
 extern asc_C3214, asc_C321B, asc_C3222, asc_C3229, asc_C322F, asc_C3236, asc_C323D, asc_C3245
 extern asc_C324C, asc_C3253, asc_C325B, asc_C3267, asc_C326D, asc_C3277, asc_C3288, asc_C328E
-extern asc_C32A4, asc_C32AA, asc_C32AF, asc_C32B5, asc_C814F, byte_D11BC, byte_D1238, byte_D12DE
+extern asc_C32A4, asc_C32AA, asc_C32AF, asc_C32B5, str_extBIN, byte_D11BC, byte_D1238, byte_D12DE
 extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, byte_DB3AD, byte_DD710, byte_DD750
 extern byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED83C, byte_ED86D, byte_ED9E7, dword_C65B0
 extern dword_C65B8, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
 extern dword_D0B2A, dword_D1338, dword_D133C, dword_D1478, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
 extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, exit_, j___close_, jctime, lseek_
 extern off_C57CC, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
-extern open_, perror_, read_, sprintf_, sub_1431E, sub_1D6E8, sub_244E2, sub_31013
+extern open_, perror_, read_, sprintf_, MakePath, sub_1D6E8, sub_244E2, MessageBox
 extern sub_6B5E4, sub_76429, sub_76771, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8FFB0
 extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, sub_B2CD8, sub_B30B4, WaitKey
 extern sub_B4B58, sub_B4DD4, sub_B4FAC, sub_B5DB0, unk_7673A, unk_76742, unk_76748, unk_7674F
@@ -226,7 +226,7 @@ loc_7857C:
 xor edx, edx	; 7857C
 loc_7857E:
 lea eax, [dword esp+0100h]	; 7857E
-call sub_1431E	; 78585
+call MakePath	; 78585
 push byte 0	; 7858A
 lea eax, [dword esp+0104h]	; 7858C
 push eax	; 78593
@@ -239,7 +239,7 @@ mov byte [esp+eax], al	; 785A0
 inc eax	; 785A3
 cmp eax, 100h	; 785A4
 jl short loc_785A0	; 785A9
-mov ecx, asc_C814F	; 785AB
+mov ecx, str_extBIN	; 785AB
 mov ebx, asc_C31F7	; 785B0
 cmp byte [byte_ED86D], 1	; 785B5
 jne short loc_785C6	; 785BC
@@ -249,7 +249,7 @@ loc_785C6:
 xor edx, edx	; 785C6
 loc_785C8:
 lea eax, [dword esp+0100h]	; 785C8
-call sub_1431E	; 785CF
+call MakePath	; 785CF
 push byte 0	; 785D4
 lea eax, [dword esp+0104h]	; 785D6
 push eax	; 785DD
@@ -323,7 +323,7 @@ loc_786C3:
 xor edx, edx	; 786C3
 loc_786C5:
 lea eax, [dword esp+0100h]	; 786C5
-call sub_1431E	; 786CC
+call MakePath	; 786CC
 push byte 0	; 786D1
 lea eax, [dword esp+0104h]	; 786D3
 push eax	; 786DA
@@ -570,7 +570,7 @@ push ebp	; 78A94
 sub esp, byte 10h	; 78A95
 mov edi, eax	; 78A98
 mov esi, ebx	; 78A9A
-mov ecx, asc_C814F	; 78A9C
+mov ecx, str_extBIN	; 78A9C
 mov ebx, asc_C31F7	; 78AA1
 cmp byte [byte_ED86D], 1	; 78AA6
 jne short loc_78AB7	; 78AAD
@@ -580,7 +580,7 @@ loc_78AB7:
 xor edx, edx	; 78AB7
 loc_78AB9:
 mov eax, esp	; 78AB9
-call sub_1431E	; 78ABB
+call MakePath	; 78ABB
 push byte 0	; 78AC0
 lea eax, [byte esp+04h]	; 78AC2
 push eax	; 78AC6
@@ -1070,7 +1070,7 @@ mov ecx, edi	; 7906A
 lea ebx, [byte esp+068h]	; 7906C
 mov edx, 0FFFFFFFFh	; 79070
 mov eax, edx	; 79075
-call sub_31013	; 79077
+call MessageBox	; 79077
 mov eax, 1	; 7907C
 jmp short loc_79085	; 79081
 loc_79083:

@@ -4,12 +4,12 @@ bits 32
 section s_1BBCC progbits alloc exec nowrite align=1
 extern __CHK, asc_C0A18, asc_C0A4D, asc_C0A55, asc_C0A5D, asc_C0A68, asc_C0A71, byte_C5400
 extern byte_C5424, byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt
-extern byte_C66B4, byte_C8451, byte_DAC14, byte_DAC15, byte_DAC18, byte_DAC20, hmroster, byte_DB3AD
+extern byte_C66B4, curleague, byte_DAC14, byte_DAC15, byte_DAC18, byte_DAC20, hmroster, byte_DB3AD
 extern byte_DB3AE, awroster, byte_DC224, byte_DC225, byte_DC228, byte_DC267, byte_DC268, byte_DD710
 extern byte_DD750, cont2team, HomeTeam, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
 extern dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_m2, dword_DF6C2, fputchar, lseek_, off_CEE5F
 extern off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF, sprintf_, strcat_, strcpy_
-extern strncpy_, sub_14525, sub_14566, sub_1457C, sub_145A2, sub_145F9, sub_15B76, sub_1CC3D
+extern strncpy_, FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, sub_15B76, sub_1CC3D
 extern sub_B2CD8, unk_C0A1E, unk_C0A20, unk_C0A22, unk_C0A24, unk_C0A26, unk_C0A28, unk_C0A2A
 extern unk_C0A2C, unk_C0A2F, unk_C0A32, unk_C0A35, unk_C0A37, unk_C0A39, unk_C0A3B, unk_C0A3D
 extern unk_C0A3F, unk_C0A41, unk_C0A43, unk_C0A45, unk_C0A47, unk_C0A49, unk_C0A4B, unk_C0A51
@@ -60,7 +60,7 @@ add esp, byte 4	; 1BC13
 loc_1BC16:
 lea edx, [byte esp+060h]	; 1BC16
 lea eax, [byte esp+030h]	; 1BC1A
-call sub_14525	; 1BC1E
+call FileOpenRead	; 1BC1E
 test eax, eax	; 1BC23
 je short loc_1BC34	; 1BC25
 push unk_C0A20	; 1BC27
@@ -100,7 +100,7 @@ mov ecx, 2E8h	; 1BC8A
 mov ebx, 0FFFFFFFFh	; 1BC8F
 mov edx, unk_DBC30	; 1BC94
 mov eax, dword [byte esp+060h]	; 1BC99
-call sub_145A2	; 1BC9D
+call FileReadAt	; 1BC9D
 test eax, eax	; 1BCA2
 je short loc_1BCB3	; 1BCA4
 push unk_C0A26	; 1BCA6
@@ -108,7 +108,7 @@ call sub_B2CD8	; 1BCAB
 add esp, byte 4	; 1BCB0
 loc_1BCB3:
 lea eax, [byte esp+060h]	; 1BCB3
-call sub_1457C	; 1BCB7
+call FileClose	; 1BCB7
 push asc_C0A18	; 1BCBC
 push byte_DD710	; 1BCC1
 lea eax, [byte esp+038h]	; 1BCC6
@@ -127,7 +127,7 @@ add esp, byte 4	; 1BCF0
 loc_1BCF3:
 lea edx, [byte esp+060h]	; 1BCF3
 lea eax, [byte esp+030h]	; 1BCF7
-call sub_14525	; 1BCFB
+call FileOpenRead	; 1BCFB
 test eax, eax	; 1BD00
 je short loc_1BD11	; 1BD02
 push unk_C0A20	; 1BD04
@@ -167,7 +167,7 @@ mov ecx, 2E8h	; 1BD67
 mov ebx, 0FFFFFFFFh	; 1BD6C
 mov edx, unk_DBF18	; 1BD71
 mov eax, dword [byte esp+060h]	; 1BD76
-call sub_145A2	; 1BD7A
+call FileReadAt	; 1BD7A
 test eax, eax	; 1BD7F
 je short loc_1BD90	; 1BD81
 push unk_C0A2A	; 1BD83
@@ -175,7 +175,7 @@ call sub_B2CD8	; 1BD88
 add esp, byte 4	; 1BD8D
 loc_1BD90:
 lea eax, [byte esp+060h]	; 1BD90
-call sub_1457C	; 1BD94
+call FileClose	; 1BD94
 lea eax, [byte esp+050h]	; 1BD99
 push eax	; 1BD9D
 push byte_DD750	; 1BD9E
@@ -197,15 +197,15 @@ mov edx, dword [byte esp+06Ch]	; 1BDD1
 mov eax, dword [byte esp+0Ch]	; 1BDD5
 call sub_1C3F6	; 1BDD9
 lea eax, [byte esp+060h]	; 1BDDE
-call sub_1457C	; 1BDE2
+call FileClose	; 1BDE2
 lea eax, [byte esp+05Ch]	; 1BDE7
-call sub_1457C	; 1BDEB
+call FileClose	; 1BDEB
 lea eax, [byte esp+058h]	; 1BDF0
-call sub_1457C	; 1BDF4
+call FileClose	; 1BDF4
 test byte [esp], 6	; 1BDF9
 jne short loc_1BE08	; 1BDFD
 lea eax, [byte esp+054h]	; 1BDFF
-call sub_1457C	; 1BE03
+call FileClose	; 1BE03
 loc_1BE08:
 lea eax, [byte esp+050h]	; 1BE08
 push eax	; 1BE0C
@@ -228,15 +228,15 @@ mov edx, dword [byte esp+06Ch]	; 1BE40
 mov eax, dword [byte esp+0Ch]	; 1BE44
 call sub_1C3F6	; 1BE48
 lea eax, [byte esp+060h]	; 1BE4D
-call sub_1457C	; 1BE51
+call FileClose	; 1BE51
 lea eax, [byte esp+05Ch]	; 1BE56
-call sub_1457C	; 1BE5A
+call FileClose	; 1BE5A
 lea eax, [byte esp+058h]	; 1BE5F
-call sub_1457C	; 1BE63
+call FileClose	; 1BE63
 test byte [esp], 6	; 1BE68
 jne short loc_1BE77	; 1BE6C
 lea eax, [byte esp+054h]	; 1BE6E
-call sub_1457C	; 1BE72
+call FileClose	; 1BE72
 loc_1BE77:
 mov edi, dword [esp]	; 1BE77
 test edi, edi	; 1BE7A
@@ -319,7 +319,7 @@ loc_1BF73:
 call sub_1C807	; 1BF73
 mov edx, esp	; 1BF78
 mov eax, byte_DAC20	; 1BF7A
-call sub_14566	; 1BF7F
+call FileCreate	; 1BF7F
 test eax, eax	; 1BF84
 je short loc_1BF95	; 1BF86
 push unk_C0A2C	; 1BF88
@@ -330,7 +330,7 @@ mov ecx, 0Bh	; 1BF95
 mov ebx, 0FFFFFFFFh	; 1BF9A
 mov edx, unk_C5423	; 1BF9F
 mov eax, dword [esp]	; 1BFA4
-call sub_145F9	; 1BFA7
+call FileWriteAt	; 1BFA7
 test eax, eax	; 1BFAC
 je short loc_1BFBD	; 1BFAE
 push unk_C0A2F	; 1BFB0
@@ -341,7 +341,7 @@ mov ecx, 0Bh	; 1BFBD
 mov ebx, 0FFFFFFFFh	; 1BFC2
 mov edx, unk_C542E	; 1BFC7
 mov eax, dword [esp]	; 1BFCC
-call sub_145F9	; 1BFCF
+call FileWriteAt	; 1BFCF
 test eax, eax	; 1BFD4
 je short loc_1BFE5	; 1BFD6
 push unk_C0A32	; 1BFD8
@@ -349,7 +349,7 @@ call sub_B2CD8	; 1BFDD
 add esp, byte 4	; 1BFE2
 loc_1BFE5:
 mov eax, esp	; 1BFE5
-call sub_1457C	; 1BFE7
+call FileClose	; 1BFE7
 xor eax, eax	; 1BFEC
 call sub_1BBCC	; 1BFEE
 xor ebx, ebx	; 1BFF3
@@ -450,7 +450,7 @@ mov ecx, 34h	; 1C101
 mov ebx, 0FFFFFFFFh	; 1C106
 mov edx, dword [byte esp+01Ch]	; 1C10B
 mov eax, edi	; 1C10F
-call sub_145A2	; 1C111
+call FileReadAt	; 1C111
 test eax, eax	; 1C116
 je short loc_1C127	; 1C118
 push unk_C0A39	; 1C11A
@@ -482,7 +482,7 @@ mov ecx, dword [byte esp+024h]	; 1C164
 mov ebx, 0FFFFFFFFh	; 1C168
 mov edx, dword [byte esp+020h]	; 1C16D
 mov eax, ebp	; 1C171
-call sub_145A2	; 1C173
+call FileReadAt	; 1C173
 test eax, eax	; 1C178
 je short loc_1C189	; 1C17A
 push unk_C0A3F	; 1C17C
@@ -514,7 +514,7 @@ mov ecx, dword [byte esp+02Ch]	; 1C1CA
 mov ebx, 0FFFFFFFFh	; 1C1CE
 mov edx, dword [byte esp+028h]	; 1C1D3
 mov eax, dword [byte esp+04h]	; 1C1D7
-call sub_145A2	; 1C1DB
+call FileReadAt	; 1C1DB
 test eax, eax	; 1C1E0
 je short loc_1C1F1	; 1C1E2
 push unk_C0A45	; 1C1E4
@@ -552,7 +552,7 @@ mov ecx, dword [byte esp+034h]	; 1C23B
 mov ebx, 0FFFFFFFFh	; 1C23F
 mov edx, dword [byte esp+030h]	; 1C244
 mov eax, esi	; 1C248
-call sub_145A2	; 1C24A
+call FileReadAt	; 1C24A
 test eax, eax	; 1C24F
 je short loc_1C260	; 1C251
 push unk_C0A4B	; 1C253
@@ -595,7 +595,7 @@ add esp, byte 4	; 1C2B7
 loc_1C2BA:
 mov edx, edi	; 1C2BA
 lea eax, [byte esp+030h]	; 1C2BC
-call sub_14525	; 1C2C0
+call FileOpenRead	; 1C2C0
 test eax, eax	; 1C2C5
 je short loc_1C2D6	; 1C2C7
 push unk_C0A53	; 1C2C9
@@ -621,7 +621,7 @@ add esp, byte 4	; 1C30A
 loc_1C30D:
 mov edx, ebp	; 1C30D
 lea eax, [byte esp+030h]	; 1C30F
-call sub_14525	; 1C313
+call FileOpenRead	; 1C313
 test eax, eax	; 1C318
 je short loc_1C329	; 1C31A
 push unk_C0A5B	; 1C31C
@@ -647,7 +647,7 @@ add esp, byte 4	; 1C35D
 loc_1C360:
 mov edx, esi	; 1C360
 lea eax, [byte esp+030h]	; 1C362
-call sub_14525	; 1C366
+call FileOpenRead	; 1C366
 test eax, eax	; 1C36B
 je short loc_1C37C	; 1C36D
 push unk_C0A66	; 1C36F
@@ -679,7 +679,7 @@ add esp, byte 4	; 1C3C2
 loc_1C3C5:
 mov edx, dword [byte esp+060h]	; 1C3C5
 lea eax, [byte esp+030h]	; 1C3C9
-call sub_14525	; 1C3CD
+call FileOpenRead	; 1C3CD
 test eax, eax	; 1C3D2
 je short loc_1C3E3	; 1C3D4
 push unk_C0A43	; 1C3D6
@@ -1026,9 +1026,9 @@ call __CHK	; 1C80C
 push edx	; 1C811
 xor ah, ah	; 1C812
 mov byte [byte_DAC20], ah	; 1C814
-cmp byte [byte_C8451], 0	; 1C81A
+cmp byte [curleague], 0	; 1C81A
 je short loc_1C841	; 1C821
-mov edx, byte_C8451	; 1C823
+mov edx, curleague	; 1C823
 mov eax, byte_DAC20	; 1C828
 call strcpy_	; 1C82D
 mov edx, unk_C0A6F	; 1C832

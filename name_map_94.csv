@@ -41,16 +41,16 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00013FA7,sub_13FA7,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),asset_loading,unmatched
 00014056,sub_14056,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),asset_loading,unmatched
 000142E7,sub_142E7,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),asset_loading,unmatched
-0001431E,sub_1431E,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
+0001431E,sub_1431E,MakePath,PC-new,,,,high,dst = dir + '\' (when dir non-empty) + name + ext,file_utils,manual-trace
 00014368,sub_14368,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
 00014442,sub_14442,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
-00014525,sub_14525,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
-0001453E,sub_1453E,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
-00014552,sub_14552,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
-00014566,sub_14566,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
-0001457C,sub_1457C,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
-000145A2,sub_145A2,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
-000145F9,sub_145F9,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
+00014525,sub_14525,FileOpenRead,PC-new,,,,high,"_dos_open(path, 40h read/deny-none, &handle)",file_utils,manual-trace
+0001453E,sub_1453E,FileOpenWrite,PC-new,,,,high,"_dos_open(path, 41h write/deny-none, &handle)",file_utils,manual-trace
+00014552,sub_14552,FileOpenRW,PC-new,,,,high,"_dos_open(path, 42h read-write/deny-none, &handle)",file_utils,manual-trace
+00014566,sub_14566,FileCreate,PC-new,,,,high,"_dos_creat(path, 0, &handle)",file_utils,manual-trace
+0001457C,sub_1457C,FileClose,PC-new,,,,high,"_dos_close(*handle) when >= 0, then *handle = -1",file_utils,manual-trace
+000145A2,sub_145A2,FileReadAt,PC-new,,,,high,"(handle, buf, offset (<0 = current), len): lseek then _dos_read; 0 ok, 1 short read, -1 seek error",file_utils,manual-trace
+000145F9,sub_145F9,FileWriteAt,PC-new,,,,high,"(handle, buf, offset (<0 = current), len): lseek then _dos_write; 0 ok, 1 short write",file_utils,manual-trace
 0001463D,sub_1463D,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
 00014654,sub_14654,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
 0001466B,sub_1466B,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_utils,unmatched
@@ -276,7 +276,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00030E66,sub_30E66,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),misc_dialogs,unmatched
 00030F12,sub_30F12,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),misc_dialogs,unmatched
 00030FB4,sub_30FB4,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),misc_dialogs,unmatched
-00031013,sub_31013,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),misc_dialogs,unmatched
+00031013,sub_31013,MessageBox,PC-new,,,,medium,"(x, y (-1 = centred), message line table, line count, buttons, button count, ...): the league/front-end message dialog used for every 'Copying databases' / 'Insert disk' / error box",misc_dialogs,manual-trace
 00031250,sub_31250,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),misc_dialogs,unmatched
 0003149D,sub_3149D,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),misc_dialogs,unmatched
 000314B4,sub_314B4,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),misc_dialogs,unmatched
@@ -337,8 +337,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0003A2EE,sub_3A2EE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
 0003A31E,sub_3A31E,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
 0003A347,sub_3A347,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-0003A395,sub_3A395,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-0003A49E,sub_3A49E,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
+0003A395,sub_3A395,AskTeamPassword,PC-new,,,,medium,"'Enter password for <team>' input and check (sub_3A597), 'Incorrect password!' on mismatch; TradePlayers asks it for both teams",league_setup,manual-trace
+0003A49E,sub_3A49E,AskMasterPassword,PC-new,,,,high,"up to 3 tries: '<team> enter master password.' input, compare with the master password, 'Incorrect password!'; -1 on Esc",league_setup,manual-trace
 0003A597,sub_3A597,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
 0003A5FC,sub_3A5FC,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
 0003A71C,sub_3A71C,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
@@ -359,7 +359,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0003D46D,sub_3D46D,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_merge,unmatched
 0003D694,sub_3D694,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_merge,unmatched
 0003D84F,sub_3D84F,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_merge,unmatched
-0003D8DD,sub_3D8DD,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_merge,unmatched
+0003D8DD,sub_3D8DD,ReadLeagueInfo,PC-new,,,,medium,"opens <league>\PINFO.DB and reads the fields WriteLeagueInfo writes into the caller's pointers (humancount, leaguemaster, leaguesaved, leagueflags, leagueteams, masterpw, savedname)",database_merge,manual-trace
 0003DAB9,sub_3DAB9,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_merge,unmatched
 0003DB41,sub_3DB41,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),config_cfg,unmatched
 0003DC2C,sub_3DC2C,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),roster_jersey,unmatched
@@ -376,17 +376,19 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0003EF89,sub_3EF89,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),roster_jersey,unmatched
 0003FEF0,sub_3FEF0,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),roster_jersey,unmatched
 0003FF52,sub_3FF52,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),roster_jersey,unmatched
-00040183,sub_40183,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),trades,unmatched
-000408F5,sub_408F5,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),trades,unmatched
-00040C29,sub_40C29,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),trades,unmatched
-00040F4E,sub_40F4E,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),trades,unmatched
-00041171,sub_41171,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),trades,unmatched
-00041337,sub_41337,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),trades,unmatched
-00041344,sub_41344,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),trades,unmatched
-000413CD,sub_413CD,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),trades,unmatched
-000414E0,sub_414E0,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),trades,unmatched
-00041516,sub_41516,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),trades,unmatched
-00041978,sub_41978,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),trades,unmatched
+00040183,sub_40183,TradePlayers,PC-new,,,,high,"league menu entry (temp_files 3354F): reads PINFO (ReadLeagueInfo), refuses with 'There is a saved game in the league' / master-database prompt, reads SCHEDULE.DB to refuse after the deadline ('The trading deadline has passed!'), needs two human teams ('There is only one human controlled team!'), 'Select two teams for trading players', AskTeamPassword for each, 'Show <team> Statistics...' buttons, then sub_3E390 does the trade ('Error while trading players!')",trades,manual-trace
+00040792,sub_40792,LoadHomePals,PC-new,,,,medium,"unreferenced: opens HOMEPALS.BIN (palette dir when byte_ED86D), copies 1C0h-byte records for two teams (C0h to a local palette, 100h to byte_DC9D8 / 90h+70h(+40h) to byte_DC8D8) and sets 80h colours with sub_B4B88",trades,manual-trace
+000408F5,sub_408F5,AddHumanTeam,PC-new,,,,high,"league menu (temp_files 33256): ReadLeagueInfo, saved-game / master-database prompts, refuses when 1Ah teams are human ('All the teams are already human'), 'Select new human controlled team', then WriteLeagueInfo and CopyHumanTeamDBs for the new team",trades,manual-trace
+00040C29,sub_40C29,RemoveHumanTeam,PC-new,,,,high,"league menu (temp_files 332EC): same checks as AddHumanTeam, refuses with one human team ('There is only one human controlled team!'), 'Select human controlled team to remove', then rewrites PINFO.DB",trades,manual-trace
+00040F4E,sub_40F4E,CheckMasterPassword,PC-new,,,,medium,"league menu (temp_files 3331D): ReadLeagueInfo, master-database prompt, then AskMasterPassword for the league master team (leaguemaster); returns its result (0 = accepted), the caller runs settings when it fails",trades,manual-trace
+00041171,sub_41171,FmtFromLeague,PC-new,,,,high,dst = text + ' from the league ' + league path up to the first '.'; used for the 'That disk is for ...' message and in database_merge/import_export,trades,manual-trace
+000411C8,sub_411C8,BuildLeagueList,PC-new,,,,medium,"unreferenced: _dos_findfirst/next over '*.LP', allocates 'LLST' (pointer list) and 'LLSN' (9-byte names), keeps leagues whose GetLeagueId result passes the flag filter (bit 0: id >= 0, bit 1: id < 0); returns the count",trades,manual-trace
+00041337,sub_41337,LeagueCheckStub,PC-new,,,,medium,"returns 0; called (league path, 2) before ReadLeagueInfo by AddHumanTeam/RemoveHumanTeam/CheckMasterPassword and in database_merge/import_export (stubbed-out check)",trades,manual-trace
+00041344,sub_41344,GetLeagueId,PC-new,,,,medium,"opens <dir>\PLAYER.ID, reads byte 0 and 4 bytes at 19h into the caller's buffer, returns byte 0 (FFh when the file is missing or short)",trades,manual-trace
+000413CD,sub_413CD,WriteLeagueInfo,PC-new,,,,high,"creates <league>\PINFO.DB and writes: +0 human count, +2 master team, +4 saved-game flag, +6 saved-game name (0Dh), +13h flags, +15h master password (0Bh), +20h team table (30Ch = 1Ah x 1Eh); args match the ReadLeagueInfo globals",trades,manual-trace
+000414E0,sub_414E0,MsgCopyingDatabases,PC-new,,,,high,MessageBox 'Copying databases for %s' (no buttons) with the team name,trades,manual-trace
+00041516,sub_41516,CopyHumanTeamDBs,PC-new,,,,medium,"for each human team (+17h = 1, or the one asked): team from disk (+18h = 2) asks 'Insert disk for', checks PLAYER.ID ('That disk is for ... from the league ...') and imports with sub_3BB87; otherwise MsgCopyingDatabases and copies the 7 league databases (KEY..SCHEDULE.DB) to '.xx' copies, sets +16h bit 0 and saves PINFO",trades,manual-trace
+00041978,sub_41978,SaveLeagueGameRef,PC-new,,,,medium,"demo_savegame 85CC2: writes the league state (DDD34-DDD59) to the saved-game file, then marks PINFO.DB of each league in the game (savleague1, savleague2 when two) with saved flag -1 and name 'saved'",trades,manual-trace
 00041B80,sub_41B80,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),schedule,unmatched
 00041C79,sub_41C79,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),schedule,unmatched
 00041C9B,sub_41C9B,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),schedule,unmatched

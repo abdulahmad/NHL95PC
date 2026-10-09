@@ -23,7 +23,7 @@ extern fputchar, j___close_, jctime, lseek_, memcpy_, off_C68CC, off_C68E4, off_
 extern off_C68F4, off_C68F8, off_C6A64, off_C6A99, off_C6AAC, off_C6AD1, off_C6AE0, off_C6B68
 extern off_C6B6C, off_C6B70, off_C6B88, off_C6B8C, off_C6B90, off_C6B94, off_C6BE8, off_C6C14
 extern off_C6C40, off_C6C44, off_C6C48, off_C6C4C, off_C6C50, open_, qsort_, read_
-extern sprintf_, strcat_, strnicmp_, sub_1431E, sub_174C2, sub_17573, sub_175E2, sub_17636
+extern sprintf_, strcat_, strnicmp_, MakePath, sub_174C2, sub_17573, sub_175E2, sub_17636
 extern sub_176AE, sub_176DB, sub_17711, sub_1777E, sub_1FB7F, sub_1FC8F, sub_1FF86, sub_21C04
 extern sub_29A97, sub_29C75, sub_8CCA8, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_91370
 extern sub_913B4, sub_B30B4, sub_B30BB, sub_B4BA8, sub_B4BC4, unk_C0DA6, unk_C0E9A, unk_C0EA8
@@ -118,7 +118,7 @@ mov ebx, dword [nosplit eax*4+off_C68EC]	; 21D1F
 xor ecx, ecx	; 21D26
 mov edx, unk_C65D4	; 21D28
 lea eax, [dword esp+0B8h]	; 21D2D
-call sub_1431E	; 21D34
+call MakePath	; 21D34
 push dword 200h	; 21D39
 lea eax, [dword esp+0BCh]	; 21D3E
 push eax	; 21D45
@@ -145,7 +145,7 @@ xor ecx, ecx	; 21D8A
 mov ebx, asc_C68FC	; 21D8C
 mov edx, unk_C65D4	; 21D91
 lea eax, [dword esp+0B8h]	; 21D96
-call sub_1431E	; 21D9D
+call MakePath	; 21D9D
 push dword 200h	; 21DA2
 lea eax, [dword esp+0BCh]	; 21DA7
 push eax	; 21DAE
@@ -165,7 +165,7 @@ mov ebx, dword [off_C68F4]	; 21DDD
 xor ecx, ecx	; 21DE3
 mov edx, unk_C65D4	; 21DE5
 lea eax, [dword esp+0B8h]	; 21DEA
-call sub_1431E	; 21DF1
+call MakePath	; 21DF1
 push dword 200h	; 21DF6
 lea eax, [dword esp+0BCh]	; 21DFB
 push eax	; 21E02
@@ -209,7 +209,7 @@ loc_21E82:
 xor edx, edx	; 21E82
 loc_21E84:
 lea eax, [dword esp+0B8h]	; 21E84
-call sub_1431E	; 21E8B
+call MakePath	; 21E8B
 push byte 0	; 21E90
 lea eax, [dword esp+0BCh]	; 21E92
 push eax	; 21E99
@@ -273,7 +273,7 @@ loc_21F5F:
 xor edx, edx	; 21F5F
 loc_21F61:
 lea eax, [dword esp+0B8h]	; 21F61
-call sub_1431E	; 21F68
+call MakePath	; 21F68
 push byte 0	; 21F6D
 lea eax, [dword esp+0BCh]	; 21F6F
 push eax	; 21F76
@@ -318,7 +318,7 @@ loc_21FED:
 xor edx, edx	; 21FED
 loc_21FEF:
 lea eax, [dword esp+0B8h]	; 21FEF
-call sub_1431E	; 21FF6
+call MakePath	; 21FF6
 push byte 0	; 21FFB
 lea eax, [dword esp+0BCh]	; 21FFD
 push eax	; 22004
@@ -341,7 +341,7 @@ loc_2203A:
 xor edx, edx	; 2203A
 loc_2203C:
 lea eax, [dword esp+0B8h]	; 2203C
-call sub_1431E	; 22043
+call MakePath	; 22043
 push byte 0	; 22048
 lea eax, [dword esp+0BCh]	; 2204A
 push eax	; 22051
@@ -371,7 +371,7 @@ loc_2209C:
 xor edx, edx	; 2209C
 loc_2209E:
 lea eax, [dword esp+0B8h]	; 2209E
-call sub_1431E	; 220A5
+call MakePath	; 220A5
 push byte 0	; 220AA
 lea eax, [dword esp+0BCh]	; 220AC
 push eax	; 220B3
@@ -724,7 +724,7 @@ mov ebx, dword [nosplit eax*4+off_C68EC]	; 225B9
 xor ecx, ecx	; 225C0
 mov edx, unk_C65D4	; 225C2
 lea eax, [dword esp+0C8h]	; 225C7
-call sub_1431E	; 225CE
+call MakePath	; 225CE
 push dword 200h	; 225D3
 lea eax, [dword esp+0CCh]	; 225D8
 push eax	; 225DF
@@ -751,7 +751,7 @@ xor ecx, ecx	; 22624
 mov ebx, asc_C68FC	; 22626
 mov edx, unk_C65D4	; 2262B
 lea eax, [dword esp+0C8h]	; 22630
-call sub_1431E	; 22637
+call MakePath	; 22637
 push dword 200h	; 2263C
 lea eax, [dword esp+0CCh]	; 22641
 push eax	; 22648
@@ -771,7 +771,7 @@ mov ebx, dword [off_C68F4]	; 22677
 xor ecx, ecx	; 2267D
 mov edx, unk_C65D4	; 2267F
 lea eax, [dword esp+0C8h]	; 22684
-call sub_1431E	; 2268B
+call MakePath	; 2268B
 push dword 200h	; 22690
 lea eax, [dword esp+0CCh]	; 22695
 push eax	; 2269C
@@ -815,7 +815,7 @@ loc_2271C:
 xor edx, edx	; 2271C
 loc_2271E:
 lea eax, [dword esp+0C8h]	; 2271E
-call sub_1431E	; 22725
+call MakePath	; 22725
 push byte 0	; 2272A
 lea eax, [dword esp+0CCh]	; 2272C
 push eax	; 22733
@@ -878,7 +878,7 @@ loc_227F8:
 xor edx, edx	; 227F8
 loc_227FA:
 lea eax, [dword esp+0C8h]	; 227FA
-call sub_1431E	; 22801
+call MakePath	; 22801
 push byte 0	; 22806
 lea eax, [dword esp+0CCh]	; 22808
 push eax	; 2280F
@@ -923,7 +923,7 @@ loc_22886:
 xor edx, edx	; 22886
 loc_22888:
 lea eax, [dword esp+0C8h]	; 22888
-call sub_1431E	; 2288F
+call MakePath	; 2288F
 push byte 0	; 22894
 lea eax, [dword esp+0CCh]	; 22896
 push eax	; 2289D
@@ -946,7 +946,7 @@ loc_228D3:
 xor edx, edx	; 228D3
 loc_228D5:
 lea eax, [dword esp+0C8h]	; 228D5
-call sub_1431E	; 228DC
+call MakePath	; 228DC
 push byte 0	; 228E1
 lea eax, [dword esp+0CCh]	; 228E3
 push eax	; 228EA
@@ -976,7 +976,7 @@ loc_22935:
 xor edx, edx	; 22935
 loc_22937:
 lea eax, [dword esp+0C8h]	; 22937
-call sub_1431E	; 2293E
+call MakePath	; 2293E
 push byte 0	; 22943
 lea eax, [dword esp+0CCh]	; 22945
 push eax	; 2294C
@@ -2099,7 +2099,7 @@ mov ebx, dword [nosplit eax*4+off_C68F4]	; 2360F
 xor ecx, ecx	; 23616
 mov edx, unk_C65D4	; 23618
 lea eax, [dword esp+0224h]	; 2361D
-call sub_1431E	; 23624
+call MakePath	; 23624
 push dword 200h	; 23629
 lea eax, [dword esp+0228h]	; 2362E
 push eax	; 23635
@@ -2469,7 +2469,7 @@ loc_23B0B:
 xor edx, edx	; 23B0B
 loc_23B0D:
 lea eax, [dword esp+0224h]	; 23B0D
-call sub_1431E	; 23B14
+call MakePath	; 23B14
 push byte 0	; 23B19
 lea eax, [dword esp+0228h]	; 23B1B
 push eax	; 23B22
@@ -2511,7 +2511,7 @@ loc_23BA4:
 xor edx, edx	; 23BA4
 loc_23BA6:
 lea eax, [dword esp+0224h]	; 23BA6
-call sub_1431E	; 23BAD
+call MakePath	; 23BAD
 push byte 0	; 23BB2
 lea eax, [dword esp+0228h]	; 23BB4
 push eax	; 23BBB
@@ -3182,7 +3182,7 @@ mov ebx, dword [off_C68F8]	; 24511
 xor ecx, ecx	; 24517
 mov edx, unk_C65D4	; 24519
 lea eax, [dword esp+03C8h]	; 2451E
-call sub_1431E	; 24525
+call MakePath	; 24525
 push dword 200h	; 2452A
 lea eax, [dword esp+03CCh]	; 2452F
 push eax	; 24536
@@ -3210,7 +3210,7 @@ xor ecx, ecx	; 24577
 mov ebx, asc_C1040	; 24579
 mov edx, unk_C65D4	; 2457E
 lea eax, [dword esp+03C8h]	; 24583
-call sub_1431E	; 2458A
+call MakePath	; 2458A
 push dword 200h	; 2458F
 lea eax, [dword esp+03CCh]	; 24594
 push eax	; 2459B
@@ -3222,7 +3222,7 @@ mov ebx, dword [nosplit ebx*4+off_C68EC]	; 245B1
 xor ecx, ecx	; 245B8
 mov edx, unk_C65D4	; 245BA
 lea eax, [dword esp+03C8h]	; 245BF
-call sub_1431E	; 245C6
+call MakePath	; 245C6
 push dword 200h	; 245CB
 lea eax, [dword esp+03CCh]	; 245D0
 push eax	; 245D7
@@ -3395,7 +3395,7 @@ loc_2487A:
 xor edx, edx	; 2487A
 loc_2487C:
 lea eax, [dword esp+03C8h]	; 2487C
-call sub_1431E	; 24883
+call MakePath	; 24883
 push byte 0	; 24888
 lea eax, [dword esp+03CCh]	; 2488A
 push eax	; 24891
@@ -3437,7 +3437,7 @@ loc_24913:
 xor edx, edx	; 24913
 loc_24915:
 lea eax, [dword esp+03C8h]	; 24915
-call sub_1431E	; 2491C
+call MakePath	; 2491C
 push byte 0	; 24921
 lea eax, [dword esp+03CCh]	; 24923
 push eax	; 2492A
@@ -5089,7 +5089,7 @@ mov ebx, dword [nosplit eax*4+off_C68F4]	; 25BD3
 xor ecx, ecx	; 25BDA
 mov edx, unk_C65D4	; 25BDC
 lea eax, [dword esp+0238h]	; 25BE1
-call sub_1431E	; 25BE8
+call MakePath	; 25BE8
 push dword 200h	; 25BED
 lea eax, [dword esp+023Ch]	; 25BF2
 push eax	; 25BF9
@@ -5148,7 +5148,7 @@ xor ecx, ecx	; 25CB0
 mov ebx, asc_C122A	; 25CB2
 mov edx, unk_C65D4	; 25CB7
 lea eax, [dword esp+0238h]	; 25CBC
-call sub_1431E	; 25CC3
+call MakePath	; 25CC3
 push dword 200h	; 25CC8
 lea eax, [dword esp+023Ch]	; 25CCD
 push eax	; 25CD4
@@ -5160,7 +5160,7 @@ mov ebx, dword [nosplit eax*4+off_C68EC]	; 25CE9
 xor ecx, ecx	; 25CF0
 mov edx, unk_C65D4	; 25CF2
 lea eax, [dword esp+0238h]	; 25CF7
-call sub_1431E	; 25CFE
+call MakePath	; 25CFE
 push dword 200h	; 25D03
 lea eax, [dword esp+023Ch]	; 25D08
 push eax	; 25D0F
@@ -5512,7 +5512,7 @@ loc_2622D:
 xor edx, edx	; 2622D
 loc_2622F:
 lea eax, [dword esp+0238h]	; 2622F
-call sub_1431E	; 26236
+call MakePath	; 26236
 push byte 0	; 2623B
 lea eax, [dword esp+023Ch]	; 2623D
 push eax	; 26244
@@ -5554,7 +5554,7 @@ loc_262C6:
 xor edx, edx	; 262C6
 loc_262C8:
 lea eax, [dword esp+0238h]	; 262C8
-call sub_1431E	; 262CF
+call MakePath	; 262CF
 push byte 0	; 262D4
 lea eax, [dword esp+023Ch]	; 262D6
 push eax	; 262DD
@@ -5737,7 +5737,7 @@ mov ebx, dword [off_C68F4]	; 26599
 xor ecx, ecx	; 2659F
 mov edx, unk_C65D4	; 265A1
 lea eax, [dword esp+0238h]	; 265A6
-call sub_1431E	; 265AD
+call MakePath	; 265AD
 push dword 200h	; 265B2
 lea eax, [dword esp+023Ch]	; 265B7
 push eax	; 265BE

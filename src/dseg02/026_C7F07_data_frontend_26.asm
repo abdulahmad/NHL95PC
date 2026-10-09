@@ -3,13 +3,13 @@ bits 32
 %include "hockey.inc"
 section s_C7F07 progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450, unk_C7E86, unk_C7E9B, unk_C7EB9, unk_C7EE2
-global asc_C80F3, asc_C80F9, asc_C8100, asc_C810C, asc_C811A, asc_C811E, asc_C812D, asc_C8131
-global asc_C8136, asc_C8140, asc_C8145, asc_C814A, asc_C814F, asc_C8154, asc_C8158, asc_C815C
-global asc_C8166, byte_C8111, byte_C8164, byte_C816A, dword_C7F0B, dword_C80A1, off_C800C, off_C8055
-global off_C80D7, off_C80DB, off_C80DF, off_C80E3, off_C80E7, off_C80EB, off_C80EF, unk_C7F07
+global str_PINFO, str_PLAYER, asc_C8100, asc_C810C, str_extDB, asc_C811E, asc_C812D, asc_C8131
+global asc_C8136, asc_C8140, asc_C8145, asc_C814A, str_extBIN, str_extxx, asc_C8158, str_extLP
+global str_extID, byte_C8111, str_dot, str_floppydrv, dword_C7F0B, msg_SavedGame_arg, off_C800C, off_C8055
+global leaguedbnames, unk_C7F07
 global unk_C7F1B, unk_C7F53, unk_C7F77, unk_C7F7B, unk_C7F8E, unk_C7F92, unk_C7FB9, unk_C7FBD
-global unk_C7FD6, unk_C7FDA, unk_C7FF5, unk_C8014, unk_C8039, unk_C805D, unk_C8081, unk_C809D
-global unk_C80A9, unk_C80AD, unk_C80B4, unk_C80B8, unk_C80C1, unk_C80C7, unk_C80CE, unk_C8113
+global unk_C7FD6, unk_C7FDA, unk_C7FF5, unk_C8014, unk_C8039, unk_C805D, unk_C8081, msg_SavedGame
+global unk_C80A9, unk_C80AD, unk_C80B4, unk_C80B8, unk_C80C1, unk_C80C7, unk_C80CE, str_star
 global unk_C8115, unk_C8117
 unk_C7F07:
 dd unk_C7E86
@@ -73,9 +73,9 @@ db 067h,075h,065h,00h
 unk_C8081:
 db 077h,068h,069h,063h,068h,020h,06Dh,075h,073h,074h,020h,062h,065h,020h,070h,06Ch
 db 061h,079h,065h,064h,020h,066h,069h,072h,073h,074h,021h,00h
-unk_C809D:
+msg_SavedGame:
 dd unk_C805D
-dword_C80A1:
+msg_SavedGame_arg:
 db 00h,00h,00h,00h
 dd unk_C8081
 unk_C80A9:
@@ -92,23 +92,17 @@ unk_C80C7:
 db 053h,045h,041h,053h,04Fh,04Eh,00h
 unk_C80CE:
 db 053h,043h,048h,045h,044h,055h,04Ch,045h,00h
-off_C80D7:
+leaguedbnames:
 dd unk_C80A9
-off_C80DB:
 dd unk_C80AD
-off_C80DF:
 dd unk_C80B4
-off_C80E3:
 dd unk_C80B8
-off_C80E7:
 dd unk_C80C1
-off_C80EB:
 dd unk_C80C7
-off_C80EF:
 dd unk_C80CE
-asc_C80F3:
+str_PINFO:
 db 050h,049h,04Eh,046h,04Fh,00h
-asc_C80F9:
+str_PLAYER:
 db 050h,04Ch,041h,059h,045h,052h,00h
 asc_C8100:
 db 04Ch,053h,053h,043h,048h,045h,044h,00h,050h,047h,053h,00h
@@ -116,13 +110,13 @@ asc_C810C:
 db 047h,041h,04Dh,045h,00h
 byte_C8111:
 db 020h,00h
-unk_C8113:
+str_star:
 db 02Ah,00h
 unk_C8115:
 db 05Ch,00h
 unk_C8117:
 db 025h,073h,00h
-asc_C811A:
+str_extDB:
 db 02Eh,044h,042h,00h
 asc_C811E:
 db 02Eh,04Fh,052h,047h,00h,02Eh,04Eh,053h,048h,00h,02Eh,04Dh,056h,049h,00h
@@ -138,17 +132,17 @@ asc_C8145:
 db 02Eh,043h,046h,047h,00h
 asc_C814A:
 db 02Eh,056h,046h,04Eh,00h
-asc_C814F:
+str_extBIN:
 db 02Eh,042h,049h,04Eh,00h
-asc_C8154:
+str_extxx:
 db 02Eh,078h,078h,00h
 asc_C8158:
 db 02Eh,078h,078h,00h
-asc_C815C:
+str_extLP:
 db 02Eh,04Ch,050h,00h,02Eh,053h,050h,00h
-byte_C8164:
+str_dot:
 db 02Eh,00h
-asc_C8166:
+str_extID:
 db 02Eh,049h,044h,00h
-byte_C816A:
+str_floppydrv:
 db 03Fh,03Ah,00h

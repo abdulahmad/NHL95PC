@@ -7,8 +7,8 @@ extern asc_C6747, asc_C675B, asc_C6779, byte_C671C, byte_C672F, byte_C6745, byte
 extern byte_DC836, byte_DCFD8, byte_DD058, dword_C65B0, dword_C65B4, dword_C6956, dword_C6A60, dword_DC238
 extern dword_DC640, dword_DC6B8, dword_DC6BC, dword_DC720, dword_DC73C, dword_DC750, dword_DC754, dword_DC7B8
 extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD120, dword_EA0DC, jctime, memcmp_
-extern memcpy_, off_D3078, sprintf_, strcat_, strlen_, strncpy_, sub_14525, sub_1457C
-extern sub_145A2, sub_18D03, sub_18D0D, sub_1D6BE, sub_24453, sub_26B5A, sub_27BC3, sub_27F9C
+extern memcpy_, off_D3078, sprintf_, strcat_, strlen_, strncpy_, FileOpenRead, FileClose
+extern FileReadAt, sub_18D03, sub_18D0D, sub_1D6BE, sub_24453, sub_26B5A, sub_27BC3, sub_27F9C
 extern sub_29681, sub_6B391, sub_6B3D7, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_8CCA8
 extern sub_903F0, sub_90F38, sub_91370, sub_91400, sub_91964, MouseSetPos, sub_B2E1B, sub_B4DD4
 extern unk_DC834, unk_DC837, unk_DC847, unk_DD0D8
@@ -3184,7 +3184,7 @@ mov dword [byte esp+01Ch], 0FFFFFFFFh	; 1FE11
 xor ebp, ebp	; 1FE19
 mov dword [byte esp+028h], ebp	; 1FE1B
 lea edx, [byte esp+01Ch]	; 1FE1F
-call sub_14525	; 1FE23
+call FileOpenRead	; 1FE23
 mov dword [byte esp+02Ch], eax	; 1FE28
 test eax, eax	; 1FE2C
 jne short loc_1FE52	; 1FE2E
@@ -3192,7 +3192,7 @@ mov ecx, 2	; 1FE30
 mov ebx, 4	; 1FE35
 lea edx, [byte esp+020h]	; 1FE3A
 mov eax, dword [byte esp+01Ch]	; 1FE3E
-call sub_145A2	; 1FE42
+call FileReadAt	; 1FE42
 mov dword [byte esp+02Ch], eax	; 1FE47
 xor edx, edx	; 1FE4B
 mov word [byte esp+022h], dx	; 1FE4D
@@ -3211,7 +3211,7 @@ mov ecx, esi	; 1FE72
 mov ebx, 6	; 1FE74
 mov edx, eax	; 1FE79
 mov eax, dword [byte esp+01Ch]	; 1FE7B
-call sub_145A2	; 1FE7F
+call FileReadAt	; 1FE7F
 mov dword [byte esp+02Ch], eax	; 1FE84
 loc_1FE88:
 mov esi, dword [byte esp+02Ch]	; 1FE88
@@ -3244,7 +3244,7 @@ mov ecx, 11h	; 1FEE3
 mov ebx, edi	; 1FEE8
 lea edx, [byte esp+04h]	; 1FEEA
 mov eax, dword [byte esp+01Ch]	; 1FEEE
-call sub_145A2	; 1FEF2
+call FileReadAt	; 1FEF2
 mov dword [byte esp+02Ch], eax	; 1FEF7
 loc_1FEFB:
 inc esi	; 1FEFB
@@ -3281,7 +3281,7 @@ mov ecx, ebp	; 1FF4E
 mov ebx, edi	; 1FF50
 mov edx, eax	; 1FF52
 mov eax, dword [byte esp+01Ch]	; 1FF54
-call sub_145A2	; 1FF58
+call FileReadAt	; 1FF58
 test eax, eax	; 1FF5D
 jge short loc_1FF70	; 1FF5F
 push esi	; 1FF61
@@ -3291,7 +3291,7 @@ xor esi, esi	; 1FF6A
 mov dword [byte esp+028h], esi	; 1FF6C
 loc_1FF70:
 lea eax, [byte esp+01Ch]	; 1FF70
-call sub_1457C	; 1FF74
+call FileClose	; 1FF74
 mov eax, dword [byte esp+028h]	; 1FF79
 add esp, byte 30h	; 1FF7D
 loc_1FF80:

@@ -13,7 +13,7 @@ extern asc_D2628, asc_D2635, asc_D2641, asc_D2672, asc_D267F, asc_D26A4, asc_D26
 extern asc_D26CB, asc_D26D7, asc_D26E4, asc_D26F1, asc_D26FE, asc_D270B, asc_D2718, asc_D2725
 extern asc_D2732, asc_D27BF, byte_ED98C, dword_CCC98, dword_D27A2, dword_D27BB, dword_D2C6B, dword_ED7AC
 extern dword_ED7B0, itoa_, loc_836C3, off_D273E, off_D2776, sprintf_, strcpy_, strncpy_
-extern sub_1431E, sub_833FA, sub_83520, sub_83711, sub_83897, sub_83CAE, sub_83D78, sub_83E6D
+extern MakePath, sub_833FA, sub_83520, sub_83711, sub_83897, sub_83CAE, sub_83D78, sub_83E6D
 extern sub_83EEB, sub_83F35, sub_83FAF, sub_8426F
 global loc_842D7, loc_842DE, loc_842E5, loc_842FA, loc_842FF, loc_84327, loc_8433E, loc_84349
 global loc_84350, loc_84357, loc_84365, loc_84371, loc_84378, loc_8437F, loc_84384, loc_8438D
@@ -1484,7 +1484,7 @@ loc_85552:
 xor edx, edx	; 85552
 loc_85554:
 mov eax, esp	; 85554
-call sub_1431E	; 85556
+call MakePath	; 85556
 xor edx, edx	; 8555B
 mov eax, esp	; 8555D
 call sub_83897	; 8555F
@@ -1699,7 +1699,7 @@ loc_857F5:
 xor edx, edx	; 857F5
 loc_857F7:
 mov eax, esp	; 857F7
-call sub_1431E	; 857F9
+call MakePath	; 857F9
 mov edx, 1Ah	; 857FE
 mov eax, esp	; 85803
 call sub_83897	; 85805

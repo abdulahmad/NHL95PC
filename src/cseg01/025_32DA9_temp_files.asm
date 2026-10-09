@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_32DA9 progbits alloc exec nowrite align=1
-extern __CHK, asc_C177B, asc_C1783, asc_C1788, byte_C5386, byte_C53DC, byte_C5400, byte_C8451
+extern __CHK, asc_C177B, asc_C1783, asc_C1788, byte_C5386, byte_C53DC, byte_C5400, curleague
 extern musicon, byte_DE268, byte_EA0F4, dword_C5382, dword_C53D3, dword_C53D7, dword_C53DF, dword_C53E3
 extern dword_C53E7, dword_C53EB, dword_C53EF, dword_C53F3, dword_C53FB, dword_C65C0, dword_C65C4, dword_C65C8
 extern dword_C65CC, dword_C65D0, songdata, dword_C73D0, rinkbm, dword_C7440, cont2team, HomeTeam
 extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, dword_DC234, jctime, loc_32704, musicslot
-extern loc_32705, strcat_, strcpy_, sub_10712, sub_11D09, sub_14525, sub_148A5, sub_1BEFD
+extern loc_32705, strcat_, strcpy_, sub_10712, sub_11D09, FileOpenRead, sub_148A5, sub_1BEFD
 extern sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
 extern sub_20D97, sub_29F28, sub_3271B, sub_327A1, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
-extern sub_3B9CA, sub_3CF5B, sub_3D108, sub_40183, sub_408F5, sub_40C29, sub_40F4E, sub_44DCF
+extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, sub_44DCF
 extern sub_479E9, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, unk_208EF, unk_20A46, unk_20BBD
 extern unk_20EB7, unk_C5298, unk_CE64F, word_C53DB
@@ -314,7 +314,7 @@ mov eax, dword_C5382	; 33242
 call sub_327A1	; 33247
 mov eax, 3	; 3324C
 call sub_1D100	; 33251
-call sub_408F5	; 33256
+call AddHumanTeam	; 33256
 loc_3325B:
 xor eax, eax	; 3325B
 call sub_1D100	; 3325D
@@ -360,7 +360,7 @@ mov eax, dword_C5382	; 332D8
 call sub_327A1	; 332DD
 mov eax, 3	; 332E2
 call sub_1D100	; 332E7
-call sub_40C29	; 332EC
+call RemoveHumanTeam	; 332EC
 jmp near loc_3325B	; 332F1
 sub_332F6:
 push dword 24h	; 332F6
@@ -376,7 +376,7 @@ mov eax, unk_C5298	; 33309
 call sub_3271B	; 3330E
 mov eax, dword_C5382	; 33313
 call sub_327A1	; 33318
-call sub_40F4E	; 3331D
+call CheckMasterPassword	; 3331D
 test eax, eax	; 33322
 jne short loc_3332B	; 33324
 mov edi, 0FFFFFFFFh	; 33326
@@ -551,7 +551,7 @@ mov eax, dword_C5382	; 3353B
 call sub_327A1	; 33540
 mov eax, 3	; 33545
 call sub_1D100	; 3354A
-call sub_40183	; 3354F
+call TradePlayers	; 3354F
 jmp near loc_3325B	; 33554
 sub_33559:
 push dword 40h	; 33559
@@ -574,7 +574,7 @@ mov eax, 2	; 33594
 call sub_1D610	; 33599
 cmp dword [ebx], byte 0	; 3359E
 jge short loc_335CE	; 335A1
-mov edx, byte_C8451	; 335A3
+mov edx, curleague	; 335A3
 mov eax, esp	; 335A8
 call strcpy_	; 335AA
 mov edx, asc_C1788	; 335AF
@@ -582,7 +582,7 @@ mov eax, esp	; 335B4
 call strcat_	; 335B6
 mov edx, ebx	; 335BB
 mov eax, esp	; 335BD
-call sub_14525	; 335BF
+call FileOpenRead	; 335BF
 test eax, eax	; 335C4
 je short loc_335CE	; 335C6
 mov dword [ebx], 0FFFFFFFFh	; 335C8

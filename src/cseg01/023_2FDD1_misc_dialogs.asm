@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_2FDD1 progbits alloc exec nowrite align=1
-extern __CHK, asc_C1710, asc_C1718, asc_C811A, asc_C811E, byte_C4B6C, byte_D42C3, byte_D42C5
+extern __CHK, asc_C1710, asc_C1718, str_extDB, asc_C811E, byte_C4B6C, byte_D42C3, byte_D42C5
 extern dword_C4B69, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, dword_C71E4, dword_C71E8
 extern dword_C71EC, dword_C71F0, dword_C71F4, dword_C71FC, dword_C7208, dword_C7210, dword_D42A8, dword_D42AC
 extern dword_DC238, dword_DD678, dword_DD688, dword_DD68C, dword_DD690, dword_DD694, dword_DD698, dword_DD69C
@@ -36,7 +36,7 @@ global loc_319D1, loc_319E5, loc_319F7, loc_31A3F, loc_31A5C, loc_31A63, loc_31A
 global loc_31A7C, loc_31A9F, sub_2FDD1, sub_2FE49, sub_2FED2, sub_2FEDF, sub_30203, sub_30209
 global sub_3023E, sub_302B9, sub_3039C, sub_303FB, sub_309E4, sub_30A0C, sub_30A39, sub_30AE2
 global sub_30B16, sub_30BF3, sub_30C3D, sub_30D0E, sub_30E66, sub_30F12, sub_30F5F, sub_30FB4
-global sub_31013, sub_31250, sub_3149D, sub_314B4, sub_31599, sub_3170D
+global MessageBox, sub_31250, sub_3149D, sub_314B4, sub_31599, sub_3170D
 sub_2FDD1:
 push dword 30h	; 2FDD1
 call __CHK	; 2FDD6
@@ -63,14 +63,14 @@ mov ecx, 3	; 2FE09
 mov ebx, off_C74AB	; 2FE0E
 mov edx, 0FFFFFFFFh	; 2FE13
 mov eax, edx	; 2FE18
-call sub_31013	; 2FE1A
+call MessageBox	; 2FE1A
 mov dword [byte esp+08h], eax	; 2FE1F
 cmp eax, byte 1	; 2FE23
 jne short loc_2FE34	; 2FE26
 mov dword [dword_DD770], asc_C811E	; 2FE28
 jmp short loc_2FE3E	; 2FE32
 loc_2FE34:
-mov dword [dword_DD770], asc_C811A	; 2FE34
+mov dword [dword_DD770], str_extDB	; 2FE34
 loc_2FE3E:
 mov eax, dword [byte esp+08h]	; 2FE3E
 add esp, byte 0Ch	; 2FE42
@@ -1673,7 +1673,7 @@ pop ebp	; 3100F
 pop edi	; 31010
 pop esi	; 31011
 ret	; 31012
-sub_31013:
+MessageBox:
 push dword 3Ch	; 31013
 call __CHK	; 31018
 push esi	; 3101D

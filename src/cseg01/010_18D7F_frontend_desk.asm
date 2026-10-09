@@ -12,8 +12,8 @@ extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, bai
 extern dword_D8C84, dword_DC230, dword_DC234, dword_DC238, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
 extern dword_EA0DC, jctime, off_CEE5F, off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF
 extern off_CEF23, off_D3078, randomd0, sprintf_, sub_10E9F, sub_11598, sub_12034, sub_1395F
-extern sub_1431E, sub_16F9A, sub_17816, sub_1B982, sub_1BAF3, sub_1D610, sub_2D35A, sub_2F2B1
-extern sub_2F3D7, sub_2F5EE, sub_2FEDF, sub_30A0C, sub_31013, sub_3377C, sub_33E6A, sub_479E9
+extern MakePath, sub_16F9A, sub_17816, sub_1B982, sub_1BAF3, sub_1D610, sub_2D35A, sub_2F2B1
+extern sub_2F3D7, sub_2F5EE, sub_2FEDF, sub_30A0C, MessageBox, sub_3377C, sub_33E6A, sub_479E9
 extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB
 extern sub_6BA4D, sub_76429, sub_767D0, sub_7E0FA, sub_805C4, sub_836E4, sub_837A8, sub_846F0
@@ -541,7 +541,7 @@ loc_19459:
 xor edx, edx	; 19459
 loc_1945B:
 lea eax, [dword esp+0344h]	; 1945B
-call sub_1431E	; 19462
+call MakePath	; 19462
 push byte 0	; 19467
 lea eax, [dword esp+0348h]	; 19469
 push eax	; 19470
@@ -694,7 +694,7 @@ loc_196B4:
 xor edx, edx	; 196B4
 loc_196B6:
 lea eax, [dword esp+0344h]	; 196B6
-call sub_1431E	; 196BD
+call MakePath	; 196BD
 lea eax, [dword esp+0344h]	; 196C2
 call sub_8F98F	; 196C9
 mov dword [songdata], eax	; 196CE
@@ -1198,7 +1198,7 @@ loc_19ECF:
 xor edx, edx	; 19ECF
 loc_19ED1:
 lea eax, [dword esp+0344h]	; 19ED1
-call sub_1431E	; 19ED8
+call MakePath	; 19ED8
 push byte 0	; 19EDD
 lea eax, [dword esp+0348h]	; 19EDF
 push eax	; 19EE6
@@ -1683,7 +1683,7 @@ mov ecx, 3	; 1A668
 mov ebx, dword_C66A4	; 1A66D
 mov edx, 0FFFFFFFFh	; 1A672
 mov eax, edx	; 1A677
-call sub_31013	; 1A679
+call MessageBox	; 1A679
 mov dword [esp], eax	; 1A67E
 test eax, eax	; 1A681
 jg short loc_1A689	; 1A683
@@ -1746,7 +1746,7 @@ mov ecx, 3	; 1A733
 mov ebx, dword_C66A4	; 1A738
 mov edx, 0FFFFFFFFh	; 1A73D
 mov eax, edx	; 1A742
-call sub_31013	; 1A744
+call MessageBox	; 1A744
 mov dword [esp], eax	; 1A749
 test eax, eax	; 1A74C
 jle near loc_1A80C	; 1A74E
