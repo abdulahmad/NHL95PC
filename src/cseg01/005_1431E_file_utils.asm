@@ -4,11 +4,11 @@ bits 32
 section s_1431E progbits alloc exec nowrite align=1
 extern __CHK, _dos_close_, _dos_creat_, _dos_getdiskfree_, _dos_open_, _dos_read_, _dos_write_, str_ErrDiskFree4
 extern str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, msg_NeedKbytes, str_dot, curleague, dword_C56C4, dword_C56E4
-extern dword_C5704, dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844
+extern hudclockmin, hudclocksec, hudclockhund, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844
 extern dword_C5848, hudhomeline, hudawayline, dword_C5854, dword_C5858, dword_C585C, dword_C5860, linesprites
-extern dword_DC28C, dword_DC2BC, dword_DC2C0, scoredigits, dword_DC30C, dword_DC334, gmode, j_unlink_
-extern lseek_, off_C56B5, leaguedbnames, rmdir_, sprintf_, strcat_, strcpy_, sub_15374
-extern sub_1540A, sub_15655, sub_15707, sub_157BD, sub_15995, MessageBox, TeamLineEnergy, SelectScreenBM
+extern dword_DC28C, dword_DC2BC, dword_DC2C0, scoredigits, clockdigits, clockcolon, gmode, j_unlink_
+extern lseek_, off_C56B5, leaguedbnames, rmdir_, sprintf_, strcat_, strcpy_, TickPanelClock
+extern DrawPanelClockDigits, TickPanelPenalties, DrawEnergyBar, DrawLineGroupBars, DrawPanelPenalties, MessageBox, TeamLineEnergy, SelectScreenBM
 extern SelectRinkBM, FatalError, MouseSetPos, sub_B4CD8, sub_B4CF2, str_star, str_backslash2, unk_DC2F4
 extern unk_DC300, unknown_libname_1, unknown_libname_2, hudpenhome, hudpenaway, lcboxon, word_CBC6C
 global FileOpenRead_x, FileReadAt_x, FileReadAt_x2
@@ -949,23 +949,23 @@ push esi	; 14CFE
 push edi	; 14CFF
 push ebp	; 14D00
 call SelectScreenBM	; 14D01
-cmp dword [dword_C5704], byte 0	; 14D06
+cmp dword [hudclockmin], byte 0	; 14D06
 jl near UpdateHudPanel_x	; 14D0D
 mov eax, dword [dword_DC28C]	; 14D13
 mov dword [dword_C583C], eax	; 14D18
 xor ebx, ebx	; 14D1D
 mov dword [dword_DC28C], ebx	; 14D1F
-call sub_15374	; 14D25
+call TickPanelClock	; 14D25
 test eax, eax	; 14D2A
 je short .1	; 14D2C
 test byte [gmode], 10h	; 14D2E
 jne short .1	; 14D35
 mov edx, dword [dword_C583C]	; 14D37
 mov eax, hudpenhome	; 14D3D
-call sub_15655	; 14D42
+call TickPanelPenalties	; 14D42
 mov edx, dword [dword_C583C]	; 14D47
 mov eax, hudpenaway	; 14D4D
-call sub_15655	; 14D52
+call TickPanelPenalties	; 14D52
 .1:
 mov edx, dword_C56E4	; 14D57
 xor eax, eax	; 14D5C
@@ -973,7 +973,7 @@ call GetLineEnergies	; 14D5E
 mov edx, dword_C56C4	; 14D63
 mov eax, 1	; 14D68
 call GetLineEnergies	; 14D6D
-call sub_1540A	; 14D72
+call DrawPanelClockDigits	; 14D72
 mov edx, dword [hudhomeline]	; 14D77
 mov ebx, 1F4h	; 14D7D
 mov eax, dword [nosplit edx*4+dword_C56E4]	; 14D82
@@ -981,14 +981,14 @@ mov edx, eax	; 14D89
 sar edx, 1Fh	; 14D8B
 idiv ebx	; 14D8E
 mov edx, 2Bh	; 14D90
-call sub_15707	; 14D95
+call DrawEnergyBar	; 14D95
 mov edx, dword [hudawayline]	; 14D9A
 mov eax, dword [nosplit edx*4+dword_C56C4]	; 14DA0
 mov edx, eax	; 14DA7
 sar edx, 1Fh	; 14DA9
 idiv ebx	; 14DAC
 mov edx, 0FCh	; 14DAE
-call sub_15707	; 14DB3
+call DrawEnergyBar	; 14DB3
 cmp word [lcboxon], byte 0	; 14DB8
 jne short .2	; 14DC0
 cmp dword [dword_C5844], byte 0	; 14DC2
@@ -1001,7 +1001,7 @@ mov ebx, dword [hudhomeline]	; 14DD6
 mov ecx, dword_C56E4	; 14DDC
 mov edx, unk_DC2F4	; 14DE1
 mov eax, dword_C585C	; 14DE6
-call sub_157BD	; 14DEB
+call DrawLineGroupBars	; 14DEB
 xor ecx, ecx	; 14DF0
 mov dword [dword_C5854], ecx	; 14DF2
 jmp short .6	; 14DF8
@@ -1014,7 +1014,7 @@ mov ebx, dword [hudhomeline]	; 14E10
 mov ecx, dword_C56E4	; 14E16
 mov edx, unk_DC2F4	; 14E1B
 mov eax, dword_C585C	; 14E20
-call sub_157BD	; 14E25
+call DrawLineGroupBars	; 14E25
 xor ebx, ebx	; 14E2A
 mov dword [dword_C5854], ebx	; 14E2C
 jmp short .6	; 14E32
@@ -1029,7 +1029,7 @@ mov dword [dword_C5854], 1	; 14E4C
 .5:
 mov edx, 48h	; 14E56
 mov eax, hudpenhome	; 14E5B
-call sub_15995	; 14E60
+call DrawPanelPenalties	; 14E60
 xor eax, eax	; 14E65
 mov dword [dword_C585C], eax	; 14E67
 .6:
@@ -1045,7 +1045,7 @@ mov ebx, dword [hudawayline]	; 14E8D
 mov ecx, dword_C56C4	; 14E93
 mov edx, unk_DC300	; 14E98
 mov eax, dword_C5860	; 14E9D
-call sub_157BD	; 14EA2
+call DrawLineGroupBars	; 14EA2
 xor esi, esi	; 14EA7
 mov dword [dword_C5858], esi	; 14EA9
 jmp near UpdateHudPanel_x	; 14EAF
@@ -1058,7 +1058,7 @@ mov ebx, dword [hudawayline]	; 14ECD
 mov ecx, dword_C56C4	; 14ED3
 mov edx, unk_DC300	; 14ED8
 mov eax, dword_C5860	; 14EDD
-call sub_157BD	; 14EE2
+call DrawLineGroupBars	; 14EE2
 xor ecx, ecx	; 14EE7
 mov dword [dword_C5858], ecx	; 14EE9
 jmp short UpdateHudPanel_x	; 14EEF
@@ -1073,7 +1073,7 @@ mov dword [dword_C5858], 1	; 14F09
 .10:
 mov edx, 0BFh	; 14F13
 mov eax, hudpenaway	; 14F18
-call sub_15995	; 14F1D
+call DrawPanelPenalties	; 14F1D
 xor edx, edx	; 14F22
 mov dword [dword_C5860], edx	; 14F24
 UpdateHudPanel_x:
@@ -1093,31 +1093,31 @@ push edx	; 14F3D
 push esi	; 14F3E
 push edi	; 14F3F
 push ebp	; 14F40
-mov edx, dword [dword_C5704]	; 14F41
+mov edx, dword [hudclockmin]	; 14F41
 test edx, edx	; 14F47
 jne near .3	; 14F49
 push byte 3	; 14F4F
 push dword 0AAh	; 14F51
-mov edx, dword [dword_DC334]	; 14F56
+mov edx, dword [clockcolon]	; 14F56
 push edx	; 14F5C
 call sub_B4CD8	; 14F5D
 add esp, byte 0Ch	; 14F62
-cmp dword [dword_C5708], byte 0Ah	; 14F65
+cmp dword [hudclocksec], byte 0Ah	; 14F65
 jge short .1	; 14F6C
 push byte 3	; 14F6E
 push dword 8Ch	; 14F70
-mov esi, dword [dword_DC334]	; 14F75
+mov esi, dword [clockcolon]	; 14F75
 push esi	; 14F7B
 jmp short .2	; 14F7C
 .1:
 push byte 3	; 14F7E
 push dword 8Ch	; 14F80
 mov ebx, 0Ah	; 14F85
-mov eax, dword [dword_C5708]	; 14F8A
+mov eax, dword [hudclocksec]	; 14F8A
 mov edx, eax	; 14F8F
 sar edx, 1Fh	; 14F91
 idiv ebx	; 14F94
-mov ecx, dword [nosplit eax*4+dword_DC30C]	; 14F96
+mov ecx, dword [nosplit eax*4+clockdigits]	; 14F96
 push ecx	; 14F9D
 .2:
 call sub_B4CD8	; 14F9E
@@ -1125,22 +1125,22 @@ add esp, byte 0Ch	; 14FA3
 push byte 3	; 14FA6
 push dword 95h	; 14FA8
 mov ebx, 0Ah	; 14FAD
-mov eax, dword [dword_C5708]	; 14FB2
+mov eax, dword [hudclocksec]	; 14FB2
 mov edx, eax	; 14FB7
 sar edx, 1Fh	; 14FB9
 idiv ebx	; 14FBC
-mov edi, dword [nosplit edx*4+dword_DC30C]	; 14FBE
+mov edi, dword [nosplit edx*4+clockdigits]	; 14FBE
 push edi	; 14FC5
 call sub_B4CD8	; 14FC6
 add esp, byte 0Ch	; 14FCB
 push byte 3	; 14FCE
 push dword 0A1h	; 14FD0
 mov ebx, 0Ah	; 14FD5
-mov eax, dword [dword_C570C]	; 14FDA
+mov eax, dword [hudclockhund]	; 14FDA
 mov edx, eax	; 14FDF
 sar edx, 1Fh	; 14FE1
 idiv ebx	; 14FE4
-mov ebp, dword [nosplit eax*4+dword_DC30C]	; 14FE6
+mov ebp, dword [nosplit eax*4+clockdigits]	; 14FE6
 push ebp	; 14FED
 jmp near .6	; 14FEE
 .3:
@@ -1148,7 +1148,7 @@ cmp edx, byte 0Ah	; 14FF3
 jge short .4	; 14FF6
 push byte 3	; 14FF8
 push dword 8Ch	; 14FFA
-mov esi, dword [dword_DC334]	; 14FFF
+mov esi, dword [clockcolon]	; 14FFF
 push esi	; 15005
 jmp short .5	; 15006
 .4:
@@ -1158,7 +1158,7 @@ mov ebx, 0Ah	; 1500F
 mov eax, edx	; 15014
 sar edx, 1Fh	; 15016
 idiv ebx	; 15019
-mov ecx, dword [nosplit eax*4+dword_DC30C]	; 1501B
+mov ecx, dword [nosplit eax*4+clockdigits]	; 1501B
 push ecx	; 15022
 .5:
 call sub_B4CD8	; 15023
@@ -1166,41 +1166,41 @@ add esp, byte 0Ch	; 15028
 push byte 3	; 1502B
 push dword 95h	; 1502D
 mov ebx, 0Ah	; 15032
-mov eax, dword [dword_C5704]	; 15037
+mov eax, dword [hudclockmin]	; 15037
 mov edx, eax	; 1503C
 sar edx, 1Fh	; 1503E
 idiv ebx	; 15041
-mov edi, dword [nosplit edx*4+dword_DC30C]	; 15043
+mov edi, dword [nosplit edx*4+clockdigits]	; 15043
 push edi	; 1504A
 call sub_B4CD8	; 1504B
 add esp, byte 0Ch	; 15050
 push byte 3	; 15053
 push dword 0A1h	; 15055
 mov ebx, 0Ah	; 1505A
-mov eax, dword [dword_C5708]	; 1505F
+mov eax, dword [hudclocksec]	; 1505F
 mov edx, eax	; 15064
 sar edx, 1Fh	; 15066
 idiv ebx	; 15069
-mov ebp, dword [nosplit eax*4+dword_DC30C]	; 1506B
+mov ebp, dword [nosplit eax*4+clockdigits]	; 1506B
 push ebp	; 15072
 call sub_B4CD8	; 15073
 add esp, byte 0Ch	; 15078
 push byte 3	; 1507B
 push dword 0AAh	; 1507D
 mov ebx, 0Ah	; 15082
-mov eax, dword [dword_C5708]	; 15087
+mov eax, dword [hudclocksec]	; 15087
 mov edx, eax	; 1508C
 sar edx, 1Fh	; 1508E
 idiv ebx	; 15091
-mov eax, dword [nosplit edx*4+dword_DC30C]	; 15093
+mov eax, dword [nosplit edx*4+clockdigits]	; 15093
 push eax	; 1509A
 .6:
 call sub_B4CD8	; 1509B
 add esp, byte 0Ch	; 150A0
-mov eax, dword [dword_C5704]	; 150A3
+mov eax, dword [hudclockmin]	; 150A3
 mov dword [dword_C5710], eax	; 150A8
-mov eax, dword [dword_C5708]	; 150AD
+mov eax, dword [hudclocksec]	; 150AD
 mov dword [dword_C5714], eax	; 150B2
-mov eax, dword [dword_C570C]	; 150B7
+mov eax, dword [hudclockhund]	; 150B7
 mov dword [dword_C5718], eax	; 150BC
 jmp near UpdateHudPanel_x	; 150C1

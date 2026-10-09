@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_8BEDB progbits alloc exec nowrite align=1
 extern StanleyCupTimer, __CHK, musicon, vtoa_dt, screenbm, songdata, rinkbm, musicslot
-extern musichandle, vgapage, sub_1600C, sub_16072, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002
+extern musichandle, vgapage, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002
 extern sub_1B092, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
 extern sub_1B2A7, sub_1B8AC, sub_1B92E, sub_33E6A, sub_6B3D7, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_90D20, sub_910E0, sub_B395C, sub_B3989, sub_B39A7, sub_B4B88, sub_B4BA8, SetDrawBitmap
@@ -15,7 +15,7 @@ global stub_8C1F7, stub_8C202, stub_8C20D, stub_8C218, stub_8C223, vgacopy_bg, S
 ;  Opens the file through the cdstream reader, then per chunk:
 ;   'MVIh' header: sets up the decoder (cmv_player) and the frame delay
 ;   'MVIf' frame : decodes and waits for the frame time (sub_B395C ticks)
-;   'MVIe' end   : stops.  A key press (sub_1600C) aborts.
+;   'MVIe' end   : stops.  A key press (AnyInputPressed) aborts.
 ;  Afterwards waits for the music fade and restarts the song if music is on.
 PlayMVI:
 push dword 58h	; 8BEDB
@@ -77,7 +77,7 @@ jmp near .8	; 8BF8F
 .2:
 test eax, eax	; 8BF94
 je near .7	; 8BF96
-call sub_16072	; 8BF9C
+call ReadBE32	; 8BF9C
 mov dword [byte esp+08h], eax	; 8BFA1
 cmp eax, 4D564966h	; 8BFA5
 jb short .3	; 8BFAA
@@ -197,7 +197,7 @@ test eax, eax	; 8C114
 jne short .8	; 8C116
 test esi, esi	; 8C118
 jne short .8	; 8C11A
-call sub_1600C	; 8C11C
+call AnyInputPressed	; 8C11C
 mov esi, eax	; 8C121
 jmp short PlayMVI.wait	; 8C123
 .7:
@@ -205,7 +205,7 @@ call sub_1B2A7	; 8C125
 .8:
 test esi, esi	; 8C12A
 jne short .9	; 8C12C
-call sub_1600C	; 8C12E
+call AnyInputPressed	; 8C12E
 mov esi, eax	; 8C133
 .9:
 test esi, esi	; 8C135

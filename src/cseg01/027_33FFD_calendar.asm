@@ -8,7 +8,7 @@ extern byte_C845E, musicon, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, game
 extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, songdata, dword_C895E, dword_C8976, dword_C897A
 extern dword_C898E, dword_C8992, musichandle, dword_D2C6B, dword_D42A8, dword_D8B74, dword_DC238, musicslot
 extern dword_DD780, dword_DD794, dword_DD7A0, dword_DDD28, dword_DDD2C, dword_DDD30, dword_EA0DC, fputchar
-extern jctime, off_C57CC, off_C85F6, off_C8616, sprintf_, MakePath, FileOpenRead, leaguedbnames
+extern jctime, crestnames, off_C85F6, off_C8616, sprintf_, MakePath, FileOpenRead, leaguedbnames
 extern FileClose, FileReadAt, ReadSchedGame, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
 extern sub_21350, sub_214B1, sub_215C4, sub_216D7, sub_217FE, sub_30A0C, sub_479E9, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
@@ -82,7 +82,7 @@ call sub_9061C	; 34093
 add esp, byte 4	; 34098
 mov ecx, dword [dword esp+0BCh]	; 3409B
 shl ecx, 2	; 340A2
-mov ebx, dword [dword ecx+off_C57CC]	; 340A5
+mov ebx, dword [dword ecx+crestnames]	; 340A5
 mov byte [byte esp+04Ch], 21h	; 340AB
 mov al, byte [ebx]	; 340B0
 mov byte [byte esp+04Dh], al	; 340B2
@@ -824,7 +824,7 @@ jmp short loc_34A8B	; 34A58
 loc_34A5A:
 mov esi, dword [dword esp+07CAh]	; 34A5A
 sar esi, 10h	; 34A61
-mov eax, dword [nosplit esi*4+off_C57CC]	; 34A64
+mov eax, dword [nosplit esi*4+crestnames]	; 34A64
 push eax	; 34A6B
 mov edx, dword [dword esp+0790h]	; 34A6C
 push edx	; 34A73

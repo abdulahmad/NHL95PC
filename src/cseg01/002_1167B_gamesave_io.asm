@@ -4,7 +4,7 @@ bits 32
 section s_1167B progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, awardtype
 extern curleague, sflags, musicon, byte_D9299, awardwinners, byte_ED7CC, joysampling, gameopts
-extern inputframes, escrequest, dword_C5130, gameresult, gamemode, dword_C5704, dword_C5708, dword_C570C
+extern inputframes, escrequest, demomode, gameresult, gamemode, hudclockmin, hudclocksec, hudclockhund
 extern dword_C5840, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
 extern penshotlive, dword_D2C6B, dword_D302C, dword_D3030, dword_D8C40, frameaccum, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, dword_DD6A8, dword_DD6AE
@@ -13,7 +13,7 @@ extern HandleHotKey_ret, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, 
 extern off_C526F, off_C5273, off_C5439, leaguedbnames, replaystart, camx_m2
 extern off_CBED0, strcat_, strcpy_, SetScreenSize, ResetInputSampling, RunGameFrames, FadePalette, LoadGameGfx
 extern SetupGame, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadSeasonRec, ReadTeamRec, UpdateHudPanel
-extern sub_150C6, sub_15B76, sub_1920F, sub_1935D, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
+extern DrawHudPanel, LoadCupFinalSeries, sub_1920F, sub_1935D, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
 extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71, DrawRinkOverlays, PeriodOver, LoadGameState
 extern sub_61A27, sub_61B85, sub_64614, SetupTeamLines, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
@@ -172,12 +172,12 @@ mov eax, dword [gameclock]	; 11891
 sar eax, 10h	; 11896
 or eax, edx	; 11899
 jne short .9	; 1189B
-mov edx, dword [dword_C5704]	; 1189D
+mov edx, dword [hudclockmin]	; 1189D
 mov eax, edx	; 118A3
 shl eax, 4	; 118A5
 sub eax, edx	; 118A8
 shl eax, 2	; 118AA
-mov edx, dword [dword_C5708]	; 118AD
+mov edx, dword [hudclocksec]	; 118AD
 add edx, eax	; 118B3
 mov eax, edx	; 118B5
 shl eax, 2	; 118B7
@@ -185,7 +185,7 @@ sub eax, edx	; 118BA
 shl eax, 3	; 118BC
 add eax, edx	; 118BF
 shl eax, 2	; 118C1
-mov edx, dword [dword_C570C]	; 118C4
+mov edx, dword [hudclockhund]	; 118C4
 add eax, edx	; 118CA
 mov dword [dword_DC28C], eax	; 118CC
 .9:
@@ -224,7 +224,7 @@ mov dword [joysampling], eax	; 11950
 .10:
 cmp dword [escrequest], byte 0	; 11955
 je near .23	; 1195C
-mov edx, dword [dword_C5130]	; 11962
+mov edx, dword [demomode]	; 11962
 test edx, edx	; 11968
 je short .11	; 1196A
 mov ebx, 10h	; 1196C
@@ -309,7 +309,7 @@ sar edx, 10h	; 11AC0
 mov eax, dword [cont2team]	; 11AC3
 sar eax, 10h	; 11AC8
 xor ecx, ecx	; 11ACB
-call sub_150C6	; 11ACD
+call DrawHudPanel	; 11ACD
 mov eax, dword [dword_CBECA]	; 11AD2
 sar eax, 10h	; 11AD7
 add dword [dword_C7444], 3E8h	; 11ADA
@@ -379,7 +379,7 @@ jmp near GameLoop.2	; 11BD6
 .24:
 xor esi, esi	; 11BDB
 mov dword [joysampling], esi	; 11BDD
-cmp dword [dword_C5130], byte 0	; 11BE3
+cmp dword [demomode], byte 0	; 11BE3
 je short .25	; 11BEA
 mov ebx, 10h	; 11BEC
 mov edx, unk_DF314	; 11BF1
@@ -407,7 +407,7 @@ sar edx, 10h	; 11C60
 mov eax, dword [cont2team]	; 11C63
 sar eax, 10h	; 11C68
 mov ecx, 1	; 11C6B
-call sub_150C6	; 11C70
+call DrawHudPanel	; 11C70
 xor eax, eax	; 11C75
 call PlayCrowdSample	; 11C77
 .26:
@@ -496,7 +496,7 @@ jmp near .14	; 11DB3
 .4:
 test byte [gameopts+1], 2	; 11DB8
 jne short .5	; 11DBF
-call sub_15B76	; 11DC1
+call LoadCupFinalSeries	; 11DC1
 .5:
 mov eax, dword [edx]	; 11DC6
 call LoadGameState	; 11DC8
@@ -550,7 +550,7 @@ sar edx, 10h	; 11E8F
 mov eax, dword [cont2team]	; 11E92
 sar eax, 10h	; 11E97
 xor ecx, ecx	; 11E9A
-call sub_150C6	; 11E9C
+call DrawHudPanel	; 11E9C
 mov eax, dword [dword_CBECA]	; 11EA1
 sar eax, 10h	; 11EA6
 add dword [dword_C7444], 3E8h	; 11EA9

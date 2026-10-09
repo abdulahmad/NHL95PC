@@ -20,7 +20,7 @@ extern dword_E9A9E, dword_E9AB6, dword_E9AB7, gwgteam, gwgplayer, startm_m2
 extern seqtimer, puckvx, gmode, goalieacc, jctime, PreGameIntro_popebp, PreGameIntro_popx, ltx
 extern off_C5439, puckx, pucky, puckvy, puckz, puckc, camx_m2, starordtab
 extern playeracc, puckshadow, puckvz, qsort_, randomd0, sfx, skateto, skatetopuck
-extern sprintf_, vecdist, FadePalette, sub_15C30, ThreeStarsLoop, joyq_flush, getlchoice, PenShotAssign
+extern sprintf_, vecdist, FadePalette, IsCupClinched, ThreeStarsLoop, joyq_flush, getlchoice, PenShotAssign
 extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
 extern sub_59AAD, sub_59AD0, sub_59B0F, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
 extern EvadePC, sub_61576, sub_61D48, sub_62343, sub_62807, sub_62C37, sub_64102, sub_64439
@@ -730,7 +730,7 @@ mov edx, dword [awscore-2]	; 48B6B
 sar edx, 10h	; 48B71
 mov eax, dword [hmscore-2]	; 48B74
 sar eax, 10h	; 48B79
-call sub_15C30	; 48B7C
+call IsCupClinched	; 48B7C
 test eax, eax	; 48B81
 je short .3	; 48B83
 mov ebx, dword [gwgplayer-2]	; 48B85

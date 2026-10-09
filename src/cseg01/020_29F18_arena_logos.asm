@@ -10,7 +10,7 @@ extern byte_C6F6C, curleague, musicon, byte_D42C3, hmroster, byte_ED7F3, byte_ED
 extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, ctl1team, ctl2team
 extern teamconf, dword_C71CC, dword_C71D0, dword_C71D4, songdata, cont2team, HomeTeam, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, dword_DC238, dword_EA0DC
-extern fputchar, jctime, memcpy_, off_C5439, off_C57CC, off_C6F48, leaguedbnames
+extern fputchar, jctime, memcpy_, off_C5439, crestnames, off_C6F48, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern sub_174C2, sub_175E2, sub_17636, sub_29C75, sub_29D00, sub_30A0C, sub_30A39, sub_30AE2
 extern sub_33E6A, sub_479E9, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, sub_6B391
@@ -224,7 +224,7 @@ mov esi, eax	; 2A1D9
 add esp, byte 8	; 2A1DB
 xor eax, eax	; 2A1DE
 mov al, byte [dword esp+066Ch]	; 2A1E0
-mov edx, dword [nosplit eax*4+off_C57CC]	; 2A1E7
+mov edx, dword [nosplit eax*4+crestnames]	; 2A1E7
 push edx	; 2A1EE
 push esi	; 2A1EF
 call sub_B30B4	; 2A1F0
@@ -236,7 +236,7 @@ call sub_91370	; 2A1FD
 add esp, byte 0Ch	; 2A202
 xor eax, eax	; 2A205
 mov al, byte [dword esp+0670h]	; 2A207
-mov ebx, dword [nosplit eax*4+off_C57CC]	; 2A20E
+mov ebx, dword [nosplit eax*4+crestnames]	; 2A20E
 push ebx	; 2A215
 push esi	; 2A216
 call sub_B30B4	; 2A217
@@ -938,7 +938,7 @@ mov dword [dword esp+0104h], eax	; 2AC49
 add esp, byte 8	; 2AC50
 mov eax, dword [cont2team]	; 2AC53
 sar eax, 10h	; 2AC58
-mov ebx, dword [nosplit eax*4+off_C57CC]	; 2AC5B
+mov ebx, dword [nosplit eax*4+crestnames]	; 2AC5B
 push ebx	; 2AC62
 mov ecx, dword [dword esp+0100h]	; 2AC63
 push ecx	; 2AC6A
@@ -980,7 +980,7 @@ call sub_91400	; 2ACDF
 add esp, byte 0Ch	; 2ACE4
 mov eax, dword [HomeTeam]	; 2ACE7
 sar eax, 10h	; 2ACEC
-mov edx, dword [nosplit eax*4+off_C57CC]	; 2ACEF
+mov edx, dword [nosplit eax*4+crestnames]	; 2ACEF
 push edx	; 2ACF6
 mov ebx, dword [dword esp+0100h]	; 2ACF7
 push ebx	; 2ACFE

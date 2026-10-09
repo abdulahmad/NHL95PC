@@ -3,14 +3,14 @@ bits 32
 %include "hockey.inc"
 section s_69336 progbits alloc exec nowrite align=1
 extern DoGameFrame, ResetBench, __CHK, assreplace, sflags, gmode2, musicon
-extern iflags, byte_E9AC1, joysampling, inputframes, escrequest, dword_C5130, gameopts, dword_C5704
-extern dword_C5708, dword_C570C, dword_C7444, dword_C7448, dword_C90B0, sflags3, cont2team, HomeTeam
+extern iflags, byte_E9AC1, joysampling, inputframes, escrequest, demomode, gameopts, hudclockmin
+extern hudclocksec, hudclockhund, dword_C7444, dword_C7448, dword_C90B0, sflags3, cont2team, HomeTeam
 extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, dword_D8C40, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC28C, dword_DD6A8, dword_DD6AE, dword_DD6B0
 extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
 extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSize, ResetInputSampling, RunGameFrames
-extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, sub_150C6, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
+extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, DrawHudPanel, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
 extern sub_479E9, FadeOutPalCycle, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
 extern sub_59CA9, sub_59D54, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
 extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_836E4
@@ -153,14 +153,14 @@ mov eax, ebx	; 69536
 mov edx, ebx	; 69538
 sar edx, 1Fh	; 6953A
 idiv ecx	; 6953D
-mov dword [dword_C5704], eax	; 6953F
+mov dword [hudclockmin], eax	; 6953F
 mov eax, ebx	; 69544
 mov edx, ebx	; 69546
 sar edx, 1Fh	; 69548
 idiv ecx	; 6954B
-mov dword [dword_C5708], edx	; 6954D
+mov dword [hudclocksec], edx	; 6954D
 xor ecx, ecx	; 69553
-mov dword [dword_C570C], ecx	; 69555
+mov dword [hudclockhund], ecx	; 69555
 mov eax, dword [dword esp+0114h]	; 6955B
 mov dword [dword_D8C84], eax	; 69562
 mov eax, dword [dword esp+0114h]	; 69567
@@ -205,7 +205,7 @@ sar edx, 10h	; 69604
 mov eax, dword [cont2team]	; 69607
 sar eax, 10h	; 6960C
 xor ecx, ecx	; 6960F
-call sub_150C6	; 69611
+call DrawHudPanel	; 69611
 xor dl, dl	; 69616
 mov byte [gmode], dl	; 69618
 mov byte [gmode], 10h	; 6961E
@@ -419,7 +419,7 @@ mov word [word_CBEC4], si	; 699C8
 call sub_B396E	; 699CF
 mov esi, 1	; 699D4
 mov dword [joysampling], esi	; 699D9
-mov dword [dword_C5130], esi	; 699DF
+mov dword [demomode], esi	; 699DF
 mov dword [escrequest], edi	; 699E5
 .17:
 cmp word [exitgame], byte 0	; 699EB
@@ -560,12 +560,12 @@ mov edx, dword [gameclock]	; 69BE1
 sar edx, 10h	; 69BE7
 or eax, edx	; 69BEA
 jne short .23	; 69BEC
-mov edx, dword [dword_C5704]	; 69BEE
+mov edx, dword [hudclockmin]	; 69BEE
 mov eax, edx	; 69BF4
 shl eax, 4	; 69BF6
 sub eax, edx	; 69BF9
 shl eax, 2	; 69BFB
-mov edx, dword [dword_C5708]	; 69BFE
+mov edx, dword [hudclocksec]	; 69BFE
 add edx, eax	; 69C04
 mov eax, edx	; 69C06
 shl eax, 2	; 69C08
@@ -573,7 +573,7 @@ sub eax, edx	; 69C0B
 shl eax, 3	; 69C0D
 add eax, edx	; 69C10
 shl eax, 2	; 69C12
-mov edx, dword [dword_C570C]	; 69C15
+mov edx, dword [hudclockhund]	; 69C15
 add eax, edx	; 69C1B
 mov dword [dword_DC28C], eax	; 69C1D
 .23:
@@ -640,7 +640,7 @@ mov word [word_CBEC8], di	; 69D08
 mov word [word_CBECE], di	; 69D0F
 mov word [word_CBECC], di	; 69D16
 xor ecx, ecx	; 69D1D
-mov dword [dword_C5130], ecx	; 69D1F
+mov dword [demomode], ecx	; 69D1F
 mov dword [dword_CCC98], ecx	; 69D25
 push unk_DF014	; 69D2B
 push dword 100h	; 69D30

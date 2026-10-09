@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_1B0F3 progbits alloc exec nowrite align=1
 extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, joysampling, dword_C66B0, rinkbm
-extern dword_CBECA, photobankf, rinkendbank, numshpbank, photobanks, dword_DC230, dword_DC2F0, dword_DC338
+extern dword_CBECA, photobankf, rinkendbank, numshpbank, photobanks, dword_DC230, dword_DC2F0, cupseries
 extern dword_DC8A0, dword_DC8C8, dword_E0244, hilightfont, jctime, sub_33727, joyq_flush, CrowdNoiseOff
 extern GameOver, sub_7DEC8, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E4F8, sub_8EA18, sub_91FA4
 extern FatalError, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, scrpitch
@@ -799,14 +799,14 @@ xor edx, edx	; 1BA2C
 mov dword [hilightfont], edx	; 1BA2E
 loc_1BA34:
 call sub_7DEC8	; 1BA34
-mov ebx, dword [dword_DC338]	; 1BA39
+mov ebx, dword [cupseries]	; 1BA39
 test ebx, ebx	; 1BA3F
 je short loc_1BA54	; 1BA41
 push ebx	; 1BA43
 call jctime	; 1BA44
 add esp, byte 4	; 1BA49
 xor esi, esi	; 1BA4C
-mov dword [dword_DC338], esi	; 1BA4E
+mov dword [cupseries], esi	; 1BA4E
 loc_1BA54:
 xor edi, edi	; 1BA54
 mov dword [joysampling], edi	; 1BA56

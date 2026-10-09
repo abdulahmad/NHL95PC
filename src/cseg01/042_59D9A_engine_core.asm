@@ -21,7 +21,7 @@ extern dword_E009C, recbpr, dword_E03A8, dword_E03AE
 extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
 extern replaystart, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
 extern passspeed, randomd0, sfx, vecdist, IntermissionPC, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
-extern DrawPanelScore, DrawPanelLine, sub_15C30, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
+extern DrawPanelScore, DrawPanelLine, IsCupClinched, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
 extern PlayCrowdSample, sub_59A7E, sub_61576, sub_615A2, sub_61862, PenaltyManager, sub_63C73, ClearPenaltyBuffer
 extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, awlinetab, unk_DAC40, unk_DAC70, unk_DACA0
@@ -4774,7 +4774,7 @@ mov edx, dword [awscore-2]	; 5D892
 sar edx, 10h	; 5D898
 mov eax, dword [hmscore-2]	; 5D89B
 sar eax, 10h	; 5D8A0
-call sub_15C30	; 5D8A3
+call IsCupClinched	; 5D8A3
 test eax, eax	; 5D8A8
 je short .2	; 5D8AA
 mov word [regd0], 8	; 5D8AC

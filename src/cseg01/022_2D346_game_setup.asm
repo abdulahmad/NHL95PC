@@ -17,7 +17,7 @@ extern gameresult, gameopts, dword_C541F, songdata, cont2team, HomeTeam, dword_C
 extern musichandle, dword_D2C6B, dword_D8B68, dword_DBC7C, schedgameidx, dword_DD66C, dword_DD670, dword_DD730
 extern hmtmstruct, dword_DF61A
 extern dword_DF626, dword_DF62A, dword_DF636, fputchar, jctime, memcpy_
-extern off_C57CC, off_C719C, leaguedbnames, off_CD304, rand_, sprintf_
+extern crestnames, off_C719C, leaguedbnames, off_CD304, rand_, sprintf_
 extern strcat_, strcpy_, FadePalette, MakePath, FileOpenRead, FileOpenRW, FileClose, ReadKeyRec
 extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, sub_174C2, sub_175E2, sub_1BAF3, sub_29C75, sub_33E6A
 extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
@@ -194,7 +194,7 @@ mov edi, eax	; 2D56E
 add esp, byte 8	; 2D570
 mov eax, dword [cont2team]	; 2D573
 sar eax, 10h	; 2D578
-mov ebx, dword [nosplit eax*4+off_C57CC]	; 2D57B
+mov ebx, dword [nosplit eax*4+crestnames]	; 2D57B
 push ebx	; 2D582
 push edi	; 2D583
 call sub_B30B4	; 2D584
@@ -228,7 +228,7 @@ mov dx, word [byte esi+0Ah]	; 2D5D9
 mov word [byte eax+0Ah], dx	; 2D5DD
 mov eax, dword [HomeTeam]	; 2D5E1
 sar eax, 10h	; 2D5E6
-mov ecx, dword [nosplit eax*4+off_C57CC]	; 2D5E9
+mov ecx, dword [nosplit eax*4+crestnames]	; 2D5E9
 push ecx	; 2D5F0
 push edi	; 2D5F1
 call sub_B30B4	; 2D5F2
@@ -2529,7 +2529,7 @@ jl short loc_2F794	; 2F7CB
 xor edi, edi	; 2F7CD
 loc_2F7CF:
 mov eax, dword [byte ebp+edi*4-020h]	; 2F7CF
-mov edx, dword [nosplit eax*4+off_C57CC]	; 2F7D3
+mov edx, dword [nosplit eax*4+crestnames]	; 2F7D3
 push edx	; 2F7DA
 mov ebx, dword [byte ebp-010h]	; 2F7DB
 push ebx	; 2F7DE

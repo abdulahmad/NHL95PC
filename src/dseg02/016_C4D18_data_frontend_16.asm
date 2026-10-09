@@ -18,7 +18,7 @@ extern unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
 global str_D02d, str_D01d, pad1dev, pad2dev, lasthotkey, byte_C5138, awardtype
 global byte_C541B, byte_C5424
 global byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, joyqtick
-global samesideflag, inputframes, escrequest, joyrec, palfadedin, screenw, screenh, dword_C5130
+global samesideflag, inputframes, escrequest, joyrec, palfadedin, screenw, screenh, demomode
 global dword_C5131, dword_C5133, dword_C5135, dword_C513C, dword_C5168
 global postate
 global lgstate
@@ -112,7 +112,7 @@ db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_C5130:
+demomode:
 db 00h
 dword_C5131:
 db 00h,00h

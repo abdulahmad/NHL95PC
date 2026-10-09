@@ -9,7 +9,7 @@ extern byte_DB3AE, awroster, byte_DC224, byte_DC225, byte_DC228, byte_DC267, byt
 extern leaguedbfmt, cont2team, HomeTeam, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
 extern dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_m2, dword_DF6C2, fputchar, lseek_, off_CEE5F
 extern off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF, sprintf_, strcat_, strcpy_
-extern strncpy_, FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, sub_15B76, sub_1CC3D
+extern strncpy_, FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, LoadCupFinalSeries, sub_1CC3D
 extern FatalError, unk_C0A1E, unk_C0A20, unk_C0A22, unk_C0A24, unk_C0A26, unk_C0A28, unk_C0A2A
 extern unk_C0A2C, unk_C0A2F, unk_C0A32, unk_C0A35, unk_C0A37, unk_C0A39, unk_C0A3B, unk_C0A3D
 extern unk_C0A3F, unk_C0A41, unk_C0A43, unk_C0A45, unk_C0A47, unk_C0A49, unk_C0A4B, unk_C0A51
@@ -314,7 +314,7 @@ mov byte [awgoalcnt], ah	; 1BF59
 mov byte [awshotcnt], ah	; 1BF5F
 test byte [gameopts+1], 2	; 1BF65
 jne short loc_1BF73	; 1BF6C
-call sub_15B76	; 1BF6E
+call LoadCupFinalSeries	; 1BF6E
 loc_1BF73:
 call sub_1C807	; 1BF73
 mov edx, esp	; 1BF78

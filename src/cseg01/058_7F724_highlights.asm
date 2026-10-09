@@ -5,7 +5,7 @@ section s_7F724 progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, asc_C342E, asc_C3436, asc_C3449, asc_C3450, asc_C3472, asc_C3477
 extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, curleague, sflags, musicon
 extern byte_DB3AD, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
-extern byte_E03E3, byte_E03E4, dword_C5704, dword_C5708, dword_C570C, songdata, dword_C7444, dword_C7448
+extern byte_E03E3, byte_E03E4, hudclockmin, hudclocksec, hudclockhund, songdata, dword_C7444, dword_C7448
 extern cont2team, HomeTeam, musichandle, dword_D42A8, rinkendbank, numshpbank, dword_D8C84, musicslot
 extern dword_DC230, dword_DC2F0, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
 extern dword_ED6F8, hilightfont, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, teamcitynames
@@ -321,11 +321,11 @@ mov al, byte [VisTeam]	; 7FA9A
 mov byte [byte_E03E3], al	; 7FA9F
 mov eax, dword [dword_D8C84]	; 7FAA4
 mov dword [dword_E0400], eax	; 7FAA9
-mov eax, dword [dword_C5704]	; 7FAAE
+mov eax, dword [hudclockmin]	; 7FAAE
 mov dword [dword_E0404], eax	; 7FAB3
-mov eax, dword [dword_C5708]	; 7FAB8
+mov eax, dword [hudclocksec]	; 7FAB8
 mov dword [dword_E0408], eax	; 7FABD
-mov eax, dword [dword_C570C]	; 7FAC2
+mov eax, dword [hudclockhund]	; 7FAC2
 mov dword [dword_E040C], eax	; 7FAC7
 mov ax, word [sflags]	; 7FACC
 mov word [word_E0410], ax	; 7FAD2
@@ -849,11 +849,11 @@ mov word [VisTeam], ax	; 8015A
 mov eax, dword [dword_E0400]	; 80160
 mov dword [dword_D8C84], eax	; 80165
 mov eax, dword [dword_E0404]	; 8016A
-mov dword [dword_C5704], eax	; 8016F
+mov dword [hudclockmin], eax	; 8016F
 mov eax, dword [dword_E0408]	; 80174
-mov dword [dword_C5708], eax	; 80179
+mov dword [hudclocksec], eax	; 80179
 mov eax, dword [dword_E040C]	; 8017E
-mov dword [dword_C570C], eax	; 80183
+mov dword [hudclockhund], eax	; 80183
 mov ax, word [word_E0410]	; 80188
 mov word [sflags], ax	; 8018E
 mov eax, dword [replaystart]	; 80194

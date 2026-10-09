@@ -5,7 +5,7 @@ section s_85924 progbits alloc exec nowrite align=1
 extern __CHK, asc_C38F8, asc_C3904, asc_C3923, asc_C3932, asc_C3947, asc_C3966, asc_C3972
 extern asc_C3976, asc_C397E, asc_C3986, asc_C398F, asc_C3994, asc_C399B, asc_C39A0, str_extDB
 extern asc_D281F, curleague, byte_DD774, byte_DD788, gameopts
-extern byte_ED92F, dword_C5130, postate, lgstate, gamemode, dword_D2C6B, dword_D8B74, dword_DC238
+extern byte_ED92F, demomode, postate, lgstate, gamemode, dword_D2C6B, dword_D8B74, dword_DC238
 extern dword_DC888, dword_DC88C, dword_DD730, dword_EA0DC, jctime, off_D27EF, off_D27F7, off_D2855
 extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, CopyFile, DiskSpaceShort
 extern sub_30A0C, sub_30F12, MessageBox, sub_3170D, SaveModeState, LoadModeState, WriteModeState, SaveLeagueGameRef
@@ -92,7 +92,7 @@ mov eax, edx	; 85A1A
 call MessageBox	; 85A1C
 jmp near loc_85D52	; 85A21
 loc_85A26:
-cmp dword [dword_C5130], byte 0	; 85A26
+cmp dword [demomode], byte 0	; 85A26
 je short loc_85A3D	; 85A2D
 lea edi, [byte esp+06Ch]	; 85A2F
 mov esi, asc_C3923	; 85A33

@@ -5,7 +5,7 @@ section s_DB7EC nobits alloc noexec write align=1
 global awroster, byte_DB7F1, byte_DC224, byte_DC225, byte_DC228, byte_DC264, byte_DC265, byte_DC266
 global byte_DC267, byte_DC268, dword_DBC7C, dword_DBCE0, dword_DC230, schedgameidx, dword_DC238, dword_DC23E
 global linesprites, dword_DC28C, dword_DC290, dword_DC2B8, dword_DC2BC, dword_DC2C0, scoredigits, dword_DC2F0
-global dword_DC30C, dword_DC334, dword_DC338, dword_DC33C, dword_DC640, dword_DC6A8, dword_DC6AC, dword_DC6B0
+global clockdigits, clockcolon, cupseries, dword_DC33C, dword_DC640, dword_DC6A8, dword_DC6AC, dword_DC6B0
 global dword_DC6B4, dword_DC6B8, dword_DC6BC, dword_DC720, dword_DC734, dword_DC738, dword_DC73C, dword_DC750
 global dword_DC754, playofftree, unk_DBC30, unk_DBC35, unk_DBCEC, unk_DBD1C, unk_DBF18, unk_DBF1D
 global unk_DBFD4, hmlinetab, unk_DC240, unk_DC252, unk_DC2F4, unk_DC300, unk_DC340, word_DC242
@@ -90,11 +90,11 @@ unk_DC2F4:
 resb 12
 unk_DC300:
 resb 12
-dword_DC30C:
+clockdigits:
 resb 40
-dword_DC334:
+clockcolon:
 resb 4
-dword_DC338:
+cupseries:
 resb 4
 dword_DC33C:
 resb 4

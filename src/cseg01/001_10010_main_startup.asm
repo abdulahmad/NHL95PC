@@ -8,7 +8,7 @@ extern str_Scor3b, str_Kaufm020, str_ConfigureLeftJoystick, str_ConfigureRightJo
 extern pad1dev, pad2dev, lasthotkey, byte_C5138, musicon, byte_D3040, byte_D416A, byte_D8C88
 extern byte_EA0F4, byte_ED906, byte_ED92E, byte_ED935, byte_ED936, byte_ED990, dword_C4CFC, joypresent
 extern inputticks, joysampling, joyqhead, joyqcount, joyqtick, samesideflag, inputframes
-extern escrequest, joyrec, palfadedin, screenw, screenh, dword_C5130, dword_C5131, dword_C5133
+extern escrequest, joyrec, palfadedin, screenw, screenh, demomode, dword_C5131, dword_C5133
 extern dword_C5135, gameopts
 extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, dword_C5840, screenbm
 extern songdata, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
@@ -17,7 +17,7 @@ extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8
 extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84, photoptrs, dword_DC230
 extern dword_DC238, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
-extern sub_150C6, sub_1672A, sub_16F9A, sub_190BE, sub_1BAF3, sub_1CD73, sub_3149D, sub_31AB5
+extern DrawHudPanel, sub_1672A, sub_16F9A, sub_190BE, sub_1BAF3, sub_1CD73, sub_3149D, sub_31AB5
 extern LoadModeState, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
 extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
 extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
@@ -1267,7 +1267,7 @@ lea edx, [byte ebx+01h]	; 10E6D
 mov eax, 1	; 10E70
 call ReadControllerPad	; 10E75
 lea eax, [byte ebx+02h]	; 10E7A
-cmp dword [dword_C5130], byte 0	; 10E7D
+cmp dword [demomode], byte 0	; 10E7D
 je short .4	; 10E84
 mov edx, ebx	; 10E86
 call ReadSkipKeys	; 10E88
@@ -1678,7 +1678,7 @@ sar edx, 10h	; 11370
 mov eax, dword [cont2team]	; 11373
 sar eax, 10h	; 11378
 xor ecx, ecx	; 1137B
-call sub_150C6	; 1137D
+call DrawHudPanel	; 1137D
 mov eax, dword [dword_E9A9E]	; 11382
 sar eax, 10h	; 11387
 mov dword [joysampling], eax	; 1138A

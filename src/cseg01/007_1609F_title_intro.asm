@@ -8,11 +8,11 @@ extern asc_C089D, asc_C08A6, asc_C08AB, asc_C08B0, asc_C08B5, asc_C08BE, asc_C08
 extern asc_C08D6, asc_C08DB, asc_C08E0, asc_C08E7, asc_C08F0, asc_C08F8, asc_C0900, asc_C0909
 extern asc_C8140, musicon, byte_D42C3, byte_ED7F0, byte_ED833, byte_ED834, byte_ED8D0, byte_ED8F3
 extern byte_ED8F4, byte_ED8F6, byte_ED8F7, byte_ED8F8, byte_ED92D, byte_ED9A6, byte_ED9A8, byte_ED9AD
-extern byte_ED9E9, byte_ED9EA, dword_C4CFC, dword_C5130, dword_C541F, dword_C588A, dword_C6410, dword_C6414
+extern byte_ED9E9, byte_ED9EA, dword_C4CFC, demomode, dword_C541F, dword_C588A, dword_C6410, dword_C6414
 extern dword_C6418, dword_C641C, dword_C6420, dword_C6430, songdata, dword_CC0EC, dword_CCC94, musicslot
 extern musichandle, dword_D2C6B, dword_D42A8, dword_D8B68, dword_D8B74, dword_DC238, dword_DC33C, dword_ED7B0
-extern fputchar, jctime, loc_16005, memcpy_, memset_, off_C6399, rand_, sprintf_
-extern srand_, strlen_, MakePath, sub_15D6B, sub_1600C, sub_16072, sub_1AC25, sub_1ACF1
+extern fputchar, jctime, RunDemoGame_x, memcpy_, memset_, off_C6399, rand_, sprintf_
+extern srand_, strlen_, MakePath, RunDemoGame, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
 extern sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2, sub_1B2A7, sub_1B8AC, sub_1B92E, sub_33E6A
 extern FadeOutPalCycle, StopDigiSample, PlayDigiSample, sub_59C1D, sub_59C3E, sub_59D54, sub_6B3D7, sub_76429
@@ -273,7 +273,7 @@ jmp near loc_16639	; 163CF
 loc_163D4:
 test eax, eax	; 163D4
 je near loc_16634	; 163D6
-call sub_16072	; 163DC
+call ReadBE32	; 163DC
 mov dword [dword esp+0330h], eax	; 163E1
 cmp eax, 4D564966h	; 163E8
 jb short loc_16401	; 163ED
@@ -436,7 +436,7 @@ test esi, esi	; 16622
 jne short loc_16639	; 16624
 cmp ebp, byte 23h	; 16626
 jle short loc_16619	; 16629
-call sub_1600C	; 1662B
+call AnyInputPressed	; 1662B
 mov esi, eax	; 16630
 jmp short loc_16619	; 16632
 loc_16634:
@@ -446,7 +446,7 @@ test esi, esi	; 16639
 jne short loc_16649	; 1663B
 cmp ebp, byte 23h	; 1663D
 jle short loc_16649	; 16640
-call sub_1600C	; 16642
+call AnyInputPressed	; 16642
 mov esi, eax	; 16647
 loc_16649:
 test esi, esi	; 16649
@@ -509,7 +509,7 @@ call jctime	; 16715
 add esp, byte 4	; 1671A
 mov eax, esi	; 1671D
 add esp, 350h	; 1671F
-jmp near loc_16005	; 16725
+jmp near RunDemoGame_x	; 16725
 sub_1672A:
 push dword 674h	; 1672A
 call __CHK	; 1672F
@@ -1105,7 +1105,7 @@ add esp, byte 4	; 16F54
 call sub_1609F	; 16F57
 test eax, eax	; 16F5C
 jne short loc_16F6D	; 16F5E
-call sub_15D6B	; 16F60
+call RunDemoGame	; 16F60
 test eax, eax	; 16F65
 je near loc_16DFC	; 16F67
 loc_16F6D:
@@ -1116,9 +1116,9 @@ add esp, byte 4	; 16F79
 call sub_59D54	; 16F7C
 xor ebp, ebp	; 16F81
 mov dword [dword_CC0EC], ebp	; 16F83
-mov dword [dword_C5130], ebp	; 16F89
+mov dword [demomode], ebp	; 16F89
 add esp, 64Ch	; 16F8F
-jmp near loc_16005	; 16F95
+jmp near RunDemoGame_x	; 16F95
 sub_16F9A:
 push dword 394h	; 16F9A
 call __CHK	; 16F9F
@@ -1472,7 +1472,7 @@ push byte 0	; 174AD
 call sub_B392C	; 174AF
 add esp, byte 4	; 174B4
 add esp, 36Ch	; 174B7
-jmp near loc_16005	; 174BD
+jmp near RunDemoGame_x	; 174BD
 sub_174C2:
 push dword 4	; 174C2
 call __CHK	; 174C7

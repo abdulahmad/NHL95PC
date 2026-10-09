@@ -6,7 +6,7 @@ extern PBnum, StanleyCupTimer, __CHK, __STOSB, __STOSD, str_ErrLoadGame, str_Err
 extern pad2dev, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, byte_DC265
 extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, PenBuf, iflags, byte_E9AC8
 extern byte_E9AD3, OOlist, collflag, postate, lgstate, gamemode, ctl1team, ctl2team
-extern ctl1dev, ctl2dev, ctl1side, dword_C5704, dword_C5708, dword_C570C, dword_C5840, dword_C66D0
+extern ctl1dev, ctl2dev, ctl1side, hudclockmin, hudclocksec, hudclockhund, dword_C5840, dword_C66D0
 extern dword_C66D4, dword_C90B0, sflags3, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0AC
 extern lastsfx, photobankf, onetimerflag, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 extern dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
@@ -442,13 +442,13 @@ add eax, byte 2	; 60153
 mov dx, word [ctl2dev]	; 60156
 mov word [eax], dx	; 6015D
 add eax, byte 2	; 60160
-mov dx, word [dword_C5704]	; 60163
+mov dx, word [hudclockmin]	; 60163
 mov word [eax], dx	; 6016A
 add eax, byte 2	; 6016D
-mov dx, word [dword_C5708]	; 60170
+mov dx, word [hudclocksec]	; 60170
 mov word [eax], dx	; 60177
 add eax, byte 2	; 6017A
-mov dx, word [dword_C570C]	; 6017D
+mov dx, word [hudclockhund]	; 6017D
 mov word [eax], dx	; 60184
 add eax, byte 2	; 60187
 mov dx, word [word_CC0B0]	; 6018A
@@ -1226,13 +1226,13 @@ movsx eax, word [ebx]	; 60C95
 mov dword [ctl2dev], eax	; 60C98
 add ebx, byte 2	; 60C9D
 movsx eax, word [ebx]	; 60CA0
-mov dword [dword_C5704], eax	; 60CA3
+mov dword [hudclockmin], eax	; 60CA3
 add ebx, byte 2	; 60CA8
 movsx eax, word [ebx]	; 60CAB
-mov dword [dword_C5708], eax	; 60CAE
+mov dword [hudclocksec], eax	; 60CAE
 add ebx, byte 2	; 60CB3
 movsx eax, word [ebx]	; 60CB6
-mov dword [dword_C570C], eax	; 60CB9
+mov dword [hudclockhund], eax	; 60CB9
 add ebx, byte 2	; 60CBE
 mov ax, word [ebx]	; 60CC1
 mov word [word_CC0B0], ax	; 60CC4

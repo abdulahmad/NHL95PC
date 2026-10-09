@@ -34,7 +34,7 @@ global asc_C70A0, asc_C70B8, asc_C70C7, asc_C70EC, asc_C70F8, asc_C7298, byte_C6
 global byte_C672F, byte_C6745, byte_C6759, byte_C6777, byte_C67A9, byte_C6D72, byte_C6D73, byte_C6D7A
 global byte_C6D7B, byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, byte_C6D9A
 global byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, byte_C6DB2, byte_C6DB3
-global byte_C6F6C, byte_C7218, dword_C56C4, dword_C56E4, dword_C5704, dword_C5708, dword_C570C, dword_C5710
+global byte_C6F6C, byte_C7218, dword_C56C4, dword_C56E4, hudclockmin, hudclocksec, hudclockhund, dword_C5710
 global dword_C5714, dword_C5718, dword_C583C, dword_C5840, dword_C5844, dword_C5848, hudhomeline, hudawayline
 global dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862, dword_C5886, dword_C588A
 global dword_C6410, dword_C6414, dword_C6418, dword_C641C, dword_C6420, dword_C6430, dword_C65A8, dword_C65AC
@@ -47,8 +47,8 @@ global dword_C7014, dword_C7018, dword_C701C, dword_C7020, dword_C7024, dword_C7
 global dword_C7034, dword_C70E3, dword_C70E7, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC
 global dword_C71E0, dword_C71E4, dword_C71E8, dword_C71EC, dword_C71F0, dword_C71F4, dword_C71FC, dword_C7208
 global dword_C7210, dword_C7219, songdata, dword_C729A, dword_C729C, dword_C729E, dword_C72A0, dword_C73D0
-global rinkbm, dword_C73D8, dword_C7440, dword_C7444, dword_C7448, off_C56B5, off_C579C, off_C57C8
-global off_C57CC, off_C6399, off_C648E, off_C659A, off_C6821, off_C6825, off_C6841, off_C6845
+global rinkbm, dword_C73D8, dword_C7440, dword_C7444, dword_C7448, off_C56B5, perioddigits, off_C57C8
+global crestnames, off_C6399, off_C648E, off_C659A, off_C6821, off_C6825, off_C6841, off_C6845
 global off_C6881, off_C6885, off_C68BC, off_C68CC, off_C68E4, off_C68EC, off_C68F4, off_C68F8
 global off_C6A64, off_C6A99, off_C6AAC, off_C6AD1, off_C6AE0, off_C6B68, off_C6B6C, off_C6B70
 global off_C6B88, off_C6B8C, off_C6B90, off_C6B94, off_C6BE8, off_C6C14, off_C6C40, off_C6C44
@@ -97,11 +97,11 @@ db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
 dword_C56E4:
 db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
 db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
-dword_C5704:
+hudclockmin:
 db 05h,00h,00h,00h
-dword_C5708:
+hudclocksec:
 db 00h,00h,00h,00h
-dword_C570C:
+hudclockhund:
 db 00h,00h,00h,00h
 dword_C5710:
 db 063h,00h,00h,00h
@@ -131,7 +131,7 @@ db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h
-off_C579C:
+perioddigits:
 dd unk_C06BC
 dd unk_C06C1
 dd unk_C06C6
@@ -145,7 +145,7 @@ dd unk_C06E9
 dd unk_C06EE
 off_C57C8:
 dd unk_C06F3
-off_C57CC:
+crestnames:
 dd unk_C06F8
 dd unk_C06FD
 dd unk_C0702

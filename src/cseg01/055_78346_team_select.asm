@@ -11,7 +11,7 @@ extern byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED83C, byte_ED86D, b
 extern dword_C65B8, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
 extern dword_D0B2A, dword_D1338, dword_D133C, dword_D1478, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
 extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, exit_, j___close_, jctime, lseek_
-extern off_C57CC, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
+extern crestnames, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
 extern open_, perror_, read_, sprintf_, MakePath, sub_1D6E8, sub_244E2, MessageBox
 extern sub_6B5E4, sub_76429, sub_76771, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8FFB0
 extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, FatalError, sub_B30B4, WaitKey
@@ -338,7 +338,7 @@ loc_786F1:
 mov ax, word [HomeTeam]	; 786F1
 loc_786F7:
 cwde	; 786F7
-mov edi, dword [nosplit eax*4+off_C57CC]	; 786F8
+mov edi, dword [nosplit eax*4+crestnames]	; 786F8
 push edi	; 786FF
 push esi	; 78700
 call sub_B30B4	; 78701

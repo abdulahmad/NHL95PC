@@ -16,7 +16,7 @@ extern dword_D8B68, numshapes, dword_D8C4C, rinkendbank, frameaccum, rinkendart,
 extern dword_D8C84, photobanks, photoptrs, dword_DF00C, dword_DF010, dword_E009C, photoptrsf
 extern dword_E9A9E, dword_E9AB6, hilightfont, jctime, PickAwardWinners_x, memcpy_, nullsub_2
 extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, PickAwardWinners, ShowAwardScreens
-extern DrawAwardsSummary, MakePath, FileOpenRead, FileClose, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
+extern DrawAwardsSummary, MakePath, FileOpenRead, FileClose, DrawHudPanel, sub_174C2, sub_1CBD8, sub_33E6A
 extern StartPreGame, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
 extern sub_64614, SetupTeamLines, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
@@ -34,7 +34,7 @@ global LoadTransparentRinkEndOverlay
 global IndexPhotoBank_x
 global LoadPhotoBankF_x
 global AwardsCeremony, IndexPhotoBank, LoadPhotoBankF, LoadPlayerPhotos, LoadGameGfx, LoadGameGfx_common, ReloadGameGfx, PlacePlayersAtStart
-global SetupGame, SetupGameQuick, ResetGameVars, FileExists
+global SetupGame, SetupDemoGame, ResetGameVars, FileExists
 AwardsCeremony:
 push dword 78h	; 13320
 call __CHK	; 13325
@@ -950,7 +950,7 @@ mov eax, dword [cont2team]	; 13EE0
 sar eax, 10h	; 13EE5
 mov ecx, 1	; 13EE8
 mov ebx, ecx	; 13EED
-call sub_150C6	; 13EEF
+call DrawHudPanel	; 13EEF
 xor ecx, ecx	; 13EF4
 mov word [crowdlevel], cx	; 13EF6
 xor ebx, ebx	; 13EFD
@@ -1008,7 +1008,7 @@ pop edx	; 13FA3
 pop ecx	; 13FA4
 pop ebx	; 13FA5
 ret	; 13FA6
-SetupGameQuick:
+SetupDemoGame:
 push dword 14h	; 13FA7
 call __CHK	; 13FAC
 push ebx	; 13FB1

@@ -12,7 +12,7 @@ extern dword_C71DC, songdata, msg_InsertDisk_arg, dword_C7AE4, dword_C7AE8, dwor
 extern dword_C8998, HomeTeam, musichandle, dword_D2C6B, dword_DB088, schedgameidx, dword_DC23E, musicslot
 extern leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
 extern dword_DDD6C, awtmlines, startm_m2, hmtmlines, hmtmstruct
-extern fputchar, jctime, memset_, off_C57CC, off_C800C, leaguedbnames
+extern fputchar, jctime, memset_, crestnames, off_C800C, leaguedbnames
 extern sprintf_, strcat_, strcpy_, SetupControllers, PlayGame, FileExists, MakePath
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, ReadKeyRec, ReadSeasonRec
 extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, sub_174C2, sub_17573, sub_175E2, sub_1BEFD
@@ -2405,7 +2405,7 @@ add esp, byte 8	; 38016
 mov dword [dword esp+0C8h], eax	; 38019
 xor ebp, ebp	; 38020
 loc_38022:
-mov edx, dword [nosplit ebp*4+off_C57CC]	; 38022
+mov edx, dword [nosplit ebp*4+crestnames]	; 38022
 push edx	; 38029
 mov ebx, dword [dword esp+0CCh]	; 3802A
 push ebx	; 38031
