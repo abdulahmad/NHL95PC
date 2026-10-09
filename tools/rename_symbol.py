@@ -5,7 +5,10 @@
                                  [--file94 checks94.asm] [--other-names TEXT] [--confidence high] [--method manual-trace]
                                  [--no-record] [--no-build] [--dry-run]
   python3 tools/rename_symbol.py --batch renames.txt [same options]
-        one rename per line: OLD NEW [evidence text ...]; a line starting with '#' is a comment. All renames are applied in order,
+        one rename per line: OLD NEW [{key=value,...}] [evidence text ...]; a line starting with '#' is a comment.
+        {...} overrides the command-line options for that line only: source_game, source_file, file94, other_names,
+        confidence, method, no_record (e.g. {source_game=PC-new,confidence=medium} or {no_record} for an IDA sub_
+        label that is really a shared epilogue tail). All renames are applied in order,
         then one build; a failure anywhere restores everything. Use it for the many loc_ -> .local renames.
 
 What it does
@@ -25,6 +28,10 @@ What it does
        equate in src/inc/structs.inc                                   -> tools/struct_fieldmap.csv (genesis_field)
        other code labels (loc_, jpt_ ... and locals)                    -> nothing (they live in src/ only)
      A function rename needs --evidence (what the routine does / which Genesis routine it matches), unless --no-record.
+  NEW of the form BASE+k / BASE-k (k decimal, 0x.. or ..h) folds an alias label into an expression: OLD must be
+     a bare label line at BASE's address + k in the same file (e.g. the Watcom -5r label dword_E03BA = regd0-2, or a
+     table's second column word_C90E2 = dirtab+2). Every use becomes BASE+k, the OLD label line is removed (the bytes
+     stay), the global/extern lists follow, and a tools/global_map.csv row for OLD is dropped.
   6. make again: it must print MATCH, else every file is restored and the exit status is 1. Then src/inc/symbols.inc
      is regenerated (tools/update_symbols.py).
 Needs the same as make: nasm, python3, your HOCKEY.EXE."""
@@ -40,6 +47,8 @@ LOCAL = re.compile(r'^\.[A-Za-z0-9_$#@~?][A-Za-z0-9_$#@~?.]*$')
 AUTO = re.compile(r'^(sub|loc|locret|nullsub|j_sub|unk|off|asc|byte|word|dword|qword|tbyte|jpt|stru|algn|flt|dbl)_[0-9A-F]+$')
 LABEL_DEF = re.compile(r'^([A-Za-z_?][A-Za-z0-9_$#@~?.]*):')
 LOCAL_DEF = re.compile(r'^(\.[A-Za-z0-9_$#@~?.]+):')
+LINE_OPTS = ('source_game', 'source_file', 'file94', 'other_names', 'confidence', 'method', 'no_record')
+FOLD = re.compile(r'^([A-Za-z_?][A-Za-z0-9_$#@~?]*)([+-](?:[0-9]+|0[xX][0-9A-Fa-f]+|[0-9][0-9A-Fa-f]*[hH]))$')
 EQU_DEF = re.compile(r'^\s*([A-Za-z_?.][A-Za-z0-9_$#@~?.]*)\s+equ\b', re.I)
 
 def ident(n):
@@ -131,6 +140,8 @@ class Session:
         di = next((i for i, l in enumerate(dlines) if l.startswith(old + ':') or (EQU_DEF.match(l) and EQU_DEF.match(l).group(1) == old)), None)
         if di is None: raise Fail('%s is a local label (parent.name); rename locals by hand in %s' % (old, os.path.relpath(deff, ROOT)))
         is_equ = not dlines[di].startswith(old + ':')
+        fm = FOLD.match(new)
+        if fm: return self.fold(old, fm.group(1), fm.group(2), deff, di, is_equ, evidence)
         local = new.startswith('.')
         parent = None
         if local:
@@ -153,9 +164,9 @@ class Session:
         addr = self.addr.get(old)
         # ---- rewrite
         rx = tok(old); changed = []
-        ext_users = [g for g in texts if g != deff and re.search(r'^extern .*' + rx.pattern, texts[g], re.M)]
+        ext_users = [g for g in texts if g != deff and old in texts[g] and re.search(r'^extern .*' + rx.pattern, texts[g], re.M)]
         for f, t in texts.items():
-            if not rx.search(t): continue
+            if old not in t or not rx.search(t): continue
             if not local:
                 nt = sub_code(t, rx, new)
             else:
@@ -228,6 +239,49 @@ class Session:
         self.log.append('%s -> %s%s: %d file(s)%s%s' % (old, full, ' (local %s)' % new if local else '', len(changed),
                         '' if addr is None else ', %05X %s' % (addr, seg['module'] if seg else '?'), ', recorded in ' + rec if rec else ''))
 
+    def fold(self, old, base, off, deff, di, is_equ, evidence):
+        """OLD is an alias of BASE+k (a Watcom -5r load label such as dword_E03BA = regd0-2, or dirtab+2):
+        every use becomes the expression, the OLD label line goes, the bytes stay where they were."""
+        texts = self.texts; names = self.names
+        if is_equ: raise Fail('%s is an equate; fold only label aliases' % old)
+        if base not in names: raise Fail('%s (the base of %s%s) is not defined; name the base first' % (base, base, off))
+        if names[base] != deff: raise Fail('%s and %s are defined in different files' % (old, base))
+        k = int(off[1:-1], 16) if off.lower().endswith('h') else int(off[1:], 0)
+        k = -k if off[0] == '-' else k
+        ao, ab = self.addr.get(old), self.addr.get(base)
+        if ao is None or ab is None: raise Fail('no build/obj address for %s or %s; run make first' % (old, base))
+        if ab + k != ao: raise Fail('%s is at %05X but %s%s is %05X' % (old, ao, base, off, ab + k))
+        if texts[deff].split('\n')[di].split(';')[0].strip() != old + ':':
+            raise Fail('%s: the definition line has more than the label; fold it by hand' % old)
+        rx = tok(old); changed = []
+        bad = [l.strip() for t in texts.values() for l in t.split('\n') if 'nosplit' in l and rx.search(l)]
+        if bad: raise Fail('%s is used in a nosplit operand (%s); nasm ignores nosplit on [idx*s+sym+k], so give it its own name instead of folding' % (old, bad[0]))
+        for f, t in texts.items():
+            if not rx.search(t) and f != deff: continue
+            out = []
+            for i, ln in enumerate(t.split('\n')):
+                if f == deff and i == di: continue                       # drop the alias label line
+                if ln.startswith(('global ', 'extern ')):
+                    kw = ln.split(' ', 1)[0]; lst = [n.strip() for n in ln[len(kw) + 1:].split(',')]
+                    if old in lst:
+                        lst = [n for n in lst if n != old]
+                        if kw == 'extern' and not any(base in [m.strip() for m in l2[7:].split(',')] for l2 in t.split('\n') if l2.startswith('extern ')):
+                            lst.append(base)
+                        if kw == 'global' and base not in ' '.join(l2 for l2 in t.split('\n') if l2.startswith('global ')).replace(',', ' ').split():
+                            lst.append(base)
+                        if lst: out.append(kw + ' ' + ', '.join(lst))
+                        continue
+                out.append(sub_code(ln, rx, base + off))
+            nt = '\n'.join(out)
+            if nt != t: texts[f] = nt; changed.append(f)
+        names.pop(old); self.addr.pop(old, None)
+        rec = ''
+        if not self.a.no_record:
+            cols, rows, _ = self.table('tools/global_map.csv')
+            n0 = len(rows); rows[:] = [r for r in rows if r['genesis_symbol'] != old]
+            if len(rows) != n0: self.csvs[os.path.join(ROOT, 'tools/global_map.csv')][2] = True; rec = ' (its tools/global_map.csv row removed)'
+        self.log.append('%s -> %s%s (alias folded, label line removed): %d file(s)%s' % (old, base, off, len(changed), rec))
+
     def commit(self):
         a = self.a
         newtexts = {f: t for f, t in self.texts.items() if t != self.orig[f]}
@@ -263,16 +317,28 @@ def main():
             if not ln: continue
             p = ln.split(None, 2)
             if len(p) < 2: die('%s:%d: need OLD NEW [evidence]' % (a.batch, k))
-            pairs.append((p[0], p[1], p[2] if len(p) > 2 else None))
-    elif a.old and a.new: pairs = [(a.old, a.new, None)]
+            ev, opts = (p[2] if len(p) > 2 else None), {}
+            if ev and ev.startswith('{'):
+                if '}' not in ev: die('%s:%d: unclosed {options}' % (a.batch, k))
+                body, ev = ev[1:].split('}', 1); ev = ev.strip() or None
+                for kv in filter(None, (x.strip() for x in body.split(','))):
+                    key, _, val = kv.partition('=')
+                    key = key.strip().replace('-', '_')
+                    if key not in LINE_OPTS: die('%s:%d: unknown option %s (use %s)' % (a.batch, k, key, ', '.join(LINE_OPTS)))
+                    opts[key] = True if key == 'no_record' else val.strip()
+            pairs.append((p[0], p[1], ev, opts))
+    elif a.old and a.new: pairs = [(a.old, a.new, None, {})]
     else: ap.error('give OLD NEW or --batch FILE')
     if not a.no_build:
         ok, log = make()
         if not ok: die('the tree does not build to a MATCH before the rename; fix that first:\n' + log)
     S = Session(a)
-    for old, new, ev in pairs:
+    for old, new, ev, opts in pairs:
+        saved = {key: getattr(a, key) for key in opts}
+        for key, val in opts.items(): setattr(a, key, val)
         try: S.rename(old, new, ev)
         except Fail as e: die(str(e) + ('' if len(pairs) == 1 else ' (nothing written)'))
+        for key, val in saved.items(): setattr(a, key, val)
     S.commit()
 
 if __name__ == '__main__':

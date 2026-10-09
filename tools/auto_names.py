@@ -7,7 +7,8 @@
 For one segment it prints the auto names DEFINED in the file (these must all be named before the queue row is
 marked done), the auto names it USES from data segments (dseg02; name them in the same session), and the auto
 names it uses from other code segments (name them when the routine is identified, else when their segment comes up).
-Also counts structure-style operands ([byte reg+NNh]) that do not use a structs.inc name yet."""
+Also lists structure-style operands ([byte reg+NNh], not the ebp/esp frame) that do not use a structs.inc name yet
+(address and operand; all of them with --all). These need not reach 0: name a field only when the evidence is there."""
 import os, re, sys, argparse
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
@@ -15,7 +16,7 @@ from link_src import read_layout
 from update_symbols import decl_lists
 AUTO = re.compile(r'\b((?:sub|loc|locret|nullsub|j_sub|unk|off|asc|byte|word|dword|qword|tbyte|jpt|stru|algn)_[0-9A-F]{5,8})\b')
 DEF = re.compile(r'^([A-Za-z_?][\w$#@~?.]*)(?::|\s+equ\b)')
-STRUCT_OP = re.compile(r'\[(?:byte|dword) e(?:ax|bx|cx|dx|si|di|bp)\+0[0-9A-F]+h\]')
+STRUCT_OP = re.compile(r'\[(?:byte|dword) e(?:ax|bx|cx|dx|si|di)\+0[0-9A-F]+h\]')   # not ebp/esp: stack frame
 
 def analyse(sg, segs):
     t = open(os.path.join(ROOT, 'src', sg['src'])).read()
@@ -28,7 +29,7 @@ def analyse(sg, segs):
         return next((o for s0, s1, o in starts if s0 <= a < s1), 0)
     ext = sorted({n for n in e if AUTO.fullmatch(n)})
     data = [n for n in ext if obj_of(n) == 2]; codex = [n for n in ext if obj_of(n) == 1]
-    sops = sum(len(STRUCT_OP.findall(l)) for l in code)
+    sops = ['%s %s' % ((re.search(r';\s*([0-9A-F]{5})\b', l) or re.match('()', '')).group(1), o) for l in t.split('\n') for o in STRUCT_OP.findall(l.split(';')[0])]
     return defined, data, codex, sops
 
 def main():
@@ -41,7 +42,7 @@ def main():
         for sg in segs:
             if sg['obj'] != 1: continue
             d, da, c, so = analyse(sg, segs)
-            print('%-46s %8d %8d %8d %8d' % (sg['src'], len(d), len(da), len(c), so))
+            print('%-46s %8d %8d %8d %8d' % (sg['src'], len(d), len(da), len(c), len(so)))
         return
     k = a.seg
     sg = next((s for s in segs if k in (s['module'], '%05X' % s['start'], s['src'], os.path.basename(s['src'])) or s['src'].endswith(k)), None)
@@ -52,7 +53,8 @@ def main():
     for title, l in (('auto names defined here', d), ('auto data names used (dseg02)', da), ('auto code names used from other segments', c)):
         print('%s: %d' % (title, len(l)))
         if l: print('   ' + ' '.join(l[:lim]) + (' ...' if lim and len(l) > lim else ''))
-    print('[reg+NNh] operands without a field name: %d' % so)
+    print('[reg+NNh] operands without a field name (not ebp/esp): %d' % len(so))
+    if so: print('   ' + ', '.join(so[:lim if lim is None else 10]) + (' ...' if lim and len(so) > 10 else ''))
 
 if __name__ == '__main__':
     main()

@@ -20,8 +20,9 @@ The segment boundaries come from `segmap95pc.json` (`tools/segdef.py`, `EXE_SEGM
   - `tools/manual_names.csv`: hand-traced rows. They override the generated ones.
   - `EXE_SEGMAP95PC.md` and `segmap95pc.json`: the segment notes and Genesis counterparts.
   - `tools/struct_fieldmap.csv`: player structure fields.
-  - `tools/global_map.csv`: globals.
+  - `tools/global_map.csv`: globals. The seeded rows are weak alignments (`aligned 2/3 accesses ...`), not proof. When the code shows a seeded name is wrong, rename it and say why in the evidence (engine_skating: `gameclock` C9080 was the pointer to the puck's Xvel, `wcradiusy` E03B4 was the d4 static).
 - Style source: the matching routine in https://github.com/abdulahmad/NHLPA93Genesis (`src/logic93_*.asm`, `hockey93_*.asm`, `penalty93_*.asm` ...). Use https://github.com/abdulahmad/NHL94Genesis for what 94 added. Use https://github.com/abdulahmad/NHL95Genesis (listing `lst/nhl95.bin.lst`) for what 95 added.
+- A local checkout of the three Genesis repos works the same as the GitHub pages; search it with `rg` (for example `rg -n '^skateto' src/logic93_*.asm`).
 - Docs: `docs/ASM_BUILD.md` covers the source tree, the encoding rules and the linker. `BUILD_NOTES.md` covers the compiler fingerprint and fixups. `docs/SKATING_AND_RINK.md` covers skating physics compared with 93G.
 
 ## Lineage
@@ -55,12 +56,16 @@ After the segment's last change, also run `python3 tools/update_symbols.py --che
   - auto code names it calls in other segments
   - `[reg+NNh]` operands without a field name
 - `python3 tools/auto_names.py --summary` gives the same counts for every code file.
+- The `[reg+NNh]` list (address and operand, not the ebp/esp frame) need not reach 0. Name a field only when the evidence is there; say what is left in the row.
 - `python3 tools/rename_symbol.py OLD NEW --evidence "..." [--source-game 93G --source-file logic93_5.asm --file94 checks94.asm]` renames one symbol everywhere:
   - It changes the definition, every use in every file, the global and extern lists, and comments (never an `;IDA:` note).
   - It records the name: a function goes to `tools/manual_names.csv` and `name_map_94.csv`, a data or BSS label to `tools/global_map.csv`, a `structs.inc` field to `tools/struct_fieldmap.csv`.
   - It refuses names nasm reads as instructions or registers, and names already defined (case differences are a warning).
   - It rebuilds and requires MATCH. On failure it restores every file.
   - When the old name is the listing's name for the address, it adds `;IDA: <name>` to the definition.
+- `NEW` of the form `BASE-2` / `BASE+2` folds an alias label into an expression: `rename_symbol.py dword_E03BA regd0-2`. OLD must be a bare label line at BASE's address plus the offset, in the same file. Every use becomes the expression, the alias label line goes (the bytes stay), and the global/extern lists follow. Use it for the Watcom `-5r` labels IDA put 2 bytes before a word variable. It refuses an alias used in a `nosplit` operand (see Rules); give that one its own name (`dirtab_y`).
+- In a batch line, `{key=value,...}` after NEW overrides the command-line options for that line only: `source_game`, `source_file`, `file94`, `other_names`, `confidence`, `method`, `no_record`. For example `sub_5E4C4 EvadePlayers {source_game=PC-new,confidence=medium} evidence ...`, or `sub_5E7F7 EvadePlayers_popebp {no_record}` for an IDA `sub_` that is really a shared epilogue (it is not a function, so it must not go to `manual_names.csv`).
+- `python3 tools/struct_operands.py MODULE... | --group engine [--apply]` rewrites `[byte REG+NNh]` player-struct operands as `structs.inc` names, per function and base register, where at least 3 different fields match by offset and access size (`size` tag in `structs.inc`). It handles `Field+2` (the integer word of a 16.16 value) and the `-5r` `Field-2` load. It is a heuristic: check the result, and do the rest by hand (step 5).
 - `NEW` starting with `.` makes a `loc_` label a NASM local of the global label above it, e.g. `rename_symbol.py loc_5E196 .notgoalie`.
 - `python3 tools/rename_symbol.py --batch renames.txt` applies many renames with one build. Each line is `OLD NEW [evidence]`. Put local renames in address order: a local attaches to the nearest global label above it, so convert the `loc_` labels of a function from the top down. A batch file is scratch; do not commit it.
 - `src/inc/structs.inc` holds the structure field equates; `src/inc/hockey.inc` includes it in every file. Add a field there and a row in `tools/struct_fieldmap.csv` in the same commit.
@@ -83,18 +88,22 @@ After the segment's last change, also run `python3 tools/update_symbols.py --che
      - Where the routine lines up with 93G, use the 93G local at the same instruction.
      - Elsewhere, `.x` for the exit (the `pop ...; ret` tail), `.loop` for the target of a later branch back, else `.1`, `.2` ... in order.
      - A `loc_` that another function or file jumps to stays global; name it for its routine (`doplayeracc_stop`).
-   - `jpt_` switch tables get the function's name plus `_jt` (Watcom puts the table right before its function).
+   - Switch tables (`jpt_`, or an `unk_` label over `dd loc_...` lines) get the function's name plus `_jt` (Watcom puts the table right before its function). Name the case labels `.cN`, N the table index (`avdgoal.c0`); the table refers to them as `func.cN`.
+   - IDA sometimes labels a cross-jumped epilogue `sub_` (a `pop ...; ret` tail that several functions jump into). It is not a function: keep it global, name it for the first function and what it does (`EvadePlayers_popebp`, `EvadePC_x`), and rename it with `{no_record}`.
    - Data in code (`off_`, `asc_`, `dword_` in cseg01) is named for what it holds.
 4. Name the data and BSS labels the segment uses. They are defined in `src/dseg02`; `rename_symbol.py` finds them. Use the 93G RAM name of the same variable (`ram93.asm`, from a lined-up 93G operand), else name it from what it holds.
    - You may split a `db` run or a `resb` to put a label inside it, as long as the bytes do not change. For example, `resb 152` becomes `name: resb 4` plus `resb 148`.
-5. Write structure fields as names: `[byte ecx+06Ah]` becomes `[byte ecx+SCnum]`. Keep the displacement size, and add a field to `structs.inc` when the evidence is there. The Watcom `-5r` short load reads a 16-bit field as a dword 2 bytes earlier: `mov edx, [byte ecx+0Ah]` / `sar edx, 10h` is `[byte ecx+Xvel-2]`.
+5. Write structure fields as names: `[byte ecx+06Ah]` becomes `[byte ecx+SCnum]`. Keep the displacement size, and add a field to `structs.inc` (with its `size` tag) and `tools/struct_fieldmap.csv` when the evidence is there. Start with `tools/struct_operands.py MODULE` (dry run), then do the rest by hand:
+   - The Watcom `-5r` short load reads a 16-bit field as a dword 2 bytes earlier: `mov edx, [byte ecx+0Ah]` / `sar edx, 10h` is `[byte ecx+Xvel-2]`. A byte field is read 3 bytes earlier with `sar 18h`: `mov edx, [byte ebx+44h]` / `sar edx, 18h` is `[byte ebx+pnum-3]`.
+   - A 68k `.b` access to a word field reads its HIGH byte. The PC is little-endian, so that is `Field+1`: 93G `move.b Xvel(a3),d0` is `movsx ax, byte [ebx+Xvel+1]`. A word the 68k code uses as two bytes is swapped: 93G `temp2(a3)` (the countdown) is PC `temp2+1`, and `temp2+1(a3)` is PC `temp2`.
+   - `add.l d4,facedir(a3)` (a long over a word field and its fraction) is `add dword [ecx+facedir-2], edx`.
 6. Comments:
    - Bring over the 93G comment when the routine matches.
    - Otherwise add one above each function that says what it does, its arguments (eax, edx, ebx, ecx) and its return value.
    - Note PC differences from Genesis values (`; 93G $96, PC 200+legstr`).
 7. Run `make` (MATCH), `python3 tools/update_symbols.py --check`, and `python3 tools/auto_names.py <module>` (0 auto names defined).
 8. In this file: mark the row `done` (date, number of functions named, and anything left: low-confidence names, auto code names in other segments), and set Current segment to the next row. Do not mark the next row done.
-9. Commit. One segment per commit, and one per PR if you use PRs. The commit holds that segment's file plus the data files, `src/inc/*.inc` and tables its names touched.
+9. Commit. One segment per commit, and one per PR if you use PRs. The commit holds that segment's file plus the data files, `src/inc/*.inc` and tables its names touched. Renaming a global rewrites its uses in other segment files too; those edits belong to the same commit.
 
 ## Rules (x86 / NASM)
 
@@ -105,6 +114,7 @@ After the segment's last change, also run `python3 tools/update_symbols.py --che
 - Keep each `LD op, dst, src` line. It is the load-form register-to-register encoding, which NASM would otherwise emit in the store form (`x86enc.inc`). Do not rewrite it as `mov`.
 - A `db` line with a disassembly comment is an instruction NASM cannot encode the same way. Keep the bytes. You may replace a number in it with a symbol expression only if the value is the same (`dd name` at a fixup, `name-$-4` for a rel32).
 - A `db ...; raw (target X unlabelled)` line is a branch into the middle of something. Keep it as bytes.
+- nasm ignores `nosplit` when the displacement is a symbol plus a constant: `[nosplit esi*2+dirtab+2]` assembles as `[esi+esi*1+...]` and the build fails. Keep a plain label for an indexed table column (`dirtab_y`), not `dirtab+2`.
 - `name equ $+k` defines a label inside an instruction or a pointer. Rename it like any label; keep the `equ $+k`.
 - Keep the `; <address>` comment at the end of every instruction line. It maps the line back to the EXE. Put your comments on their own lines or after it.
 - `dd name` in data is a pointer with an LE fixup. A number where the original had a pointer, or a pointer where it had a number, changes the fixup set; the link reports it.
@@ -122,6 +132,8 @@ After the segment's last change, also run `python3 tools/update_symbols.py --che
 - Short loads: `-5r` loads a 16-bit value as `mov r32, [x-2]` / `sar r32, 10h`. 2,527 of them.
 - Genesis values that were 68k words are mostly 16-bit here (`cmp word [...]`). The 16.16 positions and velocities stay 32-bit fixed point.
 - Byte order: a 68k word tested with `bset/btst #n` shows up as a byte test on the low byte (`gmode`: `test byte [gmode], 1`).
+- Ported 68k registers: Watcom keeps several of the 68k code's data registers in static words in the engine BSS, and routines pass values in them the way the Genesis code passed them in d0-d4: `regd0` E03BC, `regd1` E03C0, `regd2` E03AC, `regd3` E03B0, `regd4` E03B4 (each a 4-byte slot; `regd0-2` is the `-5r` load of `regd0`). For example, skateto takes its target in `regd0`/`regd1` and the EvadePC callback returns its direction in `regd0`. Read a write to one of them as a write to that 68k register when lining up with 93G.
+- Puck pointers: the C code reaches the puck through a pointer table in dseg (`puckx` C907C, `puckvx` C9080, `pucky` C9084, `puckvy` C9088, `puckz` C908C, `puckvz` C9090, `puckc` C9094). `mov eax, [puckx]` / `mov ax, [eax]` is 93G `move.w (puckx).w`. The puck is `SortCords` entry 14 (DFF1C), as in 93G.
 - Structures follow the Genesis names but have their own PC offsets (`structs.inc`; for example 93G `SCnum` `$52` is PC `6Ah`). A 93G offset is never a PC offset.
 - `switch`: Watcom emits the jump table (`jmp dword [reg*4+jpt_X]`) usually right before the function. The table entries are `dd` labels in code.
 - Routines share tails: Watcom cross-jumps the common end of two functions. A `loc_` reached from two functions is such a tail; keep it global and name it for the first function.
