@@ -26,6 +26,10 @@ global FinishPlayoffs_r4
 global LoadLeagueGameRef, DateKey, NormalizeDate, UpdateSeasonSchedule, UpdatePlayoffSeries, SeriesLength, RandomizeSchedule, SimScheduleDay
 global BuildPlayoffs, GetPlayoffSeeds, SortStandings, SwapInt, SetSeriesTeams, SeedPlayoffRound1, SimPlayoffRound1, SeedPlayoffRound2
 global SimPlayoffRound2, SeedPlayoffRound3, SimPlayoffRound3, SeedPlayoffFinal, SimPlayoffFinal, FinishPlayoffs, AdvancePlayoffs, CreateNewLeague
+; C: src/c/034_41B80_schedule/LoadLeagueGameRef.c
+%ifdef CBUILD
+%include "c/034_41B80_schedule/LoadLeagueGameRef.inc"
+%else
 LoadLeagueGameRef:
 push dword 14h	; 41B80
 call __CHK	; 41B85
@@ -107,6 +111,7 @@ pop edx	; 41C75
 pop ecx	; 41C76
 pop ebx	; 41C77
 ret	; 41C78
+%endif ; C
 DateKey:
 push dword 8	; 41C79
 call __CHK	; 41C7E

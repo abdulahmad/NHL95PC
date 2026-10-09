@@ -3935,6 +3935,10 @@ pop edx	; 25140
 pop ecx	; 25141
 pop ebx	; 25142
 ret	; 25143
+; C: src/c/017_21CDE_player_stats/CmpGoals.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/CmpGoals.inc"
+%else
 CmpGoals:
 push dword 14h	; 25144
 call __CHK	; 25149
@@ -4036,6 +4040,11 @@ pop esi	; 25233
 pop ecx	; 25234
 pop ebx	; 25235
 ret	; 25236
+%endif ; C
+; C: src/c/017_21CDE_player_stats/CmpAssists.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/CmpAssists.inc"
+%else
 CmpAssists:
 push dword 14h	; 25237
 call __CHK	; 2523C
@@ -4137,6 +4146,11 @@ pop esi	; 25321
 pop ecx	; 25322
 pop ebx	; 25323
 ret	; 25324
+%endif ; C
+; C: src/c/017_21CDE_player_stats/CmpPPGoals.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/CmpPPGoals.inc"
+%else
 CmpPPGoals:
 push dword 14h	; 25325
 call __CHK	; 2532A
@@ -4253,6 +4267,11 @@ pop esi	; 25434
 pop ecx	; 25435
 pop ebx	; 25436
 ret	; 25437
+%endif ; C
+; C: src/c/017_21CDE_player_stats/CmpSHGoals.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/CmpSHGoals.inc"
+%else
 CmpSHGoals:
 push dword 14h	; 25438
 call __CHK	; 2543D
@@ -4369,6 +4388,11 @@ pop esi	; 25547
 pop ecx	; 25548
 pop ebx	; 25549
 ret	; 2554A
+%endif ; C
+; C: src/c/017_21CDE_player_stats/CmpPlusMinus.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/CmpPlusMinus.inc"
+%else
 CmpPlusMinus:
 push dword 10h	; 2554B
 call __CHK	; 25550
@@ -4466,6 +4490,11 @@ pop edi	; 2563E
 pop esi	; 2563F
 pop ebx	; 25640
 ret	; 25641
+%endif ; C
+; C: src/c/017_21CDE_player_stats/CmpPIM.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/CmpPIM.inc"
+%else
 CmpPIM:
 push dword 14h	; 25642
 call __CHK	; 25647
@@ -4582,6 +4611,7 @@ pop esi	; 25751
 pop ecx	; 25752
 pop ebx	; 25753
 ret	; 25754
+%endif ; C
 CmpShootPct:
 push dword 14h	; 25755
 call __CHK	; 2575A

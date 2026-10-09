@@ -34,8 +34,6 @@ extern void LoadPhotoBankF_x(); /* 13957 */
 extern void LoadGameGfx(); /* 13A91 */
 extern void LoadGameGfx_common(); /* 13B56 */
 extern void ReloadGameGfx(); /* 13BB4 */
-extern void PlacePlayersAtStart(); /* 13C79 */
-extern void SetupGame(); /* 13E8F */
 extern void FileOpenRead_x(); /* 14537 */
 extern void FileOpenWrite(); /* 1453E */
 extern void FileOpenRW(); /* 14552 */
@@ -55,7 +53,6 @@ extern void PanelAddPenalty(); /* 14C22 */
 extern void UpdateHudPanel(); /* 14CF1 */
 extern void UpdateHudPanel_x(); /* 14F2A */
 extern void DrawPanelClock(); /* 14F31 */
-extern void DrawHudPanel(); /* 150C6 */
 extern void DrawPanelClockDigits(); /* 1540A */
 extern void TickPanelPenalties(); /* 15655 */
 extern void DrawEnergyBar(); /* 15707 */
@@ -262,7 +259,6 @@ extern void RunTeamPickMenu(); /* 1DF03 */
 extern void RunPlayerPickMenu(); /* 1ED96 */
 extern void TextPrintf(); /* 1FB1C */
 extern void TextPrintf2(); /* 1FB49 */
-extern void CmpPoints(); /* 1FB7F */
 extern void CmpGAA(); /* 1FC8F */
 extern void LoadShapeByTag(); /* 1FDFE */
 extern void LoadShapeByTag_x(); /* 1FF80 */
@@ -336,12 +332,6 @@ extern void TeamStatsScreen_colPK(); /* 24317 */
 extern void TeamStatsScreen_colPP(); /* 2437E */
 extern void TeamStatsScreen_colPen(); /* 243A2 */
 extern void TeamRosterScreen(); /* 244E2 */
-extern void CmpAssists(); /* 25237 */
-extern void CmpPPGoals(); /* 25325 */
-extern void CmpSHGoals(); /* 25438 */
-extern void CmpPlusMinus(); /* 2554B */
-extern void CmpPIM(); /* 25642 */
-extern void CmpShootPct(); /* 25755 */
 extern void CmpGoalieWins(); /* 2586A */
 extern void CmpSavePct(); /* 259C0 */
 extern void LeadersScreen_coljt(); /* 25AF8 */
@@ -498,8 +488,6 @@ extern void AskTeamPassword(); /* 3A395 */
 extern void AskTeamPassword_ret(); /* 3A498 */
 extern void AskMasterPassword(); /* 3A49E */
 extern void EncryptPassword(); /* 3A597 */
-extern void MergeTeamRecDelta(); /* 3A5FC */
-extern void MergeSeasonRecDelta(); /* 3A71C */
 extern void MergeGoalieRecDelta(); /* 3A826 */
 extern void MergeTeamDbs(); /* 3A9AA */
 extern void MergeTeamDbs_ret(); /* 3AE18 */
@@ -545,7 +533,6 @@ extern void GetLeagueId(); /* 41344 */
 extern void WriteLeagueInfo(); /* 413CD */
 extern void CopyHumanTeamDBs(); /* 41516 */
 extern void SaveLeagueGameRef(); /* 41978 */
-extern void LoadLeagueGameRef(); /* 41B80 */
 extern void UpdateSeasonSchedule(); /* 41CC4 */
 extern void UpdateSeasonSchedule_pop3(); /* 41F5E */
 extern void UpdatePlayoffSeries(); /* 41F64 */
@@ -613,7 +600,6 @@ extern void assscore(); /* 4A90F */
 extern void asseben(); /* 4AAC2 */
 extern void assleaveice(); /* 4AB87 */
 extern void asspenalty(); /* 4ADAB */
-extern void assepen(); /* 4B02D */
 extern void assbench(); /* 4B12C */
 extern void assgoalietopuck(); /* 4B5C2 */
 extern void assgoalie(); /* 4B774 */
@@ -666,7 +652,6 @@ extern void asspsclear(); /* 52DB0 */
 extern void assrefpenshot(); /* 52FB0 */
 extern void burst(); /* 532BD */
 extern void check4check(); /* 53537 */
-extern void checkagr(); /* 5369F */
 extern void checkcheck(); /* 5382C */
 extern void checkgoalp(); /* 53CE5 */
 extern void checkint(); /* 53E6A */
@@ -709,8 +694,6 @@ extern void wallcoll(); /* 587D3 */
 extern void wallcollb(); /* 58B7F */
 extern void checkplcoll(); /* 58CE2 */
 extern void checkcx(); /* 58DC7 */
-extern void CPgoalie(); /* 591C7 */
-extern void ChkGoalies(); /* 59265 */
 extern void ReturnGoalies(); /* 59352 */
 extern void ChkPullGoalieLate(); /* 593F5 */
 extern void sndcb_addesp8_x(); /* 594AC */
@@ -739,8 +722,6 @@ extern void getlinee_sum(); /* 5A2C6 */
 extern void getlinee(); /* 5A30C */
 extern void calcpuckcross_ret6(); /* 5A41E */
 extern void calcpuckcross_ret5(); /* 5A41F */
-extern void SetCoachMode(); /* 5A581 */
-extern void InitCoachModes(); /* 5A669 */
 extern void UpdateCoachModes(); /* 5A77C */
 extern void Goal(); /* 5AB36 */
 extern void clearteams(); /* 5B881 */

@@ -4739,9 +4739,7 @@ extern int statspalshape; /* DD100 */
 extern int statsbgshapes; /* DD104 */
 extern int statsteamrecs; /* DD108 */
 extern int statsteambuf; /* DD10C */
-extern int statsskaterbuf; /* DD110 */
 extern int statsgoaliebuf; /* DD114 */
-extern int statssortkeys; /* DD118 */
 extern int statsplayerbuf; /* DD11C */
 extern int statspal; /* DD120 */
 extern int exhfiles[]; /* DD124 */

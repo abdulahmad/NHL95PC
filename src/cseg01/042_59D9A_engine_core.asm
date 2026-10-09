@@ -862,6 +862,10 @@ pop edx	; 5A665
 pop ecx	; 5A666
 pop ebx	; 5A667
 ret	; 5A668
+; C: src/c/042_59D9A_engine_core/InitCoachModes.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/InitCoachModes.inc"
+%else
 InitCoachModes:
 push dword 14h	; 5A669
 call __CHK	; 5A66E
@@ -928,6 +932,7 @@ pop edx	; 5A778
 pop ecx	; 5A779
 pop ebx	; 5A77A
 ret	; 5A77B
+%endif ; C
 ; UpdateCoachModes: PC-new coach AI, once a second from ClockTick. Picks each team's mode (team D2h..D6h) from the
 ;   score difference, time left and penalties (details not traced).
 UpdateCoachModes:

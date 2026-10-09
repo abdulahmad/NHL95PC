@@ -2574,6 +2574,10 @@ cmp esi, byte 0Ah	; 3A5EF
 jl short EncryptPassword.1	; 3A5F2
 add esp, byte 4	; 3A5F4
 jmp near AskTeamPassword_ret	; 3A5F7
+; C: src/c/029_380E9_league_setup/MergeTeamRecDelta.c
+%ifdef CBUILD
+%include "c/029_380E9_league_setup/MergeTeamRecDelta.inc"
+%else
 MergeTeamRecDelta:
 push dword 0Ch	; 3A5FC
 call __CHK	; 3A601
@@ -2658,6 +2662,11 @@ rep movsd	; 3A715
 pop edi	; 3A717
 pop esi	; 3A718
 ret 4	; 3A719
+%endif ; C
+; C: src/c/029_380E9_league_setup/MergeSeasonRecDelta.c
+%ifdef CBUILD
+%include "c/029_380E9_league_setup/MergeSeasonRecDelta.inc"
+%else
 MergeSeasonRecDelta:
 push dword 0Ch	; 3A71C
 call __CHK	; 3A721
@@ -2734,6 +2743,7 @@ mov byte [byte ebx+027h], al	; 3A81E
 pop edi	; 3A821
 pop esi	; 3A822
 ret 4	; 3A823
+%endif ; C
 MergeGoalieRecDelta:
 push dword 0Ch	; 3A826
 call __CHK	; 3A82B

@@ -12,6 +12,7 @@ assreplace,11FF4,29,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/assreplace
 FileExists,142E7,55,004_13320_asset_loading,src/c/004_13320_asset_loading/FileExists.c,matched,
 LoadTransparentRinkEndOverlay,13A2F,98,004_13320_asset_loading,src/c/004_13320_asset_loading/LoadTransparentRinkEndOverlay.c,matched,
 SetupDemoGame,13FA7,175,004_13320_asset_loading,src/c/004_13320_asset_loading/SetupDemoGame.c,matched,
+SetupGame,13E8F,280,004_13320_asset_loading,src/c/004_13320_asset_loading/SetupGame.c,nonmatching,
 DeleteDir,14442,227,005_1431E_file_utils,src/c/005_1431E_file_utils/DeleteDir.c,matched,
 DeleteFiles,14368,218,005_1431E_file_utils,src/c/005_1431E_file_utils/DeleteFiles.c,matched,
 DiskSpaceShort,14825,128,005_1431E_file_utils,src/c/005_1431E_file_utils/DiskSpaceShort.c,matched,
@@ -66,9 +67,16 @@ NullBlit,1D019,11,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/Null
 NullFunc_1D024,1D024,11,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/NullFunc_1D024.c,matched,
 StrLenToDot,1D5D5,59,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/StrLenToDot.c,nonmatching,size differs (34 vs 59): the original block probably runs past the ret (db 90h pad and more); check the label end before retrying
 StrPrefixDiffers,1D6BE,42,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/StrPrefixDiffers.c,matched,
+CmpPoints,1FB7F,272,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/CmpPoints.c,nonmatching,
 InitMenuRemap,1FAA7,117,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/InitMenuRemap.c,nonmatching,draft: asm calls __STOSB for the 15h-byte clear (inline memset helper); default-flag memset calls memset_
 FreeCalendarIfLowMem,212C6,56,016_20016_easn_stats,src/c/016_20016_easn_stats/FreeCalendarIfLowMem.c,matched,
-CmpGoals,25144,243,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpGoals.c,nonmatching,
+CmpAssists,25237,238,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpAssists.c,matched,
+CmpGoals,25144,243,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpGoals.c,matched,
+CmpPIM,25642,275,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpPIM.c,matched,
+CmpPPGoals,25325,275,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpPPGoals.c,matched,
+CmpPlusMinus,2554B,247,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpPlusMinus.c,matched,
+CmpSHGoals,25438,275,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpSHGoals.c,matched,
+CmpShootPct,25755,277,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpShootPct.c,nonmatching,
 PlayerFromMouseY,24453,143,017_21CDE_player_stats,src/c/017_21CDE_player_stats/PlayerFromMouseY.c,matched,
 FitPlayerName,29C75,139,019_2970A_league_schedule,src/c/019_2970A_league_schedule/FitPlayerName.c,matched,
 PrintClampedText,2F580,110,022_2D346_game_setup,src/c/022_2D346_game_setup/PrintClampedText.c,matched,
@@ -93,6 +101,8 @@ CalPrevMonth,346FE,109,027_33FFD_calendar,src/c/027_33FFD_calendar/CalPrevMonth.
 CalReturn,3476B,30,027_33FFD_calendar,src/c/027_33FFD_calendar/CalReturn.c,matched,
 SetGameSides,347B7,106,027_33FFD_calendar,src/c/027_33FFD_calendar/SetGameSides.c,nonmatching,draft: record pointer built in edx (asm) vs eax; o kept in edx
 RestoreGridCellBg,37E5B,75,028_35FB9_import_export,src/c/028_35FB9_import_export/RestoreGridCellBg.c,matched,
+MergeSeasonRecDelta,3A71C,266,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeSeasonRecDelta.c,matched,
+MergeTeamRecDelta,3A5FC,288,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeTeamRecDelta.c,matched,
 ReadLeagueTeamEntry,3A31E,41,029_380E9_league_setup,src/c/029_380E9_league_setup/ReadLeagueTeamEntry.c,matched,
 TeamSelCancel,38B3A,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelCancel.c,matched,
 TeamSelDone,38B25,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelDone.c,matched,
@@ -105,6 +115,7 @@ FmtFromLeague,41171,87,033_40183_trades,src/c/033_40183_trades/FmtFromLeague.c,m
 LeagueCheckStub,41337,13,033_40183_trades,src/c/033_40183_trades/LeagueCheckStub.c,matched,
 MsgCopyingDatabases,414E0,54,033_40183_trades,src/c/033_40183_trades/MsgCopyingDatabases.c,matched,
 DateKey,41C79,34,034_41B80_schedule,src/c/034_41B80_schedule/DateKey.c,nonmatching,"original keeps day in edx and builds the month in ebx (lea ebx,[eax+0Ch] / mov ebx,eax); this draft moves day to ebx. 10-min cap"
+LoadLeagueGameRef,41B80,249,034_41B80_schedule,src/c/034_41B80_schedule/LoadLeagueGameRef.c,matched,
 NormalizeDate,41C9B,41,034_41B80_schedule,src/c/034_41B80_schedule/NormalizeDate.c,matched,
 SwapInt,42F19,41,034_41B80_schedule,src/c/034_41B80_schedule/SwapInt.c,matched,
 LoadScreenPalTick,47951,152,035_45282_options_settings,src/c/035_45282_options_settings/LoadScreenPalTick.c,matched,
@@ -123,6 +134,7 @@ StartFaceoffLineChange,4DA37,68,037_4842A_engine_player_logic,src/c/037_4842A_en
 StopIfFree,4A80E,36,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StopIfFree.c,matched,
 a2offsides,4DCDD,116,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/a2offsides.c,matched,
 assdopen,4AFFB,50,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assdopen.c,matched,
+assepen,4B02D,255,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assepen.c,nonmatching,
 assexit,4D509,31,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assexit.c,matched,
 assintrostand,4842A,176,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assintrostand.c,matched,
 assrefatdot,4DFF7,198,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assrefatdot.c,matched,
@@ -148,6 +160,7 @@ PassCompleted,50AFE,87,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_as
 PenShotStart,511B4,171,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/PenShotStart.c,matched,
 SetPenaltyStrength,510A9,108,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/SetPenaltyStrength.c,matched,
 assbenchwait,526ED,51,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/assbenchwait.c,matched,
+ChkGoalies,59265,237,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ChkGoalies.c,nonmatching,
 CompShoot,55A35,106,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/CompShoot.c,matched,
 FacingBoards,5378D,159,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/FacingBoards.c,matched,
 Findhittype,579FF,63,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/Findhittype.c,matched,
@@ -158,6 +171,7 @@ SkillForAnim,54134,150,040_53294_engine_physics_ai,src/c/040_53294_engine_physic
 Sweepcheck,532A2,27,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/Sweepcheck.c,matched,
 ToFixed,53294,14,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ToFixed.c,matched,
 TryBlockShot,534BB,124,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/TryBlockShot.c,nonmatching,"registers only: original p in ecx, n in ebx, gmode2 temp in edx; this draft p in ebx, n in edx. 10-min cap"
+checkagr,5369F,238,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkagr.c,nonmatching,
 newcheck,58084,113,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/newcheck.c,matched,
 passmode,5514E,97,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/passmode.c,matched,
 puckIChk,56E52,125,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/puckIChk.c,nonmatching,"draft: asm keeps |x| work in ebx (saves ebx, frame 8); ours saves edx"
@@ -184,6 +198,7 @@ GameOver,5DD9E,30,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GameOver.c,m
 GetHotOrStick,5A534,77,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetHotOrStick.c,matched,
 GetPeriodTime,5B9D1,54,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetPeriodTime.c,matched,
 GiveControl,5B1CE,202,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GiveControl.c,nonmatching,"3 bytes short, same branch layout: the original loads regd1 into cx on the pad-1-first path and into si on the pad-2-first path (push esi, __CHK 14h) and keeps c2playernum in bx; this draft uses one register for both. Without the c2 local the layout breaks (no cross-jump into the pad 2 tail)"
+InitCoachModes,5A669,275,042_59D9A_engine_core,src/c/042_59D9A_engine_core/InitCoachModes.c,matched,
 Intermission,5DE42,46,042_59D9A_engine_core,src/c/042_59D9A_engine_core/Intermission.c,matched,
 LockScroll,5CD25,42,042_59D9A_engine_core,src/c/042_59D9A_engine_core/LockScroll.c,matched,
 PenTeamScored,5AAAE,136,042_59D9A_engine_core,src/c/042_59D9A_engine_core/PenTeamScored.c,matched,
@@ -271,6 +286,7 @@ DrawCtlBoxes,7D671,64,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialog
 DrawModeSetChecks,7B7BE,136,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/DrawModeSetChecks.c,matched,
 ExhSetHitTest,7C28D,138,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ExhSetHitTest.c,matched,
 ModeSetHitTest,7B734,138,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ModeSetHitTest.c,matched,
+SetCtlTeams,7DB67,292,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SetCtlTeams.c,matched,
 SetLeagueSetImage,7A6AD,16,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SetLeagueSetImage.c,matched,
 SettingsStub,7B39C,11,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SettingsStub.c,matched,
 GadgetHitTest,7E8E5,89,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/GadgetHitTest.c,matched,

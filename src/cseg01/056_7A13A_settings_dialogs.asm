@@ -4987,6 +4987,10 @@ jmp near ControlsDlgLoop.19	; 7DB58
 mov edi, dword [byte esp+014h]	; 7DB5D
 push edi	; 7DB61
 jmp near ControlsDlgLoop.5	; 7DB62
+; C: src/c/056_7A13A_settings_dialogs/SetCtlTeams.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/SetCtlTeams.inc"
+%else
 SetCtlTeams:
 push dword 8	; 7DB67
 call __CHK	; 7DB6C
@@ -5057,3 +5061,4 @@ mov dword [ctl2dev], 1	; 7DC7A
 call SetSideControls	; 7DC84
 pop esi	; 7DC89
 ret	; 7DC8A
+%endif ; C

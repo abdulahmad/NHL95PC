@@ -68,4 +68,6 @@ typedef struct Rect4 {
     int l, t, r, b;
 } Rect4;
 extern unsigned char *samplereq;  /* ED7B4: sample request block (20 names of 13 bytes, counters at +104h..+10Ch) */
+extern unsigned char *statsskaterbuf;  /* DD110: skater stats records, 2Fh bytes each (season, playoffs at +12h) */
+extern int *statssortkeys;  /* DD118: per-player sort keys for the stats leaders (CmpShootPct compares them first) */
 #endif

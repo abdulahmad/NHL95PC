@@ -488,5 +488,24 @@ int OneTimerChk(Player *p);  /* 50E5C */
 int StatsMenuSavePct(void);  /* 18C20 */                  
 void StatsSel9394Season(void);  /* 17A00 */               
 int CmpGoals(int *a, int *b);  /* 25144 */                
+int CmpAssists(int *a, int *b);  /* 25237 */              
+int CmpPlusMinus(int *a, int *b);  /* 2554B */            
+int CmpPoints(int *a, int *b);  /* 1FB7F */               
+int CmpPIM(int *a, int *b);  /* 25642 */                  
+int CmpPPGoals(int *a, int *b);  /* 25325 */              
+int CmpSHGoals(int *a, int *b);  /* 25438 */              
+int CmpShootPct(int *a, int *b);  /* 25755 */             
+void InitCoachModes(void);  /* 5A669 */                   
+void SetCoachMode(int side);
+void ChkGoalies(void);  /* 59265 */                       
+void CPgoalie(Team *t, Team *o, int y);
+int SetupGame(void);  /* 13E8F */                         
+void DrawHudPanel(int home, int vis, int a, int b);
+void PlacePlayersAtStart(void);
+void MergeSeasonRecDelta(short *old, short *cur, short *dst, int a, int b);  /* 3A71C */
+void MergeTeamRecDelta(unsigned char *old, unsigned char *cur, unsigned char *dst, int a, int b);  /* 3A5FC */
+int LoadLeagueGameRef(int fh);  /* 41B80 */               
+short checkagr(Player *p);  /* 5369F */                   
+void assepen(Player *p);  /* 4B02D */                     
 
 #endif
