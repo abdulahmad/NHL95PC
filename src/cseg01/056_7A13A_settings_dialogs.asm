@@ -3728,6 +3728,10 @@ pop edx	; 7CC86
 pop ecx	; 7CC87
 pop ebx	; 7CC88
 ret	; 7CC89
+; C: src/c/056_7A13A_settings_dialogs/CtlSwapTeamFlag.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/CtlSwapTeamFlag.inc"
+%else
 CtlSwapTeamFlag:
 push dword 10h	; 7CC8A
 call __CHK	; 7CC8F
@@ -3761,6 +3765,7 @@ pop edx	; 7CCE1
 pop ecx	; 7CCE2
 pop ebx	; 7CCE3
 ret	; 7CCE4
+%endif ; C
 ReassignCtlPlayer:
 push dword 28h	; 7CCE5
 call __CHK	; 7CCEA
@@ -4526,6 +4531,10 @@ push eax	; 7D60F
 push str_TheKeyboard	; 7D610
 call sub_91964	; 7D615
 jmp near ControlsDlg_ret0C	; 7D61A
+; C: src/c/056_7A13A_settings_dialogs/CtlDlgHitTest.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/CtlDlgHitTest.inc"
+%else
 CtlDlgHitTest:
 push dword 0Ch	; 7D61F
 call __CHK	; 7D624
@@ -4560,6 +4569,7 @@ xor eax, eax	; 7D66C
 pop esi	; 7D66E
 pop ecx	; 7D66F
 ret	; 7D670
+%endif ; C
 ; C: src/c/056_7A13A_settings_dialogs/DrawCtlBoxes.c
 %ifdef CBUILD
 %include "c/056_7A13A_settings_dialogs/DrawCtlBoxes.inc"

@@ -1573,6 +1573,10 @@ pop esi	; 175DE
 pop ecx	; 175DF
 pop ebx	; 175E0
 ret	; 175E1
+; C: src/c/007_1609F_title_intro/PrintShadowText.c
+%ifdef CBUILD
+%include "c/007_1609F_title_intro/PrintShadowText.inc"
+%else
 PrintShadowText:
 push dword 20h	; 175E2
 call __CHK	; 175E7
@@ -1608,6 +1612,7 @@ pop edi	; 17632
 pop esi	; 17633
 pop ecx	; 17634
 ret	; 17635
+%endif ; C
 PrintOutlinedText:
 push dword 24h	; 17636
 call __CHK	; 1763B

@@ -955,6 +955,10 @@ call SetScreenSize	; 7E8D8
 .30:
 add esp, byte 24h	; 7E8DD
 jmp near DrawGadgetButton_ret	; 7E8E0
+; C: src/c/057_7DC8B_gadgets_replay/GadgetHitTest.c
+%ifdef CBUILD
+%include "c/057_7DC8B_gadgets_replay/GadgetHitTest.inc"
+%else
 GadgetHitTest:
 push dword 10h	; 7E8E5
 call __CHK	; 7E8EA
@@ -994,6 +998,7 @@ pop edi	; 7E93A
 pop esi	; 7E93B
 pop ecx	; 7E93C
 ret	; 7E93D
+%endif ; C
 PickNearestPlayer:
 push dword 1Ch	; 7E93E
 call __CHK	; 7E943

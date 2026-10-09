@@ -66,6 +66,10 @@ pop edx	; 8351C
 pop ecx	; 8351D
 pop ebx	; 8351E
 ret	; 8351F
+; C: src/c/061_83459_speech/ResetSampleReq.c
+%ifdef CBUILD
+%include "c/061_83459_speech/ResetSampleReq.inc"
+%else
 ResetSampleReq:
 push dword 0Ch	; 83520
 call __CHK	; 83525
@@ -92,6 +96,7 @@ mov dword [dword eax+0104h], 0	; 8356D
 pop edx	; 83577
 pop ebx	; 83578
 ret	; 83579
+%endif ; C
 InitSpeech:
 push dword 1Ch	; 8357A
 call __CHK	; 8357F

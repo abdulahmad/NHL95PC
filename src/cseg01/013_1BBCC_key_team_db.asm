@@ -1313,6 +1313,10 @@ pop edx	; 1CB7B
 pop ecx	; 1CB7C
 pop ebx	; 1CB7D
 ret	; 1CB7E
+; C: src/c/013_1BBCC_key_team_db/ResetGoalieMenu.c
+%ifdef CBUILD
+%include "c/013_1BBCC_key_team_db/ResetGoalieMenu.inc"
+%else
 ResetGoalieMenu:
 push dword 8	; 1CB7F
 call __CHK	; 1CB84
@@ -1335,6 +1339,7 @@ mov eax, dword [mi_AwayGoalieNone]	; 1CBCE
 mov byte [eax], 2	; 1CBD3
 pop edx	; 1CBD6
 ret	; 1CBD7
+%endif ; C
 ClearPanelPenalties:
 push dword 10h	; 1CBD8
 call __CHK	; 1CBDD

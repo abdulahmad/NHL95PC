@@ -5260,7 +5260,6 @@ extern int visnamebckspr; /* ED7A0 */
 extern int dword_ED7A4; /* ED7A4 */
 extern int dword_ED7A8; /* ED7A8 */
 extern int speechq; /* ED7AC */
-extern int samplereq; /* ED7B4 */
 extern int speechcopybuf; /* ED7B8 */
 extern unsigned char unk_ED7BC[]; /* ED7BC */
 extern unsigned char fileoncd[]; /* ED7CC */

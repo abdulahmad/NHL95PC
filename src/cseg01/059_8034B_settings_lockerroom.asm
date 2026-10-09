@@ -2825,6 +2825,10 @@ pop edx	; 827AF
 pop ecx	; 827B0
 pop ebx	; 827B1
 ret	; 827B2
+; C: src/c/059_8034B_settings_lockerroom/SoundCardHitTest.c
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/SoundCardHitTest.inc"
+%else
 SoundCardHitTest:
 push dword 0Ch	; 827B3
 call __CHK	; 827B8
@@ -2859,6 +2863,7 @@ xor eax, eax	; 82800
 pop esi	; 82802
 pop ecx	; 82803
 ret	; 82804
+%endif ; C
 RedrawSoundCardOpts:
 push dword 20h	; 82805
 call __CHK	; 8280A

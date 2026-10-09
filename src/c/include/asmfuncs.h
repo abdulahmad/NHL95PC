@@ -88,7 +88,6 @@ extern void RunIntro(); /* 1672A */
 extern void ShowCredits(); /* 16F9A */
 extern void RenderTextLine(); /* 174D8 */
 extern void PrintCenteredText(); /* 17573 */
-extern void PrintShadowText(); /* 175E2 */
 extern void PrintOutlinedText(); /* 17636 */
 extern void PrintFmt1(); /* 176AE */
 extern void PrintFmt2(); /* 176DB */
@@ -275,7 +274,6 @@ extern void OpenPlayerDBs(); /* 1C26C */
 extern void OpenPlayerDBs_x(); /* 1C3F0 */
 extern void LoadTeamRoster(); /* 1C3F6 */
 extern void SetupGoalieMenu(); /* 1C852 */
-extern void ResetGoalieMenu(); /* 1CB7F */
 extern void ClearPanelPenalties(); /* 1CBD8 */
 extern void LoadScoreboardGfx(); /* 1CC3D */
 extern void DrawSprite_jt(); /* 1CD53 */
@@ -493,7 +491,6 @@ extern void DrawButton_x(); /* 30BEC */
 extern void DrawScrollBar(); /* 30C3D */
 extern void TrackScrollBars(); /* 30D0E */
 extern void SaveDialogBg(); /* 30E66 */
-extern void GrowToButton(); /* 30F5F */
 extern void GrowToButtons(); /* 30FB4 */
 extern void MessageBox(); /* 31013 */
 extern void RunMessageBox(); /* 31250 */
@@ -906,7 +903,6 @@ extern void chkprogress_go(); /* 63475 */
 extern void chkprogress_x(); /* 6353E */
 extern void Stop4Pen(); /* 63543 */
 extern void checkfornewpen(); /* 637B5 */
-extern void chkatop(); /* 639A4 */
 extern void ProcessPenaltyList(); /* 63A37 */
 extern void updatepentime(); /* 63B85 */
 extern void PenaltyManager(); /* 63BF8 */
@@ -1227,7 +1223,6 @@ extern void DrawDbDialog_n4(); /* 72A38 */
 extern void DrawDbDialog_n3(); /* 72A3F */
 extern void DrawDbDialog_n2(); /* 72A46 */
 extern void DrawDbDialog_n1(); /* 72A4D */
-extern void DbDialogHitTest(); /* 72A5C */
 extern void DrawDbList_jt(); /* 72AAE */
 extern void DrawDbList(); /* 72AC6 */
 extern void DrawDbList_n6(); /* 72CB5 */
@@ -1360,7 +1355,6 @@ extern void MenuP1ControlsInGame(); /* 7CAF7 */
 extern void ControlsDlgInGame(); /* 7CB03 */
 extern void MenuP2ControlsInGame(); /* 7CB9F */
 extern void CtlSwapScoreFix(); /* 7CBB3 */
-extern void CtlSwapTeamFlag(); /* 7CC8A */
 extern void ReassignCtlPlayer(); /* 7CCE5 */
 extern void ClearCtlBlink(); /* 7CEA1 */
 extern void ControlsDlgInGame_side(); /* 7CFB9 */
@@ -1373,7 +1367,6 @@ extern void MenuP2ControlsPlayoff(); /* 7D145 */
 extern void ControlsDlgPlayoff(); /* 7D154 */
 extern void DrawControlsDlg(); /* 7D254 */
 extern void DrawControlsOpts(); /* 7D3F0 */
-extern void CtlDlgHitTest(); /* 7D61F */
 extern void ControlsDlgLoop(); /* 7D6B1 */
 extern void SetCtlTeams(); /* 7DB67 */
 extern void LoadRockMusic(); /* 7DC8B */
@@ -1385,7 +1378,6 @@ extern void bothneitherstrs(); /* 7E05F */
 extern void DrawGadgetButton(); /* 7E067 */
 extern void DrawGadgetButton_ret(); /* 7E0F3 */
 extern void InstantReplay(); /* 7E0FA */
-extern void GadgetHitTest(); /* 7E8E5 */
 extern void PickNearestPlayer(); /* 7E93E */
 extern void ReplayControlLoop(); /* 7E9AC */
 extern void ReplaySaveHilight_jt(); /* 7F09F */
@@ -1426,7 +1418,6 @@ extern void DrawSelBoxOff(); /* 824F8 */
 extern void MenuSoundSettings(); /* 82579 */
 extern void DrawSoundCardDlg(); /* 8261C */
 extern void DrawSoundCardOpts(); /* 82690 */
-extern void SoundCardHitTest(); /* 827B3 */
 extern void RedrawSoundCardOpts(); /* 82805 */
 extern void SoundCardDlgLoop(); /* 8291E */
 extern void SoundCardDlgLoop_poll(); /* 82A5B */
@@ -1437,7 +1428,6 @@ extern void SetSoundDevice(); /* 82D7A */
 extern void SpeechTimerTick(); /* 832BC */
 extern void ResetSpeechQueue(); /* 833FA */
 extern void InitSpeechSlots(); /* 83459 */
-extern void ResetSampleReq(); /* 83520 */
 extern void InitSpeech(); /* 8357A */
 extern void ShutdownSpeech(); /* 8363C */
 extern void ShutdownSpeech_ret6(); /* 836C3 */
@@ -2286,7 +2276,6 @@ extern void loc_91940(); /* 91940 */
 extern void loc_91946(); /* 91946 */
 extern void loc_91950(); /* 91950 */
 extern void loc_9195D(); /* 9195D */
-extern void sub_91964(); /* 91964 */
 extern void loc_9199D(); /* 9199D */
 extern void loc_919A4(); /* 919A4 */
 extern void loc_919B7(); /* 919B7 */

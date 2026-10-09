@@ -259,5 +259,16 @@ int ViewHilights(void);  /* 80075 */
 int LockerHitTest(int x, int y, int *hit);  /* 81520 */   
 int AddStar(short n, short team, short pl);  /* 48789 */  
 void PanelRemovePenalty(short away, short pl);  /* 14CA0 */
+int DbDialogHitTest(int x, int y, int *hit);  /* 72A5C */ 
+int CtlDlgHitTest(int x, int y, int *hit);  /* 7D61F */   
+int SoundCardHitTest(int x, int y, int *hit);  /* 827B3 */
+int GadgetHitTest(int x, int y, int *hit);  /* 7E8E5 */   
+void PrintShadowText(int x, int y, char *s);  /* 175E2 */ 
+void __cdecl sub_91964(char *s, int x, int y);  /* graphics library: print a string */
+void GrowToButton(int *b, int *w, int *h);  /* 30F5F */   
+void chkatop(void);  /* 639A4 */                          
+void ResetGoalieMenu(void);  /* 1CB7F */                  
+void ResetSampleReq(void);  /* 83520 */                   
+void CtlSwapTeamFlag(int team);  /* 7CC8A */              
 
 #endif

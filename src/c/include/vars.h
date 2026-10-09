@@ -63,4 +63,9 @@ typedef struct Button {
     int pressed;                /* 10h: drawn pressed when nonzero */
     unsigned char pad1[8];
 } Button;
+/* screen rectangle of the dialog hit tables (lockerrects, dbdlgrects, ctldlgrects, soundcardrects, gadgetrects) */
+typedef struct Rect4 {
+    int l, t, r, b;
+} Rect4;
+extern unsigned char *samplereq;  /* ED7B4: sample request block (20 names of 13 bytes, counters at +104h..+10Ch) */
 #endif
