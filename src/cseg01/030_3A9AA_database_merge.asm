@@ -1868,6 +1868,10 @@ pop ebp	; 3C30A
 pop edi	; 3C30B
 pop esi	; 3C30C
 ret 0Ch	; 3C30D
+; C: src/c/030_3A9AA_database_merge/CopyLeagueFiles.c
+%ifdef CBUILD
+%include "c/030_3A9AA_database_merge/CopyLeagueFiles.inc"
+%else
 CopyLeagueFiles:
 push dword 20h	; 3C310
 call __CHK	; 3C315
@@ -1936,6 +1940,7 @@ pop esi	; 3C3AB
 pop ecx	; 3C3AC
 pop ebx	; 3C3AD
 ret	; 3C3AE
+%endif ; C
 ImportMasterLeague:
 push dword 0A4h	; 3C3AF
 call __CHK	; 3C3B4

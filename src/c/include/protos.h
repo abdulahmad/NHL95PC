@@ -758,5 +758,10 @@ void __cdecl sub_93000(int x1, int y1, int x2, int y2, int c);  /* graphics libr
 void HighlightGridCell(int team, unsigned char *tab, int on);  /* 37EA6 */
 int LeagueSetHitTest(int x, int y, int *item);  /* 7A9C8 */
 void DrawSpriteNumber(short x, short y, short n, short suffix);  /* 11005 */
+int LocateTeamDbCopy(unsigned char *tab, int i, char *file, char *hddir, char *flopdir, char **dir, unsigned *id);  /* 3AF70 */
+void TradeDone(int a, int b, int c, int d, int e, int f, int g, int h, unsigned char *sel);  /* 3EDAA */
+void ClockTick(void);  /* 5DC10 */
+int CopyLeagueFiles(char *src, char *dst);  /* 3C310 */
+int ReadLeagueInfo(char *dir, void *teams, char *pw, short *b, void *a, void *d, int *saved, char *name);  /* 3D8DD */
 
 #endif

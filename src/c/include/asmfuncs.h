@@ -430,15 +430,12 @@ extern void AskTeamPassword_ret(); /* 3A498 */
 extern void MergeTeamDbs(); /* 3A9AA */
 extern void MergeTeamDbs_ret(); /* 3AE18 */
 extern void MergeScheduleDb(); /* 3AE1E */
-extern void LocateTeamDbCopy(); /* 3AF70 */
 extern void UpdateTeamDbs(); /* 3B039 */
 extern void UpdateTeamDbs_ret(); /* 3B254 */
 extern void RebuildLeagueDbs(); /* 3B9CA */
 extern void ExportTeamToFloppy(); /* 3BB87 */
-extern void CopyLeagueFiles(); /* 3C310 */
 extern void ImportMasterLeague_ret(); /* 3C6DB */
 extern void ExportDbs(); /* 3D108 */
-extern void ReadLeagueInfo(); /* 3D8DD */
 extern void LoadNhlCfg(); /* 3DB41 */
 extern void negone_3DC28(); /* 3DC28 */
 extern void BuildTradeRoster(); /* 3DC2C */
@@ -448,7 +445,6 @@ extern void ExecuteTrade(); /* 3E390 */
 extern void DrawTradeScreen(); /* 3E9CF */
 extern void TradeHitTest(); /* 3ECAE */
 extern void TradeHitTest_ret(); /* 3EDA4 */
-extern void TradeDone(); /* 3EDAA */
 extern void TradeScreenLoop(); /* 3EF89 */
 extern void TradeScreen(); /* 3FF52 */
 extern void TradePlayers(); /* 40183 */

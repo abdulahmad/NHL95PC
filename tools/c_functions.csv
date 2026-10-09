@@ -2,7 +2,7 @@ function,address,size,segment,c_file,status,notes
 DiskFreeBytes,106C8,74,001_10010_main_startup,src/c/001_10010_main_startup/DiskFreeBytes.c,matched,
 DrawFrameSprite,110E0,86,001_10010_main_startup,src/c/001_10010_main_startup/DrawFrameSprite.c,nonmatching,registers: asm builds x+C0h in esi and 140h-y in edx (then ebx); C swaps them
 DrawRinkEndArt,11136,43,001_10010_main_startup,src/c/001_10010_main_startup/DrawRinkEndArt.c,matched,
-DrawSpriteNumber,11005,219,001_10010_main_startup,src/c/001_10010_main_startup/DrawSpriteNumber.c,nonmatching,
+DrawSpriteNumber,11005,219,001_10010_main_startup,src/c/001_10010_main_startup/DrawSpriteNumber.c,nonmatching,"register / stack slots: asm keeps n in ax/edi, sy and suffix as stack words (read as dword >> 16); C needs ebp"
 GetMemListHead,10010,26,001_10010_main_startup,src/c/001_10010_main_startup/GetMemListHead.c,matched,
 GetMemStats,1002A,106,001_10010_main_startup,src/c/001_10010_main_startup/GetMemStats.c,matched,
 IntermissionPC,10F6D,152,001_10010_main_startup,src/c/001_10010_main_startup/IntermissionPC.c,matched,
@@ -150,7 +150,7 @@ CalReturn,3476B,30,027_33FFD_calendar,src/c/027_33FFD_calendar/CalReturn.c,match
 SetGameSides,347B7,106,027_33FFD_calendar,src/c/027_33FFD_calendar/SetGameSides.c,nonmatching,draft: record pointer built in edx (asm) vs eax; o kept in edx
 DrawTeamGrid,37FBA,303,028_35FB9_import_export,src/c/028_35FB9_import_export/DrawTeamGrid.c,nonmatching,
 DrawTeamGridName,37C53,279,028_35FB9_import_export,src/c/028_35FB9_import_export/DrawTeamGridName.c,nonmatching,register allocation: asm keeps the row in a stack slot and the column in edi (no order of the 5 locals matches)
-HighlightGridCell,37EA6,276,028_35FB9_import_export,src/c/028_35FB9_import_export/HighlightGridCell.c,nonmatching,
+HighlightGridCell,37EA6,276,028_35FB9_import_export,src/c/028_35FB9_import_export/HighlightGridCell.c,nonmatching,register / stack slots of the 8 frame corner temporaries differ; logic matches
 MakeTeamDbFmt,36207,102,028_35FB9_import_export,src/c/028_35FB9_import_export/MakeTeamDbFmt.c,matched,
 RestoreGridCellBg,37E5B,75,028_35FB9_import_export,src/c/028_35FB9_import_export/RestoreGridCellBg.c,matched,
 SaveGridCellBg,37D6A,241,028_35FB9_import_export,src/c/028_35FB9_import_export/SaveGridCellBg.c,matched,
@@ -165,14 +165,18 @@ ReadLeagueTeamEntry,3A31E,41,029_380E9_league_setup,src/c/029_380E9_league_setup
 TeamSelCancel,38B3A,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelCancel.c,matched,
 TeamSelDone,38B25,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelDone.c,matched,
 WriteTeamRec,3A2B8,54,029_380E9_league_setup,src/c/029_380E9_league_setup/WriteTeamRec.c,matched,
+CopyLeagueFiles,3C310,159,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/CopyLeagueFiles.c,matched,
 ImportDbs,3CF5B,429,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ImportDbs.c,matched,
+LocateTeamDbCopy,3AF70,201,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/LocateTeamDbCopy.c,nonmatching,
 MergeUpdateDbs,3B8B0,282,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/MergeUpdateDbs.c,matched,
+ReadLeagueInfo,3D8DD,476,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ReadLeagueInfo.c,nonmatching,
 ReadTeamNames,3DAB9,136,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ReadTeamNames.c,matched,
 WaitLeagueFloppy,3D84F,142,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/WaitLeagueFloppy.c,nonmatching,"draft: file/name params in edi/esi swapped, local order and MessageBox result kept in eax not edx"
 DrawTradeRow,3E7B3,130,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/DrawTradeRow.c,nonmatching,"draft: row offset in ecx vs eax, add order; 1 byte longer"
 FindTradeSlot,3EF3C,77,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/FindTradeSlot.c,matched,
 LoadTradeTeamPals,3E835,410,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/LoadTradeTeamPals.c,matched,
 TradeCancel,3EF27,21,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeCancel.c,matched,
+TradeDone,3EDAA,381,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeDone.c,nonmatching,
 TradeRosterCmp,3FEF0,98,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeRosterCmp.c,matched,
 FmtFromLeague,41171,87,033_40183_trades,src/c/033_40183_trades/FmtFromLeague.c,matched,
 GetLeagueId,41344,137,033_40183_trades,src/c/033_40183_trades/GetLeagueId.c,matched,
@@ -288,6 +292,7 @@ WaitDigiSample,599EE,35,041_59493_engine_sound_iface,src/c/041_59493_engine_soun
 sfx,59884,193,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/sfx.c,nonmatching,
 AvgCline,5A03B,104,042_59D9A_engine_core,src/c/042_59D9A_engine_core/AvgCline.c,matched,
 ClearSortCords,5BA4E,59,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ClearSortCords.c,matched,
+ClockTick,5DC10,347,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ClockTick.c,nonmatching,
 GameOver,5DD9E,30,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GameOver.c,matched,
 GetHotOrStick,5A534,77,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetHotOrStick.c,matched,
 GetHotStick,5A4AD,70,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetHotStick.c,nonmatching,"1 register: the X-flip negate goes through a fresh esi (mov esi,ebx / neg esi), same open issue as GetHot; rest matches"
