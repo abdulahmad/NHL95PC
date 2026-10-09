@@ -31,7 +31,7 @@ global PassLaneChk_ret5a, PassLaneChk_ret5
 global dopass_ret6
 global passtoa0, puckbody, puckglue, puckgoalie, puckshadow, puckstick, setpassmode
 global ToFixed, BlockShotDive, TryBlockShot, FacingBoards, SkillForAnim, ChkDelayedOffside, PuckCheckColl, PenTimeDiff
-global PassLaneChk, sub_54D63, passmode, CompShoot, ChkOffsides, MarkTwoLinePlayers, ChkShotStat, setInjuryType
+global PassLaneChk, ScatterPass, passmode, CompShoot, ChkOffsides, MarkTwoLinePlayers, ChkShotStat, setInjuryType
 global sub_5601D, puckIChk, newcheck, ChkGoalies, ReturnGoalies, ChkPullGoalieLate, wallcoll, wallcollb
 ToFixed:
 push dword 4	; 53294
@@ -2313,7 +2313,7 @@ pop esi	; 54D5F
 pop ecx	; 54D60
 pop ebx	; 54D61
 ret	; 54D62
-sub_54D63:
+ScatterPass:
 push dword 0Ch	; 54D63
 call __CHK	; 54D68
 push ebx	; 54D6D
@@ -2386,7 +2386,7 @@ mov edx, SortCords	; 54E45
 add edx, eax	; 54E4A
 .1:
 mov eax, ecx	; 54E4C
-call sub_54D63	; 54E4E
+call ScatterPass	; 54E4E
 jmp near .23	; 54E53
 .2:
 cmp word [byte ecx+position], byte 0	; 54E58

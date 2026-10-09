@@ -52,9 +52,9 @@ global assshoot_ret
 global ass_replace_popx, ass_popx
 global ass_skate_temp34
 global puckflip, pucknorm, pucknorm_body, pucknothing, puckunflip, rtss
-global PickShotAim, AddStar, sub_487D9, StarCompare, PickThreeStars, StartThreeStars, sub_49260, sub_492F9
-global StopIfFree, GoalieToPuckVec, sub_4B4E9, sub_4C632, sub_4C8BD, asspuckc_chkdir, ChkTwoLinePass, SkateToSpot
-global sub_4E71A, sub_4F99B
+global PickShotAim, AddStar, StarEligible, StarCompare, PickThreeStars, StartThreeStars, MoveInDir, SteerToTarget
+global StopIfFree, GoalieToPuckVec, TurnTowardDir, CountPuckThreat, sub_4C8BD, asspuckc_chkdir, ChkTwoLinePass, SkateToSpot
+global CrowdOnStoppage, sub_4F99B
 assintrostand:
 push dword 10h	; 4842A
 call __CHK	; 4842F
@@ -379,7 +379,7 @@ mov eax, 1	; 487D1
 pop esi	; 487D6
 pop ecx	; 487D7
 ret	; 487D8
-sub_487D9:
+StarEligible:
 push dword 0Ch	; 487D9
 call __CHK	; 487DE
 push ebx	; 487E3
@@ -412,12 +412,12 @@ cmp ebx, ecx	; 4881B
 jne short .5	; 4881D
 cmp word [byte eax+01Ah], byte 6	; 4881F
 jne short .6	; 48824
-jmp short sub_487D9.1	; 48826
+jmp short StarEligible.1	; 48826
 .5:
 inc edx	; 48828
 add eax, 80h	; 48829
 cmp edx, byte 6	; 4882E
-jl short sub_487D9.4	; 48831
+jl short StarEligible.4	; 48831
 .6:
 mov eax, 1	; 48833
 pop ecx	; 48838
@@ -566,11 +566,11 @@ jmp short StarCompare.6	; 489AE
 .10:
 mov edx, ebp	; 489B0
 mov eax, edi	; 489B2
-call sub_487D9	; 489B4
+call StarEligible	; 489B4
 mov ecx, eax	; 489B9
 mov edx, dword [byte esp+04h]	; 489BB
 mov eax, ebx	; 489BF
-call sub_487D9	; 489C1
+call StarEligible	; 489C1
 xor ecx, eax	; 489C6
 je short .12	; 489C8
 test eax, eax	; 489CA
@@ -1195,7 +1195,7 @@ jmp near PreGameIntro_popx	; 49251
 .4:
 call sub_8F633	; 49256
 jmp near PreGameIntro_popx	; 4925B
-sub_49260:
+MoveInDir:
 push dword 8	; 49260
 call __CHK	; 49265
 push ebx	; 4926A
@@ -1256,7 +1256,7 @@ call playeracc	; 492F2
 .x:
 pop ebx	; 492F7
 ret	; 492F8
-sub_492F9:
+SteerToTarget:
 push dword 10h	; 492F9
 call __CHK	; 492FE
 push ebx	; 49303
@@ -1366,7 +1366,7 @@ mov word [byte ebx+facedir], ax	; 4944B
 mov edx, dword [byte ebx+025h]	; 4944F
 sar edx, 18h	; 49452
 mov eax, ebx	; 49455
-call sub_49260	; 49457
+call MoveInDir	; 49457
 pop edx	; 4945C
 pop ecx	; 4945D
 pop ebx	; 4945E
@@ -1478,7 +1478,7 @@ mov word [regd0], ax	; 4959C
 mov ax, word [byte ebx+temp4]	; 495A2
 mov word [regd1], ax	; 495A6
 mov eax, ebx	; 495AC
-call sub_492F9	; 495AE
+call SteerToTarget	; 495AE
 .x:
 pop edi	; 495B3
 pop edx	; 495B4
@@ -3886,7 +3886,7 @@ pop edx	; 4B4E5
 pop ecx	; 4B4E6
 pop ebx	; 4B4E7
 ret	; 4B4E8
-sub_4B4E9:
+TurnTowardDir:
 push dword 14h	; 4B4E9
 call __CHK	; 4B4EE
 push ebx	; 4B4F3
@@ -3934,7 +3934,7 @@ jg short .4	; 4B566
 cmp cx, byte 5	; 4B568
 jl short .4	; 4B56C
 cmp cx, byte 7	; 4B56E
-jle short sub_4B4E9.2	; 4B572
+jle short TurnTowardDir.2	; 4B572
 .4:
 cmp bx, byte 5	; 4B574
 jl short .6	; 4B578
@@ -5286,7 +5286,7 @@ call playeracc	; 4C627
 assgoalie_popebp:
 pop ebp	; 4C62C
 jmp near ass_popx	; 4C62D
-sub_4C632:
+CountPuckThreat:
 push dword 18h	; 4C632
 call __CHK	; 4C637
 push ebx	; 4C63C
@@ -5361,7 +5361,7 @@ add eax, 80h	; 4C6E2
 inc ebx	; 4C6E7
 .9:
 cmp bx, byte 6	; 4C6E8
-jl short sub_4C632.3	; 4C6EC
+jl short CountPuckThreat.3	; 4C6EC
 jmp near ass_popx	; 4C6EE
 ; asspuckc: asstab 10h (93G logic93_3 asspuckc, player has the puck): checkob, chk4lc, chk4shot, chk4pass, then
 ;   skateto with asspuckc_chkdir as the collision routine.
@@ -7999,7 +7999,7 @@ pop esi	; 4E716
 pop ecx	; 4E717
 pop ebx	; 4E718
 ret	; 4E719
-sub_4E71A:
+CrowdOnStoppage:
 push dword 0Ch	; 4E71A
 call __CHK	; 4E71F
 push ecx	; 4E724
@@ -8059,7 +8059,7 @@ cmp ax, word [periodendtime]	; 4E7D4
 jg short .5	; 4E7DB
 mov word [periodendtime], 0FFFFh	; 4E7DD
 mov eax, 5	; 4E7E6
-jmp short sub_4E71A.3	; 4E7EB
+jmp short CrowdOnStoppage.3	; 4E7EB
 .5:
 test byte [gameopts+1], 1	; 4E7ED
 je short .7	; 4E7F4
@@ -8079,10 +8079,10 @@ jne short .7	; 4E823
 test edx, edx	; 4E825
 jle short .6	; 4E827
 mov eax, 4	; 4E829
-jmp short sub_4E71A.3	; 4E82E
+jmp short CrowdOnStoppage.3	; 4E82E
 .6:
 mov eax, 1	; 4E830
-jmp short sub_4E71A.3	; 4E835
+jmp short CrowdOnStoppage.3	; 4E835
 .7:
 mov eax, 8	; 4E837
 call randomd0	; 4E83C
@@ -8200,7 +8200,7 @@ mov word [byte ebx+Wallsin], 0	; 4E9BD
 mov edx, 0A5Bh	; 4E9C3
 mov eax, ebx	; 4E9C8
 call SetSPA	; 4E9CA
-call sub_4E71A	; 4E9CF
+call CrowdOnStoppage	; 4E9CF
 test eax, eax	; 4E9D4
 jne short ass_popx	; 4E9D6
 cmp word [word_CBEC0], 100h	; 4E9D8
@@ -8686,7 +8686,7 @@ jmp near .64	; 4F0AD
 call sub_62807	; 4F0B2
 jmp short .20	; 4F0B7
 .19:
-call sub_4E71A	; 4F0B9
+call CrowdOnStoppage	; 4F0B9
 test eax, eax	; 4F0BE
 jne near .64	; 4F0C0
 .20:

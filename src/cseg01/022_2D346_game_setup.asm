@@ -20,7 +20,7 @@ extern crestnames, gamestatlabels, leaguedbnames, penaltynames, rand_, sprintf_
 extern strcat_, strcpy_, FadePalette, MakePath, FileOpenRead, FileOpenRW, FileClose, ReadKeyRec
 extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, SetTextColors, PrintShadowText, sub_1BAF3, FitPlayerName, WaitClickTimeout
 extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, PaScoringPeriod, PaElseNhl, PaOpenBank, ClearInputQueue
-extern FadePalStep, sub_7DF4E, MusicChanCmd3, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
+extern FadePalStep, DrawGadgetByType, MusicChanCmd3, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_913B4, sub_913D0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, SetDrawBitmap, sub_B4F8C, gsuminitff, str_D6, str_OT, str_S3
@@ -594,7 +594,7 @@ mov dl, byte [dword esp+07E8h]	; 2DC2E
 lea ecx, [dword esp+0670h]	; 2DC35
 mov ebx, dword [dword esp+07B0h]	; 2DC3C
 mov eax, dword [byte esp+08h]	; 2DC43
-call sub_7DF4E	; 2DC47
+call DrawGadgetByType	; 2DC47
 push byte 50h	; 2DC4C
 push byte 3Dh	; 2DC4E
 mov eax, dword [hmcrestbmp]	; 2DC50
@@ -619,7 +619,7 @@ mov dl, byte [dword esp+07E8h]	; 2DC8A
 lea ecx, [dword esp+0670h]	; 2DC91
 mov ebx, dword [dword esp+07B0h]	; 2DC98
 mov eax, dword [byte esp+08h]	; 2DC9F
-call sub_7DF4E	; 2DCA3
+call DrawGadgetByType	; 2DCA3
 jmp near GameSummaryScreen_period.15	; 2DCA8
 .39:
 test bl, 20h	; 2DCAD
@@ -700,7 +700,7 @@ mov dl, byte [dword esp+07E8h]	; 2DE05
 lea ecx, [dword esp+0670h]	; 2DE0C
 mov ebx, dword [dword esp+07B0h]	; 2DE13
 mov eax, dword [byte esp+08h]	; 2DE1A
-call sub_7DF4E	; 2DE1E
+call DrawGadgetByType	; 2DE1E
 push dword 1E0h	; 2DE23
 push byte 0	; 2DE28
 push dword 280h	; 2DE2A
@@ -839,7 +839,7 @@ mov dl, byte [dword esp+07E8h]	; 2E041
 lea ecx, [dword esp+0670h]	; 2E048
 mov ebx, dword [dword esp+07B0h]	; 2E04F
 mov eax, dword [byte esp+08h]	; 2E056
-call sub_7DF4E	; 2E05A
+call DrawGadgetByType	; 2E05A
 push byte 50h	; 2E05F
 push byte 3Dh	; 2E061
 mov eax, dword [nosplit esi*4+hmcrestbmp]	; 2E063
@@ -1088,7 +1088,7 @@ mov dl, byte [dword esp+07E8h]	; 2E40F
 lea ecx, [dword esp+0670h]	; 2E416
 mov ebx, dword [dword esp+07B0h]	; 2E41D
 mov eax, dword [byte esp+08h]	; 2E424
-call sub_7DF4E	; 2E428
+call DrawGadgetByType	; 2E428
 push byte 50h	; 2E42D
 push byte 3Dh	; 2E42F
 mov eax, dword [hmcrestbmp]	; 2E431
@@ -1114,7 +1114,7 @@ mov dl, byte [dword esp+07E8h]	; 2E46E
 lea ecx, [dword esp+0670h]	; 2E475
 mov ebx, dword [dword esp+07B0h]	; 2E47C
 mov eax, dword [byte esp+08h]	; 2E483
-call sub_7DF4E	; 2E487
+call DrawGadgetByType	; 2E487
 .28:
 xor ebx, ebx	; 2E48C
 mov dword [dword esp+0778h], ebx	; 2E48E
@@ -1863,7 +1863,7 @@ mov dl, byte [dword esp+07E0h]	; 2EF8A
 lea ecx, [dword esp+0670h]	; 2EF91
 mov ebx, dword [dword esp+07B0h]	; 2EF98
 mov eax, dword [byte esp+08h]	; 2EF9F
-call sub_7DF4E	; 2EFA3
+call DrawGadgetByType	; 2EFA3
 push byte 50h	; 2EFA8
 push byte 3Dh	; 2EFAA
 mov eax, dword [hmcrestbmp]	; 2EFAC
@@ -1889,7 +1889,7 @@ mov dl, byte [dword esp+07E0h]	; 2EFE9
 lea ecx, [dword esp+0670h]	; 2EFF0
 mov ebx, dword [dword esp+07B0h]	; 2EFF7
 mov eax, dword [byte esp+08h]	; 2EFFE
-call sub_7DF4E	; 2F002
+call DrawGadgetByType	; 2F002
 .76:
 test byte [esp], 1	; 2F007
 je short .78	; 2F00B

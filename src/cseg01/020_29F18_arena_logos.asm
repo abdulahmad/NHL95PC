@@ -14,7 +14,7 @@ extern fputchar, jctime, memcpy_, teamabbrevs, crestnames, scoutcatnames, league
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, SetDialogColors, TrackButtons, DrawButtons
 extern WaitClickTimeout, ShowLoadingScreen, PaTonightIntro, PaLineups, PaPlayoffTonight, PaOpenBank, PaPreloadClips, GetInputEvent
-extern ClearInputQueue, FadePalStep, GameLineEditor, sub_7DF4E, SpeechBusy, MusicChanReset2, sub_8CCA8, sub_8D2F0
+extern ClearInputQueue, FadePalStep, GameLineEditor, DrawGadgetByType, SpeechBusy, MusicChanReset2, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_91370, sub_913D0, sub_91400
 extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4FAC, str_D4
@@ -1267,7 +1267,7 @@ lea ecx, [dword esp+09Ch]	; 2B125
 mov ebx, dword [dword esp+0110h]	; 2B12C
 xor edx, edx	; 2B133
 mov eax, 8	; 2B135
-call sub_7DF4E	; 2B13A
+call DrawGadgetByType	; 2B13A
 push dword 1E0h	; 2B13F
 push byte 0	; 2B144
 push dword 280h	; 2B146
@@ -1414,7 +1414,7 @@ lea ecx, [dword esp+09Ch]	; 2B333
 mov ebx, dword [dword esp+0110h]	; 2B33A
 xor edx, edx	; 2B341
 mov eax, 10h	; 2B343
-call sub_7DF4E	; 2B348
+call DrawGadgetByType	; 2B348
 push byte 50h	; 2B34D
 push byte 3Dh	; 2B34F
 mov eax, dword [dword esp+011Ch]	; 2B351
@@ -1544,7 +1544,7 @@ lea ecx, [dword esp+09Ch]	; 2B50B
 mov ebx, dword [dword esp+0110h]	; 2B512
 xor edx, edx	; 2B519
 mov eax, 4	; 2B51B
-call sub_7DF4E	; 2B520
+call DrawGadgetByType	; 2B520
 push byte 50h	; 2B525
 push byte 3Dh	; 2B527
 mov eax, dword [dword esp+011Ch]	; 2B529

@@ -673,7 +673,7 @@
 ;  7DB67  SetCtlTeams                              cseg01/056_7A13A_settings_dialogs.asm        1
 ;  7DC8B  LoadRockMusic                            cseg01/057_7DC8B_gadgets_replay.asm          4
 ;  7DEC8  FreeRockMusic                            cseg01/057_7DC8B_gadgets_replay.asm          2
-;  7DF4E  sub_7DF4E                                cseg01/057_7DC8B_gadgets_replay.asm          2
+;  7DF4E  DrawGadgetByType                         cseg01/057_7DC8B_gadgets_replay.asm          2
 ;  7E05F  bothneitherstrs                          cseg01/057_7DC8B_gadgets_replay.asm          1
 ;  7E0F3  DrawGadgetButton_ret                     cseg01/057_7DC8B_gadgets_replay.asm          1
 ;  7E0FA  InstantReplay                            cseg01/057_7DC8B_gadgets_replay.asm          3

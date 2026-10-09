@@ -25,7 +25,7 @@ global ReplaySaveHilight_jt
 global LoadRockMusic_ret
 global DrawGadgetButton_ret
 global ReplaySaveHilight_n0, ReplaySaveHilight_n2, ReplaySaveHilight_n1, ReplaySaveHilight_n3
-global LoadRockMusic, FreeRockMusic, sub_7DF4E
+global LoadRockMusic, FreeRockMusic, DrawGadgetByType
 global GadgetStub0, sub_7E03F, DrawGadgetButton, InstantReplay, GadgetHitTest, PickNearestPlayer, ReplayControlLoop, ReplaySaveHilight
 global bothneitherstrs
 LoadRockMusic:
@@ -276,7 +276,7 @@ cmp edx, byte 3	; 7DF43
 jl short FreeRockMusic.5	; 7DF46
 pop ebp	; 7DF48
 jmp near LoadRockMusic_ret	; 7DF49
-sub_7DF4E:
+DrawGadgetByType:
 push dword 18h	; 7DF4E
 call __CHK	; 7DF53
 push esi	; 7DF58
@@ -319,7 +319,7 @@ push edx	; 7DFB4
 call sub_913B4	; 7DFB5
 add esp, byte 4	; 7DFBA
 mov ebx, dword [byte esi+04h]	; 7DFBD
-jmp short sub_7DF4E.2	; 7DFC0
+jmp short DrawGadgetByType.2	; 7DFC0
 .4:
 mov ecx, dword [byte ecx+028h]	; 7DFC2
 push ecx	; 7DFC5
@@ -338,7 +338,7 @@ push edx	; 7DFE2
 call sub_913B4	; 7DFE3
 add esp, byte 4	; 7DFE8
 mov ebx, dword [byte esi+0Ch]	; 7DFEB
-jmp short sub_7DF4E.2	; 7DFEE
+jmp short DrawGadgetByType.2	; 7DFEE
 .6:
 mov ecx, dword [byte esi+028h]	; 7DFF0
 push ecx	; 7DFF3
