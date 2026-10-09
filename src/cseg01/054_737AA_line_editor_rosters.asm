@@ -7,7 +7,7 @@ extern asc_C30F2, asc_C30F7, asc_C30FE, asc_C3107, asc_C3111, asc_C3122, asc_C31
 extern asc_C3134, asc_C313F, asc_C3146, asc_C314E, asc_C3152, asc_C3156, asc_C315A, asc_C3160
 extern asc_C3164, asc_C316C, asc_C3171, asc_C3180, asc_C3184, asc_C3189, asc_C3190, asc_C3194
 extern asc_C319D, asc_C31A2, asc_C31A7, asc_C31AF, asc_C31B6, asc_C31BB, asc_C31C2, asc_C31CB
-extern asc_C31D5, str_fmt2d, str_fmt3d, asc_C690B, asc_C6913, asc_C692B, asc_C6935, str_Bkgd2
+extern asc_C31D5, str_fmt2d, str_fmt3d, str_fmt4d, str_fmtTenths, str_fmtMinSec, str_fmtEmb, str_Bkgd2
 extern rosterteam, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238, byte_D12DE, gameopts
 extern musicon, hmroster, byte_DB3AD, leaguedbfmt, rosterlist, byte_EA991, byte_EA992, byte_EA993
 extern byte_EC7E0, byte_EC7E4, byte_ECAE4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED0F7, byte_ED0F8
@@ -3438,7 +3438,7 @@ xor eax, eax	; 75DAA
 mov al, byte [byte_EC7E0]	; 75DAC
 mov ebp, dword [nosplit eax*4+rosterteamrec]	; 75DB1
 push ebp	; 75DB8
-push asc_C6935	; 75DB9
+push str_fmtEmb	; 75DB9
 lea eax, [byte esp+058h]	; 75DBE
 push eax	; 75DC2
 call sprintf_	; 75DC3
@@ -3644,7 +3644,7 @@ mov eax, 186h	; 760B9
 call PrintFmt1	; 760BE
 xor ecx, ecx	; 760C3
 mov cx, word [byte edi+0Eh]	; 760C5
-mov ebx, asc_C690B	; 760C9
+mov ebx, str_fmt4d	; 760C9
 mov edx, esi	; 760CE
 mov eax, 1AEh	; 760D0
 call PrintFmt1	; 760D5
@@ -3656,7 +3656,7 @@ mov eax, 1E8h	; 760E7
 call PrintFmt1	; 760EC
 mov ecx, dword [byte edi+0Eh]	; 760F1
 sar ecx, 10h	; 760F4
-mov ebx, asc_C690B	; 760F7
+mov ebx, str_fmt4d	; 760F7
 mov edx, esi	; 760FC
 mov eax, 210h	; 760FE
 call PrintFmt1	; 76103
@@ -3788,7 +3788,7 @@ mov eax, 10Eh	; 762D6
 call PrintFmt1	; 762DB
 xor ecx, ecx	; 762E0
 mov cx, word [byte edi+0Ch]	; 762E2
-mov ebx, asc_C690B	; 762E6
+mov ebx, str_fmt4d	; 762E6
 mov edx, esi	; 762EB
 mov eax, 136h	; 762ED
 call PrintFmt1	; 762F2
@@ -3805,7 +3805,7 @@ mov edx, ebx	; 7630E
 sar edx, 1Fh	; 76310
 idiv ecx	; 76313
 mov ecx, eax	; 76315
-mov ebx, asc_C692B	; 76317
+mov ebx, str_fmtMinSec	; 76317
 mov edx, esi	; 7631C
 mov eax, 15Eh	; 7631E
 call PrintFmt2	; 76323
@@ -3840,7 +3840,7 @@ call PrintFmt1	; 7638E
 xor ecx, ecx	; 76393
 mov eax, dword [dword esp+098h]	; 76395
 mov cx, word [byte eax+012h]	; 7639C
-mov ebx, asc_C690B	; 763A0
+mov ebx, str_fmt4d	; 763A0
 mov edx, esi	; 763A5
 mov eax, 20Eh	; 763A7
 call PrintFmt1	; 763AC
@@ -3858,7 +3858,7 @@ mov edx, edi	; 763CF
 sar edx, 1Fh	; 763D1
 idiv ebx	; 763D4
 mov ecx, eax	; 763D6
-mov ebx, asc_C6913	; 763D8
+mov ebx, str_fmtTenths	; 763D8
 mov edx, esi	; 763DD
 mov eax, 240h	; 763DF
 call PrintFmt2	; 763E4

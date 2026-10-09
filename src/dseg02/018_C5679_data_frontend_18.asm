@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_C5679 progbits alloc noexec write align=1
 extern dword_DD124, dword_DD1B4, dword_DD244, StatsSel9394Season, StatsSel9394Playoffs, StatsSelLeague, StatsSelLeaguePlayoffs, StatsSelPlayoffMode
-extern NullBlit, CompareSkaterStats, CompareGoalieStats, sub_22DDE, sub_22F2E, sub_23051, sub_2312D, sub_232B7
-extern sub_23437, sub_25144, sub_25237, sub_25325, sub_25438, sub_2554B, sub_25642, sub_25755
-extern sub_2586A, sub_259C0, sub_B4CD8, sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8
+extern NullBlit, CmpPoints, CmpGAA, CmpTeamStandings, CmpTeamScoring, CmpTeamDefense, CmpTeamPP, CmpTeamPK
+extern CmpTeamPenalties, CmpGoals, CmpAssists, CmpPPGoals, CmpSHGoals, CmpPlusMinus, CmpPIM, CmpShootPct
+extern CmpGoalieWins, CmpSavePct, sub_B4CD8, sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8
 extern sub_B5974, sub_B5AC8, unk_C06BC, unk_C06C1, unk_C06C6, unk_C06CB, unk_C06D0, unk_C06D5
 extern unk_C06DA, unk_C06DF, unk_C06E4, unk_C06E9, unk_C06EE, unk_C06F3, unk_C06F8, unk_C06FD
 extern unk_C0702, unk_C0707, unk_C070C, unk_C0711, unk_C0716, unk_C071B, unk_C0720, unk_C0725
@@ -15,7 +15,7 @@ extern unk_C077A, unk_C077F, unk_C07A4, unk_C07A6, unk_C07AF, unk_C07B8, unk_C07
 extern unk_C07D3, unk_C07DC, unk_C07E5, unk_C07EE, unk_C07F7, unk_C0800, unk_C0809, unk_C0812
 extern unk_C081B, unk_C0824, unk_C082D, unk_C0836, unk_C083F, unk_C0848, unk_C0851, unk_C0B68
 extern unk_C0B79, unk_C0B8A, unk_C0B9D, unk_C0BAF, unk_C0BB7, unk_C0BC0, unk_C0BCC, unk_C0BD8
-extern unk_C0BE4, unk_C0BF0, unk_C0BF7, unk_C0BFF, unk_C0C09, unk_C0C13, unk_C0C1F, unk_C0CB0
+extern unk_C0BE4, str_embnhl, str_embscup, str_careerdb, str_seasondb, str_carteamsdb, str_teamsdb, unk_C0CB0
 extern unk_C0CB6, unk_C0CBE, unk_C0CC5, unk_C0CD0, unk_C0CD9, unk_C0CE7, unk_C0CF0, unk_C0CF8
 extern unk_C0D0C, unk_C0D20, unk_C0D2F, unk_C0D39, unk_C0D49, unk_C0DEC, unk_C0DF7, unk_C0E03
 extern unk_C0E0E, unk_C0E1A, unk_C0E27, unk_C0E2D, unk_C0E35, unk_C0E3C, unk_C0E50, unk_C0EE0
@@ -28,8 +28,8 @@ extern unk_C11DE, unk_C11E2, unk_C11E8, unk_C11EE, unk_C11F3, unk_C11F7, unk_C11
 extern unk_C1203, unk_C1206, unk_C120B, unk_C126C, unk_C1276, unk_C5654
 global CreditsList, msg_NeedKbytes, msg_NeedKbytes2, str_ReturningToSportsCentral, str_ReturningOutOfThe, str_ReturningToThePlayoff, str_ExitingTheGame, str_DoYouWishToReturn
 global str_DoYouWishToExit, str_9394Season, str_9394PlayOffs, str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle
-global str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, asc_C68FC, str_fmt2d, str_fmt3d, asc_C690B
-global asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B, asc_C6935, str_Bkgd2, str_EASNvfn
+global str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, str_AttDb, str_fmt2d, str_fmt3d, str_fmt4d
+global str_fmt5d, str_fmtTenths, str_fmtPct, str_fmtPct0, str_fmtMinSec, str_fmtEmb, str_Bkgd2, str_EASNvfn
 global asc_C70A0, asc_C70B8, asc_C70C7, asc_C70EC, asc_C70F8, asc_C7298, byte_C66B4, mi_9394Season
 global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, byte_C6D72, byte_C6D73, byte_C6D7A
 global byte_C6D7B, byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, byte_C6D9A
@@ -41,7 +41,7 @@ global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy
 global statscategory, statsteamsel, statsredrawcb, deskexit, teamstatscb, skaterstatscb, goaliestatscb, standingscb
 global standingsmenucb, hlplayedmask, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dirtyrectcount, dword_C66D0
 global dword_C66D4, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD, statsplayoffs, statsfromleague, statspalvalid
-global dword_C6AF8, dword_C6B30, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32, dword_C6E3A, dword_C6E4A
+global westconfteams, eastconfteams, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32, dword_C6E3A, dword_C6E4A
 global dword_C6F78, dword_C6F88, dword_C6F8C, dword_C6F90, dword_C6F94, dword_C7008, dword_C700C, dword_C7010
 global dword_C7014, dword_C7018, dword_C701C, dword_C7020, dword_C7024, dword_C7028, dword_C702C, dword_C7030
 global dword_C7034, dword_C70E3, dword_C70E7, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC
@@ -49,9 +49,9 @@ global dword_C71E0, dword_C71E4, dword_C71E8, dword_C71EC, dword_C71F0, dword_C7
 global dword_C7210, dword_C7219, songdata, dword_C729A, dword_C729C, dword_C729E, dword_C72A0, dword_C73D0
 global rinkbm, dword_C73D8, dword_C7440, dword_C7444, dword_C7448, off_C56B5, perioddigits, off_C57C8
 global crestnames, off_C6399, off_C648E, off_C659A, off_C6821, off_C6825, off_C6841, off_C6845
-global off_C6881, off_C6885, off_C68BC, off_C68CC, off_C68E4, off_C68EC, off_C68F4, off_C68F8
-global off_C6A64, off_C6A99, off_C6AAC, off_C6AD1, off_C6AE0, off_C6B68, off_C6B6C, off_C6B70
-global off_C6B88, off_C6B8C, off_C6B90, off_C6B94, off_C6BE8, off_C6C14, off_C6C40, off_C6C44
+global off_C6881, off_C6885, off_C68BC, statslabels, statsbgnames, statsplayerdbs, statsteamdbs
+global skaterratingnames, off_C6A99, goalieratingnames, off_C6AD1, teamsortfns, westconfname, eastconfname, teamstattitles
+global teamcolhdrs, leadersortfns, leadertitles, off_C6C40, off_C6C44
 global off_C6C48, off_C6C4C, off_C6C50, off_C6D22, off_C6F48, off_C6F7C, off_C6F80, off_C6F84
 global off_C719C, off_C7282, off_C74AB, unk_C56A1, unk_C588E, unk_C588F, unk_C58A3, unk_C58B2
 global unk_C58CA, unk_C58EA, unk_C590D, unk_C592F, unk_C5969, unk_C5996, unk_C59B3, unk_C59D4
@@ -965,42 +965,41 @@ dd unk_C0B68
 dd unk_C0B79
 dd unk_C0B8A
 dd unk_C0B9D
-off_C68CC:
+statslabels:
 dd unk_C0BAF
 dd unk_C0BB7
 dd unk_C0BC0
 dd unk_C0BCC
 dd unk_C0BD8
 dd unk_C0BE4
-off_C68E4:
-dd unk_C0BF0
-dd unk_C0BF7
-off_C68EC:
-dd unk_C0BFF
-dd unk_C0C09
-off_C68F4:
-dd unk_C0C13
-off_C68F8:
-dd unk_C0C1F
-asc_C68FC:
+statsbgnames:
+dd str_embnhl
+dd str_embscup
+statsplayerdbs:
+dd str_careerdb
+dd str_seasondb
+statsteamdbs:
+dd str_carteamsdb
+dd str_teamsdb
+str_AttDb:
 db 061h,074h,074h,02Eh,064h,062h,00h
 str_fmt2d:
 db 025h,032h,064h,00h
 str_fmt3d:
 db 025h,033h,064h,00h
-asc_C690B:
+str_fmt4d:
 db 025h,034h,064h,00h
-asc_C690F:
+str_fmt5d:
 db 025h,035h,064h,00h
-asc_C6913:
+str_fmtTenths:
 db 025h,033h,064h,02Eh,025h,031h,064h,00h
-asc_C691B:
+str_fmtPct:
 db 025h,031h,064h,02Eh,025h,030h,033h,064h,00h
-asc_C6924:
+str_fmtPct0:
 db 020h,02Eh,025h,030h,033h,064h,00h
-asc_C692B:
+str_fmtMinSec:
 db 025h,032h,064h,02Eh,025h,032h,02Eh,032h,064h,00h
-asc_C6935:
+str_fmtEmb:
 db 065h,06Dh,062h,025h,073h,00h
 str_Bkgd2:
 db 062h,06Bh,067h,064h,00h
@@ -1030,7 +1029,7 @@ db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 statspalvalid:
 db 00h,00h,00h,00h
-off_C6A64:
+skaterratingnames:
 dd unk_C0CB0
 dd unk_C0CB6
 dd unk_C0CBE
@@ -1047,7 +1046,7 @@ dd unk_C0D39
 off_C6A99 equ $+1
 dd unk_C0D49
 db 01h,02h,03h,04h,05h,06h,07h,09h,0Ah,0Bh,0Ch,0Dh,0Eh,013h,00h,00h
-off_C6AAC:
+goalieratingnames:
 dd unk_C0DEC
 dd unk_C0DF7
 dd unk_C0E03
@@ -1060,41 +1059,38 @@ dd unk_C0E3C
 off_C6AD1 equ $+1
 dd unk_C0E50
 db 01h,02h,03h,04h,05h,06h,07h,08h,0Ah,0Bh,00h,00h
-off_C6AE0:
-dd sub_22F2E
-dd sub_23051
-dd sub_232B7
-dd sub_2312D
-dd sub_23437
-dd sub_22DDE
-dword_C6AF8:
+teamsortfns:
+dd CmpTeamScoring
+dd CmpTeamDefense
+dd CmpTeamPK
+dd CmpTeamPP
+dd CmpTeamPenalties
+dd CmpTeamStandings
+westconfteams:
 db 04h,00h,00h,00h,02h,00h,00h,00h,014h,00h,00h,00h,08h,00h,00h,00h
 db 011h,00h,00h,00h,03h,00h,00h,00h,015h,00h,00h,00h,012h,00h,00h,00h
 db 018h,00h,00h,00h,07h,00h,00h,00h,05h,00h,00h,00h,017h,00h,00h,00h
 db 063h,00h,00h,00h,063h,00h,00h,00h
-dword_C6B30:
+eastconfteams:
 db 0Ch,00h,00h,00h,0Fh,00h,00h,00h,0Ah,00h,00h,00h,00h,00h,00h,00h
 db 09h,00h,00h,00h,01h,00h,00h,00h,016h,00h,00h,00h,0Bh,00h,00h,00h
 db 019h,00h,00h,00h,0Eh,00h,00h,00h,010h,00h,00h,00h,013h,00h,00h,00h
 db 06h,00h,00h,00h,0Dh,00h,00h,00h
-off_C6B68:
+westconfname:
 dd unk_C0EE0
-off_C6B6C:
+eastconfname:
 dd unk_C0EF3
-off_C6B70:
+teamstattitles:
 dd unk_C0F06
 dd unk_C0F14
 dd unk_C0F22
 dd unk_C0F38
 dd unk_C0F49
 dd unk_C0F59
-off_C6B88:
+teamcolhdrs:
 dd unk_C0F69
-off_C6B8C:
 dd unk_C0F6C
-off_C6B90:
 dd unk_C0F6F
-off_C6B94:
 dd unk_C0F72
 dd unk_C0F69
 dd unk_C0F6C
@@ -1116,19 +1112,19 @@ dd unk_C0F9D
 dd unk_C0FA1
 dd unk_C0F89
 dd unk_C0F89
-off_C6BE8:
-dd CompareSkaterStats
-dd sub_25144
-dd sub_25237
-dd sub_25325
-dd sub_25438
-dd sub_2554B
-dd sub_25642
-dd sub_25755
-dd CompareGoalieStats
-dd sub_2586A
-dd sub_259C0
-off_C6C14:
+leadersortfns:
+dd CmpPoints
+dd CmpGoals
+dd CmpAssists
+dd CmpPPGoals
+dd CmpSHGoals
+dd CmpPlusMinus
+dd CmpPIM
+dd CmpShootPct
+dd CmpGAA
+dd CmpGoalieWins
+dd CmpSavePct
+leadertitles:
 dd unk_C10CC
 dd unk_C10DB
 dd unk_C10E9

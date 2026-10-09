@@ -14,7 +14,7 @@ extern dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DD
 extern dword_DE264, dword_EA0DC, jctime, memcpy_, leaguedbnames, off_C8BDD, off_CF2A3
 extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
 extern FileOpenRW, FileClose, ReadKeyRec, WriteKeyRec, ReadTeamRec, LoadGameTeams, RunMenu, InitMenuRemap
-extern sub_244E2, sub_2FEDF, MessageBox, WriteTeamRec, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
+extern TeamRosterScreen, sub_2FEDF, MessageBox, WriteTeamRec, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
 extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A099, ClearPlayerFromLines
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
 extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, MouseSetPos
@@ -242,7 +242,7 @@ push byte 0	; 3DE61
 call sub_B392C	; 3DE63
 add esp, byte 4	; 3DE68
 mov dword [dword_DC738], 1	; 3DE6B
-mov dword [statsredrawcb], sub_244E2	; 3DE75
+mov dword [statsredrawcb], TeamRosterScreen	; 3DE75
 xor eax, eax	; 3DE7F
 mov al, byte [byte esp+018h]	; 3DE81
 mov dword [statscategory], eax	; 3DE85
@@ -302,7 +302,7 @@ mov eax, 1	; 3DF46
 call InitMenuRemap	; 3DF4B
 xor eax, eax	; 3DF50
 mov al, byte [byte esp+018h]	; 3DF52
-call sub_244E2	; 3DF56
+call TeamRosterScreen	; 3DF56
 push byte 42h	; 3DF5B
 mov ecx, 41h	; 3DF5D
 mov ebx, 40h	; 3DF62

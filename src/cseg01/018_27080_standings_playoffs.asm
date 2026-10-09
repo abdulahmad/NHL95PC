@@ -5,18 +5,18 @@ section s_27080 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1282, asc_C128B, asc_C1290, asc_C129B, asc_C12A3, asc_C12AE, asc_C12B6
 extern asc_C12C7, asc_C12CB, asc_C12CF, asc_C12D3, asc_C12D9, asc_C12E0, asc_C12E5, asc_C1307
 extern asc_C130C, asc_C1311, asc_C131A, asc_C132D, asc_C1340, asc_C1347, asc_C134C, asc_C1351
-extern asc_C1356, asc_C135E, asc_C1363, asc_C1368, str_fmt2d, str_fmt3d, asc_C691B, asc_C6924
+extern asc_C1356, asc_C135E, asc_C1363, asc_C1368, str_fmt2d, str_fmt3d, str_fmtPct, str_fmtPct0
 extern str_Bkgd2, byte_C6D72, byte_C6D7A, byte_C6D7B, byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83
 extern byte_C6D8A, byte_C6D92, byte_C6D9A, byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC
 extern byte_C6DAD, byte_C6DB2, byte_ED858, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A, teamconf
 extern dword_C65AC, statsplayoffs, statsfromleague, statspalvalid, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32
 extern dword_C6E3A, dword_C6E4A, dword_D2C6B, dword_D8B68, dword_D8B74, playofftree, statspalshape, statsbgshapes
-extern statspal, fputchar, j___close_, jctime, lseek_, memcpy_, off_C68BC, off_C68E4
-extern off_C68F4, off_CF6A3, open_, qsort_, read_, sprintf_, strcat_, MakePath
+extern statspal, fputchar, j___close_, jctime, lseek_, memcpy_, off_C68BC, statsbgnames
+extern statsteamdbs, off_CF6A3, open_, qsort_, read_, sprintf_, strcat_, MakePath
 extern SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff
-extern DeskSetExit3b, MakeStatsTitle, sub_269F4, sub_2970A, sub_29A97, sub_29B07, LoadScheduleDB, sub_8E83C
+extern DeskSetExit3b, MakeStatsTitle, stand_tmpl2, sub_2970A, sub_29A97, sub_29B07, LoadScheduleDB, sub_8E83C
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_91044, sub_91370, sub_913B4, sub_B30B4, sub_B4B88
-extern sub_B4BA8, sub_B4BC4, unk_269EA, unk_269FE, unk_C12BB, unk_C12BE, unk_C12C1, unk_C12C4
+extern sub_B4BA8, sub_B4BC4, stand_tmpl1, CmpConfStandings, unk_C12BB, unk_C12BE, unk_C12C1, unk_C12C4
 extern unk_C1344, unk_C135B, statsleague, unk_DDAC4, word_C6E22
 global loc_27115, loc_2711F, loc_27138, loc_27143, loc_27148, loc_271CE, loc_271D7, loc_27205
 global loc_2725D, loc_27267, loc_27320, loc_2732A, loc_274F6, loc_27501, loc_27506, loc_2766A
@@ -64,12 +64,12 @@ sub esp, 440h	; 27091
 mov dword [byte ebp-034h], eax	; 27097
 mov dword [byte ebp-03Ch], edx	; 2709A
 lea edi, [byte ebp-054h]	; 2709D
-mov esi, unk_269EA	; 270A0
+mov esi, stand_tmpl1	; 270A0
 movsd	; 270A5
 movsd	; 270A6
 movsw	; 270A7
 lea edi, [byte ebp-048h]	; 270A9
-mov esi, sub_269F4	; 270AC
+mov esi, stand_tmpl2	; 270AC
 movsd	; 270B1
 movsd	; 270B2
 movsw	; 270B3
@@ -81,7 +81,7 @@ mov dword [byte ebp-0Ch], eax	; 270CC
 xor ecx, ecx	; 270CF
 mov eax, dword [statsfromleague]	; 270D1
 shl eax, 2	; 270D6
-mov ebx, dword [dword eax+off_C68F4]	; 270D9
+mov ebx, dword [dword eax+statsteamdbs]	; 270D9
 mov edx, statsleague	; 270DF
 lea eax, [byte ebp-074h]	; 270E4
 call MakePath	; 270E7
@@ -175,7 +175,7 @@ jmp near loc_27143	; 27200
 loc_27205:
 mov eax, dword [byte ebp-010h]	; 27205
 call j___close_	; 27208
-mov ecx, unk_269FE	; 2720D
+mov ecx, CmpConfStandings	; 2720D
 mov ebx, 4	; 27212
 mov edx, 1Ah	; 27217
 mov eax, dword [byte ebp-03Ch]	; 2721C
@@ -184,7 +184,7 @@ call sub_B4BA8	; 27224
 mov dword [dword ebp-042Ch], 0	; 27229
 mov eax, dword [statsplayoffs]	; 27233
 shl eax, 2	; 27238
-mov eax, dword [dword eax+off_C68E4]	; 2723B
+mov eax, dword [dword eax+statsbgnames]	; 2723B
 mov dword [dword ebp-0430h], eax	; 27241
 cmp byte [byte_ED858], 1	; 27247
 jne short loc_2725D	; 2724E
@@ -580,7 +580,7 @@ mov eax, edx	; 277B9
 sar edx, 1Fh	; 277BB
 idiv ebx	; 277BE
 movsx ecx, dx	; 277C0
-mov ebx, asc_C6924	; 277C3
+mov ebx, str_fmtPct0	; 277C3
 mov edx, dword [byte ebp-026h]	; 277C8
 sar edx, 10h	; 277CB
 mov eax, dword [byte ebp-020h]	; 277CE
@@ -606,7 +606,7 @@ mov eax, edx	; 2780D
 sar edx, 1Fh	; 2780F
 idiv ebx	; 27812
 movsx ecx, ax	; 27814
-mov ebx, asc_C691B	; 27817
+mov ebx, str_fmtPct	; 27817
 mov edx, dword [byte ebp-026h]	; 2781C
 sar edx, 10h	; 2781F
 mov eax, dword [byte ebp-020h]	; 27822
@@ -1359,7 +1359,7 @@ jne near loc_280CA	; 27FF6
 mov dword [dword ebp-01CCh], 0	; 27FFC
 mov eax, dword [statsplayoffs]	; 28006
 shl eax, 2	; 2800B
-mov eax, dword [dword eax+off_C68E4]	; 2800E
+mov eax, dword [dword eax+statsbgnames]	; 2800E
 mov dword [dword ebp-01D0h], eax	; 28014
 cmp byte [byte_ED859], 1	; 2801A
 jne short loc_28030	; 28021

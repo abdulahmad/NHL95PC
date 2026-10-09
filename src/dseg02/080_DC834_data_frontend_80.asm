@@ -9,8 +9,8 @@ global byte_DD2D4, byte_DD2DC, byte_DD668, byte_DD669, leaguedbfmt2, leaguedbfmt
 global byte_DD788, byte_DD789, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname
 global byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_DDD8C, byte_DDD8D, byte_DDD8E
 global byte_DE268, byte_DE26C, byte_DEB70, byte_DEB71, dword_DC85C, dword_DC860, dword_DC868, dword_DC888
-global dword_DC88C, dword_DC8A0, dword_DC8C8, dirtyrectptr, statspalshape, statsbgshapes, dword_DD108, statsteambuf
-global statsskaterbuf, statsgoaliebuf, dword_DD118, statsplayerbuf, statspal, dword_DD124, dword_DD128, dword_DD12C
+global dword_DC88C, dword_DC8A0, dword_DC8C8, dirtyrectptr, statspalshape, statsbgshapes, statsteamrecs, statsteambuf
+global statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf, statspal, dword_DD124, dword_DD128, dword_DD12C
 global dword_DD130, dword_DD134, dword_DD1B4, dword_DD1B8, dword_DD1BC, dword_DD1C0, dword_DD1C4, dword_DD244
 global dword_DD248, dword_DD24C, dword_DD250, dword_DD254, dword_DD634, dword_DD638, dword_DD63C, dword_DD640
 global dword_DD644, dword_DD648, dword_DD64C, dword_DD650, dword_DD654, dword_DD658, dword_DD65C, dword_DD660
@@ -103,7 +103,7 @@ statspalshape:
 resb 4
 statsbgshapes:
 resb 4
-dword_DD108:
+statsteamrecs:
 resb 4
 statsteambuf:
 resb 4
@@ -111,7 +111,7 @@ statsskaterbuf:
 resb 4
 statsgoaliebuf:
 resb 4
-dword_DD118:
+statssortkeys:
 resb 4
 statsplayerbuf:
 resb 4

@@ -4,7 +4,7 @@ bits 32
 section s_17DFC progbits alloc exec nowrite align=1
 extern __CHK, str_SfPal1, str_SfPal2, dword_C65A8, dword_C65AC, statscategory, deskexit, statsplayer
 extern teamstatscb, skaterstatscb, goaliestatscb, dword_DC6A8, sfpal2, sfpal1, dword_DC738, jctime
-extern DeskSetExit_ret1, DeskSetExit3_body, StatsSel_x, sub_235BE, sub_25B24, sub_76429, sub_8CCA8, sub_8FFB0
+extern DeskSetExit_ret1, DeskSetExit3_body, StatsSel_x, TeamStatsScreen, LeadersScreen, sub_76429, sub_8CCA8, sub_8FFB0
 global StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense, StatsMenuPenaltyKilling, StatsMenuPowerPlay
 global StatsMenuTeamPenalties, StatsMenuPoints, StatsMenuGoals, StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus, StatsMenuPIM
 global StatsMenuShootPct, StatsMenuGAA, StatsMenuGoalieWins, StatsMenuSavePct, DeskSetExit3b, ShowPlayerStatsItem, FreeDeskBuffers
@@ -50,7 +50,7 @@ push ecx	; 17E8F
 call jctime	; 17E90
 add esp, byte 4	; 17E95
 mov eax, 5	; 17E98
-call sub_235BE	; 17E9D
+call TeamStatsScreen	; 17E9D
 mov dword [dword_DC6A8], eax	; 17EA2
 mov edx, dword [sfpal2]	; 17EA7
 mov ebx, 10h	; 17EAD
@@ -116,7 +116,7 @@ push ecx	; 17F6F
 call jctime	; 17F70
 add esp, byte 4	; 17F75
 xor eax, eax	; 17F78
-call sub_235BE	; 17F7A
+call TeamStatsScreen	; 17F7A
 mov dword [dword_DC6A8], eax	; 17F7F
 mov edx, dword [sfpal2]	; 17F84
 mov ebx, 10h	; 17F8A
@@ -182,7 +182,7 @@ push ecx	; 1804F
 call jctime	; 18050
 add esp, byte 4	; 18055
 mov eax, 1	; 18058
-call sub_235BE	; 1805D
+call TeamStatsScreen	; 1805D
 mov dword [dword_DC6A8], eax	; 18062
 mov edx, dword [sfpal2]	; 18067
 mov ebx, 10h	; 1806D
@@ -248,7 +248,7 @@ push ecx	; 18132
 call jctime	; 18133
 add esp, byte 4	; 18138
 mov eax, 2	; 1813B
-call sub_235BE	; 18140
+call TeamStatsScreen	; 18140
 mov dword [dword_DC6A8], eax	; 18145
 mov edx, dword [sfpal2]	; 1814A
 mov ebx, 10h	; 18150
@@ -314,7 +314,7 @@ push ecx	; 18215
 call jctime	; 18216
 add esp, byte 4	; 1821B
 mov eax, 3	; 1821E
-call sub_235BE	; 18223
+call TeamStatsScreen	; 18223
 mov dword [dword_DC6A8], eax	; 18228
 mov edx, dword [sfpal2]	; 1822D
 mov ebx, 10h	; 18233
@@ -380,7 +380,7 @@ push ecx	; 182F8
 call jctime	; 182F9
 add esp, byte 4	; 182FE
 mov eax, 4	; 18301
-call sub_235BE	; 18306
+call TeamStatsScreen	; 18306
 mov dword [dword_DC6A8], eax	; 1830B
 mov edx, dword [sfpal2]	; 18310
 mov ebx, 10h	; 18316
@@ -446,7 +446,7 @@ push ecx	; 183D8
 call jctime	; 183D9
 add esp, byte 4	; 183DE
 xor eax, eax	; 183E1
-call sub_25B24	; 183E3
+call LeadersScreen	; 183E3
 mov dword [dword_DC6A8], eax	; 183E8
 mov edx, dword [sfpal2]	; 183ED
 mov ebx, 10h	; 183F3
@@ -512,7 +512,7 @@ push ecx	; 184B8
 call jctime	; 184B9
 add esp, byte 4	; 184BE
 mov eax, 1	; 184C1
-call sub_25B24	; 184C6
+call LeadersScreen	; 184C6
 mov dword [dword_DC6A8], eax	; 184CB
 mov edx, dword [sfpal2]	; 184D0
 mov ebx, 10h	; 184D6
@@ -578,7 +578,7 @@ push ecx	; 1859B
 call jctime	; 1859C
 add esp, byte 4	; 185A1
 mov eax, 2	; 185A4
-call sub_25B24	; 185A9
+call LeadersScreen	; 185A9
 mov dword [dword_DC6A8], eax	; 185AE
 mov edx, dword [sfpal2]	; 185B3
 mov ebx, 10h	; 185B9
@@ -644,7 +644,7 @@ push ecx	; 1867E
 call jctime	; 1867F
 add esp, byte 4	; 18684
 mov eax, 3	; 18687
-call sub_25B24	; 1868C
+call LeadersScreen	; 1868C
 mov dword [dword_DC6A8], eax	; 18691
 mov edx, dword [sfpal2]	; 18696
 mov ebx, 10h	; 1869C
@@ -710,7 +710,7 @@ push ecx	; 18761
 call jctime	; 18762
 add esp, byte 4	; 18767
 mov eax, 4	; 1876A
-call sub_25B24	; 1876F
+call LeadersScreen	; 1876F
 mov dword [dword_DC6A8], eax	; 18774
 mov edx, dword [sfpal2]	; 18779
 mov ebx, 10h	; 1877F
@@ -776,7 +776,7 @@ push ecx	; 18844
 call jctime	; 18845
 add esp, byte 4	; 1884A
 mov eax, 5	; 1884D
-call sub_25B24	; 18852
+call LeadersScreen	; 18852
 mov dword [dword_DC6A8], eax	; 18857
 mov edx, dword [sfpal2]	; 1885C
 mov ebx, 10h	; 18862
@@ -842,7 +842,7 @@ push ecx	; 18927
 call jctime	; 18928
 add esp, byte 4	; 1892D
 mov eax, 6	; 18930
-call sub_25B24	; 18935
+call LeadersScreen	; 18935
 mov dword [dword_DC6A8], eax	; 1893A
 mov edx, dword [sfpal2]	; 1893F
 mov ebx, 10h	; 18945
@@ -908,7 +908,7 @@ push ecx	; 18A0A
 call jctime	; 18A0B
 add esp, byte 4	; 18A10
 mov eax, 7	; 18A13
-call sub_25B24	; 18A18
+call LeadersScreen	; 18A18
 mov dword [dword_DC6A8], eax	; 18A1D
 mov edx, dword [sfpal2]	; 18A22
 mov ebx, 10h	; 18A28
@@ -974,7 +974,7 @@ push ecx	; 18AED
 call jctime	; 18AEE
 add esp, byte 4	; 18AF3
 mov eax, 8	; 18AF6
-call sub_25B24	; 18AFB
+call LeadersScreen	; 18AFB
 mov dword [dword_DC6A8], eax	; 18B00
 mov edx, dword [sfpal2]	; 18B05
 mov ebx, 10h	; 18B0B
@@ -1040,7 +1040,7 @@ push ecx	; 18BD0
 call jctime	; 18BD1
 add esp, byte 4	; 18BD6
 mov eax, 9	; 18BD9
-call sub_25B24	; 18BDE
+call LeadersScreen	; 18BDE
 mov dword [dword_DC6A8], eax	; 18BE3
 mov edx, dword [sfpal2]	; 18BE8
 mov ebx, 10h	; 18BEE
@@ -1106,7 +1106,7 @@ push ecx	; 18CB3
 call jctime	; 18CB4
 add esp, byte 4	; 18CB9
 mov eax, 0Ah	; 18CBC
-call sub_25B24	; 18CC1
+call LeadersScreen	; 18CC1
 mov dword [dword_DC6A8], eax	; 18CC6
 mov edx, dword [sfpal2]	; 18CCB
 mov ebx, 10h	; 18CD1

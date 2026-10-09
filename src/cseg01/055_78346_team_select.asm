@@ -12,7 +12,7 @@ extern statsredrawcb, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E
 extern dword_D0B2A, dword_D1338, dword_D133C, dword_D1478, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
 extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, exit_, j___close_, jctime, lseek_
 extern crestnames, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
-extern open_, perror_, read_, sprintf_, MakePath, RunMenu, sub_244E2, MessageBox
+extern open_, perror_, read_, sprintf_, MakePath, RunMenu, TeamRosterScreen, MessageBox
 extern sub_6B5E4, sub_76429, sub_76771, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8FFB0
 extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, FatalError, sub_B30B4, WaitKey
 extern sub_B4B58, sub_B4DD4, sub_B4FAC, sub_B5DB0, unk_7673A, unk_76742, unk_76748, unk_7674F
@@ -1949,7 +1949,7 @@ mov esi, ecx	; 79AE5
 mov edx, 1	; 79AE7
 mov dword [dword_DC738], edx	; 79AEC
 mov dword [dword_DC734], edx	; 79AF2
-mov dword [statsredrawcb], sub_244E2	; 79AF8
+mov dword [statsredrawcb], TeamRosterScreen	; 79AF8
 test bl, bl	; 79B02
 je short loc_79B0D	; 79B04
 mov eax, dword [HomeTeam]	; 79B06
@@ -2007,7 +2007,7 @@ loc_79BC7:
 mov eax, dword [cont2team]	; 79BC7
 loc_79BCC:
 sar eax, 10h	; 79BCC
-call sub_244E2	; 79BCF
+call TeamRosterScreen	; 79BCF
 push dword 0C2h	; 79BD4
 mov ecx, 0C1h	; 79BD9
 mov ebx, 0C0h	; 79BDE

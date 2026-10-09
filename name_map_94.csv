@@ -202,8 +202,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0001FAA7,sub_1FAA7,InitMenuRemap,PC-new,,,,low,"fills 256-byte remap table menuremap (mode 0: shift 15h-3Fh down, else identity) and installs it via sub_B4DD4",menu_system,manual-trace
 0001FB1C,sub_1FB1C,TextPrintf,PC-new,,,,low,sprintf into printfbuf then sub_91964 text draw; no refs,menu_system,manual-trace
 0001FB49,sub_1FB49,TextPrintf2,PC-new,,,,low,as TextPrintf with one more format arg; no refs,menu_system,manual-trace
-0001FB7F,sub_1FB7F,CompareSkaterStats,PC-new,,,,high,qsort comparator on statsskaterorder over 47-byte skater stat records (season / playoff +12h),menu_system,manual-trace
-0001FC8F,sub_1FC8F,CompareGoalieStats,PC-new,,,,high,qsort comparator on statsgoalieorder over 54-byte goalie stat records (season / playoff +16h),menu_system,manual-trace
+0001FB7F,sub_1FB7F,CmpPoints,PC-new,,,,high,off_C6BE8[0] (Point Leaders); also the default skater roster sort,menu_system,manual-trace
+0001FC8F,sub_1FC8F,CmpGAA,PC-new,,,,high,off_C6BE8[8] (Goals Against Average Leaders); also the default goalie roster sort,menu_system,manual-trace
 0001FDFE,sub_1FDFE,LoadShapeByTag,PC-new,,,,low,"opens file, reads tag directory (""sfh""), finds 4-char tag, allocs ""shape"" and reads it; no refs",menu_system,manual-trace
 0001FF86,sub_1FF86,MakeStatsTitle,PC-new,,,,high,dest = selected stats source label ('93-'94 Season / league / playoffs) + suffix,menu_system,manual-trace
 00020016,sub_20016,GameTeamStatsScreen,PC-new,,,,medium,teamstatscb set around PlayGame: team stats screen (sub_235BE) with embpal / !pal palette fade and RunMenu on the 4-item menu,easn_stats,manual-trace
@@ -220,23 +220,28 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000216D7,sub_216D7,CalStandingsScreen,PC-new,,,,medium,calendar standings,easn_stats,manual-trace
 000217FE,sub_217FE,CalStandingsMenu,PC-new,,,,medium,standingsmenucb set by calendar; also in a menu table,easn_stats,manual-trace
 00021C04,sub_21C04,DrawPhotoWithPal,PC-new,,,,medium,"copies 0B4h + 0A5h palette bytes into the stats palette, installs photoremap, draws photo shape (player photo by tag at 21FC7 / 22860)",easn_stats,manual-trace
-00021CDE,sub_21CDE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-00022581,sub_22581,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-00022DDE,sub_22DDE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-000235BE,sub_235BE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-00024453,sub_24453,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-000244E2,sub_244E2,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-00025144,sub_25144,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-00025237,sub_25237,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-00025325,sub_25325,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-00025438,sub_25438,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-0002554B,sub_2554B,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-00025642,sub_25642,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-00025755,sub_25755,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-0002586A,sub_2586A,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-000259C0,sub_259C0,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-00025B24,sub_25B24,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
-00026B5A,sub_26B5A,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
+00021CDE,sub_21CDE,SkaterStatsCard,PC-new,,,,high,"Player Stats card for statsplayer (skater): reads career/season.db + att.db + team record, emb<team> background, PORTR photo, position name, G/A/Pt/PIM/+-/PPG/SHG/Shots/Pct, Ratings, Shoots L/R",player_stats,manual-trace
+00022581,sub_22581,GoalieStatsCard,PC-new,,,,high,"goalie version: ""%d Goalie"", GP/Min/GAA/W/L/T/SO/EN/SA/Pct, Ratings, Glove Hand",player_stats,manual-trace
+00022DDE,sub_22DDE,CmpTeamStandings,PC-new,,,,high,off_C6AE0[5] team sort (Team Standings),player_stats,manual-trace
+00022F2E,sub_22F2E,CmpTeamScoring,PC-new,,,,high,off_C6AE0[0] (Team Scoring),player_stats,manual-trace
+00023051,sub_23051,CmpTeamDefense,PC-new,,,,high,off_C6AE0[1] (Team Defense),player_stats,manual-trace
+0002312D,sub_2312D,CmpTeamPP,PC-new,,,,high,off_C6AE0[3] (Team Power Play),player_stats,manual-trace
+000232B7,sub_232B7,CmpTeamPK,PC-new,,,,high,off_C6AE0[2] (Team Penalty Killing),player_stats,manual-trace
+00023437,sub_23437,CmpTeamPenalties,PC-new,,,,high,off_C6AE0[4] (Team Penalties),player_stats,manual-trace
+000235BE,sub_235BE,TeamStatsScreen,PC-new,,,,high,"team stats table for statscategory 0-5 (titles off_C6B70, sorts off_C6AE0); allocs ""teams"" / ""addsort""; ""Stats Unavailable""",player_stats,manual-trace
+00024453,sub_24453,PlayerFromMouseY,PC-new,,,,high,roster hit test: y 40h.. skater rows / 1A5h.. goalie rows of 0Dh px -> player index; called by RunPlayerPickMenu,player_stats,manual-trace
+000244E2,sub_244E2,TeamRosterScreen,PC-new,,,,medium,"team roster table (key.db, trad / regi, Pos No Name GP G A PT ... goalies Min GAA W L T GA SA PCT); team_select / roster / standings menus",player_stats,manual-trace
+00025144,sub_25144,CmpGoals,PC-new,,,,high,off_C6BE8[1] (Goal Leaders),player_stats,manual-trace
+00025237,sub_25237,CmpAssists,PC-new,,,,high,off_C6BE8[2] (Assist Leaders),player_stats,manual-trace
+00025325,sub_25325,CmpPPGoals,PC-new,,,,high,off_C6BE8[3] (Power Play Goal Leaders),player_stats,manual-trace
+00025438,sub_25438,CmpSHGoals,PC-new,,,,high,off_C6BE8[4] (Shorthanded Goal Leaders),player_stats,manual-trace
+0002554B,sub_2554B,CmpPlusMinus,PC-new,,,,high,off_C6BE8[5] (Plus/Minus Leaders),player_stats,manual-trace
+00025642,sub_25642,CmpPIM,PC-new,,,,high,off_C6BE8[6] (Penalty Minute Leaders),player_stats,manual-trace
+00025755,sub_25755,CmpShootPct,PC-new,,,,high,off_C6BE8[7] (Shooting Percentage Leaders),player_stats,manual-trace
+0002586A,sub_2586A,CmpGoalieWins,PC-new,,,,high,off_C6BE8[9] (Goaltender Win Leaders),player_stats,manual-trace
+000259C0,sub_259C0,CmpSavePct,PC-new,,,,high,off_C6BE8[10] (Save Percentage Leaders),player_stats,manual-trace
+00025B24,sub_25B24,LeadersScreen,PC-new,,,,high,"player leaders table for statscategory 0-10 (titles off_C6C14, sorts off_C6BE8): POS PLAYER TEAM ...",player_stats,manual-trace
+00026B5A,sub_26B5A,TeamFromMouse,PC-new,,,,medium,"standings hit test: mouse x/y -> team row (two columns, rows of 0Dh px; playoff variant); called by RunTeamPickMenu",player_stats,manual-trace
 00027080,sub_27080,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),standings_playoffs,unmatched
 0002785F,sub_2785F,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),standings_playoffs,unmatched
 00027BC3,sub_27BC3,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),standings_playoffs,unmatched

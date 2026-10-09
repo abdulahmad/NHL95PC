@@ -8,14 +8,14 @@ extern menuremap, menuremap2, statscategory, statsteamsel, statsplayoffs, statsp
 extern statsteamorder, statsnumgoalies, statsskaterorder, statsgoalieorder, statsgoalieplr, statsnumskaters, statsskaterplr, playofftree
 extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, statspal, dword_EA0DC, jctime, memcmp_
 extern memcpy_, off_D3078, sprintf_, strcat_, strlen_, strncpy_, FileOpenRead, FileClose
-extern FileReadAt, DeskSetExit3b, ShowPlayerStatsItem, StrPrefixDiffers, sub_24453, sub_26B5A, sub_27BC3, sub_27F9C
+extern FileReadAt, DeskSetExit3b, ShowPlayerStatsItem, StrPrefixDiffers, PlayerFromMouseY, TeamFromMouse, sub_27BC3, sub_27F9C
 extern sub_29681, sub_6B391, sub_6B3D7, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_8CCA8
 extern sub_903F0, sub_90F38, sub_91370, sub_91400, sub_91964, MouseSetPos, sub_B2E1B, sub_B4DD4
 extern statsplayer, printfbuf
 global RunMenu_ret4
 global LoadShapeByTag_x
 global RunMenu, RunTeamPickMenu
-global RunPlayerPickMenu, InitMenuRemap, TextPrintf, TextPrintf2, CompareSkaterStats, CompareGoalieStats, LoadShapeByTag, MakeStatsTitle
+global RunPlayerPickMenu, InitMenuRemap, TextPrintf, TextPrintf2, CmpPoints, CmpGAA, LoadShapeByTag, MakeStatsTitle
 RunMenu:
 push dword 0B4h	; 1D6E8
 call __CHK	; 1D6ED
@@ -1502,7 +1502,7 @@ add esp, byte 0Ch	; 1EA2D
 lea ebx, [byte esp+074h]	; 1EA30
 mov edx, dword [byte esp+078h]	; 1EA34
 mov eax, dword [byte esp+07Ch]	; 1EA38
-call sub_26B5A	; 1EA3C
+call TeamFromMouse	; 1EA3C
 test eax, eax	; 1EA41
 je near .81	; 1EA43
 mov edx, dword [byte esp+070h]	; 1EA49
@@ -2562,7 +2562,7 @@ add esp, byte 0Ch	; 1F7AD
 lea ebx, [byte esp+070h]	; 1F7B0
 mov edx, dword [byte esp+074h]	; 1F7B4
 mov eax, dword [byte esp+078h]	; 1F7B8
-call sub_24453	; 1F7BC
+call PlayerFromMouseY	; 1F7BC
 test eax, eax	; 1F7C1
 je near .64	; 1F7C3
 mov esi, 3	; 1F7C9
@@ -2885,7 +2885,7 @@ add esp, byte 0Ch	; 1FB77
 pop edi	; 1FB7A
 pop esi	; 1FB7B
 ret 4	; 1FB7C
-CompareSkaterStats:
+CmpPoints:
 push dword 14h	; 1FB7F
 call __CHK	; 1FB84
 push ebx	; 1FB89
@@ -2963,7 +2963,7 @@ je short .8	; 1FC43
 mov edx, ebx	; 1FC45
 and edx, 0FFFFh	; 1FC47
 mov eax, edi	; 1FC4D
-jmp short CompareSkaterStats.6	; 1FC4F
+jmp short CmpPoints.6	; 1FC4F
 .8:
 cmp si, word [edx]	; 1FC51
 je short .9	; 1FC54
@@ -2984,7 +2984,7 @@ mov si, word [byte eax+02h]	; 1FC6D
 cmp bx, si	; 1FC71
 je short .10	; 1FC74
 mov edx, ebx	; 1FC76
-jmp short CompareSkaterStats.5	; 1FC78
+jmp short CmpPoints.5	; 1FC78
 .10:
 mov edx, dword [byte edx+0Eh]	; 1FC7A
 sar edx, 10h	; 1FC7D
@@ -2998,7 +2998,7 @@ pop esi	; 1FC8B
 pop ecx	; 1FC8C
 pop ebx	; 1FC8D
 ret	; 1FC8E
-CompareGoalieStats:
+CmpGAA:
 push dword 14h	; 1FC8F
 call __CHK	; 1FC94
 push ebx	; 1FC99
@@ -3097,7 +3097,7 @@ jmp near .14	; 1FD79
 mov bx, word [edx]	; 1FD7E
 mov si, word [eax]	; 1FD81
 cmp bx, si	; 1FD84
-jne short CompareGoalieStats.8	; 1FD87
+jne short CmpGAA.8	; 1FD87
 mov bx, word [byte edx+0Eh]	; 1FD89
 mov di, word [byte eax+0Eh]	; 1FD8D
 cmp bx, di	; 1FD91
@@ -3130,7 +3130,7 @@ xor ebx, ebx	; 1FDD2
 mov bx, si	; 1FDD4
 xor eax, eax	; 1FDD7
 mov ax, word [byte edx+04h]	; 1FDD9
-jmp near CompareGoalieStats.6	; 1FDDD
+jmp near CmpGAA.6	; 1FDDD
 .13:
 mov dx, word [byte edx+014h]	; 1FDE2
 and edx, 0FFFFh	; 1FDE6
