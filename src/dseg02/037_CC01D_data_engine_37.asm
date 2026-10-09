@@ -4,7 +4,7 @@ bits 32
 section s_CC01D progbits alloc noexec write align=1
 extern str_1st, str_2nd, str_3rd, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60
 extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
-global asc_CCDD8, asc_CCDEC, byte_CC049, lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5
+global str_ErrLoadGame, str_ErrSaveGame, byte_CC049, lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5
 global byte_CC9B0, byte_CC9E4, byte_CC9E7, byte_CCA95, lchoicetab, byte_CCBBA, byte_CCBBB, byte_CCCA0
 global byte_CCE00, byte_CCE01, dword_CC080, dword_CC0AC, dword_CC0B4, lastsfx, dword_CC0E0, dword_CC0EC
 global dword_CC0F0, onetimerflag, dword_CC0F8, dword_CC0FA, penshotplayer, dword_CC100, dword_CC104, dword_CC108
@@ -412,10 +412,10 @@ db 040h,0F2h,0BCh,01h,010h,050h,0E3h,01h,010h,08Dh,0Ah,02h,040h,094h,032h,02h
 db 00h,051h,05Bh,02h,010h,0AFh,084h,02h,090h,09Ah,0AEh,02h,00h,00h,0D9h,02h
 db 040h,0CCh,03h,03h,090h,0ECh,02Eh,03h,090h,04Eh,05Ah,03h,040h,0E0h,085h,03h
 db 00h,090h,0B1h,03h,090h,04Ch,0DDh,03h,010h,05h,09h,04h,00h,0A9h,034h,04h
-asc_CCDD8:
+str_ErrLoadGame:
 db 045h,072h,072h,06Fh,072h,020h,04Ch,06Fh,061h,064h,069h,06Eh,067h,020h,047h,061h
 db 06Dh,065h,0Ah,00h
-asc_CCDEC:
+str_ErrSaveGame:
 db 045h,072h,072h,06Fh,072h,020h,053h,061h,076h,069h,06Eh,067h,020h,047h,061h,06Dh
 db 065h,0Ah,00h,00h
 byte_CCE00:

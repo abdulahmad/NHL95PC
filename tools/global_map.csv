@@ -169,3 +169,5 @@ awtmgoalie,DF74C,visitor tmgoalie (awtmstruct+38h)
 hmlinetab,DC200,"home line table (30h bytes; tmlines of hmtmstruct, set by clearteams); SetupTeamLines / RemoveFromLines fill it, StartHL2 saves and restores it"
 awlinetab,DABF0,"visitor line table (tmlines of awtmstruct), as hmlinetab"
 seqtimer,E9B04,"scripted sequence timer: PreGameIntro sets 708h, StartThreeStars 2EE0h; ThreeStarsLoop counts it down by real-time ticks, the PC assignment at 484DA compares it with 0Ah"
+str_ErrSaveGame,CCDEC,"""Error Saving Game"" (SaveGameState)"
+str_ErrLoadGame,CCDD8,"""Error Loading Game"" (LoadGameState)"

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_5FB03 progbits alloc exec nowrite align=1
-extern PBnum, StanleyCupTimer, __CHK, __STOSB, __STOSD, asc_CCDD8, asc_CCDEC, byte_C4D1C
+extern PBnum, StanleyCupTimer, __CHK, __STOSB, __STOSD, str_ErrLoadGame, str_ErrSaveGame, byte_C4D1C
 extern byte_C4D1D, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, byte_DC265
 extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, PenBuf, iflags, byte_E9AC8
 extern byte_E9AD3, OOlist, collflag, dword_C530D, dword_C5382, dword_C53FB, dword_C5403, dword_C5407
@@ -31,16 +31,8 @@ extern word_DEE96, word_DEF84, word_DEF88, puckcross, word_E024E, lcrequest, wor
 extern word_E0382, word_E0390, OOlistpos, word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, CwdExciteLvl
 extern word_E9AAA, periodendtime, word_E9AAE, word_E9AB0, word_E9AB2, word_E9AB4, PerTimeTotal, lj2
 extern lj1, lasttouch, word_E9AC4, word_E9B2C
-global loc_5FB3F, loc_5FB41, loc_5FB6F, loc_5FB77, loc_5FBA5, loc_5FBD3, loc_5FBFB, loc_5FC36
-global loc_5FC9A, loc_5FEFF, loc_5FF05, loc_60245, loc_6024B, loc_603D0, loc_603F8, loc_60420
-global loc_60448, loc_60470, loc_60498, loc_604C0, loc_604E8, loc_604F0, loc_6051C, loc_60522
-global loc_60568, loc_60594, loc_6059A, loc_60603, loc_6064F, loc_60658, loc_6068A, loc_606A7
-global loc_606D9, loc_60714, loc_6073B, loc_6075F, loc_6079A, loc_6080F, loc_60A52, loc_60A5D
-global loc_60D69, loc_60D90, loc_60E61, loc_60FA9, loc_60FD0, loc_60FF7, loc_6101E, loc_61045
-global loc_6106E, loc_61097, loc_610A7, loc_610D1, loc_610F7, loc_61100, loc_61187, loc_611ED
-global loc_611FC, loc_6120F, loc_61224, loc_61235, loc_61244, loc_61249, loc_612F9, loc_613CB
-global loc_61409, loc_6140E, loc_6141E, loc_61423, loc_6147F, sub_5FB03, sub_6060B, sub_60612
-sub_5FB03:
+global SaveGameState, SaveGameState_popx, LoadGameState
+SaveGameState:
 push dword 0B0h	; 5FB03
 call __CHK	; 5FB08
 push ebx	; 5FB0D
@@ -56,13 +48,13 @@ mov ebx, 0FFFFFFFFh	; 5FB1F
 mov edx, dword_C5413	; 5FB24
 call sub_145F9	; 5FB29
 test eax, eax	; 5FB2E
-je short loc_5FB3F	; 5FB30
-push asc_CCDEC	; 5FB32
+je short .1	; 5FB30
+push str_ErrSaveGame	; 5FB32
 call sub_B2CD8	; 5FB37
 add esp, byte 4	; 5FB3C
-loc_5FB3F:
+.1:
 xor ebp, ebp	; 5FB3F
-loc_5FB41:
+.2:
 mov edx, ebp	; 5FB41
 shl edx, 7	; 5FB43
 add edx, SortCords	; 5FB46
@@ -71,16 +63,16 @@ mov ebx, 0FFFFFFFFh	; 5FB51
 mov eax, dword [esp]	; 5FB56
 call sub_145F9	; 5FB59
 test eax, eax	; 5FB5E
-je short loc_5FB6F	; 5FB60
-push asc_CCDEC	; 5FB62
+je short .3	; 5FB60
+push str_ErrSaveGame	; 5FB62
 call sub_B2CD8	; 5FB67
 add esp, byte 4	; 5FB6C
-loc_5FB6F:
+.3:
 inc ebp	; 5FB6F
 cmp ebp, byte 11h	; 5FB70
-jl short loc_5FB41	; 5FB73
+jl short SaveGameState.2	; 5FB73
 xor ebp, ebp	; 5FB75
-loc_5FB77:
+.4:
 mov edx, ebp	; 5FB77
 shl edx, 8	; 5FB79
 add edx, hmtmstruct	; 5FB7C
@@ -89,36 +81,36 @@ mov ebx, 0FFFFFFFFh	; 5FB87
 mov eax, dword [esp]	; 5FB8C
 call sub_145F9	; 5FB8F
 test eax, eax	; 5FB94
-je short loc_5FBA5	; 5FB96
-push asc_CCDEC	; 5FB98
+je short .5	; 5FB96
+push str_ErrSaveGame	; 5FB98
 call sub_B2CD8	; 5FB9D
 add esp, byte 4	; 5FBA2
-loc_5FBA5:
+.5:
 inc ebp	; 5FBA5
 cmp ebp, byte 2	; 5FBA6
-jl short loc_5FB77	; 5FBA9
+jl short SaveGameState.4	; 5FBA9
 mov ecx, 30h	; 5FBAB
 mov ebx, 0FFFFFFFFh	; 5FBB0
 mov edx, hmlinetab	; 5FBB5
 mov eax, dword [esp]	; 5FBBA
 call sub_145F9	; 5FBBD
 test eax, eax	; 5FBC2
-je short loc_5FBD3	; 5FBC4
-push asc_CCDEC	; 5FBC6
+je short .6	; 5FBC4
+push str_ErrSaveGame	; 5FBC6
 call sub_B2CD8	; 5FBCB
 add esp, byte 4	; 5FBD0
-loc_5FBD3:
+.6:
 mov ecx, 30h	; 5FBD3
 mov ebx, 0FFFFFFFFh	; 5FBD8
 mov edx, awlinetab	; 5FBDD
 mov eax, dword [esp]	; 5FBE2
 call sub_145F9	; 5FBE5
 test eax, eax	; 5FBEA
-je short loc_5FBFB	; 5FBEC
-push asc_CCDEC	; 5FBEE
+je short .7	; 5FBEC
+push str_ErrSaveGame	; 5FBEE
 call sub_B2CD8	; 5FBF3
 add esp, byte 4	; 5FBF8
-loc_5FBFB:
+.7:
 mov ax, word [HomeTeam]	; 5FBFB
 mov word [byte esp+04h], ax	; 5FC01
 lea eax, [byte esp+04h]	; 5FC06
@@ -133,13 +125,13 @@ mov dx, word [camy]	; 5FC27
 mov word [eax], dx	; 5FC2E
 xor ebp, ebp	; 5FC31
 add eax, byte 2	; 5FC33
-loc_5FC36:
+.8:
 mov dx, word [nosplit ebp*2+word_E0390]	; 5FC36
 mov word [eax], dx	; 5FC3E
 add eax, byte 2	; 5FC41
 inc ebp	; 5FC44
 cmp ebp, byte 6	; 5FC45
-jl short loc_5FC36	; 5FC48
+jl short SaveGameState.8	; 5FC48
 mov dx, word [lastplayer]	; 5FC4A
 mov word [eax], dx	; 5FC51
 add eax, byte 2	; 5FC54
@@ -159,13 +151,13 @@ mov dx, word [threat]	; 5FC8B
 mov word [eax], dx	; 5FC92
 xor ebp, ebp	; 5FC95
 add eax, byte 2	; 5FC97
-loc_5FC9A:
+.9:
 mov dx, word [nosplit ebp*2+puckcross]	; 5FC9A
 mov word [eax], dx	; 5FCA2
 add eax, byte 2	; 5FCA5
 inc ebp	; 5FCA8
 cmp ebp, byte 4	; 5FCA9
-jl short loc_5FC9A	; 5FCAC
+jl short SaveGameState.9	; 5FCAC
 mov dx, word [lj1]	; 5FCAE
 mov word [eax], dx	; 5FCB5
 add eax, byte 2	; 5FCB8
@@ -300,20 +292,20 @@ lea edx, [byte esp+04h]	; 5FEE2
 mov eax, dword [esp]	; 5FEE6
 call sub_145F9	; 5FEE9
 test eax, eax	; 5FEEE
-je short loc_5FEFF	; 5FEF0
-push asc_CCDEC	; 5FEF2
+je short .10	; 5FEF0
+push str_ErrSaveGame	; 5FEF2
 call sub_B2CD8	; 5FEF7
 add esp, byte 4	; 5FEFC
-loc_5FEFF:
+.10:
 lea eax, [byte esp+04h]	; 5FEFF
 xor ebp, ebp	; 5FF03
-loc_5FF05:
+.11:
 mov dx, word [nosplit ebp*2+PlList]	; 5FF05
 mov word [eax], dx	; 5FF0D
 add eax, byte 2	; 5FF10
 inc ebp	; 5FF13
 cmp ebp, byte 6	; 5FF14
-jl short loc_5FF05	; 5FF17
+jl short SaveGameState.11	; 5FF17
 mov dl, byte [byte_C4D1C]	; 5FF19
 mov byte [eax], dl	; 5FF1F
 mov dl, byte [byte_C4D1D]	; 5FF21
@@ -500,14 +492,14 @@ lea edx, [byte esp+04h]	; 60228
 mov eax, dword [esp]	; 6022C
 call sub_145F9	; 6022F
 test eax, eax	; 60234
-je short loc_60245	; 60236
-push asc_CCDEC	; 60238
+je short .12	; 60236
+push str_ErrSaveGame	; 60238
 call sub_B2CD8	; 6023D
 add esp, byte 4	; 60242
-loc_60245:
+.12:
 lea eax, [byte esp+04h]	; 60245
 xor ebp, ebp	; 60249
-loc_6024B:
+.13:
 mov ecx, ebp	; 6024B
 shl ecx, 2	; 6024D
 sub ecx, ebp	; 60250
@@ -519,7 +511,7 @@ mov word [eax], dx	; 60268
 add eax, byte 2	; 6026B
 inc ebp	; 6026E
 cmp ebp, byte 14h	; 6026F
-jl short loc_6024B	; 60272
+jl short SaveGameState.13	; 60272
 mov dx, word [word_CBECC]	; 60274
 mov word [eax], dx	; 6027B
 add eax, byte 2	; 6027E
@@ -597,108 +589,108 @@ lea edx, [byte esp+04h]	; 603B3
 mov eax, dword [esp]	; 603B7
 call sub_145F9	; 603BA
 test eax, eax	; 603BF
-je short loc_603D0	; 603C1
-push asc_CCDEC	; 603C3
+je short .14	; 603C1
+push str_ErrSaveGame	; 603C3
 call sub_B2CD8	; 603C8
 add esp, byte 4	; 603CD
-loc_603D0:
+.14:
 mov ecx, 42h	; 603D0
 mov ebx, 0FFFFFFFFh	; 603D5
 mov edx, PenBuf	; 603DA
 mov eax, dword [esp]	; 603DF
 call sub_145F9	; 603E2
 test eax, eax	; 603E7
-je short loc_603F8	; 603E9
-push asc_CCDEC	; 603EB
+je short .15	; 603E9
+push str_ErrSaveGame	; 603EB
 call sub_B2CD8	; 603F0
 add esp, byte 4	; 603F5
-loc_603F8:
+.15:
 mov ecx, 0Bh	; 603F8
 mov ebx, 0FFFFFFFFh	; 603FD
 mov edx, byte_E9AC8	; 60402
 mov eax, dword [esp]	; 60407
 call sub_145F9	; 6040A
 test eax, eax	; 6040F
-je short loc_60420	; 60411
-push asc_CCDEC	; 60413
+je short .16	; 60411
+push str_ErrSaveGame	; 60413
 call sub_B2CD8	; 60418
 add esp, byte 4	; 6041D
-loc_60420:
+.16:
 mov ecx, 0Bh	; 60420
 mov ebx, 0FFFFFFFFh	; 60425
 mov edx, byte_E9AD3	; 6042A
 mov eax, dword [esp]	; 6042F
 call sub_145F9	; 60432
 test eax, eax	; 60437
-je short loc_60448	; 60439
-push asc_CCDEC	; 6043B
+je short .17	; 60439
+push str_ErrSaveGame	; 6043B
 call sub_B2CD8	; 60440
 add esp, byte 4	; 60445
-loc_60448:
+.17:
 mov ecx, 0Bh	; 60448
 mov ebx, 0FFFFFFFFh	; 6044D
 mov edx, unk_C5423	; 60452
 mov eax, dword [esp]	; 60457
 call sub_145F9	; 6045A
 test eax, eax	; 6045F
-je short loc_60470	; 60461
-push asc_CCDEC	; 60463
+je short .18	; 60461
+push str_ErrSaveGame	; 60463
 call sub_B2CD8	; 60468
 add esp, byte 4	; 6046D
-loc_60470:
+.18:
 mov ecx, 0Bh	; 60470
 mov ebx, 0FFFFFFFFh	; 60475
 mov edx, unk_C542E	; 6047A
 mov eax, dword [esp]	; 6047F
 call sub_145F9	; 60482
 test eax, eax	; 60487
-je short loc_60498	; 60489
-push asc_CCDEC	; 6048B
+je short .19	; 60489
+push str_ErrSaveGame	; 6048B
 call sub_B2CD8	; 60490
 add esp, byte 4	; 60495
-loc_60498:
+.19:
 mov ecx, 40h	; 60498
 mov ebx, 0FFFFFFFFh	; 6049D
 mov edx, word_C571C	; 604A2
 mov eax, dword [esp]	; 604A7
 call sub_145F9	; 604AA
 test eax, eax	; 604AF
-je short loc_604C0	; 604B1
-push asc_CCDEC	; 604B3
+je short .20	; 604B1
+push str_ErrSaveGame	; 604B3
 call sub_B2CD8	; 604B8
 add esp, byte 4	; 604BD
-loc_604C0:
+.20:
 mov ecx, 40h	; 604C0
 mov ebx, 0FFFFFFFFh	; 604C5
 mov edx, word_C575C	; 604CA
 mov eax, dword [esp]	; 604CF
 call sub_145F9	; 604D2
 test eax, eax	; 604D7
-je short loc_604E8	; 604D9
-push asc_CCDEC	; 604DB
+je short .21	; 604D9
+push str_ErrSaveGame	; 604DB
 call sub_B2CD8	; 604E0
 add esp, byte 4	; 604E5
-loc_604E8:
+.21:
 lea ebx, [byte esp+04h]	; 604E8
 xor ecx, ecx	; 604EC
 xor ebp, ebp	; 604EE
-loc_604F0:
+.22:
 lea eax, [byte ecx+010h]	; 604F0
 cmp eax, 80h	; 604F3
-jbe short loc_60522	; 604F8
+jbe short .24	; 604F8
 mov ebx, 0FFFFFFFFh	; 604FA
 lea edx, [byte esp+04h]	; 604FF
 mov eax, dword [esp]	; 60503
 call sub_145F9	; 60506
 test eax, eax	; 6050B
-je short loc_6051C	; 6050D
-push asc_CCDEC	; 6050F
+je short .23	; 6050D
+push str_ErrSaveGame	; 6050F
 call sub_B2CD8	; 60514
 add esp, byte 4	; 60519
-loc_6051C:
+.23:
 lea ebx, [byte esp+04h]	; 6051C
 xor ecx, ecx	; 60520
-loc_60522:
+.24:
 mov esi, 19h	; 60522
 mov eax, ebp	; 60527
 mov edx, ebp	; 60529
@@ -726,25 +718,25 @@ add ebx, byte 10h	; 6055A
 add ecx, byte 10h	; 6055D
 inc ebp	; 60560
 cmp ebp, byte 32h	; 60561
-jl short loc_604F0	; 60564
+jl short SaveGameState.22	; 60564
 xor ebp, ebp	; 60566
-loc_60568:
+.25:
 lea eax, [byte ecx+06h]	; 60568
 cmp eax, 80h	; 6056B
-jbe short loc_6059A	; 60570
+jbe short .27	; 60570
 mov ebx, 0FFFFFFFFh	; 60572
 lea edx, [byte esp+04h]	; 60577
 mov eax, dword [esp]	; 6057B
 call sub_145F9	; 6057E
 test eax, eax	; 60583
-je short loc_60594	; 60585
-push asc_CCDEC	; 60587
+je short .26	; 60585
+push str_ErrSaveGame	; 60587
 call sub_B2CD8	; 6058C
 add esp, byte 4	; 60591
-loc_60594:
+.26:
 lea ebx, [byte esp+04h]	; 60594
 xor ecx, ecx	; 60598
-loc_6059A:
+.27:
 mov esi, 3	; 6059A
 mov eax, ebp	; 6059F
 mov edx, ebp	; 605A1
@@ -771,22 +763,22 @@ add ebx, byte 6	; 605D1
 add ecx, byte 6	; 605D4
 inc ebp	; 605D7
 cmp ebp, byte 6	; 605D8
-jl short loc_60568	; 605DB
+jl short SaveGameState.25	; 605DB
 test ecx, ecx	; 605DD
-je short loc_60603	; 605DF
+je short .28	; 605DF
 mov ebx, 0FFFFFFFFh	; 605E1
 lea edx, [byte esp+04h]	; 605E6
 mov eax, dword [esp]	; 605EA
 call sub_145F9	; 605ED
 test eax, eax	; 605F2
-je short loc_60603	; 605F4
-push asc_CCDEC	; 605F6
+je short .28	; 605F4
+push str_ErrSaveGame	; 605F6
 call sub_B2CD8	; 605FB
 add esp, byte 4	; 60600
-loc_60603:
+.28:
 xor eax, eax	; 60603
 add esp, 90h	; 60605
-sub_6060B:
+SaveGameState_popx:
 pop ebp	; 6060B
 pop edi	; 6060C
 pop esi	; 6060D
@@ -794,7 +786,7 @@ pop edx	; 6060E
 pop ecx	; 6060F
 pop ebx	; 60610
 ret	; 60611
-sub_60612:
+LoadGameState:
 push dword 134h	; 60612
 call __CHK	; 60617
 push ebx	; 6061C
@@ -810,14 +802,14 @@ mov ebx, 0FFFFFFFFh	; 6062F
 mov edx, dword_C5413	; 60634
 call sub_145A2	; 60639
 test eax, eax	; 6063E
-je short loc_6064F	; 60640
-push asc_CCDEC	; 60642
+je short .1	; 60640
+push str_ErrSaveGame	; 60642
 call sub_B2CD8	; 60647
 add esp, byte 4	; 6064C
-loc_6064F:
+.1:
 xor edx, edx	; 6064F
 mov dword [dword esp+010Ch], edx	; 60651
-loc_60658:
+.2:
 mov edx, dword [dword esp+010Ch]	; 60658
 shl edx, 7	; 6065F
 add edx, SortCords	; 60662
@@ -826,19 +818,19 @@ mov ebx, 0FFFFFFFFh	; 6066D
 mov eax, ebp	; 60672
 call sub_145A2	; 60674
 test eax, eax	; 60679
-je short loc_6068A	; 6067B
-push asc_CCDD8	; 6067D
+je short .3	; 6067B
+push str_ErrLoadGame	; 6067D
 call sub_B2CD8	; 60682
 add esp, byte 4	; 60687
-loc_6068A:
+.3:
 mov ebx, dword [dword esp+010Ch]	; 6068A
 inc ebx	; 60691
 mov dword [dword esp+010Ch], ebx	; 60692
 cmp ebx, byte 11h	; 60699
-jl short loc_60658	; 6069C
+jl short LoadGameState.2	; 6069C
 xor esi, esi	; 6069E
 mov dword [dword esp+010Ch], esi	; 606A0
-loc_606A7:
+.4:
 mov edx, dword [dword esp+010Ch]	; 606A7
 shl edx, 8	; 606AE
 add edx, hmtmstruct	; 606B1
@@ -847,49 +839,49 @@ mov ebx, 0FFFFFFFFh	; 606BC
 mov eax, ebp	; 606C1
 call sub_145A2	; 606C3
 test eax, eax	; 606C8
-je short loc_606D9	; 606CA
-push asc_CCDD8	; 606CC
+je short .5	; 606CA
+push str_ErrLoadGame	; 606CC
 call sub_B2CD8	; 606D1
 add esp, byte 4	; 606D6
-loc_606D9:
+.5:
 mov edi, dword [dword esp+010Ch]	; 606D9
 inc edi	; 606E0
 mov dword [dword esp+010Ch], edi	; 606E1
 cmp edi, byte 2	; 606E8
-jl short loc_606A7	; 606EB
+jl short LoadGameState.4	; 606EB
 mov ecx, 30h	; 606ED
 mov ebx, 0FFFFFFFFh	; 606F2
 mov edx, hmlinetab	; 606F7
 mov eax, ebp	; 606FC
 call sub_145A2	; 606FE
 test eax, eax	; 60703
-je short loc_60714	; 60705
-push asc_CCDD8	; 60707
+je short .6	; 60705
+push str_ErrLoadGame	; 60707
 call sub_B2CD8	; 6070C
 add esp, byte 4	; 60711
-loc_60714:
+.6:
 mov ecx, 30h	; 60714
 mov ebx, 0FFFFFFFFh	; 60719
 mov edx, awlinetab	; 6071E
 mov eax, ebp	; 60723
 call sub_145A2	; 60725
 test eax, eax	; 6072A
-je short loc_6073B	; 6072C
-push asc_CCDD8	; 6072E
+je short .7	; 6072C
+push str_ErrLoadGame	; 6072E
 call sub_B2CD8	; 60733
 add esp, byte 4	; 60738
-loc_6073B:
+.7:
 mov ecx, 80h	; 6073B
 mov ebx, 0FFFFFFFFh	; 60740
 mov edx, esp	; 60745
 mov eax, ebp	; 60747
 call sub_145A2	; 60749
 test eax, eax	; 6074E
-je short loc_6075F	; 60750
-push asc_CCDD8	; 60752
+je short .8	; 60750
+push str_ErrLoadGame	; 60752
 call sub_B2CD8	; 60757
 add esp, byte 4	; 6075C
-loc_6075F:
+.8:
 mov eax, dword [esp]	; 6075F
 mov word [HomeTeam], ax	; 60762
 mov ebx, esp	; 60768
@@ -905,7 +897,7 @@ mov word [camy], ax	; 60788
 xor edx, edx	; 6078E
 mov dword [dword esp+010Ch], edx	; 60790
 add ebx, byte 2	; 60797
-loc_6079A:
+.9:
 mov eax, dword [dword esp+010Ch]	; 6079A
 mov dx, word [ebx]	; 607A1
 mov word [nosplit eax*2+word_E0390], dx	; 607A4
@@ -913,7 +905,7 @@ add ebx, byte 2	; 607AC
 lea ecx, [byte eax+01h]	; 607AF
 mov dword [dword esp+010Ch], ecx	; 607B2
 cmp ecx, byte 6	; 607B9
-jl short loc_6079A	; 607BC
+jl short LoadGameState.9	; 607BC
 mov ax, word [ebx]	; 607BE
 mov word [lastplayer], ax	; 607C1
 add ebx, byte 2	; 607C7
@@ -934,7 +926,7 @@ mov word [threat], ax	; 607FD
 xor edi, edi	; 60803
 mov dword [dword esp+010Ch], edi	; 60805
 add ebx, byte 2	; 6080C
-loc_6080F:
+.10:
 mov eax, dword [dword esp+010Ch]	; 6080F
 mov dx, word [ebx]	; 60816
 mov word [nosplit eax*2+puckcross], dx	; 60819
@@ -942,7 +934,7 @@ add ebx, byte 2	; 60821
 inc eax	; 60824
 mov dword [dword esp+010Ch], eax	; 60825
 cmp eax, byte 4	; 6082C
-jl short loc_6080F	; 6082F
+jl short LoadGameState.10	; 6082F
 mov ax, word [ebx]	; 60831
 mov word [lj1], ax	; 60834
 add ebx, byte 2	; 6083A
@@ -1077,15 +1069,15 @@ mov edx, esp	; 60A38
 mov eax, ebp	; 60A3A
 call sub_145A2	; 60A3C
 test eax, eax	; 60A41
-je short loc_60A52	; 60A43
-push asc_CCDD8	; 60A45
+je short .11	; 60A43
+push str_ErrLoadGame	; 60A45
 call sub_B2CD8	; 60A4A
 add esp, byte 4	; 60A4F
-loc_60A52:
+.11:
 mov ebx, esp	; 60A52
 xor ecx, ecx	; 60A54
 mov dword [dword esp+010Ch], ecx	; 60A56
-loc_60A5D:
+.12:
 mov eax, dword [dword esp+010Ch]	; 60A5D
 mov dx, word [ebx]	; 60A64
 mov word [nosplit eax*2+PlList], dx	; 60A67
@@ -1093,7 +1085,7 @@ add ebx, byte 2	; 60A6F
 lea esi, [byte eax+01h]	; 60A72
 mov dword [dword esp+010Ch], esi	; 60A75
 cmp esi, byte 6	; 60A7C
-jl short loc_60A5D	; 60A7F
+jl short LoadGameState.12	; 60A7F
 mov al, byte [ebx]	; 60A81
 mov byte [byte_C4D1C], al	; 60A83
 mov al, byte [byte ebx+01h]	; 60A88
@@ -1283,11 +1275,11 @@ mov edx, esp	; 60D4F
 mov eax, ebp	; 60D51
 call sub_145A2	; 60D53
 test eax, eax	; 60D58
-je short loc_60D69	; 60D5A
-push asc_CCDD8	; 60D5C
+je short .13	; 60D5A
+push str_ErrLoadGame	; 60D5C
 call sub_B2CD8	; 60D61
 add esp, byte 4	; 60D66
-loc_60D69:
+.13:
 mov ebx, esp	; 60D69
 mov ecx, 20h	; 60D6B
 xor edx, edx	; 60D70
@@ -1296,7 +1288,7 @@ call __STOSB	; 60D77
 mov dword [dword esp+010Ch], 10h	; 60D7C
 xor edx, edx	; 60D87
 mov dword [dword esp+010Ch], edx	; 60D89
-loc_60D90:
+.14:
 mov eax, dword [dword esp+010Ch]	; 60D90
 mov esi, eax	; 60D97
 shl esi, 2	; 60D99
@@ -1333,7 +1325,7 @@ mov ax, word [ebx]	; 60E02
 mov word [byte esi+02h], ax	; 60E05
 add ebx, byte 2	; 60E09
 test edi, edi	; 60E0C
-jl short loc_60E61	; 60E0E
+jl short .15	; 60E0E
 mov eax, edi	; 60E10
 shl edi, 2	; 60E12
 sub edi, eax	; 60E15
@@ -1355,12 +1347,12 @@ mov edx, dword [esi]	; 60E52
 sar edx, 18h	; 60E54
 mov al, byte [dword edx+eax+byte_CCE00]	; 60E57
 mov byte [byte esi+04h], al	; 60E5E
-loc_60E61:
+.15:
 mov ecx, dword [dword esp+010Ch]	; 60E61
 inc ecx	; 60E68
 mov dword [dword esp+010Ch], ecx	; 60E69
 cmp ecx, byte 14h	; 60E70
-jl near loc_60D90	; 60E73
+jl near LoadGameState.14	; 60E73
 mov ax, word [ebx]	; 60E79
 mov word [word_CBECC], ax	; 60E7C
 add ebx, byte 2	; 60E82
@@ -1438,102 +1430,102 @@ mov edx, PenBuf	; 60F8C
 mov eax, ebp	; 60F91
 call sub_145A2	; 60F93
 test eax, eax	; 60F98
-je short loc_60FA9	; 60F9A
-push asc_CCDD8	; 60F9C
+je short .16	; 60F9A
+push str_ErrLoadGame	; 60F9C
 call sub_B2CD8	; 60FA1
 add esp, byte 4	; 60FA6
-loc_60FA9:
+.16:
 mov ecx, 0Bh	; 60FA9
 mov ebx, 0FFFFFFFFh	; 60FAE
 mov edx, byte_E9AC8	; 60FB3
 mov eax, ebp	; 60FB8
 call sub_145A2	; 60FBA
 test eax, eax	; 60FBF
-je short loc_60FD0	; 60FC1
-push asc_CCDD8	; 60FC3
+je short .17	; 60FC1
+push str_ErrLoadGame	; 60FC3
 call sub_B2CD8	; 60FC8
 add esp, byte 4	; 60FCD
-loc_60FD0:
+.17:
 mov ecx, 0Bh	; 60FD0
 mov ebx, 0FFFFFFFFh	; 60FD5
 mov edx, byte_E9AD3	; 60FDA
 mov eax, ebp	; 60FDF
 call sub_145A2	; 60FE1
 test eax, eax	; 60FE6
-je short loc_60FF7	; 60FE8
-push asc_CCDD8	; 60FEA
+je short .18	; 60FE8
+push str_ErrLoadGame	; 60FEA
 call sub_B2CD8	; 60FEF
 add esp, byte 4	; 60FF4
-loc_60FF7:
+.18:
 mov ecx, 0Bh	; 60FF7
 mov ebx, 0FFFFFFFFh	; 60FFC
 mov edx, unk_C5423	; 61001
 mov eax, ebp	; 61006
 call sub_145A2	; 61008
 test eax, eax	; 6100D
-je short loc_6101E	; 6100F
-push asc_CCDD8	; 61011
+je short .19	; 6100F
+push str_ErrLoadGame	; 61011
 call sub_B2CD8	; 61016
 add esp, byte 4	; 6101B
-loc_6101E:
+.19:
 mov ecx, 0Bh	; 6101E
 mov ebx, 0FFFFFFFFh	; 61023
 mov edx, unk_C542E	; 61028
 mov eax, ebp	; 6102D
 call sub_145A2	; 6102F
 test eax, eax	; 61034
-je short loc_61045	; 61036
-push asc_CCDD8	; 61038
+je short .20	; 61036
+push str_ErrLoadGame	; 61038
 call sub_B2CD8	; 6103D
 add esp, byte 4	; 61042
-loc_61045:
+.20:
 mov ecx, 40h	; 61045
 mov ebx, 0FFFFFFFFh	; 6104A
 lea edx, [dword esp+0C0h]	; 6104F
 mov eax, ebp	; 61056
 call sub_145A2	; 61058
 test eax, eax	; 6105D
-je short loc_6106E	; 6105F
-push asc_CCDD8	; 61061
+je short .21	; 6105F
+push str_ErrLoadGame	; 61061
 call sub_B2CD8	; 61066
 add esp, byte 4	; 6106B
-loc_6106E:
+.21:
 mov ecx, 40h	; 6106E
 mov ebx, 0FFFFFFFFh	; 61073
 lea edx, [dword esp+080h]	; 61078
 mov eax, ebp	; 6107F
 call sub_145A2	; 61081
 test eax, eax	; 61086
-je short loc_61097	; 61088
-push asc_CCDD8	; 6108A
+je short .22	; 61088
+push str_ErrLoadGame	; 6108A
 call sub_B2CD8	; 6108F
 add esp, byte 4	; 61094
-loc_61097:
+.22:
 xor edi, edi	; 61097
 mov dword [dword esp+0108h], edi	; 61099
 mov dword [dword esp+010Ch], edi	; 610A0
-loc_610A7:
+.23:
 cmp dword [dword esp+0108h], byte 0	; 610A7
-jne short loc_61100	; 610AF
+jne short .26	; 610AF
 mov dword [dword esp+0108h], 80h	; 610B1
 cmp dword [dword esp+010Ch], byte 30h	; 610BC
-jl short loc_610D1	; 610C4
+jl short .24	; 610C4
 mov dword [dword esp+0108h], 44h	; 610C6
-loc_610D1:
+.24:
 mov ecx, dword [dword esp+0108h]	; 610D1
 mov ebx, 0FFFFFFFFh	; 610D8
 mov edx, esp	; 610DD
 mov eax, ebp	; 610DF
 call sub_145A2	; 610E1
 test eax, eax	; 610E6
-je short loc_610F7	; 610E8
-push asc_CCDD8	; 610EA
+je short .25	; 610E8
+push str_ErrLoadGame	; 610EA
 call sub_B2CD8	; 610EF
 add esp, byte 4	; 610F4
-loc_610F7:
+.25:
 mov eax, esp	; 610F7
 mov dword [dword esp+0104h], eax	; 610F9
-loc_61100:
+.26:
 mov ecx, dword [dword esp+0104h]	; 61100
 mov ebx, 19h	; 61107
 mov eax, dword [dword esp+010Ch]	; 6110C
@@ -1565,11 +1557,11 @@ mov edx, dword [dword esp+010Ch]	; 6115F
 inc edx	; 61166
 mov dword [dword esp+010Ch], edx	; 61167
 cmp edx, byte 32h	; 6116E
-jl near loc_610A7	; 61171
+jl near LoadGameState.23	; 61171
 mov ebp, dword [dword esp+0104h]	; 61177
 xor ecx, ecx	; 6117E
 mov dword [dword esp+010Ch], ecx	; 61180
-loc_61187:
+.27:
 mov esi, ebp	; 61187
 mov ebx, 3	; 61189
 mov eax, dword [dword esp+010Ch]	; 6118E
@@ -1595,43 +1587,43 @@ mov esi, dword [dword esp+010Ch]	; 611C7
 inc esi	; 611CE
 mov dword [dword esp+010Ch], esi	; 611CF
 cmp esi, byte 6	; 611D6
-jl short loc_61187	; 611D9
+jl short LoadGameState.27	; 611D9
 cmp byte [byte_C4D1C], 1	; 611DB
-je short loc_611ED	; 611E2
+je short .28	; 611E2
 cmp byte [byte_C4D1D], 1	; 611E4
-jne short loc_611FC	; 611EB
-loc_611ED:
+jne short .29	; 611EB
+.28:
 push byte 64h	; 611ED
 push dword 0A0h	; 611EF
 call MouseSetPos	; 611F4
 add esp, byte 8	; 611F9
-loc_611FC:
+.29:
 mov eax, dword [dword_C53FB]	; 611FC
 cmp eax, byte 1	; 61201
-jb short loc_6120F	; 61204
-jbe short loc_61224	; 61206
+jb short .30	; 61204
+jbe short .31	; 61206
 cmp eax, byte 2	; 61208
-je short loc_61235	; 6120B
-jmp short loc_61249	; 6120D
-loc_6120F:
+je short .32	; 6120B
+jmp short .34	; 6120D
+.30:
 test eax, eax	; 6120F
-jne short loc_61249	; 61211
+jne short .34	; 61211
 mov eax, unk_C5298	; 61213
 call sub_3271B	; 61218
 mov eax, unk_C5298	; 6121D
-jmp short loc_61244	; 61222
-loc_61224:
+jmp short .33	; 61222
+.31:
 mov eax, dword_C530D	; 61224
 call sub_3271B	; 61229
 mov eax, dword_C530D	; 6122E
-jmp short loc_61244	; 61233
-loc_61235:
+jmp short .33	; 61233
+.32:
 mov eax, dword_C5382	; 61235
 call sub_3271B	; 6123A
 mov eax, dword_C5382	; 6123F
-loc_61244:
+.33:
 call sub_327A1	; 61244
-loc_61249:
+.34:
 call GetPeriodTime	; 61249
 mov word [PerTimeTotal], ax	; 6124E
 mov eax, 1	; 61254
@@ -1664,14 +1656,14 @@ mov dword [dword_CC0E0], ecx	; 612CE
 mov eax, dword [dword_CBECA]	; 612D4
 sar eax, 10h	; 612D9
 cmp eax, ebx	; 612DC
-je short loc_612F9	; 612DE
+je short .35	; 612DE
 mov edx, dword [word_CBECC]	; 612E0
 sar edx, 10h	; 612E6
 cmp edx, ebx	; 612E9
-je short loc_612F9	; 612EB
+je short .35	; 612EB
 mov eax, dword [nosplit eax*4+off_CC01D]	; 612ED
 mov dword [dword_E0248], eax	; 612F4
-loc_612F9:
+.35:
 call sub_61E99	; 612F9
 mov eax, dword [replaystart]	; 612FE
 mov dword [recbpr], eax	; 61303
@@ -1697,7 +1689,7 @@ mov dword [awtmptrF2], unk_DBF18	; 613B3
 mov ebx, SortCords	; 613BD
 xor ebp, ebp	; 613C2
 mov dword [dword esp+010Ch], ebp	; 613C4
-loc_613CB:
+.36:
 mov eax, dword [dword esp+010Ch]	; 613CB
 mov word [byte ebx+06Ah], ax	; 613D2
 mov eax, dword [dword esp+010Ch]	; 613D6
@@ -1709,20 +1701,20 @@ mov word [byte ebx+066h], ax	; 613EC
 mov ax, word [nosplit esi*2+word_CBD66]	; 613F0
 mov word [byte ebx+068h], ax	; 613F8
 test byte [byte ebx+044h], 40h	; 613FC
-je short loc_61409	; 61400
+je short .37	; 61400
 mov eax, awtmstruct	; 61402
-jmp short loc_6140E	; 61407
-loc_61409:
+jmp short .38	; 61407
+.37:
 mov eax, hmtmstruct	; 61409
-loc_6140E:
+.38:
 mov dword [byte ebx+06Ch], eax	; 6140E
 test byte [byte ebx+044h], 40h	; 61411
-jne short loc_6141E	; 61415
+jne short .39	; 61415
 mov eax, awtmstruct	; 61417
-jmp short loc_61423	; 6141C
-loc_6141E:
+jmp short .40	; 6141C
+.39:
 mov eax, hmtmstruct	; 6141E
-loc_61423:
+.40:
 mov dword [byte ebx+070h], eax	; 61423
 mov eax, dword [ebx]	; 61426
 mov dword [byte ebx+074h], eax	; 61428
@@ -1739,11 +1731,11 @@ inc eax	; 6145A
 mov dword [dword esp+010Ch], eax	; 6145B
 add ebx, 80h	; 61462
 cmp eax, byte 11h	; 61468
-jl near loc_613CB	; 6146B
+jl near LoadGameState.36	; 6146B
 call SprSort	; 61471
 xor ebx, ebx	; 61476
 mov dword [dword esp+010Ch], ebx	; 61478
-loc_6147F:
+.41:
 mov ebx, dword [dword esp+010Ch]	; 6147F
 lea edi, [nosplit ebx*8+word_C571C]	; 61486
 lea esi, [dword esp+ebx*8+0C0h]	; 6148D
@@ -1756,7 +1748,7 @@ movsd	; 614A5
 lea ecx, [byte ebx+01h]	; 614A6
 mov dword [dword esp+010Ch], ecx	; 614A9
 cmp ecx, byte 8	; 614B0
-jl short loc_6147F	; 614B3
+jl short LoadGameState.41	; 614B3
 xor eax, eax	; 614B5
 add esp, 110h	; 614B7
-jmp near sub_6060B	; 614BD
+jmp near SaveGameState_popx	; 614BD

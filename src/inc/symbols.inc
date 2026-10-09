@@ -519,8 +519,8 @@
 ;  5EDAD  playeracc                                cseg01/043_5E16D_engine_skating.asm          1
 ;  5F82A  StopNA                                   cseg01/043_5E16D_engine_skating.asm          1
 ;  5F8B2  goalieacc                                cseg01/043_5E16D_engine_skating.asm          1
-;  5FB03  sub_5FB03                                cseg01/044_5FB03_game_state_saveload.asm     1
-;  60612  sub_60612                                cseg01/044_5FB03_game_state_saveload.asm     1
+;  5FB03  SaveGameState                            cseg01/044_5FB03_game_state_saveload.asm     1
+;  60612  LoadGameState                            cseg01/044_5FB03_game_state_saveload.asm     1
 ;  61576  sub_61576                                cseg01/045_614C2_scoring_penalty_text.asm    3
 ;  615A2  sub_615A2                                cseg01/045_614C2_scoring_penalty_text.asm    1
 ;  61862  sub_61862                                cseg01/045_614C2_scoring_penalty_text.asm    1
@@ -4147,8 +4147,8 @@
 ;  CCD4F  dword_CCD4F                              dseg02/037_CC01D_data_engine_37.asm          1
 ;  CCD78  doplayeracc_ftab                         dseg02/037_CC01D_data_engine_37.asm          1
 ;  CCD98  MaxSpeed                                 dseg02/037_CC01D_data_engine_37.asm          1
-;  CCDD8  asc_CCDD8                                dseg02/037_CC01D_data_engine_37.asm          1
-;  CCDEC  asc_CCDEC                                dseg02/037_CC01D_data_engine_37.asm          1
+;  CCDD8  str_ErrLoadGame                          dseg02/037_CC01D_data_engine_37.asm          1
+;  CCDEC  str_ErrSaveGame                          dseg02/037_CC01D_data_engine_37.asm          1
 ;  CCE00  byte_CCE00                               dseg02/037_CC01D_data_engine_37.asm          3
 ;  CCE01  byte_CCE01                               dseg02/037_CC01D_data_engine_37.asm          1
 ;  CCEF6  dword_CCEF6                              dseg02/037_CC01D_data_engine_37.asm          1

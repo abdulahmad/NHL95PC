@@ -9,7 +9,7 @@ extern byte_ED92F, dword_C5130, dword_C530D, dword_C5382, dword_C53FB, dword_D2C
 extern dword_DC888, dword_DC88C, dword_DD730, dword_EA0DC, jctime, off_D27EF, off_D27F7, off_D2855
 extern sprintf_, strcat_, sub_1431E, sub_14566, sub_1457C, sub_145F9, sub_1466B, sub_14825
 extern sub_30A0C, sub_30F12, sub_31013, sub_3170D, sub_3271B, sub_327A1, sub_32B1D, sub_41978
-extern sub_5FB03, sub_6B391, sub_6B3D7, sub_80075, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
+extern SaveGameState, sub_6B391, sub_6B3D7, sub_80075, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_903F0, sub_910E0, sub_91284, sub_91370, sub_91400
 extern sub_92CD0, sub_92DE0, sub_B2CD8, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3989, sub_B3999
 extern sub_B4BA8, unk_C392C, unk_C392F, unk_C393B, unk_C393E, unk_C3941, unk_C3944, unk_C396F
@@ -200,7 +200,7 @@ call sub_B2CD8	; 85BA1
 add esp, byte 4	; 85BA6
 loc_85BA9:
 mov eax, dword [dword esp+098h]	; 85BA9
-call sub_5FB03	; 85BB0
+call SaveGameState	; 85BB0
 lea eax, [dword esp+098h]	; 85BB5
 call sub_1457C	; 85BBC
 jmp near loc_85D52	; 85BC1
@@ -289,7 +289,7 @@ mov eax, dword_C530D	; 85CF7
 call sub_32B1D	; 85CFC
 loc_85D01:
 mov eax, dword [dword esp+098h]	; 85D01
-call sub_5FB03	; 85D08
+call SaveGameState	; 85D08
 lea eax, [dword esp+098h]	; 85D0D
 call sub_1457C	; 85D14
 push byte_C8451	; 85D19
