@@ -1964,6 +1964,10 @@ pop edx	; 5498C
 pop ecx	; 5498D
 pop ebx	; 5498E
 ret	; 5498F
+; C: src/c/040_53294_engine_physics_ai/CheckBump.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/CheckBump.inc"
+%else
 CheckBump:
 push dword 10h	; 54990
 call __CHK	; 54995
@@ -2039,6 +2043,7 @@ pop esi	; 54A4F
 pop ecx	; 54A50
 pop ebx	; 54A51
 ret	; 54A52
+%endif ; C
 GetLowestPen:
 push dword 18h	; 54A53
 call __CHK	; 54A58
@@ -7692,6 +7697,10 @@ pop ebp	; 591C3
 pop edi	; 591C4
 pop esi	; 591C5
 ret	; 591C6
+; C: src/c/040_53294_engine_physics_ai/CPgoalie.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/CPgoalie.inc"
+%else
 CPgoalie:
 push dword 8	; 591C7
 call __CHK	; 591CC
@@ -7739,6 +7748,7 @@ call setpersonel	; 5925E
 .x:
 pop ecx	; 59263
 ret	; 59264
+%endif ; C
 ; ChkGoalies: 93G logic93_4 ChkGoalies (computer pulls goalie on delayed penalty), once a second from periodicevents.
 ChkGoalies:
 push dword 14h	; 59265

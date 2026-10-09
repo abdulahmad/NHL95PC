@@ -3928,6 +3928,10 @@ mov word [yc1], ax	; 5CD41
 or byte [sflags], 40h	; 5CD47
 ret	; 5CD4E
 %endif ; C
+; C: src/c/042_59D9A_engine_core/cleargamevars.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/cleargamevars.inc"
+%else
 cleargamevars:
 push dword 0Ch	; 5CD4F
 call __CHK	; 5CD54
@@ -3969,6 +3973,7 @@ call ClearPenaltyBuffer	; 5CE0A
 pop edx	; 5CE0F
 pop ebx	; 5CE10
 ret	; 5CE11
+%endif ; C
 DrawRinkOverlays:
 push dword 6Ch	; 5CE12
 call __CHK	; 5CE17

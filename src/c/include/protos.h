@@ -498,6 +498,7 @@ void InitCoachModes(void);  /* 5A669 */
 void SetCoachMode(int side);
 void ChkGoalies(void);  /* 59265 */                       
 void CPgoalie(Team *t, Team *o, int y);
+int ChkPullGoalieLate(int side);  /* 593F5 */
 int SetupGame(void);  /* 13E8F */                         
 void DrawHudPanel(int home, int vis, int a, int b);
 void PlacePlayersAtStart(void);
@@ -631,5 +632,12 @@ int FinishPlayoffs(int fh, int a, int b, int c, char *dir, char *ext, int round)
 void MoveToFreeAgents(int *mode, int *x, int *y);  /* 70E8D */
 void LoadRosterList(int side);  /* 6DE94 */
 void DrawEditRosters(void);  /* 6D2F8 */
+void cleargamevars(void);  /* 5CD4F */
+int IsCupClinched(unsigned char home, unsigned char away);  /* 15C30 */
+int SeriesLength(unsigned char *s);  /* 42221 */
+void SetSeriesTeams(unsigned char *s, int a, int b, int games);  /* 42F42 */
+void UpdatePowerPlayFlags(void);  /* 63C73 */
+int CheckBump(Player *p, Player *c);  /* 54990 */
+int ChkDelayedOffside(Player *p);  /* 541CA */
 
 #endif

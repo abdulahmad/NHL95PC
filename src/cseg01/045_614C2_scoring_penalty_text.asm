@@ -3241,6 +3241,10 @@ pop esi	; 63C6F
 pop edx	; 63C70
 pop ebx	; 63C71
 ret	; 63C72
+; C: src/c/045_614C2_scoring_penalty_text/UpdatePowerPlayFlags.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/UpdatePowerPlayFlags.inc"
+%else
 UpdatePowerPlayFlags:
 push dword 10h	; 63C73
 call __CHK	; 63C78
@@ -3309,6 +3313,7 @@ pop edx	; 63D38
 pop ecx	; 63D39
 pop ebx	; 63D3A
 ret	; 63D3B
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/ClearPenaltyBuffer.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/ClearPenaltyBuffer.inc"

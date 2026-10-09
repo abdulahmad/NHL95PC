@@ -1625,6 +1625,10 @@ pop esi	; 42F3F
 pop ecx	; 42F40
 ret	; 42F41
 %endif ; C
+; C: src/c/034_41B80_schedule/SetSeriesTeams.c
+%ifdef CBUILD
+%include "c/034_41B80_schedule/SetSeriesTeams.inc"
+%else
 SetSeriesTeams:
 push dword 8	; 42F42
 call __CHK	; 42F47
@@ -1692,6 +1696,7 @@ mov byte [byte eax+02h], dl	; 42FE5
 mov byte [byte eax+03h], bl	; 42FE8
 pop esi	; 42FEB
 ret	; 42FEC
+%endif ; C
 SeedPlayoffRound1:
 push dword 5FCh	; 42FED
 call __CHK	; 42FF2

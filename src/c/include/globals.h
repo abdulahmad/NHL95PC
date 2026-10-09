@@ -4679,7 +4679,6 @@ extern unsigned char hmlineind[]; /* DC2F4 */
 extern unsigned char awlineind[]; /* DC300 */
 extern int clockdigits[]; /* DC30C */
 extern int clockcolon; /* DC334 */
-extern int cupseries; /* DC338 */
 extern int dword_DC33C; /* DC33C */
 extern unsigned char unk_DC340[]; /* DC340 */
 extern int statsteamorder[]; /* DC640 */

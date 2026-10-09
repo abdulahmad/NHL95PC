@@ -56,7 +56,6 @@ extern void TickPanelPenalties(); /* 15655 */
 extern void DrawEnergyBar(); /* 15707 */
 extern void DrawLineGroupBars(); /* 157BD */
 extern void DrawPanelPenalties(); /* 15995 */
-extern void IsCupClinched(); /* 15C30 */
 extern void RunDemoGame(); /* 15D6B */
 extern void RunDemoGame_x(); /* 16005 */
 extern void TitleScreen(); /* 1609F */
@@ -501,7 +500,6 @@ extern void UpdateSeasonSchedule(); /* 41CC4 */
 extern void UpdateSeasonSchedule_pop3(); /* 41F5E */
 extern void UpdatePlayoffSeries(); /* 41F64 */
 extern void SeriesLength_jt(); /* 42205 */
-extern void SeriesLength(); /* 42221 */
 extern void SeriesLength_bo1(); /* 42255 */
 extern void SeriesLength_bo3(); /* 42260 */
 extern void SeriesLength_n3(); /* 42267 */
@@ -512,7 +510,6 @@ extern void SimScheduleDay(); /* 42631 */
 extern void BuildPlayoffs(); /* 428AB */
 extern void GetPlayoffSeeds(); /* 42BBA */
 extern void SortStandings(); /* 42DAA */
-extern void SetSeriesTeams(); /* 42F42 */
 extern void SeedPlayoffRound1(); /* 42FED */
 extern void SimPlayoffRound1_ok(); /* 4374C */
 extern void SimPlayoffRound1_pop3(); /* 43751 */
@@ -610,10 +607,8 @@ extern void checkint(); /* 53E6A */
 extern void checkob(); /* 53F8C */
 extern void checkob_ret5a(); /* 5412B */
 extern void checkob_ret5(); /* 5412E */
-extern void ChkDelayedOffside(); /* 541CA */
 extern void checkpuckcoll(); /* 5428A */
 extern void PuckCheckColl(); /* 548AC */
-extern void CheckBump(); /* 54990 */
 extern void GetLowestPen(); /* 54A53 */
 extern void chk4lc(); /* 54AF9 */
 extern void chk4lc_shoot(); /* 54BF8 */
@@ -629,7 +624,6 @@ extern void ChkShotStat(); /* 55D28 */
 extern void setInjuryType(); /* 55E72 */
 extern void NetCollide(); /* 5601D */
 extern void holdcheck(); /* 56B79 */
-extern void puckbody(); /* 56D06 */
 extern void puckglue(); /* 56F5A */
 extern void puckgoalie(); /* 57096 */
 extern void puckstick(); /* 57483 */
@@ -644,7 +638,6 @@ extern void wallcollb(); /* 58B7F */
 extern void checkplcoll(); /* 58CE2 */
 extern void checkcx(); /* 58DC7 */
 extern void ReturnGoalies(); /* 59352 */
-extern void ChkPullGoalieLate(); /* 593F5 */
 extern void sndcb_addesp8_x(); /* 594AC */
 extern void SndLoadFile2(); /* 594B2 */
 extern void CrowdNoiseUpdate(); /* 594CD */
@@ -678,7 +671,6 @@ extern void ResetClock(); /* 5BA07 */
 extern void SetPlList(); /* 5BBFA */
 extern void updateplayers(); /* 5C40F */
 extern void updateanim(); /* 5CAEF */
-extern void cleargamevars(); /* 5CD4F */
 extern void DrawRinkOverlays(); /* 5CE12 */
 extern void SprSortVert(); /* 5DD6B */
 extern void SprSort(); /* 5DD7C */

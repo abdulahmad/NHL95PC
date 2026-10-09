@@ -75,4 +75,6 @@ extern unsigned char *rostergstat;  /* EBC6C: roster goalie stats records, 2Ch b
 extern unsigned char *falist;  /* D07AA: free-agent list, 1Bh bytes per player (name at +8) */
 extern unsigned char *statsteamrecs;  /* DD108: team stats records, 4Ch bytes each (season standings at +28h, playoffs at +3Ah) */
 extern int *statssortkeys;  /* DD118: per-player sort keys for the stats leaders (CmpShootPct compares them first) */
+extern unsigned char *cupseries;   /* DC338: cup final series buffer (2 team bytes at +2/+3, then 6-byte game records) */
+
 #endif
