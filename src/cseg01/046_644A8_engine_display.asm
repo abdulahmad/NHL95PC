@@ -11,19 +11,19 @@ extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, byte_ED7CC, b
 extern byte_ED92B, joysampling, dword_C90B0, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, dword_CC0DC
 extern dword_CCEF6, dword_CD41E, dword_CD4B0, dword_D2C6B, dword_D30AC, dword_D30B0, dword_D30B4, dword_D30B8
 extern dword_D30BC, dword_D30C0, dword_D8B70, dword_D8B78, dword_D8C40, dword_D8C84, dword_DEF8C, dword_DEFE0
-extern dword_DF004, dword_DF614, dword_DFF1C, dword_E00A0, dword_E0220, dword_E0230, dword_E0244, dword_E0248
+extern dword_DF004, hmtmstruct, puckstruct, dword_E00A0, dword_E0220, dword_E0230, dword_E0244, dword_E0248
 extern dword_E039C, dword_E03A4, dword_E03AE, dword_E03B9, dword_E03BD
 extern dword_E9A9E, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38
 extern dword_E9F54, dword_E9F56, dword_E9F5A, dword_E9F76, dword_E9F78, dword_E9F7B, dword_E9F8C, dword_E9F98
 extern dword_E9FA5, dword_E9FA8, dword_E9FAA, dword_E9FD9, dword_E9FF0, dword_ED74C, fputchar, gmode
-extern jctime, off_C9078, puckz, puckc, off_C9096, off_CBED0, off_CC01D, off_CD498
+extern jctime, off_C9078, puckz, puckc, camx_m2, off_CBED0, off_CC01D, off_CD498
 extern off_CD4A0, off_CD4DC, setpersonel, sfx, sprintf_, sub_11005, sub_110E0, sub_11136
 extern sub_1431E, sub_1CD73, sub_594CD, sub_59748, sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8EA18, sub_90354, sub_90D20, sub_90EC0, sub_91964, sub_93540, sub_B30B4
 extern sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80, unk_DABF0, unk_DACA0, unk_DC200, SortCords
 extern unk_E001C, unk_E9CEC, unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE
-extern unk_E9EE0, word_C9098, word_C909A, xc1, yc1, word_C90B2, word_C90B4, c1playernum
-extern c2playernum, cont1team, word_C90CE, word_C90D4, word_C90DA, word_C90DC, word_C90DE, word_CBEC0
+extern unk_E9EE0, camx, camy, xc1, yc1, word_C90B2, word_C90B4, c1playernum
+extern c2playernum, cont1team, word_C90CE, word_C90D4, gsp, gameclock, clockticks, word_CBEC0
 extern word_CBEC8, word_CBECC, word_CBECE, word_CC054, word_CC0B0, word_CC0DE, word_CCEF8, word_CD4FC
 extern word_CD4FE, word_CD500, scrolly, scrollx, word_DEE94, word_DF64C, word_E001E, word_E0022
 extern word_E0046, regd2, regd3, regd0, regd1, joysampling_save, word_E9AB2, word_E9AB4
@@ -2294,7 +2294,7 @@ mov ebx, 0Fh	; 65D58
 mov word [yc1], bx	; 65D5D
 mov word [regd2], bx	; 65D64
 mov ecx, 5	; 65D6B
-mov ax, word [word_C909A]	; 65D70
+mov ax, word [camy]	; 65D70
 sub ebx, eax	; 65D76
 mov word [regd0], bx	; 65D78
 mov eax, dword [regd0-2]	; 65D7F
@@ -2321,7 +2321,7 @@ loc_65DC3:
 movsx ecx, cx	; 65DC3
 cmp eax, ecx	; 65DC6
 jle near loc_65E51	; 65DC8
-mov ax, word [word_C909A]	; 65DCE
+mov ax, word [camy]	; 65DCE
 mov cx, word [regd1]	; 65DD4
 sub ecx, eax	; 65DDB
 mov word [regd1], cx	; 65DDD
@@ -2357,10 +2357,10 @@ jne short loc_65E44	; 65E39
 mov word [regd1], 1	; 65E3B
 loc_65E44:
 mov ax, word [regd1]	; 65E44
-add word [word_C909A], ax	; 65E4A
+add word [camy], ax	; 65E4A
 loc_65E51:
 mov ax, word [regd3]	; 65E51
-mov bx, word [word_C9098]	; 65E57
+mov bx, word [camx]	; 65E57
 sub eax, ebx	; 65E5E
 mov word [regd0], ax	; 65E60
 movsx ecx, dx	; 65E66
@@ -2388,7 +2388,7 @@ cmp ax, 20h	; 65EB9
 jle short loc_65EC8	; 65EBD
 mov word [regd1], 20h	; 65EBF
 loc_65EC8:
-mov ax, word [word_C9098]	; 65EC8
+mov ax, word [camx]	; 65EC8
 mov dx, word [regd1]	; 65ECE
 sub edx, eax	; 65ED5
 mov word [regd1], dx	; 65ED7
@@ -2424,9 +2424,9 @@ jne near loc_66480	; 65F38
 mov word [regd1], 1	; 65F3E
 jmp near loc_66480	; 65F47
 loc_65F4C:
-cmp word [word_C90DC], byte 0	; 65F4C
+cmp word [gameclock], byte 0	; 65F4C
 jne short loc_65F64	; 65F54
-cmp word [word_C90DE], byte 0	; 65F56
+cmp word [clockticks], byte 0	; 65F56
 je near loc_66249	; 65F5E
 loc_65F64:
 test byte [gmode], 4	; 65F64
@@ -2443,7 +2443,7 @@ mov word [xc1], si	; 65F91
 mov si, word [word_E0022]	; 65F98
 mov word [yc1], si	; 65F9F
 mov si, word [xc1]	; 65FA6
-mov di, word [word_C9098]	; 65FAD
+mov di, word [camx]	; 65FAD
 sub esi, edi	; 65FB4
 mov word [regd2], si	; 65FB6
 mov si, word [word_E0046]	; 65FBD
@@ -2456,7 +2456,7 @@ sar edi, 10h	; 65FDC
 xor edi, esi	; 65FDF
 test edi, edi	; 65FE1
 jge short loc_65FEE	; 65FE3
-mov si, word [word_C9098]	; 65FE5
+mov si, word [camx]	; 65FE5
 jmp short loc_66022	; 65FEC
 loc_65FEE:
 cmp word [regd2], byte 0	; 65FEE
@@ -2480,7 +2480,7 @@ loc_66022:
 mov word [xc1], si	; 66022
 loc_66029:
 mov si, word [yc1]	; 66029
-mov di, word [word_C909A]	; 66030
+mov di, word [camy]	; 66030
 sub esi, edi	; 66037
 mov word [regd2], si	; 66039
 mov si, word [byte eax+temp4]	; 66040
@@ -2493,7 +2493,7 @@ sar edi, 10h	; 6605C
 xor edi, esi	; 6605F
 test edi, edi	; 66061
 jge short loc_6607C	; 66063
-mov si, word [word_C909A]	; 66065
+mov si, word [camy]	; 66065
 loc_6606C:
 mov word [regd2], si	; 6606C
 mov word [yc1], si	; 66073
@@ -2610,7 +2610,7 @@ jg short loc_66212	; 66200
 mov word [dword_C90B0], 0FFCEh	; 66202
 jmp short loc_66212	; 6620B
 loc_6620D:
-mov eax, dword_DFF1C	; 6620D
+mov eax, puckstruct	; 6620D
 loc_66212:
 mov esi, dword [byte eax+0Ch]	; 66212
 sar esi, 18h	; 66215
@@ -2627,7 +2627,7 @@ mov word [regd3], ax	; 6623D
 mov word [xc1], ax	; 66243
 loc_66249:
 mov ax, word [regd2]	; 66249
-mov di, word [word_C909A]	; 6624F
+mov di, word [camy]	; 6624F
 sub eax, edi	; 66256
 mov word [regd0], ax	; 66258
 movsx eax, cx	; 6625E
@@ -2674,7 +2674,7 @@ loc_662EE:
 movsx ecx, cx	; 662EE
 cmp eax, ecx	; 662F1
 jle near loc_66392	; 662F3
-mov ax, word [word_C909A]	; 662F9
+mov ax, word [camy]	; 662F9
 mov di, word [regd1]	; 662FF
 sub edi, eax	; 66306
 mov word [regd1], di	; 66308
@@ -2717,10 +2717,10 @@ jne short loc_66385	; 6637A
 mov word [regd1], 1	; 6637C
 loc_66385:
 mov ax, word [regd1]	; 66385
-add word [word_C909A], ax	; 6638B
+add word [camy], ax	; 6638B
 loc_66392:
 mov ax, word [regd3]	; 66392
-mov si, word [word_C9098]	; 66398
+mov si, word [camx]	; 66398
 sub eax, esi	; 6639F
 mov word [regd0], ax	; 663A1
 movsx eax, dx	; 663A7
@@ -2748,7 +2748,7 @@ cmp ax, 20h	; 663FB
 jle short loc_6640A	; 663FF
 mov word [regd1], 20h	; 66401
 loc_6640A:
-mov ax, word [word_C9098]	; 6640A
+mov ax, word [camx]	; 6640A
 mov cx, word [regd1]	; 66410
 sub ecx, eax	; 66417
 mov word [regd1], cx	; 66419
@@ -2784,7 +2784,7 @@ jne short loc_66480	; 66475
 mov word [regd1], 1	; 66477
 loc_66480:
 mov ax, word [regd1]	; 66480
-add word [word_C9098], ax	; 66486
+add word [camx], ax	; 66486
 loc_6648D:
 add esp, byte 4	; 6648D
 loc_66490:
@@ -2941,7 +2941,7 @@ mov word [byte esp+010h], ax	; 66671
 mov si, word [scrollx]	; 66676
 add esi, byte 4Ah	; 6667D
 sub esi, dword [byte esp+018h]	; 66680
-cmp word [word_C90DA], byte 4	; 66684
+cmp word [gsp], byte 4	; 66684
 jne short loc_66694	; 6668C
 add esi, 0ACh	; 6668E
 loc_66694:
@@ -2982,7 +2982,7 @@ add esp, byte 10h	; 66710
 loc_66713:
 mov si, word [scrollx]	; 66713
 add esi, byte 0Ch	; 6671A
-cmp word [word_C90DA], byte 4	; 6671D
+cmp word [gsp], byte 4	; 6671D
 jne short loc_6672D	; 66725
 add esi, 0ACh	; 66727
 loc_6672D:
@@ -3481,7 +3481,7 @@ add esp, byte 0Ch	; 66D7E
 loc_66D81:
 mov si, word [dword_D30AC]	; 66D81
 add esi, byte 8	; 66D88
-cmp word [word_C90DA], byte 4	; 66D8B
+cmp word [gsp], byte 4	; 66D8B
 jne short loc_66D9B	; 66D93
 add esi, 0ACh	; 66D95
 loc_66D9B:
@@ -3862,7 +3862,7 @@ loc_672E1:
 mov byte [eax], 1	; 672E1
 movsx eax, dx	; 672E4
 shl eax, 8	; 672E7
-add eax, dword_DF614	; 672EA
+add eax, hmtmstruct	; 672EA
 call setpersonel	; 672EF
 loc_672F4:
 pop esi	; 672F4
@@ -3930,7 +3930,7 @@ movsx edx, ax	; 673A6
 shl edx, 8	; 673A9
 cmp cx, word [dword edx+word_DF64C]	; 673AC
 je short loc_673C1	; 673B3
-mov eax, dword_DF614	; 673B5
+mov eax, hmtmstruct	; 673B5
 add eax, edx	; 673BA
 call setpersonel	; 673BC
 loc_673C1:
@@ -4289,10 +4289,10 @@ mov byte [eax], dl	; 67814
 mov eax, dword [dword_E039C]	; 67816
 lea ebx, [byte eax+01h]	; 6781B
 mov dword [dword_E039C], ebx	; 6781E
-mov dl, byte [word_C9098]	; 67824
+mov dl, byte [camx]	; 67824
 mov byte [eax], dl	; 6782A
 mov eax, dword [dword_E039C]	; 6782C
-mov dx, word [word_C909A]	; 67831
+mov dx, word [camy]	; 67831
 mov word [eax], dx	; 67838
 mov ecx, dword [dword_E039C]	; 6783B
 add ecx, byte 2	; 67841
@@ -4615,11 +4615,11 @@ inc edx	; 67C86
 mov dword [dword_E03A4], edx	; 67C87
 movsx ax, byte [eax]	; 67C8D
 mov word [word_E9FB0], ax	; 67C91
-mov word [word_C9098], ax	; 67C97
+mov word [camx], ax	; 67C97
 mov eax, edx	; 67C9D
 mov dx, word [edx]	; 67C9F
 mov word [word_E9FB2], dx	; 67CA2
-mov word [word_C909A], dx	; 67CA9
+mov word [camy], dx	; 67CA9
 add eax, byte 2	; 67CB0
 mov dword [dword_E03A4], eax	; 67CB3
 mov edx, eax	; 67CB8
@@ -4721,13 +4721,13 @@ mov ebp, esp	; 67DDB
 sub esp, byte 34h	; 67DDD
 push eax	; 67DE0
 push edx	; 67DE1
-mov eax, dword [off_C9096]	; 67DE2
+mov eax, dword [camx_m2]	; 67DE2
 sar eax, 10h	; 67DE7
 cmp eax, byte 0FFFFFFF0h	; 67DEA
 jle near loc_67E99	; 67DED
-cmp word [word_C909A], byte 50h	; 67DF3
+cmp word [camy], byte 50h	; 67DF3
 jge short loc_67E44	; 67DFB
-mov eax, dword [word_C9098]	; 67DFD
+mov eax, dword [camx]	; 67DFD
 sar eax, 10h	; 67E02
 cmp eax, 0FFFFFF6Ch	; 67E05
 jle short loc_67E44	; 67E0A
@@ -4751,11 +4751,11 @@ jge short loc_67E44	; 67E3C
 cmp si, byte 3	; 67E3E
 jl short loc_67E10	; 67E42
 loc_67E44:
-mov eax, dword [word_C9098]	; 67E44
+mov eax, dword [camx]	; 67E44
 sar eax, 10h	; 67E49
 cmp eax, byte 0FFFFFFB5h	; 67E4C
 jle short loc_67E99	; 67E4F
-cmp word [word_C909A], 0B1h	; 67E51
+cmp word [camy], 0B1h	; 67E51
 jge short loc_67E99	; 67E5A
 mov eax, dword [byte_E9FAC]	; 67E5C
 sar eax, 18h	; 67E61
@@ -4928,7 +4928,7 @@ dec esi	; 6806E
 loc_6806F:
 cmp si, byte 12h	; 6806F
 jge near loc_67F3B	; 68073
-mov eax, dword [word_C9098]	; 68079
+mov eax, dword [camx]	; 68079
 sar eax, 10h	; 6807E
 cmp eax, 0FFFFFF50h	; 68081
 jge short loc_680B4	; 68086
@@ -5476,7 +5476,7 @@ sar eax, 10h	; 687AB
 xor ecx, ecx	; 687AE
 call sub_110E0	; 687B0
 loc_687B5:
-mov eax, dword [word_C9098]	; 687B5
+mov eax, dword [camx]	; 687B5
 sar eax, 10h	; 687BA
 cmp eax, 0FFFFFF50h	; 687BD
 jge short loc_687E7	; 687C2
@@ -5492,7 +5492,7 @@ push eax	; 687DE
 call sub_B4BC4	; 687DF
 add esp, byte 10h	; 687E4
 loc_687E7:
-mov eax, dword [word_C9098]	; 687E7
+mov eax, dword [camx]	; 687E7
 sar eax, 10h	; 687EC
 cmp eax, 0FFFFFF70h	; 687EF
 jge short loc_687FB	; 687F4

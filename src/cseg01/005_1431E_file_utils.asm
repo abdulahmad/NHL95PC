@@ -8,7 +8,7 @@ extern dword_C5704, dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5
 extern dword_C5848, dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_DC26C
 extern dword_DC28C, dword_DC2BC, dword_DC2C0, dword_DC2C4, dword_DC30C, dword_DC334, gmode, j_unlink_
 extern lseek_, off_C56B5, off_C80D7, rmdir_, sprintf_, strcat_, strcpy_, sub_15374
-extern sub_1540A, sub_15655, sub_15707, sub_157BD, sub_15995, sub_31013, sub_5A2EE, SelectScreenBM
+extern sub_1540A, sub_15655, sub_15707, sub_157BD, sub_15995, sub_31013, TeamLineEnergy, SelectScreenBM
 extern SelectRinkBM, sub_B2CD8, MouseSetPos, sub_B4CD8, sub_B4CF2, unk_C8113, unk_C8115, unk_DC2F4
 extern unk_DC300, unknown_libname_1, unknown_libname_2, word_C571C, word_C575C, lcboxon, word_CBC6C
 global loc_14349, loc_1434C, loc_14359, loc_14366, loc_143FA, loc_14436, loc_1443A, loc_144D7
@@ -839,7 +839,7 @@ xor ebx, ebx	; 14C00
 loc_14C02:
 movsx edx, bx	; 14C02
 movsx eax, cx	; 14C05
-call sub_5A2EE	; 14C08
+call TeamLineEnergy	; 14C08
 movsx edx, ax	; 14C0D
 mov eax, ebx	; 14C10
 sub edx, byte 60h	; 14C12

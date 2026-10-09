@@ -11,7 +11,7 @@ extern byte_ED98E, dword_C53F7, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65
 extern dword_C71DC, songdata, dword_C7615, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7E42, dword_C7F0B
 extern dword_C8998, dword_C90CA, musichandle, dword_D2C6B, dword_DB088, dword_DC234, dword_DC23E, musicslot
 extern dword_DD7A8, dword_DD7AC, dword_DDAC0, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
-extern dword_DDD6C, dword_DF616, dword_DF620, dword_DF622, dword_DF6EE, dword_DF722, dword_DF7EE, dword_E9AF6
+extern dword_DDD6C, dword_DF616, dword_DF620, awtmlines, dword_E9AF6, hmtmlines
 extern fputchar, jctime, memset_, off_C57CC, off_C800C, off_C80D7, off_C80E7, off_C80EB
 extern off_C80EF, sprintf_, strcat_, strcpy_, sub_10712, sub_11D09, sub_142E7, sub_1431E
 extern sub_14525, sub_1453E, sub_14552, sub_1457C, sub_145A2, sub_145F9, sub_1463D, sub_1478B
@@ -26,7 +26,7 @@ extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, unk_C7AE0, unk_C7E3E, unk_C7E
 extern unk_C7F1B, unk_C7F8E, unk_C8115, unk_C8117, unk_DABF0, unk_DC200, unk_DC240, unk_DD7B4
 extern unk_DDAC4, unk_DDD1D, unk_DDD4C, unk_DDD59, word_C90CC, word_DB08A, word_DB08C, word_DB08E
 extern word_DB090, word_DB092, word_DB096, word_DC242, word_DC244, word_DDD46, word_DDD48, word_DDD4A
-extern word_DF618, word_DF624, word_DF64C, word_DF724, word_DF74C, word_E9AF8
+extern word_DF618, hmscore, word_DF64C, awscore, word_DF74C, word_E9AF8
 global loc_3602E, loc_36047, loc_3607B, loc_36089, loc_360DA, loc_360FD, loc_36149, loc_3614E
 global loc_361F9, loc_36265, loc_362E4, loc_362FD, loc_3635F, loc_36392, loc_363C8, loc_363E1
 global loc_3641F, loc_3642B, loc_36437, loc_36453, loc_36477, loc_36509, loc_36569, loc_36583
@@ -332,11 +332,11 @@ test ebx, ebx	; 363E1
 jne near loc_365FF	; 363E3
 mov eax, dword [dword esp+03FCh]	; 363E9
 inc byte [eax]	; 363F0
-mov ax, word [word_DF624]	; 363F2
-mov dx, word [word_DF724]	; 363F8
+mov ax, word [hmscore]	; 363F2
+mov dx, word [awscore]	; 363F8
 cmp ax, dx	; 363FF
 jle short loc_36437	; 36402
-mov eax, dword [dword_DF722]	; 36404
+mov eax, dword [awscore-2]	; 36404
 sar eax, 10h	; 36409
 inc eax	; 3640C
 mov dword [dword esp+0404h], eax	; 3640D
@@ -364,20 +364,20 @@ loc_36453:
 mov dword [dword esp+0400h], 0FFFFFFFFh	; 36453
 mov eax, dword [dword esp+03FCh]	; 3645E
 inc byte [byte eax+03h]	; 36465
-mov eax, dword [dword_DF622]	; 36468
+mov eax, dword [hmscore-2]	; 36468
 sar eax, 10h	; 3646D
 mov dword [dword esp+0404h], eax	; 36470
 loc_36477:
 mov eax, ebp	; 36477
 shl eax, 8	; 36479
 mov dword [dword esp+03F0h], eax	; 3647C
-mov ax, word [dword eax+word_DF624]	; 36483
+mov ax, word [dword eax+hmscore]	; 36483
 mov edx, dword [dword esp+03FCh]	; 3648A
 add word [byte edx+04h], ax	; 36491
 mov eax, ebp	; 36495
 xor al, 1	; 36497
 shl eax, 8	; 36499
-mov dx, word [dword eax+word_DF624]	; 3649C
+mov dx, word [dword eax+hmscore]	; 3649C
 mov ecx, dword [dword esp+03FCh]	; 364A3
 add word [byte ecx+06h], dx	; 364AA
 mov edx, dword [dword esp+03F0h]	; 364AE
@@ -463,14 +463,14 @@ mov ax, word [word_DF64C]	; 36609
 xor ah, ah	; 3660F
 and al, 1	; 36611
 cwde	; 36613
-mov edx, dword [dword_DF6EE]	; 36614
+mov edx, dword [hmtmlines]	; 36614
 mov al, byte [byte edx+eax+024h]	; 3661A
 mov byte [dword esp+040Ch], al	; 3661E
 mov ax, word [word_DF74C]	; 36625
 xor ah, ah	; 3662B
 and al, 1	; 3662D
 movsx edx, ax	; 3662F
-mov eax, dword [dword_DF7EE]	; 36632
+mov eax, dword [awtmlines]	; 36632
 mov al, byte [byte edx+eax+024h]	; 36637
 mov byte [dword esp+040Dh], al	; 3663B
 jmp near loc_36747	; 36642
@@ -719,8 +719,8 @@ add dl, 19h	; 36A2F
 and edx, 0FFh	; 36A32
 cmp eax, edx	; 36A38
 jne short loc_36A8B	; 36A3A
-mov ax, word [word_DF624]	; 36A3C
-mov cx, word [word_DF724]	; 36A42
+mov ax, word [hmscore]	; 36A3C
+mov cx, word [awscore]	; 36A42
 cmp ax, cx	; 36A49
 jle short loc_36A5E	; 36A4C
 test ebp, ebp	; 36A4E
@@ -739,12 +739,12 @@ jmp short loc_36A52	; 36A64
 loc_36A66:
 inc word [byte esi+06h]	; 36A66
 loc_36A6A:
-cmp word [word_DF724], byte 0	; 36A6A
+cmp word [awscore], byte 0	; 36A6A
 jne short loc_36A78	; 36A72
 test ebp, ebp	; 36A74
 je short loc_36A87	; 36A76
 loc_36A78:
-cmp word [word_DF624], byte 0	; 36A78
+cmp word [hmscore], byte 0	; 36A78
 jne short loc_36A8B	; 36A80
 cmp ebp, byte 1	; 36A82
 jne short loc_36A8B	; 36A85
@@ -1455,9 +1455,9 @@ call sub_11D09	; 3748A
 call sub_6B410	; 3748F
 cmp dword [dword_C53F7], byte 1	; 37494
 jne short loc_374BD	; 3749B
-mov al, byte [word_DF624]	; 3749D
+mov al, byte [hmscore]	; 3749D
 mov byte [dword_DDD44], al	; 374A2
-mov al, byte [word_DF724]	; 374A7
+mov al, byte [awscore]	; 374A7
 mov byte [byte_DDD45], al	; 374AC
 jmp short loc_374BD	; 374B1
 loc_374B3:

@@ -9,13 +9,13 @@ extern dword_C5301, dword_C5305, dword_C5309, dword_C53F7, dword_C53FB, gameopts
 extern dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
 extern dword_C5886, cont2team, dword_C90CA, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
-extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, dword_DF622, dword_DF63C, dword_DF722
+extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, dword_DF63C, hmscore, awscore
 extern dword_DF73C, jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C8, off_C57CC
 extern off_D3078, rand_, randomd0, sub_10712, sub_10E9F, sub_1167B, sub_13BB4, sub_13FA7
 extern sub_1431E, sub_14A20, sub_14F31, sub_1BEFD, sub_327A1, sub_3371C, sub_3377C, sub_42221
-extern sub_479E9, sub_47C31, joyq_flush, sub_59D71, sub_5B9D1, sub_673C5, sub_6B410, sub_6B47C
+extern sub_479E9, sub_47C31, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
 extern sub_7DC8B, sub_891B2, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
-extern sub_B39ED, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, unk_C5298, unk_DF314, word_CBC4A
+extern sub_B39ED, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, unk_C5298, unk_DF314, PerTimeTab
 extern word_CBC52, lcblink, word_CBC60, lcboxon
 global loc_1511A, loc_15180, loc_15182, loc_151F8, loc_15252, loc_1528C, loc_1528E, loc_15400
 global loc_15446, loc_1548D, loc_1549C, loc_154A4, loc_154E3, loc_15523, loc_1556C, loc_1557B
@@ -42,7 +42,7 @@ mov ebp, edx	; 150D7
 mov esi, ebx	; 150D9
 test ecx, ecx	; 150DB
 je short loc_1511A	; 150DD
-call sub_5B9D1	; 150DF
+call GetPeriodTime	; 150DF
 cwde	; 150E4
 mov dword [dword_C5708], eax	; 150E5
 mov dword [dword_C5704], eax	; 150EA
@@ -99,11 +99,11 @@ add esp, byte 8	; 151AB
 push eax	; 151AE
 call sub_B4CF2	; 151AF
 add esp, byte 4	; 151B4
-mov edx, dword [dword_DF622]	; 151B7
+mov edx, dword [hmscore-2]	; 151B7
 sar edx, 10h	; 151BD
 xor eax, eax	; 151C0
 call sub_14A20	; 151C2
-mov edx, dword [dword_DF722]	; 151C7
+mov edx, dword [awscore-2]	; 151C7
 sar edx, 10h	; 151CD
 mov eax, 1	; 151D0
 call sub_14A20	; 151D5
@@ -1149,7 +1149,7 @@ push ebp	; 15D7A
 sub esp, byte 78h	; 15D7B
 call sub_479E9	; 15D7E
 call sub_6B47C	; 15D83
-mov word [word_CBC4A], 3Ch	; 15D88
+mov word [PerTimeTab], 3Ch	; 15D88
 call sub_3371C	; 15D91
 mov dword [dword_C5130], 1	; 15D96
 call rand_	; 15DA0
@@ -1283,7 +1283,7 @@ call sub_1167B	; 15FB0
 mov edx, 1E0h	; 15FB5
 mov eax, 280h	; 15FBA
 call sub_10E9F	; 15FBF
-mov word [word_CBC4A], 12Ch	; 15FC4
+mov word [PerTimeTab], 12Ch	; 15FC4
 xor ecx, ecx	; 15FCD
 mov dword [dword_C5130], ecx	; 15FCF
 mov ecx, 1Dh	; 15FD5

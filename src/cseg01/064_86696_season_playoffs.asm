@@ -37,7 +37,7 @@ extern sub_B30B4, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4BC4, unk_208
 extern unk_20BBD, unk_20EB7, unk_86616, unk_C3A37, unk_C3A3A, unk_C3A3D, unk_C3A40, unk_C3A66
 extern unk_C3AE1, unk_C3AF8, unk_C5298, unk_C7733, unk_CEE4F, unk_CEEAF, unk_CF90F, unk_D2864
 extern unk_D2B38, unk_DBC30, unk_DDAC4, unk_DDCE6, unk_DDCFB, unk_ED7BC, unknown_libname_1, word_C5366
-extern word_C6D24, word_C6E22, scrpitch, word_C90CC, word_DF624, word_DF724
+extern word_C6D24, word_C6E22, scrpitch, word_C90CC, hmscore, awscore
 global loc_86791, loc_86793, loc_867E2, loc_867F6, loc_86811, loc_86813, loc_86976, loc_86987
 global loc_86998, loc_869A9, loc_869B3, loc_869C8, loc_869D2, loc_86A77, loc_86A8E, loc_86B18
 global loc_86B6B, loc_86BC4, loc_86C1C, loc_86C1E, loc_86C63, loc_86C77, loc_86CDE, loc_86D28
@@ -2939,9 +2939,9 @@ mov edx, eax	; 887CB
 sar edx, 1Fh	; 887CD
 idiv ebx	; 887D0
 mov dword [byte esp+05Ch], eax	; 887D2
-mov al, byte [word_DF624]	; 887D6
+mov al, byte [hmscore]	; 887D6
 mov byte [byte esi+04h], al	; 887DB
-mov al, byte [word_DF724]	; 887DE
+mov al, byte [awscore]	; 887DE
 mov byte [byte esi+05h], al	; 887E3
 mov ebx, dword [off_C80EB]	; 887E6
 mov ecx, asc_C811A	; 887EC

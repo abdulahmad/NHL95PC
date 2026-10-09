@@ -17,19 +17,19 @@ extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E0
 extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, loc_12842, memcpy_, nullsub_2
 extern puckx, pucky, passspeed, randomd0, sprintf_, sub_11598, sub_1205D, sub_12849
 extern sub_13188, sub_1431E, sub_14525, sub_1457C, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
-extern sub_4830E, joyq_flush, sub_59863, sub_59981, sub_599B9, sub_599EE, sub_5E086, sub_5E0B0
+extern sub_4830E, joyq_flush, sub_59863, sub_59981, sub_599B9, sub_599EE, StartGame, forceteams
 extern sub_64614, sub_658F3, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, MouseSetPos, sub_B30B4, sub_B30BB
 extern sub_B392C, sub_B4BA8, threat, unk_DF014, SortCords, vtoa, regd4, scrpitch
 extern lastplayer, passdir, word_C90A6, passplayer, word_C90B2, word_C90B4, word_C90CE, word_C90D0
-extern refsignal, word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_CBC44, word_CBC46, word_CBC48
+extern refsignal, word_C90D4, word_C90D6, word_C90D8, gsp, word_CBC44, exitgame, gameover
 extern word_CBC52, word_CBC54, lcblink, word_CBC58, lcblinktime, lcsel, word_CBC60
 extern lcline, word_CBC64, lctimer, word_CBC68, lcboxon, word_CBC6C, word_CBE8C, word_CBE8E
 extern word_CBEC0, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0B0
 extern word_CC0DE, word_DEE94, word_DF64A, word_DF74A, word_E024E, lcrequest, word_E0306, lcreqchoice
 extern word_E0382, regd2, regd0, regd1, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4
-extern word_E9AA6, word_E9AA8, word_E9AAA, word_E9AAE, word_E9B2C
+extern word_E9AA6, CwdExciteLvl, word_E9AAA, word_E9AAE, word_E9B2C
 global LoadTransparentRinkEndOverlay, loc_13384, loc_133A7, loc_133D4, loc_13405, loc_13407, loc_134A2, loc_134A4
 global loc_134E7, loc_1350F, loc_13513, loc_1352B, loc_1352D, loc_13546, loc_1358D, loc_1359C
 global loc_135C2, loc_135E7, loc_1360F, loc_13619, loc_13634, loc_13671, loc_13673, loc_136B6
@@ -802,7 +802,7 @@ push ecx	; 13C84
 push edx	; 13C85
 cmp dword [dword_CC0EC], byte 0	; 13C86
 jne near loc_13E8B	; 13C8D
-call sub_5E0B0	; 13C93
+call forceteams	; 13C93
 xor edx, edx	; 13C98
 mov word [word_C90B4], dx	; 13C9A
 mov word [word_C90B2], dx	; 13CA1
@@ -945,7 +945,7 @@ xor eax, eax	; 13EA2
 call sub_658F3	; 13EA4
 mov eax, 1	; 13EA9
 call sub_658F3	; 13EAE
-mov word [word_C90DA], 0FFFFh	; 13EB3
+mov word [gsp], 0FFFFh	; 13EB3
 xor ebx, ebx	; 13EBC
 mov word [word_CC0DE], bx	; 13EBE
 call sub_59863	; 13EC5
@@ -981,7 +981,7 @@ je short loc_13F2F	; 13F24
 mov word [word_CBEC4], 1	; 13F26
 loc_13F2F:
 xor edi, edi	; 13F2F
-mov word [word_C90DA], di	; 13F31
+mov word [gsp], di	; 13F31
 call sub_14056	; 13F38
 mov dword [dword_CC0F0], edx	; 13F3D
 test edx, edx	; 13F43
@@ -1028,7 +1028,7 @@ xor eax, eax	; 13FBA
 call sub_658F3	; 13FBC
 mov eax, 1	; 13FC1
 call sub_658F3	; 13FC6
-mov word [word_C90DA], 0FFFFh	; 13FCB
+mov word [gsp], 0FFFFh	; 13FCB
 xor ebx, ebx	; 13FD4
 mov word [word_CC0DE], bx	; 13FD6
 call sub_59863	; 13FDD
@@ -1055,7 +1055,7 @@ je short loc_14026	; 1401B
 mov word [word_CBEC4], 1	; 1401D
 loc_14026:
 xor edi, edi	; 14026
-mov word [word_C90DA], di	; 14028
+mov word [gsp], di	; 14028
 call sub_14056	; 1402F
 mov dword [dword_CC0F0], edx	; 14034
 cmp dword [dword_CC0EC], byte 0	; 1403A
@@ -1151,7 +1151,7 @@ mov dword [dword_CC124], ebx	; 141D4
 mov dword [dword_CC0F8], ebx	; 141DA
 mov dword [dword_CC0FC], 0FFFFFFFFh	; 141E0
 xor eax, esi	; 141EA
-mov word [word_E9AA8], ax	; 141EC
+mov word [CwdExciteLvl], ax	; 141EC
 xor ebx, ebx	; 141F2
 loc_141F4:
 mov eax, ebx	; 141F4
@@ -1183,7 +1183,7 @@ mov word [word_E9AAA], dx	; 1425C
 xor ecx, ecx	; 14263
 mov dword [dword_E009C], ecx	; 14265
 mov word [word_E9A9C], 0FFFFh	; 1426B
-call sub_5E086	; 14274
+call StartGame	; 14274
 mov dword [dword_D8C84], 1	; 14279
 cmp byte [byte_C4D1C], 1	; 14283
 je short loc_14295	; 1428A
@@ -1199,9 +1199,9 @@ xor edi, edi	; 142A4
 mov dword [dword_C5840], edi	; 142A6
 mov dword [dword_C4E10], edi	; 142AC
 xor ecx, ecx	; 142B2
-mov word [word_CBC46], cx	; 142B4
+mov word [exitgame], cx	; 142B4
 xor esi, esi	; 142BB
-mov word [word_CBC48], si	; 142BD
+mov word [gameover], si	; 142BD
 mov dword [dword_D8C78], edi	; 142C4
 mov dword [dword_D8C6C], edi	; 142CA
 mov dword [joysampling], edi	; 142D0

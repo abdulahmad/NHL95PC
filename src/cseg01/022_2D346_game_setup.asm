@@ -15,7 +15,7 @@ extern byte_DD710, byte_DD750, byte_DD774, byte_DD775, byte_DD788, byte_DD789, b
 extern byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED8CE, byte_ED9AC, byte_ED9B0, byte_ED9E6
 extern dword_C53F7, gameopts, dword_C541F, songdata, cont2team, dword_C90CA, dword_CCC94, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_DBC7C, dword_DC234, dword_DD66C, dword_DD670, dword_DD730
-extern dword_DF612, dword_DF614, dword_DF616, dword_DF61A, dword_DF61C, dword_DF61E, dword_DF620, dword_DF622
+extern dword_DF612, hmtmstruct, dword_DF616, dword_DF61A, dword_DF61C, dword_DF61E, dword_DF620
 extern dword_DF626, dword_DF62A, dword_DF636, dword_DF638, dword_DF63A, fputchar, jctime, memcpy_
 extern off_C57CC, off_C719C, off_C80D7, off_C80E7, off_C80EB, off_CD304, rand_, sprintf_
 extern strcat_, strcpy_, sub_11598, sub_1431E, sub_14525, sub_14552, sub_1457C, sub_1463D
@@ -25,7 +25,7 @@ extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_913B4, sub_913D0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, SetDrawBitmap, sub_B4F8C, unk_2D33E, unk_C160E, unk_C161D, unk_C164B
-extern unk_C1679, unk_C167C, unk_C16D7, unk_DABF0, unk_DBC30, unk_DC200, word_DF618, word_DF624
+extern unk_C1679, unk_C167C, unk_C16D7, unk_DABF0, unk_DBC30, unk_DC200, word_DF618, hmscore
 global jpt_2D346, loc_2D3D4, loc_2D401, loc_2D40F, loc_2D411, loc_2D4B5, loc_2D509, loc_2D50B
 global loc_2D551, loc_2D553, loc_2D675, loc_2D677, loc_2D6EF, loc_2D6F1, loc_2D781, loc_2D79B
 global loc_2D7BC, loc_2D7BE, loc_2D83E, loc_2D85B, loc_2D85D, loc_2D8AE, loc_2D90F, loc_2D986
@@ -2578,7 +2578,7 @@ mov edx, 8Ah	; 2F849
 call sub_175E2	; 2F84E
 mov esi, edi	; 2F853
 shl esi, 8	; 2F855
-mov eax, dword [dword esi+dword_DF622]	; 2F858
+mov eax, dword [dword esi+hmscore-2]	; 2F858
 sar eax, 10h	; 2F85E
 push eax	; 2F861
 push unk_C16D7	; 2F862
@@ -2638,7 +2638,7 @@ call sub_2F580	; 2F90A
 mov eax, dword [dword esi+dword_DF616]	; 2F90F
 sar eax, 10h	; 2F915
 push eax	; 2F918
-mov eax, dword [dword esi+dword_DF614]	; 2F919
+mov eax, dword [dword esi+hmtmstruct]	; 2F919
 sar eax, 10h	; 2F91F
 push eax	; 2F922
 push asc_C16DA	; 2F923
@@ -2729,7 +2729,7 @@ mov eax, edx	; 2FA2A
 lea ebx, [byte ebp-034h]	; 2FA2C
 mov edx, 140h	; 2FA2F
 call sub_2F580	; 2FA34
-mov eax, dword [dword esi+word_DF624]	; 2FA39
+mov eax, dword [dword esi+hmscore]	; 2FA39
 sar eax, 10h	; 2FA3F
 push eax	; 2FA42
 push unk_C16D7	; 2FA43

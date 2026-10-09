@@ -19,7 +19,7 @@ extern dword_DC238, dword_DF00C, dword_DF010, dword_E9A9E, dword_EDA08, dword_ED
 extern int386_, off_D3078, printf_, srand_, sub_1431E, sub_14525, sub_1457C, sub_145A2
 extern sub_150C6, sub_1672A, sub_16F9A, sub_190BE, sub_1BAF3, sub_1CD73, sub_3149D, sub_31AB5
 extern sub_327A1, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, sub_59748, sub_597E3
-extern sub_59863, sub_59981, sub_5DC10, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
+extern sub_59863, sub_59981, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
 extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
 extern sub_8DF54, sub_8E080, sub_8E4C0, sub_8E5AC, sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0
@@ -27,7 +27,7 @@ extern sub_B29F0, sub_B2CBE, sub_B2CD8, MouseSetPos, sub_B2E1B, sub_B2F22, sub_B
 extern sub_B30F4, sub_B33DB, sub_B3464, sub_B392C, sub_B3989, sub_B3999, sub_B39ED, sub_B3A24
 extern sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C33, sub_B4C84, unk_C0180, unk_C01D4
 extern unk_C01D7, unk_C4E30, unk_C5298, joyqueue, unk_DF014, vtoa, cont1team, word_CBC44
-extern word_CBC46, word_CBC48, word_CBEC4, lcrequest, word_E0306, lcreqchoice, word_E0382, joysampling_save
+extern exitgame, gameover, word_CBEC4, lcrequest, word_E0306, lcreqchoice, word_E0382, joysampling_save
 global loc_10024, loc_1005B, loc_10075, loc_1007D, loc_10084, loc_100DB, loc_100F7, loc_10167
 global loc_101E3, loc_10216, loc_1022C, loc_10236, loc_10278, loc_102F5, loc_102F7, loc_10342
 global loc_10344, loc_10381, loc_10383, loc_103BB, loc_103BD, loc_103F5, loc_103F7, loc_10476
@@ -1815,7 +1815,7 @@ cmp dword [dword_CC128], byte 0	; 114FB
 jne short loc_1150B	; 11502
 add dword [dword_D8C78], byte 64h	; 11504
 loc_1150B:
-call sub_5DC10	; 1150B
+call ClockTick	; 1150B
 loc_11510:
 call DoGameFrame	; 11510
 mov eax, dword [dword_C4E10]	; 11515
@@ -1826,9 +1826,9 @@ call joyq_pop	; 11522
 loc_11527:
 cmp dword [dword_C5840], byte 0	; 11527
 jne short loc_1154D	; 1152E
-cmp word [word_CBC46], byte 0	; 11530
+cmp word [exitgame], byte 0	; 11530
 jne short loc_1154D	; 11538
-cmp word [word_CBC48], byte 0	; 1153A
+cmp word [gameover], byte 0	; 1153A
 jne short loc_1154D	; 11542
 inc edx	; 11544
 loc_11545:

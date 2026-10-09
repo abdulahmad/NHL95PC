@@ -7,19 +7,19 @@ extern sub_4F7D0, sub_4E8EF, sub_4842A, sub_484DA, sub_52720, sub_5147D, sub_526
 extern sub_49BC2, sub_52FB0, sub_52DB0, sub_4FAE8, assbench, asscenterd, asscentero, assdefd
 extern assdefo, sub_4AFFB, asseben, assepen, assfaceoff, assfaceoffp1, assgoalie, sub_4B5C2
 extern assnearest, sub_50F3F, asspenalty, sub_4C6F3, assscore, assshoot, assstanley, asswingd
-extern asswingo, dword_DFF2C, sub_516E1, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
-extern unk_DFF5E, unk_E0416, word_DFF1E, word_DFF22, word_DFF26, word_DFF28, word_DFF2A
-global StanleyCupTimer, asstab, sflags, gmode2, byte_C90C3, byte_C90C5, byte_C90D5, byte_C9104
+extern asswingo, sub_516E1, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
+extern unk_DFF5E, unk_E0416, word_DFF1E, word_DFF28, word_DFF2A, puckstruct
+global StanleyCupTimer, asstab, sflags, gmode2, byte_C90D5, byte_C9104
 global byte_C9111, byte_C9123, byte_C9142, byte_C9146, byte_CBC36, byte_CBC37, byte_CBEA8, collflag
 global dirtab, wcradiusy, dword_C90B0, dword_C90C0, cont2team, dword_C90CA, dword_C9120, dword_CBC3E
 global dword_CBEBE, dword_CBECA, puckvx, gmode, off_C9078, puckx, pucky, puckvy
-global puckz, puckc, off_C9096, off_CBD2E, passspeed, puckvz, threat, unk_C921D
+global puckz, puckc, camx_m2, off_CBD2E, passspeed, puckvz, threat, SPAtab
 global unk_CBC6E, unk_CBC7E, unk_CBC9E, unk_CBCAE, unk_CBCBE, unk_CBCCE, unk_CBCDE, unk_CBCEE
-global unk_CBCFE, unk_CBD0E, unk_CBD1E, unk_CBD5A, wcradiusx, word_C9098, word_C909A, lastplayer
+global unk_CBCFE, unk_CBD0E, unk_CBD1E, ds2list, wcradiusx, camx, camy, lastplayer
 global passdir, word_C90A6, passplayer, xc1, yc1, word_C90B2, word_C90B4, fodir1
 global fodir2, c1playernum, c2playernum, cont1team, word_C90CC, word_C90CE, word_C90D0, refsignal
-global word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_C90DC, word_C90DE, dirtab_y
-global word_CBC42, word_CBC44, word_CBC46, word_CBC48, word_CBC4A, word_CBC52, word_CBC54, lcblink
+global word_C90D4, word_C90D6, word_C90D8, gsp, gameclock, clockticks, dirtab_y
+global word_CBC42, word_CBC44, exitgame, gameover, PerTimeTab, word_CBC52, word_CBC54, lcblink
 global word_CBC58, lcblinktime, lcsel, word_CBC60, lcline, word_CBC64, lctimer
 global word_CBC68, lcboxon, word_CBC6C, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, word_CBEC0
 global word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE
@@ -30,19 +30,19 @@ dd word_DFF1E
 puckvx:
 dd word_DFF28
 pucky:
-dd word_DFF22
+dd puckstruct+6
 puckvy:
 dd word_DFF2A
 puckz:
-dd word_DFF26
+dd puckstruct+0Ah
 puckvz:
-dd dword_DFF2C
+dd puckstruct+10h
 puckc:
-off_C9096 equ $+2
+camx_m2 equ $+2
 dd unk_DFF5E
-word_C9098:
+camx:
 db 00h,00h
-word_C909A:
+camy:
 db 00h,00h
 wcradiusx:
 db 00h,00h
@@ -86,11 +86,9 @@ dword_C90C0:
 db 00h,00h
 c1playernum:
 db 0FFh
-byte_C90C3:
 db 0FFh
 c2playernum:
 db 0FFh
-byte_C90C5:
 db 0FFh
 cont1team:
 db 00h,00h
@@ -114,11 +112,11 @@ word_C90D6:
 db 00h,00h
 word_C90D8:
 db 0FFh,0FFh
-word_C90DA:
+gsp:
 db 00h,00h
-word_C90DC:
+gameclock:
 db 00h,00h
-word_C90DE:
+clockticks:
 db 00h,00h
 dirtab:
 db 00h,00h
@@ -190,7 +188,7 @@ dd sub_49BC2
 dd sub_52FB0
 dd sub_52DB0
 dd sub_4FAE8
-unk_C921D:
+SPAtab:
 db 00h,00h,00h,080h,012h,00h,024h,00h,036h,00h,048h,00h,05Ah,00h,06Ch,00h
 db 07Eh,00h,096h,01h,0B4h,00h,01Ah,02h,0Ah,00h,01Bh,02h,0Ah,00h,01Ah,02h
 db 0Ah,00h,01Bh,02h,0Ah,00h,096h,01h,0F0h,00h,01Ah,02h,0Ah,00h,01Bh,02h
@@ -875,11 +873,11 @@ word_CBC42:
 db 00h,00h
 word_CBC44:
 db 00h,00h
-word_CBC46:
+exitgame:
 db 01h,00h
-word_CBC48:
+gameover:
 db 01h,00h
-word_CBC4A:
+PerTimeTab:
 db 02Ch,01h,058h,02h,0B0h,04h,0B0h,04h
 word_CBC52:
 db 00h,00h
@@ -943,7 +941,7 @@ dd unk_CBCEE
 dd unk_CBCFE
 dd unk_CBD0E
 dd unk_CBD1E
-unk_CBD5A:
+ds2list:
 db 060h,0FFh,0F1h,0FFh,00h,00h,0FFh,0FFh,00h,00h
 word_CBD64:
 db 08h,00h

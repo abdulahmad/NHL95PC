@@ -5,9 +5,9 @@ section s_4FCE8 progbits alloc exec nowrite align=1
 extern SetLCmode, SetSPA, SetShotMode, ShotMode, __CHK, burst, sflags, gmode2
 extern lchoicetab, byte_DFF3A, checkob, doplayeracc, joysampling, joyqhead, joyqcount, joyqtick
 extern joyrec, gameopts, cont2team, dword_CC0F0, dword_CC0F4, dword_CC118
-extern dword_CC128, dword_CCC9C, dword_DF812, dword_DFF36, dword_E9A9E, gmode, lcreqchoice
+extern dword_CC128, dword_CCC9C, dword_DF812, dword_E9A9E, gmode, lcreqchoice, puckstruct
 extern sub_4D938, puckx, pucky, puckvy, puckc, setpassmode, setpersonel, vecdist
-extern sub_14AFE, sub_53387, passmode, sub_59E69, sub_59FE1, MouseSetPos, joyqueue, SortCords
+extern sub_14AFE, sub_53387, passmode, changeplayer, restorepl, MouseSetPos, joyqueue, SortCords
 extern vtoa, lastplayer, passdir, passplayer, fodir1, fodir2, c1playernum
 extern c2playernum, cont1team, lcblink, lcblinktime, lcsel, word_CBC60, lcline
 extern lctimer, lcboxon, linenext, word_DFF42, lcrequest, regd2, regd3, regd0
@@ -816,7 +816,7 @@ pop ecx	; 505B3
 pop ebx	; 505B4
 ret	; 505B5
 .nlcm:
-mov eax, dword [dword_DFF36]	; 505B6
+mov eax, dword [puckstruct+1Ah]	; 505B6
 sar eax, 10h	; 505BB
 cmp byte [dword eax+byte_DFF3A], 1Ch	; 505BE
 jne short .joycon	; 505C5
@@ -852,7 +852,7 @@ je short .5	; 5062F
 .change:
 movsx edx, si	; 50631
 mov eax, ebx	; 50634
-call sub_59E69	; 50636
+call changeplayer	; 50636
 pop edi	; 5063B
 pop esi	; 5063C
 pop ecx	; 5063D
@@ -912,7 +912,7 @@ mov edx, dword [c1playernum-2]	; 506FC
 sar edx, 10h	; 50702
 mov eax, dword [byte eax+SCnum-2]	; 50705
 sar eax, 10h	; 50708
-call sub_59FE1	; 5070B
+call restorepl	; 5070B
 mov word [c1playernum], ax	; 50710
 .ot:
 mov dword [dword_CC0F4], 1	; 50716
@@ -929,7 +929,7 @@ mov edx, dword [c2playernum-2]	; 50732
 sar edx, 10h	; 50738
 mov eax, dword [byte eax+SCnum-2]	; 5073B
 sar eax, 10h	; 5073E
-call sub_59FE1	; 50741
+call restorepl	; 50741
 mov word [c2playernum], ax	; 50746
 jmp short doinput.ot	; 5074C
 .unlocked:

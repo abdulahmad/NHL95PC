@@ -10,15 +10,15 @@ extern asc_C2550, asc_C2584, asc_C25CA, asc_C25F5, asc_C2625, asc_C2652, asc_C26
 extern asc_C26CF, asc_C26FA, asc_C272A, asc_C2757, byte_C542F, byte_C5430, byte_C5431, byte_C5432
 extern gmode2, dword_C53FB, dword_C90C0, dword_CC0F8, dword_CC0FC, dword_CC100, dword_CC104, dword_CC108
 extern dword_CC118, dword_CC11C, dword_CC120, dword_CC124, dword_CC128, dword_CC12C, dword_CD504, dword_D41F0
-extern dword_D8C6C, dword_D8C78, dword_DF612, dword_DF614, dword_DF616, dword_DF61C, dword_DF61E, dword_DF620
-extern dword_DF622, dword_DF638, dword_DF63A, dword_DF63C, dword_DF690, dword_DF6FA, dword_DF712, dword_DF714
-extern dword_DF716, dword_DF71C, dword_DF71E, dword_DF720, dword_DF722, dword_DF738, dword_DF73A, dword_DF73C
+extern dword_D8C6C, dword_D8C78, dword_DF612, hmtmstruct, dword_DF616, dword_DF61C, dword_DF61E, dword_DF620
+extern dword_DF638, dword_DF63A, dword_DF63C, dword_DF690, dword_DF6FA, dword_DF712, awtmstruct, hmscore
+extern dword_DF716, dword_DF71C, dword_DF71E, dword_DF720, dword_DF738, dword_DF73A, dword_DF73C, awscore
 extern dword_DF7FA, dword_E9A13, dword_E9A14, fclose_, fopen_, fprintf_, gmode, puckc
-extern off_C9096, off_CD6E4, off_CD8C4, off_CD984, puckvz, sprintf_, joyq_flush, sub_51440
+extern camx_m2, off_CD6E4, off_CD8C4, off_CD984, puckvz, sprintf_, joyq_flush, sub_51440
 extern sub_935E0, sub_93E38, sub_B39ED, sub_B3A18, threat, unk_C234B, unk_C234D, unk_C2478
-extern unk_C247A, unk_C247C, unk_C2485, unk_C24A0, SortCords, word_C9098, xc1, c1playernum
-extern c2playernum, cont1team, word_C90CC, word_C90D0, refsignal, word_C90DA, word_C90DC, word_CBC42
-extern word_CBC44, word_CBC46, word_DF64A, word_DF74A
+extern unk_C247A, unk_C247C, unk_C2485, unk_C24A0, SortCords, camx, xc1, c1playernum
+extern c2playernum, cont1team, word_C90CC, word_C90D0, refsignal, gsp, gameclock, word_CBC42
+extern word_CBC44, exitgame, word_DF64A, word_DF74A
 global loc_688E0, loc_688E5, loc_68B33, loc_68C39, loc_68C3E, loc_68CC1, loc_68D06, loc_68D21
 global loc_68D3A, loc_68D4D, loc_68D53, loc_68D6C, loc_68D7A, loc_68D98, loc_68DCC, loc_68DEB
 global loc_68DEC, loc_68DF6, loc_68E07, loc_68E0C, loc_68E27, loc_68E34, loc_68E46, loc_68E5B
@@ -102,10 +102,10 @@ push eax	; 68992
 mov eax, dword [threat]	; 68993
 sar eax, 10h	; 68998
 push eax	; 6899B
-mov eax, dword [word_C9098]	; 6899C
+mov eax, dword [camx]	; 6899C
 sar eax, 10h	; 689A1
 push eax	; 689A4
-mov eax, dword [off_C9096]	; 689A5
+mov eax, dword [camx_m2]	; 689A5
 sar eax, 10h	; 689AA
 push eax	; 689AD
 push asc_C23A6	; 689AE
@@ -166,7 +166,7 @@ push eax	; 68A55
 mov eax, dword [word_CBC44]	; 68A56
 sar eax, 10h	; 68A5B
 push eax	; 68A5E
-mov eax, dword [word_CBC46]	; 68A5F
+mov eax, dword [exitgame]	; 68A5F
 sar eax, 10h	; 68A64
 push eax	; 68A67
 push asc_C23DB	; 68A68
@@ -176,10 +176,10 @@ push eax	; 68A72
 call sprintf_	; 68A73
 add esp, byte 18h	; 68A78
 add esi, eax	; 68A7B
-mov eax, dword [word_C90DC]	; 68A7D
+mov eax, dword [gameclock]	; 68A7D
 sar eax, 10h	; 68A82
 push eax	; 68A85
-mov eax, dword [word_C90DA]	; 68A86
+mov eax, dword [gsp]	; 68A86
 sar eax, 10h	; 68A8B
 push eax	; 68A8E
 push asc_C23F4	; 68A8F
@@ -573,7 +573,7 @@ jmp short loc_68F28	; 68EE5
 loc_68EE7:
 movsx eax, si	; 68EE7
 shl eax, 8	; 68EEA
-mov ebx, dword_DF614	; 68EED
+mov ebx, hmtmstruct	; 68EED
 add ebx, eax	; 68EF2
 xor edx, edx	; 68EF4
 jmp short loc_68F0F	; 68EF6
@@ -702,7 +702,7 @@ inc esi	; 6901A
 loc_6901B:
 cmp si, byte 11h	; 6901B
 jl near loc_68F8A	; 6901F
-mov esi, dword_DF614	; 69025
+mov esi, hmtmstruct	; 69025
 push asc_C2550	; 6902A
 push ecx	; 6902F
 call fprintf_	; 69030
@@ -729,7 +729,7 @@ push eax	; 69072
 mov eax, dword [dword_DF616]	; 69073
 sar eax, 10h	; 69078
 push eax	; 6907B
-mov eax, dword [dword_DF614]	; 6907C
+mov eax, dword [hmtmstruct]	; 6907C
 sar eax, 10h	; 69081
 push eax	; 69084
 xor eax, eax	; 69085
@@ -738,7 +738,7 @@ push eax	; 6908C
 xor eax, eax	; 6908D
 mov al, byte [byte_C5430]	; 6908F
 push eax	; 69094
-mov eax, dword [dword_DF622]	; 69095
+mov eax, dword [hmscore-2]	; 69095
 sar eax, 10h	; 6909A
 push eax	; 6909D
 mov eax, dword [dword_DF612]	; 6909E
@@ -844,7 +844,7 @@ inc edx	; 691A8
 loc_691A9:
 cmp dx, byte 3	; 691A9
 jl short loc_6915A	; 691AD
-mov esi, dword_DF714	; 691AF
+mov esi, awtmstruct	; 691AF
 push asc_C2689	; 691B4
 push ecx	; 691B9
 call fprintf_	; 691BA
@@ -867,7 +867,7 @@ push eax	; 691EE
 mov eax, dword [dword_DF716]	; 691EF
 sar eax, 10h	; 691F4
 push eax	; 691F7
-mov eax, dword [dword_DF714]	; 691F8
+mov eax, dword [awtmstruct]	; 691F8
 sar eax, 10h	; 691FD
 push eax	; 69200
 xor eax, eax	; 69201
@@ -876,7 +876,7 @@ push eax	; 69208
 xor eax, eax	; 69209
 mov al, byte [byte_C5432]	; 6920B
 push eax	; 69210
-mov eax, dword [dword_DF722]	; 69211
+mov eax, dword [awscore-2]	; 69211
 sar eax, 10h	; 69216
 push eax	; 69219
 mov eax, dword [dword_DF712]	; 6921A

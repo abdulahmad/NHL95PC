@@ -2,20 +2,20 @@
 bits 32
 %include "hockey.inc"
 section s_E9A11 nobits alloc noexec write align=1
-global OOlist, OOlistpos, PBnum, Ylist, byte_E9A15, byte_E9A16, byte_E9A17, byte_E9ABB
+global Ylist_m2, PBnum, byte_E9A15, byte_E9A16, byte_E9A17, byte_E9ABB
 global byte_E9AC0, byte_E9AC1, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD
 global byte_E9ACE, byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, byte_E9AD4, byte_E9AD5
-global byte_E9AD6, byte_E9AD7, byte_E9ADE, byte_E9ADF, byte_E9DB4, byte_E9E18, byte_E9E31, byte_E9E4A
+global byte_E9AD6, byte_E9AD7, OOlist, byte_E9DB4, byte_E9E18, byte_E9E31, byte_E9E4A
 global byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC, byte_E9FAD, byte_E9FAE
 global byte_E9FAF, byte_E9FDC, byte_E9FDD, dword_E9A11, dword_E9A13, dword_E9A14, dword_E9A9E, dword_E9AB6
-global dword_E9AB7, dword_E9ADB, dword_E9ADC, dword_E9AF0, dword_E9AF2, dword_E9AF4, dword_E9AF6, dword_E9B04
+global dword_E9AB7, dword_E9AF0, dword_E9AF2, dword_E9AF4, dword_E9AF6, dword_E9B04
 global dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9BAC, dword_E9BB0, dword_E9BB4, dword_E9BB8, dword_E9BBC
 global dword_E9BC0, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38
 global dword_E9F54, dword_E9F56, dword_E9F5A, dword_E9F76, dword_E9F78, dword_E9F7B, dword_E9F8C, dword_E9F98
 global dword_E9FA5, dword_E9FA8, dword_E9FAA, dword_E9FD9, dword_E9FF0, ltx, unk_E9B4C, unk_E9CEC
-global unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE, unk_E9EE0, word_E9A58
-global word_E9A7A, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4, word_E9AA6, word_E9AA8, word_E9AAA
-global word_E9AAC, word_E9AAE, word_E9AB0, word_E9AB2, word_E9AB4, word_E9AB8, lj2, lj1
+global unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE, unk_E9EE0, Ylist
+global OOlistpos, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4, word_E9AA6, CwdExciteLvl, word_E9AAA
+global periodendtime, word_E9AAE, word_E9AB0, word_E9AB2, word_E9AB4, PerTimeTotal, lj2, lj1
 global word_E9AC2, word_E9AC4, word_E9AF8, word_E9AFA, word_E9B28, word_E9B2C, word_E9F12, word_E9F14
 global word_E9F18, word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A, word_E9FA7, word_E9FA9
 global word_E9FB0, word_E9FB2, word_E9FB4
@@ -31,11 +31,11 @@ byte_E9A16:
 resb 1
 byte_E9A17:
 resb 63
-OOlistpos:
+Ylist_m2:
 resb 2
-word_E9A58:
+Ylist:
 resb 34
-word_E9A7A:
+OOlistpos:
 resb 34
 word_E9A9C:
 resb 2
@@ -49,11 +49,11 @@ word_E9AA4:
 resb 2
 word_E9AA6:
 resb 2
-word_E9AA8:
+CwdExciteLvl:
 resb 2
 word_E9AAA:
 resb 2
-word_E9AAC:
+periodendtime:
 resb 2
 word_E9AAE:
 resb 2
@@ -67,7 +67,7 @@ dword_E9AB6:
 resb 1
 dword_E9AB7:
 resb 1
-word_E9AB8:
+PerTimeTotal:
 resb 2
 PBnum:
 resb 1
@@ -119,17 +119,12 @@ byte_E9AD6:
 resb 1
 byte_E9AD7:
 resb 3
-Ylist:
 resb 1
-dword_E9ADB:
 resb 1
-dword_E9ADC:
+resb 1
 resb 1
 OOlist:
 resb 1
-byte_E9ADE:
-resb 1
-byte_E9ADF:
 resb 17
 dword_E9AF0:
 resb 2

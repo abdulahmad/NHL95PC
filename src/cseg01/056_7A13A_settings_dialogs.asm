@@ -14,18 +14,18 @@ extern dword_D14F0, dword_D14F4, dword_D14F8, dword_D14FC, dword_D16AC, dword_D1
 extern dword_D17EC, dword_D17F0, dword_D17F4, dword_D17F8, dword_D195C, dword_D1960, dword_D1964, dword_D1968
 extern dword_D196C, dword_D1970, dword_D1974, dword_D1978, dword_D197C, dword_D1980, dword_D198C, dword_D1990
 extern dword_D199C, dword_D19A0, dword_D19AC, dword_D19B0, dword_D19EC, dword_D20A8, musichandle, musicslot
-extern dword_D29FB, dword_D2C6B, dword_DC238, dword_DD64C, dword_DF614, dword_DF622, dword_DF63C, dword_DF648
-extern dword_DFF36, dword_EA0DC, dword_ED35C, dword_ED360, dword_ED364, dword_ED75C, dword_ED760, dword_ED764
+extern dword_D29FB, dword_D2C6B, dword_DC238, dword_DD64C, hmtmstruct, dword_DF63C, dword_DF648, hmscore
+extern dword_EA0DC, dword_ED35C, dword_ED360, dword_ED364, dword_ED75C, dword_ED760, dword_ED764, puckstruct
 extern dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C, dword_ED780, dword_ED784
 extern dword_ED788, dword_ED78C, puckvx, gmode, jctime, off_C54A9, puckx, pucky
 extern puckvy, puckc, off_CD498, off_CD4A0, setpersonel, sub_1431E, sub_3271B, sub_327A1
-extern sub_32B1D, sub_59748, sub_59863, sub_59FE1, sub_6B391, sub_6B3D7, sub_8034B, sub_8050F
+extern sub_32B1D, sub_59748, sub_59863, restorepl, sub_6B391, sub_6B3D7, sub_8034B, sub_8050F
 extern sub_8B85B, sub_8B92F, sub_8CCA8, sub_8E83C, sub_8E9C0, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_90D20, sub_91284, sub_91370
 extern sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_96440, sub_B2DCA, sub_B30B4, sub_B4B88
 extern sub_B4BA8, sub_B4DD4, sub_B4FAC, unk_C5298, unk_D16A0, unk_D19CC, unk_D19DC, SortCords
-extern unk_DFB1C, c1playernum, c2playernum, cont1team, word_C90CC, word_C90DA, word_C90DC, lcblink
-extern word_CBC58, lcboxon, word_CBC6C, word_DF63E, word_DF65A, word_DF75A, word_DFF42
+extern unk_DFB1C, c1playernum, c2playernum, cont1team, word_C90CC, gsp, gameclock, lcblink
+extern word_CBC58, lcboxon, word_CBC6C, hmtmline, word_DF65A, word_DF75A, word_DFF42
 global jpt_7A872, loc_7A1F2, loc_7A1F5, loc_7A1F6, loc_7A263, loc_7A439, loc_7A43B, loc_7A500
 global loc_7A51D, loc_7A5B9, loc_7A5BD, loc_7A5D3, loc_7A652, loc_7A66F, loc_7A68A, loc_7A68F
 global loc_7A6DB, loc_7A70A, loc_7A72D, loc_7A72F, loc_7A780, loc_7A78A, loc_7A7C3, loc_7A7E0
@@ -3698,7 +3698,7 @@ push ecx	; 7CBBE
 push edx	; 7CBBF
 mov edx, eax	; 7CBC0
 shl eax, 8	; 7CBC2
-add eax, dword_DF614	; 7CBC5
+add eax, hmtmstruct	; 7CBC5
 cmp word [byte eax+038h], byte 0	; 7CBCA
 jge near loc_7CC86	; 7CBCF
 mov bl, byte [byte eax+038h]	; 7CBD5
@@ -3711,7 +3711,7 @@ test edx, edx	; 7CBE9
 sete bl	; 7CBEB
 and ebx, 0FFh	; 7CBEE
 shl ebx, 8	; 7CBF4
-mov ecx, dword [dword ebx+dword_DF622]	; 7CBF7
+mov ecx, dword [dword ebx+hmscore-2]	; 7CBF7
 sar ecx, 10h	; 7CBFD
 mov ebx, dword [byte eax+0Eh]	; 7CC00
 sar ebx, 10h	; 7CC03
@@ -3721,9 +3721,9 @@ test ecx, ecx	; 7CC0A
 jle short loc_7CC27	; 7CC0C
 cmp ecx, byte 2	; 7CC0E
 jg short loc_7CC27	; 7CC11
-cmp word [word_C90DA], byte 2	; 7CC13
+cmp word [gsp], byte 2	; 7CC13
 jne short loc_7CC27	; 7CC1B
-cmp word [word_C90DC], byte 3Ch	; 7CC1D
+cmp word [gameclock], byte 3Ch	; 7CC1D
 jle short loc_7CC86	; 7CC25
 loc_7CC27:
 mov cl, byte [gmode]	; 7CC27
@@ -3768,7 +3768,7 @@ push ecx	; 7CC95
 push edx	; 7CC96
 mov ebx, eax	; 7CC97
 shl eax, 8	; 7CC99
-add eax, dword_DF614	; 7CC9C
+add eax, hmtmstruct	; 7CC9C
 cmp word [byte eax+038h], byte 0	; 7CCA1
 jge short loc_7CCE1	; 7CCA6
 test byte [byte eax+038h], 0F0h	; 7CCA8
@@ -3915,7 +3915,7 @@ mov edx, dword [dword_C90C0]	; 7CE54
 sar edx, 10h	; 7CE5A
 mov eax, dword [byte esp+06h]	; 7CE5D
 sar eax, 10h	; 7CE61
-call sub_59FE1	; 7CE64
+call restorepl	; 7CE64
 mov word [c1playernum], ax	; 7CE69
 jmp short loc_7CE99	; 7CE6F
 loc_7CE71:
@@ -3926,7 +3926,7 @@ mov edx, dword [c1playernum]	; 7CE7E
 sar edx, 10h	; 7CE84
 mov eax, dword [byte esp+06h]	; 7CE87
 sar eax, 10h	; 7CE8B
-call sub_59FE1	; 7CE8E
+call restorepl	; 7CE8E
 mov word [c2playernum], ax	; 7CE93
 loc_7CE99:
 add esp, byte 10h	; 7CE99
@@ -4000,7 +4000,7 @@ test ecx, ecx	; 7CF69
 jle short loc_7CF79	; 7CF6B
 cmp edx, byte 6	; 7CF6D
 jge short loc_7CF79	; 7CF70
-mov word [dword eax+word_DF63E], si	; 7CF72
+mov word [dword eax+hmtmline], si	; 7CF72
 loc_7CF79:
 test ecx, ecx	; 7CF79
 jge short loc_7CF93	; 7CF7B
@@ -4011,7 +4011,7 @@ jge short loc_7CF93	; 7CF85
 loc_7CF87:
 mov eax, ebx	; 7CF87
 shl eax, 8	; 7CF89
-mov word [dword eax+word_DF63E], di	; 7CF8C
+mov word [dword eax+hmtmline], di	; 7CF8C
 loc_7CF93:
 test ecx, ecx	; 7CF93
 jne short loc_7CFAA	; 7CF95
@@ -4020,7 +4020,7 @@ jl short loc_7CFAA	; 7CF9A
 mov eax, ebx	; 7CF9C
 shl eax, 8	; 7CF9E
 xor edx, edx	; 7CFA1
-mov word [dword eax+word_DF63E], dx	; 7CFA3
+mov word [dword eax+hmtmline], dx	; 7CFA3
 loc_7CFAA:
 inc ebx	; 7CFAA
 cmp ebx, byte 2	; 7CFAB
@@ -4094,7 +4094,7 @@ loc_7D07C:
 mov eax, ebp	; 7D07C
 call sub_7CCE5	; 7D07E
 call sub_7CEA1	; 7D083
-mov eax, dword [dword_DFF36]	; 7D088
+mov eax, dword [puckstruct+1Ah]	; 7D088
 sar eax, 10h	; 7D08D
 cmp byte [dword eax+byte_DFF3A], 1Bh	; 7D090
 jne short loc_7D0AF	; 7D097

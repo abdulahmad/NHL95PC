@@ -21,8 +21,8 @@ extern sub_84704, sub_84715, sub_84729, sub_8BC15, sub_8CCA8, sub_8D2F0, sub_8E8
 extern sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0
 extern sub_9061C, sub_91370, sub_91400, MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
 extern sub_B396E, sub_B4B58, sub_B4BA8, sub_B4FAC, unk_CEB8F, unk_CEC4F, unk_CF2EF, unk_D2B38
-extern unk_DABF0, unk_DC200, unk_DC890, unk_DF014, word_C90CC, word_CBC44, word_CBC46, scrolly
-extern scrollx, word_DF624, word_DF724
+extern unk_DABF0, unk_DC200, unk_DC890, unk_DF014, word_C90CC, word_CBC44, exitgame, scrolly
+extern scrollx, hmscore, awscore
 global code_1A817, code_1A8AA, code_1A922, code_1A96D, code_1A9AC, loc_18E13, loc_18F79, loc_18F86
 global loc_18FA2, loc_18FC9, loc_18FDF, loc_19045, loc_1909C, loc_1909E, loc_190B4, loc_19178
 global loc_1918C, loc_191C4, loc_191C9, loc_1930F, loc_19336, loc_193B5, loc_193BF, loc_19423
@@ -370,7 +370,7 @@ jmp short loc_191C9	; 191C2
 loc_191C4:
 call sub_47C31	; 191C4
 loc_191C9:
-mov word [word_CBC46], 0FFFFh	; 191C9
+mov word [exitgame], 0FFFFh	; 191C9
 mov eax, 1	; 191D2
 call sub_1935D	; 191D7
 xor ah, ah	; 191DC
@@ -739,8 +739,8 @@ cmp dword [esp], byte 2	; 19764
 jne near loc_19844	; 19768
 cmp dword [dword_DC234], 444h	; 1976E
 jl near loc_19844	; 19778
-mov ax, word [word_DF624]	; 1977E
-cmp ax, word [word_DF724]	; 19784
+mov ax, word [hmscore]	; 1977E
+cmp ax, word [awscore]	; 19784
 jle short loc_19795	; 1978B
 mov esi, dword [cont2team]	; 1978D
 jmp short loc_1979B	; 19793

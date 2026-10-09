@@ -3,15 +3,15 @@ bits 32
 %include "hockey.inc"
 section s_DF63E nobits alloc noexec write align=1
 global byte_DF64D, byte_DF658, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byte_DF758
-global dword_DF642, dword_DF646, dword_DF648, dword_DF652, dword_DF690, dword_DF6C2, dword_DF6EA, dword_DF6EE
-global dword_DF6F2, dword_DF6F6, dword_DF6FA, dword_DF6FE, dword_DF702, dword_DF706, dword_DF70A, dword_DF712
-global dword_DF714, dword_DF716, dword_DF71C, dword_DF71E, dword_DF720, dword_DF722, dword_DF738, dword_DF73A
-global dword_DF73C, dword_DF748, dword_DF752, word_DF63E, word_DF640, word_DF644, word_DF64A, word_DF64C
-global word_DF656, word_DF65A, word_DF692, word_DF70E, word_DF724, word_DF73E, word_DF740, word_DF742
+global dword_DF642, dword_DF646, dword_DF648, dword_DF652, dword_DF690, dword_DF6C2, dword_DF6EA, hmtmlines
+global dword_DF6F2, dword_DF6F6, dword_DF6FA, dword_DF6FE, hmtmroster, hmtmptrF2, hmtmsort, dword_DF712
+global awtmstruct, dword_DF716, dword_DF71C, dword_DF71E, dword_DF720, dword_DF738, dword_DF73A
+global dword_DF73C, dword_DF748, dword_DF752, hmtmline, hmtmlcnt, word_DF644, word_DF64A, word_DF64C
+global word_DF656, word_DF65A, word_DF692, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
 global word_DF744, word_DF746, word_DF74A, word_DF74C, word_DF756
-word_DF63E:
+hmtmline:
 resb 2
-word_DF640:
+hmtmlcnt:
 resb 2
 dword_DF642:
 resb 2
@@ -53,7 +53,7 @@ byte_DF6E9:
 resb 1
 dword_DF6EA:
 resb 4
-dword_DF6EE:
+hmtmlines:
 resb 4
 dword_DF6F2:
 resb 4
@@ -63,17 +63,17 @@ dword_DF6FA:
 resb 4
 dword_DF6FE:
 resb 4
-dword_DF702:
+hmtmroster:
 resb 4
-dword_DF706:
+hmtmptrF2:
 resb 4
-dword_DF70A:
+hmtmsort:
 resb 4
 word_DF70E:
 resb 4
 dword_DF712:
 resb 2
-dword_DF714:
+awtmstruct:
 resb 2
 dword_DF716:
 resb 6
@@ -83,9 +83,8 @@ dword_DF71E:
 resb 2
 dword_DF720:
 resb 2
-dword_DF722:
 resb 2
-word_DF724:
+awscore:
 resb 20
 dword_DF738:
 resb 2
@@ -93,9 +92,9 @@ dword_DF73A:
 resb 2
 dword_DF73C:
 resb 2
-word_DF73E:
+awtmline:
 resb 2
-word_DF740:
+awtmlcnt:
 resb 2
 word_DF742:
 resb 2

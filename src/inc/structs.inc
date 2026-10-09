@@ -48,4 +48,9 @@ optmptr    equ 70h   ; size d; 93G none; pointer to the other team's structure: 
 tmline     equ 2Ah   ; 93G $16; getlchoice adds tmline*4 to the choice index (93G adds tmline*3); lcfound/lcselect store the new line, then setpersonel
 tmlcnt     equ 2Ch   ; 93G none; lcfound/lcselect: when the new line is < 4 it is incremented and wrapped at 3 (even-strength line rotation count)
 tmap       equ 36h   ; 93G $24; getlchoice/lcselect: other tmap - own tmap selects the even / short-handed / power-play choices (93G 'number I'm short')
+tmscore    equ 10h   ; 93G $C; Goal adds 1 (inc word [esi+10h]); PeriodOver/clockcont_0 compare hmscore (DF624) with awscore (DF724)
+tmpdst     equ 7Eh   ; 93G $66 (-2 bench / -1 ice / 0+ box): word per roster player: -2 bench, -1 on ice (setplayer, forcepldata), >0 penalty box time; restoreteams sets all to -2; ResetBench counts >0 into PBnum
+tmlines    equ 0DAh  ; 93G none; pointer to the team's line table (clearteams: home unk_DC200, away unk_DABF0); LineEnergy and setpersonel read it
+tmroster   equ 0EEh  ; 93G none; pointer to the team roster, 27h bytes per player (byte 0 = status: 3 bench, 4 on ice); clearteams: byte_DB3A8 / byte_DB7EC
+tmsort     equ 0F6h  ; 93G $22; pointer to the team's first SortCords entry (home SortCords, away SortCords+600h); forcepldata/resetplstuff walk 6 entries from it
 tmflags    equ 44h   ; 93G $30; lineinput: bit 0 'start lc mode' cleared before opening the box; lcfound/lcselect clear bit 1 (93G bclr #1,tmflags(a2))

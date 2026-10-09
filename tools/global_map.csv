@@ -1,10 +1,8 @@
 genesis_symbol,pc_address,evidence
-OOlist,E9ADD,"aligned 2/3 accesses in checkcoll, checkplcoll"
-OOlistpos,E9A56,"aligned 2/3 accesses in checkcoll, checkplcoll"
+Ylist_m2,E9A56,Ylist-2: the -5r load dword [eax*2+E9A56] / sar 10h reads Ylist[eax]; used in nosplit operands so it cannot be folded
 PBnum,E9ABA,"aligned 2/3 accesses in assdopen, asspenalty"
 RNGseed,C9100,randomd0 seed (manual)
 StanleyCupTimer,C9100,randomd0 seed (manual)
-Ylist,E9ADA,"aligned 2/3 accesses in checkcoll, checkplcoll"
 collflag,C90BA,"aligned 2/3 accesses in Bcheck, holdcheck"
 dirtab,C90E0,"data table byte match (words->le16, logic93_5.asm, 16 elems)"
 puckvx,C9080,"pointer to the puck's Xvel (dd word_DFF28 = SortCords+14*80h+Xvel); skatetopuck reads its high byte /2 (93G skatetopuckinit puckvx) and vtoa(puckvx,puckvy); was gameclock in the seed global_map (2/2 weak alignment)"
@@ -79,3 +77,42 @@ lchoicetab,CCB5A,"93G getlchoice .tab: 4 bytes per tmline, +20h/+40h sections fo
 lcrequest,E0304,"per team: line change requested by number (PC keys); doinput hands it to lcselect, then clears it"
 lcreqchoice,E0380,per team: the requested line choice passed to lcselect
 wcradiusy,C909E,pair with wcradiusx: sub_580F5 stores [ecx+66h] in wcradiusx and [ecx+68h] here (93G radiusx/radiusy order); engine_input reads lastplayer through it as the -5r load wcradiusy+2... (dword [C909E] / sar 10h = word C90A0)
+OOlist,E9ADE,"93G checkcoll/checkplcoll: sub_5DD7C fills E9A58[0..16] with each sort object's Ypos (Xpos if sfhor) and bubble-sorts the bytes at E9ADE by those words, writing each object's slot into E9A7A: Ylist / OOlist / OOlistpos as in 93G ram. The seeded names sat on -5r alias labels"
+Ylist,E9A58,"93G checkcoll/checkplcoll: sub_5DD7C fills E9A58[0..16] with each sort object's Ypos (Xpos if sfhor) and bubble-sorts the bytes at E9ADE by those words, writing each object's slot into E9A7A: Ylist / OOlist / OOlistpos as in 93G ram. The seeded names sat on -5r alias labels"
+OOlistpos,E9A7A,"93G checkcoll/checkplcoll: sub_5DD7C fills E9A58[0..16] with each sort object's Ypos (Xpos if sfhor) and bubble-sorts the bytes at E9ADE by those words, writing each object's slot into E9A7A: Ylist / OOlist / OOlistpos as in 93G ram. The seeded names sat on -5r alias labels"
+hmtmstruct,DF614,93G hmtmstruct: home team struct (100h bytes); restoreteams/clearteams/ResetBench start here and add 100h for awtmstruct
+awtmstruct,DF714,93G hmtmstruct+tmsize: visitor team struct (DF614+100h)
+hmscore,DF624,home tmscore (team+10h): PeriodOver/clockcont_0 subtract awscore to find a tie
+awscore,DF724,visitor tmscore (awtmstruct+10h)
+hmtmline,DF63E,home tmline (hmtmstruct+2Ah): SetupTeamForIntermission sets 0/3/5
+awtmline,DF73E,visitor tmline (awtmstruct+2Ah)
+hmtmlcnt,DF640,home tmlcnt (hmtmstruct+2Ch)
+awtmlcnt,DF740,visitor tmlcnt (awtmstruct+2Ch)
+hmtmsort,DF70A,home tmsort pointer (hmtmstruct+F6h) to the first of its 6 SortCords entries
+awtmsort,DF80A,visitor tmsort pointer (awtmstruct+F6h)
+hmtmroster,DF702,"home roster pointer (hmtmstruct+EEh), 27h bytes per player; ResetBench/setplayer write status bytes there"
+awtmroster,DF802,visitor roster pointer (awtmstruct+EEh)
+puckcross,DF814,calcpuckcross result: where/when the puck crosses each goal line (2 records after the team structs)
+gsp,C90DA,"93G gsp: period number (0-3, 4 = game over); PeriodOver increments it, IntermissionStart checks 4"
+gameclock,C90DC,"93G gameclock: seconds left in the period; ResetClock sets it, ClockTick counts it down"
+clockticks,C90DE,ticks within the current gameclock second (reloaded with 18h by ClockTick)
+PerTimeTotal,E9AB8,93G PerTimeTotal: period length (ResetClock)
+periodendtime,E9AAC,"93G periodendtime: gameclock - random(length/2), set by ResetClock"
+CwdExciteLvl,E9AA8,crowd excitement level (updatecrowdf)
+lldisp,CC0D9,"93G lldisp: periodicevents frame countdown, +18h once a second (PC byte)"
+lldispodd,CC0D8,bit 0 flips each lldisp second in periodicevents
+exitgame,CBC46,main-loop request flag set by SetExitGame
+gameover,CBC48,main-loop request flag set by GameOver
+PerTimeTab,CBC4A,period length table read by GetPeriodTime
+PlList,E0384,player list built by SetPlList / TryAddPlayerToList
+ds2list,CBD5A,93G defaultsprites2 .list: initial values of the 17 sort objects
+SPAtab,C921D,93G SPA animation table read by updateanim
+camx,C9098,camera x (LockScroll copies it into xc1)
+camy,C909A,camera y (LockScroll copies it into yc1)
+camx_m2,C9096,camx-2 (equ): the -5r load dword [camx_m2] / sar 10h reads camx
+puckstruct,DFF1C,93G puckx struct: the puck's SortCords entry 14 (SortCords+700h)
+sortobj15,DFF9C,"SortCords entry 15 (SortCords+780h), the sort object after the puck"
+hmtmlines,DF6EE,"home team line table pointer (hmtmstruct+DAh); clearteams sets it to unk_DC200, the scoring text indexes it with the team offset (eax+DF6EE)"
+awtmlines,DF7EE,visitor line table pointer (awtmstruct+DAh)
+hmtmptrF2,DF706,"home team struct +F2h data pointer (clearteams sets unk_DBC30, game_state_saveload too); role not identified"
+awtmptrF2,DF806,visitor team struct +F2h data pointer (clearteams sets unk_DBF18); role not identified

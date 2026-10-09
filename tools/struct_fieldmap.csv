@@ -37,3 +37,8 @@ tmline,$16 (team),2Ah (team),"getlchoice adds tmline*4 to the choice index (93G 
 tmlcnt,none (team),2Ch (team),"lcfound/lcselect: incremented and wrapped at 3 when the new line is < 4"
 tmap,$24 (team),36h (team),"getlchoice/lcselect: other tmap - own tmap picks the even / PK / PP choices, as 93G getlchoice"
 tmflags,$30 (team),44h (team),"lineinput: bit 0 cleared before opening the box; lcfound clears bit 1, as 93G lineinput/lcfound"
+tmscore,$C (team),10h (team),"Goal does inc word [scoring team+10h]; PeriodOver/clockcont_0 compare DF624 with DF724, as 93G Goal addq #1,tmscore(a2)"
+tmpdst,$66 (team),7Eh (team),"restoreteams writes FFFEh to every entry (93G move.w #$FFFE,tmpdst(a2,d0)); setplayer/forcepldata write FFFFh; ResetBench counts entries > 0"
+tmlines,none (team),DAh (team),"clearteams stores the line table pointers unk_DC200 / unk_DABF0; LineEnergy and setpersonel index it"
+tmroster,none (team),EEh (team),"clearteams stores byte_DB3A8 / byte_DB7EC; setplayer/ResetBench/forcepldata index it with player*27h"
+tmsort,$22 (team),F6h (team),"clearteams stores SortCords / unk_DFB1C(+600h); forcepldata walks 6 entries from it, as 93G movea.w tmsort(a2),a3"

@@ -11,7 +11,7 @@ extern dword_D8C40, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, dword_DC
 extern dword_DD6B0, dword_E03A4, dword_E9F16, dword_E9F38, dword_EA0DC, dword_ED368, dword_ED380, dword_ED384
 extern dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8, dword_ED6DC, dword_ED6E0, dword_ED6E4
 extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED6FC, dword_ED704, dword_ED708
-extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, jctime, off_C9096, off_CD4FA
+extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, jctime, camx_m2, off_CD4FA
 extern off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25, rand_, sub_10E9F, sub_110E0, sub_11598
 extern sub_1431E, sub_30A0C, sub_30F12, sub_31013, sub_33DD3, sub_59748, sub_67581, sub_67900
 extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_6B391, sub_6B3D7, sub_7F724
@@ -19,7 +19,7 @@ extern sub_7FA10, sub_7FC12, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0,
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
 extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B396E, sub_B3989, sub_B3999, sub_B4BA8, sub_B4BC4
 extern sub_B4CD8, sub_B4FAC, sub_B500C, sub_B5DB0, unk_C33F8, unk_C3403, unk_DF014, unk_DF314
-extern word_C9098, word_C909A, word_CC0DE, word_CD4FC, word_CD500, scrolly, word_E9F18, word_E9F3A
+extern camx, camy, word_CC0DE, word_CD4FC, word_CD500, scrolly, word_E9F18, word_E9F3A
 extern word_ED758
 global jpt_7F09F, loc_7DCC0, loc_7DCC2, loc_7DCFC, loc_7DCFE, loc_7DD15, loc_7DD1E, loc_7DD26
 global loc_7DD4A, loc_7DD6A, loc_7DD6B, loc_7DD74, loc_7DD78, loc_7DD87, loc_7DD88, loc_7DD90
@@ -568,9 +568,9 @@ add esp, byte 0Ch	; 7E25C
 mov edx, 1	; 7E25F
 mov dword [dword_C66D4], edx	; 7E264
 mov dword [dword_C66D0], edx	; 7E26A
-mov ax, word [word_C9098]	; 7E270
+mov ax, word [camx]	; 7E270
 mov dword [byte esp+01Ch], eax	; 7E276
-mov ax, word [word_C909A]	; 7E27A
+mov ax, word [camy]	; 7E27A
 mov dword [byte esp+020h], eax	; 7E280
 mov di, word [dword_D8C7C]	; 7E284
 mov ax, word [dword_D8C74]	; 7E28B
@@ -597,7 +597,7 @@ call sub_67900	; 7E2F6
 mov eax, dword [dword_CC0DC]	; 7E2FB
 sar eax, 10h	; 7E300
 mov dword [dword_CCC88], eax	; 7E303
-mov eax, dword [off_C9096]	; 7E308
+mov eax, dword [camx_m2]	; 7E308
 sar eax, 10h	; 7E30D
 add eax, byte 20h	; 7E310
 mov dword [dword_D8C7C], eax	; 7E313
@@ -610,7 +610,7 @@ jge short loc_7E338	; 7E32E
 xor ecx, ecx	; 7E330
 mov dword [dword_D8C7C], ecx	; 7E332
 loc_7E338:
-mov eax, dword [word_C9098]	; 7E338
+mov eax, dword [camx]	; 7E338
 sar eax, 10h	; 7E33D
 mov edx, 140h	; 7E340
 sub edx, eax	; 7E345
@@ -715,35 +715,35 @@ call SelectRinkBM	; 7E4BB
 cmp dword [dword_ED70C], byte 0	; 7E4C0
 je near loc_7E55D	; 7E4C7
 mov ax, word [dword_ED6F0]	; 7E4CD
-mov word [word_C9098], ax	; 7E4D3
+mov word [camx], ax	; 7E4D3
 mov ax, word [dword_ED6F4]	; 7E4D9
-mov word [word_C909A], ax	; 7E4DF
-cmp word [word_C9098], byte 20h	; 7E4E5
+mov word [camy], ax	; 7E4DF
+cmp word [camx], byte 20h	; 7E4E5
 jle short loc_7E4FA	; 7E4ED
-mov word [word_C9098], 20h	; 7E4EF
+mov word [camx], 20h	; 7E4EF
 jmp short loc_7E510	; 7E4F8
 loc_7E4FA:
-mov eax, dword [off_C9096]	; 7E4FA
+mov eax, dword [camx_m2]	; 7E4FA
 sar eax, 10h	; 7E4FF
 cmp eax, byte 0FFFFFFE0h	; 7E502
 jge short loc_7E510	; 7E505
-mov word [word_C9098], 0FFE0h	; 7E507
+mov word [camx], 0FFE0h	; 7E507
 loc_7E510:
-cmp word [word_C909A], 0ECh	; 7E510
+cmp word [camy], 0ECh	; 7E510
 jle short loc_7E526	; 7E519
-mov word [word_C909A], 0ECh	; 7E51B
+mov word [camy], 0ECh	; 7E51B
 jmp short loc_7E53E	; 7E524
 loc_7E526:
-mov eax, dword [word_C9098]	; 7E526
+mov eax, dword [camx]	; 7E526
 sar eax, 10h	; 7E52B
 cmp eax, 0FFFFFF44h	; 7E52E
 jge short loc_7E53E	; 7E533
-mov word [word_C909A], 0FF44h	; 7E535
+mov word [camy], 0FF44h	; 7E535
 loc_7E53E:
-mov eax, dword [off_C9096]	; 7E53E
+mov eax, dword [camx_m2]	; 7E53E
 sar eax, 10h	; 7E543
 mov dword [dword_ED6F0], eax	; 7E546
-mov eax, dword [word_C9098]	; 7E54B
+mov eax, dword [camx]	; 7E54B
 sar eax, 10h	; 7E550
 mov dword [dword_ED6F4], eax	; 7E553
 jmp near loc_7E5E5	; 7E558
@@ -753,32 +753,32 @@ jl near loc_7E5E5	; 7E565
 mov eax, dword [off_CD4FA]	; 7E56B
 sar eax, 10h	; 7E570
 mov dx, word [nosplit eax*2+word_E9F18]	; 7E573
-mov word [word_C9098], dx	; 7E57B
+mov word [camx], dx	; 7E57B
 mov ax, word [nosplit eax*2+word_E9F3A]	; 7E582
-mov word [word_C909A], ax	; 7E58A
+mov word [camy], ax	; 7E58A
 cmp dx, byte 20h	; 7E590
 jle short loc_7E5A1	; 7E594
-mov word [word_C9098], 20h	; 7E596
+mov word [camx], 20h	; 7E596
 jmp short loc_7E5B7	; 7E59F
 loc_7E5A1:
-mov eax, dword [off_C9096]	; 7E5A1
+mov eax, dword [camx_m2]	; 7E5A1
 sar eax, 10h	; 7E5A6
 cmp eax, byte 0FFFFFFE0h	; 7E5A9
 jge short loc_7E5B7	; 7E5AC
-mov word [word_C9098], 0FFE0h	; 7E5AE
+mov word [camx], 0FFE0h	; 7E5AE
 loc_7E5B7:
-cmp word [word_C909A], 0ECh	; 7E5B7
+cmp word [camy], 0ECh	; 7E5B7
 jle short loc_7E5CD	; 7E5C0
-mov word [word_C909A], 0ECh	; 7E5C2
+mov word [camy], 0ECh	; 7E5C2
 jmp short loc_7E5E5	; 7E5CB
 loc_7E5CD:
-mov eax, dword [word_C9098]	; 7E5CD
+mov eax, dword [camx]	; 7E5CD
 sar eax, 10h	; 7E5D2
 cmp eax, 0FFFFFF44h	; 7E5D5
 jge short loc_7E5E5	; 7E5DA
-mov word [word_C909A], 0FF44h	; 7E5DC
+mov word [camy], 0FF44h	; 7E5DC
 loc_7E5E5:
-mov eax, dword [off_C9096]	; 7E5E5
+mov eax, dword [camx_m2]	; 7E5E5
 sar eax, 10h	; 7E5EA
 add eax, byte 20h	; 7E5ED
 mov dword [dword_D8C7C], eax	; 7E5F0
@@ -791,7 +791,7 @@ jge short loc_7E615	; 7E60B
 xor ebp, ebp	; 7E60D
 mov dword [dword_D8C7C], ebp	; 7E60F
 loc_7E615:
-mov eax, dword [word_C9098]	; 7E615
+mov eax, dword [camx]	; 7E615
 sar eax, 10h	; 7E61A
 mov edx, 140h	; 7E61D
 sub edx, eax	; 7E622
@@ -841,12 +841,12 @@ mov edx, dword [dword_ED74C]	; 7E6D7
 cmp edx, byte 0FFFFFFFFh	; 7E6DD
 jne short loc_7E73D	; 7E6E0
 mov dword [dword_ED6EC], edx	; 7E6E2
-mov eax, dword [off_C9096]	; 7E6E8
+mov eax, dword [camx_m2]	; 7E6E8
 sar eax, 10h	; 7E6ED
 add eax, dword [dword_ED6E0]	; 7E6F0
 sub eax, 0A0h	; 7E6F6
 mov dword [dword_ED704], eax	; 7E6FB
-mov eax, dword [word_C9098]	; 7E700
+mov eax, dword [camx]	; 7E700
 sar eax, 10h	; 7E705
 sub eax, dword [dword_ED6DC]	; 7E708
 add eax, byte 54h	; 7E70E
@@ -881,14 +881,14 @@ je short loc_7E7E6	; 7E772
 mov eax, ebx	; 7E774
 mov ebx, dword [nosplit ebx*2+dword_E9F16]	; 7E776
 sar ebx, 10h	; 7E77D
-mov edx, dword [off_C9096]	; 7E780
+mov edx, dword [camx_m2]	; 7E780
 sar edx, 10h	; 7E786
 sub ebx, edx	; 7E789
 add ebx, 0A0h	; 7E78B
 mov dword [dword_ED6E0], ebx	; 7E791
 mov eax, dword [nosplit eax*2+dword_E9F38]	; 7E797
 sar eax, 10h	; 7E79E
-mov edx, dword [word_C9098]	; 7E7A1
+mov edx, dword [camx]	; 7E7A1
 sar edx, 10h	; 7E7A7
 sub edx, eax	; 7E7AA
 add edx, byte 54h	; 7E7AC
@@ -931,9 +931,9 @@ mov ecx, 0FFFFFFFFh	; 7E833
 mov word [dword_CC0DC], cx	; 7E838
 mov word [word_CD500], cx	; 7E83F
 mov eax, dword [byte esp+01Ch]	; 7E846
-mov word [word_C9098], ax	; 7E84A
+mov word [camx], ax	; 7E84A
 mov eax, dword [byte esp+020h]	; 7E850
-mov word [word_C909A], ax	; 7E854
+mov word [camy], ax	; 7E854
 movsx eax, di	; 7E85A
 mov dword [dword_D8C7C], eax	; 7E85D
 mov eax, dword [byte esp+016h]	; 7E862
@@ -1128,12 +1128,12 @@ mov dword [esp], eax	; 7EA8E
 mov edx, dword [dword_ED6DC]	; 7EA91
 cmp edx, 0A8h	; 7EA97
 jge short loc_7EAC9	; 7EA9D
-mov eax, dword [off_C9096]	; 7EA9F
+mov eax, dword [camx_m2]	; 7EA9F
 sar eax, 10h	; 7EAA4
 add eax, dword [dword_ED6E0]	; 7EAA7
 sub eax, 0A0h	; 7EAAD
 mov dword [dword_ED704], eax	; 7EAB2
-mov eax, dword [word_C9098]	; 7EAB7
+mov eax, dword [camx]	; 7EAB7
 sar eax, 10h	; 7EABC
 sub eax, edx	; 7EABF
 add eax, byte 54h	; 7EAC1

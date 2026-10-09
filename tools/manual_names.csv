@@ -17,6 +17,53 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00050ADE,sub_50ADE,CenterMouse,PC-new,,,,medium,"MouseSetPos(160,100); called after control switches in engine_assign_faceoff",engine_input,manual-trace
 000532BD,sub_532BD,burst,93G,logic93_1.asm,,,high,"manual trace: CCh energy cost, energy>>7 dir-vector push, same constants as 93G burst",engine_physics_ai,manual-trace
 0005514E,sub_5514E,passmode,93G,logic93_1.asm,input94.asm,,high,"as 93G passmode: B changed (regd2 bit 4) -> dopass, else dpad&7 -> passdir",engine_physics_ai,manual-trace
+00059E69,sub_59E69,changeplayer,93G,logic93_1.asm,,,high,"93G changeplayer: hand control to the nearest teammate (Sweepcheck), restorepl the old one; called from input, physics, assignments",engine_core,manual-trace
+00059FE1,sub_59FE1,restorepl,93G,logic93_1.asm,,,medium,"93G restorepl: eax = new controlled player, edx = old one; clears the old player's joystick control flags and gives the new one its assignment back",engine_core,manual-trace
+0005A03B,sub_5A03B,AvgCline,PC-new,penalty93_2.asm,penalty94.asm,92G AvgCline; 95G AvgCline,medium,average energy of the team's skaters on the ice (walks tmsort F6h); used by chk4lc and the physics code,engine_core,manual-trace
+0005A0A3,sub_5A0A3,chk4lc,93G,logic93_3.asm,,,medium,"93G chk4lc: decide whether the team should change lines (energy of the line on ice vs the next line, tmline/tmlcnt, sub_14AFE opens the box)",engine_core,manual-trace
+0005A2EE,sub_5A2EE,TeamLineEnergy,PC-new,,,,medium,energy of team line for the stats screens (file_utils caller); wraps LineEnergy,engine_core,manual-trace
+0005A30C,sub_5A30C,LineEnergy,PC-new,,,,medium,average energy of one line (lines >= 4 take the power-play/PK tail LineEnergy_pp),engine_core,manual-trace
+0005A341,sub_5A341,calcpuckcross,PC-new,,,,medium,predicts where/when the puck crosses each goal line and stores it in puckcross (DF814); called from player logic,engine_core,manual-trace
+0005A4AD,sub_5A4AD,GetHotStick,PC-new,,,,medium,GetHot variant with the stick-position table CC7A4,engine_core,manual-trace
+0005A534,sub_5A534,GetHotOrStick,PC-new,,,,medium,GetHot or GetHotStick depending on the player; physics caller,engine_core,manual-trace
+0005A581,sub_5A581,SetCoachMode,PC-new,,,,medium,sets a team's coach AI mode (team D2h..D6h fields),engine_core,manual-trace
+0005A669,sub_5A669,InitCoachModes,PC-new,,,,medium,resets both teams' coach AI modes at period start (StartPer),engine_core,manual-trace
+0005A77C,sub_5A77C,UpdateCoachModes,PC-new,,,,medium,"once a second (ClockTick): picks each team's coach mode from score, period time and penalties",engine_core,manual-trace
+0005AAAE,sub_5AAAE,PenTeamScored,PC-new,penalty93_1.asm,penalty94.asm,92G releasepl; 95G releasepl,medium,"{source_game=PC-new,confidence=medium} called by Goal: during a delayed penalty (gmode bit 3, 93G gmpendel) returns 1 when the scoring team has a skater with pflags2 bit 4 (93G 'caused a penalty'), so the goal does not count",engine_core,manual-trace
+0005AB36,sub_5AB36,Goal,PC-new,,,,medium,"{source_game=93G,source_file=hockey93_04.asm,confidence=high} 93G Goal (puck in goal, from checkgoal): scoring team by puck Ypos sign xor gmdir (esi = scoring, ebp = other, as 93G a2/a1), puck stopped in the net (Xvel/Yvel 0, beside the goal ecx), assreplace puck 1Ah; offside (tmflags bit 4) -> AddPenalty 8, PenTeamScored -> no goal; else tmscore+1 (inc word [esi+10h]) and the 93G ScoreSum/assist bookkeeping",engine_core,manual-trace
+0005B1CE,sub_5B1CE,GiveControl,PC-new,,,,medium,physics caller: gives the human the player who got the puck (restorepl),engine_core,manual-trace
+0005B2C5,sub_5B2C5,setplayer,93G,hockey93_05.asm,,,high,"93G setplayer: clears pflags2 bit 6, pnum = edx (47h), tmpdst entry = -1 (on ice), roster byte = 4, loads the player's attributes",engine_core,manual-trace
+0005B826,sub_5B826,reenergizeteam,93G,penalty93_2.asm,penalty94.asm,92G reenergizeteam,high,93G reenergizeteam: refill energy of the whole roster (1000h),engine_core,manual-trace
+0005B881,sub_5B881,clearteams,PC-new,,,,medium,"initializes both team structs and their pointers (roster, line table, tmsort) for a new game",engine_core,manual-trace
+0005B97A,sub_5B97A,restoreteams,93G,hockey93_01.asm,,,high,"93G restoreteams: tmap = 6, every tmpdst entry = -2 (bench), both teams",engine_core,manual-trace
+0005B9D1,sub_5B9D1,GetPeriodTime,93G,hockey93_01.asm,,,medium,93G GetPeriodTime: period length from the option table CBC4A,engine_core,manual-trace
+0005BA07,sub_5BA07,ResetClock,93G,hockey93_01.asm,,,high,"93G ResetClock: gameclock = PerTimeTotal = periodendtime = GetPeriodTime, clock stopped",engine_core,manual-trace
+0005BA4E,sub_5BA4E,ClearSortCords,PC-new,,,,medium,zeroes the SortCords objects (93G defaultsprites2 .0 loop),engine_core,manual-trace
+0005BA89,sub_5BA89,defaultsprites2,93G,hockey93_06.asm,,,high,"93G defaultsprites2: init the 17 sort objects from the CBD5A list, OOlist, then SprSort",engine_core,manual-trace
+0005BB9E,sub_5BB9E,TryAddPlayerToList,PC-new,,,,medium,adds a roster player to PlList (E0384) if not already there,engine_core,manual-trace
+0005BBFA,sub_5BBFA,SetPlList,PC-new,,,,medium,builds the player list for the line/stat screens via TryAddPlayerToList,engine_core,manual-trace
+0005C010,sub_5C010,StartPer,93G,hockey93_01.asm,,,high,"93G StartPer: setupice, ResetClock, no controlled players, faceoff at center, InitCoachModes, then the game loop",engine_core,manual-trace
+0005C1E2,sub_5C1E2,RestBench,PC-new,,,,medium,bench players regain energy (+8) each second,engine_core,manual-trace
+0005C248,sub_5C248,updatecrowdf,93G,hockey93_01.asm,,,medium,"93G updatecrowdf: crowd excitement level E9AA8 rises/decays, random crowd sfx",engine_core,manual-trace
+0005C302,sub_5C302,periodicevents,93G,hockey93_01.asm,,,high,"93G periodicevents: penalties, crowd, clockcont, then once a second (lldisp 18h frames) the slower checks",engine_core,manual-trace
+0005CAEF,sub_5CAEF,updateanim,93G,hockey93_02.asm,replay94.asm,92G updateanim,high,"93G updateanim: step SPAnum/SPAcnt through the SPA table (C921D), SetSPA when an animation ends",engine_core,manual-trace
+0005CD25,sub_5CD25,LockScroll,PC-new,,,,medium,camera follows the puck unless sfslock: xc1/yc1,engine_core,manual-trace
+0005CD4F,sub_5CD4F,cleargamevars,PC-new,,,,medium,clears per-game globals before StartGame,engine_core,manual-trace
+0005CE12,sub_5CE12,DrawRinkOverlays,PC-new,,,,medium,"draws the rink overlay sprites (penalty box markers per PBnum, period marks) through sub_110E0",engine_core,manual-trace
+0005D7F7,sub_5D7F7,setupice,93G,hockey93_06.asm,,,medium,"93G setupice role: per-period rink setup, gmdir flips pfgoal of the players, defaultsprites2",engine_core,manual-trace
+0005D852,sub_5D852,clockcont_0,93G,hockey93_01.asm,,,medium,"93G clockcont_0: end of period (puck assinsert 18h, score / overtime checks, shootout); also called from puckfaceoff in the assignment code",engine_core,manual-trace
+0005DC10,sub_5DC10,ClockTick,PC-new,,,,medium,"timer tick of the game clock: gameclock seconds and 18h-tick counter, horn sfx 97h at 60 s, UpdateCoachModes once a second",engine_core,manual-trace
+0005DD6B,sub_5DD6B,SprSortVert,PC-new,,,,medium,clears sfhor and falls into SprSort,engine_core,manual-trace
+0005DD7C,sub_5DD7C,SprSort,93G,hockey93_06.asm,,,high,93G SprSort: insertion sort of OOlist by Ylist,engine_core,manual-trace
+0005DD9E,sub_5DD9E,GameOver,93G,hockey93_06.asm,,,medium,game over: sets the main-loop request flag CBC48 (IntermissionStart when gsp = 4),engine_core,manual-trace
+0005DDBC,sub_5DDBC,SetExitGame,PC-new,,,,low,sets the main-loop request flag CBC46 (assignment caller),engine_core,manual-trace
+0005DDDA,sub_5DDDA,SetupTeamForIntermission,93G,penalty93_2.asm,,,high,"93G SetupTeamForIntermission: ResetBench, reenergizeteam both teams, tmline 0/3/5 by tmap difference",engine_core,manual-trace
+0005DE42,sub_5DE42,Intermission,93G,penalty93_2.asm,,,medium,93G Intermission start: SetupTeamForIntermission and clear the SortCords positions,engine_core,manual-trace
+0005DE70,sub_5DE70,IntermissionStart,93G,hockey93_06.asm,,,high,"93G IntermissionStart: GameOver when gsp = 4, else Intermission and StartPer",engine_core,manual-trace
+0005DEA6,sub_5DEA6,PeriodOver,93G,hockey93_06.asm,,,high,"93G PeriodOver: gsp++, gmdir flips, overtime / playoff rules (byte_C5400 bit 1), score check, IntermissionStart",engine_core,manual-trace
+0005DF86,sub_5DF86,ResetBench,93G,hockey93_05.asm,collide94.asm,92G ResetBench; 95G ResetBench,high,93G ResetBench: count players in the box (PBnum) and send everyone else to the bench (tmpdst -2),engine_core,manual-trace
+0005E086,sub_5E086,StartGame,93G,hockey93_01.asm,,,medium,"93G StartGame role: cleargamevars, clearteams, gsp = 0, restoreteams, IntermissionStart",engine_core,manual-trace
+0005E0B0,sub_5E0B0,forceteams,PC-new,,,,medium,setpersonel + forcepldata for both teams,engine_core,manual-trace
 0005E4C4,sub_5E4C4,EvadePlayers,PC-new,,,,medium,"PC-new skateto collision callback (passed in edx by an assignment at 4E288): steers round the back of the net when behind it, else sidesteps the nearest player within 28h on both axes (loops SortCords 0-14, skips 12/13); returns the direction in regd0. 93G has only EvadePC (puck carrier)",engine_skating,manual-trace
 0005E7FE,sub_5E7FE,EvadePC,93G,logic93_3.asm,,,high,"93G logic93_3 EvadePC line for line: puckc<0 exit, (Xvel hi byte + x - puckx) within +-40 (28h), same for y, vtoa, offsides option bit (93G gmoffs) then Ypos (neg unless pfgoal) - $4E (93G $58) in -50..10 -> dir 2/6 by puckx compare. Passed to skateto as the a0 routine",engine_skating,manual-trace
 0005EB17,sub_5EB17,skatetopuck,93G,logic93_5.asm,checks94.asm,92G skatetopuck; 95G skatetopuck,high,"93G logic93_5 skatetopuck: skatetopuckinit inline (puckx/y + puck vel hi byte /2), temp2 countdown (+10, goalie +5), avdgoal, GetHot, vtoa into temp2 low byte, goalie skips sweep check, vtoa(puckvx,puckvy)^4 vs facedir, distance^2 900..1444 (384h..5A4h) -> Sweepcheck, else doplayeracc(temp2 low byte)",engine_skating,manual-trace

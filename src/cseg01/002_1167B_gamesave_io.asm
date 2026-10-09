@@ -10,18 +10,18 @@ extern dword_CC128, dword_D2C6B, dword_D302C, dword_D3030, dword_D8C40, dword_D8
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, dword_DD6A8, dword_DD6AE
 extern dword_DD6B0, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, dword_E039C, dword_E9A9E, j_unlink_
 extern loc_113E9, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
-extern off_C526F, off_C5273, off_C5439, off_C80D7, off_C80E7, off_C80EB, off_C9078, off_C9096
+extern off_C526F, off_C5273, off_C5439, off_C80D7, off_C80E7, off_C80EB, off_C9078, camx_m2
 extern off_CBED0, strcat_, strcpy_, sub_10E9F, sub_1145F, sub_1149A, sub_11598, sub_13A91
 extern sub_13E8F, sub_1431E, sub_14525, sub_1457C, sub_1463D, sub_1478B, sub_147C9, sub_14CF1
 extern sub_150C6, sub_15B76, sub_1920F, sub_1935D, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
 extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, sub_47C31, sub_48F0B, joyq_flush, sub_594CD
-extern sub_597E3, sub_59863, sub_59981, sub_59A11, sub_59D71, sub_5CE12, sub_5DEA6, sub_60612
+extern sub_597E3, sub_59863, sub_59981, sub_59A11, sub_59D71, DrawRinkOverlays, PeriodOver, sub_60612
 extern sub_61A27, sub_61B85, sub_64614, sub_658F3, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
 extern sub_6AF97, sub_6B008, sub_7DC8B, sub_8374D, sub_837A8, SelectScreenBM, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8FFB0, sub_90354, sub_9035C, MouseSetPos, sub_B396E, sub_B4BA8, unk_C0200
 extern unk_D8F88, unk_D9270, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690
-extern unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, unk_DDAC4, unk_DF014, unk_DF314, word_C9098
-extern word_C90DA, word_C90DC, word_CBC44, word_CBC46, word_CBC48, word_CBEC4, word_CBECC, scrolly
+extern unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, unk_DDAC4, unk_DF014, unk_DF314, camx
+extern gsp, gameclock, word_CBC44, exitgame, gameover, word_CBEC4, word_CBECC, scrolly
 extern lcrequest, word_E0306, joysampling_save
 global assinsert, assreplace, loc_11693, loc_116AB, loc_11738, loc_11744, loc_1175E, loc_11769
 global loc_11837, loc_11855, loc_118D1, loc_11955, loc_1198F, loc_119B3, loc_119C7, loc_119DC
@@ -49,10 +49,10 @@ sub esp, byte 20h	; 1168B
 call sub_B396E	; 1168E
 loc_11693:
 mov dword [joysampling], 1	; 11693
-cmp word [word_CBC48], byte 0	; 1169D
+cmp word [gameover], byte 0	; 1169D
 jne near loc_11CDB	; 116A5
 loc_116AB:
-cmp word [word_CBC46], byte 0	; 116AB
+cmp word [exitgame], byte 0	; 116AB
 jne near loc_11BDB	; 116B3
 call sub_1145F	; 116B9
 mov edx, eax	; 116BE
@@ -75,11 +75,11 @@ idiv ebx	; 116EC
 mov dword [dword_D8C6C], edx	; 116EE
 mov eax, esi	; 116F4
 call sub_1149A	; 116F6
-mov eax, dword [off_C9096]	; 116FB
+mov eax, dword [camx_m2]	; 116FB
 sar eax, 10h	; 11700
 add eax, byte 20h	; 11703
 mov dword [dword_D8C7C], eax	; 11706
-mov eax, dword [word_C9098]	; 1170B
+mov eax, dword [camx]	; 1170B
 sar eax, 10h	; 11710
 mov edx, 140h	; 11713
 sub edx, eax	; 11718
@@ -135,7 +135,7 @@ mov edx, dword [dword_D8C72]	; 117CC
 sar edx, 10h	; 117D2
 mov eax, dword [dword_D8C7A]	; 117D5
 sar eax, 10h	; 117DA
-call sub_5CE12	; 117DD
+call DrawRinkOverlays	; 117DD
 cmp word [word_CBEC4], byte 0	; 117E2
 je short loc_11837	; 117EA
 mov ax, word [joysampling]	; 117EC
@@ -174,11 +174,11 @@ mov edx, eax	; 11871
 sar edx, 1Fh	; 11873
 idiv ebx	; 11876
 mov dword [dword_D8C78], edx	; 11878
-cmp word [word_CBC46], byte 0	; 1187E
+cmp word [exitgame], byte 0	; 1187E
 je short loc_118D1	; 11886
-mov edx, dword [word_C90DA]	; 11888
+mov edx, dword [gsp]	; 11888
 sar edx, 10h	; 1188E
-mov eax, dword [word_C90DC]	; 11891
+mov eax, dword [gameclock]	; 11891
 sar eax, 10h	; 11896
 or eax, edx	; 11899
 jne short loc_118D1	; 1189B
@@ -398,10 +398,10 @@ call sub_11598	; 11BFB
 mov dword [dword_C53F7], 1	; 11C00
 jmp near loc_11CFC	; 11C0A
 loc_11C0F:
-call sub_5DEA6	; 11C0F
+call PeriodOver	; 11C0F
 cmp dword [dword_C53F7], byte 2	; 11C14
 je near loc_11CFC	; 11C1B
-cmp word [word_CBC48], byte 0	; 11C21
+cmp word [gameover], byte 0	; 11C21
 jne short loc_11C7C	; 11C29
 call SelectScreenBM	; 11C2B
 mov edx, dword [dword_C90CA]	; 11C30
@@ -439,7 +439,7 @@ mov dword [dword_C5840], eax	; 11CAF
 xor edx, edx	; 11CB4
 mov dword [dword_C4E10], eax	; 11CB6
 xor eax, eax	; 11CBB
-mov word [word_CBC46], ax	; 11CBD
+mov word [exitgame], ax	; 11CBD
 xor ebx, ebx	; 11CC3
 mov dword [dword_D8C6C], ebx	; 11CC5
 mov dword [dword_D8C78], edx	; 11CCB

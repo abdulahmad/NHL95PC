@@ -6,15 +6,15 @@ extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9
 extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, dword_C4E10, dword_C4E14
 extern dword_C7444, dword_C7448, dword_C9074, cont2team, dword_C90CA, dword_CBC3E, dword_CBECA, dword_CC0EC
 extern dword_CC0F0, dword_CC9AD, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
-extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, dword_DF614, dword_DF714, dword_DFF1C
-extern dword_E0244, dword_E9A9E, dword_E9B04, forcepldata, jctime, puckc, off_C9096, randomd0
-extern sub_5B826, resetplstuff, setpersonel, sub_1145F, sub_1149A, sub_11598, sub_14CF1, sub_33DD3
+extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, hmtmstruct, awtmstruct, puckstruct
+extern dword_E0244, dword_E9A9E, dword_E9B04, forcepldata, jctime, puckc, camx_m2, randomd0
+extern reenergizeteam, resetplstuff, setpersonel, sub_1145F, sub_1149A, sub_11598, sub_14CF1, sub_33DD3
 extern sub_47951, joyq_flush, Readjoy1, Readjoy2, sub_594CD, sub_597E3, sub_59863, sub_59981
-extern sub_59A11, sub_5CE12, sub_5DD7C, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
+extern sub_59A11, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8374D, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
-extern unk_DF014, unk_DF314, unk_DFD9C, unk_E001C, word_C9098, word_C909A, xc1, yc1
-extern word_C90B2, word_C90B4, c1playernum, c2playernum, word_C90D4, word_CBC46, word_CBC52, word_CBC54
-extern lcblink, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly, word_DFF1E, word_DFF22
+extern unk_DF014, unk_DF314, unk_DFD9C, unk_E001C, camx, camy, xc1, yc1
+extern word_C90B2, word_C90B4, c1playernum, c2playernum, word_C90D4, exitgame, word_CBC52, word_CBC54
+extern lcblink, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly, word_DFF1E
 extern word_DFF28, word_DFF2A, word_DFF44, word_E001E, word_E0022, word_E0028, word_E002A, word_E002E
 extern word_E0042, word_E0046, word_E0048, word_E004A, word_E0052, regd1, joysampling_save
 global loc_47C4F, loc_47C60, loc_47C62, loc_47C89, loc_47CB1, loc_47CD0, loc_47E01, loc_47E05
@@ -132,21 +132,21 @@ xor ecx, ecx	; 47D86
 mov dword [dword_CBC3E], ecx	; 47D88
 mov dword [dword_E9B04], 708h	; 47D8E
 xor esi, esi	; 47D98
-mov word [word_CBC46], si	; 47D9A
+mov word [exitgame], si	; 47D9A
 mov eax, 0FFFFFFFFh	; 47DA1
 mov word [c2playernum], ax	; 47DA6
 mov word [c1playernum], ax	; 47DAC
-mov eax, dword_DF614	; 47DB2
-call sub_5B826	; 47DB7
-mov eax, dword_DF614	; 47DBC
+mov eax, hmtmstruct	; 47DB2
+call reenergizeteam	; 47DB7
+mov eax, hmtmstruct	; 47DBC
 call setpersonel	; 47DC1
-mov eax, dword_DF614	; 47DC6
+mov eax, hmtmstruct	; 47DC6
 call forcepldata	; 47DCB
-mov eax, dword_DF714	; 47DD0
-call sub_5B826	; 47DD5
-mov eax, dword_DF714	; 47DDA
+mov eax, awtmstruct	; 47DD0
+call reenergizeteam	; 47DD5
+mov eax, awtmstruct	; 47DDA
 call setpersonel	; 47DDF
-mov eax, dword_DF714	; 47DE4
+mov eax, awtmstruct	; 47DE4
 call forcepldata	; 47DE9
 call resetplstuff	; 47DEE
 mov ebx, unk_DFD9C	; 47DF3
@@ -266,13 +266,13 @@ cmp word [byte esp+0Ch], byte 2	; 47F56
 jl near loc_47E01	; 47F5C
 mov word [word_DFF44], 78h	; 47F62
 mov word [word_DFF1E], 0C8h	; 47F6B
-mov word [word_DFF22], 0FED4h	; 47F74
+mov word [puckstruct+6], 0FED4h	; 47F74
 xor ecx, ecx	; 47F7D
 mov word [word_DFF28], cx	; 47F7F
 xor esi, esi	; 47F86
 mov word [word_DFF2A], cx	; 47F88
 mov edx, 1Ah	; 47F8F
-mov eax, dword_DFF1C	; 47F94
+mov eax, puckstruct	; 47F94
 call assreplace	; 47F99
 mov eax, dword [byte esp+08h]	; 47F9E
 mov word [word_E0042], ax	; 47FA2
@@ -299,7 +299,7 @@ mov word [word_C90D4], si	; 4801A
 or byte [sflags], 40h	; 48021
 call DoGameFrame	; 48028
 call DoGameFrame	; 4802D
-call sub_5DD7C	; 48032
+call SprSort	; 48032
 xor edi, edi	; 48037
 mov dword [dword_D8C6C], edi	; 48039
 mov dword [dword_C4E10], edi	; 4803F
@@ -308,9 +308,9 @@ mov byte [eax], 0FFh	; 4804A
 mov dword [joysampling], edi	; 4804D
 call joyq_flush	; 48053
 xor edi, edi	; 48058
-mov word [word_C9098], di	; 4805A
+mov word [camx], di	; 4805A
 mov word [xc1], si	; 48061
-mov word [word_C909A], si	; 48068
+mov word [camy], si	; 48068
 mov word [yc1], si	; 4806F
 mov dword [dword_D8C7C], 20h	; 48076
 mov dword [dword_D8C74], 0ECh	; 48080
@@ -374,7 +374,7 @@ mov edx, dword [dword_D8C72]	; 48161
 sar edx, 10h	; 48167
 mov eax, dword [dword_D8C7A]	; 4816A
 sar eax, 10h	; 4816F
-call sub_5CE12	; 48172
+call DrawRinkOverlays	; 48172
 mov edx, dword [dword_DD6AE]	; 48177
 sar edx, 10h	; 4817D
 shl edx, 3	; 48180
@@ -551,11 +551,11 @@ jge short loc_483E5	; 483DB
 xor ebx, ebx	; 483DD
 mov dword [dword_E9B04], ebx	; 483DF
 loc_483E5:
-mov eax, dword [off_C9096]	; 483E5
+mov eax, dword [camx_m2]	; 483E5
 sar eax, 10h	; 483EA
 add eax, byte 20h	; 483ED
 mov dword [dword_D8C7C], eax	; 483F0
-mov eax, dword [word_C9098]	; 483F5
+mov eax, dword [camx]	; 483F5
 sar eax, 10h	; 483FA
 mov edx, 140h	; 483FD
 sub edx, eax	; 48402
