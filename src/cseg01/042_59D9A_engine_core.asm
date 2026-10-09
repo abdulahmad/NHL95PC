@@ -9,7 +9,7 @@ extern awroster, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byt
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
 extern byte_E0074, PlList, byte_E038A, PenBuf, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
 extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, rinkscrollx, rinkscrolly
-extern dword_C90B0, sflags3, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
+extern yleader, sflags3, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
 extern dword_CC0F8, penshotplayer, dword_CC104, dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer
 extern dword_CC124, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, mousex
 extern mousey, cliprect_y0, cliprect_y1, dword_D30BC, dword_D30C0, curperiod, dword_DB088, hmtmstruct
@@ -27,17 +27,17 @@ extern sub_63D69, EndPenaltyShot, DrawTextOverlay, sub_66FE2, ReplayRecordReset,
 extern threat, SPAtab, ds2list, unk_CCCC8, awlinetab, unk_DAC40, unk_DAC70, unk_DACA0
 extern unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240, unk_DC252, SortCords
 extern unk_E9D50, unk_E9EE0, updatereplay, vtoa, regd4, camx
-extern camy, lastplayer, xc1, yc1, word_C90B2, word_C90B4, fodir1, fodir2
+extern camy, lastplayer, xc1, yc1, fox, foy, fodir1, fodir2
 extern c1playernum, c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks
 extern word_CBC44, exitgame, gameover, PerTimeTab, word_CBC52, word_CBC54, lcblink, word_CBC58
-extern lcline, word_CBC64, lcboxon, word_CBC6C, word_CBEC0, word_CBEC4, word_CBEC6, word_CBEC8
+extern lcline, word_CBC64, lcboxon, word_CBC6C, ovltimer, word_CBEC4, word_CBEC6, word_CBEC8
 extern word_CBECC, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CCCA8, hmscore, hmtmline
 extern hmtmlcnt, hmtmgoalie, word_DF656, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
 extern awtmgoalie, word_DF756, word_DF80E, puckcross
 extern word_E0036, lcrequest, word_E0306
 extern word_E03A0, regd2, regd3, word_E03B8, regd0, regd1, Ylist, OOlistpos
 extern joysampling_save, word_E9AA4, word_E9AA6, CwdExciteLvl, periodendtime, word_E9AB0, PerTimeTotal, lasttouch
-extern word_E9AC4
+extern lty
 global AvgCline, DoGameFrame, GetHot, ResetBench, SetSPA, Setplass, forcepldata
 global SprSort_test
 global changeplayer_ret5
@@ -1481,10 +1481,10 @@ call sub_63D69	; 5AF67
 jmp short .43	; 5AF6C
 .42:
 xor ecx, ecx	; 5AF6E
-mov word [word_E9AC4], cx	; 5AF70
+mov word [lty], cx	; 5AF70
 mov word [ltx], cx	; 5AF77
-mov word [word_C90B4], cx	; 5AF7E
-mov word [word_C90B2], cx	; 5AF85
+mov word [foy], cx	; 5AF7E
+mov word [fox], cx	; 5AF85
 .43:
 xor ecx, ecx	; 5AF8C
 mov dword [dword_CC0F8], ecx	; 5AF8E
@@ -2917,7 +2917,7 @@ mov ebx, 0FFFFFFFFh	; 5C0B7
 mov word [word_CBEC8], bx	; 5C0BC
 xor ecx, ecx	; 5C0C3
 mov word [dword_CBECA], cx	; 5C0C5
-mov word [word_CBEC0], bx	; 5C0CC
+mov word [ovltimer], bx	; 5C0CC
 xor edx, edx	; 5C0D3
 mov dword [penshotmode], edx	; 5C0D5
 mov dword [penshotlive], edx	; 5C0DB
@@ -2927,9 +2927,9 @@ xor edi, edi	; 5C0ED
 mov dword [dword_CC0F8], edx	; 5C0EF
 mov dword [penshotplayer], 0FFFFFFFFh	; 5C0F5
 xor edi, edx	; 5C0FF
-mov word [word_C90B2], di	; 5C101
+mov word [fox], di	; 5C101
 xor eax, eax	; 5C108
-mov word [word_C90B4], ax	; 5C10A
+mov word [foy], ax	; 5C10A
 mov edx, 1Bh	; 5C110
 mov eax, puckstruct	; 5C115
 call assreplace	; 5C11A
@@ -2955,7 +2955,7 @@ mov byte [eax], 0FFh	; 5C17F
 xor eax, eax	; 5C182
 mov word [camy], ax	; 5C184
 mov word [camx], ax	; 5C18A
-mov word [dword_C90B0], ax	; 5C190
+mov word [yleader], ax	; 5C190
 mov word [yc1], ax	; 5C196
 mov word [xc1], ax	; 5C19C
 mov word [word_CBEC4], 1	; 5C1A2
@@ -3181,7 +3181,7 @@ cmp si, byte 2	; 5C485
 je short .1	; 5C489
 test si, si	; 5C48B
 je short .1	; 5C48E
-mov ax, word [word_CBEC0]	; 5C490
+mov ax, word [ovltimer]	; 5C490
 test ax, ax	; 5C496
 jl short .1	; 5C499
 cmp ax, 100h	; 5C49B
@@ -3871,9 +3871,9 @@ xor edx, edx	; 5CD8D
 mov word [xc1], dx	; 5CD8F
 xor ebx, ebx	; 5CD96
 mov word [yc1], dx	; 5CD98
-mov word [dword_C90B0], dx	; 5CD9F
-mov word [word_C90B2], dx	; 5CDA6
-mov word [word_C90B4], dx	; 5CDAD
+mov word [yleader], dx	; 5CD9F
+mov word [fox], dx	; 5CDA6
+mov word [foy], dx	; 5CDAD
 xor eax, eax	; 5CDB4
 mov word [fodir1], dx	; 5CDB6
 mov word [fodir2], dx	; 5CDBD
@@ -4615,7 +4615,7 @@ sar eax, 10h	; 5D67A
 xor ecx, ecx	; 5D67D
 call DrawFrameSprite	; 5D67F
 .67:
-cmp word [word_CBEC0], byte 0	; 5D684
+cmp word [ovltimer], byte 0	; 5D684
 jl short .68	; 5D68C
 call DrawTextOverlay	; 5D68E
 .68:

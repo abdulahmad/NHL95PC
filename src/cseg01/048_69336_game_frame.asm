@@ -4,7 +4,7 @@ bits 32
 section s_69336 progbits alloc exec nowrite align=1
 extern DoGameFrame, ResetBench, __CHK, assreplace, sflags, gmode2, musicon, bgscrollx, scrollx
 extern iflags, byte_E9AC1, joysampling, inputframes, escrequest, demomode, gameopts, hudclockmin
-extern hudclocksec, hudclockhund, rinkscrollx, rinkscrolly, dword_C90B0, sflags3, cont2team, HomeTeam
+extern hudclocksec, hudclockhund, rinkscrollx, rinkscrolly, yleader, sflags3, cont2team, HomeTeam
 extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, spritedrawcount, dword_D8C72, viewscrolly
 extern dword_D8C78, dword_D8C7A, viewscrollx, curperiod, dword_DC28C, rinkwtiles, rinkhtiles, bgscrolly
 extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
@@ -18,7 +18,7 @@ extern MusicChanReset2, sub_8F633, sub_8FFB0, sub_B396E, awlinetab, hmlinetab, s
 extern SortCords, vtoa, camx, camy, passplayer, xc1, yc1
 extern c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, refsignal, RefStep, RefPen
 extern word_C90D8, gsp, gameclock, clockticks, word_CBC44, exitgame, gameover, word_CBC52
-extern word_CBC54, lcblink, word_CBC58, lcline, word_CBC64, lcboxon, word_CBC6C, word_CBEC0
+extern word_CBC54, lcblink, word_CBC58, lcline, word_CBC64, lcboxon, word_CBC6C, ovltimer
 extern word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, scrolly, hmscore
 extern hmtmline, word_DF644, hmtmap, hmtmgoalie, awscore, awtmline, word_DF744, word_DF746
 extern awtmap, awtmgoalie, word_DF816, word_DF81A
@@ -249,7 +249,7 @@ mov word [Pencntdwn], si	; 696B2
 mov word [RefPen], bx	; 696B9
 mov ecx, esi	; 696C0
 mov word [word_C90D8], si	; 696C2
-mov word [word_CBEC0], si	; 696C9
+mov word [ovltimer], si	; 696C9
 mov word [word_CBC44], di	; 696D0
 mov word [word_CBEC8], si	; 696D7
 mov word [word_CBECE], si	; 696DE
@@ -270,7 +270,7 @@ xor ebx, edx	; 69725
 mov word [camy], bx	; 69727
 xor ecx, ecx	; 6972E
 mov word [camx], cx	; 69730
-mov word [dword_C90B0], cx	; 69737
+mov word [yleader], cx	; 69737
 mov word [yc1], cx	; 6973E
 mov word [xc1], cx	; 69745
 add dword [rinkscrollx], 3E8h	; 6974C
@@ -785,7 +785,7 @@ mov eax, dword [dword esp+0FCh]	; 69F4A
 mov word [gmode2], ax	; 69F51
 mov eax, dword [puckc]	; 69F57
 mov byte [eax], 0FFh	; 69F5C
-mov word [word_CBEC0], 0FFFFh	; 69F5F
+mov word [ovltimer], 0FFFFh	; 69F5F
 mov word [camx], di	; 69F68
 mov word [camy], di	; 69F6F
 mov edx, dword [VisTeam-2]	; 69F76

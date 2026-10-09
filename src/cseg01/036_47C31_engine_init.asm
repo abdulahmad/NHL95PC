@@ -13,7 +13,7 @@ extern LoadScreenPalTick, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, Crow
 extern PlayCrowdSample, DrawRinkOverlays, SprSort, LoadTeamPPV, CloseTextOverlay, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, SpeechStopQueue, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
 extern savepal, gamepal, unk_DFD9C, camx, camy, xc1, yc1, SortCords
-extern word_C90B2, word_C90B4, c1playernum, c2playernum, RefStep, exitgame, word_CBC52, word_CBC54
+extern fox, foy, c1playernum, c2playernum, RefStep, exitgame, word_CBC52, word_CBC54
 extern lcblink, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly
 extern word_E0022, word_E0028, word_E002A, word_E002E
 extern word_E0042, word_E0046, word_E0048, word_E004A, regd1, joysampling_save
@@ -116,9 +116,9 @@ mov byte [textline1], ah	; 47D42
 xor bh, bh	; 47D48
 mov byte [textline3], ah	; 47D4A
 mov dword [curperiod], 0FFFFFFFFh	; 47D50
-mov word [word_C90B4], bx	; 47D5A
+mov word [foy], bx	; 47D5A
 xor ecx, ecx	; 47D61
-mov word [word_C90B2], cx	; 47D63
+mov word [fox], cx	; 47D63
 mov edx, dword [HomeTeam-2]	; 47D6A
 sar edx, 10h	; 47D70
 shl edx, 10h	; 47D73

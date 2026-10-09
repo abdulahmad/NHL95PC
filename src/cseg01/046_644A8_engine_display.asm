@@ -8,7 +8,7 @@ extern hmroster, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byt
 extern textline2, textline3, textline4, textline5, byte_E03C1, byte_E9DB4, byte_E9E18
 extern byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC
 extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, fileoncd
-extern joysampling, dword_C90B0, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, lastsfx
+extern joysampling, yleader, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, lastsfx
 extern dword_CCEF6, dword_CD41E, dword_CD4B0, cddriveptr, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1
 extern dword_D30BC, dword_D30C0, scor2font, scor3font, spritedrawcount, curperiod, dword_DEF8C, dword_DEFE0
 extern dword_DF004, hmtmstruct, puckstruct, photoptrsf, dword_E0220, dword_E0230, dword_E0244, dword_E0248
@@ -22,8 +22,8 @@ extern MakePath, DrawSprite, CrowdNoiseUpdate, CrowdNoiseOff, sub_6AB7C, sub_8DA
 extern sub_8E9C0, sub_8EA18, sub_90354, sub_90D20, sub_90EC0, sub_91964, sub_93540, sub_B30B4
 extern sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80, awlinetab, unk_DACA0, hmlinetab, SortCords
 extern unk_E9CEC, unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE
-extern unk_E9EE0, camx, camy, xc1, yc1, word_C90B2, word_C90B4, c1playernum
-extern c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks, word_CBEC0
+extern unk_E9EE0, camx, camy, xc1, yc1, fox, foy, c1playernum
+extern c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks, ovltimer
 extern word_CBEC8, word_CBECC, word_CBECE, word_CC054, word_CC0B0, crowdlevel, word_CCEF8, word_CD4FC
 extern replaytick, replaysfx, scrolly, scrollx, word_DEE94, hmtmgoalie, word_E0022
 extern word_E0046, regd2, regd3, regd0, regd1, joysampling_save, word_E9AB2, word_E9AB4
@@ -2472,14 +2472,14 @@ mov si, word [xc1]	; 660C6
 mov word [regd3], si	; 660CD
 mov esi, dword [eax]	; 660D4
 sar esi, 10h	; 660D6
-mov edi, dword [word_C90B2-2]	; 660D9
+mov edi, dword [fox-2]	; 660D9
 sar edi, 10h	; 660DF
 sub esi, edi	; 660E2
 mov edi, esi	; 660E4
 mov esi, dword [byte eax+Ypos]	; 660E6
 sar esi, 10h	; 660E9
 mov dword [esp], esi	; 660EC
-mov esi, dword [word_C90B4-2]	; 660EF
+mov esi, dword [foy-2]	; 660EF
 sar esi, 10h	; 660F5
 mov ebp, dword [esp]	; 660F8
 sub ebp, esi	; 660FB
@@ -2497,10 +2497,10 @@ imul esi, esi	; 6611A
 add esi, edi	; 6611D
 cmp esi, 640h	; 6611F
 jge near .43	; 66125
-mov ax, word [word_C90B4]	; 6612B
+mov ax, word [foy]	; 6612B
 mov word [yc1], ax	; 66131
 mov word [regd2], ax	; 66137
-mov ax, word [word_C90B2]	; 6613D
+mov ax, word [fox]	; 6613D
 mov word [xc1], ax	; 66143
 mov word [regd3], ax	; 66149
 xor ecx, ecx	; 6614F
@@ -2522,7 +2522,7 @@ jne short .39	; 6618F
 mov esi, dword [byte eax+0Ch]	; 66191
 sar esi, 18h	; 66194
 neg esi	; 66197
-mov word [dword_C90B0], si	; 66199
+mov word [yleader], si	; 66199
 jmp near .42	; 661A0
 .39:
 test byte [byte eax+pflags], 80h	; 661A5
@@ -2533,24 +2533,24 @@ cmp esi, byte 0FFFFFF9Ch	; 661B1
 setl bl	; 661B4
 xor bh, bh	; 661B7
 mov esi, edi	; 661B9
-mov di, word [dword_C90B0]	; 661BB
+mov di, word [yleader]	; 661BB
 add edi, esi	; 661C2
-mov word [dword_C90B0], di	; 661C4
+mov word [yleader], di	; 661C4
 cmp di, byte 32h	; 661CB
 jl short .42	; 661CF
-mov word [dword_C90B0], 32h	; 661D1
+mov word [yleader], 32h	; 661D1
 jmp short .42	; 661DA
 .40:
 cmp word [byte eax+Yvel], byte 64h	; 661DC
 setg bl	; 661E1
 xor bh, bh	; 661E4
 mov si, word [regd0]	; 661E6
-sub word [dword_C90B0], si	; 661ED
-mov esi, dword [dword_C90B0-2]	; 661F4
+sub word [yleader], si	; 661ED
+mov esi, dword [yleader-2]	; 661F4
 sar esi, 10h	; 661FA
 cmp esi, byte 0FFFFFFCEh	; 661FD
 jg short .42	; 66200
-mov word [dword_C90B0], 0FFCEh	; 66202
+mov word [yleader], 0FFCEh	; 66202
 jmp short .42	; 6620B
 .41:
 mov eax, puckstruct	; 6620D
@@ -2560,7 +2560,7 @@ sar esi, 18h	; 66215
 mov edi, dword [byte eax+Ypos]	; 66218
 sar edi, 10h	; 6621B
 add edi, esi	; 6621E
-mov esi, dword [dword_C90B0-2]	; 66220
+mov esi, dword [yleader-2]	; 66220
 sar esi, 10h	; 66226
 add esi, edi	; 66229
 mov word [regd2], si	; 6622B
@@ -2827,7 +2827,7 @@ push esi	; 665BA
 push edi	; 665BB
 push ebp	; 665BC
 sub esp, byte 30h	; 665BD
-mov dx, word [word_CBEC0]	; 665C0
+mov dx, word [ovltimer]	; 665C0
 cmp dx, byte 10h	; 665C7
 jge short .1	; 665CB
 mov edi, edx	; 665CD
@@ -3447,14 +3447,14 @@ CloseTextOverlay:
 push dword 8	; 66DDA
 call __CHK	; 66DDF
 push ebx	; 66DE4
-cmp word [word_CBEC0], 100h	; 66DE5
+cmp word [ovltimer], 100h	; 66DE5
 jne short .1	; 66DEE
-mov word [word_CBEC0], 10h	; 66DF0
+mov word [ovltimer], 10h	; 66DF0
 pop ebx	; 66DF9
 ret	; 66DFA
 .1:
 xor ebx, ebx	; 66DFB
-mov word [word_CBEC0], bx	; 66DFD
+mov word [ovltimer], bx	; 66DFD
 pop ebx	; 66E04
 ret	; 66E05
 sub_66E06:
@@ -3465,7 +3465,7 @@ push ecx	; 66E11
 push edx	; 66E12
 push esi	; 66E13
 push edi	; 66E14
-cmp word [word_CBEC0], byte 0	; 66E15
+cmp word [ovltimer], byte 0	; 66E15
 jl near checkwindow_popx	; 66E1D
 mov bx, word [Pencntdwn]	; 66E23
 cmp bx, 100h	; 66E2A
@@ -3505,7 +3505,7 @@ jle short .6	; 66EAF
 .5:
 add word [crowdlevel], byte 8	; 66EB1
 .6:
-cmp word [word_CBEC0], byte 10h	; 66EB9
+cmp word [ovltimer], byte 10h	; 66EB9
 jne near .9	; 66EC1
 mov edx, dword [word_CBECC-2]	; 66EC7
 sar edx, 10h	; 66ECD
@@ -3532,7 +3532,7 @@ mov eax, dword [word_CBECC-2]	; 66F20
 sar eax, 10h	; 66F25
 cmp byte [dword eax+byte_CC049], 0	; 66F28
 je short .7	; 66F2F
-mov word [word_CBEC0], 258h	; 66F31
+mov word [ovltimer], 258h	; 66F31
 .7:
 mov eax, 0FFFFFFFFh	; 66F3A
 mov word [word_CBECE], ax	; 66F3F
@@ -3552,17 +3552,17 @@ mov ax, word [nosplit edx*4+word_CC054]	; 66F76
 mov word [word_E9AB2], ax	; 66F7E
 jmp near checkwindow_popx	; 66F84
 .9:
-mov di, word [word_CBEC0]	; 66F89
+mov di, word [ovltimer]	; 66F89
 cmp di, 100h	; 66F90
 jl short .10	; 66F95
 cmp di, 258h	; 66F97
 jl short .11	; 66F9C
 .10:
-inc word [word_CBEC0]	; 66F9E
+inc word [ovltimer]	; 66F9E
 .11:
-cmp word [word_CBEC0], 268h	; 66FA5
+cmp word [ovltimer], 268h	; 66FA5
 jle near checkwindow_popx	; 66FAE
-mov word [word_CBEC0], 0FFFFh	; 66FB4
+mov word [ovltimer], 0FFFFh	; 66FB4
 xor dl, dl	; 66FBD
 mov byte [textline5], dl	; 66FBF
 mov byte [textline4], dl	; 66FC5

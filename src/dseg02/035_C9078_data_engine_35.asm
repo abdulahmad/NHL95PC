@@ -11,17 +11,17 @@ extern asswingo, puckfaceoff, puckfaceoff2, pucknorm, pucknothing, puckshadow, r
 extern unk_DFF5E, unk_E0416, puckstruct
 global StanleyCupTimer, asstab, sflags, gmode2, pendelaytab
 global byte_C9111, penmintab, byte_C9142, byte_C9146, priolist, byte_CBC37, byte_CBEA8, collflag
-global dirtab, wcradiusy, dword_C90B0, sflags3, cont2team, HomeTeam, dword_C9120, dword_CBC3E
+global dirtab, wcradiusy, yleader, sflags3, cont2team, HomeTeam, dword_C9120, dword_CBC3E
 global dword_CBEBE, dword_CBECA, puckvx, gmode, replaystart, puckx, pucky, puckvy
 global puckz, puckc, camx_m2, off_CBD2E, passspeed, puckvz, threat, SPAtab
 global unk_CBC6E, unk_CBC7E, unk_CBC9E, unk_CBCAE, unk_CBCBE, unk_CBCCE, unk_CBCDE, unk_CBCEE
 global unk_CBCFE, unk_CBD0E, unk_CBD1E, ds2list, wcradiusx, camx, camy, lastplayer
-global passdir, word_C90A6, passplayer, xc1, yc1, word_C90B2, word_C90B4, fodir1
+global passdir, word_C90A6, passplayer, xc1, yc1, fox, foy, fodir1
 global fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal
 global RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, dirtab_y
 global debugstep, word_CBC44, exitgame, gameover, PerTimeTab, word_CBC52, word_CBC54, lcblink
 global word_CBC58, lcblinktime, lcsel, word_CBC60, lcline, word_CBC64, lctimer
-global word_CBC68, lcboxon, word_CBC6C, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, word_CBEC0
+global word_CBC68, lcboxon, word_CBC6C, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, ovltimer
 global word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE
 replaystart:
 dd unk_E0416
@@ -64,11 +64,11 @@ xc1:
 db 00h,00h
 yc1:
 db 00h,00h
-dword_C90B0:
+yleader:
 db 00h,00h
-word_C90B2:
+fox:
 db 00h,00h
-word_C90B4:
+foy:
 db 00h,00h
 fodir1:
 db 00h,00h
@@ -974,7 +974,7 @@ db 00h,01h,02h,03h,04h,05h,06h,00h,00h,01h,05h,03h,04h,02h,00h,00h
 db 00h,03h,05h,01h,04h,00h
 dword_CBEBE:
 db 00h,00h
-word_CBEC0:
+ovltimer:
 db 0FFh,0FFh
 word_CBEC2:
 db 00h,00h

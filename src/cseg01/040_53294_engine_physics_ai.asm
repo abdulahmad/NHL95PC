@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_53294 progbits alloc exec nowrite align=1
-extern Acheck, AddPenalty, AddPenalty2, AvgCline, GetHot, Ylist_m2, PBnum, PerTimeTotal, byte_E03C1, cont2team, word_C90B4
+extern Acheck, AddPenalty, AddPenalty2, AvgCline, GetHot, Ylist_m2, PBnum, PerTimeTotal, byte_E03C1, cont2team, foy
 extern SetSPA, Stop4Pen, __CHK, a2touchpuck, assexit, assinsert, assreplace
 extern pad1dev, hmshotcnt, awshotcnt, sflags, gmode2, PenBuf, iflags
 extern OOlist, collflag, dirtab, doplayeracc, gameopts, wcradiusy, sflags3
@@ -15,12 +15,12 @@ extern setpersonel, sfx, shotsets, vecdist, CanBlockShot, PassCompleted, changep
 extern CompLine, GetHotStick, GetHotOrStick, Goal, GiveControl, sub_61576, PostInjuryEvent, sub_64102
 extern sub_6427F, CountShotOnGoal, EndPenaltyShot, RemoveFromLines, imul32, sub_93470, threat, SortCords
 extern vtoa, wcradiusx, regd4, camx, camy, lastplayer, passdir
-extern word_C90A6, passplayer, xc1, yc1, word_C90B2, c1playernum, c2playernum, cont1team
+extern word_C90A6, passplayer, xc1, yc1, fox, c1playernum, c2playernum, cont1team
 extern gsp, gameclock, clockticks, dirtab_y, word_CBEC2, word_CBEC6, word_CBEC8, word_CC0DA
 extern crowdlevel, word_CCBCC, word_CCBDC, word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, word_CCC30
 extern word_CCC32, word_CCC62, hmtmap, awtmap, word_DFF5A, word_E03A0, regd2
 extern regd3, word_E03B8, regd0, regd1, Ylist, OOlistpos, CwdExciteLvl, lasttouch
-extern word_E9AC4, word_E9B28
+extern lty, word_E9B28
 global Bcheck, CPgoalie, CheckBump, FallDown, Findhittype, SetShotMode, ShotMode, Sweepcheck
 global burst, check4check, checkagr, checkcheck, checkcoll, checkcx, checkgoal, checkgoalp
 global checkgoalp_CalcGoalShotDir, checkint, checkob, checkplcoll, checkpuckcoll, checkwallcoll, chk4lc, chk4shot
@@ -7186,7 +7186,7 @@ jg short .7	; 58BF2
 mov cx, word [byte ebx+Yvel]	; 58BF4
 cmp cx, 0FA0h	; 58BF8
 jl short .7	; 58BFD
-cmp word [word_E9AC4], byte 26h	; 58BFF
+cmp word [lty], byte 26h	; 58BFF
 jge short .8	; 58C07
 .7:
 mov eax, ebx	; 58C09
@@ -7782,7 +7782,7 @@ mov edx, dword [cont2team-2]	; 593C2
 sar edx, 10h	; 593C8
 cmp edx, edi	; 593CB
 je short .2	; 593CD
-mov ebx, dword [word_C90B4-2]	; 593CF
+mov ebx, dword [foy-2]	; 593CF
 sar ebx, 10h	; 593D5
 mov edx, esi	; 593D8
 call CPgoalie	; 593DA
@@ -7810,7 +7810,7 @@ and ebx, 0FFh	; 59413
 shl ebx, 8	; 59419
 mov ecx, hmtmstruct	; 5941C
 add ecx, ebx	; 59421
-mov ebx, dword [word_C90B4-2]	; 59423
+mov ebx, dword [foy-2]	; 59423
 sar ebx, 10h	; 59429
 cmp word [gsp], byte 2	; 5942C
 je short .2	; 59434

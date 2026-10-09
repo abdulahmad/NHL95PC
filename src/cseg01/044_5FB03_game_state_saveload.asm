@@ -7,7 +7,7 @@ extern pad2dev, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, byte
 extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, PenBuf, iflags, byte_E9AC8
 extern byte_E9AD3, OOlist, collflag, postate, lgstate, gamemode, ctl1team, ctl2team
 extern ctl1dev, ctl2dev, ctl1side, hudclockmin, hudclocksec, hudclockhund, dword_C5840, dword_C66D0
-extern dword_C66D4, dword_C90B0, sflags3, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0AC
+extern dword_C66D4, yleader, sflags3, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0AC
 extern lastsfx, photobankf, onetimerflag, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 extern dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
 extern dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, crowdsmooth, frameaccum
@@ -20,17 +20,17 @@ extern SaveModeState, LoadModeState, GetPeriodTime, SprSort, BuildEventLines, Lo
 extern FatalError, MouseSetPos, threat, exhstate, unk_C5423, unk_C542E, awlinetab, unk_DAC40
 extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240
 extern unk_DC252, gamepal, SortCords, hudpenhome, hudpenaway, camx, camy
-extern lastplayer, passdir, word_C90A6, passplayer, xc1, yc1, word_C90B2, word_C90B4
+extern lastplayer, passdir, word_C90A6, passplayer, xc1, yc1, fox, foy
 extern fodir1, fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
 extern exitgame, gameover, word_CBC52, word_CBC54, lcblink, word_CBC58, lcblinktime
 extern lcsel, word_CBC60, lcline, word_CBC64, lctimer, word_CBC68, lcboxon, word_CBC6C
-extern word_CBD64, word_CBD66, word_CBEC0, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC
+extern word_CBD64, word_CBD66, ovltimer, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC
 extern word_CBECE, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CC10C, word_CCEF8, word_DEE94
 extern word_DEE96, word_DEF84, word_DEF88, puckcross, word_E024E, lcrequest, word_E0306, lcreqchoice
 extern word_E0382, word_E0390, OOlistpos, word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, CwdExciteLvl
 extern word_E9AAA, periodendtime, word_E9AAE, word_E9AB0, word_E9AB2, word_E9AB4, PerTimeTotal, lj2
-extern lj1, lasttouch, word_E9AC4, word_E9B2C
+extern lj1, lasttouch, lty, word_E9B2C
 global SaveGameState, SaveGameState_popx, LoadGameState
 SaveGameState:
 push dword 0B0h	; 5FB03
@@ -170,7 +170,7 @@ add eax, byte 2	; 5FCD2
 mov dx, word [ltx]	; 5FCD5
 mov word [eax], dx	; 5FCDC
 add eax, byte 2	; 5FCDF
-mov dx, word [word_E9AC4]	; 5FCE2
+mov dx, word [lty]	; 5FCE2
 mov word [eax], dx	; 5FCE9
 add eax, byte 2	; 5FCEC
 mov dx, word [xc1]	; 5FCEF
@@ -179,13 +179,13 @@ add eax, byte 2	; 5FCF9
 mov dx, word [yc1]	; 5FCFC
 mov word [eax], dx	; 5FD03
 add eax, byte 2	; 5FD06
-mov dx, word [dword_C90B0]	; 5FD09
+mov dx, word [yleader]	; 5FD09
 mov word [eax], dx	; 5FD10
 add eax, byte 2	; 5FD13
-mov dx, word [word_C90B2]	; 5FD16
+mov dx, word [fox]	; 5FD16
 mov word [eax], dx	; 5FD1D
 add eax, byte 2	; 5FD20
-mov dx, word [word_C90B4]	; 5FD23
+mov dx, word [foy]	; 5FD23
 mov word [eax], dx	; 5FD2A
 add eax, byte 2	; 5FD2D
 mov dx, word [fodir1]	; 5FD30
@@ -254,7 +254,7 @@ add eax, byte 2	; 5FE3E
 mov dx, word [gameover]	; 5FE41
 mov word [eax], dx	; 5FE48
 add eax, byte 2	; 5FE4B
-mov dx, word [word_CBEC0]	; 5FE4E
+mov dx, word [ovltimer]	; 5FE4E
 mov word [eax], dx	; 5FE55
 add eax, byte 2	; 5FE58
 mov dx, word [word_CBEC2]	; 5FE5B
@@ -948,7 +948,7 @@ mov ax, word [ebx]	; 60855
 mov word [ltx], ax	; 60858
 add ebx, byte 2	; 6085E
 mov ax, word [ebx]	; 60861
-mov word [word_E9AC4], ax	; 60864
+mov word [lty], ax	; 60864
 add ebx, byte 2	; 6086A
 mov ax, word [ebx]	; 6086D
 mov word [xc1], ax	; 60870
@@ -957,13 +957,13 @@ mov ax, word [ebx]	; 60879
 mov word [yc1], ax	; 6087C
 add ebx, byte 2	; 60882
 mov ax, word [ebx]	; 60885
-mov word [dword_C90B0], ax	; 60888
+mov word [yleader], ax	; 60888
 add ebx, byte 2	; 6088E
 mov ax, word [ebx]	; 60891
-mov word [word_C90B2], ax	; 60894
+mov word [fox], ax	; 60894
 add ebx, byte 2	; 6089A
 mov ax, word [ebx]	; 6089D
-mov word [word_C90B4], ax	; 608A0
+mov word [foy], ax	; 608A0
 add ebx, byte 2	; 608A6
 mov ax, word [ebx]	; 608A9
 mov word [fodir1], ax	; 608AC
@@ -1032,7 +1032,7 @@ mov ax, word [ebx]	; 609A4
 mov word [gameover], ax	; 609A7
 add ebx, byte 2	; 609AD
 mov ax, word [ebx]	; 609B0
-mov word [word_CBEC0], ax	; 609B3
+mov word [ovltimer], ax	; 609B3
 add ebx, byte 2	; 609B9
 mov ax, word [ebx]	; 609BC
 mov word [word_CBEC2], ax	; 609BF

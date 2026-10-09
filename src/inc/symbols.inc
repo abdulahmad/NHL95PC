@@ -3850,9 +3850,9 @@
 ;  C90AA  threat                                   dseg02/035_C9078_data_engine_35.asm          7
 ;  C90AC  xc1                                      dseg02/035_C9078_data_engine_35.asm          10
 ;  C90AE  yc1                                      dseg02/035_C9078_data_engine_35.asm          10
-;  C90B0  dword_C90B0                              dseg02/035_C9078_data_engine_35.asm          7
-;  C90B2  word_C90B2                               dseg02/035_C9078_data_engine_35.asm          9
-;  C90B4  word_C90B4                               dseg02/035_C9078_data_engine_35.asm          9
+;  C90B0  yleader                                  dseg02/035_C9078_data_engine_35.asm          7
+;  C90B2  fox                                      dseg02/035_C9078_data_engine_35.asm          9
+;  C90B4  foy                                      dseg02/035_C9078_data_engine_35.asm          9
 ;  C90B6  fodir1                                   dseg02/035_C9078_data_engine_35.asm          5
 ;  C90B8  fodir2                                   dseg02/035_C9078_data_engine_35.asm          5
 ;  C90BA  collflag                                 dseg02/035_C9078_data_engine_35.asm          3
@@ -3915,7 +3915,7 @@
 ;  CBE8E  word_CBE8E                               dseg02/035_C9078_data_engine_35.asm          2
 ;  CBEA8  byte_CBEA8                               dseg02/035_C9078_data_engine_35.asm          2
 ;  CBEBE  dword_CBEBE                              dseg02/035_C9078_data_engine_35.asm          2
-;  CBEC0  word_CBEC0                               dseg02/035_C9078_data_engine_35.asm          8
+;  CBEC0  ovltimer                                 dseg02/035_C9078_data_engine_35.asm          8
 ;  CBEC2  word_CBEC2                               dseg02/035_C9078_data_engine_35.asm          3
 ;  CBEC4  word_CBEC4                               dseg02/035_C9078_data_engine_35.asm          9
 ;  CBEC6  word_CBEC6                               dseg02/035_C9078_data_engine_35.asm          8
@@ -5895,7 +5895,7 @@
 ;  E9AC0  iflags                                   dseg02/087_E9A11_data_engine_87.asm          5
 ;  E9AC1  byte_E9AC1                               dseg02/087_E9A11_data_engine_87.asm          2
 ;  E9AC2  lasttouch                                dseg02/087_E9A11_data_engine_87.asm          4
-;  E9AC4  word_E9AC4                               dseg02/087_E9A11_data_engine_87.asm          6
+;  E9AC4  lty                                      dseg02/087_E9A11_data_engine_87.asm          6
 ;  E9AC6  ltx                                      dseg02/087_E9A11_data_engine_87.asm          5
 ;  E9AC8  byte_E9AC8                               dseg02/087_E9A11_data_engine_87.asm          4
 ;  E9AC9  byte_E9AC9                               dseg02/087_E9A11_data_engine_87.asm          1

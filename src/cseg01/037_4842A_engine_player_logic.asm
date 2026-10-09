@@ -9,7 +9,7 @@ extern byte_DAEA7, hmroster, hmrosterjersey, byte_DF87F, byte_DFFE0, byte_DFFE2,
 extern textline3, textline4, textline5, PenBuf, iflags, byte_E9AC1, byte_E9AC8
 extern byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, check4bench, check4check, checkob
 extern chk4lc, chk4shot, dirtab, chk4pass, doplayeracc, doshot, joysampling, inputframes
-extern gameopts, sounddev, dword_C5840, dword_C585C, dword_C5860, dword_C90B0, sflags3, HomeTeam
+extern gameopts, sounddev, dword_C5840, dword_C585C, dword_C5860, yleader, sflags3, HomeTeam
 extern dword_CBEBE, dword_CBECA, dword_CC0EC, dword_CC0F8, penshotplayer, dword_CC104, penshotmode, penshotstart
 extern penshotlive, dword_CC12C, dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144
 extern dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, frameaccum
@@ -27,10 +27,10 @@ extern EvadePC, sub_61576, FormatPlayerName, PostGoalEvent, sub_62807, sub_62C37
 extern RemoveFromLines, LoadTeamPPV, CloseTextOverlay, MusicChanReset, sub_8F633, sub_8FFB0, imul32, threat
 extern unk_C1B3E, unk_DACA0, hmteamrec, unk_DC240, savepal, SortCords, updateanim
 extern vtoa, regd4, camx, camy, lastplayer, passdir, word_C90A6, xc1
-extern yc1, word_C90B2, word_C90B4, fodir1, fodir2, c1playernum, c2playernum, VisTeam
+extern yc1, fox, foy, fodir1, fodir2, c1playernum, c2playernum, VisTeam
 extern Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, gsp, gameclock, clockticks
 extern dirtab_y, word_CBC44, exitgame, gameover, word_CBC52, word_CBC54, lcblink, word_CBC58
-extern lcblinktime, lcsel, lcline, lctimer, lcboxon, word_CBC6C, word_CBEC0, word_CBEC4
+extern lcblinktime, lcsel, lcline, lctimer, lcboxon, word_CBC6C, ovltimer, word_CBEC4
 extern word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, word_CC9EA, word_CC9EC, word_CCA18
 extern word_CCA1A, word_CCA1C, word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E
 extern word_CCA70, word_CCA9C, word_DC242, word_DC248, word_DC24E, hmscore, hmtmap, word_DF65A
@@ -38,7 +38,7 @@ extern awscore, awtmap, puckcross, word_DF816, word_DF81A
 extern word_DFF42, word_DFFC2, word_E0022, word_E0028
 extern word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, lcrequest, word_E0306, word_E0390
 extern word_E0392, word_E0396, regd2, regd3, regd0, regd1, joysampling_save, periodendtime
-extern word_E9AAE, PerTimeTotal, lj1, lasttouch, word_E9AC4, startm, starpl
+extern word_E9AAE, PerTimeTotal, lj1, lasttouch, lty, startm, starpl
 global ClampYPosition, Endfaceoff, SetLCmode, StartFaceoffLineChange, a2offsides, a2touchpuck, ass_pc_slot20, assthreestars
 global assleaveice, assrefatdot, assreffollow, assrefsignal, assrefgoalpa, assrefdrop, assrefgoalline, assrefwhistle
 global assintrostand, assintroline, assboxenter, assbenchside, asspenshooter, assbench, asscenterd, asscentero
@@ -1497,11 +1497,11 @@ push edi	; 495C6
 push ebp	; 495C7
 sub esp, byte 4	; 495C8
 mov ebp, eax	; 495CB
-mov eax, dword [word_CBEC0-2]	; 495CD
+mov eax, dword [ovltimer-2]	; 495CD
 sar eax, 10h	; 495D2
 cmp eax, byte 0FFFFFFFFh	; 495D5
 je short .1	; 495D8
-mov dx, word [word_CBEC0]	; 495DA
+mov dx, word [ovltimer]	; 495DA
 cmp dx, byte 10h	; 495E1
 jl near .16	; 495E5
 cmp dx, 258h	; 495EB
@@ -1655,7 +1655,7 @@ dec edi	; 497FA
 mov word [byte ebp+temp1], di	; 497FB
 test di, di	; 497FF
 jge short .8	; 49802
-mov word [word_CBEC0], 258h	; 49804
+mov word [ovltimer], 258h	; 49804
 jmp near .16	; 4980D
 .8:
 mov ebx, dword [byte ebp+temp1-2]	; 49812
@@ -1948,9 +1948,9 @@ call puckshadow	; 49BDD
 call PaSpeechBusy	; 49BE2
 test eax, eax	; 49BE7
 jne near .x	; 49BE9
-cmp word [word_CBEC0], 100h	; 49BEF
+cmp word [ovltimer], 100h	; 49BEF
 jne short .1	; 49BF8
-mov word [word_CBEC0], 258h	; 49BFA
+mov word [ovltimer], 258h	; 49BFA
 .1:
 mov eax, dword [camx-2]	; 49C03
 sar eax, 10h	; 49C08
@@ -7218,13 +7218,13 @@ xor edx, ebx	; 4DDCE
 jne short ChkTwoLinePass.1	; 4DDD0
 test byte [byte eax+pflags], 80h	; 4DDD2
 jne short .4	; 4DDD6
-cmp word [word_E9AC4], byte 4Eh	; 4DDD8
+cmp word [lty], byte 4Eh	; 4DDD8
 jl short ChkTwoLinePass.1	; 4DDE0
 cmp word [byte eax+Ypos+2], byte 0	; 4DDE2
 jle short .5	; 4DDE7
 jmp near ChkTwoLinePass.1	; 4DDE9
 .4:
-mov edx, dword [word_E9AC4-2]	; 4DDEE
+mov edx, dword [lty-2]	; 4DDEE
 sar edx, 10h	; 4DDF4
 cmp edx, byte 0FFFFFFB2h	; 4DDF7
 jg near ChkTwoLinePass.1	; 4DDFA
@@ -7253,7 +7253,7 @@ jne short .1	; 4DE37
 mov ax, word [byte ebx+Xpos+2]	; 4DE39
 mov word [ltx], ax	; 4DE3D
 mov ax, word [byte ebx+Ypos+2]	; 4DE43
-mov word [word_E9AC4], ax	; 4DE47
+mov word [lty], ax	; 4DE47
 mov ax, word [byte ebx+SCnum]	; 4DE4D
 mov word [lasttouch], ax	; 4DE51
 .1:
@@ -7413,7 +7413,7 @@ je short .4	; 4E03B
 mov dh, dl	; 4E03D
 and dh, 0FDh	; 4E03F
 mov byte [byte ebx+pflags], dh	; 4E042
-cmp word [word_C90B2], byte 0	; 4E045
+cmp word [fox], byte 0	; 4E045
 jg short .2	; 4E04D
 mov eax, 2	; 4E04F
 jmp short .3	; 4E054
@@ -7429,19 +7429,19 @@ and byte [byte ebx+pflags2], 0DFh	; 4E06F
 .4:
 test byte [gmode2], 1	; 4E073
 jne short .x	; 4E07A
-cmp word [word_C90B2], byte 0	; 4E07C
+cmp word [fox], byte 0	; 4E07C
 jg short .5	; 4E084
-mov eax, dword [word_C90B2-2]	; 4E086
+mov eax, dword [fox-2]	; 4E086
 sar eax, 10h	; 4E08B
 sub eax, byte 0Fh	; 4E08E
 jmp short .6	; 4E091
 .5:
-mov eax, dword [word_C90B2-2]	; 4E093
+mov eax, dword [fox-2]	; 4E093
 sar eax, 10h	; 4E098
 add eax, byte 0Fh	; 4E09B
 .6:
 mov word [byte ebx+Xpos+2], ax	; 4E09E
-mov ax, word [word_C90B4]	; 4E0A2
+mov ax, word [foy]	; 4E0A2
 mov word [byte ebx+Ypos+2], ax	; 4E0A8
 mov word [byte ebx+Yvel], 0	; 4E0AC
 mov ax, word [byte ebx+Yvel]	; 4E0B2
@@ -8006,7 +8006,7 @@ push ecx	; 4E724
 push edx	; 4E725
 test byte [gmode], 10h	; 4E726
 jne near .12	; 4E72D
-mov eax, dword [word_CBEC0-2]	; 4E733
+mov eax, dword [ovltimer-2]	; 4E733
 sar eax, 10h	; 4E738
 cmp eax, byte 0FFFFFFFFh	; 4E73B
 jne near .12	; 4E73E
@@ -8168,9 +8168,9 @@ cmp ax, word [awscore]	; 4E942
 je short ass_popx.1	; 4E949
 .2:
 mov word [RefStep], 0FFFFh	; 4E94B
-cmp word [word_CBEC0], 100h	; 4E954
+cmp word [ovltimer], 100h	; 4E954
 jne short .3	; 4E95D
-mov word [word_CBEC0], 258h	; 4E95F
+mov word [ovltimer], 258h	; 4E95F
 .3:
 mov edx, 1Bh	; 4E968
 mov eax, puckstruct	; 4E96D
@@ -8203,9 +8203,9 @@ call SetSPA	; 4E9CA
 call CrowdOnStoppage	; 4E9CF
 test eax, eax	; 4E9D4
 jne short ass_popx	; 4E9D6
-cmp word [word_CBEC0], 100h	; 4E9D8
+cmp word [ovltimer], 100h	; 4E9D8
 jne short .2	; 4E9E1
-mov word [word_CBEC0], 258h	; 4E9E3
+mov word [ovltimer], 258h	; 4E9E3
 .2:
 mov ax, word [byte ebx+Ypos+2]	; 4E9EC
 mov dx, word [byte ebx+temp4]	; 4E9F0
@@ -8488,7 +8488,7 @@ cmp dx, byte 2	; 4EDA2
 je near .5	; 4EDA6
 test dx, dx	; 4EDAC
 je near .5	; 4EDAF
-mov si, word [word_CBEC0]	; 4EDB5
+mov si, word [ovltimer]	; 4EDB5
 test si, si	; 4EDBC
 jl near .5	; 4EDBF
 cmp si, 100h	; 4EDC5
@@ -8496,7 +8496,7 @@ jge near .5	; 4EDCA
 mov edx, 0A5Bh	; 4EDD0
 mov eax, ebx	; 4EDD5
 call SetSPA	; 4EDD7
-cmp word [word_CBEC0], 0ECh	; 4EDDC
+cmp word [ovltimer], 0ECh	; 4EDDC
 jl near .64	; 4EDE5
 cmp byte [byte_E9AD3], 1	; 4EDEB
 jne near .64	; 4EDF2
@@ -8574,7 +8574,7 @@ mov dword [joysampling], eax	; 4EEE4
 mov byte [byte_E9AD3], 0FFh	; 4EEE9
 cmp word [gsp], byte 3	; 4EEF0
 jl near .64	; 4EEF8
-mov word [word_CBEC0], 38h	; 4EEFE
+mov word [ovltimer], 38h	; 4EEFE
 jmp near .64	; 4EF07
 .5:
 cmp byte [PenBuf], 0	; 4EF0C
@@ -8629,9 +8629,9 @@ cmp ax, word [awscore]	; 4EFAB
 je short .16	; 4EFB2
 .14:
 mov word [RefStep], 0FFFFh	; 4EFB4
-cmp word [word_CBEC0], 100h	; 4EFBD
+cmp word [ovltimer], 100h	; 4EFBD
 jne short .15	; 4EFC6
-mov word [word_CBEC0], 258h	; 4EFC8
+mov word [ovltimer], 258h	; 4EFC8
 .15:
 mov edx, 1Bh	; 4EFD1
 mov eax, puckstruct	; 4EFD6
@@ -8690,9 +8690,9 @@ call CrowdOnStoppage	; 4F0B9
 test eax, eax	; 4F0BE
 jne near .64	; 4F0C0
 .20:
-cmp word [word_CBEC0], 100h	; 4F0C6
+cmp word [ovltimer], 100h	; 4F0C6
 jne short .21	; 4F0CF
-mov word [word_CBEC0], 258h	; 4F0D1
+mov word [ovltimer], 258h	; 4F0D1
 .21:
 cmp dword [dword_C5840], byte 0	; 4F0DA
 jne near .64	; 4F0E1
@@ -9109,19 +9109,19 @@ and dh, 0FDh	; 4F600
 mov byte [byte ebx+pflags], dh	; 4F603
 mov word [byte ebx+temp2], 8	; 4F606
 mov word [byte ebx+temp1], 0	; 4F60C
-cmp word [word_C90B2], byte 0	; 4F612
+cmp word [fox], byte 0	; 4F612
 jg short .3	; 4F61A
-mov eax, dword [word_C90B2-2]	; 4F61C
+mov eax, dword [fox-2]	; 4F61C
 sar eax, 10h	; 4F621
 sub eax, byte 0Fh	; 4F624
 jmp short .4	; 4F627
 .3:
-mov eax, dword [word_C90B2-2]	; 4F629
+mov eax, dword [fox-2]	; 4F629
 sar eax, 10h	; 4F62E
 add eax, byte 0Fh	; 4F631
 .4:
 mov word [byte ebx+temp3], ax	; 4F634
-mov ax, word [word_C90B4]	; 4F638
+mov ax, word [foy]	; 4F638
 mov word [byte ebx+temp4], ax	; 4F63E
 or byte [byte ebx+pflags2], 20h	; 4F642
 mov word [byte ebx+Wallcos], 0	; 4F646
@@ -9195,7 +9195,7 @@ mov word [byte ebx+temp1], dx	; 4F723
 mov edx, 0A5Bh	; 4F727
 mov eax, ebx	; 4F72C
 call SetSPA	; 4F72E
-cmp word [word_C90B2], byte 0	; 4F733
+cmp word [fox], byte 0	; 4F733
 jg short .10	; 4F73B
 mov eax, 2	; 4F73D
 jmp short .11	; 4F742

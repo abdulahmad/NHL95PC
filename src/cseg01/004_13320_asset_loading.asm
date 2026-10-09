@@ -22,11 +22,11 @@ extern sub_64614, SetupTeamLines, ClearInputQueue, FadePalStep, sub_8CCA8, sub_8
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, MouseSetPos, sub_B30B4, sub_B30BB
 extern sub_B392C, sub_B4BA8, threat, savepal, SortCords, vtoa, regd4, scrpitch
-extern lastplayer, passdir, word_C90A6, passplayer, word_C90B2, word_C90B4, Pencntdwn, Penaltytimer
+extern lastplayer, passdir, word_C90A6, passplayer, fox, foy, Pencntdwn, Penaltytimer
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, word_CBC44, exitgame, gameover
 extern word_CBC52, word_CBC54, lcblink, word_CBC58, lcblinktime, lcsel, word_CBC60
 extern lcline, word_CBC64, lctimer, word_CBC68, lcboxon, word_CBC6C, word_CBE8C, word_CBE8E
-extern word_CBEC0, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0B0
+extern ovltimer, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0B0
 extern crowdlevel, word_DEE94, hmtmap, awtmap, word_E024E, lcrequest, word_E0306, lcreqchoice
 extern word_E0382, regd2, regd0, regd1, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4
 extern word_E9AA6, CwdExciteLvl, word_E9AAA, word_E9AAE, word_E9B2C
@@ -796,8 +796,8 @@ cmp dword [dword_CC0EC], byte 0	; 13C86
 jne near .x	; 13C8D
 call forceteams	; 13C93
 xor edx, edx	; 13C98
-mov word [word_C90B4], dx	; 13C9A
-mov word [word_C90B2], dx	; 13CA1
+mov word [foy], dx	; 13C9A
+mov word [fox], dx	; 13CA1
 mov eax, dword [pucky]	; 13CA8
 mov word [eax], dx	; 13CAD
 mov eax, dword [puckx]	; 13CB0
@@ -1082,7 +1082,7 @@ mov byte [word_E024E], dh	; 14083
 mov byte [byte_E024D], dh	; 14089
 mov byte [byte_E024C], dh	; 1408F
 mov edx, 0FFFFFFFFh	; 14095
-mov word [word_CBEC0], dx	; 1409A
+mov word [ovltimer], dx	; 1409A
 mov word [word_C90D8], dx	; 140A1
 mov word [RefStep], dx	; 140A8
 mov word [Pencntdwn], dx	; 140AF
