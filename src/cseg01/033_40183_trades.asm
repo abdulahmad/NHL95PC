@@ -1396,6 +1396,10 @@ pop ecx	; 413CA
 pop ebx	; 413CB
 ret	; 413CC
 %endif ; C
+; C: src/c/033_40183_trades/WriteLeagueInfo.c
+%ifdef CBUILD
+%include "c/033_40183_trades/WriteLeagueInfo.inc"
+%else
 WriteLeagueInfo:
 push dword 34h	; 413CD
 call __CHK	; 413D2
@@ -1485,6 +1489,7 @@ add esp, byte 28h	; 414D8
 pop edi	; 414DB
 pop esi	; 414DC
 ret 10h	; 414DD
+%endif ; C
 ; C: src/c/033_40183_trades/MsgCopyingDatabases.c
 %ifdef CBUILD
 %include "c/033_40183_trades/MsgCopyingDatabases.inc"

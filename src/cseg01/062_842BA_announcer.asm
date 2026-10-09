@@ -836,6 +836,10 @@ add esp, byte 30h	; 84C33
 pop ecx	; 84C36
 ret	; 84C37
 %endif ; C
+; C: src/c/062_842BA_announcer/SayPlayoffTonight.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/SayPlayoffTonight.inc"
+%else
 SayPlayoffTonight:
 push dword 7Ch	; 84C38
 call __CHK	; 84C3D
@@ -940,6 +944,7 @@ mov eax, 1	; 84DD1
 add esp, byte 60h	; 84DD6
 pop esi	; 84DD9
 ret 8	; 84DDA
+%endif ; C
 ; C: src/c/062_842BA_announcer/RequestTimeClips.c
 %ifdef CBUILD
 %include "c/062_842BA_announcer/RequestTimeClips.inc"

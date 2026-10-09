@@ -35,7 +35,6 @@ extern void FileReadAt_x(); /* 145E4 */
 extern void FileReadAt_x2(); /* 145E6 */
 extern void ReadKeyRec(); /* 1463D */
 extern void ReadKeyRec_x(); /* 1464D */
-extern void CopyFile(); /* 1466B */
 extern void ReadSeasonRec(); /* 1478B */
 extern void ReadTeamRec(); /* 147C9 */
 extern void ReadTeamRec_x(); /* 147F6 */
@@ -467,7 +466,6 @@ extern void AddHumanTeam_exit(); /* 40C1F */
 extern void RemoveHumanTeam(); /* 40C29 */
 extern void CheckMasterPassword(); /* 40F4E */
 extern void BuildLeagueList(); /* 411C8 */
-extern void WriteLeagueInfo(); /* 413CD */
 extern void CopyHumanTeamDBs(); /* 41516 */
 extern void SaveLeagueGameRef(); /* 41978 */
 extern void UpdateSeasonSchedule(); /* 41CC4 */

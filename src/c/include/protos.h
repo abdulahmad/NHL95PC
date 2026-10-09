@@ -739,5 +739,7 @@ void DrawPanelScore(short side, short score);  /* 14A20 */
 void __cdecl sub_90B80(int bank, char *names, int *out);  /* graphics library: look up shapes by name list */
 void LoadScoreboardGfx(void);  /* 1CC3D */
 void ShowGoalieBanner(short side);  /* 671E8 */
+int CopyFile(char *name, char *srcext, char *dstext, char *srcdir, char *dstdir);  /* 1466B */
+int WriteLeagueInfo(char *dir, void *teams, char *pw, int b, short a, short d, short c, char *name);  /* 413CD */
 
 #endif
