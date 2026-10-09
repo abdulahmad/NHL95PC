@@ -155,6 +155,19 @@ def main():
                fixups_missing_vs_exe=len(ref - have), fixups_extra_vs_exe=len(have - ref), out=os.path.relpath(a.out, ROOT),
                bytes=len(exe), sha1=h, match=h == SHA1)
     print(json.dumps(rep, indent=1))
+    if h != SHA1:
+        # where does it differ? compare with the slices rebuild_exe.py extracted from your EXE, and the fixup sets
+        nd = 0
+        for m in man['segments']:
+            if m.get('zero_pad') or not m['bytes']: continue
+            ref_b = open(os.path.join(a.parts, m['file']), 'rb').read(); got = data[int(m['start'], 16)][:m['bytes']]
+            for i in range(min(len(ref_b), len(got))):
+                if ref_b[i] != got[i]:
+                    if nd < 8: print('first difference: %05X in %s: built %02X, retail %02X' % (int(m['start'], 16) + i, m['file'].split('/')[-1][:-4], got[i], ref_b[i]))
+                    nd += 1
+        if nd: print('%d differing bytes in the segment slices (instruction address comments: grep the address in src/)' % nd)
+        for tag, sset in (('fixup missing (in the EXE, not in src/)', ref - have), ('fixup extra (in src/, not in the EXE)', have - ref)):
+            for s_, t_, o_ in sorted(sset)[:8]: print('%s: source %05X -> object %d offset %X' % (tag, s_, t_, o_))
     print(('MATCH: %s is byte-identical to the retail HOCKEY.EXE' if h == SHA1 else 'MISMATCH: %s differs from the retail HOCKEY.EXE') % rep['out'])
     sys.exit(0 if h == SHA1 else 1)
 

@@ -128,7 +128,7 @@ def emit_segment(A, seg, lab, fallback=set(), hints=True):
     f = nasm_formatter()
     els = []          # (addr, len, kind)
     phys_end = A.objs[ob]['base'] + len(A.objs[ob]['img'])
-    lines = [HEADER % (mod, s0, s1), 'bits 32', '%include "x86enc.inc"']
+    lines = [HEADER % (mod, s0, s1), 'bits 32', '%include "hockey.inc"']
     secflags = 'progbits alloc exec nowrite align=1' if ob == 1 else \
                ('progbits alloc noexec write align=1' if s0 < phys_end else 'nobits alloc noexec write align=1')
     lines.append('section %s %s' % ('s_%05X' % s0, secflags))
