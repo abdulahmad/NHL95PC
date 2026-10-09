@@ -1,7 +1,7 @@
 pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_game_names,confidence,evidence,segment,method
 00010010,sub_10010,GetMemListHead,PC-new,,,,low,returns dword_EDA08 when eax != 0 else dword_EDA0C (heads of the two runtime memory block lists walked by GetMemStats),main_startup,manual-trace
 0001002A,sub_1002A,GetMemStats,PC-new,,,,medium,"walks the memory block list from GetMemListHead(1) (next at +20h) and returns total, free, used and largest block through four pointers; main_ refuses to start ('Insufficient memory available.') when the total is below 1E5D70h",main_startup,manual-trace
-00010094,main_,main_ (role: Begin),93G,hockey93_01.asm,hockey94.asm,94G Begin,low,"IDA name from entry point / Watcom main_; role of 94 Begin (program entry -> front end), PC-specific body",main_startup,role
+00010094,main_,main_ (role: Begin),93G,hockey93_01.asm,hockey94.asm,94G Begin,high,Watcom main_ entry (called from the C runtime start); front-end entry like 94G Begin,main_startup,role
 000106C8,sub_106C8,DiskFreeBytes,PC-new,,,,high,"_dos_getdiskfree_(drive) -> clusters * sectors * bytes; FatalError 'error getting disk space free' on failure (main_, CreateNewLeague, WriteModeState)",main_startup,manual-trace
 00010712,sub_10712,SetupControllers,PC-new,,,,high,"from ctl1team/ctl2team and ctl1side/ctl2side sets cont1team/cont2team (0 none, 1 home, 2 away) and the same-side flag, maps ctl1dev/ctl2dev to pad device codes (1 mouse, 2 joystick 1, 4 joystick 2, 8 keyboard, 10h -> 0 none), recentres the mouse and stops input sampling; called before each game",main_startup,manual-trace
 0001086A,sub_1086A,ReadKeyboardPad,PC-new,,,,high,"keyboard pad: arrow / keypad scan codes (48h up, 50h down, 4Bh left, 4Dh right, 47h/49h/51h/4Fh diagonals) -> 4-bit mask -> direction via the table at C4D1F (8 = none); Ins/Alt/Enter/Space give buttons 10h, 20h or 40h (both)",main_startup,manual-trace
@@ -26,7 +26,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00011D09,sub_11D09,PlayGame,PC-new,,,,high,"(&savefile): without an open saved game runs the pre-game screens (sub_7DC8B, sub_13A91, sub_13E8F; gameresult 2 on cancel), otherwise LoadGameState from the file, rebuilds lines (SetupTeamLines) and resumes; then GameLoop; in league / Play-Off mode a completed game (gameresult 1) deletes <league>\game.sav; called from temp_files, import_export and PlayoffModeLoop",gamesave_io,manual-trace
 00011FF4,sub_11FF4,assreplace,93G,logic93_5.asm,checks94.asm,92G assreplace; 95G assreplace,medium,"callee alignment under 2 matched caller(s) Setplass, check4bench; cosine: 0.18; fieldseq: 0.29; shared: fb:pflags f:pflags; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 9 / G 6",gamesave_io,callgraph(it2)
 00012011,sub_12011,assinsert,93G,logic93_5.asm,checks94.asm,92G assinsert; 95G assinsert,high,"callee alignment under 3 matched caller(s) assnearest, forcepldata, puckfaceoff2; cosine: 1.00; fieldseq: 1.00; shared: f:assnum fv:assnum; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 11 / G 2",gamesave_io,callgraph(it0)
-00012034,sub_12034,ReplayIsEmpty,PC-new,,,,low,returns 1 when recbpr == replaystart and sflags bit 10h is clear (nothing recorded in the replay buffer),gamesave_io,manual-trace
+00012034,sub_12034,ReplayIsEmpty,PC-new,,,,medium,"returns 1 when recbpr == replaystart and sflags bit 10h is clear (nothing recorded in the replay buffer) [reviewed: body re-read, behaviour confirmed]",gamesave_io,manual-trace
 0001205D,sub_1205D,PickAwardWinners,PC-new,,,,medium,"corrected from FindLeagueLeaders: the records it fills (awardwinners, presidentsteam, cupteam) are the 11 trophy winners shown by ShowAwardScreens / DrawAwardsSummary (Hart, Art Ross, Norris, Selke, Vezina, Jennings, Calder, Presidents, Conn Smythe, EA Sports Cup, Stanley Cup); scans the 26 TEAMS.DB records with KEY / SEASON DB lookups",gamesave_io,manual-trace
 00012849,sub_12849,ShowAwardScreens,PC-new,,,,high,"for each of the 11 trophies (awardnames) loads the art file from awardart via MakePath, prints the winner (a team for awardtype 2: presidentsteam / cupteam, else the awardwinners player record with GP / G / A / Pt / PIM / +/- / PPG / SHG, or GAA / Min / Shots / Pct for goalies) and the title from awardtitles (""Most Valuable Player"", ...), fades in (""!pal"" / ""palmem"") and waits (sub_33E6A 10000); stops when the wait returns 3; returns that result; called from asset_loading",team_stats_screen,manual-trace
 00013188,sub_13188,DrawAwardsSummary,PC-new,,,,high,"one row per trophy: award name (awardnames) at x 14h, winner name at x 0B4h and team at x 190h (or the team alone for awardtype 2); called from asset_loading after the award screens",team_stats_screen,manual-trace
@@ -97,9 +97,9 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0001777E,sub_1777E,TextGridOff,PC-new,,,,medium,textgridon = 0,title_intro,manual-trace
 00017793,sub_17793,TextGridPut,PC-new,,,,medium,"(x, y, text): when textgridon, copies the text into textgrid at column x*100/640, row y*36/480",title_intro,manual-trace
 00017816,sub_17816,WriteScreenTextFile,PC-new,,,,high,"(name): ""Output Current Data"" on the sports desk: writes the 36 text rows of textgrid as 100-column lines to name.OUT (fopen ""wt""), checking free space first (FileExists / DiskSpaceShort, ""require %2d Kbytes of free disk space."" MessageBox) and asking before overwriting an existing file; reports the result with a MessageBox",output_files,manual-trace
-000179B6,sub_179B6,DeskSetExit1,PC-new,,,,low,"menu action: deskexit = 1, return 1 (the ""Sports Desk"" item of the sports desk menus)",output_files,manual-trace
-000179D0,sub_179D0,DeskSetExit2,PC-new,,,,low,"menu action: deskexit = 2, return 1",output_files,manual-trace
-000179E6,sub_179E6,DeskSetExit3,PC-new,,,,low,"menu action: deskexit = 3, return 1 (palette_fx also jumps into its body)",output_files,manual-trace
+000179B6,sub_179B6,DeskSetExit1,PC-new,,,,high,"menu action: deskexit = 1, return 1 (the ""Sports Desk"" item of the sports desk menus) [reviewed: whole body is the stub/flag-set described, no other behaviour]",output_files,manual-trace
+000179D0,sub_179D0,DeskSetExit2,PC-new,,,,high,"menu action: deskexit = 2, return 1 [reviewed: whole body is the stub/flag-set described, no other behaviour]",output_files,manual-trace
+000179E6,sub_179E6,DeskSetExit3,PC-new,,,,high,"menu action: deskexit = 3, return 1 (palette_fx also jumps into its body) [reviewed: whole body is the stub/flag-set described, no other behaviour]",output_files,manual-trace
 00017A00,sub_17A00,StatsSel9394Season,PC-new,,,,high,"""Statistics Type"" menu item ""'93 - '94 Season"": marks it (byte 1, the others 2), statsfromleague = 0, statsplayoffs = 0, copies the league name (exhstate+4) to statsleague and redraws the stats screen through the dword_C65B8 callback with a fade",output_files,manual-trace
 00017AF3,sub_17AF3,StatsSel9394Playoffs,PC-new,,,,high,"""'93 - '94 Play-Offs"" item: statsfromleague = 0, statsplayoffs = 1, exhstate+4 name, redraw",output_files,manual-trace
 00017BE7,sub_17BE7,StatsSelLeague,PC-new,,,,high,"""<league> Season"" item: statsfromleague = 1, statsplayoffs = 0, league name from lgstate+4, redraw",output_files,manual-trace
@@ -122,12 +122,12 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00018A5A,sub_18A5A,StatsMenuGAA,PC-new,,,,high,"menu action for the ""Goals Against Average ..."" stats item: statscategory = 8; on first entry (dword_DC738) fades through the SfPal1 / SfPal2 palettes into the goalie stats screen (sub_25B24), else redraws through goaliestatscb",palette_fx,manual-trace
 00018B3D,sub_18B3D,StatsMenuGoalieWins,PC-new,,,,high,"menu action for the ""Wins ..."" stats item: statscategory = 9; on first entry (dword_DC738) fades through the SfPal1 / SfPal2 palettes into the goalie stats screen (sub_25B24), else redraws through goaliestatscb",palette_fx,manual-trace
 00018C20,sub_18C20,StatsMenuSavePct,PC-new,,,,high,"menu action for the ""Save Percentage ..."" stats item: statscategory = 10; on first entry (dword_DC738) fades through the SfPal1 / SfPal2 palettes into the goalie stats screen (sub_25B24), else redraws through goaliestatscb",palette_fx,manual-trace
-00018D03,sub_18D03,DeskSetExit3b,PC-new,,,,low,"second entry to the DeskSetExit3 body (deskexit = 3, return 1), used by a sports desk menu item",palette_fx,manual-trace
+00018D03,sub_18D03,DeskSetExit3b,PC-new,,,,high,"second entry to the DeskSetExit3 body (deskexit = 3, return 1), used by a sports desk menu item [reviewed: whole body is the stub/flag-set described, no other behaviour]",palette_fx,manual-trace
 00018D0D,sub_18D0D,ShowPlayerStatsItem,PC-new,,,,medium,"""Show Player Statistics And Attributes"" menu action: deskexit = 4, or 5 when byte_DC836 is not 'G'; returns 1 via DeskSetExit_ret1",palette_fx,manual-trace
 00018D33,sub_18D33,FreeDeskBuffers,PC-new,,,,low,releases the two buffers in dword_C65AC / dword_C65A8 (jctime) and clears them; returns 0 (easn_stats),palette_fx,manual-trace
 00018D7F,sub_18D7F,OutputCurrentData,PC-new,,,,high,"""Output Current Data ..."" sports desk item: prompts ""Please enter output file name"" (sub_2FEDF text entry with temporary dword_C71CC..C71DC colours) and, unless Esc or empty, WriteScreenTextFile",frontend_desk,manual-trace
 00018E43,sub_18E43,DrawDeskFrames,PC-new,,,,low,"draws three nested rectangles (sub_B4FAC lines, colours 22h / 21h / 20h) around 0Eh,21h - 0AFh,86h",frontend_desk,manual-trace
-00018F74,sub_18F74,MenuCallbackTrue,PC-new,,,,low,callback that returns 1 (ret 0Ch; second entry loc_18F86); its address is passed by the penalty text code (62CB9),frontend_desk,manual-trace
+00018F74,sub_18F74,MenuCallbackTrue,PC-new,,,,high,"callback that returns 1 (ret 0Ch; second entry loc_18F86); its address is passed by the penalty text code (62CB9) [reviewed: whole body is the stub/flag-set described, no other behaviour]",frontend_desk,manual-trace
 00018F8D,sub_18F8D,PlayRandomHighlight,PC-new,,,,medium,"marks the highlights already shown (dword_DD730 state >= 5 and unchanged) in hlplayedmask, picks a random unplayed one of the 6 and plays it with StartHL2; returns -1 / its result",frontend_desk,manual-trace
 000190BE,sub_190BE,IntermissionDesk,PC-new,,,,medium,"between periods (called from IntermissionPC): in an exhibition between real teams plays the period highlights (sub_2F3D7, PlayRandomHighlight), then the sports desk in intermission mode (SportsDesk 1), clears the goal / shot counters and restores 320x200",frontend_desk,manual-trace
 0001920F,sub_1920F,PostGameDesk,PC-new,,,,medium,"end of game (from PlayGame): fade, 640x480, game summary (sub_2D35A), in an exhibition between real teams the highlights (PlayRandomHighlight), then SportsDesk 2 and gameresult = 1",frontend_desk,manual-trace
@@ -189,7 +189,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0001CC3D,sub_1CC3D,LoadScoreboardGfx,PC-new,,,,high,"loads scrbrd1.PPV, gets scoredigits/clockdigits/penalty digits, line indicator and visp/homp sprites; called from LoadGameTeams",frontend_labels,manual-trace
 0001CD73,sub_1CD73,DrawSprite,PC-new,,,,medium,"233 callers; clips sprite rect against cliprect_*, optional hflip, team palette remap, dispatches to 8 blitters B4CD8..B5AC8",frontend_labels,manual-trace
 0001D019,sub_1D019,NullBlit,PC-new,,,,medium,empty fn filling first 8 slots of the blitter table at C66D8,frontend_labels,manual-trace
-0001D024,sub_1D024,NullFunc_1D024,PC-new,,,,low,"empty fn, no refs",frontend_labels,manual-trace
+0001D024,sub_1D024,NullFunc_1D024,PC-new,,,,high,"empty fn, no refs [reviewed: whole body is the stub/flag-set described, no other behaviour]",frontend_labels,manual-trace
 0001D02F,code_1D02F,AddDirtyRect,PC-new,,,,low,"appends x/4,y,w/4,h 16-byte rect to dirtyrectptr[page], bumps dirtyrectcount[page]; no direct refs",frontend_labels,manual-trace
 0001D100,sub_1D100,SetupStatsSourceMenu,PC-new,,,,medium,"picks Exhibition/League/Playoffs stats source items from lgstate/postate, copies name to statsleague, sets item count",frontend_labels,manual-trace
 0001D518,sub_1D518,BuildSavedGameLabels,PC-new,,,,high,copies postate/lgstate names (dot-stripped) into the label strings and appends Play-Offs / Season suffixes to mi_ items,frontend_labels,manual-trace
@@ -247,7 +247,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00027BC3,sub_27BC3,MoveTreeHighlight,PC-new,,,,medium,"(old*, new*): unhighlight old, highlight new, *old = new; skips slots >= 1Ah; called by RunTeamPickMenu in playoff mode",standings_playoffs,manual-trace
 00027C34,sub_27C34,CountSeriesWins,PC-new,,,,medium,"loads the schedule (LoadScheduleDB or sub_29A97), counts wins per team over the 38h playoff games (6-byte entries, score +4/+5), writes wins for the 16 tree teams",standings_playoffs,manual-trace
 00027F9C,sub_27F9C,PlayoffTreeScreen,PC-new,,,,high,"playoff tree: ""Playoffs have not been seeded yet"", rst1 / rst2, scuparrw, Western / Eastern Conference, aup / midl / adn arrows",standings_playoffs,manual-trace
-00029681,sub_29681,PlayoffTreeHitTest,PC-new,,,,low,"stub, always returns 0 (ret 4); called by RunTeamPickMenu",standings_playoffs,manual-trace
+00029681,sub_29681,PlayoffTreeHitTest,PC-new,,,,high,"stub, always returns 0 (ret 4); called by RunTeamPickMenu [reviewed: whole body is the stub/flag-set described, no other behaviour]",standings_playoffs,manual-trace
 000296BA,sub_296BA,ShowPlayoffTree,PC-new,,,,medium,statsfromleague ? sub_29B07 : sub_2970A (both end in PlayoffTreeScreen); called by the *StandingsScreen callbacks,standings_playoffs,manual-trace
 0002970A,sub_2970A,LoadPlayoffModeTree,PC-new,,,,medium,"statsfromleague == 0 path of ShowPlayoffTree: reads team names into treeteamnames (sub_3DAB9 on leaguedbnames[4]) or LSSCHED.DB, fills playofftree from the playoff games (ReadSchedGame 444h.., final 4A6h -> pochampion), then PlayoffTreeScreen",league_schedule,manual-trace
 0002991C,sub_2991C,TreeSeriesWinner,PC-new,,,,medium,"same code as SeriesWinner (season_playoffs) with an extra is-series flag: walks 6-byte game entries of a series; returns the team that reached len/2+1 wins, -1 if a game is unplayed",league_schedule,manual-trace
@@ -277,9 +277,9 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0002F5EE,sub_2F5EE,GameStatsScreen,PC-new,,,,high,"DeskGameStats: gsta / leaguetm screen listing gamestatlabels with both teams' values (score, shots, one timers, PP goals/chances, PP time and shots, penalties/min, faceoffs, body checks, attack zone time, passing %)",game_setup,manual-trace
 0002FDD1,sub_2FDD1,AskDatabaseChoice,PC-new,,,,high,"MessageBox ""Do you wish to use your Current database or the Original NHL database?"" (Current / Original); sets dbextension to "".ORG"" or "".DB""",misc_dialogs,manual-trace
 0002FE49,sub_2FE49,DrawBevelRect,PC-new,,,,high,"(x, y, w, h, fill, lite, shade): fills the rect and draws the lit top/left and shaded bottom/right edges",misc_dialogs,manual-trace
-0002FED2,sub_2FED2,DlgReturnZero,PC-new,,,,low,returns 0; passed as a callback by database_dialogs,misc_dialogs,manual-trace
+0002FED2,sub_2FED2,DlgReturnZero,PC-new,,,,high,"returns 0; passed as a callback by database_dialogs [reviewed: whole body is the stub/flag-set described, no other behaviour]",misc_dialogs,manual-trace
 0002FEDF,sub_2FEDF,TextInputDialog,PC-new,,,,high,"(prompt, buf, maxlen, width, ...): DBOX prompt box with an EditTextField; used for ""Enter league name"" and league_setup names",misc_dialogs,manual-trace
-00030203,sub_30203,DlgNullCallback,PC-new,,,,low,empty stdcall stub (ret 14h),misc_dialogs,manual-trace
+00030203,sub_30203,DlgNullCallback,PC-new,,,,high,"empty stdcall stub (ret 14h) [reviewed: whole body is the stub/flag-set described, no other behaviour]",misc_dialogs,manual-trace
 00030209,sub_30209,SetListItemColors,PC-new,,,,medium,"(item, sel): text colours dlgtextfg/dlgtextbg, swapped for the selected item",misc_dialogs,manual-trace
 0003023E,sub_3023E,ListHitTest,PC-new,,,,high,"(mx, my, x, y, w, count): row under the mouse or -1 (row height font height + 2)",misc_dialogs,manual-trace
 000302B9,sub_302B9,DrawListItem,PC-new,,,,medium,fills one list row (disabled rows in boxfillcolor) and prints its text left / right / centred,misc_dialogs,manual-trace
@@ -324,7 +324,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0003366F,sub_3366F,MenuLeagueHilights,PC-new,,,,high,"League Manager ""League Hilights ...""",temp_files,manual-trace
 000336BE,sub_336BE,MenuImportDbs,PC-new,,,,high,"File menu ""Import Databases ...""",temp_files,manual-trace
 000336E6,sub_336E6,MenuExportDbs,PC-new,,,,medium,"File menu ""Export Databases ..."" action installed with a league (sub_3D108 in lgstate)",temp_files,manual-trace
-0003371C,sub_3371C,DemoSetupStub,PC-new,,,,low,empty; called before the scoreboard demo starts,temp_files,manual-trace
+0003371C,sub_3371C,DemoSetupStub,PC-new,,,,high,"empty; called before the scoreboard demo starts [reviewed: whole body is the stub/flag-set described, no other behaviour]",temp_files,manual-trace
 00033727,sub_33727,FreeRinkGfx,PC-new,,,,medium,frees rinkbm and the dword_C73D0 buffer (resets dword_C7440 to -1); used by cdstream and highlights,temp_files,manual-trace
 0003377C,sub_3377C,LoadRink,PC-new,,,,high,"(team): builds the home arena's rink bitmap (4Ah x 30h tiles) from rink.til / TILES and the arena's .map overlays (rinkarenas), skips if currink already matches, then resets the game display",rink_tiles,manual-trace
 00033C08,sub_33C08,BlitTileMap,PC-new,,,,high,"draws a .map block of 8x8 tiles (bit 4000h v-flip, 2000h h-flip, colour FFh transparent) into rinktilebm",rink_tiles,manual-trace
@@ -492,7 +492,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0004D8C7,sub_4D8C7,pucknorm,93G,logic93_4.asm,checks94.asm,92G pucknorm; 95G pucknorm,high,slot $18; head identical to 93G pucknorm: bclr pfna; clr temp1(+26h); temp2(+28h)=$78; then calls the body sub_4D6B4,engine_player_logic,asstab+content
 0004D8FD,sub_4D8FD,pucknothing,93G,logic93_4.asm,checks94.asm,94G puckunflip; 92G pucknothing,medium,"asstab slot 26; field alignment n/a of 0 known-field accesses; content rank 2/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",engine_player_logic,asstab+content
 0004D907,sub_4D907,puckunflip,93G,logic93_5.asm,checks94.asm,92G puckunflip; 95G puckunflip,medium,"cosine: 0.74; fieldseq: 0.63; shared: fv:SPAnum f:SPAnum f:facedir f:SPAcnt fv:SPAcnt; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 13 / G 9; margin 2.81",engine_player_logic,semantic(it0)
-0004D938,sub_4D938,loadTeamStruct,93G,penalty93_2.asm,penalty94.asm,,low,"callee alignment under 1 matched caller(s) SetLCmode; cosine: 0.14; fieldseq: 0.62; shared: fb:pflags f:pflags; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 45 / G 6",engine_player_logic,callgraph(it1)
+0004D938,sub_4D938,RequestLineChange,PC-new,,,,medium,"team from pflags+44h bit 40h: getlchoice (or the team's current line hmtmstruct/awtmstruct+2Ah) into lcline, lcsel, lctimer=3Ch, lcblink/lcblinktime=0Ch, lcboxon=1; clears dword_C585C/C5860. Replaces the 93G loadTeamStruct guess (cosine 0.14), which does none of this",engine_player_logic,manual-trace
 0004D9FC,sub_4D9FC,SetLCmode,93G,logic93_1.asm,input94.asm,92G SetLCmode; 95G SetLCmode,medium,"callee alignment under 1 matched caller(s) StartFaceoffLineChange; cosine: 0.34; fieldseq: 0.51; shared: fb:pflags2 f:pflags2; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 18 / G 8",engine_player_logic,callgraph(it0)
 0004DA37,sub_4DA37,StartFaceoffLineChange,94G,checks94.asm,checks94.asm,95G StartFaceoffLineChange,high,"cosine: 0.96; fieldseq: 1.00; shared: i:168 fb:pflags2 f:pflags2 i:258 f:SCnum fv:SCnum fv:temp3 f:temp3; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 20 / G 19; margin 7.68",engine_player_logic,semantic(it0)
 0004DA7B,sub_4DA7B,Endfaceoff,93G,logic93_4.asm,checks94.asm,92G Endfaceoff; 95G Endfaceoff,medium,"cosine: 0.25; fieldseq: 0.71; shared: i:800 c:randomd0 i:21 i:18 fb:pflags2 f:pflags2 f:Yvel fv:Yvel; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 143 / G 59; margin 3.20",engine_player_logic,semantic(it0)
@@ -511,7 +511,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0004F7D0,sub_4F7D0,ass_pc_slot35,PC-new,,,,low,"slot 35: position suggested 94G assonetimer but content check fails (rank >=13 of 36 slot routines; best overall matches are 93G assbench/asspenalty-style movement code) -> PC-own assignment (94 PC was ported from 93G, so slots >=$1D are PC additions)",engine_player_logic,asstab+content
 0004F990,sub_4F990,rtss,93G,hockey93_05.asm,collide94.asm,94G rtss2; 92G rtss; 95G rtss,medium,"asstab slot 0; field alignment n/a of 0 known-field accesses; content rank 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",engine_player_logic,asstab+content
 0004F99B,sub_4F99B,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),engine_player_logic,unmatched
-0004F9EF,sub_4F9EF,shotdiradj,94G,input94.asm,input94.asm,95G shotdiradj,low,"cosine: 0.24; fieldseq: 0.71; shared: i:FFD4 fb:pflags f:pflags i:2C; calls: 0 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 64 / G 63; margin 1.16",engine_player_logic,semantic(it1)
+0004F9EF,sub_4F9EF,PickShotAim,PC-new,,,,medium,"sets the shot aim offset dword_CC130/CC140 to +-2Ch (close, |x|<=14h) or +-3Ah (random 1-in-4 or player byte +65h), side from pflags+44h bit 80h, plus speeds CC134/CC138; no match to 94G shotdiradj (that one scans the opposing goalie and sets passdir)",engine_player_logic,manual-trace
 0004FAE8,sub_4FAE8,ass_pc_slot46,PC-new,,,,low,slot 46: beyond all Genesis asstabs; no content match,engine_player_logic,asstab
 0004FCE8,sub_4FCE8,joyq_pop,PC-new,,,,high,"input queue: with sampling switched off, drops the oldest 3-byte record (joyqcount--, joyqhead = (head+1) mod 50); main loop calls it after each DoGameFrame batch",engine_input,manual-trace
 0004FD47,sub_4FD47,joyq_flush,PC-new,,,,high,"input queue: joyqcount = 0, joyqtick = 0",engine_input,manual-trace
@@ -576,7 +576,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00055804,sub_55804,chk4shot,93G,logic93_3.asm,checks94.asm,92G chk4pass; 95G chk4pass,high,"93G chk4shot: threat check, regd4 = 20h - spodds (byte 5Fh), shot lane with vtoa, else CompShoot through the chk4lc tail",engine_physics_ai,manual-trace
 00055A35,sub_55A35,CompShoot,93G,logic93_3.asm,,,high,"93G CompShoot: temp2 = (E8h - pucky by pfgoal) / 8 capped at 14h (93G $108 and 20), assreplace 12h (ashoot)",engine_physics_ai,manual-trace
 00055A9F,sub_55A9F,ChkOffsides,93G,logic93_5.asm,,,medium,"93G ChkOffsides / ClearOffsidesIfAllPlayers: offsides option (gameopts bit 1), for each team with tmflags bit 4 check whether a skater is still past the blue line (4Eh) and clear the flag (sub_64338) when none is; player logic (pucknorm) caller",engine_physics_ai,manual-trace
-00055C6F,sub_55C6F,MarkTwoLinePlayers,PC-new,,,,low,"{source_game=PC-new,confidence=medium} two-line pass option (gameopts bit 3): sets pflags2 bit 7 on the skaters of the team past the red line (Ypos sign by gmode bit 1), clears it on the others; ChkTwoLinePass (from a2touchpuck) reads the flag",engine_physics_ai,manual-trace
+00055C6F,sub_55C6F,MarkTwoLinePlayers,PC-new,,,,medium,"two-line pass option (gameopts bit 3): sets pflags2 bit 7 on the skaters of the team past the red line (Ypos sign by gmode bit 1), clears it on the others; ChkTwoLinePass (from a2touchpuck) reads the flag [reviewed: body re-read, behaviour confirmed]",engine_physics_ai,manual-trace
 00055D28,sub_55D28,ChkShotStat,93G,penalty93_2.asm,,,high,"93G ChkShotStat: one-shot flag gmode2 bit 4 (93G sf2shot), crowdlevel +100 (CC0DE, capped 3E8h), CwdExciteLvl, shot counts for the shooter (lastplayer) and the goalie",engine_physics_ai,manual-trace
 00055E72,sub_55E72,setInjuryType,93G,hockey93_03.asm,,,high,"93G setInjuryType: pflags2 bit 2 (unavailable), crowdlevel +12Ch, CwdExciteLvl +1Eh, sfx A1h (93G $D), xc1/yc1 = player, sfslock",engine_physics_ai,manual-trace
 000562DB,sub_562DB,FallDown,93G,hockey93_03.asm,collide94.asm,92G FallDown; 95G FallDown,high,"93G FallDown (player a2 falls down, a3 is the hitter): fall animations (SetSPA), newcheck, setInjuryType, AddPenalty2, checkagr",engine_physics_ai,manual-trace
@@ -679,7 +679,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0005DD6B,sub_5DD6B,SprSortVert,PC-new,,,,medium,clears sfhor and falls into SprSort,engine_core,manual-trace
 0005DD7C,sub_5DD7C,SprSort,93G,hockey93_06.asm,,,high,93G SprSort: insertion sort of OOlist by Ylist,engine_core,manual-trace
 0005DD9E,sub_5DD9E,GameOver,93G,hockey93_06.asm,,,medium,game over: sets the main-loop request flag CBC48 (IntermissionStart when gsp = 4),engine_core,manual-trace
-0005DDBC,sub_5DDBC,SetExitGame,PC-new,,,,low,sets the main-loop request flag CBC46 (assignment caller),engine_core,manual-trace
+0005DDBC,sub_5DDBC,SetExitGame,PC-new,,,,medium,"sets the main-loop request flag CBC46 (assignment caller) [reviewed: body re-read, behaviour confirmed]",engine_core,manual-trace
 0005DDDA,sub_5DDDA,SetupTeamForIntermission,93G,penalty93_2.asm,,,high,"93G SetupTeamForIntermission: ResetBench, reenergizeteam both teams, tmline 0/3/5 by tmap difference",engine_core,manual-trace
 0005DE42,sub_5DE42,Intermission,93G,penalty93_2.asm,,,medium,93G Intermission start: SetupTeamForIntermission and clear the SortCords positions,engine_core,manual-trace
 0005DE70,sub_5DE70,IntermissionStart,93G,hockey93_06.asm,,,high,"93G IntermissionStart: GameOver when gsp = 4, else Intermission and StartPer",engine_core,manual-trace
@@ -852,8 +852,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00076429,sub_76429,FadePalStep,PC-new,,,,high,"(in, pal, steps): fades the 300h-byte palette in or out through fadepal (steps capped at 2 when already faded in)",line_editor_rosters,manual-trace
 0007651B,sub_7651B,FadePalStepSlow,PC-new,,,,high,same with a 45 ms delay per step (no refs),line_editor_rosters,manual-trace
 00076614,sub_76614,SetPalette768,PC-new,,,,high,sets all 256 colours in two halves with vsync,line_editor_rosters,manual-trace
-0007665E,sub_7665E,RandLfsrByte,PC-new,,,,low,"8-bit LFSR step (seed 2Bh, taps 0B8h) (no refs)",line_editor_rosters,manual-trace
-0007668D,sub_7668D,BlitClipRect,PC-new,,,,low,clips a rect to ECDE4..ECDF0 and blits it to the screen (no refs),line_editor_rosters,manual-trace
+0007665E,sub_7665E,RandLfsrByte,PC-new,,,,medium,"8-bit LFSR step (seed 2Bh, taps 0B8h) (no refs) [reviewed: body re-read, behaviour confirmed]",line_editor_rosters,manual-trace
+0007668D,sub_7668D,BlitClipRect,PC-new,,,,medium,"clips a rect to ECDE4..ECDF0 and blits it to the screen (no refs) [reviewed: body re-read, behaviour confirmed]",line_editor_rosters,manual-trace
 00076771,sub_76771,PrintLineEdStatus,PC-new,,,,high,"(x, y, text): clears and prints a status text clamped to x 26Bh",line_editor_rosters,manual-trace
 000767D0,sub_767D0,GameLineEditor,PC-new,,,,high,"game / frontend line editor (pre-game, team screens, after trades): music stop, loading screen, LoadGameRoster, qsort GameRosterCmp, GameLineEditorLoop",line_editor_rosters,manual-trace
 00076A93,sub_76A93,GameRosterCmp,PC-new,,,,high,"qsort compare: positions L, C, R, D then G, then name (+6)",line_editor_rosters,manual-trace
@@ -862,10 +862,10 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00077FF5,sub_77FF5,LoadGameRoster,PC-new,,,,high,"(team): reads the team's players from the league ""key"" file into the roster entries (FatalError A1..A8 on file errors)",line_editor_rosters,manual-trace
 00078366,sub_78366,DrawGameLineJerseys,PC-new,,,,high,"game line editor version of DrawLineJerseys (40 slots, team colours) plus the selected player's ""%c %2d %s"" status",team_select,manual-trace
 00078500,sub_78500,DrawLineEditorScreen,PC-new,,,,high,"line editor background (bkgd, emb<team> crest, HOMEPALS colours, lelogo), menu bar and the line headings (forward line 1..4, power play 1 / 2, penalty kill 1 / 2, defense, goaltenders, extra attackers)",team_select,manual-trace
-00078A81,sub_78A81,StubRet4a,PC-new,,,,low,empty function (ret 4),team_select,manual-trace
+00078A81,sub_78A81,StubRet4a,PC-new,,,,high,"empty function (ret 4) [reviewed: whole body is the stub/flag-set described, no other behaviour]",team_select,manual-trace
 00078A87,sub_78A87,LoadJerseyColours,PC-new,,,,high,(team): HOMEPALS.BIN record of the team -> jersey colour remap byte_D1238 / byte_D1333..D1336,team_select,manual-trace
 00078BE7,sub_78BE7,DrawDlgFrame,PC-new,,,,medium,"dialog box fill and bevel lines in the dialog colours (D0B16..D0B2A); used by InputDialog, create_player and the line editors",team_select,manual-trace
-00078E29,sub_78E29,StubRet4b,PC-new,,,,low,empty function (ret 4),team_select,manual-trace
+00078E29,sub_78E29,StubRet4b,PC-new,,,,high,"empty function (ret 4) [reviewed: whole body is the stub/flag-set described, no other behaviour]",team_select,manual-trace
 00078E36,sub_78E36,CheckGameRosterComplete,PC-new,,,,high,"game line editor: 18 dressed skaters and 2 goalies, else ""Your roster is incomplete."" with counts",team_select,manual-trace
 00079090,sub_79090,PruneGameLines,PC-new,,,,medium,"(team, lines): clears line slots whose player is not dressed (hmroster status 3 / 4)",team_select,manual-trace
 00079188,sub_79188,MenuUseTheseLines,PC-new,,,,high,"""Use These Lines"": CheckGameRosterComplete, maps the line jerseys to hmroster indices and the extra slots",team_select,manual-trace
@@ -893,9 +893,9 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0007AAAA,sub_7AAAA,DrawLeagueSetChecks,PC-new,,,,medium,draws chkon/chkoff shapes per setbits bit,settings_dialogs,manual-trace
 0007AC31,sub_7AC31,LeagueSetViewLoop,PC-new,,,,medium,pointer loop without editing (show settings),settings_dialogs,manual-trace
 0007ADD3,sub_7ADD3,LeagueSetEditLoop,PC-new,,,,medium,"pointer loop toggling setbits, writes gameopts",settings_dialogs,manual-trace
-0007B39C,sub_7B39C,SettingsStub,PC-new,,,,low,"empty __CHK/ret, unreferenced",settings_dialogs,manual-trace
+0007B39C,sub_7B39C,SettingsStub,PC-new,,,,high,"empty __CHK/ret, unreferenced [reviewed: whole body is the stub/flag-set described, no other behaviour]",settings_dialogs,manual-trace
 0007B3A7,sub_7B3A7,MenuModeSettings,PC-new,,,,medium,"menu action ""xxxxxxxxxxx Settings ..."" (mode name patched); gamemode 2 -> view only",settings_dialogs,manual-trace
-0007B4E5,sub_7B4E5,ModeSettings_epilogue,PC-new,,,,low,unreferenced pop/ret epilogue,settings_dialogs,manual-trace
+0007B4E5,sub_7B4E5,ModeSettings_epilogue,PC-new,,,,high,"unreferenced pop/ret epilogue [reviewed: whole body is the stub/flag-set described, no other behaviour]",settings_dialogs,manual-trace
 0007B4EC,sub_7B4EC,DrawModeSetDlg,PC-new,,,,medium,setting7 (gamemode 2) or setting4 dialog,settings_dialogs,manual-trace
 0007B604,sub_7B604,ModeOptsToBits,PC-new,,,,medium,gameopts -> setbits (mode settings),settings_dialogs,manual-trace
 0007B734,sub_7B734,ModeSetHitTest,PC-new,,,,medium,hit-test over modesetrects,settings_dialogs,manual-trace
@@ -903,7 +903,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0007B846,sub_7B846,ModeSetViewLoop,PC-new,,,,medium,view-only pointer loop,settings_dialogs,manual-trace
 0007B9E8,sub_7B9E8,ModeSetEditLoop,PC-new,,,,medium,editing pointer loop,settings_dialogs,manual-trace
 0007BEBB,sub_7BEBB,MenuExhibitionSettings,PC-new,,,,medium,"menu action ""Exhibition Settings ...""",settings_dialogs,manual-trace
-0007BF4F,sub_7BF4F,ExhSettings_ret,PC-new,,,,low,"lone ret, unreferenced",settings_dialogs,manual-trace
+0007BF4F,sub_7BF4F,ExhSettings_ret,PC-new,,,,high,"lone ret, unreferenced [reviewed: whole body is the stub/flag-set described, no other behaviour]",settings_dialogs,manual-trace
 0007BF56,sub_7BF56,ExhOptsToBits,PC-new,,,,medium,gameopts -> setbits (exhibition),settings_dialogs,manual-trace
 0007C0B9,sub_7C0B9,DrawExhSetChecks,PC-new,,,,medium,checkbox draw over exhsetrects,settings_dialogs,manual-trace
 0007C1AC,sub_7C1AC,DrawExhSetDlg,PC-new,,,,medium,setting6 + dbox dialog,settings_dialogs,manual-trace
@@ -936,7 +936,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0007DB67,sub_7DB67,SetCtlTeams,PC-new,,,,medium,"sets HomeTeam/VisTeam, ctl1team/ctl1side/ctl2side; called by SetGameSides",settings_dialogs,manual-trace
 0007DC8B,sub_7DC8B,LoadRockMusic,PC-new,,,,medium,loads 6 team cues + 3 random of 18 pool + device rock tune (MT/SB/ADROCKU) + team tune + ROCKDITI via sub_8F13B,gadgets_replay,manual-trace
 0007DEC8,sub_7DEC8,FreeRockMusic,PC-new,,,,medium,"frees rockteamcues[6], rockrandcues[3], rocktunes[3] via sub_8F1FE",gadgets_replay,manual-trace
-0007E032,sub_7E032,GadgetStub0,PC-new,,,,low,__CHK; return 0; unreferenced,gadgets_replay,manual-trace
+0007E032,sub_7E032,GadgetStub0,PC-new,,,,high,"__CHK; return 0; unreferenced [reviewed: whole body is the stub/flag-set described, no other behaviour]",gadgets_replay,manual-trace
 0007E067,sub_7E067,DrawGadgetButton,PC-new,,,,medium,"draws frame around gadget button idx (28-byte rect table gadgetrects, y-0A8h)",gadgets_replay,manual-trace
 0007E0FA,sub_7E0FA,InstantReplay,PC-new,,,,medium,"replay gadget screen: gadget6/gadget5 .PPV panel, camera save, ReplayFirstFrame/ReplayStep; from main/frontend/highlights",gadgets_replay,manual-trace
 0007E8E5,sub_7E8E5,GadgetHitTest,PC-new,,,,medium,hit-test 10 gadget button rects,gadgets_replay,manual-trace
@@ -957,7 +957,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000805C4,sub_805C4,SetModeMenuLabels,PC-new,,,,medium,"strcpy mode name + "" Settings ..."" into the menu label, sets Sports Central / Playoff Tree entries",settings_lockerroom,manual-trace
 00080682,sub_80682,DrawPanel3D,PC-new,,,,medium,"filled rect (70h) with light 77h / dark 62h edges, optional inner frame",settings_lockerroom,manual-trace
 00080830,sub_80830,LockerRoomScreen,PC-new,,,,medium,"menu ""Game: LA  at MTL ..."" pre-game locker room: stops music, loads Home/Vis/Name/Title backgrounds, draw + loop",settings_lockerroom,manual-trace
-00080A9D,sub_80A9D,LockerStub,PC-new,,,,low,lone ret,settings_lockerroom,manual-trace
+00080A9D,sub_80A9D,LockerStub,PC-new,,,,high,"lone ret [reviewed: whole body is the stub/flag-set described, no other behaviour]",settings_lockerroom,manual-trace
 00080AA4,sub_80AA4,DrawLockerRoom,PC-new,,,,medium,"lockroom image, team names, jerseys, Accept / Cancel, ""Exhibition Game""",settings_lockerroom,manual-trace
 00081520,sub_81520,LockerHitTest,PC-new,,,,medium,hit-test 8 rects at lockerrects,settings_lockerroom,manual-trace
 0008156F,sub_8156F,DrawLockerJersey,PC-new,,,,medium,loads JER%sH / JER%sV jersey image for team and draws it,settings_lockerroom,manual-trace
@@ -982,10 +982,10 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000836CA,sub_836CA,SpeechIsInit,PC-new,,,,medium,returns speechinit != 0,speech,manual-trace
 000836E4,sub_836E4,SpeechBusy,PC-new,,,,medium,speechinit and (queue active or delay pending),speech,manual-trace
 00083711,sub_83711,SpeechIdle,PC-new,,,,medium,speechinit and queue idle,speech,manual-trace
-0008373E,sub_8373E,MusicChanReset2,PC-new,,,,low,wrapper around MusicChanReset,speech,manual-trace
+0008373E,sub_8373E,MusicChanReset2,PC-new,,,,medium,"wrapper around MusicChanReset [reviewed: body re-read, behaviour confirmed]",speech,manual-trace
 0008374D,sub_8374D,SpeechStopQueue,PC-new,,,,low,"clears queue active flag, sets hold delay from bank +3B70h",speech,manual-trace
-0008378C,sub_8378C,MusicChanCmd3,PC-new,,,,low,"sub_8FCAC(musichandle, 3)",speech,manual-trace
-000837A8,sub_837A8,MusicChanReset,PC-new,,,,low,"when speechinit: sub_8FCAC(musichandle,0) then (musichandle,1)",speech,manual-trace
+0008378C,sub_8378C,MusicChanCmd3,PC-new,,,,medium,"sub_8FCAC(musichandle, 3) [reviewed: body re-read, behaviour confirmed]",speech,manual-trace
+000837A8,sub_837A8,MusicChanReset,PC-new,,,,medium,"when speechinit: sub_8FCAC(musichandle,0) then (musichandle,1) [reviewed: body re-read, behaviour confirmed]",speech,manual-trace
 000837D9,sub_837D9,Swap16,PC-new,,,,medium,byte-swap 16-bit value,speech,manual-trace
 000837FB,sub_837FB,ReadBE24,PC-new,,,,medium,reads three bytes big-endian from a DOS handle,speech,manual-trace
 0008385F,sub_8385F,ReadCString,PC-new,,,,medium,reads bytes from a DOS handle until NUL,speech,manual-trace
@@ -1042,7 +1042,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00085570,sub_85570,QueuePenaltyType,PC-new,,,,medium,requests / queues penalty type clip from penaltyclips,announcer,manual-trace
 0008579E,sub_8579E,PreloadAnnouncerClips,PC-new,,,,low,opens XBRUCE2.VIV and requests the common goal / penalty clips,announcer,manual-trace
 00085924,sub_85924,MenuSaveGame,PC-new,,,,medium,"menu action ""Save Game ..."": disk-space check (msg_NoSaveSpace), SaveGameNameDlg, writes .nhl game file, game.sav / gsummary.db copies, league / playoff 'Saving Current ...' messages",demo_savegame,manual-trace
-00085D65,sub_85D65,SaveGameStub,PC-new,,,,low,lone ret,demo_savegame,manual-trace
+00085D65,sub_85D65,SaveGameStub,PC-new,,,,high,"lone ret [reviewed: whole body is the stub/flag-set described, no other behaviour]",demo_savegame,manual-trace
 00085D6C,sub_85D6C,SaveGameNameDlg,PC-new,,,,medium,"'savegame' dialog with prmt field (EditTextField), appends .nhl, 'err1' on bad name",demo_savegame,manual-trace
 00086627,sub_86627,MenuPlayNextGame,PC-new,,,,medium,"menu action ""Play Next Game ..."": returns 4",demo_savegame,manual-trace
 00086637,sub_86637,MenuReturnToSportsCentral,PC-new,,,,medium,"menu action ""Return To Sports Central"": returns 1",demo_savegame,manual-trace
@@ -1069,7 +1069,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000891B2,sub_891B2,LoadScheduleDB,PC-new,,,,high,"loads 'schedule' through the league DB path format (byte_DD750, falling back to byte_DD710); also used by the standings and scoreboard screens",season_playoffs,manual-trace
 00089223,sub_89223,SaveScheduleDB,PC-new,,,,high,writes the schedule buffer (minus its 2-byte header offset) back to <league>\schedule.db,season_playoffs,manual-trace
 00089268,sub_89268,PlayoffModeLoop,PC-new,,,,high,"Play-Off mode loop installed in dword_CE583 by CreatePlayoffs (also entered from the file dialogs when loading): loads schedule.db, runs the game for the current series game, POAfterGame / POHandleElimination after it, then the playoff tree menu until the user leaves",season_playoffs,manual-trace
-00089B5C,sub_89B5C,POReturnZero,PC-new,,,,low,unreferenced stub that returns 0,season_playoffs,manual-trace
+00089B5C,sub_89B5C,POReturnZero,PC-new,,,,high,"unreferenced stub that returns 0 [reviewed: whole body is the stub/flag-set described, no other behaviour]",season_playoffs,manual-trace
 00089B69,sub_89B69,POHiliteSlot,PC-new,,,,medium,"draws the highlight box around playoff tree slot eax (coordinates from dword_D2B70 / dword_D2BEC, taller box for slots >= 1Ch)",season_playoffs,manual-trace
 00089BD2,sub_89BD2,PlayoffTreeMenu,PC-new,,,,medium,"mouse/keyboard loop over the playoff tree screen with the 'Pointer' cursor and 'menubuff' menu (sub_6B3D7 / sub_6BA4D), highlighting slots with POHiliteSlot",season_playoffs,manual-trace
 0008A652,sub_8A652,DrawPlayoffTree,PC-new,,,,high,"draws the playoff tree screen: 'Playoffs have not been seeded yet' when playofftree is empty, otherwise 'Western Conference' / 'Eastern Conference' brackets with series scores, pstatbar / rst1 / rst2 / scuparrw / aup / adn art",season_playoffs,manual-trace
@@ -1420,7 +1420,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B7420,sub_B7420,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B763B,sub_B763B,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B77F4,sub_B77F4,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000C020C,,awards names (95G awards95 role),95G,awards95,,,low,award name strings (Conn Smythe ...) - same role as 95G awards95 table; PC text/case differs,dseg02,data
+000C020C,unk_C020C,str_ArtHart..str_ArtStan,PC-new,,,,medium,"award art tags (hart ross norr selk vezi jenn cald pres conn easn stan) listed by the awardart pointer table; full award names follow them. 95G reference dropped (95G disassembly not used for naming)",dseg02,data
 000C053C,,TeamList city names,94G,teamdata94.asm,teamdata94.asm,,medium,team city string table incl. ANAHEIM/FLORIDA (26-team 94G list; 93G TeamList has 24),dseg02,data
 000C1B40,,PenaltyList,93G,hockey93_11.asm,data94.asm,,medium,penalty name strings in Genesis order (+ .pen file table D273E),dseg02,data
 000C5951,,CreditsList,94G,teamdata94.asm,teamdata94.asm,,high,credit names Chip Lange / Steve Babineau exist only in 94G (93G Credits lacks them),dseg02,data

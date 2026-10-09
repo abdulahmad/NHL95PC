@@ -44,7 +44,7 @@ global sub_4AB87, sub_4DFF7, sub_4E0BD, sub_4EB04, sub_4ED7C, sub_4F5BF, sub_4F7
 global sub_4842A, sub_484DA, sub_499D8, sub_49BC2, sub_4FAE8, assbench, asscenterd, asscentero
 global assdefd, assdefo, assdopen, asseben, assepen, assexit, assfaceoff, assfaceoffp1
 global assgoalie, assgoalietopuck, assnearest, asspenalty, asspuckc, assscore, assshoot, assstanley
-global asswingd, asswingo, sub_4D938
+global asswingd, asswingo, RequestLineChange
 global asswingd_skate0, asswingd_skateto
 global asswingo_evade
 global assgoalie_popebp
@@ -52,7 +52,7 @@ global assshoot_ret
 global ass_replace_popx, ass_popx
 global ass_skate_temp34
 global puckflip, pucknorm, pucknorm_body, pucknothing, puckunflip, rtss
-global sub_4F9EF, AddStar, sub_487D9, StarCompare, PickThreeStars, StartThreeStars, sub_49260, sub_492F9
+global PickShotAim, AddStar, sub_487D9, StarCompare, PickThreeStars, StartThreeStars, sub_49260, sub_492F9
 global StopIfFree, GoalieToPuckVec, sub_4B4E9, sub_4C632, sub_4C8BD, asspuckc_chkdir, ChkTwoLinePass, SkateToSpot
 global sub_4E71A, sub_4F99B
 sub_4842A:
@@ -6882,7 +6882,7 @@ mov word [byte eax+03Ah], 0	; 4D92A
 mov word [byte eax+03Ch], 0FFFFh	; 4D930
 pop edx	; 4D936
 ret	; 4D937
-sub_4D938:
+RequestLineChange:
 push dword 18h	; 4D938
 call __CHK	; 4D93D
 push ebx	; 4D942
@@ -6950,7 +6950,7 @@ or bh, 2	; 4DA1E
 mov byte [byte edx+tmflags], bh	; 4DA21
 and byte [sflags], 0F3h	; 4DA24
 or byte [byte eax+045h], 8	; 4DA2B
-call sub_4D938	; 4DA2F
+call RequestLineChange	; 4DA2F
 .x:
 pop edx	; 4DA34
 pop ebx	; 4DA35
@@ -9411,7 +9411,7 @@ mov dword [dword_CC138], eax	; 4F9E2
 inc dword [dword_CC13C]	; 4F9E7
 pop edx	; 4F9ED
 ret	; 4F9EE
-sub_4F9EF:
+PickShotAim:
 push dword 0Ch	; 4F9EF
 call __CHK	; 4F9F4
 push ebx	; 4F9F9
@@ -9551,7 +9551,7 @@ call randomd0	; 4FB84
 mov word [byte ebx+temp3], ax	; 4FB89
 mov edx, ecx	; 4FB8D
 mov eax, ebx	; 4FB8F
-call sub_4F9EF	; 4FB91
+call PickShotAim	; 4FB91
 .5:
 mov esi, dword [dword_CC138]	; 4FB96
 test esi, esi	; 4FB9C

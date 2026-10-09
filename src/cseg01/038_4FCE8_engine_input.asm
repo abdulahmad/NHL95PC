@@ -6,7 +6,7 @@ extern SetLCmode, SetSPA, SetShotMode, ShotMode, __CHK, burst, sflags, gmode2
 extern lchoicetab, byte_DFF3A, checkob, doplayeracc, joysampling, joyqhead, joyqcount, joyqtick
 extern joyrec, gameopts, cont2team, dword_CC0F0, onetimerflag, penshotmode
 extern penshotlive, dword_CCC9C, puckcross_m2, dword_E9A9E, gmode, lcreqchoice, puckstruct
-extern sub_4D938, puckx, pucky, puckvy, puckc, setpassmode, setpersonel, vecdist
+extern RequestLineChange, puckx, pucky, puckvy, puckc, setpassmode, setpersonel, vecdist
 extern DrawPanelLine, BlockShotDive, passmode, changeplayer, restorepl, MouseSetPos, joyqueue, SortCords
 extern vtoa, lastplayer, passdir, passplayer, fodir1, fodir2, c1playernum
 extern c2playernum, cont1team, lcblink, lcblinktime, lcsel, word_CBC60, lcline
@@ -98,7 +98,7 @@ mov dl, ah	; 4FDAA
 and dl, 0FEh	; 4FDAC
 mov byte [byte ebx+tmflags], dl	; 4FDAF
 mov eax, ecx	; 4FDB2
-call sub_4D938	; 4FDB4
+call RequestLineChange	; 4FDB4
 .1:
 test byte [byte ecx+pflags], 40h	; 4FDB9
 setne dl	; 4FDBD

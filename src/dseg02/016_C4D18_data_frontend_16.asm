@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_C4D18 progbits alloc noexec write align=1
-extern TeamList, unk_C020C, unk_C0211, unk_C0216, unk_C021B, unk_C0220, unk_C0225, unk_C022A
-extern unk_C022F, unk_C0234, unk_C0239, unk_C023E, unk_C0243, unk_C0248, unk_C0251, unk_C0258
+extern TeamList, str_ArtHart, str_ArtRoss, str_ArtNorr, str_ArtSelk, str_ArtVezi, str_ArtJenn, str_ArtCald
+extern str_ArtPres, str_ArtConn, str_ArtEasn, str_ArtStan, unk_C0243, unk_C0248, unk_C0251, unk_C0258
 extern unk_C025E, unk_C0265, unk_C026E, unk_C0275, unk_C0280, unk_C028C, unk_C029A, unk_C02A7
 extern unk_C02BC, unk_C02CA, unk_C02D9, unk_C02E9, unk_C0300, unk_C0310, unk_C032B, unk_C0337
 extern unk_C0352, unk_C0362, unk_C0379, unk_C0390, unk_C0397, unk_C04D0, unk_C04D4, unk_C04D8
@@ -133,17 +133,17 @@ db 0CEh,01h,00h,00h,0CFh,01h,00h,00h,0CBh,01h,00h,00h,0CCh,01h,00h,00h
 db 0C9h,01h,00h,00h,0CAh,01h,00h,00h,0D1h,01h,00h,00h,0CDh,01h,00h,00h
 db 0D2h,01h,00h,00h,0D0h,01h,00h,00h,0D3h,01h,00h,00h
 awardart:
-dd unk_C020C
-dd unk_C0211
-dd unk_C0216
-dd unk_C021B
-dd unk_C0220
-dd unk_C0225
-dd unk_C022A
-dd unk_C022F
-dd unk_C0234
-dd unk_C0239
-dd unk_C023E
+dd str_ArtHart
+dd str_ArtRoss
+dd str_ArtNorr
+dd str_ArtSelk
+dd str_ArtVezi
+dd str_ArtJenn
+dd str_ArtCald
+dd str_ArtPres
+dd str_ArtConn
+dd str_ArtEasn
+dd str_ArtStan
 awardnames:
 dd unk_C0243
 dd unk_C0248

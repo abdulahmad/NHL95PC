@@ -14,9 +14,9 @@ global str_Pal4, str_Scrn2, str_Msk1, str_MASK, str_Iff2, str_Title30, str_Mttit
 global str_Cmv, str_Title, str_Pioneer1, str_Pl2, str_Pl1, str_Bkgd3, str_Pioneer2, str_Pioneer4
 global str_Pioneer3, str_FlaD, str_Pion, str_Pio, str_Eaopen, str_Easports, str_Backwin, str_Credits
 global str_Rockditi, str_Shp0, str_OUT, str_NeedKbytesFmt2, str_SfPal1, str_SfPal2, str_PleaseEnterOutputFile, str_Eadesk1d
-global str_Desk, str_Pal5, str_Pointer2, str_Iff3, str_Pause, str_Menubuff3, unk_C020C, str_S1
-global str_errd3, str_errd4, str_backslash, unk_C0211, unk_C0216, unk_C021B, unk_C0220, unk_C0225
-global unk_C022A, unk_C022F, unk_C0234, unk_C0239, unk_C023E, unk_C0243, unk_C0248, unk_C0251
+global str_Desk, str_Pal5, str_Pointer2, str_Iff3, str_Pause, str_Menubuff3, str_ArtHart, str_S1
+global str_errd3, str_errd4, str_backslash, str_ArtRoss, str_ArtNorr, str_ArtSelk, str_ArtVezi, str_ArtJenn
+global str_ArtCald, str_ArtPres, str_ArtConn, str_ArtEasn, str_ArtStan, unk_C0243, unk_C0248, unk_C0251
 global unk_C0258, unk_C025E, unk_C0265, unk_C026E, unk_C0275, unk_C0280, unk_C028C, unk_C029A
 global unk_C02A7, unk_C02BC, unk_C02CA, unk_C02D9, unk_C02E9, unk_C0300, unk_C0310, unk_C032B
 global unk_C0337, unk_C0352, unk_C0362, unk_C0379, unk_C0390, unk_C0397, str_MightyDucks, unk_C03C4
@@ -103,27 +103,27 @@ str_backslash:
 db 05Ch,00h
 str_GameSav2:
 db 067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h,00h
-unk_C020C:
+str_ArtHart:
 db 068h,061h,072h,074h,00h
-unk_C0211:
+str_ArtRoss:
 db 072h,06Fh,073h,073h,00h
-unk_C0216:
+str_ArtNorr:
 db 06Eh,06Fh,072h,072h,00h
-unk_C021B:
+str_ArtSelk:
 db 073h,065h,06Ch,06Bh,00h
-unk_C0220:
+str_ArtVezi:
 db 076h,065h,07Ah,069h,00h
-unk_C0225:
+str_ArtJenn:
 db 06Ah,065h,06Eh,06Eh,00h
-unk_C022A:
+str_ArtCald:
 db 063h,061h,06Ch,064h,00h
-unk_C022F:
+str_ArtPres:
 db 070h,072h,065h,073h,00h
-unk_C0234:
+str_ArtConn:
 db 063h,06Fh,06Eh,06Eh,00h
-unk_C0239:
+str_ArtEasn:
 db 065h,061h,073h,06Eh,00h
-unk_C023E:
+str_ArtStan:
 db 073h,074h,061h,06Eh,00h
 unk_C0243:
 db 048h,061h,072h,074h,00h
