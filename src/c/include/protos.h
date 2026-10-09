@@ -433,5 +433,30 @@ void ResetGameVars(void);
 int StartPreGame(int mode);
 void assintrostand(Player *p);  /* 4842A */               
 void SetRinkObject(int i, int v);  /* 614C2 */            
+void RunGameFrames(int n);  /* 1149A */                   
+int HandleHotKey(int key);
+void ClockTick(void);
+void DoGameFrame(void);
+void MarkTwoLinePlayers(Player *pk);  /* 55C6F */         
+int QuickShotChk(Player *p);  /* 6427F */                 
+void SortNonDefPlayers(short side, signed char *out, short *keys);  /* 6455F */
+void __cdecl sub_93540(int n, int *keys, int *idx);  /* sort library */
+void SortPlayersByPos(short side, signed char *out, short *keys, char pos);  /* 644A8 */
+void LoadCupFinalSeries(void);  /* 15B76 */               
+void LoadScheduleDB(int *db);
+void InitSpeechSlots(int size);  /* 83459 */              
+int __cdecl sub_8CC70(char *name, int size, int flags);  /* memory library: allocate */
+int __cdecl sub_8DBD4(int buf);  /* memory library */     
+void InitSpeech(unsigned char id, int size, int copybuf, int copylen);  /* 8357A */
+int __cdecl sub_8E4C0(void (*fn)(void));  /* timer library: add tick handler */
+void BuildSavedGameLabels(void);  /* 1D518 */             
+void sfx(int id);  /* 59884 */                            
+void sub_8F61D(int id);  /* sound library: play effect */ 
+void assrefatdot(Player *p);  /* 4DFF7 */                 
+int ChkTwoLinePass(Player *p);  /* 4DD51 */               
+void SetTeamGoalie(short side, short g);  /* 672F9 */     
+void DeleteTempDatabases(void);  /* 7125C */              
+int j_unlink(char *path);  /* CRT unlink thunk */         
+void SetSideControls(void);  /* 8B85B */                  
 
 #endif

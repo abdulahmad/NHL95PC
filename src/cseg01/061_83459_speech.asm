@@ -15,6 +15,10 @@ global InitSpeechSlots, ResetSampleReq, InitSpeech, ShutdownSpeech, SpeechIsInit
 global SpeechStopQueue, MusicChanCmd3, MusicChanReset, Swap16, ReadBE24, ReadCString, OpenSpeechBank, SpeechSlotSize
 global ReadSpeechSample, LoadSpeechSlot, PlaceSpeechSlot, StrEqNoCase, FindFreeSpeechSlot, FindLoadedSpeechSlot, FindSpeechSlot, SpeechSlotLoaded
 global IsSampleRequested, RequestSample, FreeUnrequestedSamples, MoveSampleMem, CompactSpeechSlot, MakeSampleRoom, EnsureSampleRoom, CompactSpeechMem
+; C: src/c/061_83459_speech/InitSpeechSlots.c
+%ifdef CBUILD
+%include "c/061_83459_speech/InitSpeechSlots.inc"
+%else
 InitSpeechSlots:
 push dword 1Ch	; 83459
 call __CHK	; 8345E
@@ -66,6 +70,7 @@ pop edx	; 8351C
 pop ecx	; 8351D
 pop ebx	; 8351E
 ret	; 8351F
+%endif ; C
 ; C: src/c/061_83459_speech/ResetSampleReq.c
 %ifdef CBUILD
 %include "c/061_83459_speech/ResetSampleReq.inc"
@@ -97,6 +102,10 @@ pop edx	; 83577
 pop ebx	; 83578
 ret	; 83579
 %endif ; C
+; C: src/c/061_83459_speech/InitSpeech.c
+%ifdef CBUILD
+%include "c/061_83459_speech/InitSpeech.inc"
+%else
 InitSpeech:
 push dword 1Ch	; 8357A
 call __CHK	; 8357F
@@ -148,6 +157,7 @@ add esp, byte 4	; 83636
 pop edi	; 83639
 pop esi	; 8363A
 ret	; 8363B
+%endif ; C
 ShutdownSpeech:
 push dword 20h	; 8363C
 call __CHK	; 83641

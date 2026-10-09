@@ -6330,6 +6330,10 @@ call sub_8EA00	; 8B848
 add esp, byte 4	; 8B84D
 add esp, 0F4h	; 8B850
 jmp near POSeedRound2_x	; 8B856
+; C: src/c/064_86696_season_playoffs/SetSideControls.c
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/SetSideControls.inc"
+%else
 SetSideControls:
 push dword 10h	; 8B85B
 call __CHK	; 8B860
@@ -6391,6 +6395,7 @@ pop ebp	; 8B92B
 pop edi	; 8B92C
 pop edx	; 8B92D
 ret	; 8B92E
+%endif ; C
 WriteCurModeState:
 push dword 4	; 8B92F
 call __CHK	; 8B934

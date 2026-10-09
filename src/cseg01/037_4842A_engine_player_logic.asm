@@ -7467,6 +7467,10 @@ pop edx	; 4DFF4
 pop ebx	; 4DFF5
 ret	; 4DFF6
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/assrefatdot.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assrefatdot.inc"
+%else
 assrefatdot:
 push dword 0Ch	; 4DFF7
 call __CHK	; 4DFFC
@@ -7525,6 +7529,7 @@ mov word [byte ebx+Xvel], ax	; 4E0B6
 pop edx	; 4E0BA
 pop ebx	; 4E0BB
 ret	; 4E0BC
+%endif ; C
 assreffollow:
 push dword 18h	; 4E0BD
 call __CHK	; 4E0C2

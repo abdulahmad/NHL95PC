@@ -3518,6 +3518,10 @@ add eax, 80h	; 55C61
 dec si	; 55C66
 jne short ChkOffsides.18	; 55C68
 jmp near checkob_ret5	; 55C6A
+; C: src/c/040_53294_engine_physics_ai/MarkTwoLinePlayers.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/MarkTwoLinePlayers.inc"
+%else
 MarkTwoLinePlayers:
 push dword 0Ch	; 55C6F
 call __CHK	; 55C74
@@ -3581,6 +3585,7 @@ jne short MarkTwoLinePlayers.7	; 55D23
 pop edx	; 55D25
 pop ebx	; 55D26
 ret	; 55D27
+%endif ; C
 ; ChkShotStat: 93G penalty93_2 ChkShotStat. If the shot flag (gmode2 bit 4) was set: clear it, crowdlevel +100,
 ;   shot counts for the shooter and the goalie.
 ChkShotStat:

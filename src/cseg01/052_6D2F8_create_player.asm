@@ -5197,6 +5197,10 @@ pop edx	; 71258
 pop ecx	; 71259
 pop ebx	; 7125A
 ret	; 7125B
+; C: src/c/052_6D2F8_create_player/DeleteTempDatabases.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/DeleteTempDatabases.inc"
+%else
 DeleteTempDatabases:
 push dword 10h	; 7125C
 call __CHK	; 71261
@@ -5249,6 +5253,7 @@ pop edx	; 7132F
 pop ecx	; 71330
 pop ebx	; 71331
 ret	; 71332
+%endif ; C
 SwapSelectedPlayers:
 push dword 114h	; 71333
 call __CHK	; 71338

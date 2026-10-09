@@ -39,6 +39,10 @@ global CanRemovePlayer, SortPlayersByPos, SortNonDefPlayers, BuildDefaultLines, 
 global PickForLineSlot, PickGoalie, PickExtraSkater, RefillLineSlots, RemoveFromLines, SetupTeamLines, NormalizeDressFlags, DitherRect
 global LoadTeamPPV, DrawTextOverlay, CloseTextOverlay, UpdateTextOverlay, DrawCallBanner, ShowGoalieBanner, SetTeamGoalie, LoadTeamPalette
 global ReplayRecordReset, ReplayFirstFrame, ReplayPrevFrame, ReplayStep, DrawRinkSideObjects, updatereplay
+; C: src/c/046_644A8_engine_display/SortPlayersByPos.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/SortPlayersByPos.inc"
+%else
 SortPlayersByPos:
 push dword 24h	; 644A8
 call __CHK	; 644AD
@@ -107,6 +111,11 @@ pop ebp	; 6455B
 pop edi	; 6455C
 pop esi	; 6455D
 ret	; 6455E
+%endif ; C
+; C: src/c/046_644A8_engine_display/SortNonDefPlayers.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/SortNonDefPlayers.inc"
+%else
 SortNonDefPlayers:
 push dword 24h	; 6455F
 call __CHK	; 64564
@@ -176,6 +185,7 @@ pop edi	; 64610
 pop esi	; 64611
 pop ecx	; 64612
 ret	; 64613
+%endif ; C
 BuildDefaultLines:
 push dword 0F4h	; 64614
 call __CHK	; 64619

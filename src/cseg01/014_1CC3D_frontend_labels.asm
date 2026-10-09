@@ -668,6 +668,10 @@ pop edx	; 1D514
 pop ecx	; 1D515
 pop ebx	; 1D516
 ret	; 1D517
+; C: src/c/014_1CC3D_frontend_labels/BuildSavedGameLabels.c
+%ifdef CBUILD
+%include "c/014_1CC3D_frontend_labels/BuildSavedGameLabels.inc"
+%else
 BuildSavedGameLabels:
 push dword 10h	; 1D518
 call __CHK	; 1D51D
@@ -718,6 +722,7 @@ pop edx	; 1D5D1
 pop ecx	; 1D5D2
 pop ebx	; 1D5D3
 ret	; 1D5D4
+%endif ; C
 StrLenToDot:
 push dword 0Ch	; 1D5D5
 call __CHK	; 1D5DA
