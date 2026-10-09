@@ -36,7 +36,7 @@ CINCS := $(addprefix build/,$(sort $(shell grep -ho '^%include "c/[^"]*\.inc"' s
 endif
 CHDRS := $(wildcard src/c/include/*.h)
 cinfo:
-	@echo "CBUILD=$(CBUILD), $(words $(CINCS)) C functions spliced"
+	@echo "CBUILD=$(CBUILD), $(words $(CINCS)) C files spliced"
 
 .SECONDEXPANSION:
 .PRECIOUS: build/c/%.obj build/c/%.inc

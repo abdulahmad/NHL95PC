@@ -25,7 +25,8 @@ CKEYWORDS = set('auto break case char const continue default do double else enum
                 'register return short signed sizeof static struct switch typedef union unsigned void volatile while '
                 'main near far huge interrupt cdecl pascal fortran syscall'.split())
 # C type overrides for struct fields (name -> type); default from the size tag
-CTYPE = {'tmptr': 'struct Team *', 'optmptr': 'struct Team *', 'tmsort': 'struct Player *',
+CTYPE = {'legstr': 'unsigned char',   # StopNA: xor ebx,ebx / mov bl,[eax+legstr]
+         'tmptr': 'struct Team *', 'optmptr': 'struct Team *', 'tmsort': 'struct Player *',
          'tmroster': 'unsigned char *', 'tmlines': 'unsigned char *', 'tmplstats': 'short *', 'tmglstats': 'short *'}
 TYPES = {'b': 'signed char', 'w': 'short', 'd': 'int'}
 SIZES = {'b': 1, 'w': 2, 'd': 4}
