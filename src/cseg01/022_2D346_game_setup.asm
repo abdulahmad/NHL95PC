@@ -2308,6 +2308,10 @@ pop edx	; 2F57C
 pop ecx	; 2F57D
 pop ebx	; 2F57E
 ret	; 2F57F
+; C: src/c/022_2D346_game_setup/PrintClampedText.c
+%ifdef CBUILD
+%include "c/022_2D346_game_setup/PrintClampedText.inc"
+%else
 PrintClampedText:
 push dword 18h	; 2F580
 call __CHK	; 2F585
@@ -2351,6 +2355,7 @@ pop edi	; 2F5EA
 pop esi	; 2F5EB
 pop ecx	; 2F5EC
 ret	; 2F5ED
+%endif ; C
 GameStatsScreen:
 push dword 3A4h	; 2F5EE
 call __CHK	; 2F5F3

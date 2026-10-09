@@ -1527,6 +1527,10 @@ pop edi	; 1756F
 pop esi	; 17570
 pop ecx	; 17571
 ret	; 17572
+; C: src/c/007_1609F_title_intro/PrintCenteredText.c
+%ifdef CBUILD
+%include "c/007_1609F_title_intro/PrintCenteredText.inc"
+%else
 PrintCenteredText:
 push dword 24h	; 17573
 call __CHK	; 17578
@@ -1573,6 +1577,7 @@ pop esi	; 175DE
 pop ecx	; 175DF
 pop ebx	; 175E0
 ret	; 175E1
+%endif ; C
 ; C: src/c/007_1609F_title_intro/PrintShadowText.c
 %ifdef CBUILD
 %include "c/007_1609F_title_intro/PrintShadowText.inc"

@@ -546,6 +546,10 @@ pop ebp	; 3468B
 pop edi	; 3468C
 pop esi	; 3468D
 ret 10h	; 3468E
+; C: src/c/027_33FFD_calendar/CalNextMonth.c
+%ifdef CBUILD
+%include "c/027_33FFD_calendar/CalNextMonth.inc"
+%else
 CalNextMonth:
 push dword 10h	; 34691
 call __CHK	; 34696
@@ -576,6 +580,11 @@ pop edi	; 346FA
 pop ecx	; 346FB
 pop ebx	; 346FC
 ret	; 346FD
+%endif ; C
+; C: src/c/027_33FFD_calendar/CalPrevMonth.c
+%ifdef CBUILD
+%include "c/027_33FFD_calendar/CalPrevMonth.inc"
+%else
 CalPrevMonth:
 push dword 0Ch	; 346FE
 call __CHK	; 34703
@@ -603,6 +612,7 @@ mov dword [calsel], 0FFFFFFFFh	; 3475E
 pop ecx	; 34768
 pop ebx	; 34769
 ret	; 3476A
+%endif ; C
 ; C: src/c/027_33FFD_calendar/CalReturn.c
 %ifdef CBUILD
 %include "c/027_33FFD_calendar/CalReturn.inc"

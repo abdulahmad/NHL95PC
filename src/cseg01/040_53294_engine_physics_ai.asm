@@ -6371,6 +6371,10 @@ call assreplace	; 58077
 .40:
 add esp, byte 14h	; 5807C
 jmp near dopass_ret6	; 5807F
+; C: src/c/040_53294_engine_physics_ai/newcheck.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/newcheck.inc"
+%else
 newcheck:
 push dword 8	; 58084
 call __CHK	; 58089
@@ -6407,6 +6411,7 @@ movsx eax, dx	; 580EB
 call sfx	; 580EE
 pop edx	; 580F3
 ret	; 580F4
+%endif ; C
 ; checkcoll: 93G hockey93_03 checkcoll. eax = object: wall collision (checkwallcoll) at the hot spot and the stick end,
 ;   then player collisions (checkplcoll). Called from updateplayers.
 checkcoll:

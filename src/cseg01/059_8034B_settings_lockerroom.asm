@@ -2680,6 +2680,10 @@ pop esi	; 82618
 pop ecx	; 82619
 pop ebx	; 8261A
 ret	; 8261B
+; C: src/c/059_8034B_settings_lockerroom/DrawSoundCardDlg.c
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/DrawSoundCardDlg.inc"
+%else
 DrawSoundCardDlg:
 push dword 40h	; 8261C
 call __CHK	; 82621
@@ -2724,6 +2728,7 @@ pop edx	; 8268C
 pop ecx	; 8268D
 pop ebx	; 8268E
 ret	; 8268F
+%endif ; C
 DrawSoundCardOpts:
 push dword 20h	; 82690
 call __CHK	; 82695

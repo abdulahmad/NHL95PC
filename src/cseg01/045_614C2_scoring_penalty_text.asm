@@ -2952,6 +2952,10 @@ pop edx	; 63926
 pop ecx	; 63927
 pop ebx	; 63928
 ret	; 63929
+; C: src/c/045_614C2_scoring_penalty_text/releasepl.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/releasepl.inc"
+%else
 releasepl:
 push dword 0Ch	; 6392A
 call __CHK	; 6392F
@@ -2985,6 +2989,7 @@ or byte [byte ebx+045h], 4	; 6399D
 pop ecx	; 639A1
 pop ebx	; 639A2
 ret	; 639A3
+%endif ; C
 chkatop:
 push dword 8	; 639A4
 call __CHK	; 639A9
@@ -3018,6 +3023,10 @@ inc word [byte eax+tmATOP]	; 639F3
 .x:
 pop edx	; 639F7
 ret	; 639F8
+; C: src/c/045_614C2_scoring_penalty_text/CheckAndReleasePlayer.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/CheckAndReleasePlayer.inc"
+%else
 CheckAndReleasePlayer:
 push dword 0Ch	; 639F9
 call __CHK	; 639FE
@@ -3042,6 +3051,7 @@ call sfx	; 63A2F
 pop ecx	; 63A34
 pop ebx	; 63A35
 ret	; 63A36
+%endif ; C
 ProcessPenaltyList:
 push dword 1Ch	; 63A37
 call __CHK	; 63A3C
@@ -3860,6 +3870,10 @@ mov word [foy], si	; 6442F
 pop esi	; 64436
 pop ebx	; 64437
 ret	; 64438
+; C: src/c/045_614C2_scoring_penalty_text/EndPenaltyShot.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/EndPenaltyShot.inc"
+%else
 EndPenaltyShot:
 push dword 0Ch	; 64439
 call __CHK	; 6443E
@@ -3887,3 +3901,4 @@ call assreplace	; 644A0
 pop edx	; 644A5
 pop ecx	; 644A6
 ret	; 644A7
+%endif ; C

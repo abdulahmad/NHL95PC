@@ -6,7 +6,7 @@
 void CheckAndReleasePlayer(Team *t, short i)
 {
     if ((t->tmpdst[i] & 0x3FFF) <= 5) {
-        if (t->tmpdst[i] == 0) releasepl(t);
+        if (t->tmpdst[i] == 0) releasepl(t, i);
         sfx(0x97);
     }
 }

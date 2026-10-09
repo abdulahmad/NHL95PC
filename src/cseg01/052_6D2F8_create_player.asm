@@ -3491,6 +3491,10 @@ inc edi	; 6FBDD
 cmp edi, byte 0Bh	; 6FBDE
 jl short DrawGloveField.3	; 6FBE1
 jmp near DrawShootsField_tail	; 6FBE3
+; C: src/c/052_6D2F8_create_player/AskLeftRight.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/AskLeftRight.inc"
+%else
 AskLeftRight:
 push dword 28h	; 6FBE8
 call __CHK	; 6FBED
@@ -3541,6 +3545,7 @@ pop esi	; 6FC5C
 pop ecx	; 6FC5D
 pop ebx	; 6FC5E
 ret	; 6FC5F
+%endif ; C
 EditSkaterRating:
 push dword 0D4h	; 6FC60
 call __CHK	; 6FC65

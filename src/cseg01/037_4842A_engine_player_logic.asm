@@ -7194,6 +7194,10 @@ mov eax, 0FFFFFB00h	; 4DCCD
 .15:
 mov word [word_E0028], ax	; 4DCD2
 jmp near ass_popx	; 4DCD8
+; C: src/c/037_4842A_engine_player_logic/a2offsides.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/a2offsides.inc"
+%else
 a2offsides:
 push dword 8	; 4DCDD
 call __CHK	; 4DCE2
@@ -7228,6 +7232,7 @@ call AddPenalty	; 4DD45
 mov eax, 1	; 4DD4A
 pop edx	; 4DD4F
 ret	; 4DD50
+%endif ; C
 ChkTwoLinePass:
 push dword 10h	; 4DD51
 call __CHK	; 4DD56

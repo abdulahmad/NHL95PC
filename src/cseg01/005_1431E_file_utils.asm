@@ -491,6 +491,10 @@ sub ebx, edx	; 1481A
 mov ecx, 0Bh	; 1481C
 mov edx, esi	; 14821
 jmp short ReadTeamRec_x	; 14823
+; C: src/c/005_1431E_file_utils/DiskSpaceShort.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/DiskSpaceShort.inc"
+%else
 DiskSpaceShort:
 push dword 20h	; 14825
 call __CHK	; 1482A
@@ -549,6 +553,7 @@ pop esi	; 148A1
 pop ecx	; 148A2
 pop ebx	; 148A3
 ret	; 148A4
+%endif ; C
 CheckGameDiskSpace:
 push dword 88h	; 148A5
 call __CHK	; 148AA

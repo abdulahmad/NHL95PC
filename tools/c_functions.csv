@@ -9,6 +9,7 @@ assinsert,12011,35,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/assinsert.c
 assreplace,11FF4,29,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/assreplace.c,matched,
 FileExists,142E7,55,004_13320_asset_loading,src/c/004_13320_asset_loading/FileExists.c,matched,
 LoadTransparentRinkEndOverlay,13A2F,98,004_13320_asset_loading,src/c/004_13320_asset_loading/LoadTransparentRinkEndOverlay.c,matched,
+DiskSpaceShort,14825,128,005_1431E_file_utils,src/c/005_1431E_file_utils/DiskSpaceShort.c,matched,
 FileClose,1457C,38,005_1431E_file_utils,src/c/005_1431E_file_utils/FileClose.c,matched,
 FileCreate,14566,22,005_1431E_file_utils,src/c/005_1431E_file_utils/FileCreate.c,matched,
 GetLeagueDBSizes,149BF,97,005_1431E_file_utils,src/c/005_1431E_file_utils/GetLeagueDBSizes.c,matched,
@@ -19,6 +20,7 @@ ReadSchedGame,147A0,41,005_1431E_file_utils,src/c/005_1431E_file_utils/ReadSched
 WriteKeyRec,14654,23,005_1431E_file_utils,src/c/005_1431E_file_utils/WriteKeyRec.c,matched,
 AnyInputPressed,1600C,102,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/AnyInputPressed.c,nonmatching,draft: asm keeps result in esi and saves 4 regs; ours uses edx
 ReadBE32,16072,45,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/ReadBE32.c,matched,
+PrintCenteredText,17573,111,007_1609F_title_intro,src/c/007_1609F_title_intro/PrintCenteredText.c,matched,
 PrintShadowText,175E2,84,007_1609F_title_intro,src/c/007_1609F_title_intro/PrintShadowText.c,matched,
 SetTextColors,174C2,22,007_1609F_title_intro,src/c/007_1609F_title_intro/SetTextColors.c,matched,
 TextGridFree,17756,40,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGridFree.c,matched,
@@ -27,6 +29,7 @@ TextGridOpen,17711,69,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGrid
 TextGridPut,17793,131,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGridPut.c,nonmatching,original keeps y in esi from entry and builds y*36 as ((y<<3)+y)<<2 in edx; this draft uses eax as the temp. 10-min cap
 DeskSetExit1,179B6,26,008_17816_output_files,src/c/008_17816_output_files/DeskSetExit1.c,matched,
 DeskBackToGame,1A5A1,16,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskBackToGame.c,matched,
+DeskReloadGame,1A534,109,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskReloadGame.c,matched,
 DeskToSportsDesk,1A5B1,35,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskToSportsDesk.c,matched,
 ClearPanelPenalties,1CBD8,101,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/ClearPanelPenalties.c,nonmatching,"draft: zero kept in esi (asm ecx), saves esi instead of ecx"
 MakeGSummaryPath,1C807,75,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/MakeGSummaryPath.c,matched,
@@ -35,7 +38,10 @@ NullBlit,1D019,11,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/Null
 NullFunc_1D024,1D024,11,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/NullFunc_1D024.c,matched,
 StrLenToDot,1D5D5,59,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/StrLenToDot.c,nonmatching,size differs (34 vs 59): the original block probably runs past the ret (db 90h pad and more); check the label end before retrying
 StrPrefixDiffers,1D6BE,42,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/StrPrefixDiffers.c,matched,
+InitMenuRemap,1FAA7,117,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/InitMenuRemap.c,nonmatching,draft: asm calls __STOSB for the 15h-byte clear (inline memset helper); default-flag memset calls memset_
 FreeCalendarIfLowMem,212C6,56,016_20016_easn_stats,src/c/016_20016_easn_stats/FreeCalendarIfLowMem.c,matched,
+PrintClampedText,2F580,110,022_2D346_game_setup,src/c/022_2D346_game_setup/PrintClampedText.c,matched,
+AskDatabaseChoice,2FDD1,120,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/AskDatabaseChoice.c,nonmatching,"draft: addresses built in edx, asm uses eax"
 CritErrHandler,3149D,23,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/CritErrHandler.c,matched,
 DlgReturnZero,2FED2,13,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DlgReturnZero.c,matched,
 DrawButtons,30AE2,52,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawButtons.c,matched,
@@ -48,12 +54,15 @@ MenuExit,3270B,16,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MenuExit.c,match
 SaveModeState,3271B,134,024_31AB5_main_desk,src/c/024_31AB5_main_desk/SaveModeState.c,matched,
 DemoSetupStub,3371C,11,025_32DA9_temp_files,src/c/025_32DA9_temp_files/DemoSetupStub.c,matched,
 MenuLeagueHilights,3366F,79,025_32DA9_temp_files,src/c/025_32DA9_temp_files/MenuLeagueHilights.c,matched,
+CalNextMonth,34691,109,027_33FFD_calendar,src/c/027_33FFD_calendar/CalNextMonth.c,matched,
+CalPrevMonth,346FE,109,027_33FFD_calendar,src/c/027_33FFD_calendar/CalPrevMonth.c,matched,
 CalReturn,3476B,30,027_33FFD_calendar,src/c/027_33FFD_calendar/CalReturn.c,matched,
 RestoreGridCellBg,37E5B,75,028_35FB9_import_export,src/c/028_35FB9_import_export/RestoreGridCellBg.c,matched,
 ReadLeagueTeamEntry,3A31E,41,029_380E9_league_setup,src/c/029_380E9_league_setup/ReadLeagueTeamEntry.c,matched,
 TeamSelCancel,38B3A,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelCancel.c,matched,
 TeamSelDone,38B25,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelDone.c,matched,
 WriteTeamRec,3A2B8,54,029_380E9_league_setup,src/c/029_380E9_league_setup/WriteTeamRec.c,matched,
+DrawTradeRow,3E7B3,130,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/DrawTradeRow.c,nonmatching,"draft: row offset in ecx vs eax, add order; 1 byte longer"
 TradeCancel,3EF27,21,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeCancel.c,matched,
 TradeRosterCmp,3FEF0,98,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeRosterCmp.c,matched,
 FmtFromLeague,41171,87,033_40183_trades,src/c/033_40183_trades/FmtFromLeague.c,matched,
@@ -71,6 +80,7 @@ NextPathPoint,4F99B,84,037_4842A_engine_player_logic,src/c/037_4842A_engine_play
 SetLCmode,4D9FC,59,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/SetLCmode.c,matched,
 StartFaceoffLineChange,4DA37,68,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StartFaceoffLineChange.c,matched,
 StopIfFree,4A80E,36,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StopIfFree.c,matched,
+a2offsides,4DCDD,116,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/a2offsides.c,matched,
 assdopen,4AFFB,50,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assdopen.c,matched,
 assexit,4D509,31,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assexit.c,matched,
 puckflip,4DFA4,83,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/puckflip.c,matched,
@@ -80,6 +90,7 @@ puckunflip,4D907,49,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_
 rtss,4F990,11,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/rtss.c,matched,
 Acheck,4FFAE,64,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/Acheck.c,matched,
 CenterMouse,50ADE,32,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CenterMouse.c,matched,
+getlchoice,50908,109,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/getlchoice.c,nonmatching,draft: asm loads tmptr into edx first and computes the tmap difference in ax; ours keeps p in eax
 holdplayer,503CD,103,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/holdplayer.c,matched,
 joyq_flush,4FD47,27,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/joyq_flush.c,matched,
 joyq_peek,4FD62,44,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/joyq_peek.c,matched,
@@ -94,7 +105,9 @@ Findhittype,579FF,63,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_
 Sweepcheck,532A2,27,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/Sweepcheck.c,matched,
 ToFixed,53294,14,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ToFixed.c,matched,
 TryBlockShot,534BB,124,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/TryBlockShot.c,nonmatching,"registers only: original p in ecx, n in ebx, gmode2 temp in edx; this draft p in ebx, n in edx. 10-min cap"
+newcheck,58084,113,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/newcheck.c,matched,
 passmode,5514E,97,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/passmode.c,matched,
+puckIChk,56E52,125,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/puckIChk.c,nonmatching,"draft: asm keeps |x| work in ebx (saves ebx, frame 8); ours saves edx"
 setpassmode,551AF,32,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/setpassmode.c,matched,
 CrowdFadeOut,597E3,128,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/CrowdFadeOut.c,matched,
 CrowdNoiseReset,59863,33,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/CrowdNoiseReset.c,matched,
@@ -145,14 +158,16 @@ skateto,5E93B,476,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/EvadeP
 dostop,5F745,229,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/dostop.c,matched,
 goalieacc,5F8B2,216,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/goalieacc.c,matched,
 playeracc,5EDAD,673,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/playeracc.c,matched,
-CheckAndReleasePlayer,639F9,62,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/CheckAndReleasePlayer.c,nonmatching,original keeps i in edx and the masked time in cx (push ecx); this draft reuses dx. 10-min cap
+CheckAndReleasePlayer,639F9,62,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/CheckAndReleasePlayer.c,matched,original keeps i in edx and the masked time in cx (push ecx); this draft reuses dx. 10-min cap
 ClearPenaltyBuffer,63D3C,45,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/ClearPenaltyBuffer.c,matched,
 CountShotOnGoal,64338,96,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/CountShotOnGoal.c,matched,
+EndPenaltyShot,64439,111,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/EndPenaltyShot.c,matched,
 FlushGSumQueue,61B85,58,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/FlushGSumQueue.c,matched,
 GameTimeStamp,62CD7,34,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/GameTimeStamp.c,matched,
 SetBoxDoorObject,61576,44,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetBoxDoorObject.c,matched,
 SetPA,62EA2,71,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetPA.c,matched,
 chkatop,639A4,85,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/chkatop.c,nonmatching,original reads the puck y into dx (push edx) and t into ax; this draft uses ax for y. 10-min cap
+releasepl,6392A,122,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/releasepl.c,matched,
 updatePPTeamTime,63B57,46,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/updatePPTeamTime.c,matched,
 CloseTextOverlay,66DDA,44,046_644A8_engine_display,src/c/046_644A8_engine_display/CloseTextOverlay.c,matched,
 NormalizeDressFlags,65B48,59,046_644A8_engine_display,src/c/046_644A8_engine_display/NormalizeDressFlags.c,matched,
@@ -165,8 +180,10 @@ InputRemove,6B47C,63,050_6B093_joystick_calibration,src/c/050_6B093_joystick_cal
 CarTeamRecPtr,6CB6B,37,051_6C2F9_database_save,src/c/051_6C2F9_database_save/CarTeamRecPtr.c,matched,
 DrawDatabaseName,6D256,67,051_6C2F9_database_save,src/c/051_6C2F9_database_save/DrawDatabaseName.c,matched,
 DrawRosterPanel,6D299,95,051_6C2F9_database_save,src/c/051_6C2F9_database_save/DrawRosterPanel.c,matched,
+DrawRosterTitle,6CEFB,116,051_6C2F9_database_save,src/c/051_6C2F9_database_save/DrawRosterTitle.c,nonmatching,draft: x/y params in esi/edi swapped vs asm
 KeyDbPtr,6CBB7,21,051_6C2F9_database_save,src/c/051_6C2F9_database_save/KeyDbPtr.c,matched,
 TeamRecPtr,6CB90,39,051_6C2F9_database_save,src/c/051_6C2F9_database_save/TeamRecPtr.c,matched,
+AskLeftRight,6FBE8,120,052_6D2F8_create_player,src/c/052_6D2F8_create_player/AskLeftRight.c,matched,
 ComparePlayerEntry,6D78B,98,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ComparePlayerEntry.c,matched,
 CopyRoster1Rec,6DE4C,50,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CopyRoster1Rec.c,matched,
 CountSelected,6DA88,59,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CountSelected.c,nonmatching,original keeps the list pointer in edx and the count in eax; this draft swaps them. 10-min cap
@@ -189,12 +206,14 @@ GadgetHitTest,7E8E5,89,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/G
 GadgetStub0,7E032,13,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/GadgetStub0.c,matched,
 NudgeRinkScroll,7FC12,31,058_7F724_highlights,src/c/058_7F724_highlights/NudgeRinkScroll.c,matched,
 TeamFromHiName,7FC5C,70,058_7F724_highlights,src/c/058_7F724_highlights/TeamFromHiName.c,matched,
+DrawSoundCardDlg,8261C,116,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/DrawSoundCardDlg.c,matched,
 LockerHitTest,81520,79,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerHitTest.c,matched,
 SoundCardHitTest,827B3,82,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/SoundCardHitTest.c,matched,
 ClearSpeechSlot,833C5,53,060_8291E_sound_config,src/c/060_8291E_sound_config/ClearSpeechSlot.c,matched,
 FindFreeSpeechSlot,83E6D,63,061_83459_speech,src/c/061_83459_speech/FindFreeSpeechSlot.c,nonmatching,"registers only: speechbank in ebx in the original, ecx here. 10-min cap"
 FindLoadedSpeechSlot,83EAC,63,061_83459_speech,src/c/061_83459_speech/FindLoadedSpeechSlot.c,nonmatching,"registers only: speechbank in ebx in the original, ecx here. 10-min cap"
 FindSpeechSlot,83EEB,74,061_83459_speech,src/c/061_83459_speech/FindSpeechSlot.c,matched,
+FreeUnrequestedSamples,84036,115,061_83459_speech,src/c/061_83459_speech/FreeUnrequestedSamples.c,nonmatching,"draft: asm copies the result to ebx (mov ebx,ecx) before the count update; ours returns ecx"
 MakeSampleRoom,84205,106,061_83459_speech,src/c/061_83459_speech/MakeSampleRoom.c,matched,
 MusicChanCmd3,8378C,28,061_83459_speech,src/c/061_83459_speech/MusicChanCmd3.c,matched,
 ReadCString,8385F,56,061_83459_speech,src/c/061_83459_speech/ReadCString.c,matched,

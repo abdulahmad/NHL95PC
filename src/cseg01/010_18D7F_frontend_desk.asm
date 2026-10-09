@@ -1572,6 +1572,10 @@ push ebx	; 1A527
 mov ecx, dword [pointerspr]	; 1A528
 push ecx	; 1A52E
 jmp near SportsDesk.33	; 1A52F
+; C: src/c/010_18D7F_frontend_desk/DeskReloadGame.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/DeskReloadGame.inc"
+%else
 DeskReloadGame:
 push dword 1Ch	; 1A534
 call __CHK	; 1A539
@@ -1604,6 +1608,7 @@ pop edx	; 1A59D
 pop ecx	; 1A59E
 pop ebx	; 1A59F
 ret	; 1A5A0
+%endif ; C
 ; C: src/c/010_18D7F_frontend_desk/DeskBackToGame.c
 %ifdef CBUILD
 %include "c/010_18D7F_frontend_desk/DeskBackToGame.inc"
