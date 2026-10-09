@@ -111,8 +111,10 @@ ENG = [(0x47C31, 0x6A033), (0x8BEDB, 0x8C94C)]
 eng = [a for a in _FEAT['pc'] if any(lo <= a < hi for lo, hi in ENG)]
 eg = [a for a in eng if a in SM and SM[a]['src'] != 'PC-new']; ep = [a for a in eng if a in SM and SM[a]['src'] == 'PC-new']
 P('\nEngine region (47C31-6A033, 8BEDB-8C94C): %d functions (IDA procs + recovered); %d named from Genesis (%.0f%%), %d labelled PC-new assignments, total labelled %.0f%%.\n' % (len(eng), len(eg), 100.0 * len(eg) / len(eng), len(ep), 100.0 * (len(eg) + len(ep)) / len(eng)))
-P('Field map: %s.\n' % ', '.join('%s=%s' % (k, '/'.join(v)) for k, v in SEMJ['fieldmap'].items()))
-P('Global map: %s.\n' % ', '.join('%s=%s' % (k, '/'.join(v)) for k, v in SEMJ['globalmap'].items()))
+# field/global maps: the curated tables (kept current by rename_symbol.py), not the first matcher pass in sem_matches.json
+_FM = list(csv.DictReader(open('tools/struct_fieldmap.csv'))); _GM = list(csv.DictReader(open('tools/global_map.csv')))
+P('Field map (tools/struct_fieldmap.csv, %d fields; 93G offset -> PC offset): %s.\n' % (len(_FM), ', '.join('%s %s=%s' % (r['genesis_field'], r['genesis_offset'], r['pc_offset']) for r in _FM)))
+P('Global map (tools/global_map.csv, %d names, current names after the segment sessions): %s.\n' % (len(_GM), ', '.join('%s=%s' % (r['genesis_symbol'], r['pc_address']) for r in sorted(_GM, key=lambda r: r['pc_address']))))
 top = sorted([(a, v) for a, v in SM.items() if v['src'] != 'PC-new' and v['conf'] in ('high', 'medium')], key=lambda t: (t[1]['conf'] != 'high', -t[1].get('score', 0)))[:30]
 P('Notable identifications:\n'); P('| pc | name | source | conf | method | key evidence |'); P('|---|---|---|---|---|---|')
 for a, v in top: P('| %X | %s | %s | %s | %s | %s |' % (a, v['name'], GFILE.get(v['name'].replace('_body', ''), v['src']), v['conf'], v['method'], v['evidence'][:150].replace('|', '/')))

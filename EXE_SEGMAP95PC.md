@@ -376,18 +376,19 @@ Data counterparts: C1B40 PenaltyList (data94) names (penalty name strings Roughi
 
 ## 7. Name map (`name_map_94.csv`)
 
-Rows: 949. By source game / confidence:
+Rows: 966. By source game / confidence:
 
-* 93G / high: 27
-* 93G / low: 33
-* 93G / medium: 54
+* 93G / high: 39
+* 93G / low: 30
+* 93G / medium: 55
 * 94G / high: 2
 * 94G / low: 2
-* 94G / medium: 2
+* 94G / medium: 1
 * 95G / low: 1
+* PC-new / high: 4
 * PC-new / low: 18
-* PC-new / medium: 2
-* PC-new / none: 457
+* PC-new / medium: 22
+* PC-new / none: 441
 * library / high: 240
 * library / none: 111
 
@@ -400,20 +401,20 @@ Methods: (1) player-struct field correspondence learned by aligning 68k field-ac
 
 | source/conf | before | after |
 |---|---|---|
-| 93G / high | 3 | 27 |
-| 93G / low | 28 | 33 |
-| 93G / medium | 6 | 54 |
+| 93G / high | 3 | 39 |
+| 93G / low | 28 | 30 |
+| 93G / medium | 6 | 55 |
 | 94G / high | 1 | 2 |
 | 94G / low | 7 | 2 |
-| 94G / medium | 1 | 2 |
+| 94G / medium | 1 | 1 |
 | 95G / low | 1 | 1 |
-| total Genesis-named | 47 | 121 |
+| total Genesis-named | 47 | 130 |
 
 Engine region (47C31-6A033, 8BEDB-8C94C): 356 functions (IDA procs + recovered); 109 named from Genesis (31%), 20 labelled PC-new assignments, total labelled 36%.
 
-Field map: Xpos=0/2, Ypos=4/6, Xvel=C, Yvel=E, facedir=36, SPA=38, SPAnum=3A, SPAcnt=3C, pflags=44, pflags2=45, SCnum=6A, assnum=1C, temp1=26, temp2=28, position=1A, temp4=2C, temp3=2A, temp5=2E, newpos=42, Wallsin=32, Wallcos=30, OldXpos=6C, newpnum=43.
+Field map (tools/struct_fieldmap.csv, 38 fields; 93G offset -> PC offset): Xpos $00=00h;02h, Ypos $14=04h;06h, OldXpos $1C=74h, Xvel $28=0Ch, Yvel $2A=0Eh, position $34=1Ah, assnum $36=1Ch, temp1 $40=26h, temp2 $42=28h, temp3 $44=2Ah, temp4 $46=2Ch, temp5 $48=2Eh, Wallcos $4E=30h, Wallsin $50=32h, SCnum $52=6Ah, facedir $54=36h, SPA $58=38h, SPAnum $5A=3Ah, SPAcnt $5C=3Ch, newpos $60=42h, newpnum $61=43h, pflags $62=44h, pflags2 $63=45h, asslist $38=1Eh, pnum $66=47h, attribute $4=55h, weight $67=56h, legstr $68=57h, legspd $69=58h, endurance $72=61h, impactp $2E=14h, impact $32=18h, tmptr none=6Ch, optmptr none=70h, tmline $16 (team)=2Ah (team), tmlcnt none (team)=2Ch (team), tmap $24 (team)=36h (team), tmflags $30 (team)=44h (team).
 
-Global map: StanleyCupTimer=C9100, RNGseed=C9100, gmode=C90BB, dirtab=C90E0, shotsets=CCC60, PBnum=E9ABA, gameclock=C9080, threat=C90AA, passspeed=C90A2, collflag=C90BA, puckvz=C9090, OOlistpos=E9A56, wcradiusy=E03B4, wcradiusx=C909C, Ylist=E9ADA, OOlist=E9ADD, ltx=E9AC6.
+Global map (tools/global_map.csv, 80 names, current names after the segment sessions): joysampling=C4D0C, joyqhead=C4D10, joyqcount=C4D14, joyqtick=C4D18, joyrec=C4E18, gameopts=C53FF, screenbm=C66C4, songdata=C721D, scrpitch=C7290, rinkbm=C73D4, puckx=C907C, puckvx=C9080, pucky=C9084, puckvy=C9088, puckz=C908C, puckvz=C9090, puckc=C9094, wcradiusx=C909C, wcradiusy=C909E, lastplayer=C90A0, passspeed=C90A2, passdir=C90A4, passplayer=C90A8, threat=C90AA, xc1=C90AC, yc1=C90AE, fodir1=C90B6, fodir2=C90B8, collflag=C90BA, gmode=C90BB, sflags=C90BC, gmode2=C90BE, c1playernum=C90C2, c2playernum=C90C4, cont1team=C90C6, cont2team=C90C8, refsignal=C90D2, dirtab=C90E0, dirtab_y=C90E2, RNGseed=C9100, StanleyCupTimer=C9100, lcblink=CBC56, lcblinktime=CBC5A, lcsel=CBC5E, lcline=CBC62, lctimer=CBC66, lcboxon=CBC6A, linenext=CCB4A, lchoicetab=CCB5A, shotsets=CCC60, doplayeracc_ftab=CCD78, MaxSpeed=CCD98, musicslot=D242F, musicon=D2430, musichandle=D2431, vtoa_dt=D2C74, saved_ss=D2F44, joyqueue=D8B80, scrolly=DD6AA, scrollx=DD6AC, bgscrollx=DD6B2, bgscrolly8=DD70C, SortCords=DF81C, puckpflags2=DFF61, lcrequest=E0304, lcreqchoice=E0380, regd2=E03AC, regd3=E03B0, regd4=E03B4, regd0=E03BC, regd1=E03C0, OOlistpos=E9A56, joysampling_save=E9AA0, PBnum=E9ABA, lj2=E9ABC, lj1=E9ABE, ltx=E9AC6, Ylist=E9ADA, OOlist=E9ADD, vgapage=EDA04.
 
 Notable identifications:
 
