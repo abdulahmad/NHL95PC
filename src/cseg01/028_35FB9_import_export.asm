@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_35FB9 progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, _fstrcspn_, asc_C1827, asc_C1853, asc_C1859, asc_C1862, asc_C1866
+extern __CHK, __STOSB, _fstrcspn_, str_Pal17, asc_C1853, asc_C1859, asc_C1862, asc_C1866
 extern asc_C186B, asc_C1874, asc_C1879, asc_C1880, asc_C1885, asc_C78A8, asc_C7A9C, asc_C7ABF
 extern str_PINFO, str_extDB, str_extxx, asc_C8158, str_dot, str_floppydrv, curleague, gameopts
 extern musicon, byte_D42C3, byte_DC267, byte_DC268, leaguedbfmt2, leaguedbfmt, leagueflags, byte_DD7CA
@@ -17,7 +17,7 @@ extern sprintf_, strcat_, strcpy_, SetupControllers, PlayGame, FileExists, MakeP
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, ReadKeyRec, ReadSeasonRec
 extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, SetTextColors, PrintCenteredText, PrintShadowText, InitGameSummary
 extern GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, PreGameScreen, SetDialogColors, RestoreDialogBg
-extern MessageBox, sub_34821, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, WriteSchedGame, WriteTeamRec
+extern MessageBox, CalendarScreen, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, WriteSchedGame, WriteTeamRec
 extern sub_3A31E, AskTeamPassword, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, ReadLeagueInfo, sub_3DAB9
 extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSeasonSchedule, UpdatePlayoffSeries, sub_479E9, sub_6B410
 extern sub_6B47C, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FCDF, sub_8FFB0
@@ -1166,7 +1166,7 @@ loc_37048:
 mov ebx, dword [dword_DDD38]	; 37048
 mov edx, str_extxx	; 3704E
 mov eax, savleague1	; 37053
-call sub_34821	; 37058
+call CalendarScreen	; 37058
 mov word [word_DDD46], ax	; 3705D
 loc_37063:
 cmp word [word_DDD46], byte 0	; 37063
@@ -1490,7 +1490,7 @@ push eax	; 3750E
 call sub_8E83C	; 3750F
 mov dword [byte esp+070h], eax	; 37514
 add esp, byte 8	; 37518
-push asc_C1827	; 3751B
+push str_Pal17	; 3751B
 push eax	; 37520
 call sub_B30B4	; 37521
 add esp, byte 8	; 37526

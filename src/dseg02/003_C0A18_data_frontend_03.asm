@@ -39,8 +39,8 @@ global str_Ctlogo3, str_DD, str_D02d2, str_DDD, str_Iff7, str_Leaguetm, str_Mtsu
 global str_Pointer6, str_DBOX, str_Pointer7, str_Iff8, str_Maindesk, str_Tonights2, str_Easndesk, str_Desk2
 global str_Pal15, str_Menubuff4, str_GameSet4, str_Game, str_Set, str_Palette2, str_Temp4, str_GameSav4
 global str_Rink2, str_Til, str_InvalidFileSize, str_TILES, str_ErrorLoadingFile, str_Map, str_CRESTS3, str_Pal16
-global asc_C17F4, asc_C17F9, asc_C17FE, asc_C1803, asc_C180B, asc_C1810, asc_C181A, asc_C1827
-global asc_C182C, asc_C1835, asc_C183D, asc_C1842, asc_C184A, asc_C1853, asc_C1859, asc_C1862
+global str_Boxr, str_Boxb, str_Bkgd7, str_02d9D, str_Home, str_Away, str_SDD2, str_Pal17
+global str_Calendar, str_Callogo, str_Iff9, str_Pointer8, str_Menubuff5, asc_C1853, asc_C1859, asc_C1862
 global asc_C1866, asc_C186B, asc_C1874, asc_C1879, asc_C1880, asc_C1885, asc_C188D, asc_C1892
 global asc_C1897, asc_C189B, asc_C189F, asc_C18A6, asc_C18AB, asc_C18B3, asc_C18B8, asc_C18C1
 global asc_C18C7, asc_C18CC, asc_C18D5, asc_C18E8, asc_C1904, asc_C190A, asc_C190E, asc_C1919
@@ -70,7 +70,7 @@ global str_D4, str_NHL, str_PO2, str_LP, str_fek1, str_fek2, str_fek3, str_fek4
 global str_fek5, str_fek6, str_fek7, str_fek8, str_feh7, str_feA1, str_fel1, str_feA2
 global str_fel2, str_fec6, str_fed2, str_fed3, str_fed4, str_D6, str_OT, str_S3
 global str_CommaSp, str_RParen2, str_D7, str_Dot, str_Space, str_fee2, str_fee3, str_fee4
-global unk_C17F0, unk_C1815, unk_C1818, unk_C1823, unk_C1825, unk_C1900, unk_C1914, unk_C1916
+global unk_C17F0, str_D8, str_W5, str_L7, str_T5, unk_C1900, unk_C1914, unk_C1916
 global unk_C192D, unk_C1930, unk_C1934, unk_C1936, unk_C1946, unk_C1A15
 str_teams:
 db 074h,065h,061h,06Dh,073h,00h
@@ -1068,39 +1068,39 @@ str_Pal16:
 db 021h,070h,061h,06Ch,00h,00h,00h,00h
 unk_C17F0:
 db 00h,00h,00h,00h
-asc_C17F4:
+str_Boxr:
 db 062h,06Fh,078h,072h,00h
-asc_C17F9:
+str_Boxb:
 db 062h,06Fh,078h,062h,00h
-asc_C17FE:
+str_Bkgd7:
 db 062h,06Bh,067h,064h,00h
-asc_C1803:
+str_02d9D:
 db 025h,030h,032h,064h,039h,025h,064h,00h
-asc_C180B:
+str_Home:
 db 048h,06Fh,06Dh,065h,00h
-asc_C1810:
+str_Away:
 db 041h,077h,061h,079h,00h
-unk_C1815:
+str_D8:
 db 025h,064h,00h
-unk_C1818:
+str_W5:
 db 057h,00h
-asc_C181A:
+str_SDD2:
 db 025h,073h,03Ah,025h,064h,02Dh,025h,064h,00h
-unk_C1823:
+str_L7:
 db 04Ch,00h
-unk_C1825:
+str_T5:
 db 054h,00h
-asc_C1827:
+str_Pal17:
 db 021h,070h,061h,06Ch,00h
-asc_C182C:
+str_Calendar:
 db 063h,061h,06Ch,065h,06Eh,064h,061h,072h,00h
-asc_C1835:
+str_Callogo:
 db 063h,061h,06Ch,06Ch,06Fh,067h,06Fh,00h
-asc_C183D:
+str_Iff9:
 db 02Eh,069h,066h,066h,00h
-asc_C1842:
+str_Pointer8:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C184A:
+str_Menubuff5:
 db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
 asc_C1853:
 db 02Eh,025h,030h,032h,064h,00h

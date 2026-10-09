@@ -2,20 +2,20 @@
 bits 32
 %include "hockey.inc"
 section s_C8445 progbits alloc noexec write align=1
-extern CalStandingsMenu, sub_34691, sub_346FE, sub_3476B, sub_38B25, sub_38B3A, sub_7A335, sub_7A39F
+extern CalStandingsMenu, CalNextMonth, CalPrevMonth, CalReturn, sub_38B25, sub_38B3A, sub_7A335, sub_7A39F
 extern sub_7A404, sub_7CA53, sub_7CA61, unk_C67B1, unk_CDF44, unk_CDF56, unk_CDF64, unk_CDF76
 extern unk_CDF8A, unk_CE96F, unk_CEA2F, unk_CEB2F
-global monthdays, curleague, byte_C845D, byte_C845E, dword_C87B0, off_C85F6, off_C8616, unk_C846A
-global unk_C850A, unk_C8520, unk_C8536, unk_C854F, unk_C85AF, unk_C85BA, unk_C85C9, unk_C85E2
-global unk_C8642, unk_C8647, unk_C864C, unk_C8657, unk_C86B7, unk_C86CC, unk_C86EC, unk_C86FC
+global monthdays, curleague, monthfirstday_m1, monthfirstday, dword_C87B0, calnextslot, calprevslot, unk_C846A
+global unk_C850A, unk_C8520, unk_C8536, unk_C854F, str_NextMonth, str_PrevMonth, str_ReturnToSportsCentral, calplaymenu
+global unk_C8642, unk_C8647, unk_C864C, calmenubar, unk_C86B7, unk_C86CC, unk_C86EC, unk_C86FC
 global unk_C871C, unk_C8721, unk_C8728, unk_C8768, unk_C876F, unk_C8778, unk_C87B8
 monthdays:
 db 01Fh,01Ch,01Fh,01Eh,01Fh,01Eh,01Fh,01Fh,01Eh,01Fh,01Eh,01Fh
 curleague:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-byte_C845D:
+monthfirstday_m1:
 db 00h
-byte_C845E:
+monthfirstday:
 db 06h,02h,02h,05h,00h,03h,05h,01h,04h,05h,01h,03h
 unk_C846A:
 db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
@@ -64,27 +64,27 @@ db 0A7h,00h,00h,00h,036h,00h,00h,00h
 dd unk_C8536
 dd sub_7A404
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_C85AF:
+str_NextMonth:
 db 04Eh,065h,078h,074h,020h,06Dh,06Fh,06Eh,074h,068h,00h
-unk_C85BA:
+str_PrevMonth:
 db 050h,072h,065h,076h,069h,06Fh,075h,073h,020h,06Dh,06Fh,06Eh,074h,068h,00h
-unk_C85C9:
+str_ReturnToSportsCentral:
 db 052h,065h,074h,075h,072h,06Eh,020h,074h,06Fh,020h,053h,070h,06Fh,072h,074h,073h
 db 020h,043h,065h,06Eh,074h,072h,061h,06Ch,00h
-unk_C85E2:
+calplaymenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0A9h,00h,00h,00h,011h,00h,00h,00h
-dd unk_C85AF
-off_C85F6:
-dd sub_34691
+dd str_NextMonth
+calnextslot:
+dd CalNextMonth
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 0A9h,00h,00h,00h,023h,00h,00h,00h
-dd unk_C85BA
-off_C8616:
-dd sub_346FE
+dd str_PrevMonth
+calprevslot:
+dd CalPrevMonth
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 0A9h,00h,00h,00h,036h,00h,00h,00h
-dd unk_C85C9
-dd sub_3476B
+dd str_ReturnToSportsCentral
+dd CalReturn
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_C8642:
 db 050h,06Ch,061h,079h,00h
@@ -92,11 +92,11 @@ unk_C8647:
 db 047h,061h,06Dh,065h,00h
 unk_C864C:
 db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,00h
-unk_C8657:
+calmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,025h,00h,00h,00h,012h,00h,00h,00h
 dd unk_C8642
 db 00h,00h,00h,00h
-dd unk_C85E2
+dd calplaymenu
 db 03h,00h,00h,00h,026h,00h,00h,00h,00h,00h,00h,00h,051h,00h,00h,00h
 db 012h,00h,00h,00h
 dd unk_C8647

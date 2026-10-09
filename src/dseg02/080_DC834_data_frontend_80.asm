@@ -16,9 +16,9 @@ global lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open
 global fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp
 global fdlg_noarrow, hmcrestbmp, vscrestbmp, dlgsavex, dlgsavey, editcurw, editpos, editmaxw
 global editbuf, editcuron, edity, editx, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly
-global otherperiod, dword_DD748, dword_DD74C, dbextension, dword_DD780, dword_DD784, dword_DD794, dword_DD798
-global dword_DD79C, dword_DD7A0, criterrflag, leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD28
-global dword_DDD2C, dword_DDD30, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68, dword_DDD6C
+global otherperiod, dword_DD748, dword_DD74C, dbextension, calsel, dword_DD784, calexit, dword_DD798
+global dword_DD79C, calmonth, criterrflag, leaguemaster, leaguesaved, dword_DD7CE, humancount, calselday
+global dword_DDD2C, calselmonth, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68, dword_DDD6C
 global dword_DDD70, dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C
 global dword_DE260, dword_DE264, dword_DE265, dword_DEB6C, dword_DEB74, statsplayer
 global unk_DC890, unk_DC998, unk_DCA98, printfbuf, leagueteams, treeteamnames, unk_DDCFB
@@ -224,7 +224,7 @@ othergames:
 resb 1
 othergamesb:
 resb 11
-dword_DD780:
+calsel:
 resb 4
 dword_DD784:
 resb 4
@@ -232,13 +232,13 @@ otherscores:
 resb 1
 otherscoresb:
 resb 11
-dword_DD794:
+calexit:
 resb 4
 dword_DD798:
 resb 4
 dword_DD79C:
 resb 4
-dword_DD7A0:
+calmonth:
 resb 4
 criterrflag:
 resb 4
@@ -273,11 +273,11 @@ savedname:
 resb 13
 masterpw:
 resb 11
-dword_DDD28:
+calselday:
 resb 4
 dword_DDD2C:
 resb 4
-dword_DDD30:
+calselmonth:
 resb 4
 dword_DDD34:
 resb 4

@@ -299,6 +299,13 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00033DD3,sub_33DD3,SetRinkScroll,PC-new,,,,high,"(x, y): sets bgscrollx / bgscrolly (tiles) and scrollx / scrolly (pixels) when the position changed",rink_tiles,manual-trace
 00033E6A,sub_33E6A,WaitClickTimeout,PC-new,,,,medium,"(ticks): waits for a mouse click or the timeout; returns the click count (second click within 14h ticks, 3 for button bit 4)",rink_tiles,manual-trace
 00033F02,sub_33F02,LoadCrestsPalette,PC-new,,,,low,"unused: builds a palette from CRESTS3.BIN colours 160-255 and the !pal block, then sets it",rink_tiles,manual-trace
+00033FFD,sub_33FFD,DrawCalendarDay,PC-new,,,,medium,"draws one calendar day box (boxr / boxb) at calcolx / calrowy: day number, opponent crest, Home / Away and the W / L / T ""%s:%d-%d"" result",calendar,manual-trace
+00034691,sub_34691,CalNextMonth,PC-new,,,,high,"calendar ""Next month"": calmonth +1 (wraps 11 -> 0, stops at June), disables itself at the last month",calendar,manual-trace
+000346FE,sub_346FE,CalPrevMonth,PC-new,,,,high,"calendar ""Previous month"": calmonth -1 (wraps 0 -> 11, stops at October), disables itself at the first month",calendar,manual-trace
+0003476B,sub_3476B,CalReturn,PC-new,,,,high,"calendar ""Return to Sports Central"": sets calexit and calsel to -1",calendar,manual-trace
+00034789,sub_34789,ApplyShapePalette,PC-new,,,,medium,sets the palette from the !pal block of the given shape file,calendar,manual-trace
+000347B7,sub_347B7,SetGameSides,PC-new,,,,medium,"(team, sched, game): sets the side controls for the two teams of a schedule game (the other team -1 unless it is a human team)",calendar,manual-trace
+00034821,sub_34821,CalendarScreen,PC-new,,,,high,"league calendar (calendar / callogo): month grid of the human team's games, Play / Game / Statistics menu, picks and plays the next game; called from import_export",calendar,manual-trace
 0003A28F,sub_3A28F,WriteSchedGame,PC-new,,,,high,"FileWriteAt counterpart of ReadSchedGame (2 + index*6, 6 bytes)",league_setup,manual-trace
 0003A2B8,sub_3A2B8,WriteTeamRec,PC-new,,,,high,"FileWriteAt counterpart of ReadTeamRec (index*2E8h, 2E8h bytes)",league_setup,manual-trace
 0003A347,sub_3A347,WriteLeagueTeamEntry,PC-new,,,,high,"FileWriteAt of one PINFO.DB team entry (20h + index*1Eh, 1Eh bytes)",league_setup,manual-trace

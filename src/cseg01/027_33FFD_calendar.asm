@@ -2,36 +2,22 @@
 bits 32
 %include "hockey.inc"
 section s_33FFD progbits alloc exec nowrite align=1
-extern __CHK, asc_C17F4, asc_C17F9, asc_C17FE, asc_C1803, asc_C180B, asc_C1810, asc_C181A
-extern asc_C1827, asc_C182C, asc_C1835, asc_C183D, asc_C1842, asc_C184A, monthdays, byte_C845D
-extern byte_C845E, musicon, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, teamstatscb
-extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, songdata, dword_C895E, dword_C8976, dword_C897A
-extern dword_C898E, calendarshapes, musichandle, dword_D2C6B, fontcolor, dword_D8B74, pointerspr, musicslot
-extern dword_DD780, dword_DD794, dword_DD7A0, dword_DDD28, dword_DDD2C, dword_DDD30, dword_EA0DC, fputchar
-extern jctime, crestnames, off_C85F6, off_C8616, sprintf_, MakePath, FileOpenRead, leaguedbnames
+extern __CHK, str_Boxr, str_Boxb, str_Bkgd7, str_02d9D, str_Home, str_Away, str_SDD2
+extern str_Pal17, str_Calendar, str_Callogo, str_Iff9, str_Pointer8, str_Menubuff5, monthdays, monthfirstday_m1
+extern monthfirstday, musicon, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, teamstatscb
+extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, songdata, calcolx, calrowy
+extern calendarshapes, musichandle, dword_D2C6B, fontcolor, dword_D8B74, pointerspr, musicslot
+extern calsel, calexit, calmonth, calselday, dword_DDD2C, calselmonth, dword_EA0DC, fputchar
+extern jctime, crestnames, calnextslot, calprevslot, sprintf_, MakePath, FileOpenRead, leaguedbnames
 extern FileClose, FileReadAt, ReadSchedGame, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
 extern CalTeamStatsScreen, CalSkaterStatsScreen, CalGoalieStatsScreen, CalStandingsScreen, CalStandingsMenu, SetDialogColors, sub_479E9, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
 extern sub_7DB67, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
 extern sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_91370, sub_913D0
 extern sub_91400, sub_91964, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4
-extern sub_B4DD4, sub_B4FAC, unk_C1815, unk_C1818, unk_C1823, unk_C1825, unk_C8657, unk_DF014
-global loc_3411C, loc_3412B, loc_3416A, loc_341F0, loc_34216, loc_342AE, loc_342B9, loc_342C5
-global loc_342CD, loc_342DF, loc_3430A, loc_34318, loc_34328, loc_3435F, loc_343E9, loc_344C7
-global loc_34500, loc_34501, loc_34678, loc_346CC, loc_346DF, loc_346F0, loc_3473A, loc_3474D
-global loc_3475E, loc_347E6, loc_347EC, loc_34802, loc_348A4, loc_348DE, loc_3490B, loc_349A3
-global loc_349A5, loc_349E0, loc_349E2, loc_34A13, loc_34A33, loc_34A5A, loc_34A8B, loc_34AE3
-global loc_34B1C, loc_34BA5, loc_34BE5, loc_34BEA, loc_34C1E, loc_34C93, loc_34CB4, loc_34CBC
-global loc_34CD1, loc_34CE2, loc_34CEC, loc_34D5A, loc_34D75, loc_34D7F, loc_34D92, loc_34D9C
-global loc_34E8A, loc_34E8C, loc_34ECB, loc_34FBA, loc_34FBC, loc_34FDD, loc_34FE6, loc_3500F
-global loc_35064, loc_35119, loc_3516C, loc_35174, loc_35213, loc_3521A, loc_352C9, loc_35348
-global loc_3535B, loc_353A0, loc_35409, loc_35411, loc_35431, loc_354CB, loc_3551A, loc_35583
-global loc_3558B, loc_355AB, loc_35684, loc_35686, loc_356C8, loc_356D3, loc_3586D, loc_358B2
-global loc_3591B, loc_35923, loc_35943, loc_359D1, loc_359DB, loc_35A1A, loc_35A6D, loc_35A75
-global loc_35AB1, loc_35B72, loc_35BF2, loc_35C1A, loc_35C52, loc_35CA8, loc_35D85, loc_35E3E
-global loc_35E46, loc_35E5B, loc_35E6A, loc_35EEA, loc_35EF2, loc_35F0E, loc_35F1B, loc_35FA9
-global loc_35FAE, sub_33FFD, sub_34691, sub_346FE, sub_3476B, sub_34789, sub_347B7, sub_34821
-sub_33FFD:
+extern sub_B4DD4, sub_B4FAC, str_D8, str_W5, str_L7, str_T5, calmenubar, unk_DF014
+global DrawCalendarDay, CalNextMonth, CalPrevMonth, CalReturn, ApplyShapePalette, SetGameSides, CalendarScreen
+DrawCalendarDay:
 push dword 0CCh	; 33FFD
 call __CHK	; 34002
 push esi	; 34007
@@ -42,17 +28,17 @@ push eax	; 34010
 push edx	; 34011
 push ecx	; 34012
 mov esi, dword [dword esp+0C4h]	; 34013
-push asc_C17F4	; 3401A
+push str_Boxr	; 3401A
 push esi	; 3401F
 call sub_B30B4	; 34020
 add esp, byte 8	; 34025
 mov dword [dword esp+084h], eax	; 34028
-push asc_C17F9	; 3402F
+push str_Boxb	; 3402F
 push esi	; 34034
 call sub_B30B4	; 34035
 add esp, byte 8	; 3403A
 mov dword [dword esp+094h], eax	; 3403D
-push asc_C17FE	; 34044
+push str_Bkgd7	; 34044
 push esi	; 34049
 call sub_B30B4	; 3404A
 add esp, byte 8	; 3404F
@@ -67,7 +53,7 @@ add eax, byte 3	; 3406A
 push eax	; 3406D
 lea eax, [byte edx+01h]	; 3406E
 push eax	; 34071
-push asc_C1803	; 34072
+push str_02d9D	; 34072
 lea eax, [byte esp+058h]	; 34077
 push eax	; 3407B
 call sprintf_	; 3407C
@@ -107,37 +93,37 @@ call sub_8EA18	; 340EC
 add esp, byte 4	; 340F1
 mov dword [fontcolor], 0C0h	; 340F4
 mov eax, dword [byte esp+08h]	; 340FE
-cmp byte [dword eax+byte_C845E], 0	; 34102
-je short loc_3411C	; 34109
-mov esi, dword [dword_C895E]	; 3410B
+cmp byte [dword eax+monthfirstday], 0	; 34102
+je short .1	; 34109
+mov esi, dword [calcolx]	; 3410B
 add esi, byte 7	; 34111
-mov edi, dword [dword_C897A]	; 34114
-jmp short loc_3412B	; 3411A
-loc_3411C:
-mov esi, dword [dword_C8976]	; 3411C
+mov edi, dword [calrowy]	; 34114
+jmp short .2	; 3411A
+.1:
+mov esi, dword [calcolx+18h]	; 3411C
 add esi, byte 7	; 34122
-mov edi, dword [dword_C898E]	; 34125
-loc_3412B:
+mov edi, dword [calrowy+14h]	; 34125
+.2:
 add edi, byte 5	; 3412B
 mov dword [fontcolor], 0B6h	; 3412E
 push edi	; 34138
 push esi	; 34139
-push asc_C180B	; 3413A
+push str_Home	; 3413A
 call sub_91964	; 3413F
 add esp, byte 0Ch	; 34144
 mov dword [fontcolor], 0B7h	; 34147
 add edi, byte 0Ch	; 34151
 push edi	; 34154
 push esi	; 34155
-push asc_C1810	; 34156
+push str_Away	; 34156
 call sub_91964	; 3415B
 add esp, byte 0Ch	; 34160
 xor ebp, ebp	; 34163
-jmp near loc_341F0	; 34165
-loc_3416A:
+jmp near .4	; 34165
+.3:
 xor ebx, ebx	; 3416A
 mov eax, dword [byte esp+08h]	; 3416C
-mov bl, byte [dword eax+byte_C845E]	; 34170
+mov bl, byte [dword eax+monthfirstday]	; 34170
 add ebx, ebp	; 34176
 mov esi, 7	; 34178
 mov eax, ebx	; 3417D
@@ -150,13 +136,13 @@ mov eax, ebx	; 3418D
 mov edx, ebx	; 3418F
 sar edx, 1Fh	; 34191
 idiv ecx	; 34194
-mov esi, dword [nosplit esi*4+dword_C895E]	; 34196
+mov esi, dword [nosplit esi*4+calcolx]	; 34196
 add esi, byte 4	; 3419D
-mov edi, dword [nosplit eax*4+dword_C897A]	; 341A0
+mov edi, dword [nosplit eax*4+calrowy]	; 341A0
 inc edi	; 341A7
 inc ebp	; 341A8
 push ebp	; 341A9
-push unk_C1815	; 341AA
+push str_D8	; 341AA
 lea eax, [byte esp+054h]	; 341AF
 push eax	; 341B3
 call sprintf_	; 341B4
@@ -177,16 +163,16 @@ lea eax, [byte esp+054h]	; 341E3
 push eax	; 341E7
 call sub_91964	; 341E8
 add esp, byte 0Ch	; 341ED
-loc_341F0:
+.4:
 xor eax, eax	; 341F0
 mov ebx, dword [byte esp+08h]	; 341F2
 mov al, byte [dword ebx+monthdays]	; 341F6
 cmp ebp, eax	; 341FC
-jl near loc_3416A	; 341FE
+jl near DrawCalendarDay.3	; 341FE
 mov dword [dword esp+098h], 0FFFFFFFFh	; 34204
 xor ebp, ebp	; 3420F
-jmp near loc_34501	; 34211
-loc_34216:
+jmp near .18	; 34211
+.5:
 mov ebx, ebp	; 34216
 shl ebx, 2	; 34218
 sub ebx, ebp	; 3421B
@@ -197,12 +183,12 @@ mov cl, byte [ebx]	; 34224
 mov eax, dword [byte esp+08h]	; 34226
 inc eax	; 3422A
 cmp ecx, eax	; 3422B
-jne near loc_34500	; 3422D
+jne near .17	; 3422D
 xor ecx, eax	; 34233
 mov cl, byte [byte ebx+01h]	; 34235
 xor eax, eax	; 34238
 mov esi, dword [byte esp+08h]	; 3423A
-mov al, byte [dword esi+byte_C845E]	; 3423E
+mov al, byte [dword esi+monthfirstday]	; 3423E
 add eax, ecx	; 34244
 lea esi, [byte eax-01h]	; 34246
 mov ecx, 7	; 34249
@@ -216,12 +202,12 @@ mov edx, esi	; 3425B
 sar edx, 1Fh	; 3425D
 idiv ecx	; 34260
 mov esi, edi	; 34262
-mov esi, dword [nosplit esi*4+dword_C895E]	; 34264
-mov edi, dword [nosplit eax*4+dword_C897A]	; 3426B
+mov esi, dword [nosplit esi*4+calcolx]	; 34264
+mov edi, dword [nosplit eax*4+calrowy]	; 3426B
 xor eax, eax	; 34272
 mov al, byte [byte ebx+02h]	; 34274
 cmp eax, dword [dword esp+0BCh]	; 34277
-jne short loc_342DF	; 3427E
+jne short .10	; 3427E
 mov eax, dword [dword esp+084h]	; 34280
 mov dword [dword esp+09Ch], eax	; 34287
 xor eax, eax	; 3428E
@@ -230,68 +216,68 @@ mov dword [dword esp+0A4h], eax	; 34293
 mov al, byte [byte ebx+04h]	; 3429A
 mov ch, byte [byte ebx+05h]	; 3429D
 cmp al, ch	; 342A0
-jbe short loc_342B9	; 342A2
+jbe short .7	; 342A2
 xor eax, eax	; 342A4
 mov al, ch	; 342A6
 push eax	; 342A8
 xor eax, eax	; 342A9
 mov al, byte [byte ebx+04h]	; 342AB
-loc_342AE:
+.6:
 push eax	; 342AE
-push unk_C1818	; 342AF
-jmp near loc_34328	; 342B4
-loc_342B9:
-jae short loc_342CD	; 342B9
+push str_W5	; 342AF
+jmp near .13	; 342B4
+.7:
+jae short .9	; 342B9
 xor eax, eax	; 342BB
 mov al, ch	; 342BD
 push eax	; 342BF
 xor eax, eax	; 342C0
 mov al, byte [byte ebx+04h]	; 342C2
-loc_342C5:
+.8:
 push eax	; 342C5
-push unk_C1823	; 342C6
-jmp short loc_34328	; 342CB
-loc_342CD:
+push str_L7	; 342C6
+jmp short .13	; 342CB
+.9:
 xor eax, eax	; 342CD
 mov al, ch	; 342CF
 push eax	; 342D1
 xor eax, eax	; 342D2
 mov al, byte [byte ebx+04h]	; 342D4
 push eax	; 342D7
-push unk_C1825	; 342D8
-jmp short loc_34328	; 342DD
-loc_342DF:
+push str_T5	; 342D8
+jmp short .13	; 342DD
+.10:
 mov ecx, dword [dword esp+094h]	; 342DF
 mov dword [dword esp+09Ch], ecx	; 342E6
 mov dword [dword esp+0A4h], eax	; 342ED
 mov al, byte [byte ebx+04h]	; 342F4
 mov dh, byte [byte ebx+05h]	; 342F7
 cmp al, dh	; 342FA
-jbe short loc_3430A	; 342FC
+jbe short .11	; 342FC
 xor eax, eax	; 342FE
 mov al, byte [byte ebx+04h]	; 34300
 push eax	; 34303
 xor eax, eax	; 34304
 mov al, dh	; 34306
-jmp short loc_342C5	; 34308
-loc_3430A:
-jae short loc_34318	; 3430A
+jmp short DrawCalendarDay.8	; 34308
+.11:
+jae short .12	; 3430A
 xor eax, eax	; 3430C
 mov al, byte [byte ebx+04h]	; 3430E
 push eax	; 34311
 xor eax, eax	; 34312
 mov al, dh	; 34314
-jmp short loc_342AE	; 34316
-loc_34318:
+jmp short DrawCalendarDay.6	; 34316
+.12:
 xor eax, eax	; 34318
 mov al, dh	; 3431A
 push eax	; 3431C
 xor eax, eax	; 3431D
 mov al, byte [byte ebx+04h]	; 3431F
 push eax	; 34322
-push unk_C1825	; 34323
-loc_34328:
-push asc_C181A	; 34328
+push str_T5	; 34323
+.13:
+push str_SDD2	; 34328
 lea eax, [byte esp+07Ch]	; 3432D
 push eax	; 34331
 call sprintf_	; 34332
@@ -304,10 +290,10 @@ mov eax, dword [esp]	; 34343
 add eax, ebx	; 34346
 mov dword [dword esp+0A0h], eax	; 34348
 cmp byte [byte eax+04h], 0FFh	; 3434F
-je short loc_3435F	; 34353
+je short .14	; 34353
 cmp byte [byte eax+05h], 0FFh	; 34355
-jne near loc_343E9	; 34359
-loc_3435F:
+jne near .15	; 34359
+.14:
 push edi	; 3435F
 push esi	; 34360
 mov edx, dword [dword esp+0A4h]	; 34361
@@ -330,7 +316,7 @@ mov eax, dword [esp]	; 34393
 mov al, byte [byte eax+ebx*2+01h]	; 34396
 and eax, 0FFh	; 3439A
 push eax	; 3439F
-push unk_C1815	; 343A0
+push str_D8	; 343A0
 lea eax, [byte esp+054h]	; 343A5
 push eax	; 343A9
 call sprintf_	; 343AA
@@ -349,8 +335,8 @@ push edi	; 343DB
 add esi, byte 3	; 343DC
 push esi	; 343DF
 lea eax, [byte esp+054h]	; 343E0
-jmp near loc_344C7	; 343E4
-loc_343E9:
+jmp near .16	; 343E4
+.15:
 push edi	; 343E9
 push esi	; 343EA
 mov eax, dword [dword esp+0ACh]	; 343EB
@@ -364,7 +350,7 @@ xor eax, eax	; 34404
 mov ebx, dword [dword esp+0A0h]	; 34406
 mov al, byte [byte ebx+01h]	; 3440D
 push eax	; 34410
-push unk_C1815	; 34411
+push str_D8	; 34411
 lea eax, [byte esp+054h]	; 34416
 push eax	; 3441A
 call sprintf_	; 3441B
@@ -419,7 +405,7 @@ add esi, byte 26h	; 344BD
 sub esi, eax	; 344C0
 push esi	; 344C2
 lea eax, [byte esp+074h]	; 344C3
-loc_344C7:
+.16:
 push eax	; 344C7
 call sub_91964	; 344C8
 add esp, byte 0Ch	; 344CD
@@ -431,22 +417,22 @@ add ebx, ebx	; 344D9
 add ebx, dword [esp]	; 344DB
 xor eax, ebp	; 344DE
 mov al, byte [ebx]	; 344E0
-mov esi, dword [dword_DDD30]	; 344E2
+mov esi, dword [calselmonth]	; 344E2
 cmp eax, esi	; 344E8
-jne short loc_34500	; 344EA
+jne short .17	; 344EA
 xor eax, esi	; 344EC
 mov al, byte [byte ebx+01h]	; 344EE
-cmp eax, dword [dword_DDD28]	; 344F1
-jne short loc_34500	; 344F7
+cmp eax, dword [calselday]	; 344F1
+jne short .17	; 344F7
 mov dword [dword esp+098h], ebp	; 344F9
-loc_34500:
+.17:
 inc ebp	; 34500
-loc_34501:
+.18:
 cmp ebp, dword [dword esp+0B8h]	; 34501
-jl near loc_34216	; 34508
+jl near DrawCalendarDay.5	; 34508
 mov ebx, dword [dword esp+098h]	; 3450E
 test ebx, ebx	; 34515
-jl near loc_34678	; 34517
+jl near .19	; 34517
 mov eax, ebx	; 3451D
 shl eax, 2	; 3451F
 sub eax, ebx	; 34522
@@ -456,7 +442,7 @@ mov al, byte [byte eax+01h]	; 34529
 and eax, 0FFh	; 3452C
 xor ebx, ebx	; 34531
 mov ecx, dword [byte esp+08h]	; 34533
-mov bl, byte [dword ecx+byte_C845E]	; 34537
+mov bl, byte [dword ecx+monthfirstday]	; 34537
 add eax, ebx	; 3453D
 lea ebx, [byte eax-01h]	; 3453F
 mov ecx, 7	; 34542
@@ -469,8 +455,8 @@ mov eax, ebx	; 34552
 mov edx, ebx	; 34554
 sar edx, 1Fh	; 34556
 idiv ecx	; 34559
-mov esi, dword [nosplit esi*4+dword_C895E]	; 3455B
-mov edi, dword [nosplit eax*4+dword_C897A]	; 34562
+mov esi, dword [nosplit esi*4+calcolx]	; 3455B
+mov edi, dword [nosplit eax*4+calrowy]	; 34562
 lea eax, [byte esi+04Ch]	; 34569
 mov dword [dword esp+090h], eax	; 3456C
 lea ebp, [byte edi+03Eh]	; 34573
@@ -550,7 +536,7 @@ push ebp	; 3466E
 push esi	; 3466F
 call sub_B4FAC	; 34670
 add esp, byte 14h	; 34675
-loc_34678:
+.19:
 lea eax, [byte esp+0Ch]	; 34678
 push eax	; 3467C
 call sub_8EA00	; 3467D
@@ -560,79 +546,79 @@ pop ebp	; 3468B
 pop edi	; 3468C
 pop esi	; 3468D
 ret 10h	; 3468E
-sub_34691:
+CalNextMonth:
 push dword 10h	; 34691
 call __CHK	; 34696
 push ebx	; 3469B
 push ecx	; 3469C
 push edi	; 3469D
-mov dword [off_C85F6], sub_34691	; 3469E
-mov dword [off_C8616], sub_346FE	; 346A8
-mov ecx, dword [dword_DD7A0]	; 346B2
+mov dword [calnextslot], CalNextMonth	; 3469E
+mov dword [calprevslot], CalPrevMonth	; 346A8
+mov ecx, dword [calmonth]	; 346B2
 inc ecx	; 346B8
-mov dword [dword_DD7A0], ecx	; 346B9
+mov dword [calmonth], ecx	; 346B9
 cmp ecx, byte 0Ch	; 346BF
-jne short loc_346CC	; 346C2
+jne short .1	; 346C2
 xor edi, edi	; 346C4
-mov dword [dword_DD7A0], edi	; 346C6
-loc_346CC:
-cmp dword [dword_DD7A0], byte 6	; 346CC
-jne short loc_346DF	; 346D3
-mov dword [dword_DD7A0], 5	; 346D5
-loc_346DF:
-cmp dword [dword_DD7A0], byte 5	; 346DF
-jne short loc_346F0	; 346E6
+mov dword [calmonth], edi	; 346C6
+.1:
+cmp dword [calmonth], byte 6	; 346CC
+jne short .2	; 346D3
+mov dword [calmonth], 5	; 346D5
+.2:
+cmp dword [calmonth], byte 5	; 346DF
+jne short .3	; 346E6
 xor ebx, ebx	; 346E8
-mov dword [off_C85F6], ebx	; 346EA
-loc_346F0:
-mov dword [dword_DD780], 0FFFFFFFFh	; 346F0
+mov dword [calnextslot], ebx	; 346EA
+.3:
+mov dword [calsel], 0FFFFFFFFh	; 346F0
 pop edi	; 346FA
 pop ecx	; 346FB
 pop ebx	; 346FC
 ret	; 346FD
-sub_346FE:
+CalPrevMonth:
 push dword 0Ch	; 346FE
 call __CHK	; 34703
 push ebx	; 34708
 push ecx	; 34709
-mov dword [off_C85F6], sub_34691	; 3470A
-mov dword [off_C8616], sub_346FE	; 34714
-mov ecx, dword [dword_DD7A0]	; 3471E
+mov dword [calnextslot], CalNextMonth	; 3470A
+mov dword [calprevslot], CalPrevMonth	; 34714
+mov ecx, dword [calmonth]	; 3471E
 dec ecx	; 34724
-mov dword [dword_DD7A0], ecx	; 34725
+mov dword [calmonth], ecx	; 34725
 cmp ecx, byte 0FFFFFFFFh	; 3472B
-jne short loc_3473A	; 3472E
-mov dword [dword_DD7A0], 0Bh	; 34730
-loc_3473A:
-cmp dword [dword_DD7A0], byte 8	; 3473A
-jne short loc_3474D	; 34741
-mov dword [dword_DD7A0], 9	; 34743
-loc_3474D:
-cmp dword [dword_DD7A0], byte 9	; 3474D
-jne short loc_3475E	; 34754
+jne short .1	; 3472E
+mov dword [calmonth], 0Bh	; 34730
+.1:
+cmp dword [calmonth], byte 8	; 3473A
+jne short .2	; 34741
+mov dword [calmonth], 9	; 34743
+.2:
+cmp dword [calmonth], byte 9	; 3474D
+jne short .3	; 34754
 xor ebx, ebx	; 34756
-mov dword [off_C8616], ebx	; 34758
-loc_3475E:
-mov dword [dword_DD780], 0FFFFFFFFh	; 3475E
+mov dword [calprevslot], ebx	; 34758
+.3:
+mov dword [calsel], 0FFFFFFFFh	; 3475E
 pop ecx	; 34768
 pop ebx	; 34769
 ret	; 3476A
-sub_3476B:
+CalReturn:
 push dword 8	; 3476B
 call __CHK	; 34770
 push edx	; 34775
 mov edx, 0FFFFFFFFh	; 34776
-mov dword [dword_DD794], edx	; 3477B
-mov dword [dword_DD780], edx	; 34781
+mov dword [calexit], edx	; 3477B
+mov dword [calsel], edx	; 34781
 pop edx	; 34787
 ret	; 34788
-sub_34789:
+ApplyShapePalette:
 push dword 18h	; 34789
 call __CHK	; 3478E
 push ebx	; 34793
 push ecx	; 34794
 push edx	; 34795
-push asc_C1827	; 34796
+push str_Pal17	; 34796
 push eax	; 3479B
 call sub_B30B4	; 3479C
 add esp, byte 8	; 347A1
@@ -644,7 +630,7 @@ pop edx	; 347B3
 pop ecx	; 347B4
 pop ebx	; 347B5
 ret	; 347B6
-sub_347B7:
+SetGameSides:
 push dword 0Ch	; 347B7
 call __CHK	; 347BC
 push ecx	; 347C1
@@ -659,21 +645,21 @@ add edx, ecx	; 347D0
 xor eax, eax	; 347D2
 mov al, byte [byte edx+02h]	; 347D4
 cmp esi, eax	; 347D7
-jne short loc_347E6	; 347D9
+jne short .1	; 347D9
 mov dl, byte [byte edx+03h]	; 347DB
 and edx, 0FFh	; 347DE
-jmp short loc_347EC	; 347E4
-loc_347E6:
+jmp short .2	; 347E4
+.1:
 movzx esi, byte [byte edx+03h]	; 347E6
 mov edx, eax	; 347EA
-loc_347EC:
+.2:
 mov eax, edx	; 347EC
 shl eax, 4	; 347EE
 sub eax, edx	; 347F1
 cmp byte [nosplit eax*2+byte_DD7CB], 1	; 347F3
-je short loc_34802	; 347FB
+je short .3	; 347FB
 mov edx, 0FFFFFFFFh	; 347FD
-loc_34802:
+.3:
 mov eax, ebx	; 34802
 shl eax, 2	; 34804
 sub eax, ebx	; 34807
@@ -688,7 +674,7 @@ call sub_7DB67	; 34819
 pop esi	; 3481E
 pop ecx	; 3481F
 ret	; 34820
-sub_34821:
+CalendarScreen:
 push dword 7F8h	; 34821
 call __CHK	; 34826
 push ecx	; 3482B
@@ -710,14 +696,14 @@ push byte 0	; 34874
 call sub_B392C	; 34876
 add esp, byte 4	; 3487B
 cmp byte [musicon], 0	; 3487E
-je short loc_348A4	; 34885
+je short .1	; 34885
 cmp dword [songdata], byte 0	; 34887
-je short loc_348A4	; 3488E
+je short .1	; 3488E
 mov eax, dword [musichandle]	; 34890
 mov ebx, 64h	; 34895
 mov edx, 3	; 3489A
 call sub_8FCDF	; 3489F
-loc_348A4:
+.1:
 push unk_DF014	; 348A4
 push dword 100h	; 348A9
 push byte 0	; 348AE
@@ -728,23 +714,23 @@ mov edx, unk_DF014	; 348BD
 mov eax, 1	; 348C2
 call sub_76429	; 348C7
 cmp byte [musicon], 0	; 348CC
-je short loc_3490B	; 348D3
+je short .3	; 348D3
 cmp dword [songdata], byte 0	; 348D5
-je short loc_3490B	; 348DC
-loc_348DE:
+je short .3	; 348DC
+.2:
 mov eax, dword [musicslot-3]	; 348DE
 sar eax, 18h	; 348E3
 mov edx, 3	; 348E6
 call sub_8FC8A	; 348EB
 test eax, eax	; 348F0
-je short loc_348DE	; 348F2
+je short CalendarScreen.2	; 348F2
 mov ecx, dword [songdata]	; 348F4
 push ecx	; 348FA
 call sub_8D2F0	; 348FB
 add esp, byte 4	; 34900
 xor esi, esi	; 34903
 mov dword [songdata], esi	; 34905
-loc_3490B:
+.3:
 call sub_479E9	; 3490B
 mov dword [teamstatscb], CalTeamStatsScreen	; 34910
 mov dword [skaterstatscb], CalSkaterStatsScreen	; 3491A
@@ -759,21 +745,21 @@ mov eax, 0Ch	; 34953
 call SetDialogColors	; 34958
 xor edx, edx	; 3495D
 mov word [dword esp+07B8h], dx	; 3495F
-mov dword [dword_DD780], 0FFFFFFFFh	; 34967
+mov dword [calsel], 0FFFFFFFFh	; 34967
 xor edx, edx	; 34971
-mov dword [dword_DD794], edx	; 34973
+mov dword [calexit], edx	; 34973
 mov dword [dword_DDD2C], edx	; 34979
 mov eax, dword [dword_D8B74]	; 3497F
 mov dword [dword esp+07ACh], eax	; 34984
 xor ecx, ecx	; 3498B
-mov ebx, asc_C182C	; 3498D
+mov ebx, str_Calendar	; 3498D
 cmp byte [byte_ED98D], 1	; 34992
-jne short loc_349A3	; 34999
+jne short .4	; 34999
 mov edx, dword [dword_D2C6B]	; 3499B
-jmp short loc_349A5	; 349A1
-loc_349A3:
+jmp short .5	; 349A1
+.4:
 xor edx, edx	; 349A3
-loc_349A5:
+.5:
 lea eax, [dword esp+06F8h]	; 349A5
 call MakePath	; 349AC
 push byte 20h	; 349B1
@@ -783,14 +769,14 @@ call sub_8E83C	; 349BB
 add esp, byte 8	; 349C0
 mov dword [calendarshapes], eax	; 349C3
 xor ecx, ecx	; 349C8
-mov ebx, asc_C1835	; 349CA
+mov ebx, str_Callogo	; 349CA
 cmp byte [byte_ED98E], 1	; 349CF
-jne short loc_349E0	; 349D6
+jne short .6	; 349D6
 mov edx, dword [dword_D2C6B]	; 349D8
-jmp short loc_349E2	; 349DE
-loc_349E0:
+jmp short .7	; 349DE
+.6:
 xor edx, edx	; 349E0
-loc_349E2:
+.7:
 lea eax, [dword esp+06F8h]	; 349E2
 call MakePath	; 349E9
 push byte 20h	; 349EE
@@ -801,8 +787,8 @@ add esp, byte 8	; 349FD
 mov dword [dword esp+078Ch], eax	; 34A00
 xor ebx, ebx	; 34A07
 mov word [dword esp+07CCh], bx	; 34A09
-jmp short loc_34A33	; 34A11
-loc_34A13:
+jmp short .9	; 34A11
+.8:
 mov eax, dword [dword esp+07CAh]	; 34A13
 sar eax, 10h	; 34A1A
 mov dl, byte [dword esp+07CCh]	; 34A1D
@@ -810,18 +796,18 @@ mov byte [byte esp+eax+04h], dl	; 34A24
 mov eax, ecx	; 34A28
 inc eax	; 34A2A
 mov word [dword esp+07CCh], ax	; 34A2B
-loc_34A33:
+.9:
 mov ecx, dword [dword esp+07CCh]	; 34A33
 cmp cx, 100h	; 34A3A
-jl short loc_34A13	; 34A3F
+jl short CalendarScreen.8	; 34A3F
 lea eax, [byte esp+04h]	; 34A41
 push eax	; 34A45
 call sub_B4DD4	; 34A46
 add esp, byte 4	; 34A4B
 xor esi, esi	; 34A4E
 mov word [dword esp+07CCh], si	; 34A50
-jmp short loc_34A8B	; 34A58
-loc_34A5A:
+jmp short .11	; 34A58
+.10:
 mov esi, dword [dword esp+07CAh]	; 34A5A
 sar esi, 10h	; 34A61
 mov eax, dword [nosplit esi*4+crestnames]	; 34A64
@@ -832,9 +818,9 @@ call sub_B30B4	; 34A74
 add esp, byte 8	; 34A79
 mov dword [dword esp+esi*4+0690h], eax	; 34A7C
 inc word [dword esp+07CCh]	; 34A83
-loc_34A8B:
+.11:
 cmp word [dword esp+07CCh], byte 1Ah	; 34A8B
-jl short loc_34A5A	; 34A94
+jl short CalendarScreen.10	; 34A94
 mov ebx, dword [leaguedbnames+18h]	; 34A96
 mov ecx, edi	; 34A9C
 mov edx, dword [esp]	; 34A9E
@@ -845,24 +831,24 @@ lea eax, [dword esp+06F8h]	; 34AB4
 call FileOpenRead	; 34ABB
 mov esi, eax	; 34AC0
 test ax, ax	; 34AC2
-jne short loc_34AE3	; 34AC5
+jne short .12	; 34AC5
 mov ecx, 2	; 34AC7
 xor ebx, ebx	; 34ACC
 lea edx, [dword esp+07C0h]	; 34ACE
 mov eax, dword [dword esp+0780h]	; 34AD5
 call FileReadAt	; 34ADC
 mov esi, eax	; 34AE1
-loc_34AE3:
+.12:
 test si, si	; 34AE3
-jne near loc_34CE2	; 34AE6
-mov dword [dword_DD7A0], 0FFFFFFFFh	; 34AEC
+jne near .22	; 34AE6
+mov dword [calmonth], 0FFFFFFFFh	; 34AEC
 mov edi, 5	; 34AF6
 mov ebx, 0FFFFFFFFh	; 34AFB
 mov dword [dword esp+07BCh], ebx	; 34B00
 mov word [dword esp+07C4h], bx	; 34B07
 mov word [dword esp+07CCh], si	; 34B0F
-jmp near loc_34CBC	; 34B17
-loc_34B1C:
+jmp near .20	; 34B17
+.13:
 mov ebx, dword [dword esp+07CAh]	; 34B1C
 sar ebx, 10h	; 34B23
 mov eax, dword [dword esp+07B6h]	; 34B26
@@ -877,23 +863,23 @@ mov eax, dword [dword esp+0780h]	; 34B42
 call ReadSchedGame	; 34B49
 mov esi, eax	; 34B4E
 test ax, ax	; 34B50
-jne near loc_34CB4	; 34B53
+jne near .19	; 34B53
 mov eax, dword [dword esp+07CCh]	; 34B59
 cmp ax, word [dword esp+07C0h]	; 34B60
-jne near loc_34BEA	; 34B68
+jne near .16	; 34B68
 cmp byte [dword esp+ecx+0306h], 0FFh	; 34B6E
-je short loc_34BA5	; 34B76
+je short .14	; 34B76
 cmp byte [dword esp+ecx+0307h], 0FFh	; 34B78
-je short loc_34BA5	; 34B80
+je short .14	; 34B80
 movzx di, byte [dword esp+ecx+0304h]	; 34B82
 dec edi	; 34B8B
 xor eax, eax	; 34B8C
 mov al, byte [dword esp+ecx+0304h]	; 34B8E
-mov dword [dword_DDD30], eax	; 34B95
+mov dword [calselmonth], eax	; 34B95
 xor eax, eax	; 34B9A
 mov al, byte [dword esp+ecx+0305h]	; 34B9C
-jmp short loc_34BE5	; 34BA3
-loc_34BA5:
+jmp short .15	; 34BA3
+.14:
 mov ebx, dword [dword esp+07B6h]	; 34BA5
 sar ebx, 10h	; 34BAC
 lea edx, [byte ebx-01h]	; 34BAF
@@ -907,12 +893,12 @@ shl eax, 2	; 34BC5
 sub eax, ebx	; 34BC8
 xor edx, edx	; 34BCA
 mov dl, byte [dword esp+eax*2+0304h]	; 34BCC
-mov dword [dword_DDD30], edx	; 34BD3
+mov dword [calselmonth], edx	; 34BD3
 mov al, byte [dword esp+eax*2+0305h]	; 34BD9
 and eax, 0FFh	; 34BE0
-loc_34BE5:
-mov dword [dword_DDD28], eax	; 34BE5
-loc_34BEA:
+.15:
+mov dword [calselday], eax	; 34BE5
+.16:
 mov edx, dword [dword esp+07B6h]	; 34BEA
 sar edx, 10h	; 34BF1
 mov eax, edx	; 34BF4
@@ -922,12 +908,12 @@ add eax, eax	; 34BFB
 xor edx, edx	; 34BFD
 mov dl, byte [dword esp+eax+0306h]	; 34BFF
 cmp edx, ebp	; 34C06
-je short loc_34C1E	; 34C08
+je short .17	; 34C08
 mov al, byte [dword esp+eax+0307h]	; 34C0A
 and eax, 0FFh	; 34C11
 cmp eax, ebp	; 34C16
-jne near loc_34CB4	; 34C18
-loc_34C1E:
+jne near .19	; 34C18
+.17:
 mov edx, dword [dword esp+07B6h]	; 34C1E
 sar edx, 10h	; 34C25
 mov eax, edx	; 34C28
@@ -936,95 +922,95 @@ sub eax, edx	; 34C2D
 add eax, eax	; 34C2F
 mov dh, byte [dword esp+eax+0304h]	; 34C31
 cmp dh, 0FFh	; 34C38
-je near loc_34CB4	; 34C3B
+je near .19	; 34C3B
 cmp byte [dword esp+eax+0305h], 0FFh	; 34C41
-je short loc_34CB4	; 34C49
+je short .19	; 34C49
 mov bh, byte [dword esp+eax+0308h]	; 34C4B
 cmp bh, 0FFh	; 34C52
-jne short loc_34C93	; 34C55
+jne short .18	; 34C55
 cmp bh, byte [dword esp+eax+0309h]	; 34C57
-jne short loc_34C93	; 34C5E
-cmp dword [dword_DD7A0], byte 0	; 34C60
-jge short loc_34C93	; 34C67
+jne short .18	; 34C5E
+cmp dword [calmonth], byte 0	; 34C60
+jge short .18	; 34C67
 mov al, dh	; 34C69
 and eax, 0FFh	; 34C6B
 dec eax	; 34C70
-mov dword [dword_DD7A0], eax	; 34C71
+mov dword [calmonth], eax	; 34C71
 mov eax, dword [dword esp+07CCh]	; 34C76
 mov dword [dword esp+07BCh], eax	; 34C7D
 mov eax, dword [dword esp+07B8h]	; 34C84
 mov word [dword esp+07C4h], ax	; 34C8B
-loc_34C93:
+.18:
 mov eax, dword [dword esp+07B6h]	; 34C93
 sar eax, 10h	; 34C9A
 mov edx, dword [dword esp+07CCh]	; 34C9D
 mov word [dword esp+eax*2+05ACh], dx	; 34CA4
 inc word [dword esp+07B8h]	; 34CAC
-loc_34CB4:
+.19:
 inc word [dword esp+07CCh]	; 34CB4
-loc_34CBC:
+.20:
 cmp word [dword esp+07CCh], 4ADh	; 34CBC
-jge short loc_34CD1	; 34CC6
+jge short .21	; 34CC6
 test si, si	; 34CC8
-je near loc_34B1C	; 34CCB
-loc_34CD1:
-cmp dword [dword_DD7A0], byte 0	; 34CD1
-jge short loc_34CE2	; 34CD8
+je near CalendarScreen.13	; 34CCB
+.21:
+cmp dword [calmonth], byte 0	; 34CD1
+jge short .22	; 34CD8
 movsx eax, di	; 34CDA
-mov dword [dword_DD7A0], eax	; 34CDD
-loc_34CE2:
+mov dword [calmonth], eax	; 34CDD
+.22:
 test si, si	; 34CE2
-je short loc_34CEC	; 34CE5
+je short .23	; 34CE5
 call FadeOutPalCycle	; 34CE7
-loc_34CEC:
+.23:
 lea eax, [dword esp+0780h]	; 34CEC
 call FileClose	; 34CF3
 cmp word [dword esp+07BCh], byte 0	; 34CF8
-jl short loc_34D5A	; 34D01
+jl short .24	; 34D01
 test si, si	; 34D03
-jne short loc_34D5A	; 34D06
+jne short .24	; 34D06
 mov ecx, dword [dword esp+07C2h]	; 34D08
 sar ecx, 10h	; 34D0F
 mov ebx, ecx	; 34D12
 lea edx, [dword esp+0304h]	; 34D14
 mov eax, ebp	; 34D1B
-call sub_347B7	; 34D1D
+call SetGameSides	; 34D1D
 mov edx, ecx	; 34D22
 mov eax, ecx	; 34D24
 shl eax, 2	; 34D26
 sub eax, ecx	; 34D29
 xor edx, ecx	; 34D2B
 mov dl, byte [dword esp+eax*2+0304h]	; 34D2D
-mov dword [dword_DDD30], edx	; 34D34
+mov dword [calselmonth], edx	; 34D34
 mov al, byte [dword esp+eax*2+0305h]	; 34D3A
 and eax, 0FFh	; 34D41
-mov dword [dword_DDD28], eax	; 34D46
+mov dword [calselday], eax	; 34D46
 mov eax, dword [dword esp+ecx*2+05AAh]	; 34D4B
 sar eax, 10h	; 34D52
-mov dword [dword_DD780], eax	; 34D55
-loc_34D5A:
+mov dword [calsel], eax	; 34D55
+.24:
 test si, si	; 34D5A
-jne near loc_35F1B	; 34D5D
-cmp dword [dword_DD7A0], byte 5	; 34D63
-jne short loc_34D75	; 34D6A
+jne near .83	; 34D5D
+cmp dword [calmonth], byte 5	; 34D63
+jne short .25	; 34D6A
 xor eax, eax	; 34D6C
-mov dword [off_C85F6], eax	; 34D6E
-jmp short loc_34D7F	; 34D73
-loc_34D75:
-mov dword [off_C85F6], sub_34691	; 34D75
-loc_34D7F:
-cmp dword [dword_DD7A0], byte 9	; 34D7F
-jne short loc_34D92	; 34D86
+mov dword [calnextslot], eax	; 34D6E
+jmp short .26	; 34D73
+.25:
+mov dword [calnextslot], CalNextMonth	; 34D75
+.26:
+cmp dword [calmonth], byte 9	; 34D7F
+jne short .27	; 34D86
 xor ecx, ecx	; 34D88
-mov dword [off_C8616], ecx	; 34D8A
-jmp short loc_34D9C	; 34D90
-loc_34D92:
-mov dword [off_C8616], sub_346FE	; 34D92
-loc_34D9C:
-mov ax, word [dword_DD7A0]	; 34D9C
+mov dword [calprevslot], ecx	; 34D8A
+jmp short .28	; 34D90
+.27:
+mov dword [calprevslot], CalPrevMonth	; 34D92
+.28:
+mov ax, word [calmonth]	; 34D9C
 mov word [dword esp+07D0h], ax	; 34DA2
 call sub_B4BA8	; 34DAA
-mov esi, unk_C8657	; 34DAF
+mov esi, calmenubar	; 34DAF
 mov dword [dword esp+0730h], esi	; 34DB4
 mov edi, 3	; 34DBB
 mov dword [dword esp+0748h], edi	; 34DC0
@@ -1053,40 +1039,40 @@ push ebp	; 34E32
 mov eax, dword [dword esp+07C2h]	; 34E33
 sar eax, 10h	; 34E3A
 push eax	; 34E3D
-mov eax, dword [dword_DD7A0]	; 34E3E
+mov eax, dword [calmonth]	; 34E3E
 lea ecx, [dword esp+0314h]	; 34E43
 mov ebx, dword [dword esp+07B8h]	; 34E4A
 lea edx, [dword esp+06A0h]	; 34E51
-call sub_33FFD	; 34E58
+call DrawCalendarDay	; 34E58
 cmp byte [musicon], 0	; 34E5D
-je short loc_34ECB	; 34E64
+je short .31	; 34E64
 cmp dword [songdata], byte 0	; 34E66
-jne short loc_34ECB	; 34E6D
-mov ecx, asc_C183D	; 34E6F
-mov ebx, asc_C182C	; 34E74
+jne short .31	; 34E6D
+mov ecx, str_Iff9	; 34E6F
+mov ebx, str_Calendar	; 34E74
 cmp byte [byte_ED9AE], 1	; 34E79
-jne short loc_34E8A	; 34E80
+jne short .29	; 34E80
 mov edx, dword [dword_D2C6B]	; 34E82
-jmp short loc_34E8C	; 34E88
-loc_34E8A:
+jmp short .30	; 34E88
+.29:
 xor edx, edx	; 34E8A
-loc_34E8C:
+.30:
 lea eax, [dword esp+06F8h]	; 34E8C
 call MakePath	; 34E93
 lea eax, [dword esp+06F8h]	; 34E98
 call sub_8F98F	; 34E9F
 mov dword [songdata], eax	; 34EA4
 test eax, eax	; 34EA9
-je short loc_34ECB	; 34EAB
+je short .31	; 34EAB
 test byte [gameopts], 40h	; 34EAD
-je short loc_34ECB	; 34EB4
+je short .31	; 34EB4
 mov edx, dword [musichandle]	; 34EB6
 mov ecx, 4Ch	; 34EBC
 mov ebx, 3	; 34EC1
 call sub_8FB8E	; 34EC6
-loc_34ECB:
+.31:
 mov eax, dword [calendarshapes]	; 34ECB
-call sub_34789	; 34ED0
+call ApplyShapePalette	; 34ED0
 mov eax, dword [pointerspr]	; 34ED5
 mov edx, dword [byte eax+02h]	; 34EDA
 sar edx, 10h	; 34EDD
@@ -1099,7 +1085,7 @@ imul eax, edx	; 34EED
 add eax, byte 11h	; 34EF0
 push byte 20h	; 34EF3
 push eax	; 34EF5
-push asc_C1842	; 34EF6
+push str_Pointer8	; 34EF6
 call sub_8CCA8	; 34EFB
 mov dword [dword esp+0794h], eax	; 34F00
 add esp, byte 0Ch	; 34F07
@@ -1148,32 +1134,32 @@ push esi	; 34FAC
 call sub_91370	; 34FAD
 add esp, byte 0Ch	; 34FB2
 call sub_6B3D7	; 34FB5
-loc_34FBA:
+.32:
 xor ecx, ecx	; 34FBA
-loc_34FBC:
+.33:
 call sub_6B391	; 34FBC
 mov esi, eax	; 34FC1
 test eax, eax	; 34FC3
-je short loc_34FDD	; 34FC5
+je short .34	; 34FC5
 lea ebx, [dword esp+076Ch]	; 34FC7
 lea edx, [dword esp+0770h]	; 34FCE
 call dword [dword_EA0DC]	; 34FD5
 mov ecx, eax	; 34FDB
-loc_34FDD:
+.34:
 test esi, esi	; 34FDD
-je short loc_34FE6	; 34FDF
+je short .35	; 34FDF
 test cl, 2	; 34FE1
-je short loc_34FBC	; 34FE4
-loc_34FE6:
+je short CalendarScreen.33	; 34FE4
+.35:
 test cl, 2	; 34FE6
-jne short loc_35064	; 34FE9
+jne short .37	; 34FE9
 mov eax, dword [dword esp+0770h]	; 34FEB
 cmp eax, dword [dword esp+0778h]	; 34FF2
-jne short loc_3500F	; 34FF9
+jne short .36	; 34FF9
 mov eax, dword [dword esp+076Ch]	; 34FFB
 cmp eax, dword [dword esp+0774h]	; 35002
-je near loc_35F0E	; 35009
-loc_3500F:
+je near .82	; 35009
+.36:
 mov ebx, dword [dword esp+0774h]	; 3500F
 push ebx	; 35016
 mov ecx, dword [dword esp+077Ch]	; 35017
@@ -1195,8 +1181,8 @@ mov ecx, dword [dword esp+0774h]	; 35050
 push ecx	; 35057
 mov esi, dword [pointerspr]	; 35058
 push esi	; 3505E
-jmp near loc_35EEA	; 3505F
-loc_35064:
+jmp near .80	; 3505F
+.37:
 lea eax, [dword esp+0764h]	; 35064
 push eax	; 3506B
 lea eax, [dword esp+076Ch]	; 3506C
@@ -1211,7 +1197,7 @@ mov edx, dword [dword esp+077Ch]	; 35092
 mov eax, dword [dword esp+0780h]	; 35099
 call sub_6BA4D	; 350A0
 test eax, eax	; 350A5
-je near loc_359DB	; 350A7
+je near .65	; 350A7
 mov edx, dword [dword esp+0768h]	; 350AD
 shl edx, 2	; 350B4
 mov eax, dword [dword esp+0764h]	; 350B7
@@ -1219,10 +1205,10 @@ shl eax, 5	; 350BE
 mov ebx, dword [dword esp+edx+0730h]	; 350C1
 add eax, ebx	; 350C8
 cmp dword [byte eax+014h], byte 0	; 350CA
-je near loc_354CB	; 350CE
+je near .50	; 350CE
 mov eax, dword [dword esp+0764h]	; 350D4
 cmp eax, dword [dword esp+edx+0754h]	; 350DB
-jne near loc_3535B	; 350E2
+jne near .45	; 350E2
 mov ebx, dword [dword esp+0774h]	; 350E8
 push ebx	; 350EF
 mov ecx, dword [dword esp+077Ch]	; 350F0
@@ -1233,15 +1219,15 @@ call sub_903F0	; 35100
 add esp, byte 0Ch	; 35105
 mov eax, dword [dword esp+07B0h]	; 35108
 mov word [dword esp+07CCh], ax	; 3510F
-jmp short loc_35174	; 35117
-loc_35119:
+jmp short .40	; 35117
+.38:
 mov esi, dword [dword esp+07CAh]	; 35119
 sar esi, 10h	; 35120
 mov edi, esi	; 35123
 shl edi, 2	; 35125
 mov eax, dword [dword esp+edi+073Ch]	; 35128
 test eax, eax	; 3512F
-je short loc_3516C	; 35131
+je short .39	; 35131
 mov edx, dword [dword esp+esi*8+071Ch]	; 35133
 push edx	; 3513A
 mov ebx, dword [dword esp+esi*8+071Ch]	; 3513B
@@ -1256,11 +1242,11 @@ mov ebx, dword [dword esp+edi+073Ch]	; 3515C
 push ebx	; 35163
 call jctime	; 35164
 add esp, byte 4	; 35169
-loc_3516C:
+.39:
 dec word [dword esp+07CCh]	; 3516C
-loc_35174:
+.40:
 cmp word [dword esp+07CCh], byte 0	; 35174
-jge short loc_35119	; 3517D
+jge short CalendarScreen.38	; 3517D
 xor esi, esi	; 3517F
 mov dword [dword esp+07B0h], esi	; 35181
 mov eax, dword [dword esp+0768h]	; 35188
@@ -1280,23 +1266,23 @@ mov dword [dword esp+0740h], edi	; 351C3
 mov dword [dword esp+0758h], edi	; 351CA
 mov dword [dword esp+074Ch], edi	; 351D1
 cmp esi, byte 1	; 351D8
-jne short loc_3521A	; 351DB
+jne short .42	; 351DB
 mov esi, dword [dword esp+0794h]	; 351DD
 push esi	; 351E4
 call jctime	; 351E5
 add esp, byte 4	; 351EA
 cmp byte [musicon], 0	; 351ED
-je short loc_35213	; 351F4
+je short .41	; 351F4
 cmp dword [songdata], byte 0	; 351F6
-je short loc_35213	; 351FD
+je short .41	; 351FD
 mov eax, dword [musichandle]	; 351FF
 mov ebx, 64h	; 35204
 mov edx, 3	; 35209
 call sub_8FCDF	; 3520E
-loc_35213:
+.41:
 xor eax, eax	; 35213
-jmp near loc_35FAE	; 35215
-loc_3521A:
+jmp near .x	; 35215
+.42:
 mov esi, dword [dword esp+0774h]	; 3521A
 push esi	; 35221
 mov edi, dword [dword esp+077Ch]	; 35222
@@ -1310,15 +1296,15 @@ mov dword [dword esp+076Ch], eax	; 35247
 call sub_6B3D7	; 3524E
 mov eax, dword [dword esp+07CEh]	; 35253
 sar eax, 10h	; 3525A
-cmp eax, dword [dword_DD7A0]	; 3525D
-je short loc_352C9	; 35263
+cmp eax, dword [calmonth]	; 3525D
+je short .43	; 35263
 call sub_B4BA8	; 35265
 mov ebx, dword [dword esp+07A0h]	; 3526A
 push ebx	; 35271
 mov ecx, dword [dword esp+07A8h]	; 35272
 mov ebx, dword [dword esp+07A0h]	; 35279
 mov edx, 3	; 35280
-mov eax, unk_C8657	; 35285
+mov eax, calmenubar	; 35285
 call sub_6B5E4	; 3528A
 mov ecx, dword [calendarshapes]	; 3528F
 push ecx	; 35295
@@ -1328,21 +1314,21 @@ push ebp	; 3529E
 mov eax, dword [dword esp+07C2h]	; 3529F
 sar eax, 10h	; 352A6
 push eax	; 352A9
-mov eax, dword [dword_DD7A0]	; 352AA
+mov eax, dword [calmonth]	; 352AA
 lea ecx, [dword esp+0314h]	; 352AF
 mov ebx, dword [dword esp+07B8h]	; 352B6
 lea edx, [dword esp+06A0h]	; 352BD
-call sub_33FFD	; 352C4
-loc_352C9:
+call DrawCalendarDay	; 352C4
+.43:
 cmp dword [dword_DDD2C], byte 0	; 352C9
-je short loc_35348	; 352D0
+je short .44	; 352D0
 call sub_B4BA8	; 352D2
 mov eax, dword [dword esp+07A0h]	; 352D7
 push eax	; 352DE
 mov ecx, dword [dword esp+07A8h]	; 352DF
 mov ebx, dword [dword esp+07A0h]	; 352E6
 mov edx, 3	; 352ED
-mov eax, unk_C8657	; 352F2
+mov eax, calmenubar	; 352F2
 call sub_6B5E4	; 352F7
 mov edx, dword [calendarshapes]	; 352FC
 push edx	; 35302
@@ -1352,20 +1338,20 @@ push ebp	; 3530B
 mov eax, dword [dword esp+07C2h]	; 3530C
 sar eax, 10h	; 35313
 push eax	; 35316
-mov eax, dword [dword_DD7A0]	; 35317
+mov eax, dword [calmonth]	; 35317
 lea ecx, [dword esp+0314h]	; 3531C
 mov ebx, dword [dword esp+07B8h]	; 35323
 lea edx, [dword esp+06A0h]	; 3532A
-call sub_33FFD	; 35331
+call DrawCalendarDay	; 35331
 mov eax, dword [calendarshapes]	; 35336
-call sub_34789	; 3533B
+call ApplyShapePalette	; 3533B
 xor ecx, ecx	; 35340
 mov dword [dword_DDD2C], ecx	; 35342
-loc_35348:
-mov ax, word [dword_DD7A0]	; 35348
+.44:
+mov ax, word [calmonth]	; 35348
 mov word [dword esp+07D0h], ax	; 3534E
-jmp near loc_35E6A	; 35356
-loc_3535B:
+jmp near .79	; 35356
+.45:
 mov ecx, dword [dword esp+0774h]	; 3535B
 push ecx	; 35362
 mov esi, dword [dword esp+077Ch]	; 35363
@@ -1376,18 +1362,18 @@ call sub_903F0	; 35373
 add esp, byte 0Ch	; 35378
 mov eax, dword [dword esp+07B0h]	; 3537B
 cmp eax, dword [dword esp+0768h]	; 35382
-je near loc_35431	; 35389
+je near .49	; 35389
 mov eax, dword [dword esp+07B0h]	; 3538F
 mov word [dword esp+07CCh], ax	; 35396
-jmp short loc_35411	; 3539E
-loc_353A0:
+jmp short .48	; 3539E
+.46:
 mov esi, edi	; 353A0
 shl esi, 2	; 353A2
 xor ecx, ecx	; 353A5
 mov dword [dword esp+esi+0754h], ecx	; 353A7
 mov eax, dword [dword esp+esi+073Ch]	; 353AE
 test eax, eax	; 353B5
-je short loc_35409	; 353B7
+je short .47	; 353B7
 mov edx, dword [dword esp+edi*8+071Ch]	; 353B9
 push edx	; 353C0
 mov ebx, dword [dword esp+edi*8+071Ch]	; 353C1
@@ -1406,16 +1392,16 @@ xor ebx, ebx	; 353F2
 mov dword [dword esp+esi+073Ch], ebx	; 353F4
 mov dword [dword esp+esi+0730h], ebx	; 353FB
 mov dword [dword esp+esi+0748h], ebx	; 35402
-loc_35409:
+.47:
 dec word [dword esp+07CCh]	; 35409
-loc_35411:
+.48:
 mov edi, dword [dword esp+07CAh]	; 35411
 sar edi, 10h	; 35418
 mov ebx, dword [dword esp+0768h]	; 3541B
 cmp edi, ebx	; 35422
-jg near loc_353A0	; 35424
+jg near CalendarScreen.46	; 35424
 mov dword [dword esp+07B0h], ebx	; 3542A
-loc_35431:
+.49:
 mov eax, dword [dword esp+07A0h]	; 35431
 push eax	; 35438
 mov edx, dword [dword esp+07A8h]	; 35439
@@ -1445,10 +1431,10 @@ add esi, edx	; 354B9
 mov ecx, dword [dword esp+07A4h]	; 354BB
 mov edx, eax	; 354C2
 mov eax, esi	; 354C4
-jmp near loc_359D1	; 354C6
-loc_354CB:
+jmp near .64	; 354C6
+.50:
 cmp dword [byte eax+018h], byte 0	; 354CB
-je near loc_3586D	; 354CF
+je near .59	; 354CF
 mov ebx, dword [dword esp+0774h]	; 354D5
 push ebx	; 354DC
 mov ecx, dword [dword esp+077Ch]	; 354DD
@@ -1459,18 +1445,18 @@ call sub_903F0	; 354ED
 add esp, byte 0Ch	; 354F2
 mov eax, dword [dword esp+07B0h]	; 354F5
 cmp eax, dword [dword esp+0768h]	; 354FC
-je near loc_355AB	; 35503
+je near .54	; 35503
 mov eax, dword [dword esp+07B0h]	; 35509
 mov word [dword esp+07CCh], ax	; 35510
-jmp short loc_3558B	; 35518
-loc_3551A:
+jmp short .53	; 35518
+.51:
 mov esi, edi	; 3551A
 shl esi, 2	; 3551C
 xor ebx, ebx	; 3551F
 mov dword [dword esp+esi+0754h], ebx	; 35521
 mov ecx, dword [dword esp+esi+073Ch]	; 35528
 test ecx, ecx	; 3552F
-je short loc_35583	; 35531
+je short .52	; 35531
 mov eax, dword [dword esp+edi*8+071Ch]	; 35533
 push eax	; 3553A
 mov edx, dword [dword esp+edi*8+071Ch]	; 3553B
@@ -1489,16 +1475,16 @@ xor ebx, ebx	; 3556C
 mov dword [dword esp+esi+073Ch], ebx	; 3556E
 mov dword [dword esp+esi+0730h], ebx	; 35575
 mov dword [dword esp+esi+0748h], ebx	; 3557C
-loc_35583:
+.52:
 dec word [dword esp+07CCh]	; 35583
-loc_3558B:
+.53:
 mov edi, dword [dword esp+07CAh]	; 3558B
 sar edi, 10h	; 35592
 mov edx, dword [dword esp+0768h]	; 35595
 cmp edi, edx	; 3559C
-jg near loc_3551A	; 3559E
+jg near CalendarScreen.51	; 3559E
 mov dword [dword esp+07B0h], edx	; 355A4
-loc_355AB:
+.54:
 mov eax, dword [dword esp+07A0h]	; 355AB
 push eax	; 355B2
 mov edx, dword [dword esp+07A8h]	; 355B3
@@ -1539,12 +1525,12 @@ add eax, ecx	; 3566E
 mov ebx, dword [byte eax+01Ch]	; 35670
 mov dword [dword esp+esi*4+0748h], ebx	; 35673
 cmp esi, byte 1	; 3567A
-je short loc_35684	; 3567D
+je short .55	; 3567D
 mov edx, dword [byte eax+08h]	; 3567F
-jmp short loc_35686	; 35682
-loc_35684:
+jmp short .56	; 35682
+.55:
 mov edx, dword [eax]	; 35684
-loc_35686:
+.56:
 mov eax, dword [dword esp+07B0h]	; 35686
 mov ebx, dword [dword esp+eax*8+0710h]	; 3568D
 add edx, ebx	; 35694
@@ -1554,14 +1540,14 @@ shl edx, 5	; 356A4
 mov eax, dword [dword esp+0768h]	; 356A7
 shl eax, 2	; 356AE
 cmp dword [dword esp+07B0h], byte 1	; 356B1
-je short loc_356C8	; 356B9
+je short .57	; 356B9
 mov eax, dword [dword esp+eax+0730h]	; 356BB
 mov eax, dword [byte edx+eax+04h]	; 356C2
-jmp short loc_356D3	; 356C6
-loc_356C8:
+jmp short .58	; 356C6
+.57:
 mov eax, dword [dword esp+eax+0730h]	; 356C8
 mov eax, dword [byte edx+eax+0Ch]	; 356CF
-loc_356D3:
+.58:
 mov edx, dword [dword esp+07B0h]	; 356D3
 shl edx, 3	; 356DA
 mov dword [dword esp+0790h], edx	; 356DD
@@ -1588,7 +1574,7 @@ shl eax, 2	; 3573C
 imul eax, edx	; 3573F
 add eax, byte 11h	; 35742
 push eax	; 35745
-push asc_C184A	; 35746
+push str_Menubuff5	; 35746
 call sub_8CCA8	; 3574B
 add esp, byte 0Ch	; 35750
 mov edx, dword [dword esp+0798h]	; 35753
@@ -1646,8 +1632,8 @@ mov edx, dword [dword esp+edx+0720h]	; 35851
 mov eax, dword [dword esp+07A0h]	; 35858
 mov eax, dword [dword esp+eax+0738h]	; 3585F
 mov ecx, esi	; 35866
-jmp near loc_359D1	; 35868
-loc_3586D:
+jmp near .64	; 35868
+.59:
 mov esi, dword [dword esp+0774h]	; 3586D
 push esi	; 35874
 mov edi, dword [dword esp+077Ch]	; 35875
@@ -1658,18 +1644,18 @@ call sub_903F0	; 35885
 add esp, byte 0Ch	; 3588A
 mov eax, dword [dword esp+07B0h]	; 3588D
 cmp eax, dword [dword esp+0768h]	; 35894
-je near loc_35943	; 3589B
+je near .63	; 3589B
 mov eax, dword [dword esp+07B0h]	; 358A1
 mov word [dword esp+07CCh], ax	; 358A8
-jmp short loc_35923	; 358B0
-loc_358B2:
+jmp short .62	; 358B0
+.60:
 mov esi, edi	; 358B2
 shl esi, 2	; 358B4
 xor edx, edx	; 358B7
 mov dword [dword esp+esi+0754h], edx	; 358B9
 mov ebx, dword [dword esp+esi+073Ch]	; 358C0
 test ebx, ebx	; 358C7
-je short loc_3591B	; 358C9
+je short .61	; 358C9
 mov ecx, dword [dword esp+edi*8+071Ch]	; 358CB
 push ecx	; 358D2
 mov eax, dword [dword esp+edi*8+071Ch]	; 358D3
@@ -1688,16 +1674,16 @@ xor eax, eax	; 35904
 mov dword [dword esp+esi+073Ch], eax	; 35906
 mov dword [dword esp+esi+0730h], eax	; 3590D
 mov dword [dword esp+esi+0748h], eax	; 35914
-loc_3591B:
+.61:
 dec word [dword esp+07CCh]	; 3591B
-loc_35923:
+.62:
 mov edi, dword [dword esp+07CAh]	; 35923
 sar edi, 10h	; 3592A
 mov eax, dword [dword esp+0768h]	; 3592D
 cmp edi, eax	; 35934
-jg near loc_358B2	; 35936
+jg near CalendarScreen.60	; 35936
 mov dword [dword esp+07B0h], eax	; 3593C
-loc_35943:
+.63:
 mov ecx, dword [dword esp+07A0h]	; 35943
 push ecx	; 3594A
 mov esi, dword [dword esp+07A8h]	; 3594B
@@ -1726,10 +1712,10 @@ add esi, edx	; 359C4
 mov ecx, dword [dword esp+07A4h]	; 359C6
 mov edx, eax	; 359CD
 mov eax, esi	; 359CF
-loc_359D1:
+.64:
 call sub_6B9EB	; 359D1
-jmp near loc_35E6A	; 359D6
-loc_359DB:
+jmp near .79	; 359D6
+.65:
 mov edi, dword [dword esp+0774h]	; 359DB
 push edi	; 359E2
 mov eax, dword [dword esp+077Ch]	; 359E3
@@ -1739,18 +1725,18 @@ push edx	; 359F2
 call sub_903F0	; 359F3
 add esp, byte 0Ch	; 359F8
 cmp dword [dword esp+07B0h], byte 0	; 359FB
-je near loc_35AB1	; 35A03
+je near .69	; 35A03
 mov eax, dword [dword esp+07B0h]	; 35A09
 mov word [dword esp+07CCh], ax	; 35A10
-jmp short loc_35A75	; 35A18
-loc_35A1A:
+jmp short .68	; 35A18
+.66:
 mov esi, dword [dword esp+07CAh]	; 35A1A
 sar esi, 10h	; 35A21
 mov edi, esi	; 35A24
 shl edi, 2	; 35A26
 mov eax, dword [dword esp+edi+073Ch]	; 35A29
 test eax, eax	; 35A30
-je short loc_35A6D	; 35A32
+je short .67	; 35A32
 mov edx, dword [dword esp+esi*8+071Ch]	; 35A34
 push edx	; 35A3B
 mov ebx, dword [dword esp+esi*8+071Ch]	; 35A3C
@@ -1765,11 +1751,11 @@ mov ebx, dword [dword esp+edi+073Ch]	; 35A5D
 push ebx	; 35A64
 call jctime	; 35A65
 add esp, byte 4	; 35A6A
-loc_35A6D:
+.67:
 dec word [dword esp+07CCh]	; 35A6D
-loc_35A75:
+.68:
 cmp word [dword esp+07CCh], byte 0	; 35A75
-jge short loc_35A1A	; 35A7E
+jge short CalendarScreen.66	; 35A7E
 xor eax, eax	; 35A80
 mov dword [dword esp+07B0h], eax	; 35A82
 mov dword [dword esp+0734h], eax	; 35A89
@@ -1777,19 +1763,19 @@ mov dword [dword esp+073Ch], eax	; 35A90
 mov dword [dword esp+0740h], eax	; 35A97
 mov dword [dword esp+0758h], eax	; 35A9E
 mov dword [dword esp+074Ch], eax	; 35AA5
-jmp near loc_35E6A	; 35AAC
-loc_35AB1:
+jmp near .79	; 35AAC
+.69:
 mov word [dword esp+07B4h], 0FFFFh	; 35AB1
 mov ecx, dword [dword esp+0770h]	; 35ABB
 cmp ecx, byte 52h	; 35AC2
-jl near loc_35E5B	; 35AC5
+jl near .78	; 35AC5
 cmp ecx, 25Fh	; 35ACB
-jge near loc_35E5B	; 35AD1
+jge near .78	; 35AD1
 mov edi, dword [dword esp+076Ch]	; 35AD7
 cmp edi, byte 44h	; 35ADE
-jl near loc_35E5B	; 35AE1
+jl near .78	; 35AE1
 cmp edi, 1B2h	; 35AE7
-jge near loc_35E5B	; 35AED
+jge near .78	; 35AED
 lea edx, [byte edi-044h]	; 35AF3
 mov ebx, 3Dh	; 35AF6
 mov eax, edx	; 35AFB
@@ -1804,9 +1790,9 @@ mov eax, edx	; 35B11
 sar edx, 1Fh	; 35B13
 idiv ebx	; 35B16
 add esi, eax	; 35B18
-mov ebx, dword [dword_DD7A0]	; 35B1A
+mov ebx, dword [calmonth]	; 35B1A
 xor edx, edx	; 35B20
-mov dl, byte [dword ebx+byte_C845E]	; 35B22
+mov dl, byte [dword ebx+monthfirstday]	; 35B22
 mov ecx, 7	; 35B28
 mov eax, edx	; 35B2D
 sar edx, 1Fh	; 35B2F
@@ -1815,17 +1801,17 @@ mov eax, esi	; 35B34
 sub eax, edx	; 35B36
 mov word [dword esp+07C8h], ax	; 35B38
 test ax, ax	; 35B40
-jl near loc_35E5B	; 35B43
+jl near .78	; 35B43
 xor eax, eax	; 35B49
 mov al, byte [dword ebx+monthdays]	; 35B4B
 mov edx, dword [dword esp+07C6h]	; 35B51
 sar edx, 10h	; 35B58
 cmp edx, eax	; 35B5B
-jge near loc_35E5B	; 35B5D
+jge near .78	; 35B5D
 xor ebx, ebx	; 35B63
 mov word [dword esp+07CCh], bx	; 35B65
-jmp near loc_35E46	; 35B6D
-loc_35B72:
+jmp near .77	; 35B6D
+.70:
 mov edx, dword [dword esp+07CAh]	; 35B72
 sar edx, 10h	; 35B79
 mov eax, edx	; 35B7C
@@ -1834,36 +1820,36 @@ sub eax, edx	; 35B81
 add eax, eax	; 35B83
 xor ecx, ecx	; 35B85
 mov cl, byte [dword esp+eax+0304h]	; 35B87
-mov ebx, dword [dword_DD7A0]	; 35B8E
+mov ebx, dword [calmonth]	; 35B8E
 inc ebx	; 35B94
 cmp ecx, ebx	; 35B95
-jne near loc_35E3E	; 35B97
+jne near .76	; 35B97
 xor ecx, ebx	; 35B9D
 mov cl, byte [dword esp+eax+0305h]	; 35B9F
 mov ebx, dword [dword esp+07C6h]	; 35BA6
 sar ebx, 10h	; 35BAD
 inc ebx	; 35BB0
 cmp ecx, ebx	; 35BB1
-jne near loc_35E3E	; 35BB3
+jne near .76	; 35BB3
 mov bl, byte [dword esp+eax+0308h]	; 35BB9
 cmp bl, 0FFh	; 35BC0
-jne near loc_35E3E	; 35BC3
+jne near .76	; 35BC3
 cmp bl, byte [dword esp+eax+0309h]	; 35BC9
-jne near loc_35E3E	; 35BD0
+jne near .76	; 35BD0
 mov eax, dword [dword esp+edx*2+05AAh]	; 35BD6
 sar eax, 10h	; 35BDD
-cmp eax, dword [dword_DD780]	; 35BE0
-jne short loc_35BF2	; 35BE6
-mov dword [dword_DD794], 0FFFFFFFFh	; 35BE8
-loc_35BF2:
+cmp eax, dword [calsel]	; 35BE0
+jne short .71	; 35BE6
+mov dword [calexit], 0FFFFFFFFh	; 35BE8
+.71:
 cmp word [dword esp+07C0h], 444h	; 35BF2
-jl short loc_35C1A	; 35BFC
+jl short .72	; 35BFC
 mov eax, dword [dword esp+07CAh]	; 35BFE
 sar eax, 10h	; 35C05
 mov ax, word [dword esp+eax*2+05ACh]	; 35C08
 cmp ax, word [dword esp+07BCh]	; 35C10
-jne short loc_35C52	; 35C18
-loc_35C1A:
+jne short .73	; 35C18
+.72:
 mov eax, dword [dword esp+07CAh]	; 35C1A
 sar eax, 10h	; 35C21
 mov ax, word [dword esp+eax*2+05ACh]	; 35C24
@@ -1872,9 +1858,9 @@ mov eax, dword [dword esp+07CCh]	; 35C34
 mov word [dword esp+07C4h], ax	; 35C3B
 mov eax, dword [dword esp+07B8h]	; 35C43
 mov word [dword esp+07CCh], ax	; 35C4A
-loc_35C52:
-mov esi, dword [dword_DDD30]	; 35C52
-mov edi, dword [dword_DDD28]	; 35C58
+.73:
+mov esi, dword [calselmonth]	; 35C52
+mov edi, dword [calselday]	; 35C58
 mov ebx, dword [dword esp+07C2h]	; 35C5E
 sar ebx, 10h	; 35C65
 mov edx, ebx	; 35C68
@@ -1883,30 +1869,30 @@ shl eax, 2	; 35C6C
 sub eax, ebx	; 35C6F
 xor edx, ebx	; 35C71
 mov dl, byte [dword esp+eax*2+0304h]	; 35C73
-mov dword [dword_DDD30], edx	; 35C7A
+mov dword [calselmonth], edx	; 35C7A
 mov al, byte [dword esp+eax*2+0305h]	; 35C80
 and eax, 0FFh	; 35C87
-mov dword [dword_DDD28], eax	; 35C8C
-cmp dword [dword_DD794], byte 0	; 35C91
-jne short loc_35CA8	; 35C98
+mov dword [calselday], eax	; 35C8C
+cmp dword [calexit], byte 0	; 35C91
+jne short .74	; 35C98
 lea edx, [dword esp+0304h]	; 35C9A
 mov eax, ebp	; 35CA1
-call sub_347B7	; 35CA3
-loc_35CA8:
+call SetGameSides	; 35CA3
+.74:
 call sub_B4BA8	; 35CA8
 mov ebx, dword [dword esp+07A0h]	; 35CAD
 push ebx	; 35CB4
 mov ecx, dword [dword esp+07A8h]	; 35CB5
 mov ebx, dword [dword esp+07A0h]	; 35CBC
 mov edx, 3	; 35CC3
-mov eax, unk_C8657	; 35CC8
+mov eax, calmenubar	; 35CC8
 call sub_6B5E4	; 35CCD
-mov ecx, dword [dword_DDD30]	; 35CD2
+mov ecx, dword [calselmonth]	; 35CD2
 cmp esi, ecx	; 35CD8
-jne near loc_35D85	; 35CDA
-cmp edi, dword [dword_DDD28]	; 35CE0
-je near loc_35D85	; 35CE6
-movzx esi, byte [dword ecx+byte_C845D]	; 35CEC
+jne near .75	; 35CDA
+cmp edi, dword [calselday]	; 35CE0
+je near .75	; 35CE6
+movzx esi, byte [dword ecx+monthfirstday_m1]	; 35CEC
 add esi, edi	; 35CF3
 dec esi	; 35CF5
 mov ebx, 7	; 35CF6
@@ -1922,13 +1908,13 @@ sar edx, 1Fh	; 35D0F
 idiv ecx	; 35D12
 mov esi, ebx	; 35D14
 shl esi, 2	; 35D16
-mov ecx, dword [dword esi+dword_C895E]	; 35D19
+mov ecx, dword [dword esi+calcolx]	; 35D19
 sub ecx, byte 2	; 35D1F
-mov ebx, dword [nosplit eax*4+dword_C897A]	; 35D22
+mov ebx, dword [nosplit eax*4+calrowy]	; 35D22
 sub ebx, byte 2	; 35D29
-mov edx, dword [dword esi+dword_C895E]	; 35D2C
+mov edx, dword [dword esi+calcolx]	; 35D2C
 add edx, byte 4Dh	; 35D32
-mov eax, dword [nosplit eax*4+dword_C897A]	; 35D35
+mov eax, dword [nosplit eax*4+calrowy]	; 35D35
 add eax, byte 3Fh	; 35D3C
 push eax	; 35D3F
 push ebx	; 35D40
@@ -1944,15 +1930,15 @@ push ebp	; 35D5A
 mov eax, dword [dword esp+07C2h]	; 35D5B
 sar eax, 10h	; 35D62
 push eax	; 35D65
-mov eax, dword [dword_DD7A0]	; 35D66
+mov eax, dword [calmonth]	; 35D66
 lea ecx, [dword esp+0314h]	; 35D6B
 mov ebx, dword [dword esp+07B8h]	; 35D72
 lea edx, [dword esp+06A0h]	; 35D79
-call sub_33FFD	; 35D80
-loc_35D85:
-mov eax, dword [dword_DDD30]	; 35D85
-movzx esi, byte [dword eax+byte_C845D]	; 35D8A
-add esi, dword [dword_DDD28]	; 35D91
+call DrawCalendarDay	; 35D80
+.75:
+mov eax, dword [calselmonth]	; 35D85
+movzx esi, byte [dword eax+monthfirstday_m1]	; 35D8A
+add esi, dword [calselday]	; 35D91
 dec esi	; 35D97
 mov ebx, 7	; 35D98
 mov eax, esi	; 35D9D
@@ -1967,13 +1953,13 @@ sar edx, 1Fh	; 35DB1
 idiv ecx	; 35DB4
 mov esi, eax	; 35DB6
 mov eax, ebx	; 35DB8
-mov ebx, dword [nosplit eax*4+dword_C895E]	; 35DBA
+mov ebx, dword [nosplit eax*4+calcolx]	; 35DBA
 sub ebx, byte 2	; 35DC1
-mov edx, dword [nosplit esi*4+dword_C897A]	; 35DC4
+mov edx, dword [nosplit esi*4+calrowy]	; 35DC4
 sub edx, byte 2	; 35DCB
-mov eax, dword [nosplit eax*4+dword_C895E]	; 35DCE
+mov eax, dword [nosplit eax*4+calcolx]	; 35DCE
 add eax, byte 4Dh	; 35DD5
-mov ecx, dword [nosplit esi*4+dword_C897A]	; 35DD8
+mov ecx, dword [nosplit esi*4+calrowy]	; 35DD8
 add ecx, byte 3Fh	; 35DDF
 push ecx	; 35DE2
 push edx	; 35DE3
@@ -1989,28 +1975,28 @@ push ebp	; 35DFD
 mov eax, dword [dword esp+07C2h]	; 35DFE
 sar eax, 10h	; 35E05
 push eax	; 35E08
-mov eax, dword [dword_DD7A0]	; 35E09
+mov eax, dword [calmonth]	; 35E09
 lea ecx, [dword esp+0314h]	; 35E0E
 mov ebx, dword [dword esp+07B8h]	; 35E15
 lea edx, [dword esp+06A0h]	; 35E1C
-call sub_33FFD	; 35E23
+call DrawCalendarDay	; 35E23
 push dword 1E0h	; 35E28
 push byte 0	; 35E2D
 push dword 280h	; 35E2F
 push byte 0	; 35E34
 call sub_B4BC4	; 35E36
 add esp, byte 10h	; 35E3B
-loc_35E3E:
+.76:
 inc word [dword esp+07CCh]	; 35E3E
-loc_35E46:
+.77:
 mov eax, dword [dword esp+07CCh]	; 35E46
 cmp ax, word [dword esp+07B8h]	; 35E4D
-jl near loc_35B72	; 35E55
-loc_35E5B:
+jl near CalendarScreen.70	; 35E55
+.78:
 mov eax, dword [dword esp+07B2h]	; 35E5B
 sar eax, 10h	; 35E62
-mov dword [dword_DD780], eax	; 35E65
-loc_35E6A:
+mov dword [calsel], eax	; 35E65
+.79:
 mov ecx, dword [dword esp+0774h]	; 35E6A
 push ecx	; 35E71
 mov esi, dword [dword esp+077Ch]	; 35E72
@@ -2035,26 +2021,26 @@ mov edi, dword [dword esp+079Ch]	; 35EBA
 push edi	; 35EC1
 call sub_91400	; 35EC2
 add esp, byte 0Ch	; 35EC7
-cmp dword [dword_DD794], byte 0	; 35ECA
-jne short loc_35EF2	; 35ED1
+cmp dword [calexit], byte 0	; 35ECA
+jne short .81	; 35ED1
 mov edx, dword [dword esp+076Ch]	; 35ED3
 push edx	; 35EDA
 mov ebx, dword [dword esp+0774h]	; 35EDB
 push ebx	; 35EE2
 mov ecx, dword [pointerspr]	; 35EE3
 push ecx	; 35EE9
-loc_35EEA:
+.80:
 call sub_91370	; 35EEA
 add esp, byte 0Ch	; 35EEF
-loc_35EF2:
+.81:
 mov eax, dword [dword esp+0770h]	; 35EF2
 mov dword [dword esp+0778h], eax	; 35EF9
 mov eax, dword [dword esp+076Ch]	; 35F00
 mov dword [dword esp+0774h], eax	; 35F07
-loc_35F0E:
-cmp dword [dword_DD794], byte 0	; 35F0E
-je near loc_34FBA	; 35F15
-loc_35F1B:
+.82:
+cmp dword [calexit], byte 0	; 35F0E
+je near CalendarScreen.32	; 35F15
+.83:
 mov edi, dword [dword esp+0794h]	; 35F1B
 push edi	; 35F22
 call jctime	; 35F23
@@ -2075,16 +2061,16 @@ mov dword [goaliestatscb], GameGoalieStatsScreen	; 35F65
 mov dword [standingscb], GameStandingsScreen	; 35F6F
 mov dword [standingsmenucb], GameStandingsMenu	; 35F79
 cmp byte [musicon], 0	; 35F83
-je short loc_35FA9	; 35F8A
+je short .84	; 35F8A
 cmp dword [songdata], byte 0	; 35F8C
-je short loc_35FA9	; 35F93
+je short .84	; 35F93
 mov eax, dword [musichandle]	; 35F95
 mov ebx, 64h	; 35F9A
 mov edx, 3	; 35F9F
 call sub_8FCDF	; 35FA4
-loc_35FA9:
-mov eax, dword [dword_DD780]	; 35FA9
-loc_35FAE:
+.84:
+mov eax, dword [calsel]	; 35FA9
+.x:
 add esp, 7D4h	; 35FAE
 pop ebp	; 35FB4
 pop edi	; 35FB5
