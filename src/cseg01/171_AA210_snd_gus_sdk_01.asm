@@ -1448,7 +1448,7 @@ je short loc_AB299	; AB26F
 xor eax, eax	; AB271
 mov al, byte [byte ebx+01Ch]	; AB273
 movzx esi, byte [dword eax+byte_D7A3C]	; AB276
-mov eax, dword [dword_F6116]	; AB27D
+mov eax, dword [word_F6118-2]	; AB27D
 sar eax, 10h	; AB282
 add eax, byte 40h	; AB285
 imul eax, esi	; AB288
@@ -1457,7 +1457,7 @@ and edx, 0FFh	; AB291
 jmp short loc_AB2B8	; AB297
 loc_AB299:
 xor eax, eax	; AB299
-mov esi, dword [dword_F6116]	; AB29B
+mov esi, dword [word_F6118-2]	; AB29B
 mov al, byte [byte ebx+01Ch]	; AB2A1
 sar esi, 10h	; AB2A4
 add eax, 80h	; AB2A7
@@ -2935,7 +2935,7 @@ mov edx, dword [byte ebp-014h]	; AC27B
 xor eax, eax	; AC27E
 mov al, byte [dword edx+byte_D7A3C]	; AC280
 mov dword [byte ebp-030h], eax	; AC286
-mov eax, dword [dword_F6116]	; AC289
+mov eax, dword [word_F6118-2]	; AC289
 sar eax, 10h	; AC28E
 mov edx, dword [byte ebp-030h]	; AC291
 add eax, byte 40h	; AC294
@@ -2952,7 +2952,7 @@ mov edx, dword [byte ebp-0Ch]	; AC2B6
 imul edx, eax	; AC2B9
 jmp short loc_AC2EA	; AC2BC
 loc_AC2BE:
-mov eax, dword [dword_F6116]	; AC2BE
+mov eax, dword [word_F6118-2]	; AC2BE
 mov edx, dword [byte ebp-014h]	; AC2C3
 sar eax, 10h	; AC2C6
 add edx, 80h	; AC2C9

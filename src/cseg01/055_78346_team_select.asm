@@ -1531,7 +1531,7 @@ mov ecx, eax	; 795C0
 mov ebx, eax	; 795C2
 test eax, eax	; 795C4
 jge short .12	; 795C6
-mov edx, dword [cont2team]	; 795C8
+mov edx, dword [HomeTeam-2]	; 795C8
 sar edx, 10h	; 795CE
 mov eax, edx	; 795D1
 shl eax, 2	; 795D3
@@ -1545,7 +1545,7 @@ je short .10	; 795E4
 cmp byte [dword esp+030Ch], 0	; 795E6
 je short .11	; 795EE
 .10:
-mov edx, dword [HomeTeam]	; 795F0
+mov edx, dword [VisTeam-2]	; 795F0
 sar edx, 10h	; 795F6
 mov eax, edx	; 795F9
 shl eax, 2	; 795FB
@@ -1774,7 +1774,7 @@ mov ecx, eax	; 798E4
 mov ebx, eax	; 798E6
 test eax, eax	; 798E8
 jge short .11	; 798EA
-mov edx, dword [cont2team]	; 798EC
+mov edx, dword [HomeTeam-2]	; 798EC
 sar edx, 10h	; 798F2
 mov eax, edx	; 798F5
 shl eax, 2	; 798F7
@@ -1788,7 +1788,7 @@ je short .9	; 79908
 cmp byte [dword esp+030Ch], 0	; 7990A
 je short .10	; 79912
 .9:
-mov edx, dword [HomeTeam]	; 79914
+mov edx, dword [VisTeam-2]	; 79914
 sar edx, 10h	; 7991A
 mov eax, edx	; 7991D
 shl eax, 2	; 7991F

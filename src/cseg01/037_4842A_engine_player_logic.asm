@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_4842A progbits alloc exec nowrite align=1
-extern AddPenalty, AddPenalty2, DoGameFrame, Findhittype, GetHot, PBnum, SetSPA, SetShotMode
+extern AddPenalty, AddPenalty2, DoGameFrame, Findhittype, GetHot, PBnum, SetSPA, SetShotMode, word_C90D8, word_DB08A, word_DC244, word_DF644, word_E0394, word_E9AB0
 extern Setplass, ShotMode, StopNA, __CHK, str_EASports, str_StarFmt, assinsert, assreplace
 extern sflags, gmode2, byte_CC9E4, byte_CC9E7, byte_CCA95, musicon, byte_DACB3
 extern byte_DAEA7, hmroster, hmrosterjersey, byte_DF87F, byte_DFFE0, byte_DFFE2, byte_E0250, byte_E028C
@@ -723,7 +723,7 @@ je short .3	; 48B50
 mov dword [gwgteam], esi	; 48B52
 mov eax, esi	; 48B58
 shl eax, 8	; 48B5A
-mov eax, dword [dword eax+dword_DF642]	; 48B5D
+mov eax, dword [dword eax+word_DF644-2]	; 48B5D
 sar eax, 10h	; 48B63
 mov dword [gwgplayer], eax	; 48B66
 mov edx, dword [awscore-2]	; 48B6B
@@ -895,9 +895,9 @@ idiv ebp	; 48D83
 mov eax, edx	; 48D85
 shl eax, 4	; 48D87
 add eax, dword [dword esp+0C8h]	; 48D8A
-mov ebx, dword [dword eax+dword_DB088]	; 48D91
+mov ebx, dword [dword eax+word_DB08A-2]	; 48D91
 sar ebx, 10h	; 48D97
-mov eax, dword [dword eax+dword_DB086]	; 48D9A
+mov eax, dword [dword eax+dword_DB088-2]	; 48D9A
 sar eax, 10h	; 48DA0
 add eax, ebx	; 48DA3
 cmp eax, byte 1	; 48DA5
@@ -943,7 +943,7 @@ shr eax, 1Eh	; 48E1D
 movsx ax, byte [dword eax+byte_CC9E7]	; 48E20
 cmp ax, word [dword ebx+word_DC242]	; 48E28
 jg short .16	; 48E2F
-mov edx, dword [dword ebx+word_DC242]	; 48E31
+mov edx, dword [dword ebx+word_DC244-2]	; 48E31
 sar edx, 10h	; 48E37
 mov eax, edx	; 48E3A
 shl eax, 5	; 48E3C
@@ -952,7 +952,7 @@ shl eax, 2	; 48E41
 add eax, edx	; 48E44
 shl eax, 3	; 48E46
 mov dword [dword esp+0C8h], eax	; 48E49
-mov ebx, dword [dword ebx+unk_DC240]	; 48E50
+mov ebx, dword [dword ebx+word_DC242-2]	; 48E50
 sar ebx, 10h	; 48E56
 mov eax, ebx	; 48E59
 mov edx, ebx	; 48E5B
@@ -1060,7 +1060,7 @@ mov word [word_CBC54], bx	; 48FBD
 mov word [word_CBC52], bx	; 48FC4
 mov word [word_E0306], bx	; 48FCB
 mov word [lcrequest], bx	; 48FD2
-mov eax, dword [dword_CBECA]	; 48FD9
+mov eax, dword [word_CBECC-2]	; 48FD9
 sar eax, 10h	; 48FDE
 cmp eax, byte 0FFFFFFFFh	; 48FE1
 je short .1	; 48FE4
@@ -1497,7 +1497,7 @@ push edi	; 495C6
 push ebp	; 495C7
 sub esp, byte 4	; 495C8
 mov ebp, eax	; 495CB
-mov eax, dword [dword_CBEBE]	; 495CD
+mov eax, dword [word_CBEC0-2]	; 495CD
 sar eax, 10h	; 495D2
 cmp eax, byte 0FFFFFFFFh	; 495D5
 je short .1	; 495D8
@@ -1952,18 +1952,18 @@ cmp word [word_CBEC0], 100h	; 49BEF
 jne short .1	; 49BF8
 mov word [word_CBEC0], 258h	; 49BFA
 .1:
-mov eax, dword [camx_m2]	; 49C03
+mov eax, dword [camx-2]	; 49C03
 sar eax, 10h	; 49C08
 cmp eax, byte 0FFFFFFE0h	; 49C0B
 jg near .x	; 49C0E
 cmp word [camy], byte 0	; 49C14
 jge short .2	; 49C1C
-mov eax, dword [camx]	; 49C1E
+mov eax, dword [camy-2]	; 49C1E
 sar eax, 10h	; 49C23
 neg eax	; 49C26
 jmp short .3	; 49C28
 .2:
-mov eax, dword [camx]	; 49C2A
+mov eax, dword [camy-2]	; 49C2A
 sar eax, 10h	; 49C2F
 .3:
 cmp eax, byte 14h	; 49C32
@@ -2584,7 +2584,7 @@ neg esi	; 4A438
 mov word [regd3], si	; 4A43A
 .4:
 xor edx, edx	; 4A441
-mov eax, dword [dword_E03AE]	; 4A443
+mov eax, dword [regd3-2]	; 4A443
 sar eax, 10h	; 4A448
 cmp eax, byte 0FFFFFFB2h	; 4A44B
 jl short .5	; 4A44E
@@ -3513,7 +3513,7 @@ jle short .1	; 4B077
 mov ebx, 2	; 4B079
 jmp short .2	; 4B07E
 .1:
-mov ebx, dword [dword_E9AB7]	; 4B080
+mov ebx, dword [PBnum-3]	; 4B080
 sar ebx, 18h	; 4B086
 .2:
 mov edx, ebx	; 4B089
@@ -3831,7 +3831,7 @@ movsx ax, byte [byte ebx+newpnum]	; 4B43F
 mov word [regd3], ax	; 4B444
 mov byte [byte ebx+newpnum], 0FFh	; 4B44A
 mov byte [byte ebx+newpos], 0FFh	; 4B44E
-mov edx, dword [dword_E03AE]	; 4B452
+mov edx, dword [regd3-2]	; 4B452
 sar edx, 10h	; 4B458
 mov eax, ebx	; 4B45B
 call setplayer	; 4B45D
@@ -5698,7 +5698,7 @@ sar eax, 18h	; 4CABA
 mov edx, dword [byte ebx+04h]	; 4CABD
 sar edx, 10h	; 4CAC0
 add eax, edx	; 4CAC3
-mov edx, dword [dword_E03AE]	; 4CAC5
+mov edx, dword [regd3-2]	; 4CAC5
 sar edx, 10h	; 4CACB
 sub eax, edx	; 4CACE
 mov word [regd1], ax	; 4CAD0
@@ -5750,24 +5750,24 @@ xor eax, edx	; 4CB80
 jne near .x	; 4CB82
 cmp word [regd3], byte 0	; 4CB88
 jge short .9	; 4CB90
-mov eax, dword [dword_E03AE]	; 4CB92
+mov eax, dword [regd3-2]	; 4CB92
 sar eax, 10h	; 4CB97
 neg eax	; 4CB9A
 jmp short .10	; 4CB9C
 .9:
-mov eax, dword [dword_E03AE]	; 4CB9E
+mov eax, dword [regd3-2]	; 4CB9E
 sar eax, 10h	; 4CBA3
 .10:
 cmp eax, 0AAh	; 4CBA6
 jl near .x	; 4CBAB
 cmp word [regd3], byte 0	; 4CBB1
 jge short .11	; 4CBB9
-mov eax, dword [dword_E03AE]	; 4CBBB
+mov eax, dword [regd3-2]	; 4CBBB
 sar eax, 10h	; 4CBC0
 neg eax	; 4CBC3
 jmp short .12	; 4CBC5
 .11:
-mov eax, dword [dword_E03AE]	; 4CBC7
+mov eax, dword [regd3-2]	; 4CBC7
 sar eax, 10h	; 4CBCC
 .12:
 cmp eax, 0E8h	; 4CBCF
@@ -5819,7 +5819,7 @@ sar edx, 18h	; 4CC6B
 mov eax, dword [byte ebx+04h]	; 4CC6E
 sar eax, 10h	; 4CC71
 add eax, edx	; 4CC74
-mov edx, dword [dword_E03AE]	; 4CC76
+mov edx, dword [regd3-2]	; 4CC76
 sar edx, 10h	; 4CC7C
 sub eax, edx	; 4CC7F
 mov word [regd4], ax	; 4CC81
@@ -6995,12 +6995,12 @@ and byte [gmode2], 0FAh	; 4DA9B
 and byte [gmode], 0FEh	; 4DAA2
 and byte [byte ecx+pflags2], 0FEh	; 4DAA9
 or byte [sflags3], 10h	; 4DAAD
-mov eax, dword [dword_E038E]	; 4DAB4
+mov eax, dword [word_E0390-2]	; 4DAB4
 sar eax, 10h	; 4DAB9
 movsx ax, byte [dword eax+byte_CCA95]	; 4DABC
 mov edx, 10h	; 4DAC4
 sub edx, eax	; 4DAC9
-mov eax, dword [word_E0392]	; 4DACB
+mov eax, dword [word_E0394-2]	; 4DACB
 sar eax, 10h	; 4DAD0
 movsx ax, byte [dword eax+byte_CCA95]	; 4DAD3
 add edx, eax	; 4DADB
@@ -7224,7 +7224,7 @@ cmp word [byte eax+Ypos+2], byte 0	; 4DDE2
 jle short .5	; 4DDE7
 jmp near ChkTwoLinePass.1	; 4DDE9
 .4:
-mov edx, dword [lasttouch]	; 4DDEE
+mov edx, dword [word_E9AC4-2]	; 4DDEE
 sar edx, 10h	; 4DDF4
 cmp edx, byte 0FFFFFFB2h	; 4DDF7
 jg near ChkTwoLinePass.1	; 4DDFA
@@ -7318,7 +7318,7 @@ setne al	; 4DF04
 and eax, 0FFh	; 4DF07
 xor eax, edx	; 4DF0C
 je short .8	; 4DF0E
-mov eax, dword [lj1]	; 4DF10
+mov eax, dword [byte_E9AC1-3]	; 4DF10
 sar eax, 18h	; 4DF15
 shl eax, 7	; 4DF18
 add eax, SortCords	; 4DF1B
@@ -7431,12 +7431,12 @@ test byte [gmode2], 1	; 4E073
 jne short .x	; 4E07A
 cmp word [word_C90B2], byte 0	; 4E07C
 jg short .5	; 4E084
-mov eax, dword [dword_C90B0]	; 4E086
+mov eax, dword [word_C90B2-2]	; 4E086
 sar eax, 10h	; 4E08B
 sub eax, byte 0Fh	; 4E08E
 jmp short .6	; 4E091
 .5:
-mov eax, dword [dword_C90B0]	; 4E093
+mov eax, dword [word_C90B2-2]	; 4E093
 sar eax, 10h	; 4E098
 add eax, byte 0Fh	; 4E09B
 .6:
@@ -7591,7 +7591,7 @@ mov eax, 0FFFFFF70h	; 4E245
 mov word [byte ebx+temp3], ax	; 4E24A
 mov eax, dword [byte ebx+Ypos]	; 4E24E
 sar eax, 10h	; 4E251
-mov ecx, dword [camx]	; 4E254
+mov ecx, dword [camy-2]	; 4E254
 sar ecx, 10h	; 4E25A
 sub eax, ecx	; 4E25D
 test eax, eax	; 4E25F
@@ -8006,7 +8006,7 @@ push ecx	; 4E724
 push edx	; 4E725
 test byte [gmode], 10h	; 4E726
 jne near .12	; 4E72D
-mov eax, dword [dword_CBEBE]	; 4E733
+mov eax, dword [word_CBEC0-2]	; 4E733
 sar eax, 10h	; 4E738
 cmp eax, byte 0FFFFFFFFh	; 4E73B
 jne near .12	; 4E73E
@@ -8032,7 +8032,7 @@ test eax, eax	; 4E778
 jne near .12	; 4E77A
 mov edx, dword [dword_E9AB6]	; 4E780
 sar edx, 11h	; 4E786
-mov eax, dword [gsp]	; 4E789
+mov eax, dword [gameclock-2]	; 4E789
 sar eax, 10h	; 4E78E
 cmp edx, eax	; 4E791
 jle short .4	; 4E793
@@ -8065,9 +8065,9 @@ test byte [gameopts+1], 1	; 4E7ED
 je short .7	; 4E7F4
 cmp byte [musicon], 0	; 4E7F6
 je short .7	; 4E7FD
-mov eax, dword [dword_DF748]	; 4E7FF
+mov eax, dword [awtmap-2]	; 4E7FF
 sar eax, 10h	; 4E804
-mov edx, dword [dword_DF648]	; 4E807
+mov edx, dword [hmtmap-2]	; 4E807
 sar edx, 10h	; 4E80D
 sub eax, edx	; 4E810
 mov edx, eax	; 4E812
@@ -8099,7 +8099,7 @@ cmp word [crowdlevel], 2BCh	; 4E86B
 jg near .12	; 4E874
 xor eax, eax	; 4E87A
 call sub_66497	; 4E87C
-mov eax, dword [dword_CBECA]	; 4E881
+mov eax, dword [word_CBECC-2]	; 4E881
 sar eax, 10h	; 4E886
 cmp eax, byte 0FFFFFFFFh	; 4E889
 je short .12	; 4E88C
@@ -8115,7 +8115,7 @@ cmp edx, byte 1	; 4E8A4
 jne short .9	; 4E8A7
 mov eax, 2	; 4E8A9
 call sub_66497	; 4E8AE
-mov eax, dword [dword_CBECA]	; 4E8B3
+mov eax, dword [word_CBECC-2]	; 4E8B3
 sar eax, 10h	; 4E8B8
 cmp eax, byte 0FFFFFFFFh	; 4E8BB
 je short .12	; 4E8BE
@@ -8304,7 +8304,7 @@ je near .10	; 4EB2B
 mov dh, dl	; 4EB31
 and dh, 0FDh	; 4EB33
 mov byte [byte esi+pflags], dh	; 4EB36
-mov eax, dword [RefStep]	; 4EB39
+mov eax, dword [RefPen-2]	; 4EB39
 sar eax, 10h	; 4EB3E
 cmp word [nosplit eax*2+word_CCA9C], byte 0	; 4EB41
 jge near .9	; 4EB4A
@@ -8325,9 +8325,9 @@ jmp short .2	; 4EB88
 .1:
 mov ecx, hmtmstruct	; 4EB8A
 .2:
-mov ebx, dword [dword_E9AB6]	; 4EB8F
+mov ebx, dword [PerTimeTotal-2]	; 4EB8F
 sar ebx, 10h	; 4EB95
-mov eax, dword [gsp]	; 4EB98
+mov eax, dword [gameclock-2]	; 4EB98
 sar eax, 10h	; 4EB9D
 sub ebx, eax	; 4EBA0
 cmp word [gameclock], byte 3Ch	; 4EBA2
@@ -8348,7 +8348,7 @@ mov edx, ebx	; 4EBD2
 sar edx, 1Fh	; 4EBD4
 idiv dword [byte ebp-04h]	; 4EBD7
 push eax	; 4EBDA
-mov eax, dword [word_E9AAE]	; 4EBDB
+mov eax, dword [word_E9AB0-2]	; 4EBDB
 sar eax, 10h	; 4EBE0
 push eax	; 4EBE3
 cmp word [byte ecx+034h], byte 0	; 4EBE4
@@ -8421,7 +8421,7 @@ mov word [byte esi+temp1], bx	; 4ECBE
 mov edx, 0A5Bh	; 4ECC2
 mov eax, esi	; 4ECC7
 call SetSPA	; 4ECC9
-mov eax, dword [RefStep]	; 4ECCE
+mov eax, dword [RefPen-2]	; 4ECCE
 sar eax, 10h	; 4ECD3
 mov ax, word [nosplit eax*2+word_CCA9C]	; 4ECD6
 mov word [regd2], ax	; 4ECDE
@@ -8452,7 +8452,7 @@ mov ax, word [regd2]	; 4ED2A
 cmp ax, word [byte esi+facedir]	; 4ED30
 jne short .17	; 4ED34
 or byte [byte esi+pflags], 20h	; 4ED36
-mov eax, dword [RefStep]	; 4ED3A
+mov eax, dword [RefPen-2]	; 4ED3A
 sar eax, 10h	; 4ED3F
 mov edx, dword [nosplit eax*2+dword_CCAD8]	; 4ED42
 sar edx, 10h	; 4ED49
@@ -8568,7 +8568,7 @@ sar eax, 10h	; 4EECB
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 4EECE
 mov ecx, edi	; 4EED5
 call sub_59AD0	; 4EED7
-mov eax, dword [dword_E9A9E]	; 4EEDC
+mov eax, dword [joysampling_save-2]	; 4EEDC
 sar eax, 10h	; 4EEE1
 mov dword [joysampling], eax	; 4EEE4
 mov byte [byte_E9AD3], 0FFh	; 4EEE9
@@ -8657,7 +8657,7 @@ jne short .17	; 4F035
 call sub_62C37	; 4F037
 test ax, ax	; 4F03C
 jne near .20	; 4F03F
-mov eax, dword [RefPen]	; 4F045
+mov eax, dword [word_C90D8-2]	; 4F045
 sar eax, 10h	; 4F04A
 shl eax, 7	; 4F04D
 cmp byte [dword eax+byte_DF87F], 0	; 4F050
@@ -8668,7 +8668,7 @@ xor dh, dh	; 4F063
 mov byte [dword eax+byte_DF87F], dh	; 4F065
 mov eax, 8	; 4F06B
 call sub_66497	; 4F070
-mov eax, dword [dword_CBECA]	; 4F075
+mov eax, dword [word_CBECC-2]	; 4F075
 sar eax, 10h	; 4F07A
 cmp eax, byte 0FFFFFFFFh	; 4F07D
 je short .20	; 4F080
@@ -9111,12 +9111,12 @@ mov word [byte ebx+temp2], 8	; 4F606
 mov word [byte ebx+temp1], 0	; 4F60C
 cmp word [word_C90B2], byte 0	; 4F612
 jg short .3	; 4F61A
-mov eax, dword [dword_C90B0]	; 4F61C
+mov eax, dword [word_C90B2-2]	; 4F61C
 sar eax, 10h	; 4F621
 sub eax, byte 0Fh	; 4F624
 jmp short .4	; 4F627
 .3:
-mov eax, dword [dword_C90B0]	; 4F629
+mov eax, dword [word_C90B2-2]	; 4F629
 sar eax, 10h	; 4F62E
 add eax, byte 0Fh	; 4F631
 .4:
@@ -9231,7 +9231,7 @@ mov word [byte ebx+Xvel], ax	; 4F799
 call sub_59AAD	; 4F79D
 test eax, eax	; 4F7A2
 jne near ass_popx	; 4F7A4
-mov eax, dword [dword_CBECA]	; 4F7AA
+mov eax, dword [word_CBECC-2]	; 4F7AA
 sar eax, 10h	; 4F7AF
 cmp eax, byte 0FFFFFFFFh	; 4F7B2
 jne near ass_popx	; 4F7B5

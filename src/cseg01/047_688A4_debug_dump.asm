@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_688A4 progbits alloc exec nowrite align=1
-extern __CHK, str_pen, str_dbgClin, str_dbgPenShot, str_dbgLip, str_dbgHVpos, str_dbgRef, str_dbgPb
+extern __CHK, str_pen, str_dbgClin, str_dbgPenShot, str_dbgLip, str_dbgHVpos, str_dbgRef, str_dbgPb, PenBuf_pl, Pencntdwn, RefStep, awtmgoalie, camy, clockticks, cont2team, gameover, hmtmgoalie, yc1
 extern str_dbgG, str_dbgGO, str_dbgGsp, str_dbgC12, str_dbgPuckc, str_dbgIdx, str_dbgD, str_dbgLbD
 extern str_dbgDRb, str_dbgDS, str_dbgPosVel, str_dbgVz, str_dbgAss, str_dbgSpa, str_debError, str_dbgBail
 extern str_statslog, str_fmode_at, str_ErrDumpStats, str_dumpPool, str_dumpTmstructs, str_dumpHex, str_dumpSortcords, str_dumpSortLine
@@ -92,16 +92,16 @@ push eax	; 6897C
 push str_dbgLip	; 6897D
 call DebugPrintf	; 68982
 add esp, byte 8	; 68987
-mov eax, dword [xc1]	; 6898A
+mov eax, dword [yc1-2]	; 6898A
 sar eax, 10h	; 6898F
 push eax	; 68992
-mov eax, dword [threat]	; 68993
+mov eax, dword [xc1-2]	; 68993
 sar eax, 10h	; 68998
 push eax	; 6899B
-mov eax, dword [camx]	; 6899C
+mov eax, dword [camy-2]	; 6899C
 sar eax, 10h	; 689A1
 push eax	; 689A4
-mov eax, dword [camx_m2]	; 689A5
+mov eax, dword [camx-2]	; 689A5
 sar eax, 10h	; 689AA
 push eax	; 689AD
 push str_dbgHVpos	; 689AE
@@ -111,10 +111,10 @@ push eax	; 689B8
 call sprintf_	; 689B9
 add esp, byte 18h	; 689BE
 add esi, eax	; 689C1
-mov eax, dword [Penaltytimer]	; 689C3
+mov eax, dword [refsignal-2]	; 689C3
 sar eax, 10h	; 689C8
 push eax	; 689CB
-mov eax, dword [refsignal]	; 689CC
+mov eax, dword [RefStep-2]	; 689CC
 sar eax, 10h	; 689D1
 push eax	; 689D4
 push str_dbgRef	; 689D5
@@ -124,7 +124,7 @@ push eax	; 689DF
 call sprintf_	; 689E0
 add esp, byte 10h	; 689E5
 add esi, eax	; 689E8
-mov eax, dword [dword_E9A14]	; 689EA
+mov eax, dword [PenBuf_pl-3]	; 689EA
 sar eax, 18h	; 689EF
 push eax	; 689F2
 mov eax, dword [PenBuf-3]	; 689F3
@@ -137,10 +137,10 @@ push eax	; 68A06
 call sprintf_	; 68A07
 add esp, byte 10h	; 68A0C
 add esi, eax	; 68A0F
-mov eax, dword [awtmap]	; 68A11
+mov eax, dword [awtmgoalie-2]	; 68A11
 sar eax, 10h	; 68A16
 push eax	; 68A19
-mov eax, dword [hmtmap]	; 68A1A
+mov eax, dword [hmtmgoalie-2]	; 68A1A
 sar eax, 10h	; 68A1F
 push eax	; 68A22
 push str_dbgG	; 68A23
@@ -159,10 +159,10 @@ test dh, 40h	; 68A4A
 setne al	; 68A4D
 and eax, 0FFh	; 68A50
 push eax	; 68A55
-mov eax, dword [word_CBC44]	; 68A56
+mov eax, dword [exitgame-2]	; 68A56
 sar eax, 10h	; 68A5B
 push eax	; 68A5E
-mov eax, dword [exitgame]	; 68A5F
+mov eax, dword [gameover-2]	; 68A5F
 sar eax, 10h	; 68A64
 push eax	; 68A67
 push str_dbgGO	; 68A68
@@ -172,10 +172,10 @@ push eax	; 68A72
 call sprintf_	; 68A73
 add esp, byte 18h	; 68A78
 add esi, eax	; 68A7B
-mov eax, dword [gameclock]	; 68A7D
+mov eax, dword [clockticks-2]	; 68A7D
 sar eax, 10h	; 68A82
 push eax	; 68A85
-mov eax, dword [gsp]	; 68A86
+mov eax, dword [gameclock-2]	; 68A86
 sar eax, 10h	; 68A8B
 push eax	; 68A8E
 push str_dbgGsp	; 68A8F
@@ -185,16 +185,16 @@ push eax	; 68A99
 call sprintf_	; 68A9A
 add esp, byte 10h	; 68A9F
 add esi, eax	; 68AA2
-mov eax, dword [cont1team]	; 68AA4
+mov eax, dword [cont2team-2]	; 68AA4
 sar eax, 10h	; 68AA9
 push eax	; 68AAC
-mov eax, dword [c2playernum]	; 68AAD
+mov eax, dword [cont1team-2]	; 68AAD
 sar eax, 10h	; 68AB2
 push eax	; 68AB5
-mov eax, dword [c1playernum]	; 68AB6
+mov eax, dword [c2playernum-2]	; 68AB6
 sar eax, 10h	; 68ABB
 push eax	; 68ABE
-mov eax, dword [sflags3]	; 68ABF
+mov eax, dword [c1playernum-2]	; 68ABF
 sar eax, 10h	; 68AC4
 push eax	; 68AC7
 push str_dbgC12	; 68AC8
@@ -204,7 +204,7 @@ push eax	; 68AD2
 call sprintf_	; 68AD3
 add esp, byte 18h	; 68AD8
 add esi, eax	; 68ADB
-mov eax, dword [VisTeam]	; 68ADD
+mov eax, dword [Pencntdwn-2]	; 68ADD
 sar eax, 10h	; 68AE2
 push eax	; 68AE5
 mov bh, byte [gmode]	; 68AE6

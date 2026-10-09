@@ -1315,7 +1315,7 @@ mov cl, dl	; 60DD6
 mov edx, 1	; 60DD8
 shl edx, cl	; 60DDD
 mov eax, dword [dword esp+0100h]	; 60DDF
-mov eax, dword [dword eax+dword_E9B2A]	; 60DE6
+mov eax, dword [dword eax+word_E9B2C-2]	; 60DE6
 sar eax, 10h	; 60DEC
 or eax, edx	; 60DEF
 mov edx, dword [dword esp+0100h]	; 60DF1
@@ -1628,9 +1628,9 @@ call GetPeriodTime	; 61249
 mov word [PerTimeTotal], ax	; 6124E
 mov eax, 1	; 61254
 call LoadGameTeams	; 61259
-mov edx, dword [HomeTeam]	; 6125E
+mov edx, dword [VisTeam-2]	; 6125E
 sar edx, 10h	; 61264
-mov eax, dword [cont2team]	; 61267
+mov eax, dword [HomeTeam-2]	; 61267
 sar eax, 10h	; 6126C
 mov ebx, unk_DF314	; 6126F
 call sub_673C5	; 61274
@@ -1653,11 +1653,11 @@ mov eax, photobanks	; 612C2
 call __STOSD	; 612C7
 xor ecx, ecx	; 612CC
 mov dword [photobankf], ecx	; 612CE
-mov eax, dword [dword_CBECA]	; 612D4
+mov eax, dword [word_CBECC-2]	; 612D4
 sar eax, 10h	; 612D9
 cmp eax, ebx	; 612DC
 je short .35	; 612DE
-mov edx, dword [word_CBECC]	; 612E0
+mov edx, dword [word_CBECE-2]	; 612E0
 sar edx, 10h	; 612E6
 cmp edx, ebx	; 612E9
 je short .35	; 612EB

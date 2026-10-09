@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_1167B progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, awardtype
+extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, awardtype, VisTeam, bgscrollx, camy, clockticks, scrollx, word_CBECE
 extern curleague, sflags, musicon, byte_D9299, awardwinners, fileoncd, joysampling, gameopts
 extern inputframes, escrequest, demomode, gameresult, gamemode, hudclockmin, hudclocksec, hudclockhund
 extern dword_C5840, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
@@ -65,11 +65,11 @@ idiv ebx	; 116EC
 mov dword [frameaccum], edx	; 116EE
 mov eax, esi	; 116F4
 call RunGameFrames	; 116F6
-mov eax, dword [camx_m2]	; 116FB
+mov eax, dword [camx-2]	; 116FB
 sar eax, 10h	; 11700
 add eax, byte 20h	; 11703
 mov dword [dword_D8C7C], eax	; 11706
-mov eax, dword [camx]	; 1170B
+mov eax, dword [camy-2]	; 1170B
 sar eax, 10h	; 11710
 mov edx, 140h	; 11713
 sub edx, eax	; 11718
@@ -104,26 +104,26 @@ call sub_6B008	; 11772
 mov edx, dword [dword_D8C74]	; 11777
 mov eax, dword [dword_D8C7C]	; 1177D
 call SetRinkScroll	; 11782
-mov eax, dword [rinkhtiles]	; 11787
+mov eax, dword [bgscrolly-2]	; 11787
 sar eax, 10h	; 1178C
 shl eax, 3	; 1178F
-mov edx, dword [rinkwtiles]	; 11792
+mov edx, dword [scrolly-2]	; 11792
 sar edx, 10h	; 11798
 add edx, eax	; 1179B
 lea ecx, [dword edx+0A8h]	; 1179D
-mov ebx, dword [bgscrolly]	; 117A3
+mov ebx, dword [bgscrollx-2]	; 117A3
 sar ebx, 10h	; 117A9
 shl ebx, 3	; 117AC
-mov eax, dword [scrolly]	; 117AF
+mov eax, dword [scrollx-2]	; 117AF
 sar eax, 10h	; 117B4
 add eax, ebx	; 117B7
 lea ebx, [dword eax+0140h]	; 117B9
 call sub_6AF52	; 117BF
 xor ebx, ebx	; 117C4
 mov dword [spritedrawcount], ebx	; 117C6
-mov edx, dword [dword_D8C72]	; 117CC
+mov edx, dword [dword_D8C74-2]	; 117CC
 sar edx, 10h	; 117D2
-mov eax, dword [dword_D8C7A]	; 117D5
+mov eax, dword [dword_D8C7C-2]	; 117D5
 sar eax, 10h	; 117DA
 call DrawRinkOverlays	; 117DD
 cmp word [word_CBEC4], byte 0	; 117E2
@@ -141,7 +141,7 @@ mov edx, unk_DF014	; 11816
 mov eax, 1	; 1181B
 call FadePalette	; 11820
 call sub_61B85	; 11825
-mov eax, dword [dword_E9A9E]	; 1182A
+mov eax, dword [joysampling_save-2]	; 1182A
 sar eax, 10h	; 1182F
 mov dword [joysampling], eax	; 11832
 .7:
@@ -166,9 +166,9 @@ idiv ebx	; 11876
 mov dword [dword_D8C78], edx	; 11878
 cmp word [exitgame], byte 0	; 1187E
 je short .9	; 11886
-mov edx, dword [gsp]	; 11888
+mov edx, dword [gameclock-2]	; 11888
 sar edx, 10h	; 1188E
-mov eax, dword [gameclock]	; 11891
+mov eax, dword [clockticks-2]	; 11891
 sar eax, 10h	; 11896
 or eax, edx	; 11899
 jne short .9	; 1189B
@@ -190,17 +190,17 @@ add eax, edx	; 118CA
 mov dword [dword_DC28C], eax	; 118CC
 .9:
 call UpdateHudPanel	; 118D1
-mov edx, dword [rinkhtiles]	; 118D6
+mov edx, dword [bgscrolly-2]	; 118D6
 sar edx, 10h	; 118DC
 shl edx, 3	; 118DF
-mov eax, dword [rinkwtiles]	; 118E2
+mov eax, dword [scrolly-2]	; 118E2
 sar eax, 10h	; 118E7
 add edx, eax	; 118EA
 neg edx	; 118EC
-mov ebx, dword [bgscrolly]	; 118EE
+mov ebx, dword [bgscrollx-2]	; 118EE
 sar ebx, 10h	; 118F4
 shl ebx, 3	; 118F7
-mov eax, dword [scrolly]	; 118FA
+mov eax, dword [scrollx-2]	; 118FA
 sar eax, 10h	; 118FF
 add eax, ebx	; 11902
 neg eax	; 11904
@@ -218,7 +218,7 @@ xor eax, eax	; 11938
 call FadePalette	; 1193A
 xor esi, esi	; 1193F
 mov word [word_CBEC4], si	; 11941
-mov eax, dword [dword_E9A9E]	; 11948
+mov eax, dword [joysampling_save-2]	; 11948
 sar eax, 10h	; 1194D
 mov dword [joysampling], eax	; 11950
 .10:
@@ -296,27 +296,27 @@ add esp, byte 8	; 11A7E
 mov word [word_CBEC4], 1	; 11A81
 xor eax, eax	; 11A8A
 mov dword [escrequest], eax	; 11A8C
-mov eax, dword [HomeTeam]	; 11A91
+mov eax, dword [VisTeam-2]	; 11A91
 sar eax, 10h	; 11A96
 mov edx, dword [nosplit eax*4+teamabbrevs]	; 11A99
-mov eax, dword [cont2team]	; 11AA0
+mov eax, dword [HomeTeam-2]	; 11AA0
 sar eax, 10h	; 11AA5
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 11AA8
 call sub_59D71	; 11AAF
 mov ebx, dword [curperiod]	; 11AB4
-mov edx, dword [HomeTeam]	; 11ABA
+mov edx, dword [VisTeam-2]	; 11ABA
 sar edx, 10h	; 11AC0
-mov eax, dword [cont2team]	; 11AC3
+mov eax, dword [HomeTeam-2]	; 11AC3
 sar eax, 10h	; 11AC8
 xor ecx, ecx	; 11ACB
 call DrawHudPanel	; 11ACD
-mov eax, dword [dword_CBECA]	; 11AD2
+mov eax, dword [word_CBECC-2]	; 11AD2
 sar eax, 10h	; 11AD7
 add dword [rinkscrollx], 3E8h	; 11ADA
 add dword [rinkscrolly], 3E8h	; 11AE4
 cmp eax, byte 0FFFFFFFFh	; 11AEE
 je near .22	; 11AF1
-mov edx, dword [word_CBECC]	; 11AF7
+mov edx, dword [word_CBECE-2]	; 11AF7
 sar edx, 10h	; 11AFD
 cmp edx, byte 0FFFFFFFFh	; 11B00
 je near .22	; 11B03
@@ -358,7 +358,7 @@ add esp, byte 4	; 11B7F
 cmp esi, eax	; 11B82
 jl short GameLoop.20	; 11B84
 .22:
-mov eax, dword [dword_E9A9E]	; 11B86
+mov eax, dword [joysampling_save-2]	; 11B86
 sar eax, 10h	; 11B8B
 mov dword [joysampling], eax	; 11B8E
 call joyq_flush	; 11B93
@@ -371,7 +371,7 @@ xor edx, edx	; 11BB1
 mov dword [joysampling], edx	; 11BB3
 call sub_61A27	; 11BB9
 mov dword [dword_C5840], edx	; 11BBE
-mov eax, dword [dword_E9A9E]	; 11BC4
+mov eax, dword [joysampling_save-2]	; 11BC4
 sar eax, 10h	; 11BC9
 mov dword [joysampling], eax	; 11BCC
 call joyq_flush	; 11BD1
@@ -394,17 +394,17 @@ je near .30	; 11C1B
 cmp word [gameover], byte 0	; 11C21
 jne short .26	; 11C29
 call SelectScreenBM	; 11C2B
-mov edx, dword [HomeTeam]	; 11C30
+mov edx, dword [VisTeam-2]	; 11C30
 sar edx, 10h	; 11C36
 mov edx, dword [nosplit edx*4+teamabbrevs]	; 11C39
-mov eax, dword [cont2team]	; 11C40
+mov eax, dword [HomeTeam-2]	; 11C40
 sar eax, 10h	; 11C45
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 11C48
 call sub_59D71	; 11C4F
 mov ebx, dword [curperiod]	; 11C54
-mov edx, dword [HomeTeam]	; 11C5A
+mov edx, dword [VisTeam-2]	; 11C5A
 sar edx, 10h	; 11C60
-mov eax, dword [cont2team]	; 11C63
+mov eax, dword [HomeTeam-2]	; 11C63
 sar eax, 10h	; 11C68
 mov ecx, 1	; 11C6B
 call DrawHudPanel	; 11C70
@@ -461,9 +461,9 @@ cmp dword [eax], byte 0	; 11D1E
 jge near .4	; 11D21
 call LoadRockMusic	; 11D27
 call LoadGameGfx	; 11D2C
-mov edx, dword [HomeTeam]	; 11D31
+mov edx, dword [VisTeam-2]	; 11D31
 sar edx, 10h	; 11D37
-mov eax, dword [cont2team]	; 11D3A
+mov eax, dword [HomeTeam-2]	; 11D3A
 sar eax, 10h	; 11D3F
 mov ebx, unk_DF314	; 11D42
 call sub_673C5	; 11D47
@@ -476,7 +476,7 @@ jl short .1	; 11D68
 mov eax, 0Ch	; 11D6A
 jmp short .2	; 11D6F
 .1:
-mov eax, dword [cont2team]	; 11D71
+mov eax, dword [HomeTeam-2]	; 11D71
 sar eax, 10h	; 11D76
 .2:
 call LoadRink	; 11D79
@@ -512,7 +512,7 @@ call SetupTeamLines	; 11DF0
 call MakeGSummaryPath	; 11DF5
 call CrowdNoiseReset	; 11DFA
 call SetupGoalieMenu	; 11DFF
-mov eax, dword [word_CBC44]	; 11E04
+mov eax, dword [exitgame-2]	; 11E04
 sar eax, 10h	; 11E09
 cmp eax, byte 0FFFFFFFFh	; 11E0C
 je near .14	; 11E0F
@@ -545,19 +545,19 @@ mov word [word_CBEC4], 1	; 11E73
 xor eax, eax	; 11E7C
 mov dword [escrequest], eax	; 11E7E
 mov ebx, dword [curperiod]	; 11E83
-mov edx, dword [HomeTeam]	; 11E89
+mov edx, dword [VisTeam-2]	; 11E89
 sar edx, 10h	; 11E8F
-mov eax, dword [cont2team]	; 11E92
+mov eax, dword [HomeTeam-2]	; 11E92
 sar eax, 10h	; 11E97
 xor ecx, ecx	; 11E9A
 call DrawHudPanel	; 11E9C
-mov eax, dword [dword_CBECA]	; 11EA1
+mov eax, dword [word_CBECC-2]	; 11EA1
 sar eax, 10h	; 11EA6
 add dword [rinkscrollx], 3E8h	; 11EA9
 add dword [rinkscrolly], 3E8h	; 11EB3
 cmp eax, byte 0FFFFFFFFh	; 11EBD
 je near .13	; 11EC0
-mov edx, dword [word_CBECC]	; 11EC6
+mov edx, dword [word_CBECE-2]	; 11EC6
 sar edx, 10h	; 11ECC
 cmp edx, byte 0FFFFFFFFh	; 11ECF
 je near .13	; 11ED2
@@ -599,10 +599,10 @@ add esp, byte 4	; 11F49
 cmp esi, eax	; 11F4C
 jl short PlayGame.11	; 11F4E
 .13:
-mov edx, dword [HomeTeam]	; 11F50
+mov edx, dword [VisTeam-2]	; 11F50
 sar edx, 10h	; 11F56
 mov edx, dword [nosplit edx*4+teamabbrevs]	; 11F59
-mov eax, dword [cont2team]	; 11F60
+mov eax, dword [HomeTeam-2]	; 11F60
 sar eax, 10h	; 11F65
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 11F68
 call sub_59D71	; 11F6F

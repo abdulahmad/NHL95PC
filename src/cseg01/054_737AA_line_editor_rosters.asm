@@ -3913,7 +3913,7 @@ mov eax, dword [dword edi+dword_D122B]	; 764FB
 sar eax, 18h	; 76501
 add ecx, eax	; 76504
 .10:
-mov eax, dword [dword edi+byte_D122D]	; 76506
+mov eax, dword [dword edi+byte_D1230-3]	; 76506
 sar eax, 18h	; 7650C
 cmp ecx, eax	; 7650F
 jne short FadePalStep.8	; 76511
@@ -4003,7 +4003,7 @@ mov eax, dword [dword edi+dword_D1231]	; 765F7
 sar eax, 18h	; 765FD
 add ecx, eax	; 76600
 .10:
-mov eax, dword [dword edi+dword_D1233]	; 76602
+mov eax, dword [dword edi+byte_D1236-3]	; 76602
 sar eax, 18h	; 76608
 cmp ecx, eax	; 7660B
 jne short FadePalStepSlow.8	; 7660D

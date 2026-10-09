@@ -1151,7 +1151,7 @@ mov ebx, 17h	; 3B88F
 mov edx, ecx	; 3B894
 mov eax, 2Ah	; 3B896
 call SetDialogColors	; 3B89B
-mov eax, dword [dword_DE265]	; 3B8A0
+mov eax, dword [byte_DE268-3]	; 3B8A0
 sar eax, 18h	; 3B8A5
 add esp, byte 60h	; 3B8A8
 jmp near UpdateTeamDbs_ret	; 3B8AB

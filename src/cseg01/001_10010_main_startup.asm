@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_10010 progbits alloc exec nowrite align=1
-extern DoGameFrame, __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gettime_, str_NoDiskSpaceC, str_ErrDiskFree2
+extern DoGameFrame, __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gettime_, str_NoDiskSpaceC, str_ErrDiskFree2, VisTeam
 extern str_NoDiskSpaceCur, str_NoMemory, str_CheckRefCard, str_NoConvMemory, str_CheckRefCard2, str_Pointer3, str_Pntr, str_Scor2b
 extern str_Scor3b, str_Kaufm020, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_GameSet2, str_Temp3, str_ErrDiskFree3, str_VFN
 extern pad1dev, pad2dev, lasthotkey, byte_C5138, musicon, joyenablemask, byte_D416A, byte_D8C88
@@ -1358,7 +1358,7 @@ call __CHK	; 10F72
 push ebx	; 10F77
 push ecx	; 10F78
 push edx	; 10F79
-mov eax, dword [word_CBC44]	; 10F7A
+mov eax, dword [exitgame-2]	; 10F7A
 sar eax, 10h	; 10F7F
 cmp eax, byte 0FFFFFFFFh	; 10F82
 je short .3	; 10F85
@@ -1673,13 +1673,13 @@ add esp, byte 10h	; 11358
 .16:
 mov word [word_CBEC4], 1	; 1135B
 mov ebx, dword [curperiod]	; 11364
-mov edx, dword [HomeTeam]	; 1136A
+mov edx, dword [VisTeam-2]	; 1136A
 sar edx, 10h	; 11370
-mov eax, dword [cont2team]	; 11373
+mov eax, dword [HomeTeam-2]	; 11373
 sar eax, 10h	; 11378
 xor ecx, ecx	; 1137B
 call DrawHudPanel	; 1137D
-mov eax, dword [dword_E9A9E]	; 11382
+mov eax, dword [joysampling_save-2]	; 11382
 sar eax, 10h	; 11387
 mov dword [joysampling], eax	; 1138A
 mov eax, 1	; 1138F
@@ -1752,7 +1752,7 @@ xor edx, edx	; 11476
 mov dword [joysampling], edx	; 11478
 mov eax, dword [inputticks]	; 1147E
 mov dword [inputticks], edx	; 11483
-mov edx, dword [dword_E9A9E]	; 11489
+mov edx, dword [joysampling_save-2]	; 11489
 sar edx, 10h	; 1148F
 mov dword [joysampling], edx	; 11492
 pop edx	; 11498
@@ -1916,7 +1916,7 @@ mov eax, dword [dword edi+dword_C5133]	; 1165B
 sar eax, 18h	; 11661
 add ecx, eax	; 11664
 .11:
-mov eax, dword [dword edi+dword_C5135]	; 11666
+mov eax, dword [dword edi+byte_C5138-3]	; 11666
 sar eax, 18h	; 1166C
 cmp ecx, eax	; 1166F
 jne short FadePalette.9	; 11671

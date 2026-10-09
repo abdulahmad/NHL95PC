@@ -771,7 +771,7 @@ mov eax, dword [visnamebckspr]	; 80C39
 push eax	; 80C3E
 call sub_91400	; 80C3F
 add esp, byte 0Ch	; 80C44
-mov eax, dword [cont2team]	; 80C47
+mov eax, dword [HomeTeam-2]	; 80C47
 sar eax, 10h	; 80C4C
 mov eax, dword [nosplit eax*4+dword_D20E0]	; 80C4F
 mov edx, dword [nosplit eax*4+off_D21C0]	; 80C56
@@ -781,7 +781,7 @@ lea eax, [dword esp+0348h]	; 80C63
 push eax	; 80C6A
 call sprintf_	; 80C6B
 add esp, byte 0Ch	; 80C70
-mov eax, dword [cont2team]	; 80C73
+mov eax, dword [HomeTeam-2]	; 80C73
 sar eax, 10h	; 80C78
 add eax, eax	; 80C7B
 add eax, 0A3h	; 80C7D
@@ -839,7 +839,7 @@ add esp, byte 4	; 80D37
 push esi	; 80D3A
 call jctime	; 80D3B
 add esp, byte 4	; 80D40
-mov eax, dword [HomeTeam]	; 80D43
+mov eax, dword [VisTeam-2]	; 80D43
 sar eax, 10h	; 80D48
 mov eax, dword [nosplit eax*4+dword_D20E0]	; 80D4B
 mov ebp, dword [nosplit eax*4+off_D21C0]	; 80D52
@@ -849,7 +849,7 @@ lea eax, [dword esp+0348h]	; 80D5F
 push eax	; 80D66
 call sprintf_	; 80D67
 add esp, byte 0Ch	; 80D6C
-mov eax, dword [HomeTeam]	; 80D6F
+mov eax, dword [VisTeam-2]	; 80D6F
 sar eax, 10h	; 80D74
 add eax, eax	; 80D77
 add eax, 0A4h	; 80D79
@@ -946,7 +946,7 @@ call sub_8E9C0	; 80EBF
 add esp, byte 8	; 80EC4
 cmp dword [gamemode], byte 0	; 80EC7
 jne short .20	; 80ECE
-mov eax, dword [cont2team]	; 80ED0
+mov eax, dword [HomeTeam-2]	; 80ED0
 sar eax, 10h	; 80ED5
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 80ED8
 add edx, byte 1Bh	; 80EDF
@@ -957,7 +957,7 @@ idiv ebx	; 80EEC
 mov dword [dword esp+0350h], edx	; 80EEE
 cmp edx, byte 1Ah	; 80EF5
 jl short .22	; 80EF8
-mov eax, dword [HomeTeam]	; 80EFA
+mov eax, dword [VisTeam-2]	; 80EFA
 sar eax, 10h	; 80EFF
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 80F02
 jne short .22	; 80F09
@@ -965,7 +965,7 @@ mov edx, dword [dword esp+0350h]	; 80F0B
 add edx, byte 1Bh	; 80F12
 jmp short .21	; 80F15
 .20:
-mov eax, dword [cont2team]	; 80F17
+mov eax, dword [HomeTeam-2]	; 80F17
 sar eax, 10h	; 80F1C
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 80F1F
 add edx, byte 19h	; 80F26
@@ -974,7 +974,7 @@ mov eax, edx	; 80F2E
 sar edx, 1Fh	; 80F30
 idiv ebx	; 80F33
 mov dword [dword esp+0350h], edx	; 80F35
-mov eax, dword [HomeTeam]	; 80F3C
+mov eax, dword [VisTeam-2]	; 80F3C
 sar eax, 10h	; 80F41
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 80F44
 jne short .22	; 80F4B
@@ -1004,7 +1004,7 @@ mov edx, edi	; 80F9C
 call PrintShadowText	; 80F9E
 cmp dword [gamemode], byte 0	; 80FA3
 jne short .23	; 80FAA
-mov eax, dword [cont2team]	; 80FAC
+mov eax, dword [HomeTeam-2]	; 80FAC
 sar eax, 10h	; 80FB1
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 80FB4
 inc edx	; 80FBB
@@ -1015,7 +1015,7 @@ idiv ebx	; 80FC6
 mov dword [dword esp+0350h], edx	; 80FC8
 cmp edx, byte 1Ah	; 80FCF
 jl short .25	; 80FD2
-mov eax, dword [HomeTeam]	; 80FD4
+mov eax, dword [VisTeam-2]	; 80FD4
 sar eax, 10h	; 80FD9
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 80FDC
 jne short .25	; 80FE3
@@ -1023,7 +1023,7 @@ mov edx, dword [dword esp+0350h]	; 80FE5
 inc edx	; 80FEC
 jmp short .24	; 80FED
 .23:
-mov ebx, dword [cont2team]	; 80FEF
+mov ebx, dword [HomeTeam-2]	; 80FEF
 sar ebx, 10h	; 80FF5
 mov edx, dword [nosplit ebx*4+dword_D20E0]	; 80FF8
 inc edx	; 80FFF
@@ -1032,7 +1032,7 @@ mov eax, edx	; 81005
 sar edx, 1Fh	; 81007
 idiv ecx	; 8100A
 mov dword [dword esp+0350h], edx	; 8100C
-mov eax, dword [HomeTeam]	; 81013
+mov eax, dword [VisTeam-2]	; 81013
 sar eax, 10h	; 81018
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 8101B
 jne short .25	; 81022
@@ -1063,7 +1063,7 @@ mov edx, edi	; 81072
 call PrintShadowText	; 81074
 cmp dword [gamemode], byte 0	; 81079
 jne short .26	; 81080
-mov eax, dword [HomeTeam]	; 81082
+mov eax, dword [VisTeam-2]	; 81082
 sar eax, 10h	; 81087
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 8108A
 add edx, byte 1Bh	; 81091
@@ -1074,7 +1074,7 @@ idiv ebx	; 8109E
 mov dword [dword esp+0350h], edx	; 810A0
 cmp edx, byte 1Ah	; 810A7
 jl short .28	; 810AA
-mov eax, dword [cont2team]	; 810AC
+mov eax, dword [HomeTeam-2]	; 810AC
 sar eax, 10h	; 810B1
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 810B4
 jne short .28	; 810BB
@@ -1082,7 +1082,7 @@ mov edx, dword [dword esp+0350h]	; 810BD
 add edx, byte 1Bh	; 810C4
 jmp short .27	; 810C7
 .26:
-mov eax, dword [HomeTeam]	; 810C9
+mov eax, dword [VisTeam-2]	; 810C9
 sar eax, 10h	; 810CE
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 810D1
 add edx, byte 19h	; 810D8
@@ -1091,7 +1091,7 @@ mov eax, edx	; 810E0
 sar edx, 1Fh	; 810E2
 idiv ebx	; 810E5
 mov dword [dword esp+0350h], edx	; 810E7
-mov eax, dword [cont2team]	; 810EE
+mov eax, dword [HomeTeam-2]	; 810EE
 sar eax, 10h	; 810F3
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 810F6
 jne short .28	; 810FD
@@ -1123,7 +1123,7 @@ mov edx, edi	; 81154
 call PrintShadowText	; 81156
 cmp dword [gamemode], byte 0	; 8115B
 jne short .29	; 81162
-mov eax, dword [HomeTeam]	; 81164
+mov eax, dword [VisTeam-2]	; 81164
 sar eax, 10h	; 81169
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 8116C
 inc edx	; 81173
@@ -1134,7 +1134,7 @@ idiv ebx	; 8117E
 mov dword [dword esp+0350h], edx	; 81180
 cmp edx, byte 1Ah	; 81187
 jl short .31	; 8118A
-mov eax, dword [cont2team]	; 8118C
+mov eax, dword [HomeTeam-2]	; 8118C
 sar eax, 10h	; 81191
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 81194
 jne short .31	; 8119B
@@ -1142,7 +1142,7 @@ mov edx, dword [dword esp+0350h]	; 8119D
 inc edx	; 811A4
 jmp short .30	; 811A5
 .29:
-mov eax, dword [HomeTeam]	; 811A7
+mov eax, dword [VisTeam-2]	; 811A7
 sar eax, 10h	; 811AC
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 811AF
 inc edx	; 811B6
@@ -1151,7 +1151,7 @@ mov eax, edx	; 811BC
 sar edx, 1Fh	; 811BE
 idiv ebx	; 811C1
 mov dword [dword esp+0350h], edx	; 811C3
-mov eax, dword [cont2team]	; 811CA
+mov eax, dword [HomeTeam-2]	; 811CA
 sar eax, 10h	; 811CF
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 811D2
 jne short .31	; 811D9
@@ -1181,7 +1181,7 @@ lea eax, [byte ebp+02h]	; 81229
 mov ebx, esi	; 8122C
 mov edx, edi	; 8122E
 call PrintShadowText	; 81230
-mov eax, dword [cont2team]	; 81235
+mov eax, dword [HomeTeam-2]	; 81235
 sar eax, 10h	; 8123A
 mov edx, dword [nosplit eax*4+teamcitynames]	; 8123D
 push edx	; 81244
@@ -1190,7 +1190,7 @@ add esp, byte 4	; 8124A
 mov edx, 12Dh	; 8124D
 sub edx, eax	; 81252
 mov dword [dword esp+0350h], edx	; 81254
-mov eax, dword [cont2team]	; 8125B
+mov eax, dword [HomeTeam-2]	; 8125B
 sar eax, 10h	; 81260
 mov ebx, dword [nosplit eax*4+teamcitynames]	; 81263
 mov edx, 2Ch	; 8126A
@@ -1200,7 +1200,7 @@ mov ebx, str_Vs	; 8127B
 mov edx, 2Ch	; 81280
 mov eax, 13Ah	; 81285
 call PrintOutlinedText	; 8128A
-mov ebx, dword [HomeTeam]	; 8128F
+mov ebx, dword [VisTeam-2]	; 8128F
 sar ebx, 10h	; 81295
 mov ebx, dword [nosplit ebx*4+teamcitynames]	; 81298
 mov edx, 2Ch	; 8129F
@@ -1252,9 +1252,9 @@ call sub_8EA18	; 81359
 add esp, byte 4	; 8135E
 cmp dword [gamemode], byte 1	; 81361
 jne short .32	; 81368
-mov eax, dword [HomeTeam]	; 8136A
+mov eax, dword [VisTeam-2]	; 8136A
 sar eax, 10h	; 8136F
-mov edx, dword [cont2team]	; 81372
+mov edx, dword [HomeTeam-2]	; 81372
 sar edx, 10h	; 81378
 mov eax, dword [nosplit eax*4+teamdivflags]	; 8137B
 mov ebp, dword [nosplit edx*4+teamdivflags]	; 81382
@@ -1950,10 +1950,10 @@ push esi	; 81C5B
 push edi	; 81C5C
 push ebp	; 81C5D
 sub esp, 320h	; 81C5E
-mov ebp, dword [cont2team]	; 81C64
+mov ebp, dword [HomeTeam-2]	; 81C64
 sar ebp, 10h	; 81C6A
 mov ebp, dword [nosplit ebp*4+dword_D20E0]	; 81C6D
-mov eax, dword [HomeTeam]	; 81C74
+mov eax, dword [VisTeam-2]	; 81C74
 sar eax, 10h	; 81C79
 mov eax, dword [nosplit eax*4+dword_D20E0]	; 81C7C
 mov dword [dword esp+031Ch], eax	; 81C83

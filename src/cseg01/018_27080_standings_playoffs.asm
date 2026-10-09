@@ -1763,7 +1763,7 @@ sar edx, 10h	; 28656
 mov eax, dword [byte ebp-01Ah]	; 28659
 sar eax, 10h	; 2865C
 shl eax, 2	; 2865F
-mov eax, dword [dword eax+dword_C6E20]	; 28662
+mov eax, dword [dword eax+treecolx-2]	; 28662
 sar eax, 10h	; 28668
 call PrintShadowText	; 2866B
 mov eax, dword [byte ebp-01Ah]	; 28670
@@ -1952,7 +1952,7 @@ sar edx, 10h	; 288D7
 mov eax, dword [byte ebp-01Ah]	; 288DA
 sar eax, 10h	; 288DD
 shl eax, 2	; 288E0
-mov eax, dword [dword eax+dword_C6E20]	; 288E3
+mov eax, dword [dword eax+treecolx-2]	; 288E3
 sar eax, 10h	; 288E9
 call PrintShadowText	; 288EC
 mov eax, dword [byte ebp-01Ah]	; 288F1
@@ -2821,7 +2821,7 @@ sar edx, 10h	; 2952E
 mov eax, dword [byte ebp-01Ah]	; 29531
 sar eax, 10h	; 29534
 shl eax, 2	; 29537
-mov eax, dword [dword eax+dword_C6E20]	; 2953A
+mov eax, dword [dword eax+treecolx-2]	; 2953A
 sar eax, 10h	; 29540
 call PrintShadowText	; 29543
 mov eax, dword [byte ebp-01Ah]	; 29548

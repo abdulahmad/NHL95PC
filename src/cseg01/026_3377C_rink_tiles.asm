@@ -295,7 +295,7 @@ mov edx, eax	; 33B3B
 mov eax, dword [rinkbm]	; 33B3D
 mov eax, dword [byte eax+02Ch]	; 33B42
 mov word [byte eax+08h], dx	; 33B45
-mov esi, dword [scrollx]	; 33B49
+mov esi, dword [rinkhtiles-2]	; 33B49
 sar esi, 10h	; 33B4F
 shl esi, 2	; 33B52
 sub esi, byte 3Ch	; 33B55
@@ -312,7 +312,7 @@ mov edx, esi	; 33B74
 sar edx, 1Fh	; 33B76
 idiv ebx	; 33B79
 mov word [scrolly], dx	; 33B7B
-mov esi, dword [dword_DD6A6]	; 33B82
+mov esi, dword [rinkwtiles-2]	; 33B82
 sar esi, 10h	; 33B88
 shl esi, 2	; 33B8B
 mov eax, esi	; 33B8E
@@ -402,7 +402,7 @@ add eax, edi	; 33C99
 add edi, edi	; 33C9B
 sub eax, edi	; 33C9D
 mov edi, eax	; 33C9F
-mov eax, dword [dword_DD6A6]	; 33CA1
+mov eax, dword [rinkwtiles-2]	; 33CA1
 sar eax, 10h	; 33CA6
 imul edi, eax	; 33CA9
 shl edi, 6	; 33CAC
@@ -422,7 +422,7 @@ mov eax, dword [byte esp-02h]	; 33CD0
 sar eax, 10h	; 33CD4
 mov ebx, dword [byte esp+0Ch]	; 33CD7
 add ebx, eax	; 33CDB
-mov eax, dword [dword_DD6A6]	; 33CDD
+mov eax, dword [rinkwtiles-2]	; 33CDD
 sar eax, 10h	; 33CE2
 imul ebx, eax	; 33CE5
 shl ebx, 6	; 33CE8
@@ -438,7 +438,7 @@ add eax, ebx	; 33D04
 .4:
 test ebp, ebp	; 33D06
 je short .5	; 33D08
-mov edi, dword [dword_DD6A6]	; 33D0A
+mov edi, dword [rinkwtiles-2]	; 33D0A
 sar edi, 10h	; 33D10
 mov ebx, edi	; 33D13
 shl ebx, 3	; 33D15
@@ -478,7 +478,7 @@ test ebp, ebp	; 33D48
 je short .15	; 33D4A
 test esi, esi	; 33D4C
 je short .14	; 33D4E
-mov ebx, dword [dword_DD6A6]	; 33D50
+mov ebx, dword [rinkwtiles-2]	; 33D50
 sar ebx, 10h	; 33D56
 shl ebx, 3	; 33D59
 sub eax, ebx	; 33D5C
@@ -486,7 +486,7 @@ sub eax, ebx	; 33D5C
 add eax, byte 8	; 33D5E
 jmp short .18	; 33D61
 .14:
-mov ebx, dword [dword_DD6A6]	; 33D63
+mov ebx, dword [rinkwtiles-2]	; 33D63
 sar ebx, 10h	; 33D69
 shl ebx, 3	; 33D6C
 sub eax, ebx	; 33D6F
@@ -494,13 +494,13 @@ jmp short .17	; 33D71
 .15:
 test esi, esi	; 33D73
 je short .16	; 33D75
-mov ebx, dword [dword_DD6A6]	; 33D77
+mov ebx, dword [rinkwtiles-2]	; 33D77
 sar ebx, 10h	; 33D7D
 shl ebx, 3	; 33D80
 add eax, ebx	; 33D83
 jmp short BlitTileMap.13	; 33D85
 .16:
-mov ebx, dword [dword_DD6A6]	; 33D87
+mov ebx, dword [rinkwtiles-2]	; 33D87
 sar ebx, 10h	; 33D8D
 shl ebx, 3	; 33D90
 add eax, ebx	; 33D93

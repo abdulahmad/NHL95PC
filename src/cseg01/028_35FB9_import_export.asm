@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_35FB9 progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, _fstrcspn_, str_Pal17, str_02d, str_GSUMMARY, str_Pal18, str_Temp5
+extern __CHK, __STOSB, _fstrcspn_, str_Pal17, str_02d, str_GSUMMARY, str_Pal18, str_Temp5, starpl
 extern str_Easndesk2, str_GAME, str_SAV, str_Back, str_Callogo2, str_SelectATeamTo, str_MustBeImportedFrom, str_MustBeExportedTo
 extern str_PINFO, str_extDB, str_extxx, str_Xx, str_dot, str_floppydrv, curleague, gameopts
 extern musicon, byte_D42C3, byte_DC267, byte_DC268, leaguedbfmt2, leaguedbfmt, leagueflags, lgteamflags
@@ -377,11 +377,11 @@ mov dword [dword esp+03F8h], ecx	; 364FD
 jmp near .19	; 36504
 .12:
 shl eax, 2	; 36509
-mov edx, dword [dword eax+startm_m2]	; 3650C
+mov edx, dword [dword eax+startm-2]	; 3650C
 sar edx, 10h	; 36512
 cmp edx, ebp	; 36515
 jne near .18	; 36517
-mov ebx, dword [dword eax+startm]	; 3651D
+mov ebx, dword [dword eax+starpl-2]	; 3651D
 sar ebx, 10h	; 36523
 mov ebx, dword [byte esp+ebx*4+058h]	; 36526
 lea edx, [dword esp+032Ch]	; 3652A
@@ -674,7 +674,7 @@ add edi, eax	; 369D2
 cmp word [dword edi+unk_DC240], byte 0	; 369D4
 je near .55	; 369DC
 inc word [esi]	; 369E2
-mov edx, dword [dword edi+dword_DC23E]	; 369E5
+mov edx, dword [dword edi+unk_DC240-2]	; 369E5
 sar edx, 10h	; 369EB
 mov eax, edx	; 369EE
 sar edx, 1Fh	; 369F0
@@ -1130,7 +1130,7 @@ mov dword [dword esp+084h], 0FFFFFFFFh	; 37016
 cmp dword [dword esp+084h], byte 0	; 37021
 je near .85	; 37029
 .23:
-mov eax, dword [dword_DDD44]	; 3702F
+mov eax, dword [lggameidx-2]	; 3702F
 sar eax, 10h	; 37034
 cmp eax, byte 0FFFFFFFFh	; 37037
 jne short .24	; 3703A
@@ -1170,7 +1170,7 @@ mov esi, eax	; 370B7
 .27:
 test esi, esi	; 370B9
 jne short .28	; 370BB
-mov ebx, dword [dword_DDD44]	; 370BD
+mov ebx, dword [lggameidx-2]	; 370BD
 sar ebx, 10h	; 370C3
 mov edx, byte_DDD40	; 370C6
 mov eax, dword [byte esp+06Ch]	; 370CB
@@ -1375,7 +1375,7 @@ mov edx, leaguedbfmt2	; 3739E
 mov eax, leaguedbfmt	; 373A3
 call strcpy_	; 373A8
 .44:
-mov eax, dword [dword_DDD44]	; 373AD
+mov eax, dword [lggameidx-2]	; 373AD
 sar eax, 10h	; 373B2
 mov dword [schedgameidx], eax	; 373B5
 cmp word [lggameidx], 444h	; 373BA
@@ -1444,7 +1444,7 @@ test esi, esi	; 374BD
 jne near .77	; 374BF
 cmp dword [gameresult], byte 1	; 374C5
 jne near .77	; 374CC
-mov eax, dword [dword_DDD44]	; 374D2
+mov eax, dword [lggameidx-2]	; 374D2
 sar eax, 10h	; 374D7
 mov dword [byte esp+07Ch], eax	; 374DA
 push esi	; 374DE
@@ -1664,7 +1664,7 @@ call FileClose	; 377AD
 .65:
 test esi, esi	; 377B2
 jne short .66	; 377B4
-mov ebx, dword [dword_DDD44]	; 377B6
+mov ebx, dword [lggameidx-2]	; 377B6
 sar ebx, 10h	; 377BC
 mov edx, byte_DDD40	; 377BF
 mov eax, dword [byte esp+06Ch]	; 377C4
@@ -1675,7 +1675,7 @@ test esi, esi	; 377CF
 jne short .67	; 377D1
 cmp dword [dword_DDD3C], byte 0	; 377D3
 je short .67	; 377DA
-mov ebx, dword [dword_DDD44]	; 377DC
+mov ebx, dword [lggameidx-2]	; 377DC
 sar ebx, 10h	; 377E2
 mov edx, byte_DDD40	; 377E5
 mov eax, dword [byte esp+05Ch]	; 377EA
@@ -1698,7 +1698,7 @@ call FileOpenRW	; 3782A
 mov esi, eax	; 3782F
 test eax, eax	; 37831
 jne short .68	; 37833
-mov ebx, dword [dword_DDD44]	; 37835
+mov ebx, dword [lggameidx-2]	; 37835
 sar ebx, 10h	; 3783B
 mov edx, dword [byte esp+058h]	; 3783E
 mov eax, dword [byte esp+06Ch]	; 37842
@@ -1722,7 +1722,7 @@ call FileOpenRW	; 37888
 mov esi, eax	; 3788D
 test eax, eax	; 3788F
 jne short .69	; 37891
-mov ebx, dword [dword_DDD44]	; 37893
+mov ebx, dword [lggameidx-2]	; 37893
 sar ebx, 10h	; 37899
 mov edx, dword [byte esp+040h]	; 3789C
 mov eax, dword [byte esp+05Ch]	; 378A0
@@ -1764,7 +1764,7 @@ jne near .76	; 37915
 push byte 2	; 3791B
 mov esi, dword [lgplayteam]	; 3791D
 push esi	; 37923
-mov ebx, dword [dword_DDD44]	; 37924
+mov ebx, dword [lggameidx-2]	; 37924
 sar ebx, 10h	; 3792A
 dec ebx	; 3792D
 mov ecx, leagueteams	; 3792E
@@ -1791,7 +1791,7 @@ je short .74	; 3797F
 push byte 2	; 37981
 mov ecx, dword [dword_DDD34]	; 37983
 push ecx	; 37989
-mov ebx, dword [dword_DDD44]	; 3798A
+mov ebx, dword [lggameidx-2]	; 3798A
 sar ebx, 10h	; 37990
 mov ecx, leagueteams	; 37993
 mov edx, str_Xx	; 37998

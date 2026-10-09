@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_2D346 progbits alloc exec nowrite align=1
-extern __CHK, str_Indus0302, str_Ctlogo2, str_Ctbkgd2, str_Bkgd5, str_Pal13, str_Cttitle2, str_Summ2
+extern __CHK, str_Indus0302, str_Ctlogo2, str_Ctbkgd2, str_Bkgd5, str_Pal13, str_Cttitle2, str_Summ2, VisTeam
 extern str_OtShape, str_Per1, str_Per2, str_Per3, str_Top2, str_Cttitle12, str_Def2, str_Fowa2
 extern str_Scra2, str_Tlu2, str_Cttitle3, str_Ots, str_Colm, str_Gsummary2, str_Iff6, str_Gamesum
 extern str_Mtsum, str_Adsum, str_1st2, str_2nd2, str_3rd2, str_FinalOT, str_Final, str_Period
@@ -171,7 +171,7 @@ push eax	; 2D568
 call sub_8E83C	; 2D569
 mov edi, eax	; 2D56E
 add esp, byte 8	; 2D570
-mov eax, dword [cont2team]	; 2D573
+mov eax, dword [HomeTeam-2]	; 2D573
 sar eax, 10h	; 2D578
 mov ebx, dword [nosplit eax*4+crestnames]	; 2D57B
 push ebx	; 2D582
@@ -205,7 +205,7 @@ mov eax, dword [hmcrestbmp]	; 2D5D1
 mov eax, dword [byte eax+02Ch]	; 2D5D6
 mov dx, word [byte esi+0Ah]	; 2D5D9
 mov word [byte eax+0Ah], dx	; 2D5DD
-mov eax, dword [HomeTeam]	; 2D5E1
+mov eax, dword [VisTeam-2]	; 2D5E1
 sar eax, 10h	; 2D5E6
 mov ecx, dword [nosplit eax*4+crestnames]	; 2D5E9
 push ecx	; 2D5F0
@@ -2197,7 +2197,7 @@ mov al, byte [nosplit edi*2+othergames]	; 2F3ED
 and eax, 0FFh	; 2F3F4
 xor edx, edx	; 2F3F9
 mov dl, byte [dword eax+teamstartlag]	; 2F3FB
-mov eax, dword [cont2team]	; 2F401
+mov eax, dword [HomeTeam-2]	; 2F401
 sar eax, 10h	; 2F406
 mov al, byte [dword eax+teamstartlag]	; 2F409
 and eax, 0FFh	; 2F40F
@@ -2362,10 +2362,10 @@ push edi	; 2F5FC
 push ebp	; 2F5FD
 mov ebp, esp	; 2F5FE
 sub esp, 374h	; 2F600
-mov eax, dword [cont2team]	; 2F606
+mov eax, dword [HomeTeam-2]	; 2F606
 sar eax, 10h	; 2F60B
 mov dword [byte ebp-020h], eax	; 2F60E
-mov eax, dword [HomeTeam]	; 2F611
+mov eax, dword [VisTeam-2]	; 2F611
 sar eax, 10h	; 2F616
 mov dword [byte ebp-01Ch], eax	; 2F619
 call ClearInputQueue	; 2F61C

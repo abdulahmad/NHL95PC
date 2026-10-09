@@ -223,7 +223,7 @@ cmp word [byte esp+04h], byte 0	; 59F86
 jne short .12	; 59F8C
 cmp di, word [c1playernum]	; 59F8E
 je short .13	; 59F95
-mov edx, dword [sflags3]	; 59F97
+mov edx, dword [c1playernum-2]	; 59F97
 sar edx, 10h	; 59F9D
 mov eax, dword [byte esp+0Ah]	; 59FA0
 sar eax, 10h	; 59FA4
@@ -233,7 +233,7 @@ jmp short .13	; 59FB2
 .12:
 cmp di, word [c2playernum]	; 59FB4
 je short .13	; 59FBB
-mov edx, dword [c1playernum]	; 59FBD
+mov edx, dword [c2playernum-2]	; 59FBD
 sar edx, 10h	; 59FC3
 mov eax, dword [byte esp+0Ah]	; 59FC6
 sar eax, 10h	; 59FCA
@@ -1679,7 +1679,7 @@ jne short .x	; 5B238
 .2:
 cmp ax, bx	; 5B23A
 je short .x	; 5B23D
-mov edx, dword [c1playernum]	; 5B23F
+mov edx, dword [c2playernum-2]	; 5B23F
 sar edx, 10h	; 5B245
 cwde	; 5B248
 call restorepl	; 5B249
@@ -1699,7 +1699,7 @@ jne short .x	; 5B273
 cmp ax, word [c1playernum]	; 5B275
 je short .x	; 5B27C
 .4:
-mov edx, dword [sflags3]	; 5B27E
+mov edx, dword [c1playernum-2]	; 5B27E
 sar edx, 10h	; 5B284
 cwde	; 5B287
 call restorepl	; 5B288
@@ -1863,7 +1863,7 @@ jg short .17	; 5B460
 jne short .19	; 5B462
 mov eax, dword [dword_E9AB6]	; 5B464
 sar eax, 11h	; 5B469
-mov edx, dword [gsp]	; 5B46C
+mov edx, dword [gameclock-2]	; 5B46C
 sar edx, 10h	; 5B472
 cmp edx, eax	; 5B475
 jge short .19	; 5B477
@@ -3023,7 +3023,7 @@ cmp ax, word [word_E9AA4]	; 5C25B
 jle short .1	; 5C262
 mov word [word_E9AA4], ax	; 5C264
 .1:
-mov eax, dword [word_E9AA6]	; 5C26A
+mov eax, dword [CwdExciteLvl-2]	; 5C26A
 sar eax, 10h	; 5C26F
 add dword [dword_E009C], eax	; 5C272
 inc word [word_E9AA6]	; 5C278
@@ -3584,7 +3584,7 @@ jne short .46	; 5C9DE
 cmp word [byte esi+SCnum], byte 0Eh	; 5C9E0
 jne short .47	; 5C9E5
 .46:
-mov ebx, dword [dword_E03AE]	; 5C9E7
+mov ebx, dword [regd3-2]	; 5C9E7
 sar ebx, 10h	; 5C9ED
 mov edx, dword [regd2-2]	; 5C9F0
 sar edx, 10h	; 5C9F6
@@ -3916,13 +3916,13 @@ mov edx, 0FFFFFFFFh	; 5CE45
 mov word [byte ebp-010h], dx	; 5CE4A
 mov word [byte ebp-014h], dx	; 5CE4E
 .1:
-mov eax, dword [camx_m2]	; 5CE52
+mov eax, dword [camx-2]	; 5CE52
 sar eax, 10h	; 5CE57
 cmp eax, byte 0FFFFFFF0h	; 5CE5A
 jle near .8	; 5CE5D
 cmp word [camy], byte 50h	; 5CE63
 jge short .4	; 5CE6B
-mov eax, dword [camx]	; 5CE6D
+mov eax, dword [camy-2]	; 5CE6D
 sar eax, 10h	; 5CE72
 cmp eax, 0FFFFFF6Ch	; 5CE75
 jle short .4	; 5CE7A
@@ -3946,7 +3946,7 @@ jge short .4	; 5CEAC
 cmp di, byte 3	; 5CEAE
 jl short DrawRinkOverlays.2	; 5CEB2
 .4:
-mov eax, dword [camx]	; 5CEB4
+mov eax, dword [camy-2]	; 5CEB4
 sar eax, 10h	; 5CEB9
 cmp eax, byte 0FFFFFFB5h	; 5CEBC
 jle short .8	; 5CEBF
@@ -3977,7 +3977,7 @@ test di, di	; 5CF04
 jge short DrawRinkOverlays.6	; 5CF07
 .8:
 call sub_61862	; 5CF09
-mov eax, dword [camx]	; 5CF0E
+mov eax, dword [camy-2]	; 5CF0E
 sar eax, 10h	; 5CF13
 cmp eax, 0FFFFFF50h	; 5CF16
 jge short .9	; 5CF1B
@@ -4538,7 +4538,7 @@ sar eax, 10h	; 5D57E
 xor ecx, ecx	; 5D581
 call DrawFrameSprite	; 5D583
 .61:
-mov eax, dword [camx]	; 5D588
+mov eax, dword [camy-2]	; 5D588
 sar eax, 10h	; 5D58D
 cmp eax, 0FFFFFF50h	; 5D590
 jge short .62	; 5D595
@@ -4554,7 +4554,7 @@ push edx	; 5D5B1
 call sub_B4BC4	; 5D5B2
 add esp, byte 10h	; 5D5B7
 .62:
-mov eax, dword [camx]	; 5D5BA
+mov eax, dword [camy-2]	; 5D5BA
 sar eax, 10h	; 5D5BF
 cmp eax, 0FFFFFF70h	; 5D5C2
 jge short .63	; 5D5C7
@@ -4619,7 +4619,7 @@ cmp word [word_CBEC0], byte 0	; 5D684
 jl short .68	; 5D68C
 call sub_665AD	; 5D68E
 .68:
-mov eax, dword [word_CBEC6]	; 5D693
+mov eax, dword [word_CBEC8-2]	; 5D693
 sar eax, 10h	; 5D698
 cmp eax, byte 0FFFFFFFFh	; 5D69B
 je short .69	; 5D69E
@@ -5068,11 +5068,11 @@ mov word [joysampling_save], dx	; 5DCE4
 xor ebx, ebx	; 5DCEB
 mov dword [joysampling], ebx	; 5DCED
 call sub_59A7E	; 5DCF3
-mov edx, dword [dword_E9A9E]	; 5DCF8
+mov edx, dword [joysampling_save-2]	; 5DCF8
 sar edx, 10h	; 5DCFE
 mov dword [joysampling], edx	; 5DD01
 .8:
-mov edx, dword [gsp]	; 5DD07
+mov edx, dword [gameclock-2]	; 5DD07
 sar edx, 10h	; 5DD0D
 mov ebx, 3Ch	; 5DD10
 mov eax, edx	; 5DD15
@@ -5229,7 +5229,7 @@ mov word [word_CBC64], di	; 5DED7
 mov word [lcline], di	; 5DEDE
 mov word [word_CBC6C], dx	; 5DEE5
 mov word [lcboxon], dx	; 5DEEC
-mov eax, dword [word_CBC44]	; 5DEF3
+mov eax, dword [exitgame-2]	; 5DEF3
 sar eax, 10h	; 5DEF8
 cmp eax, byte 0FFFFFFFFh	; 5DEFB
 je near .3	; 5DEFE

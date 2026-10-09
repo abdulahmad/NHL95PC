@@ -4628,7 +4628,7 @@ mov dword [dword esp+0B8h], edi	; 89F2E
 mov edx, dword [dword esp+0C4h]	; 89F35
 mov eax, dword [dword esp+0C8h]	; 89F3C
 call POHiliteSlot	; 89F43
-mov eax, dword [off_C6D22]	; 89F48
+mov eax, dword [word_C6D24-2]	; 89F48
 sar eax, 10h	; 89F4D
 mov dword [dword esp+0CCh], eax	; 89F50
 mov ebp, dword [dword esp+0B0h]	; 89F57
@@ -4780,7 +4780,7 @@ call jctime	; 8A172
 add esp, byte 4	; 8A177
 .18:
 call sub_B4BA8	; 8A17A
-mov eax, dword [off_C6D22]	; 8A17F
+mov eax, dword [word_C6D24-2]	; 8A17F
 sar eax, 10h	; 8A184
 cmp eax, dword [dword esp+0CCh]	; 8A187
 je short .19	; 8A18E

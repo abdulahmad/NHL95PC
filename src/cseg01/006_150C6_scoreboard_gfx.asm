@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_150C6 progbits alloc exec nowrite align=1
-extern StanleyCupTimer, __CHK, str_Scrbrd2, str_Srb3, str_Crests4, str_Stanley, str_PPV
+extern StanleyCupTimer, __CHK, str_Scrbrd2, str_Srb3, str_Crests4, str_Stanley, str_PPV, VisTeam, awtmline, hmtmline, lcline
 extern musicon, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, ctlavailmask
 extern demomode, fileoncd
 extern gameresult, gamemode, gameopts, teamdivflags, hudclockmin
@@ -54,10 +54,10 @@ xor ebx, ebx	; 1511A
 mov dword [dword_C583C], ebx	; 1511C
 mov dword [dword_C5848], ebx	; 15122
 mov dword [dword_C5844], ebx	; 15128
-mov eax, dword [hmtmstruct+28h]	; 1512E
+mov eax, dword [hmtmline-2]	; 1512E
 sar eax, 10h	; 15133
 mov dword [hudhomeline], eax	; 15136
-mov eax, dword [awtmstruct+28h]	; 1513B
+mov eax, dword [awtmline-2]	; 1513B
 sar eax, 10h	; 15140
 mov dword [hudawayline], eax	; 15143
 mov dword [dword_C5858], ebx	; 15148
@@ -614,7 +614,7 @@ mov dword [byte esp+0Ch], ebp	; 157E5
 add ebp, ebp	; 157E9
 cmp word [dword ebp+lcboxon], byte 0	; 157EB
 je short .1	; 157F3
-mov ebp, dword [dword ebp+word_CBC60]	; 157F5
+mov ebp, dword [dword ebp+lcline-2]	; 157F5
 sar ebp, 10h	; 157FB
 jmp short .2	; 157FE
 .1:
@@ -937,9 +937,9 @@ push edx	; 15B82
 push esi	; 15B83
 push edi	; 15B84
 sub esp, byte 4	; 15B85
-mov eax, dword [cont2team]	; 15B88
+mov eax, dword [HomeTeam-2]	; 15B88
 sar eax, 10h	; 15B8D
-mov edx, dword [HomeTeam]	; 15B90
+mov edx, dword [VisTeam-2]	; 15B90
 sar edx, 10h	; 15B96
 mov eax, dword [nosplit eax*4+teamdivflags]	; 15B99
 or eax, dword [nosplit edx*4+teamdivflags]	; 15BA0
@@ -1223,10 +1223,10 @@ mov byte [gameopts+1], bh	; 15ED6
 mov cl, bh	; 15EDC
 and cl, 3	; 15EDE
 mov byte [gameopts+1], cl	; 15EE1
-mov edx, dword [HomeTeam]	; 15EE7
+mov edx, dword [VisTeam-2]	; 15EE7
 sar edx, 10h	; 15EED
 mov edx, dword [nosplit edx*4+teamabbrevs]	; 15EF0
-mov eax, dword [cont2team]	; 15EF7
+mov eax, dword [HomeTeam-2]	; 15EF7
 sar eax, 10h	; 15EFC
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 15EFF
 call sub_59D71	; 15F06
@@ -1239,7 +1239,7 @@ jl short .6	; 15F21
 mov eax, 0Ch	; 15F23
 jmp short .7	; 15F28
 .6:
-mov eax, dword [cont2team]	; 15F2A
+mov eax, dword [HomeTeam-2]	; 15F2A
 sar eax, 10h	; 15F2F
 .7:
 call LoadRink	; 15F32
@@ -1256,15 +1256,15 @@ mov dword [gameresult], eax	; 15F62
 mov edx, 0C8h	; 15F67
 mov eax, 140h	; 15F6C
 call SetScreenSize	; 15F71
-mov edx, dword [HomeTeam]	; 15F76
+mov edx, dword [VisTeam-2]	; 15F76
 sar edx, 10h	; 15F7C
-mov eax, dword [cont2team]	; 15F7F
+mov eax, dword [HomeTeam-2]	; 15F7F
 sar eax, 10h	; 15F84
 mov ebx, unk_DF314	; 15F87
 call sub_673C5	; 15F8C
-mov edx, dword [HomeTeam]	; 15F91
+mov edx, dword [VisTeam-2]	; 15F91
 sar edx, 10h	; 15F97
-mov eax, dword [cont2team]	; 15F9A
+mov eax, dword [HomeTeam-2]	; 15F9A
 sar eax, 10h	; 15F9F
 mov ecx, ebp	; 15FA2
 mov ebx, ebp	; 15FA4

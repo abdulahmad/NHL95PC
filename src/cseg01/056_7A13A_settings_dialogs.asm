@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_7A13A progbits alloc exec nowrite align=1
-extern __CHK, str_BKGD, str_Setting5, str_Dbox2, str_Music, str_Sound, str_DigitizedSpeech, str_Setting3
+extern __CHK, str_BKGD, str_Setting5, str_Dbox2, str_Music, str_Sound, str_DigitizedSpeech, str_Setting3, hmtmap
 extern str_Pointer15, str_BKGD2, str_Setting7, str_Setting4, str_Dbox3, str_Music2, str_Sound2, str_DigitizedSpeech2
 extern str_Pointer16, str_BKGD3, str_DigitizedSpeech3, str_Music3, str_Sound3, str_Setting6, str_Dbox4, str_Pointer17
 extern str_BKGD4, str_PlayerImg, str_Dbox5, str_OneS, str_TwoS, str_TheMouse, str_JoystickOne, str_JoystickTwo
@@ -3869,7 +3869,7 @@ jne short .14	; 7CE45
 mov eax, dword [byte esp+08h]	; 7CE47
 cmp ax, word [c1playernum]	; 7CE4B
 je short .15	; 7CE52
-mov edx, dword [sflags3]	; 7CE54
+mov edx, dword [c1playernum-2]	; 7CE54
 sar edx, 10h	; 7CE5A
 mov eax, dword [byte esp+06h]	; 7CE5D
 sar eax, 10h	; 7CE61
@@ -3880,7 +3880,7 @@ jmp short .15	; 7CE6F
 mov eax, dword [byte esp+08h]	; 7CE71
 cmp ax, word [c2playernum]	; 7CE75
 je short .15	; 7CE7C
-mov edx, dword [c1playernum]	; 7CE7E
+mov edx, dword [c2playernum-2]	; 7CE7E
 sar edx, 10h	; 7CE84
 mov eax, dword [byte esp+06h]	; 7CE87
 sar eax, 10h	; 7CE8B
@@ -3905,11 +3905,11 @@ test ebx, ebx	; 7CEBC
 setne al	; 7CEBE
 and eax, 0FFh	; 7CEC1
 inc eax	; 7CEC6
-mov edx, dword [c2playernum]	; 7CEC7
+mov edx, dword [cont1team-2]	; 7CEC7
 sar edx, 10h	; 7CECD
 cmp edx, eax	; 7CED0
 je near .9	; 7CED2
-mov edx, dword [cont1team]	; 7CED8
+mov edx, dword [cont2team-2]	; 7CED8
 sar edx, 10h	; 7CEDE
 cmp edx, eax	; 7CEE1
 je near .9	; 7CEE3
@@ -3944,15 +3944,15 @@ test ebx, ebx	; 7CF38
 sete al	; 7CF3A
 and eax, 0FFh	; 7CF3D
 shl eax, 8	; 7CF42
-mov edx, dword [dword eax+dword_DF648]	; 7CF45
+mov edx, dword [dword eax+hmtmap-2]	; 7CF45
 sar edx, 10h	; 7CF4B
 mov eax, ebx	; 7CF4E
 shl eax, 8	; 7CF50
-mov ecx, dword [dword eax+dword_DF648]	; 7CF53
+mov ecx, dword [dword eax+hmtmap-2]	; 7CF53
 sar ecx, 10h	; 7CF59
 sub edx, ecx	; 7CF5C
 mov ecx, edx	; 7CF5E
-mov edx, dword [dword eax+hmtmstruct+28h]	; 7CF60
+mov edx, dword [dword eax+hmtmline-2]	; 7CF60
 sar edx, 10h	; 7CF66
 test ecx, ecx	; 7CF69
 jle short .6	; 7CF6B
@@ -3992,9 +3992,9 @@ jmp short ControlsDlgInGame_setside	; 7CFC7
 .1:
 mov edx, 2	; 7CFC9
 ControlsDlgInGame_setside:
-mov ecx, dword [c2playernum]	; 7CFCE
+mov ecx, dword [cont1team-2]	; 7CFCE
 sar ecx, 10h	; 7CFD4
-mov ebx, dword [cont1team]	; 7CFD7
+mov ebx, dword [cont2team-2]	; 7CFD7
 sar ebx, 10h	; 7CFDD
 test ebp, ebp	; 7CFE0
 je short .1	; 7CFE2
@@ -4072,11 +4072,11 @@ je short .14	; 7D0B6
 cmp ebx, edx	; 7D0B8
 jne short .15	; 7D0BA
 .14:
-mov eax, dword [c2playernum]	; 7D0BC
+mov eax, dword [cont1team-2]	; 7D0BC
 sar eax, 10h	; 7D0C1
 cmp eax, edx	; 7D0C4
 je short .15	; 7D0C6
-mov eax, dword [cont1team]	; 7D0C8
+mov eax, dword [cont2team-2]	; 7D0C8
 sar eax, 10h	; 7D0CD
 cmp eax, edx	; 7D0D0
 je short .15	; 7D0D2
@@ -4090,11 +4090,11 @@ cmp ecx, edx	; 7D0E6
 je short .17	; 7D0E8
 cmp ebx, edx	; 7D0EA
 je short .17	; 7D0EC
-mov eax, dword [c2playernum]	; 7D0EE
+mov eax, dword [cont1team-2]	; 7D0EE
 sar eax, 10h	; 7D0F3
 cmp eax, edx	; 7D0F6
 je short .16	; 7D0F8
-mov eax, dword [cont1team]	; 7D0FA
+mov eax, dword [cont2team-2]	; 7D0FA
 sar eax, 10h	; 7D0FF
 cmp eax, edx	; 7D102
 jne short .17	; 7D104
@@ -4307,7 +4307,7 @@ add esp, byte 14h	; 7D36A
 push esi	; 7D36D
 add edi, byte 3	; 7D36E
 push edi	; 7D371
-mov eax, dword [cont2team]	; 7D372
+mov eax, dword [HomeTeam-2]	; 7D372
 sar eax, 10h	; 7D377
 mov edx, dword [nosplit eax*4+teamcitynames]	; 7D37A
 push edx	; 7D381
@@ -4335,7 +4335,7 @@ add esp, byte 14h	; 7D3C5
 push esi	; 7D3C8
 add edi, byte 3	; 7D3C9
 push edi	; 7D3CC
-mov eax, dword [HomeTeam]	; 7D3CD
+mov eax, dword [VisTeam-2]	; 7D3CD
 sar eax, 10h	; 7D3D2
 mov ebx, dword [nosplit eax*4+teamcitynames]	; 7D3D5
 push ebx	; 7D3DC
@@ -4847,7 +4847,7 @@ sete al	; 7D9CD
 and eax, 0FFh	; 7D9D0
 cmp dword [nosplit eax*4+ctl1side], byte 0	; 7D9D5
 jne near .28	; 7D9DD
-mov edx, dword [HomeTeam]	; 7D9E3
+mov edx, dword [VisTeam-2]	; 7D9E3
 sar edx, 10h	; 7D9E9
 test esi, esi	; 7D9EC
 sete al	; 7D9EE
@@ -4872,7 +4872,7 @@ sete al	; 7DA36
 and eax, 0FFh	; 7DA39
 cmp edi, dword [nosplit eax*4+ctl1side]	; 7DA3E
 jne near .28	; 7DA45
-mov edx, dword [cont2team]	; 7DA4B
+mov edx, dword [HomeTeam-2]	; 7DA4B
 sar edx, 10h	; 7DA51
 mov edi, dword [esp]	; 7DA54
 test edi, edi	; 7DA57
@@ -4888,7 +4888,7 @@ jmp near .28	; 7DA7B
 .25:
 test byte [setbits], 1	; 7DA80
 je short .26	; 7DA87
-mov edx, dword [cont2team]	; 7DA89
+mov edx, dword [HomeTeam-2]	; 7DA89
 sar edx, 10h	; 7DA8F
 mov dword [dword eax+ctl1team], edx	; 7DA92
 xor ebx, ebx	; 7DA98
@@ -4906,7 +4906,7 @@ mov dword [nosplit eax*4+ctl1team], 0FFFFFFFEh	; 7DAC1
 test ecx, ecx	; 7DACC
 jmp near ControlsDlgLoop.22	; 7DACE
 .26:
-mov edx, dword [HomeTeam]	; 7DAD3
+mov edx, dword [VisTeam-2]	; 7DAD3
 sar edx, 10h	; 7DAD9
 mov dword [dword eax+ctl1team], edx	; 7DADC
 mov dword [dword eax+ctl1side], 1	; 7DAE2

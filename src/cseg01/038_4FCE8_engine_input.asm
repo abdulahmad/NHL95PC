@@ -43,7 +43,7 @@ cmp esi, byte 32h	; 4FD2A
 jl short .1	; 4FD2D
 mov dword [joyqhead], ebx	; 4FD2F
 .1:
-mov eax, dword [dword_E9A9E]	; 4FD35
+mov eax, dword [joysampling_save-2]	; 4FD35
 sar eax, 10h	; 4FD3A
 mov dword [joysampling], eax	; 4FD3D
 .x:
@@ -129,13 +129,13 @@ add edx, byte 3Ch	; 4FE1A
 mov word [dword ebx+lctimer], dx	; 4FE1D
 cmp word [dword ebx+lcline], byte 3	; 4FE24
 jle short .3	; 4FE2C
-mov edx, dword [dword ebx+lcblinktime+2]	; 4FE2E
+mov edx, dword [dword ebx+lcsel-2]	; 4FE2E
 sar edx, 10h	; 4FE34
 inc edx	; 4FE37
 mov edi, 2	; 4FE38
 jmp short .4	; 4FE3D
 .3:
-mov edx, dword [dword ebx+lcblinktime+2]	; 4FE3F
+mov edx, dword [dword ebx+lcsel-2]	; 4FE3F
 sar edx, 10h	; 4FE45
 inc edx	; 4FE48
 mov edi, 4	; 4FE49

@@ -907,9 +907,9 @@ xor edi, edi	; 80252
 mov dword [songdata], edi	; 80254
 .4:
 call ShowLoadingScreen	; 8025A
-mov edx, dword [HomeTeam]	; 8025F
+mov edx, dword [VisTeam-2]	; 8025F
 sar edx, 10h	; 80265
-mov eax, dword [cont2team]	; 80268
+mov eax, dword [HomeTeam-2]	; 80268
 sar eax, 10h	; 8026D
 mov ebx, unk_DF314	; 80270
 call sub_673C5	; 80275
@@ -924,7 +924,7 @@ jl short .5	; 802A0
 mov eax, 0Ch	; 802A2
 jmp short .6	; 802A7
 .5:
-mov eax, dword [cont2team]	; 802A9
+mov eax, dword [HomeTeam-2]	; 802A9
 sar eax, 10h	; 802AE
 .6:
 call LoadRink	; 802B1

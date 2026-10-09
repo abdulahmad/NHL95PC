@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_29F18 progbits alloc exec nowrite align=1
-extern __CHK, str_Apal, str_Pal10, str_Arena, str_Pal11, str_Rink, str_Srlogo, str_SAtS
+extern __CHK, str_Apal, str_Pal10, str_Arena, str_Pal11, str_Rink, str_Srlogo, str_SAtS, VisTeam
 extern str_Pointer4, str_Iff4, str_Scouting, str_Screen, str_Ctlogo, str_Logohome, str_Logoaway, str_Ctbkgd
 extern str_Bkgd4, str_Pal12, str_Cttitle1, str_Def, str_Fowa, str_Scra, str_Tlu, str_Top
 extern str_Indus030, str_GIPK, str_Iff5, str_Tonights, str_Injured, str_extDB, str_VFN
@@ -676,7 +676,7 @@ cmp edx, byte 3	; 2A8A8
 ja near PreGameScreen_homelines.3	; 2A8AB
 jmp dword [nosplit cs:edx*4+PreGameScreen_jt]	; 2A8B1
 PreGameScreen_awaylines:
-mov eax, dword [HomeTeam]	; 2A8B9
+mov eax, dword [VisTeam-2]	; 2A8B9
 sar eax, 10h	; 2A8BE
 cmp eax, dword [ctl1team]	; 2A8C1
 je short .1	; 2A8C7
@@ -716,7 +716,7 @@ mov dword [dword esp+0664h], 0FFFFFFFFh	; 2A93A
 mov dword [dword esp+0640h], 3	; 2A945
 jmp near PreGameScreen_homelines.3	; 2A950
 PreGameScreen_homelines:
-mov eax, dword [cont2team]	; 2A955
+mov eax, dword [HomeTeam-2]	; 2A955
 sar eax, 10h	; 2A95A
 cmp eax, dword [ctl1team]	; 2A95D
 je short .1	; 2A963
@@ -924,7 +924,7 @@ push eax	; 2AC43
 call sub_8E83C	; 2AC44
 mov dword [dword esp+0104h], eax	; 2AC49
 add esp, byte 8	; 2AC50
-mov eax, dword [cont2team]	; 2AC53
+mov eax, dword [HomeTeam-2]	; 2AC53
 sar eax, 10h	; 2AC58
 mov ebx, dword [nosplit eax*4+crestnames]	; 2AC5B
 push ebx	; 2AC62
@@ -966,7 +966,7 @@ mov eax, dword [dword esp+0E8h]	; 2ACD7
 push eax	; 2ACDE
 call sub_91400	; 2ACDF
 add esp, byte 0Ch	; 2ACE4
-mov eax, dword [HomeTeam]	; 2ACE7
+mov eax, dword [VisTeam-2]	; 2ACE7
 sar eax, 10h	; 2ACEC
 mov edx, dword [nosplit eax*4+crestnames]	; 2ACEF
 push edx	; 2ACF6

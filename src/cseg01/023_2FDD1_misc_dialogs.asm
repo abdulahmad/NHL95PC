@@ -2510,7 +2510,7 @@ je near EditTextField.17	; 31A1D
 mov al, byte [byte esp+04h]	; 31A23
 inc al	; 31A27
 and eax, 0FFh	; 31A29
-mov eax, dword [dword eax+dword_C4B69]	; 31A2E
+mov eax, dword [dword eax+byte_C4B6C-3]	; 31A2E
 sar eax, 18h	; 31A34
 test al, 0E0h	; 31A37
 je near EditTextField.17	; 31A39

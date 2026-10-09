@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_6D2F8 progbits alloc exec nowrite align=1
-extern __CHK, __CHP, _dos_getdiskfree_, str_Prez2, str_Pal, str_ea, str_Uar, str_Uarm
+extern __CHK, __CHP, _dos_getdiskfree_, str_Prez2, str_Pal, str_ea, str_Uar, str_Uarm, byte_C4B6C
 extern str_TheJerseyNumber2d, str_PleaseEnterANew, str_Menubuff, str_TheDatabaseHasNot, str_AreYouSureYou, str_ErrorsFoundInDatabases, str_TheForwardLinesAre, str_TheDefenceLinesAre
 extern str_ThePowerPlayLines, str_ThePenaltyKillingLines, str_TheGoalieLinesAre, str_TheExtraAttackerLines, str_NotEnoughPlayers, str_NotEnoughGoalies, str_NotEnoughForwards, str_NotEnoughDefence
 extern str_Shoots, str_spL, str_spR, str_GloveHand, str_EnterANewRating, str_RatingRange, str_ShootsLeftOrRight, str_NotEnoughRatingUnits
@@ -2604,7 +2604,7 @@ xor eax, eax	; 6F17B
 mov dl, byte [ecx+eax]	; 6F17D
 inc dl	; 6F180
 and edx, 0FFh	; 6F182
-mov edx, dword [dword edx+dword_C4B69]	; 6F188
+mov edx, dword [dword edx+byte_C4B6C-3]	; 6F188
 sar edx, 18h	; 6F18E
 test dl, 0C0h	; 6F191
 jne short .2	; 6F194
@@ -2621,7 +2621,7 @@ lea edi, [ecx+eax]	; 6F1A4
 mov bl, byte [edi]	; 6F1A7
 inc bl	; 6F1A9
 and ebx, 0FFh	; 6F1AB
-mov ebx, dword [dword ebx+dword_C4B69]	; 6F1B1
+mov ebx, dword [dword ebx+byte_C4B6C-3]	; 6F1B1
 sar ebx, 18h	; 6F1B7
 test bl, 0C0h	; 6F1BA
 je short .4	; 6F1BD
@@ -2649,7 +2649,7 @@ jne short .9	; 6F1ED
 mov dl, byte [ecx+eax]	; 6F1EF
 inc dl	; 6F1F2
 and edx, 0FFh	; 6F1F4
-mov edx, dword [dword edx+dword_C4B69]	; 6F1FA
+mov edx, dword [dword edx+byte_C4B6C-3]	; 6F1FA
 sar edx, 18h	; 6F200
 test dl, 0C0h	; 6F203
 je short .9	; 6F206
@@ -2657,7 +2657,7 @@ je short .9	; 6F206
 mov dl, byte [ecx+eax]	; 6F208
 inc dl	; 6F20B
 and edx, 0FFh	; 6F20D
-mov edx, dword [dword edx+dword_C4B69]	; 6F213
+mov edx, dword [dword edx+byte_C4B6C-3]	; 6F213
 sar edx, 18h	; 6F219
 test dl, 0C0h	; 6F21C
 je short .9	; 6F21F
@@ -2669,7 +2669,7 @@ jmp short SplitPlayerName.8	; 6F226
 mov dl, byte [ecx+eax]	; 6F228
 inc dl	; 6F22B
 and edx, 0FFh	; 6F22D
-mov edx, dword [dword edx+dword_C4B69]	; 6F233
+mov edx, dword [dword edx+byte_C4B6C-3]	; 6F233
 sar edx, 18h	; 6F239
 test dl, 0C0h	; 6F23C
 jne short .10	; 6F23F
@@ -2686,7 +2686,7 @@ lea edi, [ecx+eax]	; 6F24F
 mov bl, byte [edi]	; 6F252
 inc bl	; 6F254
 and ebx, 0FFh	; 6F256
-mov ebx, dword [dword ebx+dword_C4B69]	; 6F25C
+mov ebx, dword [dword ebx+byte_C4B6C-3]	; 6F25C
 sar ebx, 18h	; 6F262
 test bl, 0C0h	; 6F265
 je short .12	; 6F268

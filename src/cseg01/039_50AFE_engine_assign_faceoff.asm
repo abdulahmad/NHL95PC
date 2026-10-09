@@ -1155,7 +1155,7 @@ cmp bx, cx	; 51874
 je short .12	; 51877
 cmp cx, word [c1playernum]	; 51879
 je short .14	; 51880
-mov edx, dword [sflags3]	; 51882
+mov edx, dword [c1playernum-2]	; 51882
 sar edx, 10h	; 51888
 mov eax, dword [byte eax+SCnum-2]	; 5188B
 sar eax, 10h	; 5188E
@@ -1192,7 +1192,7 @@ cmp bx, cx	; 518EB
 je short .18	; 518EE
 cmp cx, word [c2playernum]	; 518F0
 je short .20	; 518F7
-mov edx, dword [c1playernum]	; 518F9
+mov edx, dword [c2playernum-2]	; 518F9
 sar edx, 10h	; 518FF
 mov eax, dword [byte eax+SCnum-2]	; 51902
 sar eax, 10h	; 51905
@@ -1230,9 +1230,9 @@ add eax, 80h	; 51975
 .23:
 cmp dl, 0Ch	; 5197A
 jl short puckfaceoff.22	; 5197D
-mov eax, dword [c2playernum]	; 5197F
+mov eax, dword [cont1team-2]	; 5197F
 sar eax, 10h	; 51984
-mov edx, dword [cont1team]	; 51987
+mov edx, dword [cont2team-2]	; 51987
 sar edx, 10h	; 5198D
 or eax, edx	; 51990
 je short .24	; 51992
@@ -1425,7 +1425,7 @@ je near TakePlayerFromBox_ret6	; 51C6B
 and byte [byte esi+pflags], 0FDh	; 51C71
 cmp dword [dword_CC0F0], byte 0	; 51C75
 je short .3	; 51C7C
-mov eax, dword [dword_CBECA]	; 51C7E
+mov eax, dword [word_CBECC-2]	; 51C7E
 sar eax, 10h	; 51C83
 cmp eax, byte 0FFFFFFFFh	; 51C86
 je short .3	; 51C89
@@ -1440,7 +1440,7 @@ mov ax, word [joysampling]	; 51CA2
 mov word [joysampling_save], ax	; 51CA8
 mov dword [joysampling], ebp	; 51CAE
 call sub_61B85	; 51CB4
-mov eax, dword [dword_E9A9E]	; 51CB9
+mov eax, dword [joysampling_save-2]	; 51CB9
 sar eax, 10h	; 51CBE
 mov dword [joysampling], eax	; 51CC1
 mov edi, 0FFFFFFFFh	; 51CC6
@@ -1525,12 +1525,12 @@ mov ax, word [word_C90B4]	; 51E24
 mov word [yc1], ax	; 51E2A
 cmp word [xc1], byte 0	; 51E30
 jge short .8	; 51E38
-mov eax, dword [threat]	; 51E3A
+mov eax, dword [xc1-2]	; 51E3A
 sar eax, 10h	; 51E3F
 neg eax	; 51E42
 jmp short .9	; 51E44
 .8:
-mov eax, dword [threat]	; 51E46
+mov eax, dword [xc1-2]	; 51E46
 sar eax, 10h	; 51E4B
 .9:
 cmp eax, byte 20h	; 51E4E
@@ -1544,7 +1544,7 @@ mov eax, 0FFFFFFE0h	; 51E64
 .11:
 mov word [xc1], ax	; 51E69
 .12:
-mov eax, dword [xc1]	; 51E6F
+mov eax, dword [yc1-2]	; 51E6F
 sar eax, 10h	; 51E74
 cmp eax, 0FFFFFF44h	; 51E77
 jg short .13	; 51E7C
@@ -1615,24 +1615,24 @@ call checkwindow	; 51FBA
 cmp dword [penshotmode], byte 0	; 51FBF
 je near .25	; 51FC6
 call SprSort	; 51FCC
-mov eax, dword [sflags3]	; 51FD1
+mov eax, dword [c1playernum-2]	; 51FD1
 sar eax, 10h	; 51FD6
 mov ebx, dword [penshotplayer]	; 51FD9
 cmp eax, ebx	; 51FDF
 je near .18	; 51FE1
-mov edx, dword [c1playernum]	; 51FE7
+mov edx, dword [c2playernum-2]	; 51FE7
 sar edx, 10h	; 51FED
 cmp edx, ebx	; 51FF0
 je short .18	; 51FF2
 mov ebx, dword [dword_CC104]	; 51FF4
 inc ebx	; 51FFA
-mov ecx, dword [c2playernum]	; 51FFB
+mov ecx, dword [cont1team-2]	; 51FFB
 sar ecx, 10h	; 52001
 cmp ecx, ebx	; 52004
 jne short .17	; 52006
 cmp eax, dword [penshotplayer]	; 52008
 je short .18	; 5200E
-mov ebx, dword [dword_CC0FA]	; 52010
+mov ebx, dword [penshotplayer-2]	; 52010
 sar ebx, 10h	; 52016
 mov edx, eax	; 52019
 mov eax, ebx	; 5201B
@@ -1640,13 +1640,13 @@ call restorepl	; 5201D
 mov word [c1playernum], ax	; 52022
 jmp short .18	; 52028
 .17:
-mov eax, dword [cont1team]	; 5202A
+mov eax, dword [cont2team-2]	; 5202A
 sar eax, 10h	; 5202F
 cmp eax, ebx	; 52032
 jne short .18	; 52034
 cmp edx, dword [penshotplayer]	; 52036
 je short .18	; 5203C
-mov eax, dword [dword_CC0FA]	; 5203E
+mov eax, dword [penshotplayer-2]	; 5203E
 sar eax, 10h	; 52043
 call restorepl	; 52046
 mov word [c2playernum], ax	; 5204B
@@ -1679,12 +1679,12 @@ mov edi, dword [dword_CC104]	; 520A1
 test edi, edi	; 520A7
 sete al	; 520A9
 and eax, 0FFh	; 520AC
-mov edx, dword [c2playernum]	; 520B1
+mov edx, dword [cont1team-2]	; 520B1
 sar edx, 10h	; 520B7
 inc eax	; 520BA
 cmp edx, eax	; 520BB
 jne short .23	; 520BD
-mov edx, dword [sflags3]	; 520BF
+mov edx, dword [c1playernum-2]	; 520BF
 sar edx, 10h	; 520C5
 cmp edx, byte 0FFFFFFFFh	; 520C8
 je short .24	; 520CB
@@ -1696,12 +1696,12 @@ jmp short .24	; 520DD
 test edi, edi	; 520DF
 sete al	; 520E1
 and eax, 0FFh	; 520E4
-mov edx, dword [cont1team]	; 520E9
+mov edx, dword [cont2team-2]	; 520E9
 sar edx, 10h	; 520EF
 inc eax	; 520F2
 cmp edx, eax	; 520F3
 jne short .24	; 520F5
-mov edx, dword [c1playernum]	; 520F7
+mov edx, dword [c2playernum-2]	; 520F7
 sar edx, 10h	; 520FD
 cmp edx, byte 0FFFFFFFFh	; 52100
 je short .24	; 52103
@@ -1808,7 +1808,7 @@ cmp word [byte ebx+position], byte 0	; 522B0
 je short .35	; 522B5
 cmp word [regd4], byte 4	; 522B7
 jg short .34	; 522BF
-mov edx, dword [dword_C90B0]	; 522C1
+mov edx, dword [word_C90B2-2]	; 522C1
 sar edx, 10h	; 522C7
 mov eax, dword [regd0-2]	; 522CA
 sar eax, 10h	; 522CF
@@ -1837,12 +1837,12 @@ jmp near .42	; 52324
 .35:
 cmp word [word_C90B4], byte 0	; 52329
 jge short .36	; 52331
-mov eax, dword [word_C90B2]	; 52333
+mov eax, dword [word_C90B4-2]	; 52333
 sar eax, 10h	; 52338
 neg eax	; 5233B
 jmp short .37	; 5233D
 .36:
-mov eax, dword [word_C90B2]	; 5233F
+mov eax, dword [word_C90B4-2]	; 5233F
 sar eax, 10h	; 52344
 .37:
 cmp eax, byte 27h	; 52347
@@ -1864,7 +1864,7 @@ jmp short .39	; 5237F
 .38:
 mov eax, 0FFFFFFD9h	; 52381
 .39:
-mov edx, dword [word_C90B2]	; 52386
+mov edx, dword [word_C90B4-2]	; 52386
 sar edx, 10h	; 5238C
 sub edx, eax	; 5238F
 mov eax, edx	; 52391
@@ -1877,7 +1877,7 @@ jmp short .41	; 5239D
 movsx edx, dx	; 5239F
 .41:
 mov eax, edx	; 523A2
-mov edx, dword [dword_C90B0]	; 523A4
+mov edx, dword [word_C90B2-2]	; 523A4
 sar edx, 10h	; 523AA
 cwde	; 523AD
 imul edx, eax	; 523AE
@@ -2211,7 +2211,7 @@ cmp word [byte ebx+position], byte 0	; 5286E
 je short .8	; 52873
 cmp word [regd4], byte 4	; 52875
 jg short .7	; 5287D
-mov edx, dword [dword_C90B0]	; 5287F
+mov edx, dword [word_C90B2-2]	; 5287F
 sar edx, 10h	; 52885
 mov eax, dword [regd0-2]	; 52888
 sar eax, 10h	; 5288D
@@ -2240,12 +2240,12 @@ jmp near .15	; 528E2
 .8:
 cmp word [word_C90B4], byte 0	; 528E7
 jge short .9	; 528EF
-mov eax, dword [word_C90B2]	; 528F1
+mov eax, dword [word_C90B4-2]	; 528F1
 sar eax, 10h	; 528F6
 neg eax	; 528F9
 jmp short .10	; 528FB
 .9:
-mov eax, dword [word_C90B2]	; 528FD
+mov eax, dword [word_C90B4-2]	; 528FD
 sar eax, 10h	; 52902
 .10:
 cmp eax, byte 27h	; 52905
@@ -2266,7 +2266,7 @@ jmp short .12	; 5293C
 .11:
 mov eax, 0FFFFFFD9h	; 5293E
 .12:
-mov edx, dword [word_C90B2]	; 52943
+mov edx, dword [word_C90B4-2]	; 52943
 sar edx, 10h	; 52949
 sub edx, eax	; 5294C
 mov eax, edx	; 5294E
@@ -2279,7 +2279,7 @@ jmp short .14	; 5295A
 movsx edx, dx	; 5295C
 .14:
 mov eax, edx	; 5295F
-mov edx, dword [dword_C90B0]	; 52961
+mov edx, dword [word_C90B2-2]	; 52961
 sar edx, 10h	; 52967
 cwde	; 5296A
 imul edx, eax	; 5296B
@@ -2992,7 +2992,7 @@ ret	; 53236
 call sub_59AAD	; 53237
 test eax, eax	; 5323C
 jne short .x	; 5323E
-mov eax, dword [dword_CBECA]	; 53240
+mov eax, dword [word_CBECC-2]	; 53240
 sar eax, 10h	; 53245
 cmp eax, byte 0FFFFFFFFh	; 53248
 jne short .x	; 5324B

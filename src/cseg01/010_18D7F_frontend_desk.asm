@@ -296,7 +296,7 @@ push ebx	; 190C8
 push ecx	; 190C9
 push edx	; 190CA
 push esi	; 190CB
-mov eax, dword [word_CBC44]	; 190CC
+mov eax, dword [exitgame-2]	; 190CC
 sar eax, 10h	; 190D1
 cmp eax, byte 0FFFFFFFFh	; 190D4
 je near .3	; 190D7
@@ -327,9 +327,9 @@ cmp dword [curperiod], byte 1	; 1914F
 jne short .2	; 19156
 xor esi, esi	; 19158
 mov dword [hlplayedmask], esi	; 1915A
-mov edx, dword [HomeTeam]	; 19160
+mov edx, dword [VisTeam-2]	; 19160
 sar edx, 10h	; 19166
-mov eax, dword [cont2team]	; 19169
+mov eax, dword [HomeTeam-2]	; 19169
 sar eax, 10h	; 1916E
 call PickOtherGames	; 19171
 xor edx, edx	; 19176
@@ -741,9 +741,9 @@ cmp dword [curperiod], byte 3	; 197A0
 jle short .16	; 197A7
 mov edi, 0FFFFFFFFh	; 197A9
 .16:
-mov edx, dword [cont2team]	; 197AE
+mov edx, dword [HomeTeam-2]	; 197AE
 sar edx, 10h	; 197B4
-mov eax, dword [HomeTeam]	; 197B7
+mov eax, dword [VisTeam-2]	; 197B7
 sar eax, 10h	; 197BC
 shl eax, 2	; 197BF
 mov edx, dword [nosplit edx*4+teamconf]	; 197C2
@@ -769,7 +769,7 @@ cmp dword [schedgameidx], 498h	; 19801
 jl short .20	; 1980B
 mov ecx, 3	; 1980D
 .20:
-mov eax, dword [dword_CCC9D]	; 19812
+mov eax, dword [byte_CCCA0-3]	; 19812
 sar eax, 18h	; 19817
 push eax	; 1981A
 push edi	; 1981B
@@ -1583,7 +1583,7 @@ jl short .1	; 1A549
 mov eax, 0Ch	; 1A54B
 jmp short .2	; 1A550
 .1:
-mov eax, dword [cont2team]	; 1A552
+mov eax, dword [HomeTeam-2]	; 1A552
 sar eax, 10h	; 1A557
 .2:
 call LoadRink	; 1A55A
@@ -1803,7 +1803,7 @@ jl short .1	; 1A82C
 mov eax, 0Ch	; 1A82E
 jmp short .2	; 1A833
 .1:
-mov eax, dword [cont2team]	; 1A835
+mov eax, dword [HomeTeam-2]	; 1A835
 sar eax, 10h	; 1A83A
 .2:
 call LoadRink	; 1A83D

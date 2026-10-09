@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_644A8 progbits alloc exec nowrite align=1
-extern PBnum, __CHK, asc_C1DB6, asc_C1DBC, asc_C1DC5, asc_C1DCE, asc_C1DD6, str_PPV
+extern PBnum, __CHK, asc_C1DB6, asc_C1DBC, asc_C1DC5, asc_C1DCE, asc_C1DD6, str_PPV, cont2team
 extern str_extBIN, sflags, gmode2, byte_CC049, byte_CCE00, byte_CD418, byte_CD421, byte_CD473
 extern hmroster, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byte_DFFA6, byte_E0250
 extern byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E03C1, byte_E9DB4, byte_E9E18
@@ -95,7 +95,7 @@ jge short .5	; 6453D
 mov edx, 0FFFFFFFFh	; 6453F
 jmp short .6	; 64544
 .5:
-mov edx, dword [dword edx+dword_E9C85]	; 64546
+mov edx, dword [dword edx+dword_E9C88-3]	; 64546
 sar edx, 18h	; 6454C
 .6:
 mov byte [eax+ebp], dl	; 6454F
@@ -163,7 +163,7 @@ jge short .5	; 645F1
 mov edx, 0FFFFFFFFh	; 645F3
 jmp short .6	; 645F8
 .5:
-mov edx, dword [dword edx+dword_E9C85]	; 645FA
+mov edx, dword [dword edx+dword_E9C88-3]	; 645FA
 sar edx, 18h	; 64600
 .6:
 mov byte [edi+eax], dl	; 64603
@@ -881,7 +881,7 @@ jne short sub_64E60.3	; 64EA6
 movsx eax, cx	; 64EA8
 cmp byte [dword eax+byte_CD421], 0	; 64EAB
 jl short .7	; 64EB2
-mov eax, dword [dword eax+dword_CD41E]	; 64EB4
+mov eax, dword [dword eax+byte_CD421-3]	; 64EB4
 sar eax, 18h	; 64EBA
 movsx di, byte [eax+ebp]	; 64EBD
 movsx ebx, byte [eax+ebp]	; 64EC2
@@ -1098,7 +1098,7 @@ movsx eax, cx	; 65122
 movsx dx, byte [dword eax+byte_CD421]	; 65125
 cmp dx, si	; 6512D
 je short .33	; 65130
-mov eax, dword [dword eax+dword_CD41E]	; 65132
+mov eax, dword [dword eax+byte_CD421-3]	; 65132
 sar eax, 18h	; 65138
 movsx di, byte [eax+ebp]	; 6513B
 movsx ebx, byte [eax+ebp]	; 65140
@@ -2394,7 +2394,7 @@ sub esi, edi	; 65FC4
 mov word [regd3], si	; 65FC6
 mov esi, dword [regd2-2]	; 65FCD
 sar esi, 10h	; 65FD3
-mov edi, dword [dword_E03AE]	; 65FD6
+mov edi, dword [regd3-2]	; 65FD6
 sar edi, 10h	; 65FDC
 xor edi, esi	; 65FDF
 test edi, edi	; 65FE1
@@ -2408,12 +2408,12 @@ neg esi	; 65FF8
 .24:
 cmp word [regd3], byte 0	; 65FFA
 jge short .25	; 66002
-mov edi, dword [dword_E03AE]	; 66004
+mov edi, dword [regd3-2]	; 66004
 sar edi, 10h	; 6600A
 neg edi	; 6600D
 jmp short .26	; 6600F
 .25:
-mov edi, dword [dword_E03AE]	; 66011
+mov edi, dword [regd3-2]	; 66011
 sar edi, 10h	; 66017
 .26:
 cmp esi, edi	; 6601A
@@ -2431,7 +2431,7 @@ sub esi, edi	; 66044
 mov word [regd3], si	; 66046
 mov esi, dword [regd2-2]	; 6604D
 sar esi, 10h	; 66053
-mov edi, dword [dword_E03AE]	; 66056
+mov edi, dword [regd3-2]	; 66056
 sar edi, 10h	; 6605C
 xor edi, esi	; 6605F
 test edi, edi	; 66061
@@ -2452,12 +2452,12 @@ mov edi, esi	; 6608C
 .32:
 cmp word [regd3], byte 0	; 6608E
 jge short .33	; 66096
-mov esi, dword [dword_E03AE]	; 66098
+mov esi, dword [regd3-2]	; 66098
 sar esi, 10h	; 6609E
 neg esi	; 660A1
 jmp short .34	; 660A3
 .33:
-mov esi, dword [dword_E03AE]	; 660A5
+mov esi, dword [regd3-2]	; 660A5
 sar esi, 10h	; 660AB
 .34:
 cmp edi, esi	; 660AE
@@ -2472,14 +2472,14 @@ mov si, word [xc1]	; 660C6
 mov word [regd3], si	; 660CD
 mov esi, dword [eax]	; 660D4
 sar esi, 10h	; 660D6
-mov edi, dword [dword_C90B0]	; 660D9
+mov edi, dword [word_C90B2-2]	; 660D9
 sar edi, 10h	; 660DF
 sub esi, edi	; 660E2
 mov edi, esi	; 660E4
 mov esi, dword [byte eax+Ypos]	; 660E6
 sar esi, 10h	; 660E9
 mov dword [esp], esi	; 660EC
-mov esi, dword [word_C90B2]	; 660EF
+mov esi, dword [word_C90B4-2]	; 660EF
 sar esi, 10h	; 660F5
 mov ebp, dword [esp]	; 660F8
 sub ebp, esi	; 660FB
@@ -2546,7 +2546,7 @@ setg bl	; 661E1
 xor bh, bh	; 661E4
 mov si, word [regd0]	; 661E6
 sub word [dword_C90B0], si	; 661ED
-mov esi, dword [yc1]	; 661F4
+mov esi, dword [dword_C90B0-2]	; 661F4
 sar esi, 10h	; 661FA
 cmp esi, byte 0FFFFFFCEh	; 661FD
 jg short .42	; 66200
@@ -2560,7 +2560,7 @@ sar esi, 18h	; 66215
 mov edi, dword [byte eax+Ypos]	; 66218
 sar edi, 10h	; 6621B
 add edi, esi	; 6621E
-mov esi, dword [yc1]	; 66220
+mov esi, dword [dword_C90B0-2]	; 66220
 sar esi, 10h	; 66226
 add esi, edi	; 66229
 mov word [regd2], si	; 6622B
@@ -2801,7 +2801,7 @@ call sub_90354	; 6654E
 add esp, byte 4	; 66553
 cmp esi, eax	; 66556
 jl short sub_66497.3	; 66558
-mov eax, dword [dword_E9A9E]	; 6655A
+mov eax, dword [joysampling_save-2]	; 6655A
 sar eax, 10h	; 6655F
 mov dword [joysampling], eax	; 66562
 mov word [word_CBECC], di	; 66567
@@ -2948,11 +2948,11 @@ add word [byte esp+01Ch], ax	; 6677A
 add word [byte esp+014h], ax	; 6677F
 test di, di	; 66784
 jl short .7	; 66787
-mov eax, dword [dword_CBECA]	; 66789
+mov eax, dword [word_CBECC-2]	; 66789
 sar eax, 10h	; 6678E
 cmp eax, byte 0FFFFFFFFh	; 66791
 je short .7	; 66794
-mov eax, dword [word_CBECC]	; 66796
+mov eax, dword [word_CBECE-2]	; 66796
 sar eax, 10h	; 6679B
 cmp eax, byte 0FFFFFFFFh	; 6679E
 jne short .8	; 667A1
@@ -3047,11 +3047,11 @@ call sub_B4BC4	; 66890
 add esp, byte 10h	; 66895
 jmp near .33	; 66898
 .11:
-mov eax, dword [dword_CBECA]	; 6689D
+mov eax, dword [word_CBECC-2]	; 6689D
 sar eax, 10h	; 668A2
 cmp eax, byte 0FFFFFFFFh	; 668A5
 je near .20	; 668A8
-mov eax, dword [word_CBECC]	; 668AE
+mov eax, dword [word_CBECE-2]	; 668AE
 sar eax, 10h	; 668B3
 cmp eax, byte 0FFFFFFFFh	; 668B6
 je near .20	; 668B9
@@ -3072,7 +3072,7 @@ add edi, byte 1Fh	; 668EE
 push edi	; 668F1
 add ebp, byte 11h	; 668F2
 push ebp	; 668F5
-mov eax, dword [word_CBECC]	; 668F6
+mov eax, dword [word_CBECE-2]	; 668F6
 sar eax, 10h	; 668FB
 mov ecx, dword [nosplit eax*4+dword_DEF8C]	; 668FE
 push ecx	; 66905
@@ -3097,7 +3097,7 @@ add esp, byte 0Ch	; 6693C
 add ebp, byte 3Ch	; 6693F
 push ebp	; 66942
 push edi	; 66943
-mov eax, dword [word_CBECC]	; 66944
+mov eax, dword [word_CBECE-2]	; 66944
 sar eax, 10h	; 66949
 mov edx, dword [nosplit eax*4+dword_DEF8C]	; 6694C
 push edx	; 66953
@@ -3108,7 +3108,7 @@ sar eax, 10h	; 6695A
 push eax	; 6695D
 movsx eax, si	; 6695E
 push eax	; 66961
-mov eax, dword [word_CBECC]	; 66962
+mov eax, dword [word_CBECE-2]	; 66962
 sar eax, 10h	; 66967
 mov ebp, dword [nosplit eax*4+dword_DEF8C]	; 6696A
 push ebp	; 66971
@@ -3507,7 +3507,7 @@ add word [crowdlevel], byte 8	; 66EB1
 .6:
 cmp word [word_CBEC0], byte 10h	; 66EB9
 jne near .9	; 66EC1
-mov edx, dword [dword_CBECA]	; 66EC7
+mov edx, dword [word_CBECC-2]	; 66EC7
 sar edx, 10h	; 66ECD
 cmp edx, byte 0FFFFFFFFh	; 66ED0
 je near .9	; 66ED3
@@ -3528,7 +3528,7 @@ mov ecx, dword [dword_E0244]	; 66F11
 push ecx	; 66F17
 call jctime	; 66F18
 add esp, byte 4	; 66F1D
-mov eax, dword [dword_CBECA]	; 66F20
+mov eax, dword [word_CBECC-2]	; 66F20
 sar eax, 10h	; 66F25
 cmp byte [dword eax+byte_CC049], 0	; 66F28
 je short .7	; 66F2F
@@ -3544,7 +3544,7 @@ jmp near checkwindow_popx	; 66F53
 mov esi, ecx	; 66F58
 inc esi	; 66F5A
 mov word [word_E9AB4], si	; 66F5B
-mov ebx, dword [word_E9AB2]	; 66F62
+mov ebx, dword [word_E9AB4-2]	; 66F62
 sar ebx, 10h	; 66F68
 movsx ax, byte [ebx+eax]	; 66F6B
 mov word [word_CBECE], ax	; 66F70
@@ -3742,12 +3742,12 @@ shl ebx, 8	; 671FB
 mov bx, word [dword ebx+hmtmgoalie]	; 671FE
 cmp dword [curperiod], byte 0FFFFFFFFh	; 67205
 je near .x	; 6720C
-mov ecx, dword [c2playernum]	; 67212
+mov ecx, dword [cont1team-2]	; 67212
 sar ecx, 10h	; 67218
 inc eax	; 6721B
 cmp ecx, eax	; 6721C
 je short .1	; 6721E
-mov ecx, dword [cont1team]	; 67220
+mov ecx, dword [cont2team-2]	; 67220
 sar ecx, 10h	; 67226
 cmp ecx, eax	; 67229
 jne near .x	; 6722B
@@ -3823,12 +3823,12 @@ movsx ebx, ax	; 67306
 mov ecx, ebx	; 67309
 shl ecx, 8	; 6730B
 mov cx, word [dword ecx+hmtmgoalie]	; 6730E
-mov esi, dword [c2playernum]	; 67315
+mov esi, dword [cont1team-2]	; 67315
 sar esi, 10h	; 6731B
 inc ebx	; 6731E
 cmp esi, ebx	; 6731F
 je short .1	; 67321
-mov esi, dword [cont1team]	; 67323
+mov esi, dword [cont2team-2]	; 67323
 sar esi, 10h	; 67329
 cmp esi, ebx	; 6732C
 jne near .x	; 6732E
@@ -4472,7 +4472,7 @@ jne short .20	; 67B65
 mov edx, 0FFFFFFFFh	; 67B67
 jmp short .21	; 67B6C
 .20:
-mov edx, dword [dword_E03BD]	; 67B6E
+mov edx, dword [regd1-3]	; 67B6E
 sar edx, 18h	; 67B74
 .21:
 mov bl, dl	; 67B77
@@ -4487,7 +4487,7 @@ jne short .22	; 67B98
 mov edx, 0FFFFFFFFh	; 67B9A
 jmp short .23	; 67B9F
 .22:
-mov edx, dword [dword_E03BD]	; 67BA1
+mov edx, dword [regd1-3]	; 67BA1
 sar edx, 18h	; 67BA7
 .23:
 mov bl, dl	; 67BAA
@@ -4520,7 +4520,7 @@ jne short .25	; 67C0A
 mov eax, 0FFFFFFFFh	; 67C0C
 jmp short .26	; 67C11
 .25:
-mov eax, dword [dword_E03BD]	; 67C13
+mov eax, dword [regd1-3]	; 67C13
 sar eax, 18h	; 67C18
 .26:
 mov byte [byte_E9FAB], al	; 67C1B
@@ -4533,7 +4533,7 @@ jne short .27	; 67C32
 mov eax, 0FFFFFFFFh	; 67C34
 jmp short .28	; 67C39
 .27:
-mov eax, dword [dword_E03BD]	; 67C3B
+mov eax, dword [regd1-3]	; 67C3B
 sar eax, 18h	; 67C40
 .28:
 mov byte [byte_E9FAC], al	; 67C43
@@ -4664,13 +4664,13 @@ mov ebp, esp	; 67DDB
 sub esp, byte 34h	; 67DDD
 push eax	; 67DE0
 push edx	; 67DE1
-mov eax, dword [camx_m2]	; 67DE2
+mov eax, dword [camx-2]	; 67DE2
 sar eax, 10h	; 67DE7
 cmp eax, byte 0FFFFFFF0h	; 67DEA
 jle near .7	; 67DED
 cmp word [camy], byte 50h	; 67DF3
 jge short .3	; 67DFB
-mov eax, dword [camx]	; 67DFD
+mov eax, dword [camy-2]	; 67DFD
 sar eax, 10h	; 67E02
 cmp eax, 0FFFFFF6Ch	; 67E05
 jle short .3	; 67E0A
@@ -4694,13 +4694,13 @@ jge short .3	; 67E3C
 cmp si, byte 3	; 67E3E
 jl short sub_67DCC.1	; 67E42
 .3:
-mov eax, dword [camx]	; 67E44
+mov eax, dword [camy-2]	; 67E44
 sar eax, 10h	; 67E49
 cmp eax, byte 0FFFFFFB5h	; 67E4C
 jle short .7	; 67E4F
 cmp word [camy], 0B1h	; 67E51
 jge short .7	; 67E5A
-mov eax, dword [byte_E9FAC]	; 67E5C
+mov eax, dword [byte_E9FAF-3]	; 67E5C
 sar eax, 18h	; 67E61
 dec eax	; 67E64
 cmp eax, byte 2	; 67E65
@@ -4743,7 +4743,7 @@ inc edi	; 67ED2
 movsx edx, di	; 67ED3
 mov edx, dword [nosplit edx*2+dword_CCEF6]	; 67ED6
 sar edx, 10h	; 67EDD
-mov eax, dword [dword eax+dword_E9FD9]	; 67EE0
+mov eax, dword [dword eax+byte_E9FDC-3]	; 67EE0
 sar eax, 18h	; 67EE6
 movsx ax, byte [dword edx+eax+byte_CCE00]	; 67EE9
 mov word [byte ebp-08h], ax	; 67EF2
@@ -4788,7 +4788,7 @@ inc edi	; 67F75
 movsx edx, di	; 67F76
 mov edx, dword [nosplit edx*2+dword_CCEF6]	; 67F79
 sar edx, 10h	; 67F80
-mov eax, dword [dword eax+dword_E9FD9]	; 67F83
+mov eax, dword [dword eax+byte_E9FDC-3]	; 67F83
 sar eax, 18h	; 67F89
 movsx ax, byte [dword edx+eax+byte_CCE00]	; 67F8C
 mov word [byte ebp-08h], ax	; 67F95
@@ -4858,9 +4858,9 @@ mov word [byte ebp-08h], ax	; 68043
 cmp ax, 362h	; 68047
 jl short .22	; 6804B
 push byte 0	; 6804D
-mov ebx, dword [dword_E9F56]	; 6804F
+mov ebx, dword [word_E9F58-2]	; 6804F
 sar ebx, 10h	; 68055
-mov edx, dword [dword_E9F34]	; 68058
+mov edx, dword [word_E9F36-2]	; 68058
 sar edx, 10h	; 6805E
 mov eax, dword [byte ebp-0Ah]	; 68061
 sar eax, 10h	; 68064
@@ -4871,7 +4871,7 @@ dec esi	; 6806E
 .23:
 cmp si, byte 12h	; 6806F
 jge near sub_67DCC.11	; 68073
-mov eax, dword [camx]	; 68079
+mov eax, dword [camy-2]	; 68079
 sar eax, 10h	; 6807E
 cmp eax, 0FFFFFF50h	; 68081
 jge short .24	; 68086
@@ -4898,7 +4898,7 @@ inc esi	; 680C5
 .26:
 cmp si, byte 3	; 680C6
 jl short sub_67DCC.25	; 680CA
-mov eax, dword [dword_E9FAA]	; 680CC
+mov eax, dword [byte_E9FAD-3]	; 680CC
 sar eax, 18h	; 680D1
 cmp eax, byte 0FFFFFFFFh	; 680D4
 je short .27	; 680D7
@@ -4908,7 +4908,7 @@ mov dword [byte ebp-020h], eax	; 680E3
 .27:
 cmp byte [byte_E9FAB], 0	; 680E6
 jl short .28	; 680ED
-mov eax, dword [dword_E9FA8]	; 680EF
+mov eax, dword [byte_E9FAB-3]	; 680EF
 sar eax, 18h	; 680F4
 mov eax, dword [nosplit eax*2+dword_E9F38]	; 680F7
 sar eax, 10h	; 680FE
@@ -4916,7 +4916,7 @@ mov dword [byte ebp-028h], eax	; 68101
 .28:
 cmp byte [byte_E9FAC], 0	; 68104
 jl short .29	; 6810B
-mov eax, dword [word_E9FA9]	; 6810D
+mov eax, dword [byte_E9FAC-3]	; 6810D
 sar eax, 18h	; 68112
 mov eax, dword [nosplit eax*2+dword_E9F38]	; 68115
 sar eax, 10h	; 6811C
@@ -4936,7 +4936,7 @@ movsx esi, di	; 6813B
 mov si, word [byte ebp+esi*4-034h]	; 6813E
 cmp si, byte 2	; 68143
 jne short .31	; 68147
-mov eax, dword [dword_E9FAA]	; 68149
+mov eax, dword [byte_E9FAD-3]	; 68149
 sar eax, 18h	; 6814E
 cmp eax, byte 0FFFFFFFFh	; 68151
 je near .42	; 68154
@@ -4964,7 +4964,7 @@ jl near .42	; 68199
 mov eax, dword [byte ebp-0Ah]	; 6819F
 sar eax, 10h	; 681A2
 add eax, eax	; 681A5
-mov edx, dword [dword eax+dword_E9F5A]	; 681A7
+mov edx, dword [dword eax+word_E9F5C-2]	; 681A7
 sar edx, 10h	; 681AD
 cmp edx, byte 0FFFFFFFFh	; 681B0
 je near .42	; 681B3
@@ -5123,7 +5123,7 @@ jmp short .47	; 68399
 .44:
 cmp word [byte ebp-08h], 189h	; 6839B
 jne short .45	; 683A1
-mov eax, dword [dword_E9FA5]	; 683A3
+mov eax, dword [word_E9FA7-2]	; 683A3
 sar eax, 10h	; 683A8
 cmp eax, 0FFFFFF00h	; 683AB
 jle short .45	; 683B0
@@ -5156,9 +5156,9 @@ je short .49	; 68407
 cmp word [word_E9FA7], byte 0	; 68409
 jl short .49	; 68411
 push byte 0	; 68413
-mov ebx, dword [dword_E9F54]	; 68415
+mov ebx, dword [dword_E9F56-2]	; 68415
 sar ebx, 10h	; 6841B
-mov edx, dword [dword_E9FA5]	; 6841E
+mov edx, dword [word_E9FA7-2]	; 6841E
 sar edx, 10h	; 68424
 mov eax, edx	; 68427
 shl eax, 2	; 68429
@@ -5169,9 +5169,9 @@ LD sub, eax, edx	; 68433
 sar eax, 1	; 68435
 add eax, ebx	; 68437
 movsx ebx, ax	; 68439
-mov edx, dword [dword_E9F32]	; 6843C
+mov edx, dword [dword_E9F34-2]	; 6843C
 sar edx, 10h	; 68442
-mov eax, dword [dword_E9F76]	; 68445
+mov eax, dword [dword_E9F78-2]	; 68445
 sar eax, 10h	; 6844A
 xor ecx, ecx	; 6844D
 call DrawFrameSprite	; 6844F
@@ -5185,7 +5185,7 @@ cmp si, byte 0Fh	; 68466
 je near .67	; 6846A
 cmp si, byte 0Eh	; 68470
 jne near .54	; 68474
-mov eax, dword [dword_E9FAA]	; 6847A
+mov eax, dword [byte_E9FAD-3]	; 6847A
 sar eax, 18h	; 6847F
 cmp eax, byte 0FFFFFFFFh	; 68482
 jne near .67	; 68485
@@ -5195,7 +5195,7 @@ movsx eax, si	; 68499
 add eax, eax	; 6849C
 cmp word [dword eax+word_E9F3A], 0E8h	; 6849E
 jge near .67	; 684A7
-mov edx, dword [dword eax+dword_E9F38]	; 684AD
+mov edx, dword [dword eax+word_E9F3A-2]	; 684AD
 sar edx, 10h	; 684B3
 cmp edx, 0FFFFFF18h	; 684B6
 jg short .53	; 684BC
@@ -5203,12 +5203,12 @@ cmp edx, 0FFFFFF10h	; 684BE
 jl short .53	; 684C4
 cmp word [dword eax+word_E9F18], byte 0	; 684C6
 jge short .51	; 684CE
-mov eax, dword [dword eax+dword_E9F16]	; 684D0
+mov eax, dword [dword eax+word_E9F18-2]	; 684D0
 sar eax, 10h	; 684D6
 neg eax	; 684D9
 jmp short .52	; 684DB
 .51:
-mov eax, dword [dword eax+dword_E9F16]	; 684DD
+mov eax, dword [dword eax+word_E9F18-2]	; 684DD
 sar eax, 10h	; 684E3
 .52:
 cmp eax, byte 14h	; 684E6
@@ -5220,7 +5220,7 @@ push byte 0	; 684F9
 movsx ebx, si	; 684FB
 mov ecx, dword [nosplit ebx*2+dword_E9F38]	; 684FE
 sar ecx, 10h	; 68505
-mov edx, dword [dword_E9FA5]	; 68508
+mov edx, dword [word_E9FA7-2]	; 68508
 sar edx, 10h	; 6850E
 mov eax, edx	; 68511
 shl eax, 2	; 68513
@@ -5253,7 +5253,7 @@ cmp eax, byte 0FFFFFFFFh	; 68566
 je near .60	; 68569
 cmp si, byte 0Ch	; 6856F
 jge near .60	; 68573
-mov eax, dword [dword_E9FAA]	; 68579
+mov eax, dword [byte_E9FAD-3]	; 68579
 sar eax, 18h	; 6857E
 cmp eax, byte 0FFFFFFFFh	; 68581
 je short .56	; 68584
@@ -5274,10 +5274,10 @@ cmp si, word [word_CD4FC]	; 685B8
 jne short .58	; 685BF
 .57:
 movsx eax, si	; 685C1
-mov edx, dword [dword eax+dword_E9F98]	; 685C4
+mov edx, dword [dword eax+byte_E9F9B-3]	; 685C4
 sar edx, 18h	; 685CA
 mov dword [byte ebp-014h], edx	; 685CD
-mov ebx, dword [dword eax+dword_E9F8C]	; 685D0
+mov ebx, dword [dword eax+byte_E9F8F-3]	; 685D0
 sar ebx, 18h	; 685D6
 mov edx, dword [nosplit eax*2+dword_E9F38]	; 685D9
 sar edx, 10h	; 685E0
@@ -5288,7 +5288,7 @@ jmp short .59	; 685F0
 .58:
 cmp dword [dword_CBC3E], byte 0	; 685F2
 je short .60	; 685F9
-mov ebx, dword [dword eax+dword_E9F8C]	; 685FB
+mov ebx, dword [dword eax+byte_E9F8F-3]	; 685FB
 sar ebx, 18h	; 68601
 mov edx, dword [nosplit eax*2+dword_E9F38]	; 68604
 sar edx, 10h	; 6860B
@@ -5304,7 +5304,7 @@ xor ah, ah	; 68629
 cwde	; 6862B
 push eax	; 6862C
 movsx eax, si	; 6862D
-mov ecx, dword [dword eax+dword_E9F7B]	; 68630
+mov ecx, dword [dword eax+byte_E9F7E-3]	; 68630
 sar ecx, 18h	; 68636
 mov ebx, dword [nosplit eax*2+dword_E9F38]	; 68639
 sar ebx, 10h	; 68640
@@ -5319,12 +5319,12 @@ cmp byte [byte_E9FAD], 10h	; 68666
 je near .67	; 6866D
 cmp word [dword_E9F34], byte 0	; 68673
 jge short .61	; 6867B
-mov eax, dword [dword_E9F32]	; 6867D
+mov eax, dword [dword_E9F34-2]	; 6867D
 sar eax, 10h	; 68682
 neg eax	; 68685
 jmp short .62	; 68687
 .61:
-mov eax, dword [dword_E9F32]	; 68689
+mov eax, dword [dword_E9F34-2]	; 68689
 sar eax, 10h	; 6868E
 .62:
 cmp eax, byte 6	; 68691
@@ -5339,9 +5339,9 @@ cmp dx, word [dword eax+word_E9F3A]	; 686AD
 jl short .67	; 686B4
 cmp word [word_E9FA7], byte 0Dh	; 686B6
 jl short .67	; 686BE
-mov eax, dword [dword eax+dword_E9F16]	; 686C0
+mov eax, dword [dword eax+word_E9F18-2]	; 686C0
 sar eax, 10h	; 686C6
-mov edx, dword [dword_E9F32]	; 686C9
+mov edx, dword [dword_E9F34-2]	; 686C9
 sar edx, 10h	; 686CF
 sub edx, eax	; 686D2
 mov eax, edx	; 686D4
@@ -5353,7 +5353,7 @@ cmp eax, byte 15h	; 686DC
 jge short .67	; 686DF
 .65:
 push byte 0	; 686E1
-mov edx, dword [dword_E9FA5]	; 686E3
+mov edx, dword [word_E9FA7-2]	; 686E3
 sar edx, 10h	; 686E9
 mov eax, edx	; 686EC
 shl eax, 2	; 686EE
@@ -5362,13 +5362,13 @@ mov edx, eax	; 686F3
 sar edx, 1Fh	; 686F5
 LD sub, eax, edx	; 686F8
 sar eax, 1	; 686FA
-mov edx, dword [dword_E9F54]	; 686FC
+mov edx, dword [dword_E9F56-2]	; 686FC
 sar edx, 10h	; 68702
 add eax, edx	; 68705
 movsx ebx, ax	; 68707
-mov edx, dword [dword_E9F32]	; 6870A
+mov edx, dword [dword_E9F34-2]	; 6870A
 sar edx, 10h	; 68710
-mov eax, dword [dword_E9F76]	; 68713
+mov eax, dword [dword_E9F78-2]	; 68713
 sar eax, 10h	; 68718
 xor ecx, ecx	; 6871B
 .66:
@@ -5378,7 +5378,7 @@ inc edi	; 68722
 .68:
 cmp di, byte 11h	; 68723
 jl near sub_67DCC.50	; 68727
-mov eax, dword [dword_E9F54]	; 6872D
+mov eax, dword [dword_E9F56-2]	; 6872D
 sar eax, 10h	; 68732
 cmp eax, 0FFFFFF18h	; 68735
 jg near .71	; 6873A
@@ -5386,12 +5386,12 @@ cmp eax, 0FFFFFF14h	; 68740
 jl short .71	; 68745
 cmp word [dword_E9F34], byte 0	; 68747
 jge short .69	; 6874F
-mov eax, dword [dword_E9F32]	; 68751
+mov eax, dword [dword_E9F34-2]	; 68751
 sar eax, 10h	; 68756
 neg eax	; 68759
 jmp short .70	; 6875B
 .69:
-mov eax, dword [dword_E9F32]	; 6875D
+mov eax, dword [dword_E9F34-2]	; 6875D
 sar eax, 10h	; 68762
 .70:
 cmp eax, byte 14h	; 68765
@@ -5399,7 +5399,7 @@ jg short .71	; 68768
 cmp word [word_E9FA7], byte 0Dh	; 6876A
 jl short .71	; 68772
 push byte 0	; 68774
-mov edx, dword [dword_E9FA5]	; 68776
+mov edx, dword [word_E9FA7-2]	; 68776
 sar edx, 10h	; 6877C
 mov eax, edx	; 6877F
 shl eax, 2	; 68781
@@ -5408,18 +5408,18 @@ mov edx, eax	; 68786
 sar edx, 1Fh	; 68788
 LD sub, eax, edx	; 6878B
 sar eax, 1	; 6878D
-mov edx, dword [dword_E9F54]	; 6878F
+mov edx, dword [dword_E9F56-2]	; 6878F
 sar edx, 10h	; 68795
 add eax, edx	; 68798
 movsx ebx, ax	; 6879A
-mov edx, dword [dword_E9F32]	; 6879D
+mov edx, dword [dword_E9F34-2]	; 6879D
 sar edx, 10h	; 687A3
-mov eax, dword [dword_E9F76]	; 687A6
+mov eax, dword [dword_E9F78-2]	; 687A6
 sar eax, 10h	; 687AB
 xor ecx, ecx	; 687AE
 call DrawFrameSprite	; 687B0
 .71:
-mov eax, dword [camx]	; 687B5
+mov eax, dword [camy-2]	; 687B5
 sar eax, 10h	; 687BA
 cmp eax, 0FFFFFF50h	; 687BD
 jge short .72	; 687C2
@@ -5435,7 +5435,7 @@ push eax	; 687DE
 call sub_B4BC4	; 687DF
 add esp, byte 10h	; 687E4
 .72:
-mov eax, dword [camx]	; 687E7
+mov eax, dword [camy-2]	; 687E7
 sar eax, 10h	; 687EC
 cmp eax, 0FFFFFF70h	; 687EF
 jge short .73	; 687F4
@@ -5449,27 +5449,27 @@ jl short .74	; 68811
 cmp si, 237h	; 68813
 jg short .74	; 68818
 push byte 0	; 6881A
-mov ebx, dword [dword_E9F56]	; 6881C
+mov ebx, dword [word_E9F58-2]	; 6881C
 sar ebx, 10h	; 68822
-mov edx, dword [dword_E9F34]	; 68825
+mov edx, dword [word_E9F36-2]	; 68825
 sar edx, 10h	; 6882B
-mov eax, dword [dword_E9F78]	; 6882E
+mov eax, dword [word_E9F7A-2]	; 6882E
 sar eax, 10h	; 68833
 xor ecx, ecx	; 68836
 call DrawFrameSprite	; 68838
 .74:
-mov ebx, dword [dword_E9F54]	; 6883D
+mov ebx, dword [dword_E9F56-2]	; 6883D
 sar ebx, 10h	; 68843
 cmp ebx, 0FFFFFEF8h	; 68846
 jge short .75	; 6884C
-mov eax, dword [dword_E9FAA]	; 6884E
+mov eax, dword [byte_E9FAD-3]	; 6884E
 sar eax, 18h	; 68853
 cmp eax, byte 0FFFFFFFFh	; 68856
 jne short .75	; 68859
 cmp word [word_E9FA7], byte 0	; 6885B
 jl short .75	; 68863
 push byte 0	; 68865
-mov edx, dword [dword_E9FA5]	; 68867
+mov edx, dword [word_E9FA7-2]	; 68867
 sar edx, 10h	; 6886D
 mov eax, edx	; 68870
 shl eax, 2	; 68872
@@ -5480,9 +5480,9 @@ LD sub, eax, edx	; 6887C
 sar eax, 1	; 6887E
 add eax, ebx	; 68880
 movsx ebx, ax	; 68882
-mov edx, dword [dword_E9F32]	; 68885
+mov edx, dword [dword_E9F34-2]	; 68885
 sar edx, 10h	; 6888B
-mov eax, dword [dword_E9F76]	; 6888E
+mov eax, dword [dword_E9F78-2]	; 6888E
 sar eax, 10h	; 68893
 xor ecx, ecx	; 68896
 call DrawFrameSprite	; 68898

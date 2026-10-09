@@ -67,7 +67,7 @@ push str_fe3	; 1BC45
 call FatalError	; 1BC4A
 add esp, byte 4	; 1BC4F
 .3:
-mov edx, dword [cont2team]	; 1BC52
+mov edx, dword [HomeTeam-2]	; 1BC52
 sar edx, 10h	; 1BC58
 mov eax, edx	; 1BC5B
 shl eax, 2	; 1BC5D
@@ -134,7 +134,7 @@ push str_fe3	; 1BD22
 call FatalError	; 1BD27
 add esp, byte 4	; 1BD2C
 .8:
-mov edx, dword [HomeTeam]	; 1BD2F
+mov edx, dword [VisTeam-2]	; 1BD2F
 sar edx, 10h	; 1BD35
 mov eax, edx	; 1BD38
 shl eax, 2	; 1BD3A
@@ -1164,7 +1164,7 @@ jge short .7	; 1C9D4
 mov eax, dword [byte esi+050h]	; 1C9D6
 jmp short .8	; 1C9D9
 .7:
-mov eax, dword [hmtmap]	; 1C9DB
+mov eax, dword [hmtmgoalie-2]	; 1C9DB
 sar eax, 10h	; 1C9E0
 shl eax, 5	; 1C9E3
 mov eax, dword [byte esi+eax+010h]	; 1C9E6
@@ -1296,7 +1296,7 @@ jge short .15	; 1CB5E
 mov eax, dword [byte esi+050h]	; 1CB60
 jmp short .16	; 1CB63
 .15:
-mov eax, dword [awtmap]	; 1CB65
+mov eax, dword [awtmgoalie-2]	; 1CB65
 sar eax, 10h	; 1CB6A
 shl eax, 5	; 1CB6D
 mov eax, dword [byte esi+eax+010h]	; 1CB70

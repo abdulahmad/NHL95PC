@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_47C31 progbits alloc exec nowrite align=1
-extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, loadpals
+extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, loadpals, VisTeam, bgscrollx, scrollx
 extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, inputframes, escrequest
 extern rinkscrollx, rinkscrolly, loadscreenon, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
 extern dword_CC0F0, dword_CC9AD, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
@@ -94,11 +94,11 @@ push edi	; 47CE4
 sub esp, byte 10h	; 47CE5
 mov eax, 0Ah	; 47CE8
 call PlayCrowdSample	; 47CED
-mov eax, dword [cont2team]	; 47CF2
+mov eax, dword [HomeTeam-2]	; 47CF2
 sar eax, 10h	; 47CF7
 movsx dx, byte [dword eax+byte_CC9B0]	; 47CFA
 mov dword [byte esp+08h], edx	; 47D02
-mov edi, dword [dword eax+dword_CC9AD]	; 47D06
+mov edi, dword [dword eax+byte_CC9B0-3]	; 47D06
 sar edi, 18h	; 47D0C
 mov di, word [nosplit edi*2+word_CC9CC]	; 47D0F
 cmp dx, byte 1	; 47D17
@@ -119,10 +119,10 @@ mov dword [curperiod], 0FFFFFFFFh	; 47D50
 mov word [word_C90B4], bx	; 47D5A
 xor ecx, ecx	; 47D61
 mov word [word_C90B2], cx	; 47D63
-mov edx, dword [cont2team]	; 47D6A
+mov edx, dword [HomeTeam-2]	; 47D6A
 sar edx, 10h	; 47D70
 shl edx, 10h	; 47D73
-mov eax, dword [HomeTeam]	; 47D76
+mov eax, dword [VisTeam-2]	; 47D76
 sar eax, 10h	; 47D7B
 add eax, edx	; 47D7E
 add dword [StanleyCupTimer], eax	; 47D80
@@ -312,7 +312,7 @@ mov word [camy], si	; 48068
 mov word [yc1], si	; 4806F
 mov dword [dword_D8C7C], 20h	; 48076
 mov dword [dword_D8C74], 0ECh	; 48080
-mov eax, dword [dword_CBECA]	; 4808A
+mov eax, dword [word_CBECC-2]	; 4808A
 sar eax, 10h	; 4808F
 cmp eax, byte 0FFFFFFFFh	; 48092
 je short .17	; 48095
@@ -351,39 +351,39 @@ call sub_6B008	; 48107
 mov edx, dword [dword_D8C74]	; 4810C
 mov eax, dword [dword_D8C7C]	; 48112
 call SetRinkScroll	; 48117
-mov edx, dword [rinkhtiles]	; 4811C
+mov edx, dword [bgscrolly-2]	; 4811C
 sar edx, 10h	; 48122
 shl edx, 3	; 48125
-mov eax, dword [rinkwtiles]	; 48128
+mov eax, dword [scrolly-2]	; 48128
 sar eax, 10h	; 4812D
 add edx, eax	; 48130
 lea ecx, [dword edx+0A8h]	; 48132
-mov eax, dword [bgscrolly]	; 48138
+mov eax, dword [bgscrollx-2]	; 48138
 sar eax, 10h	; 4813D
 shl eax, 3	; 48140
-mov ebx, dword [scrolly]	; 48143
+mov ebx, dword [scrollx-2]	; 48143
 sar ebx, 10h	; 48149
 add eax, ebx	; 4814C
 lea ebx, [dword eax+0140h]	; 4814E
 call sub_6AF52	; 48154
 xor ebp, ebp	; 48159
 mov dword [spritedrawcount], ebp	; 4815B
-mov edx, dword [dword_D8C72]	; 48161
+mov edx, dword [dword_D8C74-2]	; 48161
 sar edx, 10h	; 48167
-mov eax, dword [dword_D8C7A]	; 4816A
+mov eax, dword [dword_D8C7C-2]	; 4816A
 sar eax, 10h	; 4816F
 call DrawRinkOverlays	; 48172
-mov edx, dword [rinkhtiles]	; 48177
+mov edx, dword [bgscrolly-2]	; 48177
 sar edx, 10h	; 4817D
 shl edx, 3	; 48180
-mov eax, dword [rinkwtiles]	; 48183
+mov eax, dword [scrolly-2]	; 48183
 sar eax, 10h	; 48188
 add edx, eax	; 4818B
 neg edx	; 4818D
-mov ebx, dword [bgscrolly]	; 4818F
+mov ebx, dword [bgscrollx-2]	; 4818F
 sar ebx, 10h	; 48195
 shl ebx, 3	; 48198
-mov eax, dword [scrolly]	; 4819B
+mov eax, dword [scrollx-2]	; 4819B
 sar eax, 10h	; 481A0
 add eax, ebx	; 481A3
 neg eax	; 481A5
@@ -400,7 +400,7 @@ mov edx, unk_DF314	; 481D4
 call FadePalette	; 481D9
 xor ebx, ebx	; 481DE
 mov word [word_CBEC4], bx	; 481E0
-mov eax, dword [dword_E9A9E]	; 481E7
+mov eax, dword [joysampling_save-2]	; 481E7
 sar eax, 10h	; 481EC
 mov dword [joysampling], eax	; 481EF
 .3:
@@ -430,7 +430,7 @@ jmp near ThreeStarsLoop_tick	; 48249
 PreGameIntro_end:
 xor esi, esi	; 4824E
 mov dword [joysampling], esi	; 48250
-mov eax, dword [dword_CBECA]	; 48256
+mov eax, dword [word_CBECC-2]	; 48256
 sar eax, 10h	; 4825B
 cmp eax, byte 0FFFFFFFFh	; 4825E
 je short .1	; 48261
@@ -549,11 +549,11 @@ jge short .1	; 483DB
 xor ebx, ebx	; 483DD
 mov dword [seqtimer], ebx	; 483DF
 .1:
-mov eax, dword [camx_m2]	; 483E5
+mov eax, dword [camx-2]	; 483E5
 sar eax, 10h	; 483EA
 add eax, byte 20h	; 483ED
 mov dword [dword_D8C7C], eax	; 483F0
-mov eax, dword [camx]	; 483F5
+mov eax, dword [camy-2]	; 483F5
 sar eax, 10h	; 483FA
 mov edx, 140h	; 483FD
 sub edx, eax	; 48402

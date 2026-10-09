@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_32DA9 progbits alloc exec nowrite align=1
-extern __CHK, str_Palette2, str_Temp4, str_GameSav4, curleague, gameopts
+extern __CHK, str_Palette2, str_Temp4, str_GameSav4, curleague, gameopts, VisTeam
 extern musicon, byte_DE268, ctlavailmask, lgstate
 extern gamemode, teamstatscb, skaterstatscb, goaliestatscb
 extern standingscb, standingsmenucb, songdata, rinktilebm, rinkbm, currink, cont2team, HomeTeam
@@ -48,9 +48,9 @@ cmp dword [esi], byte 0	; 32E11
 jge short .2	; 32E14
 xor eax, eax	; 32E16
 call InitGameSummary	; 32E18
-mov edx, dword [HomeTeam]	; 32E1D
+mov edx, dword [VisTeam-2]	; 32E1D
 sar edx, 10h	; 32E23
-mov eax, dword [cont2team]	; 32E26
+mov eax, dword [HomeTeam-2]	; 32E26
 sar eax, 10h	; 32E2B
 call PreGameScreen	; 32E2E
 mov edx, eax	; 32E33

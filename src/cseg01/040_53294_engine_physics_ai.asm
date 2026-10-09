@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_53294 progbits alloc exec nowrite align=1
-extern Acheck, AddPenalty, AddPenalty2, AvgCline, GetHot, Ylist_m2, PBnum
+extern Acheck, AddPenalty, AddPenalty2, AvgCline, GetHot, Ylist_m2, PBnum, PerTimeTotal, byte_E03C1, cont2team, word_C90B4
 extern SetSPA, Stop4Pen, __CHK, a2touchpuck, assexit, assinsert, assreplace
 extern pad1dev, hmshotcnt, awshotcnt, sflags, gmode2, PenBuf, iflags
 extern OOlist, collflag, dirtab, doplayeracc, gameopts, wcradiusy, sflags3
@@ -827,7 +827,7 @@ jge near .44	; 53BA2
 mov eax, dword [byte ecx+SCnum-2]	; 53BA8
 sar eax, 10h	; 53BAB
 mov dword [penshotplayer], eax	; 53BAE
-mov eax, dword [sflags3]	; 53BB3
+mov eax, dword [c1playernum-2]	; 53BB3
 sar eax, 10h	; 53BB8
 mov edi, dword [penshotplayer]	; 53BBB
 cmp eax, edi	; 53BC1
@@ -947,7 +947,7 @@ sub bx, word [byte edx+Xpos+2]	; 53D0B
 cmp word [byte edx+SCnum], byte 0Ch	; 53D0F
 jne short .2	; 53D14
 movsx esi, cx	; 53D16
-mov eax, dword [wcradiusx]	; 53D19
+mov eax, dword [wcradiusy-2]	; 53D19
 sar eax, 10h	; 53D1E
 add eax, esi	; 53D21
 cmp eax, byte 0FFFFFFDEh	; 53D23
@@ -955,7 +955,7 @@ jl near .x	; 53D26
 jmp short .3	; 53D2C
 .2:
 movsx esi, cx	; 53D2E
-mov eax, dword [wcradiusx]	; 53D31
+mov eax, dword [wcradiusy-2]	; 53D31
 sar eax, 10h	; 53D36
 sub esi, eax	; 53D39
 cmp esi, byte 22h	; 53D3B
@@ -969,7 +969,7 @@ jmp short .5	; 53D4E
 .4:
 movsx eax, bx	; 53D50
 .5:
-mov esi, dword [camy]	; 53D53
+mov esi, dword [wcradiusx-2]	; 53D53
 sar esi, 10h	; 53D59
 sub eax, esi	; 53D5C
 cmp eax, byte 40h	; 53D5E
@@ -2479,9 +2479,9 @@ mov eax, ebp	; 54F63
 call passtoa0	; 54F65
 jmp near .14	; 54F6A
 .13:
-mov edi, dword [passdir]	; 54F6F
+mov edi, dword [word_C90A6-2]	; 54F6F
 sar edi, 10h	; 54F75
-mov esi, dword [passspeed]	; 54F78
+mov esi, dword [passdir-2]	; 54F78
 sar esi, 10h	; 54F7E
 mov esi, dword [nosplit esi*4+dirtab]	; 54F81
 sar esi, 10h	; 54F88
@@ -2498,7 +2498,7 @@ mov edx, dword [esp]	; 54FA5
 add dx, word [byte ecx+Yvel]	; 54FA8
 mov eax, dword [puckvy]	; 54FAC
 mov word [eax], dx	; 54FB1
-mov esi, dword [passspeed]	; 54FB4
+mov esi, dword [passdir-2]	; 54FB4
 sar esi, 10h	; 54FBA
 mov esi, dword [nosplit esi*4+clockticks]	; 54FBD
 sar esi, 10h	; 54FC4
@@ -2551,7 +2551,7 @@ cmp ax, dx	; 55065
 jne short .16	; 55068
 cmp dx, word [byte ebp+06Ah]	; 5506A
 je near .22	; 5506E
-mov edx, dword [sflags3]	; 55074
+mov edx, dword [c1playernum-2]	; 55074
 sar edx, 10h	; 5507A
 mov eax, dword [byte ebp+068h]	; 5507D
 sar eax, 10h	; 55080
@@ -2562,7 +2562,7 @@ jmp near .22	; 5508E
 mov ax, word [byte ebp+06Ah]	; 55093
 cmp ax, word [c2playernum]	; 55097
 je near .22	; 5509E
-mov edx, dword [c1playernum]	; 550A4
+mov edx, dword [c2playernum-2]	; 550A4
 sar edx, 10h	; 550AA
 mov eax, dword [byte ebp+068h]	; 550AD
 sar eax, 10h	; 550B0
@@ -3559,7 +3559,7 @@ and dl, 0EFh	; 55D48
 mov byte [gmode2], dl	; 55D4B
 test byte [gmode], 1	; 55D51
 jne near checkob_ret5	; 55D58
-mov eax, dword [wcradiusy]	; 55D5E
+mov eax, dword [lastplayer-2]	; 55D5E
 sar eax, 10h	; 55D63
 shl eax, 7	; 55D66
 add eax, SortCords	; 55D69
@@ -3716,9 +3716,9 @@ mov byte [ebx+eax], 6	; 55F8E
 mov ecx, 0FFFFFFFFh	; 55F92
 .4:
 mov word [word_CBEC6], 1	; 55F97
-mov eax, dword [dword_E9AB6]	; 55FA0
+mov eax, dword [PerTimeTotal-2]	; 55FA0
 sar eax, 10h	; 55FA5
-mov ebx, dword [gsp]	; 55FA8
+mov ebx, dword [gameclock-2]	; 55FA8
 sar ebx, 10h	; 55FAE
 sub eax, ebx	; 55FB1
 mov ebx, eax	; 55FB3
@@ -4595,7 +4595,7 @@ jge short .7	; 56B0B
 mov eax, dword [byte ebx+SCnum-2]	; 56B0D
 sar eax, 10h	; 56B10
 mov dword [penshotplayer], eax	; 56B13
-mov eax, dword [sflags3]	; 56B18
+mov eax, dword [c1playernum-2]	; 56B18
 sar eax, 10h	; 56B1D
 mov ebx, dword [penshotplayer]	; 56B20
 cmp eax, ebx	; 56B26
@@ -4704,7 +4704,7 @@ jge near .10	; 56C6D
 mov eax, dword [byte ebx+SCnum-2]	; 56C73
 sar eax, 10h	; 56C76
 mov dword [penshotplayer], eax	; 56C79
-mov eax, dword [sflags3]	; 56C7E
+mov eax, dword [c1playernum-2]	; 56C7E
 sar eax, 10h	; 56C83
 mov ebx, dword [penshotplayer]	; 56C86
 cmp eax, ebx	; 56C8C
@@ -5113,7 +5113,7 @@ setl al	; 571AF
 and eax, 0FFh	; 571B2
 xor eax, edx	; 571B7
 je near .12	; 571B9
-mov eax, dword [wcradiusy]	; 571BF
+mov eax, dword [lastplayer-2]	; 571BF
 sar eax, 10h	; 571C4
 shl eax, 7	; 571C7
 cmp word [dword eax+SortCords+6], byte 0	; 571CA
@@ -5128,7 +5128,7 @@ sar eax, 10h	; 571E7
 .6:
 cmp eax, byte 58h	; 571EA
 jle near .12	; 571ED
-mov eax, dword [wcradiusy]	; 571F3
+mov eax, dword [lastplayer-2]	; 571F3
 sar eax, 10h	; 571F8
 shl eax, 7	; 571FB
 cmp word [dword eax+SortCords+6], byte 0	; 571FE
@@ -5374,7 +5374,7 @@ setl al	; 574F4
 and eax, 0FFh	; 574F7
 xor eax, ebx	; 574FC
 je near .8	; 574FE
-mov edi, dword [wcradiusy]	; 57504
+mov edi, dword [lastplayer-2]	; 57504
 sar edi, 10h	; 5750A
 shl edi, 7	; 5750D
 cmp word [dword edi+SortCords+6], byte 0	; 57510
@@ -5389,7 +5389,7 @@ sar eax, 10h	; 5752D
 .2:
 cmp eax, byte 58h	; 57530
 jle near .8	; 57533
-mov eax, dword [wcradiusy]	; 57539
+mov eax, dword [lastplayer-2]	; 57539
 sar eax, 10h	; 5753E
 shl eax, 7	; 57541
 cmp word [dword eax+SortCords+6], byte 0	; 57544
@@ -5995,7 +5995,7 @@ cmp di, 0E2Bh	; 57C7C
 jne short .3	; 57C81
 .2:
 mov word [byte esp+0Ch], 0AAh	; 57C83
-mov eax, dword [passdir]	; 57C8A
+mov eax, dword [word_C90A6-2]	; 57C8A
 sar eax, 10h	; 57C8F
 mov edx, eax	; 57C92
 sar edx, 2	; 57C94
@@ -6058,12 +6058,12 @@ call imul32	; 57D15
 add esp, byte 8	; 57D1A
 sar eax, 0Ch	; 57D1D
 movsx edx, ax	; 57D20
-mov eax, dword [passdir]	; 57D23
+mov eax, dword [word_C90A6-2]	; 57D23
 sar eax, 10h	; 57D28
 add edx, byte 14h	; 57D2B
 imul eax, edx	; 57D2E
 mov word [word_C90A6], ax	; 57D31
-mov eax, dword [passdir]	; 57D37
+mov eax, dword [word_C90A6-2]	; 57D37
 sar eax, 10h	; 57D3C
 imul eax, dword 5249h	; 57D3F
 shr eax, 10h	; 57D45
@@ -6092,7 +6092,7 @@ test byte [byte esi+pflags], 80h	; 57D9E
 jne short .15	; 57DA2
 mov edx, 0FFFFFF18h	; 57DA4
 .15:
-mov edi, dword [passspeed]	; 57DA9
+mov edi, dword [passdir-2]	; 57DA9
 sar edi, 10h	; 57DAF
 mov ebx, dword [puckx]	; 57DB2
 mov ax, word [nosplit edi*4+shotsets]	; 57DB8
@@ -6206,7 +6206,7 @@ movsx eax, dx	; 57EF8
 call randomd0	; 57EFB
 add edi, eax	; 57F00
 .27:
-mov edx, dword [passdir]	; 57F02
+mov edx, dword [word_C90A6-2]	; 57F02
 sar edx, 10h	; 57F08
 mov eax, edx	; 57F0B
 shl eax, 4	; 57F0D
@@ -6223,7 +6223,7 @@ idiv ebp	; 57F29
 mov ebx, eax	; 57F2B
 mov eax, dword [puckvx]	; 57F2D
 mov word [eax], bx	; 57F32
-mov edx, dword [passdir]	; 57F35
+mov edx, dword [word_C90A6-2]	; 57F35
 sar edx, 10h	; 57F3B
 mov eax, edx	; 57F3E
 shl eax, 4	; 57F40
@@ -6307,7 +6307,7 @@ mov word [eax], dx	; 58011
 .37:
 test di, di	; 58014
 je short .39	; 58017
-mov ebp, dword [passdir]	; 58019
+mov ebp, dword [word_C90A6-2]	; 58019
 sar ebp, 10h	; 5801F
 mov eax, ebp	; 58022
 shl eax, 4	; 58024
@@ -6742,9 +6742,9 @@ mov edx, dword [esi]	; 585FF
 sub edx, dword [byte esi+OldXpos]	; 58601
 sar edx, 8	; 58604
 mov dword [regd3], edx	; 58607
-mov ecx, dword [dword_E03B6]	; 5860D
+mov ecx, dword [word_E03B8-2]	; 5860D
 sar ecx, 10h	; 58613
-mov edx, dword [dword_E03AE]	; 58616
+mov edx, dword [regd3-2]	; 58616
 sar edx, 10h	; 5861C
 imul edx, ecx	; 5861F
 mov ecx, dword [regd1-2]	; 58622
@@ -6983,7 +6983,7 @@ sub esi, eax	; 58968
 mov word [regd3], si	; 5896A
 mov ecx, dword [regd0-2]	; 58971
 sar ecx, 10h	; 58977
-mov edx, dword [dword_E03AE]	; 5897A
+mov edx, dword [regd3-2]	; 5897A
 sar edx, 10h	; 58980
 imul ecx, edx	; 58983
 mov edx, dword [regd1-2]	; 58986
@@ -6996,7 +6996,7 @@ sar ecx, 8	; 5899C
 mov word [byte ebx+Xvel], cx	; 5899F
 mov eax, dword [regd1-2]	; 589A3
 sar eax, 10h	; 589A8
-mov edx, dword [dword_E03AE]	; 589AB
+mov edx, dword [regd3-2]	; 589AB
 sar edx, 10h	; 589B1
 imul edx, eax	; 589B4
 mov eax, dword [regd0-2]	; 589B7
@@ -7056,7 +7056,7 @@ mov word [regd2], 0FC18h	; 58A6C
 .17:
 mov ecx, dword [regd0-2]	; 58A75
 sar ecx, 10h	; 58A7B
-mov eax, dword [dword_E03AE]	; 58A7E
+mov eax, dword [regd3-2]	; 58A7E
 sar eax, 10h	; 58A83
 imul ecx, eax	; 58A86
 mov edx, dword [regd1-2]	; 58A89
@@ -7070,7 +7070,7 @@ sar eax, 8	; 58AA1
 mov word [byte ebx+Xvel], ax	; 58AA4
 mov ecx, dword [regd1-2]	; 58AA8
 sar ecx, 10h	; 58AAE
-mov eax, dword [dword_E03AE]	; 58AB1
+mov eax, dword [regd3-2]	; 58AB1
 sar eax, 10h	; 58AB6
 imul ecx, eax	; 58AB9
 mov edx, dword [regd0-2]	; 58ABC
@@ -7415,7 +7415,7 @@ xor eax, edx	; 58EFE
 test al, 40h	; 58F00
 je near .11	; 58F02
 .5:
-mov eax, dword [regd1-2]	; 58F08
+mov eax, dword [byte_E03C1-3]	; 58F08
 sar eax, 18h	; 58F0D
 mov word [regd4], ax	; 58F10
 cmp ax, 5	; 58F16
@@ -7501,7 +7501,7 @@ sar edx, 1Fh	; 5903E
 idiv ebp	; 59041
 mov dword [regd0], eax	; 59043
 mov dword [regd1], eax	; 59048
-mov edx, dword [dword_E03B6]	; 5904D
+mov edx, dword [word_E03B8-2]	; 5904D
 sar edx, 10h	; 59053
 imul edx, ebx	; 59056
 imul eax, edi	; 59059
@@ -7512,7 +7512,7 @@ mov dx, word [byte ecx+Xvel]	; 59064
 mov eax, dword [esp]	; 59068
 add edx, eax	; 5906B
 mov word [byte esi+Xvel], dx	; 5906D
-mov eax, dword [dword_E03B6]	; 59071
+mov eax, dword [word_E03B8-2]	; 59071
 sar eax, 10h	; 59076
 imul eax, edi	; 59079
 mov edx, dword [regd0]	; 5907C
@@ -7714,12 +7714,12 @@ call setpersonel	; 59303
 jmp short .3	; 59308
 .2:
 movsx edx, cx	; 5930A
-mov ebx, dword [c2playernum]	; 5930D
+mov ebx, dword [cont1team-2]	; 5930D
 sar ebx, 10h	; 59313
 inc edx	; 59316
 cmp ebx, edx	; 59317
 je short .3	; 59319
-mov ebx, dword [cont1team]	; 5931B
+mov ebx, dword [cont2team-2]	; 5931B
 sar ebx, 10h	; 59321
 cmp ebx, edx	; 59324
 je short .3	; 59326
@@ -7773,16 +7773,16 @@ sar ebx, 10h	; 593A4
 shl ebx, 2	; 593A7
 mov edx, dword [dword ebx+edx*4+off_CD498]	; 593AA
 mov byte [edx], 1	; 593B1
-mov edx, dword [c2playernum]	; 593B4
+mov edx, dword [cont1team-2]	; 593B4
 sar edx, 10h	; 593BA
 inc edi	; 593BD
 cmp edx, edi	; 593BE
 je short .2	; 593C0
-mov edx, dword [cont1team]	; 593C2
+mov edx, dword [cont2team-2]	; 593C2
 sar edx, 10h	; 593C8
 cmp edx, edi	; 593CB
 je short .2	; 593CD
-mov ebx, dword [word_C90B2]	; 593CF
+mov ebx, dword [word_C90B4-2]	; 593CF
 sar ebx, 10h	; 593D5
 mov edx, esi	; 593D8
 call CPgoalie	; 593DA
@@ -7810,7 +7810,7 @@ and ebx, 0FFh	; 59413
 shl ebx, 8	; 59419
 mov ecx, hmtmstruct	; 5941C
 add ecx, ebx	; 59421
-mov ebx, dword [word_C90B2]	; 59423
+mov ebx, dword [word_C90B4-2]	; 59423
 sar ebx, 10h	; 59429
 cmp word [gsp], byte 2	; 5942C
 je short .2	; 59434
@@ -7824,7 +7824,7 @@ ret	; 5943C
 .2:
 cmp word [gameclock], byte 3Ch	; 5943D
 jg short ChkPullGoalieLate.1	; 59445
-mov esi, dword [c2playernum]	; 59447
+mov esi, dword [cont1team-2]	; 59447
 sar esi, 10h	; 5944D
 inc eax	; 59450
 cmp esi, eax	; 59451

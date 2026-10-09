@@ -929,10 +929,10 @@ call strcpy_	; 3273E
 lea eax, [byte ebx+031h]	; 32743
 mov edx, leaguedbfmt2	; 32746
 call strcpy_	; 3274B
-mov eax, dword [cont2team]	; 32750
+mov eax, dword [HomeTeam-2]	; 32750
 sar eax, 10h	; 32755
 mov dword [byte ebx+051h], eax	; 32758
-mov eax, dword [HomeTeam]	; 3275B
+mov eax, dword [VisTeam-2]	; 3275B
 sar eax, 10h	; 32760
 mov dword [byte ebx+055h], eax	; 32763
 mov eax, dword [gameopts]	; 32766
@@ -1157,7 +1157,7 @@ call sub_8F96E	; 32A84
 call SetSideControls	; 32A89
 cmp dword [gamemode], byte 0	; 32A8E
 jne near MainDeskLoop_x	; 32A95
-mov edx, dword [cont2team]	; 32A9B
+mov edx, dword [HomeTeam-2]	; 32A9B
 sar edx, 10h	; 32AA1
 mov edx, dword [nosplit edx*4+teamabbrevs]	; 32AA4
 cmp byte [byte edx+02h], 0	; 32AAB
@@ -1172,7 +1172,7 @@ mov eax, str_LAAtMTL+7	; 32AC7
 call strncpy_	; 32ACC
 mov byte [str_LAAtMTL+9], 20h	; 32AD1
 .27:
-mov edx, dword [HomeTeam]	; 32AD8
+mov edx, dword [VisTeam-2]	; 32AD8
 sar edx, 10h	; 32ADE
 mov edx, dword [nosplit edx*4+teamabbrevs]	; 32AE1
 cmp byte [byte edx+02h], 0	; 32AE8
@@ -1232,10 +1232,10 @@ mov edx, leaguedbfmt2	; 32B93
 call strcpy_	; 32B98
 mov eax, dword [gamemode]	; 32B9D
 mov dword [byte ebp+00h], eax	; 32BA2
-mov eax, dword [cont2team]	; 32BA5
+mov eax, dword [HomeTeam-2]	; 32BA5
 sar eax, 10h	; 32BAA
 mov dword [byte ebp+051h], eax	; 32BAD
-mov eax, dword [HomeTeam]	; 32BB0
+mov eax, dword [VisTeam-2]	; 32BB0
 sar eax, 10h	; 32BB5
 mov dword [byte ebp+055h], eax	; 32BB8
 mov eax, dword [gameopts]	; 32BBB

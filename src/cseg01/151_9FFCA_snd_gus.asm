@@ -611,7 +611,7 @@ add edx, eax	; A06BD
 mov dword [byte ebp-08h], edx	; A06BF
 mov edx, dword [byte ebp-06h]	; A06C2
 sar edx, 10h	; A06C5
-mov eax, dword [dword_F58D0]	; A06C8
+mov eax, dword [word_F58D2-2]	; A06C8
 sar eax, 10h	; A06CD
 test edx, eax	; A06D0
 je short loc_A06EB	; A06D2
@@ -1709,7 +1709,7 @@ add edx, eax	; A12C6
 mov dword [byte ebp-034h], edx	; A12C8
 mov edx, dword [byte ebp-016h]	; A12CB
 sar edx, 10h	; A12CE
-mov eax, dword [word_F58D4]	; A12D1
+mov eax, dword [word_F58D6-2]	; A12D1
 sar eax, 10h	; A12D6
 and edx, eax	; A12D9
 mov eax, dword [byte ebp-030h]	; A12DB

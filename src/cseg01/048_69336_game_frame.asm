@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_69336 progbits alloc exec nowrite align=1
-extern DoGameFrame, ResetBench, __CHK, assreplace, sflags, gmode2, musicon
+extern DoGameFrame, ResetBench, __CHK, assreplace, sflags, gmode2, musicon, bgscrollx, scrollx
 extern iflags, byte_E9AC1, joysampling, inputframes, escrequest, demomode, gameopts, hudclockmin
 extern hudclocksec, hudclockhund, rinkscrollx, rinkscrolly, dword_C90B0, sflags3, cont2team, HomeTeam
 extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, spritedrawcount, dword_D8C72, dword_D8C74
@@ -116,7 +116,7 @@ mov eax, dword [byte esp+04h]	; 69486
 mov word [VisTeam], ax	; 6948A
 mov eax, 2	; 69490
 call LoadGameTeams	; 69495
-mov eax, dword [dword_CBECA]	; 6949A
+mov eax, dword [word_CBECC-2]	; 6949A
 sar eax, 10h	; 6949F
 cmp eax, byte 0FFFFFFFFh	; 694A2
 je short .3	; 694A5
@@ -125,9 +125,9 @@ push ebx	; 694AD
 call jctime	; 694AE
 add esp, byte 4	; 694B3
 .3:
-mov edx, dword [HomeTeam]	; 694B6
+mov edx, dword [VisTeam-2]	; 694B6
 sar edx, 10h	; 694BC
-mov eax, dword [cont2team]	; 694BF
+mov eax, dword [HomeTeam-2]	; 694BF
 sar eax, 10h	; 694C4
 mov ebx, unk_DF314	; 694C7
 call sub_673C5	; 694CC
@@ -146,7 +146,7 @@ call randomd0	; 69511
 add eax, 3Ch	; 69516
 mov word [gameclock], ax	; 6951B
 mov word [clockticks], cx	; 69521
-mov ebx, dword [gsp]	; 69528
+mov ebx, dword [gameclock-2]	; 69528
 sar ebx, 10h	; 6952E
 mov ecx, 3Ch	; 69531
 mov eax, ebx	; 69536
@@ -195,14 +195,14 @@ jl short .4	; 695E2
 mov eax, 0Ch	; 695E4
 jmp short .5	; 695E9
 .4:
-mov eax, dword [cont2team]	; 695EB
+mov eax, dword [HomeTeam-2]	; 695EB
 sar eax, 10h	; 695F0
 .5:
 call LoadRink	; 695F3
 mov ebx, dword [curperiod]	; 695F8
-mov edx, dword [HomeTeam]	; 695FE
+mov edx, dword [VisTeam-2]	; 695FE
 sar edx, 10h	; 69604
-mov eax, dword [cont2team]	; 69607
+mov eax, dword [HomeTeam-2]	; 69607
 sar eax, 10h	; 6960C
 xor ecx, ecx	; 6960F
 call DrawHudPanel	; 69611
@@ -443,11 +443,11 @@ idiv ebx	; 69A20
 mov edi, edx	; 69A22
 mov eax, esi	; 69A24
 call RunGameFrames	; 69A26
-mov eax, dword [camx_m2]	; 69A2B
+mov eax, dword [camx-2]	; 69A2B
 sar eax, 10h	; 69A30
 add eax, byte 20h	; 69A33
 mov dword [dword_D8C7C], eax	; 69A36
-mov eax, dword [camx]	; 69A3B
+mov eax, dword [camy-2]	; 69A3B
 sar eax, 10h	; 69A40
 mov edx, 140h	; 69A43
 sub edx, eax	; 69A48
@@ -482,39 +482,39 @@ call sub_6B008	; 69AA2
 mov edx, dword [dword_D8C74]	; 69AA7
 mov eax, dword [dword_D8C7C]	; 69AAD
 call SetRinkScroll	; 69AB2
-mov eax, dword [rinkhtiles]	; 69AB7
+mov eax, dword [bgscrolly-2]	; 69AB7
 sar eax, 10h	; 69ABC
 shl eax, 3	; 69ABF
-mov edx, dword [rinkwtiles]	; 69AC2
+mov edx, dword [scrolly-2]	; 69AC2
 sar edx, 10h	; 69AC8
 add edx, eax	; 69ACB
 lea ecx, [dword edx+0A8h]	; 69ACD
-mov ebx, dword [bgscrolly]	; 69AD3
+mov ebx, dword [bgscrollx-2]	; 69AD3
 sar ebx, 10h	; 69AD9
 shl ebx, 3	; 69ADC
-mov eax, dword [scrolly]	; 69ADF
+mov eax, dword [scrollx-2]	; 69ADF
 sar eax, 10h	; 69AE4
 add eax, ebx	; 69AE7
 lea ebx, [dword eax+0140h]	; 69AE9
 call sub_6AF52	; 69AEF
 xor ebx, ebx	; 69AF4
 mov dword [spritedrawcount], ebx	; 69AF6
-mov edx, dword [dword_D8C72]	; 69AFC
+mov edx, dword [dword_D8C74-2]	; 69AFC
 sar edx, 10h	; 69B02
-mov eax, dword [dword_D8C7A]	; 69B05
+mov eax, dword [dword_D8C7C-2]	; 69B05
 sar eax, 10h	; 69B0A
 call DrawRinkOverlays	; 69B0D
-mov edx, dword [rinkhtiles]	; 69B12
+mov edx, dword [bgscrolly-2]	; 69B12
 sar edx, 10h	; 69B18
 shl edx, 3	; 69B1B
-mov eax, dword [rinkwtiles]	; 69B1E
+mov eax, dword [scrolly-2]	; 69B1E
 sar eax, 10h	; 69B23
 add edx, eax	; 69B26
 neg edx	; 69B28
-mov eax, dword [bgscrolly]	; 69B2A
+mov eax, dword [bgscrollx-2]	; 69B2A
 sar eax, 10h	; 69B2F
 shl eax, 3	; 69B32
-mov ebx, dword [scrolly]	; 69B35
+mov ebx, dword [scrollx-2]	; 69B35
 sar ebx, 10h	; 69B3B
 add eax, ebx	; 69B3E
 neg eax	; 69B40
@@ -535,7 +535,7 @@ mov ebx, 10h	; 69B7D
 mov edx, unk_DF014	; 69B82
 mov eax, 1	; 69B87
 call FadePalette	; 69B8C
-mov eax, dword [dword_E9A9E]	; 69B91
+mov eax, dword [joysampling_save-2]	; 69B91
 sar eax, 10h	; 69B96
 mov dword [joysampling], eax	; 69B99
 .22:
@@ -554,9 +554,9 @@ idiv ebx	; 69BC7
 mov dword [dword_D8C78], edx	; 69BC9
 cmp word [exitgame], byte 0	; 69BCF
 je short .23	; 69BD7
-mov eax, dword [gsp]	; 69BD9
+mov eax, dword [gameclock-2]	; 69BD9
 sar eax, 10h	; 69BDE
-mov edx, dword [gameclock]	; 69BE1
+mov edx, dword [clockticks-2]	; 69BE1
 sar edx, 10h	; 69BE7
 or eax, edx	; 69BEA
 jne short .23	; 69BEC
@@ -605,7 +605,7 @@ mov eax, dword [crowdlevel-2]	; 69C8E
 sar eax, 10h	; 69C93
 mov dword [crowdsmooth], eax	; 69C96
 .24:
-mov eax, dword [dword_E9A9E]	; 69C9B
+mov eax, dword [joysampling_save-2]	; 69C9B
 sar eax, 10h	; 69CA0
 mov dword [joysampling], eax	; 69CA3
 .25:
@@ -626,7 +626,7 @@ je near StartHL2.17	; 69CD9
 .26:
 xor edx, edx	; 69CDF
 mov dword [joysampling], edx	; 69CE1
-mov eax, dword [dword_CBECA]	; 69CE7
+mov eax, dword [word_CBECC-2]	; 69CE7
 sar eax, 10h	; 69CEC
 cmp eax, byte 0FFFFFFFFh	; 69CEF
 je short .27	; 69CF2
@@ -788,9 +788,9 @@ mov byte [eax], 0FFh	; 69F5C
 mov word [word_CBEC0], 0FFFFh	; 69F5F
 mov word [camx], di	; 69F68
 mov word [camy], di	; 69F6F
-mov edx, dword [HomeTeam]	; 69F76
+mov edx, dword [VisTeam-2]	; 69F76
 sar edx, 10h	; 69F7C
-mov eax, dword [cont2team]	; 69F7F
+mov eax, dword [HomeTeam-2]	; 69F7F
 sar eax, 10h	; 69F84
 mov ebx, unk_DF314	; 69F87
 call sub_673C5	; 69F8C

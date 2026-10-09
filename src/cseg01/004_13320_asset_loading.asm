@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_13320 progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, str_Pal3, str_Palmem, str_Awardsi, str_Scrn, str_Titl, str_Iff
+extern __CHK, __STOSB, str_Pal3, str_Palmem, str_Awardsi, str_Scrn, str_Titl, str_Iff, VisTeam
 extern str_Awards, str_Mtafan, str_Adafan, str_Awasong, str_Mtawards, str_Adawards, str_Summ, str_04d
 extern str_F000149, str_D50D99, str_D00D49, str_D50_D99, str_D00_D49, str_Trinknd, str_0000, str_HILIGHT
 extern str_Numshp, str_GfxIdList, str_PPV, str_VFN, assinsert, pad1dev, pad2dev, byte_CBEA8
@@ -944,9 +944,9 @@ call CrowdNoiseReset	; 13EC5
 xor edx, edx	; 13ECA
 mov dword [dword_CC0F0], edx	; 13ECC
 call ResetGameVars	; 13ED2
-mov edx, dword [HomeTeam]	; 13ED7
+mov edx, dword [VisTeam-2]	; 13ED7
 sar edx, 10h	; 13EDD
-mov eax, dword [cont2team]	; 13EE0
+mov eax, dword [HomeTeam-2]	; 13EE0
 sar eax, 10h	; 13EE5
 mov ecx, 1	; 13EE8
 mov ebx, ecx	; 13EED
