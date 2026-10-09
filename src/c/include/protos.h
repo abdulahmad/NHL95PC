@@ -118,5 +118,31 @@ int FileCreate(char *name, int *h);
 int _dos_creat(char *name, int attr, int *h);  /* Watcom CRT _dos_creat_ */
 void CenterMouse(void);
 void __cdecl MouseSetPos(int x, int y);  /* input library, stack args */
+void WriteKeyRec(int fh, void *rec, long pos);  /* 14654 */
+int FileWriteAt(int fh, void *buf, long pos, unsigned len);  /* 145F9 */
+int FileReadAt(int fh, void *buf, long pos, unsigned len);  /* 145A2: seek to pos (pos < 0: no seek), read len bytes */
+void ReadSchedGame(int fh, void *game, int n);  /* 147A0 */
+void TextGridOff(void);  /* 1777E */                      
+void SetTextColors(int color, int shadow);  /* 174C2 */   
+void SaveModeState(unsigned char *st);
+char *strcpy(char *d, const char *s);  /* Watcom CRT strcpy_ */
+int DeskSetExit1(void);  /* 179B6 */                      
+void SndLoadFile(int unused, char *name);
+void __cdecl sub_8E8B8(char *name, int bank);  /* sound library loader, stack args */
+void NudgeRinkScroll(void);  /* 7FC12 */                  
+void ClampYPosition(Player *p);  /* 4B6F4 */              
+void CrowdFadeOut(void);
+void __cdecl sub_B3989(int n);  /* timer library, stack args */
+void __cdecl sub_B3999(void);  /* timer library */        
+void PaPreloadClips(int a, int b);
+int PreloadAnnouncerClips(int a, int b);  /* 8579E: 0 = not done yet */
+void TextGridPut(int x, int y, char *s);
+void *memcpy(void *d, const void *s, unsigned n);  /* Watcom CRT memcpy_ */
+unsigned strlen(const char *s);  /* Watcom CRT strlen_ */ 
+void POSetSeriesTeams(unsigned char *s, int a, int b);  /* 87520 */
+void GoalieToPuckVec(Player *p);  /* 4B467 */             
+void TryBlockShot(Player *p);
+int CanBlockShot(Player *p);  /* 4FFEE */                 
+void BlockShotDive(Player *p, int how);  /* 53387 */      
 
 #endif

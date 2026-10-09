@@ -914,6 +914,10 @@ push dword 4	; 3270B
 call __CHK	; 32710
 mov eax, 1	; 32715
 ret	; 3271A
+; C: src/c/024_31AB5_main_desk/SaveModeState.c
+%ifdef CBUILD
+%include "c/024_31AB5_main_desk/SaveModeState.inc"
+%else
 SaveModeState:
 push dword 0Ch	; 3271B
 call __CHK	; 32720
@@ -952,6 +956,7 @@ mov dword [byte ebx+071h], eax	; 3279B
 pop edx	; 3279E
 pop ebx	; 3279F
 ret	; 327A0
+%endif ; C
 LoadModeState:
 push dword 1Ch	; 327A1
 call __CHK	; 327A6

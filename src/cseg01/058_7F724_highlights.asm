@@ -420,12 +420,17 @@ pop edx	; 7FC0E
 pop ecx	; 7FC0F
 pop ebx	; 7FC10
 ret	; 7FC11
+; C: src/c/058_7F724_highlights/NudgeRinkScroll.c
+%ifdef CBUILD
+%include "c/058_7F724_highlights/NudgeRinkScroll.inc"
+%else
 NudgeRinkScroll:
 push dword 4	; 7FC12
 call __CHK	; 7FC17
 add dword [rinkscrollx], 3E8h	; 7FC1C
 add dword [rinkscrolly], 3E8h	; 7FC26
 ret	; 7FC30
+%endif ; C
 CmpInt:
 push dword 10h	; 7FC31
 call __CHK	; 7FC36

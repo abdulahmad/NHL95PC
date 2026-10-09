@@ -140,6 +140,10 @@ pop edx	; 179B2
 pop ecx	; 179B3
 pop ebx	; 179B4
 ret	; 179B5
+; C: src/c/008_17816_output_files/DeskSetExit1.c
+%ifdef CBUILD
+%include "c/008_17816_output_files/DeskSetExit1.inc"
+%else
 DeskSetExit1:
 push dword 8	; 179B6
 call __CHK	; 179BB
@@ -149,6 +153,7 @@ mov dword [deskexit], edx	; 179C6
 mov eax, edx	; 179CC
 pop edx	; 179CE
 ret	; 179CF
+%endif ; C
 DeskSetExit2:
 push dword 4	; 179D0
 call __CHK	; 179D5

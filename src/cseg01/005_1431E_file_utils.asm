@@ -328,6 +328,10 @@ ReadKeyRec_x:
 call FileReadAt	; 1464D
 pop ecx	; 14652
 ret	; 14653
+; C: src/c/005_1431E_file_utils/WriteKeyRec.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/WriteKeyRec.inc"
+%else
 WriteKeyRec:
 push dword 8	; 14654
 call __CHK	; 14659
@@ -336,6 +340,7 @@ mov ecx, 34h	; 1465F
 call FileWriteAt	; 14664
 pop ecx	; 14669
 ret	; 1466A
+%endif ; C
 CopyFile:
 push dword 460h	; 1466B
 call __CHK	; 14670
@@ -418,6 +423,10 @@ call __CHK	; 14790
 push ecx	; 14795
 mov ecx, 2Fh	; 14796
 jmp near ReadKeyRec_x	; 1479B
+; C: src/c/005_1431E_file_utils/ReadSchedGame.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/ReadSchedGame.inc"
+%else
 ReadSchedGame:
 push dword 0Ch	; 147A0
 call __CHK	; 147A5
@@ -435,6 +444,7 @@ call FileReadAt	; 147C1
 pop esi	; 147C6
 pop ecx	; 147C7
 ret	; 147C8
+%endif ; C
 ReadTeamRec:
 push dword 10h	; 147C9
 call __CHK	; 147CE

@@ -1457,12 +1457,17 @@ call sub_B392C	; 174AF
 add esp, byte 4	; 174B4
 add esp, 36Ch	; 174B7
 jmp near RunDemoGame_x	; 174BD
+; C: src/c/007_1609F_title_intro/SetTextColors.c
+%ifdef CBUILD
+%include "c/007_1609F_title_intro/SetTextColors.inc"
+%else
 SetTextColors:
 push dword 4	; 174C2
 call __CHK	; 174C7
 mov dword [textcolor], eax	; 174CC
 mov dword [textshadow], edx	; 174D1
 ret	; 174D7
+%endif ; C
 RenderTextLine:
 push dword 84h	; 174D8
 call __CHK	; 174DD
@@ -1729,6 +1734,10 @@ pop edx	; 1777B
 pop ebx	; 1777C
 ret	; 1777D
 %endif ; C
+; C: src/c/007_1609F_title_intro/TextGridOff.c
+%ifdef CBUILD
+%include "c/007_1609F_title_intro/TextGridOff.inc"
+%else
 TextGridOff:
 push dword 8	; 1777E
 call __CHK	; 17783
@@ -1737,6 +1746,7 @@ xor edx, edx	; 17789
 mov dword [textgridon], edx	; 1778B
 pop edx	; 17791
 ret	; 17792
+%endif ; C
 TextGridPut:
 push dword 0Ch	; 17793
 call __CHK	; 17798

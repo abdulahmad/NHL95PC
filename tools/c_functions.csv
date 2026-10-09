@@ -3,13 +3,22 @@ GetMemListHead,10010,26,001_10010_main_startup,src/c/001_10010_main_startup/GetM
 ReplayIsEmpty,12034,41,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/ReplayIsEmpty.c,matched,
 FileClose,1457C,38,005_1431E_file_utils,src/c/005_1431E_file_utils/FileClose.c,matched,
 FileCreate,14566,22,005_1431E_file_utils,src/c/005_1431E_file_utils/FileCreate.c,matched,
+ReadSchedGame,147A0,41,005_1431E_file_utils,src/c/005_1431E_file_utils/ReadSchedGame.c,matched,
+WriteKeyRec,14654,23,005_1431E_file_utils,src/c/005_1431E_file_utils/WriteKeyRec.c,matched,
+SetTextColors,174C2,22,007_1609F_title_intro,src/c/007_1609F_title_intro/SetTextColors.c,matched,
 TextGridFree,17756,40,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGridFree.c,matched,
+TextGridOff,1777E,21,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGridOff.c,matched,
+TextGridPut,17793,131,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGridPut.c,nonmatching,original keeps y in esi from entry and builds y*36 as ((y<<3)+y)<<2 in edx; this draft uses eax as the temp. 10-min cap
+DeskSetExit1,179B6,26,008_17816_output_files,src/c/008_17816_output_files/DeskSetExit1.c,matched,
 DeskToSportsDesk,1A5B1,35,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskToSportsDesk.c,matched,
 StrLenToDot,1D5D5,59,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/StrLenToDot.c,nonmatching,size differs (34 vs 59): the original block probably runs past the ret (db 90h pad and more); check the label end before retrying
+SaveModeState,3271B,134,024_31AB5_main_desk,src/c/024_31AB5_main_desk/SaveModeState.c,matched,
 CalReturn,3476B,30,027_33FFD_calendar,src/c/027_33FFD_calendar/CalReturn.c,matched,
 DateKey,41C79,34,034_41B80_schedule,src/c/034_41B80_schedule/DateKey.c,nonmatching,"original keeps day in edx and builds the month in ebx (lea ebx,[eax+0Ch] / mov ebx,eax); this draft moves day to ebx. 10-min cap"
 RandMod,45282,36,035_45282_options_settings,src/c/035_45282_options_settings/RandMod.c,matched,
 SimAddPair,452A6,31,035_45282_options_settings,src/c/035_45282_options_settings/SimAddPair.c,nonmatching,original keeps pairs in edx and the count in esi; this draft swaps them (with or without a count local). 10-min cap
+ClampYPosition,4B6F4,128,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/ClampYPosition.c,matched,
+GoalieToPuckVec,4B467,130,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/GoalieToPuckVec.c,matched,
 NextPathPoint,4F99B,84,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/NextPathPoint.c,matched,
 SetLCmode,4D9FC,59,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/SetLCmode.c,matched,
 StartFaceoffLineChange,4DA37,68,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StartFaceoffLineChange.c,matched,
@@ -30,11 +39,15 @@ assbenchwait,526ED,51,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_ass
 Findhittype,579FF,63,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/Findhittype.c,matched,
 Sweepcheck,532A2,27,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/Sweepcheck.c,matched,
 ToFixed,53294,14,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ToFixed.c,matched,
+TryBlockShot,534BB,124,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/TryBlockShot.c,nonmatching,"registers only: original p in ecx, n in ebx, gmode2 temp in edx; this draft p in ebx, n in edx. 10-min cap"
 setpassmode,551AF,32,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/setpassmode.c,matched,
+CrowdFadeOut,597E3,128,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/CrowdFadeOut.c,matched,
 CrowdNoiseReset,59863,33,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/CrowdNoiseReset.c,matched,
 PaOpenBank,59D54,29,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaOpenBank.c,matched,
 PaPlayerNumber,59B0F,45,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPlayerNumber.c,matched,
+PaPreloadClips,59D71,41,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPreloadClips.c,matched,
 PaSpeechBusy,59AAD,35,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaSpeechBusy.c,matched,
+SndLoadFile,59493,25,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/SndLoadFile.c,nonmatching,C body is right but the asm block ends at sndcb_addesp8_x (a label other functions jump into); needs a multi-block file or an endlabel mark
 WaitDigiSample,599EE,35,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/WaitDigiSample.c,matched,
 AvgCline,5A03B,104,042_59D9A_engine_core,src/c/042_59D9A_engine_core/AvgCline.c,matched,
 ClearSortCords,5BA4E,59,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ClearSortCords.c,matched,
@@ -82,9 +95,11 @@ CarTeamRecPtr,6CB6B,37,051_6C2F9_database_save,src/c/051_6C2F9_database_save/Car
 KeyDbPtr,6CBB7,21,051_6C2F9_database_save,src/c/051_6C2F9_database_save/KeyDbPtr.c,matched,
 TeamRecPtr,6CB90,39,051_6C2F9_database_save,src/c/051_6C2F9_database_save/TeamRecPtr.c,matched,
 RatingToFloat,6F6AD,39,052_6D2F8_create_player,src/c/052_6D2F8_create_player/RatingToFloat.c,matched,
+NudgeRinkScroll,7FC12,31,058_7F724_highlights,src/c/058_7F724_highlights/NudgeRinkScroll.c,matched,
 MusicChanCmd3,8378C,28,061_83459_speech,src/c/061_83459_speech/MusicChanCmd3.c,matched,
 SpeechIsInit,836CA,26,061_83459_speech,src/c/061_83459_speech/SpeechIsInit.c,matched,
 Swap16,837D9,34,061_83459_speech,src/c/061_83459_speech/Swap16.c,matched,
+POSetSeriesTeams,87520,131,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSetSeriesTeams.c,nonmatching,original keeps s in eax and ORs the flags into ecx; this draft moves s to ecx. 10-min cap
 randomd0,8C230,96,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:16bit-pop insn:16bit-push
 vgacopy_bg,8C290,223,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
 vgacopy_rect,8C36F,122,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push

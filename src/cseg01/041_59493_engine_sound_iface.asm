@@ -289,6 +289,10 @@ pop esi	; 597DF
 pop edx	; 597E0
 pop ebx	; 597E1
 ret	; 597E2
+; C: src/c/041_59493_engine_sound_iface/CrowdFadeOut.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/CrowdFadeOut.inc"
+%else
 CrowdFadeOut:
 push dword 1Ch	; 597E3
 call __CHK	; 597E8
@@ -331,6 +335,7 @@ pop edx	; 5985F
 pop ecx	; 59860
 pop ebx	; 59861
 ret	; 59862
+%endif ; C
 ; C: src/c/041_59493_engine_sound_iface/CrowdNoiseReset.c
 %ifdef CBUILD
 %include "c/041_59493_engine_sound_iface/CrowdNoiseReset.inc"
@@ -767,6 +772,10 @@ je short PaOpenBank.1	; 59D6E
 .x:
 ret	; 59D70
 %endif ; C
+; C: src/c/041_59493_engine_sound_iface/PaPreloadClips.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PaPreloadClips.inc"
+%else
 PaPreloadClips:
 push dword 0Ch	; 59D71
 call __CHK	; 59D76
@@ -786,3 +795,4 @@ je short PaPreloadClips.1	; 59D95
 pop ecx	; 59D97
 pop ebx	; 59D98
 ret	; 59D99
+%endif ; C

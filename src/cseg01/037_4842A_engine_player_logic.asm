@@ -3851,6 +3851,10 @@ pop edx	; 4B463
 pop ecx	; 4B464
 pop ebx	; 4B465
 ret	; 4B466
+; C: src/c/037_4842A_engine_player_logic/GoalieToPuckVec.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/GoalieToPuckVec.inc"
+%else
 GoalieToPuckVec:
 push dword 14h	; 4B467
 call __CHK	; 4B46C
@@ -3896,6 +3900,7 @@ pop edx	; 4B4E5
 pop ecx	; 4B4E6
 pop ebx	; 4B4E7
 ret	; 4B4E8
+%endif ; C
 AdjustFacingDirection:
 push dword 14h	; 4B4E9
 call __CHK	; 4B4EE
@@ -4099,6 +4104,10 @@ pop edx	; 4B6F0
 pop ecx	; 4B6F1
 pop ebx	; 4B6F2
 ret	; 4B6F3
+; C: src/c/037_4842A_engine_player_logic/ClampYPosition.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/ClampYPosition.inc"
+%else
 ClampYPosition:
 push dword 0Ch	; 4B6F4
 call __CHK	; 4B6F9
@@ -4138,6 +4147,7 @@ sub word [regd1], ax	; 4B76A
 pop edx	; 4B771
 pop ecx	; 4B772
 ret	; 4B773
+%endif ; C
 assgoalie:
 push dword 24h	; 4B774
 call __CHK	; 4B779
