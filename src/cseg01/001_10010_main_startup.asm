@@ -19,7 +19,7 @@ extern pointerspr, savedmousex, savedmousey, dword_E9A9E, memlist1, memlist0, ex
 extern int386_, mousepollfn, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
 extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, MainDeskLoop
 extern LoadModeState, LoadNhlCfg, ShowLoadingScreen, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
-extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, JoystickCalScreen, ClearInputQueue, InputInstall
+extern CrowdNoiseReset, StopDigiSample, ClockTick, ShowGoalieBanner, sub_6A9CE, JoystickCalScreen, ClearInputQueue, InputInstall
 extern InputRemove, FadePalStep, InstantReplay, SpeechStopQueue, MusicChanReset, InitFileLocations, sub_8CCA8, sub_8D2F0
 extern sub_8DF54, sub_8E080, sub_8E4C0, sub_8E5AC, sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0
@@ -1599,7 +1599,7 @@ jmp near .19	; 11233
 .6:
 xor eax, eax	; 11238
 .7:
-call sub_671E8	; 1123A
+call ShowGoalieBanner	; 1123A
 jmp near .19	; 1123F
 .8:
 mov eax, 1	; 11244

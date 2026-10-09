@@ -10,7 +10,7 @@ extern textline3, textline4, textline5, PenBuf, iflags, byte_E9AC1, byte_E9AC8
 extern byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, check4bench, check4check, checkob
 extern chk4lc, chk4shot, dirtab, chk4pass, doplayeracc, doshot, joysampling, inputframes
 extern gameopts, sounddev, deferpending, dword_C585C, dword_C5860, yleader, sflags3, HomeTeam
-extern dword_CBEBE, dword_CBECA, dword_CC0EC, shotongoal, penshotplayer, penshotteam, penshotmode, penshotstart
+extern dword_CBEBE, bannertimer, dword_CC0EC, shotongoal, penshotplayer, penshotteam, penshotmode, penshotstart
 extern penshotlive, psendcount, sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir
 extern dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, frameaccum
 extern curperiod, dword_DB086, dword_DB088, hmtmstruct, dword_DF642, dword_DF648, dword_DF652
@@ -23,7 +23,7 @@ extern playeracc, puckshadow, puckvz, qsort_, randomd0, sfx, skateto, skatetopuc
 extern sprintf_, vecdist, FadePalette, IsCupClinched, ThreeStarsLoop, joyq_flush, getlchoice, PenShotAssign
 extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
 extern PaSpeechBusy, PaGoal, PaPlayerNumber, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
-extern EvadePC, sub_61576, FormatPlayerName, PostGoalEvent, sub_62807, sub_62C37, sub_64102, EndPenaltyShot
+extern EvadePC, SetBoxDoorObject, FormatPlayerName, PostGoalEvent, ChkScorerMilestone, QueueGoalieNote, ShotLaneOpen, EndPenaltyShot
 extern RemoveFromLines, LoadTeamPPV, CloseTextOverlay, MusicChanReset, sub_8F633, sub_8FFB0, imul32, threat
 extern unk_C1B3E, unk_DACA0, hmteamrec, unk_DC240, savepal, SortCords, updateanim
 extern vtoa, regd4, camx, camy, lastplayer, passdir, word_C90A6, xc1
@@ -31,7 +31,7 @@ extern yc1, fox, foy, fodir1, fodir2, c1playernum, c2playernum, VisTeam
 extern Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, gsp, gameclock, clockticks
 extern dirtab_y, word_CBC44, exitgame, gameover, energywarn, lcblink
 extern lcblinktime, lcsel, lcline, lctimer, lcboxon, ovltimer, fadeinpending
-extern word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, word_CC9EA, word_CC9EC, word_CCA18
+extern word_CBEC6, bannermsg, word_CBECC, word_CBECE, crowdlevel, word_CC9EA, word_CC9EC, word_CCA18
 extern word_CCA1A, word_CCA1C, word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E
 extern word_CCA70, word_CCA9C, word_DC242, word_DC248, word_DC24E, hmscore, hmtmap, word_DF65A
 extern awscore, awtmap, puckcross, word_DF816, word_DF81A
@@ -1050,7 +1050,7 @@ mov word [word_CBC44], bx	; 48F77
 mov word [RefPen], bx	; 48F7E
 mov word [refsignal], bx	; 48F85
 mov word [Penaltytimer], bx	; 48F8C
-mov word [dword_CBECA], bx	; 48F93
+mov word [bannertimer], bx	; 48F93
 mov word [word_CBEC6], bx	; 48F9A
 mov word [lcboxon+2], bx	; 48FA1
 mov word [lcboxon], bx	; 48FA8
@@ -1070,7 +1070,7 @@ call jctime	; 48FED
 add esp, byte 4	; 48FF2
 .1:
 mov edx, 0FFFFFFFFh	; 48FF5
-mov word [word_CBEC8], dx	; 48FFA
+mov word [bannermsg], dx	; 48FFA
 mov word [word_CBECE], dx	; 49001
 mov word [word_CBECC], dx	; 49008
 xor dl, dl	; 4900F
@@ -1845,7 +1845,7 @@ call assexit	; 49AA0
 test byte [byte ebx+pflags], 40h	; 49AA5
 setne al	; 49AA9
 and eax, 0FFh	; 49AAC
-call sub_61576	; 49AB1
+call SetBoxDoorObject	; 49AB1
 pop esi	; 49AB6
 pop edx	; 49AB7
 pop ecx	; 49AB8
@@ -4679,7 +4679,7 @@ movsx eax, cx	; 4BEC1
 .61:
 cmp eax, byte 74h	; 4BEC4
 jge short .62	; 4BEC7
-call sub_64102	; 4BEC9
+call ShotLaneOpen	; 4BEC9
 test eax, eax	; 4BECE
 je short .62	; 4BED0
 mov word [regd4], 14h	; 4BED2
@@ -8654,7 +8654,7 @@ call SetSPA	; 4F025
 mov si, word [RefPen]	; 4F02A
 cmp si, byte 4	; 4F031
 jne short .17	; 4F035
-call sub_62C37	; 4F037
+call QueueGoalieNote	; 4F037
 test ax, ax	; 4F03C
 jne near .20	; 4F03F
 mov eax, dword [word_C90D8-2]	; 4F045
@@ -8683,7 +8683,7 @@ je short .18	; 4F0A2
 mov word [exitgame], 1	; 4F0A4
 jmp near .64	; 4F0AD
 .18:
-call sub_62807	; 4F0B2
+call ChkScorerMilestone	; 4F0B2
 jmp short .20	; 4F0B7
 .19:
 call CrowdOnStoppage	; 4F0B9

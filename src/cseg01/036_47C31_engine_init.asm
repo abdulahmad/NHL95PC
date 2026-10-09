@@ -4,7 +4,7 @@ bits 32
 section s_47C31 progbits alloc exec nowrite align=1
 extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, loadpals, VisTeam, bgscrollx, scrollx
 extern textline1, textline2, textline3, textline4, textline5, joysampling, inputframes, escrequest
-extern rinkscrollx, rinkscrolly, loadscreenon, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
+extern rinkscrollx, rinkscrolly, loadscreenon, cont2team, HomeTeam, dword_CBC3E, bannertimer, dword_CC0EC
 extern introskipped, dword_CC9AD, spritedrawcount, frameaccum, dword_D8C72, viewscrolly, dword_D8C7A, viewscrollx
 extern curperiod, rinkwtiles, rinkhtiles, bgscrolly, palcyclelock, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, randomd0

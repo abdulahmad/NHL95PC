@@ -5,7 +5,7 @@ section s_69336 progbits alloc exec nowrite align=1
 extern DoGameFrame, ResetBench, __CHK, assreplace, sflags, gmode2, musicon, bgscrollx, scrollx
 extern iflags, byte_E9AC1, joysampling, inputframes, escrequest, demomode, gameopts, hudclockmin
 extern hudclocksec, hudclockhund, rinkscrollx, rinkscrolly, yleader, sflags3, cont2team, HomeTeam
-extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, spritedrawcount, dword_D8C72, viewscrolly
+extern bannertimer, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, spritedrawcount, dword_D8C72, viewscrolly
 extern dword_D8C78, dword_D8C7A, viewscrollx, curperiod, dword_DC28C, rinkwtiles, rinkhtiles, bgscrolly
 extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
@@ -19,7 +19,7 @@ extern SortCords, vtoa, camx, camy, passplayer, xc1, yc1
 extern c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, refsignal, RefStep, RefPen
 extern word_C90D8, gsp, gameclock, clockticks, word_CBC44, exitgame, gameover, energywarn
 extern lcblink, lcline, lcboxon, ovltimer
-extern fadeinpending, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, scrolly, hmscore
+extern fadeinpending, word_CBEC6, bannermsg, word_CBECC, word_CBECE, crowdlevel, scrolly, hmscore
 extern hmtmline, word_DF644, hmtmap, hmtmgoalie, awscore, awtmline, word_DF744, word_DF746
 extern awtmap, awtmgoalie, word_DF816, word_DF81A
 extern word_E0022, word_E0028, word_E002A
@@ -251,12 +251,12 @@ mov ecx, esi	; 696C0
 mov word [word_C90D8], si	; 696C2
 mov word [ovltimer], si	; 696C9
 mov word [word_CBC44], di	; 696D0
-mov word [word_CBEC8], si	; 696D7
+mov word [bannermsg], si	; 696D7
 mov word [word_CBECE], si	; 696DE
 mov ebx, esi	; 696E5
 mov word [word_CBECC], si	; 696E7
 xor ecx, esi	; 696EE
-mov word [dword_CBECA], cx	; 696F0
+mov word [bannertimer], cx	; 696F0
 xor esi, esi	; 696F7
 mov word [word_CBEC6], si	; 696F9
 mov word [crowdlevel], si	; 69700
@@ -636,7 +636,7 @@ call jctime	; 69CFB
 add esp, byte 4	; 69D00
 .27:
 mov edi, 0FFFFFFFFh	; 69D03
-mov word [word_CBEC8], di	; 69D08
+mov word [bannermsg], di	; 69D08
 mov word [word_CBECE], di	; 69D0F
 mov word [word_CBECC], di	; 69D16
 xor ecx, ecx	; 69D1D

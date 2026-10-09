@@ -4,7 +4,7 @@ bits 32
 section s_CD34C progbits alloc noexec write align=1
 extern str_pen, unk_C1B49, unk_C1BE3, unk_C1BEC, unk_C1BF5, unk_C1BFE, unk_C1C05, unk_C1C0D
 extern unk_C1C16, unk_C1C1F, unk_C1C27, unk_C1C2F, unk_C1C38, unk_C1C41, unk_C1C47, unk_C1C50
-extern unk_C1D64, unk_C1D72, unk_C1D7E, unk_C1D87, unk_C1D93, unk_C1D9B, unk_C1DA1, unk_C1DA9
+extern str_BnReturnGoalie, str_BnPullGoalie, str_BnFaceOff, str_BnTwoLinePass, str_BnOffside, str_BnIcing, str_BnPenalty, str_BnPenaltyShot
 extern unk_C1DDC, unk_C1DE3, unk_C1DEB, unk_C1DF3, unk_C1DFB, unk_C1E04, unk_C1E0C, unk_C1E14
 extern unk_C1E1C, unk_C1E24, unk_C1E2A, unk_C1E31, unk_C1E38, unk_C1E3E, unk_C1E44, unk_C1E4C
 extern unk_C1E52, unk_C1E58, unk_C1E5E, unk_C1E63, unk_C1E69, unk_C1E6F, unk_C1E75, unk_C1E7B
@@ -29,7 +29,7 @@ extern unk_C2311, unk_C231A, unk_C2323, unk_C232B, unk_C2332, unk_C2338, unk_C23
 extern unk_C2340, unk_C2343, unk_C2345, unk_C2348, unk_CDC47, unk_CDC60, unk_CDC79, unk_CDC97
 extern unk_CDCB0, unk_CDCC9
 global byte_CD418, byte_CD421, byte_CD473, gsumqcount, defercount, dword_CD41E, dword_CD4B0, dbg_spalist
-global dword_CD9A0, off_CD354, off_CD498, off_CD4A0, off_CD4DC, off_CD4FA, dbg_spanames, dbg_assnames
+global dword_CD9A0, off_CD354, off_CD498, off_CD4A0, bannerstrs, off_CD4FA, dbg_spanames, dbg_assnames
 global dbg_posnames, word_CD39C, word_CD4FC, replaytick, replaysfx
 gsumqcount:
 db 00h,00h,00h,00h
@@ -90,16 +90,16 @@ dword_CD4B0:
 db 0Dh,0ACh,00h,00h,0CDh,05Ch,00h,00h,0A5h,050h,00h,00h,0AAh,050h,00h,00h
 db 023h,03Ch,00h,00h,07Bh,04Fh,00h,00h,084h,06Dh,00h,00h,0D1h,037h,01h,00h
 db 0D5h,0D0h,01h,00h,075h,0C4h,00h,00h,0C5h,0C7h,01h,00h
-off_CD4DC:
-dd unk_C1D64
-dd unk_C1D72
-dd unk_C1D7E
-dd unk_C1D87
-dd unk_C1D93
-dd unk_C1D9B
-dd unk_C1DA1
+bannerstrs:
+dd str_BnReturnGoalie
+dd str_BnPullGoalie
+dd str_BnFaceOff
+dd str_BnTwoLinePass
+dd str_BnOffside
+dd str_BnIcing
+dd str_BnPenalty
 off_CD4FA equ $+2
-dd unk_C1DA9
+dd str_BnPenaltyShot
 word_CD4FC:
 db 0FFh,0FFh
 replaytick:

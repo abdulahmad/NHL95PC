@@ -9,7 +9,7 @@ extern awroster, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byt
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
 extern byte_E0074, PlList, byte_E038A, PenBuf, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
 extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, rinkscrollx, rinkscrolly
-extern yleader, sflags3, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
+extern yleader, sflags3, cont2team, dword_CBC3E, bannertimer, dword_CC0B4, lastsfx, onetimerflag
 extern shotongoal, penshotplayer, penshotteam, penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer
 extern shotontarget, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, mousex
 extern mousey, cliprect_y0, cliprect_y1, dword_D30BC, dword_D30C0, curperiod, dword_DB088, hmtmstruct
@@ -22,15 +22,15 @@ extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
 extern replaystart, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
 extern passspeed, randomd0, sfx, vecdist, IntermissionPC, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
 extern DrawPanelScore, DrawPanelLine, IsCupClinched, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
-extern PlayCrowdSample, PaOneMinuteLeft, sub_61576, DecayCrowdLevel, sub_61862, PenaltyManager, UpdatePowerPlayFlags, ClearPenaltyBuffer
-extern sub_63D69, EndPenaltyShot, DrawTextOverlay, sub_66FE2, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
+extern PlayCrowdSample, PaOneMinuteLeft, SetBoxDoorObject, DecayCrowdLevel, DrawRinkObjects, PenaltyManager, UpdatePowerPlayFlags, ClearPenaltyBuffer
+extern PenGoalStuff, EndPenaltyShot, DrawTextOverlay, DrawCallBanner, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, awlinetab, unk_DAC40, unk_DAC70, unk_DACA0
 extern unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240, unk_DC252, SortCords
 extern unk_E9D50, unk_E9EE0, updatereplay, vtoa, regd4, camx
 extern camy, lastplayer, xc1, yc1, fox, foy, fodir1, fodir2
 extern c1playernum, c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks
 extern word_CBC44, exitgame, gameover, PerTimeTab, energywarn, lcblink
-extern lcline, lcboxon, ovltimer, fadeinpending, word_CBEC6, word_CBEC8
+extern lcline, lcboxon, ovltimer, fadeinpending, word_CBEC6, bannermsg
 extern word_CBECC, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CCCA8, hmscore, hmtmline
 extern hmtmlcnt, hmtmgoalie, word_DF656, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
 extern awtmgoalie, word_DF756, word_DF80E, puckcross
@@ -1306,7 +1306,7 @@ mov word [crowdlevel], 320h	; 5AD25
 .16:
 mov eax, dword [byte esp+02h]	; 5AD2E
 sar eax, 10h	; 5AD32
-call sub_61576	; 5AD35
+call SetBoxDoorObject	; 5AD35
 cmp word [byte esp+04h], byte 0	; 5AD3A
 jne short .20	; 5AD40
 test byte [gameopts+1], 1	; 5AD42
@@ -1477,7 +1477,7 @@ jl short Goal.37	; 5AF5E
 .41:
 mov eax, dword [byte esp+02h]	; 5AF60
 sar eax, 10h	; 5AF64
-call sub_63D69	; 5AF67
+call PenGoalStuff	; 5AF67
 jmp short .43	; 5AF6C
 .42:
 xor ecx, ecx	; 5AF6E
@@ -2914,9 +2914,9 @@ mov word [c2playernum], 8	; 5C0A7
 .5:
 mov byte [byte_E9AD3], 0FFh	; 5C0B0
 mov ebx, 0FFFFFFFFh	; 5C0B7
-mov word [word_CBEC8], bx	; 5C0BC
+mov word [bannermsg], bx	; 5C0BC
 xor ecx, ecx	; 5C0C3
-mov word [dword_CBECA], cx	; 5C0C5
+mov word [bannertimer], cx	; 5C0C5
 mov word [ovltimer], bx	; 5C0CC
 xor edx, edx	; 5C0D3
 mov dword [penshotmode], edx	; 5C0D5
@@ -3976,7 +3976,7 @@ dec edi	; 5CF03
 test di, di	; 5CF04
 jge short DrawRinkOverlays.6	; 5CF07
 .8:
-call sub_61862	; 5CF09
+call DrawRinkObjects	; 5CF09
 mov eax, dword [camy-2]	; 5CF0E
 sar eax, 10h	; 5CF13
 cmp eax, 0FFFFFF50h	; 5CF16
@@ -4619,22 +4619,22 @@ cmp word [ovltimer], byte 0	; 5D684
 jl short .68	; 5D68C
 call DrawTextOverlay	; 5D68E
 .68:
-mov eax, dword [word_CBEC8-2]	; 5D693
+mov eax, dword [bannermsg-2]	; 5D693
 sar eax, 10h	; 5D698
 cmp eax, byte 0FFFFFFFFh	; 5D69B
 je short .69	; 5D69E
-call sub_66FE2	; 5D6A0
-mov cx, word [dword_CBECA]	; 5D6A5
+call DrawCallBanner	; 5D6A0
+mov cx, word [bannertimer]	; 5D6A5
 test cx, cx	; 5D6AC
 jle short .69	; 5D6AF
 mov esi, ecx	; 5D6B1
 dec esi	; 5D6B3
-mov word [dword_CBECA], si	; 5D6B4
+mov word [bannertimer], si	; 5D6B4
 test si, si	; 5D6BB
 jg short .69	; 5D6BE
 xor eax, eax	; 5D6C0
-mov word [dword_CBECA], ax	; 5D6C2
-mov word [word_CBEC8], 0FFFFh	; 5D6C8
+mov word [bannertimer], ax	; 5D6C2
+mov word [bannermsg], 0FFFFh	; 5D6C8
 .69:
 cmp byte [pad1dev], 1	; 5D6D1
 je short .70	; 5D6D8
@@ -4864,7 +4864,7 @@ add ecx, eax	; 5D9FC
 cmp word [regd1], byte 0	; 5D9FE
 setl al	; 5DA06
 and eax, 0FFh	; 5DA09
-call sub_61576	; 5DA0E
+call SetBoxDoorObject	; 5DA0E
 cmp word [regd0], byte 8	; 5DA13
 jne near .17	; 5DA1B
 mov byte [byte_CCCA0], 1	; 5DA21

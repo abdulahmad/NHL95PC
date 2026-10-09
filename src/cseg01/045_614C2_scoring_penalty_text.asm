@@ -11,7 +11,7 @@ extern hmroster, hmrosterjersey, hmtmflags, byte_DF6E8, awtmflags, byte_DF7E8, b
 extern byte_E024D, textline1, textline2, textline3, textline4, textline5, byte_E9A15, PenBuf
 extern PenBuf_pl, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD, byte_E9ACE
 extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, joysampling, gamemode, gameopts
-extern deferpending, yleader, sflags3, HomeTeam, dword_C9120, dword_CBEBE, dword_CBECA, dword_CC0AC
+extern deferpending, yleader, sflags3, HomeTeam, dword_C9120, dword_CBEBE, bannertimer, dword_CC0AC
 extern lastsfx, shotongoal, penshotplayer, penshotpnum, penshotteam, penshotfox, penshotfoy, penshotmode
 extern penshotstart, penshottimer, shotontarget, penshotlive, dword_CD2F8, gsumqcount, defercount, scor2font
 extern curperiod, dword_DB086, dword_DB088, s1font, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
@@ -27,7 +27,7 @@ extern LoadTeamPPV, CloseTextOverlay, sub_66E06, sub_8EA18, FatalError, unk_C1B4
 extern str_B5, str_B6, str_B7, str_B8, str_S8, unk_C5423, unk_C542E, hmteamrec
 extern SortCords, unk_E9B4C, word_C5428, fox, foy, c1playernum, c2playernum
 extern cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, word_C90D8
-extern gsp, gameclock, clockticks, word_CBC44, ovltimer, word_CBEC6, word_CBEC8, word_CBECC
+extern gsp, gameclock, clockticks, word_CBC44, ovltimer, word_CBEC6, bannermsg, word_CBECC
 extern word_CC0B0, crowdlevel, word_CCEF8, word_CD39C, word_DEE94, hmscore, word_DF644, hmtmap
 extern hmtmgoalie, awscore, awtmap, word_DFF42, regd2, regd3, regd1
 extern joysampling_save, CwdExciteLvl, periodendtime, word_E9AAE, PerTimeTotal, lty, word_E9B2C
@@ -37,13 +37,13 @@ global fileio_popebpx
 global fileio_tail_a, fileio_tail_b, fileio_tail_c
 global InProgress_popebp, InProgress_popx
 global chkprogress_x
-global sub_614C2, sub_61576, DecayCrowdLevel, sub_61862
+global SetRinkObject, SetBoxDoorObject, DecayCrowdLevel, DrawRinkObjects
 global QueueDeferredCall, RunDeferredCalls, AppendGSumRecord, FlushGSumQueue, ReadGSumHeader, ReadGSumTail, WriteGSumHeader, FormatPlayerName
-global BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCallback0C, sub_62807, sub_62C37, GameTimeStamp
+global BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCallback0C, ChkScorerMilestone, QueueGoalieNote, GameTimeStamp
 global SetPA, InProgress, chkprogress_go, checkfornewpen, releasepl, chkatop, CheckAndReleasePlayer, ProcessPenaltyList
-global ChkPowerPlayTime, updatepentime, PenaltyManager, chkprogress, UpdatePowerPlayFlags, ClearPenaltyBuffer, sub_63D69, SetupPenaltyShot
-global sub_64102, sub_6427F, CountShotOnGoal, StartPenaltyShot, EndPenaltyShot
-sub_614C2:
+global ChkPowerPlayTime, updatepentime, PenaltyManager, chkprogress, UpdatePowerPlayFlags, ClearPenaltyBuffer, PenGoalStuff, SetupPenaltyShot
+global ShotLaneOpen, QuickShotChk, CountShotOnGoal, StartPenaltyShot, EndPenaltyShot
+SetRinkObject:
 push dword 14h	; 614C2
 call __CHK	; 614C7
 push ebx	; 614CC
@@ -101,7 +101,7 @@ pop esi	; 61572
 pop ecx	; 61573
 pop ebx	; 61574
 ret	; 61575
-sub_61576:
+SetBoxDoorObject:
 push dword 8	; 61576
 call __CHK	; 6157B
 push edx	; 61580
@@ -114,7 +114,7 @@ jmp short .2	; 6158F
 mov edx, 87h	; 61591
 mov eax, 12h	; 61596
 .2:
-call sub_614C2	; 6159B
+call SetRinkObject	; 6159B
 pop edx	; 615A0
 ret	; 615A1
 DecayCrowdLevel:
@@ -234,7 +234,7 @@ jmp short DecayCrowdLevel.8	; 6170C
 movsx edx, si	; 6170E
 mov eax, dword [byte esp-02h]	; 61711
 sar eax, 10h	; 61715
-call sub_614C2	; 61718
+call SetRinkObject	; 61718
 jmp near .19	; 6171D
 .10:
 mov ah, byte [byte ebx+02h]	; 61722
@@ -348,7 +348,7 @@ pop edx	; 6185E
 pop ecx	; 6185F
 pop ebx	; 61860
 ret	; 61861
-sub_61862:
+DrawRinkObjects:
 push dword 34h	; 61862
 call __CHK	; 61867
 push ebx	; 6186C
@@ -386,7 +386,7 @@ inc edi	; 618BA
 add esi, byte 0Ch	; 618BB
 .3:
 cmp di, byte 12h	; 618BE
-jl short sub_61862.1	; 618C2
+jl short DrawRinkObjects.1	; 618C2
 mov edi, 1	; 618C4
 add esi, byte 0Ch	; 618C9
 jmp near .12	; 618CC
@@ -464,7 +464,7 @@ dec edi	; 619B3
 sub esi, byte 0Ch	; 619B4
 .12:
 test di, di	; 619B7
-jge near sub_61862.4	; 619BA
+jge near DrawRinkObjects.4	; 619BA
 mov esp, ebp	; 619C0
 pop ebp	; 619C2
 jmp near sfxslots_popx	; 619C3
@@ -1609,7 +1609,7 @@ push dword 4	; 627F8
 call __CHK	; 627FD
 xor eax, eax	; 62802
 ret 0Ch	; 62804
-sub_62807:
+ChkScorerMilestone:
 push dword 30h	; 62807
 call __CHK	; 6280C
 push ebx	; 62811
@@ -1690,7 +1690,7 @@ idiv dword [esp]	; 6290E
 test edx, edx	; 62911
 jne short .5	; 62913
 mov esi, 2	; 62915
-jmp short sub_62807.2	; 6291A
+jmp short ChkScorerMilestone.2	; 6291A
 .5:
 mov edx, ebp	; 6291C
 shl edx, 2	; 6291E
@@ -1735,7 +1735,7 @@ idiv dword [esp]	; 6298F
 test edx, edx	; 62992
 jne short .7	; 62994
 mov esi, 3	; 62996
-jmp near sub_62807.2	; 6299B
+jmp near ChkScorerMilestone.2	; 6299B
 .7:
 mov edx, ebp	; 629A0
 shl edx, 2	; 629A2
@@ -1769,7 +1769,7 @@ idiv dword [esp]	; 629F6
 test edx, edx	; 629F9
 jne short .9	; 629FB
 mov esi, 7	; 629FD
-jmp near sub_62807.2	; 62A02
+jmp near ChkScorerMilestone.2	; 62A02
 .9:
 mov edx, ebp	; 62A07
 shl edx, 2	; 62A09
@@ -1953,7 +1953,7 @@ mov word [ovltimer], 0FFFFh	; 62C26
 .17:
 add esp, byte 4	; 62C2F
 jmp near fileio_popebpx	; 62C32
-sub_62C37:
+QueueGoalieNote:
 push dword 24h	; 62C37
 call __CHK	; 62C3C
 push ebx	; 62C41
@@ -1971,7 +1971,7 @@ pop ebx	; 62C53
 ret	; 62C54
 .2:
 cmp word [word_C90D8], byte 0	; 62C55
-jl short sub_62C37.1	; 62C5D
+jl short QueueGoalieNote.1	; 62C5D
 mov eax, dword [word_C90D8-2]	; 62C5F
 sar eax, 10h	; 62C64
 shl eax, 7	; 62C67
@@ -1992,7 +1992,7 @@ shl edx, 3	; 62C90
 .3:
 mov ebx, dword [dword_CC0AC]	; 62C93
 test edx, ebx	; 62C99
-jne short sub_62C37.1	; 62C9B
+jne short QueueGoalieNote.1	; 62C9B
 mov ecx, ebx	; 62C9D
 or ecx, edx	; 62C9F
 mov dword [dword_CC0AC], ecx	; 62CA1
@@ -2078,19 +2078,19 @@ cmp dword [penshotstart], byte 0	; 62DAB
 jne short .1	; 62DB2
 movsx edx, cx	; 62DB4
 shl edx, 2	; 62DB7
-mov eax, dword [word_CBEC8-2]	; 62DBA
+mov eax, dword [bannermsg-2]	; 62DBA
 sar eax, 10h	; 62DBF
 cmp eax, dword [dword edx+word_CD39C]	; 62DC2
 jge short .1	; 62DC8
 mov ax, word [dword edx+word_CD39C]	; 62DCA
-mov word [word_CBEC8], ax	; 62DD1
-mov eax, dword [word_CBEC8-2]	; 62DD7
+mov word [bannermsg], ax	; 62DD1
+mov eax, dword [bannermsg-2]	; 62DD7
 sar eax, 10h	; 62DDC
 cmp eax, byte 0FFFFFFFFh	; 62DDF
 je short .1	; 62DE2
-cmp word [word_CBEC8], byte 6	; 62DE4
+cmp word [bannermsg], byte 6	; 62DE4
 je short .1	; 62DEC
-mov word [dword_CBECA], 50h	; 62DEE
+mov word [bannertimer], 50h	; 62DEE
 .1:
 cmp cx, byte 7	; 62DF7
 jl short .5	; 62DFB
@@ -2655,9 +2655,9 @@ mov word [word_DFF42], 1C20h	; 63514
 mov byte [RefStep+1], 0FFh	; 6351D
 xor ebx, ebx	; 63524
 mov word [refsignal], bx	; 63526
-cmp word [dword_CBECA], byte 0	; 6352D
+cmp word [bannertimer], byte 0	; 6352D
 jne short chkprogress_x	; 63535
-mov word [word_CBEC8], di	; 63537
+mov word [bannermsg], di	; 63537
 chkprogress_x:
 pop edi	; 6353E
 pop esi	; 6353F
@@ -2873,11 +2873,11 @@ call SetPA	; 63848
 jmp near .10	; 6384D
 .3:
 mov word [refsignal], 28h	; 63852
-mov eax, dword [word_CBEC8-2]	; 6385B
+mov eax, dword [bannermsg-2]	; 6385B
 sar eax, 10h	; 63860
 cmp eax, byte 0FFFFFFFFh	; 63863
 je short .4	; 63866
-mov word [dword_CBECA], 50h	; 63868
+mov word [bannertimer], 50h	; 63868
 .4:
 movsx eax, dx	; 63871
 call Stop4Pen	; 63874
@@ -3283,7 +3283,7 @@ jl short ClearPenaltyBuffer.1	; 63D64
 pop edx	; 63D66
 pop ebx	; 63D67
 ret	; 63D68
-sub_63D69:
+PenGoalStuff:
 push dword 20h	; 63D69
 call __CHK	; 63D6E
 push ebx	; 63D73
@@ -3379,12 +3379,12 @@ inc ebx	; 63E89
 .13:
 movsx edx, bx	; 63E8A
 cmp byte [nosplit edx*2+PenBuf], 0	; 63E8D
-jne near sub_63D69.5	; 63E95
+jne near PenGoalStuff.5	; 63E95
 cmp byte [PenBuf], 0	; 63E9B
 jne short .14	; 63EA2
-cmp word [word_CBEC8], byte 6	; 63EA4
+cmp word [bannermsg], byte 6	; 63EA4
 jne short .14	; 63EAC
-mov word [word_CBEC8], 0FFFFh	; 63EAE
+mov word [bannermsg], 0FFFFh	; 63EAE
 .14:
 mov dx, word [byte ebp+036h]	; 63EB7
 cmp dx, word [byte edi+036h]	; 63EBB
@@ -3402,7 +3402,7 @@ je short .17	; 63EE6
 inc ebx	; 63EE8
 .16:
 cmp bx, byte 1Ch	; 63EE9
-jl short sub_63D69.15	; 63EED
+jl short PenGoalStuff.15	; 63EED
 .17:
 movsx ecx, ax	; 63EEF
 mov eax, ecx	; 63EF2
@@ -3435,7 +3435,7 @@ mov byte [dword edx+edi+0B5h], cl	; 63F4A
 test cl, cl	; 63F51
 jl short .19	; 63F53
 inc eax	; 63F55
-jmp short sub_63D69.18	; 63F56
+jmp short PenGoalStuff.18	; 63F56
 .19:
 inc word [byte ebp+02h]	; 63F58
 or byte [hmtmflags], 1	; 63F5C
@@ -3545,7 +3545,7 @@ pop esi	; 640FE
 pop edx	; 640FF
 pop ebx	; 64100
 ret	; 64101
-sub_64102:
+ShotLaneOpen:
 push dword 2Ch	; 64102
 call __CHK	; 64107
 push ebx	; 6410C
@@ -3577,7 +3577,7 @@ sar eax, 10h	; 64146
 test byte [byte esi+pflags], 80h	; 64149
 je near .8	; 6414D
 test ebp, ebp	; 64153
-jl short sub_64102.1	; 64155
+jl short ShotLaneOpen.1	; 64155
 push eax	; 64157
 add ebp, byte 4	; 64158
 sub edi, 0E8h	; 6415B
@@ -3607,7 +3607,7 @@ sar edx, 10h	; 6419A
 mov eax, dword [byte esi+Ypos]	; 6419D
 sar eax, 10h	; 641A0
 cmp eax, ebp	; 641A3
-jg short sub_64102.1	; 641A5
+jg short ShotLaneOpen.1	; 641A5
 cmp word [byte esi+Yvel], byte 0	; 641A7
 jl short .6	; 641AC
 push edx	; 641AE
@@ -3618,17 +3618,17 @@ add esp, byte 8	; 641BA
 mov edx, dword [byte esp+04h]	; 641BD
 sub edx, dword [esp]	; 641C1
 cmp eax, edx	; 641C4
-jle near sub_64102.1	; 641C6
+jle near ShotLaneOpen.1	; 641C6
 .6:
 inc edi	; 641CC
 add esi, 80h	; 641CD
 .7:
 cmp edi, byte 6	; 641D3
-jl short sub_64102.5	; 641D6
+jl short ShotLaneOpen.5	; 641D6
 jmp near .14	; 641D8
 .8:
 test ebp, ebp	; 641DD
-jg near sub_64102.1	; 641DF
+jg near ShotLaneOpen.1	; 641DF
 push eax	; 641E5
 sub ebp, byte 4	; 641E6
 add edi, 0E8h	; 641E9
@@ -3658,7 +3658,7 @@ sar edx, 10h	; 64228
 mov eax, dword [byte esi+Ypos]	; 6422B
 sar eax, 10h	; 6422E
 cmp eax, ebp	; 64231
-jl near sub_64102.1	; 64233
+jl near ShotLaneOpen.1	; 64233
 cmp word [byte esi+Yvel], byte 0	; 64239
 jg short .12	; 6423E
 push edx	; 64240
@@ -3669,13 +3669,13 @@ add esp, byte 8	; 6424C
 mov edx, dword [byte esp+04h]	; 6424F
 sub edx, dword [esp]	; 64253
 cmp eax, edx	; 64256
-jle near sub_64102.1	; 64258
+jle near ShotLaneOpen.1	; 64258
 .12:
 inc edi	; 6425E
 add esi, 80h	; 6425F
 .13:
 cmp edi, byte 6	; 64265
-jl short sub_64102.11	; 64268
+jl short ShotLaneOpen.11	; 64268
 .14:
 mov esi, 1	; 6426A
 mov dword [shotontarget], esi	; 6426F
@@ -3683,7 +3683,7 @@ mov eax, esi	; 64275
 .15:
 add esp, byte 8	; 64277
 jmp near InProgress_popebp	; 6427A
-sub_6427F:
+QuickShotChk:
 push dword 10h	; 6427F
 call __CHK	; 64284
 push ebx	; 64289
@@ -3710,23 +3710,23 @@ ret	; 642BD
 test byte [byte edx+pflags], 80h	; 642BE
 je short .3	; 642C2
 cmp word [byte edx+Yvel], byte 0	; 642C4
-jl short sub_6427F.1	; 642C9
+jl short QuickShotChk.1	; 642C9
 mov bx, word [byte edx+facedir]	; 642CB
 cmp bx, byte 2	; 642CF
 jl short .4	; 642D3
 cmp bx, byte 6	; 642D5
 jg short .4	; 642D9
-jmp short sub_6427F.1	; 642DB
+jmp short QuickShotChk.1	; 642DB
 .3:
 cmp word [byte edx+Yvel], byte 0	; 642DD
-jg short sub_6427F.1	; 642E2
+jg short QuickShotChk.1	; 642E2
 mov si, word [byte edx+facedir]	; 642E4
 cmp si, byte 2	; 642E8
-jle short sub_6427F.1	; 642EC
+jle short QuickShotChk.1	; 642EC
 cmp si, byte 6	; 642EE
-jge short sub_6427F.1	; 642F2
+jge short QuickShotChk.1	; 642F2
 .4:
-call sub_64102	; 642F4
+call ShotLaneOpen	; 642F4
 mov eax, dword [shotontarget]	; 642F9
 mov dword [shotongoal], eax	; 642FE
 test eax, eax	; 64303
@@ -3742,10 +3742,10 @@ mov eax, dword [byte edx+Ypos]	; 64318
 sar eax, 10h	; 6431B
 .6:
 cmp eax, 0E4h	; 6431E
-jg short sub_6427F.1	; 64323
+jg short QuickShotChk.1	; 64323
 mov eax, dword [byte edx+070h]	; 64325
 cmp word [byte eax+tmgoalie], byte 0	; 64328
-jl short sub_6427F.1	; 6432D
+jl short QuickShotChk.1	; 6432D
 mov eax, 1	; 6432F
 .x:
 pop esi	; 64334
@@ -3756,7 +3756,7 @@ CountShotOnGoal:
 push dword 8	; 64338
 call __CHK	; 6433D
 push edx	; 64342
-call sub_64102	; 64343
+call ShotLaneOpen	; 64343
 mov eax, dword [shotontarget]	; 64348
 mov dword [shotongoal], eax	; 6434D
 test eax, eax	; 64352

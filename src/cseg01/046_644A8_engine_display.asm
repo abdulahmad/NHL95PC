@@ -8,7 +8,7 @@ extern hmroster, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byt
 extern textline2, textline3, textline4, textline5, byte_E03C1, byte_E9DB4, byte_E9E18
 extern byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC
 extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, fileoncd
-extern joysampling, yleader, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, lastsfx
+extern joysampling, yleader, dword_CBC3E, bannertimer, dword_CC080, dword_CC0B4, lastsfx
 extern dword_CCEF6, dword_CD41E, dword_CD4B0, cddriveptr, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1
 extern dword_D30BC, dword_D30C0, scor2font, scor3font, spritedrawcount, curperiod, dword_DEF8C, dword_DEFE0
 extern dword_DF004, hmtmstruct, puckstruct, photoptrsf, dword_E0220, dword_E0230, dword_E0244, dword_E0248
@@ -17,14 +17,14 @@ extern dword_E9A9E, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9
 extern dword_E9F54, dword_E9F56, dword_E9F5A, dword_E9F76, dword_E9F78, dword_E9F7B, dword_E9F8C, dword_E9F98
 extern dword_E9FA5, dword_E9FA8, dword_E9FAA, dword_E9FD9, dword_E9FF0, dword_ED74C, fputchar, gmode
 extern jctime, replaystart, puckz, puckc, camx_m2, off_CBED0, off_CC01D, off_CD498
-extern off_CD4A0, off_CD4DC, setpersonel, sfx, sprintf_, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
+extern off_CD4A0, bannerstrs, setpersonel, sfx, sprintf_, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
 extern MakePath, DrawSprite, CrowdNoiseUpdate, CrowdNoiseOff, sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8EA18, sub_90354, sub_90D20, sub_90EC0, sub_91964, sub_93540, sub_B30B4
 extern sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80, awlinetab, unk_DACA0, hmlinetab, SortCords
 extern unk_E9CEC, unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE
 extern unk_E9EE0, camx, camy, xc1, yc1, fox, foy, c1playernum
 extern c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks, ovltimer
-extern word_CBEC8, word_CBECC, word_CBECE, word_CC054, word_CC0B0, crowdlevel, word_CCEF8, word_CD4FC
+extern bannermsg, word_CBECC, word_CBECE, word_CC054, word_CC0B0, crowdlevel, word_CCEF8, word_CD4FC
 extern replaytick, replaysfx, scrolly, scrollx, word_DEE94, hmtmgoalie, word_E0022
 extern word_E0046, regd2, regd3, regd0, regd1, joysampling_save, word_E9AB2, word_E9AB4
 extern word_E9F12, word_E9F14, word_E9F18, word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A
@@ -35,11 +35,11 @@ global lines_addesp10_x
 global lines_popx2
 global checkwindow_popebp, checkwindow_popx
 global ReplayStep_popx
-global CanRemovePlayer, sub_644A8, sub_6455F, sub_64614, sub_64A0B, sub_64CA8
+global CanRemovePlayer, SortPlayersByPos, SortNonDefPlayers, BuildDefaultLines, sub_64A0B, sub_64CA8
 global sub_64E60, sub_652D6, sub_653BE, sub_6552E, RemoveFromLines, SetupTeamLines, NormalizeDressFlags, DitherRect
-global LoadTeamPPV, DrawTextOverlay, CloseTextOverlay, sub_66E06, sub_66FE2, sub_671E8, SetTeamGoalie, LoadTeamPalette
+global LoadTeamPPV, DrawTextOverlay, CloseTextOverlay, sub_66E06, DrawCallBanner, ShowGoalieBanner, SetTeamGoalie, LoadTeamPalette
 global ReplayRecordReset, ReplayFirstFrame, ReplayPrevFrame, ReplayStep, sub_67DCC, updatereplay
-sub_644A8:
+SortPlayersByPos:
 push dword 24h	; 644A8
 call __CHK	; 644AD
 push esi	; 644B2
@@ -80,7 +80,7 @@ mov dword [dword ebx+dword_E9C24], edx	; 6450F
 .3:
 inc eax	; 64515
 cmp eax, byte 19h	; 64516
-jl short sub_644A8.1	; 64519
+jl short SortPlayersByPos.1	; 64519
 push dword_E9C88	; 6451B
 push dword_E9C24	; 64520
 push byte 19h	; 64525
@@ -101,13 +101,13 @@ sar edx, 18h	; 6454C
 mov byte [eax+ebp], dl	; 6454F
 inc eax	; 64552
 cmp eax, byte 19h	; 64553
-jl short sub_644A8.4	; 64556
+jl short SortPlayersByPos.4	; 64556
 add esp, byte 8	; 64558
 pop ebp	; 6455B
 pop edi	; 6455C
 pop esi	; 6455D
 ret	; 6455E
-sub_6455F:
+SortNonDefPlayers:
 push dword 24h	; 6455F
 call __CHK	; 64564
 push ecx	; 64569
@@ -148,7 +148,7 @@ mov dword [dword ebx+dword_E9C24], edx	; 645C3
 .3:
 inc eax	; 645C9
 cmp eax, byte 19h	; 645CA
-jl short sub_6455F.1	; 645CD
+jl short SortNonDefPlayers.1	; 645CD
 push dword_E9C88	; 645CF
 push dword_E9C24	; 645D4
 push byte 19h	; 645D9
@@ -169,14 +169,14 @@ sar edx, 18h	; 64600
 mov byte [edi+eax], dl	; 64603
 inc eax	; 64606
 cmp eax, byte 19h	; 64607
-jl short sub_6455F.4	; 6460A
+jl short SortNonDefPlayers.4	; 6460A
 add esp, byte 4	; 6460C
 pop ebp	; 6460F
 pop edi	; 64610
 pop esi	; 64611
 pop ecx	; 64612
 ret	; 64613
-sub_64614:
+BuildDefaultLines:
 push dword 0F4h	; 64614
 call __CHK	; 64619
 push ebx	; 6461E
@@ -321,7 +321,7 @@ mov word [esp+ebx], ax	; 6481C
 inc edx	; 64820
 .6:
 cmp dx, byte 19h	; 64821
-jl near sub_64614.2	; 64825
+jl near BuildDefaultLines.2	; 64825
 movsx edi, si	; 6482B
 mov ebp, edi	; 6482E
 shl ebp, 2	; 64830
@@ -343,25 +343,25 @@ add edx, eax	; 64861
 mov ecx, 44h	; 64863
 mov ebx, dword [dword esp+0CCh]	; 64868
 mov eax, edi	; 6486F
-call sub_644A8	; 64871
+call SortPlayersByPos	; 64871
 mov edx, unk_E9EAE	; 64876
 add edx, dword [dword esp+0C8h]	; 6487B
 mov ecx, 52h	; 64882
 mov ebx, dword [dword esp+0CCh]	; 64887
 mov eax, edi	; 6488E
-call sub_644A8	; 64890
+call SortPlayersByPos	; 64890
 mov edx, unk_E9DE6	; 64895
 add edx, dword [dword esp+0C8h]	; 6489A
 mov ecx, 4Ch	; 648A1
 mov ebx, dword [dword esp+0CCh]	; 648A6
 mov eax, edi	; 648AD
-call sub_644A8	; 648AF
+call SortPlayersByPos	; 648AF
 mov edx, unk_E9CEC	; 648B4
 add edx, dword [dword esp+0C8h]	; 648B9
 mov ecx, 43h	; 648C0
 mov ebx, dword [dword esp+0CCh]	; 648C5
 mov eax, edi	; 648CC
-call sub_644A8	; 648CE
+call SortPlayersByPos	; 648CE
 mov eax, esp	; 648D3
 add ebp, eax	; 648D5
 mov edx, byte_E9DB4	; 648D7
@@ -369,35 +369,35 @@ add edx, dword [dword esp+0C8h]	; 648DC
 mov ecx, 44h	; 648E3
 mov ebx, ebp	; 648E8
 mov eax, edi	; 648EA
-call sub_644A8	; 648EC
+call SortPlayersByPos	; 648EC
 mov edx, unk_E9D1E	; 648F1
 add edx, dword [dword esp+0C8h]	; 648F6
 mov ecx, 52h	; 648FD
 mov ebx, ebp	; 64902
 mov eax, edi	; 64904
-call sub_644A8	; 64906
+call SortPlayersByPos	; 64906
 mov edx, unk_E9E7C	; 6490B
 add edx, dword [dword esp+0C8h]	; 64910
 mov ecx, 4Ch	; 64917
 mov ebx, ebp	; 6491C
 mov eax, edi	; 6491E
-call sub_644A8	; 64920
+call SortPlayersByPos	; 64920
 mov edx, unk_E9D82	; 64925
 add edx, dword [dword esp+0C8h]	; 6492A
 mov ecx, 43h	; 64931
 mov ebx, ebp	; 64936
 mov eax, edi	; 64938
-call sub_644A8	; 6493A
+call SortPlayersByPos	; 6493A
 mov edx, byte_E9E4A	; 6493F
 add edx, dword [dword esp+0C8h]	; 64944
 mov ebx, dword [dword esp+0CCh]	; 6494B
 mov eax, edi	; 64952
-call sub_6455F	; 64954
+call SortNonDefPlayers	; 64954
 mov edx, unk_E9EE0	; 64959
 add edx, dword [dword esp+0C8h]	; 6495E
 mov ebx, ebp	; 64965
 mov eax, edi	; 64967
-call sub_6455F	; 64969
+call SortNonDefPlayers	; 64969
 xor edx, edx	; 6496E
 movsx ecx, si	; 64970
 jmp short .8	; 64973
@@ -426,7 +426,7 @@ mov byte [dword edi+byte_E9E18], al	; 649AF
 inc edx	; 649B5
 .8:
 cmp dx, byte 19h	; 649B6
-jl short sub_64614.7	; 649BA
+jl short BuildDefaultLines.7	; 649BA
 test si, si	; 649BC
 je short .9	; 649BF
 mov ebx, awlinetab	; 649C1
@@ -449,11 +449,11 @@ mov byte [dword ecx+eax+byte_E9E18], 0	; 649E4
 inc edx	; 649EC
 .12:
 cmp dx, byte 12h	; 649ED
-jl short sub_64614.11	; 649F1
+jl short BuildDefaultLines.11	; 649F1
 inc esi	; 649F3
 .13:
 cmp si, byte 2	; 649F4
-jl near sub_64614.1	; 649F8
+jl near BuildDefaultLines.1	; 649F8
 add esp, 0D8h	; 649FE
 lines_popx:
 pop ebp	; 64A04
@@ -2844,9 +2844,9 @@ jl short .3	; 665E4
 mov edi, 258h	; 665E6
 sub edi, edx	; 665EB
 .3:
-mov word [word_CBEC8], 0FFFFh	; 665ED
+mov word [bannermsg], 0FFFFh	; 665ED
 xor edx, edx	; 665F6
-mov word [dword_CBECA], dx	; 665F8
+mov word [bannertimer], dx	; 665F8
 test di, di	; 665FF
 jge near .5	; 66602
 movsx ebx, di	; 66608
@@ -3570,7 +3570,7 @@ mov byte [textline2], dl	; 66FCB
 mov byte [textline1], dl	; 66FD1
 mov byte [textline3], dl	; 66FD7
 jmp near checkwindow_popx	; 66FDD
-sub_66FE2:
+DrawCallBanner:
 push dword 54h	; 66FE2
 call __CHK	; 66FE7
 push ebx	; 66FEC
@@ -3595,7 +3595,7 @@ call sub_8EA18	; 67028
 add esp, byte 4	; 6702D
 movsx ebp, di	; 67030
 shl ebp, 2	; 67033
-mov ebx, dword [dword ebp+off_CD4DC]	; 67036
+mov ebx, dword [dword ebp+bannerstrs]	; 67036
 push ebx	; 6703C
 call fputchar	; 6703D
 add esp, byte 4	; 67042
@@ -3694,7 +3694,7 @@ push edi	; 67168
 cwde	; 67169
 mov dword [byte esp+04h], eax	; 6716A
 push eax	; 6716E
-mov ecx, dword [dword ebp+off_CD4DC]	; 6716F
+mov ecx, dword [dword ebp+bannerstrs]	; 6716F
 push ecx	; 67175
 call sub_91964	; 67176
 add esp, byte 0Ch	; 6717B
@@ -3709,7 +3709,7 @@ add esp, byte 8	; 67198
 push edi	; 6719B
 mov edx, dword [byte esp+04h]	; 6719C
 push edx	; 671A0
-mov ebx, dword [dword ebp+off_CD4DC]	; 671A1
+mov ebx, dword [dword ebp+bannerstrs]	; 671A1
 push ebx	; 671A7
 call sub_91964	; 671A8
 add esp, byte 0Ch	; 671AD
@@ -3728,7 +3728,7 @@ mov dword [spritedrawcount], edi	; 671D5
 call sub_6AB7C	; 671DB
 add esp, byte 24h	; 671E0
 jmp near checkwindow_popebp	; 671E3
-sub_671E8:
+ShowGoalieBanner:
 push dword 14h	; 671E8
 call __CHK	; 671ED
 push ebx	; 671F2
@@ -3759,14 +3759,14 @@ je near .x	; 6723E
 test bx, bx	; 67244
 setge al	; 67247
 and eax, 0FFh	; 6724A
-mov cx, word [word_CBEC8]	; 6724F
+mov cx, word [bannermsg]	; 6724F
 cmp ax, cx	; 67256
 jg short .2	; 67259
 cmp cx, byte 2	; 6725B
 jge short .3	; 6725F
 .2:
-mov word [word_CBEC8], ax	; 67261
-mov word [dword_CBECA], 50h	; 67267
+mov word [bannermsg], ax	; 67261
+mov word [bannertimer], 50h	; 67267
 .3:
 test bx, bx	; 67270
 jge short .4	; 67273

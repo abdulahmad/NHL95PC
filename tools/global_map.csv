@@ -2171,3 +2171,14 @@ deferpending,C5840,set by sub_62807 after QueueDeferredCall; GameLoop then runs 
 defercount,CD350,number of slots queued by QueueDeferredCall
 gsumqcount,CD34C,number of 0Dh-byte records queued at unk_E9B4C for FlushGSumQueue
 energywarn,CBC52,"per-team word (home, away): 1 while one of the team's skaters is exhausted (+43h < 0) on an odd lldispodd frame; DrawEnergyBar draws the bar in 0/7 instead of 67h"
+bannermsg,CBEC8,"index into the call banner strings off_CD4DC (-1 none); set by offside/icing/faceoff/penalty code, drawn by DrawCallBanner"
+bannertimer,CBECA,word: frames left for the call banner (50h typical); cleared with bannermsg
+bannerstrs,CD4DC,pointer table of the call banner strings indexed by bannermsg (DrawCallBanner)
+str_BnReturnGoalie,C1D64,"string 'RETURN GOALIE'"
+str_BnPullGoalie,C1D72,"string 'PULL GOALIE'"
+str_BnFaceOff,C1D7E,"string 'FACE-OFF'"
+str_BnTwoLinePass,C1D87,"string '2 LINE PASS'"
+str_BnOffside,C1D93,"string 'OFFSIDE'"
+str_BnIcing,C1D9B,"string 'ICING'"
+str_BnPenalty,C1DA1,"string 'PENALTY'"
+str_BnPenaltyShot,C1DA9,"string 'PENALTY SHOT'"

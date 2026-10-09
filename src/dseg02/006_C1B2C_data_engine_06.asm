@@ -15,8 +15,8 @@ global unk_C1B4A, unk_C1B53, unk_C1B5C, unk_C1B6A, unk_C1B72, unk_C1B7B, unk_C1B
 global unk_C1B9D, unk_C1BA6, unk_C1BAF, unk_C1BC1, unk_C1BD6, unk_C1BE3, unk_C1BEC, unk_C1BF5
 global unk_C1BFE, unk_C1C05, unk_C1C0D, unk_C1C16, unk_C1C1F, unk_C1C27, unk_C1C2F, unk_C1C38
 global unk_C1C41, unk_C1C47, unk_C1C50, str_B3, str_B4, str_B5, str_B6, str_B7
-global str_B8, str_S8, unk_C1D64, unk_C1D72, unk_C1D7E, unk_C1D87, unk_C1D93, unk_C1D9B
-global unk_C1DA1, unk_C1DA9, unk_C1DDC, unk_C1DE3, unk_C1DEB, unk_C1DF3, unk_C1DFB, unk_C1E04
+global str_B8, str_S8, str_BnReturnGoalie, str_BnPullGoalie, str_BnFaceOff, str_BnTwoLinePass, str_BnOffside, str_BnIcing
+global str_BnPenalty, str_BnPenaltyShot, unk_C1DDC, unk_C1DE3, unk_C1DEB, unk_C1DF3, unk_C1DFB, unk_C1E04
 global unk_C1E0C, unk_C1E14, unk_C1E1C, unk_C1E24, unk_C1E2A, unk_C1E31, unk_C1E38, unk_C1E3E
 global unk_C1E44, unk_C1E4C, unk_C1E52, unk_C1E58, unk_C1E5E, unk_C1E63, unk_C1E69, unk_C1E6F
 global unk_C1E75, unk_C1E7B, unk_C1E85, unk_C1E8F, unk_C1E98, unk_C1EA5, unk_C1EB2, unk_C1EBA
@@ -161,21 +161,21 @@ db 067h,06Fh,06Eh,065h,020h,066h,06Fh,072h,020h,031h,020h,070h,065h,072h,069h,06
 db 064h,00h,00h,00h,00h
 str_ServedByD:
 db 073h,065h,072h,076h,065h,064h,020h,062h,079h,020h,023h,025h,064h,00h,00h,00h
-unk_C1D64:
+str_BnReturnGoalie:
 db 052h,045h,054h,055h,052h,04Eh,020h,047h,04Fh,041h,04Ch,049h,045h,00h
-unk_C1D72:
+str_BnPullGoalie:
 db 050h,055h,04Ch,04Ch,020h,047h,04Fh,041h,04Ch,049h,045h,00h
-unk_C1D7E:
+str_BnFaceOff:
 db 046h,041h,043h,045h,02Dh,04Fh,046h,046h,00h
-unk_C1D87:
+str_BnTwoLinePass:
 db 032h,020h,04Ch,049h,04Eh,045h,020h,050h,041h,053h,053h,00h
-unk_C1D93:
+str_BnOffside:
 db 04Fh,046h,046h,053h,049h,044h,045h,00h
-unk_C1D9B:
+str_BnIcing:
 db 049h,043h,049h,04Eh,047h,00h
-unk_C1DA1:
+str_BnPenalty:
 db 050h,045h,04Eh,041h,04Ch,054h,059h,00h
-unk_C1DA9:
+str_BnPenaltyShot:
 db 050h,045h,04Eh,041h,04Ch,054h,059h,020h,053h,048h,04Fh,054h,00h
 str_04d2:
 db 025h,030h,034h,064h,00h,00h

@@ -6,17 +6,17 @@ extern Acheck, AddPenalty, AddPenalty2, AvgCline, GetHot, Ylist_m2, PBnum, PerTi
 extern SetSPA, Stop4Pen, __CHK, a2touchpuck, assexit, assinsert, assreplace
 extern pad1dev, hmshotcnt, awshotcnt, sflags, gmode2, PenBuf, iflags
 extern OOlist, collflag, dirtab, doplayeracc, gameopts, wcradiusy, sflags3
-extern dword_CBECA, onetimerflag, shotongoal, penshotplayer, penshotctl, penshotmode, penshotstart, shotontarget
+extern bannertimer, onetimerflag, shotongoal, penshotplayer, penshotctl, penshotmode, penshotstart, shotontarget
 extern penshotlive, dword_CCC2C, dword_CCC4E, hmtmstruct, awtmstruct, puckcross_m2
 extern dword_E03AE, dword_E03B6, dword_E03B9, dword_E03BD, dword_E9A9E
 extern dword_E9AB6, puckvx, gmode, puckx, pucky, puckvy, puckz
 extern puckc, off_CD498, off_CD4A0, passspeed, puckflip, puckvz, randomd0, CanRemovePlayer
 extern setpersonel, sfx, shotsets, vecdist, CanBlockShot, PassCompleted, changeplayer, restorepl
-extern CompLine, GetHotStick, GetHotOrStick, Goal, GiveControl, sub_61576, PostInjuryEvent, sub_64102
-extern sub_6427F, CountShotOnGoal, EndPenaltyShot, RemoveFromLines, imul32, sub_93470, threat, SortCords
+extern CompLine, GetHotStick, GetHotOrStick, Goal, GiveControl, SetBoxDoorObject, PostInjuryEvent, ShotLaneOpen
+extern QuickShotChk, CountShotOnGoal, EndPenaltyShot, RemoveFromLines, imul32, sub_93470, threat, SortCords
 extern vtoa, wcradiusx, regd4, camx, camy, lastplayer, passdir
 extern word_C90A6, passplayer, xc1, yc1, fox, c1playernum, c2playernum, cont1team
-extern gsp, gameclock, clockticks, dirtab_y, word_CBEC2, word_CBEC6, word_CBEC8, word_CC0DA
+extern gsp, gameclock, clockticks, dirtab_y, word_CBEC2, word_CBEC6, bannermsg, word_CC0DA
 extern crowdlevel, word_CCBCC, word_CCBDC, word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, word_CCC30
 extern word_CCC32, word_CCC62, hmtmap, awtmap, word_DFF5A, word_E03A0, regd2
 extern regd3, word_E03B8, regd0, regd1, Ylist, OOlistpos, CwdExciteLvl, lasttouch
@@ -769,7 +769,7 @@ jle near .30	; 53ABA
 test byte [gmode], 10h	; 53AC0
 jne short .29	; 53AC7
 mov eax, ecx	; 53AC9
-call sub_6427F	; 53ACB
+call QuickShotChk	; 53ACB
 test eax, eax	; 53AD0
 je short .29	; 53AD2
 cmp dword [penshotplayer], byte 0	; 53AD4
@@ -819,7 +819,7 @@ jmp near .44	; 53B7E
 test byte [gmode], 10h	; 53B83
 jne near .44	; 53B8A
 mov eax, ecx	; 53B90
-call sub_6427F	; 53B92
+call QuickShotChk	; 53B92
 test eax, eax	; 53B97
 je short .35	; 53B99
 cmp dword [penshotplayer], byte 0	; 53B9B
@@ -1241,7 +1241,7 @@ jne near checkob_ret5a	; 540A1
 mov cl, bh	; 540A7
 or cl, 80h	; 540A9
 mov byte [gmode2], cl	; 540AC
-cmp word [word_CBEC8], byte 4	; 540B2
+cmp word [bannermsg], byte 4	; 540B2
 jge near checkob_ret5a	; 540BA
 test byte [byte edi+pflags], 80h	; 540C0
 setne al	; 540C4
@@ -1253,9 +1253,9 @@ setl al	; 540D8
 and eax, 0FFh	; 540DB
 xor eax, ebx	; 540E0
 je short checkob_ret5a	; 540E2
-mov word [word_CBEC8], 4	; 540E4
+mov word [bannermsg], 4	; 540E4
 xor edx, edx	; 540ED
-mov word [dword_CBECA], dx	; 540EF
+mov word [bannertimer], dx	; 540EF
 jmp short checkob_ret5a	; 540F6
 .14:
 mov dh, byte [gmode2]	; 540F8
@@ -1264,11 +1264,11 @@ je short checkob_ret5a	; 54101
 mov bl, dh	; 54103
 and bl, 7Fh	; 54105
 mov byte [gmode2], bl	; 54108
-cmp word [word_CBEC8], byte 4	; 5410E
+cmp word [bannermsg], byte 4	; 5410E
 jne short checkob_ret5a	; 54116
-cmp word [dword_CBECA], byte 0	; 54118
+cmp word [bannertimer], byte 0	; 54118
 jne short checkob_ret5a	; 54120
-mov word [word_CBEC8], 0FFFFh	; 54122
+mov word [bannermsg], 0FFFFh	; 54122
 checkob_ret5a:
 add esp, byte 4	; 5412B
 checkob_ret5:
@@ -2191,7 +2191,7 @@ jne short .2	; 54C30
 xor eax, eax	; 54C32
 jmp near PassLaneChk_ret5a	; 54C34
 .2:
-call sub_64102	; 54C39
+call ShotLaneOpen	; 54C39
 test eax, eax	; 54C3E
 jne short PassLaneChk.1	; 54C40
 mov esi, dword [byte ebx+Ypos]	; 54C42
@@ -4349,7 +4349,7 @@ mov esi, 993h	; 567F0
 test byte [byte ecx+pflags], 40h	; 567F5
 setne al	; 567F9
 and eax, 0FFh	; 567FC
-call sub_61576	; 56801
+call SetBoxDoorObject	; 56801
 jmp short .38	; 56806
 .34:
 mov esi, 681h	; 56808
@@ -4587,7 +4587,7 @@ mov edx, ebx	; 56AF0
 mov eax, ecx	; 56AF2
 call FallDown	; 56AF4
 mov eax, ebx	; 56AF9
-call sub_6427F	; 56AFB
+call QuickShotChk	; 56AFB
 test eax, eax	; 56B00
 je short .5	; 56B02
 cmp dword [penshotplayer], byte 0	; 56B04
@@ -4696,7 +4696,7 @@ movsx edx, ax	; 56C51
 mov eax, ecx	; 56C54
 call SetSPA	; 56C56
 mov eax, ebx	; 56C5B
-call sub_6427F	; 56C5D
+call QuickShotChk	; 56C5D
 test eax, eax	; 56C62
 je short .7	; 56C64
 cmp dword [penshotplayer], byte 0	; 56C66
@@ -6070,7 +6070,7 @@ shr eax, 10h	; 57D45
 mov word [word_C90A6], ax	; 57D48
 cmp dword [shotongoal], byte 0	; 57D4E
 je short .13	; 57D55
-call sub_64102	; 57D57
+call ShotLaneOpen	; 57D57
 mov eax, dword [shotontarget]	; 57D5C
 mov dword [shotongoal], eax	; 57D61
 .13:

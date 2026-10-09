@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_1B0F3 progbits alloc exec nowrite align=1
 extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, joysampling, dword_C66B0, rinkbm, word_CBECC
-extern dword_CBECA, photobankf, rinkendbank, numshpbank, photobanks, s1font, scrbrdshapes, cupseries
+extern bannertimer, photobankf, rinkendbank, numshpbank, photobanks, s1font, scrbrdshapes, cupseries
 extern dword_DC8A0, dword_DC8C8, dword_E0244, hilightfont, jctime, FreeRinkGfx, joyq_flush, CrowdNoiseOff
 extern GameOver, FreeRockMusic, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E4F8, sub_8EA18, sub_91FA4
 extern FatalError, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, scrpitch

@@ -10,7 +10,7 @@ extern musicon, byte_E024C, byte_E024D, byte_E024F, textline1, textline2, textli
 extern textline5, byte_E9AC8, byte_E9AD3, fileoncd
 extern joysampling
 extern inputframes, gameopts, sounddev, deferpending, dword_C66D0, dword_C66D4, songdata, cont2team
-extern HomeTeam, dword_CBECA, dword_CC0AC, photobankf, dword_CC0EC, introskipped, shotongoal, penshotplayer
+extern HomeTeam, bannertimer, dword_CC0AC, photobankf, dword_CC0EC, introskipped, shotongoal, penshotplayer
 extern penshotmode, penshotstart, shotontarget, penshotlive, crowdsmooth, musichandle, cddriveptr, musicslot
 extern kaufmfont, numshapes, dword_D8C4C, rinkendbank, frameaccum, rinkendart, dword_D8C78, numshpbank
 extern curperiod, photobanks, photoptrs, savedmousex, savedmousey, dword_E009C, photoptrsf
@@ -18,7 +18,7 @@ extern dword_E9A9E, dword_E9AB6, hilightfont, jctime, PickAwardWinners_x, memcpy
 extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, PickAwardWinners, ShowAwardScreens
 extern DrawAwardsSummary, MakePath, FileOpenRead, FileClose, DrawHudPanel, SetTextColors, ClearPanelPenalties, WaitClickTimeout
 extern StartPreGame, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
-extern sub_64614, SetupTeamLines, ClearInputQueue, FadePalStep, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
+extern BuildDefaultLines, SetupTeamLines, ClearInputQueue, FadePalStep, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, MouseSetPos, sub_B30B4, sub_B30BB
 extern sub_B392C, sub_B4BA8, threat, savepal, SortCords, vtoa, regd4, scrpitch
@@ -26,7 +26,7 @@ extern lastplayer, passdir, word_C90A6, passplayer, fox, foy, Pencntdwn, Penalty
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, word_CBC44, exitgame, gameover
 extern energywarn, lcblink, lcblinktime, lcsel, word_CBC60
 extern lcline, lctimer, lcboxon, word_CBE8C, word_CBE8E
-extern ovltimer, word_CBEC2, fadeinpending, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0B0
+extern ovltimer, word_CBEC2, fadeinpending, word_CBEC6, bannermsg, word_CBECC, word_CBECE, word_CC0B0
 extern crowdlevel, word_DEE94, hmtmap, awtmap, word_E024E, lcrequest, lcreqchoice
 extern regd2, regd0, regd1, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4
 extern word_E9AA6, CwdExciteLvl, word_E9AAA, word_E9AAE, word_E9B2C
@@ -932,7 +932,7 @@ push ebx	; 13E99
 push ecx	; 13E9A
 push edx	; 13E9B
 push edi	; 13E9C
-call sub_64614	; 13E9D
+call BuildDefaultLines	; 13E9D
 xor eax, eax	; 13EA2
 call SetupTeamLines	; 13EA4
 mov eax, 1	; 13EA9
@@ -1015,7 +1015,7 @@ push ebx	; 13FB1
 push ecx	; 13FB2
 push edx	; 13FB3
 push edi	; 13FB4
-call sub_64614	; 13FB5
+call BuildDefaultLines	; 13FB5
 xor eax, eax	; 13FBA
 call SetupTeamLines	; 13FBC
 mov eax, 1	; 13FC1
@@ -1120,11 +1120,11 @@ xor ebx, ebx	; 14167
 mov dword [savedmousey], ebx	; 14169
 xor ecx, ecx	; 1416F
 mov dword [savedmousex], ecx	; 14171
-mov word [dword_CBECA], ax	; 14177
+mov word [bannertimer], ax	; 14177
 mov word [word_CBEC6], ax	; 1417D
 mov word [word_CBEC2], ax	; 14183
 mov ecx, edx	; 14189
-mov word [word_CBEC8], dx	; 1418B
+mov word [bannermsg], dx	; 1418B
 mov word [word_CBECE], dx	; 14192
 mov word [word_CBECC], dx	; 14199
 xor ch, dh	; 141A0

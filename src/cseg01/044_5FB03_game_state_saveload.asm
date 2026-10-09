@@ -7,7 +7,7 @@ extern pad2dev, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, byte
 extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, PenBuf, iflags, byte_E9AC8
 extern byte_E9AD3, OOlist, collflag, postate, lgstate, gamemode, ctl1team, ctl2team
 extern ctl1dev, ctl2dev, ctl1side, hudclockmin, hudclocksec, hudclockhund, deferpending, dword_C66D0
-extern dword_C66D4, yleader, sflags3, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0AC
+extern dword_C66D4, yleader, sflags3, cont2team, HomeTeam, dword_CBC3E, bannertimer, dword_CC0AC
 extern lastsfx, photobankf, onetimerflag, shotongoal, penshotplayer, penshotpnum, penshotteam, penshotctl
 extern penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount
 extern sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, crowdsmooth, frameaccum
@@ -25,7 +25,7 @@ extern fodir1, fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, 
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
 extern exitgame, gameover, energywarn, lcblink, lcblinktime
 extern lcsel, word_CBC60, lcline, lctimer, lcboxon
-extern word_CBD64, word_CBD66, ovltimer, word_CBEC2, fadeinpending, word_CBEC6, word_CBEC8, word_CBECC
+extern word_CBD64, word_CBD66, ovltimer, word_CBEC2, fadeinpending, word_CBEC6, bannermsg, word_CBECC
 extern word_CBECE, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CC10C, word_CCEF8, word_DEE94
 extern word_DEE96, word_DEF84, word_DEF88, puckcross, word_E024E, lcrequest, lcreqchoice
 extern word_E0390, OOlistpos, word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, CwdExciteLvl
@@ -272,10 +272,10 @@ add eax, byte 2	; 5FE8C
 mov dx, word [word_E9AB0]	; 5FE8F
 mov word [eax], dx	; 5FE96
 add eax, byte 2	; 5FE99
-mov dx, word [word_CBEC8]	; 5FE9C
+mov dx, word [bannermsg]	; 5FE9C
 mov word [eax], dx	; 5FEA3
 add eax, byte 2	; 5FEA6
-mov dx, word [dword_CBECA]	; 5FEA9
+mov dx, word [bannertimer]	; 5FEA9
 mov word [eax], dx	; 5FEB0
 add eax, byte 2	; 5FEB3
 mov edx, dword [StanleyCupTimer]	; 5FEB6
@@ -1050,10 +1050,10 @@ mov ax, word [ebx]	; 609EB
 mov word [word_E9AB0], ax	; 609EE
 add ebx, byte 2	; 609F4
 mov ax, word [ebx]	; 609F7
-mov word [word_CBEC8], ax	; 609FA
+mov word [bannermsg], ax	; 609FA
 add ebx, byte 2	; 60A00
 mov ax, word [ebx]	; 60A03
-mov word [dword_CBECA], ax	; 60A06
+mov word [bannertimer], ax	; 60A06
 add ebx, byte 2	; 60A0C
 mov eax, dword [ebx]	; 60A0F
 mov dword [StanleyCupTimer], eax	; 60A11

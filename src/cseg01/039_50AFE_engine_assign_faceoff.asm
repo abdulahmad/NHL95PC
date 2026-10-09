@@ -6,7 +6,7 @@ extern Endfaceoff, Findhittype, ResetBench, SetSPA, Setplass, StartFaceoffLineCh
 extern a2touchpuck, assexit, assinsert, assreplace, sflags, gmode2, byte_CBEA8, byte_CCBBA
 extern byte_CCBBB, hmroster, hmtmflags, awtmflags, textline1, textline2, puckcross
 extern textline3, textline4, textline5, byte_E0393, byte_E0397, iflags, checkwindow, doshot
-extern joysampling, gameopts, yleader, sflags3, cont2team, dword_CBECA, dword_CC0EC, introskipped
+extern joysampling, gameopts, yleader, sflags3, cont2team, bannertimer, dword_CC0EC, introskipped
 extern onetimerflag, dword_CC0FA, penshotplayer, penshotteam, penshotmode, penshotstart, hmtmstruct, awtmstruct
 extern dword_E0244, dword_E9A9E, forcepldata, puckvx, gmode
 extern jctime, CanBlockShot_ret5, ltx, puckx, pucky, puckvy, puckz, puckc
@@ -18,7 +18,7 @@ extern vtoa, regd4, camx, camy, passdir, word_C90A6, passplayer, xc1
 extern yc1, fox, foy, fodir1, fodir2, c1playernum, c2playernum, cont1team
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
 extern energywarn, lcblink, lcboxon, word_CBE8C, word_CBE8E
-extern ovltimer, fadeinpending, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, hmscore
+extern ovltimer, fadeinpending, word_CBEC6, bannermsg, word_CBECC, word_CBECE, crowdlevel, hmscore
 extern hmtmline, hmtmlcnt, hmtmpdst, awscore, awtmline, awtmlcnt
 extern puckstruct, sortobj15
 extern word_E0390, word_E0392, word_E0394, word_E0396
@@ -1444,7 +1444,7 @@ mov eax, dword [joysampling_save-2]	; 51CB9
 sar eax, 10h	; 51CBE
 mov dword [joysampling], eax	; 51CC1
 mov edi, 0FFFFFFFFh	; 51CC6
-mov word [word_CBEC8], di	; 51CCB
+mov word [bannermsg], di	; 51CCB
 mov eax, edi	; 51CD2
 mov word [word_CBECE], di	; 51CD4
 mov edx, edi	; 51CDB
@@ -1452,7 +1452,7 @@ mov word [word_CBECC], di	; 51CDD
 mov ebx, edi	; 51CE4
 mov word [ovltimer], di	; 51CE6
 xor ecx, ecx	; 51CED
-mov word [dword_CBECA], cx	; 51CEF
+mov word [bannertimer], cx	; 51CEF
 xor dh, ah	; 51CF6
 mov byte [textline5], dh	; 51CF8
 xor bl, al	; 51CFE

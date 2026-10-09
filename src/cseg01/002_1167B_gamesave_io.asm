@@ -5,7 +5,7 @@ section s_1167B progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, awardtype, VisTeam, bgscrollx, camy, clockticks, scrollx, word_CBECE
 extern curleague, sflags, musicon, byte_D9299, awardwinners, fileoncd, joysampling, gameopts
 extern inputframes, escrequest, demomode, gameresult, gamemode, hudclockmin, hudclocksec, hudclockhund
-extern deferpending, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBECA, dword_CC080, introskipped
+extern deferpending, rinkscrollx, rinkscrolly, cont2team, HomeTeam, bannertimer, dword_CC080, introskipped
 extern penshotlive, cddriveptr, mousex, mousey, spritedrawcount, frameaccum, dword_D8C72, viewscrolly
 extern dword_D8C78, dword_D8C7A, viewscrollx, curperiod, s1font, dword_DC28C, rinkwtiles, rinkhtiles
 extern bgscrolly, dword_DEF8C, savedmousex, savedmousey, dword_E0244, recbpr, dword_E9A9E, j_unlink_
@@ -16,7 +16,7 @@ extern SetupGame, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadSeasonRec, 
 extern DrawHudPanel, LoadCupFinalSeries, PostGameDesk, SportsDesk, sub_1B982, MakeGSummaryPath, SetupGoalieMenu, ResetGoalieMenu
 extern LoadRink, SetRinkScroll, ReadGoalieSeasonRec, ReadTeamNames, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, PaPreloadClips, DrawRinkOverlays, PeriodOver, LoadGameState
-extern RunDeferredCalls, FlushGSumQueue, sub_64614, SetupTeamLines, NormalizeDressFlags, LoadTeamPalette, sub_6ADA7, sub_6AF52
+extern RunDeferredCalls, FlushGSumQueue, BuildDefaultLines, SetupTeamLines, NormalizeDressFlags, LoadTeamPalette, sub_6ADA7, sub_6AF52
 extern sub_6AF97, sub_6B008, LoadRockMusic, SpeechStopQueue, MusicChanReset, SelectScreenBM, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8FFB0, sub_90354, sub_9035C, MouseSetPos, sub_B396E, sub_B4BA8, str_backslash
 extern cupteam, presidentsteam, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690
@@ -503,7 +503,7 @@ call LoadGameState	; 11DC8
 mov eax, edx	; 11DCD
 call FileClose	; 11DCF
 mov dword [edx], 0FFFFFFFFh	; 11DD4
-call sub_64614	; 11DDA
+call BuildDefaultLines	; 11DDA
 call NormalizeDressFlags	; 11DDF
 xor eax, eax	; 11DE4
 call SetupTeamLines	; 11DE6
