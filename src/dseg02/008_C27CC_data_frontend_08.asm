@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_C27CC progbits alloc noexec write align=1
 global str_Joycal, str_Scrn3, str_Rite, str_Left, str_Pal24, str_Puck, str_PuckBack, str_LEFTJOYSTICK
-global str_RIGHTJOYSTICK, asc_C2814, asc_C282C, asc_C2834, asc_C284F, asc_C2854, asc_C2873, asc_C2894
-global asc_C2899, asc_C28A1, asc_C28AC, asc_C28B8, unk_C27F5, unk_C28A9
+global str_RIGHTJOYSTICK, str_SaveAsGameDatabases, str_Current2, str_EnterANewDatabase, str_DBX, str_ErrorGettingDiskSpace, str_3dKbytesOfFree2, str_Temp7
+global str_Current3, str_Pointer11, str_FreeAgents, str_DATABASE, unk_C27F5, str_S5
 str_Joycal:
 db 06Ah,06Fh,079h,063h,061h,06Ch,00h
 str_Scrn3:
@@ -25,32 +25,32 @@ str_LEFTJOYSTICK:
 db 04Ch,045h,046h,054h,020h,04Ah,04Fh,059h,053h,054h,049h,043h,04Bh,00h
 str_RIGHTJOYSTICK:
 db 052h,049h,047h,048h,054h,020h,04Ah,04Fh,059h,053h,054h,049h,043h,04Bh,00h
-asc_C2814:
+str_SaveAsGameDatabases:
 db 053h,061h,076h,065h,020h,061h,073h,020h,067h,061h,06Dh,065h,020h,064h,061h,074h
 db 061h,062h,061h,073h,065h,073h,03Fh,00h
-asc_C282C:
+str_Current2:
 db 043h,075h,072h,072h,065h,06Eh,074h,00h
-asc_C2834:
+str_EnterANewDatabase:
 db 045h,06Eh,074h,065h,072h,020h,061h,020h,06Eh,065h,077h,020h,064h,061h,074h,061h
 db 062h,061h,073h,065h,020h,06Eh,061h,06Dh,065h,03Ah,00h
-asc_C284F:
+str_DBX:
 db 02Eh,044h,042h,058h,00h
-asc_C2854:
+str_ErrorGettingDiskSpace:
 db 065h,072h,072h,06Fh,072h,020h,067h,065h,074h,074h,069h,06Eh,067h,020h,064h,069h
 db 073h,06Bh,020h,073h,070h,061h,063h,065h,020h,066h,072h,065h,065h,0Ah,00h
-asc_C2873:
+str_3dKbytesOfFree2:
 db 025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,066h,072h
 db 065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,02Eh,00h,00h
 db 00h
-asc_C2894:
+str_Temp7:
 db 074h,065h,06Dh,070h,00h
-asc_C2899:
+str_Current3:
 db 043h,075h,072h,072h,065h,06Eh,074h,00h
-asc_C28A1:
+str_Pointer11:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-unk_C28A9:
+str_S5:
 db 025h,073h,00h
-asc_C28AC:
+str_FreeAgents:
 db 046h,072h,065h,065h,020h,041h,067h,065h,06Eh,074h,073h,00h
-asc_C28B8:
+str_DATABASE:
 db 044h,041h,054h,041h,042h,041h,053h,045h,020h,03Ah,020h,00h

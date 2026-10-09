@@ -4,7 +4,7 @@ bits 32
 section s_EA0DC nobits alloc noexec write align=1
 global ctlavailmask, rosterlist, byte_EA991, byte_EA992
 global byte_EA993, ptrupdatefn, inputqueue, lastinputdir, inputrepeat, inputev
-global dword_EA2B0, dword_EA2B4, dword_EA988, unk_EA968
+global dword_EA2B0, dword_EA2B4, rosterteamptr, unk_EA968
 ptrupdatefn:
 resb 24
 ctlavailmask:
@@ -29,7 +29,7 @@ dword_EA2B4:
 resb 1716
 unk_EA968:
 resb 32
-dword_EA988:
+rosterteamptr:
 resb 8
 rosterlist:
 resb 1

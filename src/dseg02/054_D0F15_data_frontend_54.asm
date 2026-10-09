@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_D0F15 progbits alloc noexec write align=1
 extern unk_C2B0B
-global asc_D0F15
-asc_D0F15:
+global str_SavingDatabases
+str_SavingDatabases:
 db 053h,061h,076h,069h,06Eh,067h,020h,064h,061h,074h,061h,062h,061h,073h,065h,073h
 db 02Eh,00h,00h,00h,00h,00h,021h,00h,00h,00h,0E9h,00h,00h,00h,014h,00h
 db 00h,00h,014h,00h,00h,00h,00h,00h,00h,00h,05h,00h,00h,00h,00h,00h

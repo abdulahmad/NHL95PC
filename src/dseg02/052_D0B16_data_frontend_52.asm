@@ -5,7 +5,7 @@ section s_D0B16 progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450
 global dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A, dword_D0BFC, dword_D0C04
 global dword_D0C10, dword_D0C18, dword_D0C20, unk_D0B76, unk_D0B79, unk_D0B80, unk_D0BB8, unk_D0BF0
-global unk_D0C24
+global savedbbtns
 dword_D0B16:
 db 041h,00h,00h,00h
 dword_D0B1A:
@@ -50,7 +50,7 @@ dword_D0C18:
 db 00h,00h,00h,00h,00h,00h,00h,00h
 dword_D0C20:
 db 00h,00h,00h,00h
-unk_D0C24:
+savedbbtns:
 db 08h,00h,00h,00h,01Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd unk_C7450

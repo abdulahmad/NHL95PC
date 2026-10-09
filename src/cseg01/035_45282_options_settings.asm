@@ -5,8 +5,8 @@ section s_45282 progbits alloc exec nowrite align=1
 extern __CHK, tag_pset, tag_aps, tag_apset, tag_gset, tag_ags, tag_agset, str_LoadPic
 extern str_Pal23, loadpals, palcyclephase, palcycledelay, byte_ED9EE, gameopts, simfwdorder, simdorder
 extern loadscreenon, seasondb, dword_D2C6B, palcyclelock, jctime, memcpy_, memset_, rand_
-extern MakePath, ReadTeamRec, WriteTeamRec, ReadDbRec4Ch, KeyDbPtr, sub_6CBCC, sub_6CBE1, sub_6CBE8
-extern sub_6CBFD, sub_76429, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E83C, sub_8FFB0, sub_910E0
+extern MakePath, ReadTeamRec, WriteTeamRec, ReadDbRec4Ch, KeyDbPtr, SeasonDbPtr, SeasonDbPtr2, CareerDbPtr
+extern CareerDbPtr2, sub_76429, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E83C, sub_8FFB0, sub_910E0
 extern sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4C61, tag_t
 extern tag_at, tag_pk, tag_ps, tag_gk, tag_gs
 global RandMod, SimAddPair, SimulateGame, LoadScreenPalTick
@@ -257,7 +257,7 @@ jne near .14	; 4563D
 mov eax, dword [dword esp+ebx+017Ch]	; 45643
 mov eax, dword [ecx+eax]	; 4564A
 mov eax, dword [byte eax+028h]	; 4564D
-call sub_6CBE8	; 45650
+call CareerDbPtr	; 45650
 mov edx, dword [dword esp+ebx+012Ch]	; 45655
 mov dword [ecx+edx], eax	; 4565C
 mov ebp, dword [dword esp+ebx+012Ch]	; 4565F
@@ -409,7 +409,7 @@ shl ebx, 2	; 458B7
 mov eax, dword [dword esp+edx+017Ch]	; 458BA
 mov eax, dword [ebx+eax]	; 458C1
 mov eax, dword [byte eax+02Ch]	; 458C4
-call sub_6CBCC	; 458C7
+call SeasonDbPtr	; 458C7
 mov ecx, eax	; 458CC
 mov eax, dword [dword esp+edx+0154h]	; 458CE
 mov dword [ebx+eax], ecx	; 458D5
@@ -456,7 +456,7 @@ jne short .21	; 45981
 mov eax, dword [dword esp+edx+0134h]	; 45983
 mov eax, dword [ebx+eax]	; 4598A
 mov eax, dword [byte eax+028h]	; 4598D
-call sub_6CBFD	; 45990
+call CareerDbPtr2	; 45990
 mov ecx, eax	; 45995
 mov eax, dword [dword esp+edx+014Ch]	; 45997
 mov dword [ebx+eax], ecx	; 4599E
@@ -483,7 +483,7 @@ shl ebx, 2	; 459F2
 mov eax, dword [dword esp+edx+0134h]	; 459F5
 mov eax, dword [ebx+eax]	; 459FC
 mov eax, dword [byte eax+02Ch]	; 459FF
-call sub_6CBE1	; 45A02
+call SeasonDbPtr2	; 45A02
 mov ecx, dword [dword esp+edx+0124h]	; 45A07
 mov dword [ecx+ebx], eax	; 45A0E
 cmp dword [esp], 444h	; 45A11

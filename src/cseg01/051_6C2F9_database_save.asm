@@ -2,32 +2,27 @@
 bits 32
 %include "hockey.inc"
 section s_6C2F9 progbits alloc exec nowrite align=1
-extern __CHK, _dos_getdiskfree_, asc_C2814, asc_C282C, asc_C2834, asc_C284F, asc_C2854, asc_C2873
-extern asc_C2894, asc_C2899, asc_C28A1, asc_C28AC, asc_C28B8, str_fmt2d, str_extDB, asc_CFB69
-extern asc_D0F15, rosterisfa, musicon, byte_D42C3, rosterlist, byte_EA991, rostersel, boxfillcolor
+extern __CHK, _dos_getdiskfree_, str_SaveAsGameDatabases, str_Current2, str_EnterANewDatabase, str_DBX, str_ErrorGettingDiskSpace, str_3dKbytesOfFree2
+extern str_Temp7, str_Current3, str_Pointer11, str_FreeAgents, str_DATABASE, str_fmt2d, str_extDB, str_XXXKbytesOfFree2
+extern str_SavingDatabases, rosterisfa, musicon, byte_D42C3, rosterlist, byte_EA991, rostersel, boxfillcolor
 extern boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg, songdata, falist, falistsel, facount
 extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0BFC, dword_D0C04, dword_D0C10
 extern dword_D0C18, dword_D0C20, musichandle, dword_D8B74, pointerspr, dword_EA2B0, dword_EA2B4, musicslot
-extern dword_EA988, dword_EBC68, msglines, dword_EBCA4, dword_EBE9C, editrosters_exit, fputchar, jctime
+extern rosterteamptr, dbdirty, msglines, dword_EBCA4, editptrspr, editrosters_exit, fputchar, jctime
 extern BuildFreeAgentList_ret, mkdir_, leaguedbnames
-extern off_CFB1C, off_CFB8A, rmdir_, sprintf_, strcat_, strcpy_, strlen_, strupr_
+extern dbexistsmsg, nodiskspacemsg, rmdir_, sprintf_, strcat_, strcpy_, strlen_, strupr_
 extern MakePath, DeleteDir, PrintCenteredText, PrintShadowText, FitPlayerName, TextInputDialog, DrawButtons, DrawScrollBar
 extern RestoreDialogBg, MessageBox, LoadLeagueDbsMem, DrawEditRosters, EditRosters, CheckDatabases, sub_76429, sub_8CCA8
 extern sub_8D2F0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90F38
-extern sub_91964, sub_932D0, FatalError, MouseSetPos, sub_B4BA8, sub_B4F8C, unk13_6BF3D, unk_C28A9
-extern btn_LeagueExists, unk_D0450, unk_D07EB, unk_D0BB8, unk_D0BF0, unk_D0C24, unk_EC7C0, unknown_libname_1
-global loc_6C3B3, loc_6C470, loc_6C475, loc_6C486, loc_6C4B2, loc_6C4F7, loc_6C53F, loc_6C54F
-global loc_6C580, loc_6C590, loc_6C5C1, loc_6C5D1, loc_6C602, loc_6C612, loc_6C63F, loc_6C64B
-global loc_6C680, loc_6C690, loc_6C74C, loc_6C7A8, loc_6C828, loc_6C960, loc_6CAC0, loc_6CADF
-global loc_6CB00, loc_6CB21, loc_6CB42, loc_6CBD1, loc_6CBED, loc_6CC09, loc_6CCD6, loc_6CD38
-global loc_6CD65, loc_6CE41, loc_6CEC4, loc_6CEF1, loc_6CEF4, loc_6CEF5, loc_6CF35, loc_6CF56
-global loc_6CF5C, loc_6CF61, loc_6CF94, loc_6D0B5, loc_6D0BA, loc_6D0C5, loc_6D0CA, loc_6D0D9
-global loc_6D0E6, loc_6D1E4, loc_6D1E9, loc_6D1F2, loc_6D1F4, loc_6D205, loc_6D24F, loc_6D2C8
-global loc_6D2EB, sub_6C2F9, sub_6C3BB, sub_6C4BA, sub_6C96C, sub_6CA8F, CarTeamRecPtr, TeamRecPtr
-global KeyDbPtr, sub_6CBCC, sub_6CBE1, sub_6CBE8, sub_6CBFD, sub_6CC04, sub_6CC20, sub_6CEFB
-global sub_6CF6F, sub_6D256, sub_6D299
-sub_6C2F9:
+extern sub_91964, sub_932D0, FatalError, MouseSetPos, sub_B4BA8, sub_B4F8C, unk13_6BF3D, str_S5
+extern btn_LeagueExists, unk_D0450, str_C4, unk_D0BB8, unk_D0BF0, savedbbtns, curdbname, unknown_libname_1
+global SeasonDbPtr_common, CareerDbPtr_common
+global RunEditRosters_ret6, RunEditRosters_ret5
+global MenuSaveDbs, MenuSaveDbsAs, SaveDbsToDir, WriteLeagueDbsMem, FreeLeagueDbsMem, CarTeamRecPtr, TeamRecPtr
+global KeyDbPtr, SeasonDbPtr, SeasonDbPtr2, CareerDbPtr, CareerDbPtr2, AttDbPtr, RunEditRosters, DrawRosterTitle
+global DrawRosterList, DrawDatabaseName, DrawRosterPanel
+MenuSaveDbs:
 push dword 3Ch	; 6C2F9
 call __CHK	; 6C2FE
 push ecx	; 6C303
@@ -43,32 +38,32 @@ movsd	; 6C316
 movsd	; 6C317
 movsd	; 6C318
 movsb	; 6C319
-mov dword [msglines], asc_C2814	; 6C31A
+mov dword [msglines], str_SaveAsGameDatabases	; 6C31A
 push byte 0FFFFFFFFh	; 6C324
 push ebx	; 6C326
 mov ebx, dword [byte esp+08h]	; 6C327
 push ebx	; 6C32B
 push byte 2	; 6C32C
-push unk_D0C24	; 6C32E
+push savedbbtns	; 6C32E
 mov ecx, 1	; 6C333
 mov ebx, msglines	; 6C338
 mov edx, 0FFFFFFFFh	; 6C33D
 mov eax, edx	; 6C342
 call MessageBox	; 6C344
 cmp eax, byte 1	; 6C349
-jne short loc_6C3B3	; 6C34C
+jne short .x	; 6C34C
 mov edx, ebp	; 6C34E
 mov eax, dword [esp]	; 6C350
 call CheckDatabases	; 6C353
 mov edx, eax	; 6C358
 call DrawEditRosters	; 6C35A
 test edx, edx	; 6C35F
-je short loc_6C3B3	; 6C361
-mov edi, unk_EC7C0	; 6C363
-mov esi, asc_C282C	; 6C368
+je short .x	; 6C361
+mov edi, curdbname	; 6C363
+mov esi, str_Current2	; 6C368
 movsd	; 6C36D
 movsd	; 6C36E
-mov dword [msglines], asc_D0F15	; 6C36F
+mov dword [msglines], str_SavingDatabases	; 6C36F
 push byte 0	; 6C379
 push ebp	; 6C37B
 mov esi, dword [byte esp+08h]	; 6C37C
@@ -82,17 +77,17 @@ mov eax, edx	; 6C394
 call MessageBox	; 6C396
 mov edx, str_extDB	; 6C39B
 lea eax, [byte esp+04h]	; 6C3A0
-call sub_6C4BA	; 6C3A4
+call SaveDbsToDir	; 6C3A4
 call RestoreDialogBg	; 6C3A9
 call DrawEditRosters	; 6C3AE
-loc_6C3B3:
+.x:
 add esp, byte 14h	; 6C3B3
 pop ebp	; 6C3B6
 pop edi	; 6C3B7
 pop esi	; 6C3B8
 pop ecx	; 6C3B9
 ret	; 6C3BA
-sub_6C3BB:
+MenuSaveDbsAs:
 push dword 78h	; 6C3BB
 call __CHK	; 6C3C0
 push ecx	; 6C3C5
@@ -112,16 +107,16 @@ push esi	; 6C3DB
 mov ecx, 30h	; 6C3DC
 mov ebx, 8	; 6C3E1
 lea edx, [byte esp+050h]	; 6C3E6
-mov eax, asc_C2834	; 6C3EA
+mov eax, str_EnterANewDatabase	; 6C3EA
 call TextInputDialog	; 6C3EF
 cmp byte [byte esp+03Ch], 0	; 6C3F4
-je near loc_6C4B2	; 6C3F9
+je near .x	; 6C3F9
 cmp eax, byte 1Bh	; 6C3FF
-je near loc_6C4B2	; 6C402
+je near .x	; 6C402
 lea edx, [byte esp+03Ch]	; 6C408
 lea eax, [byte esp+02Ch]	; 6C40C
 call strcpy_	; 6C410
-mov edx, asc_C284F	; 6C415
+mov edx, str_DBX	; 6C415
 lea eax, [byte esp+03Ch]	; 6C41A
 call strcat_	; 6C41E
 mov ebx, esp	; 6C423
@@ -131,50 +126,50 @@ call unknown_libname_1	; 6C42E
 test eax, eax	; 6C433
 sete al	; 6C435
 and eax, 0FFh	; 6C438
-je short loc_6C475	; 6C43D
+je short .2	; 6C43D
 push byte 0FFFFFFFFh	; 6C43F
 push ebp	; 6C441
 push edi	; 6C442
 push byte 2	; 6C443
 push btn_LeagueExists	; 6C445
 mov ecx, 2	; 6C44A
-mov ebx, off_CFB1C	; 6C44F
+mov ebx, dbexistsmsg	; 6C44F
 mov edx, 0FFFFFFFFh	; 6C454
 mov eax, edx	; 6C459
 call MessageBox	; 6C45B
 cmp eax, byte 1	; 6C460
-jne short loc_6C470	; 6C463
+jne short .1	; 6C463
 lea eax, [byte esp+03Ch]	; 6C465
 call DeleteDir	; 6C469
-jmp short loc_6C475	; 6C46E
-loc_6C470:
+jmp short .2	; 6C46E
+.1:
 mov esi, 1	; 6C470
-loc_6C475:
+.2:
 test esi, esi	; 6C475
-jne short loc_6C486	; 6C477
+jne short .3	; 6C477
 lea eax, [byte esp+03Ch]	; 6C479
 call mkdir_	; 6C47D
 mov dword [byte esp+04Ch], eax	; 6C482
-loc_6C486:
+.3:
 test esi, esi	; 6C486
-jne short loc_6C4B2	; 6C488
+jne short .x	; 6C488
 cmp dword [byte esp+04Ch], byte 0	; 6C48A
-jne short loc_6C4B2	; 6C48F
+jne short .x	; 6C48F
 lea edx, [byte esp+02Ch]	; 6C491
-mov eax, unk_EC7C0	; 6C495
+mov eax, curdbname	; 6C495
 call strcpy_	; 6C49A
 mov edx, str_extDB	; 6C49F
 lea eax, [byte esp+03Ch]	; 6C4A4
-call sub_6C4BA	; 6C4A8
+call SaveDbsToDir	; 6C4A8
 call DrawEditRosters	; 6C4AD
-loc_6C4B2:
+.x:
 add esp, byte 50h	; 6C4B2
 pop ebp	; 6C4B5
 pop edi	; 6C4B6
 pop esi	; 6C4B7
 pop ecx	; 6C4B8
 ret	; 6C4B9
-sub_6C4BA:
+SaveDbsToDir:
 push dword 0CCh	; 6C4BA
 call __CHK	; 6C4BF
 push ebx	; 6C4C4
@@ -189,11 +184,11 @@ lea edx, [dword esp+08Ch]	; 6C4D8
 xor eax, eax	; 6C4DF
 call _dos_getdiskfree_	; 6C4E1
 test eax, eax	; 6C4E6
-je short loc_6C4F7	; 6C4E8
-push asc_C2854	; 6C4EA
+je short .1	; 6C4E8
+push str_ErrorGettingDiskSpace	; 6C4EA
 call FatalError	; 6C4EF
 add esp, byte 4	; 6C4F4
-loc_6C4F7:
+.1:
 xor esi, esi	; 6C4F7
 mov si, word [dword esp+090h]	; 6C4F9
 xor eax, eax	; 6C501
@@ -209,16 +204,16 @@ xor edx, edx	; 6C528
 lea eax, [byte esp+02Ch]	; 6C52A
 call unknown_libname_1	; 6C52E
 test eax, eax	; 6C533
-je short loc_6C53F	; 6C535
+je short .2	; 6C535
 xor edx, edx	; 6C537
 mov dword [byte esp+04Ch], edx	; 6C539
-jmp short loc_6C54F	; 6C53D
-loc_6C53F:
+jmp short .3	; 6C53D
+.2:
 mov eax, dword [byte esp+01Ah]	; 6C53F
 add eax, 3FFh	; 6C543
 shr eax, 0Ah	; 6C548
 mov dword [byte esp+04Ch], eax	; 6C54B
-loc_6C54F:
+.3:
 mov ebx, dword [leaguedbnames+4]	; 6C54F
 mov ecx, dword [dword esp+09Ch]	; 6C555
 mov edx, ebp	; 6C55C
@@ -229,16 +224,16 @@ xor edx, edx	; 6C569
 lea eax, [byte esp+02Ch]	; 6C56B
 call unknown_libname_1	; 6C56F
 test eax, eax	; 6C574
-je short loc_6C580	; 6C576
+je short .4	; 6C576
 xor ebx, ebx	; 6C578
 mov dword [byte esp+050h], ebx	; 6C57A
-jmp short loc_6C590	; 6C57E
-loc_6C580:
+jmp short .5	; 6C57E
+.4:
 mov eax, dword [byte esp+01Ah]	; 6C580
 add eax, 3FFh	; 6C584
 shr eax, 0Ah	; 6C589
 mov dword [byte esp+050h], eax	; 6C58C
-loc_6C590:
+.5:
 mov ebx, dword [leaguedbnames+0Ch]	; 6C590
 mov ecx, dword [dword esp+09Ch]	; 6C596
 mov edx, ebp	; 6C59D
@@ -249,16 +244,16 @@ xor edx, edx	; 6C5AA
 lea eax, [byte esp+02Ch]	; 6C5AC
 call unknown_libname_1	; 6C5B0
 test eax, eax	; 6C5B5
-je short loc_6C5C1	; 6C5B7
+je short .6	; 6C5B7
 xor ecx, ecx	; 6C5B9
 mov dword [byte esp+054h], ecx	; 6C5BB
-jmp short loc_6C5D1	; 6C5BF
-loc_6C5C1:
+jmp short .7	; 6C5BF
+.6:
 mov eax, dword [byte esp+01Ah]	; 6C5C1
 add eax, 3FFh	; 6C5C5
 shr eax, 0Ah	; 6C5CA
 mov dword [byte esp+054h], eax	; 6C5CD
-loc_6C5D1:
+.7:
 mov ebx, dword [leaguedbnames]	; 6C5D1
 mov ecx, dword [dword esp+09Ch]	; 6C5D7
 mov edx, ebp	; 6C5DE
@@ -269,16 +264,16 @@ xor edx, edx	; 6C5EB
 lea eax, [byte esp+02Ch]	; 6C5ED
 call unknown_libname_1	; 6C5F1
 test eax, eax	; 6C5F6
-je short loc_6C602	; 6C5F8
+je short .8	; 6C5F8
 xor edi, edi	; 6C5FA
 mov dword [byte esp+058h], edi	; 6C5FC
-jmp short loc_6C612	; 6C600
-loc_6C602:
+jmp short .9	; 6C600
+.8:
 mov eax, dword [byte esp+01Ah]	; 6C602
 add eax, 3FFh	; 6C606
 shr eax, 0Ah	; 6C60B
 mov dword [byte esp+058h], eax	; 6C60E
-loc_6C612:
+.9:
 mov ebx, dword [leaguedbnames+10h]	; 6C612
 mov ecx, dword [dword esp+09Ch]	; 6C618
 mov edx, ebp	; 6C61F
@@ -289,14 +284,14 @@ xor edx, edx	; 6C62C
 lea eax, [byte esp+02Ch]	; 6C62E
 call unknown_libname_1	; 6C632
 test eax, eax	; 6C637
-je short loc_6C63F	; 6C639
+je short .10	; 6C639
 xor eax, eax	; 6C63B
-jmp short loc_6C64B	; 6C63D
-loc_6C63F:
+jmp short .11	; 6C63D
+.10:
 mov eax, dword [byte esp+01Ah]	; 6C63F
 add eax, 3FFh	; 6C643
 shr eax, 0Ah	; 6C648
-loc_6C64B:
+.11:
 mov dword [byte esp+05Ch], eax	; 6C64B
 mov ebx, dword [leaguedbnames+8]	; 6C64F
 mov ecx, dword [dword esp+09Ch]	; 6C655
@@ -308,16 +303,16 @@ xor edx, edx	; 6C669
 lea eax, [byte esp+02Ch]	; 6C66B
 call unknown_libname_1	; 6C66F
 test eax, eax	; 6C674
-je short loc_6C680	; 6C676
+je short .12	; 6C676
 xor edx, edx	; 6C678
 mov dword [byte esp+060h], edx	; 6C67A
-jmp short loc_6C690	; 6C67E
-loc_6C680:
+jmp short .13	; 6C67E
+.12:
 mov eax, dword [byte esp+01Ah]	; 6C680
 add eax, 3FFh	; 6C684
 shr eax, 0Ah	; 6C689
 mov dword [byte esp+060h], eax	; 6C68C
-loc_6C690:
+.13:
 mov edx, dword [seasondb_size]	; 6C690
 add edx, 3FFh	; 6C696
 mov eax, edx	; 6C69C
@@ -369,7 +364,7 @@ mov dword [dword esp+080h], eax	; 6C73A
 xor ebx, ebx	; 6C741
 mov dword [dword esp+084h], ebx	; 6C743
 xor edi, edi	; 6C74A
-loc_6C74C:
+.14:
 mov edx, dword [byte esp+ebx*4+06Ch]	; 6C74C
 add edx, esi	; 6C750
 dec edx	; 6C752
@@ -386,11 +381,11 @@ idiv esi	; 6C768
 sub edi, eax	; 6C76A
 inc ebx	; 6C76C
 cmp ebx, byte 6	; 6C76D
-jl short loc_6C74C	; 6C770
+jl short SaveDbsToDir.14	; 6C770
 xor eax, eax	; 6C772
 mov ax, word [dword esp+08Eh]	; 6C774
 cmp edi, eax	; 6C77C
-jle near loc_6C828	; 6C77E
+jle near .16	; 6C77E
 mov eax, 140h	; 6C784
 mov dword [dword esp+098h], eax	; 6C789
 mov edx, 0F0h	; 6C790
@@ -400,7 +395,7 @@ push eax	; 6C79D
 call MouseSetPos	; 6C79E
 add esp, byte 8	; 6C7A3
 xor ebx, ebx	; 6C7A6
-loc_6C7A8:
+.15:
 mov edx, dword [byte esp+ebx*4+06Ch]	; 6C7A8
 add edx, esi	; 6C7AC
 dec edx	; 6C7AE
@@ -410,7 +405,7 @@ idiv esi	; 6C7B4
 add edi, eax	; 6C7B6
 inc ebx	; 6C7B8
 cmp ebx, byte 6	; 6C7B9
-jl short loc_6C7A8	; 6C7BC
+jl short SaveDbsToDir.15	; 6C7BC
 mov edx, edi	; 6C7BE
 imul edx, esi	; 6C7C0
 mov eax, edx	; 6C7C3
@@ -419,8 +414,8 @@ shl edx, 0Ah	; 6C7C8
 LD sbb, eax, edx	; 6C7CB
 sar eax, 0Ah	; 6C7CD
 push eax	; 6C7D0
-push asc_C2873	; 6C7D1
-push asc_CFB69	; 6C7D6
+push str_3dKbytesOfFree2	; 6C7D1
+push str_XXXKbytesOfFree2	; 6C7D6
 call sprintf_	; 6C7DB
 add esp, byte 0Ch	; 6C7E0
 push dword 320h	; 6C7E3
@@ -431,16 +426,16 @@ push eax	; 6C7F7
 push byte 0	; 6C7F8
 push byte 0	; 6C7FA
 mov ecx, 3	; 6C7FC
-mov ebx, off_CFB8A	; 6C801
+mov ebx, nodiskspacemsg	; 6C801
 mov edx, 0FFFFFFFFh	; 6C806
 mov eax, edx	; 6C80B
 call MessageBox	; 6C80D
 cmp byte [byte ebp+00h], 0	; 6C812
-je near loc_6C960	; 6C816
+je near .x	; 6C816
 mov eax, ebp	; 6C81C
 call rmdir_	; 6C81E
-jmp near loc_6C960	; 6C823
-loc_6C828:
+jmp near .x	; 6C823
+.16:
 mov ebx, dword [leaguedbnames+14h]	; 6C828
 mov ecx, dword [dword esp+09Ch]	; 6C82E
 mov edx, ebp	; 6C835
@@ -520,8 +515,8 @@ push eax	; 6C94F
 call sub_932D0	; 6C950
 add esp, byte 0Ch	; 6C955
 xor ecx, ecx	; 6C958
-mov dword [dword_EBC68], ecx	; 6C95A
-loc_6C960:
+mov dword [dbdirty], ecx	; 6C95A
+.x:
 add esp, 0A0h	; 6C960
 pop ebp	; 6C966
 pop edi	; 6C967
@@ -529,7 +524,7 @@ pop esi	; 6C968
 pop ecx	; 6C969
 pop ebx	; 6C96A
 ret	; 6C96B
-sub_6C96C:
+WriteLeagueDbsMem:
 push dword 48h	; 6C96C
 call __CHK	; 6C971
 push ebx	; 6C976
@@ -620,7 +615,7 @@ call sub_932D0	; 6CA7F
 add esp, byte 0Ch	; 6CA84
 add esp, byte 20h	; 6CA87
 jmp near BuildFreeAgentList_ret	; 6CA8A
-sub_6CA8F:
+FreeLeagueDbsMem:
 push dword 20h	; 6CA8F
 call __CHK	; 6CA94
 push ebx	; 6CA99
@@ -631,54 +626,54 @@ push edi	; 6CA9D
 push ebp	; 6CA9E
 mov edx, dword [attdb]	; 6CA9F
 test edx, edx	; 6CAA5
-je short loc_6CAC0	; 6CAA7
+je short .1	; 6CAA7
 push edx	; 6CAA9
 call jctime	; 6CAAA
 add esp, byte 4	; 6CAAF
 xor ecx, ecx	; 6CAB2
 mov dword [attdb], ecx	; 6CAB4
 mov dword [attdb_size], ecx	; 6CABA
-loc_6CAC0:
+.1:
 mov edi, dword [teamsdb]	; 6CAC0
 test edi, edi	; 6CAC6
-je short loc_6CADF	; 6CAC8
+je short .2	; 6CAC8
 push edi	; 6CACA
 call jctime	; 6CACB
 add esp, byte 4	; 6CAD0
 xor eax, eax	; 6CAD3
 mov dword [teamsdb], eax	; 6CAD5
 mov dword [teamsdb_size], eax	; 6CADA
-loc_6CADF:
+.2:
 mov ebx, dword [keydb]	; 6CADF
 test ebx, ebx	; 6CAE5
-je short loc_6CB00	; 6CAE7
+je short .3	; 6CAE7
 push ebx	; 6CAE9
 call jctime	; 6CAEA
 add esp, byte 4	; 6CAEF
 xor esi, esi	; 6CAF2
 mov dword [keydb], esi	; 6CAF4
 mov dword [keydb_size], esi	; 6CAFA
-loc_6CB00:
+.3:
 mov ebp, dword [carteamsdb]	; 6CB00
 test ebp, ebp	; 6CB06
-je short loc_6CB21	; 6CB08
+je short .4	; 6CB08
 push ebp	; 6CB0A
 call jctime	; 6CB0B
 add esp, byte 4	; 6CB10
 xor edx, edx	; 6CB13
 mov dword [carteamsdb], edx	; 6CB15
 mov dword [carteamsdb_size], edx	; 6CB1B
-loc_6CB21:
+.4:
 mov ecx, dword [careerdb]	; 6CB21
 test ecx, ecx	; 6CB27
-je short loc_6CB42	; 6CB29
+je short .5	; 6CB29
 push ecx	; 6CB2B
 call jctime	; 6CB2C
 add esp, byte 4	; 6CB31
 xor edi, edi	; 6CB34
 mov dword [careerdb], edi	; 6CB36
 mov dword [careerdb_size], edi	; 6CB3C
-loc_6CB42:
+.5:
 mov eax, dword [seasondb]	; 6CB42
 test eax, eax	; 6CB47
 je near BuildFreeAgentList_ret	; 6CB49
@@ -728,33 +723,33 @@ mov edx, dword [keydb]	; 6CBC2
 add eax, edx	; 6CBC8
 pop edx	; 6CBCA
 ret	; 6CBCB
-sub_6CBCC:
+SeasonDbPtr:
 push dword 8	; 6CBCC
-loc_6CBD1:
+SeasonDbPtr_common:
 call __CHK	; 6CBD1
 push edx	; 6CBD6
 mov edx, dword [seasondb]	; 6CBD7
 add eax, edx	; 6CBDD
 pop edx	; 6CBDF
 ret	; 6CBE0
-sub_6CBE1:
+SeasonDbPtr2:
 push dword 8	; 6CBE1
-jmp short loc_6CBD1	; 6CBE6
-sub_6CBE8:
+jmp short SeasonDbPtr_common	; 6CBE6
+CareerDbPtr:
 push dword 8	; 6CBE8
-loc_6CBED:
+CareerDbPtr_common:
 call __CHK	; 6CBED
 push edx	; 6CBF2
 mov edx, dword [careerdb]	; 6CBF3
 add eax, edx	; 6CBF9
 pop edx	; 6CBFB
 ret	; 6CBFC
-sub_6CBFD:
+CareerDbPtr2:
 push dword 8	; 6CBFD
-jmp short loc_6CBED	; 6CC02
-sub_6CC04:
+jmp short CareerDbPtr_common	; 6CC02
+AttDbPtr:
 push dword 8	; 6CC04
-loc_6CC09:
+.1:
 call __CHK	; 6CC09
 push edx	; 6CC0E
 mov edx, dword [attdb]	; 6CC0F
@@ -762,8 +757,8 @@ add eax, edx	; 6CC15
 pop edx	; 6CC17
 ret	; 6CC18
 push dword 8	; 6CC19
-jmp short loc_6CC09	; 6CC1E
-sub_6CC20:
+jmp short AttDbPtr.1	; 6CC1E
+RunEditRosters:
 push dword 7Ch	; 6CC20
 call __CHK	; 6CC25
 push ebx	; 6CC2A
@@ -795,19 +790,19 @@ mov dword [editrosters_exit], ebp	; 6CC8E
 mov dword [dword_D0B12], ebp	; 6CC94
 push byte 20h	; 6CC9A
 push dword 300h	; 6CC9C
-push asc_C2894	; 6CCA1
+push str_Temp7	; 6CCA1
 call sub_8CCA8	; 6CCA6
 add esp, byte 0Ch	; 6CCAB
 mov ebp, eax	; 6CCAE
 cmp byte [musicon], 0	; 6CCB0
-je short loc_6CCD6	; 6CCB7
+je short .1	; 6CCB7
 cmp dword [songdata], byte 0	; 6CCB9
-je short loc_6CCD6	; 6CCC0
+je short .1	; 6CCC0
 mov eax, dword [musichandle]	; 6CCC2
 mov ebx, 32h	; 6CCC7
 mov edx, 3	; 6CCCC
 call sub_8FCDF	; 6CCD1
-loc_6CCD6:
+.1:
 push ebp	; 6CCD6
 push dword 100h	; 6CCD7
 push byte 0	; 6CCDC
@@ -817,8 +812,8 @@ mov ebx, 10h	; 6CCE6
 mov edx, ebp	; 6CCEB
 mov eax, 1	; 6CCED
 call sub_76429	; 6CCF2
-mov edi, unk_EC7C0	; 6CCF7
-mov esi, asc_C2899	; 6CCFC
+mov edi, curdbname	; 6CCF7
+mov esi, str_Current3	; 6CCFC
 movsd	; 6CD01
 movsd	; 6CD02
 call sub_B4BA8	; 6CD03
@@ -832,23 +827,23 @@ push eax	; 6CD1D
 call sub_8E9E8	; 6CD1E
 add esp, byte 4	; 6CD23
 cmp byte [musicon], 0	; 6CD26
-je short loc_6CD65	; 6CD2D
+je short .3	; 6CD2D
 cmp dword [songdata], byte 0	; 6CD2F
-je short loc_6CD65	; 6CD36
-loc_6CD38:
+je short .3	; 6CD36
+.2:
 mov eax, dword [musicslot-3]	; 6CD38
 sar eax, 18h	; 6CD3D
 mov edx, 3	; 6CD40
 call sub_8FC8A	; 6CD45
 test eax, eax	; 6CD4A
-je short loc_6CD38	; 6CD4C
+je short RunEditRosters.2	; 6CD4C
 mov esi, dword [songdata]	; 6CD4E
 push esi	; 6CD54
 call sub_8D2F0	; 6CD55
 add esp, byte 4	; 6CD5A
 xor edi, edi	; 6CD5D
 mov dword [songdata], edi	; 6CD5F
-loc_6CD65:
+.3:
 push byte 20h	; 6CD65
 push dword 1E0h	; 6CD67
 push dword 280h	; 6CD6C
@@ -866,10 +861,10 @@ imul eax, edx	; 6CD95
 add eax, byte 11h	; 6CD98
 push byte 20h	; 6CD9B
 push eax	; 6CD9D
-push asc_C28A1	; 6CD9E
+push str_Pointer11	; 6CD9E
 call sub_8CCA8	; 6CDA3
 add esp, byte 0Ch	; 6CDA8
-mov dword [dword_EBE9C], eax	; 6CDAB
+mov dword [editptrspr], eax	; 6CDAB
 mov esi, dword [pointerspr]	; 6CDB0
 mov edi, eax	; 6CDB6
 movsd	; 6CDB8
@@ -880,12 +875,12 @@ movsb	; 6CDBC
 mov eax, dword [pointerspr]	; 6CDBD
 mov si, word [byte eax+04h]	; 6CDC2
 inc esi	; 6CDC6
-mov eax, dword [dword_EBE9C]	; 6CDC7
+mov eax, dword [editptrspr]	; 6CDC7
 mov word [byte eax+04h], si	; 6CDCC
 mov eax, dword [pointerspr]	; 6CDD0
 mov si, word [byte eax+06h]	; 6CDD5
 inc esi	; 6CDD9
-mov eax, dword [dword_EBE9C]	; 6CDDA
+mov eax, dword [editptrspr]	; 6CDDA
 mov word [byte eax+06h], si	; 6CDDF
 mov eax, str_extDB	; 6CDE3
 call LoadLeagueDbsMem	; 6CDE8
@@ -895,20 +890,20 @@ mov ebx, 40h	; 6CDF4
 mov edx, 6	; 6CDF9
 mov eax, unk_D0450	; 6CDFE
 call EditRosters	; 6CE03
-call sub_6CA8F	; 6CE08
-mov eax, dword [dword_EBE9C]	; 6CE0D
+call FreeLeagueDbsMem	; 6CE08
+mov eax, dword [editptrspr]	; 6CE0D
 push eax	; 6CE12
 call jctime	; 6CE13
 add esp, byte 4	; 6CE18
 cmp byte [musicon], 0	; 6CE1B
-je short loc_6CE41	; 6CE22
+je short .4	; 6CE22
 cmp dword [songdata], byte 0	; 6CE24
-je short loc_6CE41	; 6CE2B
+je short .4	; 6CE2B
 mov eax, dword [musichandle]	; 6CE2D
 mov ebx, 32h	; 6CE32
 mov edx, 3	; 6CE37
 call sub_8FCDF	; 6CE3C
-loc_6CE41:
+.4:
 push ebp	; 6CE41
 push dword 100h	; 6CE42
 push byte 0	; 6CE47
@@ -940,34 +935,34 @@ mov dword [dlgtextfg], eax	; 6CEA4
 mov eax, dword [byte esp+044h]	; 6CEA9
 mov dword [dlgtextbg], eax	; 6CEAD
 cmp byte [musicon], 0	; 6CEB2
-je short loc_6CEF1	; 6CEB9
+je short .6	; 6CEB9
 cmp dword [songdata], byte 0	; 6CEBB
-je short loc_6CEF1	; 6CEC2
-loc_6CEC4:
+je short .6	; 6CEC2
+.5:
 mov eax, dword [musicslot-3]	; 6CEC4
 sar eax, 18h	; 6CEC9
 mov edx, 3	; 6CECC
 call sub_8FC8A	; 6CED1
 test eax, eax	; 6CED6
-je short loc_6CEC4	; 6CED8
+je short RunEditRosters.5	; 6CED8
 mov esi, dword [songdata]	; 6CEDA
 push esi	; 6CEE0
 call sub_8D2F0	; 6CEE1
 add esp, byte 4	; 6CEE6
 xor edi, edi	; 6CEE9
 mov dword [songdata], edi	; 6CEEB
-loc_6CEF1:
+.6:
 add esp, byte 54h	; 6CEF1
-loc_6CEF4:
+RunEditRosters_ret6:
 pop ebp	; 6CEF4
-loc_6CEF5:
+RunEditRosters_ret5:
 pop edi	; 6CEF5
 pop esi	; 6CEF6
 pop edx	; 6CEF7
 pop ecx	; 6CEF8
 pop ebx	; 6CEF9
 ret	; 6CEFA
-sub_6CEFB:
+DrawRosterTitle:
 push dword 70h	; 6CEFB
 call __CHK	; 6CF00
 push ecx	; 6CF05
@@ -977,34 +972,34 @@ sub esp, byte 54h	; 6CF08
 mov edi, eax	; 6CF0B
 mov esi, edx	; 6CF0D
 cmp byte [dword ebx+rosterisfa], 1	; 6CF0F
-je short loc_6CF5C	; 6CF16
-mov eax, dword [nosplit ebx*4+dword_EA988]	; 6CF18
+je short .3	; 6CF16
+mov eax, dword [nosplit ebx*4+rosterteamptr]	; 6CF18
 add eax, byte 1Ah	; 6CF1F
 push eax	; 6CF22
-push unk_C28A9	; 6CF23
+push str_S5	; 6CF23
 lea eax, [byte esp+08h]	; 6CF28
 push eax	; 6CF2C
 call sprintf_	; 6CF2D
 add esp, byte 0Ch	; 6CF32
-loc_6CF35:
+.1:
 mov eax, esp	; 6CF35
 push eax	; 6CF37
 call fputchar	; 6CF38
 add esp, byte 4	; 6CF3D
 cmp eax, 91h	; 6CF40
-jle short loc_6CF56	; 6CF45
+jle short .2	; 6CF45
 mov eax, esp	; 6CF47
 call strlen_	; 6CF49
 xor dl, dl	; 6CF4E
 mov byte [byte esp+eax-01h], dl	; 6CF50
-jmp short loc_6CF35	; 6CF54
-loc_6CF56:
+jmp short DrawRosterTitle.1	; 6CF54
+.2:
 mov ebx, esp	; 6CF56
 mov edx, esi	; 6CF58
-jmp short loc_6CF61	; 6CF5A
-loc_6CF5C:
-mov ebx, asc_C28AC	; 6CF5C
-loc_6CF61:
+jmp short .4	; 6CF5A
+.3:
+mov ebx, str_FreeAgents	; 6CF5C
+.4:
 mov eax, edi	; 6CF61
 call PrintShadowText	; 6CF63
 add esp, byte 54h	; 6CF68
@@ -1012,7 +1007,7 @@ pop edi	; 6CF6B
 pop esi	; 6CF6C
 pop ecx	; 6CF6D
 ret	; 6CF6E
-sub_6CF6F:
+DrawRosterList:
 push dword 94h	; 6CF6F
 call __CHK	; 6CF74
 push ecx	; 6CF79
@@ -1025,9 +1020,9 @@ push eax	; 6CF82
 push edx	; 6CF83
 push ebx	; 6CF84
 cmp byte [dword ebx+rosterisfa], 1	; 6CF85
-je near loc_6D0D9	; 6CF8C
+je near .6	; 6CF8C
 xor esi, esi	; 6CF92
-loc_6CF94:
+.1:
 mov edi, dword [byte ebp-06Ch]	; 6CF94
 mov eax, edi	; 6CF97
 shl eax, 2	; 6CF99
@@ -1046,7 +1041,7 @@ mov dword [byte ebp-04h], eax	; 6CFB7
 mov edi, dword [byte ebp-08h]	; 6CFBA
 add edi, eax	; 6CFBD
 cmp byte [dword edi+rosterlist], 0	; 6CFBF
-je near loc_6D0C5	; 6CFC6
+je near .4	; 6CFC6
 xor eax, eax	; 6CFCC
 mov al, byte [dword edi+byte_EA991]	; 6CFCE
 push eax	; 6CFD4
@@ -1069,7 +1064,7 @@ add esp, byte 0Ch	; 6D001
 xor eax, eax	; 6D004
 mov al, byte [dword edi+rosterlist]	; 6D006
 push eax	; 6D00C
-push unk_D07EB	; 6D00D
+push str_C4	; 6D00D
 lea eax, [byte ebp-060h]	; 6D012
 push eax	; 6D015
 call sprintf_	; 6D016
@@ -1111,7 +1106,7 @@ mov eax, edx	; 6D080
 shl eax, 3	; 6D082
 sub eax, edx	; 6D085
 cmp byte [dword esi+eax*4+rostersel], 0	; 6D087
-je short loc_6D0CA	; 6D08F
+je short .5	; 6D08F
 push dword 80h	; 6D091
 xor eax, eax	; 6D096
 mov al, byte [byte_D42C3]	; 6D098
@@ -1121,28 +1116,28 @@ imul eax, esi	; 6D0A3
 add eax, byte 35h	; 6D0A6
 push eax	; 6D0A9
 test edx, edx	; 6D0AA
-je short loc_6D0B5	; 6D0AC
+je short .2	; 6D0AC
 mov eax, 15Eh	; 6D0AE
-jmp short loc_6D0BA	; 6D0B3
-loc_6D0B5:
+jmp short .3	; 6D0B3
+.2:
 mov eax, 23h	; 6D0B5
-loc_6D0BA:
+.3:
 push eax	; 6D0BA
 call sub_90F38	; 6D0BB
 add esp, byte 14h	; 6D0C0
-jmp short loc_6D0CA	; 6D0C3
-loc_6D0C5:
+jmp short .5	; 6D0C3
+.4:
 mov esi, 1Ch	; 6D0C5
-loc_6D0CA:
+.5:
 inc esi	; 6D0CA
 cmp esi, byte 1Ch	; 6D0CB
-jl near loc_6CF94	; 6D0CE
-jmp near loc_6D24F	; 6D0D4
-loc_6D0D9:
+jl near DrawRosterList.1	; 6D0CE
+jmp near .x	; 6D0D4
+.6:
 mov edi, dword [dword_EBCA4]	; 6D0D9
 xor esi, esi	; 6D0DF
-jmp near loc_6D1F4	; 6D0E1
-loc_6D0E6:
+jmp near .11	; 6D0E1
+.7:
 mov eax, edi	; 6D0E6
 shl eax, 3	; 6D0E8
 sub eax, edi	; 6D0EB
@@ -1175,7 +1170,7 @@ add eax, dword [byte ebp-0Ch]	; 6D13A
 mov al, byte [eax]	; 6D13D
 and eax, 0FFh	; 6D13F
 push eax	; 6D144
-push unk_D07EB	; 6D145
+push str_C4	; 6D145
 lea eax, [byte ebp-060h]	; 6D14A
 push eax	; 6D14D
 call sprintf_	; 6D14E
@@ -1213,7 +1208,7 @@ call sub_91964	; 6D1AB
 add esp, byte 0Ch	; 6D1B0
 mov eax, dword [falistsel]	; 6D1B3
 cmp byte [edi+eax], 0	; 6D1B8
-je short loc_6D1F2	; 6D1BC
+je short .10	; 6D1BC
 push dword 80h	; 6D1BE
 xor eax, eax	; 6D1C3
 mov al, byte [byte_D42C3]	; 6D1C5
@@ -1223,26 +1218,26 @@ imul eax, esi	; 6D1D0
 add eax, byte 35h	; 6D1D3
 push eax	; 6D1D6
 cmp dword [byte ebp-06Ch], byte 0	; 6D1D7
-je short loc_6D1E4	; 6D1DB
+je short .8	; 6D1DB
 mov eax, 15Eh	; 6D1DD
-jmp short loc_6D1E9	; 6D1E2
-loc_6D1E4:
+jmp short .9	; 6D1E2
+.8:
 mov eax, 23h	; 6D1E4
-loc_6D1E9:
+.9:
 push eax	; 6D1E9
 call sub_90F38	; 6D1EA
 add esp, byte 14h	; 6D1EF
-loc_6D1F2:
+.10:
 inc edi	; 6D1F2
 inc esi	; 6D1F3
-loc_6D1F4:
+.11:
 cmp esi, byte 1Ch	; 6D1F4
-jge short loc_6D205	; 6D1F7
+jge short .12	; 6D1F7
 cmp edi, dword [facount]	; 6D1F9
-jl near loc_6D0E6	; 6D1FF
-loc_6D205:
+jl near DrawRosterList.7	; 6D1FF
+.12:
 cmp dword [dword_D0C20], byte 0	; 6D205
-je short loc_6D24F	; 6D20C
+je short .x	; 6D20C
 mov edx, 2	; 6D20E
 mov eax, unk_D0BB8	; 6D213
 call DrawButtons	; 6D218
@@ -1257,14 +1252,14 @@ div ebx	; 6D23E
 mov dword [dword_D0C04], eax	; 6D240
 mov eax, unk_D0BF0	; 6D245
 call DrawScrollBar	; 6D24A
-loc_6D24F:
+.x:
 mov esp, ebp	; 6D24F
 pop ebp	; 6D251
 pop edi	; 6D252
 pop esi	; 6D253
 pop ecx	; 6D254
 ret	; 6D255
-sub_6D256:
+DrawDatabaseName:
 push dword 44h	; 6D256
 call __CHK	; 6D25B
 push edx	; 6D260
@@ -1272,13 +1267,13 @@ push esi	; 6D261
 push edi	; 6D262
 sub esp, byte 34h	; 6D263
 mov edi, esp	; 6D266
-mov esi, asc_C28B8	; 6D268
+mov esi, str_DATABASE	; 6D268
 movsd	; 6D26D
 movsd	; 6D26E
 movsd	; 6D26F
-mov eax, unk_EC7C0	; 6D270
+mov eax, curdbname	; 6D270
 call strupr_	; 6D275
-mov edx, unk_EC7C0	; 6D27A
+mov edx, curdbname	; 6D27A
 mov eax, esp	; 6D27F
 call strcat_	; 6D281
 mov edx, esp	; 6D286
@@ -1289,32 +1284,32 @@ pop edi	; 6D295
 pop esi	; 6D296
 pop edx	; 6D297
 ret	; 6D298
-sub_6D299:
+DrawRosterPanel:
 push dword 0Ch	; 6D299
 call __CHK	; 6D29E
 push ebx	; 6D2A3
 push edx	; 6D2A4
 test eax, eax	; 6D2A5
-jne short loc_6D2C8	; 6D2A7
+jne short .1	; 6D2A7
 xor ebx, ebx	; 6D2A9
 mov edx, 25h	; 6D2AB
 mov eax, 64h	; 6D2B0
-call sub_6CEFB	; 6D2B5
+call DrawRosterTitle	; 6D2B5
 xor ebx, ebx	; 6D2BA
 mov edx, 35h	; 6D2BC
 mov eax, 2Dh	; 6D2C1
-jmp short loc_6D2EB	; 6D2C6
-loc_6D2C8:
+jmp short .2	; 6D2C6
+.1:
 mov ebx, 1	; 6D2C8
 mov edx, 25h	; 6D2CD
 mov eax, 19Eh	; 6D2D2
-call sub_6CEFB	; 6D2D7
+call DrawRosterTitle	; 6D2D7
 mov ebx, 1	; 6D2DC
 mov edx, 35h	; 6D2E1
 mov eax, 167h	; 6D2E6
-loc_6D2EB:
-call sub_6CF6F	; 6D2EB
-call sub_6D256	; 6D2F0
+.2:
+call DrawRosterList	; 6D2EB
+call DrawDatabaseName	; 6D2F0
 pop edx	; 6D2F5
 pop ebx	; 6D2F6
 ret	; 6D2F7

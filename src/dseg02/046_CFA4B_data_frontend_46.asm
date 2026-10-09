@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_CFA4B progbits alloc noexec write align=1
-extern sub_6C2F9, sub_6C3BB, EditRostersReturn, SelectRosterTeam, sub_73703, EasnStandingsMenu, unk_CDF56, unk_CDF64
+extern MenuSaveDbs, MenuSaveDbsAs, EditRostersReturn, SelectRosterTeam, sub_73703, EasnStandingsMenu, unk_CDF56, unk_CDF64
 extern unk_CDF76, unk_CDF8A, unk_CE96F, unk_CEA2F, unk_CEB2F
-global asc_CFB69, dword_CFA4B, off_CFB1C, off_CFB8A, unk_CFAD5, unk_CFB01, unk_CFB24, unk_CFB46
+global str_XXXKbytesOfFree2, dword_CFA4B, dbexistsmsg, nodiskspacemsg, unk_CFAD5, unk_CFB01, unk_CFB24, unk_CFB46
 global unk_CFB98, unk_CFBA4, unk_CFBB0, unk_CFBBD, unk_CFBCD, unk_CFBDA, unk_CFBE8, unk_CFCA8
 global unk_CFCB4, unk_CFCBF, unk_CFCCB, unk_CFCD9, unk_CFCE5, unk_CFCF2, unk_CFDB2, unk_CFDBD
 global unk_CFDC9, unk_CFDD6, unk_CFDE3, unk_CFDEE, unk_CFDFD, unk_CFE08, unk_CFEE8, unk_CFEF4
@@ -39,7 +39,7 @@ db 020h,074h,068h,061h,074h,020h,06Eh,061h,06Dh,065h,021h,00h
 unk_CFB01:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,072h
 db 065h,070h,06Ch,061h,063h,065h,020h,069h,074h,03Fh,00h
-off_CFB1C:
+dbexistsmsg:
 dd unk_CFAD5
 dd unk_CFB01
 unk_CFB24:
@@ -50,14 +50,14 @@ unk_CFB46:
 db 074h,06Fh,020h,073h,061h,076h,065h,020h,074h,068h,065h,020h,064h,061h,074h,061h
 db 062h,061h,073h,065h,073h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h,069h
 db 072h,065h,00h
-asc_CFB69:
+str_XXXKbytesOfFree2:
 db 058h,058h,058h,020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,066h,072h
 db 065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,02Eh,020h,020h
 db 00h
-off_CFB8A:
+nodiskspacemsg:
 dd unk_CFB24
 dd unk_CFB46
-dd asc_CFB69
+dd str_XXXKbytesOfFree2
 db 00h,00h
 unk_CFB98:
 db 041h,06Eh,061h,068h,065h,069h,06Dh,020h,02Eh,02Eh,02Eh,00h
@@ -233,11 +233,11 @@ db 052h,065h,074h,075h,072h,06Eh,00h
 unk_D006E:
 db 00h,00h,00h,00h,00h,00h,00h,00h,080h,00h,00h,00h,011h,00h,00h,00h
 dd unk_D0031
-dd sub_6C2F9
+dd MenuSaveDbs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 080h,00h,00h,00h,023h,00h,00h,00h
 dd unk_D0042
-dd sub_6C3BB
+dd MenuSaveDbsAs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 080h,00h,00h,00h,035h,00h,00h,00h
 dd unk_D0055

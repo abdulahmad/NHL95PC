@@ -739,11 +739,24 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0006BF4A,sub_6BF4A,BuildFreeAgentList,PC-new,,,,high,"falist entries (1Bh bytes: position, jersey, index, ""F. Lastname"") for KEY records with team 0FFh, up to facount",joystick_calibration,manual-trace
 0006C043,sub_6C043,BuildTeamRosterList,PC-new,,,,high,"(team, entries, teamrec*): 28 roster entries from the in-memory TEAMS / KEY DBs, entries in teamrec+0E4h flagged 2",joystick_calibration,manual-trace
 0006C19B,sub_6C19B,LoadLeagueDbsMem,PC-new,,,,high,"(dir): loads SEASON, CAREER, CARTEAMS, KEY, TEAMS and ATT .DB files into memory (seasondb, careerdb, ...) with sizes",joystick_calibration,manual-trace
-0006C2F9,sub_6C2F9,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_save,unmatched
-0006C3BB,sub_6C3BB,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_save,unmatched
+0006C2F9,sub_6C2F9,MenuSaveDbs,PC-new,,,,high,"Edit Rosters menu ""Save"": ""Save as game databases?"", CheckDatabases, ""Saving databases."" into ""Current"" (SaveDbsToDir)",database_save,manual-trace
+0006C3BB,sub_6C3BB,MenuSaveDbsAs,PC-new,,,,high,"Edit Rosters menu ""Save As"": ""Enter a new database name:"" (.DBX dir), ""There is already a database with that name! Do you want to replace it?"", mkdir, SaveDbsToDir",database_save,manual-trace
+0006C4BA,sub_6C4BA,SaveDbsToDir,PC-new,,,,medium,"(dir, ext): sums the old file sizes (KB) against the in-memory DB sizes and the free disk space (""Insufficient disk space available ... XXX Kbytes""), then writes the DBs (WriteLeagueDbsMem); rmdir on failure",database_save,manual-trace
+0006C96C,sub_6C96C,WriteLeagueDbsMem,PC-new,,,,high,"(dir): writes SEASON, CAREER, CARTEAMS, KEY, TEAMS and ATT from memory (pair of LoadLeagueDbsMem)",database_save,manual-trace
+0006CA8F,sub_6CA8F,FreeLeagueDbsMem,PC-new,,,,high,frees the six in-memory DBs,database_save,manual-trace
 0006CB6B,sub_6CB6B,CarTeamRecPtr,PC-new,,,,high,returns carteamsdb + team * 4Ch,database_save,manual-trace
 0006CB90,sub_6CB90,TeamRecPtr,PC-new,,,,high,returns teamsdb + team * 2E8h,database_save,manual-trace
 0006CBB7,sub_6CBB7,KeyDbPtr,PC-new,,,,high,returns keydb + offset (player entry pointer into KEY.DB),database_save,manual-trace
+0006CBCC,sub_6CBCC,SeasonDbPtr,PC-new,,,,medium,seasondb + offset,database_save,manual-trace
+0006CBE1,sub_6CBE1,SeasonDbPtr2,PC-new,,,,medium,second entry with the same body (SimulateGame goalie path),database_save,manual-trace
+0006CBE8,sub_6CBE8,CareerDbPtr,PC-new,,,,medium,careerdb + offset,database_save,manual-trace
+0006CBFD,sub_6CBFD,CareerDbPtr2,PC-new,,,,medium,second entry with the same body,database_save,manual-trace
+0006CC04,sub_6CC04,AttDbPtr,PC-new,,,,medium,attdb + offset (no direct refs; an unlabelled twin follows),database_save,manual-trace
+0006CC20,sub_6CC20,RunEditRosters,PC-new,,,,high,"Edit Rosters session: dialog colours, music fade, ""Current"" DBs into memory (LoadLeagueDbsMem), enlarged pointer copy, EditRosters, FreeLeagueDbsMem, restore",database_save,manual-trace
+0006CEFB,sub_6CEFB,DrawRosterTitle,PC-new,,,,high,"(x, y, side): team name or ""Free Agents"", trimmed to 91h pixels",database_save,manual-trace
+0006CF6F,sub_6CF6F,DrawRosterList,PC-new,,,,medium,"roster panel rows (position, jersey, FitPlayerName), buttons and scroll bar",database_save,manual-trace
+0006D256,sub_6D256,DrawDatabaseName,PC-new,,,,high,"""DATABASE : "" + upper-cased current database name, centred",database_save,manual-trace
+0006D299,sub_6D299,DrawRosterPanel,PC-new,,,,high,"(side): DrawRosterTitle, DrawRosterList and DrawDatabaseName for the left or right panel",database_save,manual-trace
 0006D2F8,sub_6D2F8,DrawEditRosters,PC-new,,,,medium,"redraws the Edit Rosters screen (prez2 background and palette, both roster panels with 'Ratings:' and jersey numbers); called after every roster change and from database_dialogs",create_player,manual-trace
 0006D5BB,sub_6D5BB,EditRostersReturn,PC-new,,,,high,'Return' menu item (frontend_46 menu table): sets editrosters_exit to -1,create_player,manual-trace
 0006D5D0,sub_6D5D0,SelectRosterTeam,PC-new,,,,high,"division-submenu team item: puts the picked team (divisionteams[div][slot]) in rosterteam[side], re-enables the previous team's item and 'Free Agents ...', disables the new one, enables 'Edit Team Lines ...', reloads the list (LoadRosterList) and redraws",create_player,manual-trace

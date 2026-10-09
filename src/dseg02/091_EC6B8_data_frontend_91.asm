@@ -25,7 +25,7 @@ global dword_ED6FC, hilightfont, dword_ED704, dword_ED708, dword_ED70C, dword_ED
 global dword_ED756, dword_ED75C, dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774
 global dword_ED778, dword_ED77C, dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794
 global dword_ED798, dword_ED79C, dword_ED7A0, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, dword_ED7B4
-global dword_ED7B8, vgapage, memlist1, memlist0, unk_EC7C0, unk_ED7BC, word_ED758
+global dword_ED7B8, vgapage, memlist1, memlist0, curdbname, unk_ED7BC, word_ED758
 dword_EC6B8:
 resb 4
 dword_EC6BC:
@@ -56,7 +56,7 @@ dword_EC774:
 resb 4
 dword_EC778:
 resb 72
-unk_EC7C0:
+curdbname:
 resb 32
 byte_EC7E0:
 resb 4

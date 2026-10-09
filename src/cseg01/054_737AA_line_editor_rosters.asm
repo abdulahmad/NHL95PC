@@ -18,13 +18,13 @@ extern dword_D1231, dword_D1233, dword_D1338, dword_D133C, dword_D1398, dword_D1
 extern dword_D1418, dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, musichandle, musicslot
 extern dword_D2C6B, dword_D8B74, dword_D8C84, dword_DBC7C, dword_DBCE0, pointerspr, statsskaterorder, statsgoalieorder
 extern statsgoalieplr, statsskaterplr, statsplayerbuf, ptrupdatefn, dword_EA2B4, rosterteamrec, dword_EBC6C, dword_EBC70
-extern msglines, dword_EBE9C, dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0
+extern msglines, editptrspr, dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0
 extern vgapage, fputchar, j___close_, j___delay_, jctime, lseek_, memcpy_, off_CF223
 extern off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443, off_D056C, off_D058C
 extern open_, qsort_, read_, sprintf_, strcmp_, MakePath, SetTextColors, PrintCenteredText
 extern PrintShadowText, PrintFmt1, PrintFmt2, RunMenu, FitPlayerName, MessageBox, ShowLoadingScreen, FadeOutPalCycle
 extern GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, KeyDbPtr
-extern sub_6CBE8, sub_6CBFD, sub_78366, sub_78500, sub_78A87, sub_79188, sub_79DE1, sub_79F41
+extern CareerDbPtr, CareerDbPtr2, sub_78366, sub_78500, sub_78A87, sub_79188, sub_79DE1, sub_79F41
 extern sub_7A099, sub_836E4, sub_8373E, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C
 extern sub_90D20, sub_9121C, sub_913B4, sub_91400, sub_91964, sub_91FE0, sub_931FC, FatalError
@@ -553,7 +553,7 @@ loc_73D6E:
 lea eax, [byte esi-01Ch]	; 73D6E
 loc_73D71:
 push eax	; 73D71
-mov eax, dword [dword_EBE9C]	; 73D72
+mov eax, dword [editptrspr]	; 73D72
 push eax	; 73D77
 call sub_91400	; 73D78
 add esp, byte 0Ch	; 73D7D
@@ -3345,7 +3345,7 @@ mov ecx, 0Dh	; 75C59
 mov esi, eax	; 75C5E
 rep movsd	; 75C60
 mov eax, dword [byte eax+028h]	; 75C62
-call sub_6CBE8	; 75C65
+call CareerDbPtr	; 75C65
 mov edx, dword [dword esp+0A0h]	; 75C6A
 mov ebx, edx	; 75C71
 shl ebx, 2	; 75C73
@@ -3394,7 +3394,7 @@ mov ecx, 0Dh	; 75CFF
 mov esi, eax	; 75D04
 rep movsd	; 75D06
 mov eax, dword [byte eax+028h]	; 75D08
-call sub_6CBFD	; 75D0B
+call CareerDbPtr2	; 75D0B
 mov ebx, eax	; 75D10
 mov eax, dword [dword esp+0A4h]	; 75D12
 mov esi, eax	; 75D19

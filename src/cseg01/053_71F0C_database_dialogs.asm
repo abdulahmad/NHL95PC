@@ -13,15 +13,15 @@ extern dword_D0B1E, dword_D1084, dword_D1088, dword_D108C, dword_D1090, dword_D1
 extern dword_D1110, dword_D1114, dword_D1118, dword_D111C, dword_D1120, dword_D1124, dword_D1128, dword_D112C
 extern dword_D1130, dword_D11B6, dword_D2C6B, dword_D42AC, pointerspr, fdlg_tabexh, fdlg_none, fdlg_tabpo
 extern fdlg_open, fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow
-extern fdlg_tablp, fdlg_noarrow, ptrupdatefn, dword_EBC68, dword_EC6B8, dword_EC6BC, dword_EC6C0, dword_EC6C4
+extern fdlg_tablp, fdlg_noarrow, ptrupdatefn, dbdirty, dword_EC6B8, dword_EC6BC, dword_EC6C0, dword_EC6C4
 extern dword_EC6C8, dword_EC710, dword_EC714, dword_EC718, dword_EC71C, dword_EC720, dword_EC768, dword_EC76C
 extern dword_EC770, dword_EC774, dword_EC778, fputchar, jctime, leaguedbnames
 extern off_D1184, qsort_, strcat_, strcpy_, strlen_
 extern MakePath, DeleteDir, PrintShadowText, CmpFileNames, PrintTextCopy, FileDlgHitTest, DlgReturnZero, MeasureTextLine
-extern MessageBox, EditTextField, GetInputEvent, ClearInputQueue, sub_6CA8F, DrawEditRosters, LoadBothRosterLists, sub_78BE7
+extern MessageBox, EditTextField, GetInputEvent, ClearInputQueue, FreeLeagueDbsMem, DrawEditRosters, LoadBothRosterLists, sub_78BE7
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284
 extern sub_91370, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_B2CBE, sub_B2DCA, sub_B30B4
-extern sub_B4BA8, sub_B4FAC, unk_D11B2, btn_POHumanOut, unk_EC7C0, unknown_libname_1, unknown_libname_2, unknown_libname_4
+extern sub_B4BA8, sub_B4FAC, unk_D11B2, btn_POHumanOut, curdbname, unknown_libname_1, unknown_libname_2, unknown_libname_4
 global jpt_727D6, jpt_72AAE, loc_71F4B, loc_71F68, loc_71F84, loc_72082, loc_720BD, loc_72150
 global loc_72197, loc_7219F, loc_721BE, loc_721C4, loc_721D2, loc_721F0, loc_72200, loc_72248
 global loc_7224E, loc_72265, loc_7226A, loc_7226E, loc_722BE, loc_722CC, loc_722D0, loc_722E3
@@ -1765,14 +1765,14 @@ jmp short loc_73454	; 733F0
 loc_733F2:
 test eax, eax	; 733F2
 jne short loc_73454	; 733F4
-mov edi, unk_EC7C0	; 733F6
+mov edi, curdbname	; 733F6
 mov esi, asc_C3092	; 733FB
 movsd	; 73400
 movsd	; 73401
 mov edx, str_extDB	; 73402
 jmp short loc_7344D	; 73407
 loc_73409:
-mov edi, unk_EC7C0	; 73409
+mov edi, curdbname	; 73409
 mov esi, asc_C309A	; 7340E
 movsd	; 73413
 movsd	; 73414
@@ -1785,7 +1785,7 @@ mov edx, dword [nosplit eax*4+dword_EC720]	; 73422
 mov eax, esp	; 73429
 call strcpy_	; 7342B
 mov edx, esp	; 73430
-mov eax, unk_EC7C0	; 73432
+mov eax, curdbname	; 73432
 call strcpy_	; 73437
 mov edx, asc_C30C3	; 7343C
 mov eax, esp	; 73441
@@ -1810,7 +1810,7 @@ push edi	; 73468
 sub esp, byte 20h	; 73469
 mov edi, eax	; 7346C
 mov esi, edx	; 7346E
-call sub_6CA8F	; 73470
+call FreeLeagueDbsMem	; 73470
 mov ebx, dword [leaguedbnames+14h]	; 73475
 mov ecx, edx	; 7347B
 mov edx, edi	; 7347D
@@ -1908,7 +1908,7 @@ call sub_92DE0	; 735A6
 add esp, byte 4	; 735AB
 mov dword [attdb_size], eax	; 735AE
 xor edx, edx	; 735B3
-mov dword [dword_EBC68], edx	; 735B5
+mov dword [dbdirty], edx	; 735B5
 add esp, byte 20h	; 735BB
 pop edi	; 735BE
 pop esi	; 735BF
