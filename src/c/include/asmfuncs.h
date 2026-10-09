@@ -974,19 +974,13 @@ extern void IntermissionStart(); /* 5DE70 */
 extern void PeriodOver(); /* 5DEA6 */
 extern void ResetBench(); /* 5DF86 */
 extern void resetplstuff(); /* 5E01A */
-extern void doplayeracc(); /* 5E16D */
-extern void EvadePlayers(); /* 5E4C4 */
 extern void EvadePlayers_popebp(); /* 5E7F7 */
 extern void EvadePlayers_popedi(); /* 5E7F8 */
 extern void EvadePC(); /* 5E7FE */
 extern void EvadePC_x(); /* 5E933 */
-extern void skateto(); /* 5E93B */
 extern void skatetopuck(); /* 5EB17 */
-extern void playeracc(); /* 5EDAD */
 extern void avdgoal_box(); /* 5F04E */
 extern void avdgoal_jt(); /* 5F11D */
-extern void avdgoal(); /* 5F151 */
-extern void goalieacc(); /* 5F8B2 */
 extern void noturn0(); /* 5F98A */
 extern void SaveGameState(); /* 5FB03 */
 extern void SaveGameState_popx(); /* 6060B */
@@ -1712,7 +1706,6 @@ extern void stub_8C202(); /* 8C202 */
 extern void stub_8C20D(); /* 8C20D */
 extern void stub_8C218(); /* 8C218 */
 extern void stub_8C223(); /* 8C223 */
-extern void randomd0(); /* 8C230 */
 extern void vgacopy_bg(); /* 8C290 */
 extern void vgacopy_rect(); /* 8C36F */
 extern void vgacopy_rect_src(); /* 8C3E9 */
@@ -1723,7 +1716,6 @@ extern void vgacopy_bgfull(); /* 8C6F0 */
 extern void vgacopy_A40(); /* 8C798 */
 extern void vgacopy_n(); /* 8C7F5 */
 extern void vgacopy_pages(); /* 8C852 */
-extern void vtoa(); /* 8C8E8 */
 extern void SaveSS(); /* 8C944 */
 extern void loc_8C970(); /* 8C970 */
 extern void sub_8C97D(); /* 8C97D */

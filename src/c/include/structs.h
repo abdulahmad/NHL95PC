@@ -37,13 +37,17 @@ typedef struct Player {
     signed char pflags2;         /* 045h 93G $63; seed: SetSPA/asseben hand alignment */
     unsigned char pad_46[0x1];
     signed char pnum;            /* 047h 93G $66; engine_skating playeracc: byte (dword [x-3] / sar 18h) *2 indexes the team energy words, as 93G getpde move.b pnum(a3),d1 / add d1,d1 */
-    unsigned char pad_48[0xD];
+    unsigned char pad_48[0x6];
+    short puckdist;              /* 04Eh 93G none; updateplayers: word vecdist(puck - player) per frame (mov word [esi+4Eh],ax after vecdist of puckx/pucky minus Xpos/Ypos) */
+    unsigned char pad_50[0x2];
+    signed char puckdir;         /* 052h 93G none; updateplayers: byte vtoa(puck - player), the direction to the puck; goalieacc/skatetopuck/chk4pass read it */
+    unsigned char pad_53[0x2];
     signed char attribute;       /* 055h 93G $4; doplayeracc .s1 and noturn0 .nostop: test byte [reg+55h],8 where 93G does btst #3,attribute(a3) (PC keeps only the flip bits byte) */
-    signed char weight;          /* 056h 93G $67; playeracc: byte >>3 subtracted from 32, as 93G move.b weight(a3),d2 / lsr #3 */
+    unsigned char weight;        /* 056h 93G $67; playeracc: byte >>3 subtracted from 32, as 93G move.b weight(a3),d2 / lsr #3 */
     unsigned char legstr;        /* 057h 93G $68; playeracc: added to the accel factor (twice for the goalie) as 93G legstr; StopNA step 200+legstr */
-    signed char legspd;          /* 058h 93G $69; playeracc: times the energy level for the MaxSpeed index, as 93G move.b legspd(a3),d2 / mulu d0,d2 */
+    unsigned char legspd;        /* 058h 93G $69; playeracc: times the energy level for the MaxSpeed index, as 93G move.b legspd(a3),d2 / mulu d0,d2 */
     unsigned char pad_59[0x8];
-    signed char endurance;       /* 061h 93G $72; playeracc .sube: added to the energy level, as 93G move.b endurance(a3),d2 / add d2,d0 */
+    unsigned char endurance;     /* 061h 93G $72; playeracc .sube: added to the energy level, as 93G move.b endurance(a3),d2 / add d2,d0 */
     unsigned char pad_62[0x8];
     short SCnum;                 /* 06Ah 93G $52; seed: SetSPA/asseben hand alignment */
     struct Team * tmptr;         /* 06Ch 93G none (loadTeamStruct by pfteam); pointer to the player's own team structure: lineinput, lcselect, getlchoice read tmflags/tmline/tmap through it */
@@ -77,6 +81,8 @@ typedef struct Player {
 #define OFS_Player_pflags 0x44
 #define OFS_Player_pflags2 0x45
 #define OFS_Player_pnum 0x47
+#define OFS_Player_puckdist 0x4E
+#define OFS_Player_puckdir 0x52
 #define OFS_Player_attribute 0x55
 #define OFS_Player_weight 0x56
 #define OFS_Player_legstr 0x57

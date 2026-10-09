@@ -2693,13 +2693,10 @@ extern int dword_C9002; /* C9002 */
 extern int simfwdorder[]; /* C900C */
 extern int simdorder[]; /* C905C */
 extern int loadscreenon; /* C9074 */
-extern int puckx; /* C907C */
 extern int puckvx; /* C9080 */
-extern int pucky; /* C9084 */
 extern int puckvy; /* C9088 */
 extern int puckz; /* C908C */
 extern int puckvz; /* C9090 */
-extern int puckc; /* C9094 */
 extern unsigned char camx_m2[]; /* C9096 */
 extern short camx; /* C9098 */
 extern short camy; /* C909A */
@@ -5003,16 +5000,11 @@ extern short word_E039A; /* E039A */
 extern short word_E03A0; /* E03A0 */
 extern int replayplay; /* E03A4 */
 extern int dword_E03A8; /* E03A8 */
-extern short regd2; /* E03AC */
 extern int dword_E03AE; /* E03AE */
-extern short regd3; /* E03B0 */
-extern short regd4; /* E03B4 */
 extern int dword_E03B6[]; /* E03B6 */
 extern short word_E03B8; /* E03B8 */
 extern int dword_E03B9; /* E03B9 */
-extern short regd0; /* E03BC */
 extern int dword_E03BD; /* E03BD */
-extern short regd1; /* E03C0 */
 extern signed char byte_E03C1; /* E03C1 */
 extern unsigned char hilightrec[]; /* E03C4 */
 extern unsigned char unk_E0416[]; /* E0416 */

@@ -25,4 +25,19 @@ extern struct Team awtmstruct;      /* DF714: away team structure (93G awtmstruc
 extern struct Player SortCords[];
 extern unsigned char *replaystart;  /* C9078: start of the replay buffer (frames of 80h bytes, 9600h bytes) */
 extern unsigned char *recbpr;       /* E039C: replay record pointer (next frame to write) */   /* DF81C: player structures, 80h each; home 0-5, away 6-11 (+300h) (93G SortCords) */
+extern short *puckx;          /* C907C: points at the puck's x word (puckstruct+2; 93G puckx) */
+extern short *pucky;          /* C9084: points at the puck's y word (puckstruct+6) */
+extern signed char *puckc;   /* C9094: points at the puck's controller byte (SortCords number of the carrier, -1 none; 93G puckc) */
+/* regd0-regd4: the 68k data registers of the Genesis code, kept as 4-byte statics. The PC code reads and writes
+   them as words (.w, the 68k .w ops) and as whole longs (.l / .ul, the .l ops and unsigned compares). */
+typedef union Reg68 {
+    short w;
+    long l;
+    unsigned long ul;
+} Reg68;
+extern Reg68 regd0;     /* E03BC */
+extern Reg68 regd1;     /* E03C0 */
+extern Reg68 regd2;     /* E03AC */
+extern Reg68 regd3;     /* E03B0 */
+extern Reg68 regd4;     /* E03B4 */
 #endif

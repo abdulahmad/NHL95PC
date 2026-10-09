@@ -1015,6 +1015,10 @@ jmp near EvadePC_x	; 5EDA8
 ; playeracc: accelerate player in direction edx (93G logic93_5 playeracc, ;d2 = direction of acc). eax = player.
 ;   dirtab x/y times (legstr+30h)/64 (PC), wall push test, accel factor 32-weight/8+legstr (+legstr+20 goalie), max speed
 ;   check against MaxSpeed (referee: fixed 0Fh/0Ch), then the energy drain when fatigue is on (93G .sube, getpde/setpde inline).
+; C: src/c/043_5E16D_engine_skating/playeracc.c
+%ifdef CBUILD
+%include "c/043_5E16D_engine_skating/playeracc.inc"
+%else
 playeracc:
 push dword 14h	; 5EDAD
 call __CHK	; 5EDB2
@@ -1225,6 +1229,7 @@ pop esi	; 5F04A
 pop ecx	; 5F04B
 pop ebx	; 5F04C
 ret	; 5F04D
+%endif ; C
 ; avdgoal_box: PC-new helper of avdgoal. eax = player, edx/ebx = goal x limits, ecx = goal y, [esp+4]/[esp+8] = int* for
 ;   the side bits of the player and the target (1/4 x, 2/8 y). Returns eax 1 when the line player->target (regd0/regd1)
 ;   crosses this goal's box, else 0. ret 8.
@@ -2012,6 +2017,10 @@ jmp near EvadePlayers_popedi	; 5F8AD
 ; goalieacc: goalie gets acc. in direction edx (93G logic93_5 goalieacc). eax = goalie.
 ;   Turns facedir one step toward the direction, SPAgskate, playeracc. PC: when the clock runs, he has no puck and his
 ;   assignment is 0Fh, he turns toward the direction byte at +52h instead.
+; C: src/c/043_5E16D_engine_skating/goalieacc.c
+%ifdef CBUILD
+%include "c/043_5E16D_engine_skating/goalieacc.inc"
+%else
 goalieacc:
 push dword 0Ch	; 5F8B2
 call __CHK	; 5F8B7
@@ -2095,6 +2104,7 @@ call playeracc	; 5F982	; playeracc
 pop ecx	; 5F987
 pop ebx	; 5F988
 ret	; 5F989
+%endif ; C
 ; noturn0: doplayeracc when the wanted direction needs no turn (93G logic93_5 noturn0). eax = player, edx = direction
 ;   minus facedir (0-7), ebx = facedir. Skating against the motion -> dostop; else skate animation (SPAskate/skatewp/skateback)
 ;   and the inline 93G noturn (reverse when pfrev), then playeracc.

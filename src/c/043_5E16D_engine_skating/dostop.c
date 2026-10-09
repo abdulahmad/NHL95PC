@@ -5,8 +5,6 @@
    one step on each axis. */
 #include "nhl95.h"
 
-#define ABS(v) ((v) < 0 ? -(v) : (v))
-
 void dostop(Player *p)
 {
     short spa;

@@ -36,6 +36,12 @@ void LockScroll(void);                                    /* 5CD25 */
 void GameOver(void);                                      /* 5DD9E */
 void SetExitGame(void);                                   /* 5DDBC */
 /* 043_5E16D_engine_skating */
+void doplayeracc(struct Player *p, short dir);             /* 5E16D */
+void skateto(struct Player *p, void (*evade)(struct Player *p)); /* 5E93B */
+void avdgoal(struct Player *p);                           /* 5F151 */
+void playeracc(struct Player *p, short dir);               /* 5EDAD */
+void goalieacc(struct Player *p, short dir);               /* 5F8B2 */
+void EvadePlayers(struct Player *p);                      /* 5E4C4 */
 void dostop(struct Player *p);                            /* 5F745 */
 void StopNA(struct Player *p);                            /* 5F82A (asm) */
 /* 045_614C2_scoring_penalty_text */
@@ -47,7 +53,9 @@ unsigned char *ReplayPrevFrame(void);                     /* 675A0 */
 void CloseTextOverlay(void);                              /* 66DDA */
 void ReplayRecordReset(void);                             /* 67564 */
 /* asm functions with a known signature */
+short vtoa(int dx, int dy);                               /* hand-written: direction 0-7 of the vector (dx, dy) */
 int SpeechBusy(void);                                     /* announcer sample still playing? */
+short randomd0(short range);                              /* random 0..range-1 (93G randomd0) */
 int OpenAnnouncerBank(void);                              /* 0 = failed */
 short sub_8F80E(int handle);                              /* sound library: sample finished? */
 

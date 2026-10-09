@@ -24,6 +24,8 @@ pflags,$62,44h,seed: SetSPA/asseben hand alignment
 pflags2,$63,45h,seed: SetSPA/asseben hand alignment
 asslist,$38,1Eh,"byte array indexed by assnum: avdgoal/goalieacc cmp byte [reg+assnum+asslist] (93G asslist(a3,d1.w))"
 pnum,$66,47h,"engine_skating playeracc: byte (dword [x-3] / sar 18h) *2 indexes the team energy words, as 93G getpde move.b pnum(a3),d1 / add d1,d1"
+puckdist,none,4Eh,"updateplayers: word [esi+4Eh] = vecdist(puckx-Xpos, pucky-Ypos) each frame"
+puckdir,none,52h,"updateplayers: byte [esi+52h] = vtoa(puckx-Xpos, pucky-Ypos); goalieacc turns toward it, chk4pass xors it with 4 for passdir"
 attribute,$4,55h,"doplayeracc .s1 and noturn0 .nostop: test byte [reg+55h],8 where 93G does btst #3,attribute(a3) (PC keeps only the flip bits byte)"
 weight,$67,56h,"playeracc: byte >>3 subtracted from 32, as 93G move.b weight(a3),d2 / lsr #3"
 legstr,$68,57h,playeracc: added to the accel factor (twice for the goalie) as 93G legstr; StopNA step 200+legstr
