@@ -20,7 +20,7 @@ global byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, musicslot, mu
 global byte_D27B6, dbdlgrects
 global dword_D1229, dword_D122B, dword_D122F, dword_D1231, dword_D1233, lineslotx
 global linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458
-global dword_D145C, dword_D1468, dword_D146C, dword_D1478, dword_D14F0, dword_D14F4, dword_D14F8, dword_D14FC
+global dword_D145C, dword_D1468, dword_D146C, jerseydigits, dword_D14F0, dword_D14F4, dword_D14F8, dword_D14FC
 global dword_D16AC, dword_D16B0, dword_D16B4, dword_D16B8, dword_D17EC, dword_D17F0, dword_D17F4, dword_D17F8
 global dword_D195C, dword_D1960, dword_D1964, dword_D1968, dword_D196C, dword_D1970, dword_D1974, dword_D1978
 global dword_D197C, dword_D1980, dword_D198C, dword_D1990, dword_D199C, dword_D19A0, dword_D19AC, dword_D19B0
@@ -174,7 +174,7 @@ dword_D1468:
 db 063h,01h,00h,00h
 dword_D146C:
 db 093h,01h,00h,00h,09Fh,01h,00h,00h,093h,01h,00h,00h
-dword_D1478:
+jerseydigits:
 db 0FEh,0F7h,0FFh,01h,018h,080h,01h,0F8h,0FFh,0FEh,07h,00h,00h,00h,00h,02h
 db 0F8h,0FFh,0FFh,0Fh,080h,00h,00h,00h,06h,07Fh,0F8h,0C1h,019h,08Eh,071h,0F8h
 db 0C3h,01Eh,0Ch,00h,06h,076h,0E0h,061h,018h,086h,061h,0F8h,0FFh,09Eh,07h,00h

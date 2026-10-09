@@ -693,6 +693,24 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00076AF5,sub_76AF5,GameLineEditorLoop,PC-new,,,,medium,game line editor screen and input loop (copy of DbLineEditorLoop on game teams),line_editor_rosters,manual-trace
 00077F6F,sub_77F6F,LineEdHitTest,PC-new,,,,high,"(x, y, out): line slot (40 rects 3Ah x 28h) or roster list row (100 + (y - 16h) / 0Dh)",line_editor_rosters,manual-trace
 00077FF5,sub_77FF5,LoadGameRoster,PC-new,,,,high,"(team): reads the team's players from the league ""key"" file into the roster entries (FatalError A1..A8 on file errors)",line_editor_rosters,manual-trace
+00078366,sub_78366,DrawGameLineJerseys,PC-new,,,,high,"game line editor version of DrawLineJerseys (40 slots, team colours) plus the selected player's ""%c %2d %s"" status",team_select,manual-trace
+00078500,sub_78500,DrawLineEditorScreen,PC-new,,,,high,"line editor background (bkgd, emb<team> crest, HOMEPALS colours, lelogo), menu bar and the line headings (forward line 1..4, power play 1 / 2, penalty kill 1 / 2, defense, goaltenders, extra attackers)",team_select,manual-trace
+00078A81,sub_78A81,StubRet4a,PC-new,,,,low,empty function (ret 4),team_select,manual-trace
+00078A87,sub_78A87,LoadJerseyColours,PC-new,,,,high,(team): HOMEPALS.BIN record of the team -> jersey colour remap byte_D1238 / byte_D1333..D1336,team_select,manual-trace
+00078BE7,sub_78BE7,DrawDlgFrame,PC-new,,,,medium,"dialog box fill and bevel lines in the dialog colours (D0B16..D0B2A); used by InputDialog, create_player and the line editors",team_select,manual-trace
+00078E29,sub_78E29,StubRet4b,PC-new,,,,low,empty function (ret 4),team_select,manual-trace
+00078E36,sub_78E36,CheckGameRosterComplete,PC-new,,,,high,"game line editor: 18 dressed skaters and 2 goalies, else ""Your roster is incomplete."" with counts",team_select,manual-trace
+00079090,sub_79090,PruneGameLines,PC-new,,,,medium,"(team, lines): clears line slots whose player is not dressed (hmroster status 3 / 4)",team_select,manual-trace
+00079188,sub_79188,MenuUseTheseLines,PC-new,,,,high,"""Use These Lines"": CheckGameRosterComplete, maps the line jerseys to hmroster indices and the extra slots",team_select,manual-trace
+0007928A,sub_7928A,MenuLineEdCancel,PC-new,,,,high,"""Cancel"": returns 1",team_select,manual-trace
+0007929C,sub_7929C,MenuUseOriginalLines,PC-new,,,,high,"""Use Original Lines"": restores the team record lines, PruneGameLines, redraw",team_select,manual-trace
+000793A4,sub_793A4,MenuUseDefaultLines,PC-new,,,,high,"""Use Default Lines"": reads the team's lines from the league ""teams"" file (FatalError B3..B7), PruneGameLines, enables the save / use items",team_select,manual-trace
+00079AC9,sub_79AC9,MenuGameShowPlayerStats,PC-new,,,,high,"game line editor ""Show Player Statistics"": tstat / keys / pstat / gstat, TeamRosterScreen menu, redraw",team_select,manual-trace
+00079DD1,sub_79DD1,MenuReturnToLineEditor,PC-new,,,,high,"""Line Editor"" / ""Return To Line Editor"": returns 1",team_select,manual-trace
+00079DE1,sub_79DE1,GameScratchPlayer,PC-new,,,,high,"hmroster status 2, removes him from the lines, disables the save / use items if a slot is now empty",team_select,manual-trace
+00079F41,sub_79F41,GameDressPlayer,PC-new,,,,high,"hmroster status 3, redraw, status line",team_select,manual-trace
+0007A017,sub_7A017,BlitJerseyDigit,PC-new,,,,high,"(dst, digit, colour, right): 1-bit 84-pixel digit glyph from jerseydigits into a jersey shape",team_select,manual-trace
+0007A099,sub_7A099,MakeJerseyShape,PC-new,,,,high,"(buf, number, body, digit colour): fills the jersey colours and blits one or two digits",team_select,manual-trace
 00086696,sub_86696,CreatePlayoffs,PC-new,,,,high,"main-menu handler (frontend menu table CDxxx dd entry): asks 'Please Enter New Play-Off Name' (sub_2FEDF), confirms replacing an existing .PO dir (msg 'There is already a Play-Off with that name!'), mkdir <name>.PO, checks free disk space ('Insufficient disk space to setup a Playoff Series'), copies the 7 league DBs, seeds 16 teams (POSeedTeams), builds schedule.db (POCreateSchedule) and installs PlayoffModeLoop as the mode loop (dword_CE583)",season_playoffs,manual-trace
 00086E8B,sub_86E8B,POSeedTeams,PC-new,,,,medium,"fills the 16 seed slots: 8 placeholders per conference (-3 west / -12 east, random slots), puts HomeTeam and VisTeam into their conference's slots (opposite ends if same conference), then POPickConfTeams fills the remaining placeholders with random teams of each conference",season_playoffs,manual-trace
 000870B6,sub_870B6,POPickConfTeams,PC-new,,,,medium,"(slots, confflag, first, count): picks 8 distinct random teams from confteams[first..first+count) excluding HomeTeam/VisTeam, keeps the first two from different divisions, and writes them over the -confflag placeholders",season_playoffs,manual-trace

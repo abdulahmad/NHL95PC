@@ -4,7 +4,7 @@ bits 32
 section s_1BBCC progbits alloc exec nowrite align=1
 extern __CHK, str_teams, str_key, str_att, str_season, str_career, str_GsummaryDb2, gameopts
 extern byte_C5424, byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt
-extern byte_C66B4, curleague, awgoalieidx, awscratch, gsummarypath, hmroster, byte_DB3AD
+extern byte_C66B4, curleague, awgoalieidx, awscratch, gsummarypath, hmroster, hmrosterjersey
 extern byte_DB3AE, awroster, hmgoalieidx, hmscratch, byte_DC267, byte_DC268, leaguedbfmt2
 extern leaguedbfmt, cont2team, HomeTeam, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
 extern dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_m2, dword_DF6C2, fputchar, lseek_, mi_HomeGoalie1
@@ -745,7 +745,7 @@ mov edx, dword [byte esp+024h]	; 1C49D
 mov eax, dword [byte esp+028h]	; 1C4A1
 call ReadPlayerRecs	; 1C4A5
 mov al, byte [byte esp+049h]	; 1C4AA
-mov byte [dword esi+byte_DB3AD], al	; 1C4AE
+mov byte [dword esi+hmrosterjersey], al	; 1C4AE
 mov al, byte [byte esp+04Ah]	; 1C4B4
 mov byte [dword esi+byte_DB3AE], al	; 1C4B8
 mov ebx, hmroster	; 1C4BE
@@ -923,7 +923,7 @@ mov edx, dword [byte esp+024h]	; 1C6E5
 mov eax, dword [byte esp+028h]	; 1C6E9
 call ReadPlayerRecs	; 1C6ED
 mov al, byte [byte esp+049h]	; 1C6F2
-mov byte [dword esi+byte_DB3AD], al	; 1C6F6
+mov byte [dword esi+hmrosterjersey], al	; 1C6F6
 mov al, byte [byte esp+04Ah]	; 1C6FC
 mov byte [dword esi+byte_DB3AE], al	; 1C700
 mov ebx, hmroster	; 1C706

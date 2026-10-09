@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_CF00B progbits alloc noexec write align=1
-extern DeskSetExit1, DeskSetExit2, DeskSetExit3, DeskSetExit3b, ShowPlayerStatsItem, OutputCurrentData, GameStandingsMenu, sub_79188
-extern sub_7928A, sub_7929C, sub_793A4, sub_79AC9, sub_79DD1, sub_79DE1, sub_79F41, unk_7947F
-extern unk_797B4, unk_C67B1, unk_CDCE9, unk_CDCF0, unk_CDCF5, unk_CDD04, unk_CDD10, unk_CDD1B
+extern DeskSetExit1, DeskSetExit2, DeskSetExit3, DeskSetExit3b, ShowPlayerStatsItem, OutputCurrentData, GameStandingsMenu, MenuUseTheseLines
+extern MenuLineEdCancel, MenuUseOriginalLines, MenuUseDefaultLines, MenuGameShowPlayerStats, MenuReturnToLineEditor, GameScratchPlayer, GameDressPlayer, MenuSaveDefaultLines
+extern MenuSaveTheseLines, unk_C67B1, unk_CDCE9, unk_CDCF0, unk_CDCF5, unk_CDD04, unk_CDD10, unk_CDD1B
 extern unk_CDF56, unk_CDF64, unk_CDF76, unk_CDF8A, unk_CE0B5, unk_CE0C1, unk_CE0C8, unk_CE0DA
 extern unk_CE0EB, unk_CE0FB, unk_CE10E, unk_CE120, unk_CE136, unk_CE143, unk_CE152, unk_CE169
 extern unk_CE175, unk_CE187, unk_CE18E, unk_CE19E, unk_CE1B1, unk_CE1C3, unk_CE1D9, unk_CE1E5
@@ -13,8 +13,8 @@ extern unk_CE2B3, unk_CE2BD, unk_CE2CF, unk_CE2DF, unk_CE305, unk_CE31F, unk_CE3
 extern unk_CE34F, unk_CE361, unk_CE371, unk_CE383, unk_CE389, unk_CE96F, unk_CEA2F, unk_CEB2F
 extern unk_CECAF, unk_CED6F, unk_CEF0F, unk_CEF2F, unk_CEF6F, unk_CEFEF
 global dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB, dword_CF5D7, dword_CF5F7, dword_CF617, dword_CF637
-global dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB, dword_CF84B, dword_CF8CB, off_CF223, off_CF283
-global off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443, off_CF51F, off_CF5DF, off_CF61F
+global dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB, dword_CF84B, dword_CF8CB, menuact_uselines2, menuact_savedeflines2
+global off_CF2A3, off_CF2C3, menuact_uselines, menuact_savedeflines, menuact_savelines, off_CF51F, off_CF5DF, off_CF61F
 global off_CF67F, off_CF6A3, unk_CF1AF, unk_CF20F, unk_CF28F, unk_CF2CF, unk_CF2EF, unk_CF32F
 global unk_CF3CF, unk_CF42F, unk_CF48F, unk_CF4CF, unk_CF50F, unk_CF52F, unk_CF54F, unk_CF5CF
 global unk_CF5EF, unk_CF62F, unk_CF68F, unk_CF6AF, unk_CF72F, unk_CF74F, unk_CF78F, unk_CF80F
@@ -104,37 +104,37 @@ db 01h,00h,00h,00h
 unk_CF20F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,098h,00h,00h,00h,011h,00h,00h,00h
 dd unk_CE0EB
-off_CF223:
-dd sub_79188
+menuact_uselines2:
+dd MenuUseTheseLines
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 098h,00h,00h,00h,023h,00h,00h,00h
 dd unk_CE0FB
-dd sub_7929C
+dd MenuUseOriginalLines
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 098h,00h,00h,00h,035h,00h,00h,00h
 dd unk_CE10E
-dd sub_793A4
+dd MenuUseDefaultLines
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 098h,00h,00h,00h,048h,00h,00h,00h
 dd unk_CE120
-off_CF283:
-dd unk_7947F
+menuact_savedeflines2:
+dd MenuSaveDefaultLines
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CF28F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,068h,00h,00h,00h,011h,00h,00h,00h
 dd unk_CE136
 off_CF2A3:
-dd sub_79F41
+dd GameDressPlayer
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 068h,00h,00h,00h,024h,00h,00h,00h
 dd unk_CE143
 off_CF2C3:
-dd sub_79DE1
+dd GameScratchPlayer
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CF2CF:
 db 00h,00h,00h,00h,00h,00h,00h,00h,09Ch,00h,00h,00h,012h,00h,00h,00h
 dd unk_CE152
-dd sub_79AC9
+dd MenuGameShowPlayerStats
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CF2EF:
 db 00h,00h,00h,00h,00h,00h,00h,00h,04Dh,00h,00h,00h,012h,00h,00h,00h
@@ -150,25 +150,25 @@ db 01h,00h,00h,00h
 unk_CF32F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,098h,00h,00h,00h,011h,00h,00h,00h
 dd unk_CE187
-dd sub_7928A
+dd MenuLineEdCancel
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 098h,00h,00h,00h,023h,00h,00h,00h
 dd unk_CE18E
-off_CF363:
-dd sub_79188
+menuact_uselines:
+dd MenuUseTheseLines
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 098h,00h,00h,00h,035h,00h,00h,00h
 dd unk_CE19E
-dd sub_7929C
+dd MenuUseOriginalLines
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 098h,00h,00h,00h,047h,00h,00h,00h
 dd unk_CE1B1
-dd sub_793A4
+dd MenuUseDefaultLines
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
 db 098h,00h,00h,00h,05Ah,00h,00h,00h
 dd unk_CE1C3
-off_CF3C3:
-dd unk_7947F
+menuact_savedeflines:
+dd MenuSaveDefaultLines
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CF3CF:
 db 00h,00h,00h,00h,00h,00h,00h,00h,04Dh,00h,00h,00h,012h,00h,00h,00h
@@ -189,16 +189,16 @@ db 01h,00h,00h,00h
 unk_CF42F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,098h,00h,00h,00h,011h,00h,00h,00h
 dd unk_CE0DA
-off_CF443:
-dd unk_797B4
+menuact_savelines:
+dd MenuSaveTheseLines
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 098h,00h,00h,00h,023h,00h,00h,00h
 dd unk_CE0FB
-dd sub_7929C
+dd MenuUseOriginalLines
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 098h,00h,00h,00h,036h,00h,00h,00h
 dd unk_CE10E
-dd sub_793A4
+dd MenuUseDefaultLines
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CF48F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,045h,00h,00h,00h,012h,00h,00h,00h
@@ -215,7 +215,7 @@ db 04h,00h,00h,00h
 unk_CF4CF:
 db 00h,00h,00h,00h,00h,00h,00h,00h,04Dh,00h,00h,00h,012h,00h,00h,00h
 dd unk_CE1D9
-dd sub_79DD1
+dd MenuReturnToLineEditor
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 046h,00h,00h,00h,012h,00h,00h,00h
 dd unk_CE1F5

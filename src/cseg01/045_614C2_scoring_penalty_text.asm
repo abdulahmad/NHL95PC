@@ -7,7 +7,7 @@ extern asc_C1CA8, asc_C1CAC, asc_C1CB3, asc_C1CB9, asc_C1CC4, asc_C1CCD, asc_C1C
 extern asc_C1CFE, asc_C1D0E, asc_C1D19, asc_C1D2D, asc_C1D3F, asc_C1D54, assinsert, assreplace
 extern hmgoalcnt, awgoalcnt, sflags, gmode2, pendelaytab, byte_C9111
 extern penmintab, byte_C9142, byte_C9146, priolist, byte_CCE00, byte_CCE01, musicon, gsummarypath
-extern hmroster, byte_DB3AD, hmtmflags, byte_DF6E8, awtmflags, byte_DF7E8, byte_DF861, byte_E024C
+extern hmroster, hmrosterjersey, hmtmflags, byte_DF6E8, awtmflags, byte_DF7E8, byte_DF861, byte_E024C
 extern byte_E024D, byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E9A15, PenBuf
 extern PenBuf_pl, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD, byte_E9ACE
 extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, joysampling, gamemode, gameopts
@@ -988,7 +988,7 @@ lea edx, [byte ecx+017h]	; 61FDA
 push edx	; 61FDD
 add ecx, byte 7	; 61FDE
 xor ebx, esi	; 61FE1
-mov bl, byte [dword edi+eax+byte_DB3AD]	; 61FE3
+mov bl, byte [dword edi+eax+hmrosterjersey]	; 61FE3
 mov edx, unk_C1B49	; 61FEA
 mov eax, byte_E0250	; 61FEF
 call sub_61D48	; 61FF4
@@ -1018,7 +1018,7 @@ lea ebx, [byte eax+017h]	; 62044
 push ebx	; 62047
 lea ecx, [byte eax+07h]	; 62048
 xor ebx, ebx	; 6204B
-mov bl, byte [dword edx+edi+byte_DB3AD]	; 6204D
+mov bl, byte [dword edx+edi+hmrosterjersey]	; 6204D
 mov edx, unk_C1B49	; 62054
 mov eax, byte_E0308	; 62059
 call sub_61D48	; 6205E
@@ -1045,7 +1045,7 @@ lea edx, [ecx+eax]	; 6209E
 lea ecx, [byte edx+017h]	; 620A1
 push ecx	; 620A4
 lea ecx, [byte edx+07h]	; 620A5
-mov bl, byte [dword ebx+eax+byte_DB3AD]	; 620A8
+mov bl, byte [dword ebx+eax+hmrosterjersey]	; 620A8
 and ebx, 0FFh	; 620AF
 mov edx, unk_C1B49	; 620B5
 mov eax, byte_E0344	; 620BA
@@ -1115,7 +1115,7 @@ push ecx	; 62184
 lea ecx, [byte edx+07h]	; 62185
 add eax, ebx	; 62188
 xor ebx, ebx	; 6218A
-mov bl, byte [dword eax+byte_DB3AD]	; 6218C
+mov bl, byte [dword eax+hmrosterjersey]	; 6218C
 mov edx, unk_C1B49	; 62192
 mov eax, byte_E0308	; 62197
 jmp near sub_61E99.7	; 6219C
@@ -1160,7 +1160,7 @@ push ecx	; 62208
 lea ecx, [byte eax+07h]	; 62209
 lea eax, [ebx+edx]	; 6220C
 xor ebx, ebx	; 6220F
-mov bl, byte [dword eax+byte_DB3AD]	; 62211
+mov bl, byte [dword eax+hmrosterjersey]	; 62211
 mov edx, unk_C1B49	; 62217
 mov eax, byte_E0250	; 6221C
 call sub_61D48	; 62221
@@ -1231,7 +1231,7 @@ add ecx, eax	; 622F9
 lea edx, [byte ecx+017h]	; 622FB
 push edx	; 622FE
 add ecx, byte 7	; 622FF
-mov bl, byte [dword ebx+eax+byte_DB3AD]	; 62302
+mov bl, byte [dword ebx+eax+hmrosterjersey]	; 62302
 and ebx, 0FFh	; 62309
 mov edx, unk_C1B49	; 6230F
 mov eax, byte_E0250	; 62314
@@ -1484,7 +1484,7 @@ add eax, edx	; 62667
 shl eax, 3	; 62669
 sub eax, edx	; 6266C
 xor edx, edx	; 6266E
-mov dl, byte [dword ebx+eax+byte_DB3AD]	; 62670
+mov dl, byte [dword ebx+eax+hmrosterjersey]	; 62670
 mov eax, dword [nosplit esi*4+teamabbrevs]	; 62677
 mov ecx, dword [byte esp+01Ch]	; 6267E
 mov ebx, dword [byte esp+018h]	; 62682
@@ -1542,7 +1542,7 @@ shl eax, 2	; 6271D
 add eax, ebx	; 62720
 shl eax, 3	; 62722
 sub eax, ebx	; 62725
-movzx edi, byte [dword edi+eax+byte_DB3AD]	; 62727
+movzx edi, byte [dword edi+eax+hmrosterjersey]	; 62727
 mov eax, dword [nosplit esi*4+teamabbrevs]	; 6272F
 mov ebx, edx	; 62736
 mov edx, edi	; 62738

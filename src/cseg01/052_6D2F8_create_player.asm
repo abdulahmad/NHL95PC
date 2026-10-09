@@ -31,7 +31,7 @@ extern strcmp_, strcpy_, strlen_, strlwr_, strupr_, MakePath, FileOpenWrite, Fil
 extern FileWriteAt, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, ListDialog, TrackButtons
 extern DrawButtons, InitScrollBar, TrackScrollBars, MessageBox, GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown
 extern DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, BuildFreeAgentList, BuildTeamRosterList, WriteLeagueDbsMem, FreeLeagueDbsMem, CarTeamRecPtr
-extern TeamRecPtr, KeyDbPtr, DrawRosterPanel, InputDialog, DbLineEditor, FadePalStep, sub_78BE7, sub_8CCA8
+extern TeamRecPtr, KeyDbPtr, DrawRosterPanel, InputDialog, DbLineEditor, FadePalStep, DrawDlgFrame, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8EA18, sub_8FC8A, sub_8FFB0, sub_903F0, sub_9061C
 extern sub_90D20, sub_90F38, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_92DE0, sub_B2CBE
 extern FatalError, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, SetDrawBitmap
@@ -132,7 +132,7 @@ mov ecx, 154h	; 6D403
 mov ebx, 1CCh	; 6D408
 mov edx, 8Ch	; 6D40D
 mov eax, 0B4h	; 6D412
-call sub_78BE7	; 6D417
+call DrawDlgFrame	; 6D417
 push byte 41h	; 6D41C
 push dword 0C9h	; 6D41E
 push dword 119h	; 6D423

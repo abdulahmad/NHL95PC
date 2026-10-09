@@ -4,7 +4,7 @@ bits 32
 section s_7F724 progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, asc_C342E, asc_C3436, asc_C3449, asc_C3450, asc_C3472, asc_C3477
 extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, curleague, sflags, musicon
-extern byte_DB3AD, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
+extern hmrosterjersey, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
 extern byte_E03E3, byte_E03E4, hudclockmin, hudclocksec, hudclockhund, songdata, rinkscrollx, rinkscrolly
 extern cont2team, HomeTeam, musichandle, fontcolor, rinkendbank, numshpbank, dword_D8C84, musicslot
 extern dword_DC230, scrbrdshapes, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
@@ -340,7 +340,7 @@ shl eax, 2	; 7FAEE
 add eax, edx	; 7FAF1
 shl eax, 3	; 7FAF3
 sub eax, edx	; 7FAF6
-mov bl, byte [dword eax+byte_DB3AD]	; 7FAF8
+mov bl, byte [dword eax+hmrosterjersey]	; 7FAF8
 mov byte [dword edx+byte_E03C7], bl	; 7FAFE
 mov al, byte [dword eax+byte_DB7F1]	; 7FB04
 mov byte [dword edx+byte_E03E4], al	; 7FB0A
@@ -868,7 +868,7 @@ add eax, edx	; 801AD
 shl eax, 3	; 801AF
 sub eax, edx	; 801B2
 mov bl, byte [dword edx+byte_E03C7]	; 801B4
-mov byte [dword eax+byte_DB3AD], bl	; 801BA
+mov byte [dword eax+hmrosterjersey], bl	; 801BA
 mov bl, byte [dword edx+byte_E03E4]	; 801C0
 mov byte [dword eax+byte_DB7F1], bl	; 801C6
 inc edx	; 801CC

@@ -15,7 +15,7 @@ extern dword_DE264, ptrupdatefn, jctime, memcpy_, leaguedbnames, unequaltrademsg
 extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
 extern FileOpenRW, FileClose, ReadKeyRec, WriteKeyRec, ReadTeamRec, LoadGameTeams, RunMenu, InitMenuRemap
 extern TeamRosterScreen, TextInputDialog, MessageBox, WriteTeamRec, GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown
-extern DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, FadePalStep, GameLineEditor, sub_78BE7, sub_7A099, ClearPlayerFromLines
+extern DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, FadePalStep, GameLineEditor, DrawDlgFrame, MakeJerseyShape, ClearPlayerFromLines
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
 extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, MouseSetPos
 extern sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, SetDrawBitmap, str_S12
@@ -1072,13 +1072,13 @@ mov ecx, 1DFh	; 3EA6D
 mov ebx, 27Fh	; 3EA72
 xor edx, edx	; 3EA77
 mov eax, 1C0h	; 3EA79
-call sub_78BE7	; 3EA7E
+call DrawDlgFrame	; 3EA7E
 push byte 1	; 3EA83
 mov ecx, 1DFh	; 3EA85
 mov ebx, 0BEh	; 3EA8A
 xor edx, edx	; 3EA8F
 xor eax, eax	; 3EA91
-call sub_78BE7	; 3EA93
+call DrawDlgFrame	; 3EA93
 push byte 20h	; 3EA98
 push dword 300h	; 3EA9A
 push str_Pal22	; 3EA9F
@@ -1143,7 +1143,7 @@ mov edx, dword [byte esp+04Ch]	; 3EB77
 mov dl, byte [byte edx+eax*2+01h]	; 3EB7B
 and edx, 0FFh	; 3EB7F
 mov eax, byte_D1238	; 3EB85
-call sub_7A099	; 3EB8A
+call MakeJerseyShape	; 3EB8A
 push byte_D1238	; 3EB8F
 call sub_B4DD4	; 3EB94
 add esp, byte 4	; 3EB99
@@ -1774,7 +1774,7 @@ add eax, edx	; 3F2B5
 xor edx, edx	; 3F2B7
 mov dl, byte [dword eax+tradejersey]	; 3F2B9
 mov eax, byte_D1238	; 3F2BF
-call sub_7A099	; 3F2C4
+call MakeJerseyShape	; 3F2C4
 push byte_D1238	; 3F2C9
 call sub_B4DD4	; 3F2CE
 add esp, byte 4	; 3F2D3
@@ -2565,7 +2565,7 @@ sub eax, edx	; 3FC1B
 xor edx, edx	; 3FC1D
 mov dl, byte [dword ebp+eax*2-099h]	; 3FC1F
 mov eax, byte_D1238	; 3FC26
-call sub_7A099	; 3FC2B
+call MakeJerseyShape	; 3FC2B
 push byte_D1238	; 3FC30
 call sub_B4DD4	; 3FC35
 add esp, byte 4	; 3FC3A
@@ -2719,7 +2719,7 @@ add eax, edx	; 3FE54
 xor edx, edx	; 3FE56
 mov dl, byte [dword eax+tradejersey]	; 3FE58
 mov eax, byte_D1238	; 3FE5E
-call sub_7A099	; 3FE63
+call MakeJerseyShape	; 3FE63
 push byte_D1238	; 3FE68
 call sub_B4DD4	; 3FE6D
 add esp, byte 4	; 3FE72

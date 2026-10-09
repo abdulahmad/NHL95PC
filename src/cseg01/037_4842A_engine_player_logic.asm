@@ -5,7 +5,7 @@ section s_4842A progbits alloc exec nowrite align=1
 extern AddPenalty, AddPenalty2, DoGameFrame, Findhittype, GetHot, PBnum, SetSPA, SetShotMode
 extern Setplass, ShotMode, StopNA, __CHK, str_EASports, str_StarFmt, assinsert, assreplace
 extern sflags, gmode2, byte_CC9E4, byte_CC9E7, byte_CCA95, musicon, byte_DACB3
-extern byte_DAEA7, hmroster, byte_DB3AD, byte_DF87F, byte_DFFE0, byte_DFFE2, byte_E0250, byte_E028C
+extern byte_DAEA7, hmroster, hmrosterjersey, byte_DF87F, byte_DFFE0, byte_DFFE2, byte_E0250, byte_E028C
 extern byte_E02C8, byte_E0308, byte_E0344, PenBuf, iflags, byte_E9AC1, byte_E9AC8
 extern byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, check4bench, check4check, checkob
 extern chk4lc, chk4shot, dirtab, chk4pass, doplayeracc, doshot, joysampling, inputframes
@@ -1568,7 +1568,7 @@ lea ecx, [byte eax+017h]	; 496C8
 push ecx	; 496CB
 add eax, byte 7	; 496CC
 mov dword [byte esp+08h], eax	; 496CF
-mov dl, byte [dword edx+ebx+byte_DB3AD]	; 496D3
+mov dl, byte [dword edx+ebx+hmrosterjersey]	; 496D3
 and edx, 0FFh	; 496DA
 mov ebx, esi	; 496E0
 shl ebx, 2	; 496E2
@@ -1605,7 +1605,7 @@ shl ebx, 3	; 49735
 sub ebx, edi	; 49738
 add eax, ebx	; 4973A
 xor ebx, ebx	; 4973C
-mov bl, byte [dword eax+byte_DB3AD]	; 4973E
+mov bl, byte [dword eax+hmrosterjersey]	; 4973E
 mov edx, dword [byte ebp+temp1-2]	; 49744
 sar edx, 10h	; 49747
 inc edx	; 4974A
@@ -1689,7 +1689,7 @@ lea eax, [byte ecx+017h]	; 4986F
 push eax	; 49872
 add ecx, byte 7	; 49873
 xor eax, eax	; 49876
-mov al, byte [dword edx+ebx+byte_DB3AD]	; 49878
+mov al, byte [dword edx+ebx+hmrosterjersey]	; 49878
 mov dword [byte esp+08h], eax	; 4987F
 mov ebx, esi	; 49883
 shl ebx, 2	; 49885
@@ -1722,7 +1722,7 @@ shl ebx, 2	; 498CD
 add ebx, edi	; 498D0
 shl ebx, 3	; 498D2
 sub ebx, edi	; 498D5
-mov bl, byte [dword edx+ebx+byte_DB3AD]	; 498D7
+mov bl, byte [dword edx+ebx+hmrosterjersey]	; 498D7
 and ebx, 0FFh	; 498DE
 mov edx, dword [byte ebp+temp1-2]	; 498E4
 sar edx, 10h	; 498E7
@@ -8542,7 +8542,7 @@ shl ebx, 2	; 4EE78
 add ebx, ecx	; 4EE7B
 shl ebx, 3	; 4EE7D
 sub ebx, ecx	; 4EE80
-mov bl, byte [dword esi+ebx+byte_DB3AD]	; 4EE82
+mov bl, byte [dword esi+ebx+hmrosterjersey]	; 4EE82
 and ebx, 0FFh	; 4EE89
 push ebx	; 4EE8F
 movsx ecx, dx	; 4EE90
@@ -8551,7 +8551,7 @@ shl ebx, 2	; 4EE95
 add ebx, ecx	; 4EE98
 shl ebx, 3	; 4EE9A
 sub ebx, ecx	; 4EE9D
-movzx edi, byte [dword esi+ebx+byte_DB3AD]	; 4EE9F
+movzx edi, byte [dword esi+ebx+hmrosterjersey]	; 4EE9F
 mov ecx, dword [byte esp+02h]	; 4EEA7
 sar ecx, 10h	; 4EEAB
 mov ebx, ecx	; 4EEAE
@@ -8561,7 +8561,7 @@ shl ebx, 3	; 4EEB5
 sub ebx, ecx	; 4EEB8
 add esi, ebx	; 4EEBA
 xor ebx, ebx	; 4EEBC
-mov bl, byte [dword esi+byte_DB3AD]	; 4EEBE
+mov bl, byte [dword esi+hmrosterjersey]	; 4EEBE
 movsx edx, ax	; 4EEC4
 mov eax, dword [byte esp+06h]	; 4EEC7
 sar eax, 10h	; 4EECB

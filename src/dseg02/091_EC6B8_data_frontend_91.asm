@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_EC6B8 nobits alloc noexec write align=1
-global lineedpanel, fadepal, fadepal2, byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED0F7
+global lineedpanel, fadepal, fadepal2, byte_ECDF4, gmroster, gmrosterjersey, gmrosterslot, byte_ED0F7
 global byte_ED0F8, byte_ED0F9, byte_ED0FA, byte_ED361, byte_ED7CC, byte_ED7CD, byte_ED7E4, byte_ED7E6
 global byte_ED7EB, byte_ED7ED, byte_ED7F0, byte_ED7F3, byte_ED7F7, byte_ED821, byte_ED823, byte_ED824
 global byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED82F, byte_ED830, byte_ED833, byte_ED834
@@ -63,11 +63,11 @@ dword_ECDF0:
 resb 4
 byte_ECDF4:
 resb 768
-byte_ED0F4:
+gmroster:
 resb 1
-byte_ED0F5:
+gmrosterjersey:
 resb 1
-byte_ED0F6:
+gmrosterslot:
 resb 1
 byte_ED0F7:
 resb 1

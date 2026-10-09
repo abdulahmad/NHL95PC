@@ -17,7 +17,7 @@ extern dblisttemp, dblisttempnames, dblistorig
 extern fputchar, jctime, leaguedbnames
 extern dbtablists, qsort_, strcat_, strcpy_, strlen_
 extern MakePath, DeleteDir, PrintShadowText, CmpFileNames, PrintTextCopy, FileDlgHitTest, DlgReturnZero, MeasureTextLine
-extern MessageBox, EditTextField, GetInputEvent, ClearInputQueue, FreeLeagueDbsMem, DrawEditRosters, LoadBothRosterLists, sub_78BE7
+extern MessageBox, EditTextField, GetInputEvent, ClearInputQueue, FreeLeagueDbsMem, DrawEditRosters, LoadBothRosterLists, DrawDlgFrame
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284
 extern sub_91370, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_B2CBE, sub_B2DCA, sub_B30B4
 extern sub_B4BA8, sub_B4FAC, deldbmsg, btn_POHumanOut, curdbname, unknown_libname_1, unknown_libname_2, unknown_libname_4
@@ -151,7 +151,7 @@ add ebx, dword [byte esp+04Ch]	; 72067
 dec ebx	; 7206B
 mov edx, dword [byte esp+068h]	; 7206C
 mov eax, dword [byte esp+064h]	; 72070
-call sub_78BE7	; 72074
+call DrawDlgFrame	; 72074
 xor esi, esi	; 72079
 add dword [byte esp+064h], byte 8	; 7207B
 jmp short .5	; 72080
@@ -204,7 +204,7 @@ add ebx, dword [byte esp+060h]	; 72112
 dec ebx	; 72116
 mov edx, dword [byte esp+068h]	; 72117
 mov eax, dword [byte esp+064h]	; 7211B
-call sub_78BE7	; 7211F
+call DrawDlgFrame	; 7211F
 mov eax, dword [byte esp+040h]	; 72124
 mov dword [dword_D0B16], eax	; 72128
 mov dword [dword_D0B1A], edi	; 7212D

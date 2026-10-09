@@ -2,54 +2,39 @@
 bits 32
 %include "hockey.inc"
 section s_78346 progbits alloc exec nowrite align=1
-extern __CHK, str_Lelogo2, str_C2dS3, asc_C31F1, asc_C31F7, asc_C3200, asc_C3205, asc_C320D
-extern asc_C3214, asc_C321B, asc_C3222, asc_C3229, asc_C322F, asc_C3236, asc_C323D, asc_C3245
-extern asc_C324C, asc_C3253, asc_C325B, asc_C3267, asc_C326D, asc_C3277, asc_C3288, asc_C328E
-extern asc_C32A4, asc_C32AA, asc_C32AF, asc_C32B5, str_extBIN, byte_D11BC, byte_D1238, byte_D12DE
-extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, byte_DB3AD, leaguedbfmt2, leaguedbfmt
-extern byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED83C, byte_ED86D, byte_ED9E7, statscategory
+extern __CHK, str_Lelogo2, str_C2dS3, str_EmbS, str_HOMEPALS3, str_Bkgd10, str_Forward, str_Line1
+extern str_Line2, str_Line3, str_Line4, str_Power, str_Play1, str_Play2, str_Penalty, str_Kill1
+extern str_Kill2, str_Defense3, str_Goaltenders, str_Extra, str_Attackers, str_S2dSS2, str_Teams2, str_ErrB2Perror
+extern str_Tstat2, str_Keys4, str_Pstat4, str_Gstat4, str_extBIN, byte_D11BC, byte_D1238, byte_D12DE
+extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, hmrosterjersey, leaguedbfmt2, leaguedbfmt
+extern byte_ECDF4, gmroster, gmrosterjersey, gmrosterslot, byte_ED83C, byte_ED86D, byte_ED9E7, statscategory
 extern statsredrawcb, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
-extern dword_D0B2A, lineslotx, linesloty, dword_D1478, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
+extern dword_D0B2A, lineslotx, linesloty, jerseydigits, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
 extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, exit_, j___close_, jctime, lseek_
-extern crestnames, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
+extern crestnames, menuact_uselines2, menuact_savedeflines2, off_CF2A3, off_CF2C3, menuact_uselines, menuact_savedeflines, menuact_savelines
 extern open_, perror_, read_, sprintf_, MakePath, RunMenu, TeamRosterScreen, MessageBox
 extern DrawMenuBar, FadePalStep, PrintLineEdStatus, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8FFB0
 extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, FatalError, sub_B30B4, WaitKey
 extern sub_B4B58, sub_B4DD4, sub_B4FAC, sub_B5DB0, str_Scratch2, str_Dress2, str_Player2, str_GoalieW2
-extern str_RosterIncomplete2, unk_C3283, unk_C3285, unk_C3292, unk_C3295, unk_C3298, unk_C329B, unk_C329E
-extern unk_C32A1, unk_CF48F, hmteamrec, unk_DBD1C, VisTeam, write_
-global jpt_78346, loc_7838A, loc_78390, loc_783B7, loc_78403, loc_78460, loc_78470, loc_78477
-global loc_7847E, loc_78483, loc_784F8, loc_7857C, loc_7857E, loc_785A0, loc_785C6, loc_785C8
-global loc_785F4, loc_785FA, loc_78614, loc_786C3, loc_786C5, loc_786F1, loc_786F7, loc_78AB7
-global loc_78AB9, loc_78ADD, loc_78AE3, loc_78AF5, loc_78B0C, loc_78B7D, loc_78B92, loc_78B9A
-global loc_78B9F, loc_78E21, loc_78ED5, loc_78F29, loc_78F2A, loc_78F43, loc_78F62, loc_78F67
-global loc_78F8C, loc_78F9D, loc_78FA2, loc_78FC0, loc_78FD6, loc_78FEE, loc_78FF3, loc_79013
-global loc_79024, loc_79029, loc_79040, loc_79054, loc_79083, loc_79085, loc_790B1, loc_790F2
-global loc_790FD, loc_790FF, loc_79131, loc_79139, loc_7917A, loc_79180, loc_791BC, loc_791BE
-global loc_79200, loc_79206, loc_79220, loc_7923A, loc_79277, loc_7927A, loc_79280, loc_79310
-global loc_7934A, loc_7936C, loc_79372, loc_7939A, loc_7939C, loc_79418, loc_79452, loc_79474
-global loc_794D0, loc_794DA, loc_79523, loc_7953F, loc_79551, loc_79557, loc_79589, loc_795A2
-global loc_795AF, loc_795F0, loc_79618, loc_79625, loc_7962E, loc_79630, loc_79681, loc_79687
-global loc_796B3, loc_796DB, loc_79726, loc_7972D, loc_79737, loc_79750, loc_7975D, loc_797A6
-global loc_797A8, loc_797AE, loc_7980F, loc_79847, loc_79863, loc_79875, loc_7987B, loc_798AD
-global loc_798C6, loc_798D3, loc_79914, loc_7993C, loc_79949, loc_79952, loc_79954, loc_799A5
-global loc_799AB, loc_799CA, loc_799F4, loc_79A3F, loc_79A46, loc_79A69, loc_79A76, loc_79B0D
-global loc_79B12, loc_79B94, loc_79BC7, loc_79BCC, loc_79BF4, loc_79C44, loc_79D3D, loc_79D47
-global loc_79DB6, loc_79DFB, loc_79E1C, loc_79E50, loc_79E78, loc_79E7E, loc_7A035, loc_7A06A
-global loc_7A07E, loc_7A080, loc_7A087, loc_7A0B1, loc_7A0B8, loc_7A0C5, loc_7A0CC, loc_7A0F1
-global loc_7A12E, loc_7A133, sub_78366, sub_78500, sub_78A81, sub_78A87, sub_78BE7, sub_78E29
-global sub_78E36, sub_79090, sub_79188, sub_7928A, sub_7929C, sub_793A4, sub_797FE, sub_79AC9
-global sub_79DD1, sub_79DE1, sub_79F41, sub_7A017, sub_7A099, unk_7947F, unk_797B4
-jpt_78346:
-dd loc_7847E
-dd loc_78460
-dd loc_78477
-dd loc_78477
-dd loc_7847E
-dd loc_7847E
-dd loc_78483
-dd loc_7847E
-sub_78366:
+extern str_RosterIncomplete2, unk_C3283, str_S7, str_ErrB3, str_ErrB4, str_ErrB5, str_ErrB6, str_ErrB7
+extern str_ErrB2, unk_CF48F, hmteamrec, unk_DBD1C, VisTeam, write_
+global DrawGameLineJerseys_jt, DrawGameLineJerseys_st1, DrawGameLineJerseys_st2
+global DrawGameLineJerseys_st0, DrawGameLineJerseys_join
+global MenuUseOriginalLines_redraw, MenuUseOriginalLines_ret0, MenuUseOriginalLines_ret
+global MenuSaveDefaultLines_ret, MenuSaveDefaultLines_pop
+global DrawGameLineJerseys, DrawLineEditorScreen, StubRet4a, LoadJerseyColours, DrawDlgFrame, StubRet4b
+global CheckGameRosterComplete, PruneGameLines, MenuUseTheseLines, MenuLineEdCancel, MenuUseOriginalLines, MenuUseDefaultLines, MenuSaveTheseLines_x, MenuGameShowPlayerStats
+global MenuReturnToLineEditor, GameScratchPlayer, GameDressPlayer, BlitJerseyDigit, MakeJerseyShape, MenuSaveDefaultLines, MenuSaveTheseLines
+DrawGameLineJerseys_jt:
+dd DrawGameLineJerseys_st0
+dd DrawGameLineJerseys_st1
+dd DrawGameLineJerseys_st2
+dd DrawGameLineJerseys_st2
+dd DrawGameLineJerseys_st0
+dd DrawGameLineJerseys_st0
+dd DrawGameLineJerseys_join
+dd DrawGameLineJerseys_st0
+DrawGameLineJerseys:
 push dword 58h	; 78366
 call __CHK	; 7836B
 push ecx	; 78370
@@ -61,12 +46,12 @@ push eax	; 78377
 mov ebp, edx	; 78378
 mov byte [byte esp+024h], bl	; 7837A
 test bl, bl	; 7837E
-je short loc_7838A	; 78380
+je short .1	; 78380
 mov ax, word [VisTeam]	; 78382
-jmp short loc_78390	; 78388
-loc_7838A:
+jmp short .2	; 78388
+.1:
 mov ax, word [HomeTeam]	; 7838A
-loc_78390:
+.2:
 cwde	; 78390
 mov al, byte [nosplit eax*4+byte_D11BC]	; 78391
 mov byte [byte esp+02Ch], al	; 78398
@@ -77,7 +62,7 @@ mov byte [byte esp+02Ch], al	; 783A8
 mov al, byte [byte_D12DE]	; 783AC
 mov byte [byte esp+028h], al	; 783B1
 xor esi, esi	; 783B5
-loc_783B7:
+.3:
 xor ecx, ecx	; 783B7
 mov cl, byte [byte esp+028h]	; 783B9
 xor ebx, ebx	; 783BD
@@ -86,7 +71,7 @@ mov eax, dword [esp]	; 783C3
 xor edx, edx	; 783C6
 mov dl, byte [esi+eax]	; 783C8
 mov eax, byte_D1238	; 783CB
-call sub_7A099	; 783D0
+call MakeJerseyShape	; 783D0
 push byte_D1238	; 783D5
 call sub_B4DD4	; 783DA
 add esp, byte 4	; 783DF
@@ -99,9 +84,9 @@ call sub_931FC	; 783F3
 add esp, byte 0Ch	; 783F8
 inc esi	; 783FB
 cmp esi, byte 28h	; 783FC
-jl short loc_783B7	; 783FF
+jl short DrawGameLineJerseys.3	; 783FF
 xor esi, esi	; 78401
-loc_78403:
+.4:
 mov edx, esi	; 78403
 mov eax, esi	; 78405
 shl eax, 2	; 78407
@@ -109,7 +94,7 @@ sub eax, esi	; 7840A
 shl eax, 2	; 7840C
 sub eax, esi	; 7840F
 xor edx, esi	; 78411
-mov dl, byte [nosplit eax*2+byte_ED0F6]	; 78413
+mov dl, byte [nosplit eax*2+gmrosterslot]	; 78413
 mov ebx, edx	; 7841A
 shl ebx, 2	; 7841C
 add ebx, edx	; 7841F
@@ -126,27 +111,27 @@ shl eax, 2	; 78438
 add eax, ebx	; 7843B
 mov dl, byte [dword eax+hmroster]	; 7843D
 test dl, dl	; 78443
-je near loc_784F8	; 78445
+je near DrawGameLineJerseys_join.x	; 78445
 mov al, dl	; 7844B
 dec al	; 7844D
 cmp al, 7	; 7844F
-ja short loc_78483	; 78451
+ja short DrawGameLineJerseys_join	; 78451
 and eax, 0FFh	; 78453
-jmp dword [nosplit cs:eax*4+jpt_78346]	; 78458
-loc_78460:
+jmp dword [nosplit cs:eax*4+DrawGameLineJerseys_jt]	; 78458
+DrawGameLineJerseys_st1:
 cmp dword [dword_D8C84], byte 0	; 78460
-jge short loc_78470	; 78467
+jge short .1	; 78467
 mov edi, 0FCh	; 78469
-jmp short loc_78483	; 7846E
-loc_78470:
+jmp short DrawGameLineJerseys_join	; 7846E
+.1:
 mov edi, 0C2h	; 78470
-jmp short loc_78483	; 78475
-loc_78477:
+jmp short DrawGameLineJerseys_join	; 78475
+DrawGameLineJerseys_st2:
 mov edi, 0C3h	; 78477
-jmp short loc_78483	; 7847C
-loc_7847E:
+jmp short DrawGameLineJerseys_join	; 7847C
+DrawGameLineJerseys_st0:
 mov edi, 0C2h	; 7847E
-loc_78483:
+DrawGameLineJerseys_join:
 push dword 0C1h	; 78483
 push edi	; 78488
 call sub_8E9C0	; 78489
@@ -157,14 +142,14 @@ sub eax, esi	; 78496
 shl eax, 2	; 78498
 sub eax, esi	; 7849B
 add eax, eax	; 7849D
-mov edx, byte_ED0F4	; 7849F
+mov edx, gmroster	; 7849F
 add edx, eax	; 784A4
 add edx, byte 3	; 784A6
 push edx	; 784A9
 xor edx, edx	; 784AA
-mov dl, byte [dword eax+byte_ED0F5]	; 784AC
+mov dl, byte [dword eax+gmrosterjersey]	; 784AC
 push edx	; 784B2
-mov al, byte [dword eax+byte_ED0F4]	; 784B3
+mov al, byte [dword eax+gmroster]	; 784B3
 and eax, 0FFh	; 784B9
 push eax	; 784BE
 push str_C2dS3	; 784BF
@@ -183,15 +168,15 @@ mov eax, 1FAh	; 784E4
 call PrintLineEdStatus	; 784E9
 inc esi	; 784EE
 cmp esi, byte 1Ch	; 784EF
-jl near loc_78403	; 784F2
-loc_784F8:
+jl near DrawGameLineJerseys.4	; 784F2
+.x:
 add esp, byte 30h	; 784F8
 pop ebp	; 784FB
 pop edi	; 784FC
 pop esi	; 784FD
 pop ecx	; 784FE
 ret	; 784FF
-sub_78500:
+DrawLineEditorScreen:
 push dword 178h	; 78500
 call __CHK	; 78505
 push esi	; 7850A
@@ -211,7 +196,7 @@ shl eax, 5	; 78542
 sub eax, edx	; 78545
 add eax, hmteamrec	; 78547
 push eax	; 7854C
-push asc_C31F1	; 7854D
+push str_EmbS	; 7854D
 lea eax, [dword esp+0148h]	; 78552
 push eax	; 78559
 call sprintf_	; 7855A
@@ -219,12 +204,12 @@ add esp, byte 0Ch	; 7855F
 xor ecx, ecx	; 78562
 lea ebx, [dword esp+0140h]	; 78564
 cmp byte [byte_ED83C], 1	; 7856B
-jne short loc_7857C	; 78572
+jne short .1	; 78572
 mov edx, dword [dword_D2C6B]	; 78574
-jmp short loc_7857E	; 7857A
-loc_7857C:
+jmp short .2	; 7857A
+.1:
 xor edx, edx	; 7857C
-loc_7857E:
+.2:
 lea eax, [dword esp+0100h]	; 7857E
 call MakePath	; 78585
 push byte 0	; 7858A
@@ -234,20 +219,20 @@ call sub_8E83C	; 78594
 add esp, byte 8	; 78599
 mov esi, eax	; 7859C
 xor eax, eax	; 7859E
-loc_785A0:
+.3:
 mov byte [esp+eax], al	; 785A0
 inc eax	; 785A3
 cmp eax, 100h	; 785A4
-jl short loc_785A0	; 785A9
+jl short DrawLineEditorScreen.3	; 785A9
 mov ecx, str_extBIN	; 785AB
-mov ebx, asc_C31F7	; 785B0
+mov ebx, str_HOMEPALS3	; 785B0
 cmp byte [byte_ED86D], 1	; 785B5
-jne short loc_785C6	; 785BC
+jne short .4	; 785BC
 mov edx, dword [dword_D2C6B]	; 785BE
-jmp short loc_785C8	; 785C4
-loc_785C6:
+jmp short .5	; 785C4
+.4:
 xor edx, edx	; 785C6
-loc_785C8:
+.5:
 lea eax, [dword esp+0100h]	; 785C8
 call MakePath	; 785CF
 push byte 0	; 785D4
@@ -257,12 +242,12 @@ call sub_8E8A0	; 785DE
 add esp, byte 8	; 785E3
 mov ecx, eax	; 785E6
 test edi, edi	; 785E8
-je short loc_785F4	; 785EA
+je short .6	; 785EA
 mov ax, word [VisTeam]	; 785EC
-jmp short loc_785FA	; 785F2
-loc_785F4:
+jmp short .7	; 785F2
+.6:
 mov ax, word [HomeTeam]	; 785F4
-loc_785FA:
+.7:
 movsx edx, ax	; 785FA
 mov eax, edx	; 785FD
 shl eax, 3	; 785FF
@@ -271,12 +256,12 @@ shl eax, 6	; 78604
 lea ebx, [dword ecx+0C0h]	; 78607
 add ebx, eax	; 7860D
 mov eax, 80h	; 7860F
-loc_78614:
+.8:
 mov dl, byte [ebx+eax]	; 78614
 mov byte [esp+eax], dl	; 78617
 inc eax	; 7861A
 cmp eax, 100h	; 7861B
-jl short loc_78614	; 78620
+jl short DrawLineEditorScreen.8	; 78620
 push ecx	; 78622
 call jctime	; 78623
 add esp, byte 4	; 78628
@@ -286,7 +271,7 @@ call sub_B4DD4	; 7862E
 add esp, byte 4	; 78633
 push byte 0	; 78636
 push byte 0FFFFFFB4h	; 78638
-push asc_C3200	; 7863A
+push str_Bkgd10	; 7863A
 push esi	; 7863F
 call sub_B30B4	; 78640
 add esp, byte 8	; 78645
@@ -312,16 +297,16 @@ mov ecx, 1DFh	; 78692
 mov ebx, 27Fh	; 78697
 mov edx, 13h	; 7869C
 mov eax, 1F4h	; 786A1
-call sub_78BE7	; 786A6
+call DrawDlgFrame	; 786A6
 xor ecx, ecx	; 786AB
 mov ebx, str_Lelogo2	; 786AD
 cmp byte [byte_ED9E7], 1	; 786B2
-jne short loc_786C3	; 786B9
+jne short .9	; 786B9
 mov edx, dword [dword_D2C6B]	; 786BB
-jmp short loc_786C5	; 786C1
-loc_786C3:
+jmp short .10	; 786C1
+.9:
 xor edx, edx	; 786C3
-loc_786C5:
+.10:
 lea eax, [dword esp+0100h]	; 786C5
 call MakePath	; 786CC
 push byte 0	; 786D1
@@ -331,12 +316,12 @@ call sub_8E83C	; 786DB
 add esp, byte 8	; 786E0
 mov esi, eax	; 786E3
 test edi, edi	; 786E5
-je short loc_786F1	; 786E7
+je short .11	; 786E7
 mov ax, word [VisTeam]	; 786E9
-jmp short loc_786F7	; 786EF
-loc_786F1:
+jmp short .12	; 786EF
+.11:
 mov ax, word [HomeTeam]	; 786F1
-loc_786F7:
+.12:
 cwde	; 786F7
 mov edi, dword [nosplit eax*4+crestnames]	; 786F8
 push edi	; 786FF
@@ -356,15 +341,15 @@ mov ecx, 54h	; 78727
 mov ebx, 45h	; 7872C
 mov edx, 2Ch	; 78731
 mov eax, 5	; 78736
-call sub_78BE7	; 7873B
+call DrawDlgFrame	; 7873B
 push byte 33h	; 78740
 push byte 0Ch	; 78742
-push asc_C3205	; 78744
+push str_Forward	; 78744
 call sub_91964	; 78749
 add esp, byte 0Ch	; 7874E
 push byte 40h	; 78751
 push byte 13h	; 78753
-push asc_C320D	; 78755
+push str_Line1	; 78755
 call sub_91964	; 7875A
 add esp, byte 0Ch	; 7875F
 push byte 1	; 78762
@@ -372,15 +357,15 @@ mov ecx, 85h	; 78764
 mov ebx, 45h	; 78769
 mov edx, 5Dh	; 7876E
 mov eax, 5	; 78773
-call sub_78BE7	; 78778
+call DrawDlgFrame	; 78778
 push byte 64h	; 7877D
 push byte 0Ch	; 7877F
-push asc_C3205	; 78781
+push str_Forward	; 78781
 call sub_91964	; 78786
 add esp, byte 0Ch	; 7878B
 push byte 71h	; 7878E
 push byte 13h	; 78790
-push asc_C3214	; 78792
+push str_Line2	; 78792
 call sub_91964	; 78797
 add esp, byte 0Ch	; 7879C
 push byte 1	; 7879F
@@ -388,15 +373,15 @@ mov ecx, 0B6h	; 787A1
 mov ebx, 45h	; 787A6
 mov edx, 8Eh	; 787AB
 mov eax, 5	; 787B0
-call sub_78BE7	; 787B5
+call DrawDlgFrame	; 787B5
 push dword 95h	; 787BA
 push byte 0Ch	; 787BF
-push asc_C3205	; 787C1
+push str_Forward	; 787C1
 call sub_91964	; 787C6
 add esp, byte 0Ch	; 787CB
 push dword 0A2h	; 787CE
 push byte 13h	; 787D3
-push asc_C321B	; 787D5
+push str_Line3	; 787D5
 call sub_91964	; 787DA
 add esp, byte 0Ch	; 787DF
 push byte 1	; 787E2
@@ -404,15 +389,15 @@ mov ecx, 0E7h	; 787E4
 mov ebx, 45h	; 787E9
 mov edx, 0BFh	; 787EE
 mov eax, 5	; 787F3
-call sub_78BE7	; 787F8
+call DrawDlgFrame	; 787F8
 push dword 0C6h	; 787FD
 push byte 0Ch	; 78802
-push asc_C3205	; 78804
+push str_Forward	; 78804
 call sub_91964	; 78809
 add esp, byte 0Ch	; 7880E
 push dword 0D3h	; 78811
 push byte 13h	; 78816
-push asc_C3222	; 78818
+push str_Line4	; 78818
 call sub_91964	; 7881D
 add esp, byte 0Ch	; 78822
 push byte 1	; 78825
@@ -420,15 +405,15 @@ mov ecx, 122h	; 78827
 mov ebx, 45h	; 7882C
 mov edx, 0FAh	; 78831
 mov eax, 5	; 78836
-call sub_78BE7	; 7883B
+call DrawDlgFrame	; 7883B
 push dword 101h	; 78840
 push byte 10h	; 78845
-push asc_C3229	; 78847
+push str_Power	; 78847
 call sub_91964	; 7884C
 add esp, byte 0Ch	; 78851
 push dword 10Eh	; 78854
 push byte 11h	; 78859
-push asc_C322F	; 7885B
+push str_Play1	; 7885B
 call sub_91964	; 78860
 add esp, byte 0Ch	; 78865
 push byte 1	; 78868
@@ -436,15 +421,15 @@ mov ecx, 153h	; 7886A
 mov ebx, 45h	; 7886F
 mov edx, 12Bh	; 78874
 mov eax, 5	; 78879
-call sub_78BE7	; 7887E
+call DrawDlgFrame	; 7887E
 push dword 132h	; 78883
 push byte 10h	; 78888
-push asc_C3229	; 7888A
+push str_Power	; 7888A
 call sub_91964	; 7888F
 add esp, byte 0Ch	; 78894
 push dword 13Fh	; 78897
 push byte 11h	; 7889C
-push asc_C3236	; 7889E
+push str_Play2	; 7889E
 call sub_91964	; 788A3
 add esp, byte 0Ch	; 788A8
 push byte 1	; 788AB
@@ -452,15 +437,15 @@ mov ecx, 18Eh	; 788AD
 mov ebx, 45h	; 788B2
 mov edx, 166h	; 788B7
 mov eax, 5	; 788BC
-call sub_78BE7	; 788C1
+call DrawDlgFrame	; 788C1
 push dword 16Dh	; 788C6
 push byte 0Ch	; 788CB
-push asc_C323D	; 788CD
+push str_Penalty	; 788CD
 call sub_91964	; 788D2
 add esp, byte 0Ch	; 788D7
 push dword 17Ah	; 788DA
 push byte 13h	; 788DF
-push asc_C3245	; 788E1
+push str_Kill1	; 788E1
 call sub_91964	; 788E6
 add esp, byte 0Ch	; 788EB
 push byte 1	; 788EE
@@ -468,15 +453,15 @@ mov ecx, 1BFh	; 788F0
 mov ebx, 45h	; 788F5
 mov edx, 197h	; 788FA
 mov eax, 5	; 788FF
-call sub_78BE7	; 78904
+call DrawDlgFrame	; 78904
 push dword 19Eh	; 78909
 push byte 0Ch	; 7890E
-push asc_C323D	; 78910
+push str_Penalty	; 78910
 call sub_91964	; 78915
 add esp, byte 0Ch	; 7891A
 push dword 1ABh	; 7891D
 push byte 13h	; 78922
-push asc_C324C	; 78924
+push str_Kill2	; 78924
 call sub_91964	; 78929
 add esp, byte 0Ch	; 7892E
 push byte 1	; 78931
@@ -484,15 +469,15 @@ mov ecx, 54h	; 78933
 mov ebx, 154h	; 78938
 mov edx, 2Ch	; 7893D
 mov eax, 114h	; 78942
-call sub_78BE7	; 78947
+call DrawDlgFrame	; 78947
 push byte 33h	; 7894C
 push dword 11Bh	; 7894E
-push asc_C3253	; 78953
+push str_Defense3	; 78953
 call sub_91964	; 78958
 add esp, byte 0Ch	; 7895D
 push byte 40h	; 78960
 push dword 120h	; 78962
-push asc_C320D	; 78967
+push str_Line1	; 78967
 call sub_91964	; 7896C
 add esp, byte 0Ch	; 78971
 push byte 1	; 78974
@@ -500,15 +485,15 @@ mov ecx, 85h	; 78976
 mov ebx, 154h	; 7897B
 mov edx, 5Dh	; 78980
 mov eax, 114h	; 78985
-call sub_78BE7	; 7898A
+call DrawDlgFrame	; 7898A
 push byte 64h	; 7898F
 push dword 11Bh	; 78991
-push asc_C3253	; 78996
+push str_Defense3	; 78996
 call sub_91964	; 7899B
 add esp, byte 0Ch	; 789A0
 push byte 71h	; 789A3
 push dword 120h	; 789A5
-push asc_C3214	; 789AA
+push str_Line2	; 789AA
 call sub_91964	; 789AF
 add esp, byte 0Ch	; 789B4
 push byte 1	; 789B7
@@ -516,15 +501,15 @@ mov ecx, 0B6h	; 789B9
 mov ebx, 154h	; 789BE
 mov edx, 8Eh	; 789C3
 mov eax, 114h	; 789C8
-call sub_78BE7	; 789CD
+call DrawDlgFrame	; 789CD
 push dword 95h	; 789D2
 push dword 11Bh	; 789D7
-push asc_C3253	; 789DC
+push str_Defense3	; 789DC
 call sub_91964	; 789E1
 add esp, byte 0Ch	; 789E6
 push dword 0A2h	; 789E9
 push dword 120h	; 789EE
-push asc_C321B	; 789F3
+push str_Line3	; 789F3
 call sub_91964	; 789F8
 add esp, byte 0Ch	; 789FD
 push byte 1	; 78A00
@@ -532,10 +517,10 @@ mov ecx, 0F0h	; 78A02
 mov ebx, 1E4h	; 78A07
 mov edx, 0C8h	; 78A0C
 mov eax, 186h	; 78A11
-call sub_78BE7	; 78A16
+call DrawDlgFrame	; 78A16
 push dword 0D5h	; 78A1B
 push dword 18Fh	; 78A20
-push asc_C325B	; 78A25
+push str_Goaltenders	; 78A25
 call sub_91964	; 78A2A
 add esp, byte 0Ch	; 78A2F
 push byte 1	; 78A32
@@ -543,24 +528,24 @@ mov ecx, 18Eh	; 78A34
 mov ebx, 1C7h	; 78A39
 mov edx, 166h	; 78A3E
 mov eax, 173h	; 78A43
-call sub_78BE7	; 78A48
+call DrawDlgFrame	; 78A48
 push dword 16Dh	; 78A4D
 push dword 189h	; 78A52
-push asc_C3267	; 78A57
+push str_Extra	; 78A57
 call sub_91964	; 78A5C
 add esp, byte 0Ch	; 78A61
 push dword 17Ah	; 78A64
 push dword 17Dh	; 78A69
-push asc_C326D	; 78A6E
+push str_Attackers	; 78A6E
 call sub_91964	; 78A73
 add esp, byte 0Ch	; 78A78
 add esp, 15Ch	; 78A7B
-sub_78A81:
+StubRet4a:
 pop ebp	; 78A81
 pop edi	; 78A82
 pop esi	; 78A83
 ret 4	; 78A84
-sub_78A87:
+LoadJerseyColours:
 push dword 2Ch	; 78A87
 call __CHK	; 78A8C
 push ecx	; 78A91
@@ -571,14 +556,14 @@ sub esp, byte 10h	; 78A95
 mov edi, eax	; 78A98
 mov esi, ebx	; 78A9A
 mov ecx, str_extBIN	; 78A9C
-mov ebx, asc_C31F7	; 78AA1
+mov ebx, str_HOMEPALS3	; 78AA1
 cmp byte [byte_ED86D], 1	; 78AA6
-jne short loc_78AB7	; 78AAD
+jne short .1	; 78AAD
 mov edx, dword [dword_D2C6B]	; 78AAF
-jmp short loc_78AB9	; 78AB5
-loc_78AB7:
+jmp short .2	; 78AB5
+.1:
 xor edx, edx	; 78AB7
-loc_78AB9:
+.2:
 mov eax, esp	; 78AB9
 call MakePath	; 78ABB
 push byte 0	; 78AC0
@@ -588,12 +573,12 @@ call sub_8E8A0	; 78AC7
 add esp, byte 8	; 78ACC
 mov ebp, eax	; 78ACF
 test edi, edi	; 78AD1
-je short loc_78ADD	; 78AD3
+je short .3	; 78AD3
 mov ax, word [VisTeam]	; 78AD5
-jmp short loc_78AE3	; 78ADB
-loc_78ADD:
+jmp short .4	; 78ADB
+.3:
 mov ax, word [HomeTeam]	; 78ADD
-loc_78AE3:
+.4:
 movsx edx, ax	; 78AE3
 mov eax, edx	; 78AE6
 shl eax, 3	; 78AE8
@@ -601,19 +586,19 @@ sub eax, edx	; 78AEB
 shl eax, 6	; 78AED
 lea ebx, [eax+ebp]	; 78AF0
 xor eax, eax	; 78AF3
-loc_78AF5:
+.5:
 mov cl, byte [ebx+eax]	; 78AF5
 mov byte [dword esi+eax+0CCh], cl	; 78AF8
 inc eax	; 78AFF
 cmp eax, 0B4h	; 78B00
-jl short loc_78AF5	; 78B05
+jl short LoadJerseyColours.5	; 78B05
 mov eax, 0B4h	; 78B07
-loc_78B0C:
+.6:
 mov dl, byte [ebx+eax]	; 78B0C
 mov byte [dword esi+eax+0198h], dl	; 78B0F
 inc eax	; 78B16
 cmp eax, 0C0h	; 78B17
-jl short loc_78B0C	; 78B1C
+jl short LoadJerseyColours.6	; 78B1C
 mov byte [dword esi+0264h], 18h	; 78B1E
 mov byte [dword esi+0265h], 0	; 78B25
 mov byte [dword esi+0266h], 0	; 78B2C
@@ -628,26 +613,26 @@ mov byte [dword esi+026Eh], 3Bh	; 78B64
 mov byte [dword esi+026Fh], 3Bh	; 78B6B
 mov eax, 80h	; 78B72
 add ebx, 0C0h	; 78B77
-loc_78B7D:
+.7:
 lea edx, [ebx+eax]	; 78B7D
 mov cl, byte [edx]	; 78B80
 cmp cl, 80h	; 78B82
-jge short loc_78B92	; 78B85
+jge short .8	; 78B85
 movsx esi, cl	; 78B87
 cmp esi, 0BBh	; 78B8A
-jg short loc_78B9A	; 78B90
-loc_78B92:
+jg short .9	; 78B90
+.8:
 mov dl, byte [ebx+eax]	; 78B92
 sub dl, 3Ch	; 78B95
-jmp short loc_78B9F	; 78B98
-loc_78B9A:
+jmp short .10	; 78B98
+.9:
 mov dl, cl	; 78B9A
 add dl, 8	; 78B9C
-loc_78B9F:
+.10:
 mov byte [dword eax+byte_D1238], dl	; 78B9F
 inc eax	; 78BA5
 cmp eax, 0FFh	; 78BA6
-jl short loc_78B7D	; 78BAB
+jl short LoadJerseyColours.7	; 78BAB
 mov byte [byte_D1333], 0FBh	; 78BAD
 mov byte [byte_D1334], 0FCh	; 78BB4
 mov byte [byte_D1335], 0FDh	; 78BBB
@@ -664,7 +649,7 @@ pop edi	; 78BE3
 pop esi	; 78BE4
 pop ecx	; 78BE5
 ret	; 78BE6
-sub_78BE7:
+DrawDlgFrame:
 push dword 38h	; 78BE7
 call __CHK	; 78BEC
 push esi	; 78BF1
@@ -742,7 +727,7 @@ push ebp	; 78C9C
 call sub_B5DB0	; 78C9D
 add esp, byte 0Ch	; 78CA2
 cmp dword [byte esp+024h], byte 0	; 78CA5
-je near loc_78E21	; 78CAA
+je near .1	; 78CAA
 mov edx, dword [dword_D0B2A]	; 78CB0
 push edx	; 78CB6
 mov eax, edi	; 78CB7
@@ -867,14 +852,14 @@ push ebx	; 78E17
 push edi	; 78E18
 call sub_B5DB0	; 78E19
 add esp, byte 0Ch	; 78E1E
-loc_78E21:
+.1:
 add esp, byte 14h	; 78E21
-jmp near sub_78A81	; 78E24
-sub_78E29:
+jmp near StubRet4a	; 78E24
+StubRet4b:
 push dword 10h	; 78E29
 call __CHK	; 78E2E
 ret 4	; 78E33
-sub_78E36:
+CheckGameRosterComplete:
 push dword 0C0h	; 78E36
 call __CHK	; 78E3B
 push ecx	; 78E40
@@ -906,7 +891,7 @@ mov esi, str_GoalieW2	; 78E92
 movsd	; 78E97
 movsw	; 78E98
 movsb	; 78E9A
-mov dword [dword esp+088h], asc_C3277	; 78E9B
+mov dword [dword esp+088h], str_S2dSS2	; 78E9B
 mov ecx, 6	; 78EA6
 lea edi, [byte esp+038h]	; 78EAB
 mov esi, str_RosterIncomplete2	; 78EAF
@@ -917,9 +902,9 @@ lea eax, [byte esp+038h]	; 78EB9
 mov dword [byte esp+054h], eax	; 78EBD
 mov edi, 1	; 78EC1
 cmp dword [dword_D8C84], byte 0	; 78EC6
-jge near loc_79083	; 78ECD
+jge near .19	; 78ECD
 xor ebx, ebx	; 78ED3
-loc_78ED5:
+.1:
 mov eax, ebx	; 78ED5
 shl eax, 2	; 78ED7
 sub eax, ebx	; 78EDA
@@ -927,7 +912,7 @@ shl eax, 2	; 78EDC
 sub eax, ebx	; 78EDF
 lea edx, [eax+eax]	; 78EE1
 xor ecx, ecx	; 78EE4
-mov cl, byte [dword edx+byte_ED0F6]	; 78EE6
+mov cl, byte [dword edx+gmrosterslot]	; 78EE6
 mov esi, ecx	; 78EEC
 shl esi, 2	; 78EEE
 add esi, ecx	; 78EF1
@@ -941,34 +926,34 @@ add eax, ecx	; 78F06
 shl eax, 4	; 78F08
 add eax, ecx	; 78F0B
 cmp byte [dword esi+eax*4+hmroster], 3	; 78F0D
-jne short loc_78F2A	; 78F15
-cmp byte [dword edx+byte_ED0F4], 47h	; 78F17
-je short loc_78F29	; 78F1E
+jne short .3	; 78F15
+cmp byte [dword edx+gmroster], 47h	; 78F17
+je short .2	; 78F1E
 inc dword [dword esp+08Ch]	; 78F20
-jmp short loc_78F2A	; 78F27
-loc_78F29:
+jmp short .3	; 78F27
+.2:
 inc ebp	; 78F29
-loc_78F2A:
+.3:
 inc ebx	; 78F2A
 cmp ebx, byte 1Ch	; 78F2B
-jl short loc_78ED5	; 78F2E
+jl short CheckGameRosterComplete.1	; 78F2E
 cmp dword [dword esp+08Ch], byte 12h	; 78F30
-jne short loc_78F43	; 78F38
+jne short .4	; 78F38
 cmp ebp, byte 2	; 78F3A
-je near loc_79083	; 78F3D
-loc_78F43:
+je near .19	; 78F3D
+.4:
 mov edx, dword [dword esp+08Ch]	; 78F43
 cmp edx, byte 12h	; 78F4A
-jge short loc_78F8C	; 78F4D
+jge short .7	; 78F4D
 mov eax, 12h	; 78F4F
 sub eax, edx	; 78F54
 cmp eax, byte 1	; 78F56
-jne short loc_78F62	; 78F59
+jne short .5	; 78F59
 mov eax, unk_C3283	; 78F5B
-jmp short loc_78F67	; 78F60
-loc_78F62:
-mov eax, unk_C3285	; 78F62
-loc_78F67:
+jmp short .6	; 78F60
+.5:
+mov eax, str_S7	; 78F62
+.6:
 push eax	; 78F67
 lea eax, [byte esp+074h]	; 78F68
 push eax	; 78F6C
@@ -979,17 +964,17 @@ lea eax, [dword esp+084h]	; 78F7A
 push eax	; 78F81
 mov ebx, dword [dword esp+098h]	; 78F82
 push ebx	; 78F89
-jmp short loc_78FC0	; 78F8A
-loc_78F8C:
-jle short loc_78FD6	; 78F8C
+jmp short .10	; 78F8A
+.7:
+jle short .11	; 78F8C
 lea eax, [byte edx-012h]	; 78F8E
 cmp eax, byte 1	; 78F91
-jne short loc_78F9D	; 78F94
+jne short .8	; 78F94
 mov eax, unk_C3283	; 78F96
-jmp short loc_78FA2	; 78F9B
-loc_78F9D:
-mov eax, unk_C3285	; 78F9D
-loc_78FA2:
+jmp short .9	; 78F9B
+.8:
+mov eax, str_S7	; 78F9D
+.9:
 push eax	; 78FA2
 lea eax, [byte esp+074h]	; 78FA3
 push eax	; 78FA7
@@ -1000,7 +985,7 @@ lea eax, [byte esp+06Ch]	; 78FB3
 push eax	; 78FB7
 mov ecx, dword [dword esp+098h]	; 78FB8
 push ecx	; 78FBF
-loc_78FC0:
+.10:
 lea eax, [byte esp+030h]	; 78FC0
 push eax	; 78FC4
 call sprintf_	; 78FC5
@@ -1008,18 +993,18 @@ add esp, byte 18h	; 78FCA
 lea edx, [byte esp+01Ch]	; 78FCD
 mov dword [byte esp+edi*4+054h], edx	; 78FD1
 inc edi	; 78FD5
-loc_78FD6:
+.11:
 cmp ebp, byte 2	; 78FD6
-jge short loc_79013	; 78FD9
+jge short .14	; 78FD9
 mov eax, 2	; 78FDB
 sub eax, ebp	; 78FE0
 cmp eax, byte 1	; 78FE2
-jne short loc_78FEE	; 78FE5
+jne short .12	; 78FE5
 mov eax, unk_C3283	; 78FE7
-jmp short loc_78FF3	; 78FEC
-loc_78FEE:
-mov eax, unk_C3285	; 78FEE
-loc_78FF3:
+jmp short .13	; 78FEC
+.12:
+mov eax, str_S7	; 78FEE
+.13:
 push eax	; 78FF3
 lea eax, [byte esp+06Ch]	; 78FF4
 push eax	; 78FF8
@@ -1030,17 +1015,17 @@ lea eax, [dword esp+084h]	; 79001
 push eax	; 79008
 mov esi, dword [dword esp+098h]	; 79009
 push esi	; 79010
-jmp short loc_79040	; 79011
-loc_79013:
-jle short loc_79054	; 79013
+jmp short .17	; 79011
+.14:
+jle short .18	; 79013
 lea eax, [byte ebp-02h]	; 79015
 cmp eax, byte 1	; 79018
-jne short loc_79024	; 7901B
+jne short .15	; 7901B
 mov eax, unk_C3283	; 7901D
-jmp short loc_79029	; 79022
-loc_79024:
-mov eax, unk_C3285	; 79024
-loc_79029:
+jmp short .16	; 79022
+.15:
+mov eax, str_S7	; 79024
+.16:
 push eax	; 79029
 lea eax, [byte esp+06Ch]	; 7902A
 push eax	; 7902E
@@ -1050,7 +1035,7 @@ lea eax, [byte esp+06Ch]	; 79033
 push eax	; 79037
 mov ecx, dword [dword esp+098h]	; 79038
 push ecx	; 7903F
-loc_79040:
+.17:
 lea eax, [byte esp+014h]	; 79040
 push eax	; 79044
 call sprintf_	; 79045
@@ -1058,7 +1043,7 @@ add esp, byte 18h	; 7904A
 mov edx, esp	; 7904D
 mov dword [byte esp+edi*4+054h], edx	; 7904F
 inc edi	; 79053
-loc_79054:
+.18:
 push byte 0FFFFFFFFh	; 79054
 mov ebp, dword [dword esp+088h]	; 79056
 push ebp	; 7905D
@@ -1072,17 +1057,17 @@ mov edx, 0FFFFFFFFh	; 79070
 mov eax, edx	; 79075
 call MessageBox	; 79077
 mov eax, 1	; 7907C
-jmp short loc_79085	; 79081
-loc_79083:
+jmp short .x	; 79081
+.19:
 xor eax, eax	; 79083
-loc_79085:
+.x:
 add esp, 94h	; 79085
 pop ebp	; 7908B
 pop edi	; 7908C
 pop esi	; 7908D
 pop ecx	; 7908E
 ret	; 7908F
-sub_79090:
+PruneGameLines:
 push dword 18h	; 79090
 call __CHK	; 79095
 push ebx	; 7909A
@@ -1093,12 +1078,12 @@ sub esp, byte 4	; 7909E
 mov byte [esp], al	; 790A1
 mov esi, edx	; 790A4
 cmp dword [dword_D8C84], byte 0	; 790A6
-jl short loc_790FD	; 790AD
+jl short .3	; 790AD
 xor eax, eax	; 790AF
-loc_790B1:
+.1:
 lea ebx, [esi+eax]	; 790B1
 cmp byte [ebx], 64h	; 790B4
-je short loc_790F2	; 790B7
+je short .2	; 790B7
 xor ecx, ecx	; 790B9
 mov cl, byte [ebx]	; 790BB
 mov edi, ecx	; 790BD
@@ -1117,18 +1102,18 @@ shl edx, 2	; 790DA
 add edx, edi	; 790DD
 mov ch, byte [dword edx+hmroster]	; 790DF
 cmp ch, 4	; 790E5
-je short loc_790F2	; 790E8
+je short .2	; 790E8
 cmp ch, 3	; 790EA
-je short loc_790F2	; 790ED
+je short .2	; 790ED
 mov byte [ebx], 64h	; 790EF
-loc_790F2:
+.2:
 inc eax	; 790F2
 cmp eax, byte 28h	; 790F3
-jl short loc_790B1	; 790F6
-jmp near loc_79180	; 790F8
-loc_790FD:
+jl short PruneGameLines.1	; 790F6
+jmp near .x	; 790F8
+.3:
 xor eax, eax	; 790FD
-loc_790FF:
+.4:
 xor ebx, ebx	; 790FF
 mov bl, byte [esp]	; 79101
 mov ecx, ebx	; 79104
@@ -1144,18 +1129,18 @@ shl edx, 3	; 7911A
 sub edx, eax	; 7911D
 add edx, ecx	; 7911F
 cmp byte [dword edx+hmroster], 2	; 79121
-jne short loc_79131	; 79128
+jne short .5	; 79128
 mov byte [dword edx+hmroster], 3	; 7912A
-loc_79131:
+.5:
 inc eax	; 79131
 cmp eax, byte 1Ch	; 79132
-jl short loc_790FF	; 79135
+jl short PruneGameLines.4	; 79135
 xor eax, eax	; 79137
-loc_79139:
+.6:
 lea edx, [esi+eax]	; 79139
 mov cl, byte [byte edx+028h]	; 7913C
 cmp cl, 64h	; 7913F
-je short loc_7917A	; 79142
+je short .7	; 79142
 xor ebx, ebx	; 79144
 mov bl, cl	; 79146
 mov ecx, ebx	; 79148
@@ -1173,20 +1158,20 @@ add edx, ebx	; 79163
 shl edx, 2	; 79165
 add edx, ecx	; 79168
 cmp byte [dword edx+hmroster], 3	; 7916A
-jne short loc_7917A	; 79171
+jne short .7	; 79171
 mov byte [dword edx+hmroster], 2	; 79173
-loc_7917A:
+.7:
 inc eax	; 7917A
 cmp eax, byte 8	; 7917B
-jl short loc_79139	; 7917E
-loc_79180:
+jl short PruneGameLines.6	; 7917E
+.x:
 add esp, byte 4	; 79180
 pop edi	; 79183
 pop esi	; 79184
 pop ecx	; 79185
 pop ebx	; 79186
 ret	; 79187
-sub_79188:
+MenuUseTheseLines:
 push dword 18h	; 79188
 call __CHK	; 7918D
 push esi	; 79192
@@ -1200,13 +1185,13 @@ xor eax, eax	; 791A0
 mov al, bl	; 791A2
 mov ebx, dword [byte esp+02Ch]	; 791A4
 mov edx, dword [byte esp+028h]	; 791A8
-call sub_78E36	; 791AC
+call CheckGameRosterComplete	; 791AC
 test eax, eax	; 791B1
-jne near loc_7939A	; 791B3
+jne near MenuUseOriginalLines_ret0	; 791B3
 mov dword [esp], eax	; 791B9
-loc_791BC:
+.1:
 xor edx, edx	; 791BC
-loc_791BE:
+.2:
 xor ebx, ebx	; 791BE
 mov bl, byte [byte esp+04h]	; 791C0
 mov ecx, ebx	; 791C4
@@ -1222,40 +1207,40 @@ shl eax, 3	; 791DA
 sub eax, edx	; 791DD
 add eax, ecx	; 791DF
 cmp byte [dword eax+hmroster], 0	; 791E1
-je short loc_79200	; 791E8
+je short .3	; 791E8
 mov ebx, dword [esp]	; 791EA
 mov bl, byte [esi+ebx]	; 791ED
-cmp bl, byte [dword eax+byte_DB3AD]	; 791F0
-jne short loc_79200	; 791F6
+cmp bl, byte [dword eax+hmrosterjersey]	; 791F0
+jne short .3	; 791F6
 mov eax, dword [esp]	; 791F8
 mov byte [edi+eax], dl	; 791FB
-jmp short loc_79206	; 791FE
-loc_79200:
+jmp short .4	; 791FE
+.3:
 inc edx	; 79200
 cmp edx, byte 1Ch	; 79201
-jl short loc_791BE	; 79204
-loc_79206:
+jl short MenuUseTheseLines.2	; 79204
+.4:
 mov ebx, dword [esp]	; 79206
 inc ebx	; 79209
 mov dword [esp], ebx	; 7920A
 cmp ebx, byte 28h	; 7920D
-jl short loc_791BC	; 79210
+jl short MenuUseTheseLines.1	; 79210
 cmp dword [dword_D8C84], byte 0	; 79212
-jge short loc_79280	; 79219
+jge short .9	; 79219
 xor ebp, ebp	; 7921B
 mov dword [esp], ebp	; 7921D
-loc_79220:
+.5:
 mov eax, dword [esp]	; 79220
 mov byte [byte edi+eax+028h], 64h	; 79223
 inc eax	; 79228
 mov dword [esp], eax	; 79229
 cmp eax, byte 8	; 7922C
-jl short loc_79220	; 7922F
+jl short MenuUseTheseLines.5	; 7922F
 xor ebx, ebx	; 79231
 mov dword [esp], ebx	; 79233
 xor edx, edx	; 79236
-jmp short loc_7927A	; 79238
-loc_7923A:
+jmp short .8	; 79238
+.6:
 xor ebx, ebx	; 7923A
 mov bl, byte [byte esp+04h]	; 7923C
 mov ecx, ebx	; 79240
@@ -1273,26 +1258,26 @@ sub eax, ebx	; 7925C
 add eax, ecx	; 7925E
 mov cl, byte [dword eax+hmroster]	; 79260
 test cl, cl	; 79266
-je short loc_79277	; 79268
+je short .7	; 79268
 cmp cl, 3	; 7926A
-je short loc_79277	; 7926D
+je short .7	; 7926D
 mov bl, byte [esp]	; 7926F
 mov byte [byte edx+edi+028h], bl	; 79272
 inc edx	; 79276
-loc_79277:
+.7:
 inc dword [esp]	; 79277
-loc_7927A:
+.8:
 cmp dword [esp], byte 1Ch	; 7927A
-jl short loc_7923A	; 7927E
-loc_79280:
+jl short MenuUseTheseLines.6	; 7927E
+.9:
 mov eax, 1	; 79280
-jmp near loc_7939C	; 79285
-sub_7928A:
+jmp near MenuUseOriginalLines_ret	; 79285
+MenuLineEdCancel:
 push dword 4	; 7928A
 call __CHK	; 7928F
 mov eax, 1	; 79294
 ret 18h	; 79299
-sub_7929C:
+MenuUseOriginalLines:
 push dword 18h	; 7929C
 call __CHK	; 792A1
 push esi	; 792A6
@@ -1316,21 +1301,21 @@ add ebp, eax	; 792D1
 add ebp, 0ECh	; 792D3
 mov edx, ebp	; 792D9
 mov eax, ebx	; 792DB
-call sub_79090	; 792DD
-mov dword [off_CF443], unk_797B4	; 792E2
-mov ebx, sub_79188	; 792EC
-mov dword [off_CF363], ebx	; 792F1
-mov dword [off_CF223], ebx	; 792F7
-mov esi, unk_7947F	; 792FD
-mov dword [off_CF3C3], esi	; 79302
-mov dword [off_CF283], esi	; 79308
+call PruneGameLines	; 792DD
+mov dword [menuact_savelines], MenuSaveTheseLines	; 792E2
+mov ebx, MenuUseTheseLines	; 792EC
+mov dword [menuact_uselines], ebx	; 792F1
+mov dword [menuact_uselines2], ebx	; 792F7
+mov esi, MenuSaveDefaultLines	; 792FD
+mov dword [menuact_savedeflines], esi	; 79302
+mov dword [menuact_savedeflines2], esi	; 79308
 xor edx, edx	; 7930E
-loc_79310:
+.1:
 lea eax, [edx+ebp]	; 79310
 lea ebx, [edi+edx]	; 79313
 mov cl, byte [eax]	; 79316
 cmp cl, 64h	; 79318
-je short loc_7934A	; 7931B
+je short .2	; 7931B
 xor ecx, ecx	; 7931D
 mov cl, byte [eax]	; 7931F
 mov esi, ecx	; 79321
@@ -1345,38 +1330,38 @@ shl eax, 4	; 79335
 add eax, ecx	; 79338
 shl eax, 4	; 7933A
 add eax, ecx	; 7933D
-mov al, byte [dword esi+eax*4+byte_DB3AD]	; 7933F
+mov al, byte [dword esi+eax*4+hmrosterjersey]	; 7933F
 mov byte [ebx], al	; 79346
-jmp short loc_7936C	; 79348
-loc_7934A:
+jmp short .3	; 79348
+.2:
 mov byte [ebx], cl	; 7934A
 xor ebx, ebx	; 7934C
-mov dword [off_CF443], ebx	; 7934E
-mov dword [off_CF363], ebx	; 79354
-mov dword [off_CF223], ebx	; 7935A
-mov dword [off_CF3C3], ebx	; 79360
-mov dword [off_CF283], ebx	; 79366
-loc_7936C:
+mov dword [menuact_savelines], ebx	; 7934E
+mov dword [menuact_uselines], ebx	; 79354
+mov dword [menuact_uselines2], ebx	; 7935A
+mov dword [menuact_savedeflines], ebx	; 79360
+mov dword [menuact_savedeflines2], ebx	; 79366
+.3:
 inc edx	; 7936C
 cmp edx, byte 28h	; 7936D
-jl short loc_79310	; 79370
-loc_79372:
+jl short MenuUseOriginalLines.1	; 79370
+MenuUseOriginalLines_redraw:
 xor ebx, ebx	; 79372
 mov bl, byte [byte esp+04h]	; 79374
 mov edx, dword [byte esp+018h]	; 79378
 mov eax, edi	; 7937C
-call sub_78366	; 7937E
+call DrawGameLineJerseys	; 7937E
 mov eax, dword [esp]	; 79383
 mov dword [eax], 0FFFFFFFFh	; 79386
 xor ecx, ecx	; 7938C
 mov dword [off_CF2C3], ecx	; 7938E
 mov dword [off_CF2A3], ecx	; 79394
-loc_7939A:
+MenuUseOriginalLines_ret0:
 xor eax, eax	; 7939A
-loc_7939C:
+MenuUseOriginalLines_ret:
 add esp, byte 8	; 7939C
-jmp near loc_797AE	; 7939F
-sub_793A4:
+jmp near MenuSaveDefaultLines_pop	; 7939F
+MenuUseDefaultLines:
 push dword 18h	; 793A4
 call __CHK	; 793A9
 push esi	; 793AE
@@ -1400,21 +1385,21 @@ add ebp, eax	; 793D9
 add ebp, 0BCh	; 793DB
 mov edx, ebp	; 793E1
 mov eax, ebx	; 793E3
-call sub_79090	; 793E5
-mov dword [off_CF443], unk_797B4	; 793EA
-mov ebx, sub_79188	; 793F4
-mov dword [off_CF363], ebx	; 793F9
-mov dword [off_CF223], ebx	; 793FF
-mov esi, unk_7947F	; 79405
-mov dword [off_CF3C3], esi	; 7940A
-mov dword [off_CF283], esi	; 79410
+call PruneGameLines	; 793E5
+mov dword [menuact_savelines], MenuSaveTheseLines	; 793EA
+mov ebx, MenuUseTheseLines	; 793F4
+mov dword [menuact_uselines], ebx	; 793F9
+mov dword [menuact_uselines2], ebx	; 793FF
+mov esi, MenuSaveDefaultLines	; 79405
+mov dword [menuact_savedeflines], esi	; 7940A
+mov dword [menuact_savedeflines2], esi	; 79410
 xor edx, edx	; 79416
-loc_79418:
+.1:
 lea eax, [edx+ebp]	; 79418
 lea ebx, [edi+edx]	; 7941B
 mov cl, byte [eax]	; 7941E
 cmp cl, 64h	; 79420
-je short loc_79452	; 79423
+je short .2	; 79423
 xor ecx, ecx	; 79425
 mov cl, byte [eax]	; 79427
 mov esi, ecx	; 79429
@@ -1429,23 +1414,23 @@ shl eax, 4	; 7943D
 add eax, ecx	; 79440
 shl eax, 4	; 79442
 add eax, ecx	; 79445
-mov al, byte [dword esi+eax*4+byte_DB3AD]	; 79447
+mov al, byte [dword esi+eax*4+hmrosterjersey]	; 79447
 mov byte [ebx], al	; 7944E
-jmp short loc_79474	; 79450
-loc_79452:
+jmp short .3	; 79450
+.2:
 mov byte [ebx], cl	; 79452
 xor ebx, ebx	; 79454
-mov dword [off_CF443], ebx	; 79456
-mov dword [off_CF363], ebx	; 7945C
-mov dword [off_CF223], ebx	; 79462
-mov dword [off_CF3C3], ebx	; 79468
-mov dword [off_CF283], ebx	; 7946E
-loc_79474:
+mov dword [menuact_savelines], ebx	; 79456
+mov dword [menuact_uselines], ebx	; 7945C
+mov dword [menuact_uselines2], ebx	; 79462
+mov dword [menuact_savedeflines], ebx	; 79468
+mov dword [menuact_savedeflines2], ebx	; 7946E
+.3:
 inc edx	; 79474
 cmp edx, byte 28h	; 79475
-jl short loc_79418	; 79478
-jmp near loc_79372	; 7947A
-unk_7947F:
+jl short MenuUseDefaultLines.1	; 79478
+jmp near MenuUseOriginalLines_redraw	; 7947A
+MenuSaveDefaultLines:
 db 068h,02Ch,03h,00h,00h
 call __CHK	; 79484
 push esi	; 79489
@@ -1458,18 +1443,18 @@ xor eax, eax	; 7949B
 mov al, bl	; 7949D
 mov ebx, dword [dword esp+0334h]	; 7949F
 mov edx, dword [dword esp+0330h]	; 794A6
-call sub_78E36	; 794AD
+call CheckGameRosterComplete	; 794AD
 test eax, eax	; 794B2
-jne near loc_797A6	; 794B4
+jne near .24	; 794B4
 cmp byte [dword esp+030Ch], 0	; 794BA
-je short loc_794D0	; 794C2
-push asc_C3288	; 794C4
+je short .1	; 794C2
+push str_Teams2	; 794C4
 push leaguedbfmt2	; 794C9
-jmp short loc_794DA	; 794CE
-loc_794D0:
-push asc_C3288	; 794D0
+jmp short .2	; 794CE
+.1:
+push str_Teams2	; 794D0
 push leaguedbfmt	; 794D5
-loc_794DA:
+.2:
 lea eax, [dword esp+02F0h]	; 794DA
 push eax	; 794E1
 call sprintf_	; 794E2
@@ -1481,31 +1466,31 @@ call open_	; 794F7
 add esp, byte 8	; 794FC
 mov ebp, eax	; 794FF
 test eax, eax	; 79501
-jge short loc_79523	; 79503
+jge short .3	; 79503
 call sub_B4B58	; 79505
-mov eax, asc_C328E	; 7950A
+mov eax, str_ErrB2Perror	; 7950A
 call perror_	; 7950F
 call WaitKey	; 79514
 mov eax, 1	; 79519
 call exit_	; 7951E
-loc_79523:
+.3:
 xor ebx, ebx	; 79523
 xor edx, edx	; 79525
 mov eax, ebp	; 79527
 call lseek_	; 79529
 test eax, eax	; 7952E
-je short loc_7953F	; 79530
-push unk_C3292	; 79532
+je short .4	; 79530
+push str_ErrB3	; 79532
 call FatalError	; 79537
 add esp, byte 4	; 7953C
-loc_7953F:
+.4:
 cmp byte [dword esp+030Ch], 0	; 7953F
-je short loc_79551	; 79547
+je short .5	; 79547
 mov edx, dword [HomeTeam]	; 79549
-jmp short loc_79557	; 7954F
-loc_79551:
+jmp short .6	; 7954F
+.5:
 mov edx, dword [cont2team]	; 79551
-loc_79557:
+.6:
 sar edx, 10h	; 79557
 mov eax, edx	; 7955A
 shl eax, 2	; 7955C
@@ -1520,24 +1505,24 @@ mov eax, ebp	; 7956F
 call lseek_	; 79571
 mov ebx, eax	; 79576
 test ebx, ebx	; 79578
-jge short loc_79589	; 7957A
-push unk_C3295	; 7957C
+jge short .7	; 7957A
+push str_ErrB4	; 7957C
 call FatalError	; 79581
 add esp, byte 4	; 79586
-loc_79589:
+.7:
 mov ebx, 2E8h	; 79589
 mov edx, esp	; 7958E
 mov eax, ebp	; 79590
 call read_	; 79592
 test eax, eax	; 79597
-jl short loc_795A2	; 79599
+jl short .8	; 79599
 cmp eax, 2E8h	; 7959B
-je short loc_795AF	; 795A0
-loc_795A2:
-push unk_C3298	; 795A2
+je short .9	; 795A0
+.8:
+push str_ErrB5	; 795A2
 call FatalError	; 795A7
 add esp, byte 4	; 795AC
-loc_795AF:
+.9:
 mov ebx, 1	; 795AF
 mov edx, 0FFFFFD18h	; 795B4
 mov eax, ebp	; 795B9
@@ -1545,7 +1530,7 @@ call lseek_	; 795BB
 mov ecx, eax	; 795C0
 mov ebx, eax	; 795C2
 test eax, eax	; 795C4
-jge short loc_79625	; 795C6
+jge short .12	; 795C6
 mov edx, dword [cont2team]	; 795C8
 sar edx, 10h	; 795CE
 mov eax, edx	; 795D1
@@ -1556,10 +1541,10 @@ mov edx, eax	; 795DB
 shl eax, 5	; 795DD
 sub eax, edx	; 795E0
 cmp ecx, eax	; 795E2
-je short loc_795F0	; 795E4
+je short .10	; 795E4
 cmp byte [dword esp+030Ch], 0	; 795E6
-je short loc_79618	; 795EE
-loc_795F0:
+je short .11	; 795EE
+.10:
 mov edx, dword [HomeTeam]	; 795F0
 sar edx, 10h	; 795F6
 mov eax, edx	; 795F9
@@ -1570,19 +1555,19 @@ mov edx, eax	; 79603
 shl eax, 5	; 79605
 sub eax, edx	; 79608
 cmp ebx, eax	; 7960A
-je short loc_79625	; 7960C
+je short .12	; 7960C
 cmp byte [dword esp+030Ch], 0	; 7960E
-je short loc_79625	; 79616
-loc_79618:
-push unk_C329B	; 79618
+je short .12	; 79616
+.11:
+push str_ErrB6	; 79618
 call FatalError	; 7961D
 add esp, byte 4	; 79622
-loc_79625:
+.12:
 xor edx, edx	; 79625
 mov dword [dword esp+0308h], edx	; 79627
-loc_7962E:
+.13:
 xor edx, edx	; 7962E
-loc_79630:
+.14:
 xor ebx, ebx	; 79630
 mov bl, byte [dword esp+030Ch]	; 79632
 mov ecx, ebx	; 79639
@@ -1598,41 +1583,41 @@ shl eax, 3	; 7964F
 sub eax, edx	; 79652
 add eax, ecx	; 79654
 cmp byte [dword eax+hmroster], 0	; 79656
-je short loc_79681	; 7965D
+je short .15	; 7965D
 mov ebx, dword [dword esp+0308h]	; 7965F
 mov bl, byte [esi+ebx]	; 79666
-cmp bl, byte [dword eax+byte_DB3AD]	; 79669
-jne short loc_79681	; 7966F
+cmp bl, byte [dword eax+hmrosterjersey]	; 79669
+jne short .15	; 7966F
 mov eax, dword [dword esp+0308h]	; 79671
 mov byte [dword esp+eax+0BCh], dl	; 79678
-jmp short loc_79687	; 7967F
-loc_79681:
+jmp short .16	; 7967F
+.15:
 inc edx	; 79681
 cmp edx, byte 1Ch	; 79682
-jl short loc_79630	; 79685
-loc_79687:
+jl short MenuSaveDefaultLines.14	; 79685
+.16:
 mov ebx, dword [dword esp+0308h]	; 79687
 inc ebx	; 7968E
 mov dword [dword esp+0308h], ebx	; 7968F
 cmp ebx, byte 28h	; 79696
-jl short loc_7962E	; 79699
+jl short MenuSaveDefaultLines.13	; 79699
 cmp dword [dword_D8C84], byte 0	; 7969B
-jge near loc_79737	; 796A2
+jge near .21	; 796A2
 xor edi, edi	; 796A8
 mov dword [dword esp+0308h], edi	; 796AA
 mov ch, 64h	; 796B1
-loc_796B3:
+.17:
 mov eax, dword [dword esp+0308h]	; 796B3
 mov byte [dword esp+eax+0E4h], ch	; 796BA
 inc eax	; 796C1
 mov dword [dword esp+0308h], eax	; 796C2
 cmp eax, byte 8	; 796C9
-jl short loc_796B3	; 796CC
+jl short MenuSaveDefaultLines.17	; 796CC
 xor ebx, ebx	; 796CE
 mov dword [dword esp+0308h], ebx	; 796D0
 xor edx, edx	; 796D7
-jmp short loc_7972D	; 796D9
-loc_796DB:
+jmp short .20	; 796D9
+.18:
 xor ebx, ebx	; 796DB
 mov bl, byte [dword esp+030Ch]	; 796DD
 mov ecx, ebx	; 796E4
@@ -1650,31 +1635,31 @@ sub eax, ebx	; 79704
 add eax, ecx	; 79706
 mov bl, byte [dword eax+hmroster]	; 79708
 test bl, bl	; 7970E
-je short loc_79726	; 79710
+je short .19	; 79710
 cmp bl, 3	; 79712
-je short loc_79726	; 79715
+je short .19	; 79715
 mov al, byte [dword esp+0308h]	; 79717
 mov byte [dword esp+edx+0E4h], al	; 7971E
 inc edx	; 79725
-loc_79726:
+.19:
 inc dword [dword esp+0308h]	; 79726
-loc_7972D:
+.20:
 cmp dword [dword esp+0308h], byte 1Ch	; 7972D
-jl short loc_796DB	; 79735
-loc_79737:
+jl short MenuSaveDefaultLines.18	; 79735
+.21:
 mov ebx, 2E8h	; 79737
 mov edx, esp	; 7973C
 mov eax, ebp	; 7973E
 call write_	; 79740
 test eax, eax	; 79745
-jl short loc_79750	; 79747
+jl short .22	; 79747
 cmp eax, 2E8h	; 79749
-je short loc_7975D	; 7974E
-loc_79750:
-push unk_C329E	; 79750
+je short .23	; 7974E
+.22:
+push str_ErrB7	; 79750
 call FatalError	; 79755
 add esp, byte 4	; 7975A
-loc_7975D:
+.23:
 xor edx, edx	; 7975D
 mov dl, byte [dword esp+030Ch]	; 7975F
 mov eax, edx	; 79766
@@ -1694,28 +1679,28 @@ lea esi, [dword esp+0ECh]	; 79796
 rep movsd	; 7979D
 mov eax, ebp	; 7979F
 call j___close_	; 797A1
-loc_797A6:
+.24:
 xor eax, eax	; 797A6
-loc_797A8:
+MenuSaveDefaultLines_ret:
 add esp, 310h	; 797A8
-loc_797AE:
+MenuSaveDefaultLines_pop:
 pop ebp	; 797AE
 pop edi	; 797AF
 pop esi	; 797B0
 ret 18h	; 797B1
-unk_797B4:
+MenuSaveTheseLines:
 db 068h,02Ch,03h,00h,00h,0E8h,08Eh,031h,01h,00h,056h,057h,055h,081h,0ECh,010h
 db 03h,00h,00h,089h,0C6h,088h,09Ch,024h,0Ch,03h,00h,00h,031h,0C0h,088h,0D8h
 db 08Bh,09Ch,024h,034h,03h,00h,00h,08Bh,094h,024h,030h,03h,00h,00h,0E8h,04Fh
 db 0F6h,0FFh,0FFh,085h,0C0h,074h,04h,031h,0C0h,0EBh,0B9h,080h,0BCh,024h,0Ch,03h
 db 00h,00h,00h,074h,0Ch,068h
-dd asc_C3288
-sub_797FE:
+dd str_Teams2
+MenuSaveTheseLines_x:
 push leaguedbfmt2	; 797FE
-jmp short loc_7980F	; 79803
-push asc_C3288	; 79805
+jmp short .1	; 79803
+push str_Teams2	; 79805
 push leaguedbfmt	; 7980A
-loc_7980F:
+.1:
 lea eax, [dword esp+02F0h]	; 7980F
 push eax	; 79816
 call sprintf_	; 79817
@@ -1727,28 +1712,28 @@ call open_	; 7982C
 add esp, byte 8	; 79831
 mov ebp, eax	; 79834
 test eax, eax	; 79836
-jge short loc_79847	; 79838
-push unk_C32A1	; 7983A
+jge short .2	; 79838
+push str_ErrB2	; 7983A
 call FatalError	; 7983F
 add esp, byte 4	; 79844
-loc_79847:
+.2:
 xor ebx, ebx	; 79847
 xor edx, edx	; 79849
 mov eax, ebp	; 7984B
 call lseek_	; 7984D
 test eax, eax	; 79852
-je short loc_79863	; 79854
-push unk_C3292	; 79856
+je short .3	; 79854
+push str_ErrB3	; 79856
 call FatalError	; 7985B
 add esp, byte 4	; 79860
-loc_79863:
+.3:
 cmp byte [dword esp+030Ch], 0	; 79863
-je short loc_79875	; 7986B
+je short .4	; 7986B
 mov edx, dword [HomeTeam]	; 7986D
-jmp short loc_7987B	; 79873
-loc_79875:
+jmp short .5	; 79873
+.4:
 mov edx, dword [cont2team]	; 79875
-loc_7987B:
+.5:
 sar edx, 10h	; 7987B
 mov eax, edx	; 7987E
 shl eax, 2	; 79880
@@ -1763,24 +1748,24 @@ mov eax, ebp	; 79893
 call lseek_	; 79895
 mov ebx, eax	; 7989A
 test ebx, ebx	; 7989C
-jge short loc_798AD	; 7989E
-push unk_C3295	; 798A0
+jge short .6	; 7989E
+push str_ErrB4	; 798A0
 call FatalError	; 798A5
 add esp, byte 4	; 798AA
-loc_798AD:
+.6:
 mov ebx, 2E8h	; 798AD
 mov edx, esp	; 798B2
 mov eax, ebp	; 798B4
 call read_	; 798B6
 test eax, eax	; 798BB
-jl short loc_798C6	; 798BD
+jl short .7	; 798BD
 cmp eax, 2E8h	; 798BF
-je short loc_798D3	; 798C4
-loc_798C6:
-push unk_C3298	; 798C6
+je short .8	; 798C4
+.7:
+push str_ErrB5	; 798C6
 call FatalError	; 798CB
 add esp, byte 4	; 798D0
-loc_798D3:
+.8:
 mov ebx, 1	; 798D3
 mov edx, 0FFFFFD18h	; 798D8
 mov eax, ebp	; 798DD
@@ -1788,7 +1773,7 @@ call lseek_	; 798DF
 mov ecx, eax	; 798E4
 mov ebx, eax	; 798E6
 test eax, eax	; 798E8
-jge short loc_79949	; 798EA
+jge short .11	; 798EA
 mov edx, dword [cont2team]	; 798EC
 sar edx, 10h	; 798F2
 mov eax, edx	; 798F5
@@ -1799,10 +1784,10 @@ mov edx, eax	; 798FF
 shl eax, 5	; 79901
 sub eax, edx	; 79904
 cmp ecx, eax	; 79906
-je short loc_79914	; 79908
+je short .9	; 79908
 cmp byte [dword esp+030Ch], 0	; 7990A
-je short loc_7993C	; 79912
-loc_79914:
+je short .10	; 79912
+.9:
 mov edx, dword [HomeTeam]	; 79914
 sar edx, 10h	; 7991A
 mov eax, edx	; 7991D
@@ -1813,19 +1798,19 @@ mov edx, eax	; 79927
 shl eax, 5	; 79929
 sub eax, edx	; 7992C
 cmp ebx, eax	; 7992E
-je short loc_79949	; 79930
+je short .11	; 79930
 cmp byte [dword esp+030Ch], 0	; 79932
-je short loc_79949	; 7993A
-loc_7993C:
-push unk_C329B	; 7993C
+je short .11	; 7993A
+.10:
+push str_ErrB6	; 7993C
 call FatalError	; 79941
 add esp, byte 4	; 79946
-loc_79949:
+.11:
 xor edx, edx	; 79949
 mov dword [dword esp+0308h], edx	; 7994B
-loc_79952:
+.12:
 xor ecx, ecx	; 79952
-loc_79954:
+.13:
 xor edx, edx	; 79954
 mov dl, byte [dword esp+030Ch]	; 79956
 mov ebx, edx	; 7995D
@@ -1841,39 +1826,39 @@ shl eax, 3	; 79973
 sub eax, ecx	; 79976
 add eax, ebx	; 79978
 cmp byte [dword eax+hmroster], 0	; 7997A
-je short loc_799A5	; 79981
+je short .14	; 79981
 mov edx, dword [dword esp+0308h]	; 79983
 mov dl, byte [edx+esi]	; 7998A
-cmp dl, byte [dword eax+byte_DB3AD]	; 7998D
-jne short loc_799A5	; 79993
+cmp dl, byte [dword eax+hmrosterjersey]	; 7998D
+jne short .14	; 79993
 mov eax, dword [dword esp+0308h]	; 79995
 mov byte [dword esp+eax+0BCh], cl	; 7999C
-jmp short loc_799AB	; 799A3
-loc_799A5:
+jmp short .15	; 799A3
+.14:
 inc ecx	; 799A5
 cmp ecx, byte 1Ch	; 799A6
-jl short loc_79954	; 799A9
-loc_799AB:
+jl short MenuSaveTheseLines_x.13	; 799A9
+.15:
 mov ebx, dword [dword esp+0308h]	; 799AB
 inc ebx	; 799B2
 mov dword [dword esp+0308h], ebx	; 799B3
 cmp ebx, byte 28h	; 799BA
-jl short loc_79952	; 799BD
+jl short MenuSaveTheseLines_x.12	; 799BD
 xor esi, esi	; 799BF
 mov dword [dword esp+0308h], esi	; 799C1
 mov bl, 64h	; 799C8
-loc_799CA:
+.16:
 mov eax, dword [dword esp+0308h]	; 799CA
 mov byte [dword esp+eax+0E4h], bl	; 799D1
 lea edi, [byte eax+01h]	; 799D8
 mov dword [dword esp+0308h], edi	; 799DB
 cmp edi, byte 8	; 799E2
-jl short loc_799CA	; 799E5
+jl short MenuSaveTheseLines_x.16	; 799E5
 xor edx, edx	; 799E7
 mov dword [dword esp+0308h], edx	; 799E9
 xor ecx, ecx	; 799F0
-jmp short loc_79A46	; 799F2
-loc_799F4:
+jmp short .19	; 799F2
+.17:
 xor edx, edx	; 799F4
 mov dl, byte [dword esp+030Ch]	; 799F6
 mov ebx, edx	; 799FD
@@ -1891,30 +1876,30 @@ sub eax, edx	; 79A1D
 add eax, ebx	; 79A1F
 mov bh, byte [dword eax+hmroster]	; 79A21
 test bh, bh	; 79A27
-je short loc_79A3F	; 79A29
+je short .18	; 79A29
 cmp bh, 3	; 79A2B
-je short loc_79A3F	; 79A2E
+je short .18	; 79A2E
 mov al, byte [dword esp+0308h]	; 79A30
 mov byte [dword esp+ecx+0E4h], al	; 79A37
 inc ecx	; 79A3E
-loc_79A3F:
+.18:
 inc dword [dword esp+0308h]	; 79A3F
-loc_79A46:
+.19:
 cmp dword [dword esp+0308h], byte 1Ch	; 79A46
-jl short loc_799F4	; 79A4E
+jl short MenuSaveTheseLines_x.17	; 79A4E
 mov ebx, 2E8h	; 79A50
 mov edx, esp	; 79A55
 mov eax, ebp	; 79A57
 call write_	; 79A59
 test eax, eax	; 79A5E
-jl short loc_79A69	; 79A60
+jl short .20	; 79A60
 cmp eax, 2E8h	; 79A62
-je short loc_79A76	; 79A67
-loc_79A69:
-push unk_C329E	; 79A69
+je short .21	; 79A67
+.20:
+push str_ErrB7	; 79A69
 call FatalError	; 79A6E
 add esp, byte 4	; 79A73
-loc_79A76:
+.21:
 xor edx, edx	; 79A76
 mov dl, byte [dword esp+030Ch]	; 79A78
 mov eax, edx	; 79A7F
@@ -1935,8 +1920,8 @@ rep movsd	; 79AB6
 mov eax, ebp	; 79AB8
 call j___close_	; 79ABA
 mov eax, 1	; 79ABF
-jmp near loc_797A8	; 79AC4
-sub_79AC9:
+jmp near MenuSaveDefaultLines_ret	; 79AC4
+MenuGameShowPlayerStats:
 push dword 348h	; 79AC9
 call __CHK	; 79ACE
 push esi	; 79AD3
@@ -1951,35 +1936,35 @@ mov dword [dword_DC738], edx	; 79AEC
 mov dword [dword_DC734], edx	; 79AF2
 mov dword [statsredrawcb], TeamRosterScreen	; 79AF8
 test bl, bl	; 79B02
-je short loc_79B0D	; 79B04
+je short .1	; 79B04
 mov eax, dword [HomeTeam]	; 79B06
-jmp short loc_79B12	; 79B0B
-loc_79B0D:
+jmp short .2	; 79B0B
+.1:
 mov eax, dword [cont2team]	; 79B0D
-loc_79B12:
+.2:
 sar eax, 10h	; 79B12
 mov dword [statscategory], eax	; 79B15
 push byte 20h	; 79B1A
 push dword 2A4h	; 79B1C
-push asc_C32A4	; 79B21
+push str_Tstat2	; 79B21
 call sub_8CCA8	; 79B26
 add esp, byte 0Ch	; 79B2B
 mov dword [statsteambuf], eax	; 79B2E
 push byte 20h	; 79B33
 push dword 5B0h	; 79B35
-push asc_C32AA	; 79B3A
+push str_Keys4	; 79B3A
 call sub_8CCA8	; 79B3F
 add esp, byte 0Ch	; 79B44
 mov dword [statsplayerbuf], eax	; 79B47
 push byte 20h	; 79B4C
 push dword 497h	; 79B4E
-push asc_C32AF	; 79B53
+push str_Pstat4	; 79B53
 call sub_8CCA8	; 79B58
 add esp, byte 0Ch	; 79B5D
 mov dword [statsskaterbuf], eax	; 79B60
 push byte 20h	; 79B65
 push dword 10Eh	; 79B67
-push asc_C32B5	; 79B6C
+push str_Gstat4	; 79B6C
 call sub_8CCA8	; 79B71
 add esp, byte 0Ch	; 79B76
 mov dword [statsgoaliebuf], eax	; 79B79
@@ -1989,23 +1974,23 @@ push byte 0	; 79B88
 call sub_8FFB0	; 79B8A
 add esp, byte 0Ch	; 79B8F
 xor eax, eax	; 79B92
-loc_79B94:
+.3:
 mov dl, byte [dword eax+byte_ECDF4]	; 79B94
 mov byte [esp+eax], dl	; 79B9A
 inc eax	; 79B9D
 cmp eax, 300h	; 79B9E
-jl short loc_79B94	; 79BA3
+jl short MenuGameShowPlayerStats.3	; 79BA3
 mov ebx, 10h	; 79BA5
 mov edx, esp	; 79BAA
 mov eax, 1	; 79BAC
 call FadePalStep	; 79BB1
 cmp byte [dword esp+0320h], 0	; 79BB6
-je short loc_79BC7	; 79BBE
+je short .4	; 79BBE
 mov eax, dword [HomeTeam]	; 79BC0
-jmp short loc_79BCC	; 79BC5
-loc_79BC7:
+jmp short .5	; 79BC5
+.4:
 mov eax, dword [cont2team]	; 79BC7
-loc_79BCC:
+.5:
 sar eax, 10h	; 79BCC
 call TeamRosterScreen	; 79BCF
 push dword 0C2h	; 79BD4
@@ -2015,12 +2000,12 @@ mov edx, 2	; 79BE3
 mov eax, unk_CF48F	; 79BE8
 call DrawMenuBar	; 79BED
 xor eax, eax	; 79BF2
-loc_79BF4:
+.6:
 mov dl, byte [dword eax+byte_ECDF4]	; 79BF4
 mov byte [esp+eax], dl	; 79BFA
 inc eax	; 79BFD
 cmp eax, 300h	; 79BFE
-jl short loc_79BF4	; 79C03
+jl short MenuGameShowPlayerStats.6	; 79C03
 mov ebx, 10h	; 79C05
 mov edx, esp	; 79C0A
 xor eax, eax	; 79C0C
@@ -2036,12 +2021,12 @@ mov edx, esp	; 79C36
 mov eax, 1	; 79C38
 call FadePalStep	; 79C3D
 xor eax, eax	; 79C42
-loc_79C44:
+.7:
 mov dl, byte [dword eax+byte_ECDF4]	; 79C44
 mov byte [esp+eax], dl	; 79C4A
 inc eax	; 79C4D
 cmp eax, 300h	; 79C4E
-jl short loc_79C44	; 79C53
+jl short MenuGameShowPlayerStats.7	; 79C53
 xor edi, edi	; 79C55
 mov dword [dword_DC738], edi	; 79C57
 mov dword [statsredrawcb], edi	; 79C5D
@@ -2073,14 +2058,14 @@ movzx edi, byte [dword esp+0324h]	; 79CBF
 mov ecx, dword [dword esp+0340h]	; 79CC7
 mov edx, dword [dword esp+0338h]	; 79CCE
 mov eax, edi	; 79CD5
-call sub_78500	; 79CD7
+call DrawLineEditorScreen	; 79CD7
 mov ebx, edi	; 79CDC
 mov edx, dword [dword esp+0334h]	; 79CDE
 mov eax, ebp	; 79CE5
-call sub_78366	; 79CE7
+call DrawGameLineJerseys	; 79CE7
 mov ebp, dword [esi]	; 79CEC
 test ebp, ebp	; 79CEE
-jl near loc_79DB6	; 79CF0
+jl near .10	; 79CF0
 mov edx, ebp	; 79CF6
 mov eax, ebp	; 79CF8
 shl eax, 2	; 79CFA
@@ -2088,7 +2073,7 @@ sub eax, ebp	; 79CFD
 shl eax, 2	; 79CFF
 sub eax, ebp	; 79D02
 xor edx, ebp	; 79D04
-mov dl, byte [nosplit eax*2+byte_ED0F6]	; 79D06
+mov dl, byte [nosplit eax*2+gmrosterslot]	; 79D06
 mov eax, edx	; 79D0D
 shl eax, 2	; 79D0F
 add eax, edx	; 79D12
@@ -2101,14 +2086,14 @@ add eax, edi	; 79D20
 shl eax, 4	; 79D22
 add eax, edi	; 79D25
 cmp byte [dword edx+eax*4+hmroster], 2	; 79D27
-jne short loc_79D3D	; 79D2F
+jne short .8	; 79D2F
 push dword 0C1h	; 79D31
 push dword 0FDh	; 79D36
-jmp short loc_79D47	; 79D3B
-loc_79D3D:
+jmp short .9	; 79D3B
+.8:
 push dword 0C1h	; 79D3D
 push dword 0C0h	; 79D42
-loc_79D47:
+.9:
 call sub_8E9C0	; 79D47
 add esp, byte 8	; 79D4C
 mov edi, dword [esi]	; 79D4F
@@ -2118,14 +2103,14 @@ sub eax, edi	; 79D56
 shl eax, 2	; 79D58
 sub eax, edi	; 79D5B
 add eax, eax	; 79D5D
-mov edx, byte_ED0F4	; 79D5F
+mov edx, gmroster	; 79D5F
 add edx, eax	; 79D64
 add edx, byte 3	; 79D66
 push edx	; 79D69
 xor edx, edx	; 79D6A
-mov dl, byte [dword eax+byte_ED0F5]	; 79D6C
+mov dl, byte [dword eax+gmrosterjersey]	; 79D6C
 push edx	; 79D72
-mov al, byte [dword eax+byte_ED0F4]	; 79D73
+mov al, byte [dword eax+gmroster]	; 79D73
 and eax, 0FFh	; 79D79
 push eax	; 79D7E
 push str_C2dS3	; 79D7F
@@ -2143,20 +2128,20 @@ lea edx, [byte eax+016h]	; 79DA2
 lea ebx, [dword esp+0300h]	; 79DA5
 mov eax, 1FAh	; 79DAC
 call PrintLineEdStatus	; 79DB1
-loc_79DB6:
+.10:
 mov ebx, 10h	; 79DB6
 mov edx, esp	; 79DBB
 xor eax, eax	; 79DBD
 call FadePalStep	; 79DBF
 xor eax, eax	; 79DC4
 add esp, 324h	; 79DC6
-jmp near loc_797AE	; 79DCC
-sub_79DD1:
+jmp near MenuSaveDefaultLines_pop	; 79DCC
+MenuReturnToLineEditor:
 push dword 4	; 79DD1
 call __CHK	; 79DD6
 mov eax, 1	; 79DDB
 ret	; 79DE0
-sub_79DE1:
+GameScratchPlayer:
 push dword 48h	; 79DE1
 call __CHK	; 79DE6
 push esi	; 79DEB
@@ -2167,7 +2152,7 @@ mov edi, eax	; 79DF1
 mov byte [byte esp+020h], bl	; 79DF3
 mov esi, ecx	; 79DF7
 xor edx, edx	; 79DF9
-loc_79DFB:
+.1:
 mov ebx, dword [esi]	; 79DFB
 mov eax, ebx	; 79DFD
 shl eax, 2	; 79DFF
@@ -2177,36 +2162,36 @@ sub eax, ebx	; 79E07
 lea ebx, [eax+eax]	; 79E09
 lea eax, [edi+edx]	; 79E0C
 mov cl, byte [eax]	; 79E0F
-cmp cl, byte [dword ebx+byte_ED0F5]	; 79E11
-jne short loc_79E1C	; 79E17
+cmp cl, byte [dword ebx+gmrosterjersey]	; 79E11
+jne short .2	; 79E17
 mov byte [eax], 64h	; 79E19
-loc_79E1C:
+.2:
 inc edx	; 79E1C
 cmp edx, byte 28h	; 79E1D
-jl short loc_79DFB	; 79E20
-mov dword [off_CF443], unk_797B4	; 79E22
-mov ebx, sub_79188	; 79E2C
-mov dword [off_CF363], ebx	; 79E31
-mov dword [off_CF223], ebx	; 79E37
-mov ebp, unk_7947F	; 79E3D
-mov dword [off_CF3C3], ebp	; 79E42
-mov dword [off_CF283], ebp	; 79E48
+jl short GameScratchPlayer.1	; 79E20
+mov dword [menuact_savelines], MenuSaveTheseLines	; 79E22
+mov ebx, MenuUseTheseLines	; 79E2C
+mov dword [menuact_uselines], ebx	; 79E31
+mov dword [menuact_uselines2], ebx	; 79E37
+mov ebp, MenuSaveDefaultLines	; 79E3D
+mov dword [menuact_savedeflines], ebp	; 79E42
+mov dword [menuact_savedeflines2], ebp	; 79E48
 xor edx, edx	; 79E4E
-loc_79E50:
+.3:
 cmp byte [edx+edi], 64h	; 79E50
-jne short loc_79E78	; 79E54
+jne short .4	; 79E54
 xor edx, edx	; 79E56
-mov dword [off_CF443], edx	; 79E58
-mov dword [off_CF363], edx	; 79E5E
-mov dword [off_CF223], edx	; 79E64
-mov dword [off_CF3C3], edx	; 79E6A
-mov dword [off_CF283], edx	; 79E70
-jmp short loc_79E7E	; 79E76
-loc_79E78:
+mov dword [menuact_savelines], edx	; 79E58
+mov dword [menuact_uselines], edx	; 79E5E
+mov dword [menuact_uselines2], edx	; 79E64
+mov dword [menuact_savedeflines], edx	; 79E6A
+mov dword [menuact_savedeflines2], edx	; 79E70
+jmp short .5	; 79E76
+.4:
 inc edx	; 79E78
 cmp edx, byte 28h	; 79E79
-jl short loc_79E50	; 79E7C
-loc_79E7E:
+jl short GameScratchPlayer.3	; 79E7C
+.5:
 mov edx, dword [esi]	; 79E7E
 mov eax, edx	; 79E80
 shl eax, 2	; 79E82
@@ -2214,7 +2199,7 @@ sub eax, edx	; 79E85
 shl eax, 2	; 79E87
 sub eax, edx	; 79E8A
 xor edx, edx	; 79E8C
-mov dl, byte [nosplit eax*2+byte_ED0F6]	; 79E8E
+mov dl, byte [nosplit eax*2+gmrosterslot]	; 79E8E
 mov ecx, edx	; 79E95
 shl ecx, 2	; 79E97
 add ecx, edx	; 79E9A
@@ -2230,7 +2215,7 @@ add eax, ebx	; 79EB1
 mov byte [dword ecx+eax*4+hmroster], 2	; 79EB3
 mov edx, dword [byte esp+034h]	; 79EBB
 mov eax, edi	; 79EBF
-call sub_78366	; 79EC1
+call DrawGameLineJerseys	; 79EC1
 push dword 0C1h	; 79EC6
 push dword 0FCh	; 79ECB
 call sub_8E9C0	; 79ED0
@@ -2242,14 +2227,14 @@ sub eax, edx	; 79EDF
 shl eax, 2	; 79EE1
 sub eax, edx	; 79EE4
 add eax, eax	; 79EE6
-mov edx, byte_ED0F4	; 79EE8
+mov edx, gmroster	; 79EE8
 add edx, eax	; 79EED
 add edx, byte 3	; 79EEF
 push edx	; 79EF2
 xor edx, edx	; 79EF3
-mov dl, byte [dword eax+byte_ED0F5]	; 79EF5
+mov dl, byte [dword eax+gmrosterjersey]	; 79EF5
 push edx	; 79EFB
-mov al, byte [dword eax+byte_ED0F4]	; 79EFC
+mov al, byte [dword eax+gmroster]	; 79EFC
 and eax, 0FFh	; 79F02
 push eax	; 79F07
 push str_C2dS3	; 79F08
@@ -2269,8 +2254,8 @@ mov eax, 1FAh	; 79F2D
 call PrintLineEdStatus	; 79F32
 xor eax, eax	; 79F37
 add esp, byte 24h	; 79F39
-jmp near loc_797AE	; 79F3C
-sub_79F41:
+jmp near MenuSaveDefaultLines_pop	; 79F3C
+GameDressPlayer:
 push dword 40h	; 79F41
 call __CHK	; 79F46
 push esi	; 79F4B
@@ -2285,7 +2270,7 @@ sub eax, edx	; 79F5B
 shl eax, 2	; 79F5D
 sub eax, edx	; 79F60
 xor edx, edx	; 79F62
-mov dl, byte [nosplit eax*2+byte_ED0F6]	; 79F64
+mov dl, byte [nosplit eax*2+gmrosterslot]	; 79F64
 mov ecx, edx	; 79F6B
 shl ecx, 2	; 79F6D
 add ecx, edx	; 79F70
@@ -2300,7 +2285,7 @@ add eax, ebx	; 79F87
 mov byte [dword ecx+eax*4+hmroster], 3	; 79F89
 mov edx, dword [byte esp+02Ch]	; 79F91
 mov eax, edi	; 79F95
-call sub_78366	; 79F97
+call DrawGameLineJerseys	; 79F97
 push dword 0C1h	; 79F9C
 push dword 0C0h	; 79FA1
 call sub_8E9C0	; 79FA6
@@ -2312,14 +2297,14 @@ sub eax, edx	; 79FB5
 shl eax, 2	; 79FB7
 sub eax, edx	; 79FBA
 add eax, eax	; 79FBC
-mov edx, byte_ED0F4	; 79FBE
+mov edx, gmroster	; 79FBE
 add edx, eax	; 79FC3
 add edx, byte 3	; 79FC5
 push edx	; 79FC8
 xor edx, edx	; 79FC9
-mov dl, byte [dword eax+byte_ED0F5]	; 79FCB
+mov dl, byte [dword eax+gmrosterjersey]	; 79FCB
 push edx	; 79FD1
-mov al, byte [dword eax+byte_ED0F4]	; 79FD2
+mov al, byte [dword eax+gmroster]	; 79FD2
 and eax, 0FFh	; 79FD8
 push eax	; 79FDD
 push str_C2dS3	; 79FDE
@@ -2342,7 +2327,7 @@ add esp, byte 20h	; 7A00F
 pop edi	; 7A012
 pop esi	; 7A013
 ret 18h	; 7A014
-sub_7A017:
+BlitJerseyDigit:
 push dword 18h	; 7A017
 call __CHK	; 7A01C
 push esi	; 7A021
@@ -2354,14 +2339,14 @@ mov edi, edx	; 7A029
 mov byte [byte esp+04h], bl	; 7A02B
 mov ebp, dword [byte esp+018h]	; 7A02F
 xor ebx, ebx	; 7A033
-loc_7A035:
+.1:
 mov ecx, 20h	; 7A035
 mov eax, ebx	; 7A03A
 mov edx, ebx	; 7A03C
 sar edx, 1Fh	; 7A03E
 idiv ecx	; 7A041
 test edx, edx	; 7A043
-jne short loc_7A06A	; 7A045
+jne short .2	; 7A045
 mov ecx, edi	; 7A047
 shl ecx, 2	; 7A049
 sub ecx, edi	; 7A04C
@@ -2372,33 +2357,33 @@ sar edx, 1Fh	; 7A055
 shl edx, 5	; 7A058
 LD sbb, eax, edx	; 7A05B
 sar eax, 5	; 7A05D
-mov eax, dword [dword ecx+eax*4+dword_D1478]	; 7A060
+mov eax, dword [dword ecx+eax*4+jerseydigits]	; 7A060
 mov dword [esp], eax	; 7A067
-loc_7A06A:
+.2:
 test byte [esp], 1	; 7A06A
-je short loc_7A087	; 7A06E
+je short .5	; 7A06E
 test ebp, ebp	; 7A070
-je short loc_7A07E	; 7A072
+je short .3	; 7A072
 cmp ebx, byte 23h	; 7A074
-jle short loc_7A07E	; 7A077
+jle short .3	; 7A077
 lea eax, [byte ebx+030h]	; 7A079
-jmp short loc_7A080	; 7A07C
-loc_7A07E:
+jmp short .4	; 7A07C
+.3:
 mov eax, ebx	; 7A07E
-loc_7A080:
+.4:
 mov dl, byte [byte esp+04h]	; 7A080
 mov byte [esi+eax], dl	; 7A084
-loc_7A087:
+.5:
 sar dword [esp], 1	; 7A087
 inc ebx	; 7A08A
 cmp ebx, byte 54h	; 7A08B
-jl short loc_7A035	; 7A08E
+jl short BlitJerseyDigit.1	; 7A08E
 add esp, byte 8	; 7A090
 pop ebp	; 7A093
 pop edi	; 7A094
 pop esi	; 7A095
 ret 4	; 7A096
-sub_7A099:
+MakeJerseyShape:
 push dword 18h	; 7A099
 call __CHK	; 7A09E
 push esi	; 7A0A3
@@ -2408,34 +2393,34 @@ sub esp, byte 4	; 7A0A6
 mov esi, eax	; 7A0A9
 mov edi, edx	; 7A0AB
 xor eax, eax	; 7A0AD
-jmp short loc_7A0B8	; 7A0AF
-loc_7A0B1:
+jmp short .2	; 7A0AF
+.1:
 movsx edx, ax	; 7A0B1
 mov byte [edx+esi], cl	; 7A0B4
 inc eax	; 7A0B7
-loc_7A0B8:
+.2:
 cmp ax, 8Fh	; 7A0B8
-jle short loc_7A0B1	; 7A0BC
+jle short MakeJerseyShape.1	; 7A0BC
 mov eax, 0C0h	; 7A0BE
-jmp short loc_7A0CC	; 7A0C3
-loc_7A0C5:
+jmp short .4	; 7A0C3
+.3:
 movsx edx, ax	; 7A0C5
 mov byte [edx+esi], cl	; 7A0C8
 inc eax	; 7A0CB
-loc_7A0CC:
+.4:
 cmp ax, 0EFh	; 7A0CC
-jle short loc_7A0C5	; 7A0D0
+jle short MakeJerseyShape.3	; 7A0D0
 cmp edi, byte 63h	; 7A0D2
-ja short loc_7A133	; 7A0D5
+ja short .x	; 7A0D5
 cmp edi, byte 0Ah	; 7A0D7
-jae short loc_7A0F1	; 7A0DA
+jae short .5	; 7A0DA
 push byte 0	; 7A0DC
 and ecx, 0FFh	; 7A0DE
 and ebx, 0FFh	; 7A0E4
 lea eax, [byte esi+030h]	; 7A0EA
 mov edx, edi	; 7A0ED
-jmp short loc_7A12E	; 7A0EF
-loc_7A0F1:
+jmp short .6	; 7A0EF
+.5:
 push byte 0	; 7A0F1
 movzx ebp, cl	; 7A0F3
 xor eax, eax	; 7A0F6
@@ -2449,7 +2434,7 @@ mov edx, eax	; 7A109
 mov ecx, ebp	; 7A10B
 mov ebx, dword [byte esp+04h]	; 7A10D
 mov eax, esi	; 7A111
-call sub_7A017	; 7A113
+call BlitJerseyDigit	; 7A113
 push byte 1	; 7A118
 mov ebx, 0Ah	; 7A11A
 xor edx, edx	; 7A11F
@@ -2458,9 +2443,9 @@ div ebx	; 7A123
 lea eax, [byte esi+06Ch]	; 7A125
 mov ecx, ebp	; 7A128
 mov ebx, dword [byte esp+04h]	; 7A12A
-loc_7A12E:
-call sub_7A017	; 7A12E
-loc_7A133:
+.6:
+call BlitJerseyDigit	; 7A12E
+.x:
 add esp, byte 4	; 7A133
 pop ebp	; 7A136
 pop edi	; 7A137

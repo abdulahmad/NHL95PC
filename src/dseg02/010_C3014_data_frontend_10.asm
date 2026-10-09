@@ -10,10 +10,10 @@ global str_Shrt2, str_Pntr3, str_Pointer13, str_Embpal4, str_Pal26, str_Lelogo, 
 global str_S2dSS, str_Keys3, str_Pstat3, str_Gstat3, str_SRoster, str_Pos2, str_Name2, str_G4
 global str_A4, str_PT2, str_Shots4, str_PIM4, asc_C3164, str_Min4, str_GAA4, str_GA3
 global str_SA3, str_PCT2, str_Pal27, str_Lineditp3, str_Shrt3, str_Pntr4, str_Pointer14, str_Embpal5
-global str_Pal28, str_Lelogo2, str_Menubuff9, str_C2dS3, str_Key, asc_C31F1, asc_C31F7, asc_C3200
-global asc_C3205, asc_C320D, asc_C3214, asc_C321B, asc_C3222, asc_C3229, asc_C322F, asc_C3236
-global asc_C323D, asc_C3245, asc_C324C, asc_C3253, asc_C325B, asc_C3267, asc_C326D, asc_C3277
-global asc_C3288, asc_C328E, asc_C32A4, asc_C32AA, asc_C32AF, asc_C32B5, asc_C32BC, asc_C32C1
+global str_Pal28, str_Lelogo2, str_Menubuff9, str_C2dS3, str_Key, str_EmbS, str_HOMEPALS3, str_Bkgd10
+global str_Forward, str_Line1, str_Line2, str_Line3, str_Line4, str_Power, str_Play1, str_Play2
+global str_Penalty, str_Kill1, str_Kill2, str_Defense3, str_Goaltenders, str_Extra, str_Attackers, str_S2dSS2
+global str_Teams2, str_ErrB2Perror, str_Tstat2, str_Keys4, str_Pstat4, str_Gstat4, asc_C32BC, asc_C32C1
 global asc_C32CA, asc_C32CF, asc_C32D5, asc_C32DB, asc_C32EC, asc_C32F5, asc_C3300, asc_C3305
 global asc_C330E, asc_C3317, asc_C331C, asc_C3322, asc_C3328, asc_C3339, asc_C3344, asc_C3349
 global asc_C335A, asc_C3360, asc_C3366, asc_C336F, asc_C3374, asc_C337C, asc_C3381, asc_C3388
@@ -35,7 +35,7 @@ global asc_C3932, asc_C3947, asc_C3966, asc_C3972, asc_C3976, asc_C397E, asc_C39
 global asc_C3994, asc_C399B, asc_C39A0, qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0
 global unk_C311D, str_S6, str_No2, str_GP8, str_C5, str_W6, str_L8, str_T6
 global str_ErrA1, str_ErrA2, str_ErrA3, str_ErrA4, str_ErrA5, str_ErrA6, str_ErrA7, str_ErrA8
-global unk_C3283, unk_C3285, unk_C3292, unk_C3295, unk_C3298, unk_C329B, unk_C329E, unk_C32A1
+global unk_C3283, str_S7, str_ErrB3, str_ErrB4, str_ErrB5, str_ErrB6, str_ErrB7, str_ErrB2
 global unk_C33F8, unk_C3403, unk_C3444, unk_C3447, unk_C344D, unk_C3468, unk_C346B, unk_C3470
 global unk_C34D0, unk_C34D4, unk_C34D8, unk_C34DC, unk_C34E0, unk_C34E4, unk_C34E8, unk_C34EC
 global unk_C34F0, unk_C34F4, unk_C34F8, unk_C34FB, unk_C34FF, unk_C3502, unk_C3506, unk_C350A
@@ -214,71 +214,71 @@ str_ErrA7:
 db 041h,037h,00h
 str_ErrA8:
 db 041h,038h,00h
-asc_C31F1:
+str_EmbS:
 db 065h,06Dh,062h,025h,073h,00h
-asc_C31F7:
+str_HOMEPALS3:
 db 048h,04Fh,04Dh,045h,050h,041h,04Ch,053h,00h
-asc_C3200:
+str_Bkgd10:
 db 062h,06Bh,067h,064h,00h
-asc_C3205:
+str_Forward:
 db 066h,06Fh,072h,077h,061h,072h,064h,00h
-asc_C320D:
+str_Line1:
 db 06Ch,069h,06Eh,065h,020h,031h,00h
-asc_C3214:
+str_Line2:
 db 06Ch,069h,06Eh,065h,020h,032h,00h
-asc_C321B:
+str_Line3:
 db 06Ch,069h,06Eh,065h,020h,033h,00h
-asc_C3222:
+str_Line4:
 db 06Ch,069h,06Eh,065h,020h,034h,00h
-asc_C3229:
+str_Power:
 db 070h,06Fh,077h,065h,072h,00h
-asc_C322F:
+str_Play1:
 db 070h,06Ch,061h,079h,020h,031h,00h
-asc_C3236:
+str_Play2:
 db 070h,06Ch,061h,079h,020h,032h,00h
-asc_C323D:
+str_Penalty:
 db 070h,065h,06Eh,061h,06Ch,074h,079h,00h
-asc_C3245:
+str_Kill1:
 db 06Bh,069h,06Ch,06Ch,020h,031h,00h
-asc_C324C:
+str_Kill2:
 db 06Bh,069h,06Ch,06Ch,020h,032h,00h
-asc_C3253:
+str_Defense3:
 db 064h,065h,066h,065h,06Eh,073h,065h,00h
-asc_C325B:
+str_Goaltenders:
 db 067h,06Fh,061h,06Ch,074h,065h,06Eh,064h,065h,072h,073h,00h
-asc_C3267:
+str_Extra:
 db 065h,078h,074h,072h,061h,00h
-asc_C326D:
+str_Attackers:
 db 061h,074h,074h,061h,063h,06Bh,065h,072h,073h,00h
-asc_C3277:
+str_S2dSS2:
 db 025h,073h,020h,025h,032h,064h,020h,025h,073h,025h,073h,00h
 unk_C3283:
 db 02Eh,00h
-unk_C3285:
+str_S7:
 db 073h,02Eh,00h
-asc_C3288:
+str_Teams2:
 db 074h,065h,061h,06Dh,073h,00h
-asc_C328E:
+str_ErrB2Perror:
 db 062h,032h,03Ah,00h
-unk_C3292:
+str_ErrB3:
 db 042h,033h,00h
-unk_C3295:
+str_ErrB4:
 db 042h,034h,00h
-unk_C3298:
+str_ErrB5:
 db 042h,035h,00h
-unk_C329B:
+str_ErrB6:
 db 042h,036h,00h
-unk_C329E:
+str_ErrB7:
 db 042h,037h,00h
-unk_C32A1:
+str_ErrB2:
 db 042h,032h,00h
-asc_C32A4:
+str_Tstat2:
 db 074h,073h,074h,061h,074h,00h
-asc_C32AA:
+str_Keys4:
 db 06Bh,065h,079h,073h,00h
-asc_C32AF:
+str_Pstat4:
 db 070h,073h,074h,061h,074h,00h
-asc_C32B5:
+str_Gstat4:
 db 067h,073h,074h,061h,074h,00h,00h
 asc_C32BC:
 db 042h,04Bh,047h,044h,00h

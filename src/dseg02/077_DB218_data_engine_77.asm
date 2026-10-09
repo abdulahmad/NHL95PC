@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_DB218 nobits alloc noexec write align=1
-global hmroster, byte_DB3AD, byte_DB3AE, unk_DB218
+global hmroster, hmrosterjersey, byte_DB3AE, unk_DB218
 unk_DB218:
 resb 400
 hmroster:
 resb 5
-byte_DB3AD:
+hmrosterjersey:
 resb 1
 byte_DB3AE:
 resb 1086
