@@ -411,7 +411,6 @@ extern void MenuTradePlayers(); /* 33523 */
 extern void MenuImportDbs(); /* 336BE */
 extern void MenuExportDbs(); /* 336E6 */
 extern void BlitTileMap(); /* 33C08 */
-extern void LoadCrestsPalette(); /* 33F02 */
 extern void DrawCalendarDay(); /* 33FFD */
 extern void ApplyShapePalette(); /* 34789 */
 extern void CalendarScreen(); /* 34821 */
@@ -6496,7 +6495,6 @@ extern void loc_B3C9C(); /* B3C9C */
 extern void loc_B3CAF(); /* B3CAF */
 extern void loc_B3CB1(); /* B3CB1 */
 extern void sub_B3CB3(); /* B3CB3 */
-extern void sub_B3CC8(); /* B3CC8 */
 extern void loc_B3CF4(); /* B3CF4 */
 extern void loc_B3D02(); /* B3D02 */
 extern void loc_B3D08(); /* B3D08 */

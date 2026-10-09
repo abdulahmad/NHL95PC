@@ -732,5 +732,8 @@ void checkpuckcoll(Player *p, int pl);  /* 5428A */
 void PuckCheckColl(Player *p);  /* 548AC */
 void AppendGSumRecord(void *rec);  /* 61A8A */
 int SayPlayerNumber(char *team, int phrase, int number);  /* 85213 */
+void LoadCrestsPalette(void);  /* 33F02 */
+int __cdecl sub_B3CC8(char *path);  /* file library: check a file */
+int ReadGameSettings(unsigned char *set, char *dir, int direct);  /* 2D260 */
 
 #endif

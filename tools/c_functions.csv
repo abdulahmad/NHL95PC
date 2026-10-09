@@ -108,6 +108,7 @@ PlayerFromMouseY,24453,143,017_21CDE_player_stats,src/c/017_21CDE_player_stats/P
 FitPlayerName,29C75,139,019_2970A_league_schedule,src/c/019_2970A_league_schedule/FitPlayerName.c,matched,
 LoadFileDlgShapes,2B7C3,385,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/LoadFileDlgShapes.c,matched,
 PrintTextCopy,2C135,63,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/PrintTextCopy.c,matched,
+ReadGameSettings,2D260,222,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/ReadGameSettings.c,matched,
 SelectSavedFile,2D099,455,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/SelectSavedFile.c,nonmatching,
 PickOtherGames,2F2B1,294,022_2D346_game_setup,src/c/022_2D346_game_setup/PickOtherGames.c,nonmatching,
 PrintClampedText,2F580,110,022_2D346_game_setup,src/c/022_2D346_game_setup/PrintClampedText.c,matched,
@@ -135,6 +136,7 @@ FreeRinkGfx,33727,85,025_32DA9_temp_files,src/c/025_32DA9_temp_files/FreeRinkGfx
 MenuLeagueHilights,3366F,79,025_32DA9_temp_files,src/c/025_32DA9_temp_files/MenuLeagueHilights.c,matched,
 MenuMergeLeagueFiles,33469,146,025_32DA9_temp_files,src/c/025_32DA9_temp_files/MenuMergeLeagueFiles.c,matched,
 MenuNextLeagueGame,33559,278,025_32DA9_temp_files,src/c/025_32DA9_temp_files/MenuNextLeagueGame.c,matched,
+LoadCrestsPalette,33F02,251,026_3377C_rink_tiles,src/c/026_3377C_rink_tiles/LoadCrestsPalette.c,matched,
 SetRinkScroll,33DD3,151,026_3377C_rink_tiles,src/c/026_3377C_rink_tiles/SetRinkScroll.c,matched,
 WaitClickTimeout,33E6A,152,026_3377C_rink_tiles,src/c/026_3377C_rink_tiles/WaitClickTimeout.c,nonmatching,"registers/stack: asm keeps start and the ptrupdatefn result on the stack (10h locals), t1 in ebp; C keeps them in registers"
 CalNextMonth,34691,109,027_33FFD_calendar,src/c/027_33FFD_calendar/CalNextMonth.c,matched,

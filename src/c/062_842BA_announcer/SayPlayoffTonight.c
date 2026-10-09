@@ -6,10 +6,10 @@
    and returns 1, else 0. */
 int SayPlayoffTonight(char *rnk, char *away, char *home, int game, unsigned conf, unsigned round)
 {
-    char a[16];
-    char g[16];
     char r[16];
+    char a[16];
     char num[16];
+    char g[16];
     char rc[16];
     char h[16];
 

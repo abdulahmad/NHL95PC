@@ -2161,6 +2161,10 @@ pop edx	; 2D25C
 pop ecx	; 2D25D
 pop ebx	; 2D25E
 ret	; 2D25F
+; C: src/c/021_2B7B7_file_dialogs/ReadGameSettings.c
+%ifdef CBUILD
+%include "c/021_2B7B7_file_dialogs/ReadGameSettings.inc"
+%else
 ReadGameSettings:
 push dword 5Ch	; 2D260
 call __CHK	; 2D265
@@ -2245,5 +2249,6 @@ pop edi	; 2D33A
 pop esi	; 2D33B
 pop ecx	; 2D33C
 ret	; 2D33D
+%endif ; C
 gsuminitff:
 db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh

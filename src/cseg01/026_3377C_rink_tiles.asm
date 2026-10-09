@@ -650,6 +650,10 @@ pop edx	; 33EFE
 pop ecx	; 33EFF
 pop ebx	; 33F00
 ret	; 33F01
+; C: src/c/026_3377C_rink_tiles/LoadCrestsPalette.c
+%ifdef CBUILD
+%include "c/026_3377C_rink_tiles/LoadCrestsPalette.inc"
+%else
 LoadCrestsPalette:
 push dword 330h	; 33F02
 call __CHK	; 33F07
@@ -732,3 +736,4 @@ pop edx	; 33FF9
 pop ecx	; 33FFA
 pop ebx	; 33FFB
 ret	; 33FFC
+%endif ; C
