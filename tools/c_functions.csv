@@ -77,6 +77,7 @@ DeskScoringSummary,1AA6D,87,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_des
 DeskToSportsDesk,1A5B1,35,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskToSportsDesk.c,matched,
 DrawDeskFrames,18E43,305,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DrawDeskFrames.c,matched,
 IntermissionDesk,190BE,337,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/IntermissionDesk.c,matched,
+OutputCurrentData,18D7F,196,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/OutputCurrentData.c,matched,
 PlayRandomHighlight,18F8D,305,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/PlayRandomHighlight.c,matched,
 PostGameDesk,1920F,334,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/PostGameDesk.c,nonmatching,
 ClearPanelPenalties,1CBD8,101,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/ClearPanelPenalties.c,nonmatching,"draft: zero kept in esi (asm ecx), saves esi instead of ecx"
@@ -283,6 +284,7 @@ PenTeamScored,5AAAE,136,042_59D9A_engine_core,src/c/042_59D9A_engine_core/PenTea
 PeriodOver,5DEA6,224,042_59D9A_engine_core,src/c/042_59D9A_engine_core/PeriodOver.c,matched,
 ResetClock,5BA07,71,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ResetClock.c,nonmatching,"2 bytes long: the original keeps the clockticks zero in edx (only push edx, __CHK 8); every variant tried (temp, chained stores, PerTimeTotal/2, int temp) zeroes ebx and saves it too (__CHK 0Ch). Maybe randomd0/GetPeriodTime were declared with other types in the original file"
 RestBench,5C1E2,102,042_59D9A_engine_core,src/c/042_59D9A_engine_core/RestBench.c,matched,
+SetCoachMode,5A581,232,042_59D9A_engine_core,src/c/042_59D9A_engine_core/SetCoachMode.c,nonmatching,
 SetExitGame,5DDBC,30,042_59D9A_engine_core,src/c/042_59D9A_engine_core/SetExitGame.c,matched,
 SetSPA,59D9A,33,042_59D9A_engine_core,src/c/042_59D9A_engine_core/SetSPA.c,matched,
 Setplass,5B298,45,042_59D9A_engine_core,src/c/042_59D9A_engine_core/Setplass.c,matched,

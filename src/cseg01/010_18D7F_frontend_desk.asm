@@ -29,6 +29,10 @@ global DeskSummary_common, DeskItem_ret2, DeskGoalie_x1, DeskGoalie_x2, DeskGoal
 global MenuCallbackTrue, PlayRandomHighlight, IntermissionDesk, PostGameDesk, SportsDesk, DeskReloadGame, DeskBackToGame, DeskToSportsDesk
 global DeskReturnConfirm, DeskExitGame, DeskScoringSummary, DeskTeamScratches, DeskHomeGoalie1, DeskHomeGoalie2, DeskHomeGoalieNone, DeskAwayGoalie1
 global DeskAwayGoalie2, DeskAwayGoalieNone
+; C: src/c/010_18D7F_frontend_desk/OutputCurrentData.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/OutputCurrentData.inc"
+%else
 OutputCurrentData:
 push dword 44h	; 18D7F
 call __CHK	; 18D84
@@ -86,6 +90,7 @@ pop edx	; 18E3F
 pop ecx	; 18E40
 pop ebx	; 18E41
 ret	; 18E42
+%endif ; C
 ; C: src/c/010_18D7F_frontend_desk/DrawDeskFrames.c
 %ifdef CBUILD
 %include "c/010_18D7F_frontend_desk/DrawDeskFrames.inc"

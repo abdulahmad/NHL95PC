@@ -70,7 +70,6 @@ extern void StatsSelPlayoffMode(); /* 17D6E */
 extern void DeskSetExit3b(); /* 18D03 */
 extern void ShowPlayerStatsItem(); /* 18D0D */
 extern void FreeDeskBuffers(); /* 18D33 */
-extern void OutputCurrentData(); /* 18D7F */
 extern void MenuCallbackTrue(); /* 18F74 */
 extern void MenuCallbackTrue2(); /* 18F86 */
 extern void DeskGoToReplay(); /* 1A817 */
@@ -378,7 +377,6 @@ extern void GameSummaryScreen_final(); /* 2DF34 */
 extern void GameSummaryScreen_period(); /* 2DF39 */
 extern void UpdateOtherScores_x(); /* 2F579 */
 extern void GameStatsScreen(); /* 2F5EE */
-extern void TextInputDialog(); /* 2FEDF */
 extern void DlgNullCallback(); /* 30203 */
 extern void DrawListItem(); /* 302B9 */
 extern void DrawListItem_x(); /* 30396 */

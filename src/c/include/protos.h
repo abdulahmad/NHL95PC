@@ -495,7 +495,7 @@ int CmpPPGoals(int *a, int *b);  /* 25325 */
 int CmpSHGoals(int *a, int *b);  /* 25438 */              
 int CmpShootPct(int *a, int *b);  /* 25755 */             
 void InitCoachModes(void);  /* 5A669 */                   
-void SetCoachMode(int side);
+short SetCoachMode(int side);
 void ChkGoalies(void);  /* 59265 */                       
 void CPgoalie(Team *t, Team *o, int y);
 int ChkPullGoalieLate(int side);  /* 593F5 */
@@ -722,5 +722,7 @@ void WriteModeState(void *st);  /* 32B1D: the rest of its arguments come through
 void WriteCurModeState(void);  /* 8B92F */
 void PaTonightIntro(int home, int away);  /* 59BB5 */
 int DeskReturnConfirm(void);  /* 1A5D4 */
+int TextInputDialog(char *prompt, char *buf, int len, int a, int b, int c, int d, int e, int f);  /* 2FEDF */
+int OutputCurrentData(void);  /* 18D7F */
 
 #endif
