@@ -81,6 +81,38 @@ types: `size b` is `signed char`, `size w` `short`, `size d` `int`; overrides in
 
 `tools/cc.py unmark` removes a marker (for example to merge a function into a multi-function file).
 
+## Multi-block files (shared exits)
+
+Watcom merges identical function tails (`pop edi / pop esi / ... / ret`) across one source file: a later function
+jumps (`jmp near`) into an earlier function's epilogue when it is more than 127 bytes away. In the EXE this shows
+as a jump from one function into another's `_popedi`/`_ret` label (StopNA into EvadePlayers, about 14 engine_core
+functions into `calcpuckcross_ret5/6` and `changeplayer_ret5`: the original was one source file per segment).
+
+* Put the functions in one C file in address order, named after the first one. Functions between them that are
+  not matched yet stay in the file as drafts: they give the distance that makes the compiler emit the near jump.
+* Mark each block separately: `cc.py mark File.c` for the first function (includes `c/<seg>/<File>.inc`),
+  `cc.py mark File.c --func F` for any other (includes `c/<seg>/<File>.<F>.inc`). Only the matched functions need
+  marking; drafts stay asm.
+* `frag` cuts F's bytes out of the file's `_TEXT` and rewrites every rel32 branch that leaves the slice as
+  `dd (Label+k)-($+4)`: Label+k is the target in a marked block of the file, or, for a draft function, the shared
+  ret tail found by its bytes (the bytes up to the next `ret` must occur exactly once in the original function).
+  Short branches out of the slice are an error.
+* `cdiff.py File.c --func F` compares one function of the file; `c_progress.py` lists one row per marked block and
+  one `nonmatching` row per unmarked function (notes key `c_file` or `c_file:Func` in the csv).
+
+## Hand-written asm (status `asm`)
+
+`python3 tools/find_handasm.py [--list]` scans the game segments (001-066, libraries excluded) and writes
+`tools/handasm.csv`. Watcom 10.0 C always starts a function with `push N / call __CHK`. A function **without** it
+and with a strong hand-asm signal (port `in`/`out`, 16-bit push/pop, `loop`, `lds`/`les`, `pusha`, `int`,
+`cli`/`sti`, string ops without `rep`, a call to the middle of a function), or any no-`__CHK` function in
+`asm_helpers`, gets status `asm`. `c_progress.py` copies those rows into `tools/c_functions.csv` /
+`C_PROGRESS.md` with status `asm` and no C file: the C queue skips them, and they are not in the denominator.
+No-`__CHK` functions without a strong signal are listed as `nochk` (review by hand): `main_startup`'s
+`Read*Pad` are C compiled without stack checks (Watcom register convention), most of the others are case blocks
+or callback pieces of a C function reached through a pointer table, and a few are data disassembled as code
+(`stand_tmpl2`). `sahf` is not a signal: Watcom emits `fnstsw ax / sahf` after every float compare.
+
 ## Compiler learnings (Watcom C/C++32 10.0 LA, `wcc386` with no options)
 
 * **Flags**: none. `-5r -fpi -zp1 -mf`, stack checks on, no `-o`. Every function so far matched with the defaults.
@@ -126,5 +158,12 @@ types: `size b` is `signed char`, `size w` `short`, `size d` `int`; overrides in
   still gets the `jmp`; use `do { } while (--k >= 0)` for the bottom-only test (RestBench).
 * **The 68k registers** regd0-regd4 are 4-byte statics read both as words and longs: vars.h declares them as
   `Reg68` unions (`.w`, `.l`, `.ul`); `.ul` gives the unsigned `ja` of playeracc's max speed check.
+* **Shared tails need the whole file**: StopNA matched only once EvadePlayers and skateto (drafts) were in the
+  same file before it, see "Multi-block files".
+* **Declaration order** of locals changes register allocation in some functions (calcpuckcross), not in others.
+* **gmode bit 0** (`gmclock`) means "game clock stopped" (93G ram93): ResetClock sets it, the faceoff drop
+  clears it. Code that tests it and skips work does so while the clock is stopped.
 * **Still open**: EvadePlayers needs one more stack dword (a swap spill for the vtoa args while ebp is busy);
-  skateto picks edx where the original picks eax for two short-lived loads (Xvel|Yvel, the pucky pointer).
+  skateto picks edx where the original picks eax for two short-lived loads (Xvel|Yvel, the pucky pointer);
+  calcpuckcross is 2 bytes short (x/side registers swapped, a 16-bit `mov bx,dx`). reenergizeteam ends in
+  calcpuckcross's tail, so it waits for calcpuckcross.c to match (or for a draft whose tail bytes are unique).

@@ -153,7 +153,11 @@ workflow and compiler notes: [docs/C_MATCHING.md](docs/C_MATCHING.md); progress:
   comments over. Constants in `src/c/include/consts.h`, typed globals in `vars.h`, prototypes in `protos.h`.
 - One file per function, except groups that must compile together (tail call into the next function, shared
   epilogues): one file, address order, named after the first function.
-- Pick compiled-C functions only (`push dword N` / `call __CHK` prologue). Leave hand-written asm alone.
+- Pick compiled-C functions only (`push dword N` / `call __CHK` prologue). Leave hand-written asm alone: rows with
+  status `asm` in `tools/c_functions.csv` / `C_PROGRESS.md` (from `tools/find_handasm.py`, see the C_MATCHING
+  section "Hand-written asm") are skipped by the C queue.
+- Functions that jump into another function's epilogue (shared tails) go in one multi-block C file with the
+  functions between them; mark each with `cc.py mark File.c --func F` (C_MATCHING "Multi-block files").
 - Commit each batch with `make` MATCH (both CBUILD settings), `python3 tools/c_progress.py`, and the headers
   regenerated with `python3 tools/gen_cheaders.py` when names changed. Never commit compiler binaries, OMF objects
   or generated `.inc` fragments (they are under `build/`).
