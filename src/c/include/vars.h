@@ -57,4 +57,10 @@ typedef struct SpeechSlot {
     int loaded;                 /* 22h: 1 = sample in memory */
 } SpeechSlot;
 extern SpeechSlot *speechbank;  /* ED7B0: the speech bank slot array */
+/* dialog button, 1Ch bytes (DrawButtons / DrawButton) */
+typedef struct Button {
+    unsigned char pad0[0x10];
+    int pressed;                /* 10h: drawn pressed when nonzero */
+    unsigned char pad1[8];
+} Button;
 #endif

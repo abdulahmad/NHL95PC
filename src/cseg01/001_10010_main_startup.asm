@@ -1757,6 +1757,10 @@ mov esi, 1	; 11450
 mov dword [escrequest], esi	; 11455
 mov eax, esi	; 1145B
 jmp short HandleHotKey_ret	; 1145D
+; C: src/c/001_10010_main_startup/ResetInputSampling.c
+%ifdef CBUILD
+%include "c/001_10010_main_startup/ResetInputSampling.inc"
+%else
 ResetInputSampling:
 push dword 8	; 1145F
 call __CHK	; 11464
@@ -1772,6 +1776,7 @@ sar edx, 10h	; 1148F
 mov dword [joysampling], edx	; 11492
 pop edx	; 11498
 ret	; 11499
+%endif ; C
 RunGameFrames:
 push dword 0Ch	; 1149A
 call __CHK	; 1149F

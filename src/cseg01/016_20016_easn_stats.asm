@@ -1288,6 +1288,10 @@ mov eax, 2	; 212B5
 add esp, 38Ch	; 212BA
 pop ebp	; 212C0
 jmp near EasnTeamStatsScreen_x	; 212C1
+; C: src/c/016_20016_easn_stats/FreeCalendarIfLowMem.c
+%ifdef CBUILD
+%include "c/016_20016_easn_stats/FreeCalendarIfLowMem.inc"
+%else
 FreeCalendarIfLowMem:
 push dword 14h	; 212C6
 call __CHK	; 212CB
@@ -1311,6 +1315,7 @@ pop edx	; 212FA
 pop ecx	; 212FB
 pop ebx	; 212FC
 ret	; 212FD
+%endif ; C
 LoadCalendarShapes:
 push dword 38h	; 212FE
 call __CHK	; 21303

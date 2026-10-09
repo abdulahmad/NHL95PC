@@ -1200,6 +1200,10 @@ mov dword [joysampling], edi	; 142D0
 mov word [joysampling_save], cx	; 142D6
 call joyq_flush	; 142DD
 jmp near IndexPhotoBank_x	; 142E2
+; C: src/c/004_13320_asset_loading/FileExists.c
+%ifdef CBUILD
+%include "c/004_13320_asset_loading/FileExists.inc"
+%else
 FileExists:
 push dword 10h	; 142E7
 call __CHK	; 142EC
@@ -1221,3 +1225,4 @@ add esp, byte 4	; 14318
 pop edx	; 1431B
 pop ebx	; 1431C
 ret	; 1431D
+%endif ; C

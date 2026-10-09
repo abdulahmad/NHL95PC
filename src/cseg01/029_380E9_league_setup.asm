@@ -2248,6 +2248,10 @@ call FileWriteAt	; 3A2B0
 pop esi	; 3A2B5
 pop ecx	; 3A2B6
 ret	; 3A2B7
+; C: src/c/029_380E9_league_setup/WriteTeamRec.c
+%ifdef CBUILD
+%include "c/029_380E9_league_setup/WriteTeamRec.inc"
+%else
 WriteTeamRec:
 push dword 10h	; 3A2B8
 call __CHK	; 3A2BD
@@ -2272,6 +2276,7 @@ pop edi	; 3A2EA
 pop esi	; 3A2EB
 pop ecx	; 3A2EC
 ret	; 3A2ED
+%endif ; C
 ReadDbRec4Ch:
 push dword 10h	; 3A2EE
 call __CHK	; 3A2F3

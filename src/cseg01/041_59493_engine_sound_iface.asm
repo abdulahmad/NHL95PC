@@ -451,6 +451,10 @@ mov dword [digihandle], 0FFFFFFFFh	; 599AD
 .x:
 pop edx	; 599B7
 ret	; 599B8
+; C: src/c/041_59493_engine_sound_iface/PlayDigiSample.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PlayDigiSample.inc"
+%else
 PlayDigiSample:
 push dword 0Ch	; 599B9
 call __CHK	; 599BE
@@ -470,6 +474,7 @@ mov dword [digihandle], eax	; 599E6
 pop edx	; 599EB
 pop ebx	; 599EC
 ret	; 599ED
+%endif ; C
 ; C: src/c/041_59493_engine_sound_iface/WaitDigiSample.c
 %ifdef CBUILD
 %include "c/041_59493_engine_sound_iface/WaitDigiSample.inc"
@@ -703,6 +708,10 @@ je near nullsub_5	; 59C91
 test byte [gameopts+1], 1	; 59C97
 je near nullsub_5	; 59C9E
 jmp near SayElseNhl	; 59CA4
+; C: src/c/041_59493_engine_sound_iface/PaHighlightIntro.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PaHighlightIntro.inc"
+%else
 PaHighlightIntro:
 push dword 8	; 59CA9
 call __CHK	; 59CAE
@@ -718,6 +727,7 @@ call SayHighlightIntro	; 59CD6
 .x:
 pop ebx	; 59CDB
 ret	; 59CDC
+%endif ; C
 PaPlayoffResult:
 push dword 14h	; 59CDD
 call __CHK	; 59CE2

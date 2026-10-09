@@ -273,6 +273,10 @@ add eax, inputqueue	; 6B3CF
 pop edx	; 6B3D4
 pop ebx	; 6B3D5
 ret	; 6B3D6
+; C: src/c/050_6B093_joystick_calibration/ClearInputQueue.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/ClearInputQueue.inc"
+%else
 ClearInputQueue:
 push dword 8	; 6B3D7
 call __CHK	; 6B3DC
@@ -287,6 +291,7 @@ mov dword [enterheld], edx	; 6B406
 xor eax, eax	; 6B40C
 pop edx	; 6B40E
 ret	; 6B40F
+%endif ; C
 InputInstall:
 push dword 14h	; 6B410
 call __CHK	; 6B415

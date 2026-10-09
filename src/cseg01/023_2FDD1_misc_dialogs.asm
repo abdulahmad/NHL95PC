@@ -372,6 +372,10 @@ pop ebp	; 30203
 pop edi	; 30204
 pop esi	; 30205
 ret 14h	; 30206
+; C: src/c/023_2FDD1_misc_dialogs/SetListItemColors.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/SetListItemColors.inc"
+%else
 SetListItemColors:
 push dword 14h	; 30209
 call __CHK	; 3020E
@@ -393,6 +397,7 @@ add esp, byte 8	; 30238
 pop ecx	; 3023B
 pop ebx	; 3023C
 ret	; 3023D
+%endif ; C
 ListHitTest:
 push dword 18h	; 3023E
 call __CHK	; 30243
@@ -1163,6 +1168,10 @@ pop ebp	; 30ADC
 pop edi	; 30ADD
 pop esi	; 30ADE
 ret 4	; 30ADF
+; C: src/c/023_2FDD1_misc_dialogs/DrawButtons.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/DrawButtons.inc"
+%else
 DrawButtons:
 push dword 0Ch	; 30AE2
 call __CHK	; 30AE7
@@ -1187,6 +1196,7 @@ jl short DrawButtons.1	; 30B11
 pop esi	; 30B13
 pop ecx	; 30B14
 ret	; 30B15
+%endif ; C
 DrawButton:
 push dword 28h	; 30B16
 call __CHK	; 30B1B

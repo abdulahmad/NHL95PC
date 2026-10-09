@@ -2035,6 +2035,10 @@ inc ecx	; 65B3C
 cmp cx, byte 19h	; 65B3D
 jl short SetupTeamLines.23	; 65B41
 jmp near lines_popx	; 65B43
+; C: src/c/046_644A8_engine_display/NormalizeDressFlags.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/NormalizeDressFlags.inc"
+%else
 NormalizeDressFlags:
 push dword 0Ch	; 65B48
 call __CHK	; 65B4D
@@ -2056,6 +2060,7 @@ jl short NormalizeDressFlags.1	; 65B7E
 pop edx	; 65B80
 pop ebx	; 65B81
 ret	; 65B82
+%endif ; C
 CanRemovePlayer:
 push dword 24h	; 65B83
 call __CHK	; 65B88

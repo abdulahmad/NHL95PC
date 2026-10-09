@@ -820,6 +820,10 @@ mov edx, dword [speechq]	; 833B1
 mov eax, dword [dword eax+03B70h]	; 833B7
 mov dword [byte edx+05Ch], eax	; 833BD
 jmp near ShutdownSpeech_ret5	; 833C0
+; C: src/c/060_8291E_sound_config/ClearSpeechSlot.c
+%ifdef CBUILD
+%include "c/060_8291E_sound_config/ClearSpeechSlot.inc"
+%else
 ClearSpeechSlot:
 push dword 4	; 833C5
 call __CHK	; 833CA
@@ -831,6 +835,7 @@ mov dword [byte eax+016h], 0	; 833E4
 mov dword [byte eax+01Eh], 0	; 833EB
 mov dword [byte eax+022h], 0	; 833F2
 ret	; 833F9
+%endif ; C
 ResetSpeechQueue:
 push dword 0Ch	; 833FA
 call __CHK	; 833FF

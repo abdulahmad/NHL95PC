@@ -842,6 +842,10 @@ pop esi	; 14BEB
 pop ecx	; 14BEC
 pop ebx	; 14BED
 ret	; 14BEE
+; C: src/c/005_1431E_file_utils/GetLineEnergies.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/GetLineEnergies.inc"
+%else
 GetLineEnergies:
 push dword 10h	; 14BEF
 call __CHK	; 14BF4
@@ -866,6 +870,7 @@ pop esi	; 14C1E
 pop ecx	; 14C1F
 pop ebx	; 14C20
 ret	; 14C21
+%endif ; C
 PanelAddPenalty:
 push dword 10h	; 14C22
 call __CHK	; 14C27

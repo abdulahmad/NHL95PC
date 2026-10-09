@@ -23,7 +23,6 @@ extern void DrawSpriteNumber(); /* 11005 */
 extern void DrawFrameSprite(); /* 110E0 */
 extern void HandleHotKey(); /* 1118F */
 extern void HandleHotKey_ret(); /* 113E9 */
-extern void ResetInputSampling(); /* 1145F */
 extern void RunGameFrames(); /* 1149A */
 extern void SetFullPalette(); /* 11550 */
 extern void FadePalette(); /* 11598 */
@@ -47,11 +46,9 @@ extern void PlacePlayersAtStart(); /* 13C79 */
 extern void SetupGame(); /* 13E8F */
 extern void SetupDemoGame(); /* 13FA7 */
 extern void ResetGameVars(); /* 14056 */
-extern void FileExists(); /* 142E7 */
 extern void MakePath(); /* 1431E */
 extern void DeleteFiles(); /* 14368 */
 extern void DeleteDir(); /* 14442 */
-extern void FileOpenRead(); /* 14525 */
 extern void FileOpenRead_x(); /* 14537 */
 extern void FileOpenWrite(); /* 1453E */
 extern void FileOpenRW(); /* 14552 */
@@ -70,7 +67,6 @@ extern void GetLeagueDBSizes(); /* 149BF */
 extern void DrawPanelScore(); /* 14A20 */
 extern void DrawPanelLine(); /* 14AFE */
 extern void DrawPanelLine_x(); /* 14BE9 */
-extern void GetLineEnergies(); /* 14BEF */
 extern void PanelAddPenalty(); /* 14C22 */
 extern void PanelRemovePenalty(); /* 14CA0 */
 extern void UpdateHudPanel(); /* 14CF1 */
@@ -351,7 +347,6 @@ extern void EasnStandingsMenu_standings(); /* 21093 */
 extern void EasnStandingsMenu_roster(); /* 210FB */
 extern void EasnStandingsMenu_player(); /* 21151 */
 extern void EasnStandingsMenu_player2(); /* 211A4 */
-extern void FreeCalendarIfLowMem(); /* 212C6 */
 extern void LoadCalendarShapes(); /* 212FE */
 extern void CalTeamStatsScreen(); /* 21350 */
 extern void CalTeamStatsScreen_common(); /* 2145E */
@@ -489,7 +484,6 @@ extern void AskDatabaseChoice(); /* 2FDD1 */
 extern void DrawBevelRect(); /* 2FE49 */
 extern void TextInputDialog(); /* 2FEDF */
 extern void DlgNullCallback(); /* 30203 */
-extern void SetListItemColors(); /* 30209 */
 extern void ListHitTest(); /* 3023E */
 extern void DrawListItem(); /* 302B9 */
 extern void DrawListItem_x(); /* 30396 */
@@ -499,8 +493,6 @@ extern void MeasureTextLine(); /* 309E4 */
 extern void SetDialogColors(); /* 30A0C */
 extern void TrackButtons(); /* 30A39 */
 extern void TrackButtons_x(); /* 30ADC */
-extern void DrawButtons(); /* 30AE2 */
-extern void DrawButton(); /* 30B16 */
 extern void DrawButton_x(); /* 30BEC */
 extern void InitScrollBar(); /* 30BF3 */
 extern void DrawScrollBar(); /* 30C3D */
@@ -573,7 +565,6 @@ extern void ReadGoalieSeasonRec_common(); /* 3A276 */
 extern void WriteGoalieSeasonRec(); /* 3A27D */
 extern void WriteSchedGame(); /* 3A28F */
 extern void WriteSchedGame_common(); /* 3A2AE */
-extern void WriteTeamRec(); /* 3A2B8 */
 extern void ReadDbRec4Ch(); /* 3A2EE */
 extern void WriteLeagueTeamEntry(); /* 3A347 */
 extern void ReadDbRec28h(); /* 3A36B */
@@ -841,10 +832,6 @@ extern void sndcb_addesp8_x(); /* 594AC */
 extern void SndLoadFile2(); /* 594B2 */
 extern void CrowdNoiseUpdate(); /* 594CD */
 extern void CrowdNoiseOff(); /* 59748 */
-extern void sfx(); /* 59884 */
-extern void FreeDigiSample(); /* 59945 */
-extern void StopDigiSample(); /* 59981 */
-extern void PlayDigiSample(); /* 599B9 */
 extern void PlayCrowdSample(); /* 59A11 */
 extern void PlayCrowdSample_ret(); /* 59A7D */
 extern void PaOneMinuteLeft(); /* 59A7E */
@@ -857,7 +844,6 @@ extern void PaNhlIntro(); /* 59C1D */
 extern void PaGoodnight(); /* 59C3E */
 extern void PaLineups(); /* 59C5F */
 extern void PaElseNhl(); /* 59C80 */
-extern void PaHighlightIntro(); /* 59CA9 */
 extern void PaPlayoffResult(); /* 59CDD */
 extern void PaPlayoffTonight(); /* 59D16 */
 extern void SprSort_loop(); /* 59DBB */
@@ -866,7 +852,6 @@ extern void changeplayer_ret5(); /* 59FDB */
 extern void CompLine(); /* 5A0A3 */
 extern void getlinee_pp(); /* 5A288 */
 extern void getlinee_sum(); /* 5A2C6 */
-extern void TeamLineEnergy(); /* 5A2EE */
 extern void getlinee(); /* 5A30C */
 extern void calcpuckcross_ret6(); /* 5A41E */
 extern void calcpuckcross_ret5(); /* 5A41F */
@@ -936,9 +921,7 @@ extern void chkprogress_go(); /* 63475 */
 extern void chkprogress_x(); /* 6353E */
 extern void Stop4Pen(); /* 63543 */
 extern void checkfornewpen(); /* 637B5 */
-extern void releasepl(); /* 6392A */
 extern void chkatop(); /* 639A4 */
-extern void CheckAndReleasePlayer(); /* 639F9 */
 extern void ProcessPenaltyList(); /* 63A37 */
 extern void updatepentime(); /* 63B85 */
 extern void PenaltyManager(); /* 63BF8 */
@@ -965,7 +948,6 @@ extern void PickExtraSkater(); /* 653BE */
 extern void RefillLineSlots(); /* 6552E */
 extern void RemoveFromLines(); /* 655CC */
 extern void SetupTeamLines(); /* 658F3 */
-extern void NormalizeDressFlags(); /* 65B48 */
 extern void CanRemovePlayer(); /* 65B83 */
 extern void DitherRect(); /* 65CA8 */
 extern void checkwindow(); /* 65D01 */
@@ -1160,7 +1142,6 @@ extern void CalLeftJoystick(); /* 6B35C */
 extern void CalLeftJoystick_common(); /* 6B371 */
 extern void CalRightJoystick(); /* 6B37A */
 extern void GetInputEvent(); /* 6B391 */
-extern void ClearInputQueue(); /* 6B3D7 */
 extern void InputInstall(); /* 6B410 */
 extern void InputRemove(); /* 6B47C */
 extern void EventToPointer(); /* 6B4BB */
@@ -1479,7 +1460,6 @@ extern void SoundCardDlg_epilogue(); /* 82D53 */
 extern void SoundCardDlgLoop_x(); /* 82D5A */
 extern void SetSoundDevice(); /* 82D7A */
 extern void SpeechTimerTick(); /* 832BC */
-extern void ClearSpeechSlot(); /* 833C5 */
 extern void ResetSpeechQueue(); /* 833FA */
 extern void InitSpeechSlots(); /* 83459 */
 extern void ResetSampleReq(); /* 83520 */
@@ -1529,7 +1509,6 @@ extern void FreeCoachClip(); /* 8474E */
 extern void FreeClip(); /* 8475D */
 extern void FreeClip_ret(); /* 847B7 */
 extern void SayElseNhl(); /* 847BA */
-extern void SayHighlightIntro(); /* 847CE */
 extern void SayPlayoffResult(); /* 8490D */
 extern void SayTheGame(); /* 84A6C */
 extern void SayScoringPeriod(); /* 84A7D */
@@ -1670,7 +1649,6 @@ extern void sub_8D2A0(); /* 8D2A0 */
 extern void loc_8D2AE(); /* 8D2AE */
 extern void loc_8D2B9(); /* 8D2B9 */
 extern void sub_8D2D2(); /* 8D2D2 */
-extern void jctime(); /* 8D2D8 */
 extern void sub_8D2F0(); /* 8D2F0 */
 extern void sub_8D31C(); /* 8D31C */
 extern void loc_8D340(); /* 8D340 */
@@ -1743,7 +1721,6 @@ extern void loc_8DA6E(); /* 8DA6E */
 extern void loc_8DA8F(); /* 8DA8F */
 extern void sub_8DA98(); /* 8DA98 */
 extern void loc_8DAAD(); /* 8DAAD */
-extern void sub_8DAB8(); /* 8DAB8 */
 extern void sub_8DAE4(); /* 8DAE4 */
 extern void loc_8DB05(); /* 8DB05 */
 extern void loc_8DB12(); /* 8DB12 */
@@ -1881,7 +1858,6 @@ extern void sub_8E920(); /* 8E920 */
 extern void loc_8E963(); /* 8E963 */
 extern void loc_8E991(); /* 8E991 */
 extern void loc_8E9B4(); /* 8E9B4 */
-extern void sub_8E9C0(); /* 8E9C0 */
 extern void sub_8E9D4(); /* 8E9D4 */
 extern void sub_8E9E8(); /* 8E9E8 */
 extern void sub_8EA00(); /* 8EA00 */
@@ -1979,7 +1955,6 @@ extern void loc_8F244(); /* 8F244 */
 extern void sub_8F247(); /* 8F247 */
 extern void loc_8F24D(); /* 8F24D */
 extern void loc_8F262(); /* 8F262 */
-extern void sub_8F270(); /* 8F270 */
 extern void sub_8F27A(); /* 8F27A */
 extern void loc_8F2D7(); /* 8F2D7 */
 extern void loc_8F2F8(); /* 8F2F8 */
@@ -2016,7 +1991,6 @@ extern void loc_8F64F(); /* 8F64F */
 extern void loc_8F66B(); /* 8F66B */
 extern void loc_8F66C(); /* 8F66C */
 extern void loc_8F679(); /* 8F679 */
-extern void sub_8F67D(); /* 8F67D */
 extern void loc_8F694(); /* 8F694 */
 extern void loc_8F6B2(); /* 8F6B2 */
 extern void loc_8F6CD(); /* 8F6CD */
@@ -2028,7 +2002,6 @@ extern void loc_8F70D(); /* 8F70D */
 extern void loc_8F767(); /* 8F767 */
 extern void loc_8F76B(); /* 8F76B */
 extern void loc_8F7A2(); /* 8F7A2 */
-extern void sub_8F7AE(); /* 8F7AE */
 extern void loc_8F7C6(); /* 8F7C6 */
 extern void loc_8F7F6(); /* 8F7F6 */
 extern void loc_8F7FA(); /* 8F7FA */

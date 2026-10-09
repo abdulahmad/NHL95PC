@@ -190,5 +190,33 @@ void __cdecl sub_B3A24(void);  /* keyboard library */
 unsigned char RandLfsrByte(unsigned char *s);  /* 7665E */
 void puckunflip(Player *p);  /* 4D907 */                  
 void CopyRoster1Rec(void);  /* 6DE4C */                   
+void GetLineEnergies(short team, int *out);  /* 14BEF */  
+short TeamLineEnergy(short team, short line);  /* 5A2EE */
+void DrawButtons(Button *b, int n);  /* 30AE2 */          
+void DrawButton(Button *b);  /* 30B16 */                  
+void PaHighlightIntro(int home, int vis);  /* 59CA9 */    
+void SayHighlightIntro(int a, int b, int c);  /* 847CE */ 
+void SetListItemColors(int sel, int item);  /* 30209 */   
+void __cdecl sub_8E9C0(int fg, int bg);  /* graphics library: set text colours */
+void PlayDigiSample(void *s);  /* 599B9 */                
+void StopDigiSample(void);  /* 59981 */                   
+int sub_8F270(void *s, int a);  /* sound library: start sample */
+void ClearSpeechSlot(unsigned char *s);  /* 833C5 */      
+void WriteTeamRec(int fh, void *rec, int n);  /* 3A2B8 */ 
+int FileExists(char *name);  /* 142E7 */                  
+int FileOpenRead(char *name, int *h);  /* 14525: 0 = ok */
+void FreeCalendarIfLowMem(void);  /* 212C6 */             
+int __cdecl sub_8DAB8(void);  /* memory library: free memory */
+void __cdecl jctime(int p);  /* library: free a block */  
+void StopDigiSample(void);  /* 59981 */                   
+void sub_8F67D(int h);  /* sound library: stop sample */  
+void FreeDigiSample(int unused);  /* 59945 */             
+void sub_8F7AE(int h);  /* sound library: free sample */  
+int ClearInputQueue(void);  /* 6B3D7 */                   
+int ResetInputSampling(void);  /* 1145F */                
+void NormalizeDressFlags(void);  /* 65B48 */              
+void CheckAndReleasePlayer(Team *t, short i);  /* 639F9 */
+void releasepl(Team *t);  /* 6392A */                     
+void sfx(int n);  /* 59884 */                             
 
 #endif
