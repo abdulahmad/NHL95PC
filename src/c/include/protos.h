@@ -270,5 +270,26 @@ void chkatop(void);  /* 639A4 */
 void ResetGoalieMenu(void);  /* 1CB7F */                  
 void ResetSampleReq(void);  /* 83520 */                   
 void CtlSwapTeamFlag(int team);  /* 7CC8A */              
+int SayOneMinuteLeft(void);  /* 854AC */                  
+void ResetSpeechQueue(void);  /* 833FA */                 
+void RequestSample(char *name);  /* 83FAF */              
+void EnsureSampleRoom(void);  /* 8426F */                 
+void QueueSpeechClip(char *name);  /* 84418 */            
+int SayScorePeriod(int per);  /* 84657 */                 
+void joyq_pop(void);  /* 4FCE8 */                         
+void DrawRosterPanel(int side);  /* 6D299 */              
+void DrawRosterTitle(int x, int y, int side);  /* 6CEFB */
+void DrawRosterList(int x, int y, int side);  /* 6CF6F */ 
+void DrawDatabaseName(void);  /* 6D256 */                 
+int CountShotOnGoal(void);  /* 64338 */                   
+void ShotLaneOpen(void);  /* 64102 */                     
+void ClearPanelPenalties(void);  /* 1CBD8 */              
+void LoadScoreboardGfx(void);  /* 1CC3D */                
+int AnyInputPressed(void);  /* 1600C */                   
+int PollKey(void);  /* keyboard library */                
+int sub_B3464(void);  /* joystick library: read both pads */
+void CompShoot(Player *p);  /* 55A35 */                   
+void passmode(Player *p);  /* 5514E */                    
+void dopass(Player *p);  /* 54DF4 */                      
 
 #endif

@@ -375,6 +375,10 @@ mov eax, 1	; 84650
 .x:
 pop edx	; 84655
 ret	; 84656
+; C: src/c/062_842BA_announcer/SayScorePeriod.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/SayScorePeriod.inc"
+%else
 SayScorePeriod:
 push dword 8	; 84657
 call __CHK	; 8465C
@@ -402,6 +406,7 @@ mov eax, 1	; 846AD
 .x:
 pop edx	; 846B2
 ret	; 846B3
+%endif ; C
 SayNhlIntro:
 push dword 4	; 846B4
 call __CHK	; 846B9
@@ -1417,6 +1422,10 @@ add esp, byte 40h	; 854A4
 pop ebp	; 854A7
 pop esi	; 854A8
 ret 4	; 854A9
+; C: src/c/062_842BA_announcer/SayOneMinuteLeft.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/SayOneMinuteLeft.inc"
+%else
 SayOneMinuteLeft:
 push dword 8	; 854AC
 call __CHK	; 854B1
@@ -1445,6 +1454,7 @@ mov eax, ebx	; 85503
 .x:
 pop ebx	; 85505
 ret	; 85506
+%endif ; C
 OpenAnnouncerBank:
 push dword 20h	; 85507
 call __CHK	; 8550C

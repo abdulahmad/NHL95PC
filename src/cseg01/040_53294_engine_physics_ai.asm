@@ -2625,6 +2625,10 @@ add esp, byte 0Ch	; 55145
 dopass_ret6:
 pop ebp	; 55148
 jmp near checkob_ret5	; 55149
+; C: src/c/040_53294_engine_physics_ai/passmode.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/passmode.inc"
+%else
 passmode:
 push dword 8	; 5514E
 call __CHK	; 55153
@@ -2651,6 +2655,7 @@ call dopass	; 551A8
 .x:
 pop edx	; 551AD
 ret	; 551AE
+%endif ; C
 ; C: src/c/040_53294_engine_physics_ai/setpassmode.c
 %ifdef CBUILD
 %include "c/040_53294_engine_physics_ai/setpassmode.inc"
@@ -3328,6 +3333,10 @@ test byte [gmode2], 80h	; 55A27
 jne short chk4shot.14	; 55A2E
 jmp near chk4lc_shoot	; 55A30
 ; CompShoot: 93G logic93_3 CompShoot. temp2 = swing time (E8h - pucky by pfgoal) / 8, max 14h; assreplace ashoot (12h).
+; C: src/c/040_53294_engine_physics_ai/CompShoot.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/CompShoot.inc"
+%else
 CompShoot:
 push dword 8	; 55A35
 call __CHK	; 55A3A
@@ -3357,6 +3366,7 @@ mov edx, 12h	; 55A93
 call assreplace	; 55A98
 pop edx	; 55A9D
 ret	; 55A9E
+%endif ; C
 ; ChkOffsides: 93G logic93_5 ChkOffsides / ClearOffsidesIfAllPlayers. Offsides option (gameopts bit 1): a team's
 ;   offsides flag (tmflags bit 4) is cleared once none of its skaters is past the blue line (4Eh).
 ChkOffsides:

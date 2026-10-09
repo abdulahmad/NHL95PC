@@ -3782,6 +3782,10 @@ pop esi	; 64334
 pop edx	; 64335
 pop ebx	; 64336
 ret	; 64337
+; C: src/c/045_614C2_scoring_penalty_text/CountShotOnGoal.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/CountShotOnGoal.inc"
+%else
 CountShotOnGoal:
 push dword 8	; 64338
 call __CHK	; 6433D
@@ -3814,6 +3818,7 @@ xor edx, edx	; 64392
 mov eax, edx	; 64394
 pop edx	; 64396
 ret	; 64397
+%endif ; C
 StartPenaltyShot:
 push dword 0Ch	; 64398
 call __CHK	; 6439D

@@ -82,7 +82,6 @@ extern void IsCupClinched(); /* 15C30 */
 extern void CupSeriesWinner(); /* 15CE1 */
 extern void RunDemoGame(); /* 15D6B */
 extern void RunDemoGame_x(); /* 16005 */
-extern void AnyInputPressed(); /* 1600C */
 extern void TitleScreen(); /* 1609F */
 extern void RunIntro(); /* 1672A */
 extern void ShowCredits(); /* 16F9A */
@@ -274,8 +273,6 @@ extern void OpenPlayerDBs(); /* 1C26C */
 extern void OpenPlayerDBs_x(); /* 1C3F0 */
 extern void LoadTeamRoster(); /* 1C3F6 */
 extern void SetupGoalieMenu(); /* 1C852 */
-extern void ClearPanelPenalties(); /* 1CBD8 */
-extern void LoadScoreboardGfx(); /* 1CC3D */
 extern void DrawSprite_jt(); /* 1CD53 */
 extern void DrawSprite_b0(); /* 1CFBF */
 extern void DrawSprite_b1(); /* 1CFD3 */
@@ -726,7 +723,6 @@ extern void assrefdrop(); /* 4F5BF */
 extern void assrefgoalline(); /* 4F7D0 */
 extern void StartShotPath(); /* 4F9EF */
 extern void asspenshooter(); /* 4FAE8 */
-extern void joyq_pop(); /* 4FCE8 */
 extern void lineinput(); /* 4FD8E */
 extern void faceoffinput(); /* 4FF0D */
 extern void CanBlockShot_ret6(); /* 50336 */
@@ -777,13 +773,10 @@ extern void PassLaneChk(); /* 54C09 */
 extern void PassLaneChk_ret5a(); /* 54D5A */
 extern void PassLaneChk_ret5(); /* 54D5D */
 extern void ScatterPass(); /* 54D63 */
-extern void dopass(); /* 54DF4 */
 extern void dopass_ret6(); /* 55148 */
-extern void passmode(); /* 5514E */
 extern void passtoa0(); /* 551CF */
 extern void chk4pass(); /* 55493 */
 extern void chk4shot(); /* 55804 */
-extern void CompShoot(); /* 55A35 */
 extern void ChkOffsides(); /* 55A9F */
 extern void MarkTwoLinePlayers(); /* 55C6F */
 extern void ChkShotStat(); /* 55D28 */
@@ -910,9 +903,7 @@ extern void chkprogress(); /* 63C0C */
 extern void UpdatePowerPlayFlags(); /* 63C73 */
 extern void PenGoalStuff(); /* 63D69 */
 extern void SetupPenaltyShot(); /* 63F72 */
-extern void ShotLaneOpen(); /* 64102 */
 extern void QuickShotChk(); /* 6427F */
-extern void CountShotOnGoal(); /* 64338 */
 extern void StartPenaltyShot(); /* 64398 */
 extern void EndPenaltyShot(); /* 64439 */
 extern void SortPlayersByPos(); /* 644A8 */
@@ -1162,10 +1153,6 @@ extern void AttDbPtr(); /* 6CC04 */
 extern void RunEditRosters(); /* 6CC20 */
 extern void RunEditRosters_ret6(); /* 6CEF4 */
 extern void RunEditRosters_ret5(); /* 6CEF5 */
-extern void DrawRosterTitle(); /* 6CEFB */
-extern void DrawRosterList(); /* 6CF6F */
-extern void DrawDatabaseName(); /* 6D256 */
-extern void DrawRosterPanel(); /* 6D299 */
 extern void DrawEditRosters(); /* 6D2F8 */
 extern void SelectRosterTeam(); /* 6D5D0 */
 extern void ShowFreeAgents(); /* 6D6DB */
@@ -1426,7 +1413,6 @@ extern void SoundCardDlg_epilogue(); /* 82D53 */
 extern void SoundCardDlgLoop_x(); /* 82D5A */
 extern void SetSoundDevice(); /* 82D7A */
 extern void SpeechTimerTick(); /* 832BC */
-extern void ResetSpeechQueue(); /* 833FA */
 extern void InitSpeechSlots(); /* 83459 */
 extern void InitSpeech(); /* 8357A */
 extern void ShutdownSpeech(); /* 8363C */
@@ -1442,19 +1428,15 @@ extern void ReadSpeechSample(); /* 83BF3 */
 extern void LoadSpeechSlot(); /* 83CAE */
 extern void PlaceSpeechSlot(); /* 83D78 */
 extern void IsSampleRequested(); /* 83F61 */
-extern void RequestSample(); /* 83FAF */
 extern void FreeUnrequestedSamples(); /* 84036 */
 extern void MoveSampleMem(); /* 840A9 */
 extern void CompactSpeechSlot(); /* 84125 */
 extern void MakeSampleRoom(); /* 84205 */
-extern void EnsureSampleRoom(); /* 8426F */
 extern void CompactSpeechMem(); /* 8427E */
 extern void PlayoffRoundClipD(); /* 84306 */
 extern void PlayoffRoundClipU(); /* 8438F */
-extern void QueueSpeechClip(); /* 84418 */
 extern void LoadClipSlot(); /* 84539 */
 extern void SayClip_body(); /* 8460F */
-extern void SayScorePeriod(); /* 84657 */
 extern void SayNhlIntro(); /* 846B4 */
 extern void SayGoodnight(); /* 846C8 */
 extern void SayLineups(); /* 846DC */
@@ -1482,7 +1464,6 @@ extern void QueueTimeClips(); /* 84EAC */
 extern void SayPenalty(); /* 84F7B */
 extern void SayPlayerNumber(); /* 85213 */
 extern void SayGoal(); /* 8531F */
-extern void SayOneMinuteLeft(); /* 854AC */
 extern void QueuePenaltyType(); /* 85570 */
 extern void MenuSaveGame(); /* 85924 */
 extern void SaveGameStub(); /* 85D65 */
@@ -6803,7 +6784,6 @@ extern void loc_B3430(); /* B3430 */
 extern void loc_B3449(); /* B3449 */
 extern void sub_B3454(); /* B3454 */
 extern void sub_B345D(); /* B345D */
-extern void sub_B3464(); /* B3464 */
 extern void loc_B3471(); /* B3471 */
 extern void loc_B34B1(); /* B34B1 */
 extern void loc_B34B5(); /* B34B5 */
@@ -6869,7 +6849,6 @@ extern void loc_B39C3(); /* B39C3 */
 extern void sub_B39D0(); /* B39D0 */
 extern void loc_B39DE(); /* B39DE */
 extern void loc_B39EC(); /* B39EC */
-extern void PollKey(); /* B39ED */
 extern void sub_B39F3(); /* B39F3 */
 extern void loc_B3A01(); /* B3A01 */
 extern void loc_B3A07(); /* B3A07 */
