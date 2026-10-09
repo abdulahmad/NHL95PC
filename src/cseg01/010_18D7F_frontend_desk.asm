@@ -1933,6 +1933,10 @@ mov eax, 1	; 1A998
 call FadePalStep	; 1A99D
 call GameStatsScreen	; 1A9A2
 jmp near DeskItem_ret2	; 1A9A7
+; C: src/c/010_18D7F_frontend_desk/DeskPenaltySummary.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/DeskPenaltySummary.inc"
+%else
 DeskPenaltySummary:	;IDA: code_1A9AC
 push dword 20h	; 1A9AC
 call __CHK	; 1A9B1
@@ -1988,6 +1992,11 @@ pop edx	; 1AA69
 pop ecx	; 1AA6A
 pop ebx	; 1AA6B
 ret	; 1AA6C
+%endif ; C
+; C: src/c/010_18D7F_frontend_desk/DeskScoringSummary.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/DeskScoringSummary.inc"
+%else
 DeskScoringSummary:
 push dword 1Ch	; 1AA6D
 call __CHK	; 1AA72
@@ -2016,6 +2025,7 @@ pop edx	; 1AAC0
 pop ecx	; 1AAC1
 pop ebx	; 1AAC2
 ret	; 1AAC3
+%endif ; C
 DeskTeamScratches:
 push dword 1Ch	; 1AAC4
 call __CHK	; 1AAC9

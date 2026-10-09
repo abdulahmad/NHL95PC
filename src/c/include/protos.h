@@ -714,5 +714,7 @@ void DrawShootsField(void);  /* 6FA7D */
 void DrawGloveField(void);  /* 6FB35 */
 int TrackButtons(int *list, int n, int x, int y, int buttons);  /* 30A39 */
 int TeamGridHitTest(int x, int y, unsigned char *tab);  /* 37B92 */
+int DeskPenaltySummary(void);  /* 1A9AC */
+int DeskScoringSummary(void);  /* 1AA6D */
 
 #endif
