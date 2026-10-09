@@ -9,7 +9,7 @@ extern standingscb, standingsmenucb, songdata, dword_C73D0, rinkbm, dword_C7440,
 extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, schedgameidx, jctime, loc_32704, musicslot
 extern loc_32705, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRead, CheckGameDiskSpace, InitGameSummary
 extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
-extern EasnStandingsScreen, sub_29F28, SaveModeState, LoadModeState, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
+extern EasnStandingsScreen, PreGameScreen, SaveModeState, LoadModeState, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
 extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
 extern sub_479E9, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, EasnTeamStatsScreen, EasnSkaterStatsScreen, EasnGoalieStatsScreen
@@ -54,7 +54,7 @@ mov edx, dword [HomeTeam]	; 32E1D
 sar edx, 10h	; 32E23
 mov eax, dword [cont2team]	; 32E26
 sar eax, 10h	; 32E2B
-call sub_29F28	; 32E2E
+call PreGameScreen	; 32E2E
 mov edx, eax	; 32E33
 call sub_6B47C	; 32E35
 loc_32E3A:

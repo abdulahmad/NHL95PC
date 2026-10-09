@@ -2,44 +2,32 @@
 bits 32
 %include "hockey.inc"
 section s_29F18 progbits alloc exec nowrite align=1
-extern __CHK, asc_C1370, asc_C1375, asc_C1379, asc_C137F, asc_C1384, asc_C1389, asc_C1390
-extern asc_C13A0, asc_C13A8, asc_C13AD, asc_C13B6, asc_C13C0, asc_C13C7, asc_C13D0, asc_C13D9
-extern asc_C13E0, asc_C13E5, asc_C13EA, asc_C13F3, asc_C13F8, asc_C13FD, asc_C1402, asc_C1407
-extern asc_C140C, asc_C1415, asc_C141A, asc_C141F, asc_C1428, str_extDB, str_VFN
-extern byte_C6F6C, curleague, musicon, byte_D42C3, hmroster, byte_ED7F3, byte_ED824, byte_ED825
+extern __CHK, str_Apal, str_Pal10, str_Arena, str_Pal11, str_Rink, str_Srlogo, str_SAtS
+extern str_Pointer4, str_Iff4, str_Scouting, str_Screen, str_Ctlogo, str_Logohome, str_Logoaway, str_Ctbkgd
+extern str_Bkgd4, str_Pal12, str_Cttitle1, str_Def, str_Fowa, str_Scra, str_Tlu, str_Top
+extern str_Indus030, str_GIPK, str_Iff5, str_Tonights, str_Injured, str_extDB, str_VFN
+extern scoutcatidx, curleague, musicon, byte_D42C3, hmroster, byte_ED7F3, byte_ED824, byte_ED825
 extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, ctl1team, ctl2team
 extern teamconf, boxfillcolor, boxlitecolor, boxshadecolor, songdata, cont2team, HomeTeam, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, pointerspr, dword_EA0DC
-extern fputchar, jctime, memcpy_, off_C5439, crestnames, off_C6F48, leaguedbnames
+extern fputchar, jctime, memcpy_, off_C5439, crestnames, scoutcatnames, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, sub_30A0C, sub_30A39, sub_30AE2
 extern sub_33E6A, sub_479E9, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, sub_6B391
 extern sub_6B3D7, sub_76429, sub_767D0, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_91370, sub_913D0, sub_91400
-extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4FAC, unk_C139D
-extern unk_C6E7E, unk_C6E9A, unk_CF1AF, awlinetab, hmlinetab
-global jpt_29F18, loc_29FEF, loc_2A01F, loc_2A028, loc_2A075, loc_2A0B1, loc_2A0DE, loc_2A128
-global loc_2A12A, loc_2A1BC, loc_2A1BE, loc_2A2F3, loc_2A36A, loc_2A3BB, loc_2A3E9, loc_2A3F0
-global loc_2A40B, loc_2A4E7, loc_2A4F4, loc_2A50A, loc_2A520, loc_2A52B, loc_2A536, loc_2A65B
-global loc_2A65D, loc_2A69C, loc_2A6D7, loc_2A706, loc_2A71D, loc_2A733, loc_2A744, loc_2A777
-global loc_2A787, loc_2A790, loc_2A7B6, loc_2A7C4, loc_2A7E4, loc_2A832, loc_2A857, loc_2A8A8
-global loc_2A8B9, loc_2A8D5, loc_2A92A, loc_2A93A, loc_2A955, loc_2A971, loc_2A9BE, loc_2AA3B
-global loc_2AA40, loc_2AA81, loc_2AA89, loc_2AA97, loc_2AACB, loc_2AAF3, loc_2AB1F, loc_2AB36
-global loc_2AB3F, loc_2ABAE, loc_2ABCC, loc_2AC2C, loc_2AC2E, loc_2AD9C, loc_2AD9E, loc_2AE0A
-global loc_2AE0C, loc_2AEC4, loc_2AEC6, loc_2AF23, loc_2AF52, loc_2AF56, loc_2AFB6, loc_2AFB7
-global loc_2AFC0, loc_2AFC7, loc_2AFD9, loc_2B033, loc_2B035, loc_2B074, loc_2B082, loc_2B0F7
-global loc_2B11B, loc_2B1AD, loc_2B1B4, loc_2B260, loc_2B261, loc_2B26E, loc_2B281, loc_2B293
-global loc_2B2BF, loc_2B2CA, loc_2B399, loc_2B3A0, loc_2B447, loc_2B448, loc_2B455, loc_2B468
-global loc_2B47A, loc_2B4A2, loc_2B4AE, loc_2B56E, loc_2B62F, loc_2B63B, loc_2B642, loc_2B656
-global loc_2B67E, loc_2B68A, loc_2B691, loc_2B6A8, loc_2B6DE, loc_2B715, loc_2B742, loc_2B74C
-global sub_29F28, sub_2ABDF
-jpt_29F18:
-dd loc_2A8B9
-dd loc_2A92A
-dd loc_2A93A
-dd loc_2A955
-sub_29F28:
+extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4FAC, str_D4
+extern pregamebuttons, unk_CF1AF, awlinetab, hmlinetab
+global PreGameScreen_jt
+global PreGameScreen_awaylines, PreGameScreen_play, PreGameScreen_cancel, PreGameScreen_homelines
+global PreGameScreen, TonightsGameScreen
+PreGameScreen_jt:
+dd PreGameScreen_awaylines
+dd PreGameScreen_play
+dd PreGameScreen_cancel
+dd PreGameScreen_homelines
+PreGameScreen:
 push dword 6A0h	; 29F28
 call __CHK	; 29F2D
 push ebx	; 29F32
@@ -63,7 +51,7 @@ mov eax, 0FAh	; 29F7B
 call SetTextColors	; 29F80
 push byte 20h	; 29F85
 push dword 300h	; 29F87
-push asc_C1370	; 29F8C
+push str_Apal	; 29F8C
 call sub_8CCA8	; 29F91
 add esp, byte 0Ch	; 29F96
 mov dword [dword esp+0644h], eax	; 29F99
@@ -80,8 +68,8 @@ lea edx, [dword esp+0638h]	; 29FD8
 lea eax, [dword esp+0610h]	; 29FDF
 call FileOpenRead	; 29FE6
 xor cl, cl	; 29FEB
-jmp short loc_2A01F	; 29FED
-loc_29FEF:
+jmp short .2	; 29FED
+.1:
 xor edx, edx	; 29FEF
 mov dl, cl	; 29FF1
 xor ebx, ebx	; 29FF3
@@ -98,30 +86,30 @@ add edx, eax	; 2A00F
 mov eax, dword [dword esp+0638h]	; 2A011
 call ReadTeamRec	; 2A018
 inc cl	; 2A01D
-loc_2A01F:
+.2:
 cmp cl, 2	; 2A01F
-jae short loc_2A028	; 2A022
+jae short .3	; 2A022
 test eax, eax	; 2A024
-je short loc_29FEF	; 2A026
-loc_2A028:
+je short PreGameScreen.1	; 2A026
+.3:
 lea eax, [dword esp+0638h]	; 2A028
 call FileClose	; 2A02F
 call sub_B4BA8	; 2A034
 push byte 20h	; 2A039
 push dword 300h	; 2A03B
-push asc_C1375	; 2A040
+push str_Pal10	; 2A040
 call sub_8CCA8	; 2A045
 add esp, byte 0Ch	; 2A04A
 mov esi, eax	; 2A04D
 cmp byte [musicon], 0	; 2A04F
-je short loc_2A075	; 2A056
+je short .4	; 2A056
 cmp dword [songdata], byte 0	; 2A058
-je short loc_2A075	; 2A05F
+je short .4	; 2A05F
 mov eax, dword [musichandle]	; 2A061
 mov ebx, 64h	; 2A066
 mov edx, 3	; 2A06B
 call sub_8FCDF	; 2A070
-loc_2A075:
+.4:
 push esi	; 2A075
 push dword 100h	; 2A076
 push byte 0	; 2A07B
@@ -135,23 +123,23 @@ push esi	; 2A096
 call jctime	; 2A097
 add esp, byte 4	; 2A09C
 cmp byte [musicon], 0	; 2A09F
-je short loc_2A0DE	; 2A0A6
+je short .6	; 2A0A6
 cmp dword [songdata], byte 0	; 2A0A8
-je short loc_2A0DE	; 2A0AF
-loc_2A0B1:
+je short .6	; 2A0AF
+.5:
 mov eax, dword [musicslot-3]	; 2A0B1
 sar eax, 18h	; 2A0B6
 mov edx, 3	; 2A0B9
 call sub_8FC8A	; 2A0BE
 test eax, eax	; 2A0C3
-je short loc_2A0B1	; 2A0C5
+je short PreGameScreen.5	; 2A0C5
 mov esi, dword [songdata]	; 2A0C7
 push esi	; 2A0CD
 call sub_8D2F0	; 2A0CE
 add esp, byte 4	; 2A0D3
 xor edi, edi	; 2A0D6
 mov dword [songdata], edi	; 2A0D8
-loc_2A0DE:
+.6:
 mov ebp, dword [dword_D8B68]	; 2A0DE
 mov eax, dword [dword_D8B74]	; 2A0E4
 mov dword [dword esp+0648h], eax	; 2A0E9
@@ -164,14 +152,14 @@ push eax	; 2A107
 call sub_8EA18	; 2A108
 add esp, byte 4	; 2A10D
 xor ecx, ecx	; 2A110
-mov ebx, asc_C1379	; 2A112
+mov ebx, str_Arena	; 2A112
 cmp byte [byte_ED7F3], 1	; 2A117
-jne short loc_2A128	; 2A11E
+jne short .7	; 2A11E
 mov edx, dword [dword_D2C6B]	; 2A120
-jmp short loc_2A12A	; 2A126
-loc_2A128:
+jmp short .8	; 2A126
+.7:
 xor edx, edx	; 2A128
-loc_2A12A:
+.8:
 lea eax, [dword esp+0610h]	; 2A12A
 call MakePath	; 2A131
 push byte 0	; 2A136
@@ -180,7 +168,7 @@ push eax	; 2A13F
 call sub_8E83C	; 2A140
 mov esi, eax	; 2A145
 add esp, byte 8	; 2A147
-push asc_C137F	; 2A14A
+push str_Pal11	; 2A14A
 push eax	; 2A14F
 call sub_B30B4	; 2A150
 add esp, byte 8	; 2A155
@@ -188,7 +176,7 @@ lea edx, [byte eax+010h]	; 2A158
 mov ebx, 300h	; 2A15B
 mov eax, dword [dword esp+0644h]	; 2A160
 call memcpy_	; 2A167
-push asc_C1384	; 2A16C
+push str_Rink	; 2A16C
 push esi	; 2A171
 call sub_B30B4	; 2A172
 mov edi, eax	; 2A177
@@ -206,14 +194,14 @@ push esi	; 2A19B
 call jctime	; 2A19C
 add esp, byte 4	; 2A1A1
 xor ecx, ecx	; 2A1A4
-mov ebx, asc_C1389	; 2A1A6
+mov ebx, str_Srlogo	; 2A1A6
 cmp byte [byte_ED9E5], 1	; 2A1AB
-jne short loc_2A1BC	; 2A1B2
+jne short .9	; 2A1B2
 mov edx, dword [dword_D2C6B]	; 2A1B4
-jmp short loc_2A1BE	; 2A1BA
-loc_2A1BC:
+jmp short .10	; 2A1BA
+.9:
 xor edx, edx	; 2A1BC
-loc_2A1BE:
+.10:
 lea eax, [dword esp+0610h]	; 2A1BE
 call MakePath	; 2A1C5
 push byte 0	; 2A1CA
@@ -256,7 +244,7 @@ lea eax, [byte esp+01Ah]	; 2A241
 push eax	; 2A245
 lea eax, [dword esp+0306h]	; 2A246
 push eax	; 2A24D
-push asc_C1390	; 2A24E
+push str_SAtS	; 2A24E
 lea eax, [dword esp+061Ch]	; 2A253
 push eax	; 2A25A
 call sprintf_	; 2A25B
@@ -299,14 +287,14 @@ push byte 6Eh	; 2A2E7
 call sub_B4FAC	; 2A2E9
 add esp, byte 14h	; 2A2EE
 xor esi, esi	; 2A2F1
-loc_2A2F3:
+.11:
 xor eax, eax	; 2A2F3
 mov al, byte [byte_D42C3]	; 2A2F5
 add eax, byte 3	; 2A2FA
 imul eax, esi	; 2A2FD
 lea edi, [dword eax+0DAh]	; 2A300
 cmp esi, byte 8	; 2A306
-jne short loc_2A36A	; 2A309
+jne short .12	; 2A309
 mov ebp, dword [boxfillcolor]	; 2A30B
 push ebp	; 2A311
 push byte 5	; 2A312
@@ -336,8 +324,8 @@ push ebx	; 2A35F
 push byte 6Eh	; 2A360
 call sub_B4FAC	; 2A362
 add esp, byte 14h	; 2A367
-loc_2A36A:
-mov ebp, dword [nosplit esi*4+off_C6F48]	; 2A36A
+.12:
+mov ebp, dword [nosplit esi*4+scoutcatnames]	; 2A36A
 push ebp	; 2A371
 call fputchar	; 2A372
 add esp, byte 4	; 2A377
@@ -352,49 +340,49 @@ mov edx, edi	; 2A38C
 call PrintOutlinedText	; 2A38E
 inc esi	; 2A393
 cmp esi, byte 9	; 2A394
-jl near loc_2A2F3	; 2A397
+jl near PreGameScreen.11	; 2A397
 lea eax, [dword esp+05C4h]	; 2A39D
 mov dword [dword esp+065Ch], eax	; 2A3A4
 lea eax, [dword esp+02DCh]	; 2A3AB
 mov dword [dword esp+0658h], eax	; 2A3B2
 xor esi, esi	; 2A3B9
-loc_2A3BB:
+.13:
 mov ebp, 0FAh	; 2A3BB
 mov ecx, ebp	; 2A3C0
 xor eax, eax	; 2A3C2
-mov al, byte [dword esi+byte_C6F6C]	; 2A3C4
+mov al, byte [dword esi+scoutcatidx]	; 2A3C4
 mov edx, dword [dword esp+065Ch]	; 2A3CA
 add edx, eax	; 2A3D1
 add eax, dword [dword esp+0658h]	; 2A3D3
 mov bl, byte [edx]	; 2A3DA
 mov bh, byte [eax]	; 2A3DC
 cmp bl, bh	; 2A3DE
-jbe short loc_2A3E9	; 2A3E0
+jbe short .14	; 2A3E0
 mov ebp, 0FDh	; 2A3E2
-jmp short loc_2A3F0	; 2A3E7
-loc_2A3E9:
-jae short loc_2A3F0	; 2A3E9
+jmp short .15	; 2A3E7
+.14:
+jae short .15	; 2A3E9
 mov ecx, 0FDh	; 2A3EB
-loc_2A3F0:
+.15:
 xor eax, eax	; 2A3F0
 mov al, byte [byte_D42C3]	; 2A3F2
 lea edi, [byte eax+03h]	; 2A3F7
 imul edi, esi	; 2A3FA
 add edi, 0DAh	; 2A3FD
 cmp esi, byte 8	; 2A403
-jne short loc_2A40B	; 2A406
+jne short .16	; 2A406
 add edi, byte 0Ch	; 2A408
-loc_2A40B:
+.16:
 mov edx, 0F7h	; 2A40B
 mov eax, ebp	; 2A410
 call SetTextColors	; 2A412
 xor eax, eax	; 2A417
-mov al, byte [dword esi+byte_C6F6C]	; 2A419
+mov al, byte [dword esi+scoutcatidx]	; 2A419
 add eax, dword [dword esp+065Ch]	; 2A41F
 mov al, byte [eax]	; 2A426
 and eax, 0FFh	; 2A428
 push eax	; 2A42D
-push unk_C139D	; 2A42E
+push str_D4	; 2A42E
 lea eax, [dword esp+0618h]	; 2A433
 push eax	; 2A43A
 call sprintf_	; 2A43B
@@ -407,12 +395,12 @@ mov edx, 0F7h	; 2A456
 mov eax, ecx	; 2A45B
 call SetTextColors	; 2A45D
 xor eax, eax	; 2A462
-mov al, byte [dword esi+byte_C6F6C]	; 2A464
+mov al, byte [dword esi+scoutcatidx]	; 2A464
 add eax, dword [dword esp+0658h]	; 2A46A
 mov al, byte [eax]	; 2A471
 and eax, 0FFh	; 2A473
 push eax	; 2A478
-push unk_C139D	; 2A479
+push str_D4	; 2A479
 lea eax, [dword esp+0618h]	; 2A47E
 push eax	; 2A485
 call sprintf_	; 2A486
@@ -423,7 +411,7 @@ mov eax, 212h	; 2A497
 call PrintOutlinedText	; 2A49C
 inc esi	; 2A4A1
 cmp esi, byte 9	; 2A4A2
-jl near loc_2A3BB	; 2A4A5
+jl near PreGameScreen.13	; 2A4A5
 mov edx, 0F7h	; 2A4AB
 mov eax, 0FAh	; 2A4B0
 call SetTextColors	; 2A4B5
@@ -432,28 +420,28 @@ push ebx	; 2A4C1
 call sub_8EA18	; 2A4C2
 add esp, byte 4	; 2A4C7
 cmp dword [off_CEF43], byte 0	; 2A4CA
-jne short loc_2A4F4	; 2A4D1
+jne short .18	; 2A4D1
 cmp dword [off_CEF63], byte 0	; 2A4D3
-jne short loc_2A4F4	; 2A4DA
+jne short .18	; 2A4DA
 mov dword [dword esp+0650h], 2	; 2A4DC
-loc_2A4E7:
-mov dword [dword esp+0654h], unk_C6E9A	; 2A4E7
-jmp short loc_2A536	; 2A4F2
-loc_2A4F4:
+.17:
+mov dword [dword esp+0654h], pregamebuttons+1Ch	; 2A4E7
+jmp short .22	; 2A4F2
+.18:
 cmp dword [off_CEF43], byte 0	; 2A4F4
-jne short loc_2A50A	; 2A4FB
+jne short .19	; 2A4FB
 mov dword [dword esp+0650h], 3	; 2A4FD
-jmp short loc_2A52B	; 2A508
-loc_2A50A:
+jmp short .21	; 2A508
+.19:
 cmp dword [off_CEF63], byte 0	; 2A50A
-jne short loc_2A520	; 2A511
+jne short .20	; 2A511
 mov dword [dword esp+0650h], 3	; 2A513
-jmp short loc_2A4E7	; 2A51E
-loc_2A520:
+jmp short PreGameScreen.17	; 2A51E
+.20:
 mov dword [dword esp+0650h], 4	; 2A520
-loc_2A52B:
-mov dword [dword esp+0654h], unk_C6E7E	; 2A52B
-loc_2A536:
+.21:
+mov dword [dword esp+0654h], pregamebuttons	; 2A52B
+.22:
 push byte 1	; 2A536
 mov ecx, 1DFh	; 2A538
 mov ebx, 26Bh	; 2A53D
@@ -474,7 +462,7 @@ imul eax, edx	; 2A574
 add eax, byte 11h	; 2A577
 push byte 20h	; 2A57A
 push eax	; 2A57C
-push asc_C13A0	; 2A57D
+push str_Pointer4	; 2A57D
 call sub_8CCA8	; 2A582
 mov dword [dword esp+0648h], eax	; 2A587
 add esp, byte 0Ch	; 2A58E
@@ -525,45 +513,45 @@ call sub_91370	; 2A621
 add esp, byte 0Ch	; 2A626
 call sub_6B3D7	; 2A629
 cmp byte [musicon], 0	; 2A62E
-je short loc_2A69C	; 2A635
+je short .25	; 2A635
 cmp dword [songdata], byte 0	; 2A637
-jne short loc_2A69C	; 2A63E
-mov ecx, asc_C13A8	; 2A640
-mov ebx, asc_C13AD	; 2A645
+jne short .25	; 2A63E
+mov ecx, str_Iff4	; 2A640
+mov ebx, str_Scouting	; 2A645
 cmp byte [byte_ED9AF], 1	; 2A64A
-jne short loc_2A65B	; 2A651
+jne short .23	; 2A651
 mov edx, dword [dword_D2C6B]	; 2A653
-jmp short loc_2A65D	; 2A659
-loc_2A65B:
+jmp short .24	; 2A659
+.23:
 xor edx, edx	; 2A65B
-loc_2A65D:
+.24:
 lea eax, [dword esp+0610h]	; 2A65D
 call MakePath	; 2A664
 lea eax, [dword esp+0610h]	; 2A669
 call sub_8F98F	; 2A670
 mov dword [songdata], eax	; 2A675
 test eax, eax	; 2A67A
-je short loc_2A69C	; 2A67C
+je short .25	; 2A67C
 test byte [gameopts], 40h	; 2A67E
-je short loc_2A69C	; 2A685
+je short .25	; 2A685
 mov edx, dword [musichandle]	; 2A687
 mov ecx, 4Ch	; 2A68D
 mov ebx, 3	; 2A692
 call sub_8FB8E	; 2A697
-loc_2A69C:
+.25:
 mov ebx, 10h	; 2A69C
 mov edx, dword [dword esp+0644h]	; 2A6A1
 xor eax, eax	; 2A6A8
 call sub_76429	; 2A6AA
 cmp dword [schedgameidx], 444h	; 2A6AF
-jge short loc_2A6D7	; 2A6B9
+jge short .26	; 2A6B9
 xor edx, edx	; 2A6BB
 mov dl, byte [dword esp+066Ch]	; 2A6BD
 xor eax, eax	; 2A6C4
 mov al, byte [dword esp+0670h]	; 2A6C6
 call sub_59BB5	; 2A6CD
-jmp near loc_2A777	; 2A6D2
-loc_2A6D7:
+jmp near .31	; 2A6D2
+.26:
 xor edx, edx	; 2A6D7
 mov dl, byte [dword esp+0670h]	; 2A6D9
 shl edx, 2	; 2A6E0
@@ -573,10 +561,10 @@ shl eax, 2	; 2A6EC
 mov ebx, dword [dword edx+teamconf]	; 2A6EF
 mov edi, dword [dword eax+teamconf]	; 2A6F5
 cmp ebx, edi	; 2A6FB
-je short loc_2A706	; 2A6FD
+je short .27	; 2A6FD
 mov ecx, 3	; 2A6FF
-jmp short loc_2A71D	; 2A704
-loc_2A706:
+jmp short .28	; 2A704
+.27:
 mov edx, dword [dword edx+teamconf]	; 2A706
 or edx, edi	; 2A70C
 mov ebx, 2	; 2A70E
@@ -584,16 +572,16 @@ mov eax, edx	; 2A713
 sar edx, 1Fh	; 2A715
 idiv ebx	; 2A718
 lea ecx, [byte edx+01h]	; 2A71A
-loc_2A71D:
+.28:
 mov eax, 1	; 2A71D
 cmp dword [schedgameidx], 47Ch	; 2A722
-jl short loc_2A733	; 2A72C
+jl short .29	; 2A72C
 mov eax, 2	; 2A72E
-loc_2A733:
+.29:
 cmp dword [schedgameidx], 498h	; 2A733
-jl short loc_2A744	; 2A73D
+jl short .30	; 2A73D
 mov eax, 3	; 2A73F
-loc_2A744:
+.30:
 push eax	; 2A744
 mov edx, dword [schedgameidx]	; 2A745
 sub edx, 444h	; 2A74B
@@ -607,35 +595,35 @@ mov dl, byte [dword esp+0670h]	; 2A762
 xor eax, eax	; 2A769
 mov al, byte [dword esp+0674h]	; 2A76B
 call sub_59D16	; 2A772
-loc_2A777:
+.31:
 xor ebx, ebx	; 2A777
 mov dword [dword esp+0664h], ebx	; 2A779
 mov dword [dword esp+0640h], ebx	; 2A780
-loc_2A787:
+.32:
 xor edi, edi	; 2A787
 mov dword [dword esp+064Ch], edi	; 2A789
-loc_2A790:
+.33:
 call sub_6B391	; 2A790
 mov ecx, eax	; 2A795
 test eax, eax	; 2A797
-je short loc_2A7B6	; 2A799
+je short .34	; 2A799
 lea ebx, [dword esp+0634h]	; 2A79B
 lea edx, [dword esp+0630h]	; 2A7A2
 call dword [dword_EA0DC]	; 2A7A9
 mov dword [dword esp+064Ch], eax	; 2A7AF
-loc_2A7B6:
+.34:
 test ecx, ecx	; 2A7B6
-je short loc_2A7C4	; 2A7B8
+je short .35	; 2A7B8
 test byte [dword esp+064Ch], 6	; 2A7BA
-je short loc_2A790	; 2A7C2
-loc_2A7C4:
+je short PreGameScreen.33	; 2A7C2
+.35:
 cmp dword [dword esp+064Ch], byte 0	; 2A7C4
-jne short loc_2A832	; 2A7CC
+jne short .37	; 2A7CC
 cmp ebp, dword [dword esp+0630h]	; 2A7CE
-jne short loc_2A7E4	; 2A7D5
+jne short .36	; 2A7D5
 cmp esi, dword [dword esp+0634h]	; 2A7D7
-je near loc_2AA97	; 2A7DE
-loc_2A7E4:
+je near PreGameScreen_homelines.7	; 2A7DE
+.36:
 push esi	; 2A7E4
 push ebp	; 2A7E5
 mov ecx, dword [dword esp+0668h]	; 2A7E6
@@ -656,14 +644,14 @@ mov edx, dword [dword esp+0634h]	; 2A81E
 push edx	; 2A825
 mov ebx, dword [pointerspr]	; 2A826
 push ebx	; 2A82C
-jmp near loc_2AA81	; 2A82D
-loc_2A832:
+jmp near PreGameScreen_homelines.5	; 2A82D
+.37:
 test byte [dword esp+064Ch], 4	; 2A832
-je short loc_2A857	; 2A83A
+je short .38	; 2A83A
 mov dword [dword esp+0664h], 0FFFFFFFFh	; 2A83C
 mov dword [dword esp+0640h], 3	; 2A847
-jmp near loc_2AA97	; 2A852
-loc_2A857:
+jmp near PreGameScreen_homelines.7	; 2A852
+.38:
 push esi	; 2A857
 push ebp	; 2A858
 mov edx, dword [dword esp+0668h]	; 2A859
@@ -679,25 +667,25 @@ mov eax, dword [dword esp+0658h]	; 2A886
 call sub_30A39	; 2A88D
 mov edx, eax	; 2A892
 test eax, eax	; 2A894
-jl near loc_2AA40	; 2A896
+jl near PreGameScreen_homelines.4	; 2A896
 cmp dword [off_CEF63], byte 0	; 2A89C
-jne short loc_2A8A8	; 2A8A3
+jne short .39	; 2A8A3
 lea edx, [byte eax+01h]	; 2A8A5
-loc_2A8A8:
+.39:
 cmp edx, byte 3	; 2A8A8
-ja near loc_2AA3B	; 2A8AB
-jmp dword [nosplit cs:edx*4+jpt_29F18]	; 2A8B1
-loc_2A8B9:
+ja near PreGameScreen_homelines.3	; 2A8AB
+jmp dword [nosplit cs:edx*4+PreGameScreen_jt]	; 2A8B1
+PreGameScreen_awaylines:
 mov eax, dword [HomeTeam]	; 2A8B9
 sar eax, 10h	; 2A8BE
 cmp eax, dword [ctl1team]	; 2A8C1
-je short loc_2A8D5	; 2A8C7
+je short .1	; 2A8C7
 cmp eax, dword [ctl2team]	; 2A8C9
-jne near loc_2AA3B	; 2A8CF
-loc_2A8D5:
+jne near PreGameScreen_homelines.3	; 2A8CF
+.1:
 push byte 20h	; 2A8D5
 push dword 4B011h	; 2A8D7
-push asc_C13B6	; 2A8DC
+push str_Screen	; 2A8DC
 call sub_8CCA8	; 2A8E1
 mov ebp, eax	; 2A8E6
 add esp, byte 0Ch	; 2A8E8
@@ -719,25 +707,25 @@ mov ecx, 3	; 2A911
 mov ebx, unk_CF1AF	; 2A916
 mov edx, awlinetab	; 2A91B
 mov eax, 1	; 2A920
-jmp near loc_2A9BE	; 2A925
-loc_2A92A:
+jmp near PreGameScreen_homelines.2	; 2A925
+PreGameScreen_play:
 mov dword [dword esp+0664h], 0FFFFFFFFh	; 2A92A
-jmp near loc_2AA3B	; 2A935
-loc_2A93A:
+jmp near PreGameScreen_homelines.3	; 2A935
+PreGameScreen_cancel:
 mov dword [dword esp+0664h], 0FFFFFFFFh	; 2A93A
 mov dword [dword esp+0640h], 3	; 2A945
-jmp near loc_2AA3B	; 2A950
-loc_2A955:
+jmp near PreGameScreen_homelines.3	; 2A950
+PreGameScreen_homelines:
 mov eax, dword [cont2team]	; 2A955
 sar eax, 10h	; 2A95A
 cmp eax, dword [ctl1team]	; 2A95D
-je short loc_2A971	; 2A963
+je short .1	; 2A963
 cmp eax, dword [ctl2team]	; 2A965
-jne near loc_2AA3B	; 2A96B
-loc_2A971:
+jne near .3	; 2A96B
+.1:
 push byte 20h	; 2A971
 push dword 4B011h	; 2A973
-push asc_C13B6	; 2A978
+push str_Screen	; 2A978
 call sub_8CCA8	; 2A97D
 mov ebp, eax	; 2A982
 add esp, byte 0Ch	; 2A984
@@ -759,11 +747,11 @@ mov ecx, 3	; 2A9AD
 mov ebx, unk_CF1AF	; 2A9B2
 mov edx, hmlinetab	; 2A9B7
 xor eax, eax	; 2A9BC
-loc_2A9BE:
+.2:
 call sub_767D0	; 2A9BE
 push byte 20h	; 2A9C3
 push dword 300h	; 2A9C5
-push asc_C1375	; 2A9CA
+push str_Pal10	; 2A9CA
 call sub_8CCA8	; 2A9CF
 mov esi, eax	; 2A9D4
 add esp, byte 0Ch	; 2A9D6
@@ -794,9 +782,9 @@ call sub_76429	; 2AA27
 mov edx, 0F7h	; 2AA2C
 mov eax, 0FAh	; 2AA31
 call SetTextColors	; 2AA36
-loc_2AA3B:
+.3:
 call sub_B4BA8	; 2AA3B
-loc_2AA40:
+.4:
 mov esi, dword [dword esp+0634h]	; 2AA40
 push esi	; 2AA47
 mov edi, dword [dword esp+0634h]	; 2AA48
@@ -806,63 +794,63 @@ push ebp	; 2AA57
 call sub_91400	; 2AA58
 add esp, byte 0Ch	; 2AA5D
 cmp dword [dword esp+0664h], byte 0	; 2AA60
-jne short loc_2AA89	; 2AA68
+jne short .6	; 2AA68
 mov edx, dword [dword esp+0634h]	; 2AA6A
 push edx	; 2AA71
 mov ebx, dword [dword esp+0634h]	; 2AA72
 push ebx	; 2AA79
 mov ecx, dword [pointerspr]	; 2AA7A
 push ecx	; 2AA80
-loc_2AA81:
+.5:
 call sub_91370	; 2AA81
 add esp, byte 0Ch	; 2AA86
-loc_2AA89:
+.6:
 mov ebp, dword [dword esp+0630h]	; 2AA89
 mov esi, dword [dword esp+0634h]	; 2AA90
-loc_2AA97:
+.7:
 cmp dword [dword esp+0664h], byte 0	; 2AA97
-je near loc_2A787	; 2AA9F
+je near PreGameScreen.32	; 2AA9F
 cmp byte [musicon], 0	; 2AAA5
-je short loc_2AACB	; 2AAAC
+je short .8	; 2AAAC
 cmp dword [songdata], byte 0	; 2AAAE
-je short loc_2AACB	; 2AAB5
+je short .8	; 2AAB5
 mov eax, dword [musichandle]	; 2AAB7
 mov ebx, 64h	; 2AABC
 mov edx, 3	; 2AAC1
 call sub_8FCDF	; 2AAC6
-loc_2AACB:
+.8:
 mov ebx, 10h	; 2AACB
 mov edx, dword [dword esp+0644h]	; 2AAD0
 mov eax, 1	; 2AAD7
 call sub_76429	; 2AADC
 cmp byte [musicon], 0	; 2AAE1
-je short loc_2AB1F	; 2AAE8
+je short .10	; 2AAE8
 cmp dword [songdata], byte 0	; 2AAEA
-je short loc_2AB1F	; 2AAF1
-loc_2AAF3:
+je short .10	; 2AAF1
+.9:
 mov eax, dword [musicslot-3]	; 2AAF3
 sar eax, 18h	; 2AAF8
 mov edx, 3	; 2AAFB
 call sub_8FC8A	; 2AB00
 test eax, eax	; 2AB05
-je short loc_2AAF3	; 2AB07
+je short PreGameScreen_homelines.9	; 2AB07
 mov ebp, dword [songdata]	; 2AB09
 push ebp	; 2AB0F
 call sub_8D2F0	; 2AB10
 add esp, byte 4	; 2AB15
 xor eax, eax	; 2AB18
 mov dword [songdata], eax	; 2AB1A
-loc_2AB1F:
+.10:
 cmp byte [musicon], 0	; 2AB1F
-je short loc_2AB3F	; 2AB26
+je short .12	; 2AB26
 test byte [gameopts+1], 1	; 2AB28
-je short loc_2AB3F	; 2AB2F
+je short .12	; 2AB2F
 call sub_8373E	; 2AB31
-loc_2AB36:
+.11:
 call sub_836E4	; 2AB36
 test eax, eax	; 2AB3B
-jne short loc_2AB36	; 2AB3D
-loc_2AB3F:
+jne short PreGameScreen_homelines.11	; 2AB3D
+.12:
 lea eax, [dword esp+05D0h]	; 2AB3F
 push eax	; 2AB46
 call sub_8EA00	; 2AB47
@@ -876,25 +864,25 @@ push ebx	; 2AB66
 call jctime	; 2AB67
 add esp, byte 4	; 2AB6C
 cmp dword [dword esp+0640h], byte 2	; 2AB6F
-jge short loc_2ABAE	; 2AB77
+jge short .13	; 2AB77
 xor ecx, ecx	; 2AB79
 mov cl, byte [dword esp+066Ch]	; 2AB7B
 xor ebx, ebx	; 2AB82
 mov bl, byte [dword esp+0670h]	; 2AB84
 mov edx, ecx	; 2AB8B
 mov eax, ebx	; 2AB8D
-call sub_2ABDF	; 2AB8F
+call TonightsGameScreen	; 2AB8F
 mov dword [dword esp+0640h], eax	; 2AB94
 mov edx, dword [nosplit ecx*4+off_C5439]	; 2AB9B
 mov eax, dword [nosplit ebx*4+off_C5439]	; 2ABA2
 call sub_59D71	; 2ABA9
-loc_2ABAE:
+.13:
 xor esi, esi	; 2ABAE
 mov dword [dword esp+0664h], esi	; 2ABB0
 cmp dword [dword esp+0640h], byte 3	; 2ABB7
-jne short loc_2ABCC	; 2ABBF
+jne short .14	; 2ABBF
 mov dword [dword esp+0664h], 4	; 2ABC1
-loc_2ABCC:
+.14:
 mov eax, dword [dword esp+0664h]	; 2ABCC
 add esp, 674h	; 2ABD3
 pop ebp	; 2ABD9
@@ -903,7 +891,7 @@ pop esi	; 2ABDB
 pop ecx	; 2ABDC
 pop ebx	; 2ABDD
 ret	; 2ABDE
-sub_2ABDF:
+TonightsGameScreen:
 push dword 148h	; 2ABDF
 call __CHK	; 2ABE4
 push ebx	; 2ABE9
@@ -920,14 +908,14 @@ push ebp	; 2AC0B
 call sub_B392C	; 2AC0C
 add esp, byte 4	; 2AC11
 xor ecx, ecx	; 2AC14
-mov ebx, asc_C13C0	; 2AC16
+mov ebx, str_Ctlogo	; 2AC16
 cmp byte [byte_ED825], 1	; 2AC1B
-jne short loc_2AC2C	; 2AC22
+jne short .1	; 2AC22
 mov edx, dword [dword_D2C6B]	; 2AC24
-jmp short loc_2AC2E	; 2AC2A
-loc_2AC2C:
+jmp short .2	; 2AC2A
+.1:
 xor edx, edx	; 2AC2C
-loc_2AC2E:
+.2:
 lea eax, [dword esp+0C8h]	; 2AC2E
 call MakePath	; 2AC35
 push byte 0	; 2AC3A
@@ -955,7 +943,7 @@ add eax, byte 11h	; 2AC90
 mov dword [dword esp+0110h], eax	; 2AC93
 push byte 20h	; 2AC9A
 push eax	; 2AC9C
-push asc_C13C7	; 2AC9D
+push str_Logohome	; 2AC9D
 call sub_8CCA8	; 2ACA2
 add esp, byte 0Ch	; 2ACA7
 mov dword [dword esp+0E0h], eax	; 2ACAA
@@ -996,7 +984,7 @@ add eax, byte 11h	; 2AD1D
 mov dword [dword esp+0110h], eax	; 2AD20
 push byte 20h	; 2AD27
 push eax	; 2AD29
-push asc_C13D0	; 2AD2A
+push str_Logoaway	; 2AD2A
 call sub_8CCA8	; 2AD2F
 add esp, byte 0Ch	; 2AD34
 mov dword [dword esp+0E4h], eax	; 2AD37
@@ -1024,14 +1012,14 @@ push eax	; 2AD7B
 call jctime	; 2AD7C
 add esp, byte 4	; 2AD81
 xor ecx, ecx	; 2AD84
-mov ebx, asc_C13D9	; 2AD86
+mov ebx, str_Ctbkgd	; 2AD86
 cmp byte [byte_ED824], 1	; 2AD8B
-jne short loc_2AD9C	; 2AD92
+jne short .3	; 2AD92
 mov edx, dword [dword_D2C6B]	; 2AD94
-jmp short loc_2AD9E	; 2AD9A
-loc_2AD9C:
+jmp short .4	; 2AD9A
+.3:
 xor edx, edx	; 2AD9C
-loc_2AD9E:
+.4:
 lea eax, [dword esp+0C8h]	; 2AD9E
 call MakePath	; 2ADA5
 push byte 0	; 2ADAA
@@ -1041,26 +1029,26 @@ call sub_8E83C	; 2ADB4
 mov esi, eax	; 2ADB9
 add esp, byte 8	; 2ADBB
 mov dword [dword esp+0F0h], eax	; 2ADBE
-push asc_C13E0	; 2ADC5
+push str_Bkgd4	; 2ADC5
 push eax	; 2ADCA
 call sub_B30B4	; 2ADCB
 add esp, byte 8	; 2ADD0
 mov dword [dword esp+0100h], eax	; 2ADD3
-push asc_C13E5	; 2ADDA
+push str_Pal12	; 2ADDA
 push esi	; 2ADDF
 call sub_B30B4	; 2ADE0
 add esp, byte 8	; 2ADE5
 add eax, byte 10h	; 2ADE8
 mov dword [dword esp+0108h], eax	; 2ADEB
 xor ecx, ecx	; 2ADF2
-mov ebx, asc_C13EA	; 2ADF4
+mov ebx, str_Cttitle1	; 2ADF4
 cmp byte [byte_ED826], 1	; 2ADF9
-jne short loc_2AE0A	; 2AE00
+jne short .5	; 2AE00
 mov edx, dword [dword_D2C6B]	; 2AE02
-jmp short loc_2AE0C	; 2AE08
-loc_2AE0A:
+jmp short .6	; 2AE08
+.5:
 xor edx, edx	; 2AE0A
-loc_2AE0C:
+.6:
 lea eax, [dword esp+0C8h]	; 2AE0C
 call MakePath	; 2AE13
 push byte 0	; 2AE18
@@ -1070,27 +1058,27 @@ call sub_8E83C	; 2AE22
 mov esi, eax	; 2AE27
 add esp, byte 8	; 2AE29
 mov dword [dword esp+0F8h], eax	; 2AE2C
-push asc_C13F3	; 2AE33
+push str_Def	; 2AE33
 push eax	; 2AE38
 call sub_B30B4	; 2AE39
 add esp, byte 8	; 2AE3E
 mov dword [dword esp+094h], eax	; 2AE41
-push asc_C13F8	; 2AE48
+push str_Fowa	; 2AE48
 push esi	; 2AE4D
 call sub_B30B4	; 2AE4E
 add esp, byte 8	; 2AE53
 mov dword [dword esp+098h], eax	; 2AE56
-push asc_C13FD	; 2AE5D
+push str_Scra	; 2AE5D
 push esi	; 2AE62
 call sub_B30B4	; 2AE63
 add esp, byte 8	; 2AE68
 mov dword [dword esp+0B0h], eax	; 2AE6B
-push asc_C1402	; 2AE72
+push str_Tlu	; 2AE72
 push esi	; 2AE77
 call sub_B30B4	; 2AE78
 add esp, byte 8	; 2AE7D
 mov dword [dword esp+0B8h], eax	; 2AE80
-push asc_C1407	; 2AE87
+push str_Top	; 2AE87
 push esi	; 2AE8C
 call sub_B30B4	; 2AE8D
 add esp, byte 8	; 2AE92
@@ -1100,14 +1088,14 @@ push eax	; 2AEA0
 call sub_8E9E8	; 2AEA1
 add esp, byte 4	; 2AEA6
 mov ecx, str_VFN	; 2AEA9
-mov ebx, asc_C140C	; 2AEAE
+mov ebx, str_Indus030	; 2AEAE
 cmp byte [byte_ED9E6], 1	; 2AEB3
-jne short loc_2AEC4	; 2AEBA
+jne short .7	; 2AEBA
 mov edx, dword [dword_D2C6B]	; 2AEBC
-jmp short loc_2AEC6	; 2AEC2
-loc_2AEC4:
+jmp short .8	; 2AEC2
+.7:
 xor edx, edx	; 2AEC4
-loc_2AEC6:
+.8:
 mov eax, esp	; 2AEC6
 call MakePath	; 2AEC8
 push byte 20h	; 2AECD
@@ -1123,7 +1111,7 @@ xor edx, edx	; 2AEEC
 mov eax, 40h	; 2AEEE
 call SetTextColors	; 2AEF3
 test ebp, ebp	; 2AEF8
-jne short loc_2AF23	; 2AEFA
+jne short .9	; 2AEFA
 mov ebx, dword [leaguedbnames]	; 2AEFC
 mov ecx, str_extDB	; 2AF02
 mov edx, curleague	; 2AF07
@@ -1133,21 +1121,21 @@ lea edx, [dword esp+0E8h]	; 2AF13
 mov eax, esp	; 2AF1A
 call FileOpenRead	; 2AF1C
 mov ebp, eax	; 2AF21
-loc_2AF23:
+.9:
 test ebp, ebp	; 2AF23
-jne near loc_2AFD9	; 2AF25
+jne near .16	; 2AF25
 push byte 20h	; 2AF2B
 push dword 0B60h	; 2AF2D
-push asc_C1415	; 2AF32
+push str_GIPK	; 2AF32
 call sub_8CCA8	; 2AF37
 add esp, byte 0Ch	; 2AF3C
 mov dword [dword esp+010Ch], eax	; 2AF3F
 mov dword [dword esp+0110h], ebp	; 2AF46
-jmp near loc_2AFC7	; 2AF4D
-loc_2AF52:
+jmp near .15	; 2AF4D
+.10:
 xor esi, esi	; 2AF52
-jmp short loc_2AFB7	; 2AF54
-loc_2AF56:
+jmp short .13	; 2AF54
+.11:
 mov edx, dword [dword esp+0110h]	; 2AF56
 mov eax, edx	; 2AF5D
 shl eax, 2	; 2AF5F
@@ -1159,7 +1147,7 @@ sub eax, edx	; 2AF6C
 mov ebx, esi	; 2AF6E
 mov ebx, dword [dword eax+ebx*4+dword_DBC7C]	; 2AF70
 cmp ebx, byte 0FFFFFFFFh	; 2AF77
-je short loc_2AFB6	; 2AF7A
+je short .12	; 2AF7A
 mov edx, dword [dword esp+0110h]	; 2AF7C
 mov eax, edx	; 2AF83
 shl eax, 3	; 2AF85
@@ -1177,21 +1165,21 @@ add edx, eax	; 2AFA6
 mov eax, dword [dword esp+0E8h]	; 2AFA8
 call ReadKeyRec	; 2AFAF
 mov ebp, eax	; 2AFB4
-loc_2AFB6:
+.12:
 inc esi	; 2AFB6
-loc_2AFB7:
+.13:
 cmp esi, byte 1Ch	; 2AFB7
-jge short loc_2AFC0	; 2AFBA
+jge short .14	; 2AFBA
 test ebp, ebp	; 2AFBC
-je short loc_2AF56	; 2AFBE
-loc_2AFC0:
+je short TonightsGameScreen.11	; 2AFBE
+.14:
 inc dword [dword esp+0110h]	; 2AFC0
-loc_2AFC7:
+.15:
 cmp dword [dword esp+0110h], byte 2	; 2AFC7
-jge short loc_2AFD9	; 2AFCF
+jge short .16	; 2AFCF
 test ebp, ebp	; 2AFD1
-je near loc_2AF52	; 2AFD3
-loc_2AFD9:
+je near TonightsGameScreen.10	; 2AFD3
+.16:
 lea eax, [dword esp+0E8h]	; 2AFD9
 call FileClose	; 2AFE0
 mov dword [dword esp+0D8h], hmlinetab	; 2AFE5
@@ -1200,39 +1188,39 @@ xor ebp, ebp	; 2AFFB
 mov dword [dword esp+0104h], ebp	; 2AFFD
 xor esi, esi	; 2B004
 cmp byte [musicon], 0	; 2B006
-je short loc_2B074	; 2B00D
+je short .19	; 2B00D
 cmp dword [songdata], byte 0	; 2B00F
-jne short loc_2B074	; 2B016
-mov ecx, asc_C141A	; 2B018
-mov ebx, asc_C141F	; 2B01D
+jne short .19	; 2B016
+mov ecx, str_Iff5	; 2B018
+mov ebx, str_Tonights	; 2B01D
 cmp byte [byte_ED9AB], 1	; 2B022
-jne short loc_2B033	; 2B029
+jne short .17	; 2B029
 mov edx, dword [dword_D2C6B]	; 2B02B
-jmp short loc_2B035	; 2B031
-loc_2B033:
+jmp short .18	; 2B031
+.17:
 xor edx, edx	; 2B033
-loc_2B035:
+.18:
 lea eax, [dword esp+0C8h]	; 2B035
 call MakePath	; 2B03C
 lea eax, [dword esp+0C8h]	; 2B041
 call sub_8F98F	; 2B048
 mov dword [songdata], eax	; 2B04D
 test eax, eax	; 2B052
-je short loc_2B074	; 2B054
+je short .19	; 2B054
 test byte [gameopts], 40h	; 2B056
-je short loc_2B074	; 2B05D
+je short .19	; 2B05D
 mov edx, dword [musichandle]	; 2B05F
 mov ecx, 4Ch	; 2B065
 mov ebx, 3	; 2B06A
 call sub_8FB8E	; 2B06F
-loc_2B074:
+.19:
 xor edx, edx	; 2B074
 mov dword [dword esp+0114h], edx	; 2B076
-jmp near loc_2B691	; 2B07D
-loc_2B082:
+jmp near .48	; 2B07D
+.20:
 call sub_B4BA8	; 2B082
 cmp dword [dword esp+0114h], byte 0	; 2B087
-je short loc_2B0F7	; 2B08F
+je short .21	; 2B08F
 push dword 1E0h	; 2B091
 push dword 8Ch	; 2B096
 push dword 280h	; 2B09B
@@ -1259,8 +1247,8 @@ push dword 80h	; 2B0E7
 push ebp	; 2B0EC
 call sub_B4BC4	; 2B0ED
 add esp, byte 10h	; 2B0F2
-jmp short loc_2B11B	; 2B0F5
-loc_2B0F7:
+jmp short .22	; 2B0F5
+.21:
 push dword 1E0h	; 2B0F7
 push ebp	; 2B0FC
 push dword 280h	; 2B0FD
@@ -1271,7 +1259,7 @@ mov edx, dword [dword esp+0100h]	; 2B10B
 push edx	; 2B112
 call sub_9061C	; 2B113
 add esp, byte 4	; 2B118
-loc_2B11B:
+.22:
 lea eax, [dword esp+011Ch]	; 2B11B
 push eax	; 2B122
 push byte 0	; 2B123
@@ -1306,11 +1294,11 @@ movzx edi, byte [byte_D42C3]	; 2B192
 add edi, 0A6h	; 2B199
 xor eax, eax	; 2B19F
 mov dword [dword esp+0110h], eax	; 2B1A1
-jmp near loc_2B281	; 2B1A8
-loc_2B1AD:
+jmp near .28	; 2B1A8
+.23:
 xor esi, esi	; 2B1AD
-jmp near loc_2B261	; 2B1AF
-loc_2B1B4:
+jmp near .26	; 2B1AF
+.24:
 mov ebx, dword [dword esp+0114h]	; 2B1B4
 mov edx, dword [dword esp+0110h]	; 2B1BB
 mov eax, edx	; 2B1C2
@@ -1337,7 +1325,7 @@ shl eax, 2	; 2B202
 mov edx, dword [dword esp+010Ch]	; 2B205
 add edx, eax	; 2B20C
 test ebp, ebp	; 2B20E
-jne short loc_2B260	; 2B210
+jne short .25	; 2B210
 lea ebx, [byte edx+013h]	; 2B212
 mov ecx, 0C8h	; 2B215
 xor edx, edx	; 2B21A
@@ -1366,42 +1354,42 @@ add eax, ebx	; 2B255
 mov ebx, esp	; 2B257
 mov edx, edi	; 2B259
 call PrintShadowText	; 2B25B
-loc_2B260:
+.25:
 inc esi	; 2B260
-loc_2B261:
+.26:
 cmp esi, byte 3	; 2B261
-jge short loc_2B26E	; 2B264
+jge short .27	; 2B264
 test ebp, ebp	; 2B266
-je near loc_2B1B4	; 2B268
-loc_2B26E:
+je near TonightsGameScreen.24	; 2B268
+.27:
 xor eax, eax	; 2B26E
 mov al, byte [byte_D42C3]	; 2B270
 add eax, byte 0Eh	; 2B275
 add edi, eax	; 2B278
 inc dword [dword esp+0110h]	; 2B27A
-loc_2B281:
+.28:
 cmp dword [dword esp+0110h], byte 4	; 2B281
-jge short loc_2B293	; 2B289
+jge short .29	; 2B289
 test ebp, ebp	; 2B28B
-je near loc_2B1AD	; 2B28D
-loc_2B293:
+je near TonightsGameScreen.23	; 2B28D
+.29:
 cmp dword [dword esp+0104h], byte 0	; 2B293
-jne short loc_2B2CA	; 2B29B
+jne short .31	; 2B29B
 mov ebx, 10h	; 2B29D
 mov edx, dword [dword esp+0108h]	; 2B2A2
 xor eax, eax	; 2B2A9
 call sub_76429	; 2B2AB
 cmp dword [dword esp+0114h], byte 0	; 2B2B0
-jne short loc_2B2BF	; 2B2B8
+jne short .30	; 2B2B8
 call sub_59C5F	; 2B2BA
-loc_2B2BF:
+.30:
 mov dword [dword esp+0104h], 0FFFFFFFFh	; 2B2BF
-loc_2B2CA:
+.31:
 mov eax, 3E8h	; 2B2CA
 call sub_33E6A	; 2B2CF
 mov esi, eax	; 2B2D4
 cmp eax, byte 2	; 2B2D6
-jge near loc_2B4AE	; 2B2D9
+jge near .40	; 2B2D9
 call sub_B4BA8	; 2B2DF
 push dword 1E0h	; 2B2E4
 push dword 8Ch	; 2B2E9
@@ -1444,11 +1432,11 @@ movzx edi, byte [byte_D42C3]	; 2B37E
 add edi, 0A6h	; 2B385
 xor ecx, ecx	; 2B38B
 mov dword [dword esp+0110h], ecx	; 2B38D
-jmp near loc_2B468	; 2B394
-loc_2B399:
+jmp near .37	; 2B394
+.32:
 xor esi, esi	; 2B399
-jmp near loc_2B448	; 2B39B
-loc_2B3A0:
+jmp near .35	; 2B39B
+.33:
 mov eax, dword [dword esp+0114h]	; 2B3A0
 mov edx, dword [dword esp+eax*4+0D8h]	; 2B3A7
 mov eax, dword [dword esp+0110h]	; 2B3AE
@@ -1473,7 +1461,7 @@ shl eax, 2	; 2B3EF
 mov edx, dword [dword esp+010Ch]	; 2B3F2
 add edx, eax	; 2B3F9
 test ebp, ebp	; 2B3FB
-jne short loc_2B447	; 2B3FD
+jne short .34	; 2B3FD
 lea ebx, [byte edx+013h]	; 2B3FF
 mov ecx, 0C8h	; 2B402
 xor edx, edx	; 2B407
@@ -1499,39 +1487,39 @@ add eax, edx	; 2B43C
 mov ebx, esp	; 2B43E
 mov edx, edi	; 2B440
 call PrintShadowText	; 2B442
-loc_2B447:
+.34:
 inc esi	; 2B447
-loc_2B448:
+.35:
 cmp esi, byte 2	; 2B448
-jge short loc_2B455	; 2B44B
+jge short .36	; 2B44B
 test ebp, ebp	; 2B44D
-je near loc_2B3A0	; 2B44F
-loc_2B455:
+je near TonightsGameScreen.33	; 2B44F
+.36:
 xor eax, eax	; 2B455
 mov al, byte [byte_D42C3]	; 2B457
 add eax, byte 0Eh	; 2B45C
 add edi, eax	; 2B45F
 inc dword [dword esp+0110h]	; 2B461
-loc_2B468:
+.37:
 cmp dword [dword esp+0110h], byte 3	; 2B468
-jge short loc_2B47A	; 2B470
+jge short .38	; 2B470
 test ebp, ebp	; 2B472
-je near loc_2B399	; 2B474
-loc_2B47A:
+je near TonightsGameScreen.32	; 2B474
+.38:
 cmp dword [dword esp+0104h], byte 0	; 2B47A
-jne short loc_2B4A2	; 2B482
+jne short .39	; 2B482
 mov ebx, 10h	; 2B484
 mov edx, dword [dword esp+0108h]	; 2B489
 xor eax, eax	; 2B490
 call sub_76429	; 2B492
 mov dword [dword esp+0104h], 0FFFFFFFFh	; 2B497
-loc_2B4A2:
+.39:
 mov eax, 3E8h	; 2B4A2
 call sub_33E6A	; 2B4A7
 mov esi, eax	; 2B4AC
-loc_2B4AE:
+.40:
 cmp esi, byte 2	; 2B4AE
-jge near loc_2B68A	; 2B4B1
+jge near .47	; 2B4B1
 call sub_B4BA8	; 2B4B7
 push dword 1E0h	; 2B4BC
 push dword 8Ch	; 2B4C1
@@ -1574,8 +1562,8 @@ movzx edi, byte [byte_D42C3]	; 2B556
 add edi, byte 7Eh	; 2B55D
 xor eax, eax	; 2B560
 mov dword [dword esp+0110h], eax	; 2B562
-jmp near loc_2B642	; 2B569
-loc_2B56E:
+jmp near .44	; 2B569
+.41:
 mov eax, dword [dword esp+0114h]	; 2B56E
 mov eax, dword [dword esp+eax*4+0D8h]	; 2B575
 add eax, edx	; 2B57C
@@ -1583,7 +1571,7 @@ mov al, byte [byte eax+028h]	; 2B57E
 and eax, 0FFh	; 2B581
 mov dword [dword esp+0118h], eax	; 2B586
 cmp eax, byte 64h	; 2B58D
-jge near loc_2B63B	; 2B590
+jge near .43	; 2B590
 mov edx, dword [dword esp+0114h]	; 2B596
 mov eax, edx	; 2B59D
 shl eax, 3	; 2B59F
@@ -1600,7 +1588,7 @@ shl eax, 2	; 2B5BC
 mov edx, dword [dword esp+010Ch]	; 2B5BF
 add edx, eax	; 2B5C6
 test ebp, ebp	; 2B5C8
-jne short loc_2B62F	; 2B5CA
+jne short .42	; 2B5CA
 lea ebx, [byte edx+013h]	; 2B5CC
 mov ecx, 0C8h	; 2B5CF
 xor edx, edx	; 2B5D4
@@ -1624,59 +1612,59 @@ add eax, edx	; 2B60D
 shl eax, 3	; 2B60F
 sub eax, edx	; 2B612
 cmp byte [dword ebx+eax+hmroster], 1	; 2B614
-jne short loc_2B62F	; 2B61C
-mov ebx, asc_C1428	; 2B61E
+jne short .42	; 2B61C
+mov ebx, str_Injured	; 2B61E
 mov edx, edi	; 2B623
 mov eax, 226h	; 2B625
 call PrintShadowText	; 2B62A
-loc_2B62F:
+.42:
 xor eax, eax	; 2B62F
 mov al, byte [byte_D42C3]	; 2B631
 add eax, byte 0Eh	; 2B636
 add edi, eax	; 2B639
-loc_2B63B:
+.43:
 inc dword [dword esp+0110h]	; 2B63B
-loc_2B642:
+.44:
 mov edx, dword [dword esp+0110h]	; 2B642
 cmp edx, byte 8	; 2B649
-jge short loc_2B656	; 2B64C
+jge short .45	; 2B64C
 test ebp, ebp	; 2B64E
-je near loc_2B56E	; 2B650
-loc_2B656:
+je near TonightsGameScreen.41	; 2B650
+.45:
 cmp dword [dword esp+0104h], byte 0	; 2B656
-jne short loc_2B67E	; 2B65E
+jne short .46	; 2B65E
 mov ebx, 10h	; 2B660
 mov edx, dword [dword esp+0108h]	; 2B665
 xor eax, eax	; 2B66C
 call sub_76429	; 2B66E
 mov dword [dword esp+0104h], 0FFFFFFFFh	; 2B673
-loc_2B67E:
+.46:
 mov eax, 3E8h	; 2B67E
 call sub_33E6A	; 2B683
 mov esi, eax	; 2B688
-loc_2B68A:
+.47:
 inc dword [dword esp+0114h]	; 2B68A
-loc_2B691:
+.48:
 cmp dword [dword esp+0114h], byte 2	; 2B691
-jge short loc_2B6A8	; 2B699
+jge short .49	; 2B699
 cmp esi, byte 2	; 2B69B
-jge short loc_2B6A8	; 2B69E
+jge short .49	; 2B69E
 test ebp, ebp	; 2B6A0
-je near loc_2B082	; 2B6A2
-loc_2B6A8:
+je near TonightsGameScreen.20	; 2B6A2
+.49:
 mov ecx, dword [dword esp+010Ch]	; 2B6A8
 push ecx	; 2B6AF
 call jctime	; 2B6B0
 add esp, byte 4	; 2B6B5
 cmp byte [musicon], 0	; 2B6B8
-je short loc_2B6DE	; 2B6BF
+je short .50	; 2B6BF
 cmp dword [songdata], byte 0	; 2B6C1
-je short loc_2B6DE	; 2B6C8
+je short .50	; 2B6C8
 mov eax, dword [musichandle]	; 2B6CA
 mov ebx, 64h	; 2B6CF
 mov edx, 3	; 2B6D4
 call sub_8FCDF	; 2B6D9
-loc_2B6DE:
+.50:
 mov ebx, 10h	; 2B6DE
 mov edx, dword [dword esp+0108h]	; 2B6E3
 mov eax, 1	; 2B6EA
@@ -1686,27 +1674,27 @@ push byte 0	; 2B6F9
 call sub_B392C	; 2B6FB
 add esp, byte 4	; 2B700
 cmp byte [musicon], 0	; 2B703
-je short loc_2B742	; 2B70A
+je short .52	; 2B70A
 cmp dword [songdata], byte 0	; 2B70C
-je short loc_2B742	; 2B713
-loc_2B715:
+je short .52	; 2B713
+.51:
 mov eax, dword [musicslot-3]	; 2B715
 sar eax, 18h	; 2B71A
 mov edx, 3	; 2B71D
 call sub_8FC8A	; 2B722
 test eax, eax	; 2B727
-je short loc_2B715	; 2B729
+je short TonightsGameScreen.51	; 2B729
 mov edx, dword [songdata]	; 2B72B
 push edx	; 2B731
 call sub_8D2F0	; 2B732
 add esp, byte 4	; 2B737
 xor ebx, ebx	; 2B73A
 mov dword [songdata], ebx	; 2B73C
-loc_2B742:
+.52:
 cmp esi, byte 3	; 2B742
-jge short loc_2B74C	; 2B745
+jge short .53	; 2B745
 call sub_479E9	; 2B747
-loc_2B74C:
+.53:
 lea eax, [byte esp+054h]	; 2B74C
 push eax	; 2B750
 call sub_8EA00	; 2B751

@@ -25,7 +25,7 @@ extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers
 extern FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
 extern CopyFile, DiskSpaceShort, CheckGameDiskSpace, GetLeagueDBSizes, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText
 extern TextGridOpen, TextGridOff, InitGameSummary, SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen
-extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, CountSeriesWins, sub_29F28, sub_2FDD1, sub_2FEDF
+extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, CountSeriesWins, PreGameScreen, sub_2FDD1, sub_2FEDF
 extern sub_30A0C, sub_30F12, MessageBox, SaveModeState, LoadModeState, WriteModeState, sub_3626D, SimulateGame
 extern sub_479E9, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E
 extern sub_6B9EB, sub_6BA4D, sub_76429, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
@@ -4159,7 +4159,7 @@ mov edx, dword [VisTeam-2]	; 898AF
 sar edx, 10h	; 898B5
 mov eax, dword [HomeTeam-2]	; 898B8
 sar eax, 10h	; 898BD
-call sub_29F28	; 898C0
+call PreGameScreen	; 898C0
 mov dword [byte esp+02Ch], eax	; 898C5
 call sub_6B47C	; 898C9
 jmp short .28	; 898CE

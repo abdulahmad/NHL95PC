@@ -20,10 +20,10 @@ global str_Pst26, str_StatsUnavailable2, str_POS, str_PLAYER2, str_TEAM, str_Pst
 global str_Western, str_Conference, str_Eastern, str_Team, str_GF, str_GA2, str_P, str_Pct4
 global str_Embpal2, str_Pal9, str_PlayoffsHaveNotBeen2, str_Rst12, str_Rst22, str_Scuparrw2, str_WesternConference2, str_EasternConference2
 global str_C3, str_Aup12, str_Aup22, str_Aup32, str_Midl2, str_Adn32, str_Adn22, str_Adn12
-global asc_C1370, asc_C1375, asc_C1379, asc_C137F, asc_C1384, asc_C1389, asc_C1390, asc_C13A0
-global asc_C13A8, asc_C13AD, asc_C13B6, asc_C13C0, asc_C13C7, asc_C13D0, asc_C13D9, asc_C13E0
-global asc_C13E5, asc_C13EA, asc_C13F3, asc_C13F8, asc_C13FD, asc_C1402, asc_C1407, asc_C140C
-global asc_C1415, asc_C141A, asc_C141F, asc_C1428, asc_C143D, asc_C1446, asc_C144B, asc_C1450
+global str_Apal, str_Pal10, str_Arena, str_Pal11, str_Rink, str_Srlogo, str_SAtS, str_Pointer4
+global str_Iff4, str_Scouting, str_Screen, str_Ctlogo, str_Logohome, str_Logoaway, str_Ctbkgd, str_Bkgd4
+global str_Pal12, str_Cttitle1, str_Def, str_Fowa, str_Scra, str_Tlu, str_Top, str_Indus030
+global str_GIPK, str_Iff5, str_Tonights, str_Injured, asc_C143D, asc_C1446, asc_C144B, asc_C1450
 global asc_C1455, asc_C145A, asc_C145F, asc_C1464, asc_C1469, asc_C146E, asc_C1473, asc_C1478
 global asc_C147D, asc_C1482, asc_C1486, asc_C148E, asc_C14B2, asc_C14BB, asc_C14C0, asc_C14C7
 global asc_C14DA, asc_C14EA, asc_C14EF, asc_C14F6, asc_C14FB, asc_C1506, asc_C150F, asc_C1516
@@ -66,7 +66,7 @@ global unk_C1194, unk_C11AC, unk_C11C5, unk_C11C9, unk_C11CD, unk_C11D1, unk_C11
 global unk_C11D9, unk_C11DE, unk_C11E2, unk_C11E8, unk_C11EE, unk_C11F3, unk_C11F7, unk_C11FD
 global unk_C1200, unk_C1203, unk_C1206, unk_C120B, str_NO, str_GP6, str_C2, unk_C126C
 global unk_C1276, str_GP7, str_W4, str_L6, str_T4, str_D3, str_TwoSpaces, str_Space2
-global unk_C139D, unk_C1430, unk_C1435, unk_C1439, unk_C148B, unk_C149A, unk_C149D, unk_C14A0
+global str_D4, unk_C1430, unk_C1435, unk_C1439, unk_C148B, unk_C149A, unk_C149D, unk_C14A0
 global unk_C14A3, unk_C14A6, unk_C14A9, unk_C14AC, unk_C14AF, unk_C14C4, unk_C14D4, unk_C14D7
 global unk_C14E7, unk_C153C, unk_C155C, unk_C1563, unk_C1566, unk_C160E, unk_C161D, unk_C164B
 global unk_C1679, unk_C167C, unk_C16D7, unk_C1720, unk_C1722, unk_C1772, unk_C1775, unk_C1778
@@ -696,63 +696,63 @@ str_Adn12:
 db 061h,064h,06Eh,031h,00h
 str_Space2:
 db 020h,00h,00h
-asc_C1370:
+str_Apal:
 db 061h,070h,061h,06Ch,00h
-asc_C1375:
+str_Pal10:
 db 050h,061h,06Ch,00h
-asc_C1379:
+str_Arena:
 db 061h,072h,065h,06Eh,061h,00h
-asc_C137F:
+str_Pal11:
 db 021h,070h,061h,06Ch,00h
-asc_C1384:
+str_Rink:
 db 072h,069h,06Eh,06Bh,00h
-asc_C1389:
+str_Srlogo:
 db 073h,072h,06Ch,06Fh,067h,06Fh,00h
-asc_C1390:
+str_SAtS:
 db 025h,073h,020h,020h,020h,061h,074h,020h,020h,020h,025h,073h,00h
-unk_C139D:
+str_D4:
 db 025h,064h,00h
-asc_C13A0:
+str_Pointer4:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C13A8:
+str_Iff4:
 db 02Eh,069h,066h,066h,00h
-asc_C13AD:
+str_Scouting:
 db 073h,063h,06Fh,075h,074h,069h,06Eh,067h,00h
-asc_C13B6:
+str_Screen:
 db 053h,063h,072h,065h,065h,06Eh,00h,00h,00h,00h
-asc_C13C0:
+str_Ctlogo:
 db 063h,074h,06Ch,06Fh,067h,06Fh,00h
-asc_C13C7:
+str_Logohome:
 db 06Ch,06Fh,067h,06Fh,068h,06Fh,06Dh,065h,00h
-asc_C13D0:
+str_Logoaway:
 db 06Ch,06Fh,067h,06Fh,061h,077h,061h,079h,00h
-asc_C13D9:
+str_Ctbkgd:
 db 063h,074h,062h,06Bh,067h,064h,00h
-asc_C13E0:
+str_Bkgd4:
 db 062h,06Bh,067h,064h,00h
-asc_C13E5:
+str_Pal12:
 db 021h,070h,061h,06Ch,00h
-asc_C13EA:
+str_Cttitle1:
 db 063h,074h,074h,069h,074h,06Ch,065h,031h,00h
-asc_C13F3:
+str_Def:
 db 064h,065h,066h,020h,00h
-asc_C13F8:
+str_Fowa:
 db 066h,06Fh,077h,061h,00h
-asc_C13FD:
+str_Scra:
 db 073h,063h,072h,061h,00h
-asc_C1402:
+str_Tlu:
 db 074h,06Ch,075h,020h,00h
-asc_C1407:
+str_Top:
 db 074h,06Fh,070h,020h,00h
-asc_C140C:
+str_Indus030:
 db 069h,06Eh,064h,075h,073h,030h,033h,030h,00h
-asc_C1415:
+str_GIPK:
 db 047h,049h,050h,04Bh,00h
-asc_C141A:
+str_Iff5:
 db 02Eh,069h,066h,066h,00h
-asc_C141F:
+str_Tonights:
 db 074h,06Fh,06Eh,069h,067h,068h,074h,073h,00h
-asc_C1428:
+str_Injured:
 db 049h,06Eh,06Ah,075h,072h,065h,064h,00h
 unk_C1430:
 db 02Eh,04Eh,048h,04Ch,00h

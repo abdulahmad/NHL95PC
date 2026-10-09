@@ -16,7 +16,7 @@ extern fputchar, jctime, memset_, crestnames, off_C800C, leaguedbnames
 extern sprintf_, strcat_, strcpy_, SetupControllers, PlayGame, FileExists, MakePath
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, ReadKeyRec, ReadSeasonRec
 extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, SetTextColors, PrintCenteredText, PrintShadowText, InitGameSummary
-extern GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, sub_29F28, sub_30A0C, sub_30F12
+extern GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, PreGameScreen, sub_30A0C, sub_30F12
 extern MessageBox, sub_34821, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, WriteSchedGame, WriteTeamRec
 extern sub_3A31E, AskTeamPassword, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, ReadLeagueInfo, sub_3DAB9
 extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSeasonSchedule, UpdatePlayoffSeries, sub_479E9, sub_6B410
@@ -1436,7 +1436,7 @@ xor edx, edx	; 3742F
 mov dl, byte [VisTeam]	; 37431
 xor eax, eax	; 37437
 mov al, byte [HomeTeam]	; 37439
-call sub_29F28	; 3743E
+call PreGameScreen	; 3743E
 mov esi, eax	; 37443
 jmp short loc_3744C	; 37445
 loc_37447:
