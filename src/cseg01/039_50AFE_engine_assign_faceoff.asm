@@ -11,7 +11,7 @@ extern onetimerflag, dword_CC0FA, penshotplayer, dword_CC104, penshotmode, pensh
 extern dword_E0244, dword_E9A9E, forcepldata, puckvx, gmode
 extern jctime, CanBlockShot_ret5, ltx, puckx, pucky, puckvy, puckz, puckc
 extern puckvz, randomd0, resetplstuff, setpersonel, sfx, skateto, skatetopuck, sub_14AFE
-extern sub_4A80E, sub_4E292, lcfound, CenterMouse, ReturnGoalies, sub_59981, sub_59AAD, changeplayer
+extern StopIfFree, SkateToSpot, lcfound, CenterMouse, ReturnGoalies, sub_59981, sub_59AAD, changeplayer
 extern restorepl, CompLine, setplayer, clockcont_0, SprSortVert, SprSort, SetExitGame, EvadePC
 extern sub_61B85, sub_63F72, threat, SortCords, updateanim
 extern vtoa, regd4, camx, camy, passdir, word_C90A6, passplayer, xc1
@@ -388,7 +388,7 @@ mov dword [onetimerflag], edi	; 50F65
 mov eax, edx	; 50F6B
 call assexit	; 50F6D
 mov eax, edx	; 50F72
-call sub_4A80E	; 50F74
+call StopIfFree	; 50F74
 jmp near CanBlockShot_ret5	; 50F79
 .1:
 dec byte [byte edx+027h]	; 50F7E
@@ -2465,7 +2465,7 @@ jmp near TakePlayerFromBox_ret5	; 52BA3
 .37:
 xor edx, edx	; 52BA8
 mov eax, ebx	; 52BAA
-call sub_4E292	; 52BAC
+call SkateToSpot	; 52BAC
 jmp near TakePlayerFromBox_ret5	; 52BB1
 check4bench:
 push dword 10h	; 52BB6
@@ -3014,7 +3014,7 @@ mov ax, word [byte ebx+temp4]	; 5327D
 mov word [regd1], ax	; 53281
 xor edx, edx	; 53287
 mov eax, ebx	; 53289
-call sub_4E292	; 5328B
+call SkateToSpot	; 5328B
 .x:
 pop edx	; 53290
 pop ecx	; 53291

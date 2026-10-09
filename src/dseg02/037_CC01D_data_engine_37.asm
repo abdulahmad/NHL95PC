@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_CC01D progbits alloc noexec write align=1
-extern unk_C1B20, unk_C1B24, unk_C1B28, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60
+extern str_1st, str_2nd, str_3rd, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60
 extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
 global asc_CCDD8, asc_CCDEC, byte_CC049, lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5
 global byte_CC9B0, byte_CC9E4, byte_CC9E7, byte_CCA95, lchoicetab, byte_CCBBA, byte_CCBBB, byte_CCCA0
@@ -13,7 +13,7 @@ global dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC
 global dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, dword_CCC2C, dword_CCC4E
 global dword_CCC84, dword_CCC88, dword_CCC8C, dword_CCC90, dword_CCC94, dword_CCC98, dword_CCC9C, dword_CCC9D
 global dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, doplayeracc_ftab, MaxSpeed, dword_CCEF6, dword_CD2F8
-global off_CC01D, off_CCA0A, shotsets, unk_CCCC8, word_CC054, word_CC0B0, lldispodd, word_CC0DA
+global off_CC01D, starordtab, shotsets, unk_CCCC8, word_CC054, word_CC0B0, lldispodd, word_CC0DA
 global crowdlevel, word_CC10C, word_CC9CC, word_CC9EA, word_CC9EC, word_CCA18, word_CCA1A, word_CCA1C
 global word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E, word_CCA70, word_CCA9C
 global linenext, word_CCBCC, word_CCBDC, word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, word_CCC30
@@ -268,10 +268,10 @@ db 089h,0FFh
 word_CC9EC:
 db 0C9h,0FFh,0CAh,0FFh,0D3h,0FFh,0C5h,0FFh,0Fh,00h,084h,0FFh,0Ah,00h,0A2h,0FFh
 db 014h,00h,0D4h,0FFh,05h,00h,0C0h,0FFh,0CEh,0FFh,08Eh,0FFh,0ECh,0FFh
-off_CCA0A:
-dd unk_C1B20
-dd unk_C1B24
-dd unk_C1B28
+starordtab:
+dd str_1st
+dd str_2nd
+dd str_3rd
 db 00h,00h
 word_CCA18:
 db 064h,00h

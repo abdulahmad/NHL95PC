@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_C1B2C progbits alloc noexec write align=1
-global PenaltyList, asc_C1B2C, asc_C1B36, asc_C1C6A, asc_C1C78, asc_C1C87, asc_C1C92, asc_C1C9B
+global PenaltyList, str_EASports, str_StarFmt, asc_C1C6A, asc_C1C78, asc_C1C87, asc_C1C92, asc_C1C9B
 global asc_C1CA8, asc_C1CAC, asc_C1CB3, asc_C1CB9, asc_C1CC4, asc_C1CCD, asc_C1CDA, asc_C1CE9
 global asc_C1CFE, asc_C1D0E, asc_C1D19, asc_C1D2D, asc_C1D3F, asc_C1D54, asc_C1DB6, asc_C1DBC
 global asc_C1DC5, asc_C1DCE, asc_C1DD6, asc_C223B, asc_C234F, asc_C2373, asc_C239E, asc_C23A6
@@ -39,9 +39,9 @@ global unk_C22C2, unk_C22CB, unk_C22D3, unk_C22DB, unk_C22E6, unk_C22EE, unk_C22
 global unk_C2301, unk_C2309, unk_C2311, unk_C231A, unk_C2323, unk_C232B, unk_C2332, unk_C2338
 global unk_C233A, unk_C233D, unk_C2340, unk_C2343, unk_C2345, unk_C2348, unk_C234B, unk_C234D
 global unk_C2478, unk_C247A, unk_C247C, unk_C2485, unk_C24A0
-asc_C1B2C:
+str_EASports:
 db 045h,041h,020h,053h,070h,06Fh,072h,074h,073h,00h
-asc_C1B36:
+str_StarFmt:
 db 025h,073h,020h,053h,074h,061h,072h,00h
 unk_C1B3E:
 db 00h,00h

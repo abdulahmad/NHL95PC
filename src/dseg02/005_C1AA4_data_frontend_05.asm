@@ -5,7 +5,7 @@ section s_C1AA4 progbits alloc noexec write align=1
 global asc_C1AAF, asc_C1AB4, asc_C1AB8, asc_C1AC4, asc_C1AC9, asc_C1ACD, asc_C1AD4, asc_C1AD9
 global unk_C1AA4, unk_C1AA6, unk_C1AA9, unk_C1AAC, unk_C1ABE, unk_C1AC1, unk_C1AE0, unk_C1AE6
 global unk_C1AEB, unk_C1AF0, unk_C1AF6, unk_C1AFC, unk_C1B02, unk_C1B07, unk_C1B0C, unk_C1B12
-global unk_C1B18, unk_C1B20, unk_C1B24, unk_C1B28
+global unk_C1B18, str_1st, str_2nd, str_3rd
 unk_C1AA4:
 db 074h,00h
 unk_C1AA6:
@@ -56,9 +56,9 @@ unk_C1B12:
 db 063h,072h,06Fh,073h,073h,00h
 unk_C1B18:
 db 067h,075h,069h,06Ch,074h,00h,00h,00h
-unk_C1B20:
+str_1st:
 db 031h,073h,074h,00h
-unk_C1B24:
+str_2nd:
 db 032h,06Eh,064h,00h
-unk_C1B28:
+str_3rd:
 db 033h,072h,064h,00h

@@ -31,7 +31,7 @@ global PassLaneChk_ret5a, PassLaneChk_ret5
 global dopass_ret6
 global passtoa0, puckbody, puckglue, puckgoalie, puckshadow, puckstick, setpassmode
 global ToFixed, BlockShotDive, TryBlockShot, FacingBoards, SkillForAnim, ChkDelayedOffside, PuckCheckColl, PenTimeDiff
-global PassLaneChk, sub_54D63, passmode, CompShoot, ChkOffsides, MarkOffsidePlayers, ChkShotStat, setInjuryType
+global PassLaneChk, sub_54D63, passmode, CompShoot, ChkOffsides, MarkTwoLinePlayers, ChkShotStat, setInjuryType
 global sub_5601D, puckIChk, newcheck, ChkGoalies, ReturnGoalies, ChkPullGoalieLate, wallcoll, wallcollb
 ToFixed:
 push dword 4	; 53294
@@ -3478,7 +3478,7 @@ add eax, 80h	; 55C61
 dec si	; 55C66
 jne short ChkOffsides.18	; 55C68
 jmp near checkob_ret5	; 55C6A
-MarkOffsidePlayers:
+MarkTwoLinePlayers:
 push dword 0Ch	; 55C6F
 call __CHK	; 55C74
 push ebx	; 55C79
@@ -3514,7 +3514,7 @@ and byte [byte eax+pflags2], 7Fh	; 55CD8
 add edx, 80h	; 55CDC
 add eax, 80h	; 55CE2
 dec bx	; 55CE7
-jne short MarkOffsidePlayers.3	; 55CE9
+jne short MarkTwoLinePlayers.3	; 55CE9
 pop edx	; 55CEB
 pop ebx	; 55CEC
 ret	; 55CED
@@ -3536,7 +3536,7 @@ and byte [byte edx+pflags2], 7Fh	; 55D12
 add edx, 80h	; 55D16
 add eax, 80h	; 55D1C
 dec bx	; 55D21
-jne short MarkOffsidePlayers.7	; 55D23
+jne short MarkTwoLinePlayers.7	; 55D23
 .x:
 pop edx	; 55D25
 pop ebx	; 55D26

@@ -11,7 +11,7 @@ extern byte_ED98E, dword_C53F7, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65
 extern dword_C71DC, songdata, dword_C7615, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7E42, dword_C7F0B
 extern dword_C8998, dword_C90CA, musichandle, dword_D2C6B, dword_DB088, dword_DC234, dword_DC23E, musicslot
 extern dword_DD7A8, dword_DD7AC, dword_DDAC0, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
-extern dword_DDD6C, dword_DF616, dword_DF620, awtmlines, dword_E9AF6, hmtmlines
+extern dword_DDD6C, dword_DF616, dword_DF620, awtmlines, startm_m2, hmtmlines
 extern fputchar, jctime, memset_, off_C57CC, off_C800C, off_C80D7, off_C80E7, off_C80EB
 extern off_C80EF, sprintf_, strcat_, strcpy_, sub_10712, sub_11D09, sub_142E7, sub_1431E
 extern sub_14525, sub_1453E, sub_14552, sub_1457C, sub_145A2, sub_145F9, sub_1463D, sub_1478B
@@ -26,7 +26,7 @@ extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, unk_C7AE0, unk_C7E3E, unk_C7E
 extern unk_C7F1B, unk_C7F8E, unk_C8115, unk_C8117, unk_DABF0, unk_DC200, unk_DC240, unk_DD7B4
 extern unk_DDAC4, unk_DDD1D, unk_DDD4C, unk_DDD59, word_C90CC, word_DB08A, word_DB08C, word_DB08E
 extern word_DB090, word_DB092, word_DB096, word_DC242, word_DC244, word_DDD46, word_DDD48, word_DDD4A
-extern word_DF618, hmscore, word_DF64C, awscore, word_DF74C, word_E9AF8
+extern word_DF618, hmscore, word_DF64C, awscore, word_DF74C, startm
 global loc_3602E, loc_36047, loc_3607B, loc_36089, loc_360DA, loc_360FD, loc_36149, loc_3614E
 global loc_361F9, loc_36265, loc_362E4, loc_362FD, loc_3635F, loc_36392, loc_363C8, loc_363E1
 global loc_3641F, loc_3642B, loc_36437, loc_36453, loc_36477, loc_36509, loc_36569, loc_36583
@@ -400,11 +400,11 @@ mov dword [dword esp+03F8h], ecx	; 364FD
 jmp near loc_365EB	; 36504
 loc_36509:
 shl eax, 2	; 36509
-mov edx, dword [dword eax+dword_E9AF6]	; 3650C
+mov edx, dword [dword eax+startm_m2]	; 3650C
 sar edx, 10h	; 36512
 cmp edx, ebp	; 36515
 jne near loc_365E4	; 36517
-mov ebx, dword [dword eax+word_E9AF8]	; 3651D
+mov ebx, dword [dword eax+startm]	; 3651D
 sar ebx, 10h	; 36523
 mov ebx, dword [byte esp+ebx*4+058h]	; 36526
 lea edx, [dword esp+032Ch]	; 3652A

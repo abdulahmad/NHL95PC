@@ -133,3 +133,13 @@ hmtmpdst,DF692,home tmpdst array (hmtmstruct+7Eh); TakePlayerFromBox indexes it 
 hmtmflags,DF658,home tmflags (hmtmstruct+44h)
 awtmflags,DF758,visitor tmflags (awtmstruct+44h)
 onetimerflag,CC0F4,"one-timer pending (94G onetimerflags role): set by the input code at 50716, PassRecOneTimer shoots while it is set and clears it on exit"
+gwgteam,E9AF0,"three stars: winning team (0 home / 1 away, -1 if tied); set by PickThreeStars"
+gwgplayer,E9AF4,"three stars: the winning team's player from team field 2Eh (likely the game-winning goal scorer); StarCompare gives him +2"
+startm,E9AF8,"three-stars list, team of star i (word, stride 4, 3 entries; -1 = empty); AddStar / PickThreeStars fill it, assthreestars reads it"
+starpl,E9AFA,"three-stars list, player index of star i (word, stride 4); pairs with startm"
+str_EASports,C1B2C,"""EA Sports"" (three-stars caption, assthreestars)"
+str_StarFmt,C1B36,"""%s Star"" sprintf format, filled with str_1st/2nd/3rd by assthreestars"
+starordtab,CCA0A,"dd str_1st, str_2nd, str_3rd: star ordinal strings indexed by star number (assthreestars)"
+str_1st,C1B20,"""1st"" (starordtab)"
+str_2nd,C1B24,"""2nd"" (starordtab)"
+str_3rd,C1B28,"""3rd"" (starordtab)"

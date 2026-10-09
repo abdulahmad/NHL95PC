@@ -5,7 +5,7 @@ section s_644A8 progbits alloc exec nowrite align=1
 extern PBnum, __CHK, asc_C1DB6, asc_C1DBC, asc_C1DC5, asc_C1DCE, asc_C1DD6, asc_C8136
 extern asc_C814F, sflags, gmode2, byte_CC049, byte_CCE00, byte_CD418, byte_CD421, byte_CD473
 extern hmroster, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byte_DFFA6, byte_E0250
-extern byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E03C1, byte_E9ABB, byte_E9DB4, byte_E9E18
+extern byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E03C1, byte_E9DB4, byte_E9E18
 extern byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC
 extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, byte_ED7CC, byte_ED7F7, byte_ED86D
 extern byte_ED92B, joysampling, dword_C90B0, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, dword_CC0DC
@@ -4276,7 +4276,7 @@ lea ecx, [byte eax+01h]	; 677E4
 mov dword [dword_E039C], ecx	; 677E7
 mov dl, byte [ebx]	; 677ED
 mov byte [eax], dl	; 677EF
-mov dl, byte [byte_E9ABB]	; 677F1
+mov dl, byte [PBnum+1]	; 677F1
 and dl, 0Fh	; 677F7
 shl dl, 4	; 677FA
 mov al, byte [PBnum]	; 677FD

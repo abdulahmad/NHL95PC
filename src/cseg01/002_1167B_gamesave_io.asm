@@ -14,7 +14,7 @@ extern off_C526F, off_C5273, off_C5439, off_C80D7, off_C80E7, off_C80EB, off_C90
 extern off_CBED0, strcat_, strcpy_, sub_10E9F, sub_1145F, sub_1149A, sub_11598, sub_13A91
 extern sub_13E8F, sub_1431E, sub_14525, sub_1457C, sub_1463D, sub_1478B, sub_147C9, sub_14CF1
 extern sub_150C6, sub_15B76, sub_1920F, sub_1935D, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
-extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, sub_47C31, sub_48F0B, joyq_flush, sub_594CD
+extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, sub_47C31, StartThreeStars, joyq_flush, sub_594CD
 extern sub_597E3, sub_59863, sub_59981, sub_59A11, sub_59D71, DrawRinkOverlays, PeriodOver, sub_60612
 extern sub_61A27, sub_61B85, sub_64614, sub_658F3, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
 extern sub_6AF97, sub_6B008, sub_7DC8B, sub_8374D, sub_837A8, SelectScreenBM, sub_8E8A0, sub_8EA18
@@ -449,7 +449,7 @@ loc_11CDB:
 xor ebx, ebx	; 11CDB
 mov dword [joysampling], ebx	; 11CDD
 call sub_61B85	; 11CE3
-call sub_48F0B	; 11CE8
+call StartThreeStars	; 11CE8
 call sub_1920F	; 11CED
 mov dword [dword_C53F7], 1	; 11CF2
 loc_11CFC:
