@@ -3888,7 +3888,7 @@
 ;  C921D  SPAtab                                   dseg02/035_C9078_data_engine_35.asm          1
 ;  CBC36  priolist                                 dseg02/035_C9078_data_engine_35.asm          1
 ;  CBC37  byte_CBC37                               dseg02/035_C9078_data_engine_35.asm          1
-;  CBC3E  dword_CBC3E                              dseg02/035_C9078_data_engine_35.asm          5
+;  CBC3E  shownumbers                              dseg02/035_C9078_data_engine_35.asm          5
 ;  CBC42  debugstep                                dseg02/035_C9078_data_engine_35.asm          1
 ;  CBC44  word_CBC44                               dseg02/035_C9078_data_engine_35.asm          11
 ;  CBC46  exitgame                                 dseg02/035_C9078_data_engine_35.asm          10

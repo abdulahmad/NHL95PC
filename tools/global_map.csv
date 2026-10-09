@@ -2187,3 +2187,4 @@ ovlstep,CBECE,current overlay script step value (byte of the script at ovlstepid
 ovlstepidx,E9AB4,"index of the current step in the overlay script, advanced by UpdateTextOverlay"
 ovlsteptimer,E9AB2,frames left in the current overlay step (from word_CC054[ovlseq])
 ovlscript,E0248,pointer to the loaded overlay script bytes (cleared when the sequence ends)
+shownumbers,CBC3E,toggled by HandleHotKey on scan code 0Fh (Tab); while set the frame code draws each player's number (+5Eh) above him with DrawSpriteNumber

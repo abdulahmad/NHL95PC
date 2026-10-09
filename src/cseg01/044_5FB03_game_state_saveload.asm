@@ -7,7 +7,7 @@ extern pad2dev, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, byte
 extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, PenBuf, iflags, byte_E9AC8
 extern byte_E9AD3, OOlist, collflag, postate, lgstate, gamemode, ctl1team, ctl2team
 extern ctl1dev, ctl2dev, ctl1side, hudclockmin, hudclocksec, hudclockhund, deferpending, dword_C66D0
-extern dword_C66D4, yleader, sflags3, cont2team, HomeTeam, dword_CBC3E, bannertimer, dword_CC0AC
+extern dword_C66D4, yleader, sflags3, cont2team, HomeTeam, shownumbers, bannertimer, dword_CC0AC
 extern lastsfx, photobankf, onetimerflag, shotongoal, penshotplayer, penshotpnum, penshotteam, penshotctl
 extern penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount
 extern sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, crowdsmooth, frameaccum
@@ -242,7 +242,7 @@ add eax, byte 2	; 5FE0A
 mov dx, word [clockticks]	; 5FE0D
 mov word [eax], dx	; 5FE14
 add eax, byte 2	; 5FE17
-mov dx, word [dword_CBC3E]	; 5FE1A
+mov dx, word [shownumbers]	; 5FE1A
 mov word [eax], dx	; 5FE21
 add eax, byte 2	; 5FE24
 mov dx, word [word_CBC44]	; 5FE27
@@ -1020,7 +1020,7 @@ mov ax, word [ebx]	; 60975
 mov word [clockticks], ax	; 60978
 add ebx, byte 2	; 6097E
 movsx eax, word [ebx]	; 60981
-mov dword [dword_CBC3E], eax	; 60984
+mov dword [shownumbers], eax	; 60984
 add ebx, byte 2	; 60989
 mov ax, word [ebx]	; 6098C
 mov word [word_CBC44], ax	; 6098F

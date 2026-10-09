@@ -11,7 +11,7 @@ extern inputticks, joysampling, joyqhead, joyqcount, joyqtick, samesideflag, inp
 extern escrequest, joyrec, palfadedin, screenw, screenh, demomode, dword_C5131, dword_C5133
 extern dword_C5135, gameopts
 extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, deferpending, screenbm
-extern songdata, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
+extern songdata, rinkscrollx, rinkscrolly, cont2team, HomeTeam, shownumbers, penshotlive, musicslot
 extern musichandle, cddriveptr, mousex, mousey, mousebtns, dword_D30D4, dword_D4158, dword_D415C
 extern dword_D4160, dword_D4164, bailout_vec, kaufmfont, pntrshapes, scor2font, mainfont, scor3font
 extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, curperiod, photoptrs, s1font
@@ -1605,10 +1605,10 @@ jmp near .19	; 1123F
 mov eax, 1	; 11244
 jmp short HandleHotKey.7	; 11249
 .9:
-cmp dword [dword_CBC3E], byte 0	; 1124B
+cmp dword [shownumbers], byte 0	; 1124B
 sete al	; 11252
 and eax, 0FFh	; 11255
-mov dword [dword_CBC3E], eax	; 1125A
+mov dword [shownumbers], eax	; 1125A
 jmp near .19	; 1125F
 .10:
 test byte [gmode], 10h	; 11264

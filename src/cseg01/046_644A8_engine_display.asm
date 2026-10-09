@@ -8,7 +8,7 @@ extern hmroster, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byt
 extern textline2, textline3, textline4, textline5, byte_E03C1, byte_E9DB4, byte_E9E18
 extern byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC
 extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, fileoncd
-extern joysampling, yleader, dword_CBC3E, bannertimer, dword_CC080, dword_CC0B4, lastsfx
+extern joysampling, yleader, shownumbers, bannertimer, dword_CC080, dword_CC0B4, lastsfx
 extern dword_CCEF6, dword_CD41E, dword_CD4B0, cddriveptr, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1
 extern dword_D30BC, dword_D30C0, scor2font, scor3font, spritedrawcount, curperiod, dword_DEF8C, dword_DEFE0
 extern dword_DF004, hmtmstruct, puckstruct, photoptrsf, dword_E0220, dword_E0230, dword_E0244, ovlscript
@@ -5286,7 +5286,7 @@ sar eax, 10h	; 685EA
 mov ecx, dword [byte ebp-014h]	; 685ED
 jmp short .59	; 685F0
 .58:
-cmp dword [dword_CBC3E], byte 0	; 685F2
+cmp dword [shownumbers], byte 0	; 685F2
 je short .60	; 685F9
 mov ebx, dword [dword eax+byte_E9F8F-3]	; 685FB
 sar ebx, 18h	; 68601

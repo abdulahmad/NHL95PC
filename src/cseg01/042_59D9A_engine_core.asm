@@ -9,7 +9,7 @@ extern awroster, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byt
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
 extern byte_E0074, PlList, byte_E038A, PenBuf, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
 extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, rinkscrollx, rinkscrolly
-extern yleader, sflags3, cont2team, dword_CBC3E, bannertimer, dword_CC0B4, lastsfx, onetimerflag
+extern yleader, sflags3, cont2team, shownumbers, bannertimer, dword_CC0B4, lastsfx, onetimerflag
 extern shotongoal, penshotplayer, penshotteam, penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer
 extern shotontarget, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, mousex
 extern mousey, cliprect_y0, cliprect_y1, dword_D30BC, dword_D30C0, curperiod, dword_DB088, hmtmstruct
@@ -4396,7 +4396,7 @@ mov eax, dword [esi]	; 5D3EC
 sar eax, 10h	; 5D3EE
 jmp short .47	; 5D3F1
 .46:
-cmp dword [dword_CBC3E], byte 0	; 5D3F3
+cmp dword [shownumbers], byte 0	; 5D3F3
 je short .48	; 5D3FA
 xor ebx, ebx	; 5D3FC
 mov bl, byte [byte esi+05Eh]	; 5D3FE

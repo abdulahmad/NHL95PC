@@ -11,7 +11,7 @@ extern asswingo, puckfaceoff, puckfaceoff2, pucknorm, pucknothing, puckshadow, r
 extern unk_DFF5E, unk_E0416, puckstruct
 global StanleyCupTimer, asstab, sflags, gmode2, pendelaytab
 global byte_C9111, penmintab, byte_C9142, byte_C9146, priolist, byte_CBC37, byte_CBEA8, collflag
-global dirtab, wcradiusy, yleader, sflags3, cont2team, HomeTeam, dword_C9120, dword_CBC3E
+global dirtab, wcradiusy, yleader, sflags3, cont2team, HomeTeam, dword_C9120, shownumbers
 global dword_CBEBE, bannertimer, puckvx, gmode, replaystart, puckx, pucky, puckvy
 global puckz, puckc, camx_m2, off_CBD2E, passspeed, puckvz, threat, SPAtab
 global unk_CBC6E, unk_CBC7E, unk_CBC9E, unk_CBCAE, unk_CBCBE, unk_CBCCE, unk_CBCDE, unk_CBCEE
@@ -866,7 +866,7 @@ priolist:
 db 0FFh
 byte_CBC37:
 db 00h,01h,02h,04h,03h,05h,06h
-dword_CBC3E:
+shownumbers:
 db 00h,00h,00h,00h
 debugstep:
 db 00h,00h
