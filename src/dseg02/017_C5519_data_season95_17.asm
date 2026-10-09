@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_C5519 progbits alloc noexec write align=1
-global dword_C5519, dword_C5581, dword_C55E9, dword_C5619, unk_C5654
-dword_C5519:
+global teamdivflags, dword_C5581, dword_C55E9, dword_C5619, unk_C5654
+teamdivflags:
 db 04h,00h,00h,00h,04h,00h,00h,00h,01h,00h,00h,00h,02h,00h,00h,00h
 db 02h,00h,00h,00h,01h,00h,00h,00h,04h,00h,00h,00h,01h,00h,00h,00h
 db 02h,00h,00h,00h,04h,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h

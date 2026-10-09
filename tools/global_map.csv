@@ -313,3 +313,116 @@ careerdb,D07BF,buffer of the loaded CAREER.DB (leaguedbnames+4) in UpdateSeasonS
 careerdb_size,D07D7,size of CAREER.DB
 keydb,D07C7,buffer of the loaded KEY.DB (leaguedbnames+0) in UpdateSeasonSchedule
 keydb_size,D07DF,size of KEY.DB
+rosterteam,D079E,team shown in Edit Rosters panel 0/1 (FFh = free-agent list); SelectRosterTeam / ShowFreeAgents set it
+rosterisfa,D07A8,per panel: 1 when it shows the free-agent list
+falist,D07AA,free-agent list (1Bh bytes per player) built by LoadRosterList
+falistsel,D07AE,free-agent selection flags (one byte per entry)
+facount,D07B2,number of free agents (KEY.DB entries with team FFh)
+rostersel,EAF80,"selection flags of the two team panels, 1Ch bytes each"
+rosterlist,EA990,"player lists of the two team panels, 1Ch entries of 1Bh bytes (2F4h) each"
+rosterteamrec,EAF78,per panel pointer to the team's TEAMS.DB record (2E8h bytes); EditTeamLines copies it
+editrosters_exit,EBEA0,EditRostersReturn sets -1; EditRosters leaves its loop on it
+msglines,EBC74,line-pointer table the roster editor fills for MessageBox / the input dialog (sub_71F0C)
+teamdivflags,C5519,per team: >>1 gives the divisionteams row (4 counted as 3); SetSeriesTeams uses 2-3-2 when two teams' flags OR to 3
+roster1divmenus,D0151,"Roster 1 menu: per division (Central, Northeast, Atlantic, Pacific) the submenu item table; team items' handlers (+14h) are SelectRosterTeam or 0"
+roster2divmenus,D0211,"Roster 2 menu division table, as roster1divmenus"
+menu_r1_freeagents,D01CD,handler slot of 'Free Agents ...' in the Roster 1 menu (ShowFreeAgents or 0)
+menu_r2_freeagents,D028D,handler slot of 'Free Agents ...' in the Roster 2 menu
+menu_r1_tofa,D0331,Edit Roster 1 'Move to Free Agent List' handler slot (MoveToFreeAgents or 0)
+menu_r1_toroster2,D0351,Edit Roster 1 'Move to Roster 2' handler slot (MoveToOtherRoster or 0)
+menu_r1_editlines,D0391,Edit Roster 1 'Edit Team Lines ...' handler slot (EditTeamLines or 0)
+menu_r2_tofa,D03B1,Edit Roster 2 'Move to Free Agent List' handler slot
+menu_r2_toroster1,D03D1,Edit Roster 2 'Move to Roster 1' handler slot
+menu_r2_editlines,D0411,Edit Roster 2 'Edit Team Lines ...' handler slot
+str_fmtpd,C5283,string '%d'
+str_Prez2,C28C4,string 'prez2'
+str_Pal,C28CA,string '!pal'
+str_ea,C28CF,string 'ea  '
+str_Uar,C28D4,string 'uar'
+str_Uarm,C28D8,string 'uarm'
+str_TheJerseyNumber2d,C28DD,string 'The jersey number %2d is already used!'
+str_PleaseEnterANew,C2904,string 'Please enter a new jersey number for'
+str_Menubuff,C2929,string 'menubuff'
+str_TheDatabaseHasNot,C2932,string 'The database has not been saved.'
+str_AreYouSureYou,C2953,string 'Are you sure you want to exit?'
+str_ErrorsFoundInDatabases,C2B10,string 'Errors found in databases!'
+str_TheForwardLinesAre,C2B2B,string 'The forward lines are not complete on '
+str_TheDefenceLinesAre,C2B52,string 'The defence lines are not complete on '
+str_ThePowerPlayLines,C2B79,string 'The power play lines are not complete on '
+str_ThePenaltyKillingLines,C2BA3,string 'The penalty killing lines are not complete on '
+str_TheGoalieLinesAre,C2BD2,string 'The goalie lines are not complete on '
+str_TheExtraAttackerLines,C2BF8,string 'The extra attacker lines are not complete on '
+str_NotEnoughPlayers,C2C26,string 'There are not enough players on '
+str_NotEnoughGoalies,C2C47,string 'There are not enough goalies on '
+str_NotEnoughForwards,C2C68,string 'There are not enough forwards on '
+str_NotEnoughDefence,C2C8A,string 'There are not enough defence on '
+str_Shoots,C2CF4,string 'Shoots'
+str_spL,C2CFB,string '  L'
+str_spR,C2CFF,string '  R'
+str_GloveHand,C2D03,string 'Glove Hand'
+str_EnterANewRating,C2D12,string 'Enter a new rating:'
+str_RatingRange,C2D26,string '%2d < %s < %2d'
+str_ShootsLeftOrRight,C2D35,string 'Shoots Left or Right?'
+str_NotEnoughRatingUnits,C2D4B,string 'Not enough Rating Units'
+str_GloveHandLeftOr,C2D63,string 'Glove hand Left or Right?'
+str_Prez22,C2D7D,string 'prez2'
+str_Pal2,C2D83,string '!pal'
+str_ea2,C2D88,string 'ea  '
+str_Pstatbar,C2D8D,string 'pstatbar'
+str_Pst2,C2D96,string 'pst2'
+str_FreeAgent,C2D9B,string 'Free Agent'
+str_fmtSS,C2DA6,string '%s %s'
+str_fmtD,C2DAC,string '%d '
+str_Center,C2DB0,string 'Center'
+str_Defence,C2DB7,string 'Defence'
+str_LeftWing,C2DBF,string 'Left Wing'
+str_RightWing,C2DC9,string 'Right Wing'
+str_Goalie,C2DD4,string 'Goalie'
+str_RatingUnitsAvailable3d,C2DDB,string 'Rating Units Available <%3d>'
+str_Temp,C2DF8,string 'temp'
+str_3dKbytesOfFree,C2E1C,string '%3d Kbytes of free disk space.'
+str_NotEnoughSpaceTo,C2E3B,string 'Not enough space to create'
+str_ANewFreeAgent,C2E56,string 'a new free agent.'
+str_EnterNewPlayerName,C2E68,string 'Enter the name of the new player'
+str_EnterNewGoalieName,C2E89,string 'Enter the name of the new goalie'
+str_EnterAPositionFor,C2EAA,string 'Enter a position for'
+str_LCRD,C2EBF,"string '(L,C,R,D)'"
+str_EnterAJerseyNumber,C2EC9,string 'Enter a jersey number for'
+str_NotEnoughSpaceFA,C2EE3,string 'There is not enough space'
+str_InTheFreeAgent,C2EFD,string 'in the free agent list'
+str_ForAllSelectedPlayers,C2F14,string 'for all selected players'
+str_TheNumberOfSelected,C2F30,string 'The number of selected '
+str_PlayersAndGoalies,C2F48,string 'players and goalies'
+str_Players,C2F5C,string 'players'
+str_Goalies,C2F64,string 'goalies'
+str_MustBeTheSame,C2F6C,string 'must be the same on both teams!'
+str_EnterNameOfPlayer,C2F8C,string 'Enter name of player to find:'
+str_FreeAgentList,C2FAA,string 'Free Agent List'
+str_ChooseWhichTeamTo,C2FBA,string 'Choose which team to display'
+str_IsAlreadyDisplayedOn,C2FD7,string 'is already displayed on'
+str_Roster2,C2FEF,string 'Roster 2'
+str_Roster1,C2FF8,string 'Roster 1'
+str_DoesNotExist,C3001,string 'does not exist!'
+str_fmt2d,C6903,string '%2d'
+str_fmt3d,C6907,string '%3d'
+str_TMP,D07B6,string '.TMP'
+str_Ratings,D0819,string 'Ratings:'
+str_ThereIsNoSpace,D0D68,string 'There is no space to add'
+str_TheSelectedPlayer,D0D81,string 'the selected player'
+str_NotEnoughSpaceTo2,D0D95,string 'There is not enough space to'
+str_AddAllSelectedPlayers,D0DB2,string 'add all selected players'
+str_ErrorWhileMakingNew,D0E18,string 'Error while making new databases!'
+str_NewPlayer,D0E3A,string 'New player'
+str_NotAddedToDatabases,D0E45,string ' not added to databases!'
+str_Move,D0E81,string 'Move'
+str_ToFreeAgentList,D0E86,string 'to Free Agent List?'
+str_CreateAPlayerOr,D0EB4,string 'Create a player or goalie.'
+str_XXXKbytesOfFree,D1056,string 'XXX Kbytes of free disk space.  '
+carteamsdb,D07C3,buffer of CARTEAMS.DB (LoadTempDatabases loads leaguedbnames+0Ch into it); CarTeamRecPtr indexes it by team * 4Ch
+carteamsdb_size,D07DB,size of CARTEAMS.DB (sub_92DE0 after the load)
+teamsdb,D07CB,buffer of TEAMS.DB (leaguedbnames+10h); TeamRecPtr indexes it by team * 2E8h
+teamsdb_size,D07E3,size of TEAMS.DB
+attdb,D07CF,buffer of ATT.DB (leaguedbnames+8) in LoadTempDatabases
+attdb_size,D07E7,size of ATT.DB
+str_space,C8111,"string ' ' (separator between first and last name)"
+str_ErrDiskFree,C2DFD,"string 'error getting disk space free\n' (CreateFreeAgent)"

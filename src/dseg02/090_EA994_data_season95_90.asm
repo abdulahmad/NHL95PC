@@ -2,24 +2,23 @@
 bits 32
 %include "hockey.inc"
 section s_EA994 nobits alloc noexec write align=1
-global byte_EAC86, byte_EAF80, byte_EAF99, byte_EAF9C, byte_EAFB5, dword_EA994, dword_EAF78, dword_EAF7C
-global dword_EBC68, dword_EBC6C, dword_EBC70, dword_EBC74, dword_EBC78, dword_EBC7C, dword_EBCA4, dword_EBE9C
-global dword_EBEA0, unk_EAC84, unk_EAFB8
+global byte_EAC86, rostersel, byte_EAF99, byte_EAFB5, dword_EA994, rosterteamrec, dword_EAF7C
+global dword_EBC68, dword_EBC6C, dword_EBC70, msglines, dword_EBCA4, dword_EBE9C
+global editrosters_exit, unk_EAC84, unk_EAFB8
 dword_EA994:
 resb 752
 unk_EAC84:
 resb 2
 byte_EAC86:
 resb 754
-dword_EAF78:
+rosterteamrec:
 resb 4
 dword_EAF7C:
 resb 4
-byte_EAF80:
+rostersel:
 resb 25
 byte_EAF99:
 resb 3
-byte_EAF9C:
 resb 25
 byte_EAFB5:
 resb 3
@@ -31,15 +30,13 @@ dword_EBC6C:
 resb 4
 dword_EBC70:
 resb 4
-dword_EBC74:
+msglines:
 resb 4
-dword_EBC78:
 resb 4
-dword_EBC7C:
 resb 40
 dword_EBCA4:
 resb 504
 dword_EBE9C:
 resb 4
-dword_EBEA0:
+editrosters_exit:
 resb 2072

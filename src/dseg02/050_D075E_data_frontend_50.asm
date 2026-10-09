@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_D075E progbits alloc noexec write align=1
 extern unk_D068A, unk_D0720, unk_D0740, unk_D0752
-global asc_D07B6, byte_D079E, byte_D079F, byte_D07A8, byte_D07A9, dword_D07AA, dword_D07AE, dword_D07B2
-global seasondb, careerdb, dword_D07C3, keydb, dword_D07CB, dword_D07CF, seasondb_size, careerdb_size
-global dword_D07DB, keydb_size, dword_D07E3, dword_D07E7, unk_D075E, unk_D07EB
+global str_TMP, rosterteam, rosterisfa, falist, falistsel, facount
+global seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
+global carteamsdb_size, keydb_size, teamsdb_size, attdb_size, unk_D075E, unk_D07EB
 unk_D075E:
 db 00h,00h,00h,00h,00h,00h,00h,00h,075h,00h,00h,00h,012h,00h,00h,00h
 dd unk_D0740
@@ -17,45 +17,43 @@ dd unk_D0752
 db 00h,00h,00h,00h
 dd unk_D068A
 db 02h,00h,00h,00h
-byte_D079E:
+rosterteam:
 db 0Ch
-byte_D079F:
 db 015h,07Dh,00h,00h,00h,0B7h,01h,00h,00h
-byte_D07A8:
+rosterisfa:
 db 00h
-byte_D07A9:
 db 00h
-dword_D07AA:
+falist:
 db 00h,00h,00h,00h
-dword_D07AE:
+falistsel:
 db 00h,00h,00h,00h
-dword_D07B2:
+facount:
 db 00h,00h,00h,00h
-asc_D07B6:
+str_TMP:
 db 02Eh,054h,04Dh,050h,00h
 seasondb:
 db 00h,00h,00h,00h
 careerdb:
 db 00h,00h,00h,00h
-dword_D07C3:
+carteamsdb:
 db 00h,00h,00h,00h
 keydb:
 db 00h,00h,00h,00h
-dword_D07CB:
+teamsdb:
 db 00h,00h,00h,00h
-dword_D07CF:
+attdb:
 db 00h,00h,00h,00h
 seasondb_size:
 db 00h,00h,00h,00h
 careerdb_size:
 db 00h,00h,00h,00h
-dword_D07DB:
+carteamsdb_size:
 db 00h,00h,00h,00h
 keydb_size:
 db 00h,00h,00h,00h
-dword_D07E3:
+teamsdb_size:
 db 00h,00h,00h,00h
-dword_D07E7:
+attdb_size:
 db 00h,00h,00h,00h
 unk_D07EB:
 db 025h,063h,00h,04Eh,061h,06Dh,065h,03Ah,020h,025h,073h,020h,025h,073h,00h,025h

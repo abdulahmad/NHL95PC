@@ -10,7 +10,7 @@ extern off_C527B, sprintf_, strcat_, strcpy_, strnicmp_, MakePath, sub_174C2, su
 extern sub_176AE, sub_176DB, sub_29C75, sub_33E6A, sub_6B3D7, sub_76429, sub_8CCA8, sub_8E83C
 extern sub_8FFB0, sub_9035C, sub_9061C, sub_B30B4, sub_B395C, unk_C03A3, unk_C03C4, unk_C03C6
 extern unk_C03CE, unk_C03D9, unk_C03DB, unk_C03DD, unk_C03DF, unk_C03E2, unk_C03EF, unk_C03F1
-extern unk_C03F3, unk_C5283, unk_D8F88, unk_D8F8D, unk_D9270, unk_D9275, unk_DDAC4
+extern unk_C03F3, str_fmtpd, unk_D8F88, unk_D8F8D, unk_D9270, unk_D9275, unk_DDAC4
 global loc_1286C, loc_128A2, loc_128A4, loc_128F4, loc_128F9, loc_12930, loc_1293E, loc_1294C
 global loc_12951, loc_12982, loc_12989, loc_1298E, loc_129AD, loc_12A44, loc_12A59, loc_12A60
 global loc_12A65, loc_12A6C, loc_12BCD, loc_12CC5, loc_12D8A, loc_12EAB, loc_13027, loc_13029
@@ -318,7 +318,7 @@ add esi, byte 50h	; 12BE9
 call sub_175E2	; 12BEC
 xor ecx, ecx	; 12BF1
 mov cx, word [edi]	; 12BF3
-mov ebx, unk_C5283	; 12BF6
+mov ebx, str_fmtpd	; 12BF6
 mov edx, ebp	; 12BFB
 mov eax, esi	; 12BFD
 call sub_176AE	; 12BFF
@@ -327,7 +327,7 @@ mov cx, word [byte edi+0Ch]	; 12C06
 xor edx, edx	; 12C0A
 mov dl, byte [byte_D42C3]	; 12C0C
 add edx, ebp	; 12C12
-mov ebx, unk_C5283	; 12C14
+mov ebx, str_fmtpd	; 12C14
 mov eax, esi	; 12C19
 call sub_176AE	; 12C1B
 xor ebx, ebx	; 12C20
@@ -358,7 +358,7 @@ mov eax, edx	; 12C66
 shl eax, 2	; 12C68
 sub eax, edx	; 12C6B
 lea edx, [eax+ebp]	; 12C6D
-mov ebx, unk_C5283	; 12C70
+mov ebx, str_fmtpd	; 12C70
 mov eax, esi	; 12C75
 call sub_176AE	; 12C77
 xor ecx, ecx	; 12C7C
@@ -367,7 +367,7 @@ xor edx, edx	; 12C82
 mov dl, byte [byte_D42C3]	; 12C84
 shl edx, 2	; 12C8A
 add edx, ebp	; 12C8D
-mov ebx, unk_C5283	; 12C8F
+mov ebx, str_fmtpd	; 12C8F
 mov eax, esi	; 12C94
 call sub_176AE	; 12C96
 mov edx, dword [byte esp+03Ch]	; 12C9B
@@ -380,7 +380,7 @@ mov eax, edx	; 12CAF
 shl eax, 2	; 12CB1
 add eax, edx	; 12CB4
 lea edx, [eax+ebp]	; 12CB6
-mov ebx, unk_C5283	; 12CB9
+mov ebx, str_fmtpd	; 12CB9
 mov eax, esi	; 12CBE
 call sub_176AE	; 12CC0
 loc_12CC5:
@@ -393,7 +393,7 @@ shl eax, 2	; 12CD5
 sub eax, edx	; 12CD8
 add eax, eax	; 12CDA
 lea edx, [eax+ebp]	; 12CDC
-mov ebx, unk_C5283	; 12CDF
+mov ebx, str_fmtpd	; 12CDF
 mov eax, esi	; 12CE4
 call sub_176AE	; 12CE6
 xor ecx, ecx	; 12CEB
@@ -404,7 +404,7 @@ mov eax, edx	; 12CF9
 shl eax, 3	; 12CFB
 sub eax, edx	; 12CFE
 lea edx, [eax+ebp]	; 12D00
-mov ebx, unk_C5283	; 12D03
+mov ebx, str_fmtpd	; 12D03
 mov eax, esi	; 12D08
 call sub_176AE	; 12D0A
 xor ecx, ecx	; 12D0F
@@ -413,7 +413,7 @@ xor edx, edx	; 12D15
 mov dl, byte [byte_D42C3]	; 12D17
 shl edx, 3	; 12D1D
 add edx, ebp	; 12D20
-mov ebx, unk_C5283	; 12D22
+mov ebx, str_fmtpd	; 12D22
 mov eax, esi	; 12D27
 call sub_176AE	; 12D29
 xor ebx, ebx	; 12D2E
@@ -544,7 +544,7 @@ add esi, byte 50h	; 12EC7
 call sub_175E2	; 12ECA
 xor ecx, ecx	; 12ECF
 mov cx, word [edi]	; 12ED1
-mov ebx, unk_C5283	; 12ED4
+mov ebx, str_fmtpd	; 12ED4
 mov edx, ebp	; 12ED9
 mov eax, esi	; 12EDB
 call sub_176AE	; 12EDD
@@ -553,7 +553,7 @@ mov cx, word [byte edi+02h]	; 12EE4
 xor edx, edx	; 12EE8
 mov dl, byte [byte_D42C3]	; 12EEA
 add edx, ebp	; 12EF0
-mov ebx, unk_C5283	; 12EF2
+mov ebx, str_fmtpd	; 12EF2
 mov eax, esi	; 12EF7
 call sub_176AE	; 12EF9
 xor ecx, ecx	; 12EFE
@@ -562,7 +562,7 @@ xor eax, eax	; 12F04
 mov al, byte [byte_D42C3]	; 12F06
 add eax, eax	; 12F0B
 lea edx, [eax+ebp]	; 12F0D
-mov ebx, unk_C5283	; 12F10
+mov ebx, str_fmtpd	; 12F10
 mov eax, esi	; 12F15
 call sub_176AE	; 12F17
 xor ecx, ecx	; 12F1C
@@ -573,7 +573,7 @@ mov eax, edx	; 12F2A
 shl eax, 2	; 12F2C
 sub eax, edx	; 12F2F
 lea edx, [eax+ebp]	; 12F31
-mov ebx, unk_C5283	; 12F34
+mov ebx, str_fmtpd	; 12F34
 mov eax, esi	; 12F39
 call sub_176AE	; 12F3B
 xor ecx, ecx	; 12F40
@@ -582,7 +582,7 @@ xor edx, edx	; 12F46
 mov dl, byte [byte_D42C3]	; 12F48
 shl edx, 2	; 12F4E
 add edx, ebp	; 12F51
-mov ebx, unk_C5283	; 12F53
+mov ebx, str_fmtpd	; 12F53
 mov eax, esi	; 12F58
 call sub_176AE	; 12F5A
 mov ecx, dword [byte edi+0Eh]	; 12F5F
@@ -593,7 +593,7 @@ mov eax, edx	; 12F6D
 shl eax, 2	; 12F6F
 add eax, edx	; 12F72
 lea edx, [eax+ebp]	; 12F74
-mov ebx, unk_C5283	; 12F77
+mov ebx, str_fmtpd	; 12F77
 mov eax, esi	; 12F7C
 call sub_176AE	; 12F7E
 xor ecx, ecx	; 12F83
@@ -605,7 +605,7 @@ shl eax, 2	; 12F93
 sub eax, edx	; 12F96
 add eax, eax	; 12F98
 lea edx, [eax+ebp]	; 12F9A
-mov ebx, unk_C5283	; 12F9D
+mov ebx, str_fmtpd	; 12F9D
 mov eax, esi	; 12FA2
 call sub_176AE	; 12FA4
 xor ecx, ecx	; 12FA9
@@ -616,7 +616,7 @@ mov eax, edx	; 12FB7
 shl eax, 3	; 12FB9
 sub eax, edx	; 12FBC
 lea edx, [eax+ebp]	; 12FBE
-mov ebx, unk_C5283	; 12FC1
+mov ebx, str_fmtpd	; 12FC1
 mov eax, esi	; 12FC6
 call sub_176AE	; 12FC8
 xor ecx, ecx	; 12FCD
@@ -625,7 +625,7 @@ xor eax, eax	; 12FD3
 mov al, byte [byte_D42C3]	; 12FD5
 shl eax, 3	; 12FDA
 lea edx, [eax+ebp]	; 12FDD
-mov ebx, unk_C5283	; 12FE0
+mov ebx, str_fmtpd	; 12FE0
 mov eax, esi	; 12FE5
 call sub_176AE	; 12FE7
 cmp word [byte edi+0Eh], byte 0	; 12FEC

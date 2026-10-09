@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_EA0DC nobits alloc noexec write align=1
-global byte_EA0F4, byte_EA0FC, byte_EA0FD, byte_EA2A4, byte_EA2A5, byte_EA990, byte_EA991, byte_EA992
+global byte_EA0F4, byte_EA0FC, byte_EA0FD, byte_EA2A4, byte_EA2A5, rosterlist, byte_EA991, byte_EA992
 global byte_EA993, dword_EA0DC, dword_EA0F8, dword_EA101, dword_EA298, dword_EA29C, dword_EA2A0, dword_EA2A9
 global dword_EA2B0, dword_EA2B4, dword_EA988, unk_EA968
 dword_EA0DC:
@@ -37,7 +37,7 @@ unk_EA968:
 resb 32
 dword_EA988:
 resb 8
-byte_EA990:
+rosterlist:
 resb 1
 byte_EA991:
 resb 1

@@ -12,10 +12,10 @@ extern asc_C101B, asc_C1040, asc_C1047, asc_C1050, asc_C1058, asc_C105D, asc_C10
 extern asc_C1082, asc_C108A, asc_C108E, asc_C1092, asc_C1096, asc_C109C, asc_C10A0, asc_C10A8
 extern asc_C10AD, asc_C10BC, asc_C10C0, asc_C10C5, asc_C1211, asc_C1216, asc_C121C, asc_C1222
 extern asc_C122A, asc_C1231, asc_C123A, asc_C123F, asc_C1251, asc_C1258, asc_C125F, asc_C68FC
-extern asc_C6903, asc_C6907, asc_C690B, asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B
+extern str_fmt2d, str_fmt3d, asc_C690B, asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B
 extern asc_C6935, asc_C693B, byte_C6D72, byte_C6D73, byte_C6D7A, byte_C6D7B, byte_C6D82, byte_C6D83
 extern byte_C6D8A, byte_C6D9A, byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DB2, byte_C6DB3
-extern byte_ED83C, byte_ED858, byte_ED859, byte_ED908, byte_ED909, dword_C5519, dword_C5581, dword_C6956
+extern byte_ED83C, byte_ED858, byte_ED859, byte_ED908, byte_ED909, teamdivflags, dword_C5581, dword_C6956
 extern dword_C695A, dword_C6AF8, dword_C6B30, dword_C6E32, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DC6B8
 extern dword_DC6BC, dword_DC720, dword_DC734, dword_DC73C, dword_DC750, dword_DC754, dword_DC85C, dword_DC860
 extern dword_DD100, dword_DD104, dword_DD108, dword_DD10C, dword_DD110, dword_DD114, dword_DD118, dword_DD11C
@@ -528,31 +528,31 @@ mov edx, edi	; 222E2
 mov eax, 32h	; 222E4
 call sub_175E2	; 222E9
 movsx ecx, word [esi]	; 222EE
-mov ebx, asc_C6903	; 222F1
+mov ebx, str_fmt2d	; 222F1
 mov edx, edi	; 222F6
 mov eax, 82h	; 222F8
 call sub_176AE	; 222FD
 mov ecx, dword [esi]	; 22302
 sar ecx, 10h	; 22304
-mov ebx, asc_C6907	; 22307
+mov ebx, str_fmt3d	; 22307
 mov edx, edi	; 2230C
 mov eax, 0AAh	; 2230E
 call sub_176AE	; 22313
 mov ecx, dword [byte esi+02h]	; 22318
 sar ecx, 10h	; 2231B
-mov ebx, asc_C6907	; 2231E
+mov ebx, str_fmt3d	; 2231E
 mov edx, edi	; 22323
 mov eax, 0D2h	; 22325
 call sub_176AE	; 2232A
 mov ecx, dword [byte esi+04h]	; 2232F
 sar ecx, 10h	; 22332
-mov ebx, asc_C6907	; 22335
+mov ebx, str_fmt3d	; 22335
 mov edx, edi	; 2233A
 mov eax, 0FAh	; 2233C
 call sub_176AE	; 22341
 mov ecx, dword [byte esi+0Ah]	; 22346
 sar ecx, 10h	; 22349
-mov ebx, asc_C6907	; 2234C
+mov ebx, str_fmt3d	; 2234C
 mov edx, edi	; 22351
 mov eax, 122h	; 22353
 call sub_176AE	; 22358
@@ -564,13 +564,13 @@ mov eax, 14Ah	; 2236A
 call sub_176AE	; 2236F
 mov ecx, dword [byte esi+06h]	; 22374
 sar ecx, 10h	; 22377
-mov ebx, asc_C6907	; 2237A
+mov ebx, str_fmt3d	; 2237A
 mov edx, edi	; 2237F
 mov eax, 186h	; 22381
 call sub_176AE	; 22386
 mov ecx, dword [byte esi+08h]	; 2238B
 sar ecx, 10h	; 2238E
-mov ebx, asc_C6907	; 22391
+mov ebx, str_fmt3d	; 22391
 mov edx, edi	; 22396
 mov eax, 1AEh	; 22398
 call sub_176AE	; 2239D
@@ -683,7 +683,7 @@ movsx ecx, si	; 2252D
 mov eax, dword [dword esp+0108h]	; 22530
 add eax, 10Eh	; 22537
 cwde	; 2253C
-mov ebx, asc_C6907	; 2253D
+mov ebx, str_fmt3d	; 2253D
 mov edx, edi	; 22542
 call sub_176AE	; 22544
 add dword [dword esp+0F4h], byte 0Dh	; 22549
@@ -1106,7 +1106,7 @@ mov edx, edi	; 22B3E
 mov eax, 32h	; 22B40
 call sub_175E2	; 22B45
 movsx ecx, word [esi]	; 22B4A
-mov ebx, asc_C6903	; 22B4D
+mov ebx, str_fmt2d	; 22B4D
 mov edx, edi	; 22B52
 mov eax, 82h	; 22B54
 call sub_176AE	; 22B59
@@ -1136,31 +1136,31 @@ mov eax, 0D2h	; 22BA0
 call sub_176DB	; 22BA5
 mov ecx, dword [esi]	; 22BAA
 sar ecx, 10h	; 22BAC
-mov ebx, asc_C6903	; 22BAF
+mov ebx, str_fmt2d	; 22BAF
 mov edx, edi	; 22BB4
 mov eax, 10Eh	; 22BB6
 call sub_176AE	; 22BBB
 mov ecx, dword [byte esi+02h]	; 22BC0
 sar ecx, 10h	; 22BC3
-mov ebx, asc_C6903	; 22BC6
+mov ebx, str_fmt2d	; 22BC6
 mov edx, edi	; 22BCB
 mov eax, 136h	; 22BCD
 call sub_176AE	; 22BD2
 mov ecx, dword [byte esi+04h]	; 22BD7
 sar ecx, 10h	; 22BDA
-mov ebx, asc_C6903	; 22BDD
+mov ebx, str_fmt2d	; 22BDD
 mov edx, edi	; 22BE2
 mov eax, 15Eh	; 22BE4
 call sub_176AE	; 22BE9
 mov ecx, dword [byte esi+06h]	; 22BEE
 sar ecx, 10h	; 22BF1
-mov ebx, asc_C6903	; 22BF4
+mov ebx, str_fmt2d	; 22BF4
 mov edx, edi	; 22BF9
 mov eax, 186h	; 22BFB
 call sub_176AE	; 22C00
 mov ecx, dword [byte esi+08h]	; 22C05
 sar ecx, 10h	; 22C08
-mov ebx, asc_C6903	; 22C0B
+mov ebx, str_fmt2d	; 22C0B
 mov edx, edi	; 22C10
 mov eax, 1AEh	; 22C12
 call sub_176AE	; 22C17
@@ -1270,7 +1270,7 @@ movsx ecx, bx	; 22D96
 mov eax, edi	; 22D99
 add eax, 104h	; 22D9B
 cwde	; 22DA0
-mov ebx, asc_C6907	; 22DA1
+mov ebx, str_fmt3d	; 22DA1
 mov edx, esi	; 22DA6
 call sub_176AE	; 22DA8
 add dword [dword esp+0100h], byte 0Dh	; 22DAD
@@ -2350,16 +2350,16 @@ cmp ebp, edi	; 2397A
 jl short loc_23945	; 2397C
 mov edx, dword [byte esp+08h]	; 2397E
 mov eax, dword [byte esp+04h]	; 23982
-mov eax, dword [nosplit eax*4+dword_C5519]	; 23986
-or eax, dword [nosplit edx*4+dword_C5519]	; 2398D
+mov eax, dword [nosplit eax*4+teamdivflags]	; 23986
+or eax, dword [nosplit edx*4+teamdivflags]	; 2398D
 cmp eax, byte 3	; 23994
 je short loc_239D6	; 23997
 mov ebp, 2	; 23999
 loc_2399E:
 mov edx, dword [byte esp+ebp*4+04h]	; 2399E
 mov eax, dword [byte esp+04h]	; 239A2
-mov eax, dword [nosplit eax*4+dword_C5519]	; 239A6
-or eax, dword [nosplit edx*4+dword_C5519]	; 239AD
+mov eax, dword [nosplit eax*4+teamdivflags]	; 239A6
+or eax, dword [nosplit edx*4+teamdivflags]	; 239AD
 cmp eax, byte 3	; 239B4
 je short loc_239BF	; 239B7
 inc ebp	; 239B9
@@ -2379,16 +2379,16 @@ mov dword [byte esp+08h], ebx	; 239D2
 loc_239D6:
 mov eax, dword [byte esp+03Ch]	; 239D6
 mov edx, dword [byte esp+040h]	; 239DA
-mov eax, dword [nosplit eax*4+dword_C5519]	; 239DE
-or eax, dword [nosplit edx*4+dword_C5519]	; 239E5
+mov eax, dword [nosplit eax*4+teamdivflags]	; 239DE
+or eax, dword [nosplit edx*4+teamdivflags]	; 239E5
 cmp eax, byte 0Ch	; 239EC
 je short loc_23A2F	; 239EF
 mov ebp, 2	; 239F1
 loc_239F6:
 mov edx, dword [byte esp+ebp*4+03Ch]	; 239F6
 mov eax, dword [byte esp+03Ch]	; 239FA
-mov eax, dword [nosplit eax*4+dword_C5519]	; 239FE
-or eax, dword [nosplit edx*4+dword_C5519]	; 23A05
+mov eax, dword [nosplit eax*4+teamdivflags]	; 239FE
+or eax, dword [nosplit edx*4+teamdivflags]	; 23A05
 cmp eax, byte 0Ch	; 23A0C
 je short loc_23A17	; 23A0F
 inc ebp	; 23A11
@@ -2719,7 +2719,7 @@ sar edi, 10h	; 23EE0
 mov eax, dword [dword esp+0248h]	; 23EE3
 add eax, 1Eh	; 23EEA
 cwde	; 23EEF
-mov ebx, asc_C6903	; 23EF0
+mov ebx, str_fmt2d	; 23EF0
 mov edx, edi	; 23EF5
 call sub_176AE	; 23EF7
 mov ebx, 3	; 23EFC
@@ -2747,7 +2747,7 @@ sar edi, 10h	; 23F46
 mov eax, dword [dword esp+0248h]	; 23F49
 add eax, 0ECh	; 23F50
 cwde	; 23F55
-mov ebx, asc_C6903	; 23F56
+mov ebx, str_fmt2d	; 23F56
 mov edx, edi	; 23F5B
 call sub_176AE	; 23F5D
 mov eax, dword [dword esp+0248h]	; 23F62
@@ -2763,13 +2763,13 @@ mov dl, byte [byte esi+03h]	; 23F82
 add edx, ebx	; 23F85
 movsx ecx, dx	; 23F87
 cwde	; 23F8A
-mov ebx, asc_C6907	; 23F8B
+mov ebx, str_fmt3d	; 23F8B
 jmp short loc_23F9D	; 23F90
 loc_23F92:
 xor ecx, ecx	; 23F92
 mov cl, byte [byte esi+01h]	; 23F94
 cwde	; 23F97
-mov ebx, asc_C6903	; 23F98
+mov ebx, str_fmt2d	; 23F98
 loc_23F9D:
 mov edx, edi	; 23F9D
 call sub_176AE	; 23F9F
@@ -2808,7 +2808,7 @@ sar edi, 10h	; 2401D
 mov eax, dword [dword esp+0248h]	; 24020
 add eax, 1Eh	; 24027
 cwde	; 2402C
-mov ebx, asc_C6903	; 2402D
+mov ebx, str_fmt2d	; 2402D
 mov edx, edi	; 24032
 call sub_176AE	; 24034
 mov ebx, 3	; 24039
@@ -2835,7 +2835,7 @@ sar edi, 10h	; 24083
 mov eax, dword [dword esp+0248h]	; 24086
 add eax, 0DCh	; 2408D
 cwde	; 24092
-mov ebx, asc_C6903	; 24093
+mov ebx, str_fmt2d	; 24093
 mov edx, edi	; 24098
 call sub_176AE	; 2409A
 mov eax, dword [dword esp+0248h]	; 2409F
@@ -2850,13 +2850,13 @@ mov bl, byte [byte esi+03h]	; 240BD
 add edx, ebx	; 240C0
 movsx ecx, dx	; 240C2
 cwde	; 240C5
-mov ebx, asc_C6907	; 240C6
+mov ebx, str_fmt3d	; 240C6
 jmp short loc_240D8	; 240CB
 loc_240CD:
 xor ecx, ecx	; 240CD
 mov cl, byte [byte esi+01h]	; 240CF
 cwde	; 240D2
-mov ebx, asc_C6903	; 240D3
+mov ebx, str_fmt2d	; 240D3
 loc_240D8:
 mov edx, edi	; 240D8
 call sub_176AE	; 240DA
@@ -2921,7 +2921,7 @@ movsx ecx, ax	; 241B9
 mov edi, dword [dword esp+025Eh]	; 241BC
 sar edi, 10h	; 241C3
 inc dword [dword esp+025Ch]	; 241C6
-mov ebx, asc_C6903	; 241CD
+mov ebx, str_fmt2d	; 241CD
 mov edx, edi	; 241D2
 mov eax, 50h	; 241D4
 call sub_176AE	; 241D9
@@ -2943,7 +2943,7 @@ xor ecx, ecx	; 24212
 mov cl, byte [esi]	; 24214
 mov edi, dword [dword esp+025Eh]	; 24216
 sar edi, 10h	; 2421D
-mov ebx, asc_C6903	; 24220
+mov ebx, str_fmt2d	; 24220
 mov edx, edi	; 24225
 mov eax, 154h	; 24227
 call sub_176AE	; 2422C
@@ -2958,13 +2958,13 @@ jmp dword [nosplit cs:eax*4+jpt_235AA]	; 24250
 loc_24258:
 xor ecx, ecx	; 24258
 mov cl, byte [byte esi+01h]	; 2425A
-mov ebx, asc_C6903	; 2425D
+mov ebx, str_fmt2d	; 2425D
 mov edx, edi	; 24262
 mov eax, 186h	; 24264
 call sub_176AE	; 24269
 xor ecx, ecx	; 2426E
 mov cl, byte [byte esi+02h]	; 24270
-mov ebx, asc_C6903	; 24273
+mov ebx, str_fmt2d	; 24273
 mov edx, edi	; 24278
 mov eax, 1B8h	; 2427A
 call sub_176AE	; 2427F
@@ -2972,7 +2972,7 @@ cmp dword [dword_C6956], byte 0	; 24284
 jne short loc_242A3	; 2428B
 xor ecx, ecx	; 2428D
 mov cl, byte [byte esi+03h]	; 2428F
-mov ebx, asc_C6903	; 24292
+mov ebx, str_fmt2d	; 24292
 mov edx, edi	; 24297
 mov eax, 1EAh	; 24299
 call sub_176AE	; 2429E
@@ -2982,20 +2982,20 @@ loc_242A6:
 sar ecx, 10h	; 242A6
 mov edx, dword [dword esp+025Eh]	; 242A9
 sar edx, 10h	; 242B0
-mov ebx, asc_C6907	; 242B3
+mov ebx, str_fmt3d	; 242B3
 mov eax, 21Ch	; 242B8
 call sub_176AE	; 242BD
 jmp near loc_243F5	; 242C2
 loc_242C7:
 xor ecx, ecx	; 242C7
 mov cl, byte [byte esi+01h]	; 242C9
-mov ebx, asc_C6903	; 242CC
+mov ebx, str_fmt2d	; 242CC
 mov edx, edi	; 242D1
 mov eax, 186h	; 242D3
 call sub_176AE	; 242D8
 xor ecx, ecx	; 242DD
 mov cl, byte [byte esi+02h]	; 242DF
-mov ebx, asc_C6903	; 242E2
+mov ebx, str_fmt2d	; 242E2
 mov edx, edi	; 242E7
 mov eax, 1B8h	; 242E9
 call sub_176AE	; 242EE
@@ -3003,7 +3003,7 @@ cmp dword [dword_C6956], byte 0	; 242F3
 jne short loc_24312	; 242FA
 xor ecx, ecx	; 242FC
 mov cl, byte [byte esi+03h]	; 242FE
-mov ebx, asc_C6903	; 24301
+mov ebx, str_fmt2d	; 24301
 mov edx, edi	; 24306
 mov eax, 1EAh	; 24308
 call sub_176AE	; 2430D
@@ -3013,7 +3013,7 @@ jmp short loc_242A6	; 24315
 loc_24317:
 mov ecx, dword [byte esi+0Ch]	; 24317
 sar ecx, 10h	; 2431A
-mov ebx, asc_C6907	; 2431D
+mov ebx, str_fmt3d	; 2431D
 mov edx, edi	; 24322
 mov eax, 186h	; 24324
 call sub_176AE	; 24329
@@ -3045,18 +3045,18 @@ jmp short loc_243F0	; 2437C
 loc_2437E:
 mov ecx, dword [byte esi+08h]	; 2437E
 sar ecx, 10h	; 24381
-mov ebx, asc_C6907	; 24384
+mov ebx, str_fmt3d	; 24384
 mov edx, edi	; 24389
 mov eax, 186h	; 2438B
 call sub_176AE	; 24390
 mov ecx, dword [byte esi+06h]	; 24395
 sar ecx, 10h	; 24398
-mov ebx, asc_C6907	; 2439B
+mov ebx, str_fmt3d	; 2439B
 jmp short loc_24339	; 243A0
 loc_243A2:
 mov ecx, dword [byte esi+0Eh]	; 243A2
 sar ecx, 10h	; 243A5
-mov ebx, asc_C6907	; 243A8
+mov ebx, str_fmt3d	; 243A8
 mov edx, edi	; 243AD
 mov eax, 186h	; 243AF
 call sub_176AE	; 243B4
@@ -3649,7 +3649,7 @@ cmp bl, 64h	; 24C48
 jae short loc_24C62	; 24C4B
 xor ecx, ecx	; 24C4D
 mov cl, bl	; 24C4F
-mov ebx, asc_C6903	; 24C51
+mov ebx, str_fmt2d	; 24C51
 mov edx, esi	; 24C56
 mov eax, 42h	; 24C58
 call sub_176AE	; 24C5D
@@ -3683,25 +3683,25 @@ loc_24CC7:
 movsx ecx, word [esi]	; 24CC7
 mov edi, dword [dword esp+040Ah]	; 24CCA
 sar edi, 10h	; 24CD1
-mov ebx, asc_C6903	; 24CD4
+mov ebx, str_fmt2d	; 24CD4
 mov edx, edi	; 24CD9
 mov eax, 10Eh	; 24CDB
 call sub_176AE	; 24CE0
 mov ecx, dword [esi]	; 24CE5
 sar ecx, 10h	; 24CE7
-mov ebx, asc_C6907	; 24CEA
+mov ebx, str_fmt3d	; 24CEA
 mov edx, edi	; 24CEF
 mov eax, 136h	; 24CF1
 call sub_176AE	; 24CF6
 mov ecx, dword [byte esi+02h]	; 24CFB
 sar ecx, 10h	; 24CFE
-mov ebx, asc_C6907	; 24D01
+mov ebx, str_fmt3d	; 24D01
 mov edx, edi	; 24D06
 mov eax, 15Eh	; 24D08
 call sub_176AE	; 24D0D
 mov ecx, dword [byte esi+04h]	; 24D12
 sar ecx, 10h	; 24D15
-mov ebx, asc_C6907	; 24D18
+mov ebx, str_fmt3d	; 24D18
 mov edx, edi	; 24D1D
 mov eax, 186h	; 24D1F
 call sub_176AE	; 24D24
@@ -3713,7 +3713,7 @@ mov eax, 1AEh	; 24D36
 call sub_176AE	; 24D3B
 mov ecx, dword [byte esi+0Ah]	; 24D40
 sar ecx, 10h	; 24D43
-mov ebx, asc_C6907	; 24D46
+mov ebx, str_fmt3d	; 24D46
 mov edx, edi	; 24D4B
 mov eax, 1E8h	; 24D4D
 call sub_176AE	; 24D52
@@ -3820,7 +3820,7 @@ cmp bh, 64h	; 24EFF
 jae short loc_24F19	; 24F02
 xor ecx, ecx	; 24F04
 mov cl, bh	; 24F06
-mov ebx, asc_C6903	; 24F08
+mov ebx, str_fmt2d	; 24F08
 mov edx, esi	; 24F0D
 mov eax, 42h	; 24F0F
 call sub_176AE	; 24F14
@@ -3856,7 +3856,7 @@ mov dword [dword esp+0400h], esi	; 24F80
 movsx ecx, word [esi]	; 24F87
 mov edi, dword [dword esp+040Ah]	; 24F8A
 sar edi, 10h	; 24F91
-mov ebx, asc_C6903	; 24F94
+mov ebx, str_fmt2d	; 24F94
 mov edx, edi	; 24F99
 mov eax, 10Eh	; 24F9B
 call sub_176AE	; 24FA0
@@ -3886,13 +3886,13 @@ mov eax, 15Eh	; 24FE7
 call sub_176DB	; 24FEC
 mov ecx, dword [esi]	; 24FF1
 sar ecx, 10h	; 24FF3
-mov ebx, asc_C6903	; 24FF6
+mov ebx, str_fmt2d	; 24FF6
 mov edx, edi	; 24FFB
 mov eax, 190h	; 24FFD
 call sub_176AE	; 25002
 mov ecx, dword [byte esi+02h]	; 25007
 sar ecx, 10h	; 2500A
-mov ebx, asc_C6903	; 2500D
+mov ebx, str_fmt2d	; 2500D
 mov edx, edi	; 25012
 mov eax, 1AEh	; 25014
 call sub_176AE	; 25019
@@ -3900,7 +3900,7 @@ cmp dword [dword_C6956], byte 0	; 2501E
 jne short loc_2503E	; 25025
 mov ecx, dword [byte esi+04h]	; 25027
 sar ecx, 10h	; 2502A
-mov ebx, asc_C6903	; 2502D
+mov ebx, str_fmt2d	; 2502D
 mov edx, edi	; 25032
 mov eax, 1CCh	; 25034
 call sub_176AE	; 25039
@@ -3910,7 +3910,7 @@ mov ecx, dword [byte ecx+0Ch]	; 25045
 sar ecx, 10h	; 25048
 mov edi, dword [dword esp+040Ah]	; 2504B
 sar edi, 10h	; 25052
-mov ebx, asc_C6907	; 25055
+mov ebx, str_fmt3d	; 25055
 mov edx, edi	; 2505A
 mov eax, 1EAh	; 2505C
 call sub_176AE	; 25061
@@ -5717,7 +5717,7 @@ cmp bh, 64h	; 26547
 jae short loc_26561	; 2654A
 xor ecx, ecx	; 2654C
 mov cl, bh	; 2654E
-mov ebx, asc_C6903	; 26550
+mov ebx, str_fmt2d	; 26550
 mov edx, esi	; 26555
 mov eax, 32h	; 26557
 call sub_176AE	; 2655C
@@ -5788,25 +5788,25 @@ mov dword [dword esp+0268h], esi	; 26654
 movsx ecx, word [esi]	; 2665B
 mov edi, dword [dword esp+0262h]	; 2665E
 sar edi, 10h	; 26665
-mov ebx, asc_C6903	; 26668
+mov ebx, str_fmt2d	; 26668
 mov edx, edi	; 2666D
 mov eax, 172h	; 2666F
 call sub_176AE	; 26674
 mov ecx, dword [esi]	; 26679
 sar ecx, 10h	; 2667B
-mov ebx, asc_C6907	; 2667E
+mov ebx, str_fmt3d	; 2667E
 mov edx, edi	; 26683
 mov eax, 19Ah	; 26685
 call sub_176AE	; 2668A
 mov ecx, dword [byte esi+02h]	; 2668F
 sar ecx, 10h	; 26692
-mov ebx, asc_C6907	; 26695
+mov ebx, str_fmt3d	; 26695
 mov edx, edi	; 2669A
 mov eax, 1CCh	; 2669C
 call sub_176AE	; 266A1
 mov ecx, dword [byte esi+04h]	; 266A6
 sar ecx, 10h	; 266A9
-mov ebx, asc_C6907	; 266AC
+mov ebx, str_fmt3d	; 266AC
 mov edx, edi	; 266B1
 mov eax, 1F4h	; 266B3
 jmp short loc_2671F	; 266B8
@@ -5832,7 +5832,7 @@ mov ebp, esi	; 266ED
 movsx ecx, word [esi]	; 266EF
 mov edi, dword [dword esp+0262h]	; 266F2
 sar edi, 10h	; 266F9
-mov ebx, asc_C6903	; 266FC
+mov ebx, str_fmt2d	; 266FC
 mov edx, edi	; 26701
 mov eax, 172h	; 26703
 call sub_176AE	; 26708
@@ -5854,7 +5854,7 @@ mov ecx, dword [byte ecx+06h]	; 26741
 sar ecx, 10h	; 26744
 mov edx, dword [dword esp+0262h]	; 26747
 sar edx, 10h	; 2674E
-mov ebx, asc_C6903	; 26751
+mov ebx, str_fmt2d	; 26751
 jmp near loc_2691B	; 26756
 loc_2675B:
 mov ecx, dword [dword esp+0268h]	; 2675B
@@ -5863,7 +5863,7 @@ loc_26765:
 sar ecx, 10h	; 26765
 mov edx, dword [dword esp+0262h]	; 26768
 sar edx, 10h	; 2676F
-mov ebx, asc_C6907	; 26772
+mov ebx, str_fmt3d	; 26772
 jmp near loc_2691B	; 26777
 loc_2677C:
 mov ecx, dword [dword esp+0268h]	; 2677C
@@ -5938,7 +5938,7 @@ mov ecx, dword [byte ebp+0Ch]	; 26873
 sar ecx, 10h	; 26876
 mov edi, dword [dword esp+0262h]	; 26879
 sar edi, 10h	; 26880
-mov ebx, asc_C6907	; 26883
+mov ebx, str_fmt3d	; 26883
 mov edx, edi	; 26888
 mov eax, 1CCh	; 2688A
 call sub_176AE	; 2688F
@@ -5965,13 +5965,13 @@ mov ecx, dword [byte ebp+00h]	; 268C9
 sar ecx, 10h	; 268CC
 mov esi, dword [dword esp+0262h]	; 268CF
 sar esi, 10h	; 268D6
-mov ebx, asc_C6903	; 268D9
+mov ebx, str_fmt2d	; 268D9
 mov edx, esi	; 268DE
 mov eax, 1CCh	; 268E0
 call sub_176AE	; 268E5
 mov ecx, dword [byte ebp+02h]	; 268EA
 sar ecx, 10h	; 268ED
-mov ebx, asc_C6903	; 268F0
+mov ebx, str_fmt2d	; 268F0
 mov edx, esi	; 268F5
 mov eax, 1F4h	; 268F7
 call sub_176AE	; 268FC
@@ -5979,7 +5979,7 @@ cmp dword [dword_C6956], byte 0	; 26901
 jne near loc_26811	; 26908
 mov ecx, dword [byte ebp+04h]	; 2690E
 sar ecx, 10h	; 26911
-mov ebx, asc_C6903	; 26914
+mov ebx, str_fmt2d	; 26914
 loc_26919:
 mov edx, esi	; 26919
 loc_2691B:
@@ -5991,7 +5991,7 @@ mov ecx, dword [byte ebp+0Ch]	; 2692A
 sar ecx, 10h	; 2692D
 mov esi, dword [dword esp+0262h]	; 26930
 sar esi, 10h	; 26937
-mov ebx, asc_C6907	; 2693A
+mov ebx, str_fmt3d	; 2693A
 mov edx, esi	; 2693F
 mov eax, 1CCh	; 26941
 call sub_176AE	; 26946

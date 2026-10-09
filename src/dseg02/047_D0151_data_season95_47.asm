@@ -2,14 +2,14 @@
 bits 32
 %include "hockey.inc"
 section s_D0151 progbits alloc noexec write align=1
-extern sub_6D6DB, sub_6DF06, sub_706E2, sub_71961, sub_75456, sub_7928A, unk_CFBE8, unk_CFCF2
+extern ShowFreeAgents, EditTeamLines, CreateFreeAgent, FindPlayer, sub_75456, sub_7928A, unk_CFBE8, unk_CFCF2
 extern unk_CFE08, unk_CFF51, unk_D006E, unk_D00EE, unk_D00FE, unk_D010E, unk_D0118, unk_D0122
 extern unk_D012E, unk_D0139
-global dword_D0151, dword_D0211, dword_D0331, dword_D0351, dword_D03B1, dword_D03D1, off_D01CD, off_D028D
-global off_D0391, off_D0411, unk_D01F9, unk_D02B9, unk_D02D1, unk_D02E2, unk_D02F3, unk_D0309
+global roster1divmenus, roster2divmenus, menu_r1_tofa, menu_r1_toroster2, menu_r2_tofa, menu_r2_toroster1, menu_r1_freeagents, menu_r2_freeagents
+global menu_r1_editlines, menu_r2_editlines, unk_D01F9, unk_D02B9, unk_D02D1, unk_D02E2, unk_D02F3, unk_D0309
 global unk_D031D, unk_D039D, unk_D041D, unk_D0422, unk_D042B, unk_D0434, unk_D0442, unk_D0450
 global unk_D04F0, unk_D04F5, unk_D04FC, unk_D053C, unk_D0549, unk_D0558
-dword_D0151:
+roster1divmenus:
 dd unk_CFBE8
 db 06h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,066h,00h,00h,00h
 db 023h,00h,00h,00h
@@ -29,18 +29,18 @@ dd unk_CFF51
 db 07h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,066h,00h,00h,00h
 db 059h,00h,00h,00h
 dd unk_D00EE
-off_D01CD:
-dd sub_6D6DB
+menu_r1_freeagents:
+dd ShowFreeAgents
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 066h,00h,00h,00h,06Ch,00h,00h,00h
 dd unk_D00FE
-dd sub_71961
+dd FindPlayer
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_D01F9:
 db 00h,00h,00h,00h,00h,00h,00h,00h,066h,00h,00h,00h,011h,00h,00h,00h
 dd unk_D010E
 db 00h,00h,00h,00h
-dword_D0211:
+roster2divmenus:
 dd unk_CFBE8
 db 06h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,066h,00h,00h,00h
 db 023h,00h,00h,00h
@@ -60,12 +60,12 @@ dd unk_CFF51
 db 07h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,066h,00h,00h,00h
 db 059h,00h,00h,00h
 dd unk_D00EE
-off_D028D:
-dd sub_6D6DB
+menu_r2_freeagents:
+dd ShowFreeAgents
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 066h,00h,00h,00h,06Ch,00h,00h,00h
 dd unk_D00FE
-dd sub_71961
+dd FindPlayer
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_D02B9:
 db 04Dh,06Fh,076h,065h,020h,074h,06Fh,020h,046h,072h,065h,065h,020h,041h,067h,065h
@@ -85,38 +85,38 @@ db 02Eh,02Eh,02Eh,00h
 unk_D031D:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0A9h,00h,00h,00h,011h,00h,00h,00h
 dd unk_D02B9
-dword_D0331:
+menu_r1_tofa:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 012h,00h,00h,00h,0A9h,00h,00h,00h,023h,00h,00h,00h
 dd unk_D02D1
-dword_D0351:
+menu_r1_toroster2:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 024h,00h,00h,00h,0A9h,00h,00h,00h,035h,00h,00h,00h
 dd unk_D02F3
-dd sub_706E2
+dd CreateFreeAgent
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 0A9h,00h,00h,00h,048h,00h,00h,00h
 dd unk_D0309
-off_D0391:
-dd sub_6DF06
+menu_r1_editlines:
+dd EditTeamLines
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_D039D:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0A9h,00h,00h,00h,011h,00h,00h,00h
 dd unk_D02B9
-dword_D03B1:
+menu_r2_tofa:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 012h,00h,00h,00h,0A9h,00h,00h,00h,023h,00h,00h,00h
 dd unk_D02E2
-dword_D03D1:
+menu_r2_toroster1:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 024h,00h,00h,00h,0A9h,00h,00h,00h,035h,00h,00h,00h
 dd unk_D02F3
-dd sub_706E2
+dd CreateFreeAgent
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 0A9h,00h,00h,00h,048h,00h,00h,00h
 dd unk_D0309
-off_D0411:
-dd sub_6DF06
+menu_r2_editlines:
+dd EditTeamLines
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_D041D:
 db 046h,069h,06Ch,065h,00h

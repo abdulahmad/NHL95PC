@@ -7,8 +7,8 @@ extern asc_C303C, asc_C3041, asc_C3046, asc_C304B, asc_C3050, asc_C3055, asc_C30
 extern asc_C3064, asc_C306C, asc_C3072, asc_C307B, asc_C3081, asc_C3086, asc_C308D, asc_C3092
 extern asc_C309A, asc_C30A3, asc_C30AD, asc_C30B6, asc_C30BB, asc_C30C3, asc_C30C8, str_extDB
 extern asc_C811E, byte_C4B6C, byte_D42C3, byte_DD2D4, byte_DD2DC, byte_DD668, byte_DD669, byte_ED993
-extern byte_ED994, dword_C6F78, seasondb, careerdb, dword_D07C3, keydb, dword_D07CB, dword_D07CF
-extern seasondb_size, careerdb_size, dword_D07DB, keydb_size, dword_D07E3, dword_D07E7, dword_D0B16, dword_D0B1A
+extern byte_ED994, dword_C6F78, seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb
+extern seasondb_size, careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B16, dword_D0B1A
 extern dword_D0B1E, dword_D1084, dword_D1088, dword_D108C, dword_D1090, dword_D1104, dword_D1108, dword_D110C
 extern dword_D1110, dword_D1114, dword_D1118, dword_D111C, dword_D1120, dword_D1124, dword_D1128, dword_D112C
 extern dword_D1130, dword_D11B6, dword_D2C6B, dword_D42AC, dword_DC238, dword_DD634, dword_DD638, dword_DD63C
@@ -18,7 +18,7 @@ extern dword_EC6C8, dword_EC710, dword_EC714, dword_EC718, dword_EC71C, dword_EC
 extern dword_EC770, dword_EC774, dword_EC778, fputchar, jctime, leaguedbnames
 extern off_D1184, qsort_, strcat_, strcpy_, strlen_
 extern MakePath, sub_14442, sub_175E2, sub_2BEEA, sub_2C135, sub_2C3FF, sub_2FED2, sub_309E4
-extern MessageBox, sub_3170D, sub_6B391, sub_6B3D7, sub_6CA8F, sub_6D2F8, sub_6DE7E, sub_78BE7
+extern MessageBox, sub_3170D, sub_6B391, sub_6B3D7, sub_6CA8F, DrawEditRosters, LoadBothRosterLists, sub_78BE7
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284
 extern sub_91370, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_B2CBE, sub_B2DCA, sub_B30B4
 extern sub_B4BA8, sub_B4FAC, unk_D11B2, unk_D2B38, unk_EC7C0, unknown_libname_1, unknown_libname_2, unknown_libname_4
@@ -40,9 +40,9 @@ global loc_7321C, loc_73257, loc_73265, loc_73283, loc_73287, loc_7328F, loc_732
 global loc_732B2, loc_732BE, loc_732D1, loc_73303, loc_7330B, loc_73340, loc_73347, loc_73361
 global loc_7338C, loc_73395, loc_733F2, loc_73409, loc_7341D, loc_7344D, loc_73454, loc_7366B
 global loc_73677, loc_73682, loc_7369C, loc_736A7, loc_736B3, loc_736CB, loc_736E0, loc_736F4
-global loc_736F9, loc_7377F, sub_71F0C, sub_7230B, sub_72485, sub_7248C, sub_72605, sub_727EE
+global loc_736F9, loc_7377F, InputDialog, sub_7230B, sub_72485, sub_7248C, sub_72605, sub_727EE
 global sub_72A5C, sub_72AC6, sub_72DE7, sub_733C4, sub_7345B, sub_735C3, sub_73703, unk_722FE
-sub_71F0C:
+InputDialog:
 push dword 90h	; 71F0C
 call __CHK	; 71F11
 push esi	; 71F16
@@ -1678,8 +1678,8 @@ push ebp	; 732E6
 call jctime	; 732E7
 add esp, byte 4	; 732EC
 call sub_733C4	; 732EF
-call sub_6DE7E	; 732F4
-call sub_6D2F8	; 732F9
+call LoadBothRosterLists	; 732F4
+call DrawEditRosters	; 732F9
 mov eax, 1	; 732FE
 loc_73303:
 add esp, byte 1Ch	; 73303
@@ -1853,12 +1853,12 @@ lea eax, [byte esp+04h]	; 734F2
 push eax	; 734F6
 call sub_8E8A0	; 734F7
 add esp, byte 8	; 734FC
-mov dword [dword_D07C3], eax	; 734FF
+mov dword [carteamsdb], eax	; 734FF
 mov eax, esp	; 73504
 push eax	; 73506
 call sub_92DE0	; 73507
 add esp, byte 4	; 7350C
-mov dword [dword_D07DB], eax	; 7350F
+mov dword [carteamsdb_size], eax	; 7350F
 mov ebx, dword [leaguedbnames]	; 73514
 mov ecx, esi	; 7351A
 mov edx, edi	; 7351C
@@ -1885,12 +1885,12 @@ lea eax, [byte esp+04h]	; 7355C
 push eax	; 73560
 call sub_8E8A0	; 73561
 add esp, byte 8	; 73566
-mov dword [dword_D07CB], eax	; 73569
+mov dword [teamsdb], eax	; 73569
 mov eax, esp	; 7356E
 push eax	; 73570
 call sub_92DE0	; 73571
 add esp, byte 4	; 73576
-mov dword [dword_D07E3], eax	; 73579
+mov dword [teamsdb_size], eax	; 73579
 mov ebx, dword [leaguedbnames+8]	; 7357E
 mov ecx, esi	; 73584
 mov edx, edi	; 73586
@@ -1901,12 +1901,12 @@ lea eax, [byte esp+04h]	; 73591
 push eax	; 73595
 call sub_8E8A0	; 73596
 add esp, byte 8	; 7359B
-mov dword [dword_D07CF], eax	; 7359E
+mov dword [attdb], eax	; 7359E
 mov eax, esp	; 735A3
 push eax	; 735A5
 call sub_92DE0	; 735A6
 add esp, byte 4	; 735AB
-mov dword [dword_D07E7], eax	; 735AE
+mov dword [attdb_size], eax	; 735AE
 xor edx, edx	; 735B3
 mov dword [dword_EBC68], edx	; 735B5
 add esp, byte 20h	; 735BB

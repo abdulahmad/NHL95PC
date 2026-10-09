@@ -5,7 +5,7 @@ section s_27080 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1282, asc_C128B, asc_C1290, asc_C129B, asc_C12A3, asc_C12AE, asc_C12B6
 extern asc_C12C7, asc_C12CB, asc_C12CF, asc_C12D3, asc_C12D9, asc_C12E0, asc_C12E5, asc_C1307
 extern asc_C130C, asc_C1311, asc_C131A, asc_C132D, asc_C1340, asc_C1347, asc_C134C, asc_C1351
-extern asc_C1356, asc_C135E, asc_C1363, asc_C1368, asc_C6903, asc_C6907, asc_C691B, asc_C6924
+extern asc_C1356, asc_C135E, asc_C1363, asc_C1368, str_fmt2d, str_fmt3d, asc_C691B, asc_C6924
 extern asc_C693B, byte_C6D72, byte_C6D7A, byte_C6D7B, byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83
 extern byte_C6D8A, byte_C6D92, byte_C6D9A, byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC
 extern byte_C6DAD, byte_C6DB2, byte_ED858, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A, dword_C5581
@@ -499,7 +499,7 @@ mov eax, dword [byte ebp-02Ch]	; 276A6
 mov al, byte [byte eax+0Eh]	; 276A9
 xor ah, ah	; 276AC
 movsx ecx, ax	; 276AE
-mov ebx, asc_C6903	; 276B1
+mov ebx, str_fmt2d	; 276B1
 mov edx, dword [byte ebp-026h]	; 276B6
 sar edx, 10h	; 276B9
 mov eax, dword [byte ebp-020h]	; 276BC
@@ -510,7 +510,7 @@ mov eax, dword [byte ebp-02Ch]	; 276CA
 mov al, byte [byte eax+0Fh]	; 276CD
 xor ah, ah	; 276D0
 movsx ecx, ax	; 276D2
-mov ebx, asc_C6903	; 276D5
+mov ebx, str_fmt2d	; 276D5
 mov edx, dword [byte ebp-026h]	; 276DA
 sar edx, 10h	; 276DD
 mov eax, dword [byte ebp-020h]	; 276E0
@@ -521,7 +521,7 @@ mov edx, dword [byte ebp-02Ch]	; 276EE
 xor eax, eax	; 276F1
 mov al, byte [byte edx+010h]	; 276F3
 movsx ecx, ax	; 276F6
-mov ebx, asc_C6903	; 276F9
+mov ebx, str_fmt2d	; 276F9
 mov edx, dword [byte ebp-026h]	; 276FE
 sar edx, 10h	; 27701
 mov eax, dword [byte ebp-020h]	; 27704
@@ -532,7 +532,7 @@ mov edx, dword [byte ebp-02Ch]	; 27712
 xor eax, eax	; 27715
 mov al, byte [byte edx+011h]	; 27717
 movsx ecx, ax	; 2771A
-mov ebx, asc_C6903	; 2771D
+mov ebx, str_fmt2d	; 2771D
 mov edx, dword [byte ebp-026h]	; 27722
 sar edx, 10h	; 27725
 mov eax, dword [byte ebp-020h]	; 27728
@@ -542,7 +542,7 @@ call sub_176AE	; 27731
 mov ecx, dword [byte ebp-02Ch]	; 27736
 mov ecx, dword [byte ecx+010h]	; 27739
 sar ecx, 10h	; 2773C
-mov ebx, asc_C6907	; 2773F
+mov ebx, str_fmt3d	; 2773F
 mov edx, dword [byte ebp-026h]	; 27744
 sar edx, 10h	; 27747
 mov eax, dword [byte ebp-020h]	; 2774A
@@ -552,7 +552,7 @@ call sub_176AE	; 27753
 mov ecx, dword [byte ebp-02Ch]	; 27758
 mov ecx, dword [byte ecx+012h]	; 2775B
 sar ecx, 10h	; 2775E
-mov ebx, asc_C6907	; 27761
+mov ebx, str_fmt3d	; 27761
 mov edx, dword [byte ebp-026h]	; 27766
 sar edx, 10h	; 27769
 mov eax, dword [byte ebp-020h]	; 2776C
@@ -562,7 +562,7 @@ call sub_176AE	; 27775
 mov eax, dword [byte ebp-02Ch]	; 2777A
 mov ecx, dword [byte eax+014h]	; 2777D
 sar ecx, 10h	; 27780
-mov ebx, asc_C6907	; 27783
+mov ebx, str_fmt3d	; 27783
 mov edx, dword [byte ebp-026h]	; 27788
 sar edx, 10h	; 2778B
 mov eax, dword [byte ebp-020h]	; 2778E

@@ -5,7 +5,7 @@ section s_150C6 progbits alloc exec nowrite align=1
 extern StanleyCupTimer, __CHK, asc_C0784, asc_C078C, asc_C0791, asc_C079C, asc_C8136, byte_C5400
 extern musicon, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, byte_EA0F4
 extern byte_ED823, byte_ED939, dword_C5130, dword_C52E9, dword_C52ED, dword_C52F5, dword_C52F9, dword_C52FD
-extern dword_C5301, dword_C5305, dword_C5309, dword_C53F7, dword_C53FB, gameopts, dword_C5519, dword_C5704
+extern dword_C5301, dword_C5305, dword_C5309, dword_C53F7, dword_C53FB, gameopts, teamdivflags, dword_C5704
 extern dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
 extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
@@ -950,8 +950,8 @@ mov eax, dword [cont2team]	; 15B88
 sar eax, 10h	; 15B8D
 mov edx, dword [HomeTeam]	; 15B90
 sar edx, 10h	; 15B96
-mov eax, dword [nosplit eax*4+dword_C5519]	; 15B99
-or eax, dword [nosplit edx*4+dword_C5519]	; 15BA0
+mov eax, dword [nosplit eax*4+teamdivflags]	; 15B99
+or eax, dword [nosplit edx*4+teamdivflags]	; 15BA0
 test al, 3	; 15BA7
 je near loc_15C1F	; 15BA9
 test al, 0Ch	; 15BAF

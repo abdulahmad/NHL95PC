@@ -5,7 +5,7 @@ section s_3DC2C progbits alloc exec nowrite align=1
 extern __CHK, asc_C1964, asc_C1969, asc_C196F, asc_C1974, asc_C197A, asc_C1980, asc_C1987
 extern asc_C198C, asc_C1994, asc_C19C1, asc_C19DC, asc_C19E0, asc_C19EA, asc_C19F3, asc_C19FA
 extern asc_C19FF, asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, str_extDB, asc_C814A, str_extBIN
-extern byte_C8111, str_dot, curleague, byte_D11BC, byte_D1238, byte_D12DE, byte_D1333, byte_D1334
+extern str_space, str_dot, curleague, byte_D11BC, byte_D1238, byte_D12DE, byte_D1333, byte_D1334
 extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, byte_DD710, byte_DD750, byte_DDD8C
 extern byte_DDD8D, byte_DDD8E, byte_ED7F7, byte_ED858, byte_ED85A, byte_ED86D, byte_ED8B3, byte_ED8B4
 extern dword_C65B0, dword_C65B8, dword_C8B7C, dword_C8B80, HomeTeam, dword_D2C6B, dword_D8C84, dword_DC238
@@ -138,7 +138,7 @@ mov al, byte [byte esp+03h]	; 3DD35
 mov byte [byte ecx+03h], al	; 3DD39
 mov al, byte [str_dot]	; 3DD3C
 mov byte [byte ecx+04h], al	; 3DD41
-mov al, byte [byte_C8111]	; 3DD44
+mov al, byte [str_space]	; 3DD44
 mov byte [byte ecx+05h], al	; 3DD49
 mov byte [byte ecx+06h], 0	; 3DD4C
 lea eax, [byte ecx+03h]	; 3DD50
@@ -187,7 +187,7 @@ mov al, byte [byte esp+03h]	; 3DDBB
 mov byte [byte ecx+03h], al	; 3DDBF
 mov al, byte [str_dot]	; 3DDC2
 mov byte [byte ecx+04h], al	; 3DDC7
-mov al, byte [byte_C8111]	; 3DDCA
+mov al, byte [str_space]	; 3DDCA
 mov byte [byte ecx+05h], al	; 3DDCF
 mov byte [byte ecx+06h], 0	; 3DDD2
 lea eax, [byte ecx+03h]	; 3DDD6
@@ -507,7 +507,7 @@ mov dword [dword esp+063Ch], eax	; 3E223
 lea edx, [byte eax+03h]	; 3E22A
 lea eax, [dword esp+0608h]	; 3E22D
 call strcpy_	; 3E234
-mov edx, byte_C8111	; 3E239
+mov edx, str_space	; 3E239
 lea eax, [dword esp+0608h]	; 3E23E
 call strcat_	; 3E245
 mov edx, dword [dword esp+063Ch]	; 3E24A

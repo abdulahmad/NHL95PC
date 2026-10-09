@@ -5,7 +5,7 @@ section s_41B80 progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, str_sche, str_Sch, str_gameset, str_KbytesFree, str_extDB, str_extLP
 extern str_SelHumanTeams, str_EnterLeagueName, str_KbytesFreeLine, byte_C5386, divisionteams, teamdivision, teamdivslot, monthdays_m1
 extern curleague, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname, byte_DDD40
-extern byte_DE268, dword_C5382, gameopts, dword_C5519, dword_C55E9, dword_C5619, dword_C8C61, dword_C8D06
+extern byte_DE268, dword_C5382, gameopts, teamdivflags, dword_C55E9, dword_C5619, dword_C8C61, dword_C8D06
 extern dword_C9002, seasondb, careerdb, keydb, seasondb_size, careerdb_size, keydb_size, dword_DD770
 extern leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, jctime
 extern memset_, mkdir_, msg_LeagueExists, leaguedbnames
@@ -1347,8 +1347,8 @@ mov eax, edi	; 42C57
 call SortStandings	; 42C59
 mov edx, dword [byte edi+04h]	; 42C5E
 mov eax, dword [edi]	; 42C61
-mov eax, dword [nosplit eax*4+dword_C5519]	; 42C63
-or eax, dword [nosplit edx*4+dword_C5519]	; 42C6A
+mov eax, dword [nosplit eax*4+teamdivflags]	; 42C63
+or eax, dword [nosplit edx*4+teamdivflags]	; 42C6A
 cmp eax, byte 3	; 42C71
 je short .6	; 42C74
 mov ecx, 2	; 42C76
@@ -1356,8 +1356,8 @@ mov ecx, 2	; 42C76
 mov eax, ecx	; 42C7B
 mov eax, dword [edi+eax*4]	; 42C7D
 mov esi, dword [edi]	; 42C80
-mov esi, dword [nosplit esi*4+dword_C5519]	; 42C82
-or esi, dword [nosplit eax*4+dword_C5519]	; 42C89
+mov esi, dword [nosplit esi*4+teamdivflags]	; 42C82
+or esi, dword [nosplit eax*4+teamdivflags]	; 42C89
 cmp esi, byte 3	; 42C90
 je short .3	; 42C93
 inc ecx	; 42C95
@@ -1415,8 +1415,8 @@ lea edx, [dword esp+0398h]	; 42D36
 call SortStandings	; 42D3D
 mov eax, dword [byte edi+038h]	; 42D42
 mov edx, dword [byte edi+03Ch]	; 42D45
-mov eax, dword [nosplit eax*4+dword_C5519]	; 42D48
-or eax, dword [nosplit edx*4+dword_C5519]	; 42D4F
+mov eax, dword [nosplit eax*4+teamdivflags]	; 42D48
+or eax, dword [nosplit edx*4+teamdivflags]	; 42D4F
 cmp eax, byte 0Ch	; 42D56
 je short .12	; 42D59
 mov ecx, 2	; 42D5B
@@ -1424,8 +1424,8 @@ mov ecx, 2	; 42D5B
 mov eax, ecx	; 42D60
 mov eax, dword [byte edi+eax*4+038h]	; 42D62
 mov esi, dword [byte edi+038h]	; 42D66
-mov esi, dword [nosplit esi*4+dword_C5519]	; 42D69
-or esi, dword [nosplit eax*4+dword_C5519]	; 42D70
+mov esi, dword [nosplit esi*4+teamdivflags]	; 42D69
+or esi, dword [nosplit eax*4+teamdivflags]	; 42D70
 cmp esi, byte 0Ch	; 42D77
 je short .9	; 42D7A
 inc ecx	; 42D7C
@@ -1614,8 +1614,8 @@ SetSeriesTeams:
 push dword 8	; 42F42
 call __CHK	; 42F47
 push esi	; 42F4C
-mov esi, dword [nosplit edx*4+dword_C5519]	; 42F4D
-or esi, dword [nosplit ebx*4+dword_C5519]	; 42F54
+mov esi, dword [nosplit edx*4+teamdivflags]	; 42F4D
+or esi, dword [nosplit ebx*4+teamdivflags]	; 42F54
 cmp esi, byte 3	; 42F5B
 jne short .1	; 42F5E
 cmp ecx, byte 7	; 42F60

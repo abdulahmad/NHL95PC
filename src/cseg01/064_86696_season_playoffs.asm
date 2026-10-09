@@ -13,7 +13,7 @@ extern byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, byte_C6DB2, s
 extern musicon, byte_DD710, byte_DD750, byte_EA0F4, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A
 extern code_1A8AA, code_1A922, dword_C530D, dword_C535E, dword_C5362, dword_C536A, dword_C536E, dword_C5372
 extern dword_C5376, dword_C537A, dword_C537E, dword_C5382, dword_C53F7, dword_C53FB, gameopts, dword_C5403
-extern dword_C5407, dword_C5413, dword_C5417, dword_C5519, dword_C5581, dword_C55E9, dword_C65AC, dword_C65C0
+extern dword_C5407, dword_C5413, dword_C5417, teamdivflags, dword_C5581, dword_C55E9, dword_C65AC, dword_C65C0
 extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C6D26, dword_C6DBA, dword_C71CC, dword_C71D0
 extern dword_C71D4, dword_C71D8, dword_C71DC, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
 extern dword_CE5C3, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
@@ -857,7 +857,7 @@ mov edi, ecx	; 870CA
 xor esi, esi	; 870CC
 mov eax, dword [cont2team]	; 870CE
 sar eax, 10h	; 870D3
-test dword [nosplit eax*4+dword_C5519], edx	; 870D6
+test dword [nosplit eax*4+teamdivflags], edx	; 870D6
 je short loc_87108	; 870DD
 xor ebx, ebx	; 870DF
 jmp short loc_870F9	; 870E1
@@ -879,7 +879,7 @@ or esi, eax	; 87106
 loc_87108:
 mov eax, dword [HomeTeam]	; 87108
 sar eax, 10h	; 8710D
-mov eax, dword [nosplit eax*4+dword_C5519]	; 87110
+mov eax, dword [nosplit eax*4+teamdivflags]	; 87110
 test dword [esp], eax	; 87117
 je short loc_87145	; 8711A
 xor ebx, ebx	; 8711C
@@ -928,8 +928,8 @@ mov eax, dword [byte esp+0Ch]	; 87181
 mov eax, dword [nosplit eax*4+dword_C55E9]	; 87185
 mov edx, dword [byte esp+08h]	; 8718C
 mov edx, dword [nosplit edx*4+dword_C55E9]	; 87190
-mov edx, dword [nosplit edx*4+dword_C5519]	; 87197
-cmp edx, dword [nosplit eax*4+dword_C5519]	; 8719E
+mov edx, dword [nosplit edx*4+teamdivflags]	; 87197
+cmp edx, dword [nosplit eax*4+teamdivflags]	; 8719E
 jne short loc_871EA	; 871A5
 mov ebx, 2	; 871A7
 jmp short loc_871AF	; 871AC
@@ -942,8 +942,8 @@ mov eax, dword [byte esp+edx+08h]	; 871B4
 mov eax, dword [nosplit eax*4+dword_C55E9]	; 871B8
 mov esi, dword [byte esp+08h]	; 871BF
 mov esi, dword [nosplit esi*4+dword_C55E9]	; 871C3
-mov esi, dword [nosplit esi*4+dword_C5519]	; 871CA
-cmp esi, dword [nosplit eax*4+dword_C5519]	; 871D1
+mov esi, dword [nosplit esi*4+teamdivflags]	; 871CA
+cmp esi, dword [nosplit eax*4+teamdivflags]	; 871D1
 je short loc_871AE	; 871D8
 mov esi, dword [byte esp+0Ch]	; 871DA
 mov eax, dword [byte esp+edx+08h]	; 871DE
@@ -1207,8 +1207,8 @@ sub_87520:
 push dword 8	; 87520
 call __CHK	; 87525
 push ecx	; 8752A
-mov ecx, dword [nosplit edx*4+dword_C5519]	; 8752B
-or ecx, dword [nosplit ebx*4+dword_C5519]	; 87532
+mov ecx, dword [nosplit edx*4+teamdivflags]	; 8752B
+or ecx, dword [nosplit ebx*4+teamdivflags]	; 87532
 cmp ecx, byte 3	; 87539
 jne short loc_8755E	; 8753C
 mov byte [byte eax+026h], dl	; 8753E

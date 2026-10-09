@@ -5,7 +5,7 @@ section s_45282 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1AAF, asc_C1AB4, asc_C1AB8, asc_C1AC4, asc_C1AC9, asc_C1ACD, asc_C1AD4
 extern asc_C1AD9, byte_DE26C, byte_DEB70, byte_DEB71, byte_ED9EE, gameopts, dword_C900C, dword_C905C
 extern dword_C9074, seasondb, dword_D2C6B, dword_DEB6C, jctime, memcpy_, memset_, rand_
-extern MakePath, ReadTeamRec, WriteTeamRec, sub_3A2EE, sub_6CBB7, sub_6CBCC, sub_6CBE1, sub_6CBE8
+extern MakePath, ReadTeamRec, WriteTeamRec, sub_3A2EE, KeyDbPtr, sub_6CBCC, sub_6CBE1, sub_6CBE8
 extern sub_6CBFD, sub_76429, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E83C, sub_8FFB0, sub_910E0
 extern sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4C61, unk_C1AA4
 extern unk_C1AA6, unk_C1AA9, unk_C1AAC, unk_C1ABE, unk_C1AC1
@@ -273,7 +273,7 @@ shl ecx, 2	; 45616
 mov eax, dword [byte ecx+eax+04Ch]	; 45619
 cmp eax, byte 0FFFFFFFFh	; 4561D
 je near loc_4590E	; 45620
-call sub_6CBB7	; 45626
+call KeyDbPtr	; 45626
 mov edx, dword [dword esp+ebx+017Ch]	; 4562B
 mov dword [ecx+edx], eax	; 45632
 cmp dword [dword esp+01A4h], byte 0	; 45635
@@ -471,7 +471,7 @@ shl ebx, 2	; 45955
 mov eax, dword [dword ebx+eax+0B0h]	; 45958
 cmp eax, byte 0FFFFFFFFh	; 4595F
 je near loc_45A44	; 45962
-call sub_6CBB7	; 45968
+call KeyDbPtr	; 45968
 mov ecx, eax	; 4596D
 mov eax, dword [dword esp+edx+0134h]	; 4596F
 mov dword [ebx+eax], ecx	; 45976

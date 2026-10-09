@@ -28,7 +28,7 @@ extern unk_C11DE, unk_C11E2, unk_C11E8, unk_C11EE, unk_C11F3, unk_C11F7, unk_C11
 extern unk_C1203, unk_C1206, unk_C120B, unk_C126C, unk_C1276, unk_C5654
 global CreditsList, asc_C5679, asc_C6570, asc_C65F8, asc_C6614, asc_C662E, asc_C664C, asc_C6678
 global asc_C668F, asc_C671E, asc_C6731, asc_C6747, asc_C6748, asc_C675B, asc_C675C, asc_C6779
-global asc_C677A, asc_C6891, asc_C689A, asc_C68AD, asc_C68FC, asc_C6903, asc_C6907, asc_C690B
+global asc_C677A, asc_C6891, asc_C689A, asc_C68AD, asc_C68FC, str_fmt2d, str_fmt3d, asc_C690B
 global asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B, asc_C6935, asc_C693B, asc_C6940
 global asc_C70A0, asc_C70B8, asc_C70C7, asc_C70EC, asc_C70F8, asc_C7298, byte_C66B4, byte_C671C
 global byte_C672F, byte_C6745, byte_C6759, byte_C6777, byte_C67A9, byte_C6D72, byte_C6D73, byte_C6D7A
@@ -987,9 +987,9 @@ off_C68F8:
 dd unk_C0C1F
 asc_C68FC:
 db 061h,074h,074h,02Eh,064h,062h,00h
-asc_C6903:
+str_fmt2d:
 db 025h,032h,064h,00h
-asc_C6907:
+str_fmt3d:
 db 025h,033h,064h,00h
 asc_C690B:
 db 025h,034h,064h,00h

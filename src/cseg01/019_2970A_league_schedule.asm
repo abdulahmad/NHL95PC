@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_2970A progbits alloc exec nowrite align=1
-extern __CHK, asc_C8100, str_extDB, byte_C5386, byte_C8111, dword_C695A, dword_C71CC, dword_C71D0
+extern __CHK, asc_C8100, str_extDB, byte_C5386, str_space, dword_C695A, dword_C71CC, dword_C71D0
 extern dword_C71D4, dword_DC7B8, dword_DC7BC, dword_DC830, fputchar, jctime, teamcitynames, leaguedbnames
 extern strcat_, strcmp_, strcpy_, strlen_, MakePath, FileOpenRead, FileClose
 extern ReadSchedGame, sub_27F9C, sub_3DAB9, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, unk_C136D
@@ -524,7 +524,7 @@ mov edi, ecx	; 29C8C
 test edx, edx	; 29C8E
 je short loc_29CD7	; 29C90
 call strcpy_	; 29C92
-mov edx, byte_C8111	; 29C97
+mov edx, str_space	; 29C97
 mov eax, esi	; 29C9C
 call strcat_	; 29C9E
 mov edx, ebx	; 29CA3

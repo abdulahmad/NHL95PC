@@ -8,8 +8,8 @@ extern unk_C29D0, unk_C29DE, unk_C29E7, unk_C29EF, unk_C2A03, unk_C2A17, unk_C2A
 extern unk_C2A40, unk_C2A49, unk_C2A4E, unk_C2A53, unk_C2A59, unk_C2A5C, unk_C2A5F, unk_C2A62
 extern unk_C2A65, unk_C2A68, unk_C2A6E, unk_C2A79, unk_C2A84, unk_C2A90, unk_C2A9B, unk_C2AA7
 extern unk_C2AB4, unk_C2AC4, unk_C2ACF, unk_C2AD8, unk_C2AE0, unk_C2AE8, unk_C2AF4
-global asc_D0819, byte_D0AE6, dword_D0B12, off_D0880, off_D08B9, off_D09DB, off_D0A04, off_D0AC2
-asc_D0819:
+global str_Ratings, byte_D0AE6, dword_D0B12, off_D0880, off_D08B9, off_D09DB, off_D0A04, off_D0AC2
+str_Ratings:
 db 052h,061h,074h,069h,06Eh,067h,073h,03Ah,00h,052h,06Fh,06Fh,06Bh,069h,065h,03Ah
 db 00h,04Eh,061h,06Dh,065h,03Ah,00h
 dd unk_C2974

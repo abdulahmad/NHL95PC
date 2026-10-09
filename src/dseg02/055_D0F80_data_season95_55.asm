@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D0F80 progbits alloc noexec write align=1
-global asc_D1056, byte_D0F94, byte_D0FE0, off_D1077, unk_D0F80, unk_D0FA8, unk_D0FBC, unk_D0FD0
+global str_XXXKbytesOfFree, byte_D0F94, byte_D0FE0, off_D1077, unk_D0F80, unk_D0FA8, unk_D0FBC, unk_D0FD0
 global unk_D0FF0, unk_D1000, unk_D1010, unk_D1032
 unk_D0F80:
 db 01h,07h,07h,09h,07h,07h,07h,07h,07h,07h,07h,07h,07h,05h,07h,00h
@@ -32,12 +32,12 @@ unk_D1032:
 db 074h,06Fh,020h,063h,072h,065h,061h,074h,065h,020h,061h,020h,066h,072h,065h,065h
 db 020h,061h,067h,065h,06Eh,074h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h
 db 069h,072h,065h,00h
-asc_D1056:
+str_XXXKbytesOfFree:
 db 058h,058h,058h,020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,066h,072h
 db 065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,02Eh,020h,020h
 db 00h
 off_D1077:
 dd unk_D1010
 dd unk_D1032
-dd asc_D1056
+dd str_XXXKbytesOfFree
 db 00h

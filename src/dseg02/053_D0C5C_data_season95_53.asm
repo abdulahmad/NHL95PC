@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_D0C5C progbits alloc noexec write align=1
 extern unk_C2AFD, unk_C2B04, unk_C744C, unk_C7450
-global asc_D0D68, asc_D0D81, asc_D0D95, asc_D0DB2, asc_D0E18, asc_D0E3A, asc_D0E45, asc_D0E81
-global asc_D0E86, asc_D0EB4, dword_D0CDA, unk_D0C5C, unk_D0C94, unk_D0C9D, unk_D0CA2, unk_D0ECF
+global str_ThereIsNoSpace, str_TheSelectedPlayer, str_NotEnoughSpaceTo2, str_AddAllSelectedPlayers, str_ErrorWhileMakingNew, str_NewPlayer, str_NotAddedToDatabases, str_Move
+global str_ToFreeAgentList, str_CreateAPlayerOr, dword_D0CDA, unk_D0C5C, unk_D0C94, unk_D0C9D, unk_D0CA2, unk_D0ECF
 global unk_D0ED6, unk_D0EDD
 unk_D0C5C:
 db 032h,00h,00h,00h,0B8h,01h,00h,00h,03Fh,00h,00h,00h,014h,00h,00h,00h
@@ -36,16 +36,16 @@ dd unk_C7450
 db 0F8h,0FFh,0FFh,0FFh,03Ch,00h,00h,00h,025h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,06h,00h,00h,00h
 dd unk_C744C
-asc_D0D68:
+str_ThereIsNoSpace:
 db 054h,068h,065h,072h,065h,020h,069h,073h,020h,06Eh,06Fh,020h,073h,070h,061h,063h
 db 065h,020h,074h,06Fh,020h,061h,064h,064h,00h
-asc_D0D81:
+str_TheSelectedPlayer:
 db 074h,068h,065h,020h,073h,065h,06Ch,065h,063h,074h,065h,064h,020h,070h,06Ch,061h
 db 079h,065h,072h,00h
-asc_D0D95:
+str_NotEnoughSpaceTo2:
 db 054h,068h,065h,072h,065h,020h,069h,073h,020h,06Eh,06Fh,074h,020h,065h,06Eh,06Fh
 db 075h,067h,068h,020h,073h,070h,061h,063h,065h,020h,074h,06Fh,00h
-asc_D0DB2:
+str_AddAllSelectedPlayers:
 db 061h,064h,064h,020h,061h,06Ch,06Ch,020h,073h,065h,06Ch,065h,063h,074h,065h,064h
 db 020h,070h,06Ch,061h,079h,065h,072h,073h,00h,04Eh,06Fh,074h,020h,065h,06Eh,06Fh
 db 075h,067h,068h,074h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,00h
@@ -53,24 +53,24 @@ db 04Eh,06Fh,074h,020h,065h,06Eh,06Fh,075h,067h,068h,074h,020h,06Dh,065h,06Dh,06
 db 072h,079h,00h,074h,06Fh,020h,064h,065h,06Ch,065h,074h,065h,020h,070h,06Ch,061h
 db 079h,065h,072h,073h,021h,00h,074h,06Fh,020h,061h,064h,064h,020h,070h,06Ch,061h
 db 079h,065h,072h,073h,021h,00h
-asc_D0E18:
+str_ErrorWhileMakingNew:
 db 045h,072h,072h,06Fh,072h,020h,077h,068h,069h,06Ch,065h,020h,06Dh,061h,06Bh,069h
 db 06Eh,067h,020h,06Eh,065h,077h,020h,064h,061h,074h,061h,062h,061h,073h,065h,073h
 db 021h,00h
-asc_D0E3A:
+str_NewPlayer:
 db 04Eh,065h,077h,020h,070h,06Ch,061h,079h,065h,072h,00h
-asc_D0E45:
+str_NotAddedToDatabases:
 db 020h,06Eh,06Fh,074h,020h,061h,064h,064h,065h,064h,020h,074h,06Fh,020h,064h,061h
 db 074h,061h,062h,061h,073h,065h,073h,021h,00h,050h,06Ch,061h,079h,065h,072h,020h
 db 06Eh,06Fh,074h,020h,064h,065h,06Ch,065h,074h,065h,064h,020h,066h,072h,06Fh,06Dh
 db 020h,064h,061h,074h,061h,062h,061h,073h,065h,073h,021h,00h
-asc_D0E81:
+str_Move:
 db 04Dh,06Fh,076h,065h,00h
-asc_D0E86:
+str_ToFreeAgentList:
 db 074h,06Fh,020h,046h,072h,065h,065h,020h,041h,067h,065h,06Eh,074h,020h,04Ch,069h
 db 073h,074h,03Fh,00h,074h,06Fh,020h,052h,06Fh,073h,074h,065h,072h,020h,031h,03Fh
 db 00h,074h,06Fh,020h,052h,06Fh,073h,074h,065h,072h,020h,032h,03Fh,00h
-asc_D0EB4:
+str_CreateAPlayerOr:
 db 043h,072h,065h,061h,074h,065h,020h,061h,020h,070h,06Ch,061h,079h,065h,072h,020h
 db 06Fh,072h,020h,067h,06Fh,061h,06Ch,069h,065h,02Eh,00h
 unk_D0ECF:

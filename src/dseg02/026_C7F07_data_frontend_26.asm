@@ -5,7 +5,7 @@ section s_C7F07 progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450, unk_C7E86, unk_C7E9B, unk_C7EB9, unk_C7EE2
 global str_PINFO, str_PLAYER, asc_C8100, asc_C810C, str_extDB, asc_C811E, asc_C812D, asc_C8131
 global asc_C8136, asc_C8140, asc_C8145, asc_C814A, str_extBIN, str_extxx, asc_C8158, str_extLP
-global str_extID, byte_C8111, str_dot, str_floppydrv, dword_C7F0B, msg_SavedGame_arg, off_C800C, off_C8055
+global str_extID, str_space, str_dot, str_floppydrv, dword_C7F0B, msg_SavedGame_arg, off_C800C, off_C8055
 global leaguedbnames, unk_C7F07
 global unk_C7F1B, unk_C7F53, unk_C7F77, unk_C7F7B, unk_C7F8E, unk_C7F92, unk_C7FB9, unk_C7FBD
 global unk_C7FD6, unk_C7FDA, unk_C7FF5, unk_C8014, unk_C8039, unk_C805D, unk_C8081, msg_SavedGame
@@ -108,7 +108,7 @@ asc_C8100:
 db 04Ch,053h,053h,043h,048h,045h,044h,00h,050h,047h,053h,00h
 asc_C810C:
 db 047h,041h,04Dh,045h,00h
-byte_C8111:
+str_space:
 db 020h,00h
 str_star:
 db 02Ah,00h

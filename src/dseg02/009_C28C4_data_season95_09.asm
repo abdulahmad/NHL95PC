@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_C28C4 progbits alloc noexec write align=1
-global asc_C28C4, asc_C28CA, asc_C28CF, asc_C28D4, asc_C28D8, asc_C28DD, asc_C2904, asc_C2929
-global asc_C2932, asc_C2953, asc_C2B10, asc_C2B2B, asc_C2B52, asc_C2B79, asc_C2BA3, asc_C2BD2
-global asc_C2BF8, asc_C2C26, asc_C2C47, asc_C2C68, asc_C2C8A, asc_C2CF4, asc_C2CFB, asc_C2CFF
-global asc_C2D03, asc_C2D12, asc_C2D26, asc_C2D35, asc_C2D4B, asc_C2D63, asc_C2D7D, asc_C2D83
-global asc_C2D88, asc_C2D8D, asc_C2D96, asc_C2D9B, asc_C2DA6, asc_C2DAC, asc_C2DB0, asc_C2DB7
-global asc_C2DBF, asc_C2DC9, asc_C2DD4, asc_C2DDB, asc_C2DF8, asc_C2DFD, asc_C2E1C, asc_C2E3B
-global asc_C2E56, asc_C2E68, asc_C2E89, asc_C2EAA, asc_C2EBF, asc_C2EC9, asc_C2EE3, asc_C2EFD
-global asc_C2F14, asc_C2F30, asc_C2F48, asc_C2F5C, asc_C2F64, asc_C2F6C, asc_C2F8C, asc_C2FAA
-global asc_C2FBA, asc_C2FD7, asc_C2FEF, asc_C2FF8, asc_C3001, dword_C2CAC, dword_C2CB0, dword_C2CB4
+global str_Prez2, str_Pal, str_ea, str_Uar, str_Uarm, str_TheJerseyNumber2d, str_PleaseEnterANew, str_Menubuff
+global str_TheDatabaseHasNot, str_AreYouSureYou, str_ErrorsFoundInDatabases, str_TheForwardLinesAre, str_TheDefenceLinesAre, str_ThePowerPlayLines, str_ThePenaltyKillingLines, str_TheGoalieLinesAre
+global str_TheExtraAttackerLines, str_NotEnoughPlayers, str_NotEnoughGoalies, str_NotEnoughForwards, str_NotEnoughDefence, str_Shoots, str_spL, str_spR
+global str_GloveHand, str_EnterANewRating, str_RatingRange, str_ShootsLeftOrRight, str_NotEnoughRatingUnits, str_GloveHandLeftOr, str_Prez22, str_Pal2
+global str_ea2, str_Pstatbar, str_Pst2, str_FreeAgent, str_fmtSS, str_fmtD, str_Center, str_Defence
+global str_LeftWing, str_RightWing, str_Goalie, str_RatingUnitsAvailable3d, str_Temp, str_ErrDiskFree, str_3dKbytesOfFree, str_NotEnoughSpaceTo
+global str_ANewFreeAgent, str_EnterNewPlayerName, str_EnterNewGoalieName, str_EnterAPositionFor, str_LCRD, str_EnterAJerseyNumber, str_NotEnoughSpaceFA, str_InTheFreeAgent
+global str_ForAllSelectedPlayers, str_TheNumberOfSelected, str_PlayersAndGoalies, str_Players, str_Goalies, str_MustBeTheSame, str_EnterNameOfPlayer, str_FreeAgentList
+global str_ChooseWhichTeamTo, str_IsAlreadyDisplayedOn, str_Roster2, str_Roster1, str_DoesNotExist, dword_C2CAC, dword_C2CB0, dword_C2CB4
 global dword_C2CB8, dword_C2CBC, dword_C2CC0, dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4
 global dword_C2CD8, dword_C2CDC, dword_C2CF0, qword_C2CE0, qword_C2CE8, unk_C2974, unk_C2977, unk_C297B
 global unk_C297F, unk_C2983, unk_C2987, unk_C298C, unk_C2990, unk_C2994, unk_C299A, unk_C29A0
@@ -20,31 +20,31 @@ global unk_C2A53, unk_C2A59, unk_C2A5C, unk_C2A5F, unk_C2A62, unk_C2A65, unk_C2A
 global unk_C2A79, unk_C2A84, unk_C2A90, unk_C2A9B, unk_C2AA7, unk_C2AB4, unk_C2AC4, unk_C2ACF
 global unk_C2AD8, unk_C2AE0, unk_C2AE8, unk_C2AF4, unk_C2AFD, unk_C2B04, unk_C2B0B, word_C2D0E
 global word_C2D10
-asc_C28C4:
+str_Prez2:
 db 070h,072h,065h,07Ah,032h,00h
-asc_C28CA:
+str_Pal:
 db 021h,070h,061h,06Ch,00h
-asc_C28CF:
+str_ea:
 db 065h,061h,020h,020h,00h
-asc_C28D4:
+str_Uar:
 db 075h,061h,072h,00h
-asc_C28D8:
+str_Uarm:
 db 075h,061h,072h,06Dh,00h
-asc_C28DD:
+str_TheJerseyNumber2d:
 db 054h,068h,065h,020h,06Ah,065h,072h,073h,065h,079h,020h,06Eh,075h,06Dh,062h,065h
 db 072h,020h,025h,032h,064h,020h,069h,073h,020h,061h,06Ch,072h,065h,061h,064h,079h
 db 020h,075h,073h,065h,064h,021h,00h
-asc_C2904:
+str_PleaseEnterANew:
 db 050h,06Ch,065h,061h,073h,065h,020h,065h,06Eh,074h,065h,072h,020h,061h,020h,06Eh
 db 065h,077h,020h,06Ah,065h,072h,073h,065h,079h,020h,06Eh,075h,06Dh,062h,065h,072h
 db 020h,066h,06Fh,072h,00h
-asc_C2929:
+str_Menubuff:
 db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
-asc_C2932:
+str_TheDatabaseHasNot:
 db 054h,068h,065h,020h,064h,061h,074h,061h,062h,061h,073h,065h,020h,068h,061h,073h
 db 020h,06Eh,06Fh,074h,020h,062h,065h,065h,06Eh,020h,073h,061h,076h,065h,064h,02Eh
 db 00h
-asc_C2953:
+str_AreYouSureYou:
 db 041h,072h,065h,020h,079h,06Fh,075h,020h,073h,075h,072h,065h,020h,079h,06Fh,075h
 db 020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,065h,078h,069h,074h,03Fh,00h,00h
 db 00h
@@ -150,46 +150,46 @@ unk_C2B04:
 db 043h,072h,065h,061h,074h,065h,00h
 unk_C2B0B:
 db 058h,00h,00h,00h,00h
-asc_C2B10:
+str_ErrorsFoundInDatabases:
 db 045h,072h,072h,06Fh,072h,073h,020h,066h,06Fh,075h,06Eh,064h,020h,069h,06Eh,020h
 db 064h,061h,074h,061h,062h,061h,073h,065h,073h,021h,00h
-asc_C2B2B:
+str_TheForwardLinesAre:
 db 054h,068h,065h,020h,066h,06Fh,072h,077h,061h,072h,064h,020h,06Ch,069h,06Eh,065h
 db 073h,020h,061h,072h,065h,020h,06Eh,06Fh,074h,020h,063h,06Fh,06Dh,070h,06Ch,065h
 db 074h,065h,020h,06Fh,06Eh,020h,00h
-asc_C2B52:
+str_TheDefenceLinesAre:
 db 054h,068h,065h,020h,064h,065h,066h,065h,06Eh,063h,065h,020h,06Ch,069h,06Eh,065h
 db 073h,020h,061h,072h,065h,020h,06Eh,06Fh,074h,020h,063h,06Fh,06Dh,070h,06Ch,065h
 db 074h,065h,020h,06Fh,06Eh,020h,00h
-asc_C2B79:
+str_ThePowerPlayLines:
 db 054h,068h,065h,020h,070h,06Fh,077h,065h,072h,020h,070h,06Ch,061h,079h,020h,06Ch
 db 069h,06Eh,065h,073h,020h,061h,072h,065h,020h,06Eh,06Fh,074h,020h,063h,06Fh,06Dh
 db 070h,06Ch,065h,074h,065h,020h,06Fh,06Eh,020h,00h
-asc_C2BA3:
+str_ThePenaltyKillingLines:
 db 054h,068h,065h,020h,070h,065h,06Eh,061h,06Ch,074h,079h,020h,06Bh,069h,06Ch,06Ch
 db 069h,06Eh,067h,020h,06Ch,069h,06Eh,065h,073h,020h,061h,072h,065h,020h,06Eh,06Fh
 db 074h,020h,063h,06Fh,06Dh,070h,06Ch,065h,074h,065h,020h,06Fh,06Eh,020h,00h
-asc_C2BD2:
+str_TheGoalieLinesAre:
 db 054h,068h,065h,020h,067h,06Fh,061h,06Ch,069h,065h,020h,06Ch,069h,06Eh,065h,073h
 db 020h,061h,072h,065h,020h,06Eh,06Fh,074h,020h,063h,06Fh,06Dh,070h,06Ch,065h,074h
 db 065h,020h,06Fh,06Eh,020h,00h
-asc_C2BF8:
+str_TheExtraAttackerLines:
 db 054h,068h,065h,020h,065h,078h,074h,072h,061h,020h,061h,074h,074h,061h,063h,06Bh
 db 065h,072h,020h,06Ch,069h,06Eh,065h,073h,020h,061h,072h,065h,020h,06Eh,06Fh,074h
 db 020h,063h,06Fh,06Dh,070h,06Ch,065h,074h,065h,020h,06Fh,06Eh,020h,00h
-asc_C2C26:
+str_NotEnoughPlayers:
 db 054h,068h,065h,072h,065h,020h,061h,072h,065h,020h,06Eh,06Fh,074h,020h,065h,06Eh
 db 06Fh,075h,067h,068h,020h,070h,06Ch,061h,079h,065h,072h,073h,020h,06Fh,06Eh,020h
 db 00h
-asc_C2C47:
+str_NotEnoughGoalies:
 db 054h,068h,065h,072h,065h,020h,061h,072h,065h,020h,06Eh,06Fh,074h,020h,065h,06Eh
 db 06Fh,075h,067h,068h,020h,067h,06Fh,061h,06Ch,069h,065h,073h,020h,06Fh,06Eh,020h
 db 00h
-asc_C2C68:
+str_NotEnoughForwards:
 db 054h,068h,065h,072h,065h,020h,061h,072h,065h,020h,06Eh,06Fh,074h,020h,065h,06Eh
 db 06Fh,075h,067h,068h,020h,066h,06Fh,072h,077h,061h,072h,064h,073h,020h,06Fh,06Eh
 db 020h,00h
-asc_C2C8A:
+str_NotEnoughDefence:
 db 054h,068h,065h,072h,065h,020h,061h,072h,065h,020h,06Eh,06Fh,074h,020h,065h,06Eh
 db 06Fh,075h,067h,068h,020h,064h,065h,066h,065h,06Eh,063h,065h,020h,06Fh,06Eh,020h
 db 00h,00h
@@ -225,128 +225,128 @@ qword_C2CE8:
 db 09Ah,099h,099h,099h,099h,099h,0B9h,03Fh
 dword_C2CF0:
 db 00h,080h,0ADh,043h
-asc_C2CF4:
+str_Shoots:
 db 053h,068h,06Fh,06Fh,074h,073h,00h
-asc_C2CFB:
+str_spL:
 db 020h,020h,04Ch,00h
-asc_C2CFF:
+str_spR:
 db 020h,020h,052h,00h
-asc_C2D03:
+str_GloveHand:
 db 047h,06Ch,06Fh,076h,065h,020h,048h,061h,06Eh,064h,00h
 word_C2D0E:
 db 04Ch,00h
 word_C2D10:
 db 052h,00h
-asc_C2D12:
+str_EnterANewRating:
 db 045h,06Eh,074h,065h,072h,020h,061h,020h,06Eh,065h,077h,020h,072h,061h,074h,069h
 db 06Eh,067h,03Ah,00h
-asc_C2D26:
+str_RatingRange:
 db 025h,032h,064h,020h,03Ch,020h,025h,073h,020h,03Ch,020h,025h,032h,064h,00h
-asc_C2D35:
+str_ShootsLeftOrRight:
 db 053h,068h,06Fh,06Fh,074h,073h,020h,04Ch,065h,066h,074h,020h,06Fh,072h,020h,052h
 db 069h,067h,068h,074h,03Fh,00h
-asc_C2D4B:
+str_NotEnoughRatingUnits:
 db 04Eh,06Fh,074h,020h,065h,06Eh,06Fh,075h,067h,068h,020h,052h,061h,074h,069h,06Eh
 db 067h,020h,055h,06Eh,069h,074h,073h,00h
-asc_C2D63:
+str_GloveHandLeftOr:
 db 047h,06Ch,06Fh,076h,065h,020h,068h,061h,06Eh,064h,020h,04Ch,065h,066h,074h,020h
 db 06Fh,072h,020h,052h,069h,067h,068h,074h,03Fh,00h
-asc_C2D7D:
+str_Prez22:
 db 070h,072h,065h,07Ah,032h,00h
-asc_C2D83:
+str_Pal2:
 db 021h,070h,061h,06Ch,00h
-asc_C2D88:
+str_ea2:
 db 065h,061h,020h,020h,00h
-asc_C2D8D:
+str_Pstatbar:
 db 070h,073h,074h,061h,074h,062h,061h,072h,00h
-asc_C2D96:
+str_Pst2:
 db 070h,073h,074h,032h,00h
-asc_C2D9B:
+str_FreeAgent:
 db 046h,072h,065h,065h,020h,041h,067h,065h,06Eh,074h,00h
-asc_C2DA6:
+str_fmtSS:
 db 025h,073h,020h,025h,073h,00h
-asc_C2DAC:
+str_fmtD:
 db 025h,064h,020h,00h
-asc_C2DB0:
+str_Center:
 db 043h,065h,06Eh,074h,065h,072h,00h
-asc_C2DB7:
+str_Defence:
 db 044h,065h,066h,065h,06Eh,063h,065h,00h
-asc_C2DBF:
+str_LeftWing:
 db 04Ch,065h,066h,074h,020h,057h,069h,06Eh,067h,00h
-asc_C2DC9:
+str_RightWing:
 db 052h,069h,067h,068h,074h,020h,057h,069h,06Eh,067h,00h
-asc_C2DD4:
+str_Goalie:
 db 047h,06Fh,061h,06Ch,069h,065h,00h
-asc_C2DDB:
+str_RatingUnitsAvailable3d:
 db 052h,061h,074h,069h,06Eh,067h,020h,055h,06Eh,069h,074h,073h,020h,041h,076h,061h
 db 069h,06Ch,061h,062h,06Ch,065h,020h,03Ch,025h,033h,064h,03Eh,00h
-asc_C2DF8:
+str_Temp:
 db 074h,065h,06Dh,070h,00h
-asc_C2DFD:
+str_ErrDiskFree:
 db 065h,072h,072h,06Fh,072h,020h,067h,065h,074h,074h,069h,06Eh,067h,020h,064h,069h
 db 073h,06Bh,020h,073h,070h,061h,063h,065h,020h,066h,072h,065h,065h,0Ah,00h
-asc_C2E1C:
+str_3dKbytesOfFree:
 db 025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,066h,072h
 db 065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,02Eh,00h
-asc_C2E3B:
+str_NotEnoughSpaceTo:
 db 04Eh,06Fh,074h,020h,065h,06Eh,06Fh,075h,067h,068h,020h,073h,070h,061h,063h,065h
 db 020h,074h,06Fh,020h,063h,072h,065h,061h,074h,065h,00h
-asc_C2E56:
+str_ANewFreeAgent:
 db 061h,020h,06Eh,065h,077h,020h,066h,072h,065h,065h,020h,061h,067h,065h,06Eh,074h
 db 02Eh,00h
-asc_C2E68:
+str_EnterNewPlayerName:
 db 045h,06Eh,074h,065h,072h,020h,074h,068h,065h,020h,06Eh,061h,06Dh,065h,020h,06Fh
 db 066h,020h,074h,068h,065h,020h,06Eh,065h,077h,020h,070h,06Ch,061h,079h,065h,072h
 db 00h
-asc_C2E89:
+str_EnterNewGoalieName:
 db 045h,06Eh,074h,065h,072h,020h,074h,068h,065h,020h,06Eh,061h,06Dh,065h,020h,06Fh
 db 066h,020h,074h,068h,065h,020h,06Eh,065h,077h,020h,067h,06Fh,061h,06Ch,069h,065h
 db 00h
-asc_C2EAA:
+str_EnterAPositionFor:
 db 045h,06Eh,074h,065h,072h,020h,061h,020h,070h,06Fh,073h,069h,074h,069h,06Fh,06Eh
 db 020h,066h,06Fh,072h,00h
-asc_C2EBF:
+str_LCRD:
 db 028h,04Ch,02Ch,043h,02Ch,052h,02Ch,044h,029h,00h
-asc_C2EC9:
+str_EnterAJerseyNumber:
 db 045h,06Eh,074h,065h,072h,020h,061h,020h,06Ah,065h,072h,073h,065h,079h,020h,06Eh
 db 075h,06Dh,062h,065h,072h,020h,066h,06Fh,072h,00h
-asc_C2EE3:
+str_NotEnoughSpaceFA:
 db 054h,068h,065h,072h,065h,020h,069h,073h,020h,06Eh,06Fh,074h,020h,065h,06Eh,06Fh
 db 075h,067h,068h,020h,073h,070h,061h,063h,065h,00h
-asc_C2EFD:
+str_InTheFreeAgent:
 db 069h,06Eh,020h,074h,068h,065h,020h,066h,072h,065h,065h,020h,061h,067h,065h,06Eh
 db 074h,020h,06Ch,069h,073h,074h,00h
-asc_C2F14:
+str_ForAllSelectedPlayers:
 db 066h,06Fh,072h,020h,061h,06Ch,06Ch,020h,073h,065h,06Ch,065h,063h,074h,065h,064h
 db 020h,070h,06Ch,061h,079h,065h,072h,073h,00h,00h,00h,00h
-asc_C2F30:
+str_TheNumberOfSelected:
 db 054h,068h,065h,020h,06Eh,075h,06Dh,062h,065h,072h,020h,06Fh,066h,020h,073h,065h
 db 06Ch,065h,063h,074h,065h,064h,020h,00h
-asc_C2F48:
+str_PlayersAndGoalies:
 db 070h,06Ch,061h,079h,065h,072h,073h,020h,061h,06Eh,064h,020h,067h,06Fh,061h,06Ch
 db 069h,065h,073h,00h
-asc_C2F5C:
+str_Players:
 db 070h,06Ch,061h,079h,065h,072h,073h,00h
-asc_C2F64:
+str_Goalies:
 db 067h,06Fh,061h,06Ch,069h,065h,073h,00h
-asc_C2F6C:
+str_MustBeTheSame:
 db 06Dh,075h,073h,074h,020h,062h,065h,020h,074h,068h,065h,020h,073h,061h,06Dh,065h
 db 020h,06Fh,06Eh,020h,062h,06Fh,074h,068h,020h,074h,065h,061h,06Dh,073h,021h,00h
-asc_C2F8C:
+str_EnterNameOfPlayer:
 db 045h,06Eh,074h,065h,072h,020h,06Eh,061h,06Dh,065h,020h,06Fh,066h,020h,070h,06Ch
 db 061h,079h,065h,072h,020h,074h,06Fh,020h,066h,069h,06Eh,064h,03Ah,00h
-asc_C2FAA:
+str_FreeAgentList:
 db 046h,072h,065h,065h,020h,041h,067h,065h,06Eh,074h,020h,04Ch,069h,073h,074h,00h
-asc_C2FBA:
+str_ChooseWhichTeamTo:
 db 043h,068h,06Fh,06Fh,073h,065h,020h,077h,068h,069h,063h,068h,020h,074h,065h,061h
 db 06Dh,020h,074h,06Fh,020h,064h,069h,073h,070h,06Ch,061h,079h,00h
-asc_C2FD7:
+str_IsAlreadyDisplayedOn:
 db 069h,073h,020h,061h,06Ch,072h,065h,061h,064h,079h,020h,064h,069h,073h,070h,06Ch
 db 061h,079h,065h,064h,020h,06Fh,06Eh,00h
-asc_C2FEF:
+str_Roster2:
 db 052h,06Fh,073h,074h,065h,072h,020h,032h,00h
-asc_C2FF8:
+str_Roster1:
 db 052h,06Fh,073h,074h,065h,072h,020h,031h,00h
-asc_C3001:
+str_DoesNotExist:
 db 064h,06Fh,065h,073h,020h,06Eh,06Fh,074h,020h,065h,078h,069h,073h,074h,021h,00h
 db 00h,00h,00h

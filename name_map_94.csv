@@ -689,9 +689,50 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0006BE95,sub_6BE95,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),joystick_calibration,unmatched
 0006C2F9,sub_6C2F9,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_save,unmatched
 0006C3BB,sub_6C3BB,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_save,unmatched
-0006D5BB,sub_6D5BB,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),create_player,unmatched
-000706E2,sub_706E2,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),create_player,unmatched
-00071961,sub_71961,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),create_player,unmatched
+0006CB6B,sub_6CB6B,CarTeamRecPtr,PC-new,,,,high,returns carteamsdb + team * 4Ch,database_save,manual-trace
+0006CB90,sub_6CB90,TeamRecPtr,PC-new,,,,high,returns teamsdb + team * 2E8h,database_save,manual-trace
+0006CBB7,sub_6CBB7,KeyDbPtr,PC-new,,,,high,returns keydb + offset (player entry pointer into KEY.DB),database_save,manual-trace
+0006D2F8,sub_6D2F8,DrawEditRosters,PC-new,,,,medium,"redraws the Edit Rosters screen (prez2 background and palette, both roster panels with 'Ratings:' and jersey numbers); called after every roster change and from database_dialogs",create_player,manual-trace
+0006D5BB,sub_6D5BB,EditRostersReturn,PC-new,,,,high,'Return' menu item (frontend_46 menu table): sets editrosters_exit to -1,create_player,manual-trace
+0006D5D0,sub_6D5D0,SelectRosterTeam,PC-new,,,,high,"division-submenu team item: puts the picked team (divisionteams[div][slot]) in rosterteam[side], re-enables the previous team's item and 'Free Agents ...', disables the new one, enables 'Edit Team Lines ...', reloads the list (LoadRosterList) and redraws",create_player,manual-trace
+0006D6DB,sub_6D6DB,ShowFreeAgents,PC-new,,,,high,"'Free Agents ...' menu item: rosterteam[side] = FFh, rosterisfa[side] = 1, disables the item and 'Edit Team Lines ...', LoadRosterList and redraw",create_player,manual-trace
+0006D78B,sub_6D78B,ComparePlayerEntry,PC-new,,,,medium,"sort compare for 1Bh-byte list entries: by position byte (L, C, R, D order, empty last), then strcmp of the name at +0Bh",create_player,manual-trace
+0006D7ED,sub_6D7ED,ShellSortBytes,PC-new,,,,high,"shell sort (base, count, element size, compare fn) swapping elements byte by byte with xor",create_player,manual-trace
+0006DA88,sub_6DA88,CountSelected,PC-new,,,,high,"counts the non-zero selection flags of a panel (falistsel uses facount entries, a roster panel 1Ch)",create_player,manual-trace
+0006DAC3,sub_6DAC3,RosterPanelClick,PC-new,,,,medium,"mouse click (x, y): picks panel 0 (x 23h-113h) or 1 (x 15Eh-24Eh) and the row (y from 35h), toggles that player's selection, then enables 'Move to Free Agent List' (MoveToFreeAgents) / 'Move to Roster N' (MoveToOtherRoster) by the selection count",create_player,manual-trace
+0006DCBE,sub_6DCBE,FixJerseyNumber,PC-new,,,,high,'The jersey number %2d is already used!' / 'Please enter a new jersey number for' input dialog for a player moved onto a team,create_player,manual-trace
+0006DE4C,sub_6DE4C,CopyRoster1Rec,PC-new,,,,low,"unreferenced: dword_D0B12 = 2, copies 2E8h bytes from the roster-1 team record to unk_EAFB8 and redraws",create_player,manual-trace
+0006DE7E,sub_6DE7E,LoadBothRosterLists,PC-new,,,,high,LoadRosterList(0) then falls into LoadRosterList(1); database_dialogs 732F4 and EditRosters,create_player,manual-trace
+0006DE94,sub_6DE94,LoadRosterList,PC-new,,,,high,"(side): free-agent panel frees and rebuilds falist from KEY.DB (keydb_size/34h entries), team panel builds the sorted 1Ch-player list of rosterteam[side]; resets the selections and the move menu items",create_player,manual-trace
+0006DF06,sub_6DF06,EditTeamLines,PC-new,,,,high,"'Edit Team Lines ...' menu item: sets HomeTeam/VisTeam to the panel's team, copies its team record into the unk_DBC30 slot and runs the line editor sub_737E1, then restores and redraws",create_player,manual-trace
+0006E089,sub_6E089,EditRosters,PC-new,,,,medium,"database_save 6CE03: Edit Rosters screen loop (menubuff menus, panel clicks, keys); on exit 'The database has not been saved. Are you sure you want to exit?'",create_player,manual-trace
+0006EAB5,sub_6EAB5,ErrorScreenWait,PC-new,,,,low,mouse/keyboard wait loop used by ShowDBError,create_player,manual-trace
+0006EC95,sub_6EC95,DrawDBErrorsScreen,PC-new,,,,medium,draws the 'Errors found in databases!' screen,create_player,manual-trace
+0006ED39,sub_6ED39,ShowDBError,PC-new,,,,medium,prints one error line on the database-errors screen and waits (ErrorScreenWait),create_player,manual-trace
+0006ED8F,sub_6ED8F,CheckTeamLines,PC-new,,,,high,"checks one team: 'The forward/defence/power play/penalty killing/goalie/extra attacker lines are not complete on', 'There are not enough players/goalies/forwards/defence on' + team name",create_player,manual-trace
+0006EF84,sub_6EF84,CheckDatabases,PC-new,,,,medium,database_save 6C353: runs CheckTeamLines over the teams and shows the errors before saving,create_player,manual-trace
+0006F159,sub_6F159,SplitPlayerName,PC-new,,,,high,splits a full name at the first non-letter run into first name (max 15) and last name using the ctype table (C4B69 bit C0h),create_player,manual-trace
+0006F29C,sub_6F29C,MoveToOtherRoster,PC-new,,,,high,"'Move to Roster N' menu item: moves the selected players to the other panel's team ('There is no space to add the selected player' / 'There is not enough space to add all selected players'), FixJerseyNumber, reloads and redraws",create_player,manual-trace
+0006F6AD,sub_6F6AD,RatingToFloat,PC-new,,,,medium,returns (rating + 5) * 5 as a float (fild),create_player,manual-trace
+0006F6D4,sub_6F6D4,RandomizeNewRatings,PC-new,,,,medium,CreateFreeAgent: builds the new player's ratings from the chosen values with randomd0 and the C2CAC-C2CF0 float tables (RatingToFloat),create_player,manual-trace
+0006FA72,sub_6FA72,CreatePlayerNop,PC-new,,,,high,"empty function (ret only), unreferenced",create_player,manual-trace
+0006FA7D,sub_6FA7D,DrawShootsField,PC-new,,,,high,draws 'Shoots' and '  L' / '  R' with its value on the create-player screen,create_player,manual-trace
+0006FB35,sub_6FB35,DrawGloveField,PC-new,,,,high,draws 'Glove Hand' and '  L' / '  R' on the create-goalie screen,create_player,manual-trace
+0006FBE8,sub_6FBE8,AskLeftRight,PC-new,,,,high,"(&flag, prompt): one-key input dialog, L/l sets 1, R/r sets 0",create_player,manual-trace
+0006FC60,sub_6FC60,EditSkaterRating,PC-new,,,,high,"create-player rating click: 'Enter a new rating:' with '%2d < %s < %2d' limits, 'Shoots Left or Right?' (AskLeftRight), 'Not enough Rating Units'",create_player,manual-trace
+0006FF69,sub_6FF69,EditGoalieRating,PC-new,,,,high,goalie version of EditSkaterRating ('Glove hand Left or Right?'),create_player,manual-trace
+0007025B,sub_7025B,DrawCreatePlayer,PC-new,,,,high,"draws the create-player screen (pstatbar, 'Free Agent', name, position Center/Defence/Left Wing/Right Wing/Goalie, ratings, 'Rating Units Available <%3d>')",create_player,manual-trace
+000704A6,sub_704A6,CreatePlayerLoop,PC-new,,,,medium,"create-player screen loop: DrawCreatePlayer, mouse clicks to EditSkaterRating / EditGoalieRating",create_player,manual-trace
+000706E2,sub_706E2,CreateFreeAgent,PC-new,,,,high,"'Create Free Agent ...' menu item: disk-space check ('Not enough space to create a new free agent.'), 'Enter the name of the new player/goalie', 'Enter a position for (L,C,R,D)', 'Enter a jersey number for', CreatePlayerLoop, writes the player into .TMP database copies ('Error while making new databases!')",create_player,manual-trace
+00070E8D,sub_70E8D,MoveToFreeAgents,PC-new,,,,high,"'Move to Free Agent List' menu item: 'Move <name> to free agent list?', 'There is not enough space in the free agent list for all selected players', RemovePlayerFromTeam, reload and redraw",create_player,manual-trace
+00071043,sub_71043,RemovePlayerFromTeam,PC-new,,,,medium,"finds the player (name keys +24h/+28h/+2Ch) in the team's 1Ch roster slots (+4Ch), clears it (-1), facount++, and replaces it in the line table (+0BCh, 30h bytes) with 64h",create_player,manual-trace
+000710D8,sub_710D8,LoadTempDatabases,PC-new,,,,medium,loads the league databases' .TMP copies into buffers (dword_D07C3/D07CB/D07CF with sizes D07DB/D07E3/D07E7),create_player,manual-trace
+0007125C,sub_7125C,DeleteTempDatabases,PC-new,,,,high,unlinks the .TMP copies of the league databases,create_player,manual-trace
+00071333,sub_71333,SwapSelectedPlayers,PC-new,,,,low,unreferenced: checks 'The number of selected players and goalies must be the same on both teams!' and exchanges the selected players between the two panels,create_player,manual-trace
+00071690,sub_71690,SelectMatchingPlayers,PC-new,,,,high,"(first, last, side): selects the panel's players whose lower-cased first/last name match (last only when first is empty)",create_player,manual-trace
+0007183D,sub_7183D,SetRosterTeamMenus,PC-new,,,,high,"(side, team): re-enables the old team's division item (or 'Free Agents ...'), disables the new one and sets 'Edit Team Lines ...'",create_player,manual-trace
+00071961,sub_71961,FindPlayer,PC-new,,,,high,"'Find Player ...' menu item: 'Enter name of player to find:', searches the free-agent list and the teams, 'Choose which team to display' / 'is already displayed on Roster N' / 'does not exist!', then SetRosterTeamMenus, LoadRosterList and SelectMatchingPlayers",create_player,manual-trace
+00071F0C,sub_71F0C,InputDialog,PC-new,,,,medium,"text-input message box (line table, line count, buffer, ...) returning FFh on Esc; FixJerseyNumber, AskLeftRight, EditSkaterRating, FindPlayer",database_dialogs,manual-trace
 00073703,sub_73703,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_dialogs,unmatched
 00075456,sub_75456,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),line_editor_rosters,unmatched
 00075BAA,sub_75BAA,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),line_editor_rosters,unmatched

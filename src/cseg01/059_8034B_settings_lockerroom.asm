@@ -13,7 +13,7 @@ extern asc_D20C6, asc_D20D2, byte_C541B, byte_CDB77, byte_CDB7E, musicon, byte_D
 extern byte_DC9DF, byte_DC9E8, byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA21, byte_DCA28
 extern byte_DCA29, byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_ED7CC, byte_ED8B5
 extern byte_ED95D, byte_ED991, byte_ED9A9, dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C5413
-extern dword_C5417, dword_C541F, dword_C5519, songdata, cont2team, HomeTeam, dword_D20A8, dword_D20E0
+extern dword_C5417, dword_C541F, teamdivflags, songdata, cont2team, HomeTeam, dword_D20A8, dword_D20E0
 extern dword_D2150, dword_D223C, dword_D227C, dword_D2280, dword_D2284, dword_D2288, dword_D229C, dword_D22A0
 extern dword_D22A4, dword_D22A8, dword_D22AC, dword_D22B0, dword_D22B4, dword_D22BC, dword_D22C0, dword_D22C4
 extern dword_D22C8, dword_D22CC, dword_D22D0, dword_D22D4, dword_D22DC, dword_D22E0, dword_D22EC, dword_D22F0
@@ -1269,8 +1269,8 @@ mov eax, dword [HomeTeam]	; 8136A
 sar eax, 10h	; 8136F
 mov edx, dword [cont2team]	; 81372
 sar edx, 10h	; 81378
-mov eax, dword [nosplit eax*4+dword_C5519]	; 8137B
-mov ebp, dword [nosplit edx*4+dword_C5519]	; 81382
+mov eax, dword [nosplit eax*4+teamdivflags]	; 8137B
+mov ebp, dword [nosplit edx*4+teamdivflags]	; 81382
 or eax, ebp	; 81389
 mov dword [dword esp+0350h], eax	; 8138B
 mov esi, dword [nosplit eax*4+dword_D223C]	; 81392
@@ -2150,8 +2150,8 @@ mov ebx, dword [dword esp+031Ch]	; 81F20
 push ebx	; 81F27
 mov ebx, dword [nosplit ebx*4+dword_D2150]	; 81F28
 mov edx, dword [nosplit ebp*4+dword_D2150]	; 81F2F
-mov ebx, dword [nosplit ebx*4+dword_C5519]	; 81F36
-or ebx, dword [nosplit edx*4+dword_C5519]	; 81F3D
+mov ebx, dword [nosplit ebx*4+teamdivflags]	; 81F36
+or ebx, dword [nosplit edx*4+teamdivflags]	; 81F3D
 mov ecx, ebp	; 81F44
 mov edx, ebp	; 81F46
 xor eax, eax	; 81F48
@@ -2198,8 +2198,8 @@ mov edi, dword [dword esp+031Ch]	; 81FBD
 push edi	; 81FC4
 mov ebx, dword [nosplit edi*4+dword_D2150]	; 81FC5
 mov edx, dword [nosplit ebp*4+dword_D2150]	; 81FCC
-mov eax, dword [nosplit ebx*4+dword_C5519]	; 81FD3
-mov ebx, dword [nosplit edx*4+dword_C5519]	; 81FDA
+mov eax, dword [nosplit ebx*4+teamdivflags]	; 81FD3
+mov ebx, dword [nosplit edx*4+teamdivflags]	; 81FDA
 or ebx, eax	; 81FE1
 mov ecx, ebp	; 81FE3
 mov edx, ebp	; 81FE5
@@ -2269,8 +2269,8 @@ mov edi, dword [dword esp+031Ch]	; 820B3
 push edi	; 820BA
 mov ebx, dword [nosplit edi*4+dword_D2150]	; 820BB
 mov edx, dword [nosplit ebp*4+dword_D2150]	; 820C2
-mov eax, dword [nosplit ebx*4+dword_C5519]	; 820C9
-mov ebx, dword [nosplit edx*4+dword_C5519]	; 820D0
+mov eax, dword [nosplit ebx*4+teamdivflags]	; 820C9
+mov ebx, dword [nosplit edx*4+teamdivflags]	; 820D0
 or ebx, eax	; 820D7
 mov ecx, ebp	; 820D9
 mov edx, edi	; 820DB
@@ -2310,8 +2310,8 @@ mov esi, dword [dword esp+031Ch]	; 8213C
 push esi	; 82143
 mov ebx, dword [nosplit esi*4+dword_D2150]	; 82144
 mov edx, dword [nosplit ebp*4+dword_D2150]	; 8214B
-mov ebx, dword [nosplit ebx*4+dword_C5519]	; 82152
-or ebx, dword [nosplit edx*4+dword_C5519]	; 82159
+mov ebx, dword [nosplit ebx*4+teamdivflags]	; 82152
+or ebx, dword [nosplit edx*4+teamdivflags]	; 82159
 mov ecx, ebp	; 82160
 mov edx, esi	; 82162
 mov eax, 1	; 82164
