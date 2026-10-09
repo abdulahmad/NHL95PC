@@ -6,7 +6,7 @@ extern __CHK, tag_pset, tag_aps, tag_apset, tag_gset, tag_ags, tag_agset, str_Lo
 extern str_Pal23, loadpals, palcyclephase, palcycledelay, byte_ED9EE, gameopts, simfwdorder, simdorder
 extern loadscreenon, seasondb, dword_D2C6B, palcyclelock, jctime, memcpy_, memset_, rand_
 extern MakePath, ReadTeamRec, WriteTeamRec, ReadDbRec4Ch, KeyDbPtr, SeasonDbPtr, SeasonDbPtr2, CareerDbPtr
-extern CareerDbPtr2, sub_76429, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E83C, sub_8FFB0, sub_910E0
+extern CareerDbPtr2, FadePalStep, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E83C, sub_8FFB0, sub_910E0
 extern sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4C61, tag_t
 extern tag_at, tag_pk, tag_ps, tag_gk, tag_gs
 global RandMod, SimAddPair, SimulateGame, LoadScreenPalTick
@@ -2702,7 +2702,7 @@ add esp, byte 0Ch	; 47A1C
 mov ebx, 8	; 47A1F
 mov edx, loadpals	; 47A24
 mov eax, 1	; 47A29
-call sub_76429	; 47A2E
+call FadePalStep	; 47A2E
 call sub_B4BA8	; 47A33
 push byte 0	; 47A38
 call sub_B392C	; 47A3A

@@ -5,12 +5,12 @@ section s_C3014 progbits alloc noexec write align=1
 global str_DSBOX, str_DbBut, str_None2, str_Del2, str_Open3, str_Can2, str_Noar2, str_Up2
 global str_Down2, str_Arro2, str_Dbno, str_Dbcu, str_Dbtm, str_Dbor, str_Db3, str_CURRENT
 global str_Org, str_ORIGINAL, str_Dbx, str_Open4, str_Delete2, str_Done2, str_Current4, str_Original2
-global str_Temporary, str_Dbdialog, str_Pdbx, str_Pointer12, str_DBX2, str_Buf2, asc_C30CC, asc_C30D0
-global asc_C30D9, asc_C30DE, asc_C30E3, asc_C30EB, asc_C30F2, asc_C30F7, asc_C30FE, asc_C3107
-global asc_C3111, asc_C3122, asc_C3127, asc_C312D, asc_C3134, asc_C313F, asc_C3146, asc_C314E
-global asc_C3152, asc_C3156, asc_C315A, asc_C3160, asc_C3164, asc_C316C, asc_C3171, asc_C3180
-global asc_C3184, asc_C3189, asc_C3190, asc_C3194, asc_C319D, asc_C31A2, asc_C31A7, asc_C31AF
-global asc_C31B6, asc_C31BB, asc_C31C2, asc_C31CB, asc_C31D5, asc_C31F1, asc_C31F7, asc_C3200
+global str_Temporary, str_Dbdialog, str_Pdbx, str_Pointer12, str_DBX2, str_Buf2, str_Pal25, str_Lineditp2
+global str_Shrt2, str_Pntr3, str_Pointer13, str_Embpal4, str_Pal26, str_Lelogo, str_Menubuff8, str_C2dS2
+global str_S2dSS, str_Keys3, str_Pstat3, str_Gstat3, str_SRoster, str_Pos2, str_Name2, str_G4
+global str_A4, str_PT2, str_Shots4, str_PIM4, asc_C3164, str_Min4, str_GAA4, str_GA3
+global str_SA3, str_PCT2, str_Pal27, str_Lineditp3, str_Shrt3, str_Pntr4, str_Pointer14, str_Embpal5
+global str_Pal28, str_Lelogo2, str_Menubuff9, str_C2dS3, str_Key, asc_C31F1, asc_C31F7, asc_C3200
 global asc_C3205, asc_C320D, asc_C3214, asc_C321B, asc_C3222, asc_C3229, asc_C322F, asc_C3236
 global asc_C323D, asc_C3245, asc_C324C, asc_C3253, asc_C325B, asc_C3267, asc_C326D, asc_C3277
 global asc_C3288, asc_C328E, asc_C32A4, asc_C32AA, asc_C32AF, asc_C32B5, asc_C32BC, asc_C32C1
@@ -33,8 +33,8 @@ global asc_C38B2, asc_C38B6, asc_C38BA, asc_C38BE, asc_C38C2, asc_C38CA, asc_C38
 global asc_C38DC, asc_C38E4, asc_C38E8, asc_C38EC, asc_C38F0, asc_C38F8, asc_C3904, asc_C3923
 global asc_C3932, asc_C3947, asc_C3966, asc_C3972, asc_C3976, asc_C397E, asc_C3986, asc_C398F
 global asc_C3994, asc_C399B, asc_C39A0, qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0
-global unk_C311D, unk_C311F, unk_C3143, unk_C314B, unk_C3169, unk_C3177, unk_C317A, unk_C317D
-global unk_C31D9, unk_C31DC, unk_C31DF, unk_C31E2, unk_C31E5, unk_C31E8, unk_C31EB, unk_C31EE
+global unk_C311D, str_S6, str_No2, str_GP8, str_C5, str_W6, str_L8, str_T6
+global str_ErrA1, str_ErrA2, str_ErrA3, str_ErrA4, str_ErrA5, str_ErrA6, str_ErrA7, str_ErrA8
 global unk_C3283, unk_C3285, unk_C3292, unk_C3295, unk_C3298, unk_C329B, unk_C329E, unk_C32A1
 global unk_C33F8, unk_C3403, unk_C3444, unk_C3447, unk_C344D, unk_C3468, unk_C346B, unk_C3470
 global unk_C34D0, unk_C34D4, unk_C34D8, unk_C34DC, unk_C34E0, unk_C34E4, unk_C34E8, unk_C34EC
@@ -104,115 +104,115 @@ str_DBX2:
 db 02Eh,044h,042h,058h,00h
 str_Buf2:
 db 062h,075h,066h,00h
-asc_C30CC:
+str_Pal25:
 db 050h,061h,06Ch,00h
-asc_C30D0:
+str_Lineditp2:
 db 06Ch,069h,06Eh,065h,064h,069h,074h,070h,00h
-asc_C30D9:
+str_Shrt2:
 db 073h,068h,072h,074h,00h
-asc_C30DE:
+str_Pntr3:
 db 070h,06Eh,074h,072h,00h
-asc_C30E3:
+str_Pointer13:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C30EB:
+str_Embpal4:
 db 065h,06Dh,062h,070h,061h,06Ch,00h
-asc_C30F2:
+str_Pal26:
 db 021h,070h,061h,06Ch,00h
-asc_C30F7:
+str_Lelogo:
 db 06Ch,065h,06Ch,06Fh,067h,06Fh,00h
-asc_C30FE:
+str_Menubuff8:
 db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
-asc_C3107:
+str_C2dS2:
 db 025h,063h,020h,025h,032h,064h,020h,025h,073h,00h
-asc_C3111:
+str_S2dSS:
 db 025h,073h,020h,025h,032h,064h,020h,025h,073h,025h,073h,00h
 unk_C311D:
 db 02Eh,00h
-unk_C311F:
+str_S6:
 db 073h,02Eh,00h
-asc_C3122:
+str_Keys3:
 db 06Bh,065h,079h,073h,00h
-asc_C3127:
+str_Pstat3:
 db 070h,073h,074h,061h,074h,00h
-asc_C312D:
+str_Gstat3:
 db 067h,073h,074h,061h,074h,00h,00h
-asc_C3134:
+str_SRoster:
 db 025h,073h,020h,052h,06Fh,073h,074h,065h,072h,03Ah,00h
-asc_C313F:
+str_Pos2:
 db 050h,06Fh,073h,00h
-unk_C3143:
+str_No2:
 db 04Eh,06Fh,00h
-asc_C3146:
+str_Name2:
 db 04Eh,061h,06Dh,065h,00h
-unk_C314B:
+str_GP8:
 db 047h,050h,00h
-asc_C314E:
+str_G4:
 db 020h,020h,047h,00h
-asc_C3152:
+str_A4:
 db 020h,020h,041h,00h
-asc_C3156:
+str_PT2:
 db 020h,050h,054h,00h
-asc_C315A:
+str_Shots4:
 db 053h,068h,06Fh,074h,073h,00h
-asc_C3160:
+str_PIM4:
 db 050h,049h,04Dh,00h
 asc_C3164:
 db 020h,02Bh,02Fh,02Dh,00h
-unk_C3169:
+str_C5:
 db 025h,063h,00h
-asc_C316C:
+str_Min4:
 db 020h,04Dh,069h,06Eh,00h
-asc_C3171:
+str_GAA4:
 db 020h,020h,047h,041h,041h,00h
-unk_C3177:
+str_W6:
 db 020h,057h,00h
-unk_C317A:
+str_L8:
 db 020h,04Ch,00h
-unk_C317D:
+str_T6:
 db 020h,054h,00h
-asc_C3180:
+str_GA3:
 db 020h,047h,041h,00h
-asc_C3184:
+str_SA3:
 db 020h,020h,053h,041h,00h
-asc_C3189:
+str_PCT2:
 db 020h,020h,050h,043h,054h,00h,00h
-asc_C3190:
+str_Pal27:
 db 050h,061h,06Ch,00h
-asc_C3194:
+str_Lineditp3:
 db 06Ch,069h,06Eh,065h,064h,069h,074h,070h,00h
-asc_C319D:
+str_Shrt3:
 db 073h,068h,072h,074h,00h
-asc_C31A2:
+str_Pntr4:
 db 070h,06Eh,074h,072h,00h
-asc_C31A7:
+str_Pointer14:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C31AF:
+str_Embpal5:
 db 065h,06Dh,062h,070h,061h,06Ch,00h
-asc_C31B6:
+str_Pal28:
 db 021h,070h,061h,06Ch,00h
-asc_C31BB:
+str_Lelogo2:
 db 06Ch,065h,06Ch,06Fh,067h,06Fh,00h
-asc_C31C2:
+str_Menubuff9:
 db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
-asc_C31CB:
+str_C2dS3:
 db 025h,063h,020h,025h,032h,064h,020h,025h,073h,00h
-asc_C31D5:
+str_Key:
 db 06Bh,065h,079h,00h
-unk_C31D9:
+str_ErrA1:
 db 041h,031h,00h
-unk_C31DC:
+str_ErrA2:
 db 041h,032h,00h
-unk_C31DF:
+str_ErrA3:
 db 041h,033h,00h
-unk_C31E2:
+str_ErrA4:
 db 041h,034h,00h
-unk_C31E5:
+str_ErrA5:
 db 041h,035h,00h
-unk_C31E8:
+str_ErrA6:
 db 041h,036h,00h
-unk_C31EB:
+str_ErrA7:
 db 041h,037h,00h
-unk_C31EE:
+str_ErrA8:
 db 041h,038h,00h
 asc_C31F1:
 db 065h,06Dh,062h,025h,073h,00h

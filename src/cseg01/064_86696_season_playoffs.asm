@@ -28,7 +28,7 @@ extern TextGridOpen, TextGridOff, InitGameSummary, SetupStatsSourceMenu, BuildSa
 extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, CountSeriesWins, PreGameScreen, AskDatabaseChoice, TextInputDialog
 extern SetDialogColors, RestoreDialogBg, MessageBox, SaveModeState, LoadModeState, WriteModeState, PostGameToTeamDb, SimulateGame
 extern ShowLoadingScreen, GetInputEvent, ClearInputQueue, InputInstall, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel
-extern DrawMenuItemNorm, MenuHitTest, sub_76429, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
+extern DrawMenuItemNorm, MenuHitTest, FadePalStep, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E8B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_910B0, sub_9121C, sub_91370, sub_913B4
 extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, FatalError, MouseSetPos, sub_B2DCA, sub_B2E1B
@@ -93,7 +93,7 @@ add esp, byte 0Ch	; 86756
 mov ebx, 10h	; 86759
 mov edx, edi	; 8675E
 mov eax, 1	; 86760
-call sub_76429	; 86765
+call FadePalStep	; 86765
 call sub_B4BA8	; 8676A
 mov ebp, dword [dword_C65AC]	; 8676F
 test ebp, ebp	; 86775
@@ -164,7 +164,7 @@ add esp, byte 8	; 86838
 lea edx, [byte eax+010h]	; 8683B
 mov ebx, 10h	; 8683E
 xor eax, eax	; 86843
-call sub_76429	; 86845
+call FadePalStep	; 86845
 push byte 41h	; 8684A
 push byte 40h	; 8684C
 call sub_8E9C0	; 8684E
@@ -397,7 +397,7 @@ add esp, byte 0Ch	; 86BE6
 mov ebx, 10h	; 86BE9
 mov edx, esi	; 86BEE
 mov eax, 1	; 86BF0
-call sub_76429	; 86BF5
+call FadePalStep	; 86BF5
 mov ebx, dword [dword_C65AC]	; 86BFA
 test ebx, ebx	; 86C00
 jne short .21	; 86C02
@@ -445,7 +445,7 @@ add esp, byte 8	; 86C85
 lea edx, [byte eax+010h]	; 86C88
 mov ebx, 10h	; 86C8B
 xor eax, eax	; 86C90
-call sub_76429	; 86C92
+call FadePalStep	; 86C92
 push ebp	; 86C97
 call jctime	; 86C98
 add esp, byte 4	; 86C9D
@@ -553,7 +553,7 @@ add esp, byte 0Ch	; 86E18
 mov ebx, 10h	; 86E1B
 mov edx, esi	; 86E20
 mov eax, 1	; 86E22
-call sub_76429	; 86E27
+call FadePalStep	; 86E27
 push esi	; 86E2C
 call jctime	; 86E2D
 add esp, byte 4	; 86E32
@@ -2350,7 +2350,7 @@ call DrawMenuBar	; 8812E
 mov ebx, 10h	; 88133
 mov edx, dword [byte esp+06Ch]	; 88138
 xor eax, eax	; 8813C
-call sub_76429	; 8813E
+call FadePalStep	; 8813E
 push edi	; 88143
 jmp near .34	; 88144
 .3:
@@ -2413,7 +2413,7 @@ jne near .29	; 88215
 mov ebx, 10h	; 8821B
 mov edx, dword [byte esp+06Ch]	; 88220
 xor eax, eax	; 88224
-call sub_76429	; 88226
+call FadePalStep	; 88226
 push byte 0FFFFFFFFh	; 8822B
 lea eax, [byte esp+064h]	; 8822D
 push eax	; 88231
@@ -2650,7 +2650,7 @@ add esp, byte 4	; 884EC
 mov ebx, 10h	; 884EF
 mov edx, dword [byte esp+06Ch]	; 884F4
 xor eax, eax	; 884F8
-call sub_76429	; 884FA
+call FadePalStep	; 884FA
 push byte 0	; 884FF
 lea eax, [byte esp+064h]	; 88501
 push eax	; 88505
@@ -2669,7 +2669,7 @@ call RestoreDialogBg	; 8852A
 mov ebx, 10h	; 8852F
 mov edx, dword [byte esp+06Ch]	; 88534
 mov eax, 1	; 88538
-call sub_76429	; 8853D
+call FadePalStep	; 8853D
 mov ebx, dword [leaguedbnames+14h]	; 88542
 mov ecx, str_extDB	; 88548
 mov edx, curleague	; 8854D
@@ -2724,7 +2724,7 @@ call DrawMenuBar	; 885FB
 mov ebx, 10h	; 88600
 mov edx, dword [byte esp+06Ch]	; 88605
 xor eax, eax	; 88609
-call sub_76429	; 8860B
+call FadePalStep	; 8860B
 mov ebp, dword [byte esp+068h]	; 88610
 push ebp	; 88614
 .34:
@@ -3807,7 +3807,7 @@ add esp, byte 0Ch	; 8938F
 mov ebx, 10h	; 89392
 mov edx, esi	; 89397
 mov eax, 1	; 89399
-call sub_76429	; 8939E
+call FadePalStep	; 8939E
 push esi	; 893A3
 call jctime	; 893A4
 add esp, byte 4	; 893A9
@@ -3889,7 +3889,7 @@ add esp, byte 0Ch	; 89502
 mov ebx, 10h	; 89505
 mov edx, esi	; 8950A
 mov eax, 1	; 8950C
-call sub_76429	; 89511
+call FadePalStep	; 89511
 push esi	; 89516
 call jctime	; 89517
 add esp, byte 4	; 8951C
@@ -4004,7 +4004,7 @@ add esp, byte 0Ch	; 89693
 mov ebx, 10h	; 89696
 mov edx, esi	; 8969B
 mov eax, 1	; 8969D
-call sub_76429	; 896A2
+call FadePalStep	; 896A2
 push esi	; 896A7
 call jctime	; 896A8
 add esp, byte 4	; 896AD
@@ -4104,7 +4104,7 @@ add esp, byte 0Ch	; 897E2
 mov ebx, 10h	; 897E5
 mov edx, esi	; 897EA
 mov eax, 1	; 897EC
-call sub_76429	; 897F1
+call FadePalStep	; 897F1
 push byte 43h	; 897F6
 mov ecx, 40h	; 897F8
 mov ebx, 42h	; 897FD
@@ -4125,7 +4125,7 @@ jne near .30	; 8982F
 mov ebx, 1	; 89835
 mov edx, esi	; 8983A
 mov eax, ebx	; 8983C
-call sub_76429	; 8983E
+call FadePalStep	; 8983E
 push esi	; 89843
 call jctime	; 89844
 add esp, byte 4	; 89849
@@ -4195,7 +4195,7 @@ jmp short .31	; 8996A
 mov ebx, 1	; 8996C
 mov edx, esi	; 89971
 mov eax, ebx	; 89973
-call sub_76429	; 89975
+call FadePalStep	; 89975
 push esi	; 8997A
 call jctime	; 8997B
 add esp, byte 4	; 89980
@@ -4264,7 +4264,7 @@ add esp, byte 0Ch	; 89A4B
 mov ebx, 10h	; 89A4E
 mov edx, esi	; 89A53
 mov eax, 1	; 89A55
-call sub_76429	; 89A5A
+call FadePalStep	; 89A5A
 push esi	; 89A5F
 call jctime	; 89A60
 add esp, byte 4	; 89A65
@@ -4322,7 +4322,7 @@ add esp, byte 0Ch	; 89B1A
 mov ebx, 10h	; 89B1D
 mov edx, esi	; 89B22
 mov eax, 1	; 89B24
-call sub_76429	; 89B29
+call FadePalStep	; 89B29
 push esi	; 89B2E
 call jctime	; 89B2F
 add esp, byte 4	; 89B34
@@ -4774,7 +4774,7 @@ call DrawMenuBar	; 8A15E
 mov ebx, 10h	; 8A163
 mov edx, edi	; 8A168
 xor eax, eax	; 8A16A
-call sub_76429	; 8A16C
+call FadePalStep	; 8A16C
 push esi	; 8A171
 call jctime	; 8A172
 add esp, byte 4	; 8A177

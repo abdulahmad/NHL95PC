@@ -18,7 +18,7 @@ extern dword_E9A9E, dword_E9AB6, hilightfont, jctime, PickAwardWinners_x, memcpy
 extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, PickAwardWinners, ShowAwardScreens
 extern DrawAwardsSummary, MakePath, FileOpenRead, FileClose, DrawHudPanel, SetTextColors, ClearPanelPenalties, WaitClickTimeout
 extern StartPreGame, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
-extern sub_64614, SetupTeamLines, ClearInputQueue, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
+extern sub_64614, SetupTeamLines, ClearInputQueue, FadePalStep, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, MouseSetPos, sub_B30B4, sub_B30BB
 extern sub_B392C, sub_B4BA8, threat, unk_DF014, SortCords, vtoa, regd4, scrpitch
@@ -69,7 +69,7 @@ call sub_8FCDF	; 1337F
 mov ebx, 10h	; 13384
 mov edx, esi	; 13389
 mov eax, 1	; 1338B
-call sub_76429	; 13390
+call FadePalStep	; 13390
 cmp byte [musicon], 0	; 13395
 je short .3	; 1339C
 cmp dword [songdata], byte 0	; 1339E
@@ -200,7 +200,7 @@ call PlayDigiSample	; 13541
 mov ebx, 10h	; 13546
 mov edx, esi	; 1354B
 xor eax, eax	; 1354D
-call sub_76429	; 1354F
+call FadePalStep	; 1354F
 cmp byte [musicon], 0	; 13554
 jne short .14	; 1355B
 cmp dword [dword_C541F], byte 1	; 1355D
@@ -209,7 +209,7 @@ call WaitDigiSample	; 13566
 mov ebx, 10h	; 1356B
 mov edx, esi	; 13570
 mov eax, 1	; 13572
-call sub_76429	; 13577
+call FadePalStep	; 13577
 call StopDigiSample	; 1357C
 mov eax, edi	; 13581
 call sub_8F1FE	; 13583
@@ -238,7 +238,7 @@ call sub_8FCDF	; 135D1
 mov ebx, 10h	; 135D6
 mov edx, esi	; 135DB
 mov eax, 1	; 135DD
-call sub_76429	; 135E2
+call FadePalStep	; 135E2
 .17:
 mov eax, dword [musicslot-3]	; 135E7
 sar eax, 18h	; 135EC
@@ -262,7 +262,7 @@ call WaitClickTimeout	; 1361E
 mov ebx, 10h	; 13623
 mov edx, esi	; 13628
 mov eax, 1	; 1362A
-call sub_76429	; 1362F
+call FadePalStep	; 1362F
 .20:
 push esi	; 13634
 call jctime	; 13635
@@ -376,13 +376,13 @@ lea ebp, [byte eax+010h]	; 137B4
 mov ebx, 10h	; 137B7
 mov edx, ebp	; 137BC
 xor eax, eax	; 137BE
-call sub_76429	; 137C0
+call FadePalStep	; 137C0
 mov eax, 2328h	; 137C5
 call WaitClickTimeout	; 137CA
 mov ebx, 10h	; 137CF
 mov edx, ebp	; 137D4
 mov eax, 1	; 137D6
-call sub_76429	; 137DB
+call FadePalStep	; 137DB
 push esi	; 137E0
 call jctime	; 137E1
 add esp, byte 4	; 137E6

@@ -6,7 +6,7 @@ extern __CHK, str_OUT, str_NeedKbytesFmt2, msg_NeedKbytes2, mi_9394Season, mi_93
 extern mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, textgrid, statscategory, statsteamsel, statsredrawcb, deskexit
 extern statsplayoffs, statsfromleague, statspalvalid, dword_DC6B4, dword_DC738, statspal, fclose_, fopen_
 extern fputs_, off_C648E, off_C659A, sprintf_, strcat_, strcmp_, strcpy_, strncpy_
-extern FileExists, DiskSpaceShort, MessageBox, sub_76429, sub_8FFB0, str_rt, str_wt, exhstate
+extern FileExists, DiskSpaceShort, MessageBox, FadePalStep, sub_8FFB0, str_rt, str_wt, exhstate
 extern unk_C6499, unk_C64F5, unk_C652A, statsleague, unk_DC340
 global DeskSetExit_ret1, StatsSel_common
 global WriteScreenTextFile, DeskSetExit1
@@ -202,7 +202,7 @@ add esp, byte 0Ch	; 17A91
 mov ebx, 10h	; 17A94
 mov edx, unk_DC340	; 17A99
 mov eax, 1	; 17A9E
-call sub_76429	; 17AA3
+call FadePalStep	; 17AA3
 mov dword [statspalvalid], 1	; 17AA8
 mov dword [statspal], unk_DC340	; 17AB2
 mov dword [dword_DC6B4], 0FFFFFFFFh	; 17ABC
@@ -213,7 +213,7 @@ mov dword [statspal], ebp	; 17AD7
 mov ebx, 10h	; 17ADD
 mov edx, unk_DC340	; 17AE2
 xor eax, eax	; 17AE7
-call sub_76429	; 17AE9
+call FadePalStep	; 17AE9
 .x:
 pop ebp	; 17AEE
 pop edx	; 17AEF
@@ -262,7 +262,7 @@ add esp, byte 0Ch	; 17B89
 mov ebx, 10h	; 17B8C
 mov edx, unk_DC340	; 17B91
 mov eax, ebp	; 17B96
-call sub_76429	; 17B98
+call FadePalStep	; 17B98
 mov dword [statspalvalid], ebp	; 17B9D
 mov dword [statspal], unk_DC340	; 17BA3
 mov dword [dword_DC6B4], 0FFFFFFFFh	; 17BAD
@@ -274,7 +274,7 @@ mov dword [statspal], esi	; 17BCA
 mov ebx, 10h	; 17BD0
 mov edx, unk_DC340	; 17BD5
 xor eax, eax	; 17BDA
-call sub_76429	; 17BDC
+call FadePalStep	; 17BDC
 StatsSel_x:
 pop ebp	; 17BE1
 pop esi	; 17BE2
@@ -323,7 +323,7 @@ add esp, byte 0Ch	; 17C7D
 mov ebx, 10h	; 17C80
 mov edx, unk_DC340	; 17C85
 mov eax, 1	; 17C8A
-call sub_76429	; 17C8F
+call FadePalStep	; 17C8F
 mov dword [statspalvalid], 1	; 17C94
 mov dword [statspal], unk_DC340	; 17C9E
 mov dword [dword_DC6B4], 0FFFFFFFFh	; 17CA8
@@ -334,7 +334,7 @@ mov dword [statspal], ebp	; 17CC3
 mov ebx, 10h	; 17CC9
 mov edx, unk_DC340	; 17CCE
 xor eax, eax	; 17CD3
-call sub_76429	; 17CD5
+call FadePalStep	; 17CD5
 .x:
 pop ebp	; 17CDA
 pop edi	; 17CDB

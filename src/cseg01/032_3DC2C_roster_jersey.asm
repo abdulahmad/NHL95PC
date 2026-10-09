@@ -15,7 +15,7 @@ extern dword_DE264, ptrupdatefn, jctime, memcpy_, leaguedbnames, unequaltrademsg
 extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
 extern FileOpenRW, FileClose, ReadKeyRec, WriteKeyRec, ReadTeamRec, LoadGameTeams, RunMenu, InitMenuRemap
 extern TeamRosterScreen, TextInputDialog, MessageBox, WriteTeamRec, GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown
-extern DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, sub_76429, sub_767D0, sub_78BE7, sub_7A099, ClearPlayerFromLines
+extern DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, FadePalStep, GameLineEditor, sub_78BE7, sub_7A099, ClearPlayerFromLines
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
 extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, MouseSetPos
 extern sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, SetDrawBitmap, str_S12
@@ -218,7 +218,7 @@ add esp, byte 0Ch	; 3DE4D
 mov ebx, 10h	; 3DE50
 mov edx, edi	; 3DE55
 mov eax, 1	; 3DE57
-call sub_76429	; 3DE5C
+call FadePalStep	; 3DE5C
 push byte 0	; 3DE61
 call sub_B392C	; 3DE63
 add esp, byte 4	; 3DE68
@@ -293,7 +293,7 @@ call DrawMenuBar	; 3DF71
 mov ebx, 10h	; 3DF76
 mov edx, esi	; 3DF7B
 xor eax, eax	; 3DF7D
-call sub_76429	; 3DF7F
+call FadePalStep	; 3DF7F
 push byte 42h	; 3DF84
 mov ecx, 41h	; 3DF86
 mov ebx, 40h	; 3DF8B
@@ -328,7 +328,7 @@ call sub_B4BA8	; 3E002
 mov ebx, 10h	; 3E007
 mov edx, esi	; 3E00C
 mov eax, 1	; 3E00E
-call sub_76429	; 3E013
+call FadePalStep	; 3E013
 push edi	; 3E018
 call sub_B392C	; 3E019
 add esp, byte 4	; 3E01E
@@ -797,7 +797,7 @@ mov ecx, 3	; 3E6F9
 mov ebx, unk_CF3CF	; 3E6FE
 mov edx, hmlinetab	; 3E703
 xor eax, eax	; 3E708
-call sub_767D0	; 3E70A
+call GameLineEditor	; 3E70A
 push byte 20h	; 3E70F
 push dword 300h	; 3E711
 push str_Pal22	; 3E716
@@ -812,7 +812,7 @@ add esp, byte 0Ch	; 3E731
 mov ebx, 10h	; 3E734
 mov edx, edi	; 3E739
 mov eax, 1	; 3E73B
-call sub_76429	; 3E740
+call FadePalStep	; 3E740
 push edi	; 3E745
 call jctime	; 3E746
 add esp, byte 4	; 3E74B
@@ -820,7 +820,7 @@ mov ecx, 3	; 3E74E
 mov ebx, unk_CF3CF	; 3E753
 mov edx, awlinetab	; 3E758
 mov eax, 1	; 3E75D
-call sub_767D0	; 3E762
+call GameLineEditor	; 3E762
 push byte 20h	; 3E767
 push dword 300h	; 3E769
 push str_Pal22	; 3E76E
@@ -835,7 +835,7 @@ add esp, byte 0Ch	; 3E789
 mov ebx, 10h	; 3E78C
 mov edx, edi	; 3E791
 mov eax, 1	; 3E793
-call sub_76429	; 3E798
+call FadePalStep	; 3E798
 push edi	; 3E79D
 call jctime	; 3E79E
 add esp, byte 4	; 3E7A3
@@ -1227,7 +1227,7 @@ add esp, byte 4	; 3EC85
 mov ebx, 10h	; 3EC88
 mov edx, dword [byte esp+034h]	; 3EC8D
 xor eax, eax	; 3EC91
-call sub_76429	; 3EC93
+call FadePalStep	; 3EC93
 mov esi, dword [byte esp+034h]	; 3EC98
 push esi	; 3EC9C
 call jctime	; 3EC9D
@@ -2839,7 +2839,7 @@ add esp, byte 0Ch	; 3FF9F
 mov ebx, 10h	; 3FFA2
 mov edx, edi	; 3FFA7
 mov eax, 1	; 3FFA9
-call sub_76429	; 3FFAE
+call FadePalStep	; 3FFAE
 push edi	; 3FFB3
 call jctime	; 3FFB4
 add esp, byte 4	; 3FFB9

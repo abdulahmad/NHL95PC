@@ -12,7 +12,7 @@ extern dword_D2C6B, pointerspr, ptrupdatefn, jctime, memcpy_, teamabbrevs, setdi
 extern strcpy_, strncpy_, DiskFreeBytes, FileExists, MakePath, FileOpenRead, FileOpenRW, FileCreate
 extern FileClose, FileReadAt, FileWriteAt, SetupStatsSourceMenu, SetScreenTitle, EasnStandingsScreen, MessageBox, FadeOutPalCycle
 extern GetInputEvent, ClearInputQueue, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest
-extern sub_76429, SetSideControls, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E, sub_8F979
+extern FadePalStep, SetSideControls, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C, sub_91370
 extern sub_91400, FatalError, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_B4BC4, EasnTeamStatsScreen
 extern EasnSkaterStatsScreen, EasnGoalieStatsScreen, EasnStandingsMenu, str_fee2, str_fee3, str_fee4, scrpitch, VisTeam
@@ -226,7 +226,7 @@ add esp, byte 8	; 31DC2
 lea edx, [byte eax+010h]	; 31DC5
 mov ebx, 10h	; 31DC8
 xor eax, eax	; 31DCD
-call sub_76429	; 31DCF
+call FadePalStep	; 31DCF
 push ebp	; 31DD4
 call jctime	; 31DD5
 add esp, byte 4	; 31DDA
@@ -540,7 +540,7 @@ call sub_8FB8E	; 3222C
 mov ebx, 10h	; 32231
 mov edx, esi	; 32236
 xor eax, eax	; 32238
-call sub_76429	; 3223A
+call FadePalStep	; 3223A
 push ebp	; 3223F
 call jctime	; 32240
 add esp, byte 4	; 32245

@@ -20,7 +20,7 @@ extern GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameSt
 extern MessageBox, CalendarScreen, LeagueTeamSelect, WriteSeasonRec, ReadGoalieSeasonRec, WriteGoalieSeasonRec, WriteSchedGame, WriteTeamRec
 extern ReadLeagueTeamEntry, AskTeamPassword, UpdateTeamDbs, MergeLeagueFiles, FindLeagueFloppy, WaitLeagueFloppy, ReadLeagueInfo, ReadTeamNames
 extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSeasonSchedule, UpdatePlayoffSeries, ShowLoadingScreen, InputInstall
-extern InputRemove, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FCDF, sub_8FFB0
+extern InputRemove, FadePalStep, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_903F0, sub_91370, sub_91400, sub_92F50, sub_93000, sub_B2DCA, sub_B2E1B, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, leaguediskmsg, playerdbsmsg, btn_MasterDB, unk_C7F07
 extern unk_C7F1B, updschedmsg, str_backslash2, str_S4, awlinetab, hmlinetab, unk_DC240, leagueteams
@@ -1079,7 +1079,7 @@ add esp, byte 0Ch	; 36F51
 mov ebx, 10h	; 36F54
 mov edx, dword [dword esp+080h]	; 36F59
 mov eax, 1	; 36F60
-call sub_76429	; 36F65
+call FadePalStep	; 36F65
 mov eax, dword [dword esp+080h]	; 36F6A
 push eax	; 36F71
 call jctime	; 36F72
@@ -1302,7 +1302,7 @@ add esp, byte 0Ch	; 37286
 mov ebx, 10h	; 37289
 mov edx, esi	; 3728E
 mov eax, 1	; 37290
-call sub_76429	; 37295
+call FadePalStep	; 37295
 push esi	; 3729A
 call jctime	; 3729B
 add esp, byte 4	; 372A0
@@ -1884,7 +1884,7 @@ add esp, byte 0Ch	; 37AC0
 mov ebx, 10h	; 37AC3
 mov edx, dword [dword esp+08Ch]	; 37AC8
 mov eax, 1	; 37ACF
-call sub_76429	; 37AD4
+call FadePalStep	; 37AD4
 mov eax, dword [dword esp+08Ch]	; 37AD9
 push eax	; 37AE0
 call jctime	; 37AE1

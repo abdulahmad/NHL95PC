@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_EC6B8 nobits alloc noexec write align=1
-global byte_EC7E0, byte_EC7E4, byte_ECAE4, byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED0F7
+global lineedpanel, fadepal, fadepal2, byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED0F7
 global byte_ED0F8, byte_ED0F9, byte_ED0FA, byte_ED361, byte_ED7CC, byte_ED7CD, byte_ED7E4, byte_ED7E6
 global byte_ED7EB, byte_ED7ED, byte_ED7F0, byte_ED7F3, byte_ED7F7, byte_ED821, byte_ED823, byte_ED824
 global byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED82F, byte_ED830, byte_ED833, byte_ED834
@@ -47,11 +47,11 @@ resb 4
 resb 72
 curdbname:
 resb 32
-byte_EC7E0:
+lineedpanel:
 resb 4
-byte_EC7E4:
+fadepal:
 resb 768
-byte_ECAE4:
+fadepal2:
 resb 768
 dword_ECDE4:
 resb 4

@@ -14,7 +14,7 @@ extern fputchar, jctime, memcpy_, teamabbrevs, crestnames, scoutcatnames, league
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, SetDialogColors, TrackButtons, DrawButtons
 extern WaitClickTimeout, ShowLoadingScreen, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, GetInputEvent
-extern ClearInputQueue, sub_76429, sub_767D0, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
+extern ClearInputQueue, FadePalStep, GameLineEditor, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_91370, sub_913D0, sub_91400
 extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4FAC, str_D4
@@ -118,7 +118,7 @@ add esp, byte 0Ch	; 2A082
 mov ebx, 10h	; 2A085
 mov edx, esi	; 2A08A
 mov eax, 1	; 2A08C
-call sub_76429	; 2A091
+call FadePalStep	; 2A091
 push esi	; 2A096
 call jctime	; 2A097
 add esp, byte 4	; 2A09C
@@ -542,7 +542,7 @@ call sub_8FB8E	; 2A697
 mov ebx, 10h	; 2A69C
 mov edx, dword [dword esp+0644h]	; 2A6A1
 xor eax, eax	; 2A6A8
-call sub_76429	; 2A6AA
+call FadePalStep	; 2A6AA
 cmp dword [schedgameidx], 444h	; 2A6AF
 jge short .26	; 2A6B9
 xor edx, edx	; 2A6BB
@@ -748,7 +748,7 @@ mov ebx, unk_CF1AF	; 2A9B2
 mov edx, hmlinetab	; 2A9B7
 xor eax, eax	; 2A9BC
 .2:
-call sub_767D0	; 2A9BE
+call GameLineEditor	; 2A9BE
 push byte 20h	; 2A9C3
 push dword 300h	; 2A9C5
 push str_Pal10	; 2A9CA
@@ -763,7 +763,7 @@ add esp, byte 0Ch	; 2A9E6
 mov ebx, 10h	; 2A9E9
 mov edx, esi	; 2A9EE
 mov eax, 1	; 2A9F0
-call sub_76429	; 2A9F5
+call FadePalStep	; 2A9F5
 push esi	; 2A9FA
 call jctime	; 2A9FB
 add esp, byte 4	; 2AA00
@@ -778,7 +778,7 @@ add esp, byte 4	; 2AA16
 mov ebx, 10h	; 2AA19
 mov edx, dword [dword esp+0644h]	; 2AA1E
 xor eax, eax	; 2AA25
-call sub_76429	; 2AA27
+call FadePalStep	; 2AA27
 mov edx, 0F7h	; 2AA2C
 mov eax, 0FAh	; 2AA31
 call SetTextColors	; 2AA36
@@ -822,7 +822,7 @@ call sub_8FCDF	; 2AAC6
 mov ebx, 10h	; 2AACB
 mov edx, dword [dword esp+0644h]	; 2AAD0
 mov eax, 1	; 2AAD7
-call sub_76429	; 2AADC
+call FadePalStep	; 2AADC
 cmp byte [musicon], 0	; 2AAE1
 je short .10	; 2AAE8
 cmp dword [songdata], byte 0	; 2AAEA
@@ -1378,7 +1378,7 @@ jne short .31	; 2B29B
 mov ebx, 10h	; 2B29D
 mov edx, dword [dword esp+0108h]	; 2B2A2
 xor eax, eax	; 2B2A9
-call sub_76429	; 2B2AB
+call FadePalStep	; 2B2AB
 cmp dword [dword esp+0114h], byte 0	; 2B2B0
 jne short .30	; 2B2B8
 call sub_59C5F	; 2B2BA
@@ -1511,7 +1511,7 @@ jne short .39	; 2B482
 mov ebx, 10h	; 2B484
 mov edx, dword [dword esp+0108h]	; 2B489
 xor eax, eax	; 2B490
-call sub_76429	; 2B492
+call FadePalStep	; 2B492
 mov dword [dword esp+0104h], 0FFFFFFFFh	; 2B497
 .39:
 mov eax, 3E8h	; 2B4A2
@@ -1636,7 +1636,7 @@ jne short .46	; 2B65E
 mov ebx, 10h	; 2B660
 mov edx, dword [dword esp+0108h]	; 2B665
 xor eax, eax	; 2B66C
-call sub_76429	; 2B66E
+call FadePalStep	; 2B66E
 mov dword [dword esp+0104h], 0FFFFFFFFh	; 2B673
 .46:
 mov eax, 3E8h	; 2B67E
@@ -1668,7 +1668,7 @@ call sub_8FCDF	; 2B6D9
 mov ebx, 10h	; 2B6DE
 mov edx, dword [dword esp+0108h]	; 2B6E3
 mov eax, 1	; 2B6EA
-call sub_76429	; 2B6EF
+call FadePalStep	; 2B6EF
 call sub_B4BA8	; 2B6F4
 push byte 0	; 2B6F9
 call sub_B392C	; 2B6FB

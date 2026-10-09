@@ -2,21 +2,21 @@
 bits 32
 %include "hockey.inc"
 section s_78346 progbits alloc exec nowrite align=1
-extern __CHK, asc_C31BB, asc_C31CB, asc_C31F1, asc_C31F7, asc_C3200, asc_C3205, asc_C320D
+extern __CHK, str_Lelogo2, str_C2dS3, asc_C31F1, asc_C31F7, asc_C3200, asc_C3205, asc_C320D
 extern asc_C3214, asc_C321B, asc_C3222, asc_C3229, asc_C322F, asc_C3236, asc_C323D, asc_C3245
 extern asc_C324C, asc_C3253, asc_C325B, asc_C3267, asc_C326D, asc_C3277, asc_C3288, asc_C328E
 extern asc_C32A4, asc_C32AA, asc_C32AF, asc_C32B5, str_extBIN, byte_D11BC, byte_D1238, byte_D12DE
 extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, byte_DB3AD, leaguedbfmt2, leaguedbfmt
 extern byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED83C, byte_ED86D, byte_ED9E7, statscategory
 extern statsredrawcb, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
-extern dword_D0B2A, dword_D1338, dword_D133C, dword_D1478, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
+extern dword_D0B2A, lineslotx, linesloty, dword_D1478, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
 extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, exit_, j___close_, jctime, lseek_
 extern crestnames, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
 extern open_, perror_, read_, sprintf_, MakePath, RunMenu, TeamRosterScreen, MessageBox
-extern DrawMenuBar, sub_76429, sub_76771, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8FFB0
+extern DrawMenuBar, FadePalStep, PrintLineEdStatus, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8FFB0
 extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, FatalError, sub_B30B4, WaitKey
-extern sub_B4B58, sub_B4DD4, sub_B4FAC, sub_B5DB0, unk_7673A, unk_76742, unk_76748, unk_7674F
-extern unk_76756, unk_C3283, unk_C3285, unk_C3292, unk_C3295, unk_C3298, unk_C329B, unk_C329E
+extern sub_B4B58, sub_B4DD4, sub_B4FAC, sub_B5DB0, str_Scratch2, str_Dress2, str_Player2, str_GoalieW2
+extern str_RosterIncomplete2, unk_C3283, unk_C3285, unk_C3292, unk_C3295, unk_C3298, unk_C329B, unk_C329E
 extern unk_C32A1, unk_CF48F, hmteamrec, unk_DBD1C, VisTeam, write_
 global jpt_78346, loc_7838A, loc_78390, loc_783B7, loc_78403, loc_78460, loc_78470, loc_78477
 global loc_7847E, loc_78483, loc_784F8, loc_7857C, loc_7857E, loc_785A0, loc_785C6, loc_785C8
@@ -90,9 +90,9 @@ call sub_7A099	; 783D0
 push byte_D1238	; 783D5
 call sub_B4DD4	; 783DA
 add esp, byte 4	; 783DF
-mov edx, dword [nosplit esi*8+dword_D133C]	; 783E2
+mov edx, dword [nosplit esi*8+linesloty]	; 783E2
 push edx	; 783E9
-mov ebx, dword [nosplit esi*8+dword_D1338]	; 783EA
+mov ebx, dword [nosplit esi*8+lineslotx]	; 783EA
 push ebx	; 783F1
 push ebp	; 783F2
 call sub_931FC	; 783F3
@@ -167,7 +167,7 @@ push edx	; 784B2
 mov al, byte [dword eax+byte_ED0F4]	; 784B3
 and eax, 0FFh	; 784B9
 push eax	; 784BE
-push asc_C31CB	; 784BF
+push str_C2dS3	; 784BF
 lea eax, [byte esp+014h]	; 784C4
 push eax	; 784C8
 call sprintf_	; 784C9
@@ -180,7 +180,7 @@ add eax, esi	; 784DB
 lea edx, [byte eax+016h]	; 784DD
 lea ebx, [byte esp+04h]	; 784E0
 mov eax, 1FAh	; 784E4
-call sub_76771	; 784E9
+call PrintLineEdStatus	; 784E9
 inc esi	; 784EE
 cmp esi, byte 1Ch	; 784EF
 jl near loc_78403	; 784F2
@@ -314,7 +314,7 @@ mov edx, 13h	; 7869C
 mov eax, 1F4h	; 786A1
 call sub_78BE7	; 786A6
 xor ecx, ecx	; 786AB
-mov ebx, asc_C31BB	; 786AD
+mov ebx, str_Lelogo2	; 786AD
 cmp byte [byte_ED9E7], 1	; 786B2
 jne short loc_786C3	; 786B9
 mov edx, dword [dword_D2C6B]	; 786BB
@@ -889,27 +889,27 @@ xor edx, edx	; 78E5F
 mov dword [dword esp+08Ch], edx	; 78E61
 xor ebp, ebp	; 78E68
 lea edi, [byte esp+060h]	; 78E6A
-mov esi, unk_7673A	; 78E6E
+mov esi, str_Scratch2	; 78E6E
 movsd	; 78E73
 movsd	; 78E74
 lea edi, [byte esp+078h]	; 78E75
-mov esi, unk_76742	; 78E79
+mov esi, str_Dress2	; 78E79
 movsd	; 78E7E
 movsw	; 78E7F
 lea edi, [byte esp+070h]	; 78E81
-mov esi, unk_76748	; 78E85
+mov esi, str_Player2	; 78E85
 movsd	; 78E8A
 movsw	; 78E8B
 movsb	; 78E8D
 lea edi, [byte esp+068h]	; 78E8E
-mov esi, unk_7674F	; 78E92
+mov esi, str_GoalieW2	; 78E92
 movsd	; 78E97
 movsw	; 78E98
 movsb	; 78E9A
 mov dword [dword esp+088h], asc_C3277	; 78E9B
 mov ecx, 6	; 78EA6
 lea edi, [byte esp+038h]	; 78EAB
-mov esi, unk_76756	; 78EAF
+mov esi, str_RosterIncomplete2	; 78EAF
 rep movsd	; 78EB4
 movsw	; 78EB6
 movsb	; 78EB8
@@ -1998,7 +1998,7 @@ jl short loc_79B94	; 79BA3
 mov ebx, 10h	; 79BA5
 mov edx, esp	; 79BAA
 mov eax, 1	; 79BAC
-call sub_76429	; 79BB1
+call FadePalStep	; 79BB1
 cmp byte [dword esp+0320h], 0	; 79BB6
 je short loc_79BC7	; 79BBE
 mov eax, dword [HomeTeam]	; 79BC0
@@ -2024,7 +2024,7 @@ jl short loc_79BF4	; 79C03
 mov ebx, 10h	; 79C05
 mov edx, esp	; 79C0A
 xor eax, eax	; 79C0C
-call sub_76429	; 79C0E
+call FadePalStep	; 79C0E
 push dword 0C2h	; 79C13
 mov ecx, 0C1h	; 79C18
 mov ebx, 0C0h	; 79C1D
@@ -2034,7 +2034,7 @@ call RunMenu	; 79C2C
 mov ebx, 10h	; 79C31
 mov edx, esp	; 79C36
 mov eax, 1	; 79C38
-call sub_76429	; 79C3D
+call FadePalStep	; 79C3D
 xor eax, eax	; 79C42
 loc_79C44:
 mov dl, byte [dword eax+byte_ECDF4]	; 79C44
@@ -2128,7 +2128,7 @@ push edx	; 79D72
 mov al, byte [dword eax+byte_ED0F4]	; 79D73
 and eax, 0FFh	; 79D79
 push eax	; 79D7E
-push asc_C31CB	; 79D7F
+push str_C2dS3	; 79D7F
 lea eax, [dword esp+0310h]	; 79D84
 push eax	; 79D8B
 call sprintf_	; 79D8C
@@ -2142,12 +2142,12 @@ add eax, edx	; 79DA0
 lea edx, [byte eax+016h]	; 79DA2
 lea ebx, [dword esp+0300h]	; 79DA5
 mov eax, 1FAh	; 79DAC
-call sub_76771	; 79DB1
+call PrintLineEdStatus	; 79DB1
 loc_79DB6:
 mov ebx, 10h	; 79DB6
 mov edx, esp	; 79DBB
 xor eax, eax	; 79DBD
-call sub_76429	; 79DBF
+call FadePalStep	; 79DBF
 xor eax, eax	; 79DC4
 add esp, 324h	; 79DC6
 jmp near loc_797AE	; 79DCC
@@ -2252,7 +2252,7 @@ push edx	; 79EFB
 mov al, byte [dword eax+byte_ED0F4]	; 79EFC
 and eax, 0FFh	; 79F02
 push eax	; 79F07
-push asc_C31CB	; 79F08
+push str_C2dS3	; 79F08
 lea eax, [byte esp+010h]	; 79F0D
 push eax	; 79F11
 call sprintf_	; 79F12
@@ -2266,7 +2266,7 @@ add eax, edx	; 79F26
 lea edx, [byte eax+016h]	; 79F28
 mov ebx, esp	; 79F2B
 mov eax, 1FAh	; 79F2D
-call sub_76771	; 79F32
+call PrintLineEdStatus	; 79F32
 xor eax, eax	; 79F37
 add esp, byte 24h	; 79F39
 jmp near loc_797AE	; 79F3C
@@ -2322,7 +2322,7 @@ push edx	; 79FD1
 mov al, byte [dword eax+byte_ED0F4]	; 79FD2
 and eax, 0FFh	; 79FD8
 push eax	; 79FDD
-push asc_C31CB	; 79FDE
+push str_C2dS3	; 79FDE
 lea eax, [byte esp+010h]	; 79FE3
 push eax	; 79FE7
 call sprintf_	; 79FE8
@@ -2336,7 +2336,7 @@ add eax, edx	; 79FFC
 lea edx, [byte eax+016h]	; 79FFE
 mov ebx, esp	; 7A001
 mov eax, 1FAh	; 7A003
-call sub_76771	; 7A008
+call PrintLineEdStatus	; 7A008
 xor eax, eax	; 7A00D
 add esp, byte 20h	; 7A00F
 pop edi	; 7A012

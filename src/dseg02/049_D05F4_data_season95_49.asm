@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D05F4 progbits alloc noexec write align=1
-extern sub_75BAA, sub_75BDE, sub_79DD1, unk_D04FC, unk_D0558, unk_D05AF, unk_D05CF, unk_D05DB
+extern MenuRegSeasonStats, MenuPlayoffStats, sub_79DD1, unk_D04FC, unk_D0558, unk_D05AF, unk_D05CF, unk_D05DB
 extern unk_D05E2
 global unk_D05F4, unk_D0654, unk_D0672, unk_D068A, unk_D070A, unk_D0720, unk_D0740, unk_D0752
 unk_D05F4:
@@ -30,11 +30,11 @@ db 069h,063h,073h,020h,02Eh,02Eh,02Eh,00h
 unk_D068A:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0BFh,00h,00h,00h,011h,00h,00h,00h
 dd unk_D0654
-dd sub_75BAA
+dd MenuRegSeasonStats
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 0BFh,00h,00h,00h,024h,00h,00h,00h
 dd unk_D0672
-dd sub_75BDE
+dd MenuPlayoffStats
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h

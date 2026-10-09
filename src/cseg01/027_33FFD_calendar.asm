@@ -11,7 +11,7 @@ extern calsel, calexit, calmonth, calselday, dword_DDD2C, calselmonth, ptrupdate
 extern jctime, crestnames, calnextslot, calprevslot, sprintf_, MakePath, FileOpenRead, leaguedbnames
 extern FileClose, FileReadAt, ReadSchedGame, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
 extern CalTeamStatsScreen, CalSkaterStatsScreen, CalGoalieStatsScreen, CalStandingsScreen, CalStandingsMenu, SetDialogColors, ShowLoadingScreen, FadeOutPalCycle
-extern GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, sub_76429
+extern GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, FadePalStep
 extern sub_7DB67, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
 extern sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_91370, sub_913D0
 extern sub_91400, sub_91964, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4
@@ -625,7 +625,7 @@ add esp, byte 8	; 347A1
 lea edx, [byte eax+010h]	; 347A4
 mov ebx, 10h	; 347A7
 xor eax, eax	; 347AC
-call sub_76429	; 347AE
+call FadePalStep	; 347AE
 pop edx	; 347B3
 pop ecx	; 347B4
 pop ebx	; 347B5
@@ -712,7 +712,7 @@ add esp, byte 0Ch	; 348B5
 mov ebx, 10h	; 348B8
 mov edx, unk_DF014	; 348BD
 mov eax, 1	; 348C2
-call sub_76429	; 348C7
+call FadePalStep	; 348C7
 cmp byte [musicon], 0	; 348CC
 je short .3	; 348D3
 cmp dword [songdata], byte 0	; 348D5

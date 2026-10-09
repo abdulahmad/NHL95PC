@@ -15,7 +15,7 @@ extern fputchar, jctime, RunDemoGame_x, memcpy_, memset_, off_C6399, rand_, spri
 extern srand_, strlen_, MakePath, RunDemoGame, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
 extern sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2, sub_1B2A7, sub_1B8AC, sub_1B92E, WaitClickTimeout
-extern FadeOutPalCycle, StopDigiSample, PlayDigiSample, sub_59C1D, sub_59C3E, sub_59D54, ClearInputQueue, sub_76429
+extern FadeOutPalCycle, StopDigiSample, PlayDigiSample, sub_59C1D, sub_59C3E, sub_59D54, ClearInputQueue, FadePalStep
 extern sub_83459, sub_8374D, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C
 extern sub_9087C, sub_9121C, sub_91284, sub_912C8, sub_9132C, sub_91370, sub_913B4, sub_91400
@@ -218,7 +218,7 @@ call sub_8FB8E	; 1633C
 mov ebx, 10h	; 16341
 mov edx, esp	; 16346
 xor eax, eax	; 16348
-call sub_76429	; 1634A
+call FadePalStep	; 1634A
 push byte 5Ah	; 1634F
 call sub_B3989	; 16351
 add esp, byte 4	; 16356
@@ -234,7 +234,7 @@ call PlayDigiSample	; 1636E
 mov ebx, 10h	; 16373
 mov edx, esp	; 16378
 xor eax, eax	; 1637A
-call sub_76429	; 1637C
+call FadePalStep	; 1637C
 .21:
 xor esi, esi	; 16381
 call sub_B395C	; 16383
@@ -464,7 +464,7 @@ call sub_8FCDF	; 166A7
 mov ebx, 10h	; 166AC
 mov edx, esp	; 166B1
 mov eax, 1	; 166B3
-call sub_76429	; 166B8
+call FadePalStep	; 166B8
 cmp byte [musicon], 0	; 166BD
 je short .41	; 166C4
 cmp dword [songdata], byte 0	; 166C6
@@ -665,7 +665,7 @@ call sub_8FB8E	; 169A7
 mov ebx, 5Ah	; 169AC
 mov edx, esp	; 169B1
 xor eax, eax	; 169B3
-call sub_76429	; 169B5
+call FadePalStep	; 169B5
 mov edi, 1	; 169BA
 .16:
 test edi, edi	; 169BF
@@ -986,7 +986,7 @@ call sub_59D54	; 16DC7
 mov ebx, 10h	; 16DCC
 lea edx, [dword esp+0300h]	; 16DD1
 mov eax, 1	; 16DD8
-call sub_76429	; 16DDD
+call FadePalStep	; 16DDD
 lea eax, [dword esp+0634h]	; 16DE2
 call _dos_gettime_	; 16DE9
 xor eax, eax	; 16DEE
@@ -1056,7 +1056,7 @@ call sub_8FB8E	; 16ED3
 mov ebx, 10h	; 16ED8
 mov edx, esp	; 16EDD
 xor eax, eax	; 16EDF
-call sub_76429	; 16EE1
+call FadePalStep	; 16EE1
 push dword 0C8h	; 16EE6
 call sub_B3989	; 16EEB
 add esp, byte 4	; 16EF0
@@ -1082,7 +1082,7 @@ mov dword [songdata], edi	; 16F31
 mov ebx, 10h	; 16F37
 mov edx, esp	; 16F3C
 mov eax, 1	; 16F3E
-call sub_76429	; 16F43
+call FadePalStep	; 16F43
 call sub_B4BA8	; 16F48
 push byte 0	; 16F4D
 call sub_B392C	; 16F4F
@@ -1263,7 +1263,7 @@ call PlayDigiSample	; 171E2
 mov ebx, 10h	; 171E7
 mov edx, esp	; 171EC
 xor eax, eax	; 171EE
-call sub_76429	; 171F0
+call FadePalStep	; 171F0
 call sub_59C3E	; 171F5
 xor edi, edi	; 171FA
 mov dword [dword esp+035Ch], edi	; 171FC
@@ -1418,7 +1418,7 @@ call sub_8374D	; 17415
 mov ebx, 10h	; 1741A
 mov edx, esp	; 1741F
 mov eax, 1	; 17421
-call sub_76429	; 17426
+call FadePalStep	; 17426
 cmp byte [musicon], 0	; 1742B
 je short .26	; 17432
 cmp dword [songdata], byte 0	; 17434

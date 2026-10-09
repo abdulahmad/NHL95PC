@@ -7,7 +7,7 @@ extern str_Pal16, rinkarenas, str_extBIN, byte_ED7CC, byte_ED7CD, byte_ED821, by
 extern rinktilebm, rinkbm, rinkfileidx, currink, rinkscrollx
 extern rinkscrolly, dword_D2C6B, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly, ptrupdatefn, jctime
 extern MakePath, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52, sub_6AF97
-extern GetInputEvent, sub_76429, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_913B4
+extern GetInputEvent, FadePalStep, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_913B4
 extern sub_92DE0, sub_92EE4, FatalError, sub_B30B4, sub_B395C, SetDrawBitmap, sub_B4F8C, unk_DC890
 extern scrolly, scrollx, bgscrollx
 global LoadRink, BlitTileMap, SetRinkScroll, WaitClickTimeout, LoadCrestsPalette
@@ -662,7 +662,7 @@ add esp, byte 0Ch	; 33F25
 mov ebx, 10h	; 33F28
 mov edx, esp	; 33F2D
 mov eax, 1	; 33F2F
-call sub_76429	; 33F34
+call FadePalStep	; 33F34
 mov ecx, str_extBIN	; 33F39
 mov ebx, str_CRESTS3	; 33F3E
 cmp byte [byte_ED821], 1	; 33F43
@@ -720,7 +720,7 @@ add esp, byte 4	; 33FE1
 mov ebx, 10h	; 33FE4
 mov edx, esp	; 33FE9
 xor eax, eax	; 33FEB
-call sub_76429	; 33FED
+call FadePalStep	; 33FED
 add esp, 310h	; 33FF2
 pop esi	; 33FF8
 pop edx	; 33FF9

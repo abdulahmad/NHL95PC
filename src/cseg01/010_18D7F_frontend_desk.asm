@@ -16,7 +16,7 @@ extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScre
 extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, MessageBox, LoadRink, WaitClickTimeout, ShowLoadingScreen
 extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern GetInputEvent, ClearInputQueue, InputInstall, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm
-extern MenuHitTest, sub_76429, sub_767D0, sub_7E0FA, sub_805C4, sub_836E4, sub_837A8, sub_846F0
+extern MenuHitTest, FadePalStep, GameLineEditor, sub_7E0FA, sub_805C4, sub_836E4, sub_837A8, sub_846F0
 extern sub_84704, sub_84715, sub_84729, sub_8BC15, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0
 extern sub_9061C, sub_91370, sub_91400, MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
@@ -389,7 +389,7 @@ add esp, byte 0Ch	; 1922D
 mov ebx, 10h	; 19230
 mov edx, unk_DF014	; 19235
 mov eax, 1	; 1923A
-call sub_76429	; 1923F
+call FadePalStep	; 1923F
 mov edx, 1E0h	; 19244
 mov eax, 280h	; 19249
 call SetScreenSize	; 1924E
@@ -509,7 +509,7 @@ add esp, byte 0Ch	; 1940D
 mov ebx, 10h	; 19410
 lea edx, [byte esp+04h]	; 19415
 mov eax, 1	; 19419
-call sub_76429	; 1941E
+call FadePalStep	; 1941E
 .3:
 call sub_B4BA8	; 19423
 mov ebx, dword [esp]	; 19428
@@ -698,7 +698,7 @@ call sub_8FB8E	; 196F0
 mov ebx, 10h	; 196F5
 lea edx, [byte esp+04h]	; 196FA
 xor eax, eax	; 196FE
-call sub_76429	; 19700
+call FadePalStep	; 19700
 push dword 1E0h	; 19705
 push dword 280h	; 1970A
 push byte 0	; 1970F
@@ -856,7 +856,7 @@ add esp, byte 0Ch	; 19967
 mov ebx, 10h	; 1996A
 lea edx, [byte esp+04h]	; 1996F
 mov eax, 1	; 19973
-call sub_76429	; 19978
+call FadePalStep	; 19978
 mov eax, dword [gamemode]	; 1997D
 call SetScreenTitle	; 19982
 mov ebp, dword [dword esp+03F8h]	; 19987
@@ -1112,7 +1112,7 @@ call sub_846F0	; 19DA8
 mov ebx, 14h	; 19DAD
 lea edx, [byte esp+04h]	; 19DB2
 mov eax, 1	; 19DB6
-call sub_76429	; 19DBB
+call FadePalStep	; 19DBB
 cmp dword [dword esp+03DCh], byte 1	; 19DC0
 je short .42	; 19DC8
 mov dword [gameresult], 2	; 19DCA
@@ -1172,7 +1172,7 @@ add esp, byte 0Ch	; 19E94
 mov ebx, 10h	; 19E97
 lea edx, [byte esp+04h]	; 19E9C
 mov eax, 1	; 19EA0
-call sub_76429	; 19EA5
+call FadePalStep	; 19EA5
 mov eax, 0AAE60h	; 19EAA
 call sub_1BAF3	; 19EAF
 xor ecx, ecx	; 19EB4
@@ -1225,7 +1225,7 @@ call DrawMenuBar	; 19F53
 mov ebx, 10h	; 19F58
 lea edx, [byte esp+04h]	; 19F5D
 xor eax, eax	; 19F61
-call sub_76429	; 19F63
+call FadePalStep	; 19F63
 .52:
 mov ecx, dword [dword esp+03ECh]	; 19F68
 push ecx	; 19F6F
@@ -1596,7 +1596,7 @@ add esp, byte 0Ch	; 1A575
 mov ebx, 10h	; 1A578
 mov edx, unk_DF014	; 1A57D
 mov eax, 1	; 1A582
-call sub_76429	; 1A587
+call FadePalStep	; 1A587
 mov edx, 1	; 1A58C
 mov dword [dword_C66D4], edx	; 1A591
 mov dword [dword_C66D0], edx	; 1A597
@@ -1746,7 +1746,7 @@ add esp, byte 0Ch	; 1A765
 mov ebx, 10h	; 1A768
 mov edx, unk_DF014	; 1A76D
 mov eax, 1	; 1A772
-call sub_76429	; 1A777
+call FadePalStep	; 1A777
 call sub_B4BA8	; 1A77C
 push byte 0	; 1A781
 call sub_B392C	; 1A783
@@ -1780,7 +1780,7 @@ add esp, byte 0Ch	; 1A7EA
 mov ebx, 10h	; 1A7ED
 mov edx, unk_DF014	; 1A7F2
 mov eax, 1	; 1A7F7
-call sub_76429	; 1A7FC
+call FadePalStep	; 1A7FC
 call sub_B4B58	; 1A801
 call dword [bailout_vec]	; 1A806
 .4:
@@ -1844,13 +1844,13 @@ add esp, byte 0Ch	; 1A8C8
 mov ebx, 10h	; 1A8CB
 mov edx, unk_DF014	; 1A8D0
 mov eax, 1	; 1A8D5
-call sub_76429	; 1A8DA
+call FadePalStep	; 1A8DA
 mov ecx, 2	; 1A8DF
 mov ebx, unk_CF2EF	; 1A8E4
 mov edx, hmlinetab	; 1A8E9
 xor eax, eax	; 1A8EE
 DeskLines_common:
-call sub_767D0	; 1A8F0
+call GameLineEditor	; 1A8F0
 push unk_DF014	; 1A8F5
 push dword 100h	; 1A8FA
 push byte 0	; 1A8FF
@@ -1859,7 +1859,7 @@ add esp, byte 0Ch	; 1A906
 mov ebx, 10h	; 1A909
 mov edx, unk_DF014	; 1A90E
 mov eax, 1	; 1A913
-call sub_76429	; 1A918
+call FadePalStep	; 1A918
 jmp near DeskItem_ret2	; 1A91D
 DeskVisitorLines:	;IDA: code_1A922
 push dword 1Ch	; 1A922
@@ -1875,7 +1875,7 @@ add esp, byte 0Ch	; 1A940
 mov ebx, 10h	; 1A943
 mov edx, unk_DF014	; 1A948
 mov eax, 1	; 1A94D
-call sub_76429	; 1A952
+call FadePalStep	; 1A952
 mov ecx, 2	; 1A957
 mov ebx, unk_CF2EF	; 1A95C
 mov edx, awlinetab	; 1A961
@@ -1895,7 +1895,7 @@ add esp, byte 0Ch	; 1A98B
 mov ebx, 10h	; 1A98E
 mov edx, unk_DF014	; 1A993
 mov eax, 1	; 1A998
-call sub_76429	; 1A99D
+call FadePalStep	; 1A99D
 call GameStatsScreen	; 1A9A2
 jmp near DeskItem_ret2	; 1A9A7
 DeskPenaltySummary:	;IDA: code_1A9AC
@@ -1922,7 +1922,7 @@ call sub_8FCDF	; 1A9EF
 mov ebx, 10h	; 1A9F4
 mov edx, unk_DF014	; 1A9F9
 mov eax, 1	; 1A9FE
-call sub_76429	; 1AA03
+call FadePalStep	; 1AA03
 cmp byte [musicon], 0	; 1AA08
 je short .3	; 1AA0F
 cmp dword [songdata], byte 0	; 1AA11
@@ -1967,7 +1967,7 @@ add esp, byte 0Ch	; 1AA8B
 mov ebx, 10h	; 1AA8E
 mov edx, unk_DF014	; 1AA93
 mov eax, 1	; 1AA98
-call sub_76429	; 1AA9D
+call FadePalStep	; 1AA9D
 call ShowLoadingScreen	; 1AAA2
 mov ebx, dword [dword_D8C84]	; 1AAA7
 xor ecx, ecx	; 1AAAD
@@ -1995,7 +1995,7 @@ add esp, byte 0Ch	; 1AAE2
 mov ebx, 10h	; 1AAE5
 mov edx, unk_DF014	; 1AAEA
 mov eax, 1	; 1AAEF
-call sub_76429	; 1AAF4
+call FadePalStep	; 1AAF4
 call ShowLoadingScreen	; 1AAF9
 xor ecx, ecx	; 1AAFE
 xor ebx, ebx	; 1AB00

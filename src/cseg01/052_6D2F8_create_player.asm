@@ -14,7 +14,7 @@ extern str_MustBeTheSame, str_EnterNameOfPlayer, str_FreeAgentList, str_ChooseWh
 extern str_fmt2d, str_fmt3d, str_TMP, str_Ratings, str_ThereIsNoSpace, str_TheSelectedPlayer, str_NotEnoughSpaceTo2, str_AddAllSelectedPlayers
 extern str_ErrorWhileMakingNew, str_NewPlayer, str_NotAddedToDatabases, str_Move, str_ToFreeAgentList, str_CreateAPlayerOr, str_XXXKbytesOfFree, str_space
 extern divisionteams, rosterteam, rosterisfa, byte_D0AE6, byte_D0F94, byte_D0FE0
-extern musicon, byte_D42C3, rosterlist, byte_EA991, byte_EA992, byte_EA993, byte_EAC86, rostersel
+extern musicon, byte_D42C3, rosterlist, rosterjersey, rosterslot, rosterstat, byte_EAC86, rostersel
 extern byte_EAF99, byte_EAFB5, byte_ED908, byte_ED98F, dword_C2CAC, dword_C2CB0, dword_C2CB4
 extern dword_C2CB8, dword_C2CBC, dword_C2CC0, dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4
 extern dword_C2CD8, dword_C2CDC, dword_C2CF0, dword_C4B69, teamdivflags, songdata, HomeTeam, roster1divmenus
@@ -31,7 +31,7 @@ extern strcmp_, strcpy_, strlen_, strlwr_, strupr_, MakePath, FileOpenWrite, Fil
 extern FileWriteAt, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, ListDialog, TrackButtons
 extern DrawButtons, InitScrollBar, TrackScrollBars, MessageBox, GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown
 extern DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, BuildFreeAgentList, BuildTeamRosterList, WriteLeagueDbsMem, FreeLeagueDbsMem, CarTeamRecPtr
-extern TeamRecPtr, KeyDbPtr, DrawRosterPanel, InputDialog, sub_737E1, sub_76429, sub_78BE7, sub_8CCA8
+extern TeamRecPtr, KeyDbPtr, DrawRosterPanel, InputDialog, DbLineEditor, FadePalStep, sub_78BE7, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8EA18, sub_8FC8A, sub_8FFB0, sub_903F0, sub_9061C
 extern sub_90D20, sub_90F38, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_92DE0, sub_B2CBE
 extern FatalError, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, SetDrawBitmap
@@ -871,7 +871,7 @@ sub eax, edx	; 6DCEB
 shl eax, 2	; 6DCED
 sub eax, edx	; 6DCF0
 xor edx, edx	; 6DCF2
-mov dl, byte [dword ebx+eax+byte_EA992]	; 6DCF4
+mov dl, byte [dword ebx+eax+rosterslot]	; 6DCF4
 mov eax, dword [esp]	; 6DCFB
 mov ebx, dword [nosplit eax*4+rosterteamrec]	; 6DCFE
 mov eax, edx	; 6DD05
@@ -904,8 +904,8 @@ shl eax, 3	; 6DD43
 sub eax, edx	; 6DD46
 shl eax, 2	; 6DD48
 sub eax, edx	; 6DD4B
-mov bl, byte [dword ecx+byte_EA991]	; 6DD4D
-cmp bl, byte [dword esi+eax+byte_EA991]	; 6DD53
+mov bl, byte [dword ecx+rosterjersey]	; 6DD4D
+cmp bl, byte [dword esi+eax+rosterjersey]	; 6DD53
 jne short .3	; 6DD5A
 mov edi, 0FFFFFFFFh	; 6DD5C
 .3:
@@ -972,7 +972,7 @@ shl eax, 2	; 6DE26
 sub eax, ebp	; 6DE29
 mov edx, dword [byte esp+07Ch]	; 6DE2B
 mov dl, byte [byte edx+01h]	; 6DE2F
-mov byte [dword ebx+eax+byte_EA991], dl	; 6DE32
+mov byte [dword ebx+eax+rosterjersey], dl	; 6DE32
 .6:
 test edi, edi	; 6DE39
 jne near FixJerseyNumber.1	; 6DE3B
@@ -1106,7 +1106,7 @@ xor eax, eax	; 6DFE4
 mov al, byte [dword esp+02E8h]	; 6DFE6
 mov ecx, 3	; 6DFED
 mov ebx, unk_D05F4	; 6DFF2
-call sub_737E1	; 6DFF7
+call DbLineEditor	; 6DFF7
 call sub_B4BA8	; 6DFFC
 push byte 0	; 6E001
 call sub_B392C	; 6E003
@@ -1139,7 +1139,7 @@ call DrawEditRosters	; 6E068
 mov ebx, 10h	; 6E06D
 mov edx, unk_DF014	; 6E072
 xor eax, eax	; 6E077
-call sub_76429	; 6E079
+call FadePalStep	; 6E079
 add esp, 2F0h	; 6E07E
 jmp near RunEditRosters_ret5	; 6E084
 EditRosters:
@@ -1216,7 +1216,7 @@ add esp, byte 0Ch	; 6E157
 mov ebx, 10h	; 6E15A
 mov edx, unk_DF014	; 6E15F
 xor eax, eax	; 6E164
-call sub_76429	; 6E166
+call FadePalStep	; 6E166
 push dword 1E0h	; 6E16B
 push dword 280h	; 6E170
 push byte 0	; 6E175
@@ -2830,7 +2830,7 @@ shl eax, 3	; 6F3EE
 sub eax, edx	; 6F3F1
 shl eax, 2	; 6F3F3
 sub eax, edx	; 6F3F6
-mov byte [dword ebx+eax+byte_EA993], 2	; 6F3F8
+mov byte [dword ebx+eax+rosterstat], 2	; 6F3F8
 xor eax, eax	; 6F400
 mov edx, dword [byte esp+010h]	; 6F402
 mov al, byte [dword edx+rosterteam]	; 6F406
@@ -2862,9 +2862,9 @@ shl eax, 2	; 6F454
 sub eax, edi	; 6F457
 add eax, dword [byte esp+08h]	; 6F459
 mov dl, byte [byte esi+01h]	; 6F45D
-mov byte [dword eax+byte_EA991], dl	; 6F460
+mov byte [dword eax+rosterjersey], dl	; 6F460
 mov dl, byte [byte esp+020h]	; 6F466
-mov byte [dword eax+byte_EA992], dl	; 6F46A
+mov byte [dword eax+rosterslot], dl	; 6F46A
 mov edx, edi	; 6F470
 mov eax, ecx	; 6F472
 call FixJerseyNumber	; 6F474
@@ -2962,7 +2962,7 @@ shl eax, 3	; 6F585
 sub eax, edx	; 6F588
 shl eax, 2	; 6F58A
 sub eax, edx	; 6F58D
-mov byte [dword ebx+eax+byte_EA993], 2	; 6F58F
+mov byte [dword ebx+eax+rosterstat], 2	; 6F58F
 xor ebx, ebx	; 6F597
 .24:
 mov eax, dword [nosplit ecx*4+rosterteamrec]	; 6F599
@@ -2989,9 +2989,9 @@ shl eax, 2	; 6F5D6
 sub eax, edi	; 6F5D9
 add eax, dword [byte esp+08h]	; 6F5DB
 mov dl, byte [byte esi+01h]	; 6F5DF
-mov byte [dword eax+byte_EA991], dl	; 6F5E2
+mov byte [dword eax+rosterjersey], dl	; 6F5E2
 mov dl, byte [byte esp+020h]	; 6F5E8
-mov byte [dword eax+byte_EA992], dl	; 6F5EC
+mov byte [dword eax+rosterslot], dl	; 6F5EC
 mov edx, edi	; 6F5F2
 mov eax, ecx	; 6F5F4
 call FixJerseyNumber	; 6F5F6
@@ -4218,7 +4218,7 @@ add esp, byte 0Ch	; 704F0
 mov ebx, 10h	; 704F3
 mov edx, esi	; 704F8
 mov eax, 1	; 704FA
-call sub_76429	; 704FF
+call FadePalStep	; 704FF
 cmp byte [byte ebp+02h], 47h	; 70504
 jne short .1	; 70508
 mov dword [byte esp+08h], 104h	; 7050A
@@ -4258,7 +4258,7 @@ add esp, byte 0Ch	; 70564
 mov ebx, 10h	; 70567
 mov edx, dword [byte esp+0Ch]	; 7056C
 xor eax, eax	; 70570
-call sub_76429	; 70572
+call FadePalStep	; 70572
 mov ebx, dword [byte esp+0Ch]	; 70577
 push ebx	; 7057B
 call jctime	; 7057C
@@ -4644,7 +4644,7 @@ jl near .26	; 70AFE
 mov ebx, 10h	; 70B04
 mov edx, esi	; 70B09
 mov eax, 1	; 70B0B
-call sub_76429	; 70B10
+call FadePalStep	; 70B10
 push byte 0	; 70B15
 call sub_B392C	; 70B17
 add esp, byte 4	; 70B1C
@@ -4824,7 +4824,7 @@ call strcat_	; 70DFE
 mov ebx, 10h	; 70E03
 mov edx, edi	; 70E08
 xor eax, eax	; 70E0A
-call sub_76429	; 70E0C
+call FadePalStep	; 70E0C
 lea eax, [byte esp+08h]	; 70E11
 mov dword [msglines+4], eax	; 70E15
 push byte 0FFFFFFFFh	; 70E1A
@@ -4850,13 +4850,13 @@ mov ebx, 10h	; 70E55
 mov edx, esi	; 70E5A
 .27:
 mov eax, 1	; 70E5C
-call sub_76429	; 70E61
+call FadePalStep	; 70E61
 .28:
 call DrawEditRosters	; 70E66
 mov ebx, 10h	; 70E6B
 mov edx, edi	; 70E70
 xor eax, eax	; 70E72
-call sub_76429	; 70E74
+call FadePalStep	; 70E74
 push edi	; 70E79
 call jctime	; 70E7A
 add esp, byte 4	; 70E7F
@@ -5300,7 +5300,7 @@ shl edx, 3	; 7143A
 sub edx, ebx	; 7143D
 shl edx, 2	; 7143F
 sub edx, ebx	; 71442
-mov dl, byte [dword edx+byte_EA992]	; 71444
+mov dl, byte [dword edx+rosterslot]	; 71444
 mov byte [dword esp+eax+0B0h], dl	; 7144A
 mov byte [byte esp+eax+078h], bl	; 71451
 inc eax	; 71455
@@ -5395,15 +5395,15 @@ sub edx, ecx	; 71582
 shl edx, 2	; 71584
 sub edx, ecx	; 71587
 mov cl, byte [dword edx+byte_EAC86]	; 71589
-mov ch, byte [dword eax+byte_EA992]	; 7158F
+mov ch, byte [dword eax+rosterslot]	; 7158F
 xor ch, cl	; 71595
-mov byte [dword eax+byte_EA992], ch	; 71597
+mov byte [dword eax+rosterslot], ch	; 71597
 mov cl, ch	; 7159D
 mov ch, byte [dword edx+byte_EAC86]	; 7159F
 xor ch, cl	; 715A5
 mov byte [dword edx+byte_EAC86], ch	; 715A7
 mov cl, ch	; 715AD
-xor byte [dword eax+byte_EA992], cl	; 715AF
+xor byte [dword eax+rosterslot], cl	; 715AF
 mov ecx, 6	; 715B5
 lea edi, [byte esp+05Ch]	; 715BA
 lea esi, [dword eax+rosterlist]	; 715BE

@@ -11,7 +11,7 @@ extern calendarshapes, dword_D2C6B, statsteamorder, dword_DC6B4, dword_DC734, dw
 extern statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, statspal, dword_DDD2C, jctime
 extern memcpy_, statsbgnames, MakePath, FreeDeskBuffers, RunMenu, RunTeamPickMenu, RunPlayerPickMenu, InitMenuRemap
 extern SkaterStatsCard, GoalieStatsCard, TeamStatsScreen, TeamRosterScreen, LeadersScreen, StandingsScreen, ShowPlayoffTree, DrawMenuBar
-extern sub_76429, sub_8CCA8, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_91FE0, sub_B30B4
+extern FadePalStep, sub_8CCA8, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_91FE0, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, photoremap, unk_CF54F, unk_CF6AF, unk_CF74F
 extern unk_CF78F, unk_CF80F, unk_CF88F, statsplayer
 global GameStandingsMenu_jt, EasnStandingsMenu_jt, CalStandingsMenu_jt, GameTeamStatsScreen_common
@@ -49,7 +49,7 @@ add esp, byte 0Ch	; 20054
 mov ebx, 10h	; 20057
 mov edx, esp	; 2005C
 mov eax, 1	; 2005E
-call sub_76429	; 20063
+call FadePalStep	; 20063
 call sub_B4BA8	; 20068
 mov eax, 1	; 2006D
 call InitMenuRemap	; 20072
@@ -94,7 +94,7 @@ add esp, byte 4	; 20104
 mov ebx, 10h	; 20107
 mov edx, esp	; 2010C
 xor eax, eax	; 2010E
-call sub_76429	; 20110
+call FadePalStep	; 20110
 push byte 42h	; 20115
 mov ecx, 41h	; 20117
 mov ebx, 40h	; 2011C
@@ -111,7 +111,7 @@ add esp, byte 0Ch	; 2013F
 mov ebx, 10h	; 20142
 mov edx, esp	; 20147
 mov eax, 1	; 20149
-call sub_76429	; 2014E
+call FadePalStep	; 2014E
 xor esi, esi	; 20153
 mov dword [dword_DC738], esi	; 20155
 mov dword [statsredrawcb], esi	; 2015B
@@ -147,7 +147,7 @@ add esp, byte 0Ch	; 201BC
 mov ebx, 10h	; 201BF
 mov edx, esp	; 201C4
 mov eax, 1	; 201C6
-call sub_76429	; 201CB
+call FadePalStep	; 201CB
 call sub_B4BA8	; 201D0
 mov eax, 1	; 201D5
 call InitMenuRemap	; 201DA
@@ -192,7 +192,7 @@ add esp, byte 4	; 2026C
 mov ebx, 10h	; 2026F
 mov edx, esp	; 20274
 xor eax, eax	; 20276
-call sub_76429	; 20278
+call FadePalStep	; 20278
 xor edi, edi	; 2027D
 mov dword [statspalvalid], edi	; 2027F
 mov dword [statspal], edi	; 20285
@@ -211,7 +211,7 @@ add esp, byte 0Ch	; 202B4
 mov ebx, 10h	; 202B7
 mov edx, esp	; 202BC
 mov eax, 1	; 202BE
-call sub_76429	; 202C3
+call FadePalStep	; 202C3
 mov dword [dword_DC738], edi	; 202C8
 mov dword [statsredrawcb], edi	; 202CE
 mov eax, 2	; 202D4
@@ -244,7 +244,7 @@ add esp, byte 0Ch	; 20323
 mov ebx, 10h	; 20326
 mov edx, esp	; 2032B
 mov eax, 1	; 2032D
-call sub_76429	; 20332
+call FadePalStep	; 20332
 mov eax, 1	; 20337
 call InitMenuRemap	; 2033C
 mov eax, esi	; 20341
@@ -288,7 +288,7 @@ add esp, byte 4	; 203CE
 mov ebx, 10h	; 203D1
 mov edx, esp	; 203D6
 xor eax, eax	; 203D8
-call sub_76429	; 203DA
+call FadePalStep	; 203DA
 push byte 42h	; 203DF
 mov ecx, 41h	; 203E1
 mov ebx, 40h	; 203E6
@@ -408,7 +408,7 @@ add esp, byte 0Ch	; 20568
 mov ebx, 10h	; 2056B
 mov edx, esp	; 20570
 mov eax, 1	; 20572
-call sub_76429	; 20577
+call FadePalStep	; 20577
 call sub_B4BA8	; 2057C
 push byte 0	; 20581
 call sub_B392C	; 20583
@@ -594,7 +594,7 @@ add esp, byte 0Ch	; 20866
 mov ebx, 10h	; 20869
 mov edx, esp	; 2086E
 mov eax, 1	; 20870
-call sub_76429	; 20875
+call FadePalStep	; 20875
 call FreeDeskBuffers	; 2087A
 mov edi, dword [statsteambuf]	; 2087F
 push edi	; 20885
@@ -650,7 +650,7 @@ call InitMenuRemap	; 20943
 mov ebx, 10h	; 20948
 mov edx, esp	; 2094D
 mov eax, 1	; 2094F
-call sub_76429	; 20954
+call FadePalStep	; 20954
 mov eax, esi	; 20959
 call TeamStatsScreen	; 2095B
 push byte 42h	; 20960
@@ -684,7 +684,7 @@ mov dword [statspalshape], eax	; 209C6
 lea edx, [byte eax+010h]	; 209CB
 mov ebx, 10h	; 209CE
 xor eax, eax	; 209D3
-call sub_76429	; 209D5
+call FadePalStep	; 209D5
 mov esi, dword [statsbgshapes]	; 209DA
 push esi	; 209E0
 call jctime	; 209E1
@@ -704,7 +704,7 @@ add esp, byte 0Ch	; 20A13
 mov ebx, 10h	; 20A16
 mov edx, esp	; 20A1B
 mov eax, 1	; 20A1D
-call sub_76429	; 20A22
+call FadePalStep	; 20A22
 xor edi, edi	; 20A27
 mov dword [dword_DC738], edi	; 20A29
 mov dword [statsredrawcb], edi	; 20A2F
@@ -743,7 +743,7 @@ call InitMenuRemap	; 20A9D
 mov ebx, 10h	; 20AA2
 mov edx, esp	; 20AA7
 mov eax, 1	; 20AA9
-call sub_76429	; 20AAE
+call FadePalStep	; 20AAE
 mov eax, esi	; 20AB3
 call LeadersScreen	; 20AB5
 push byte 42h	; 20ABA
@@ -777,7 +777,7 @@ mov dword [statspalshape], eax	; 20B20
 lea edx, [byte eax+010h]	; 20B25
 mov ebx, 10h	; 20B28
 xor eax, eax	; 20B2D
-call sub_76429	; 20B2F
+call FadePalStep	; 20B2F
 mov esi, dword [statsbgshapes]	; 20B34
 push esi	; 20B3A
 call jctime	; 20B3B
@@ -842,7 +842,7 @@ call InitMenuRemap	; 20C14
 mov ebx, 10h	; 20C19
 mov edx, esp	; 20C1E
 mov eax, 1	; 20C20
-call sub_76429	; 20C25
+call FadePalStep	; 20C25
 mov eax, esi	; 20C2A
 call LeadersScreen	; 20C2C
 push byte 42h	; 20C31
@@ -876,7 +876,7 @@ mov dword [statspalshape], eax	; 20C97
 lea edx, [byte eax+010h]	; 20C9C
 mov ebx, 10h	; 20C9F
 xor eax, eax	; 20CA4
-call sub_76429	; 20CA6
+call FadePalStep	; 20CA6
 mov esi, dword [statsbgshapes]	; 20CAB
 push esi	; 20CB1
 call jctime	; 20CB2
@@ -919,7 +919,7 @@ mov dword [statspalshape], eax	; 20D3E
 mov ebx, 10h	; 20D43
 mov edx, esp	; 20D48
 mov eax, 1	; 20D4A
-call sub_76429	; 20D4F
+call FadePalStep	; 20D4F
 mov ebp, dword [statsbgshapes]	; 20D54
 push ebp	; 20D5A
 call jctime	; 20D5B
@@ -1068,7 +1068,7 @@ add esp, byte 0Ch	; 20F2A
 mov ebx, 10h	; 20F2D
 mov edx, esp	; 20F32
 mov eax, edi	; 20F34
-call sub_76429	; 20F36
+call FadePalStep	; 20F36
 mov eax, edi	; 20F3B
 call InitMenuRemap	; 20F3D
 push byte 20h	; 20F42
@@ -1131,7 +1131,7 @@ mov dword [statspalshape], eax	; 21022
 lea edx, [byte eax+010h]	; 21027
 mov ebx, 10h	; 2102A
 xor eax, eax	; 2102F
-call sub_76429	; 21031
+call FadePalStep	; 21031
 mov edx, dword [statsbgshapes]	; 21036
 push edx	; 2103C
 call jctime	; 2103D
@@ -1273,7 +1273,7 @@ add esp, byte 0Ch	; 2127D
 mov ebx, 10h	; 21280
 mov edx, esp	; 21285
 mov eax, 1	; 21287
-call sub_76429	; 2128C
+call FadePalStep	; 2128C
 xor edi, edi	; 21291
 mov dword [dword_DC738], edi	; 21293
 mov dword [statsredrawcb], edi	; 21299
@@ -1366,7 +1366,7 @@ call InitMenuRemap	; 2139D
 mov ebx, 10h	; 213A2
 mov edx, esp	; 213A7
 mov eax, 1	; 213A9
-call sub_76429	; 213AE
+call FadePalStep	; 213AE
 call FreeCalendarIfLowMem	; 213B3
 mov eax, esi	; 213B8
 call TeamStatsScreen	; 213BA
@@ -1401,7 +1401,7 @@ mov dword [statspalshape], eax	; 21425
 lea edx, [byte eax+010h]	; 2142A
 mov ebx, 10h	; 2142D
 xor eax, eax	; 21432
-call sub_76429	; 21434
+call FadePalStep	; 21434
 mov ecx, dword [statsbgshapes]	; 21439
 push ecx	; 2143F
 call jctime	; 21440
@@ -1422,7 +1422,7 @@ add esp, byte 0Ch	; 21472
 mov ebx, 10h	; 21475
 mov edx, esp	; 2147A
 mov eax, 1	; 2147C
-call sub_76429	; 21481
+call FadePalStep	; 21481
 mov dword [dword_DDD2C], 0FFFFFFFFh	; 21486
 call LoadCalendarShapes	; 21490
 xor edi, edi	; 21495
@@ -1462,7 +1462,7 @@ call InitMenuRemap	; 214FE
 mov ebx, 10h	; 21503
 mov edx, esp	; 21508
 mov eax, 1	; 2150A
-call sub_76429	; 2150F
+call FadePalStep	; 2150F
 call FreeCalendarIfLowMem	; 21514
 mov eax, esi	; 21519
 call LeadersScreen	; 2151B
@@ -1497,7 +1497,7 @@ mov dword [statspalshape], eax	; 21586
 lea edx, [byte eax+010h]	; 2158B
 mov ebx, 10h	; 2158E
 xor eax, eax	; 21593
-call sub_76429	; 21595
+call FadePalStep	; 21595
 mov ecx, dword [statsbgshapes]	; 2159A
 push ecx	; 215A0
 call jctime	; 215A1
@@ -1533,7 +1533,7 @@ call InitMenuRemap	; 21611
 mov ebx, 10h	; 21616
 mov edx, esp	; 2161B
 mov eax, 1	; 2161D
-call sub_76429	; 21622
+call FadePalStep	; 21622
 call FreeCalendarIfLowMem	; 21627
 mov eax, esi	; 2162C
 call LeadersScreen	; 2162E
@@ -1568,7 +1568,7 @@ mov dword [statspalshape], eax	; 21699
 lea edx, [byte eax+010h]	; 2169E
 mov ebx, 10h	; 216A1
 xor eax, eax	; 216A6
-call sub_76429	; 216A8
+call FadePalStep	; 216A8
 mov ecx, dword [statsbgshapes]	; 216AD
 push ecx	; 216B3
 call jctime	; 216B4
@@ -1700,7 +1700,7 @@ add esp, byte 0Ch	; 21862
 mov ebx, 10h	; 21865
 mov edx, esp	; 2186A
 mov eax, 1	; 2186C
-call sub_76429	; 21871
+call FadePalStep	; 21871
 call FreeCalendarIfLowMem	; 21876
 xor esi, esi	; 2187B
 mov dword [dword_C6D26], esi	; 2187D
@@ -1765,7 +1765,7 @@ mov dword [statspalshape], eax	; 2196B
 lea edx, [byte eax+010h]	; 21970
 mov ebx, 10h	; 21973
 xor eax, eax	; 21978
-call sub_76429	; 2197A
+call FadePalStep	; 2197A
 mov eax, dword [statsbgshapes]	; 2197F
 push eax	; 21984
 call jctime	; 21985
@@ -1912,7 +1912,7 @@ add esp, byte 0Ch	; 21BD3
 mov ebx, 10h	; 21BD6
 mov edx, esp	; 21BDB
 mov eax, 1	; 21BDD
-call sub_76429	; 21BE2
+call FadePalStep	; 21BE2
 mov dword [dword_DDD2C], 0FFFFFFFFh	; 21BE7
 call LoadCalendarShapes	; 21BF1
 xor eax, eax	; 21BF6

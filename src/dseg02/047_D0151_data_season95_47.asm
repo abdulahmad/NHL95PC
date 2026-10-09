@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D0151 progbits alloc noexec write align=1
-extern ShowFreeAgents, EditTeamLines, CreateFreeAgent, FindPlayer, sub_75456, sub_7928A, unk_CFBE8, unk_CFCF2
+extern ShowFreeAgents, EditTeamLines, CreateFreeAgent, FindPlayer, LineEdDone, sub_7928A, unk_CFBE8, unk_CFCF2
 extern unk_CFE08, unk_CFF51, unk_D006E, unk_D00EE, unk_D00FE, unk_D010E, unk_D0118, unk_D0122
 extern unk_D012E, unk_D0139
 global roster1divmenus, roster2divmenus, menu_r1_tofa, menu_r1_toroster2, menu_r2_tofa, menu_r2_toroster1, menu_r1_freeagents, menu_r2_freeagents
@@ -161,7 +161,7 @@ db 043h,061h,06Eh,063h,065h,06Ch,00h
 unk_D04FC:
 db 00h,00h,00h,00h,00h,00h,00h,00h,034h,00h,00h,00h,011h,00h,00h,00h
 dd unk_D04F0
-dd sub_75456
+dd LineEdDone
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 034h,00h,00h,00h,024h,00h,00h,00h
 dd unk_D04F5

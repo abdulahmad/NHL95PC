@@ -4,7 +4,7 @@ bits 32
 section s_17DFC progbits alloc exec nowrite align=1
 extern __CHK, str_SfPal1, str_SfPal2, dword_C65A8, dword_C65AC, statscategory, deskexit, statsplayer
 extern teamstatscb, skaterstatscb, goaliestatscb, dword_DC6A8, sfpal2, sfpal1, dword_DC738, jctime
-extern DeskSetExit_ret1, DeskSetExit3_body, StatsSel_x, TeamStatsScreen, LeadersScreen, sub_76429, sub_8CCA8, sub_8FFB0
+extern DeskSetExit_ret1, DeskSetExit3_body, StatsSel_x, TeamStatsScreen, LeadersScreen, FadePalStep, sub_8CCA8, sub_8FFB0
 global StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense, StatsMenuPenaltyKilling, StatsMenuPowerPlay
 global StatsMenuTeamPenalties, StatsMenuPoints, StatsMenuGoals, StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus, StatsMenuPIM
 global StatsMenuShootPct, StatsMenuGAA, StatsMenuGoalieWins, StatsMenuSavePct, DeskSetExit3b, ShowPlayerStatsItem, FreeDeskBuffers
@@ -44,7 +44,7 @@ add esp, byte 0Ch	; 17E71
 mov edx, dword [sfpal1]	; 17E74
 mov ebx, 10h	; 17E7A
 mov eax, 1	; 17E7F
-call sub_76429	; 17E84
+call FadePalStep	; 17E84
 mov ecx, dword [sfpal1]	; 17E89
 push ecx	; 17E8F
 call jctime	; 17E90
@@ -55,7 +55,7 @@ mov dword [dword_DC6A8], eax	; 17EA2
 mov edx, dword [sfpal2]	; 17EA7
 mov ebx, 10h	; 17EAD
 xor eax, eax	; 17EB2
-call sub_76429	; 17EB4
+call FadePalStep	; 17EB4
 mov esi, dword [sfpal2]	; 17EB9
 push esi	; 17EBF
 call jctime	; 17EC0
@@ -110,7 +110,7 @@ add esp, byte 0Ch	; 17F51
 mov edx, dword [sfpal1]	; 17F54
 mov ebx, 10h	; 17F5A
 mov eax, 1	; 17F5F
-call sub_76429	; 17F64
+call FadePalStep	; 17F64
 mov ecx, dword [sfpal1]	; 17F69
 push ecx	; 17F6F
 call jctime	; 17F70
@@ -121,7 +121,7 @@ mov dword [dword_DC6A8], eax	; 17F7F
 mov edx, dword [sfpal2]	; 17F84
 mov ebx, 10h	; 17F8A
 xor eax, eax	; 17F8F
-call sub_76429	; 17F91
+call FadePalStep	; 17F91
 mov esi, dword [sfpal2]	; 17F96
 push esi	; 17F9C
 call jctime	; 17F9D
@@ -176,7 +176,7 @@ add esp, byte 0Ch	; 18031
 mov edx, dword [sfpal1]	; 18034
 mov ebx, 10h	; 1803A
 mov eax, 1	; 1803F
-call sub_76429	; 18044
+call FadePalStep	; 18044
 mov ecx, dword [sfpal1]	; 18049
 push ecx	; 1804F
 call jctime	; 18050
@@ -187,7 +187,7 @@ mov dword [dword_DC6A8], eax	; 18062
 mov edx, dword [sfpal2]	; 18067
 mov ebx, 10h	; 1806D
 xor eax, eax	; 18072
-call sub_76429	; 18074
+call FadePalStep	; 18074
 mov esi, dword [sfpal2]	; 18079
 push esi	; 1807F
 call jctime	; 18080
@@ -242,7 +242,7 @@ add esp, byte 0Ch	; 18114
 mov edx, dword [sfpal1]	; 18117
 mov ebx, 10h	; 1811D
 mov eax, 1	; 18122
-call sub_76429	; 18127
+call FadePalStep	; 18127
 mov ecx, dword [sfpal1]	; 1812C
 push ecx	; 18132
 call jctime	; 18133
@@ -253,7 +253,7 @@ mov dword [dword_DC6A8], eax	; 18145
 mov edx, dword [sfpal2]	; 1814A
 mov ebx, 10h	; 18150
 xor eax, eax	; 18155
-call sub_76429	; 18157
+call FadePalStep	; 18157
 mov esi, dword [sfpal2]	; 1815C
 push esi	; 18162
 call jctime	; 18163
@@ -308,7 +308,7 @@ add esp, byte 0Ch	; 181F7
 mov edx, dword [sfpal1]	; 181FA
 mov ebx, 10h	; 18200
 mov eax, 1	; 18205
-call sub_76429	; 1820A
+call FadePalStep	; 1820A
 mov ecx, dword [sfpal1]	; 1820F
 push ecx	; 18215
 call jctime	; 18216
@@ -319,7 +319,7 @@ mov dword [dword_DC6A8], eax	; 18228
 mov edx, dword [sfpal2]	; 1822D
 mov ebx, 10h	; 18233
 xor eax, eax	; 18238
-call sub_76429	; 1823A
+call FadePalStep	; 1823A
 mov esi, dword [sfpal2]	; 1823F
 push esi	; 18245
 call jctime	; 18246
@@ -374,7 +374,7 @@ add esp, byte 0Ch	; 182DA
 mov edx, dword [sfpal1]	; 182DD
 mov ebx, 10h	; 182E3
 mov eax, 1	; 182E8
-call sub_76429	; 182ED
+call FadePalStep	; 182ED
 mov ecx, dword [sfpal1]	; 182F2
 push ecx	; 182F8
 call jctime	; 182F9
@@ -385,7 +385,7 @@ mov dword [dword_DC6A8], eax	; 1830B
 mov edx, dword [sfpal2]	; 18310
 mov ebx, 10h	; 18316
 xor eax, eax	; 1831B
-call sub_76429	; 1831D
+call FadePalStep	; 1831D
 mov esi, dword [sfpal2]	; 18322
 push esi	; 18328
 call jctime	; 18329
@@ -440,7 +440,7 @@ add esp, byte 0Ch	; 183BA
 mov edx, dword [sfpal1]	; 183BD
 mov ebx, 10h	; 183C3
 mov eax, 1	; 183C8
-call sub_76429	; 183CD
+call FadePalStep	; 183CD
 mov ecx, dword [sfpal1]	; 183D2
 push ecx	; 183D8
 call jctime	; 183D9
@@ -451,7 +451,7 @@ mov dword [dword_DC6A8], eax	; 183E8
 mov edx, dword [sfpal2]	; 183ED
 mov ebx, 10h	; 183F3
 xor eax, eax	; 183F8
-call sub_76429	; 183FA
+call FadePalStep	; 183FA
 mov esi, dword [sfpal2]	; 183FF
 push esi	; 18405
 call jctime	; 18406
@@ -506,7 +506,7 @@ add esp, byte 0Ch	; 1849A
 mov edx, dword [sfpal1]	; 1849D
 mov ebx, 10h	; 184A3
 mov eax, 1	; 184A8
-call sub_76429	; 184AD
+call FadePalStep	; 184AD
 mov ecx, dword [sfpal1]	; 184B2
 push ecx	; 184B8
 call jctime	; 184B9
@@ -517,7 +517,7 @@ mov dword [dword_DC6A8], eax	; 184CB
 mov edx, dword [sfpal2]	; 184D0
 mov ebx, 10h	; 184D6
 xor eax, eax	; 184DB
-call sub_76429	; 184DD
+call FadePalStep	; 184DD
 mov esi, dword [sfpal2]	; 184E2
 push esi	; 184E8
 call jctime	; 184E9
@@ -572,7 +572,7 @@ add esp, byte 0Ch	; 1857D
 mov edx, dword [sfpal1]	; 18580
 mov ebx, 10h	; 18586
 mov eax, 1	; 1858B
-call sub_76429	; 18590
+call FadePalStep	; 18590
 mov ecx, dword [sfpal1]	; 18595
 push ecx	; 1859B
 call jctime	; 1859C
@@ -583,7 +583,7 @@ mov dword [dword_DC6A8], eax	; 185AE
 mov edx, dword [sfpal2]	; 185B3
 mov ebx, 10h	; 185B9
 xor eax, eax	; 185BE
-call sub_76429	; 185C0
+call FadePalStep	; 185C0
 mov esi, dword [sfpal2]	; 185C5
 push esi	; 185CB
 call jctime	; 185CC
@@ -638,7 +638,7 @@ add esp, byte 0Ch	; 18660
 mov edx, dword [sfpal1]	; 18663
 mov ebx, 10h	; 18669
 mov eax, 1	; 1866E
-call sub_76429	; 18673
+call FadePalStep	; 18673
 mov ecx, dword [sfpal1]	; 18678
 push ecx	; 1867E
 call jctime	; 1867F
@@ -649,7 +649,7 @@ mov dword [dword_DC6A8], eax	; 18691
 mov edx, dword [sfpal2]	; 18696
 mov ebx, 10h	; 1869C
 xor eax, eax	; 186A1
-call sub_76429	; 186A3
+call FadePalStep	; 186A3
 mov esi, dword [sfpal2]	; 186A8
 push esi	; 186AE
 call jctime	; 186AF
@@ -704,7 +704,7 @@ add esp, byte 0Ch	; 18743
 mov edx, dword [sfpal1]	; 18746
 mov ebx, 10h	; 1874C
 mov eax, 1	; 18751
-call sub_76429	; 18756
+call FadePalStep	; 18756
 mov ecx, dword [sfpal1]	; 1875B
 push ecx	; 18761
 call jctime	; 18762
@@ -715,7 +715,7 @@ mov dword [dword_DC6A8], eax	; 18774
 mov edx, dword [sfpal2]	; 18779
 mov ebx, 10h	; 1877F
 xor eax, eax	; 18784
-call sub_76429	; 18786
+call FadePalStep	; 18786
 mov esi, dword [sfpal2]	; 1878B
 push esi	; 18791
 call jctime	; 18792
@@ -770,7 +770,7 @@ add esp, byte 0Ch	; 18826
 mov edx, dword [sfpal1]	; 18829
 mov ebx, 10h	; 1882F
 mov eax, 1	; 18834
-call sub_76429	; 18839
+call FadePalStep	; 18839
 mov ecx, dword [sfpal1]	; 1883E
 push ecx	; 18844
 call jctime	; 18845
@@ -781,7 +781,7 @@ mov dword [dword_DC6A8], eax	; 18857
 mov edx, dword [sfpal2]	; 1885C
 mov ebx, 10h	; 18862
 xor eax, eax	; 18867
-call sub_76429	; 18869
+call FadePalStep	; 18869
 mov esi, dword [sfpal2]	; 1886E
 push esi	; 18874
 call jctime	; 18875
@@ -836,7 +836,7 @@ add esp, byte 0Ch	; 18909
 mov edx, dword [sfpal1]	; 1890C
 mov ebx, 10h	; 18912
 mov eax, 1	; 18917
-call sub_76429	; 1891C
+call FadePalStep	; 1891C
 mov ecx, dword [sfpal1]	; 18921
 push ecx	; 18927
 call jctime	; 18928
@@ -847,7 +847,7 @@ mov dword [dword_DC6A8], eax	; 1893A
 mov edx, dword [sfpal2]	; 1893F
 mov ebx, 10h	; 18945
 xor eax, eax	; 1894A
-call sub_76429	; 1894C
+call FadePalStep	; 1894C
 mov esi, dword [sfpal2]	; 18951
 push esi	; 18957
 call jctime	; 18958
@@ -902,7 +902,7 @@ add esp, byte 0Ch	; 189EC
 mov edx, dword [sfpal1]	; 189EF
 mov ebx, 10h	; 189F5
 mov eax, 1	; 189FA
-call sub_76429	; 189FF
+call FadePalStep	; 189FF
 mov ecx, dword [sfpal1]	; 18A04
 push ecx	; 18A0A
 call jctime	; 18A0B
@@ -913,7 +913,7 @@ mov dword [dword_DC6A8], eax	; 18A1D
 mov edx, dword [sfpal2]	; 18A22
 mov ebx, 10h	; 18A28
 xor eax, eax	; 18A2D
-call sub_76429	; 18A2F
+call FadePalStep	; 18A2F
 mov esi, dword [sfpal2]	; 18A34
 push esi	; 18A3A
 call jctime	; 18A3B
@@ -968,7 +968,7 @@ add esp, byte 0Ch	; 18ACF
 mov edx, dword [sfpal1]	; 18AD2
 mov ebx, 10h	; 18AD8
 mov eax, 1	; 18ADD
-call sub_76429	; 18AE2
+call FadePalStep	; 18AE2
 mov ecx, dword [sfpal1]	; 18AE7
 push ecx	; 18AED
 call jctime	; 18AEE
@@ -979,7 +979,7 @@ mov dword [dword_DC6A8], eax	; 18B00
 mov edx, dword [sfpal2]	; 18B05
 mov ebx, 10h	; 18B0B
 xor eax, eax	; 18B10
-call sub_76429	; 18B12
+call FadePalStep	; 18B12
 mov esi, dword [sfpal2]	; 18B17
 push esi	; 18B1D
 call jctime	; 18B1E
@@ -1034,7 +1034,7 @@ add esp, byte 0Ch	; 18BB2
 mov edx, dword [sfpal1]	; 18BB5
 mov ebx, 10h	; 18BBB
 mov eax, 1	; 18BC0
-call sub_76429	; 18BC5
+call FadePalStep	; 18BC5
 mov ecx, dword [sfpal1]	; 18BCA
 push ecx	; 18BD0
 call jctime	; 18BD1
@@ -1045,7 +1045,7 @@ mov dword [dword_DC6A8], eax	; 18BE3
 mov edx, dword [sfpal2]	; 18BE8
 mov ebx, 10h	; 18BEE
 xor eax, eax	; 18BF3
-call sub_76429	; 18BF5
+call FadePalStep	; 18BF5
 mov esi, dword [sfpal2]	; 18BFA
 push esi	; 18C00
 call jctime	; 18C01
@@ -1100,7 +1100,7 @@ add esp, byte 0Ch	; 18C95
 mov edx, dword [sfpal1]	; 18C98
 mov ebx, 10h	; 18C9E
 mov eax, 1	; 18CA3
-call sub_76429	; 18CA8
+call FadePalStep	; 18CA8
 mov ecx, dword [sfpal1]	; 18CAD
 push ecx	; 18CB3
 call jctime	; 18CB4
@@ -1111,7 +1111,7 @@ mov dword [dword_DC6A8], eax	; 18CC6
 mov edx, dword [sfpal2]	; 18CCB
 mov ebx, 10h	; 18CD1
 xor eax, eax	; 18CD6
-call sub_76429	; 18CD8
+call FadePalStep	; 18CD8
 mov esi, dword [sfpal2]	; 18CDD
 push esi	; 18CE3
 call jctime	; 18CE4

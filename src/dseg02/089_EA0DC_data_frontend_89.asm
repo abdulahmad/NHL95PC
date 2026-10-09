@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_EA0DC nobits alloc noexec write align=1
-global ctlavailmask, rosterlist, byte_EA991, byte_EA992
-global byte_EA993, ptrupdatefn, inputqueue, lastinputdir, inputrepeat, inputev
+global ctlavailmask, rosterlist, rosterjersey, rosterslot
+global rosterstat, ptrupdatefn, inputqueue, lastinputdir, inputrepeat, inputev
 global dword_EA2B0, dword_EA2B4, rosterteamptr, unk_EA968
 ptrupdatefn:
 resb 24
@@ -33,9 +33,9 @@ rosterteamptr:
 resb 8
 rosterlist:
 resb 1
-byte_EA991:
+rosterjersey:
 resb 1
-byte_EA992:
+rosterslot:
 resb 1
-byte_EA993:
+rosterstat:
 resb 1

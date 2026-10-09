@@ -23,7 +23,7 @@ extern dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED
 extern dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794, dword_ED798, dword_ED79C
 extern dword_ED7A0, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
 extern sprintf_, strcpy_, strncpy_, MakePath, SetTextColors, PrintShadowText, PrintOutlinedText, ShowLoadingScreen
-extern FadeOutPalCycle, GetInputEvent, ClearInputQueue, sub_76429, sub_8291E, WriteCurModeState, sub_8CCA8, sub_8D2F0
+extern FadeOutPalCycle, GetInputEvent, ClearInputQueue, FadePalStep, sub_8291E, WriteCurModeState, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_912C8, sub_91400
 extern sub_91964, sub_91FE0, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8, sub_B4DD4
@@ -509,7 +509,7 @@ add esp, byte 0Ch	; 8087B
 mov ebx, 10h	; 8087E
 mov edx, esp	; 80883
 mov eax, 1	; 80885
-call sub_76429	; 8088A
+call FadePalStep	; 8088A
 cmp byte [musicon], 0	; 8088F
 je short loc_808CE	; 80896
 cmp dword [songdata], byte 0	; 80898
@@ -1332,7 +1332,7 @@ loc_81462:
 mov ebx, 10h	; 81462
 mov edx, esp	; 81467
 xor eax, eax	; 81469
-call sub_76429	; 8146B
+call FadePalStep	; 8146B
 xor ebx, ebx	; 81470
 mov dword [dword esp+0350h], ebx	; 81472
 loc_81479:
@@ -2402,7 +2402,7 @@ add esp, byte 0Ch	; 822AC
 mov ebx, 10h	; 822AF
 mov edx, esp	; 822B4
 mov eax, 1	; 822B6
-call sub_76429	; 822BB
+call FadePalStep	; 822BB
 mov ebp, dword [dword esp+0318h]	; 822C0
 push ebp	; 822C7
 call jctime	; 822C8
@@ -2448,7 +2448,7 @@ add esp, byte 0Ch	; 82351
 mov ebx, 10h	; 82354
 mov edx, esp	; 82359
 mov eax, 1	; 8235B
-call sub_76429	; 82360
+call FadePalStep	; 82360
 mov edi, dword [dword esp+0318h]	; 82365
 push edi	; 8236C
 call jctime	; 8236D
@@ -2492,7 +2492,7 @@ add esp, byte 0Ch	; 823F2
 mov ebx, 10h	; 823F5
 mov edx, esp	; 823FA
 mov eax, 1	; 823FC
-call sub_76429	; 82401
+call FadePalStep	; 82401
 mov ebp, dword [dword esp+0318h]	; 82406
 push ebp	; 8240D
 call jctime	; 8240E

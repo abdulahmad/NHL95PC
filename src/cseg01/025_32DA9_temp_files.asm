@@ -11,7 +11,7 @@ extern MainDeskLoop_x2, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRe
 extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
 extern EasnStandingsScreen, PreGameScreen, SaveModeState, LoadModeState, PlayLeagueGame, UpdateTeamDbs, MergeLeagueFiles, MergeUpdateDbs
 extern RebuildLeagueDbs, ImportDbs, ExportDbs, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
-extern ShowLoadingScreen, InputInstall, InputRemove, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
+extern ShowLoadingScreen, InputInstall, InputRemove, FadePalStep, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, EasnTeamStatsScreen, EasnSkaterStatsScreen, EasnGoalieStatsScreen
 extern EasnStandingsMenu, exhstate, leaguemgrmenu
 global MenuAddTeam_common
@@ -85,7 +85,7 @@ call sub_8FCDF	; 32E9D
 mov ebx, 10h	; 32EA2
 mov edx, edi	; 32EA7
 mov eax, 1	; 32EA9
-call sub_76429	; 32EAE
+call FadePalStep	; 32EAE
 push edi	; 32EB3
 call jctime	; 32EB4
 add esp, byte 4	; 32EB9
@@ -137,7 +137,7 @@ add esp, byte 0Ch	; 32F57
 mov ebx, 10h	; 32F5A
 mov edx, esi	; 32F5F
 mov eax, 1	; 32F61
-call sub_76429	; 32F66
+call FadePalStep	; 32F66
 push esi	; 32F6B
 call jctime	; 32F6C
 add esp, byte 4	; 32F71
@@ -277,7 +277,7 @@ call sub_8FCDF	; 331BF
 mov ebx, 10h	; 331C4
 mov edx, esi	; 331C9
 mov eax, 1	; 331CB
-call sub_76429	; 331D0
+call FadePalStep	; 331D0
 push esi	; 331D5
 call jctime	; 331D6
 add esp, byte 4	; 331DB
@@ -334,7 +334,7 @@ add esp, byte 0Ch	; 33299
 mov ebx, 10h	; 3329C
 mov edx, esi	; 332A1
 mov eax, 1	; 332A3
-call sub_76429	; 332A8
+call FadePalStep	; 332A8
 push esi	; 332AD
 call jctime	; 332AE
 add esp, byte 4	; 332B3
@@ -395,7 +395,7 @@ add esp, byte 0Ch	; 33357
 mov ebx, 10h	; 3335A
 mov edx, esi	; 3335F
 mov eax, 1	; 33361
-call sub_76429	; 33366
+call FadePalStep	; 33366
 push esi	; 3336B
 call jctime	; 3336C
 add esp, byte 4	; 33371
@@ -459,7 +459,7 @@ add esp, byte 0Ch	; 3343B
 mov ebx, 10h	; 3343E
 mov edx, esi	; 33443
 mov eax, 1	; 33445
-call sub_76429	; 3344A
+call FadePalStep	; 3344A
 push esi	; 3344F
 call jctime	; 33450
 add esp, byte 4	; 33455
@@ -510,7 +510,7 @@ add esp, byte 0Ch	; 334CD
 mov ebx, 10h	; 334D0
 mov edx, esi	; 334D5
 mov eax, 1	; 334D7
-call sub_76429	; 334DC
+call FadePalStep	; 334DC
 push esi	; 334E1
 call jctime	; 334E2
 add esp, byte 4	; 334E7
@@ -612,7 +612,7 @@ add esp, byte 0Ch	; 33645
 mov ebx, 10h	; 33648
 mov edx, esi	; 3364D
 mov eax, 1	; 3364F
-call sub_76429	; 33654
+call FadePalStep	; 33654
 push esi	; 33659
 call jctime	; 3365A
 add esp, byte 4	; 3365F

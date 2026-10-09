@@ -810,9 +810,31 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0007345B,sub_7345B,LoadDbsFromDir,PC-new,,,,high,"(dir, ext): FreeLeagueDbsMem then loads the six DBs into memory, dbdirty = 0",database_dialogs,manual-trace
 000735C3,sub_735C3,DeleteSelectedDb,PC-new,,,,high,"(list): ""Confirm deletion of the database:"" <name>, DeleteDir of <name>.DBX, removes it from the list and fixes tab / scroll state",database_dialogs,manual-trace
 00073703,sub_73703,MenuOpenDatabase,PC-new,,,,high,"Edit Rosters menu action: ScanDbFiles, pointer copy, LoadDbDialogShapes, DrawDbDialog, DbDialogLoop, frees the shapes",database_dialogs,manual-trace
-00075456,sub_75456,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),line_editor_rosters,unmatched
-00075BAA,sub_75BAA,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),line_editor_rosters,unmatched
-00075BDE,sub_75BDE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),line_editor_rosters,unmatched
+000737E1,sub_737E1,DbLineEditor,PC-new,,,,high,"Edit Rosters line editor (create_player): fade out, loading screen, dialog colours, lineditp graphics / shrt font, runs DbLineEditorLoop, restores",line_editor_rosters,manual-trace
+000739B6,sub_739B6,FindRosterSlot,PC-new,,,,high,"(slot, panel): index of the rosterlist entry whose roster slot (+2) matches",line_editor_rosters,manual-trace
+00073A18,sub_73A18,DbLineEditorLoop,PC-new,,,,medium,"line editor screen and input loop (lelogo, menus via MenuHitTest / DrawMenuItemSel, drag players into the 40 line slots)",line_editor_rosters,manual-trace
+00075046,sub_75046,DrawLineJerseys,PC-new,,,,high,"(lines, ..., panel): draws the 40 line slots as team-coloured jersey numbers (sub_7A099) at lineslotx / linesloty",line_editor_rosters,manual-trace
+000751FC,sub_751FC,CheckRosterComplete,PC-new,,,,high,"dressed (status 3) players must be 18 skaters and 2 goalies, else ""Your Roster is incomplete."" with the counts (""%s %2d %s%s"", Scratch / Dress, Player / Goalie)",line_editor_rosters,manual-trace
+00075456,sub_75456,LineEdDone,PC-new,,,,high,"line editor ""Done"": CheckRosterComplete, maps the 40 line slots and the 8 extra (scratched) slots back to roster slots, copies the team record lines +0BCh to +0ECh",line_editor_rosters,manual-trace
+0007556E,sub_7556E,MenuShowPlayerStats,PC-new,,,,high,"line editor ""Show Player Statistics"": loads keys / pstat / gstat, Regular Season / Play-Off menu, redraws the lines",line_editor_rosters,manual-trace
+00075770,sub_75770,ScratchPlayer,PC-new,,,,high,"status 2 (scratched): removes the player from every line slot, redraws, prints his ""%c %2d %s"" row",line_editor_rosters,manual-trace
+00075868,sub_75868,DressPlayer,PC-new,,,,high,"status 3 (dressed), redraws, prints his row",line_editor_rosters,manual-trace
+00075931,sub_75931,CmpRosterSkaters,PC-new,,,,medium,qsort compare of skater stat rows (regular or play-off half by statsplayoffs),line_editor_rosters,manual-trace
+00075A37,sub_75A37,CmpRosterGoalies,PC-new,,,,medium,qsort compare of goalie stat rows,line_editor_rosters,manual-trace
+00075BAA,sub_75BAA,MenuRegSeasonStats,PC-new,,,,high,"""Regular Season Statistics ..."": statsplayoffs = 0, ShowRosterStats",line_editor_rosters,manual-trace
+00075BDE,sub_75BDE,MenuPlayoffStats,PC-new,,,,high,"""Play-Off Statistics ..."": statsplayoffs = 1, ShowRosterStats",line_editor_rosters,manual-trace
+00075BF7,sub_75BF7,ShowRosterStats,PC-new,,,,high,"""%s Roster:"" print-out: skaters (Pos No Name GP G A PT Shots PIM +/-) and goalies (GP Min GAA W L T GA SA PCT), sorted",line_editor_rosters,manual-trace
+00076429,sub_76429,FadePalStep,PC-new,,,,high,"(in, pal, steps): fades the 300h-byte palette in or out through fadepal (steps capped at 2 when already faded in)",line_editor_rosters,manual-trace
+0007651B,sub_7651B,FadePalStepSlow,PC-new,,,,high,same with a 45 ms delay per step (no refs),line_editor_rosters,manual-trace
+00076614,sub_76614,SetPalette768,PC-new,,,,high,sets all 256 colours in two halves with vsync,line_editor_rosters,manual-trace
+0007665E,sub_7665E,RandLfsrByte,PC-new,,,,low,"8-bit LFSR step (seed 2Bh, taps 0B8h) (no refs)",line_editor_rosters,manual-trace
+0007668D,sub_7668D,BlitClipRect,PC-new,,,,low,clips a rect to ECDE4..ECDF0 and blits it to the screen (no refs),line_editor_rosters,manual-trace
+00076771,sub_76771,PrintLineEdStatus,PC-new,,,,high,"(x, y, text): clears and prints a status text clamped to x 26Bh",line_editor_rosters,manual-trace
+000767D0,sub_767D0,GameLineEditor,PC-new,,,,high,"game / frontend line editor (pre-game, team screens, after trades): music stop, loading screen, LoadGameRoster, qsort GameRosterCmp, GameLineEditorLoop",line_editor_rosters,manual-trace
+00076A93,sub_76A93,GameRosterCmp,PC-new,,,,high,"qsort compare: positions L, C, R, D then G, then name (+6)",line_editor_rosters,manual-trace
+00076AF5,sub_76AF5,GameLineEditorLoop,PC-new,,,,medium,game line editor screen and input loop (copy of DbLineEditorLoop on game teams),line_editor_rosters,manual-trace
+00077F6F,sub_77F6F,LineEdHitTest,PC-new,,,,high,"(x, y, out): line slot (40 rects 3Ah x 28h) or roster list row (100 + (y - 16h) / 0Dh)",line_editor_rosters,manual-trace
+00077FF5,sub_77FF5,LoadGameRoster,PC-new,,,,high,"(team): reads the team's players from the league ""key"" file into the roster entries (FatalError A1..A8 on file errors)",line_editor_rosters,manual-trace
 00079188,sub_79188,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),team_select,unmatched
 0007A1FC,sub_7A1FC,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),settings_dialogs,unmatched
 0007A29C,sub_7A29C,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),settings_dialogs,unmatched

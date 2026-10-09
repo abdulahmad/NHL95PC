@@ -4,7 +4,7 @@ bits 32
 section s_6C2F9 progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, str_SaveAsGameDatabases, str_Current2, str_EnterANewDatabase, str_DBX, str_ErrorGettingDiskSpace, str_3dKbytesOfFree2
 extern str_Temp7, str_Current3, str_Pointer11, str_FreeAgents, str_DATABASE, str_fmt2d, str_extDB, str_XXXKbytesOfFree2
-extern str_SavingDatabases, rosterisfa, musicon, byte_D42C3, rosterlist, byte_EA991, rostersel, boxfillcolor
+extern str_SavingDatabases, rosterisfa, musicon, byte_D42C3, rosterlist, rosterjersey, rostersel, boxfillcolor
 extern boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg, songdata, falist, falistsel, facount
 extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0BFC, dword_D0C04, dword_D0C10
@@ -13,7 +13,7 @@ extern rosterteamptr, dbdirty, msglines, dword_EBCA4, editptrspr, editrosters_ex
 extern BuildFreeAgentList_ret, mkdir_, leaguedbnames
 extern dbexistsmsg, nodiskspacemsg, rmdir_, sprintf_, strcat_, strcpy_, strlen_, strupr_
 extern MakePath, DeleteDir, PrintCenteredText, PrintShadowText, FitPlayerName, TextInputDialog, DrawButtons, DrawScrollBar
-extern RestoreDialogBg, MessageBox, LoadLeagueDbsMem, DrawEditRosters, EditRosters, CheckDatabases, sub_76429, sub_8CCA8
+extern RestoreDialogBg, MessageBox, LoadLeagueDbsMem, DrawEditRosters, EditRosters, CheckDatabases, FadePalStep, sub_8CCA8
 extern sub_8D2F0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90F38
 extern sub_91964, sub_932D0, FatalError, MouseSetPos, sub_B4BA8, sub_B4F8C, unk13_6BF3D, str_S5
 extern btn_LeagueExists, unk_D0450, str_C4, unk_D0BB8, unk_D0BF0, savedbbtns, curdbname, unknown_libname_1
@@ -811,7 +811,7 @@ add esp, byte 0Ch	; 6CCE3
 mov ebx, 10h	; 6CCE6
 mov edx, ebp	; 6CCEB
 mov eax, 1	; 6CCED
-call sub_76429	; 6CCF2
+call FadePalStep	; 6CCF2
 mov edi, curdbname	; 6CCF7
 mov esi, str_Current3	; 6CCFC
 movsd	; 6CD01
@@ -912,7 +912,7 @@ add esp, byte 0Ch	; 6CE4E
 mov ebx, 10h	; 6CE51
 mov edx, ebp	; 6CE56
 mov eax, 1	; 6CE58
-call sub_76429	; 6CE5D
+call FadePalStep	; 6CE5D
 push ebp	; 6CE62
 call jctime	; 6CE63
 add esp, byte 4	; 6CE68
@@ -1043,7 +1043,7 @@ add edi, eax	; 6CFBD
 cmp byte [dword edi+rosterlist], 0	; 6CFBF
 je near .4	; 6CFC6
 xor eax, eax	; 6CFCC
-mov al, byte [dword edi+byte_EA991]	; 6CFCE
+mov al, byte [dword edi+rosterjersey]	; 6CFCE
 push eax	; 6CFD4
 push str_fmt2d	; 6CFD5
 lea eax, [byte ebp-060h]	; 6CFDA

@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_D056C progbits alloc noexec write align=1
-extern sub_7556E, sub_75770, sub_75868, unk_D0549
+extern MenuShowPlayerStats, ScratchPlayer, DressPlayer, unk_D0549
 global off_D056C, off_D058C, unk_D0598, unk_D05AF, unk_D05CF, unk_D05DB, unk_D05E2
 off_D056C:
-dd sub_75868
+dd DressPlayer
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 068h,00h,00h,00h,024h,00h,00h,00h
 dd unk_D0549
 off_D058C:
-dd sub_75770
+dd ScratchPlayer
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_D0598:
 db 053h,068h,06Fh,077h,020h,050h,06Ch,061h,079h,065h,072h,020h,053h,074h,061h,074h
@@ -18,7 +18,7 @@ db 069h,073h,074h,069h,063h,073h,00h
 unk_D05AF:
 db 00h,00h,00h,00h,00h,00h,00h,00h,09Ch,00h,00h,00h,012h,00h,00h,00h
 dd unk_D0598
-dd sub_7556E
+dd MenuShowPlayerStats
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_D05CF:
 db 04Ch,069h,06Eh,065h,020h,045h,064h,069h,074h,06Fh,072h,00h

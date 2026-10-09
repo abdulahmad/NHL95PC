@@ -18,8 +18,8 @@ global asc_D26CB, asc_D26D7, asc_D26E4, asc_D26F1, asc_D26FE, asc_D270B, asc_D27
 global asc_D2732, asc_D27BF, asc_D281F, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238
 global byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, musicslot, musicon, byte_D2439
 global byte_D27B6, dbdlgrects
-global dword_D1229, dword_D122B, dword_D122F, dword_D1231, dword_D1233, dword_D1338
-global dword_D133C, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458
+global dword_D1229, dword_D122B, dword_D122F, dword_D1231, dword_D1233, lineslotx
+global linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458
 global dword_D145C, dword_D1468, dword_D146C, dword_D1478, dword_D14F0, dword_D14F4, dword_D14F8, dword_D14FC
 global dword_D16AC, dword_D16B0, dword_D16B4, dword_D16B8, dword_D17EC, dword_D17F0, dword_D17F4, dword_D17F8
 global dword_D195C, dword_D1960, dword_D1964, dword_D1968, dword_D196C, dword_D1970, dword_D1974, dword_D1978
@@ -136,9 +136,9 @@ byte_D1335:
 db 0FDh
 byte_D1336:
 db 0FEh,0FFh
-dword_D1338:
+lineslotx:
 db 047h,00h,00h,00h
-dword_D133C:
+linesloty:
 db 028h,00h,00h,00h,083h,00h,00h,00h,028h,00h,00h,00h,0BFh,00h,00h,00h
 db 028h,00h,00h,00h,047h,00h,00h,00h,059h,00h,00h,00h,083h,00h,00h,00h
 db 059h,00h,00h,00h,0BFh,00h,00h,00h,059h,00h,00h,00h,047h,00h,00h,00h

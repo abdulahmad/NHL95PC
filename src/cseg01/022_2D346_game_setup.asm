@@ -21,7 +21,7 @@ extern crestnames, gamestatlabels, leaguedbnames, penaltynames, rand_, sprintf_
 extern strcat_, strcpy_, FadePalette, MakePath, FileOpenRead, FileOpenRW, FileClose, ReadKeyRec
 extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, SetTextColors, PrintShadowText, sub_1BAF3, FitPlayerName, WaitClickTimeout
 extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, ClearInputQueue
-extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
+extern FadePalStep, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_913B4, sub_913D0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, SetDrawBitmap, sub_B4F8C, gsuminitff, str_D6, str_OT, str_S3
@@ -796,7 +796,7 @@ jne short .3	; 2DF97
 mov ebx, 10h	; 2DF99
 mov edx, dword [dword esp+07A8h]	; 2DF9E
 xor eax, eax	; 2DFA5
-call sub_76429	; 2DFA7
+call FadePalStep	; 2DFA7
 .3:
 mov eax, 3E8h	; 2DFAC
 call WaitClickTimeout	; 2DFB1
@@ -823,7 +823,7 @@ je short .8	; 2E003
 mov ebx, 10h	; 2E005
 mov edx, dword [dword esp+07A8h]	; 2E00A
 mov eax, 1	; 2E011
-call sub_76429	; 2E016
+call FadePalStep	; 2E016
 .8:
 push byte 0	; 2E01B
 call sub_B392C	; 2E01D
@@ -919,7 +919,7 @@ je near GameSummaryScreen_period.9	; 2E17F
 mov ebx, 10h	; 2E185
 mov edx, dword [dword esp+07A8h]	; 2E18A
 xor eax, eax	; 2E191
-call sub_76429	; 2E193
+call FadePalStep	; 2E193
 mov eax, 3E8h	; 2E198
 call WaitClickTimeout	; 2E19D
 mov dword [dword esp+07B4h], eax	; 2E1A2
@@ -1803,7 +1803,7 @@ je short .71	; 2EE7A
 mov ebx, 10h	; 2EE7C
 mov edx, dword [dword esp+07A8h]	; 2EE81
 xor eax, eax	; 2EE88
-call sub_76429	; 2EE8A
+call FadePalStep	; 2EE8A
 xor ecx, ecx	; 2EE8F
 mov dword [dword esp+0798h], ecx	; 2EE91
 .71:
@@ -1977,7 +1977,7 @@ call sub_8FCDF	; 2F14B
 mov ebx, 10h	; 2F150
 mov edx, dword [dword esp+07A8h]	; 2F155
 mov eax, 1	; 2F15C
-call sub_76429	; 2F161
+call FadePalStep	; 2F161
 cmp byte [musicon], 0	; 2F166
 je short .84	; 2F16D
 cmp dword [songdata], byte 0	; 2F16F
@@ -2928,7 +2928,7 @@ call PlayDigiSample	; 2FD08
 mov ebx, 10h	; 2FD0D
 lea edx, [dword ebp-0374h]	; 2FD12
 xor eax, eax	; 2FD18
-call sub_76429	; 2FD1A
+call FadePalStep	; 2FD1A
 mov eax, 7D0h	; 2FD1F
 call WaitClickTimeout	; 2FD24
 cmp byte [musicon], 0	; 2FD29
@@ -2943,7 +2943,7 @@ call sub_8FCDF	; 2FD4A
 mov ebx, 10h	; 2FD4F
 lea edx, [dword ebp-0374h]	; 2FD54
 mov eax, 1	; 2FD5A
-call sub_76429	; 2FD5F
+call FadePalStep	; 2FD5F
 cmp byte [musicon], 0	; 2FD64
 je short .24	; 2FD6B
 cmp dword [songdata], byte 0	; 2FD6D

@@ -12,7 +12,7 @@ extern careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, joy
 extern mousebtns, ptrupdatefn, inputqueue, lastinputdir, inputrepeat, inputev
 extern dword_ED7B0, jctime, memcpy_, memset_, leaguedbnames
 extern mousepollfn, joycalprehook, joycalposthook, strcat_, MakePath, SetTextColors
-extern PrintShadowText, FreeLeagueDbsMem, TeamRecPtr, KeyDbPtr, RunEditRosters, sub_76429, sub_83459, sub_8CCA8
+extern PrintShadowText, FreeLeagueDbsMem, TeamRecPtr, KeyDbPtr, RunEditRosters, FadePalStep, sub_83459, sub_8CCA8
 extern sub_8D2F0, sub_8E4C0, sub_8E4F8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_90D20, sub_910E0, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_91964
 extern sub_92CD0, sub_92DE0, sub_B29F0, sub_B2CBE, MouseSetPos, sub_B2F22, sub_B30B4, sub_B30F4
@@ -138,7 +138,7 @@ movsb	; 6B20B
 mov ebx, 10h	; 6B20C
 mov edx, esp	; 6B211
 xor eax, eax	; 6B213
-call sub_76429	; 6B215
+call FadePalStep	; 6B215
 mov esi, 0FFFFFFFFh	; 6B21A
 .5:
 call sub_B39D0	; 6B21F
@@ -207,7 +207,7 @@ add esp, byte 4	; 6B310
 mov ebx, 10h	; 6B313
 mov edx, esp	; 6B318
 mov eax, 1	; 6B31A
-call sub_76429	; 6B31F
+call FadePalStep	; 6B31F
 lea eax, [dword esp+0300h]	; 6B324
 push eax	; 6B32B
 call sub_8EA00	; 6B32C

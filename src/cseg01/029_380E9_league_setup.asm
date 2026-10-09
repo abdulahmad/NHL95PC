@@ -11,7 +11,7 @@ extern pointerspr, teamselresult, leaguemaster, leaguesaved, ptrupdatefn, jctime
 extern pwmismatchmsg, strcat_, strcmp_, strcpy_, stricmp_, strlen_, MakePath, leaguedbnames
 extern FileOpenRead, FileClose, FileReadAt, FileWriteAt, ReadTeamRec, SetTextColors, TextInputDialog, ListDialog
 extern SetDialogColors, MessageBox, TeamGridHitTest, DrawTeamGridName, SaveGridCellBg, RestoreGridCellBg, HighlightGridCell, DrawTeamGrid
-extern GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, sub_76429
+extern GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, FadePalStep
 extern sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_91370, sub_91400, MouseSetPos, sub_B2DCA
 extern sub_B30B4, sub_B392C, sub_B4BA8, sub_B4DD4, unk_C1900, unk_C7592, removeteammsg, removeteambtns
@@ -850,7 +850,7 @@ add esp, byte 0Ch	; 38CF1
 mov ebx, 10h	; 38CF4
 mov edx, esi	; 38CF9
 mov eax, 1	; 38CFB
-call sub_76429	; 38D00
+call FadePalStep	; 38D00
 push esi	; 38D05
 call jctime	; 38D06
 add esp, byte 4	; 38D0B
@@ -1054,7 +1054,7 @@ add esp, byte 8	; 39015
 lea edx, [byte eax+010h]	; 39018
 mov ebx, 10h	; 3901B
 xor eax, eax	; 39020
-call sub_76429	; 39022
+call FadePalStep	; 39022
 push esi	; 39027
 call jctime	; 39028
 add esp, byte 4	; 3902D
@@ -1237,7 +1237,7 @@ add esp, byte 0Ch	; 39301
 mov ebx, 10h	; 39304
 mov edx, esi	; 39309
 mov eax, 1	; 3930B
-call sub_76429	; 39310
+call FadePalStep	; 39310
 push esi	; 39315
 call jctime	; 39316
 add esp, byte 4	; 3931B
