@@ -2129,6 +2129,10 @@ pop ebp	; 37D66
 pop edi	; 37D67
 pop esi	; 37D68
 ret	; 37D69
+; C: src/c/028_35FB9_import_export/SaveGridCellBg.c
+%ifdef CBUILD
+%include "c/028_35FB9_import_export/SaveGridCellBg.inc"
+%else
 SaveGridCellBg:
 push dword 28h	; 37D6A
 call __CHK	; 37D6F
@@ -2214,6 +2218,7 @@ pop ebp	; 37E55
 pop edi	; 37E56
 pop esi	; 37E57
 ret 4	; 37E58
+%endif ; C
 ; C: src/c/028_35FB9_import_export/RestoreGridCellBg.c
 %ifdef CBUILD
 %include "c/028_35FB9_import_export/RestoreGridCellBg.inc"

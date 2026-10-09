@@ -757,6 +757,10 @@ call DrawLeagueSetChecks	; 7A9C1
 pop edx	; 7A9C6
 ret	; 7A9C7
 %endif ; C
+; C: src/c/056_7A13A_settings_dialogs/LeagueSetHitTest.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/LeagueSetHitTest.inc"
+%else
 LeagueSetHitTest:
 push dword 10h	; 7A9C8
 call __CHK	; 7A9CD
@@ -842,6 +846,7 @@ pop ebp	; 7AAA6
 pop esi	; 7AAA7
 pop ecx	; 7AAA8
 ret	; 7AAA9
+%endif ; C
 DrawLeagueSetChecks:
 push dword 2Ch	; 7AAAA
 call __CHK	; 7AAAF

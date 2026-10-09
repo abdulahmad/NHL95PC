@@ -15,7 +15,6 @@ extern void ReadControllerPad(); /* 10A86 */
 extern void ReadHotKeys(); /* 10AC6 */
 extern void ReadSkipKeys(); /* 10C7F */
 extern void SampleInputTick(); /* 10DCD */
-extern void DrawSpriteNumber(); /* 11005 */
 extern void HandleHotKey_ret(); /* 113E9 */
 extern void SetFullPalette(); /* 11550 */
 extern void GameLoop(); /* 1167B */
@@ -413,8 +412,6 @@ extern void ApplyShapePalette(); /* 34789 */
 extern void CalendarScreen(); /* 34821 */
 extern void CheckLeagueDiskSync(); /* 35FB9 */
 extern void PostGameToTeamDb(); /* 3626D */
-extern void SaveGridCellBg(); /* 37D6A */
-extern void HighlightGridCell(); /* 37EA6 */
 extern void ChooseLeagueController(); /* 380E9 */
 extern void BuildStandingsGrid(); /* 384B8 */
 extern void LeagueTeamSelect(); /* 38B4F */
@@ -1008,7 +1005,6 @@ extern void LeagueOptsToBits_n2(); /* 7A9A8 */
 extern void LeagueOptsToBits_n3(); /* 7A9B1 */
 extern void LeagueOptsToBits_n4(); /* 7A9BA */
 extern void LeagueOptsToBits_n0(); /* 7A9C1 */
-extern void LeagueSetHitTest(); /* 7A9C8 */
 extern void LeagueSetViewLoop(); /* 7AC31 */
 extern void LeagueSetEditLoop(); /* 7ADD3 */
 extern void MenuModeSettings(); /* 7B3A7 */
@@ -2112,10 +2108,8 @@ extern void sub_92EE4(); /* 92EE4 */
 extern void loc_92F0F(); /* 92F0F */
 extern void loc_92F31(); /* 92F31 */
 extern void loc_92F3A(); /* 92F3A */
-extern void sub_92F50(); /* 92F50 */
 extern void loc_92F6C(); /* 92F6C */
 extern void loc_92F89(); /* 92F89 */
-extern void sub_93000(); /* 93000 */
 extern void loc_9301C(); /* 9301C */
 extern void loc_93039(); /* 93039 */
 extern void loc_930C2(); /* 930C2 */

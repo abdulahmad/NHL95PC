@@ -752,5 +752,11 @@ void StatsSelLeague(void);  /* 17BE7 */
 int AskMasterPassword(int t, char *names, char *key);  /* 3A49E */
 void EncryptPassword(char *pw, int t);  /* 3A597 */
 int AskTeamPassword(int t, char *ents);  /* 3A395 */
+void SaveGridCellBg(int team, unsigned char *tab, int bm, int x, int y);  /* 37D6A */
+void __cdecl sub_92F50(int x1, int y1, int x2, int y2, int c);  /* graphics library: frame */
+void __cdecl sub_93000(int x1, int y1, int x2, int y2, int c);  /* graphics library: erase frame */
+void HighlightGridCell(int team, unsigned char *tab, int on);  /* 37EA6 */
+int LeagueSetHitTest(int x, int y, int *item);  /* 7A9C8 */
+void DrawSpriteNumber(short x, short y, short n, short suffix);  /* 11005 */
 
 #endif
