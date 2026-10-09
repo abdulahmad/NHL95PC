@@ -294,6 +294,11 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000336E6,sub_336E6,MenuExportDbs,PC-new,,,,medium,"File menu ""Export Databases ..."" action installed with a league (sub_3D108 in lgstate)",temp_files,manual-trace
 0003371C,sub_3371C,DemoSetupStub,PC-new,,,,low,empty; called before the scoreboard demo starts,temp_files,manual-trace
 00033727,sub_33727,FreeRinkGfx,PC-new,,,,medium,frees rinkbm and the dword_C73D0 buffer (resets dword_C7440 to -1); used by cdstream and highlights,temp_files,manual-trace
+0003377C,sub_3377C,LoadRink,PC-new,,,,high,"(team): builds the home arena's rink bitmap (4Ah x 30h tiles) from rink.til / TILES and the arena's .map overlays (rinkarenas), skips if currink already matches, then resets the game display",rink_tiles,manual-trace
+00033C08,sub_33C08,BlitTileMap,PC-new,,,,high,"draws a .map block of 8x8 tiles (bit 4000h v-flip, 2000h h-flip, colour FFh transparent) into rinktilebm",rink_tiles,manual-trace
+00033DD3,sub_33DD3,SetRinkScroll,PC-new,,,,high,"(x, y): sets bgscrollx / bgscrolly (tiles) and scrollx / scrolly (pixels) when the position changed",rink_tiles,manual-trace
+00033E6A,sub_33E6A,WaitClickTimeout,PC-new,,,,medium,"(ticks): waits for a mouse click or the timeout; returns the click count (second click within 14h ticks, 3 for button bit 4)",rink_tiles,manual-trace
+00033F02,sub_33F02,LoadCrestsPalette,PC-new,,,,low,"unused: builds a palette from CRESTS3.BIN colours 160-255 and the !pal block, then sets it",rink_tiles,manual-trace
 0003A28F,sub_3A28F,WriteSchedGame,PC-new,,,,high,"FileWriteAt counterpart of ReadSchedGame (2 + index*6, 6 bytes)",league_setup,manual-trace
 0003A2B8,sub_3A2B8,WriteTeamRec,PC-new,,,,high,"FileWriteAt counterpart of ReadTeamRec (index*2E8h, 2E8h bytes)",league_setup,manual-trace
 0003A347,sub_3A347,WriteLeagueTeamEntry,PC-new,,,,high,"FileWriteAt of one PINFO.DB team entry (20h + index*1Eh, 1Eh bytes)",league_setup,manual-trace

@@ -326,10 +326,11 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000336E6,sub_336E6,MenuExportDbs,PC-new,,,,medium,"File menu ""Export Databases ..."" action installed with a league (sub_3D108 in lgstate)",temp_files,manual-trace
 0003371C,sub_3371C,DemoSetupStub,PC-new,,,,low,empty; called before the scoreboard demo starts,temp_files,manual-trace
 00033727,sub_33727,FreeRinkGfx,PC-new,,,,medium,frees rinkbm and the dword_C73D0 buffer (resets dword_C7440 to -1); used by cdstream and highlights,temp_files,manual-trace
-0003377C,sub_3377C,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),rink_tiles,unmatched
-00033C08,sub_33C08,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),rink_tiles,unmatched
-00033DD3,sub_33DD3,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),rink_tiles,unmatched
-00033E6A,sub_33E6A,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),rink_tiles,unmatched
+0003377C,sub_3377C,LoadRink,PC-new,,,,high,"(team): builds the home arena's rink bitmap (4Ah x 30h tiles) from rink.til / TILES and the arena's .map overlays (rinkarenas), skips if currink already matches, then resets the game display",rink_tiles,manual-trace
+00033C08,sub_33C08,BlitTileMap,PC-new,,,,high,"draws a .map block of 8x8 tiles (bit 4000h v-flip, 2000h h-flip, colour FFh transparent) into rinktilebm",rink_tiles,manual-trace
+00033DD3,sub_33DD3,SetRinkScroll,PC-new,,,,high,"(x, y): sets bgscrollx / bgscrolly (tiles) and scrollx / scrolly (pixels) when the position changed",rink_tiles,manual-trace
+00033E6A,sub_33E6A,WaitClickTimeout,PC-new,,,,medium,"(ticks): waits for a mouse click or the timeout; returns the click count (second click within 14h ticks, 3 for button bit 4)",rink_tiles,manual-trace
+00033F02,sub_33F02,LoadCrestsPalette,PC-new,,,,low,"unused: builds a palette from CRESTS3.BIN colours 160-255 and the !pal block, then sets it",rink_tiles,manual-trace
 00033FFD,sub_33FFD,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),calendar,unmatched
 00034691,sub_34691,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),calendar,unmatched
 000346FE,sub_346FE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),calendar,unmatched

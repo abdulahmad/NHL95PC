@@ -15,7 +15,7 @@ global exhfilenames, pofiles, pofilenames, lgfiles
 global lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open
 global fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp
 global fdlg_noarrow, hmcrestbmp, vscrestbmp, dlgsavex, dlgsavey, editcurw, editpos, editmaxw
-global editbuf, editcuron, edity, editx, dword_DD6A6, dword_DD6A8, dword_DD6AE, dword_DD6B0
+global editbuf, editcuron, edity, editx, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly
 global otherperiod, dword_DD748, dword_DD74C, dbextension, dword_DD780, dword_DD784, dword_DD794, dword_DD798
 global dword_DD79C, dword_DD7A0, criterrflag, leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD28
 global dword_DDD2C, dword_DDD30, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68, dword_DDD6C
@@ -194,15 +194,15 @@ editx:
 resb 2
 dword_DD6A6:
 resb 2
-dword_DD6A8:
+rinkwtiles:
 resb 2
 scrolly:
 resb 2
 scrollx:
 resb 2
-dword_DD6AE:
+rinkhtiles:
 resb 2
-dword_DD6B0:
+bgscrolly:
 resb 2
 bgscrollx:
 resb 90

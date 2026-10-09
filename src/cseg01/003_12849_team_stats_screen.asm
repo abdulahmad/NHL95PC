@@ -7,7 +7,7 @@ extern str_Pct, str_PIM, str_PlusMinus, str_PPG, str_SHG, str_Pal3, str_Palmem, 
 extern str_D01d, awardtype, byte_D42C3, awardwinners, byte_ED7CC, dword_C513C, dword_C5168
 extern dword_D2C6B, fputchar, jctime, PickAwardWinners_x, awardart, awardnames, awardtitles, off_C524F
 extern off_C527B, sprintf_, strcat_, strcpy_, strnicmp_, MakePath, SetTextColors, PrintShadowText
-extern PrintFmt1, PrintFmt2, FitPlayerName, sub_33E6A, sub_6B3D7, sub_76429, sub_8CCA8, sub_8E83C
+extern PrintFmt1, PrintFmt2, FitPlayerName, WaitClickTimeout, sub_6B3D7, sub_76429, sub_8CCA8, sub_8E83C
 extern sub_8FFB0, sub_9035C, sub_9061C, sub_B30B4, sub_B395C, str_MightyDucks, unk_C03C4, unk_C03C6
 extern str_GP, str_W, str_L, str_T, str_SO, str_EN, str_G, str_A
 extern str_Pt, str_fmtpd, cupteam, presidentsteam, treeteamnames
@@ -724,7 +724,7 @@ push ebx	; 13113
 call jctime	; 13114
 add esp, byte 4	; 13119
 mov eax, 2710h	; 1311C
-call sub_33E6A	; 13121
+call WaitClickTimeout	; 13121
 mov edi, eax	; 13126
 push byte 0	; 13128
 push dword 300h	; 1312A

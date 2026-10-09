@@ -5,7 +5,7 @@ section s_8BEDB progbits alloc exec nowrite align=1
 extern StanleyCupTimer, __CHK, musicon, vtoa_dt, screenbm, songdata, rinkbm, musicslot
 extern musichandle, vgapage, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002
 extern sub_1B092, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
-extern sub_1B2A7, sub_1B8AC, sub_1B92E, sub_33E6A, sub_6B3D7, sub_8FB8E, sub_8FC8A, sub_8FCDF
+extern sub_1B2A7, sub_1B8AC, sub_1B92E, WaitClickTimeout, sub_6B3D7, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_90D20, sub_910E0, sub_B395C, sub_B3989, sub_B39A7, sub_B4B88, sub_B4BA8, SetDrawBitmap
 extern scrpitch, saved_ss, scrolly, scrollx, bgscrollx, bgscrolly8
 global SelectScreenBM_set
@@ -235,7 +235,7 @@ call sub_8FC8A	; 8C182
 test eax, eax	; 8C187
 jne short .10	; 8C189
 mov eax, 0Ah	; 8C18B
-call sub_33E6A	; 8C190
+call WaitClickTimeout	; 8C190
 mov esi, eax	; 8C195
 jmp short PlayMVI.fade	; 8C197
 .10:

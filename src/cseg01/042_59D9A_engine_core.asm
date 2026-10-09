@@ -8,7 +8,7 @@ extern lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5, byte_CCCA0, music
 extern awroster, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byte_DF7CA, byte_DF7E6
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
 extern byte_E0074, PlList, byte_E038A, PenBuf, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
-extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, dword_C7444, dword_C7448
+extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, rinkscrollx, rinkscrolly
 extern dword_C90B0, sflags3, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
 extern dword_CC0F8, penshotplayer, dword_CC104, dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer
 extern dword_CC124, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D302C
@@ -2959,8 +2959,8 @@ mov word [dword_C90B0], ax	; 5C190
 mov word [yc1], ax	; 5C196
 mov word [xc1], ax	; 5C19C
 mov word [word_CBEC4], 1	; 5C1A2
-add dword [dword_C7444], 3E8h	; 5C1AB
-add dword [dword_C7448], 3E8h	; 5C1B5
+add dword [rinkscrollx], 3E8h	; 5C1AB
+add dword [rinkscrolly], 3E8h	; 5C1B5
 jmp near calcpuckcross_ret5	; 5C1BF
 DoGameFrame:
 push dword 4	; 5C1C4

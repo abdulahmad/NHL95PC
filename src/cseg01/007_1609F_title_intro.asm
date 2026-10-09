@@ -14,7 +14,7 @@ extern musichandle, dword_D2C6B, fontcolor, dword_D8B68, dword_D8B74, pointerspr
 extern fputchar, jctime, RunDemoGame_x, memcpy_, memset_, off_C6399, rand_, sprintf_
 extern srand_, strlen_, MakePath, RunDemoGame, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
-extern sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2, sub_1B2A7, sub_1B8AC, sub_1B92E, sub_33E6A
+extern sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2, sub_1B2A7, sub_1B8AC, sub_1B92E, WaitClickTimeout
 extern FadeOutPalCycle, StopDigiSample, PlayDigiSample, sub_59C1D, sub_59C3E, sub_59D54, sub_6B3D7, sub_76429
 extern sub_83459, sub_8374D, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C
@@ -919,7 +919,7 @@ jmp short .36	; 16CE7
 cmp dword [dword esp+0638h], byte 0	; 16CE9
 jne short .36	; 16CF1
 mov eax, 78h	; 16CF3
-call sub_33E6A	; 16CF8
+call WaitClickTimeout	; 16CF8
 .36:
 cmp byte [musicon], 0	; 16CFD
 je near .43	; 16D04
@@ -1283,7 +1283,7 @@ call sub_6B3D7	; 17238
 cmp dword [dword esp+0364h], byte 0	; 1723D
 je short .15	; 17245
 mov eax, 62h	; 17247
-call sub_33E6A	; 1724C
+call WaitClickTimeout	; 1724C
 mov dword [dword esp+035Ch], eax	; 17251
 .15:
 mov ecx, dword [dword esp+035Ch]	; 17258
@@ -1389,7 +1389,7 @@ cmp esi, eax	; 173A7
 jl short ShowCredits.20	; 173A9
 call sub_6B3D7	; 173AB
 mov eax, dword [dword esp+0358h]	; 173B0
-call sub_33E6A	; 173B7
+call WaitClickTimeout	; 173B7
 test eax, eax	; 173BC
 jne short .23	; 173BE
 .22:

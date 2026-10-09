@@ -5,7 +5,7 @@ section s_32DA9 progbits alloc exec nowrite align=1
 extern __CHK, str_Palette2, str_Temp4, str_GameSav4, curleague, gameopts
 extern musicon, byte_DE268, ctlavailmask, lgstate
 extern gamemode, teamstatscb, skaterstatscb, goaliestatscb
-extern standingscb, standingsmenucb, songdata, dword_C73D0, rinkbm, dword_C7440, cont2team, HomeTeam
+extern standingscb, standingsmenucb, songdata, rinktilebm, rinkbm, currink, cont2team, HomeTeam
 extern menuact_export, menuact_nextlg, menusub_lgmgr, musichandle, schedgameidx, jctime, MainDeskLoop_x, musicslot
 extern MainDeskLoop_x2, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRead, CheckGameDiskSpace, InitGameSummary
 extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
@@ -692,15 +692,15 @@ add esp, byte 4	; 33746
 xor ecx, ecx	; 33749
 mov dword [rinkbm], ecx	; 3374B
 .1:
-mov esi, dword [dword_C73D0]	; 33751
+mov esi, dword [rinktilebm]	; 33751
 test esi, esi	; 33757
 je short .x	; 33759
 push esi	; 3375B
 call jctime	; 3375C
 add esp, byte 4	; 33761
 xor ebp, ebp	; 33764
-mov dword [dword_C73D0], ebp	; 33766
-mov dword [dword_C7440], 0FFFFFFFFh	; 3376C
+mov dword [rinktilebm], ebp	; 33766
+mov dword [currink], 0FFFFFFFFh	; 3376C
 .x:
 pop ebp	; 33776
 pop esi	; 33777

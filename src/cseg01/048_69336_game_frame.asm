@@ -4,13 +4,13 @@ bits 32
 section s_69336 progbits alloc exec nowrite align=1
 extern DoGameFrame, ResetBench, __CHK, assreplace, sflags, gmode2, musicon
 extern iflags, byte_E9AC1, joysampling, inputframes, escrequest, demomode, gameopts, hudclockmin
-extern hudclocksec, hudclockhund, dword_C7444, dword_C7448, dword_C90B0, sflags3, cont2team, HomeTeam
+extern hudclocksec, hudclockhund, rinkscrollx, rinkscrolly, dword_C90B0, sflags3, cont2team, HomeTeam
 extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, spritedrawcount, dword_D8C72, dword_D8C74
-extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC28C, dword_DD6A8, dword_DD6AE, dword_DD6B0
+extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC28C, rinkwtiles, rinkhtiles, bgscrolly
 extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
 extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSize, ResetInputSampling, RunGameFrames
-extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, DrawHudPanel, sub_1BAF3, LoadGameTeams, sub_3377C, sub_33DD3
+extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, DrawHudPanel, sub_1BAF3, LoadGameTeams, LoadRink, SetRinkScroll
 extern sub_479E9, FadeOutPalCycle, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
 extern sub_59CA9, sub_59D54, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
 extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_836E4
@@ -198,7 +198,7 @@ jmp short .5	; 695E9
 mov eax, dword [cont2team]	; 695EB
 sar eax, 10h	; 695F0
 .5:
-call sub_3377C	; 695F3
+call LoadRink	; 695F3
 mov ebx, dword [dword_D8C84]	; 695F8
 mov edx, dword [HomeTeam]	; 695FE
 sar edx, 10h	; 69604
@@ -273,8 +273,8 @@ mov word [camx], cx	; 69730
 mov word [dword_C90B0], cx	; 69737
 mov word [yc1], cx	; 6973E
 mov word [xc1], cx	; 69745
-add dword [dword_C7444], 3E8h	; 6974C
-add dword [dword_C7448], 3E8h	; 69756
+add dword [rinkscrollx], 3E8h	; 6974C
+add dword [rinkscrolly], 3E8h	; 69756
 call ResetBench	; 69760
 mov eax, hmtmstruct	; 69765
 call reenergizeteam	; 6976A
@@ -481,15 +481,15 @@ call sub_6AF97	; 69A9D
 call sub_6B008	; 69AA2
 mov edx, dword [dword_D8C74]	; 69AA7
 mov eax, dword [dword_D8C7C]	; 69AAD
-call sub_33DD3	; 69AB2
-mov eax, dword [dword_DD6AE]	; 69AB7
+call SetRinkScroll	; 69AB2
+mov eax, dword [rinkhtiles]	; 69AB7
 sar eax, 10h	; 69ABC
 shl eax, 3	; 69ABF
-mov edx, dword [dword_DD6A8]	; 69AC2
+mov edx, dword [rinkwtiles]	; 69AC2
 sar edx, 10h	; 69AC8
 add edx, eax	; 69ACB
 lea ecx, [dword edx+0A8h]	; 69ACD
-mov ebx, dword [dword_DD6B0]	; 69AD3
+mov ebx, dword [bgscrolly]	; 69AD3
 sar ebx, 10h	; 69AD9
 shl ebx, 3	; 69ADC
 mov eax, dword [scrolly]	; 69ADF
@@ -504,14 +504,14 @@ sar edx, 10h	; 69B02
 mov eax, dword [dword_D8C7A]	; 69B05
 sar eax, 10h	; 69B0A
 call DrawRinkOverlays	; 69B0D
-mov edx, dword [dword_DD6AE]	; 69B12
+mov edx, dword [rinkhtiles]	; 69B12
 sar edx, 10h	; 69B18
 shl edx, 3	; 69B1B
-mov eax, dword [dword_DD6A8]	; 69B1E
+mov eax, dword [rinkwtiles]	; 69B1E
 sar eax, 10h	; 69B23
 add edx, eax	; 69B26
 neg edx	; 69B28
-mov eax, dword [dword_DD6B0]	; 69B2A
+mov eax, dword [bgscrolly]	; 69B2A
 sar eax, 10h	; 69B2F
 shl eax, 3	; 69B32
 mov ebx, dword [scrolly]	; 69B35

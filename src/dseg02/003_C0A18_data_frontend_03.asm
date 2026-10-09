@@ -38,7 +38,7 @@ global str_ShotsOnGoal, str_SDD, str_Ctbkgd3, str_Pal14, str_Bkgd6, str_Cttitle3
 global str_Ctlogo3, str_DD, str_D02d2, str_DDD, str_Iff7, str_Leaguetm, str_Mtsum2, str_Adsum2
 global str_Pointer6, str_DBOX, str_Pointer7, str_Iff8, str_Maindesk, str_Tonights2, str_Easndesk, str_Desk2
 global str_Pal15, str_Menubuff4, str_GameSet4, str_Game, str_Set, str_Palette2, str_Temp4, str_GameSav4
-global asc_C1794, asc_C1799, asc_C179E, asc_C17B9, asc_C17BF, asc_C17D8, asc_C17E0, asc_C17E8
+global str_Rink2, str_Til, str_InvalidFileSize, str_TILES, str_ErrorLoadingFile, str_Map, str_CRESTS3, str_Pal16
 global asc_C17F4, asc_C17F9, asc_C17FE, asc_C1803, asc_C180B, asc_C1810, asc_C181A, asc_C1827
 global asc_C182C, asc_C1835, asc_C183D, asc_C1842, asc_C184A, asc_C1853, asc_C1859, asc_C1862
 global asc_C1866, asc_C186B, asc_C1874, asc_C1879, asc_C1880, asc_C1885, asc_C188D, asc_C1892
@@ -1048,23 +1048,23 @@ str_Temp4:
 db 074h,065h,06Dh,070h,00h
 str_GameSav4:
 db 05Ch,067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h,00h,00h
-asc_C1794:
+str_Rink2:
 db 072h,069h,06Eh,06Bh,00h
-asc_C1799:
+str_Til:
 db 02Eh,074h,069h,06Ch,00h
-asc_C179E:
+str_InvalidFileSize:
 db 049h,06Eh,076h,061h,06Ch,069h,064h,020h,066h,069h,06Ch,065h,020h,027h,025h,073h
 db 027h,020h,073h,069h,07Ah,065h,020h,025h,064h,0Ah,00h
-asc_C17B9:
+str_TILES:
 db 054h,049h,04Ch,045h,053h,00h
-asc_C17BF:
+str_ErrorLoadingFile:
 db 045h,072h,072h,06Fh,072h,020h,06Ch,06Fh,061h,064h,069h,06Eh,067h,020h,066h,069h
 db 06Ch,065h,020h,027h,025h,073h,027h,0Ah,00h
-asc_C17D8:
+str_Map:
 db 02Eh,06Dh,061h,070h,00h,00h,00h,00h
-asc_C17E0:
+str_CRESTS3:
 db 043h,052h,045h,053h,054h,053h,033h,00h
-asc_C17E8:
+str_Pal16:
 db 021h,070h,061h,06Ch,00h,00h,00h,00h
 unk_C17F0:
 db 00h,00h,00h,00h

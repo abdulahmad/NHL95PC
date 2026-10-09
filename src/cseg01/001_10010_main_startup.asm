@@ -11,7 +11,7 @@ extern inputticks, joysampling, joyqhead, joyqcount, joyqtick, samesideflag, inp
 extern escrequest, joyrec, palfadedin, screenw, screenh, demomode, dword_C5131, dword_C5133
 extern dword_C5135, gameopts
 extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, dword_C5840, screenbm
-extern songdata, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
+extern songdata, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
 extern musichandle, dword_D2C6B, dword_D302C, dword_D3030, dword_D3034, dword_D30D4, dword_D4158, dword_D415C
 extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
 extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84, photoptrs, dword_DC230
@@ -1683,8 +1683,8 @@ mov eax, dword [dword_E9A9E]	; 11382
 sar eax, 10h	; 11387
 mov dword [joysampling], eax	; 1138A
 mov eax, 1	; 1138F
-add dword [dword_C7444], 3E8h	; 11394
-add dword [dword_C7448], 3E8h	; 1139E
+add dword [rinkscrollx], 3E8h	; 11394
+add dword [rinkscrolly], 3E8h	; 1139E
 jmp near HandleHotKey_ret	; 113A8
 .17:
 test byte [gameopts], 40h	; 113AD

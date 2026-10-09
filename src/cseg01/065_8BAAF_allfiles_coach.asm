@@ -6,7 +6,7 @@ extern __CHK, asc_C3B0E, asc_C3B16, asc_C3B2A, asc_C3B38, asc_C3B45, asc_C3B67, 
 extern asc_C3B75, asc_C3B7A, asc_C3B7F, asc_C3B84, asc_C3B8A, asc_C3B93, musicon, gameopts
 extern byte_D2C68, byte_ED7CC, byte_ED9B2, byte_ED9B3, byte_ED9EB, songdata, dword_D2C6B, musicslot
 extern fclose_, fgets_, fopen_, fscanf_, jctime, memcpy_, rand_, sprintf_
-extern strcat_, stricmp_, FadePalette, MakePath, sub_33E6A, FadeOutPalCycle, sub_6B410, sub_6B47C
+extern strcat_, stricmp_, FadePalette, MakePath, WaitClickTimeout, FadeOutPalCycle, sub_6B410, sub_6B47C
 extern sub_836E4, sub_8373E, sub_8473A, sub_8474E, PlayMVI, sub_8D2F0, sub_8E83C, sub_8F98F
 extern sub_8FC8A, sub_8FFB0, sub_9061C, FatalError, sub_B30B4, sub_B4BA8, unk_C3B0C
 global loc_8BAE6, loc_8BB72, loc_8BB76, loc_8BBA7, loc_8BBB0, loc_8BBCF, loc_8BBFF, loc_8BC02
@@ -220,7 +220,7 @@ mov edx, esp	; 8BD45
 xor eax, eax	; 8BD47
 call FadePalette	; 8BD49
 mov eax, 0Ah	; 8BD4E
-call sub_33E6A	; 8BD53
+call WaitClickTimeout	; 8BD53
 mov esi, eax	; 8BD58
 test eax, eax	; 8BD5A
 jne near loc_8BE76	; 8BD5C

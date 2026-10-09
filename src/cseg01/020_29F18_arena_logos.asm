@@ -13,7 +13,7 @@ extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgam
 extern fputchar, jctime, memcpy_, teamabbrevs, crestnames, scoutcatnames, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, SetDialogColors, TrackButtons, DrawButtons
-extern sub_33E6A, sub_479E9, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, sub_6B391
+extern WaitClickTimeout, sub_479E9, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, sub_6B391
 extern sub_6B3D7, sub_76429, sub_767D0, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_91370, sub_913D0, sub_91400
@@ -1386,7 +1386,7 @@ call sub_59C5F	; 2B2BA
 mov dword [dword esp+0104h], 0FFFFFFFFh	; 2B2BF
 .31:
 mov eax, 3E8h	; 2B2CA
-call sub_33E6A	; 2B2CF
+call WaitClickTimeout	; 2B2CF
 mov esi, eax	; 2B2D4
 cmp eax, byte 2	; 2B2D6
 jge near .40	; 2B2D9
@@ -1515,7 +1515,7 @@ call sub_76429	; 2B492
 mov dword [dword esp+0104h], 0FFFFFFFFh	; 2B497
 .39:
 mov eax, 3E8h	; 2B4A2
-call sub_33E6A	; 2B4A7
+call WaitClickTimeout	; 2B4A7
 mov esi, eax	; 2B4AC
 .40:
 cmp esi, byte 2	; 2B4AE
@@ -1640,7 +1640,7 @@ call sub_76429	; 2B66E
 mov dword [dword esp+0104h], 0FFFFFFFFh	; 2B673
 .46:
 mov eax, 3E8h	; 2B67E
-call sub_33E6A	; 2B683
+call WaitClickTimeout	; 2B683
 mov esi, eax	; 2B688
 .47:
 inc dword [dword esp+0114h]	; 2B68A

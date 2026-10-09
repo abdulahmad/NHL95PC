@@ -5,16 +5,16 @@ section s_1167B progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, awardtype
 extern curleague, sflags, musicon, byte_D9299, awardwinners, byte_ED7CC, joysampling, gameopts
 extern inputframes, escrequest, demomode, gameresult, gamemode, hudclockmin, hudclocksec, hudclockhund
-extern dword_C5840, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
+extern dword_C5840, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
 extern penshotlive, dword_D2C6B, dword_D302C, dword_D3030, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74
-extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, dword_DD6A8, dword_DD6AE
-extern dword_DD6B0, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, dword_E9A9E, j_unlink_
+extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, rinkwtiles, rinkhtiles
+extern bgscrolly, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, dword_E9A9E, j_unlink_
 extern HandleHotKey_ret, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
 extern off_C526F, off_C5273, teamabbrevs, leaguedbnames, replaystart, camx_m2
 extern off_CBED0, strcat_, strcpy_, SetScreenSize, ResetInputSampling, RunGameFrames, FadePalette, LoadGameGfx
 extern SetupGame, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadSeasonRec, ReadTeamRec, UpdateHudPanel
 extern DrawHudPanel, LoadCupFinalSeries, PostGameDesk, SportsDesk, sub_1B982, MakeGSummaryPath, SetupGoalieMenu, ResetGoalieMenu
-extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
+extern LoadRink, SetRinkScroll, sub_3A266, sub_3DAB9, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71, DrawRinkOverlays, PeriodOver, LoadGameState
 extern sub_61A27, sub_61B85, sub_64614, SetupTeamLines, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
 extern sub_6AF97, sub_6B008, sub_7DC8B, sub_8374D, sub_837A8, SelectScreenBM, sub_8E8A0, sub_8EA18
@@ -103,15 +103,15 @@ call sub_6AF97	; 1176D
 call sub_6B008	; 11772
 mov edx, dword [dword_D8C74]	; 11777
 mov eax, dword [dword_D8C7C]	; 1177D
-call sub_33DD3	; 11782
-mov eax, dword [dword_DD6AE]	; 11787
+call SetRinkScroll	; 11782
+mov eax, dword [rinkhtiles]	; 11787
 sar eax, 10h	; 1178C
 shl eax, 3	; 1178F
-mov edx, dword [dword_DD6A8]	; 11792
+mov edx, dword [rinkwtiles]	; 11792
 sar edx, 10h	; 11798
 add edx, eax	; 1179B
 lea ecx, [dword edx+0A8h]	; 1179D
-mov ebx, dword [dword_DD6B0]	; 117A3
+mov ebx, dword [bgscrolly]	; 117A3
 sar ebx, 10h	; 117A9
 shl ebx, 3	; 117AC
 mov eax, dword [scrolly]	; 117AF
@@ -190,14 +190,14 @@ add eax, edx	; 118CA
 mov dword [dword_DC28C], eax	; 118CC
 .9:
 call UpdateHudPanel	; 118D1
-mov edx, dword [dword_DD6AE]	; 118D6
+mov edx, dword [rinkhtiles]	; 118D6
 sar edx, 10h	; 118DC
 shl edx, 3	; 118DF
-mov eax, dword [dword_DD6A8]	; 118E2
+mov eax, dword [rinkwtiles]	; 118E2
 sar eax, 10h	; 118E7
 add edx, eax	; 118EA
 neg edx	; 118EC
-mov ebx, dword [dword_DD6B0]	; 118EE
+mov ebx, dword [bgscrolly]	; 118EE
 sar ebx, 10h	; 118F4
 shl ebx, 3	; 118F7
 mov eax, dword [scrolly]	; 118FA
@@ -312,8 +312,8 @@ xor ecx, ecx	; 11ACB
 call DrawHudPanel	; 11ACD
 mov eax, dword [dword_CBECA]	; 11AD2
 sar eax, 10h	; 11AD7
-add dword [dword_C7444], 3E8h	; 11ADA
-add dword [dword_C7448], 3E8h	; 11AE4
+add dword [rinkscrollx], 3E8h	; 11ADA
+add dword [rinkscrolly], 3E8h	; 11AE4
 cmp eax, byte 0FFFFFFFFh	; 11AEE
 je near .22	; 11AF1
 mov edx, dword [word_CBECC]	; 11AF7
@@ -479,10 +479,10 @@ jmp short .2	; 11D6F
 mov eax, dword [cont2team]	; 11D71
 sar eax, 10h	; 11D76
 .2:
-call sub_3377C	; 11D79
+call LoadRink	; 11D79
 xor esi, esi	; 11D7E
-mov dword [dword_C7448], esi	; 11D80
-mov dword [dword_C7444], esi	; 11D86
+mov dword [rinkscrolly], esi	; 11D80
+mov dword [rinkscrollx], esi	; 11D86
 call SetupGame	; 11D8C
 test eax, eax	; 11D91
 jge short .3	; 11D93
@@ -553,8 +553,8 @@ xor ecx, ecx	; 11E9A
 call DrawHudPanel	; 11E9C
 mov eax, dword [dword_CBECA]	; 11EA1
 sar eax, 10h	; 11EA6
-add dword [dword_C7444], 3E8h	; 11EA9
-add dword [dword_C7448], 3E8h	; 11EB3
+add dword [rinkscrollx], 3E8h	; 11EA9
+add dword [rinkscrolly], 3E8h	; 11EB3
 cmp eax, byte 0FFFFFFFFh	; 11EBD
 je near .13	; 11EC0
 mov edx, dword [word_CBECC]	; 11EC6

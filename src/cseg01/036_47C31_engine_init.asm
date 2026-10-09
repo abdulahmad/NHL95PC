@@ -4,11 +4,11 @@ bits 32
 section s_47C31 progbits alloc exec nowrite align=1
 extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, byte_DE26C
 extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, inputframes, escrequest
-extern dword_C7444, dword_C7448, dword_C9074, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
+extern rinkscrollx, rinkscrolly, dword_C9074, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
 extern dword_CC0F0, dword_CC9AD, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
-extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, hmtmstruct, awtmstruct, puckstruct
+extern dword_D8C84, rinkwtiles, rinkhtiles, bgscrolly, dword_DEB6C, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, randomd0
-extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, UpdateHudPanel, sub_33DD3
+extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, UpdateHudPanel, SetRinkScroll
 extern sub_47951, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
 extern PlayCrowdSample, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8374D, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
@@ -350,15 +350,15 @@ call sub_6AF97	; 48102
 call sub_6B008	; 48107
 mov edx, dword [dword_D8C74]	; 4810C
 mov eax, dword [dword_D8C7C]	; 48112
-call sub_33DD3	; 48117
-mov edx, dword [dword_DD6AE]	; 4811C
+call SetRinkScroll	; 48117
+mov edx, dword [rinkhtiles]	; 4811C
 sar edx, 10h	; 48122
 shl edx, 3	; 48125
-mov eax, dword [dword_DD6A8]	; 48128
+mov eax, dword [rinkwtiles]	; 48128
 sar eax, 10h	; 4812D
 add edx, eax	; 48130
 lea ecx, [dword edx+0A8h]	; 48132
-mov eax, dword [dword_DD6B0]	; 48138
+mov eax, dword [bgscrolly]	; 48138
 sar eax, 10h	; 4813D
 shl eax, 3	; 48140
 mov ebx, dword [scrolly]	; 48143
@@ -373,14 +373,14 @@ sar edx, 10h	; 48167
 mov eax, dword [dword_D8C7A]	; 4816A
 sar eax, 10h	; 4816F
 call DrawRinkOverlays	; 48172
-mov edx, dword [dword_DD6AE]	; 48177
+mov edx, dword [rinkhtiles]	; 48177
 sar edx, 10h	; 4817D
 shl edx, 3	; 48180
-mov eax, dword [dword_DD6A8]	; 48183
+mov eax, dword [rinkwtiles]	; 48183
 sar eax, 10h	; 48188
 add edx, eax	; 4818B
 neg edx	; 4818D
-mov ebx, dword [dword_DD6B0]	; 4818F
+mov ebx, dword [bgscrolly]	; 4818F
 sar ebx, 10h	; 48195
 shl ebx, 3	; 48198
 mov eax, dword [scrolly]	; 4819B
@@ -510,8 +510,8 @@ call sub_B396E	; 48343
 mov dword [joysampling], 1	; 48348
 xor ebx, ebx	; 48352
 mov dword [escrequest], ebx	; 48354
-add dword [dword_C7444], 3E8h	; 4835A
-add dword [dword_C7448], 3E8h	; 48364
+add dword [rinkscrollx], 3E8h	; 4835A
+add dword [rinkscrolly], 3E8h	; 48364
 ThreeStarsLoop_tick:
 cmp dword [seqtimer], byte 0	; 4836E
 je near PreGameIntro_end	; 48375

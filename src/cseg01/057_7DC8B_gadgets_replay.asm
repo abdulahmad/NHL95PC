@@ -5,15 +5,15 @@ section s_7DC8B progbits alloc exec nowrite align=1
 extern __CHK, asc_C33D4, asc_C33DC, asc_C33E4, asc_C33EC, asc_C3411, asc_C3419, asc_C3421
 extern asc_C3426, str_PPV, musicon, byte_ED7CC, byte_ED7EB, byte_ED862, byte_ED8CC, byte_ED92D
 extern byte_ED932, byte_ED9EF, gamemode, ctl1team, ctl2team, dword_C541F, dword_C66D0, dword_C66D4
-extern dword_C7444, dword_C7448, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, dword_D1C8B
+extern rinkscrollx, rinkscrolly, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, dword_D1C8B
 extern dword_D1CE6, dword_D1CEE, dword_D1DC8, dword_D1DCC, dword_D1DD0, dword_D1DD4, dword_D2C6B, dword_D8B74
-extern spritedrawcount, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, pointerspr, dword_DD6A8, dword_DD6AE
-extern dword_DD6B0, replayplay, dword_E9F16, dword_E9F38, dword_EA0DC, dword_ED368, dword_ED380, dword_ED384
+extern spritedrawcount, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, pointerspr, rinkwtiles, rinkhtiles
+extern bgscrolly, replayplay, dword_E9F16, dword_E9F38, dword_EA0DC, dword_ED368, dword_ED380, dword_ED384
 extern dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8, dword_ED6DC, dword_ED6E0, dword_ED6E4
 extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED6FC, dword_ED704, dword_ED708
 extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, jctime, camx_m2, off_CD4FA
 extern off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25, rand_, SetScreenSize, DrawFrameSprite, FadePalette
-extern MakePath, SetDialogColors, RestoreDialogBg, MessageBox, sub_33DD3, CrowdNoiseOff, ReplayFirstFrame, ReplayStep
+extern MakePath, SetDialogColors, RestoreDialogBg, MessageBox, SetRinkScroll, CrowdNoiseOff, ReplayFirstFrame, ReplayStep
 extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_6B391, sub_6B3D7, sub_7F724
 extern sub_7FA10, sub_7FC12, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
@@ -586,8 +586,8 @@ xor edx, edx	; 7E2BF
 mov dword [dword_ED6FC], ecx	; 7E2C1
 xor ebx, ebx	; 7E2C7
 mov word [word_ED758], bx	; 7E2C9
-add dword [dword_C7444], 3E8h	; 7E2D0
-add dword [dword_C7448], 3E8h	; 7E2DA
+add dword [rinkscrollx], 3E8h	; 7E2D0
+add dword [rinkscrolly], 3E8h	; 7E2DA
 call ReplayFirstFrame	; 7E2E4
 mov dword [replayplay], eax	; 7E2E9
 xor ebp, ebp	; 7E2EE
@@ -632,15 +632,15 @@ call sub_6AF97	; 7E37A
 call sub_6B008	; 7E37F
 mov edx, dword [dword_D8C74]	; 7E384
 mov eax, dword [dword_D8C7C]	; 7E38A
-call sub_33DD3	; 7E38F
-mov eax, dword [dword_DD6AE]	; 7E394
+call SetRinkScroll	; 7E38F
+mov eax, dword [rinkhtiles]	; 7E394
 sar eax, 10h	; 7E399
 shl eax, 3	; 7E39C
-mov edx, dword [dword_DD6A8]	; 7E39F
+mov edx, dword [rinkwtiles]	; 7E39F
 sar edx, 10h	; 7E3A5
 add edx, eax	; 7E3A8
 lea ecx, [dword edx+0A8h]	; 7E3AA
-mov eax, dword [dword_DD6B0]	; 7E3B0
+mov eax, dword [bgscrolly]	; 7E3B0
 sar eax, 10h	; 7E3B5
 shl eax, 3	; 7E3B8
 mov ebx, dword [scrolly]	; 7E3BB
@@ -655,14 +655,14 @@ sar edx, 10h	; 7E3DF
 mov eax, dword [dword_D8C7A]	; 7E3E2
 sar eax, 10h	; 7E3E7
 call sub_67DCC	; 7E3EA
-mov eax, dword [dword_DD6AE]	; 7E3EF
+mov eax, dword [rinkhtiles]	; 7E3EF
 sar eax, 10h	; 7E3F4
 shl eax, 3	; 7E3F7
-mov edx, dword [dword_DD6A8]	; 7E3FA
+mov edx, dword [rinkwtiles]	; 7E3FA
 sar edx, 10h	; 7E400
 add edx, eax	; 7E403
 neg edx	; 7E405
-mov eax, dword [dword_DD6B0]	; 7E407
+mov eax, dword [bgscrolly]	; 7E407
 sar eax, 10h	; 7E40C
 shl eax, 3	; 7E40F
 mov ebx, dword [scrolly]	; 7E412
@@ -812,15 +812,15 @@ call sub_6AF97	; 7E652
 call sub_6B008	; 7E657
 mov edx, dword [dword_D8C74]	; 7E65C
 mov eax, dword [dword_D8C7C]	; 7E662
-call sub_33DD3	; 7E667
-mov eax, dword [dword_DD6AE]	; 7E66C
+call SetRinkScroll	; 7E667
+mov eax, dword [rinkhtiles]	; 7E66C
 sar eax, 10h	; 7E671
 shl eax, 3	; 7E674
-mov edx, dword [dword_DD6A8]	; 7E677
+mov edx, dword [rinkwtiles]	; 7E677
 sar edx, 10h	; 7E67D
 add edx, eax	; 7E680
 lea ecx, [dword edx+0A8h]	; 7E682
-mov ebx, dword [dword_DD6B0]	; 7E688
+mov ebx, dword [bgscrolly]	; 7E688
 sar ebx, 10h	; 7E68E
 shl ebx, 3	; 7E691
 mov eax, dword [scrolly]	; 7E694
@@ -906,14 +906,14 @@ add esp, byte 8	; 7E7D9
 mov eax, dword [dword_ED74C]	; 7E7DC
 mov dword [dword_ED6EC], eax	; 7E7E1
 loc_7E7E6:
-mov eax, dword [dword_DD6AE]	; 7E7E6
+mov eax, dword [rinkhtiles]	; 7E7E6
 sar eax, 10h	; 7E7EB
 shl eax, 3	; 7E7EE
-mov edx, dword [dword_DD6A8]	; 7E7F1
+mov edx, dword [rinkwtiles]	; 7E7F1
 sar edx, 10h	; 7E7F7
 add edx, eax	; 7E7FA
 neg edx	; 7E7FC
-mov eax, dword [dword_DD6B0]	; 7E7FE
+mov eax, dword [bgscrolly]	; 7E7FE
 sar eax, 10h	; 7E803
 shl eax, 3	; 7E806
 mov ebx, dword [scrolly]	; 7E809

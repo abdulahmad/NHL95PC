@@ -30,7 +30,7 @@ global CreditsList, msg_NeedKbytes, msg_NeedKbytes2, str_ReturningToSportsCentra
 global str_DoYouWishToExit, str_9394Season, str_9394PlayOffs, str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle
 global str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, str_AttDb, str_fmt2d, str_fmt3d, str_fmt4d
 global str_fmt5d, str_fmtTenths, str_fmtPct, str_fmtPct0, str_fmtMinSec, str_fmtEmb, str_Bkgd2, str_EASNvfn
-global str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_NoScoring, str_NoPenalties, asc_C7298, byte_C66B4, mi_9394Season
+global str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_NoScoring, str_NoPenalties, rinkarenas, byte_C66B4, mi_9394Season
 global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, treecolslots, treecol_Wr2
 global treecol_Er2, treecol_Er1
 global scoutcatidx, desksongalt, dword_C56C4, dword_C56E4, hudclockmin, hudclocksec, hudclockhund, dword_C5710
@@ -44,8 +44,8 @@ global westconfteams, eastconfteams, dword_C6D26, dword_C6DBA, dword_C6E20, tree
 global fdlgshapes, fdlgrects
 global boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
 global dword_C71E0, dlgsavebuf, listscroll
-global keepdesksong, songdata, dword_C729A, dword_C729C, dword_C729E, dword_C72A0, dword_C73D0
-global rinkbm, dword_C73D8, dword_C7440, dword_C7444, dword_C7448, off_C56B5, perioddigits, off_C57C8
+global keepdesksong, songdata, rinktilebm
+global rinkbm, rinkfileidx, currink, rinkscrollx, rinkscrolly, off_C56B5, perioddigits, off_C57C8
 global crestnames, off_C6399, off_C648E, off_C659A, off_C6821, off_C6825, off_C6841, off_C6845
 global off_C6881, off_C6885, divisionnames, statslabels, statsbgnames, statsplayerdbs, statsteamdbs
 global skaterratingnames, off_C6A99, goalieratingnames, off_C6AD1, teamsortfns, westconfname, eastconfname, teamstattitles
@@ -1440,15 +1440,11 @@ dd str_1KbytesFree
 db 00h,00h
 scrpitch:
 db 050h,00h,00h,00h,00h,00h,00h,00h
-asc_C7298:
+rinkarenas:
 db 042h,04Fh
-dword_C729A:
 db 053h,00h
-dword_C729C:
 db 015h,00h
-dword_C729E:
 db 026h,00h
-dword_C72A0:
 db 0FFh,0FFh,0FFh,0FFh,042h,055h,046h,00h,016h,00h,024h,00h,0FFh,0FFh,0FFh,0FFh
 db 043h,047h,059h,00h,016h,00h,025h,00h,0FFh,0FFh,0FFh,0FFh,043h,048h,049h,00h
 db 016h,00h,025h,00h,0FFh,0FFh,0FFh,0FFh,044h,045h,054h,00h,015h,00h,025h,00h
@@ -1468,11 +1464,11 @@ db 0FFh,0FFh,0FFh,0FFh,056h,041h,04Eh,00h,015h,00h,024h,00h,0FFh,0FFh,0FFh,0FFh
 db 057h,053h,048h,00h,016h,00h,025h,00h,0FFh,0FFh,0FFh,0FFh,057h,050h,047h,00h
 db 015h,00h,026h,00h,0FFh,0FFh,0FFh,0FFh,041h,04Eh,048h,00h,015h,00h,025h,00h
 db 0FFh,0FFh,0FFh,0FFh,046h,04Ch,04Fh,00h,015h,00h,025h,00h,0FFh,0FFh,0FFh,0FFh
-dword_C73D0:
+rinktilebm:
 db 00h,00h,00h,00h
 rinkbm:
 db 00h,00h,00h,00h
-dword_C73D8:
+rinkfileidx:
 db 02Ch,00h,00h,00h,035h,00h,00h,00h,048h,00h,00h,00h,04Ah,00h,00h,00h
 db 05Dh,00h,00h,00h,06Eh,00h,00h,00h,09Eh,00h,00h,00h,0DDh,00h,00h,00h
 db 0EBh,00h,00h,00h,0FDh,00h,00h,00h,05h,01h,00h,00h,0Eh,01h,00h,00h
@@ -1480,11 +1476,11 @@ db 010h,01h,00h,00h,012h,01h,00h,00h,01Fh,01h,00h,00h,02Dh,01h,00h,00h
 db 057h,01h,00h,00h,092h,01h,00h,00h,086h,01h,00h,00h,097h,01h,00h,00h
 db 0A3h,01h,00h,00h,0B1h,01h,00h,00h,0BFh,01h,00h,00h,0BCh,01h,00h,00h
 db 025h,00h,00h,00h,093h,00h,00h,00h
-dword_C7440:
+currink:
 db 0FFh,0FFh,0FFh,0FFh
-dword_C7444:
+rinkscrollx:
 db 00h,00h,00h,00h
-dword_C7448:
+rinkscrolly:
 db 00h,00h,00h,00h
 unk_C744C:
 db 059h,065h,073h,00h

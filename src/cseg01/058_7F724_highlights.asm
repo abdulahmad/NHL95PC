@@ -5,13 +5,13 @@ section s_7F724 progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, asc_C342E, asc_C3436, asc_C3449, asc_C3450, asc_C3472, asc_C3477
 extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, curleague, sflags, musicon
 extern byte_DB3AD, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
-extern byte_E03E3, byte_E03E4, hudclockmin, hudclocksec, hudclockhund, songdata, dword_C7444, dword_C7448
+extern byte_E03E3, byte_E03E4, hudclockmin, hudclocksec, hudclockhund, songdata, rinkscrollx, rinkscrolly
 extern cont2team, HomeTeam, musichandle, fontcolor, rinkendbank, numshpbank, dword_D8C84, musicslot
 extern dword_DC230, scrbrdshapes, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
 extern dword_ED6F8, hilightfont, fputchar, jctime, loc_7E0F3, lseek_, teamabbrevs, teamcitynames
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, SetScreenSize
 extern LoadGameGfx, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
-extern sub_1BAB1, ListDialog, SetDialogColors, MessageBox, FreeRinkGfx, sub_3377C, sub_479E9, FadeOutPalCycle
+extern sub_1BAB1, ListDialog, SetDialogColors, MessageBox, FreeRinkGfx, LoadRink, sub_479E9, FadeOutPalCycle
 extern sub_673C5, sub_6B3D7, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
 extern sub_93000, FatalError, sub_B2DCA, sub_B4FAC, sub_B5DB0, unk_7E05F, unk_C3444, unk_C3447
@@ -428,8 +428,8 @@ ret	; 7FC11
 sub_7FC12:
 push dword 4	; 7FC12
 call __CHK	; 7FC17
-add dword [dword_C7444], 3E8h	; 7FC1C
-add dword [dword_C7448], 3E8h	; 7FC26
+add dword [rinkscrollx], 3E8h	; 7FC1C
+add dword [rinkscrolly], 3E8h	; 7FC26
 ret	; 7FC30
 sub_7FC31:
 push dword 10h	; 7FC31
@@ -932,7 +932,7 @@ loc_802A9:
 mov eax, dword [cont2team]	; 802A9
 sar eax, 10h	; 802AE
 loc_802B1:
-call sub_3377C	; 802B1
+call LoadRink	; 802B1
 xor eax, eax	; 802B6
 call sub_7E0FA	; 802B8
 mov eax, esp	; 802BD

@@ -13,7 +13,7 @@ extern dword_D8C84, dword_DC230, schedgameidx, pointerspr, dword_DC868, dword_DC
 extern dword_EA0DC, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
 extern off_CEF23, off_D3078, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
 extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, GameSummaryScreen, PickOtherGames
-extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, MessageBox, sub_3377C, sub_33E6A, sub_479E9
+extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, MessageBox, LoadRink, WaitClickTimeout, sub_479E9
 extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB
 extern sub_6BA4D, sub_76429, sub_767D0, sub_7E0FA, sub_805C4, sub_836E4, sub_837A8, sub_846F0
@@ -433,7 +433,7 @@ mov edx, eax	; 192FD
 test eax, eax	; 192FF
 je short .1	; 19301
 mov eax, 0Ah	; 19303
-call sub_33E6A	; 19308
+call WaitClickTimeout	; 19308
 mov edx, eax	; 1930D
 .1:
 test edx, edx	; 1930F
@@ -1586,7 +1586,7 @@ jmp short .2	; 1A550
 mov eax, dword [cont2team]	; 1A552
 sar eax, 10h	; 1A557
 .2:
-call sub_3377C	; 1A55A
+call LoadRink	; 1A55A
 call LoadPlayerPhotos	; 1A55F
 push unk_DF014	; 1A564
 push dword 100h	; 1A569
@@ -1806,7 +1806,7 @@ jmp short .2	; 1A833
 mov eax, dword [cont2team]	; 1A835
 sar eax, 10h	; 1A83A
 .2:
-call sub_3377C	; 1A83D
+call LoadRink	; 1A83D
 call LoadPlayerPhotos	; 1A842
 push unk_DF014	; 1A847
 push dword 100h	; 1A84C

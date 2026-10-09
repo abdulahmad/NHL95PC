@@ -19,7 +19,7 @@ extern hmtmstruct
 extern fputchar, jctime, memcpy_
 extern crestnames, gamestatlabels, leaguedbnames, penaltynames, rand_, sprintf_
 extern strcat_, strcpy_, FadePalette, MakePath, FileOpenRead, FileOpenRW, FileClose, ReadKeyRec
-extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, SetTextColors, PrintShadowText, sub_1BAF3, FitPlayerName, sub_33E6A
+extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, SetTextColors, PrintShadowText, sub_1BAF3, FitPlayerName, WaitClickTimeout
 extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
 extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
@@ -799,7 +799,7 @@ xor eax, eax	; 2DFA5
 call sub_76429	; 2DFA7
 .3:
 mov eax, 3E8h	; 2DFAC
-call sub_33E6A	; 2DFB1
+call WaitClickTimeout	; 2DFB1
 mov dword [dword esp+07B4h], eax	; 2DFB6
 .4:
 inc dword [dword esp+0778h]	; 2DFBD
@@ -921,7 +921,7 @@ mov edx, dword [dword esp+07A8h]	; 2E18A
 xor eax, eax	; 2E191
 call sub_76429	; 2E193
 mov eax, 3E8h	; 2E198
-call sub_33E6A	; 2E19D
+call WaitClickTimeout	; 2E19D
 mov dword [dword esp+07B4h], eax	; 2E1A2
 inc esi	; 2E1A9
 cmp esi, byte 2	; 2E1AA
@@ -1813,7 +1813,7 @@ movzx esi, byte [dword esp+07D8h]	; 2EE9E
 cmp esi, byte 4	; 2EEA6
 .72:
 mov eax, 3E8h	; 2EEA9
-call sub_33E6A	; 2EEAE
+call WaitClickTimeout	; 2EEAE
 mov dword [dword esp+07B4h], eax	; 2EEB3
 xor esi, esi	; 2EEBA
 mov dword [dword esp+07B8h], esi	; 2EEBC
@@ -2930,7 +2930,7 @@ lea edx, [dword ebp-0374h]	; 2FD12
 xor eax, eax	; 2FD18
 call sub_76429	; 2FD1A
 mov eax, 7D0h	; 2FD1F
-call sub_33E6A	; 2FD24
+call WaitClickTimeout	; 2FD24
 cmp byte [musicon], 0	; 2FD29
 je short .22	; 2FD30
 cmp dword [songdata], byte 0	; 2FD32
