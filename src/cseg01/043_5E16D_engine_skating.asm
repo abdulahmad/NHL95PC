@@ -1962,6 +1962,10 @@ ret	; 5F829
 %endif ; C
 ; StopNA: slow player by a step on each axis, no animation change (93G logic93_5 StopNA). eax = player.
 ;   PC step 200+legstr (goalie 200+3*legstr); 93G $96 (150).
+; C: src/c/043_5E16D_engine_skating/EvadePlayers.c (StopNA)
+%ifdef CBUILD
+%include "c/043_5E16D_engine_skating/EvadePlayers.StopNA.inc"
+%else
 StopNA:
 push dword 18h	; 5F82A
 call __CHK	; 5F82F
@@ -2014,6 +2018,7 @@ jge near EvadePlayers_popedi	; 5F8A1
 .3:
 mov word [byte eax+Yvel], 0	; 5F8A7
 jmp near EvadePlayers_popedi	; 5F8AD
+%endif ; C
 ; goalieacc: goalie gets acc. in direction edx (93G logic93_5 goalieacc). eax = goalie.
 ;   Turns facedir one step toward the direction, SPAgskate, playeracc. PC: when the clock runs, he has no puck and his
 ;   assignment is 0Fh, he turns toward the direction byte at +52h instead.

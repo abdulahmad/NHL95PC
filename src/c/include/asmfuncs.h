@@ -931,7 +931,6 @@ extern void getlinee_pp(); /* 5A288 */
 extern void getlinee_sum(); /* 5A2C6 */
 extern void TeamLineEnergy(); /* 5A2EE */
 extern void getlinee(); /* 5A30C */
-extern void calcpuckcross(); /* 5A341 */
 extern void calcpuckcross_ret6(); /* 5A41E */
 extern void calcpuckcross_ret5(); /* 5A41F */
 extern void GetHot(); /* 5A425 */
@@ -944,7 +943,6 @@ extern void Goal(); /* 5AB36 */
 extern void GiveControl(); /* 5B1CE */
 extern void Setplass(); /* 5B298 */
 extern void setplayer(); /* 5B2C5 */
-extern void reenergizeteam(); /* 5B826 */
 extern void clearteams(); /* 5B881 */
 extern void ResetClock(); /* 5BA07 */
 extern void defaultsprites2(); /* 5BA89 */

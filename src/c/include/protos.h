@@ -27,6 +27,8 @@ void CrowdNoiseReset(void);                               /* 59863 */
 /* 042_59D9A_engine_core */
 short restorepl(short newpl, short oldpl);                /* 59FE1 */
 void AvgCline(struct Team *t);                            /* 5A03B */
+void calcpuckcross(void);                                 /* 5A341 */
+void reenergizeteam(struct Team *t);                      /* 5B826 */
 void RestBench(void);                                     /* 5C1E2 */
 void restoreteams(void);                                  /* 5B97A */
 int PenTeamScored(void);                                  /* 5AAAE */

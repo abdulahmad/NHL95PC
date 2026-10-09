@@ -2693,8 +2693,6 @@ extern int dword_C9002; /* C9002 */
 extern int simfwdorder[]; /* C900C */
 extern int simdorder[]; /* C905C */
 extern int loadscreenon; /* C9074 */
-extern int puckvx; /* C9080 */
-extern int puckvy; /* C9088 */
 extern int puckz; /* C908C */
 extern int puckvz; /* C9090 */
 extern unsigned char camx_m2[]; /* C9096 */

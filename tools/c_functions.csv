@@ -24,18 +24,32 @@ RestBench,5C1E2,102,042_59D9A_engine_core,src/c/042_59D9A_engine_core/RestBench.
 SetExitGame,5DDBC,30,042_59D9A_engine_core,src/c/042_59D9A_engine_core/SetExitGame.c,matched,
 SetSPA,59D9A,33,042_59D9A_engine_core,src/c/042_59D9A_engine_core/SetSPA.c,matched,
 StartGame,5E086,42,042_59D9A_engine_core,src/c/042_59D9A_engine_core/StartGame.c,matched,
+calcpuckcross,5A341,221,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,nonmatching,"body 2 bytes short: the original keeps x in ebx and side in ecx and stores x with 16-bit mov bx,dx; this draft swaps the two registers and uses mov ebx,edx (declaration order did not change it). Its pop/ret tail (calcpuckcross_ret5/6) is shared by ~14 engine_core functions (reenergizeteam, Goal, SetPlList ...): they belong in this file once it matches"
 forceteams forcepldata,5E0B0,189,042_59D9A_engine_core,src/c/042_59D9A_engine_core/forceteams.c,matched,
 restorepl,59FE1,90,042_59D9A_engine_core,src/c/042_59D9A_engine_core/restorepl.c,matched,
 restoreteams,5B97A,87,042_59D9A_engine_core,src/c/042_59D9A_engine_core/restoreteams.c,matched,
+StopNA,5F82A,136,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/EvadePlayers.c,matched,
 EvadePlayers,5E4C4,819,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/EvadePlayers.c,nonmatching,"body matches to +1A7 (of 333h); the original frame has one more dword (sub esp,14h): a swap spill at [esp] for the vtoa args because ebp is busy there; this draft keeps ebp free (frame 10h)"
-StopNA,5F82A,136,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/StopNA.c,nonmatching,shares the EvadePlayers pop/ret epilogue (jmp EvadePlayers_popedi): must join EvadePlayers in one file; body also keeps 5 registers (push 18h) where this draft needs 2
+skateto,5E93B,476,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/EvadePlayers.c,nonmatching,1 instruction off: the original loads the pucky pointer into eax and Xvel|Yvel as eax=Xvel/edx=Yvel; wcc picks edx in both (register cache of regd0 in eax?)
 dostop,5F745,229,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/dostop.c,matched,
 goalieacc,5F8B2,216,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/goalieacc.c,matched,
 playeracc,5EDAD,673,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/playeracc.c,matched,
-skateto,5E93B,476,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/skateto.c,nonmatching,1 instruction off: the original loads the pucky pointer into eax and Xvel|Yvel as eax=Xvel/edx=Yvel; wcc picks edx in both (register cache of regd0 in eax?)
 ClearPenaltyBuffer,63D3C,45,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/ClearPenaltyBuffer.c,matched,
 updatePPTeamTime,63B57,46,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/updatePPTeamTime.c,matched,
 CloseTextOverlay,66DDA,44,046_644A8_engine_display,src/c/046_644A8_engine_display/CloseTextOverlay.c,matched,
 ReplayFirstFrame,67581,31,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayFirstFrame.c,matched,
 ReplayPrevFrame,675A0,54,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayPrevFrame.c,matched,
 ReplayRecordReset,67564,29,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayRecordReset.c,matched,
+randomd0,8C230,96,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:16bit-pop insn:16bit-push
+vgacopy_bg,8C290,223,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
+vgacopy_rect,8C36F,122,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
+vgacopy_rect_src,8C3E9,122,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
+vgadraw_tile,8C463,297,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:cld insn:in insn:loop insn:out insn:16bit-pop insn:16bit-push stackargs
+vgaflip,8C58C,171,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:in insn:out insn:16bit-pop insn:16bit-push
+vgaload_planes,8C637,185,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:cld insn:in insn:lds insn:loop insn:out insn:16bit-pop insn:16bit-push
+vgacopy_bgfull,8C6F0,168,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:in insn:out insn:16bit-pop insn:16bit-push
+vgacopy_A40,8C798,93,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
+vgacopy_n,8C7F5,93,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
+vgacopy_pages,8C852,150,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
+vtoa,8C8E8,92,066_8BEDB_asm_helpers,,asm,find_handasm segment: nochk
+SaveSS,8C944,0,066_8BEDB_asm_helpers,,asm,find_handasm segment: nochk
