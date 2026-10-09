@@ -3275,7 +3275,6 @@ extern unsigned char unk_D0752[]; /* D0752 */
 extern unsigned char unk_D075E[]; /* D075E */
 extern unsigned char rosterteam[]; /* D079E */
 extern unsigned char rosterisfa[]; /* D07A8 */
-extern int falist; /* D07AA */
 extern int falistsel; /* D07AE */
 extern int facount; /* D07B2 */
 extern unsigned char str_TMP[]; /* D07B6 */

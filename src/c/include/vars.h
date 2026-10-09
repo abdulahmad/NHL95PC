@@ -72,5 +72,6 @@ extern unsigned char *samplereq;  /* ED7B4: sample request block (20 names of 13
 extern unsigned char *statsskaterbuf;  /* DD110: skater stats records, 2Fh bytes each (season, playoffs at +12h) */
 extern unsigned char *statsgoaliebuf;  /* DD114: goalie stats records, 36h bytes each (season, playoffs at +16h) */
 extern unsigned char *rostergstat;  /* EBC6C: roster goalie stats records, 2Ch bytes each (season, playoffs at +16h) */
+extern unsigned char *falist;  /* D07AA: free-agent list, 1Bh bytes per player (name at +8) */
 extern int *statssortkeys;  /* DD118: per-player sort keys for the stats leaders (CmpShootPct compares them first) */
 #endif

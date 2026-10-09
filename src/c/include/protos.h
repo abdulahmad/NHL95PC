@@ -605,5 +605,7 @@ void RequestTimeClips(int a, int b);
 void QueueTimeClips(int a, int b);
 int ReadPlayerRecs(int f1, int f2, int f3, int f4, long off, unsigned char *hdr, void *b2, unsigned n2, void *b3, unsigned n3, void *b4, unsigned n4);  /* 1C0AF */
 long lseek(int fh, long pos, int how);
+void SelectMatchingPlayers(char *first, char *last, int side);  /* 71690 */
+char *strlwr(char *s);
 
 #endif

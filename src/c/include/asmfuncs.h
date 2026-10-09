@@ -992,7 +992,6 @@ extern void CreatePlayerLoop(); /* 704A6 */
 extern void CreateFreeAgent(); /* 706E2 */
 extern void MoveToFreeAgents(); /* 70E8D */
 extern void SwapSelectedPlayers(); /* 71333 */
-extern void SelectMatchingPlayers(); /* 71690 */
 extern void FindPlayer(); /* 71961 */
 extern void unk13_722FE(); /* 722FE */
 extern void LoadDbDialogShapes(); /* 7230B */
