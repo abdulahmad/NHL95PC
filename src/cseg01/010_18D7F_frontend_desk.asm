@@ -16,8 +16,8 @@ extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScre
 extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, MessageBox, LoadRink, WaitClickTimeout, ShowLoadingScreen
 extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern GetInputEvent, ClearInputQueue, InputInstall, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm
-extern MenuHitTest, FadePalStep, GameLineEditor, InstantReplay, SetModeMenuLabels, SpeechBusy, MusicChanReset, sub_846F0
-extern sub_84704, sub_84715, sub_84729, sub_8BC15, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
+extern MenuHitTest, FadePalStep, GameLineEditor, InstantReplay, SetModeMenuLabels, SpeechBusy, MusicChanReset, SayNowBack
+extern FreeNowBack, SayBackMoment, FreeBackMoment, sub_8BC15, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0
 extern sub_9061C, sub_91370, sub_91400, MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
 extern sub_B396E, sub_B4B58, sub_B4BA8, sub_B4FAC, unk_CEB8F, unk_CEC4F, unk_CF2EF, btn_POHumanOut
@@ -803,7 +803,7 @@ test byte [gameopts+1], 1	; 1987A
 je short .24	; 19881
 mov dword [dword esp+03E8h], 0FFFFFFFFh	; 19883
 call MusicChanReset	; 1988E
-call sub_84715	; 19893
+call SayBackMoment	; 19893
 .24:
 cmp dword [dword esp+03F4h], byte 0	; 19898
 je near .29	; 198A0
@@ -889,7 +889,7 @@ jne short .28	; 199EB
 test byte [gameopts+1], 1	; 199ED
 je short .28	; 199F4
 call MusicChanReset	; 199F6
-call sub_84729	; 199FB
+call FreeBackMoment	; 199FB
 .28:
 xor eax, eax	; 19A00
 add esp, 408h	; 19A02
@@ -1107,7 +1107,7 @@ je short .41	; 19D98
 test byte [gameopts+1], 1	; 19D9A
 je short .41	; 19DA1
 call MusicChanReset	; 19DA3
-call sub_846F0	; 19DA8
+call SayNowBack	; 19DA8
 .41:
 mov ebx, 14h	; 19DAD
 lea edx, [byte esp+04h]	; 19DB2
@@ -1158,7 +1158,7 @@ je near SportsDesk.28	; 19E62
 call SpeechBusy	; 19E68
 test eax, eax	; 19E6D
 jne short SportsDesk.47	; 19E6F
-call sub_84704	; 19E71
+call FreeNowBack	; 19E71
 jmp near SportsDesk.28	; 19E76
 .48:
 cmp edx, byte 2	; 19E7B

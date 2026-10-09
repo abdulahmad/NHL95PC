@@ -4,7 +4,7 @@ bits 32
 section s_83459 progbits alloc exec nowrite align=1
 extern __CHK, __CHP, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _os_handle_3, str_Speechbuf
 extern str_Sentence, str_SampleMemMan, str_SpeechBank, byte_D27B6, dword_CCC94, musichandle, dword_D27B2, speechcopylen
-extern speechinit, speechq, speechbank, samplereq, speechcopybuf, jctime, loc_847B7, lseek_
+extern speechinit, speechq, speechbank, samplereq, speechcopybuf, jctime, FreeClip_ret, lseek_
 extern qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0, strncpy_, SpeechTimerTick, ClearSpeechSlot
 extern ResetSpeechQueue, sub_8CC70, sub_8CCA8, sub_8D2F0, sub_8DBD4, sub_8E4C0, sub_8E4F8, sub_8FCAC
 extern sub_98028
@@ -1243,7 +1243,7 @@ call FindLoadedSpeechSlot	; 84298
 mov edx, eax	; 8429D
 .2:
 cmp edx, byte 0FFFFFFFFh	; 8429F
-je near loc_847B7	; 842A2
+je near FreeClip_ret	; 842A2
 mov eax, ebx	; 842A8
 call CompactSpeechSlot	; 842AA
 mov eax, ebx	; 842AF

@@ -5,8 +5,8 @@ section s_59493 progbits alloc exec nowrite align=1
 extern __CHK, musicon, byte_D2439, gameopts, sounddev, lastsfx, digihandle
 extern crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_D2427, leaguesetimg, rockteamcues
 extern dword_ED374, dword_ED7A4, gmode, teamabbrevs, rand_, randomd0, SpeechBusy, MusicChanReset
-extern sub_846B4, sub_846C8, sub_846DC, sub_847BA, sub_847CE, sub_8490D, sub_84A7D, sub_84B0D
-extern sub_84C38, sub_84F7B, sub_8511E, sub_85213, sub_8531F, sub_854AC, sub_85507, sub_8579E
+extern SayNhlIntro, SayGoodnight, SayLineups, SayElseNhl, SayHighlightIntro, SayPlayoffResult, SayScoringPeriod, SayTonightIntro
+extern SayPlayoffTonight, SayPenalty, SayPenaltyShot, SayPlayerNumber, SayGoal, SayOneMinuteLeft, OpenAnnouncerBank, PreloadAnnouncerClips
 extern sub_8E8B8, sub_8E908, sub_8F270, sub_8F61D, sub_8F67D, sub_8F7AE, sub_8F80E, sub_8FD84
 extern sub_8FDB2, sub_8FDE5, sub_8FE1C, sub_8FE4F, sub_B3989, sub_B3999, crowdlevel
 global sndcb_addesp8_x
@@ -524,7 +524,7 @@ je short PlayCrowdSample_ret	; 59A98
 test byte [gmode], 10h	; 59A9A
 jne short PlayCrowdSample_ret	; 59AA1
 call MusicChanReset	; 59AA3
-jmp near sub_854AC	; 59AA8
+jmp near SayOneMinuteLeft	; 59AA8
 sub_59AAD:
 push dword 4	; 59AAD
 call __CHK	; 59AB2
@@ -551,7 +551,7 @@ call MusicChanReset	; 59AF9
 mov edi, dword [byte esp+0Ch]	; 59AFE
 push edi	; 59B02
 mov eax, esi	; 59B03
-call sub_8531F	; 59B05
+call SayGoal	; 59B05
 .x:
 pop edi	; 59B0A
 pop esi	; 59B0B
@@ -567,7 +567,7 @@ test byte [gameopts+1], 1	; 59B25
 je short .x	; 59B2C
 call MusicChanReset	; 59B2E
 mov eax, ecx	; 59B33
-call sub_85213	; 59B35
+call SayPlayerNumber	; 59B35
 .x:
 pop ecx	; 59B3A
 ret	; 59B3B
@@ -594,7 +594,7 @@ push edi	; 59B75
 mov ebp, dword [byte esp+020h]	; 59B76
 push ebp	; 59B7A
 mov eax, esi	; 59B7B
-call sub_84F7B	; 59B7D
+call SayPenalty	; 59B7D
 .x:
 pop ebp	; 59B82
 pop edi	; 59B83
@@ -611,7 +611,7 @@ test byte [gameopts+1], 1	; 59B9E
 je short .x	; 59BA5
 call MusicChanReset	; 59BA7
 mov eax, esi	; 59BAC
-call sub_8511E	; 59BAE
+call SayPenaltyShot	; 59BAE
 .x:
 pop esi	; 59BB3
 ret	; 59BB4
@@ -632,7 +632,7 @@ je short .2	; 59BDD
 mov ebx, dword [nosplit eax*4+teamabbrevs]	; 59BDF
 mov edx, dword [nosplit edx*4+teamabbrevs]	; 59BE6
 mov eax, dword [nosplit ecx*4+teamabbrevs]	; 59BED
-call sub_84B0D	; 59BF4
+call SayTonightIntro	; 59BF4
 .2:
 pop ecx	; 59BF9
 pop ebx	; 59BFA
@@ -645,7 +645,7 @@ cmp byte [musicon], 0	; 59C06
 je short nullsub_5	; 59C0D
 test byte [gameopts+1], 1	; 59C0F
 je short nullsub_5	; 59C16
-jmp near sub_84A7D	; 59C18
+jmp near SayScoringPeriod	; 59C18
 sub_59C1D:
 push dword 4	; 59C1D
 call __CHK	; 59C22
@@ -653,7 +653,7 @@ cmp byte [musicon], 0	; 59C27
 je short nullsub_5	; 59C2E
 test byte [gameopts+1], 1	; 59C30
 je short nullsub_5	; 59C37
-jmp near sub_846B4	; 59C39
+jmp near SayNhlIntro	; 59C39
 sub_59C3E:
 push dword 4	; 59C3E
 call __CHK	; 59C43
@@ -661,7 +661,7 @@ cmp byte [musicon], 0	; 59C48
 je short nullsub_5	; 59C4F
 test byte [gameopts+1], 1	; 59C51
 je short nullsub_5	; 59C58
-jmp near sub_846C8	; 59C5A
+jmp near SayGoodnight	; 59C5A
 sub_59C5F:
 push dword 4	; 59C5F
 call __CHK	; 59C64
@@ -669,7 +669,7 @@ cmp byte [musicon], 0	; 59C69
 je short nullsub_5	; 59C70
 test byte [gameopts+1], 1	; 59C72
 je short nullsub_5	; 59C79
-jmp near sub_846DC	; 59C7B
+jmp near SayLineups	; 59C7B
 sub_59C80:
 push dword 4	; 59C80
 call __CHK	; 59C85
@@ -677,7 +677,7 @@ cmp byte [musicon], 0	; 59C8A
 je near nullsub_5	; 59C91
 test byte [gameopts+1], 1	; 59C97
 je near nullsub_5	; 59C9E
-jmp near sub_847BA	; 59CA4
+jmp near SayElseNhl	; 59CA4
 sub_59CA9:
 push dword 8	; 59CA9
 call __CHK	; 59CAE
@@ -689,7 +689,7 @@ je short .x	; 59CC4
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 59CC6
 mov edx, dword [nosplit edx*4+teamabbrevs]	; 59CCD
 mov ebx, eax	; 59CD4
-call sub_847CE	; 59CD6
+call SayHighlightIntro	; 59CD6
 .x:
 pop ebx	; 59CDB
 ret	; 59CDC
@@ -707,7 +707,7 @@ push esi	; 59CFF
 mov edi, dword [byte esp+010h]	; 59D00
 push edi	; 59D04
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 59D05
-call sub_8490D	; 59D0C
+call SayPlayoffResult	; 59D0C
 .x:
 pop edi	; 59D11
 pop esi	; 59D12
@@ -727,7 +727,7 @@ mov eax, dword [nosplit eax*4+teamabbrevs]	; 59D39
 mov edx, dword [nosplit edx*4+teamabbrevs]	; 59D40
 mov ecx, ebx	; 59D47
 mov ebx, eax	; 59D49
-call sub_84C38	; 59D4B
+call SayPlayoffTonight	; 59D4B
 .x:
 pop esi	; 59D50
 ret 4	; 59D51
@@ -737,7 +737,7 @@ call __CHK	; 59D59
 cmp byte [musicon], 0	; 59D5E
 je short .x	; 59D65
 .1:
-call sub_85507	; 59D67
+call OpenAnnouncerBank	; 59D67
 test eax, eax	; 59D6C
 je short sub_59D54.1	; 59D6E
 .x:
@@ -754,7 +754,7 @@ je short .x	; 59D88
 .1:
 mov edx, ecx	; 59D8A
 mov eax, ebx	; 59D8C
-call sub_8579E	; 59D8E
+call PreloadAnnouncerClips	; 59D8E
 test eax, eax	; 59D93
 je short sub_59D71.1	; 59D95
 .x:

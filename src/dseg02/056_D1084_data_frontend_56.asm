@@ -10,12 +10,12 @@ extern unk_C355E, unk_C3580, unk_C36D4, unk_C36E1, unk_C36EE, unk_C36FB, unk_C37
 extern unk_C371F, unk_C372C, unk_C3738, unk_C3742, unk_C374F, unk_C375C, unk_C3769, unk_C3775
 global str_HilightDescFmt, str_Exhibition2, str_Playoff, str_League2, str_ShowLeague, str_Settings3, str_PCBEEP, str_SBDAC
 global str_ADLIB, str_MT322, str_SBDAC2, str_PCBEEP2, str_SoundBlaster2, str_Adlib, str_MT323, str_ULTRASOUND
-global asc_D24DC, asc_D24E2, asc_D24EC, asc_D24F3, asc_D24FF, asc_D250B, asc_D2517, asc_D2523
-global asc_D252E, asc_D253A, asc_D2546, asc_D2552, asc_D255E, asc_D2569, asc_D2575, asc_D257E
-global asc_D2587, asc_D259F, asc_D25AB, asc_D25B8, asc_D25CD, asc_D2608, asc_D2610, asc_D261C
-global asc_D2628, asc_D2635, asc_D2641, asc_D2672, asc_D267F, asc_D26A4, asc_D26B1, asc_D26BE
-global asc_D26CB, asc_D26D7, asc_D26E4, asc_D26F1, asc_D26FE, asc_D270B, asc_D2718, asc_D2725
-global asc_D2732, asc_D27BF, asc_D281F, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238
+global str_SS5, str_PauseCor, str_AtCor, str_1minuteCor, str_MinutesCor, str_1secondCor, str_SecondsCor, str_PennumCor
+global str_PensnumCor, str_PenshotCor, str_GoalnumCor, str_AsstnumCor, str_AndnumCor, str_OneleftCor, str_2minCor, str_5minCor
+global str_NumberCor, str_NowbackInt, str_BackmomtInt, str_CoachclpInt, str_OfBar, str_AndBar, str_BetweenBar, str_GamenumBar
+global str_EasportsBar, str_TonightBar, str_GamebtwnBar, str_GoodniteInt, str_LineupsInt, str_TakeynowBar, str_HighliteBar, str_OvertimeBar
+global str_HavewonBar, str_Scor1perBar, str_Scor2perBar, str_Scor3perBar, str_Scor1otpBar, str_Scor2otpBar, str_Scor3otpBar, str_ScortotpBar
+global str_ThegameBar, str_VIV, asc_D281F, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238
 global byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, musicslot, musicon, byte_D2439
 global byte_D27B6, dbdlgrects
 global dword_D1229, dword_D122B, dword_D122F, dword_D1231, dword_D1233, lineslotx
@@ -29,7 +29,7 @@ global dword_D22DC, dword_D22E0
 global dword_D22EC, dword_D22F0, dword_D2350, soundcardrects, dword_D2423
 global dword_D2427, dword_D242B, musichandle, dword_D2435, sounddevids, sndcardname, dword_D27A2
 global dword_D27B2, speechcopylen, speechinit, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
-global off_D21C0, off_D2230, msg_InitMT32, off_D273E, off_D2776, off_D27EF, off_D27F7, off_D2855
+global off_D21C0, off_D2230, msg_InitMT32, penaltyclips, scorperclips, off_D27EF, off_D27F7, off_D2855
 global unk_D1190, deldbmsg, unk_D12C8, unk_D16A0, unk_D19CC, unk_D19DC, unk_D19F0, unk_D19F5
 global unk_D19FA, unk_D19FF, unk_D1A05, unk_D1A0A, unk_D1A0F, unk_D1A14, unk_D1A19, unk_D1A1F
 global unk_D1A25, unk_D1A2B, unk_D1A30, unk_D1A35, unk_D1A39, unk_D1A3F, unk_D1A45, unk_D1A4B
@@ -756,99 +756,99 @@ msg_InitMT32:
 dd unk_D24A8
 dd unk_D24C4
 db 00h,00h,00h
-asc_D24DC:
+str_SS5:
 db 025h,073h,02Eh,025h,073h,00h
-asc_D24E2:
+str_PauseCor:
 db 070h,061h,075h,073h,065h,02Eh,063h,06Fh,072h,00h
-asc_D24EC:
+str_AtCor:
 db 061h,074h,02Eh,063h,06Fh,072h,00h
-asc_D24F3:
+str_1minuteCor:
 db 031h,06Dh,069h,06Eh,075h,074h,065h,02Eh,063h,06Fh,072h,00h
-asc_D24FF:
+str_MinutesCor:
 db 06Dh,069h,06Eh,075h,074h,065h,073h,02Eh,063h,06Fh,072h,00h
-asc_D250B:
+str_1secondCor:
 db 031h,073h,065h,063h,06Fh,06Eh,064h,02Eh,063h,06Fh,072h,00h
-asc_D2517:
+str_SecondsCor:
 db 073h,065h,063h,06Fh,06Eh,064h,073h,02Eh,063h,06Fh,072h,00h
-asc_D2523:
+str_PennumCor:
 db 070h,065h,06Eh,06Eh,075h,06Dh,02Eh,063h,06Fh,072h,00h
-asc_D252E:
+str_PensnumCor:
 db 070h,065h,06Eh,073h,06Eh,075h,06Dh,02Eh,063h,06Fh,072h,00h
-asc_D253A:
+str_PenshotCor:
 db 070h,065h,06Eh,073h,068h,06Fh,074h,02Eh,063h,06Fh,072h,00h
-asc_D2546:
+str_GoalnumCor:
 db 067h,06Fh,061h,06Ch,06Eh,075h,06Dh,02Eh,063h,06Fh,072h,00h
-asc_D2552:
+str_AsstnumCor:
 db 061h,073h,073h,074h,06Eh,075h,06Dh,02Eh,063h,06Fh,072h,00h
-asc_D255E:
+str_AndnumCor:
 db 061h,06Eh,064h,06Eh,075h,06Dh,02Eh,063h,06Fh,072h,00h
-asc_D2569:
+str_OneleftCor:
 db 06Fh,06Eh,065h,06Ch,065h,066h,074h,02Eh,063h,06Fh,072h,00h
-asc_D2575:
+str_2minCor:
 db 032h,06Dh,069h,06Eh,02Eh,063h,06Fh,072h,00h
-asc_D257E:
+str_5minCor:
 db 035h,06Dh,069h,06Eh,02Eh,063h,06Fh,072h,00h
-asc_D2587:
+str_NumberCor:
 db 06Eh,075h,06Dh,062h,065h,072h,02Eh,063h,06Fh,072h,00h,065h,061h,073h,070h,06Fh
 db 072h,074h,073h,02Eh,069h,06Eh,074h,00h
-asc_D259F:
+str_NowbackInt:
 db 06Eh,06Fh,077h,062h,061h,063h,06Bh,02Eh,069h,06Eh,074h,00h
-asc_D25AB:
+str_BackmomtInt:
 db 062h,061h,063h,06Bh,06Dh,06Fh,06Dh,074h,02Eh,069h,06Eh,074h,00h
-asc_D25B8:
+str_CoachclpInt:
 db 063h,06Fh,061h,063h,068h,063h,06Ch,070h,02Eh,069h,06Eh,074h,00h,06Eh,068h,06Ch
 db 02Eh,069h,06Eh,074h,00h
-asc_D25CD:
+str_OfBar:
 db 06Fh,066h,02Eh,062h,061h,072h,00h,06Eh,075h,06Dh,062h,065h,072h,02Eh,062h,061h
 db 072h,00h,064h,069h,076h,069h,073h,069h,06Fh,06Eh,02Eh,062h,061h,072h,00h,063h
 db 06Fh,06Eh,066h,02Eh,062h,061h,072h,00h,066h,069h,06Eh,061h,06Ch,02Eh,062h,061h
 db 072h,00h,073h,065h,06Dh,069h,02Eh,062h,061h,072h,00h
-asc_D2608:
+str_AndBar:
 db 061h,06Eh,064h,02Eh,062h,061h,072h,00h
-asc_D2610:
+str_BetweenBar:
 db 062h,065h,074h,077h,065h,065h,06Eh,02Eh,062h,061h,072h,00h
-asc_D261C:
+str_GamenumBar:
 db 067h,061h,06Dh,065h,06Eh,075h,06Dh,02Eh,062h,061h,072h,00h
-asc_D2628:
+str_EasportsBar:
 db 065h,061h,073h,070h,06Fh,072h,074h,073h,02Eh,062h,061h,072h,00h
-asc_D2635:
+str_TonightBar:
 db 074h,06Fh,06Eh,069h,067h,068h,074h,02Eh,062h,061h,072h,00h
-asc_D2641:
+str_GamebtwnBar:
 db 067h,061h,06Dh,065h,062h,074h,077h,06Eh,02Eh,062h,061h,072h,00h,070h,072h,065h
 db 073h,065h,06Eh,074h,073h,02Eh,069h,06Eh,074h,00h,068h,06Fh,063h,06Bh,065h,079h
 db 02Eh,069h,06Eh,074h,00h,069h,06Dh,072h,062h,061h,072h,072h,02Eh,069h,06Eh,074h
 db 00h
-asc_D2672:
+str_GoodniteInt:
 db 067h,06Fh,06Fh,064h,06Eh,069h,074h,065h,02Eh,069h,06Eh,074h,00h
-asc_D267F:
+str_LineupsInt:
 db 06Ch,069h,06Eh,065h,075h,070h,073h,02Eh,069h,06Eh,074h,00h,065h,06Ch,073h,065h
 db 077h,068h,065h,072h,02Eh,069h,06Eh,074h,00h,074h,06Fh,06Eh,069h,067h,068h,074h
 db 02Eh,069h,06Eh,074h,00h
-asc_D26A4:
+str_TakeynowBar:
 db 074h,061h,06Bh,065h,079h,06Eh,06Fh,077h,02Eh,062h,061h,072h,00h
-asc_D26B1:
+str_HighliteBar:
 db 068h,069h,067h,068h,06Ch,069h,074h,065h,02Eh,062h,061h,072h,00h
-asc_D26BE:
+str_OvertimeBar:
 db 06Fh,076h,065h,072h,074h,069h,06Dh,065h,02Eh,062h,061h,072h,00h
-asc_D26CB:
+str_HavewonBar:
 db 068h,061h,076h,065h,077h,06Fh,06Eh,02Eh,062h,061h,072h,00h
-asc_D26D7:
+str_Scor1perBar:
 db 073h,063h,06Fh,072h,031h,070h,065h,072h,02Eh,062h,061h,072h,00h
-asc_D26E4:
+str_Scor2perBar:
 db 073h,063h,06Fh,072h,032h,070h,065h,072h,02Eh,062h,061h,072h,00h
-asc_D26F1:
+str_Scor3perBar:
 db 073h,063h,06Fh,072h,033h,070h,065h,072h,02Eh,062h,061h,072h,00h
-asc_D26FE:
+str_Scor1otpBar:
 db 073h,063h,06Fh,072h,031h,06Fh,074h,070h,02Eh,062h,061h,072h,00h
-asc_D270B:
+str_Scor2otpBar:
 db 073h,063h,06Fh,072h,032h,06Fh,074h,070h,02Eh,062h,061h,072h,00h
-asc_D2718:
+str_Scor3otpBar:
 db 073h,063h,06Fh,072h,033h,06Fh,074h,070h,02Eh,062h,061h,072h,00h
-asc_D2725:
+str_ScortotpBar:
 db 073h,063h,06Fh,072h,074h,06Fh,074h,070h,02Eh,062h,061h,072h,00h
-asc_D2732:
+str_ThegameBar:
 db 074h,068h,065h,067h,061h,06Dh,065h,02Eh,062h,061h,072h,00h
-off_D273E:
+penaltyclips:
 dd unk_C36D4
 dd unk_C36E1
 dd unk_C36EE
@@ -863,10 +863,10 @@ dd unk_C374F
 dd unk_C375C
 dd unk_C3769
 dd unk_C3775
-off_D2776:
-dd asc_D26D7
-dd asc_D26E4
-dd asc_D26F1
+scorperclips:
+dd str_Scor1perBar
+dd str_Scor2perBar
+dd str_Scor3perBar
 unk_D2782:
 db 031h,073h,074h,073h,074h,061h,072h,02Eh,063h,06Fh,072h,00h
 unk_D278E:
@@ -886,7 +886,7 @@ speechcopylen:
 db 00h,00h,00h,00h
 speechinit:
 db 00h,00h,00h,00h
-asc_D27BF:
+str_VIV:
 db 02Eh,056h,049h,056h,00h
 unk_D27C4:
 db 053h,061h,076h,069h,06Eh,067h,020h,043h,075h,072h,072h,065h,06Eh,074h,00h

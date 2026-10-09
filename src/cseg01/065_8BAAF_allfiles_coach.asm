@@ -7,7 +7,7 @@ extern asc_C3B75, asc_C3B7A, asc_C3B7F, asc_C3B84, asc_C3B8A, asc_C3B93, musicon
 extern byte_D2C68, byte_ED7CC, byte_ED9B2, byte_ED9B3, byte_ED9EB, songdata, dword_D2C6B, musicslot
 extern fclose_, fgets_, fopen_, fscanf_, jctime, memcpy_, rand_, sprintf_
 extern strcat_, stricmp_, FadePalette, MakePath, WaitClickTimeout, FadeOutPalCycle, InputInstall, InputRemove
-extern SpeechBusy, MusicChanReset2, sub_8473A, sub_8474E, PlayMVI, sub_8D2F0, sub_8E83C, sub_8F98F
+extern SpeechBusy, MusicChanReset2, SayCoachClip, FreeCoachClip, PlayMVI, sub_8D2F0, sub_8E83C, sub_8F98F
 extern sub_8FC8A, sub_8FFB0, sub_9061C, FatalError, sub_B30B4, sub_B4BA8, unk_C3B0C
 global loc_8BAE6, loc_8BB72, loc_8BB76, loc_8BBA7, loc_8BBB0, loc_8BBCF, loc_8BBFF, loc_8BC02
 global loc_8BC4D, loc_8BC4F, loc_8BD01, loc_8BD03, loc_8BD20, loc_8BD3E, loc_8BD40, loc_8BDA9
@@ -210,7 +210,7 @@ je short loc_8BD3E	; 8BD27
 test byte [gameopts+1], 1	; 8BD29
 je short loc_8BD3E	; 8BD30
 mov edi, 1	; 8BD32
-call sub_8473A	; 8BD37
+call SayCoachClip	; 8BD37
 jmp short loc_8BD40	; 8BD3C
 loc_8BD3E:
 xor edi, edi	; 8BD3E
@@ -323,7 +323,7 @@ mov dword [songdata], ebp	; 8BEB7
 loc_8BEBD:
 cmp edi, byte 1	; 8BEBD
 jne short loc_8BEC7	; 8BEC0
-call sub_8474E	; 8BEC2
+call FreeCoachClip	; 8BEC2
 loc_8BEC7:
 call InputRemove	; 8BEC7
 mov eax, esi	; 8BECC

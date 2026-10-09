@@ -26,11 +26,11 @@ global str_VisNameBck, str_TitleBck, str_Lockroom, str_P01, str_Room, str_JERSH,
 global str_Accept, str_Cancel2, str_HomeTeam, str_VisitingTeam, str_ExhibitionGame, str_Iff11, str_Jersey, str_Pointer20
 global str_Temp8, str_Buffer, str_Sound4, str_Dbx2, str_PCSpeaker, str_SoundBlaster, str_ADLib, str_MT32
 global str_UltraSound, str_Pointer21, str_Iff12, str_Maindesk2, str_Slapshot, str_MT32HOCK, str_NHL3, str_CantOpenNhlCfg
-global asc_C36C3, str_Emmcopybuf, str_Speechbuf, str_Sentence, str_SampleMemMan, str_SpeechBank, asc_C37D8, asc_C37DC
-global asc_C37E8, asc_C37F5, asc_C3802, asc_C380F, asc_C381C, asc_C3829, asc_C3836, asc_C3843
-global asc_C3850, asc_C385D, asc_C386A, asc_C3877, asc_C3884, asc_C3891, asc_C389E, asc_C38A6
-global asc_C38B2, asc_C38B6, asc_C38BA, asc_C38BE, asc_C38C2, asc_C38CA, asc_C38D2, asc_C38D6
-global asc_C38DC, asc_C38E4, asc_C38E8, asc_C38EC, asc_C38F0, asc_C38F8, asc_C3904, asc_C3923
+global asc_C36C3, str_Emmcopybuf, str_Speechbuf, str_Sentence, str_SampleMemMan, str_SpeechBank, str_Cor, str_GamemiscS
+global str_EastquadBar, str_EastsemdBar, str_EastfindBar, str_WestquadBar, str_WestsemdBar, str_WestfindBar, str_StanleydBar, str_EastquauBar
+global str_EastsemuBar, str_EastfinuBar, str_WestquauBar, str_WestsemuBar, str_WestfinuBar, str_StanleyuBar, str_NhlInt, str_ElsenhlInt
+global str_Rnk, str_Awa, str_Hom, str_Bar, str_Gamenum, str_SSS, str_Num, str_DS
+global str_02dS, str_Tea, str_Pen, str_Frm, str_XBRUCE2, asc_C38F8, asc_C3904, asc_C3923
 global asc_C3932, asc_C3947, asc_C3966, asc_C3972, asc_C3976, asc_C397E, asc_C3986, asc_C398F
 global asc_C3994, asc_C399B, asc_C39A0, qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0
 global unk_C311D, str_S6, str_No2, str_GP8, str_C5, str_W6, str_L8, str_T6
@@ -618,67 +618,67 @@ qword_C37C8:
 db 00h,00h,00h,00h,00h,00h,059h,040h
 qword_C37D0:
 db 00h,00h,00h,00h,080h,088h,0C5h,040h
-asc_C37D8:
+str_Cor:
 db 063h,06Fh,072h,00h
-asc_C37DC:
+str_GamemiscS:
 db 067h,061h,06Dh,065h,06Dh,069h,073h,063h,02Eh,025h,073h,00h
-asc_C37E8:
+str_EastquadBar:
 db 065h,061h,073h,074h,071h,075h,061h,064h,02Eh,062h,061h,072h,00h
-asc_C37F5:
+str_EastsemdBar:
 db 065h,061h,073h,074h,073h,065h,06Dh,064h,02Eh,062h,061h,072h,00h
-asc_C3802:
+str_EastfindBar:
 db 065h,061h,073h,074h,066h,069h,06Eh,064h,02Eh,062h,061h,072h,00h
-asc_C380F:
+str_WestquadBar:
 db 077h,065h,073h,074h,071h,075h,061h,064h,02Eh,062h,061h,072h,00h
-asc_C381C:
+str_WestsemdBar:
 db 077h,065h,073h,074h,073h,065h,06Dh,064h,02Eh,062h,061h,072h,00h
-asc_C3829:
+str_WestfindBar:
 db 077h,065h,073h,074h,066h,069h,06Eh,064h,02Eh,062h,061h,072h,00h
-asc_C3836:
+str_StanleydBar:
 db 073h,074h,061h,06Eh,06Ch,065h,079h,064h,02Eh,062h,061h,072h,00h
-asc_C3843:
+str_EastquauBar:
 db 065h,061h,073h,074h,071h,075h,061h,075h,02Eh,062h,061h,072h,00h
-asc_C3850:
+str_EastsemuBar:
 db 065h,061h,073h,074h,073h,065h,06Dh,075h,02Eh,062h,061h,072h,00h
-asc_C385D:
+str_EastfinuBar:
 db 065h,061h,073h,074h,066h,069h,06Eh,075h,02Eh,062h,061h,072h,00h
-asc_C386A:
+str_WestquauBar:
 db 077h,065h,073h,074h,071h,075h,061h,075h,02Eh,062h,061h,072h,00h
-asc_C3877:
+str_WestsemuBar:
 db 077h,065h,073h,074h,073h,065h,06Dh,075h,02Eh,062h,061h,072h,00h
-asc_C3884:
+str_WestfinuBar:
 db 077h,065h,073h,074h,066h,069h,06Eh,075h,02Eh,062h,061h,072h,00h
-asc_C3891:
+str_StanleyuBar:
 db 073h,074h,061h,06Eh,06Ch,065h,079h,075h,02Eh,062h,061h,072h,00h
-asc_C389E:
+str_NhlInt:
 db 06Eh,068h,06Ch,02Eh,069h,06Eh,074h,00h
-asc_C38A6:
+str_ElsenhlInt:
 db 065h,06Ch,073h,065h,06Eh,068h,06Ch,02Eh,069h,06Eh,074h,00h
-asc_C38B2:
+str_Rnk:
 db 072h,06Eh,06Bh,00h
-asc_C38B6:
+str_Awa:
 db 061h,077h,061h,00h
-asc_C38BA:
+str_Hom:
 db 068h,06Fh,06Dh,00h
-asc_C38BE:
+str_Bar:
 db 062h,061h,072h,00h
-asc_C38C2:
+str_Gamenum:
 db 067h,061h,06Dh,065h,06Eh,075h,06Dh,00h
-asc_C38CA:
+str_SSS:
 db 025h,073h,025h,073h,02Eh,025h,073h,00h
-asc_C38D2:
+str_Num:
 db 06Eh,075h,06Dh,00h
-asc_C38D6:
+str_DS:
 db 025h,064h,02Eh,025h,073h,00h
-asc_C38DC:
+str_02dS:
 db 025h,030h,032h,064h,02Eh,025h,073h,00h
-asc_C38E4:
+str_Tea:
 db 074h,065h,061h,00h
-asc_C38E8:
+str_Pen:
 db 070h,065h,06Eh,00h
-asc_C38EC:
+str_Frm:
 db 066h,072h,06Dh,00h
-asc_C38F0:
+str_XBRUCE2:
 db 058h,042h,052h,055h,043h,045h,032h,00h
 asc_C38F8:
 db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,02Eh,064h,062h,00h

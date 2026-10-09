@@ -840,6 +840,40 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00084205,sub_84205,MakeSampleRoom,PC-new,,,,medium,frees unrequested samples until used + requested fits the limit,speech,manual-trace
 0008426F,sub_8426F,EnsureSampleRoom,PC-new,,,,medium,__CHK wrapper of MakeSampleRoom,speech,manual-trace
 0008427E,sub_8427E,CompactSpeechMem,PC-new,,,,medium,walks free/loaded slots compacting data,speech,manual-trace
+000842BA,sub_842BA,PenaltyLenClip,PC-new,,,,medium,picks '2min.cor' / '5min.cor' (or gamemisc.cor) for a penalty length,announcer,manual-trace
+00084306,sub_84306,PlayoffRoundClipD,PC-new,,,,medium,"series round clip east/west quad/semd/find, stanleyd.bar",announcer,manual-trace
+0008438F,sub_8438F,PlayoffRoundClipU,PC-new,,,,medium,"series round clip east/west quau/semu/finu, stanleyu.bar",announcer,manual-trace
+00084418,sub_84418,QueueSpeechClip,PC-new,,,,medium,"appends clip slot to speechq, loading it into memory if needed",announcer,manual-trace
+00084539,sub_84539,LoadClipSlot,PC-new,,,,medium,moves a clip slot into a free slot and loads ('G' type) or places it,announcer,manual-trace
+00084657,sub_84657,SayScorePeriod,PC-new,,,,medium,one-clip announcement from scorperclips table,announcer,manual-trace
+000846B4,sub_846B4,SayNhlIntro,PC-new,,,,medium,clip 'nhl.int',announcer,manual-trace
+000846C8,sub_846C8,SayGoodnight,PC-new,,,,medium,clip 'goodnite.int',announcer,manual-trace
+000846DC,sub_846DC,SayLineups,PC-new,,,,medium,clip 'lineups.int',announcer,manual-trace
+000846F0,sub_846F0,SayNowBack,PC-new,,,,medium,clip 'nowback.int' (SportsDesk),announcer,manual-trace
+00084704,sub_84704,FreeNowBack,PC-new,,,,medium,unloads 'nowback.int',announcer,manual-trace
+00084715,sub_84715,SayBackMoment,PC-new,,,,medium,clip 'backmomt.int' (SportsDesk),announcer,manual-trace
+00084729,sub_84729,FreeBackMoment,PC-new,,,,medium,unloads 'backmomt.int',announcer,manual-trace
+0008473A,sub_8473A,SayCoachClip,PC-new,,,,medium,clip 'coachclp.int' (coach screen),announcer,manual-trace
+0008474E,sub_8474E,FreeCoachClip,PC-new,,,,medium,unloads 'coachclp.int',announcer,manual-trace
+0008475D,sub_8475D,FreeClip,PC-new,,,,medium,marks a loaded clip slot free and recomputes used memory,announcer,manual-trace
+000847BA,sub_847BA,SayElseNhl,PC-new,,,,medium,clip 'elsenhl.int',announcer,manual-trace
+000847CE,sub_847CE,SayHighlightIntro,PC-new,,,,medium,'takeynow' / 'highlite' / 'of' / 'gamebtwn' + team rnk/awa/hom clips,announcer,manual-trace
+0008490D,sub_8490D,SayPlayoffResult,PC-new,,,,medium,'gamenum' + round clip + 'overtime' / 'havewon' sentence,announcer,manual-trace
+00084A6C,sub_84A6C,SayTheGame,PC-new,,,,medium,clip 'thegame.bar',announcer,manual-trace
+00084A7D,sub_84A7D,SayScoringPeriod,PC-new,,,,medium,picks scorNper / scorNotp / scortotp / thegame clip by period and overtime,announcer,manual-trace
+00084AAE,sub_84AAE,SayClip,PC-new,,,,medium,"single-clip announcement (reset queue, request, ensure room, queue, start)",announcer,manual-trace
+00084B0D,sub_84B0D,SayTonightIntro,PC-new,,,,medium,'easports' / 'tonight' / 'gamebtwn' / 'and' + team clips,announcer,manual-trace
+00084C38,sub_84C38,SayPlayoffTonight,PC-new,,,,medium,'tonight' / 'between' / 'gamenum' + round clip + teams,announcer,manual-trace
+00084DDD,sub_84DDD,RequestTimeClips,PC-new,,,,medium,"requests 'at', minute / second number clips for a game time",announcer,manual-trace
+00084EAC,sub_84EAC,QueueTimeClips,PC-new,,,,medium,queues the same time clips,announcer,manual-trace
+00084F7B,sub_84F7B,SayPenalty,PC-new,,,,medium,"team, penalty type, 'pennum' / 'pensnum', length and time",announcer,manual-trace
+0008511E,sub_8511E,SayPenaltyShot,PC-new,,,,medium,team + 'penshot' + time,announcer,manual-trace
+00085213,sub_85213,SayPlayerNumber,PC-new,,,,low,team 'frm' clip + 'number' + '%d.num',announcer,manual-trace
+0008531F,sub_8531F,SayGoal,PC-new,,,,medium,"team, 'goalnum', 'asstnum' / 'andnum', time",announcer,manual-trace
+000854AC,sub_854AC,SayOneMinuteLeft,PC-new,,,,medium,"clip 'oneleft.cor', sets CCC98",announcer,manual-trace
+00085507,sub_85507,OpenAnnouncerBank,PC-new,,,,medium,opens XBRUCE2.VIV speech bank,announcer,manual-trace
+00085570,sub_85570,QueuePenaltyType,PC-new,,,,medium,requests / queues penalty type clip from penaltyclips,announcer,manual-trace
+0008579E,sub_8579E,PreloadAnnouncerClips,PC-new,,,,low,opens XBRUCE2.VIV and requests the common goal / penalty clips,announcer,manual-trace
 00086696,sub_86696,CreatePlayoffs,PC-new,,,,high,"main-menu handler (frontend menu table CDxxx dd entry): asks 'Please Enter New Play-Off Name' (sub_2FEDF), confirms replacing an existing .PO dir (msg 'There is already a Play-Off with that name!'), mkdir <name>.PO, checks free disk space ('Insufficient disk space to setup a Playoff Series'), copies the 7 league DBs, seeds 16 teams (POSeedTeams), builds schedule.db (POCreateSchedule) and installs PlayoffModeLoop as the mode loop (dword_CE583)",season_playoffs,manual-trace
 00086E8B,sub_86E8B,POSeedTeams,PC-new,,,,medium,"fills the 16 seed slots: 8 placeholders per conference (-3 west / -12 east, random slots), puts HomeTeam and VisTeam into their conference's slots (opposite ends if same conference), then POPickConfTeams fills the remaining placeholders with random teams of each conference",season_playoffs,manual-trace
 000870B6,sub_870B6,POPickConfTeams,PC-new,,,,medium,"(slots, confflag, first, count): picks 8 distinct random teams from confteams[first..first+count) excluding HomeTeam/VisTeam, keeps the first two from different divisions, and writes them over the -confflag placeholders",season_playoffs,manual-trace
