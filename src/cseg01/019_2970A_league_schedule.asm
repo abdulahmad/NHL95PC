@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_2970A progbits alloc exec nowrite align=1
 extern __CHK, asc_C8100, str_extDB, byte_C5386, str_space, dword_C695A, dword_C71CC, dword_C71D0
-extern dword_C71D4, dword_DC7B8, dword_DC7BC, dword_DC830, fputchar, jctime, teamcitynames, leaguedbnames
+extern dword_C71D4, playofftree, playofftree_p1, pochampion, fputchar, jctime, teamcitynames, leaguedbnames
 extern strcat_, strcmp_, strcpy_, strlen_, MakePath, FileOpenRead, FileClose
 extern ReadSchedGame, sub_27F9C, sub_3DAB9, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, unk_C136D
 extern unk_C65D4, unk_DDAC4, unk_DDCE6
@@ -78,14 +78,14 @@ mov dl, byte [byte ebp-036h]	; 297C4
 mov eax, dword [byte ebp-016h]	; 297C7
 sar eax, 10h	; 297CA
 shl eax, 2	; 297CD
-mov dword [dword eax+dword_DC7B8], edx	; 297D0
+mov dword [dword eax+playofftree], edx	; 297D0
 inc word [byte ebp-014h]	; 297D6
 xor edx, edx	; 297DA
 mov dl, byte [byte ebp-035h]	; 297DC
 mov eax, dword [byte ebp-016h]	; 297DF
 sar eax, 10h	; 297E2
 shl eax, 2	; 297E5
-mov dword [dword eax+dword_DC7B8], edx	; 297E8
+mov dword [dword eax+playofftree], edx	; 297E8
 inc word [byte ebp-014h]	; 297EE
 jmp short loc_2979F	; 297F2
 loc_297F4:
@@ -161,7 +161,7 @@ jmp short loc_298BB	; 298A9
 loc_298AB:
 xor eax, eax	; 298AB
 mov al, byte [byte ebp-036h]	; 298AD
-mov dword [dword_DC830], eax	; 298B0
+mov dword [pochampion], eax	; 298B0
 mov word [byte ebp-010h], 7	; 298B5
 loc_298BB:
 cmp word [byte ebp-0Ch], byte 4	; 298BB
@@ -182,7 +182,7 @@ jmp short loc_298F1	; 298DF
 loc_298E1:
 xor eax, eax	; 298E1
 mov al, byte [byte ebp-035h]	; 298E3
-mov dword [dword_DC830], eax	; 298E6
+mov dword [pochampion], eax	; 298E6
 mov word [byte ebp-010h], 7	; 298EB
 loc_298F1:
 jmp near loc_2981B	; 298F1
@@ -457,28 +457,28 @@ xor edx, edx	; 29BAD
 mov dl, byte [byte eax+02h]	; 29BAF
 mov eax, dword [byte ebp-04h]	; 29BB2
 shl eax, 2	; 29BB5
-mov dword [dword eax+dword_DC7B8], edx	; 29BB8
+mov dword [dword eax+playofftree], edx	; 29BB8
 mov eax, dword [byte ebp-020h]	; 29BBE
 xor edx, edx	; 29BC1
 mov dl, byte [byte eax+03h]	; 29BC3
 mov eax, dword [byte ebp-04h]	; 29BC6
 shl eax, 2	; 29BC9
-mov dword [dword eax+dword_DC7BC], edx	; 29BCC
+mov dword [dword eax+playofftree_p1], edx	; 29BCC
 mov eax, dword [byte ebp-04h]	; 29BD2
 shl eax, 2	; 29BD5
-cmp dword [dword eax+dword_DC7B8], 0FFh	; 29BD8
+cmp dword [dword eax+playofftree], 0FFh	; 29BD8
 jne short loc_29BF4	; 29BE2
 mov eax, dword [byte ebp-04h]	; 29BE4
 shl eax, 2	; 29BE7
-mov dword [dword eax+dword_DC7B8], 1Ah	; 29BEA
+mov dword [dword eax+playofftree], 1Ah	; 29BEA
 loc_29BF4:
 mov eax, dword [byte ebp-04h]	; 29BF4
 shl eax, 2	; 29BF7
-cmp dword [dword eax+dword_DC7BC], 0FFh	; 29BFA
+cmp dword [dword eax+playofftree_p1], 0FFh	; 29BFA
 jne short loc_29C16	; 29C04
 mov eax, dword [byte ebp-04h]	; 29C06
 shl eax, 2	; 29C09
-mov dword [dword eax+dword_DC7BC], 1Ah	; 29C0C
+mov dword [dword eax+playofftree_p1], 1Ah	; 29C0C
 loc_29C16:
 jmp short loc_29BA0	; 29C16
 loc_29C18:
@@ -490,10 +490,10 @@ mov eax, dword [byte ebp-01Ch]	; 29C26
 mov edx, dword [dword eax+088h]	; 29C29
 mov eax, dword [byte ebp-020h]	; 29C2F
 call sub_2991C	; 29C32
-mov dword [dword_DC830], eax	; 29C37
-cmp dword [dword_DC830], byte 0FFFFFFFFh	; 29C3C
+mov dword [pochampion], eax	; 29C37
+cmp dword [pochampion], byte 0FFFFFFFFh	; 29C3C
 jne short loc_29C4F	; 29C43
-mov dword [dword_DC830], 1Ah	; 29C45
+mov dword [pochampion], 1Ah	; 29C45
 loc_29C4F:
 mov eax, dword [byte ebp-01Ch]	; 29C4F
 sub eax, byte 2	; 29C52

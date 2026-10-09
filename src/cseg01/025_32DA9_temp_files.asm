@@ -2,18 +2,18 @@
 bits 32
 %include "hockey.inc"
 section s_32DA9 progbits alloc exec nowrite align=1
-extern __CHK, asc_C177B, asc_C1783, asc_C1788, byte_C5386, byte_C53DC, byte_C5400, curleague
-extern musicon, byte_DE268, byte_EA0F4, dword_C5382, dword_C53D3, dword_C53D7, dword_C53DF, dword_C53E3
-extern dword_C53E7, dword_C53EB, dword_C53EF, dword_C53F3, dword_C53FB, dword_C65C0, dword_C65C4, dword_C65C8
+extern __CHK, asc_C177B, asc_C1783, asc_C1788, byte_C5386, byte_C53DC, curleague, gameopts
+extern musicon, byte_DE268, byte_EA0F4, lgstate, dword_C53D3, dword_C53D7, dword_C53DF, dword_C53E3
+extern dword_C53E7, dword_C53EB, dword_C53EF, dword_C53F3, gamemode, dword_C65C0, dword_C65C4, dword_C65C8
 extern dword_C65CC, dword_C65D0, songdata, dword_C73D0, rinkbm, dword_C7440, cont2team, HomeTeam
-extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, dword_DC234, jctime, loc_32704, musicslot
+extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, schedgameidx, jctime, loc_32704, musicslot
 extern loc_32705, strcat_, strcpy_, sub_10712, sub_11D09, FileOpenRead, sub_148A5, sub_1BEFD
 extern sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
-extern sub_20D97, sub_29F28, sub_3271B, sub_327A1, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
+extern sub_20D97, sub_29F28, SaveModeState, LoadModeState, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
 extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
 extern sub_479E9, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, unk_208EF, unk_20A46, unk_20BBD
-extern unk_20EB7, unk_C5298, unk_CE64F, word_C53DB
+extern unk_20EB7, exhstate, unk_CE64F, word_C53DB
 global loc_32DCD, loc_32E3A, loc_32EA2, loc_32ECE, loc_32EFB, loc_32F00, loc_32F0E, loc_32F4A
 global loc_32F86, loc_32FB3, loc_33045, loc_3304C, loc_3307D, loc_3308E, loc_3309F, loc_330B0
 global loc_330BA, loc_330CF, loc_330D9, loc_3314E, loc_3316E, loc_331C4, loc_331F8, loc_3325B
@@ -38,14 +38,14 @@ je short loc_32DCD	; 32DC4
 xor eax, eax	; 32DC6
 jmp near loc_32704	; 32DC8
 loc_32DCD:
-mov dword [dword_DC234], edx	; 32DCD
+mov dword [schedgameidx], edx	; 32DCD
 mov dword [dword_C65C0], sub_20016	; 32DD3
 mov dword [dword_C65C4], sub_20171	; 32DDD
 mov dword [dword_C65C8], sub_202E5	; 32DE7
 mov dword [dword_C65CC], sub_203FA	; 32DF1
 mov dword [dword_C65D0], sub_2051A	; 32DFB
 call sub_10712	; 32E05
-or byte [byte_C5400], 2	; 32E0A
+or byte [gameopts+1], 2	; 32E0A
 cmp dword [esi], byte 0	; 32E11
 jge short loc_32E3A	; 32E14
 xor eax, eax	; 32E16
@@ -176,9 +176,9 @@ push ebx	; 32FFE
 push ecx	; 32FFF
 push edx	; 33000
 push esi	; 33001
-mov eax, unk_C5298	; 33002
-call sub_3271B	; 33007
-mov dword [dword_C5382], 2	; 3300C
+mov eax, exhstate	; 33002
+call SaveModeState	; 33007
+mov dword [lgstate], 2	; 3300C
 mov dword [dword_C53D3], 0Ch	; 33016
 mov dword [dword_C53D7], 15h	; 33020
 or word [word_C53DB], 2FFh	; 3302A
@@ -230,8 +230,8 @@ mov dword [dword_C53E3], 0FFFFFFFEh	; 330E3
 xor eax, eax	; 330ED
 mov dword [dword_C53EF], eax	; 330EF
 mov dword [dword_C53F3], 1	; 330F4
-mov eax, dword_C5382	; 330FE
-call sub_327A1	; 33103
+mov eax, lgstate	; 330FE
+call LoadModeState	; 33103
 xor eax, eax	; 33108
 call sub_7A6AD	; 3310A
 call CreateNewLeague	; 3310F
@@ -254,8 +254,8 @@ mov dword [dword_CE4E3], ebx	; 3315C
 mov dword [dword_CE503], ebx	; 33162
 mov dword [dword_CE527], ebx	; 33168
 loc_3316E:
-mov eax, unk_C5298	; 3316E
-call sub_327A1	; 33173
+mov eax, exhstate	; 3316E
+call LoadModeState	; 33173
 push byte 20h	; 33178
 push dword 300h	; 3317A
 push asc_C1783	; 3317F
@@ -308,20 +308,20 @@ push ebx	; 33234
 push ecx	; 33235
 push edx	; 33236
 push esi	; 33237
-mov eax, unk_C5298	; 33238
-call sub_3271B	; 3323D
-mov eax, dword_C5382	; 33242
-call sub_327A1	; 33247
+mov eax, exhstate	; 33238
+call SaveModeState	; 3323D
+mov eax, lgstate	; 33242
+call LoadModeState	; 33247
 mov eax, 3	; 3324C
 call sub_1D100	; 33251
 call AddHumanTeam	; 33256
 loc_3325B:
 xor eax, eax	; 3325B
 call sub_1D100	; 3325D
-mov eax, dword_C5382	; 33262
-call sub_3271B	; 33267
-mov eax, unk_C5298	; 3326C
-call sub_327A1	; 33271
+mov eax, lgstate	; 33262
+call SaveModeState	; 33267
+mov eax, exhstate	; 3326C
+call LoadModeState	; 33271
 push byte 20h	; 33276
 push dword 300h	; 33278
 push asc_C1783	; 3327D
@@ -354,10 +354,10 @@ push ebx	; 332CA
 push ecx	; 332CB
 push edx	; 332CC
 push esi	; 332CD
-mov eax, unk_C5298	; 332CE
-call sub_3271B	; 332D3
-mov eax, dword_C5382	; 332D8
-call sub_327A1	; 332DD
+mov eax, exhstate	; 332CE
+call SaveModeState	; 332D3
+mov eax, lgstate	; 332D8
+call LoadModeState	; 332DD
 mov eax, 3	; 332E2
 call sub_1D100	; 332E7
 call RemoveHumanTeam	; 332EC
@@ -372,10 +372,10 @@ push esi	; 33303
 push edi	; 33304
 xor edi, edi	; 33305
 xor esi, esi	; 33307
-mov eax, unk_C5298	; 33309
-call sub_3271B	; 3330E
-mov eax, dword_C5382	; 33313
-call sub_327A1	; 33318
+mov eax, exhstate	; 33309
+call SaveModeState	; 3330E
+mov eax, lgstate	; 33313
+call LoadModeState	; 33318
 call CheckMasterPassword	; 3331D
 test eax, eax	; 33322
 jne short loc_3332B	; 33324
@@ -407,25 +407,25 @@ test edi, edi	; 33379
 je short loc_33382	; 3337B
 call sub_7A13A	; 3337D
 loc_33382:
-mov eax, dword_C5382	; 33382
-call sub_3271B	; 33387
-mov eax, unk_C5298	; 3338C
-call sub_327A1	; 33391
+mov eax, lgstate	; 33382
+call SaveModeState	; 33387
+mov eax, exhstate	; 3338C
+call LoadModeState	; 33391
 mov eax, esi	; 33396
 jmp near loc_32705	; 33398
 sub_3339D:
 push dword 4	; 3339D
 call __CHK	; 333A2
-mov eax, unk_C5298	; 333A7
-call sub_3271B	; 333AC
-mov eax, dword_C5382	; 333B1
-call sub_327A1	; 333B6
+mov eax, exhstate	; 333A7
+call SaveModeState	; 333AC
+mov eax, lgstate	; 333B1
+call LoadModeState	; 333B6
 call sub_3B9CA	; 333BB
 loc_333C0:
-mov eax, dword_C5382	; 333C0
-call sub_3271B	; 333C5
-mov eax, unk_C5298	; 333CA
-call sub_327A1	; 333CF
+mov eax, lgstate	; 333C0
+call SaveModeState	; 333C5
+mov eax, exhstate	; 333CA
+call LoadModeState	; 333CF
 xor eax, eax	; 333D4
 ret	; 333D6
 sub_333D7:
@@ -435,16 +435,16 @@ push ebx	; 333E1
 push ecx	; 333E2
 push edx	; 333E3
 push esi	; 333E4
-mov eax, unk_C5298	; 333E5
-call sub_3271B	; 333EA
-mov eax, dword_C5382	; 333EF
-call sub_327A1	; 333F4
+mov eax, exhstate	; 333E5
+call SaveModeState	; 333EA
+mov eax, lgstate	; 333EF
+call LoadModeState	; 333F4
 call sub_3B8B0	; 333F9
 mov esi, eax	; 333FE
-mov eax, dword_C5382	; 33400
-call sub_3271B	; 33405
-mov eax, unk_C5298	; 3340A
-call sub_327A1	; 3340F
+mov eax, lgstate	; 33400
+call SaveModeState	; 33405
+mov eax, exhstate	; 3340A
+call LoadModeState	; 3340F
 test esi, esi	; 33414
 je short loc_33462	; 33416
 push byte 20h	; 33418
@@ -486,16 +486,16 @@ push ebx	; 33473
 push ecx	; 33474
 push edx	; 33475
 push esi	; 33476
-mov eax, unk_C5298	; 33477
-call sub_3271B	; 3347C
-mov eax, dword_C5382	; 33481
-call sub_327A1	; 33486
+mov eax, exhstate	; 33477
+call SaveModeState	; 3347C
+mov eax, lgstate	; 33481
+call LoadModeState	; 33486
 call sub_3B25A	; 3348B
 mov esi, eax	; 33490
-mov eax, dword_C5382	; 33492
-call sub_3271B	; 33497
-mov eax, unk_C5298	; 3349C
-call sub_327A1	; 334A1
+mov eax, lgstate	; 33492
+call SaveModeState	; 33497
+mov eax, exhstate	; 3349C
+call LoadModeState	; 334A1
 test esi, esi	; 334A6
 je short loc_334F4	; 334A8
 push byte 20h	; 334AA
@@ -532,10 +532,10 @@ ret	; 334FA
 sub_334FB:
 push dword 4	; 334FB
 call __CHK	; 33500
-mov eax, unk_C5298	; 33505
-call sub_3271B	; 3350A
-mov eax, dword_C5382	; 3350F
-call sub_327A1	; 33514
+mov eax, exhstate	; 33505
+call SaveModeState	; 3350A
+mov eax, lgstate	; 3350F
+call LoadModeState	; 33514
 call sub_3B039	; 33519
 jmp near loc_333C0	; 3351E
 sub_33523:
@@ -545,10 +545,10 @@ push ebx	; 3352D
 push ecx	; 3352E
 push edx	; 3352F
 push esi	; 33530
-mov eax, unk_C5298	; 33531
-call sub_3271B	; 33536
-mov eax, dword_C5382	; 3353B
-call sub_327A1	; 33540
+mov eax, exhstate	; 33531
+call SaveModeState	; 33536
+mov eax, lgstate	; 3353B
+call LoadModeState	; 33540
 mov eax, 3	; 33545
 call sub_1D100	; 3354A
 call TradePlayers	; 3354F
@@ -562,10 +562,10 @@ push edx	; 33565
 push esi	; 33566
 sub esp, byte 20h	; 33567
 mov ebx, eax	; 3356A
-mov eax, unk_C5298	; 3356C
-call sub_3271B	; 33571
-mov eax, dword_C5382	; 33576
-call sub_327A1	; 3357B
+mov eax, exhstate	; 3356C
+call SaveModeState	; 33571
+mov eax, lgstate	; 33576
+call LoadModeState	; 3357B
 mov eax, 3	; 33580
 call sub_1D100	; 33585
 mov eax, 1	; 3358A
@@ -596,10 +596,10 @@ mov dword [dword_C65CC], sub_20D97	; 335F3
 mov dword [dword_C65D0], unk_20EB7	; 335FD
 xor eax, eax	; 33607
 call sub_1D100	; 33609
-mov eax, dword_C5382	; 3360E
-call sub_3271B	; 33613
-mov eax, unk_C5298	; 33618
-call sub_327A1	; 3361D
+mov eax, lgstate	; 3360E
+call SaveModeState	; 33613
+mov eax, exhstate	; 33618
+call LoadModeState	; 3361D
 push byte 20h	; 33622
 push dword 300h	; 33624
 push asc_C1783	; 33629
@@ -629,33 +629,33 @@ sub_3366F:
 push dword 8	; 3366F
 call __CHK	; 33674
 push edx	; 33679
-mov eax, unk_C5298	; 3367A
-call sub_3271B	; 3367F
-mov eax, dword_C5382	; 33684
-call sub_327A1	; 33689
+mov eax, exhstate	; 3367A
+call SaveModeState	; 3367F
+mov eax, lgstate	; 33684
+call LoadModeState	; 33689
 xor edx, edx	; 3368E
-mov dword [dword_C53FB], edx	; 33690
+mov dword [gamemode], edx	; 33690
 call sub_80075	; 33696
 test eax, eax	; 3369B
 jne short loc_336B0	; 3369D
-mov eax, unk_C5298	; 3369F
-call sub_327A1	; 336A4
+mov eax, exhstate	; 3369F
+call LoadModeState	; 336A4
 mov eax, 2	; 336A9
 pop edx	; 336AE
 ret	; 336AF
 loc_336B0:
-mov eax, unk_C5298	; 336B0
-call sub_327A1	; 336B5
+mov eax, exhstate	; 336B0
+call LoadModeState	; 336B5
 xor eax, eax	; 336BA
 pop edx	; 336BC
 ret	; 336BD
 sub_336BE:
 push dword 4	; 336BE
 call __CHK	; 336C3
-mov eax, unk_C5298	; 336C8
-call sub_3271B	; 336CD
-mov eax, dword_C5382	; 336D2
-call sub_327A1	; 336D7
+mov eax, exhstate	; 336C8
+call SaveModeState	; 336CD
+mov eax, lgstate	; 336D2
+call LoadModeState	; 336D7
 call sub_3CF5B	; 336DC
 jmp near loc_333C0	; 336E1
 sub_336E6:
@@ -665,10 +665,10 @@ push ebx	; 336F0
 push ecx	; 336F1
 push edx	; 336F2
 push esi	; 336F3
-mov eax, unk_C5298	; 336F4
-call sub_3271B	; 336F9
-mov eax, dword_C5382	; 336FE
-call sub_327A1	; 33703
+mov eax, exhstate	; 336F4
+call SaveModeState	; 336F9
+mov eax, lgstate	; 336FE
+call LoadModeState	; 33703
 mov eax, 3	; 33708
 call sub_1D100	; 3370D
 call sub_3D108	; 33712

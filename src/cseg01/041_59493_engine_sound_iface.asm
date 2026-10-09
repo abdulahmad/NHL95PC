@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_59493 progbits alloc exec nowrite align=1
-extern __CHK, byte_C5400, musicon, byte_D2439, gameopts, dword_C541F, lastsfx, digihandle
+extern __CHK, musicon, byte_D2439, gameopts, dword_C541F, lastsfx, digihandle
 extern crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_D2427, dword_ED35C, dword_ED368
 extern dword_ED374, dword_ED7A4, gmode, off_C5439, rand_, randomd0, sub_836E4, sub_837A8
 extern sub_846B4, sub_846C8, sub_846DC, sub_847BA, sub_847CE, sub_8490D, sub_84A7D, sub_84B0D
@@ -519,7 +519,7 @@ push dword 4	; 59A7E
 call __CHK	; 59A83
 cmp byte [musicon], 0	; 59A88
 je short PlayCrowdSample_ret	; 59A8F
-test byte [byte_C5400], 1	; 59A91
+test byte [gameopts+1], 1	; 59A91
 je short PlayCrowdSample_ret	; 59A98
 test byte [gmode], 10h	; 59A9A
 jne short PlayCrowdSample_ret	; 59AA1
@@ -530,7 +530,7 @@ push dword 4	; 59AAD
 call __CHK	; 59AB2
 cmp byte [musicon], 0	; 59AB7
 je short .1	; 59ABE
-test byte [byte_C5400], 1	; 59AC0
+test byte [gameopts+1], 1	; 59AC0
 jne near sub_836E4	; 59AC7
 .1:
 xor eax, eax	; 59ACD
@@ -543,7 +543,7 @@ push edi	; 59ADB
 mov esi, eax	; 59ADC
 cmp byte [musicon], 0	; 59ADE
 je short .x	; 59AE5
-test byte [byte_C5400], 1	; 59AE7
+test byte [gameopts+1], 1	; 59AE7
 je short .x	; 59AEE
 test byte [gmode], 10h	; 59AF0
 jne short .x	; 59AF7
@@ -563,7 +563,7 @@ push ecx	; 59B19
 mov ecx, eax	; 59B1A
 cmp byte [musicon], 0	; 59B1C
 je short .x	; 59B23
-test byte [byte_C5400], 1	; 59B25
+test byte [gameopts+1], 1	; 59B25
 je short .x	; 59B2C
 call sub_837A8	; 59B2E
 mov eax, ecx	; 59B33
@@ -580,7 +580,7 @@ push ebp	; 59B48
 mov esi, eax	; 59B49
 cmp byte [musicon], 0	; 59B4B
 je short .x	; 59B52
-test byte [byte_C5400], 1	; 59B54
+test byte [gameopts+1], 1	; 59B54
 je short .x	; 59B5B
 call sub_837A8	; 59B5D
 mov edi, dword [byte esp+020h]	; 59B62
@@ -607,7 +607,7 @@ push esi	; 59B92
 mov esi, eax	; 59B93
 cmp byte [musicon], 0	; 59B95
 je short .x	; 59B9C
-test byte [byte_C5400], 1	; 59B9E
+test byte [gameopts+1], 1	; 59B9E
 je short .x	; 59BA5
 call sub_837A8	; 59BA7
 mov eax, esi	; 59BAC
@@ -627,7 +627,7 @@ mov ecx, 0Ch	; 59BC8
 .1:
 cmp byte [musicon], 0	; 59BCD
 je short .2	; 59BD4
-test byte [byte_C5400], 1	; 59BD6
+test byte [gameopts+1], 1	; 59BD6
 je short .2	; 59BDD
 mov ebx, dword [nosplit eax*4+off_C5439]	; 59BDF
 mov edx, dword [nosplit edx*4+off_C5439]	; 59BE6
@@ -643,7 +643,7 @@ push dword 4	; 59BFC
 call __CHK	; 59C01
 cmp byte [musicon], 0	; 59C06
 je short nullsub_5	; 59C0D
-test byte [byte_C5400], 1	; 59C0F
+test byte [gameopts+1], 1	; 59C0F
 je short nullsub_5	; 59C16
 jmp near sub_84A7D	; 59C18
 sub_59C1D:
@@ -651,7 +651,7 @@ push dword 4	; 59C1D
 call __CHK	; 59C22
 cmp byte [musicon], 0	; 59C27
 je short nullsub_5	; 59C2E
-test byte [byte_C5400], 1	; 59C30
+test byte [gameopts+1], 1	; 59C30
 je short nullsub_5	; 59C37
 jmp near sub_846B4	; 59C39
 sub_59C3E:
@@ -659,7 +659,7 @@ push dword 4	; 59C3E
 call __CHK	; 59C43
 cmp byte [musicon], 0	; 59C48
 je short nullsub_5	; 59C4F
-test byte [byte_C5400], 1	; 59C51
+test byte [gameopts+1], 1	; 59C51
 je short nullsub_5	; 59C58
 jmp near sub_846C8	; 59C5A
 sub_59C5F:
@@ -667,7 +667,7 @@ push dword 4	; 59C5F
 call __CHK	; 59C64
 cmp byte [musicon], 0	; 59C69
 je short nullsub_5	; 59C70
-test byte [byte_C5400], 1	; 59C72
+test byte [gameopts+1], 1	; 59C72
 je short nullsub_5	; 59C79
 jmp near sub_846DC	; 59C7B
 sub_59C80:
@@ -675,7 +675,7 @@ push dword 4	; 59C80
 call __CHK	; 59C85
 cmp byte [musicon], 0	; 59C8A
 je near nullsub_5	; 59C91
-test byte [byte_C5400], 1	; 59C97
+test byte [gameopts+1], 1	; 59C97
 je near nullsub_5	; 59C9E
 jmp near sub_847BA	; 59CA4
 sub_59CA9:
@@ -684,7 +684,7 @@ call __CHK	; 59CAE
 push ebx	; 59CB3
 cmp byte [musicon], 0	; 59CB4
 je short .x	; 59CBB
-test byte [byte_C5400], 1	; 59CBD
+test byte [gameopts+1], 1	; 59CBD
 je short .x	; 59CC4
 mov eax, dword [nosplit eax*4+off_C5439]	; 59CC6
 mov edx, dword [nosplit edx*4+off_C5439]	; 59CCD
@@ -700,7 +700,7 @@ push esi	; 59CE7
 push edi	; 59CE8
 cmp byte [musicon], 0	; 59CE9
 je short .x	; 59CF0
-test byte [byte_C5400], 1	; 59CF2
+test byte [gameopts+1], 1	; 59CF2
 je short .x	; 59CF9
 mov esi, dword [byte esp+010h]	; 59CFB
 push esi	; 59CFF
@@ -718,7 +718,7 @@ call __CHK	; 59D1B
 push esi	; 59D20
 cmp byte [musicon], 0	; 59D21
 je short .x	; 59D28
-test byte [byte_C5400], 1	; 59D2A
+test byte [gameopts+1], 1	; 59D2A
 je short .x	; 59D31
 mov esi, dword [byte esp+08h]	; 59D33
 push esi	; 59D37

@@ -4,12 +4,12 @@ bits 32
 section s_35FB9 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _fstrcspn_, asc_C1827, asc_C1853, asc_C1859, asc_C1862, asc_C1866
 extern asc_C186B, asc_C1874, asc_C1879, asc_C1880, asc_C1885, asc_C78A8, asc_C7A9C, asc_C7ABF
-extern str_PINFO, str_extDB, str_extxx, asc_C8158, byte_C5400, str_dot, str_floppydrv, curleague
-extern musicon, byte_D42C3, byte_DC267, byte_DC268, byte_DD710, byte_DD750, leagueflags, byte_DD7CA
+extern str_PINFO, str_extDB, str_extxx, asc_C8158, str_dot, str_floppydrv, curleague, gameopts
+extern musicon, byte_D42C3, byte_DC267, byte_DC268, leaguedbfmt2, leaguedbfmt, leagueflags, byte_DD7CA
 extern byte_DD7CB, savedname, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_ED836
 extern byte_ED98E, dword_C53F7, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C71D8
 extern dword_C71DC, songdata, msg_InsertDisk_arg, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7E42, dword_C7F0B
-extern dword_C8998, HomeTeam, musichandle, dword_D2C6B, dword_DB088, dword_DC234, dword_DC23E, musicslot
+extern dword_C8998, HomeTeam, musichandle, dword_D2C6B, dword_DB088, schedgameidx, dword_DC23E, musicslot
 extern leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
 extern dword_DDD6C, awtmlines, startm_m2, hmtmlines, hmtmstruct
 extern fputchar, jctime, memset_, off_C57CC, off_C800C, leaguedbnames
@@ -1365,7 +1365,7 @@ mov dword [byte esp+074h], ebx	; 37312
 mov ebp, 1	; 37316
 mov ebx, leagueteams	; 3731B
 mov edx, savleague1	; 37320
-mov eax, byte_DD750	; 37325
+mov eax, leaguedbfmt	; 37325
 call sub_36207	; 3732A
 xor ecx, ecx	; 3732F
 mov cl, byte [byte_DDD43]	; 37331
@@ -1377,36 +1377,36 @@ mov dword [byte esp+074h], 1	; 37343
 xor ebp, ebp	; 3734B
 mov ebx, leagueteams	; 3734D
 mov edx, savleague2	; 37352
-mov eax, byte_DD750	; 37357
+mov eax, leaguedbfmt	; 37357
 call sub_36207	; 3735C
 xor ecx, ecx	; 37361
 mov cl, byte [byte_DDD43]	; 37363
 mov ebx, leagueteams	; 37369
 mov edx, savleague1	; 3736E
 loc_37373:
-mov eax, byte_DD710	; 37373
+mov eax, leaguedbfmt2	; 37373
 call sub_36207	; 37378
-cmp byte [byte_DD710], 0	; 3737D
+cmp byte [leaguedbfmt2], 0	; 3737D
 jne short loc_37395	; 37384
-mov edx, byte_DD750	; 37386
-mov eax, byte_DD710	; 3738B
+mov edx, leaguedbfmt	; 37386
+mov eax, leaguedbfmt2	; 3738B
 call strcpy_	; 37390
 loc_37395:
-cmp byte [byte_DD750], 0	; 37395
+cmp byte [leaguedbfmt], 0	; 37395
 jne short loc_373AD	; 3739C
-mov edx, byte_DD710	; 3739E
-mov eax, byte_DD750	; 373A3
+mov edx, leaguedbfmt2	; 3739E
+mov eax, leaguedbfmt	; 373A3
 call strcpy_	; 373A8
 loc_373AD:
 mov eax, dword [dword_DDD44]	; 373AD
 sar eax, 10h	; 373B2
-mov dword [dword_DC234], eax	; 373B5
+mov dword [schedgameidx], eax	; 373B5
 cmp word [word_DDD46], 444h	; 373BA
 jge short loc_373CE	; 373C3
-or byte [byte_C5400], 2	; 373C5
+or byte [gameopts+1], 2	; 373C5
 jmp short loc_373D5	; 373CC
 loc_373CE:
-and byte [byte_C5400], 0FDh	; 373CE
+and byte [gameopts+1], 0FDh	; 373CE
 loc_373D5:
 cmp dword [edi], byte 0	; 373D5
 jge short loc_37408	; 373D8

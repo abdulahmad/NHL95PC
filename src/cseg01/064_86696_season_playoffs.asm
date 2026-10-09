@@ -2,113 +2,50 @@
 bits 32
 %include "hockey.inc"
 section s_86696 progbits alloc exec nowrite align=1
-extern __CHK, __STOSD, asc_C39B3, asc_C39BB, asc_C39C3, asc_C39C8, asc_C39CF, asc_C39D4
-extern asc_C39F3, asc_C39F7, asc_C39FE, asc_C3A07, asc_C3A26, asc_C3A2B, asc_C3A43, asc_C3A47
-extern asc_C3A4B, asc_C3A4F, asc_C3A54, asc_C3A5D, asc_C3A68, asc_C3A70, asc_C3A79, asc_C3A9B
-extern asc_C3AA4, asc_C3AA9, asc_C3AAE, asc_C3AB7, asc_C3ACA, asc_C3ADD, asc_C3AE4, asc_C3AE9
-extern asc_C3AEE, asc_C3AF3, asc_C3AFB, asc_C3B00, asc_C3B05, asc_C6779, asc_C693B, str_extDB
-extern asc_D29CB, asc_D2A6C, asc_D2AAF, byte_C5367, byte_C5400, byte_C6D72, byte_C6D7A, byte_C6D7B
+extern __CHK, __STOSD, str_Palette, str_Embscup, str_Bkgd, str_Embpal, str_BangPal, str_PleaseEnterNewPlay
+extern str_PO, str_fmtSlashDb, str_GameSet, str_4dKbytesOfFree, str_Temp2, str_ScheduleDb, str_E31, str_E32
+extern str_Db, str_Tied, str_Schedule, str_GameSav, str_Pointer, str_Menubuff2, str_PlayoffsHaveNotBeen, str_Pstatbar2
+extern str_Rst1, str_Rst2, str_Scuparrw, str_WesternConference, str_EasternConference, str_fmtcsp, str_Aup1, str_Aup2
+extern str_Aup3, str_Midl, str_Adn3, str_Adn2, str_Adn1, asc_C6779, str_Bkgd2, str_extDB
+extern msg_PODiskSpace_arg, msg_POTeamOut_arg, msg_POTeamOut_arg2, byte_C6D72, byte_C6D7A, byte_C6D7B
 extern byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, byte_C6D9A, byte_C6DA2
 extern byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, byte_C6DB2, str_dot, curleague
-extern musicon, byte_DD710, byte_DD750, byte_EA0F4, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A
-extern code_1A8AA, code_1A922, dword_C530D, dword_C535E, dword_C5362, dword_C536A, dword_C536E, dword_C5372
-extern dword_C5376, dword_C537A, dword_C537E, dword_C5382, dword_C53F7, dword_C53FB, gameopts, dword_C5403
-extern dword_C5407, dword_C5413, dword_C5417, teamdivflags, dword_C5581, dword_C55E9, dword_C65AC, dword_C65C0
+extern musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A
+extern code_1A8AA, code_1A922, postate
+extern lgstate, dword_C53F7, gamemode, gameopts, ctl1team
+extern ctl2team, ctl1side, ctl2side, teamdivflags, teamconf, confteams, dword_C65AC, dword_C65C0
 extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C6D26, dword_C6DBA, dword_C71CC, dword_C71D0
 extern dword_C71D4, dword_C71D8, dword_C71DC, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
 extern dword_CE5C3, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
-extern keydb_size, musichandle, dword_D2884, dword_D288C, dword_D29FB, dword_D2B70, dword_D2BEC, musicslot
-extern dword_D2C6B, dword_D8B68, dword_D8B74, dword_DC234, dword_DC238, dword_DC7B8, dword_DC7BC, dword_DC830
+extern keydb_size, musichandle, dword_D2884, dword_D288C, seriesgameno, dword_D2B70, dword_D2BEC, musicslot
+extern dword_D2C6B, dword_D8B68, dword_D8B74, schedgameidx, dword_DC238, playofftree, playofftree_p1, pochampion
 extern dword_DD770, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, off_C5439, teamcitynames
 extern off_C6D22, leaguedbnames, off_CEF43, off_CEF63
-extern off_CF983, off_D28EB, off_D2950, off_D2983, off_D29EF, off_D2B0C, off_D2B1C, off_D2B34
+extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, msg_POHumanOut, msg_POTeamOut, msg_POGenFinal
 extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, sub_10712, sub_11D09
 extern sub_142E7, MakePath, sub_14442, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
 extern sub_1466B, sub_14825, sub_148A5, sub_149BF, sub_174C2, sub_17573, sub_175E2, sub_17636
 extern sub_17711, sub_1777E, sub_1BEFD, sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171
 extern sub_202E5, sub_203FA, sub_2051A, sub_20D97, sub_27C34, sub_29F28, sub_2FDD1, sub_2FEDF
-extern sub_30A0C, sub_30F12, MessageBox, sub_3271B, sub_327A1, sub_32B1D, sub_3626D, SimulateGame
+extern sub_30A0C, sub_30F12, MessageBox, SaveModeState, LoadModeState, WriteModeState, sub_3626D, SimulateGame
 extern sub_479E9, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E
 extern sub_6B9EB, sub_6BA4D, sub_76429, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E8B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_910B0, sub_9121C, sub_91370, sub_913B4
-extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, sub_B2CD8, MouseSetPos, sub_B2DCA, sub_B2E1B
+extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, FatalError, MouseSetPos, sub_B2DCA, sub_B2E1B
 extern sub_B30B4, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4BC4, unk_208EF, unk_20A46
-extern unk_20BBD, unk_20EB7, unk_86616, unk_C3A37, unk_C3A3A, unk_C3A3D, unk_C3A40, unk_C3A66
-extern unk_C3AE1, unk_C3AF8, unk_C5298, btn_LeagueExists, unk_CEE4F, unk_CEEAF, unk_CF90F, unk_D2864
-extern unk_D2B38, unk_DBC30, unk_DDAC4, unk_DDCE6, unk_DDCFB, unk_ED7BC, unknown_libname_1, word_C5366
+extern unk_20BBD, unk_20EB7, unk_86616, str_E1, str_E2, str_F1, str_F2, unk_C3A66
+extern str_D, unk_C3AF8, exhstate, btn_LeagueExists, unk_CEE4F, unk_CEEAF, unk_CF90F, unk_D2864
+extern btn_POHumanOut, unk_DBC30, unk_DDAC4, unk_DDCE6, unk_DDCFB, unk_ED7BC, unknown_libname_1
 extern word_C6D24, word_C6E22, scrpitch, VisTeam, hmscore, awscore
-global loc_86791, loc_86793, loc_867E2, loc_867F6, loc_86811, loc_86813, loc_86976, loc_86987
-global loc_86998, loc_869A9, loc_869B3, loc_869C8, loc_869D2, loc_86A77, loc_86A8E, loc_86B18
-global loc_86B6B, loc_86BC4, loc_86C1C, loc_86C1E, loc_86C63, loc_86C77, loc_86CDE, loc_86D28
-global loc_86D2E, loc_86D94, loc_86DD0, loc_86DD7, loc_86DF5, loc_86EA2, loc_86EB3, loc_86EC2
-global loc_86ECF, loc_86EF5, loc_86EFD, loc_86F3C, loc_86F3D, loc_86F63, loc_86F64, loc_86F88
-global loc_86F9E, loc_86FB7, loc_86FB8, loc_86FE7, loc_87000, loc_87001, loc_8703A, loc_8706D
-global loc_87085, loc_8708B, loc_870E3, loc_870F9, loc_870FD, loc_87108, loc_87120, loc_87136
-global loc_8713A, loc_87145, loc_87147, loc_87156, loc_87179, loc_871AE, loc_871AF, loc_871EA
-global loc_871F0, loc_87212, loc_87213, loc_87266, loc_8742C, loc_8743F, loc_87452, loc_87478
-global loc_87490, loc_87496, loc_874E9, loc_87509, loc_87514, loc_8755E, loc_8757C, loc_8758A
-global loc_875BB, loc_875D2, loc_87606, loc_87614, loc_87648, loc_87654, loc_8766B, loc_8766C
-global loc_876C2, loc_876D9, loc_876DA, loc_87732, loc_8778F, loc_8779C, loc_877BA, loc_877BE
-global loc_877C6, loc_877C8, loc_877CB, loc_877D3, loc_877DD, loc_877E1, loc_87816, loc_87823
-global loc_8783B, loc_87848, loc_8784A, loc_8784D, loc_87859, loc_8785B, loc_87880, loc_878CB
-global loc_878E7, loc_8790F, loc_87929, loc_8794C, loc_87988, loc_8798C, loc_879AC, loc_879B0
-global loc_879D0, loc_879D4, loc_879F4, loc_879F8, loc_879FE, loc_87A14, loc_87A15, loc_87A72
-global loc_87A76, loc_87A96, loc_87A9A, loc_87ABA, loc_87ABE, loc_87ADE, loc_87AE2, loc_87AE8
-global loc_87AFE, loc_87AFF, loc_87B29, loc_87B2C, loc_87B50, loc_87B73, loc_87B8E, loc_87BAE
-global loc_87BC5, loc_87BE5, loc_87C15, loc_87C18, loc_87C22, loc_87C37, loc_87C3B, loc_87C69
-global loc_87C6C, loc_87C76, loc_87C7C, loc_87C89, loc_87C90, loc_87C98, loc_87CBB, loc_87CD1
-global loc_87CEC, loc_87D0C, loc_87D42, loc_87D45, loc_87D4F, loc_87DA5, loc_87DD8, loc_87DE1
-global loc_87DF3, loc_87E0C, loc_87E18, loc_87E47, loc_87E4B, loc_87E53, loc_87E55, loc_87E58
-global loc_87ED4, loc_87F07, loc_87F0D, loc_87F35, loc_87F4E, loc_87F52, loc_87F5A, loc_87F5C
-global loc_87F5F, loc_87F6B, loc_87F9E, loc_87FB0, loc_87FB2, loc_87FBB, loc_87FC3, loc_87FC7
-global loc_87FD3, loc_87FF9, loc_8800B, loc_8800D, loc_88016, loc_8801E, loc_88022, loc_8802E
-global loc_88054, loc_88066, loc_88068, loc_88071, loc_88079, loc_8807D, loc_88089, loc_880DF
-global loc_880E1, loc_88149, loc_8829E, loc_882C0, loc_882D7, loc_882D8, loc_882EB, loc_882FD
-global loc_88324, loc_88339, loc_8835B, loc_88372, loc_88373, loc_88386, loc_88397, loc_883BE
-global loc_883D3, loc_88401, loc_88402, loc_88415, loc_88427, loc_8844E, loc_88453, loc_88463
-global loc_88490, loc_884AB, loc_884DB, loc_884E2, loc_8852F, loc_88587, loc_8859A, loc_885AD
-global loc_88615, loc_886A2, loc_886D5, loc_886D9, loc_88718, loc_8871C, loc_88722, loc_88734
-global loc_888AE, loc_888C0, loc_888C8, loc_888D2, loc_888E4, loc_888EC, loc_888F6, loc_88908
-global loc_8890E, loc_8899D, loc_889B6, loc_889BA, loc_889BB, loc_889CE, loc_889E0, loc_88A07
-global loc_88A22, loc_88A48, loc_88A61, loc_88A65, loc_88A66, loc_88A79, loc_88A8B, loc_88AB2
-global loc_88ACD, loc_88AF3, loc_88B0C, loc_88B10, loc_88B11, loc_88B24, loc_88B35, loc_88B5C
-global loc_88B74, loc_88B8A, loc_88B8B, loc_88B9E, loc_88BB0, loc_88BD7, loc_88BDC, loc_88BEA
-global loc_88C1B, loc_88C36, loc_88C6E, loc_88CA0, loc_88CC0, loc_88CD6, loc_88CE9, loc_88D04
-global loc_88D17, loc_88D27, loc_88D3A, loc_88D4D, loc_88D60, loc_88D7F, loc_88D9F, loc_88E00
-global loc_88E19, loc_88E2E, loc_88E4A, loc_88E90, loc_88EA3, loc_88EB5, loc_88EFB, loc_88F02
-global loc_88F33, loc_88F38, loc_88F78, loc_88FFB, loc_89012, loc_8901A, loc_89070, loc_89086
-global loc_890AE, loc_890CF, loc_89107, loc_89128, loc_89149, loc_89151, loc_89162, loc_8916C
-global loc_89181, loc_8919C, loc_891A6, loc_891AA, loc_89219, loc_8921B, loc_892E0, loc_8936C
-global loc_893BE, loc_893F3, loc_8948B, loc_894C9, loc_894DF, loc_89524, loc_89531, loc_89546
-global loc_89557, loc_89584, loc_8959F, loc_895D9, loc_895DB, loc_8962F, loc_89631, loc_8964C
-global loc_89670, loc_896C0, loc_896E8, loc_896F0, loc_89750, loc_89758, loc_89782, loc_897BF
-global loc_898D0, loc_898D9, loc_89961, loc_8996C, loc_8998B, loc_899A0, loc_899C8, loc_899CE
-global loc_89A0B, loc_89A0D, loc_89A28, loc_89ACC, loc_89AF7, loc_89B99, loc_89B9C, loc_89D58
-global loc_89D5B, loc_89D6E, loc_89D70, loc_89D93, loc_89DBC, loc_89DED, loc_89E35, loc_89EF0
-global loc_89F27, loc_89F28, loc_8A096, loc_8A0AB, loc_8A0D2, loc_8A0EF, loc_8A107, loc_8A109
-global loc_8A17A, loc_8A1A2, loc_8A1F3, loc_8A272, loc_8A27A, loc_8A284, loc_8A2C2, loc_8A314
-global loc_8A315, loc_8A327, loc_8A3CC, loc_8A3CE, loc_8A407, loc_8A40F, loc_8A528, loc_8A5AF
-global loc_8A5CE, loc_8A616, loc_8A617, loc_8A624, loc_8A646, loc_8A6E6, loc_8A6E8, loc_8A73A
-global loc_8A7C0, loc_8A7D8, loc_8A7DA, loc_8A854, loc_8A856, loc_8A95E, loc_8A972, loc_8A989
-global loc_8A9B0, loc_8A9C2, loc_8A9D7, loc_8A9EE, loc_8AA04, loc_8AA22, loc_8AAF7, loc_8AB03
-global loc_8AB0D, loc_8AB56, loc_8AB57, loc_8ABE3, loc_8ABFC, loc_8AC1A, loc_8ACCF, loc_8ACDB
-global loc_8ACE5, loc_8AD2E, loc_8AD2F, loc_8AE38, loc_8AE44, loc_8AE4E, loc_8AF42, loc_8AF4E
-global loc_8AF58, loc_8AFA0, loc_8AFA9, loc_8B0BA, loc_8B0C6, loc_8B0D0, loc_8B0F3, loc_8B147
-global loc_8B20C, loc_8B218, loc_8B222, loc_8B24E, loc_8B326, loc_8B332, loc_8B33C, loc_8B430
-global loc_8B43C, loc_8B446, loc_8B4AC, loc_8B4B5, loc_8B510, loc_8B51A, loc_8B521, loc_8B535
-global loc_8B54C, loc_8B618, loc_8B624, loc_8B62E, loc_8B677, loc_8B678, loc_8B6AB, loc_8B6B4
-global loc_8B6BB, loc_8B6D1, loc_8B6EF, loc_8B7C4, loc_8B7D0, loc_8B7DA, loc_8B823, loc_8B824
-global loc_8B84D, loc_8B8A3, loc_8B8BD, loc_8B8CF, loc_8B8DF, loc_8B8F3, loc_8B905, loc_8B917
-global loc_8B921, loc_8B94A, loc_8B94B, loc_8B959, loc_8B963, loc_8B97D, loc_8B98F, loc_8B99A
-global loc_8B9A3, loc_8B9AB, loc_8B9BB, loc_8B9C4, loc_8B9D5, loc_8B9E0, loc_8B9EB, loc_8B9F6
-global loc_8B9FF, loc_8BA0A, loc_8BA15, loc_8BA20, loc_8BA2B, loc_8BA34, loc_8BA3F, loc_8BA4A
-global loc_8BA55, loc_8BA5E, loc_8BA69, loc_8BA74, loc_8BA7F, loc_8BA88, loc_8BA91, loc_8BA9A
-global loc_8BAA3, loc_8BAAC, sub_86696, sub_86E8B, sub_870B6, sub_8721F, sub_8751A, sub_87520
-global sub_875A3, SeriesWinner, sub_877E9, sub_87863, sub_87B33, sub_87C9E, sub_87D5A, sub_87E77
-global sub_87F85, sub_87FE0, sub_8803B, sub_88096, sub_88625, sub_8873C, sub_891B2, sub_89223
-global sub_89268, sub_89B5C, sub_89B69, sub_89BD2, sub_8A652, sub_8B85B, sub_8B92F, sub_8B96D
-sub_86696:
+global POSeedRound2_x30, POSeedRound2_x
+global POSeedConfFinals_pair, POSeedConfFinals_x
+global LoadScheduleDB_x
+global CreatePlayoffs, POSeedTeams, POPickConfTeams, POCreateSchedule, POCreateSchedule_x, POSetSeriesTeams
+global POInitSchedule, SeriesWinner, POSeriesScore, POSeedRound2, POSeedConfFinals, POSeedFinal, POSimSeriesTeamWins, POSimSeries
+global POPreSimRound1, POPreSimRound2, POPreSimConfFinals, POHandleElimination, POSimSeriesTo, POAfterGame, LoadScheduleDB, SaveScheduleDB
+global PlayoffModeLoop, POReturnZero, POHiliteSlot, PlayoffTreeMenu, DrawPlayoffTree, SetSideControls, WriteCurModeState, ClearPlayerFromLines
+CreatePlayoffs:
 push dword 0F8h	; 86696
 call __CHK	; 8669B
 push ebx	; 866A0
@@ -140,11 +77,11 @@ mov dword [dword_C71D0], ebx	; 86707
 mov dword [dword_C71D4], 42h	; 8670D
 mov dword [dword_C71D8], ebx	; 86717
 mov dword [dword_C71DC], 43h	; 8671D
-mov eax, unk_C5298	; 86727
-call sub_3271B	; 8672C
+mov eax, exhstate	; 86727
+call SaveModeState	; 8672C
 push byte 20h	; 86731
 push dword 300h	; 86733
-push asc_C39B3	; 86738
+push str_Palette	; 86738
 call sub_8CCA8	; 8673D
 mov edi, eax	; 86742
 add esp, byte 0Ch	; 86744
@@ -161,16 +98,16 @@ call sub_76429	; 86765
 call sub_B4BA8	; 8676A
 mov ebp, dword [dword_C65AC]	; 8676F
 test ebp, ebp	; 86775
-jne short loc_867E2	; 86777
+jne short .3	; 86777
 xor ecx, ecx	; 86779
-mov ebx, asc_C39BB	; 8677B
+mov ebx, str_Embscup	; 8677B
 cmp byte [byte_ED859], 1	; 86780
-jne short loc_86791	; 86787
+jne short .1	; 86787
 mov edx, dword [dword_D2C6B]	; 86789
-jmp short loc_86793	; 8678F
-loc_86791:
+jmp short .2	; 8678F
+.1:
 xor edx, edx	; 86791
-loc_86793:
+.2:
 lea eax, [byte esp+06Ch]	; 86793
 call MakePath	; 86797
 push byte 0	; 8679C
@@ -185,7 +122,7 @@ push dword 280h	; 867B4
 push byte 0	; 867B9
 call sub_B4BC4	; 867BB
 add esp, byte 10h	; 867C0
-push asc_C39C3	; 867C3
+push str_Bkgd	; 867C3
 push edi	; 867C8
 call sub_B30B4	; 867C9
 add esp, byte 8	; 867CE
@@ -194,25 +131,25 @@ call sub_913B4	; 867D2
 add esp, byte 4	; 867D7
 push edi	; 867DA
 call jctime	; 867DB
-jmp short loc_867F6	; 867E0
-loc_867E2:
-push asc_C39C3	; 867E2
+jmp short .4	; 867E0
+.3:
+push str_Bkgd	; 867E2
 push ebp	; 867E7
 call sub_B30B4	; 867E8
 add esp, byte 8	; 867ED
 push eax	; 867F0
 call sub_9121C	; 867F1
-loc_867F6:
+.4:
 add esp, byte 4	; 867F6
 xor ecx, ecx	; 867F9
-mov ebx, asc_C39C8	; 867FB
+mov ebx, str_Embpal	; 867FB
 cmp byte [byte_ED85A], 1	; 86800
-jne short loc_86811	; 86807
+jne short .5	; 86807
 mov edx, dword [dword_D2C6B]	; 86809
-jmp short loc_86813	; 8680F
-loc_86811:
+jmp short .6	; 8680F
+.5:
 xor edx, edx	; 86811
-loc_86813:
+.6:
 lea eax, [byte esp+06Ch]	; 86813
 call MakePath	; 86817
 push byte 0	; 8681C
@@ -221,7 +158,7 @@ push eax	; 86822
 call sub_8E83C	; 86823
 add esp, byte 8	; 86828
 mov ebp, eax	; 8682B
-push asc_C39CF	; 8682D
+push str_BangPal	; 8682D
 push eax	; 86832
 call sub_B30B4	; 86833
 add esp, byte 8	; 86838
@@ -263,7 +200,7 @@ push byte 0	; 868B5
 mov ecx, 36h	; 868B7
 mov ebx, 8	; 868BC
 lea edx, [dword esp+0A0h]	; 868C1
-mov eax, asc_C39D4	; 868C8
+mov eax, str_PleaseEnterNewPlay	; 868C8
 call sub_2FEDF	; 868CD
 mov edi, eax	; 868D2
 lea eax, [dword esp+0C4h]	; 868D4
@@ -281,57 +218,57 @@ push eax	; 868FF
 call sub_B2DCA	; 86900
 add esp, byte 0Ch	; 86905
 cmp edi, byte 1Bh	; 86908
-je near loc_86A77	; 8690B
+je near .14	; 8690B
 cmp byte [dword esp+08Ch], 0	; 86911
-je near loc_86A77	; 86919
-mov dword [dword_C530D], 1	; 8691F
-mov dword [dword_C535E], 0Ch	; 86929
-mov dword [dword_C5362], 15h	; 86933
-mov dx, word [word_C5366]	; 8693D
+je near .14	; 86919
+mov dword [postate], 1	; 8691F
+mov dword [postate+51h], 0Ch	; 86929
+mov dword [postate+55h], 15h	; 86933
+mov dx, word [postate+59h]	; 8693D
 xor dl, dl	; 86944
 and dh, 80h	; 86946
-mov word [word_C5366], dx	; 86949
+mov word [postate+59h], dx	; 86949
 mov ebx, edx	; 86950
 or ebx, 79FFh	; 86952
-mov word [word_C5366], bx	; 86958
+mov word [postate+59h], bx	; 86958
 mov ch, byte [byte_EA0F4]	; 8695F
 test ch, 2	; 86965
-je short loc_86976	; 86968
-mov dword [dword_C5372], 2	; 8696A
-jmp short loc_869B3	; 86974
-loc_86976:
+je short .7	; 86968
+mov dword [postate+65h], 2	; 8696A
+jmp short .11	; 86974
+.7:
 test ch, 4	; 86976
-je short loc_86987	; 86979
-mov dword [dword_C5372], 4	; 8697B
-jmp short loc_869B3	; 86985
-loc_86987:
+je short .8	; 86979
+mov dword [postate+65h], 4	; 8697B
+jmp short .11	; 86985
+.8:
 test ch, 8	; 86987
-je short loc_86998	; 8698A
-mov dword [dword_C5372], 8	; 8698C
-jmp short loc_869B3	; 86996
-loc_86998:
+je short .9	; 8698A
+mov dword [postate+65h], 8	; 8698C
+jmp short .11	; 86996
+.9:
 test ch, 1	; 86998
-je short loc_869A9	; 8699B
-mov dword [dword_C5372], 1	; 8699D
-jmp short loc_869B3	; 869A7
-loc_869A9:
-mov dword [dword_C5372], 10h	; 869A9
-loc_869B3:
-cmp dword [dword_C5372], byte 10h	; 869B3
-je short loc_869C8	; 869BA
-mov dword [dword_C536A], 0Ch	; 869BC
-jmp short loc_869D2	; 869C6
-loc_869C8:
-mov dword [dword_C536A], 0FFFFFFFFh	; 869C8
-loc_869D2:
-mov dword [dword_C5376], 10h	; 869D2
-mov dword [dword_C536E], 0FFFFFFFEh	; 869DC
+je short .10	; 8699B
+mov dword [postate+65h], 1	; 8699D
+jmp short .11	; 869A7
+.10:
+mov dword [postate+65h], 10h	; 869A9
+.11:
+cmp dword [postate+65h], byte 10h	; 869B3
+je short .12	; 869BA
+mov dword [postate+5Dh], 0Ch	; 869BC
+jmp short .13	; 869C6
+.12:
+mov dword [postate+5Dh], 0FFFFFFFFh	; 869C8
+.13:
+mov dword [postate+69h], 10h	; 869D2
+mov dword [postate+61h], 0FFFFFFFEh	; 869DC
 xor edi, edi	; 869E6
-mov dword [dword_C537A], edi	; 869E8
-mov dword [dword_C537E], 1	; 869EE
-mov eax, dword_C530D	; 869F8
-call sub_327A1	; 869FD
-mov edx, asc_C39F3	; 86A02
+mov dword [postate+6Dh], edi	; 869E8
+mov dword [postate+71h], 1	; 869EE
+mov eax, postate	; 869F8
+call LoadModeState	; 869FD
+mov edx, str_PO	; 86A02
 lea eax, [dword esp+08Ch]	; 86A07
 call strcat_	; 86A0E
 lea ebx, [byte esp+040h]	; 86A13
@@ -339,7 +276,7 @@ mov edx, 10h	; 86A17
 lea eax, [dword esp+08Ch]	; 86A1C
 call unknown_libname_1	; 86A23
 test eax, eax	; 86A28
-jne short loc_86A8E	; 86A2A
+jne short .15	; 86A2A
 push byte 0FFFFFFFFh	; 86A2C
 lea eax, [dword esp+0A4h]	; 86A2E
 push eax	; 86A35
@@ -348,7 +285,7 @@ push eax	; 86A3D
 push byte 2	; 86A3E
 push btn_LeagueExists	; 86A40
 mov ecx, 2	; 86A45
-mov ebx, off_D28EB	; 86A4A
+mov ebx, msg_POExists	; 86A4A
 mov edx, 0FFFFFFFFh	; 86A4F
 mov eax, edx	; 86A54
 call MessageBox	; 86A56
@@ -356,11 +293,11 @@ test eax, eax	; 86A5B
 sete al	; 86A5D
 and eax, 0FFh	; 86A60
 mov edi, eax	; 86A65
-jne short loc_86A77	; 86A67
+jne short .14	; 86A67
 lea eax, [dword esp+08Ch]	; 86A69
 call sub_14442	; 86A70
-jmp short loc_86A8E	; 86A75
-loc_86A77:
+jmp short .15	; 86A75
+.14:
 push ebp	; 86A77
 call jctime	; 86A78
 add esp, byte 4	; 86A7D
@@ -368,25 +305,25 @@ push esi	; 86A80
 call jctime	; 86A81
 add esp, byte 4	; 86A86
 mov edi, 1	; 86A89
-loc_86A8E:
+.15:
 test edi, edi	; 86A8E
-jne near loc_86DF5	; 86A90
+jne near .29	; 86A90
 lea edx, [dword esp+08Ch]	; 86A96
 mov eax, curleague	; 86A9D
 call strcpy_	; 86AA2
 lea edx, [dword esp+08Ch]	; 86AA7
-mov eax, byte_DD750	; 86AAE
+mov eax, leaguedbfmt	; 86AAE
 call strcpy_	; 86AB3
-mov edx, asc_C39F7	; 86AB8
-mov eax, byte_DD750	; 86ABD
+mov edx, str_fmtSlashDb	; 86AB8
+mov eax, leaguedbfmt	; 86ABD
 call strcat_	; 86AC2
-mov edx, byte_DD750	; 86AC7
-mov eax, byte_DD710	; 86ACC
+mov edx, leaguedbfmt	; 86AC7
+mov eax, leaguedbfmt2	; 86ACC
 call strcpy_	; 86AD1
 lea eax, [dword esp+08Ch]	; 86AD6
 call mkdir_	; 86ADD
 test eax, eax	; 86AE2
-je short loc_86B18	; 86AE4
+je short .16	; 86AE4
 push dword 190h	; 86AE6
 lea eax, [dword esp+0A4h]	; 86AEB
 push eax	; 86AF2
@@ -395,43 +332,43 @@ push eax	; 86AFA
 push edi	; 86AFB
 push edi	; 86AFC
 mov ecx, 4	; 86AFD
-mov ebx, off_D2950	; 86B02
+mov ebx, msg_POSetupError	; 86B02
 mov edx, 0FFFFFFFFh	; 86B07
 mov eax, edx	; 86B0C
 call MessageBox	; 86B0E
 mov edi, 1	; 86B13
-loc_86B18:
+.16:
 test edi, edi	; 86B18
-jne near loc_86DF5	; 86B1A
+jne near .29	; 86B1A
 call sub_2FDD1	; 86B20
 mov edi, eax	; 86B25
 test eax, eax	; 86B27
-jl near loc_86BC4	; 86B29
+jl near .18	; 86B29
 mov ebx, dword [dword_DD770]	; 86B2F
 mov edx, unk_D2864	; 86B35
 xor eax, eax	; 86B3A
 call sub_149BF	; 86B3C
 xor ecx, ecx	; 86B41
-mov ebx, asc_C39FE	; 86B43
+mov ebx, str_GameSet	; 86B43
 mov edx, curleague	; 86B48
 lea eax, [byte esp+06Ch]	; 86B4D
 call MakePath	; 86B51
 lea eax, [byte esp+06Ch]	; 86B56
 call sub_142E7	; 86B5A
 test eax, eax	; 86B5F
-je short loc_86B6B	; 86B61
+je short .17	; 86B61
 xor edx, edx	; 86B63
 mov dword [dword_D2884], edx	; 86B65
-loc_86B6B:
+.17:
 mov edx, unk_D2864	; 86B6B
 xor eax, eax	; 86B70
 call sub_14825	; 86B72
 mov edi, eax	; 86B77
 test eax, eax	; 86B79
-je short loc_86BC4	; 86B7B
+je short .18	; 86B7B
 push eax	; 86B7D
-push asc_C3A07	; 86B7E
-push asc_D29CB	; 86B83
+push str_4dKbytesOfFree	; 86B7E
+push msg_PODiskSpace_arg	; 86B83
 call sprintf_	; 86B88
 add esp, byte 0Ch	; 86B8D
 push dword 258h	; 86B90
@@ -442,17 +379,17 @@ push eax	; 86BA4
 push byte 0	; 86BA5
 push byte 0	; 86BA7
 mov ecx, 3	; 86BA9
-mov ebx, off_D29EF	; 86BAE
+mov ebx, msg_PODiskSpace	; 86BAE
 mov edx, 0FFFFFFFFh	; 86BB3
 mov eax, edx	; 86BB8
 call MessageBox	; 86BBA
 mov edi, 1	; 86BBF
-loc_86BC4:
+.18:
 test edi, edi	; 86BC4
-jne near loc_86DD7	; 86BC6
+jne near .28	; 86BC6
 call sub_80830	; 86BCC
 cmp eax, byte 3	; 86BD1
-je near loc_86DD7	; 86BD4
+je near .28	; 86BD4
 push esi	; 86BDA
 push dword 100h	; 86BDB
 push edi	; 86BE0
@@ -464,16 +401,16 @@ mov eax, 1	; 86BF0
 call sub_76429	; 86BF5
 mov ebx, dword [dword_C65AC]	; 86BFA
 test ebx, ebx	; 86C00
-jne short loc_86C63	; 86C02
+jne short .21	; 86C02
 xor ecx, ecx	; 86C04
-mov ebx, asc_C39BB	; 86C06
+mov ebx, str_Embscup	; 86C06
 cmp byte [byte_ED859], 1	; 86C0B
-jne short loc_86C1C	; 86C12
+jne short .19	; 86C12
 mov edx, dword [dword_D2C6B]	; 86C14
-jmp short loc_86C1E	; 86C1A
-loc_86C1C:
+jmp short .20	; 86C1A
+.19:
 xor edx, edx	; 86C1C
-loc_86C1E:
+.20:
 lea eax, [byte esp+06Ch]	; 86C1E
 call MakePath	; 86C22
 push byte 0	; 86C27
@@ -482,7 +419,7 @@ push eax	; 86C2D
 call sub_8E83C	; 86C2E
 mov dword [dword esp+0B0h], eax	; 86C33
 add esp, byte 8	; 86C3A
-push asc_C39C3	; 86C3D
+push str_Bkgd	; 86C3D
 push eax	; 86C42
 call sub_B30B4	; 86C43
 add esp, byte 8	; 86C48
@@ -492,17 +429,17 @@ add esp, byte 4	; 86C51
 mov edx, dword [dword esp+0A8h]	; 86C54
 push edx	; 86C5B
 call jctime	; 86C5C
-jmp short loc_86C77	; 86C61
-loc_86C63:
-push asc_C39C3	; 86C63
+jmp short .22	; 86C61
+.21:
+push str_Bkgd	; 86C63
 push ebx	; 86C68
 call sub_B30B4	; 86C69
 add esp, byte 8	; 86C6E
 push eax	; 86C71
 call sub_9121C	; 86C72
-loc_86C77:
+.22:
 add esp, byte 4	; 86C77
-push asc_C39CF	; 86C7A
+push str_BangPal	; 86C7A
 push ebp	; 86C7F
 call sub_B30B4	; 86C80
 add esp, byte 8	; 86C85
@@ -517,7 +454,7 @@ push esi	; 86CA0
 call jctime	; 86CA1
 add esp, byte 4	; 86CA6
 mov eax, esp	; 86CA9
-call sub_86E8B	; 86CAB
+call POSeedTeams	; 86CAB
 push byte 0	; 86CB0
 lea eax, [dword esp+0A4h]	; 86CB2
 push eax	; 86CB9
@@ -526,12 +463,12 @@ push eax	; 86CC1
 push byte 0	; 86CC2
 push byte 0	; 86CC4
 mov ecx, 2	; 86CC6
-mov ebx, off_D2983	; 86CCB
+mov ebx, msg_POSettingUp	; 86CCB
 mov edx, 0FFFFFFFFh	; 86CD0
 mov eax, edx	; 86CD5
 call MessageBox	; 86CD7
 xor esi, esi	; 86CDC
-loc_86CDE:
+.23:
 push curleague	; 86CDE
 mov edx, dword [dword_DD770]	; 86CE3
 mov eax, dword [nosplit esi*4+leaguedbnames]	; 86CE9
@@ -539,7 +476,7 @@ mov ecx, str_dot	; 86CF0
 mov ebx, str_extDB	; 86CF5
 call sub_1466B	; 86CFA
 test eax, eax	; 86CFF
-je short loc_86D28	; 86D01
+je short .24	; 86D01
 push dword 190h	; 86D03
 call sub_B3989	; 86D08
 add esp, byte 4	; 86D0D
@@ -547,19 +484,19 @@ lea eax, [dword esp+08Ch]	; 86D10
 call sub_14442	; 86D17
 mov edi, 1	; 86D1C
 call sub_B3999	; 86D21
-jmp short loc_86D2E	; 86D26
-loc_86D28:
+jmp short .25	; 86D26
+.24:
 inc esi	; 86D28
 cmp esi, byte 7	; 86D29
-jl short loc_86CDE	; 86D2C
-loc_86D2E:
+jl short CreatePlayoffs.23	; 86D2C
+.25:
 test edi, edi	; 86D2E
-jne near loc_86DD0	; 86D30
+jne near .27	; 86D30
 lea edx, [dword esp+08Ch]	; 86D36
 mov eax, esp	; 86D3D
-call sub_8721F	; 86D3F
+call POCreateSchedule	; 86D3F
 test eax, eax	; 86D44
-je short loc_86D94	; 86D46
+je short .26	; 86D46
 push dword 190h	; 86D48
 call sub_B3989	; 86D4D
 add esp, byte 4	; 86D52
@@ -571,7 +508,7 @@ push eax	; 86D65
 push edi	; 86D66
 push edi	; 86D67
 mov ecx, 4	; 86D68
-mov ebx, off_D2950	; 86D6D
+mov ebx, msg_POSetupError	; 86D6D
 mov edx, 0FFFFFFFFh	; 86D72
 mov eax, edx	; 86D77
 call MessageBox	; 86D79
@@ -579,21 +516,21 @@ lea eax, [dword esp+08Ch]	; 86D7E
 call sub_14442	; 86D85
 call sub_B3999	; 86D8A
 call sub_30F12	; 86D8F
-loc_86D94:
-mov eax, dword_C530D	; 86D94
-call sub_32B1D	; 86D99
+.26:
+mov eax, postate	; 86D94
+call WriteModeState	; 86D99
 call sub_1D518	; 86D9E
 xor eax, eax	; 86DA3
 call sub_1D100	; 86DA5
-mov dword [dword_CE583], sub_89268	; 86DAA
+mov dword [dword_CE583], PlayoffModeLoop	; 86DAA
 mov dword [dword_CE5A3], sub_7A29C	; 86DB4
 mov dword [dword_CE5C3], sub_86647	; 86DBE
 xor edi, edi	; 86DC8
-mov dword [dword_D29FB], edi	; 86DCA
-loc_86DD0:
+mov dword [seriesgameno], edi	; 86DCA
+.27:
 call sub_30F12	; 86DD0
-jmp short loc_86DF5	; 86DD5
-loc_86DD7:
+jmp short .29	; 86DD5
+.28:
 lea eax, [dword esp+08Ch]	; 86DD7
 call rmdir_	; 86DDE
 push ebp	; 86DE3
@@ -602,10 +539,10 @@ add esp, byte 4	; 86DE9
 push esi	; 86DEC
 call jctime	; 86DED
 add esp, byte 4	; 86DF2
-loc_86DF5:
+.29:
 push byte 20h	; 86DF5
 push dword 300h	; 86DF7
-push asc_C3A26	; 86DFC
+push str_Temp2	; 86DFC
 call sub_8CCA8	; 86E01
 mov esi, eax	; 86E06
 add esp, byte 0Ch	; 86E08
@@ -621,8 +558,8 @@ call sub_76429	; 86E27
 push esi	; 86E2C
 call jctime	; 86E2D
 add esp, byte 4	; 86E32
-mov eax, unk_C5298	; 86E35
-call sub_327A1	; 86E3A
+mov eax, exhstate	; 86E35
+call LoadModeState	; 86E3A
 mov eax, dword [dword esp+0ACh]	; 86E3F
 mov dword [dword_C71CC], eax	; 86E46
 mov eax, dword [dword esp+0B0h]	; 86E4B
@@ -635,8 +572,8 @@ mov eax, dword [dword esp+0B4h]	; 86E6F
 mov dword [dword_C71DC], eax	; 86E76
 mov eax, 2	; 86E7B
 add esp, 0C8h	; 86E80
-jmp near loc_87B2C	; 86E86
-sub_86E8B:
+jmp near POSeedRound2_x	; 86E86
+POSeedTeams:
 push dword 20h	; 86E8B
 call __CHK	; 86E90
 push ebx	; 86E95
@@ -648,111 +585,111 @@ push ebp	; 86E9A
 sub esp, byte 4	; 86E9B
 mov esi, eax	; 86E9E
 xor ebx, ebx	; 86EA0
-loc_86EA2:
+.1:
 mov eax, ebx	; 86EA2
 mov dword [esi+eax*4], 0FFFFFFF0h	; 86EA4
 inc ebx	; 86EAB
 cmp ebx, byte 10h	; 86EAC
-jl short loc_86EA2	; 86EAF
+jl short POSeedTeams.1	; 86EAF
 xor ebx, ebx	; 86EB1
-loc_86EB3:
+.2:
 mov eax, 10h	; 86EB3
 call randomd0	; 86EB8
 movsx edx, ax	; 86EBD
-jmp short loc_86ECF	; 86EC0
-loc_86EC2:
+jmp short .4	; 86EC0
+.3:
 inc edx	; 86EC2
 mov ecx, 10h	; 86EC3
 mov eax, edx	; 86EC8
 sar edx, 1Fh	; 86ECA
 idiv ecx	; 86ECD
-loc_86ECF:
+.4:
 mov eax, edx	; 86ECF
 shl eax, 2	; 86ED1
 add eax, esi	; 86ED4
 cmp dword [eax], byte 0FFFFFFF0h	; 86ED6
-jne short loc_86EC2	; 86ED9
+jne short POSeedTeams.3	; 86ED9
 mov dword [eax], 0FFFFFFFDh	; 86EDB
 mov eax, 10h	; 86EE1
 call randomd0	; 86EE6
 movsx edx, ax	; 86EEB
 mov ecx, 10h	; 86EEE
-jmp short loc_86EFD	; 86EF3
-loc_86EF5:
+jmp short .6	; 86EF3
+.5:
 inc edx	; 86EF5
 mov eax, edx	; 86EF6
 sar edx, 1Fh	; 86EF8
 idiv ecx	; 86EFB
-loc_86EFD:
+.6:
 mov eax, edx	; 86EFD
 shl eax, 2	; 86EFF
 add eax, esi	; 86F02
 cmp dword [eax], byte 0FFFFFFF0h	; 86F04
-jne short loc_86EF5	; 86F07
+jne short POSeedTeams.5	; 86F07
 mov dword [eax], 0FFFFFFF4h	; 86F09
 add ebx, byte 2	; 86F0F
 cmp ebx, byte 10h	; 86F12
-jl short loc_86EB3	; 86F15
-mov eax, dword [cont2team]	; 86F17
+jl short POSeedTeams.2	; 86F15
+mov eax, dword [HomeTeam-2]	; 86F17
 sar eax, 10h	; 86F1C
-mov edx, dword [HomeTeam]	; 86F1F
+mov edx, dword [VisTeam-2]	; 86F1F
 sar edx, 10h	; 86F25
-mov eax, dword [nosplit eax*4+dword_C5581]	; 86F28
-cmp eax, dword [nosplit edx*4+dword_C5581]	; 86F2F
-jne short loc_86F88	; 86F36
+mov eax, dword [nosplit eax*4+teamconf]	; 86F28
+cmp eax, dword [nosplit edx*4+teamconf]	; 86F2F
+jne short .11	; 86F36
 xor ebx, ebx	; 86F38
-jmp short loc_86F3D	; 86F3A
-loc_86F3C:
+jmp short .8	; 86F3A
+.7:
 inc ebx	; 86F3C
-loc_86F3D:
-mov edx, dword [cont2team]	; 86F3D
+.8:
+mov edx, dword [HomeTeam-2]	; 86F3D
 sar edx, 10h	; 86F43
-mov ecx, dword [nosplit edx*4+dword_C5581]	; 86F46
+mov ecx, dword [nosplit edx*4+teamconf]	; 86F46
 neg ecx	; 86F4D
 mov eax, ebx	; 86F4F
 shl eax, 2	; 86F51
 add eax, esi	; 86F54
 cmp ecx, dword [eax]	; 86F56
-jne short loc_86F3C	; 86F58
+jne short POSeedTeams.7	; 86F58
 mov dword [eax], edx	; 86F5A
 mov ebx, 0Fh	; 86F5C
-jmp short loc_86F64	; 86F61
-loc_86F63:
+jmp short .10	; 86F61
+.9:
 dec ebx	; 86F63
-loc_86F64:
-mov edx, dword [HomeTeam]	; 86F64
+.10:
+mov edx, dword [VisTeam-2]	; 86F64
 sar edx, 10h	; 86F6A
-mov ecx, dword [nosplit edx*4+dword_C5581]	; 86F6D
+mov ecx, dword [nosplit edx*4+teamconf]	; 86F6D
 neg ecx	; 86F74
 mov eax, ebx	; 86F76
 shl eax, 2	; 86F78
 add eax, esi	; 86F7B
 cmp ecx, dword [eax]	; 86F7D
-jne short loc_86F63	; 86F7F
+jne short POSeedTeams.9	; 86F7F
 mov dword [eax], edx	; 86F81
-jmp near loc_8708B	; 86F83
-loc_86F88:
+jmp near .21	; 86F83
+.11:
 mov eax, 3	; 86F88
 call randomd0	; 86F8D
 movsx ecx, ax	; 86F92
 xor ebx, ebx	; 86F95
 mov edx, 0FFFFFFFFh	; 86F97
-jmp short loc_86FB8	; 86F9C
-loc_86F9E:
-mov eax, dword [cont2team]	; 86F9E
+jmp short .14	; 86F9C
+.12:
+mov eax, dword [HomeTeam-2]	; 86F9E
 sar eax, 10h	; 86FA3
-mov edi, dword [nosplit eax*4+dword_C5581]	; 86FA6
+mov edi, dword [nosplit eax*4+teamconf]	; 86FA6
 neg edi	; 86FAD
 mov eax, ebx	; 86FAF
 cmp edi, dword [esi+eax*4]	; 86FB1
-jne short loc_86FB7	; 86FB4
+jne short .13	; 86FB4
 inc edx	; 86FB6
-loc_86FB7:
+.13:
 inc ebx	; 86FB7
-loc_86FB8:
+.14:
 cmp edx, ecx	; 86FB8
-jne short loc_86F9E	; 86FBA
-mov edx, dword [cont2team]	; 86FBC
+jne short POSeedTeams.12	; 86FBA
+mov edx, dword [HomeTeam-2]	; 86FBC
 sar edx, 10h	; 86FC2
 dec ebx	; 86FC5
 mov eax, ebx	; 86FC6
@@ -766,22 +703,22 @@ cwde	; 86FDB
 add ecx, eax	; 86FDC
 xor ebx, ebx	; 86FDE
 mov edx, 0FFFFFFFFh	; 86FE0
-jmp short loc_87001	; 86FE5
-loc_86FE7:
-mov eax, dword [HomeTeam]	; 86FE7
+jmp short .17	; 86FE5
+.15:
+mov eax, dword [VisTeam-2]	; 86FE7
 sar eax, 10h	; 86FEC
-mov edi, dword [nosplit eax*4+dword_C5581]	; 86FEF
+mov edi, dword [nosplit eax*4+teamconf]	; 86FEF
 neg edi	; 86FF6
 mov eax, ebx	; 86FF8
 cmp edi, dword [esi+eax*4]	; 86FFA
-jne short loc_87000	; 86FFD
+jne short .16	; 86FFD
 inc edx	; 86FFF
-loc_87000:
+.16:
 inc ebx	; 87000
-loc_87001:
+.17:
 cmp edx, ecx	; 87001
-jne short loc_86FE7	; 87003
-mov eax, dword [HomeTeam]	; 87005
+jne short POSeedTeams.15	; 87003
+mov eax, dword [VisTeam-2]	; 87005
 sar eax, 10h	; 8700A
 dec ebx	; 8700D
 mov edx, ebx	; 8700E
@@ -790,7 +727,7 @@ add edx, esi	; 87013
 mov dword [edx], eax	; 87015
 mov eax, dword [esp]	; 87017
 cmp ebx, eax	; 8701A
-jge short loc_8708B	; 8701C
+jge short .21	; 8701C
 mov ebx, dword [esi+eax*4]	; 8701E
 mov ecx, dword [edx]	; 87021
 xor ebx, ecx	; 87023
@@ -803,47 +740,47 @@ mov ebp, dword [edx]	; 87031
 xor ebx, ebp	; 87033
 mov dword [esi+eax*4], ebx	; 87035
 xor ebx, ebx	; 87038
-loc_8703A:
-mov ecx, dword [cont2team]	; 8703A
+.18:
+mov ecx, dword [HomeTeam-2]	; 8703A
 sar ecx, 10h	; 87040
-mov ecx, dword [nosplit ecx*4+dword_C5581]	; 87043
+mov ecx, dword [nosplit ecx*4+teamconf]	; 87043
 neg ecx	; 8704A
 mov eax, ebx	; 8704C
 shl eax, 2	; 8704E
 add eax, esi	; 87051
 cmp ecx, dword [eax]	; 87053
-jne short loc_8706D	; 87055
-mov edx, dword [HomeTeam]	; 87057
+jne short .19	; 87055
+mov edx, dword [VisTeam-2]	; 87057
 sar edx, 10h	; 8705D
-mov edx, dword [nosplit edx*4+dword_C5581]	; 87060
+mov edx, dword [nosplit edx*4+teamconf]	; 87060
 neg edx	; 87067
 mov dword [eax], edx	; 87069
-jmp short loc_87085	; 8706B
-loc_8706D:
-mov edx, dword [HomeTeam]	; 8706D
+jmp short .20	; 8706B
+.19:
+mov edx, dword [VisTeam-2]	; 8706D
 sar edx, 10h	; 87073
-mov edx, dword [nosplit edx*4+dword_C5581]	; 87076
+mov edx, dword [nosplit edx*4+teamconf]	; 87076
 neg edx	; 8707D
 cmp edx, dword [eax]	; 8707F
-jne short loc_87085	; 87081
+jne short .20	; 87081
 mov dword [eax], ecx	; 87083
-loc_87085:
+.20:
 inc ebx	; 87085
 cmp ebx, byte 10h	; 87086
-jl short loc_8703A	; 87089
-loc_8708B:
+jl short POSeedTeams.18	; 87089
+.21:
 mov ecx, 0Ch	; 8708B
 xor ebx, ebx	; 87090
 mov edx, 3	; 87092
 mov eax, esi	; 87097
-call sub_870B6	; 87099
+call POPickConfTeams	; 87099
 mov ecx, 0Eh	; 8709E
 mov ebx, 0Ch	; 870A3
 mov edx, ebx	; 870A8
 mov eax, esi	; 870AA
-call sub_870B6	; 870AC
-jmp near loc_87C90	; 870B1
-sub_870B6:
+call POPickConfTeams	; 870AC
+jmp near POSeedConfFinals_x	; 870B1
+POPickConfTeams:
 push dword 38h	; 870B6
 call __CHK	; 870BB
 push esi	; 870C0
@@ -855,128 +792,128 @@ push edx	; 870C7
 mov ebp, ebx	; 870C8
 mov edi, ecx	; 870CA
 xor esi, esi	; 870CC
-mov eax, dword [cont2team]	; 870CE
+mov eax, dword [HomeTeam-2]	; 870CE
 sar eax, 10h	; 870D3
 test dword [nosplit eax*4+teamdivflags], edx	; 870D6
-je short loc_87108	; 870DD
+je short .4	; 870DD
 xor ebx, ebx	; 870DF
-jmp short loc_870F9	; 870E1
-loc_870E3:
+jmp short .2	; 870E1
+.1:
 lea eax, [ebx+ebp]	; 870E3
-mov edx, dword [cont2team]	; 870E6
+mov edx, dword [HomeTeam-2]	; 870E6
 sar edx, 10h	; 870EC
-cmp edx, dword [nosplit eax*4+dword_C55E9]	; 870EF
-je short loc_870FD	; 870F6
+cmp edx, dword [nosplit eax*4+confteams]	; 870EF
+je short .3	; 870F6
 inc ebx	; 870F8
-loc_870F9:
+.2:
 cmp ebx, edi	; 870F9
-jl short loc_870E3	; 870FB
-loc_870FD:
+jl short POPickConfTeams.1	; 870FB
+.3:
 mov cl, bl	; 870FD
 mov eax, 1	; 870FF
 shl eax, cl	; 87104
 or esi, eax	; 87106
-loc_87108:
-mov eax, dword [HomeTeam]	; 87108
+.4:
+mov eax, dword [VisTeam-2]	; 87108
 sar eax, 10h	; 8710D
 mov eax, dword [nosplit eax*4+teamdivflags]	; 87110
 test dword [esp], eax	; 87117
-je short loc_87145	; 8711A
+je short .8	; 8711A
 xor ebx, ebx	; 8711C
-jmp short loc_87136	; 8711E
-loc_87120:
+jmp short .6	; 8711E
+.5:
 lea eax, [ebx+ebp]	; 87120
-mov edx, dword [HomeTeam]	; 87123
+mov edx, dword [VisTeam-2]	; 87123
 sar edx, 10h	; 87129
-cmp edx, dword [nosplit eax*4+dword_C55E9]	; 8712C
-je short loc_8713A	; 87133
+cmp edx, dword [nosplit eax*4+confteams]	; 8712C
+je short .7	; 87133
 inc ebx	; 87135
-loc_87136:
+.6:
 cmp ebx, edi	; 87136
-jl short loc_87120	; 87138
-loc_8713A:
+jl short POPickConfTeams.5	; 87138
+.7:
 mov cl, bl	; 8713A
 mov eax, 1	; 8713C
 shl eax, cl	; 87141
 or esi, eax	; 87143
-loc_87145:
+.8:
 xor ebx, ebx	; 87145
-loc_87147:
+.9:
 movsx eax, di	; 87147
 call randomd0	; 8714A
 movsx edx, ax	; 8714F
 mov dword [byte esp+ebx*4+08h], edx	; 87152
-loc_87156:
+.10:
 mov edx, ebx	; 87156
 shl edx, 2	; 87158
 mov cl, byte [byte esp+edx+08h]	; 8715B
 mov eax, 1	; 8715F
 shl eax, cl	; 87164
 test esi, eax	; 87166
-je short loc_87179	; 87168
+je short .11	; 87168
 movsx eax, di	; 8716A
 call randomd0	; 8716D
 cwde	; 87172
 mov dword [byte esp+edx+08h], eax	; 87173
-jmp short loc_87156	; 87177
-loc_87179:
+jmp short POPickConfTeams.10	; 87177
+.11:
 or esi, eax	; 87179
 inc ebx	; 8717B
 cmp ebx, byte 8	; 8717C
-jl short loc_87147	; 8717F
+jl short POPickConfTeams.9	; 8717F
 mov eax, dword [byte esp+0Ch]	; 87181
-mov eax, dword [nosplit eax*4+dword_C55E9]	; 87185
+mov eax, dword [nosplit eax*4+confteams]	; 87185
 mov edx, dword [byte esp+08h]	; 8718C
-mov edx, dword [nosplit edx*4+dword_C55E9]	; 87190
+mov edx, dword [nosplit edx*4+confteams]	; 87190
 mov edx, dword [nosplit edx*4+teamdivflags]	; 87197
 cmp edx, dword [nosplit eax*4+teamdivflags]	; 8719E
-jne short loc_871EA	; 871A5
+jne short .14	; 871A5
 mov ebx, 2	; 871A7
-jmp short loc_871AF	; 871AC
-loc_871AE:
+jmp short .13	; 871AC
+.12:
 inc ebx	; 871AE
-loc_871AF:
+.13:
 mov edx, ebx	; 871AF
 shl edx, 2	; 871B1
 mov eax, dword [byte esp+edx+08h]	; 871B4
-mov eax, dword [nosplit eax*4+dword_C55E9]	; 871B8
+mov eax, dword [nosplit eax*4+confteams]	; 871B8
 mov esi, dword [byte esp+08h]	; 871BF
-mov esi, dword [nosplit esi*4+dword_C55E9]	; 871C3
+mov esi, dword [nosplit esi*4+confteams]	; 871C3
 mov esi, dword [nosplit esi*4+teamdivflags]	; 871CA
 cmp esi, dword [nosplit eax*4+teamdivflags]	; 871D1
-je short loc_871AE	; 871D8
+je short POPickConfTeams.12	; 871D8
 mov esi, dword [byte esp+0Ch]	; 871DA
 mov eax, dword [byte esp+edx+08h]	; 871DE
 mov dword [byte esp+0Ch], eax	; 871E2
 mov dword [byte esp+edx+08h], esi	; 871E6
-loc_871EA:
+.14:
 xor ebx, ebx	; 871EA
 xor esi, esi	; 871EC
-jmp short loc_87213	; 871EE
-loc_871F0:
+jmp short .17	; 871EE
+.15:
 mov eax, ebx	; 871F0
 shl eax, 2	; 871F2
 add eax, dword [byte esp+04h]	; 871F5
 mov edx, dword [esp]	; 871F9
 neg edx	; 871FC
 cmp edx, dword [eax]	; 871FE
-jne short loc_87212	; 87200
+jne short .16	; 87200
 mov edx, dword [byte esp+esi*4+08h]	; 87202
 add edx, ebp	; 87206
-mov edx, dword [nosplit edx*4+dword_C55E9]	; 87208
+mov edx, dword [nosplit edx*4+confteams]	; 87208
 mov dword [eax], edx	; 8720F
 inc esi	; 87211
-loc_87212:
+.16:
 inc ebx	; 87212
-loc_87213:
+.17:
 cmp ebx, byte 10h	; 87213
-jl short loc_871F0	; 87216
+jl short POPickConfTeams.15	; 87216
 add esp, byte 28h	; 87218
 pop ebp	; 8721B
 pop edi	; 8721C
 pop esi	; 8721D
 ret	; 8721E
-sub_8721F:
+POCreateSchedule:
 push dword 0A8h	; 8721F
 call __CHK	; 87224
 push ebx	; 87229
@@ -988,7 +925,7 @@ sub esp, 84h	; 8722E
 mov ebp, eax	; 87234
 mov edi, edx	; 87236
 xor ecx, ecx	; 87238
-mov ebx, asc_C3A2B	; 8723A
+mov ebx, str_ScheduleDb	; 8723A
 mov eax, esp	; 8723F
 call MakePath	; 87241
 push byte 20h	; 87246
@@ -998,10 +935,10 @@ call sub_8E8B8	; 8724D
 add esp, byte 8	; 87252
 lea esi, [byte eax+02h]	; 87255
 test esi, esi	; 87258
-jne short loc_87266	; 8725A
+jne short .1	; 8725A
 mov eax, 1	; 8725C
-jmp near loc_87514	; 87261
-loc_87266:
+jmp near .10	; 87261
+.1:
 mov dword [dword esi+088h], 7	; 87266
 mov eax, dword [dword esi+088h]	; 87270
 mov dword [dword esi+084h], eax	; 87276
@@ -1020,14 +957,14 @@ mov dword [byte esi+054h], eax	; 872A0
 mov dword [byte esi+050h], eax	; 872A3
 mov edx, ebp	; 872A6
 mov eax, esi	; 872A8
-call sub_875A3	; 872AA
-mov eax, dword [cont2team]	; 872AF
+call POInitSchedule	; 872AA
+mov eax, dword [HomeTeam-2]	; 872AF
 sar eax, 10h	; 872B4
-mov edx, dword [HomeTeam]	; 872B7
+mov edx, dword [VisTeam-2]	; 872B7
 sar edx, 10h	; 872BD
-mov eax, dword [nosplit eax*4+dword_C5581]	; 872C0
-cmp eax, dword [nosplit edx*4+dword_C5581]	; 872C7
-je near loc_87478	; 872CE
+mov eax, dword [nosplit eax*4+teamconf]	; 872C0
+cmp eax, dword [nosplit edx*4+teamconf]	; 872C7
+je near .5	; 872CE
 mov ebx, dword [leaguedbnames+14h]	; 872D4
 mov ecx, str_extDB	; 872DA
 mov edx, edi	; 872DF
@@ -1076,30 +1013,30 @@ push eax	; 8737A
 call sub_92DE0	; 8737B
 add esp, byte 4	; 87380
 mov dword [keydb_size], eax	; 87383
-mov ebx, dword [HomeTeam]	; 87388
+mov ebx, dword [VisTeam-2]	; 87388
 sar ebx, 10h	; 8738E
-mov edx, dword [cont2team]	; 87391
+mov edx, dword [HomeTeam-2]	; 87391
 sar edx, 10h	; 87397
 mov eax, esi	; 8739A
-call sub_87F85	; 8739C
+call POPreSimRound1	; 8739C
 mov eax, esi	; 873A1
-call sub_87863	; 873A3
-mov ebx, dword [HomeTeam]	; 873A8
+call POSeedRound2	; 873A3
+mov ebx, dword [VisTeam-2]	; 873A8
 sar ebx, 10h	; 873AE
-mov edx, dword [cont2team]	; 873B1
+mov edx, dword [HomeTeam-2]	; 873B1
 sar edx, 10h	; 873B7
 mov eax, esi	; 873BA
-call sub_87FE0	; 873BC
+call POPreSimRound2	; 873BC
 mov eax, esi	; 873C1
-call sub_87B33	; 873C3
-mov ebx, dword [HomeTeam]	; 873C8
+call POSeedConfFinals	; 873C3
+mov ebx, dword [VisTeam-2]	; 873C8
 sar ebx, 10h	; 873CE
-mov edx, dword [cont2team]	; 873D1
+mov edx, dword [HomeTeam-2]	; 873D1
 sar edx, 10h	; 873D7
 mov eax, esi	; 873DA
-call sub_8803B	; 873DC
+call POPreSimConfFinals	; 873DC
 mov eax, esi	; 873E1
-call sub_87C9E	; 873E3
+call POSeedFinal	; 873E3
 mov ebx, dword [leaguedbnames+14h]	; 873E8
 mov ecx, str_extDB	; 873EE
 mov edx, edi	; 873F3
@@ -1115,25 +1052,25 @@ call sub_932D0	; 87411
 add esp, byte 0Ch	; 87416
 mov ebp, dword [seasondb]	; 87419
 test ebp, ebp	; 8741F
-je short loc_8742C	; 87421
+je short .2	; 87421
 push ebp	; 87423
 call jctime	; 87424
 add esp, byte 4	; 87429
-loc_8742C:
+.2:
 mov edx, dword [careerdb]	; 8742C
 test edx, edx	; 87432
-je short loc_8743F	; 87434
+je short .3	; 87434
 push edx	; 87436
 call jctime	; 87437
 add esp, byte 4	; 8743C
-loc_8743F:
+.3:
 mov ecx, dword [keydb]	; 8743F
 test ecx, ecx	; 87445
-je short loc_87452	; 87447
+je short .4	; 87447
 push ecx	; 87449
 call jctime	; 8744A
 add esp, byte 4	; 8744F
-loc_87452:
+.4:
 xor ebp, ebp	; 87452
 mov dword [seasondb], ebp	; 87454
 mov dword [careerdb], ebp	; 8745A
@@ -1141,24 +1078,24 @@ mov dword [keydb], ebp	; 87460
 mov dword [seasondb_size], ebp	; 87466
 mov dword [careerdb_size], ebp	; 8746C
 mov dword [keydb_size], ebp	; 87472
-loc_87478:
+.5:
 xor edx, edx	; 87478
 lea eax, [dword esi+01998h]	; 8747A
 mov di, word [VisTeam]	; 87480
 mov cx, word [HomeTeam]	; 87487
-jmp short loc_87496	; 8748E
-loc_87490:
+jmp short .7	; 8748E
+.6:
 add edx, byte 7	; 87490
 add eax, byte 2Ah	; 87493
-loc_87496:
+.7:
 xor ebx, ebx	; 87496
 mov bl, byte [byte eax+02h]	; 87498
 cmp bx, cx	; 8749B
-jne short loc_87490	; 8749E
+jne short POCreateSchedule.6	; 8749E
 xor ebx, ecx	; 874A0
 mov bl, byte [byte eax+03h]	; 874A2
 cmp bx, di	; 874A5
-jne short loc_87490	; 874A8
+jne short POCreateSchedule.6	; 874A8
 mov dword [byte esi+040h], edx	; 874AA
 mov ebx, 7	; 874AD
 mov eax, edx	; 874B2
@@ -1176,11 +1113,11 @@ call FileOpenWrite	; 874D2
 mov edx, eax	; 874D7
 lea eax, [byte esi-02h]	; 874D9
 test edx, edx	; 874DC
-je short loc_874E9	; 874DE
+je short .8	; 874DE
 mov edi, 1	; 874E0
 mov esi, eax	; 874E5
-jmp short loc_87509	; 874E7
-loc_874E9:
+jmp short .9	; 874E7
+.8:
 mov esi, eax	; 874E9
 xor ebx, ebx	; 874EB
 mov edx, eax	; 874ED
@@ -1189,28 +1126,28 @@ call FileWriteAt	; 874F6
 mov edi, eax	; 874FB
 lea eax, [dword esp+080h]	; 874FD
 call FileClose	; 87504
-loc_87509:
+.9:
 push esi	; 87509
 call jctime	; 8750A
 add esp, byte 4	; 8750F
 mov eax, edi	; 87512
-loc_87514:
+.10:
 add esp, 84h	; 87514
-sub_8751A:
+POCreateSchedule_x:
 pop ebp	; 8751A
 pop edi	; 8751B
 pop esi	; 8751C
 pop ecx	; 8751D
 pop ebx	; 8751E
 ret	; 8751F
-sub_87520:
+POSetSeriesTeams:
 push dword 8	; 87520
 call __CHK	; 87525
 push ecx	; 8752A
 mov ecx, dword [nosplit edx*4+teamdivflags]	; 8752B
 or ecx, dword [nosplit ebx*4+teamdivflags]	; 87532
 cmp ecx, byte 3	; 87539
-jne short loc_8755E	; 8753C
+jne short .1	; 8753C
 mov byte [byte eax+026h], dl	; 8753E
 mov byte [byte eax+020h], dl	; 87541
 mov byte [byte eax+01Bh], dl	; 87544
@@ -1221,8 +1158,8 @@ mov byte [byte eax+02h], dl	; 87550
 mov byte [byte eax+027h], bl	; 87553
 mov byte [byte eax+021h], bl	; 87556
 mov byte [byte eax+01Ah], bl	; 87559
-jmp short loc_8757C	; 8755C
-loc_8755E:
+jmp short .2	; 8755C
+.1:
 mov byte [byte eax+026h], dl	; 8755E
 mov byte [byte eax+021h], dl	; 87561
 mov byte [byte eax+01Ah], dl	; 87564
@@ -1233,13 +1170,13 @@ mov byte [byte eax+02h], dl	; 87570
 mov byte [byte eax+027h], bl	; 87573
 mov byte [byte eax+020h], bl	; 87576
 mov byte [byte eax+01Bh], bl	; 87579
-loc_8757C:
+.2:
 mov byte [byte eax+014h], bl	; 8757C
 mov byte [byte eax+0Eh], bl	; 8757F
 mov byte [byte eax+09h], bl	; 87582
 mov byte [byte eax+03h], bl	; 87585
 xor ebx, ebx	; 87588
-loc_8758A:
+.3:
 mov edx, ebx	; 8758A
 shl edx, 2	; 8758C
 sub edx, ebx	; 8758F
@@ -1247,10 +1184,10 @@ mov byte [byte eax+edx*2+04h], 0FFh	; 87591
 mov byte [byte eax+edx*2+05h], 0FFh	; 87596
 inc ebx	; 8759B
 cmp ebx, byte 7	; 8759C
-jl short loc_8758A	; 8759F
+jl short POSetSeriesTeams.3	; 8759F
 pop ecx	; 875A1
 ret	; 875A2
-sub_875A3:
+POInitSchedule:
 push dword 3Ch	; 875A3
 call __CHK	; 875A8
 push ebx	; 875AD
@@ -1262,16 +1199,16 @@ sub esp, byte 24h	; 875B2
 mov ebp, eax	; 875B5
 mov edi, edx	; 875B7
 xor ebx, ebx	; 875B9
-loc_875BB:
+.1:
 mov edx, ebx	; 875BB
 mov eax, dword [edi+edx*4]	; 875BD
 mov dword [byte ebp+edx*4+00h], eax	; 875C0
 inc ebx	; 875C4
 cmp ebx, byte 10h	; 875C5
-jl short loc_875BB	; 875C8
+jl short POInitSchedule.1	; 875C8
 lea ecx, [dword ebp+01998h]	; 875CA
 xor ebx, ebx	; 875D0
-loc_875D2:
+.2:
 mov eax, ebx	; 875D2
 mov esi, ebx	; 875D4
 shl esi, 2	; 875D6
@@ -1287,16 +1224,16 @@ add edx, edx	; 875F3
 add edx, byte 11h	; 875F5
 mov byte [byte esi+01h], dl	; 875F8
 cmp dl, 1Eh	; 875FB
-jbe short loc_87606	; 875FE
+jbe short .3	; 875FE
 inc byte [esi]	; 87600
 sub byte [byte esi+01h], 1Eh	; 87602
-loc_87606:
+.3:
 inc ebx	; 87606
 cmp ebx, byte 1Ch	; 87607
-jl short loc_875D2	; 8760A
+jl short POInitSchedule.2	; 8760A
 lea ecx, [dword ebp+01A40h]	; 8760C
 xor ebx, ebx	; 87612
-loc_87614:
+.4:
 mov esi, ebx	; 87614
 shl esi, 2	; 87616
 sub esi, ebx	; 87619
@@ -1312,82 +1249,82 @@ add edx, edx	; 87635
 add edx, byte 10h	; 87637
 mov byte [byte esi+01h], dl	; 8763A
 cmp dl, 1Eh	; 8763D
-jbe short loc_87648	; 87640
+jbe short .5	; 87640
 inc byte [esi]	; 87642
 sub byte [byte esi+01h], 1Eh	; 87644
-loc_87648:
+.5:
 inc ebx	; 87648
 cmp ebx, byte 1Ch	; 87649
-jl short loc_87614	; 8764C
+jl short POInitSchedule.4	; 8764C
 xor ebx, ebx	; 8764E
 xor eax, eax	; 87650
-jmp short loc_8766C	; 87652
-loc_87654:
+jmp short .8	; 87652
+.6:
 mov ecx, ebx	; 87654
 shl ecx, 2	; 87656
 add ecx, edi	; 87659
 mov esi, dword [ecx]	; 8765B
-cmp dword [nosplit esi*4+dword_C5581], byte 3	; 8765D
-jne short loc_8766B	; 87665
+cmp dword [nosplit esi*4+teamconf], byte 3	; 8765D
+jne short .7	; 87665
 mov dword [esp+eax*4], esi	; 87667
 inc eax	; 8766A
-loc_8766B:
+.7:
 inc ebx	; 8766B
-loc_8766C:
+.8:
 cmp ebx, byte 10h	; 8766C
-jl short loc_87654	; 8766F
+jl short POInitSchedule.6	; 8766F
 lea eax, [dword ebp+01998h]	; 87671
 mov ebx, dword [byte esp+01Ch]	; 87677
 mov edx, dword [esp]	; 8767B
-call sub_87520	; 8767E
+call POSetSeriesTeams	; 8767E
 lea eax, [dword ebp+019C2h]	; 87683
 mov ebx, dword [byte esp+018h]	; 87689
 mov edx, dword [byte esp+04h]	; 8768D
-call sub_87520	; 87691
+call POSetSeriesTeams	; 87691
 lea eax, [dword ebp+019ECh]	; 87696
 mov ebx, dword [byte esp+014h]	; 8769C
 mov edx, dword [byte esp+08h]	; 876A0
-call sub_87520	; 876A4
+call POSetSeriesTeams	; 876A4
 lea eax, [dword ebp+01A16h]	; 876A9
 mov ebx, dword [byte esp+010h]	; 876AF
 mov edx, dword [byte esp+0Ch]	; 876B3
-call sub_87520	; 876B7
+call POSetSeriesTeams	; 876B7
 xor ebx, ebx	; 876BC
 xor eax, eax	; 876BE
-jmp short loc_876DA	; 876C0
-loc_876C2:
+jmp short .11	; 876C0
+.9:
 mov ecx, ebx	; 876C2
 shl ecx, 2	; 876C4
 add ecx, edi	; 876C7
 mov esi, dword [ecx]	; 876C9
-cmp dword [nosplit esi*4+dword_C5581], byte 0Ch	; 876CB
-jne short loc_876D9	; 876D3
+cmp dword [nosplit esi*4+teamconf], byte 0Ch	; 876CB
+jne short .10	; 876D3
 mov dword [esp+eax*4], esi	; 876D5
 inc eax	; 876D8
-loc_876D9:
+.10:
 inc ebx	; 876D9
-loc_876DA:
+.11:
 cmp ebx, byte 10h	; 876DA
-jl short loc_876C2	; 876DD
+jl short POInitSchedule.9	; 876DD
 lea eax, [dword ebp+01A40h]	; 876DF
 mov ebx, dword [byte esp+01Ch]	; 876E5
 mov edx, dword [esp]	; 876E9
-call sub_87520	; 876EC
+call POSetSeriesTeams	; 876EC
 lea eax, [dword ebp+01A6Ah]	; 876F1
 mov ebx, dword [byte esp+018h]	; 876F7
 mov edx, dword [byte esp+04h]	; 876FB
-call sub_87520	; 876FF
+call POSetSeriesTeams	; 876FF
 lea eax, [dword ebp+01A94h]	; 87704
 mov ebx, dword [byte esp+014h]	; 8770A
 mov edx, dword [byte esp+08h]	; 8770E
-call sub_87520	; 87712
+call POSetSeriesTeams	; 87712
 lea eax, [dword ebp+01ABEh]	; 87717
 mov ebx, dword [byte esp+010h]	; 8771D
 mov edx, dword [byte esp+0Ch]	; 87721
-call sub_87520	; 87725
+call POSetSeriesTeams	; 87725
 lea ecx, [dword ebp+01AE8h]	; 8772A
 xor ebx, ebx	; 87730
-loc_87732:
+.12:
 mov byte [byte ecx+01h], 0	; 87732
 mov al, byte [byte ecx+01h]	; 87736
 mov byte [ecx], al	; 87739
@@ -1400,9 +1337,9 @@ mov byte [byte ecx+04h], al	; 8774C
 inc ebx	; 8774F
 add ecx, byte 6	; 87750
 cmp ebx, byte 31h	; 87753
-jl short loc_87732	; 87756
+jl short POInitSchedule.12	; 87756
 add esp, byte 24h	; 87758
-jmp near sub_8751A	; 8775B
+jmp near POCreateSchedule_x	; 8775B
 SeriesWinner:
 push dword 24h	; 87760
 call __CHK	; 87765
@@ -1423,50 +1360,50 @@ mov dl, byte [byte eax+03h]	; 87782
 mov dword [byte esp+04h], edx	; 87785
 xor edx, edx	; 87789
 xor ebx, ebx	; 8778B
-jmp short loc_877CB	; 8778D
-loc_8778F:
+jmp short .7	; 8778D
+.1:
 cmp byte [byte eax+04h], 0FFh	; 8778F
-jne short loc_8779C	; 87793
+jne short .2	; 87793
 mov eax, 0FFFFFFFFh	; 87795
-jmp short loc_877E1	; 8779A
-loc_8779C:
+jmp short .10	; 8779A
+.2:
 movzx esi, byte [byte eax+02h]	; 8779C
 mov dword [esp], esi	; 877A0
 lea edi, [byte ebx+01h]	; 877A3
 lea esi, [byte edx+01h]	; 877A6
 mov ecx, dword [esp]	; 877A9
 cmp ecx, dword [byte esp+08h]	; 877AC
-jne short loc_877BE	; 877B0
+jne short .4	; 877B0
 mov cl, byte [byte eax+04h]	; 877B2
 cmp cl, byte [byte eax+05h]	; 877B5
-ja short loc_877C6	; 877B8
-loc_877BA:
+ja short .5	; 877B8
+.3:
 mov edx, esi	; 877BA
-jmp short loc_877C8	; 877BC
-loc_877BE:
+jmp short .6	; 877BC
+.4:
 mov cl, byte [byte eax+04h]	; 877BE
 cmp cl, byte [byte eax+05h]	; 877C1
-ja short loc_877BA	; 877C4
-loc_877C6:
+ja short SeriesWinner.3	; 877C4
+.5:
 mov ebx, edi	; 877C6
-loc_877C8:
+.6:
 add eax, byte 6	; 877C8
-loc_877CB:
+.7:
 cmp ebx, ebp	; 877CB
-jae short loc_877D3	; 877CD
+jae short .8	; 877CD
 cmp edx, ebp	; 877CF
-jb short loc_8778F	; 877D1
-loc_877D3:
+jb short SeriesWinner.1	; 877D1
+.8:
 cmp ebx, edx	; 877D3
-jle short loc_877DD	; 877D5
+jle short .9	; 877D5
 mov eax, dword [byte esp+08h]	; 877D7
-jmp short loc_877E1	; 877DB
-loc_877DD:
+jmp short .10	; 877DB
+.9:
 mov eax, dword [byte esp+04h]	; 877DD
-loc_877E1:
+.10:
 add esp, byte 0Ch	; 877E1
-jmp near sub_8751A	; 877E4
-sub_877E9:
+jmp near POCreateSchedule_x	; 877E4
+POSeriesScore:
 push dword 10h	; 877E9
 call __CHK	; 877EE
 push esi	; 877F3
@@ -1483,49 +1420,49 @@ mov dword [edi], ecx	; 87808
 mov dword [ebx], 0	; 8780A
 mov ecx, dword [ebx]	; 87810
 mov dword [edx], ecx	; 87812
-jmp short loc_8784D	; 87814
-loc_87816:
+jmp short .6	; 87814
+.1:
 cmp byte [byte eax+04h], 0FFh	; 87816
-jne short loc_87823	; 8781A
+jne short .2	; 8781A
 mov ecx, 0FFFFFFFFh	; 8781C
-jmp short loc_8785B	; 87821
-loc_87823:
+jmp short .8	; 87821
+.2:
 xor ecx, ecx	; 87823
 mov cl, byte [byte eax+02h]	; 87825
 cmp ecx, dword [esi]	; 87828
-jne short loc_8783B	; 8782A
+jne short .3	; 8782A
 mov cl, byte [byte eax+04h]	; 8782C
 cmp cl, byte [byte eax+05h]	; 8782F
-ja short loc_87848	; 87832
+ja short .4	; 87832
 lea ebp, [byte edi+01h]	; 87834
 mov dword [ebx], ebp	; 87837
-jmp short loc_8784A	; 87839
-loc_8783B:
+jmp short .5	; 87839
+.3:
 mov cl, byte [byte eax+04h]	; 8783B
 cmp cl, byte [byte eax+05h]	; 8783E
-jbe short loc_87848	; 87841
+jbe short .4	; 87841
 inc edi	; 87843
 mov dword [ebx], edi	; 87844
-jmp short loc_8784A	; 87846
-loc_87848:
+jmp short .5	; 87846
+.4:
 inc dword [edx]	; 87848
-loc_8784A:
+.5:
 add eax, byte 6	; 8784A
-loc_8784D:
+.6:
 cmp dword [edx], byte 4	; 8784D
-jge short loc_87859	; 87850
+jge short .7	; 87850
 mov edi, dword [ebx]	; 87852
 cmp edi, byte 4	; 87854
-jl short loc_87816	; 87857
-loc_87859:
+jl short POSeriesScore.1	; 87857
+.7:
 xor ecx, ecx	; 87859
-loc_8785B:
+.8:
 mov eax, ecx	; 8785B
 pop ebp	; 8785D
 pop edi	; 8785E
 pop esi	; 8785F
 ret 4	; 87860
-sub_87863:
+POSeedRound2:
 push dword 4Ch	; 87863
 call __CHK	; 87868
 push ebx	; 8786D
@@ -1538,33 +1475,33 @@ sub esp, byte 30h	; 87873
 mov esi, eax	; 87876
 lea ecx, [dword eax+019BCh]	; 87878
 xor ebx, ebx	; 8787E
-loc_87880:
+.1:
 mov ah, byte [byte ecx+04h]	; 87880
 cmp ah, 0FFh	; 87883
-jne short loc_878CB	; 87886
+jne short .2	; 87886
 mov dl, byte [byte ecx+02Eh]	; 87888
 cmp dl, ah	; 8788B
-jne short loc_878CB	; 8788D
+jne short .2	; 8788D
 mov dh, byte [byte ecx+058h]	; 8788F
 cmp dh, ah	; 87892
-jne short loc_878CB	; 87894
+jne short .2	; 87894
 mov al, byte [dword ecx+082h]	; 87896
 cmp al, ah	; 8789C
-jne short loc_878CB	; 8789E
+jne short .2	; 8789E
 mov ah, byte [dword ecx+0ACh]	; 878A0
 cmp ah, dl	; 878A6
-jne short loc_878CB	; 878A8
+jne short .2	; 878A8
 cmp dh, byte [dword ecx+0D6h]	; 878AA
-jne short loc_878CB	; 878B0
+jne short .2	; 878B0
 cmp al, byte [dword ecx+0100h]	; 878B2
-jne short loc_878CB	; 878B8
+jne short .2	; 878B8
 cmp ah, byte [dword ecx+012Ah]	; 878BA
-jne short loc_878CB	; 878C0
+jne short .2	; 878C0
 inc ebx	; 878C2
 sub ecx, byte 6	; 878C3
 cmp ebx, byte 6	; 878C6
-jl short loc_87880	; 878C9
-loc_878CB:
+jl short POSeedRound2.1	; 878C9
+.2:
 xor eax, eax	; 878CB
 mov al, byte [ecx]	; 878CD
 mov dword [byte esp+020h], eax	; 878CF
@@ -1574,7 +1511,7 @@ add eax, byte 3	; 878D8
 mov dword [byte esp+024h], eax	; 878DB
 lea ecx, [dword esi+01AE8h]	; 878DF
 xor ebx, ebx	; 878E5
-loc_878E7:
+.3:
 mov al, byte [byte esp+020h]	; 878E7
 mov byte [ecx], al	; 878EB
 mov edi, 7	; 878ED
@@ -1586,19 +1523,19 @@ add edx, edx	; 878FB
 add edx, dword [byte esp+024h]	; 878FD
 mov byte [byte ecx+01h], dl	; 87901
 cmp dl, 1Eh	; 87904
-jbe short loc_8790F	; 87907
+jbe short .4	; 87907
 inc byte [ecx]	; 87909
 sub byte [byte ecx+01h], 1Eh	; 8790B
-loc_8790F:
+.4:
 inc ebx	; 8790F
 add ecx, byte 6	; 87910
 cmp ebx, byte 0Eh	; 87913
-jl short loc_878E7	; 87916
+jl short POSeedRound2.3	; 87916
 dec dword [byte esp+024h]	; 87918
 lea ecx, [dword esi+01B3Ch]	; 8791C
 xor ebx, ebx	; 87922
 mov edi, 7	; 87924
-loc_87929:
+.5:
 mov al, byte [byte esp+020h]	; 87929
 mov byte [ecx], al	; 8792D
 mov eax, ebx	; 8792F
@@ -1609,14 +1546,14 @@ add edx, edx	; 87938
 add edx, dword [byte esp+024h]	; 8793A
 mov byte [byte ecx+01h], dl	; 8793E
 cmp dl, 1Eh	; 87941
-jbe short loc_8794C	; 87944
+jbe short .6	; 87944
 inc byte [ecx]	; 87946
 sub byte [byte ecx+01h], 1Eh	; 87948
-loc_8794C:
+.6:
 inc ebx	; 8794C
 add ecx, byte 6	; 8794D
 cmp ebx, byte 0Eh	; 87950
-jl short loc_87929	; 87953
+jl short POSeedRound2.5	; 87953
 mov ecx, 8	; 87955
 mov edx, 0FFFFFFFFh	; 8795A
 mov eax, esp	; 8795F
@@ -1629,12 +1566,12 @@ mov dword [byte esp+020h], eax	; 87976
 xor edx, edx	; 8797A
 mov dl, byte [byte ecx+02h]	; 8797C
 cmp eax, edx	; 8797F
-jne short loc_87988	; 87981
+jne short .7	; 87981
 mov dword [esp], edx	; 87983
-jmp short loc_8798C	; 87986
-loc_87988:
+jmp short .8	; 87986
+.7:
 mov dword [byte esp+01Ch], eax	; 87988
-loc_8798C:
+.8:
 mov edx, dword [byte esi+054h]	; 8798C
 add ecx, byte 2Ah	; 8798F
 mov eax, ecx	; 87992
@@ -1643,12 +1580,12 @@ mov dword [byte esp+024h], eax	; 87999
 xor edx, edx	; 8799D
 mov dl, byte [byte ecx+02h]	; 8799F
 cmp eax, edx	; 879A2
-jne short loc_879AC	; 879A4
+jne short .9	; 879A4
 mov dword [byte esp+04h], edx	; 879A6
-jmp short loc_879B0	; 879AA
-loc_879AC:
+jmp short .10	; 879AA
+.9:
 mov dword [byte esp+018h], eax	; 879AC
-loc_879B0:
+.10:
 mov edx, dword [byte esi+058h]	; 879B0
 add ecx, byte 2Ah	; 879B3
 mov eax, ecx	; 879B6
@@ -1657,12 +1594,12 @@ mov dword [byte esp+028h], eax	; 879BD
 xor edx, edx	; 879C1
 mov dl, byte [byte ecx+02h]	; 879C3
 cmp eax, edx	; 879C6
-jne short loc_879D0	; 879C8
+jne short .11	; 879C8
 mov dword [byte esp+08h], edx	; 879CA
-jmp short loc_879D4	; 879CE
-loc_879D0:
+jmp short .12	; 879CE
+.11:
 mov dword [byte esp+014h], eax	; 879D0
-loc_879D4:
+.12:
 mov edx, dword [byte esi+05Ch]	; 879D4
 add ecx, byte 2Ah	; 879D7
 mov eax, ecx	; 879DA
@@ -1671,39 +1608,39 @@ mov dword [byte esp+02Ch], eax	; 879E1
 xor edx, edx	; 879E5
 mov dl, byte [byte ecx+02h]	; 879E7
 cmp eax, edx	; 879EA
-jne short loc_879F4	; 879EC
+jne short .13	; 879EC
 mov dword [byte esp+0Ch], edx	; 879EE
-jmp short loc_879F8	; 879F2
-loc_879F4:
+jmp short .14	; 879F2
+.13:
 mov dword [byte esp+010h], eax	; 879F4
-loc_879F8:
+.14:
 xor ebx, ebx	; 879F8
 xor edx, edx	; 879FA
-jmp short loc_87A15	; 879FC
-loc_879FE:
+jmp short .17	; 879FC
+.15:
 mov eax, ebx	; 879FE
 shl eax, 2	; 87A00
 mov ecx, dword [esp+eax]	; 87A03
 test ecx, ecx	; 87A06
-jl short loc_87A14	; 87A08
+jl short .16	; 87A08
 cmp ecx, byte 1Ah	; 87A0A
-jge short loc_87A14	; 87A0D
+jge short .16	; 87A0D
 mov dword [byte esp+edx*4+020h], ecx	; 87A0F
 inc edx	; 87A13
-loc_87A14:
+.16:
 inc ebx	; 87A14
-loc_87A15:
+.17:
 cmp ebx, byte 8	; 87A15
-jl short loc_879FE	; 87A18
+jl short POSeedRound2.15	; 87A18
 lea ecx, [dword esi+01AE8h]	; 87A1A
 mov ebx, dword [byte esp+02Ch]	; 87A20
 mov edx, dword [byte esp+020h]	; 87A24
 mov eax, ecx	; 87A28
-call sub_87520	; 87A2A
+call POSetSeriesTeams	; 87A2A
 lea eax, [byte ecx+02Ah]	; 87A2F
 mov ebx, dword [byte esp+028h]	; 87A32
 mov edx, dword [byte esp+024h]	; 87A36
-call sub_87520	; 87A3A
+call POSetSeriesTeams	; 87A3A
 mov ecx, 8	; 87A3F
 mov edx, 0FFFFFFFFh	; 87A44
 mov eax, esp	; 87A49
@@ -1716,12 +1653,12 @@ mov dword [byte esp+020h], eax	; 87A60
 xor edx, edx	; 87A64
 mov dl, byte [byte ecx+02h]	; 87A66
 cmp eax, edx	; 87A69
-jne short loc_87A72	; 87A6B
+jne short .18	; 87A6B
 mov dword [esp], edx	; 87A6D
-jmp short loc_87A76	; 87A70
-loc_87A72:
+jmp short .19	; 87A70
+.18:
 mov dword [byte esp+01Ch], eax	; 87A72
-loc_87A76:
+.19:
 mov edx, dword [byte esi+064h]	; 87A76
 add ecx, byte 2Ah	; 87A79
 mov eax, ecx	; 87A7C
@@ -1730,12 +1667,12 @@ mov dword [byte esp+024h], eax	; 87A83
 xor edx, edx	; 87A87
 mov dl, byte [byte ecx+02h]	; 87A89
 cmp eax, edx	; 87A8C
-jne short loc_87A96	; 87A8E
+jne short .20	; 87A8E
 mov dword [byte esp+04h], edx	; 87A90
-jmp short loc_87A9A	; 87A94
-loc_87A96:
+jmp short .21	; 87A94
+.20:
 mov dword [byte esp+018h], eax	; 87A96
-loc_87A9A:
+.21:
 mov edx, dword [byte esi+068h]	; 87A9A
 add ecx, byte 2Ah	; 87A9D
 mov eax, ecx	; 87AA0
@@ -1744,12 +1681,12 @@ mov dword [byte esp+028h], eax	; 87AA7
 xor edx, edx	; 87AAB
 mov dl, byte [byte ecx+02h]	; 87AAD
 cmp eax, edx	; 87AB0
-jne short loc_87ABA	; 87AB2
+jne short .22	; 87AB2
 mov dword [byte esp+08h], edx	; 87AB4
-jmp short loc_87ABE	; 87AB8
-loc_87ABA:
+jmp short .23	; 87AB8
+.22:
 mov dword [byte esp+014h], eax	; 87ABA
-loc_87ABE:
+.23:
 mov edx, dword [byte esi+06Ch]	; 87ABE
 add ecx, byte 2Ah	; 87AC1
 mov eax, ecx	; 87AC4
@@ -1758,42 +1695,42 @@ mov dword [byte esp+02Ch], eax	; 87ACB
 xor edx, edx	; 87ACF
 mov dl, byte [byte ecx+02h]	; 87AD1
 cmp eax, edx	; 87AD4
-jne short loc_87ADE	; 87AD6
+jne short .24	; 87AD6
 mov dword [byte esp+0Ch], edx	; 87AD8
-jmp short loc_87AE2	; 87ADC
-loc_87ADE:
+jmp short .25	; 87ADC
+.24:
 mov dword [byte esp+010h], eax	; 87ADE
-loc_87AE2:
+.25:
 xor ebx, ebx	; 87AE2
 xor edx, edx	; 87AE4
-jmp short loc_87AFF	; 87AE6
-loc_87AE8:
+jmp short .28	; 87AE6
+.26:
 mov eax, ebx	; 87AE8
 shl eax, 2	; 87AEA
 mov ebp, dword [esp+eax]	; 87AED
 test ebp, ebp	; 87AF0
-jl short loc_87AFE	; 87AF2
+jl short .27	; 87AF2
 cmp ebp, byte 1Ah	; 87AF4
-jge short loc_87AFE	; 87AF7
+jge short .27	; 87AF7
 mov dword [byte esp+edx*4+020h], ebp	; 87AF9
 inc edx	; 87AFD
-loc_87AFE:
+.27:
 inc ebx	; 87AFE
-loc_87AFF:
+.28:
 cmp ebx, byte 8	; 87AFF
-jl short loc_87AE8	; 87B02
+jl short POSeedRound2.26	; 87B02
 lea ecx, [dword esi+01B3Ch]	; 87B04
 mov ebx, dword [byte esp+02Ch]	; 87B0A
 mov edx, dword [byte esp+020h]	; 87B0E
 mov eax, ecx	; 87B12
-call sub_87520	; 87B14
+call POSetSeriesTeams	; 87B14
 lea eax, [byte ecx+02Ah]	; 87B19
 mov ebx, dword [byte esp+028h]	; 87B1C
 mov edx, dword [byte esp+024h]	; 87B20
-call sub_87520	; 87B24
-loc_87B29:
+call POSetSeriesTeams	; 87B24
+POSeedRound2_x30:
 add esp, byte 30h	; 87B29
-loc_87B2C:
+POSeedRound2_x:
 pop ebp	; 87B2C
 pop edi	; 87B2D
 pop esi	; 87B2E
@@ -1801,7 +1738,7 @@ pop edx	; 87B2F
 pop ecx	; 87B30
 pop ebx	; 87B31
 ret	; 87B32
-sub_87B33:
+POSeedConfFinals:
 push dword 20h	; 87B33
 call __CHK	; 87B38
 push ebx	; 87B3D
@@ -1814,21 +1751,21 @@ sub esp, byte 4	; 87B43
 mov ebp, eax	; 87B46
 lea ecx, [dword eax+01B0Ch]	; 87B48
 xor ebx, ebx	; 87B4E
-loc_87B50:
+.1:
 mov ah, byte [byte ecx+04h]	; 87B50
 cmp ah, 0FFh	; 87B53
-jne short loc_87B73	; 87B56
+jne short .2	; 87B56
 cmp ah, byte [byte ecx+02Eh]	; 87B58
-jne short loc_87B73	; 87B5B
+jne short .2	; 87B5B
 cmp ah, byte [byte ecx+058h]	; 87B5D
-jne short loc_87B73	; 87B60
+jne short .2	; 87B60
 cmp ah, byte [dword ecx+082h]	; 87B62
-jne short loc_87B73	; 87B68
+jne short .2	; 87B68
 inc ebx	; 87B6A
 sub ecx, byte 6	; 87B6B
 cmp ebx, byte 3	; 87B6E
-jl short loc_87B50	; 87B71
-loc_87B73:
+jl short POSeedConfFinals.1	; 87B71
+.2:
 xor eax, eax	; 87B73
 mov al, byte [ecx]	; 87B75
 mov dword [esp], eax	; 87B77
@@ -1837,7 +1774,7 @@ add esi, byte 3	; 87B7E
 lea ecx, [dword ebp+01B90h]	; 87B81
 xor ebx, ebx	; 87B87
 mov edi, 7	; 87B89
-loc_87B8E:
+.3:
 mov al, byte [esp]	; 87B8E
 mov byte [ecx], al	; 87B91
 mov eax, ebx	; 87B93
@@ -1848,19 +1785,19 @@ lea eax, [edx+edx]	; 87B9C
 add eax, esi	; 87B9F
 mov byte [byte ecx+01h], al	; 87BA1
 cmp al, 1Fh	; 87BA4
-jbe short loc_87BAE	; 87BA6
+jbe short .4	; 87BA6
 inc byte [ecx]	; 87BA8
 sub byte [byte ecx+01h], 1Fh	; 87BAA
-loc_87BAE:
+.4:
 inc ebx	; 87BAE
 add ecx, byte 6	; 87BAF
 cmp ebx, byte 7	; 87BB2
-jl short loc_87B8E	; 87BB5
+jl short POSeedConfFinals.3	; 87BB5
 dec esi	; 87BB7
 lea ecx, [dword ebp+01BBAh]	; 87BB8
 xor ebx, ebx	; 87BBE
 mov edi, 7	; 87BC0
-loc_87BC5:
+.5:
 mov al, byte [esp]	; 87BC5
 mov byte [ecx], al	; 87BC8
 mov eax, ebx	; 87BCA
@@ -1871,14 +1808,14 @@ lea eax, [edx+edx]	; 87BD3
 add eax, esi	; 87BD6
 mov byte [byte ecx+01h], al	; 87BD8
 cmp al, 1Fh	; 87BDB
-jbe short loc_87BE5	; 87BDD
+jbe short .6	; 87BDD
 inc byte [ecx]	; 87BDF
 sub byte [byte ecx+01h], 1Fh	; 87BE1
-loc_87BE5:
+.6:
 inc ebx	; 87BE5
 add ecx, byte 6	; 87BE6
 cmp ebx, byte 7	; 87BE9
-jl short loc_87BC5	; 87BEC
+jl short POSeedConfFinals.5	; 87BEC
 lea ecx, [dword ebp+01AE8h]	; 87BEE
 mov edx, dword [byte ebp+070h]	; 87BF4
 mov eax, ecx	; 87BF7
@@ -1890,30 +1827,30 @@ call SeriesWinner	; 87C07
 mov esi, eax	; 87C0C
 mov eax, ebp	; 87C0E
 mov ebx, dword [esp]	; 87C10
-jmp short loc_87C18	; 87C13
-loc_87C15:
+jmp short .8	; 87C13
+.7:
 add eax, byte 4	; 87C15
-loc_87C18:
+.8:
 mov edx, dword [eax]	; 87C18
 cmp edx, ebx	; 87C1A
-je short loc_87C22	; 87C1C
+je short .9	; 87C1C
 cmp esi, edx	; 87C1E
-jne short loc_87C15	; 87C20
-loc_87C22:
+jne short POSeedConfFinals.7	; 87C20
+.9:
 lea ecx, [dword ebp+01B90h]	; 87C22
 mov eax, dword [eax]	; 87C28
 mov edi, dword [esp]	; 87C2A
 cmp eax, edi	; 87C2D
-jne short loc_87C37	; 87C2F
+jne short .10	; 87C2F
 mov ebx, esi	; 87C31
 mov edx, edi	; 87C33
-jmp short loc_87C3B	; 87C35
-loc_87C37:
+jmp short .11	; 87C35
+.10:
 mov ebx, edi	; 87C37
 mov edx, esi	; 87C39
-loc_87C3B:
+.11:
 mov eax, ecx	; 87C3B
-call sub_87520	; 87C3D
+call POSetSeriesTeams	; 87C3D
 lea ecx, [dword ebp+01B3Ch]	; 87C42
 mov edx, dword [byte ebp+078h]	; 87C48
 mov eax, ecx	; 87C4B
@@ -1925,35 +1862,35 @@ call SeriesWinner	; 87C5B
 mov esi, eax	; 87C60
 mov eax, ebp	; 87C62
 mov ebx, dword [esp]	; 87C64
-jmp short loc_87C6C	; 87C67
-loc_87C69:
+jmp short .13	; 87C67
+.12:
 add eax, byte 4	; 87C69
-loc_87C6C:
+.13:
 mov edx, dword [eax]	; 87C6C
 cmp edx, ebx	; 87C6E
-je short loc_87C76	; 87C70
+je short .14	; 87C70
 cmp esi, edx	; 87C72
-jne short loc_87C69	; 87C74
-loc_87C76:
+jne short POSeedConfFinals.12	; 87C74
+.14:
 lea ecx, [dword ebp+01BBAh]	; 87C76
-loc_87C7C:
+POSeedConfFinals_pair:
 mov eax, dword [eax]	; 87C7C
 mov edi, dword [esp]	; 87C7E
 cmp eax, edi	; 87C81
-jne short loc_87C98	; 87C83
+jne short POSeedConfFinals_x.18	; 87C83
 mov ebx, esi	; 87C85
 mov edx, edi	; 87C87
-loc_87C89:
+.16:
 mov eax, ecx	; 87C89
-call sub_87520	; 87C8B
-loc_87C90:
+call POSetSeriesTeams	; 87C8B
+POSeedConfFinals_x:
 add esp, byte 4	; 87C90
-jmp near loc_87B2C	; 87C93
-loc_87C98:
+jmp near POSeedRound2_x	; 87C93
+.18:
 mov ebx, edi	; 87C98
 mov edx, esi	; 87C9A
-jmp short loc_87C89	; 87C9C
-sub_87C9E:
+jmp short POSeedConfFinals_pair.16	; 87C9C
+POSeedFinal:
 push dword 20h	; 87C9E
 call __CHK	; 87CA3
 push ebx	; 87CA8
@@ -1966,17 +1903,17 @@ sub esp, byte 4	; 87CAE
 mov ebp, eax	; 87CB1
 lea ecx, [dword eax+01BB4h]	; 87CB3
 xor ebx, ebx	; 87CB9
-loc_87CBB:
+.1:
 mov ah, byte [byte ecx+04h]	; 87CBB
 cmp ah, 0FFh	; 87CBE
-jne short loc_87CD1	; 87CC1
+jne short .2	; 87CC1
 cmp ah, byte [byte ecx+02Eh]	; 87CC3
-jne short loc_87CD1	; 87CC6
+jne short .2	; 87CC6
 inc ebx	; 87CC8
 sub ecx, byte 6	; 87CC9
 cmp ebx, byte 3	; 87CCC
-jl short loc_87CBB	; 87CCF
-loc_87CD1:
+jl short POSeedFinal.1	; 87CCF
+.2:
 xor eax, eax	; 87CD1
 mov al, byte [ecx]	; 87CD3
 mov dword [esp], eax	; 87CD5
@@ -1985,7 +1922,7 @@ add esi, byte 3	; 87CDC
 lea ecx, [dword ebp+01BE4h]	; 87CDF
 xor ebx, ebx	; 87CE5
 mov edi, 7	; 87CE7
-loc_87CEC:
+.3:
 mov al, byte [esp]	; 87CEC
 mov byte [ecx], al	; 87CEF
 mov eax, ebx	; 87CF1
@@ -1996,14 +1933,14 @@ add edx, edx	; 87CFA
 add edx, esi	; 87CFC
 mov byte [byte ecx+01h], dl	; 87CFE
 cmp dl, 1Fh	; 87D01
-jbe short loc_87D0C	; 87D04
+jbe short .4	; 87D04
 inc byte [ecx]	; 87D06
 sub byte [byte ecx+01h], 1Fh	; 87D08
-loc_87D0C:
+.4:
 inc ebx	; 87D0C
 add ecx, byte 6	; 87D0D
 cmp ebx, byte 7	; 87D10
-jl short loc_87CEC	; 87D13
+jl short POSeedFinal.3	; 87D13
 lea ecx, [dword ebp+01B90h]	; 87D15
 mov edx, dword [dword ebp+080h]	; 87D1B
 mov eax, ecx	; 87D21
@@ -2015,19 +1952,19 @@ call SeriesWinner	; 87D34
 mov esi, eax	; 87D39
 mov eax, ebp	; 87D3B
 mov ebx, dword [esp]	; 87D3D
-jmp short loc_87D45	; 87D40
-loc_87D42:
+jmp short .6	; 87D40
+.5:
 add eax, byte 4	; 87D42
-loc_87D45:
+.6:
 mov edx, dword [eax]	; 87D45
 cmp edx, ebx	; 87D47
-je short loc_87D4F	; 87D49
+je short .7	; 87D49
 cmp esi, edx	; 87D4B
-jne short loc_87D42	; 87D4D
-loc_87D4F:
+jne short POSeedFinal.5	; 87D4D
+.7:
 lea ecx, [dword ebp+01BE4h]	; 87D4F
-jmp near loc_87C7C	; 87D55
-sub_87D5A:
+jmp near POSeedConfFinals_pair	; 87D55
+POSimSeriesTeamWins:
 push dword 70h	; 87D5A
 call __CHK	; 87D5F
 push ebx	; 87D64
@@ -2047,11 +1984,11 @@ lea edx, [byte esp+044h]	; 87D89
 mov eax, esp	; 87D8D
 call FileOpenRW	; 87D8F
 test eax, eax	; 87D94
-je short loc_87DA5	; 87D96
-push unk_C3A37	; 87D98
-call sub_B2CD8	; 87D9D
+je short .1	; 87D96
+push str_E1	; 87D98
+call FatalError	; 87D9D
 add esp, byte 4	; 87DA2
-loc_87DA5:
+.1:
 mov ebx, dword [leaguedbnames+0Ch]	; 87DA5
 mov ecx, str_extDB	; 87DAB
 mov edx, curleague	; 87DB0
@@ -2061,41 +1998,41 @@ lea edx, [byte esp+040h]	; 87DBC
 mov eax, esp	; 87DC0
 call FileOpenRead	; 87DC2
 test eax, eax	; 87DC7
-je short loc_87DD8	; 87DC9
-push unk_C3A3A	; 87DCB
-call sub_B2CD8	; 87DD0
+je short .2	; 87DC9
+push str_E2	; 87DCB
+call FatalError	; 87DD0
 add esp, byte 4	; 87DD5
-loc_87DD8:
+.2:
 xor ebp, ebp	; 87DD8
 xor edi, edi	; 87DDA
-jmp near loc_87E58	; 87DDC
-loc_87DE1:
+jmp near .11	; 87DDC
+.3:
 cmp ebp, edi	; 87DE1
-jge short loc_87DF3	; 87DE3
+jge short .4	; 87DE3
 push byte 2	; 87DE5
 mov ebx, dword [byte esp+044h]	; 87DE7
 push ebx	; 87DEB
 mov ecx, dword [byte esp+04Ch]	; 87DEC
 push ecx	; 87DF0
-jmp short loc_87E18	; 87DF1
-loc_87DF3:
+jmp short .6	; 87DF1
+.4:
 xor eax, eax	; 87DF3
 mov al, byte [byte esi+02h]	; 87DF5
 cmp eax, dword [byte esp+048h]	; 87DF8
-jne short loc_87E0C	; 87DFC
+jne short .5	; 87DFC
 push byte 0	; 87DFE
 mov eax, dword [byte esp+044h]	; 87E00
 push eax	; 87E04
 mov edx, dword [byte esp+04Ch]	; 87E05
 push edx	; 87E09
-jmp short loc_87E18	; 87E0A
-loc_87E0C:
+jmp short .6	; 87E0A
+.5:
 push byte 1	; 87E0C
 mov ebx, dword [byte esp+044h]	; 87E0E
 push ebx	; 87E12
 mov ecx, dword [byte esp+04Ch]	; 87E13
 push ecx	; 87E17
-loc_87E18:
+.6:
 mov ecx, esi	; 87E18
 mov ebx, 44Ch	; 87E1A
 mov edx, str_extDB	; 87E1F
@@ -2106,31 +2043,31 @@ mov bl, byte [byte esi+02h]	; 87E30
 lea eax, [byte edi+01h]	; 87E33
 lea edx, [byte ebp+01h]	; 87E36
 cmp ebx, dword [byte esp+048h]	; 87E39
-jne short loc_87E4B	; 87E3D
+jne short .8	; 87E3D
 mov bl, byte [byte esi+04h]	; 87E3F
 cmp bl, byte [byte esi+05h]	; 87E42
-jbe short loc_87E53	; 87E45
-loc_87E47:
+jbe short .9	; 87E45
+.7:
 mov edi, eax	; 87E47
-jmp short loc_87E55	; 87E49
-loc_87E4B:
+jmp short .10	; 87E49
+.8:
 mov bl, byte [byte esi+05h]	; 87E4B
 cmp bl, byte [byte esi+04h]	; 87E4E
-ja short loc_87E47	; 87E51
-loc_87E53:
+ja short POSimSeriesTeamWins.7	; 87E51
+.9:
 mov ebp, edx	; 87E53
-loc_87E55:
+.10:
 add esi, byte 6	; 87E55
-loc_87E58:
+.11:
 cmp edi, byte 4	; 87E58
-jl short loc_87DE1	; 87E5B
+jl short POSimSeriesTeamWins.3	; 87E5B
 lea eax, [byte esp+044h]	; 87E5D
 call FileClose	; 87E61
 lea eax, [byte esp+040h]	; 87E66
 call FileClose	; 87E6A
 add esp, byte 4Ch	; 87E6F
-jmp near sub_8751A	; 87E72
-sub_87E77:
+jmp near POCreateSchedule_x	; 87E72
+POSimSeries:
 push dword 74h	; 87E77
 call __CHK	; 87E7C
 push ebx	; 87E81
@@ -2157,11 +2094,11 @@ lea edx, [byte esp+044h]	; 87EB8
 mov eax, esp	; 87EBC
 call FileOpenRW	; 87EBE
 test eax, eax	; 87EC3
-je short loc_87ED4	; 87EC5
-push unk_C3A3D	; 87EC7
-call sub_B2CD8	; 87ECC
+je short .1	; 87EC5
+push str_F1	; 87EC7
+call FatalError	; 87ECC
 add esp, byte 4	; 87ED1
-loc_87ED4:
+.1:
 mov ebx, dword [leaguedbnames+0Ch]	; 87ED4
 mov ecx, str_extDB	; 87EDA
 mov edx, curleague	; 87EDF
@@ -2171,17 +2108,17 @@ lea edx, [byte esp+040h]	; 87EEB
 mov eax, esp	; 87EEF
 call FileOpenRead	; 87EF1
 test eax, eax	; 87EF6
-je short loc_87F07	; 87EF8
-push unk_C3A40	; 87EFA
-call sub_B2CD8	; 87EFF
+je short .2	; 87EF8
+push str_F2	; 87EFA
+call FatalError	; 87EFF
 add esp, byte 4	; 87F04
-loc_87F07:
+.2:
 xor edi, edi	; 87F07
 xor ebp, ebp	; 87F09
-jmp short loc_87F5F	; 87F0B
-loc_87F0D:
+jmp short .9	; 87F0B
+.3:
 cmp byte [byte esi+04h], 0FFh	; 87F0D
-jne short loc_87F35	; 87F11
+jne short .4	; 87F11
 push byte 2	; 87F13
 mov ecx, dword [byte esp+044h]	; 87F15
 push ecx	; 87F19
@@ -2192,41 +2129,41 @@ mov ebx, 44Ch	; 87F21
 mov edx, str_extDB	; 87F26
 mov eax, curleague	; 87F2B
 call SimulateGame	; 87F30
-loc_87F35:
+.4:
 xor ebx, ebx	; 87F35
 mov bl, byte [byte esi+02h]	; 87F37
 lea eax, [byte ebp+01h]	; 87F3A
 lea edx, [byte edi+01h]	; 87F3D
 cmp ebx, dword [byte esp+048h]	; 87F40
-jne short loc_87F52	; 87F44
+jne short .6	; 87F44
 mov bl, byte [byte esi+04h]	; 87F46
 cmp bl, byte [byte esi+05h]	; 87F49
-ja short loc_87F5A	; 87F4C
-loc_87F4E:
+ja short .7	; 87F4C
+.5:
 mov edi, edx	; 87F4E
-jmp short loc_87F5C	; 87F50
-loc_87F52:
+jmp short .8	; 87F50
+.6:
 mov bl, byte [byte esi+04h]	; 87F52
 cmp bl, byte [byte esi+05h]	; 87F55
-ja short loc_87F4E	; 87F58
-loc_87F5A:
+ja short POSimSeries.5	; 87F58
+.7:
 mov ebp, eax	; 87F5A
-loc_87F5C:
+.8:
 add esi, byte 6	; 87F5C
-loc_87F5F:
+.9:
 mov edx, dword [byte esp+04Ch]	; 87F5F
 cmp ebp, edx	; 87F63
-jae short loc_87F6B	; 87F65
+jae short .10	; 87F65
 cmp edi, edx	; 87F67
-jb short loc_87F0D	; 87F69
-loc_87F6B:
+jb short POSimSeries.3	; 87F69
+.10:
 lea eax, [byte esp+044h]	; 87F6B
 call FileClose	; 87F6F
 lea eax, [byte esp+040h]	; 87F74
 call FileClose	; 87F78
 add esp, byte 50h	; 87F7D
-jmp near sub_8751A	; 87F80
-sub_87F85:
+jmp near POCreateSchedule_x	; 87F80
+POPreSimRound1:
 push dword 10h	; 87F85
 call __CHK	; 87F8A
 push ecx	; 87F8F
@@ -2236,43 +2173,43 @@ mov esi, edx	; 87F92
 mov ecx, ebx	; 87F94
 lea ebx, [dword eax+01998h]	; 87F96
 xor edi, edi	; 87F9C
-loc_87F9E:
+.1:
 xor edx, edx	; 87F9E
 mov dl, byte [byte ebx+02h]	; 87FA0
 cmp edx, esi	; 87FA3
-je short loc_87FB0	; 87FA5
+je short .2	; 87FA5
 xor eax, eax	; 87FA7
 mov al, byte [byte ebx+03h]	; 87FA9
 cmp eax, esi	; 87FAC
-jne short loc_87FBB	; 87FAE
-loc_87FB0:
+jne short .4	; 87FAE
+.2:
 mov edx, esi	; 87FB0
-loc_87FB2:
+.3:
 mov eax, ebx	; 87FB2
-call sub_87D5A	; 87FB4
-jmp short loc_87FD3	; 87FB9
-loc_87FBB:
+call POSimSeriesTeamWins	; 87FB4
+jmp short .7	; 87FB9
+.4:
 cmp edx, ecx	; 87FBB
-je short loc_87FC3	; 87FBD
+je short .5	; 87FBD
 cmp eax, ecx	; 87FBF
-jne short loc_87FC7	; 87FC1
-loc_87FC3:
+jne short .6	; 87FC1
+.5:
 mov edx, ecx	; 87FC3
-jmp short loc_87FB2	; 87FC5
-loc_87FC7:
+jmp short POPreSimRound1.3	; 87FC5
+.6:
 mov edx, 7	; 87FC7
 mov eax, ebx	; 87FCC
-call sub_87E77	; 87FCE
-loc_87FD3:
+call POSimSeries	; 87FCE
+.7:
 inc edi	; 87FD3
 add ebx, byte 2Ah	; 87FD4
 cmp edi, byte 8	; 87FD7
-jl short loc_87F9E	; 87FDA
+jl short POPreSimRound1.1	; 87FDA
 pop edi	; 87FDC
 pop esi	; 87FDD
 pop ecx	; 87FDE
 ret	; 87FDF
-sub_87FE0:
+POPreSimRound2:
 push dword 10h	; 87FE0
 call __CHK	; 87FE5
 push ecx	; 87FEA
@@ -2282,43 +2219,43 @@ mov esi, edx	; 87FED
 mov ecx, ebx	; 87FEF
 lea ebx, [dword eax+01AE8h]	; 87FF1
 xor edi, edi	; 87FF7
-loc_87FF9:
+.1:
 xor edx, edx	; 87FF9
 mov dl, byte [byte ebx+02h]	; 87FFB
 cmp edx, esi	; 87FFE
-je short loc_8800B	; 88000
+je short .2	; 88000
 xor eax, eax	; 88002
 mov al, byte [byte ebx+03h]	; 88004
 cmp eax, esi	; 88007
-jne short loc_88016	; 88009
-loc_8800B:
+jne short .4	; 88009
+.2:
 mov edx, esi	; 8800B
-loc_8800D:
+.3:
 mov eax, ebx	; 8800D
-call sub_87D5A	; 8800F
-jmp short loc_8802E	; 88014
-loc_88016:
+call POSimSeriesTeamWins	; 8800F
+jmp short .7	; 88014
+.4:
 cmp edx, ecx	; 88016
-je short loc_8801E	; 88018
+je short .5	; 88018
 cmp eax, ecx	; 8801A
-jne short loc_88022	; 8801C
-loc_8801E:
+jne short .6	; 8801C
+.5:
 mov edx, ecx	; 8801E
-jmp short loc_8800D	; 88020
-loc_88022:
+jmp short POPreSimRound2.3	; 88020
+.6:
 mov edx, 7	; 88022
 mov eax, ebx	; 88027
-call sub_87E77	; 88029
-loc_8802E:
+call POSimSeries	; 88029
+.7:
 inc edi	; 8802E
 add ebx, byte 2Ah	; 8802F
 cmp edi, byte 4	; 88032
-jl short loc_87FF9	; 88035
+jl short POPreSimRound2.1	; 88035
 pop edi	; 88037
 pop esi	; 88038
 pop ecx	; 88039
 ret	; 8803A
-sub_8803B:
+POPreSimConfFinals:
 push dword 10h	; 8803B
 call __CHK	; 88040
 push ecx	; 88045
@@ -2328,43 +2265,43 @@ mov esi, edx	; 88048
 mov ecx, ebx	; 8804A
 lea ebx, [dword eax+01B90h]	; 8804C
 xor edi, edi	; 88052
-loc_88054:
+.1:
 xor edx, edx	; 88054
 mov dl, byte [byte ebx+02h]	; 88056
 cmp edx, esi	; 88059
-je short loc_88066	; 8805B
+je short .2	; 8805B
 xor eax, eax	; 8805D
 mov al, byte [byte ebx+03h]	; 8805F
 cmp eax, esi	; 88062
-jne short loc_88071	; 88064
-loc_88066:
+jne short .4	; 88064
+.2:
 mov edx, esi	; 88066
-loc_88068:
+.3:
 mov eax, ebx	; 88068
-call sub_87D5A	; 8806A
-jmp short loc_88089	; 8806F
-loc_88071:
+call POSimSeriesTeamWins	; 8806A
+jmp short .7	; 8806F
+.4:
 cmp edx, ecx	; 88071
-je short loc_88079	; 88073
+je short .5	; 88073
 cmp eax, ecx	; 88075
-jne short loc_8807D	; 88077
-loc_88079:
+jne short .6	; 88077
+.5:
 mov edx, ecx	; 88079
-jmp short loc_88068	; 8807B
-loc_8807D:
+jmp short POPreSimConfFinals.3	; 8807B
+.6:
 mov edx, 7	; 8807D
 mov eax, ebx	; 88082
-call sub_87E77	; 88084
-loc_88089:
+call POSimSeries	; 88084
+.7:
 inc edi	; 88089
 add ebx, byte 2Ah	; 8808A
 cmp edi, byte 2	; 8808D
-jl short loc_88054	; 88090
+jl short POPreSimConfFinals.1	; 88090
 pop edi	; 88092
 pop esi	; 88093
 pop ecx	; 88094
 ret	; 88095
-sub_88096:
+POHandleElimination:
 push dword 9Ch	; 88096
 call __CHK	; 8809B
 push ebx	; 880A0
@@ -2379,15 +2316,15 @@ mov dword [byte esp+064h], 0A0h	; 880AC
 mov dword [byte esp+060h], 64h	; 880B4
 xor ecx, ecx	; 880BC
 mov dword [dword_C6D26], ecx	; 880BE
-call sub_8A652	; 880C4
-mov ebx, asc_C39C8	; 880C9
+call DrawPlayoffTree	; 880C4
+mov ebx, str_Embpal	; 880C9
 cmp byte [byte_ED85A], 1	; 880CE
-jne short loc_880DF	; 880D5
+jne short .1	; 880D5
 mov edx, dword [dword_D2C6B]	; 880D7
-jmp short loc_880E1	; 880DD
-loc_880DF:
+jmp short .2	; 880DD
+.1:
 xor edx, edx	; 880DF
-loc_880E1:
+.2:
 lea eax, [byte esp+040h]	; 880E1
 call MakePath	; 880E5
 push byte 0	; 880EA
@@ -2397,14 +2334,14 @@ call sub_8E83C	; 880F1
 mov edi, eax	; 880F6
 add esp, byte 8	; 880F8
 mov dword [byte esp+068h], eax	; 880FB
-push asc_C39CF	; 880FF
+push str_BangPal	; 880FF
 push eax	; 88104
 call sub_B30B4	; 88105
 add esp, byte 8	; 8810A
 add eax, byte 10h	; 8810D
 mov dword [byte esp+06Ch], eax	; 88110
 test esi, esi	; 88114
-jne short loc_88149	; 88116
+jne short .3	; 88116
 push byte 42h	; 88118
 mov ecx, 41h	; 8811A
 mov ebx, 40h	; 8811F
@@ -2416,8 +2353,8 @@ mov edx, dword [byte esp+06Ch]	; 88138
 xor eax, eax	; 8813C
 call sub_76429	; 8813E
 push edi	; 88143
-jmp near loc_88615	; 88144
-loc_88149:
+jmp near .34	; 88144
+.3:
 push byte 0	; 88149
 mov ecx, 40h	; 8814B
 mov ebx, 42h	; 88150
@@ -2473,7 +2410,7 @@ call sub_92DE0	; 88205
 add esp, byte 4	; 8820A
 mov dword [keydb_size], eax	; 8820D
 cmp esi, byte 1	; 88212
-jne near loc_884E2	; 88215
+jne near .29	; 88215
 mov ebx, 10h	; 8821B
 mov edx, dword [byte esp+06Ch]	; 88220
 xor eax, eax	; 88224
@@ -2484,14 +2421,14 @@ push eax	; 88231
 lea eax, [byte esp+06Ch]	; 88232
 push eax	; 88236
 push byte 2	; 88237
-push unk_D2B38	; 88239
+push btn_POHumanOut	; 88239
 mov ecx, 4	; 8823E
-mov ebx, off_D2B0C	; 88243
+mov ebx, msg_POHumanOut	; 88243
 mov edx, 0FFFFFFFFh	; 88248
 mov eax, edx	; 8824D
 call MessageBox	; 8824F
 test eax, eax	; 88254
-je near loc_8852F	; 88256
+je near .30	; 88256
 push byte 0	; 8825C
 lea eax, [byte esp+064h]	; 8825E
 push eax	; 88262
@@ -2500,19 +2437,19 @@ push eax	; 88267
 push byte 0	; 88268
 push byte 0	; 8826A
 mov ecx, esi	; 8826C
-mov ebx, off_D2B34	; 8826E
+mov ebx, msg_POGenFinal	; 8826E
 mov edx, 0FFFFFFFFh	; 88273
 mov eax, edx	; 88278
 call MessageBox	; 8827A
 mov eax, dword [byte ebp+044h]	; 8827F
 cmp eax, byte 8	; 88282
-jb short loc_8829E	; 88285
+jb short .4	; 88285
 cmp eax, byte 0Bh	; 88287
-jbe near loc_88339	; 8828A
+jbe near .11	; 8828A
 cmp eax, byte 0Dh	; 88290
-jbe near loc_883D3	; 88293
-jmp near loc_88453	; 88299
-loc_8829E:
+jbe near .18	; 88293
+jmp near .24	; 88299
+.4:
 mov eax, dword [gameopts]	; 8829E
 shl eax, 11h	; 882A3
 shr eax, 1Dh	; 882A6
@@ -2522,32 +2459,32 @@ mov dword [byte ebp+074h], eax	; 882AF
 mov dword [byte ebp+070h], eax	; 882B2
 lea esi, [dword ebp+01AE8h]	; 882B5
 mov edi, 8	; 882BB
-loc_882C0:
+.5:
 mov edx, dword [gameopts]	; 882C0
 shl edx, 11h	; 882C6
 shr edx, 1Dh	; 882C9
 mov eax, esi	; 882CC
-call sub_87E77	; 882CE
+call POSimSeries	; 882CE
 xor edx, edx	; 882D3
-jmp short loc_882D8	; 882D5
-loc_882D7:
+jmp short .7	; 882D5
+.6:
 inc edx	; 882D7
-loc_882D8:
+.7:
 cmp edx, byte 7	; 882D8
-jge short loc_882EB	; 882DB
+jge short .8	; 882DB
 mov eax, edx	; 882DD
 shl eax, 2	; 882DF
 sub eax, edx	; 882E2
 cmp byte [byte esi+eax*2+04h], 0FFh	; 882E4
-jne short loc_882D7	; 882E9
-loc_882EB:
+jne short POHandleElimination.6	; 882E9
+.8:
 mov eax, dword [gameopts]	; 882EB
 shl eax, 11h	; 882F0
 shr eax, 1Eh	; 882F3
 lea ebx, [byte eax+01h]	; 882F6
 sub edx, ebx	; 882F9
-jmp short loc_88324	; 882FB
-loc_882FD:
+jmp short .10	; 882FB
+.9:
 lea ecx, [edx+ebx]	; 882FD
 mov eax, ecx	; 88300
 shl eax, 2	; 88302
@@ -2560,16 +2497,16 @@ mov byte [byte esi+eax*2+02h], cl	; 88318
 mov byte [byte esi+eax*2+01h], cl	; 8831C
 mov byte [esi+eax*2], cl	; 88320
 inc ebx	; 88323
-loc_88324:
+.10:
 cmp ebx, byte 4	; 88324
-jl short loc_882FD	; 88327
+jl short POHandleElimination.9	; 88327
 inc edi	; 88329
 add esi, byte 2Ah	; 8832A
 cmp edi, byte 0Ch	; 8832D
-jl short loc_882C0	; 88330
+jl short POHandleElimination.5	; 88330
 mov eax, ebp	; 88332
-call sub_87B33	; 88334
-loc_88339:
+call POSeedConfFinals	; 88334
+.11:
 mov eax, dword [gameopts]	; 88339
 shl eax, 11h	; 8833E
 shr eax, 1Dh	; 88341
@@ -2577,32 +2514,32 @@ mov dword [dword ebp+084h], eax	; 88344
 mov dword [dword ebp+080h], eax	; 8834A
 lea esi, [dword ebp+01B90h]	; 88350
 mov edi, 0Ch	; 88356
-loc_8835B:
+.12:
 mov edx, dword [gameopts]	; 8835B
 shl edx, 11h	; 88361
 shr edx, 1Dh	; 88364
 mov eax, esi	; 88367
-call sub_87E77	; 88369
+call POSimSeries	; 88369
 xor edx, edx	; 8836E
-jmp short loc_88373	; 88370
-loc_88372:
+jmp short .14	; 88370
+.13:
 inc edx	; 88372
-loc_88373:
+.14:
 cmp edx, byte 7	; 88373
-jge short loc_88386	; 88376
+jge short .15	; 88376
 mov eax, edx	; 88378
 shl eax, 2	; 8837A
 sub eax, edx	; 8837D
 cmp byte [byte esi+eax*2+04h], 0FFh	; 8837F
-jne short loc_88372	; 88384
-loc_88386:
+jne short POHandleElimination.13	; 88384
+.15:
 mov ebx, dword [gameopts]	; 88386
 shl ebx, 11h	; 8838C
 shr ebx, 1Eh	; 8838F
 inc ebx	; 88392
 sub edx, ebx	; 88393
-jmp short loc_883BE	; 88395
-loc_88397:
+jmp short .17	; 88395
+.16:
 lea ecx, [edx+ebx]	; 88397
 mov eax, ecx	; 8839A
 shl eax, 2	; 8839C
@@ -2615,16 +2552,16 @@ mov byte [byte esi+eax*2+02h], cl	; 883B2
 mov byte [byte esi+eax*2+01h], cl	; 883B6
 mov byte [esi+eax*2], cl	; 883BA
 inc ebx	; 883BD
-loc_883BE:
+.17:
 cmp ebx, byte 4	; 883BE
-jl short loc_88397	; 883C1
+jl short POHandleElimination.16	; 883C1
 inc edi	; 883C3
 add esi, byte 2Ah	; 883C4
 cmp edi, byte 0Eh	; 883C7
-jl short loc_8835B	; 883CA
+jl short POHandleElimination.12	; 883CA
 mov eax, ebp	; 883CC
-call sub_87C9E	; 883CE
-loc_883D3:
+call POSeedFinal	; 883CE
+.18:
 mov eax, dword [gameopts]	; 883D3
 shl eax, 11h	; 883D8
 shr eax, 1Dh	; 883DB
@@ -2634,27 +2571,27 @@ mov edx, dword [gameopts]	; 883EA
 shl edx, 11h	; 883F0
 shr edx, 1Dh	; 883F3
 mov eax, esi	; 883F6
-call sub_87E77	; 883F8
+call POSimSeries	; 883F8
 xor edx, edx	; 883FD
-jmp short loc_88402	; 883FF
-loc_88401:
+jmp short .20	; 883FF
+.19:
 inc edx	; 88401
-loc_88402:
+.20:
 cmp edx, byte 7	; 88402
-jge short loc_88415	; 88405
+jge short .21	; 88405
 mov eax, edx	; 88407
 shl eax, 2	; 88409
 sub eax, edx	; 8840C
 cmp byte [byte esi+eax*2+04h], 0FFh	; 8840E
-jne short loc_88401	; 88413
-loc_88415:
+jne short POHandleElimination.19	; 88413
+.21:
 mov eax, dword [gameopts]	; 88415
 shl eax, 11h	; 8841A
 shr eax, 1Eh	; 8841D
 lea ebx, [byte eax+01h]	; 88420
 sub edx, ebx	; 88423
-jmp short loc_8844E	; 88425
-loc_88427:
+jmp short .23	; 88425
+.22:
 lea ecx, [edx+ebx]	; 88427
 mov eax, ecx	; 8842A
 shl eax, 2	; 8842C
@@ -2667,47 +2604,47 @@ mov byte [byte esi+eax*2+02h], cl	; 88442
 mov byte [byte esi+eax*2+01h], cl	; 88446
 mov byte [esi+eax*2], cl	; 8844A
 inc ebx	; 8844D
-loc_8844E:
+.23:
 cmp ebx, byte 4	; 8844E
-jl short loc_88427	; 88451
-loc_88453:
+jl short POHandleElimination.22	; 88451
+.24:
 lea esi, [dword ebp+01AE8h]	; 88453
 mov edi, 10h	; 88459
 mov ebx, 1Ah	; 8845E
-loc_88463:
+.25:
 xor edx, edx	; 88463
 mov dl, byte [byte esi+02h]	; 88465
 mov eax, edi	; 88468
 shl eax, 2	; 8846A
-mov dword [dword eax+dword_DC7B8], edx	; 8846D
+mov dword [dword eax+playofftree], edx	; 8846D
 xor edx, edx	; 88473
 mov dl, byte [byte esi+03h]	; 88475
-mov dword [dword eax+dword_DC7BC], edx	; 88478
-cmp dword [dword eax+dword_DC7B8], 0FFh	; 8847E
-jne short loc_88490	; 88488
-mov dword [dword eax+dword_DC7B8], ebx	; 8848A
-loc_88490:
+mov dword [dword eax+playofftree_p1], edx	; 88478
+cmp dword [dword eax+playofftree], 0FFh	; 8847E
+jne short .26	; 88488
+mov dword [dword eax+playofftree], ebx	; 8848A
+.26:
 mov eax, edi	; 88490
 shl eax, 2	; 88492
-cmp dword [dword eax+dword_DC7BC], 0FFh	; 88495
-jne short loc_884AB	; 8849F
-mov dword [dword eax+dword_DC7BC], 1Ah	; 884A1
-loc_884AB:
+cmp dword [dword eax+playofftree_p1], 0FFh	; 88495
+jne short .27	; 8849F
+mov dword [dword eax+playofftree_p1], 1Ah	; 884A1
+.27:
 add edi, byte 2	; 884AB
 add esi, byte 2Ah	; 884AE
 cmp edi, byte 1Eh	; 884B1
-jl short loc_88463	; 884B4
+jl short POHandleElimination.25	; 884B4
 lea eax, [dword ebp+01BE4h]	; 884B6
 mov edx, dword [dword ebp+088h]	; 884BC
 call SeriesWinner	; 884C2
-mov dword [dword_DC830], eax	; 884C7
+mov dword [pochampion], eax	; 884C7
 cmp eax, byte 0FFFFFFFFh	; 884CC
-jne short loc_884DB	; 884CF
-mov dword [dword_DC830], 1Ah	; 884D1
-loc_884DB:
+jne short .28	; 884CF
+mov dword [pochampion], 1Ah	; 884D1
+.28:
 call sub_30F12	; 884DB
-jmp short loc_8852F	; 884E0
-loc_884E2:
+jmp short .30	; 884E0
+.29:
 push dword 3E8h	; 884E2
 call sub_B3989	; 884E7
 add esp, byte 4	; 884EC
@@ -2723,13 +2660,13 @@ push eax	; 8850A
 push byte 0	; 8850B
 push byte 0	; 8850D
 mov ecx, 6	; 8850F
-mov ebx, off_D2B1C	; 88514
+mov ebx, msg_POTeamOut	; 88514
 mov edx, 0FFFFFFFFh	; 88519
 mov eax, edx	; 8851E
 call MessageBox	; 88520
 call sub_B3999	; 88525
 call sub_30F12	; 8852A
-loc_8852F:
+.30:
 mov ebx, 10h	; 8852F
 mov edx, dword [byte esp+06Ch]	; 88534
 mov eax, 1	; 88538
@@ -2749,25 +2686,25 @@ call sub_932D0	; 8856C
 add esp, byte 0Ch	; 88571
 mov edi, dword [seasondb]	; 88574
 test edi, edi	; 8857A
-je short loc_88587	; 8857C
+je short .31	; 8857C
 push edi	; 8857E
 call jctime	; 8857F
 add esp, byte 4	; 88584
-loc_88587:
+.31:
 mov edx, dword [careerdb]	; 88587
 test edx, edx	; 8858D
-je short loc_8859A	; 8858F
+je short .32	; 8858F
 push edx	; 88591
 call jctime	; 88592
 add esp, byte 4	; 88597
-loc_8859A:
+.32:
 mov ecx, dword [keydb]	; 8859A
 test ecx, ecx	; 885A0
-je short loc_885AD	; 885A2
+je short .33	; 885A2
 push ecx	; 885A4
 call jctime	; 885A5
 add esp, byte 4	; 885AA
-loc_885AD:
+.33:
 xor edi, edi	; 885AD
 mov dword [seasondb], edi	; 885AF
 mov dword [careerdb], edi	; 885B5
@@ -2776,9 +2713,9 @@ mov dword [seasondb_size], edi	; 885C1
 mov dword [careerdb_size], edi	; 885C7
 mov dword [keydb_size], edi	; 885CD
 mov eax, ebp	; 885D3
-call sub_89223	; 885D5
+call SaveScheduleDB	; 885D5
 mov dword [dword_C6D26], edi	; 885DA
-call sub_8A652	; 885E0
+call DrawPlayoffTree	; 885E0
 push byte 42h	; 885E5
 mov ecx, 41h	; 885E7
 mov ebx, 40h	; 885EC
@@ -2791,12 +2728,12 @@ xor eax, eax	; 88609
 call sub_76429	; 8860B
 mov ebp, dword [byte esp+068h]	; 88610
 push ebp	; 88614
-loc_88615:
+.34:
 call jctime	; 88615
 add esp, byte 4	; 8861A
 add esp, byte 70h	; 8861D
-jmp near sub_8751A	; 88620
-sub_88625:
+jmp near POCreateSchedule_x	; 88620
+POSimSeriesTo:
 push dword 4Ch	; 88625
 call __CHK	; 8862A
 push ecx	; 8862F
@@ -2821,7 +2758,7 @@ shr edx, 1Dh	; 8865D
 mov eax, esi	; 88660
 call SeriesWinner	; 88662
 test eax, eax	; 88667
-jge near loc_88734	; 88669
+jge near .x	; 88669
 mov ebx, dword [leaguedbnames+10h]	; 8866F
 mov ecx, str_extDB	; 88675
 mov edx, curleague	; 8867A
@@ -2831,11 +2768,11 @@ lea edx, [byte esp+024h]	; 88686
 mov eax, esp	; 8868A
 call FileOpenRW	; 8868C
 test eax, eax	; 88691
-je short loc_886A2	; 88693
-push asc_C3A43	; 88695
-call sub_B2CD8	; 8869A
+je short .1	; 88693
+push str_E31	; 88695
+call FatalError	; 8869A
 add esp, byte 4	; 8869F
-loc_886A2:
+.1:
 mov ebx, dword [leaguedbnames+0Ch]	; 886A2
 mov ecx, str_extDB	; 886A8
 mov edx, curleague	; 886AD
@@ -2845,23 +2782,23 @@ lea edx, [byte esp+020h]	; 886B9
 mov eax, esp	; 886BD
 call FileOpenRead	; 886BF
 test eax, eax	; 886C4
-je short loc_886D5	; 886C6
-push asc_C3A47	; 886C8
-call sub_B2CD8	; 886CD
+je short .2	; 886C6
+push str_E32	; 886C8
+call FatalError	; 886CD
 add esp, byte 4	; 886D2
-loc_886D5:
+.2:
 xor edi, edi	; 886D5
-jmp short loc_8871C	; 886D7
-loc_886D9:
+jmp short .5	; 886D7
+.3:
 cmp byte [byte esi+04h], 0FFh	; 886D9
-jne short loc_88718	; 886DD
+jne short .4	; 886DD
 mov edx, dword [gameopts]	; 886DF
 shl edx, 11h	; 886E5
 shr edx, 1Dh	; 886E8
 mov eax, ebp	; 886EB
 call SeriesWinner	; 886ED
 test eax, eax	; 886F2
-jge short loc_88722	; 886F4
+jge short .6	; 886F4
 push byte 2	; 886F6
 mov ebx, dword [byte esp+024h]	; 886F8
 push ebx	; 886FC
@@ -2872,25 +2809,25 @@ mov ebx, 4B0h	; 88704
 mov edx, str_extDB	; 88709
 mov eax, curleague	; 8870E
 call SimulateGame	; 88713
-loc_88718:
+.4:
 inc edi	; 88718
 add esi, byte 6	; 88719
-loc_8871C:
+.5:
 cmp edi, dword [byte esp+028h]	; 8871C
-jl short loc_886D9	; 88720
-loc_88722:
+jl short POSimSeriesTo.3	; 88720
+.6:
 lea eax, [byte esp+024h]	; 88722
 call FileClose	; 88726
 lea eax, [byte esp+020h]	; 8872B
 call FileClose	; 8872F
-loc_88734:
+.x:
 add esp, byte 2Ch	; 88734
 pop ebp	; 88737
 pop edi	; 88738
 pop esi	; 88739
 pop ecx	; 8873A
 ret	; 8873B
-sub_8873C:
+POAfterGame:
 push dword 90h	; 8873C
 call __CHK	; 88741
 push ebx	; 88746
@@ -2908,18 +2845,18 @@ mov dword [byte esp+05Ch], eax	; 88759
 push curleague	; 8875D
 lea esi, [dword eax+0444h]	; 88762
 push esi	; 88768
-mov ebx, dword [cont2team]	; 88769
+mov ebx, dword [HomeTeam-2]	; 88769
 sar ebx, 10h	; 8876F
 xor ecx, ecx	; 88772
-mov edx, asc_C3A4B	; 88774
+mov edx, str_Db	; 88774
 mov eax, curleague	; 88779
 call sub_3626D	; 8877E
 push curleague	; 88783
 push esi	; 88788
-mov ebx, dword [HomeTeam]	; 88789
+mov ebx, dword [VisTeam-2]	; 88789
 sar ebx, 10h	; 8878F
 mov ecx, 1	; 88792
-mov edx, asc_C3A4B	; 88797
+mov edx, str_Db	; 88797
 mov eax, curleague	; 8879C
 call sub_3626D	; 887A1
 mov eax, esi	; 887A6
@@ -2993,52 +2930,52 @@ add esp, byte 4	; 8889B
 mov dword [keydb_size], eax	; 8889E
 mov ebx, dword [byte esp+05Ch]	; 888A3
 cmp ebx, byte 8	; 888A7
-jge short loc_888C8	; 888AA
+jge short .3	; 888AA
 xor edi, edi	; 888AC
-loc_888AE:
+.1:
 cmp edi, dword [byte esp+05Ch]	; 888AE
-je short loc_888C0	; 888B2
+je short .2	; 888B2
 mov ebx, ebp	; 888B4
 mov edx, edi	; 888B6
 mov eax, dword [esp]	; 888B8
-call sub_88625	; 888BB
-loc_888C0:
+call POSimSeriesTo	; 888BB
+.2:
 inc edi	; 888C0
 cmp edi, byte 8	; 888C1
-jl short loc_888AE	; 888C4
-jmp short loc_8890E	; 888C6
-loc_888C8:
+jl short POAfterGame.1	; 888C4
+jmp short .9	; 888C6
+.3:
 cmp ebx, byte 0Ch	; 888C8
-jge short loc_888EC	; 888CB
+jge short .6	; 888CB
 mov edi, 8	; 888CD
-loc_888D2:
+.4:
 cmp edi, dword [byte esp+05Ch]	; 888D2
-je short loc_888E4	; 888D6
+je short .5	; 888D6
 mov ebx, ebp	; 888D8
 mov edx, edi	; 888DA
 mov eax, dword [esp]	; 888DC
-call sub_88625	; 888DF
-loc_888E4:
+call POSimSeriesTo	; 888DF
+.5:
 inc edi	; 888E4
 cmp edi, byte 0Ch	; 888E5
-jl short loc_888D2	; 888E8
-jmp short loc_8890E	; 888EA
-loc_888EC:
+jl short POAfterGame.4	; 888E8
+jmp short .9	; 888EA
+.6:
 cmp ebx, byte 0Eh	; 888EC
-jge short loc_8890E	; 888EF
+jge short .9	; 888EF
 mov edi, 0Ch	; 888F1
-loc_888F6:
+.7:
 cmp edi, dword [byte esp+05Ch]	; 888F6
-je short loc_88908	; 888FA
+je short .8	; 888FA
 mov ebx, ebp	; 888FC
 mov edx, edi	; 888FE
 mov eax, dword [esp]	; 88900
-call sub_88625	; 88903
-loc_88908:
+call POSimSeriesTo	; 88903
+.8:
 inc edi	; 88908
 cmp edi, byte 0Eh	; 88909
-jl short loc_888F6	; 8890C
-loc_8890E:
+jl short POAfterGame.7	; 8890C
+.9:
 mov edx, dword [byte esp+05Ch]	; 8890E
 mov eax, edx	; 88912
 shl eax, 3	; 88914
@@ -3057,8 +2994,8 @@ mov eax, ebp	; 88939
 call SeriesWinner	; 8893B
 mov edi, eax	; 88940
 test eax, eax	; 88942
-jl near loc_88D9F	; 88944
-mov edx, dword [cont2team]	; 8894A
+jl near .55	; 88944
+mov edx, dword [HomeTeam-2]	; 8894A
 sar edx, 10h	; 88950
 cmp eax, edx	; 88953
 sete al	; 88955
@@ -3068,7 +3005,7 @@ mov ebp, dword [gameopts]	; 88961
 shl ebp, 11h	; 88967
 mov edx, dword [byte esp+05Ch]	; 8896A
 cmp edx, byte 8	; 8896E
-jge near loc_88A22	; 88971
+jge near .17	; 88971
 shr ebp, 1Dh	; 88977
 mov eax, dword [esp]	; 8897A
 mov dword [byte eax+06Ch], ebp	; 8897D
@@ -3081,35 +3018,35 @@ mov dword [byte eax+054h], ebp	; 8898F
 mov dword [byte eax+050h], ebp	; 88992
 lea esi, [dword eax+01998h]	; 88995
 xor ebp, ebp	; 8899B
-loc_8899D:
+.10:
 cmp ebp, dword [byte esp+05Ch]	; 8899D
-je short loc_889B6	; 889A1
+je short .11	; 889A1
 mov edx, dword [gameopts]	; 889A3
 shl edx, 11h	; 889A9
 shr edx, 1Dh	; 889AC
 mov eax, esi	; 889AF
-call sub_87E77	; 889B1
-loc_889B6:
+call POSimSeries	; 889B1
+.11:
 xor edx, edx	; 889B6
-jmp short loc_889BB	; 889B8
-loc_889BA:
+jmp short .13	; 889B8
+.12:
 inc edx	; 889BA
-loc_889BB:
+.13:
 cmp edx, byte 7	; 889BB
-jge short loc_889CE	; 889BE
+jge short .14	; 889BE
 mov eax, edx	; 889C0
 shl eax, 2	; 889C2
 sub eax, edx	; 889C5
 cmp byte [byte esi+eax*2+04h], 0FFh	; 889C7
-jne short loc_889BA	; 889CC
-loc_889CE:
+jne short POAfterGame.12	; 889CC
+.14:
 mov eax, dword [gameopts]	; 889CE
 shl eax, 11h	; 889D3
 shr eax, 1Eh	; 889D6
 lea ebx, [byte eax+01h]	; 889D9
 sub edx, ebx	; 889DC
-jmp short loc_88A07	; 889DE
-loc_889E0:
+jmp short .16	; 889DE
+.15:
 lea ecx, [edx+ebx]	; 889E0
 mov eax, ecx	; 889E3
 shl eax, 2	; 889E5
@@ -3122,19 +3059,19 @@ mov byte [byte esi+eax*2+02h], cl	; 889FB
 mov byte [byte esi+eax*2+01h], cl	; 889FF
 mov byte [esi+eax*2], cl	; 88A03
 inc ebx	; 88A06
-loc_88A07:
+.16:
 cmp ebx, byte 4	; 88A07
-jl short loc_889E0	; 88A0A
+jl short POAfterGame.15	; 88A0A
 inc ebp	; 88A0C
 add esi, byte 2Ah	; 88A0D
 cmp ebp, byte 8	; 88A10
-jl short loc_8899D	; 88A13
+jl short POAfterGame.10	; 88A13
 mov eax, dword [esp]	; 88A15
-call sub_87863	; 88A18
-jmp near loc_88BDC	; 88A1D
-loc_88A22:
+call POSeedRound2	; 88A18
+jmp near .39	; 88A1D
+.17:
 cmp edx, byte 0Ch	; 88A22
-jge near loc_88ACD	; 88A25
+jge near .25	; 88A25
 shr ebp, 1Dh	; 88A2B
 mov eax, dword [esp]	; 88A2E
 mov dword [byte eax+07Ch], ebp	; 88A31
@@ -3143,35 +3080,35 @@ mov dword [byte eax+074h], ebp	; 88A37
 mov dword [byte eax+070h], ebp	; 88A3A
 lea esi, [dword eax+01AE8h]	; 88A3D
 mov ebp, 8	; 88A43
-loc_88A48:
+.18:
 cmp ebp, dword [byte esp+05Ch]	; 88A48
-je short loc_88A61	; 88A4C
+je short .19	; 88A4C
 mov edx, dword [gameopts]	; 88A4E
 shl edx, 11h	; 88A54
 shr edx, 1Dh	; 88A57
 mov eax, esi	; 88A5A
-call sub_87E77	; 88A5C
-loc_88A61:
+call POSimSeries	; 88A5C
+.19:
 xor edx, edx	; 88A61
-jmp short loc_88A66	; 88A63
-loc_88A65:
+jmp short .21	; 88A63
+.20:
 inc edx	; 88A65
-loc_88A66:
+.21:
 cmp edx, byte 7	; 88A66
-jge short loc_88A79	; 88A69
+jge short .22	; 88A69
 mov eax, edx	; 88A6B
 shl eax, 2	; 88A6D
 sub eax, edx	; 88A70
 cmp byte [byte esi+eax*2+04h], 0FFh	; 88A72
-jne short loc_88A65	; 88A77
-loc_88A79:
+jne short POAfterGame.20	; 88A77
+.22:
 mov eax, dword [gameopts]	; 88A79
 shl eax, 11h	; 88A7E
 shr eax, 1Eh	; 88A81
 lea ebx, [byte eax+01h]	; 88A84
 sub edx, ebx	; 88A87
-jmp short loc_88AB2	; 88A89
-loc_88A8B:
+jmp short .24	; 88A89
+.23:
 lea ecx, [edx+ebx]	; 88A8B
 mov eax, ecx	; 88A8E
 shl eax, 2	; 88A90
@@ -3184,54 +3121,54 @@ mov byte [byte esi+eax*2+02h], cl	; 88AA6
 mov byte [byte esi+eax*2+01h], cl	; 88AAA
 mov byte [esi+eax*2], cl	; 88AAE
 inc ebx	; 88AB1
-loc_88AB2:
+.24:
 cmp ebx, byte 4	; 88AB2
-jl short loc_88A8B	; 88AB5
+jl short POAfterGame.23	; 88AB5
 inc ebp	; 88AB7
 add esi, byte 2Ah	; 88AB8
 cmp ebp, byte 0Ch	; 88ABB
-jl short loc_88A48	; 88ABE
+jl short POAfterGame.18	; 88ABE
 mov eax, dword [esp]	; 88AC0
-call sub_87B33	; 88AC3
-jmp near loc_88BDC	; 88AC8
-loc_88ACD:
+call POSeedConfFinals	; 88AC3
+jmp near .39	; 88AC8
+.25:
 cmp edx, byte 0Eh	; 88ACD
-jge near loc_88B74	; 88AD0
+jge near .33	; 88AD0
 shr ebp, 1Dh	; 88AD6
 mov eax, dword [esp]	; 88AD9
 mov dword [dword eax+084h], ebp	; 88ADC
 mov dword [dword eax+080h], ebp	; 88AE2
 lea esi, [dword eax+01B90h]	; 88AE8
 mov ebp, 0Ch	; 88AEE
-loc_88AF3:
+.26:
 cmp ebp, dword [byte esp+05Ch]	; 88AF3
-je short loc_88B0C	; 88AF7
+je short .27	; 88AF7
 mov edx, dword [gameopts]	; 88AF9
 shl edx, 11h	; 88AFF
 shr edx, 1Dh	; 88B02
 mov eax, esi	; 88B05
-call sub_87E77	; 88B07
-loc_88B0C:
+call POSimSeries	; 88B07
+.27:
 xor edx, edx	; 88B0C
-jmp short loc_88B11	; 88B0E
-loc_88B10:
+jmp short .29	; 88B0E
+.28:
 inc edx	; 88B10
-loc_88B11:
+.29:
 cmp edx, byte 7	; 88B11
-jge short loc_88B24	; 88B14
+jge short .30	; 88B14
 mov eax, edx	; 88B16
 shl eax, 2	; 88B18
 sub eax, edx	; 88B1B
 cmp byte [byte esi+eax*2+04h], 0FFh	; 88B1D
-jne short loc_88B10	; 88B22
-loc_88B24:
+jne short POAfterGame.28	; 88B22
+.30:
 mov ebx, dword [gameopts]	; 88B24
 shl ebx, 11h	; 88B2A
 shr ebx, 1Eh	; 88B2D
 inc ebx	; 88B30
 sub edx, ebx	; 88B31
-jmp short loc_88B5C	; 88B33
-loc_88B35:
+jmp short .32	; 88B33
+.31:
 lea ecx, [edx+ebx]	; 88B35
 mov eax, ecx	; 88B38
 shl eax, 2	; 88B3A
@@ -3244,41 +3181,41 @@ mov byte [byte esi+eax*2+02h], cl	; 88B50
 mov byte [byte esi+eax*2+01h], cl	; 88B54
 mov byte [esi+eax*2], cl	; 88B58
 inc ebx	; 88B5B
-loc_88B5C:
+.32:
 cmp ebx, byte 4	; 88B5C
-jl short loc_88B35	; 88B5F
+jl short POAfterGame.31	; 88B5F
 inc ebp	; 88B61
 add esi, byte 2Ah	; 88B62
 cmp ebp, byte 0Eh	; 88B65
-jl short loc_88AF3	; 88B68
+jl short POAfterGame.26	; 88B68
 mov eax, dword [esp]	; 88B6A
-call sub_87C9E	; 88B6D
-jmp short loc_88BDC	; 88B72
-loc_88B74:
+call POSeedFinal	; 88B6D
+jmp short .39	; 88B72
+.33:
 shr ebp, 1Dh	; 88B74
 mov eax, dword [esp]	; 88B77
 mov dword [dword eax+088h], ebp	; 88B7A
 lea esi, [dword eax+01BE4h]	; 88B80
 xor edx, edx	; 88B86
-jmp short loc_88B8B	; 88B88
-loc_88B8A:
+jmp short .35	; 88B88
+.34:
 inc edx	; 88B8A
-loc_88B8B:
+.35:
 cmp edx, byte 7	; 88B8B
-jge short loc_88B9E	; 88B8E
+jge short .36	; 88B8E
 mov eax, edx	; 88B90
 shl eax, 2	; 88B92
 sub eax, edx	; 88B95
 cmp byte [byte esi+eax*2+04h], 0FFh	; 88B97
-jne short loc_88B8A	; 88B9C
-loc_88B9E:
+jne short POAfterGame.34	; 88B9C
+.36:
 mov eax, dword [gameopts]	; 88B9E
 shl eax, 11h	; 88BA3
 shr eax, 1Eh	; 88BA6
 lea ebx, [byte eax+01h]	; 88BA9
 sub edx, ebx	; 88BAC
-jmp short loc_88BD7	; 88BAE
-loc_88BB0:
+jmp short .38	; 88BAE
+.37:
 lea ecx, [edx+ebx]	; 88BB0
 mov eax, ecx	; 88BB3
 shl eax, 2	; 88BB5
@@ -3291,132 +3228,132 @@ mov byte [byte esi+eax*2+02h], cl	; 88BCB
 mov byte [byte esi+eax*2+01h], cl	; 88BCF
 mov byte [esi+eax*2], cl	; 88BD3
 inc ebx	; 88BD6
-loc_88BD7:
+.38:
 cmp ebx, byte 4	; 88BD7
-jl short loc_88BB0	; 88BDA
-loc_88BDC:
+jl short POAfterGame.37	; 88BDA
+.39:
 mov esi, dword [esp]	; 88BDC
 add esi, 1AE8h	; 88BDF
 mov ebp, 10h	; 88BE5
-loc_88BEA:
+.40:
 xor edx, edx	; 88BEA
 mov dl, byte [byte esi+02h]	; 88BEC
 mov eax, ebp	; 88BEF
 shl eax, 2	; 88BF1
-mov dword [dword eax+dword_DC7B8], edx	; 88BF4
+mov dword [dword eax+playofftree], edx	; 88BF4
 xor edx, edx	; 88BFA
 mov dl, byte [byte esi+03h]	; 88BFC
-mov dword [dword eax+dword_DC7BC], edx	; 88BFF
-cmp dword [dword eax+dword_DC7B8], 0FFh	; 88C05
-jne short loc_88C1B	; 88C0F
-mov dword [dword eax+dword_DC7B8], 1Ah	; 88C11
-loc_88C1B:
+mov dword [dword eax+playofftree_p1], edx	; 88BFF
+cmp dword [dword eax+playofftree], 0FFh	; 88C05
+jne short .41	; 88C0F
+mov dword [dword eax+playofftree], 1Ah	; 88C11
+.41:
 mov eax, ebp	; 88C1B
 shl eax, 2	; 88C1D
-cmp dword [dword eax+dword_DC7BC], 0FFh	; 88C20
-jne short loc_88C36	; 88C2A
-mov dword [dword eax+dword_DC7BC], 1Ah	; 88C2C
-loc_88C36:
+cmp dword [dword eax+playofftree_p1], 0FFh	; 88C20
+jne short .42	; 88C2A
+mov dword [dword eax+playofftree_p1], 1Ah	; 88C2C
+.42:
 add ebp, byte 2	; 88C36
 add esi, byte 2Ah	; 88C39
 cmp ebp, byte 1Eh	; 88C3C
-jl short loc_88BEA	; 88C3F
+jl short POAfterGame.40	; 88C3F
 mov esi, dword [esp]	; 88C41
 add esi, 1BE4h	; 88C44
 mov edx, dword [esp]	; 88C4A
 mov edx, dword [dword edx+088h]	; 88C4D
 mov eax, esi	; 88C53
 call SeriesWinner	; 88C55
-mov dword [dword_DC830], eax	; 88C5A
+mov dword [pochampion], eax	; 88C5A
 cmp eax, byte 0FFFFFFFFh	; 88C5F
-jne short loc_88C6E	; 88C62
-mov dword [dword_DC830], 1Ah	; 88C64
-loc_88C6E:
+jne short .43	; 88C62
+mov dword [pochampion], 1Ah	; 88C64
+.43:
 mov eax, dword [byte esp+05Ch]	; 88C6E
 cmp eax, byte 8	; 88C72
-jb short loc_88CA0	; 88C75
+jb short .44	; 88C75
 cmp eax, byte 9	; 88C77
-jbe near loc_88D27	; 88C7A
+jbe near .50	; 88C7A
 cmp eax, byte 0Ch	; 88C80
-jb near loc_88D3A	; 88C83
+jb near .51	; 88C83
 cmp eax, byte 0Dh	; 88C89
-jbe near loc_88D4D	; 88C8C
+jbe near .52	; 88C8C
 cmp eax, byte 0Eh	; 88C92
-je near loc_88D60	; 88C95
-jmp near loc_88D7F	; 88C9B
-loc_88CA0:
+je near .53	; 88C95
+jmp near .54	; 88C9B
+.44:
 cmp eax, byte 3	; 88CA0
-ja short loc_88CE9	; 88CA3
+ja short .47	; 88CA3
 xor eax, eax	; 88CA5
 mov edx, dword [esp]	; 88CA7
 mov al, byte [dword edx+01AEAh]	; 88CAA
 cmp eax, edi	; 88CB0
-je short loc_88CC0	; 88CB2
+je short .45	; 88CB2
 xor eax, eax	; 88CB4
 mov al, byte [dword edx+01AEBh]	; 88CB6
 cmp eax, edi	; 88CBC
-jne short loc_88CD6	; 88CBE
-loc_88CC0:
+jne short .46	; 88CBE
+.45:
 mov dword [byte esp+05Ch], 8	; 88CC0
 mov esi, dword [esp]	; 88CC8
 add esi, 1AE8h	; 88CCB
-jmp near loc_88D7F	; 88CD1
-loc_88CD6:
+jmp near .54	; 88CD1
+.46:
 mov dword [byte esp+05Ch], 9	; 88CD6
 lea esi, [dword edx+01B12h]	; 88CDE
-jmp near loc_88D7F	; 88CE4
-loc_88CE9:
+jmp near .54	; 88CE4
+.47:
 xor eax, eax	; 88CE9
 mov edx, dword [esp]	; 88CEB
 mov al, byte [dword edx+01B3Eh]	; 88CEE
 cmp eax, edi	; 88CF4
-je short loc_88D04	; 88CF6
+je short .48	; 88CF6
 xor eax, eax	; 88CF8
 mov al, byte [dword edx+01B3Fh]	; 88CFA
 cmp eax, edi	; 88D00
-jne short loc_88D17	; 88D02
-loc_88D04:
+jne short .49	; 88D02
+.48:
 mov dword [byte esp+05Ch], 0Ah	; 88D04
 mov esi, dword [esp]	; 88D0C
 add esi, 1B3Ch	; 88D0F
-jmp short loc_88D7F	; 88D15
-loc_88D17:
+jmp short .54	; 88D15
+.49:
 mov dword [byte esp+05Ch], 0Bh	; 88D17
 lea esi, [dword edx+01B66h]	; 88D1F
-jmp short loc_88D7F	; 88D25
-loc_88D27:
+jmp short .54	; 88D25
+.50:
 mov dword [byte esp+05Ch], 0Ch	; 88D27
 mov esi, dword [esp]	; 88D2F
 add esi, 1B90h	; 88D32
-jmp short loc_88D7F	; 88D38
-loc_88D3A:
+jmp short .54	; 88D38
+.51:
 mov dword [byte esp+05Ch], 0Dh	; 88D3A
 mov esi, dword [esp]	; 88D42
 add esi, 1BBAh	; 88D45
-jmp short loc_88D7F	; 88D4B
-loc_88D4D:
+jmp short .54	; 88D4B
+.52:
 mov dword [byte esp+05Ch], 0Eh	; 88D4D
 mov esi, dword [esp]	; 88D55
 add esi, 1BE4h	; 88D58
-jmp short loc_88D7F	; 88D5E
-loc_88D60:
+jmp short .54	; 88D5E
+.53:
 mov dword [byte esp+05Ch], 0Fh	; 88D60
 xor edx, edx	; 88D68
 mov dword [off_CF983], edx	; 88D6A
 mov eax, dword [esp]	; 88D70
 mov dword [byte eax+040h], 69h	; 88D73
-call sub_89223	; 88D7A
-loc_88D7F:
+call SaveScheduleDB	; 88D7A
+.54:
 mov edx, dword [byte esp+05Ch]	; 88D7F
 mov eax, edx	; 88D83
 shl eax, 3	; 88D85
 sub eax, edx	; 88D88
 mov edx, dword [esp]	; 88D8A
 mov dword [byte edx+040h], eax	; 88D8D
-mov eax, dword_C530D	; 88D90
-call sub_32B1D	; 88D95
-jmp near loc_88E4A	; 88D9A
-loc_88D9F:
+mov eax, postate	; 88D90
+call WriteModeState	; 88D95
+jmp near .59	; 88D9A
+.55:
 xor ecx, ecx	; 88D9F
 mov dword [byte esp+058h], ecx	; 88DA1
 mov dword [byte esp+054h], ecx	; 88DA5
@@ -3437,20 +3374,20 @@ lea ecx, [byte esp+054h]	; 88DCE
 lea ebx, [byte esp+058h]	; 88DD2
 lea edx, [byte esp+05Ch]	; 88DD6
 mov eax, ebp	; 88DDA
-call sub_877E9	; 88DDC
+call POSeriesScore	; 88DDC
 mov eax, dword [byte esp+058h]	; 88DE1
 mov ecx, dword [byte esp+054h]	; 88DE5
 cmp eax, ecx	; 88DE9
-jne short loc_88E00	; 88DEB
+jne short .56	; 88DEB
 push ecx	; 88DED
 mov ebp, dword [byte esp+05Ch]	; 88DEE
 push ebp	; 88DF2
-push asc_C3A4F	; 88DF3
+push str_Tied	; 88DF3
 mov eax, dword [dword_D288C]	; 88DF8
 push eax	; 88DFD
-jmp short loc_88E2E	; 88DFE
-loc_88E00:
-jle short loc_88E19	; 88E00
+jmp short .58	; 88DFE
+.56:
+jle short .57	; 88E00
 push ecx	; 88E02
 push eax	; 88E03
 mov eax, dword [byte esp+058h]	; 88E04
@@ -3458,8 +3395,8 @@ mov edx, dword [nosplit eax*4+off_C5439]	; 88E08
 push edx	; 88E0F
 mov ebx, dword [dword_D288C]	; 88E10
 push ebx	; 88E16
-jmp short loc_88E2E	; 88E17
-loc_88E19:
+jmp short .58	; 88E17
+.57:
 push eax	; 88E19
 push ecx	; 88E1A
 mov eax, dword [byte esp+054h]	; 88E1B
@@ -3467,14 +3404,14 @@ mov ebx, dword [nosplit eax*4+off_C5439]	; 88E1F
 push ebx	; 88E26
 mov ecx, dword [dword_D288C]	; 88E27
 push ecx	; 88E2D
-loc_88E2E:
+.58:
 push unk_ED7BC	; 88E2E
 call sprintf_	; 88E33
 add esp, byte 14h	; 88E38
 mov edx, unk_ED7BC	; 88E3B
 mov eax, unk_DDCFB	; 88E40
 call strcpy_	; 88E45
-loc_88E4A:
+.59:
 mov ebx, dword [leaguedbnames+14h]	; 88E4A
 mov ecx, str_extDB	; 88E50
 mov edx, curleague	; 88E55
@@ -3490,25 +3427,25 @@ call sub_932D0	; 88E75
 add esp, byte 0Ch	; 88E7A
 mov edx, dword [seasondb]	; 88E7D
 test edx, edx	; 88E83
-je short loc_88E90	; 88E85
+je short .60	; 88E85
 push edx	; 88E87
 call jctime	; 88E88
 add esp, byte 4	; 88E8D
-loc_88E90:
+.60:
 mov ecx, dword [careerdb]	; 88E90
 test ecx, ecx	; 88E96
-je short loc_88EA3	; 88E98
+je short .61	; 88E98
 push ecx	; 88E9A
 call jctime	; 88E9B
 add esp, byte 4	; 88EA0
-loc_88EA3:
+.61:
 mov eax, dword [keydb]	; 88EA3
 test eax, eax	; 88EA8
-je short loc_88EB5	; 88EAA
+je short .62	; 88EAA
 push eax	; 88EAC
 call jctime	; 88EAD
 add esp, byte 4	; 88EB2
-loc_88EB5:
+.62:
 xor ebx, ebx	; 88EB5
 mov dword [seasondb], ebx	; 88EB7
 mov dword [careerdb], ebx	; 88EBD
@@ -3517,49 +3454,49 @@ mov dword [seasondb_size], ebx	; 88EC9
 mov dword [careerdb_size], ebx	; 88ECF
 mov dword [keydb_size], ebx	; 88ED5
 cmp dword [byte esp+05Ch], byte 0Fh	; 88EDB
-jge near loc_891A6	; 88EE0
+jge near .83	; 88EE0
 test edi, edi	; 88EE6
-jl near loc_89128	; 88EE8
-mov eax, dword [dword_C5413]	; 88EEE
-cmp eax, dword [dword_C5417]	; 88EF3
-jne short loc_88F02	; 88EF9
-loc_88EFB:
+jl near .76	; 88EE8
+mov eax, dword [ctl1side]	; 88EEE
+cmp eax, dword [ctl2side]	; 88EF3
+jne short .64	; 88EF9
+.63:
 mov eax, 1	; 88EFB
-jmp short loc_88F38	; 88F00
-loc_88F02:
-cmp dword [dword_C5407], byte 0	; 88F02
+jmp short .66	; 88F00
+.64:
+cmp dword [ctl2team], byte 0	; 88F02
 setl al	; 88F09
 and eax, 0FFh	; 88F0C
-mov ebx, dword [dword_C5403]	; 88F11
+mov ebx, dword [ctl1team]	; 88F11
 test ebx, ebx	; 88F17
 setl dl	; 88F19
 and edx, 0FFh	; 88F1C
 xor eax, edx	; 88F22
-jne short loc_88EFB	; 88F24
+jne short POAfterGame.63	; 88F24
 test ebx, ebx	; 88F26
-jge short loc_88F33	; 88F28
-cmp dword [dword_C5407], byte 0	; 88F2A
-jl short loc_88F38	; 88F31
-loc_88F33:
+jge short .65	; 88F28
+cmp dword [ctl2team], byte 0	; 88F2A
+jl short .66	; 88F31
+.65:
 mov eax, 2	; 88F33
-loc_88F38:
+.66:
 cmp eax, byte 1	; 88F38
-jne short loc_88F78	; 88F3B
-cmp edi, dword [dword_C5403]	; 88F3D
-je near loc_8901A	; 88F43
-cmp edi, dword [dword_C5407]	; 88F49
-je near loc_8901A	; 88F4F
+jne short .67	; 88F3B
+cmp edi, dword [ctl1team]	; 88F3D
+je near .70	; 88F43
+cmp edi, dword [ctl2team]	; 88F49
+je near .70	; 88F4F
 mov eax, dword [esp]	; 88F55
 mov dword [byte eax+040h], 69h	; 88F58
 xor eax, eax	; 88F5F
 mov dword [off_CF983], eax	; 88F61
 mov eax, dword [esp]	; 88F66
-call sub_89223	; 88F69
+call SaveScheduleDB	; 88F69
 mov eax, 1	; 88F6E
-jmp near loc_891AA	; 88F73
-loc_88F78:
+jmp near .84	; 88F73
+.67:
 cmp eax, byte 2	; 88F78
-jne near loc_8901A	; 88F7B
+jne near .70	; 88F7B
 mov edx, dword [byte esp+044h]	; 88F81
 mov eax, edx	; 88F85
 shl eax, 2	; 88F87
@@ -3570,7 +3507,7 @@ shl eax, 5	; 88F91
 sub eax, edx	; 88F94
 add eax, unk_DBC30	; 88F96
 lea edx, [byte eax+05h]	; 88F9B
-mov eax, asc_D2A6C	; 88F9E
+mov eax, msg_POTeamOut_arg	; 88F9E
 call strcpy_	; 88FA3
 cmp dword [byte esp+044h], byte 0	; 88FA8
 sete al	; 88FAD
@@ -3585,25 +3522,25 @@ sub eax, edx	; 88FC4
 mov edx, unk_DBC30	; 88FC6
 add edx, eax	; 88FCB
 add edx, byte 5	; 88FCD
-mov eax, asc_D2AAF	; 88FD0
+mov eax, msg_POTeamOut_arg2	; 88FD0
 call strcpy_	; 88FD5
-cmp edi, dword [dword_C5403]	; 88FDA
-je short loc_88FFB	; 88FE0
-cmp dword [dword_C5413], byte 0	; 88FE2
+cmp edi, dword [ctl1team]	; 88FDA
+je short .68	; 88FE0
+cmp dword [ctl1side], byte 0	; 88FE2
 sete al	; 88FE9
 and eax, 0FFh	; 88FEC
 sub eax, byte 2	; 88FF1
-mov dword [dword_C5403], eax	; 88FF4
-jmp short loc_89012	; 88FF9
-loc_88FFB:
-cmp dword [dword_C5417], byte 0	; 88FFB
+mov dword [ctl1team], eax	; 88FF4
+jmp short .69	; 88FF9
+.68:
+cmp dword [ctl2side], byte 0	; 88FFB
 sete al	; 89002
 and eax, 0FFh	; 89005
 sub eax, byte 2	; 8900A
-mov dword [dword_C5407], eax	; 8900D
-loc_89012:
+mov dword [ctl2team], eax	; 8900D
+.69:
 mov dword [byte esp+048h], 2	; 89012
-loc_8901A:
+.70:
 mov eax, dword [byte esp+05Ch]	; 8901A
 mov edx, dword [esp]	; 8901E
 mov dword [byte edx+044h], eax	; 89021
@@ -3613,109 +3550,109 @@ mov word [HomeTeam], ax	; 89029
 xor eax, eax	; 8902F
 mov al, byte [byte esi+03h]	; 89031
 mov word [VisTeam], ax	; 89034
-mov ecx, dword [dword_C5403]	; 8903A
+mov ecx, dword [ctl1team]	; 8903A
 cmp edi, ecx	; 89040
-jne short loc_89086	; 89042
-mov ebp, dword [dword_C5407]	; 89044
+jne short .72	; 89042
+mov ebp, dword [ctl2team]	; 89044
 cmp ecx, ebp	; 8904A
-jne short loc_89086	; 8904C
+jne short .72	; 8904C
 xor eax, eax	; 8904E
 mov al, byte [byte esi+02h]	; 89050
-cmp eax, dword [dword_C5403]	; 89053
-jne short loc_89070	; 89059
+cmp eax, dword [ctl1team]	; 89053
+jne short .71	; 89059
 xor edi, ebp	; 8905B
-mov dword [dword_C5417], edi	; 8905D
+mov dword [ctl2side], edi	; 8905D
 xor ebp, ebp	; 89063
-mov dword [dword_C5413], ebp	; 89065
-jmp near loc_891A6	; 8906B
-loc_89070:
+mov dword [ctl1side], ebp	; 89065
+jmp near .83	; 8906B
+.71:
 mov ecx, 1	; 89070
-mov dword [dword_C5417], ecx	; 89075
-mov dword [dword_C5413], ecx	; 8907B
-jmp near loc_891A6	; 89081
-loc_89086:
-cmp edi, dword [dword_C5403]	; 89086
-jne short loc_890CF	; 8908C
+mov dword [ctl2side], ecx	; 89075
+mov dword [ctl1side], ecx	; 8907B
+jmp near .83	; 89081
+.72:
+cmp edi, dword [ctl1team]	; 89086
+jne short .74	; 8908C
 xor eax, eax	; 8908E
 mov al, byte [byte esi+02h]	; 89090
 cmp eax, edi	; 89093
-jne short loc_890AE	; 89095
+jne short .73	; 89095
 xor ebp, ebp	; 89097
-mov dword [dword_C5413], ebp	; 89099
-mov dword [dword_C5407], 0FFFFFFFEh	; 8909F
-jmp near loc_8919C	; 890A9
-loc_890AE:
-mov dword [dword_C5413], 1	; 890AE
-mov dword [dword_C5407], 0FFFFFFFFh	; 890B8
+mov dword [ctl1side], ebp	; 89099
+mov dword [ctl2team], 0FFFFFFFEh	; 8909F
+jmp near .82	; 890A9
+.73:
+mov dword [ctl1side], 1	; 890AE
+mov dword [ctl2team], 0FFFFFFFFh	; 890B8
 xor edi, edi	; 890C2
-mov dword [dword_C5417], edi	; 890C4
-jmp near loc_891A6	; 890CA
-loc_890CF:
-mov edx, dword [dword_C5407]	; 890CF
+mov dword [ctl2side], edi	; 890C4
+jmp near .83	; 890CA
+.74:
+mov edx, dword [ctl2team]	; 890CF
 cmp edi, edx	; 890D5
-jne near loc_891A6	; 890D7
+jne near .83	; 890D7
 xor eax, eax	; 890DD
 mov al, byte [byte esi+02h]	; 890DF
 cmp eax, edx	; 890E2
-jne short loc_89107	; 890E4
+jne short .75	; 890E4
 xor ebp, ebp	; 890E6
-mov dword [dword_C5417], ebp	; 890E8
-mov dword [dword_C5403], 0FFFFFFFEh	; 890EE
-mov dword [dword_C5413], 1	; 890F8
-jmp near loc_891A6	; 89102
-loc_89107:
-mov dword [dword_C5417], 1	; 89107
-mov dword [dword_C5403], 0FFFFFFFFh	; 89111
+mov dword [ctl2side], ebp	; 890E8
+mov dword [ctl1team], 0FFFFFFFEh	; 890EE
+mov dword [ctl1side], 1	; 890F8
+jmp near .83	; 89102
+.75:
+mov dword [ctl2side], 1	; 89107
+mov dword [ctl1team], 0FFFFFFFFh	; 89111
 xor edi, edx	; 8911B
-mov dword [dword_C5413], edi	; 8911D
-jmp near loc_891A6	; 89123
-loc_89128:
+mov dword [ctl1side], edi	; 8911D
+jmp near .83	; 89123
+.76:
 xor eax, eax	; 89128
 mov al, byte [byte esi+02h]	; 8912A
 mov word [HomeTeam], ax	; 8912D
 xor eax, eax	; 89133
 mov al, byte [byte esi+03h]	; 89135
 mov word [VisTeam], ax	; 89138
-mov esi, dword [dword_C5403]	; 8913E
+mov esi, dword [ctl1team]	; 8913E
 cmp esi, byte 0FFFFFFFFh	; 89144
-jne short loc_89151	; 89147
-loc_89149:
-mov dword [dword_C5413], ebx	; 89149
-jmp short loc_8916C	; 8914F
-loc_89151:
+jne short .78	; 89147
+.77:
+mov dword [ctl1side], ebx	; 89149
+jmp short .80	; 8914F
+.78:
 cmp esi, byte 0FFFFFFFEh	; 89151
-je short loc_89162	; 89154
-mov eax, dword [cont2team]	; 89156
+je short .79	; 89154
+mov eax, dword [HomeTeam-2]	; 89156
 sar eax, 10h	; 8915B
 cmp eax, esi	; 8915E
-je short loc_89149	; 89160
-loc_89162:
-mov dword [dword_C5413], 1	; 89162
-loc_8916C:
-mov esi, dword [dword_C5407]	; 8916C
+je short POAfterGame.77	; 89160
+.79:
+mov dword [ctl1side], 1	; 89162
+.80:
+mov esi, dword [ctl2team]	; 8916C
 cmp esi, byte 0FFFFFFFFh	; 89172
-jne short loc_89181	; 89175
+jne short .81	; 89175
 xor ecx, ecx	; 89177
-mov dword [dword_C5417], ecx	; 89179
-jmp short loc_891A6	; 8917F
-loc_89181:
+mov dword [ctl2side], ecx	; 89179
+jmp short .83	; 8917F
+.81:
 cmp esi, byte 0FFFFFFFEh	; 89181
-je short loc_8919C	; 89184
-mov eax, dword [cont2team]	; 89186
+je short .82	; 89184
+mov eax, dword [HomeTeam-2]	; 89186
 sar eax, 10h	; 8918B
 cmp eax, esi	; 8918E
-jne short loc_8919C	; 89190
+jne short .82	; 89190
 xor edx, edx	; 89192
-mov dword [dword_C5417], edx	; 89194
-jmp short loc_891A6	; 8919A
-loc_8919C:
-mov dword [dword_C5417], 1	; 8919C
-loc_891A6:
+mov dword [ctl2side], edx	; 89194
+jmp short .83	; 8919A
+.82:
+mov dword [ctl2side], 1	; 8919C
+.83:
 mov eax, dword [byte esp+048h]	; 891A6
-loc_891AA:
+.84:
 add esp, byte 60h	; 891AA
-jmp near loc_87B2C	; 891AD
-sub_891B2:
+jmp near POSeedRound2_x	; 891AD
+LoadScheduleDB:
 push dword 60h	; 891B2
 call __CHK	; 891B7
 push ebx	; 891BC
@@ -3724,8 +3661,8 @@ push edx	; 891BE
 push esi	; 891BF
 sub esp, byte 40h	; 891C0
 mov esi, eax	; 891C3
-push asc_C3A54	; 891C5
-push byte_DD750	; 891CA
+push str_Schedule	; 891C5
+push leaguedbfmt	; 891CA
 lea eax, [byte esp+08h]	; 891CF
 push eax	; 891D3
 call sprintf_	; 891D4
@@ -3737,9 +3674,9 @@ call sub_8E8B8	; 891E3
 add esp, byte 8	; 891E8
 mov dword [esi], eax	; 891EB
 test eax, eax	; 891ED
-jne short loc_89219	; 891EF
-push asc_C3A54	; 891F1
-push byte_DD710	; 891F6
+jne short .1	; 891EF
+push str_Schedule	; 891F1
+push leaguedbfmt2	; 891F6
 lea eax, [byte esp+08h]	; 891FB
 push eax	; 891FF
 call sprintf_	; 89200
@@ -3750,16 +3687,16 @@ push eax	; 8920E
 call sub_8E8B8	; 8920F
 add esp, byte 8	; 89214
 mov dword [esi], eax	; 89217
-loc_89219:
+.1:
 xor eax, eax	; 89219
-loc_8921B:
+LoadScheduleDB_x:
 add esp, byte 40h	; 8921B
 pop esi	; 8921E
 pop edx	; 8921F
 pop ecx	; 89220
 pop ebx	; 89221
 ret	; 89222
-sub_89223:
+SaveScheduleDB:
 push dword 60h	; 89223
 call __CHK	; 89228
 push ebx	; 8922D
@@ -3769,7 +3706,7 @@ push esi	; 89230
 sub esp, byte 40h	; 89231
 mov esi, eax	; 89234
 xor ecx, ecx	; 89236
-mov ebx, asc_C3A2B	; 89238
+mov ebx, str_ScheduleDb	; 89238
 mov edx, curleague	; 8923D
 mov eax, esp	; 89242
 call MakePath	; 89244
@@ -3784,8 +3721,8 @@ lea eax, [byte esp+08h]	; 89259
 push eax	; 8925D
 call sub_932D0	; 8925E
 add esp, byte 0Ch	; 89263
-jmp short loc_8921B	; 89266
-sub_89268:
+jmp short LoadScheduleDB_x	; 89266
+PlayoffModeLoop:
 push dword 58h	; 89268
 call __CHK	; 8926D
 push ebx	; 89272
@@ -3800,18 +3737,18 @@ xor edx, edx	; 8927D
 mov dword [byte esp+028h], edx	; 8927F
 mov dword [byte esp+024h], edx	; 89283
 mov dword [byte esp+020h], edx	; 89287
-mov eax, unk_C5298	; 8928B
-call sub_3271B	; 89290
-mov eax, dword_C530D	; 89295
-call sub_327A1	; 8929A
+mov eax, exhstate	; 8928B
+call SaveModeState	; 89290
+mov eax, postate	; 89295
+call LoadModeState	; 8929A
 mov eax, 2	; 8929F
 call sub_1D100	; 892A4
 mov eax, 1	; 892A9
 call sub_1D610	; 892AE
 cmp dword [byte ebp+00h], byte 0	; 892B3
-jge short loc_892E0	; 892B7
+jge short .1	; 892B7
 xor ecx, ecx	; 892B9
-mov ebx, asc_C3A5D	; 892BB
+mov ebx, str_GameSav	; 892BB
 mov edx, curleague	; 892C0
 mov eax, esp	; 892C5
 call MakePath	; 892C7
@@ -3819,9 +3756,9 @@ mov edx, ebp	; 892CC
 mov eax, esp	; 892CE
 call FileOpenRead	; 892D0
 test eax, eax	; 892D5
-je short loc_892E0	; 892D7
+je short .1	; 892D7
 mov dword [byte ebp+00h], 0FFFFFFFFh	; 892D9
-loc_892E0:
+.1:
 push byte 0	; 892E0
 mov ecx, 0FAh	; 892E2
 mov ebx, 0F8h	; 892E7
@@ -3829,18 +3766,18 @@ mov edx, ecx	; 892EC
 mov eax, 0F9h	; 892EE
 call sub_30A0C	; 892F3
 cmp dword [byte ebp+00h], byte 0	; 892F8
-jl near loc_89524	; 892FC
+jl near .8	; 892FC
 call sub_148A5	; 89302
 test eax, eax	; 89307
-jne near loc_89524	; 89309
+jne near .8	; 89309
 lea eax, [byte esp+020h]	; 8930F
-call sub_891B2	; 89313
+call LoadScheduleDB	; 89313
 mov eax, dword [byte esp+020h]	; 89318
 add eax, byte 2	; 8931C
 mov dword [byte esp+020h], eax	; 8931F
 mov eax, dword [byte eax+040h]	; 89323
 add eax, 444h	; 89326
-mov dword [dword_DC234], eax	; 8932B
+mov dword [schedgameidx], eax	; 8932B
 mov eax, dword [byte esp+020h]	; 89330
 sub eax, byte 2	; 89334
 push eax	; 89337
@@ -3849,17 +3786,17 @@ add esp, byte 4	; 8933D
 xor edx, edx	; 89340
 mov dword [byte esp+020h], edx	; 89342
 cmp byte [musicon], 0	; 89346
-je short loc_8936C	; 8934D
+je short .2	; 8934D
 cmp dword [songdata], byte 0	; 8934F
-je short loc_8936C	; 89356
+je short .2	; 89356
 mov eax, dword [musichandle]	; 89358
 mov ebx, 64h	; 8935D
 mov edx, 3	; 89362
 call sub_8FCDF	; 89367
-loc_8936C:
+.2:
 push byte 20h	; 8936C
 push dword 300h	; 8936E
-push asc_C39B3	; 89373
+push str_Palette	; 89373
 call sub_8CCA8	; 89378
 mov esi, eax	; 8937D
 add esp, byte 0Ch	; 8937F
@@ -3876,16 +3813,16 @@ push esi	; 893A3
 call jctime	; 893A4
 add esp, byte 4	; 893A9
 cmp byte [musicon], 0	; 893AC
-je short loc_893F3	; 893B3
+je short .4	; 893B3
 cmp dword [songdata], byte 0	; 893B5
-je short loc_893F3	; 893BC
-loc_893BE:
+je short .4	; 893BC
+.3:
 mov eax, dword [musicslot-3]	; 893BE
 sar eax, 18h	; 893C3
 mov edx, 3	; 893C6
 call sub_8FC8A	; 893CB
 test eax, eax	; 893D0
-je short loc_893BE	; 893D2
+je short PlayoffModeLoop.3	; 893D2
 mov esi, dword [songdata]	; 893D4
 push esi	; 893DA
 call sub_8D2F0	; 893DB
@@ -3893,9 +3830,9 @@ add esp, byte 4	; 893E0
 xor edi, edi	; 893E3
 mov dword [songdata], edi	; 893E5
 mov dword [byte esp+024h], 1	; 893EB
-loc_893F3:
+.4:
 call sub_479E9	; 893F3
-call sub_8B85B	; 893F8
+call SetSideControls	; 893F8
 call sub_10712	; 893FD
 mov dword [dword_C65C0], sub_20016	; 89402
 mov dword [dword_C65C4], sub_20171	; 8940C
@@ -3911,15 +3848,15 @@ mov dword [dword_C65CC], sub_20D97	; 89459
 mov dword [dword_C65D0], unk_20EB7	; 89463
 mov word [scrpitch], 50h	; 8946D
 cmp dword [byte esp+020h], byte 0	; 89476
-jne short loc_8948B	; 8947B
+jne short .5	; 8947B
 lea eax, [byte esp+020h]	; 8947D
-call sub_891B2	; 89481
+call LoadScheduleDB	; 89481
 add dword [byte esp+020h], byte 2	; 89486
-loc_8948B:
+.5:
 cmp dword [dword_C53F7], byte 1	; 8948B
-jne short loc_894DF	; 89492
+jne short .7	; 89492
 xor ecx, ecx	; 89494
-mov ebx, asc_C3A5D	; 89496
+mov ebx, str_GameSav	; 89496
 mov edx, curleague	; 8949B
 mov eax, esp	; 894A0
 call MakePath	; 894A2
@@ -3927,21 +3864,21 @@ mov edx, ebp	; 894A7
 mov eax, esp	; 894A9
 call FileOpenRead	; 894AB
 test eax, eax	; 894B0
-jne short loc_894C9	; 894B2
+jne short .6	; 894B2
 mov eax, esp	; 894B4
 call j_unlink_	; 894B6
-and byte [byte_C5367], 7Fh	; 894BB
-and byte [byte_C5400], 7Fh	; 894C2
-loc_894C9:
+and byte [postate+5Ah], 7Fh	; 894BB
+and byte [gameopts+1], 7Fh	; 894C2
+.6:
 mov eax, dword [byte esp+020h]	; 894C9
-call sub_8873C	; 894CD
+call POAfterGame	; 894CD
 mov dword [byte esp+028h], eax	; 894D2
 mov eax, dword [byte esp+020h]	; 894D6
-call sub_89223	; 894DA
-loc_894DF:
+call SaveScheduleDB	; 894DA
+.7:
 push byte 20h	; 894DF
 push dword 300h	; 894E1
-push asc_C39B3	; 894E6
+push str_Palette	; 894E6
 call sub_8CCA8	; 894EB
 mov esi, eax	; 894F0
 add esp, byte 0Ch	; 894F2
@@ -3958,58 +3895,58 @@ push esi	; 89516
 call jctime	; 89517
 add esp, byte 4	; 8951C
 call sub_6B410	; 8951F
-loc_89524:
+.8:
 cmp dword [byte ebp+00h], byte 0	; 89524
-jl short loc_89531	; 89528
+jl short .9	; 89528
 mov eax, ebp	; 8952A
 call FileClose	; 8952C
-loc_89531:
+.9:
 cmp dword [byte esp+020h], byte 0	; 89531
-jne short loc_89546	; 89536
+jne short .10	; 89536
 lea eax, [byte esp+020h]	; 89538
-call sub_891B2	; 8953C
+call LoadScheduleDB	; 8953C
 add dword [byte esp+020h], byte 2	; 89541
-loc_89546:
+.10:
 mov edi, dword [byte esp+020h]	; 89546
 add edi, 1998h	; 8954A
 xor esi, esi	; 89550
 mov ebx, 1Ah	; 89552
-loc_89557:
+.11:
 xor edx, edx	; 89557
 mov dl, byte [byte edi+02h]	; 89559
 mov eax, esi	; 8955C
 shl eax, 2	; 8955E
-mov dword [dword eax+dword_DC7B8], edx	; 89561
+mov dword [dword eax+playofftree], edx	; 89561
 xor edx, edx	; 89567
 mov dl, byte [byte edi+03h]	; 89569
-mov dword [dword eax+dword_DC7BC], edx	; 8956C
-cmp dword [dword eax+dword_DC7B8], 0FFh	; 89572
-jne short loc_89584	; 8957C
-mov dword [dword eax+dword_DC7B8], ebx	; 8957E
-loc_89584:
+mov dword [dword eax+playofftree_p1], edx	; 8956C
+cmp dword [dword eax+playofftree], 0FFh	; 89572
+jne short .12	; 8957C
+mov dword [dword eax+playofftree], ebx	; 8957E
+.12:
 mov eax, esi	; 89584
 shl eax, 2	; 89586
-cmp dword [dword eax+dword_DC7BC], 0FFh	; 89589
-jne short loc_8959F	; 89593
-mov dword [dword eax+dword_DC7BC], 1Ah	; 89595
-loc_8959F:
+cmp dword [dword eax+playofftree_p1], 0FFh	; 89589
+jne short .13	; 89593
+mov dword [dword eax+playofftree_p1], 1Ah	; 89595
+.13:
 add esi, byte 2	; 8959F
 add edi, byte 2Ah	; 895A2
 cmp esi, byte 1Eh	; 895A5
-jl short loc_89557	; 895A8
+jl short PlayoffModeLoop.11	; 895A8
 mov edi, dword [byte esp+020h]	; 895AA
 add edi, 1BE4h	; 895AE
 mov eax, dword [byte esp+020h]	; 895B4
 mov edx, dword [dword eax+088h]	; 895B8
 mov eax, edi	; 895BE
 call SeriesWinner	; 895C0
-mov dword [dword_DC830], eax	; 895C5
+mov dword [pochampion], eax	; 895C5
 cmp eax, byte 0FFFFFFFFh	; 895CA
-jne short loc_895D9	; 895CD
-mov dword [dword_DC830], 1Ah	; 895CF
-loc_895D9:
+jne short .14	; 895CD
+mov dword [pochampion], 1Ah	; 895CF
+.14:
 xor esi, esi	; 895D9
-loc_895DB:
+.15:
 mov edx, dword [nosplit esi*4+teamcitynames]	; 895DB
 mov edi, esi	; 895E2
 shl edi, 2	; 895E4
@@ -4021,21 +3958,21 @@ add eax, edi	; 895F3
 call strcpy_	; 895F5
 inc esi	; 895FA
 cmp esi, byte 1Ah	; 895FB
-jl short loc_895DB	; 895FE
+jl short PlayoffModeLoop.15	; 895FE
 mov edx, unk_C3A66	; 89600
 mov eax, unk_DDCE6	; 89605
 call strcpy_	; 8960A
 mov ecx, dword [dword_C65AC]	; 8960F
 test ecx, ecx	; 89615
-jne short loc_8964C	; 89617
-mov ebx, asc_C39BB	; 89619
+jne short .18	; 89617
+mov ebx, str_Embscup	; 89619
 cmp byte [byte_ED859], 1	; 8961E
-jne short loc_8962F	; 89625
+jne short .16	; 89625
 mov edx, dword [dword_D2C6B]	; 89627
-jmp short loc_89631	; 8962D
-loc_8962F:
+jmp short .17	; 8962D
+.16:
 xor edx, edx	; 8962F
-loc_89631:
+.17:
 mov eax, esp	; 89631
 call MakePath	; 89633
 push byte 20h	; 89638
@@ -4044,19 +3981,19 @@ push eax	; 8963E
 call sub_8E83C	; 8963F
 add esp, byte 8	; 89644
 mov dword [dword_C65AC], eax	; 89647
-loc_8964C:
+.18:
 cmp dword [byte esp+024h], byte 0	; 8964C
-jne short loc_89670	; 89651
+jne short .19	; 89651
 cmp byte [musicon], 0	; 89653
-je short loc_89670	; 8965A
+je short .19	; 8965A
 mov eax, dword [musichandle]	; 8965C
 mov ebx, 64h	; 89661
 mov edx, 3	; 89666
 call sub_8FCDF	; 8966B
-loc_89670:
+.19:
 push byte 20h	; 89670
 push dword 300h	; 89672
-push asc_C39B3	; 89677
+push str_Palette	; 89677
 call sub_8CCA8	; 8967C
 mov esi, eax	; 89681
 add esp, byte 0Ch	; 89683
@@ -4073,31 +4010,31 @@ push esi	; 896A7
 call jctime	; 896A8
 add esp, byte 4	; 896AD
 cmp dword [byte esp+024h], byte 0	; 896B0
-jne short loc_896F0	; 896B5
+jne short .22	; 896B5
 cmp byte [musicon], 0	; 896B7
-je short loc_896F0	; 896BE
-loc_896C0:
+je short .22	; 896BE
+.20:
 mov eax, dword [musicslot-3]	; 896C0
 sar eax, 18h	; 896C5
 mov edx, 3	; 896C8
 call sub_8FC8A	; 896CD
 test eax, eax	; 896D2
-je short loc_896C0	; 896D4
+je short PlayoffModeLoop.20	; 896D4
 mov eax, dword [songdata]	; 896D6
 test eax, eax	; 896DB
-je short loc_896E8	; 896DD
+je short .21	; 896DD
 push eax	; 896DF
 call sub_8D2F0	; 896E0
 add esp, byte 4	; 896E5
-loc_896E8:
+.21:
 xor ebx, ebx	; 896E8
 mov dword [songdata], ebx	; 896EA
-loc_896F0:
+.22:
 mov edx, dword [byte esp+020h]	; 896F0
 mov eax, dword [byte esp+028h]	; 896F4
-call sub_88096	; 896F8
+call POHandleElimination	; 896F8
 mov eax, dword [byte esp+020h]	; 896FD
-call sub_89223	; 89701
+call SaveScheduleDB	; 89701
 mov ebx, dword [byte esp+020h]	; 89706
 mov ebx, dword [byte ebx+040h]	; 8970A
 lea edx, [dword ebx+0444h]	; 8970D
@@ -4112,19 +4049,19 @@ mov eax, ebx	; 89727
 mov edx, ebx	; 89729
 sar edx, 1Fh	; 8972B
 idiv ecx	; 8972E
-mov dword [dword_D29FB], edx	; 89730
+mov dword [seriesgameno], edx	; 89730
 mov eax, ebx	; 89736
 mov edx, ebx	; 89738
 sar edx, 1Fh	; 8973A
 idiv ecx	; 8973D
 cmp eax, byte 0Fh	; 8973F
-jge short loc_89750	; 89742
+jge short .23	; 89742
 mov dword [off_CF983], sub_86627	; 89744
-jmp short loc_89758	; 8974E
-loc_89750:
+jmp short .24	; 8974E
+.23:
 xor ecx, ecx	; 89750
 mov dword [off_CF983], ecx	; 89752
-loc_89758:
+.24:
 xor eax, eax	; 89758
 mov dword [dword_C6D26], eax	; 8975A
 push byte 42h	; 8975F
@@ -4136,27 +4073,27 @@ call sub_6B5E4	; 89775
 mov eax, dword [byte esp+020h]	; 8977A
 mov edx, dword [byte eax+044h]	; 8977E
 push edx	; 89781
-loc_89782:
+.25:
 push byte 42h	; 89782
 mov ecx, 41h	; 89784
 mov ebx, 40h	; 89789
 mov edx, 3	; 8978E
 mov eax, unk_CF90F	; 89793
-call sub_89BD2	; 89798
+call PlayoffTreeMenu	; 89798
 test eax, eax	; 8979D
-jne near loc_89ACC	; 8979F
+jne near .38	; 8979F
 mov eax, dword [dword_C65AC]	; 897A5
 test eax, eax	; 897AA
-je short loc_897BF	; 897AC
+je short .26	; 897AC
 push eax	; 897AE
 call jctime	; 897AF
 add esp, byte 4	; 897B4
 xor ebx, ebx	; 897B7
 mov dword [dword_C65AC], ebx	; 897B9
-loc_897BF:
+.26:
 push byte 20h	; 897BF
 push dword 300h	; 897C1
-push asc_C39B3	; 897C6
+push str_Palette	; 897C6
 call sub_8CCA8	; 897CB
 mov esi, eax	; 897D0
 add esp, byte 0Ch	; 897D2
@@ -4185,7 +4122,7 @@ call sub_B4B88	; 89820
 add esp, byte 0Ch	; 89825
 call sub_148A5	; 89828
 test eax, eax	; 8982D
-jne near loc_8996C	; 8982F
+jne near .30	; 8982F
 mov ebx, 1	; 89835
 mov edx, esi	; 8983A
 mov eax, ebx	; 8983C
@@ -4194,17 +4131,17 @@ push esi	; 89843
 call jctime	; 89844
 add esp, byte 4	; 89849
 call sub_10712	; 8984C
-mov eax, dword_C530D	; 89851
-call sub_32B1D	; 89856
+mov eax, postate	; 89851
+call WriteModeState	; 89856
 mov eax, dword [byte esp+020h]	; 8985B
-call sub_89223	; 8985F
+call SaveScheduleDB	; 8985F
 mov eax, dword [byte esp+020h]	; 89864
 mov eax, dword [byte eax+040h]	; 89868
 add eax, 444h	; 8986B
-mov dword [dword_DC234], eax	; 89870
-call sub_8B85B	; 89875
+mov dword [schedgameidx], eax	; 89870
+call SetSideControls	; 89875
 xor ecx, ecx	; 8987A
-mov ebx, asc_C3A5D	; 8987C
+mov ebx, str_GameSav	; 8987C
 mov edx, curleague	; 89881
 mov eax, esp	; 89886
 call MakePath	; 89888
@@ -4212,25 +4149,25 @@ mov edx, ebp	; 8988D
 mov eax, esp	; 8988F
 call FileOpenRead	; 89891
 test eax, eax	; 89896
-je short loc_898D0	; 89898
+je short .27	; 89898
 mov dword [byte ebp+00h], 0FFFFFFFFh	; 8989A
 xor edx, edx	; 898A1
 mov dl, byte [byte edi+01h]	; 898A3
 xor eax, eax	; 898A6
 mov al, byte [edi]	; 898A8
 call sub_1BEFD	; 898AA
-mov edx, dword [HomeTeam]	; 898AF
+mov edx, dword [VisTeam-2]	; 898AF
 sar edx, 10h	; 898B5
-mov eax, dword [cont2team]	; 898B8
+mov eax, dword [HomeTeam-2]	; 898B8
 sar eax, 10h	; 898BD
 call sub_29F28	; 898C0
 mov dword [byte esp+02Ch], eax	; 898C5
 call sub_6B47C	; 898C9
-jmp short loc_898D9	; 898CE
-loc_898D0:
+jmp short .28	; 898CE
+.27:
 mov dword [byte esp+02Ch], eax	; 898D0
 call sub_479E9	; 898D4
-loc_898D9:
+.28:
 mov eax, dword [byte esp+020h]	; 898D9
 sub eax, byte 2	; 898DD
 push eax	; 898E0
@@ -4239,7 +4176,7 @@ add esp, byte 4	; 898E6
 xor edi, edi	; 898E9
 mov dword [byte esp+020h], edi	; 898EB
 test byte [byte esp+02Ch], 4	; 898EF
-jne short loc_89961	; 898F4
+jne short .29	; 898F4
 mov dword [dword_C65C0], sub_20016	; 898F6
 mov dword [dword_C65C4], sub_20171	; 89900
 mov dword [dword_C65C8], sub_202E5	; 8990A
@@ -4252,10 +4189,10 @@ mov dword [dword_C65C4], unk_20A46	; 89939
 mov dword [dword_C65C8], unk_20BBD	; 89943
 mov dword [dword_C65CC], sub_20D97	; 8994D
 mov dword [dword_C65D0], unk_20EB7	; 89957
-loc_89961:
+.29:
 mov word [scrpitch], 50h	; 89961
-jmp short loc_8998B	; 8996A
-loc_8996C:
+jmp short .31	; 8996A
+.30:
 mov ebx, 1	; 8996C
 mov edx, esi	; 89971
 mov eax, ebx	; 89973
@@ -4264,27 +4201,27 @@ push esi	; 8997A
 call jctime	; 8997B
 add esp, byte 4	; 89980
 mov dword [byte esp+02Ch], 4	; 89983
-loc_8998B:
+.31:
 cmp dword [byte esp+020h], byte 0	; 8998B
-jne short loc_899A0	; 89990
+jne short .32	; 89990
 lea eax, [byte esp+020h]	; 89992
-call sub_891B2	; 89996
+call LoadScheduleDB	; 89996
 add dword [byte esp+020h], byte 2	; 8999B
-loc_899A0:
+.32:
 cmp dword [dword_C53F7], byte 1	; 899A0
-jne short loc_899C8	; 899A7
+jne short .33	; 899A7
 test byte [byte esp+02Ch], 4	; 899A9
-jne short loc_899C8	; 899AE
+jne short .33	; 899AE
 mov eax, dword [byte esp+020h]	; 899B0
-call sub_8873C	; 899B4
+call POAfterGame	; 899B4
 mov dword [byte esp+028h], eax	; 899B9
 mov eax, dword [byte esp+020h]	; 899BD
-call sub_89223	; 899C1
-jmp short loc_899CE	; 899C6
-loc_899C8:
+call SaveScheduleDB	; 899C1
+jmp short .34	; 899C6
+.33:
 xor edx, edx	; 899C8
 mov dword [byte esp+028h], edx	; 899CA
-loc_899CE:
+.34:
 mov eax, dword [byte esp+020h]	; 899CE
 mov edx, dword [byte eax+040h]	; 899D2
 add edx, 444h	; 899D5
@@ -4295,16 +4232,16 @@ add eax, eax	; 899E2
 mov edi, dword [byte esp+020h]	; 899E4
 add edi, eax	; 899E8
 cmp dword [dword_C65AC], byte 0	; 899EA
-jne short loc_89A28	; 899F1
+jne short .37	; 899F1
 xor ecx, ecx	; 899F3
-mov ebx, asc_C39BB	; 899F5
+mov ebx, str_Embscup	; 899F5
 cmp byte [byte_ED859], 1	; 899FA
-jne short loc_89A0B	; 89A01
+jne short .35	; 89A01
 mov edx, dword [dword_D2C6B]	; 89A03
-jmp short loc_89A0D	; 89A09
-loc_89A0B:
+jmp short .36	; 89A09
+.35:
 xor edx, edx	; 89A0B
-loc_89A0D:
+.36:
 mov eax, esp	; 89A0D
 call MakePath	; 89A0F
 push byte 20h	; 89A14
@@ -4313,10 +4250,10 @@ push eax	; 89A1A
 call sub_8E83C	; 89A1B
 add esp, byte 8	; 89A20
 mov dword [dword_C65AC], eax	; 89A23
-loc_89A28:
+.37:
 push byte 20h	; 89A28
 push dword 300h	; 89A2A
-push asc_C39B3	; 89A2F
+push str_Palette	; 89A2F
 call sub_8CCA8	; 89A34
 mov esi, eax	; 89A39
 add esp, byte 0Ch	; 89A3B
@@ -4343,21 +4280,21 @@ call sub_6B5E4	; 89A86
 call sub_6B410	; 89A8B
 mov edx, dword [byte esp+020h]	; 89A90
 mov eax, dword [byte esp+028h]	; 89A94
-call sub_88096	; 89A98
+call POHandleElimination	; 89A98
 mov eax, dword [byte esp+020h]	; 89A9D
-call sub_89223	; 89AA1
+call SaveScheduleDB	; 89AA1
 mov edx, dword [byte esp+020h]	; 89AA6
 mov edx, dword [byte edx+040h]	; 89AAA
 mov ebx, 7	; 89AAD
 mov eax, edx	; 89AB2
 sar edx, 1Fh	; 89AB4
 idiv ebx	; 89AB7
-mov dword [dword_D29FB], edx	; 89AB9
+mov dword [seriesgameno], edx	; 89AB9
 mov eax, dword [byte esp+020h]	; 89ABF
 mov esi, dword [byte eax+044h]	; 89AC3
 push esi	; 89AC6
-jmp near loc_89782	; 89AC7
-loc_89ACC:
+jmp near PlayoffModeLoop.25	; 89AC7
+.38:
 mov eax, dword [byte esp+020h]	; 89ACC
 sub eax, byte 2	; 89AD0
 push eax	; 89AD3
@@ -4365,16 +4302,16 @@ call jctime	; 89AD4
 add esp, byte 4	; 89AD9
 mov ebx, dword [dword_C65AC]	; 89ADC
 test ebx, ebx	; 89AE2
-je short loc_89AF7	; 89AE4
+je short .39	; 89AE4
 push ebx	; 89AE6
 call jctime	; 89AE7
 add esp, byte 4	; 89AEC
 xor esi, esi	; 89AEF
 mov dword [dword_C65AC], esi	; 89AF1
-loc_89AF7:
+.39:
 push byte 20h	; 89AF7
 push dword 300h	; 89AF9
-push asc_C39B3	; 89AFE
+push str_Palette	; 89AFE
 call sub_8CCA8	; 89B03
 mov esi, eax	; 89B08
 add esp, byte 0Ch	; 89B0A
@@ -4392,18 +4329,18 @@ call jctime	; 89B2F
 add esp, byte 4	; 89B34
 xor eax, eax	; 89B37
 call sub_1D100	; 89B39
-mov eax, dword_C530D	; 89B3E
-call sub_32B1D	; 89B43
-mov eax, unk_C5298	; 89B48
-call sub_327A1	; 89B4D
+mov eax, postate	; 89B3E
+call WriteModeState	; 89B43
+mov eax, exhstate	; 89B48
+call LoadModeState	; 89B4D
 mov eax, 2	; 89B52
-jmp near loc_87B29	; 89B57
-sub_89B5C:
+jmp near POSeedRound2_x30	; 89B57
+POReturnZero:
 push dword 4	; 89B5C
 call __CHK	; 89B61
 xor eax, eax	; 89B66
 ret	; 89B68
-sub_89B69:
+POHiliteSlot:
 push dword 30h	; 89B69
 call __CHK	; 89B6E
 push ebx	; 89B73
@@ -4417,12 +4354,12 @@ mov dword [esp], edi	; 89B82
 mov esi, dword [nosplit eax*4+dword_D2BEC]	; 89B85
 add edi, byte 74h	; 89B8C
 cmp eax, byte 1Ch	; 89B8F
-jge short loc_89B99	; 89B92
+jge short .1	; 89B92
 lea ebp, [byte esi+01Fh]	; 89B94
-jmp short loc_89B9C	; 89B97
-loc_89B99:
+jmp short .2	; 89B97
+.1:
 lea ebp, [byte esi+03Ch]	; 89B99
-loc_89B9C:
+.2:
 push dword 80h	; 89B9C
 push ebp	; 89BA1
 push edi	; 89BA2
@@ -4444,8 +4381,8 @@ push eax	; 89BC1
 call sub_92F50	; 89BC2
 add esp, byte 14h	; 89BC7
 add esp, byte 4	; 89BCA
-jmp near sub_8751A	; 89BCD
-sub_89BD2:
+jmp near POCreateSchedule_x	; 89BCD
+PlayoffTreeMenu:
 push dword 0F4h	; 89BD2
 call __CHK	; 89BD7
 push esi	; 89BDC
@@ -4486,7 +4423,7 @@ imul eax, edx	; 89C4D
 add eax, byte 11h	; 89C50
 push byte 20h	; 89C53
 push eax	; 89C55
-push asc_C3A68	; 89C56
+push str_Pointer	; 89C56
 call sub_8CCA8	; 89C5B
 mov ebp, eax	; 89C60
 add esp, byte 0Ch	; 89C62
@@ -4558,37 +4495,37 @@ mov eax, dword [dword esp+0E8h]	; 89D3C
 add eax, eax	; 89D43
 mov dword [dword esp+0C8h], eax	; 89D45
 cmp eax, byte 1Eh	; 89D4C
-jne short loc_89D58	; 89D4F
+jne short .1	; 89D4F
 mov edx, 0FFFFFFFFh	; 89D51
-jmp short loc_89D5B	; 89D56
-loc_89D58:
+jmp short .2	; 89D56
+.1:
 lea edx, [byte eax+01h]	; 89D58
-loc_89D5B:
+.2:
 mov dword [dword esp+0C4h], edx	; 89D5B
 mov eax, dword [dword esp+0C8h]	; 89D62
-call sub_89B69	; 89D69
-loc_89D6E:
+call POHiliteSlot	; 89D69
+.3:
 xor ecx, ecx	; 89D6E
-loc_89D70:
+.4:
 call sub_6B391	; 89D70
 test eax, eax	; 89D75
-je short loc_89D93	; 89D77
+je short .5	; 89D77
 lea ebx, [dword esp+0A4h]	; 89D79
 lea edx, [dword esp+0A8h]	; 89D80
 call dword [dword_EA0DC]	; 89D87
 mov ecx, eax	; 89D8D
 test al, 2	; 89D8F
-je short loc_89D70	; 89D91
-loc_89D93:
+je short PlayoffTreeMenu.4	; 89D91
+.5:
 test cl, 2	; 89D93
-jne near loc_89E35	; 89D96
+jne near .8	; 89D96
 mov eax, dword [dword esp+0A8h]	; 89D9C
 cmp eax, dword [dword esp+0B4h]	; 89DA3
-jne short loc_89DBC	; 89DAA
+jne short .6	; 89DAA
 mov eax, dword [dword esp+0A4h]	; 89DAC
 cmp eax, dword [dword esp+0D0h]	; 89DB3
-je short loc_89D6E	; 89DBA
-loc_89DBC:
+je short PlayoffTreeMenu.3	; 89DBA
+.6:
 mov ecx, dword [dword esp+0D0h]	; 89DBC
 push ecx	; 89DC3
 mov esi, dword [dword esp+0B8h]	; 89DC4
@@ -4602,7 +4539,7 @@ push ebp	; 89DE3
 mov eax, dword [dword esp+0ACh]	; 89DE4
 push eax	; 89DEB
 push edi	; 89DEC
-loc_89DED:
+.7:
 call sub_91400	; 89DED
 add esp, byte 0Ch	; 89DF2
 mov ebx, dword [dword esp+0A4h]	; 89DF5
@@ -4617,8 +4554,8 @@ mov eax, dword [dword esp+0A8h]	; 89E14
 mov dword [dword esp+0B4h], eax	; 89E1B
 mov eax, dword [dword esp+0A4h]	; 89E22
 mov dword [dword esp+0D0h], eax	; 89E29
-jmp near loc_89D6E	; 89E30
-loc_89E35:
+jmp near PlayoffTreeMenu.3	; 89E30
+.8:
 mov edi, dword [dword esp+0D0h]	; 89E35
 push edi	; 89E3C
 mov ebp, dword [dword esp+0B8h]	; 89E3D
@@ -4641,7 +4578,7 @@ mov edx, dword [dword esp+0B4h]	; 89E80
 mov eax, dword [dword esp+0B8h]	; 89E87
 call sub_6BA4D	; 89E8E
 test eax, eax	; 89E93
-je near loc_8A5AF	; 89E95
+je near .33	; 89E95
 mov edx, dword [dword esp+0A0h]	; 89E9B
 shl edx, 2	; 89EA2
 mov eax, dword [dword esp+09Ch]	; 89EA5
@@ -4649,10 +4586,10 @@ shl eax, 5	; 89EAC
 mov ebx, dword [byte esp+edx+070h]	; 89EAF
 add eax, ebx	; 89EB3
 cmp dword [byte eax+014h], byte 0	; 89EB5
-je near loc_8A284	; 89EB9
+je near .23	; 89EB9
 mov eax, dword [dword esp+09Ch]	; 89EBF
 cmp eax, dword [byte esp+edx+050h]	; 89EC6
-jne near loc_8A1F3	; 89ECA
+jne near .20	; 89ECA
 mov edi, dword [dword esp+0D0h]	; 89ED0
 push edi	; 89ED7
 push ebp	; 89ED8
@@ -4661,13 +4598,13 @@ push eax	; 89EE0
 call sub_903F0	; 89EE1
 add esp, byte 0Ch	; 89EE6
 mov esi, 3	; 89EE9
-jmp short loc_89F28	; 89EEE
-loc_89EF0:
+jmp short .11	; 89EEE
+.9:
 mov ebp, esi	; 89EF0
 shl ebp, 2	; 89EF2
 mov edi, dword [byte esp+ebp+060h]	; 89EF5
 test edi, edi	; 89EF9
-je short loc_89F27	; 89EFB
+je short .10	; 89EFB
 mov eax, dword [byte esp+esi*8+014h]	; 89EFD
 push eax	; 89F01
 mov edx, dword [byte esp+esi*8+014h]	; 89F02
@@ -4682,16 +4619,16 @@ mov edi, dword [byte esp+ebp+060h]	; 89F1A
 push edi	; 89F1E
 call jctime	; 89F1F
 add esp, byte 4	; 89F24
-loc_89F27:
+.10:
 dec esi	; 89F27
-loc_89F28:
+.11:
 test esi, esi	; 89F28
-jge short loc_89EF0	; 89F2A
+jge short PlayoffTreeMenu.9	; 89F2A
 xor edi, edi	; 89F2C
 mov dword [dword esp+0B8h], edi	; 89F2E
 mov edx, dword [dword esp+0C4h]	; 89F35
 mov eax, dword [dword esp+0C8h]	; 89F3C
-call sub_89B69	; 89F43
+call POHiliteSlot	; 89F43
 mov eax, dword [off_C6D22]	; 89F48
 sar eax, 10h	; 89F4D
 mov dword [dword esp+0CCh], eax	; 89F50
@@ -4741,7 +4678,7 @@ imul eax, edx	; 8A014
 add eax, byte 11h	; 8A017
 push byte 20h	; 8A01A
 push eax	; 8A01C
-push asc_C3A68	; 8A01D
+push str_Pointer	; 8A01D
 call sub_8CCA8	; 8A022
 add esp, byte 0Ch	; 8A027
 mov dword [dword esp+0B0h], eax	; 8A02A
@@ -4768,31 +4705,31 @@ mov dword [dword esp+08Ch], edx	; 8A06C
 mov dword [dword esp+088h], edx	; 8A073
 mov dword [dword esp+084h], edx	; 8A07A
 cmp ebp, byte 1	; 8A081
-jne short loc_8A096	; 8A084
+jne short .12	; 8A084
 push eax	; 8A086
 call jctime	; 8A087
 add esp, byte 4	; 8A08C
 mov eax, ebp	; 8A08F
-jmp near loc_8A646	; 8A091
-loc_8A096:
+jmp near .x	; 8A091
+.12:
 cmp ebp, byte 4	; 8A096
-jne short loc_8A0AB	; 8A099
+jne short .13	; 8A099
 push eax	; 8A09B
 call jctime	; 8A09C
 add esp, byte 4	; 8A0A1
 xor eax, eax	; 8A0A4
-jmp near loc_8A646	; 8A0A6
-loc_8A0AB:
+jmp near .x	; 8A0A6
+.13:
 cmp ebp, byte 2	; 8A0AB
-jne near loc_8A17A	; 8A0AE
+jne near .18	; 8A0AE
 mov ecx, dword [dword_C65AC]	; 8A0B4
 test ecx, ecx	; 8A0BA
-jne short loc_8A0EF	; 8A0BC
-mov ebx, asc_C39BB	; 8A0BE
+jne short .15	; 8A0BC
+mov ebx, str_Embscup	; 8A0BE
 cmp byte [byte_ED859], 1	; 8A0C3
-jne short loc_8A0D2	; 8A0CA
+jne short .14	; 8A0CA
 mov edx, dword [dword_D2C6B]	; 8A0CC
-loc_8A0D2:
+.14:
 lea eax, [byte esp+030h]	; 8A0D2
 call MakePath	; 8A0D6
 push byte 20h	; 8A0DB
@@ -4801,16 +4738,16 @@ push eax	; 8A0E1
 call sub_8E83C	; 8A0E2
 add esp, byte 8	; 8A0E7
 mov dword [dword_C65AC], eax	; 8A0EA
-loc_8A0EF:
+.15:
 xor ecx, ecx	; 8A0EF
-mov ebx, asc_C39C8	; 8A0F1
+mov ebx, str_Embpal	; 8A0F1
 cmp byte [byte_ED85A], 1	; 8A0F6
-jne short loc_8A107	; 8A0FD
+jne short .16	; 8A0FD
 mov edx, dword [dword_D2C6B]	; 8A0FF
-jmp short loc_8A109	; 8A105
-loc_8A107:
+jmp short .17	; 8A105
+.16:
 xor edx, edx	; 8A107
-loc_8A109:
+.17:
 lea eax, [byte esp+030h]	; 8A109
 call MakePath	; 8A10D
 push byte 0	; 8A112
@@ -4819,7 +4756,7 @@ push eax	; 8A118
 call sub_8E83C	; 8A119
 mov esi, eax	; 8A11E
 add esp, byte 8	; 8A120
-push asc_C39CF	; 8A123
+push str_BangPal	; 8A123
 push eax	; 8A128
 call sub_B30B4	; 8A129
 add esp, byte 8	; 8A12E
@@ -4827,7 +4764,7 @@ lea edi, [byte eax+010h]	; 8A131
 call sub_B4BA8	; 8A134
 xor ebp, ebp	; 8A139
 mov dword [dword_C6D26], ebp	; 8A13B
-call sub_8A652	; 8A141
+call DrawPlayoffTree	; 8A141
 mov eax, dword [dword esp+0E4h]	; 8A146
 push eax	; 8A14D
 mov ecx, dword [byte esp+04h]	; 8A14E
@@ -4842,19 +4779,19 @@ call sub_76429	; 8A16C
 push esi	; 8A171
 call jctime	; 8A172
 add esp, byte 4	; 8A177
-loc_8A17A:
+.18:
 call sub_B4BA8	; 8A17A
 mov eax, dword [off_C6D22]	; 8A17F
 sar eax, 10h	; 8A184
 cmp eax, dword [dword esp+0CCh]	; 8A187
-je short loc_8A1A2	; 8A18E
+je short .19	; 8A18E
 mov eax, dword [dword esp+0CCh]	; 8A190
 mov word [word_C6D24], ax	; 8A197
-call sub_8A652	; 8A19D
-loc_8A1A2:
+call DrawPlayoffTree	; 8A19D
+.19:
 mov edx, dword [dword esp+0C4h]	; 8A1A2
 mov eax, dword [dword esp+0C8h]	; 8A1A9
-call sub_89B69	; 8A1B0
+call POHiliteSlot	; 8A1B0
 mov ebx, dword [dword esp+0D0h]	; 8A1B5
 push ebx	; 8A1BC
 mov ecx, dword [dword esp+0B8h]	; 8A1BD
@@ -4866,8 +4803,8 @@ mov dword [dword esp+0A8h], eax	; 8A1D4
 mov eax, dword [dword esp+0D0h]	; 8A1DB
 mov dword [dword esp+0A4h], eax	; 8A1E2
 call sub_6B3D7	; 8A1E9
-jmp near loc_8A624	; 8A1EE
-loc_8A1F3:
+jmp near .37	; 8A1EE
+.20:
 mov edi, dword [dword esp+0D0h]	; 8A1F3
 push edi	; 8A1FA
 push ebp	; 8A1FB
@@ -4901,16 +4838,16 @@ mov esi, dword [byte esp+edx*4+058h]	; 8A265
 shl esi, 5	; 8A269
 mov edx, dword [byte esp+edx*4+078h]	; 8A26C
 add esi, edx	; 8A270
-loc_8A272:
+.21:
 mov ecx, dword [byte esp+0Ch]	; 8A272
 mov edx, eax	; 8A276
 mov eax, esi	; 8A278
-loc_8A27A:
+.22:
 call sub_6B9EB	; 8A27A
-jmp near loc_8A624	; 8A27F
-loc_8A284:
+jmp near .37	; 8A27F
+.23:
 cmp dword [byte eax+018h], byte 0	; 8A284
-je near loc_8A528	; 8A288
+je near .32	; 8A288
 mov eax, dword [dword esp+0D0h]	; 8A28E
 push eax	; 8A295
 mov edx, dword [dword esp+0B8h]	; 8A296
@@ -4921,17 +4858,17 @@ call sub_903F0	; 8A2A6
 add esp, byte 0Ch	; 8A2AB
 mov eax, dword [dword esp+0B8h]	; 8A2AE
 cmp eax, dword [dword esp+0A0h]	; 8A2B5
-je short loc_8A327	; 8A2BC
+je short .27	; 8A2BC
 mov esi, eax	; 8A2BE
-jmp short loc_8A315	; 8A2C0
-loc_8A2C2:
+jmp short .26	; 8A2C0
+.24:
 mov edi, esi	; 8A2C2
 shl edi, 2	; 8A2C4
 xor ebp, ebp	; 8A2C7
 mov dword [byte esp+edi+050h], ebp	; 8A2C9
 mov eax, dword [byte esp+edi+060h]	; 8A2CD
 test eax, eax	; 8A2D1
-je short loc_8A314	; 8A2D3
+je short .25	; 8A2D3
 mov ebp, esi	; 8A2D5
 mov edx, dword [byte esp+esi*8+014h]	; 8A2D7
 push edx	; 8A2DB
@@ -4952,14 +4889,14 @@ mov dword [byte esp+edi+060h], ebx	; 8A303
 mov dword [byte esp+edi+070h], ebx	; 8A307
 xor ebp, esi	; 8A30B
 mov dword [dword esp+edi+080h], ebp	; 8A30D
-loc_8A314:
+.25:
 dec esi	; 8A314
-loc_8A315:
+.26:
 mov ecx, dword [dword esp+0A0h]	; 8A315
 cmp esi, ecx	; 8A31C
-jg short loc_8A2C2	; 8A31E
+jg short PlayoffTreeMenu.24	; 8A31E
 mov dword [dword esp+0B8h], ecx	; 8A320
-loc_8A327:
+.27:
 mov eax, dword [dword esp+0E4h]	; 8A327
 push eax	; 8A32E
 mov edx, dword [byte esp+04h]	; 8A32F
@@ -5000,12 +4937,12 @@ add eax, ecx	; 8A3B6
 mov ebx, dword [byte eax+01Ch]	; 8A3B8
 mov dword [dword esp+esi*4+080h], ebx	; 8A3BB
 cmp esi, byte 1	; 8A3C2
-je short loc_8A3CC	; 8A3C5
+je short .28	; 8A3C5
 mov edx, dword [byte eax+08h]	; 8A3C7
-jmp short loc_8A3CE	; 8A3CA
-loc_8A3CC:
+jmp short .29	; 8A3CA
+.28:
 mov edx, dword [eax]	; 8A3CC
-loc_8A3CE:
+.29:
 mov eax, dword [dword esp+0B8h]	; 8A3CE
 mov ebp, dword [byte esp+eax*8+08h]	; 8A3D5
 add edx, ebp	; 8A3D9
@@ -5015,14 +4952,14 @@ shl edx, 5	; 8A3E6
 mov eax, dword [dword esp+0A0h]	; 8A3E9
 shl eax, 2	; 8A3F0
 cmp dword [dword esp+0B8h], byte 1	; 8A3F3
-je short loc_8A407	; 8A3FB
+je short .30	; 8A3FB
 mov eax, dword [byte esp+eax+070h]	; 8A3FD
 mov eax, dword [byte edx+eax+04h]	; 8A401
-jmp short loc_8A40F	; 8A405
-loc_8A407:
+jmp short .31	; 8A405
+.30:
 mov eax, dword [byte esp+eax+070h]	; 8A407
 mov eax, dword [byte edx+eax+0Ch]	; 8A40B
-loc_8A40F:
+.31:
 mov edx, dword [dword esp+0B8h]	; 8A40F
 shl edx, 3	; 8A416
 mov dword [dword esp+0ACh], edx	; 8A419
@@ -5046,7 +4983,7 @@ mov eax, ebx	; 8A45E
 imul eax, edx	; 8A460
 add eax, byte 11h	; 8A463
 push eax	; 8A466
-push asc_C3A70	; 8A467
+push str_Menubuff2	; 8A467
 call sub_8CCA8	; 8A46C
 add esp, byte 0Ch	; 8A471
 mov dword [byte esp+ebp*4+060h], eax	; 8A474
@@ -5096,8 +5033,8 @@ mov edx, dword [dword esp+0B4h]	; 8A510
 mov edx, dword [byte esp+edx+018h]	; 8A517
 mov eax, dword [byte esp+ebp*4+078h]	; 8A51B
 mov ecx, dword [byte esp+0Ch]	; 8A51F
-jmp near loc_8A27A	; 8A523
-loc_8A528:
+jmp near PlayoffTreeMenu.22	; 8A523
+.32:
 mov eax, dword [dword esp+0D0h]	; 8A528
 push eax	; 8A52F
 mov edx, dword [dword esp+0B8h]	; 8A530
@@ -5131,8 +5068,8 @@ mov ecx, dword [byte esp+edx*4+058h]	; 8A59D
 shl ecx, 5	; 8A5A1
 mov esi, dword [byte esp+edx*4+078h]	; 8A5A4
 add esi, ecx	; 8A5A8
-jmp near loc_8A272	; 8A5AA
-loc_8A5AF:
+jmp near PlayoffTreeMenu.21	; 8A5AA
+.33:
 push edi	; 8A5AF
 push ebp	; 8A5B0
 mov ecx, dword [dword esp+0B8h]	; 8A5B1
@@ -5141,14 +5078,14 @@ call sub_903F0	; 8A5B9
 add esp, byte 0Ch	; 8A5BE
 mov esi, dword [dword esp+0B8h]	; 8A5C1
 test esi, esi	; 8A5C8
-je short loc_8A624	; 8A5CA
-jmp short loc_8A617	; 8A5CC
-loc_8A5CE:
+je short .37	; 8A5CA
+jmp short .36	; 8A5CC
+.34:
 mov edi, esi	; 8A5CE
 shl edi, 2	; 8A5D0
 mov ebp, dword [byte esp+edi+060h]	; 8A5D3
 test ebp, ebp	; 8A5D7
-je short loc_8A616	; 8A5D9
+je short .35	; 8A5D9
 mov eax, dword [byte esp+esi*8+014h]	; 8A5DB
 push eax	; 8A5DF
 mov edx, dword [byte esp+esi*8+014h]	; 8A5E0
@@ -5167,14 +5104,14 @@ xor eax, eax	; 8A605
 mov dword [byte esp+edi+060h], eax	; 8A607
 mov dword [byte esp+edi+070h], eax	; 8A60B
 mov dword [dword esp+edi+080h], eax	; 8A60F
-loc_8A616:
+.35:
 dec esi	; 8A616
-loc_8A617:
+.36:
 test esi, esi	; 8A617
-jge short loc_8A5CE	; 8A619
+jge short PlayoffTreeMenu.34	; 8A619
 xor edi, edi	; 8A61B
 mov dword [dword esp+0B8h], edi	; 8A61D
-loc_8A624:
+.37:
 call sub_B4BA8	; 8A624
 mov ebp, dword [dword esp+0A4h]	; 8A629
 push ebp	; 8A630
@@ -5182,14 +5119,14 @@ mov eax, dword [dword esp+0ACh]	; 8A631
 push eax	; 8A638
 mov edx, dword [dword esp+0B8h]	; 8A639
 push edx	; 8A640
-jmp near loc_89DED	; 8A641
-loc_8A646:
+jmp near PlayoffTreeMenu.7	; 8A641
+.x:
 add esp, 0D4h	; 8A646
 pop ebp	; 8A64C
 pop edi	; 8A64D
 pop esi	; 8A64E
 ret 8	; 8A64F
-sub_8A652:
+DrawPlayoffTree:
 push dword 120h	; 8A652
 call __CHK	; 8A657
 push ebx	; 8A65C
@@ -5209,7 +5146,7 @@ push dword 280h	; 8A684
 push edx	; 8A689
 call sub_B4BC4	; 8A68A
 add esp, byte 10h	; 8A68F
-push asc_C693B	; 8A692
+push str_Bkgd2	; 8A692
 mov ebx, dword [dword_C65AC]	; 8A697
 push ebx	; 8A69D
 call sub_B30B4	; 8A69E
@@ -5224,16 +5161,16 @@ push byte 0	; 8A6BB
 call sub_B4BC4	; 8A6BD
 add esp, byte 10h	; 8A6C2
 cmp dword [dword_C6D26], byte 1	; 8A6C5
-jne short loc_8A73A	; 8A6CC
+jne short .3	; 8A6CC
 xor ecx, ecx	; 8A6CE
-mov ebx, asc_C39C8	; 8A6D0
+mov ebx, str_Embpal	; 8A6D0
 cmp byte [byte_ED85A], 1	; 8A6D5
-jne short loc_8A6E6	; 8A6DC
+jne short .1	; 8A6DC
 mov edx, dword [dword_D2C6B]	; 8A6DE
-jmp short loc_8A6E8	; 8A6E4
-loc_8A6E6:
+jmp short .2	; 8A6E4
+.1:
 xor edx, edx	; 8A6E6
-loc_8A6E8:
+.2:
 lea eax, [dword esp+0D8h]	; 8A6E8
 call MakePath	; 8A6EF
 push byte 0	; 8A6F4
@@ -5242,7 +5179,7 @@ push eax	; 8A6FD
 call sub_8E83C	; 8A6FE
 mov edi, eax	; 8A703
 add esp, byte 8	; 8A705
-push asc_C39CF	; 8A708
+push str_BangPal	; 8A708
 push eax	; 8A70D
 call sub_B30B4	; 8A70E
 add esp, byte 8	; 8A713
@@ -5257,24 +5194,24 @@ call jctime	; 8A72A
 add esp, byte 4	; 8A72F
 xor edi, edi	; 8A732
 mov dword [dword_C6D26], edi	; 8A734
-loc_8A73A:
+.3:
 mov ebx, 1	; 8A73A
 mov edx, esp	; 8A73F
-mov eax, dword_DC7B8	; 8A741
+mov eax, playofftree	; 8A741
 call sub_27C34	; 8A746
 mov edx, 43h	; 8A74B
 mov eax, 40h	; 8A750
 call sub_174C2	; 8A755
 xor eax, eax	; 8A75A
 mov al, byte [byte_C6D72]	; 8A75C
-cmp dword [nosplit eax*4+dword_DC7B8], byte 19h	; 8A761
-jle short loc_8A7C0	; 8A769
+cmp dword [nosplit eax*4+playofftree], byte 19h	; 8A761
+jle short .4	; 8A769
 push esi	; 8A76B
 call sub_8EA18	; 8A76C
 add esp, byte 4	; 8A771
 mov ecx, 8	; 8A774
 lea edi, [dword esp+0B8h]	; 8A779
-mov esi, asc_C3A79	; 8A780
+mov esi, str_PlayoffsHaveNotBeen	; 8A780
 rep movsd	; 8A785
 movsw	; 8A787
 lea eax, [dword esp+0B8h]	; 8A789
@@ -5290,17 +5227,17 @@ mov edx, 0F0h	; 8A7AB
 call sub_17636	; 8A7B0
 push ebp	; 8A7B5
 call sub_8EA18	; 8A7B6
-jmp near loc_8B84D	; 8A7BB
-loc_8A7C0:
+jmp near .76	; 8A7BB
+.4:
 xor ecx, ecx	; 8A7C0
-mov ebx, asc_C3A9B	; 8A7C2
+mov ebx, str_Pstatbar2	; 8A7C2
 cmp byte [byte_ED908], 1	; 8A7C7
-jne short loc_8A7D8	; 8A7CE
+jne short .5	; 8A7CE
 mov edx, dword [dword_D2C6B]	; 8A7D0
-jmp short loc_8A7DA	; 8A7D6
-loc_8A7D8:
+jmp short .6	; 8A7D6
+.5:
 xor edx, edx	; 8A7D8
-loc_8A7DA:
+.6:
 lea eax, [dword esp+0D8h]	; 8A7DA
 call MakePath	; 8A7E1
 push byte 0	; 8A7E6
@@ -5309,7 +5246,7 @@ push eax	; 8A7EF
 call sub_8E83C	; 8A7F0
 mov edi, eax	; 8A7F5
 add esp, byte 8	; 8A7F7
-push asc_C3AA4	; 8A7FA
+push str_Rst1	; 8A7FA
 push eax	; 8A7FF
 call sub_B30B4	; 8A800
 add esp, byte 8	; 8A805
@@ -5318,7 +5255,7 @@ push byte 0	; 8A80A
 push eax	; 8A80C
 call sub_91370	; 8A80D
 add esp, byte 0Ch	; 8A812
-push asc_C3AA9	; 8A815
+push str_Rst2	; 8A815
 push edi	; 8A81A
 call sub_B30B4	; 8A81B
 add esp, byte 8	; 8A820
@@ -5331,14 +5268,14 @@ push edi	; 8A833
 call jctime	; 8A834
 add esp, byte 4	; 8A839
 xor ecx, ecx	; 8A83C
-mov ebx, asc_C3AAE	; 8A83E
+mov ebx, str_Scuparrw	; 8A83E
 cmp byte [byte_ED93A], 1	; 8A843
-jne short loc_8A854	; 8A84A
+jne short .7	; 8A84A
 mov edx, dword [dword_D2C6B]	; 8A84C
-jmp short loc_8A856	; 8A852
-loc_8A854:
+jmp short .8	; 8A852
+.7:
 xor edx, edx	; 8A854
-loc_8A856:
+.8:
 lea eax, [dword esp+0D8h]	; 8A856
 call MakePath	; 8A85D
 push byte 0	; 8A862
@@ -5368,7 +5305,7 @@ push esi	; 8A8C7
 call sub_8EA18	; 8A8C8
 add esp, byte 4	; 8A8CD
 lea edi, [dword esp+0B8h]	; 8A8D0
-mov esi, asc_C3AB7	; 8A8D7
+mov esi, str_WesternConference	; 8A8D7
 movsd	; 8A8DC
 movsd	; 8A8DD
 movsd	; 8A8DE
@@ -5387,7 +5324,7 @@ lea ebx, [dword esp+0B8h]	; 8A8FE
 mov edx, 2Fh	; 8A905
 call sub_17636	; 8A90A
 lea edi, [dword esp+0B8h]	; 8A90F
-mov esi, asc_C3ACA	; 8A916
+mov esi, str_EasternConference	; 8A916
 movsd	; 8A91B
 movsd	; 8A91C
 movsd	; 8A91D
@@ -5409,55 +5346,55 @@ push ebp	; 8A94E
 call sub_8EA18	; 8A94F
 add esp, byte 4	; 8A954
 xor ecx, ecx	; 8A957
-jmp near loc_8A9D7	; 8A959
-loc_8A95E:
+jmp near .14	; 8A959
+.9:
 cmp cx, byte 4	; 8A95E
-jge short loc_8A972	; 8A962
+jge short .10	; 8A962
 movsx eax, cx	; 8A964
 movzx si, byte [nosplit eax*2+byte_C6D72]	; 8A967
-jmp short loc_8A989	; 8A970
-loc_8A972:
+jmp short .11	; 8A970
+.10:
 movsx eax, cx	; 8A972
 add eax, eax	; 8A975
 sub eax, byte 8	; 8A977
 mov edx, 7	; 8A97A
 sub edx, eax	; 8A97F
 movzx si, byte [dword edx+byte_C6D72]	; 8A981
-loc_8A989:
+.11:
 movsx edx, cx	; 8A989
 movsx eax, si	; 8A98C
-mov eax, dword [nosplit eax*4+dword_DC7B8]	; 8A98F
+mov eax, dword [nosplit eax*4+playofftree]	; 8A98F
 mov dword [nosplit eax*4+dword_C6DBA], edx	; 8A996
 lea eax, [edx+edx]	; 8A99D
 cmp cx, byte 4	; 8A9A0
-jge short loc_8A9B0	; 8A9A4
+jge short .12	; 8A9A4
 movzx si, byte [dword eax+byte_C6DB2]	; 8A9A6
-jmp short loc_8A9C2	; 8A9AE
-loc_8A9B0:
+jmp short .13	; 8A9AE
+.12:
 sub eax, byte 8	; 8A9B0
 mov edx, 7	; 8A9B3
 sub edx, eax	; 8A9B8
 movzx si, byte [dword edx+byte_C6DB2]	; 8A9BA
-loc_8A9C2:
+.13:
 movsx edx, cx	; 8A9C2
 movsx eax, si	; 8A9C5
-mov eax, dword [nosplit eax*4+dword_DC7B8]	; 8A9C8
+mov eax, dword [nosplit eax*4+playofftree]	; 8A9C8
 mov dword [nosplit eax*4+dword_C6DBA], edx	; 8A9CF
 inc ecx	; 8A9D6
-loc_8A9D7:
+.14:
 cmp cx, byte 8	; 8A9D7
-jl short loc_8A95E	; 8A9DB
+jl short DrawPlayoffTree.9	; 8A9DB
 mov word [dword esp+0F0h], 48h	; 8A9DD
 xor ecx, ecx	; 8A9E7
-jmp near loc_8AB57	; 8A9E9
-loc_8A9EE:
+jmp near .22	; 8A9E9
+.15:
 cmp cx, byte 4	; 8A9EE
-jge short loc_8AA04	; 8A9F2
+jge short .16	; 8A9F2
 mov ebx, ecx	; 8A9F4
 movsx eax, cx	; 8A9F6
 movzx si, byte [nosplit eax*2+byte_C6D72]	; 8A9F9
-jmp short loc_8AA22	; 8AA02
-loc_8AA04:
+jmp short .17	; 8AA02
+.16:
 mov ebx, 7	; 8AA04
 sub ebx, ecx	; 8AA09
 movsx eax, cx	; 8AA0B
@@ -5466,22 +5403,22 @@ sub eax, byte 8	; 8AA10
 mov edx, 7	; 8AA13
 sub edx, eax	; 8AA18
 movzx si, byte [dword edx+byte_C6D72]	; 8AA1A
-loc_8AA22:
+.17:
 mov edx, 43h	; 8AA22
 mov eax, 40h	; 8AA27
 call sub_174C2	; 8AA2C
 movsx edi, si	; 8AA31
 shl edi, 2	; 8AA34
-mov eax, dword [dword edi+dword_DC7B8]	; 8AA37
+mov eax, dword [dword edi+playofftree]	; 8AA37
 mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8AA3D
 add eax, 91h	; 8AA44
 push eax	; 8AA49
-push asc_C3ADD	; 8AA4A
+push str_fmtcsp	; 8AA4A
 lea eax, [dword esp+0C0h]	; 8AA4F
 push eax	; 8AA56
 call sprintf_	; 8AA57
 add esp, byte 0Ch	; 8AA5C
-mov ebp, dword [dword edi+dword_DC7B8]	; 8AA5F
+mov ebp, dword [dword edi+playofftree]	; 8AA5F
 mov eax, ebp	; 8AA65
 shl eax, 2	; 8AA67
 add eax, ebp	; 8AA6A
@@ -5501,35 +5438,35 @@ mov bx, word [nosplit ebp*4+word_C6E22]	; 8AAA4
 add ebx, byte 6Ah	; 8AAAC
 xor eax, eax	; 8AAAF
 mov al, byte [byte_C6D7A]	; 8AAB1
-mov eax, dword [nosplit eax*4+dword_DC7B8]	; 8AAB6
-mov edx, dword [dword edi+dword_DC7B8]	; 8AABD
+mov eax, dword [nosplit eax*4+playofftree]	; 8AAB6
+mov edx, dword [dword edi+playofftree]	; 8AABD
 cmp eax, edx	; 8AAC3
-je short loc_8AAF7	; 8AAC5
+je short .18	; 8AAC5
 xor eax, eax	; 8AAC7
 mov al, byte [byte_C6D7B]	; 8AAC9
-cmp edx, dword [nosplit eax*4+dword_DC7B8]	; 8AACE
-je short loc_8AAF7	; 8AAD5
+cmp edx, dword [nosplit eax*4+playofftree]	; 8AACE
+je short .18	; 8AAD5
 xor eax, eax	; 8AAD7
 mov al, byte [byte_C6D7C]	; 8AAD9
-cmp edx, dword [nosplit eax*4+dword_DC7B8]	; 8AADE
-je short loc_8AAF7	; 8AAE5
+cmp edx, dword [nosplit eax*4+playofftree]	; 8AADE
+je short .18	; 8AAE5
 xor eax, eax	; 8AAE7
 mov al, byte [byte_C6D7D]	; 8AAE9
-cmp edx, dword [nosplit eax*4+dword_DC7B8]	; 8AAEE
-jne short loc_8AB03	; 8AAF5
-loc_8AAF7:
+cmp edx, dword [nosplit eax*4+playofftree]	; 8AAEE
+jne short .19	; 8AAF5
+.18:
 mov edx, 43h	; 8AAF7
 mov eax, 44h	; 8AAFC
-jmp short loc_8AB0D	; 8AB01
-loc_8AB03:
+jmp short .20	; 8AB01
+.19:
 mov edx, 43h	; 8AB03
 mov eax, 40h	; 8AB08
-loc_8AB0D:
+.20:
 call sub_174C2	; 8AB0D
 movsx eax, si	; 8AB12
 mov edx, dword [esp+eax*4]	; 8AB15
 push edx	; 8AB18
-push unk_C3AE1	; 8AB19
+push str_D	; 8AB19
 lea eax, [dword esp+0C0h]	; 8AB1E
 push eax	; 8AB25
 call sprintf_	; 8AB26
@@ -5540,31 +5477,31 @@ movsx eax, bx	; 8AB38
 lea ebx, [dword esp+0B8h]	; 8AB3B
 call sub_175E2	; 8AB42
 cmp cx, byte 3	; 8AB47
-jne short loc_8AB56	; 8AB4B
+jne short .21	; 8AB4B
 add word [dword esp+0F0h], byte 10h	; 8AB4D
-loc_8AB56:
+.21:
 inc ecx	; 8AB56
-loc_8AB57:
+.22:
 cmp cx, byte 8	; 8AB57
-jl near loc_8A9EE	; 8AB5B
+jl near DrawPlayoffTree.15	; 8AB5B
 xor eax, eax	; 8AB61
 mov al, byte [byte_C6D7A]	; 8AB63
 add word [dword esp+0F0h], byte 3Fh	; 8AB68
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8AB71
-jge near loc_8AFA0	; 8AB79
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8AB71
+jge near .37	; 8AB79
 xor eax, eax	; 8AB7F
 mov al, byte [byte_C6D7B]	; 8AB81
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8AB86
-jge near loc_8AFA0	; 8AB8E
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8AB86
+jge near .37	; 8AB8E
 xor eax, eax	; 8AB94
 mov al, byte [byte_C6D7C]	; 8AB96
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8AB9B
-jge near loc_8AFA0	; 8ABA3
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8AB9B
+jge near .37	; 8ABA3
 xor eax, eax	; 8ABA9
 mov al, byte [byte_C6D7D]	; 8ABAB
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8ABB0
-jge near loc_8AFA0	; 8ABB8
-push asc_C3AE4	; 8ABBE
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8ABB0
+jge near .37	; 8ABB8
+push str_Aup1	; 8ABBE
 mov ebp, dword [dword esp+0F0h]	; 8ABC3
 push ebp	; 8ABCA
 call sub_B30B4	; 8ABCB
@@ -5573,16 +5510,16 @@ push eax	; 8ABD3
 call sub_913B4	; 8ABD4
 add esp, byte 4	; 8ABD9
 xor ecx, ecx	; 8ABDC
-jmp near loc_8AD2F	; 8ABDE
-loc_8ABE3:
+jmp near .30	; 8ABDE
+.23:
 cmp cx, byte 2	; 8ABE3
-jge short loc_8ABFC	; 8ABE7
+jge short .24	; 8ABE7
 mov ebx, ecx	; 8ABE9
 add ebx, byte 4	; 8ABEB
 movsx eax, cx	; 8ABEE
 movzx si, byte [nosplit eax*2+byte_C6D7A]	; 8ABF1
-jmp short loc_8AC1A	; 8ABFA
-loc_8ABFC:
+jmp short .25	; 8ABFA
+.24:
 mov ebx, 7	; 8ABFC
 sub ebx, ecx	; 8AC01
 movsx eax, cx	; 8AC03
@@ -5591,22 +5528,22 @@ sub eax, byte 4	; 8AC08
 mov edx, 3	; 8AC0B
 sub edx, eax	; 8AC10
 movzx si, byte [dword edx+byte_C6D7A]	; 8AC12
-loc_8AC1A:
+.25:
 mov edx, 43h	; 8AC1A
 mov eax, 40h	; 8AC1F
 call sub_174C2	; 8AC24
 movsx edi, si	; 8AC29
 shl edi, 2	; 8AC2C
-mov eax, dword [dword edi+dword_DC7B8]	; 8AC2F
+mov eax, dword [dword edi+playofftree]	; 8AC2F
 mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8AC35
 add eax, 91h	; 8AC3C
 push eax	; 8AC41
-push asc_C3ADD	; 8AC42
+push str_fmtcsp	; 8AC42
 lea eax, [dword esp+0C0h]	; 8AC47
 push eax	; 8AC4E
 call sprintf_	; 8AC4F
 add esp, byte 0Ch	; 8AC54
-mov ebp, dword [dword edi+dword_DC7B8]	; 8AC57
+mov ebp, dword [dword edi+playofftree]	; 8AC57
 mov eax, ebp	; 8AC5D
 shl eax, 2	; 8AC5F
 add eax, ebp	; 8AC62
@@ -5626,27 +5563,27 @@ mov bx, word [nosplit ebp*4+word_C6E22]	; 8AC9C
 add ebx, byte 6Ah	; 8ACA4
 xor eax, eax	; 8ACA7
 mov al, byte [byte_C6D82]	; 8ACA9
-mov eax, dword [nosplit eax*4+dword_DC7B8]	; 8ACAE
-mov ebp, dword [dword edi+dword_DC7B8]	; 8ACB5
+mov eax, dword [nosplit eax*4+playofftree]	; 8ACAE
+mov ebp, dword [dword edi+playofftree]	; 8ACB5
 cmp eax, ebp	; 8ACBB
-je short loc_8ACCF	; 8ACBD
+je short .26	; 8ACBD
 xor eax, eax	; 8ACBF
 mov al, byte [byte_C6D83]	; 8ACC1
-cmp ebp, dword [nosplit eax*4+dword_DC7B8]	; 8ACC6
-jne short loc_8ACDB	; 8ACCD
-loc_8ACCF:
+cmp ebp, dword [nosplit eax*4+playofftree]	; 8ACC6
+jne short .27	; 8ACCD
+.26:
 mov edx, 43h	; 8ACCF
 mov eax, 44h	; 8ACD4
-jmp short loc_8ACE5	; 8ACD9
-loc_8ACDB:
+jmp short .28	; 8ACD9
+.27:
 mov edx, 43h	; 8ACDB
 mov eax, 40h	; 8ACE0
-loc_8ACE5:
+.28:
 call sub_174C2	; 8ACE5
 movsx eax, si	; 8ACEA
 mov esi, dword [esp+eax*4]	; 8ACED
 push esi	; 8ACF0
-push unk_C3AE1	; 8ACF1
+push str_D	; 8ACF1
 lea eax, [dword esp+0C0h]	; 8ACF6
 push eax	; 8ACFD
 call sprintf_	; 8ACFE
@@ -5657,23 +5594,23 @@ movsx eax, bx	; 8AD10
 lea ebx, [dword esp+0B8h]	; 8AD13
 call sub_175E2	; 8AD1A
 cmp cx, byte 1	; 8AD1F
-jne short loc_8AD2E	; 8AD23
+jne short .29	; 8AD23
 add word [dword esp+0F0h], byte 10h	; 8AD25
-loc_8AD2E:
+.29:
 inc ecx	; 8AD2E
-loc_8AD2F:
+.30:
 cmp cx, byte 4	; 8AD2F
-jl near loc_8ABE3	; 8AD33
+jl near DrawPlayoffTree.23	; 8AD33
 xor eax, eax	; 8AD39
 mov al, byte [byte_C6D82]	; 8AD3B
 add word [dword esp+0F0h], byte 3Dh	; 8AD40
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8AD49
-jge near loc_8AFA9	; 8AD51
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8AD49
+jge near .38	; 8AD51
 xor eax, eax	; 8AD57
 mov al, byte [byte_C6D83]	; 8AD59
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8AD5E
-jge near loc_8AFA9	; 8AD66
-push asc_C3AE9	; 8AD6C
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8AD5E
+jge near .38	; 8AD66
+push str_Aup2	; 8AD6C
 mov esi, dword [dword esp+0F0h]	; 8AD71
 push esi	; 8AD78
 call sub_B30B4	; 8AD79
@@ -5687,16 +5624,16 @@ mov eax, 40h	; 8AD97
 call sub_174C2	; 8AD9C
 movsx edi, si	; 8ADA1
 shl edi, 2	; 8ADA4
-mov eax, dword [dword edi+dword_DC7B8]	; 8ADA7
+mov eax, dword [dword edi+playofftree]	; 8ADA7
 mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8ADAD
 add eax, 91h	; 8ADB4
 push eax	; 8ADB9
-push asc_C3ADD	; 8ADBA
+push str_fmtcsp	; 8ADBA
 lea eax, [dword esp+0C0h]	; 8ADBF
 push eax	; 8ADC6
 call sprintf_	; 8ADC7
 add esp, byte 0Ch	; 8ADCC
-mov edx, dword [dword edi+dword_DC7B8]	; 8ADCF
+mov edx, dword [dword edi+playofftree]	; 8ADCF
 mov eax, edx	; 8ADD5
 shl eax, 2	; 8ADD7
 add eax, edx	; 8ADDA
@@ -5714,27 +5651,27 @@ mov eax, 48h	; 8AE06
 call sub_175E2	; 8AE0B
 xor eax, eax	; 8AE10
 mov al, byte [byte_C6D8A]	; 8AE12
-mov eax, dword [nosplit eax*4+dword_DC7B8]	; 8AE17
-mov ebp, dword [dword edi+dword_DC7B8]	; 8AE1E
+mov eax, dword [nosplit eax*4+playofftree]	; 8AE17
+mov ebp, dword [dword edi+playofftree]	; 8AE1E
 cmp eax, ebp	; 8AE24
-je short loc_8AE38	; 8AE26
+je short .31	; 8AE26
 xor eax, eax	; 8AE28
 mov al, byte [byte_C6D9A]	; 8AE2A
-cmp ebp, dword [nosplit eax*4+dword_DC7B8]	; 8AE2F
-jne short loc_8AE44	; 8AE36
-loc_8AE38:
+cmp ebp, dword [nosplit eax*4+playofftree]	; 8AE2F
+jne short .32	; 8AE36
+.31:
 mov edx, 43h	; 8AE38
 mov eax, 44h	; 8AE3D
-jmp short loc_8AE4E	; 8AE42
-loc_8AE44:
+jmp short .33	; 8AE42
+.32:
 mov edx, 43h	; 8AE44
 mov eax, 40h	; 8AE49
-loc_8AE4E:
+.33:
 call sub_174C2	; 8AE4E
 movsx eax, si	; 8AE53
 mov ebx, dword [esp+eax*4]	; 8AE56
 push ebx	; 8AE59
-push unk_C3AE1	; 8AE5A
+push str_D	; 8AE5A
 lea eax, [dword esp+0C0h]	; 8AE5F
 push eax	; 8AE66
 call sprintf_	; 8AE67
@@ -5752,16 +5689,16 @@ mov eax, 40h	; 8AEA1
 call sub_174C2	; 8AEA6
 movsx edi, si	; 8AEAB
 shl edi, 2	; 8AEAE
-mov eax, dword [dword edi+dword_DC7B8]	; 8AEB1
+mov eax, dword [dword edi+playofftree]	; 8AEB1
 mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8AEB7
 add eax, 91h	; 8AEBE
 push eax	; 8AEC3
-push asc_C3ADD	; 8AEC4
+push str_fmtcsp	; 8AEC4
 lea eax, [dword esp+0C0h]	; 8AEC9
 push eax	; 8AED0
 call sprintf_	; 8AED1
 add esp, byte 0Ch	; 8AED6
-mov edx, dword [dword edi+dword_DC7B8]	; 8AED9
+mov edx, dword [dword edi+playofftree]	; 8AED9
 mov eax, edx	; 8AEDF
 shl eax, 2	; 8AEE1
 add eax, edx	; 8AEE4
@@ -5779,27 +5716,27 @@ mov eax, 48h	; 8AF10
 call sub_175E2	; 8AF15
 xor eax, eax	; 8AF1A
 mov al, byte [byte_C6D8A]	; 8AF1C
-mov eax, dword [nosplit eax*4+dword_DC7B8]	; 8AF21
-mov ecx, dword [dword edi+dword_DC7B8]	; 8AF28
+mov eax, dword [nosplit eax*4+playofftree]	; 8AF21
+mov ecx, dword [dword edi+playofftree]	; 8AF28
 cmp eax, ecx	; 8AF2E
-je short loc_8AF42	; 8AF30
+je short .34	; 8AF30
 xor eax, eax	; 8AF32
 mov al, byte [byte_C6D9A]	; 8AF34
-cmp ecx, dword [nosplit eax*4+dword_DC7B8]	; 8AF39
-jne short loc_8AF4E	; 8AF40
-loc_8AF42:
+cmp ecx, dword [nosplit eax*4+playofftree]	; 8AF39
+jne short .35	; 8AF40
+.34:
 mov edx, 43h	; 8AF42
 mov eax, 44h	; 8AF47
-jmp short loc_8AF58	; 8AF4C
-loc_8AF4E:
+jmp short .36	; 8AF4C
+.35:
 mov edx, 43h	; 8AF4E
 mov eax, 40h	; 8AF53
-loc_8AF58:
+.36:
 call sub_174C2	; 8AF58
 movsx eax, si	; 8AF5D
 mov edx, dword [esp+eax*4]	; 8AF60
 push edx	; 8AF63
-push unk_C3AE1	; 8AF64
+push str_D	; 8AF64
 lea eax, [dword esp+0C0h]	; 8AF69
 push eax	; 8AF70
 call sprintf_	; 8AF71
@@ -5811,15 +5748,15 @@ lea ebx, [dword esp+0B8h]	; 8AF84
 mov eax, 0B2h	; 8AF8B
 call sub_175E2	; 8AF90
 sub word [dword esp+0F0h], byte 10h	; 8AF95
-jmp short loc_8AFA9	; 8AF9E
-loc_8AFA0:
+jmp short .38	; 8AF9E
+.37:
 add word [dword esp+0F0h], byte 4Dh	; 8AFA0
-loc_8AFA9:
+.38:
 xor eax, eax	; 8AFA9
 mov al, byte [byte_C6D8A]	; 8AFAB
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8AFB0
-jge near loc_8B0F3	; 8AFB8
-push asc_C3AEE	; 8AFBE
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8AFB0
+jge near .42	; 8AFB8
+push str_Aup3	; 8AFBE
 mov ebp, dword [dword esp+0F0h]	; 8AFC3
 push ebp	; 8AFCA
 call sub_B30B4	; 8AFCB
@@ -5828,7 +5765,7 @@ push eax	; 8AFD3
 call sub_913B4	; 8AFD4
 add esp, byte 4	; 8AFD9
 mov dword [dword esp+0E8h], 1	; 8AFDC
-push asc_C3AF3	; 8AFE7
+push str_Midl	; 8AFE7
 push ebp	; 8AFEC
 call sub_B30B4	; 8AFED
 add esp, byte 8	; 8AFF2
@@ -5845,7 +5782,7 @@ movsb	; 8B01B
 movzx si, byte [byte_C6D8A]	; 8B01C
 xor edx, edx	; 8B024
 mov dl, byte [byte_C6D8A]	; 8B026
-mov edx, dword [nosplit edx*4+dword_DC7B8]	; 8B02C
+mov edx, dword [nosplit edx*4+playofftree]	; 8B02C
 mov eax, edx	; 8B033
 shl eax, 2	; 8B035
 add eax, edx	; 8B038
@@ -5865,29 +5802,29 @@ movsx edx, si	; 8B070
 shl edx, 2	; 8B073
 mov ebx, dword [esp+edx]	; 8B076
 push ebx	; 8B079
-push unk_C3AE1	; 8B07A
+push str_D	; 8B07A
 lea eax, [dword esp+0C0h]	; 8B07F
 push eax	; 8B086
 call sprintf_	; 8B087
 add esp, byte 0Ch	; 8B08C
 xor eax, eax	; 8B08F
 mov al, byte [byte_C6D92]	; 8B091
-mov eax, dword [nosplit eax*4+dword_DC7B8]	; 8B096
-cmp eax, dword [dword edx+dword_DC7B8]	; 8B09D
-jne short loc_8B0C6	; 8B0A3
-cmp dword [dword edx+dword_C5581], byte 3	; 8B0A5
-jne short loc_8B0BA	; 8B0AC
+mov eax, dword [nosplit eax*4+playofftree]	; 8B096
+cmp eax, dword [dword edx+playofftree]	; 8B09D
+jne short .40	; 8B0A3
+cmp dword [dword edx+teamconf], byte 3	; 8B0A5
+jne short .39	; 8B0AC
 mov edx, 43h	; 8B0AE
 mov eax, 44h	; 8B0B3
-jmp short loc_8B0D0	; 8B0B8
-loc_8B0BA:
+jmp short .41	; 8B0B8
+.39:
 mov edx, 43h	; 8B0BA
 mov eax, 0C4h	; 8B0BF
-jmp short loc_8B0D0	; 8B0C4
-loc_8B0C6:
+jmp short .41	; 8B0C4
+.40:
 mov edx, 43h	; 8B0C6
 mov eax, 40h	; 8B0CB
-loc_8B0D0:
+.41:
 call sub_174C2	; 8B0D0
 mov edx, dword [dword esp+0EEh]	; 8B0D5
 sar edx, 10h	; 8B0DC
@@ -5895,12 +5832,12 @@ sub edx, byte 4	; 8B0DF
 lea ebx, [dword esp+0B8h]	; 8B0E2
 mov eax, 16Ch	; 8B0E9
 call sub_175E2	; 8B0EE
-loc_8B0F3:
+.42:
 xor eax, eax	; 8B0F3
 mov al, byte [byte_C6D9A]	; 8B0F5
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8B0FA
-jge near loc_8B24E	; 8B102
-push asc_C3AFB	; 8B108
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B0FA
+jge near .47	; 8B102
+push str_Adn3	; 8B108
 mov ebp, dword [dword esp+0F0h]	; 8B10D
 push ebp	; 8B114
 call sub_B30B4	; 8B115
@@ -5909,15 +5846,15 @@ push eax	; 8B11D
 call sub_913B4	; 8B11E
 add esp, byte 4	; 8B123
 cmp dword [dword esp+0E8h], byte 0	; 8B126
-jne short loc_8B147	; 8B12E
-push asc_C3AF3	; 8B130
+jne short .43	; 8B12E
+push str_Midl	; 8B130
 push ebp	; 8B135
 call sub_B30B4	; 8B136
 add esp, byte 8	; 8B13B
 push eax	; 8B13E
 call sub_913B4	; 8B13F
 add esp, byte 4	; 8B144
-loc_8B147:
+.43:
 add word [dword esp+0F0h], byte 10h	; 8B147
 mov edx, 43h	; 8B150
 mov eax, 40h	; 8B155
@@ -5929,7 +5866,7 @@ movsb	; 8B16D
 movzx si, byte [byte_C6D9A]	; 8B16E
 xor edx, edx	; 8B176
 mov dl, byte [byte_C6D9A]	; 8B178
-mov edx, dword [nosplit edx*4+dword_DC7B8]	; 8B17E
+mov edx, dword [nosplit edx*4+playofftree]	; 8B17E
 mov eax, edx	; 8B185
 shl eax, 2	; 8B187
 add eax, edx	; 8B18A
@@ -5949,29 +5886,29 @@ movsx edx, si	; 8B1C2
 shl edx, 2	; 8B1C5
 mov ebx, dword [esp+edx]	; 8B1C8
 push ebx	; 8B1CB
-push unk_C3AE1	; 8B1CC
+push str_D	; 8B1CC
 lea eax, [dword esp+0C0h]	; 8B1D1
 push eax	; 8B1D8
 call sprintf_	; 8B1D9
 add esp, byte 0Ch	; 8B1DE
 xor eax, eax	; 8B1E1
 mov al, byte [byte_C6D92]	; 8B1E3
-mov eax, dword [nosplit eax*4+dword_DC7B8]	; 8B1E8
-cmp eax, dword [dword edx+dword_DC7B8]	; 8B1EF
-jne short loc_8B218	; 8B1F5
-cmp dword [dword edx+dword_C5581], byte 3	; 8B1F7
-jne short loc_8B20C	; 8B1FE
+mov eax, dword [nosplit eax*4+playofftree]	; 8B1E8
+cmp eax, dword [dword edx+playofftree]	; 8B1EF
+jne short .45	; 8B1F5
+cmp dword [dword edx+teamconf], byte 3	; 8B1F7
+jne short .44	; 8B1FE
 mov edx, 43h	; 8B200
 mov eax, 44h	; 8B205
-jmp short loc_8B222	; 8B20A
-loc_8B20C:
+jmp short .46	; 8B20A
+.44:
 mov edx, 43h	; 8B20C
 mov eax, 0C4h	; 8B211
-jmp short loc_8B222	; 8B216
-loc_8B218:
+jmp short .46	; 8B216
+.45:
 mov edx, 43h	; 8B218
 mov eax, 40h	; 8B21D
-loc_8B222:
+.46:
 call sub_174C2	; 8B222
 mov edx, dword [dword esp+0EEh]	; 8B227
 sar edx, 10h	; 8B22E
@@ -5980,31 +5917,31 @@ lea ebx, [dword esp+0B8h]	; 8B234
 mov eax, 16Ch	; 8B23B
 call sub_175E2	; 8B240
 sub word [dword esp+0F0h], byte 10h	; 8B245
-loc_8B24E:
+.47:
 xor eax, eax	; 8B24E
 mov al, byte [byte_C6DA2]	; 8B250
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8B255
-jge near loc_8B4AC	; 8B25D
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B255
+jge near .54	; 8B25D
 xor eax, eax	; 8B263
 mov al, byte [byte_C6DA3]	; 8B265
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8B26A
-jge near loc_8B4AC	; 8B272
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B26A
+jge near .54	; 8B272
 movzx si, byte [byte_C6DA2]	; 8B278
 mov edx, 43h	; 8B280
 mov eax, 40h	; 8B285
 call sub_174C2	; 8B28A
 movsx edi, si	; 8B28F
 shl edi, 2	; 8B292
-mov eax, dword [dword edi+dword_DC7B8]	; 8B295
+mov eax, dword [dword edi+playofftree]	; 8B295
 mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8B29B
 add eax, 91h	; 8B2A2
 push eax	; 8B2A7
-push asc_C3ADD	; 8B2A8
+push str_fmtcsp	; 8B2A8
 lea eax, [dword esp+0C0h]	; 8B2AD
 push eax	; 8B2B4
 call sprintf_	; 8B2B5
 add esp, byte 0Ch	; 8B2BA
-mov edx, dword [dword edi+dword_DC7B8]	; 8B2BD
+mov edx, dword [dword edi+playofftree]	; 8B2BD
 mov eax, edx	; 8B2C3
 shl eax, 2	; 8B2C5
 add eax, edx	; 8B2C8
@@ -6022,27 +5959,27 @@ mov eax, 1C6h	; 8B2F4
 call sub_175E2	; 8B2F9
 xor eax, eax	; 8B2FE
 mov al, byte [byte_C6D8A]	; 8B300
-mov eax, dword [nosplit eax*4+dword_DC7B8]	; 8B305
-mov edx, dword [dword edi+dword_DC7B8]	; 8B30C
+mov eax, dword [nosplit eax*4+playofftree]	; 8B305
+mov edx, dword [dword edi+playofftree]	; 8B30C
 cmp eax, edx	; 8B312
-je short loc_8B326	; 8B314
+je short .48	; 8B314
 xor eax, eax	; 8B316
 mov al, byte [byte_C6D9A]	; 8B318
-cmp edx, dword [nosplit eax*4+dword_DC7B8]	; 8B31D
-jne short loc_8B332	; 8B324
-loc_8B326:
+cmp edx, dword [nosplit eax*4+playofftree]	; 8B31D
+jne short .49	; 8B324
+.48:
 mov edx, 43h	; 8B326
 mov eax, 0C4h	; 8B32B
-jmp short loc_8B33C	; 8B330
-loc_8B332:
+jmp short .50	; 8B330
+.49:
 mov edx, 43h	; 8B332
 mov eax, 40h	; 8B337
-loc_8B33C:
+.50:
 call sub_174C2	; 8B33C
 movsx eax, si	; 8B341
 mov ecx, dword [esp+eax*4]	; 8B344
 push ecx	; 8B347
-push unk_C3AE1	; 8B348
+push str_D	; 8B348
 lea eax, [dword esp+0C0h]	; 8B34D
 push eax	; 8B354
 call sprintf_	; 8B355
@@ -6060,16 +5997,16 @@ mov eax, 40h	; 8B38F
 call sub_174C2	; 8B394
 movsx edi, si	; 8B399
 shl edi, 2	; 8B39C
-mov eax, dword [dword edi+dword_DC7B8]	; 8B39F
+mov eax, dword [dword edi+playofftree]	; 8B39F
 mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8B3A5
 add eax, 91h	; 8B3AC
 push eax	; 8B3B1
-push asc_C3ADD	; 8B3B2
+push str_fmtcsp	; 8B3B2
 lea eax, [dword esp+0C0h]	; 8B3B7
 push eax	; 8B3BE
 call sprintf_	; 8B3BF
 add esp, byte 0Ch	; 8B3C4
-mov edx, dword [dword edi+dword_DC7B8]	; 8B3C7
+mov edx, dword [dword edi+playofftree]	; 8B3C7
 mov eax, edx	; 8B3CD
 shl eax, 2	; 8B3CF
 add eax, edx	; 8B3D2
@@ -6087,27 +6024,27 @@ mov eax, 1C6h	; 8B3FE
 call sub_175E2	; 8B403
 xor eax, eax	; 8B408
 mov al, byte [byte_C6D8A]	; 8B40A
-mov eax, dword [nosplit eax*4+dword_DC7B8]	; 8B40F
-mov ebp, dword [dword edi+dword_DC7B8]	; 8B416
+mov eax, dword [nosplit eax*4+playofftree]	; 8B40F
+mov ebp, dword [dword edi+playofftree]	; 8B416
 cmp eax, ebp	; 8B41C
-je short loc_8B430	; 8B41E
+je short .51	; 8B41E
 xor eax, eax	; 8B420
 mov al, byte [byte_C6D9A]	; 8B422
-cmp ebp, dword [nosplit eax*4+dword_DC7B8]	; 8B427
-jne short loc_8B43C	; 8B42E
-loc_8B430:
+cmp ebp, dword [nosplit eax*4+playofftree]	; 8B427
+jne short .52	; 8B42E
+.51:
 mov edx, 43h	; 8B430
 mov eax, 0C4h	; 8B435
-jmp short loc_8B446	; 8B43A
-loc_8B43C:
+jmp short .53	; 8B43A
+.52:
 mov edx, 43h	; 8B43C
 mov eax, 40h	; 8B441
-loc_8B446:
+.53:
 call sub_174C2	; 8B446
 movsx eax, si	; 8B44B
 mov ebx, dword [esp+eax*4]	; 8B44E
 push ebx	; 8B451
-push unk_C3AE1	; 8B452
+push str_D	; 8B452
 lea eax, [dword esp+0C0h]	; 8B457
 push eax	; 8B45E
 call sprintf_	; 8B45F
@@ -6118,7 +6055,7 @@ dec edx	; 8B471
 lea ebx, [dword esp+0B8h]	; 8B472
 mov eax, 230h	; 8B479
 call sub_175E2	; 8B47E
-push asc_C3B00	; 8B483
+push str_Adn2	; 8B483
 mov ecx, dword [dword esp+0F0h]	; 8B488
 push ecx	; 8B48F
 add word [dword esp+0F8h], byte 3Dh	; 8B490
@@ -6127,65 +6064,65 @@ add esp, byte 8	; 8B49E
 push eax	; 8B4A1
 call sub_913B4	; 8B4A2
 add esp, byte 4	; 8B4A7
-jmp short loc_8B4B5	; 8B4AA
-loc_8B4AC:
+jmp short .55	; 8B4AA
+.54:
 add word [dword esp+0F0h], byte 4Dh	; 8B4AC
-loc_8B4B5:
+.55:
 xor eax, eax	; 8B4B5
 mov al, byte [byte_C6DAA]	; 8B4B7
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8B4BC
-jge near loc_8B6AB	; 8B4C4
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B4BC
+jge near .66	; 8B4C4
 xor eax, eax	; 8B4CA
 mov al, byte [byte_C6DAB]	; 8B4CC
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8B4D1
-jge near loc_8B6AB	; 8B4D9
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B4D1
+jge near .66	; 8B4D9
 xor eax, eax	; 8B4DF
 mov al, byte [byte_C6DAC]	; 8B4E1
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8B4E6
-jge near loc_8B6AB	; 8B4EE
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B4E6
+jge near .66	; 8B4EE
 xor eax, eax	; 8B4F4
 mov al, byte [byte_C6DAD]	; 8B4F6
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 8B4FB
-jge near loc_8B6AB	; 8B503
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B4FB
+jge near .66	; 8B503
 xor ecx, ecx	; 8B509
-jmp near loc_8B678	; 8B50B
-loc_8B510:
+jmp near .65	; 8B50B
+.56:
 cmp cx, byte 2	; 8B510
-jge short loc_8B51A	; 8B514
+jge short .57	; 8B514
 mov ebx, ecx	; 8B516
-jmp short loc_8B521	; 8B518
-loc_8B51A:
+jmp short .58	; 8B518
+.57:
 mov ebx, 3	; 8B51A
 sub ebx, ecx	; 8B51F
-loc_8B521:
+.58:
 cmp cx, byte 2	; 8B521
-jge short loc_8B535	; 8B525
+jge short .59	; 8B525
 movsx eax, cx	; 8B527
 movzx si, byte [nosplit eax*2+byte_C6DAA]	; 8B52A
-jmp short loc_8B54C	; 8B533
-loc_8B535:
+jmp short .60	; 8B533
+.59:
 movsx eax, cx	; 8B535
 add eax, eax	; 8B538
 sub eax, byte 4	; 8B53A
 mov edx, 3	; 8B53D
 sub edx, eax	; 8B542
 movzx si, byte [dword edx+byte_C6DAA]	; 8B544
-loc_8B54C:
+.60:
 mov edx, 43h	; 8B54C
 mov eax, 40h	; 8B551
 call sub_174C2	; 8B556
 movsx edi, si	; 8B55B
 shl edi, 2	; 8B55E
-mov eax, dword [dword edi+dword_DC7B8]	; 8B561
+mov eax, dword [dword edi+playofftree]	; 8B561
 mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8B567
 add eax, 91h	; 8B56E
 push eax	; 8B573
-push asc_C3ADD	; 8B574
+push str_fmtcsp	; 8B574
 lea eax, [dword esp+0C0h]	; 8B579
 push eax	; 8B580
 call sprintf_	; 8B581
 add esp, byte 0Ch	; 8B586
-mov ebp, dword [dword edi+dword_DC7B8]	; 8B589
+mov ebp, dword [dword edi+playofftree]	; 8B589
 mov eax, ebp	; 8B58F
 shl eax, 2	; 8B591
 add eax, ebp	; 8B594
@@ -6212,27 +6149,27 @@ mov ebx, 286h	; 8B5E3
 sub bx, word [nosplit ebp*4+word_C6E22]	; 8B5E8
 xor eax, eax	; 8B5F0
 mov al, byte [byte_C6DA2]	; 8B5F2
-mov eax, dword [nosplit eax*4+dword_DC7B8]	; 8B5F7
-mov ebp, dword [dword edi+dword_DC7B8]	; 8B5FE
+mov eax, dword [nosplit eax*4+playofftree]	; 8B5F7
+mov ebp, dword [dword edi+playofftree]	; 8B5FE
 cmp eax, ebp	; 8B604
-je short loc_8B618	; 8B606
+je short .61	; 8B606
 xor eax, eax	; 8B608
 mov al, byte [byte_C6DA3]	; 8B60A
-cmp ebp, dword [nosplit eax*4+dword_DC7B8]	; 8B60F
-jne short loc_8B624	; 8B616
-loc_8B618:
+cmp ebp, dword [nosplit eax*4+playofftree]	; 8B60F
+jne short .62	; 8B616
+.61:
 mov edx, 43h	; 8B618
 mov eax, 0C4h	; 8B61D
-jmp short loc_8B62E	; 8B622
-loc_8B624:
+jmp short .63	; 8B622
+.62:
 mov edx, 43h	; 8B624
 mov eax, 40h	; 8B629
-loc_8B62E:
+.63:
 call sub_174C2	; 8B62E
 movsx eax, si	; 8B633
 mov esi, dword [esp+eax*4]	; 8B636
 push esi	; 8B639
-push unk_C3AE1	; 8B63A
+push str_D	; 8B63A
 lea eax, [dword esp+0C0h]	; 8B63F
 push eax	; 8B646
 call sprintf_	; 8B647
@@ -6243,14 +6180,14 @@ movsx eax, bx	; 8B659
 lea ebx, [dword esp+0B8h]	; 8B65C
 call sub_175E2	; 8B663
 cmp cx, byte 1	; 8B668
-jne short loc_8B677	; 8B66C
+jne short .64	; 8B66C
 add word [dword esp+0F0h], byte 10h	; 8B66E
-loc_8B677:
+.64:
 inc ecx	; 8B677
-loc_8B678:
+.65:
 cmp cx, byte 4	; 8B678
-jl near loc_8B510	; 8B67C
-push asc_C3B05	; 8B682
+jl near DrawPlayoffTree.56	; 8B67C
+push str_Adn1	; 8B682
 mov ebx, dword [dword esp+0F0h]	; 8B687
 push ebx	; 8B68E
 add word [dword esp+0F8h], byte 3Dh	; 8B68F
@@ -6259,20 +6196,20 @@ add esp, byte 8	; 8B69D
 push eax	; 8B6A0
 call sub_913B4	; 8B6A1
 add esp, byte 4	; 8B6A6
-jmp short loc_8B6B4	; 8B6A9
-loc_8B6AB:
+jmp short .67	; 8B6A9
+.66:
 add word [dword esp+0F0h], byte 4Dh	; 8B6AB
-loc_8B6B4:
+.67:
 xor ecx, ecx	; 8B6B4
-jmp near loc_8B824	; 8B6B6
-loc_8B6BB:
+jmp near .75	; 8B6B6
+.68:
 cmp cx, byte 4	; 8B6BB
-jge short loc_8B6D1	; 8B6BF
+jge short .69	; 8B6BF
 mov ebx, ecx	; 8B6C1
 movsx eax, cx	; 8B6C3
 movzx si, byte [nosplit eax*2+byte_C6DB2]	; 8B6C6
-jmp short loc_8B6EF	; 8B6CF
-loc_8B6D1:
+jmp short .70	; 8B6CF
+.69:
 mov ebx, 7	; 8B6D1
 sub ebx, ecx	; 8B6D6
 movsx eax, cx	; 8B6D8
@@ -6281,22 +6218,22 @@ sub eax, byte 8	; 8B6DD
 mov edx, 7	; 8B6E0
 sub edx, eax	; 8B6E5
 movzx si, byte [dword edx+byte_C6DB2]	; 8B6E7
-loc_8B6EF:
+.70:
 mov edx, 43h	; 8B6EF
 mov eax, 40h	; 8B6F4
 call sub_174C2	; 8B6F9
 movsx edi, si	; 8B6FE
 shl edi, 2	; 8B701
-mov eax, dword [dword edi+dword_DC7B8]	; 8B704
+mov eax, dword [dword edi+playofftree]	; 8B704
 mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8B70A
 add eax, 91h	; 8B711
 push eax	; 8B716
-push asc_C3ADD	; 8B717
+push str_fmtcsp	; 8B717
 lea eax, [dword esp+0C0h]	; 8B71C
 push eax	; 8B723
 call sprintf_	; 8B724
 add esp, byte 0Ch	; 8B729
-mov ebp, dword [dword edi+dword_DC7B8]	; 8B72C
+mov ebp, dword [dword edi+playofftree]	; 8B72C
 mov eax, ebp	; 8B732
 shl eax, 2	; 8B734
 add eax, ebp	; 8B737
@@ -6316,35 +6253,35 @@ mov bx, word [nosplit ebp*4+word_C6E22]	; 8B771
 add ebx, byte 6Ah	; 8B779
 xor eax, eax	; 8B77C
 mov al, byte [byte_C6DAA]	; 8B77E
-mov eax, dword [nosplit eax*4+dword_DC7B8]	; 8B783
-mov ebp, dword [dword edi+dword_DC7B8]	; 8B78A
+mov eax, dword [nosplit eax*4+playofftree]	; 8B783
+mov ebp, dword [dword edi+playofftree]	; 8B78A
 cmp eax, ebp	; 8B790
-je short loc_8B7C4	; 8B792
+je short .71	; 8B792
 xor eax, eax	; 8B794
 mov al, byte [byte_C6DAB]	; 8B796
-cmp ebp, dword [nosplit eax*4+dword_DC7B8]	; 8B79B
-je short loc_8B7C4	; 8B7A2
+cmp ebp, dword [nosplit eax*4+playofftree]	; 8B79B
+je short .71	; 8B7A2
 xor eax, eax	; 8B7A4
 mov al, byte [byte_C6DAC]	; 8B7A6
-cmp ebp, dword [nosplit eax*4+dword_DC7B8]	; 8B7AB
-je short loc_8B7C4	; 8B7B2
+cmp ebp, dword [nosplit eax*4+playofftree]	; 8B7AB
+je short .71	; 8B7B2
 xor eax, eax	; 8B7B4
 mov al, byte [byte_C6DAD]	; 8B7B6
-cmp ebp, dword [nosplit eax*4+dword_DC7B8]	; 8B7BB
-jne short loc_8B7D0	; 8B7C2
-loc_8B7C4:
+cmp ebp, dword [nosplit eax*4+playofftree]	; 8B7BB
+jne short .72	; 8B7C2
+.71:
 mov edx, 43h	; 8B7C4
 mov eax, 0C4h	; 8B7C9
-jmp short loc_8B7DA	; 8B7CE
-loc_8B7D0:
+jmp short .73	; 8B7CE
+.72:
 mov edx, 43h	; 8B7D0
 mov eax, 40h	; 8B7D5
-loc_8B7DA:
+.73:
 call sub_174C2	; 8B7DA
 movsx eax, si	; 8B7DF
 mov esi, dword [esp+eax*4]	; 8B7E2
 push esi	; 8B7E5
-push unk_C3AE1	; 8B7E6
+push str_D	; 8B7E6
 lea eax, [dword esp+0C0h]	; 8B7EB
 push eax	; 8B7F2
 call sprintf_	; 8B7F3
@@ -6355,13 +6292,13 @@ movsx eax, bx	; 8B805
 lea ebx, [dword esp+0B8h]	; 8B808
 call sub_175E2	; 8B80F
 cmp cx, byte 3	; 8B814
-jne short loc_8B823	; 8B818
+jne short .74	; 8B818
 add word [dword esp+0F0h], byte 10h	; 8B81A
-loc_8B823:
+.74:
 inc ecx	; 8B823
-loc_8B824:
+.75:
 cmp cx, byte 8	; 8B824
-jl near loc_8B6BB	; 8B828
+jl near DrawPlayoffTree.68	; 8B828
 call sub_1777E	; 8B82E
 mov edi, dword [dword esp+0ECh]	; 8B833
 push edi	; 8B83A
@@ -6370,22 +6307,22 @@ add esp, byte 4	; 8B840
 lea eax, [byte esp+078h]	; 8B843
 push eax	; 8B847
 call sub_8EA00	; 8B848
-loc_8B84D:
+.76:
 add esp, byte 4	; 8B84D
 add esp, 0F4h	; 8B850
-jmp near loc_87B2C	; 8B856
-sub_8B85B:
+jmp near POSeedRound2_x	; 8B856
+SetSideControls:
 push dword 10h	; 8B85B
 call __CHK	; 8B860
 push edx	; 8B865
 push edi	; 8B866
 push ebp	; 8B867
-mov eax, dword [dword_C5413]	; 8B868
-cmp eax, dword [dword_C5417]	; 8B86D
-jne short loc_8B8BD	; 8B873
-mov eax, dword [dword_C5413]	; 8B875
+mov eax, dword [ctl1side]	; 8B868
+cmp eax, dword [ctl2side]	; 8B86D
+jne short .2	; 8B873
+mov eax, dword [ctl1side]	; 8B875
 test eax, eax	; 8B87A
-jne short loc_8B8A3	; 8B87C
+jne short .1	; 8B87C
 mov dword [off_CEF43], code_1A8AA	; 8B87E
 mov dword [off_CEF63], eax	; 8B888
 mov dword [dword_CEDE7], unk_CEE4F	; 8B88D
@@ -6395,31 +6332,31 @@ pop ebp	; 8B89F
 pop edi	; 8B8A0
 pop edx	; 8B8A1
 ret	; 8B8A2
-loc_8B8A3:
+.1:
 xor edx, edx	; 8B8A3
 mov dword [off_CEF43], edx	; 8B8A5
 mov dword [off_CEF63], code_1A922	; 8B8AB
 mov dword [dword_CEDE7], edx	; 8B8B5
-jmp short loc_8B921	; 8B8BB
-loc_8B8BD:
-cmp dword [dword_C5403], byte 0FFFFFFFFh	; 8B8BD
-je short loc_8B8CF	; 8B8C4
-cmp dword [dword_C5407], byte 0FFFFFFFFh	; 8B8C6
-jne short loc_8B8DF	; 8B8CD
-loc_8B8CF:
+jmp short .8	; 8B8BB
+.2:
+cmp dword [ctl1team], byte 0FFFFFFFFh	; 8B8BD
+je short .3	; 8B8C4
+cmp dword [ctl2team], byte 0FFFFFFFFh	; 8B8C6
+jne short .4	; 8B8CD
+.3:
 xor ebp, ebp	; 8B8CF
 mov dword [off_CEF43], ebp	; 8B8D1
 mov dword [dword_CEDE7], ebp	; 8B8D7
-jmp short loc_8B8F3	; 8B8DD
-loc_8B8DF:
+jmp short .5	; 8B8DD
+.4:
 mov dword [off_CEF43], code_1A8AA	; 8B8DF
 mov dword [dword_CEDE7], unk_CEE4F	; 8B8E9
-loc_8B8F3:
-cmp dword [dword_C5403], byte 0FFFFFFFEh	; 8B8F3
-je short loc_8B905	; 8B8FA
-cmp dword [dword_C5407], byte 0FFFFFFFEh	; 8B8FC
-jne short loc_8B917	; 8B903
-loc_8B905:
+.5:
+cmp dword [ctl1team], byte 0FFFFFFFEh	; 8B8F3
+je short .6	; 8B8FA
+cmp dword [ctl2team], byte 0FFFFFFFEh	; 8B8FC
+jne short .7	; 8B903
+.6:
 xor edi, edi	; 8B905
 mov dword [off_CEF63], edi	; 8B907
 mov dword [dword_CEE07], edi	; 8B90D
@@ -6427,183 +6364,183 @@ pop ebp	; 8B913
 pop edi	; 8B914
 pop edx	; 8B915
 ret	; 8B916
-loc_8B917:
+.7:
 mov dword [off_CEF63], code_1A922	; 8B917
-loc_8B921:
+.8:
 mov dword [dword_CEE07], unk_CEEAF	; 8B921
 pop ebp	; 8B92B
 pop edi	; 8B92C
 pop edx	; 8B92D
 ret	; 8B92E
-sub_8B92F:
+WriteCurModeState:
 push dword 4	; 8B92F
 call __CHK	; 8B934
-mov eax, dword [dword_C53FB]	; 8B939
+mov eax, dword [gamemode]	; 8B939
 cmp eax, byte 1	; 8B93E
-jb short loc_8B94B	; 8B941
-jbe short loc_8B959	; 8B943
+jb short .1	; 8B941
+jbe short .2	; 8B943
 cmp eax, byte 2	; 8B945
-je short loc_8B963	; 8B948
-loc_8B94A:
+je short .3	; 8B948
+.x:
 ret	; 8B94A
-loc_8B94B:
+.1:
 test eax, eax	; 8B94B
-jne short loc_8B94A	; 8B94D
-mov eax, unk_C5298	; 8B94F
-jmp near sub_32B1D	; 8B954
-loc_8B959:
-mov eax, dword_C530D	; 8B959
-jmp near sub_32B1D	; 8B95E
-loc_8B963:
-mov eax, dword_C5382	; 8B963
-jmp near sub_32B1D	; 8B968
-sub_8B96D:
+jne short WriteCurModeState.x	; 8B94D
+mov eax, exhstate	; 8B94F
+jmp near WriteModeState	; 8B954
+.2:
+mov eax, postate	; 8B959
+jmp near WriteModeState	; 8B95E
+.3:
+mov eax, lgstate	; 8B963
+jmp near WriteModeState	; 8B968
+ClearPlayerFromLines:
 push dword 0Ch	; 8B96D
 call __CHK	; 8B972
 push ebx	; 8B977
 push ecx	; 8B978
 mov cl, al	; 8B979
 xor ebx, ebx	; 8B97B
-loc_8B97D:
+.1:
 mov eax, ebx	; 8B97D
 shl eax, 2	; 8B97F
 sub eax, ebx	; 8B982
 add eax, edx	; 8B984
 cmp cl, byte [eax]	; 8B986
-jne short loc_8B98F	; 8B988
+jne short .2	; 8B988
 mov byte [eax], 64h	; 8B98A
-jmp short loc_8B9A3	; 8B98D
-loc_8B98F:
+jmp short .4	; 8B98D
+.2:
 cmp cl, byte [byte eax+01h]	; 8B98F
-jne short loc_8B99A	; 8B992
+jne short .3	; 8B992
 mov byte [byte eax+01h], 64h	; 8B994
-jmp short loc_8B9A3	; 8B998
-loc_8B99A:
+jmp short .4	; 8B998
+.3:
 cmp cl, byte [byte eax+02h]	; 8B99A
-jne short loc_8B9A3	; 8B99D
+jne short .4	; 8B99D
 mov byte [byte eax+02h], 64h	; 8B99F
-loc_8B9A3:
+.4:
 inc ebx	; 8B9A3
 cmp ebx, byte 4	; 8B9A4
-jl short loc_8B97D	; 8B9A7
+jl short ClearPlayerFromLines.1	; 8B9A7
 xor ebx, ebx	; 8B9A9
-loc_8B9AB:
+.5:
 lea eax, [ebx+ebx]	; 8B9AB
 add eax, edx	; 8B9AE
 cmp cl, byte [byte eax+0Ch]	; 8B9B0
-jne short loc_8B9BB	; 8B9B3
+jne short .6	; 8B9B3
 mov byte [byte eax+0Ch], 64h	; 8B9B5
-jmp short loc_8B9C4	; 8B9B9
-loc_8B9BB:
+jmp short .7	; 8B9B9
+.6:
 cmp cl, byte [byte eax+0Dh]	; 8B9BB
-jne short loc_8B9C4	; 8B9BE
+jne short .7	; 8B9BE
 mov byte [byte eax+0Dh], 64h	; 8B9C0
-loc_8B9C4:
+.7:
 inc ebx	; 8B9C4
 cmp ebx, byte 3	; 8B9C5
-jl short loc_8B9AB	; 8B9C8
+jl short ClearPlayerFromLines.5	; 8B9C8
 cmp cl, byte [byte edx+012h]	; 8B9CA
-jne short loc_8B9D5	; 8B9CD
+jne short .8	; 8B9CD
 mov byte [byte edx+012h], 64h	; 8B9CF
-jmp short loc_8B9FF	; 8B9D3
-loc_8B9D5:
+jmp short .12	; 8B9D3
+.8:
 cmp cl, byte [byte edx+013h]	; 8B9D5
-jne short loc_8B9E0	; 8B9D8
+jne short .9	; 8B9D8
 mov byte [byte edx+013h], 64h	; 8B9DA
-jmp short loc_8B9FF	; 8B9DE
-loc_8B9E0:
+jmp short .12	; 8B9DE
+.9:
 cmp cl, byte [byte edx+014h]	; 8B9E0
-jne short loc_8B9EB	; 8B9E3
+jne short .10	; 8B9E3
 mov byte [byte edx+014h], 64h	; 8B9E5
-jmp short loc_8B9FF	; 8B9E9
-loc_8B9EB:
+jmp short .12	; 8B9E9
+.10:
 cmp cl, byte [byte edx+015h]	; 8B9EB
-jne short loc_8B9F6	; 8B9EE
+jne short .11	; 8B9EE
 mov byte [byte edx+015h], 64h	; 8B9F0
-jmp short loc_8B9FF	; 8B9F4
-loc_8B9F6:
+jmp short .12	; 8B9F4
+.11:
 cmp cl, byte [byte edx+016h]	; 8B9F6
-jne short loc_8B9FF	; 8B9F9
+jne short .12	; 8B9F9
 mov byte [byte edx+016h], 64h	; 8B9FB
-loc_8B9FF:
+.12:
 cmp cl, byte [byte edx+017h]	; 8B9FF
-jne short loc_8BA0A	; 8BA02
+jne short .13	; 8BA02
 mov byte [byte edx+017h], 64h	; 8BA04
-jmp short loc_8BA34	; 8BA08
-loc_8BA0A:
+jmp short .17	; 8BA08
+.13:
 cmp cl, byte [byte edx+018h]	; 8BA0A
-jne short loc_8BA15	; 8BA0D
+jne short .14	; 8BA0D
 mov byte [byte edx+018h], 64h	; 8BA0F
-jmp short loc_8BA34	; 8BA13
-loc_8BA15:
+jmp short .17	; 8BA13
+.14:
 cmp cl, byte [byte edx+019h]	; 8BA15
-jne short loc_8BA20	; 8BA18
+jne short .15	; 8BA18
 mov byte [byte edx+019h], 64h	; 8BA1A
-jmp short loc_8BA34	; 8BA1E
-loc_8BA20:
+jmp short .17	; 8BA1E
+.15:
 cmp cl, byte [byte edx+01Ah]	; 8BA20
-jne short loc_8BA2B	; 8BA23
+jne short .16	; 8BA23
 mov byte [byte edx+01Ah], 64h	; 8BA25
-jmp short loc_8BA34	; 8BA29
-loc_8BA2B:
+jmp short .17	; 8BA29
+.16:
 cmp cl, byte [byte edx+01Bh]	; 8BA2B
-jne short loc_8BA34	; 8BA2E
+jne short .17	; 8BA2E
 mov byte [byte edx+01Bh], 64h	; 8BA30
-loc_8BA34:
+.17:
 cmp cl, byte [byte edx+01Ch]	; 8BA34
-jne short loc_8BA3F	; 8BA37
+jne short .18	; 8BA37
 mov byte [byte edx+01Ch], 64h	; 8BA39
-jmp short loc_8BA5E	; 8BA3D
-loc_8BA3F:
+jmp short .21	; 8BA3D
+.18:
 cmp cl, byte [byte edx+01Dh]	; 8BA3F
-jne short loc_8BA4A	; 8BA42
+jne short .19	; 8BA42
 mov byte [byte edx+01Dh], 64h	; 8BA44
-jmp short loc_8BA5E	; 8BA48
-loc_8BA4A:
+jmp short .21	; 8BA48
+.19:
 cmp cl, byte [byte edx+01Eh]	; 8BA4A
-jne short loc_8BA55	; 8BA4D
+jne short .20	; 8BA4D
 mov byte [byte edx+01Eh], 64h	; 8BA4F
-jmp short loc_8BA5E	; 8BA53
-loc_8BA55:
+jmp short .21	; 8BA53
+.20:
 cmp cl, byte [byte edx+01Fh]	; 8BA55
-jne short loc_8BA5E	; 8BA58
+jne short .21	; 8BA58
 mov byte [byte edx+01Fh], 64h	; 8BA5A
-loc_8BA5E:
+.21:
 cmp cl, byte [byte edx+020h]	; 8BA5E
-jne short loc_8BA69	; 8BA61
+jne short .22	; 8BA61
 mov byte [byte edx+020h], 64h	; 8BA63
-jmp short loc_8BA88	; 8BA67
-loc_8BA69:
+jmp short .25	; 8BA67
+.22:
 cmp cl, byte [byte edx+021h]	; 8BA69
-jne short loc_8BA74	; 8BA6C
+jne short .23	; 8BA6C
 mov byte [byte edx+021h], 64h	; 8BA6E
-jmp short loc_8BA88	; 8BA72
-loc_8BA74:
+jmp short .25	; 8BA72
+.23:
 cmp cl, byte [byte edx+022h]	; 8BA74
-jne short loc_8BA7F	; 8BA77
+jne short .24	; 8BA77
 mov byte [byte edx+022h], 64h	; 8BA79
-jmp short loc_8BA88	; 8BA7D
-loc_8BA7F:
+jmp short .25	; 8BA7D
+.24:
 cmp cl, byte [byte edx+023h]	; 8BA7F
-jne short loc_8BA88	; 8BA82
+jne short .25	; 8BA82
 mov byte [byte edx+023h], 64h	; 8BA84
-loc_8BA88:
+.25:
 cmp cl, byte [byte edx+024h]	; 8BA88
-jne short loc_8BA91	; 8BA8B
+jne short .26	; 8BA8B
 mov byte [byte edx+024h], 64h	; 8BA8D
-loc_8BA91:
+.26:
 cmp cl, byte [byte edx+025h]	; 8BA91
-jne short loc_8BA9A	; 8BA94
+jne short .27	; 8BA94
 mov byte [byte edx+025h], 64h	; 8BA96
-loc_8BA9A:
+.27:
 cmp cl, byte [byte edx+026h]	; 8BA9A
-jne short loc_8BAA3	; 8BA9D
+jne short .28	; 8BA9D
 mov byte [byte edx+026h], 64h	; 8BA9F
-loc_8BAA3:
+.28:
 cmp cl, byte [byte edx+027h]	; 8BAA3
-jne short loc_8BAAC	; 8BAA6
+jne short .x	; 8BAA6
 mov byte [byte edx+027h], 64h	; 8BAA8
-loc_8BAAC:
+.x:
 pop ecx	; 8BAAC
 pop ebx	; 8BAAD
 ret	; 8BAAE

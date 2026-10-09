@@ -8,7 +8,7 @@ extern dword_D2F80, dword_D2F88, dword_D2F8C, dword_D2F90, dword_D3024, dword_D3
 extern dword_D3050, dword_D3054, dword_D3058, dword_D30A4, dword_D30D4, dword_D30D8, dword_D30DC, dword_D30E0
 extern dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0, dword_D30F4, dword_D30F8, dword_D3104, dword_D4108
 extern dword_D4F4C, dword_D4F50, dword_EDABA, dword_EDCB8, dword_EDCBC, jctime, spawnl_, strncmp_
-extern sub_8DBC0, sub_8E8A0, sub_98A40, sub_B2CD8, sub_B3ABC, sub_B3E98, sub_B3FC2, sub_B4BA8
+extern sub_8DBC0, sub_8E8A0, sub_98A40, FatalError, sub_B3ABC, sub_B3E98, sub_B3FC2, sub_B4BA8
 extern sub_B5E00, sub_B5EA7, sub_B5EB8, unk_EDAB8, unk_EDBB8, unlink_, word_EDBCA
 global loc_8DF8B, loc_8DFB0, loc_8DFEA, loc_8E011, loc_8E06C, loc_8E0A0, loc_8E0AE, loc_8E0C6
 global loc_8E0D5, loc_8E0DE, loc_8E0FA, loc_8E113, loc_8E12F, loc_8E148, loc_8E161, loc_8E17A
@@ -38,7 +38,7 @@ mov dword [dword_EDCB8], eax	; 8DF99
 cmp eax, byte 0FFFFFFFFh	; 8DF9E
 jne short loc_8DFB0	; 8DFA1
 push asc_C3DD4	; 8DFA3
-call sub_B2CD8	; 8DFA8
+call FatalError	; 8DFA8
 add esp, byte 4	; 8DFAD
 loc_8DFB0:
 push byte 0	; 8DFB0
@@ -55,7 +55,7 @@ add esp, byte 4	; 8DFD3
 cmp eax, 41Ch	; 8DFD6
 je short loc_8DFEA	; 8DFDB
 push asc_C3E38	; 8DFDD
-call sub_B2CD8	; 8DFE2
+call FatalError	; 8DFE2
 add esp, byte 4	; 8DFE7
 loc_8DFEA:
 xor edx, edx	; 8DFEA
@@ -111,7 +111,7 @@ mov ebp, dword [byte esp+01Ch]	; 8E086
 cmp dword [dword_D2F80], byte 0	; 8E08A
 jne short loc_8E0A0	; 8E091
 push asc_C3E9C	; 8E093
-call sub_B2CD8	; 8E098
+call FatalError	; 8E098
 add esp, byte 4	; 8E09D
 loc_8E0A0:
 cmp dword [dword_D3024], byte 0	; 8E0A0
@@ -185,7 +185,7 @@ push ebp	; 8E18E
 mov ebx, dword [byte esp+01Ch]	; 8E18F
 push ebx	; 8E193
 push asc_C3ED4	; 8E194
-call sub_B2CD8	; 8E199
+call FatalError	; 8E199
 add esp, byte 0Ch	; 8E19E
 loc_8E1A1:
 test esi, esi	; 8E1A1
@@ -193,7 +193,7 @@ jl near loc_8E29F	; 8E1A3
 cmp dword [dword_EDCB8], byte 0	; 8E1A9
 jne short loc_8E1BF	; 8E1B0
 push asc_C3F00	; 8E1B2
-call sub_B2CD8	; 8E1B7
+call FatalError	; 8E1B7
 add esp, byte 4	; 8E1BC
 loc_8E1BF:
 xor edi, edi	; 8E1BF

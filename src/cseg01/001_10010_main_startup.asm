@@ -10,7 +10,7 @@ extern byte_EA0F4, byte_ED906, byte_ED92E, byte_ED935, byte_ED936, byte_ED990, d
 extern dword_C4D04, dword_C4D08, joysampling, joyqhead, joyqcount, joyqtick, dword_C4E0C, dword_C4E10
 extern dword_C4E14, joyrec, dword_C4E24, dword_C4E28, dword_C4E2C, dword_C5130, dword_C5131, dword_C5133
 extern dword_C5135, dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5305, dword_C5309, gameopts
-extern dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413, dword_C5417, dword_C5840, screenbm
+extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, dword_C5840, screenbm
 extern songdata, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
 extern musichandle, dword_D2C6B, dword_D302C, dword_D3030, dword_D3034, dword_D30D4, dword_D4158, dword_D415C
 extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
@@ -18,15 +18,15 @@ extern dword_D8B7C, dword_D8C18, dword_D8C4C, dword_D8C70, dword_D8C78, dword_D8
 extern dword_DC238, dword_DF00C, dword_DF010, dword_E9A9E, dword_EDA08, dword_EDA0C, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
 extern sub_150C6, sub_1672A, sub_16F9A, sub_190BE, sub_1BAF3, sub_1CD73, sub_3149D, sub_31AB5
-extern sub_327A1, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
+extern LoadModeState, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
 extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
 extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
 extern sub_8DF54, sub_8E080, sub_8E4C0, sub_8E5AC, sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0
-extern sub_B29F0, sub_B2CBE, sub_B2CD8, MouseSetPos, sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4
+extern sub_B29F0, sub_B2CBE, FatalError, MouseSetPos, sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4
 extern sub_B30F4, sub_B33DB, sub_B3464, sub_B392C, sub_B3989, sub_B3999, PollKey, sub_B3A24
 extern sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C33, sub_B4C84, unk_C0180, unk_C01D4
-extern unk_C01D7, unk_C4E30, unk_C5298, joyqueue, unk_DF014, vtoa, cont1team, word_CBC44
+extern unk_C01D7, unk_C4E30, exhstate, joyqueue, unk_DF014, vtoa, cont1team, word_CBC44
 extern exitgame, gameover, word_CBEC4, lcrequest, word_E0306, lcreqchoice, word_E0382, joysampling_save
 global loc_10024, loc_1005B, loc_10075, loc_1007D, loc_10084, loc_100DB, loc_100F7, loc_10167
 global loc_101E3, loc_10216, loc_1022C, loc_10236, loc_10278, loc_102F5, loc_102F7, loc_10342
@@ -144,7 +144,7 @@ call _dos_getdiskfree_	; 100E1
 test eax, eax	; 100E6
 je short loc_100F7	; 100E8
 push asc_C005B	; 100EA
-call sub_B2CD8	; 100EF
+call FatalError	; 100EF
 add esp, byte 4	; 100F4
 loc_100F7:
 xor esi, esi	; 100F7
@@ -369,8 +369,8 @@ mov edx, dword [dword_DC230]	; 10414
 push edx	; 1041A
 call sub_8EA18	; 1041B
 add esp, byte 4	; 10420
-mov eax, unk_C5298	; 10423
-call sub_327A1	; 10428
+mov eax, exhstate	; 10423
+call LoadModeState	; 10428
 call sub_3DB41	; 1042D
 call sub_1672A	; 10432
 call sub_B30F4	; 10437
@@ -427,13 +427,13 @@ test eax, eax	; 104F9
 jne short loc_10549	; 104FB
 mov ecx, 75h	; 104FD
 mov ebx, 0FFFFFFFFh	; 10502
-mov edx, unk_C5298	; 10507
+mov edx, exhstate	; 10507
 mov eax, dword [byte esp+068h]	; 1050C
 call FileReadAt	; 10510
 test eax, eax	; 10515
 je short loc_10526	; 10517
 push unk_C01D4	; 10519
-call sub_B2CD8	; 1051E
+call FatalError	; 1051E
 add esp, byte 4	; 10523
 loc_10526:
 lea eax, [byte esp+068h]	; 10526
@@ -441,7 +441,7 @@ call FileClose	; 1052A
 test eax, eax	; 1052F
 je near loc_105E1	; 10531
 push unk_C01D7	; 10537
-call sub_B2CD8	; 1053C
+call FatalError	; 1053C
 add esp, byte 4	; 10541
 jmp near loc_105E1	; 10544
 loc_10549:
@@ -482,8 +482,8 @@ mov dword [dword_C52F5], 0FFFFFFFFh	; 105CD
 loc_105D7:
 mov dword [dword_C52F9], 0FFFFFFFEh	; 105D7
 loc_105E1:
-mov eax, unk_C5298	; 105E1
-call sub_327A1	; 105E6
+mov eax, exhstate	; 105E1
+call LoadModeState	; 105E6
 call sub_479E9	; 105EB
 lea eax, [byte esp+06Ch]	; 105F0
 call _dos_gettime_	; 105F4
@@ -558,7 +558,7 @@ call _dos_getdiskfree_	; 106DA
 test eax, eax	; 106DF
 je short loc_106F0	; 106E1
 push asc_C01DF	; 106E3
-call sub_B2CD8	; 106E8
+call FatalError	; 106E8
 add esp, byte 4	; 106ED
 loc_106F0:
 xor edx, edx	; 106F0
@@ -581,38 +581,38 @@ push ebx	; 1071C
 push ecx	; 1071D
 push edx	; 1071E
 push ebp	; 1071F
-cmp dword [dword_C5403], byte 0	; 10720
+cmp dword [ctl1team], byte 0	; 10720
 jge short loc_10734	; 10727
 xor ecx, ecx	; 10729
 mov word [cont1team], cx	; 1072B
 jmp short loc_10751	; 10732
 loc_10734:
-cmp dword [dword_C5413], byte 0	; 10734
+cmp dword [ctl1side], byte 0	; 10734
 jne short loc_10748	; 1073B
 mov word [cont1team], 1	; 1073D
 jmp short loc_10751	; 10746
 loc_10748:
 mov word [cont1team], 2	; 10748
 loc_10751:
-cmp dword [dword_C5407], byte 0	; 10751
+cmp dword [ctl2team], byte 0	; 10751
 jge short loc_10764	; 10758
 xor eax, eax	; 1075A
 mov word [cont2team], ax	; 1075C
 jmp short loc_10781	; 10762
 loc_10764:
-cmp dword [dword_C5417], byte 0	; 10764
+cmp dword [ctl2side], byte 0	; 10764
 jne short loc_10778	; 1076B
 mov word [cont2team], 1	; 1076D
 jmp short loc_10781	; 10776
 loc_10778:
 mov word [cont2team], 2	; 10778
 loc_10781:
-mov eax, dword [dword_C5413]	; 10781
-cmp eax, dword [dword_C5417]	; 10786
+mov eax, dword [ctl1side]	; 10781
+cmp eax, dword [ctl2side]	; 10786
 sete al	; 1078C
 and eax, 0FFh	; 1078F
 mov dword [dword_C4E0C], eax	; 10794
-mov eax, dword [dword_C540B]	; 10799
+mov eax, dword [ctl1dev]	; 10799
 cmp eax, byte 4	; 1079E
 jb short loc_107B6	; 107A1
 cmp eax, byte 4	; 107A3
@@ -646,7 +646,7 @@ loc_107E8:
 xor ah, ah	; 107E8
 mov byte [byte_C4D1C], ah	; 107EA
 loc_107F0:
-mov eax, dword [dword_C540F]	; 107F0
+mov eax, dword [ctl2dev]	; 107F0
 cmp eax, byte 4	; 107F5
 jb short loc_1080A	; 107F8
 jbe short loc_1082A	; 107FA

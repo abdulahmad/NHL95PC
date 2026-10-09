@@ -15,7 +15,7 @@ extern off_CFB1C, off_CFB8A, rmdir_, sprintf_, strcat_, strcpy_, strlen_, strupr
 extern MakePath, sub_14442, sub_17573, sub_175E2, sub_29C75, sub_2FEDF, sub_30AE2, sub_30C3D
 extern sub_30F12, MessageBox, sub_6C19B, DrawEditRosters, EditRosters, CheckDatabases, sub_76429, sub_8CCA8
 extern sub_8D2F0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90F38
-extern sub_91964, sub_932D0, sub_B2CD8, MouseSetPos, sub_B4BA8, sub_B4F8C, unk_6BF3D, unk_C28A9
+extern sub_91964, sub_932D0, FatalError, MouseSetPos, sub_B4BA8, sub_B4F8C, unk_6BF3D, unk_C28A9
 extern btn_LeagueExists, unk_D0450, unk_D07EB, unk_D0BB8, unk_D0BF0, unk_D0C24, unk_EC7C0, unknown_libname_1
 global loc_6C3B3, loc_6C470, loc_6C475, loc_6C486, loc_6C4B2, loc_6C4F7, loc_6C53F, loc_6C54F
 global loc_6C580, loc_6C590, loc_6C5C1, loc_6C5D1, loc_6C602, loc_6C612, loc_6C63F, loc_6C64B
@@ -191,7 +191,7 @@ call _dos_getdiskfree_	; 6C4E1
 test eax, eax	; 6C4E6
 je short loc_6C4F7	; 6C4E8
 push asc_C2854	; 6C4EA
-call sub_B2CD8	; 6C4EF
+call FatalError	; 6C4EF
 add esp, byte 4	; 6C4F4
 loc_6C4F7:
 xor esi, esi	; 6C4F7

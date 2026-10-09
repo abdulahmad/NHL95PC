@@ -29,7 +29,7 @@ extern unk_C1203, unk_C1206, unk_C120B, unk_C126C, unk_C1276, unk_C5654
 global CreditsList, asc_C5679, asc_C6570, asc_C65F8, asc_C6614, asc_C662E, asc_C664C, asc_C6678
 global asc_C668F, asc_C671E, asc_C6731, asc_C6747, asc_C6748, asc_C675B, asc_C675C, asc_C6779
 global asc_C677A, asc_C6891, asc_C689A, asc_C68AD, asc_C68FC, str_fmt2d, str_fmt3d, asc_C690B
-global asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B, asc_C6935, asc_C693B, asc_C6940
+global asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B, asc_C6935, str_Bkgd2, asc_C6940
 global asc_C70A0, asc_C70B8, asc_C70C7, asc_C70EC, asc_C70F8, asc_C7298, byte_C66B4, byte_C671C
 global byte_C672F, byte_C6745, byte_C6759, byte_C6777, byte_C67A9, byte_C6D72, byte_C6D73, byte_C6D7A
 global byte_C6D7B, byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, byte_C6D9A
@@ -1005,7 +1005,7 @@ asc_C692B:
 db 025h,032h,064h,02Eh,025h,032h,02Eh,032h,064h,00h
 asc_C6935:
 db 065h,06Dh,062h,025h,073h,00h
-asc_C693B:
+str_Bkgd2:
 db 062h,06Bh,067h,064h,00h
 asc_C6940:
 db 045h,041h,053h,04Eh,02Eh,076h,066h,06Eh,00h,077h,069h,074h,074h,06Ch,065h,030h

@@ -4,7 +4,7 @@ bits 32
 section s_7DC8B progbits alloc exec nowrite align=1
 extern __CHK, asc_C33D4, asc_C33DC, asc_C33E4, asc_C33EC, asc_C3411, asc_C3419, asc_C3421
 extern asc_C3426, asc_C8136, musicon, byte_ED7CC, byte_ED7EB, byte_ED862, byte_ED8CC, byte_ED92D
-extern byte_ED932, byte_ED9EF, dword_C53FB, dword_C5403, dword_C5407, dword_C541F, dword_C66D0, dword_C66D4
+extern byte_ED932, byte_ED9EF, gamemode, ctl1team, ctl2team, dword_C541F, dword_C66D0, dword_C66D4
 extern dword_C7444, dword_C7448, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, dword_D1C8B
 extern dword_D1CE6, dword_D1CEE, dword_D1DC8, dword_D1DCC, dword_D1DD0, dword_D1DD4, dword_D2C6B, dword_D8B74
 extern dword_D8C40, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, dword_DC238, dword_DD6A8, dword_DD6AE
@@ -477,11 +477,11 @@ push edi	; 7E108
 push ebp	; 7E109
 sub esp, byte 20h	; 7E10A
 push eax	; 7E10D
-cmp dword [dword_C53FB], byte 0	; 7E10E
+cmp dword [gamemode], byte 0	; 7E10E
 je short loc_7E129	; 7E115
-cmp dword [dword_C5403], byte 0	; 7E117
+cmp dword [ctl1team], byte 0	; 7E117
 jge short loc_7E135	; 7E11E
-cmp dword [dword_C5407], byte 0	; 7E120
+cmp dword [ctl2team], byte 0	; 7E120
 jge short loc_7E135	; 7E127
 loc_7E129:
 mov dword [dword_ED6F8], 1	; 7E129
@@ -1567,10 +1567,10 @@ sub esp, byte 64h	; 7F0BD
 push edx	; 7F0C0
 push ebx	; 7F0C1
 call sub_B4BA8	; 7F0C2
-mov edx, dword [dword_C5403]	; 7F0C7
+mov edx, dword [ctl1team]	; 7F0C7
 test edx, edx	; 7F0CD
 jl short loc_7F0E3	; 7F0CF
-mov ebx, dword [dword_C5407]	; 7F0D1
+mov ebx, dword [ctl2team]	; 7F0D1
 test ebx, ebx	; 7F0D7
 jl short loc_7F0E3	; 7F0D9
 cmp edx, ebx	; 7F0DB
@@ -1579,7 +1579,7 @@ loc_7F0E3:
 push byte 64h	; 7F0E3
 call sub_B3989	; 7F0E5
 add esp, byte 4	; 7F0EA
-mov edi, dword [dword_C5403]	; 7F0ED
+mov edi, dword [ctl1team]	; 7F0ED
 test edi, edi	; 7F0F3
 jl short loc_7F10E	; 7F0F5
 mov eax, dword [cont2team]	; 7F0F7
@@ -1594,7 +1594,7 @@ jmp short loc_7F129	; 7F10C
 loc_7F10E:
 mov eax, dword [cont2team]	; 7F10E
 sar eax, 10h	; 7F113
-mov ebp, dword [dword_C5407]	; 7F116
+mov ebp, dword [ctl2team]	; 7F116
 cmp eax, ebp	; 7F11C
 jne short loc_7F124	; 7F11E
 xor eax, ebp	; 7F120

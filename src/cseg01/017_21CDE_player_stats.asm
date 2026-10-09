@@ -13,9 +13,9 @@ extern asc_C1082, asc_C108A, asc_C108E, asc_C1092, asc_C1096, asc_C109C, asc_C10
 extern asc_C10AD, asc_C10BC, asc_C10C0, asc_C10C5, asc_C1211, asc_C1216, asc_C121C, asc_C1222
 extern asc_C122A, asc_C1231, asc_C123A, asc_C123F, asc_C1251, asc_C1258, asc_C125F, asc_C68FC
 extern str_fmt2d, str_fmt3d, asc_C690B, asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B
-extern asc_C6935, asc_C693B, byte_C6D72, byte_C6D73, byte_C6D7A, byte_C6D7B, byte_C6D82, byte_C6D83
+extern asc_C6935, str_Bkgd2, byte_C6D72, byte_C6D73, byte_C6D7A, byte_C6D7B, byte_C6D82, byte_C6D83
 extern byte_C6D8A, byte_C6D9A, byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DB2, byte_C6DB3
-extern byte_ED83C, byte_ED858, byte_ED859, byte_ED908, byte_ED909, teamdivflags, dword_C5581, dword_C6956
+extern byte_ED83C, byte_ED858, byte_ED859, byte_ED908, byte_ED909, teamdivflags, teamconf, dword_C6956
 extern dword_C695A, dword_C6AF8, dword_C6B30, dword_C6E32, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DC6B8
 extern dword_DC6BC, dword_DC720, dword_DC734, dword_DC73C, dword_DC750, dword_DC754, dword_DC85C, dword_DC860
 extern dword_DD100, dword_DD104, dword_DD108, dword_DD10C, dword_DD110, dword_DD114, dword_DD118, dword_DD11C
@@ -216,7 +216,7 @@ push eax	; 21E99
 call sub_8E83C	; 21E9A
 add esp, byte 8	; 21E9F
 mov dword [dword_DD104], eax	; 21EA2
-push asc_C693B	; 21EA7
+push str_Bkgd2	; 21EA7
 push eax	; 21EAC
 call sub_B30B4	; 21EAD
 add esp, byte 8	; 21EB2
@@ -822,7 +822,7 @@ push eax	; 22733
 call sub_8E83C	; 22734
 add esp, byte 8	; 22739
 mov dword [dword_DD104], eax	; 2273C
-push asc_C693B	; 22741
+push str_Bkgd2	; 22741
 push eax	; 22746
 call sub_B30B4	; 22747
 add esp, byte 8	; 2274C
@@ -2333,7 +2333,7 @@ mov eax, ebp	; 23945
 shl eax, 2	; 23947
 mov ecx, dword [dword esp+eax+0DCh]	; 2394A
 mov ecx, dword [byte esp+ecx*4+074h]	; 23951
-cmp dword [nosplit ecx*4+dword_C5581], byte 3	; 23955
+cmp dword [nosplit ecx*4+teamconf], byte 3	; 23955
 jne short loc_2396D	; 2395D
 mov eax, dword [dword esp+eax+0DCh]	; 2395F
 mov dword [byte esp+edx*4+04h], eax	; 23966
@@ -2423,7 +2423,7 @@ mov eax, ebp	; 23A62
 shl eax, 2	; 23A64
 mov ecx, dword [dword esp+eax+0DCh]	; 23A67
 mov ecx, dword [byte esp+ecx*4+074h]	; 23A6E
-cmp dword [nosplit ecx*4+dword_C5581], byte 3	; 23A72
+cmp dword [nosplit ecx*4+teamconf], byte 3	; 23A72
 jne short loc_23A8A	; 23A7A
 mov eax, dword [dword esp+eax+0DCh]	; 23A7C
 mov dword [byte esp+edx*4+04h], eax	; 23A83
@@ -2476,7 +2476,7 @@ push eax	; 23B22
 call sub_8E83C	; 23B23
 add esp, byte 8	; 23B28
 mov dword [dword_DD104], eax	; 23B2B
-push asc_C693B	; 23B30
+push str_Bkgd2	; 23B30
 push eax	; 23B35
 call sub_B30B4	; 23B36
 add esp, byte 8	; 23B3B
@@ -3402,7 +3402,7 @@ push eax	; 24891
 call sub_8E83C	; 24892
 add esp, byte 8	; 24897
 mov dword [dword_DD104], eax	; 2489A
-push asc_C693B	; 2489F
+push str_Bkgd2	; 2489F
 push eax	; 248A4
 call sub_B30B4	; 248A5
 add esp, byte 8	; 248AA
@@ -5519,7 +5519,7 @@ push eax	; 26244
 call sub_8E83C	; 26245
 add esp, byte 8	; 2624A
 mov dword [dword_DD104], eax	; 2624D
-push asc_C693B	; 26252
+push str_Bkgd2	; 26252
 push eax	; 26257
 call sub_B30B4	; 26258
 add esp, byte 8	; 2625D

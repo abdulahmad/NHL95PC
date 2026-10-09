@@ -12,7 +12,7 @@ extern dword_D4210, dword_D4214, dword_D4218, dword_D421C, dword_D4220, dword_D4
 extern dword_D4230, dword_D4234, dword_D4238, dword_D423C, dword_D4240, dword_D4248, dword_D424C, dword_D4250
 extern dword_D4254, dword_D4258, dword_D425C, dword_D4260, dword_D4264, dword_D4268, dword_D426C, dword_D4270
 extern dword_D4274, dword_D4278, dword_D427C, dword_D4294, dword_D4298, exit_, off_D42A0, sub_902A0
-extern sub_90D20, sub_9864C, sub_98664, sub_B2CD8, unk_8E870, word_D3094, word_D309A
+extern sub_90D20, sub_9864C, sub_98664, FatalError, unk_8E870, word_D3094, word_D309A
 global loc_B3089, loc_B30B0, loc_B30BD, loc_B30D1, loc_B30E3, loc_B30F1, loc_B3115, loc_B3129
 global loc_B3132, loc_B3156, loc_B31A5, loc_B31A9, loc_B31BB, loc_B31BF, loc_B31D0, loc_B31DB
 global loc_B3207, loc_B3219, loc_B322F, loc_B3258, loc_B3277, loc_B3285, loc_B32A3, loc_B32BE
@@ -122,7 +122,7 @@ LD or, ebx, ebx	; B30E3
 je short loc_B30F1	; B30E5
 push dword [byte esp+08h]	; B30E7
 push ebx	; B30EB
-call sub_B2CD8	; B30EC
+call FatalError	; B30EC
 loc_B30F1:
 LD xor, eax, eax	; B30F1
 ret	; B30F3

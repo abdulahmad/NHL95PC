@@ -5,7 +5,7 @@ section s_8C990 progbits alloc exec nowrite align=1
 extern asc_C3B98, asc_C3BA0, asc_C3BAC, asc_C3BB0, asc_C3BCC, asc_C3C10, asc_C3C4C, asc_C3C88
 extern asc_C3CB0, asc_C3CF4, asc_C3D38, dword_D2F58, dword_D2F5C, dword_D2F60, dword_D2F64, dword_EDA08
 extern dword_EDAB0, sub_8D604, sub_8D844, sub_8D990, sub_8DA98, sub_8DAB8, sub_8DB78, sub_8DB8C
-extern sub_8E3E4, sub_8E424, sub_986E4, sub_B2CD8, unknown_libname_22
+extern sub_8E3E4, sub_8E424, sub_986E4, FatalError, unknown_libname_22
 global loc_8CAC8, loc_8CAE8, loc_8CBD2, loc_8CBE3, loc_8CBF5, loc_8CC1D, loc_8CC37, loc_8CC53
 global loc_8CD90, loc_8CDDC, loc_8CDEE, loc_8CE17, loc_8CE32, loc_8CE3D, loc_8CE43, loc_8CE5A
 global loc_8CE68, loc_8CEC9, loc_8CEE4, loc_8CEFA, loc_8CF54, loc_8CF66, loc_8CF7D, loc_8CF82
@@ -227,7 +227,7 @@ loc_8CBE3:
 cmp esi, dword [byte edi+04h]	; 8CBE3
 jne short loc_8CBF5	; 8CBE6
 push asc_C3BB0	; 8CBE8
-call sub_B2CD8	; 8CBED
+call FatalError	; 8CBED
 add esp, byte 4	; 8CBF2
 loc_8CBF5:
 mov eax, dword [byte esi+020h]	; 8CBF5
@@ -388,7 +388,7 @@ push eax	; 8CD78
 mov ebp, dword [byte esp+01Ch]	; 8CD79
 push ebp	; 8CD7D
 push asc_C3BCC	; 8CD7E
-call sub_B2CD8	; 8CD83
+call FatalError	; 8CD83
 add esp, byte 0Ch	; 8CD88
 jmp near loc_8D0BF	; 8CD8B
 loc_8CD90:
@@ -678,7 +678,7 @@ mov ebx, dword [byte esp+01Ch]	; 8D085
 push ebx	; 8D089
 push asc_C3C4C	; 8D08A
 loc_8D08F:
-call sub_B2CD8	; 8D08F
+call FatalError	; 8D08F
 add esp, byte 0Ch	; 8D094
 loc_8D097:
 cmp dword [byte esp+020h], byte 0	; 8D097
@@ -690,7 +690,7 @@ add esp, byte 4	; 8D0AA
 mov edi, dword [byte esp+01Ch]	; 8D0AD
 push edi	; 8D0B1
 push asc_C3C88	; 8D0B2
-call sub_B2CD8	; 8D0B7
+call FatalError	; 8D0B7
 add esp, byte 8	; 8D0BC
 loc_8D0BF:
 xor eax, eax	; 8D0BF
@@ -811,7 +811,7 @@ push eax	; 8D1EA
 mov ebp, dword [byte esp+018h]	; 8D1EB
 push ebp	; 8D1EF
 push asc_C3CB0	; 8D1F0
-call sub_B2CD8	; 8D1F5
+call FatalError	; 8D1F5
 add esp, byte 0Ch	; 8D1FA
 jmp near loc_8D29A	; 8D1FD
 loc_8D202:
@@ -873,7 +873,7 @@ push ebp	; 8D287
 mov esi, dword [byte esp+018h]	; 8D288
 push esi	; 8D28C
 push asc_C3CF4	; 8D28D
-call sub_B2CD8	; 8D292
+call FatalError	; 8D292
 add esp, byte 0Ch	; 8D297
 loc_8D29A:
 xor eax, eax	; 8D29A
@@ -899,7 +899,7 @@ cmp eax, dword [byte edx+04h]	; 8D2C2
 jne short loc_8D2AE	; 8D2C5
 push ebx	; 8D2C7
 push asc_C3D38	; 8D2C8
-call sub_B2CD8	; 8D2CD
+call FatalError	; 8D2CD
 sub_8D2D2:
 add esp, byte 8	; 8D2D2
 xor eax, eax	; 8D2D5

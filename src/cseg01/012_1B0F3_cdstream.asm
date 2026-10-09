@@ -6,7 +6,7 @@ extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, joysampling, dword_C66
 extern dword_CBECA, dword_CC0E0, dword_D8C68, dword_D8C80, dword_D9980, dword_DC230, dword_DC2F0, dword_DC338
 extern dword_DC8A0, dword_DC8C8, dword_E0244, dword_ED700, jctime, sub_33727, joyq_flush, CrowdNoiseOff
 extern GameOver, sub_7DEC8, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E4F8, sub_8EA18, sub_91FA4
-extern sub_B2CD8, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, scrpitch
+extern FatalError, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, scrpitch
 global jpt_1B283, loc_1B1B7, loc_1B218, loc_1B225, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0
 global loc_1B2F0, loc_1B334, loc_1B3AE, loc_1B42A, loc_1B468, loc_1B46D, loc_1B485, loc_1B49D
 global loc_1B4BC, loc_1B534, loc_1B588, loc_1B5EB, loc_1B681, loc_1B721, loc_1B789, loc_1B799
@@ -110,7 +110,7 @@ cmp edx, byte 9	; 1B213
 jle short loc_1B225	; 1B216
 loc_1B218:
 push asc_C09C5	; 1B218
-call sub_B2CD8	; 1B21D
+call FatalError	; 1B21D
 add esp, byte 4	; 1B222
 loc_1B225:
 mov ecx, dword [byte esp+0Ch]	; 1B225
@@ -317,7 +317,7 @@ mov eax, dword [dword_DC8A0]	; 1B4A6
 mov edx, dword [byte eax+02Ch]	; 1B4AB
 push edx	; 1B4AE
 push asc_C09F2	; 1B4AF
-call sub_B2CD8	; 1B4B4
+call FatalError	; 1B4B4
 add esp, byte 0Ch	; 1B4B9
 loc_1B4BC:
 mov eax, dword [dword_DC8C8]	; 1B4BC

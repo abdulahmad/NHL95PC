@@ -5,9 +5,9 @@ section s_20016 progbits alloc exec nowrite align=1
 extern __CHK, asc_C0C34, asc_C0C3B, asc_C0C40, asc_C0C46, asc_C0C4B, asc_C0C51, asc_C0C58
 extern asc_C0C5F, asc_C0C64, asc_C0C6D, asc_C0C73, asc_C0C78, asc_C0C7E, asc_C0C84, asc_C0C8D
 extern asc_C0C94, asc_C0C99, asc_C0C9F, asc_C0CA4, asc_C0CAA, asc_C6940, byte_DC836, byte_ED836
-extern byte_ED858, byte_ED859, byte_ED85A, byte_ED98D, dword_C53FB, dword_C65A8, dword_C65AC, dword_C65B0
+extern byte_ED858, byte_ED859, byte_ED85A, byte_ED98D, gamemode, dword_C65A8, dword_C65AC, dword_C65B0
 extern dword_C65B4, dword_C65B8, dword_C65BC, dword_C65CC, dword_C6956, dword_C6A60, dword_C6D26, dword_C7219
-extern dword_C8992, dword_D2C6B, dword_DC640, dword_DC6B4, dword_DC734, dword_DC738, dword_DC7B8, dword_DD100
+extern dword_C8992, dword_D2C6B, dword_DC640, dword_DC6B4, dword_DC734, dword_DC738, playofftree, dword_DD100
 extern dword_DD104, dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD120, dword_DDD2C, jctime
 extern memcpy_, off_C68E4, MakePath, sub_18D33, sub_1D6E8, sub_1DF03, sub_1ED96, sub_1FAA7
 extern sub_21CDE, sub_22581, sub_235BE, sub_244E2, sub_25B24, sub_27080, sub_296BA, sub_6B5E4
@@ -796,7 +796,7 @@ push dword 100h	; 20B61
 push byte 0	; 20B66
 call sub_8FFB0	; 20B68
 add esp, byte 0Ch	; 20B6D
-cmp dword [dword_C53FB], byte 1	; 20B70
+cmp dword [gamemode], byte 1	; 20B70
 je short loc_20B9B	; 20B77
 xor ecx, ecx	; 20B79
 mov ebx, asc_C0C64	; 20B7B
@@ -895,7 +895,7 @@ push dword 100h	; 20CD8
 push byte 0	; 20CDD
 call sub_8FFB0	; 20CDF
 add esp, byte 0Ch	; 20CE4
-cmp dword [dword_C53FB], byte 1	; 20CE7
+cmp dword [gamemode], byte 1	; 20CE7
 je near loc_20D84	; 20CEE
 xor ecx, ecx	; 20CF4
 mov ebx, asc_C0C64	; 20CF6
@@ -1044,7 +1044,7 @@ push ebp	; 20EC6
 sub esp, 38Ch	; 20EC7
 xor eax, eax	; 20ECD
 loc_20ECF:
-mov ebx, dword [nosplit eax*4+dword_DC7B8]	; 20ECF
+mov ebx, dword [nosplit eax*4+playofftree]	; 20ECF
 mov dword [dword esp+eax*4+0300h], ebx	; 20ED6
 inc eax	; 20EDD
 cmp eax, byte 1Fh	; 20EDE
@@ -1282,7 +1282,7 @@ mov dword [dword_C65B8], edi	; 21299
 xor eax, eax	; 2129F
 loc_212A1:
 mov ebx, dword [dword esp+eax*4+0300h]	; 212A1
-mov dword [nosplit eax*4+dword_DC7B8], ebx	; 212A8
+mov dword [nosplit eax*4+playofftree], ebx	; 212A8
 inc eax	; 212AF
 cmp eax, byte 1Fh	; 212B0
 jl short loc_212A1	; 212B3
@@ -1680,7 +1680,7 @@ push ebp	; 2180D
 sub esp, 38Ch	; 2180E
 xor eax, eax	; 21814
 loc_21816:
-mov ebx, dword [nosplit eax*4+dword_DC7B8]	; 21816
+mov ebx, dword [nosplit eax*4+playofftree]	; 21816
 mov dword [dword esp+eax*4+0300h], ebx	; 2181D
 inc eax	; 21824
 cmp eax, byte 1Fh	; 21825
@@ -1901,7 +1901,7 @@ mov dword [dword_DC738], eax	; 21BA6
 mov dword [dword_C65B8], eax	; 21BAB
 loc_21BB0:
 mov ebx, dword [dword esp+eax*4+0300h]	; 21BB0
-mov dword [nosplit eax*4+dword_DC7B8], ebx	; 21BB7
+mov dword [nosplit eax*4+playofftree], ebx	; 21BB7
 inc eax	; 21BBE
 cmp eax, byte 1Fh	; 21BBF
 jl short loc_21BB0	; 21BC2

@@ -16,18 +16,18 @@ extern unk_C05D3, unk_C05DA, unk_C05E3, unk_C05EC, unk_C05F6, unk_C05FE, unk_C06
 extern unk_C061C, unk_C0624, unk_C062C, unk_C063B, unk_D97CA, unk_D9800, unk_D9836, unk_D9865
 extern unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
 global asc_C5286, asc_C528E, byte_C4D1C, byte_C4D1D, byte_C4D1E, byte_C5138, byte_C5244, byte_C524D
-global byte_C52F2, byte_C5311, byte_C5367, byte_C5386, byte_C53DC, byte_C5400, byte_C541B, byte_C5424
+global byte_C52F2, byte_C5311, byte_C5386, byte_C53DC, byte_C541B, byte_C5424
 global byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, joyqtick
 global dword_C4E0C, dword_C4E10, dword_C4E14, joyrec, dword_C4E24, dword_C4E28, dword_C4E2C, dword_C5130
 global dword_C5131, dword_C5133, dword_C5135, dword_C513C, dword_C5168, dword_C51F0, dword_C52E9, dword_C52ED
-global dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5305, dword_C5309, dword_C530D, dword_C535E
-global dword_C5362, dword_C536A, dword_C536E, dword_C5372, dword_C5376, dword_C537A, dword_C537E, dword_C5382
+global dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5305, dword_C5309, postate
+global lgstate
 global dword_C53D3, dword_C53D7, dword_C53DF, dword_C53E3, dword_C53E7, dword_C53EB, dword_C53EF, dword_C53F3
-global dword_C53F7, dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413
-global dword_C5417, dword_C541F, off_C5194, off_C51C0, off_C51EC, off_C524F, off_C5253, off_C5257
+global dword_C53F7, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
+global ctl2side, dword_C541F, off_C5194, off_C51C0, off_C51EC, off_C524F, off_C5253, off_C5257
 global off_C525B, off_C525F, off_C5263, off_C5267, off_C526F, off_C5273, off_C527B, off_C5439
-global off_C5441, teamcitynames, unk_C4E30, str_fmtpd, unk_C5298, unk_C529C, unk_C5423, unk_C542E
-global word_C5366, word_C53DB, word_C5428
+global off_C5441, teamcitynames, unk_C4E30, str_fmtpd, exhstate, unk_C529C, unk_C5423, unk_C542E
+global word_C53DB, word_C5428
 joyqtick:
 db 00h,00h,00h,00h
 byte_C4D1C:
@@ -212,7 +212,7 @@ asc_C5286:
 db 025h,064h,02Eh,025h,030h,032h,064h,00h
 asc_C528E:
 db 025h,064h,02Eh,025h,030h,031h,064h,00h,00h,00h
-unk_C5298:
+exhstate:
 db 00h,00h,00h,00h
 unk_C529C:
 db 02Eh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
@@ -238,7 +238,7 @@ dword_C5305:
 db 00h,00h,00h,00h
 dword_C5309:
 db 01h,00h,00h,00h
-dword_C530D:
+postate:
 db 01h,00h,00h,00h
 byte_C5311:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
@@ -246,27 +246,17 @@ db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
 db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_C535E:
 db 0Ch,00h,00h,00h
-dword_C5362:
 db 015h,00h,00h,00h
-word_C5366:
 db 0FFh
-byte_C5367:
 db 079h,00h,00h
-dword_C536A:
 db 0FFh,0FFh,0FFh,0FFh
-dword_C536E:
 db 0FEh,0FFh,0FFh,0FFh
-dword_C5372:
 db 010h,00h,00h,00h
-dword_C5376:
 db 010h,00h,00h,00h
-dword_C537A:
 db 00h,00h,00h,00h
-dword_C537E:
 db 01h,00h,00h,00h
-dword_C5382:
+lgstate:
 db 02h,00h,00h,00h
 byte_C5386:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
@@ -296,23 +286,22 @@ dword_C53F3:
 db 01h,00h,00h,00h
 dword_C53F7:
 db 00h,00h,00h,00h
-dword_C53FB:
+gamemode:
 db 00h,00h,00h,00h
 gameopts:
 db 0FFh
-byte_C5400:
 db 07Bh,00h,00h
-dword_C5403:
+ctl1team:
 db 0FFh,0FFh,0FFh,0FFh
-dword_C5407:
+ctl2team:
 db 0FEh,0FFh,0FFh,0FFh
-dword_C540B:
+ctl1dev:
 db 010h,00h,00h,00h
-dword_C540F:
+ctl2dev:
 db 010h,00h,00h,00h
-dword_C5413:
+ctl1side:
 db 00h,00h,00h,00h
-dword_C5417:
+ctl2side:
 db 01h,00h,00h,00h
 byte_C541B:
 db 0FFh,00h,00h,00h

@@ -2,20 +2,20 @@
 bits 32
 %include "hockey.inc"
 section s_150C6 progbits alloc exec nowrite align=1
-extern StanleyCupTimer, __CHK, asc_C0784, asc_C078C, asc_C0791, asc_C079C, asc_C8136, byte_C5400
+extern StanleyCupTimer, __CHK, asc_C0784, asc_C078C, asc_C0791, asc_C079C, asc_C8136
 extern musicon, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, byte_EA0F4
 extern byte_ED823, byte_ED939, dword_C5130, dword_C52E9, dword_C52ED, dword_C52F5, dword_C52F9, dword_C52FD
-extern dword_C5301, dword_C5305, dword_C5309, dword_C53F7, dword_C53FB, gameopts, teamdivflags, dword_C5704
+extern dword_C5301, dword_C5305, dword_C5309, dword_C53F7, gamemode, gameopts, teamdivflags, dword_C5704
 extern dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
 extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
 extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, hmscore, awscore, hmtmstruct
 extern jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C8, off_C57CC, awtmstruct
 extern off_D3078, rand_, randomd0, sub_10712, sub_10E9F, sub_1167B, sub_13BB4, sub_13FA7
-extern MakePath, sub_14A20, sub_14F31, sub_1BEFD, sub_327A1, sub_3371C, sub_3377C, SeriesLength
+extern MakePath, sub_14A20, sub_14F31, sub_1BEFD, LoadModeState, sub_3371C, sub_3377C, SeriesLength
 extern sub_479E9, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
-extern sub_7DC8B, sub_891B2, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
-extern PollKey, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, unk_C5298, unk_DF314, PerTimeTab
+extern sub_7DC8B, LoadScheduleDB, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
+extern PollKey, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, exhstate, unk_DF314, PerTimeTab
 extern word_CBC52, lcblink, word_CBC60, lcboxon
 global loc_1511A, loc_15180, loc_15182, loc_151F8, loc_15252, loc_1528C, loc_1528E, loc_15400
 global loc_15446, loc_1548D, loc_1549C, loc_154A4, loc_154E3, loc_15523, loc_1556C, loc_1557B
@@ -963,7 +963,7 @@ call sub_8CCA8	; 15BBC
 add esp, byte 0Ch	; 15BC1
 mov dword [dword_DC338], eax	; 15BC4
 mov eax, esp	; 15BC9
-call sub_891B2	; 15BCB
+call LoadScheduleDB	; 15BCB
 mov eax, dword [esp]	; 15BD0
 add eax, byte 2	; 15BD3
 mov dword [esp], eax	; 15BD6
@@ -1038,7 +1038,7 @@ mov eax, dword [dword_DC338]	; 15C71
 add edx, eax	; 15C76
 mov al, byte [esp]	; 15C78
 mov byte [byte edx+05h], al	; 15C7B
-cmp dword [dword_C53FB], byte 1	; 15C7E
+cmp dword [gamemode], byte 1	; 15C7E
 jne short loc_15C95	; 15C85
 mov edx, dword [gameopts]	; 15C87
 shl edx, 11h	; 15C8D
@@ -1167,7 +1167,7 @@ idiv ebx	; 15DC8
 mov dword [dword_C5886], edx	; 15DCA
 mov ecx, 1Dh	; 15DD0
 mov edi, esp	; 15DD5
-mov esi, unk_C5298	; 15DD7
+mov esi, exhstate	; 15DD7
 rep movsd	; 15DDC
 movsb	; 15DDE
 cmp edx, byte 2	; 15DDF
@@ -1208,7 +1208,7 @@ loc_15E5E:
 mov ebp, 10h	; 15E5E
 mov dword [dword_C52FD], ebp	; 15E63
 xor eax, eax	; 15E69
-mov dword [dword_C53FB], eax	; 15E6B
+mov dword [gamemode], eax	; 15E6B
 mov dword [dword_C5301], ebp	; 15E70
 mov dword [dword_C5305], eax	; 15E76
 mov dword [dword_C5309], 1	; 15E7B
@@ -1216,22 +1216,22 @@ mov eax, dword [dword_C52E9]	; 15E85
 mov dword [dword_C52F5], eax	; 15E8A
 mov dword [dword_C52F5], 0FFFFFFFFh	; 15E8F
 mov dword [dword_C52F9], 0FFFFFFFEh	; 15E99
-mov eax, unk_C5298	; 15EA3
-call sub_327A1	; 15EA8
+mov eax, exhstate	; 15EA3
+call LoadModeState	; 15EA8
 or byte [gameopts], 0FFh	; 15EAD
 cmp byte [musicon], 0	; 15EB4
 je short loc_15EC6	; 15EBB
-or byte [byte_C5400], 1	; 15EBD
+or byte [gameopts+1], 1	; 15EBD
 jmp short loc_15ECD	; 15EC4
 loc_15EC6:
-and byte [byte_C5400], 0FEh	; 15EC6
+and byte [gameopts+1], 0FEh	; 15EC6
 loc_15ECD:
-mov bh, byte [byte_C5400]	; 15ECD
+mov bh, byte [gameopts+1]	; 15ECD
 or bh, 2	; 15ED3
-mov byte [byte_C5400], bh	; 15ED6
+mov byte [gameopts+1], bh	; 15ED6
 mov cl, bh	; 15EDC
 and cl, 3	; 15EDE
-mov byte [byte_C5400], cl	; 15EE1
+mov byte [gameopts+1], cl	; 15EE1
 mov edx, dword [HomeTeam]	; 15EE7
 sar edx, 10h	; 15EED
 mov edx, dword [nosplit edx*4+off_C5439]	; 15EF0
@@ -1287,12 +1287,12 @@ mov word [PerTimeTab], 12Ch	; 15FC4
 xor ecx, ecx	; 15FCD
 mov dword [dword_C5130], ecx	; 15FCF
 mov ecx, 1Dh	; 15FD5
-mov edi, unk_C5298	; 15FDA
+mov edi, exhstate	; 15FDA
 mov esi, esp	; 15FDF
 rep movsd	; 15FE1
 movsb	; 15FE3
-mov eax, unk_C5298	; 15FE4
-call sub_327A1	; 15FE9
+mov eax, exhstate	; 15FE4
+call LoadModeState	; 15FE9
 call sub_6B410	; 15FEE
 cmp dword [dword_C53F7], byte 2	; 15FF3
 sete al	; 15FFA

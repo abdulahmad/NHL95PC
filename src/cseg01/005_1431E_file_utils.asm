@@ -9,7 +9,7 @@ extern dword_C5848, dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C5
 extern dword_DC28C, dword_DC2BC, dword_DC2C0, dword_DC2C4, dword_DC30C, dword_DC334, gmode, j_unlink_
 extern lseek_, off_C56B5, leaguedbnames, rmdir_, sprintf_, strcat_, strcpy_, sub_15374
 extern sub_1540A, sub_15655, sub_15707, sub_157BD, sub_15995, MessageBox, TeamLineEnergy, SelectScreenBM
-extern SelectRinkBM, sub_B2CD8, MouseSetPos, sub_B4CD8, sub_B4CF2, str_star, unk_C8115, unk_DC2F4
+extern SelectRinkBM, FatalError, MouseSetPos, sub_B4CD8, sub_B4CF2, str_star, unk_C8115, unk_DC2F4
 extern unk_DC300, unknown_libname_1, unknown_libname_2, word_C571C, word_C575C, lcboxon, word_CBC6C
 global loc_14349, loc_1434C, loc_14359, loc_14366, loc_143FA, loc_14436, loc_1443A, loc_144D7
 global loc_14513, loc_14517, loc_14537, loc_14599, loc_145D0, loc_145E4, loc_145E6, loc_145F0
@@ -486,7 +486,7 @@ call _dos_getdiskfree_	; 1483C
 test eax, eax	; 14841
 je short loc_14852	; 14843
 push asc_C064C	; 14845
-call sub_B2CD8	; 1484A
+call FatalError	; 1484A
 add esp, byte 4	; 1484F
 loc_14852:
 xor edx, edx	; 14852
@@ -546,7 +546,7 @@ call _dos_getdiskfree_	; 148CD
 test eax, eax	; 148D2
 je short loc_148E3	; 148D4
 push asc_C066B	; 148D6
-call sub_B2CD8	; 148DB
+call FatalError	; 148DB
 add esp, byte 4	; 148E0
 loc_148E3:
 xor eax, eax	; 148E3

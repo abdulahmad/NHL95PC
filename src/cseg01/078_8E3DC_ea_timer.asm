@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_8E3DC progbits alloc exec nowrite align=1
 extern __STOSD, _dos_getvect_, _dos_setvect_, asc_C3F5C, dword_D2FDC, dword_D2FE0, dword_D2FE4, dword_EDCDC
-extern strncmp_, strncpy_, sub_902A0, sub_91FA4, sub_98B30, sub_B2CD8, sub_B3454, sub_B3ABC
+extern strncmp_, strncpy_, sub_902A0, sub_91FA4, sub_98B30, FatalError, sub_B3454, sub_B3ABC
 extern word_D2FE8
 global loc_8E42F, loc_8E440, loc_8E443, loc_8E449, loc_8E473, loc_8E484, loc_8E4B0, loc_8E4B8
 global loc_8E4CB, loc_8E4D6, loc_8E4E9, loc_8E507, loc_8E511, loc_8E523, loc_8E52C, loc_8E536
@@ -124,7 +124,7 @@ je short loc_8E4CB	; 8E4E5
 jmp short loc_8E4D6	; 8E4E7
 loc_8E4E9:
 push asc_C3F5C	; 8E4E9
-call sub_B2CD8	; 8E4EE
+call FatalError	; 8E4EE
 sub_8E4F3:
 add esp, byte 4	; 8E4F3
 ret	; 8E4F6

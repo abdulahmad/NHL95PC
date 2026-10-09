@@ -4,7 +4,7 @@ bits 32
 section s_4842A progbits alloc exec nowrite align=1
 extern AddPenalty, AddPenalty2, DoGameFrame, Findhittype, GetHot, PBnum, SetSPA, SetShotMode
 extern Setplass, ShotMode, StopNA, __CHK, str_EASports, str_StarFmt, assinsert, assreplace
-extern byte_C5400, sflags, gmode2, byte_CC9E4, byte_CC9E7, byte_CCA95, musicon, byte_DACB3
+extern sflags, gmode2, byte_CC9E4, byte_CC9E7, byte_CCA95, musicon, byte_DACB3
 extern byte_DAEA7, hmroster, byte_DB3AD, byte_DF87F, byte_DFFE0, byte_DFFE2, byte_E0250, byte_E028C
 extern byte_E02C8, byte_E0308, byte_E0344, PenBuf, iflags, byte_E9AC1, byte_E9AC8
 extern byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, check4bench, check4check, checkob
@@ -1528,7 +1528,7 @@ mov eax, 14h	; 49633
 call randomd0	; 49638
 add eax, 14h	; 4963D
 mov word [byte ebp+temp2], ax	; 49642
-test byte [byte_C5400], 1	; 49646
+test byte [gameopts+1], 1	; 49646
 je short .2	; 4964D
 cmp byte [musicon], 0	; 4964F
 je short .2	; 49656
@@ -1643,7 +1643,7 @@ mov eax, 1Eh	; 497C5
 call randomd0	; 497CA
 add eax, 14h	; 497CF
 mov word [byte ebp+temp2], ax	; 497D4
-test byte [byte_C5400], 1	; 497D8
+test byte [gameopts+1], 1	; 497D8
 je short .7	; 497DF
 cmp byte [musicon], 0	; 497E1
 je short .7	; 497E8
@@ -8061,7 +8061,7 @@ mov word [periodendtime], 0FFFFh	; 4E7DD
 mov eax, 5	; 4E7E6
 jmp short sub_4E71A.3	; 4E7EB
 .5:
-test byte [byte_C5400], 1	; 4E7ED
+test byte [gameopts+1], 1	; 4E7ED
 je short .7	; 4E7F4
 cmp byte [musicon], 0	; 4E7F6
 je short .7	; 4E7FD

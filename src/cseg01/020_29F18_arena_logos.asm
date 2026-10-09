@@ -5,11 +5,11 @@ section s_29F18 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1370, asc_C1375, asc_C1379, asc_C137F, asc_C1384, asc_C1389, asc_C1390
 extern asc_C13A0, asc_C13A8, asc_C13AD, asc_C13B6, asc_C13C0, asc_C13C7, asc_C13D0, asc_C13D9
 extern asc_C13E0, asc_C13E5, asc_C13EA, asc_C13F3, asc_C13F8, asc_C13FD, asc_C1402, asc_C1407
-extern asc_C140C, asc_C1415, asc_C141A, asc_C141F, asc_C1428, str_extDB, asc_C814A, byte_C5400
+extern asc_C140C, asc_C1415, asc_C141A, asc_C141F, asc_C1428, str_extDB, asc_C814A
 extern byte_C6F6C, curleague, musicon, byte_D42C3, hmroster, byte_ED7F3, byte_ED824, byte_ED825
-extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, dword_C5403, dword_C5407
-extern dword_C5581, dword_C71CC, dword_C71D0, dword_C71D4, songdata, cont2team, HomeTeam, musicslot
-extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, dword_DC234, dword_DC238, dword_EA0DC
+extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, ctl1team, ctl2team
+extern teamconf, dword_C71CC, dword_C71D0, dword_C71D4, songdata, cont2team, HomeTeam, musicslot
+extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, dword_DC238, dword_EA0DC
 extern fputchar, jctime, memcpy_, off_C5439, off_C57CC, off_C6F48, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, sub_1463D, ReadTeamRec
 extern sub_174C2, sub_175E2, sub_17636, sub_29C75, sub_29D00, sub_30A0C, sub_30A39, sub_30AE2
@@ -555,7 +555,7 @@ mov ebx, 10h	; 2A69C
 mov edx, dword [dword esp+0644h]	; 2A6A1
 xor eax, eax	; 2A6A8
 call sub_76429	; 2A6AA
-cmp dword [dword_DC234], 444h	; 2A6AF
+cmp dword [schedgameidx], 444h	; 2A6AF
 jge short loc_2A6D7	; 2A6B9
 xor edx, edx	; 2A6BB
 mov dl, byte [dword esp+066Ch]	; 2A6BD
@@ -570,14 +570,14 @@ shl edx, 2	; 2A6E0
 xor eax, eax	; 2A6E3
 mov al, byte [dword esp+066Ch]	; 2A6E5
 shl eax, 2	; 2A6EC
-mov ebx, dword [dword edx+dword_C5581]	; 2A6EF
-mov edi, dword [dword eax+dword_C5581]	; 2A6F5
+mov ebx, dword [dword edx+teamconf]	; 2A6EF
+mov edi, dword [dword eax+teamconf]	; 2A6F5
 cmp ebx, edi	; 2A6FB
 je short loc_2A706	; 2A6FD
 mov ecx, 3	; 2A6FF
 jmp short loc_2A71D	; 2A704
 loc_2A706:
-mov edx, dword [dword edx+dword_C5581]	; 2A706
+mov edx, dword [dword edx+teamconf]	; 2A706
 or edx, edi	; 2A70C
 mov ebx, 2	; 2A70E
 mov eax, edx	; 2A713
@@ -586,16 +586,16 @@ idiv ebx	; 2A718
 lea ecx, [byte edx+01h]	; 2A71A
 loc_2A71D:
 mov eax, 1	; 2A71D
-cmp dword [dword_DC234], 47Ch	; 2A722
+cmp dword [schedgameidx], 47Ch	; 2A722
 jl short loc_2A733	; 2A72C
 mov eax, 2	; 2A72E
 loc_2A733:
-cmp dword [dword_DC234], 498h	; 2A733
+cmp dword [schedgameidx], 498h	; 2A733
 jl short loc_2A744	; 2A73D
 mov eax, 3	; 2A73F
 loc_2A744:
 push eax	; 2A744
-mov edx, dword [dword_DC234]	; 2A745
+mov edx, dword [schedgameidx]	; 2A745
 sub edx, 444h	; 2A74B
 mov ebx, 7	; 2A751
 mov eax, edx	; 2A756
@@ -690,9 +690,9 @@ jmp dword [nosplit cs:edx*4+jpt_29F18]	; 2A8B1
 loc_2A8B9:
 mov eax, dword [HomeTeam]	; 2A8B9
 sar eax, 10h	; 2A8BE
-cmp eax, dword [dword_C5403]	; 2A8C1
+cmp eax, dword [ctl1team]	; 2A8C1
 je short loc_2A8D5	; 2A8C7
-cmp eax, dword [dword_C5407]	; 2A8C9
+cmp eax, dword [ctl2team]	; 2A8C9
 jne near loc_2AA3B	; 2A8CF
 loc_2A8D5:
 push byte 20h	; 2A8D5
@@ -730,9 +730,9 @@ jmp near loc_2AA3B	; 2A950
 loc_2A955:
 mov eax, dword [cont2team]	; 2A955
 sar eax, 10h	; 2A95A
-cmp eax, dword [dword_C5403]	; 2A95D
+cmp eax, dword [ctl1team]	; 2A95D
 je short loc_2A971	; 2A963
-cmp eax, dword [dword_C5407]	; 2A965
+cmp eax, dword [ctl2team]	; 2A965
 jne near loc_2AA3B	; 2A96B
 loc_2A971:
 push byte 20h	; 2A971
@@ -855,7 +855,7 @@ mov dword [songdata], eax	; 2AB1A
 loc_2AB1F:
 cmp byte [musicon], 0	; 2AB1F
 je short loc_2AB3F	; 2AB26
-test byte [byte_C5400], 1	; 2AB28
+test byte [gameopts+1], 1	; 2AB28
 je short loc_2AB3F	; 2AB2F
 call sub_8373E	; 2AB31
 loc_2AB36:

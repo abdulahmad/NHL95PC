@@ -4,7 +4,7 @@ bits 32
 section s_B3B00 progbits alloc exec nowrite align=1
 extern asc_D43F4, byte_D4410, dword_D2FE0, dword_D4438, dword_D443C, dword_D4440, dword_D4444, dword_D44AC
 extern dword_D4530, dword_D4F2C, dword_D4F30, dword_D4F34, dword_D4F38, dword_D4F3C, dword_D4F40, sprintf_
-extern sub_B2CD8, sub_B49C0, sub_B4A60, sub_B4A66, unk_D4448, unk_D44B0, unk_D44CE
+extern FatalError, sub_B49C0, sub_B4A60, sub_B4A66, unk_D4448, unk_D44B0, unk_D44CE
 global loc_B3B6E, loc_B3BB9, loc_B3BEE, loc_B3C2B, loc_B3C53, loc_B3C6E, loc_B3C76, loc_B3C85
 global loc_B3C9C, loc_B3CAF, loc_B3CB1, loc_B3CF4, loc_B3D02, loc_B3D08, loc_B3D0A, loc_B3D22
 global loc_B3D26, loc_B3D85, loc_B3DAB, loc_B3DB9, loc_B3DD4, loc_B3DDD, loc_B3DF1, vecdist
@@ -139,7 +139,7 @@ ret	; B3C52
 loc_B3C53:
 push dword [byte ebp+08h]	; B3C53
 push asc_D43F4	; B3C56
-call sub_B2CD8	; B3C5B
+call FatalError	; B3C5B
 sub_B3C60:
 push ebp	; B3C60
 LD mov, ebp, esp	; B3C61

@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_D2A6C progbits alloc noexec write align=1
 extern unk_D29FF, unk_D2A1D, unk_D2A38, unk_D2A56, unk_D2A68
-global asc_D2A6C, asc_D2AAF, byte_D2C5C, byte_D2C68, vtoa_dt, dword_D2B70, dword_D2BEC, dword_D2C6B
-global off_D2B0C, off_D2B1C, off_D2B34, unk_D2A82, unk_D2A9C, unk_D2AAB, unk_D2AC5, unk_D2ADF
-global unk_D2AE7, unk_D2AEB, unk_D2AEE, unk_D2B38
-asc_D2A6C:
+global msg_POTeamOut_arg, msg_POTeamOut_arg2, byte_D2C5C, byte_D2C68, vtoa_dt, dword_D2B70, dword_D2BEC, dword_D2C6B
+global msg_POHumanOut, msg_POTeamOut, msg_POGenFinal, unk_D2A82, unk_D2A9C, unk_D2AAB, unk_D2AC5, unk_D2ADF
+global unk_D2AE7, unk_D2AEB, unk_D2AEE, btn_POHumanOut
+msg_POTeamOut_arg:
 db 02Eh,02Eh,02Eh,02Eh,02Ch,02Eh,02Eh,02Eh,02Eh,02Ch,02Eh,02Eh,02Eh,02Eh,02Ch,02Eh
 db 02Eh,02Eh,02Eh,02Ch,02Eh,00h
 unk_D2A82:
@@ -16,7 +16,7 @@ unk_D2A9C:
 db 074h,068h,065h,020h,070h,06Ch,061h,079h,02Dh,06Fh,066h,066h,073h,02Eh,00h
 unk_D2AAB:
 db 054h,068h,065h,020h
-asc_D2AAF:
+msg_POTeamOut_arg2:
 db 02Eh,02Eh,02Eh,02Eh,02Eh,02Eh,02Eh,02Eh,02Eh,02Eh,02Eh,02Eh,02Eh,02Eh,02Eh,02Eh
 db 02Eh,02Eh,02Eh,02Eh,02Eh,00h
 unk_D2AC5:
@@ -31,21 +31,21 @@ db 04Eh,04Fh,00h
 unk_D2AEE:
 db 047h,065h,06Eh,065h,072h,061h,074h,069h,06Eh,067h,020h,074h,068h,065h,020h,066h
 db 069h,06Eh,061h,06Ch,020h,072h,065h,073h,075h,06Ch,074h,073h,02Eh,00h
-off_D2B0C:
+msg_POHumanOut:
 dd unk_D29FF
 dd unk_D2A1D
 dd unk_D2A38
 dd unk_D2A56
-off_D2B1C:
+msg_POTeamOut:
 dd unk_D2A68
 dd unk_D2A82
 dd unk_D2A9C
 dd unk_D2AAB
 dd unk_D2AC5
 dd unk_D2ADF
-off_D2B34:
+msg_POGenFinal:
 dd unk_D2AEE
-unk_D2B38:
+btn_POHumanOut:
 db 010h,00h,00h,00h,04Eh,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd unk_D2AEB

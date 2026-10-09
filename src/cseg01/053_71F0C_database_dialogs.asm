@@ -21,7 +21,7 @@ extern MakePath, sub_14442, sub_175E2, sub_2BEEA, sub_2C135, sub_2C3FF, sub_2FED
 extern MessageBox, sub_3170D, sub_6B391, sub_6B3D7, sub_6CA8F, DrawEditRosters, LoadBothRosterLists, sub_78BE7
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284
 extern sub_91370, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_B2CBE, sub_B2DCA, sub_B30B4
-extern sub_B4BA8, sub_B4FAC, unk_D11B2, unk_D2B38, unk_EC7C0, unknown_libname_1, unknown_libname_2, unknown_libname_4
+extern sub_B4BA8, sub_B4FAC, unk_D11B2, btn_POHumanOut, unk_EC7C0, unknown_libname_1, unknown_libname_2, unknown_libname_4
 global jpt_727D6, jpt_72AAE, loc_71F4B, loc_71F68, loc_71F84, loc_72082, loc_720BD, loc_72150
 global loc_72197, loc_7219F, loc_721BE, loc_721C4, loc_721D2, loc_721F0, loc_72200, loc_72248
 global loc_7224E, loc_72265, loc_7226A, loc_7226E, loc_722BE, loc_722CC, loc_722D0, loc_722E3
@@ -1936,7 +1936,7 @@ push eax	; 735F9
 lea eax, [byte esp+048h]	; 735FA
 push eax	; 735FE
 push byte 2	; 735FF
-push unk_D2B38	; 73601
+push btn_POHumanOut	; 73601
 mov ecx, 2	; 73606
 mov ebx, unk_D11B2	; 7360B
 mov edx, 0FFFFFFFFh	; 73610

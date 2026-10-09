@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_DC7BC nobits alloc noexec write align=1
-global dword_DC7BC, dword_DC830
-dword_DC7BC:
+global playofftree_p1, pochampion
+playofftree_p1:
 resb 116
-dword_DC830:
+pochampion:
 resb 4

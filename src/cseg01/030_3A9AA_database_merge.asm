@@ -6,7 +6,7 @@ extern __CHK, _dos_getdiskfree_, _fstrcspn_, asc_C1904, asc_C190A, asc_C190E, as
 extern asc_C1923, asc_C1927, asc_C1938, asc_C193D, asc_C78BF, asc_C7D75, asc_C7D88, str_PINFO
 extern str_PLAYER, asc_C810C, str_extDB, asc_C8131, str_extxx, asc_C8158, str_extID, byte_C5386
 extern str_dot, str_floppydrv, curleague, leagueflags, byte_DD7CA, byte_DD7CB, savedname, byte_DE268
-extern dword_C5382, dword_C71E4, dword_C756D, dword_C760D, msg_InsertDisk_arg, msg_WrongDisk_arg, dword_C79C0, dword_C79C8
+extern lgstate, dword_C71E4, dword_C756D, dword_C760D, msg_InsertDisk_arg, msg_WrongDisk_arg, dword_C79C0, dword_C79C8
 extern dword_C7B16, dword_C7B1E, dword_C7B47, dword_C7B4F, dword_C7BA7, dword_C7BAF, dword_C7C25, dword_C7DA1
 extern dword_C7DA5, dword_C7E42, msg_SavedGame_arg, dword_C89E6, dword_C8A2B, dword_CE4E3, dword_CE503, dword_CE527
 extern dword_DD748, dword_DD74C, dword_DD784, dword_DD7A4, leaguemaster, leaguesaved, dword_DD7CE, humancount
@@ -15,10 +15,10 @@ extern leaguedbnames, off_C89DE, off_C8A85, off_C8AB9, off_C8B37
 extern sprintf_, strcmp_, strcpy_, stricmp_, sub_142E7, MakePath, sub_14368, sub_14442
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt, sub_1463D
 extern sub_1466B, sub_1478B, ReadSchedGame, ReadTeamRec, sub_1D100, sub_1D518, sub_30A0C, sub_30F12
-extern MessageBox, sub_327A1, sub_32C9E, sub_33559, sub_336E6, sub_38B4F, sub_3A24F, sub_3A266
+extern MessageBox, LoadModeState, sub_32C9E, sub_33559, sub_336E6, sub_38B4F, sub_3A24F, sub_3A266
 extern sub_3A27D, WriteSchedGame, WriteTeamRec, sub_3A31E, WriteLeagueTeamEntry, AskTeamPassword, AskMasterPassword, sub_3A5FC
 extern sub_3A71C, sub_3A826, FmtFromLeague, LeagueCheckStub, GetLeagueId, MsgCopyingDatabases, CopyHumanTeamDBs, UpdateSeasonSchedule
-extern sub_B2CD8, sub_B2DCA, sub_B392C, sub_B3CC8, sub_B4B88, unk_C1914, unk_C1916, unk_C192D
+extern FatalError, sub_B2DCA, sub_B392C, sub_B3CC8, sub_B4B88, unk_C1914, unk_C1916, unk_C192D
 extern unk_C1930, unk_C7569, unk_C7609, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, unk_C792B, unk_C79D0
 extern unk_C7B12, unk_C7C61, unk_C7CF1, unk_C7D9D, unk_C7E3E, btn_MasterDB, unk_C7F77, unk_C7F8E
 extern unk_C7FB9, unk_C7FD6, msg_SavedGame, unk_C8A27, unk_C8AE0, unk_C8B00, unk_C8B40, unk_CE64F
@@ -2854,13 +2854,13 @@ test eax, eax	; 3D044
 jne short loc_3D08B	; 3D046
 mov ecx, 75h	; 3D048
 mov ebx, 0FFFFFFFFh	; 3D04D
-mov edx, dword_C5382	; 3D052
+mov edx, lgstate	; 3D052
 mov eax, dword [byte esp+028h]	; 3D057
 call FileReadAt	; 3D05B
 test eax, eax	; 3D060
 je short loc_3D071	; 3D062
 push unk_C192D	; 3D064
-call sub_B2CD8	; 3D069
+call FatalError	; 3D069
 add esp, byte 4	; 3D06E
 loc_3D071:
 lea eax, [byte esp+028h]	; 3D071
@@ -2868,11 +2868,11 @@ call FileClose	; 3D075
 test eax, eax	; 3D07A
 je short loc_3D08B	; 3D07C
 push unk_C1930	; 3D07E
-call sub_B2CD8	; 3D083
+call FatalError	; 3D083
 add esp, byte 4	; 3D088
 loc_3D08B:
-mov eax, dword_C5382	; 3D08B
-call sub_327A1	; 3D090
+mov eax, lgstate	; 3D08B
+call LoadModeState	; 3D090
 call sub_1D518	; 3D095
 xor eax, eax	; 3D09A
 call sub_1D100	; 3D09C

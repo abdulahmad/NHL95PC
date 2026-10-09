@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_D2864 progbits alloc noexec write align=1
 extern unk_C39A8
-global asc_D29CB, dword_D2884, dword_D288C, off_D28EB, off_D2950, off_D2983, off_D29EF, unk_D2864
+global msg_PODiskSpace_arg, dword_D2884, dword_D288C, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, unk_D2864
 global unk_D2890, unk_D28BC, unk_D28F3, unk_D2912, unk_D292B, unk_D2947, unk_D2960, unk_D296D
 global unk_D298B, unk_D29AC
 unk_D2864:
@@ -21,7 +21,7 @@ unk_D28BC:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,072h
 db 065h,070h,06Ch,061h,063h,065h,020h,069h,074h,020h,077h,069h,074h,068h,020h,061h
 db 020h,06Eh,065h,077h,020h,050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,03Fh,00h
-off_D28EB:
+msg_POExists:
 dd unk_D2890
 dd unk_D28BC
 unk_D28F3:
@@ -35,7 +35,7 @@ db 050h,06Ch,061h,079h,06Fh,066h,066h,020h,053h,065h,072h,069h,065h,073h,020h,04
 db 061h,073h,020h,04Eh,06Fh,074h,020h,042h,065h,065h,06Eh,00h
 unk_D2947:
 db 043h,072h,065h,061h,074h,065h,064h,02Eh,00h
-off_D2950:
+msg_POSetupError:
 dd unk_D28F3
 dd unk_D2912
 dd unk_D292B
@@ -45,7 +45,7 @@ db 050h,06Ch,065h,061h,073h,065h,020h,057h,061h,069h,074h,02Eh,00h
 unk_D296D:
 db 053h,065h,074h,074h,069h,06Eh,067h,020h,055h,070h,020h,050h,06Ch,061h,079h,02Dh
 db 04Fh,066h,066h,073h,02Eh,00h
-off_D2983:
+msg_POSettingUp:
 dd unk_D2960
 dd unk_D296D
 unk_D298B:
@@ -55,11 +55,11 @@ db 00h
 unk_D29AC:
 db 061h,020h,050h,06Ch,061h,079h,06Fh,066h,066h,020h,053h,065h,072h,069h,065h,073h
 db 02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h,069h,072h,065h,020h,00h
-asc_D29CB:
+msg_PODiskSpace_arg:
 db 058h,058h,058h,058h,020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,066h
 db 072h,065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,02Eh,020h
 db 020h,020h,020h,00h
-off_D29EF:
+msg_PODiskSpace:
 dd unk_D298B
 dd unk_D29AC
-dd asc_D29CB
+dd msg_PODiskSpace_arg

@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_1BBCC progbits alloc exec nowrite align=1
-extern __CHK, asc_C0A18, asc_C0A4D, asc_C0A55, asc_C0A5D, asc_C0A68, asc_C0A71, byte_C5400
+extern __CHK, asc_C0A18, asc_C0A4D, asc_C0A55, asc_C0A5D, asc_C0A68, asc_C0A71, gameopts
 extern byte_C5424, byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt
 extern byte_C66B4, curleague, byte_DAC14, byte_DAC15, byte_DAC18, byte_DAC20, hmroster, byte_DB3AD
-extern byte_DB3AE, awroster, byte_DC224, byte_DC225, byte_DC228, byte_DC267, byte_DC268, byte_DD710
-extern byte_DD750, cont2team, HomeTeam, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
+extern byte_DB3AE, awroster, byte_DC224, byte_DC225, byte_DC228, byte_DC267, byte_DC268, leaguedbfmt2
+extern leaguedbfmt, cont2team, HomeTeam, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
 extern dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_m2, dword_DF6C2, fputchar, lseek_, off_CEE5F
 extern off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF, sprintf_, strcat_, strcpy_
 extern strncpy_, FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, sub_15B76, sub_1CC3D
-extern sub_B2CD8, unk_C0A1E, unk_C0A20, unk_C0A22, unk_C0A24, unk_C0A26, unk_C0A28, unk_C0A2A
+extern FatalError, unk_C0A1E, unk_C0A20, unk_C0A22, unk_C0A24, unk_C0A26, unk_C0A28, unk_C0A2A
 extern unk_C0A2C, unk_C0A2F, unk_C0A32, unk_C0A35, unk_C0A37, unk_C0A39, unk_C0A3B, unk_C0A3D
 extern unk_C0A3F, unk_C0A41, unk_C0A43, unk_C0A45, unk_C0A47, unk_C0A49, unk_C0A4B, unk_C0A51
 extern unk_C0A53, unk_C0A59, unk_C0A5B, unk_C0A64, unk_C0A66, unk_C0A6F, unk_C5423, unk_C542E
@@ -43,7 +43,7 @@ push edi	; 1BBDA
 sub esp, byte 60h	; 1BBDB
 push eax	; 1BBDE
 push asc_C0A18	; 1BBDF
-push byte_DD750	; 1BBE4
+push leaguedbfmt	; 1BBE4
 lea eax, [byte esp+038h]	; 1BBE9
 push eax	; 1BBED
 call sprintf_	; 1BBEE
@@ -55,7 +55,7 @@ call unknown_libname_1	; 1BC00
 test eax, eax	; 1BC05
 je short loc_1BC16	; 1BC07
 push unk_C0A1E	; 1BC09
-call sub_B2CD8	; 1BC0E
+call FatalError	; 1BC0E
 add esp, byte 4	; 1BC13
 loc_1BC16:
 lea edx, [byte esp+060h]	; 1BC16
@@ -64,7 +64,7 @@ call FileOpenRead	; 1BC1E
 test eax, eax	; 1BC23
 je short loc_1BC34	; 1BC25
 push unk_C0A20	; 1BC27
-call sub_B2CD8	; 1BC2C
+call FatalError	; 1BC2C
 add esp, byte 4	; 1BC31
 loc_1BC34:
 xor ebx, ebx	; 1BC34
@@ -74,7 +74,7 @@ call lseek_	; 1BC3C
 test eax, eax	; 1BC41
 je short loc_1BC52	; 1BC43
 push unk_C0A22	; 1BC45
-call sub_B2CD8	; 1BC4A
+call FatalError	; 1BC4A
 add esp, byte 4	; 1BC4F
 loc_1BC52:
 mov edx, dword [cont2team]	; 1BC52
@@ -93,7 +93,7 @@ call lseek_	; 1BC74
 test eax, eax	; 1BC79
 jge short loc_1BC8A	; 1BC7B
 push unk_C0A24	; 1BC7D
-call sub_B2CD8	; 1BC82
+call FatalError	; 1BC82
 add esp, byte 4	; 1BC87
 loc_1BC8A:
 mov ecx, 2E8h	; 1BC8A
@@ -104,13 +104,13 @@ call FileReadAt	; 1BC9D
 test eax, eax	; 1BCA2
 je short loc_1BCB3	; 1BCA4
 push unk_C0A26	; 1BCA6
-call sub_B2CD8	; 1BCAB
+call FatalError	; 1BCAB
 add esp, byte 4	; 1BCB0
 loc_1BCB3:
 lea eax, [byte esp+060h]	; 1BCB3
 call FileClose	; 1BCB7
 push asc_C0A18	; 1BCBC
-push byte_DD710	; 1BCC1
+push leaguedbfmt2	; 1BCC1
 lea eax, [byte esp+038h]	; 1BCC6
 push eax	; 1BCCA
 call sprintf_	; 1BCCB
@@ -122,7 +122,7 @@ call unknown_libname_1	; 1BCDD
 test eax, eax	; 1BCE2
 je short loc_1BCF3	; 1BCE4
 push unk_C0A1E	; 1BCE6
-call sub_B2CD8	; 1BCEB
+call FatalError	; 1BCEB
 add esp, byte 4	; 1BCF0
 loc_1BCF3:
 lea edx, [byte esp+060h]	; 1BCF3
@@ -131,7 +131,7 @@ call FileOpenRead	; 1BCFB
 test eax, eax	; 1BD00
 je short loc_1BD11	; 1BD02
 push unk_C0A20	; 1BD04
-call sub_B2CD8	; 1BD09
+call FatalError	; 1BD09
 add esp, byte 4	; 1BD0E
 loc_1BD11:
 xor ebx, ebx	; 1BD11
@@ -141,7 +141,7 @@ call lseek_	; 1BD19
 test eax, eax	; 1BD1E
 je short loc_1BD2F	; 1BD20
 push unk_C0A22	; 1BD22
-call sub_B2CD8	; 1BD27
+call FatalError	; 1BD27
 add esp, byte 4	; 1BD2C
 loc_1BD2F:
 mov edx, dword [HomeTeam]	; 1BD2F
@@ -160,7 +160,7 @@ call lseek_	; 1BD51
 test eax, eax	; 1BD56
 jge short loc_1BD67	; 1BD58
 push unk_C0A28	; 1BD5A
-call sub_B2CD8	; 1BD5F
+call FatalError	; 1BD5F
 add esp, byte 4	; 1BD64
 loc_1BD67:
 mov ecx, 2E8h	; 1BD67
@@ -171,14 +171,14 @@ call FileReadAt	; 1BD7A
 test eax, eax	; 1BD7F
 je short loc_1BD90	; 1BD81
 push unk_C0A2A	; 1BD83
-call sub_B2CD8	; 1BD88
+call FatalError	; 1BD88
 add esp, byte 4	; 1BD8D
 loc_1BD90:
 lea eax, [byte esp+060h]	; 1BD90
 call FileClose	; 1BD94
 lea eax, [byte esp+050h]	; 1BD99
 push eax	; 1BD9D
-push byte_DD750	; 1BD9E
+push leaguedbfmt	; 1BD9E
 lea eax, [byte esp+05Ch]	; 1BDA3
 push eax	; 1BDA7
 lea ecx, [byte esp+064h]	; 1BDA8
@@ -209,7 +209,7 @@ call FileClose	; 1BE03
 loc_1BE08:
 lea eax, [byte esp+050h]	; 1BE08
 push eax	; 1BE0C
-push byte_DD710	; 1BE0D
+push leaguedbfmt2	; 1BE0D
 lea eax, [byte esp+05Ch]	; 1BE12
 push eax	; 1BE16
 lea ecx, [byte esp+064h]	; 1BE17
@@ -312,7 +312,7 @@ mov byte [hmgoalcnt], ah	; 1BF4D
 mov byte [hmshotcnt], ah	; 1BF53
 mov byte [awgoalcnt], ah	; 1BF59
 mov byte [awshotcnt], ah	; 1BF5F
-test byte [byte_C5400], 2	; 1BF65
+test byte [gameopts+1], 2	; 1BF65
 jne short loc_1BF73	; 1BF6C
 call sub_15B76	; 1BF6E
 loc_1BF73:
@@ -323,7 +323,7 @@ call FileCreate	; 1BF7F
 test eax, eax	; 1BF84
 je short loc_1BF95	; 1BF86
 push unk_C0A2C	; 1BF88
-call sub_B2CD8	; 1BF8D
+call FatalError	; 1BF8D
 add esp, byte 4	; 1BF92
 loc_1BF95:
 mov ecx, 0Bh	; 1BF95
@@ -334,7 +334,7 @@ call FileWriteAt	; 1BFA7
 test eax, eax	; 1BFAC
 je short loc_1BFBD	; 1BFAE
 push unk_C0A2F	; 1BFB0
-call sub_B2CD8	; 1BFB5
+call FatalError	; 1BFB5
 add esp, byte 4	; 1BFBA
 loc_1BFBD:
 mov ecx, 0Bh	; 1BFBD
@@ -345,7 +345,7 @@ call FileWriteAt	; 1BFCF
 test eax, eax	; 1BFD4
 je short loc_1BFE5	; 1BFD6
 push unk_C0A32	; 1BFD8
-call sub_B2CD8	; 1BFDD
+call FatalError	; 1BFDD
 add esp, byte 4	; 1BFE2
 loc_1BFE5:
 mov eax, esp	; 1BFE5
@@ -433,7 +433,7 @@ call lseek_	; 1C0CD
 test eax, eax	; 1C0D2
 je short loc_1C0E3	; 1C0D4
 push unk_C0A35	; 1C0D6
-call sub_B2CD8	; 1C0DB
+call FatalError	; 1C0DB
 add esp, byte 4	; 1C0E0
 loc_1C0E3:
 xor ebx, ebx	; 1C0E3
@@ -443,7 +443,7 @@ call lseek_	; 1C0EB
 test eax, eax	; 1C0F0
 jge short loc_1C101	; 1C0F2
 push unk_C0A37	; 1C0F4
-call sub_B2CD8	; 1C0F9
+call FatalError	; 1C0F9
 add esp, byte 4	; 1C0FE
 loc_1C101:
 mov ecx, 34h	; 1C101
@@ -454,7 +454,7 @@ call FileReadAt	; 1C111
 test eax, eax	; 1C116
 je short loc_1C127	; 1C118
 push unk_C0A39	; 1C11A
-call sub_B2CD8	; 1C11F
+call FatalError	; 1C11F
 add esp, byte 4	; 1C124
 loc_1C127:
 xor ebx, ebx	; 1C127
@@ -464,7 +464,7 @@ call lseek_	; 1C12D
 test eax, eax	; 1C132
 je short loc_1C143	; 1C134
 push unk_C0A3B	; 1C136
-call sub_B2CD8	; 1C13B
+call FatalError	; 1C13B
 add esp, byte 4	; 1C140
 loc_1C143:
 mov edx, dword [byte esp+01Ch]	; 1C143
@@ -475,7 +475,7 @@ call lseek_	; 1C14E
 test eax, eax	; 1C153
 jge short loc_1C164	; 1C155
 push unk_C0A3D	; 1C157
-call sub_B2CD8	; 1C15C
+call FatalError	; 1C15C
 add esp, byte 4	; 1C161
 loc_1C164:
 mov ecx, dword [byte esp+024h]	; 1C164
@@ -486,7 +486,7 @@ call FileReadAt	; 1C173
 test eax, eax	; 1C178
 je short loc_1C189	; 1C17A
 push unk_C0A3F	; 1C17C
-call sub_B2CD8	; 1C181
+call FatalError	; 1C181
 add esp, byte 4	; 1C186
 loc_1C189:
 xor ebx, ebx	; 1C189
@@ -496,7 +496,7 @@ call lseek_	; 1C191
 test eax, eax	; 1C196
 je short loc_1C1A7	; 1C198
 push unk_C0A41	; 1C19A
-call sub_B2CD8	; 1C19F
+call FatalError	; 1C19F
 add esp, byte 4	; 1C1A4
 loc_1C1A7:
 mov edx, dword [byte esp+01Ch]	; 1C1A7
@@ -507,7 +507,7 @@ call lseek_	; 1C1B4
 test eax, eax	; 1C1B9
 jge short loc_1C1CA	; 1C1BB
 push unk_C0A43	; 1C1BD
-call sub_B2CD8	; 1C1C2
+call FatalError	; 1C1C2
 add esp, byte 4	; 1C1C7
 loc_1C1CA:
 mov ecx, dword [byte esp+02Ch]	; 1C1CA
@@ -518,7 +518,7 @@ call FileReadAt	; 1C1DB
 test eax, eax	; 1C1E0
 je short loc_1C1F1	; 1C1E2
 push unk_C0A45	; 1C1E4
-call sub_B2CD8	; 1C1E9
+call FatalError	; 1C1E9
 add esp, byte 4	; 1C1EE
 loc_1C1F1:
 mov edx, dword [byte esp+034h]	; 1C1F1
@@ -534,7 +534,7 @@ call lseek_	; 1C204
 test eax, eax	; 1C209
 je short loc_1C21A	; 1C20B
 push unk_C0A47	; 1C20D
-call sub_B2CD8	; 1C212
+call FatalError	; 1C212
 add esp, byte 4	; 1C217
 loc_1C21A:
 mov edx, dword [byte esp+01Ch]	; 1C21A
@@ -545,7 +545,7 @@ call lseek_	; 1C225
 test eax, eax	; 1C22A
 jge short loc_1C23B	; 1C22C
 push unk_C0A49	; 1C22E
-call sub_B2CD8	; 1C233
+call FatalError	; 1C233
 add esp, byte 4	; 1C238
 loc_1C23B:
 mov ecx, dword [byte esp+034h]	; 1C23B
@@ -556,7 +556,7 @@ call FileReadAt	; 1C24A
 test eax, eax	; 1C24F
 je short loc_1C260	; 1C251
 push unk_C0A4B	; 1C253
-call sub_B2CD8	; 1C258
+call FatalError	; 1C258
 add esp, byte 4	; 1C25D
 loc_1C260:
 mov eax, dword [esp]	; 1C260
@@ -590,7 +590,7 @@ call unknown_libname_1	; 1C2A4
 test eax, eax	; 1C2A9
 je short loc_1C2BA	; 1C2AB
 push unk_C0A51	; 1C2AD
-call sub_B2CD8	; 1C2B2
+call FatalError	; 1C2B2
 add esp, byte 4	; 1C2B7
 loc_1C2BA:
 mov edx, edi	; 1C2BA
@@ -599,7 +599,7 @@ call FileOpenRead	; 1C2C0
 test eax, eax	; 1C2C5
 je short loc_1C2D6	; 1C2C7
 push unk_C0A53	; 1C2C9
-call sub_B2CD8	; 1C2CE
+call FatalError	; 1C2CE
 add esp, byte 4	; 1C2D3
 loc_1C2D6:
 push asc_C0A55	; 1C2D6
@@ -616,7 +616,7 @@ call unknown_libname_1	; 1C2F7
 test eax, eax	; 1C2FC
 je short loc_1C30D	; 1C2FE
 push unk_C0A59	; 1C300
-call sub_B2CD8	; 1C305
+call FatalError	; 1C305
 add esp, byte 4	; 1C30A
 loc_1C30D:
 mov edx, ebp	; 1C30D
@@ -625,7 +625,7 @@ call FileOpenRead	; 1C313
 test eax, eax	; 1C318
 je short loc_1C329	; 1C31A
 push unk_C0A5B	; 1C31C
-call sub_B2CD8	; 1C321
+call FatalError	; 1C321
 add esp, byte 4	; 1C326
 loc_1C329:
 push asc_C0A5D	; 1C329
@@ -642,7 +642,7 @@ call unknown_libname_1	; 1C34A
 test eax, eax	; 1C34F
 je short loc_1C360	; 1C351
 push unk_C0A64	; 1C353
-call sub_B2CD8	; 1C358
+call FatalError	; 1C358
 add esp, byte 4	; 1C35D
 loc_1C360:
 mov edx, esi	; 1C360
@@ -651,7 +651,7 @@ call FileOpenRead	; 1C366
 test eax, eax	; 1C36B
 je short loc_1C37C	; 1C36D
 push unk_C0A66	; 1C36F
-call sub_B2CD8	; 1C374
+call FatalError	; 1C374
 add esp, byte 4	; 1C379
 loc_1C37C:
 test byte [esp], 6	; 1C37C
@@ -674,7 +674,7 @@ call unknown_libname_1	; 1C3AF
 test eax, eax	; 1C3B4
 je short loc_1C3C5	; 1C3B6
 push unk_C0A41	; 1C3B8
-call sub_B2CD8	; 1C3BD
+call FatalError	; 1C3BD
 add esp, byte 4	; 1C3C2
 loc_1C3C5:
 mov edx, dword [byte esp+060h]	; 1C3C5
@@ -683,7 +683,7 @@ call FileOpenRead	; 1C3CD
 test eax, eax	; 1C3D2
 je short loc_1C3E3	; 1C3D4
 push unk_C0A43	; 1C3D6
-call sub_B2CD8	; 1C3DB
+call FatalError	; 1C3DB
 add esp, byte 4	; 1C3E0
 loc_1C3E3:
 mov eax, dword [byte esp+068h]	; 1C3E3
@@ -847,7 +847,7 @@ shl eax, 4	; 1C5C9
 mov edx, ebp	; 1C5CC
 shl edx, 4	; 1C5CE
 add eax, edx	; 1C5D1
-test byte [byte_C5400], 2	; 1C5D3
+test byte [gameopts+1], 2	; 1C5D3
 je short loc_1C623	; 1C5DA
 xor edx, edx	; 1C5DC
 mov dx, word [dword esp+0D0h]	; 1C5DE

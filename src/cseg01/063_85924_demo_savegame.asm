@@ -4,16 +4,16 @@ bits 32
 section s_85924 progbits alloc exec nowrite align=1
 extern __CHK, asc_C38F8, asc_C3904, asc_C3923, asc_C3932, asc_C3947, asc_C3966, asc_C3972
 extern asc_C3976, asc_C397E, asc_C3986, asc_C398F, asc_C3994, asc_C399B, asc_C39A0, str_extDB
-extern asc_D281F, byte_C52F2, byte_C5367, byte_C53DC, byte_C5400, curleague, byte_DD774, byte_DD788
-extern byte_ED92F, dword_C5130, dword_C530D, dword_C5382, dword_C53FB, dword_D2C6B, dword_D8B74, dword_DC238
+extern asc_D281F, byte_C52F2, byte_C53DC, curleague, byte_DD774, byte_DD788, gameopts
+extern byte_ED92F, dword_C5130, postate, lgstate, gamemode, dword_D2C6B, dword_D8B74, dword_DC238
 extern dword_DC888, dword_DC88C, dword_DD730, dword_EA0DC, jctime, off_D27EF, off_D27F7, off_D2855
 extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, sub_1466B, sub_14825
-extern sub_30A0C, sub_30F12, MessageBox, sub_3170D, sub_3271B, sub_327A1, sub_32B1D, SaveLeagueGameRef
+extern sub_30A0C, sub_30F12, MessageBox, sub_3170D, SaveModeState, LoadModeState, WriteModeState, SaveLeagueGameRef
 extern SaveGameState, sub_6B391, sub_6B3D7, sub_80075, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_903F0, sub_910E0, sub_91284, sub_91370, sub_91400
-extern sub_92CD0, sub_92DE0, sub_B2CD8, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3989, sub_B3999
+extern sub_92CD0, sub_92DE0, FatalError, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3989, sub_B3999
 extern sub_B4BA8, unk_C392C, unk_C392F, unk_C393B, unk_C393E, unk_C3941, unk_C3944, unk_C396F
-extern unk_C397B, unk_C5298, unknown_libname_1
+extern unk_C397B, exhstate, unknown_libname_1
 global loc_859EB, loc_85A26, loc_85A3D, loc_85A5C, loc_85A95, loc_85AC1, loc_85B1C, loc_85B51
 global loc_85B7D, loc_85BA9, loc_85BC6, loc_85C21, loc_85C7B, loc_85CC9, loc_85D01, loc_85D48
 global loc_85D52, loc_85D5D, loc_85E34, loc_85E36, loc_85F7D, loc_85F98, loc_860E3, loc_860E4
@@ -52,7 +52,7 @@ mov eax, dword [byte esp+05Ah]	; 85978
 mov dword [dword esp+08Ch], eax	; 8597C
 xor ebx, ebx	; 85983
 mov dword [dword esp+094h], ebx	; 85985
-cmp dword [dword_C53FB], byte 0	; 8598C
+cmp dword [gamemode], byte 0	; 8598C
 jne near loc_85BC6	; 85993
 lea edx, [dword eax+01328h]	; 85999
 mov eax, edx	; 8599F
@@ -113,27 +113,27 @@ xor ebp, ebp	; 85A55
 jmp near loc_85D5D	; 85A57
 loc_85A5C:
 or byte [byte_C52F2], 80h	; 85A5C
-or byte [byte_C5400], 80h	; 85A63
-mov eax, unk_C5298	; 85A6A
-call sub_32B1D	; 85A6F
+or byte [gameopts+1], 80h	; 85A63
+mov eax, exhstate	; 85A6A
+call WriteModeState	; 85A6F
 lea edx, [dword esp+098h]	; 85A74
 lea eax, [byte esp+06Ch]	; 85A7B
 call FileCreate	; 85A7F
 test eax, eax	; 85A84
 je short loc_85A95	; 85A86
 push unk_C392C	; 85A88
-call sub_B2CD8	; 85A8D
+call FatalError	; 85A8D
 add esp, byte 4	; 85A92
 loc_85A95:
 mov ecx, 75h	; 85A95
 mov ebx, 0FFFFFFFFh	; 85A9A
-mov edx, unk_C5298	; 85A9F
+mov edx, exhstate	; 85A9F
 mov eax, dword [dword esp+098h]	; 85AA4
 call FileWriteAt	; 85AAB
 test eax, eax	; 85AB0
 je short loc_85AC1	; 85AB2
 push unk_C392F	; 85AB4
-call sub_B2CD8	; 85AB9
+call FatalError	; 85AB9
 add esp, byte 4	; 85ABE
 loc_85AC1:
 mov ecx, str_extDB	; 85AC1
@@ -160,7 +160,7 @@ call FileWriteAt	; 85B06
 test eax, eax	; 85B0B
 je short loc_85B1C	; 85B0D
 push unk_C393B	; 85B0F
-call sub_B2CD8	; 85B14
+call FatalError	; 85B14
 add esp, byte 4	; 85B19
 loc_85B1C:
 push edi	; 85B1C
@@ -174,7 +174,7 @@ call FileWriteAt	; 85B3B
 test eax, eax	; 85B40
 je short loc_85B51	; 85B42
 push unk_C393E	; 85B44
-call sub_B2CD8	; 85B49
+call FatalError	; 85B49
 add esp, byte 4	; 85B4E
 loc_85B51:
 mov ecx, 0Ch	; 85B51
@@ -185,7 +185,7 @@ call FileWriteAt	; 85B67
 test eax, eax	; 85B6C
 je short loc_85B7D	; 85B6E
 push unk_C3941	; 85B70
-call sub_B2CD8	; 85B75
+call FatalError	; 85B75
 add esp, byte 4	; 85B7A
 loc_85B7D:
 mov ecx, 18h	; 85B7D
@@ -196,7 +196,7 @@ call FileWriteAt	; 85B93
 test eax, eax	; 85B98
 je short loc_85BA9	; 85B9A
 push unk_C3944	; 85B9C
-call sub_B2CD8	; 85BA1
+call FatalError	; 85BA1
 add esp, byte 4	; 85BA6
 loc_85BA9:
 mov eax, dword [dword esp+098h]	; 85BA9
@@ -249,10 +249,10 @@ call FileCreate	; 85C65
 test eax, eax	; 85C6A
 je short loc_85C7B	; 85C6C
 push unk_C396F	; 85C6E
-call sub_B2CD8	; 85C73
+call FatalError	; 85C73
 add esp, byte 4	; 85C78
 loc_85C7B:
-mov edi, dword [dword_C53FB]	; 85C7B
+mov edi, dword [gamemode]	; 85C7B
 cmp edi, byte 2	; 85C81
 jne short loc_85CC9	; 85C84
 push byte 0	; 85C86
@@ -266,9 +266,9 @@ mov edx, 0FFFFFFFFh	; 85C97
 mov eax, edx	; 85C9C
 call MessageBox	; 85C9E
 or byte [byte_C53DC], 80h	; 85CA3
-or byte [byte_C5400], 80h	; 85CAA
-mov eax, dword_C5382	; 85CB1
-call sub_32B1D	; 85CB6
+or byte [gameopts+1], 80h	; 85CAA
+mov eax, lgstate	; 85CB1
+call WriteModeState	; 85CB6
 mov eax, dword [dword esp+098h]	; 85CBB
 call SaveLeagueGameRef	; 85CC2
 jmp short loc_85D01	; 85CC7
@@ -283,10 +283,10 @@ mov ebx, off_D27F7	; 85CD8
 mov edx, 0FFFFFFFFh	; 85CDD
 mov eax, edx	; 85CE2
 call MessageBox	; 85CE4
-or byte [byte_C5367], 80h	; 85CE9
-or byte [byte_C5400], 80h	; 85CF0
-mov eax, dword_C530D	; 85CF7
-call sub_32B1D	; 85CFC
+or byte [postate+5Ah], 80h	; 85CE9
+or byte [gameopts+1], 80h	; 85CF0
+mov eax, postate	; 85CF7
+call WriteModeState	; 85CFC
 loc_85D01:
 mov eax, dword [dword esp+098h]	; 85D01
 call SaveGameState	; 85D08
@@ -301,7 +301,7 @@ call sub_1466B	; 85D32
 test eax, eax	; 85D37
 je short loc_85D48	; 85D39
 push unk_C397B	; 85D3B
-call sub_B2CD8	; 85D40
+call FatalError	; 85D40
 add esp, byte 4	; 85D45
 loc_85D48:
 call sub_B3999	; 85D48
@@ -1030,23 +1030,23 @@ sub_86647:
 push dword 8	; 86647
 call __CHK	; 8664C
 push edx	; 86651
-mov eax, unk_C5298	; 86652
-call sub_3271B	; 86657
-mov eax, dword_C530D	; 8665C
-call sub_327A1	; 86661
+mov eax, exhstate	; 86652
+call SaveModeState	; 86657
+mov eax, postate	; 8665C
+call LoadModeState	; 86661
 xor edx, edx	; 86666
-mov dword [dword_C53FB], edx	; 86668
+mov dword [gamemode], edx	; 86668
 call sub_80075	; 8666E
 test eax, eax	; 86673
 jne short loc_86688	; 86675
-mov eax, unk_C5298	; 86677
-call sub_327A1	; 8667C
+mov eax, exhstate	; 86677
+call LoadModeState	; 8667C
 mov eax, 2	; 86681
 pop edx	; 86686
 ret	; 86687
 loc_86688:
-mov eax, unk_C5298	; 86688
-call sub_327A1	; 8668D
+mov eax, exhstate	; 86688
+call LoadModeState	; 8668D
 xor eax, eax	; 86692
 pop edx	; 86694
 ret	; 86695

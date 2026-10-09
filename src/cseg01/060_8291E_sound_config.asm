@@ -4,7 +4,7 @@ bits 32
 section s_8291E progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, asc_C3680, asc_C3688, asc_C368D, asc_C3696, asc_C369F, asc_C36A8
 extern asc_C36AF, asc_C36C3, asc_C36C9, asc_C8145, asc_D236F, asc_D2379, asc_D2382, asc_D238B
-extern asc_D2390, asc_D2399, asc_D2479, asc_D2486, asc_D248C, asc_D2491, byte_C5400, byte_C541B
+extern asc_D2390, asc_D2399, asc_D2479, asc_D2486, asc_D248C, asc_D2491, byte_C541B
 extern musicslot, musicon, byte_D2439, byte_ED8C3, byte_ED95B, byte_ED9A7, dword_C4CFC, gameopts
 extern dword_C541F, songdata, dword_CCC94, dword_D2350, dword_D2423, dword_D2427, dword_D242B
 extern musichandle, dword_D2435, dword_D243A, dword_D24A0, dword_D27B2, dword_D27BB, dword_D2C6B, dword_DC238
@@ -13,7 +13,7 @@ extern fprintf_, jctime, loc_836C4, off_D24D1, strcpy_, MakePath, sub_30A0C, sub
 extern MessageBox, PlayDigiSample, WaitDigiSample, sub_6B391, sub_6B3D7, sub_8245A, sub_824F8, sub_827B3
 extern sub_82805, sub_8357A, sub_8363C, sub_8CCA8, sub_8D2F0, sub_8EB5B, sub_8EB93, sub_8ECC0
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A, sub_8FCDF
-extern sub_903F0, sub_91370, sub_91400, sub_97079, sub_B2CD8, sub_B2DCA, sub_B3989, sub_B3999
+extern sub_903F0, sub_91370, sub_91400, sub_97079, FatalError, sub_B2DCA, sub_B3989, sub_B3999
 extern sub_B4BA8, unk_C36AC, unk_D23A0, unk_D2403, unk_D2413, unk_D249C
 global loc_829A2, loc_82A04, loc_82A0A, loc_82A29, loc_82A4F, loc_82A5B, loc_82A8F, loc_82AAC
 global loc_82B2D, loc_82B30, loc_82B37, loc_82B43, loc_82B55, loc_82B63, loc_82BAE, loc_82BDA
@@ -288,10 +288,10 @@ call sub_8FB8E	; 82C5E
 loc_82C63:
 cmp byte [musicon], 0	; 82C63
 je short loc_82C78	; 82C6A
-or byte [byte_C5400], 1	; 82C6C
+or byte [gameopts+1], 1	; 82C6C
 jmp near loc_82D4E	; 82C73
 loc_82C78:
-and byte [byte_C5400], 0FEh	; 82C78
+and byte [gameopts+1], 0FEh	; 82C78
 jmp near loc_82D4E	; 82C7F
 loc_82C84:
 mov eax, dword [dword_ED360]	; 82C84
@@ -616,7 +616,7 @@ mov edi, eax	; 83103
 test eax, eax	; 83105
 jne short loc_83116	; 83107
 push asc_C36AF	; 83109
-call sub_B2CD8	; 8310E
+call FatalError	; 8310E
 add esp, byte 4	; 83113
 loc_83116:
 xor eax, eax	; 83116

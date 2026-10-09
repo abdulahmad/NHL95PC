@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_C5519 progbits alloc noexec write align=1
-global teamdivflags, dword_C5581, dword_C55E9, dword_C5619, unk_C5654
+global teamdivflags, teamconf, confteams, dword_C5619, unk_C5654
 teamdivflags:
 db 04h,00h,00h,00h,04h,00h,00h,00h,01h,00h,00h,00h,02h,00h,00h,00h
 db 02h,00h,00h,00h,01h,00h,00h,00h,04h,00h,00h,00h,01h,00h,00h,00h
@@ -11,7 +11,7 @@ db 08h,00h,00h,00h,04h,00h,00h,00h,08h,00h,00h,00h,04h,00h,00h,00h
 db 04h,00h,00h,00h,02h,00h,00h,00h,01h,00h,00h,00h,08h,00h,00h,00h
 db 02h,00h,00h,00h,01h,00h,00h,00h,08h,00h,00h,00h,02h,00h,00h,00h
 db 01h,00h,00h,00h,08h,00h,00h,00h
-dword_C5581:
+teamconf:
 db 0Ch,00h,00h,00h,0Ch,00h,00h,00h,03h,00h,00h,00h,03h,00h,00h,00h
 db 03h,00h,00h,00h,03h,00h,00h,00h,0Ch,00h,00h,00h,03h,00h,00h,00h
 db 03h,00h,00h,00h,0Ch,00h,00h,00h,0Ch,00h,00h,00h,0Ch,00h,00h,00h
@@ -19,7 +19,7 @@ db 0Ch,00h,00h,00h,0Ch,00h,00h,00h,0Ch,00h,00h,00h,0Ch,00h,00h,00h
 db 0Ch,00h,00h,00h,03h,00h,00h,00h,03h,00h,00h,00h,0Ch,00h,00h,00h
 db 03h,00h,00h,00h,03h,00h,00h,00h,0Ch,00h,00h,00h,03h,00h,00h,00h
 db 03h,00h,00h,00h,0Ch,00h,00h,00h
-dword_C55E9:
+confteams:
 db 018h,00h,00h,00h,02h,00h,00h,00h,05h,00h,00h,00h,07h,00h,00h,00h
 db 012h,00h,00h,00h,015h,00h,00h,00h,03h,00h,00h,00h,08h,00h,00h,00h
 db 04h,00h,00h,00h,011h,00h,00h,00h,014h,00h,00h,00h,017h,00h,00h,00h

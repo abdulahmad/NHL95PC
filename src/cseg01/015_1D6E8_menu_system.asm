@@ -5,7 +5,7 @@ section s_1D6E8 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, asc_C0B54, asc_C0B5C, asc_C0C28, asc_C0C2C, asc_C671E, asc_C6731
 extern asc_C6747, asc_C675B, asc_C6779, byte_C671C, byte_C672F, byte_C6745, byte_C6759, byte_C6777
 extern byte_DC836, byte_DCFD8, byte_DD058, dword_C65B0, dword_C65B4, dword_C6956, dword_C6A60, dword_DC238
-extern dword_DC640, dword_DC6B8, dword_DC6BC, dword_DC720, dword_DC73C, dword_DC750, dword_DC754, dword_DC7B8
+extern dword_DC640, dword_DC6B8, dword_DC6BC, dword_DC720, dword_DC73C, dword_DC750, dword_DC754, playofftree
 extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD120, dword_EA0DC, jctime, memcmp_
 extern memcpy_, off_D3078, sprintf_, strcat_, strlen_, strncpy_, FileOpenRead, FileClose
 extern FileReadAt, sub_18D03, sub_18D0D, sub_1D6BE, sub_24453, sub_26B5A, sub_27BC3, sub_27F9C
@@ -821,7 +821,7 @@ jmp short loc_1E108	; 1E0E8
 loc_1E0EA:
 mov eax, dword [dword_C65B4]	; 1E0EA
 mov dword [byte esp+070h], eax	; 1E0EF
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 1E0F3
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 1E0F3
 je short loc_1E108	; 1E0FB
 xor edx, edx	; 1E0FD
 lea eax, [byte esp+070h]	; 1E0FF
@@ -888,7 +888,7 @@ mov dword [dword esp+098h], edi	; 1E1B5
 loc_1E1BC:
 call sub_27F9C	; 1E1BC
 mov eax, dword [byte esp+070h]	; 1E1C1
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 1E1C5
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 1E1C5
 je short loc_1E1DA	; 1E1CD
 xor edx, edx	; 1E1CF
 lea eax, [byte esp+070h]	; 1E1D1
@@ -1047,7 +1047,7 @@ mov dword [byte esp+074h], eax	; 1E3F5
 mov dword [dword_C65B0], eax	; 1E3F9
 jmp short loc_1E40F	; 1E3FE
 loc_1E400:
-mov eax, dword [dword eax+dword_DC7B8]	; 1E400
+mov eax, dword [dword eax+playofftree]	; 1E400
 mov dword [dword_C65B0], eax	; 1E406
 mov eax, dword [byte esp+070h]	; 1E40B
 loc_1E40F:
@@ -1121,7 +1121,7 @@ jmp short loc_1E4FA	; 1E4DA
 loc_1E4DC:
 mov eax, dword [dword_C65B4]	; 1E4DC
 mov dword [byte esp+070h], eax	; 1E4E1
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 1E4E5
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 1E4E5
 je short loc_1E4FA	; 1E4ED
 xor edx, edx	; 1E4EF
 lea eax, [byte esp+070h]	; 1E4F1
@@ -1235,7 +1235,7 @@ jmp short loc_1E65A	; 1E63A
 loc_1E63C:
 mov eax, dword [dword_C65B4]	; 1E63C
 mov dword [byte esp+070h], eax	; 1E641
-cmp dword [nosplit eax*4+dword_DC7B8], byte 1Ah	; 1E645
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 1E645
 je short loc_1E65A	; 1E64D
 xor edx, edx	; 1E64F
 lea eax, [byte esp+070h]	; 1E651
@@ -1668,9 +1668,9 @@ call sub_90F38	; 1EBD3
 add esp, byte 14h	; 1EBD8
 jmp near loc_1ED71	; 1EBDB
 loc_1EBE0:
-cmp dword [nosplit esi*4+dword_DC7B8], byte 1Ah	; 1EBE0
+cmp dword [nosplit esi*4+playofftree], byte 1Ah	; 1EBE0
 je near loc_1ED71	; 1EBE8
-cmp dword [dword edx+dword_DC7B8], byte 1Ah	; 1EBEE
+cmp dword [dword edx+playofftree], byte 1Ah	; 1EBEE
 je near loc_1ED71	; 1EBF5
 lea edx, [byte esp+074h]	; 1EBFB
 lea eax, [byte esp+070h]	; 1EBFF
@@ -1679,7 +1679,7 @@ jmp near loc_1ED71	; 1EC08
 loc_1EC0D:
 cmp dword [dword_C6956], byte 0	; 1EC0D
 je short loc_1EC23	; 1EC14
-cmp dword [dword edx+dword_DC7B8], byte 1Ah	; 1EC16
+cmp dword [dword edx+playofftree], byte 1Ah	; 1EC16
 je near loc_1ED71	; 1EC1D
 loc_1EC23:
 mov esi, 3	; 1EC23
@@ -1718,7 +1718,7 @@ mov dword [byte esp+074h], eax	; 1EC7C
 mov dword [dword_C65B0], eax	; 1EC80
 jmp short loc_1EC96	; 1EC85
 loc_1EC87:
-mov eax, dword [dword eax+dword_DC7B8]	; 1EC87
+mov eax, dword [dword eax+playofftree]	; 1EC87
 mov dword [dword_C65B0], eax	; 1EC8D
 mov eax, dword [byte esp+070h]	; 1EC92
 loc_1EC96:

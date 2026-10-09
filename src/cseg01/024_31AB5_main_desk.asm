@@ -4,17 +4,17 @@ bits 32
 section s_31AB5 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1724, asc_C172C, asc_C1731, asc_C173A, asc_C1743, asc_C174C, asc_C1751
 extern asc_C1756, asc_C175F, asc_C1768, asc_C176D, asc_CDB75, asc_CDB7C, byte_C7218, curleague
-extern byte_CDB77, byte_CDB7E, musicon, byte_DD710, byte_DD750, byte_EA0F4, byte_ED836, byte_ED9A7
-extern byte_ED9AB, dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413
-extern dword_C5417, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C7219, songdata
+extern byte_CDB77, byte_CDB7E, musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED836, byte_ED9A7
+extern byte_ED9AB, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
+extern ctl2side, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C7219, songdata
 extern cont2team, HomeTeam, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
 extern dword_D2C6B, dword_DC238, dword_EA0DC, jctime, memcpy_, off_C5439, off_C7282, off_D3078
 extern strcpy_, strncpy_, sub_106C8, sub_142E7, MakePath, FileOpenRead, FileOpenRW, FileCreate
 extern FileClose, FileReadAt, FileWriteAt, sub_1D100, sub_1D610, sub_20D97, MessageBox, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D
-extern sub_76429, sub_8B85B, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E, sub_8F979
+extern sub_76429, SetSideControls, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C, sub_91370
-extern sub_91400, sub_B2CD8, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_B4BC4, unk_208EF
+extern sub_91400, FatalError, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_B4BC4, unk_208EF
 extern unk_20A46, unk_20BBD, unk_20EB7, unk_C1772, unk_C1775, unk_C1778, scrpitch, VisTeam
 global loc_31C7C, loc_31C7E, loc_31C91, loc_31CAC, loc_31CAE, loc_31CBE, loc_31CCC, loc_31CE4
 global loc_31CE6, loc_31DB7, loc_31DE2, loc_31DE4, loc_31E07, loc_31E30, loc_31E85, loc_31EAE
@@ -28,7 +28,7 @@ global loc_32905, loc_32923, loc_32941, loc_3295F, loc_32969, loc_32997, loc_329
 global loc_329F1, loc_329FB, loc_32A2E, loc_32A35, loc_32A5F, loc_32A6F, loc_32A74, loc_32A84
 global loc_32A89, loc_32AC2, loc_32AD8, loc_32B02, loc_32B47, loc_32B5D, loc_32B76, loc_32C0F
 global loc_32C35, loc_32C51, loc_32C96, loc_32CC4, loc_32CCE, loc_32D30, loc_32D6D, loc_32D9E
-global sub_31AB5, sub_3270B, sub_3271B, sub_327A1, sub_32B1D, sub_32C9E
+global sub_31AB5, sub_3270B, SaveModeState, LoadModeState, WriteModeState, sub_32C9E
 sub_31AB5:
 push dword 0CCh	; 31AB5
 call __CHK	; 31ABA
@@ -92,7 +92,7 @@ push eax	; 31B96
 call MouseSetPos	; 31B97
 add esp, byte 8	; 31B9C
 call dword [off_D3078]	; 31B9F
-call sub_8B85B	; 31BA5
+call SetSideControls	; 31BA5
 xor eax, eax	; 31BAA
 call sub_1D100	; 31BAC
 mov dword [dword_C65C0], unk_208EF	; 31BB1
@@ -925,7 +925,7 @@ push dword 4	; 3270B
 call __CHK	; 32710
 mov eax, 1	; 32715
 ret	; 3271A
-sub_3271B:
+SaveModeState:
 push dword 0Ch	; 3271B
 call __CHK	; 32720
 push ebx	; 32725
@@ -935,10 +935,10 @@ add eax, byte 4	; 32729
 mov edx, curleague	; 3272C
 call strcpy_	; 32731
 lea eax, [byte ebx+011h]	; 32736
-mov edx, byte_DD750	; 32739
+mov edx, leaguedbfmt	; 32739
 call strcpy_	; 3273E
 lea eax, [byte ebx+031h]	; 32743
-mov edx, byte_DD710	; 32746
+mov edx, leaguedbfmt2	; 32746
 call strcpy_	; 3274B
 mov eax, dword [cont2team]	; 32750
 sar eax, 10h	; 32755
@@ -948,22 +948,22 @@ sar eax, 10h	; 32760
 mov dword [byte ebx+055h], eax	; 32763
 mov eax, dword [gameopts]	; 32766
 mov dword [byte ebx+059h], eax	; 3276B
-mov eax, dword [dword_C5403]	; 3276E
+mov eax, dword [ctl1team]	; 3276E
 mov dword [byte ebx+05Dh], eax	; 32773
-mov eax, dword [dword_C5407]	; 32776
+mov eax, dword [ctl2team]	; 32776
 mov dword [byte ebx+061h], eax	; 3277B
-mov eax, dword [dword_C540B]	; 3277E
+mov eax, dword [ctl1dev]	; 3277E
 mov dword [byte ebx+065h], eax	; 32783
-mov eax, dword [dword_C540F]	; 32786
+mov eax, dword [ctl2dev]	; 32786
 mov dword [byte ebx+069h], eax	; 3278B
-mov eax, dword [dword_C5413]	; 3278E
+mov eax, dword [ctl1side]	; 3278E
 mov dword [byte ebx+06Dh], eax	; 32793
-mov eax, dword [dword_C5417]	; 32796
+mov eax, dword [ctl2side]	; 32796
 mov dword [byte ebx+071h], eax	; 3279B
 pop edx	; 3279E
 pop ebx	; 3279F
 ret	; 327A0
-sub_327A1:
+LoadModeState:
 push dword 1Ch	; 327A1
 call __CHK	; 327A6
 push ebx	; 327AB
@@ -977,13 +977,13 @@ lea edx, [byte eax+04h]	; 327B3
 mov eax, curleague	; 327B6
 call strcpy_	; 327BB
 lea edx, [byte ebx+011h]	; 327C0
-mov eax, byte_DD750	; 327C3
+mov eax, leaguedbfmt	; 327C3
 call strcpy_	; 327C8
 lea edx, [byte ebx+031h]	; 327CD
-mov eax, byte_DD710	; 327D0
+mov eax, leaguedbfmt2	; 327D0
 call strcpy_	; 327D5
 mov edx, dword [ebx]	; 327DA
-mov dword [dword_C53FB], edx	; 327DC
+mov dword [gamemode], edx	; 327DC
 mov dx, word [byte ebx+051h]	; 327E2
 mov word [HomeTeam], dx	; 327E6
 mov dx, word [byte ebx+055h]	; 327ED
@@ -991,18 +991,18 @@ mov word [VisTeam], dx	; 327F1
 mov edx, dword [byte ebx+059h]	; 327F8
 mov dword [gameopts], edx	; 327FB
 mov edx, dword [byte ebx+05Dh]	; 32801
-mov dword [dword_C5403], edx	; 32804
+mov dword [ctl1team], edx	; 32804
 mov edx, dword [byte ebx+061h]	; 3280A
-mov dword [dword_C5407], edx	; 3280D
+mov dword [ctl2team], edx	; 3280D
 mov edx, dword [byte ebx+065h]	; 32813
-mov dword [dword_C540B], edx	; 32816
+mov dword [ctl1dev], edx	; 32816
 mov edx, dword [byte ebx+069h]	; 3281C
-mov dword [dword_C540F], edx	; 3281F
+mov dword [ctl2dev], edx	; 3281F
 mov edx, dword [byte ebx+06Dh]	; 32825
-mov dword [dword_C5413], edx	; 32828
+mov dword [ctl1side], edx	; 32828
 mov edx, dword [byte ebx+071h]	; 3282E
-mov dword [dword_C5417], edx	; 32831
-mov edx, dword [dword_C540B]	; 32837
+mov dword [ctl2side], edx	; 32831
+mov edx, dword [ctl1dev]	; 32837
 cmp edx, byte 2	; 3283D
 jb short loc_3284B	; 32840
 jbe short loc_32863	; 32842
@@ -1015,21 +1015,21 @@ jne short loc_32887	; 3284E
 test byte [byte_EA0F4], 1	; 32850
 jne short loc_32887	; 32857
 xor ecx, ecx	; 32859
-mov dword [dword_C540B], ecx	; 3285B
+mov dword [ctl1dev], ecx	; 3285B
 jmp short loc_32887	; 32861
 loc_32863:
 test byte [byte_EA0F4], 2	; 32863
 jne short loc_32887	; 3286A
 xor ebx, ebx	; 3286C
-mov dword [dword_C540B], ebx	; 3286E
+mov dword [ctl1dev], ebx	; 3286E
 jmp short loc_32887	; 32874
 loc_32876:
 test byte [byte_EA0F4], 4	; 32876
 jne short loc_32887	; 3287D
 xor edx, edx	; 3287F
-mov dword [dword_C540B], edx	; 32881
+mov dword [ctl1dev], edx	; 32881
 loc_32887:
-mov edx, dword [dword_C540F]	; 32887
+mov edx, dword [ctl2dev]	; 32887
 cmp edx, byte 2	; 3288D
 jb short loc_3289B	; 32890
 jbe short loc_328B3	; 32892
@@ -1042,90 +1042,90 @@ jne short loc_328D7	; 3289E
 test byte [byte_EA0F4], 1	; 328A0
 jne short loc_328D7	; 328A7
 xor ebp, ebp	; 328A9
-mov dword [dword_C540F], ebp	; 328AB
+mov dword [ctl2dev], ebp	; 328AB
 jmp short loc_328D7	; 328B1
 loc_328B3:
 test byte [byte_EA0F4], 2	; 328B3
 jne short loc_328D7	; 328BA
 xor edi, edi	; 328BC
-mov dword [dword_C540F], edi	; 328BE
+mov dword [ctl2dev], edi	; 328BE
 jmp short loc_328D7	; 328C4
 loc_328C6:
 test byte [byte_EA0F4], 4	; 328C6
 jne short loc_328D7	; 328CD
 xor esi, esi	; 328CF
-mov dword [dword_C540F], esi	; 328D1
+mov dword [ctl2dev], esi	; 328D1
 loc_328D7:
-cmp dword [dword_C540B], byte 0	; 328D7
+cmp dword [ctl1dev], byte 0	; 328D7
 jne near loc_32969	; 328DE
 test byte [byte_EA0F4], 2	; 328E4
 je short loc_32905	; 328EB
-cmp dword [dword_C540F], byte 2	; 328ED
+cmp dword [ctl2dev], byte 2	; 328ED
 je short loc_32905	; 328F4
-mov dword [dword_C540B], 2	; 328F6
+mov dword [ctl1dev], 2	; 328F6
 jmp near loc_32969	; 32900
 loc_32905:
 test byte [byte_EA0F4], 4	; 32905
 je short loc_32923	; 3290C
-cmp dword [dword_C540F], byte 4	; 3290E
+cmp dword [ctl2dev], byte 4	; 3290E
 je short loc_32923	; 32915
-mov dword [dword_C540B], 4	; 32917
+mov dword [ctl1dev], 4	; 32917
 jmp short loc_32969	; 32921
 loc_32923:
 test byte [byte_EA0F4], 8	; 32923
 je short loc_32941	; 3292A
-cmp dword [dword_C540F], byte 8	; 3292C
+cmp dword [ctl2dev], byte 8	; 3292C
 je short loc_32941	; 32933
-mov dword [dword_C540B], 8	; 32935
+mov dword [ctl1dev], 8	; 32935
 jmp short loc_32969	; 3293F
 loc_32941:
 test byte [byte_EA0F4], 1	; 32941
 je short loc_3295F	; 32948
-cmp dword [dword_C540F], byte 1	; 3294A
+cmp dword [ctl2dev], byte 1	; 3294A
 je short loc_3295F	; 32951
-mov dword [dword_C540B], 1	; 32953
+mov dword [ctl1dev], 1	; 32953
 jmp short loc_32969	; 3295D
 loc_3295F:
-mov dword [dword_C540B], 10h	; 3295F
+mov dword [ctl1dev], 10h	; 3295F
 loc_32969:
-cmp dword [dword_C540F], byte 0	; 32969
+cmp dword [ctl2dev], byte 0	; 32969
 jne near loc_329FB	; 32970
 test byte [byte_EA0F4], 2	; 32976
 je short loc_32997	; 3297D
-cmp dword [dword_C540B], byte 2	; 3297F
+cmp dword [ctl1dev], byte 2	; 3297F
 je short loc_32997	; 32986
-mov dword [dword_C540F], 2	; 32988
+mov dword [ctl2dev], 2	; 32988
 jmp near loc_329FB	; 32992
 loc_32997:
 test byte [byte_EA0F4], 4	; 32997
 je short loc_329B5	; 3299E
-cmp dword [dword_C540B], byte 4	; 329A0
+cmp dword [ctl1dev], byte 4	; 329A0
 je short loc_329B5	; 329A7
-mov dword [dword_C540F], 4	; 329A9
+mov dword [ctl2dev], 4	; 329A9
 jmp short loc_329FB	; 329B3
 loc_329B5:
 test byte [byte_EA0F4], 8	; 329B5
 je short loc_329D3	; 329BC
-cmp dword [dword_C540B], byte 8	; 329BE
+cmp dword [ctl1dev], byte 8	; 329BE
 je short loc_329D3	; 329C5
-mov dword [dword_C540F], 8	; 329C7
+mov dword [ctl2dev], 8	; 329C7
 jmp short loc_329FB	; 329D1
 loc_329D3:
 test byte [byte_EA0F4], 1	; 329D3
 je short loc_329F1	; 329DA
-cmp dword [dword_C540B], byte 1	; 329DC
+cmp dword [ctl1dev], byte 1	; 329DC
 je short loc_329F1	; 329E3
-mov dword [dword_C540F], 1	; 329E5
+mov dword [ctl2dev], 1	; 329E5
 jmp short loc_329FB	; 329EF
 loc_329F1:
-mov dword [dword_C540F], 10h	; 329F1
+mov dword [ctl2dev], 10h	; 329F1
 loc_329FB:
-cmp dword [dword_C540F], byte 10h	; 329FB
+cmp dword [ctl2dev], byte 10h	; 329FB
 sete al	; 32A02
 xor edx, edx	; 32A05
 mov dl, al	; 32A07
 mov ebx, edx	; 32A09
-mov eax, dword [dword_C540B]	; 32A0B
+mov eax, dword [ctl1dev]	; 32A0B
 cmp eax, byte 10h	; 32A10
 sete dl	; 32A13
 and edx, 0FFh	; 32A16
@@ -1140,16 +1140,16 @@ loc_32A2E:
 xor edx, edx	; 32A2E
 mov ebx, 1	; 32A30
 loc_32A35:
-cmp dword [nosplit edx*4+dword_C5413], byte 0	; 32A35
+cmp dword [nosplit edx*4+ctl1side], byte 0	; 32A35
 sete dl	; 32A3D
 mov eax, edx	; 32A40
 and eax, 0FFh	; 32A42
-mov dword [nosplit ebx*4+dword_C5413], eax	; 32A47
+mov dword [nosplit ebx*4+ctl1side], eax	; 32A47
 sete dl	; 32A4E
 xor eax, eax	; 32A51
 mov al, dl	; 32A53
 sub eax, byte 2	; 32A55
-mov dword [nosplit ebx*4+dword_C5403], eax	; 32A58
+mov dword [nosplit ebx*4+ctl1team], eax	; 32A58
 loc_32A5F:
 test byte [gameopts], 40h	; 32A5F
 je short loc_32A6F	; 32A66
@@ -1165,8 +1165,8 @@ jmp short loc_32A89	; 32A82
 loc_32A84:
 call sub_8F96E	; 32A84
 loc_32A89:
-call sub_8B85B	; 32A89
-cmp dword [dword_C53FB], byte 0	; 32A8E
+call SetSideControls	; 32A89
+cmp dword [gamemode], byte 0	; 32A8E
 jne near loc_32704	; 32A95
 mov edx, dword [cont2team]	; 32A9B
 sar edx, 10h	; 32AA1
@@ -1198,7 +1198,7 @@ mov eax, asc_CDB75	; 32B07
 call strncpy_	; 32B0C
 mov byte [byte_CDB77], 20h	; 32B11
 jmp near loc_32704	; 32B18
-sub_32B1D:
+WriteModeState:
 push dword 5Ch	; 32B1D
 call __CHK	; 32B22
 push ebx	; 32B27
@@ -1209,7 +1209,7 @@ push edi	; 32B2B
 push ebp	; 32B2C
 sub esp, byte 2Ch	; 32B2D
 mov ebp, eax	; 32B30
-cmp dword [dword_C53FB], byte 0	; 32B32
+cmp dword [gamemode], byte 0	; 32B32
 jne short loc_32B47	; 32B39
 mov edi, esp	; 32B3B
 mov esi, asc_C175F	; 32B3D
@@ -1236,12 +1236,12 @@ lea eax, [byte ebp+04h]	; 32B76
 mov edx, curleague	; 32B79
 call strcpy_	; 32B7E
 lea eax, [byte ebp+011h]	; 32B83
-mov edx, byte_DD750	; 32B86
+mov edx, leaguedbfmt	; 32B86
 call strcpy_	; 32B8B
 lea eax, [byte ebp+031h]	; 32B90
-mov edx, byte_DD710	; 32B93
+mov edx, leaguedbfmt2	; 32B93
 call strcpy_	; 32B98
-mov eax, dword [dword_C53FB]	; 32B9D
+mov eax, dword [gamemode]	; 32B9D
 mov dword [byte ebp+00h], eax	; 32BA2
 mov eax, dword [cont2team]	; 32BA5
 sar eax, 10h	; 32BAA
@@ -1251,17 +1251,17 @@ sar eax, 10h	; 32BB5
 mov dword [byte ebp+055h], eax	; 32BB8
 mov eax, dword [gameopts]	; 32BBB
 mov dword [byte ebp+059h], eax	; 32BC0
-mov eax, dword [dword_C5403]	; 32BC3
+mov eax, dword [ctl1team]	; 32BC3
 mov dword [byte ebp+05Dh], eax	; 32BC8
-mov eax, dword [dword_C5407]	; 32BCB
+mov eax, dword [ctl2team]	; 32BCB
 mov dword [byte ebp+061h], eax	; 32BD0
-mov eax, dword [dword_C540B]	; 32BD3
+mov eax, dword [ctl1dev]	; 32BD3
 mov dword [byte ebp+065h], eax	; 32BD8
-mov eax, dword [dword_C540F]	; 32BDB
+mov eax, dword [ctl2dev]	; 32BDB
 mov dword [byte ebp+069h], eax	; 32BE0
-mov eax, dword [dword_C5413]	; 32BE3
+mov eax, dword [ctl1side]	; 32BE3
 mov dword [byte ebp+06Dh], eax	; 32BE8
-mov eax, dword [dword_C5417]	; 32BEB
+mov eax, dword [ctl2side]	; 32BEB
 mov dword [byte ebp+071h], eax	; 32BF0
 lea edx, [byte esp+020h]	; 32BF3
 mov eax, esp	; 32BF7
@@ -1269,7 +1269,7 @@ call FileCreate	; 32BF9
 test eax, eax	; 32BFE
 je short loc_32C0F	; 32C00
 push unk_C1772	; 32C02
-call sub_B2CD8	; 32C07
+call FatalError	; 32C07
 add esp, byte 4	; 32C0C
 loc_32C0F:
 mov ecx, 75h	; 32C0F
@@ -1280,7 +1280,7 @@ call FileWriteAt	; 32C1F
 test eax, eax	; 32C24
 je short loc_32C35	; 32C26
 push unk_C1775	; 32C28
-call sub_B2CD8	; 32C2D
+call FatalError	; 32C2D
 add esp, byte 4	; 32C32
 loc_32C35:
 lea eax, [byte esp+020h]	; 32C35
@@ -1288,7 +1288,7 @@ call FileClose	; 32C39
 test eax, eax	; 32C3E
 je short loc_32C96	; 32C40
 push unk_C1778	; 32C42
-call sub_B2CD8	; 32C47
+call FatalError	; 32C47
 add esp, byte 4	; 32C4C
 jmp short loc_32C96	; 32C4F
 loc_32C51:

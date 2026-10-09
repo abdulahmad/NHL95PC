@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_8D2F0 progbits alloc exec nowrite align=1
 extern asc_C3D60, dword_D2F58, dword_D2F64, dword_EDA08, dword_EDAAC, dword_EDAB0, dword_EDAB4, sub_8CD4C
-extern sub_8D2A0, sub_8E3F8, sub_8E44C, sub_986E4, sub_B2CD8, sub_B3ABC, unknown_libname_22
+extern sub_8D2A0, sub_8E3F8, sub_8E44C, sub_986E4, FatalError, sub_B3ABC, unknown_libname_22
 global loc_8D340, loc_8D379, loc_8D38E, loc_8D40C, loc_8D427, loc_8D438, loc_8D45C, loc_8D45E
 global loc_8D521, loc_8D53A, loc_8D542, loc_8D591, loc_8D5B0, loc_8D5B8, loc_8D640, loc_8D653
 global loc_8D670, loc_8D683, loc_8D697, loc_8D6AA, loc_8D6D8, loc_8D708, loc_8D70A, loc_8D727
@@ -948,7 +948,7 @@ push ebx	; 8DB9B
 call sub_986E4	; 8DB9C
 add esp, byte 4	; 8DBA1
 push asc_C3D60	; 8DBA4
-call sub_B2CD8	; 8DBA9
+call FatalError	; 8DBA9
 add esp, byte 4	; 8DBAE
 loc_8DBB1:
 mov eax, dword [dword_EDAAC]	; 8DBB1

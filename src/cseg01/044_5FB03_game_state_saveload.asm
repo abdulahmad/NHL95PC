@@ -5,8 +5,8 @@ section s_5FB03 progbits alloc exec nowrite align=1
 extern PBnum, StanleyCupTimer, __CHK, __STOSB, __STOSD, str_ErrLoadGame, str_ErrSaveGame, byte_C4D1C
 extern byte_C4D1D, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, byte_DC265
 extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, PenBuf, iflags, byte_E9AC8
-extern byte_E9AD3, OOlist, collflag, dword_C530D, dword_C5382, dword_C53FB, dword_C5403, dword_C5407
-extern dword_C540B, dword_C540F, dword_C5413, dword_C5704, dword_C5708, dword_C570C, dword_C5840, dword_C66D0
+extern byte_E9AD3, OOlist, collflag, postate, lgstate, gamemode, ctl1team, ctl2team
+extern ctl1dev, ctl2dev, ctl1side, dword_C5704, dword_C5708, dword_C570C, dword_C5840, dword_C66D0
 extern dword_C66D4, dword_C90B0, sflags3, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0AC
 extern lastsfx, dword_CC0E0, onetimerflag, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 extern dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
@@ -16,8 +16,8 @@ extern dword_DF6F2, dword_DF6F6, hmtmplstats, dword_DF6FE, hmtmroster, hmtmlines
 extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2
 extern awtmsort, dword_E009C, dword_E0248, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
 extern ltx, replaystart, off_CC01D, passspeed, sub_13A91, FileReadAt, FileWriteAt, sub_1BBCC
-extern sub_3271B, sub_327A1, GetPeriodTime, SprSort, sub_61E99, sub_673C5, ReplayRecordReset, sub_7DC8B
-extern sub_B2CD8, MouseSetPos, threat, unk_C5298, unk_C5423, unk_C542E, awlinetab, unk_DAC40
+extern SaveModeState, LoadModeState, GetPeriodTime, SprSort, sub_61E99, sub_673C5, ReplayRecordReset, sub_7DC8B
+extern FatalError, MouseSetPos, threat, exhstate, unk_C5423, unk_C542E, awlinetab, unk_DAC40
 extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, hmlinetab, unk_DC240
 extern unk_DC252, unk_DF314, SortCords, word_C571C, word_C575C, camx, camy
 extern lastplayer, passdir, word_C90A6, passplayer, xc1, yc1, word_C90B2, word_C90B4
@@ -45,12 +45,12 @@ sub esp, 8Ch	; 5FB13
 push eax	; 5FB19
 mov ecx, 4	; 5FB1A
 mov ebx, 0FFFFFFFFh	; 5FB1F
-mov edx, dword_C5413	; 5FB24
+mov edx, ctl1side	; 5FB24
 call FileWriteAt	; 5FB29
 test eax, eax	; 5FB2E
 je short .1	; 5FB30
 push str_ErrSaveGame	; 5FB32
-call sub_B2CD8	; 5FB37
+call FatalError	; 5FB37
 add esp, byte 4	; 5FB3C
 .1:
 xor ebp, ebp	; 5FB3F
@@ -65,7 +65,7 @@ call FileWriteAt	; 5FB59
 test eax, eax	; 5FB5E
 je short .3	; 5FB60
 push str_ErrSaveGame	; 5FB62
-call sub_B2CD8	; 5FB67
+call FatalError	; 5FB67
 add esp, byte 4	; 5FB6C
 .3:
 inc ebp	; 5FB6F
@@ -83,7 +83,7 @@ call FileWriteAt	; 5FB8F
 test eax, eax	; 5FB94
 je short .5	; 5FB96
 push str_ErrSaveGame	; 5FB98
-call sub_B2CD8	; 5FB9D
+call FatalError	; 5FB9D
 add esp, byte 4	; 5FBA2
 .5:
 inc ebp	; 5FBA5
@@ -97,7 +97,7 @@ call FileWriteAt	; 5FBBD
 test eax, eax	; 5FBC2
 je short .6	; 5FBC4
 push str_ErrSaveGame	; 5FBC6
-call sub_B2CD8	; 5FBCB
+call FatalError	; 5FBCB
 add esp, byte 4	; 5FBD0
 .6:
 mov ecx, 30h	; 5FBD3
@@ -108,7 +108,7 @@ call FileWriteAt	; 5FBE5
 test eax, eax	; 5FBEA
 je short .7	; 5FBEC
 push str_ErrSaveGame	; 5FBEE
-call sub_B2CD8	; 5FBF3
+call FatalError	; 5FBF3
 add esp, byte 4	; 5FBF8
 .7:
 mov ax, word [HomeTeam]	; 5FBFB
@@ -294,7 +294,7 @@ call FileWriteAt	; 5FEE9
 test eax, eax	; 5FEEE
 je short .10	; 5FEF0
 push str_ErrSaveGame	; 5FEF2
-call sub_B2CD8	; 5FEF7
+call FatalError	; 5FEF7
 add esp, byte 4	; 5FEFC
 .10:
 lea eax, [byte esp+04h]	; 5FEFF
@@ -430,16 +430,16 @@ add eax, byte 2	; 6011F
 mov dx, word [dword_E009C]	; 60122
 mov word [eax], dx	; 60129
 add eax, byte 2	; 6012C
-mov dx, word [dword_C5403]	; 6012F
+mov dx, word [ctl1team]	; 6012F
 mov word [eax], dx	; 60136
 add eax, byte 2	; 60139
-mov dx, word [dword_C5407]	; 6013C
+mov dx, word [ctl2team]	; 6013C
 mov word [eax], dx	; 60143
 add eax, byte 2	; 60146
-mov dx, word [dword_C540B]	; 60149
+mov dx, word [ctl1dev]	; 60149
 mov word [eax], dx	; 60150
 add eax, byte 2	; 60153
-mov dx, word [dword_C540F]	; 60156
+mov dx, word [ctl2dev]	; 60156
 mov word [eax], dx	; 6015D
 add eax, byte 2	; 60160
 mov dx, word [dword_C5704]	; 60163
@@ -469,7 +469,7 @@ add eax, byte 2	; 601C8
 mov dx, word [word_E024E]	; 601CB
 mov word [eax], dx	; 601D2
 add eax, byte 2	; 601D5
-mov dx, word [dword_C53FB]	; 601D8
+mov dx, word [gamemode]	; 601D8
 mov word [eax], dx	; 601DF
 add eax, byte 2	; 601E2
 mov dl, byte [byte_DC268]	; 601E5
@@ -494,7 +494,7 @@ call FileWriteAt	; 6022F
 test eax, eax	; 60234
 je short .12	; 60236
 push str_ErrSaveGame	; 60238
-call sub_B2CD8	; 6023D
+call FatalError	; 6023D
 add esp, byte 4	; 60242
 .12:
 lea eax, [byte esp+04h]	; 60245
@@ -591,7 +591,7 @@ call FileWriteAt	; 603BA
 test eax, eax	; 603BF
 je short .14	; 603C1
 push str_ErrSaveGame	; 603C3
-call sub_B2CD8	; 603C8
+call FatalError	; 603C8
 add esp, byte 4	; 603CD
 .14:
 mov ecx, 42h	; 603D0
@@ -602,7 +602,7 @@ call FileWriteAt	; 603E2
 test eax, eax	; 603E7
 je short .15	; 603E9
 push str_ErrSaveGame	; 603EB
-call sub_B2CD8	; 603F0
+call FatalError	; 603F0
 add esp, byte 4	; 603F5
 .15:
 mov ecx, 0Bh	; 603F8
@@ -613,7 +613,7 @@ call FileWriteAt	; 6040A
 test eax, eax	; 6040F
 je short .16	; 60411
 push str_ErrSaveGame	; 60413
-call sub_B2CD8	; 60418
+call FatalError	; 60418
 add esp, byte 4	; 6041D
 .16:
 mov ecx, 0Bh	; 60420
@@ -624,7 +624,7 @@ call FileWriteAt	; 60432
 test eax, eax	; 60437
 je short .17	; 60439
 push str_ErrSaveGame	; 6043B
-call sub_B2CD8	; 60440
+call FatalError	; 60440
 add esp, byte 4	; 60445
 .17:
 mov ecx, 0Bh	; 60448
@@ -635,7 +635,7 @@ call FileWriteAt	; 6045A
 test eax, eax	; 6045F
 je short .18	; 60461
 push str_ErrSaveGame	; 60463
-call sub_B2CD8	; 60468
+call FatalError	; 60468
 add esp, byte 4	; 6046D
 .18:
 mov ecx, 0Bh	; 60470
@@ -646,7 +646,7 @@ call FileWriteAt	; 60482
 test eax, eax	; 60487
 je short .19	; 60489
 push str_ErrSaveGame	; 6048B
-call sub_B2CD8	; 60490
+call FatalError	; 60490
 add esp, byte 4	; 60495
 .19:
 mov ecx, 40h	; 60498
@@ -657,7 +657,7 @@ call FileWriteAt	; 604AA
 test eax, eax	; 604AF
 je short .20	; 604B1
 push str_ErrSaveGame	; 604B3
-call sub_B2CD8	; 604B8
+call FatalError	; 604B8
 add esp, byte 4	; 604BD
 .20:
 mov ecx, 40h	; 604C0
@@ -668,7 +668,7 @@ call FileWriteAt	; 604D2
 test eax, eax	; 604D7
 je short .21	; 604D9
 push str_ErrSaveGame	; 604DB
-call sub_B2CD8	; 604E0
+call FatalError	; 604E0
 add esp, byte 4	; 604E5
 .21:
 lea ebx, [byte esp+04h]	; 604E8
@@ -685,7 +685,7 @@ call FileWriteAt	; 60506
 test eax, eax	; 6050B
 je short .23	; 6050D
 push str_ErrSaveGame	; 6050F
-call sub_B2CD8	; 60514
+call FatalError	; 60514
 add esp, byte 4	; 60519
 .23:
 lea ebx, [byte esp+04h]	; 6051C
@@ -731,7 +731,7 @@ call FileWriteAt	; 6057E
 test eax, eax	; 60583
 je short .26	; 60585
 push str_ErrSaveGame	; 60587
-call sub_B2CD8	; 6058C
+call FatalError	; 6058C
 add esp, byte 4	; 60591
 .26:
 lea ebx, [byte esp+04h]	; 60594
@@ -773,7 +773,7 @@ call FileWriteAt	; 605ED
 test eax, eax	; 605F2
 je short .28	; 605F4
 push str_ErrSaveGame	; 605F6
-call sub_B2CD8	; 605FB
+call FatalError	; 605FB
 add esp, byte 4	; 60600
 .28:
 xor eax, eax	; 60603
@@ -799,12 +799,12 @@ sub esp, 110h	; 60622
 mov ebp, eax	; 60628
 mov ecx, 4	; 6062A
 mov ebx, 0FFFFFFFFh	; 6062F
-mov edx, dword_C5413	; 60634
+mov edx, ctl1side	; 60634
 call FileReadAt	; 60639
 test eax, eax	; 6063E
 je short .1	; 60640
 push str_ErrSaveGame	; 60642
-call sub_B2CD8	; 60647
+call FatalError	; 60647
 add esp, byte 4	; 6064C
 .1:
 xor edx, edx	; 6064F
@@ -820,7 +820,7 @@ call FileReadAt	; 60674
 test eax, eax	; 60679
 je short .3	; 6067B
 push str_ErrLoadGame	; 6067D
-call sub_B2CD8	; 60682
+call FatalError	; 60682
 add esp, byte 4	; 60687
 .3:
 mov ebx, dword [dword esp+010Ch]	; 6068A
@@ -841,7 +841,7 @@ call FileReadAt	; 606C3
 test eax, eax	; 606C8
 je short .5	; 606CA
 push str_ErrLoadGame	; 606CC
-call sub_B2CD8	; 606D1
+call FatalError	; 606D1
 add esp, byte 4	; 606D6
 .5:
 mov edi, dword [dword esp+010Ch]	; 606D9
@@ -857,7 +857,7 @@ call FileReadAt	; 606FE
 test eax, eax	; 60703
 je short .6	; 60705
 push str_ErrLoadGame	; 60707
-call sub_B2CD8	; 6070C
+call FatalError	; 6070C
 add esp, byte 4	; 60711
 .6:
 mov ecx, 30h	; 60714
@@ -868,7 +868,7 @@ call FileReadAt	; 60725
 test eax, eax	; 6072A
 je short .7	; 6072C
 push str_ErrLoadGame	; 6072E
-call sub_B2CD8	; 60733
+call FatalError	; 60733
 add esp, byte 4	; 60738
 .7:
 mov ecx, 80h	; 6073B
@@ -879,7 +879,7 @@ call FileReadAt	; 60749
 test eax, eax	; 6074E
 je short .8	; 60750
 push str_ErrLoadGame	; 60752
-call sub_B2CD8	; 60757
+call FatalError	; 60757
 add esp, byte 4	; 6075C
 .8:
 mov eax, dword [esp]	; 6075F
@@ -1071,7 +1071,7 @@ call FileReadAt	; 60A3C
 test eax, eax	; 60A41
 je short .11	; 60A43
 push str_ErrLoadGame	; 60A45
-call sub_B2CD8	; 60A4A
+call FatalError	; 60A4A
 add esp, byte 4	; 60A4F
 .11:
 mov ebx, esp	; 60A52
@@ -1214,16 +1214,16 @@ movsx eax, word [ebx]	; 60C69
 mov dword [dword_E009C], eax	; 60C6C
 add ebx, byte 2	; 60C71
 movsx eax, word [ebx]	; 60C74
-mov dword [dword_C5403], eax	; 60C77
+mov dword [ctl1team], eax	; 60C77
 add ebx, byte 2	; 60C7C
 movsx eax, word [ebx]	; 60C7F
-mov dword [dword_C5407], eax	; 60C82
+mov dword [ctl2team], eax	; 60C82
 add ebx, byte 2	; 60C87
 movsx eax, word [ebx]	; 60C8A
-mov dword [dword_C540B], eax	; 60C8D
+mov dword [ctl1dev], eax	; 60C8D
 add ebx, byte 2	; 60C92
 movsx eax, word [ebx]	; 60C95
-mov dword [dword_C540F], eax	; 60C98
+mov dword [ctl2dev], eax	; 60C98
 add ebx, byte 2	; 60C9D
 movsx eax, word [ebx]	; 60CA0
 mov dword [dword_C5704], eax	; 60CA3
@@ -1253,7 +1253,7 @@ mov ax, word [ebx]	; 60CFA
 mov word [word_E024E], ax	; 60CFD
 add ebx, byte 2	; 60D03
 movsx eax, word [ebx]	; 60D06
-mov dword [dword_C53FB], eax	; 60D09
+mov dword [gamemode], eax	; 60D09
 add ebx, byte 2	; 60D0E
 mov al, byte [ebx]	; 60D11
 mov byte [byte_DC268], al	; 60D13
@@ -1277,7 +1277,7 @@ call FileReadAt	; 60D53
 test eax, eax	; 60D58
 je short .13	; 60D5A
 push str_ErrLoadGame	; 60D5C
-call sub_B2CD8	; 60D61
+call FatalError	; 60D61
 add esp, byte 4	; 60D66
 .13:
 mov ebx, esp	; 60D69
@@ -1432,7 +1432,7 @@ call FileReadAt	; 60F93
 test eax, eax	; 60F98
 je short .16	; 60F9A
 push str_ErrLoadGame	; 60F9C
-call sub_B2CD8	; 60FA1
+call FatalError	; 60FA1
 add esp, byte 4	; 60FA6
 .16:
 mov ecx, 0Bh	; 60FA9
@@ -1443,7 +1443,7 @@ call FileReadAt	; 60FBA
 test eax, eax	; 60FBF
 je short .17	; 60FC1
 push str_ErrLoadGame	; 60FC3
-call sub_B2CD8	; 60FC8
+call FatalError	; 60FC8
 add esp, byte 4	; 60FCD
 .17:
 mov ecx, 0Bh	; 60FD0
@@ -1454,7 +1454,7 @@ call FileReadAt	; 60FE1
 test eax, eax	; 60FE6
 je short .18	; 60FE8
 push str_ErrLoadGame	; 60FEA
-call sub_B2CD8	; 60FEF
+call FatalError	; 60FEF
 add esp, byte 4	; 60FF4
 .18:
 mov ecx, 0Bh	; 60FF7
@@ -1465,7 +1465,7 @@ call FileReadAt	; 61008
 test eax, eax	; 6100D
 je short .19	; 6100F
 push str_ErrLoadGame	; 61011
-call sub_B2CD8	; 61016
+call FatalError	; 61016
 add esp, byte 4	; 6101B
 .19:
 mov ecx, 0Bh	; 6101E
@@ -1476,7 +1476,7 @@ call FileReadAt	; 6102F
 test eax, eax	; 61034
 je short .20	; 61036
 push str_ErrLoadGame	; 61038
-call sub_B2CD8	; 6103D
+call FatalError	; 6103D
 add esp, byte 4	; 61042
 .20:
 mov ecx, 40h	; 61045
@@ -1487,7 +1487,7 @@ call FileReadAt	; 61058
 test eax, eax	; 6105D
 je short .21	; 6105F
 push str_ErrLoadGame	; 61061
-call sub_B2CD8	; 61066
+call FatalError	; 61066
 add esp, byte 4	; 6106B
 .21:
 mov ecx, 40h	; 6106E
@@ -1498,7 +1498,7 @@ call FileReadAt	; 61081
 test eax, eax	; 61086
 je short .22	; 61088
 push str_ErrLoadGame	; 6108A
-call sub_B2CD8	; 6108F
+call FatalError	; 6108F
 add esp, byte 4	; 61094
 .22:
 xor edi, edi	; 61097
@@ -1520,7 +1520,7 @@ call FileReadAt	; 610E1
 test eax, eax	; 610E6
 je short .25	; 610E8
 push str_ErrLoadGame	; 610EA
-call sub_B2CD8	; 610EF
+call FatalError	; 610EF
 add esp, byte 4	; 610F4
 .25:
 mov eax, esp	; 610F7
@@ -1598,7 +1598,7 @@ push dword 0A0h	; 611EF
 call MouseSetPos	; 611F4
 add esp, byte 8	; 611F9
 .29:
-mov eax, dword [dword_C53FB]	; 611FC
+mov eax, dword [gamemode]	; 611FC
 cmp eax, byte 1	; 61201
 jb short .30	; 61204
 jbe short .31	; 61206
@@ -1608,21 +1608,21 @@ jmp short .34	; 6120D
 .30:
 test eax, eax	; 6120F
 jne short .34	; 61211
-mov eax, unk_C5298	; 61213
-call sub_3271B	; 61218
-mov eax, unk_C5298	; 6121D
+mov eax, exhstate	; 61213
+call SaveModeState	; 61218
+mov eax, exhstate	; 6121D
 jmp short .33	; 61222
 .31:
-mov eax, dword_C530D	; 61224
-call sub_3271B	; 61229
-mov eax, dword_C530D	; 6122E
+mov eax, postate	; 61224
+call SaveModeState	; 61229
+mov eax, postate	; 6122E
 jmp short .33	; 61233
 .32:
-mov eax, dword_C5382	; 61235
-call sub_3271B	; 6123A
-mov eax, dword_C5382	; 6123F
+mov eax, lgstate	; 61235
+call SaveModeState	; 6123A
+mov eax, lgstate	; 6123F
 .33:
-call sub_327A1	; 61244
+call LoadModeState	; 61244
 .34:
 call GetPeriodTime	; 61249
 mov word [PerTimeTotal], ax	; 6124E

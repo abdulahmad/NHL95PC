@@ -14,7 +14,7 @@ extern sub_13A91, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, 
 extern sub_1BAB1, sub_303FB, sub_30A0C, MessageBox, sub_33727, sub_3377C, sub_479E9, FadeOutPalCycle
 extern sub_673C5, sub_6B3D7, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
-extern sub_93000, sub_B2CD8, sub_B2DCA, sub_B4FAC, sub_B5DB0, unk_7E05F, unk_C3444, unk_C3447
+extern sub_93000, FatalError, sub_B2DCA, sub_B4FAC, sub_B5DB0, unk_7E05F, unk_C3444, unk_C3447
 extern unk_C344D, unk_C3468, unk_C346B, unk_C3470, str_star, unk_D1F4B, unk_DBC30, unk_DBC35
 extern unk_DBF1D, unk_DF314, unknown_libname_1, unknown_libname_2, VisTeam, word_E0410
 global loc_7F7B3, loc_7F829, loc_7FA3F, loc_7FA7C, loc_7FAEC, loc_7FB92, loc_7FBB5, loc_7FBEE
@@ -288,7 +288,7 @@ call _dos_getdiskfree_	; 7FA29
 test eax, eax	; 7FA2E
 je short loc_7FA3F	; 7FA30
 push unk_C3444	; 7FA32
-call sub_B2CD8	; 7FA37
+call FatalError	; 7FA37
 add esp, byte 4	; 7FA3C
 loc_7FA3F:
 xor ebx, ebx	; 7FA3F
@@ -379,7 +379,7 @@ call FileCreate	; 7FB7A
 test eax, eax	; 7FB7F
 je short loc_7FBB5	; 7FB81
 push unk_C344D	; 7FB83
-call sub_B2CD8	; 7FB88
+call FatalError	; 7FB88
 add esp, byte 4	; 7FB8D
 jmp short loc_7FBB5	; 7FB90
 loc_7FB92:
@@ -391,7 +391,7 @@ je short loc_7FBB5	; 7FBA1
 lea eax, [byte esp+02Ch]	; 7FBA3
 push eax	; 7FBA7
 push asc_C3450	; 7FBA8
-call sub_B2CD8	; 7FBAD
+call FatalError	; 7FBAD
 add esp, byte 8	; 7FBB2
 loc_7FBB5:
 mov ebx, 2	; 7FBB5
@@ -406,7 +406,7 @@ call FileWriteAt	; 7FBD8
 test eax, eax	; 7FBDD
 je short loc_7FBEE	; 7FBDF
 push unk_C3468	; 7FBE1
-call sub_B2CD8	; 7FBE6
+call FatalError	; 7FBE6
 add esp, byte 4	; 7FBEB
 loc_7FBEE:
 lea eax, [byte esp+054h]	; 7FBEE
@@ -414,7 +414,7 @@ call FileClose	; 7FBF2
 test eax, eax	; 7FBF7
 je short loc_7FC08	; 7FBF9
 push unk_C346B	; 7FBFB
-call sub_B2CD8	; 7FC00
+call FatalError	; 7FC00
 add esp, byte 4	; 7FC05
 loc_7FC08:
 xor eax, eax	; 7FC08

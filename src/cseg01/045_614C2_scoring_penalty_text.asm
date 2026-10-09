@@ -5,12 +5,12 @@ section s_614C2 progbits alloc exec nowrite align=1
 extern PBnum, Setplass, __CHK, asc_C1C6A, asc_C1C78, asc_C1C87, asc_C1C92, asc_C1C9B
 extern asc_C1CA8, asc_C1CAC, asc_C1CB3, asc_C1CB9, asc_C1CC4, asc_C1CCD, asc_C1CDA, asc_C1CE9
 extern asc_C1CFE, asc_C1D0E, asc_C1D19, asc_C1D2D, asc_C1D3F, asc_C1D54, assinsert, assreplace
-extern byte_C5400, hmgoalcnt, awgoalcnt, sflags, gmode2, pendelaytab, byte_C9111
+extern hmgoalcnt, awgoalcnt, sflags, gmode2, pendelaytab, byte_C9111
 extern penmintab, byte_C9142, byte_C9146, priolist, byte_CCE00, byte_CCE01, musicon, byte_DAC20
 extern hmroster, byte_DB3AD, hmtmflags, byte_DF6E8, awtmflags, byte_DF7E8, byte_DF861, byte_E024C
 extern byte_E024D, byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E9A15, PenBuf
 extern PenBuf_pl, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD, byte_E9ACE
-extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, joysampling, dword_C53FB, gameopts
+extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, joysampling, gamemode, gameopts
 extern dword_C5840, dword_C90B0, sflags3, HomeTeam, dword_C9120, dword_CBEBE, dword_CBECA, dword_CC0AC
 extern lastsfx, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC110, dword_CC114, penshotmode
 extern penshotstart, penshottimer, dword_CC124, penshotlive, dword_CD2F8, dword_CD34C, dword_CD350, dword_D8B70
@@ -23,7 +23,7 @@ extern lseek_, ltx, off_C5439, puckx, pucky, puckvy, puckz, puckc
 extern off_CD304, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
 extern strcpy_, strlen_, sub_110E0, FileOpenRW, FileClose, FileWriteAt, sub_14C22, sub_14CA0
 extern sub_18F74, sub_1CD73, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
-extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, sub_B2CD8, unk_C1B49, unk_C1C58, unk_C1C5B
+extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, FatalError, unk_C1B49, unk_C1C58, unk_C1C5B
 extern unk_C1C5E, unk_C1C61, unk_C1C64, unk_C1C67, unk_C1CB0, unk_C5423, unk_C542E, unk_DBC30
 extern SortCords, unk_E9B4C, word_C5428, word_C90B2, word_C90B4, c1playernum, c2playernum
 extern cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, word_C90D8
@@ -545,7 +545,7 @@ call FileOpenRW	; 61AAB
 test eax, eax	; 61AB0
 je short .1	; 61AB2
 push unk_C1C58	; 61AB4
-call sub_B2CD8	; 61AB9
+call FatalError	; 61AB9
 add esp, byte 4	; 61ABE
 .1:
 xor ebx, ebx	; 61AC1
@@ -555,7 +555,7 @@ call lseek_	; 61AC8
 test eax, eax	; 61ACD
 jge short .2	; 61ACF
 push unk_C1C5B	; 61AD1
-call sub_B2CD8	; 61AD6
+call FatalError	; 61AD6
 add esp, byte 4	; 61ADB
 .2:
 mov ecx, 0Bh	; 61ADE
@@ -566,7 +566,7 @@ call FileWriteAt	; 61AF0
 test eax, eax	; 61AF5
 je short .3	; 61AF7
 push unk_C1C5E	; 61AF9
-call sub_B2CD8	; 61AFE
+call FatalError	; 61AFE
 add esp, byte 4	; 61B03
 .3:
 mov ebx, 2	; 61B06
@@ -576,7 +576,7 @@ call lseek_	; 61B13
 test eax, eax	; 61B18
 jge short .4	; 61B1A
 push unk_C1C61	; 61B1C
-call sub_B2CD8	; 61B21
+call FatalError	; 61B21
 add esp, byte 4	; 61B26
 .4:
 mov ecx, 0Bh	; 61B29
@@ -587,7 +587,7 @@ call FileWriteAt	; 61B38
 test eax, eax	; 61B3D
 je short .5	; 61B3F
 push unk_C1C64	; 61B41
-call sub_B2CD8	; 61B46
+call FatalError	; 61B46
 add esp, byte 4	; 61B4B
 .5:
 mov ecx, 0Bh	; 61B4E
@@ -598,7 +598,7 @@ call FileWriteAt	; 61B60
 test eax, eax	; 61B65
 je short .6	; 61B67
 push unk_C1C67	; 61B69
-call sub_B2CD8	; 61B6E
+call FatalError	; 61B6E
 add esp, byte 4	; 61B73
 .6:
 mov eax, esp	; 61B76
@@ -646,7 +646,7 @@ call FileOpenRW	; 61BD6
 test eax, eax	; 61BDB
 je short .1	; 61BDD
 push unk_C1C58	; 61BDF
-call sub_B2CD8	; 61BE4
+call FatalError	; 61BE4
 add esp, byte 4	; 61BE9
 .1:
 mov ecx, 0Bh	; 61BEC
@@ -659,7 +659,7 @@ test eax, eax	; 61C03
 je short fileio_tail_c	; 61C05
 push unk_C1C5B	; 61C07
 fileio_tail_b:
-call sub_B2CD8	; 61C0C
+call FatalError	; 61C0C
 add esp, byte 4	; 61C11
 fileio_tail_c:
 mov eax, esp	; 61C14
@@ -682,7 +682,7 @@ call FileOpenRW	; 61C39
 test eax, eax	; 61C3E
 je short .1	; 61C40
 push unk_C1C58	; 61C42
-call sub_B2CD8	; 61C47
+call FatalError	; 61C47
 add esp, byte 4	; 61C4C
 .1:
 mov ebx, 2	; 61C4F
@@ -692,7 +692,7 @@ call lseek_	; 61C5C
 test eax, eax	; 61C61
 jge short .2	; 61C63
 push unk_C1C61	; 61C65
-call sub_B2CD8	; 61C6A
+call FatalError	; 61C6A
 add esp, byte 4	; 61C6F
 .2:
 mov ecx, 0Bh	; 61C72
@@ -713,7 +713,7 @@ call FileOpenRW	; 61CA4
 test eax, eax	; 61CA9
 je short .1	; 61CAB
 push unk_C1C58	; 61CAD
-call sub_B2CD8	; 61CB2
+call FatalError	; 61CB2
 add esp, byte 4	; 61CB7
 .1:
 xor ebx, ebx	; 61CBA
@@ -723,7 +723,7 @@ call lseek_	; 61CC1
 test eax, eax	; 61CC6
 jge short .2	; 61CC8
 push unk_C1C5B	; 61CCA
-call sub_B2CD8	; 61CCF
+call FatalError	; 61CCF
 add esp, byte 4	; 61CD4
 .2:
 mov ecx, 0Bh	; 61CD7
@@ -734,7 +734,7 @@ call FileWriteAt	; 61CE9
 test eax, eax	; 61CEE
 je short .3	; 61CF0
 push unk_C1C5E	; 61CF2
-call sub_B2CD8	; 61CF7
+call FatalError	; 61CF7
 add esp, byte 4	; 61CFC
 .3:
 mov ebx, 2	; 61CFF
@@ -744,7 +744,7 @@ call lseek_	; 61D09
 test eax, eax	; 61D0E
 jge short .4	; 61D10
 push unk_C1C61	; 61D12
-call sub_B2CD8	; 61D17
+call FatalError	; 61D17
 add esp, byte 4	; 61D1C
 .4:
 mov ecx, 0Bh	; 61D1F
@@ -941,7 +941,7 @@ push eax	; 61F53
 call sprintf_	; 61F54
 mov ecx, eax	; 61F59
 add esp, byte 0Ch	; 61F5B
-cmp dword [dword_C53FB], byte 0	; 61F5E
+cmp dword [gamemode], byte 0	; 61F5E
 je short .4	; 61F65
 test byte [gmode], 10h	; 61F67
 jne short .4	; 61F6E
@@ -1663,9 +1663,9 @@ mov esi, 1	; 628A7
 mov ebx, ecx	; 628AC
 jmp near .10	; 628AE
 .3:
-cmp dword [dword_C53FB], byte 0	; 628B3
+cmp dword [gamemode], byte 0	; 628B3
 je near .10	; 628BA
-test byte [byte_C5400], 2	; 628C0
+test byte [gameopts+1], 2	; 628C0
 je near .8	; 628C7
 mov eax, dword [dword edx+dword_DEB7C]	; 628CD
 mov dword [esp], eax	; 628D3
@@ -1791,7 +1791,7 @@ test edx, edx	; 62A36
 jne short .10	; 62A38
 mov esi, 8	; 62A3A
 .10:
-cmp dword [dword_C53FB], byte 0	; 62A3F
+cmp dword [gamemode], byte 0	; 62A3F
 je near .16	; 62A46
 test esi, esi	; 62A4C
 jne near .16	; 62A4E
@@ -1817,7 +1817,7 @@ sar ecx, 10h	; 62A90
 mov ebx, dword [dword edx+dword_DB086]	; 62A93
 sar ebx, 10h	; 62A99
 add ebx, ecx	; 62A9C
-test byte [byte_C5400], 2	; 62A9E
+test byte [gameopts+1], 2	; 62A9E
 je short .12	; 62AA5
 add ebx, dword [dword edx+dword_DEB80]	; 62AA7
 cmp ebx, byte 64h	; 62AAD
@@ -1889,7 +1889,7 @@ sar ecx, 10h	; 62B6A
 mov ebx, dword [dword edx+dword_DB086]	; 62B6D
 sar ebx, 10h	; 62B73
 add ebx, ecx	; 62B76
-test byte [byte_C5400], 2	; 62B78
+test byte [gameopts+1], 2	; 62B78
 je short .15	; 62B7F
 add ebx, dword [dword edx+dword_DEB80]	; 62B81
 cmp ebx, byte 64h	; 62B87
@@ -3239,7 +3239,7 @@ mov byte [gmode2], ch	; 63CEE
 inc word [byte eax+04h]	; 63CF4
 test byte [gmode], 1	; 63CF8
 je short .x	; 63CFF
-test byte [byte_C5400], 1	; 63D01
+test byte [gameopts+1], 1	; 63D01
 je short .5	; 63D08
 cmp byte [musicon], 0	; 63D0A
 jne short .6	; 63D11

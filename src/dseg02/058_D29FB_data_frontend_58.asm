@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_D29FB progbits alloc noexec write align=1
-global dword_D29FB, unk_D29FF, unk_D2A1D, unk_D2A38, unk_D2A56, unk_D2A68
-dword_D29FB:
+global seriesgameno, unk_D29FF, unk_D2A1D, unk_D2A38, unk_D2A56, unk_D2A68
+seriesgameno:
 db 0FFh,0FFh,0FFh,0FFh
 unk_D29FF:
 db 059h,06Fh,075h,072h,020h,074h,065h,061h,06Dh,020h,068h,061h,073h,020h,062h,065h

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_59D9A progbits alloc exec nowrite align=1
 extern AddPenalty, AddPenalty2, PBnum, Sweepcheck, __CHK, assinsert, assreplace, asstab
-extern byte_C4D1C, byte_C4D1D, byte_C5400, sflags, gmode2, byte_CBC37
+extern byte_C4D1C, byte_C4D1D, sflags, gmode2, byte_CBC37
 extern lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5, byte_CCCA0, musicon, hmroster
 extern awroster, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byte_DF7CA, byte_DF7E6
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
@@ -1309,7 +1309,7 @@ sar eax, 10h	; 5AD32
 call sub_61576	; 5AD35
 cmp word [byte esp+04h], byte 0	; 5AD3A
 jne short .20	; 5AD40
-test byte [byte_C5400], 1	; 5AD42
+test byte [gameopts+1], 1	; 5AD42
 je short .17	; 5AD49
 cmp byte [musicon], 0	; 5AD4B
 jne short .18	; 5AD52
@@ -2341,7 +2341,7 @@ mov eax, dword [gameopts]	; 5B9DB
 shl eax, 14h	; 5B9E0
 shr eax, 1Eh	; 5B9E3
 mov ax, word [nosplit eax*2+PerTimeTab]	; 5B9E6
-test byte [byte_C5400], 2	; 5B9EE
+test byte [gameopts+1], 2	; 5B9EE
 je short .x	; 5B9F5
 cmp dword [dword_D8C84], byte 3	; 5B9F7
 jle short .x	; 5B9FE
@@ -4787,7 +4787,7 @@ mov word [regd1], ax	; 5D8CA
 jne near .8	; 5D8D0
 cmp word [gsp], byte 3	; 5D8D6
 jne near .7	; 5D8DE
-test byte [byte_C5400], 2	; 5D8E4
+test byte [gameopts+1], 2	; 5D8E4
 je near .7	; 5D8EB
 call ClearPenaltyBuffer	; 5D8F1
 mov di, word [crowdlevel]	; 5D8F6
@@ -5054,7 +5054,7 @@ jne short .8	; 5DCB3
 .5:
 cmp byte [musicon], 0	; 5DCB5
 je short .6	; 5DCBC
-test byte [byte_C5400], 1	; 5DCBE
+test byte [gameopts+1], 1	; 5DCBE
 jne short .7	; 5DCC5
 .6:
 mov eax, 97h	; 5DCC7
@@ -5211,7 +5211,7 @@ call sub_10F6D	; 5DE97
 call StartPer	; 5DE9C
 jmp near SetPenaltyStrength	; 5DEA1
 ; PeriodOver: 93G hockey93_06 PeriodOver. Line change box reset, gsp+1, gmdir flips; after the 3rd period:
-;   overtime (byte_C5400 bit 1 = playoffs) or game over (gsp 4) unless tied; then IntermissionStart.
+;   overtime (gameopts+1 bit 1 = playoffs) or game over (gsp 4) unless tied; then IntermissionStart.
 PeriodOver:
 push dword 14h	; 5DEA6
 call __CHK	; 5DEAB
@@ -5243,12 +5243,12 @@ cmp cx, byte 3	; 5DF22
 jl short .3	; 5DF26
 jle short .1	; 5DF28
 mov word [gsp], 3	; 5DF2A
-test byte [byte_C5400], 2	; 5DF33
+test byte [gameopts+1], 2	; 5DF33
 je short .2	; 5DF3A
 mov word [gsp], 4	; 5DF3C
 jmp short .2	; 5DF45
 .1:
-test byte [byte_C5400], 2	; 5DF47
+test byte [gameopts+1], 2	; 5DF47
 je short .2	; 5DF4E
 mov dh, ah	; 5DF50
 xor dh, 2	; 5DF52

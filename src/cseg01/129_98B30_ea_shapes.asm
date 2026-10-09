@@ -7,7 +7,7 @@ extern byte_F1704, byte_F1705, byte_F1784, byte_F188C, byte_F188D, byte_F188E, b
 extern byte_F234E, dword_D2F60, dword_D4F58, dword_D4F64, dword_D4F8A, dword_D4F92, dword_D4F96, dword_D4F9A
 extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, stricmp_, sub_8CD04, sub_8D2F0
 extern sub_8D728, sub_8F0D7, sub_8FCAC, sub_971DB, sub_971F8, sub_9722E, sub_A2000, sub_A2610
-extern sub_A27C4, sub_A28F0, sub_A2AB8, sub_B2CD8, sub_B6FFC, sub_B7005, unk_F1884, unk_F21FC
+extern sub_A27C4, sub_A28F0, sub_A2AB8, FatalError, sub_B6FFC, sub_B7005, unk_F1884, unk_F21FC
 extern word_D4F88
 global jpt_998DD, loc_98D43, loc_98D67, loc_98D6D, loc_98D7D, loc_98D8E, loc_98DA1, loc_98DB7
 global loc_98DC3, loc_98DCD, loc_98DCF, loc_98DF6, loc_98E06, loc_98E17, loc_98E36, loc_98E47
@@ -299,7 +299,7 @@ loc_98E06:
 cmp esi, edx	; 98E06
 je short loc_98E17	; 98E08
 push asc_C481C	; 98E0A
-call sub_B2CD8	; 98E0F
+call FatalError	; 98E0F
 add esp, byte 4	; 98E14
 loc_98E17:
 mov eax, dword [esi]	; 98E17

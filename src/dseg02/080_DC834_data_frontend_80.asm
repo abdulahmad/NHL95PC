@@ -5,7 +5,7 @@ section s_DC834 nobits alloc noexec write align=1
 global byte_DC836, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DC9DD, byte_DC9DF, byte_DC9E8
 global byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA1B, byte_DCA21, byte_DCA28, byte_DCA29
 global byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_DCAD7, byte_DCFD8, byte_DD058
-global byte_DD2D4, byte_DD2DC, byte_DD668, byte_DD669, byte_DD710, byte_DD750, byte_DD774, byte_DD775
+global byte_DD2D4, byte_DD2DC, byte_DD668, byte_DD669, leaguedbfmt2, leaguedbfmt, byte_DD774, byte_DD775
 global byte_DD788, byte_DD789, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname
 global byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_DDD8C, byte_DDD8D, byte_DDD8E
 global byte_DE268, byte_DE26C, byte_DEB70, byte_DEB71, dword_DC85C, dword_DC860, dword_DC868, dword_DC888
@@ -222,7 +222,7 @@ bgscrollx:
 resb 90
 bgscrolly8:
 resb 4
-byte_DD710:
+leaguedbfmt2:
 resb 32
 dword_DD730:
 resb 24
@@ -230,7 +230,7 @@ dword_DD748:
 resb 4
 dword_DD74C:
 resb 4
-byte_DD750:
+leaguedbfmt:
 resb 32
 dword_DD770:
 resb 4

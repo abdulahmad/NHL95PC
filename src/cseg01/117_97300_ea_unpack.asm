@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_97300 progbits alloc exec nowrite align=1
 extern __STOSB, asc_C47B8, asc_C47C4, dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0
-extern dword_EDEF4, dword_EDEF8, off_D3088, off_D308C, strncmp_, sub_B2CD8, sub_B3ABC
+extern dword_EDEF4, dword_EDEF8, off_D3088, off_D308C, strncmp_, FatalError, sub_B3ABC
 global loc_97329, loc_97338, loc_9734A, loc_973BC, loc_973D9, loc_97406, loc_97429, loc_97462
 global loc_97481, loc_974AF, loc_974B8, loc_974C3, loc_974CE, loc_974D9, loc_974E4, loc_974EF
 global loc_974FA, loc_97505, loc_97510, loc_9751B, loc_9752F, loc_97542, loc_97562, loc_9756D
@@ -1393,7 +1393,7 @@ xor eax, eax	; 97FF6
 mov al, byte [byte ebp+00h]	; 97FF8
 push eax	; 97FFB
 push asc_C47C4	; 97FFC
-call sub_B2CD8	; 98001
+call FatalError	; 98001
 add esp, byte 8	; 98006
 loc_98009:
 test edi, edi	; 98009

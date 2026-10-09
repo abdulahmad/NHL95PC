@@ -8,7 +8,7 @@ extern str_dbgDRb, str_dbgDS, str_dbgPosVel, str_dbgVz, str_dbgAss, str_dbgSpa, 
 extern str_statslog, str_fmode_at, str_ErrDumpStats, str_dumpPool, str_dumpTmstructs, str_dumpHex, str_dumpSortcords, str_dumpSortLine
 extern str_dumpRule, str_dumpTeamHdrH, str_dumpHome, str_dumpPlHdrH, str_dumpPlLineH, str_dumpGlHdrH, str_dumpGlLine, str_dumpTeamHdrA
 extern str_dumpAway, str_dumpPlHdrA, str_dumpPlLineA, str_dumpGlHdrA, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt
-extern gmode2, dword_C53FB, sflags3, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
+extern gmode2, gamemode, sflags3, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 extern penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C, dbg_spalist, bailout_vec
 extern dword_D8C6C, dword_D8C78, hmtmstruct
 extern hmtmpdst_m2, hmtmplstats, awtmstruct, hmscore
@@ -550,7 +550,7 @@ call DebugPrintf	; 68EA5
 add esp, byte 4	; 68EAA
 jmp near .exit	; 68EAD
 .opened:
-mov edx, dword [dword_C53FB]	; 68EB2
+mov edx, dword [gamemode]	; 68EB2
 push edx	; 68EB8
 mov esi, dword [dword_D8C6C]	; 68EB9
 push esi	; 68EBF

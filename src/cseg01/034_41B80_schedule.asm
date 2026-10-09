@@ -5,14 +5,14 @@ section s_41B80 progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, str_sche, str_Sch, str_gameset, str_KbytesFree, str_extDB, str_extLP
 extern str_SelHumanTeams, str_EnterLeagueName, str_KbytesFreeLine, byte_C5386, divisionteams, teamdivision, teamdivslot, monthdays_m1
 extern curleague, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname, byte_DDD40
-extern byte_DE268, dword_C5382, gameopts, teamdivflags, dword_C55E9, dword_C5619, dword_C8C61, dword_C8D06
+extern byte_DE268, lgstate, gameopts, teamdivflags, confteams, dword_C5619, dword_C8C61, dword_C8D06
 extern dword_C9002, seasondb, careerdb, keydb, seasondb_size, careerdb_size, keydb_size, dword_DD770
 extern leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, jctime
 extern memset_, mkdir_, msg_LeagueExists, leaguedbnames
 extern msg_GenSchedule, msg_NoDiskSpace, rand_, sprintf_, strcat_, strcpy_, sub_106C8
 extern sub_13320, sub_142E7, MakePath, sub_14442, FileOpenRead, FileOpenRW, FileClose, FileReadAt
 extern FileWriteAt, sub_1466B, ReadSchedGame, ReadTeamRec, sub_14825, sub_149BF, sub_2FDD1, sub_2FEDF
-extern sub_30A0C, sub_30F12, MessageBox, sub_32B1D, sub_38B4F, WriteSchedGame, WriteTeamRec, sub_3DAB9
+extern sub_30A0C, sub_30F12, MessageBox, WriteModeState, sub_38B4F, WriteSchedGame, WriteTeamRec, sub_3DAB9
 extern WriteLeagueInfo, CopyHumanTeamDBs, SimulateGame, SeriesWinner, sub_8CCA8, sub_8E8A0, sub_92DE0, sub_932D0
 extern sub_B2DCA, btn_LeagueExists, msg_WhichSchedule, btn_WhichSchedule, msg_CreateError, msg_CreatingLeague, msg_DiskFull, leagueteams
 extern unk_DDAC4, masterpw, savleague1, savleague2, unknown_libname_1, word_DDD46, word_DDD48, word_DDD4A
@@ -1313,13 +1313,13 @@ xor ecx, ecx	; 42BD2
 .1:
 mov esi, ecx	; 42BD4
 shl esi, 2	; 42BD6
-mov ebx, dword [dword esi+dword_C55E9]	; 42BD9
+mov ebx, dword [dword esi+confteams]	; 42BD9
 mov edx, esp	; 42BDF
 mov eax, ebp	; 42BE1
 call ReadTeamRec	; 42BE3
 test eax, eax	; 42BE8
 jne near .x	; 42BEA
-mov edx, dword [dword esi+dword_C55E9]	; 42BF0
+mov edx, dword [dword esi+confteams]	; 42BF0
 mov dword [edi+esi], edx	; 42BF6
 mov al, byte [byte esp+029h]	; 42BF9
 lea edx, [eax+eax]	; 42BFD
@@ -4283,8 +4283,8 @@ je short CreateNewLeague.15	; 451C4
 .17:
 test edi, edi	; 451C6
 jne short .18	; 451C8
-mov eax, dword_C5382	; 451CA
-call sub_32B1D	; 451CF
+mov eax, lgstate	; 451CA
+call WriteModeState	; 451CF
 mov edx, dword [byte esp+06Ch]	; 451D4
 mov eax, curleague	; 451D8
 call RandomizeSchedule	; 451DD

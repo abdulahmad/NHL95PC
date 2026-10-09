@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_93308 progbits alloc exec nowrite align=1
 extern asc_C3FD8, byte_D4544, byte_D4545, byte_D4546, dword_D4534, dword_D453C, dword_D4540, sub_8DBD4
-extern sub_8DBDC, sub_B2CD8, sub_B3ABC, sub_B3B44, sub_B3C60, sub_B3C70, sub_B3FC2, vsprintf_
+extern sub_8DBDC, FatalError, sub_B3ABC, sub_B3B44, sub_B3C60, sub_B3C70, sub_B3FC2, vsprintf_
 global loc_933C7, loc_933CB, loc_933E8, loc_9348D, loc_934A9, loc_934C0, loc_934C1, loc_934DC
 global loc_934F2, loc_93558, loc_93565, loc_93570, loc_935B4, loc_935C1, loc_935CF, loc_93622
 global loc_93671, loc_936A4, loc_936E8, loc_93705, loc_9374E, loc_9377C, loc_937A8, loc_937E5
@@ -82,7 +82,7 @@ je short loc_933C7	; 933B3
 mov ebp, dword [byte esp+01Ch]	; 933B5
 push ebp	; 933B9
 push asc_C3FD8	; 933BA
-call sub_B2CD8	; 933BF
+call FatalError	; 933BF
 add esp, byte 8	; 933C4
 loc_933C7:
 xor eax, eax	; 933C7

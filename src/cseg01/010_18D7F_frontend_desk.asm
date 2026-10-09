@@ -4,12 +4,12 @@ bits 32
 section s_18D7F progbits alloc exec nowrite align=1
 extern StartHL2, __CHK, asc_C0952, asc_C0970, asc_C097A, asc_C097F, asc_C0984, asc_C098C
 extern asc_C0991, asc_C0997, asc_C65F8, asc_C6614, asc_C662E, asc_C664C, asc_C6678, asc_C668F
-extern byte_C5400, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, byte_CCCA0, musicon, byte_DD774
+extern hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, byte_CCCA0, musicon, byte_DD774
 extern byte_DD775, byte_DD788, byte_DD789, byte_ED830, byte_ED9E8, joysampling, dword_C4E14, dword_C53F7
-extern dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C5581, dword_C5840, dword_C65F4, dword_C66A4
+extern gamemode, gameopts, ctl1team, ctl2team, teamconf, dword_C5840, dword_C65F4, dword_C66A4
 extern dword_C66AC, dword_C66D0, dword_C66D4, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC
 extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, bailout_vec, musicslot
-extern dword_D8C84, dword_DC230, dword_DC234, dword_DC238, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
+extern dword_D8C84, dword_DC230, schedgameidx, dword_DC238, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
 extern dword_EA0DC, jctime, off_CEE5F, off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF
 extern off_CEF23, off_D3078, randomd0, sprintf_, sub_10E9F, sub_11598, sub_12034, sub_1395F
 extern MakePath, sub_16F9A, sub_17816, sub_1B982, sub_1BAF3, sub_1D610, sub_2D35A, sub_2F2B1
@@ -20,7 +20,7 @@ extern sub_6BA4D, sub_76429, sub_767D0, sub_7E0FA, sub_805C4, sub_836E4, sub_837
 extern sub_84704, sub_84715, sub_84729, sub_8BC15, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0
 extern sub_9061C, sub_91370, sub_91400, MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
-extern sub_B396E, sub_B4B58, sub_B4BA8, sub_B4FAC, unk_CEB8F, unk_CEC4F, unk_CF2EF, unk_D2B38
+extern sub_B396E, sub_B4B58, sub_B4BA8, sub_B4FAC, unk_CEB8F, unk_CEC4F, unk_CF2EF, btn_POHumanOut
 extern awlinetab, hmlinetab, unk_DC890, unk_DF014, VisTeam, word_CBC44, exitgame, scrolly
 extern scrollx, hmscore, awscore
 global code_1A817, code_1A8AA, code_1A922, code_1A96D, code_1A9AC, loc_18E13, loc_18F79, loc_18F86
@@ -323,7 +323,7 @@ mov eax, 1	; 190FB
 call sub_2D35A	; 19100
 mov ecx, eax	; 19105
 call sub_6B47C	; 19107
-cmp dword [dword_C53FB], byte 0	; 1910C
+cmp dword [gamemode], byte 0	; 1910C
 jne near loc_191C9	; 19113
 mov dx, word [HomeTeam]	; 19119
 cmp dx, byte 1Ah	; 19120
@@ -419,7 +419,7 @@ mov eax, edx	; 19283
 call sub_2D35A	; 19285
 mov edx, eax	; 1928A
 call sub_6B47C	; 1928C
-cmp dword [dword_C53FB], byte 0	; 19291
+cmp dword [gamemode], byte 0	; 19291
 jne near loc_19336	; 19298
 test dl, 4	; 1929E
 jne near loc_19336	; 192A1
@@ -484,7 +484,7 @@ xor edx, edx	; 19374
 mov dword [dword esp+0404h], edx	; 19376
 mov dword [dword esp+03F4h], edx	; 1937D
 mov dword [dword esp+03F0h], 5DCh	; 19384
-mov eax, dword [dword_C53FB]	; 1938F
+mov eax, dword [gamemode]	; 1938F
 call sub_805C4	; 19394
 mov eax, dword [esp]	; 19399
 add eax, byte 3	; 1939C
@@ -581,7 +581,7 @@ call sub_8EA18	; 194D7
 add esp, byte 4	; 194DC
 cmp dword [esp], byte 2	; 194DF
 jne short loc_1950E	; 194E3
-cmp dword [dword_DC234], 444h	; 194E5
+cmp dword [schedgameidx], 444h	; 194E5
 jl short loc_194F6	; 194EF
 call sub_59D54	; 194F1
 loc_194F6:
@@ -728,16 +728,16 @@ call sub_6B3D7	; 19739
 mov edi, dword [esp]	; 1973E
 cmp edi, byte 1	; 19741
 jne short loc_1975F	; 19744
-cmp dword [dword_C5403], byte 0	; 19746
+cmp dword [ctl1team], byte 0	; 19746
 jge short loc_1975F	; 1974D
-cmp dword [dword_C5407], byte 0	; 1974F
+cmp dword [ctl2team], byte 0	; 1974F
 jge short loc_1975F	; 19756
 mov dword [dword esp+03F4h], edi	; 19758
 loc_1975F:
 call sub_B396E	; 1975F
 cmp dword [esp], byte 2	; 19764
 jne near loc_19844	; 19768
-cmp dword [dword_DC234], 444h	; 1976E
+cmp dword [schedgameidx], 444h	; 1976E
 jl near loc_19844	; 19778
 mov ax, word [hmscore]	; 1977E
 cmp ax, word [awscore]	; 19784
@@ -758,8 +758,8 @@ sar edx, 10h	; 197B4
 mov eax, dword [HomeTeam]	; 197B7
 sar eax, 10h	; 197BC
 shl eax, 2	; 197BF
-mov edx, dword [nosplit edx*4+dword_C5581]	; 197C2
-mov ebx, dword [dword eax+dword_C5581]	; 197C9
+mov edx, dword [nosplit edx*4+teamconf]	; 197C2
+mov ebx, dword [dword eax+teamconf]	; 197C9
 cmp edx, ebx	; 197CF
 je short loc_197DA	; 197D1
 mov ebx, 3	; 197D3
@@ -773,11 +773,11 @@ idiv ebx	; 197E6
 lea ebx, [byte edx+01h]	; 197E8
 loc_197EB:
 mov ecx, 1	; 197EB
-cmp dword [dword_DC234], 47Ch	; 197F0
+cmp dword [schedgameidx], 47Ch	; 197F0
 jl short loc_19801	; 197FA
 mov ecx, 2	; 197FC
 loc_19801:
-cmp dword [dword_DC234], 498h	; 19801
+cmp dword [schedgameidx], 498h	; 19801
 jl short loc_19812	; 1980B
 mov ecx, 3	; 1980D
 loc_19812:
@@ -785,7 +785,7 @@ mov eax, dword [dword_CCC9D]	; 19812
 sar eax, 18h	; 19817
 push eax	; 1981A
 push edi	; 1981B
-mov edx, dword [dword_DC234]	; 1981C
+mov edx, dword [schedgameidx]	; 1981C
 sub edx, 444h	; 19822
 mov eax, edx	; 19828
 sar edx, 1Fh	; 1982A
@@ -811,7 +811,7 @@ cmp dword [esp], byte 0	; 1986B
 jne short loc_19898	; 1986F
 cmp dword [dword_C53F7], byte 0	; 19871
 jne short loc_19898	; 19878
-test byte [byte_C5400], 1	; 1987A
+test byte [gameopts+1], 1	; 1987A
 je short loc_19898	; 19881
 mov dword [dword esp+03E8h], 0FFFFFFFFh	; 19883
 call sub_837A8	; 1988E
@@ -869,7 +869,7 @@ mov ebx, 10h	; 1996A
 lea edx, [byte esp+04h]	; 1996F
 mov eax, 1	; 19973
 call sub_76429	; 19978
-mov eax, dword [dword_C53FB]	; 1997D
+mov eax, dword [gamemode]	; 1997D
 call sub_1D610	; 19982
 mov ebp, dword [dword esp+03F8h]	; 19987
 push ebp	; 1998E
@@ -898,7 +898,7 @@ cmp byte [musicon], 0	; 199DB
 je short loc_19A00	; 199E2
 cmp dword [dword_C53F7], byte 0	; 199E4
 jne short loc_19A00	; 199EB
-test byte [byte_C5400], 1	; 199ED
+test byte [gameopts+1], 1	; 199ED
 je short loc_19A00	; 199F4
 call sub_837A8	; 199F6
 call sub_84729	; 199FB
@@ -1116,7 +1116,7 @@ cmp dword [dword esp+03DCh], byte 1	; 19D87
 jne short loc_19DAD	; 19D8F
 cmp byte [musicon], 0	; 19D91
 je short loc_19DAD	; 19D98
-test byte [byte_C5400], 1	; 19D9A
+test byte [gameopts+1], 1	; 19D9A
 je short loc_19DAD	; 19DA1
 call sub_837A8	; 19DA3
 call sub_846F0	; 19DA8
@@ -1129,7 +1129,7 @@ cmp dword [dword esp+03DCh], byte 1	; 19DC0
 je short loc_19DD4	; 19DC8
 mov dword [dword_C53F7], 2	; 19DCA
 loc_19DD4:
-mov eax, dword [dword_C53FB]	; 19DD4
+mov eax, dword [gamemode]	; 19DD4
 call sub_1D610	; 19DD9
 mov ecx, dword [dword esp+03F8h]	; 19DDE
 test ecx, ecx	; 19DE5
@@ -1164,7 +1164,7 @@ cmp dword [dword esp+03DCh], byte 1	; 19E40
 jne near loc_19A00	; 19E48
 cmp byte [musicon], 0	; 19E4E
 je near loc_19A00	; 19E55
-test byte [byte_C5400], 1	; 19E5B
+test byte [gameopts+1], 1	; 19E5B
 je near loc_19A00	; 19E62
 loc_19E68:
 call sub_836E4	; 19E68
@@ -1647,7 +1647,7 @@ lea eax, [byte esp+010h]	; 1A5ED
 push eax	; 1A5F1
 call sub_B2DCA	; 1A5F2
 add esp, byte 0Ch	; 1A5F7
-mov eax, dword [dword_C53FB]	; 1A5FA
+mov eax, dword [gamemode]	; 1A5FA
 cmp eax, byte 1	; 1A5FF
 jb short loc_1A60D	; 1A602
 jbe short loc_1A629	; 1A604
@@ -1678,7 +1678,7 @@ push eax	; 1A65B
 lea eax, [byte esp+010h]	; 1A65C
 push eax	; 1A660
 push byte 2	; 1A661
-push unk_D2B38	; 1A663
+push btn_POHumanOut	; 1A663
 mov ecx, 3	; 1A668
 mov ebx, dword_C66A4	; 1A66D
 mov edx, 0FFFFFFFFh	; 1A672
@@ -1741,7 +1741,7 @@ push eax	; 1A726
 lea eax, [byte esp+010h]	; 1A727
 push eax	; 1A72B
 push byte 2	; 1A72C
-push unk_D2B38	; 1A72E
+push btn_POHumanOut	; 1A72E
 mov ecx, 3	; 1A733
 mov ebx, dword_C66A4	; 1A738
 mov edx, 0FFFFFFFFh	; 1A73D

@@ -3,12 +3,12 @@ bits 32
 %include "hockey.inc"
 section s_8BAAF progbits alloc exec nowrite align=1
 extern __CHK, asc_C3B0E, asc_C3B16, asc_C3B2A, asc_C3B38, asc_C3B45, asc_C3B67, asc_C3B6C
-extern asc_C3B75, asc_C3B7A, asc_C3B7F, asc_C3B84, asc_C3B8A, asc_C3B93, byte_C5400, musicon
+extern asc_C3B75, asc_C3B7A, asc_C3B7F, asc_C3B84, asc_C3B8A, asc_C3B93, musicon, gameopts
 extern byte_D2C68, byte_ED7CC, byte_ED9B2, byte_ED9B3, byte_ED9EB, songdata, dword_D2C6B, musicslot
 extern fclose_, fgets_, fopen_, fscanf_, jctime, memcpy_, rand_, sprintf_
 extern strcat_, stricmp_, sub_11598, MakePath, sub_33E6A, FadeOutPalCycle, sub_6B410, sub_6B47C
 extern sub_836E4, sub_8373E, sub_8473A, sub_8474E, PlayMVI, sub_8D2F0, sub_8E83C, sub_8F98F
-extern sub_8FC8A, sub_8FFB0, sub_9061C, sub_B2CD8, sub_B30B4, sub_B4BA8, unk_C3B0C
+extern sub_8FC8A, sub_8FFB0, sub_9061C, FatalError, sub_B30B4, sub_B4BA8, unk_C3B0C
 global loc_8BAE6, loc_8BB72, loc_8BB76, loc_8BBA7, loc_8BBB0, loc_8BBCF, loc_8BBFF, loc_8BC02
 global loc_8BC4D, loc_8BC4F, loc_8BD01, loc_8BD03, loc_8BD20, loc_8BD3E, loc_8BD40, loc_8BDA9
 global loc_8BDAB, loc_8BDC9, loc_8BDD2, loc_8BE24, loc_8BE2D, loc_8BE47, loc_8BE76, loc_8BEBD
@@ -29,7 +29,7 @@ mov esi, eax	; 8BAD3
 test eax, eax	; 8BAD5
 jne short loc_8BAE6	; 8BAD7
 push asc_C3B16	; 8BAD9
-call sub_B2CD8	; 8BADE
+call FatalError	; 8BADE
 add esp, byte 4	; 8BAE3
 loc_8BAE6:
 mov ebx, esi	; 8BAE6
@@ -62,7 +62,7 @@ jne short loc_8BB72	; 8BB5C
 mov eax, esi	; 8BB5E
 call fclose_	; 8BB60
 push asc_C3B45	; 8BB65
-call sub_B2CD8	; 8BB6A
+call FatalError	; 8BB6A
 add esp, byte 4	; 8BB6F
 loc_8BB72:
 xor ebx, ebx	; 8BB72
@@ -207,7 +207,7 @@ mov dword [songdata], eax	; 8BD1B
 loc_8BD20:
 cmp byte [musicon], 0	; 8BD20
 je short loc_8BD3E	; 8BD27
-test byte [byte_C5400], 1	; 8BD29
+test byte [gameopts+1], 1	; 8BD29
 je short loc_8BD3E	; 8BD30
 mov edi, 1	; 8BD32
 call sub_8473A	; 8BD37
@@ -249,7 +249,7 @@ lea eax, [dword esp+0300h]	; 8BDAB
 call MakePath	; 8BDB2
 cmp byte [musicon], 0	; 8BDB7
 je short loc_8BDD2	; 8BDBE
-test byte [byte_C5400], 1	; 8BDC0
+test byte [gameopts+1], 1	; 8BDC0
 je short loc_8BDD2	; 8BDC7
 loc_8BDC9:
 call sub_836E4	; 8BDC9
@@ -273,7 +273,7 @@ mov eax, 1	; 8BE03
 call sub_11598	; 8BE08
 cmp byte [musicon], 0	; 8BE0D
 je short loc_8BE2D	; 8BE14
-test byte [byte_C5400], 1	; 8BE16
+test byte [gameopts+1], 1	; 8BE16
 je short loc_8BE2D	; 8BE1D
 call sub_8373E	; 8BE1F
 loc_8BE24:

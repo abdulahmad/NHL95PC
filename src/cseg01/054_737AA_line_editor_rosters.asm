@@ -7,9 +7,9 @@ extern asc_C30F2, asc_C30F7, asc_C30FE, asc_C3107, asc_C3111, asc_C3122, asc_C31
 extern asc_C3134, asc_C313F, asc_C3146, asc_C314E, asc_C3152, asc_C3156, asc_C315A, asc_C3160
 extern asc_C3164, asc_C316C, asc_C3171, asc_C3180, asc_C3184, asc_C3189, asc_C3190, asc_C3194
 extern asc_C319D, asc_C31A2, asc_C31A7, asc_C31AF, asc_C31B6, asc_C31BB, asc_C31C2, asc_C31CB
-extern asc_C31D5, str_fmt2d, str_fmt3d, asc_C690B, asc_C6913, asc_C692B, asc_C6935, asc_C693B
-extern byte_C5400, rosterteam, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238, byte_D12DE
-extern musicon, hmroster, byte_DB3AD, byte_DD750, rosterlist, byte_EA991, byte_EA992, byte_EA993
+extern asc_C31D5, str_fmt2d, str_fmt3d, asc_C690B, asc_C6913, asc_C692B, asc_C6935, str_Bkgd2
+extern rosterteam, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238, byte_D12DE, gameopts
+extern musicon, hmroster, byte_DB3AD, leaguedbfmt, rosterlist, byte_EA991, byte_EA992, byte_EA993
 extern byte_EC7E0, byte_EC7E4, byte_ECAE4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED0F7, byte_ED0F8
 extern byte_ED0F9, byte_ED0FA, byte_ED83C, byte_ED85A, byte_ED8B4, byte_ED9E7, dword_C4E24, dword_C6956
 extern dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, songdata, HomeTeam, dword_D0B16
@@ -27,7 +27,7 @@ extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA
 extern sub_6CBE8, sub_6CBFD, sub_78366, sub_78500, sub_78A87, sub_79188, sub_79DE1, sub_79F41
 extern sub_7A099, sub_836E4, sub_8373E, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C
-extern sub_90D20, sub_9121C, sub_913B4, sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_B2CD8
+extern sub_90D20, sub_9121C, sub_913B4, sub_91400, sub_91964, sub_91FE0, sub_931FC, FatalError
 extern MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4BC4
 extern sub_B4C84, sub_B4DD4, SetDrawBitmap, unk_7947F, unk_797B4, unk_C311D, unk_C311F, unk_C3143
 extern unk_C314B, unk_C3169, unk_C3177, unk_C317A, unk_C317D, unk_C31D9, unk_C31DC, unk_C31DF
@@ -3464,7 +3464,7 @@ push eax	; 75E05
 call sub_8E83C	; 75E06
 mov esi, eax	; 75E0B
 add esp, byte 8	; 75E0D
-push asc_C693B	; 75E10
+push str_Bkgd2	; 75E10
 push eax	; 75E15
 call sub_B30B4	; 75E16
 mov edi, eax	; 75E1B
@@ -4285,7 +4285,7 @@ mov dword [songdata], ecx	; 7687B
 loc_76881:
 cmp byte [musicon], 0	; 76881
 je short loc_768A1	; 76888
-test byte [byte_C5400], 1	; 7688A
+test byte [gameopts+1], 1	; 7688A
 je short loc_768A1	; 76891
 call sub_8373E	; 76893
 loc_76898:
@@ -6327,7 +6327,7 @@ mov dword [dword esp+080h], ebx	; 7803F
 cmp ebx, byte 1Ch	; 78046
 jl short loc_78016	; 78049
 push asc_C31D5	; 7804B
-push byte_DD750	; 78050
+push leaguedbfmt	; 78050
 lea eax, [byte esp+068h]	; 78055
 push eax	; 78059
 call sprintf_	; 7805A
@@ -6339,7 +6339,7 @@ call unknown_libname_1	; 7806C
 test eax, eax	; 78071
 je short loc_78082	; 78073
 push unk_C31D9	; 78075
-call sub_B2CD8	; 7807A
+call FatalError	; 7807A
 add esp, byte 4	; 7807F
 loc_78082:
 push dword 200h	; 78082
@@ -6351,7 +6351,7 @@ mov esi, eax	; 78094
 test eax, eax	; 78096
 jge short loc_780A7	; 78098
 push unk_C31DC	; 7809A
-call sub_B2CD8	; 7809F
+call FatalError	; 7809F
 add esp, byte 4	; 780A4
 loc_780A7:
 xor ebp, ebp	; 780A7
@@ -6384,7 +6384,7 @@ call lseek_	; 780F4
 test eax, eax	; 780F9
 je short loc_7810A	; 780FB
 push unk_C31DF	; 780FD
-call sub_B2CD8	; 78102
+call FatalError	; 78102
 add esp, byte 4	; 78107
 loc_7810A:
 mov eax, edi	; 7810A
@@ -6402,7 +6402,7 @@ call lseek_	; 7812D
 test eax, eax	; 78132
 jge short loc_78143	; 78134
 push unk_C31E2	; 78136
-call sub_B2CD8	; 7813B
+call FatalError	; 7813B
 add esp, byte 4	; 78140
 loc_78143:
 mov ebx, 34h	; 78143
@@ -6415,7 +6415,7 @@ cmp eax, byte 34h	; 78155
 je short loc_78167	; 78158
 loc_7815A:
 push unk_C31E5	; 7815A
-call sub_B2CD8	; 7815F
+call FatalError	; 7815F
 add esp, byte 4	; 78164
 loc_78167:
 mov edx, dword [dword esp+080h]	; 78167
@@ -6483,7 +6483,7 @@ call lseek_	; 78237
 test eax, eax	; 7823C
 je short loc_7824D	; 7823E
 push unk_C31E8	; 78240
-call sub_B2CD8	; 78245
+call FatalError	; 78245
 add esp, byte 4	; 7824A
 loc_7824D:
 mov eax, edi	; 7824D
@@ -6501,7 +6501,7 @@ call lseek_	; 78270
 test eax, eax	; 78275
 jge short loc_78286	; 78277
 push unk_C31EB	; 78279
-call sub_B2CD8	; 7827E
+call FatalError	; 7827E
 add esp, byte 4	; 78283
 loc_78286:
 mov ebx, 34h	; 78286
@@ -6514,7 +6514,7 @@ cmp eax, byte 34h	; 78298
 je short loc_782AA	; 7829B
 loc_7829D:
 push unk_C31EE	; 7829D
-call sub_B2CD8	; 782A2
+call FatalError	; 782A2
 add esp, byte 4	; 782A7
 loc_782AA:
 mov edx, dword [dword esp+080h]	; 782AA

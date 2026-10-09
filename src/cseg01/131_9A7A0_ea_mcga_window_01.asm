@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9A7A0 progbits alloc exec nowrite align=1
-extern _os_handle, asc_C4888, asc_C4894, asc_C48B0, asc_C48C8, sub_8CC70, sub_98D20, sub_B2CD8
+extern _os_handle, asc_C4888, asc_C4894, asc_C48B0, asc_C48C8, sub_8CC70, sub_98D20, FatalError
 extern sub_B3FC2
 global loc_9A7DB, loc_9A7EF, loc_9A868, sub_9A7A0
 sub_9A7A0:
@@ -24,14 +24,14 @@ mov ebp, eax	; 9A7C8
 test eax, eax	; 9A7CA
 jne short loc_9A7DB	; 9A7CC
 push asc_C4894	; 9A7CE
-call sub_B2CD8	; 9A7D3
+call FatalError	; 9A7D3
 add esp, byte 4	; 9A7D8
 loc_9A7DB:
 mov esi, dword [byte ebp+00h]	; 9A7DB
 test esi, esi	; 9A7DE
 jne short loc_9A7EF	; 9A7E0
 push asc_C48B0	; 9A7E2
-call sub_B2CD8	; 9A7E7
+call FatalError	; 9A7E7
 add esp, byte 4	; 9A7EC
 loc_9A7EF:
 lea eax, [byte esi+030h]	; 9A7EF
@@ -70,7 +70,7 @@ push esi	; 9A855
 mov edi, dword [byte esp+018h]	; 9A856
 push edi	; 9A85A
 push asc_C48C8	; 9A85B
-call sub_B2CD8	; 9A860
+call FatalError	; 9A860
 add esp, byte 0Ch	; 9A865
 loc_9A868:
 mov eax, ebp	; 9A868

@@ -8,7 +8,7 @@ extern dword_C729C, dword_C729E, dword_C72A0, dword_C73D0, rinkbm, dword_C73D8, 
 extern dword_C7448, dword_D2C6B, dword_DD6A6, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_EA0DC, jctime
 extern MakePath, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52, sub_6AF97
 extern sub_6B391, sub_76429, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_913B4
-extern sub_92DE0, sub_92EE4, sub_B2CD8, sub_B30B4, sub_B395C, SetDrawBitmap, sub_B4F8C, unk_DC890
+extern sub_92DE0, sub_92EE4, FatalError, sub_B30B4, sub_B395C, SetDrawBitmap, sub_B4F8C, unk_DC890
 extern scrolly, scrollx, bgscrollx
 global loc_337C2, loc_337F3, loc_3381F, loc_33843, loc_33845, loc_338CB, loc_338CD, loc_3390C
 global loc_33949, loc_33977, loc_33979, loc_33A0F, loc_33A2F, loc_33ACD, loc_33C40, loc_33C4B
@@ -138,7 +138,7 @@ push esi	; 338F9
 lea eax, [byte esp+04h]	; 338FA
 push eax	; 338FE
 push asc_C179E	; 338FF
-call sub_B2CD8	; 33904
+call FatalError	; 33904
 add esp, byte 0Ch	; 33909
 loc_3390C:
 push byte 0	; 3390C
@@ -159,7 +159,7 @@ jne short loc_33949	; 33937
 mov eax, esp	; 33939
 push eax	; 3393B
 push asc_C17BF	; 3393C
-call sub_B2CD8	; 33941
+call FatalError	; 33941
 add esp, byte 8	; 33946
 loc_33949:
 mov ecx, asc_C17D8	; 33949

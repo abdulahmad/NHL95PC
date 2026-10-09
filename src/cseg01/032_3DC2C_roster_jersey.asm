@@ -6,7 +6,7 @@ extern __CHK, asc_C1964, asc_C1969, asc_C196F, asc_C1974, asc_C197A, asc_C1980, 
 extern asc_C198C, asc_C1994, asc_C19C1, asc_C19DC, asc_C19E0, asc_C19EA, asc_C19F3, asc_C19FA
 extern asc_C19FF, asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, str_extDB, asc_C814A, str_extBIN
 extern str_space, str_dot, curleague, byte_D11BC, byte_D1238, byte_D12DE, byte_D1333, byte_D1334
-extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, byte_DD710, byte_DD750, byte_DDD8C
+extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, leaguedbfmt2, leaguedbfmt, byte_DDD8C
 extern byte_DDD8D, byte_DDD8E, byte_ED7F7, byte_ED858, byte_ED85A, byte_ED86D, byte_ED8B3, byte_ED8B4
 extern dword_C65B0, dword_C65B8, dword_C8B7C, dword_C8B80, HomeTeam, dword_D2C6B, dword_D8C84, dword_DC238
 extern dword_DC738, dword_DD100, dword_DD104, dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD79C
@@ -15,7 +15,7 @@ extern dword_DE264, dword_EA0DC, jctime, memcpy_, leaguedbnames, off_C8BDD, off_
 extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
 extern FileOpenRW, FileClose, sub_1463D, sub_14654, ReadTeamRec, sub_1BBCC, sub_1D6E8, sub_1FAA7
 extern sub_244E2, sub_2FEDF, MessageBox, WriteTeamRec, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
-extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A099, sub_8B96D
+extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A099, ClearPlayerFromLines
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
 extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, MouseSetPos
 extern sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, SetDrawBitmap, unk_C1A15
@@ -713,19 +713,19 @@ mov esi, dword [dword esp+0664h]	; 3E552
 xor eax, eax	; 3E559
 mov al, byte [ecx+esi]	; 3E55B
 lea edx, [dword esp+0BCh]	; 3E55E
-call sub_8B96D	; 3E565
+call ClearPlayerFromLines	; 3E565
 xor eax, eax	; 3E56A
 mov al, byte [ecx+esi]	; 3E56C
 lea edx, [dword esp+0ECh]	; 3E56F
-call sub_8B96D	; 3E576
+call ClearPlayerFromLines	; 3E576
 xor eax, eax	; 3E57B
 mov al, byte [byte ecx+esi+02h]	; 3E57D
 lea edx, [dword esp+03A4h]	; 3E581
-call sub_8B96D	; 3E588
+call ClearPlayerFromLines	; 3E588
 xor eax, eax	; 3E58D
 mov al, byte [byte ecx+esi+02h]	; 3E58F
 lea edx, [dword esp+03D4h]	; 3E593
-call sub_8B96D	; 3E59A
+call ClearPlayerFromLines	; 3E59A
 mov ebx, ebp	; 3E59F
 lea edx, [dword esp+0604h]	; 3E5A1
 mov eax, dword [dword esp+0658h]	; 3E5A8
@@ -795,19 +795,19 @@ mov word [HomeTeam], ax	; 3E68D
 mov ax, word [byte edi+04h]	; 3E693
 mov word [VisTeam], ax	; 3E697
 mov edx, curleague	; 3E69D
-mov eax, byte_DD750	; 3E6A2
+mov eax, leaguedbfmt	; 3E6A2
 call strcpy_	; 3E6A7
 mov edx, unk_C8115	; 3E6AC
-mov eax, byte_DD750	; 3E6B1
+mov eax, leaguedbfmt	; 3E6B1
 call strcat_	; 3E6B6
 mov edx, unk_C8117	; 3E6BB
-mov eax, byte_DD750	; 3E6C0
+mov eax, leaguedbfmt	; 3E6C0
 call strcat_	; 3E6C5
 mov edx, str_extDB	; 3E6CA
-mov eax, byte_DD750	; 3E6CF
+mov eax, leaguedbfmt	; 3E6CF
 call strcat_	; 3E6D4
-mov edx, byte_DD750	; 3E6D9
-mov eax, byte_DD710	; 3E6DE
+mov edx, leaguedbfmt	; 3E6D9
+mov eax, leaguedbfmt2	; 3E6DE
 call strcpy_	; 3E6E3
 xor eax, eax	; 3E6E8
 call sub_1BBCC	; 3E6EA

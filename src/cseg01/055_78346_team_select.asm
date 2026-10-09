@@ -6,7 +6,7 @@ extern __CHK, asc_C31BB, asc_C31CB, asc_C31F1, asc_C31F7, asc_C3200, asc_C3205, 
 extern asc_C3214, asc_C321B, asc_C3222, asc_C3229, asc_C322F, asc_C3236, asc_C323D, asc_C3245
 extern asc_C324C, asc_C3253, asc_C325B, asc_C3267, asc_C326D, asc_C3277, asc_C3288, asc_C328E
 extern asc_C32A4, asc_C32AA, asc_C32AF, asc_C32B5, str_extBIN, byte_D11BC, byte_D1238, byte_D12DE
-extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, byte_DB3AD, byte_DD710, byte_DD750
+extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, byte_DB3AD, leaguedbfmt2, leaguedbfmt
 extern byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED83C, byte_ED86D, byte_ED9E7, dword_C65B0
 extern dword_C65B8, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
 extern dword_D0B2A, dword_D1338, dword_D133C, dword_D1478, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
@@ -14,7 +14,7 @@ extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, exit_, j___close_, jc
 extern off_C57CC, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
 extern open_, perror_, read_, sprintf_, MakePath, sub_1D6E8, sub_244E2, MessageBox
 extern sub_6B5E4, sub_76429, sub_76771, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8FFB0
-extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, sub_B2CD8, sub_B30B4, WaitKey
+extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, FatalError, sub_B30B4, WaitKey
 extern sub_B4B58, sub_B4DD4, sub_B4FAC, sub_B5DB0, unk_7673A, unk_76742, unk_76748, unk_7674F
 extern unk_76756, unk_C3283, unk_C3285, unk_C3292, unk_C3295, unk_C3298, unk_C329B, unk_C329E
 extern unk_C32A1, unk_CF48F, unk_DBC30, unk_DBCEC, unk_DBD1C, VisTeam, write_
@@ -1464,11 +1464,11 @@ jne near loc_797A6	; 794B4
 cmp byte [dword esp+030Ch], 0	; 794BA
 je short loc_794D0	; 794C2
 push asc_C3288	; 794C4
-push byte_DD710	; 794C9
+push leaguedbfmt2	; 794C9
 jmp short loc_794DA	; 794CE
 loc_794D0:
 push asc_C3288	; 794D0
-push byte_DD750	; 794D5
+push leaguedbfmt	; 794D5
 loc_794DA:
 lea eax, [dword esp+02F0h]	; 794DA
 push eax	; 794E1
@@ -1496,7 +1496,7 @@ call lseek_	; 79529
 test eax, eax	; 7952E
 je short loc_7953F	; 79530
 push unk_C3292	; 79532
-call sub_B2CD8	; 79537
+call FatalError	; 79537
 add esp, byte 4	; 7953C
 loc_7953F:
 cmp byte [dword esp+030Ch], 0	; 7953F
@@ -1522,7 +1522,7 @@ mov ebx, eax	; 79576
 test ebx, ebx	; 79578
 jge short loc_79589	; 7957A
 push unk_C3295	; 7957C
-call sub_B2CD8	; 79581
+call FatalError	; 79581
 add esp, byte 4	; 79586
 loc_79589:
 mov ebx, 2E8h	; 79589
@@ -1535,7 +1535,7 @@ cmp eax, 2E8h	; 7959B
 je short loc_795AF	; 795A0
 loc_795A2:
 push unk_C3298	; 795A2
-call sub_B2CD8	; 795A7
+call FatalError	; 795A7
 add esp, byte 4	; 795AC
 loc_795AF:
 mov ebx, 1	; 795AF
@@ -1575,7 +1575,7 @@ cmp byte [dword esp+030Ch], 0	; 7960E
 je short loc_79625	; 79616
 loc_79618:
 push unk_C329B	; 79618
-call sub_B2CD8	; 7961D
+call FatalError	; 7961D
 add esp, byte 4	; 79622
 loc_79625:
 xor edx, edx	; 79625
@@ -1672,7 +1672,7 @@ cmp eax, 2E8h	; 79749
 je short loc_7975D	; 7974E
 loc_79750:
 push unk_C329E	; 79750
-call sub_B2CD8	; 79755
+call FatalError	; 79755
 add esp, byte 4	; 7975A
 loc_7975D:
 xor edx, edx	; 7975D
@@ -1711,10 +1711,10 @@ db 0F6h,0FFh,0FFh,085h,0C0h,074h,04h,031h,0C0h,0EBh,0B9h,080h,0BCh,024h,0Ch,03h
 db 00h,00h,00h,074h,0Ch,068h
 dd asc_C3288
 sub_797FE:
-push byte_DD710	; 797FE
+push leaguedbfmt2	; 797FE
 jmp short loc_7980F	; 79803
 push asc_C3288	; 79805
-push byte_DD750	; 7980A
+push leaguedbfmt	; 7980A
 loc_7980F:
 lea eax, [dword esp+02F0h]	; 7980F
 push eax	; 79816
@@ -1729,7 +1729,7 @@ mov ebp, eax	; 79834
 test eax, eax	; 79836
 jge short loc_79847	; 79838
 push unk_C32A1	; 7983A
-call sub_B2CD8	; 7983F
+call FatalError	; 7983F
 add esp, byte 4	; 79844
 loc_79847:
 xor ebx, ebx	; 79847
@@ -1739,7 +1739,7 @@ call lseek_	; 7984D
 test eax, eax	; 79852
 je short loc_79863	; 79854
 push unk_C3292	; 79856
-call sub_B2CD8	; 7985B
+call FatalError	; 7985B
 add esp, byte 4	; 79860
 loc_79863:
 cmp byte [dword esp+030Ch], 0	; 79863
@@ -1765,7 +1765,7 @@ mov ebx, eax	; 7989A
 test ebx, ebx	; 7989C
 jge short loc_798AD	; 7989E
 push unk_C3295	; 798A0
-call sub_B2CD8	; 798A5
+call FatalError	; 798A5
 add esp, byte 4	; 798AA
 loc_798AD:
 mov ebx, 2E8h	; 798AD
@@ -1778,7 +1778,7 @@ cmp eax, 2E8h	; 798BF
 je short loc_798D3	; 798C4
 loc_798C6:
 push unk_C3298	; 798C6
-call sub_B2CD8	; 798CB
+call FatalError	; 798CB
 add esp, byte 4	; 798D0
 loc_798D3:
 mov ebx, 1	; 798D3
@@ -1818,7 +1818,7 @@ cmp byte [dword esp+030Ch], 0	; 79932
 je short loc_79949	; 7993A
 loc_7993C:
 push unk_C329B	; 7993C
-call sub_B2CD8	; 79941
+call FatalError	; 79941
 add esp, byte 4	; 79946
 loc_79949:
 xor edx, edx	; 79949
@@ -1912,7 +1912,7 @@ cmp eax, 2E8h	; 79A62
 je short loc_79A76	; 79A67
 loc_79A69:
 push unk_C329E	; 79A69
-call sub_B2CD8	; 79A6E
+call FatalError	; 79A6E
 add esp, byte 4	; 79A73
 loc_79A76:
 xor edx, edx	; 79A76

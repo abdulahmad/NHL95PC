@@ -7,26 +7,26 @@ extern asc_C1464, asc_C1469, asc_C146E, asc_C1473, asc_C1478, asc_C147D, asc_C14
 extern asc_C148E, asc_C14B2, asc_C14BB, asc_C14C0, asc_C14C7, asc_C14DA, asc_C14EA, asc_C14EF
 extern asc_C14F6, asc_C14FB, asc_C1506, asc_C150F, asc_C1516, asc_C151B, asc_C1520, asc_C1526
 extern asc_C152F, asc_C1534, asc_C153F, asc_C1543, asc_C154F, asc_C1553, asc_C155F, asc_C1569
-extern asc_C70A0, asc_C70B8, asc_C70C7, asc_CDB75, asc_CDB7C, byte_C52F2, byte_C5311, byte_C5367
+extern asc_C70A0, asc_C70B8, asc_C70C7, asc_CDB75, asc_CDB7C, byte_C52F2, byte_C5311
 extern byte_C5386, byte_C53DC, musicon, byte_DD2D4, byte_DD668, byte_DD669, byte_DD774, byte_DD788
-extern byte_ED82F, byte_ED992, dword_C52E9, dword_C52ED, dword_C530D, dword_C5382, dword_C53F7, dword_C6F78
+extern byte_ED82F, byte_ED992, dword_C52E9, dword_C52ED, postate, lgstate, dword_C53F7, dword_C6F78
 extern dword_C6F88, dword_C6F8C, dword_C6F90, dword_C6F94, dword_C7008, dword_C700C, dword_C7010, dword_C7014
 extern dword_C7018, dword_C701C, dword_C7020, dword_C7024, dword_C7028, dword_C702C, dword_C7030, dword_C7034
 extern dword_C70E3, dword_C70E7, dword_CE4E3, dword_CE503, dword_CE527, dword_CE583, dword_CE5A3, dword_CE5C3
-extern dword_D29FB, dword_D2C6B, dword_DC238, dword_DD124, dword_DD128, dword_DD12C, dword_DD130, dword_DD134
+extern seriesgameno, dword_D2C6B, dword_DC238, dword_DD124, dword_DD128, dword_DD12C, dword_DD130, dword_DD134
 extern dword_DD1B4, dword_DD1B8, dword_DD1BC, dword_DD1C0, dword_DD1C4, dword_DD244, dword_DD248, dword_DD24C
 extern dword_DD250, dword_DD254, dword_DD634, dword_DD638, dword_DD63C, dword_DD640, dword_DD644, dword_DD648
 extern dword_DD64C, dword_DD650, dword_DD654, dword_DD658, dword_DD65C, dword_DD660, dword_DD664, dword_DD730
 extern dword_EA0DC, j_unlink_, jctime, off_C5439, off_C5441, off_C6F7C, off_C6F80, off_C6F84
 extern qsort_, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, MakePath, sub_14442
 extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, sub_1466B, sub_1D100, sub_1D518
-extern sub_30A0C, MessageBox, sub_327A1, sub_32DA9, sub_33559, sub_336E6, sub_6B391, sub_6B3D7
-extern sub_7A29C, sub_86647, sub_89268, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0
-extern sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400, sub_91964, sub_92CD0, sub_B2CD8
+extern sub_30A0C, MessageBox, LoadModeState, sub_32DA9, sub_33559, sub_336E6, sub_6B391, sub_6B3D7
+extern sub_7A29C, sub_86647, PlayoffModeLoop, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0
+extern sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400, sub_91964, sub_92CD0, FatalError
 extern MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3CC8, sub_B4BA8, sub_B4FAC, unk_C1430, unk_C1435
 extern unk_C1439, unk_C148B, unk_C149A, unk_C149D, unk_C14A0, unk_C14A3, unk_C14A6, unk_C14A9
 extern unk_C14AC, unk_C14AF, unk_C14C4, unk_C14D4, unk_C14D7, unk_C14E7, unk_C153C, unk_C155C
-extern unk_C1563, unk_C1566, unk_C5298, unk_C70DF, unk_CE64F, unk_D2B38, unknown_libname_1, unknown_libname_2
+extern unk_C1563, unk_C1566, exhstate, unk_C70DF, unk_CE64F, btn_POHumanOut, unknown_libname_1, unknown_libname_2
 extern unlink_
 global jpt_2C177, jpt_2C453, loc_2B7FA, loc_2B93A, loc_2B93D, loc_2BA0C, loc_2BA59, loc_2BA78
 global loc_2BAA0, loc_2BAC8, loc_2BAD3, loc_2BAFB, loc_2BB23, loc_2BB24, loc_2BB5A, loc_2BB83
@@ -245,7 +245,7 @@ call FileOpenRead	; 2BA43
 test eax, eax	; 2BA48
 je short loc_2BA59	; 2BA4A
 push unk_C148B	; 2BA4C
-call sub_B2CD8	; 2BA51
+call FatalError	; 2BA51
 add esp, byte 4	; 2BA56
 loc_2BA59:
 lea edx, [byte esp+02Ch]	; 2BA59
@@ -254,7 +254,7 @@ call FileCreate	; 2BA62
 test eax, eax	; 2BA67
 je short loc_2BA78	; 2BA69
 push unk_C149A	; 2BA6B
-call sub_B2CD8	; 2BA70
+call FatalError	; 2BA70
 add esp, byte 4	; 2BA75
 loc_2BA78:
 mov ecx, 0Bh	; 2BA78
@@ -265,7 +265,7 @@ call FileReadAt	; 2BA8A
 test eax, eax	; 2BA8F
 je short loc_2BAA0	; 2BA91
 push unk_C149D	; 2BA93
-call sub_B2CD8	; 2BA98
+call FatalError	; 2BA98
 add esp, byte 4	; 2BA9D
 loc_2BAA0:
 mov ecx, 0Bh	; 2BAA0
@@ -276,7 +276,7 @@ call FileWriteAt	; 2BAB2
 test eax, eax	; 2BAB7
 je short loc_2BAC8	; 2BAB9
 push unk_C14A0	; 2BABB
-call sub_B2CD8	; 2BAC0
+call FatalError	; 2BAC0
 add esp, byte 4	; 2BAC5
 loc_2BAC8:
 mov edi, dword [byte esp+023h]	; 2BAC8
@@ -292,7 +292,7 @@ call FileReadAt	; 2BAE5
 test eax, eax	; 2BAEA
 je short loc_2BAFB	; 2BAEC
 push unk_C14A3	; 2BAEE
-call sub_B2CD8	; 2BAF3
+call FatalError	; 2BAF3
 add esp, byte 4	; 2BAF8
 loc_2BAFB:
 mov ecx, 0Bh	; 2BAFB
@@ -303,7 +303,7 @@ call FileWriteAt	; 2BB0D
 test eax, eax	; 2BB12
 je short loc_2BB23	; 2BB14
 push unk_C14A6	; 2BB16
-call sub_B2CD8	; 2BB1B
+call FatalError	; 2BB1B
 add esp, byte 4	; 2BB20
 loc_2BB23:
 inc esi	; 2BB23
@@ -320,7 +320,7 @@ call FileReadAt	; 2BB44
 test eax, eax	; 2BB49
 je short loc_2BB5A	; 2BB4B
 push unk_C14A9	; 2BB4D
-call sub_B2CD8	; 2BB52
+call FatalError	; 2BB52
 add esp, byte 4	; 2BB57
 loc_2BB5A:
 mov ecx, 0Ch	; 2BB5A
@@ -331,7 +331,7 @@ call FileReadAt	; 2BB6D
 test eax, eax	; 2BB72
 je short loc_2BB83	; 2BB74
 push unk_C14AC	; 2BB76
-call sub_B2CD8	; 2BB7B
+call FatalError	; 2BB7B
 add esp, byte 4	; 2BB80
 loc_2BB83:
 mov ecx, 18h	; 2BB83
@@ -342,7 +342,7 @@ call FileReadAt	; 2BB96
 test eax, eax	; 2BB9B
 je short loc_2BBAC	; 2BB9D
 push unk_C14AF	; 2BB9F
-call sub_B2CD8	; 2BBA4
+call FatalError	; 2BBA4
 add esp, byte 4	; 2BBA9
 loc_2BBAC:
 and byte [byte_C52F2], 7Fh	; 2BBAC
@@ -363,7 +363,7 @@ call sub_1466B	; 2BBE5
 test eax, eax	; 2BBEA
 je short loc_2BBFB	; 2BBEC
 push unk_C14C4	; 2BBEE
-call sub_B2CD8	; 2BBF3
+call FatalError	; 2BBF3
 add esp, byte 4	; 2BBF8
 loc_2BBFB:
 mov eax, 2	; 2BBFB
@@ -381,14 +381,14 @@ call FileOpenRead	; 2BC2A
 test eax, eax	; 2BC2F
 je short loc_2BC40	; 2BC31
 push unk_C14D4	; 2BC33
-call sub_B2CD8	; 2BC38
+call FatalError	; 2BC38
 add esp, byte 4	; 2BC3D
 loc_2BC40:
-and byte [byte_C5367], 7Fh	; 2BC40
+and byte [postate+5Ah], 7Fh	; 2BC40
 lea eax, [byte esp+030h]	; 2BC47
-call sub_89268	; 2BC4B
+call PlayoffModeLoop	; 2BC4B
 mov edi, eax	; 2BC50
-test byte [byte_C5367], 80h	; 2BC52
+test byte [postate+5Ah], 80h	; 2BC52
 loc_2BC59:
 jne short loc_2BC6B	; 2BC59
 cmp dword [dword_C53F7], byte 1	; 2BC5B
@@ -410,7 +410,7 @@ call sub_1466B	; 2BC92
 test eax, eax	; 2BC97
 je short loc_2BCA8	; 2BC99
 push unk_C14D7	; 2BC9B
-call sub_B2CD8	; 2BCA0
+call FatalError	; 2BCA0
 add esp, byte 4	; 2BCA5
 loc_2BCA8:
 mov eax, 3	; 2BCA8
@@ -428,7 +428,7 @@ call FileOpenRead	; 2BCD7
 test eax, eax	; 2BCDC
 je short loc_2BCED	; 2BCDE
 push unk_C14E7	; 2BCE0
-call sub_B2CD8	; 2BCE5
+call FatalError	; 2BCE5
 add esp, byte 4	; 2BCEA
 loc_2BCED:
 and byte [byte_C53DC], 7Fh	; 2BCED
@@ -1912,7 +1912,7 @@ push eax	; 2CEB5
 lea eax, [byte esp+054h]	; 2CEB6
 push eax	; 2CEBA
 push byte 2	; 2CEBB
-push unk_D2B38	; 2CEBD
+push btn_POHumanOut	; 2CEBD
 mov ecx, 3	; 2CEC2
 mov ebx, unk_C70DF	; 2CEC7
 mov edx, 0FFFFFFFFh	; 2CECC
@@ -1976,7 +1976,7 @@ call unlink_	; 2CF94
 test eax, eax	; 2CF99
 je short loc_2CFAA	; 2CF9B
 push unk_C153C	; 2CF9D
-call sub_B2CD8	; 2CFA2
+call FatalError	; 2CFA2
 add esp, byte 4	; 2CFA7
 loc_2CFAA:
 mov ebx, dword [byte ebp+00h]	; 2CFAA
@@ -2083,10 +2083,10 @@ lea eax, [byte esp+020h]	; 2D0EB
 call strcat_	; 2D0EF
 mov ebx, 1	; 2D0F4
 lea edx, [byte esp+020h]	; 2D0F9
-mov eax, unk_C5298	; 2D0FD
+mov eax, exhstate	; 2D0FD
 call sub_2D260	; 2D102
-mov eax, unk_C5298	; 2D107
-call sub_327A1	; 2D10C
+mov eax, exhstate	; 2D107
+call LoadModeState	; 2D10C
 mov edx, dword [dword_C52E9]	; 2D111
 cmp edx, byte 18h	; 2D117
 jge short loc_2D125	; 2D11A
@@ -2121,10 +2121,10 @@ lea eax, [byte esp+020h]	; 2D189
 call strcat_	; 2D18D
 xor ebx, ebx	; 2D192
 lea edx, [byte esp+020h]	; 2D194
-mov eax, dword_C530D	; 2D198
+mov eax, postate	; 2D198
 call sub_2D260	; 2D19D
 mov esi, eax	; 2D1A2
-mov dword [dword_CE583], sub_89268	; 2D1A4
+mov dword [dword_CE583], PlayoffModeLoop	; 2D1A4
 mov dword [dword_CE5A3], sub_7A29C	; 2D1AE
 mov dword [dword_CE5C3], sub_86647	; 2D1B8
 xor ecx, ecx	; 2D1C2
@@ -2143,7 +2143,7 @@ mov ecx, 7	; 2D1E8
 mov eax, edx	; 2D1ED
 sar edx, 1Fh	; 2D1EF
 idiv ecx	; 2D1F2
-mov dword [dword_D29FB], edx	; 2D1F4
+mov dword [seriesgameno], edx	; 2D1F4
 push ebx	; 2D1FA
 call jctime	; 2D1FB
 add esp, byte 4	; 2D200
@@ -2159,7 +2159,7 @@ lea eax, [byte esp+020h]	; 2D221
 call strcat_	; 2D225
 xor ebx, ebx	; 2D22A
 lea edx, [byte esp+020h]	; 2D22C
-mov eax, dword_C5382	; 2D230
+mov eax, lgstate	; 2D230
 call sub_2D260	; 2D235
 mov dword [dword_CE4E3], sub_336E6	; 2D23A
 mov dword [dword_CE503], sub_33559	; 2D244
@@ -2203,7 +2203,7 @@ test eax, eax	; 2D2AA
 je short loc_2D2BB	; 2D2AC
 push asc_C155F	; 2D2AE
 loc_2D2B3:
-call sub_B2CD8	; 2D2B3
+call FatalError	; 2D2B3
 add esp, byte 4	; 2D2B8
 loc_2D2BB:
 mov ecx, 75h	; 2D2BB
@@ -2214,7 +2214,7 @@ call FileReadAt	; 2D2CB
 test eax, eax	; 2D2D0
 je short loc_2D2E1	; 2D2D2
 push unk_C1563	; 2D2D4
-call sub_B2CD8	; 2D2D9
+call FatalError	; 2D2D9
 add esp, byte 4	; 2D2DE
 loc_2D2E1:
 lea eax, [byte esp+040h]	; 2D2E1
@@ -2222,7 +2222,7 @@ call FileClose	; 2D2E5
 test eax, eax	; 2D2EA
 je short loc_2D2FB	; 2D2EC
 push unk_C1566	; 2D2EE
-call sub_B2CD8	; 2D2F3
+call FatalError	; 2D2F3
 add esp, byte 4	; 2D2F8
 loc_2D2FB:
 test ebp, ebp	; 2D2FB

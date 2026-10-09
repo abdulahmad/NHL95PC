@@ -7,7 +7,7 @@ extern sub_18508, sub_185EB, sub_186CE, sub_187B1, sub_18894, sub_18977, sub_18A
 extern sub_18C20, sub_1A5A1, sub_1A5B1, sub_1A5D4, sub_1A6A7, sub_2B944, sub_3270B, sub_32DA9
 extern sub_32FF4, sub_3322A, sub_332C0, sub_332F6, sub_3339D, sub_333D7, sub_33469, sub_334FB
 extern sub_33523, sub_3366F, sub_336BE, sub_6BE95, sub_7BEBB, sub_7C993, sub_7C9A1, sub_7CAF7
-extern sub_7CB9F, sub_80830, sub_82579, sub_85924, sub_86696, unk_20EB7, unk_C67B1, unk_CEF0F
+extern sub_7CB9F, sub_80830, sub_82579, sub_85924, CreatePlayoffs, unk_20EB7, unk_C67B1, unk_CEF0F
 extern unk_CEF2F, unk_CEF6F, unk_CEFEF
 global asc_CDB75, asc_CDB7C, asc_CDBDC, asc_CDBE3, asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_CDD5E
 global asc_CDD6B, asc_CE20B, asc_CE21A, asc_CE22A, asc_CE237, asc_CE247, asc_CE259, byte_CDB77
@@ -499,7 +499,7 @@ dd unk_CDA6E
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 0B4h,00h,00h,00h,0A5h,00h,00h,00h,0C5h,00h,00h,00h
 dd unk_CDA9B
-dd sub_86696
+dd CreatePlayoffs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0C6h,00h,00h,00h
 db 0A5h,00h,00h,00h,0D7h,00h,00h,00h
 dd unk_CDAB3

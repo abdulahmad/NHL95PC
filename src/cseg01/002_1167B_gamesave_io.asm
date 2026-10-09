@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_1167B progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, asc_C0202, str_extDB, asc_C8136, byte_C4D1C, byte_C4D1D, byte_C524D
-extern byte_C5400, curleague, sflags, musicon, byte_D9299, byte_D9558, byte_ED7CC, joysampling
-extern dword_C4E10, dword_C4E14, dword_C5130, dword_C53F7, dword_C53FB, dword_C5704, dword_C5708, dword_C570C
+extern curleague, sflags, musicon, byte_D9299, byte_D9558, byte_ED7CC, joysampling, gameopts
+extern dword_C4E10, dword_C4E14, dword_C5130, dword_C53F7, gamemode, dword_C5704, dword_C5708, dword_C570C
 extern dword_C5840, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
 extern penshotlive, dword_D2C6B, dword_D302C, dword_D3030, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, dword_DD6A8, dword_DD6AE
@@ -504,7 +504,7 @@ loc_11DAE:
 call sub_1C852	; 11DAE
 jmp near loc_11F74	; 11DB3
 loc_11DB8:
-test byte [byte_C5400], 2	; 11DB8
+test byte [gameopts+1], 2	; 11DB8
 jne short loc_11DC6	; 11DBF
 call sub_15B76	; 11DC1
 loc_11DC6:
@@ -623,11 +623,11 @@ mov dword [dword_C53F7], ebx	; 11F7C
 call joyq_flush	; 11F82
 call sub_1167B	; 11F87
 call sub_1CB7F	; 11F8C
-cmp dword [dword_C53FB], byte 0	; 11F91
+cmp dword [gamemode], byte 0	; 11F91
 je short loc_11FDD	; 11F98
 cmp dword [dword_C53F7], byte 1	; 11F9A
 jne short loc_11FDD	; 11FA1
-and byte [byte_C5400], 7Fh	; 11FA3
+and byte [gameopts+1], 7Fh	; 11FA3
 mov edx, curleague	; 11FAA
 lea eax, [byte esp+020h]	; 11FAF
 call strcpy_	; 11FB3

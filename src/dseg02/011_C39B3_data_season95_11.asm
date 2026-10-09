@@ -2,99 +2,99 @@
 bits 32
 %include "hockey.inc"
 section s_C39B3 progbits alloc noexec write align=1
-global asc_C39B3, asc_C39BB, asc_C39C3, asc_C39C8, asc_C39CF, asc_C39D4, asc_C39F3, asc_C39F7
-global asc_C39FE, asc_C3A07, asc_C3A26, asc_C3A2B, asc_C3A43, asc_C3A47, asc_C3A4B, asc_C3A4F
-global asc_C3A54, asc_C3A5D, asc_C3A68, asc_C3A70, asc_C3A79, asc_C3A9B, asc_C3AA4, asc_C3AA9
-global asc_C3AAE, asc_C3AB7, asc_C3ACA, asc_C3ADD, asc_C3AE4, asc_C3AE9, asc_C3AEE, asc_C3AF3
-global asc_C3AFB, asc_C3B00, asc_C3B05, unk_C3A37, unk_C3A3A, unk_C3A3D, unk_C3A40, unk_C3A66
-global unk_C3AE1, unk_C3AF8
-asc_C39B3:
+global str_Palette, str_Embscup, str_Bkgd, str_Embpal, str_BangPal, str_PleaseEnterNewPlay, str_PO, str_fmtSlashDb
+global str_GameSet, str_4dKbytesOfFree, str_Temp2, str_ScheduleDb, str_E31, str_E32, str_Db, str_Tied
+global str_Schedule, str_GameSav, str_Pointer, str_Menubuff2, str_PlayoffsHaveNotBeen, str_Pstatbar2, str_Rst1, str_Rst2
+global str_Scuparrw, str_WesternConference, str_EasternConference, str_fmtcsp, str_Aup1, str_Aup2, str_Aup3, str_Midl
+global str_Adn3, str_Adn2, str_Adn1, str_E1, str_E2, str_F1, str_F2, unk_C3A66
+global str_D, unk_C3AF8
+str_Palette:
 db 070h,061h,06Ch,065h,074h,074h,065h,00h
-asc_C39BB:
+str_Embscup:
 db 065h,06Dh,062h,073h,063h,075h,070h,00h
-asc_C39C3:
+str_Bkgd:
 db 062h,06Bh,067h,064h,00h
-asc_C39C8:
+str_Embpal:
 db 065h,06Dh,062h,070h,061h,06Ch,00h
-asc_C39CF:
+str_BangPal:
 db 021h,070h,061h,06Ch,00h
-asc_C39D4:
+str_PleaseEnterNewPlay:
 db 050h,06Ch,065h,061h,073h,065h,020h,045h,06Eh,074h,065h,072h,020h,04Eh,065h,077h
 db 020h,050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,020h,04Eh,061h,06Dh,065h,00h
-asc_C39F3:
+str_PO:
 db 02Eh,050h,04Fh,00h
-asc_C39F7:
+str_fmtSlashDb:
 db 05Ch,025h,073h,02Eh,064h,062h,00h
-asc_C39FE:
+str_GameSet:
 db 067h,061h,06Dh,065h,02Eh,073h,065h,074h,00h
-asc_C3A07:
+str_4dKbytesOfFree:
 db 025h,034h,064h,020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,066h,072h
 db 065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,02Eh,00h
-asc_C3A26:
+str_Temp2:
 db 074h,065h,06Dh,070h,00h
-asc_C3A2B:
+str_ScheduleDb:
 db 073h,063h,068h,065h,064h,075h,06Ch,065h,02Eh,064h,062h,00h
-unk_C3A37:
+str_E1:
 db 065h,031h,00h
-unk_C3A3A:
+str_E2:
 db 065h,032h,00h
-unk_C3A3D:
+str_F1:
 db 066h,031h,00h
-unk_C3A40:
+str_F2:
 db 066h,032h,00h
-asc_C3A43:
+str_E31:
 db 065h,033h,031h,00h
-asc_C3A47:
+str_E32:
 db 065h,033h,032h,00h
-asc_C3A4B:
+str_Db:
 db 02Eh,064h,062h,00h
-asc_C3A4F:
+str_Tied:
 db 074h,069h,065h,064h,00h
-asc_C3A54:
+str_Schedule:
 db 073h,063h,068h,065h,064h,075h,06Ch,065h,00h
-asc_C3A5D:
+str_GameSav:
 db 067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h
 unk_C3A66:
 db 020h,00h
-asc_C3A68:
+str_Pointer:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C3A70:
+str_Menubuff2:
 db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
-asc_C3A79:
+str_PlayoffsHaveNotBeen:
 db 050h,06Ch,061h,079h,06Fh,066h,066h,073h,020h,068h,061h,076h,065h,020h,06Eh,06Fh
 db 074h,020h,062h,065h,065h,06Eh,020h,073h,065h,065h,064h,065h,064h,020h,079h,065h
 db 074h,00h
-asc_C3A9B:
+str_Pstatbar2:
 db 070h,073h,074h,061h,074h,062h,061h,072h,00h
-asc_C3AA4:
+str_Rst1:
 db 072h,073h,074h,031h,00h
-asc_C3AA9:
+str_Rst2:
 db 072h,073h,074h,032h,00h
-asc_C3AAE:
+str_Scuparrw:
 db 073h,063h,075h,070h,061h,072h,072h,077h,00h
-asc_C3AB7:
+str_WesternConference:
 db 057h,065h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
 db 063h,065h,00h
-asc_C3ACA:
+str_EasternConference:
 db 045h,061h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
 db 063h,065h,00h
-asc_C3ADD:
+str_fmtcsp:
 db 025h,063h,020h,00h
-unk_C3AE1:
+str_D:
 db 025h,064h,00h
-asc_C3AE4:
+str_Aup1:
 db 061h,075h,070h,031h,00h
-asc_C3AE9:
+str_Aup2:
 db 061h,075h,070h,032h,00h
-asc_C3AEE:
+str_Aup3:
 db 061h,075h,070h,033h,00h
-asc_C3AF3:
+str_Midl:
 db 06Dh,069h,064h,06Ch,00h
 unk_C3AF8:
 db 020h,020h,00h
-asc_C3AFB:
+str_Adn3:
 db 061h,064h,06Eh,033h,00h
-asc_C3B00:
+str_Adn2:
 db 061h,064h,06Eh,032h,00h
-asc_C3B05:
+str_Adn1:
 db 061h,064h,06Eh,031h,00h,00h,00h

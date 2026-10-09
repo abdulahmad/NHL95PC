@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_69336 progbits alloc exec nowrite align=1
-extern DoGameFrame, ResetBench, __CHK, assreplace, byte_C5400, sflags, gmode2, musicon
+extern DoGameFrame, ResetBench, __CHK, assreplace, sflags, gmode2, musicon
 extern iflags, byte_E9AC1, joysampling, dword_C4E10, dword_C4E14, dword_C5130, gameopts, dword_C5704
 extern dword_C5708, dword_C570C, dword_C7444, dword_C7448, dword_C90B0, sflags3, cont2team, HomeTeam
 extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, dword_D8C40, dword_D8C72, dword_D8C74
@@ -213,7 +213,7 @@ test byte [gsp], 1	; 69625
 je short .9	; 6962C
 cmp word [gsp], byte 3	; 6962E
 jne short .6	; 69636
-test byte [byte_C5400], 2	; 69638
+test byte [gameopts+1], 2	; 69638
 jne short .7	; 6963F
 .6:
 mov eax, 1	; 69641
@@ -658,7 +658,7 @@ xor edi, edi	; 69D60
 mov dword [crowdsmooth], edi	; 69D62
 cmp byte [musicon], 0	; 69D68
 je short .29	; 69D6F
-test byte [byte_C5400], 1	; 69D71
+test byte [gameopts+1], 1	; 69D71
 je short .29	; 69D78
 call sub_8373E	; 69D7A
 .28:
@@ -765,7 +765,7 @@ test byte [gsp], ah	; 69F04
 je short .37	; 69F0A
 cmp word [gsp], byte 3	; 69F0C
 jne short .34	; 69F14
-test byte [byte_C5400], 2	; 69F16
+test byte [gameopts+1], 2	; 69F16
 jne short .35	; 69F1D
 .34:
 mov eax, 1	; 69F1F
