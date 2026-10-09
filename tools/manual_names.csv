@@ -785,6 +785,23 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0007FCF8,sub_7FCF8,SelectHilight,PC-new,,,,medium,"scans *.HI, ListDialog ""Select a team"" then ""Select a hilight"", ""There are no hilights!"" message",highlights,manual-trace
 00080075,sub_80075,ViewHilights,PC-new,,,,medium,"SelectHilight, reads chosen 9652h-byte record into hilightrec, PlayHilight; called by MenuLeagueHilights and demo",highlights,manual-trace
 0008011C,sub_8011C,PlayHilight,PC-new,,,,medium,"restores teams / clock / jerseys from hilightrec, loads rink + gfx, runs InstantReplay, frees",highlights,manual-trace
+0008034B,sub_8034B,LoadSettingsShapes,PC-new,,,,medium,"loads ""settings"" PPV once (settingsfile) and its On/Off/acpt/canc/na/pg/pl shapes",settings_lockerroom,manual-trace
+0008050F,sub_8050F,DrawSettingsHeading,PC-new,,,,medium,prints Exhibition / Playoff / League heading text in dialog (jump table by mode),settings_lockerroom,manual-trace
+000805C4,sub_805C4,SetModeMenuLabels,PC-new,,,,medium,"strcpy mode name + "" Settings ..."" into the menu label, sets Sports Central / Playoff Tree entries",settings_lockerroom,manual-trace
+00080682,sub_80682,DrawPanel3D,PC-new,,,,medium,"filled rect (70h) with light 77h / dark 62h edges, optional inner frame",settings_lockerroom,manual-trace
+00080830,sub_80830,LockerRoomScreen,PC-new,,,,medium,"menu ""Game: LA  at MTL ..."" pre-game locker room: stops music, loads Home/Vis/Name/Title backgrounds, draw + loop",settings_lockerroom,manual-trace
+00080A9D,sub_80A9D,LockerStub,PC-new,,,,low,lone ret,settings_lockerroom,manual-trace
+00080AA4,sub_80AA4,DrawLockerRoom,PC-new,,,,medium,"lockroom image, team names, jerseys, Accept / Cancel, ""Exhibition Game""",settings_lockerroom,manual-trace
+00081520,sub_81520,LockerHitTest,PC-new,,,,medium,hit-test 8 rects at lockerrects,settings_lockerroom,manual-trace
+0008156F,sub_8156F,DrawLockerJersey,PC-new,,,,medium,loads JER%sH / JER%sV jersey image for team and draws it,settings_lockerroom,manual-trace
+00081C4E,sub_81C4E,LockerRoomLoop,PC-new,,,,medium,"pointer loop: jersey swap / accept / cancel, WriteCurModeState",settings_lockerroom,manual-trace
+0008245A,sub_8245A,DrawSelBoxOn,PC-new,,,,medium,selected radio box frame (shared with sound_config),settings_lockerroom,manual-trace
+000824F8,sub_824F8,DrawSelBoxOff,PC-new,,,,medium,unselected radio box frame,settings_lockerroom,manual-trace
+00082579,sub_82579,MenuSoundSettings,PC-new,,,,medium,"menu action ""Sound Settings ...""",settings_lockerroom,manual-trace
+0008261C,sub_8261C,DrawSoundCardDlg,PC-new,,,,medium,"""sound"" PPV dbx2 dialog",settings_lockerroom,manual-trace
+00082690,sub_82690,DrawSoundCardOpts,PC-new,,,,medium,PC Speaker / Sound Blaster / AD Lib / MT-32 / UltraSound boxes by sound device bits,settings_lockerroom,manual-trace
+000827B3,sub_827B3,SoundCardHitTest,PC-new,,,,medium,hit-test 8 rects at soundcardrects,settings_lockerroom,manual-trace
+00082805,sub_82805,RedrawSoundCardOpts,PC-new,,,,medium,redraw of the card options from the sound config loop,settings_lockerroom,manual-trace
 00086696,sub_86696,CreatePlayoffs,PC-new,,,,high,"main-menu handler (frontend menu table CDxxx dd entry): asks 'Please Enter New Play-Off Name' (sub_2FEDF), confirms replacing an existing .PO dir (msg 'There is already a Play-Off with that name!'), mkdir <name>.PO, checks free disk space ('Insufficient disk space to setup a Playoff Series'), copies the 7 league DBs, seeds 16 teams (POSeedTeams), builds schedule.db (POCreateSchedule) and installs PlayoffModeLoop as the mode loop (dword_CE583)",season_playoffs,manual-trace
 00086E8B,sub_86E8B,POSeedTeams,PC-new,,,,medium,"fills the 16 seed slots: 8 placeholders per conference (-3 west / -12 east, random slots), puts HomeTeam and VisTeam into their conference's slots (opposite ends if same conference), then POPickConfTeams fills the remaining placeholders with random teams of each conference",season_playoffs,manual-trace
 000870B6,sub_870B6,POPickConfTeams,PC-new,,,,medium,"(slots, confflag, first, count): picks 8 distinct random teams from confteams[first..first+count) excluding HomeTeam/VisTeam, keeps the first two from different divisions, and writes them over the -confflag placeholders",season_playoffs,manual-trace

@@ -12,13 +12,13 @@ extern byte_ED943, samesideflag, postate, gamemode, gameopts, ctl1team, ctl2team
 extern ctl2dev, ctl1side, ctl2side, dword_C541F, songdata, sflags3, cont2team, HomeTeam
 extern leaguesetrects, modesetrects
 extern exhsetrects, ctldlgrects
-extern ctldlgalt, dword_D20A8, musichandle, musicslot
+extern ctldlgalt, settingsfile, musichandle, musicslot
 extern seriesgameno, dword_D2C6B, pointerspr, fdlg_cancel, hmtmstruct, dword_DF648, hmscore
-extern ptrupdatefn, leaguesetimg, setbits, dword_ED364, dword_ED75C, dword_ED760, dword_ED764, puckstruct
-extern dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C, chkoffspr, dword_ED784
-extern chkonspr, dword_ED78C, puckvx, gmode, jctime, teamcitynames, puckx, pucky
+extern ptrupdatefn, leaguesetimg, setbits, dword_ED364, pl20spr, pl05spr, pl10spr, puckstruct
+extern pg07spr, na05spr, pg01spr, acptspr, na03spr, pg03spr, chkoffspr, pg05spr
+extern chkonspr, na01spr, puckvx, gmode, jctime, teamcitynames, puckx, pucky
 extern puckvy, puckc, off_CD498, off_CD4A0, setpersonel, MakePath, SaveModeState, LoadModeState
-extern WriteModeState, CrowdNoiseOff, CrowdNoiseReset, restorepl, GetInputEvent, ClearInputQueue, sub_8034B, sub_8050F
+extern WriteModeState, CrowdNoiseOff, CrowdNoiseReset, restorepl, GetInputEvent, ClearInputQueue, LoadSettingsShapes, DrawSettingsHeading
 extern SetSideControls, WriteCurModeState, sub_8CCA8, sub_8E83C, sub_8E9C0, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_90D20, sub_91284, sub_91370
 extern sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_96440, sub_B2DCA, sub_B30B4, sub_B4B88
@@ -53,7 +53,7 @@ mov esi, dword [seriesgameno]	; 7A14D
 mov dword [esp], esi	; 7A153
 xor edx, edx	; 7A156
 mov dword [seriesgameno], edx	; 7A158
-call sub_8034B	; 7A15E
+call LoadSettingsShapes	; 7A15E
 call sub_B4BA8	; 7A163
 push byte 20h	; 7A168
 push dword 1436Bh	; 7A16A
@@ -88,12 +88,12 @@ add esp, byte 0Ch	; 7A1C4
 push ebp	; 7A1C7
 call jctime	; 7A1C8
 add esp, byte 4	; 7A1CD
-mov ebx, dword [dword_D20A8]	; 7A1D0
+mov ebx, dword [settingsfile]	; 7A1D0
 push ebx	; 7A1D6
 call jctime	; 7A1D7
 add esp, byte 4	; 7A1DC
 xor ecx, ecx	; 7A1DF
-mov dword [dword_D20A8], ecx	; 7A1E1
+mov dword [settingsfile], ecx	; 7A1E1
 mov esi, dword [esp]	; 7A1E7
 mov dword [seriesgameno], esi	; 7A1EA
 xor eax, eax	; 7A1F0
@@ -117,7 +117,7 @@ push edx	; 7A208
 push esi	; 7A209
 push edi	; 7A20A
 push ebp	; 7A20B
-call sub_8034B	; 7A20C
+call LoadSettingsShapes	; 7A20C
 call sub_B4BA8	; 7A211
 push byte 20h	; 7A216
 push dword 1436Bh	; 7A218
@@ -154,12 +154,12 @@ add esp, byte 0Ch	; 7A272
 push ebp	; 7A275
 call jctime	; 7A276
 add esp, byte 4	; 7A27B
-mov edx, dword [dword_D20A8]	; 7A27E
+mov edx, dword [settingsfile]	; 7A27E
 push edx	; 7A284
 call jctime	; 7A285
 add esp, byte 4	; 7A28A
 xor ebx, ebx	; 7A28D
-mov dword [dword_D20A8], ebx	; 7A28F
+mov dword [settingsfile], ebx	; 7A28F
 xor eax, eax	; 7A295
 jmp near LeagueSettingsDlg_ret	; 7A297
 EditPlayoffSettings:
@@ -171,7 +171,7 @@ push edx	; 7A2A8
 push esi	; 7A2A9
 push edi	; 7A2AA
 push ebp	; 7A2AB
-call sub_8034B	; 7A2AC
+call LoadSettingsShapes	; 7A2AC
 call sub_B4BA8	; 7A2B1
 push byte 20h	; 7A2B6
 push dword 1436Bh	; 7A2B8
@@ -217,7 +217,7 @@ push esi	; 7A342
 push edi	; 7A343
 push ebp	; 7A344
 call sub_B4BA8	; 7A345
-call sub_8034B	; 7A34A
+call LoadSettingsShapes	; 7A34A
 push byte 20h	; 7A34F
 push dword 1436Bh	; 7A351
 push str_BKGD	; 7A356
@@ -251,7 +251,7 @@ push edx	; 7A3AB
 push esi	; 7A3AC
 push edi	; 7A3AD
 push ebp	; 7A3AE
-call sub_8034B	; 7A3AF
+call LoadSettingsShapes	; 7A3AF
 push byte 20h	; 7A3B4
 push dword 1436Bh	; 7A3B6
 push str_BKGD	; 7A3BB
@@ -286,7 +286,7 @@ push esi	; 7A411
 push edi	; 7A412
 push ebp	; 7A413
 sub esp, byte 28h	; 7A414
-call sub_8034B	; 7A417
+call LoadSettingsShapes	; 7A417
 call sub_B4BA8	; 7A41C
 xor ecx, ecx	; 7A421
 mov ebx, str_Setting5	; 7A423
@@ -375,7 +375,7 @@ mov ecx, dword [gamemode]	; 7A522
 mov ebx, 5	; 7A528
 mov edx, 13h	; 7A52D
 mov eax, 0Ah	; 7A532
-call sub_8050F	; 7A537
+call DrawSettingsHeading	; 7A537
 call LeagueOptsToBits	; 7A53C
 call LeagueSetViewLoop	; 7A541
 push byte 13h	; 7A546
@@ -387,12 +387,12 @@ add esp, byte 0Ch	; 7A554
 push esi	; 7A557
 call jctime	; 7A558
 add esp, byte 4	; 7A55D
-mov ebp, dword [dword_D20A8]	; 7A560
+mov ebp, dword [settingsfile]	; 7A560
 push ebp	; 7A566
 call jctime	; 7A567
 add esp, byte 4	; 7A56C
 xor eax, eax	; 7A56F
-mov dword [dword_D20A8], eax	; 7A571
+mov dword [settingsfile], eax	; 7A571
 add esp, byte 28h	; 7A576
 jmp near LeagueSettingsDlg_ret	; 7A579
 DrawLeagueSetDlgSel:
@@ -481,7 +481,7 @@ mov ebx, 3	; 7A68A
 .7:
 mov edx, 13h	; 7A68F
 mov eax, 0Ah	; 7A694
-call sub_8050F	; 7A699
+call DrawSettingsHeading	; 7A699
 call sub_B4BA8	; 7A69E
 xor eax, eax	; 7A6A3
 mov esp, ebp	; 7A6A5
@@ -593,7 +593,7 @@ cmp ecx, byte 5	; 7A7F1
 jl short .9	; 7A7F4
 push dword 125h	; 7A7F6
 push dword 85h	; 7A7FB
-mov ebx, dword [dword_ED76C]	; 7A800
+mov ebx, dword [na05spr]	; 7A800
 push ebx	; 7A806
 jmp short .11	; 7A807
 .9:
@@ -601,7 +601,7 @@ cmp ecx, byte 3	; 7A809
 jl short .10	; 7A80C
 push dword 125h	; 7A80E
 push dword 85h	; 7A813
-mov edx, dword [dword_ED778]	; 7A818
+mov edx, dword [na03spr]	; 7A818
 push edx	; 7A81E
 jmp short .11	; 7A81F
 .10:
@@ -609,7 +609,7 @@ cmp ecx, ebx	; 7A821
 jl short .12	; 7A823
 push dword 125h	; 7A825
 push dword 85h	; 7A82A
-mov eax, dword [dword_ED78C]	; 7A82F
+mov eax, dword [na01spr]	; 7A82F
 push eax	; 7A834
 .11:
 call sub_91FE0	; 7A835
@@ -626,7 +626,7 @@ mov ecx, dword [gamemode]	; 7A84A
 mov ebx, 3	; 7A850
 mov edx, 13h	; 7A855
 mov eax, 0Ah	; 7A85A
-call sub_8050F	; 7A85F
+call DrawSettingsHeading	; 7A85F
 add esp, 120h	; 7A864
 jmp near LeagueSettingsDlg_ret0	; 7A86A
 db 08Dh,040h,00h
@@ -902,7 +902,7 @@ push eax	; 7AB53
 mov eax, dword [esi]	; 7AB54
 add eax, byte 0Ah	; 7AB56
 push eax	; 7AB59
-mov ebp, dword [dword_ED75C]	; 7AB5A
+mov ebp, dword [pl20spr]	; 7AB5A
 push ebp	; 7AB60
 jmp short .8	; 7AB61
 .6:
@@ -912,7 +912,7 @@ push eax	; 7AB69
 mov eax, dword [esi]	; 7AB6A
 add eax, byte 0Ah	; 7AB6C
 push eax	; 7AB6F
-mov edi, dword [dword_ED764]	; 7AB70
+mov edi, dword [pl10spr]	; 7AB70
 push edi	; 7AB76
 jmp short .8	; 7AB77
 .7:
@@ -922,7 +922,7 @@ push eax	; 7AB7F
 mov eax, dword [esi]	; 7AB80
 add eax, byte 0Ah	; 7AB82
 push eax	; 7AB85
-mov ecx, dword [dword_ED760]	; 7AB86
+mov ecx, dword [pl05spr]	; 7AB86
 push ecx	; 7AB8C
 .8:
 call sub_91FE0	; 7AB8D
@@ -949,7 +949,7 @@ push eax	; 7ABD5
 mov eax, dword [esi]	; 7ABD6
 add eax, byte 0Ah	; 7ABD8
 push eax	; 7ABDB
-mov ecx, dword [dword_ED770]	; 7ABDC
+mov ecx, dword [pg01spr]	; 7ABDC
 push ecx	; 7ABE2
 jmp short .14	; 7ABE3
 .11:
@@ -959,7 +959,7 @@ push eax	; 7ABEB
 mov eax, dword [esi]	; 7ABEC
 add eax, byte 0Ah	; 7ABEE
 push eax	; 7ABF1
-mov ebx, dword [dword_ED77C]	; 7ABF2
+mov ebx, dword [pg03spr]	; 7ABF2
 push ebx	; 7ABF8
 jmp short .14	; 7ABF9
 .12:
@@ -969,7 +969,7 @@ push eax	; 7AC01
 mov eax, dword [esi]	; 7AC02
 add eax, byte 0Ah	; 7AC04
 push eax	; 7AC07
-mov edx, dword [dword_ED784]	; 7AC08
+mov edx, dword [pg05spr]	; 7AC08
 push edx	; 7AC0E
 jmp short .14	; 7AC0F
 .13:
@@ -979,7 +979,7 @@ push eax	; 7AC17
 mov eax, dword [esi]	; 7AC18
 add eax, byte 0Ah	; 7AC1A
 push eax	; 7AC1D
-mov eax, dword [dword_ED768]	; 7AC1E
+mov eax, dword [pg07spr]	; 7AC1E
 push eax	; 7AC23
 .14:
 call sub_91FE0	; 7AC24
@@ -1345,7 +1345,7 @@ jl near .34	; 7B04F
 jne near .31	; 7B055
 push dword 148h	; 7B05B
 push byte 3Fh	; 7B060
-mov eax, dword [dword_ED774]	; 7B062
+mov eax, dword [acptspr]	; 7B062
 push eax	; 7B067
 call sub_91FE0	; 7B068
 add esp, byte 0Ch	; 7B06D
@@ -1602,7 +1602,7 @@ push esi	; 7B3B4
 push edi	; 7B3B5
 push ebp	; 7B3B6
 call sub_B4BA8	; 7B3B7
-call sub_8034B	; 7B3BC
+call LoadSettingsShapes	; 7B3BC
 push byte 20h	; 7B3C1
 push dword 0E935h	; 7B3C3
 push str_BKGD2	; 7B3C8
@@ -1685,12 +1685,12 @@ call sub_8F96E	; 7B4BE
 push ebp	; 7B4C3
 call jctime	; 7B4C4
 add esp, byte 4	; 7B4C9
-mov ebx, dword [dword_D20A8]	; 7B4CC
+mov ebx, dword [settingsfile]	; 7B4CC
 push ebx	; 7B4D2
 call jctime	; 7B4D3
 add esp, byte 4	; 7B4D8
 xor ecx, ecx	; 7B4DB
-mov dword [dword_D20A8], ecx	; 7B4DD
+mov dword [settingsfile], ecx	; 7B4DD
 xor eax, eax	; 7B4E3
 ModeSettings_epilogue:
 pop ebp	; 7B4E5
@@ -1780,7 +1780,7 @@ mov ecx, dword [gamemode]	; 7B5E2
 mov ebx, 4	; 7B5E8
 mov edx, 13h	; 7B5ED
 mov eax, 0Ah	; 7B5F2
-call sub_8050F	; 7B5F7
+call DrawSettingsHeading	; 7B5F7
 add esp, byte 20h	; 7B5FC
 pop esi	; 7B5FF
 pop edx	; 7B600
@@ -2347,7 +2347,7 @@ jmp near ModeSetEditLoop.6	; 7BC36
 jne near .24	; 7BC3B
 push dword 0F8h	; 7BC41
 push byte 37h	; 7BC46
-mov ebx, dword [dword_ED774]	; 7BC48
+mov ebx, dword [acptspr]	; 7BC48
 push ebx	; 7BC4E
 call sub_903F0	; 7BC4F
 add esp, byte 0Ch	; 7BC54
@@ -2528,7 +2528,7 @@ push edx	; 7BEC7
 push esi	; 7BEC8
 push edi	; 7BEC9
 push ebp	; 7BECA
-call sub_8034B	; 7BECB
+call LoadSettingsShapes	; 7BECB
 push byte 20h	; 7BED0
 push dword 10AA5h	; 7BED2
 push str_BKGD3	; 7BED7
@@ -2561,12 +2561,12 @@ add esp, byte 0Ch	; 7BF2A
 push ebp	; 7BF2D
 call jctime	; 7BF2E
 add esp, byte 4	; 7BF33
-mov edx, dword [dword_D20A8]	; 7BF36
+mov edx, dword [settingsfile]	; 7BF36
 push edx	; 7BF3C
 call jctime	; 7BF3D
 add esp, byte 4	; 7BF42
 xor ebx, ebx	; 7BF45
-mov dword [dword_D20A8], ebx	; 7BF47
+mov dword [settingsfile], ebx	; 7BF47
 xor eax, eax	; 7BF4D
 ExhSettings_ret:
 pop ebp	; 7BF4F
@@ -2765,7 +2765,7 @@ push eax	; 7C162
 mov eax, dword [esi]	; 7C163
 add eax, byte 0Ah	; 7C165
 push eax	; 7C168
-mov edi, dword [dword_ED75C]	; 7C169
+mov edi, dword [pl20spr]	; 7C169
 push edi	; 7C16F
 jmp short .8	; 7C170
 .6:
@@ -2775,7 +2775,7 @@ push eax	; 7C178
 mov eax, dword [esi]	; 7C179
 add eax, byte 0Ah	; 7C17B
 push eax	; 7C17E
-mov esi, dword [dword_ED764]	; 7C17F
+mov esi, dword [pl10spr]	; 7C17F
 push esi	; 7C185
 jmp short .8	; 7C186
 .7:
@@ -2785,7 +2785,7 @@ push eax	; 7C18E
 mov eax, dword [esi]	; 7C18F
 add eax, byte 0Ah	; 7C191
 push eax	; 7C194
-mov ecx, dword [dword_ED760]	; 7C195
+mov ecx, dword [pl05spr]	; 7C195
 push ecx	; 7C19B
 .8:
 call sub_903F0	; 7C19C
@@ -2857,7 +2857,7 @@ mov ecx, dword [gamemode]	; 7C26B
 mov ebx, 6	; 7C271
 mov edx, 13h	; 7C276
 mov eax, 0Ah	; 7C27B
-call sub_8050F	; 7C280
+call DrawSettingsHeading	; 7C280
 add esp, byte 20h	; 7C285
 pop esi	; 7C288
 pop edx	; 7C289
@@ -3121,7 +3121,7 @@ jl near .26	; 7C56A
 jne near .23	; 7C570
 push dword 120h	; 7C576
 push byte 37h	; 7C57B
-mov ebx, dword [dword_ED774]	; 7C57D
+mov ebx, dword [acptspr]	; 7C57D
 push ebx	; 7C583
 call sub_903F0	; 7C584
 add esp, byte 0Ch	; 7C589

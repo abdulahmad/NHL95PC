@@ -16,7 +16,7 @@ extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScre
 extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, MessageBox, LoadRink, WaitClickTimeout, ShowLoadingScreen
 extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern GetInputEvent, ClearInputQueue, InputInstall, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm
-extern MenuHitTest, FadePalStep, GameLineEditor, InstantReplay, sub_805C4, sub_836E4, sub_837A8, sub_846F0
+extern MenuHitTest, FadePalStep, GameLineEditor, InstantReplay, SetModeMenuLabels, sub_836E4, sub_837A8, sub_846F0
 extern sub_84704, sub_84715, sub_84729, sub_8BC15, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0
 extern sub_9061C, sub_91370, sub_91400, MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
@@ -473,7 +473,7 @@ mov dword [dword esp+0404h], edx	; 19376
 mov dword [dword esp+03F4h], edx	; 1937D
 mov dword [dword esp+03F0h], 5DCh	; 19384
 mov eax, dword [gamemode]	; 1938F
-call sub_805C4	; 19394
+call SetModeMenuLabels	; 19394
 mov eax, dword [esp]	; 19399
 add eax, byte 3	; 1939C
 call SetScreenTitle	; 1939F

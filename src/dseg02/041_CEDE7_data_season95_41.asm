@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_CEDE7 progbits alloc noexec write align=1
-extern asc_CDBDC, MenuModeSettings, unk_CDC1E, unk_CDC80, unk_CEEAF
+extern modesetlabel, MenuModeSettings, unk_CDC1E, unk_CDC80, unk_CEEAF
 global dword_CEDE7, dword_CEE07, unk_CEE4F
 dword_CEDE7:
 dd unk_CEE4F
@@ -17,7 +17,7 @@ db 06Bh,00h,00h,00h
 dd unk_CDC1E
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 06Ch,00h,00h,00h,0A9h,00h,00h,00h,07Eh,00h,00h,00h
-dd asc_CDBDC
+dd modesetlabel
 dd MenuModeSettings
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CEE4F:

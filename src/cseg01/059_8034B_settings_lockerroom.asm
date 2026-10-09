@@ -2,55 +2,42 @@
 bits 32
 %include "hockey.inc"
 section s_8034B progbits alloc exec nowrite align=1
-extern __CHK, asc_C3480, asc_C3489, asc_C348E, asc_C3493, asc_C3498, asc_C349D, asc_C34A2
-extern asc_C34A7, asc_C34AC, asc_C34B1, asc_C34B6, asc_C34BB, asc_C34C0, asc_C34C5, asc_C34CA
-extern asc_C3594, asc_C359C, asc_C35A3, asc_C35AF, asc_C35BA, asc_C35C3, asc_C35CC, asc_C35D1
-extern asc_C35D6, asc_C35DD, asc_C35E2, asc_C35EC, asc_C35F3, asc_C35FA, asc_C3604, asc_C3612
-extern asc_C3622, asc_C3627, asc_C362E, asc_C3638, asc_C363D, asc_C3644, asc_C364A, asc_C364F
-extern asc_C365A, asc_C3668, asc_C366F, asc_C3675, str_LAAtMTL, asc_CDBDC, asc_CDBE3
-extern asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_CDD5E, asc_CDD6B, asc_D20AC, asc_D20B7, asc_D20BF
-extern asc_D20C6, asc_D20D2, byte_C541B, musicon, byte_DC9D8, byte_DC9DD
+extern __CHK, str_Settings, str_On, str_Off, str_Acpt, str_Canc, str_Na01, str_Na03
+extern str_Na05, str_Pg01, str_Pg03, str_Pg05, str_Pg07, str_Pl05, str_Pl10, str_Pl20
+extern str_HomeBck, str_VisBck, str_HomeNameBck, str_VisNameBck, str_TitleBck, str_Lockroom, str_P01, str_Room
+extern str_JERSH, str_00002, str_JERSV, str_Accept, str_Cancel2, str_HomeTeam, str_VisitingTeam, str_ExhibitionGame
+extern str_Iff11, str_Jersey, str_Pointer20, str_Temp8, str_Buffer, str_Sound4, str_Dbx2, str_PCSpeaker
+extern str_SoundBlaster, str_ADLib, str_MT32, str_UltraSound, str_LAAtMTL, modesetlabel
+extern str_SportsCentral2, str_PlayoffTree2, str_Return, str_Exhibition2, str_Playoff, str_League2
+extern str_ShowLeague, str_Settings3, byte_C541B, musicon, byte_DC9D8, byte_DC9DD
 extern byte_DC9DF, byte_DC9E8, byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA21, byte_DCA28
 extern byte_DCA29, byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_ED7CC, byte_ED8B5
 extern byte_ED95D, byte_ED991, byte_ED9A9, gamemode, gameopts, ctl1team, ctl2team, ctl1side
-extern ctl2side, dword_C541F, teamdivflags, songdata, cont2team, HomeTeam, dword_D20A8, dword_D20E0
-extern dword_D2150, dword_D223C, dword_D227C, dword_D2280, dword_D2284, dword_D2288, dword_D229C, dword_D22A0
-extern dword_D22A4, dword_D22A8, dword_D22AC, dword_D22B0, dword_D22B4, dword_D22BC, dword_D22C0, dword_D22C4
-extern dword_D22C8, dword_D22CC, dword_D22D0, dword_D22D4, dword_D22DC, dword_D22E0, dword_D22EC, dword_D22F0
-extern dword_D23A3, dword_D23A7, dword_D23AB, dword_D23AF, musichandle, dword_D2435, dword_D2C6B, musicslot
-extern dword_D8B68, dword_D8B74, dword_DC230, pointerspr, fdlg_cancel, ptrupdatefn, setbits, dword_ED75C
-extern dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C
-extern chkoffspr, dword_ED784, chkonspr, dword_ED78C, dword_ED790, dword_ED794, dword_ED798, dword_ED79C
-extern dword_ED7A0, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
+extern ctl2side, dword_C541F, teamdivflags, songdata, cont2team, HomeTeam, settingsfile, dword_D20E0
+extern dword_D2150, dword_D223C, lockerrects
+extern dword_D22DC, dword_D22E0, dword_D22EC, dword_D22F0
+extern soundcardrects, musichandle, dword_D2435, dword_D2C6B, musicslot
+extern dword_D8B68, dword_D8B74, dword_DC230, pointerspr, fdlg_cancel, ptrupdatefn, setbits, pl20spr
+extern pl05spr, pl10spr, pg07spr, na05spr, pg01spr, acptspr, na03spr, pg03spr
+extern chkoffspr, pg05spr, chkonspr, na01spr, titlebckspr, homebckspr, homenamebckspr, visbckspr
+extern visnamebckspr, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
 extern sprintf_, strcpy_, strncpy_, MakePath, SetTextColors, PrintShadowText, PrintOutlinedText, ShowLoadingScreen
 extern FadeOutPalCycle, GetInputEvent, ClearInputQueue, FadePalStep, sub_8291E, WriteCurModeState, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_912C8, sub_91400
 extern sub_91964, sub_91FE0, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8, sub_B4DD4
-extern sub_B4FAC, sub_B5DB0, unk_C35E9, VisTeam
-global jpt_804FF, jpt_81C2E, loc_80382, loc_804F3, loc_8056C, loc_80571, loc_80574, loc_80582
-global loc_80592, loc_8059E, loc_805A8, loc_805B0, loc_805E1, loc_8061C, loc_8064F, loc_8067E
-global loc_80827, loc_8082A, loc_8086C, loc_808A1, loc_808CE, loc_80A95, loc_80A97, loc_80AD7
-global loc_80AD9, loc_80B15, loc_80B3A, loc_80B3F, loc_80B41, loc_80B44, loc_80BA3, loc_80CA3
-global loc_80CA5, loc_80CE1, loc_80D01, loc_80D0C, loc_80D9F, loc_80DA1, loc_80DDD, loc_80DFD
-global loc_80E08, loc_80E59, loc_80F17, loc_80F57, loc_80F65, loc_80FEF, loc_8102C, loc_8103A
-global loc_810C9, loc_8110E, loc_8111C, loc_811A7, loc_811E8, loc_811F6, loc_813BD, loc_813DF
-global loc_81423, loc_81462, loc_81479, loc_81535, loc_81564, loc_815AB, loc_815B0, loc_815EF
-global loc_815F1, loc_81629, loc_81644, loc_8164B, loc_81656, loc_81658, loc_81673, loc_8167A
-global loc_81683, loc_816C8, loc_816FF, loc_817BA, loc_817CC, loc_81832, loc_81898, loc_81920
-global loc_8198D, loc_819FD, loc_81A02, loc_81A63, loc_81AC4, loc_81B47, loc_81BAF, loc_81C1A
-global loc_81D69, loc_81D72, loc_81D9A, loc_81DD3, loc_81E33, loc_81E5C, loc_81EC9, loc_81EF8
-global loc_81F17, loc_81F20, loc_81F69, loc_81F98, loc_81FB4, loc_81FBD, loc_81FE9, loc_82003
-global loc_8200B, loc_8204D, loc_82081, loc_820A5, loc_820B3, loc_820E7, loc_82116, loc_8212D
-global loc_8213C, loc_82188, loc_821D5, loc_821EB, loc_82210, loc_82226, loc_8223F, loc_82244
-global loc_8224C, loc_82265, loc_8226A, loc_82272, loc_8229D, loc_822E2, loc_8230F, loc_82311
-global loc_8231C, loc_82342, loc_82387, loc_823B3, loc_823BD, loc_823E3, loc_82428, loc_824D6
-global loc_8259A, loc_825B3, loc_8264A, loc_8264C, loc_826AA, loc_826CC, loc_826D1, loc_82716
-global loc_8273C, loc_82762, loc_82788, loc_827AE, loc_827CB, loc_827FA, loc_82815, loc_82837
-global loc_8283C, loc_82881, loc_828A7, loc_828CD, loc_828F3, loc_82919, sub_8034B, sub_8050F
-global sub_805C4, sub_80682, sub_80830, sub_80A9D, sub_80AA4, sub_81520, sub_8156F, sub_81C4E
-global sub_8245A, sub_824F8, sub_82579, sub_8261C, sub_82690, sub_827B3, sub_82805
-sub_8034B:
+extern sub_B4FAC, sub_B5DB0, str_Vs, VisTeam
+global DrawSettingsHeading_jt, LockerRoomLoop_jt, DrawSettingsHeading_n0, DrawSettingsHeading_n1
+global DrawPanel3D_ret
+global LockerRoomLoop_n2
+global LockerRoomLoop_n0
+global LockerRoomLoop_n4, LockerRoomLoop_n1
+global LockerRoomLoop_n6
+global LockerRoomLoop_n7, DrawSelBox_common
+global LoadSettingsShapes, DrawSettingsHeading
+global SetModeMenuLabels, DrawPanel3D, LockerRoomScreen, LockerStub, DrawLockerRoom, LockerHitTest, DrawLockerJersey, LockerRoomLoop
+global DrawSelBoxOn, DrawSelBoxOff, MenuSoundSettings, DrawSoundCardDlg, DrawSoundCardOpts, SoundCardHitTest, RedrawSoundCardOpts
+LoadSettingsShapes:
 push dword 44h	; 8034B
 call __CHK	; 80350
 push ebx	; 80355
@@ -60,15 +47,15 @@ push esi	; 80358
 push edi	; 80359
 push ebp	; 8035A
 sub esp, byte 20h	; 8035B
-mov edx, dword [dword_D20A8]	; 8035E
+mov edx, dword [settingsfile]	; 8035E
 test edx, edx	; 80364
-jne near loc_804F3	; 80366
+jne near .x	; 80366
 xor ecx, ecx	; 8036C
-mov ebx, asc_C3480	; 8036E
+mov ebx, str_Settings	; 8036E
 cmp byte [byte_ED991], 1	; 80373
-jne short loc_80382	; 8037A
+jne short .1	; 8037A
 mov edx, dword [dword_D2C6B]	; 8037C
-loc_80382:
+.1:
 mov eax, esp	; 80382
 call MakePath	; 80384
 push byte 0	; 80389
@@ -76,91 +63,91 @@ lea eax, [byte esp+04h]	; 8038B
 push eax	; 8038F
 call sub_8E83C	; 80390
 add esp, byte 8	; 80395
-mov dword [dword_D20A8], eax	; 80398
-push asc_C3489	; 8039D
+mov dword [settingsfile], eax	; 80398
+push str_On	; 8039D
 push eax	; 803A2
 call sub_B30B4	; 803A3
 add esp, byte 8	; 803A8
 mov dword [chkonspr], eax	; 803AB
-push asc_C348E	; 803B0
-mov ebx, dword [dword_D20A8]	; 803B5
+push str_Off	; 803B0
+mov ebx, dword [settingsfile]	; 803B5
 push ebx	; 803BB
 call sub_B30B4	; 803BC
 add esp, byte 8	; 803C1
 mov dword [chkoffspr], eax	; 803C4
-push asc_C3493	; 803C9
-mov ecx, dword [dword_D20A8]	; 803CE
+push str_Acpt	; 803C9
+mov ecx, dword [settingsfile]	; 803CE
 push ecx	; 803D4
 call sub_B30B4	; 803D5
 add esp, byte 8	; 803DA
-mov dword [dword_ED774], eax	; 803DD
-push asc_C3498	; 803E2
-mov esi, dword [dword_D20A8]	; 803E7
+mov dword [acptspr], eax	; 803DD
+push str_Canc	; 803E2
+mov esi, dword [settingsfile]	; 803E7
 push esi	; 803ED
 call sub_B30B4	; 803EE
 add esp, byte 8	; 803F3
 mov dword [fdlg_cancel], eax	; 803F6
-push asc_C349D	; 803FB
-mov edi, dword [dword_D20A8]	; 80400
+push str_Na01	; 803FB
+mov edi, dword [settingsfile]	; 80400
 push edi	; 80406
 call sub_B30B4	; 80407
 add esp, byte 8	; 8040C
-mov dword [dword_ED78C], eax	; 8040F
-push asc_C34A2	; 80414
-mov ebp, dword [dword_D20A8]	; 80419
+mov dword [na01spr], eax	; 8040F
+push str_Na03	; 80414
+mov ebp, dword [settingsfile]	; 80419
 push ebp	; 8041F
 call sub_B30B4	; 80420
 add esp, byte 8	; 80425
-mov dword [dword_ED778], eax	; 80428
-push asc_C34A7	; 8042D
-mov eax, dword [dword_D20A8]	; 80432
+mov dword [na03spr], eax	; 80428
+push str_Na05	; 8042D
+mov eax, dword [settingsfile]	; 80432
 push eax	; 80437
 call sub_B30B4	; 80438
 add esp, byte 8	; 8043D
-mov dword [dword_ED76C], eax	; 80440
-push asc_C34AC	; 80445
-mov edx, dword [dword_D20A8]	; 8044A
+mov dword [na05spr], eax	; 80440
+push str_Pg01	; 80445
+mov edx, dword [settingsfile]	; 8044A
 push edx	; 80450
 call sub_B30B4	; 80451
 add esp, byte 8	; 80456
-mov dword [dword_ED770], eax	; 80459
-push asc_C34B1	; 8045E
-mov ebx, dword [dword_D20A8]	; 80463
+mov dword [pg01spr], eax	; 80459
+push str_Pg03	; 8045E
+mov ebx, dword [settingsfile]	; 80463
 push ebx	; 80469
 call sub_B30B4	; 8046A
 add esp, byte 8	; 8046F
-mov dword [dword_ED77C], eax	; 80472
-push asc_C34B6	; 80477
-mov ecx, dword [dword_D20A8]	; 8047C
+mov dword [pg03spr], eax	; 80472
+push str_Pg05	; 80477
+mov ecx, dword [settingsfile]	; 8047C
 push ecx	; 80482
 call sub_B30B4	; 80483
 add esp, byte 8	; 80488
-mov dword [dword_ED784], eax	; 8048B
-push asc_C34BB	; 80490
-mov esi, dword [dword_D20A8]	; 80495
+mov dword [pg05spr], eax	; 8048B
+push str_Pg07	; 80490
+mov esi, dword [settingsfile]	; 80495
 push esi	; 8049B
 call sub_B30B4	; 8049C
 add esp, byte 8	; 804A1
-mov dword [dword_ED768], eax	; 804A4
-push asc_C34C0	; 804A9
-mov edi, dword [dword_D20A8]	; 804AE
+mov dword [pg07spr], eax	; 804A4
+push str_Pl05	; 804A9
+mov edi, dword [settingsfile]	; 804AE
 push edi	; 804B4
 call sub_B30B4	; 804B5
 add esp, byte 8	; 804BA
-mov dword [dword_ED760], eax	; 804BD
-push asc_C34C5	; 804C2
-mov ebp, dword [dword_D20A8]	; 804C7
+mov dword [pl05spr], eax	; 804BD
+push str_Pl10	; 804C2
+mov ebp, dword [settingsfile]	; 804C7
 push ebp	; 804CD
 call sub_B30B4	; 804CE
 add esp, byte 8	; 804D3
-mov dword [dword_ED764], eax	; 804D6
-push asc_C34CA	; 804DB
-mov eax, dword [dword_D20A8]	; 804E0
+mov dword [pl10spr], eax	; 804D6
+push str_Pl20	; 804DB
+mov eax, dword [settingsfile]	; 804E0
 push eax	; 804E5
 call sub_B30B4	; 804E6
 add esp, byte 8	; 804EB
-mov dword [dword_ED75C], eax	; 804EE
-loc_804F3:
+mov dword [pl20spr], eax	; 804EE
+.x:
 add esp, byte 20h	; 804F3
 pop ebp	; 804F6
 pop edi	; 804F7
@@ -170,12 +157,12 @@ pop ecx	; 804FA
 pop ebx	; 804FB
 ret	; 804FC
 db 08Bh,0C0h
-jpt_804FF:
-dd loc_8056C
-dd loc_80571
-dd loc_8056C
-dd loc_80571
-sub_8050F:
+DrawSettingsHeading_jt:
+dd DrawSettingsHeading_n0
+dd DrawSettingsHeading_n1
+dd DrawSettingsHeading_n0
+dd DrawSettingsHeading_n1
+DrawSettingsHeading:
 push dword 60h	; 8050F
 call __CHK	; 80514
 push esi	; 80519
@@ -203,43 +190,43 @@ add edi, byte 16h	; 80555
 mov eax, dword [byte esp+040h]	; 80558
 sub eax, byte 3	; 8055C
 cmp eax, byte 3	; 8055F
-ja short loc_80574	; 80562
-jmp dword [nosplit cs:eax*4+jpt_804FF]	; 80564
-loc_8056C:
+ja short DrawSettingsHeading_n1.1	; 80562
+jmp dword [nosplit cs:eax*4+DrawSettingsHeading_jt]	; 80564
+DrawSettingsHeading_n0:
 add esi, byte 59h	; 8056C
-jmp short loc_80574	; 8056F
-loc_80571:
+jmp short DrawSettingsHeading_n1.1	; 8056F
+DrawSettingsHeading_n1:
 add esi, byte 51h	; 80571
-loc_80574:
+.1:
 cmp ebp, byte 1	; 80574
-jb short loc_80582	; 80577
-jbe short loc_80592	; 80579
+jb short .2	; 80577
+jbe short .3	; 80579
 cmp ebp, byte 2	; 8057B
-je short loc_8059E	; 8057E
-jmp short loc_805B0	; 80580
-loc_80582:
+je short .4	; 8057E
+jmp short .6	; 80580
+.2:
 test ebp, ebp	; 80582
-jne short loc_805B0	; 80584
+jne short .6	; 80584
 push edi	; 80586
 sub esi, byte 41h	; 80587
 push esi	; 8058A
-push asc_D20AC	; 8058B
-jmp short loc_805A8	; 80590
-loc_80592:
+push str_Exhibition2	; 8058B
+jmp short .5	; 80590
+.3:
 push edi	; 80592
 sub esi, byte 32h	; 80593
 push esi	; 80596
-push asc_D20B7	; 80597
-jmp short loc_805A8	; 8059C
-loc_8059E:
+push str_Playoff	; 80597
+jmp short .5	; 8059C
+.4:
 push edi	; 8059E
 sub esi, byte 2Fh	; 8059F
 push esi	; 805A2
-push asc_D20BF	; 805A3
-loc_805A8:
+push str_League2	; 805A3
+.5:
 call sub_91964	; 805A8
 add esp, byte 0Ch	; 805AD
-loc_805B0:
+.6:
 mov eax, esp	; 805B0
 push eax	; 805B2
 call sub_8EA00	; 805B3
@@ -249,67 +236,67 @@ pop ebp	; 805BE
 pop edi	; 805BF
 pop esi	; 805C0
 ret 4	; 805C1
-sub_805C4:
+SetModeMenuLabels:
 push dword 10h	; 805C4
 call __CHK	; 805C9
 push ecx	; 805CE
 push edx	; 805CF
 push edi	; 805D0
 cmp eax, byte 1	; 805D1
-jb short loc_805E1	; 805D4
-jbe short loc_8061C	; 805D6
+jb short .1	; 805D4
+jbe short .2	; 805D6
 cmp eax, byte 2	; 805D8
-je short loc_8064F	; 805DB
+je short .3	; 805DB
 pop edi	; 805DD
 pop edx	; 805DE
 pop ecx	; 805DF
 ret	; 805E0
-loc_805E1:
+.1:
 test eax, eax	; 805E1
-jne near loc_8067E	; 805E3
-mov edx, asc_D20AC	; 805E9
-mov eax, asc_CDBDC	; 805EE
+jne near .x	; 805E3
+mov edx, str_Exhibition2	; 805E9
+mov eax, modesetlabel	; 805EE
 call strcpy_	; 805F3
-mov edx, asc_D20D2	; 805F8
-mov eax, asc_CDBE6	; 805FD
+mov edx, str_Settings3	; 805F8
+mov eax, modesetlabel+0Ah	; 805FD
 call strcpy_	; 80602
-mov edi, asc_CDD4F	; 80607
+mov edi, str_SportsCentral2	; 80607
 mov dword [off_CECFF], edi	; 8060C
 mov dword [off_CED3F], edi	; 80612
 pop edi	; 80618
 pop edx	; 80619
 pop ecx	; 8061A
 ret	; 8061B
-loc_8061C:
-mov edx, asc_D20B7	; 8061C
-mov eax, asc_CDBDC	; 80621
+.2:
+mov edx, str_Playoff	; 8061C
+mov eax, modesetlabel	; 80621
 call strcpy_	; 80626
-mov edx, asc_D20D2	; 8062B
-mov eax, asc_CDBE3	; 80630
+mov edx, str_Settings3	; 8062B
+mov eax, modesetlabel+7	; 80630
 call strcpy_	; 80635
-mov ecx, asc_CDD5E	; 8063A
+mov ecx, str_PlayoffTree2	; 8063A
 mov dword [off_CECFF], ecx	; 8063F
 mov dword [off_CED3F], ecx	; 80645
 pop edi	; 8064B
 pop edx	; 8064C
 pop ecx	; 8064D
 ret	; 8064E
-loc_8064F:
-mov edx, asc_D20C6	; 8064F
-mov eax, asc_CDBDC	; 80654
+.3:
+mov edx, str_ShowLeague	; 8064F
+mov eax, modesetlabel	; 80654
 call strcpy_	; 80659
-mov edx, asc_D20D2	; 8065E
-mov eax, asc_CDBE7	; 80663
+mov edx, str_Settings3	; 8065E
+mov eax, modesetlabel+0Bh	; 80663
 call strcpy_	; 80668
-mov edx, asc_CDD6B	; 8066D
+mov edx, str_Return	; 8066D
 mov dword [off_CECFF], edx	; 80672
 mov dword [off_CED3F], edx	; 80678
-loc_8067E:
+.x:
 pop edi	; 8067E
 pop edx	; 8067F
 pop ecx	; 80680
 ret	; 80681
-sub_80682:
+DrawPanel3D:
 push dword 38h	; 80682
 call __CHK	; 80687
 push esi	; 8068C
@@ -365,7 +352,7 @@ push edi	; 806EF
 call sub_B4FAC	; 806F0
 add esp, byte 14h	; 806F5
 cmp dword [byte esp+024h], byte 0	; 806F8
-je near loc_80827	; 806FD
+je near .1	; 806FD
 push byte 77h	; 80703
 mov eax, esi	; 80705
 add eax, byte 2	; 80707
@@ -474,14 +461,14 @@ push esi	; 8081D
 push edi	; 8081E
 call sub_B5DB0	; 8081F
 add esp, byte 0Ch	; 80824
-loc_80827:
+.1:
 add esp, byte 14h	; 80827
-loc_8082A:
+DrawPanel3D_ret:
 pop ebp	; 8082A
 pop edi	; 8082B
 pop esi	; 8082C
 ret 4	; 8082D
-sub_80830:
+LockerRoomScreen:
 push dword 368h	; 80830
 call __CHK	; 80835
 push ebx	; 8083A
@@ -492,14 +479,14 @@ push edi	; 8083E
 push ebp	; 8083F
 sub esp, 340h	; 80840
 cmp byte [musicon], 0	; 80846
-je short loc_8086C	; 8084D
+je short .1	; 8084D
 cmp dword [songdata], byte 0	; 8084F
-je short loc_8086C	; 80856
+je short .1	; 80856
 mov eax, dword [musichandle]	; 80858
 mov ebx, 64h	; 8085D
 mov edx, 3	; 80862
 call sub_8FCDF	; 80867
-loc_8086C:
+.1:
 mov eax, esp	; 8086C
 push eax	; 8086E
 push dword 100h	; 8086F
@@ -511,23 +498,23 @@ mov edx, esp	; 80883
 mov eax, 1	; 80885
 call FadePalStep	; 8088A
 cmp byte [musicon], 0	; 8088F
-je short loc_808CE	; 80896
+je short .3	; 80896
 cmp dword [songdata], byte 0	; 80898
-je short loc_808CE	; 8089F
-loc_808A1:
+je short .3	; 8089F
+.2:
 mov eax, dword [musicslot-3]	; 808A1
 sar eax, 18h	; 808A6
 mov edx, 3	; 808A9
 call sub_8FC8A	; 808AE
 test eax, eax	; 808B3
-je short loc_808A1	; 808B5
+je short LockerRoomScreen.2	; 808B5
 mov ecx, dword [songdata]	; 808B7
 push ecx	; 808BD
 call sub_8D2F0	; 808BE
 add esp, byte 4	; 808C3
 xor esi, esi	; 808C6
 mov dword [songdata], esi	; 808C8
-loc_808CE:
+.3:
 call ShowLoadingScreen	; 808CE
 lea eax, [dword esp+0300h]	; 808D3
 push eax	; 808DA
@@ -535,78 +522,78 @@ call sub_8E9E8	; 808DB
 add esp, byte 4	; 808E0
 push byte 20h	; 808E3
 push dword 1B811h	; 808E5
-push asc_C3594	; 808EA
+push str_HomeBck	; 808EA
 call sub_8CCA8	; 808EF
 add esp, byte 0Ch	; 808F4
-mov dword [dword_ED794], eax	; 808F7
+mov dword [homebckspr], eax	; 808F7
 push byte 20h	; 808FC
 push dword 1A6F9h	; 808FE
-push asc_C359C	; 80903
+push str_VisBck	; 80903
 call sub_8CCA8	; 80908
 add esp, byte 0Ch	; 8090D
-mov dword [dword_ED79C], eax	; 80910
+mov dword [visbckspr], eax	; 80910
 mov esi, dword [pointerspr]	; 80915
-mov edi, dword [dword_ED794]	; 8091B
+mov edi, dword [homebckspr]	; 8091B
 movsd	; 80921
 movsd	; 80922
 movsd	; 80923
 movsd	; 80924
 movsb	; 80925
 mov esi, dword [pointerspr]	; 80926
-mov edi, dword [dword_ED79C]	; 8092C
+mov edi, dword [visbckspr]	; 8092C
 movsd	; 80932
 movsd	; 80933
 movsd	; 80934
 movsd	; 80935
 movsb	; 80936
-mov eax, dword [dword_ED794]	; 80937
+mov eax, dword [homebckspr]	; 80937
 mov word [byte eax+04h], 140h	; 8093C
-mov eax, dword [dword_ED79C]	; 80942
+mov eax, dword [visbckspr]	; 80942
 mov word [byte eax+04h], 138h	; 80947
-mov eax, dword [dword_ED794]	; 8094D
+mov eax, dword [homebckspr]	; 8094D
 mov word [byte eax+06h], 160h	; 80952
-mov eax, dword [dword_ED79C]	; 80958
+mov eax, dword [visbckspr]	; 80958
 mov word [byte eax+06h], 15Bh	; 8095D
 push byte 20h	; 80963
 push dword 0A07h	; 80965
-push asc_C35A3	; 8096A
+push str_HomeNameBck	; 8096A
 call sub_8CCA8	; 8096F
 add esp, byte 0Ch	; 80974
-mov dword [dword_ED798], eax	; 80977
+mov dword [homenamebckspr], eax	; 80977
 push byte 20h	; 8097C
 push dword 0A07h	; 8097E
-push asc_C35AF	; 80983
+push str_VisNameBck	; 80983
 call sub_8CCA8	; 80988
 add esp, byte 0Ch	; 8098D
-mov dword [dword_ED7A0], eax	; 80990
+mov dword [visnamebckspr], eax	; 80990
 mov esi, dword [pointerspr]	; 80995
-mov edi, dword [dword_ED798]	; 8099B
+mov edi, dword [homenamebckspr]	; 8099B
 movsd	; 809A1
 movsd	; 809A2
 movsd	; 809A3
 movsd	; 809A4
 movsb	; 809A5
 mov esi, dword [pointerspr]	; 809A6
-mov edi, dword [dword_ED7A0]	; 809AC
+mov edi, dword [visnamebckspr]	; 809AC
 movsd	; 809B2
 movsd	; 809B3
 movsd	; 809B4
 movsd	; 809B5
 movsb	; 809B6
-mov eax, dword [dword_ED798]	; 809B7
+mov eax, dword [homenamebckspr]	; 809B7
 mov word [byte eax+04h], 0AAh	; 809BC
-mov eax, dword [dword_ED7A0]	; 809C2
+mov eax, dword [visnamebckspr]	; 809C2
 mov word [byte eax+04h], 0AAh	; 809C7
-mov eax, dword [dword_ED798]	; 809CD
+mov eax, dword [homenamebckspr]	; 809CD
 mov word [byte eax+06h], 0Fh	; 809D2
-mov eax, dword [dword_ED7A0]	; 809D8
+mov eax, dword [visnamebckspr]	; 809D8
 mov word [byte eax+06h], 0Fh	; 809DD
 push byte 20h	; 809E3
 push dword 35C7h	; 809E5
-push asc_C35BA	; 809EA
+push str_TitleBck	; 809EA
 call sub_8CCA8	; 809EF
 add esp, byte 0Ch	; 809F4
-mov dword [dword_ED790], eax	; 809F7
+mov dword [titlebckspr], eax	; 809F7
 mov esi, dword [pointerspr]	; 809FC
 mov edi, eax	; 80A02
 movsd	; 80A04
@@ -614,30 +601,30 @@ movsd	; 80A05
 movsd	; 80A06
 movsd	; 80A07
 movsb	; 80A08
-mov eax, dword [dword_ED790]	; 80A09
+mov eax, dword [titlebckspr]	; 80A09
 mov word [byte eax+04h], 226h	; 80A0E
-mov eax, dword [dword_ED790]	; 80A14
+mov eax, dword [titlebckspr]	; 80A14
 mov word [byte eax+06h], 19h	; 80A19
-call sub_80AA4	; 80A1F
-call sub_81C4E	; 80A24
+call DrawLockerRoom	; 80A1F
+call LockerRoomLoop	; 80A24
 mov esi, eax	; 80A29
-mov edi, dword [dword_ED790]	; 80A2B
+mov edi, dword [titlebckspr]	; 80A2B
 push edi	; 80A31
 call jctime	; 80A32
 add esp, byte 4	; 80A37
-mov ebp, dword [dword_ED798]	; 80A3A
+mov ebp, dword [homenamebckspr]	; 80A3A
 push ebp	; 80A40
 call jctime	; 80A41
 add esp, byte 4	; 80A46
-mov eax, dword [dword_ED7A0]	; 80A49
+mov eax, dword [visnamebckspr]	; 80A49
 push eax	; 80A4E
 call jctime	; 80A4F
 add esp, byte 4	; 80A54
-mov edx, dword [dword_ED794]	; 80A57
+mov edx, dword [homebckspr]	; 80A57
 push edx	; 80A5D
 call jctime	; 80A5E
 add esp, byte 4	; 80A63
-mov ebx, dword [dword_ED79C]	; 80A66
+mov ebx, dword [visbckspr]	; 80A66
 push ebx	; 80A6C
 call jctime	; 80A6D
 add esp, byte 4	; 80A72
@@ -646,14 +633,14 @@ push eax	; 80A7C
 call sub_8EA00	; 80A7D
 add esp, byte 4	; 80A82
 cmp dword [gamemode], byte 0	; 80A85
-jne short loc_80A95	; 80A8C
+jne short .4	; 80A8C
 mov eax, 2	; 80A8E
-jmp short loc_80A97	; 80A93
-loc_80A95:
+jmp short .5	; 80A93
+.4:
 mov eax, esi	; 80A95
-loc_80A97:
+.5:
 add esp, 340h	; 80A97
-sub_80A9D:
+LockerStub:
 pop ebp	; 80A9D
 pop edi	; 80A9E
 pop esi	; 80A9F
@@ -661,7 +648,7 @@ pop edx	; 80AA0
 pop ecx	; 80AA1
 pop ebx	; 80AA2
 ret	; 80AA3
-sub_80AA4:
+DrawLockerRoom:
 push dword 384h	; 80AA4
 call __CHK	; 80AA9
 push ebx	; 80AAE
@@ -673,14 +660,14 @@ push ebp	; 80AB3
 sub esp, 354h	; 80AB4
 call sub_B4BA8	; 80ABA
 xor ecx, ecx	; 80ABF
-mov ebx, asc_C35C3	; 80AC1
+mov ebx, str_Lockroom	; 80AC1
 cmp byte [byte_ED8B5], 1	; 80AC6
-jne short loc_80AD7	; 80ACD
+jne short .1	; 80ACD
 mov edx, dword [dword_D2C6B]	; 80ACF
-jmp short loc_80AD9	; 80AD5
-loc_80AD7:
+jmp short .2	; 80AD5
+.1:
 xor edx, edx	; 80AD7
-loc_80AD9:
+.2:
 lea eax, [dword esp+0300h]	; 80AD9
 call MakePath	; 80AE0
 push byte 0	; 80AE5
@@ -689,7 +676,7 @@ push eax	; 80AEE
 call sub_8E83C	; 80AEF
 add esp, byte 8	; 80AF4
 mov esi, eax	; 80AF7
-push asc_C35CC	; 80AF9
+push str_P01	; 80AF9
 push eax	; 80AFE
 call sub_B30B4	; 80AFF
 add esp, byte 8	; 80B04
@@ -697,33 +684,33 @@ lea edx, [byte eax+010h]	; 80B07
 xor ebx, ebx	; 80B0A
 mov dword [dword esp+0350h], ebx	; 80B0C
 mov bh, 3Fh	; 80B13
-loc_80B15:
+.3:
 mov eax, dword [dword esp+0350h]	; 80B15
 add eax, edx	; 80B1C
 mov ecx, dword [dword esp+0350h]	; 80B1E
 cmp ecx, 168h	; 80B25
-jge short loc_80B3F	; 80B2B
+jge short .5	; 80B2B
 mov bl, byte [eax]	; 80B2D
 cmp bl, 3Bh	; 80B2F
-jge short loc_80B3A	; 80B32
+jge short .4	; 80B32
 mov al, bl	; 80B34
 add al, 5	; 80B36
-jmp short loc_80B41	; 80B38
-loc_80B3A:
+jmp short .6	; 80B38
+.4:
 mov byte [esp+ecx], bh	; 80B3A
-jmp short loc_80B44	; 80B3D
-loc_80B3F:
+jmp short .7	; 80B3D
+.5:
 mov al, byte [eax]	; 80B3F
-loc_80B41:
+.6:
 mov byte [esp+ecx], al	; 80B41
-loc_80B44:
+.7:
 mov edi, dword [dword esp+0350h]	; 80B44
 inc edi	; 80B4B
 mov dword [dword esp+0350h], edi	; 80B4C
 cmp edi, 180h	; 80B53
-jl short loc_80B15	; 80B59
+jl short DrawLockerRoom.3	; 80B59
 call FadeOutPalCycle	; 80B5B
-push asc_C35D1	; 80B60
+push str_Room	; 80B60
 push esi	; 80B65
 call sub_B30B4	; 80B66
 add esp, byte 8	; 80B6B
@@ -738,49 +725,49 @@ mov ecx, 1E0h	; 80B82
 mov ebx, 27Fh	; 80B87
 mov edx, 1A7h	; 80B8C
 xor eax, eax	; 80B91
-call sub_80682	; 80B93
+call DrawPanel3D	; 80B93
 mov dword [dword esp+0350h], 2	; 80B98
-loc_80BA3:
+.8:
 push byte 0	; 80BA3
 mov eax, dword [dword esp+0354h]	; 80BA5
 shl eax, 4	; 80BAC
-mov ecx, dword [dword eax+dword_D2288]	; 80BAF
-mov ebx, dword [dword eax+dword_D2284]	; 80BB5
-mov edx, dword [dword eax+dword_D2280]	; 80BBB
-mov eax, dword [dword eax+dword_D227C]	; 80BC1
-call sub_80682	; 80BC7
+mov ecx, dword [dword eax+lockerrects+0Ch]	; 80BAF
+mov ebx, dword [dword eax+lockerrects+8]	; 80BB5
+mov edx, dword [dword eax+lockerrects+4]	; 80BBB
+mov eax, dword [dword eax+lockerrects]	; 80BC1
+call DrawPanel3D	; 80BC7
 mov edx, dword [dword esp+0350h]	; 80BCC
 inc edx	; 80BD3
 mov dword [dword esp+0350h], edx	; 80BD4
 cmp edx, byte 8	; 80BDB
-jl short loc_80BA3	; 80BDE
+jl short DrawLockerRoom.8	; 80BDE
 push byte 11h	; 80BE0
 push byte 2Dh	; 80BE2
-mov ecx, dword [dword_ED790]	; 80BE4
+mov ecx, dword [titlebckspr]	; 80BE4
 push ecx	; 80BEA
 call sub_91400	; 80BEB
 add esp, byte 0Ch	; 80BF0
 push byte 45h	; 80BF3
 push byte 0Ah	; 80BF5
-mov esi, dword [dword_ED794]	; 80BF7
+mov esi, dword [homebckspr]	; 80BF7
 push esi	; 80BFD
 call sub_91400	; 80BFE
 add esp, byte 0Ch	; 80C03
 push byte 4Ah	; 80C06
 push dword 146h	; 80C08
-mov edi, dword [dword_ED79C]	; 80C0D
+mov edi, dword [visbckspr]	; 80C0D
 push edi	; 80C13
 call sub_91400	; 80C14
 add esp, byte 0Ch	; 80C19
 push byte 2Ch	; 80C1C
 push dword 85h	; 80C1E
-mov ebp, dword [dword_ED798]	; 80C23
+mov ebp, dword [homenamebckspr]	; 80C23
 push ebp	; 80C29
 call sub_91400	; 80C2A
 add esp, byte 0Ch	; 80C2F
 push byte 2Ch	; 80C32
 push dword 152h	; 80C34
-mov eax, dword [dword_ED7A0]	; 80C39
+mov eax, dword [visnamebckspr]	; 80C39
 push eax	; 80C3E
 call sub_91400	; 80C3F
 add esp, byte 0Ch	; 80C44
@@ -789,7 +776,7 @@ sar eax, 10h	; 80C4C
 mov eax, dword [nosplit eax*4+dword_D20E0]	; 80C4F
 mov edx, dword [nosplit eax*4+off_D21C0]	; 80C56
 push edx	; 80C5D
-push asc_C35D6	; 80C5E
+push str_JERSH	; 80C5E
 lea eax, [dword esp+0348h]	; 80C63
 push eax	; 80C6A
 call sprintf_	; 80C6B
@@ -802,12 +789,12 @@ mov dword [dword esp+0350h], eax	; 80C82
 xor ecx, ecx	; 80C89
 lea ebx, [dword esp+0340h]	; 80C8B
 cmp byte [dword eax+byte_ED7CC], 1	; 80C92
-jne short loc_80CA3	; 80C99
+jne short .9	; 80C99
 mov edx, dword [dword_D2C6B]	; 80C9B
-jmp short loc_80CA5	; 80CA1
-loc_80CA3:
+jmp short .10	; 80CA1
+.9:
 xor edx, edx	; 80CA3
-loc_80CA5:
+.10:
 lea eax, [dword esp+0300h]	; 80CA5
 call MakePath	; 80CAC
 push byte 0	; 80CB1
@@ -816,33 +803,33 @@ push eax	; 80CBA
 call sub_8E83C	; 80CBB
 add esp, byte 8	; 80CC0
 mov esi, eax	; 80CC3
-push asc_C35CC	; 80CC5
+push str_P01	; 80CC5
 push eax	; 80CCA
 call sub_B30B4	; 80CCB
 add esp, byte 8	; 80CD0
 lea edx, [byte eax+010h]	; 80CD3
 mov dword [dword esp+0350h], 240h	; 80CD6
-loc_80CE1:
+.11:
 mov eax, dword [dword esp+0350h]	; 80CE1
 add eax, edx	; 80CE8
 mov bl, byte [eax]	; 80CEA
 cmp bl, 3Bh	; 80CEC
-jge short loc_80D01	; 80CEF
+jge short .12	; 80CEF
 mov al, bl	; 80CF1
 add al, 5	; 80CF3
 mov ebx, dword [dword esp+0350h]	; 80CF5
 mov byte [esp+ebx], al	; 80CFC
-jmp short loc_80D0C	; 80CFF
-loc_80D01:
+jmp short .13	; 80CFF
+.12:
 mov eax, dword [dword esp+0350h]	; 80D01
 mov byte [esp+eax], 3Fh	; 80D08
-loc_80D0C:
+.13:
 mov ecx, dword [dword esp+0350h]	; 80D0C
 inc ecx	; 80D13
 mov dword [dword esp+0350h], ecx	; 80D14
 cmp ecx, 300h	; 80D1B
-jl short loc_80CE1	; 80D21
-push asc_C35DD	; 80D23
+jl short DrawLockerRoom.11	; 80D21
+push str_00002	; 80D23
 push esi	; 80D28
 call sub_B30B4	; 80D29
 add esp, byte 8	; 80D2E
@@ -857,7 +844,7 @@ sar eax, 10h	; 80D48
 mov eax, dword [nosplit eax*4+dword_D20E0]	; 80D4B
 mov ebp, dword [nosplit eax*4+off_D21C0]	; 80D52
 push ebp	; 80D59
-push asc_C35E2	; 80D5A
+push str_JERSV	; 80D5A
 lea eax, [dword esp+0348h]	; 80D5F
 push eax	; 80D66
 call sprintf_	; 80D67
@@ -870,12 +857,12 @@ mov dword [dword esp+0350h], eax	; 80D7E
 xor ecx, ecx	; 80D85
 lea ebx, [dword esp+0340h]	; 80D87
 cmp byte [dword eax+byte_ED7CC], 1	; 80D8E
-jne short loc_80D9F	; 80D95
+jne short .14	; 80D95
 mov edx, dword [dword_D2C6B]	; 80D97
-jmp short loc_80DA1	; 80D9D
-loc_80D9F:
+jmp short .15	; 80D9D
+.14:
 xor edx, edx	; 80D9F
-loc_80DA1:
+.15:
 lea eax, [dword esp+0300h]	; 80DA1
 call MakePath	; 80DA8
 push byte 0	; 80DAD
@@ -884,33 +871,33 @@ push eax	; 80DB6
 call sub_8E83C	; 80DB7
 add esp, byte 8	; 80DBC
 mov esi, eax	; 80DBF
-push asc_C35CC	; 80DC1
+push str_P01	; 80DC1
 push eax	; 80DC6
 call sub_B30B4	; 80DC7
 add esp, byte 8	; 80DCC
 lea edx, [byte eax+010h]	; 80DCF
 mov dword [dword esp+0350h], 180h	; 80DD2
-loc_80DDD:
+.16:
 mov eax, dword [dword esp+0350h]	; 80DDD
 add eax, edx	; 80DE4
 mov bl, byte [eax]	; 80DE6
 cmp bl, 3Bh	; 80DE8
-jge short loc_80DFD	; 80DEB
+jge short .17	; 80DEB
 mov al, bl	; 80DED
 add al, 5	; 80DEF
 mov ebx, dword [dword esp+0350h]	; 80DF1
 mov byte [esp+ebx], al	; 80DF8
-jmp short loc_80E08	; 80DFB
-loc_80DFD:
+jmp short .18	; 80DFB
+.17:
 mov eax, dword [dword esp+0350h]	; 80DFD
 mov byte [esp+eax], 3Fh	; 80E04
-loc_80E08:
+.18:
 mov ebx, dword [dword esp+0350h]	; 80E08
 inc ebx	; 80E0F
 mov dword [dword esp+0350h], ebx	; 80E10
 cmp ebx, 240h	; 80E17
-jl short loc_80DDD	; 80E1D
-push asc_C35DD	; 80E1F
+jl short DrawLockerRoom.16	; 80E1D
+push str_00002	; 80E1F
 push esi	; 80E24
 call sub_B30B4	; 80E25
 add esp, byte 8	; 80E2A
@@ -924,17 +911,17 @@ mov edx, 62h	; 80E3F
 mov eax, 77h	; 80E44
 call SetTextColors	; 80E49
 mov dword [dword esp+0350h], 2	; 80E4E
-loc_80E59:
+.19:
 push byte 70h	; 80E59
 mov eax, dword [dword esp+0354h]	; 80E5B
 shl eax, 4	; 80E62
-mov edx, dword [dword eax+dword_D2288]	; 80E65
-mov edi, dword [dword eax+dword_D2280]	; 80E6B
+mov edx, dword [dword eax+lockerrects+0Ch]	; 80E65
+mov edi, dword [dword eax+lockerrects+4]	; 80E6B
 sub edx, edi	; 80E71
 dec edx	; 80E73
 push edx	; 80E74
-mov edx, dword [dword eax+dword_D2284]	; 80E75
-mov ebp, dword [dword eax+dword_D227C]	; 80E7B
+mov edx, dword [dword eax+lockerrects+8]	; 80E75
+mov ebp, dword [dword eax+lockerrects]	; 80E7B
 sub edx, ebp	; 80E81
 dec edx	; 80E83
 push edx	; 80E84
@@ -948,7 +935,7 @@ mov eax, dword [dword esp+0350h]	; 80E95
 inc eax	; 80E9C
 mov dword [dword esp+0350h], eax	; 80E9D
 cmp eax, byte 6	; 80EA4
-jl short loc_80E59	; 80EA7
+jl short DrawLockerRoom.19	; 80EA7
 mov ebx, dword [dword_D8B74]	; 80EA9
 push ebx	; 80EAF
 call sub_8EA18	; 80EB0
@@ -958,7 +945,7 @@ push byte 77h	; 80EBD
 call sub_8E9C0	; 80EBF
 add esp, byte 8	; 80EC4
 cmp dword [gamemode], byte 0	; 80EC7
-jne short loc_80F17	; 80ECE
+jne short .20	; 80ECE
 mov eax, dword [cont2team]	; 80ED0
 sar eax, 10h	; 80ED5
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 80ED8
@@ -969,15 +956,15 @@ sar edx, 1Fh	; 80EE9
 idiv ebx	; 80EEC
 mov dword [dword esp+0350h], edx	; 80EEE
 cmp edx, byte 1Ah	; 80EF5
-jl short loc_80F65	; 80EF8
+jl short .22	; 80EF8
 mov eax, dword [HomeTeam]	; 80EFA
 sar eax, 10h	; 80EFF
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 80F02
-jne short loc_80F65	; 80F09
+jne short .22	; 80F09
 mov edx, dword [dword esp+0350h]	; 80F0B
 add edx, byte 1Bh	; 80F12
-jmp short loc_80F57	; 80F15
-loc_80F17:
+jmp short .21	; 80F15
+.20:
 mov eax, dword [cont2team]	; 80F17
 sar eax, 10h	; 80F1C
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 80F1F
@@ -990,21 +977,21 @@ mov dword [dword esp+0350h], edx	; 80F35
 mov eax, dword [HomeTeam]	; 80F3C
 sar eax, 10h	; 80F41
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 80F44
-jne short loc_80F65	; 80F4B
+jne short .22	; 80F4B
 mov edx, dword [dword esp+0350h]	; 80F4D
 add edx, byte 19h	; 80F54
-loc_80F57:
+.21:
 mov eax, edx	; 80F57
 sar edx, 1Fh	; 80F59
 idiv ebx	; 80F5C
 mov dword [dword esp+0350h], edx	; 80F5E
-loc_80F65:
+.22:
 mov esi, dword [dword esp+0350h]	; 80F65
 mov esi, dword [nosplit esi*4+off_D21C0]	; 80F6C
-mov edi, dword [dword_D22A0]	; 80F73
+mov edi, dword [lockerrects+024h]	; 80F73
 add edi, byte 3	; 80F79
-mov ebp, dword [dword_D229C]	; 80F7C
-add ebp, dword [dword_D22A4]	; 80F82
+mov ebp, dword [lockerrects+020h]	; 80F7C
+add ebp, dword [lockerrects+028h]	; 80F82
 sar ebp, 1	; 80F88
 push esi	; 80F8A
 call fputchar	; 80F8B
@@ -1016,7 +1003,7 @@ mov ebx, esi	; 80F9A
 mov edx, edi	; 80F9C
 call PrintShadowText	; 80F9E
 cmp dword [gamemode], byte 0	; 80FA3
-jne short loc_80FEF	; 80FAA
+jne short .23	; 80FAA
 mov eax, dword [cont2team]	; 80FAC
 sar eax, 10h	; 80FB1
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 80FB4
@@ -1027,15 +1014,15 @@ sar edx, 1Fh	; 80FC3
 idiv ebx	; 80FC6
 mov dword [dword esp+0350h], edx	; 80FC8
 cmp edx, byte 1Ah	; 80FCF
-jl short loc_8103A	; 80FD2
+jl short .25	; 80FD2
 mov eax, dword [HomeTeam]	; 80FD4
 sar eax, 10h	; 80FD9
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 80FDC
-jne short loc_8103A	; 80FE3
+jne short .25	; 80FE3
 mov edx, dword [dword esp+0350h]	; 80FE5
 inc edx	; 80FEC
-jmp short loc_8102C	; 80FED
-loc_80FEF:
+jmp short .24	; 80FED
+.23:
 mov ebx, dword [cont2team]	; 80FEF
 sar ebx, 10h	; 80FF5
 mov edx, dword [nosplit ebx*4+dword_D20E0]	; 80FF8
@@ -1048,21 +1035,21 @@ mov dword [dword esp+0350h], edx	; 8100C
 mov eax, dword [HomeTeam]	; 81013
 sar eax, 10h	; 81018
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 8101B
-jne short loc_8103A	; 81022
+jne short .25	; 81022
 lea edx, [byte ebx+01h]	; 81024
 mov ebx, 1Ah	; 81027
-loc_8102C:
+.24:
 mov eax, edx	; 8102C
 sar edx, 1Fh	; 8102E
 idiv ebx	; 81031
 mov dword [dword esp+0350h], edx	; 81033
-loc_8103A:
+.25:
 mov esi, dword [dword esp+0350h]	; 8103A
 mov esi, dword [nosplit esi*4+off_D21C0]	; 81041
-mov edi, dword [dword_D22B0]	; 81048
+mov edi, dword [lockerrects+034h]	; 81048
 add edi, byte 3	; 8104E
-mov eax, dword [dword_D22AC]	; 81051
-mov ebp, dword [dword_D22B4]	; 81056
+mov eax, dword [lockerrects+030h]	; 81051
+mov ebp, dword [lockerrects+038h]	; 81056
 add ebp, eax	; 8105C
 sar ebp, 1	; 8105E
 push esi	; 81060
@@ -1075,7 +1062,7 @@ mov ebx, esi	; 81070
 mov edx, edi	; 81072
 call PrintShadowText	; 81074
 cmp dword [gamemode], byte 0	; 81079
-jne short loc_810C9	; 81080
+jne short .26	; 81080
 mov eax, dword [HomeTeam]	; 81082
 sar eax, 10h	; 81087
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 8108A
@@ -1086,15 +1073,15 @@ sar edx, 1Fh	; 8109B
 idiv ebx	; 8109E
 mov dword [dword esp+0350h], edx	; 810A0
 cmp edx, byte 1Ah	; 810A7
-jl short loc_8111C	; 810AA
+jl short .28	; 810AA
 mov eax, dword [cont2team]	; 810AC
 sar eax, 10h	; 810B1
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 810B4
-jne short loc_8111C	; 810BB
+jne short .28	; 810BB
 mov edx, dword [dword esp+0350h]	; 810BD
 add edx, byte 1Bh	; 810C4
-jmp short loc_8110E	; 810C7
-loc_810C9:
+jmp short .27	; 810C7
+.26:
 mov eax, dword [HomeTeam]	; 810C9
 sar eax, 10h	; 810CE
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 810D1
@@ -1107,22 +1094,22 @@ mov dword [dword esp+0350h], edx	; 810E7
 mov eax, dword [cont2team]	; 810EE
 sar eax, 10h	; 810F3
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 810F6
-jne short loc_8111C	; 810FD
+jne short .28	; 810FD
 mov edx, dword [dword esp+0350h]	; 810FF
 add edx, byte 19h	; 81106
 mov ebx, 1Ah	; 81109
-loc_8110E:
+.27:
 mov eax, edx	; 8110E
 sar edx, 1Fh	; 81110
 idiv ebx	; 81113
 mov dword [dword esp+0350h], edx	; 81115
-loc_8111C:
+.28:
 mov esi, dword [dword esp+0350h]	; 8111C
 mov esi, dword [nosplit esi*4+off_D21C0]	; 81123
-mov edi, dword [dword_D22C0]	; 8112A
+mov edi, dword [lockerrects+044h]	; 8112A
 add edi, byte 3	; 81130
-mov eax, dword [dword_D22BC]	; 81133
-mov ebp, dword [dword_D22C4]	; 81138
+mov eax, dword [lockerrects+040h]	; 81133
+mov ebp, dword [lockerrects+048h]	; 81138
 add ebp, eax	; 8113E
 sar ebp, 1	; 81140
 push esi	; 81142
@@ -1135,7 +1122,7 @@ mov ebx, esi	; 81152
 mov edx, edi	; 81154
 call PrintShadowText	; 81156
 cmp dword [gamemode], byte 0	; 8115B
-jne short loc_811A7	; 81162
+jne short .29	; 81162
 mov eax, dword [HomeTeam]	; 81164
 sar eax, 10h	; 81169
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 8116C
@@ -1146,15 +1133,15 @@ sar edx, 1Fh	; 8117B
 idiv ebx	; 8117E
 mov dword [dword esp+0350h], edx	; 81180
 cmp edx, byte 1Ah	; 81187
-jl short loc_811F6	; 8118A
+jl short .31	; 8118A
 mov eax, dword [cont2team]	; 8118C
 sar eax, 10h	; 81191
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 81194
-jne short loc_811F6	; 8119B
+jne short .31	; 8119B
 mov edx, dword [dword esp+0350h]	; 8119D
 inc edx	; 811A4
-jmp short loc_811E8	; 811A5
-loc_811A7:
+jmp short .30	; 811A5
+.29:
 mov eax, dword [HomeTeam]	; 811A7
 sar eax, 10h	; 811AC
 mov edx, dword [nosplit eax*4+dword_D20E0]	; 811AF
@@ -1167,22 +1154,22 @@ mov dword [dword esp+0350h], edx	; 811C3
 mov eax, dword [cont2team]	; 811CA
 sar eax, 10h	; 811CF
 cmp edx, dword [nosplit eax*4+dword_D20E0]	; 811D2
-jne short loc_811F6	; 811D9
+jne short .31	; 811D9
 mov edx, dword [dword esp+0350h]	; 811DB
 inc edx	; 811E2
 mov ebx, 1Ah	; 811E3
-loc_811E8:
+.30:
 mov eax, edx	; 811E8
 sar edx, 1Fh	; 811EA
 idiv ebx	; 811ED
 mov dword [dword esp+0350h], edx	; 811EF
-loc_811F6:
+.31:
 mov esi, dword [dword esp+0350h]	; 811F6
 mov esi, dword [nosplit esi*4+off_D21C0]	; 811FD
-mov edi, dword [dword_D22D0]	; 81204
+mov edi, dword [lockerrects+054h]	; 81204
 add edi, byte 3	; 8120A
-mov eax, dword [dword_D22CC]	; 8120D
-mov ebp, dword [dword_D22D4]	; 81212
+mov eax, dword [lockerrects+050h]	; 8120D
+mov ebp, dword [lockerrects+058h]	; 81212
 add ebp, eax	; 81218
 sar ebp, 1	; 8121A
 push esi	; 8121C
@@ -1209,7 +1196,7 @@ mov ebx, dword [nosplit eax*4+teamcitynames]	; 81263
 mov edx, 2Ch	; 8126A
 mov eax, dword [dword esp+0350h]	; 8126F
 call PrintOutlinedText	; 81276
-mov ebx, unk_C35E9	; 8127B
+mov ebx, str_Vs	; 8127B
 mov edx, 2Ch	; 81280
 mov eax, 13Ah	; 81285
 call PrintOutlinedText	; 8128A
@@ -1223,40 +1210,40 @@ mov edx, dword [dword_D22E0]	; 812AE
 add edx, byte 3	; 812B4
 mov eax, dword [dword_D22DC]	; 812B7
 add eax, byte 12h	; 812BC
-mov ebx, asc_C35EC	; 812BF
+mov ebx, str_Accept	; 812BF
 call PrintShadowText	; 812C4
 mov edx, dword [dword_D22F0]	; 812C9
 add edx, byte 3	; 812CF
 mov eax, dword [dword_D22EC]	; 812D2
 add eax, byte 12h	; 812D7
-mov ebx, asc_C35F3	; 812DA
+mov ebx, str_Cancel2	; 812DA
 call PrintShadowText	; 812DF
-mov esi, dword [dword_D22A8]	; 812E4
+mov esi, dword [lockerrects+02Ch]	; 812E4
 add esi, byte 5	; 812EA
-mov edi, dword [dword_D229C]	; 812ED
-add edi, dword [dword_D22B4]	; 812F3
+mov edi, dword [lockerrects+020h]	; 812ED
+add edi, dword [lockerrects+038h]	; 812F3
 sar edi, 1	; 812F9
-push asc_C35FA	; 812FB
+push str_HomeTeam	; 812FB
 call fputchar	; 81300
 add esp, byte 4	; 81305
 sar eax, 1	; 81308
 sub edi, eax	; 8130A
 lea eax, [byte edi+02h]	; 8130C
-mov ebx, asc_C35FA	; 8130F
+mov ebx, str_HomeTeam	; 8130F
 mov edx, esi	; 81314
 call PrintShadowText	; 81316
-mov esi, dword [dword_D22C8]	; 8131B
+mov esi, dword [lockerrects+04Ch]	; 8131B
 add esi, byte 5	; 81321
-mov edi, dword [dword_D22BC]	; 81324
-add edi, dword [dword_D22D4]	; 8132A
+mov edi, dword [lockerrects+040h]	; 81324
+add edi, dword [lockerrects+058h]	; 8132A
 sar edi, 1	; 81330
-push asc_C3604	; 81332
+push str_VisitingTeam	; 81332
 call fputchar	; 81337
 add esp, byte 4	; 8133C
 sar eax, 1	; 8133F
 sub edi, eax	; 81341
 lea eax, [byte edi+02h]	; 81343
-mov ebx, asc_C3604	; 81346
+mov ebx, str_VisitingTeam	; 81346
 mov edx, esi	; 8134B
 call PrintShadowText	; 8134D
 mov esi, dword [dword_D8B68]	; 81352
@@ -1264,7 +1251,7 @@ push esi	; 81358
 call sub_8EA18	; 81359
 add esp, byte 4	; 8135E
 cmp dword [gamemode], byte 1	; 81361
-jne short loc_813BD	; 81368
+jne short .32	; 81368
 mov eax, dword [HomeTeam]	; 8136A
 sar eax, 10h	; 8136F
 mov edx, dword [cont2team]	; 81372
@@ -1285,9 +1272,9 @@ sar edx, 1Fh	; 813B2
 LD sub, eax, edx	; 813B5
 sar eax, 1	; 813B7
 mov ebx, esi	; 813B9
-jmp short loc_813DF	; 813BB
-loc_813BD:
-push asc_C3612	; 813BD
+jmp short .33	; 813BB
+.32:
+push str_ExhibitionGame	; 813BD
 call fputchar	; 813C2
 add esp, byte 4	; 813C7
 mov edx, 280h	; 813CA
@@ -1296,8 +1283,8 @@ mov eax, edx	; 813D1
 sar edx, 1Fh	; 813D3
 LD sub, eax, edx	; 813D6
 sar eax, 1	; 813D8
-mov ebx, asc_C3612	; 813DA
-loc_813DF:
+mov ebx, str_ExhibitionGame	; 813DA
+.33:
 mov edx, 12h	; 813DF
 call PrintOutlinedText	; 813E4
 mov eax, dword [dword_D8B74]	; 813E9
@@ -1305,44 +1292,44 @@ push eax	; 813EE
 call sub_8EA18	; 813EF
 add esp, byte 4	; 813F4
 cmp byte [musicon], 0	; 813F7
-je short loc_81462	; 813FE
+je short .35	; 813FE
 mov edx, dword [songdata]	; 81400
 test edx, edx	; 81406
-jne short loc_81462	; 81408
-mov ecx, asc_C3622	; 8140A
-mov ebx, asc_C3627	; 8140F
+jne short .35	; 81408
+mov ecx, str_Iff11	; 8140A
+mov ebx, str_Jersey	; 8140F
 cmp byte [byte_ED9A9], 1	; 81414
-jne short loc_81423	; 8141B
+jne short .34	; 8141B
 mov edx, dword [dword_D2C6B]	; 8141D
-loc_81423:
+.34:
 lea eax, [dword esp+0300h]	; 81423
 call MakePath	; 8142A
 lea eax, [dword esp+0300h]	; 8142F
 call sub_8F98F	; 81436
 mov dword [songdata], eax	; 8143B
 test eax, eax	; 81440
-je short loc_81462	; 81442
+je short .35	; 81442
 test byte [gameopts], 40h	; 81444
-je short loc_81462	; 8144B
+je short .35	; 8144B
 mov edx, dword [musichandle]	; 8144D
 mov ecx, 4Ch	; 81453
 mov ebx, 3	; 81458
 call sub_8FB8E	; 8145D
-loc_81462:
+.35:
 mov ebx, 10h	; 81462
 mov edx, esp	; 81467
 xor eax, eax	; 81469
 call FadePalStep	; 8146B
 xor ebx, ebx	; 81470
 mov dword [dword esp+0350h], ebx	; 81472
-loc_81479:
+.36:
 mov eax, dword [dword esp+0350h]	; 81479
 mov dl, byte [dword esp+0350h]	; 81480
 mov byte [dword eax+byte_DC9D8], dl	; 81487
 lea ecx, [byte eax+01h]	; 8148D
 mov dword [dword esp+0350h], ecx	; 81490
 cmp ecx, 100h	; 81497
-jl short loc_81479	; 8149D
+jl short DrawLockerRoom.36	; 8149D
 mov byte [byte_DC9E8], 2Ch	; 8149F
 mov byte [byte_DC9E9], 1	; 814A6
 mov byte [byte_DC9DF], 2Fh	; 814AD
@@ -1363,8 +1350,8 @@ push byte_DC9D8	; 81508
 call sub_B4DD4	; 8150D
 add esp, byte 4	; 81512
 add esp, 354h	; 81515
-jmp near sub_80A9D	; 8151B
-sub_81520:
+jmp near LockerStub	; 8151B
+LockerHitTest:
 push dword 0Ch	; 81520
 call __CHK	; 81525
 push ecx	; 8152A
@@ -1373,31 +1360,31 @@ mov ecx, eax	; 8152C
 mov esi, edx	; 8152E
 xor edx, edx	; 81530
 lea ecx, [byte eax+04h]	; 81532
-loc_81535:
+.1:
 mov eax, edx	; 81535
 shl eax, 4	; 81537
-cmp ecx, dword [dword eax+dword_D227C]	; 8153A
-jl short loc_81564	; 81540
-cmp ecx, dword [dword eax+dword_D2284]	; 81542
-jg short loc_81564	; 81548
-cmp esi, dword [dword eax+dword_D2280]	; 8154A
-jl short loc_81564	; 81550
-cmp esi, dword [dword eax+dword_D2288]	; 81552
-jg short loc_81564	; 81558
+cmp ecx, dword [dword eax+lockerrects]	; 8153A
+jl short .2	; 81540
+cmp ecx, dword [dword eax+lockerrects+8]	; 81542
+jg short .2	; 81548
+cmp esi, dword [dword eax+lockerrects+4]	; 8154A
+jl short .2	; 81550
+cmp esi, dword [dword eax+lockerrects+0Ch]	; 81552
+jg short .2	; 81558
 mov dword [ebx], edx	; 8155A
 mov eax, 1	; 8155C
 pop esi	; 81561
 pop ecx	; 81562
 ret	; 81563
-loc_81564:
+.2:
 inc edx	; 81564
 cmp edx, byte 8	; 81565
-jl short loc_81535	; 81568
+jl short LockerHitTest.1	; 81568
 xor eax, eax	; 8156A
 pop esi	; 8156C
 pop ecx	; 8156D
 ret	; 8156E
-sub_8156F:
+DrawLockerJersey:
 push dword 148h	; 8156F
 call __CHK	; 81574
 push esi	; 81579
@@ -1414,12 +1401,12 @@ mov eax, esi	; 81591
 mov edx, dword [nosplit eax*4+off_D21C0]	; 81593
 push edx	; 8159A
 cmp dword [dword ebp-0124h], byte 0	; 8159B
-je short loc_815AB	; 815A2
-mov eax, asc_C35E2	; 815A4
-jmp short loc_815B0	; 815A9
-loc_815AB:
-mov eax, asc_C35D6	; 815AB
-loc_815B0:
+je short .1	; 815A2
+mov eax, str_JERSV	; 815A4
+jmp short .2	; 815A9
+.1:
+mov eax, str_JERSH	; 815AB
+.2:
 push eax	; 815B0
 lea eax, [byte ebp-020h]	; 815B1
 push eax	; 815B4
@@ -1433,12 +1420,12 @@ add eax, 0A3h	; 815D3
 xor ecx, ecx	; 815D8
 lea ebx, [byte ebp-020h]	; 815DA
 cmp byte [dword eax+esi*2+byte_ED7CC], 1	; 815DD
-jne short loc_815EF	; 815E5
+jne short .3	; 815E5
 mov edx, dword [dword_D2C6B]	; 815E7
-jmp short loc_815F1	; 815ED
-loc_815EF:
+jmp short .4	; 815ED
+.3:
 xor edx, edx	; 815EF
-loc_815F1:
+.4:
 lea eax, [byte ebp-060h]	; 815F1
 call MakePath	; 815F4
 push byte 0	; 815F9
@@ -1447,61 +1434,61 @@ push eax	; 815FE
 call sub_8E83C	; 815FF
 add esp, byte 8	; 81604
 mov dword [byte ebp-04h], eax	; 81607
-push asc_C35CC	; 8160A
+push str_P01	; 8160A
 push eax	; 8160F
 call sub_B30B4	; 81610
 add esp, byte 8	; 81615
 lea edx, [byte eax+010h]	; 81618
 mov esi, dword [dword ebp-0124h]	; 8161B
 test esi, esi	; 81621
-je short loc_81656	; 81623
+je short .8	; 81623
 xor esi, esi	; 81625
 mov ch, 3Fh	; 81627
-loc_81629:
+.5:
 lea eax, [edx+esi]	; 81629
 mov cl, byte [dword eax+0180h]	; 8162C
 cmp cl, 3Bh	; 81632
-jge short loc_81644	; 81635
+jge short .6	; 81635
 mov al, cl	; 81637
 add al, 5	; 81639
 mov byte [dword esi+ebp-0120h], al	; 8163B
-jmp short loc_8164B	; 81642
-loc_81644:
+jmp short .7	; 81642
+.6:
 mov byte [dword esi+ebp-0120h], ch	; 81644
-loc_8164B:
+.7:
 inc esi	; 8164B
 cmp esi, 0C0h	; 8164C
-jl short loc_81629	; 81652
-jmp short loc_81683	; 81654
-loc_81656:
+jl short DrawLockerJersey.5	; 81652
+jmp short .12	; 81654
+.8:
 mov bh, 3Fh	; 81656
-loc_81658:
+.9:
 lea eax, [edx+esi]	; 81658
 mov bl, byte [dword eax+0240h]	; 8165B
 cmp bl, 3Bh	; 81661
-jge short loc_81673	; 81664
+jge short .10	; 81664
 mov al, bl	; 81666
 add al, 5	; 81668
 mov byte [dword esi+ebp-0120h], al	; 8166A
-jmp short loc_8167A	; 81671
-loc_81673:
+jmp short .11	; 81671
+.10:
 mov byte [dword esi+ebp-0120h], bh	; 81673
-loc_8167A:
+.11:
 inc esi	; 8167A
 cmp esi, 0C0h	; 8167B
-jl short loc_81658	; 81681
-loc_81683:
+jl short DrawLockerJersey.9	; 81681
+.12:
 cmp dword [dword ebp-0124h], byte 0	; 81683
-je short loc_816C8	; 8168A
+je short .13	; 8168A
 push byte 4Ah	; 8168C
 push dword 146h	; 8168E
-mov ecx, dword [dword_ED79C]	; 81693
+mov ecx, dword [visbckspr]	; 81693
 push ecx	; 81699
 call sub_910E0	; 8169A
 add esp, byte 0Ch	; 8169F
 push byte 2Ch	; 816A2
 push dword 152h	; 816A4
-mov esi, dword [dword_ED7A0]	; 816A9
+mov esi, dword [visnamebckspr]	; 816A9
 push esi	; 816AF
 call sub_910E0	; 816B0
 add esp, byte 0Ch	; 816B5
@@ -1509,17 +1496,17 @@ lea eax, [dword ebp-0120h]	; 816B8
 push eax	; 816BE
 push byte 40h	; 816BF
 push dword 80h	; 816C1
-jmp short loc_816FF	; 816C6
-loc_816C8:
+jmp short .14	; 816C6
+.13:
 push byte 45h	; 816C8
 push byte 0Ah	; 816CA
-mov edx, dword [dword_ED794]	; 816CC
+mov edx, dword [homebckspr]	; 816CC
 push edx	; 816D2
 call sub_910E0	; 816D3
 add esp, byte 0Ch	; 816D8
 push byte 2Ch	; 816DB
 push dword 85h	; 816DD
-mov ebx, dword [dword_ED798]	; 816E2
+mov ebx, dword [homenamebckspr]	; 816E2
 push ebx	; 816E8
 call sub_910E0	; 816E9
 add esp, byte 0Ch	; 816EE
@@ -1527,10 +1514,10 @@ lea eax, [dword ebp-0120h]	; 816F1
 push eax	; 816F7
 push byte 40h	; 816F8
 push dword 0C0h	; 816FA
-loc_816FF:
+.14:
 call sub_B4B88	; 816FF
 add esp, byte 0Ch	; 81704
-push asc_C35DD	; 81707
+push str_00002	; 81707
 mov eax, dword [byte ebp-04h]	; 8170C
 push eax	; 8170F
 call sub_B30B4	; 81710
@@ -1550,10 +1537,10 @@ mov edx, 62h	; 8173C
 mov eax, 77h	; 81741
 call SetTextColors	; 81746
 cmp dword [gamemode], byte 1	; 8174B
-jne short loc_817BA	; 81752
+jne short .15	; 81752
 push byte 11h	; 81754
 push byte 2Dh	; 81756
-mov ecx, dword [dword_ED790]	; 81758
+mov ecx, dword [titlebckspr]	; 81758
 push ecx	; 8175E
 call sub_910E0	; 8175F
 add esp, byte 0Ch	; 81764
@@ -1580,21 +1567,21 @@ mov eax, dword [dword_D8B74]	; 817AC
 push eax	; 817B1
 call sub_8EA18	; 817B2
 add esp, byte 4	; 817B7
-loc_817BA:
+.15:
 cmp dword [gamemode], byte 0	; 817BA
-jne near loc_819FD	; 817C1
+jne near .21	; 817C1
 mov esi, 2	; 817C7
-loc_817CC:
+.16:
 push byte 70h	; 817CC
 mov eax, esi	; 817CE
 shl eax, 4	; 817D0
-mov edx, dword [dword eax+dword_D2288]	; 817D3
-mov ebx, dword [dword eax+dword_D2280]	; 817D9
+mov edx, dword [dword eax+lockerrects+0Ch]	; 817D3
+mov ebx, dword [dword eax+lockerrects+4]	; 817D9
 sub edx, ebx	; 817DF
 dec edx	; 817E1
 push edx	; 817E2
-mov edx, dword [dword eax+dword_D2284]	; 817E3
-mov ecx, dword [dword eax+dword_D227C]	; 817E9
+mov edx, dword [dword eax+lockerrects+8]	; 817E3
+mov ecx, dword [dword eax+lockerrects]	; 817E9
 sub edx, ecx	; 817EF
 dec edx	; 817F1
 push edx	; 817F2
@@ -1606,7 +1593,7 @@ call sub_90D20	; 817FB
 add esp, byte 14h	; 81800
 inc esi	; 81803
 cmp esi, byte 6	; 81804
-jl short loc_817CC	; 81807
+jl short DrawLockerJersey.16	; 81807
 mov edx, dword [byte ebp+010h]	; 81809
 add edx, byte 1Bh	; 8180C
 mov ebx, 1Ch	; 8180F
@@ -1615,21 +1602,21 @@ sar edx, 1Fh	; 81816
 idiv ebx	; 81819
 mov esi, edx	; 8181B
 cmp edx, byte 1Ah	; 8181D
-jl short loc_81832	; 81820
+jl short .17	; 81820
 cmp edx, edi	; 81822
-jne short loc_81832	; 81824
+jne short .17	; 81824
 lea edx, [byte edi+01Bh]	; 81826
 mov eax, edx	; 81829
 sar edx, 1Fh	; 8182B
 idiv ebx	; 8182E
 mov esi, edx	; 81830
-loc_81832:
+.17:
 mov esi, dword [nosplit esi*4+off_D21C0]	; 81832
-mov eax, dword [dword_D22C0]	; 81839
+mov eax, dword [lockerrects+044h]	; 81839
 add eax, byte 3	; 8183E
 mov dword [byte ebp-010h], eax	; 81841
-mov eax, dword [dword_D22BC]	; 81844
-add eax, dword [dword_D22C4]	; 81849
+mov eax, dword [lockerrects+040h]	; 81844
+add eax, dword [lockerrects+048h]	; 81849
 sar eax, 1	; 8184F
 mov dword [byte ebp-0Ch], eax	; 81851
 push esi	; 81854
@@ -1650,21 +1637,21 @@ sar edx, 1Fh	; 8187C
 idiv ebx	; 8187F
 mov esi, edx	; 81881
 cmp edx, byte 1Ah	; 81883
-jl short loc_81898	; 81886
+jl short .18	; 81886
 cmp edx, edi	; 81888
-jne short loc_81898	; 8188A
+jne short .18	; 8188A
 lea edx, [byte edi+01h]	; 8188C
 mov eax, edx	; 8188F
 sar edx, 1Fh	; 81891
 idiv ebx	; 81894
 mov esi, edx	; 81896
-loc_81898:
+.18:
 mov esi, dword [nosplit esi*4+off_D21C0]	; 81898
-mov eax, dword [dword_D22D0]	; 8189F
+mov eax, dword [lockerrects+054h]	; 8189F
 add eax, byte 3	; 818A4
 mov dword [byte ebp-010h], eax	; 818A7
-mov eax, dword [dword_D22CC]	; 818AA
-add eax, dword [dword_D22D4]	; 818AF
+mov eax, dword [lockerrects+050h]	; 818AA
+add eax, dword [lockerrects+058h]	; 818AF
 sar eax, 1	; 818B5
 mov dword [byte ebp-0Ch], eax	; 818B7
 push esi	; 818BA
@@ -1690,22 +1677,22 @@ sar edx, 1Fh	; 81901
 idiv ebx	; 81904
 mov esi, edx	; 81906
 cmp edx, byte 1Ah	; 81908
-jl short loc_81920	; 8190B
+jl short .19	; 8190B
 mov ecx, dword [byte ebp+010h]	; 8190D
 cmp edx, ecx	; 81910
-jne short loc_81920	; 81912
+jne short .19	; 81912
 lea edx, [byte ecx+01Bh]	; 81914
 mov eax, edx	; 81917
 sar edx, 1Fh	; 81919
 idiv ebx	; 8191C
 mov esi, edx	; 8191E
-loc_81920:
+.19:
 mov esi, dword [nosplit esi*4+off_D21C0]	; 81920
-mov eax, dword [dword_D22A0]	; 81927
+mov eax, dword [lockerrects+024h]	; 81927
 add eax, byte 3	; 8192C
 mov dword [byte ebp-010h], eax	; 8192F
-mov eax, dword [dword_D229C]	; 81932
-add eax, dword [dword_D22A4]	; 81937
+mov eax, dword [lockerrects+020h]	; 81932
+add eax, dword [lockerrects+028h]	; 81937
 sar eax, 1	; 8193D
 mov dword [byte ebp-0Ch], eax	; 8193F
 push esi	; 81942
@@ -1725,23 +1712,23 @@ sar edx, 1Fh	; 81969
 idiv ebx	; 8196C
 mov esi, edx	; 8196E
 cmp edx, byte 1Ah	; 81970
-jl short loc_8198D	; 81973
+jl short .20	; 81973
 mov ebx, dword [byte ebp+010h]	; 81975
 cmp edx, ebx	; 81978
-jne short loc_8198D	; 8197A
+jne short .20	; 8197A
 lea edx, [byte ebx+01h]	; 8197C
 mov ebx, 1Ch	; 8197F
 mov eax, edx	; 81984
 sar edx, 1Fh	; 81986
 idiv ebx	; 81989
 mov esi, edx	; 8198B
-loc_8198D:
+.20:
 mov esi, dword [nosplit esi*4+off_D21C0]	; 8198D
-mov eax, dword [dword_D22B0]	; 81994
+mov eax, dword [lockerrects+034h]	; 81994
 add eax, byte 3	; 81999
 mov dword [byte ebp-010h], eax	; 8199C
-mov eax, dword [dword_D22AC]	; 8199F
-add eax, dword [dword_D22B4]	; 819A4
+mov eax, dword [lockerrects+030h]	; 8199F
+add eax, dword [lockerrects+038h]	; 819A4
 sar eax, 1	; 819AA
 mov dword [byte ebp-0Ch], eax	; 819AC
 push esi	; 819AF
@@ -1763,20 +1750,20 @@ mov esi, 12Dh	; 819E3
 sub esi, eax	; 819E8
 mov eax, dword [nosplit edi*4+dword_D2150]	; 819EA
 mov ebx, dword [nosplit eax*4+teamcitynames]	; 819F1
-jmp near loc_81C1A	; 819F8
-loc_819FD:
+jmp near .27	; 819F8
+.21:
 mov esi, 2	; 819FD
-loc_81A02:
+.22:
 push byte 70h	; 81A02
 mov eax, esi	; 81A04
 shl eax, 4	; 81A06
-mov edx, dword [dword eax+dword_D2288]	; 81A09
-mov ebx, dword [dword eax+dword_D2280]	; 81A0F
+mov edx, dword [dword eax+lockerrects+0Ch]	; 81A09
+mov ebx, dword [dword eax+lockerrects+4]	; 81A0F
 sub edx, ebx	; 81A15
 dec edx	; 81A17
 push edx	; 81A18
-mov edx, dword [dword eax+dword_D2284]	; 81A19
-mov ecx, dword [dword eax+dword_D227C]	; 81A1F
+mov edx, dword [dword eax+lockerrects+8]	; 81A19
+mov ecx, dword [dword eax+lockerrects]	; 81A1F
 sub edx, ecx	; 81A25
 dec edx	; 81A27
 push edx	; 81A28
@@ -1788,7 +1775,7 @@ call sub_90D20	; 81A31
 add esp, byte 14h	; 81A36
 inc esi	; 81A39
 cmp esi, byte 6	; 81A3A
-jl short loc_81A02	; 81A3D
+jl short DrawLockerJersey.22	; 81A3D
 mov edx, dword [byte ebp+010h]	; 81A3F
 add edx, byte 19h	; 81A42
 mov ebx, 1Ah	; 81A45
@@ -1797,19 +1784,19 @@ sar edx, 1Fh	; 81A4C
 idiv ebx	; 81A4F
 mov esi, edx	; 81A51
 cmp edx, edi	; 81A53
-jne short loc_81A63	; 81A55
+jne short .23	; 81A55
 lea edx, [byte edi+019h]	; 81A57
 mov eax, edx	; 81A5A
 sar edx, 1Fh	; 81A5C
 idiv ebx	; 81A5F
 mov esi, edx	; 81A61
-loc_81A63:
+.23:
 mov esi, dword [nosplit esi*4+off_D21C0]	; 81A63
-mov eax, dword [dword_D22C0]	; 81A6A
+mov eax, dword [lockerrects+044h]	; 81A6A
 add eax, byte 3	; 81A6F
 mov dword [byte ebp-010h], eax	; 81A72
-mov eax, dword [dword_D22BC]	; 81A75
-add eax, dword [dword_D22C4]	; 81A7A
+mov eax, dword [lockerrects+040h]	; 81A75
+add eax, dword [lockerrects+048h]	; 81A7A
 sar eax, 1	; 81A80
 mov dword [byte ebp-0Ch], eax	; 81A82
 push esi	; 81A85
@@ -1830,19 +1817,19 @@ sar edx, 1Fh	; 81AAD
 idiv ebx	; 81AB0
 mov esi, edx	; 81AB2
 cmp edx, edi	; 81AB4
-jne short loc_81AC4	; 81AB6
+jne short .24	; 81AB6
 lea edx, [byte edi+01h]	; 81AB8
 mov eax, edx	; 81ABB
 sar edx, 1Fh	; 81ABD
 idiv ebx	; 81AC0
 mov esi, edx	; 81AC2
-loc_81AC4:
+.24:
 mov esi, dword [nosplit esi*4+off_D21C0]	; 81AC4
-mov eax, dword [dword_D22D0]	; 81ACB
+mov eax, dword [lockerrects+054h]	; 81ACB
 add eax, byte 3	; 81AD0
 mov dword [byte ebp-010h], eax	; 81AD3
-mov eax, dword [dword_D22CC]	; 81AD6
-add eax, dword [dword_D22D4]	; 81ADB
+mov eax, dword [lockerrects+050h]	; 81AD6
+add eax, dword [lockerrects+058h]	; 81ADB
 sar eax, 1	; 81AE1
 mov dword [byte ebp-0Ch], eax	; 81AE3
 push esi	; 81AE6
@@ -1869,19 +1856,19 @@ idiv ebx	; 81B30
 mov esi, edx	; 81B32
 mov ecx, dword [byte ebp+010h]	; 81B34
 cmp edx, ecx	; 81B37
-jne short loc_81B47	; 81B39
+jne short .25	; 81B39
 lea edx, [byte ecx+019h]	; 81B3B
 mov eax, edx	; 81B3E
 sar edx, 1Fh	; 81B40
 idiv ebx	; 81B43
 mov esi, edx	; 81B45
-loc_81B47:
+.25:
 mov esi, dword [nosplit esi*4+off_D21C0]	; 81B47
-mov eax, dword [dword_D22A0]	; 81B4E
+mov eax, dword [lockerrects+024h]	; 81B4E
 add eax, byte 3	; 81B53
 mov dword [byte ebp-010h], eax	; 81B56
-mov eax, dword [dword_D229C]	; 81B59
-add eax, dword [dword_D22A4]	; 81B5E
+mov eax, dword [lockerrects+020h]	; 81B59
+add eax, dword [lockerrects+028h]	; 81B5E
 sar eax, 1	; 81B64
 mov dword [byte ebp-0Ch], eax	; 81B66
 push esi	; 81B69
@@ -1902,20 +1889,20 @@ idiv ebx	; 81B93
 mov esi, edx	; 81B95
 mov ebx, dword [byte ebp+010h]	; 81B97
 cmp edx, ebx	; 81B9A
-jne short loc_81BAF	; 81B9C
+jne short .26	; 81B9C
 lea edx, [byte ebx+01h]	; 81B9E
 mov ebx, 1Ah	; 81BA1
 mov eax, edx	; 81BA6
 sar edx, 1Fh	; 81BA8
 idiv ebx	; 81BAB
 mov esi, edx	; 81BAD
-loc_81BAF:
+.26:
 mov esi, dword [nosplit esi*4+off_D21C0]	; 81BAF
-mov eax, dword [dword_D22B0]	; 81BB6
+mov eax, dword [lockerrects+034h]	; 81BB6
 add eax, byte 3	; 81BBB
 mov dword [byte ebp-0Ch], eax	; 81BBE
-mov eax, dword [dword_D22AC]	; 81BC1
-add eax, dword [dword_D22B4]	; 81BC6
+mov eax, dword [lockerrects+030h]	; 81BC1
+add eax, dword [lockerrects+038h]	; 81BC6
 sar eax, 1	; 81BCC
 mov dword [byte ebp-010h], eax	; 81BCE
 push esi	; 81BD1
@@ -1937,23 +1924,23 @@ mov esi, 12Dh	; 81C05
 sub esi, eax	; 81C0A
 mov ebx, dword [nosplit edi*4+dword_D2150]	; 81C0C
 mov ebx, dword [nosplit ebx*4+teamcitynames]	; 81C13
-loc_81C1A:
+.27:
 mov edx, 2Ch	; 81C1A
 mov eax, esi	; 81C1F
 call PrintOutlinedText	; 81C21
 mov esp, ebp	; 81C26
-jmp near loc_8082A	; 81C28
+jmp near DrawPanel3D_ret	; 81C28
 db 090h
-jpt_81C2E:
-dd loc_81F69
-dd loc_820E7
-dd loc_81EC9
-dd loc_81F69
-dd loc_8204D
-dd loc_820E7
-dd loc_82188
-dd loc_8231C
-sub_81C4E:
+LockerRoomLoop_jt:
+dd LockerRoomLoop_n0
+dd LockerRoomLoop_n1
+dd LockerRoomLoop_n2
+dd LockerRoomLoop_n0
+dd LockerRoomLoop_n4
+dd LockerRoomLoop_n1
+dd LockerRoomLoop_n6
+dd LockerRoomLoop_n7
+LockerRoomLoop:
 push dword 348h	; 81C4E
 call __CHK	; 81C53
 push ebx	; 81C58
@@ -1994,7 +1981,7 @@ imul eax, edx	; 81CDE
 add eax, byte 11h	; 81CE1
 push byte 20h	; 81CE4
 push eax	; 81CE6
-push asc_C362E	; 81CE7
+push str_Pointer20	; 81CE7
 call sub_8CCA8	; 81CEC
 add esp, byte 0Ch	; 81CF1
 mov dword [dword esp+0318h], eax	; 81CF4
@@ -2031,32 +2018,32 @@ push ecx	; 81D5B
 call sub_91FE0	; 81D5C
 add esp, byte 0Ch	; 81D61
 call ClearInputQueue	; 81D64
-loc_81D69:
+.1:
 xor esi, esi	; 81D69
 mov dword [dword esp+0304h], esi	; 81D6B
-loc_81D72:
+.2:
 call GetInputEvent	; 81D72
 test eax, eax	; 81D77
-je short loc_81D9A	; 81D79
+je short .3	; 81D79
 lea ebx, [dword esp+0308h]	; 81D7B
 lea edx, [dword esp+030Ch]	; 81D82
 call dword [ptrupdatefn]	; 81D89
 mov dword [dword esp+0304h], eax	; 81D8F
 test al, 6	; 81D96
-je short loc_81D72	; 81D98
-loc_81D9A:
+je short LockerRoomLoop.2	; 81D98
+.3:
 mov ah, byte [dword esp+0304h]	; 81D9A
 test ah, 2	; 81DA1
-jne near loc_81E5C	; 81DA4
+jne near .6	; 81DA4
 test ah, 4	; 81DAA
-jne near loc_81E5C	; 81DAD
+jne near .6	; 81DAD
 mov eax, dword [dword esp+030Ch]	; 81DB3
 cmp eax, dword [dword esp+0314h]	; 81DBA
-jne short loc_81DD3	; 81DC1
+jne short .4	; 81DC1
 mov eax, dword [dword esp+0308h]	; 81DC3
 cmp eax, dword [dword esp+0310h]	; 81DCA
-je short loc_81D69	; 81DD1
-loc_81DD3:
+je short LockerRoomLoop.1	; 81DD1
+.4:
 mov edi, dword [dword esp+0310h]	; 81DD3
 push edi	; 81DDA
 mov eax, dword [dword esp+0318h]	; 81DDB
@@ -2082,17 +2069,17 @@ sub eax, byte 4	; 81E28
 push eax	; 81E2B
 mov esi, dword [pointerspr]	; 81E2C
 push esi	; 81E32
-loc_81E33:
+.5:
 call sub_91FE0	; 81E33
 add esp, byte 0Ch	; 81E38
 mov eax, dword [dword esp+030Ch]	; 81E3B
 mov dword [dword esp+0314h], eax	; 81E42
 mov eax, dword [dword esp+0308h]	; 81E49
 mov dword [dword esp+0310h], eax	; 81E50
-jmp near loc_81D69	; 81E57
-loc_81E5C:
+jmp near LockerRoomLoop.1	; 81E57
+.6:
 test byte [dword esp+0304h], 2	; 81E5C
-je near loc_823BD	; 81E64
+je near LockerRoomLoop_n7.4	; 81E64
 mov edx, dword [dword esp+0310h]	; 81E6A
 push edx	; 81E71
 mov eax, dword [dword esp+0318h]	; 81E72
@@ -2105,17 +2092,17 @@ add esp, byte 0Ch	; 81E8A
 lea ebx, [dword esp+0300h]	; 81E8D
 mov edx, dword [dword esp+0308h]	; 81E94
 mov eax, dword [dword esp+030Ch]	; 81E9B
-call sub_81520	; 81EA2
+call LockerHitTest	; 81EA2
 test eax, eax	; 81EA7
-je near loc_8200B	; 81EA9
+je near LockerRoomLoop_n0.6	; 81EA9
 mov ecx, dword [dword esp+0300h]	; 81EAF
 cmp ecx, byte 7	; 81EB6
-ja near loc_8200B	; 81EB9
+ja near LockerRoomLoop_n0.6	; 81EB9
 mov eax, ecx	; 81EBF
-jmp dword [nosplit cs:eax*4+jpt_81C2E]	; 81EC1
-loc_81EC9:
+jmp dword [nosplit cs:eax*4+LockerRoomLoop_jt]	; 81EC1
+LockerRoomLoop_n2:
 cmp dword [gamemode], byte 0	; 81EC9
-jne short loc_81EF8	; 81ED0
+jne short .1	; 81ED0
 lea edx, [byte ebp+01Bh]	; 81ED2
 mov ebx, 1Ch	; 81ED5
 mov eax, edx	; 81EDA
@@ -2123,13 +2110,13 @@ sar edx, 1Fh	; 81EDC
 idiv ebx	; 81EDF
 mov ebp, edx	; 81EE1
 cmp edx, byte 1Ah	; 81EE3
-jl short loc_81F20	; 81EE6
+jl short .3	; 81EE6
 mov edx, dword [dword esp+031Ch]	; 81EE8
 cmp ebp, edx	; 81EEF
-jne short loc_81F20	; 81EF1
+jne short .3	; 81EF1
 add edx, byte 1Bh	; 81EF3
-jmp short loc_81F17	; 81EF6
-loc_81EF8:
+jmp short .2	; 81EF6
+.1:
 lea edx, [byte ebp+019h]	; 81EF8
 mov ebx, 1Ah	; 81EFB
 mov eax, edx	; 81F00
@@ -2138,14 +2125,14 @@ idiv ebx	; 81F05
 mov ebp, edx	; 81F07
 mov eax, dword [dword esp+031Ch]	; 81F09
 cmp edx, eax	; 81F10
-jne short loc_81F20	; 81F12
+jne short .3	; 81F12
 lea edx, [byte eax+019h]	; 81F14
-loc_81F17:
+.2:
 mov eax, edx	; 81F17
 sar edx, 1Fh	; 81F19
 idiv ebx	; 81F1C
 mov ebp, edx	; 81F1E
-loc_81F20:
+.3:
 mov ebx, dword [dword esp+031Ch]	; 81F20
 push ebx	; 81F27
 mov ebx, dword [nosplit ebx*4+dword_D2150]	; 81F28
@@ -2155,30 +2142,30 @@ or ebx, dword [nosplit edx*4+teamdivflags]	; 81F3D
 mov ecx, ebp	; 81F44
 mov edx, ebp	; 81F46
 xor eax, eax	; 81F48
-call sub_8156F	; 81F4A
+call DrawLockerJersey	; 81F4A
 call ClearInputQueue	; 81F4F
 mov esi, dword [dword esp+0308h]	; 81F54
 push esi	; 81F5B
 mov edi, dword [dword esp+0310h]	; 81F5C
 push edi	; 81F63
-jmp near loc_82003	; 81F64
-loc_81F69:
+jmp near LockerRoomLoop_n0.5	; 81F64
+LockerRoomLoop_n0:
 lea edx, [byte ebp+01h]	; 81F69
 cmp dword [gamemode], byte 0	; 81F6C
-jne short loc_81F98	; 81F73
+jne short .1	; 81F73
 mov ebx, 1Ch	; 81F75
 mov eax, edx	; 81F7A
 sar edx, 1Fh	; 81F7C
 idiv ebx	; 81F7F
 mov ebp, edx	; 81F81
 cmp edx, byte 1Ah	; 81F83
-jl short loc_81FBD	; 81F86
+jl short .3	; 81F86
 mov esi, dword [dword esp+031Ch]	; 81F88
 cmp edx, esi	; 81F8F
-jne short loc_81FBD	; 81F91
+jne short .3	; 81F91
 lea edx, [byte esi+01h]	; 81F93
-jmp short loc_81FB4	; 81F96
-loc_81F98:
+jmp short .2	; 81F96
+.1:
 mov ebx, 1Ah	; 81F98
 mov eax, edx	; 81F9D
 sar edx, 1Fh	; 81F9F
@@ -2186,14 +2173,14 @@ idiv ebx	; 81FA2
 mov ebp, edx	; 81FA4
 mov ecx, dword [dword esp+031Ch]	; 81FA6
 cmp edx, ecx	; 81FAD
-jne short loc_81FBD	; 81FAF
+jne short .3	; 81FAF
 lea edx, [byte ecx+01h]	; 81FB1
-loc_81FB4:
+.2:
 mov eax, edx	; 81FB4
 sar edx, 1Fh	; 81FB6
 idiv ebx	; 81FB9
 mov ebp, edx	; 81FBB
-loc_81FBD:
+.3:
 mov edi, dword [dword esp+031Ch]	; 81FBD
 push edi	; 81FC4
 mov ebx, dword [nosplit edi*4+dword_D2150]	; 81FC5
@@ -2204,17 +2191,17 @@ or ebx, eax	; 81FE1
 mov ecx, ebp	; 81FE3
 mov edx, ebp	; 81FE5
 xor eax, eax	; 81FE7
-loc_81FE9:
-call sub_8156F	; 81FE9
+.4:
+call DrawLockerJersey	; 81FE9
 call ClearInputQueue	; 81FEE
 mov ecx, dword [dword esp+0308h]	; 81FF3
 push ecx	; 81FFA
 mov esi, dword [dword esp+0310h]	; 81FFB
 push esi	; 82002
-loc_82003:
+.5:
 call MouseSetPos	; 82003
 add esp, byte 8	; 82008
-loc_8200B:
+.6:
 mov edi, dword [dword esp+0308h]	; 8200B
 push edi	; 82012
 mov eax, dword [dword esp+0310h]	; 82013
@@ -2231,10 +2218,10 @@ sub eax, byte 4	; 8203D
 push eax	; 82040
 mov ebx, dword [pointerspr]	; 82041
 push ebx	; 82047
-jmp near loc_81E33	; 82048
-loc_8204D:
+jmp near LockerRoomLoop.5	; 82048
+LockerRoomLoop_n4:
 cmp dword [gamemode], byte 0	; 8204D
-jne short loc_82081	; 82054
+jne short .1	; 82054
 mov edx, dword [dword esp+031Ch]	; 82056
 add edx, byte 1Bh	; 8205D
 mov ebx, 1Ch	; 82060
@@ -2243,12 +2230,12 @@ sar edx, 1Fh	; 82067
 idiv ebx	; 8206A
 mov dword [dword esp+031Ch], edx	; 8206C
 cmp edx, byte 1Ah	; 82073
-jl short loc_820B3	; 82076
+jl short .3	; 82076
 cmp ebp, edx	; 82078
-jne short loc_820B3	; 8207A
+jne short .3	; 8207A
 add edx, byte 1Bh	; 8207C
-jmp short loc_820A5	; 8207F
-loc_82081:
+jmp short .2	; 8207F
+.1:
 mov edx, dword [dword esp+031Ch]	; 82081
 add edx, byte 19h	; 82088
 mov ebx, 1Ah	; 8208B
@@ -2257,14 +2244,14 @@ sar edx, 1Fh	; 82092
 idiv ebx	; 82095
 mov dword [dword esp+031Ch], edx	; 82097
 cmp ebp, edx	; 8209E
-jne short loc_820B3	; 820A0
+jne short .3	; 820A0
 add edx, byte 19h	; 820A2
-loc_820A5:
+.2:
 mov eax, edx	; 820A5
 sar edx, 1Fh	; 820A7
 idiv ebx	; 820AA
 mov dword [dword esp+031Ch], edx	; 820AC
-loc_820B3:
+.3:
 mov edi, dword [dword esp+031Ch]	; 820B3
 push edi	; 820BA
 mov ebx, dword [nosplit edi*4+dword_D2150]	; 820BB
@@ -2275,37 +2262,37 @@ or ebx, eax	; 820D7
 mov ecx, ebp	; 820D9
 mov edx, edi	; 820DB
 mov eax, 1	; 820DD
-jmp near loc_81FE9	; 820E2
-loc_820E7:
+jmp near LockerRoomLoop_n0.4	; 820E2
+LockerRoomLoop_n1:
 mov edx, dword [dword esp+031Ch]	; 820E7
 inc edx	; 820EE
 cmp dword [gamemode], byte 0	; 820EF
-jne short loc_82116	; 820F6
+jne short .1	; 820F6
 mov ebx, 1Ch	; 820F8
 mov eax, edx	; 820FD
 sar edx, 1Fh	; 820FF
 idiv ebx	; 82102
 mov dword [dword esp+031Ch], edx	; 82104
 cmp edx, byte 1Ah	; 8210B
-jl short loc_8213C	; 8210E
+jl short .3	; 8210E
 cmp ebp, edx	; 82110
-jne short loc_8213C	; 82112
-jmp short loc_8212D	; 82114
-loc_82116:
+jne short .3	; 82112
+jmp short .2	; 82114
+.1:
 mov ebx, 1Ah	; 82116
 mov eax, edx	; 8211B
 sar edx, 1Fh	; 8211D
 idiv ebx	; 82120
 mov dword [dword esp+031Ch], edx	; 82122
 cmp ebp, edx	; 82129
-jne short loc_8213C	; 8212B
-loc_8212D:
+jne short .3	; 8212B
+.2:
 inc edx	; 8212D
 mov eax, edx	; 8212E
 sar edx, 1Fh	; 82130
 idiv ebx	; 82133
 mov dword [dword esp+031Ch], edx	; 82135
-loc_8213C:
+.3:
 mov esi, dword [dword esp+031Ch]	; 8213C
 push esi	; 82143
 mov ebx, dword [nosplit esi*4+dword_D2150]	; 82144
@@ -2315,14 +2302,14 @@ or ebx, dword [nosplit edx*4+teamdivflags]	; 82159
 mov ecx, ebp	; 82160
 mov edx, esi	; 82162
 mov eax, 1	; 82164
-call sub_8156F	; 82169
+call DrawLockerJersey	; 82169
 call ClearInputQueue	; 8216E
 mov eax, dword [dword esp+0308h]	; 82173
 push eax	; 8217A
 mov edx, dword [dword esp+0310h]	; 8217B
 push edx	; 82182
-jmp near loc_82003	; 82183
-loc_82188:
+jmp near LockerRoomLoop_n0.5	; 82183
+LockerRoomLoop_n6:
 mov edx, ebp	; 82188
 shl edx, 2	; 8218A
 mov ax, word [dword edx+dword_D2150]	; 8218D
@@ -2331,68 +2318,68 @@ mov eax, dword [dword esp+031Ch]	; 8219A
 mov ax, word [nosplit eax*4+dword_D2150]	; 821A1
 mov word [VisTeam], ax	; 821A9
 cmp dword [gamemode], byte 0	; 821AF
-jne short loc_82226	; 821B6
+jne short .4	; 821B6
 mov edx, dword [dword edx+off_D21C0]	; 821B8
 cmp byte [byte edx+02h], 0	; 821BE
-je short loc_821D5	; 821C2
+je short .1	; 821C2
 mov ebx, 3	; 821C4
 mov eax, str_LAAtMTL+7	; 821C9
 call strncpy_	; 821CE
-jmp short loc_821EB	; 821D3
-loc_821D5:
+jmp short .2	; 821D3
+.1:
 mov ebx, 2	; 821D5
 mov eax, str_LAAtMTL+7	; 821DA
 call strncpy_	; 821DF
 mov byte [str_LAAtMTL+9], 20h	; 821E4
-loc_821EB:
+.2:
 mov edx, dword [dword esp+031Ch]	; 821EB
 mov edx, dword [nosplit edx*4+off_D21C0]	; 821F2
 cmp byte [byte edx+02h], 0	; 821F9
-je short loc_82210	; 821FD
+je short .3	; 821FD
 mov ebx, 3	; 821FF
 mov eax, str_LAAtMTL	; 82204
 call strncpy_	; 82209
-jmp short loc_82226	; 8220E
-loc_82210:
+jmp short .4	; 8220E
+.3:
 mov ebx, 2	; 82210
 mov eax, str_LAAtMTL	; 82215
 call strncpy_	; 8221A
 mov byte [str_LAAtMTL+2], 20h	; 8221F
-loc_82226:
+.4:
 cmp dword [ctl1team], byte 0	; 82226
-jl short loc_8224C	; 8222D
+jl short .7	; 8222D
 cmp dword [ctl1side], byte 0	; 8222F
-jne short loc_8223F	; 82236
+jne short .5	; 82236
 mov eax, dword [cont2team]	; 82238
-jmp short loc_82244	; 8223D
-loc_8223F:
+jmp short .6	; 8223D
+.5:
 mov eax, dword [HomeTeam]	; 8223F
-loc_82244:
+.6:
 sar eax, 10h	; 82244
 mov dword [ctl1team], eax	; 82247
-loc_8224C:
+.7:
 cmp dword [ctl2team], byte 0	; 8224C
-jl short loc_82272	; 82253
+jl short .10	; 82253
 cmp dword [ctl2side], byte 0	; 82255
-jne short loc_82265	; 8225C
+jne short .8	; 8225C
 mov eax, dword [cont2team]	; 8225E
-jmp short loc_8226A	; 82263
-loc_82265:
+jmp short .9	; 82263
+.8:
 mov eax, dword [HomeTeam]	; 82265
-loc_8226A:
+.9:
 sar eax, 10h	; 8226A
 mov dword [ctl2team], eax	; 8226D
-loc_82272:
+.10:
 call WriteCurModeState	; 82272
 cmp byte [musicon], 0	; 82277
-je short loc_8229D	; 8227E
+je short .11	; 8227E
 cmp dword [songdata], byte 0	; 82280
-je short loc_8229D	; 82287
+je short .11	; 82287
 mov eax, dword [musichandle]	; 82289
 mov ebx, 64h	; 8228E
 mov edx, 3	; 82293
 call sub_8FCDF	; 82298
-loc_8229D:
+.11:
 mov eax, esp	; 8229D
 push eax	; 8229F
 push dword 100h	; 822A0
@@ -2408,37 +2395,37 @@ push ebp	; 822C7
 call jctime	; 822C8
 add esp, byte 4	; 822CD
 cmp byte [musicon], 0	; 822D0
-je short loc_8230F	; 822D7
+je short .13	; 822D7
 cmp dword [songdata], byte 0	; 822D9
-je short loc_8230F	; 822E0
-loc_822E2:
+je short .13	; 822E0
+.12:
 mov eax, dword [musicslot-3]	; 822E2
 sar eax, 18h	; 822E7
 mov edx, 3	; 822EA
 call sub_8FC8A	; 822EF
 test eax, eax	; 822F4
-je short loc_822E2	; 822F6
+je short LockerRoomLoop_n6.12	; 822F6
 mov ebx, dword [songdata]	; 822F8
 push ebx	; 822FE
 call sub_8D2F0	; 822FF
 add esp, byte 4	; 82304
 xor ecx, ecx	; 82307
 mov dword [songdata], ecx	; 82309
-loc_8230F:
+.13:
 xor eax, eax	; 8230F
-loc_82311:
+.14:
 add esp, 320h	; 82311
-jmp near sub_80A9D	; 82317
-loc_8231C:
+jmp near LockerStub	; 82317
+LockerRoomLoop_n7:
 cmp byte [musicon], 0	; 8231C
-je short loc_82342	; 82323
+je short .1	; 82323
 cmp dword [songdata], byte 0	; 82325
-je short loc_82342	; 8232C
+je short .1	; 8232C
 mov eax, dword [musichandle]	; 8232E
 mov ebx, 64h	; 82333
 mov edx, 3	; 82338
 call sub_8FCDF	; 8233D
-loc_82342:
+.1:
 mov eax, esp	; 82342
 push eax	; 82344
 push dword 100h	; 82345
@@ -2454,35 +2441,35 @@ push edi	; 8236C
 call jctime	; 8236D
 add esp, byte 4	; 82372
 cmp byte [musicon], 0	; 82375
-je short loc_823B3	; 8237C
+je short .3	; 8237C
 cmp dword [songdata], byte 0	; 8237E
-je short loc_823B3	; 82385
-loc_82387:
+je short .3	; 82385
+.2:
 mov eax, dword [musicslot-3]	; 82387
 sar eax, 18h	; 8238C
 mov edx, 3	; 8238F
 call sub_8FC8A	; 82394
 test eax, eax	; 82399
-je short loc_82387	; 8239B
+je short LockerRoomLoop_n7.2	; 8239B
 mov eax, dword [songdata]	; 8239D
 push eax	; 823A2
 call sub_8D2F0	; 823A3
 add esp, byte 4	; 823A8
 xor edx, edx	; 823AB
 mov dword [songdata], edx	; 823AD
-loc_823B3:
+.3:
 mov eax, 3	; 823B3
-jmp near loc_82311	; 823B8
-loc_823BD:
+jmp near LockerRoomLoop_n6.14	; 823B8
+.4:
 cmp byte [musicon], 0	; 823BD
-je short loc_823E3	; 823C4
+je short .5	; 823C4
 cmp dword [songdata], byte 0	; 823C6
-je short loc_823E3	; 823CD
+je short .5	; 823CD
 mov eax, dword [musichandle]	; 823CF
 mov ebx, 64h	; 823D4
 mov edx, 3	; 823D9
 call sub_8FCDF	; 823DE
-loc_823E3:
+.5:
 mov eax, esp	; 823E3
 push eax	; 823E5
 push dword 100h	; 823E6
@@ -2498,24 +2485,24 @@ push ebp	; 8240D
 call jctime	; 8240E
 add esp, byte 4	; 82413
 cmp byte [musicon], 0	; 82416
-je short loc_823B3	; 8241D
+je short LockerRoomLoop_n7.3	; 8241D
 cmp dword [songdata], byte 0	; 8241F
-je short loc_823B3	; 82426
-loc_82428:
+je short LockerRoomLoop_n7.3	; 82426
+.6:
 mov eax, dword [musicslot-3]	; 82428
 sar eax, 18h	; 8242D
 mov edx, 3	; 82430
 call sub_8FC8A	; 82435
 test eax, eax	; 8243A
-je short loc_82428	; 8243C
+je short LockerRoomLoop_n7.6	; 8243C
 mov edi, dword [songdata]	; 8243E
 push edi	; 82444
 call sub_8D2F0	; 82445
 add esp, byte 4	; 8244A
 xor ebp, ebp	; 8244D
 mov dword [songdata], ebp	; 8244F
-jmp near loc_823B3	; 82455
-sub_8245A:
+jmp near LockerRoomLoop_n7.3	; 82455
+DrawSelBoxOn:
 push dword 28h	; 8245A
 call __CHK	; 8245F
 push ebx	; 82464
@@ -2563,7 +2550,7 @@ push eax	; 824C8
 call sub_B4FAC	; 824C9
 add esp, byte 14h	; 824CE
 push dword 0FAh	; 824D1
-loc_824D6:
+DrawSelBox_common:
 mov eax, dword [byte esi+0Ch]	; 824D6
 add eax, byte 13h	; 824D9
 push eax	; 824DC
@@ -2581,7 +2568,7 @@ pop edx	; 824F4
 pop ecx	; 824F5
 pop ebx	; 824F6
 ret	; 824F7
-sub_824F8:
+DrawSelBoxOff:
 push dword 28h	; 824F8
 call __CHK	; 824FD
 push ebx	; 82502
@@ -2629,8 +2616,8 @@ push eax	; 82566
 call sub_B4FAC	; 82567
 add esp, byte 14h	; 8256C
 push dword 0F8h	; 8256F
-jmp near loc_824D6	; 82574
-sub_82579:
+jmp near DrawSelBox_common	; 82574
+MenuSoundSettings:
 push dword 24h	; 82579
 call __CHK	; 8257E
 push ebx	; 82583
@@ -2639,20 +2626,20 @@ push esi	; 82585
 push edi	; 82586
 push ebp	; 82587
 cmp byte [musicon], 0	; 82588
-je short loc_8259A	; 8258F
+je short .1	; 8258F
 cmp dword [songdata], byte 0	; 82591
-jne short loc_825B3	; 82598
-loc_8259A:
+jne short .2	; 82598
+.1:
 push byte 0	; 8259A
 push dword 4E200h	; 8259C
-push asc_C3638	; 825A1
+push str_Temp8	; 825A1
 call sub_8CCA8	; 825A6
 add esp, byte 0Ch	; 825AB
 mov dword [dword_D2435], eax	; 825AE
-loc_825B3:
+.2:
 push byte 0	; 825B3
 push dword 5F11h	; 825B5
-push asc_C363D	; 825BA
+push str_Buffer	; 825BA
 call sub_8CCA8	; 825BF
 mov ebp, eax	; 825C4
 add esp, byte 0Ch	; 825C6
@@ -2670,8 +2657,8 @@ push byte 0Ah	; 825E4
 push eax	; 825E6
 call sub_91400	; 825E7
 add esp, byte 0Ch	; 825EC
-call sub_8261C	; 825EF
-call sub_82690	; 825F4
+call DrawSoundCardDlg	; 825EF
+call DrawSoundCardOpts	; 825F4
 call sub_8291E	; 825F9
 push byte 13h	; 825FE
 push byte 0Ah	; 82600
@@ -2688,7 +2675,7 @@ pop esi	; 82618
 pop ecx	; 82619
 pop ebx	; 8261A
 ret	; 8261B
-sub_8261C:
+DrawSoundCardDlg:
 push dword 40h	; 8261C
 call __CHK	; 82621
 push ebx	; 82626
@@ -2698,14 +2685,14 @@ push esi	; 82629
 sub esp, byte 20h	; 8262A
 call sub_B4BA8	; 8262D
 xor ecx, ecx	; 82632
-mov ebx, asc_C3644	; 82634
+mov ebx, str_Sound4	; 82634
 cmp byte [byte_ED95D], 1	; 82639
-jne short loc_8264A	; 82640
+jne short .1	; 82640
 mov edx, dword [dword_D2C6B]	; 82642
-jmp short loc_8264C	; 82648
-loc_8264A:
+jmp short .2	; 82648
+.1:
 xor edx, edx	; 8264A
-loc_8264C:
+.2:
 mov eax, esp	; 8264C
 call MakePath	; 8264E
 push byte 0	; 82653
@@ -2716,7 +2703,7 @@ mov esi, eax	; 8265F
 add esp, byte 8	; 82661
 push byte 13h	; 82664
 push byte 0Ah	; 82666
-push asc_C364A	; 82668
+push str_Dbx2	; 82668
 push eax	; 8266D
 call sub_B30B4	; 8266E
 add esp, byte 8	; 82673
@@ -2732,7 +2719,7 @@ pop edx	; 8268C
 pop ecx	; 8268D
 pop ebx	; 8268E
 ret	; 8268F
-sub_82690:
+DrawSoundCardOpts:
 push dword 20h	; 82690
 call __CHK	; 82695
 push ebx	; 8269A
@@ -2742,98 +2729,98 @@ push esi	; 8269D
 mov eax, dword [dword_C541F]	; 8269E
 mov dword [setbits], eax	; 826A3
 xor edx, edx	; 826A8
-loc_826AA:
+.1:
 mov cl, dl	; 826AA
 mov esi, 1	; 826AC
 shl esi, cl	; 826B1
 mov eax, edx	; 826B3
 shl eax, 4	; 826B5
-add eax, dword_D23A3	; 826B8
+add eax, soundcardrects	; 826B8
 test dword [setbits], esi	; 826BD
-je short loc_826CC	; 826C3
-call sub_8245A	; 826C5
-jmp short loc_826D1	; 826CA
-loc_826CC:
-call sub_824F8	; 826CC
-loc_826D1:
+je short .2	; 826C3
+call DrawSelBoxOn	; 826C5
+jmp short .3	; 826CA
+.2:
+call DrawSelBoxOff	; 826CC
+.3:
 inc edx	; 826D1
 cmp edx, byte 8	; 826D2
-jl short loc_826AA	; 826D5
-mov esi, dword_D23A3	; 826D7
+jl short DrawSoundCardOpts.1	; 826D5
+mov esi, soundcardrects	; 826D7
 push dword 0FFh	; 826DC
 push dword 0F8h	; 826E1
 call sub_8E9C0	; 826E6
 add esp, byte 8	; 826EB
 test byte [byte_C541B], 1	; 826EE
-jne short loc_82716	; 826F5
-mov eax, dword [dword_D23A7]	; 826F7
+jne short .4	; 826F5
+mov eax, dword [soundcardrects+4]	; 826F7
 add eax, byte 13h	; 826FC
 push eax	; 826FF
-mov eax, dword [dword_D23A3]	; 82700
+mov eax, dword [soundcardrects]	; 82700
 add eax, byte 18h	; 82705
 push eax	; 82708
-push asc_C364F	; 82709
+push str_PCSpeaker	; 82709
 call sub_91964	; 8270E
 add esp, byte 0Ch	; 82713
-loc_82716:
+.4:
 add esi, byte 10h	; 82716
 test byte [byte_C541B], 2	; 82719
-jne short loc_8273C	; 82720
+jne short .5	; 82720
 mov eax, dword [byte esi+04h]	; 82722
 add eax, byte 13h	; 82725
 push eax	; 82728
 mov eax, dword [esi]	; 82729
 add eax, byte 0Eh	; 8272B
 push eax	; 8272E
-push asc_C365A	; 8272F
+push str_SoundBlaster	; 8272F
 call sub_91964	; 82734
 add esp, byte 0Ch	; 82739
-loc_8273C:
+.5:
 add esi, byte 10h	; 8273C
 test byte [byte_C541B], 4	; 8273F
-jne short loc_82762	; 82746
+jne short .6	; 82746
 mov eax, dword [byte esi+04h]	; 82748
 add eax, byte 13h	; 8274B
 push eax	; 8274E
 mov eax, dword [esi]	; 8274F
 add eax, byte 29h	; 82751
 push eax	; 82754
-push asc_C3668	; 82755
+push str_ADLib	; 82755
 call sub_91964	; 8275A
 add esp, byte 0Ch	; 8275F
-loc_82762:
+.6:
 add esi, byte 10h	; 82762
 test byte [byte_C541B], 8	; 82765
-jne short loc_82788	; 8276C
+jne short .7	; 8276C
 mov eax, dword [byte esi+04h]	; 8276E
 add eax, byte 13h	; 82771
 push eax	; 82774
 mov eax, dword [esi]	; 82775
 add eax, byte 28h	; 82777
 push eax	; 8277A
-push asc_C366F	; 8277B
+push str_MT32	; 8277B
 call sub_91964	; 82780
 add esp, byte 0Ch	; 82785
-loc_82788:
+.7:
 add esi, byte 20h	; 82788
 test byte [byte_C541B], 20h	; 8278B
-jne short loc_827AE	; 82792
+jne short .x	; 82792
 mov eax, dword [byte esi+04h]	; 82794
 add eax, byte 13h	; 82797
 push eax	; 8279A
 mov eax, dword [esi]	; 8279B
 add eax, byte 18h	; 8279D
 push eax	; 827A0
-push asc_C3675	; 827A1
+push str_UltraSound	; 827A1
 call sub_91964	; 827A6
 add esp, byte 0Ch	; 827AB
-loc_827AE:
+.x:
 pop esi	; 827AE
 pop edx	; 827AF
 pop ecx	; 827B0
 pop ebx	; 827B1
 ret	; 827B2
-sub_827B3:
+SoundCardHitTest:
 push dword 0Ch	; 827B3
 call __CHK	; 827B8
 push ecx	; 827BD
@@ -2843,31 +2830,31 @@ mov esi, edx	; 827C1
 xor edx, edx	; 827C3
 lea ecx, [byte eax-06h]	; 827C5
 sub esi, byte 13h	; 827C8
-loc_827CB:
+.1:
 mov eax, edx	; 827CB
 shl eax, 4	; 827CD
-cmp ecx, dword [dword eax+dword_D23A3]	; 827D0
-jl short loc_827FA	; 827D6
-cmp ecx, dword [dword eax+dword_D23AB]	; 827D8
-jg short loc_827FA	; 827DE
-cmp esi, dword [dword eax+dword_D23A7]	; 827E0
-jl short loc_827FA	; 827E6
-cmp esi, dword [dword eax+dword_D23AF]	; 827E8
-jg short loc_827FA	; 827EE
+cmp ecx, dword [dword eax+soundcardrects]	; 827D0
+jl short .2	; 827D6
+cmp ecx, dword [dword eax+soundcardrects+8]	; 827D8
+jg short .2	; 827DE
+cmp esi, dword [dword eax+soundcardrects+4]	; 827E0
+jl short .2	; 827E6
+cmp esi, dword [dword eax+soundcardrects+0Ch]	; 827E8
+jg short .2	; 827EE
 mov dword [ebx], edx	; 827F0
 mov eax, 1	; 827F2
 pop esi	; 827F7
 pop ecx	; 827F8
 ret	; 827F9
-loc_827FA:
+.2:
 inc edx	; 827FA
 cmp edx, byte 8	; 827FB
-jl short loc_827CB	; 827FE
+jl short SoundCardHitTest.1	; 827FE
 xor eax, eax	; 82800
 pop esi	; 82802
 pop ecx	; 82803
 ret	; 82804
-sub_82805:
+RedrawSoundCardOpts:
 push dword 20h	; 82805
 call __CHK	; 8280A
 push ebx	; 8280F
@@ -2875,92 +2862,92 @@ push ecx	; 82810
 push edx	; 82811
 push esi	; 82812
 xor edx, edx	; 82813
-loc_82815:
+.1:
 mov cl, dl	; 82815
 mov esi, 1	; 82817
 shl esi, cl	; 8281C
 mov eax, edx	; 8281E
 shl eax, 4	; 82820
-add eax, dword_D23A3	; 82823
+add eax, soundcardrects	; 82823
 test dword [setbits], esi	; 82828
-je short loc_82837	; 8282E
-call sub_8245A	; 82830
-jmp short loc_8283C	; 82835
-loc_82837:
-call sub_824F8	; 82837
-loc_8283C:
+je short .2	; 8282E
+call DrawSelBoxOn	; 82830
+jmp short .3	; 82835
+.2:
+call DrawSelBoxOff	; 82837
+.3:
 inc edx	; 8283C
 cmp edx, byte 8	; 8283D
-jl short loc_82815	; 82840
-mov esi, dword_D23A3	; 82842
+jl short RedrawSoundCardOpts.1	; 82840
+mov esi, soundcardrects	; 82842
 push dword 0FFh	; 82847
 push dword 0F8h	; 8284C
 call sub_8E9C0	; 82851
 add esp, byte 8	; 82856
 test byte [byte_C541B], 1	; 82859
-jne short loc_82881	; 82860
-mov eax, dword [dword_D23A7]	; 82862
+jne short .4	; 82860
+mov eax, dword [soundcardrects+4]	; 82862
 add eax, byte 13h	; 82867
 push eax	; 8286A
-mov eax, dword [dword_D23A3]	; 8286B
+mov eax, dword [soundcardrects]	; 8286B
 add eax, byte 18h	; 82870
 push eax	; 82873
-push asc_C364F	; 82874
+push str_PCSpeaker	; 82874
 call sub_91964	; 82879
 add esp, byte 0Ch	; 8287E
-loc_82881:
+.4:
 add esi, byte 10h	; 82881
 test byte [byte_C541B], 2	; 82884
-jne short loc_828A7	; 8288B
+jne short .5	; 8288B
 mov eax, dword [byte esi+04h]	; 8288D
 add eax, byte 13h	; 82890
 push eax	; 82893
 mov eax, dword [esi]	; 82894
 add eax, byte 0Eh	; 82896
 push eax	; 82899
-push asc_C365A	; 8289A
+push str_SoundBlaster	; 8289A
 call sub_91964	; 8289F
 add esp, byte 0Ch	; 828A4
-loc_828A7:
+.5:
 add esi, byte 10h	; 828A7
 test byte [byte_C541B], 4	; 828AA
-jne short loc_828CD	; 828B1
+jne short .6	; 828B1
 mov eax, dword [byte esi+04h]	; 828B3
 add eax, byte 13h	; 828B6
 push eax	; 828B9
 mov eax, dword [esi]	; 828BA
 add eax, byte 29h	; 828BC
 push eax	; 828BF
-push asc_C3668	; 828C0
+push str_ADLib	; 828C0
 call sub_91964	; 828C5
 add esp, byte 0Ch	; 828CA
-loc_828CD:
+.6:
 add esi, byte 10h	; 828CD
 test byte [byte_C541B], 8	; 828D0
-jne short loc_828F3	; 828D7
+jne short .7	; 828D7
 mov eax, dword [byte esi+04h]	; 828D9
 add eax, byte 13h	; 828DC
 push eax	; 828DF
 mov eax, dword [esi]	; 828E0
 add eax, byte 28h	; 828E2
 push eax	; 828E5
-push asc_C366F	; 828E6
+push str_MT32	; 828E6
 call sub_91964	; 828EB
 add esp, byte 0Ch	; 828F0
-loc_828F3:
+.7:
 add esi, byte 20h	; 828F3
 test byte [byte_C541B], 20h	; 828F6
-jne short loc_82919	; 828FD
+jne short .x	; 828FD
 mov eax, dword [byte esi+04h]	; 828FF
 add eax, byte 13h	; 82902
 push eax	; 82905
 mov eax, dword [esi]	; 82906
 add eax, byte 18h	; 82908
 push eax	; 8290B
-push asc_C3675	; 8290C
+push str_UltraSound	; 8290C
 call sub_91964	; 82911
 add esp, byte 0Ch	; 82916
-loc_82919:
+.x:
 pop esi	; 82919
 pop edx	; 8291A
 pop ecx	; 8291B

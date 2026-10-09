@@ -7,10 +7,10 @@ extern StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus,
 extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, MenuOpenSaved, MenuExit, MenuNewExhibition
 extern MenuNewLeague, MenuAddTeam, MenuRemoveTeam, MenuLeagueSettings, MenuRebuildDbs, MenuMergeUpdateDbs, MenuMergeLeagueFiles, MenuUpdateTeamDbs
 extern MenuTradePlayers, MenuLeagueHilights, MenuImportDbs, MenuCentralRegistry, MenuExhibitionSettings, MenuP1ControlsExh, MenuP2ControlsExh, MenuP1ControlsInGame
-extern MenuP2ControlsInGame, sub_80830, sub_82579, sub_85924, CreatePlayoffs, EasnStandingsMenu, unk_C67B1, unk_CEF0F
+extern MenuP2ControlsInGame, LockerRoomScreen, MenuSoundSettings, sub_85924, CreatePlayoffs, EasnStandingsMenu, unk_C67B1, unk_CEF0F
 extern unk_CEF2F, unk_CEF6F, unk_CEFEF
-global str_LAAtMTL, asc_CDBDC, asc_CDBE3, asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_CDD5E
-global asc_CDD6B, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide
+global str_LAAtMTL, modesetlabel, str_SportsCentral2, str_PlayoffTree2
+global str_Return, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide
 global joycalx, joycaly, inputinstalled, ptrstep, dword_CDA24, inputqcount, inputqtail
 global inputqhead, inputpolldiv, dword_CDA38, joybtnheld, enterheld, lastmousebtns, lastmousex, lastmousey
 global mainmenubar, menuact_export, menuact_nextlg, menusub_lgmgr, menuact_nextpo
@@ -131,13 +131,10 @@ db 073h,020h,02Eh,02Eh,02Eh,00h
 unk_CDBC4:
 db 045h,078h,068h,069h,062h,069h,074h,069h,06Fh,06Eh,020h,053h,065h,074h,074h,069h
 db 06Eh,067h,073h,020h,02Eh,02Eh,02Eh,00h
-asc_CDBDC:
+modesetlabel:
 db 078h,078h,078h,078h,078h,078h,078h
-asc_CDBE3:
 db 078h,078h,078h
-asc_CDBE6:
 db 078h
-asc_CDBE7:
 db 020h,053h,065h,074h,074h,069h,06Eh,067h,073h,020h,02Eh,02Eh,02Eh,00h
 unk_CDBF5:
 db 050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,020h,053h,065h,074h,074h,069h,06Eh,067h
@@ -191,11 +188,11 @@ unk_CDD35:
 db 053h,061h,076h,065h,020h,047h,061h,06Dh,065h,020h,02Eh,02Eh,02Eh,00h
 unk_CDD43:
 db 053h,070h,06Fh,072h,074h,073h,020h,044h,065h,073h,06Bh,00h
-asc_CDD4F:
+str_SportsCentral2:
 db 053h,070h,06Fh,072h,074h,073h,020h,043h,065h,06Eh,074h,072h,061h,06Ch,00h
-asc_CDD5E:
+str_PlayoffTree2:
 db 050h,06Ch,061h,079h,06Fh,066h,066h,020h,054h,072h,065h,065h,00h
-asc_CDD6B:
+str_Return:
 db 052h,065h,074h,075h,072h,06Eh,00h
 unk_CDD72:
 db 045h,078h,069h,074h,00h
@@ -573,7 +570,7 @@ db 00h,00h,00h,00h,00h,00h,00h,00h
 gamemenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,092h,00h,00h,00h,011h,00h,00h,00h
 dd unk_CDB6F
-dd sub_80830
+dd LockerRoomScreen
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 092h,00h,00h,00h,023h,00h,00h,00h
 dd unk_CDBC4
@@ -595,7 +592,7 @@ dd unk_CDB84
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 06Ch,00h,00h,00h,092h,00h,00h,00h,07Eh,00h,00h,00h
 dd unk_CDC0B
-dd sub_82579
+dd MenuSoundSettings
 db 00h,00h,00h,00h,00h,00h,00h,00h
 statsmenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h

@@ -10,8 +10,8 @@ extern dword_C541F, songdata, dword_CCC94, dword_D2350, dword_D2423, dword_D2427
 extern musichandle, dword_D2435, sounddevids, dword_D24A0, dword_D27B2, dword_D27BB, dword_D2C6B, pointerspr
 extern ptrupdatefn, setbits, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, fclose_, fopen_
 extern fprintf_, jctime, loc_836C4, off_D24D1, strcpy_, MakePath, SetDialogColors, RestoreDialogBg
-extern MessageBox, PlayDigiSample, WaitDigiSample, GetInputEvent, ClearInputQueue, sub_8245A, sub_824F8, sub_827B3
-extern sub_82805, sub_8357A, sub_8363C, sub_8CCA8, sub_8D2F0, sub_8EB5B, sub_8EB93, sub_8ECC0
+extern MessageBox, PlayDigiSample, WaitDigiSample, GetInputEvent, ClearInputQueue, DrawSelBoxOn, DrawSelBoxOff, SoundCardHitTest
+extern RedrawSoundCardOpts, sub_8357A, sub_8363C, sub_8CCA8, sub_8D2F0, sub_8EB5B, sub_8EB93, sub_8ECC0
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_91370, sub_91400, sub_97079, FatalError, sub_B2DCA, sub_B3989, sub_B3999
 extern sub_B4BA8, unk_C36AC, unk_D23A0, unk_D2403, unk_D2413, unk_D249C
@@ -179,7 +179,7 @@ add esp, byte 0Ch	; 82ACC
 lea ebx, [byte esp+020h]	; 82ACF
 mov edx, dword [byte esp+028h]	; 82AD3
 mov eax, dword [byte esp+02Ch]	; 82AD7
-call sub_827B3	; 82ADB
+call SoundCardHitTest	; 82ADB
 test eax, eax	; 82AE0
 je near loc_82D0C	; 82AE2
 mov cl, byte [byte esp+020h]	; 82AE8
@@ -221,7 +221,7 @@ mov dword [setbits], eax	; 82B59
 jmp near loc_82D07	; 82B5E
 loc_82B63:
 mov eax, unk_D2403	; 82B63
-call sub_8245A	; 82B68
+call DrawSelBoxOn	; 82B68
 push dword 0F7h	; 82B6D
 mov ecx, 0FAh	; 82B72
 mov ebx, 0F8h	; 82B77
@@ -326,9 +326,9 @@ mov ebx, 3	; 82CF3
 call sub_8FB8E	; 82CF8
 loc_82CFD:
 mov eax, unk_D2403	; 82CFD
-call sub_824F8	; 82D02
+call DrawSelBoxOff	; 82D02
 loc_82D07:
-call sub_82805	; 82D07
+call RedrawSoundCardOpts	; 82D07
 loc_82D0C:
 mov edi, dword [byte esp+028h]	; 82D0C
 push edi	; 82D10
@@ -348,7 +348,7 @@ push edx	; 82D35
 jmp near loc_82A8F	; 82D36
 loc_82D3B:
 mov eax, unk_D2413	; 82D3B
-call sub_8245A	; 82D40
+call DrawSelBoxOn	; 82D40
 loc_82D45:
 push ebp	; 82D45
 call jctime	; 82D46

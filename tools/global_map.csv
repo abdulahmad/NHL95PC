@@ -1827,17 +1827,89 @@ hilightrec,E03C4,9652h-byte highlight record buffer (.HI file record)
 curperiod,D8C84,"period number (hilight record +3Ch printed as ""Period %d""; compared with 3)"
 msg_NoHilights,D1F4B,message 'There are no hilights!'
 str_CantOpenFile,C3450,"string ""Can not open `%s' file\n"""
-str_SaveTo,C342E,"string 'Save To'"
-str_HilightsReel,C3436,"string 'Hilights Reel'"
-str_HI,C3449,"string '.HI'"
-str_HLTL,C3472,"string 'HLTL'"
-str_HLT,C3477,"string 'HLT'"
-str_HLTS,C347B,"string 'HLTS'"
-str_HI2,C812D,"string '.HI'"
-str_SelectATeam,C8208,"string 'Select a team'"
-str_SelectAHilight,C8216,"string 'Select a hilight'"
+str_SaveTo,C342E,string 'Save To'
+str_HilightsReel,C3436,string 'Hilights Reel'
+str_HI,C3449,string '.HI'
+str_HLTL,C3472,string 'HLTL'
+str_HLT,C3477,string 'HLT'
+str_HLTS,C347B,string 'HLTS'
+str_HI2,C812D,string '.HI'
+str_SelectATeam,C8208,string 'Select a team'
+str_SelectAHilight,C8216,string 'Select a hilight'
 str_HilightDescFmt,D207A,"string '%d %d, %s vs %s, Period %d, Time %02d:%02d.'"
-str_K1,C3444,"string 'k1'"
-str_F12,C344D,"string 'f1'"
-str_F3,C3468,"string 'f3'"
-str_F4,C346B,"string 'f4'"
+str_K1,C3444,string 'k1'
+str_F12,C344D,string 'f1'
+str_F3,C3468,string 'f3'
+str_F4,C346B,string 'f4'
+settingsfile,D20A8,"loaded ""settings"" PPV file (0 = not loaded)"
+acptspr,ED774,"""acpt"" shape"
+na01spr,ED78C,"""na01"" shape"
+na03spr,ED778,"""na03"" shape"
+na05spr,ED76C,"""na05"" shape"
+pg01spr,ED770,"""pg01"" shape"
+pg03spr,ED77C,"""pg03"" shape"
+pg05spr,ED784,"""pg05"" shape"
+pg07spr,ED768,"""pg07"" shape"
+pl05spr,ED760,"""pl05"" period length shape"
+pl10spr,ED764,"""pl10"" shape"
+pl20spr,ED75C,"""pl20"" shape"
+homebckspr,ED794,HomeBck
+visbckspr,ED79C,VisBck
+homenamebckspr,ED798,HomeNameBck
+visnamebckspr,ED7A0,VisNameBck
+titlebckspr,ED790,TitleBck
+lockerrects,D227C,16-byte rects
+soundcardrects,D23A3,16-byte rects
+modesetlabel,CDBDC,"menu label buffer ""xxxxxxx..."" patched with mode name"
+str_Settings,C3480,"string 'settings'"
+str_On,C3489,"string 'On  '"
+str_Off,C348E,"string 'Off '"
+str_Acpt,C3493,"string 'acpt'"
+str_Canc,C3498,"string 'canc'"
+str_Na01,C349D,"string 'na01'"
+str_Na03,C34A2,"string 'na03'"
+str_Na05,C34A7,"string 'na05'"
+str_Pg01,C34AC,"string 'pg01'"
+str_Pg03,C34B1,"string 'pg03'"
+str_Pg05,C34B6,"string 'pg05'"
+str_Pg07,C34BB,"string 'pg07'"
+str_Pl05,C34C0,"string 'pl05'"
+str_Pl10,C34C5,"string 'pl10'"
+str_Pl20,C34CA,"string 'pl20'"
+str_HomeBck,C3594,"string 'HomeBck'"
+str_VisBck,C359C,"string 'VisBck'"
+str_HomeNameBck,C35A3,"string 'HomeNameBck'"
+str_VisNameBck,C35AF,"string 'VisNameBck'"
+str_TitleBck,C35BA,"string 'TitleBck'"
+str_Lockroom,C35C3,"string 'lockroom'"
+str_P01,C35CC,"string '!p01'"
+str_Room,C35D1,"string 'room'"
+str_JERSH,C35D6,"string 'JER%sH'"
+str_00002,C35DD,"string '0000'"
+str_JERSV,C35E2,"string 'JER%sV'"
+str_Accept,C35EC,"string 'Accept'"
+str_Cancel2,C35F3,"string 'Cancel'"
+str_HomeTeam,C35FA,"string 'Home Team'"
+str_VisitingTeam,C3604,"string 'Visiting Team'"
+str_ExhibitionGame,C3612,"string 'Exhibition Game'"
+str_Iff11,C3622,"string '.iff'"
+str_Jersey,C3627,"string 'jersey'"
+str_Pointer20,C362E,"string 'Pointer'"
+str_Temp8,C3638,"string 'temp'"
+str_Buffer,C363D,"string 'buffer'"
+str_Sound4,C3644,"string 'sound'"
+str_Dbx2,C364A,"string 'dbx2'"
+str_PCSpeaker,C364F,"string 'PC Speaker'"
+str_SoundBlaster,C365A,"string 'Sound Blaster'"
+str_ADLib,C3668,"string 'AD Lib'"
+str_MT32,C366F,"string 'MT-32'"
+str_UltraSound,C3675,"string 'UltraSound'"
+str_SportsCentral2,CDD4F,"string 'Sports Central'"
+str_PlayoffTree2,CDD5E,"string 'Playoff Tree'"
+str_Return,CDD6B,"string 'Return'"
+str_Exhibition2,D20AC,"string 'Exhibition'"
+str_Playoff,D20B7,"string 'Playoff'"
+str_League2,D20BF,"string 'League'"
+str_ShowLeague,D20C6,"string 'Show League'"
+str_Settings3,D20D2,"string ' Settings ...'"
+str_Vs,C35E9,"string 'vs'"

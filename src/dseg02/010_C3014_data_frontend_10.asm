@@ -19,13 +19,13 @@ global str_Setting4, str_Dbox3, str_Music2, str_Sound2, str_DigitizedSpeech2, st
 global str_Music3, str_Sound3, str_Setting6, str_Dbox4, str_Pointer17, str_BKGD4, str_PlayerImg, str_Dbox5
 global str_OneS, str_TwoS, str_TheMouse, str_JoystickOne, str_JoystickTwo, str_TheKeyboard, str_Pointer18, str_MTROCKU
 global str_SBROCKU, str_ADROCKU, str_ROCKDITI, str_Gadget6, str_Gadget5, str_Gad1, str_Pointer19, str_SaveTo
-global str_HilightsReel, str_HI, str_CantOpenFile, str_HLTL, str_HLT, str_HLTS, asc_C3480, asc_C3489
-global asc_C348E, asc_C3493, asc_C3498, asc_C349D, asc_C34A2, asc_C34A7, asc_C34AC, asc_C34B1
-global asc_C34B6, asc_C34BB, asc_C34C0, asc_C34C5, asc_C34CA, asc_C3594, asc_C359C, asc_C35A3
-global asc_C35AF, asc_C35BA, asc_C35C3, asc_C35CC, asc_C35D1, asc_C35D6, asc_C35DD, asc_C35E2
-global asc_C35EC, asc_C35F3, asc_C35FA, asc_C3604, asc_C3612, asc_C3622, asc_C3627, asc_C362E
-global asc_C3638, asc_C363D, asc_C3644, asc_C364A, asc_C364F, asc_C365A, asc_C3668, asc_C366F
-global asc_C3675, asc_C3680, asc_C3688, asc_C368D, asc_C3696, asc_C369F, asc_C36A8, asc_C36AF
+global str_HilightsReel, str_HI, str_CantOpenFile, str_HLTL, str_HLT, str_HLTS, str_Settings, str_On
+global str_Off, str_Acpt, str_Canc, str_Na01, str_Na03, str_Na05, str_Pg01, str_Pg03
+global str_Pg05, str_Pg07, str_Pl05, str_Pl10, str_Pl20, str_HomeBck, str_VisBck, str_HomeNameBck
+global str_VisNameBck, str_TitleBck, str_Lockroom, str_P01, str_Room, str_JERSH, str_00002, str_JERSV
+global str_Accept, str_Cancel2, str_HomeTeam, str_VisitingTeam, str_ExhibitionGame, str_Iff11, str_Jersey, str_Pointer20
+global str_Temp8, str_Buffer, str_Sound4, str_Dbx2, str_PCSpeaker, str_SoundBlaster, str_ADLib, str_MT32
+global str_UltraSound, asc_C3680, asc_C3688, asc_C368D, asc_C3696, asc_C369F, asc_C36A8, asc_C36AF
 global asc_C36C3, asc_C36C9, asc_C3782, asc_C378C, asc_C3795, asc_C37A4, asc_C37D8, asc_C37DC
 global asc_C37E8, asc_C37F5, asc_C3802, asc_C380F, asc_C381C, asc_C3829, asc_C3836, asc_C3843
 global asc_C3850, asc_C385D, asc_C386A, asc_C3877, asc_C3884, asc_C3891, asc_C389E, asc_C38A6
@@ -40,7 +40,7 @@ global str_BothTeams, str_NeitherTeams, str_K1, unk_C3447, str_F12, str_F3, str_
 global unk_C34D0, unk_C34D4, unk_C34D8, unk_C34DC, unk_C34E0, unk_C34E4, unk_C34E8, unk_C34EC
 global unk_C34F0, unk_C34F4, unk_C34F8, unk_C34FB, unk_C34FF, unk_C3502, unk_C3506, unk_C350A
 global unk_C350E, unk_C3512, unk_C3516, unk_C351A, unk_C351E, unk_C3521, unk_C3524, unk_C3528
-global unk_C352C, unk_C3530, unk_C3534, unk_C3538, unk_C353C, unk_C355E, unk_C3580, unk_C35E9
+global unk_C352C, unk_C3530, unk_C3534, unk_C3538, unk_C353C, unk_C355E, unk_C3580, str_Vs
 global unk_C36AC, unk_C36D4, unk_C36E1, unk_C36EE, unk_C36FB, unk_C3706, unk_C3712, unk_C371F
 global unk_C372C, unk_C3738, unk_C3742, unk_C374F, unk_C375C, unk_C3769, unk_C3775, unk_C392C
 global unk_C392F, unk_C393B, unk_C393E, unk_C3941, unk_C3944, unk_C396F, unk_C397B, unk_C39A8
@@ -396,35 +396,35 @@ str_HLT:
 db 048h,04Ch,054h,00h
 str_HLTS:
 db 048h,04Ch,054h,053h,00h
-asc_C3480:
+str_Settings:
 db 073h,065h,074h,074h,069h,06Eh,067h,073h,00h
-asc_C3489:
+str_On:
 db 04Fh,06Eh,020h,020h,00h
-asc_C348E:
+str_Off:
 db 04Fh,066h,066h,020h,00h
-asc_C3493:
+str_Acpt:
 db 061h,063h,070h,074h,00h
-asc_C3498:
+str_Canc:
 db 063h,061h,06Eh,063h,00h
-asc_C349D:
+str_Na01:
 db 06Eh,061h,030h,031h,00h
-asc_C34A2:
+str_Na03:
 db 06Eh,061h,030h,033h,00h
-asc_C34A7:
+str_Na05:
 db 06Eh,061h,030h,035h,00h
-asc_C34AC:
+str_Pg01:
 db 070h,067h,030h,031h,00h
-asc_C34B1:
+str_Pg03:
 db 070h,067h,030h,033h,00h
-asc_C34B6:
+str_Pg05:
 db 070h,067h,030h,035h,00h
-asc_C34BB:
+str_Pg07:
 db 070h,067h,030h,037h,00h
-asc_C34C0:
+str_Pl05:
 db 070h,06Ch,030h,035h,00h
-asc_C34C5:
+str_Pl10:
 db 070h,06Ch,031h,030h,00h
-asc_C34CA:
+str_Pl20:
 db 070h,06Ch,032h,030h,00h,00h
 unk_C34D0:
 db 041h,04Eh,041h,00h
@@ -493,63 +493,63 @@ db 073h,00h
 unk_C3580:
 db 053h,074h,061h,06Eh,06Ch,065h,079h,020h,043h,075h,070h,06h,020h,046h,069h,06Eh
 db 061h,06Ch,073h,00h
-asc_C3594:
+str_HomeBck:
 db 048h,06Fh,06Dh,065h,042h,063h,06Bh,00h
-asc_C359C:
+str_VisBck:
 db 056h,069h,073h,042h,063h,06Bh,00h
-asc_C35A3:
+str_HomeNameBck:
 db 048h,06Fh,06Dh,065h,04Eh,061h,06Dh,065h,042h,063h,06Bh,00h
-asc_C35AF:
+str_VisNameBck:
 db 056h,069h,073h,04Eh,061h,06Dh,065h,042h,063h,06Bh,00h
-asc_C35BA:
+str_TitleBck:
 db 054h,069h,074h,06Ch,065h,042h,063h,06Bh,00h
-asc_C35C3:
+str_Lockroom:
 db 06Ch,06Fh,063h,06Bh,072h,06Fh,06Fh,06Dh,00h
-asc_C35CC:
+str_P01:
 db 021h,070h,030h,031h,00h
-asc_C35D1:
+str_Room:
 db 072h,06Fh,06Fh,06Dh,00h
-asc_C35D6:
+str_JERSH:
 db 04Ah,045h,052h,025h,073h,048h,00h
-asc_C35DD:
+str_00002:
 db 030h,030h,030h,030h,00h
-asc_C35E2:
+str_JERSV:
 db 04Ah,045h,052h,025h,073h,056h,00h
-unk_C35E9:
+str_Vs:
 db 076h,073h,00h
-asc_C35EC:
+str_Accept:
 db 041h,063h,063h,065h,070h,074h,00h
-asc_C35F3:
+str_Cancel2:
 db 043h,061h,06Eh,063h,065h,06Ch,00h
-asc_C35FA:
+str_HomeTeam:
 db 048h,06Fh,06Dh,065h,020h,054h,065h,061h,06Dh,00h
-asc_C3604:
+str_VisitingTeam:
 db 056h,069h,073h,069h,074h,069h,06Eh,067h,020h,054h,065h,061h,06Dh,00h
-asc_C3612:
+str_ExhibitionGame:
 db 045h,078h,068h,069h,062h,069h,074h,069h,06Fh,06Eh,020h,047h,061h,06Dh,065h,00h
-asc_C3622:
+str_Iff11:
 db 02Eh,069h,066h,066h,00h
-asc_C3627:
+str_Jersey:
 db 06Ah,065h,072h,073h,065h,079h,00h
-asc_C362E:
+str_Pointer20:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h
-asc_C3638:
+str_Temp8:
 db 074h,065h,06Dh,070h,00h
-asc_C363D:
+str_Buffer:
 db 062h,075h,066h,066h,065h,072h,00h
-asc_C3644:
+str_Sound4:
 db 073h,06Fh,075h,06Eh,064h,00h
-asc_C364A:
+str_Dbx2:
 db 064h,062h,078h,032h,00h
-asc_C364F:
+str_PCSpeaker:
 db 050h,043h,020h,053h,070h,065h,061h,06Bh,065h,072h,00h
-asc_C365A:
+str_SoundBlaster:
 db 053h,06Fh,075h,06Eh,064h,020h,042h,06Ch,061h,073h,074h,065h,072h,00h
-asc_C3668:
+str_ADLib:
 db 041h,044h,020h,04Ch,069h,062h,00h
-asc_C366F:
+str_MT32:
 db 04Dh,054h,02Dh,033h,032h,00h
-asc_C3675:
+str_UltraSound:
 db 055h,06Ch,074h,072h,061h,053h,06Fh,075h,06Eh,064h,00h
 asc_C3680:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h

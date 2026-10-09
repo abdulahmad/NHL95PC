@@ -8,7 +8,7 @@ extern unk_C3502, unk_C3506, unk_C350A, unk_C350E, unk_C3512, unk_C3516, unk_C35
 extern unk_C3521, unk_C3524, unk_C3528, unk_C352C, unk_C3530, unk_C3534, unk_C3538, unk_C353C
 extern unk_C355E, unk_C3580, unk_C36D4, unk_C36E1, unk_C36EE, unk_C36FB, unk_C3706, unk_C3712
 extern unk_C371F, unk_C372C, unk_C3738, unk_C3742, unk_C374F, unk_C375C, unk_C3769, unk_C3775
-global str_HilightDescFmt, asc_D20AC, asc_D20B7, asc_D20BF, asc_D20C6, asc_D20D2, asc_D236F, asc_D2379
+global str_HilightDescFmt, str_Exhibition2, str_Playoff, str_League2, str_ShowLeague, str_Settings3, asc_D236F, asc_D2379
 global asc_D2382, asc_D238B, asc_D2390, asc_D2399, asc_D2479, asc_D2486, asc_D248C, asc_D2491
 global asc_D24DC, asc_D24E2, asc_D24EC, asc_D24F3, asc_D24FF, asc_D250B, asc_D2517, asc_D2523
 global asc_D252E, asc_D253A, asc_D2546, asc_D2552, asc_D255E, asc_D2569, asc_D2575, asc_D257E
@@ -24,10 +24,9 @@ global dword_D145C, dword_D1468, dword_D146C, jerseydigits, leaguesetrects
 global modesetrects, exhsetrects
 global ctldlgrects
 global ctldlgalt, rockcuepool, teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1
-global dword_D20A8, dword_D20E0, dword_D2150, dword_D223C, dword_D227C, dword_D2280, dword_D2284, dword_D2288
-global dword_D229C, dword_D22A0, dword_D22A4, dword_D22A8, dword_D22AC, dword_D22B0, dword_D22B4, dword_D22BC
-global dword_D22C0, dword_D22C4, dword_D22C8, dword_D22CC, dword_D22D0, dword_D22D4, dword_D22DC, dword_D22E0
-global dword_D22EC, dword_D22F0, dword_D2350, dword_D23A3, dword_D23A7, dword_D23AB, dword_D23AF, dword_D2423
+global settingsfile, dword_D20E0, dword_D2150, dword_D223C, lockerrects
+global dword_D22DC, dword_D22E0
+global dword_D22EC, dword_D22F0, dword_D2350, soundcardrects, dword_D2423
 global dword_D2427, dword_D242B, musichandle, dword_D2435, sounddevids, dword_D24A0, dword_D27A2
 global dword_D27B2, dword_D27B7, dword_D27BB, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
 global off_D21C0, off_D2230, off_D24D1, off_D273E, off_D2776, off_D27EF, off_D27F7, off_D2855
@@ -579,17 +578,17 @@ str_HilightDescFmt:
 db 025h,064h,020h,025h,064h,02Ch,020h,025h,073h,020h,076h,073h,020h,025h,073h,02Ch
 db 020h,050h,065h,072h,069h,06Fh,064h,020h,025h,064h,02Ch,020h,054h,069h,06Dh,065h
 db 020h,025h,030h,032h,064h,03Ah,025h,030h,032h,064h,02Eh,00h,00h,00h
-dword_D20A8:
+settingsfile:
 db 00h,00h,00h,00h
-asc_D20AC:
+str_Exhibition2:
 db 045h,078h,068h,069h,062h,069h,074h,069h,06Fh,06Eh,00h
-asc_D20B7:
+str_Playoff:
 db 050h,06Ch,061h,079h,06Fh,066h,066h,00h
-asc_D20BF:
+str_League2:
 db 04Ch,065h,061h,067h,075h,065h,00h
-asc_D20C6:
+str_ShowLeague:
 db 053h,068h,06Fh,077h,020h,04Ch,065h,061h,067h,075h,065h,00h
-asc_D20D2:
+str_Settings3:
 db 020h,053h,065h,074h,074h,069h,06Eh,067h,073h,020h,02Eh,02Eh,02Eh,00h
 dword_D20E0:
 db 01h,00h,00h,00h,02h,00h,00h,00h,03h,00h,00h,00h,04h,00h,00h,00h
@@ -645,42 +644,25 @@ db 0FFh,0FFh,0FFh,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 01h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
 db 01h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
 db 01h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-dword_D227C:
+lockerrects:
 db 023h,00h,00h,00h
-dword_D2280:
 db 046h,00h,00h,00h
-dword_D2284:
 db 040h,01h,00h,00h
-dword_D2288:
 db 090h,01h,00h,00h,059h,01h,00h,00h,046h,00h,00h,00h,076h,02h,00h,00h
 db 090h,01h,00h,00h
-dword_D229C:
 db 095h,00h,00h,00h
-dword_D22A0:
 db 0B0h,01h,00h,00h
-dword_D22A4:
 db 0C4h,00h,00h,00h
-dword_D22A8:
 db 0C4h,01h,00h,00h
-dword_D22AC:
 db 0D9h,00h,00h,00h
-dword_D22B0:
 db 0B0h,01h,00h,00h
-dword_D22B4:
 db 08h,01h,00h,00h,0C4h,01h,00h,00h
-dword_D22BC:
 db 079h,01h,00h,00h
-dword_D22C0:
 db 0B0h,01h,00h,00h
-dword_D22C4:
 db 0A8h,01h,00h,00h
-dword_D22C8:
 db 0C4h,01h,00h,00h
-dword_D22CC:
 db 0BDh,01h,00h,00h
-dword_D22D0:
 db 0B0h,01h,00h,00h
-dword_D22D4:
 db 0ECh,01h,00h,00h,0C4h,01h,00h,00h
 dword_D22DC:
 db 01Bh,02h,00h,00h
@@ -712,13 +694,10 @@ asc_D2399:
 db 050h,043h,042h,045h,045h,050h,00h
 unk_D23A0:
 db 050h,043h,00h
-dword_D23A3:
+soundcardrects:
 db 0Eh,00h,00h,00h
-dword_D23A7:
 db 01Eh,00h,00h,00h
-dword_D23AB:
 db 071h,00h,00h,00h
-dword_D23AF:
 db 02Fh,00h,00h,00h,0Eh,00h,00h,00h,033h,00h,00h,00h,071h,00h,00h,00h
 db 044h,00h,00h,00h,0Eh,00h,00h,00h,048h,00h,00h,00h,071h,00h,00h,00h
 db 059h,00h,00h,00h,0Eh,00h,00h,00h,05Dh,00h,00h,00h,071h,00h,00h,00h

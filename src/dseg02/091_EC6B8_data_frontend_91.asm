@@ -22,9 +22,9 @@ global dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0, leaguesetimg, setbits
 global dword_ED374, rocktunes, rockrandcues, dword_ED6D0, dword_ED6D4, gadgetfile
 global gadgetptry, gadgetptrx, gadgetshape, dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8
 global dword_ED6FC, hilightfont, dword_ED704, dword_ED708, dword_ED70C, dword_ED74C, dword_ED750, dword_ED754
-global dword_ED756, dword_ED75C, dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774
-global dword_ED778, dword_ED77C, chkoffspr, dword_ED784, chkonspr, dword_ED78C, dword_ED790, dword_ED794
-global dword_ED798, dword_ED79C, dword_ED7A0, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, dword_ED7B4
+global dword_ED756, pl20spr, pl05spr, pl10spr, pg07spr, na05spr, pg01spr, acptspr
+global na03spr, pg03spr, chkoffspr, pg05spr, chkonspr, na01spr, titlebckspr, homebckspr
+global homenamebckspr, visbckspr, visnamebckspr, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, dword_ED7B4
 global dword_ED7B8, vgapage, memlist1, memlist0, curdbname, unk_ED7BC, word_ED758
 dblistcur:
 resb 4
@@ -136,41 +136,41 @@ dword_ED756:
 resb 2
 word_ED758:
 resb 4
-dword_ED75C:
+pl20spr:
 resb 4
-dword_ED760:
+pl05spr:
 resb 4
-dword_ED764:
+pl10spr:
 resb 4
-dword_ED768:
+pg07spr:
 resb 4
-dword_ED76C:
+na05spr:
 resb 4
-dword_ED770:
+pg01spr:
 resb 4
-dword_ED774:
+acptspr:
 resb 4
-dword_ED778:
+na03spr:
 resb 4
-dword_ED77C:
+pg03spr:
 resb 4
 chkoffspr:
 resb 4
-dword_ED784:
+pg05spr:
 resb 4
 chkonspr:
 resb 4
-dword_ED78C:
+na01spr:
 resb 4
-dword_ED790:
+titlebckspr:
 resb 4
-dword_ED794:
+homebckspr:
 resb 4
-dword_ED798:
+homenamebckspr:
 resb 4
-dword_ED79C:
+visbckspr:
 resb 4
-dword_ED7A0:
+visnamebckspr:
 resb 4
 dword_ED7A4:
 resb 4
