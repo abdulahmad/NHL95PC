@@ -54,6 +54,9 @@ def func_addr(src, func):
                 if a: return func, int(a.group(1), 16)
     raise SystemExit('label %s not found in %s' % (func, asm))
 
+def sx(v):
+    return v - (1 << 32) if v >= 1 << 31 else v
+
 def name_of(rev, a):
     if a in rev: return rev[a]
     best = max((x for x in rev if x <= a and a - x < 0x10000), default=None)
@@ -73,6 +76,10 @@ def main():
     # the whole object from the first public (shared tails / several functions per file)
     text = r['text']; c0 = off0
     n = len(text) - c0
+    stem, fil, asm, inc = cc.c_paths(a.src)
+    if func != fil and len(r['pubs']) > 1:     # one function of a multi-function file: just its asm block
+        n = min(n, cc.asm_range(a.src, func)[1] - addr)
+    tt = None
     orig = original(addr, max(n, 1) + 64)
     ofx = orig_fixups(addr, addr + len(orig))
     cfx = {f['off'] - c0: f for f in r['fixups'] if f['off'] >= c0}
@@ -119,6 +126,15 @@ def main():
                 if len(ob) != len(cb) or mb(ob) != mb(cb): mark = '! '
                 elif not ct or not ot or ct[0] != ot[0]: mark = '~ '
                 if ot: otxt += '  ; ' + name_of(rev, ot[0])
+            elif ob != cb and ci.mnemonic.startswith('j') and ci.size == oinst.size and ci.mnemonic == oinst.mnemonic \
+                    and ci.op_str.startswith('0x') and not (0 <= sx(int(ci.op_str, 16)) < n):
+                # leaves the function: to another block / shared tail of the file (cc.py TextTargets)
+                if tt is None: tt = cc.TextTargets(a.src, r)
+                try: cd = tt.resolve(c0 + sx(int(ci.op_str, 16)), func)[1]
+                except SystemExit: cd = None
+                od = addr + oinst.address + oinst.size + int.from_bytes(ob[-4:] if ci.size > 2 else ob[-1:], 'little', signed=True)
+                mark = '  ' if cd == od else '! '
+                otxt += '  ; ' + name_of(rev, od)
             elif ob != cb: mark = '! ' if (oinst.mnemonic != ci.mnemonic or oinst.size != ci.size) else '~ '
         ctxt = '%s %s' % (ci.mnemonic, ci.op_str)
         if ct:

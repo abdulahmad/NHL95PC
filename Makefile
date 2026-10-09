@@ -42,8 +42,9 @@ cinfo:
 .PRECIOUS: build/c/%.obj build/c/%.inc
 build/c/%.obj: src/c/%.c $(CHDRS) tools/cc.py
 	@$(PYTHON) tools/cc.py compile $< -o $@
-build/c/%.inc: build/c/%.obj src/cseg01/$$(firstword $$(subst /, ,$$*)).asm tools/cc.py tools/cobj.py
-	@$(PYTHON) tools/cc.py frag src/c/$*.c $< $@
+# build/c/<seg>/<File>.inc, or build/c/<seg>/<File>.<Func>.inc for a further function of a multi-block file
+build/c/%.inc: build/c/$$(basename $$*).obj src/cseg01/$$(firstword $$(subst /, ,$$*)).asm tools/cc.py tools/cobj.py | build/parts/manifest.json
+	@$(PYTHON) tools/cc.py frag src/c/$(basename $*).c $< $@
 
 # stubs + LE metadata + fixup order from your EXE (also checks its sha1)
 build/parts/manifest.json: $(HOCKEY_EXE) segmap95pc.json tools/rebuild_exe.py

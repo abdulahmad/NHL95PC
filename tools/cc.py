@@ -3,8 +3,8 @@
 
   python3 tools/cc.py compile src/c/<seg>/<Func>.c [-o OBJ]   wcc386 10.0 LA under headless DOSBox -> OMF object
   python3 tools/cc.py frag    src/c/<seg>/<Func>.c OBJ OUT.inc  object -> NASM fragment for the marked asm block
-  python3 tools/cc.py mark    src/c/<seg>/<Func>.c [--end LABEL] wrap the asm function in the CBUILD markers
-  python3 tools/cc.py unmark  src/c/<seg>/<Func>.c              remove the markers again (asm block stays)
+  python3 tools/cc.py mark    src/c/<seg>/<Func>.c [--func F] [--end LABEL] wrap the asm function in the CBUILD markers
+  python3 tools/cc.py unmark  src/c/<seg>/<Func>.c [--func F]   remove the markers again (asm block stays)
   python3 tools/cc.py check                                    toolchain present? (exit 0/1; used by the Makefile)
 
 Layout: src/c/<segment file stem>/<Func>.c (e.g. src/c/042_59D9A_engine_core/SetSPA.c) replaces the block of
@@ -24,6 +24,15 @@ recreates the same LE fixups. Every label of the asm block (global, local .x, mi
 re-emitted at its original offset, taken from the instruction address comments, so other code that jumps into the
 block still assembles. `frag` fails when the compiled size differs from the asm block; the bytes themselves are
 checked by the sha1 at the end of `make` (use tools/cdiff.py to see differences).
+
+Several blocks from one C file (shared exits): Watcom merges identical function tails across a source file, so a
+function can end with `jmp Other_popedi` into another function's epilogue (StopNA -> EvadePlayers, reenergizeteam ->
+calcpuckcross). Such functions must be compiled in one file. The first block uses the file's own name; every other
+function F of the file is marked with `cc.py mark FILE.c --func F` and includes "c/<seg>/<File>.<F>.inc". `frag`
+then cuts the slice of _TEXT that starts at F's public (the block's length) and rewrites every rel32 branch that
+leaves the slice as `dd (Label+k)-($+4)` to the asm label of the block it lands in. Code of the file that is not
+in a marked block (drafts, functions kept in the file for the original layout) is compiled but not spliced. A
+branch out of a slice into unmarked code, or a short (rel8) one, is an error.
 
 Compiler: Watcom C/C++32 10.0 LA wcc386 (WATCOM_ROOT, default ~/watcom: dosla/WCC386.EXE + w10a DOS4GW), default
 flags. A source may add flags with a comment line `/* cflags: -xx */` (none needed so far). Headers come from
@@ -67,12 +76,23 @@ def compile_c(src, obj, extra=''):
         return True
     finally: shutil.rmtree(work, ignore_errors=True)
 
-def c_paths(src):
-    """src/c/<stem>/<Func>.c -> (stem, Func, asm path, include name)"""
+def c_paths(src, func=None):
+    """src/c/<stem>/<File>.c [, function F] -> (stem, F (default File), asm path, include name of F's block)"""
     rel = os.path.relpath(os.path.abspath(src), os.path.join(ROOT, 'src/c'))
     stem, fn = rel.split(os.sep)
-    func = os.path.splitext(fn)[0]
-    return stem, func, os.path.join(ROOT, 'src/cseg01', stem + '.asm'), 'c/%s/%s.inc' % (stem, func)
+    fil = os.path.splitext(fn)[0]
+    func = func or fil
+    inc = 'c/%s/%s.inc' % (stem, fil) if func == fil else 'c/%s/%s.%s.inc' % (stem, fil, func)
+    return stem, func, os.path.join(ROOT, 'src/cseg01', stem + '.asm'), inc
+
+def file_blocks(src):
+    """every marked block of this C file: {function: include name}"""
+    stem, fil, asm, inc0 = c_paths(src)
+    out = {}
+    for l in open(asm):
+        m = re.match(r'%%include "c/%s/%s(\.(\w+))?\.inc"' % (re.escape(stem), re.escape(fil)), l.strip())
+        if m: out[m.group(2) or fil] = m.group(0)
+    return out
 
 LABEL = re.compile(r'^([A-Za-z_.][\w.$?@]*):')
 ADDR = re.compile(r';\s*([0-9A-F]{5})\s*$')
@@ -84,9 +104,9 @@ def seg_end(stem):
         if p[5] == 'cseg01/%s.asm' % stem: return int(p[2], 16)
     raise SystemExit('segment %s not in src/segments.txt' % stem)
 
-def block(src):
-    """the marked asm block for this C file: (start, end, [(label, addr)], lines)"""
-    stem, func, asm, inc = c_paths(src)
+def block(src, func=None):
+    """the marked asm block of function func (default: the file's name): (start, end, [(label, addr)], lines)"""
+    stem, func, asm, inc = c_paths(src, func)
     L = open(asm).read().split('\n')
     i = next((k for k, l in enumerate(L) if l.strip() == '%%include "%s"' % inc), None)
     if i is None: raise SystemExit('%s: no %%include "%s" block (run cc.py mark)' % (os.path.relpath(asm, ROOT), inc))
@@ -112,10 +132,9 @@ def block(src):
 
 def asm_range(src, func=None):
     """(start, end) of the original code: the marked block, else label func up to the next non-local label"""
-    stem, f, asm, inc = c_paths(src)
-    func = func or f
-    if func == f and any(l.strip() == '%%include "%s"' % inc for l in open(asm)):
-        s, e, labs, body = block(src); return s, e
+    stem, func, asm, inc = c_paths(src, func)
+    if any(l.strip() == '%%include "%s"' % inc for l in open(asm)):
+        s, e, labs, body = block(src, func); return s, e
     L = open(asm).read().split('\n'); start = None; k = 0
     for k, l in enumerate(L):
         m = LABEL.match(l)
@@ -131,41 +150,121 @@ def asm_range(src, func=None):
     return start, seg_end(stem)
 
 def frag(src, obj, out):
-    stem, func, asm, inc = c_paths(src)
-    start, end, labels, body = block(src)
+    stem, fil, asm, inc = c_paths(src)
+    b = os.path.basename(out)[:-len('.inc')]
+    func = b.split('.', 1)[1] if '.' in b else fil
+    start, end, labels, body = block(src, func)
     known = set(n for n, a in labels) | symbols()
     r = cobj.parse(obj, known)
-    text = r['text']
-    if len(text) != end - start:
-        raise SystemExit('%s: compiled %d bytes, asm block %05X-%05X is %d bytes (see tools/cdiff.py %s)'
-                         % (os.path.relpath(src, ROOT), len(text), start, end, end - start, os.path.relpath(src, ROOT)))
-    for n, off in r['pubs'].items():
-        la = dict((x, a) for x, a in labels).get(n)
-        if la is not None and la - start != off:
-            raise SystemExit('%s: public %s at +%X, asm label at +%X' % (src, n, off, la - start))
-    fx = {f['off']: f for f in r['fixups']}
+    text = r['text']; pubs = r['pubs']
+    blocks = file_blocks(src)
+    multi = len(blocks) > 1 or func != fil
+    s0 = pubs.get(func, 0) if multi else 0
+    if func not in pubs and multi: raise SystemExit('%s: no public %s in the object' % (src, func))
+    n = end - start
+    if (not multi and len(text) != n) or (multi and s0 + n > len(text)):
+        raise SystemExit('%s: compiled %d bytes for %s, asm block %05X-%05X is %d bytes (see tools/cdiff.py %s --func %s)'
+                         % (os.path.relpath(src, ROOT), len(text) - s0, func, start, end, n, os.path.relpath(src, ROOT), func))
+    tt = TextTargets(src, r)
+    textlabel = lambda t: tt.resolve(t, func)[0]
+    for nm, off in pubs.items():
+        la = dict((x, a) for x, a in labels).get(nm)
+        if la is not None and la - start != off - s0:
+            raise SystemExit('%s: public %s at +%X, asm label at +%X' % (src, nm, off - s0, la - start))
+    fx = {f['off'] - s0: f for f in r['fixups'] if s0 <= f['off'] < s0 + n}
+    # rel32 branches (no fixup) that leave the slice: to another block of the file
+    try:
+        from capstone import Cs, CS_ARCH_X86, CS_MODE_32
+    except ImportError:
+        Cs = None
+    xb = {}
+    if multi:
+        if Cs is None: raise SystemExit('capstone needed for multi-block C files (pip install capstone)')
+        for i in Cs(CS_ARCH_X86, CS_MODE_32).disasm(text[s0:s0 + n], s0):
+            if not (i.mnemonic == 'call' or i.mnemonic.startswith('j')) or not i.op_str.startswith('0x'): continue
+            a = i.address - s0
+            if any(k in fx for k in range(a, a + i.size)): continue
+            t = int(i.op_str, 16)
+            if s0 <= t < s0 + n: continue
+            if i.size == 2: raise SystemExit('%s: short branch at %s+%X leaves the block' % (src, func, a))
+            xb[a + i.size - 4] = textlabel(t)
     cuts = {}
-    for n, a in labels: cuts.setdefault(a - start, []).append(n)
-    lines = ['; GENERATED by tools/cc.py from %s (wcc386 10.0 LA); do not edit' % os.path.relpath(src, ROOT)]
+    for nm, a in labels: cuts.setdefault(a - start, []).append(nm)
+    lines = ['; GENERATED by tools/cc.py from %s%s (wcc386 10.0 LA); do not edit' % (os.path.relpath(src, ROOT), ', function %s' % func if multi else '')]
     pos = 0; row = []
     def flush():
         if row: lines.append('db ' + ','.join('0%02Xh' % b for b in row)); row.clear()
-    while pos < len(text):
-        for n in cuts.get(pos, []): flush(); lines.append('%s:' % n)
+    while pos < n:
+        for nm in cuts.get(pos, []): flush(); lines.append('%s:' % nm)
         f = fx.get(pos)
         if f:
             flush()
-            t = start if f['target'] == 'TEXT' else None
-            tgt = ('%s+0%Xh' % (labels[0][0], f['addend'])) if f['target'] == 'TEXT' else '%s%+d' % (f['target'], f['addend']) if f['addend'] else f['target']
-            if f['target'] == 'TEXT' and labels[0][1] != start: raise SystemExit('first label not at block start')
+            if f['target'] == 'TEXT':
+                tgt = textlabel(f['addend'])
+            else:
+                tgt = '%s%+d' % (f['target'], f['addend']) if f['addend'] else f['target']
             lines.append('dd %s' % tgt if f['kind'] == 'abs32' else 'dd (%s)-($+4)' % tgt)
             pos += 4; continue
-        row.append(text[pos]); pos += 1
-        if len(row) == 16 or pos in cuts or pos in fx: flush()
+        if pos in xb:
+            flush(); lines.append('dd (%s)-($+4)' % xb[pos]); pos += 4; continue
+        row.append(text[s0 + pos]); pos += 1
+        if len(row) == 16 or pos in cuts or pos in fx or pos in xb: flush()
     flush()
-    for n in cuts.get(pos, []): lines.append('%s:' % n)
+    for nm in cuts.get(pos, []): lines.append('%s:' % nm)
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     open(out, 'w').write('\n'.join(lines) + '\n')
+
+def label_addr(asm, name):
+    L = open(asm).read().split('\n')
+    for k, l in enumerate(L):
+        if l.startswith(name + ':'):
+            for l2 in L[k + 1:]:
+                a = ADDR.search(l2)
+                if a: return int(a.group(1), 16)
+    return None
+
+def original_bytes(addr, n):
+    """retail code bytes (build/parts, extracted by make from your HOCKEY.EXE)"""
+    import json
+    man = json.load(open(os.path.join(ROOT, 'build/parts/manifest.json')))
+    for m in man['segments']:
+        s0, s1 = int(m['start'], 16), int(m['end'], 16)
+        if m['obj'] == 1 and s0 <= addr < s1:
+            return open(os.path.join(ROOT, 'build/parts', m['file']), 'rb').read()[addr - s0:addr - s0 + n]
+    raise SystemExit('address %X not in cseg01' % addr)
+
+class TextTargets:
+    """map an offset in a multi-function object's _TEXT to the asm: (label expression, original address).
+    A marked block of the file: its first label + offset. Code of the file that is not marked (a draft kept for
+    the layout): only a shared tail is allowed - the bytes from the target up to the next ret must occur exactly
+    once in the original function, and the branch goes there (e.g. StopNA's jmp into EvadePlayers' pop/ret)."""
+    def __init__(self, src, r):
+        self.src = src; self.r = r
+        stem, fil, self.asm, inc = c_paths(src)
+        self.where = []
+        for g in file_blocks(src):
+            gs, ge, gl, _ = block(src, g)
+            if g not in r['pubs']: raise SystemExit('%s: no public %s in the object' % (src, g))
+            self.where.append((r['pubs'][g], r['pubs'][g] + ge - gs, gl[0][0], gs))
+    def resolve(self, t, func='?'):
+        for a, e, lab, gs in self.where:
+            if a <= t < e or (t == e and a < e): return '%s+0%Xh' % (lab, t - a), gs + t - a
+        pubs = sorted(self.r['pubs'].items(), key=lambda x: x[1])
+        own = [(n, o) for n, o in pubs if o <= t]
+        if not own: raise SystemExit('%s: %s refers to _TEXT+%X before any function' % (self.src, func, t))
+        g, go = own[-1]
+        text = self.r['text']; k = text.find(b'\xc3', t)
+        tail = text[t:k + 1] if 0 <= k - t < 16 else b''
+        ga = label_addr(self.asm, g)
+        if not tail or ga is None:
+            raise SystemExit('%s: %s branches to %s+%X (_TEXT+%X), not a marked block nor a shared ret tail' % (self.src, func, g, t - go, t))
+        later = [o for n, o in pubs if o > go]
+        span = (later[0] - go if later else len(text) - go) + 0x100
+        orig = original_bytes(ga, span)
+        hits = [m.start() for m in re.finditer(re.escape(tail), orig)]
+        if len(hits) != 1:
+            raise SystemExit('%s: %s branches to the tail %s of %s; found %d times in the original %s' % (self.src, func, tail.hex(), g, len(hits), g))
+        return '%s+0%Xh' % (g, hits[0]), ga + hits[0]
 
 _syms = None
 def symbols():
@@ -177,8 +276,8 @@ def symbols():
             if ln.startswith(';') and len(p) >= 2 and re.match(r'^[0-9A-F]{5}$', p[0]): _syms.add(p[1])
     return _syms
 
-def mark(src, endlabel=None):
-    stem, func, asm, inc = c_paths(src)
+def mark(src, endlabel=None, func=None):
+    stem, func, asm, inc = c_paths(src, func)
     L = open(asm).read().split('\n')
     if any(l.strip() == '%%include "%s"' % inc for l in L): raise SystemExit('already marked')
     i = next((k for k, l in enumerate(L) if l.startswith(func + ':')), None)
@@ -192,13 +291,13 @@ def mark(src, endlabel=None):
         if L[j].startswith('%'): break
         j += 1
     while j > i + 1 and (not L[j - 1].strip() or L[j - 1].startswith(';')): j -= 1   # the next function's comment block
-    rel = os.path.relpath(os.path.abspath(src), ROOT)
+    rel = os.path.relpath(os.path.abspath(src), ROOT) + ('' if inc.endswith('/%s.inc' % func) else ' (%s)' % func)
     L[i:j] = ['; C: %s' % rel, '%ifdef CBUILD', '%%include "%s"' % inc, '%else'] + L[i:j] + ['%endif ; C']
     open(asm, 'w').write('\n'.join(L))
     print('marked %s lines %d-%d of %s' % (func, i + 1, j, os.path.relpath(asm, ROOT)))
 
-def unmark(src):
-    stem, func, asm, inc = c_paths(src)
+def unmark(src, func=None):
+    stem, func, asm, inc = c_paths(src, func)
     L = open(asm).read().split('\n')
     i = next((k for k, l in enumerate(L) if l.strip() == '%%include "%s"' % inc), None)
     if i is None: raise SystemExit('not marked')
@@ -209,13 +308,13 @@ def unmark(src):
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('cmd'); ap.add_argument('src', nargs='?'); ap.add_argument('rest', nargs='*')
-    ap.add_argument('-o'); ap.add_argument('--end'); ap.add_argument('--flags', default='')
+    ap.add_argument('-o'); ap.add_argument('--end'); ap.add_argument('--func'); ap.add_argument('--flags', default='')
     a = ap.parse_args()
     if a.cmd == 'check': sys.exit(0 if check() else 1)
     if a.cmd == 'compile':
         obj = a.o or os.path.join(ROOT, 'build', os.path.relpath(os.path.splitext(os.path.abspath(a.src))[0], os.path.join(ROOT, 'src')) + '.obj')
         sys.exit(0 if compile_c(a.src, obj, a.flags) else 1)
     if a.cmd == 'frag': frag(a.src, a.rest[0], a.rest[1])
-    elif a.cmd == 'mark': mark(a.src, a.end)
-    elif a.cmd == 'unmark': unmark(a.src)
+    elif a.cmd == 'mark': mark(a.src, a.end, a.func)
+    elif a.cmd == 'unmark': unmark(a.src, a.func)
     else: sys.exit(__doc__)

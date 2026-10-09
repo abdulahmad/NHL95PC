@@ -1,0 +1,59 @@
+function,address,size,segment,status,confidence,signals
+ReadKeyboardPad,1086A,311,001_10010_main_startup,nochk,,nochk
+ReadJoyPad,109A1,91,001_10010_main_startup,nochk,,nochk
+ReadMousePad,109FC,138,001_10010_main_startup,nochk,,nochk
+ReadControllerPad,10A86,64,001_10010_main_startup,nochk,,nochk
+ReadHotKeys,10AC6,441,001_10010_main_startup,nochk,,nochk
+ReadSkipKeys,10C7F,544,001_10010_main_startup,nochk,,nochk
+DeskSetExit3b,18D03,10,009_17DFC_palette_fx,nochk,,nochk
+MenuCallbackTrue2,18F86,7,010_18D7F_frontend_desk,nochk,,nochk
+DrawSprite_b0,1CFBF,90,014_1CC3D_frontend_labels,nochk,,nochk
+SetupStatsSourceMenu_all,1D342,470,014_1CC3D_frontend_labels,nochk,,nochk
+SetScreenTitle_rink,1D665,89,014_1CC3D_frontend_labels,nochk,,nochk
+GameStandingsMenu_player2,207F3,257,016_20016_easn_stats,nochk,,nochk
+EasnTeamStatsScreen_m,208F4,344,016_20016_easn_stats,nochk,,nochk
+EasnSkaterStatsScreen_m,20A4C,374,016_20016_easn_stats,nochk,,nochk insn:cld
+EasnGoalieStatsScreen_m,20BC2,469,016_20016_easn_stats,nochk,,nochk
+EasnStandingsMenu_m,20EBC,744,016_20016_easn_stats,nochk,,nochk
+EasnStandingsMenu_player2,211A4,290,016_20016_easn_stats,nochk,,nochk
+CalStandingsMenu_player2,21AE7,285,016_20016_easn_stats,nochk,,nochk
+TeamStatsScreen_keyPen,2384C,2572,017_21CDE_player_stats,nochk,,nochk
+TeamStatsScreen_colScoring,24258,191,017_21CDE_player_stats,nochk,,nochk
+TeamStatsScreen_colPK,24317,139,017_21CDE_player_stats,nochk,,nochk
+TeamStatsScreen_colPen,243A2,177,017_21CDE_player_stats,nochk,,nochk
+LeadersScreen_colSHG,2675B,78,017_21CDE_player_stats,nochk,,nochk
+LeadersScreen_colShootPct,267A9,288,017_21CDE_player_stats,nochk,,nochk
+LeadersScreen_colWins,268C9,97,017_21CDE_player_stats,nochk,,nochk
+LeadersScreen_colSavePct,2692A,202,017_21CDE_player_stats,nochk,,nochk stackargs
+stand_tmpl2,269F4,358,017_21CDE_player_stats,nochk,,nochk insn:das
+PreGameScreen_homelines,2A955,650,020_29F18_arena_logos,nochk,,nochk
+SeriesLength_bo1,42255,18,034_41B80_schedule,nochk,,nochk
+SeriesLength_n3,42267,46,034_41B80_schedule,nochk,,nochk
+chkprogress_go,63475,206,045_614C2_scoring_penalty_text,nochk,,nochk
+InputPollTick,6BAEB,325,050_6B093_joystick_calibration,nochk,,nochk
+PollMouseEvent,6BC30,170,050_6B093_joystick_calibration,nochk,,nochk
+PollJoystickEvent,6BCDA,143,050_6B093_joystick_calibration,nochk,,nochk
+PollKeyboardEvent,6BD69,300,050_6B093_joystick_calibration,nochk,,nochk
+SeasonDbPtr2,6CBE1,7,051_6C2F9_database_save,nochk,,nochk
+CareerDbPtr2,6CBFD,7,051_6C2F9_database_save,nochk,,nochk
+LoadRosterList_team,6D98E,250,052_6D2F8_create_player,nochk,,nochk
+MenuSaveDefaultLines,79484,890,055_78346_team_select,nochk,,nochk
+MenuSaveTheseLines_x,797FE,715,055_78346_team_select,nochk,,nochk
+ReplaySaveHilight_n3,7F5A8,0,057_7DC8B_gadgets_replay,nochk,,nochk
+DrawSettingsHeading_n1,80571,83,059_8034B_settings_lockerroom,nochk,,nochk
+LockerRoomLoop_n0,81F69,543,059_8034B_settings_lockerroom,nochk,,nochk
+LockerRoomLoop_n6,82188,404,059_8034B_settings_lockerroom,nochk,,nochk
+LockerRoomLoop_n7,8231C,318,059_8034B_settings_lockerroom,nochk,,nochk
+randomd0,8C230,96,066_8BEDB_asm_helpers,asm,high,nochk insn:16bit-pop insn:16bit-push
+vgacopy_bg,8C290,223,066_8BEDB_asm_helpers,asm,high,nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
+vgacopy_rect,8C36F,122,066_8BEDB_asm_helpers,asm,high,nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
+vgacopy_rect_src,8C3E9,122,066_8BEDB_asm_helpers,asm,high,nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
+vgadraw_tile,8C463,297,066_8BEDB_asm_helpers,asm,high,nochk insn:cld insn:in insn:loop insn:out insn:16bit-pop insn:16bit-push stackargs
+vgaflip,8C58C,171,066_8BEDB_asm_helpers,asm,high,nochk insn:in insn:out insn:16bit-pop insn:16bit-push
+vgaload_planes,8C637,185,066_8BEDB_asm_helpers,asm,high,nochk insn:cld insn:in insn:lds insn:loop insn:out insn:16bit-pop insn:16bit-push
+vgacopy_bgfull,8C6F0,168,066_8BEDB_asm_helpers,asm,high,nochk insn:in insn:out insn:16bit-pop insn:16bit-push
+vgacopy_A40,8C798,93,066_8BEDB_asm_helpers,asm,high,nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
+vgacopy_n,8C7F5,93,066_8BEDB_asm_helpers,asm,high,nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
+vgacopy_pages,8C852,150,066_8BEDB_asm_helpers,asm,high,nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
+vtoa,8C8E8,92,066_8BEDB_asm_helpers,asm,segment,nochk
+SaveSS,8C944,0,066_8BEDB_asm_helpers,asm,segment,nochk
