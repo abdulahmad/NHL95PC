@@ -7,7 +7,7 @@ extern asc_C32F5, asc_C3300, asc_C3305, asc_C330E, asc_C3317, asc_C331C, asc_C33
 extern asc_C3339, asc_C3344, asc_C3349, asc_C335A, asc_C3360, asc_C3366, asc_C336F, asc_C3374
 extern asc_C337C, asc_C3381, asc_C3388, asc_C338D, asc_C3393, asc_C3399, asc_C33A3, asc_C33B0
 extern asc_C33BD, asc_C33CA, pad1dev, musicon, hmtmflags, awtmflags, byte_DF861
-extern byte_DFF3A, byte_EA0F4, byte_ED361, byte_ED904, byte_ED93F, byte_ED940, byte_ED941, byte_ED942
+extern byte_DFF3A, ctlavailmask, byte_ED361, byte_ED904, byte_ED93F, byte_ED940, byte_ED941, byte_ED942
 extern byte_ED943, samesideflag, postate, gamemode, gameopts, ctl1team, ctl2team, ctl1dev
 extern ctl2dev, ctl1side, ctl2side, dword_C541F, songdata, sflags3, cont2team, HomeTeam
 extern dword_D14F0, dword_D14F4, dword_D14F8, dword_D14FC, dword_D16AC, dword_D16B0, dword_D16B4, dword_D16B8
@@ -4421,21 +4421,21 @@ call sub_91964	; 7D43E
 add esp, byte 0Ch	; 7D443
 xor ebx, ebx	; 7D446
 mov dword [dword_ED360], ebx	; 7D448
-mov eax, dword [byte_EA0F4]	; 7D44E
+mov eax, dword [ctlavailmask]	; 7D44E
 and eax, byte 1	; 7D453
 shl eax, 2	; 7D456
 or ax, 1C3h	; 7D459
-mov edx, dword [byte_EA0F4]	; 7D45D
+mov edx, dword [ctlavailmask]	; 7D45D
 shl edx, 1Eh	; 7D463
 shr edx, 1Fh	; 7D466
 shl edx, 3	; 7D469
 or edx, eax	; 7D46C
-mov eax, dword [byte_EA0F4]	; 7D46E
+mov eax, dword [ctlavailmask]	; 7D46E
 shl eax, 1Dh	; 7D473
 shr eax, 1Fh	; 7D476
 shl eax, 4	; 7D479
 or edx, eax	; 7D47C
-mov eax, dword [byte_EA0F4]	; 7D47E
+mov eax, dword [ctlavailmask]	; 7D47E
 shl eax, 1Ch	; 7D483
 shr eax, 1Fh	; 7D486
 shl eax, 5	; 7D489
@@ -5033,21 +5033,21 @@ and eax, 0FFh	; 7DC09
 mov dword [ctl2side], eax	; 7DC0E
 cmp dword [ctl2dev], byte 10h	; 7DC13
 jne near loc_7DC84	; 7DC1A
-test byte [byte_EA0F4], 2	; 7DC20
+test byte [ctlavailmask], 2	; 7DC20
 je short loc_7DC3E	; 7DC27
 cmp dword [ctl1dev], byte 2	; 7DC29
 je short loc_7DC3E	; 7DC30
 mov dword [ctl2dev], 2	; 7DC32
 jmp short loc_7DC84	; 7DC3C
 loc_7DC3E:
-test byte [byte_EA0F4], 4	; 7DC3E
+test byte [ctlavailmask], 4	; 7DC3E
 je short loc_7DC5C	; 7DC45
 cmp dword [ctl1dev], byte 4	; 7DC47
 je short loc_7DC5C	; 7DC4E
 mov dword [ctl2dev], 4	; 7DC50
 jmp short loc_7DC84	; 7DC5A
 loc_7DC5C:
-test byte [byte_EA0F4], 8	; 7DC5C
+test byte [ctlavailmask], 8	; 7DC5C
 je short loc_7DC7A	; 7DC63
 cmp dword [ctl1dev], byte 8	; 7DC65
 je short loc_7DC7A	; 7DC6C

@@ -10,7 +10,7 @@ extern penshotlive, dword_D2C6B, dword_D302C, dword_D3030, spritedrawcount, fram
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, dword_DD6A8, dword_DD6AE
 extern dword_DD6B0, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, dword_E9A9E, j_unlink_
 extern HandleHotKey_ret, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
-extern off_C526F, off_C5273, off_C5439, leaguedbnames, replaystart, camx_m2
+extern off_C526F, off_C5273, teamabbrevs, leaguedbnames, replaystart, camx_m2
 extern off_CBED0, strcat_, strcpy_, SetScreenSize, ResetInputSampling, RunGameFrames, FadePalette, LoadGameGfx
 extern SetupGame, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadSeasonRec, ReadTeamRec, UpdateHudPanel
 extern DrawHudPanel, LoadCupFinalSeries, PostGameDesk, SportsDesk, sub_1B982, MakeGSummaryPath, SetupGoalieMenu, ResetGoalieMenu
@@ -298,10 +298,10 @@ xor eax, eax	; 11A8A
 mov dword [escrequest], eax	; 11A8C
 mov eax, dword [HomeTeam]	; 11A91
 sar eax, 10h	; 11A96
-mov edx, dword [nosplit eax*4+off_C5439]	; 11A99
+mov edx, dword [nosplit eax*4+teamabbrevs]	; 11A99
 mov eax, dword [cont2team]	; 11AA0
 sar eax, 10h	; 11AA5
-mov eax, dword [nosplit eax*4+off_C5439]	; 11AA8
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 11AA8
 call sub_59D71	; 11AAF
 mov ebx, dword [dword_D8C84]	; 11AB4
 mov edx, dword [HomeTeam]	; 11ABA
@@ -396,10 +396,10 @@ jne short .26	; 11C29
 call SelectScreenBM	; 11C2B
 mov edx, dword [HomeTeam]	; 11C30
 sar edx, 10h	; 11C36
-mov edx, dword [nosplit edx*4+off_C5439]	; 11C39
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 11C39
 mov eax, dword [cont2team]	; 11C40
 sar eax, 10h	; 11C45
-mov eax, dword [nosplit eax*4+off_C5439]	; 11C48
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 11C48
 call sub_59D71	; 11C4F
 mov ebx, dword [dword_D8C84]	; 11C54
 mov edx, dword [HomeTeam]	; 11C5A
@@ -601,10 +601,10 @@ jl short PlayGame.11	; 11F4E
 .13:
 mov edx, dword [HomeTeam]	; 11F50
 sar edx, 10h	; 11F56
-mov edx, dword [nosplit edx*4+off_C5439]	; 11F59
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 11F59
 mov eax, dword [cont2team]	; 11F60
 sar eax, 10h	; 11F65
-mov eax, dword [nosplit eax*4+off_C5439]	; 11F68
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 11F68
 call sub_59D71	; 11F6F
 .14:
 xor ebx, ebx	; 11F74

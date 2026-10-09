@@ -3,14 +3,14 @@ bits 32
 %include "hockey.inc"
 section s_150C6 progbits alloc exec nowrite align=1
 extern StanleyCupTimer, __CHK, str_Scrbrd2, str_Srb3, str_Crests4, str_Stanley, str_PPV
-extern musicon, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, byte_EA0F4
+extern musicon, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, ctlavailmask
 extern byte_ED823, byte_ED939, demomode
 extern gameresult, gamemode, gameopts, teamdivflags, hudclockmin
 extern hudclocksec, hudclockhund, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern hudhomeline, hudawayline, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
 extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, linesprites
 extern penaltydigits, dword_DC2B8, clockdigits, clockcolon, cupseries, hmscore, awscore, hmtmstruct
-extern jctime, DrawPanelLine_x, UpdateHudPanel_x, off_C5439, perioddigits, off_C57C8, crestnames, awtmstruct
+extern jctime, DrawPanelLine_x, UpdateHudPanel_x, teamabbrevs, perioddigits, off_C57C8, crestnames, awtmstruct
 extern off_D3078, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, ReloadGameGfx, SetupDemoGame
 extern MakePath, DrawPanelScore, DrawPanelClock, InitGameSummary, LoadModeState, sub_3371C, sub_3377C, SeriesLength
 extern sub_479E9, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
@@ -1225,10 +1225,10 @@ and cl, 3	; 15EDE
 mov byte [gameopts+1], cl	; 15EE1
 mov edx, dword [HomeTeam]	; 15EE7
 sar edx, 10h	; 15EED
-mov edx, dword [nosplit edx*4+off_C5439]	; 15EF0
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 15EF0
 mov eax, dword [cont2team]	; 15EF7
 sar eax, 10h	; 15EFC
-mov eax, dword [nosplit eax*4+off_C5439]	; 15EFF
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 15EFF
 call sub_59D71	; 15F06
 call SetupControllers	; 15F0B
 xor edx, edx	; 15F10
@@ -1308,7 +1308,7 @@ call PollKey	; 1601A
 mov esi, eax	; 1601F
 test eax, eax	; 16021
 jne short .3	; 16023
-mov ah, byte [byte_EA0F4]	; 16025
+mov ah, byte [ctlavailmask]	; 16025
 test ah, 2	; 1602B
 jne short .1	; 1602E
 test ah, 4	; 16030
@@ -1325,7 +1325,7 @@ mov esi, 1	; 16045
 .3:
 test esi, esi	; 1604A
 jne short .4	; 1604C
-test byte [byte_EA0F4], 1	; 1604E
+test byte [ctlavailmask], 1	; 1604E
 je short .4	; 16055
 call dword [off_D3078]	; 16057
 test byte [dword_D3034], 3	; 1605D

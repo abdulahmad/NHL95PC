@@ -33,7 +33,7 @@ global str_fmt5d, str_fmtTenths, str_fmtPct, str_fmtPct0, str_fmtMinSec, str_fmt
 global str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_NoScoring, str_NoPenalties, asc_C7298, byte_C66B4, mi_9394Season
 global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, treecolslots, treecol_Wr2
 global treecol_Er2, treecol_Er1
-global scoutcatidx, byte_C7218, dword_C56C4, dword_C56E4, hudclockmin, hudclocksec, hudclockhund, dword_C5710
+global scoutcatidx, desksongalt, dword_C56C4, dword_C56E4, hudclockmin, hudclocksec, hudclockhund, dword_C5710
 global dword_C5714, dword_C5718, dword_C583C, dword_C5840, dword_C5844, dword_C5848, hudhomeline, hudawayline
 global dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862, dword_C5886, dword_C588A
 global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, dword_C65A8, dword_C65AC
@@ -44,14 +44,14 @@ global westconfteams, eastconfteams, dword_C6D26, dword_C6DBA, dword_C6E20, tree
 global fdlgshapes, fdlgrects
 global boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
 global dword_C71E0, dlgsavebuf, listscroll
-global dword_C7219, songdata, dword_C729A, dword_C729C, dword_C729E, dword_C72A0, dword_C73D0
+global keepdesksong, songdata, dword_C729A, dword_C729C, dword_C729E, dword_C72A0, dword_C73D0
 global rinkbm, dword_C73D8, dword_C7440, dword_C7444, dword_C7448, off_C56B5, perioddigits, off_C57C8
 global crestnames, off_C6399, off_C648E, off_C659A, off_C6821, off_C6825, off_C6841, off_C6845
 global off_C6881, off_C6885, divisionnames, statslabels, statsbgnames, statsplayerdbs, statsteamdbs
 global skaterratingnames, off_C6A99, goalieratingnames, off_C6AD1, teamsortfns, westconfname, eastconfname, teamstattitles
 global teamcolhdrs, leadersortfns, leadertitles, off_C6C40, off_C6C44
 global off_C6C48, off_C6C4C, off_C6C50, off_C6D22, scoutcatnames, off_C6F7C, off_C6F80, off_C6F84
-global gamestatlabels, off_C7282, dbchoicelines, unk_C56A1, unk_C588E, unk_C588F, unk_C58A3, unk_C58B2
+global gamestatlabels, setdiskmsg, dbchoicelines, unk_C56A1, unk_C588E, unk_C588F, unk_C58A3, unk_C58B2
 global unk_C58CA, unk_C58EA, unk_C590D, unk_C592F, unk_C5969, unk_C5996, unk_C59B3, unk_C59D4
 global unk_C59F5, unk_C5A0D, unk_C5A2B, unk_C5A4E, unk_C5A6C, unk_C5A78, unk_C5AA5, unk_C5AC8
 global unk_C5AE8, unk_C5AF5, unk_C5B13, unk_C5B35, unk_C5B54, unk_C5B72, unk_C5B93, unk_C5BC0
@@ -73,7 +73,7 @@ global unk_C652A, unk_C652E, unk_C654F, statsleague, unk_C665D, unk_C678E, unk_C
 global str_AwayLines, str_Play, str_Cancel, str_HomeLines, pregamebuttons, str_PenaltyKilling, str_PowerPlay
 global str_Shooting, str_Skating, str_Passing, str_Defense2, str_Checking, str_Goaltending, str_Overall, unk_C7088
 global delmsgbox, str_gsScore, str_gsShots, str_gsPowerPlay, str_gsPenalties, str_gsFaceoffsWon, str_gsBodyChecks, str_gsAttackZone
-global str_gsPassing, str_gsOneTimers, str_gsPPMinutes, str_gsPPShots, str_gsOffFaceoffs, unk_C7221, unk_C7243, unk_C7265
+global str_gsPassing, str_gsOneTimers, str_gsPPMinutes, str_gsPPShots, str_gsOffFaceoffs, str_InsufficientDiskSpace, str_ToSaveTheSettings, str_1KbytesFree
 global unk_C744C, unk_C7450, str_DoYouWishToUse, str_CurrentDbOr, str_OriginalNHLDb, str_Current, str_Original, dbchoicebtns
 global unk_C74EF, hudpenhome, word_C571E, word_C5720, word_C5722, hudpenaway, word_C575E, word_C5760
 global word_C5762, word_C6D24, treecolx, scrpitch
@@ -1416,27 +1416,27 @@ db 00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h
-byte_C7218:
+desksongalt:
 db 01h
-dword_C7219:
+keepdesksong:
 db 00h,00h,00h,00h
 songdata:
 db 00h,00h,00h,00h
-unk_C7221:
+str_InsufficientDiskSpace:
 db 049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,064h,069h,073h
 db 06Bh,020h,073h,070h,061h,063h,065h,020h,061h,076h,061h,069h,06Ch,061h,062h,06Ch
 db 065h,00h
-unk_C7243:
+str_ToSaveTheSettings:
 db 074h,06Fh,020h,073h,061h,076h,065h,020h,074h,068h,065h,020h,073h,065h,074h,074h
 db 069h,06Eh,067h,073h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h,069h,072h
 db 065h,00h
-unk_C7265:
+str_1KbytesFree:
 db 031h,020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,066h,072h,065h,065h
 db 020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,02Eh,00h
-off_C7282:
-dd unk_C7221
-dd unk_C7243
-dd unk_C7265
+setdiskmsg:
+dd str_InsufficientDiskSpace
+dd str_ToSaveTheSettings
+dd str_1KbytesFree
 db 00h,00h
 scrpitch:
 db 050h,00h,00h,00h,00h,00h,00h,00h

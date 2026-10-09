@@ -16,7 +16,7 @@ extern seriesgameno, dword_D2C6B, pointerspr, exhfiles, exhfilenames
 extern pofiles, pofilenames, lgfiles
 extern lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open, fdlg_del, fdlg_up
 extern fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp, fdlg_noarrow, otherperiod
-extern dword_EA0DC, j_unlink_, jctime, off_C5439, off_C5441, off_C6F7C, off_C6F80, off_C6F84
+extern dword_EA0DC, j_unlink_, jctime, teamabbrevs, off_C5441, off_C6F7C, off_C6F80, off_C6F84
 extern qsort_, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, MakePath, DeleteDir
 extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, CopyFile, SetupStatsSourceMenu, BuildSavedGameLabels
 extern SetDialogColors, MessageBox, LoadModeState, sub_32DA9, sub_33559, sub_336E6, sub_6B391, sub_6B3D7
@@ -2070,7 +2070,7 @@ call LoadModeState	; 2D10C
 mov edx, dword [exhstate+51h]	; 2D111
 cmp edx, byte 18h	; 2D117
 jge short .2	; 2D11A
-mov edx, dword [nosplit edx*4+off_C5439]	; 2D11C
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 2D11C
 jmp short .3	; 2D123
 .2:
 mov edx, dword [nosplit edx*4+off_C5441]	; 2D125
@@ -2081,7 +2081,7 @@ call strncpy_	; 2D136
 mov ebx, dword [exhstate+55h]	; 2D13B
 cmp ebx, byte 18h	; 2D141
 jge short .4	; 2D144
-mov edx, dword [nosplit ebx*4+off_C5439]	; 2D146
+mov edx, dword [nosplit ebx*4+teamabbrevs]	; 2D146
 jmp short .5	; 2D14D
 .4:
 mov edx, dword [nosplit ebx*4+off_C5441]	; 2D14F

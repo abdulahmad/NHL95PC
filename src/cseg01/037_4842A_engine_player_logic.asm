@@ -18,7 +18,7 @@ extern hmtmpdst_m2, awtmstruct, dword_DF748, dword_DF752, dword_DF848, puckstruc
 extern sortobj15, dword_E0244, dword_E038E, dword_E03AE
 extern dword_E9A9E, dword_E9AB6, dword_E9AB7, gwgteam, gwgplayer, startm_m2
 extern seqtimer, puckvx, gmode, goalieacc, jctime, PreGameIntro_popebp, PreGameIntro_popx, ltx
-extern off_C5439, puckx, pucky, puckvy, puckz, puckc, camx_m2, starordtab
+extern teamabbrevs, puckx, pucky, puckvy, puckz, puckc, camx_m2, starordtab
 extern playeracc, puckshadow, puckvz, qsort_, randomd0, sfx, skateto, skatetopuck
 extern sprintf_, vecdist, FadePalette, IsCupClinched, ThreeStarsLoop, joyq_flush, getlchoice, PenShotAssign
 extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
@@ -1609,7 +1609,7 @@ mov bl, byte [dword eax+byte_DB3AD]	; 4973E
 mov edx, dword [byte ebp+temp1-2]	; 49744
 sar edx, 10h	; 49747
 inc edx	; 4974A
-mov eax, dword [nosplit ecx*4+off_C5439]	; 4974B
+mov eax, dword [nosplit ecx*4+teamabbrevs]	; 4974B
 call sub_59B0F	; 49752
 .5:
 mov di, word [byte ebp+temp2]	; 49757
@@ -1727,7 +1727,7 @@ and ebx, 0FFh	; 498DE
 mov edx, dword [byte ebp+temp1-2]	; 498E4
 sar edx, 10h	; 498E7
 inc edx	; 498EA
-mov eax, dword [nosplit eax*4+off_C5439]	; 498EB
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 498EB
 call sub_59B0F	; 498F2
 jmp near .16	; 498F7
 .11:
@@ -8565,7 +8565,7 @@ mov bl, byte [dword esi+byte_DB3AD]	; 4EEBE
 movsx edx, ax	; 4EEC4
 mov eax, dword [byte esp+06h]	; 4EEC7
 sar eax, 10h	; 4EECB
-mov eax, dword [nosplit eax*4+off_C5439]	; 4EECE
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 4EECE
 mov ecx, edi	; 4EED5
 call sub_59AD0	; 4EED7
 mov eax, dword [dword_E9A9E]	; 4EEDC

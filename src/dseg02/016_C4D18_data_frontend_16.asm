@@ -24,7 +24,7 @@ global postate
 global lgstate
 global gameresult, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
 global ctl2side, dword_C541F, awardart, awardnames, awardtitles, off_C524F, off_C5253, off_C5257
-global off_C525B, off_C525F, off_C5263, off_C5267, off_C526F, off_C5273, off_C527B, off_C5439
+global off_C525B, off_C525F, off_C5263, off_C5267, off_C526F, off_C5273, off_C527B, teamabbrevs
 global off_C5441, teamcitynames, unk_C4E30, str_fmtpd, exhstate, unk_C5423, unk_C542E
 global word_C5428
 joyqtick:
@@ -304,7 +304,7 @@ awgoalcnt:
 db 00h
 awshotcnt:
 db 00h,00h,00h,00h,00h,00h,00h
-off_C5439:
+teamabbrevs:
 dd unk_C04D0
 dd unk_C04D4
 off_C5441:

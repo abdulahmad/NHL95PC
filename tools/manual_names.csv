@@ -272,9 +272,12 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000314B4,sub_314B4,DrawEditCursor,PC-new,,,,high,"XOR-draws the edit cursor (width 1, or font height in overwrite mode) at editpos",misc_dialogs,manual-trace
 00031599,sub_31599,DrawEditText,PC-new,,,,high,"trims editbuf to editmaxw pixels, draws it and clears the rest of the field",misc_dialogs,manual-trace
 0003170D,sub_3170D,EditTextField,PC-new,,,,high,"(buf, maxlen, maxw, x, y, idlecb, ..., flags): line editor with Left / Right / Home / End / Ins / Del / Backspace, digit-only or letters-only flags; Enter / Esc ends",misc_dialogs,manual-trace
+00031AB5,sub_31AB5,MainDeskLoop,PC-new,,,,high,"front-end top level called from main: maindesk / tonights music alternation, easndesk screen, menu bar File / Game / Statistics, runs the chosen item's action until it returns 1 (Exit)",main_desk,manual-trace
+0003270B,sub_3270B,MenuExit,PC-new,,,,high,"File menu ""Exit"" action: returns 1 so MainDeskLoop ends",main_desk,manual-trace
 0003271B,sub_3271B,SaveModeState,PC-new,,,,high,"copies the current league name, DB path formats, HomeTeam/VisTeam, gameopts and controller teams/devices/sides into a 75h-byte mode state block",main_desk,manual-trace
 000327A1,sub_327A1,LoadModeState,PC-new,,,,high,"the reverse of SaveModeState: sets gamemode (+0), curleague, paths, HomeTeam/VisTeam, gameopts and controller fields from a mode state block",main_desk,manual-trace
 00032B1D,sub_32B1D,WriteModeState,PC-new,,,,medium,"fills a mode state block from the current globals and writes its 75h bytes to the mode's settings file (root for gamemode 0, else in the league dir)",main_desk,manual-trace
+00032C9E,sub_32C9E,CopyGameSettings,PC-new,,,,medium,"(src, dst): copies game.set (75h bytes) to dst, or into an existing dst only the 13 bytes at +4 and the dword at +59h; used by database_merge with the floppy path",main_desk,manual-trace
 0003A28F,sub_3A28F,WriteSchedGame,PC-new,,,,high,"FileWriteAt counterpart of ReadSchedGame (2 + index*6, 6 bytes)",league_setup,manual-trace
 0003A2B8,sub_3A2B8,WriteTeamRec,PC-new,,,,high,"FileWriteAt counterpart of ReadTeamRec (index*2E8h, 2E8h bytes)",league_setup,manual-trace
 0003A347,sub_3A347,WriteLeagueTeamEntry,PC-new,,,,high,"FileWriteAt of one PINFO.DB team entry (20h + index*1Eh, 1Eh bytes)",league_setup,manual-trace

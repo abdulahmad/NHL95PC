@@ -6,7 +6,7 @@ extern __CHK, str_embpal, str_Pal6, str_tstat, str_keys, str_pstat, str_gstat, s
 extern str_Pal7, str_easndesk2, str_tstat2, str_keys2, str_pstat2, str_gstat2, str_calendar, str_embpal3
 extern str_Pal8, str_tstat3, str_keys3, str_pstat3, str_gstat3, str_EASNvfn, byte_ED836
 extern byte_ED858, byte_ED859, byte_ED85A, byte_ED98D, gamemode, dword_C65A8, dword_C65AC, statscategory
-extern statsteamsel, statsredrawcb, deskexit, standingscb, statsplayoffs, statspalvalid, dword_C6D26, dword_C7219
+extern statsteamsel, statsredrawcb, deskexit, standingscb, statsplayoffs, statspalvalid, dword_C6D26, keepdesksong
 extern calendarshapes, dword_D2C6B, statsteamorder, dword_DC6B4, dword_DC734, dword_DC738, playofftree, statspalshape
 extern statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, statspal, dword_DDD2C, jctime
 extern memcpy_, statsbgnames, MakePath, FreeDeskBuffers, RunMenu, RunTeamPickMenu, RunPlayerPickMenu, InitMenuRemap
@@ -640,7 +640,7 @@ push byte 0	; 2090E
 call sub_8FFB0	; 20910
 add esp, byte 0Ch	; 20915
 mov edx, 1	; 20918
-mov dword [dword_C7219], edx	; 2091D
+mov dword [keepdesksong], edx	; 2091D
 mov dword [dword_DC738], edx	; 20923
 mov dword [statscategory], esi	; 20929
 mov dword [statsredrawcb], TeamStatsScreen	; 2092F
@@ -727,7 +727,7 @@ push esi	; 20A53
 push ebp	; 20A54
 sub esp, 310h	; 20A55
 mov esi, eax	; 20A5B
-mov dword [dword_C7219], 1	; 20A5D
+mov dword [keepdesksong], 1	; 20A5D
 mov eax, esp	; 20A67
 push eax	; 20A69
 push dword 100h	; 20A6A
@@ -826,7 +826,7 @@ push esi	; 20BCA
 push ebp	; 20BCB
 sub esp, 310h	; 20BCC
 mov esi, eax	; 20BD2
-mov dword [dword_C7219], 1	; 20BD4
+mov dword [keepdesksong], 1	; 20BD4
 mov eax, esp	; 20BDE
 push eax	; 20BE0
 push dword 100h	; 20BE1
@@ -1056,7 +1056,7 @@ mov dword [statsteamsel], ebx	; 20EFA
 mov dword [statscategory], ebx	; 20F00
 mov dword [dword_C6D26], ebx	; 20F06
 mov edi, edx	; 20F0C
-mov dword [dword_C7219], edx	; 20F0E
+mov dword [keepdesksong], edx	; 20F0E
 xor ah, ah	; 20F14
 mov byte [statsplayer+2], ah	; 20F16
 mov eax, esp	; 20F1C

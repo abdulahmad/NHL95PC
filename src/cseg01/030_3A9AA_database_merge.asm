@@ -15,7 +15,7 @@ extern leaguedbnames, off_C89DE, off_C8A85, off_C8AB9, off_C8B37
 extern sprintf_, strcmp_, strcpy_, stricmp_, FileExists, MakePath, DeleteFiles, DeleteDir
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt, ReadKeyRec
 extern CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, SetupStatsSourceMenu, BuildSavedGameLabels, SetDialogColors, RestoreDialogBg
-extern MessageBox, LoadModeState, sub_32C9E, sub_33559, sub_336E6, sub_38B4F, sub_3A24F, sub_3A266
+extern MessageBox, LoadModeState, CopyGameSettings, sub_33559, sub_336E6, sub_38B4F, sub_3A24F, sub_3A266
 extern sub_3A27D, WriteSchedGame, WriteTeamRec, sub_3A31E, WriteLeagueTeamEntry, AskTeamPassword, AskMasterPassword, sub_3A5FC
 extern sub_3A71C, sub_3A826, FmtFromLeague, LeagueCheckStub, GetLeagueId, MsgCopyingDatabases, CopyHumanTeamDBs, UpdateSeasonSchedule
 extern FatalError, sub_B2DCA, sub_B392C, sub_B3CC8, sub_B4B88, unk_C1914, unk_C1916, unk_C192D
@@ -1707,7 +1707,7 @@ lea eax, [byte esp+060h]	; 3C050
 call MakePath	; 3C054
 lea edx, [byte esp+060h]	; 3C059
 lea eax, [byte esp+040h]	; 3C05D
-call sub_32C9E	; 3C061
+call CopyGameSettings	; 3C061
 mov esi, eax	; 3C066
 loc_3C068:
 inc dword [byte ebp+01Ah]	; 3C068

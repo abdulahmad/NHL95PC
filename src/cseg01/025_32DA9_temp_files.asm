@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_32DA9 progbits alloc exec nowrite align=1
 extern __CHK, asc_C177B, asc_C1783, asc_C1788, curleague, gameopts
-extern musicon, byte_DE268, byte_EA0F4, lgstate
+extern musicon, byte_DE268, ctlavailmask, lgstate
 extern gamemode, teamstatscb, skaterstatscb, goaliestatscb
 extern standingscb, standingsmenucb, songdata, dword_C73D0, rinkbm, dword_C7440, cont2team, HomeTeam
-extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, schedgameidx, jctime, loc_32704, musicslot
-extern loc_32705, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRead, CheckGameDiskSpace, InitGameSummary
+extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, schedgameidx, jctime, MainDeskLoop_x, musicslot
+extern MainDeskLoop_x2, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRead, CheckGameDiskSpace, InitGameSummary
 extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
 extern EasnStandingsScreen, PreGameScreen, SaveModeState, LoadModeState, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
 extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
@@ -36,7 +36,7 @@ call CheckGameDiskSpace	; 32DBD
 test eax, eax	; 32DC2
 je short loc_32DCD	; 32DC4
 xor eax, eax	; 32DC6
-jmp near loc_32704	; 32DC8
+jmp near MainDeskLoop_x	; 32DC8
 loc_32DCD:
 mov dword [schedgameidx], edx	; 32DCD
 mov dword [teamstatscb], GameTeamStatsScreen	; 32DD3
@@ -168,7 +168,7 @@ mov dword [goaliestatscb], EasnGoalieStatsScreen	; 32FCC
 mov dword [standingscb], EasnStandingsScreen	; 32FD6
 mov dword [standingsmenucb], EasnStandingsMenu	; 32FE0
 mov eax, 2	; 32FEA
-jmp near loc_32704	; 32FEF
+jmp near MainDeskLoop_x	; 32FEF
 sub_32FF4:
 push dword 20h	; 32FF4
 call __CHK	; 32FF9
@@ -195,7 +195,7 @@ mov byte [lgstate+5Ah], bl	; 33055
 mov bh, bl	; 3305B
 or bh, 78h	; 3305D
 mov byte [lgstate+5Ah], bh	; 33060
-mov cl, byte [byte_EA0F4]	; 33066
+mov cl, byte [ctlavailmask]	; 33066
 test cl, 2	; 3306C
 je short loc_3307D	; 3306F
 mov dword [lgstate+65h], 2	; 33071
@@ -412,7 +412,7 @@ call SaveModeState	; 33387
 mov eax, exhstate	; 3338C
 call LoadModeState	; 33391
 mov eax, esi	; 33396
-jmp near loc_32705	; 33398
+jmp near MainDeskLoop_x2	; 33398
 sub_3339D:
 push dword 4	; 3339D
 call __CHK	; 333A2

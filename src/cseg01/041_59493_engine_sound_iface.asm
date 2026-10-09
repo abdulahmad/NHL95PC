@@ -4,7 +4,7 @@ bits 32
 section s_59493 progbits alloc exec nowrite align=1
 extern __CHK, musicon, byte_D2439, gameopts, dword_C541F, lastsfx, digihandle
 extern crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_D2427, dword_ED35C, dword_ED368
-extern dword_ED374, dword_ED7A4, gmode, off_C5439, rand_, randomd0, sub_836E4, sub_837A8
+extern dword_ED374, dword_ED7A4, gmode, teamabbrevs, rand_, randomd0, sub_836E4, sub_837A8
 extern sub_846B4, sub_846C8, sub_846DC, sub_847BA, sub_847CE, sub_8490D, sub_84A7D, sub_84B0D
 extern sub_84C38, sub_84F7B, sub_8511E, sub_85213, sub_8531F, sub_854AC, sub_85507, sub_8579E
 extern sub_8E8B8, sub_8E908, sub_8F270, sub_8F61D, sub_8F67D, sub_8F7AE, sub_8F80E, sub_8FD84
@@ -629,9 +629,9 @@ cmp byte [musicon], 0	; 59BCD
 je short .2	; 59BD4
 test byte [gameopts+1], 1	; 59BD6
 je short .2	; 59BDD
-mov ebx, dword [nosplit eax*4+off_C5439]	; 59BDF
-mov edx, dword [nosplit edx*4+off_C5439]	; 59BE6
-mov eax, dword [nosplit ecx*4+off_C5439]	; 59BED
+mov ebx, dword [nosplit eax*4+teamabbrevs]	; 59BDF
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 59BE6
+mov eax, dword [nosplit ecx*4+teamabbrevs]	; 59BED
 call sub_84B0D	; 59BF4
 .2:
 pop ecx	; 59BF9
@@ -686,8 +686,8 @@ cmp byte [musicon], 0	; 59CB4
 je short .x	; 59CBB
 test byte [gameopts+1], 1	; 59CBD
 je short .x	; 59CC4
-mov eax, dword [nosplit eax*4+off_C5439]	; 59CC6
-mov edx, dword [nosplit edx*4+off_C5439]	; 59CCD
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 59CC6
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 59CCD
 mov ebx, eax	; 59CD4
 call sub_847CE	; 59CD6
 .x:
@@ -706,7 +706,7 @@ mov esi, dword [byte esp+010h]	; 59CFB
 push esi	; 59CFF
 mov edi, dword [byte esp+010h]	; 59D00
 push edi	; 59D04
-mov eax, dword [nosplit eax*4+off_C5439]	; 59D05
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 59D05
 call sub_8490D	; 59D0C
 .x:
 pop edi	; 59D11
@@ -723,8 +723,8 @@ je short .x	; 59D31
 mov esi, dword [byte esp+08h]	; 59D33
 push esi	; 59D37
 push ecx	; 59D38
-mov eax, dword [nosplit eax*4+off_C5439]	; 59D39
-mov edx, dword [nosplit edx*4+off_C5439]	; 59D40
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 59D39
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 59D40
 mov ecx, ebx	; 59D47
 mov ebx, eax	; 59D49
 call sub_84C38	; 59D4B

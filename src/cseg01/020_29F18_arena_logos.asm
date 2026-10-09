@@ -10,7 +10,7 @@ extern scoutcatidx, curleague, musicon, byte_D42C3, hmroster, byte_ED7F3, byte_E
 extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, ctl1team, ctl2team
 extern teamconf, boxfillcolor, boxlitecolor, boxshadecolor, songdata, cont2team, HomeTeam, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, pointerspr, dword_EA0DC
-extern fputchar, jctime, memcpy_, off_C5439, crestnames, scoutcatnames, leaguedbnames
+extern fputchar, jctime, memcpy_, teamabbrevs, crestnames, scoutcatnames, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, SetDialogColors, TrackButtons, DrawButtons
 extern sub_33E6A, sub_479E9, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, sub_6B391
@@ -873,8 +873,8 @@ mov edx, ecx	; 2AB8B
 mov eax, ebx	; 2AB8D
 call TonightsGameScreen	; 2AB8F
 mov dword [dword esp+0640h], eax	; 2AB94
-mov edx, dword [nosplit ecx*4+off_C5439]	; 2AB9B
-mov eax, dword [nosplit ebx*4+off_C5439]	; 2ABA2
+mov edx, dword [nosplit ecx*4+teamabbrevs]	; 2AB9B
+mov eax, dword [nosplit ebx*4+teamabbrevs]	; 2ABA2
 call sub_59D71	; 2ABA9
 .13:
 xor esi, esi	; 2ABAE

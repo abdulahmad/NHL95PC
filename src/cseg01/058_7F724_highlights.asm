@@ -8,7 +8,7 @@ extern byte_DB3AD, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, b
 extern byte_E03E3, byte_E03E4, hudclockmin, hudclocksec, hudclockhund, songdata, dword_C7444, dword_C7448
 extern cont2team, HomeTeam, musichandle, fontcolor, rinkendbank, numshpbank, dword_D8C84, musicslot
 extern dword_DC230, scrbrdshapes, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
-extern dword_ED6F8, hilightfont, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, teamcitynames
+extern dword_ED6F8, hilightfont, fputchar, jctime, loc_7E0F3, lseek_, teamabbrevs, teamcitynames
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, SetScreenSize
 extern LoadGameGfx, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
 extern sub_1BAB1, ListDialog, SetDialogColors, MessageBox, sub_33727, sub_3377C, sub_479E9, FadeOutPalCycle
@@ -467,7 +467,7 @@ call strcspn_	; 7FC76
 mov byte [ecx+eax], 0	; 7FC7B
 xor ebx, ebx	; 7FC7F
 loc_7FC81:
-mov edx, dword [nosplit ebx*4+off_C5439]	; 7FC81
+mov edx, dword [nosplit ebx*4+teamabbrevs]	; 7FC81
 mov eax, ecx	; 7FC88
 call stricmp_	; 7FC8A
 test eax, eax	; 7FC8F
@@ -597,7 +597,7 @@ call ListDialog	; 7FDFC
 test eax, eax	; 7FE01
 jl near loc_80062	; 7FE03
 mov ebx, dword [byte esp+eax*4+078h]	; 7FE09
-mov ebx, dword [nosplit ebx*4+off_C5439]	; 7FE0D
+mov ebx, dword [nosplit ebx*4+teamabbrevs]	; 7FE0D
 mov ecx, asc_C812D	; 7FE14
 xor edx, edx	; 7FE19
 mov eax, dword [byte esp+0Ch]	; 7FE1B

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_6B093 progbits alloc exec nowrite align=1
 extern __CHK, asc_C27CC, asc_C27D3, asc_C27D8, asc_C27DD, asc_C27E2, asc_C27E7, asc_C27EC
-extern asc_C27F7, asc_C2805, str_space, str_dot, musicon, byte_D3040, byte_D416A, byte_EA0F4
+extern asc_C27F7, asc_C2805, str_space, str_dot, musicon, byte_D3040, byte_D416A, ctlavailmask
 extern byte_EA0FC, byte_EA0FD, byte_EA2A4, byte_EA2A5, dword_C4CFC, dword_C71E0, dword_CCC94, dword_CD9D0
 extern dword_CD9F4, dword_CDA1C, dword_CDA20, dword_CDA24, dword_CDA28, dword_CDA2C, dword_CDA30, dword_CDA34
 extern dword_CDA38, dword_CDA3C, dword_CDA40, dword_CDA44, dword_CDA48, dword_CDA4C, falist, falistsel
@@ -305,10 +305,10 @@ push edx	; 6B41C
 call sub_B2F22	; 6B41D
 test eax, eax	; 6B422
 je short loc_6B42F	; 6B424
-or byte [byte_EA0F4], 1	; 6B426
+or byte [ctlavailmask], 1	; 6B426
 jmp short loc_6B436	; 6B42D
 loc_6B42F:
-and byte [byte_EA0F4], 0FEh	; 6B42F
+and byte [ctlavailmask], 0FEh	; 6B42F
 loc_6B436:
 cmp dword [dword_CDA1C], byte 0	; 6B436
 jne short loc_6B478	; 6B43D
@@ -987,14 +987,14 @@ dec edx	; 6BAF6
 mov dword [dword_CDA34], edx	; 6BAF7
 jne near loc_6BC2C	; 6BAFD
 mov dword [dword_CDA34], 5	; 6BB03
-test byte [byte_EA0F4], 1	; 6BB0D
+test byte [ctlavailmask], 1	; 6BB0D
 je short loc_6BB20	; 6BB14
 mov eax, dword_EA2A0	; 6BB16
 call sub_6BC30	; 6BB1B
 loc_6BB20:
 test eax, eax	; 6BB20
 jne short loc_6BB3E	; 6BB22
-mov dh, byte [byte_EA0F4]	; 6BB24
+mov dh, byte [ctlavailmask]	; 6BB24
 test dh, 2	; 6BB2A
 jne short loc_6BB34	; 6BB2D
 test dh, 4	; 6BB2F
@@ -1005,7 +1005,7 @@ call sub_6BCDA	; 6BB39
 loc_6BB3E:
 test eax, eax	; 6BB3E
 jne short loc_6BB55	; 6BB40
-test byte [byte_EA0F4], 8	; 6BB42
+test byte [ctlavailmask], 8	; 6BB42
 je short loc_6BB55	; 6BB49
 mov eax, dword_EA2A0	; 6BB4B
 call sub_6BD69	; 6BB50
@@ -1139,7 +1139,7 @@ cmp byte [byte_D416A], 0	; 6BCE1
 je near loc_6BD61	; 6BCE8
 call sub_B30F4	; 6BCEE
 call sub_B3464	; 6BCF3
-test byte [byte_EA0F4], 2	; 6BCF8
+test byte [ctlavailmask], 2	; 6BCF8
 jne short loc_6BD04	; 6BCFF
 sar eax, 8	; 6BD01
 loc_6BD04:

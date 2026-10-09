@@ -36,8 +36,8 @@ global str_Final, str_Period, str_Injured2, str_EVNT, str_PRDS, str_D5, str_St, 
 global str_Rd, str_Th, str_SH, str_PP, str_02d02d, str_S2, str_SS4, str_DMinS
 global str_ShotsOnGoal, str_SDD, str_Ctbkgd3, str_Pal14, str_Bkgd6, str_Cttitle32, str_Colm2, str_Gsta
 global str_Ctlogo3, str_DD, str_D02d2, str_DDD, str_Iff7, str_Leaguetm, str_Mtsum2, str_Adsum2
-global str_Pointer6, str_DBOX, asc_C1724, asc_C172C, asc_C1731, asc_C173A, asc_C1743, asc_C174C
-global asc_C1751, asc_C1756, asc_C175F, asc_C1768, asc_C176D, asc_C177B, asc_C1783, asc_C1788
+global str_Pointer6, str_DBOX, str_Pointer7, str_Iff8, str_Maindesk, str_Tonights2, str_Easndesk, str_Desk2
+global str_Pal15, str_Menubuff4, str_GameSet4, str_Game, str_Set, asc_C177B, asc_C1783, asc_C1788
 global asc_C1794, asc_C1799, asc_C179E, asc_C17B9, asc_C17BF, asc_C17D8, asc_C17E0, asc_C17E8
 global asc_C17F4, asc_C17F9, asc_C17FE, asc_C1803, asc_C180B, asc_C1810, asc_C181A, asc_C1827
 global asc_C182C, asc_C1835, asc_C183D, asc_C1842, asc_C184A, asc_C1853, asc_C1859, asc_C1862
@@ -69,7 +69,7 @@ global unk_C1276, str_GP7, str_W4, str_L6, str_T4, str_D3, str_TwoSpaces, str_Sp
 global str_D4, str_NHL, str_PO2, str_LP, str_fek1, str_fek2, str_fek3, str_fek4
 global str_fek5, str_fek6, str_fek7, str_fek8, str_feh7, str_feA1, str_fel1, str_feA2
 global str_fel2, str_fec6, str_fed2, str_fed3, str_fed4, str_D6, str_OT, str_S3
-global str_CommaSp, str_RParen2, str_D7, str_Dot, str_Space, unk_C1772, unk_C1775, unk_C1778
+global str_CommaSp, str_RParen2, str_D7, str_Dot, str_Space, str_fee2, str_fee3, str_fee4
 global unk_C17F0, unk_C1815, unk_C1818, unk_C1823, unk_C1825, unk_C1900, unk_C1914, unk_C1916
 global unk_C192D, unk_C1930, unk_C1934, unk_C1936, unk_C1946, unk_C1A15
 str_teams:
@@ -1014,33 +1014,33 @@ str_Dot:
 db 02Eh,00h
 str_Space:
 db 020h,00h
-asc_C1724:
+str_Pointer7:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C172C:
+str_Iff8:
 db 02Eh,069h,066h,066h,00h
-asc_C1731:
+str_Maindesk:
 db 06Dh,061h,069h,06Eh,064h,065h,073h,06Bh,00h
-asc_C173A:
+str_Tonights2:
 db 074h,06Fh,06Eh,069h,067h,068h,074h,073h,00h
-asc_C1743:
+str_Easndesk:
 db 065h,061h,073h,06Eh,064h,065h,073h,06Bh,00h
-asc_C174C:
+str_Desk2:
 db 064h,065h,073h,06Bh,00h
-asc_C1751:
+str_Pal15:
 db 021h,070h,061h,06Ch,00h
-asc_C1756:
+str_Menubuff4:
 db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
-asc_C175F:
+str_GameSet4:
 db 067h,061h,06Dh,065h,02Eh,073h,065h,074h,00h
-asc_C1768:
+str_Game:
 db 067h,061h,06Dh,065h,00h
-asc_C176D:
+str_Set:
 db 02Eh,073h,065h,074h,00h
-unk_C1772:
+str_fee2:
 db 065h,032h,00h
-unk_C1775:
+str_fee3:
 db 065h,033h,00h
-unk_C1778:
+str_fee4:
 db 065h,034h,00h
 asc_C177B:
 db 070h,061h,06Ch,065h,074h,074h,065h,00h

@@ -19,7 +19,7 @@ extern hmtmstruct, dword_DF646, awtmstruct, puckstruct, sortobj15, hmtmlines
 extern photoptrsf, dword_E0220, dword_E0230, PenBuf_m5
 extern dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9BAC, dword_E9BB0
 extern dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, fputchar, puckvx, gmode, MenuCallbackTrue2
-extern lseek_, ltx, off_C5439, puckx, pucky, puckvy, puckz, puckc
+extern lseek_, ltx, teamabbrevs, puckx, pucky, puckvy, puckz, puckc
 extern penaltynames, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
 extern strcpy_, strlen_, DrawFrameSprite, FileOpenRW, FileClose, FileWriteAt, PanelAddPenalty, PanelRemovePenalty
 extern MenuCallbackTrue, DrawSprite, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
@@ -1485,7 +1485,7 @@ shl eax, 3	; 62669
 sub eax, edx	; 6266C
 xor edx, edx	; 6266E
 mov dl, byte [dword ebx+eax+byte_DB3AD]	; 62670
-mov eax, dword [nosplit esi*4+off_C5439]	; 62677
+mov eax, dword [nosplit esi*4+teamabbrevs]	; 62677
 mov ecx, dword [byte esp+01Ch]	; 6267E
 mov ebx, dword [byte esp+018h]	; 62682
 call sub_59B88	; 62686
@@ -1543,7 +1543,7 @@ add eax, ebx	; 62720
 shl eax, 3	; 62722
 sub eax, ebx	; 62725
 movzx edi, byte [dword edi+eax+byte_DB3AD]	; 62727
-mov eax, dword [nosplit esi*4+off_C5439]	; 6272F
+mov eax, dword [nosplit esi*4+teamabbrevs]	; 6272F
 mov ebx, edx	; 62736
 mov edx, edi	; 62738
 call sub_59B3C	; 6273A

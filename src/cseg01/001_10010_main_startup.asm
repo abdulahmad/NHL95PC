@@ -6,7 +6,7 @@ extern DoGameFrame, __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gett
 extern str_NoDiskSpaceCur, str_NoMemory, str_CheckRefCard, str_NoConvMemory, str_CheckRefCard2, str_Pointer3, str_Pntr, str_Scor2b
 extern str_Scor3b, str_Kaufm020, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_GameSet2, str_Temp3, str_ErrDiskFree3, str_VFN
 extern pad1dev, pad2dev, lasthotkey, byte_C5138, musicon, byte_D3040, byte_D416A, byte_D8C88
-extern byte_EA0F4, byte_ED906, byte_ED92E, byte_ED935, byte_ED936, byte_ED990, dword_C4CFC, joypresent
+extern ctlavailmask, byte_ED906, byte_ED92E, byte_ED935, byte_ED936, byte_ED990, dword_C4CFC, joypresent
 extern inputticks, joysampling, joyqhead, joyqcount, joyqtick, samesideflag, inputframes
 extern escrequest, joyrec, palfadedin, screenw, screenh, demomode, dword_C5131, dword_C5133
 extern dword_C5135, gameopts
@@ -17,7 +17,7 @@ extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8
 extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84, photoptrs, dword_DC230
 extern pointerspr, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
-extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, sub_31AB5
+extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, MainDeskLoop
 extern LoadModeState, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
 extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
 extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
@@ -223,11 +223,11 @@ db 068h	; 10254 push 0DCDh
 dd SampleInputTick
 call sub_8E4C0	; 10259
 add esp, byte 4	; 1025E
-or byte [byte_EA0F4], 8	; 10261
+or byte [ctlavailmask], 8	; 10261
 call sub_B2F22	; 10268
 test eax, eax	; 1026D
 je short .8	; 1026F
-or byte [byte_EA0F4], 1	; 10271
+or byte [ctlavailmask], 1	; 10271
 .8:
 call sub_6B410	; 10278
 call dword [off_D3078]	; 1027D
@@ -376,7 +376,7 @@ call sub_6B093	; 10481
 add esp, byte 10h	; 10486
 test byte [byte_D3040], 1	; 10489
 je short .20	; 10490
-or byte [byte_EA0F4], 2	; 10492
+or byte [ctlavailmask], 2	; 10492
 mov dword [joypresent], 1	; 10499
 .20:
 test byte [byte_D416A], 0Ch	; 104A3
@@ -394,7 +394,7 @@ call sub_6B093	; 104C9
 add esp, byte 10h	; 104CE
 test byte [byte_D3040], 2	; 104D1
 je short .22	; 104D8
-or byte [byte_EA0F4], 4	; 104DA
+or byte [ctlavailmask], 4	; 104DA
 mov dword [joypresent+4], 1	; 104E1
 .22:
 lea edx, [byte esp+068h]	; 104EB
@@ -422,7 +422,7 @@ call FatalError	; 1053C
 add esp, byte 4	; 10541
 jmp near .32	; 10544
 .24:
-mov dl, byte [byte_EA0F4]	; 10549
+mov dl, byte [ctlavailmask]	; 10549
 test dl, 2	; 1054F
 je short .25	; 10552
 mov dword [exhstate+65h], 2	; 10554
@@ -467,7 +467,7 @@ call _dos_gettime_	; 105F4
 xor eax, eax	; 105F9
 mov al, byte [byte esp+06Fh]	; 105FB
 call srand_	; 105FF
-call sub_31AB5	; 10604
+call MainDeskLoop	; 10604
 push byte 20h	; 10609
 push dword 300h	; 1060B
 push str_Temp3	; 10610
@@ -1130,7 +1130,7 @@ je short .6	; 10CE2
 or byte [esi], 10h	; 10CE4
 jmp near .x	; 10CE7
 .3:
-mov dl, byte [byte_EA0F4]	; 10CEC
+mov dl, byte [ctlavailmask]	; 10CEC
 test dl, 2	; 10CF2
 jne short .4	; 10CF5
 test dl, 4	; 10CF7
@@ -1150,7 +1150,7 @@ sar eax, 8	; 10D16
 test al, 30h	; 10D19
 jne short ReadSkipKeys.5	; 10D1B
 .8:
-test byte [byte_EA0F4], 1	; 10D1D
+test byte [ctlavailmask], 1	; 10D1D
 je short .9	; 10D24
 call dword [off_D3078]	; 10D26
 test byte [dword_D3034], 3	; 10D2C

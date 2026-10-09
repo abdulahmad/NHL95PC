@@ -4,7 +4,7 @@ bits 32
 section s_CD9D0 progbits alloc noexec write align=1
 extern StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense, StatsMenuPenaltyKilling, StatsMenuPowerPlay, StatsMenuTeamPenalties, StatsMenuPoints, StatsMenuGoals
 extern StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus, StatsMenuPIM, StatsMenuShootPct, StatsMenuGAA, StatsMenuGoalieWins
-extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, MenuOpenSaved, sub_3270B, sub_32DA9
+extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, MenuOpenSaved, MenuExit, sub_32DA9
 extern sub_32FF4, sub_3322A, sub_332C0, sub_332F6, sub_3339D, sub_333D7, sub_33469, sub_334FB
 extern sub_33523, sub_3366F, sub_336BE, sub_6BE95, sub_7BEBB, sub_7C993, sub_7C9A1, sub_7CAF7
 extern sub_7CB9F, sub_80830, sub_82579, sub_85924, CreatePlayoffs, EasnStandingsMenu, unk_C67B1, unk_CEF0F
@@ -13,7 +13,7 @@ global str_LAAtMTL, asc_CDBDC, asc_CDBE3, asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_C
 global asc_CDD6B, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide
 global dword_CD9D0, dword_CD9F4, dword_CDA1C, dword_CDA20, dword_CDA24, dword_CDA28, dword_CDA2C
 global dword_CDA30, dword_CDA34, dword_CDA38, dword_CDA3C, dword_CDA40, dword_CDA44, dword_CDA48, dword_CDA4C
-global dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, dword_CE4E3, dword_CE503, dword_CE527, dword_CE583
+global mainmenubar, dword_CE4E3, dword_CE503, dword_CE527, dword_CE583
 global dword_CE5A3, dword_CE5C3, dword_CE8EB, off_CECFF, off_CED3F, unk_CDA50, unk_CDA55, unk_CDA5A
 global unk_CDA65, unk_CDA6E, unk_CDA83, unk_CDA9B, unk_CDAB3, unk_CDACA, unk_CDAE0, unk_CDAF6
 global unk_CDB05, unk_CDB1A, unk_CDB2F, unk_CDB44, unk_CDB55, unk_CDB6A, unk_CDB6F, unk_CDB84
@@ -30,8 +30,8 @@ global unk_CE0DA, unk_CE0EB, unk_CE0FB, unk_CE10E, unk_CE120, unk_CE136, unk_CE1
 global unk_CE169, unk_CE175, unk_CE187, unk_CE18E, unk_CE19E, unk_CE1B1, unk_CE1C3, unk_CE1D9
 global unk_CE1E5, unk_CE1F5, unk_CE1FF, unk_CE263, unk_CE26D, unk_CE274, unk_CE284, unk_CE290
 global unk_CE2A2, unk_CE2B3, unk_CE2BD, unk_CE2CF, unk_CE2DF, unk_CE305, unk_CE31F, unk_CE32F
-global unk_CE33F, unk_CE34F, unk_CE361, unk_CE371, unk_CE383, unk_CE389, unk_CE40F, unk_CE64F
-global unk_CE7EF, unk_CE8CF, unk_CE96F, unk_CEA2F, unk_CEB2F, unk_CEB8F, unk_CEC4F, unk_CECAF
+global unk_CE33F, unk_CE34F, unk_CE361, unk_CE371, unk_CE383, unk_CE389, filemenu, unk_CE64F
+global gamemenu, statsmenu, unk_CE96F, unk_CEA2F, unk_CEB2F, unk_CEB8F, unk_CEC4F, unk_CECAF
 global unk_CED2F, unk_CED6F
 dword_CD9D0:
 db 01Dh,01h,00h,00h,01Dh,01h,00h,00h,09Dh,01h,00h,00h,09Dh,01h,00h,00h
@@ -433,29 +433,26 @@ unk_CE389:
 db 04Fh,075h,074h,070h,075h,074h,020h,043h,075h,072h,072h,065h,06Eh,074h,020h,044h
 db 061h,074h,061h,020h,02Eh,02Eh,02Eh,00h,052h,061h,064h,061h,072h,027h,073h,020h
 db 043h,06Ch,069h,070h,073h,00h
-dword_CE3AF:
+mainmenubar:
 db 00h,00h,00h,00h
-dword_CE3B3:
 db 00h,00h,00h,00h
-dword_CE3B7:
 db 020h,00h,00h,00h
-dword_CE3BB:
 db 012h,00h,00h,00h
 dd unk_CDA50
 db 00h,00h,00h,00h
-dd unk_CE40F
+dd filemenu
 db 012h,00h,00h,00h,021h,00h,00h,00h,00h,00h,00h,00h,04Ch,00h,00h,00h
 db 012h,00h,00h,00h
 dd unk_CDA55
 db 00h,00h,00h,00h
-dd unk_CE7EF
+dd gamemenu
 db 07h,00h,00h,00h,04Dh,00h,00h,00h,00h,00h,00h,00h,092h,00h,00h,00h
 db 012h,00h,00h,00h
 dd unk_CDA5A
 db 00h,00h,00h,00h
-dd unk_CE8CF
+dd statsmenu
 db 05h,00h,00h,00h
-unk_CE40F:
+filemenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0A5h,00h,00h,00h,011h,00h,00h,00h
 dd unk_CDA65
 dd MenuOpenSaved
@@ -522,7 +519,7 @@ dd unk_CDA6E
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 032h,01h,00h,00h,0A5h,00h,00h,00h,044h,01h,00h,00h
 dd unk_CDB6A
-dd sub_3270B
+dd MenuExit
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CE64F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0FDh,00h,00h,00h,011h,00h,00h,00h
@@ -573,7 +570,7 @@ db 0D8h,00h,00h,00h,0FDh,00h,00h,00h,0EAh,00h,00h,00h
 dd unk_CDEB0
 dd sub_334FB
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CE7EF:
+gamemenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,092h,00h,00h,00h,011h,00h,00h,00h
 dd unk_CDB6F
 dd sub_80830
@@ -600,7 +597,7 @@ db 06Ch,00h,00h,00h,092h,00h,00h,00h,07Eh,00h,00h,00h
 dd unk_CDC0B
 dd sub_82579
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CE8CF:
+statsmenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
 dd unk_CDF44
 db 00h,00h,00h,00h

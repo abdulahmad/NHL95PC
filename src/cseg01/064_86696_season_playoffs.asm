@@ -9,7 +9,7 @@ extern str_Rst1, str_Rst2, str_Scuparrw, str_WesternConference, str_EasternConfe
 extern str_Aup3, str_Midl, str_Adn3, str_Adn2, str_Adn1, str_POTitle, str_Bkgd2, str_extDB
 extern msg_PODiskSpace_arg, msg_POTeamOut_arg, msg_POTeamOut_arg2, treecolslots, treecol_Wr2
 extern treecol_Er2, treecol_Er1, str_dot, curleague
-extern musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A
+extern musicon, leaguedbfmt2, leaguedbfmt, ctlavailmask, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A
 extern DeskHomeLines, DeskVisitorLines, postate
 extern lgstate, gameresult, gamemode, gameopts, ctl1team
 extern ctl2team, ctl1side, ctl2side, teamdivflags, teamconf, confteams, dword_C65AC, teamstatscb
@@ -18,7 +18,7 @@ extern boxshadecolor, dlgtextfg, dlgtextbg, songdata, cont2team, HomeTeam, dword
 extern dword_CE5C3, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
 extern keydb_size, musichandle, dword_D2884, dword_D288C, seriesgameno, dword_D2B70, dword_D2BEC, musicslot
 extern dword_D2C6B, dword_D8B68, dword_D8B74, schedgameidx, pointerspr, playofftree, playofftree_p1, pochampion
-extern dbextension, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, off_C5439, teamcitynames
+extern dbextension, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, teamabbrevs, teamcitynames
 extern off_C6D22, leaguedbnames, off_CEF43, off_CEF63
 extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, msg_POHumanOut, msg_POTeamOut, msg_POGenFinal
 extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers, PlayGame
@@ -230,7 +230,7 @@ mov word [postate+59h], dx	; 86949
 mov ebx, edx	; 86950
 or ebx, 79FFh	; 86952
 mov word [postate+59h], bx	; 86958
-mov ch, byte [byte_EA0F4]	; 8695F
+mov ch, byte [ctlavailmask]	; 8695F
 test ch, 2	; 86965
 je short .7	; 86968
 mov dword [postate+65h], 2	; 8696A
@@ -3390,7 +3390,7 @@ jle short .57	; 88E00
 push ecx	; 88E02
 push eax	; 88E03
 mov eax, dword [byte esp+058h]	; 88E04
-mov edx, dword [nosplit eax*4+off_C5439]	; 88E08
+mov edx, dword [nosplit eax*4+teamabbrevs]	; 88E08
 push edx	; 88E0F
 mov ebx, dword [dword_D288C]	; 88E10
 push ebx	; 88E16
@@ -3399,7 +3399,7 @@ jmp short .58	; 88E17
 push eax	; 88E19
 push ecx	; 88E1A
 mov eax, dword [byte esp+054h]	; 88E1B
-mov ebx, dword [nosplit eax*4+off_C5439]	; 88E1F
+mov ebx, dword [nosplit eax*4+teamabbrevs]	; 88E1F
 push ebx	; 88E26
 mov ecx, dword [dword_D288C]	; 88E27
 push ecx	; 88E2D
