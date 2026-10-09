@@ -57,6 +57,10 @@ call strcat_	; 14361
 pop esi	; 14366
 ret	; 14367
 %endif ; C
+; C: src/c/005_1431E_file_utils/DeleteFiles.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/DeleteFiles.inc"
+%else
 DeleteFiles:
 push dword 58h	; 14368
 call __CHK	; 1436D
@@ -124,6 +128,11 @@ add esp, byte 4Ch	; 1443C
 pop esi	; 1443F
 pop ecx	; 14440
 ret	; 14441
+%endif ; C
+; C: src/c/005_1431E_file_utils/DeleteDir.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/DeleteDir.inc"
+%else
 DeleteDir:
 push dword 5Ch	; 14442
 call __CHK	; 14447
@@ -192,6 +201,7 @@ pop edx	; 14521
 pop ecx	; 14522
 pop ebx	; 14523
 ret	; 14524
+%endif ; C
 FileOpenRead:
 push dword 8	; 14525
 call __CHK	; 1452A

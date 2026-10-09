@@ -167,6 +167,10 @@ mov dword [deskexit], 3	; 179F0
 DeskSetExit_ret1:
 mov eax, 1	; 179FA
 ret	; 179FF
+; C: src/c/008_17816_output_files/StatsSel9394Season.c
+%ifdef CBUILD
+%include "c/008_17816_output_files/StatsSel9394Season.inc"
+%else
 StatsSel9394Season:
 push dword 20h	; 17A00
 call __CHK	; 17A05
@@ -225,6 +229,7 @@ pop edx	; 17AEF
 pop ecx	; 17AF0
 pop ebx	; 17AF1
 ret	; 17AF2
+%endif ; C
 StatsSel9394Playoffs:
 push dword 24h	; 17AF3
 call __CHK	; 17AF8

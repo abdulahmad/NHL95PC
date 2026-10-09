@@ -2900,6 +2900,10 @@ call doplayeracc	; 4A82B
 pop edx	; 4A830
 ret	; 4A831
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/assstanley.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assstanley.inc"
+%else
 assstanley:
 push dword 10h	; 4A832
 call __CHK	; 4A837
@@ -2969,6 +2973,7 @@ pop edx	; 4A90B
 pop ecx	; 4A90C
 pop ebx	; 4A90D
 ret	; 4A90E
+%endif ; C
 assscore:
 push dword 14h	; 4A90F
 call __CHK	; 4A914
@@ -3916,6 +3921,10 @@ pop ecx	; 4B4E6
 pop ebx	; 4B4E7
 ret	; 4B4E8
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/AdjustFacingDirection.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/AdjustFacingDirection.inc"
+%else
 AdjustFacingDirection:
 push dword 14h	; 4B4E9
 call __CHK	; 4B4EE
@@ -4000,6 +4009,7 @@ pop esi	; 4B5BE
 pop ecx	; 4B5BF
 pop ebx	; 4B5C0
 ret	; 4B5C1
+%endif ; C
 assgoalietopuck:
 push dword 14h	; 4B5C2
 call __CHK	; 4B5C7

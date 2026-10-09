@@ -5307,6 +5307,10 @@ call StartPer	; 5DE9C
 jmp near SetPenaltyStrength	; 5DEA1
 ; PeriodOver: 93G hockey93_06 PeriodOver. Line change box reset, gsp+1, gmdir flips; after the 3rd period:
 ;   overtime (gameopts+1 bit 1 = playoffs) or game over (gsp 4) unless tied; then IntermissionStart.
+; C: src/c/042_59D9A_engine_core/PeriodOver.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/PeriodOver.inc"
+%else
 PeriodOver:
 push dword 14h	; 5DEA6
 call __CHK	; 5DEAB
@@ -5362,6 +5366,7 @@ pop edx	; 5DF82
 pop ecx	; 5DF83
 pop ebx	; 5DF84
 ret	; 5DF85
+%endif ; C
 ; ResetBench: 93G hockey93_05 ResetBench. Per team: PBnum = players with penalty time left (tmpdst > 0), all others
 ;   not dressed back to the bench (tmpdst -2, roster status 3).
 ; C: src/c/042_59D9A_engine_core/calcpuckcross.c (ResetBench)

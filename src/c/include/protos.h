@@ -458,5 +458,35 @@ void SetTeamGoalie(short side, short g);  /* 672F9 */
 void DeleteTempDatabases(void);  /* 7125C */              
 int j_unlink(char *path);  /* CRT unlink thunk */         
 void SetSideControls(void);  /* 8B85B */                  
+int StatsMenuPoints(void);  /* 18348 */                   
+;int LeadersScreen(int cat);
+int TeamStatsScreen(int cat);
+int StatsMenuGoals(void);  /* 18425 */                    
+int StatsMenuAssists(void);  /* 18508 */                  
+int StatsMenuPPGoals(void);  /* 185EB */                  
+int StatsMenuSHGoals(void);  /* 186CE */                  
+int StatsMenuPlusMinus(void);  /* 187B1 */                
+int StatsMenuPIM(void);  /* 18894 */                      
+int StatsMenuShootPct(void);  /* 18977 */                 
+int StatsMenuGAA(void);  /* 18A5A */                      
+int StatsMenuGoalieWins(void);  /* 18B3D */               
+int StatsMenuTeamScoring(void);  /* 17EDF */              
+int StatsMenuTeamDefense(void);  /* 17FBC */              
+int StatsMenuPenaltyKilling(void);  /* 1809F */           
+int StatsMenuPowerPlay(void);  /* 18182 */                
+int StatsMenuTeamPenalties(void);  /* 18265 */            
+int StatsMenuStandings(void);  /* 17DFC */                
+void assstanley(Player *p);  /* 4A832 */                  
+void PeriodOver(void);  /* 5DEA6 */                       
+void IntermissionStart(void);
+int DeleteFiles(char *dir, char *name, char *ext);  /* 14368 */
+unsigned unknown_libname_2(void *ft);  /* Watcom CRT _dos_findnext */
+void DeleteDir(char *dir);  /* 14442 */                   
+int rmdir(const char *path);  /* Watcom CRT rmdir_ */     
+void AdjustFacingDirection(Player *p, int want);  /* 4B4E9 */
+int OneTimerChk(Player *p);  /* 50E5C */                  
+int StatsMenuSavePct(void);  /* 18C20 */                  
+void StatsSel9394Season(void);  /* 17A00 */               
+int CmpGoals(int *a, int *b);  /* 25144 */                
 
 #endif

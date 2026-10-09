@@ -8,6 +8,10 @@ extern DeskSetExit_ret1, DeskSetExit3_body, StatsSel_x, TeamStatsScreen, Leaders
 global StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense, StatsMenuPenaltyKilling, StatsMenuPowerPlay
 global StatsMenuTeamPenalties, StatsMenuPoints, StatsMenuGoals, StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus, StatsMenuPIM
 global StatsMenuShootPct, StatsMenuGAA, StatsMenuGoalieWins, StatsMenuSavePct, DeskSetExit3b, ShowPlayerStatsItem, FreeDeskBuffers
+; C: src/c/009_17DFC_palette_fx/StatsMenuStandings.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuStandings.inc"
+%else
 StatsMenuStandings:
 push dword 20h	; 17DFC
 call __CHK	; 17E01
@@ -74,6 +78,11 @@ pop edx	; 17EDB
 pop ecx	; 17EDC
 pop ebx	; 17EDD
 ret	; 17EDE
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuTeamScoring.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuTeamScoring.inc"
+%else
 StatsMenuTeamScoring:
 push dword 20h	; 17EDF
 call __CHK	; 17EE4
@@ -140,6 +149,11 @@ pop edx	; 17FB8
 pop ecx	; 17FB9
 pop ebx	; 17FBA
 ret	; 17FBB
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuTeamDefense.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuTeamDefense.inc"
+%else
 StatsMenuTeamDefense:
 push dword 20h	; 17FBC
 call __CHK	; 17FC1
@@ -206,6 +220,11 @@ pop edx	; 1809B
 pop ecx	; 1809C
 pop ebx	; 1809D
 ret	; 1809E
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuPenaltyKilling.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuPenaltyKilling.inc"
+%else
 StatsMenuPenaltyKilling:
 push dword 20h	; 1809F
 call __CHK	; 180A4
@@ -272,6 +291,11 @@ pop edx	; 1817E
 pop ecx	; 1817F
 pop ebx	; 18180
 ret	; 18181
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuPowerPlay.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuPowerPlay.inc"
+%else
 StatsMenuPowerPlay:
 push dword 20h	; 18182
 call __CHK	; 18187
@@ -338,6 +362,11 @@ pop edx	; 18261
 pop ecx	; 18262
 pop ebx	; 18263
 ret	; 18264
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuTeamPenalties.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuTeamPenalties.inc"
+%else
 StatsMenuTeamPenalties:
 push dword 20h	; 18265
 call __CHK	; 1826A
@@ -404,6 +433,11 @@ pop edx	; 18344
 pop ecx	; 18345
 pop ebx	; 18346
 ret	; 18347
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuPoints.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuPoints.inc"
+%else
 StatsMenuPoints:
 push dword 20h	; 18348
 call __CHK	; 1834D
@@ -470,6 +504,11 @@ pop edx	; 18421
 pop ecx	; 18422
 pop ebx	; 18423
 ret	; 18424
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuGoals.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuGoals.inc"
+%else
 StatsMenuGoals:
 push dword 20h	; 18425
 call __CHK	; 1842A
@@ -536,6 +575,11 @@ pop edx	; 18504
 pop ecx	; 18505
 pop ebx	; 18506
 ret	; 18507
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuAssists.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuAssists.inc"
+%else
 StatsMenuAssists:
 push dword 20h	; 18508
 call __CHK	; 1850D
@@ -602,6 +646,11 @@ pop edx	; 185E7
 pop ecx	; 185E8
 pop ebx	; 185E9
 ret	; 185EA
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuPPGoals.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuPPGoals.inc"
+%else
 StatsMenuPPGoals:
 push dword 20h	; 185EB
 call __CHK	; 185F0
@@ -668,6 +717,11 @@ pop edx	; 186CA
 pop ecx	; 186CB
 pop ebx	; 186CC
 ret	; 186CD
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuSHGoals.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuSHGoals.inc"
+%else
 StatsMenuSHGoals:
 push dword 20h	; 186CE
 call __CHK	; 186D3
@@ -734,6 +788,11 @@ pop edx	; 187AD
 pop ecx	; 187AE
 pop ebx	; 187AF
 ret	; 187B0
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuPlusMinus.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuPlusMinus.inc"
+%else
 StatsMenuPlusMinus:
 push dword 20h	; 187B1
 call __CHK	; 187B6
@@ -800,6 +859,11 @@ pop edx	; 18890
 pop ecx	; 18891
 pop ebx	; 18892
 ret	; 18893
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuPIM.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuPIM.inc"
+%else
 StatsMenuPIM:
 push dword 20h	; 18894
 call __CHK	; 18899
@@ -866,6 +930,11 @@ pop edx	; 18973
 pop ecx	; 18974
 pop ebx	; 18975
 ret	; 18976
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuShootPct.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuShootPct.inc"
+%else
 StatsMenuShootPct:
 push dword 20h	; 18977
 call __CHK	; 1897C
@@ -932,6 +1001,11 @@ pop edx	; 18A56
 pop ecx	; 18A57
 pop ebx	; 18A58
 ret	; 18A59
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuGAA.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuGAA.inc"
+%else
 StatsMenuGAA:
 push dword 20h	; 18A5A
 call __CHK	; 18A5F
@@ -998,6 +1072,11 @@ pop edx	; 18B39
 pop ecx	; 18B3A
 pop ebx	; 18B3B
 ret	; 18B3C
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuGoalieWins.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuGoalieWins.inc"
+%else
 StatsMenuGoalieWins:
 push dword 20h	; 18B3D
 call __CHK	; 18B42
@@ -1064,6 +1143,11 @@ pop edx	; 18C1C
 pop ecx	; 18C1D
 pop ebx	; 18C1E
 ret	; 18C1F
+%endif ; C
+; C: src/c/009_17DFC_palette_fx/StatsMenuSavePct.c
+%ifdef CBUILD
+%include "c/009_17DFC_palette_fx/StatsMenuSavePct.inc"
+%else
 StatsMenuSavePct:
 push dword 20h	; 18C20
 call __CHK	; 18C25
@@ -1130,6 +1214,7 @@ pop edx	; 18CFF
 pop ecx	; 18D00
 pop ebx	; 18D01
 ret	; 18D02
+%endif ; C
 DeskSetExit3b:
 push dword 4	; 18D03
 jmp near DeskSetExit3_body	; 18D08
