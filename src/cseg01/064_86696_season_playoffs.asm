@@ -11,7 +11,7 @@ extern msg_PODiskSpace_arg, msg_POTeamOut_arg, msg_POTeamOut_arg2, byte_C6D72, b
 extern byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, byte_C6D9A, byte_C6DA2
 extern byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, byte_C6DB2, str_dot, curleague
 extern musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A
-extern code_1A8AA, code_1A922, postate
+extern DeskHomeLines, DeskVisitorLines, postate
 extern lgstate, gameresult, gamemode, gameopts, ctl1team
 extern ctl2team, ctl1side, ctl2side, teamdivflags, teamconf, confteams, dword_C65AC, teamstatscb
 extern skaterstatscb, goaliestatscb, dword_C65CC, dword_C65D0, dword_C6D26, dword_C6DBA, dword_C71CC, dword_C71D0
@@ -6323,7 +6323,7 @@ jne short .2	; 8B873
 mov eax, dword [ctl1side]	; 8B875
 test eax, eax	; 8B87A
 jne short .1	; 8B87C
-mov dword [off_CEF43], code_1A8AA	; 8B87E
+mov dword [off_CEF43], DeskHomeLines	; 8B87E
 mov dword [off_CEF63], eax	; 8B888
 mov dword [dword_CEDE7], unk_CEE4F	; 8B88D
 xor edx, edx	; 8B897
@@ -6335,7 +6335,7 @@ ret	; 8B8A2
 .1:
 xor edx, edx	; 8B8A3
 mov dword [off_CEF43], edx	; 8B8A5
-mov dword [off_CEF63], code_1A922	; 8B8AB
+mov dword [off_CEF63], DeskVisitorLines	; 8B8AB
 mov dword [dword_CEDE7], edx	; 8B8B5
 jmp short .8	; 8B8BB
 .2:
@@ -6349,7 +6349,7 @@ mov dword [off_CEF43], ebp	; 8B8D1
 mov dword [dword_CEDE7], ebp	; 8B8D7
 jmp short .5	; 8B8DD
 .4:
-mov dword [off_CEF43], code_1A8AA	; 8B8DF
+mov dword [off_CEF43], DeskHomeLines	; 8B8DF
 mov dword [dword_CEDE7], unk_CEE4F	; 8B8E9
 .5:
 cmp dword [ctl1team], byte 0FFFFFFFEh	; 8B8F3
@@ -6365,7 +6365,7 @@ pop edi	; 8B914
 pop edx	; 8B915
 ret	; 8B916
 .7:
-mov dword [off_CEF63], code_1A922	; 8B917
+mov dword [off_CEF63], DeskVisitorLines	; 8B917
 .8:
 mov dword [dword_CEE07], unk_CEEAF	; 8B921
 pop ebp	; 8B92B

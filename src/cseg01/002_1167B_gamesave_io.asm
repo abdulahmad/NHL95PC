@@ -13,7 +13,7 @@ extern HandleHotKey_ret, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, 
 extern off_C526F, off_C5273, off_C5439, leaguedbnames, replaystart, camx_m2
 extern off_CBED0, strcat_, strcpy_, SetScreenSize, ResetInputSampling, RunGameFrames, FadePalette, LoadGameGfx
 extern SetupGame, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadSeasonRec, ReadTeamRec, UpdateHudPanel
-extern DrawHudPanel, LoadCupFinalSeries, sub_1920F, sub_1935D, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
+extern DrawHudPanel, LoadCupFinalSeries, PostGameDesk, SportsDesk, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
 extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71, DrawRinkOverlays, PeriodOver, LoadGameState
 extern sub_61A27, sub_61B85, sub_64614, SetupTeamLines, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
@@ -275,7 +275,7 @@ mov edx, 1E0h	; 11A27
 mov eax, 280h	; 11A2C
 call SetScreenSize	; 11A31
 xor eax, eax	; 11A36
-call sub_1935D	; 11A38
+call SportsDesk	; 11A38
 cmp dword [gameresult], byte 2	; 11A3D
 je near .30	; 11A44
 mov edx, 0C8h	; 11A4A
@@ -440,7 +440,7 @@ xor ebx, ebx	; 11CDB
 mov dword [joysampling], ebx	; 11CDD
 call sub_61B85	; 11CE3
 call StartThreeStars	; 11CE8
-call sub_1920F	; 11CED
+call PostGameDesk	; 11CED
 mov dword [gameresult], 1	; 11CF2
 .30:
 call sub_1B982	; 11CFC
@@ -520,7 +520,7 @@ call FadeOutPalCycle	; 11E15
 xor ecx, ecx	; 11E1A
 mov dword [gameresult], ecx	; 11E1C
 xor eax, eax	; 11E22
-call sub_1935D	; 11E24
+call SportsDesk	; 11E24
 cmp dword [gameresult], byte 2	; 11E29
 jne short .6	; 11E30
 call sub_1B982	; 11E32

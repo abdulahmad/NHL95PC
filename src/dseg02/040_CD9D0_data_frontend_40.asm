@@ -4,7 +4,7 @@ bits 32
 section s_CD9D0 progbits alloc noexec write align=1
 extern StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense, StatsMenuPenaltyKilling, StatsMenuPowerPlay, StatsMenuTeamPenalties, StatsMenuPoints, StatsMenuGoals
 extern StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus, StatsMenuPIM, StatsMenuShootPct, StatsMenuGAA, StatsMenuGoalieWins
-extern StatsMenuSavePct, sub_1A5A1, sub_1A5B1, sub_1A5D4, sub_1A6A7, sub_2B944, sub_3270B, sub_32DA9
+extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, sub_2B944, sub_3270B, sub_32DA9
 extern sub_32FF4, sub_3322A, sub_332C0, sub_332F6, sub_3339D, sub_333D7, sub_33469, sub_334FB
 extern sub_33523, sub_3366F, sub_336BE, sub_6BE95, sub_7BEBB, sub_7C993, sub_7C9A1, sub_7CAF7
 extern sub_7CB9F, sub_80830, sub_82579, sub_85924, CreatePlayoffs, unk_20EB7, unk_C67B1, unk_CEF0F
@@ -750,7 +750,7 @@ db 04h,00h,00h,00h
 unk_CECAF:
 db 00h,00h,00h,00h,00h,00h,00h,00h,076h,00h,00h,00h,011h,00h,00h,00h
 dd unk_CDD28
-dd sub_1A5A1
+dd DeskBackToGame
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 076h,00h,00h,00h,023h,00h,00h,00h
 dd unk_CDD35
@@ -759,21 +759,21 @@ db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 076h,00h,00h,00h,035h,00h,00h,00h
 off_CECFF:
 dd unk_CDD43
-dd sub_1A5D4
+dd DeskReturnConfirm
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 076h,00h,00h,00h,048h,00h,00h,00h
 dd unk_CDD72
-dd sub_1A6A7
+dd DeskExitGame
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CED2F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,076h,00h,00h,00h,011h,00h,00h,00h
 off_CED3F:
 dd unk_CDD43
-dd sub_1A5B1
+dd DeskToSportsDesk
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 076h,00h,00h,00h,024h,00h,00h,00h
 dd unk_CDD72
-dd sub_1A6A7
+dd DeskExitGame
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CED6F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0A9h,00h,00h,00h,011h,00h,00h,00h

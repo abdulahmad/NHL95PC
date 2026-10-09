@@ -18,11 +18,11 @@ extern dword_D8C84, dword_DB086, dword_DB088, dword_DC230, dword_DEB74, dword_DE
 extern hmtmstruct, dword_DF646, awtmstruct, puckstruct, sortobj15, hmtmlines
 extern photoptrsf, dword_E0220, dword_E0230, PenBuf_m5
 extern dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9BAC, dword_E9BB0
-extern dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, fputchar, puckvx, gmode, loc_18F86
+extern dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, fputchar, puckvx, gmode, MenuCallbackTrue2
 extern lseek_, ltx, off_C5439, puckx, pucky, puckvy, puckz, puckc
 extern off_CD304, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
 extern strcpy_, strlen_, DrawFrameSprite, FileOpenRW, FileClose, FileWriteAt, PanelAddPenalty, PanelRemovePenalty
-extern sub_18F74, sub_1CD73, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
+extern MenuCallbackTrue, sub_1CD73, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
 extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, FatalError, unk_C1B49, unk_C1C58, unk_C1C5B
 extern unk_C1C5E, unk_C1C61, unk_C1C64, unk_C1C67, unk_C1CB0, unk_C5423, unk_C542E, unk_DBC30
 extern SortCords, unk_E9B4C, word_C5428, word_C90B2, word_C90B4, c1playernum, c2playernum
@@ -1946,7 +1946,7 @@ push ebx	; 62C0B
 mov ecx, esi	; 62C0C
 mov ebx, edi	; 62C0E
 mov edx, ebp	; 62C10
-mov eax, loc_18F86	; 62C12
+mov eax, MenuCallbackTrue2	; 62C12
 call sub_619C8	; 62C17
 mov dword [dword_C5840], 1	; 62C1C
 mov word [word_CBEC0], 0FFFFh	; 62C26
@@ -2004,7 +2004,7 @@ mov ebx, dword [byte eax+044h]	; 62CAF
 sar ebx, 18h	; 62CB2
 xor ecx, ecx	; 62CB5
 mov edx, esi	; 62CB7
-mov eax, sub_18F74	; 62CB9
+mov eax, MenuCallbackTrue	; 62CB9
 call sub_619C8	; 62CBE
 mov dword [dword_C5840], 1	; 62CC3
 mov eax, 1	; 62CCD

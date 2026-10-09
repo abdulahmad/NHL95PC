@@ -125,26 +125,31 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00018D03,sub_18D03,DeskSetExit3b,PC-new,,,,low,"second entry to the DeskSetExit3 body (deskexit = 3, return 1), used by a sports desk menu item",palette_fx,manual-trace
 00018D0D,sub_18D0D,ShowPlayerStatsItem,PC-new,,,,medium,"""Show Player Statistics And Attributes"" menu action: deskexit = 4, or 5 when byte_DC836 is not 'G'; returns 1 via DeskSetExit_ret1",palette_fx,manual-trace
 00018D33,sub_18D33,FreeDeskBuffers,PC-new,,,,low,releases the two buffers in dword_C65AC / dword_C65A8 (jctime) and clears them; returns 0 (easn_stats),palette_fx,manual-trace
-00018D7F,sub_18D7F,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-00018F8D,sub_18F8D,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-000190BE,sub_190BE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001920F,sub_1920F,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001935D,sub_1935D,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001A534,sub_1A534,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001A5A1,sub_1A5A1,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001A5B1,sub_1A5B1,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001A5D4,sub_1A5D4,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001A6A7,sub_1A6A7,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001A817,code_1A817,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001A8AA,code_1A8AA,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001A922,code_1A922,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001A96D,code_1A96D,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001A9AC,code_1A9AC,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001AA6D,sub_1AA6D,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001AAC4,sub_1AAC4,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001AB95,sub_1AB95,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001ABC8,sub_1ABC8,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
-0001ABF1,sub_1ABF1,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),frontend_desk,unmatched
+00018D7F,sub_18D7F,OutputCurrentData,PC-new,,,,high,"""Output Current Data ..."" sports desk item: prompts ""Please enter output file name"" (sub_2FEDF text entry with temporary dword_C71CC..C71DC colours) and, unless Esc or empty, WriteScreenTextFile",frontend_desk,manual-trace
+00018E43,sub_18E43,DrawDeskFrames,PC-new,,,,low,"draws three nested rectangles (sub_B4FAC lines, colours 22h / 21h / 20h) around 0Eh,21h - 0AFh,86h",frontend_desk,manual-trace
+00018F74,sub_18F74,MenuCallbackTrue,PC-new,,,,low,callback that returns 1 (ret 0Ch; second entry loc_18F86); its address is passed by the penalty text code (62CB9),frontend_desk,manual-trace
+00018F8D,sub_18F8D,PlayRandomHighlight,PC-new,,,,medium,"marks the highlights already shown (dword_DD730 state >= 5 and unchanged) in hlplayedmask, picks a random unplayed one of the 6 and plays it with StartHL2; returns -1 / its result",frontend_desk,manual-trace
+000190BE,sub_190BE,IntermissionDesk,PC-new,,,,medium,"between periods (called from IntermissionPC): in an exhibition between real teams plays the period highlights (sub_2F3D7, PlayRandomHighlight), then the sports desk in intermission mode (SportsDesk 1), clears the goal / shot counters and restores 320x200",frontend_desk,manual-trace
+0001920F,sub_1920F,PostGameDesk,PC-new,,,,medium,"end of game (from PlayGame): fade, 640x480, game summary (sub_2D35A), in an exhibition between real teams the highlights (PlayRandomHighlight), then SportsDesk 2 and gameresult = 1",frontend_desk,manual-trace
+0001935D,sub_1935D,SportsDesk,PC-new,,,,medium,"(mode): the PC ""EA Sports desk"" menu screen (""eadesk%1d"" art by mode, ""desk"" / ""!pal"", ""Pointer"" cursor, ""pause"" and ""menubuff"" buffers); mode 0 is the pause menu from GameLoop (Esc), 1 the intermission, 2 after the game; runs the desk menus until an item returns to the game",frontend_desk,manual-trace
+0001A534,sub_1A534,DeskReloadGame,PC-new,,,,low,"reloads the home team art (sub_3377C, team 0Ch for the all-star teams) and LoadPlayerPhotos, fades in and flags a desk redraw (dword_C66D4 / dword_C66D0); SportsDesk",frontend_desk,manual-trace
+0001A5A1,sub_1A5A1,DeskBackToGame,PC-new,,,,high,"""Back to Game"" item: returns 1",frontend_desk,manual-trace
+0001A5B1,sub_1A5B1,DeskToSportsDesk,PC-new,,,,medium,"""Sports Desk"" item (no confirmation): flags a redraw, returns 5",frontend_desk,manual-trace
+0001A5D4,sub_1A5D4,DeskReturnConfirm,PC-new,,,,high,"""Sports Desk"" item in a game: MessageBox ""Returning to sports central"" / ""Returning out of the game"" / ""Returning to the playoff tree"" (by gamemode) ""Do you wish to return?""; yes returns 5, else 0",frontend_desk,manual-trace
+0001A6A7,sub_1A6A7,DeskExitGame,PC-new,,,,high,"""Exit"" item: MessageBox ""Exiting the game"" / ""Do you wish to exit?""; on yes stops the music, ShowCredits and leaves through bailout_vec",frontend_desk,manual-trace
+0001A817,code_1A817,DeskGoToReplay,PC-new,,,,medium,"""Go To Replay ..."" item: reloads the home team art and photos, fades, 320x200, sub_7E0FA (replay), flags a redraw",frontend_desk,manual-trace
+0001A8AA,code_1A8AA,DeskHomeLines,PC-new,,,,medium,"""Home Team ..."" item: fade, line editor for hmlinetab (sub_767D0 team 0)",frontend_desk,manual-trace
+0001A922,code_1A922,DeskVisitorLines,PC-new,,,,medium,"""Visiting Team ..."" item: fade, line editor for awlinetab (sub_767D0 team 1)",frontend_desk,manual-trace
+0001A96D,code_1A96D,DeskGameStats,PC-new,,,,medium,"""Game Statistics ..."" item: fade, sub_2F5EE",frontend_desk,manual-trace
+0001A9AC,code_1A9AC,DeskPenaltySummary,PC-new,,,,medium,"""Penalty Summary ..."" item: fades the music, sub_2D35A summary page",frontend_desk,manual-trace
+0001AA6D,sub_1AA6D,DeskScoringSummary,PC-new,,,,medium,"""Scoring Summary ..."" item: fade, sub_2D35A(1)",frontend_desk,manual-trace
+0001AAC4,sub_1AAC4,DeskTeamScratches,PC-new,,,,medium,"""Team Scratches ..."" item: fade, sub_2D35A(4)",frontend_desk,manual-trace
+0001AB0B,sub_1AB0B,DeskHomeGoalie1,PC-new,,,,medium,"""Home Team Goalie"" menu, first goalie: sub_672F9(0, 0) and marks the item",frontend_desk,manual-trace
+0001AB39,sub_1AB39,DeskHomeGoalie2,PC-new,,,,medium,"home second goalie: sub_672F9(0, 1)",frontend_desk,manual-trace
+0001AB62,sub_1AB62,DeskHomeGoalieNone,PC-new,,,,medium,"home goalie ""NONE"" (empty net): sub_672F9(0, -1)",frontend_desk,manual-trace
+0001AB95,sub_1AB95,DeskAwayGoalie1,PC-new,,,,medium,"visiting first goalie: sub_672F9(1, 0)",frontend_desk,manual-trace
+0001ABC8,sub_1ABC8,DeskAwayGoalie2,PC-new,,,,medium,"visiting second goalie: sub_672F9(1, 1)",frontend_desk,manual-trace
+0001ABF1,sub_1ABF1,DeskAwayGoalieNone,PC-new,,,,medium,"visiting goalie ""NONE"": sub_672F9(1, -1)",frontend_desk,manual-trace
 0001AC25,sub_1AC25,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),cmv_player,unmatched
 0001AC9A,sub_1AC9A,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),cmv_player,unmatched
 0001ACF1,sub_1ACF1,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),cmv_player,unmatched

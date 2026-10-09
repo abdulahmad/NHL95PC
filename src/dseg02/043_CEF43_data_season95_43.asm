@@ -2,33 +2,33 @@
 bits 32
 %include "hockey.inc"
 section s_CEF43 progbits alloc noexec write align=1
-extern code_1A8AA, code_1A922, code_1A96D, code_1A9AC, sub_1AA6D, sub_1AAC4, unk_C67B1, unk_CDD96
+extern DeskHomeLines, DeskVisitorLines, DeskGameStats, DeskPenaltySummary, DeskScoringSummary, DeskTeamScratches, unk_C67B1, unk_CDD96
 extern unk_CDDA8, unk_CDDBC, unk_CDDD0, unk_CDDE4, unk_CDF44
 global off_CEF43, off_CEF63, unk_CEF6F, unk_CEFEF
 off_CEF43:
-dd code_1A8AA
+dd DeskHomeLines
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 06Eh,00h,00h,00h,024h,00h,00h,00h
 dd unk_CDD96
 off_CEF63:
-dd code_1A922
+dd DeskVisitorLines
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CEF6F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
 dd unk_CDDA8
-dd code_1A96D
+dd DeskGameStats
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 08Ch,00h,00h,00h,023h,00h,00h,00h
 dd unk_CDDBC
-dd code_1A9AC
+dd DeskPenaltySummary
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 08Ch,00h,00h,00h,035h,00h,00h,00h
 dd unk_CDDD0
-dd sub_1AA6D
+dd DeskScoringSummary
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 08Ch,00h,00h,00h,048h,00h,00h,00h
 dd unk_CDDE4
-dd sub_1AAC4
+dd DeskTeamScratches
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CEFEF:
 db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_CF00B progbits alloc noexec write align=1
-extern DeskSetExit1, DeskSetExit2, DeskSetExit3, DeskSetExit3b, ShowPlayerStatsItem, sub_18D7F, sub_2051A, sub_79188
+extern DeskSetExit1, DeskSetExit2, DeskSetExit3, DeskSetExit3b, ShowPlayerStatsItem, OutputCurrentData, sub_2051A, sub_79188
 extern sub_7928A, sub_7929C, sub_793A4, sub_79AC9, sub_79DD1, sub_79DE1, sub_79F41, unk_7947F
 extern unk_797B4, unk_C67B1, unk_CDCE9, unk_CDCF0, unk_CDCF5, unk_CDD04, unk_CDD10, unk_CDD1B
 extern unk_CDF56, unk_CDF64, unk_CDF76, unk_CDF8A, unk_CE0B5, unk_CE0C1, unk_CE0C8, unk_CE0DA
@@ -233,7 +233,7 @@ db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CF52F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,09Ah,00h,00h,00h,012h,00h,00h,00h
 dd unk_CE389
-dd sub_18D7F
+dd OutputCurrentData
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CF54F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,045h,00h,00h,00h,012h,00h,00h,00h

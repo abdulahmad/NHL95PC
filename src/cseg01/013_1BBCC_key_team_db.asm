@@ -7,8 +7,8 @@ extern byte_C5424, byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awg
 extern byte_C66B4, curleague, byte_DAC14, byte_DAC15, byte_DAC18, byte_DAC20, hmroster, byte_DB3AD
 extern byte_DB3AE, awroster, byte_DC224, byte_DC225, byte_DC228, byte_DC267, byte_DC268, leaguedbfmt2
 extern leaguedbfmt, cont2team, HomeTeam, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
-extern dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_m2, dword_DF6C2, fputchar, lseek_, off_CEE5F
-extern off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF, sprintf_, strcat_, strcpy_
+extern dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_m2, dword_DF6C2, fputchar, lseek_, mi_HomeGoalie1
+extern mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone, sprintf_, strcat_, strcpy_
 extern strncpy_, FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, LoadCupFinalSeries, sub_1CC3D
 extern FatalError, unk_C0A1E, unk_C0A20, unk_C0A22, unk_C0A24, unk_C0A26, unk_C0A28, unk_C0A2A
 extern unk_C0A2C, unk_C0A2F, unk_C0A32, unk_C0A35, unk_C0A37, unk_C0A39, unk_C0A3B, unk_C0A3D
@@ -1057,7 +1057,7 @@ add ebx, edx	; 1C875
 shl ebx, 3	; 1C877
 sub ebx, edx	; 1C87A
 add ebx, hmroster	; 1C87C
-mov edx, dword [off_CEE5F]	; 1C882
+mov edx, dword [mi_HomeGoalie1]	; 1C882
 mov eax, esp	; 1C888
 call strcpy_	; 1C88A
 mov ah, byte [byte ebx+05h]	; 1C88F
@@ -1189,7 +1189,7 @@ add ebx, edx	; 1C9FF
 shl ebx, 3	; 1CA01
 sub ebx, edx	; 1CA04
 add ebx, awroster	; 1CA06
-mov edx, dword [off_CEEBF]	; 1CA0C
+mov edx, dword [mi_AwayGoalie1]	; 1CA0C
 mov eax, esp	; 1CA12
 call strcpy_	; 1CA14
 cmp byte [byte ebx+05h], 0Ah	; 1CA19
@@ -1322,21 +1322,21 @@ sub_1CB7F:
 push dword 8	; 1CB7F
 call __CHK	; 1CB84
 push edx	; 1CB89
-mov eax, dword [off_CEE5F]	; 1CB8A
+mov eax, dword [mi_HomeGoalie1]	; 1CB8A
 mov edx, unk_CDCD0	; 1CB8F
 call strcpy_	; 1CB94
-mov eax, dword [off_CEE7F]	; 1CB99
+mov eax, dword [mi_HomeGoalie2]	; 1CB99
 mov edx, unk_CDCD0	; 1CB9E
 call strcpy_	; 1CBA3
-mov eax, dword [off_CEE9F]	; 1CBA8
+mov eax, dword [mi_HomeGoalieNone]	; 1CBA8
 mov byte [eax], 2	; 1CBAD
-mov eax, dword [off_CEEBF]	; 1CBB0
+mov eax, dword [mi_AwayGoalie1]	; 1CBB0
 mov edx, unk_CDCD0	; 1CBB5
 call strcpy_	; 1CBBA
-mov eax, dword [off_CEEDF]	; 1CBBF
+mov eax, dword [mi_AwayGoalie2]	; 1CBBF
 mov edx, unk_CDCD0	; 1CBC4
 call strcpy_	; 1CBC9
-mov eax, dword [off_CEEFF]	; 1CBCE
+mov eax, dword [mi_AwayGoalieNone]	; 1CBCE
 mov byte [eax], 2	; 1CBD3
 pop edx	; 1CBD6
 ret	; 1CBD7

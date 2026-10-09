@@ -13,8 +13,8 @@ global str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_Scrbrd2, str_Srb
 global str_Pal4, str_Scrn2, str_Msk1, str_MASK, str_Iff2, str_Title30, str_Mttitle, str_Adtitle
 global str_Cmv, str_Title, str_Pioneer1, str_Pl2, str_Pl1, str_Bkgd3, str_Pioneer2, str_Pioneer4
 global str_Pioneer3, str_FlaD, str_Pion, str_Pio, str_Eaopen, str_Easports, str_Backwin, str_Credits
-global str_Rockditi, str_Shp0, str_OUT, str_NeedKbytesFmt2, str_SfPal1, str_SfPal2, asc_C0952, asc_C0970
-global asc_C097A, asc_C097F, asc_C0984, asc_C098C, asc_C0991, asc_C0997, unk_C020C, str_S1
+global str_Rockditi, str_Shp0, str_OUT, str_NeedKbytesFmt2, str_SfPal1, str_SfPal2, str_PleaseEnterOutputFile, str_Eadesk1d
+global str_Desk, str_Pal5, str_Pointer2, str_Iff3, str_Pause, str_Menubuff3, unk_C020C, str_S1
 global str_errd3, str_errd4, str_backslash, unk_C0211, unk_C0216, unk_C021B, unk_C0220, unk_C0225
 global unk_C022A, unk_C022F, unk_C0234, unk_C0239, unk_C023E, unk_C0243, unk_C0248, unk_C0251
 global unk_C0258, unk_C025E, unk_C0265, unk_C026E, unk_C0275, unk_C0280, unk_C028C, unk_C029A
@@ -602,20 +602,20 @@ str_SfPal1:
 db 053h,066h,050h,061h,06Ch,031h,00h
 str_SfPal2:
 db 053h,066h,050h,061h,06Ch,032h,00h
-asc_C0952:
+str_PleaseEnterOutputFile:
 db 050h,06Ch,065h,061h,073h,065h,020h,065h,06Eh,074h,065h,072h,020h,06Fh,075h,074h
 db 070h,075h,074h,020h,066h,069h,06Ch,065h,020h,06Eh,061h,06Dh,065h,00h
-asc_C0970:
+str_Eadesk1d:
 db 065h,061h,064h,065h,073h,06Bh,025h,031h,064h,00h
-asc_C097A:
+str_Desk:
 db 064h,065h,073h,06Bh,00h
-asc_C097F:
+str_Pal5:
 db 021h,070h,061h,06Ch,00h
-asc_C0984:
+str_Pointer2:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C098C:
+str_Iff3:
 db 02Eh,069h,066h,066h,00h
-asc_C0991:
+str_Pause:
 db 070h,061h,075h,073h,065h,00h
-asc_C0997:
+str_Menubuff3:
 db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h

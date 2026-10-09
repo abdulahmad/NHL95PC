@@ -26,8 +26,8 @@ extern unk_C10E9, unk_C10F9, unk_C1112, unk_C112C, unk_C1140, unk_C1158, unk_C11
 extern unk_C11AC, unk_C11C5, unk_C11C9, unk_C11CD, unk_C11D1, unk_C11D2, unk_C11D5, unk_C11D9
 extern unk_C11DE, unk_C11E2, unk_C11E8, unk_C11EE, unk_C11F3, unk_C11F7, unk_C11FD, unk_C1200
 extern unk_C1203, unk_C1206, unk_C120B, unk_C126C, unk_C1276, unk_C5654
-global CreditsList, msg_NeedKbytes, msg_NeedKbytes2, asc_C65F8, asc_C6614, asc_C662E, asc_C664C, asc_C6678
-global asc_C668F, asc_C671E, asc_C6731, asc_C6747, asc_C6748, asc_C675B, asc_C675C, asc_C6779
+global CreditsList, msg_NeedKbytes, msg_NeedKbytes2, str_ReturningToSportsCentral, str_ReturningOutOfThe, str_ReturningToThePlayoff, str_ExitingTheGame, str_DoYouWishToReturn
+global str_DoYouWishToExit, asc_C671E, asc_C6731, asc_C6747, asc_C6748, asc_C675B, asc_C675C, asc_C6779
 global asc_C677A, asc_C6891, asc_C689A, asc_C68AD, asc_C68FC, str_fmt2d, str_fmt3d, asc_C690B
 global asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B, asc_C6935, str_Bkgd2, asc_C6940
 global asc_C70A0, asc_C70B8, asc_C70C7, asc_C70EC, asc_C70F8, asc_C7298, byte_C66B4, mi_9394Season
@@ -39,7 +39,7 @@ global dword_C5714, dword_C5718, dword_C583C, dword_C5840, dword_C5844, dword_C5
 global dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862, dword_C5886, dword_C588A
 global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, dword_C65A8, dword_C65AC
 global statscategory, dword_C65B4, statsredrawcb, deskexit, teamstatscb, skaterstatscb, goaliestatscb, dword_C65CC
-global dword_C65D0, dword_C65F4, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dword_C66C8, dword_C66D0
+global dword_C65D0, hlplayedmask, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dword_C66C8, dword_C66D0
 global dword_C66D4, dword_C6718, dword_C679D, dword_C67B9, dword_C67BD, statsplayoffs, statsfromleague, dword_C6A60
 global dword_C6AF8, dword_C6B30, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32, dword_C6E3A, dword_C6E4A
 global dword_C6F78, dword_C6F88, dword_C6F8C, dword_C6F90, dword_C6F94, dword_C7008, dword_C700C, dword_C7010
@@ -824,27 +824,27 @@ db 00h,00h,00h,00h
 statsleague:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_C65F4:
+hlplayedmask:
 db 00h,00h,00h,00h
-asc_C65F8:
+str_ReturningToSportsCentral:
 db 052h,065h,074h,075h,072h,06Eh,069h,06Eh,067h,020h,074h,06Fh,020h,073h,070h,06Fh
 db 072h,074h,073h,020h,063h,065h,06Eh,074h,072h,061h,06Ch,00h
-asc_C6614:
+str_ReturningOutOfThe:
 db 052h,065h,074h,075h,072h,06Eh,069h,06Eh,067h,020h,06Fh,075h,074h,020h,06Fh,066h
 db 020h,074h,068h,065h,020h,067h,061h,06Dh,065h,00h
-asc_C662E:
+str_ReturningToThePlayoff:
 db 052h,065h,074h,075h,072h,06Eh,069h,06Eh,067h,020h,074h,06Fh,020h,074h,068h,065h
 db 020h,070h,06Ch,061h,079h,06Fh,066h,066h,020h,074h,072h,065h,065h,00h
-asc_C664C:
+str_ExitingTheGame:
 db 045h,078h,069h,074h,069h,06Eh,067h,020h,074h,068h,065h,020h,067h,061h,06Dh,065h
 db 00h
 unk_C665D:
 db 06Dh,061h,079h,020h,06Ch,06Fh,073h,065h,020h,074h,068h,069h,073h,020h,067h,061h
 db 06Dh,065h,027h,073h,020h,064h,061h,074h,061h,02Eh,00h
-asc_C6678:
+str_DoYouWishToReturn:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,069h,073h,068h,020h,074h,06Fh,020h,072h
 db 065h,074h,075h,072h,06Eh,03Fh,00h
-asc_C668F:
+str_DoYouWishToExit:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,069h,073h,068h,020h,074h,06Fh,020h,065h
 db 078h,069h,074h,03Fh,00h
 dword_C66A4:
