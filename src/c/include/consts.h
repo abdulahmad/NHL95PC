@@ -39,7 +39,8 @@
 #define ENERGYMAX       0x1000  /* tmpde: full energy */
 
 /* game mode bits */
-#define gmclock         0x01    /* gmode bit 0: game clock running (93G gmclock) */
+#define gmclock         0x01    /* gmode bit 0: game clock stopped (93G gmclock 'game clock is stopped'; ResetClock sets it,
+                                   the faceoff drop clears it) */
 #define gmdir           0x02    /* gmode bit 1: 0 = home team goes up (93G gmdir) */
 #define gmpendel        0x08    /* gmode bit 3: delayed penalty has been called (93G gmpendel) */
 

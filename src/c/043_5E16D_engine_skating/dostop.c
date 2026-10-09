@@ -1,7 +1,7 @@
 /* dostop (5F745) - 93G logic93_5 dostop: player p stops. While |Xvel| or |Yvel| is above 1000h the stop
    animation starts: SPAstop (and pflags2 pf2aip) when skating forwards, SPAglide when skating backwards (pfrev).
    The referee (sort object 16) has his own stop / glide animations, in a signalling variant while refsignal
-   counts down or, when the clock is stopped, if gmode2 bit 7 or gmode bit 3 is set. Then StopNA slows him by
+   counts down or, while the clock runs, if gmode2 bit 7 or gmode bit 3 is set. Then StopNA slows him by
    one step on each axis. */
 #include "nhl95.h"
 

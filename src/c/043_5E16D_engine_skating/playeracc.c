@@ -5,9 +5,9 @@
    The dirtab x/y step times (legstr+30h)/64 (PC); no push into a wall (Wallsin / Wallcos); accel factor
    32 - weight/8 + legstr (goalie: + legstr + 14h, 93G legstr + 8) into regd2; new velocity (regd0, regd1) =
    step * factor / 32 + old. Max speed check: speed squared (regd3) against MaxSpeed[legspd * energy >> 12]
-   (referee: fixed index 0Fh, or 0Ch when the clock runs and he is 74h+ from centre; pflags2 bit 6 cuts it to
+   (referee: fixed index 0Fh, or 0Ch when the clock is stopped and he is 74h+ from centre; pflags2 bit 6 cuts it to
    1/8); the velocity is kept only under it. Then the energy drain when fatigue (line changes) is on and the
-   clock is stopped (93G .sube, getpde / setpde inline): 1 in 128 calls the energy drops by 28h (93G $21);
+   clock runs (93G .sube, getpde / setpde inline): 1 in 128 calls the energy drops by 28h (93G $21);
    at C00h+ the endurance is added back, at most 1000h. */
 void playeracc(Player *p, short dir)
 {
