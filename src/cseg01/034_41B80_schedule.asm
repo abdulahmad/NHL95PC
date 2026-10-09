@@ -1309,6 +1309,10 @@ mov ebx, dword [dword esp+09Ch]	; 42BA6
 mov eax, ebx	; 42BAD
 add esp, 0A4h	; 42BAF
 jmp near UpdateSeasonSchedule_pop3	; 42BB5
+; C: src/c/034_41B80_schedule/GetPlayoffSeeds.c
+%ifdef CBUILD
+%include "c/034_41B80_schedule/GetPlayoffSeeds.inc"
+%else
 GetPlayoffSeeds:
 push dword 3E4h	; 42BBA
 call __CHK	; 42BBF
@@ -1463,6 +1467,7 @@ pop edi	; 42DA6
 pop esi	; 42DA7
 pop ecx	; 42DA8
 ret	; 42DA9
+%endif ; C
 SortStandings:
 push dword 38h	; 42DAA
 call __CHK	; 42DAF

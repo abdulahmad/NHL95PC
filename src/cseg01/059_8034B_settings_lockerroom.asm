@@ -241,6 +241,10 @@ pop ebp	; 805BE
 pop edi	; 805BF
 pop esi	; 805C0
 ret 4	; 805C1
+; C: src/c/059_8034B_settings_lockerroom/SetModeMenuLabels.c
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/SetModeMenuLabels.inc"
+%else
 SetModeMenuLabels:
 push dword 10h	; 805C4
 call __CHK	; 805C9
@@ -301,6 +305,7 @@ pop edi	; 8067E
 pop edx	; 8067F
 pop ecx	; 80680
 ret	; 80681
+%endif ; C
 DrawPanel3D:
 push dword 38h	; 80682
 call __CHK	; 80687

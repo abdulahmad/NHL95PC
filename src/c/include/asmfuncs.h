@@ -35,7 +35,6 @@ extern void FileReadAt_x2(); /* 145E6 */
 extern void ReadKeyRec(); /* 1463D */
 extern void ReadKeyRec_x(); /* 1464D */
 extern void ReadSeasonRec(); /* 1478B */
-extern void ReadTeamRec(); /* 147C9 */
 extern void ReadTeamRec_x(); /* 147F6 */
 extern void ReadGSummaryRec(); /* 147FF */
 extern void CheckGameDiskSpace(); /* 148A5 */
@@ -237,7 +236,6 @@ extern void GameTeamStatsScreen_common(); /* 2012B */
 extern void GameSkaterStatsScreen(); /* 20171 */
 extern void GameSkaterStatsScreen_x(); /* 202DF */
 extern void GameGoalieStatsScreen(); /* 202E5 */
-extern void GameStandingsScreen(); /* 203FA */
 extern void GameStandingsMenu_jt(); /* 2050A */
 extern void GameStandingsMenu(); /* 2051A */
 extern void GameStandingsMenu_standings(); /* 206EA */
@@ -273,7 +271,6 @@ extern void CalStandingsMenu_standings(); /* 219D6 */
 extern void CalStandingsMenu_roster(); /* 21A3D */
 extern void CalStandingsMenu_player(); /* 21A90 */
 extern void CalStandingsMenu_player2(); /* 21AE7 */
-extern void DrawPhotoWithPal(); /* 21C04 */
 extern void SkaterStatsCard(); /* 21CDE */
 extern void GoalieStatsCard(); /* 22581 */
 extern void CmpTeamScoring(); /* 22F2E */
@@ -464,8 +461,6 @@ extern void SeriesLength_bo7(); /* 4228E */
 extern void RandomizeSchedule(); /* 42295 */
 extern void SimScheduleDay(); /* 42631 */
 extern void BuildPlayoffs(); /* 428AB */
-extern void GetPlayoffSeeds(); /* 42BBA */
-extern void SortStandings(); /* 42DAA */
 extern void SeedPlayoffRound1(); /* 42FED */
 extern void SimPlayoffRound1_ok(); /* 4374C */
 extern void SimPlayoffRound1_pop3(); /* 43751 */
@@ -833,8 +828,6 @@ extern void CalLeftJoystick_common(); /* 6B371 */
 extern void CalRightJoystick(); /* 6B37A */
 extern void DrawMenuDropdown(); /* 6B684 */
 extern void DrawMenuDropdown_ret(); /* 6B7F6 */
-extern void DrawMenuBox(); /* 6B7FC */
-extern void PrintMenuText(); /* 6B88E */
 extern void PrintMenuTextGrey(); /* 6B8CB */
 extern void PrintMenuTextGrey_common(); /* 6B907 */
 extern void PrintMenuTextGrey_ret(); /* 6B90A */
@@ -847,7 +840,6 @@ extern void MenuHitTest(); /* 6BA4D */
 extern void PollMouseEvent(); /* 6BC30 */
 extern void PollJoystickEvent(); /* 6BCDA */
 extern void PollKeyboardEvent(); /* 6BD69 */
-extern void MenuCentralRegistry(); /* 6BE95 */
 extern void unk13_6BF3D(); /* 6BF3D */
 extern void BuildFreeAgentList(); /* 6BF4A */
 extern void BuildFreeAgentList_ret(); /* 6C03C */
@@ -956,7 +948,6 @@ extern void StubRet4a(); /* 78A81 */
 extern void DrawDlgFrame(); /* 78BE7 */
 extern void StubRet4b(); /* 78E29 */
 extern void CheckGameRosterComplete(); /* 78E36 */
-extern void PruneGameLines(); /* 79090 */
 extern void MenuUseTheseLines(); /* 79188 */
 extern void MenuLineEdCancel(); /* 7928A */
 extern void MenuUseOriginalLines(); /* 7929C */
@@ -994,12 +985,10 @@ extern void LeagueSetViewLoop(); /* 7AC31 */
 extern void LeagueSetEditLoop(); /* 7ADD3 */
 extern void MenuModeSettings(); /* 7B3A7 */
 extern void ModeSettings_epilogue(); /* 7B4E5 */
-extern void DrawModeSetDlg(); /* 7B4EC */
 extern void ModeSetViewLoop(); /* 7B846 */
 extern void ModeSetEditLoop(); /* 7B9E8 */
 extern void MenuExhibitionSettings(); /* 7BEBB */
 extern void ExhSettings_ret(); /* 7BF4F */
-extern void DrawExhSetDlg(); /* 7C1AC */
 extern void ExhSetEditLoop(); /* 7C317 */
 extern void DrawCtlBox_common(); /* 7C8DF */
 extern void MenuP1ControlsExh(); /* 7C993 */
@@ -1044,10 +1033,8 @@ extern void SaveHilight(); /* 7FA10 */
 extern void CmpInt(); /* 7FC31 */
 extern void LoadSettingsShapes(); /* 8034B */
 extern void DrawSettingsHeading_jt(); /* 804FF */
-extern void DrawSettingsHeading(); /* 8050F */
 extern void DrawSettingsHeading_n0(); /* 8056C */
 extern void DrawSettingsHeading_n1(); /* 80571 */
-extern void SetModeMenuLabels(); /* 805C4 */
 extern void DrawPanel3D(); /* 80682 */
 extern void DrawPanel3D_ret(); /* 8082A */
 extern void LockerRoomScreen(); /* 80830 */
@@ -1063,7 +1050,6 @@ extern void LockerRoomLoop_n1(); /* 820E7 */
 extern void LockerRoomLoop_n6(); /* 82188 */
 extern void LockerRoomLoop_n7(); /* 8231C */
 extern void DrawSelBox_common(); /* 824D6 */
-extern void MenuSoundSettings(); /* 82579 */
 extern void SoundCardDlgLoop(); /* 8291E */
 extern void SoundCardDlgLoop_poll(); /* 82A5B */
 extern void SoundCardDlgLoop_next(); /* 82D45 */
@@ -1928,7 +1914,6 @@ extern void loc_91F79(); /* 91F79 */
 extern void loc_91F9A(); /* 91F9A */
 extern void sub_91FA4(); /* 91FA4 */
 extern void loc_91FD5(); /* 91FD5 */
-extern void sub_91FE0(); /* 91FE0 */
 extern void loc_92001(); /* 92001 */
 extern void sub_92024(); /* 92024 */
 extern void loc_92098(); /* 92098 */

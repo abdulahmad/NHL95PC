@@ -780,5 +780,20 @@ int FileDlgHitTest(int x, int y, int *item);  /* 2C3FF */
 void a2touchpuck(Player *p);  /* 4DE14 */
 void __cdecl sub_92CD0(char *s, int x, int y);  /* graphics library: print text */
 void DrawDbDialogButtons(void);  /* 72605 */
+int GameStandingsScreen(void);  /* 203FA */
+void PruneGameLines(unsigned char side, unsigned char *lines);  /* 79090 */
+void DrawSettingsHeading(int x, int y, int n, int mode, int col);  /* 8050F */
+void DrawExhSetDlg(void);  /* 7C1AC */
+void DrawModeSetDlg(void);  /* 7B4EC */
+void DrawPhotoWithPal(unsigned char *src, int art, int x, int y);  /* 21C04 */
+void __cdecl sub_91FE0(int art, int x, int y);  /* graphics library: draw art */
+int MenuSoundSettings(void);  /* 82579 */
+int MenuCentralRegistry(void);  /* 6BE95 */
+void SetModeMenuLabels(unsigned mode);  /* 805C4 */
+void DrawMenuBox(int x1, int y1, int x2, int y2, int c1, int c2, int c3);  /* 6B7FC */
+void PrintMenuText(int x, int y, char *s);  /* 6B88E */
+int ReadTeamRec(int fd, void *buf, int team);  /* 147C9 */
+void SortStandings(int *teams, int *pts, int *wins, int *gf, int *ga, int n);  /* 42DAA */
+int GetPlayoffSeeds(int *seeds, int b, int fd);  /* 42BBA */
 
 #endif

@@ -1720,6 +1720,10 @@ pop edx	; 7B4E8
 pop ecx	; 7B4E9
 pop ebx	; 7B4EA
 ret	; 7B4EB
+; C: src/c/056_7A13A_settings_dialogs/DrawModeSetDlg.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/DrawModeSetDlg.inc"
+%else
 DrawModeSetDlg:
 push dword 40h	; 7B4EC
 call __CHK	; 7B4F1
@@ -1807,6 +1811,7 @@ pop edx	; 7B600
 pop ecx	; 7B601
 pop ebx	; 7B602
 ret	; 7B603
+%endif ; C
 ; C: src/c/056_7A13A_settings_dialogs/ModeOptsToBits.c
 %ifdef CBUILD
 %include "c/056_7A13A_settings_dialogs/ModeOptsToBits.inc"
@@ -2833,6 +2838,10 @@ add esp, byte 0Ch	; 7C1A1
 .9:
 add esp, byte 4	; 7C1A4
 jmp near ExhSettings_ret	; 7C1A7
+; C: src/c/056_7A13A_settings_dialogs/DrawExhSetDlg.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/DrawExhSetDlg.inc"
+%else
 DrawExhSetDlg:
 push dword 40h	; 7C1AC
 call __CHK	; 7C1B1
@@ -2904,6 +2913,7 @@ pop edx	; 7C289
 pop ecx	; 7C28A
 pop ebx	; 7C28B
 ret	; 7C28C
+%endif ; C
 ; C: src/c/056_7A13A_settings_dialogs/ExhSetHitTest.c
 %ifdef CBUILD
 %include "c/056_7A13A_settings_dialogs/ExhSetHitTest.inc"

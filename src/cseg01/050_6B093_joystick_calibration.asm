@@ -469,6 +469,10 @@ pop esi	; 6B5E1
 pop ecx	; 6B5E2
 ret	; 6B5E3
 %endif ; C
+; C: src/c/050_6B093_joystick_calibration/DrawMenuBar.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/DrawMenuBar.inc"
+%else
 DrawMenuBar:
 push dword 28h	; 6B5E4
 call __CHK	; 6B5E9
@@ -531,6 +535,7 @@ pop ebp	; 6B67E
 pop edi	; 6B67F
 pop esi	; 6B680
 ret 4	; 6B681
+%endif ; C
 DrawMenuDropdown:
 push dword 28h	; 6B684
 call __CHK	; 6B689
@@ -1311,6 +1316,10 @@ pop edx	; 6BE91
 pop ecx	; 6BE92
 pop ebx	; 6BE93
 ret	; 6BE94
+; C: src/c/050_6B093_joystick_calibration/MenuCentralRegistry.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/MenuCentralRegistry.inc"
+%else
 MenuCentralRegistry:
 push dword 1Ch	; 6BE95
 call __CHK	; 6BE9A
@@ -1364,6 +1373,7 @@ pop edx	; 6BF39
 pop ecx	; 6BF3A
 pop ebx	; 6BF3B
 ret	; 6BF3C
+%endif ; C
 unk13_6BF3D:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 BuildFreeAgentList:
