@@ -11,7 +11,7 @@ extern dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5
 extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
 extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, hmscore, awscore, hmtmstruct
 extern jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C8, off_C57CC, awtmstruct
-extern off_D3078, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, sub_13BB4, sub_13FA7
+extern off_D3078, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, ReloadGameGfx, SetupGameQuick
 extern MakePath, sub_14A20, sub_14F31, sub_1BEFD, LoadModeState, sub_3371C, sub_3377C, SeriesLength
 extern sub_479E9, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
 extern sub_7DC8B, LoadScheduleDB, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
@@ -1253,11 +1253,11 @@ sar eax, 10h	; 15F2F
 loc_15F32:
 call sub_3377C	; 15F32
 call sub_7DC8B	; 15F37
-call sub_13BB4	; 15F3C
+call ReloadGameGfx	; 15F3C
 call FadeOutPalCycle	; 15F41
 mov ebp, 1	; 15F46
 mov dword [dword_CC0EC], ebp	; 15F4B
-call sub_13FA7	; 15F51
+call SetupGameQuick	; 15F51
 xor eax, eax	; 15F56
 mov dword [dword_CC0EC], eax	; 15F58
 mov dword [dword_CC0F0], eax	; 15F5D

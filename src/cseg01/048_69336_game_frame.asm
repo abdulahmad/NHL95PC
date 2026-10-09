@@ -10,7 +10,7 @@ extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC28C, dword_DD
 extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
 extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSize, ResetInputSampling, RunGameFrames
-extern FadePalette, sub_1395F, sub_14CF1, sub_150C6, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
+extern FadePalette, LoadPlayerPhotos, sub_14CF1, sub_150C6, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
 extern sub_479E9, FadeOutPalCycle, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
 extern sub_59CA9, sub_59D54, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
 extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_836E4
@@ -131,7 +131,7 @@ mov eax, dword [cont2team]	; 694BF
 sar eax, 10h	; 694C4
 mov ebx, unk_DF314	; 694C7
 call sub_673C5	; 694CC
-call sub_1395F	; 694D1
+call LoadPlayerPhotos	; 694D1
 xor ecx, ecx	; 694D6
 mov word [awtmgoalie], cx	; 694D8
 mov word [hmtmgoalie], cx	; 694DF

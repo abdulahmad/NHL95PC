@@ -23,7 +23,7 @@ extern dword_DD770, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, off_C5439,
 extern off_C6D22, leaguedbnames, off_CEF43, off_CEF63
 extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, msg_POHumanOut, msg_POTeamOut, msg_POGenFinal
 extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers, PlayGame
-extern sub_142E7, MakePath, sub_14442, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
+extern FileExists, MakePath, sub_14442, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
 extern sub_1466B, sub_14825, sub_148A5, sub_149BF, sub_174C2, sub_17573, sub_175E2, sub_17636
 extern sub_17711, sub_1777E, sub_1BEFD, sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171
 extern sub_202E5, sub_203FA, sub_2051A, sub_20D97, sub_27C34, sub_29F28, sub_2FDD1, sub_2FEDF
@@ -354,7 +354,7 @@ mov edx, curleague	; 86B48
 lea eax, [byte esp+06Ch]	; 86B4D
 call MakePath	; 86B51
 lea eax, [byte esp+06Ch]	; 86B56
-call sub_142E7	; 86B5A
+call FileExists	; 86B5A
 test eax, eax	; 86B5F
 je short .17	; 86B61
 xor edx, edx	; 86B63

@@ -10,7 +10,7 @@ extern dword_C9002, seasondb, careerdb, keydb, seasondb_size, careerdb_size, key
 extern leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, jctime
 extern memset_, mkdir_, msg_LeagueExists, leaguedbnames
 extern msg_GenSchedule, msg_NoDiskSpace, rand_, sprintf_, strcat_, strcpy_, DiskFreeBytes
-extern sub_13320, sub_142E7, MakePath, sub_14442, FileOpenRead, FileOpenRW, FileClose, FileReadAt
+extern AwardsCeremony, FileExists, MakePath, sub_14442, FileOpenRead, FileOpenRW, FileClose, FileReadAt
 extern FileWriteAt, sub_1466B, ReadSchedGame, ReadTeamRec, sub_14825, sub_149BF, sub_2FDD1, sub_2FEDF
 extern sub_30A0C, sub_30F12, MessageBox, WriteModeState, sub_38B4F, WriteSchedGame, WriteTeamRec, sub_3DAB9
 extern WriteLeagueInfo, CopyHumanTeamDBs, SimulateGame, SeriesWinner, sub_8CCA8, sub_8E8A0, sub_92DE0, sub_932D0
@@ -1280,7 +1280,7 @@ lea eax, [byte esp+07Ch]	; 42B5C
 push eax	; 42B60
 call sub_932D0	; 42B61
 add esp, byte 0Ch	; 42B66
-call sub_13320	; 42B69
+call AwardsCeremony	; 42B69
 mov byte [byte_DE268], 0FFh	; 42B6E
 mov dword [dword esp+0A0h], 4ADh	; 42B75
 mov ecx, 2	; 42B80
@@ -3686,7 +3686,7 @@ lea eax, [byte esp+0Ch]	; 449FD
 push eax	; 44A01
 call sub_932D0	; 44A02
 add esp, byte 0Ch	; 44A07
-call sub_13320	; 44A0A
+call AwardsCeremony	; 44A0A
 mov byte [byte_DE268], 0FFh	; 44A0F
 mov dword [byte esp+028h], 4ADh	; 44A16
 mov ecx, 2	; 44A1E
@@ -3935,7 +3935,7 @@ lea eax, [byte esp+08h]	; 44D5B
 push eax	; 44D5F
 call sub_932D0	; 44D60
 add esp, byte 0Ch	; 44D65
-call sub_13320	; 44D68
+call AwardsCeremony	; 44D68
 mov byte [byte_DE268], 0FFh	; 44D6D
 .11:
 mov ecx, 2	; 44D74
@@ -4203,7 +4203,7 @@ mov edx, curleague	; 450B0
 lea eax, [byte esp+02Ch]	; 450B5
 call MakePath	; 450B9
 lea eax, [byte esp+02Ch]	; 450BE
-call sub_142E7	; 450C2
+call FileExists	; 450C2
 test eax, eax	; 450C7
 je short .13	; 450C9
 xor eax, eax	; 450CB

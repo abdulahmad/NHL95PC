@@ -11,8 +11,8 @@ extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC
 extern dword_DD6B0, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, dword_E9A9E, j_unlink_
 extern HandleHotKey_ret, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
 extern off_C526F, off_C5273, off_C5439, leaguedbnames, replaystart, camx_m2
-extern off_CBED0, strcat_, strcpy_, SetScreenSize, ResetInputSampling, RunGameFrames, FadePalette, sub_13A91
-extern sub_13E8F, MakePath, FileOpenRead, FileClose, sub_1463D, sub_1478B, ReadTeamRec, sub_14CF1
+extern off_CBED0, strcat_, strcpy_, SetScreenSize, ResetInputSampling, RunGameFrames, FadePalette, LoadGameGfx
+extern SetupGame, MakePath, FileOpenRead, FileClose, sub_1463D, sub_1478B, ReadTeamRec, sub_14CF1
 extern sub_150C6, sub_15B76, sub_1920F, sub_1935D, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
 extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71, DrawRinkOverlays, PeriodOver, LoadGameState
@@ -460,7 +460,7 @@ mov edx, eax	; 11D1C
 cmp dword [eax], byte 0	; 11D1E
 jge near .4	; 11D21
 call sub_7DC8B	; 11D27
-call sub_13A91	; 11D2C
+call LoadGameGfx	; 11D2C
 mov edx, dword [HomeTeam]	; 11D31
 sar edx, 10h	; 11D37
 mov eax, dword [cont2team]	; 11D3A
@@ -483,7 +483,7 @@ call sub_3377C	; 11D79
 xor esi, esi	; 11D7E
 mov dword [dword_C7448], esi	; 11D80
 mov dword [dword_C7444], esi	; 11D86
-call sub_13E8F	; 11D8C
+call SetupGame	; 11D8C
 test eax, eax	; 11D91
 jge short .3	; 11D93
 mov dword [gameresult], 2	; 11D95

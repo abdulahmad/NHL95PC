@@ -6,7 +6,7 @@ extern __CHK, asc_C0910, asc_C0915, asc_C6570, byte_C671C, byte_C672F, postate, 
 extern byte_C6745, byte_C6759, byte_C6777, dword_C6410, dword_C65B0, dword_C65B4, dword_C65B8, dword_C65BC
 extern dword_C6956, dword_C695A, dword_C6A60, dword_DC6B4, dword_DC738, dword_DD120, fclose_, fopen_
 extern fputs_, off_C648E, off_C659A, sprintf_, strcat_, strcmp_, strcpy_, strncpy_
-extern sub_142E7, sub_14825, MessageBox, sub_76429, sub_8FFB0, unk_C093C, unk_C093F, exhstate
+extern FileExists, sub_14825, MessageBox, sub_76429, sub_8FFB0, unk_C093C, unk_C093F, exhstate
 extern unk_C6499, unk_C64F5, unk_C652A, unk_C65D4, unk_DC340
 global loc_1787A, loc_1787C, loc_178BB, loc_17910, loc_1792C, loc_17980, loc_1799E, loc_179AA
 global loc_179FA, loc_17A24, loc_17A5C, loc_17AEE, loc_17B18, loc_17B50, loc_17B65, loc_17C0C
@@ -34,7 +34,7 @@ mov edx, asc_C0910	; 17854
 lea eax, [byte esp+068h]	; 17859
 call strcat_	; 1785D
 lea eax, [byte esp+068h]	; 17862
-call sub_142E7	; 17866
+call FileExists	; 17866
 test eax, eax	; 1786B
 jne short loc_1787A	; 1786D
 lea edx, [byte esp+07Ch]	; 1786F

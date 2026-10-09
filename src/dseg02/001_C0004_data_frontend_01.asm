@@ -6,9 +6,9 @@ global TeamList, str_NoDiskSpaceC, str_ErrDiskFree2, str_NoDiskSpaceCur, str_NoM
 global str_Pointer3, str_Pntr, str_Scor2b, str_Scor3b, str_Kaufm020, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_GameSet2
 global str_Temp3, str_ErrDiskFree3, str_GameSav2, str_ANA, str_Cal, str_Flo, str_SS, str_Min
 global str_GAA, str_Shots, str_Pct, str_PIM, str_PlusMinus, str_PPG, str_SHG, str_Pal3
-global str_Palmem, asc_C0412, asc_C041A, asc_C041F, asc_C0424, asc_C0429, asc_C0430, asc_C0437
-global asc_C043E, asc_C0446, asc_C044F, asc_C0458, asc_C0460, asc_C0465, asc_C046E, asc_C0477
-global asc_C0480, asc_C048A, asc_C0494, asc_C049C, asc_C04A1, asc_C04A9, asc_C04B0, asc_C064C
+global str_Palmem, str_Awardsi, str_Scrn, str_Titl, str_Iff, str_Awards, str_Mtafan, str_Adafan
+global str_Awasong, str_Mtawards, str_Adawards, str_Summ, str_04d, str_F000149, str_D50D99, str_D00D49
+global str_D50_D99, str_D00_D49, str_Trinknd, str_0000, str_HILIGHT, str_Numshp, str_GfxIdList, asc_C064C
 global asc_C066B, asc_C068A, asc_C0696, asc_C0784, asc_C078C, asc_C0791, asc_C079C, asc_C085A
 global asc_C0861, asc_C0866, asc_C086B, asc_C0870, asc_C0875, asc_C087A, asc_C0882, asc_C088A
 global asc_C0892, asc_C0897, asc_C089D, asc_C08A6, asc_C08AB, asc_C08B0, asc_C08B5, asc_C08BE
@@ -234,49 +234,49 @@ str_Pal3:
 db 021h,070h,061h,06Ch,00h
 str_Palmem:
 db 070h,061h,06Ch,06Dh,065h,06Dh,00h
-asc_C0412:
+str_Awardsi:
 db 061h,077h,061h,072h,064h,073h,069h,00h
-asc_C041A:
+str_Scrn:
 db 073h,063h,072h,06Eh,00h
-asc_C041F:
+str_Titl:
 db 074h,069h,074h,06Ch,00h
-asc_C0424:
+str_Iff:
 db 02Eh,069h,066h,066h,00h
-asc_C0429:
+str_Awards:
 db 061h,077h,061h,072h,064h,073h,00h
-asc_C0430:
+str_Mtafan:
 db 06Dh,074h,061h,066h,061h,06Eh,00h
-asc_C0437:
+str_Adafan:
 db 061h,064h,061h,066h,061h,06Eh,00h
-asc_C043E:
+str_Awasong:
 db 061h,077h,061h,073h,06Fh,06Eh,067h,00h
-asc_C0446:
+str_Mtawards:
 db 06Dh,074h,061h,077h,061h,072h,064h,073h,00h
-asc_C044F:
+str_Adawards:
 db 061h,064h,061h,077h,061h,072h,064h,073h,00h
-asc_C0458:
+str_Summ:
 db 073h,075h,06Dh,06Dh,00h,00h,00h,00h
-asc_C0460:
+str_04d:
 db 025h,030h,034h,064h,00h
-asc_C0465:
+str_F000149:
 db 066h,030h,030h,030h,05Fh,031h,034h,039h,00h
-asc_C046E:
+str_D50D99:
 db 025h,064h,035h,030h,025h,064h,039h,039h,00h
-asc_C0477:
+str_D00D49:
 db 025h,064h,030h,030h,025h,064h,034h,039h,00h
-asc_C0480:
+str_D50_D99:
 db 025h,064h,035h,030h,05Fh,025h,064h,039h,039h,00h
-asc_C048A:
+str_D00_D49:
 db 025h,064h,030h,030h,05Fh,025h,064h,034h,039h,00h
-asc_C0494:
+str_Trinknd:
 db 074h,072h,069h,06Eh,06Bh,06Eh,064h,00h
-asc_C049C:
+str_0000:
 db 030h,030h,030h,030h,00h
-asc_C04A1:
+str_HILIGHT:
 db 048h,049h,04Ch,049h,047h,048h,054h,00h
-asc_C04A9:
+str_Numshp:
 db 06Eh,075h,06Dh,073h,068h,070h,00h
-asc_C04B0:
+str_GfxIdList:
 db 030h,030h,030h,047h,030h,030h,030h,044h,030h,030h,030h,044h,030h,030h,030h,04Ch
 db 030h,030h,030h,043h,030h,030h,030h,052h,030h,030h,030h,058h,00h,00h,00h,00h
 unk_C04D0:

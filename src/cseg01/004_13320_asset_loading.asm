@@ -2,19 +2,19 @@
 bits 32
 %include "hockey.inc"
 section s_13320 progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, str_Pal3, str_Palmem, asc_C0412, asc_C041A, asc_C041F, asc_C0424
-extern asc_C0429, asc_C0430, asc_C0437, asc_C043E, asc_C0446, asc_C044F, asc_C0458, asc_C0460
-extern asc_C0465, asc_C046E, asc_C0477, asc_C0480, asc_C048A, asc_C0494, asc_C049C, asc_C04A1
-extern asc_C04A9, asc_C04B0, str_PPV, str_VFN, assinsert, pad1dev, pad2dev, byte_CBEA8
+extern __CHK, __STOSB, str_Pal3, str_Palmem, str_Awardsi, str_Scrn, str_Titl, str_Iff
+extern str_Awards, str_Mtafan, str_Adafan, str_Awasong, str_Mtawards, str_Adawards, str_Summ, str_04d
+extern str_F000149, str_D50D99, str_D00D49, str_D50_D99, str_D00_D49, str_Trinknd, str_0000, str_HILIGHT
+extern str_Numshp, str_GfxIdList, str_PPV, str_VFN, assinsert, pad1dev, pad2dev, byte_CBEA8
 extern musicon, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8, byte_E0308
 extern byte_E0344, byte_E9AC8, byte_E9AD3, byte_ED7CC, byte_ED7E4, byte_ED7E6, byte_ED85C, byte_ED86C
 extern byte_ED8C6, byte_ED8C8, byte_ED8D7, byte_ED976, byte_ED9AA, byte_ED9EC, byte_ED9F0, joysampling
 extern inputframes, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, songdata, cont2team
-extern HomeTeam, dword_CBECA, dword_CC0AC, dword_CC0E0, dword_CC0EC, dword_CC0F0, dword_CC0F8, penshotplayer
+extern HomeTeam, dword_CBECA, dword_CC0AC, photobankf, dword_CC0EC, dword_CC0F0, dword_CC0F8, penshotplayer
 extern penshotmode, penshotstart, dword_CC124, penshotlive, crowdsmooth, musichandle, dword_D2C6B, musicslot
-extern dword_D8B68, dword_D8C18, dword_D8C4C, dword_D8C68, frameaccum, rinkendart, dword_D8C78, dword_D8C80
-extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E009C, dword_E00A0
-extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, PickAwardWinners_x, memcpy_, nullsub_2
+extern dword_D8B68, numshapes, dword_D8C4C, rinkendbank, frameaccum, rinkendart, dword_D8C78, numshpbank
+extern dword_D8C84, photobanks, photoptrs, dword_DF00C, dword_DF010, dword_E009C, photoptrsf
+extern dword_E9A9E, dword_E9AB6, hilightfont, jctime, PickAwardWinners_x, memcpy_, nullsub_2
 extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, PickAwardWinners, ShowAwardScreens
 extern DrawAwardsSummary, MakePath, FileOpenRead, FileClose, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
 extern StartPreGame, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
@@ -30,20 +30,12 @@ extern word_CBEC0, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, w
 extern crowdlevel, word_DEE94, hmtmap, awtmap, word_E024E, lcrequest, word_E0306, lcreqchoice
 extern word_E0382, regd2, regd0, regd1, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4
 extern word_E9AA6, CwdExciteLvl, word_E9AAA, word_E9AAE, word_E9B2C
-global LoadTransparentRinkEndOverlay, loc_13384, loc_133A7, loc_133D4, loc_13405, loc_13407, loc_134A2, loc_134A4
-global loc_134E7, loc_1350F, loc_13513, loc_1352B, loc_1352D, loc_13546, loc_1358D, loc_1359C
-global loc_135C2, loc_135E7, loc_1360F, loc_13619, loc_13634, loc_13671, loc_13673, loc_136B6
-global loc_136D7, loc_136DB, loc_136F3, loc_136F5, loc_1370E, loc_1373C, loc_1373E, loc_137E9
-global loc_137F8, loc_13815, loc_1383E, loc_13848, loc_13854, loc_1388C, loc_138C8, loc_138CC
-global loc_13906, loc_13923, loc_13957, loc_13972, loc_139AF, loc_139B8, loc_139C5, loc_139CC
-global loc_139F3, loc_139F5, loc_13A1B, loc_13A5A, loc_13A5C, loc_13ACB, loc_13ACD, loc_13B03
-global loc_13B05, loc_13B22, loc_13BE9, loc_13BEB, loc_13C21, loc_13C23, loc_13C40, loc_13CC6
-global loc_13D0B, loc_13D11, loc_13D8E, loc_13DF0, loc_13E02, loc_13E1D, loc_13E2B, loc_13E3D
-global loc_13E51, loc_13E6F, loc_13E8B, loc_13F1C, loc_13F2F, loc_13F6F, loc_13F81, loc_13F86
-global loc_13FA0, loc_14013, loc_14026, loc_1404F, loc_141F4, loc_14295, loc_142A4, loc_1430F
-global sub_13320, sub_13867, sub_138D2, sub_1395F, sub_13A91, sub_13B56, sub_13BB4, sub_13C79
-global sub_13E8F, sub_13FA7, sub_14056, sub_142E7
-sub_13320:
+global LoadTransparentRinkEndOverlay
+global IndexPhotoBank_x
+global LoadPhotoBankF_x
+global AwardsCeremony, IndexPhotoBank, LoadPhotoBankF, LoadPlayerPhotos, LoadGameGfx, LoadGameGfx_common, ReloadGameGfx, PlacePlayersAtStart
+global SetupGame, SetupGameQuick, ResetGameVars, FileExists
+AwardsCeremony:
 push dword 78h	; 13320
 call __CHK	; 13325
 push ebx	; 1332A
@@ -66,36 +58,36 @@ push byte 0	; 13354
 call sub_8FFB0	; 13356
 add esp, byte 0Ch	; 1335B
 cmp byte [musicon], 0	; 1335E
-je short loc_13384	; 13365
+je short .1	; 13365
 cmp dword [songdata], byte 0	; 13367
-je short loc_13384	; 1336E
+je short .1	; 1336E
 mov eax, dword [musichandle]	; 13370
 mov ebx, 32h	; 13375
 mov edx, 3	; 1337A
 call sub_8FCDF	; 1337F
-loc_13384:
+.1:
 mov ebx, 10h	; 13384
 mov edx, esi	; 13389
 mov eax, 1	; 1338B
 call sub_76429	; 13390
 cmp byte [musicon], 0	; 13395
-je short loc_133D4	; 1339C
+je short .3	; 1339C
 cmp dword [songdata], byte 0	; 1339E
-je short loc_133D4	; 133A5
-loc_133A7:
+je short .3	; 133A5
+.2:
 mov eax, dword [musicslot-3]	; 133A7
 sar eax, 18h	; 133AC
 mov edx, 3	; 133AF
 call sub_8FC8A	; 133B4
 test eax, eax	; 133B9
-je short loc_133A7	; 133BB
+je short AwardsCeremony.2	; 133BB
 mov ecx, dword [songdata]	; 133BD
 push ecx	; 133C3
 call sub_8D2F0	; 133C4
 add esp, byte 4	; 133C9
 xor ebp, ebp	; 133CC
 mov dword [songdata], ebp	; 133CE
-loc_133D4:
+.3:
 mov eax, esp	; 133D4
 push eax	; 133D6
 call sub_8E9E8	; 133D7
@@ -105,14 +97,14 @@ push eax	; 133E4
 call sub_8EA18	; 133E5
 add esp, byte 4	; 133EA
 xor ecx, ecx	; 133ED
-mov ebx, asc_C0412	; 133EF
+mov ebx, str_Awardsi	; 133EF
 cmp byte [byte_ED9AA], 1	; 133F4
-jne short loc_13405	; 133FB
+jne short .4	; 133FB
 mov edx, dword [dword_D2C6B]	; 133FD
-jmp short loc_13407	; 13403
-loc_13405:
+jmp short .5	; 13403
+.4:
 xor edx, edx	; 13405
-loc_13407:
+.5:
 lea eax, [byte esp+040h]	; 13407
 call MakePath	; 1340B
 push byte 0	; 13410
@@ -121,14 +113,14 @@ push eax	; 13416
 call sub_8E83C	; 13417
 mov ebp, eax	; 1341C
 add esp, byte 8	; 1341E
-push asc_C041A	; 13421
+push str_Scrn	; 13421
 push eax	; 13426
 call sub_B30B4	; 13427
 add esp, byte 8	; 1342C
 push eax	; 1342F
 call sub_9061C	; 13430
 add esp, byte 4	; 13435
-push asc_C041F	; 13438
+push str_Titl	; 13438
 push ebp	; 1343D
 call sub_B30B4	; 1343E
 add esp, byte 8	; 13443
@@ -147,72 +139,72 @@ push ebp	; 1346C
 call jctime	; 1346D
 add esp, byte 4	; 13472
 cmp byte [musicon], 0	; 13475
-je short loc_134E7	; 1347C
+je short .8	; 1347C
 cmp dword [songdata], byte 0	; 1347E
-jne short loc_134E7	; 13485
-mov ecx, asc_C0424	; 13487
-mov ebx, asc_C0429	; 1348C
+jne short .8	; 13485
+mov ecx, str_Iff	; 13487
+mov ebx, str_Awards	; 1348C
 cmp byte [byte_ED9EC], 1	; 13491
-jne short loc_134A2	; 13498
+jne short .6	; 13498
 mov edx, dword [dword_D2C6B]	; 1349A
-jmp short loc_134A4	; 134A0
-loc_134A2:
+jmp short .7	; 134A0
+.6:
 xor edx, edx	; 134A2
-loc_134A4:
+.7:
 lea eax, [byte esp+040h]	; 134A4
 call MakePath	; 134A8
 lea eax, [byte esp+040h]	; 134AD
 call sub_8F98F	; 134B1
 mov dword [songdata], eax	; 134B6
 test eax, eax	; 134BB
-je near loc_13546	; 134BD
+je near .13	; 134BD
 test byte [gameopts], 40h	; 134C3
-je near loc_13546	; 134CA
+je near .13	; 134CA
 mov edx, dword [musichandle]	; 134D0
 mov ecx, 4Ch	; 134D6
 mov ebx, 3	; 134DB
 call sub_8FB8E	; 134E0
-jmp short loc_13546	; 134E5
-loc_134E7:
+jmp short .13	; 134E5
+.8:
 mov ebx, dword [dword_C541F]	; 134E7
 cmp ebx, byte 1	; 134ED
-je short loc_13546	; 134F0
+je short .13	; 134F0
 cmp ebx, byte 8	; 134F2
-jne short loc_13513	; 134F5
+jne short .10	; 134F5
 xor ecx, ecx	; 134F7
-mov ebx, asc_C0430	; 134F9
+mov ebx, str_Mtafan	; 134F9
 cmp byte [byte_ED8C6], 1	; 134FE
-jne short loc_1350F	; 13505
+jne short .9	; 13505
 mov edx, dword [dword_D2C6B]	; 13507
-jmp short loc_1352D	; 1350D
-loc_1350F:
+jmp short .12	; 1350D
+.9:
 xor edx, edx	; 1350F
-jmp short loc_1352D	; 13511
-loc_13513:
+jmp short .12	; 13511
+.10:
 xor ecx, ecx	; 13513
-mov ebx, asc_C0437	; 13515
+mov ebx, str_Adafan	; 13515
 cmp byte [byte_ED7E4], 1	; 1351A
-jne short loc_1352B	; 13521
+jne short .11	; 13521
 mov edx, dword [dword_D2C6B]	; 13523
-jmp short loc_1352D	; 13529
-loc_1352B:
+jmp short .12	; 13529
+.11:
 xor edx, edx	; 1352B
-loc_1352D:
+.12:
 lea eax, [byte esp+040h]	; 1352D
 call MakePath	; 13531
 lea eax, [byte esp+040h]	; 13536
 call sub_8F13B	; 1353A
 mov edi, eax	; 1353F
 call PlayDigiSample	; 13541
-loc_13546:
+.13:
 mov ebx, 10h	; 13546
 mov edx, esi	; 1354B
 xor eax, eax	; 1354D
 call sub_76429	; 1354F
 cmp byte [musicon], 0	; 13554
-jne short loc_1358D	; 1355B
+jne short .14	; 1355B
 cmp dword [dword_C541F], byte 1	; 1355D
-je short loc_1358D	; 13564
+je short .14	; 13564
 call WaitDigiSample	; 13566
 mov ebx, 10h	; 1356B
 mov edx, esi	; 13570
@@ -221,24 +213,24 @@ call sub_76429	; 13577
 call StopDigiSample	; 1357C
 mov eax, edi	; 13581
 call sub_8F1FE	; 13583
-jmp near loc_13634	; 13588
-loc_1358D:
+jmp near .20	; 13588
+.14:
 cmp byte [musicon], 0	; 1358D
-je near loc_13619	; 13594
+je near .19	; 13594
 xor eax, eax	; 1359A
-loc_1359C:
+.15:
 test eax, eax	; 1359C
-jne short loc_135C2	; 1359E
+jne short .16	; 1359E
 mov eax, dword [musicslot-3]	; 135A0
 sar eax, 18h	; 135A5
 mov edx, 3	; 135A8
 call sub_8FC8A	; 135AD
 test eax, eax	; 135B2
-jne short loc_135C2	; 135B4
+jne short .16	; 135B4
 mov eax, 0Ah	; 135B6
 call sub_33E6A	; 135BB
-jmp short loc_1359C	; 135C0
-loc_135C2:
+jmp short AwardsCeremony.15	; 135C0
+.16:
 mov eax, dword [musichandle]	; 135C2
 mov ebx, 32h	; 135C7
 mov edx, 3	; 135CC
@@ -247,106 +239,106 @@ mov ebx, 10h	; 135D6
 mov edx, esi	; 135DB
 mov eax, 1	; 135DD
 call sub_76429	; 135E2
-loc_135E7:
+.17:
 mov eax, dword [musicslot-3]	; 135E7
 sar eax, 18h	; 135EC
 mov edx, 3	; 135EF
 call sub_8FC8A	; 135F4
 test eax, eax	; 135F9
-je short loc_135E7	; 135FB
+je short AwardsCeremony.17	; 135FB
 mov eax, dword [songdata]	; 135FD
 test eax, eax	; 13602
-je short loc_1360F	; 13604
+je short .18	; 13604
 push eax	; 13606
 call sub_8D2F0	; 13607
 add esp, byte 4	; 1360C
-loc_1360F:
+.18:
 xor ebx, ebx	; 1360F
 mov dword [songdata], ebx	; 13611
-jmp short loc_13634	; 13617
-loc_13619:
+jmp short .20	; 13617
+.19:
 mov eax, 140h	; 13619
 call sub_33E6A	; 1361E
 mov ebx, 10h	; 13623
 mov edx, esi	; 13628
 mov eax, 1	; 1362A
 call sub_76429	; 1362F
-loc_13634:
+.20:
 push esi	; 13634
 call jctime	; 13635
 add esp, byte 4	; 1363A
 call PickAwardWinners	; 1363D
 mov esi, eax	; 13642
 cmp byte [musicon], 0	; 13644
-je short loc_136B6	; 1364B
+je short .23	; 1364B
 cmp dword [songdata], byte 0	; 1364D
-jne short loc_136B6	; 13654
-mov ecx, asc_C0424	; 13656
-mov ebx, asc_C043E	; 1365B
+jne short .23	; 13654
+mov ecx, str_Iff	; 13656
+mov ebx, str_Awasong	; 1365B
 cmp byte [byte_ED9F0], 1	; 13660
-jne short loc_13671	; 13667
+jne short .21	; 13667
 mov edx, dword [dword_D2C6B]	; 13669
-jmp short loc_13673	; 1366F
-loc_13671:
+jmp short .22	; 1366F
+.21:
 xor edx, edx	; 13671
-loc_13673:
+.22:
 lea eax, [byte esp+040h]	; 13673
 call MakePath	; 13677
 lea eax, [byte esp+040h]	; 1367C
 call sub_8F98F	; 13680
 mov dword [songdata], eax	; 13685
 test eax, eax	; 1368A
-je near loc_1370E	; 1368C
+je near .28	; 1368C
 test byte [gameopts], 40h	; 13692
-je near loc_1370E	; 13699
+je near .28	; 13699
 mov edx, dword [musichandle]	; 1369F
 mov ecx, 7Fh	; 136A5
 mov ebx, 3	; 136AA
 call sub_8FB8E	; 136AF
-jmp short loc_1370E	; 136B4
-loc_136B6:
+jmp short .28	; 136B4
+.23:
 cmp dword [dword_C541F], byte 8	; 136B6
-jne short loc_136DB	; 136BD
+jne short .25	; 136BD
 xor ecx, ecx	; 136BF
-mov ebx, asc_C0446	; 136C1
+mov ebx, str_Mtawards	; 136C1
 cmp byte [byte_ED8C8], 1	; 136C6
-jne short loc_136D7	; 136CD
+jne short .24	; 136CD
 mov edx, dword [dword_D2C6B]	; 136CF
-jmp short loc_136F5	; 136D5
-loc_136D7:
+jmp short .27	; 136D5
+.24:
 xor edx, edx	; 136D7
-jmp short loc_136F5	; 136D9
-loc_136DB:
+jmp short .27	; 136D9
+.25:
 xor ecx, ecx	; 136DB
-mov ebx, asc_C044F	; 136DD
+mov ebx, str_Adawards	; 136DD
 cmp byte [byte_ED7E6], 1	; 136E2
-jne short loc_136F3	; 136E9
+jne short .26	; 136E9
 mov edx, dword [dword_D2C6B]	; 136EB
-jmp short loc_136F5	; 136F1
-loc_136F3:
+jmp short .27	; 136F1
+.26:
 xor edx, edx	; 136F3
-loc_136F5:
+.27:
 lea eax, [byte esp+040h]	; 136F5
 call MakePath	; 136F9
 lea eax, [byte esp+040h]	; 136FE
 call sub_8F13B	; 13702
 mov edi, eax	; 13707
 call PlayDigiSample	; 13709
-loc_1370E:
+.28:
 test esi, esi	; 1370E
-jne near loc_137F8	; 13710
+jne near .32	; 13710
 call ShowAwardScreens	; 13716
 cmp eax, byte 3	; 1371B
-jge near loc_137E9	; 1371E
+jge near .31	; 1371E
 xor ecx, ecx	; 13724
-mov ebx, asc_C0412	; 13726
+mov ebx, str_Awardsi	; 13726
 cmp byte [byte_ED9AA], 1	; 1372B
-jne short loc_1373C	; 13732
+jne short .29	; 13732
 mov edx, dword [dword_D2C6B]	; 13734
-jmp short loc_1373E	; 1373A
-loc_1373C:
+jmp short .30	; 1373A
+.29:
 xor edx, edx	; 1373C
-loc_1373E:
+.30:
 lea eax, [byte esp+040h]	; 1373E
 call MakePath	; 13742
 push byte 0	; 13747
@@ -360,14 +352,14 @@ call sub_B4BA8	; 1375D
 xor edx, edx	; 13762
 mov eax, 1	; 13764
 call sub_174C2	; 13769
-push asc_C041A	; 1376E
+push str_Scrn	; 1376E
 push esi	; 13773
 call sub_B30B4	; 13774
 add esp, byte 8	; 13779
 push eax	; 1377C
 call sub_9061C	; 1377D
 add esp, byte 4	; 13782
-push asc_C0458	; 13785
+push str_Summ	; 13785
 push esi	; 1378A
 call sub_B30B4	; 1378B
 add esp, byte 8	; 13790
@@ -394,47 +386,47 @@ call sub_76429	; 137DB
 push esi	; 137E0
 call jctime	; 137E1
 add esp, byte 4	; 137E6
-loc_137E9:
+.31:
 call sub_B4BA8	; 137E9
 push byte 0	; 137EE
 call sub_B392C	; 137F0
 add esp, byte 4	; 137F5
-loc_137F8:
+.32:
 cmp byte [musicon], 0	; 137F8
-je short loc_13848	; 137FF
+je short .35	; 137FF
 mov eax, dword [musichandle]	; 13801
 mov ebx, 78h	; 13806
 mov edx, 3	; 1380B
 call sub_8FCDF	; 13810
-loc_13815:
+.33:
 mov eax, dword [musicslot-3]	; 13815
 sar eax, 18h	; 1381A
 mov edx, 3	; 1381D
 call sub_8FC8A	; 13822
 test eax, eax	; 13827
-je short loc_13815	; 13829
+je short AwardsCeremony.33	; 13829
 mov ebp, dword [songdata]	; 1382B
 test ebp, ebp	; 13831
-je short loc_1383E	; 13833
+je short .34	; 13833
 push ebp	; 13835
 call sub_8D2F0	; 13836
 add esp, byte 4	; 1383B
-loc_1383E:
+.34:
 xor edx, edx	; 1383E
 mov dword [songdata], edx	; 13840
-jmp short loc_13854	; 13846
-loc_13848:
+jmp short .36	; 13846
+.35:
 call StopDigiSample	; 13848
 mov eax, edi	; 1384D
 call sub_8F1FE	; 1384F
-loc_13854:
+.36:
 mov eax, esp	; 13854
 push eax	; 13856
 call sub_8EA00	; 13857
 add esp, byte 4	; 1385C
 add esp, byte 50h	; 1385F
 jmp near PickAwardWinners_x	; 13862
-sub_13867:
+IndexPhotoBank:
 push dword 34h	; 13867
 call __CHK	; 1386C
 push ebx	; 13871
@@ -452,37 +444,37 @@ shl esi, 3	; 13883
 add esi, eax	; 13886
 add esi, esi	; 13888
 xor edi, edi	; 1388A
-loc_1388C:
+.1:
 push esi	; 1388C
-push asc_C0460	; 1388D
+push str_04d	; 1388D
 lea eax, [byte esp+08h]	; 13892
 push eax	; 13896
 call sprintf_	; 13897
 add esp, byte 0Ch	; 1389C
 mov eax, esp	; 1389F
 push eax	; 138A1
-mov edx, dword [nosplit ebp*4+dword_D9980]	; 138A2
+mov edx, dword [nosplit ebp*4+photobanks]	; 138A2
 push edx	; 138A9
 call sub_B30BB	; 138AA
 add esp, byte 8	; 138AF
-mov dword [nosplit esi*4+dword_D9A38], eax	; 138B2
+mov dword [nosplit esi*4+photoptrs], eax	; 138B2
 inc esi	; 138B9
 cmp esi, 46Eh	; 138BA
-jge short loc_138C8	; 138C0
+jge short .2	; 138C0
 inc edi	; 138C2
 cmp edi, byte 32h	; 138C3
-jl short loc_1388C	; 138C6
-loc_138C8:
+jl short IndexPhotoBank.1	; 138C6
+.2:
 add esp, byte 0Ch	; 138C8
 pop ebp	; 138CB
-loc_138CC:
+IndexPhotoBank_x:
 pop edi	; 138CC
 pop esi	; 138CD
 pop edx	; 138CE
 pop ecx	; 138CF
 pop ebx	; 138D0
 ret	; 138D1
-sub_138D2:
+LoadPhotoBankF:
 push dword 40h	; 138D2
 call __CHK	; 138D7
 push ebx	; 138DC
@@ -490,15 +482,15 @@ push ecx	; 138DD
 push edx	; 138DE
 push esi	; 138DF
 sub esp, byte 20h	; 138E0
-mov edx, dword [dword_CC0E0]	; 138E3
+mov edx, dword [photobankf]	; 138E3
 test edx, edx	; 138E9
-jne short loc_13957	; 138EB
+jne short LoadPhotoBankF_x	; 138EB
 mov ecx, str_PPV	; 138ED
-mov ebx, asc_C0465	; 138F2
+mov ebx, str_F000149	; 138F2
 cmp byte [byte_ED85C], 1	; 138F7
-jne short loc_13906	; 138FE
+jne short .1	; 138FE
 mov edx, dword [dword_D2C6B]	; 13900
-loc_13906:
+.1:
 mov eax, esp	; 13906
 call MakePath	; 13908
 push byte 20h	; 1390D
@@ -506,33 +498,33 @@ lea eax, [byte esp+04h]	; 1390F
 push eax	; 13913
 call sub_8E8A0	; 13914
 add esp, byte 8	; 13919
-mov dword [dword_CC0E0], eax	; 1391C
+mov dword [photobankf], eax	; 1391C
 xor esi, esi	; 13921
-loc_13923:
+.2:
 push esi	; 13923
-push asc_C0460	; 13924
+push str_04d	; 13924
 lea eax, [byte esp+018h]	; 13929
 push eax	; 1392D
 call sprintf_	; 1392E
 add esp, byte 0Ch	; 13933
 lea eax, [byte esp+010h]	; 13936
 push eax	; 1393A
-mov ebx, dword [dword_CC0E0]	; 1393B
+mov ebx, dword [photobankf]	; 1393B
 push ebx	; 13941
 call sub_B30B4	; 13942
 add esp, byte 8	; 13947
-mov dword [nosplit esi*4+dword_E00A0], eax	; 1394A
+mov dword [nosplit esi*4+photoptrsf], eax	; 1394A
 inc esi	; 13951
 cmp esi, byte 69h	; 13952
-jl short loc_13923	; 13955
-loc_13957:
+jl short LoadPhotoBankF.2	; 13955
+LoadPhotoBankF_x:
 add esp, byte 20h	; 13957
 pop esi	; 1395A
 pop edx	; 1395B
 pop ecx	; 1395C
 pop ebx	; 1395D
 ret	; 1395E
-sub_1395F:
+LoadPlayerPhotos:
 push dword 44h	; 1395F
 call __CHK	; 13964
 push ebx	; 13969
@@ -541,9 +533,9 @@ push edx	; 1396B
 push esi	; 1396C
 sub esp, byte 20h	; 1396D
 xor esi, esi	; 13970
-loc_13972:
-cmp dword [nosplit esi*4+dword_D9980], byte 0	; 13972
-jne near loc_13A1B	; 1397A
+.1:
+cmp dword [nosplit esi*4+photobanks], byte 0	; 13972
+jne near .8	; 1397A
 mov eax, esi	; 13980
 mov edx, esi	; 13982
 sar edx, 1Fh	; 13984
@@ -557,30 +549,30 @@ sar edx, 1Fh	; 13996
 idiv ecx	; 13999
 mov eax, edx	; 1399B
 cmp esi, byte 14h	; 1399D
-jl short loc_139B8	; 139A0
+jl short .3	; 139A0
 test edx, edx	; 139A2
-je short loc_139AF	; 139A4
+je short .2	; 139A4
 push ebx	; 139A6
 push ebx	; 139A7
-push asc_C046E	; 139A8
-jmp short loc_139CC	; 139AD
-loc_139AF:
+push str_D50D99	; 139A8
+jmp short .5	; 139AD
+.2:
 push ebx	; 139AF
 push ebx	; 139B0
-push asc_C0477	; 139B1
-jmp short loc_139CC	; 139B6
-loc_139B8:
+push str_D00D49	; 139B1
+jmp short .5	; 139B6
+.3:
 test edx, edx	; 139B8
-je short loc_139C5	; 139BA
+je short .4	; 139BA
 push ebx	; 139BC
 push ebx	; 139BD
-push asc_C0480	; 139BE
-jmp short loc_139CC	; 139C3
-loc_139C5:
+push str_D50_D99	; 139BE
+jmp short .5	; 139C3
+.4:
 push ebx	; 139C5
 push ebx	; 139C6
-push asc_C048A	; 139C7
-loc_139CC:
+push str_D00_D49	; 139C7
+.5:
 lea eax, [byte esp+01Ch]	; 139CC
 push eax	; 139D0
 call sprintf_	; 139D1
@@ -588,12 +580,12 @@ add esp, byte 10h	; 139D6
 mov ecx, str_PPV	; 139D9
 lea ebx, [byte esp+010h]	; 139DE
 cmp byte [dword esi+byte_ED7CC], 1	; 139E2
-jne short loc_139F3	; 139E9
+jne short .6	; 139E9
 mov edx, dword [dword_D2C6B]	; 139EB
-jmp short loc_139F5	; 139F1
-loc_139F3:
+jmp short .7	; 139F1
+.6:
 xor edx, edx	; 139F3
-loc_139F5:
+.7:
 mov eax, esp	; 139F5
 call MakePath	; 139F7
 push byte 20h	; 139FC
@@ -603,14 +595,14 @@ call sub_8E8A0	; 13A03
 mov edx, eax	; 13A08
 add esp, byte 8	; 13A0A
 mov eax, esi	; 13A0D
-mov dword [nosplit esi*4+dword_D9980], edx	; 13A0F
-call sub_13867	; 13A16
-loc_13A1B:
+mov dword [nosplit esi*4+photobanks], edx	; 13A0F
+call IndexPhotoBank	; 13A16
+.8:
 inc esi	; 13A1B
 cmp esi, byte 17h	; 13A1C
-jl near loc_13972	; 13A1F
-call sub_138D2	; 13A25
-jmp near loc_13957	; 13A2A
+jl near LoadPlayerPhotos.1	; 13A1F
+call LoadPhotoBankF	; 13A25
+jmp near LoadPhotoBankF_x	; 13A2A
 LoadTransparentRinkEndOverlay:
 push dword 28h	; 13A2F
 call __CHK	; 13A34
@@ -619,14 +611,14 @@ push ecx	; 13A3A
 push edx	; 13A3B
 sub esp, byte 10h	; 13A3C
 mov ecx, str_PPV	; 13A3F
-mov ebx, asc_C0494	; 13A44
+mov ebx, str_Trinknd	; 13A44
 cmp byte [byte_ED976], 1	; 13A49
-jne short loc_13A5A	; 13A50
+jne short .1	; 13A50
 mov edx, dword [dword_D2C6B]	; 13A52
-jmp short loc_13A5C	; 13A58
-loc_13A5A:
+jmp short .2	; 13A58
+.1:
 xor edx, edx	; 13A5A
-loc_13A5C:
+.2:
 mov eax, esp	; 13A5C
 call MakePath	; 13A5E
 push byte 20h	; 13A63
@@ -634,8 +626,8 @@ lea eax, [byte esp+04h]	; 13A65
 push eax	; 13A69
 call sub_8E8A0	; 13A6A
 add esp, byte 8	; 13A6F
-mov dword [dword_D8C68], eax	; 13A72
-push asc_C049C	; 13A77
+mov dword [rinkendbank], eax	; 13A72
+push str_0000	; 13A77
 push eax	; 13A7C
 call sub_B30B4	; 13A7D
 add esp, byte 8	; 13A82
@@ -645,7 +637,7 @@ pop edx	; 13A8D
 pop ecx	; 13A8E
 pop ebx	; 13A8F
 ret	; 13A90
-sub_13A91:
+LoadGameGfx:
 push dword 3Ch	; 13A91
 call __CHK	; 13A96
 push ebx	; 13A9B
@@ -656,14 +648,14 @@ sub esp, byte 1Ch	; 13A9F
 call sub_B4BA8	; 13AA2
 mov word [scrpitch], 52h	; 13AA7
 mov ecx, str_VFN	; 13AB0
-mov ebx, asc_C04A1	; 13AB5
+mov ebx, str_HILIGHT	; 13AB5
 cmp byte [byte_ED86C], 1	; 13ABA
-jne short loc_13ACB	; 13AC1
+jne short .1	; 13AC1
 mov edx, dword [dword_D2C6B]	; 13AC3
-jmp short loc_13ACD	; 13AC9
-loc_13ACB:
+jmp short .2	; 13AC9
+.1:
 xor edx, edx	; 13ACB
-loc_13ACD:
+.2:
 mov eax, esp	; 13ACD
 call MakePath	; 13ACF
 push byte 20h	; 13AD4
@@ -671,16 +663,16 @@ lea eax, [byte esp+04h]	; 13AD6
 push eax	; 13ADA
 call sub_8E8A0	; 13ADB
 add esp, byte 8	; 13AE0
-mov dword [dword_ED700], eax	; 13AE3
+mov dword [hilightfont], eax	; 13AE3
 mov ecx, str_PPV	; 13AE8
-mov ebx, asc_C04A9	; 13AED
+mov ebx, str_Numshp	; 13AED
 cmp byte [byte_ED8D7], 1	; 13AF2
-jne short loc_13B03	; 13AF9
+jne short .3	; 13AF9
 mov edx, dword [dword_D2C6B]	; 13AFB
-jmp short loc_13B05	; 13B01
-loc_13B03:
+jmp short .4	; 13B01
+.3:
 xor edx, edx	; 13B03
-loc_13B05:
+.4:
 mov eax, esp	; 13B05
 call MakePath	; 13B07
 push byte 20h	; 13B0C
@@ -688,29 +680,29 @@ lea eax, [byte esp+04h]	; 13B0E
 push eax	; 13B12
 call sub_8E8A0	; 13B13
 add esp, byte 8	; 13B18
-mov dword [dword_D8C80], eax	; 13B1B
+mov dword [numshpbank], eax	; 13B1B
 xor esi, esi	; 13B20
-loc_13B22:
+.5:
 push esi	; 13B22
-push asc_C0460	; 13B23
+push str_04d	; 13B23
 lea eax, [byte esp+018h]	; 13B28
 push eax	; 13B2C
 call sprintf_	; 13B2D
 add esp, byte 0Ch	; 13B32
 lea eax, [byte esp+010h]	; 13B35
 push eax	; 13B39
-mov edx, dword [dword_D8C80]	; 13B3A
+mov edx, dword [numshpbank]	; 13B3A
 push edx	; 13B40
 call sub_B30B4	; 13B41
 add esp, byte 8	; 13B46
-mov dword [nosplit esi*4+dword_D8C18], eax	; 13B49
+mov dword [nosplit esi*4+numshapes], eax	; 13B49
 inc esi	; 13B50
 cmp esi, byte 0Ah	; 13B51
-jl short loc_13B22	; 13B54
-sub_13B56:
+jl short LoadGameGfx.5	; 13B54
+LoadGameGfx_common:
 push dword_D8C4C	; 13B56
-push asc_C04B0	; 13B5B
-mov ebx, dword [dword_D8C80]	; 13B60
+push str_GfxIdList	; 13B5B
+mov ebx, dword [numshpbank]	; 13B60
 push ebx	; 13B66
 call sub_90B80	; 13B67
 add esp, byte 0Ch	; 13B6C
@@ -720,7 +712,7 @@ push dword 0FFh	; 13B79
 push byte 4	; 13B7E
 call sub_8E9C0	; 13B80
 add esp, byte 8	; 13B85
-call sub_1395F	; 13B88
+call LoadPlayerPhotos	; 13B88
 call nullsub_2	; 13B8D
 mov word [word_CBEC4], 1	; 13B92
 mov ecx, 1	; 13B9B
@@ -732,7 +724,7 @@ pop edx	; 13BB0
 pop ecx	; 13BB1
 pop ebx	; 13BB2
 ret	; 13BB3
-sub_13BB4:
+ReloadGameGfx:
 push dword 3Ch	; 13BB4
 call __CHK	; 13BB9
 push ebx	; 13BBE
@@ -742,14 +734,14 @@ push esi	; 13BC1
 sub esp, byte 1Ch	; 13BC2
 mov word [scrpitch], 52h	; 13BC5
 mov ecx, str_VFN	; 13BCE
-mov ebx, asc_C04A1	; 13BD3
+mov ebx, str_HILIGHT	; 13BD3
 cmp byte [byte_ED86C], 1	; 13BD8
-jne short loc_13BE9	; 13BDF
+jne short .1	; 13BDF
 mov edx, dword [dword_D2C6B]	; 13BE1
-jmp short loc_13BEB	; 13BE7
-loc_13BE9:
+jmp short .2	; 13BE7
+.1:
 xor edx, edx	; 13BE9
-loc_13BEB:
+.2:
 mov eax, esp	; 13BEB
 call MakePath	; 13BED
 push byte 20h	; 13BF2
@@ -757,16 +749,16 @@ lea eax, [byte esp+04h]	; 13BF4
 push eax	; 13BF8
 call sub_8E8A0	; 13BF9
 add esp, byte 8	; 13BFE
-mov dword [dword_ED700], eax	; 13C01
+mov dword [hilightfont], eax	; 13C01
 mov ecx, str_PPV	; 13C06
-mov ebx, asc_C04A9	; 13C0B
+mov ebx, str_Numshp	; 13C0B
 cmp byte [byte_ED8D7], 1	; 13C10
-jne short loc_13C21	; 13C17
+jne short .3	; 13C17
 mov edx, dword [dword_D2C6B]	; 13C19
-jmp short loc_13C23	; 13C1F
-loc_13C21:
+jmp short .4	; 13C1F
+.3:
 xor edx, edx	; 13C21
-loc_13C23:
+.4:
 mov eax, esp	; 13C23
 call MakePath	; 13C25
 push byte 20h	; 13C2A
@@ -774,34 +766,34 @@ lea eax, [byte esp+04h]	; 13C2C
 push eax	; 13C30
 call sub_8E8A0	; 13C31
 add esp, byte 8	; 13C36
-mov dword [dword_D8C80], eax	; 13C39
+mov dword [numshpbank], eax	; 13C39
 xor esi, esi	; 13C3E
-loc_13C40:
+.5:
 push esi	; 13C40
-push asc_C0460	; 13C41
+push str_04d	; 13C41
 lea eax, [byte esp+018h]	; 13C46
 push eax	; 13C4A
 call sprintf_	; 13C4B
 add esp, byte 0Ch	; 13C50
 lea eax, [byte esp+010h]	; 13C53
 push eax	; 13C57
-mov edx, dword [dword_D8C80]	; 13C58
+mov edx, dword [numshpbank]	; 13C58
 push edx	; 13C5E
 call sub_B30B4	; 13C5F
 add esp, byte 8	; 13C64
-mov dword [nosplit esi*4+dword_D8C18], eax	; 13C67
+mov dword [nosplit esi*4+numshapes], eax	; 13C67
 inc esi	; 13C6E
 cmp esi, byte 0Ah	; 13C6F
-jl short loc_13C40	; 13C72
-jmp near sub_13B56	; 13C74
-sub_13C79:
+jl short ReloadGameGfx.5	; 13C72
+jmp near LoadGameGfx_common	; 13C74
+PlacePlayersAtStart:
 push dword 10h	; 13C79
 call __CHK	; 13C7E
 push ebx	; 13C83
 push ecx	; 13C84
 push edx	; 13C85
 cmp dword [dword_CC0EC], byte 0	; 13C86
-jne near loc_13E8B	; 13C8D
+jne near .x	; 13C8D
 call forceteams	; 13C93
 xor edx, edx	; 13C98
 mov word [word_C90B4], dx	; 13C9A
@@ -812,7 +804,7 @@ mov eax, dword [puckx]	; 13CB0
 mov word [eax], dx	; 13CB5
 mov ebx, SortCords	; 13CB8
 mov word [regd2], 0Ch	; 13CBD
-loc_13CC6:
+.1:
 mov word [byte ebx+02Eh], 0FF9Ch	; 13CC6
 mov ax, word [byte ebx+01Ah]	; 13CCC
 mov word [regd1], ax	; 13CD0
@@ -824,14 +816,14 @@ movsx edx, ax	; 13CE5
 mov eax, ebx	; 13CE8
 call assinsert	; 13CEA
 cmp word [regd1], byte 0	; 13CEF
-jl near loc_13E6F	; 13CF7
+jl near .11	; 13CF7
 test byte [byte ebx+044h], 40h	; 13CFD
-je short loc_13D0B	; 13D01
+je short .2	; 13D01
 mov ax, word [awtmap]	; 13D03
-jmp short loc_13D11	; 13D09
-loc_13D0B:
+jmp short .3	; 13D09
+.2:
 mov ax, word [hmtmap]	; 13D0B
-loc_13D11:
+.3:
 neg eax	; 13D11
 mov word [regd4], ax	; 13D13
 mov ax, word [regd4]	; 13D19
@@ -853,10 +845,10 @@ mov word [regd0], dx	; 13D65
 mov ax, word [nosplit eax*2+word_CBE8E]	; 13D6C
 mov word [regd1], ax	; 13D74
 test byte [byte ebx+044h], 80h	; 13D7A
-jne short loc_13D8E	; 13D7E
+jne short .4	; 13D7E
 neg word [regd0]	; 13D80
 neg word [regd1]	; 13D87
-loc_13D8E:
+.4:
 mov ax, word [regd0]	; 13D8E
 mov word [byte ebx+02h], ax	; 13D94
 mov ax, word [regd1]	; 13D98
@@ -875,65 +867,65 @@ cwde	; 13DD1
 call vtoa	; 13DD2
 mov word [byte ebx+036h], ax	; 13DD7
 cmp word [byte ebx+01Ah], byte 0	; 13DDB
-jne short loc_13E1D	; 13DE0
+jne short .7	; 13DE0
 cmp byte [byte ebx+065h], 0	; 13DE2
-je short loc_13DF0	; 13DE6
+je short .5	; 13DE6
 mov eax, dword [byte ebx+034h]	; 13DE8
 sar eax, 10h	; 13DEB
-jmp short loc_13E02	; 13DEE
-loc_13DF0:
+jmp short .6	; 13DEE
+.5:
 mov eax, dword [byte ebx+034h]	; 13DF0
 sar eax, 10h	; 13DF3
 mov edx, 8	; 13DF6
 sub edx, eax	; 13DFB
 mov eax, edx	; 13DFD
 and eax, byte 7	; 13DFF
-loc_13E02:
+.6:
 mov edx, eax	; 13E02
 shl eax, 2	; 13E04
 sub eax, edx	; 13E07
 add eax, 196h	; 13E09
 mov word [byte ebx+012h], ax	; 13E0E
 mov word [regd1], 1	; 13E12
-jmp short loc_13E51	; 13E1B
-loc_13E1D:
+jmp short .10	; 13E1B
+.7:
 cmp byte [byte ebx+065h], 0	; 13E1D
-je short loc_13E2B	; 13E21
+je short .8	; 13E21
 mov eax, dword [byte ebx+034h]	; 13E23
 sar eax, 10h	; 13E26
-jmp short loc_13E3D	; 13E29
-loc_13E2B:
+jmp short .9	; 13E29
+.8:
 mov eax, dword [byte ebx+034h]	; 13E2B
 sar eax, 10h	; 13E2E
 mov edx, 8	; 13E31
 sub edx, eax	; 13E36
 mov eax, edx	; 13E38
 and eax, byte 7	; 13E3A
-loc_13E3D:
+.9:
 mov edx, eax	; 13E3D
 shl eax, 2	; 13E3F
 add eax, edx	; 13E42
 mov word [byte ebx+012h], ax	; 13E44
 mov word [regd1], 289h	; 13E48
-loc_13E51:
+.10:
 and byte [byte ebx+045h], 0FBh	; 13E51
 and byte [byte ebx+044h], 0DFh	; 13E55
 mov word [byte ebx+03Ah], 0	; 13E59
 mov ax, word [regd1]	; 13E5F
 mov word [byte ebx+038h], ax	; 13E65
 mov word [byte ebx+03Ch], 0FFFFh	; 13E69
-loc_13E6F:
+.11:
 add ebx, 80h	; 13E6F
 mov cx, word [regd2]	; 13E75
 dec cx	; 13E7C
 mov word [regd2], cx	; 13E7E
-jne near loc_13CC6	; 13E85
-loc_13E8B:
+jne near PlacePlayersAtStart.1	; 13E85
+.x:
 pop edx	; 13E8B
 pop ecx	; 13E8C
 pop ebx	; 13E8D
 ret	; 13E8E
-sub_13E8F:
+SetupGame:
 push dword 20h	; 13E8F
 call __CHK	; 13E94
 push ebx	; 13E99
@@ -951,7 +943,7 @@ mov word [crowdlevel], bx	; 13EBE
 call CrowdNoiseReset	; 13EC5
 xor edx, edx	; 13ECA
 mov dword [dword_CC0F0], edx	; 13ECC
-call sub_14056	; 13ED2
+call ResetGameVars	; 13ED2
 mov edx, dword [HomeTeam]	; 13ED7
 sar edx, 10h	; 13EDD
 mov eax, dword [cont2team]	; 13EE0
@@ -967,25 +959,25 @@ xor edx, edx	; 13F05
 xor eax, eax	; 13F07
 call StartPreGame	; 13F09
 test eax, eax	; 13F0E
-jge short loc_13F1C	; 13F10
+jge short .1	; 13F10
 mov eax, 0FFFFFFFFh	; 13F12
 pop edi	; 13F17
 pop edx	; 13F18
 pop ecx	; 13F19
 pop ebx	; 13F1A
 ret	; 13F1B
-loc_13F1C:
+.1:
 mov edx, dword [dword_CC0F0]	; 13F1C
 test edx, edx	; 13F22
-je short loc_13F2F	; 13F24
+je short .2	; 13F24
 mov word [word_CBEC4], 1	; 13F26
-loc_13F2F:
+.2:
 xor edi, edi	; 13F2F
 mov word [gsp], di	; 13F31
-call sub_14056	; 13F38
+call ResetGameVars	; 13F38
 mov dword [dword_CC0F0], edx	; 13F3D
 test edx, edx	; 13F43
-je short loc_13F6F	; 13F45
+je short .3	; 13F45
 push unk_DF014	; 13F47
 push dword 100h	; 13F4C
 push byte 0	; 13F51
@@ -995,28 +987,28 @@ mov ebx, 10h	; 13F5B
 mov edx, unk_DF014	; 13F60
 mov eax, 1	; 13F65
 call FadePalette	; 13F6A
-loc_13F6F:
+.3:
 test byte [gameopts], 4	; 13F6F
-jne short loc_13F81	; 13F76
+jne short .4	; 13F76
 cmp dword [dword_CC0F0], byte 0	; 13F78
-jne short loc_13F86	; 13F7F
-loc_13F81:
-call sub_13C79	; 13F81
-loc_13F86:
+jne short .5	; 13F7F
+.4:
+call PlacePlayersAtStart	; 13F81
+.5:
 cmp dword [dword_CC0EC], byte 0	; 13F86
-jne short loc_13FA0	; 13F8D
+jne short .6	; 13F8D
 cmp dword [dword_CC0F0], byte 0	; 13F8F
-jne short loc_13FA0	; 13F96
+jne short .6	; 13F96
 xor eax, eax	; 13F98
 mov word [word_CBEC4], ax	; 13F9A
-loc_13FA0:
+.6:
 xor eax, eax	; 13FA0
 pop edi	; 13FA2
 pop edx	; 13FA3
 pop ecx	; 13FA4
 pop ebx	; 13FA5
 ret	; 13FA6
-sub_13FA7:
+SetupGameQuick:
 push dword 14h	; 13FA7
 call __CHK	; 13FAC
 push ebx	; 13FB1
@@ -1034,44 +1026,44 @@ mov word [crowdlevel], bx	; 13FD6
 call CrowdNoiseReset	; 13FDD
 xor edx, edx	; 13FE2
 mov dword [dword_CC0F0], edx	; 13FE4
-call sub_14056	; 13FEA
+call ResetGameVars	; 13FEA
 xor ecx, ecx	; 13FEF
 mov word [crowdlevel], cx	; 13FF1
 mov dword [crowdsmooth], edx	; 13FF8
 xor eax, eax	; 13FFE
 call StartPreGame	; 14000
 test eax, eax	; 14005
-jge short loc_14013	; 14007
+jge short .1	; 14007
 mov eax, 0FFFFFFFFh	; 14009
 pop edi	; 1400E
 pop edx	; 1400F
 pop ecx	; 14010
 pop ebx	; 14011
 ret	; 14012
-loc_14013:
+.1:
 mov edx, dword [dword_CC0F0]	; 14013
 test edx, edx	; 14019
-je short loc_14026	; 1401B
+je short .2	; 1401B
 mov word [word_CBEC4], 1	; 1401D
-loc_14026:
+.2:
 xor edi, edi	; 14026
 mov word [gsp], di	; 14028
-call sub_14056	; 1402F
+call ResetGameVars	; 1402F
 mov dword [dword_CC0F0], edx	; 14034
 cmp dword [dword_CC0EC], byte 0	; 1403A
-jne short loc_1404F	; 14041
+jne short .3	; 14041
 test edx, edx	; 14043
-jne short loc_1404F	; 14045
+jne short .3	; 14045
 xor eax, eax	; 14047
 mov word [word_CBEC4], ax	; 14049
-loc_1404F:
+.3:
 xor eax, eax	; 1404F
 pop edi	; 14051
 pop edx	; 14052
 pop ecx	; 14053
 pop ebx	; 14054
 ret	; 14055
-sub_14056:
+ResetGameVars:
 push dword 20h	; 14056
 call __CHK	; 1405B
 push ebx	; 14060
@@ -1153,7 +1145,7 @@ mov dword [penshotplayer], 0FFFFFFFFh	; 141E0
 xor eax, esi	; 141EA
 mov word [CwdExciteLvl], ax	; 141EC
 xor ebx, ebx	; 141F2
-loc_141F4:
+.1:
 mov eax, ebx	; 141F4
 shl eax, 2	; 141F6
 sub eax, ebx	; 141F9
@@ -1167,7 +1159,7 @@ add al, 3Ch	; 14214
 mov byte [byte edx+02h], al	; 14216
 inc ebx	; 14219
 cmp ebx, byte 14h	; 1421A
-jl short loc_141F4	; 1421D
+jl short ResetGameVars.1	; 1421D
 mov ecx, 20h	; 1421F
 xor edx, edx	; 14224
 mov eax, word_E9B2C	; 14226
@@ -1186,15 +1178,15 @@ mov word [word_E9A9C], 0FFFFh	; 1426B
 call StartGame	; 14274
 mov dword [dword_D8C84], 1	; 14279
 cmp byte [pad1dev], 1	; 14283
-je short loc_14295	; 1428A
+je short .2	; 1428A
 cmp byte [pad2dev], 1	; 1428C
-jne short loc_142A4	; 14293
-loc_14295:
+jne short .3	; 14293
+.2:
 push byte 64h	; 14295
 push dword 0A0h	; 14297
 call MouseSetPos	; 1429C
 add esp, byte 8	; 142A1
-loc_142A4:
+.3:
 xor edi, edi	; 142A4
 mov dword [dword_C5840], edi	; 142A6
 mov dword [inputframes], edi	; 142AC
@@ -1207,8 +1199,8 @@ mov dword [frameaccum], edi	; 142CA
 mov dword [joysampling], edi	; 142D0
 mov word [joysampling_save], cx	; 142D6
 call joyq_flush	; 142DD
-jmp near loc_138CC	; 142E2
-sub_142E7:
+jmp near IndexPhotoBank_x	; 142E2
+FileExists:
 push dword 10h	; 142E7
 call __CHK	; 142EC
 push ebx	; 142F1
@@ -1219,9 +1211,9 @@ xor ebx, ebx	; 142FD
 mov edx, esp	; 142FF
 call FileOpenRead	; 14301
 test eax, eax	; 14306
-jne short loc_1430F	; 14308
+jne short .1	; 14308
 mov ebx, 1	; 1430A
-loc_1430F:
+.1:
 mov eax, esp	; 1430F
 call FileClose	; 14311
 mov eax, ebx	; 14316

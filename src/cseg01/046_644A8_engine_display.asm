@@ -11,7 +11,7 @@ extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, byte_ED7CC, b
 extern byte_ED92B, joysampling, dword_C90B0, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, lastsfx
 extern dword_CCEF6, dword_CD41E, dword_CD4B0, dword_D2C6B, dword_D30AC, dword_D30B0, dword_D30B4, dword_D30B8
 extern dword_D30BC, dword_D30C0, dword_D8B70, dword_D8B78, dword_D8C40, dword_D8C84, dword_DEF8C, dword_DEFE0
-extern dword_DF004, hmtmstruct, puckstruct, dword_E00A0, dword_E0220, dword_E0230, dword_E0244, dword_E0248
+extern dword_DF004, hmtmstruct, puckstruct, photoptrsf, dword_E0220, dword_E0230, dword_E0244, dword_E0248
 extern recbpr, replayplay, dword_E03AE, dword_E03B9, dword_E03BD
 extern dword_E9A9E, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38
 extern dword_E9F54, dword_E9F56, dword_E9F5A, dword_E9F76, dword_E9F78, dword_E9F7B, dword_E9F8C, dword_E9F98
@@ -4759,7 +4759,7 @@ mov edx, dword [byte ebp-0Eh]	; 67F0E
 sar edx, 10h	; 67F11
 mov eax, dword [byte ebp-0Ah]	; 67F14
 sar eax, 10h	; 67F17
-mov eax, dword [nosplit eax*4+dword_E00A0]	; 67F1A
+mov eax, dword [nosplit eax*4+photoptrsf]	; 67F1A
 call sub_1CD73	; 67F21
 .9:
 inc esi	; 67F26
@@ -4831,7 +4831,7 @@ mov edx, dword [byte ebp-0Eh]	; 67FF2
 sar edx, 10h	; 67FF5
 mov eax, dword [byte ebp-0Ah]	; 67FF8
 sar eax, 10h	; 67FFB
-mov eax, dword [nosplit eax*4+dword_E00A0]	; 67FFE
+mov eax, dword [nosplit eax*4+photoptrsf]	; 67FFE
 xor ecx, ecx	; 68005
 call sub_1CD73	; 68007
 .18:

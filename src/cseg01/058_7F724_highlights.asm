@@ -6,11 +6,11 @@ extern __CHK, _dos_getdiskfree_, asc_C342E, asc_C3436, asc_C3449, asc_C3450, asc
 extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, curleague, sflags, musicon
 extern byte_DB3AD, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
 extern byte_E03E3, byte_E03E4, dword_C5704, dword_C5708, dword_C570C, songdata, dword_C7444, dword_C7448
-extern cont2team, HomeTeam, musichandle, dword_D42A8, dword_D8C68, dword_D8C80, dword_D8C84, musicslot
+extern cont2team, HomeTeam, musichandle, dword_D42A8, rinkendbank, numshpbank, dword_D8C84, musicslot
 extern dword_DC230, dword_DC2F0, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
-extern dword_ED6F8, dword_ED700, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, teamcitynames
+extern dword_ED6F8, hilightfont, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, teamcitynames
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, SetScreenSize
-extern sub_13A91, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
+extern LoadGameGfx, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
 extern sub_1BAB1, sub_303FB, sub_30A0C, MessageBox, sub_33727, sub_3377C, sub_479E9, FadeOutPalCycle
 extern sub_673C5, sub_6B3D7, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
@@ -42,7 +42,7 @@ mov eax, esp	; 7F742
 push eax	; 7F744
 call sub_8E9E8	; 7F745
 add esp, byte 4	; 7F74A
-mov edx, dword [dword_ED700]	; 7F74D
+mov edx, dword [hilightfont]	; 7F74D
 push edx	; 7F753
 call sub_8EA18	; 7F754
 add esp, byte 4	; 7F759
@@ -919,7 +919,7 @@ sar eax, 10h	; 8026D
 mov ebx, unk_DF314	; 80270
 call sub_673C5	; 80275
 call sub_7DC8B	; 8027A
-call sub_13A91	; 8027F
+call LoadGameGfx	; 8027F
 call FadeOutPalCycle	; 80284
 mov edx, 0C8h	; 80289
 mov eax, 140h	; 8028E
@@ -950,7 +950,7 @@ push ebp	; 802E6
 call sub_8EA18	; 802E7
 add esp, byte 4	; 802EC
 call sub_1BAB1	; 802EF
-mov eax, dword [dword_D8C68]	; 802F4
+mov eax, dword [rinkendbank]	; 802F4
 push eax	; 802F9
 call jctime	; 802FA
 add esp, byte 4	; 802FF
@@ -958,11 +958,11 @@ mov edx, dword [dword_DC2F0]	; 80302
 push edx	; 80308
 call jctime	; 80309
 add esp, byte 4	; 8030E
-mov ebx, dword [dword_D8C80]	; 80311
+mov ebx, dword [numshpbank]	; 80311
 push ebx	; 80317
 call jctime	; 80318
 add esp, byte 4	; 8031D
-mov ecx, dword [dword_ED700]	; 80320
+mov ecx, dword [hilightfont]	; 80320
 push ecx	; 80326
 call jctime	; 80327
 add esp, byte 4	; 8032C

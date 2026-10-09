@@ -12,7 +12,7 @@ extern dword_C7DA5, dword_C7E42, msg_SavedGame_arg, dword_C89E6, dword_C8A2B, dw
 extern dword_DD748, dword_DD74C, dword_DD784, dword_DD7A4, leaguemaster, leaguesaved, dword_DD7CE, humancount
 extern dword_DDD70, dword_DE265, mkdir_, off_C7905, off_C7C1D, off_C7C59, off_C7CE9, off_C7D62
 extern leaguedbnames, off_C89DE, off_C8A85, off_C8AB9, off_C8B37
-extern sprintf_, strcmp_, strcpy_, stricmp_, sub_142E7, MakePath, sub_14368, sub_14442
+extern sprintf_, strcmp_, strcpy_, stricmp_, FileExists, MakePath, sub_14368, sub_14442
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt, sub_1463D
 extern sub_1466B, sub_1478B, ReadSchedGame, ReadTeamRec, sub_1D100, sub_1D518, sub_30A0C, sub_30F12
 extern MessageBox, LoadModeState, sub_32C9E, sub_33559, sub_336E6, sub_38B4F, sub_3A24F, sub_3A266
@@ -739,7 +739,7 @@ mov edx, curleague	; 3B2EF
 mov eax, esp	; 3B2F4
 call MakePath	; 3B2F6
 mov eax, esp	; 3B2FB
-call sub_142E7	; 3B2FD
+call FileExists	; 3B2FD
 mov dword [dword_DDD70], eax	; 3B302
 test edi, edi	; 3B307
 jne near loc_3B888	; 3B309
@@ -3635,7 +3635,7 @@ mov edx, edi	; 3DA98
 mov eax, esp	; 3DA9A
 call MakePath	; 3DA9C
 mov eax, esp	; 3DAA1
-call sub_142E7	; 3DAA3
+call FileExists	; 3DAA3
 mov edx, dword [byte esp+060h]	; 3DAA8
 mov dword [edx], eax	; 3DAAC
 loc_3DAAE:

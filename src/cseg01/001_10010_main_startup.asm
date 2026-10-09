@@ -14,7 +14,7 @@ extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, dword_C5840, sc
 extern songdata, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
 extern musichandle, dword_D2C6B, dword_D302C, dword_D3030, dword_D3034, dword_D30D4, dword_D4158, dword_D415C
 extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
-extern joyrawbits, dword_D8C18, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84, dword_D9A38, dword_DC230
+extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84, photoptrs, dword_DC230
 extern dword_DC238, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
 extern sub_150C6, sub_1672A, sub_16F9A, sub_190BE, sub_1BAF3, sub_1CD73, sub_3149D, sub_31AB5
@@ -1434,7 +1434,7 @@ sar ebx, 10h	; 11067
 sub esi, byte 3	; 1106A
 movsx edx, si	; 1106D
 cwde	; 11070
-mov eax, dword [nosplit eax*4+dword_D8C18]	; 11071
+mov eax, dword [nosplit eax*4+numshapes]	; 11071
 xor ecx, ecx	; 11078
 call sub_1CD73	; 1107A
 mov ebx, 0Ah	; 1107F
@@ -1451,7 +1451,7 @@ mov edi, dword [byte esp+06h]	; 11096
 sar edi, 10h	; 1109A
 movsx edx, si	; 1109D
 cwde	; 110A0
-mov eax, dword [nosplit eax*4+dword_D8C18]	; 110A1
+mov eax, dword [nosplit eax*4+numshapes]	; 110A1
 xor ecx, ecx	; 110A8
 mov ebx, edi	; 110AA
 call sub_1CD73	; 110AC
@@ -1482,7 +1482,7 @@ cmp ax, 46Eh	; 110F0
 jge short .x	; 110F4
 cwde	; 110F6
 shl eax, 2	; 110F7
-cmp dword [dword eax+dword_D9A38], byte 0	; 110FA
+cmp dword [dword eax+photoptrs], byte 0	; 110FA
 je short .x	; 11101
 mov esi, edx	; 11103
 add esi, 0C0h	; 11105
@@ -1496,7 +1496,7 @@ push edx	; 1111D
 movsx ecx, cx	; 1111E
 movsx ebx, bx	; 11121
 movsx edx, si	; 11124
-mov eax, dword [dword eax+dword_D9A38]	; 11127
+mov eax, dword [dword eax+photoptrs]	; 11127
 call sub_1CD73	; 1112D
 .x:
 pop esi	; 11132

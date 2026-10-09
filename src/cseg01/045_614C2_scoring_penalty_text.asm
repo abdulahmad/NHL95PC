@@ -16,7 +16,7 @@ extern lastsfx, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC11
 extern penshotstart, penshottimer, dword_CC124, penshotlive, dword_CD2F8, dword_CD34C, dword_CD350, dword_D8B70
 extern dword_D8C84, dword_DB086, dword_DB088, dword_DC230, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
 extern hmtmstruct, dword_DF646, awtmstruct, puckstruct, sortobj15, hmtmlines
-extern dword_E00A0, dword_E0220, dword_E0230, PenBuf_m5
+extern photoptrsf, dword_E0220, dword_E0230, PenBuf_m5
 extern dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9BAC, dword_E9BB0
 extern dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, fputchar, puckvx, gmode, loc_18F86
 extern lseek_, ltx, off_C5439, puckx, pucky, puckvy, puckz, puckc
@@ -378,7 +378,7 @@ mov edx, dword [byte esi+03h]	; 6189F
 sar edx, 10h	; 618A2
 mov eax, dword [byte esi+01h]	; 618A5
 sar eax, 18h	; 618A8
-mov eax, dword [nosplit eax*4+dword_E00A0]	; 618AB
+mov eax, dword [nosplit eax*4+photoptrsf]	; 618AB
 mov ecx, dword [byte ebp-010h]	; 618B2
 call sub_1CD73	; 618B5
 .2:
@@ -429,7 +429,7 @@ mov edx, dword [byte ebp-0Ah]	; 61939
 sar edx, 10h	; 6193C
 mov eax, dword [byte ebp-0Eh]	; 6193F
 sar eax, 10h	; 61942
-mov eax, dword [nosplit eax*4+dword_E00A0]	; 61945
+mov eax, dword [nosplit eax*4+photoptrsf]	; 61945
 xor ecx, ecx	; 6194C
 call sub_1CD73	; 6194E
 .9:

@@ -6,7 +6,7 @@ extern str_1st, str_2nd, str_3rd, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, un
 extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
 global str_ErrLoadGame, str_ErrSaveGame, byte_CC049, lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5
 global byte_CC9B0, byte_CC9E4, byte_CC9E7, byte_CCA95, lchoicetab, byte_CCBBA, byte_CCBBB, byte_CCCA0
-global byte_CCE00, byte_CCE01, dword_CC080, dword_CC0AC, dword_CC0B4, lastsfx, dword_CC0E0, dword_CC0EC
+global byte_CCE00, byte_CCE01, dword_CC080, dword_CC0AC, dword_CC0B4, lastsfx, photobankf, dword_CC0EC
 global dword_CC0F0, onetimerflag, dword_CC0F8, dword_CC0FA, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 global dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
 global dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, dword_CC9AD, dword_CC9CE
@@ -58,7 +58,7 @@ lastsfx:
 db 0FFh,0FFh
 crowdlevel:
 db 00h,00h
-dword_CC0E0:
+photobankf:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 dword_CC0EC:
 db 00h,00h,00h,00h

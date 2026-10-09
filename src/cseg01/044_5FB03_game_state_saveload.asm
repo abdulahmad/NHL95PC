@@ -8,14 +8,14 @@ extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, PenBuf, iflags, b
 extern byte_E9AD3, OOlist, collflag, postate, lgstate, gamemode, ctl1team, ctl2team
 extern ctl1dev, ctl2dev, ctl1side, dword_C5704, dword_C5708, dword_C570C, dword_C5840, dword_C66D0
 extern dword_C66D4, dword_C90B0, sflags3, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0AC
-extern lastsfx, dword_CC0E0, onetimerflag, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
+extern lastsfx, photobankf, onetimerflag, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 extern dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
 extern dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, crowdsmooth, frameaccum
-extern dword_D8C78, dword_D8C84, dword_D9980, dword_DB088, dword_DC28C, dword_DF00C, dword_DF010, hmtmstruct
+extern dword_D8C78, dword_D8C84, photobanks, dword_DB088, dword_DC28C, dword_DF00C, dword_DF010, hmtmstruct
 extern dword_DF6F2, dword_DF6F6, hmtmplstats, dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
 extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2
 extern awtmsort, dword_E009C, dword_E0248, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
-extern ltx, replaystart, off_CC01D, passspeed, sub_13A91, FileReadAt, FileWriteAt, sub_1BBCC
+extern ltx, replaystart, off_CC01D, passspeed, LoadGameGfx, FileReadAt, FileWriteAt, sub_1BBCC
 extern SaveModeState, LoadModeState, GetPeriodTime, SprSort, sub_61E99, sub_673C5, ReplayRecordReset, sub_7DC8B
 extern FatalError, MouseSetPos, threat, exhstate, unk_C5423, unk_C542E, awlinetab, unk_DAC40
 extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, hmlinetab, unk_DC240
@@ -1642,17 +1642,17 @@ mov dword [dword_DC28C], edx	; 6128C
 call sub_7DC8B	; 61292
 mov ecx, 17h	; 61297
 mov edx, 0FFFFFFFFh	; 6129C
-mov eax, dword_D9980	; 612A1
+mov eax, photobanks	; 612A1
 call __STOSD	; 612A6
 mov ebx, 0FFFFFFFFh	; 612AB
-mov dword [dword_CC0E0], ebx	; 612B0
-call sub_13A91	; 612B6
+mov dword [photobankf], ebx	; 612B0
+call LoadGameGfx	; 612B6
 mov ecx, 17h	; 612BB
 xor edx, edx	; 612C0
-mov eax, dword_D9980	; 612C2
+mov eax, photobanks	; 612C2
 call __STOSD	; 612C7
 xor ecx, ecx	; 612CC
-mov dword [dword_CC0E0], ecx	; 612CE
+mov dword [photobankf], ecx	; 612CE
 mov eax, dword [dword_CBECA]	; 612D4
 sar eax, 10h	; 612D9
 cmp eax, ebx	; 612DC

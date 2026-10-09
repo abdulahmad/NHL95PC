@@ -21,7 +21,7 @@ global dword_EC718, dword_EC71C, dword_EC720, dword_EC768, dword_EC76C, dword_EC
 global dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0, dword_ED35C, dword_ED360, dword_ED364, dword_ED368
 global dword_ED374, dword_ED380, dword_ED384, dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8
 global dword_ED6DC, dword_ED6E0, dword_ED6E4, dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8
-global dword_ED6FC, dword_ED700, dword_ED704, dword_ED708, dword_ED70C, dword_ED74C, dword_ED750, dword_ED754
+global dword_ED6FC, hilightfont, dword_ED704, dword_ED708, dword_ED70C, dword_ED74C, dword_ED750, dword_ED754
 global dword_ED756, dword_ED75C, dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774
 global dword_ED778, dword_ED77C, dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794
 global dword_ED798, dword_ED79C, dword_ED7A0, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, dword_ED7B4
@@ -132,7 +132,7 @@ dword_ED6F8:
 resb 4
 dword_ED6FC:
 resb 4
-dword_ED700:
+hilightfont:
 resb 4
 dword_ED704:
 resb 4

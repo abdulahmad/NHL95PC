@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_1B0F3 progbits alloc exec nowrite align=1
 extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, joysampling, dword_C66B0, rinkbm
-extern dword_CBECA, dword_CC0E0, dword_D8C68, dword_D8C80, dword_D9980, dword_DC230, dword_DC2F0, dword_DC338
-extern dword_DC8A0, dword_DC8C8, dword_E0244, dword_ED700, jctime, sub_33727, joyq_flush, CrowdNoiseOff
+extern dword_CBECA, photobankf, rinkendbank, numshpbank, photobanks, dword_DC230, dword_DC2F0, dword_DC338
+extern dword_DC8A0, dword_DC8C8, dword_E0244, hilightfont, jctime, sub_33727, joyq_flush, CrowdNoiseOff
 extern GameOver, sub_7DEC8, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E4F8, sub_8EA18, sub_91FA4
 extern FatalError, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, scrpitch
 global jpt_1B283, loc_1B1B7, loc_1B218, loc_1B225, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0
@@ -762,23 +762,23 @@ xor ecx, ecx	; 1B9BC
 mov dword [dword_E0244], ecx	; 1B9BE
 loc_1B9C4:
 call sub_1BAB1	; 1B9C4
-mov esi, dword [dword_D8C68]	; 1B9C9
+mov esi, dword [rinkendbank]	; 1B9C9
 test esi, esi	; 1B9CF
 je short loc_1B9E4	; 1B9D1
 push esi	; 1B9D3
 call jctime	; 1B9D4
 add esp, byte 4	; 1B9D9
 xor ebp, ebp	; 1B9DC
-mov dword [dword_D8C68], ebp	; 1B9DE
+mov dword [rinkendbank], ebp	; 1B9DE
 loc_1B9E4:
-mov eax, dword [dword_D8C80]	; 1B9E4
+mov eax, dword [numshpbank]	; 1B9E4
 test eax, eax	; 1B9E9
 je short loc_1B9FE	; 1B9EB
 push eax	; 1B9ED
 call jctime	; 1B9EE
 add esp, byte 4	; 1B9F3
 xor ebx, ebx	; 1B9F6
-mov dword [dword_D8C80], ebx	; 1B9F8
+mov dword [numshpbank], ebx	; 1B9F8
 loc_1B9FE:
 mov ecx, dword [dword_DC2F0]	; 1B9FE
 test ecx, ecx	; 1BA04
@@ -789,14 +789,14 @@ add esp, byte 4	; 1BA0E
 xor edi, edi	; 1BA11
 mov dword [dword_DC2F0], edi	; 1BA13
 loc_1BA19:
-mov ebp, dword [dword_ED700]	; 1BA19
+mov ebp, dword [hilightfont]	; 1BA19
 test ebp, ebp	; 1BA1F
 je short loc_1BA34	; 1BA21
 push ebp	; 1BA23
 call jctime	; 1BA24
 add esp, byte 4	; 1BA29
 xor edx, edx	; 1BA2C
-mov dword [dword_ED700], edx	; 1BA2E
+mov dword [hilightfont], edx	; 1BA2E
 loc_1BA34:
 call sub_7DEC8	; 1BA34
 mov ebx, dword [dword_DC338]	; 1BA39
@@ -832,7 +832,7 @@ call __CHK	; 1BA8A
 push ebx	; 1BA8F
 push ecx	; 1BA90
 push edx	; 1BA91
-mov edx, dword [dword_CC0E0]	; 1BA92
+mov edx, dword [photobankf]	; 1BA92
 test edx, edx	; 1BA98
 je short loc_1BAA5	; 1BA9A
 push edx	; 1BA9C
@@ -840,7 +840,7 @@ call jctime	; 1BA9D
 add esp, byte 4	; 1BAA2
 loc_1BAA5:
 xor ecx, ecx	; 1BAA5
-mov dword [dword_CC0E0], ecx	; 1BAA7
+mov dword [photobankf], ecx	; 1BAA7
 pop edx	; 1BAAD
 pop ecx	; 1BAAE
 pop ebx	; 1BAAF
@@ -859,14 +859,14 @@ jmp short loc_1BAED	; 1BACA
 loc_1BACC:
 mov esi, edi	; 1BACC
 shl esi, 2	; 1BACE
-mov edx, dword [dword esi+dword_D9980]	; 1BAD1
+mov edx, dword [dword esi+photobanks]	; 1BAD1
 test edx, edx	; 1BAD7
 je short loc_1BAEC	; 1BAD9
 push edx	; 1BADB
 call jctime	; 1BADC
 add esp, byte 4	; 1BAE1
 xor ecx, ecx	; 1BAE4
-mov dword [dword esi+dword_D9980], ecx	; 1BAE6
+mov dword [dword esi+photobanks], ecx	; 1BAE6
 loc_1BAEC:
 dec edi	; 1BAEC
 loc_1BAED:
@@ -931,14 +931,14 @@ cmp eax, ebp	; 1BB8B
 jge near loc_1BB0E	; 1BB8D
 mov esi, edi	; 1BB93
 shl esi, 2	; 1BB95
-mov edx, dword [dword esi+dword_D9980]	; 1BB98
+mov edx, dword [dword esi+photobanks]	; 1BB98
 test edx, edx	; 1BB9E
 je short loc_1BBB3	; 1BBA0
 push edx	; 1BBA2
 call jctime	; 1BBA3
 add esp, byte 4	; 1BBA8
 xor ecx, ecx	; 1BBAB
-mov dword [dword esi+dword_D9980], ecx	; 1BBAD
+mov dword [dword esi+photobanks], ecx	; 1BBAD
 loc_1BBB3:
 dec edi	; 1BBB3
 loc_1BBB4:
