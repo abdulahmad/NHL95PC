@@ -1506,6 +1506,10 @@ call DrawSprite	; 1112D
 .x:
 pop esi	; 11132
 ret 4	; 11133
+; C: src/c/001_10010_main_startup/DrawRinkEndArt.c
+%ifdef CBUILD
+%include "c/001_10010_main_startup/DrawRinkEndArt.inc"
+%else
 DrawRinkEndArt:
 push dword 18h	; 11136
 call __CHK	; 1113B
@@ -1523,6 +1527,11 @@ pop edx	; 1115D
 pop ecx	; 1115E
 pop ebx	; 1115F
 ret	; 11160
+%endif ; C
+; C: src/c/001_10010_main_startup/WaitKeyRelease.c
+%ifdef CBUILD
+%include "c/001_10010_main_startup/WaitKeyRelease.inc"
+%else
 WaitKeyRelease:
 push dword 18h	; 11161
 call __CHK	; 11166
@@ -1546,6 +1555,7 @@ pop edx	; 1118B
 pop ecx	; 1118C
 pop ebx	; 1118D
 ret	; 1118E
+%endif ; C
 HandleHotKey:
 push dword 2Ch	; 1118F
 call __CHK	; 11194

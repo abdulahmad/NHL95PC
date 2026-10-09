@@ -1338,6 +1338,10 @@ pop edx	; 1606E
 pop ecx	; 1606F
 pop ebx	; 16070
 ret	; 16071
+; C: src/c/006_150C6_scoreboard_gfx/ReadBE32.c
+%ifdef CBUILD
+%include "c/006_150C6_scoreboard_gfx/ReadBE32.inc"
+%else
 ReadBE32:
 push dword 0Ch	; 16072
 call __CHK	; 16077
@@ -1359,3 +1363,4 @@ add eax, edx	; 1609A
 pop edx	; 1609C
 pop ebx	; 1609D
 ret	; 1609E
+%endif ; C

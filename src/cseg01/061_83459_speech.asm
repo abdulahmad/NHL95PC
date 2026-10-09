@@ -220,6 +220,10 @@ jne short SpeechBusy.1	; 8370C
 .3:
 xor eax, eax	; 8370E
 ret	; 83710
+; C: src/c/061_83459_speech/SpeechIdle.c
+%ifdef CBUILD
+%include "c/061_83459_speech/SpeechIdle.inc"
+%else
 SpeechIdle:
 push dword 4	; 83711
 call __CHK	; 83716
@@ -236,6 +240,7 @@ cmp dword [byte eax+05Ch], byte 0	; 83732
 jne short SpeechIdle.1	; 83736
 mov eax, 1	; 83738
 ret	; 8373D
+%endif ; C
 MusicChanReset2:
 push dword 4	; 8373E
 call __CHK	; 83743
@@ -601,6 +606,10 @@ pop esi	; 83BC3
 pop ecx	; 83BC4
 pop ebx	; 83BC5
 ret	; 83BC6
+; C: src/c/061_83459_speech/SpeechSlotSize.c
+%ifdef CBUILD
+%include "c/061_83459_speech/SpeechSlotSize.inc"
+%else
 SpeechSlotSize:
 push dword 8	; 83BC7
 call __CHK	; 83BCC
@@ -620,6 +629,7 @@ mov edx, dword [speechbank]	; 83BE7
 mov eax, dword [byte edx+eax*2+016h]	; 83BED
 pop edx	; 83BF1
 ret	; 83BF2
+%endif ; C
 ReadSpeechSample:
 push dword 38h	; 83BF3
 call __CHK	; 83BF8
@@ -927,6 +937,10 @@ pop edx	; 83F31
 pop ecx	; 83F32
 pop ebx	; 83F33
 ret	; 83F34
+; C: src/c/061_83459_speech/SpeechSlotLoaded.c
+%ifdef CBUILD
+%include "c/061_83459_speech/SpeechSlotLoaded.inc"
+%else
 SpeechSlotLoaded:
 push dword 8	; 83F35
 call __CHK	; 83F3A
@@ -942,6 +956,7 @@ sete al	; 83F57
 and eax, 0FFh	; 83F5A
 pop edx	; 83F5F
 ret	; 83F60
+%endif ; C
 IsSampleRequested:
 push dword 14h	; 83F61
 call __CHK	; 83F66

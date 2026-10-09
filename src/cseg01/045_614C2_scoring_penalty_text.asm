@@ -101,6 +101,10 @@ pop esi	; 61572
 pop ecx	; 61573
 pop ebx	; 61574
 ret	; 61575
+; C: src/c/045_614C2_scoring_penalty_text/SetBoxDoorObject.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/SetBoxDoorObject.inc"
+%else
 SetBoxDoorObject:
 push dword 8	; 61576
 call __CHK	; 6157B
@@ -117,6 +121,7 @@ mov eax, 12h	; 61596
 call SetRinkObject	; 6159B
 pop edx	; 615A0
 ret	; 615A1
+%endif ; C
 DecayCrowdLevel:
 push dword 1Ch	; 615A2
 call __CHK	; 615A7

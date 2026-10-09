@@ -21,8 +21,6 @@ extern void SetScreenSize(); /* 10E9F */
 extern void IntermissionPC(); /* 10F6D */
 extern void DrawSpriteNumber(); /* 11005 */
 extern void DrawFrameSprite(); /* 110E0 */
-extern void DrawRinkEndArt(); /* 11136 */
-extern void WaitKeyRelease(); /* 11161 */
 extern void HandleHotKey(); /* 1118F */
 extern void HandleHotKey_ret(); /* 113E9 */
 extern void ResetInputSampling(); /* 1145F */
@@ -31,7 +29,6 @@ extern void SetFullPalette(); /* 11550 */
 extern void FadePalette(); /* 11598 */
 extern void GameLoop(); /* 1167B */
 extern void PlayGame(); /* 11D09 */
-extern void assinsert(); /* 12011 */
 extern void PickAwardWinners(); /* 1205D */
 extern void PickAwardWinners_x(); /* 12842 */
 extern void ShowAwardScreens(); /* 12849 */
@@ -92,7 +89,6 @@ extern void CupSeriesWinner(); /* 15CE1 */
 extern void RunDemoGame(); /* 15D6B */
 extern void RunDemoGame_x(); /* 16005 */
 extern void AnyInputPressed(); /* 1600C */
-extern void ReadBE32(); /* 16072 */
 extern void TitleScreen(); /* 1609F */
 extern void RunIntro(); /* 1672A */
 extern void ShowCredits(); /* 16F9A */
@@ -291,7 +287,6 @@ extern void ResetGoalieMenu(); /* 1CB7F */
 extern void ClearPanelPenalties(); /* 1CBD8 */
 extern void LoadScoreboardGfx(); /* 1CC3D */
 extern void DrawSprite_jt(); /* 1CD53 */
-extern void DrawSprite(); /* 1CD73 */
 extern void DrawSprite_b0(); /* 1CFBF */
 extern void DrawSprite_b1(); /* 1CFD3 */
 extern void DrawSprite_b2(); /* 1CFDD */
@@ -316,7 +311,6 @@ extern void SetScreenTitle_tree(); /* 1D641 */
 extern void SetScreenTitle_booth(); /* 1D64D */
 extern void SetScreenTitle_desk(); /* 1D659 */
 extern void SetScreenTitle_rink(); /* 1D665 */
-extern void StrPrefixDiffers(); /* 1D6BE */
 extern void RunMenu(); /* 1D6E8 */
 extern void RunMenu_ret4(); /* 1DEFD */
 extern void RunTeamPickMenu(); /* 1DF03 */
@@ -581,7 +575,6 @@ extern void WriteSchedGame(); /* 3A28F */
 extern void WriteSchedGame_common(); /* 3A2AE */
 extern void WriteTeamRec(); /* 3A2B8 */
 extern void ReadDbRec4Ch(); /* 3A2EE */
-extern void ReadLeagueTeamEntry(); /* 3A31E */
 extern void WriteLeagueTeamEntry(); /* 3A347 */
 extern void ReadDbRec28h(); /* 3A36B */
 extern void ReadDbRec2Ch(); /* 3A380 */
@@ -857,7 +850,6 @@ extern void PlayCrowdSample_ret(); /* 59A7D */
 extern void PaOneMinuteLeft(); /* 59A7E */
 extern void PaGoal(); /* 59AD0 */
 extern void PaPenalty(); /* 59B3C */
-extern void PaPenaltyShot(); /* 59B88 */
 extern void PaTonightIntro(); /* 59BB5 */
 extern void nullsub_5(); /* 59BFB */
 extern void PaScoringPeriod(); /* 59BFC */
@@ -912,8 +904,6 @@ extern void noturn0(); /* 5F98A */
 extern void SaveGameState(); /* 5FB03 */
 extern void SaveGameState_popx(); /* 6060B */
 extern void LoadGameState(); /* 60612 */
-extern void SetRinkObject(); /* 614C2 */
-extern void SetBoxDoorObject(); /* 61576 */
 extern void DecayCrowdLevel(); /* 615A2 */
 extern void sfxslots_popx(); /* 6185C */
 extern void DrawRinkObjects(); /* 61862 */
@@ -1229,7 +1219,6 @@ extern void CountSelected(); /* 6DA88 */
 extern void RosterPanelClick(); /* 6DAC3 */
 extern void RosterPanelClick_ret(); /* 6DCB8 */
 extern void FixJerseyNumber(); /* 6DCBE */
-extern void CopyRoster1Rec(); /* 6DE4C */
 extern void LoadBothRosterLists(); /* 6DE7E */
 extern void LoadRosterList(); /* 6DE94 */
 extern void EditTeamLines(); /* 6DF06 */
@@ -1316,7 +1305,6 @@ extern void FadePalStep(); /* 76429 */
 extern void FadePalStep_ret(); /* 76513 */
 extern void FadePalStepSlow(); /* 7651B */
 extern void SetPalette768(); /* 76614 */
-extern void RandLfsrByte(); /* 7665E */
 extern void BlitClipRect(); /* 7668D */
 extern void str_Scratch2(); /* 7673A */
 extern void str_Dress2(); /* 76742 */
@@ -1499,7 +1487,6 @@ extern void InitSpeech(); /* 8357A */
 extern void ShutdownSpeech(); /* 8363C */
 extern void ShutdownSpeech_ret6(); /* 836C3 */
 extern void ShutdownSpeech_ret5(); /* 836C4 */
-extern void SpeechIdle(); /* 83711 */
 extern void MusicChanReset2(); /* 8373E */
 extern void SpeechStopQueue(); /* 8374D */
 extern void MusicChanReset(); /* 837A8 */
@@ -1508,7 +1495,6 @@ extern void ReadBE24_ret(); /* 83857 */
 extern void ReadCString(); /* 8385F */
 extern void OpenSpeechBank(); /* 83897 */
 extern void OpenSpeechBank_ret(); /* 83BC1 */
-extern void SpeechSlotSize(); /* 83BC7 */
 extern void ReadSpeechSample(); /* 83BF3 */
 extern void LoadSpeechSlot(); /* 83CAE */
 extern void PlaceSpeechSlot(); /* 83D78 */
@@ -1516,7 +1502,6 @@ extern void StrEqNoCase(); /* 83E32 */
 extern void FindFreeSpeechSlot(); /* 83E6D */
 extern void FindLoadedSpeechSlot(); /* 83EAC */
 extern void FindSpeechSlot(); /* 83EEB */
-extern void SpeechSlotLoaded(); /* 83F35 */
 extern void IsSampleRequested(); /* 83F61 */
 extern void RequestSample(); /* 83FAF */
 extern void FreeUnrequestedSamples(); /* 84036 */
@@ -1558,7 +1543,6 @@ extern void SayPlayoffTonight(); /* 84C38 */
 extern void RequestTimeClips(); /* 84DDD */
 extern void QueueTimeClips(); /* 84EAC */
 extern void SayPenalty(); /* 84F7B */
-extern void SayPenaltyShot(); /* 8511E */
 extern void SayPlayerNumber(); /* 85213 */
 extern void SayGoal(); /* 8531F */
 extern void SayOneMinuteLeft(); /* 854AC */
@@ -6812,7 +6796,6 @@ extern void loc_B2C68(); /* B2C68 */
 extern void loc_B2C6D(); /* B2C6D */
 extern void loc_B2C85(); /* B2C85 */
 extern void loc_B2CAC(); /* B2CAC */
-extern void sub_B2CBE(); /* B2CBE */
 extern void sub_B2CCD(); /* B2CCD */
 extern void FatalError(); /* B2CD8 */
 extern void loc_B2D01(); /* B2D01 */
@@ -6963,7 +6946,6 @@ extern void sub_B39F3(); /* B39F3 */
 extern void loc_B3A01(); /* B3A01 */
 extern void loc_B3A07(); /* B3A07 */
 extern void WaitKey(); /* B3A18 */
-extern void sub_B3A24(); /* B3A24 */
 extern void sub_B3A2F(); /* B3A2F */
 extern void loc_B3A47(); /* B3A47 */
 extern void loc_B3A59(); /* B3A59 */

@@ -6900,6 +6900,10 @@ ret	; 4D8FC
 pucknothing:
 push dword 4	; 4D8FD
 call __CHK	; 4D902
+; C: src/c/037_4842A_engine_player_logic/puckunflip.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/puckunflip.inc"
+%else
 puckunflip:
 push dword 8	; 4D907
 call __CHK	; 4D90C
@@ -6916,6 +6920,7 @@ mov word [byte eax+03Ah], 0	; 4D92A
 mov word [byte eax+03Ch], 0FFFFh	; 4D930
 pop edx	; 4D936
 ret	; 4D937
+%endif ; C
 %endif ; C
 RequestLineChange:
 push dword 18h	; 4D938

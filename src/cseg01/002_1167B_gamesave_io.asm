@@ -636,6 +636,10 @@ call SetScreenSize	; 11FE7
 .16:
 add esp, byte 40h	; 11FEC
 jmp near HandleHotKey_ret	; 11FEF
+; C: src/c/002_1167B_gamesave_io/assreplace.c
+%ifdef CBUILD
+%include "c/002_1167B_gamesave_io/assreplace.inc"
+%else
 assreplace:
 push dword 8	; 11FF4
 call __CHK	; 11FF9
@@ -647,6 +651,11 @@ mov byte [byte edx+eax+01Eh], bl	; 12007
 or byte [byte eax+044h], 2	; 1200B
 pop ebx	; 1200F
 ret	; 12010
+%endif ; C
+; C: src/c/002_1167B_gamesave_io/assinsert.c
+%ifdef CBUILD
+%include "c/002_1167B_gamesave_io/assinsert.inc"
+%else
 assinsert:
 push dword 8	; 12011
 call __CHK	; 12016
@@ -660,6 +669,7 @@ movsx edx, dx	; 1202A
 call assreplace	; 1202D
 pop ebx	; 12032
 ret	; 12033
+%endif ; C
 ; C: src/c/002_1167B_gamesave_io/ReplayIsEmpty.c
 %ifdef CBUILD
 %include "c/002_1167B_gamesave_io/ReplayIsEmpty.inc"

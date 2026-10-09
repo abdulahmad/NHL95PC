@@ -797,6 +797,10 @@ mov dword [dword_CF5F7], edx	; 1D6B5
 pop edx	; 1D6BB
 pop ebx	; 1D6BC
 ret	; 1D6BD
+; C: src/c/014_1CC3D_frontend_labels/StrPrefixDiffers.c
+%ifdef CBUILD
+%include "c/014_1CC3D_frontend_labels/StrPrefixDiffers.inc"
+%else
 StrPrefixDiffers:
 push dword 8	; 1D6BE
 call __CHK	; 1D6C3
@@ -821,3 +825,4 @@ jmp short StrPrefixDiffers.1	; 1D6E2
 xor eax, eax	; 1D6E4
 pop ebx	; 1D6E6
 ret	; 1D6E7
+%endif ; C

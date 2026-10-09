@@ -49,4 +49,12 @@ extern unsigned char *carteamsdb;   /* D07C3: career team database buffer (4Ch b
 extern unsigned char *keydb;        /* D07C7: key database buffer */
 extern unsigned char *teamsdb;      /* D07CB: team database buffer (2E8h bytes per team) */
 extern unsigned char *attdb;        /* D07CF: attribute database buffer */
+/* speech bank slots, 26h bytes each (SpeechSlotLoaded / SpeechSlotSize) */
+typedef struct SpeechSlot {
+    unsigned char pad0[0x16];
+    int size;                   /* 16h: sample size */
+    unsigned char pad1[8];
+    int loaded;                 /* 22h: 1 = sample in memory */
+} SpeechSlot;
+extern SpeechSlot *speechbank;  /* ED7B0: the speech bank slot array */
 #endif

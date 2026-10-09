@@ -2293,6 +2293,10 @@ pop edi	; 3A31A
 pop esi	; 3A31B
 pop ecx	; 3A31C
 ret	; 3A31D
+; C: src/c/029_380E9_league_setup/ReadLeagueTeamEntry.c
+%ifdef CBUILD
+%include "c/029_380E9_league_setup/ReadLeagueTeamEntry.inc"
+%else
 ReadLeagueTeamEntry:
 push dword 0Ch	; 3A31E
 call __CHK	; 3A323
@@ -2310,6 +2314,7 @@ call FileReadAt	; 3A33F
 pop esi	; 3A344
 pop ecx	; 3A345
 ret	; 3A346
+%endif ; C
 WriteLeagueTeamEntry:
 push dword 0Ch	; 3A347
 call __CHK	; 3A34C

@@ -170,5 +170,25 @@ void TradeCancel(void);  /* 3EF27 */
 void EditRostersReturn(void);  /* 6D5BB */                
 void SetLeagueSetImage(int img);  /* 7A6AD */             
 int CritErrHandler(void);  /* 3149D */                    
+void assreplace(Player *p, int a);  /* 11FF4 */           
+void assinsert(Player *p, short a);  /* 12011 */          
+void ReadLeagueTeamEntry(int fh, void *entry, int n);  /* 3A31E */
+int StrPrefixDiffers(char *a, char *b);  /* 1D6BE */      
+void DrawRinkEndArt(void);
+void DrawSprite(int spr, int x, int y, int a, int b, int c);  /* 1CD73 */
+void SetBoxDoorObject(int open);
+void SetRinkObject(int obj, int frame);  /* 614C2 */      
+int SpeechSlotLoaded(int i);  /* 83F35 */                 
+int SpeechSlotSize(int i);  /* 83BC7 */                   
+int ReadBE32(signed char *p);  /* 16072 */                
+void PaPenaltyShot(int a);
+void SayPenaltyShot(int a);  /* 8511E */                  
+int SpeechIdle(void);  /* 83711 */                        
+void WaitKeyRelease(int key);
+int __cdecl sub_B2CBE(int key);  /* keyboard library: key down? */
+void __cdecl sub_B3A24(void);  /* keyboard library */     
+unsigned char RandLfsrByte(unsigned char *s);  /* 7665E */
+void puckunflip(Player *p);  /* 4D907 */                  
+void CopyRoster1Rec(void);  /* 6DE4C */                   
 
 #endif

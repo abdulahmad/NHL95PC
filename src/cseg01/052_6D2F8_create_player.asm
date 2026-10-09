@@ -983,6 +983,10 @@ test edi, edi	; 6DE39
 jne near FixJerseyNumber.1	; 6DE3B
 add esp, 80h	; 6DE41
 jmp near RosterPanelClick_ret	; 6DE47
+; C: src/c/052_6D2F8_create_player/CopyRoster1Rec.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/CopyRoster1Rec.inc"
+%else
 CopyRoster1Rec:
 push dword 10h	; 6DE4C
 call __CHK	; 6DE51
@@ -999,6 +1003,7 @@ pop edi	; 6DE7A
 pop esi	; 6DE7B
 pop ecx	; 6DE7C
 ret	; 6DE7D
+%endif ; C
 LoadBothRosterLists:
 push dword 4	; 6DE7E
 call __CHK	; 6DE83
