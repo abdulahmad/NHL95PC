@@ -684,6 +684,10 @@ xor ebx, ebx	; 6CB58
 mov dword [seasondb], ebx	; 6CB5A
 mov dword [seasondb_size], ebx	; 6CB60
 jmp near BuildFreeAgentList_ret	; 6CB66
+; C: src/c/051_6C2F9_database_save/CarTeamRecPtr.c
+%ifdef CBUILD
+%include "c/051_6C2F9_database_save/CarTeamRecPtr.inc"
+%else
 CarTeamRecPtr:
 push dword 8	; 6CB6B
 call __CHK	; 6CB70
@@ -699,6 +703,11 @@ mov eax, dword [carteamsdb]	; 6CB87
 add eax, edx	; 6CB8C
 pop edx	; 6CB8E
 ret	; 6CB8F
+%endif ; C
+; C: src/c/051_6C2F9_database_save/TeamRecPtr.c
+%ifdef CBUILD
+%include "c/051_6C2F9_database_save/TeamRecPtr.inc"
+%else
 TeamRecPtr:
 push dword 8	; 6CB90
 call __CHK	; 6CB95
@@ -715,6 +724,11 @@ mov eax, dword [teamsdb]	; 6CBAE
 add eax, edx	; 6CBB3
 pop edx	; 6CBB5
 ret	; 6CBB6
+%endif ; C
+; C: src/c/051_6C2F9_database_save/KeyDbPtr.c
+%ifdef CBUILD
+%include "c/051_6C2F9_database_save/KeyDbPtr.inc"
+%else
 KeyDbPtr:
 push dword 8	; 6CBB7
 call __CHK	; 6CBBC
@@ -723,6 +737,7 @@ mov edx, dword [keydb]	; 6CBC2
 add eax, edx	; 6CBC8
 pop edx	; 6CBCA
 ret	; 6CBCB
+%endif ; C
 SeasonDbPtr:
 push dword 8	; 6CBCC
 SeasonDbPtr_common:

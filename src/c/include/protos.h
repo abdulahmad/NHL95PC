@@ -92,5 +92,31 @@ int SpeechBusy(void);                                     /* announcer sample st
 short randomd0(short range);                              /* random 0..range-1 (93G randomd0) */
 int OpenAnnouncerBank(void);                              /* 0 = failed */
 short sub_8F80E(int handle);                              /* sound library: sample finished? */
+int ReplayIsEmpty(void);                                   /* 12034 */
+void TextGridFree(void);                                  /* 17756 */
+int FileClose(int *h);                                    /* 1457C */
+short GameTimeStamp(void);                                /* 62CD7 */
+void _nfree(void *p);                                     /* Watcom CRT _nfree_ */
+int _dos_close(int h);                                    /* Watcom CRT _dos_close_ */
+int DateKey(int month, int day);  /* 41C79 */             
+unsigned Swap16(unsigned x);  /* 837D9 */                 
+int RandMod(int n);
+int rand(void);  /* Watcom CRT rand_ */                   
+void SimAddPair(int *count, int *pairs, int a, int b);  /* 452A6 */
+int StrLenToDot(char *s);  /* 1D5D5 */                    
+unsigned char *TeamRecPtr(int team);  /* 6CB90 */         
+unsigned char *CarTeamRecPtr(int team);  /* 6CB6B */      
+unsigned char *KeyDbPtr(int ofs);  /* 6CBB7 */            
+double RatingToFloat(unsigned char r);  /* 6F6AD */       
+int GetMemListHead(int which);  /* 10010 */               
+int SpeechIsInit(void);  /* 836CA */                      
+void MusicChanCmd3(void);
+void sub_8FCAC(int handle, int cmd);  /* sound library */ 
+void CalReturn(void);  /* 3476B */                        
+int DeskToSportsDesk(void);  /* 1A5B1 */                  
+int FileCreate(char *name, int *h);
+int _dos_creat(char *name, int attr, int *h);  /* Watcom CRT _dos_creat_ */
+void CenterMouse(void);
+void __cdecl MouseSetPos(int x, int y);  /* input library, stack args */
 
 #endif

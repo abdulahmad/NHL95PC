@@ -43,4 +43,10 @@ extern Reg68 regd1;     /* E03C0 */
 extern Reg68 regd2;     /* E03AC */
 extern Reg68 regd3;     /* E03B0 */
 extern Reg68 regd4;     /* E03B4 */
+extern unsigned char *seasondb;     /* D07BB: season database buffer */
+extern unsigned char *careerdb;     /* D07BF: career database buffer */
+extern unsigned char *carteamsdb;   /* D07C3: career team database buffer (4Ch bytes per team) */
+extern unsigned char *keydb;        /* D07C7: key database buffer */
+extern unsigned char *teamsdb;      /* D07CB: team database buffer (2E8h bytes per team) */
+extern unsigned char *attdb;        /* D07CF: attribute database buffer */
 #endif

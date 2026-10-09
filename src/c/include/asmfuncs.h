@@ -6,7 +6,6 @@
 
 extern void sub_10000(); /* 10000 */
 extern void unk_10003(); /* 10003 */
-extern void GetMemListHead(); /* 10010 */
 extern void GetMemStats(); /* 1002A */
 extern void main_x(); /* 106BF */
 extern void DiskFreeBytes(); /* 106C8 */
@@ -33,7 +32,6 @@ extern void FadePalette(); /* 11598 */
 extern void GameLoop(); /* 1167B */
 extern void PlayGame(); /* 11D09 */
 extern void assinsert(); /* 12011 */
-extern void ReplayIsEmpty(); /* 12034 */
 extern void PickAwardWinners(); /* 1205D */
 extern void PickAwardWinners_x(); /* 12842 */
 extern void ShowAwardScreens(); /* 12849 */
@@ -60,8 +58,6 @@ extern void FileOpenRead(); /* 14525 */
 extern void FileOpenRead_x(); /* 14537 */
 extern void FileOpenWrite(); /* 1453E */
 extern void FileOpenRW(); /* 14552 */
-extern void FileCreate(); /* 14566 */
-extern void FileClose(); /* 1457C */
 extern void FileReadAt(); /* 145A2 */
 extern void FileReadAt_x(); /* 145E4 */
 extern void FileReadAt_x2(); /* 145E6 */
@@ -112,7 +108,6 @@ extern void PrintOutlinedText(); /* 17636 */
 extern void PrintFmt1(); /* 176AE */
 extern void PrintFmt2(); /* 176DB */
 extern void TextGridOpen(); /* 17711 */
-extern void TextGridFree(); /* 17756 */
 extern void TextGridOff(); /* 1777E */
 extern void TextGridPut(); /* 17793 */
 extern void WriteScreenTextFile(); /* 17816 */
@@ -158,7 +153,6 @@ extern void PostGameDesk(); /* 1920F */
 extern void SportsDesk(); /* 1935D */
 extern void DeskReloadGame(); /* 1A534 */
 extern void DeskBackToGame(); /* 1A5A1 */
-extern void DeskToSportsDesk(); /* 1A5B1 */
 extern void DeskReturnConfirm(); /* 1A5D4 */
 extern void DeskExitGame(); /* 1A6A7 */
 extern void DeskGoToReplay(); /* 1A817 */
@@ -325,7 +319,6 @@ extern void SetupStatsSourceMenu_po(); /* 1D241 */
 extern void SetupStatsSourceMenu_exh(); /* 1D2D3 */
 extern void SetupStatsSourceMenu_all(); /* 1D342 */
 extern void BuildSavedGameLabels(); /* 1D518 */
-extern void StrLenToDot(); /* 1D5D5 */
 extern void SetScreenTitle_jt(); /* 1D5F8 */
 extern void SetScreenTitle(); /* 1D610 */
 extern void SetScreenTitle_central(); /* 1D629 */
@@ -578,7 +571,6 @@ extern void LoadCrestsPalette(); /* 33F02 */
 extern void DrawCalendarDay(); /* 33FFD */
 extern void CalNextMonth(); /* 34691 */
 extern void CalPrevMonth(); /* 346FE */
-extern void CalReturn(); /* 3476B */
 extern void ApplyShapePalette(); /* 34789 */
 extern void SetGameSides(); /* 347B7 */
 extern void CalendarScreen(); /* 34821 */
@@ -672,7 +664,6 @@ extern void MsgCopyingDatabases(); /* 414E0 */
 extern void CopyHumanTeamDBs(); /* 41516 */
 extern void SaveLeagueGameRef(); /* 41978 */
 extern void LoadLeagueGameRef(); /* 41B80 */
-extern void DateKey(); /* 41C79 */
 extern void NormalizeDate(); /* 41C9B */
 extern void UpdateSeasonSchedule(); /* 41CC4 */
 extern void UpdateSeasonSchedule_pop3(); /* 41F5E */
@@ -709,8 +700,6 @@ extern void FinishPlayoffs_r3(); /* 44952 */
 extern void FinishPlayoffs_r4(); /* 4499D */
 extern void AdvancePlayoffs(); /* 44A41 */
 extern void CreateNewLeague(); /* 44DCF */
-extern void RandMod(); /* 45282 */
-extern void SimAddPair(); /* 452A6 */
 extern void SimulateGame(); /* 452C5 */
 extern void LoadScreenPalTick(); /* 47951 */
 extern void ShowLoadingScreen(); /* 479E9 */
@@ -804,7 +793,6 @@ extern void lcfound(); /* 50975 */
 extern void Readjoy1(); /* 50A05 */
 extern void Readjoy_tail(); /* 50A59 */
 extern void Readjoy2(); /* 50A84 */
-extern void CenterMouse(); /* 50ADE */
 extern void PassRecOneTimer(); /* 50B55 */
 extern void OneTimerChk(); /* 50E5C */
 extern void asspassrec(); /* 50F3F */
@@ -941,7 +929,6 @@ extern void SprSortVert(); /* 5DD6B */
 extern void SprSort(); /* 5DD7C */
 extern void IntermissionStart(); /* 5DE70 */
 extern void PeriodOver(); /* 5DEA6 */
-extern void ResetBench(); /* 5DF86 */
 extern void resetplstuff(); /* 5E01A */
 extern void EvadePlayers_popebp(); /* 5E7F7 */
 extern void EvadePlayers_popedi(); /* 5E7F8 */
@@ -978,7 +965,6 @@ extern void PostInjuryEvent(); /* 62764 */
 extern void NullCallback0C(); /* 627F8 */
 extern void ChkScorerMilestone(); /* 62807 */
 extern void QueueGoalieNote(); /* 62C37 */
-extern void GameTimeStamp(); /* 62CD7 */
 extern void AddPenalty(); /* 62CF9 */
 extern void AddPenalty2(); /* 62D80 */
 extern void SetPA(); /* 62EA2 */
@@ -1246,9 +1232,6 @@ extern void MenuSaveDbsAs(); /* 6C3BB */
 extern void SaveDbsToDir(); /* 6C4BA */
 extern void WriteLeagueDbsMem(); /* 6C96C */
 extern void FreeLeagueDbsMem(); /* 6CA8F */
-extern void CarTeamRecPtr(); /* 6CB6B */
-extern void TeamRecPtr(); /* 6CB90 */
-extern void KeyDbPtr(); /* 6CBB7 */
 extern void SeasonDbPtr(); /* 6CBCC */
 extern void SeasonDbPtr_common(); /* 6CBD1 */
 extern void SeasonDbPtr2(); /* 6CBE1 */
@@ -1288,7 +1271,6 @@ extern void CheckTeamLines(); /* 6ED8F */
 extern void CheckDatabases(); /* 6EF84 */
 extern void SplitPlayerName(); /* 6F159 */
 extern void MoveToOtherRoster(); /* 6F29C */
-extern void RatingToFloat(); /* 6F6AD */
 extern void RandomizeNewRatings(); /* 6F6D4 */
 extern void CreatePlayerNop(); /* 6FA72 */
 extern void DrawShootsField(); /* 6FA7D */
@@ -1553,13 +1535,10 @@ extern void InitSpeech(); /* 8357A */
 extern void ShutdownSpeech(); /* 8363C */
 extern void ShutdownSpeech_ret6(); /* 836C3 */
 extern void ShutdownSpeech_ret5(); /* 836C4 */
-extern void SpeechIsInit(); /* 836CA */
 extern void SpeechIdle(); /* 83711 */
 extern void MusicChanReset2(); /* 8373E */
 extern void SpeechStopQueue(); /* 8374D */
-extern void MusicChanCmd3(); /* 8378C */
 extern void MusicChanReset(); /* 837A8 */
-extern void Swap16(); /* 837D9 */
 extern void ReadBE24(); /* 837FB */
 extern void ReadBE24_ret(); /* 83857 */
 extern void ReadCString(); /* 8385F */
@@ -2162,7 +2141,6 @@ extern void sub_8FC37(); /* 8FC37 */
 extern void sub_8FC8A(); /* 8FC8A */
 extern void loc_8FC96(); /* 8FC96 */
 extern void loc_8FC9C(); /* 8FC9C */
-extern void sub_8FCAC(); /* 8FCAC */
 extern void loc_8FCDC(); /* 8FCDC */
 extern void sub_8FCDF(); /* 8FCDF */
 extern void loc_8FCF8(); /* 8FCF8 */
@@ -6894,7 +6872,6 @@ extern void sub_B2D74(); /* B2D74 */
 extern void loc_B2D92(); /* B2D92 */
 extern void sub_B2D94(); /* B2D94 */
 extern void loc_B2DB2(); /* B2DB2 */
-extern void MouseSetPos(); /* B2DB4 */
 extern void sub_B2DCA(); /* B2DCA */
 extern void sub_B2DEF(); /* B2DEF */
 extern void sub_B2E1B(); /* B2E1B */

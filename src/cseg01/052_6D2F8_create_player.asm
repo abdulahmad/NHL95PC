@@ -3051,6 +3051,10 @@ pop edi	; 6F6A9
 pop esi	; 6F6AA
 pop ecx	; 6F6AB
 ret	; 6F6AC
+; C: src/c/052_6D2F8_create_player/RatingToFloat.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/RatingToFloat.inc"
+%else
 RatingToFloat:
 push dword 0Ch	; 6F6AD
 call __CHK	; 6F6B2
@@ -3067,6 +3071,7 @@ fild dword [esp]	; 6F6CC
 add esp, byte 4	; 6F6CF
 pop edx	; 6F6D2
 ret	; 6F6D3
+%endif ; C
 RandomizeNewRatings:
 push dword 64h	; 6F6D4
 call __CHK	; 6F6D9

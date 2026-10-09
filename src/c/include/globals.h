@@ -3279,12 +3279,6 @@ extern int falist; /* D07AA */
 extern int falistsel; /* D07AE */
 extern int facount; /* D07B2 */
 extern unsigned char str_TMP[]; /* D07B6 */
-extern int seasondb; /* D07BB */
-extern int careerdb; /* D07BF */
-extern int carteamsdb; /* D07C3 */
-extern int keydb; /* D07C7 */
-extern int teamsdb; /* D07CB */
-extern int attdb; /* D07CF */
 extern int seasondb_size; /* D07D3 */
 extern int careerdb_size; /* D07D7 */
 extern int carteamsdb_size; /* D07DB */

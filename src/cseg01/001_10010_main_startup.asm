@@ -33,6 +33,10 @@ global main_, GetMemListHead, GetMemStats, main_x, DiskFreeBytes, SetupControlle
 global ReadKeyboardPad, ReadJoyPad, ReadMousePad, ReadControllerPad, ReadHotKeys, ReadSkipKeys, SampleInputTick, SetScreenSize
 global IntermissionPC, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt, WaitKeyRelease, HandleHotKey, ResetInputSampling, RunGameFrames
 global SetFullPalette, FadePalette
+; C: src/c/001_10010_main_startup/GetMemListHead.c
+%ifdef CBUILD
+%include "c/001_10010_main_startup/GetMemListHead.inc"
+%else
 GetMemListHead:
 push dword 4	; 10010
 call __CHK	; 10015
@@ -43,6 +47,7 @@ ret	; 10023
 .1:
 mov eax, dword [memlist0]	; 10024
 ret	; 10029
+%endif ; C
 GetMemStats:
 push dword 14h	; 1002A
 call __CHK	; 1002F

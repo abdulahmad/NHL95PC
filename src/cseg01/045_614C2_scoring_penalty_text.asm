@@ -2013,6 +2013,10 @@ pop edx	; 62CD3
 pop ecx	; 62CD4
 pop ebx	; 62CD5
 ret	; 62CD6
+; C: src/c/045_614C2_scoring_penalty_text/GameTimeStamp.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/GameTimeStamp.inc"
+%else
 GameTimeStamp:
 push dword 4	; 62CD7
 call __CHK	; 62CDC
@@ -2021,6 +2025,7 @@ shl eax, 0Eh	; 62CE7
 add ax, word [PerTimeTotal]	; 62CEA
 sub ax, word [gameclock]	; 62CF1
 ret	; 62CF8
+%endif ; C
 AddPenalty:
 push dword 8	; 62CF9
 call __CHK	; 62CFE

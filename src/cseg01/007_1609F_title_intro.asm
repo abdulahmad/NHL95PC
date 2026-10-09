@@ -1708,6 +1708,10 @@ call memset_	; 1774E
 pop edx	; 17753
 pop ebx	; 17754
 ret	; 17755
+; C: src/c/007_1609F_title_intro/TextGridFree.c
+%ifdef CBUILD
+%include "c/007_1609F_title_intro/TextGridFree.inc"
+%else
 TextGridFree:
 push dword 0Ch	; 17756
 call __CHK	; 1775B
@@ -1724,6 +1728,7 @@ mov dword [textgrid], ebx	; 17775
 pop edx	; 1777B
 pop ebx	; 1777C
 ret	; 1777D
+%endif ; C
 TextGridOff:
 push dword 8	; 1777E
 call __CHK	; 17783

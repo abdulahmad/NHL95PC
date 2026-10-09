@@ -211,6 +211,10 @@ push ebx	; 1455C
 mov ebx, edx	; 1455D
 mov edx, 42h	; 1455F
 jmp short FileOpenRead_x	; 14564
+; C: src/c/005_1431E_file_utils/FileCreate.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/FileCreate.inc"
+%else
 FileCreate:
 push dword 8	; 14566
 call __CHK	; 1456B
@@ -220,6 +224,11 @@ xor edx, edx	; 14573
 call _dos_creat_	; 14575
 pop ebx	; 1457A
 ret	; 1457B
+%endif ; C
+; C: src/c/005_1431E_file_utils/FileClose.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/FileClose.inc"
+%else
 FileClose:
 push dword 0Ch	; 1457C
 call __CHK	; 14581
@@ -237,6 +246,7 @@ mov dword [edx], 0FFFFFFFFh	; 14599
 pop edx	; 1459F
 pop ebx	; 145A0
 ret	; 145A1
+%endif ; C
 FileReadAt:
 push dword 18h	; 145A2
 call __CHK	; 145A7

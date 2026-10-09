@@ -660,6 +660,10 @@ movsx edx, dx	; 1202A
 call assreplace	; 1202D
 pop ebx	; 12032
 ret	; 12033
+; C: src/c/002_1167B_gamesave_io/ReplayIsEmpty.c
+%ifdef CBUILD
+%include "c/002_1167B_gamesave_io/ReplayIsEmpty.inc"
+%else
 ReplayIsEmpty:
 push dword 4	; 12034
 call __CHK	; 12039
@@ -673,6 +677,7 @@ ret	; 12059
 .1:
 xor eax, eax	; 1205A
 ret	; 1205C
+%endif ; C
 PickAwardWinners:
 push dword 41Ch	; 1205D
 call __CHK	; 12062

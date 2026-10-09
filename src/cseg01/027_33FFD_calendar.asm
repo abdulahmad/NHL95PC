@@ -603,6 +603,10 @@ mov dword [calsel], 0FFFFFFFFh	; 3475E
 pop ecx	; 34768
 pop ebx	; 34769
 ret	; 3476A
+; C: src/c/027_33FFD_calendar/CalReturn.c
+%ifdef CBUILD
+%include "c/027_33FFD_calendar/CalReturn.inc"
+%else
 CalReturn:
 push dword 8	; 3476B
 call __CHK	; 34770
@@ -612,6 +616,7 @@ mov dword [calexit], edx	; 3477B
 mov dword [calsel], edx	; 34781
 pop edx	; 34787
 ret	; 34788
+%endif ; C
 ApplyShapePalette:
 push dword 18h	; 34789
 call __CHK	; 3478E

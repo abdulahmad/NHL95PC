@@ -1241,6 +1241,10 @@ mov word [regd2], ax	; 50AC7
 mov ax, word [regd1]	; 50ACD
 mov word [lj2], ax	; 50AD3
 jmp near Readjoy_tail	; 50AD9
+; C: src/c/038_4FCE8_engine_input/CenterMouse.c
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/CenterMouse.inc"
+%else
 CenterMouse:
 push dword 18h	; 50ADE
 call __CHK	; 50AE3
@@ -1255,3 +1259,4 @@ pop edx	; 50AFA
 pop ecx	; 50AFB
 pop ebx	; 50AFC
 ret	; 50AFD
+%endif ; C

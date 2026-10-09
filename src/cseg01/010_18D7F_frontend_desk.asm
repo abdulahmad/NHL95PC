@@ -1609,6 +1609,10 @@ push dword 4	; 1A5A1
 call __CHK	; 1A5A6
 mov eax, 1	; 1A5AB
 ret	; 1A5B0
+; C: src/c/010_18D7F_frontend_desk/DeskToSportsDesk.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/DeskToSportsDesk.inc"
+%else
 DeskToSportsDesk:
 push dword 8	; 1A5B1
 call __CHK	; 1A5B6
@@ -1619,6 +1623,7 @@ mov dword [dword_C66D0], edx	; 1A5C7
 mov eax, 5	; 1A5CD
 pop edx	; 1A5D2
 ret	; 1A5D3
+%endif ; C
 DeskReturnConfirm:
 push dword 34h	; 1A5D4
 call __CHK	; 1A5D9

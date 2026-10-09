@@ -191,6 +191,10 @@ pop edx	; 836C6
 pop ecx	; 836C7
 pop ebx	; 836C8
 ret	; 836C9
+; C: src/c/061_83459_speech/SpeechIsInit.c
+%ifdef CBUILD
+%include "c/061_83459_speech/SpeechIsInit.inc"
+%else
 SpeechIsInit:
 push dword 4	; 836CA
 call __CHK	; 836CF
@@ -198,6 +202,7 @@ cmp dword [speechinit], byte 0	; 836D4
 setne al	; 836DB
 and eax, 0FFh	; 836DE
 ret	; 836E3
+%endif ; C
 SpeechBusy:
 push dword 4	; 836E4
 call __CHK	; 836E9
@@ -256,6 +261,10 @@ pop edx	; 83788
 pop ecx	; 83789
 pop ebx	; 8378A
 ret	; 8378B
+; C: src/c/061_83459_speech/MusicChanCmd3.c
+%ifdef CBUILD
+%include "c/061_83459_speech/MusicChanCmd3.inc"
+%else
 MusicChanCmd3:
 push dword 8	; 8378C
 call __CHK	; 83791
@@ -265,6 +274,7 @@ mov edx, 3	; 8379C
 call sub_8FCAC	; 837A1
 pop edx	; 837A6
 ret	; 837A7
+%endif ; C
 MusicChanReset:
 push dword 8	; 837A8
 call __CHK	; 837AD
@@ -280,6 +290,10 @@ call sub_8FCAC	; 837D2
 .x:
 pop edx	; 837D7
 ret	; 837D8
+; C: src/c/061_83459_speech/Swap16.c
+%ifdef CBUILD
+%include "c/061_83459_speech/Swap16.inc"
+%else
 Swap16:
 push dword 8	; 837D9
 call __CHK	; 837DE
@@ -292,6 +306,7 @@ and eax, 0FFh	; 837F2
 or eax, edx	; 837F7
 pop edx	; 837F9
 ret	; 837FA
+%endif ; C
 ReadBE24:
 push dword 20h	; 837FB
 call __CHK	; 83800

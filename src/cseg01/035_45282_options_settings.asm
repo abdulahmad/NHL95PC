@@ -11,6 +11,10 @@ extern sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4C
 extern tag_at, tag_pk, tag_ps, tag_gk, tag_gs
 global RandMod, SimAddPair, SimulateGame, LoadScreenPalTick
 global ShowLoadingScreen
+; C: src/c/035_45282_options_settings/RandMod.c
+%ifdef CBUILD
+%include "c/035_45282_options_settings/RandMod.inc"
+%else
 RandMod:
 push dword 0Ch	; 45282
 call __CHK	; 45287
@@ -26,6 +30,7 @@ mov eax, edx	; 452A1
 pop edx	; 452A3
 pop ebx	; 452A4
 ret	; 452A5
+%endif ; C
 SimAddPair:
 push dword 8	; 452A6
 call __CHK	; 452AB
