@@ -3373,6 +3373,10 @@ push dword 4	; 6FA72
 call __CHK	; 6FA77
 ret	; 6FA7C
 %endif ; C
+; C: src/c/052_6D2F8_create_player/DrawShootsField.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/DrawShootsField.inc"
+%else
 DrawShootsField:
 push dword 24h	; 6FA7D
 call __CHK	; 6FA82
@@ -3439,6 +3443,11 @@ pop edx	; 6FB31
 pop ecx	; 6FB32
 pop ebx	; 6FB33
 ret	; 6FB34
+%endif ; C
+; C: src/c/052_6D2F8_create_player/DrawShootsField.c (DrawGloveField)
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/DrawShootsField.DrawGloveField.inc"
+%else
 DrawGloveField:
 push dword 24h	; 6FB35
 call __CHK	; 6FB3A
@@ -3496,6 +3505,7 @@ inc edi	; 6FBDD
 cmp edi, byte 0Bh	; 6FBDE
 jl short DrawGloveField.3	; 6FBE1
 jmp near DrawShootsField_tail	; 6FBE3
+%endif ; C
 ; C: src/c/052_6D2F8_create_player/AskLeftRight.c
 %ifdef CBUILD
 %include "c/052_6D2F8_create_player/AskLeftRight.inc"

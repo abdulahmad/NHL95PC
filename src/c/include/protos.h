@@ -710,5 +710,7 @@ void __cdecl sub_8E080(int w, int h);  /* video library: set mode size */
 void __cdecl sub_B2E1B(int x, int y, int w, int h);  /* graphics library: view rect */
 void SetScreenSize(int w, int h);  /* 10E9F */
 int avdgoal_box(Player *p, int x1, int x2, int y, int *ps, int *pt);  /* 5F04E */
+void DrawShootsField(void);  /* 6FA7D */
+void DrawGloveField(void);  /* 6FB35 */
 
 #endif

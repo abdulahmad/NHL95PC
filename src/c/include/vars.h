@@ -78,3 +78,4 @@ extern int *statssortkeys;  /* DD118: per-player sort keys for the stats leaders
 extern unsigned char *cupseries;   /* DC338: cup final series buffer (2 team bytes at +2/+3, then 6-byte game records) */
 
 #endif
+extern int off_D09DB[];  /* D09DB: glove field rating names */

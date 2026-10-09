@@ -925,10 +925,8 @@ extern void CheckTeamLines(); /* 6ED8F */
 extern void CheckDatabases(); /* 6EF84 */
 extern void MoveToOtherRoster(); /* 6F29C */
 extern void RandomizeNewRatings(); /* 6F6D4 */
-extern void DrawShootsField(); /* 6FA7D */
 extern void DrawShootsField_tail(); /* 6FB2B */
 extern void DrawShootsField_pop(); /* 6FB2E */
-extern void DrawGloveField(); /* 6FB35 */
 extern void EditSkaterRating(); /* 6FC60 */
 extern void EditSkaterRating_tail(); /* 6FF57 */
 extern void EditGoalieRating(); /* 6FF69 */

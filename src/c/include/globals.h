@@ -3288,7 +3288,6 @@ extern unsigned char str_C4[]; /* D07EB */
 extern unsigned char str_Ratings[]; /* D0819 */
 extern int off_D0880[]; /* D0880 */
 extern int off_D08B9[]; /* D08B9 */
-extern int off_D09DB[]; /* D09DB */
 extern int off_D0A04[]; /* D0A04 */
 extern int off_D0AC2[]; /* D0AC2 */
 extern unsigned char byte_D0AE6[]; /* D0AE6 */
