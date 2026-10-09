@@ -65,7 +65,6 @@ extern void RunIntro(); /* 1672A */
 extern void PrintOutlinedText(); /* 17636 */
 extern void PrintFmt1(); /* 176AE */
 extern void PrintFmt2(); /* 176DB */
-extern void WriteScreenTextFile(); /* 17816 */
 extern void DeskSetExit2(); /* 179D0 */
 extern void DeskSetExit3(); /* 179E6 */
 extern void DeskSetExit3_body(); /* 179EB */
@@ -216,7 +215,6 @@ extern void loc_1BBB3(); /* 1BBB3 */
 extern void loc_1BBB4(); /* 1BBB4 */
 extern void LoadGameTeams(); /* 1BBCC */
 extern void InitGameSummary(); /* 1BEFD */
-extern void ReadPlayerRecs(); /* 1C0AF */
 extern void OpenPlayerDBs(); /* 1C26C */
 extern void OpenPlayerDBs_x(); /* 1C3F0 */
 extern void LoadTeamRoster(); /* 1C3F6 */
@@ -383,8 +381,6 @@ extern void DrawFileDlgList_n2(); /* 2C6AF */
 extern void DrawFileDlgList_n1(); /* 2C6B6 */
 extern void RunFileDlg(); /* 2C801 */
 extern void DeleteSavedGame(); /* 2CE29 */
-extern void SelectSavedFile(); /* 2D099 */
-extern void ReadGameSettings(); /* 2D260 */
 extern void gsuminitff(); /* 2D33E */
 extern void GameSummaryScreen_jt(); /* 2D346 */
 extern void GameSummaryScreen_p1(); /* 2DF11 */
@@ -475,12 +471,8 @@ extern void MergeUpdateDbs(); /* 3B8B0 */
 extern void RebuildLeagueDbs(); /* 3B9CA */
 extern void ExportTeamToFloppy(); /* 3BB87 */
 extern void CopyLeagueFiles(); /* 3C310 */
-extern void ImportMasterLeague(); /* 3C3AF */
 extern void ImportMasterLeague_ret(); /* 3C6DB */
-extern void ImportPlayerTeam(); /* 3C6E2 */
-extern void ImportDbs(); /* 3CF5B */
 extern void ExportDbs(); /* 3D108 */
-extern void SelectFloppyDrive(); /* 3D46D */
 extern void ReadLeagueInfo(); /* 3D8DD */
 extern void ReadTeamNames(); /* 3DAB9 */
 extern void LoadNhlCfg(); /* 3DB41 */
@@ -736,7 +728,6 @@ extern void ProcessPenaltyList(); /* 63A37 */
 extern void updatepentime(); /* 63B85 */
 extern void chkprogress(); /* 63C0C */
 extern void PenGoalStuff(); /* 63D69 */
-extern void SetupPenaltyShot(); /* 63F72 */
 extern void lines_popx(); /* 64A04 */
 extern void CanFillLineSlot(); /* 64A0B */
 extern void lines_addesp10_x(); /* 64CA0 */
@@ -757,7 +748,6 @@ extern void DrawTextOverlay(); /* 665AD */
 extern void UpdateTextOverlay(); /* 66E06 */
 extern void DrawCallBanner(); /* 66FE2 */
 extern void ShowGoalieBanner(); /* 671E8 */
-extern void LoadTeamPalette(); /* 673C5 */
 extern void updatereplay(); /* 675D6 */
 extern void ReplayStep(); /* 67900 */
 extern void ReplayStep_popx(); /* 67DC6 */
@@ -1229,9 +1219,6 @@ extern void SayScoringPeriod_ot2(); /* 84ACC */
 extern void SayScoringPeriod_ot3(); /* 84AD3 */
 extern void SayScoringPeriod_ott(); /* 84ADA */
 extern void SayScoringPeriod_reg(); /* 84AE1 */
-extern void RequestTimeClips(); /* 84DDD */
-extern void QueueTimeClips(); /* 84EAC */
-extern void SayPenalty(); /* 84F7B */
 extern void SayPlayerNumber(); /* 85213 */
 extern void SayGoal(); /* 8531F */
 extern void MenuSaveGame(); /* 85924 */

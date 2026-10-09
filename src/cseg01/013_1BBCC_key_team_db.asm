@@ -406,6 +406,10 @@ pop esi	; 1C0AB
 pop ecx	; 1C0AC
 pop ebx	; 1C0AD
 ret	; 1C0AE
+; C: src/c/013_1BBCC_key_team_db/ReadPlayerRecs.c
+%ifdef CBUILD
+%include "c/013_1BBCC_key_team_db/ReadPlayerRecs.inc"
+%else
 ReadPlayerRecs:
 push dword 1Ch	; 1C0AF
 call __CHK	; 1C0B4
@@ -555,6 +559,7 @@ pop ebp	; 1C266
 pop edi	; 1C267
 pop esi	; 1C268
 ret 20h	; 1C269
+%endif ; C
 OpenPlayerDBs:
 push dword 6Ch	; 1C26C
 call __CHK	; 1C271

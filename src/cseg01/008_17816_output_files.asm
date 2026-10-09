@@ -12,6 +12,10 @@ global DeskSetExit_ret1, StatsSel_common
 global WriteScreenTextFile, DeskSetExit1
 global DeskSetExit2, DeskSetExit3, DeskSetExit3_body, StatsSel9394Season, StatsSel9394Playoffs, StatsSel_x, StatsSelLeague, StatsSelLeaguePlayoffs
 global StatsSelPlayoffMode
+; C: src/c/008_17816_output_files/WriteScreenTextFile.c
+%ifdef CBUILD
+%include "c/008_17816_output_files/WriteScreenTextFile.inc"
+%else
 WriteScreenTextFile:
 push dword 0B8h	; 17816
 call __CHK	; 1781B
@@ -140,6 +144,7 @@ pop edx	; 179B2
 pop ecx	; 179B3
 pop ebx	; 179B4
 ret	; 179B5
+%endif ; C
 ; C: src/c/008_17816_output_files/DeskSetExit1.c
 %ifdef CBUILD
 %include "c/008_17816_output_files/DeskSetExit1.inc"

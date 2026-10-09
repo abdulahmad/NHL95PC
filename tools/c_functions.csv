@@ -39,6 +39,7 @@ TextGridOpen,17711,69,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGrid
 TextGridPut,17793,131,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGridPut.c,nonmatching,original keeps y in esi from entry and builds y*36 as ((y<<3)+y)<<2 in edx; this draft uses eax as the temp. 10-min cap
 DeskSetExit1,179B6,26,008_17816_output_files,src/c/008_17816_output_files/DeskSetExit1.c,matched,
 StatsSel9394Season,17A00,243,008_17816_output_files,src/c/008_17816_output_files/StatsSel9394Season.c,matched,
+WriteScreenTextFile,17816,416,008_17816_output_files,src/c/008_17816_output_files/WriteScreenTextFile.c,matched,
 StatsMenuAssists,18508,227,009_17DFC_palette_fx,src/c/009_17DFC_palette_fx/StatsMenuAssists.c,matched,
 StatsMenuGAA,18A5A,227,009_17DFC_palette_fx,src/c/009_17DFC_palette_fx/StatsMenuGAA.c,matched,
 StatsMenuGoalieWins,18B3D,227,009_17DFC_palette_fx,src/c/009_17DFC_palette_fx/StatsMenuGoalieWins.c,matched,
@@ -66,6 +67,7 @@ PlayRandomHighlight,18F8D,305,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_d
 PostGameDesk,1920F,334,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/PostGameDesk.c,nonmatching,
 ClearPanelPenalties,1CBD8,101,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/ClearPanelPenalties.c,nonmatching,"draft: zero kept in esi (asm ecx), saves esi instead of ecx"
 MakeGSummaryPath,1C807,75,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/MakeGSummaryPath.c,matched,
+ReadPlayerRecs,1C0AF,445,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/ReadPlayerRecs.c,matched,
 ResetGoalieMenu,1CB7F,89,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/ResetGoalieMenu.c,matched,
 BuildSavedGameLabels,1D518,189,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/BuildSavedGameLabels.c,matched,
 NullBlit,1D019,11,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/NullBlit.c,matched,
@@ -87,6 +89,7 @@ CmpSavePct,259C0,356,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpSave
 CmpShootPct,25755,277,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpShootPct.c,nonmatching,
 PlayerFromMouseY,24453,143,017_21CDE_player_stats,src/c/017_21CDE_player_stats/PlayerFromMouseY.c,matched,
 FitPlayerName,29C75,139,019_2970A_league_schedule,src/c/019_2970A_league_schedule/FitPlayerName.c,matched,
+SelectSavedFile,2D099,455,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/SelectSavedFile.c,nonmatching,
 PickOtherGames,2F2B1,294,022_2D346_game_setup,src/c/022_2D346_game_setup/PickOtherGames.c,nonmatching,
 PrintClampedText,2F580,110,022_2D346_game_setup,src/c/022_2D346_game_setup/PrintClampedText.c,matched,
 AskDatabaseChoice,2FDD1,120,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/AskDatabaseChoice.c,nonmatching,"draft: addresses built in edx, asm uses eax"
@@ -121,6 +124,7 @@ ReadLeagueTeamEntry,3A31E,41,029_380E9_league_setup,src/c/029_380E9_league_setup
 TeamSelCancel,38B3A,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelCancel.c,matched,
 TeamSelDone,38B25,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelDone.c,matched,
 WriteTeamRec,3A2B8,54,029_380E9_league_setup,src/c/029_380E9_league_setup/WriteTeamRec.c,matched,
+ImportDbs,3CF5B,429,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ImportDbs.c,matched,
 WaitLeagueFloppy,3D84F,142,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/WaitLeagueFloppy.c,nonmatching,"draft: file/name params in edi/esi swapped, local order and MessageBox result kept in eax not edx"
 DrawTradeRow,3E7B3,130,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/DrawTradeRow.c,nonmatching,"draft: row offset in ecx vs eax, add order; 1 byte longer"
 LoadTradeTeamPals,3E835,410,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/LoadTradeTeamPals.c,matched,
@@ -265,11 +269,13 @@ QuickShotChk,6427F,185,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_pe
 SetBoxDoorObject,61576,44,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetBoxDoorObject.c,matched,
 SetPA,62EA2,71,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetPA.c,matched,
 SetRinkObject,614C2,180,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetRinkObject.c,matched,
+SetupPenaltyShot,63F72,400,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetupPenaltyShot.c,nonmatching,
 StartPenaltyShot,64398,161,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/StartPenaltyShot.c,matched,
 chkatop,639A4,85,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/chkatop.c,nonmatching,original reads the puck y into dx (push edx) and t into ax; this draft uses ax for y. 10-min cap
 releasepl,6392A,122,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/releasepl.c,matched,
 updatePPTeamTime,63B57,46,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/updatePPTeamTime.c,matched,
 CloseTextOverlay,66DDA,44,046_644A8_engine_display,src/c/046_644A8_engine_display/CloseTextOverlay.c,matched,
+LoadTeamPalette,673C5,415,046_644A8_engine_display,src/c/046_644A8_engine_display/LoadTeamPalette.c,matched,
 NormalizeDressFlags,65B48,59,046_644A8_engine_display,src/c/046_644A8_engine_display/NormalizeDressFlags.c,matched,
 ReplayFirstFrame,67581,31,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayFirstFrame.c,matched,
 ReplayPrevFrame,675A0,54,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayPrevFrame.c,matched,
@@ -360,6 +366,7 @@ PlayoffRoundClipU,8438F,137,062_842BA_announcer,src/c/062_842BA_announcer/Playof
 PreloadAnnouncerClips,8579E,390,062_842BA_announcer,src/c/062_842BA_announcer/PreloadAnnouncerClips.c,matched,
 SayHighlightIntro,847CE,319,062_842BA_announcer,src/c/062_842BA_announcer/SayHighlightIntro.c,matched,
 SayOneMinuteLeft,854AC,91,062_842BA_announcer,src/c/062_842BA_announcer/SayOneMinuteLeft.c,matched,
+SayPenalty,84F7B,419,062_842BA_announcer,src/c/062_842BA_announcer/SayPenalty.c,nonmatching,
 SayPlayoffResult,8490D,351,062_842BA_announcer,src/c/062_842BA_announcer/SayPlayoffResult.c,nonmatching,
 SayPlayoffTonight,84C38,421,062_842BA_announcer,src/c/062_842BA_announcer/SayPlayoffTonight.c,nonmatching,
 SayScorePeriod,84657,93,062_842BA_announcer,src/c/062_842BA_announcer/SayScorePeriod.c,matched,

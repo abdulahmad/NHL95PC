@@ -590,5 +590,20 @@ void LoadJerseyColours(int away, int unused, unsigned char *dst);  /* 78A87 */
 void LoadDbsFromDir(char *dir, char *ext);  /* 7345B */   
 void LoadTradeTeamPals(int t1, int t2, unsigned char *pal);  /* 3E835 */
 int SayPlayoffTonight(char *rnk, char *away, char *home, int game, unsigned conf, unsigned round);  /* 84C38 */
+void LoadTeamPalette(int home, int vis, unsigned char *pal);  /* 673C5 */
+void WriteScreenTextFile(char *base);  /* 17816 */        
+int fputs(const char *s, void *fp);
+void ImportDbs(void);  /* 3CF5B */                        
+int SelectFloppyDrive(int a, int b);
+int ImportMasterLeague(void);
+int ImportPlayerTeam(void);
+int SelectSavedFile(void);  /* 2D099 */                   
+int ReadGameSettings(void *st, char *name, int flag);
+void SetupPenaltyShot(void);  /* 63F72 */                 
+int SayPenalty(char *team, int num, int len, char *pen, int a, int b, int idx, int cnt, int withtime);  /* 84F7B */
+void RequestTimeClips(int a, int b);
+void QueueTimeClips(int a, int b);
+int ReadPlayerRecs(int f1, int f2, int f3, int f4, long off, unsigned char *hdr, void *b2, unsigned n2, void *b3, unsigned n3, void *b4, unsigned n4);  /* 1C0AF */
+long lseek(int fh, long pos, int how);
 
 #endif

@@ -2752,6 +2752,10 @@ call MessageBox	; 3CF49
 mov eax, esi	; 3CF4E
 add esp, 0B8h	; 3CF50
 jmp near ImportMasterLeague_ret	; 3CF56
+; C: src/c/030_3A9AA_database_merge/ImportDbs.c
+%ifdef CBUILD
+%include "c/030_3A9AA_database_merge/ImportDbs.inc"
+%else
 ImportDbs:
 push dword 54h	; 3CF5B
 call __CHK	; 3CF60
@@ -2876,6 +2880,7 @@ pop edx	; 3D104
 pop ecx	; 3D105
 pop ebx	; 3D106
 ret	; 3D107
+%endif ; C
 ExportDbs:
 push dword 78h	; 3D108
 call __CHK	; 3D10D

@@ -3901,6 +3901,10 @@ pop esi	; 673C1
 pop ecx	; 673C2
 pop ebx	; 673C3
 ret	; 673C4
+; C: src/c/046_644A8_engine_display/LoadTeamPalette.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/LoadTeamPalette.inc"
+%else
 LoadTeamPalette:
 push dword 30h	; 673C5
 call __CHK	; 673CA
@@ -4048,6 +4052,7 @@ pop edi	; 67560
 pop esi	; 67561
 pop ecx	; 67562
 ret	; 67563
+%endif ; C
 ; C: src/c/046_644A8_engine_display/ReplayRecordReset.c
 %ifdef CBUILD
 %include "c/046_644A8_engine_display/ReplayRecordReset.inc"
