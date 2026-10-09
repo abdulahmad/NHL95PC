@@ -37,7 +37,7 @@ global str_Rd, str_Th, str_SH, str_PP, str_02d02d, str_S2, str_SS4, str_DMinS
 global str_ShotsOnGoal, str_SDD, str_Ctbkgd3, str_Pal14, str_Bkgd6, str_Cttitle32, str_Colm2, str_Gsta
 global str_Ctlogo3, str_DD, str_D02d2, str_DDD, str_Iff7, str_Leaguetm, str_Mtsum2, str_Adsum2
 global str_Pointer6, str_DBOX, str_Pointer7, str_Iff8, str_Maindesk, str_Tonights2, str_Easndesk, str_Desk2
-global str_Pal15, str_Menubuff4, str_GameSet4, str_Game, str_Set, asc_C177B, asc_C1783, asc_C1788
+global str_Pal15, str_Menubuff4, str_GameSet4, str_Game, str_Set, str_Palette2, str_Temp4, str_GameSav4
 global asc_C1794, asc_C1799, asc_C179E, asc_C17B9, asc_C17BF, asc_C17D8, asc_C17E0, asc_C17E8
 global asc_C17F4, asc_C17F9, asc_C17FE, asc_C1803, asc_C180B, asc_C1810, asc_C181A, asc_C1827
 global asc_C182C, asc_C1835, asc_C183D, asc_C1842, asc_C184A, asc_C1853, asc_C1859, asc_C1862
@@ -1042,11 +1042,11 @@ str_fee3:
 db 065h,033h,00h
 str_fee4:
 db 065h,034h,00h
-asc_C177B:
+str_Palette2:
 db 070h,061h,06Ch,065h,074h,074h,065h,00h
-asc_C1783:
+str_Temp4:
 db 074h,065h,06Dh,070h,00h
-asc_C1788:
+str_GameSav4:
 db 05Ch,067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h,00h,00h
 asc_C1794:
 db 072h,069h,06Eh,06Bh,00h

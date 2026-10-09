@@ -11,7 +11,7 @@ extern str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_
 extern musicon, savefname, fdlgmask, othergames, otherscores
 extern byte_ED82F, byte_ED992, postate, lgstate, gameresult, fdlgshapes
 extern fdlgrects
-extern dword_CE4E3, dword_CE503, dword_CE527, dword_CE583, dword_CE5A3, dword_CE5C3
+extern menuact_export, menuact_nextlg, menusub_lgmgr, menuact_nextpo, menuact_posettings, menuact_pohilights
 extern seriesgameno, dword_D2C6B, pointerspr, exhfiles, exhfilenames
 extern pofiles, pofilenames, lgfiles
 extern lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open, fdlg_del, fdlg_up
@@ -19,13 +19,13 @@ extern fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp, fd
 extern dword_EA0DC, j_unlink_, jctime, teamabbrevs, off_C5441, off_C6F7C, off_C6F80, off_C6F84
 extern qsort_, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, MakePath, DeleteDir
 extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, CopyFile, SetupStatsSourceMenu, BuildSavedGameLabels
-extern SetDialogColors, MessageBox, LoadModeState, sub_32DA9, sub_33559, sub_336E6, sub_6B391, sub_6B3D7
+extern SetDialogColors, MessageBox, LoadModeState, MenuNewExhibition, MenuNextLeagueGame, MenuExportDbs, sub_6B391, sub_6B3D7
 extern sub_7A29C, sub_86647, PlayoffModeLoop, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0
 extern sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400, sub_91964, sub_92CD0, FatalError
 extern MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3CC8, sub_B4BA8, sub_B4FAC, str_NHL, str_PO2
 extern str_LP, str_fek1, str_fek2, str_fek3, str_fek4, str_fek5, str_fek6, str_fek7
 extern str_fek8, str_feh7, str_feA1, str_fel1, str_feA2, str_fel2, str_fec6, str_fed2
-extern str_fed3, str_fed4, exhstate, delmsgbox, unk_CE64F, btn_POHumanOut, unknown_libname_1, unknown_libname_2
+extern str_fed3, str_fed4, exhstate, delmsgbox, leaguemgrmenu, btn_POHumanOut, unknown_libname_1, unknown_libname_2
 extern unlink_
 global DrawFileDlg_jt, DrawFileDlgList_jt, LoadFileDlgShapes_x
 global DrawFileDlg_n6, DrawFileDlg_n5, DrawFileDlg_n4, DrawFileDlg_n3
@@ -327,7 +327,7 @@ add esp, byte 4	; 2BBA9
 .12:
 and byte [exhstate+5Ah], 7Fh	; 2BBAC
 lea eax, [byte esp+030h]	; 2BBB3
-call sub_32DA9	; 2BBB7
+call MenuNewExhibition	; 2BBB7
 mov edx, eax	; 2BBBC
 xor eax, eax	; 2BBBE
 call SetupStatsSourceMenu	; 2BBC0
@@ -413,7 +413,7 @@ add esp, byte 4	; 2BCEA
 .20:
 and byte [lgstate+5Ah], 7Fh	; 2BCED
 lea eax, [byte esp+030h]	; 2BCF4
-call sub_33559	; 2BCF8
+call MenuNextLeagueGame	; 2BCF8
 mov edi, eax	; 2BCFD
 test byte [lgstate+5Ah], 80h	; 2BCFF
 jmp near MenuOpenSaved.16	; 2BD06
@@ -1931,9 +1931,9 @@ test eax, eax	; 2CF3F
 jne short .6	; 2CF41
 xor dh, dh	; 2CF43
 mov byte [lgstate+4], dh	; 2CF45
-mov dword [dword_CE4E3], eax	; 2CF4B
-mov dword [dword_CE503], eax	; 2CF50
-mov dword [dword_CE527], eax	; 2CF55
+mov dword [menuact_export], eax	; 2CF4B
+mov dword [menuact_nextlg], eax	; 2CF50
+mov dword [menusub_lgmgr], eax	; 2CF55
 jmp short .7	; 2CF5A
 .6:
 mov edx, postate+4	; 2CF5C
@@ -1943,9 +1943,9 @@ test eax, eax	; 2CF6A
 jne short .7	; 2CF6C
 xor dl, dl	; 2CF6E
 mov byte [postate+4], dl	; 2CF70
-mov dword [dword_CE583], eax	; 2CF76
-mov dword [dword_CE5A3], eax	; 2CF7B
-mov dword [dword_CE5C3], eax	; 2CF80
+mov dword [menuact_nextpo], eax	; 2CF76
+mov dword [menuact_posettings], eax	; 2CF7B
+mov dword [menuact_pohilights], eax	; 2CF80
 .7:
 lea eax, [byte esp+01Eh]	; 2CF85
 call DeleteDir	; 2CF89
@@ -2104,9 +2104,9 @@ lea edx, [byte esp+020h]	; 2D194
 mov eax, postate	; 2D198
 call ReadGameSettings	; 2D19D
 mov esi, eax	; 2D1A2
-mov dword [dword_CE583], PlayoffModeLoop	; 2D1A4
-mov dword [dword_CE5A3], sub_7A29C	; 2D1AE
-mov dword [dword_CE5C3], sub_86647	; 2D1B8
+mov dword [menuact_nextpo], PlayoffModeLoop	; 2D1A4
+mov dword [menuact_posettings], sub_7A29C	; 2D1AE
+mov dword [menuact_pohilights], sub_86647	; 2D1B8
 xor ecx, ecx	; 2D1C2
 mov ebx, str_ScheduleDb2	; 2D1C4
 lea edx, [byte esp+020h]	; 2D1C9
@@ -2141,9 +2141,9 @@ xor ebx, ebx	; 2D22A
 lea edx, [byte esp+020h]	; 2D22C
 mov eax, lgstate	; 2D230
 call ReadGameSettings	; 2D235
-mov dword [dword_CE4E3], sub_336E6	; 2D23A
-mov dword [dword_CE503], sub_33559	; 2D244
-mov dword [dword_CE527], unk_CE64F	; 2D24E
+mov dword [menuact_export], MenuExportDbs	; 2D23A
+mov dword [menuact_nextlg], MenuNextLeagueGame	; 2D244
+mov dword [menusub_lgmgr], leaguemgrmenu	; 2D24E
 .x:
 add esp, byte 30h	; 2D258
 pop esi	; 2D25B

@@ -4,7 +4,7 @@ bits 32
 section s_1B0F3 progbits alloc exec nowrite align=1
 extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, joysampling, dword_C66B0, rinkbm
 extern dword_CBECA, photobankf, rinkendbank, numshpbank, photobanks, dword_DC230, scrbrdshapes, cupseries
-extern dword_DC8A0, dword_DC8C8, dword_E0244, hilightfont, jctime, sub_33727, joyq_flush, CrowdNoiseOff
+extern dword_DC8A0, dword_DC8C8, dword_E0244, hilightfont, jctime, FreeRinkGfx, joyq_flush, CrowdNoiseOff
 extern GameOver, sub_7DEC8, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E4F8, sub_8EA18, sub_91FA4
 extern FatalError, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, scrpitch
 global jpt_1B283, loc_1B1B7, loc_1B218, loc_1B225, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0
@@ -816,7 +816,7 @@ push ebp	; 1BA67
 call sub_8EA18	; 1BA68
 add esp, byte 4	; 1BA6D
 mov word [scrpitch], 50h	; 1BA70
-call sub_33727	; 1BA79
+call FreeRinkGfx	; 1BA79
 loc_1BA7E:
 pop ebp	; 1BA7E
 loc_1BA7F:
@@ -902,7 +902,7 @@ loc_1BB33:
 call sub_8DAB8	; 1BB33
 cmp eax, ebp	; 1BB38
 jge short loc_1BB0E	; 1BB3A
-call sub_33727	; 1BB3C
+call FreeRinkGfx	; 1BB3C
 call sub_8DAB8	; 1BB41
 cmp eax, ebp	; 1BB46
 jge short loc_1BB0E	; 1BB48

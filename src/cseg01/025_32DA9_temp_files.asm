@@ -2,26 +2,24 @@
 bits 32
 %include "hockey.inc"
 section s_32DA9 progbits alloc exec nowrite align=1
-extern __CHK, asc_C177B, asc_C1783, asc_C1788, curleague, gameopts
+extern __CHK, str_Palette2, str_Temp4, str_GameSav4, curleague, gameopts
 extern musicon, byte_DE268, ctlavailmask, lgstate
 extern gamemode, teamstatscb, skaterstatscb, goaliestatscb
 extern standingscb, standingsmenucb, songdata, dword_C73D0, rinkbm, dword_C7440, cont2team, HomeTeam
-extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, schedgameidx, jctime, MainDeskLoop_x, musicslot
+extern menuact_export, menuact_nextlg, menusub_lgmgr, musichandle, schedgameidx, jctime, MainDeskLoop_x, musicslot
 extern MainDeskLoop_x2, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRead, CheckGameDiskSpace, InitGameSummary
 extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
 extern EasnStandingsScreen, PreGameScreen, SaveModeState, LoadModeState, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
 extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
 extern sub_479E9, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, EasnTeamStatsScreen, EasnSkaterStatsScreen, EasnGoalieStatsScreen
-extern EasnStandingsMenu, exhstate, unk_CE64F
-global loc_32DCD, loc_32E3A, loc_32EA2, loc_32ECE, loc_32EFB, loc_32F00, loc_32F0E, loc_32F4A
-global loc_32F86, loc_32FB3, loc_33045, loc_3304C, loc_3307D, loc_3308E, loc_3309F, loc_330B0
-global loc_330BA, loc_330CF, loc_330D9, loc_3314E, loc_3316E, loc_331C4, loc_331F8, loc_3325B
-global loc_332B6, loc_3332B, loc_33379, loc_33382, loc_333C0, loc_33462, loc_334F4, loc_335CE
-global loc_336B0, loc_33751, loc_33776, nullsub_6, sub_32DA9, sub_32FF4, sub_3322A, sub_332C0
-global sub_332F6, sub_3339D, sub_333D7, sub_33469, sub_334FB, sub_33523, sub_33559, sub_3366F
-global sub_336BE, sub_336E6, sub_3371C, sub_33727
-sub_32DA9:
+extern EasnStandingsMenu, exhstate, leaguemgrmenu
+global MenuAddTeam_common
+global MenuAddTeam_ret2, MenuRebuildDbs_x
+global nullsub_6, MenuNewExhibition, MenuNewLeague, MenuAddTeam, MenuRemoveTeam
+global MenuLeagueSettings, MenuRebuildDbs, MenuMergeUpdateDbs, MenuMergeLeagueFiles, MenuUpdateTeamDbs, MenuTradePlayers, MenuNextLeagueGame, MenuLeagueHilights
+global MenuImportDbs, MenuExportDbs, DemoSetupStub, FreeRinkGfx
+MenuNewExhibition:
 push dword 28h	; 32DA9
 call __CHK	; 32DAE
 push ebx	; 32DB3
@@ -34,10 +32,10 @@ mov esi, eax	; 32DB9
 xor edx, edx	; 32DBB
 call CheckGameDiskSpace	; 32DBD
 test eax, eax	; 32DC2
-je short loc_32DCD	; 32DC4
+je short .1	; 32DC4
 xor eax, eax	; 32DC6
 jmp near MainDeskLoop_x	; 32DC8
-loc_32DCD:
+.1:
 mov dword [schedgameidx], edx	; 32DCD
 mov dword [teamstatscb], GameTeamStatsScreen	; 32DD3
 mov dword [skaterstatscb], GameSkaterStatsScreen	; 32DDD
@@ -47,7 +45,7 @@ mov dword [standingsmenucb], GameStandingsMenu	; 32DFB
 call SetupControllers	; 32E05
 or byte [gameopts+1], 2	; 32E0A
 cmp dword [esi], byte 0	; 32E11
-jge short loc_32E3A	; 32E14
+jge short .2	; 32E14
 xor eax, eax	; 32E16
 call InitGameSummary	; 32E18
 mov edx, dword [HomeTeam]	; 32E1D
@@ -57,16 +55,16 @@ sar eax, 10h	; 32E2B
 call PreGameScreen	; 32E2E
 mov edx, eax	; 32E33
 call sub_6B47C	; 32E35
-loc_32E3A:
+.2:
 test dl, 4	; 32E3A
-jne near loc_32F0E	; 32E3D
+jne near .7	; 32E3D
 mov eax, 1	; 32E43
 call SetupStatsSourceMenu	; 32E48
 cmp dword [esi], byte 0	; 32E4D
-jl near loc_32F00	; 32E50
+jl near .6	; 32E50
 push byte 20h	; 32E56
 push dword 300h	; 32E58
-push asc_C177B	; 32E5D
+push str_Palette2	; 32E5D
 call sub_8CCA8	; 32E62
 add esp, byte 0Ch	; 32E67
 mov edi, eax	; 32E6A
@@ -76,14 +74,14 @@ push byte 0	; 32E72
 call sub_8FFB0	; 32E74
 add esp, byte 0Ch	; 32E79
 cmp byte [musicon], 0	; 32E7C
-je short loc_32EA2	; 32E83
+je short .3	; 32E83
 cmp dword [songdata], byte 0	; 32E85
-je short loc_32EA2	; 32E8C
+je short .3	; 32E8C
 mov eax, dword [musichandle]	; 32E8E
 mov ebx, 64h	; 32E93
 mov edx, 3	; 32E98
 call sub_8FCDF	; 32E9D
-loc_32EA2:
+.3:
 mov ebx, 10h	; 32EA2
 mov edx, edi	; 32EA7
 mov eax, 1	; 32EA9
@@ -92,45 +90,45 @@ push edi	; 32EB3
 call jctime	; 32EB4
 add esp, byte 4	; 32EB9
 cmp byte [musicon], 0	; 32EBC
-je short loc_32EFB	; 32EC3
+je short .5	; 32EC3
 cmp dword [songdata], byte 0	; 32EC5
-je short loc_32EFB	; 32ECC
-loc_32ECE:
+je short .5	; 32ECC
+.4:
 mov eax, dword [musicslot-3]	; 32ECE
 sar eax, 18h	; 32ED3
 mov edx, 3	; 32ED6
 call sub_8FC8A	; 32EDB
 test eax, eax	; 32EE0
-je short loc_32ECE	; 32EE2
+je short MenuNewExhibition.4	; 32EE2
 mov edx, dword [songdata]	; 32EE4
 push edx	; 32EEA
 call sub_8D2F0	; 32EEB
 add esp, byte 4	; 32EF0
 xor ebx, ebx	; 32EF3
 mov dword [songdata], ebx	; 32EF5
-loc_32EFB:
+.5:
 call sub_479E9	; 32EFB
-loc_32F00:
+.6:
 mov eax, esi	; 32F00
 call PlayGame	; 32F02
 xor eax, eax	; 32F07
 call SetupStatsSourceMenu	; 32F09
-loc_32F0E:
+.7:
 push byte 20h	; 32F0E
 push dword 300h	; 32F10
-push asc_C1783	; 32F15
+push str_Temp4	; 32F15
 call sub_8CCA8	; 32F1A
 add esp, byte 0Ch	; 32F1F
 mov esi, eax	; 32F22
 cmp byte [musicon], 0	; 32F24
-je short loc_32F4A	; 32F2B
+je short .8	; 32F2B
 cmp dword [songdata], byte 0	; 32F2D
-je short loc_32F4A	; 32F34
+je short .8	; 32F34
 mov eax, dword [musichandle]	; 32F36
 mov ebx, 19h	; 32F3B
 mov edx, 3	; 32F40
 call sub_8FCDF	; 32F45
-loc_32F4A:
+.8:
 push esi	; 32F4A
 push dword 100h	; 32F4B
 push byte 0	; 32F50
@@ -144,23 +142,23 @@ push esi	; 32F6B
 call jctime	; 32F6C
 add esp, byte 4	; 32F71
 cmp byte [musicon], 0	; 32F74
-je short loc_32FB3	; 32F7B
+je short .10	; 32F7B
 cmp dword [songdata], byte 0	; 32F7D
-je short loc_32FB3	; 32F84
-loc_32F86:
+je short .10	; 32F84
+.9:
 mov eax, dword [musicslot-3]	; 32F86
 sar eax, 18h	; 32F8B
 mov edx, 3	; 32F8E
 call sub_8FC8A	; 32F93
 test eax, eax	; 32F98
-je short loc_32F86	; 32F9A
+je short MenuNewExhibition.9	; 32F9A
 mov edi, dword [songdata]	; 32F9C
 push edi	; 32FA2
 call sub_8D2F0	; 32FA3
 add esp, byte 4	; 32FA8
 xor ebp, ebp	; 32FAB
 mov dword [songdata], ebp	; 32FAD
-loc_32FB3:
+.10:
 call sub_6B410	; 32FB3
 mov dword [teamstatscb], EasnTeamStatsScreen	; 32FB8
 mov dword [skaterstatscb], EasnSkaterStatsScreen	; 32FC2
@@ -169,7 +167,7 @@ mov dword [standingscb], EasnStandingsScreen	; 32FD6
 mov dword [standingsmenucb], EasnStandingsMenu	; 32FE0
 mov eax, 2	; 32FEA
 jmp near MainDeskLoop_x	; 32FEF
-sub_32FF4:
+MenuNewLeague:
 push dword 20h	; 32FF4
 call __CHK	; 32FF9
 push ebx	; 32FFE
@@ -183,12 +181,12 @@ mov dword [lgstate+51h], 0Ch	; 33016
 mov dword [lgstate+55h], 15h	; 33020
 or word [lgstate+59h], 2FFh	; 3302A
 cmp byte [musicon], 0	; 33033
-je short loc_33045	; 3303A
+je short .1	; 3303A
 or byte [lgstate+5Ah], 1	; 3303C
-jmp short loc_3304C	; 33043
-loc_33045:
+jmp short .2	; 33043
+.1:
 and byte [lgstate+5Ah], 0FEh	; 33045
-loc_3304C:
+.2:
 mov bl, byte [lgstate+5Ah]	; 3304C
 and bl, 83h	; 33052
 mov byte [lgstate+5Ah], bl	; 33055
@@ -197,34 +195,34 @@ or bh, 78h	; 3305D
 mov byte [lgstate+5Ah], bh	; 33060
 mov cl, byte [ctlavailmask]	; 33066
 test cl, 2	; 3306C
-je short loc_3307D	; 3306F
+je short .3	; 3306F
 mov dword [lgstate+65h], 2	; 33071
-jmp short loc_330BA	; 3307B
-loc_3307D:
+jmp short .7	; 3307B
+.3:
 test cl, 4	; 3307D
-je short loc_3308E	; 33080
+je short .4	; 33080
 mov dword [lgstate+65h], 4	; 33082
-jmp short loc_330BA	; 3308C
-loc_3308E:
+jmp short .7	; 3308C
+.4:
 test cl, 8	; 3308E
-je short loc_3309F	; 33091
+je short .5	; 33091
 mov dword [lgstate+65h], 8	; 33093
-jmp short loc_330BA	; 3309D
-loc_3309F:
+jmp short .7	; 3309D
+.5:
 test cl, 1	; 3309F
-je short loc_330B0	; 330A2
+je short .6	; 330A2
 mov dword [lgstate+65h], 1	; 330A4
-jmp short loc_330BA	; 330AE
-loc_330B0:
+jmp short .7	; 330AE
+.6:
 mov dword [lgstate+65h], 10h	; 330B0
-loc_330BA:
+.7:
 cmp dword [lgstate+65h], byte 10h	; 330BA
-je short loc_330CF	; 330C1
+je short .8	; 330C1
 mov dword [lgstate+5Dh], 0Ch	; 330C3
-jmp short loc_330D9	; 330CD
-loc_330CF:
+jmp short .9	; 330CD
+.8:
 mov dword [lgstate+5Dh], 0FFFFFFFFh	; 330CF
-loc_330D9:
+.9:
 mov dword [lgstate+69h], 10h	; 330D9
 mov dword [lgstate+61h], 0FFFFFFFEh	; 330E3
 xor eax, eax	; 330ED
@@ -237,28 +235,28 @@ call sub_7A6AD	; 3310A
 call CreateNewLeague	; 3310F
 call sub_7B39C	; 33114
 cmp byte [lgstate+4], 0	; 33119
-je short loc_3314E	; 33120
+je short .10	; 33120
 call BuildSavedGameLabels	; 33122
 xor eax, eax	; 33127
 call SetupStatsSourceMenu	; 33129
-mov dword [dword_CE4E3], sub_336E6	; 3312E
-mov dword [dword_CE503], sub_33559	; 33138
-mov dword [dword_CE527], unk_CE64F	; 33142
-jmp short loc_3316E	; 3314C
-loc_3314E:
+mov dword [menuact_export], MenuExportDbs	; 3312E
+mov dword [menuact_nextlg], MenuNextLeagueGame	; 33138
+mov dword [menusub_lgmgr], leaguemgrmenu	; 33142
+jmp short .11	; 3314C
+.10:
 call BuildSavedGameLabels	; 3314E
 xor eax, eax	; 33153
 call SetupStatsSourceMenu	; 33155
 xor ebx, ebx	; 3315A
-mov dword [dword_CE4E3], ebx	; 3315C
-mov dword [dword_CE503], ebx	; 33162
-mov dword [dword_CE527], ebx	; 33168
-loc_3316E:
+mov dword [menuact_export], ebx	; 3315C
+mov dword [menuact_nextlg], ebx	; 33162
+mov dword [menusub_lgmgr], ebx	; 33168
+.11:
 mov eax, exhstate	; 3316E
 call LoadModeState	; 33173
 push byte 20h	; 33178
 push dword 300h	; 3317A
-push asc_C1783	; 3317F
+push str_Temp4	; 3317F
 call sub_8CCA8	; 33184
 add esp, byte 0Ch	; 33189
 mov esi, eax	; 3318C
@@ -268,14 +266,14 @@ push byte 0	; 33194
 call sub_8FFB0	; 33196
 add esp, byte 0Ch	; 3319B
 cmp byte [musicon], 0	; 3319E
-je short loc_331C4	; 331A5
+je short .12	; 331A5
 cmp dword [songdata], byte 0	; 331A7
-je short loc_331C4	; 331AE
+je short .12	; 331AE
 mov eax, dword [musichandle]	; 331B0
 mov ebx, 64h	; 331B5
 mov edx, 3	; 331BA
 call sub_8FCDF	; 331BF
-loc_331C4:
+.12:
 mov ebx, 10h	; 331C4
 mov edx, esi	; 331C9
 mov eax, 1	; 331CB
@@ -284,24 +282,24 @@ push esi	; 331D5
 call jctime	; 331D6
 add esp, byte 4	; 331DB
 cmp byte [musicon], 0	; 331DE
-je near loc_332B6	; 331E5
+je near MenuAddTeam_ret2	; 331E5
 cmp dword [songdata], byte 0	; 331EB
-je near loc_332B6	; 331F2
-loc_331F8:
+je near MenuAddTeam_ret2	; 331F2
+.13:
 mov eax, dword [musicslot-3]	; 331F8
 sar eax, 18h	; 331FD
 mov edx, 3	; 33200
 call sub_8FC8A	; 33205
 test eax, eax	; 3320A
-je short loc_331F8	; 3320C
+je short MenuNewLeague.13	; 3320C
 mov ecx, dword [songdata]	; 3320E
 push ecx	; 33214
 call sub_8D2F0	; 33215
 add esp, byte 4	; 3321A
 xor esi, esi	; 3321D
 mov dword [songdata], esi	; 3321F
-jmp near loc_332B6	; 33225
-sub_3322A:
+jmp near MenuAddTeam_ret2	; 33225
+MenuAddTeam:
 push dword 20h	; 3322A
 call __CHK	; 3322F
 push ebx	; 33234
@@ -315,7 +313,7 @@ call LoadModeState	; 33247
 mov eax, 3	; 3324C
 call SetupStatsSourceMenu	; 33251
 call AddHumanTeam	; 33256
-loc_3325B:
+MenuAddTeam_common:
 xor eax, eax	; 3325B
 call SetupStatsSourceMenu	; 3325D
 mov eax, lgstate	; 33262
@@ -324,7 +322,7 @@ mov eax, exhstate	; 3326C
 call LoadModeState	; 33271
 push byte 20h	; 33276
 push dword 300h	; 33278
-push asc_C1783	; 3327D
+push str_Temp4	; 3327D
 call sub_8CCA8	; 33282
 mov esi, eax	; 33287
 add esp, byte 0Ch	; 33289
@@ -340,14 +338,14 @@ call sub_76429	; 332A8
 push esi	; 332AD
 call jctime	; 332AE
 add esp, byte 4	; 332B3
-loc_332B6:
+MenuAddTeam_ret2:
 mov eax, 2	; 332B6
 pop esi	; 332BB
 pop edx	; 332BC
 pop ecx	; 332BD
 pop ebx	; 332BE
 ret	; 332BF
-sub_332C0:
+MenuRemoveTeam:
 push dword 20h	; 332C0
 call __CHK	; 332C5
 push ebx	; 332CA
@@ -361,8 +359,8 @@ call LoadModeState	; 332DD
 mov eax, 3	; 332E2
 call SetupStatsSourceMenu	; 332E7
 call RemoveHumanTeam	; 332EC
-jmp near loc_3325B	; 332F1
-sub_332F6:
+jmp near MenuAddTeam_common	; 332F1
+MenuLeagueSettings:
 push dword 24h	; 332F6
 call __CHK	; 332FB
 push ebx	; 33300
@@ -378,14 +376,14 @@ mov eax, lgstate	; 33313
 call LoadModeState	; 33318
 call CheckMasterPassword	; 3331D
 test eax, eax	; 33322
-jne short loc_3332B	; 33324
+jne short .1	; 33324
 mov edi, 0FFFFFFFFh	; 33326
-loc_3332B:
+.1:
 cmp byte [byte_DE268], 0	; 3332B
-je short loc_33379	; 33332
+je short .2	; 33332
 push byte 20h	; 33334
 push dword 300h	; 33336
-push asc_C1783	; 3333B
+push str_Temp4	; 3333B
 call sub_8CCA8	; 33340
 mov esi, eax	; 33345
 add esp, byte 0Ch	; 33347
@@ -402,18 +400,18 @@ push esi	; 3336B
 call jctime	; 3336C
 add esp, byte 4	; 33371
 mov esi, 2	; 33374
-loc_33379:
+.2:
 test edi, edi	; 33379
-je short loc_33382	; 3337B
+je short .3	; 3337B
 call sub_7A13A	; 3337D
-loc_33382:
+.3:
 mov eax, lgstate	; 33382
 call SaveModeState	; 33387
 mov eax, exhstate	; 3338C
 call LoadModeState	; 33391
 mov eax, esi	; 33396
 jmp near MainDeskLoop_x2	; 33398
-sub_3339D:
+MenuRebuildDbs:
 push dword 4	; 3339D
 call __CHK	; 333A2
 mov eax, exhstate	; 333A7
@@ -421,14 +419,14 @@ call SaveModeState	; 333AC
 mov eax, lgstate	; 333B1
 call LoadModeState	; 333B6
 call sub_3B9CA	; 333BB
-loc_333C0:
+MenuRebuildDbs_x:
 mov eax, lgstate	; 333C0
 call SaveModeState	; 333C5
 mov eax, exhstate	; 333CA
 call LoadModeState	; 333CF
 xor eax, eax	; 333D4
 ret	; 333D6
-sub_333D7:
+MenuMergeUpdateDbs:
 push dword 20h	; 333D7
 call __CHK	; 333DC
 push ebx	; 333E1
@@ -446,10 +444,10 @@ call SaveModeState	; 33405
 mov eax, exhstate	; 3340A
 call LoadModeState	; 3340F
 test esi, esi	; 33414
-je short loc_33462	; 33416
+je short .1	; 33416
 push byte 20h	; 33418
 push dword 300h	; 3341A
-push asc_C1783	; 3341F
+push str_Temp4	; 3341F
 call sub_8CCA8	; 33424
 mov esi, eax	; 33429
 add esp, byte 0Ch	; 3342B
@@ -471,7 +469,7 @@ pop edx	; 3345E
 pop ecx	; 3345F
 pop ebx	; 33460
 ret	; 33461
-loc_33462:
+.1:
 xor eax, eax	; 33462
 pop esi	; 33464
 pop edx	; 33465
@@ -479,7 +477,7 @@ pop ecx	; 33466
 pop ebx	; 33467
 nullsub_6:
 ret	; 33468
-sub_33469:
+MenuMergeLeagueFiles:
 push dword 20h	; 33469
 call __CHK	; 3346E
 push ebx	; 33473
@@ -497,10 +495,10 @@ call SaveModeState	; 33497
 mov eax, exhstate	; 3349C
 call LoadModeState	; 334A1
 test esi, esi	; 334A6
-je short loc_334F4	; 334A8
+je short .1	; 334A8
 push byte 20h	; 334AA
 push dword 300h	; 334AC
-push asc_C1783	; 334B1
+push str_Temp4	; 334B1
 call sub_8CCA8	; 334B6
 mov esi, eax	; 334BB
 add esp, byte 0Ch	; 334BD
@@ -522,14 +520,14 @@ pop edx	; 334F0
 pop ecx	; 334F1
 pop ebx	; 334F2
 ret	; 334F3
-loc_334F4:
+.1:
 xor eax, eax	; 334F4
 pop esi	; 334F6
 pop edx	; 334F7
 pop ecx	; 334F8
 pop ebx	; 334F9
 ret	; 334FA
-sub_334FB:
+MenuUpdateTeamDbs:
 push dword 4	; 334FB
 call __CHK	; 33500
 mov eax, exhstate	; 33505
@@ -537,8 +535,8 @@ call SaveModeState	; 3350A
 mov eax, lgstate	; 3350F
 call LoadModeState	; 33514
 call sub_3B039	; 33519
-jmp near loc_333C0	; 3351E
-sub_33523:
+jmp near MenuRebuildDbs_x	; 3351E
+MenuTradePlayers:
 push dword 20h	; 33523
 call __CHK	; 33528
 push ebx	; 3352D
@@ -552,8 +550,8 @@ call LoadModeState	; 33540
 mov eax, 3	; 33545
 call SetupStatsSourceMenu	; 3354A
 call TradePlayers	; 3354F
-jmp near loc_3325B	; 33554
-sub_33559:
+jmp near MenuAddTeam_common	; 33554
+MenuNextLeagueGame:
 push dword 40h	; 33559
 call __CHK	; 3355E
 push ebx	; 33563
@@ -573,20 +571,20 @@ call sub_7A6AD	; 3358F
 mov eax, 2	; 33594
 call SetScreenTitle	; 33599
 cmp dword [ebx], byte 0	; 3359E
-jge short loc_335CE	; 335A1
+jge short .1	; 335A1
 mov edx, curleague	; 335A3
 mov eax, esp	; 335A8
 call strcpy_	; 335AA
-mov edx, asc_C1788	; 335AF
+mov edx, str_GameSav4	; 335AF
 mov eax, esp	; 335B4
 call strcat_	; 335B6
 mov edx, ebx	; 335BB
 mov eax, esp	; 335BD
 call FileOpenRead	; 335BF
 test eax, eax	; 335C4
-je short loc_335CE	; 335C6
+je short .1	; 335C6
 mov dword [ebx], 0FFFFFFFFh	; 335C8
-loc_335CE:
+.1:
 mov eax, ebx	; 335CE
 call sub_36B93	; 335D0
 mov dword [teamstatscb], EasnTeamStatsScreen	; 335D5
@@ -602,7 +600,7 @@ mov eax, exhstate	; 33618
 call LoadModeState	; 3361D
 push byte 20h	; 33622
 push dword 300h	; 33624
-push asc_C1783	; 33629
+push str_Temp4	; 33629
 call sub_8CCA8	; 3362E
 mov esi, eax	; 33633
 add esp, byte 0Ch	; 33635
@@ -625,7 +623,7 @@ pop edx	; 3366B
 pop ecx	; 3366C
 pop ebx	; 3366D
 ret	; 3366E
-sub_3366F:
+MenuLeagueHilights:
 push dword 8	; 3366F
 call __CHK	; 33674
 push edx	; 33679
@@ -637,19 +635,19 @@ xor edx, edx	; 3368E
 mov dword [gamemode], edx	; 33690
 call sub_80075	; 33696
 test eax, eax	; 3369B
-jne short loc_336B0	; 3369D
+jne short .1	; 3369D
 mov eax, exhstate	; 3369F
 call LoadModeState	; 336A4
 mov eax, 2	; 336A9
 pop edx	; 336AE
 ret	; 336AF
-loc_336B0:
+.1:
 mov eax, exhstate	; 336B0
 call LoadModeState	; 336B5
 xor eax, eax	; 336BA
 pop edx	; 336BC
 ret	; 336BD
-sub_336BE:
+MenuImportDbs:
 push dword 4	; 336BE
 call __CHK	; 336C3
 mov eax, exhstate	; 336C8
@@ -657,8 +655,8 @@ call SaveModeState	; 336CD
 mov eax, lgstate	; 336D2
 call LoadModeState	; 336D7
 call sub_3CF5B	; 336DC
-jmp near loc_333C0	; 336E1
-sub_336E6:
+jmp near MenuRebuildDbs_x	; 336E1
+MenuExportDbs:
 push dword 20h	; 336E6
 call __CHK	; 336EB
 push ebx	; 336F0
@@ -672,12 +670,12 @@ call LoadModeState	; 33703
 mov eax, 3	; 33708
 call SetupStatsSourceMenu	; 3370D
 call sub_3D108	; 33712
-jmp near loc_3325B	; 33717
-sub_3371C:
+jmp near MenuAddTeam_common	; 33717
+DemoSetupStub:
 push dword 4	; 3371C
 call __CHK	; 33721
 ret	; 33726
-sub_33727:
+FreeRinkGfx:
 push dword 1Ch	; 33727
 call __CHK	; 3372C
 push ebx	; 33731
@@ -687,23 +685,23 @@ push esi	; 33734
 push ebp	; 33735
 mov edx, dword [rinkbm]	; 33736
 test edx, edx	; 3373C
-je short loc_33751	; 3373E
+je short .1	; 3373E
 push edx	; 33740
 call jctime	; 33741
 add esp, byte 4	; 33746
 xor ecx, ecx	; 33749
 mov dword [rinkbm], ecx	; 3374B
-loc_33751:
+.1:
 mov esi, dword [dword_C73D0]	; 33751
 test esi, esi	; 33757
-je short loc_33776	; 33759
+je short .x	; 33759
 push esi	; 3375B
 call jctime	; 3375C
 add esp, byte 4	; 33761
 xor ebp, ebp	; 33764
 mov dword [dword_C73D0], ebp	; 33766
 mov dword [dword_C7440], 0FFFFFFFFh	; 3376C
-loc_33776:
+.x:
 pop ebp	; 33776
 pop esi	; 33777
 pop edx	; 33778

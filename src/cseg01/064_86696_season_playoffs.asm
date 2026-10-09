@@ -14,8 +14,8 @@ extern DeskHomeLines, DeskVisitorLines, postate
 extern lgstate, gameresult, gamemode, gameopts, ctl1team
 extern ctl2team, ctl1side, ctl2side, teamdivflags, teamconf, confteams, dword_C65AC, teamstatscb
 extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dword_C6D26, dword_C6DBA, boxfillcolor, boxlitecolor
-extern boxshadecolor, dlgtextfg, dlgtextbg, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
-extern dword_CE5C3, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
+extern boxshadecolor, dlgtextfg, dlgtextbg, songdata, cont2team, HomeTeam, menuact_nextpo, menuact_posettings
+extern menuact_pohilights, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
 extern keydb_size, musichandle, dword_D2884, dword_D288C, seriesgameno, dword_D2B70, dword_D2BEC, musicslot
 extern dword_D2C6B, dword_D8B68, dword_D8B74, schedgameidx, pointerspr, playofftree, playofftree_p1, pochampion
 extern dbextension, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, teamabbrevs, teamcitynames
@@ -521,9 +521,9 @@ call WriteModeState	; 86D99
 call BuildSavedGameLabels	; 86D9E
 xor eax, eax	; 86DA3
 call SetupStatsSourceMenu	; 86DA5
-mov dword [dword_CE583], PlayoffModeLoop	; 86DAA
-mov dword [dword_CE5A3], sub_7A29C	; 86DB4
-mov dword [dword_CE5C3], sub_86647	; 86DBE
+mov dword [menuact_nextpo], PlayoffModeLoop	; 86DAA
+mov dword [menuact_posettings], sub_7A29C	; 86DB4
+mov dword [menuact_pohilights], sub_86647	; 86DBE
 xor edi, edi	; 86DC8
 mov dword [seriesgameno], edi	; 86DCA
 .27:

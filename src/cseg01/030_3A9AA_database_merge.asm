@@ -8,20 +8,20 @@ extern str_PLAYER, asc_C810C, str_extDB, asc_C8131, str_extxx, asc_C8158, str_ex
 extern str_dot, str_floppydrv, curleague, leagueflags, byte_DD7CA, byte_DD7CB, savedname, byte_DE268
 extern lgstate, dlgsavebuf, dword_C756D, dword_C760D, msg_InsertDisk_arg, msg_WrongDisk_arg, dword_C79C0, dword_C79C8
 extern dword_C7B16, dword_C7B1E, dword_C7B47, dword_C7B4F, dword_C7BA7, dword_C7BAF, dword_C7C25, dword_C7DA1
-extern dword_C7DA5, dword_C7E42, msg_SavedGame_arg, dword_C89E6, dword_C8A2B, dword_CE4E3, dword_CE503, dword_CE527
+extern dword_C7DA5, dword_C7E42, msg_SavedGame_arg, dword_C89E6, dword_C8A2B, menuact_export, menuact_nextlg, menusub_lgmgr
 extern dword_DD748, dword_DD74C, dword_DD784, criterrflag, leaguemaster, leaguesaved, dword_DD7CE, humancount
 extern dword_DDD70, dword_DE265, mkdir_, off_C7905, off_C7C1D, off_C7C59, off_C7CE9, off_C7D62
 extern leaguedbnames, off_C89DE, off_C8A85, off_C8AB9, off_C8B37
 extern sprintf_, strcmp_, strcpy_, stricmp_, FileExists, MakePath, DeleteFiles, DeleteDir
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt, ReadKeyRec
 extern CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, SetupStatsSourceMenu, BuildSavedGameLabels, SetDialogColors, RestoreDialogBg
-extern MessageBox, LoadModeState, CopyGameSettings, sub_33559, sub_336E6, sub_38B4F, sub_3A24F, sub_3A266
+extern MessageBox, LoadModeState, CopyGameSettings, MenuNextLeagueGame, MenuExportDbs, sub_38B4F, sub_3A24F, sub_3A266
 extern sub_3A27D, WriteSchedGame, WriteTeamRec, sub_3A31E, WriteLeagueTeamEntry, AskTeamPassword, AskMasterPassword, sub_3A5FC
 extern sub_3A71C, sub_3A826, FmtFromLeague, LeagueCheckStub, GetLeagueId, MsgCopyingDatabases, CopyHumanTeamDBs, UpdateSeasonSchedule
 extern FatalError, sub_B2DCA, sub_B392C, sub_B3CC8, sub_B4B88, unk_C1914, unk_C1916, unk_C192D
 extern unk_C1930, unk_C7569, unk_C7609, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, unk_C792B, unk_C79D0
 extern unk_C7B12, unk_C7C61, unk_C7CF1, unk_C7D9D, unk_C7E3E, btn_MasterDB, unk_C7F77, unk_C7F8E
-extern unk_C7FB9, unk_C7FD6, msg_SavedGame, unk_C8A27, unk_C8AE0, unk_C8B00, unk_C8B40, unk_CE64F
+extern unk_C7FB9, unk_C7FD6, msg_SavedGame, unk_C8A27, unk_C8AE0, unk_C8B00, unk_C8B40, leaguemgrmenu
 extern leagueteams, treeteamnames, masterpw, unknown_libname_1, word_DD7D0
 global loc_3AA73, loc_3AAA7, loc_3AAD9, loc_3AB0B, loc_3AB44, loc_3AB78, loc_3AB7A, loc_3AB95
 global loc_3ABAB, loc_3ABC6, loc_3ABFB, loc_3AC0A, loc_3AC4E, loc_3AC6E, loc_3AC8E, loc_3ACCB
@@ -2876,9 +2876,9 @@ call LoadModeState	; 3D090
 call BuildSavedGameLabels	; 3D095
 xor eax, eax	; 3D09A
 call SetupStatsSourceMenu	; 3D09C
-mov dword [dword_CE4E3], sub_336E6	; 3D0A1
-mov dword [dword_CE503], sub_33559	; 3D0AB
-mov dword [dword_CE527], unk_CE64F	; 3D0B5
+mov dword [menuact_export], MenuExportDbs	; 3D0A1
+mov dword [menuact_nextlg], MenuNextLeagueGame	; 3D0AB
+mov dword [menusub_lgmgr], leaguemgrmenu	; 3D0B5
 jmp short loc_3D0E9	; 3D0BF
 loc_3D0C1:
 xor ah, ah	; 3D0C1
@@ -2887,9 +2887,9 @@ call BuildSavedGameLabels	; 3D0C9
 xor eax, eax	; 3D0CE
 call SetupStatsSourceMenu	; 3D0D0
 xor ebx, ebx	; 3D0D5
-mov dword [dword_CE4E3], ebx	; 3D0D7
-mov dword [dword_CE503], ebx	; 3D0DD
-mov dword [dword_CE527], ebx	; 3D0E3
+mov dword [menuact_export], ebx	; 3D0D7
+mov dword [menuact_nextlg], ebx	; 3D0DD
+mov dword [menusub_lgmgr], ebx	; 3D0E3
 loc_3D0E9:
 push byte 0	; 3D0E9
 mov ecx, 3Fh	; 3D0EB

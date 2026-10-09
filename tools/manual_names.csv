@@ -278,6 +278,22 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000327A1,sub_327A1,LoadModeState,PC-new,,,,high,"the reverse of SaveModeState: sets gamemode (+0), curleague, paths, HomeTeam/VisTeam, gameopts and controller fields from a mode state block",main_desk,manual-trace
 00032B1D,sub_32B1D,WriteModeState,PC-new,,,,medium,"fills a mode state block from the current globals and writes its 75h bytes to the mode's settings file (root for gamemode 0, else in the league dir)",main_desk,manual-trace
 00032C9E,sub_32C9E,CopyGameSettings,PC-new,,,,medium,"(src, dst): copies game.set (75h bytes) to dst, or into an existing dst only the 13 bytes at +4 and the dword at +59h; used by database_merge with the floppy path",main_desk,manual-trace
+00032DA9,sub_32DA9,MenuNewExhibition,PC-new,,,,high,"File menu ""New Exhibition Game ..."": disk check, controllers, PreGameScreen, PlayGame, then back to the desk (also resumes a saved exhibition)",temp_files,manual-trace
+00032FF4,sub_32FF4,MenuNewLeague,PC-new,,,,high,"File menu ""New League ..."": CreateNewLeague in lgstate, then enables Export / Next League Game / League Manager menu actions",temp_files,manual-trace
+0003322A,sub_3322A,MenuAddTeam,PC-new,,,,high,"League Manager ""Add Team to League ..."" (AddHumanTeam in lgstate)",temp_files,manual-trace
+000332C0,sub_332C0,MenuRemoveTeam,PC-new,,,,high,"League Manager ""Remove Team From League ..."" (RemoveHumanTeam)",temp_files,manual-trace
+000332F6,sub_332F6,MenuLeagueSettings,PC-new,,,,high,"League Manager ""Change League Play Settings ..."" (CheckMasterPassword, settings dialog)",temp_files,manual-trace
+0003339D,sub_3339D,MenuRebuildDbs,PC-new,,,,high,"League Manager ""Rebuild DataBases ...""",temp_files,manual-trace
+000333D7,sub_333D7,MenuMergeUpdateDbs,PC-new,,,,high,"League Manager ""Merge and Update Team Databases ...""",temp_files,manual-trace
+00033469,sub_33469,MenuMergeLeagueFiles,PC-new,,,,high,"League Manager ""Merge League Files ...""",temp_files,manual-trace
+000334FB,sub_334FB,MenuUpdateTeamDbs,PC-new,,,,high,"League Manager ""Update Teams DataBases ...""",temp_files,manual-trace
+00033523,sub_33523,MenuTradePlayers,PC-new,,,,high,"League Manager ""Trade Players ..."" (TradePlayers in lgstate)",temp_files,manual-trace
+00033559,sub_33559,MenuNextLeagueGame,PC-new,,,,high,"File menu ""Next League Game ..."": opens curleague\game.sav, plays the league game (sub_36B93), sets the EASN league stats callbacks",temp_files,manual-trace
+0003366F,sub_3366F,MenuLeagueHilights,PC-new,,,,high,"League Manager ""League Hilights ...""",temp_files,manual-trace
+000336BE,sub_336BE,MenuImportDbs,PC-new,,,,high,"File menu ""Import Databases ...""",temp_files,manual-trace
+000336E6,sub_336E6,MenuExportDbs,PC-new,,,,medium,"File menu ""Export Databases ..."" action installed with a league (sub_3D108 in lgstate)",temp_files,manual-trace
+0003371C,sub_3371C,DemoSetupStub,PC-new,,,,low,empty; called before the scoreboard demo starts,temp_files,manual-trace
+00033727,sub_33727,FreeRinkGfx,PC-new,,,,medium,frees rinkbm and the dword_C73D0 buffer (resets dword_C7440 to -1); used by cdstream and highlights,temp_files,manual-trace
 0003A28F,sub_3A28F,WriteSchedGame,PC-new,,,,high,"FileWriteAt counterpart of ReadSchedGame (2 + index*6, 6 bytes)",league_setup,manual-trace
 0003A2B8,sub_3A2B8,WriteTeamRec,PC-new,,,,high,"FileWriteAt counterpart of ReadTeamRec (index*2E8h, 2E8h bytes)",league_setup,manual-trace
 0003A347,sub_3A347,WriteLeagueTeamEntry,PC-new,,,,high,"FileWriteAt of one PINFO.DB team entry (20h + index*1Eh, 1Eh bytes)",league_setup,manual-trace

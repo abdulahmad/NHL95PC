@@ -4,17 +4,17 @@ bits 32
 section s_CD9D0 progbits alloc noexec write align=1
 extern StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense, StatsMenuPenaltyKilling, StatsMenuPowerPlay, StatsMenuTeamPenalties, StatsMenuPoints, StatsMenuGoals
 extern StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus, StatsMenuPIM, StatsMenuShootPct, StatsMenuGAA, StatsMenuGoalieWins
-extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, MenuOpenSaved, MenuExit, sub_32DA9
-extern sub_32FF4, sub_3322A, sub_332C0, sub_332F6, sub_3339D, sub_333D7, sub_33469, sub_334FB
-extern sub_33523, sub_3366F, sub_336BE, sub_6BE95, sub_7BEBB, sub_7C993, sub_7C9A1, sub_7CAF7
+extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, MenuOpenSaved, MenuExit, MenuNewExhibition
+extern MenuNewLeague, MenuAddTeam, MenuRemoveTeam, MenuLeagueSettings, MenuRebuildDbs, MenuMergeUpdateDbs, MenuMergeLeagueFiles, MenuUpdateTeamDbs
+extern MenuTradePlayers, MenuLeagueHilights, MenuImportDbs, sub_6BE95, sub_7BEBB, sub_7C993, sub_7C9A1, sub_7CAF7
 extern sub_7CB9F, sub_80830, sub_82579, sub_85924, CreatePlayoffs, EasnStandingsMenu, unk_C67B1, unk_CEF0F
 extern unk_CEF2F, unk_CEF6F, unk_CEFEF
 global str_LAAtMTL, asc_CDBDC, asc_CDBE3, asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_CDD5E
 global asc_CDD6B, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide
 global dword_CD9D0, dword_CD9F4, dword_CDA1C, dword_CDA20, dword_CDA24, dword_CDA28, dword_CDA2C
 global dword_CDA30, dword_CDA34, dword_CDA38, dword_CDA3C, dword_CDA40, dword_CDA44, dword_CDA48, dword_CDA4C
-global mainmenubar, dword_CE4E3, dword_CE503, dword_CE527, dword_CE583
-global dword_CE5A3, dword_CE5C3, dword_CE8EB, off_CECFF, off_CED3F, unk_CDA50, unk_CDA55, unk_CDA5A
+global mainmenubar, menuact_export, menuact_nextlg, menusub_lgmgr, menuact_nextpo
+global menuact_posettings, menuact_pohilights, dword_CE8EB, off_CECFF, off_CED3F, unk_CDA50, unk_CDA55, unk_CDA5A
 global unk_CDA65, unk_CDA6E, unk_CDA83, unk_CDA9B, unk_CDAB3, unk_CDACA, unk_CDAE0, unk_CDAF6
 global unk_CDB05, unk_CDB1A, unk_CDB2F, unk_CDB44, unk_CDB55, unk_CDB6A, unk_CDB6F, unk_CDB84
 global unk_CDB98, unk_CDBAE, unk_CDBC4, unk_CDBF5, unk_CDC0B, unk_CDC1E, unk_CDC34, unk_CDC47
@@ -30,7 +30,7 @@ global unk_CE0DA, unk_CE0EB, unk_CE0FB, unk_CE10E, unk_CE120, unk_CE136, unk_CE1
 global unk_CE169, unk_CE175, unk_CE187, unk_CE18E, unk_CE19E, unk_CE1B1, unk_CE1C3, unk_CE1D9
 global unk_CE1E5, unk_CE1F5, unk_CE1FF, unk_CE263, unk_CE26D, unk_CE274, unk_CE284, unk_CE290
 global unk_CE2A2, unk_CE2B3, unk_CE2BD, unk_CE2CF, unk_CE2DF, unk_CE305, unk_CE31F, unk_CE32F
-global unk_CE33F, unk_CE34F, unk_CE361, unk_CE371, unk_CE383, unk_CE389, filemenu, unk_CE64F
+global unk_CE33F, unk_CE34F, unk_CE361, unk_CE371, unk_CE383, unk_CE389, filemenu, leaguemgrmenu
 global gamemenu, statsmenu, unk_CE96F, unk_CEA2F, unk_CEB2F, unk_CEB8F, unk_CEC4F, unk_CECAF
 global unk_CED2F, unk_CED6F
 dword_CD9D0:
@@ -462,31 +462,31 @@ dd unk_CDA6E
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 024h,00h,00h,00h,0A5h,00h,00h,00h,035h,00h,00h,00h
 dd unk_CDA83
-dd sub_32DA9
+dd MenuNewExhibition
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 0A5h,00h,00h,00h,047h,00h,00h,00h
 dd unk_CDA6E
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 048h,00h,00h,00h,0A5h,00h,00h,00h,059h,00h,00h,00h
 dd unk_CDAF6
-dd sub_32FF4
+dd MenuNewLeague
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 0A5h,00h,00h,00h,06Bh,00h,00h,00h
 dd unk_CDB05
-dd sub_336BE
+dd MenuImportDbs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,06Ch,00h,00h,00h
 db 0A5h,00h,00h,00h,07Dh,00h,00h,00h
 dd unk_CDB1A
-dword_CE4E3:
+menuact_export:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 07Eh,00h,00h,00h,0A5h,00h,00h,00h,08Fh,00h,00h,00h
 dd unk_CDB2F
-dword_CE503:
+menuact_nextlg:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 090h,00h,00h,00h,0A5h,00h,00h,00h,0A1h,00h,00h,00h
 dd unk_CDB44
 db 00h,00h,00h,00h
-dword_CE527:
+menusub_lgmgr:
 db 00h,00h,00h,00h,0Dh,00h,00h,00h,00h,00h,00h,00h,0A2h,00h,00h,00h
 db 0A5h,00h,00h,00h,0B3h,00h,00h,00h
 dd unk_CDA6E
@@ -497,15 +497,15 @@ dd CreatePlayoffs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0C6h,00h,00h,00h
 db 0A5h,00h,00h,00h,0D7h,00h,00h,00h
 dd unk_CDAB3
-dword_CE583:
+menuact_nextpo:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 0D8h,00h,00h,00h,0A5h,00h,00h,00h,0E9h,00h,00h,00h
 dd unk_CDACA
-dword_CE5A3:
+menuact_posettings:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 0EAh,00h,00h,00h,0A5h,00h,00h,00h,0FBh,00h,00h,00h
 dd unk_CDAE0
-dword_CE5C3:
+menuact_pohilights:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 0FCh,00h,00h,00h,0A5h,00h,00h,00h,0Dh,01h,00h,00h
 dd unk_CDA6E
@@ -521,54 +521,54 @@ db 032h,01h,00h,00h,0A5h,00h,00h,00h,044h,01h,00h,00h
 dd unk_CDB6A
 dd MenuExit
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CE64F:
+leaguemgrmenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0FDh,00h,00h,00h,011h,00h,00h,00h
 dd unk_CDE19
-dd sub_33469
+dd MenuMergeLeagueFiles
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 0FDh,00h,00h,00h,023h,00h,00h,00h
 dd unk_CDDF7
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 024h,00h,00h,00h,0FDh,00h,00h,00h,035h,00h,00h,00h
 dd unk_CDE30
-dd sub_332C0
+dd MenuRemoveTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 0FDh,00h,00h,00h,047h,00h,00h,00h
 dd unk_CDE4C
-dd sub_3322A
+dd MenuAddTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
 db 0FDh,00h,00h,00h,059h,00h,00h,00h
 dd unk_CDDF7
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 05Ah,00h,00h,00h,0FDh,00h,00h,00h,06Bh,00h,00h,00h
 dd unk_CDE63
-dd sub_33523
+dd MenuTradePlayers
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,06Ch,00h,00h,00h
 db 0FDh,00h,00h,00h,07Dh,00h,00h,00h
 dd unk_CDDF7
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 07Eh,00h,00h,00h,0FDh,00h,00h,00h,08Fh,00h,00h,00h
 dd unk_CDE76
-dd sub_3339D
+dd MenuRebuildDbs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,090h,00h,00h,00h
 db 0FDh,00h,00h,00h,0A1h,00h,00h,00h
 dd unk_CDE8C
-dd sub_333D7
+dd MenuMergeUpdateDbs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0A2h,00h,00h,00h
 db 0FDh,00h,00h,00h,0B3h,00h,00h,00h
 dd unk_CDECB
-dd sub_332F6
+dd MenuLeagueSettings
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0B4h,00h,00h,00h
 db 0FDh,00h,00h,00h,0C5h,00h,00h,00h
 dd unk_CDEEB
-dd sub_3366F
+dd MenuLeagueHilights
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0C6h,00h,00h,00h
 db 0FDh,00h,00h,00h,0D7h,00h,00h,00h
 dd unk_CDDF7
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 0D8h,00h,00h,00h,0FDh,00h,00h,00h,0EAh,00h,00h,00h
 dd unk_CDEB0
-dd sub_334FB
+dd MenuUpdateTeamDbs
 db 00h,00h,00h,00h,00h,00h,00h,00h
 gamemenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,092h,00h,00h,00h,011h,00h,00h,00h
