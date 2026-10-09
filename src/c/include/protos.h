@@ -726,5 +726,9 @@ int TextInputDialog(char *prompt, char *buf, int len, int a, int b, int c, int d
 int OutputCurrentData(void);  /* 18D7F */
 void clearteams(void);  /* 5B881 */
 void PickGoalie(short side, short slot, short force);  /* 652D6 */
+void checkcx(Player *p, short x, short d, short pl);  /* 58DC7 */
+void checkplcoll(Player *p, short x, int y);  /* 58CE2 */
+void checkpuckcoll(Player *p, int pl);  /* 5428A */
+void PuckCheckColl(Player *p);  /* 548AC */
 
 #endif

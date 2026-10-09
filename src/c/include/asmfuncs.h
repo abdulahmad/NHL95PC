@@ -578,8 +578,6 @@ extern void checkint(); /* 53E6A */
 extern void checkob(); /* 53F8C */
 extern void checkob_ret5a(); /* 5412B */
 extern void checkob_ret5(); /* 5412E */
-extern void checkpuckcoll(); /* 5428A */
-extern void PuckCheckColl(); /* 548AC */
 extern void GetLowestPen(); /* 54A53 */
 extern void chk4lc(); /* 54AF9 */
 extern void chk4lc_shoot(); /* 54BF8 */
@@ -605,8 +603,6 @@ extern void checkwallcoll(); /* 582C9 */
 extern void checkgoal(); /* 584AA */
 extern void wallcoll(); /* 587D3 */
 extern void wallcollb(); /* 58B7F */
-extern void checkplcoll(); /* 58CE2 */
-extern void checkcx(); /* 58DC7 */
 extern void ReturnGoalies(); /* 59352 */
 extern void sndcb_addesp8_x(); /* 594AC */
 extern void SndLoadFile2(); /* 594B2 */

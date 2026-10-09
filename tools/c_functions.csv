@@ -233,6 +233,7 @@ CompShoot,55A35,106,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_a
 FacingBoards,5378D,159,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/FacingBoards.c,matched,
 Findhittype,579FF,63,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/Findhittype.c,matched,
 MarkTwoLinePlayers,55C6F,185,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/MarkTwoLinePlayers.c,matched,
+PuckCheckColl,548AC,228,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PuckCheckColl.c,matched,
 ScatterPass,54D63,145,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ScatterPass.c,matched,
 SetShotMode,5786E,140,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/SetShotMode.c,nonmatching,"draft: vtoa result copied to edx before the regd0 store; asm stores ax then movsx edx,ax after word_C90A6"
 ShotMode,578FA,261,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ShotMode.c,matched,
@@ -241,6 +242,7 @@ Sweepcheck,532A2,27,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_a
 ToFixed,53294,14,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ToFixed.c,matched,
 TryBlockShot,534BB,124,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/TryBlockShot.c,nonmatching,"registers only: original p in ecx, n in ebx, gmode2 temp in edx; this draft p in ebx, n in edx. 10-min cap"
 checkagr,5369F,238,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkagr.c,nonmatching,
+checkplcoll,58CE2,229,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkplcoll.c,nonmatching,
 deflect,57A3E,90,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/deflect.c,matched,
 newcheck,58084,113,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/newcheck.c,matched,
 passmode,5514E,97,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/passmode.c,matched,

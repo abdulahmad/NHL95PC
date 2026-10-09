@@ -1886,6 +1886,10 @@ mov edx, ebx	; 5489E
 mov eax, ecx	; 548A0
 call puckbody	; 548A2
 jmp near PassLaneChk_ret5	; 548A7
+; C: src/c/040_53294_engine_physics_ai/PuckCheckColl.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/PuckCheckColl.inc"
+%else
 PuckCheckColl:
 push dword 14h	; 548AC
 call __CHK	; 548B1
@@ -1964,6 +1968,7 @@ pop edx	; 5498C
 pop ecx	; 5498D
 pop ebx	; 5498E
 ret	; 5498F
+%endif ; C
 ; C: src/c/040_53294_engine_physics_ai/CheckBump.c
 %ifdef CBUILD
 %include "c/040_53294_engine_physics_ai/CheckBump.inc"
