@@ -59,3 +59,12 @@ tmflags    equ 44h   ; tsize b; 93G $30; lineinput: bit 0 'start lc mode' cleare
 tmATOP     equ 0Eh   ; tsize w; 93G $A (attack time of possession stat): chkatop adds 1 once a second for the team with the puck past the blue line
 tmgoalie   equ 38h   ; tsize w; 93G $26 (goalie 1/2/none): releasepl picks the priolist row by its sign (93G tst.w tmgoalie(a2) / bpl)
 tmpbox     equ 0B6h  ; tsize b array; 93G $9A (penalty box list: roster indexes, ends with a negative byte): ProcessPenaltyList walks it and shifts it down
+tmshots    equ 00h   ; tsize w; team shots: the stats.log dump (DumpStatsLog) prints it under 'shts'
+tmppg      equ 02h   ; tsize w; power-play goals: DumpStatsLog 'ppg' column
+tmpp       equ 04h   ; tsize w; power plays: DumpStatsLog 'pp' column
+tmpen      equ 0Ah   ; tsize w; penalties: DumpStatsLog 'pen' column
+tmpenmin   equ 0Ch   ; tsize w; penalty minutes: DumpStatsLog 'penmin' column
+tmpass     equ 26h   ; tsize w; passes: DumpStatsLog 'pass' column
+tmpasscomp equ 28h   ; tsize w; completed passes: DumpStatsLog 'passcomp' column
+tmplstats  equ 0E6h  ; tsize d; pointer to skater stats, 10h bytes per roster player 0-18h (words g, a, pen, +/-, ppg, shg, eng, sht): DumpStatsLog
+tmglstats  equ 0EAh  ; tsize d; pointer to goalie stats, 6 bytes per goalie (roster 19h-1Bh; words min, sht, sav): DumpStatsLog

@@ -9,7 +9,7 @@ global loc_934F2, loc_93558, loc_93565, loc_93570, loc_935B4, loc_935C1, loc_935
 global loc_93671, loc_936A4, loc_936E8, loc_93705, loc_9374E, loc_9377C, loc_937A8, loc_937E5
 global loc_9380C, loc_93818, loc_9382A, loc_9382F, loc_93839, loc_938C1, loc_938D9, loc_938EA
 global loc_93906, loc_93922, sub_93308, sub_9333C, sub_93354, sub_9336C, imul32, sub_933FB
-global sub_93470, sub_93540, sub_935E0, sub_9362C, sub_936C0, sub_93844, sub_938C8, sub_938F4
+global sub_93470, sub_93540, DebugPrintf, sub_9362C, sub_936C0, sub_93844, sub_938C8, sub_938F4
 global sub_93908, sub_93914, sub_93924, unk_936AC
 sub_93308:
 sub esp, byte 28h	; 93308
@@ -310,7 +310,7 @@ pop edi	; 935D3
 pop esi	; 935D4
 ret	; 935D5
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_935E0:
+DebugPrintf:
 sub esp, 104h	; 935E0
 cmp dword [dword_D4534], byte 2	; 935E6
 jl short loc_93622	; 935ED

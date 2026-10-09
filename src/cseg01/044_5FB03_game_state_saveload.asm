@@ -12,8 +12,8 @@ extern lastsfx, dword_CC0E0, onetimerflag, dword_CC0F8, penshotplayer, dword_CC1
 extern dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
 extern dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, crowdsmooth, dword_D8C6C
 extern dword_D8C78, dword_D8C84, dword_D9980, dword_DB088, dword_DC28C, dword_DF00C, dword_DF010, hmtmstruct
-extern dword_DF6F2, dword_DF6F6, dword_DF6FA, dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
-extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, dword_DF7FA, dword_DF7FE, awtmroster, awtmptrF2
+extern dword_DF6F2, dword_DF6F6, hmtmplstats, dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
+extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2
 extern awtmsort, dword_E009C, dword_E0248, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
 extern ltx, replaystart, off_CC01D, passspeed, sub_13A91, sub_145A2, sub_145F9, sub_1BBCC
 extern sub_3271B, sub_327A1, GetPeriodTime, SprSort, sub_61E99, sub_673C5, ReplayRecordReset, sub_7DC8B
@@ -1674,7 +1674,7 @@ mov dword [hmtmsort], SortCords	; 6131D
 mov dword [dword_DF6F2], unk_DACA0	; 61327
 mov dword [dword_DF6F6], unk_DAC40	; 61331
 mov dword [hmtmlines], hmlinetab	; 6133B
-mov dword [dword_DF6FA], dword_DB088	; 61345
+mov dword [hmtmplstats], dword_DB088	; 61345
 mov dword [dword_DF6FE], unk_DC240	; 6134F
 mov dword [hmtmroster], hmroster	; 61359
 mov dword [hmtmptrF2], unk_DBC30	; 61363
@@ -1682,7 +1682,7 @@ mov dword [awtmsort], SortCords+300h	; 6136D
 mov dword [dword_DF7F2], unk_DAE94	; 61377
 mov dword [dword_DF7F6], unk_DAC70	; 61381
 mov dword [awtmlines], awlinetab	; 6138B
-mov dword [dword_DF7FA], unk_DB218	; 61395
+mov dword [awtmplstats], unk_DB218	; 61395
 mov dword [dword_DF7FE], unk_DC252	; 6139F
 mov dword [awtmroster], awroster	; 613A9
 mov dword [awtmptrF2], unk_DBF18	; 613B3

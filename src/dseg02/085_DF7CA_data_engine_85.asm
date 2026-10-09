@@ -6,7 +6,7 @@ global byte_DF7CA, byte_DF7E6, byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_DF861
 global byte_DF87F, byte_DFF3A, puckpflags2, byte_DFFA6, byte_DFFE0, byte_DFFE2, byte_E003A, byte_E0072
 global byte_E0073, byte_E0074, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8
 global byte_E0308, byte_E0344, PlList, byte_E038A, byte_E0393, byte_E0397, byte_E03C1, dword_DF7EA
-global awtmlines, dword_DF7F2, dword_DF7F6, dword_DF7FA, dword_DF7FE, awtmroster, awtmptrF2, awtmsort
+global awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2, awtmsort
 global puckcross_m2, dword_DF848, puckstruct
 global sortobj15, dword_E009C, dword_E00A0, dword_E0220, dword_E0230
 global dword_E0244, dword_E0248, dword_E038E, recbpr, replayplay, dword_E03A8
@@ -36,7 +36,7 @@ dword_DF7F2:
 resb 4
 dword_DF7F6:
 resb 4
-dword_DF7FA:
+awtmplstats:
 resb 4
 dword_DF7FE:
 resb 4

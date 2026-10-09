@@ -16,7 +16,7 @@ extern sub_175E2, sub_6CA8F, sub_6CB90, sub_6CBB7, sub_6CC20, sub_76429, sub_834
 extern sub_8D2F0, sub_8E4C0, sub_8E4F8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_90D20, sub_910E0, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_91964
 extern sub_92CD0, sub_92DE0, sub_B29F0, sub_B2CBE, MouseSetPos, sub_B2F22, sub_B30B4, sub_B30F4
-extern sub_B340B, sub_B3464, sub_B384E, sub_B387E, sub_B392C, sub_B39D0, sub_B39ED, sub_B4B88
+extern sub_B340B, sub_B3464, sub_B384E, sub_B387E, sub_B392C, sub_B39D0, PollKey, sub_B4B88
 extern sub_B4BA8, sub_B4C61, sub_B4FAC, unk_C27F5, unk_D45D8, scrpitch
 global loc_6B0C7, loc_6B0CC, loc_6B17A, loc_6B17F, loc_6B21F, loc_6B23C, loc_6B29D, loc_6B2FA
 global loc_6B336, loc_6B345, loc_6B371, loc_6B3AC, loc_6B42F, loc_6B436, loc_6B478, loc_6B4B6
@@ -1277,7 +1277,7 @@ je short loc_6BE6B	; 6BE60
 or byte [byte esi+04h], 2	; 6BE62
 mov dword [dword_CDA40], eax	; 6BE66
 loc_6BE6B:
-call sub_B39ED	; 6BE6B
+call PollKey	; 6BE6B
 test eax, eax	; 6BE70
 je short loc_6BE78	; 6BE72
 or byte [byte esi+04h], 20h	; 6BE74

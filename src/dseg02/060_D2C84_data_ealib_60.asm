@@ -22,7 +22,7 @@ global dword_D30D4, dword_D30D8, dword_D30DC, dword_D30E0, dword_D30E4, dword_D3
 global dword_D30F4, dword_D30F8, dword_D3104, dword_D4108, dword_D4158, dword_D415C, dword_D4160, dword_D4164
 global dword_D416C, dword_D4170, dword_D4177, dword_D417B, dword_D417F, dword_D4183, dword_D4187, dword_D418B
 global dword_D418F, dword_D4193, dword_D4197, dword_D419B, dword_D419F, dword_D41A3, dword_D41A7, dword_D41AB
-global dword_D41AF, dword_D41B3, dword_D41CE, dword_D41EA, dword_D41F0, dword_D41F4, dword_D41FC, dword_D4200
+global dword_D41AF, dword_D41B3, dword_D41CE, dword_D41EA, bailout_vec, dword_D41F4, dword_D41FC, dword_D4200
 global dword_D4204, dword_D4208, dword_D420C, dword_D4210, dword_D4214, dword_D4218, dword_D421C, dword_D4220
 global dword_D4224, dword_D4228, dword_D422C, dword_D4230, dword_D4234, dword_D4238, dword_D423C, dword_D4240
 global dword_D4248, dword_D424C, dword_D4250, dword_D4254, dword_D4258, dword_D425C, dword_D4260, dword_D4264
@@ -629,7 +629,7 @@ db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0C8h,00h,00h,00h
 db 00h,07Fh,03Fh,00h,00h,00h,00h,00h
 dword_D41EA:
 db 00h,00h,00h,00h,00h,00h
-dword_D41F0:
+bailout_vec:
 dd sub_B345D
 dword_D41F4:
 db 00h,00h,00h,00h

@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_DF63E nobits alloc noexec write align=1
 global byte_DF64D, hmtmflags, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, awtmflags
-global dword_DF642, dword_DF646, dword_DF648, dword_DF652, dword_DF690, dword_DF6C2, dword_DF6EA, hmtmlines
-global dword_DF6F2, dword_DF6F6, dword_DF6FA, dword_DF6FE, hmtmroster, hmtmptrF2, hmtmsort, dword_DF712
-global awtmstruct, dword_DF716, dword_DF71C, dword_DF71E, dword_DF720, dword_DF738, dword_DF73A
-global dword_DF73C, dword_DF748, dword_DF752, hmtmline, hmtmlcnt, word_DF644, hmtmap, hmtmgoalie
+global dword_DF642, dword_DF646, dword_DF648, dword_DF652, hmtmpdst_m2, dword_DF6C2, dword_DF6EA, hmtmlines
+global dword_DF6F2, dword_DF6F6, hmtmplstats, dword_DF6FE, hmtmroster, hmtmptrF2, hmtmsort
+global awtmstruct
+global dword_DF748, dword_DF752, hmtmline, hmtmlcnt, word_DF644, hmtmap, hmtmgoalie
 global word_DF656, word_DF65A, hmtmpdst, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
 global word_DF744, word_DF746, awtmap, awtmgoalie, word_DF756
 hmtmline:
@@ -35,7 +35,7 @@ hmtmflags:
 resb 2
 word_DF65A:
 resb 54
-dword_DF690:
+hmtmpdst_m2:
 resb 2
 hmtmpdst:
 resb 48
@@ -59,7 +59,7 @@ dword_DF6F2:
 resb 4
 dword_DF6F6:
 resb 4
-dword_DF6FA:
+hmtmplstats:
 resb 4
 dword_DF6FE:
 resb 4
@@ -71,26 +71,18 @@ hmtmsort:
 resb 4
 word_DF70E:
 resb 4
-dword_DF712:
 resb 2
 awtmstruct:
 resb 2
-dword_DF716:
 resb 6
-dword_DF71C:
 resb 2
-dword_DF71E:
 resb 2
-dword_DF720:
 resb 2
 resb 2
 awscore:
 resb 20
-dword_DF738:
 resb 2
-dword_DF73A:
 resb 2
-dword_DF73C:
 resb 2
 awtmline:
 resb 2

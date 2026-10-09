@@ -14,7 +14,7 @@ extern dword_CBEBE, dword_CBECA, dword_CC0EC, dword_CC0F8, penshotplayer, dword_
 extern penshotlive, dword_CC12C, dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144
 extern dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, dword_D8C6C
 extern dword_D8C84, dword_DB086, dword_DB088, hmtmstruct, dword_DF642, dword_DF648, dword_DF652
-extern dword_DF690, awtmstruct, dword_DF748, dword_DF752, dword_DF848, puckstruct
+extern hmtmpdst_m2, awtmstruct, dword_DF748, dword_DF752, dword_DF848, puckstruct
 extern sortobj15, dword_E0244, dword_E038E, dword_E03AE
 extern dword_E9A9E, dword_E9AB6, dword_E9AB7, gwgteam, gwgplayer, startm_m2
 extern seqtimer, puckvx, gmode, goalieacc, jctime, PreGameIntro_popebp, PreGameIntro_popx, ltx
@@ -388,7 +388,7 @@ mov ecx, edx	; 487E5
 mov edx, eax	; 487E7
 shl edx, 8	; 487E9
 mov ebx, ecx	; 487EC
-mov edx, dword [dword edx+ebx*2+dword_DF690]	; 487EE
+mov edx, dword [dword edx+ebx*2+hmtmpdst_m2]	; 487EE
 sar edx, 10h	; 487F5
 cmp edx, byte 0FFFFFFFFh	; 487F8
 jge short .2	; 487FB

@@ -5,12 +5,12 @@ section s_C1B2C progbits alloc noexec write align=1
 global PenaltyList, str_EASports, str_StarFmt, asc_C1C6A, asc_C1C78, asc_C1C87, asc_C1C92, asc_C1C9B
 global asc_C1CA8, asc_C1CAC, asc_C1CB3, asc_C1CB9, asc_C1CC4, asc_C1CCD, asc_C1CDA, asc_C1CE9
 global asc_C1CFE, asc_C1D0E, asc_C1D19, asc_C1D2D, asc_C1D3F, asc_C1D54, asc_C1DB6, asc_C1DBC
-global asc_C1DC5, asc_C1DCE, asc_C1DD6, asc_C223B, asc_C234F, asc_C2373, asc_C239E, asc_C23A6
-global asc_C23BB, asc_C23C7, asc_C23D1, asc_C23DB, asc_C23F4, asc_C23FD, asc_C2410, asc_C2437
-global asc_C243C, asc_C2440, asc_C2445, asc_C244A, asc_C2451, asc_C246D, asc_C2473, asc_C247E
-global asc_C2488, asc_C24A2, asc_C24A8, asc_C24B2, asc_C24B6, asc_C24C8, asc_C24E5, asc_C24FB
-global asc_C24FF, asc_C2515, asc_C2550, asc_C2584, asc_C25CA, asc_C25F5, asc_C2625, asc_C2652
-global asc_C2670, asc_C2689, asc_C26CF, asc_C26FA, asc_C272A, asc_C2757, unk_C1B3E, unk_C1B49
+global asc_C1DC5, asc_C1DCE, asc_C1DD6, str_pen, str_dbgClin, str_dbgPenShot, str_dbgLip, str_dbgHVpos
+global str_dbgRef, str_dbgPb, str_dbgG, str_dbgGO, str_dbgGsp, str_dbgC12, str_dbgPuckc, str_dbgIdx
+global str_dbgD, str_dbgLbD, str_dbgDRb, str_dbgDS, str_dbgPosVel, str_dbgVz, str_dbgAss, str_dbgSpa
+global str_debError, str_dbgBail, str_statslog, str_fmode_at, str_ErrDumpStats, str_dumpPool, str_dumpTmstructs, str_dumpHex
+global str_dumpSortcords, str_dumpSortLine, str_dumpRule, str_dumpTeamHdrH, str_dumpHome, str_dumpPlHdrH, str_dumpPlLineH, str_dumpGlHdrH
+global str_dumpGlLine, str_dumpTeamHdrA, str_dumpAway, str_dumpPlHdrA, str_dumpPlLineA, str_dumpGlHdrA, unk_C1B3E, unk_C1B49
 global unk_C1B4A, unk_C1B53, unk_C1B5C, unk_C1B6A, unk_C1B72, unk_C1B7B, unk_C1B88, unk_C1B90
 global unk_C1B9D, unk_C1BA6, unk_C1BAF, unk_C1BC1, unk_C1BD6, unk_C1BE3, unk_C1BEC, unk_C1BF5
 global unk_C1BFE, unk_C1C05, unk_C1C0D, unk_C1C16, unk_C1C1F, unk_C1C27, unk_C1C2F, unk_C1C38
@@ -37,8 +37,8 @@ global unk_C224C, unk_C2256, unk_C225C, unk_C2264, unk_C226A, unk_C2272, unk_C22
 global unk_C2286, unk_C228C, unk_C2292, unk_C229B, unk_C22A1, unk_C22A8, unk_C22B3, unk_C22BC
 global unk_C22C2, unk_C22CB, unk_C22D3, unk_C22DB, unk_C22E6, unk_C22EE, unk_C22F3, unk_C22F9
 global unk_C2301, unk_C2309, unk_C2311, unk_C231A, unk_C2323, unk_C232B, unk_C2332, unk_C2338
-global unk_C233A, unk_C233D, unk_C2340, unk_C2343, unk_C2345, unk_C2348, unk_C234B, unk_C234D
-global unk_C2478, unk_C247A, unk_C247C, unk_C2485, unk_C24A0
+global unk_C233A, unk_C233D, unk_C2340, unk_C2343, unk_C2345, unk_C2348, str_dbgO, str_dbgDash
+global str_dbgL, str_dbgI, str_dbgSpace, str_dbgS, str_newline
 str_EASports:
 db 045h,041h,020h,053h,070h,06Fh,072h,074h,073h,00h
 str_StarFmt:
@@ -451,7 +451,7 @@ unk_C222F:
 db 065h,078h,070h,065h,06Eh,00h
 unk_C2235:
 db 062h,065h,06Eh,063h,068h,00h
-asc_C223B:
+str_pen:
 db 070h,065h,06Eh,00h
 unk_C223F:
 db 064h,06Fh,070h,065h,06Eh,00h
@@ -533,146 +533,146 @@ unk_C2345:
 db 052h,057h,00h
 unk_C2348:
 db 058h,043h,00h
-unk_C234B:
+str_dbgO:
 db 04Fh,00h
-unk_C234D:
+str_dbgDash:
 db 02Dh,00h
-asc_C234F:
+str_dbgClin:
 db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
 db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,063h,06Ch,069h,06Eh,03Dh,025h,064h,020h
 db 025h,064h,020h,00h
-asc_C2373:
+str_dbgPenShot:
 db 070h,073h,03Ch,025h,064h,020h,025h,064h,020h,025h,064h,020h,025h,064h,020h,025h
 db 064h,03Eh,020h,066h,028h,025h,064h,020h,025h,064h,020h,025h,064h,020h,025h,064h
 db 029h,020h,062h,028h,025h,064h,020h,025h,064h,029h,00h
-asc_C239E:
+str_dbgLip:
 db 06Ch,069h,070h,020h,025h,064h,020h,00h
-asc_C23A6:
+str_dbgHVpos:
 db 048h,056h,070h,06Fh,073h,03Ch,025h,064h,020h,025h,064h,02Ch,020h,025h,064h,020h
 db 025h,064h,03Eh,020h,00h
-asc_C23BB:
+str_dbgRef:
 db 072h,065h,066h,03Ch,025h,064h,020h,025h,064h,03Eh,020h,00h
-asc_C23C7:
+str_dbgPb:
 db 070h,062h,05Bh,025h,064h,020h,025h,064h,05Dh,00h
-asc_C23D1:
+str_dbgG:
 db 047h,03Ch,025h,064h,020h,025h,064h,03Eh,020h,00h
-asc_C23DB:
+str_dbgGO:
 db 047h,04Fh,03Dh,025h,064h,020h,050h,04Fh,03Dh,025h,064h,020h,067h,06Fh,03Dh,025h
 db 064h,020h,067h,073h,03Dh,025h,064h,020h,00h
-asc_C23F4:
+str_dbgGsp:
 db 067h,03Dh,025h,064h,020h,025h,064h,020h,00h
-asc_C23FD:
+str_dbgC12:
 db 063h,031h,032h,028h,025h,064h,020h,025h,064h,029h,028h,025h,064h,020h,025h,064h
 db 029h,020h,00h
-asc_C2410:
+str_dbgPuckc:
 db 070h,075h,063h,06Bh,063h,020h,03Dh,020h,025h,064h,020h,067h,06Dh,063h,06Ch,06Fh
 db 063h,06Bh,025h,064h,020h,067h,06Dh,070h,065h,06Eh,025h,064h,020h,070h,063h,064h
 db 077h,06Eh,03Dh,025h,064h,0Ah,00h
-asc_C2437:
+str_dbgIdx:
 db 025h,064h,029h,020h,00h
-asc_C243C:
+str_dbgD:
 db 025h,064h,020h,00h
-asc_C2440:
+str_dbgLbD:
 db 05Bh,025h,064h,020h,00h
-asc_C2445:
+str_dbgDRb:
 db 025h,064h,05Dh,020h,00h
-asc_C244A:
+str_dbgDS:
 db 025h,064h,020h,025h,073h,020h,00h
-asc_C2451:
+str_dbgPosVel:
 db 040h,028h,025h,064h,020h,025h,064h,029h,020h,076h,028h,025h,064h,020h,025h,064h
 db 029h,020h,025h,064h,028h,025h,064h,020h,025h,064h,029h,00h
-asc_C246D:
+str_dbgVz:
 db 076h,07Ah,025h,064h,020h,00h
-asc_C2473:
+str_dbgAss:
 db 041h,025h,073h,020h,00h
-unk_C2478:
+str_dbgL:
 db 04Ch,00h
-unk_C247A:
+str_dbgI:
 db 049h,00h
-unk_C247C:
+str_dbgSpace:
 db 020h,00h
-asc_C247E:
+str_dbgSpa:
 db 073h,070h,061h,03Dh,025h,064h,00h
-unk_C2485:
+str_dbgS:
 db 025h,073h,00h
-asc_C2488:
+str_debError:
 db 064h,065h,062h,045h,072h,072h,06Fh,072h,03Ah,020h,025h,064h,020h,066h,072h,061h
 db 06Dh,065h,020h,025h,064h,020h,0Ah,00h
-unk_C24A0:
+str_newline:
 db 0Ah,00h
-asc_C24A2:
+str_dbgBail:
 db 062h,061h,069h,06Ch,0Ah,00h
-asc_C24A8:
+str_statslog:
 db 073h,074h,061h,074h,073h,02Eh,06Ch,06Fh,067h,00h
-asc_C24B2:
+str_fmode_at:
 db 061h,02Bh,074h,00h
-asc_C24B6:
+str_ErrDumpStats:
 db 065h,072h,072h,06Fh,072h,020h,064h,075h,06Dh,070h,020h,073h,074h,061h,074h,073h
 db 0Ah,00h
-asc_C24C8:
+str_dumpPool:
 db 03Dh,03Dh,03Dh,03Dh,03Dh,020h,070h,06Fh,06Fh,06Ch,028h,025h,064h,020h,025h,064h
 db 029h,020h,067h,06Dh,025h,064h,020h,03Dh,03Dh,03Dh,03Dh,0Ah,00h
-asc_C24E5:
+str_dumpTmstructs:
 db 03Dh,03Dh,03Dh,03Dh,03Dh,020h,074h,06Dh,073h,074h,072h,075h,063h,074h,073h,020h
 db 03Dh,03Dh,03Dh,03Dh,0Ah,00h
-asc_C24FB:
+str_dumpHex:
 db 025h,078h,020h,00h
-asc_C24FF:
+str_dumpSortcords:
 db 03Dh,03Dh,03Dh,03Dh,03Dh,020h,073h,06Fh,072h,074h,063h,06Fh,072h,064h,073h,020h
 db 03Dh,03Dh,03Dh,03Dh,0Ah,00h
-asc_C2515:
+str_dumpSortLine:
 db 025h,064h,03Ah,025h,064h,05Bh,025h,064h,020h,025h,064h,020h,025h,064h,020h,025h
 db 064h,020h,025h,064h,020h,025h,064h,020h,025h,064h,020h,025h,064h,020h,025h,064h
 db 020h,025h,064h,020h,025h,064h,020h,025h,064h,020h,025h,064h,020h,025h,064h,020h
 db 025h,064h,020h,025h,064h,020h,025h,078h,05Dh,0Ah,00h
-asc_C2550:
+str_dumpRule:
 db 03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh
 db 03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh
 db 03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh,03Dh
 db 03Dh,03Dh,0Ah,00h
-asc_C2584:
+str_dumpTeamHdrH:
 db 020h,020h,020h,020h,020h,020h,020h,073h,068h,074h,073h,020h,073h,063h,06Fh,072h
 db 065h,020h,05Bh,073h,068h,06Fh,074h,073h,020h,073h,063h,06Fh,072h,065h,05Dh,020h
 db 070h,070h,067h,020h,070h,070h,020h,070h,065h,06Eh,020h,070h,065h,06Eh,06Dh,069h
 db 06Eh,020h,061h,074h,06Fh,070h,020h,070h,061h,073h,073h,020h,070h,061h,073h,073h
 db 063h,06Fh,06Dh,070h,0Ah,00h
-asc_C25CA:
+str_dumpHome:
 db 068h,06Fh,06Dh,065h,020h,03Ah,020h,025h,064h,020h,025h,064h,020h,05Bh,025h,064h
 db 020h,025h,064h,05Dh,020h,025h,064h,020h,025h,064h,020h,025h,064h,020h,025h,064h
 db 020h,025h,064h,020h,025h,064h,020h,025h,064h,0Ah,00h
-asc_C25F5:
+str_dumpPlHdrH:
 db 020h,020h,020h,069h,020h,070h,06Eh,075h,06Dh,020h,067h,020h,020h,061h,020h,020h
 db 070h,065h,06Eh,020h,02Bh,02Fh,02Dh,020h,070h,070h,067h,020h,073h,068h,067h,020h
 db 065h,06Eh,067h,020h,073h,068h,074h,020h,073h,074h,061h,074h,075h,073h,0Ah,00h
-asc_C2625:
+str_dumpPlLineH:
 db 025h,033h,064h,020h,025h,033h,064h,020h,025h,033h,064h,020h,025h,033h,064h,020h
 db 025h,033h,064h,020h,025h,033h,064h,020h,025h,033h,064h,020h,025h,033h,064h,020h
 db 025h,033h,064h,020h,025h,033h,064h,020h,025h,033h,064h,0Ah,00h
-asc_C2652:
+str_dumpGlHdrH:
 db 020h,020h,020h,069h,020h,070h,06Eh,075h,06Dh,020h,06Dh,069h,06Eh,020h,073h,068h
 db 074h,020h,073h,061h,076h,020h,073h,074h,061h,074h,075h,073h,0Ah,00h
-asc_C2670:
+str_dumpGlLine:
 db 025h,033h,064h,020h,025h,033h,064h,020h,025h,035h,064h,020h,025h,033h,064h,020h
 db 025h,033h,064h,020h,025h,033h,064h,0Ah,00h
-asc_C2689:
+str_dumpTeamHdrA:
 db 020h,020h,020h,020h,020h,020h,020h,073h,068h,074h,073h,020h,073h,063h,06Fh,072h
 db 065h,020h,05Bh,073h,068h,06Fh,074h,073h,020h,073h,063h,06Fh,072h,065h,05Dh,020h
 db 070h,070h,067h,020h,070h,070h,020h,070h,065h,06Eh,020h,070h,065h,06Eh,06Dh,069h
 db 06Eh,020h,061h,074h,06Fh,070h,020h,070h,061h,073h,073h,020h,070h,061h,073h,073h
 db 063h,06Fh,06Dh,070h,0Ah,00h
-asc_C26CF:
+str_dumpAway:
 db 061h,077h,061h,079h,020h,03Ah,020h,025h,064h,020h,025h,064h,020h,05Bh,025h,064h
 db 020h,025h,064h,05Dh,020h,025h,064h,020h,025h,064h,020h,025h,064h,020h,025h,064h
 db 020h,025h,064h,020h,025h,064h,020h,025h,064h,0Ah,00h
-asc_C26FA:
+str_dumpPlHdrA:
 db 020h,020h,020h,069h,020h,070h,06Eh,075h,06Dh,020h,067h,020h,020h,061h,020h,020h
 db 070h,065h,06Eh,020h,02Bh,02Fh,02Dh,020h,070h,070h,067h,020h,073h,068h,067h,020h
 db 065h,06Eh,067h,020h,073h,068h,074h,020h,073h,074h,061h,074h,075h,073h,0Ah,00h
-asc_C272A:
+str_dumpPlLineA:
 db 025h,033h,064h,020h,025h,033h,064h,020h,025h,033h,064h,020h,025h,033h,064h,020h
 db 025h,033h,064h,020h,025h,033h,064h,020h,025h,033h,064h,020h,025h,033h,064h,020h
 db 025h,033h,064h,020h,025h,033h,064h,020h,025h,033h,064h,0Ah,00h
-asc_C2757:
+str_dumpGlHdrA:
 db 020h,020h,020h,069h,020h,070h,06Eh,075h,06Dh,020h,06Dh,069h,06Eh,020h,073h,068h
 db 074h,020h,073h,061h,076h,020h,073h,074h,061h,074h,075h,073h,0Ah,00h,00h,00h
 db 00h

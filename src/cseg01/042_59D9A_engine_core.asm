@@ -13,9 +13,9 @@ extern dword_C90B0, sflags3, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, l
 extern dword_CC0F8, penshotplayer, dword_CC104, dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer
 extern dword_CC124, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D302C
 extern dword_D3030, dword_D30B0, dword_D30B8, dword_D30BC, dword_D30C0, dword_D8C84, dword_DB088, hmtmstruct
-extern dword_DF642, dword_DF652, dword_DF6EA, dword_DF6F2, dword_DF6F6, dword_DF6FA
+extern dword_DF642, dword_DF652, dword_DF6EA, dword_DF6F2, dword_DF6F6, hmtmplstats
 extern dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort, awtmstruct, dword_DF752, dword_DF7EA
-extern awtmlines, dword_DF7F2, dword_DF7F6, dword_DF7FA, dword_DF7FE, awtmroster, awtmptrF2, awtmsort
+extern awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2, awtmsort
 extern puckstruct, sortobj15
 extern dword_E009C, recbpr, dword_E03A8, dword_E03AE
 extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
@@ -2281,7 +2281,7 @@ mov dword [hmtmsort], SortCords	; 5B8D7
 mov dword [dword_DF6F2], unk_DACA0	; 5B8E1
 mov dword [dword_DF6F6], unk_DAC40	; 5B8EB
 mov dword [hmtmlines], hmlinetab	; 5B8F5
-mov dword [dword_DF6FA], dword_DB088	; 5B8FF
+mov dword [hmtmplstats], dword_DB088	; 5B8FF
 mov dword [dword_DF6FE], unk_DC240	; 5B909
 mov dword [hmtmroster], hmroster	; 5B913
 mov dword [hmtmptrF2], unk_DBC30	; 5B91D
@@ -2289,7 +2289,7 @@ mov dword [awtmsort], SortCords+300h	; 5B927
 mov dword [dword_DF7F2], unk_DAE94	; 5B931
 mov dword [dword_DF7F6], unk_DAC70	; 5B93B
 mov dword [awtmlines], awlinetab	; 5B945
-mov dword [dword_DF7FA], unk_DB218	; 5B94F
+mov dword [awtmplstats], unk_DB218	; 5B94F
 mov dword [dword_DF7FE], unk_DC252	; 5B959
 mov dword [awtmroster], awroster	; 5B963
 mov dword [awtmptrF2], unk_DBF18	; 5B96D

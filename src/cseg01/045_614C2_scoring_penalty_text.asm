@@ -5,7 +5,7 @@ section s_614C2 progbits alloc exec nowrite align=1
 extern PBnum, Setplass, __CHK, asc_C1C6A, asc_C1C78, asc_C1C87, asc_C1C92, asc_C1C9B
 extern asc_C1CA8, asc_C1CAC, asc_C1CB3, asc_C1CB9, asc_C1CC4, asc_C1CCD, asc_C1CDA, asc_C1CE9
 extern asc_C1CFE, asc_C1D0E, asc_C1D19, asc_C1D2D, asc_C1D3F, asc_C1D54, assinsert, assreplace
-extern byte_C5400, byte_C542F, byte_C5431, sflags, gmode2, pendelaytab, byte_C9111
+extern byte_C5400, hmgoalcnt, awgoalcnt, sflags, gmode2, pendelaytab, byte_C9111
 extern penmintab, byte_C9142, byte_C9146, priolist, byte_CCE00, byte_CCE01, musicon, byte_DAC20
 extern hmroster, byte_DB3AD, hmtmflags, byte_DF6E8, awtmflags, byte_DF7E8, byte_DF861, byte_E024C
 extern byte_E024D, byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E9A15, PenBuf
@@ -1317,10 +1317,10 @@ mov dword [dword_CD34C], edi	; 62435
 .1:
 cmp dword [esp], byte 0	; 6243B
 je short .2	; 6243F
-inc byte [byte_C5431]	; 62441
+inc byte [awgoalcnt]	; 62441
 jmp short .3	; 62447
 .2:
-inc byte [byte_C542F]	; 62449
+inc byte [hmgoalcnt]	; 62449
 .3:
 cmp dword [esp], byte 0	; 6244F
 jne short .6	; 62453

@@ -4,7 +4,7 @@ bits 32
 section s_96440 progbits alloc exec nowrite align=1
 extern _os_handle_3, asc_C4730, asc_C4760, asc_C4780, asc_C47A4, asc_C47AC, dword_D30A4, dword_D30AC
 extern dword_D30B0, dword_D30B4, dword_D30B8, dword_D30C8, dword_D30D0, dword_D3104, jctime, sub_8CC70
-extern sub_8CCA8, sub_8CCC4, sub_8D2F0, sub_8DBD4, sub_8E8F0, sub_9132C, sub_935E0, sub_B3A88
+extern sub_8CCA8, sub_8CCC4, sub_8D2F0, sub_8DBD4, sub_8E8F0, sub_9132C, DebugPrintf, sub_B3A88
 extern sub_B3AA1, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, sub_B4BA8, sub_B4BC4
 extern sub_B4F8C, sub_B5E00, sub_B6DF7
 global loc_9646B, loc_964AB, loc_964BA, loc_964D2, loc_964EA, loc_96526, loc_9658D, loc_965A4
@@ -238,21 +238,21 @@ push ebx	; 9669E
 mov ecx, dword [byte eax+08h]	; 9669F
 push ecx	; 966A2
 push asc_C4730	; 966A3
-call sub_935E0	; 966A8
+call DebugPrintf	; 966A8
 add esp, byte 10h	; 966AD
 mov edi, dword [byte esi+010h]	; 966B0
 push edi	; 966B3
 mov ebp, dword [byte esi+0Ch]	; 966B4
 push ebp	; 966B7
 push asc_C4760	; 966B8
-call sub_935E0	; 966BD
+call DebugPrintf	; 966BD
 add esp, byte 0Ch	; 966C2
 mov eax, dword [byte esi+014h]	; 966C5
 push eax	; 966C8
 mov edx, dword [byte esi+018h]	; 966C9
 push edx	; 966CC
 push asc_C4780	; 966CD
-call sub_935E0	; 966D2
+call DebugPrintf	; 966D2
 add esp, byte 0Ch	; 966D7
 pop ebp	; 966DA
 pop edi	; 966DB

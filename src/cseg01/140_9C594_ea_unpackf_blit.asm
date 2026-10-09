@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9C594 progbits alloc exec nowrite align=1
 extern asc_C48FC, asc_C4904, byte_D506C, dword_D30AC, dword_D30B4, dword_D5064, dword_D5068, fputchar
-extern jctime, off_D516C, sub_8CCA8, sub_8FFB0, sub_91FA4, sub_92CD0, sub_935E0, sub_A2FD0
+extern jctime, off_D516C, sub_8CCA8, sub_8FFB0, sub_91FA4, sub_92CD0, DebugPrintf, sub_A2FD0
 extern sub_A3050, sub_A30D0, sub_B3ABC, sub_B7218
 global loc_9C5A4, loc_9C611, loc_9C62B, loc_9C689, loc_9C6BE, loc_9C70C, loc_9C71B, loc_9C72B
 global loc_9C748, loc_9C7AD, loc_9C7AF, loc_9C86F, loc_9C873, loc_9C880, loc_9C924, loc_9C969
@@ -315,7 +315,7 @@ push edi	; 9C951
 call sub_B7218	; 9C952
 add esp, byte 0Ch	; 9C957
 push asc_C4904	; 9C95A
-call sub_935E0	; 9C95F
+call DebugPrintf	; 9C95F
 add esp, byte 4	; 9C964
 jmp short loc_9C97F	; 9C967
 loc_9C969:

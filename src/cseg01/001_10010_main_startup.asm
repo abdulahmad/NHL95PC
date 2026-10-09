@@ -13,7 +13,7 @@ extern dword_C5135, dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5
 extern dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413, dword_C5417, dword_C5840, screenbm
 extern songdata, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
 extern musichandle, dword_D2C6B, dword_D302C, dword_D3030, dword_D3034, dword_D30D4, dword_D4158, dword_D415C
-extern dword_D4160, dword_D4164, dword_D41F0, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
+extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
 extern dword_D8B7C, dword_D8C18, dword_D8C4C, dword_D8C70, dword_D8C78, dword_D8C84, dword_D9A38, dword_DC230
 extern dword_DC238, dword_DF00C, dword_DF010, dword_E9A9E, dword_EDA08, dword_EDA0C, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, sub_1431E, sub_14525, sub_1457C, sub_145A2
@@ -24,7 +24,7 @@ extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CC
 extern sub_8DF54, sub_8E080, sub_8E4C0, sub_8E5AC, sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_B29F0, sub_B2CBE, sub_B2CD8, MouseSetPos, sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4
-extern sub_B30F4, sub_B33DB, sub_B3464, sub_B392C, sub_B3989, sub_B3999, sub_B39ED, sub_B3A24
+extern sub_B30F4, sub_B33DB, sub_B3464, sub_B392C, sub_B3989, sub_B3999, PollKey, sub_B3A24
 extern sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C33, sub_B4C84, unk_C0180, unk_C01D4
 extern unk_C01D7, unk_C4E30, unk_C5298, joyqueue, unk_DF014, vtoa, cont1team, word_CBC44
 extern exitgame, gameover, word_CBEC4, lcrequest, word_E0306, lcreqchoice, word_E0382, joysampling_save
@@ -537,7 +537,7 @@ call sub_479E9	; 106A5
 call sub_6B410	; 106AA
 call sub_16F9A	; 106AF
 call sub_B4B58	; 106B4
-call dword [dword_D41F0]	; 106B9
+call dword [bailout_vec]	; 106B9
 sub_106BF:
 add esp, byte 70h	; 106BF
 pop ebp	; 106C2
@@ -1555,7 +1555,7 @@ call sub_B2CBE	; 11172
 add esp, byte 4	; 11177
 test eax, eax	; 1117A
 je short loc_11185	; 1117C
-call sub_B39ED	; 1117E
+call PollKey	; 1117E
 jmp short loc_11171	; 11183
 loc_11185:
 call sub_B3A24	; 11185

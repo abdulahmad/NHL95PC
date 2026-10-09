@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_981AD progbits alloc exec nowrite align=1
-extern asc_C47E8, asc_C47FC, dword_D2FD8, dword_D30D4, dword_D41F0, off_D306C, off_D3070, off_D3074
+extern asc_C47E8, asc_C47FC, dword_D2FD8, dword_D30D4, bailout_vec, off_D306C, off_D3070, off_D3074
 extern off_D3078, off_D45B4, off_D45B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_90267
 extern sub_90D20, sub_910E0, sub_9132C, sub_91400, sub_93000, sub_9C5A8, sub_9C5B0, sub_A1800
 extern sub_A1840, sub_B39D0, sub_B3A88, sub_B3AA1, sub_B3D74, sub_B4BA8, SetDrawBitmap, sub_B4F8C
@@ -244,7 +244,7 @@ mov eax, asc_C47E8	; 984BB
 call sub_981F8	; 984C0
 test eax, eax	; 984C5
 je short loc_984CF	; 984C7
-call dword [dword_D41F0]	; 984C9
+call dword [bailout_vec]	; 984C9
 loc_984CF:
 ret	; 984CF
 sub_984D0:

@@ -14,7 +14,7 @@ extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, exit_, j___close_, jc
 extern off_C57CC, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
 extern open_, perror_, read_, sprintf_, sub_1431E, sub_1D6E8, sub_244E2, sub_31013
 extern sub_6B5E4, sub_76429, sub_76771, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8FFB0
-extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, sub_B2CD8, sub_B30B4, sub_B3A18
+extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, sub_B2CD8, sub_B30B4, WaitKey
 extern sub_B4B58, sub_B4DD4, sub_B4FAC, sub_B5DB0, unk_7673A, unk_76742, unk_76748, unk_7674F
 extern unk_76756, unk_C3283, unk_C3285, unk_C3292, unk_C3295, unk_C3298, unk_C329B, unk_C329E
 extern unk_C32A1, unk_CF48F, unk_DBC30, unk_DBCEC, unk_DBD1C, VisTeam, write_
@@ -1485,7 +1485,7 @@ jge short loc_79523	; 79503
 call sub_B4B58	; 79505
 mov eax, asc_C328E	; 7950A
 call perror_	; 7950F
-call sub_B3A18	; 79514
+call WaitKey	; 79514
 mov eax, 1	; 79519
 call exit_	; 7951E
 loc_79523:

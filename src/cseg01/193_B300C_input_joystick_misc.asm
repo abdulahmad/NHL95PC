@@ -28,8 +28,8 @@ global loc_B38FB, loc_B391A, loc_B39C3, loc_B39DE, loc_B39EC, loc_B3A01, loc_B3A
 global loc_B3A59, loc_B3A70, loc_B3ADF, sub_B300C, sub_B3010, sub_B3036, sub_B308B, sub_B30B4
 global sub_B30BB, sub_B30F4, sub_B3168, sub_B33DB, sub_B340B, sub_B3421, sub_B3454, sub_B345D
 global sub_B3464, sub_B384E, sub_B387E, sub_B38AE, sub_B392C, sub_B395C, sub_B3962, sub_B396E
-global sub_B3981, sub_B3989, sub_B3999, sub_B39A7, sub_B39B7, sub_B39D0, sub_B39ED, sub_B39F3
-global sub_B3A18, sub_B3A24, sub_B3A2F, sub_B3A88, sub_B3AA1, sub_B3ABC
+global sub_B3981, sub_B3989, sub_B3999, sub_B39A7, sub_B39B7, sub_B39D0, PollKey, sub_B39F3
+global WaitKey, sub_B3A24, sub_B3A2F, sub_B3A88, sub_B3AA1, sub_B3ABC
 sub_B300C:
 LD xor, eax, eax	; B300C
 ret	; B300E
@@ -831,7 +831,7 @@ je short loc_B39EC	; B39E8
 LD xor, ah, ah	; B39EA
 loc_B39EC:
 ret	; B39EC
-sub_B39ED:
+PollKey:
 jmp dword [off_D42A0]	; B39ED
 sub_B39F3:
 mov ah, 1	; B39F3
@@ -850,10 +850,10 @@ mov dword [off_D42A0], eax	; B3A0C
 ret	; B3A11
 mov eax, dword [off_D42A0]	; B3A12
 ret	; B3A17
-sub_B3A18:
+WaitKey:
 call dword [off_D42A0]	; B3A18
 LD or, ax, ax	; B3A1E
-je short sub_B3A18	; B3A21
+je short WaitKey	; B3A21
 ret	; B3A23
 sub_B3A24:
 call sub_B39D0	; B3A24
@@ -878,7 +878,7 @@ add eax, dword [byte ebp+08h]	; B3A53
 mov dword [byte ebp-04h], eax	; B3A56
 loc_B3A59:
 LD xor, eax, eax	; B3A59
-call sub_B39ED	; B3A5B
+call PollKey	; B3A5B
 LD or, eax, eax	; B3A60
 jne short loc_B3A70	; B3A62
 call sub_B395C	; B3A64

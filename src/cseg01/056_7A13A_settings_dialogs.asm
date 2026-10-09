@@ -14,7 +14,7 @@ extern dword_D14F0, dword_D14F4, dword_D14F8, dword_D14FC, dword_D16AC, dword_D1
 extern dword_D17EC, dword_D17F0, dword_D17F4, dword_D17F8, dword_D195C, dword_D1960, dword_D1964, dword_D1968
 extern dword_D196C, dword_D1970, dword_D1974, dword_D1978, dword_D197C, dword_D1980, dword_D198C, dword_D1990
 extern dword_D199C, dword_D19A0, dword_D19AC, dword_D19B0, dword_D19EC, dword_D20A8, musichandle, musicslot
-extern dword_D29FB, dword_D2C6B, dword_DC238, dword_DD64C, hmtmstruct, dword_DF63C, dword_DF648, hmscore
+extern dword_D29FB, dword_D2C6B, dword_DC238, dword_DD64C, hmtmstruct, dword_DF648, hmscore
 extern dword_EA0DC, dword_ED35C, dword_ED360, dword_ED364, dword_ED75C, dword_ED760, dword_ED764, puckstruct
 extern dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C, dword_ED780, dword_ED784
 extern dword_ED788, dword_ED78C, puckvx, gmode, jctime, off_C54A9, puckx, pucky
@@ -3994,7 +3994,7 @@ mov ecx, dword [dword eax+dword_DF648]	; 7CF53
 sar ecx, 10h	; 7CF59
 sub edx, ecx	; 7CF5C
 mov ecx, edx	; 7CF5E
-mov edx, dword [dword eax+dword_DF63C]	; 7CF60
+mov edx, dword [dword eax+hmtmstruct+28h]	; 7CF60
 sar edx, 10h	; 7CF66
 test ecx, ecx	; 7CF69
 jle short loc_7CF79	; 7CF6B

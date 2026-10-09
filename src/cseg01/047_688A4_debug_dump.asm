@@ -2,30 +2,26 @@
 bits 32
 %include "hockey.inc"
 section s_688A4 progbits alloc exec nowrite align=1
-extern __CHK, asc_C223B, asc_C234F, asc_C2373, asc_C239E, asc_C23A6, asc_C23BB, asc_C23C7
-extern asc_C23D1, asc_C23DB, asc_C23F4, asc_C23FD, asc_C2410, asc_C2437, asc_C243C, asc_C2440
-extern asc_C2445, asc_C244A, asc_C2451, asc_C246D, asc_C2473, asc_C247E, asc_C2488, asc_C24A2
-extern asc_C24A8, asc_C24B2, asc_C24B6, asc_C24C8, asc_C24E5, asc_C24FB, asc_C24FF, asc_C2515
-extern asc_C2550, asc_C2584, asc_C25CA, asc_C25F5, asc_C2625, asc_C2652, asc_C2670, asc_C2689
-extern asc_C26CF, asc_C26FA, asc_C272A, asc_C2757, byte_C542F, byte_C5430, byte_C5431, byte_C5432
+extern __CHK, str_pen, str_dbgClin, str_dbgPenShot, str_dbgLip, str_dbgHVpos, str_dbgRef, str_dbgPb
+extern str_dbgG, str_dbgGO, str_dbgGsp, str_dbgC12, str_dbgPuckc, str_dbgIdx, str_dbgD, str_dbgLbD
+extern str_dbgDRb, str_dbgDS, str_dbgPosVel, str_dbgVz, str_dbgAss, str_dbgSpa, str_debError, str_dbgBail
+extern str_statslog, str_fmode_at, str_ErrDumpStats, str_dumpPool, str_dumpTmstructs, str_dumpHex, str_dumpSortcords, str_dumpSortLine
+extern str_dumpRule, str_dumpTeamHdrH, str_dumpHome, str_dumpPlHdrH, str_dumpPlLineH, str_dumpGlHdrH, str_dumpGlLine, str_dumpTeamHdrA
+extern str_dumpAway, str_dumpPlHdrA, str_dumpPlLineA, str_dumpGlHdrA, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt
 extern gmode2, dword_C53FB, sflags3, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
-extern penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C, dword_CD504, dword_D41F0
-extern dword_D8C6C, dword_D8C78, dword_DF612, hmtmstruct, dword_DF616, dword_DF61C, dword_DF61E, dword_DF620
-extern dword_DF638, dword_DF63A, dword_DF63C, dword_DF690, dword_DF6FA, dword_DF712, awtmstruct, hmscore
-extern dword_DF716, dword_DF71C, dword_DF71E, dword_DF720, dword_DF738, dword_DF73A, dword_DF73C, awscore
-extern dword_DF7FA, dword_E9A14, fclose_, fopen_, fprintf_, gmode, puckc, PenBuf
-extern camx_m2, off_CD6E4, off_CD8C4, off_CD984, puckvz, sprintf_, joyq_flush, AllInPlace
-extern sub_935E0, sub_93E38, sub_B39ED, sub_B3A18, threat, unk_C234B, unk_C234D, unk_C2478
-extern unk_C247A, unk_C247C, unk_C2485, unk_C24A0, SortCords, camx, xc1, c1playernum
-extern c2playernum, cont1team, VisTeam, Penaltytimer, refsignal, gsp, gameclock, word_CBC42
+extern penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C, dbg_spalist, bailout_vec
+extern dword_D8C6C, dword_D8C78, hmtmstruct
+extern hmtmpdst_m2, hmtmplstats, awtmstruct, hmscore
+extern awscore
+extern awtmplstats, dword_E9A14, fclose_, fopen_, fprintf_, gmode, puckc, PenBuf
+extern camx_m2, dbg_spanames, dbg_assnames, dbg_posnames, puckvz, sprintf_, joyq_flush, AllInPlace
+extern DebugPrintf, sub_93E38, PollKey, WaitKey, threat, str_dbgO, str_dbgDash, str_dbgL
+extern str_dbgI, str_dbgSpace, str_dbgS, str_newline, SortCords, camx, xc1, c1playernum
+extern c2playernum, cont1team, VisTeam, Penaltytimer, refsignal, gsp, gameclock, debugstep
 extern word_CBC44, exitgame, hmtmap, awtmap
-global loc_688E0, loc_688E5, loc_68B33, loc_68C39, loc_68C3E, loc_68CC1, loc_68D06, loc_68D21
-global loc_68D3A, loc_68D4D, loc_68D53, loc_68D6C, loc_68D7A, loc_68D98, loc_68DCC, loc_68DEB
-global loc_68DEC, loc_68DF6, loc_68E07, loc_68E0C, loc_68E27, loc_68E34, loc_68E46, loc_68E5B
-global loc_68E6E, loc_68E74, loc_68EB2, loc_68EE7, loc_68EF8, loc_68F0F, loc_68F28, loc_68F40
-global loc_68F50, loc_68F68, loc_68F7D, loc_68F8A, loc_6901B, loc_690CD, loc_6913C, loc_6915A
-global loc_691A9, loc_69249, loc_692B8, loc_692D6, loc_69321, loc_6932E, sub_688A4, sub_68E7B
-sub_688A4:
+global DebugMonitor_pop
+global DebugMonitor, DumpStatsLog
+DebugMonitor:
 push dword 250h	; 688A4
 call __CHK	; 688A9
 push ebx	; 688AE
@@ -37,26 +33,26 @@ push ebp	; 688B3
 mov ebp, esp	; 688B4
 sub esp, 200h	; 688B6
 sub ebp, 27Eh	; 688BC
-cmp word [word_CBC42], byte 0	; 688C2
-je near loc_68DF6	; 688CA
+cmp word [debugstep], byte 0	; 688C2
+je near .readkey	; 688CA
 test byte [gmode2], 80h	; 688D0
-je short loc_688E0	; 688D7
-push unk_C234B	; 688D9
-jmp short loc_688E5	; 688DE
-loc_688E0:
-push unk_C234D	; 688E0
-loc_688E5:
-call sub_935E0	; 688E5
+je short .1	; 688D7
+push str_dbgO	; 688D9
+jmp short .2	; 688DE
+.1:
+push str_dbgDash	; 688E0
+.2:
+call DebugPrintf	; 688E5
 add esp, byte 4	; 688EA
 xor dl, dl	; 688ED
 mov byte [byte ebp+07Eh], dl	; 688EF
-mov eax, dword [dword_DF73C]	; 688F2
+mov eax, dword [awtmstruct+tmline-2]	; 688F2
 sar eax, 10h	; 688F7
 push eax	; 688FA
-mov eax, dword [dword_DF63C]	; 688FB
+mov eax, dword [hmtmstruct+tmline-2]	; 688FB
 sar eax, 10h	; 68900
 push eax	; 68903
-push asc_C234F	; 68904
+push str_dbgClin	; 68904
 lea eax, [byte ebp+07Eh]	; 68909
 push eax	; 6890C
 call sprintf_	; 6890D
@@ -84,7 +80,7 @@ mov eax, dword [penshotlive]	; 68955
 push eax	; 6895A
 mov edx, dword [penshotmode]	; 6895B
 push edx	; 68961
-push asc_C2373	; 68962
+push str_dbgPenShot	; 68962
 lea eax, [byte ebp+07Eh]	; 68967
 add eax, esi	; 6896A
 push eax	; 6896C
@@ -93,8 +89,8 @@ add esp, byte 34h	; 68972
 add esi, eax	; 68975
 call AllInPlace	; 68977
 push eax	; 6897C
-push asc_C239E	; 6897D
-call sub_935E0	; 68982
+push str_dbgLip	; 6897D
+call DebugPrintf	; 68982
 add esp, byte 8	; 68987
 mov eax, dword [xc1]	; 6898A
 sar eax, 10h	; 6898F
@@ -108,7 +104,7 @@ push eax	; 689A4
 mov eax, dword [camx_m2]	; 689A5
 sar eax, 10h	; 689AA
 push eax	; 689AD
-push asc_C23A6	; 689AE
+push str_dbgHVpos	; 689AE
 lea eax, [byte ebp+07Eh]	; 689B3
 add eax, esi	; 689B6
 push eax	; 689B8
@@ -121,7 +117,7 @@ push eax	; 689CB
 mov eax, dword [refsignal]	; 689CC
 sar eax, 10h	; 689D1
 push eax	; 689D4
-push asc_C23BB	; 689D5
+push str_dbgRef	; 689D5
 lea eax, [byte ebp+07Eh]	; 689DA
 add eax, esi	; 689DD
 push eax	; 689DF
@@ -134,7 +130,7 @@ push eax	; 689F2
 mov eax, dword [PenBuf-3]	; 689F3
 sar eax, 18h	; 689F8
 push eax	; 689FB
-push asc_C23C7	; 689FC
+push str_dbgPb	; 689FC
 lea eax, [byte ebp+07Eh]	; 68A01
 add eax, esi	; 68A04
 push eax	; 68A06
@@ -147,7 +143,7 @@ push eax	; 68A19
 mov eax, dword [hmtmap]	; 68A1A
 sar eax, 10h	; 68A1F
 push eax	; 68A22
-push asc_C23D1	; 68A23
+push str_dbgG	; 68A23
 lea eax, [byte ebp+07Eh]	; 68A28
 add eax, esi	; 68A2B
 push eax	; 68A2D
@@ -169,7 +165,7 @@ push eax	; 68A5E
 mov eax, dword [exitgame]	; 68A5F
 sar eax, 10h	; 68A64
 push eax	; 68A67
-push asc_C23DB	; 68A68
+push str_dbgGO	; 68A68
 lea eax, [byte ebp+07Eh]	; 68A6D
 add eax, esi	; 68A70
 push eax	; 68A72
@@ -182,7 +178,7 @@ push eax	; 68A85
 mov eax, dword [gsp]	; 68A86
 sar eax, 10h	; 68A8B
 push eax	; 68A8E
-push asc_C23F4	; 68A8F
+push str_dbgGsp	; 68A8F
 lea eax, [byte ebp+07Eh]	; 68A94
 add eax, esi	; 68A97
 push eax	; 68A99
@@ -201,7 +197,7 @@ push eax	; 68ABE
 mov eax, dword [sflags3]	; 68ABF
 sar eax, 10h	; 68AC4
 push eax	; 68AC7
-push asc_C23FD	; 68AC8
+push str_dbgC12	; 68AC8
 lea eax, [byte ebp+07Eh]	; 68ACD
 add eax, esi	; 68AD0
 push eax	; 68AD2
@@ -223,7 +219,7 @@ push eax	; 68B03
 mov eax, dword [puckc]	; 68B04
 movsx eax, byte [eax]	; 68B09
 push eax	; 68B0C
-push asc_C2410	; 68B0D
+push str_dbgPuckc	; 68B0D
 lea eax, [byte ebp+07Eh]	; 68B12
 add eax, esi	; 68B15
 push eax	; 68B17
@@ -231,17 +227,17 @@ call sprintf_	; 68B18
 add esp, byte 18h	; 68B1D
 lea eax, [byte ebp+07Eh]	; 68B20
 push eax	; 68B23
-call sub_935E0	; 68B24
+call DebugPrintf	; 68B24
 add esp, byte 4	; 68B29
 xor edi, edi	; 68B2C
-jmp near loc_68DEC	; 68B2E
-loc_68B33:
+jmp near .17	; 68B2E
+.objloop:
 cmp di, byte 0Ch	; 68B33
-je near loc_68DEB	; 68B37
+je near .16	; 68B37
 cmp di, byte 0Dh	; 68B3D
-je near loc_68DEB	; 68B41
+je near .16	; 68B41
 cmp di, byte 0Fh	; 68B47
-je near loc_68DEB	; 68B4B
+je near .16	; 68B4B
 movsx edx, di	; 68B51
 shl edx, 7	; 68B54
 add edx, SortCords	; 68B57
@@ -250,7 +246,7 @@ mov byte [byte ebp+07Eh], ch	; 68B5F
 mov eax, dword [byte edx+temp5-2]	; 68B62
 sar eax, 10h	; 68B65
 push eax	; 68B68
-push asc_C2437	; 68B69
+push str_dbgIdx	; 68B69
 lea eax, [byte ebp+07Eh]	; 68B6E
 push eax	; 68B71
 call sprintf_	; 68B72
@@ -259,7 +255,7 @@ mov esi, eax	; 68B7A
 xor eax, eax	; 68B7C
 mov al, byte [byte edx+05Eh]	; 68B7E
 push eax	; 68B81
-push asc_C243C	; 68B82
+push str_dbgD	; 68B82
 lea eax, [byte ebp+07Eh]	; 68B87
 add eax, esi	; 68B8A
 push eax	; 68B8C
@@ -269,7 +265,7 @@ add esi, eax	; 68B95
 mov eax, dword [byte edx+044h]	; 68B97
 sar eax, 18h	; 68B9A
 push eax	; 68B9D
-push asc_C243C	; 68B9E
+push str_dbgD	; 68B9E
 lea eax, [byte ebp+07Eh]	; 68BA3
 add eax, esi	; 68BA6
 push eax	; 68BA8
@@ -283,10 +279,10 @@ and ebx, 0FFh	; 68BBC
 shl ebx, 8	; 68BC2
 mov eax, dword [byte edx+044h]	; 68BC5
 sar eax, 18h	; 68BC8
-mov eax, dword [dword ebx+eax*2+dword_DF690]	; 68BCB
+mov eax, dword [dword ebx+eax*2+hmtmpdst_m2]	; 68BCB
 sar eax, 10h	; 68BD2
 push eax	; 68BD5
-push asc_C243C	; 68BD6
+push str_dbgD	; 68BD6
 lea eax, [byte ebp+07Eh]	; 68BDB
 add eax, esi	; 68BDE
 push eax	; 68BE0
@@ -296,7 +292,7 @@ add esi, eax	; 68BE9
 mov eax, dword [byte edx+040h]	; 68BEB
 sar eax, 18h	; 68BEE
 push eax	; 68BF1
-push asc_C2440	; 68BF2
+push str_dbgLbD	; 68BF2
 lea eax, [byte ebp+07Eh]	; 68BF7
 add eax, esi	; 68BFA
 push eax	; 68BFC
@@ -306,7 +302,7 @@ add esi, eax	; 68C05
 mov eax, dword [byte edx+03Fh]	; 68C07
 sar eax, 18h	; 68C0A
 push eax	; 68C0D
-push asc_C2445	; 68C0E
+push str_dbgDRb	; 68C0E
 lea eax, [byte ebp+07Eh]	; 68C13
 add eax, esi	; 68C16
 push eax	; 68C18
@@ -314,18 +310,18 @@ call sprintf_	; 68C19
 add esp, byte 0Ch	; 68C1E
 add esi, eax	; 68C21
 cmp word [byte edx+position], byte 0	; 68C23
-jl short loc_68C39	; 68C28
+jl short .4	; 68C28
 mov eax, dword [byte edx+position-2]	; 68C2A
 sar eax, 10h	; 68C2D
-mov eax, dword [nosplit eax*4+off_CD984]	; 68C30
-jmp short loc_68C3E	; 68C37
-loc_68C39:
-mov eax, asc_C223B	; 68C39
-loc_68C3E:
+mov eax, dword [nosplit eax*4+dbg_posnames]	; 68C30
+jmp short .5	; 68C37
+.4:
+mov eax, str_pen	; 68C39
+.5:
 push eax	; 68C3E
 movsx eax, di	; 68C3F
 push eax	; 68C42
-push asc_C244A	; 68C43
+push str_dbgDS	; 68C43
 lea eax, [byte ebp+07Eh]	; 68C48
 add eax, esi	; 68C4B
 push eax	; 68C4D
@@ -353,7 +349,7 @@ push eax	; 68C81
 mov eax, dword [edx]	; 68C82
 sar eax, 10h	; 68C84
 push eax	; 68C87
-push asc_C2451	; 68C88
+push str_dbgPosVel	; 68C88
 lea eax, [byte ebp+07Eh]	; 68C8D
 add eax, esi	; 68C90
 push eax	; 68C92
@@ -361,25 +357,25 @@ call sprintf_	; 68C93
 add esp, byte 24h	; 68C98
 add esi, eax	; 68C9B
 cmp di, byte 0Eh	; 68C9D
-jne short loc_68CC1	; 68CA1
+jne short .6	; 68CA1
 mov eax, dword [puckvz]	; 68CA3
 movsx eax, word [eax]	; 68CA8
 push eax	; 68CAB
-push asc_C246D	; 68CAC
+push str_dbgVz	; 68CAC
 lea eax, [byte ebp+07Eh]	; 68CB1
 add eax, esi	; 68CB4
 push eax	; 68CB6
 call sprintf_	; 68CB7
 add esp, byte 0Ch	; 68CBC
 add esi, eax	; 68CBF
-loc_68CC1:
+.6:
 mov eax, dword [byte edx+assnum-2]	; 68CC1
 sar eax, 10h	; 68CC4
 mov eax, dword [byte edx+eax+01Bh]	; 68CC7
 sar eax, 18h	; 68CCB
-mov ebx, dword [nosplit eax*4+off_CD8C4]	; 68CCE
+mov ebx, dword [nosplit eax*4+dbg_assnames]	; 68CCE
 push ebx	; 68CD5
-push asc_C2473	; 68CD6
+push str_dbgAss	; 68CD6
 lea eax, [byte ebp+07Eh]	; 68CDB
 add eax, esi	; 68CDE
 push eax	; 68CE0
@@ -387,26 +383,26 @@ call sprintf_	; 68CE1
 add esp, byte 0Ch	; 68CE6
 add esi, eax	; 68CE9
 test byte [byte edx+pflags], 20h	; 68CEB
-je short loc_68D06	; 68CEF
-push unk_C2478	; 68CF1
+je short .7	; 68CEF
+push str_dbgL	; 68CF1
 lea eax, [byte ebp+07Eh]	; 68CF6
 add eax, esi	; 68CF9
 push eax	; 68CFB
 call sprintf_	; 68CFC
 add esp, byte 8	; 68D01
 add esi, eax	; 68D04
-loc_68D06:
+.7:
 test byte [byte edx+pflags2], 2	; 68D06
-je short loc_68D21	; 68D0A
-push unk_C247A	; 68D0C
+je short .8	; 68D0A
+push str_dbgI	; 68D0C
 lea eax, [byte ebp+07Eh]	; 68D11
 add eax, esi	; 68D14
 push eax	; 68D16
 call sprintf_	; 68D17
 add esp, byte 8	; 68D1C
 add esi, eax	; 68D1F
-loc_68D21:
-push unk_C247C	; 68D21
+.8:
+push str_dbgSpace	; 68D21
 lea eax, [byte ebp+07Eh]	; 68D26
 add eax, esi	; 68D29
 push eax	; 68D2B
@@ -414,33 +410,33 @@ call sprintf_	; 68D2C
 add esp, byte 8	; 68D31
 add esi, eax	; 68D34
 xor eax, eax	; 68D36
-jmp short loc_68D4D	; 68D38
-loc_68D3A:
+jmp short .10	; 68D38
+.9:
 movsx ebx, ax	; 68D3A
 mov ecx, dword [byte edx+SPA-2]	; 68D3D
 sar ecx, 10h	; 68D40
-cmp ecx, dword [nosplit ebx*4+dword_CD504]	; 68D43
-je short loc_68D53	; 68D4A
+cmp ecx, dword [nosplit ebx*4+dbg_spalist]	; 68D43
+je short .11	; 68D4A
 inc eax	; 68D4C
-loc_68D4D:
+.10:
 cmp ax, 78h	; 68D4D
-jl short loc_68D3A	; 68D51
-loc_68D53:
+jl short DebugMonitor.9	; 68D51
+.11:
 lea ebx, [byte ebp+07Eh]	; 68D53
 add ebx, esi	; 68D56
 cmp ax, 78h	; 68D58
-jl short loc_68D6C	; 68D5C
+jl short .12	; 68D5C
 mov eax, dword [byte edx+SPA-2]	; 68D5E
 sar eax, 10h	; 68D61
 push eax	; 68D64
-push asc_C247E	; 68D65
-jmp short loc_68D7A	; 68D6A
-loc_68D6C:
+push str_dbgSpa	; 68D65
+jmp short .13	; 68D6A
+.12:
 cwde	; 68D6C
-mov ecx, dword [nosplit eax*4+off_CD6E4]	; 68D6D
+mov ecx, dword [nosplit eax*4+dbg_spanames]	; 68D6D
 push ecx	; 68D74
-push unk_C2485	; 68D75
-loc_68D7A:
+push str_dbgS	; 68D75
+.13:
 push ebx	; 68D7A
 call sprintf_	; 68D7B
 add esp, byte 0Ch	; 68D80
@@ -448,17 +444,17 @@ add esi, eax	; 68D83
 mov eax, dword [byte edx+010h]	; 68D85
 sar eax, 10h	; 68D88
 cmp eax, byte 0FFFFFFFFh	; 68D8B
-jl short loc_68D98	; 68D8E
+jl short .14	; 68D8E
 cmp word [byte edx+012h], 46Eh	; 68D90
-jl short loc_68DCC	; 68D96
-loc_68D98:
+jl short .15	; 68D96
+.14:
 mov eax, dword [byte edx+010h]	; 68D98
 sar eax, 10h	; 68D9B
 push eax	; 68D9E
 mov eax, dword [byte edx+SCnum-2]	; 68D9F
 sar eax, 10h	; 68DA2
 push eax	; 68DA5
-push asc_C2488	; 68DA6
+push str_debError	; 68DA6
 lea eax, [byte ebp+07Eh]	; 68DAB
 add esi, eax	; 68DAE
 push esi	; 68DB0
@@ -466,12 +462,12 @@ call sprintf_	; 68DB1
 add esp, byte 10h	; 68DB6
 lea eax, [byte ebp+07Eh]	; 68DB9
 push eax	; 68DBC
-call sub_935E0	; 68DBD
+call DebugPrintf	; 68DBD
 add esp, byte 4	; 68DC2
-call sub_B3A18	; 68DC5
-jmp short loc_68DEB	; 68DCA
-loc_68DCC:
-push unk_C24A0	; 68DCC
+call WaitKey	; 68DC5
+jmp short .16	; 68DCA
+.15:
+push str_newline	; 68DCC
 lea eax, [byte ebp+07Eh]	; 68DD1
 add esi, eax	; 68DD4
 push esi	; 68DD6
@@ -479,53 +475,53 @@ call sprintf_	; 68DD7
 add esp, byte 8	; 68DDC
 lea eax, [byte ebp+07Eh]	; 68DDF
 push eax	; 68DE2
-call sub_935E0	; 68DE3
+call DebugPrintf	; 68DE3
 add esp, byte 4	; 68DE8
-loc_68DEB:
+.16:
 inc edi	; 68DEB
-loc_68DEC:
+.17:
 cmp di, byte 11h	; 68DEC
-jl near loc_68B33	; 68DF0
-loc_68DF6:
-cmp word [word_CBC42], byte 0	; 68DF6
-je short loc_68E07	; 68DFE
-call sub_B3A18	; 68E00
-jmp short loc_68E0C	; 68E05
-loc_68E07:
-call sub_B39ED	; 68E07
-loc_68E0C:
+jl near DebugMonitor.objloop	; 68DF0
+.readkey:
+cmp word [debugstep], byte 0	; 68DF6
+je short .19	; 68DFE
+call WaitKey	; 68E00
+jmp short .20	; 68E05
+.19:
+call PollKey	; 68E07
+.20:
 cmp ax, 30h	; 68E0C
-jne short loc_68E27	; 68E10
-push asc_C24A2	; 68E12
-call sub_935E0	; 68E17
+jne short .21	; 68E10
+push str_dbgBail	; 68E12
+call DebugPrintf	; 68E17
 add esp, byte 4	; 68E1C
-call dword [dword_D41F0]	; 68E1F
-jmp short loc_68E6E	; 68E25
-loc_68E27:
+call dword [bailout_vec]	; 68E1F
+jmp short .done	; 68E25
+.21:
 cmp ax, 6Dh	; 68E27
-jne short loc_68E34	; 68E2B
+jne short .22	; 68E2B
 call sub_93E38	; 68E2D
-jmp short loc_68E6E	; 68E32
-loc_68E34:
+jmp short .done	; 68E32
+.22:
 cmp ax, 64h	; 68E34
-jne short loc_68E46	; 68E38
-mov eax, asc_C24A8	; 68E3A
-call sub_68E7B	; 68E3F
-jmp short loc_68E6E	; 68E44
-loc_68E46:
+jne short .23	; 68E38
+mov eax, str_statslog	; 68E3A
+call DumpStatsLog	; 68E3F
+jmp short .done	; 68E44
+.23:
 cmp ax, 5Ch	; 68E46
-jne short loc_68E6E	; 68E4A
-cmp word [word_CBC42], byte 0	; 68E4C
-je short loc_68E5B	; 68E54
+jne short .done	; 68E4A
+cmp word [debugstep], byte 0	; 68E4C
+je short .24	; 68E54
 call joyq_flush	; 68E56
-loc_68E5B:
-cmp word [word_CBC42], byte 0	; 68E5B
+.24:
+cmp word [debugstep], byte 0	; 68E5B
 sete al	; 68E63
 xor ah, ah	; 68E66
-mov word [word_CBC42], ax	; 68E68
-loc_68E6E:
+mov word [debugstep], ax	; 68E68
+.done:
 lea esp, [dword ebp+027Eh]	; 68E6E
-loc_68E74:
+DebugMonitor_pop:
 pop ebp	; 68E74
 pop edi	; 68E75
 pop esi	; 68E76
@@ -533,7 +529,7 @@ pop edx	; 68E77
 pop ecx	; 68E78
 pop ebx	; 68E79
 ret	; 68E7A
-sub_68E7B:
+DumpStatsLog:
 push dword 74h	; 68E7B
 call __CHK	; 68E80
 push ebx	; 68E85
@@ -543,96 +539,96 @@ push esi	; 68E88
 push edi	; 68E89
 push ebp	; 68E8A
 sub esp, byte 4	; 68E8B
-mov edx, asc_C24B2	; 68E8E
+mov edx, str_fmode_at	; 68E8E
 call fopen_	; 68E93
 mov ebx, eax	; 68E98
 mov ecx, eax	; 68E9A
 test eax, eax	; 68E9C
-jne short loc_68EB2	; 68E9E
-push asc_C24B6	; 68EA0
-call sub_935E0	; 68EA5
+jne short .opened	; 68E9E
+push str_ErrDumpStats	; 68EA0
+call DebugPrintf	; 68EA5
 add esp, byte 4	; 68EAA
-jmp near loc_6932E	; 68EAD
-loc_68EB2:
+jmp near .exit	; 68EAD
+.opened:
 mov edx, dword [dword_C53FB]	; 68EB2
 push edx	; 68EB8
 mov esi, dword [dword_D8C6C]	; 68EB9
 push esi	; 68EBF
 mov edi, dword [dword_D8C78]	; 68EC0
 push edi	; 68EC6
-push asc_C24C8	; 68EC7
+push str_dumpPool	; 68EC7
 push eax	; 68ECC
 call fprintf_	; 68ECD
 add esp, byte 14h	; 68ED2
-push asc_C24E5	; 68ED5
+push str_dumpTmstructs	; 68ED5
 push ebx	; 68EDA
 call fprintf_	; 68EDB
 add esp, byte 8	; 68EE0
 xor esi, esi	; 68EE3
-jmp short loc_68F28	; 68EE5
-loc_68EE7:
+jmp short .5	; 68EE5
+.2:
 movsx eax, si	; 68EE7
 shl eax, 8	; 68EEA
 mov ebx, hmtmstruct	; 68EED
 add ebx, eax	; 68EF2
 xor edx, edx	; 68EF4
-jmp short loc_68F0F	; 68EF6
-loc_68EF8:
+jmp short .4	; 68EF6
+.3:
 mov ebp, dword [ebx]	; 68EF8
 push ebp	; 68EFA
-push asc_C24FB	; 68EFB
+push str_dumpHex	; 68EFB
 push ecx	; 68F00
 add ebx, byte 4	; 68F01
 call fprintf_	; 68F04
 add esp, byte 0Ch	; 68F09
 add edx, byte 4	; 68F0C
-loc_68F0F:
+.4:
 movsx eax, dx	; 68F0F
 cmp eax, 0E8h	; 68F12
-jb short loc_68EF8	; 68F17
-push unk_C24A0	; 68F19
+jb short DumpStatsLog.3	; 68F17
+push str_newline	; 68F19
 push ecx	; 68F1E
 call fprintf_	; 68F1F
 add esp, byte 8	; 68F24
 inc esi	; 68F27
-loc_68F28:
+.5:
 cmp si, byte 2	; 68F28
-jl short loc_68EE7	; 68F2C
-push asc_C24FF	; 68F2E
+jl short DumpStatsLog.2	; 68F2C
+push str_dumpSortcords	; 68F2E
 push ecx	; 68F33
 call fprintf_	; 68F34
 add esp, byte 8	; 68F39
 xor esi, esi	; 68F3C
-jmp short loc_68F7D	; 68F3E
-loc_68F40:
+jmp short .9	; 68F3E
+.6:
 movsx ebx, si	; 68F40
 shl ebx, 7	; 68F43
 add ebx, SortCords	; 68F46
 xor edx, edx	; 68F4C
-jmp short loc_68F68	; 68F4E
-loc_68F50:
+jmp short .8	; 68F4E
+.7:
 movsx eax, word [ebx]	; 68F50
 push eax	; 68F53
-push asc_C24FB	; 68F54
+push str_dumpHex	; 68F54
 push ecx	; 68F59
 add ebx, byte 2	; 68F5A
 call fprintf_	; 68F5D
 add esp, byte 0Ch	; 68F62
 add edx, byte 2	; 68F65
-loc_68F68:
+.8:
 cmp dx, byte 48h	; 68F68
-jl short loc_68F50	; 68F6C
-push unk_C24A0	; 68F6E
+jl short DumpStatsLog.7	; 68F6C
+push str_newline	; 68F6E
 push ecx	; 68F73
 call fprintf_	; 68F74
 add esp, byte 8	; 68F79
 inc esi	; 68F7C
-loc_68F7D:
+.9:
 cmp si, byte 11h	; 68F7D
-jl short loc_68F40	; 68F81
+jl short DumpStatsLog.6	; 68F81
 xor esi, esi	; 68F83
-jmp near loc_6901B	; 68F85
-loc_68F8A:
+jmp near .11	; 68F85
+.10:
 movsx eax, si	; 68F8A
 shl eax, 7	; 68F8D
 mov ebx, SortCords	; 68F90
@@ -694,68 +690,68 @@ push eax	; 69004
 mov eax, dword [byte ebx+068h]	; 69005
 sar eax, 10h	; 69008
 push eax	; 6900B
-push asc_C2515	; 6900C
+push str_dumpSortLine	; 6900C
 push ecx	; 69011
 call fprintf_	; 69012
 add esp, byte 54h	; 69017
 inc esi	; 6901A
-loc_6901B:
+.11:
 cmp si, byte 11h	; 6901B
-jl near loc_68F8A	; 6901F
+jl near DumpStatsLog.10	; 6901F
 mov esi, hmtmstruct	; 69025
-push asc_C2550	; 6902A
+push str_dumpRule	; 6902A
 push ecx	; 6902F
 call fprintf_	; 69030
 add esp, byte 8	; 69035
-push asc_C2584	; 69038
+push str_dumpTeamHdrH	; 69038
 push ecx	; 6903D
 call fprintf_	; 6903E
 add esp, byte 8	; 69043
-mov eax, dword [dword_DF63A]	; 69046
+mov eax, dword [hmtmstruct+tmpasscomp-2]	; 69046
 sar eax, 10h	; 6904B
 push eax	; 6904E
-mov eax, dword [dword_DF638]	; 6904F
+mov eax, dword [hmtmstruct+tmpass-2]	; 6904F
 sar eax, 10h	; 69054
 push eax	; 69057
-mov eax, dword [dword_DF620]	; 69058
+mov eax, dword [hmtmstruct+tmATOP-2]	; 69058
 sar eax, 10h	; 6905D
 push eax	; 69060
-mov eax, dword [dword_DF61E]	; 69061
+mov eax, dword [hmtmstruct+tmpenmin-2]	; 69061
 sar eax, 10h	; 69066
 push eax	; 69069
-mov eax, dword [dword_DF61C]	; 6906A
+mov eax, dword [hmtmstruct+tmpen-2]	; 6906A
 sar eax, 10h	; 6906F
 push eax	; 69072
-mov eax, dword [dword_DF616]	; 69073
+mov eax, dword [hmtmstruct+tmpp-2]	; 69073
 sar eax, 10h	; 69078
 push eax	; 6907B
-mov eax, dword [hmtmstruct]	; 6907C
+mov eax, dword [hmtmstruct+tmppg-2]	; 6907C
 sar eax, 10h	; 69081
 push eax	; 69084
 xor eax, eax	; 69085
-mov al, byte [byte_C542F]	; 69087
+mov al, byte [hmgoalcnt]	; 69087
 push eax	; 6908C
 xor eax, eax	; 6908D
-mov al, byte [byte_C5430]	; 6908F
+mov al, byte [hmshotcnt]	; 6908F
 push eax	; 69094
 mov eax, dword [hmscore-2]	; 69095
 sar eax, 10h	; 6909A
 push eax	; 6909D
-mov eax, dword [dword_DF612]	; 6909E
+mov eax, dword [hmtmstruct+tmshots-2]	; 6909E
 sar eax, 10h	; 690A3
 push eax	; 690A6
-push asc_C25CA	; 690A7
+push str_dumpHome	; 690A7
 push ecx	; 690AC
 call fprintf_	; 690AD
 add esp, byte 34h	; 690B2
-mov ebx, dword [dword_DF6FA]	; 690B5
-push asc_C25F5	; 690BB
+mov ebx, dword [hmtmplstats]	; 690B5
+push str_dumpPlHdrH	; 690BB
 push ecx	; 690C0
 call fprintf_	; 690C1
 add esp, byte 8	; 690C6
 xor edx, edx	; 690C9
-jmp short loc_6913C	; 690CB
-loc_690CD:
+jmp short .13	; 690CB
+.12:
 movsx ebp, dx	; 690CD
 mov eax, ebp	; 690D0
 shl eax, 2	; 690D2
@@ -763,7 +759,7 @@ add eax, ebp	; 690D5
 shl eax, 3	; 690D7
 sub eax, ebp	; 690DA
 mov dword [esp], eax	; 690DC
-mov eax, dword [dword esi+0EEh]	; 690DF
+mov eax, dword [dword esi+tmroster]	; 690DF
 add eax, dword [esp]	; 690E5
 movzx edi, byte [eax]	; 690E8
 push edi	; 690EB
@@ -794,23 +790,23 @@ mov al, byte [byte eax+05h]	; 69120
 and eax, 0FFh	; 69123
 push eax	; 69128
 push ebp	; 69129
-push asc_C2625	; 6912A
+push str_dumpPlLineH	; 6912A
 push ecx	; 6912F
 call fprintf_	; 69130
 add esp, byte 34h	; 69135
 add ebx, byte 10h	; 69138
 inc edx	; 6913B
-loc_6913C:
+.13:
 cmp dx, byte 19h	; 6913C
-jl short loc_690CD	; 69140
-mov ebx, dword [dword esi+0EAh]	; 69142
-push asc_C2652	; 69148
+jl short DumpStatsLog.12	; 69140
+mov ebx, dword [dword esi+tmglstats]	; 69142
+push str_dumpGlHdrH	; 69148
 push ecx	; 6914D
 call fprintf_	; 6914E
 add esp, byte 8	; 69153
 xor edx, edx	; 69156
-jmp short loc_691A9	; 69158
-loc_6915A:
+jmp short .15	; 69158
+.14:
 movsx ebp, dx	; 6915A
 lea edi, [byte ebp+019h]	; 6915D
 mov eax, edi	; 69160
@@ -819,7 +815,7 @@ add eax, edi	; 69165
 shl eax, 3	; 69167
 sub eax, edi	; 6916A
 mov dword [esp], eax	; 6916C
-mov eax, dword [dword esi+0EEh]	; 6916F
+mov eax, dword [dword esi+tmroster]	; 6916F
 add eax, dword [esp]	; 69175
 movzx edi, byte [eax]	; 69178
 push edi	; 6917B
@@ -835,65 +831,65 @@ mov al, byte [byte eax+05h]	; 6918D
 and eax, 0FFh	; 69190
 push eax	; 69195
 push ebp	; 69196
-push asc_C2670	; 69197
+push str_dumpGlLine	; 69197
 push ecx	; 6919C
 call fprintf_	; 6919D
 add esp, byte 20h	; 691A2
 add ebx, byte 6	; 691A5
 inc edx	; 691A8
-loc_691A9:
+.15:
 cmp dx, byte 3	; 691A9
-jl short loc_6915A	; 691AD
+jl short DumpStatsLog.14	; 691AD
 mov esi, awtmstruct	; 691AF
-push asc_C2689	; 691B4
+push str_dumpTeamHdrA	; 691B4
 push ecx	; 691B9
 call fprintf_	; 691BA
 add esp, byte 8	; 691BF
-mov eax, dword [dword_DF73A]	; 691C2
+mov eax, dword [awtmstruct+tmpasscomp-2]	; 691C2
 sar eax, 10h	; 691C7
 push eax	; 691CA
-mov eax, dword [dword_DF738]	; 691CB
+mov eax, dword [awtmstruct+tmpass-2]	; 691CB
 sar eax, 10h	; 691D0
 push eax	; 691D3
-mov eax, dword [dword_DF720]	; 691D4
+mov eax, dword [awtmstruct+tmATOP-2]	; 691D4
 sar eax, 10h	; 691D9
 push eax	; 691DC
-mov eax, dword [dword_DF71E]	; 691DD
+mov eax, dword [awtmstruct+tmpenmin-2]	; 691DD
 sar eax, 10h	; 691E2
 push eax	; 691E5
-mov eax, dword [dword_DF71C]	; 691E6
+mov eax, dword [awtmstruct+tmpen-2]	; 691E6
 sar eax, 10h	; 691EB
 push eax	; 691EE
-mov eax, dword [dword_DF716]	; 691EF
+mov eax, dword [awtmstruct+tmpp-2]	; 691EF
 sar eax, 10h	; 691F4
 push eax	; 691F7
-mov eax, dword [awtmstruct]	; 691F8
+mov eax, dword [awtmstruct+tmppg-2]	; 691F8
 sar eax, 10h	; 691FD
 push eax	; 69200
 xor eax, eax	; 69201
-mov al, byte [byte_C5431]	; 69203
+mov al, byte [awgoalcnt]	; 69203
 push eax	; 69208
 xor eax, eax	; 69209
-mov al, byte [byte_C5432]	; 6920B
+mov al, byte [awshotcnt]	; 6920B
 push eax	; 69210
 mov eax, dword [awscore-2]	; 69211
 sar eax, 10h	; 69216
 push eax	; 69219
-mov eax, dword [dword_DF712]	; 6921A
+mov eax, dword [awtmstruct+tmshots-2]	; 6921A
 sar eax, 10h	; 6921F
 push eax	; 69222
-push asc_C26CF	; 69223
+push str_dumpAway	; 69223
 push ecx	; 69228
 call fprintf_	; 69229
 add esp, byte 34h	; 6922E
-mov ebx, dword [dword_DF7FA]	; 69231
-push asc_C26FA	; 69237
+mov ebx, dword [awtmplstats]	; 69231
+push str_dumpPlHdrA	; 69237
 push ecx	; 6923C
 call fprintf_	; 6923D
 add esp, byte 8	; 69242
 xor edx, edx	; 69245
-jmp short loc_692B8	; 69247
-loc_69249:
+jmp short .17	; 69247
+.16:
 movsx ebp, dx	; 69249
 mov eax, ebp	; 6924C
 shl eax, 2	; 6924E
@@ -901,7 +897,7 @@ add eax, ebp	; 69251
 shl eax, 3	; 69253
 sub eax, ebp	; 69256
 mov dword [esp], eax	; 69258
-mov eax, dword [dword esi+0EEh]	; 6925B
+mov eax, dword [dword esi+tmroster]	; 6925B
 add eax, dword [esp]	; 69261
 movzx edi, byte [eax]	; 69264
 push edi	; 69267
@@ -932,23 +928,23 @@ mov al, byte [byte eax+05h]	; 6929C
 and eax, 0FFh	; 6929F
 push eax	; 692A4
 push ebp	; 692A5
-push asc_C272A	; 692A6
+push str_dumpPlLineA	; 692A6
 push ecx	; 692AB
 call fprintf_	; 692AC
 add esp, byte 34h	; 692B1
 add ebx, byte 10h	; 692B4
 inc edx	; 692B7
-loc_692B8:
+.17:
 cmp dx, byte 19h	; 692B8
-jl short loc_69249	; 692BC
-mov ebx, dword [dword esi+0EAh]	; 692BE
-push asc_C2757	; 692C4
+jl short DumpStatsLog.16	; 692BC
+mov ebx, dword [dword esi+tmglstats]	; 692BE
+push str_dumpGlHdrA	; 692C4
 push ecx	; 692C9
 call fprintf_	; 692CA
 add esp, byte 8	; 692CF
 xor edx, edx	; 692D2
-jmp short loc_69321	; 692D4
-loc_692D6:
+jmp short .19	; 692D4
+.18:
 movsx ebp, dx	; 692D6
 lea edi, [byte ebp+019h]	; 692D9
 mov eax, edi	; 692DC
@@ -956,7 +952,7 @@ shl eax, 2	; 692DE
 add eax, edi	; 692E1
 shl eax, 3	; 692E3
 sub eax, edi	; 692E6
-mov edi, dword [dword esi+0EEh]	; 692E8
+mov edi, dword [dword esi+tmroster]	; 692E8
 add eax, edi	; 692EE
 movzx edi, byte [eax]	; 692F0
 push edi	; 692F3
@@ -972,17 +968,17 @@ mov al, byte [byte eax+05h]	; 69305
 and eax, 0FFh	; 69308
 push eax	; 6930D
 push ebp	; 6930E
-push asc_C2670	; 6930F
+push str_dumpGlLine	; 6930F
 push ecx	; 69314
 call fprintf_	; 69315
 add esp, byte 20h	; 6931A
 add ebx, byte 6	; 6931D
 inc edx	; 69320
-loc_69321:
+.19:
 cmp dx, byte 3	; 69321
-jl short loc_692D6	; 69325
+jl short DumpStatsLog.18	; 69325
 mov eax, ecx	; 69327
 call fclose_	; 69329
-loc_6932E:
+.exit:
 add esp, byte 4	; 6932E
-jmp near loc_68E74	; 69331
+jmp near DebugMonitor_pop	; 69331

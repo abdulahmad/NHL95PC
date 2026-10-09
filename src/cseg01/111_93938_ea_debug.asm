@@ -19,7 +19,7 @@ extern dword_EDA0C, dword_EDAB4, dword_EDE60, dword_EDE64, dword_EDE68, dword_ED
 extern dword_EDE78, dword_EDE7C, dword_EDE80, dword_EDE84, fclose_, fopen_, fprintf_, fputs_
 extern j___fprtf_, sprintf_, strncpy_, sub_8D2F0, sub_8D484, sub_8E9C0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_8FFB0, sub_90354, sub_9035C, sub_90373, sub_903F0, sub_9061C, sub_90D20
-extern sub_92CD0, sub_92F50, sub_93000, sub_93170, sub_935E0, sub_9362C, sub_936C0, sub_938C8
+extern sub_92CD0, sub_92F50, sub_93000, sub_93170, DebugPrintf, sub_9362C, sub_936C0, sub_938C8
 extern sub_938F4, sub_93908, sub_984D0, sub_9C594, sub_9C5A8, sub_9C5B0, sub_9C890, sub_9CA6C
 extern sub_9CA90, sub_9D090, sub_9D2E0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B39D0
 extern sub_B3A24, sub_B3A88, sub_B3AA1, sub_B3CC8, sub_B40BF, sub_B4B88, sub_B4BA8, sub_B4BC4
@@ -943,7 +943,7 @@ cmp edi, byte 1	; 9432B
 jne short loc_9439B	; 9432E
 push byte 0Bh	; 94330
 push unk_C41F0	; 94332
-call sub_935E0	; 94337
+call DebugPrintf	; 94337
 add esp, byte 8	; 9433C
 lea eax, [byte ebp-02Eh]	; 9433F
 push eax	; 94342
@@ -1973,7 +1973,7 @@ mov esi, ebx	; 94E40
 mov dword [esp], ecx	; 94E42
 push byte 0Bh	; 94E45
 push unk_C41F0	; 94E47
-call sub_935E0	; 94E4C
+call DebugPrintf	; 94E4C
 add esp, byte 8	; 94E51
 shl edi, 4	; 94E54
 mov dword [byte esp+08h], edi	; 94E57
@@ -1984,7 +1984,7 @@ loc_94E68:
 mov edi, dword [byte esp+08h]	; 94E68
 push edi	; 94E6C
 push asc_C4404	; 94E6D
-call sub_935E0	; 94E72
+call DebugPrintf	; 94E72
 add esp, byte 8	; 94E77
 xor edi, edi	; 94E7A
 loc_94E7C:
@@ -2000,7 +2000,7 @@ xor eax, eax	; 94E91
 mov al, byte [esi]	; 94E93
 push eax	; 94E95
 push asc_C440C	; 94E96
-call sub_935E0	; 94E9B
+call DebugPrintf	; 94E9B
 add esp, byte 8	; 94EA0
 cmp edi, dword [esp]	; 94EA3
 jne short loc_94ECB	; 94EA6
@@ -2009,7 +2009,7 @@ jne short loc_94ECB	; 94EAC
 cmp dword [byte esp+024h], byte 0	; 94EAE
 je short loc_94ECB	; 94EB3
 push unk_C4414	; 94EB5
-call sub_935E0	; 94EBA
+call DebugPrintf	; 94EBA
 add esp, byte 4	; 94EBF
 push byte 7	; 94EC2
 call sub_93908	; 94EC4
@@ -2019,7 +2019,7 @@ push byte 7	; 94ECB
 call sub_93908	; 94ECD
 add esp, byte 4	; 94ED2
 push unk_C4418	; 94ED5
-call sub_935E0	; 94EDA
+call DebugPrintf	; 94EDA
 loc_94EDF:
 add esp, byte 4	; 94EDF
 mov eax, edi	; 94EE2
@@ -2027,7 +2027,7 @@ and eax, byte 3	; 94EE4
 cmp eax, byte 3	; 94EE7
 jne short loc_94EF9	; 94EEA
 push unk_C4418	; 94EEC
-call sub_935E0	; 94EF1
+call DebugPrintf	; 94EF1
 add esp, byte 4	; 94EF6
 loc_94EF9:
 inc esi	; 94EF9
@@ -2035,7 +2035,7 @@ inc edi	; 94EFA
 cmp edi, byte 10h	; 94EFB
 jl near loc_94E7C	; 94EFE
 push unk_C4418	; 94F04
-call sub_935E0	; 94F09
+call DebugPrintf	; 94F09
 add esp, byte 4	; 94F0E
 xor edi, edi	; 94F11
 sub esi, byte 10h	; 94F13
@@ -2060,7 +2060,7 @@ xor eax, eax	; 94F4F
 mov al, byte [byte esp+0Ch]	; 94F51
 push eax	; 94F55
 push unk_C41F0	; 94F56
-call sub_935E0	; 94F5B
+call DebugPrintf	; 94F5B
 add esp, byte 8	; 94F60
 inc esi	; 94F63
 inc edi	; 94F64
@@ -2070,7 +2070,7 @@ push byte 7	; 94F6A
 call sub_93908	; 94F6C
 add esp, byte 4	; 94F71
 push asc_C441C	; 94F74
-call sub_935E0	; 94F79
+call DebugPrintf	; 94F79
 add esp, byte 4	; 94F7E
 add dword [byte esp+08h], byte 10h	; 94F81
 inc ebp	; 94F86
@@ -2083,7 +2083,7 @@ jge short loc_94FB0	; 94F96
 loc_94F98:
 push unk_C41FC	; 94F98
 push asc_C41F4	; 94F9D
-call sub_935E0	; 94FA2
+call DebugPrintf	; 94FA2
 add esp, byte 8	; 94FA7
 inc edi	; 94FAA
 cmp edi, byte 19h	; 94FAB
@@ -2335,12 +2335,12 @@ push esi	; 9525F
 mov eax, dword [byte esp+03Ch]	; 95260
 push eax	; 95264
 push asc_C44BC	; 95265
-call sub_935E0	; 9526A
+call DebugPrintf	; 9526A
 add esp, byte 14h	; 9526F
 cmp edi, dword [byte esp+030h]	; 95272
 jne short loc_9528A	; 95276
 push asc_C44FC	; 95278
-call sub_935E0	; 9527D
+call DebugPrintf	; 9527D
 add esp, byte 4	; 95282
 jmp near loc_954C0	; 95285
 loc_9528A:
@@ -2383,7 +2383,7 @@ push eax	; 952E2
 lea eax, [byte esp+04h]	; 952E3
 push eax	; 952E7
 push asc_C4524	; 952E8
-call sub_935E0	; 952ED
+call DebugPrintf	; 952ED
 add esp, byte 0Ch	; 952F2
 mov ebx, dword [dword_D457C]	; 952F5
 push ebx	; 952FB
@@ -2451,7 +2451,7 @@ call sub_9C5A8	; 953A9
 jmp near loc_95427	; 953AE
 loc_953B3:
 push asc_C4534	; 953B3
-call sub_935E0	; 953B8
+call DebugPrintf	; 953B8
 add esp, byte 4	; 953BD
 mov eax, dword [dword_D457C]	; 953C0
 call sub_93CA0	; 953C5
@@ -2464,10 +2464,10 @@ mov eax, dword [byte esi+06h]	; 953D3
 sar eax, 10h	; 953D6
 push eax	; 953D9
 push asc_C453C	; 953DA
-call sub_935E0	; 953DF
+call DebugPrintf	; 953DF
 add esp, byte 0Ch	; 953E4
 push asc_C4550	; 953E7
-call sub_935E0	; 953EC
+call DebugPrintf	; 953EC
 add esp, byte 4	; 953F1
 cmp ebp, byte 5Bh	; 953F4
 je short loc_95401	; 953F7
@@ -2633,7 +2633,7 @@ mov eax, dword [byte esi+02h]	; 95573
 sar eax, 10h	; 95576
 push eax	; 95579
 push asc_C455C	; 9557A
-call sub_935E0	; 9557F
+call DebugPrintf	; 9557F
 add esp, byte 1Ch	; 95584
 mov eax, dword [esi]	; 95587
 shl eax, 18h	; 95589
@@ -2647,7 +2647,7 @@ mov eax, unk_C4594	; 9559A
 loc_9559F:
 push eax	; 9559F
 push asc_C4598	; 955A0
-call sub_935E0	; 955A5
+call DebugPrintf	; 955A5
 add esp, byte 8	; 955AA
 mov eax, dword [esi]	; 955AD
 shl eax, 18h	; 955AF

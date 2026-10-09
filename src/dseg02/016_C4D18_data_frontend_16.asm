@@ -17,7 +17,7 @@ extern unk_C061C, unk_C0624, unk_C062C, unk_C063B, unk_D97CA, unk_D9800, unk_D98
 extern unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
 global asc_C5286, asc_C528E, byte_C4D1C, byte_C4D1D, byte_C4D1E, byte_C5138, byte_C5244, byte_C524D
 global byte_C52F2, byte_C5311, byte_C5367, byte_C5386, byte_C53DC, byte_C5400, byte_C541B, byte_C5424
-global byte_C5425, byte_C5426, byte_C5427, byte_C542F, byte_C5430, byte_C5431, byte_C5432, joyqtick
+global byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, joyqtick
 global dword_C4E0C, dword_C4E10, dword_C4E14, joyrec, dword_C4E24, dword_C4E28, dword_C4E2C, dword_C5130
 global dword_C5131, dword_C5133, dword_C5135, dword_C513C, dword_C5168, dword_C51F0, dword_C52E9, dword_C52ED
 global dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5305, dword_C5309, dword_C530D, dword_C535E
@@ -332,13 +332,13 @@ word_C5428:
 db 00h,00h,00h,00h,00h,00h
 unk_C542E:
 db 04h
-byte_C542F:
+hmgoalcnt:
 db 00h
-byte_C5430:
+hmshotcnt:
 db 00h
-byte_C5431:
+awgoalcnt:
 db 00h
-byte_C5432:
+awshotcnt:
 db 00h,00h,00h,00h,00h,00h,00h
 off_C5439:
 dd unk_C04D0

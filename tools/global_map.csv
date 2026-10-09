@@ -171,3 +171,16 @@ awlinetab,DABF0,"visitor line table (tmlines of awtmstruct), as hmlinetab"
 seqtimer,E9B04,"scripted sequence timer: PreGameIntro sets 708h, StartThreeStars 2EE0h; ThreeStarsLoop counts it down by real-time ticks, the PC assignment at 484DA compares it with 0Ah"
 str_ErrSaveGame,CCDEC,"""Error Saving Game"" (SaveGameState)"
 str_ErrLoadGame,CCDD8,"""Error Loading Game"" (LoadGameState)"
+debugstep,CBC42,"only used by DebugMonitor: non-zero prints the per-frame debug lines and waits for a key (WaitKey), '\' toggles it, joyq_flush on toggling off"
+hmgoalcnt,C542F,DumpStatsLog prints it as the home [shots score] 'score'; cleared with C5430-C5432 in key_team_db
+hmshotcnt,C5430,DumpStatsLog home [shots score] 'shots'; engine_physics_ai 55DFD increments it on a home shot
+awgoalcnt,C5431,DumpStatsLog away [shots score] 'score'
+awshotcnt,C5432,DumpStatsLog away [shots score] 'shots'; engine_physics_ai 55E05 increments it on an away shot
+hmtmplstats,DF6FA,"hmtmstruct+tmplstats (E6h): pointer to home skater stats, loaded by DumpStatsLog; separate label because it sits in another data file"
+awtmplstats,DF7FA,"awtmstruct+tmplstats (E6h): pointer to away skater stats, loaded by DumpStatsLog"
+hmtmpdst_m2,DF690,"hmtmstruct+7Ch: -5r short-load base of tmpdst (7Eh), indexed [team*100h + pnum*2]; DebugMonitor/player_logic/key_team_db"
+dbg_posnames,CD984,"pointer table to ""G"",""LD"",""RD"",""LW"",""C"",""RW"",""XC"": DebugMonitor prints the object's position name through it"
+dbg_assnames,CD8C4,"pointer table of assignment-name strings: DebugMonitor indexes it with the object's current asstab entry and prints ""A%s"""
+dbg_spalist,CD504,78h dword SPA values: DebugMonitor searches it for the object's SPA to find its name in dbg_spanames
+dbg_spanames,CD6E4,"78h names parallel to dbg_spalist; DebugMonitor prints the match, else ""spa=%d"""
+bailout_vec,D41F0,"called on the debug 'bail' key in DebugMonitor, from main_startup and from the keyboard handler; exit/abort vector"

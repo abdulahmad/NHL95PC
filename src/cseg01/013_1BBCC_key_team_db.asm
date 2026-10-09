@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_1BBCC progbits alloc exec nowrite align=1
 extern __CHK, asc_C0A18, asc_C0A4D, asc_C0A55, asc_C0A5D, asc_C0A68, asc_C0A71, byte_C5400
-extern byte_C5424, byte_C5425, byte_C5426, byte_C5427, byte_C542F, byte_C5430, byte_C5431, byte_C5432
+extern byte_C5424, byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt
 extern byte_C66B4, byte_C8451, byte_DAC14, byte_DAC15, byte_DAC18, byte_DAC20, hmroster, byte_DB3AD
 extern byte_DB3AE, awroster, byte_DC224, byte_DC225, byte_DC228, byte_DC267, byte_DC268, byte_DD710
 extern byte_DD750, cont2team, HomeTeam, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
-extern dword_DEB78, dword_DEB7C, dword_DEB80, dword_DF690, dword_DF6C2, fputchar, lseek_, off_CEE5F
+extern dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_m2, dword_DF6C2, fputchar, lseek_, off_CEE5F
 extern off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF, sprintf_, strcat_, strcpy_
 extern strncpy_, sub_14525, sub_14566, sub_1457C, sub_145A2, sub_145F9, sub_15B76, sub_1CC3D
 extern sub_B2CD8, unk_C0A1E, unk_C0A20, unk_C0A22, unk_C0A24, unk_C0A26, unk_C0A28, unk_C0A2A
@@ -308,10 +308,10 @@ mov al, byte [VisTeam]	; 1BF38
 mov byte [byte_C5427], al	; 1BF3D
 mov word [word_C5428], 1	; 1BF42
 xor ah, ah	; 1BF4B
-mov byte [byte_C542F], ah	; 1BF4D
-mov byte [byte_C5430], ah	; 1BF53
-mov byte [byte_C5431], ah	; 1BF59
-mov byte [byte_C5432], ah	; 1BF5F
+mov byte [hmgoalcnt], ah	; 1BF4D
+mov byte [hmshotcnt], ah	; 1BF53
+mov byte [awgoalcnt], ah	; 1BF59
+mov byte [awshotcnt], ah	; 1BF5F
 test byte [byte_C5400], 2	; 1BF65
 jne short loc_1BF73	; 1BF6C
 call sub_15B76	; 1BF6E
@@ -807,7 +807,7 @@ loc_1C549:
 mov edx, dword [dword esp+0118h]	; 1C549
 shl edx, 8	; 1C550
 mov eax, ebp	; 1C553
-mov eax, dword [dword edx+eax*2+dword_DF690]	; 1C555
+mov eax, dword [dword edx+eax*2+hmtmpdst_m2]	; 1C555
 sar eax, 10h	; 1C55C
 test eax, eax	; 1C55F
 jle short loc_1C56C	; 1C561

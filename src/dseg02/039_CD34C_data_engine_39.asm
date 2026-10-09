@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_CD34C progbits alloc noexec write align=1
-extern asc_C223B, unk_C1B49, unk_C1BE3, unk_C1BEC, unk_C1BF5, unk_C1BFE, unk_C1C05, unk_C1C0D
+extern str_pen, unk_C1B49, unk_C1BE3, unk_C1BEC, unk_C1BF5, unk_C1BFE, unk_C1C05, unk_C1C0D
 extern unk_C1C16, unk_C1C1F, unk_C1C27, unk_C1C2F, unk_C1C38, unk_C1C41, unk_C1C47, unk_C1C50
 extern unk_C1D64, unk_C1D72, unk_C1D7E, unk_C1D87, unk_C1D93, unk_C1D9B, unk_C1DA1, unk_C1DA9
 extern unk_C1DDC, unk_C1DE3, unk_C1DEB, unk_C1DF3, unk_C1DFB, unk_C1E04, unk_C1E0C, unk_C1E14
@@ -28,9 +28,9 @@ extern unk_C22D3, unk_C22DB, unk_C22E6, unk_C22EE, unk_C22F3, unk_C22F9, unk_C23
 extern unk_C2311, unk_C231A, unk_C2323, unk_C232B, unk_C2332, unk_C2338, unk_C233A, unk_C233D
 extern unk_C2340, unk_C2343, unk_C2345, unk_C2348, unk_CDC47, unk_CDC60, unk_CDC79, unk_CDC97
 extern unk_CDCB0, unk_CDCC9
-global byte_CD418, byte_CD421, byte_CD473, dword_CD34C, dword_CD350, dword_CD41E, dword_CD4B0, dword_CD504
-global dword_CD9A0, off_CD354, off_CD498, off_CD4A0, off_CD4DC, off_CD4FA, off_CD6E4, off_CD8C4
-global off_CD984, word_CD39C, word_CD4FC, replaytick, replaysfx
+global byte_CD418, byte_CD421, byte_CD473, dword_CD34C, dword_CD350, dword_CD41E, dword_CD4B0, dbg_spalist
+global dword_CD9A0, off_CD354, off_CD498, off_CD4A0, off_CD4DC, off_CD4FA, dbg_spanames, dbg_assnames
+global dbg_posnames, word_CD39C, word_CD4FC, replaytick, replaysfx
 dword_CD34C:
 db 00h,00h,00h,00h
 dword_CD350:
@@ -106,7 +106,7 @@ replaytick:
 db 01h,00h
 replaysfx:
 db 0FFh,0FFh,00h,00h
-dword_CD504:
+dbg_spalist:
 db 01h,00h,00h,00h,099h,00h,00h,00h,0B1h,00h,00h,00h,0C9h,00h,00h,00h
 db 0E1h,00h,00h,00h,01h,01h,00h,00h,019h,01h,00h,00h,031h,01h,00h,00h
 db 059h,01h,00h,00h,081h,01h,00h,00h,0B9h,01h,00h,00h,0F1h,01h,00h,00h
@@ -137,7 +137,7 @@ db 0CDh,010h,00h,00h,035h,011h,00h,00h,09Dh,011h,00h,00h,0D5h,011h,00h,00h
 db 01Dh,012h,00h,00h,065h,012h,00h,00h,0DDh,012h,00h,00h,055h,013h,00h,00h
 db 08Dh,013h,00h,00h,0C5h,013h,00h,00h,01Dh,014h,00h,00h,075h,014h,00h,00h
 db 0ADh,014h,00h,00h,0E5h,014h,00h,00h,0F9h,014h,00h,00h,0Dh,015h,00h,00h
-off_CD6E4:
+dbg_spanames:
 dd unk_C1DDC
 dd unk_C1DE3
 dd unk_C1DEB
@@ -258,7 +258,7 @@ dd unk_C21D3
 dd unk_C21DD
 dd unk_C21E6
 dd unk_C21F1
-off_CD8C4:
+dbg_assnames:
 dd unk_C21F7
 dd unk_C21FC
 dd unk_C2201
@@ -271,7 +271,7 @@ dd unk_C2224
 dd unk_C2229
 dd unk_C222F
 dd unk_C2235
-dd asc_C223B
+dd str_pen
 dd unk_C223F
 dd unk_C2245
 dd unk_C224C
@@ -307,7 +307,7 @@ dd unk_C231A
 dd unk_C2323
 dd unk_C232B
 dd unk_C2332
-off_CD984:
+dbg_posnames:
 dd unk_C2338
 dd unk_C233A
 dd unk_C233D

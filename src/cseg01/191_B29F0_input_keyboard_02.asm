@@ -4,8 +4,8 @@ bits 32
 section s_B29F0 progbits alloc exec nowrite align=1
 extern byte_D2C5C, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14, byte_D2D2F
 extern byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, dword_D2C84, dword_D2C8C, dword_D2CCC
-extern dword_D2CD0, dword_D2CD8, dword_D2D5C, dword_D2D62, dword_D2D68, dword_D2F74, dword_D3024, dword_D41F0
-extern sub_902A0, sub_93170, sub_9864C, sub_98664, sub_B3454, sub_B3A18, sub_B3E4A, sub_B3ED8
+extern dword_D2CD0, dword_D2CD8, dword_D2D5C, dword_D2D62, dword_D2D68, dword_D2F74, dword_D3024, bailout_vec
+extern sub_902A0, sub_93170, sub_9864C, sub_98664, sub_B3454, WaitKey, sub_B3E4A, sub_B3ED8
 extern sub_B4BA8, word_D2D60, word_D2D66, word_D2D6C, word_D2D6E
 global loc_B2A9A, loc_B2B09, loc_B2B3A, loc_B2B81, loc_B2B85, loc_B2BA5, loc_B2BA9, loc_B2BC0
 global loc_B2BCE, loc_B2BD6, loc_B2BDC, loc_B2BDE, loc_B2BE5, loc_B2BED, loc_B2C3B, loc_B2C68
@@ -283,16 +283,16 @@ push byte 0	; B2CF0
 push byte 0	; B2CF2
 call sub_93170	; B2CF4
 add esp, byte 8	; B2CF9
-call sub_B3A18	; B2CFC
+call WaitKey	; B2CFC
 loc_B2D01:
 call sub_B3ED8	; B2D01
 call sub_B3E4A	; B2D06
-call dword [dword_D41F0]	; B2D0B
+call dword [bailout_vec]	; B2D0B
 loc_B2D11:
 push dword [dword_D2F74]	; B2D11
 call sub_B3ED8	; B2D17
 call sub_B3E4A	; B2D1C
-call dword [dword_D41F0]	; B2D21
+call dword [bailout_vec]	; B2D21
 sub_B2D27:
 ret	; B2D27
 push ebp	; B2D28

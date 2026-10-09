@@ -15,8 +15,8 @@ extern byte_DD710, byte_DD750, byte_DD774, byte_DD775, byte_DD788, byte_DD789, b
 extern byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED8CE, byte_ED9AC, byte_ED9B0, byte_ED9E6
 extern dword_C53F7, gameopts, dword_C541F, songdata, cont2team, HomeTeam, dword_CCC94, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_DBC7C, dword_DC234, dword_DD66C, dword_DD670, dword_DD730
-extern dword_DF612, hmtmstruct, dword_DF616, dword_DF61A, dword_DF61C, dword_DF61E, dword_DF620
-extern dword_DF626, dword_DF62A, dword_DF636, dword_DF638, dword_DF63A, fputchar, jctime, memcpy_
+extern hmtmstruct, dword_DF61A
+extern dword_DF626, dword_DF62A, dword_DF636, fputchar, jctime, memcpy_
 extern off_C57CC, off_C719C, off_C80D7, off_C80E7, off_C80EB, off_CD304, rand_, sprintf_
 extern strcat_, strcpy_, sub_11598, sub_1431E, sub_14525, sub_14552, sub_1457C, sub_1463D
 extern sub_1478B, sub_147C9, sub_147FF, sub_174C2, sub_175E2, sub_1BAF3, sub_29C75, sub_33E6A
@@ -2597,7 +2597,7 @@ mov eax, edx	; 2F886
 lea ebx, [byte ebp-034h]	; 2F888
 mov edx, 0B0h	; 2F88B
 call sub_2F580	; 2F890
-mov eax, dword [dword esi+dword_DF612]	; 2F895
+mov eax, dword [dword esi+hmtmstruct-2]	; 2F895
 sar eax, 10h	; 2F89B
 push eax	; 2F89E
 push unk_C16D7	; 2F89F
@@ -2635,7 +2635,7 @@ mov eax, edx	; 2F900
 lea ebx, [byte ebp-034h]	; 2F902
 mov edx, 0E0h	; 2F905
 call sub_2F580	; 2F90A
-mov eax, dword [dword esi+dword_DF616]	; 2F90F
+mov eax, dword [dword esi+hmtmstruct+2]	; 2F90F
 sar eax, 10h	; 2F915
 push eax	; 2F918
 mov eax, dword [dword esi+hmtmstruct]	; 2F919
@@ -2707,10 +2707,10 @@ mov eax, edx	; 2F9E3
 lea ebx, [byte ebp-034h]	; 2F9E5
 mov edx, 128h	; 2F9E8
 call sub_2F580	; 2F9ED
-mov eax, dword [dword esi+dword_DF61E]	; 2F9F2
+mov eax, dword [dword esi+hmtmstruct+0Ah]	; 2F9F2
 sar eax, 10h	; 2F9F8
 push eax	; 2F9FB
-mov eax, dword [dword esi+dword_DF61C]	; 2F9FC
+mov eax, dword [dword esi+hmtmstruct+8]	; 2F9FC
 sar eax, 10h	; 2FA02
 push eax	; 2FA05
 push asc_C16DA	; 2FA06
@@ -2786,7 +2786,7 @@ mov eax, edx	; 2FAE1
 lea ebx, [byte ebp-034h]	; 2FAE3
 mov edx, 188h	; 2FAE6
 call sub_2F580	; 2FAEB
-mov ecx, dword [dword esi+dword_DF620]	; 2FAF0
+mov ecx, dword [dword esi+hmtmstruct+0Ch]	; 2FAF0
 sar ecx, 10h	; 2FAF6
 mov ebx, 3Ch	; 2FAF9
 mov eax, ecx	; 2FAFE
@@ -2819,9 +2819,9 @@ mov edx, 1A0h	; 2FB45
 call sub_2F580	; 2FB4A
 xor ebx, ebx	; 2FB4F
 mov dword [byte ebp-0Ch], 1B8h	; 2FB51
-cmp word [dword esi+dword_DF63A], byte 0	; 2FB58
+cmp word [dword esi+hmtmstruct+26h], byte 0	; 2FB58
 je short loc_2FB8C	; 2FB60
-mov edx, dword [dword esi+dword_DF63A]	; 2FB62
+mov edx, dword [dword esi+hmtmstruct+26h]	; 2FB62
 sar edx, 10h	; 2FB68
 mov eax, edx	; 2FB6B
 shl eax, 2	; 2FB6D
@@ -2829,7 +2829,7 @@ sub eax, edx	; 2FB70
 shl eax, 3	; 2FB72
 add edx, eax	; 2FB75
 shl edx, 2	; 2FB77
-mov ebx, dword [dword esi+dword_DF638]	; 2FB7A
+mov ebx, dword [dword esi+hmtmstruct+24h]	; 2FB7A
 sar ebx, 10h	; 2FB80
 mov eax, edx	; 2FB83
 sar edx, 1Fh	; 2FB85
@@ -2839,10 +2839,10 @@ loc_2FB8C:
 push ebx	; 2FB8C
 mov eax, edi	; 2FB8D
 shl eax, 8	; 2FB8F
-mov edx, dword [dword eax+dword_DF638]	; 2FB92
+mov edx, dword [dword eax+hmtmstruct+24h]	; 2FB92
 sar edx, 10h	; 2FB98
 push edx	; 2FB9B
-mov eax, dword [dword eax+dword_DF63A]	; 2FB9C
+mov eax, dword [dword eax+hmtmstruct+26h]	; 2FB9C
 sar eax, 10h	; 2FBA2
 push eax	; 2FBA5
 push asc_C16E8	; 2FBA6

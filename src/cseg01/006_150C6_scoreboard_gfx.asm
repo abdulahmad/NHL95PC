@@ -9,13 +9,13 @@ extern dword_C5301, dword_C5305, dword_C5309, dword_C53F7, dword_C53FB, gameopts
 extern dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
 extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
-extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, dword_DF63C, hmscore, awscore
-extern dword_DF73C, jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C8, off_C57CC
+extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, hmscore, awscore, hmtmstruct
+extern jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C8, off_C57CC, awtmstruct
 extern off_D3078, rand_, randomd0, sub_10712, sub_10E9F, sub_1167B, sub_13BB4, sub_13FA7
 extern sub_1431E, sub_14A20, sub_14F31, sub_1BEFD, sub_327A1, sub_3371C, sub_3377C, sub_42221
 extern sub_479E9, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
 extern sub_7DC8B, sub_891B2, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
-extern sub_B39ED, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, unk_C5298, unk_DF314, PerTimeTab
+extern PollKey, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, unk_C5298, unk_DF314, PerTimeTab
 extern word_CBC52, lcblink, word_CBC60, lcboxon
 global loc_1511A, loc_15180, loc_15182, loc_151F8, loc_15252, loc_1528C, loc_1528E, loc_15400
 global loc_15446, loc_1548D, loc_1549C, loc_154A4, loc_154E3, loc_15523, loc_1556C, loc_1557B
@@ -63,10 +63,10 @@ xor ebx, ebx	; 1511A
 mov dword [dword_C583C], ebx	; 1511C
 mov dword [dword_C5848], ebx	; 15122
 mov dword [dword_C5844], ebx	; 15128
-mov eax, dword [dword_DF63C]	; 1512E
+mov eax, dword [hmtmstruct+28h]	; 1512E
 sar eax, 10h	; 15133
 mov dword [dword_C584C], eax	; 15136
-mov eax, dword [dword_DF73C]	; 1513B
+mov eax, dword [awtmstruct+28h]	; 1513B
 sar eax, 10h	; 15140
 mov dword [dword_C5850], eax	; 15143
 mov dword [dword_C5858], ebx	; 15148
@@ -1313,7 +1313,7 @@ push ebx	; 16016
 push ecx	; 16017
 push edx	; 16018
 push esi	; 16019
-call sub_B39ED	; 1601A
+call PollKey	; 1601A
 mov esi, eax	; 1601F
 test eax, eax	; 16021
 jne short loc_1604A	; 16023

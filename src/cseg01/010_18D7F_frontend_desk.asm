@@ -4,11 +4,11 @@ bits 32
 section s_18D7F progbits alloc exec nowrite align=1
 extern StartHL2, __CHK, asc_C0952, asc_C0970, asc_C097A, asc_C097F, asc_C0984, asc_C098C
 extern asc_C0991, asc_C0997, asc_C65F8, asc_C6614, asc_C662E, asc_C664C, asc_C6678, asc_C668F
-extern byte_C5400, byte_C542F, byte_C5430, byte_C5431, byte_C5432, byte_CCCA0, musicon, byte_DD774
+extern byte_C5400, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, byte_CCCA0, musicon, byte_DD774
 extern byte_DD775, byte_DD788, byte_DD789, byte_ED830, byte_ED9E8, joysampling, dword_C4E14, dword_C53F7
 extern dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C5581, dword_C5840, dword_C65F4, dword_C66A4
 extern dword_C66AC, dword_C66D0, dword_C66D4, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC
-extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, dword_D41F0, musicslot
+extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, bailout_vec, musicslot
 extern dword_D8C84, dword_DC230, dword_DC234, dword_DC238, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
 extern dword_EA0DC, jctime, off_CEE5F, off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF
 extern off_CEF23, off_D3078, randomd0, sprintf_, sub_10E9F, sub_11598, sub_12034, sub_1395F
@@ -374,10 +374,10 @@ mov word [exitgame], 0FFFFh	; 191C9
 mov eax, 1	; 191D2
 call sub_1935D	; 191D7
 xor ah, ah	; 191DC
-mov byte [byte_C542F], ah	; 191DE
-mov byte [byte_C5430], ah	; 191E4
-mov byte [byte_C5431], ah	; 191EA
-mov byte [byte_C5432], ah	; 191F0
+mov byte [hmgoalcnt], ah	; 191DE
+mov byte [hmshotcnt], ah	; 191E4
+mov byte [awgoalcnt], ah	; 191EA
+mov byte [awshotcnt], ah	; 191F0
 call sub_61C86	; 191F6
 mov edx, 0C8h	; 191FB
 mov eax, 140h	; 19200
@@ -1794,7 +1794,7 @@ mov edx, unk_DF014	; 1A7F2
 mov eax, 1	; 1A7F7
 call sub_76429	; 1A7FC
 call sub_B4B58	; 1A801
-call dword [dword_D41F0]	; 1A806
+call dword [bailout_vec]	; 1A806
 loc_1A80C:
 xor eax, eax	; 1A80C
 add esp, byte 0Ch	; 1A80E

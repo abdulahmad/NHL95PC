@@ -11,7 +11,7 @@ extern byte_ED98E, dword_C53F7, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65
 extern dword_C71DC, songdata, dword_C7615, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7E42, dword_C7F0B
 extern dword_C8998, HomeTeam, musichandle, dword_D2C6B, dword_DB088, dword_DC234, dword_DC23E, musicslot
 extern dword_DD7A8, dword_DD7AC, dword_DDAC0, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
-extern dword_DDD6C, dword_DF616, dword_DF620, awtmlines, startm_m2, hmtmlines
+extern dword_DDD6C, awtmlines, startm_m2, hmtmlines, hmtmstruct
 extern fputchar, jctime, memset_, off_C57CC, off_C800C, off_C80D7, off_C80E7, off_C80EB
 extern off_C80EF, sprintf_, strcat_, strcpy_, sub_10712, sub_11D09, sub_142E7, sub_1431E
 extern sub_14525, sub_1453E, sub_14552, sub_1457C, sub_145A2, sub_145F9, sub_1463D, sub_1478B
@@ -384,13 +384,13 @@ mov edx, dword [dword esp+03F0h]	; 364AE
 mov dx, word [dword edx+word_DF618]	; 364B5
 add word [byte ecx+0Ah], dx	; 364BC
 mov edx, dword [dword esp+03F0h]	; 364C0
-mov dx, word [dword edx+dword_DF616]	; 364C7
+mov dx, word [dword edx+hmtmstruct+2]	; 364C7
 add word [byte ecx+08h], dx	; 364CE
 mov dx, word [dword eax+word_DF618]	; 364D2
 add word [byte ecx+0Eh], dx	; 364D9
-mov dx, word [dword eax+dword_DF616]	; 364DD
+mov dx, word [dword eax+hmtmstruct+2]	; 364DD
 add word [byte ecx+0Ch], dx	; 364E4
-mov ax, word [dword eax+dword_DF620]	; 364E8
+mov ax, word [dword eax+hmtmstruct+0Ch]	; 364E8
 mov edx, ecx	; 364EF
 mov cx, word [byte ecx+010h]	; 364F1
 add ecx, eax	; 364F5
