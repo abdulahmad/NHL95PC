@@ -746,5 +746,6 @@ void SimulateGame(char *dir, char *ext, int a, unsigned char *game, int rwfh, in
 void POSimSeriesTo(unsigned char *lg, int n, int upto);  /* 88625 */
 int MergeUpdateDbs(void);  /* 3B8B0 */
 void FormatPlayerName(char *out, char *prefix, short num, char *first, char *last, char *suffix);  /* 61D48 */
+void DrawTeamGridName(int team, char *names, int bm, unsigned char *tab);  /* 37C53 */
 
 #endif
