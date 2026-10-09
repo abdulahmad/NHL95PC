@@ -16,3 +16,5 @@ shotsets,CCC60,"data table byte match (words->le16, input94.asm, 18 elems)"
 threat,C90AA,"aligned 2/3 accesses in assgoalie, chk4pass"
 wcradiusx,C909C,"aligned 2/3 accesses in checkgoal, checkwallcoll"
 wcradiusy,E03B4,"aligned 2/3 accesses in checkgoal, checkwallcoll"
+doplayeracc_ftab,CCD78,"93G logic93_5 doplayeracc .ftab dc.w 0,$10,$10,$10,0,-$10,-$10,-$10 (turn step per facing delta); PC dword table 0,10h,10h,10h,0,-10h,-10h,-10h read only by doplayeracc"
+MaxSpeed,CCD98,93G logic93_5 MaxSpeed table (16 entries); PC 16 dwords read by playeracc max speed check (.ms)

@@ -14,7 +14,7 @@ global asc_C0861, asc_C0866, asc_C086B, asc_C0870, asc_C0875, asc_C087A, asc_C08
 global asc_C0892, asc_C0897, asc_C089D, asc_C08A6, asc_C08AB, asc_C08B0, asc_C08B5, asc_C08BE
 global asc_C08C7, asc_C08D0, asc_C08D6, asc_C08DB, asc_C08E0, asc_C08E7, asc_C08F0, asc_C08F8
 global asc_C0900, asc_C0909, asc_C0910, asc_C0915, asc_C0944, asc_C094B, asc_C0952, asc_C0970
-global asc_C097A, asc_C097F, asc_C0984, asc_C098C, asc_C0991, asc_C0997, awards, unk_C0180
+global asc_C097A, asc_C097F, asc_C0984, asc_C098C, asc_C0991, asc_C0997, unk_C020C, unk_C0180
 global unk_C01D4, unk_C01D7, unk_C0200, unk_C0211, unk_C0216, unk_C021B, unk_C0220, unk_C0225
 global unk_C022A, unk_C022F, unk_C0234, unk_C0239, unk_C023E, unk_C0243, unk_C0248, unk_C0251
 global unk_C0258, unk_C025E, unk_C0265, unk_C026E, unk_C0275, unk_C0280, unk_C028C, unk_C029A
@@ -103,7 +103,7 @@ unk_C0200:
 db 05Ch,00h
 asc_C0202:
 db 067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h,00h
-awards:
+unk_C020C:
 db 068h,061h,072h,074h,00h
 unk_C0211:
 db 072h,06Fh,073h,073h,00h

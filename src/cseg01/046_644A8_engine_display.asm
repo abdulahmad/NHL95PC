@@ -29,7 +29,7 @@ extern word_CD4FE, word_CD500, word_DD6AA, word_DD6AC, word_DEE94, word_DF64C, w
 extern word_E0046, word_E03AC, word_E03B0, word_E03BC, word_E03C0, word_E9AA0, word_E9AB2, word_E9AB4
 extern word_E9F12, word_E9F14, word_E9F18, word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A
 extern word_E9FA7, word_E9FA9, word_E9FB0, word_E9FB2, word_E9FB4
-global checkwindow, loc_644C3, loc_64509, loc_64515, loc_64531, loc_64546, loc_6454F, loc_64574
+global sub_65D01, loc_644C3, loc_64509, loc_64515, loc_64531, loc_64546, loc_6454F, loc_64574
 global loc_645BC, loc_645C9, loc_645E5, loc_645FA, loc_64603, loc_64631, loc_64638, loc_6466A
 global loc_64695, loc_64820, loc_64821, loc_64975, loc_649B6, loc_649C8, loc_649CD, loc_649D1
 global loc_649ED, loc_649F4, loc_64A04, loc_64A2E, loc_64A33, loc_64A75, loc_64A7C, loc_64A9F
@@ -92,10 +92,10 @@ global loc_68344, loc_68345, loc_6839B, loc_683BB, loc_683DA, loc_683FB, loc_684
 global loc_6845B, loc_684DD, loc_684E6, loc_684F9, loc_68543, loc_68559, loc_68593, loc_685C1
 global loc_685F2, loc_6861D, loc_68622, loc_68689, loc_68691, loc_686A1, loc_686DC, loc_686E1
 global loc_6871D, loc_68722, loc_68723, loc_6875D, loc_68765, loc_687B5, loc_687E7, loc_687FB
-global loc_6883D, loc_6889D, setInjuryType, sub_644A8, sub_6455F, sub_64614, sub_64A0B, sub_64CA8
+global loc_6883D, loc_6889D, sub_65B83, sub_644A8, sub_6455F, sub_64614, sub_64A0B, sub_64CA8
 global sub_64E60, sub_652D6, sub_653BE, sub_6552E, sub_655CC, sub_658F3, sub_65B48, sub_65CA8
 global sub_66497, sub_665AD, sub_66DDA, sub_66E06, sub_66FE2, sub_671E8, sub_672F9, sub_673C5
-global sub_67564, sub_67581, sub_675A0, sub_67900, sub_67DCC, updatereplay
+global sub_67564, sub_67581, sub_675A0, sub_67900, sub_67DCC, sub_675D6
 sub_644A8:
 push dword 24h	; 644A8
 call __CHK	; 644AD
@@ -2113,7 +2113,7 @@ jl short loc_65B56	; 65B7E
 pop edx	; 65B80
 pop ebx	; 65B81
 ret	; 65B82
-setInjuryType:
+sub_65B83:
 push dword 24h	; 65B83
 call __CHK	; 65B88
 push ebx	; 65B8D
@@ -2268,7 +2268,7 @@ pop ebp	; 65CFB
 pop edi	; 65CFC
 pop esi	; 65CFD
 ret 4	; 65CFE
-checkwindow:
+sub_65D01:
 push dword 20h	; 65D01
 call __CHK	; 65D06
 push ebx	; 65D0B
@@ -2475,7 +2475,7 @@ sar edi, 10h	; 66017
 loc_6601A:
 cmp esi, edi	; 6601A
 jle short loc_66029	; 6601C
-mov si, word [byte eax+02Ah]	; 6601E
+mov si, word [byte eax+temp3]	; 6601E
 loc_66022:
 mov word [word_C90AC], si	; 66022
 loc_66029:
@@ -2483,7 +2483,7 @@ mov si, word [word_C90AE]	; 66029
 mov di, word [word_C909A]	; 66030
 sub esi, edi	; 66037
 mov word [word_E03AC], si	; 66039
-mov si, word [byte eax+02Ch]	; 66040
+mov si, word [byte eax+temp4]	; 66040
 sub esi, edi	; 66044
 mov word [word_E03B0], si	; 66046
 mov esi, dword [dword_E03AA]	; 6604D
@@ -2519,7 +2519,7 @@ sar esi, 10h	; 660AB
 loc_660AE:
 cmp edi, esi	; 660AE
 jle short loc_660B8	; 660B0
-mov si, word [byte eax+02Ch]	; 660B2
+mov si, word [byte eax+temp4]	; 660B2
 jmp short loc_6606C	; 660B6
 loc_660B8:
 mov si, word [word_C90AE]	; 660B8
@@ -2533,7 +2533,7 @@ mov edi, dword [dword_C90B0]	; 660D9
 sar edi, 10h	; 660DF
 sub esi, edi	; 660E2
 mov edi, esi	; 660E4
-mov esi, dword [byte eax+04h]	; 660E6
+mov esi, dword [byte eax+Ypos]	; 660E6
 sar esi, 10h	; 660E9
 mov dword [esp], esi	; 660EC
 mov esi, dword [word_C90B2]	; 660EF
@@ -2541,7 +2541,7 @@ sar esi, 10h	; 660F5
 mov ebp, dword [esp]	; 660F8
 sub ebp, esi	; 660FB
 mov esi, ebp	; 660FD
-mov ebp, dword [byte eax+01Ah]	; 660FF
+mov ebp, dword [byte eax+assnum-2]	; 660FF
 sar ebp, 10h	; 66102
 add eax, ebp	; 66105
 cmp byte [byte eax+01Eh], 22h	; 66107
@@ -2574,7 +2574,7 @@ shl eax, 7	; 66176
 add eax, unk_DF81C	; 66179
 mov edi, 2	; 6617E
 mov word [word_E03BC], di	; 66183
-cmp word [byte eax+06Ah], byte 10h	; 6618A
+cmp word [byte eax+SCnum], byte 10h	; 6618A
 jne short loc_661A5	; 6618F
 mov esi, dword [byte eax+0Ch]	; 66191
 sar esi, 18h	; 66194
@@ -2582,9 +2582,9 @@ neg esi	; 66197
 mov word [dword_C90B0], si	; 66199
 jmp near loc_66212	; 661A0
 loc_661A5:
-test byte [byte eax+044h], 80h	; 661A5
+test byte [byte eax+pflags], 80h	; 661A5
 je short loc_661DC	; 661A9
-mov esi, dword [byte eax+0Ch]	; 661AB
+mov esi, dword [byte eax+Yvel-2]	; 661AB
 sar esi, 10h	; 661AE
 cmp esi, byte 0FFFFFF9Ch	; 661B1
 setl bl	; 661B4
@@ -2598,7 +2598,7 @@ jl short loc_66212	; 661CF
 mov word [dword_C90B0], 32h	; 661D1
 jmp short loc_66212	; 661DA
 loc_661DC:
-cmp word [byte eax+0Eh], byte 64h	; 661DC
+cmp word [byte eax+Yvel], byte 64h	; 661DC
 setg bl	; 661E1
 xor bh, bh	; 661E4
 mov si, word [word_E03BC]	; 661E6
@@ -2614,7 +2614,7 @@ mov eax, dword_DFF1C	; 6620D
 loc_66212:
 mov esi, dword [byte eax+0Ch]	; 66212
 sar esi, 18h	; 66215
-mov edi, dword [byte eax+04h]	; 66218
+mov edi, dword [byte eax+Ypos]	; 66218
 sar edi, 10h	; 6621B
 add edi, esi	; 6621E
 mov esi, dword [word_C90AE]	; 66220
@@ -2622,7 +2622,7 @@ sar esi, 10h	; 66226
 add esi, edi	; 66229
 mov word [word_E03AC], si	; 6622B
 mov word [word_C90AE], si	; 66232
-mov ax, word [byte eax+02h]	; 66239
+mov ax, word [byte eax+Xpos+2]	; 66239
 mov word [word_E03B0], ax	; 6623D
 mov word [word_C90AC], ax	; 66243
 loc_66249:
@@ -4122,7 +4122,7 @@ loc_675CF:
 sub eax, 80h	; 675CF
 pop edx	; 675D4
 ret	; 675D5
-updatereplay:
+sub_675D6:
 push dword 1Ch	; 675D6
 call __CHK	; 675DB
 push ebx	; 675E0
@@ -4161,12 +4161,12 @@ mov eax, unk_DF81C	; 67657
 xor edx, edx	; 6765C
 jmp short loc_676B0	; 6765E
 loc_67660:
-mov bx, word [byte eax+06h]	; 67660
+mov bx, word [byte eax+Ypos+2]	; 67660
 and bh, 3	; 67664
 movsx ebx, bx	; 67667
 mov ecx, ebx	; 6766A
 shl ecx, 0Ah	; 6766C
-mov bx, word [byte eax+02h]	; 6766F
+mov bx, word [byte eax+Xpos+2]	; 6766F
 and bh, 3	; 67673
 movsx ebx, bx	; 67676
 or ecx, ebx	; 67679
@@ -4207,7 +4207,7 @@ mov eax, unk_DF81C	; 676DF
 xor edx, edx	; 676E4
 jmp short loc_67743	; 676E6
 loc_676E8:
-mov bx, word [byte eax+01Ah]	; 676E8
+mov bx, word [byte eax+position]	; 676E8
 test bx, bx	; 676EC
 jge short loc_676FC	; 676EF
 mov word [word_E03BC], 0Fh	; 676F1
@@ -4216,7 +4216,7 @@ loc_676FC:
 mov word [word_E03BC], bx	; 676FC
 loc_67703:
 add eax, 80h	; 67703
-mov si, word [byte eax+01Ah]	; 67708
+mov si, word [byte eax+position]	; 67708
 test si, si	; 6770C
 jge short loc_6771A	; 6770F
 or byte [word_E03BC], 0F0h	; 67711

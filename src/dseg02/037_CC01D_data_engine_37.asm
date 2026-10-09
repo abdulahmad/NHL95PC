@@ -12,7 +12,7 @@ global dword_CC110, dword_CC114, dword_CC118, dword_CC11C, dword_CC120, dword_CC
 global dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, dword_CC9AD, dword_CC9CE
 global dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, dword_CCC2C, dword_CCC4E
 global dword_CCC84, dword_CCC88, dword_CCC8C, dword_CCC90, dword_CCC94, dword_CCC98, dword_CCC9C, dword_CCC9D
-global dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_CCD78, dword_CCD98, dword_CCEF6, dword_CD2F8
+global dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, doplayeracc_ftab, MaxSpeed, dword_CCEF6, dword_CD2F8
 global off_CC01D, off_CCA0A, shotsets, unk_CCCC8, word_CC054, word_CC0B0, word_CC0D8, word_CC0DA
 global word_CC0DE, word_CC10C, word_CC9CC, word_CC9EA, word_CC9EC, word_CCA18, word_CCA1A, word_CCA1C
 global word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E, word_CCA70, word_CCA9C
@@ -404,10 +404,10 @@ dword_CCD4F:
 db 019h,0FFh,0C4h,02h,00h,00h,0C5h,02h,00h,00h,0C6h,02h,00h,00h,0C9h,02h
 db 00h,00h,0CAh,02h,00h,00h,0C9h,02h,00h,00h,0C6h,02h,00h,00h,0C5h,02h
 db 00h,00h,064h,01h,00h,00h,00h,00h,00h
-dword_CCD78:
+doplayeracc_ftab:
 db 00h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h
 db 00h,00h,00h,00h,0F0h,0FFh,0FFh,0FFh,0F0h,0FFh,0FFh,0FFh,0F0h,0FFh,0FFh,0FFh
-dword_CCD98:
+MaxSpeed:
 db 040h,0F2h,0BCh,01h,010h,050h,0E3h,01h,010h,08Dh,0Ah,02h,040h,094h,032h,02h
 db 00h,051h,05Bh,02h,010h,0AFh,084h,02h,090h,09Ah,0AEh,02h,00h,00h,0D9h,02h
 db 040h,0CCh,03h,03h,090h,0ECh,02Eh,03h,090h,04Eh,05Ah,03h,040h,0E0h,085h,03h

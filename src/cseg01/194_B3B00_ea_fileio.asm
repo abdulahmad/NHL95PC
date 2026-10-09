@@ -7,7 +7,7 @@ extern dword_D4530, dword_D4F2C, dword_D4F30, dword_D4F34, dword_D4F38, dword_D4
 extern sub_B2CD8, sub_B49C0, sub_B4A60, sub_B4A66, unk_D4448, unk_D44B0, unk_D44CE
 global loc_B3B6E, loc_B3BB9, loc_B3BEE, loc_B3C2B, loc_B3C53, loc_B3C6E, loc_B3C76, loc_B3C85
 global loc_B3C9C, loc_B3CAF, loc_B3CB1, loc_B3CF4, loc_B3D02, loc_B3D08, loc_B3D0A, loc_B3D22
-global loc_B3D26, loc_B3D85, loc_B3DAB, loc_B3DB9, loc_B3DD4, loc_B3DDD, loc_B3DF1, sroot
+global loc_B3D26, loc_B3D85, loc_B3DAB, loc_B3DB9, loc_B3DD4, loc_B3DDD, loc_B3DF1, sub_B3D94
 global sub_B3B00, sub_B3B19, sub_B3B2E, sub_B3B44, sub_B3B5A, sub_B3C60, sub_B3C70, sub_B3C74
 global sub_B3CB3, sub_B3CC8, sub_B3D2A, sub_B3D46, sub_B3D56, sub_B3D64, sub_B3D74, sub_B3DFC
 sub_B3B00:
@@ -281,7 +281,7 @@ js short loc_B3D85	; B3D8D
 leave	; B3D8F
 ret	; B3D90
 db 00h,00h,00h
-sroot:
+sub_B3D94:
 push ebp	; B3D94
 LD mov, ebp, esp	; B3D95
 push dword [byte ebp+08h]	; B3D97

@@ -8,7 +8,7 @@ extern dword_C7444, dword_C7448, dword_C9074, dword_C90C8, dword_C90CA, dword_CB
 extern dword_CC0F0, dword_CC9AD, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
 extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, dword_DF614, dword_DF714, dword_DFF1C
 extern dword_E0244, dword_E9A9E, dword_E9B04, forcepldata, jctime, off_C9094, off_C9096, randomd0
-extern reenergizeteam, resetplstuff, setpersonel, sub_1145F, sub_1149A, sub_11598, sub_14CF1, sub_33DD3
+extern sub_5B826, resetplstuff, setpersonel, sub_1145F, sub_1149A, sub_11598, sub_14CF1, sub_33DD3
 extern sub_47951, sub_4FD47, sub_50A05, sub_50A84, sub_594CD, sub_597E3, sub_59863, sub_59981
 extern sub_59A11, sub_5CE12, sub_5DD7C, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8374D, sub_8C1C2, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
@@ -137,13 +137,13 @@ mov eax, 0FFFFFFFFh	; 47DA1
 mov word [word_C90C4], ax	; 47DA6
 mov word [word_C90C2], ax	; 47DAC
 mov eax, dword_DF614	; 47DB2
-call reenergizeteam	; 47DB7
+call sub_5B826	; 47DB7
 mov eax, dword_DF614	; 47DBC
 call setpersonel	; 47DC1
 mov eax, dword_DF614	; 47DC6
 call forcepldata	; 47DCB
 mov eax, dword_DF714	; 47DD0
-call reenergizeteam	; 47DD5
+call sub_5B826	; 47DD5
 mov eax, dword_DF714	; 47DDA
 call setpersonel	; 47DDF
 mov eax, dword_DF714	; 47DE4
@@ -166,32 +166,32 @@ jl short loc_47E05	; 47E12
 xor esi, esi	; 47E14
 jmp near loc_47F48	; 47E16
 loc_47E1B:
-mov ax, word [byte ebx+01Ah]	; 47E1B
+mov ax, word [byte ebx+position]	; 47E1B
 test ax, ax	; 47E1F
 jne short loc_47E7E	; 47E22
-mov word [byte ebx+02h], ax	; 47E24
-mov word [byte ebx+02Ah], ax	; 47E28
-test byte [byte ebx+044h], 80h	; 47E2C
+mov word [byte ebx+Xpos+2], ax	; 47E24
+mov word [byte ebx+temp3], ax	; 47E28
+test byte [byte ebx+pflags], 80h	; 47E2C
 je short loc_47E39	; 47E30
 mov eax, 0FFFFFF24h	; 47E32
 jmp short loc_47E3E	; 47E37
 loc_47E39:
 mov eax, 0DCh	; 47E39
 loc_47E3E:
-mov word [byte ebx+06h], ax	; 47E3E
-mov word [byte ebx+02Ch], ax	; 47E42
-mov word [byte ebx+02Eh], 0FF9Ch	; 47E46
-mov word [byte ebx+0Eh], 0	; 47E4C
-mov ax, word [byte ebx+0Eh]	; 47E52
-mov word [byte ebx+0Ch], ax	; 47E56
-test byte [byte ebx+044h], 80h	; 47E5A
+mov word [byte ebx+Ypos+2], ax	; 47E3E
+mov word [byte ebx+temp4], ax	; 47E42
+mov word [byte ebx+temp5], 0FF9Ch	; 47E46
+mov word [byte ebx+Yvel], 0	; 47E4C
+mov ax, word [byte ebx+Yvel]	; 47E52
+mov word [byte ebx+Xvel], ax	; 47E56
+test byte [byte ebx+pflags], 80h	; 47E5A
 je short loc_47E64	; 47E5E
 xor eax, eax	; 47E60
 jmp short loc_47E69	; 47E62
 loc_47E64:
 mov eax, 4	; 47E64
 loc_47E69:
-mov word [byte ebx+036h], ax	; 47E69
+mov word [byte ebx+facedir], ax	; 47E69
 mov edx, 99h	; 47E6D
 mov eax, ebx	; 47E72
 call SetSPA	; 47E74
@@ -218,12 +218,12 @@ mov eax, 8	; 47EAE
 call randomd0	; 47EB3
 sub eax, byte 4	; 47EB8
 add edx, eax	; 47EBB
-mov word [byte ebx+02h], dx	; 47EBD
-mov word [byte ebx+02Ah], dx	; 47EC1
+mov word [byte ebx+Xpos+2], dx	; 47EBD
+mov word [byte ebx+temp3], dx	; 47EC1
 mov eax, 2	; 47EC5
 call randomd0	; 47ECA
-add word [byte ebx+02h], ax	; 47ECF
-test byte [byte ebx+044h], 80h	; 47ED3
+add word [byte ebx+Xpos+2], ax	; 47ECF
+test byte [byte ebx+pflags], 80h	; 47ED3
 je short loc_47EE0	; 47ED7
 mov edx, 0FFFFFFC6h	; 47ED9
 jmp short loc_47EE5	; 47EDE
@@ -235,18 +235,18 @@ call randomd0	; 47EEA
 cwde	; 47EEF
 sub eax, byte 2	; 47EF0
 add edx, eax	; 47EF3
-mov word [byte ebx+06h], dx	; 47EF5
-mov word [byte ebx+02Ch], dx	; 47EF9
-mov word [byte ebx+036h], 4	; 47EFD
-mov word [byte ebx+0Eh], 0	; 47F03
-mov ax, word [byte ebx+0Eh]	; 47F09
-mov word [byte ebx+0Ch], ax	; 47F0D
+mov word [byte ebx+Ypos+2], dx	; 47EF5
+mov word [byte ebx+temp4], dx	; 47EF9
+mov word [byte ebx+facedir], 4	; 47EFD
+mov word [byte ebx+Yvel], 0	; 47F03
+mov ax, word [byte ebx+Yvel]	; 47F09
+mov word [byte ebx+Xvel], ax	; 47F0D
 mov eax, 28h	; 47F11
 call randomd0	; 47F16
 sub eax, byte 14h	; 47F1B
 mov edx, edi	; 47F1E
 add edx, eax	; 47F20
-mov word [byte ebx+02Eh], dx	; 47F22
+mov word [byte ebx+temp5], dx	; 47F22
 xor edx, edx	; 47F26
 mov eax, ebx	; 47F28
 call SetSPA	; 47F2A

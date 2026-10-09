@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_C9078 progbits alloc noexec write align=1
-extern ass_pc_slot20, ass_pc_slot21, ass_pc_slot29, ass_pc_slot30, ass_pc_slot31, ass_pc_slot32, ass_pc_slot33, ass_pc_slot34
-extern ass_pc_slot35, ass_pc_slot36, ass_pc_slot37, ass_pc_slot38, ass_pc_slot39, ass_pc_slot40, ass_pc_slot41, ass_pc_slot42
-extern ass_pc_slot43, ass_pc_slot44, ass_pc_slot45, ass_pc_slot46, assbench, asscenterd, asscentero, assdefd
-extern assdefo, assdopen, asseben, assepen, assfaceoff, assfaceoffp1, assgoalie, assgoalietopuck
-extern assnearest, asspassrec, asspenalty, asspuckc, assscore, assshoot, assstanley, asswingd
-extern asswingo, dword_DFF2C, puckfaceoff, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
+extern ass_pc_slot20, ass_pc_slot21, sub_4AB87, sub_4DFF7, sub_4E0BD, sub_4EB04, sub_4ED7C, sub_4F5BF
+extern sub_4F7D0, sub_4E8EF, sub_4842A, sub_484DA, sub_52720, sub_5147D, sub_526ED, sub_499D8
+extern sub_49BC2, sub_52FB0, sub_52DB0, sub_4FAE8, assbench, asscenterd, asscentero, assdefd
+extern assdefo, sub_4AFFB, asseben, assepen, assfaceoff, assfaceoffp1, assgoalie, sub_4B5C2
+extern assnearest, sub_50F3F, asspenalty, sub_4C6F3, assscore, assshoot, assstanley, asswingd
+extern asswingo, dword_DFF2C, sub_516E1, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
 extern unk_DFF5E, unk_E0416, word_DFF1E, word_DFF22, word_DFF26, word_DFF28, word_DFF2A
 global StanleyCupTimer, asstab, byte_C90BC, byte_C90BE, byte_C90C3, byte_C90C5, byte_C90D5, byte_C9104
 global byte_C9111, byte_C9123, byte_C9142, byte_C9146, byte_CBC36, byte_CBC37, byte_CBEA8, collflag
@@ -157,13 +157,13 @@ dd asseben
 dd assepen
 dd assbench
 dd asspenalty
-dd assdopen
+dd sub_4AFFB
 dd assgoalie
-dd assgoalietopuck
-dd asspuckc
+dd sub_4B5C2
+dd sub_4C6F3
 dd assnearest
 dd assshoot
-dd asspassrec
+dd sub_50F3F
 dd ass_pc_slot20
 dd ass_pc_slot21
 dd assfaceoff
@@ -171,26 +171,26 @@ dd assfaceoffp1
 dd pucknorm
 dd puckshadow
 dd pucknothing
-dd puckfaceoff
+dd sub_516E1
 dd puckfaceoff2
-dd ass_pc_slot29
-dd ass_pc_slot30
-dd ass_pc_slot31
-dd ass_pc_slot32
-dd ass_pc_slot33
-dd ass_pc_slot34
-dd ass_pc_slot35
-dd ass_pc_slot36
-dd ass_pc_slot37
-dd ass_pc_slot38
-dd ass_pc_slot39
-dd ass_pc_slot40
-dd ass_pc_slot41
-dd ass_pc_slot42
-dd ass_pc_slot43
-dd ass_pc_slot44
-dd ass_pc_slot45
-dd ass_pc_slot46
+dd sub_4AB87
+dd sub_4DFF7
+dd sub_4E0BD
+dd sub_4EB04
+dd sub_4ED7C
+dd sub_4F5BF
+dd sub_4F7D0
+dd sub_4E8EF
+dd sub_4842A
+dd sub_484DA
+dd sub_52720
+dd sub_5147D
+dd sub_526ED
+dd sub_499D8
+dd sub_49BC2
+dd sub_52FB0
+dd sub_52DB0
+dd sub_4FAE8
 unk_C921D:
 db 00h,00h,00h,080h,012h,00h,024h,00h,036h,00h,048h,00h,05Ah,00h,06Ch,00h
 db 07Eh,00h,096h,01h,0B4h,00h,01Ah,02h,0Ah,00h,01Bh,02h,0Ah,00h,01Ah,02h

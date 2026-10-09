@@ -2,14 +2,14 @@
 bits 32
 %include "hockey.inc"
 section s_69336 progbits alloc exec nowrite align=1
-extern DoGameFrame, ResetBench, __CHK, assreplace, byte_C5400, byte_C90BC, byte_C90BE, byte_D2430
+extern DoGameFrame, sub_5DF86, __CHK, assreplace, byte_C5400, byte_C90BC, byte_C90BE, byte_D2430
 extern byte_E9AC0, byte_E9AC1, dword_C4D0C, dword_C4E10, dword_C4E14, dword_C5130, dword_C53FF, dword_C5704
 extern dword_C5708, dword_C570C, dword_C7444, dword_C7448, dword_C90B0, dword_C90C0, dword_C90C8, dword_C90CA
 extern dword_CBECA, dword_CC0DC, dword_CCC88, dword_CCC98, dword_CD9A0, dword_D8C40, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC28C, dword_DD6A8, dword_DD6AE, dword_DD6B0
 extern dword_DF614, dword_DF622, dword_DF646, dword_DF648, dword_DF714, dword_DF722, dword_DF748, dword_DFF1C
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, off_C907C, off_C9084, off_C9094
-extern off_C9096, randomd0, reenergizeteam, resetplstuff, setpersonel, sub_10E9F, sub_1145F, sub_1149A
+extern off_C9096, randomd0, sub_5B826, resetplstuff, setpersonel, sub_10E9F, sub_1145F, sub_1149A
 extern sub_11598, sub_1395F, sub_14CF1, sub_150C6, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
 extern sub_479E9, sub_47C31, sub_4FD47, sub_50A05, sub_50A84, sub_594CD, sub_597E3, sub_59981
 extern sub_59CA9, sub_59D54, sub_5B97A, sub_5CE12, sub_5D7F7, sub_5DD6B, sub_5DD7C, sub_5DE42
@@ -279,9 +279,9 @@ mov word [word_C90AE], cx	; 6973E
 mov word [word_C90AC], cx	; 69745
 add dword [dword_C7444], 3E8h	; 6974C
 add dword [dword_C7448], 3E8h	; 69756
-call ResetBench	; 69760
+call sub_5DF86	; 69760
 mov eax, dword_DF614	; 69765
-call reenergizeteam	; 6976A
+call sub_5B826	; 6976A
 mov eax, dword_DF614	; 6976F
 call setpersonel	; 69774
 mov eax, dword_DF614	; 69779
@@ -291,7 +291,7 @@ mov ebx, edx	; 6978A
 mov word [dword_DF646], bx	; 6978C
 mov word [word_DF644], bx	; 69793
 mov eax, dword_DF714	; 6979A
-call reenergizeteam	; 6979F
+call sub_5B826	; 6979F
 mov eax, dword_DF714	; 697A4
 call setpersonel	; 697A9
 mov eax, dword_DF714	; 697AE
@@ -303,14 +303,14 @@ call resetplstuff	; 697CD
 mov ebx, unk_DF81C	; 697D2
 xor edi, edi	; 697D7
 loc_697D9:
-test byte [byte ebx+044h], 80h	; 697D9
+test byte [byte ebx+pflags], 80h	; 697D9
 je short loc_697E3	; 697DD
 xor edx, edx	; 697DF
 jmp short loc_697E8	; 697E1
 loc_697E3:
 mov edx, 6	; 697E3
 loc_697E8:
-mov eax, dword [byte ebx+018h]	; 697E8
+mov eax, dword [byte ebx+position-2]	; 697E8
 sar eax, 10h	; 697EB
 add edx, eax	; 697EE
 lea esi, [edx+edx]	; 697F0
@@ -321,8 +321,8 @@ mov dword [dword esp+0100h], eax	; 69800
 mov ax, word [nosplit edx*4+dword_CD9A0]	; 69807
 mov edx, dword [dword esp+0100h]	; 6980F
 add eax, edx	; 69816
-mov word [byte ebx+02h], ax	; 69818
-mov cx, word [byte ebx+01Ah]	; 6981C
+mov word [byte ebx+Xpos+2], ax	; 69818
+mov cx, word [byte ebx+position]	; 6981C
 test cx, cx	; 69820
 sete al	; 69823
 mov edx, eax	; 69826
@@ -347,20 +347,20 @@ loc_69856:
 mov edx, dword [nosplit esi*2+dword_CD9A0]	; 69856
 sar edx, 10h	; 6985D
 add eax, edx	; 69860
-mov word [byte ebx+06h], ax	; 69862
-mov word [byte ebx+0Eh], 0	; 69866
-mov ax, word [byte ebx+0Eh]	; 6986C
-mov word [byte ebx+0Ch], ax	; 69870
+mov word [byte ebx+Ypos+2], ax	; 69862
+mov word [byte ebx+Yvel], 0	; 69866
+mov ax, word [byte ebx+Yvel]	; 6986C
+mov word [byte ebx+Xvel], ax	; 69870
 mov eax, dword [off_C9084]	; 69874
 mov ax, word [eax]	; 69879
-sub ax, word [byte ebx+06h]	; 6987C
+sub ax, word [byte ebx+Ypos+2]	; 6987C
 movsx edx, ax	; 69880
 mov eax, dword [off_C907C]	; 69883
 mov ax, word [eax]	; 69888
-sub ax, word [byte ebx+02h]	; 6988B
+sub ax, word [byte ebx+Xpos+2]	; 6988B
 cwde	; 6988F
 call vtoa	; 69890
-mov word [byte ebx+036h], ax	; 69895
+mov word [byte ebx+facedir], ax	; 69895
 inc edi	; 69899
 add ebx, 80h	; 6989A
 cmp edi, byte 0Ch	; 698A0

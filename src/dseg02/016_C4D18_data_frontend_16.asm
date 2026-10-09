@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_C4D18 progbits alloc noexec write align=1
-extern TeamList, awards, unk_C0211, unk_C0216, unk_C021B, unk_C0220, unk_C0225, unk_C022A
+extern TeamList, unk_C020C, unk_C0211, unk_C0216, unk_C021B, unk_C0220, unk_C0225, unk_C022A
 extern unk_C022F, unk_C0234, unk_C0239, unk_C023E, unk_C0243, unk_C0248, unk_C0251, unk_C0258
 extern unk_C025E, unk_C0265, unk_C026E, unk_C0275, unk_C0280, unk_C028C, unk_C029A, unk_C02A7
 extern unk_C02BC, unk_C02CA, unk_C02D9, unk_C02E9, unk_C0300, unk_C0310, unk_C032B, unk_C0337
@@ -132,7 +132,7 @@ db 0CEh,01h,00h,00h,0CFh,01h,00h,00h,0CBh,01h,00h,00h,0CCh,01h,00h,00h
 db 0C9h,01h,00h,00h,0CAh,01h,00h,00h,0D1h,01h,00h,00h,0CDh,01h,00h,00h
 db 0D2h,01h,00h,00h,0D0h,01h,00h,00h,0D3h,01h,00h,00h
 off_C5194:
-dd awards
+dd unk_C020C
 dd unk_C0211
 dd unk_C0216
 dd unk_C021B

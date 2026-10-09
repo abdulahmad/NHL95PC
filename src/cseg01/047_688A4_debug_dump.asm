@@ -247,7 +247,7 @@ shl edx, 7	; 68B54
 add edx, unk_DF81C	; 68B57
 xor ch, ch	; 68B5D
 mov byte [byte ebp+07Eh], ch	; 68B5F
-mov eax, dword [byte edx+02Ch]	; 68B62
+mov eax, dword [byte edx+temp5-2]	; 68B62
 sar eax, 10h	; 68B65
 push eax	; 68B68
 push asc_C2437	; 68B69
@@ -276,7 +276,7 @@ push eax	; 68BA8
 call sprintf_	; 68BA9
 add esp, byte 0Ch	; 68BAE
 add esi, eax	; 68BB1
-test byte [byte edx+044h], 40h	; 68BB3
+test byte [byte edx+pflags], 40h	; 68BB3
 setne al	; 68BB7
 mov ebx, eax	; 68BBA
 and ebx, 0FFh	; 68BBC
@@ -313,9 +313,9 @@ push eax	; 68C18
 call sprintf_	; 68C19
 add esp, byte 0Ch	; 68C1E
 add esi, eax	; 68C21
-cmp word [byte edx+01Ah], byte 0	; 68C23
+cmp word [byte edx+position], byte 0	; 68C23
 jl short loc_68C39	; 68C28
-mov eax, dword [byte edx+018h]	; 68C2A
+mov eax, dword [byte edx+position-2]	; 68C2A
 sar eax, 10h	; 68C2D
 mov eax, dword [nosplit eax*4+off_CD984]	; 68C30
 jmp short loc_68C3E	; 68C37
@@ -332,22 +332,22 @@ push eax	; 68C4D
 call sprintf_	; 68C4E
 add esp, byte 10h	; 68C53
 add esi, eax	; 68C56
-mov eax, dword [byte edx+02Ah]	; 68C58
+mov eax, dword [byte edx+temp4-2]	; 68C58
 sar eax, 10h	; 68C5B
 push eax	; 68C5E
-mov eax, dword [byte edx+028h]	; 68C5F
+mov eax, dword [byte edx+temp3-2]	; 68C5F
 sar eax, 10h	; 68C62
 push eax	; 68C65
-mov eax, dword [byte edx+034h]	; 68C66
+mov eax, dword [byte edx+facedir-2]	; 68C66
 sar eax, 10h	; 68C69
 push eax	; 68C6C
-mov eax, dword [byte edx+0Ch]	; 68C6D
+mov eax, dword [byte edx+Yvel-2]	; 68C6D
 sar eax, 10h	; 68C70
 push eax	; 68C73
-mov eax, dword [byte edx+0Ah]	; 68C74
+mov eax, dword [byte edx+Xvel-2]	; 68C74
 sar eax, 10h	; 68C77
 push eax	; 68C7A
-mov eax, dword [byte edx+04h]	; 68C7B
+mov eax, dword [byte edx+Ypos]	; 68C7B
 sar eax, 10h	; 68C7E
 push eax	; 68C81
 mov eax, dword [edx]	; 68C82
@@ -373,7 +373,7 @@ call sprintf_	; 68CB7
 add esp, byte 0Ch	; 68CBC
 add esi, eax	; 68CBF
 loc_68CC1:
-mov eax, dword [byte edx+01Ah]	; 68CC1
+mov eax, dword [byte edx+assnum-2]	; 68CC1
 sar eax, 10h	; 68CC4
 mov eax, dword [byte edx+eax+01Bh]	; 68CC7
 sar eax, 18h	; 68CCB
@@ -386,7 +386,7 @@ push eax	; 68CE0
 call sprintf_	; 68CE1
 add esp, byte 0Ch	; 68CE6
 add esi, eax	; 68CE9
-test byte [byte edx+044h], 20h	; 68CEB
+test byte [byte edx+pflags], 20h	; 68CEB
 je short loc_68D06	; 68CEF
 push unk_C2478	; 68CF1
 lea eax, [byte ebp+07Eh]	; 68CF6
@@ -396,7 +396,7 @@ call sprintf_	; 68CFC
 add esp, byte 8	; 68D01
 add esi, eax	; 68D04
 loc_68D06:
-test byte [byte edx+045h], 2	; 68D06
+test byte [byte edx+pflags2], 2	; 68D06
 je short loc_68D21	; 68D0A
 push unk_C247A	; 68D0C
 lea eax, [byte ebp+07Eh]	; 68D11
@@ -417,7 +417,7 @@ xor eax, eax	; 68D36
 jmp short loc_68D4D	; 68D38
 loc_68D3A:
 movsx ebx, ax	; 68D3A
-mov ecx, dword [byte edx+036h]	; 68D3D
+mov ecx, dword [byte edx+SPA-2]	; 68D3D
 sar ecx, 10h	; 68D40
 cmp ecx, dword [nosplit ebx*4+dword_CD504]	; 68D43
 je short loc_68D53	; 68D4A
@@ -430,7 +430,7 @@ lea ebx, [byte ebp+07Eh]	; 68D53
 add ebx, esi	; 68D56
 cmp ax, 78h	; 68D58
 jl short loc_68D6C	; 68D5C
-mov eax, dword [byte edx+036h]	; 68D5E
+mov eax, dword [byte edx+SPA-2]	; 68D5E
 sar eax, 10h	; 68D61
 push eax	; 68D64
 push asc_C247E	; 68D65
@@ -455,7 +455,7 @@ loc_68D98:
 mov eax, dword [byte edx+010h]	; 68D98
 sar eax, 10h	; 68D9B
 push eax	; 68D9E
-mov eax, dword [byte edx+068h]	; 68D9F
+mov eax, dword [byte edx+SCnum-2]	; 68D9F
 sar eax, 10h	; 68DA2
 push eax	; 68DA5
 push asc_C2488	; 68DA6
