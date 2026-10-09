@@ -26,7 +26,7 @@ extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, unk_C7AE0, unk_C7E3E, btn_Mas
 extern unk_C7F1B, unk_C7F8E, str_backslash2, unk_C8117, awlinetab, hmlinetab, unk_DC240, leagueteams
 extern treeteamnames, masterpw, savleague1, savleague2, VisTeam, word_DB08A, word_DB08C, word_DB08E
 extern word_DB090, word_DB092, word_DB096, word_DC242, word_DC244, word_DDD46, word_DDD48, word_DDD4A
-extern word_DF618, hmscore, hmtmgoalie, awscore, awtmgoalie, startm
+extern hmscore, hmtmgoalie, awscore, awtmgoalie, startm
 global loc_3602E, loc_36047, loc_3607B, loc_36089, loc_360DA, loc_360FD, loc_36149, loc_3614E
 global loc_361F9, loc_36265, loc_362E4, loc_362FD, loc_3635F, loc_36392, loc_363C8, loc_363E1
 global loc_3641F, loc_3642B, loc_36437, loc_36453, loc_36477, loc_36509, loc_36569, loc_36583
@@ -381,12 +381,12 @@ mov dx, word [dword eax+hmscore]	; 3649C
 mov ecx, dword [dword esp+03FCh]	; 364A3
 add word [byte ecx+06h], dx	; 364AA
 mov edx, dword [dword esp+03F0h]	; 364AE
-mov dx, word [dword edx+word_DF618]	; 364B5
+mov dx, word [dword edx+hmtmstruct+4]	; 364B5
 add word [byte ecx+0Ah], dx	; 364BC
 mov edx, dword [dword esp+03F0h]	; 364C0
 mov dx, word [dword edx+hmtmstruct+2]	; 364C7
 add word [byte ecx+08h], dx	; 364CE
-mov dx, word [dword eax+word_DF618]	; 364D2
+mov dx, word [dword eax+hmtmstruct+4]	; 364D2
 add word [byte ecx+0Eh], dx	; 364D9
 mov dx, word [dword eax+hmtmstruct+2]	; 364DD
 add word [byte ecx+0Ch], dx	; 364E4

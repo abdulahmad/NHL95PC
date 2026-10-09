@@ -28,14 +28,14 @@ global str_Can, str_Noar, str_Up, str_Down, str_Arro, str_Gtno, str_Gtex, str_Gt
 global str_Gtpo, str_Buf, str_Nhl, str_GsummaryDb3, str_Gsummary, str_Sav, str_Db2, str_PoGameSav
 global str_LpGameSav, str_Open2, str_Delete, str_Done, str_Exhibition, str_Playoffs, str_League, str_Lp
 global str_Po, str_Nhl2, str_Dialogbx, str_Dbox, str_Pointer5, str_Po2, str_ScheduleDb2, str_Lp2
-global str_GameSet3, str_fedd2, str_GameSav3, asc_C1574, asc_C157D, asc_C1584, asc_C158B, asc_C1590
-global asc_C1595, asc_C159E, asc_C15A3, asc_C15A8, asc_C15AD, asc_C15B2, asc_C15B7, asc_C15BC
-global asc_C15C5, asc_C15CA, asc_C15CF, asc_C15D4, asc_C15D9, asc_C15E2, asc_C15E7, asc_C15EC
-global asc_C15F5, asc_C15FA, asc_C1602, asc_C1608, asc_C1611, asc_C1615, asc_C1619, asc_C1620
-global asc_C162B, asc_C1631, asc_C1639, asc_C1641, asc_C1646, asc_C164E, asc_C1653, asc_C1657
-global asc_C165B, asc_C165F, asc_C1663, asc_C1667, asc_C166B, asc_C1675, asc_C167E, asc_C1687
-global asc_C1693, asc_C16A1, asc_C16AC, asc_C16B3, asc_C16B8, asc_C16BD, asc_C16C6, asc_C16CB
-global asc_C16D0, asc_C16DA, asc_C16E0, asc_C16E8, asc_C16F5, asc_C16FA, asc_C1703, asc_C1709
+global str_GameSet3, str_fedd2, str_GameSav3, str_Indus0302, str_Ctlogo2, str_Ctbkgd2, str_Bkgd5, str_Pal13
+global str_Cttitle2, str_Summ2, str_OtShape, str_Per1, str_Per2, str_Per3, str_Top2, str_Cttitle12
+global str_Def2, str_Fowa2, str_Scra2, str_Tlu2, str_Cttitle3, str_Ots, str_Colm, str_Gsummary2
+global str_Iff6, str_Gamesum, str_Mtsum, str_Adsum, str_1st2, str_2nd2, str_3rd2, str_FinalOT
+global str_Final, str_Period, str_Injured2, str_EVNT, str_PRDS, str_D5, str_St, str_Nd
+global str_Rd, str_Th, str_SH, str_PP, str_02d02d, str_S2, str_SS4, str_DMinS
+global str_ShotsOnGoal, str_SDD, str_Ctbkgd3, str_Pal14, str_Bkgd6, str_Cttitle32, str_Colm2, str_Gsta
+global str_Ctlogo3, str_DD, str_D02d2, str_DDD, str_Iff7, str_Leaguetm, str_Mtsum2, str_Adsum2
 global asc_C1710, asc_C1718, asc_C1724, asc_C172C, asc_C1731, asc_C173A, asc_C1743, asc_C174C
 global asc_C1751, asc_C1756, asc_C175F, asc_C1768, asc_C176D, asc_C177B, asc_C1783, asc_C1788
 global asc_C1794, asc_C1799, asc_C179E, asc_C17B9, asc_C17BF, asc_C17D8, asc_C17E0, asc_C17E8
@@ -68,8 +68,8 @@ global unk_C1200, unk_C1203, unk_C1206, unk_C120B, str_NO, str_GP6, str_C2, unk_
 global unk_C1276, str_GP7, str_W4, str_L6, str_T4, str_D3, str_TwoSpaces, str_Space2
 global str_D4, str_NHL, str_PO2, str_LP, str_fek1, str_fek2, str_fek3, str_fek4
 global str_fek5, str_fek6, str_fek7, str_fek8, str_feh7, str_feA1, str_fel1, str_feA2
-global str_fel2, str_fec6, str_fed2, str_fed3, str_fed4, unk_C160E, unk_C161D, unk_C164B
-global unk_C1679, unk_C167C, unk_C16D7, unk_C1720, unk_C1722, unk_C1772, unk_C1775, unk_C1778
+global str_fel2, str_fec6, str_fed2, str_fed3, str_fed4, str_D6, str_OT, str_S3
+global str_CommaSp, str_RParen2, str_D7, unk_C1720, unk_C1722, unk_C1772, unk_C1775, unk_C1778
 global unk_C17F0, unk_C1815, unk_C1818, unk_C1823, unk_C1825, unk_C1900, unk_C1914, unk_C1916
 global unk_C192D, unk_C1930, unk_C1934, unk_C1936, unk_C1946, unk_C1A15
 str_teams:
@@ -872,139 +872,139 @@ str_fed4:
 db 064h,034h,00h
 str_GameSav3:
 db 067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h,00h,00h
-asc_C1574:
+str_Indus0302:
 db 069h,06Eh,064h,075h,073h,030h,033h,030h,00h
-asc_C157D:
+str_Ctlogo2:
 db 063h,074h,06Ch,06Fh,067h,06Fh,00h
-asc_C1584:
+str_Ctbkgd2:
 db 063h,074h,062h,06Bh,067h,064h,00h
-asc_C158B:
+str_Bkgd5:
 db 062h,06Bh,067h,064h,00h
-asc_C1590:
+str_Pal13:
 db 021h,070h,061h,06Ch,00h
-asc_C1595:
+str_Cttitle2:
 db 063h,074h,074h,069h,074h,06Ch,065h,032h,00h
-asc_C159E:
+str_Summ2:
 db 073h,075h,06Dh,06Dh,00h
-asc_C15A3:
+str_OtShape:
 db 06Fh,074h,020h,020h,00h
-asc_C15A8:
+str_Per1:
 db 070h,065h,072h,031h,00h
-asc_C15AD:
+str_Per2:
 db 070h,065h,072h,032h,00h
-asc_C15B2:
+str_Per3:
 db 070h,065h,072h,033h,00h
-asc_C15B7:
+str_Top2:
 db 074h,06Fh,070h,020h,00h
-asc_C15BC:
+str_Cttitle12:
 db 063h,074h,074h,069h,074h,06Ch,065h,031h,00h
-asc_C15C5:
+str_Def2:
 db 064h,065h,066h,020h,00h
-asc_C15CA:
+str_Fowa2:
 db 066h,06Fh,077h,061h,00h
-asc_C15CF:
+str_Scra2:
 db 073h,063h,072h,061h,00h
-asc_C15D4:
+str_Tlu2:
 db 074h,06Ch,075h,020h,00h
-asc_C15D9:
+str_Cttitle3:
 db 063h,074h,074h,069h,074h,06Ch,065h,033h,00h
-asc_C15E2:
+str_Ots:
 db 06Fh,074h,073h,020h,00h
-asc_C15E7:
+str_Colm:
 db 063h,06Fh,06Ch,06Dh,00h
-asc_C15EC:
+str_Gsummary2:
 db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,00h
-asc_C15F5:
+str_Iff6:
 db 02Eh,069h,066h,066h,00h
-asc_C15FA:
+str_Gamesum:
 db 067h,061h,06Dh,065h,073h,075h,06Dh,00h
-asc_C1602:
+str_Mtsum:
 db 06Dh,074h,073h,075h,06Dh,00h
-asc_C1608:
+str_Adsum:
 db 061h,064h,073h,075h,06Dh,00h
-unk_C160E:
+str_D6:
 db 025h,064h,00h
-asc_C1611:
+str_1st2:
 db 031h,073h,074h,00h
-asc_C1615:
+str_2nd2:
 db 032h,06Eh,064h,00h
-asc_C1619:
+str_3rd2:
 db 033h,072h,064h,00h
-unk_C161D:
+str_OT:
 db 04Fh,054h,00h
-asc_C1620:
+str_FinalOT:
 db 046h,069h,06Eh,061h,06Ch,020h,028h,04Fh,054h,029h,00h
-asc_C162B:
+str_Final:
 db 046h,069h,06Eh,061h,06Ch,00h
-asc_C1631:
+str_Period:
 db 020h,070h,065h,072h,069h,06Fh,064h,00h
-asc_C1639:
+str_Injured2:
 db 049h,06Eh,06Ah,075h,072h,065h,064h,00h
-asc_C1641:
+str_EVNT:
 db 045h,056h,04Eh,054h,00h
-asc_C1646:
+str_PRDS:
 db 050h,052h,044h,053h,00h
-unk_C164B:
+str_S3:
 db 025h,073h,00h
-asc_C164E:
+str_D5:
 db 020h,028h,025h,064h,00h
-asc_C1653:
+str_St:
 db 073h,074h,029h,00h
-asc_C1657:
+str_Nd:
 db 06Eh,064h,029h,00h
-asc_C165B:
+str_Rd:
 db 072h,064h,029h,00h
-asc_C165F:
+str_Th:
 db 074h,068h,029h,00h
-asc_C1663:
+str_SH:
 db 020h,053h,048h,00h
-asc_C1667:
+str_PP:
 db 020h,050h,050h,00h
-asc_C166B:
+str_02d02d:
 db 025h,030h,032h,064h,03Ah,025h,030h,032h,064h,00h
-asc_C1675:
+str_S2:
 db 028h,025h,073h,00h
-unk_C1679:
+str_CommaSp:
 db 02Ch,020h,00h
-unk_C167C:
+str_RParen2:
 db 029h,00h
-asc_C167E:
+str_SS4:
 db 025h,073h,020h,020h,020h,020h,025h,073h,00h
-asc_C1687:
+str_DMinS:
 db 025h,064h,020h,06Dh,069h,06Eh,020h,03Ah,020h,025h,073h,00h
-asc_C1693:
+str_ShotsOnGoal:
 db 053h,068h,06Fh,074h,073h,020h,06Fh,06Eh,020h,067h,06Fh,061h,06Ch,00h
-asc_C16A1:
+str_SDD:
 db 025h,073h,020h,025h,064h,02Fh,025h,064h,00h,00h,00h
-asc_C16AC:
+str_Ctbkgd3:
 db 063h,074h,062h,06Bh,067h,064h,00h
-asc_C16B3:
+str_Pal14:
 db 021h,070h,061h,06Ch,00h
-asc_C16B8:
+str_Bkgd6:
 db 062h,06Bh,067h,064h,00h
-asc_C16BD:
+str_Cttitle32:
 db 063h,074h,074h,069h,074h,06Ch,065h,033h,00h
-asc_C16C6:
+str_Colm2:
 db 063h,06Fh,06Ch,06Dh,00h
-asc_C16CB:
+str_Gsta:
 db 067h,073h,074h,061h,00h
-asc_C16D0:
+str_Ctlogo3:
 db 063h,074h,06Ch,06Fh,067h,06Fh,00h
-unk_C16D7:
+str_D7:
 db 025h,064h,00h
-asc_C16DA:
+str_DD:
 db 025h,064h,02Fh,025h,064h,00h
-asc_C16E0:
+str_D02d2:
 db 025h,064h,03Ah,025h,030h,032h,064h,00h
-asc_C16E8:
+str_DDD:
 db 025h,064h,02Fh,025h,064h,020h,028h,025h,064h,025h,025h,029h,00h
-asc_C16F5:
+str_Iff7:
 db 02Eh,069h,066h,066h,00h
-asc_C16FA:
+str_Leaguetm:
 db 06Ch,065h,061h,067h,075h,065h,074h,06Dh,00h
-asc_C1703:
+str_Mtsum2:
 db 06Dh,074h,073h,075h,06Dh,00h
-asc_C1709:
+str_Adsum2:
 db 061h,064h,073h,075h,06Dh,00h,00h
 asc_C1710:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h

@@ -20,7 +20,7 @@ extern photoptrsf, dword_E0220, dword_E0230, PenBuf_m5
 extern dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9BAC, dword_E9BB0
 extern dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, fputchar, puckvx, gmode, MenuCallbackTrue2
 extern lseek_, ltx, off_C5439, puckx, pucky, puckvy, puckz, puckc
-extern off_CD304, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
+extern penaltynames, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
 extern strcpy_, strlen_, DrawFrameSprite, FileOpenRW, FileClose, FileWriteAt, PanelAddPenalty, PanelRemovePenalty
 extern MenuCallbackTrue, DrawSprite, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
 extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, FatalError, unk_C1B49, unk_C1C58, unk_C1C5B
@@ -1166,7 +1166,7 @@ mov eax, byte_E0250	; 6221C
 call sub_61D48	; 62221
 xor eax, eax	; 62226
 mov al, byte [byte_E9ACB]	; 62228
-mov edx, dword [nosplit eax*4+off_CD304]	; 6222D
+mov edx, dword [nosplit eax*4+penaltynames]	; 6222D
 mov eax, byte_E028C	; 62234
 call strcpy_	; 62239
 movzx edi, byte [byte_E9ACC]	; 6223E

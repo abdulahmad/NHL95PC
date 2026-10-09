@@ -4,9 +4,9 @@ bits 32
 section s_85924 progbits alloc exec nowrite align=1
 extern __CHK, asc_C38F8, asc_C3904, asc_C3923, asc_C3932, asc_C3947, asc_C3966, asc_C3972
 extern asc_C3976, asc_C397E, asc_C3986, asc_C398F, asc_C3994, asc_C399B, asc_C39A0, str_extDB
-extern asc_D281F, curleague, byte_DD774, byte_DD788, gameopts
+extern asc_D281F, curleague, othergames, otherscores, gameopts
 extern byte_ED92F, demomode, postate, lgstate, gamemode, dword_D2C6B, dword_D8B74, pointerspr
-extern dword_DC888, dword_DC88C, dword_DD730, dword_EA0DC, jctime, off_D27EF, off_D27F7, off_D2855
+extern dword_DC888, dword_DC88C, otherperiod, dword_EA0DC, jctime, off_D27EF, off_D27F7, off_D2855
 extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, CopyFile, DiskSpaceShort
 extern sub_30A0C, sub_30F12, MessageBox, sub_3170D, SaveModeState, LoadModeState, WriteModeState, SaveLeagueGameRef
 extern SaveGameState, sub_6B391, sub_6B3D7, sub_80075, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
@@ -168,7 +168,7 @@ call jctime	; 85B1D
 add esp, byte 4	; 85B22
 mov ecx, 0Ch	; 85B25
 mov ebx, 0FFFFFFFFh	; 85B2A
-mov edx, byte_DD774	; 85B2F
+mov edx, othergames	; 85B2F
 mov eax, dword [dword esp+098h]	; 85B34
 call FileWriteAt	; 85B3B
 test eax, eax	; 85B40
@@ -179,7 +179,7 @@ add esp, byte 4	; 85B4E
 loc_85B51:
 mov ecx, 0Ch	; 85B51
 mov ebx, 0FFFFFFFFh	; 85B56
-mov edx, byte_DD788	; 85B5B
+mov edx, otherscores	; 85B5B
 mov eax, dword [dword esp+098h]	; 85B60
 call FileWriteAt	; 85B67
 test eax, eax	; 85B6C
@@ -190,7 +190,7 @@ add esp, byte 4	; 85B7A
 loc_85B7D:
 mov ecx, 18h	; 85B7D
 mov ebx, 0FFFFFFFFh	; 85B82
-mov edx, dword_DD730	; 85B87
+mov edx, otherperiod	; 85B87
 mov eax, dword [dword esp+098h]	; 85B8C
 call FileWriteAt	; 85B93
 test eax, eax	; 85B98

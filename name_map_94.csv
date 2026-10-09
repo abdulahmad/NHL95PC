@@ -270,11 +270,11 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0002CE29,sub_2CE29,DeleteSavedGame,PC-new,,,,high,"MessageBox ""Exhibition Game Called: / Play-Off Series Called: / League Called:"" confirm, then unlink / DeleteDir and rescan",file_dialogs,manual-trace
 0002D099,sub_2D099,SelectSavedFile,PC-new,,,,medium,"sets up the chosen save: .nhl (LoadModeState, ""LA  at MTL"" label), .po (schedule.db, seriesgameno, PlayoffModeLoop menu actions), .lp (league menu actions); ReadGameSettings for each",file_dialogs,manual-trace
 0002D260,sub_2D260,ReadGameSettings,PC-new,,,,medium,"reads 75h bytes of game.set (default or from the save dir), FatalError d2 / dd2 / d3 / d4; returns whether game.sav exists (sub_B3CC8)",file_dialogs,manual-trace
-0002D35A,sub_2D35A,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),game_setup,unmatched
-0002F2B1,sub_2F2B1,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),game_setup,unmatched
-0002F3D7,sub_2F3D7,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),game_setup,unmatched
-0002F580,sub_2F580,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),game_setup,unmatched
-0002F5EE,sub_2F5EE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),game_setup,unmatched
+0002D35A,sub_2D35A,GameSummaryScreen,PC-new,,,,high,"(mode, ...): gsummary / gamesum screen with crests, period-by-period goals / shots, scoring summary ("" PP"" / "" SH"", ""%02d:%02d"") and penalty summary (""No Scoring."" / ""No Penalties.""); called by DeskScoringSummary, DeskPenaltySummary and the intermission desk",game_setup,manual-trace
+0002F2B1,sub_2F2B1,PickOtherGames,PC-new,,,,medium,"(home, visitor): picks 6 random pairs of other teams (rand % 26, no repeats, not the two playing, teamstartlag <= home's) and clears their scores and periods",game_setup,manual-trace
+0002F3D7,sub_2F3D7,UpdateOtherScores,PC-new,,,,medium,"(period): advances the 6 other games to period + teamstartlag difference, adding rand % 3 goals per period; ties go to OT (70% chance each side scores) and finish as 5 (final OT) or 6 (final)",game_setup,manual-trace
+0002F580,sub_2F580,PrintClampedText,PC-new,,,,medium,PrintShadowText with x clamped into the left (8..F0h) or right (..280h) half by the text width,game_setup,manual-trace
+0002F5EE,sub_2F5EE,GameStatsScreen,PC-new,,,,high,"DeskGameStats: gsta / leaguetm screen listing gamestatlabels with both teams' values (score, shots, one timers, PP goals/chances, PP time and shots, penalties/min, faceoffs, body checks, attack zone time, passing %)",game_setup,manual-trace
 0002FDD1,sub_2FDD1,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),misc_dialogs,unmatched
 0002FE49,sub_2FE49,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),misc_dialogs,unmatched
 0002FED2,sub_2FED2,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),misc_dialogs,unmatched

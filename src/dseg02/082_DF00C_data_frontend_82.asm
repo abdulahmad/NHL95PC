@@ -2,9 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_DF00C nobits alloc noexec write align=1
-global dword_DF00C, dword_DF010, hmtmstruct, dword_DF61A
-global dword_DF626, dword_DF62A, dword_DF636
-global unk_DF014, unk_DF314, word_DF618, hmscore
+global dword_DF00C, dword_DF010, hmtmstruct
+global unk_DF014, unk_DF314, hmscore
 dword_DF00C:
 resb 4
 dword_DF010:
@@ -17,9 +16,7 @@ resb 2
 hmtmstruct:
 resb 2
 resb 2
-word_DF618:
 resb 2
-dword_DF61A:
 resb 2
 resb 2
 resb 2
@@ -27,11 +24,8 @@ resb 2
 resb 2
 hmscore:
 resb 2
-dword_DF626:
 resb 4
-dword_DF62A:
 resb 12
-dword_DF636:
 resb 2
 resb 2
 resb 2

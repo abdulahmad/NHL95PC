@@ -4,16 +4,16 @@ bits 32
 section s_18D7F progbits alloc exec nowrite align=1
 extern StartHL2, __CHK, str_PleaseEnterOutputFile, str_Eadesk1d, str_Desk, str_Pal5, str_Pointer2, str_Iff3
 extern str_Pause, str_Menubuff3, str_ReturningToSportsCentral, str_ReturningOutOfThe, str_ReturningToThePlayoff, str_ExitingTheGame, str_DoYouWishToReturn, str_DoYouWishToExit
-extern hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, byte_CCCA0, musicon, byte_DD774
-extern byte_DD775, byte_DD788, byte_DD789, byte_ED830, byte_ED9E8, joysampling, escrequest, gameresult
+extern hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, byte_CCCA0, musicon, othergames
+extern othergamesb, otherscores, otherscoresb, byte_ED830, byte_ED9E8, joysampling, escrequest, gameresult
 extern gamemode, gameopts, ctl1team, ctl2team, teamconf, dword_C5840, hlplayedmask, dword_C66A4
 extern dword_C66AC, dword_C66D0, dword_C66D4, boxfillcolor, boxlitecolor, boxshadecolor, dword_C71D8, dword_C71DC
 extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, bailout_vec, musicslot
-extern dword_D8C84, dword_DC230, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
+extern dword_D8C84, dword_DC230, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, otherperiod
 extern dword_EA0DC, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
 extern off_CEF23, off_D3078, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
-extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, sub_2D35A, sub_2F2B1
-extern sub_2F3D7, sub_2F5EE, sub_2FEDF, sub_30A0C, MessageBox, sub_3377C, sub_33E6A, sub_479E9
+extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, GameSummaryScreen, PickOtherGames
+extern UpdateOtherScores, GameStatsScreen, sub_2FEDF, sub_30A0C, MessageBox, sub_3377C, sub_33E6A, sub_479E9
 extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB
 extern sub_6BA4D, sub_76429, sub_767D0, sub_7E0FA, sub_805C4, sub_836E4, sub_837A8, sub_846F0
@@ -203,7 +203,7 @@ xor eax, eax	; 18FA0
 .1:
 mov edx, eax	; 18FA2
 shl edx, 2	; 18FA4
-mov ebx, dword [dword edx+dword_DD730]	; 18FA7
+mov ebx, dword [dword edx+otherperiod]	; 18FA7
 cmp ebx, byte 5	; 18FAD
 jl short .2	; 18FB0
 cmp ebx, dword [dword edx+dword_DC868]	; 18FB2
@@ -236,12 +236,12 @@ or edx, eax	; 19005
 mov dword [hlplayedmask], edx	; 19007
 mov edx, dword [byte esp+08h]	; 1900D
 xor eax, eax	; 19011
-mov al, byte [nosplit edx*2+byte_DD788]	; 19013
+mov al, byte [nosplit edx*2+otherscores]	; 19013
 mov dword [esp], eax	; 1901A
 xor eax, eax	; 1901D
-mov al, byte [nosplit edx*2+byte_DD789]	; 1901F
+mov al, byte [nosplit edx*2+otherscoresb]	; 1901F
 mov dword [byte esp+04h], eax	; 19026
-mov ecx, dword [nosplit edx*4+dword_DD730]	; 1902A
+mov ecx, dword [nosplit edx*4+otherperiod]	; 1902A
 cmp ecx, byte 5	; 19031
 jl short .4	; 19034
 mov ecx, 3	; 19036
@@ -253,28 +253,28 @@ push ecx	; 19045
 mov esi, dword [byte esp+0Ch]	; 19046
 add esi, esi	; 1904A
 xor edx, edx	; 1904C
-mov dl, byte [dword esi+byte_DD775]	; 1904E
+mov dl, byte [dword esi+othergamesb]	; 1904E
 xor eax, eax	; 19054
-mov al, byte [dword esi+byte_DD774]	; 19056
+mov al, byte [dword esi+othergames]	; 19056
 lea ecx, [byte esp+08h]	; 1905C
 lea ebx, [byte esp+04h]	; 19060
 call StartHL2	; 19064
 mov ecx, eax	; 19069
 mov edx, dword [byte esp+08h]	; 1906B
 shl edx, 2	; 1906F
-mov edi, dword [dword edx+dword_DD730]	; 19072
+mov edi, dword [dword edx+otherperiod]	; 19072
 cmp edi, byte 4	; 19078
 jg short .5	; 1907B
 mov al, byte [esp]	; 1907D
-mov byte [dword esi+byte_DD788], al	; 19080
+mov byte [dword esi+otherscores], al	; 19080
 mov al, byte [byte esp+04h]	; 19086
-mov byte [dword esi+byte_DD789], al	; 1908A
+mov byte [dword esi+otherscoresb], al	; 1908A
 jne short .5	; 19090
-mov dword [dword edx+dword_DD730], 5	; 19092
+mov dword [dword edx+otherperiod], 5	; 19092
 .5:
 xor eax, eax	; 1909C
 .6:
-mov ebx, dword [nosplit eax*4+dword_DD730]	; 1909E
+mov ebx, dword [nosplit eax*4+otherperiod]	; 1909E
 mov dword [nosplit eax*4+dword_DC868], ebx	; 190A5
 inc eax	; 190AC
 cmp eax, byte 6	; 190AD
@@ -308,7 +308,7 @@ mov edx, dword [dword_D8C84]	; 190F1
 xor ecx, ecx	; 190F7
 mov ebx, edx	; 190F9
 mov eax, 1	; 190FB
-call sub_2D35A	; 19100
+call GameSummaryScreen	; 19100
 mov ecx, eax	; 19105
 call sub_6B47C	; 19107
 cmp dword [gamemode], byte 0	; 1910C
@@ -331,10 +331,10 @@ mov edx, dword [HomeTeam]	; 19160
 sar edx, 10h	; 19166
 mov eax, dword [cont2team]	; 19169
 sar eax, 10h	; 1916E
-call sub_2F2B1	; 19171
+call PickOtherGames	; 19171
 xor edx, edx	; 19176
 .1:
-mov ebx, dword [nosplit edx*4+dword_DD730]	; 19178
+mov ebx, dword [nosplit edx*4+otherperiod]	; 19178
 mov dword [nosplit edx*4+dword_DC868], ebx	; 1917F
 inc edx	; 19186
 cmp edx, byte 6	; 19187
@@ -343,7 +343,7 @@ jl short IntermissionDesk.1	; 1918A
 test cl, 4	; 1918C
 jne short .4	; 1918F
 mov eax, dword [dword_D8C84]	; 19191
-call sub_2F3D7	; 19196
+call UpdateOtherScores	; 19196
 call PlayRandomHighlight	; 1919B
 test eax, eax	; 191A0
 jl short .4	; 191A2
@@ -352,7 +352,7 @@ mov edx, dword [dword_D8C84]	; 191A9
 xor ecx, ecx	; 191AF
 xor ebx, ebx	; 191B1
 mov eax, 20h	; 191B3
-call sub_2D35A	; 191B8
+call GameSummaryScreen	; 191B8
 call sub_6B47C	; 191BD
 jmp short .4	; 191C2
 .3:
@@ -404,7 +404,7 @@ mov ebx, dword [dword_D8C84]	; 19276
 xor ecx, ecx	; 1927C
 mov edx, 1	; 1927E
 mov eax, edx	; 19283
-call sub_2D35A	; 19285
+call GameSummaryScreen	; 19285
 mov edx, eax	; 1928A
 call sub_6B47C	; 1928C
 cmp dword [gamemode], byte 0	; 19291
@@ -422,7 +422,7 @@ je short .2	; 192CD
 cmp cx, byte 1Bh	; 192CF
 je short .2	; 192D3
 mov eax, dword [dword_D8C84]	; 192D5
-call sub_2F3D7	; 192DA
+call UpdateOtherScores	; 192DA
 call PlayRandomHighlight	; 192DF
 mov edx, 1E0h	; 192E4
 mov eax, 280h	; 192E9
@@ -444,7 +444,7 @@ mov edx, dword [dword_D8C84]	; 1931D
 xor ecx, ecx	; 19323
 xor ebx, ebx	; 19325
 mov eax, 20h	; 19327
-call sub_2D35A	; 1932C
+call GameSummaryScreen	; 1932C
 call sub_6B47C	; 19331
 .2:
 mov eax, 2	; 19336
@@ -1896,7 +1896,7 @@ mov ebx, 10h	; 1A98E
 mov edx, unk_DF014	; 1A993
 mov eax, 1	; 1A998
 call sub_76429	; 1A99D
-call sub_2F5EE	; 1A9A2
+call GameStatsScreen	; 1A9A2
 jmp near DeskItem_ret2	; 1A9A7
 DeskPenaltySummary:	;IDA: code_1A9AC
 push dword 20h	; 1A9AC
@@ -1946,7 +1946,7 @@ mov ebx, dword [dword_D8C84]	; 1AA4C
 xor ecx, ecx	; 1AA52
 mov edx, 1	; 1AA54
 mov eax, 2	; 1AA59
-call sub_2D35A	; 1AA5E
+call GameSummaryScreen	; 1AA5E
 mov eax, 2	; 1AA63
 pop esi	; 1AA68
 pop edx	; 1AA69
@@ -1974,7 +1974,7 @@ xor ecx, ecx	; 1AAAD
 mov edx, 1	; 1AAAF
 mov eax, edx	; 1AAB4
 DeskSummary_common:
-call sub_2D35A	; 1AAB6
+call GameSummaryScreen	; 1AAB6
 DeskItem_ret2:
 mov eax, 2	; 1AABB
 pop edx	; 1AAC0

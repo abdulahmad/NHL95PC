@@ -4,8 +4,8 @@ bits 32
 section s_CD304 progbits alloc noexec write align=1
 extern PenaltyList, unk_C1B49, unk_C1B4A, unk_C1B53, unk_C1B5C, unk_C1B6A, unk_C1B72, unk_C1B7B
 extern unk_C1B88, unk_C1B90, unk_C1B9D, unk_C1BA6, unk_C1BAF, unk_C1BC1, unk_C1BD6
-global off_CD304
-off_CD304:
+global penaltynames
+penaltynames:
 dd PenaltyList
 dd unk_C1B49
 dd unk_C1B4A

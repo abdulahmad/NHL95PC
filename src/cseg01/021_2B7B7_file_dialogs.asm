@@ -8,14 +8,14 @@ extern str_GsummaryDb3, str_Gsummary, str_Sav, str_Db2, str_PoGameSav, str_LpGam
 extern str_Done, str_Exhibition, str_Playoffs, str_League, str_Lp, str_Po, str_Nhl2, str_Dialogbx
 extern str_Dbox, str_Pointer5, str_Po2, str_ScheduleDb2, str_Lp2, str_GameSet3, str_fedd2, str_GameSav3
 extern str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_LAAtMTL
-extern musicon, savefname, fdlgmask, byte_DD774, byte_DD788
+extern musicon, savefname, fdlgmask, othergames, otherscores
 extern byte_ED82F, byte_ED992, postate, lgstate, gameresult, fdlgshapes
 extern fdlgrects
 extern dword_CE4E3, dword_CE503, dword_CE527, dword_CE583, dword_CE5A3, dword_CE5C3
 extern seriesgameno, dword_D2C6B, pointerspr, exhfiles, exhfilenames
 extern pofiles, pofilenames, lgfiles
 extern lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open, fdlg_del, fdlg_up
-extern fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp, fdlg_noarrow, dword_DD730
+extern fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp, fdlg_noarrow, otherperiod
 extern dword_EA0DC, j_unlink_, jctime, off_C5439, off_C5441, off_C6F7C, off_C6F80, off_C6F84
 extern qsort_, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, MakePath, DeleteDir
 extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, CopyFile, SetupStatsSourceMenu, BuildSavedGameLabels
@@ -33,7 +33,7 @@ global DrawFileDlg_n2, DrawFileDlg_n1, DrawFileDlg_x
 global DrawFileDlgList_n6, DrawFileDlgList_n5
 global DrawFileDlgList_n4, DrawFileDlgList_n3, DrawFileDlgList_n2, DrawFileDlgList_n1
 global LoadFileDlgShapes, MenuOpenSaved, DrawFileDlgTabs, CmpFileNames, ScanSavedGames, PrintTextCopy, DrawFileDlg, FileDlgHitTest
-global DrawFileDlgList, RunFileDlg, DeleteSavedGame, SelectSavedFile, ReadGameSettings, savefileexts, unk_2D33E
+global DrawFileDlgList, RunFileDlg, DeleteSavedGame, SelectSavedFile, ReadGameSettings, savefileexts, gsuminitff
 savefileexts:
 dd str_NHL
 dd str_PO2
@@ -294,7 +294,7 @@ lea eax, [byte esp+02Ch]	; 2BB28
 call FileClose	; 2BB2C
 mov ecx, 0Ch	; 2BB31
 mov ebx, 0FFFFFFFFh	; 2BB36
-mov edx, byte_DD774	; 2BB3B
+mov edx, othergames	; 2BB3B
 mov eax, dword [byte esp+030h]	; 2BB40
 call FileReadAt	; 2BB44
 test eax, eax	; 2BB49
@@ -305,7 +305,7 @@ add esp, byte 4	; 2BB57
 .10:
 mov ecx, 0Ch	; 2BB5A
 mov ebx, 0FFFFFFFFh	; 2BB5F
-mov edx, byte_DD788	; 2BB64
+mov edx, otherscores	; 2BB64
 mov eax, dword [byte esp+030h]	; 2BB69
 call FileReadAt	; 2BB6D
 test eax, eax	; 2BB72
@@ -316,7 +316,7 @@ add esp, byte 4	; 2BB80
 .11:
 mov ecx, 18h	; 2BB83
 mov ebx, 0FFFFFFFFh	; 2BB88
-mov edx, dword_DD730	; 2BB8D
+mov edx, otherperiod	; 2BB8D
 mov eax, dword [byte esp+030h]	; 2BB92
 call FileReadAt	; 2BB96
 test eax, eax	; 2BB9B
@@ -2235,5 +2235,5 @@ pop edi	; 2D33A
 pop esi	; 2D33B
 pop ecx	; 2D33C
 ret	; 2D33D
-unk_2D33E:
+gsuminitff:
 db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh

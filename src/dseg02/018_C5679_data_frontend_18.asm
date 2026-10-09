@@ -30,7 +30,7 @@ global CreditsList, msg_NeedKbytes, msg_NeedKbytes2, str_ReturningToSportsCentra
 global str_DoYouWishToExit, str_9394Season, str_9394PlayOffs, str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle
 global str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, str_AttDb, str_fmt2d, str_fmt3d, str_fmt4d
 global str_fmt5d, str_fmtTenths, str_fmtPct, str_fmtPct0, str_fmtMinSec, str_fmtEmb, str_Bkgd2, str_EASNvfn
-global str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, asc_C70EC, asc_C70F8, asc_C7298, byte_C66B4, mi_9394Season
+global str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_NoScoring, str_NoPenalties, asc_C7298, byte_C66B4, mi_9394Season
 global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, treecolslots, treecol_Wr2
 global treecol_Er2, treecol_Er1
 global scoutcatidx, byte_C7218, dword_C56C4, dword_C56E4, hudclockmin, hudclocksec, hudclockhund, dword_C5710
@@ -51,7 +51,7 @@ global off_C6881, off_C6885, divisionnames, statslabels, statsbgnames, statsplay
 global skaterratingnames, off_C6A99, goalieratingnames, off_C6AD1, teamsortfns, westconfname, eastconfname, teamstattitles
 global teamcolhdrs, leadersortfns, leadertitles, off_C6C40, off_C6C44
 global off_C6C48, off_C6C4C, off_C6C50, off_C6D22, scoutcatnames, off_C6F7C, off_C6F80, off_C6F84
-global off_C719C, off_C7282, off_C74AB, unk_C56A1, unk_C588E, unk_C588F, unk_C58A3, unk_C58B2
+global gamestatlabels, off_C7282, off_C74AB, unk_C56A1, unk_C588E, unk_C588F, unk_C58A3, unk_C58B2
 global unk_C58CA, unk_C58EA, unk_C590D, unk_C592F, unk_C5969, unk_C5996, unk_C59B3, unk_C59D4
 global unk_C59F5, unk_C5A0D, unk_C5A2B, unk_C5A4E, unk_C5A6C, unk_C5A78, unk_C5AA5, unk_C5AC8
 global unk_C5AE8, unk_C5AF5, unk_C5B13, unk_C5B35, unk_C5B54, unk_C5B72, unk_C5B93, unk_C5BC0
@@ -72,8 +72,8 @@ global unk_C638C, unk_C6440, unk_C6467, unk_C6496, unk_C6499, unk_C64D1, unk_C64
 global unk_C652A, unk_C652E, unk_C654F, statsleague, unk_C665D, unk_C678E, unk_C67B1, photoremap
 global str_AwayLines, str_Play, str_Cancel, str_HomeLines, pregamebuttons, str_PenaltyKilling, str_PowerPlay
 global str_Shooting, str_Skating, str_Passing, str_Defense2, str_Checking, str_Goaltending, str_Overall, unk_C7088
-global delmsgbox, unk_C7108, unk_C710E, unk_C7114, unk_C711F, unk_C7129, unk_C7136, unk_C7142
-global unk_C714E, unk_C7156, unk_C7161, unk_C7174, unk_C7185, unk_C7221, unk_C7243, unk_C7265
+global delmsgbox, str_gsScore, str_gsShots, str_gsPowerPlay, str_gsPenalties, str_gsFaceoffsWon, str_gsBodyChecks, str_gsAttackZone
+global str_gsPassing, str_gsOneTimers, str_gsPPMinutes, str_gsPPShots, str_gsOffFaceoffs, unk_C7221, unk_C7243, unk_C7265
 global unk_C744C, unk_C7450, unk_C7453, unk_C746B, unk_C7483, unk_C749A, unk_C74A2, unk_C74B7
 global unk_C74EF, hudpenhome, word_C571E, word_C5720, word_C5722, hudpenaway, word_C575E, word_C5760
 global word_C5762, word_C6D24, treecolx, scrpitch
@@ -1350,50 +1350,50 @@ delmsgbox:
 dd unk_C7088
 db 00h,00h,00h,00h
 db 00h,00h,00h,00h,00h
-asc_C70EC:
+str_NoScoring:
 db 04Eh,06Fh,020h,053h,063h,06Fh,072h,069h,06Eh,067h,02Eh,00h
-asc_C70F8:
+str_NoPenalties:
 db 04Eh,06Fh,020h,050h,065h,06Eh,061h,06Ch,074h,069h,065h,073h,02Eh,00h,00h,00h
-unk_C7108:
+str_gsScore:
 db 053h,063h,06Fh,072h,065h,00h
-unk_C710E:
+str_gsShots:
 db 053h,068h,06Fh,074h,073h,00h
-unk_C7114:
+str_gsPowerPlay:
 db 050h,06Fh,077h,065h,072h,020h,070h,06Ch,061h,079h,00h
-unk_C711F:
+str_gsPenalties:
 db 050h,065h,06Eh,061h,06Ch,074h,069h,065h,073h,00h
-unk_C7129:
+str_gsFaceoffsWon:
 db 046h,061h,063h,065h,06Fh,066h,066h,073h,020h,077h,06Fh,06Eh,00h
-unk_C7136:
+str_gsBodyChecks:
 db 042h,06Fh,064h,079h,020h,063h,068h,065h,063h,06Bh,073h,00h
-unk_C7142:
+str_gsAttackZone:
 db 041h,074h,074h,061h,063h,06Bh,020h,07Ah,06Fh,06Eh,065h,00h
-unk_C714E:
+str_gsPassing:
 db 050h,061h,073h,073h,069h,06Eh,067h,00h
-unk_C7156:
+str_gsOneTimers:
 db 04Fh,06Eh,065h,020h,054h,069h,06Dh,065h,072h,073h,00h
-unk_C7161:
+str_gsPPMinutes:
 db 050h,06Fh,077h,065h,072h,020h,050h,06Ch,061h,079h,020h,04Dh,069h,06Eh,075h,074h
 db 065h,073h,00h
-unk_C7174:
+str_gsPPShots:
 db 050h,06Fh,077h,065h,072h,020h,050h,06Ch,061h,079h,020h,053h,068h,06Fh,074h,073h
 db 00h
-unk_C7185:
+str_gsOffFaceoffs:
 db 04Fh,066h,066h,065h,06Eh,073h,069h,076h,065h,020h,046h,061h,063h,065h,06Fh,066h
 db 066h,073h,020h,077h,06Fh,06Eh,00h
-off_C719C:
-dd unk_C7108
-dd unk_C710E
-dd unk_C7156
-dd unk_C7114
-dd unk_C7161
-dd unk_C7174
-dd unk_C711F
-dd unk_C7129
-dd unk_C7185
-dd unk_C7136
-dd unk_C7142
-dd unk_C714E
+gamestatlabels:
+dd str_gsScore
+dd str_gsShots
+dd str_gsOneTimers
+dd str_gsPowerPlay
+dd str_gsPPMinutes
+dd str_gsPPShots
+dd str_gsPenalties
+dd str_gsFaceoffsWon
+dd str_gsOffFaceoffs
+dd str_gsBodyChecks
+dd str_gsAttackZone
+dd str_gsPassing
 boxfillcolor:
 db 02Ah,00h,00h,00h
 boxlitecolor:
