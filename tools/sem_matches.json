@@ -1,0 +1,1776 @@
+{
+ "matches": {
+  "59D9A": {
+   "name": "SetSPA",
+   "src": "93G",
+   "conf": "high",
+   "method": "manual+fields",
+   "evidence": "identical semantics: SPA/SPAnum/SPAcnt at PC +38h/+3Ah/+3Ch",
+   "score": 0.0
+  },
+  "8C230": {
+   "name": "randomd0",
+   "src": "93G",
+   "conf": "high",
+   "method": "manual+constants",
+   "evidence": "LCG multiplier E62D/BB40 identical to 93G randomd0 (seed StanleyCupTimer)",
+   "score": 0.0
+  },
+  "8C8E8": {
+   "name": "vtoa",
+   "src": "93G",
+   "conf": "high",
+   "method": "manual+constants",
+   "evidence": "returns 8 for x|y==0, same octant logic; 94G vtoa byte table found at D2C75 (data_tables)",
+   "score": 0.0
+  },
+  "5C40F": {
+   "name": "updateplayers",
+   "src": "93G",
+   "conf": "medium",
+   "method": "manual+table",
+   "evidence": "dispatches asstab (C9161) via assnum(+1Ch)-indexed asslist; content of slots 0-$1C verified against 93G routines; 93G hockey93_02 updateplayers",
+   "score": 0.0
+  },
+  "4F990": {
+   "name": "rtss",
+   "src": "93G",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "asstab slot 0; field alignment n/a of 0 known-field accesses; content rank 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",
+   "score": 0.0
+  },
+  "49CDD": {
+   "name": "assdefo",
+   "src": "93G",
+   "conf": "high",
+   "method": "asstab+content",
+   "evidence": "asstab slot 1; field alignment 82% of 11 known-field accesses; content rank 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",
+   "score": 6.81
+  },
+  "49E3A": {
+   "name": "assdefd",
+   "src": "93G",
+   "conf": "high",
+   "method": "asstab+content",
+   "evidence": "asstab slot 2; field alignment 81% of 31 known-field accesses; content rank 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",
+   "score": 8.9
+  },
+  "4A1A6": {
+   "name": "asswingd",
+   "src": "93G",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "asstab slot 3; field alignment 80% of 10 known-field accesses; content rank 2/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",
+   "score": 5.73
+  },
+  "4A343": {
+   "name": "asswingo",
+   "src": "93G",
+   "conf": "high",
+   "method": "asstab+content",
+   "evidence": "asstab slot 4; field alignment 83% of 18 known-field accesses; content rank 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 1 extra",
+   "score": 8.23
+  },
+  "4A53A": {
+   "name": "asscenterd",
+   "src": "93G",
+   "conf": "high",
+   "method": "asstab+content",
+   "evidence": "asstab slot 5; field alignment 80% of 10 known-field accesses; content rank 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",
+   "score": 7.37
+  },
+  "4A65C": {
+   "name": "asscentero",
+   "src": "93G",
+   "conf": "high",
+   "method": "asstab+content",
+   "evidence": "asstab slot 6; field alignment 82% of 17 known-field accesses; content rank 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 1 extra",
+   "score": 8.24
+  },
+  "4A90F": {
+   "name": "assscore",
+   "src": "93G",
+   "conf": "high",
+   "method": "asstab+content",
+   "evidence": "asstab slot 7; field alignment 92% of 13 known-field accesses; content rank 1/34 vs other slot routines; 2 known Genesis callees present, 0 missing, 0 extra",
+   "score": 8.28
+  },
+  "4A832": {
+   "name": "assstanley",
+   "src": "93G",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "asstab slot 8; field alignment 70% of 10 known-field accesses; content rank 1/34 vs other slot routines; 2 known Genesis callees present, 0 missing, 0 extra",
+   "score": 6.6
+  },
+  "4AAC2": {
+   "name": "asseben",
+   "src": "93G",
+   "conf": "high",
+   "method": "asstab+content",
+   "evidence": "asstab slot 9; field alignment 88% of 16 known-field accesses; content rank 1/34 vs other slot routines; 1 known Genesis callees present, 0 missing, 0 extra",
+   "score": 9.02
+  },
+  "4B02D": {
+   "name": "assepen",
+   "src": "93G",
+   "conf": "high",
+   "method": "asstab+content",
+   "evidence": "asstab slot 10; field alignment 84% of 19 known-field accesses; content rank 1/34 vs other slot routines; 1 known Genesis callees present, 0 missing, 0 extra",
+   "score": 9.93
+  },
+  "4B12C": {
+   "name": "assbench",
+   "src": "93G",
+   "conf": "high",
+   "method": "asstab+content",
+   "evidence": "asstab slot 11; field alignment 85% of 41 known-field accesses; content rank 1/34 vs other slot routines; 1 known Genesis callees present, 0 missing, 0 extra",
+   "score": 9.61
+  },
+  "4ADAB": {
+   "name": "asspenalty",
+   "src": "93G",
+   "conf": "high",
+   "method": "asstab+content",
+   "evidence": "asstab slot 12; field alignment 97% of 30 known-field accesses; content rank 1/34 vs other slot routines; 1 known Genesis callees present, 0 missing, 0 extra",
+   "score": 10.52
+  },
+  "4AFFB": {
+   "name": "assdopen",
+   "src": "93G",
+   "conf": "low",
+   "method": "asstab+content",
+   "evidence": "asstab slot 13; field alignment 33% of 3 known-field accesses; content rank 3/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",
+   "score": 0.5
+  },
+  "4B774": {
+   "name": "assgoalie",
+   "src": "93G",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "asstab slot 14; field alignment 68% of 59 known-field accesses; content rank 1/34 vs other slot routines; 2 known Genesis callees present, 0 missing, 1 extra",
+   "score": 6.41
+  },
+  "4B5C2": {
+   "name": "assgoalietopuck",
+   "src": "93G",
+   "conf": "low",
+   "method": "asstab+content",
+   "evidence": "asstab slot 15; field alignment 44% of 9 known-field accesses; content rank 3/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",
+   "score": 4.43
+  },
+  "4C6F3": {
+   "name": "asspuckc",
+   "src": "93G",
+   "conf": "low",
+   "method": "asstab+content",
+   "evidence": "asstab slot 16; field alignment 41% of 22 known-field accesses; content rank 3/34 vs other slot routines; 0 known Genesis callees present, 1 missing, 1 extra",
+   "score": 4.61
+  },
+  "4CD4B": {
+   "name": "assnearest",
+   "src": "93G",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "asstab slot 17; field alignment 61% of 28 known-field accesses; content rank 1/34 vs other slot routines; 1 known Genesis callees present, 0 missing, 0 extra",
+   "score": 5.48
+  },
+  "4D3F8": {
+   "name": "assshoot",
+   "src": "93G",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "asstab slot 18; field alignment 100% of 3 known-field accesses; content rank 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 1 extra",
+   "score": 5.21
+  },
+  "50F3F": {
+   "name": "asspassrec",
+   "src": "93G",
+   "conf": "low",
+   "method": "asstab+content",
+   "evidence": "asstab slot 19; field alignment 56% of 9 known-field accesses; content rank 3/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",
+   "score": 4.47
+  },
+  "49460": {
+   "name": "ass_pc_slot20",
+   "src": "PC-new",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "slot $14 (93G assfight) body is NOT fight code: no Pencntdwn/getpde/aggress/fight anims; it sets temp5/temp2, picks a target from table CC9EA by team/position, skates until dist^2<900 then assexit - repurposed (3-stars skate-out)",
+   "score": 0
+  },
+  "495B8": {
+   "name": "ass_pc_slot21",
+   "src": "PC-new",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "slot $15 (93G assfwatch) body is NOT fight-watch code: it selects players and formats \"%s Star\"/\"EA Sports\" via sprintf - repurposed (3-stars of the game presentation)",
+   "score": 0
+  },
+  "4D4F0": {
+   "name": "assfaceoff",
+   "src": "93G",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "asstab slot 22; field alignment 100% of 1 known-field accesses; content rank 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",
+   "score": 11.54
+  },
+  "4D528": {
+   "name": "assfaceoffp1",
+   "src": "93G",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "asstab slot 23; field alignment 88% of 8 known-field accesses; content rank 4/34 vs other slot routines; 2 known Genesis callees present, 0 missing, 0 extra",
+   "score": 3.04
+  },
+  "4D8C7": {
+   "name": "pucknorm",
+   "src": "93G",
+   "conf": "high",
+   "method": "asstab+content",
+   "evidence": "slot $18; head identical to 93G pucknorm: bclr pfna; clr temp1(+26h); temp2(+28h)=$78; then calls the body sub_4D6B4",
+   "score": 0.32
+  },
+  "56ECF": {
+   "name": "puckshadow",
+   "src": "93G",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "asstab slot 25; field alignment 100% of 6 known-field accesses; content rank 2/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",
+   "score": 4.29
+  },
+  "4D8FD": {
+   "name": "pucknothing",
+   "src": "93G",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "asstab slot 26; field alignment n/a of 0 known-field accesses; content rank 2/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",
+   "score": 0.0
+  },
+  "516E1": {
+   "name": "puckfaceoff",
+   "src": "93G",
+   "conf": "low",
+   "method": "asstab+content",
+   "evidence": "asstab slot 27; field alignment 29% of 21 known-field accesses; content rank 2/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0 extra",
+   "score": 4.3
+  },
+  "51BDB": {
+   "name": "puckfaceoff2",
+   "src": "93G",
+   "conf": "medium",
+   "method": "asstab+content",
+   "evidence": "asstab slot 28; field alignment 69% of 29 known-field accesses; content rank 1/34 vs other slot routines; 3 known Genesis callees present, 0 missing, 0 extra",
+   "score": 5.04
+  },
+  "4AB87": {
+   "name": "ass_pc_slot29",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab+content",
+   "evidence": "slot 29: position suggested 94G assgoaliectrl but content check fails (rank >=13 of 36 slot routines; best overall matches are 93G assbench/asspenalty-style movement code) -> PC-own assignment (94 PC was ported from 93G, so slots >=$1D are PC additions)",
+   "score": 0
+  },
+  "4DFF7": {
+   "name": "ass_pc_slot30",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab+content",
+   "evidence": "slot 30: position suggested 94G puckshootout but content check fails (rank >=13 of 36 slot routines; best overall matches are 93G assbench/asspenalty-style movement code) -> PC-own assignment (94 PC was ported from 93G, so slots >=$1D are PC additions)",
+   "score": 0
+  },
+  "4E0BD": {
+   "name": "ass_pc_slot31",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab+content",
+   "evidence": "slot 31: position suggested 94G puckpenshot but content check fails (rank >=13 of 36 slot routines; best overall matches are 93G assbench/asspenalty-style movement code) -> PC-own assignment (94 PC was ported from 93G, so slots >=$1D are PC additions)",
+   "score": 0
+  },
+  "4EB04": {
+   "name": "ass_pc_slot32",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab+content",
+   "evidence": "slot 32: position suggested 94G assgoaliebreakwait but content check fails (rank >=13 of 36 slot routines; best overall matches are 93G assbench/asspenalty-style movement code) -> PC-own assignment (94 PC was ported from 93G, so slots >=$1D are PC additions)",
+   "score": 0
+  },
+  "4ED7C": {
+   "name": "ass_pc_slot33",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab+content",
+   "evidence": "slot 33: position suggested 94G chkpuckc but content check fails (rank >=13 of 36 slot routines; best overall matches are 93G assbench/asspenalty-style movement code) -> PC-own assignment (94 PC was ported from 93G, so slots >=$1D are PC additions)",
+   "score": 0
+  },
+  "4F5BF": {
+   "name": "ass_pc_slot34",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab+content",
+   "evidence": "slot 34: position suggested 94G assbreakaway but content check fails (rank >=13 of 36 slot routines; best overall matches are 93G assbench/asspenalty-style movement code) -> PC-own assignment (94 PC was ported from 93G, so slots >=$1D are PC additions)",
+   "score": 0
+  },
+  "4F7D0": {
+   "name": "ass_pc_slot35",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab+content",
+   "evidence": "slot 35: position suggested 94G assonetimer but content check fails (rank >=13 of 36 slot routines; best overall matches are 93G assbench/asspenalty-style movement code) -> PC-own assignment (94 PC was ported from 93G, so slots >=$1D are PC additions)",
+   "score": 0
+  },
+  "4E8EF": {
+   "name": "ass_pc_slot36",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab",
+   "evidence": "slot 36: beyond all Genesis asstabs; no content match",
+   "score": 0
+  },
+  "4842A": {
+   "name": "ass_pc_slot37",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab",
+   "evidence": "slot 37: beyond all Genesis asstabs; no content match",
+   "score": 0
+  },
+  "484DA": {
+   "name": "ass_pc_slot38",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab",
+   "evidence": "slot 38: beyond all Genesis asstabs; no content match",
+   "score": 0
+  },
+  "52720": {
+   "name": "ass_pc_slot39",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab",
+   "evidence": "slot 39: beyond all Genesis asstabs; no content match",
+   "score": 0
+  },
+  "5147D": {
+   "name": "ass_pc_slot40",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab",
+   "evidence": "slot 40: beyond all Genesis asstabs; no content match",
+   "score": 0
+  },
+  "526ED": {
+   "name": "ass_pc_slot41",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab",
+   "evidence": "slot 41: beyond all Genesis asstabs; no content match",
+   "score": 0
+  },
+  "499D8": {
+   "name": "ass_pc_slot42",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab",
+   "evidence": "slot 42: beyond all Genesis asstabs; no content match",
+   "score": 0
+  },
+  "49BC2": {
+   "name": "ass_pc_slot43",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab",
+   "evidence": "slot 43: beyond all Genesis asstabs; no content match",
+   "score": 0
+  },
+  "52FB0": {
+   "name": "ass_pc_slot44",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab",
+   "evidence": "slot 44: beyond all Genesis asstabs; no content match",
+   "score": 0
+  },
+  "52DB0": {
+   "name": "ass_pc_slot45",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab",
+   "evidence": "slot 45: beyond all Genesis asstabs; no content match",
+   "score": 0
+  },
+  "4FAE8": {
+   "name": "ass_pc_slot46",
+   "src": "PC-new",
+   "conf": "low",
+   "method": "asstab",
+   "evidence": "slot 46: beyond all Genesis asstabs; no content match",
+   "score": 0
+  },
+  "4D6B4": {
+   "name": "pucknorm_body",
+   "src": "93G",
+   "conf": "high",
+   "method": "manual+fields",
+   "evidence": "called from pucknorm head (slot $18) at the 93G .nna point; continues 93G pucknorm (puckcross timers, findpc, puckc)",
+   "score": 0
+  },
+  "4D509": {
+   "name": "assexit",
+   "src": "93G",
+   "conf": "high",
+   "method": "manual+fields",
+   "evidence": "instruction-for-instruction 93G assexit: assnum(+1Ch)=(assnum+1)&7; bset pfna in pflags(+44h)",
+   "score": 0
+  },
+  "4D907": {
+   "name": "puckunflip",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.74; fieldseq: 0.63; shared: fv:SPAnum f:SPAnum f:facedir f:SPAcnt fv:SPAcnt; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 13 / G 9; margin 2.81",
+   "score": 9.503384649680015
+  },
+  "4DA37": {
+   "name": "StartFaceoffLineChange",
+   "src": "94G",
+   "conf": "high",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.96; fieldseq: 1.00; shared: i:168 fb:pflags2 f:pflags2 i:258 f:SCnum fv:SCnum fv:temp3 f:temp3; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 20 / G 19; margin 7.68",
+   "score": 13.767753827474351
+  },
+  "4DA7B": {
+   "name": "Endfaceoff",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.25; fieldseq: 0.71; shared: i:800 c:randomd0 i:21 i:18 fb:pflags2 f:pflags2 f:Yvel fv:Yvel; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 143 / G 59; margin 3.20",
+   "score": 7.187504913081183
+  },
+  "4DFA4": {
+   "name": "puckflip",
+   "src": "93G",
+   "conf": "high",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.56; fieldseq: 0.90; shared: fv:facedir f:facedir f:SPAcnt fv:SPAcnt c:SetSPA; calls: 1 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 27 / G 6; margin 3.88",
+   "score": 11.059903014402316
+  },
+  "4FFAE": {
+   "name": "Acheck",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.34; fieldseq: 0.78; shared: fb:pflags f:pflags c:SetSPA f:Ypos fv:Ypos; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 19 / G 12; margin 2.23",
+   "score": 8.28060158590161
+  },
+  "532A2": {
+   "name": "Sweepcheck",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.30; fieldseq: 1.00; shared: c:SetSPA fb:pflags f:pflags; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 7 / G 3; margin 4.03",
+   "score": 9.81936890562454
+  },
+  "53537": {
+   "name": "check4check",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.44; fieldseq: 0.96; shared: i:1E c:randomd0 c:vtoa fv:facedir f:facedir f:Ypos fv:Ypos fb:pflags2; calls: 2 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 95 / G 41; margin 2.69",
+   "score": 10.472307832954636
+  },
+  "54990": {
+   "name": "CheckBump",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.42; fieldseq: 1.00; shared: f:Yvel fv:Yvel f:Xvel fv:Xvel i:28 g:823483 f:Ypos fv:Ypos; calls: 0 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 63 / G 34; margin 2.51",
+   "score": 10.095561334993391
+  },
+  "54DF4": {
+   "name": "dopass",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.40; fieldseq: 0.62; shared: i:BB8 fv:position f:position c:vtoa f:SCnum fv:SCnum fb:pflags f:pflags; calls: 3 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 233 / G 101; margin 2.07",
+   "score": 7.332464849241118
+  },
+  "56B79": {
+   "name": "holdcheck",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.43; fieldseq: 0.82; shared: fv:SPA f:SPA fv:Xvel f:Xvel fv:Yvel f:Yvel c:SetSPA fb:pflags; calls: 2 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 107 / G 51; margin 2.57",
+   "score": 9.152519960587576
+  },
+  "56F5A": {
+   "name": "puckglue",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.45; fieldseq: 0.55; shared: fv:temp5 f:temp5 i:8C i:C8 f:SPA fv:SPA f:SCnum fv:SCnum; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 81 / G 35; margin 1.62",
+   "score": 7.085467488517002
+  },
+  "579FF": {
+   "name": "Findhittype",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.60; fieldseq: 0.70; shared: i:F0 fv:facedir f:facedir; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 22 / G 9; margin 6.50",
+   "score": 9.191209972041513
+  },
+  "57A3E": {
+   "name": "deflect",
+   "src": "93G",
+   "conf": "high",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.56; fieldseq: 0.71; shared: i:1000 c:randomd0 f:Yvel fv:Yvel f:Xvel fv:Xvel; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 21 / G 11; margin 4.29",
+   "score": 9.404515513369013
+  },
+  "57A98": {
+   "name": "checkgoalp_CalcGoalShotDir",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.40; fieldseq: 0.78; shared: fb:pflags f:pflags i:2C i:12 fv:position f:position f:Xvel fv:Xvel; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 116 / G 56; margin 1.80",
+   "score": 8.653979841403647
+  },
+  "57C0B": {
+   "name": "doshot",
+   "src": "93G",
+   "conf": "low",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.30; fieldseq: 0.35; shared: i:1800 i:5249 i:B33 c:randomd0 f:SCnum fv:SCnum i:3C f:SPA; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 341 / G 120; margin 0.74",
+   "score": 4.602799192736747
+  },
+  "58B7F": {
+   "name": "wallcollb",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.29; fieldseq: 0.73; shared: i:FA0 f:Yvel fv:Yvel i:1D i:12 c:SetSPA f:Ypos fv:Ypos; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 96 / G 41; margin 2.17",
+   "score": 7.562522802034637
+  },
+  "58DC7": {
+   "name": "checkcx",
+   "src": "93G",
+   "conf": "low",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.44; fieldseq: 0.53; shared: i:8C f:SCnum fv:SCnum f:Yvel fv:Yvel fv:pflags f:Xvel fv:Xvel; calls: 0 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 281 / G 122; margin 1.16",
+   "score": 6.464754857750783
+  },
+  "5B826": {
+   "name": "reenergizeteam",
+   "src": "93G",
+   "conf": "low",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.76; fieldseq: 0.00; shared: i:FFFD i:1000; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 31 / G 8; margin 2.27",
+   "score": 4.550989905764033
+  },
+  "5CAEF": {
+   "name": "updateanim",
+   "src": "93G",
+   "conf": "low",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.43; fieldseq: 0.60; shared: fv:SPAnum f:SPAnum f:SPAcnt fv:SPAcnt f:SPA fv:SPA fb:pflags2 f:pflags2; calls: 0 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 161 / G 51; margin 0.87",
+   "score": 6.960022305585484
+  },
+  "5DF86": {
+   "name": "ResetBench",
+   "src": "93G",
+   "conf": "low",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.77; fieldseq: 0.00; shared: g:957114 i:FFFD i:7FF; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 47 / G 24; margin 2.51",
+   "score": 4.594621908676292
+  },
+  "5E0DD": {
+   "name": "forcepldata",
+   "src": "93G",
+   "conf": "high",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.92; fieldseq: 0.90; shared: fv:newpos f:newpos f:newpnum fv:newpnum fv:position f:position i:11; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 45 / G 24; margin 3.44",
+   "score": 12.723939256346291
+  },
+  "5E16D": {
+   "name": "doplayeracc",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.44; fieldseq: 0.67; shared: i:180 c:vtoa fv:facedir f:facedir fb:pflags f:pflags fv:Xvel f:Xvel; calls: 2 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 243 / G 114; margin 2.71",
+   "score": 8.022618251130048
+  },
+  "5F98A": {
+   "name": "noturn0",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it0)",
+   "evidence": "cosine: 0.38; fieldseq: 0.71; shared: fv:facedir f:facedir c:SetSPA fb:pflags fb:pflags2 f:pflags2 f:pflags f:SCnum; calls: 2 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 107 / G 41; margin 2.00",
+   "score": 7.905424997884055
+  },
+  "52BB6": {
+   "name": "check4bench",
+   "src": "93G",
+   "conf": "high",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 5 matched caller(s) asscentero, assdefo, assgoalie, assgoalietopuck; cosine: 0.66; fieldseq: 0.57; shared: f:newpos fv:newpos f:newpnum fv:newpnum fv:position f:position fb:pflags2 f:pflags2; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 146 / G 34",
+   "score": 8.454405432255868
+  },
+  "5E93B": {
+   "name": "skateto",
+   "src": "93G",
+   "conf": "high",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 5 matched caller(s) asscenterd, assdefd, assgoalie, assnearest; cosine: 0.43; fieldseq: 0.67; shared: c:vtoa fv:facedir f:facedir f:Xvel fv:Xvel fv:temp2 f:temp2 f:Yvel; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 138 / G 54",
+   "score": 7.960705837552271
+  },
+  "12011": {
+   "name": "assinsert",
+   "src": "93G",
+   "conf": "high",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 3 matched caller(s) assnearest, forcepldata, puckfaceoff2; cosine: 1.00; fieldseq: 1.00; shared: f:assnum fv:assnum; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 11 / G 2",
+   "score": 14.000000000000002
+  },
+  "62D80": {
+   "name": "AddPenalty2",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 2 matched caller(s) CheckBump, assgoalie; cosine: 0.10; fieldseq: 0.19; shared: f:pflags2 fb:pflags f:pflags i:14; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 77 / G 28",
+   "score": 2.1289933086796626
+  },
+  "4B6F4": {
+   "name": "ClampYPosition",
+   "src": "93G",
+   "conf": "low",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 1 matched caller(s) assgoalie; cosine: 0.06; fieldseq: 0.57; shared: f:SCnum fv:SCnum; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 32 / G 12",
+   "score": 4.9444925265980855
+  },
+  "55804": {
+   "name": "chk4pass",
+   "src": "93G",
+   "conf": "low",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 1 matched caller(s) asspuckc; cosine: 0.22; fieldseq: 0.39; shared: c:vtoa c:randomd0 f:SCnum fv:SCnum fv:position f:position f:pflags fb:pflags; calls: 2 known Genesis callees present, 1 missing, 0 extra; size: ninsn PC 142 / G 89",
+   "score": 3.6708945659160603
+  },
+  "53F8C": {
+   "name": "checkob",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 1 matched caller(s) asspuckc; cosine: 0.35; fieldseq: 0.74; shared: fv:position f:position f:Ypos fv:Ypos fb:pflags f:SCnum fv:SCnum f:pflags; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 121 / G 41",
+   "score": 8.080319987580609
+  },
+  "578FA": {
+   "name": "ShotMode",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 1 matched caller(s) assshoot; cosine: 0.49; fieldseq: 0.66; shared: f:SPAnum fv:SPAnum; calls: 0 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 93 / G 18",
+   "score": 7.852219607458741
+  },
+  "5786E": {
+   "name": "SetShotMode",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 1 matched caller(s) assshoot; cosine: 0.17; fieldseq: 0.71; shared: c:vtoa c:SetSPA fb:pflags f:pflags f:Ypos fv:Ypos fv:Xpos f:Xpos; calls: 2 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 37 / G 17",
+   "score": 6.706434224083536
+  },
+  "5E01A": {
+   "name": "resetplstuff",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 1 matched caller(s) puckfaceoff2; cosine: 0.45; fieldseq: 0.42; shared: fv:pflags2 i:C2 c:SetSPA f:pflags2 fv:position f:position f:pflags; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 35 / G 21",
+   "score": 6.05196086012884
+  },
+  "4D9FC": {
+   "name": "SetLCmode",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 1 matched caller(s) StartFaceoffLineChange; cosine: 0.34; fieldseq: 0.51; shared: fb:pflags2 f:pflags2; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 18 / G 8",
+   "score": 6.140868492964516
+  },
+  "551CF": {
+   "name": "passtoa0",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 1 matched caller(s) dopass; cosine: 0.32; fieldseq: 0.50; shared: fv:temp3 f:temp3 f:temp4 fv:temp4 i:78 i:18 i:13 f:SCnum; calls: 0 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 213 / G 91",
+   "score": 5.490949712493843
+  },
+  "5369F": {
+   "name": "checkagr",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 1 matched caller(s) holdcheck; cosine: 0.44; fieldseq: 0.42; shared: i:28 c:randomd0 fb:pflags f:pflags i:14 f:Ypos fv:Ypos; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 79 / G 20",
+   "score": 5.949892333453488
+  },
+  "5382C": {
+   "name": "checkcheck",
+   "src": "93G",
+   "conf": "low",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 1 matched caller(s) checkcx; cosine: 0.27; fieldseq: 0.32; shared: f:SPA fv:SPA g:823483 c:randomd0 c:vtoa fb:pflags f:pflags fv:Ypos; calls: 3 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 350 / G 79",
+   "score": 3.7993560103326485
+  },
+  "53E6A": {
+   "name": "checkint",
+   "src": "93G",
+   "conf": "low",
+   "method": "callgraph(it0)",
+   "evidence": "callee alignment under 1 matched caller(s) checkcx; cosine: 0.31; fieldseq: 0.33; shared: g:823483 f:SCnum fv:SCnum i:1E i:19 c:randomd0 fb:pflags2 f:pflags2; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 81 / G 34",
+   "score": 4.507672877214198
+  },
+  "504DA": {
+   "name": "doinput_ispc",
+   "src": "94G",
+   "conf": "medium",
+   "method": "callers(it0)",
+   "evidence": "caller propagation weight 2.70 via matched callees SetLCmode, SetShotMode, checkob, doplayeracc; cosine: 0.28; fieldseq: 0.41; shared: f:position fv:position fb:pflags2 f:pflags2; calls: 0 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 304 / G 53",
+   "score": 4.540916440481036
+  },
+  "69336": {
+   "name": "StartHL2",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callers(it0)",
+   "evidence": "caller propagation weight 2.17 via matched callees ResetBench, forcepldata, reenergizeteam, resetplstuff; cosine: 0.11; fieldseq: 0.41; shared: g:823483 i:3C c:randomd0 i:78 fv:Xpos f:Xpos i:18 f:Yvel; calls: 1 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 762 / G 192",
+   "score": 3.488649777500696
+  },
+  "57096": {
+   "name": "puckgoalie",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callers(it0)",
+   "evidence": "caller propagation weight 1.20 via matched callees puckflip, puckglue; cosine: 0.16; fieldseq: 0.42; shared: c:randomd0 f:SPA fv:SPA f:SCnum fv:SCnum c:vtoa g:823483 fv:temp4; calls: 2 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 273 / G 107",
+   "score": 4.341906531657802
+  },
+  "5C1C4": {
+   "name": "DoGameFrame",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callers(it0)",
+   "evidence": "caller propagation weight 1.00 via matched callees updateplayers; cosine: 1.00; fieldseq: 0.00; shared: c:updateplayers; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 5 / G 9",
+   "score": 4.5
+  },
+  "53CE5": {
+   "name": "checkgoalp",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callers(it0)",
+   "evidence": "caller propagation weight 1.00 via matched callees CheckBump; cosine: 0.11; fieldseq: 0.49; shared: f:SCnum fv:SCnum f:Ypos fv:Ypos fv:Xpos f:Xpos; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 106 / G 41",
+   "score": 4.6225612543952295
+  },
+  "58CE2": {
+   "name": "checkplcoll",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callers(it0)",
+   "evidence": "caller propagation weight 1.00 via matched callees checkcx; cosine: 0.20; fieldseq: 0.69; shared: f:SCnum fv:SCnum fb:pflags2 f:pflags2; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 64 / G 33",
+   "score": 6.760531000741528
+  },
+  "55493": {
+   "name": "doinput",
+   "src": "93G",
+   "conf": "low",
+   "method": "callers(it0)",
+   "evidence": "caller propagation weight 0.50 via matched callees checkob; cosine: 0.41; fieldseq: 0.55; shared: fv:position f:position f:SCnum fv:SCnum fb:pflags2 f:pflags2 fb:pflags f:pflags; calls: 0 known Genesis callees present, 0 missing, 3 extra; size: ninsn PC 239 / G 58",
+   "score": 5.655392633511361
+  },
+  "582C9": {
+   "name": "checkwallcoll",
+   "src": "93G",
+   "conf": "low",
+   "method": "callers(it0)",
+   "evidence": "caller propagation weight 0.50 via matched callees wallcollb; cosine: 0.20; fieldseq: 0.52; shared: fv:Wallsin f:Wallsin f:Wallcos fv:Wallcos; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 128 / G 70",
+   "score": 5.31607951855689
+  },
+  "56A54": {
+   "name": "Bcheck",
+   "src": "93G",
+   "conf": "low",
+   "method": "callers(it0)",
+   "evidence": "caller propagation weight 0.50 via matched callees checkagr; cosine: 0.34; fieldseq: 0.60; shared: fb:pflags c:vtoa f:pflags c:randomd0 f:Ypos fv:Ypos fb:pflags2 f:pflags2; calls: 2 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 81 / G 36",
+   "score": 6.807791119449361
+  },
+  "4F9EF": {
+   "name": "shotdiradj",
+   "src": "94G",
+   "conf": "low",
+   "method": "semantic(it1)",
+   "evidence": "cosine: 0.24; fieldseq: 0.71; shared: i:FFD4 fb:pflags f:pflags i:2C; calls: 0 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 64 / G 63; margin 1.16",
+   "score": 6.689351226150586
+  },
+  "50B55": {
+   "name": "assonetimer",
+   "src": "94G",
+   "conf": "low",
+   "method": "semantic(it1)",
+   "evidence": "cosine: 0.41; fieldseq: 0.52; shared: fv:SPAnum f:SPAnum f:SPAcnt fv:SPAcnt fb:pflags f:pflags i:18 i:16; calls: 1 known Genesis callees present, 0 missing, 5 extra; size: ninsn PC 203 / G 169; margin 2.09",
+   "score": 4.592612349930596
+  },
+  "562DB": {
+   "name": "FallDown",
+   "src": "93G",
+   "conf": "low",
+   "method": "semantic(it1)",
+   "evidence": "cosine: 0.27; fieldseq: 0.39; shared: fv:SPA f:SPA f:SCnum fv:SCnum f:facedir c:AddPenalty2 c:SetSPA fb:pflags; calls: 4 known Genesis callees present, 0 missing, 2 extra; size: ninsn PC 494 / G 108; margin 1.15",
+   "score": 3.8919775238075323
+  },
+  "580F5": {
+   "name": "checkcoll",
+   "src": "93G",
+   "conf": "low",
+   "method": "semantic(it1)",
+   "evidence": "cosine: 0.36; fieldseq: 0.45; shared: c:checkwallcoll g:823482 c:checkplcoll f:SCnum fv:SCnum fv:Wallcos f:Wallcos f:Ypos; calls: 2 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 117 / G 66; margin 1.80",
+   "score": 5.724866903992476
+  },
+  "584AA": {
+   "name": "checkgoal",
+   "src": "93G",
+   "conf": "low",
+   "method": "semantic(it1)",
+   "evidence": "cosine: 0.25; fieldseq: 0.54; shared: i:1000 i:FF00 c:puckflip fb:pflags f:pflags g:823482 c:randomd0 fv:Ypos; calls: 2 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 201 / G 107; margin 0.88",
+   "score": 5.472219968092203
+  },
+  "587D3": {
+   "name": "wallcoll",
+   "src": "93G",
+   "conf": "low",
+   "method": "semantic(it1)",
+   "evidence": "cosine: 0.37; fieldseq: 0.46; shared: i:FC7C f:Yvel fv:Yvel i:FC18 f:Xvel fv:Xvel i:FC00 c:puckflip; calls: 2 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 248 / G 77; margin 2.10",
+   "score": 5.912418150198043
+  },
+  "5AAAE": {
+   "name": "releasepl",
+   "src": "93G",
+   "conf": "low",
+   "method": "semantic(it1)",
+   "evidence": "cosine: 0.53; fieldseq: 0.82; shared: f:position fv:position fb:pflags2 f:pflags2; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 38 / G 23; margin 1.14",
+   "score": 9.731613777996479
+  },
+  "59884": {
+   "name": "sfx",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it1)",
+   "evidence": "callee alignment under 4 matched caller(s) checkgoal, puckgoalie, wallcoll, wallcollb; cosine: 0.00; fieldseq: 0.00; shared: ; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 53 / G 10",
+   "score": 0.0
+  },
+  "62CF9": {
+   "name": "AddPenalty",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it1)",
+   "evidence": "callee alignment under 4 matched caller(s) Bcheck, checkcheck, checkint, holdcheck; cosine: 0.21; fieldseq: 0.00; shared: g:823483; calls: 0 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 35 / G 10",
+   "score": 0.8651489000881453
+  },
+  "5A425": {
+   "name": "GetHot",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it1)",
+   "evidence": "callee alignment under 2 matched caller(s) assnearest, checkcoll; cosine: 0.00; fieldseq: 0.00; shared: ; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 40 / G 26",
+   "score": 0.0
+  },
+  "B3D94": {
+   "name": "sroot",
+   "src": "93G",
+   "conf": "low",
+   "method": "callgraph(it1)",
+   "evidence": "callee alignment under 2 matched caller(s) checkgoalp, doshot; cosine: 0.00; fieldseq: 0.00; shared: ; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 41 / G 46; note: library-zone routine: role correspondence only (different implementation)",
+   "score": 0.0
+  },
+  "5B298": {
+   "name": "Setplass",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it1)",
+   "evidence": "callee alignment under 2 matched caller(s) check4bench, forcepldata; cosine: 0.53; fieldseq: 1.00; shared: f:position fv:position; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 13 / G 17",
+   "score": 11.162188227629887
+  },
+  "5EDAD": {
+   "name": "playeracc",
+   "src": "93G",
+   "conf": "low",
+   "method": "callgraph(it1)",
+   "evidence": "callee alignment under 1 matched caller(s) assstanley; cosine: 0.23; fieldseq: 0.39; shared: i:C00 fv:Wallcos f:Wallcos f:Yvel fv:Yvel f:Wallsin fv:Wallsin f:Xvel; calls: 0 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 190 / G 68",
+   "score": 4.069994824949861
+  },
+  "4D938": {
+   "name": "loadTeamStruct",
+   "src": "93G",
+   "conf": "low",
+   "method": "callgraph(it1)",
+   "evidence": "callee alignment under 1 matched caller(s) SetLCmode; cosine: 0.14; fieldseq: 0.62; shared: fb:pflags f:pflags; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 45 / G 6",
+   "score": 4.283443176599899
+  },
+  "551AF": {
+   "name": "setpassmode",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it1)",
+   "evidence": "callee alignment under 1 matched caller(s) doinput_ispc; cosine: 0.58; fieldseq: 1.00; shared: fv:facedir f:facedir; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 7 / G 4",
+   "score": 11.494730892862359
+  },
+  "675D6": {
+   "name": "updatereplay",
+   "src": "93G",
+   "conf": "low",
+   "method": "callgraph(it1)",
+   "evidence": "callee alignment under 1 matched caller(s) DoGameFrame; cosine: 0.09; fieldseq: 0.42; shared: g:957114 fv:position f:position g:823483 f:Ypos fv:Ypos fv:Xpos f:Xpos; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 216 / G 65",
+   "score": 3.881846359387385
+  },
+  "65D01": {
+   "name": "checkwindow",
+   "src": "93G",
+   "conf": "low",
+   "method": "callgraph(it1)",
+   "evidence": "callee alignment under 1 matched caller(s) DoGameFrame; cosine: 0.12; fieldseq: 0.51; shared: i:FFCE i:32 i:28 f:Yvel fv:Yvel f:Ypos fv:Ypos fb:pflags; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 459 / G 77",
+   "score": 4.780901086682019
+  },
+  "63543": {
+   "name": "Stop4Pen",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it1)",
+   "evidence": "callee alignment under 1 matched caller(s) FallDown; cosine: 0.06; fieldseq: 0.71; shared: g:823483 i:258 fb:pflags f:pflags; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 140 / G 56",
+   "score": 6.036754544455858
+  },
+  "65B83": {
+   "name": "setInjuryType",
+   "src": "93G",
+   "conf": "low",
+   "method": "callgraph(it1)",
+   "evidence": "callee alignment under 1 matched caller(s) FallDown; cosine: 0.06; fieldseq: 0.41; shared: fb:pflags f:pflags; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 100 / G 20",
+   "score": 3.6231254874397645
+  },
+  "5428A": {
+   "name": "checkpuckcoll",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callers(it1)",
+   "evidence": "caller propagation weight 1.33 via matched callees GetHot, puckgoalie; cosine: 0.20; fieldseq: 0.51; shared: c:puckgoalie f:Ypos fv:Ypos i:C4 i:200 fv:Xpos f:Xpos fv:position; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 412 / G 123",
+   "score": 5.273810329816421
+  },
+  "57483": {
+   "name": "puckstick",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callers(it1)",
+   "evidence": "caller propagation weight 1.00 via matched callees deflect; cosine: 0.25; fieldseq: 0.29; shared: fv:pflags fv:position f:position i:32C8 c:deflect i:2BC i:24 f:pflags; calls: 2 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 264 / G 71",
+   "score": 3.4579617628800254
+  },
+  "49260": {
+   "name": "goalieacc",
+   "src": "93G",
+   "conf": "low",
+   "method": "callers(it1)",
+   "evidence": "caller propagation weight 0.50 via matched callees playeracc; cosine: 0.53; fieldseq: 0.67; shared: fv:facedir f:facedir c:SetSPA fb:pflags2 f:pflags2 f:Xvel fv:Xvel; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 54 / G 25",
+   "score": 8.54361150516224
+  },
+  "4DCDD": {
+   "name": "a2offsides",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it2)",
+   "evidence": "cosine: 0.45; fieldseq: 0.74; shared: c:AddPenalty fb:pflags f:pflags g:823483; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 29 / G 21; margin 2.11",
+   "score": 8.605421914923458
+  },
+  "56D06": {
+   "name": "puckbody",
+   "src": "93G",
+   "conf": "low",
+   "method": "semantic(it2)",
+   "evidence": "cosine: 0.23; fieldseq: 0.34; shared: c:puckflip c:sfx c:GetHot f:Yvel fv:Yvel c:SetSPA f:Xvel fv:Xvel; calls: 4 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 98 / G 38; margin 0.83",
+   "score": 3.704792360875999
+  },
+  "5EB17": {
+   "name": "skatetopuck",
+   "src": "93G",
+   "conf": "low",
+   "method": "semantic(it2)",
+   "evidence": "cosine: 0.41; fieldseq: 0.60; shared: c:vtoa fv:facedir f:facedir c:doplayeracc c:GetHot fv:temp2 f:temp2 fv:position; calls: 3 known Genesis callees present, 0 missing, 3 extra; size: ninsn PC 187 / G 46; margin 1.06",
+   "score": 6.098804105229667
+  },
+  "4DE14": {
+   "name": "a2touchpuck",
+   "src": "93G",
+   "conf": "high",
+   "method": "callgraph(it2)",
+   "evidence": "callee alignment under 3 matched caller(s) puckbody, puckgoalie, puckstick; cosine: 0.35; fieldseq: 0.43; shared: c:AddPenalty f:pflags fb:pflags f:SCnum fv:SCnum fv:position f:position f:Ypos; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 113 / G 59",
+   "score": 5.539609021315611
+  },
+  "11FF4": {
+   "name": "assreplace",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it2)",
+   "evidence": "callee alignment under 2 matched caller(s) Setplass, check4bench; cosine: 0.18; fieldseq: 0.29; shared: fb:pflags f:pflags; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 9 / G 6",
+   "score": 3.3655263960734763
+  },
+  "5F8B2": {
+   "name": "fightinput",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callers(it2)",
+   "evidence": "caller propagation weight 1.00 via matched callees playeracc; cosine: 0.38; fieldseq: 0.24; shared: c:playeracc fv:facedir f:facedir fb:pflags2 f:pflags2 f:Xvel fv:Xvel i:18; calls: 1 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 75 / G 42",
+   "score": 3.7995045074142744
+  },
+  "54AF9": {
+   "name": "chk4lc",
+   "src": "93G",
+   "conf": "low",
+   "method": "callgraph(it3)",
+   "evidence": "callee alignment under 1 matched caller(s) asspuckc; cosine: 0.17; fieldseq: 0.49; shared: fb:pflags2 fb:pflags f:pflags2 f:pflags; calls: 0 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 73 / G 25",
+   "score": 4.490512843435106
+  },
+  "5BEF4": {
+   "name": "setpersonel",
+   "src": "93G",
+   "conf": "medium",
+   "method": "callgraph(it4)",
+   "evidence": "callee alignment under 2 matched caller(s) chk4lc, puckfaceoff2; cosine: 0.64; fieldseq: 0.75; shared: f:newpnum fv:newpnum fv:newpos f:newpos fv:position f:position; calls: 0 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 80 / G 47",
+   "score": 9.398438081969752
+  },
+  "5A03B": {
+   "name": "AvgCline",
+   "src": "93G",
+   "conf": "low",
+   "method": "callgraph(it4)",
+   "evidence": "callee alignment under 1 matched caller(s) chk4lc; cosine: 0.20; fieldseq: 0.46; shared: f:position fv:position; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 35 / G 19",
+   "score": 4.870897508377153
+  },
+  "591C7": {
+   "name": "CPgoalie",
+   "src": "93G",
+   "conf": "medium",
+   "method": "semantic(it5)",
+   "evidence": "cosine: 0.36; fieldseq: 0.61; shared: c:setpersonel i:3C fb:pflags f:pflags; calls: 1 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 43 / G 19; margin 2.51",
+   "score": 7.084732415176199
+  }
+ },
+ "slots": [
+  [
+   0,
+   "rtss",
+   "4F990",
+   {
+    "score": 0.0,
+    "fieldq": null,
+    "nknown": 0,
+    "rank": 1,
+    "best": "rtss",
+    "det": {
+     "cosine": "0.00",
+     "fieldseq": "0.00",
+     "shared": "",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 2 / G 1"
+    }
+   }
+  ],
+  [
+   1,
+   "assdefo",
+   "49CDD",
+   {
+    "score": 6.81,
+    "fieldq": 0.8181818181818182,
+    "nknown": 11,
+    "rank": 1,
+    "best": "assdefo",
+    "det": {
+     "cosine": "0.36",
+     "fieldseq": "0.58",
+     "shared": "f:pflags fb:pflags f:temp1 fv:temp1 fv:temp2 f:temp2 f:SCnum fv:SCnum",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 105 / G 49"
+    }
+   }
+  ],
+  [
+   2,
+   "assdefd",
+   "49E3A",
+   {
+    "score": 8.9,
+    "fieldq": 0.8064516129032258,
+    "nknown": 31,
+    "rank": 1,
+    "best": "assdefd",
+    "det": {
+     "cosine": "0.51",
+     "fieldseq": "0.73",
+     "shared": "fv:temp3 f:temp3 fv:temp4 f:temp4 i:32 i:FC18 f:pflags fv:position",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 216 / G 107"
+    }
+   }
+  ],
+  [
+   3,
+   "asswingd",
+   "4A1A6",
+   {
+    "score": 5.73,
+    "fieldq": 0.8,
+    "nknown": 10,
+    "rank": 2,
+    "best": "asscenterd",
+    "det": {
+     "cosine": "0.28",
+     "fieldseq": "0.50",
+     "shared": "f:pflags fb:pflags f:temp1 fv:temp1 fv:temp2 f:temp2 f:SCnum fv:SCnum",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 109 / G 60"
+    }
+   }
+  ],
+  [
+   4,
+   "asswingo",
+   "4A343",
+   {
+    "score": 8.23,
+    "fieldq": 0.8333333333333334,
+    "nknown": 18,
+    "rank": 1,
+    "best": "asswingo",
+    "det": {
+     "cosine": "0.47",
+     "fieldseq": "0.73",
+     "shared": "fv:temp5 f:temp5 fv:temp3 f:temp3 f:pflags f:temp4 fv:temp4 fb:pflags",
+     "calls": "0 known Genesis callees present, 0 missing, 1 extra",
+     "size": "ninsn PC 129 / G 74"
+    }
+   }
+  ],
+  [
+   5,
+   "asscenterd",
+   "4A53A",
+   {
+    "score": 7.37,
+    "fieldq": 0.8,
+    "nknown": 10,
+    "rank": 1,
+    "best": "asscenterd",
+    "det": {
+     "cosine": "0.40",
+     "fieldseq": "0.62",
+     "shared": "f:pflags fb:pflags f:temp1 fv:temp1 fv:temp2 f:temp2 f:SCnum fv:SCnum",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 88 / G 38"
+    }
+   }
+  ],
+  [
+   6,
+   "asscentero",
+   "4A65C",
+   {
+    "score": 8.24,
+    "fieldq": 0.8235294117647058,
+    "nknown": 17,
+    "rank": 1,
+    "best": "asscentero",
+    "det": {
+     "cosine": "0.49",
+     "fieldseq": "0.71",
+     "shared": "fv:temp5 f:temp5 fv:temp3 f:temp3 f:pflags f:temp4 fv:temp4 fb:pflags",
+     "calls": "0 known Genesis callees present, 0 missing, 1 extra",
+     "size": "ninsn PC 112 / G 66"
+    }
+   }
+  ],
+  [
+   7,
+   "assscore",
+   "4A90F",
+   {
+    "score": 8.28,
+    "fieldq": 0.9230769230769231,
+    "nknown": 13,
+    "rank": 1,
+    "best": "assscore",
+    "det": {
+     "cosine": "0.54",
+     "fieldseq": "0.63",
+     "shared": "f:temp1 fv:temp1 fv:temp3 f:temp3 f:temp4 fv:temp4 f:pflags i:78",
+     "calls": "2 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 115 / G 30"
+    }
+   }
+  ],
+  [
+   8,
+   "assstanley",
+   "4A832",
+   {
+    "score": 6.6,
+    "fieldq": 0.7,
+    "nknown": 10,
+    "rank": 1,
+    "best": "assstanley",
+    "det": {
+     "cosine": "0.51",
+     "fieldseq": "0.45",
+     "shared": "fv:temp3 f:temp3 f:temp4 fv:temp4 c:SetSPA f:pflags fv:facedir f:facedir",
+     "calls": "2 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 63 / G 21"
+    }
+   }
+  ],
+  [
+   9,
+   "asseben",
+   "4AAC2",
+   {
+    "score": 9.02,
+    "fieldq": 0.875,
+    "nknown": 16,
+    "rank": 1,
+    "best": "asseben",
+    "det": {
+     "cosine": "0.54",
+     "fieldseq": "0.72",
+     "shared": "f:pflags fv:facedir f:facedir i:1000 fv:Xvel f:Xvel fb:pflags2 f:pflags2",
+     "calls": "1 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 54 / G 25"
+    }
+   }
+  ],
+  [
+   10,
+   "assepen",
+   "4B02D",
+   {
+    "score": 9.93,
+    "fieldq": 0.8421052631578947,
+    "nknown": 19,
+    "rank": 1,
+    "best": "assepen",
+    "det": {
+     "cosine": "0.57",
+     "fieldseq": "0.82",
+     "shared": "f:pflags fb:pflags fb:pflags2 f:pflags2 fv:facedir f:facedir i:F000 fv:newpnum",
+     "calls": "1 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 74 / G 31"
+    }
+   }
+  ],
+  [
+   11,
+   "assbench",
+   "4B12C",
+   {
+    "score": 9.61,
+    "fieldq": 0.8536585365853658,
+    "nknown": 41,
+    "rank": 1,
+    "best": "assbench",
+    "det": {
+     "cosine": "0.73",
+     "fieldseq": "0.65",
+     "shared": "fv:newpnum f:newpnum f:newpos fv:newpos f:temp1 fv:temp1 fv:temp3 f:temp3",
+     "calls": "1 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 242 / G 85"
+    }
+   }
+  ],
+  [
+   12,
+   "asspenalty",
+   "4ADAB",
+   {
+    "score": 10.52,
+    "fieldq": 0.9666666666666667,
+    "nknown": 30,
+    "rank": 1,
+    "best": "asspenalty",
+    "det": {
+     "cosine": "0.64",
+     "fieldseq": "0.83",
+     "shared": "fv:facedir f:facedir f:temp1 fv:temp1 fv:temp3 f:temp3 fv:temp4 f:temp4",
+     "calls": "1 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 142 / G 69"
+    }
+   }
+  ],
+  [
+   13,
+   "assdopen",
+   "4AFFB",
+   {
+    "score": 0.5,
+    "fieldq": 0.3333333333333333,
+    "nknown": 3,
+    "rank": 3,
+    "best": "assfaceoff",
+    "det": {
+     "cosine": "0.08",
+     "fieldseq": "0.00",
+     "shared": "f:pflags",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 14 / G 10"
+    }
+   }
+  ],
+  [
+   14,
+   "assgoalie",
+   "4B774",
+   {
+    "score": 6.41,
+    "fieldq": 0.6779661016949152,
+    "nknown": 59,
+    "rank": 1,
+    "best": "assgoalie",
+    "det": {
+     "cosine": "0.39",
+     "fieldseq": "0.56",
+     "shared": "f:temp5 fv:temp5 c:vtoa i:5A i:96 i:E4 fv:facedir f:facedir",
+     "calls": "2 known Genesis callees present, 0 missing, 1 extra",
+     "size": "ninsn PC 1007 / G 321"
+    }
+   }
+  ],
+  [
+   15,
+   "assgoalietopuck",
+   "4B5C2",
+   {
+    "score": 4.43,
+    "fieldq": 0.4444444444444444,
+    "nknown": 9,
+    "rank": 3,
+    "best": "asspassrec",
+    "det": {
+     "cosine": "0.23",
+     "fieldseq": "0.38",
+     "shared": "f:pflags f:temp1 fv:temp1 fb:pflags g:823483",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 104 / G 30"
+    }
+   }
+  ],
+  [
+   16,
+   "asspuckc",
+   "4C6F3",
+   {
+    "score": 4.61,
+    "fieldq": 0.4090909090909091,
+    "nknown": 22,
+    "rank": 3,
+    "best": "assnearest",
+    "det": {
+     "cosine": "0.41",
+     "fieldseq": "0.42",
+     "shared": "fv:temp3 f:temp3 fv:temp1 f:temp1 f:pflags f:Ypos fv:Ypos f:SCnum",
+     "calls": "0 known Genesis callees present, 1 missing, 1 extra",
+     "size": "ninsn PC 139 / G 94"
+    }
+   }
+  ],
+  [
+   17,
+   "assnearest",
+   "4CD4B",
+   {
+    "score": 5.48,
+    "fieldq": 0.6071428571428571,
+    "nknown": 28,
+    "rank": 1,
+    "best": "assnearest",
+    "det": {
+     "cosine": "0.38",
+     "fieldseq": "0.40",
+     "shared": "fv:temp3 f:temp3 f:pflags fv:pflags fb:pflags fv:position f:position fv:temp1",
+     "calls": "1 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 473 / G 137"
+    }
+   }
+  ],
+  [
+   18,
+   "assshoot",
+   "4D3F8",
+   {
+    "score": 5.21,
+    "fieldq": 1.0,
+    "nknown": 3,
+    "rank": 1,
+    "best": "assshoot",
+    "det": {
+     "cosine": "0.41",
+     "fieldseq": "0.40",
+     "shared": "fv:temp2 f:temp2 f:pflags fb:pflags",
+     "calls": "0 known Genesis callees present, 0 missing, 1 extra",
+     "size": "ninsn PC 84 / G 12"
+    }
+   }
+  ],
+  [
+   19,
+   "asspassrec",
+   "50F3F",
+   {
+    "score": 4.47,
+    "fieldq": 0.5555555555555556,
+    "nknown": 9,
+    "rank": 3,
+    "best": "asscenterd",
+    "det": {
+     "cosine": "0.25",
+     "fieldseq": "0.37",
+     "shared": "f:pflags fb:pflags fv:temp2 f:temp2 g:823483",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 101 / G 21"
+    }
+   }
+  ],
+  [
+   20,
+   "assfight",
+   "49460",
+   {
+    "score": 4.62,
+    "fieldq": 0.375,
+    "nknown": 24,
+    "rank": 10,
+    "best": "asscentero",
+    "det": {
+     "cosine": "0.35",
+     "fieldseq": "0.31",
+     "shared": "f:temp4 fv:temp4 fv:temp3 f:temp3 f:pflags fb:pflags fv:temp2 f:temp2",
+     "calls": "2 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 106 / G 88"
+    }
+   }
+  ],
+  [
+   21,
+   "assfwatch",
+   "495B8",
+   {
+    "score": 3.64,
+    "fieldq": 0.5833333333333334,
+    "nknown": 12,
+    "rank": 6,
+    "best": "puckfaceoff",
+    "det": {
+     "cosine": "0.25",
+     "fieldseq": "0.32",
+     "shared": "f:temp1 fv:temp1 fv:temp3 f:temp3 f:pflags fb:pflags",
+     "calls": "0 known Genesis callees present, 0 missing, 1 extra",
+     "size": "ninsn PC 289 / G 44"
+    }
+   }
+  ],
+  [
+   22,
+   "assfaceoff",
+   "4D4F0",
+   {
+    "score": 11.54,
+    "fieldq": 1.0,
+    "nknown": 1,
+    "rank": 1,
+    "best": "assfaceoff",
+    "det": {
+     "cosine": "0.59",
+     "fieldseq": "1.00",
+     "shared": "fb:pflags f:pflags",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 5 / G 5"
+    }
+   }
+  ],
+  [
+   23,
+   "assfaceoffp1",
+   "4D528",
+   {
+    "score": 3.04,
+    "fieldq": 0.875,
+    "nknown": 8,
+    "rank": 4,
+    "best": "assgoaliectrl",
+    "det": {
+     "cosine": "0.20",
+     "fieldseq": "0.23",
+     "shared": "f:pflags fb:pflags f:pflags2 c:SetSPA c:randomd0 f:temp1 fv:temp1 i:14",
+     "calls": "2 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 108 / G 34"
+    }
+   }
+  ],
+  [
+   24,
+   "pucknorm",
+   "4D8C7",
+   {
+    "score": 0.32,
+    "fieldq": 0.15,
+    "nknown": 20,
+    "rank": 10,
+    "best": "assshoot",
+    "det": {
+     "cosine": "0.40",
+     "fieldseq": "0.24",
+     "shared": "i:78 f:temp1 fv:temp1 fv:temp2 f:temp2 f:pflags",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 15 / G 53"
+    }
+   }
+  ],
+  [
+   25,
+   "puckshadow",
+   "56ECF",
+   {
+    "score": 4.29,
+    "fieldq": 1.0,
+    "nknown": 6,
+    "rank": 2,
+    "best": "asseben",
+    "det": {
+     "cosine": "0.13",
+     "fieldseq": "0.44",
+     "shared": "fv:Ypos f:Ypos f:Xpos fv:Xpos",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 36 / G 22"
+    }
+   }
+  ],
+  [
+   26,
+   "pucknothing",
+   "4D8FD",
+   {
+    "score": 0.0,
+    "fieldq": null,
+    "nknown": 0,
+    "rank": 2,
+    "best": "rtss",
+    "det": {
+     "cosine": "0.00",
+     "fieldseq": "0.00",
+     "shared": "",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 1 / G 1"
+    }
+   }
+  ],
+  [
+   27,
+   "puckfaceoff",
+   "516E1",
+   {
+    "score": 4.3,
+    "fieldq": 0.2857142857142857,
+    "nknown": 21,
+    "rank": 2,
+    "best": "puckshootout",
+    "det": {
+     "cosine": "0.23",
+     "fieldseq": "0.37",
+     "shared": "fb:pflags2 f:pflags2 g:823483 f:temp1 fv:temp1 f:SCnum fv:SCnum fv:temp2",
+     "calls": "0 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 304 / G 123"
+    }
+   }
+  ],
+  [
+   28,
+   "puckfaceoff2",
+   "51BDB",
+   {
+    "score": 5.04,
+    "fieldq": 0.6896551724137931,
+    "nknown": 29,
+    "rank": 1,
+    "best": "puckfaceoff2",
+    "det": {
+     "cosine": "0.25",
+     "fieldseq": "0.44",
+     "shared": "f:temp1 fv:temp1 i:A800 fb:pflags f:pflags i:18A fv:Yvel f:Yvel",
+     "calls": "3 known Genesis callees present, 0 missing, 0 extra",
+     "size": "ninsn PC 649 / G 218"
+    }
+   }
+  ]
+ ],
+ "log": [
+  [
+   0,
+   47,
+   100
+  ],
+  [
+   1,
+   22,
+   122
+  ],
+  [
+   2,
+   6,
+   128
+  ],
+  [
+   3,
+   1,
+   129
+  ],
+  [
+   4,
+   2,
+   131
+  ],
+  [
+   5,
+   1,
+   132
+  ],
+  [
+   6,
+   0,
+   132
+  ]
+ ],
+ "fieldmap": {
+  "Xpos": [
+   "0",
+   "2"
+  ],
+  "Ypos": [
+   "4",
+   "6"
+  ],
+  "Xvel": [
+   "C"
+  ],
+  "Yvel": [
+   "E"
+  ],
+  "facedir": [
+   "36"
+  ],
+  "SPA": [
+   "38"
+  ],
+  "SPAnum": [
+   "3A"
+  ],
+  "SPAcnt": [
+   "3C"
+  ],
+  "pflags": [
+   "44"
+  ],
+  "pflags2": [
+   "45"
+  ],
+  "SCnum": [
+   "6A"
+  ],
+  "assnum": [
+   "1C"
+  ],
+  "temp1": [
+   "26"
+  ],
+  "temp2": [
+   "28"
+  ],
+  "position": [
+   "1A"
+  ],
+  "temp4": [
+   "2C"
+  ],
+  "temp3": [
+   "2A"
+  ],
+  "temp5": [
+   "2E"
+  ],
+  "newpos": [
+   "42"
+  ],
+  "Wallsin": [
+   "32"
+  ],
+  "Wallcos": [
+   "30"
+  ],
+  "OldXpos": [
+   "6C"
+  ],
+  "newpnum": [
+   "43"
+  ]
+ },
+ "globalmap": {
+  "StanleyCupTimer": [
+   "C9100"
+  ],
+  "RNGseed": [
+   "C9100"
+  ],
+  "gmode": [
+   "C90BB"
+  ],
+  "dirtab": [
+   "C90E0"
+  ],
+  "shotsets": [
+   "CCC60"
+  ],
+  "PBnum": [
+   "E9ABA"
+  ],
+  "gameclock": [
+   "C9080"
+  ],
+  "threat": [
+   "C90AA"
+  ],
+  "passspeed": [
+   "C90A2"
+  ],
+  "collflag": [
+   "C90BA"
+  ],
+  "puckvz": [
+   "C9090"
+  ],
+  "OOlistpos": [
+   "E9A56"
+  ],
+  "wcradiusy": [
+   "E03B4"
+  ],
+  "wcradiusx": [
+   "C909C"
+  ],
+  "Ylist": [
+   "E9ADA"
+  ],
+  "OOlist": [
+   "E9ADD"
+  ],
+  "ltx": [
+   "E9AC6"
+  ]
+ }
+}

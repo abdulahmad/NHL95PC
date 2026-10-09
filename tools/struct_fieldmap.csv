@@ -1,0 +1,24 @@
+genesis_field,genesis_offset,pc_offset,evidence
+Xpos,$00,00h;02h,seed: SetSPA/asseben hand alignment
+Ypos,$14,04h;06h,seed: SetSPA/asseben hand alignment
+OldXpos,$1C,74h,"aligned 2/3 accesses in puckfaceoff2, updateplayers"
+Xvel,$28,0Ch,seed: SetSPA/asseben hand alignment
+Yvel,$2A,0Eh,seed: SetSPA/asseben hand alignment
+position,$34,1Ah,"aligned 9/13 accesses in assbench, assdefd, assdefo, assnearest, asswingd, asswingo"
+assnum,$36,1Ch,seed: SetSPA/asseben hand alignment
+temp1,$40,26h,seed: SetSPA/asseben hand alignment
+temp2,$42,28h,seed: SetSPA/asseben hand alignment
+temp3,$44,2Ah,"aligned 16/26 accesses in assbench, asscentero, assdefd, assnearest, asspenalty, assscore"
+temp4,$46,2Ch,"aligned 13/20 accesses in assbench, asscentero, assdefd, assgoalie, asspenalty, assscore"
+temp5,$48,2Eh,"aligned 8/12 accesses in asscentero, assgoalie, asswingo"
+Wallcos,$4E,30h,"aligned 2/2 accesses in asspenalty, updateplayers"
+Wallsin,$50,32h,"aligned 2/2 accesses in asspenalty, updateplayers"
+SCnum,$52,6Ah,seed: SetSPA/asseben hand alignment
+facedir,$54,36h,seed: SetSPA/asseben hand alignment
+SPA,$58,38h,seed: SetSPA/asseben hand alignment
+SPAnum,$5A,3Ah,seed: SetSPA/asseben hand alignment
+SPAcnt,$5C,3Ch,seed: SetSPA/asseben hand alignment
+newpos,$60,42h,"aligned 3/3 accesses in assbench, assepen"
+newpnum,$61,43h,"aligned 3/3 accesses in assbench, assepen"
+pflags,$62,44h,seed: SetSPA/asseben hand alignment
+pflags2,$63,45h,seed: SetSPA/asseben hand alignment

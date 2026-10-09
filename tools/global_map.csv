@@ -1,0 +1,18 @@
+genesis_symbol,pc_address,evidence
+OOlist,E9ADD,"aligned 2/3 accesses in checkcoll, checkplcoll"
+OOlistpos,E9A56,"aligned 2/3 accesses in checkcoll, checkplcoll"
+PBnum,E9ABA,"aligned 2/3 accesses in assdopen, asspenalty"
+RNGseed,C9100,randomd0 seed (manual)
+StanleyCupTimer,C9100,randomd0 seed (manual)
+Ylist,E9ADA,"aligned 2/3 accesses in checkcoll, checkplcoll"
+collflag,C90BA,"aligned 2/3 accesses in Bcheck, holdcheck"
+dirtab,C90E0,"data table byte match (words->le16, logic93_5.asm, 16 elems)"
+gameclock,C9080,"aligned 2/2 accesses in assgoalie, puckfaceoff"
+gmode,C90BB,"Stop4Pen (63543): 93G bset #gmclock,(gmode).w <-> test/or byte_C90BB,1 (low byte of the 68k word)"
+ltx,E9AC6,"aligned 2/2 accesses in Stop4Pen, a2touchpuck"
+passspeed,C90A2,"aligned 3/5 accesses in dopass, doshot, passtoa0"
+puckvz,C9090,"aligned 3/5 accesses in dopass, doshot, passtoa0"
+shotsets,CCC60,"data table byte match (words->le16, input94.asm, 18 elems)"
+threat,C90AA,"aligned 2/3 accesses in assgoalie, chk4pass"
+wcradiusx,C909C,"aligned 2/3 accesses in checkgoal, checkwallcoll"
+wcradiusy,E03B4,"aligned 2/3 accesses in checkgoal, checkwallcoll"

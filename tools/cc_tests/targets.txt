@@ -1,0 +1,7 @@
+t1 f1_=8C1C2 f2_=8C1E2
+t2 build_path_=1431E
+t3 init_buf_=17711
+t4 hit_rect_=2C3FF
+t5 next_entry_=4F99B
+t6 reset_ent_=14CA0
+t7 pl_flag_=59FE1

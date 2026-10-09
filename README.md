@@ -1,0 +1,67 @@
+# NHL 95 PC
+
+Bitwise rebuild of NHL 95 for DOS (`HOCKEY.EXE`, EA Sports 1994). No code segment is matched in source form yet.
+
+`HOCKEY.EXE` is a Watcom C/C++32 10.0 program linked as a Linear Executable (LE) and bound to the DOS/4GW Professional extender (Rational DOS/16M loader, then a Watcom wstub, then the LE). The goal is a bit-perfect assembly rebuild first, then a matching C decompilation built with the same compiler.
+
+Sister projects: [NHL95Genesis](https://github.com/abdulahmad/NHL95Genesis), [NHL94Genesis](https://github.com/abdulahmad/NHL94Genesis), [NHLPA93Genesis](https://github.com/abdulahmad/NHLPA93Genesis). NHL 94 PC was ported from NHLPA 93 Genesis (plus some 94 Genesis and new menus). NHL 95 PC is 94 PC plus 94/95 Genesis additions. Name mapping prefers 93G names, then 94G, then 95G. The front end is PC-new.
+
+## You supply the EXE
+
+The game binary is not in this repo and never will be. Copy your own retail `HOCKEY.EXE` to the repo root:
+
+| | |
+| --- | --- |
+| File | `HOCKEY.EXE` |
+| Size | 1,179,067 bytes |
+| SHA-1 | `3961e0eba6b0338fad1613bb534efafd9406ed4a` |
+
+`.gitignore` keeps it out of commits, along with the IDA listing (`*.lst`), everything under `build/` (the extracted EXE parts), the Watcom compilers and libraries, and the local Genesis source copies (`ref/`).
+
+## Byte-exact rebuild
+
+Needs Python 3 only. Run from the repo root.
+
+```
+python3 tools/rebuild_exe.py extract   # check HOCKEY.EXE sha1, split it into build/parts/
+python3 tools/rebuild_exe.py build     # rebuild build/HOCKEY.EXE from build/parts/ only
+python3 tools/rebuild_exe.py verify    # extract + build + sha1 compare (+ fixup-order experiments)
+```
+
+`verify` prints `MATCH` and exits 0 when the rebuilt file equals your EXE. `extract` writes the MZ stubs, the LE header and tables as JSON, the 26,790 fixups as `le_fixups.tsv`, and the code/data slices for every segment in `segmap95pc.json` (`build/parts/cseg01/`, `build/parts/dseg02/`). `build` reads only that directory. Only the DOS/16M loader body, the DOS/4GW kernel and the wstub body stay opaque blobs. Details: [BUILD_NOTES.md](BUILD_NOTES.md).
+
+## Segment map
+
+* [EXE_SEGMAP95PC.md](EXE_SEGMAP95PC.md) is the segment map of the code and data objects, with module boundaries, Genesis counterparts and the evidence for each.
+* [segmap95pc.json](segmap95pc.json) is the same map in machine-readable form. `rebuild_exe.py` uses it to slice segments.
+* [name_map_94.csv](name_map_94.csv) maps each function to a name and source file in the 93/94 Genesis sources, with confidence and evidence.
+* `tools/struct_fieldmap.csv` and `tools/global_map.csv` map player-struct fields and globals to their Genesis names.
+
+The analysis scripts in `tools/` (`le_parse.py`, `lst_parse.py`, `build_funcs.py`, `features.py`, `ref93_index.py`, `ref94_index.py`, `segdef.py`, `build_segmap.py`, `sem_features.py`, `sem_match.py`, `matcher.py`, `write_md.py`) regenerate the map. They also need an IDA listing `HOCKEY.EXE.lst` that you make yourself, plus the Genesis sources cloned into `ref/93`, `ref/94` and `ref/95`. Their intermediate `.pkl` caches are not committed. Run order is listed at the top of `EXE_SEGMAP95PC.md`.
+
+## Compiler findings
+
+* **Watcom C/C++32 10.0 GA (mid-1994)**. The runtime is newer than 10.0 LA (Mar 1994) and older than 10.0a (Sep 1994). Library modules match 10.0a CLIB3R except the ones fixed by the 10.0a A-level patch. The copyright string says 1988-1994.
+* **10.0 LA `wcc386` with default flags reproduces game code.** 8 of 8 hand-written test functions are byte-exact with fixups masked. 10.0a gets 6 of 8, because it widens the 16-bit short compares the EXE has.
+* Flags inferred: `-5r -fpi -zp1` (`-mf`, stack checks on, no `-o` options). Evidence: 2,527 `mov r32,[x-2]; sar r32,10h` short loads (-5r), EMU387 linked (-fpi), unaligned dwords in packed structs (-zp1, medium confidence).
+* No public 10.0 GA binaries are known. Use 10.0 LA as the reference compiler.
+
+Test harness (needs `dosbox` and the historic Watcom installs outside the repo; set `WATCOM_ROOT`, default `~/watcom`):
+
+```
+tools/wc10.sh la tools/cc_tests/t1.c ""   # compile with 10.0 LA wcc386 under headless DOSBox -> build/cc/la/
+tools/sweep.sh la ""                      # compile every cc_tests file, compare with HOCKEY.EXE (tools/cmpobj.py)
+python3 tools/libmatch.py $WATCOM_ROOT/w10a/WATCOM/LIB386/DOS/CLIB3R.LIB   # library module matching
+```
+
+`tools/cc_tests/targets.txt` lists each test function and the EXE address it should match. `tools/cc_tests/sweep_la.txt` has the flag-sweep results.
+
+## Docs
+
+* [BUILD_NOTES.md](BUILD_NOTES.md): rebuild format, fixup ordering (wlink algorithm), compiler fingerprint, next steps
+* [EXE_SEGMAP95PC.md](EXE_SEGMAP95PC.md): segment map
+* [docs/SKATING_AND_RINK.md](docs/SKATING_AND_RINK.md): skating physics and rink geometry vs. 93 Genesis
+
+## Segment queue
+
+Not set up yet. `SEGMENT_AGENT.md` is a placeholder. The queue will follow the NHL95Genesis layout.

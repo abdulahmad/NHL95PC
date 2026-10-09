@@ -1,0 +1,62 @@
+[
+ {
+  "game": "93G",
+  "name": "puckfaceoff2",
+  "file": "logic93_4.asm",
+  "dtype": "b",
+  "n": 24,
+  "encoding": "bytes",
+  "pc": [
+   "CBEA8"
+  ],
+  "nbytes": 24
+ },
+ {
+  "game": "93G",
+  "name": "vtoa",
+  "file": "logic93_5.asm",
+  "dtype": "b",
+  "n": 8,
+  "encoding": "bytes",
+  "pc": [
+   "D2C7C"
+  ],
+  "nbytes": 8
+ },
+ {
+  "game": "93G",
+  "name": "dirtab",
+  "file": "logic93_5.asm",
+  "dtype": "w",
+  "n": 16,
+  "encoding": "words->le16",
+  "pc": [
+   "C90E0"
+  ],
+  "nbytes": 32
+ },
+ {
+  "game": "94G",
+  "name": "shotsets",
+  "file": "input94.asm",
+  "dtype": "w",
+  "n": 18,
+  "encoding": "words->le16",
+  "pc": [
+   "CCC60"
+  ],
+  "nbytes": 36
+ },
+ {
+  "game": "94G",
+  "name": "vtoa",
+  "file": "checks94.asm",
+  "dtype": "b",
+  "n": 15,
+  "encoding": "bytes",
+  "pc": [
+   "D2C75"
+  ],
+  "nbytes": 15
+ }
+]

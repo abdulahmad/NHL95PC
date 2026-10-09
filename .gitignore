@@ -1,0 +1,44 @@
+# --- Copyrighted game files: supply your own, never commit ---
+HOCKEY.EXE
+*.EXE
+*.exe
+*.EXP
+*.exp
+HOCKEY.EXE.lst
+*.lst
+FUNCTION_MAPPINGS95.md
+
+# --- Extracted EXE bytes / build output ---
+build/
+Extracted/
+output/
+*.bin
+*.obj
+*.OBJ
+
+# --- Intermediate analysis caches (derived from the EXE / IDA listing / Genesis sources) ---
+tools/*.pkl
+tools/le.json
+tools/name_map_94_before.csv
+tools/overview.txt
+
+# --- Read-only copies of the Genesis sources (clone NHL9xGenesis repos instead) ---
+ref/
+
+# --- Watcom compilers and libraries (installed outside the repo, default ~/watcom) ---
+watcom/
+*.LIB
+*.lib
+*.iso
+*.ISO
+
+# --- Archives, backups, editor / Python cruft ---
+*.zip
+*.bak
+*~
+__pycache__/
+*.pyc
+.DS_Store
+.vscode/
+logs
+*.log
