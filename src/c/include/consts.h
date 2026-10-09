@@ -14,6 +14,7 @@
 #define pfrev           0x10    /* pflags bit 4: skating backwards (93G pfrev) */
 #define pfna            0x02    /* pflags bit 1: start the next assignment (93G pfna) */
 #define pfalock         0x20    /* pflags bit 5: animation lock (93G pfalock) */
+#define pfteam          0x40    /* pflags bit 6: 0 home, 1 visitors (93G pfteam) */
 #define pfjoy           0x08    /* pflags bit 3: player under joystick control */
 #define pfgoal          0x80    /* pflags bit 7: goal to shoot at, 0 = bottom, 1 = top (93G pfgoal) */
 #define pf2aip          0x02    /* pflags2 bit 1: animation in progress (93G pf2aip) */
@@ -32,6 +33,8 @@
 
 /* assignment numbers (asstab index, asslist entries) */
 #define ASSgoalietopuck 0x0F    /* assgoalietopuck */
+#define ASSbenchwait    0x29    /* assbenchwait (PC: wait for the bench after setpersonel) */
+#define ASSpuckfaceoff  0x1B    /* puckfaceoff: the puck waits for the faceoff (94G StartPer pfaceoff $1B) */
 
 /* byte views of the player word temp2 that skateto uses (the PC splits 93G temp2) */
 #define TEMP2_DIR(p)    (((signed char *)&(p)->temp2)[0])   /* low byte: skate direction for doplayeracc */

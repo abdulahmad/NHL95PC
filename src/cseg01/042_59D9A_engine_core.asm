@@ -2816,6 +2816,10 @@ test di, di	; 5BEE3
 jge near SetPlList.14	; 5BEE6
 add esp, byte 14h	; 5BEEC
 jmp near calcpuckcross_ret6	; 5BEEF
+; C: src/c/042_59D9A_engine_core/calcpuckcross.c (setpersonel)
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/calcpuckcross.setpersonel.inc"
+%else
 setpersonel:
 push dword 1Ch	; 5BEF4
 call __CHK	; 5BEF9
@@ -2911,6 +2915,7 @@ cmp si, byte 0FFFFh	; 5C002
 jne short setpersonel.7	; 5C006
 add esp, byte 4	; 5C008
 jmp near calcpuckcross_ret5	; 5C00B
+%endif ; C
 ; StartPer: 93G hockey93_01 StartPer. setupice, ResetClock, no controlled players, center faceoff, InitCoachModes,
 ;   then DoGameFrame.
 StartPer:
@@ -5205,6 +5210,10 @@ mov word [exitgame], 1	; 5DDD0
 .x:
 ret	; 5DDD9
 %endif ; C
+; C: src/c/042_59D9A_engine_core/SetupTeamForIntermission.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/SetupTeamForIntermission.inc"
+%else
 SetupTeamForIntermission:
 push dword 10h	; 5DDDA
 call __CHK	; 5DDDF
@@ -5242,6 +5251,7 @@ pop edx	; 5DE3E
 pop ecx	; 5DE3F
 pop ebx	; 5DE40
 ret	; 5DE41
+%endif ; C
 ; C: src/c/042_59D9A_engine_core/Intermission.c
 %ifdef CBUILD
 %include "c/042_59D9A_engine_core/Intermission.inc"

@@ -35,7 +35,11 @@ void GetHot(struct Player *p);                             /* 5A425 */
 void Setplass(struct Player *p);                          /* 5B298 */
 void Acheck(struct Player *p, struct Player *q);           /* 4FFAE */
 void SetLCmode(struct Player *p);                         /* 4D9FC */
+void assdopen(struct Player *p);                          /* 4AFFB */
 int TryAddPlayerToList(struct Team *t, short pl, short slot); /* 5BB9E */
+void setpersonel(struct Team *t);                          /* 5BEF4 */
+void StartPer(void);                                       /* 5C010 */
+void SetupTeamForIntermission(void);                       /* 5DDDA */
 void reenergizeteam(struct Team *t);                      /* 5B826 */
 void RestBench(void);                                     /* 5C1E2 */
 void restoreteams(void);                                  /* 5B97A */

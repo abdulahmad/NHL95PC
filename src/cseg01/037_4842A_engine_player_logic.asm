@@ -3472,6 +3472,10 @@ mov ax, word [byte ebx+temp4]	; 4AFEC
 mov word [regd1], ax	; 4AFF0
 jmp near asswingd_skate0	; 4AFF6
 ; assdopen: asstab 0Dh (93G logic93_2 assdopen, player goes to the penalty box). Bumps PBnum (home) or PBnum+1 (away).
+; C: src/c/037_4842A_engine_player_logic/assdopen.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assdopen.inc"
+%else
 assdopen:
 push dword 8	; 4AFFB
 call __CHK	; 4B000
@@ -3491,6 +3495,7 @@ mov word [byte eax+012h], 0FFFFh	; 4B025
 .x:
 pop edx	; 4B02B
 ret	; 4B02C
+%endif ; C
 assepen:
 push dword 10h	; 4B02D
 call __CHK	; 4B032

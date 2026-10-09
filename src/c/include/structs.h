@@ -11,7 +11,8 @@ typedef struct Player {
     unsigned char pad_08[0x4];
     short Xvel;                  /* 00Ch 93G $28; seed: SetSPA/asseben hand alignment */
     short Yvel;                  /* 00Eh 93G $2A; seed: SetSPA/asseben hand alignment */
-    unsigned char pad_10[0x4];
+    unsigned char pad_10[0x2];
+    short frame;                 /* 012h 93G $6 (alice frame number); GetHot reads word [x+12h] as the hot spot frame (94G GetHot frame(a0)); assdopen sets it to -1 (94G clr.w frame(a3)) */
     short impactp;               /* 014h 93G $2E; holdplayer: Acheck target SortCords[impactp] when impact != 0 (dword [x+12h] / sar 10h), as 93G move.w impactp(a3),d0 / asl #7 */
     unsigned char pad_16[0x2];
     short impact;                /* 018h 93G $32; holdplayer and Acheck: cmp word [x+18h],0 where 93G does tst.w impact(a3) */
@@ -60,6 +61,7 @@ typedef struct Player {
 #define OFS_Player_Ypos 0x04
 #define OFS_Player_Xvel 0x0C
 #define OFS_Player_Yvel 0x0E
+#define OFS_Player_frame 0x12
 #define OFS_Player_impactp 0x14
 #define OFS_Player_impact 0x18
 #define OFS_Player_position 0x1A

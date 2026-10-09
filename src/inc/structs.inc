@@ -39,6 +39,7 @@ weight     equ 56h   ; size b; 93G $67; playeracc: byte >>3 subtracted from 32, 
 legstr     equ 57h   ; size b; 93G $68; playeracc: added to the accel factor (twice for the goalie) as 93G legstr; StopNA step 200+legstr
 legspd     equ 58h   ; size b; 93G $69; playeracc: times the energy level for the MaxSpeed index, as 93G move.b legspd(a3),d2 / mulu d0,d2
 endurance  equ 61h   ; size b; 93G $72; playeracc .sube: added to the energy level, as 93G move.b endurance(a3),d2 / add d2,d0
+frame      equ 12h   ; size w; 93G $6 (alice frame number); GetHot reads word [x+12h] as the hot spot frame (94G GetHot frame(a0)); assdopen sets it to -1 (94G clr.w frame(a3))
 impactp    equ 14h   ; size w; 93G $2E; holdplayer: Acheck target SortCords[impactp] when impact != 0 (dword [x+12h] / sar 10h), as 93G move.w impactp(a3),d0 / asl #7
 impact     equ 18h   ; size w; 93G $32; holdplayer and Acheck: cmp word [x+18h],0 where 93G does tst.w impact(a3)
 tmptr      equ 6Ch   ; size d; 93G none (loadTeamStruct by pfteam); pointer to the player's own team structure: lineinput, lcselect, getlchoice read tmflags/tmline/tmap through it

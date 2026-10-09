@@ -751,7 +751,6 @@ extern void assscore(); /* 4A90F */
 extern void asseben(); /* 4AAC2 */
 extern void assleaveice(); /* 4AB87 */
 extern void asspenalty(); /* 4ADAB */
-extern void assdopen(); /* 4AFFB */
 extern void assepen(); /* 4B02D */
 extern void assbench(); /* 4B12C */
 extern void GoalieToPuckVec(); /* 4B467 */
@@ -942,8 +941,6 @@ extern void clearteams(); /* 5B881 */
 extern void ResetClock(); /* 5BA07 */
 extern void defaultsprites2(); /* 5BA89 */
 extern void SetPlList(); /* 5BBFA */
-extern void setpersonel(); /* 5BEF4 */
-extern void StartPer(); /* 5C010 */
 extern void DoGameFrame(); /* 5C1C4 */
 extern void updatecrowdf(); /* 5C248 */
 extern void periodicevents(); /* 5C302 */
@@ -956,7 +953,6 @@ extern void clockcont_0(); /* 5D852 */
 extern void ClockTick(); /* 5DC10 */
 extern void SprSortVert(); /* 5DD6B */
 extern void SprSort(); /* 5DD7C */
-extern void SetupTeamForIntermission(); /* 5DDDA */
 extern void IntermissionStart(); /* 5DE70 */
 extern void PeriodOver(); /* 5DEA6 */
 extern void ResetBench(); /* 5DF86 */

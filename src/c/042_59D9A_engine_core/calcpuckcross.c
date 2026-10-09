@@ -50,8 +50,8 @@ void GetHot(Player *p)
     short f;
     short x;
 
-    regd1.w = regd0.w = 0;
-    f = ((short *)p)[0x12 / 2];                 /* frame (structs.inc has no field at 12h yet) */
+    regd0.w = regd1.w = 0;
+    f = p->frame;
     if (f < 0 || f >= 0x468) return;
     if (f >= 0x378) f -= 0xF4;
     else if (f > 0x283) return;
@@ -62,7 +62,7 @@ void GetHot(Player *p)
     regd0.w = x;
     regd1.w = byte_CC149[f];
     if (p->attribute & 8)                       /* X flip */
-        regd0.w = -x;
+        regd0.w = -regd0.w;
 }
 
 /* reenergizeteam (5B826) - refill the energy of team t's whole roster (93G/94G reenergizeteam, penalty94):
@@ -81,4 +81,121 @@ void reenergizeteam(Team *t)
             t->tmroster[i * 0x27] = 3;          /* roster status: bench */
         }
     }
+}
+
+/* setpersonel (5BEF4) - set the personnel of team t (93G setpersonel, 94G collide94 SetPersonel): clear newpos /
+   newpnum of the team's 6 sort objects, build PlList (SetPlList: pnum per wanted player, -1 none, the new
+   positions at PlList+6 = byte_E038A). Pass 1: a wanted player already on the ice keeps his sort object (newpos
+   from the list, newpnum = pnum). Pass 2: each remaining wanted player takes the last free sort object (newpnum
+   < 0), stopping at the first one with a position; a sort object without a position (off the ice) first gets
+   assignment assbenchwait and position 5. Used entries of PlList are set to -1. */
+void setpersonel(Team *t)
+{
+    Player *p;
+    Player *q;
+    short i;
+    short k;
+    short pn;
+
+    i = 6;
+    p = t->tmsort;
+    do {
+        p->newpos = -1;                         /* st newpos(a3) */
+        p->newpnum = -1;
+        p++;
+    } while (--i != 0);
+    SetPlList(t);
+    i = 5;
+    do {                                        /* pass 1: players already on the ice */
+        pn = PlList[i];
+        if (pn >= 0) {
+            p = t->tmsort;
+            for (k = 0, p--; k < 6; k++) {
+                p++;
+                if (p->pnum == pn) {            /* find player pn */
+                    p->newpos = byte_E038A[i];
+                    p->newpnum = pn;
+                    PlList[i] = -1;
+                    break;
+                }
+            }
+        }
+    } while (--i != (short)-1);
+    i = 5;
+    do {                                        /* pass 2: the rest take free sort objects */
+        pn = PlList[i];
+        if (pn >= 0) {
+            p = t->tmsort;
+            for (k = 0, p--; k < 6; k++) {
+                p++;
+                if (p->newpnum < 0) {
+                    q = p;
+                    if (p->position >= 0) break;
+                }
+            }
+            if (q->position < 0) {
+                assreplace(q, ASSbenchwait);
+                q->position = 5;
+            }
+            q->newpos = byte_E038A[i];
+            q->newpnum = pn;
+            PlList[i] = -1;
+        }
+    } while (--i != (short)-1);
+}
+
+/* StartPer (5C010) - start a period (93G hockey93_01 / 94G hockey94 StartPer). PC order: no line change
+   request, InitCoachModes, setupice, ResetClock; the controlled player of pad 1 (cont1team 1 home: 2, 2 away:
+   8) and pad 2 (the one before pad 1's on the same team); no banner / overlay, no penalty shot, faceoff at
+   centre ice (fox = foy = 0, puck assignment puckfaceoff); crowd quiet unless in the regular season (gsp 0);
+   gmode2 bit 2, sflags bits 4 (sfwrap) and 6 cleared, replay recording restarts; two DoGameFrame before the
+   loop; CwdExciteLvl 10h; sflags3 bit 7 before the playoffs (gsp < 2); puck uncontrolled, camera at 0, fade
+   in, rink scroll positions + 3E8h. */
+void StartPer(void)
+{
+    short t1;
+    short t2;
+
+    lcrequest[1] = lcrequest[0] = 0;            /* no line change request */
+    InitCoachModes();
+    dword_E9A9E = 0;
+    setupice();
+    ResetClock();
+    t1 = cont1team;
+    if (t1 == 1) c1playernum[0] = 2;            /* home: player 2 */
+    else if (t1 == 2) c1playernum[0] = 8;       /* away: player 8 */
+    t2 = cont2team;
+    if (t2 != 0) {
+        if (t2 == cont1team) c2playernum[0] = c1playernum[0] - 1;
+        else if (t2 == 1) c2playernum[0] = 2;
+        else if (t2 == 2) c2playernum[0] = 8;
+    }
+    byte_E9AD3 = 0xFF;
+    bannermsg = -1;
+    bannertimer = 0;
+    ovltimer = -1;
+    penshotmode = 0;
+    penshotlive = 0;
+    penshotstart = 0;
+    shotontarget = 0;
+    shotongoal = 0;
+    penshotplayer = -1;
+    fox = 0;                                    /* face off at center ice */
+    foy = 0;
+    assreplace((Player *)puckstruct, ASSpuckfaceoff);
+    if (gsp != 0) crowdlevel = 0;
+    gmode2 |= 4;
+    sflags &= ~0x50;                            /* sfwrap: reset replay stuff */
+    recbpr = replaystart;
+    ReplayRecordReset();
+    lastsfx = -1;
+    DoGameFrame();                              /* run two frames before the loop */
+    DoGameFrame();
+    CwdExciteLvl = 0x10;
+    if (gsp < 2) sflags3 |= 0x80;
+    *puckc = -1;
+    camy = camx = yleader = yc1 = xc1 = 0;
+    fadeinpending = 1;
+    rinkscrollx += 1000;
+    rinkscrolly += 1000;
 }
