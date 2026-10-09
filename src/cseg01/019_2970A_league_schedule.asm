@@ -5,7 +5,7 @@ section s_2970A progbits alloc exec nowrite align=1
 extern __CHK, asc_C8100, str_extDB, byte_C5386, byte_C8111, dword_C695A, dword_C71CC, dword_C71D0
 extern dword_C71D4, dword_DC7B8, dword_DC7BC, dword_DC830, fputchar, jctime, teamcitynames, leaguedbnames
 extern strcat_, strcmp_, strcpy_, strlen_, MakePath, FileOpenRead, FileClose
-extern sub_147A0, sub_27F9C, sub_3DAB9, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, unk_C136D
+extern ReadSchedGame, sub_27F9C, sub_3DAB9, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, unk_C136D
 extern unk_C65D4, unk_DDAC4, unk_DDCE6
 global loc_29781, loc_2978F, loc_2979D, loc_2979F, loc_297A5, loc_297F4, loc_29808, loc_29816
 global loc_2981B, loc_29821, loc_29855, loc_29868, loc_2987B, loc_2987D, loc_29882, loc_29885
@@ -71,7 +71,7 @@ add ebx, 444h	; 297AB
 lea edx, [byte ebp-038h]	; 297B1
 mov eax, dword [byte ebp-0Ah]	; 297B4
 sar eax, 10h	; 297B7
-call sub_147A0	; 297BA
+call ReadSchedGame	; 297BA
 mov dword [byte ebp-020h], eax	; 297BF
 xor edx, edx	; 297C2
 mov dl, byte [byte ebp-036h]	; 297C4
@@ -109,7 +109,7 @@ add ebx, 4A6h	; 29827
 lea edx, [byte ebp-038h]	; 2982D
 mov eax, dword [byte ebp-0Ah]	; 29830
 sar eax, 10h	; 29833
-call sub_147A0	; 29836
+call ReadSchedGame	; 29836
 mov dword [byte ebp-020h], eax	; 2983B
 cmp word [byte ebp-010h], byte 0	; 2983E
 jne short loc_29855	; 29843

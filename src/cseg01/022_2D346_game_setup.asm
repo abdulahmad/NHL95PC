@@ -19,7 +19,7 @@ extern hmtmstruct, dword_DF61A
 extern dword_DF626, dword_DF62A, dword_DF636, fputchar, jctime, memcpy_
 extern off_C57CC, off_C719C, leaguedbnames, off_CD304, rand_, sprintf_
 extern strcat_, strcpy_, sub_11598, MakePath, FileOpenRead, FileOpenRW, FileClose, sub_1463D
-extern sub_1478B, sub_147C9, sub_147FF, sub_174C2, sub_175E2, sub_1BAF3, sub_29C75, sub_33E6A
+extern sub_1478B, ReadTeamRec, sub_147FF, sub_174C2, sub_175E2, sub_1BAF3, sub_29C75, sub_33E6A
 extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
 extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
@@ -467,7 +467,7 @@ xor ebx, ebx	; 2D990
 mov bl, byte [dword esp+07D4h]	; 2D992
 lea edx, [byte esp+04h]	; 2D999
 mov eax, dword [dword esp+0768h]	; 2D99D
-call sub_147C9	; 2D9A4
+call ReadTeamRec	; 2D9A4
 mov dword [dword esp+0788h], eax	; 2D9A9
 loc_2D9B0:
 cmp dword [dword esp+0788h], byte 0	; 2D9B0
@@ -476,7 +476,7 @@ xor ebx, ebx	; 2D9BA
 mov bl, byte [dword esp+07E4h]	; 2D9BC
 lea edx, [dword esp+02ECh]	; 2D9C3
 mov eax, dword [dword esp+0768h]	; 2D9CA
-call sub_147C9	; 2D9D1
+call ReadTeamRec	; 2D9D1
 mov dword [dword esp+0788h], eax	; 2D9D6
 loc_2D9DD:
 lea eax, [dword esp+0768h]	; 2D9DD
@@ -676,7 +676,7 @@ jne short loc_2DD6B	; 2DD4B
 mov bl, byte [dword esp+07D4h]	; 2DD4D
 lea edx, [byte esp+04h]	; 2DD54
 mov eax, dword [dword esp+0768h]	; 2DD58
-call sub_147C9	; 2DD5F
+call ReadTeamRec	; 2DD5F
 mov dword [dword esp+0788h], eax	; 2DD64
 loc_2DD6B:
 cmp dword [dword esp+0788h], byte 0	; 2DD6B
@@ -685,7 +685,7 @@ xor ebx, ebx	; 2DD75
 mov bl, byte [dword esp+07E4h]	; 2DD77
 lea edx, [dword esp+02ECh]	; 2DD7E
 mov eax, dword [dword esp+0768h]	; 2DD85
-call sub_147C9	; 2DD8C
+call ReadTeamRec	; 2DD8C
 mov dword [dword esp+0788h], eax	; 2DD91
 loc_2DD98:
 lea eax, [dword esp+0768h]	; 2DD98

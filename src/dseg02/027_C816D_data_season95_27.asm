@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_C816D progbits alloc noexec write align=1
-global asc_C816D, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, asc_C8208, asc_C8216, asc_C8227
-asc_C816D:
+global str_SelHumanTeams, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, asc_C8208, asc_C8216, str_EnterLeagueName
+str_SelHumanTeams:
 db 053h,065h,06Ch,065h,063h,074h,020h,068h,075h,06Dh,061h,06Eh,020h,063h,06Fh,06Eh
 db 074h,072h,06Fh,06Ch,06Ch,065h,064h,020h,074h,065h,061h,06Dh,073h,00h
 str_SelNewHuman:
@@ -24,7 +24,7 @@ db 053h,065h,06Ch,065h,063h,074h,020h,061h,020h,074h,065h,061h,06Dh,00h
 asc_C8216:
 db 053h,065h,06Ch,065h,063h,074h,020h,061h,020h,068h,069h,06Ch,069h,067h,068h,074h
 db 00h
-asc_C8227:
+str_EnterLeagueName:
 db 045h,06Eh,074h,065h,072h,020h,04Eh,065h,077h,020h,04Ch,065h,061h,067h,075h,065h
 db 020h,04Eh,061h,06Dh,065h,00h,045h,06Eh,074h,065h,072h,020h,04Eh,075h,06Dh,062h
 db 065h,072h,020h,06Fh,066h,020h,068h,075h,06Dh,061h,06Eh,020h,063h,06Fh,06Eh,074h

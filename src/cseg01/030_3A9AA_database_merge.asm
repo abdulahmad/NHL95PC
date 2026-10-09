@@ -14,10 +14,10 @@ extern dword_DDD70, dword_DE265, mkdir_, off_C7905, off_C7C1D, off_C7C59, off_C7
 extern leaguedbnames, off_C89DE, off_C8A85, off_C8AB9, off_C8B37
 extern sprintf_, strcmp_, strcpy_, stricmp_, sub_142E7, MakePath, sub_14368, sub_14442
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt, sub_1463D
-extern sub_1466B, sub_1478B, sub_147A0, sub_147C9, sub_1D100, sub_1D518, sub_30A0C, sub_30F12
+extern sub_1466B, sub_1478B, ReadSchedGame, ReadTeamRec, sub_1D100, sub_1D518, sub_30A0C, sub_30F12
 extern MessageBox, sub_327A1, sub_32C9E, sub_33559, sub_336E6, sub_38B4F, sub_3A24F, sub_3A266
-extern sub_3A27D, sub_3A28F, sub_3A2B8, sub_3A31E, sub_3A347, AskTeamPassword, AskMasterPassword, sub_3A5FC
-extern sub_3A71C, sub_3A826, FmtFromLeague, LeagueCheckStub, GetLeagueId, MsgCopyingDatabases, CopyHumanTeamDBs, sub_41CC4
+extern sub_3A27D, WriteSchedGame, WriteTeamRec, sub_3A31E, WriteLeagueTeamEntry, AskTeamPassword, AskMasterPassword, sub_3A5FC
+extern sub_3A71C, sub_3A826, FmtFromLeague, LeagueCheckStub, GetLeagueId, MsgCopyingDatabases, CopyHumanTeamDBs, UpdateSeasonSchedule
 extern sub_B2CD8, sub_B2DCA, sub_B392C, sub_B3CC8, sub_B4B88, unk_C1914, unk_C1916, unk_C192D
 extern unk_C1930, unk_C7569, unk_C7609, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, unk_C792B, unk_C79D0
 extern unk_C7B12, unk_C7C61, unk_C7CF1, unk_C7D9D, unk_C7E3E, btn_MasterDB, unk_C7F77, unk_C7F8E
@@ -163,7 +163,7 @@ jne short loc_3AB95	; 3AB7C
 mov ebx, ebp	; 3AB7E
 lea edx, [dword esp+02E8h]	; 3AB80
 mov eax, dword [dword esp+0A54h]	; 3AB87
-call sub_147C9	; 3AB8E
+call ReadTeamRec	; 3AB8E
 mov edx, eax	; 3AB93
 loc_3AB95:
 test edx, edx	; 3AB95
@@ -171,7 +171,7 @@ jne short loc_3ABAB	; 3AB97
 mov ebx, ebp	; 3AB99
 mov edx, esp	; 3AB9B
 mov eax, dword [dword esp+0A5Ch]	; 3AB9D
-call sub_147C9	; 3ABA4
+call ReadTeamRec	; 3ABA4
 mov edx, eax	; 3ABA9
 loc_3ABAB:
 test edx, edx	; 3ABAB
@@ -179,7 +179,7 @@ jne short loc_3ABC6	; 3ABAD
 mov ebx, ebp	; 3ABAF
 lea edx, [dword esp+05D0h]	; 3ABB1
 mov eax, dword [dword esp+0A58h]	; 3ABB8
-call sub_147C9	; 3ABBF
+call ReadTeamRec	; 3ABBF
 mov edx, eax	; 3ABC4
 loc_3ABC6:
 test edx, edx	; 3ABC6
@@ -193,7 +193,7 @@ call sub_3A5FC	; 3ABDF
 mov ebx, ebp	; 3ABE4
 lea edx, [dword esp+05D0h]	; 3ABE6
 mov eax, dword [dword esp+0A58h]	; 3ABED
-call sub_3A2B8	; 3ABF4
+call WriteTeamRec	; 3ABF4
 mov edx, eax	; 3ABF9
 loc_3ABFB:
 test edx, edx	; 3ABFB
@@ -417,7 +417,7 @@ loc_3AF0C:
 mov ebx, ecx	; 3AF0C
 lea edx, [byte esp+020h]	; 3AF0E
 mov eax, dword [byte esp+028h]	; 3AF12
-call sub_147A0	; 3AF16
+call ReadSchedGame	; 3AF16
 mov edx, eax	; 3AF1B
 test eax, eax	; 3AF1D
 jne short loc_3AF44	; 3AF1F
@@ -432,7 +432,7 @@ loc_3AF33:
 mov ebx, ecx	; 3AF33
 lea edx, [byte esp+020h]	; 3AF35
 mov eax, dword [byte esp+02Ch]	; 3AF39
-call sub_3A28F	; 3AF3D
+call WriteSchedGame	; 3AF3D
 mov edx, eax	; 3AF42
 loc_3AF44:
 inc ecx	; 3AF44
@@ -973,7 +973,7 @@ mov edx, leagueteams	; 3B5F3
 add edx, esi	; 3B5F8
 mov ebx, dword [byte esp+054h]	; 3B5FA
 mov eax, dword [byte esp+044h]	; 3B5FE
-call sub_3A347	; 3B602
+call WriteLeagueTeamEntry	; 3B602
 mov esi, eax	; 3B607
 loc_3B609:
 test esi, esi	; 3B609
@@ -986,7 +986,7 @@ add eax, eax	; 3B61A
 mov edx, leagueteams	; 3B61C
 add edx, eax	; 3B621
 mov eax, dword [byte esp+058h]	; 3B623
-call sub_3A347	; 3B627
+call WriteLeagueTeamEntry	; 3B627
 mov esi, eax	; 3B62C
 loc_3B62E:
 test esi, esi	; 3B62E
@@ -1094,7 +1094,7 @@ sar ebx, 10h	; 3B786
 mov ecx, leagueteams	; 3B789
 mov edx, str_extDB	; 3B78E
 mov eax, curleague	; 3B793
-call sub_41CC4	; 3B798
+call UpdateSeasonSchedule	; 3B798
 mov esi, eax	; 3B79D
 loc_3B79F:
 test esi, esi	; 3B79F
@@ -1793,7 +1793,7 @@ jne short loc_3C1AB	; 3C192
 mov ebx, dword [dword esp+0FCh]	; 3C194
 mov edx, ebp	; 3C19B
 mov eax, dword [dword esp+0E8h]	; 3C19D
-call sub_3A347	; 3C1A4
+call WriteLeagueTeamEntry	; 3C1A4
 mov esi, eax	; 3C1A9
 loc_3C1AB:
 lea eax, [dword esp+0E8h]	; 3C1AB
@@ -1815,7 +1815,7 @@ jne short loc_3C1FD	; 3C1E4
 mov ebx, dword [dword esp+0FCh]	; 3C1E6
 mov edx, ebp	; 3C1ED
 mov eax, dword [dword esp+0D0h]	; 3C1EF
-call sub_3A347	; 3C1F6
+call WriteLeagueTeamEntry	; 3C1F6
 mov esi, eax	; 3C1FB
 loc_3C1FD:
 call sub_30F12	; 3C1FD
@@ -1826,7 +1826,7 @@ or byte [byte ebp+018h], 1	; 3C20E
 mov ebx, dword [dword esp+0FCh]	; 3C212
 mov edx, ebp	; 3C219
 mov eax, dword [dword esp+0D0h]	; 3C21B
-call sub_3A347	; 3C222
+call WriteLeagueTeamEntry	; 3C222
 lea eax, [dword esp+0DCh]	; 3C227
 push eax	; 3C22E
 lea eax, [dword esp+0E4h]	; 3C22F
@@ -2620,7 +2620,7 @@ mov ebx, dword [dword esp+0B1h]	; 3CCF0
 sar ebx, 18h	; 3CCF7
 lea edx, [byte esp+04Ch]	; 3CCFA
 mov eax, dword [dword esp+0A0h]	; 3CCFE
-call sub_3A347	; 3CD05
+call WriteLeagueTeamEntry	; 3CD05
 mov esi, eax	; 3CD0A
 loc_3CD0C:
 lea eax, [dword esp+0A0h]	; 3CD0C
@@ -2643,7 +2643,7 @@ mov ebx, dword [dword esp+0B1h]	; 3CD4E
 sar ebx, 18h	; 3CD55
 lea edx, [byte esp+04Ch]	; 3CD58
 mov eax, dword [dword esp+0A4h]	; 3CD5C
-call sub_3A347	; 3CD63
+call WriteLeagueTeamEntry	; 3CD63
 jmp near loc_3CEC8	; 3CD68
 loc_3CD6D:
 lea eax, [byte esp+07Ch]	; 3CD6D
@@ -2713,7 +2713,7 @@ mov ebx, dword [dword esp+0B1h]	; 3CE54
 sar ebx, 18h	; 3CE5B
 lea edx, [byte esp+04Ch]	; 3CE5E
 mov eax, dword [dword esp+0A0h]	; 3CE62
-call sub_3A347	; 3CE69
+call WriteLeagueTeamEntry	; 3CE69
 mov esi, eax	; 3CE6E
 loc_3CE70:
 lea eax, [dword esp+0A0h]	; 3CE70
@@ -2736,7 +2736,7 @@ mov ebx, dword [dword esp+0B1h]	; 3CEAE
 sar ebx, 18h	; 3CEB5
 lea edx, [byte esp+04Ch]	; 3CEB8
 mov eax, dword [dword esp+0A4h]	; 3CEBC
-call sub_3A347	; 3CEC3
+call WriteLeagueTeamEntry	; 3CEC3
 loc_3CEC8:
 lea eax, [dword esp+0A4h]	; 3CEC8
 call FileClose	; 3CECF

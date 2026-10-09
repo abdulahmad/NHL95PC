@@ -5,11 +5,11 @@ section s_380E9 progbits alloc exec nowrite align=1
 extern __CHK, asc_C188D, asc_C1892, asc_C1897, asc_C189B, asc_C189F, asc_C18A6, asc_C18AB
 extern asc_C18B3, asc_C18B8, asc_C18C1, asc_C18C7, asc_C18CC, asc_C18D5, asc_C18E8, asc_C7969
 extern str_extDB, asc_C82A5, asc_C82B9, asc_C82CE, asc_C82E6, asc_C830C, asc_C8333, byte_C8332
-extern byte_C83C3, musicon, leagueflags, savedname, byte_ED858, byte_ED979, byte_ED9AC, gameopts
+extern divisionteams, musicon, leagueflags, savedname, byte_ED858, byte_ED979, byte_ED9AC, gameopts
 extern songdata, dword_C786C, dword_C7A34, dword_C87B0, musichandle, dword_D2C6B, dword_D8B74, musicslot
 extern dword_DC238, dword_DD798, leaguemaster, leaguesaved, dword_EA0DC, jctime, memcpy_, memset_
 extern off_C8055, strcat_, strcmp_, strcpy_, stricmp_, strlen_, MakePath, leaguedbnames
-extern FileOpenRead, FileClose, FileReadAt, FileWriteAt, sub_147C9, sub_174C2, sub_2FEDF, sub_303FB
+extern FileOpenRead, FileClose, FileReadAt, FileWriteAt, ReadTeamRec, sub_174C2, sub_2FEDF, sub_303FB
 extern sub_30A0C, MessageBox, sub_37B92, sub_37C53, sub_37D6A, sub_37E5B, sub_37EA6, sub_37FBA
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
 extern sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E
@@ -35,7 +35,7 @@ global loc_3A25F, loc_3A276, loc_3A2AE, loc_3A3AF, loc_3A409, loc_3A469, loc_3A4
 global loc_3A498, loc_3A4B9, loc_3A511, loc_3A571, loc_3A58B, loc_3A58F, loc_3A5C3, loc_3A5E8
 global loc_3A5EE, loc_3A717, loc_3A821, loc_3A954, loc_3A958, loc_3A983, loc_3A9A5, sub_380E9
 global sub_38386, sub_384B8, sub_38B25, sub_38B3A, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D
-global sub_3A28F, sub_3A2B8, sub_3A2EE, sub_3A31E, sub_3A347, sub_3A36B, sub_3A380, AskTeamPassword
+global WriteSchedGame, WriteTeamRec, sub_3A2EE, sub_3A31E, WriteLeagueTeamEntry, sub_3A36B, sub_3A380, AskTeamPassword
 global AskMasterPassword, sub_3A597, sub_3A5FC, sub_3A71C, sub_3A826
 sub_380E9:
 push dword 110h	; 380E9
@@ -362,7 +362,7 @@ loc_384D3:
 mov ebx, esi	; 384D3
 mov edx, esp	; 384D5
 mov eax, ecx	; 384D7
-call sub_147C9	; 384D9
+call ReadTeamRec	; 384D9
 mov dword [dword esp+078Ch], eax	; 384DE
 xor edx, edx	; 384E5
 mov dl, byte [byte esp+028h]	; 384E7
@@ -394,7 +394,7 @@ shl eax, 3	; 38541
 sub eax, esi	; 38544
 mov ebx, eax	; 38546
 xor eax, eax	; 38548
-mov al, byte [dword ecx+ebx+byte_C83C3]	; 3854A
+mov al, byte [dword ecx+ebx+divisionteams]	; 3854A
 mov edx, dword [dword esp+eax*4+0518h]	; 38551
 add edx, edx	; 38558
 mov edi, dword [dword esp+eax*4+0580h]	; 3855A
@@ -419,7 +419,7 @@ mov eax, dword [dword esp+eax*4+06B8h]	; 385B3
 mov dword [dword esp+edx+0438h], eax	; 385BA
 mov eax, ebx	; 385C1
 add eax, ebp	; 385C3
-mov dl, byte [dword ecx+ebx+byte_C83C3]	; 385C5
+mov dl, byte [dword ecx+ebx+divisionteams]	; 385C5
 mov byte [ecx+eax], dl	; 385CC
 inc ecx	; 385CF
 cmp ecx, byte 7	; 385D0
@@ -808,7 +808,7 @@ test byte [dword esp+02A0h], 1	; 38C14
 je short loc_38C38	; 38C1C
 xor ecx, ecx	; 38C1E
 mov ebx, 1Ch	; 38C20
-mov edx, byte_C83C3	; 38C25
+mov edx, divisionteams	; 38C25
 lea eax, [dword esp+01B4h]	; 38C2A
 call memcpy_	; 38C31
 jmp short loc_38C8B	; 38C36
@@ -2235,7 +2235,7 @@ call __CHK	; 3A282
 push ecx	; 3A287
 mov ecx, 36h	; 3A288
 jmp short loc_3A25F	; 3A28D
-sub_3A28F:
+WriteSchedGame:
 push dword 0Ch	; 3A28F
 call __CHK	; 3A294
 push ecx	; 3A299
@@ -2253,7 +2253,7 @@ call FileWriteAt	; 3A2B0
 pop esi	; 3A2B5
 pop ecx	; 3A2B6
 ret	; 3A2B7
-sub_3A2B8:
+WriteTeamRec:
 push dword 10h	; 3A2B8
 call __CHK	; 3A2BD
 push ecx	; 3A2C2
@@ -2315,7 +2315,7 @@ call FileReadAt	; 3A33F
 pop esi	; 3A344
 pop ecx	; 3A345
 ret	; 3A346
-sub_3A347:
+WriteLeagueTeamEntry:
 push dword 0Ch	; 3A347
 call __CHK	; 3A34C
 push ecx	; 3A351

@@ -5,11 +5,11 @@ section s_C8445 progbits alloc noexec write align=1
 extern sub_217FE, sub_34691, sub_346FE, sub_3476B, sub_38B25, sub_38B3A, sub_7A335, sub_7A39F
 extern sub_7A404, sub_7CA53, sub_7CA61, unk_C67B1, unk_CDF44, unk_CDF56, unk_CDF64, unk_CDF76
 extern unk_CDF8A, unk_CE96F, unk_CEA2F, unk_CEB2F
-global byte_C8445, curleague, byte_C845D, byte_C845E, dword_C87B0, off_C85F6, off_C8616, unk_C846A
+global monthdays, curleague, byte_C845D, byte_C845E, dword_C87B0, off_C85F6, off_C8616, unk_C846A
 global unk_C850A, unk_C8520, unk_C8536, unk_C854F, unk_C85AF, unk_C85BA, unk_C85C9, unk_C85E2
 global unk_C8642, unk_C8647, unk_C864C, unk_C8657, unk_C86B7, unk_C86CC, unk_C86EC, unk_C86FC
 global unk_C871C, unk_C8721, unk_C8728, unk_C8768, unk_C876F, unk_C8778, unk_C87B8
-byte_C8445:
+monthdays:
 db 01Fh,01Ch,01Fh,01Eh,01Fh,01Eh,01Fh,01Fh,01Eh,01Fh,01Eh,01Fh
 curleague:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h

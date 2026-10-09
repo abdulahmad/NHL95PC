@@ -12,7 +12,7 @@ extern dword_DD6B0, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, 
 extern loc_113E9, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
 extern off_C526F, off_C5273, off_C5439, leaguedbnames, replaystart, camx_m2
 extern off_CBED0, strcat_, strcpy_, sub_10E9F, sub_1145F, sub_1149A, sub_11598, sub_13A91
-extern sub_13E8F, MakePath, FileOpenRead, FileClose, sub_1463D, sub_1478B, sub_147C9, sub_14CF1
+extern sub_13E8F, MakePath, FileOpenRead, FileClose, sub_1463D, sub_1478B, ReadTeamRec, sub_14CF1
 extern sub_150C6, sub_15B76, sub_1920F, sub_1935D, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
 extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71, DrawRinkOverlays, PeriodOver, LoadGameState
@@ -754,7 +754,7 @@ loc_12181:
 mov ebx, edi	; 12181
 mov edx, esp	; 12183
 mov eax, dword [dword esp+03F8h]	; 12185
-call sub_147C9	; 1218C
+call ReadTeamRec	; 1218C
 mov ebx, eax	; 12191
 xor eax, eax	; 12193
 mov al, byte [byte esp+029h]	; 12195

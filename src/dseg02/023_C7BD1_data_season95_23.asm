@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_C7BD1 progbits alloc noexec write align=1
 extern unk_C7BBB
-global msg_Copying_arg, msg_Copying, unk_C7BD9, unk_C7BEA, unk_C7BEE, unk_C7C06
+global msg_Copying_arg, msg_Copying, unk_C7BD9, msg_CreatingLeague, unk_C7BEE, unk_C7C06
 msg_Copying:
 dd unk_C7BBB
 msg_Copying_arg:
@@ -11,7 +11,7 @@ db 00h,00h,00h,00h
 unk_C7BD9:
 db 043h,072h,065h,061h,074h,069h,06Eh,067h,020h,06Ch,065h,061h,067h,075h,065h,02Eh
 db 00h
-unk_C7BEA:
+msg_CreatingLeague:
 dd unk_C7BD9
 unk_C7BEE:
 db 054h,068h,061h,074h,020h,066h,06Ch,06Fh,070h,070h,079h,020h,064h,069h,073h,06Bh

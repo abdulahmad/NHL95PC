@@ -10,7 +10,7 @@ extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, dword_DC234, jctime, 
 extern loc_32705, strcat_, strcpy_, sub_10712, sub_11D09, FileOpenRead, sub_148A5, sub_1BEFD
 extern sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
 extern sub_20D97, sub_29F28, sub_3271B, sub_327A1, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
-extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, sub_44DCF
+extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
 extern sub_479E9, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, unk_208EF, unk_20A46, unk_20BBD
 extern unk_20EB7, unk_C5298, unk_CE64F, word_C53DB
@@ -234,7 +234,7 @@ mov eax, dword_C5382	; 330FE
 call sub_327A1	; 33103
 xor eax, eax	; 33108
 call sub_7A6AD	; 3310A
-call sub_44DCF	; 3310F
+call CreateNewLeague	; 3310F
 call sub_7B39C	; 33114
 cmp byte [byte_C5386], 0	; 33119
 je short loc_3314E	; 33120

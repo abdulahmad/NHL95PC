@@ -22,7 +22,7 @@ global loc_14CC5, loc_14CCE, loc_14CD2, loc_14CD8, loc_14CEE, loc_14D57, loc_14D
 global loc_14E34, loc_14E56, loc_14E6C, loc_14E88, loc_14EB4, loc_14EF1, loc_14F13, loc_14F2A
 global loc_14F7E, loc_14F9E, loc_14FF3, loc_15008, loc_15023, loc_1509B, MakePath, sub_14368
 global sub_14442, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
-global sub_1463D, sub_14654, sub_1466B, sub_1478B, sub_147A0, sub_147C9, sub_147FF, sub_14825
+global sub_1463D, sub_14654, sub_1466B, sub_1478B, ReadSchedGame, ReadTeamRec, sub_147FF, sub_14825
 global sub_148A5, sub_149BF, sub_14A20, sub_14AFE, sub_14BEF, sub_14C22, sub_14CA0, sub_14CF1
 global sub_14F31
 MakePath:
@@ -413,7 +413,7 @@ call __CHK	; 14790
 push ecx	; 14795
 mov ecx, 2Fh	; 14796
 jmp near loc_1464D	; 1479B
-sub_147A0:
+ReadSchedGame:
 push dword 0Ch	; 147A0
 call __CHK	; 147A5
 push ecx	; 147AA
@@ -430,7 +430,7 @@ call FileReadAt	; 147C1
 pop esi	; 147C6
 pop ecx	; 147C7
 ret	; 147C8
-sub_147C9:
+ReadTeamRec:
 push dword 10h	; 147C9
 call __CHK	; 147CE
 push ecx	; 147D3

@@ -6,8 +6,8 @@ extern __CHK, _dos_getdiskfree_, asc_C2814, asc_C282C, asc_C2834, asc_C284F, asc
 extern asc_C2894, asc_C2899, asc_C28A1, asc_C28AC, asc_C28B8, asc_C6903, str_extDB, asc_CFB69
 extern asc_D0F15, byte_D07A8, musicon, byte_D42C3, byte_EA990, byte_EA991, byte_EAF80, dword_C71CC
 extern dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, songdata, dword_D07AA, dword_D07AE, dword_D07B2
-extern dword_D07BB, dword_D07BF, dword_D07C3, dword_D07C7, dword_D07CB, dword_D07CF, dword_D07D3, dword_D07D7
-extern dword_D07DB, dword_D07DF, dword_D07E3, dword_D07E7, dword_D0B12, dword_D0BFC, dword_D0C04, dword_D0C10
+extern seasondb, careerdb, dword_D07C3, keydb, dword_D07CB, dword_D07CF, seasondb_size, careerdb_size
+extern dword_D07DB, keydb_size, dword_D07E3, dword_D07E7, dword_D0B12, dword_D0BFC, dword_D0C04, dword_D0C10
 extern dword_D0C18, dword_D0C20, musichandle, dword_D8B74, dword_DC238, dword_EA2B0, dword_EA2B4, musicslot
 extern dword_EA988, dword_EBC68, dword_EBC74, dword_EBCA4, dword_EBE9C, dword_EBEA0, fputchar, jctime
 extern loc_6C03C, mkdir_, leaguedbnames
@@ -16,7 +16,7 @@ extern MakePath, sub_14442, sub_17573, sub_175E2, sub_29C75, sub_2FEDF, sub_30AE
 extern sub_30F12, MessageBox, sub_6C19B, sub_6D2F8, sub_6E089, sub_6EF84, sub_76429, sub_8CCA8
 extern sub_8D2F0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90F38
 extern sub_91964, sub_932D0, sub_B2CD8, MouseSetPos, sub_B4BA8, sub_B4F8C, unk_6BF3D, unk_C28A9
-extern unk_C7733, unk_D0450, unk_D07EB, unk_D0BB8, unk_D0BF0, unk_D0C24, unk_EC7C0, unknown_libname_1
+extern btn_LeagueExists, unk_D0450, unk_D07EB, unk_D0BB8, unk_D0BF0, unk_D0C24, unk_EC7C0, unknown_libname_1
 global loc_6C3B3, loc_6C470, loc_6C475, loc_6C486, loc_6C4B2, loc_6C4F7, loc_6C53F, loc_6C54F
 global loc_6C580, loc_6C590, loc_6C5C1, loc_6C5D1, loc_6C602, loc_6C612, loc_6C63F, loc_6C64B
 global loc_6C680, loc_6C690, loc_6C74C, loc_6C7A8, loc_6C828, loc_6C960, loc_6CAC0, loc_6CADF
@@ -136,7 +136,7 @@ push byte 0FFFFFFFFh	; 6C43F
 push ebp	; 6C441
 push edi	; 6C442
 push byte 2	; 6C443
-push unk_C7733	; 6C445
+push btn_LeagueExists	; 6C445
 mov ecx, 2	; 6C44A
 mov ebx, off_CFB1C	; 6C44F
 mov edx, 0FFFFFFFFh	; 6C454
@@ -318,7 +318,7 @@ add eax, 3FFh	; 6C684
 shr eax, 0Ah	; 6C689
 mov dword [byte esp+060h], eax	; 6C68C
 loc_6C690:
-mov edx, dword [dword_D07D3]	; 6C690
+mov edx, dword [seasondb_size]	; 6C690
 add edx, 3FFh	; 6C696
 mov eax, edx	; 6C69C
 sar edx, 1Fh	; 6C69E
@@ -326,7 +326,7 @@ shl edx, 0Ah	; 6C6A1
 LD sbb, eax, edx	; 6C6A4
 sar eax, 0Ah	; 6C6A6
 mov dword [byte esp+06Ch], eax	; 6C6A9
-mov edx, dword [dword_D07D7]	; 6C6AD
+mov edx, dword [careerdb_size]	; 6C6AD
 add edx, 3FFh	; 6C6B3
 mov eax, edx	; 6C6B9
 sar edx, 1Fh	; 6C6BB
@@ -342,7 +342,7 @@ shl edx, 0Ah	; 6C6DB
 LD sbb, eax, edx	; 6C6DE
 sar eax, 0Ah	; 6C6E0
 mov dword [byte esp+074h], eax	; 6C6E3
-mov edx, dword [dword_D07DF]	; 6C6E7
+mov edx, dword [keydb_size]	; 6C6E7
 add edx, 3FFh	; 6C6ED
 mov eax, edx	; 6C6F3
 sar edx, 1Fh	; 6C6F5
@@ -446,9 +446,9 @@ mov ecx, dword [dword esp+09Ch]	; 6C82E
 mov edx, ebp	; 6C835
 lea eax, [byte esp+02Ch]	; 6C837
 call MakePath	; 6C83B
-mov ecx, dword [dword_D07D3]	; 6C840
+mov ecx, dword [seasondb_size]	; 6C840
 push ecx	; 6C846
-mov esi, dword [dword_D07BB]	; 6C847
+mov esi, dword [seasondb]	; 6C847
 push esi	; 6C84D
 lea eax, [byte esp+034h]	; 6C84E
 push eax	; 6C852
@@ -459,9 +459,9 @@ mov ecx, dword [dword esp+09Ch]	; 6C861
 mov edx, ebp	; 6C868
 lea eax, [byte esp+02Ch]	; 6C86A
 call MakePath	; 6C86E
-mov edi, dword [dword_D07D7]	; 6C873
+mov edi, dword [careerdb_size]	; 6C873
 push edi	; 6C879
-mov eax, dword [dword_D07BF]	; 6C87A
+mov eax, dword [careerdb]	; 6C87A
 push eax	; 6C87F
 lea eax, [byte esp+034h]	; 6C880
 push eax	; 6C884
@@ -485,9 +485,9 @@ mov ecx, dword [dword esp+09Ch]	; 6C8C6
 mov edx, ebp	; 6C8CD
 lea eax, [byte esp+02Ch]	; 6C8CF
 call MakePath	; 6C8D3
-mov ecx, dword [dword_D07DF]	; 6C8D8
+mov ecx, dword [keydb_size]	; 6C8D8
 push ecx	; 6C8DE
-mov esi, dword [dword_D07C7]	; 6C8DF
+mov esi, dword [keydb]	; 6C8DF
 push esi	; 6C8E5
 lea eax, [byte esp+034h]	; 6C8E6
 push eax	; 6C8EA
@@ -545,9 +545,9 @@ mov ecx, eax	; 6C987
 xor edx, edx	; 6C989
 mov eax, esp	; 6C98B
 call MakePath	; 6C98D
-mov edx, dword [dword_D07D3]	; 6C992
+mov edx, dword [seasondb_size]	; 6C992
 push edx	; 6C998
-mov ebx, dword [dword_D07BB]	; 6C999
+mov ebx, dword [seasondb]	; 6C999
 push ebx	; 6C99F
 lea eax, [byte esp+08h]	; 6C9A0
 push eax	; 6C9A4
@@ -558,9 +558,9 @@ mov ecx, esi	; 6C9B3
 xor edx, edx	; 6C9B5
 mov eax, esp	; 6C9B7
 call MakePath	; 6C9B9
-mov ecx, dword [dword_D07D7]	; 6C9BE
+mov ecx, dword [careerdb_size]	; 6C9BE
 push ecx	; 6C9C4
-mov edi, dword [dword_D07BF]	; 6C9C5
+mov edi, dword [careerdb]	; 6C9C5
 push edi	; 6C9CB
 lea eax, [byte esp+08h]	; 6C9CC
 push eax	; 6C9D0
@@ -584,9 +584,9 @@ mov ecx, esi	; 6CA0A
 xor edx, edx	; 6CA0C
 mov eax, esp	; 6CA0E
 call MakePath	; 6CA10
-mov edx, dword [dword_D07DF]	; 6CA15
+mov edx, dword [keydb_size]	; 6CA15
 push edx	; 6CA1B
-mov ebx, dword [dword_D07C7]	; 6CA1C
+mov ebx, dword [keydb]	; 6CA1C
 push ebx	; 6CA22
 lea eax, [byte esp+08h]	; 6CA23
 push eax	; 6CA27
@@ -649,15 +649,15 @@ xor eax, eax	; 6CAD3
 mov dword [dword_D07CB], eax	; 6CAD5
 mov dword [dword_D07E3], eax	; 6CADA
 loc_6CADF:
-mov ebx, dword [dword_D07C7]	; 6CADF
+mov ebx, dword [keydb]	; 6CADF
 test ebx, ebx	; 6CAE5
 je short loc_6CB00	; 6CAE7
 push ebx	; 6CAE9
 call jctime	; 6CAEA
 add esp, byte 4	; 6CAEF
 xor esi, esi	; 6CAF2
-mov dword [dword_D07C7], esi	; 6CAF4
-mov dword [dword_D07DF], esi	; 6CAFA
+mov dword [keydb], esi	; 6CAF4
+mov dword [keydb_size], esi	; 6CAFA
 loc_6CB00:
 mov ebp, dword [dword_D07C3]	; 6CB00
 test ebp, ebp	; 6CB06
@@ -669,25 +669,25 @@ xor edx, edx	; 6CB13
 mov dword [dword_D07C3], edx	; 6CB15
 mov dword [dword_D07DB], edx	; 6CB1B
 loc_6CB21:
-mov ecx, dword [dword_D07BF]	; 6CB21
+mov ecx, dword [careerdb]	; 6CB21
 test ecx, ecx	; 6CB27
 je short loc_6CB42	; 6CB29
 push ecx	; 6CB2B
 call jctime	; 6CB2C
 add esp, byte 4	; 6CB31
 xor edi, edi	; 6CB34
-mov dword [dword_D07BF], edi	; 6CB36
-mov dword [dword_D07D7], edi	; 6CB3C
+mov dword [careerdb], edi	; 6CB36
+mov dword [careerdb_size], edi	; 6CB3C
 loc_6CB42:
-mov eax, dword [dword_D07BB]	; 6CB42
+mov eax, dword [seasondb]	; 6CB42
 test eax, eax	; 6CB47
 je near loc_6C03C	; 6CB49
 push eax	; 6CB4F
 call jctime	; 6CB50
 add esp, byte 4	; 6CB55
 xor ebx, ebx	; 6CB58
-mov dword [dword_D07BB], ebx	; 6CB5A
-mov dword [dword_D07D3], ebx	; 6CB60
+mov dword [seasondb], ebx	; 6CB5A
+mov dword [seasondb_size], ebx	; 6CB60
 jmp near loc_6C03C	; 6CB66
 sub_6CB6B:
 push dword 8	; 6CB6B
@@ -724,7 +724,7 @@ sub_6CBB7:
 push dword 8	; 6CBB7
 call __CHK	; 6CBBC
 push edx	; 6CBC1
-mov edx, dword [dword_D07C7]	; 6CBC2
+mov edx, dword [keydb]	; 6CBC2
 add eax, edx	; 6CBC8
 pop edx	; 6CBCA
 ret	; 6CBCB
@@ -733,7 +733,7 @@ push dword 8	; 6CBCC
 loc_6CBD1:
 call __CHK	; 6CBD1
 push edx	; 6CBD6
-mov edx, dword [dword_D07BB]	; 6CBD7
+mov edx, dword [seasondb]	; 6CBD7
 add eax, edx	; 6CBDD
 pop edx	; 6CBDF
 ret	; 6CBE0
@@ -745,7 +745,7 @@ push dword 8	; 6CBE8
 loc_6CBED:
 call __CHK	; 6CBED
 push edx	; 6CBF2
-mov edx, dword [dword_D07BF]	; 6CBF3
+mov edx, dword [careerdb]	; 6CBF3
 add eax, edx	; 6CBF9
 pop edx	; 6CBFB
 ret	; 6CBFC

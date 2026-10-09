@@ -3,13 +3,13 @@ bits 32
 %include "hockey.inc"
 section s_33FFD progbits alloc exec nowrite align=1
 extern __CHK, asc_C17F4, asc_C17F9, asc_C17FE, asc_C1803, asc_C180B, asc_C1810, asc_C181A
-extern asc_C1827, asc_C182C, asc_C1835, asc_C183D, asc_C1842, asc_C184A, byte_C8445, byte_C845D
+extern asc_C1827, asc_C182C, asc_C1835, asc_C183D, asc_C1842, asc_C184A, monthdays, byte_C845D
 extern byte_C845E, musicon, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, dword_C65C0
 extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, songdata, dword_C895E, dword_C8976, dword_C897A
 extern dword_C898E, dword_C8992, musichandle, dword_D2C6B, dword_D42A8, dword_D8B74, dword_DC238, musicslot
 extern dword_DD780, dword_DD794, dword_DD7A0, dword_DDD28, dword_DDD2C, dword_DDD30, dword_EA0DC, fputchar
 extern jctime, off_C57CC, off_C85F6, off_C8616, sprintf_, MakePath, FileOpenRead, leaguedbnames
-extern FileClose, FileReadAt, sub_147A0, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
+extern FileClose, FileReadAt, ReadSchedGame, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
 extern sub_21350, sub_214B1, sub_215C4, sub_216D7, sub_217FE, sub_30A0C, sub_479E9, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
 extern sub_7DB67, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
@@ -180,7 +180,7 @@ add esp, byte 0Ch	; 341ED
 loc_341F0:
 xor eax, eax	; 341F0
 mov ebx, dword [byte esp+08h]	; 341F2
-mov al, byte [dword ebx+byte_C8445]	; 341F6
+mov al, byte [dword ebx+monthdays]	; 341F6
 cmp ebp, eax	; 341FC
 jl near loc_3416A	; 341FE
 mov dword [dword esp+098h], 0FFFFFFFFh	; 34204
@@ -874,7 +874,7 @@ add ecx, ecx	; 34B37
 lea edx, [dword esp+0304h]	; 34B39
 add edx, ecx	; 34B40
 mov eax, dword [dword esp+0780h]	; 34B42
-call sub_147A0	; 34B49
+call ReadSchedGame	; 34B49
 mov esi, eax	; 34B4E
 test ax, ax	; 34B50
 jne near loc_34CB4	; 34B53
@@ -1817,7 +1817,7 @@ mov word [dword esp+07C8h], ax	; 35B38
 test ax, ax	; 35B40
 jl near loc_35E5B	; 35B43
 xor eax, eax	; 35B49
-mov al, byte [dword ebx+byte_C8445]	; 35B4B
+mov al, byte [dword ebx+monthdays]	; 35B4B
 mov edx, dword [dword esp+07C6h]	; 35B51
 sar edx, 10h	; 35B58
 cmp edx, eax	; 35B5B

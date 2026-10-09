@@ -13,8 +13,8 @@ extern dword_DC738, dword_DD100, dword_DD104, dword_DD10C, dword_DD110, dword_DD
 extern dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C, dword_DE260
 extern dword_DE264, dword_EA0DC, jctime, memcpy_, leaguedbnames, off_C8BDD, off_CF2A3
 extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
-extern FileOpenRW, FileClose, sub_1463D, sub_14654, sub_147C9, sub_1BBCC, sub_1D6E8, sub_1FAA7
-extern sub_244E2, sub_2FEDF, MessageBox, sub_3A2B8, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
+extern FileOpenRW, FileClose, sub_1463D, sub_14654, ReadTeamRec, sub_1BBCC, sub_1D6E8, sub_1FAA7
+extern sub_244E2, sub_2FEDF, MessageBox, WriteTeamRec, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
 extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A099, sub_8B96D
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
 extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, MouseSetPos
@@ -87,7 +87,7 @@ jne short loc_3DCB5	; 3DCA2
 mov ebx, dword [byte esp+060h]	; 3DCA4
 mov edx, edi	; 3DCA8
 mov eax, dword [byte esp+058h]	; 3DCAA
-call sub_147C9	; 3DCAE
+call ReadTeamRec	; 3DCAE
 mov ebx, eax	; 3DCB3
 loc_3DCB5:
 lea eax, [byte esp+058h]	; 3DCB5
@@ -628,7 +628,7 @@ jne short loc_3E40F	; 3E3FB
 mov ebx, dword [edi]	; 3E3FD
 mov edx, esp	; 3E3FF
 mov eax, dword [dword esp+065Ch]	; 3E401
-call sub_147C9	; 3E408
+call ReadTeamRec	; 3E408
 mov esi, eax	; 3E40D
 loc_3E40F:
 test esi, esi	; 3E40F
@@ -636,7 +636,7 @@ jne short loc_3E42B	; 3E411
 mov ebx, dword [byte edi+04h]	; 3E413
 lea edx, [dword esp+02E8h]	; 3E416
 mov eax, dword [dword esp+065Ch]	; 3E41D
-call sub_147C9	; 3E424
+call ReadTeamRec	; 3E424
 mov esi, eax	; 3E429
 loc_3E42B:
 test esi, esi	; 3E42B
@@ -744,7 +744,7 @@ jne short loc_3E5EC	; 3E5D8
 mov ebx, dword [edi]	; 3E5DA
 mov edx, esp	; 3E5DC
 mov eax, dword [dword esp+065Ch]	; 3E5DE
-call sub_3A2B8	; 3E5E5
+call WriteTeamRec	; 3E5E5
 mov esi, eax	; 3E5EA
 loc_3E5EC:
 test esi, esi	; 3E5EC
@@ -752,7 +752,7 @@ jne short loc_3E608	; 3E5EE
 mov ebx, dword [byte edi+04h]	; 3E5F0
 lea edx, [dword esp+02E8h]	; 3E5F3
 mov eax, dword [dword esp+065Ch]	; 3E5FA
-call sub_3A2B8	; 3E601
+call WriteTeamRec	; 3E601
 mov esi, eax	; 3E606
 loc_3E608:
 test esi, esi	; 3E608

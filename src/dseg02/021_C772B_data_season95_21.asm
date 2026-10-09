@@ -3,12 +3,12 @@ bits 32
 %include "hockey.inc"
 section s_C772B progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450, unk_C76D4, unk_C76FE
-global off_C772B, unk_C7733, unk_C776B, unk_C7792, unk_C77A3, unk_C77AA, unk_C77AE, unk_C77E6
-global unk_C7805, unk_C7809, unk_C7826, unk_C782A, msg_TradeError, unk_C784B
-off_C772B:
+global msg_LeagueExists, btn_LeagueExists, unk_C776B, unk_C7792, unk_C77A3, msg_WhichSchedule, btn_WhichSchedule, unk_C77E6
+global unk_C7805, unk_C7809, msg_CreateError, unk_C782A, msg_TradeError, unk_C784B
+msg_LeagueExists:
 dd unk_C76D4
 dd unk_C76FE
-unk_C7733:
+btn_LeagueExists:
 db 010h,00h,00h,00h,03Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd unk_C7450
@@ -24,9 +24,9 @@ db 027h,039h,033h,020h,02Dh,020h,027h,039h,034h,020h,053h,065h,061h,073h,06Fh,06
 db 00h
 unk_C77A3:
 db 052h,061h,06Eh,064h,06Fh,06Dh,00h
-unk_C77AA:
+msg_WhichSchedule:
 dd unk_C776B
-unk_C77AE:
+btn_WhichSchedule:
 db 010h,00h,00h,00h,030h,00h,00h,00h,0A0h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd unk_C7792
@@ -41,7 +41,7 @@ dd unk_C77E6
 unk_C7809:
 db 045h,072h,072h,06Fh,072h,020h,077h,068h,069h,06Ch,065h,020h,063h,072h,065h,061h
 db 074h,069h,06Eh,067h,020h,06Ch,065h,061h,067h,075h,065h,021h,00h
-unk_C7826:
+msg_CreateError:
 dd unk_C7809
 unk_C782A:
 db 045h,072h,072h,06Fh,072h,020h,077h,068h,069h,06Ch,065h,020h,074h,072h,061h,064h

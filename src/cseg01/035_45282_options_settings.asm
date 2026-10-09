@@ -4,8 +4,8 @@ bits 32
 section s_45282 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1AAF, asc_C1AB4, asc_C1AB8, asc_C1AC4, asc_C1AC9, asc_C1ACD, asc_C1AD4
 extern asc_C1AD9, byte_DE26C, byte_DEB70, byte_DEB71, byte_ED9EE, gameopts, dword_C900C, dword_C905C
-extern dword_C9074, dword_D07BB, dword_D2C6B, dword_DEB6C, jctime, memcpy_, memset_, rand_
-extern MakePath, sub_147C9, sub_3A2B8, sub_3A2EE, sub_6CBB7, sub_6CBCC, sub_6CBE1, sub_6CBE8
+extern dword_C9074, seasondb, dword_D2C6B, dword_DEB6C, jctime, memcpy_, memset_, rand_
+extern MakePath, ReadTeamRec, WriteTeamRec, sub_3A2EE, sub_6CBB7, sub_6CBCC, sub_6CBE1, sub_6CBE8
 extern sub_6CBFD, sub_76429, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E83C, sub_8FFB0, sub_910E0
 extern sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4C61, unk_C1AA4
 extern unk_C1AA6, unk_C1AA9, unk_C1AAC, unk_C1ABE, unk_C1AC1
@@ -33,7 +33,7 @@ global loc_47632, loc_47641, loc_47648, loc_47658, loc_47661, loc_476AF, loc_476
 global loc_47733, loc_47764, loc_477AC, loc_477B3, loc_477C3, loc_477CE, loc_4781E, loc_47825
 global loc_47839, loc_47840, loc_4785B, loc_47864, loc_47983, loc_479E5, loc_47A7B, loc_47A7D
 global loc_47AE7, loc_47AF1, loc_47AF4, loc_47B30, loc_47B3A, loc_47B3D, loc_47BC8, loc_47BD3
-global loc_47BD5, loc_47BFB, loc_47C1B, loc_47C25, sub_45282, sub_452A6, sub_452C5, sub_47951
+global loc_47BD5, loc_47BFB, loc_47C1B, loc_47C25, sub_45282, sub_452A6, SimulateGame, sub_47951
 global sub_479E9
 sub_45282:
 push dword 0Ch	; 45282
@@ -64,7 +64,7 @@ inc dword [eax]	; 452C1
 loc_452C3:
 pop esi	; 452C3
 ret	; 452C4
-sub_452C5:
+SimulateGame:
 push dword 224h	; 452C5
 call __CHK	; 452CA
 push esi	; 452CF
@@ -211,7 +211,7 @@ jne near loc_45591	; 4550B
 mov ebx, dword [dword esp+ecx+013Ch]	; 45511
 mov edx, dword [dword esp+ecx+016Ch]	; 45518
 mov eax, dword [dword esp+0218h]	; 4551F
-call sub_147C9	; 45526
+call ReadTeamRec	; 45526
 mov dword [dword esp+01A4h], eax	; 4552B
 cmp ebp, 444h	; 45532
 jl short loc_45557	; 45538
@@ -2524,7 +2524,7 @@ loc_47733:
 mov ebx, dword [dword esp+edi*4+013Ch]	; 47733
 mov edx, dword [dword esp+edi*4+016Ch]	; 4773A
 mov eax, dword [dword esp+0218h]	; 47741
-call sub_3A2B8	; 47748
+call WriteTeamRec	; 47748
 mov dword [dword esp+01A4h], eax	; 4774D
 mov dword [dword esp+01CCh], ebp	; 47754
 mov edi, dword [dword esp+01A4h]	; 4775B
@@ -2543,7 +2543,7 @@ mov eax, dword [ebx+eax]	; 4778A
 mov eax, dword [byte eax+02Ch]	; 4778D
 mov edx, dword [dword esp+edx+0154h]	; 47790
 mov edx, dword [edx+ebx]	; 47797
-mov ebx, dword [dword_D07BB]	; 4779A
+mov ebx, dword [seasondb]	; 4779A
 add eax, ebx	; 477A0
 mov ebx, 2Fh	; 477A2
 call memcpy_	; 477A7
@@ -2573,7 +2573,7 @@ mov eax, dword [ebx+eax]	; 477FC
 mov eax, dword [byte eax+02Ch]	; 477FF
 mov edx, dword [dword esp+edx+0124h]	; 47802
 mov edx, dword [edx+ebx]	; 47809
-mov ebx, dword [dword_D07BB]	; 4780C
+mov ebx, dword [seasondb]	; 4780C
 add eax, ebx	; 47812
 mov ebx, 2Fh	; 47814
 call memcpy_	; 47819

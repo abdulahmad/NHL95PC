@@ -284,5 +284,32 @@ str_SelTradeTeams,C81D3,string 'Select two teams for trading players'
 str_pen,C223B,string pen (DebugMonitor prints it for an object in the penalty box)
 teamcitynames,C54A9,"pointer table of team city names ('BOSTON', 'BUFFALO', 'CALGARY', ...); TradePlayers builds 'Show <city> Statistics...' from it"
 btn_MasterDB,C7E4E,"two-button table (Yes at +18h, No at +34h) for the 'Master databases for' message box"
-btn_WrongDisk,C7677,"two-button table (Yes/No) for the 'That disk is for' message box in CopyHumanTeamDBs"
-btn_TradeStats,C885C,"button table for the TradePlayers team picker (the two 'Show <city> Statistics...' buttons)"
+btn_WrongDisk,C7677,two-button table (Yes/No) for the 'That disk is for' message box in CopyHumanTeamDBs
+btn_TradeStats,C885C,button table for the TradePlayers team picker (the two 'Show <city> Statistics...' buttons)
+divisionteams,C83C3,4 divisions x 7 team indexes (63h = none); RandomizeSchedule shuffles inside each row
+teamdivision,C83DF,division (0-3) of each of the 1Ah teams; index into divisionteams
+teamdivslot,C83F9,slot of each team inside its divisionteams row
+monthdays,C8445,"31,28,31,30,31,30,31,31,30,31,30,31"
+monthdays_m1,C8444,monthdays-1 (1-based month index); NormalizeDate reads monthdays_m1[month]; separate label because monthdays is in the next data file
+str_sche,C1A70,string 'sche'
+str_Sch,C1A75,string 'Sch'
+str_gameset,C1A7C,string 'game.set'
+str_KbytesFree,C1A85,string '%4d Kbytes of free disk space.'
+str_SelHumanTeams,C816D,string 'Select human controlled teams'
+str_EnterLeagueName,C8227,string 'Enter New League Name'
+str_KbytesFreeLine,C8CA4,string 'XXXX Kbytes of free disk space.    '
+msg_GenSchedule,C8C59,message box line table
+msg_LeagueExists,C772B,message box line table
+btn_LeagueExists,C7733,string '\x10'
+msg_WhichSchedule,C77AA,message box line table
+btn_WhichSchedule,C77AE,string '\x10'
+msg_CreateError,C7826,message box line table
+msg_CreatingLeague,C7BEA,message box line table
+msg_DiskFull,C8D02,message box line table
+msg_NoDiskSpace,C8CC8,message box line table
+seasondb,D07BB,"buffer of the loaded <league>\SEASON.DB (UpdateSeasonSchedule loads it from leaguedbnames+14h, saves it back with sub_932D0, frees it); size in seasondb_size"
+seasondb_size,D07D3,"size of SEASON.DB from sub_92DE0, passed with seasondb to the save call"
+careerdb,D07BF,buffer of the loaded CAREER.DB (leaguedbnames+4) in UpdateSeasonSchedule
+careerdb_size,D07D7,size of CAREER.DB
+keydb,D07C7,buffer of the loaded KEY.DB (leaguedbnames+0) in UpdateSeasonSchedule
+keydb_size,D07DF,size of KEY.DB

@@ -15,11 +15,11 @@ extern dword_DDD6C, awtmlines, startm_m2, hmtmlines, hmtmstruct
 extern fputchar, jctime, memset_, off_C57CC, off_C800C, leaguedbnames
 extern sprintf_, strcat_, strcpy_, sub_10712, sub_11D09, sub_142E7, MakePath
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, sub_1463D, sub_1478B
-extern sub_147A0, sub_147C9, sub_147FF, sub_148A5, sub_174C2, sub_17573, sub_175E2, sub_1BEFD
+extern ReadSchedGame, ReadTeamRec, sub_147FF, sub_148A5, sub_174C2, sub_17573, sub_175E2, sub_1BEFD
 extern sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A, sub_29F28, sub_30A0C, sub_30F12
-extern MessageBox, sub_34821, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, sub_3A28F, sub_3A2B8
+extern MessageBox, sub_34821, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, WriteSchedGame, WriteTeamRec
 extern sub_3A31E, AskTeamPassword, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, ReadLeagueInfo, sub_3DAB9
-extern FmtFromLeague, LeagueCheckStub, GetLeagueId, sub_41B80, sub_41CC4, sub_41F64, sub_479E9, sub_6B410
+extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSeasonSchedule, UpdatePlayoffSeries, sub_479E9, sub_6B410
 extern sub_6B47C, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_903F0, sub_91370, sub_91400, sub_92F50, sub_93000, sub_B2DCA, sub_B2E1B, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, unk_C7AE0, unk_C7E3E, btn_MasterDB, unk_C7F07
@@ -325,7 +325,7 @@ jne short loc_363E1	; 363CA
 mov ebx, dword [esp]	; 363CC
 lea edx, [byte esp+0Ch]	; 363CF
 mov eax, dword [dword esp+03ECh]	; 363D3
-call sub_147C9	; 363DA
+call ReadTeamRec	; 363DA
 mov ebx, eax	; 363DF
 loc_363E1:
 test ebx, ebx	; 363E1
@@ -820,7 +820,7 @@ jne short loc_36B55	; 36B3E
 mov ebx, dword [esp]	; 36B40
 lea edx, [byte esp+0Ch]	; 36B43
 mov eax, dword [dword esp+03ECh]	; 36B47
-call sub_3A2B8	; 36B4E
+call WriteTeamRec	; 36B4E
 mov ebx, eax	; 36B53
 loc_36B55:
 lea eax, [dword esp+03E0h]	; 36B55
@@ -870,7 +870,7 @@ mov esi, dword [edi]	; 36BF4
 test esi, esi	; 36BF6
 jl short loc_36C01	; 36BF8
 mov eax, esi	; 36BFA
-call sub_41B80	; 36BFC
+call LoadLeagueGameRef	; 36BFC
 loc_36C01:
 mov edx, 3	; 36C01
 mov eax, curleague	; 36C06
@@ -1197,7 +1197,7 @@ mov ebx, dword [dword_DDD44]	; 370BD
 sar ebx, 10h	; 370C3
 mov edx, byte_DDD40	; 370C6
 mov eax, dword [byte esp+06Ch]	; 370CB
-call sub_147A0	; 370CF
+call ReadSchedGame	; 370CF
 mov esi, eax	; 370D4
 loc_370D6:
 test esi, esi	; 370D6
@@ -1691,7 +1691,7 @@ mov ebx, dword [dword_DDD44]	; 377B6
 sar ebx, 10h	; 377BC
 mov edx, byte_DDD40	; 377BF
 mov eax, dword [byte esp+06Ch]	; 377C4
-call sub_3A28F	; 377C8
+call WriteSchedGame	; 377C8
 mov esi, eax	; 377CD
 loc_377CF:
 test esi, esi	; 377CF
@@ -1702,7 +1702,7 @@ mov ebx, dword [dword_DDD44]	; 377DC
 sar ebx, 10h	; 377E2
 mov edx, byte_DDD40	; 377E5
 mov eax, dword [byte esp+05Ch]	; 377EA
-call sub_3A28F	; 377EE
+call WriteSchedGame	; 377EE
 mov esi, eax	; 377F3
 loc_377F5:
 test esi, esi	; 377F5
@@ -1725,7 +1725,7 @@ mov ebx, dword [dword_DDD44]	; 37835
 sar ebx, 10h	; 3783B
 mov edx, dword [byte esp+058h]	; 3783E
 mov eax, dword [byte esp+06Ch]	; 37842
-call sub_41F64	; 37846
+call UpdatePlayoffSeries	; 37846
 mov esi, eax	; 3784B
 loc_3784D:
 lea eax, [byte esp+058h]	; 3784D
@@ -1749,7 +1749,7 @@ mov ebx, dword [dword_DDD44]	; 37893
 sar ebx, 10h	; 37899
 mov edx, dword [byte esp+040h]	; 3789C
 mov eax, dword [byte esp+05Ch]	; 378A0
-call sub_41F64	; 378A4
+call UpdatePlayoffSeries	; 378A4
 mov esi, eax	; 378A9
 loc_378AB:
 lea eax, [byte esp+040h]	; 378AB
@@ -1793,7 +1793,7 @@ dec ebx	; 3792D
 mov ecx, leagueteams	; 3792E
 mov edx, str_extxx	; 37933
 mov eax, savleague1	; 37938
-call sub_41CC4	; 3793D
+call UpdateSeasonSchedule	; 3793D
 mov esi, eax	; 37942
 test eax, eax	; 37944
 jne short loc_37970	; 37946
@@ -1819,7 +1819,7 @@ sar ebx, 10h	; 37990
 mov ecx, leagueteams	; 37993
 mov edx, asc_C8158	; 37998
 mov eax, savleague2	; 3799D
-call sub_41CC4	; 379A2
+call UpdateSeasonSchedule	; 379A2
 mov esi, eax	; 379A7
 test eax, eax	; 379A9
 jne short loc_379F4	; 379AB

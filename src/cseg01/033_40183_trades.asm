@@ -12,7 +12,7 @@ extern dword_D2C6B, leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DD
 extern fputchar, jctime, memset_, teamcitynames, msg_OneHuman, leaguedbnames
 extern msg_TradeDeadline, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, strncpy_, MakePath
 extern sub_14368, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
-extern sub_1466B, sub_147A0, sub_30A0C, sub_30F12, MessageBox, sub_38B4F, sub_3A347, AskTeamPassword
+extern sub_1466B, ReadSchedGame, sub_30A0C, sub_30F12, MessageBox, sub_38B4F, WriteLeagueTeamEntry, AskTeamPassword
 extern AskMasterPassword, sub_3B25A, sub_3BB87, sub_3D46D, ReadLeagueInfo, sub_3DAB9, sub_3E390, sub_3FF52
 extern sub_6B3D7, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
 extern sub_B4F8C, unk_3DC28, msg_AllHuman, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, msg_TradeError, msg_Copying
@@ -185,7 +185,7 @@ mov ebx, dword [dword esp+0D2h]	; 40424
 sar ebx, 10h	; 4042B
 lea edx, [dword esp+0A0h]	; 4042E
 mov eax, dword [dword esp+0B8h]	; 40435
-call sub_147A0	; 4043C
+call ReadSchedGame	; 4043C
 mov ebp, eax	; 40441
 .8:
 lea eax, [dword esp+0B8h]	; 40443
@@ -1740,7 +1740,7 @@ add edx, eax	; 418C1
 mov byte [byte edx+016h], 1	; 418C3
 mov ebx, dword [dword esp+0B4h]	; 418C7
 mov eax, dword [dword esp+098h]	; 418CE
-call sub_3A347	; 418D5
+call WriteLeagueTeamEntry	; 418D5
 mov ebx, eax	; 418DA
 .16:
 lea eax, [dword esp+098h]	; 418DC

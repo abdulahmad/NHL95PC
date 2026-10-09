@@ -16,8 +16,8 @@ extern dword_C5376, dword_C537A, dword_C537E, dword_C5382, dword_C53F7, dword_C5
 extern dword_C5407, dword_C5413, dword_C5417, dword_C5519, dword_C5581, dword_C55E9, dword_C65AC, dword_C65C0
 extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C6D26, dword_C6DBA, dword_C71CC, dword_C71D0
 extern dword_C71D4, dword_C71D8, dword_C71DC, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
-extern dword_CE5C3, dword_CEDE7, dword_CEE07, dword_D07BB, dword_D07BF, dword_D07C7, dword_D07D3, dword_D07D7
-extern dword_D07DF, musichandle, dword_D2884, dword_D288C, dword_D29FB, dword_D2B70, dword_D2BEC, musicslot
+extern dword_CE5C3, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
+extern keydb_size, musichandle, dword_D2884, dword_D288C, dword_D29FB, dword_D2B70, dword_D2BEC, musicslot
 extern dword_D2C6B, dword_D8B68, dword_D8B74, dword_DC234, dword_DC238, dword_DC7B8, dword_DC7BC, dword_DC830
 extern dword_DD770, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, off_C5439, teamcitynames
 extern off_C6D22, leaguedbnames, off_CEF43, off_CEF63
@@ -27,7 +27,7 @@ extern sub_142E7, MakePath, sub_14442, FileOpenRead, FileOpenWrite, FileOpenRW, 
 extern sub_1466B, sub_14825, sub_148A5, sub_149BF, sub_174C2, sub_17573, sub_175E2, sub_17636
 extern sub_17711, sub_1777E, sub_1BEFD, sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171
 extern sub_202E5, sub_203FA, sub_2051A, sub_20D97, sub_27C34, sub_29F28, sub_2FDD1, sub_2FEDF
-extern sub_30A0C, sub_30F12, MessageBox, sub_3271B, sub_327A1, sub_32B1D, sub_3626D, sub_452C5
+extern sub_30A0C, sub_30F12, MessageBox, sub_3271B, sub_327A1, sub_32B1D, sub_3626D, SimulateGame
 extern sub_479E9, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E
 extern sub_6B9EB, sub_6BA4D, sub_76429, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E8B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
@@ -35,7 +35,7 @@ extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_910B0, sub_9121C, sub_913
 extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, sub_B2CD8, MouseSetPos, sub_B2DCA, sub_B2E1B
 extern sub_B30B4, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4BC4, unk_208EF, unk_20A46
 extern unk_20BBD, unk_20EB7, unk_86616, unk_C3A37, unk_C3A3A, unk_C3A3D, unk_C3A40, unk_C3A66
-extern unk_C3AE1, unk_C3AF8, unk_C5298, unk_C7733, unk_CEE4F, unk_CEEAF, unk_CF90F, unk_D2864
+extern unk_C3AE1, unk_C3AF8, unk_C5298, btn_LeagueExists, unk_CEE4F, unk_CEEAF, unk_CF90F, unk_D2864
 extern unk_D2B38, unk_DBC30, unk_DDAC4, unk_DDCE6, unk_DDCFB, unk_ED7BC, unknown_libname_1, word_C5366
 extern word_C6D24, word_C6E22, scrpitch, VisTeam, hmscore, awscore
 global loc_86791, loc_86793, loc_867E2, loc_867F6, loc_86811, loc_86813, loc_86976, loc_86987
@@ -105,7 +105,7 @@ global loc_8B9A3, loc_8B9AB, loc_8B9BB, loc_8B9C4, loc_8B9D5, loc_8B9E0, loc_8B9
 global loc_8B9FF, loc_8BA0A, loc_8BA15, loc_8BA20, loc_8BA2B, loc_8BA34, loc_8BA3F, loc_8BA4A
 global loc_8BA55, loc_8BA5E, loc_8BA69, loc_8BA74, loc_8BA7F, loc_8BA88, loc_8BA91, loc_8BA9A
 global loc_8BAA3, loc_8BAAC, sub_86696, sub_86E8B, sub_870B6, sub_8721F, sub_8751A, sub_87520
-global sub_875A3, sub_87760, sub_877E9, sub_87863, sub_87B33, sub_87C9E, sub_87D5A, sub_87E77
+global sub_875A3, SeriesWinner, sub_877E9, sub_87863, sub_87B33, sub_87C9E, sub_87D5A, sub_87E77
 global sub_87F85, sub_87FE0, sub_8803B, sub_88096, sub_88625, sub_8873C, sub_891B2, sub_89223
 global sub_89268, sub_89B5C, sub_89B69, sub_89BD2, sub_8A652, sub_8B85B, sub_8B92F, sub_8B96D
 sub_86696:
@@ -346,7 +346,7 @@ push eax	; 86A35
 lea eax, [dword esp+0ACh]	; 86A36
 push eax	; 86A3D
 push byte 2	; 86A3E
-push unk_C7733	; 86A40
+push btn_LeagueExists	; 86A40
 mov ecx, 2	; 86A45
 mov ebx, off_D28EB	; 86A4A
 mov edx, 0FFFFFFFFh	; 86A4F
@@ -1038,12 +1038,12 @@ lea eax, [byte esp+044h]	; 872EC
 push eax	; 872F0
 call sub_8E8A0	; 872F1
 add esp, byte 8	; 872F6
-mov dword [dword_D07BB], eax	; 872F9
+mov dword [seasondb], eax	; 872F9
 lea eax, [byte esp+040h]	; 872FE
 push eax	; 87302
 call sub_92DE0	; 87303
 add esp, byte 4	; 87308
-mov dword [dword_D07D3], eax	; 8730B
+mov dword [seasondb_size], eax	; 8730B
 mov ebx, dword [leaguedbnames+4]	; 87310
 mov ecx, str_extDB	; 87316
 mov edx, edi	; 8731B
@@ -1054,12 +1054,12 @@ lea eax, [byte esp+044h]	; 87328
 push eax	; 8732C
 call sub_8E8A0	; 8732D
 add esp, byte 8	; 87332
-mov dword [dword_D07BF], eax	; 87335
+mov dword [careerdb], eax	; 87335
 lea eax, [byte esp+040h]	; 8733A
 push eax	; 8733E
 call sub_92DE0	; 8733F
 add esp, byte 4	; 87344
-mov dword [dword_D07D7], eax	; 87347
+mov dword [careerdb_size], eax	; 87347
 mov ebx, dword [leaguedbnames]	; 8734C
 mov ecx, str_extDB	; 87352
 mov edx, edi	; 87357
@@ -1070,12 +1070,12 @@ lea eax, [byte esp+044h]	; 87364
 push eax	; 87368
 call sub_8E8A0	; 87369
 add esp, byte 8	; 8736E
-mov dword [dword_D07C7], eax	; 87371
+mov dword [keydb], eax	; 87371
 lea eax, [byte esp+040h]	; 87376
 push eax	; 8737A
 call sub_92DE0	; 8737B
 add esp, byte 4	; 87380
-mov dword [dword_D07DF], eax	; 87383
+mov dword [keydb_size], eax	; 87383
 mov ebx, dword [HomeTeam]	; 87388
 sar ebx, 10h	; 8738E
 mov edx, dword [cont2team]	; 87391
@@ -1105,29 +1105,29 @@ mov ecx, str_extDB	; 873EE
 mov edx, edi	; 873F3
 lea eax, [byte esp+040h]	; 873F5
 call MakePath	; 873F9
-mov ecx, dword [dword_D07D3]	; 873FE
+mov ecx, dword [seasondb_size]	; 873FE
 push ecx	; 87404
-mov edi, dword [dword_D07BB]	; 87405
+mov edi, dword [seasondb]	; 87405
 push edi	; 8740B
 lea eax, [byte esp+048h]	; 8740C
 push eax	; 87410
 call sub_932D0	; 87411
 add esp, byte 0Ch	; 87416
-mov ebp, dword [dword_D07BB]	; 87419
+mov ebp, dword [seasondb]	; 87419
 test ebp, ebp	; 8741F
 je short loc_8742C	; 87421
 push ebp	; 87423
 call jctime	; 87424
 add esp, byte 4	; 87429
 loc_8742C:
-mov edx, dword [dword_D07BF]	; 8742C
+mov edx, dword [careerdb]	; 8742C
 test edx, edx	; 87432
 je short loc_8743F	; 87434
 push edx	; 87436
 call jctime	; 87437
 add esp, byte 4	; 8743C
 loc_8743F:
-mov ecx, dword [dword_D07C7]	; 8743F
+mov ecx, dword [keydb]	; 8743F
 test ecx, ecx	; 87445
 je short loc_87452	; 87447
 push ecx	; 87449
@@ -1135,12 +1135,12 @@ call jctime	; 8744A
 add esp, byte 4	; 8744F
 loc_87452:
 xor ebp, ebp	; 87452
-mov dword [dword_D07BB], ebp	; 87454
-mov dword [dword_D07BF], ebp	; 8745A
-mov dword [dword_D07C7], ebp	; 87460
-mov dword [dword_D07D3], ebp	; 87466
-mov dword [dword_D07D7], ebp	; 8746C
-mov dword [dword_D07DF], ebp	; 87472
+mov dword [seasondb], ebp	; 87454
+mov dword [careerdb], ebp	; 8745A
+mov dword [keydb], ebp	; 87460
+mov dword [seasondb_size], ebp	; 87466
+mov dword [careerdb_size], ebp	; 8746C
+mov dword [keydb_size], ebp	; 87472
 loc_87478:
 xor edx, edx	; 87478
 lea eax, [dword esi+01998h]	; 8747A
@@ -1403,7 +1403,7 @@ cmp ebx, byte 31h	; 87753
 jl short loc_87732	; 87756
 add esp, byte 24h	; 87758
 jmp near sub_8751A	; 8775B
-sub_87760:
+SeriesWinner:
 push dword 24h	; 87760
 call __CHK	; 87765
 push ebx	; 8776A
@@ -1624,7 +1624,7 @@ call __STOSD	; 87961
 lea ecx, [dword esi+01998h]	; 87966
 mov edx, dword [byte esi+050h]	; 8796C
 mov eax, ecx	; 8796F
-call sub_87760	; 87971
+call SeriesWinner	; 87971
 mov dword [byte esp+020h], eax	; 87976
 xor edx, edx	; 8797A
 mov dl, byte [byte ecx+02h]	; 8797C
@@ -1638,7 +1638,7 @@ loc_8798C:
 mov edx, dword [byte esi+054h]	; 8798C
 add ecx, byte 2Ah	; 8798F
 mov eax, ecx	; 87992
-call sub_87760	; 87994
+call SeriesWinner	; 87994
 mov dword [byte esp+024h], eax	; 87999
 xor edx, edx	; 8799D
 mov dl, byte [byte ecx+02h]	; 8799F
@@ -1652,7 +1652,7 @@ loc_879B0:
 mov edx, dword [byte esi+058h]	; 879B0
 add ecx, byte 2Ah	; 879B3
 mov eax, ecx	; 879B6
-call sub_87760	; 879B8
+call SeriesWinner	; 879B8
 mov dword [byte esp+028h], eax	; 879BD
 xor edx, edx	; 879C1
 mov dl, byte [byte ecx+02h]	; 879C3
@@ -1666,7 +1666,7 @@ loc_879D4:
 mov edx, dword [byte esi+05Ch]	; 879D4
 add ecx, byte 2Ah	; 879D7
 mov eax, ecx	; 879DA
-call sub_87760	; 879DC
+call SeriesWinner	; 879DC
 mov dword [byte esp+02Ch], eax	; 879E1
 xor edx, edx	; 879E5
 mov dl, byte [byte ecx+02h]	; 879E7
@@ -1711,7 +1711,7 @@ call __STOSD	; 87A4B
 lea ecx, [dword esi+01A40h]	; 87A50
 mov edx, dword [byte esi+060h]	; 87A56
 mov eax, ecx	; 87A59
-call sub_87760	; 87A5B
+call SeriesWinner	; 87A5B
 mov dword [byte esp+020h], eax	; 87A60
 xor edx, edx	; 87A64
 mov dl, byte [byte ecx+02h]	; 87A66
@@ -1725,7 +1725,7 @@ loc_87A76:
 mov edx, dword [byte esi+064h]	; 87A76
 add ecx, byte 2Ah	; 87A79
 mov eax, ecx	; 87A7C
-call sub_87760	; 87A7E
+call SeriesWinner	; 87A7E
 mov dword [byte esp+024h], eax	; 87A83
 xor edx, edx	; 87A87
 mov dl, byte [byte ecx+02h]	; 87A89
@@ -1739,7 +1739,7 @@ loc_87A9A:
 mov edx, dword [byte esi+068h]	; 87A9A
 add ecx, byte 2Ah	; 87A9D
 mov eax, ecx	; 87AA0
-call sub_87760	; 87AA2
+call SeriesWinner	; 87AA2
 mov dword [byte esp+028h], eax	; 87AA7
 xor edx, edx	; 87AAB
 mov dl, byte [byte ecx+02h]	; 87AAD
@@ -1753,7 +1753,7 @@ loc_87ABE:
 mov edx, dword [byte esi+06Ch]	; 87ABE
 add ecx, byte 2Ah	; 87AC1
 mov eax, ecx	; 87AC4
-call sub_87760	; 87AC6
+call SeriesWinner	; 87AC6
 mov dword [byte esp+02Ch], eax	; 87ACB
 xor edx, edx	; 87ACF
 mov dl, byte [byte ecx+02h]	; 87AD1
@@ -1882,11 +1882,11 @@ jl short loc_87BC5	; 87BEC
 lea ecx, [dword ebp+01AE8h]	; 87BEE
 mov edx, dword [byte ebp+070h]	; 87BF4
 mov eax, ecx	; 87BF7
-call sub_87760	; 87BF9
+call SeriesWinner	; 87BF9
 mov dword [esp], eax	; 87BFE
 mov edx, dword [byte ebp+074h]	; 87C01
 lea eax, [byte ecx+02Ah]	; 87C04
-call sub_87760	; 87C07
+call SeriesWinner	; 87C07
 mov esi, eax	; 87C0C
 mov eax, ebp	; 87C0E
 mov ebx, dword [esp]	; 87C10
@@ -1917,11 +1917,11 @@ call sub_87520	; 87C3D
 lea ecx, [dword ebp+01B3Ch]	; 87C42
 mov edx, dword [byte ebp+078h]	; 87C48
 mov eax, ecx	; 87C4B
-call sub_87760	; 87C4D
+call SeriesWinner	; 87C4D
 mov dword [esp], eax	; 87C52
 mov edx, dword [byte ebp+07Ch]	; 87C55
 lea eax, [byte ecx+02Ah]	; 87C58
-call sub_87760	; 87C5B
+call SeriesWinner	; 87C5B
 mov esi, eax	; 87C60
 mov eax, ebp	; 87C62
 mov ebx, dword [esp]	; 87C64
@@ -2007,11 +2007,11 @@ jl short loc_87CEC	; 87D13
 lea ecx, [dword ebp+01B90h]	; 87D15
 mov edx, dword [dword ebp+080h]	; 87D1B
 mov eax, ecx	; 87D21
-call sub_87760	; 87D23
+call SeriesWinner	; 87D23
 mov dword [esp], eax	; 87D28
 mov edx, dword [dword ebp+084h]	; 87D2B
 lea eax, [byte ecx+02Ah]	; 87D31
-call sub_87760	; 87D34
+call SeriesWinner	; 87D34
 mov esi, eax	; 87D39
 mov eax, ebp	; 87D3B
 mov ebx, dword [esp]	; 87D3D
@@ -2100,7 +2100,7 @@ mov ecx, esi	; 87E18
 mov ebx, 44Ch	; 87E1A
 mov edx, str_extDB	; 87E1F
 mov eax, curleague	; 87E24
-call sub_452C5	; 87E29
+call SimulateGame	; 87E29
 xor ebx, ebx	; 87E2E
 mov bl, byte [byte esi+02h]	; 87E30
 lea eax, [byte edi+01h]	; 87E33
@@ -2191,7 +2191,7 @@ mov ecx, esi	; 87F1F
 mov ebx, 44Ch	; 87F21
 mov edx, str_extDB	; 87F26
 mov eax, curleague	; 87F2B
-call sub_452C5	; 87F30
+call SimulateGame	; 87F30
 loc_87F35:
 xor ebx, ebx	; 87F35
 mov bl, byte [byte esi+02h]	; 87F37
@@ -2434,12 +2434,12 @@ lea eax, [byte esp+04h]	; 8817A
 push eax	; 8817E
 call sub_8E8A0	; 8817F
 add esp, byte 8	; 88184
-mov dword [dword_D07BB], eax	; 88187
+mov dword [seasondb], eax	; 88187
 mov eax, esp	; 8818C
 push eax	; 8818E
 call sub_92DE0	; 8818F
 add esp, byte 4	; 88194
-mov dword [dword_D07D3], eax	; 88197
+mov dword [seasondb_size], eax	; 88197
 mov ebx, dword [leaguedbnames+4]	; 8819C
 mov ecx, str_extDB	; 881A2
 mov edx, curleague	; 881A7
@@ -2450,12 +2450,12 @@ lea eax, [byte esp+04h]	; 881B5
 push eax	; 881B9
 call sub_8E8A0	; 881BA
 add esp, byte 8	; 881BF
-mov dword [dword_D07BF], eax	; 881C2
+mov dword [careerdb], eax	; 881C2
 mov eax, esp	; 881C7
 push eax	; 881C9
 call sub_92DE0	; 881CA
 add esp, byte 4	; 881CF
-mov dword [dword_D07D7], eax	; 881D2
+mov dword [careerdb_size], eax	; 881D2
 mov ebx, dword [leaguedbnames]	; 881D7
 mov ecx, str_extDB	; 881DD
 mov edx, curleague	; 881E2
@@ -2466,12 +2466,12 @@ lea eax, [byte esp+04h]	; 881F0
 push eax	; 881F4
 call sub_8E8A0	; 881F5
 add esp, byte 8	; 881FA
-mov dword [dword_D07C7], eax	; 881FD
+mov dword [keydb], eax	; 881FD
 mov eax, esp	; 88202
 push eax	; 88204
 call sub_92DE0	; 88205
 add esp, byte 4	; 8820A
-mov dword [dword_D07DF], eax	; 8820D
+mov dword [keydb_size], eax	; 8820D
 cmp esi, byte 1	; 88212
 jne near loc_884E2	; 88215
 mov ebx, 10h	; 8821B
@@ -2699,7 +2699,7 @@ cmp edi, byte 1Eh	; 884B1
 jl short loc_88463	; 884B4
 lea eax, [dword ebp+01BE4h]	; 884B6
 mov edx, dword [dword ebp+088h]	; 884BC
-call sub_87760	; 884C2
+call SeriesWinner	; 884C2
 mov dword [dword_DC830], eax	; 884C7
 cmp eax, byte 0FFFFFFFFh	; 884CC
 jne short loc_884DB	; 884CF
@@ -2739,29 +2739,29 @@ mov ecx, str_extDB	; 88548
 mov edx, curleague	; 8854D
 mov eax, esp	; 88552
 call MakePath	; 88554
-mov ecx, dword [dword_D07D3]	; 88559
+mov ecx, dword [seasondb_size]	; 88559
 push ecx	; 8855F
-mov esi, dword [dword_D07BB]	; 88560
+mov esi, dword [seasondb]	; 88560
 push esi	; 88566
 lea eax, [byte esp+08h]	; 88567
 push eax	; 8856B
 call sub_932D0	; 8856C
 add esp, byte 0Ch	; 88571
-mov edi, dword [dword_D07BB]	; 88574
+mov edi, dword [seasondb]	; 88574
 test edi, edi	; 8857A
 je short loc_88587	; 8857C
 push edi	; 8857E
 call jctime	; 8857F
 add esp, byte 4	; 88584
 loc_88587:
-mov edx, dword [dword_D07BF]	; 88587
+mov edx, dword [careerdb]	; 88587
 test edx, edx	; 8858D
 je short loc_8859A	; 8858F
 push edx	; 88591
 call jctime	; 88592
 add esp, byte 4	; 88597
 loc_8859A:
-mov ecx, dword [dword_D07C7]	; 8859A
+mov ecx, dword [keydb]	; 8859A
 test ecx, ecx	; 885A0
 je short loc_885AD	; 885A2
 push ecx	; 885A4
@@ -2769,12 +2769,12 @@ call jctime	; 885A5
 add esp, byte 4	; 885AA
 loc_885AD:
 xor edi, edi	; 885AD
-mov dword [dword_D07BB], edi	; 885AF
-mov dword [dword_D07BF], edi	; 885B5
-mov dword [dword_D07C7], edi	; 885BB
-mov dword [dword_D07D3], edi	; 885C1
-mov dword [dword_D07D7], edi	; 885C7
-mov dword [dword_D07DF], edi	; 885CD
+mov dword [seasondb], edi	; 885AF
+mov dword [careerdb], edi	; 885B5
+mov dword [keydb], edi	; 885BB
+mov dword [seasondb_size], edi	; 885C1
+mov dword [careerdb_size], edi	; 885C7
+mov dword [keydb_size], edi	; 885CD
 mov eax, ebp	; 885D3
 call sub_89223	; 885D5
 mov dword [dword_C6D26], edi	; 885DA
@@ -2819,7 +2819,7 @@ mov edx, dword [gameopts]	; 88654
 shl edx, 11h	; 8865A
 shr edx, 1Dh	; 8865D
 mov eax, esi	; 88660
-call sub_87760	; 88662
+call SeriesWinner	; 88662
 test eax, eax	; 88667
 jge near loc_88734	; 88669
 mov ebx, dword [leaguedbnames+10h]	; 8866F
@@ -2859,7 +2859,7 @@ mov edx, dword [gameopts]	; 886DF
 shl edx, 11h	; 886E5
 shr edx, 1Dh	; 886E8
 mov eax, ebp	; 886EB
-call sub_87760	; 886ED
+call SeriesWinner	; 886ED
 test eax, eax	; 886F2
 jge short loc_88722	; 886F4
 push byte 2	; 886F6
@@ -2871,7 +2871,7 @@ mov ecx, esi	; 88702
 mov ebx, 4B0h	; 88704
 mov edx, str_extDB	; 88709
 mov eax, curleague	; 8870E
-call sub_452C5	; 88713
+call SimulateGame	; 88713
 loc_88718:
 inc edi	; 88718
 add esi, byte 6	; 88719
@@ -2953,12 +2953,12 @@ lea eax, [byte esp+08h]	; 88801
 push eax	; 88805
 call sub_8E8A0	; 88806
 add esp, byte 8	; 8880B
-mov dword [dword_D07BB], eax	; 8880E
+mov dword [seasondb], eax	; 8880E
 lea eax, [byte esp+04h]	; 88813
 push eax	; 88817
 call sub_92DE0	; 88818
 add esp, byte 4	; 8881D
-mov dword [dword_D07D3], eax	; 88820
+mov dword [seasondb_size], eax	; 88820
 mov ebx, dword [leaguedbnames+4]	; 88825
 mov ecx, str_extDB	; 8882B
 mov edx, curleague	; 88830
@@ -2969,12 +2969,12 @@ lea eax, [byte esp+08h]	; 88840
 push eax	; 88844
 call sub_8E8A0	; 88845
 add esp, byte 8	; 8884A
-mov dword [dword_D07BF], eax	; 8884D
+mov dword [careerdb], eax	; 8884D
 lea eax, [byte esp+04h]	; 88852
 push eax	; 88856
 call sub_92DE0	; 88857
 add esp, byte 4	; 8885C
-mov dword [dword_D07D7], eax	; 8885F
+mov dword [careerdb_size], eax	; 8885F
 mov ebx, dword [leaguedbnames]	; 88864
 mov ecx, str_extDB	; 8886A
 mov edx, curleague	; 8886F
@@ -2985,12 +2985,12 @@ lea eax, [byte esp+08h]	; 8887F
 push eax	; 88883
 call sub_8E8A0	; 88884
 add esp, byte 8	; 88889
-mov dword [dword_D07C7], eax	; 8888C
+mov dword [keydb], eax	; 8888C
 lea eax, [byte esp+04h]	; 88891
 push eax	; 88895
 call sub_92DE0	; 88896
 add esp, byte 4	; 8889B
-mov dword [dword_D07DF], eax	; 8889E
+mov dword [keydb_size], eax	; 8889E
 mov ebx, dword [byte esp+05Ch]	; 888A3
 cmp ebx, byte 8	; 888A7
 jge short loc_888C8	; 888AA
@@ -3054,7 +3054,7 @@ mov edx, dword [gameopts]	; 8892D
 shl edx, 11h	; 88933
 shr edx, 1Dh	; 88936
 mov eax, ebp	; 88939
-call sub_87760	; 8893B
+call SeriesWinner	; 8893B
 mov edi, eax	; 88940
 test eax, eax	; 88942
 jl near loc_88D9F	; 88944
@@ -3326,7 +3326,7 @@ add esi, 1BE4h	; 88C44
 mov edx, dword [esp]	; 88C4A
 mov edx, dword [dword edx+088h]	; 88C4D
 mov eax, esi	; 88C53
-call sub_87760	; 88C55
+call SeriesWinner	; 88C55
 mov dword [dword_DC830], eax	; 88C5A
 cmp eax, byte 0FFFFFFFFh	; 88C5F
 jne short loc_88C6E	; 88C62
@@ -3480,29 +3480,29 @@ mov ecx, str_extDB	; 88E50
 mov edx, curleague	; 88E55
 lea eax, [byte esp+04h]	; 88E5A
 call MakePath	; 88E5E
-mov ebp, dword [dword_D07D3]	; 88E63
+mov ebp, dword [seasondb_size]	; 88E63
 push ebp	; 88E69
-mov eax, dword [dword_D07BB]	; 88E6A
+mov eax, dword [seasondb]	; 88E6A
 push eax	; 88E6F
 lea eax, [byte esp+0Ch]	; 88E70
 push eax	; 88E74
 call sub_932D0	; 88E75
 add esp, byte 0Ch	; 88E7A
-mov edx, dword [dword_D07BB]	; 88E7D
+mov edx, dword [seasondb]	; 88E7D
 test edx, edx	; 88E83
 je short loc_88E90	; 88E85
 push edx	; 88E87
 call jctime	; 88E88
 add esp, byte 4	; 88E8D
 loc_88E90:
-mov ecx, dword [dword_D07BF]	; 88E90
+mov ecx, dword [careerdb]	; 88E90
 test ecx, ecx	; 88E96
 je short loc_88EA3	; 88E98
 push ecx	; 88E9A
 call jctime	; 88E9B
 add esp, byte 4	; 88EA0
 loc_88EA3:
-mov eax, dword [dword_D07C7]	; 88EA3
+mov eax, dword [keydb]	; 88EA3
 test eax, eax	; 88EA8
 je short loc_88EB5	; 88EAA
 push eax	; 88EAC
@@ -3510,12 +3510,12 @@ call jctime	; 88EAD
 add esp, byte 4	; 88EB2
 loc_88EB5:
 xor ebx, ebx	; 88EB5
-mov dword [dword_D07BB], ebx	; 88EB7
-mov dword [dword_D07BF], ebx	; 88EBD
-mov dword [dword_D07C7], ebx	; 88EC3
-mov dword [dword_D07D3], ebx	; 88EC9
-mov dword [dword_D07D7], ebx	; 88ECF
-mov dword [dword_D07DF], ebx	; 88ED5
+mov dword [seasondb], ebx	; 88EB7
+mov dword [careerdb], ebx	; 88EBD
+mov dword [keydb], ebx	; 88EC3
+mov dword [seasondb_size], ebx	; 88EC9
+mov dword [careerdb_size], ebx	; 88ECF
+mov dword [keydb_size], ebx	; 88ED5
 cmp dword [byte esp+05Ch], byte 0Fh	; 88EDB
 jge near loc_891A6	; 88EE0
 test edi, edi	; 88EE6
@@ -4002,7 +4002,7 @@ add edi, 1BE4h	; 895AE
 mov eax, dword [byte esp+020h]	; 895B4
 mov edx, dword [dword eax+088h]	; 895B8
 mov eax, edi	; 895BE
-call sub_87760	; 895C0
+call SeriesWinner	; 895C0
 mov dword [dword_DC830], eax	; 895C5
 cmp eax, byte 0FFFFFFFFh	; 895CA
 jne short loc_895D9	; 895CD

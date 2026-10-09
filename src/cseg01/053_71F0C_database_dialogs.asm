@@ -7,8 +7,8 @@ extern asc_C303C, asc_C3041, asc_C3046, asc_C304B, asc_C3050, asc_C3055, asc_C30
 extern asc_C3064, asc_C306C, asc_C3072, asc_C307B, asc_C3081, asc_C3086, asc_C308D, asc_C3092
 extern asc_C309A, asc_C30A3, asc_C30AD, asc_C30B6, asc_C30BB, asc_C30C3, asc_C30C8, str_extDB
 extern asc_C811E, byte_C4B6C, byte_D42C3, byte_DD2D4, byte_DD2DC, byte_DD668, byte_DD669, byte_ED993
-extern byte_ED994, dword_C6F78, dword_D07BB, dword_D07BF, dword_D07C3, dword_D07C7, dword_D07CB, dword_D07CF
-extern dword_D07D3, dword_D07D7, dword_D07DB, dword_D07DF, dword_D07E3, dword_D07E7, dword_D0B16, dword_D0B1A
+extern byte_ED994, dword_C6F78, seasondb, careerdb, dword_D07C3, keydb, dword_D07CB, dword_D07CF
+extern seasondb_size, careerdb_size, dword_D07DB, keydb_size, dword_D07E3, dword_D07E7, dword_D0B16, dword_D0B1A
 extern dword_D0B1E, dword_D1084, dword_D1088, dword_D108C, dword_D1090, dword_D1104, dword_D1108, dword_D110C
 extern dword_D1110, dword_D1114, dword_D1118, dword_D111C, dword_D1120, dword_D1124, dword_D1128, dword_D112C
 extern dword_D1130, dword_D11B6, dword_D2C6B, dword_D42AC, dword_DC238, dword_DD634, dword_DD638, dword_DD63C
@@ -1821,12 +1821,12 @@ lea eax, [byte esp+04h]	; 73488
 push eax	; 7348C
 call sub_8E8A0	; 7348D
 add esp, byte 8	; 73492
-mov dword [dword_D07BB], eax	; 73495
+mov dword [seasondb], eax	; 73495
 mov eax, esp	; 7349A
 push eax	; 7349C
 call sub_92DE0	; 7349D
 add esp, byte 4	; 734A2
-mov dword [dword_D07D3], eax	; 734A5
+mov dword [seasondb_size], eax	; 734A5
 mov ebx, dword [leaguedbnames+4]	; 734AA
 mov ecx, esi	; 734B0
 mov edx, edi	; 734B2
@@ -1837,12 +1837,12 @@ lea eax, [byte esp+04h]	; 734BD
 push eax	; 734C1
 call sub_8E8A0	; 734C2
 add esp, byte 8	; 734C7
-mov dword [dword_D07BF], eax	; 734CA
+mov dword [careerdb], eax	; 734CA
 mov eax, esp	; 734CF
 push eax	; 734D1
 call sub_92DE0	; 734D2
 add esp, byte 4	; 734D7
-mov dword [dword_D07D7], eax	; 734DA
+mov dword [careerdb_size], eax	; 734DA
 mov ebx, dword [leaguedbnames+0Ch]	; 734DF
 mov ecx, esi	; 734E5
 mov edx, edi	; 734E7
@@ -1869,12 +1869,12 @@ lea eax, [byte esp+04h]	; 73527
 push eax	; 7352B
 call sub_8E8A0	; 7352C
 add esp, byte 8	; 73531
-mov dword [dword_D07C7], eax	; 73534
+mov dword [keydb], eax	; 73534
 mov eax, esp	; 73539
 push eax	; 7353B
 call sub_92DE0	; 7353C
 add esp, byte 4	; 73541
-mov dword [dword_D07DF], eax	; 73544
+mov dword [keydb_size], eax	; 73544
 mov ebx, dword [leaguedbnames+10h]	; 73549
 mov ecx, esi	; 7354F
 mov edx, edi	; 73551

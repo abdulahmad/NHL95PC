@@ -2,65 +2,31 @@
 bits 32
 %include "hockey.inc"
 section s_41B80 progbits alloc exec nowrite align=1
-extern __CHK, __STOSD, asc_C1A70, asc_C1A75, asc_C1A7C, asc_C1A85, str_extDB, str_extLP
-extern asc_C816D, asc_C8227, asc_C8CA4, byte_C5386, byte_C83C3, byte_C83DF, byte_C83F9, byte_C8444
+extern __CHK, __STOSD, str_sche, str_Sch, str_gameset, str_KbytesFree, str_extDB, str_extLP
+extern str_SelHumanTeams, str_EnterLeagueName, str_KbytesFreeLine, byte_C5386, divisionteams, teamdivision, teamdivslot, monthdays_m1
 extern curleague, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname, byte_DDD40
 extern byte_DE268, dword_C5382, gameopts, dword_C5519, dword_C55E9, dword_C5619, dword_C8C61, dword_C8D06
-extern dword_C9002, dword_D07BB, dword_D07BF, dword_D07C7, dword_D07D3, dword_D07D7, dword_D07DF, dword_DD770
+extern dword_C9002, seasondb, careerdb, keydb, seasondb_size, careerdb_size, keydb_size, dword_DD770
 extern leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, jctime
-extern memset_, mkdir_, off_C772B, leaguedbnames
-extern off_C8C59, off_C8CC8, rand_, sprintf_, strcat_, strcpy_, sub_106C8
+extern memset_, mkdir_, msg_LeagueExists, leaguedbnames
+extern msg_GenSchedule, msg_NoDiskSpace, rand_, sprintf_, strcat_, strcpy_, sub_106C8
 extern sub_13320, sub_142E7, MakePath, sub_14442, FileOpenRead, FileOpenRW, FileClose, FileReadAt
-extern FileWriteAt, sub_1466B, sub_147A0, sub_147C9, sub_14825, sub_149BF, sub_2FDD1, sub_2FEDF
-extern sub_30A0C, sub_30F12, MessageBox, sub_32B1D, sub_38B4F, sub_3A28F, sub_3A2B8, sub_3DAB9
-extern WriteLeagueInfo, CopyHumanTeamDBs, sub_452C5, sub_87760, sub_8CCA8, sub_8E8A0, sub_92DE0, sub_932D0
-extern sub_B2DCA, unk_C7733, unk_C77AA, unk_C77AE, unk_C7826, unk_C7BEA, unk_C8D02, leagueteams
+extern FileWriteAt, sub_1466B, ReadSchedGame, ReadTeamRec, sub_14825, sub_149BF, sub_2FDD1, sub_2FEDF
+extern sub_30A0C, sub_30F12, MessageBox, sub_32B1D, sub_38B4F, WriteSchedGame, WriteTeamRec, sub_3DAB9
+extern WriteLeagueInfo, CopyHumanTeamDBs, SimulateGame, SeriesWinner, sub_8CCA8, sub_8E8A0, sub_92DE0, sub_932D0
+extern sub_B2DCA, btn_LeagueExists, msg_WhichSchedule, btn_WhichSchedule, msg_CreateError, msg_CreatingLeague, msg_DiskFull, leagueteams
 extern unk_DDAC4, masterpw, savleague1, savleague2, unknown_libname_1, word_DDD46, word_DDD48, word_DDD4A
-global jpt_42205, jpt_44889, loc_41BBE, loc_41BD8, loc_41BF2, loc_41C0C, loc_41C26, loc_41C40
-global loc_41C5A, loc_41C74, loc_41C8D, loc_41C92, loc_41CA7, loc_41CC1, loc_41D39, loc_41D5B
-global loc_41D7B, loc_41E22, loc_41E4E, loc_41E55, loc_41E57, loc_41E83, loc_41EA4, loc_41EA6
-global loc_41EDF, loc_41EF2, loc_41F05, loc_41F18, loc_41F5E, loc_41FB0, loc_41FC5, loc_41FDA
-global loc_41FED, loc_42029, loc_42066, loc_42081, loc_42082, loc_4208B, loc_420AA, loc_420D6
-global loc_42124, loc_42149, loc_4215F, loc_4218F, loc_421D4, loc_421DD, loc_421E4, loc_421E5
-global loc_421F6, loc_42232, loc_42245, loc_42255, loc_4225A, loc_42260, loc_42267, loc_42277
-global loc_4227E, loc_4228E, loc_422F9, loc_422FB, loc_42325, loc_42374, loc_423D8, loc_423E7
-global loc_42419, loc_42466, loc_424B3, loc_424C0, loc_4250A, loc_42544, loc_4255C, loc_42598
-global loc_42599, loc_425AF, loc_425E2, loc_425FA, loc_42606, loc_42688, loc_426D8, loc_426F1
-global loc_42703, loc_42726, loc_42732, loc_4273D, loc_42751, loc_42785, loc_427BB, loc_427C3
-global loc_427C4, loc_427DB, loc_42825, loc_42844, loc_42876, loc_42877, loc_42883, loc_428A0
-global loc_428EB, loc_42903, loc_4292E, loc_42945, loc_42952, loc_4296A, loc_429AE, loc_42B8E
-global loc_42B9D, loc_42BAD, loc_42BD4, loc_42C7B, loc_42C9B, loc_42CA2, loc_42CAC, loc_42CB4
-global loc_42CB6, loc_42D60, loc_42D82, loc_42D8A, loc_42D95, loc_42D9D, loc_42D9F, loc_42DC5
-global loc_42DCD, loc_42E00, loc_42E07, loc_42E1A, loc_42E21, loc_42EA9, loc_42EAB, loc_42EF8
-global loc_42EF9, loc_42F04, loc_42F85, loc_42FA5, loc_42FA8, loc_42FB6, loc_42FCC, loc_42FE5
-global loc_43016, loc_4304D, loc_4308B, loc_43092, loc_430DB, loc_43119, loc_4313A, loc_43171
-global loc_431B2, loc_431B6, loc_431E7, loc_43220, loc_43262, loc_43283, loc_432BC, loc_43300
-global loc_43304, loc_43335, loc_4336F, loc_433B3, loc_43496, loc_43628, loc_43639, loc_43681
-global loc_43688, loc_436AA, loc_436C7, loc_4370B, loc_43723, loc_43726, loc_4372E, loc_4372F
-global loc_4374C, loc_43751, loc_4378C, loc_4379E, loc_437AE, loc_43803, loc_4380F, loc_43818
-global loc_43857, loc_4385F, loc_43866, loc_4392B, loc_43969, loc_43970, loc_43991, loc_43998
-global loc_439B9, loc_439C0, loc_439E4, loc_439EB, loc_439F1, loc_43A0E, loc_43A0F, loc_43A5D
-global loc_43AA6, loc_43AF7, loc_43AFB, loc_43B24, loc_43B64, loc_43BA8, loc_43BEF, loc_43BF6
-global loc_43C1D, loc_43C24, loc_43C4B, loc_43C52, loc_43C79, loc_43C80, loc_43C86, loc_43CA3
-global loc_43CA4, loc_43CE5, loc_43D2E, loc_43D7F, loc_43D83, loc_43DAD, loc_43DE9, loc_43E29
-global loc_43E35, loc_43E78, loc_43E7F, loc_43EA3, loc_43EC0, loc_43F04, loc_43F1C, loc_43F1F
-global loc_43F28, loc_43F29, loc_43F86, loc_43F98, loc_43FA8, loc_43FD3, loc_43FDF, loc_43FE8
-global loc_43FFD, loc_44001, loc_44008, loc_44089, loc_440E9, loc_440ED, loc_4414D, loc_4418F
-global loc_44193, loc_441B4, loc_441F5, loc_4422C, loc_4427E, loc_44282, loc_442D0, loc_44314
-global loc_44318, loc_44339, loc_44376, loc_443A9, loc_443AB, loc_443EE, loc_443F5, loc_44419
-global loc_4443E, loc_44482, loc_4449A, loc_4449D, loc_444A6, loc_444A7, loc_444FC, loc_4451A
-global loc_44523, loc_44548, loc_44549, loc_4454D, loc_44551, loc_4458F, loc_44607, loc_44646
-global loc_4464A, loc_4466A, loc_4469D, loc_446CF, loc_4479B, loc_447DF, loc_44801, loc_4481E
-global loc_44852, loc_4486A, loc_4486D, loc_44876, loc_44877, loc_448C8, loc_4490C, loc_44952
-global loc_4499D, loc_44A33, loc_44A38, loc_44A6C, loc_44AB5, loc_44AD1, loc_44AD9, loc_44ADA
-global loc_44AEA, loc_44BE1, loc_44BF7, loc_44C72, loc_44D08, loc_44D74, loc_44D8C, loc_44DA9
-global loc_44DC4, loc_44DC6, loc_44E02, loc_44F41, loc_44F46, loc_44F7E, loc_44F8E, loc_44FCE
-global loc_44FD9, loc_45048, loc_45067, loc_45068, loc_45081, loc_45086, loc_450D2, loc_45129
-global loc_45195, loc_451B9, loc_451C6, loc_451E4, loc_45203, loc_4520E, loc_4524F, loc_45260
-global sub_41B80, sub_41C79, sub_41C9B, sub_41CC4, sub_41F64, sub_42221, sub_42295, sub_42631
-global sub_428AB, sub_42BBA, sub_42DAA, sub_42F19, sub_42F42, sub_42FED, sub_43644, sub_43757
-global sub_43E40, sub_43F4B, sub_443B6, sub_444C9, sub_447A6, sub_44899, sub_44A41, sub_44DCF
-sub_41B80:
+global SeriesLength_jt, FinishPlayoffs_jt
+global UpdateSeasonSchedule_pop3
+global SeriesLength_bo1, SeriesLength_bo3, SeriesLength_n3
+global SeriesLength_n4, SeriesLength_bo7
+global SimPlayoffRound1_ok, SimPlayoffRound1_pop3
+global FinishPlayoffs_r1, FinishPlayoffs_r2, FinishPlayoffs_r3
+global FinishPlayoffs_r4
+global LoadLeagueGameRef, DateKey, NormalizeDate, UpdateSeasonSchedule, UpdatePlayoffSeries, SeriesLength, RandomizeSchedule, SimScheduleDay
+global BuildPlayoffs, GetPlayoffSeeds, SortStandings, SwapInt, SetSeriesTeams, SeedPlayoffRound1, SimPlayoffRound1, SeedPlayoffRound2
+global SimPlayoffRound2, SeedPlayoffRound3, SimPlayoffRound3, SeedPlayoffFinal, SimPlayoffFinal, FinishPlayoffs, AdvancePlayoffs, CreateNewLeague
+LoadLeagueGameRef:
 push dword 14h	; 41B80
 call __CHK	; 41B85
 push ebx	; 41B8A
@@ -73,113 +39,113 @@ mov ebx, 0FFFFFFFFh	; 41B95
 mov edx, dword_DDD38	; 41B9A
 call FileReadAt	; 41B9F
 test eax, eax	; 41BA4
-jne short loc_41BBE	; 41BA6
+jne short .1	; 41BA6
 mov ecx, 4	; 41BA8
 mov ebx, 0FFFFFFFFh	; 41BAD
 mov edx, dword_DDD34	; 41BB2
 mov eax, esi	; 41BB7
 call FileReadAt	; 41BB9
-loc_41BBE:
+.1:
 test eax, eax	; 41BBE
-jne short loc_41BD8	; 41BC0
+jne short .2	; 41BC0
 mov ecx, 4	; 41BC2
 mov ebx, 0FFFFFFFFh	; 41BC7
 mov edx, dword_DDD3C	; 41BCC
 mov eax, esi	; 41BD1
 call FileReadAt	; 41BD3
-loc_41BD8:
+.2:
 test eax, eax	; 41BD8
-jne short loc_41BF2	; 41BDA
+jne short .3	; 41BDA
 mov ecx, 4	; 41BDC
 mov ebx, 0FFFFFFFFh	; 41BE1
 mov edx, word_DDD48	; 41BE6
 mov eax, esi	; 41BEB
 call FileReadAt	; 41BED
-loc_41BF2:
+.3:
 test eax, eax	; 41BF2
-jne short loc_41C0C	; 41BF4
+jne short .4	; 41BF4
 mov ecx, 4	; 41BF6
 mov ebx, 0FFFFFFFFh	; 41BFB
 mov edx, word_DDD4A	; 41C00
 mov eax, esi	; 41C05
 call FileReadAt	; 41C07
-loc_41C0C:
+.4:
 test eax, eax	; 41C0C
-jne short loc_41C26	; 41C0E
+jne short .5	; 41C0E
 mov ecx, 4	; 41C10
 mov ebx, 0FFFFFFFFh	; 41C15
 mov edx, word_DDD46	; 41C1A
 mov eax, esi	; 41C1F
 call FileReadAt	; 41C21
-loc_41C26:
+.5:
 test eax, eax	; 41C26
-jne short loc_41C40	; 41C28
+jne short .6	; 41C28
 mov ecx, 0Dh	; 41C2A
 mov ebx, 0FFFFFFFFh	; 41C2F
 mov edx, savleague1	; 41C34
 mov eax, esi	; 41C39
 call FileReadAt	; 41C3B
-loc_41C40:
+.6:
 test eax, eax	; 41C40
-jne short loc_41C5A	; 41C42
+jne short .7	; 41C42
 mov ecx, 0Dh	; 41C44
 mov ebx, 0FFFFFFFFh	; 41C49
 mov edx, savleague2	; 41C4E
 mov eax, esi	; 41C53
 call FileReadAt	; 41C55
-loc_41C5A:
+.7:
 test eax, eax	; 41C5A
-jne short loc_41C74	; 41C5C
+jne short .x	; 41C5C
 mov ecx, 6	; 41C5E
 mov ebx, 0FFFFFFFFh	; 41C63
 mov edx, byte_DDD40	; 41C68
 mov eax, esi	; 41C6D
 call FileReadAt	; 41C6F
-loc_41C74:
+.x:
 pop esi	; 41C74
 pop edx	; 41C75
 pop ecx	; 41C76
 pop ebx	; 41C77
 ret	; 41C78
-sub_41C79:
+DateKey:
 push dword 8	; 41C79
 call __CHK	; 41C7E
 push ebx	; 41C83
 cmp eax, byte 9	; 41C84
-jl short loc_41C8D	; 41C87
+jl short .1	; 41C87
 mov ebx, eax	; 41C89
-jmp short loc_41C92	; 41C8B
-loc_41C8D:
+jmp short .2	; 41C8B
+.1:
 lea ebx, [byte eax+0Ch]	; 41C8D
 mov eax, ebx	; 41C90
-loc_41C92:
+.2:
 shl eax, 5	; 41C92
 sub eax, ebx	; 41C95
 add eax, edx	; 41C97
 pop ebx	; 41C99
 ret	; 41C9A
-sub_41C9B:
+NormalizeDate:
 push dword 0Ch	; 41C9B
 call __CHK	; 41CA0
 push ebx	; 41CA5
 push ecx	; 41CA6
-loc_41CA7:
+.1:
 xor ebx, ebx	; 41CA7
 mov bl, byte [eax]	; 41CA9
 mov cl, byte [edx]	; 41CAB
-mov ch, byte [dword ebx+byte_C8444]	; 41CAD
+mov ch, byte [dword ebx+monthdays_m1]	; 41CAD
 cmp cl, ch	; 41CB3
-jbe short loc_41CC1	; 41CB5
+jbe short .x	; 41CB5
 mov bh, cl	; 41CB7
 sub bh, ch	; 41CB9
 mov byte [edx], bh	; 41CBB
 inc byte [eax]	; 41CBD
-jmp short loc_41CA7	; 41CBF
-loc_41CC1:
+jmp short NormalizeDate.1	; 41CBF
+.x:
 pop ecx	; 41CC1
 pop ebx	; 41CC2
 ret	; 41CC3
-sub_41CC4:
+UpdateSeasonSchedule:
 push dword 60h	; 41CC4
 call __CHK	; 41CC9
 push esi	; 41CCE
@@ -206,7 +172,7 @@ mov eax, esp	; 41D0E
 call FileOpenRW	; 41D10
 mov ebp, eax	; 41D15
 test eax, eax	; 41D17
-jne short loc_41D39	; 41D19
+jne short .1	; 41D19
 mov ebx, dword [leaguedbnames+10h]	; 41D1B
 mov ecx, esi	; 41D21
 mov edx, edi	; 41D23
@@ -216,9 +182,9 @@ lea edx, [byte esp+02Ch]	; 41D2C
 mov eax, esp	; 41D30
 call FileOpenRW	; 41D32
 mov ebp, eax	; 41D37
-loc_41D39:
+.1:
 test ebp, ebp	; 41D39
-jne short loc_41D5B	; 41D3B
+jne short .2	; 41D3B
 mov ebx, dword [leaguedbnames+0Ch]	; 41D3D
 mov ecx, esi	; 41D43
 mov edx, edi	; 41D45
@@ -228,20 +194,20 @@ lea edx, [byte esp+028h]	; 41D4E
 mov eax, esp	; 41D52
 call FileOpenRead	; 41D54
 mov ebp, eax	; 41D59
-loc_41D5B:
+.2:
 test ebp, ebp	; 41D5B
-jne short loc_41D7B	; 41D5D
+jne short .3	; 41D5D
 mov eax, dword [byte esp+034h]	; 41D5F
 cmp eax, 4ADh	; 41D63
-jge short loc_41D7B	; 41D68
+jge short .3	; 41D68
 mov ebx, eax	; 41D6A
 lea edx, [byte esp+020h]	; 41D6C
 mov eax, dword [byte esp+030h]	; 41D70
-call sub_147A0	; 41D74
+call ReadSchedGame	; 41D74
 mov ebp, eax	; 41D79
-loc_41D7B:
+.3:
 test ebp, ebp	; 41D7B
-jne near loc_41E22	; 41D7D
+jne near .4	; 41D7D
 mov ebx, dword [leaguedbnames+14h]	; 41D83
 mov ecx, esi	; 41D89
 mov edx, edi	; 41D8B
@@ -252,12 +218,12 @@ lea eax, [byte esp+04h]	; 41D96
 push eax	; 41D9A
 call sub_8E8A0	; 41D9B
 add esp, byte 8	; 41DA0
-mov dword [dword_D07BB], eax	; 41DA3
+mov dword [seasondb], eax	; 41DA3
 mov eax, esp	; 41DA8
 push eax	; 41DAA
 call sub_92DE0	; 41DAB
 add esp, byte 4	; 41DB0
-mov dword [dword_D07D3], eax	; 41DB3
+mov dword [seasondb_size], eax	; 41DB3
 mov ebx, dword [leaguedbnames+4]	; 41DB8
 mov ecx, esi	; 41DBE
 mov edx, edi	; 41DC0
@@ -268,12 +234,12 @@ lea eax, [byte esp+04h]	; 41DCB
 push eax	; 41DCF
 call sub_8E8A0	; 41DD0
 add esp, byte 8	; 41DD5
-mov dword [dword_D07BF], eax	; 41DD8
+mov dword [careerdb], eax	; 41DD8
 mov eax, esp	; 41DDD
 push eax	; 41DDF
 call sub_92DE0	; 41DE0
 add esp, byte 4	; 41DE5
-mov dword [dword_D07D7], eax	; 41DE8
+mov dword [careerdb_size], eax	; 41DE8
 mov ebx, dword [leaguedbnames]	; 41DED
 mov ecx, esi	; 41DF3
 mov edx, edi	; 41DF5
@@ -284,33 +250,33 @@ lea eax, [byte esp+04h]	; 41E00
 push eax	; 41E04
 call sub_8E8A0	; 41E05
 add esp, byte 8	; 41E0A
-mov dword [dword_D07C7], eax	; 41E0D
+mov dword [keydb], eax	; 41E0D
 mov eax, esp	; 41E12
 push eax	; 41E14
 call sub_92DE0	; 41E15
 add esp, byte 4	; 41E1A
-mov dword [dword_D07DF], eax	; 41E1D
-loc_41E22:
+mov dword [keydb_size], eax	; 41E1D
+.4:
 test ebp, ebp	; 41E22
-jne near loc_41EA6	; 41E24
+jne near .10	; 41E24
 mov edx, dword [byte esp+034h]	; 41E2A
 test edx, edx	; 41E2E
-jle near loc_41EA6	; 41E30
+jle near .10	; 41E30
 cmp edx, 444h	; 41E36
-jg short loc_41E83	; 41E3C
-jne short loc_41E4E	; 41E3E
+jg short .8	; 41E3C
+jne short .5	; 41E3E
 cmp byte [byte esp+022h], 0FFh	; 41E40
-je short loc_41E4E	; 41E45
+je short .5	; 41E45
 cmp byte [byte esp+023h], 0FFh	; 41E47
-jne short loc_41E55	; 41E4C
-loc_41E4E:
+jne short .6	; 41E4C
+.5:
 mov eax, 1	; 41E4E
-jmp short loc_41E57	; 41E53
-loc_41E55:
+jmp short .7	; 41E53
+.6:
 xor eax, eax	; 41E55
-loc_41E57:
+.7:
 test eax, eax	; 41E57
-je short loc_41E83	; 41E59
+je short .8	; 41E59
 mov edx, dword [byte esp+050h]	; 41E5B
 push edx	; 41E5F
 mov ebx, dword [byte esp+050h]	; 41E60
@@ -323,9 +289,9 @@ mov ecx, dword [byte esp+048h]	; 41E6C
 mov ebx, dword [byte esp+03Ch]	; 41E70
 mov edx, dword [byte esp+040h]	; 41E74
 mov eax, dword [byte esp+044h]	; 41E78
-call sub_42631	; 41E7C
-jmp short loc_41EA4	; 41E81
-loc_41E83:
+call SimScheduleDay	; 41E7C
+jmp short .9	; 41E81
+.8:
 mov ebp, dword [byte esp+050h]	; 41E83
 push ebp	; 41E87
 mov eax, dword [byte esp+050h]	; 41E88
@@ -336,56 +302,56 @@ mov ecx, dword [byte esp+048h]	; 41E8F
 mov ebx, dword [byte esp+038h]	; 41E93
 mov edx, dword [byte esp+03Ch]	; 41E97
 mov eax, dword [byte esp+040h]	; 41E9B
-call sub_44A41	; 41E9F
-loc_41EA4:
+call AdvancePlayoffs	; 41E9F
+.9:
 mov ebp, eax	; 41EA4
-loc_41EA6:
+.10:
 test ebp, ebp	; 41EA6
-jne short loc_41EDF	; 41EA8
-cmp dword [dword_D07BB], byte 0	; 41EAA
-je short loc_41EDF	; 41EB1
+jne short .11	; 41EA8
+cmp dword [seasondb], byte 0	; 41EAA
+je short .11	; 41EB1
 mov ebx, dword [leaguedbnames+14h]	; 41EB3
 mov ecx, esi	; 41EB9
 mov edx, edi	; 41EBB
 mov eax, esp	; 41EBD
 call MakePath	; 41EBF
-mov edx, dword [dword_D07D3]	; 41EC4
+mov edx, dword [seasondb_size]	; 41EC4
 push edx	; 41ECA
-mov ebx, dword [dword_D07BB]	; 41ECB
+mov ebx, dword [seasondb]	; 41ECB
 push ebx	; 41ED1
 lea eax, [byte esp+08h]	; 41ED2
 push eax	; 41ED6
 call sub_932D0	; 41ED7
 add esp, byte 0Ch	; 41EDC
-loc_41EDF:
-mov ecx, dword [dword_D07BB]	; 41EDF
+.11:
+mov ecx, dword [seasondb]	; 41EDF
 test ecx, ecx	; 41EE5
-je short loc_41EF2	; 41EE7
+je short .12	; 41EE7
 push ecx	; 41EE9
 call jctime	; 41EEA
 add esp, byte 4	; 41EEF
-loc_41EF2:
-mov edi, dword [dword_D07BF]	; 41EF2
+.12:
+mov edi, dword [careerdb]	; 41EF2
 test edi, edi	; 41EF8
-je short loc_41F05	; 41EFA
+je short .13	; 41EFA
 push edi	; 41EFC
 call jctime	; 41EFD
 add esp, byte 4	; 41F02
-loc_41F05:
-mov edx, dword [dword_D07C7]	; 41F05
+.13:
+mov edx, dword [keydb]	; 41F05
 test edx, edx	; 41F0B
-je short loc_41F18	; 41F0D
+je short .14	; 41F0D
 push edx	; 41F0F
 call jctime	; 41F10
 add esp, byte 4	; 41F15
-loc_41F18:
+.14:
 xor ecx, ecx	; 41F18
-mov dword [dword_D07BB], ecx	; 41F1A
-mov dword [dword_D07BF], ecx	; 41F20
-mov dword [dword_D07C7], ecx	; 41F26
-mov dword [dword_D07D3], ecx	; 41F2C
-mov dword [dword_D07D7], ecx	; 41F32
-mov dword [dword_D07DF], ecx	; 41F38
+mov dword [seasondb], ecx	; 41F1A
+mov dword [careerdb], ecx	; 41F20
+mov dword [keydb], ecx	; 41F26
+mov dword [seasondb_size], ecx	; 41F2C
+mov dword [careerdb_size], ecx	; 41F32
+mov dword [keydb_size], ecx	; 41F38
 lea eax, [byte esp+028h]	; 41F3E
 call FileClose	; 41F42
 lea eax, [byte esp+02Ch]	; 41F47
@@ -394,12 +360,12 @@ lea eax, [byte esp+030h]	; 41F50
 call FileClose	; 41F54
 mov eax, ebp	; 41F59
 add esp, byte 3Ch	; 41F5B
-loc_41F5E:
+UpdateSeasonSchedule_pop3:
 pop ebp	; 41F5E
 pop edi	; 41F5F
 pop esi	; 41F60
 ret 8	; 41F61
-sub_41F64:
+UpdatePlayoffSeries:
 push dword 384h	; 41F64
 call __CHK	; 41F69
 push ecx	; 41F6E
@@ -417,24 +383,24 @@ lea eax, [dword esp+02E8h]	; 41F8C
 call __STOSD	; 41F93
 mov edx, dword [dword esp+0358h]	; 41F98
 cmp edx, 47Ch	; 41F9F
-jge short loc_41FB0	; 41FA5
+jge short .1	; 41FA5
 mov dword [dword esp+0360h], ebx	; 41FA7
-jmp short loc_41FED	; 41FAE
-loc_41FB0:
+jmp short .4	; 41FAE
+.1:
 cmp edx, 498h	; 41FB0
-jge short loc_41FC5	; 41FB6
+jge short .2	; 41FB6
 mov dword [dword esp+0360h], 7	; 41FB8
-jmp short loc_41FED	; 41FC3
-loc_41FC5:
+jmp short .4	; 41FC3
+.2:
 cmp edx, 4A6h	; 41FC5
-jge short loc_41FDA	; 41FCB
+jge short .3	; 41FCB
 mov dword [dword esp+0360h], 0Eh	; 41FCD
-jmp short loc_41FED	; 41FD8
-loc_41FDA:
+jmp short .4	; 41FD8
+.3:
 cmp edx, 4ADh	; 41FDA
-jge short loc_41FED	; 41FE0
+jge short .4	; 41FE0
 mov dword [dword esp+0360h], 15h	; 41FE2
-loc_41FED:
+.4:
 mov eax, dword [dword esp+0358h]	; 41FED
 sub eax, 444h	; 41FF4
 mov dword [dword esp+0358h], eax	; 41FF9
@@ -448,36 +414,36 @@ mov dword [dword esp+0364h], eax	; 42015
 xor edx, edx	; 4201C
 mov dword [dword esp+0368h], edx	; 4201E
 xor ecx, ecx	; 42025
-jmp short loc_42082	; 42027
-loc_42029:
+jmp short .8	; 42027
+.5:
 mov ebx, dword [dword esp+0364h]	; 42029
 add ebx, 444h	; 42030
 add ebx, ecx	; 42036
 lea edx, [dword esp+0350h]	; 42038
 mov eax, edi	; 4203F
-call sub_147A0	; 42041
+call ReadSchedGame	; 42041
 mov ebx, eax	; 42046
 test eax, eax	; 42048
-jne short loc_42081	; 4204A
+jne short .7	; 4204A
 test ecx, ecx	; 4204C
-jne short loc_42066	; 4204E
+jne short .6	; 4204E
 movzx ebp, byte [dword esp+0352h]	; 42050
 mov al, byte [dword esp+0353h]	; 42058
 mov dword [dword esp+036Ch], eax	; 4205F
-loc_42066:
+.6:
 cmp byte [dword esp+0352h], 0FFh	; 42066
-je short loc_42081	; 4206E
+je short .7	; 4206E
 cmp byte [dword esp+0353h], 0FFh	; 42070
-je short loc_42081	; 42078
+je short .7	; 42078
 inc dword [dword esp+0368h]	; 4207A
-loc_42081:
+.7:
 inc ecx	; 42081
-loc_42082:
+.8:
 cmp ecx, byte 7	; 42082
-jge short loc_4208B	; 42085
+jge short .9	; 42085
 test ebx, ebx	; 42087
-je short loc_42029	; 42089
-loc_4208B:
+je short UpdatePlayoffSeries.5	; 42089
+.9:
 mov edx, dword [dword esp+0368h]	; 4208B
 inc edx	; 42092
 mov eax, edx	; 42093
@@ -486,17 +452,17 @@ LD sub, eax, edx	; 42098
 sar eax, 1	; 4209A
 mov dword [dword esp+035Ch], eax	; 4209C
 xor ecx, ecx	; 420A3
-jmp near loc_421E5	; 420A5
-loc_420AA:
-jne near loc_4218F	; 420AA
+jmp near .19	; 420A5
+.10:
+jne near .15	; 420AA
 mov eax, dword [dword esp+ebp*4+02E8h]	; 420B0
 mov ebx, dword [dword esp+035Ch]	; 420B7
 cmp eax, ebx	; 420BE
-je short loc_420D6	; 420C0
+je short .11	; 420C0
 mov eax, dword [dword esp+036Ch]	; 420C2
 cmp ebx, dword [dword esp+eax*4+02E8h]	; 420C9
-jne near loc_4218F	; 420D0
-loc_420D6:
+jne near .15	; 420D0
+.11:
 mov dl, 0FFh	; 420D6
 mov byte [dword esp+0350h], dl	; 420D8
 mov byte [dword esp+0351h], dl	; 420DF
@@ -507,78 +473,78 @@ add ebx, 444h	; 420FB
 add ebx, ecx	; 42101
 lea edx, [dword esp+0350h]	; 42103
 mov eax, edi	; 4210A
-call sub_3A28F	; 4210C
+call WriteSchedGame	; 4210C
 mov ebx, eax	; 42111
 test eax, eax	; 42113
-jne short loc_42124	; 42115
+jne short .12	; 42115
 mov ebx, ebp	; 42117
 mov edx, esp	; 42119
 mov eax, esi	; 4211B
-call sub_147C9	; 4211D
+call ReadTeamRec	; 4211D
 mov ebx, eax	; 42122
-loc_42124:
+.12:
 test ebx, ebx	; 42124
-jne short loc_42149	; 42126
+jne short .13	; 42126
 mov eax, dword [dword esp+0360h]	; 42128
 add eax, ecx	; 4212F
 mov dword [dword esp+eax*4+026Ch], 0FFFFFFFFh	; 42131
 mov ebx, ebp	; 4213C
 mov edx, esp	; 4213E
 mov eax, esi	; 42140
-call sub_3A2B8	; 42142
+call WriteTeamRec	; 42142
 mov ebx, eax	; 42147
-loc_42149:
+.13:
 test ebx, ebx	; 42149
-jne short loc_4215F	; 4214B
+jne short .14	; 4214B
 mov ebx, dword [dword esp+036Ch]	; 4214D
 mov edx, esp	; 42154
 mov eax, esi	; 42156
-call sub_147C9	; 42158
+call ReadTeamRec	; 42158
 mov ebx, eax	; 4215D
-loc_4215F:
+.14:
 test ebx, ebx	; 4215F
-jne near loc_421E4	; 42161
+jne near .18	; 42161
 mov eax, dword [dword esp+0360h]	; 42167
 add eax, ecx	; 4216E
 mov dword [dword esp+eax*4+026Ch], 0FFFFFFFFh	; 42170
 mov ebx, dword [dword esp+036Ch]	; 4217B
 mov edx, esp	; 42182
 mov eax, esi	; 42184
-call sub_3A2B8	; 42186
+call WriteTeamRec	; 42186
 mov ebx, eax	; 4218B
-jmp short loc_421E4	; 4218D
-loc_4218F:
+jmp short .18	; 4218D
+.15:
 mov ebx, dword [dword esp+0364h]	; 4218F
 add ebx, 444h	; 42196
 add ebx, ecx	; 4219C
 lea edx, [dword esp+0350h]	; 4219E
 mov eax, edi	; 421A5
-call sub_147A0	; 421A7
+call ReadSchedGame	; 421A7
 mov ebx, eax	; 421AC
 mov dh, byte [dword esp+0354h]	; 421AE
 cmp dh, 0FFh	; 421B5
-je short loc_421E4	; 421B8
+je short .18	; 421B8
 mov al, byte [dword esp+0355h]	; 421BA
 cmp al, 0FFh	; 421C1
-je short loc_421E4	; 421C3
+je short .18	; 421C3
 cmp dh, al	; 421C5
-jbe short loc_421D4	; 421C7
+jbe short .16	; 421C7
 xor eax, eax	; 421C9
 mov al, byte [dword esp+0352h]	; 421CB
-jmp short loc_421DD	; 421D2
-loc_421D4:
+jmp short .17	; 421D2
+.16:
 xor eax, eax	; 421D4
 mov al, byte [dword esp+0353h]	; 421D6
-loc_421DD:
+.17:
 inc dword [dword esp+eax*4+02E8h]	; 421DD
-loc_421E4:
+.18:
 inc ecx	; 421E4
-loc_421E5:
+.19:
 cmp ecx, dword [dword esp+0368h]	; 421E5
-jge short loc_421F6	; 421EC
+jge short .20	; 421EC
 test ebx, ebx	; 421EE
-je near loc_420AA	; 421F0
-loc_421F6:
+je near UpdatePlayoffSeries.10	; 421F0
+.20:
 mov eax, ebx	; 421F6
 add esp, 370h	; 421F8
 pop ebp	; 421FE
@@ -587,15 +553,15 @@ pop esi	; 42200
 pop ecx	; 42201
 ret	; 42202
 db 08Bh,0C0h
-jpt_42205:
-dd loc_42255
-dd loc_42260
-dd loc_42267
-dd loc_4227E
-dd loc_4227E
-dd loc_4228E
-dd loc_4228E
-sub_42221:
+SeriesLength_jt:
+dd SeriesLength_bo1
+dd SeriesLength_bo3
+dd SeriesLength_n3
+dd SeriesLength_n4
+dd SeriesLength_n4
+dd SeriesLength_bo7
+dd SeriesLength_bo7
+SeriesLength:
 push dword 10h	; 42221
 call __CHK	; 42226
 push ecx	; 4222B
@@ -603,50 +569,50 @@ push edx	; 4222C
 push esi	; 4222D
 mov ecx, eax	; 4222E
 xor edx, edx	; 42230
-loc_42232:
+.1:
 mov eax, edx	; 42232
 shl eax, 2	; 42234
 sub eax, edx	; 42237
 cmp byte [ecx+eax*2], 0FFh	; 42239
-je short loc_42245	; 4223D
+je short .2	; 4223D
 inc edx	; 4223F
 cmp edx, byte 7	; 42240
-jl short loc_42232	; 42243
-loc_42245:
+jl short SeriesLength.1	; 42243
+.2:
 lea eax, [byte edx-01h]	; 42245
 cmp eax, byte 6	; 42248
-ja short loc_4225A	; 4224B
-jmp dword [nosplit cs:eax*4+jpt_42205]	; 4224D
-loc_42255:
+ja short SeriesLength_bo1.4	; 4224B
+jmp dword [nosplit cs:eax*4+SeriesLength_jt]	; 4224D
+SeriesLength_bo1:
 mov esi, 1	; 42255
-loc_4225A:
+.4:
 mov eax, esi	; 4225A
 pop esi	; 4225C
 pop edx	; 4225D
 pop ecx	; 4225E
 ret	; 4225F
-loc_42260:
+SeriesLength_bo3:
 mov esi, 3	; 42260
-jmp short loc_4225A	; 42265
-loc_42267:
+jmp short SeriesLength_bo1.4	; 42265
+SeriesLength_n3:
 mov edx, 5	; 42267
 mov eax, ecx	; 4226C
-call sub_87760	; 4226E
+call SeriesWinner	; 4226E
 test eax, eax	; 42273
-jl short loc_42260	; 42275
-loc_42277:
+jl short SeriesLength_bo3	; 42275
+.7:
 mov esi, 5	; 42277
-jmp short loc_4225A	; 4227C
-loc_4227E:
+jmp short SeriesLength_bo1.4	; 4227C
+SeriesLength_n4:
 mov edx, 7	; 4227E
 mov eax, ecx	; 42283
-call sub_87760	; 42285
+call SeriesWinner	; 42285
 test eax, eax	; 4228A
-jl short loc_42277	; 4228C
-loc_4228E:
+jl short SeriesLength_n3.7	; 4228C
+SeriesLength_bo7:
 mov esi, 7	; 4228E
-jmp short loc_4225A	; 42293
-sub_42295:
+jmp short SeriesLength_bo1.4	; 42293
+RandomizeSchedule:
 push dword 3D4h	; 42295
 call __CHK	; 4229A
 push ebx	; 4229F
@@ -661,14 +627,14 @@ mov edx, 0FFFFFFFFh	; 422AC
 mov dword [dword esp+039Ch], edx	; 422B1
 mov dword [dword esp+03A0h], edx	; 422B8
 cmp dword [esp], byte 0	; 422BF
-je near loc_42374	; 422C3
+je near .4	; 422C3
 push byte 0	; 422C9
 push byte 0	; 422CB
 push byte 0	; 422CD
 push byte 0	; 422CF
 push byte 0	; 422D1
 mov ecx, 2	; 422D3
-mov ebx, off_C8C59	; 422D8
+mov ebx, msg_GenSchedule	; 422D8
 mov eax, edx	; 422DD
 call MessageBox	; 422DF
 mov ecx, 1Ah	; 422E4
@@ -676,24 +642,24 @@ xor edx, edx	; 422E9
 lea eax, [dword esp+02F0h]	; 422EB
 call __STOSD	; 422F2
 xor edi, edi	; 422F7
-loc_422F9:
+.1:
 xor ebx, ebx	; 422F9
-loc_422FB:
+.2:
 mov eax, edi	; 422FB
 shl eax, 3	; 422FD
 sub eax, edi	; 42300
 add eax, ebx	; 42302
-mov dl, byte [dword eax+byte_C83C3]	; 42304
+mov dl, byte [dword eax+divisionteams]	; 42304
 mov byte [dword esp+eax+0378h], dl	; 4230A
 inc ebx	; 42311
 cmp ebx, byte 7	; 42312
-jl short loc_422FB	; 42315
+jl short RandomizeSchedule.2	; 42315
 cmp edi, byte 2	; 42317
 setge al	; 4231A
 movzx ebp, al	; 4231D
 add ebp, byte 6	; 42320
 xor ebx, ebx	; 42323
-loc_42325:
+.3:
 call rand_	; 42325
 mov edx, eax	; 4232A
 sar edx, 1Fh	; 4232C
@@ -715,11 +681,11 @@ mov byte [dword esp+esi+0378h], al	; 4235A
 mov byte [dword esp+ecx+0378h], dl	; 42361
 inc ebx	; 42368
 cmp ebx, byte 0Ch	; 42369
-jl short loc_42325	; 4236C
+jl short RandomizeSchedule.3	; 4236C
 inc edi	; 4236E
 cmp edi, byte 4	; 4236F
-jl short loc_422F9	; 42372
-loc_42374:
+jl short RandomizeSchedule.1	; 42372
+.4:
 mov ebx, dword [leaguedbnames+18h]	; 42374
 mov ecx, str_extDB	; 4237A
 mov edx, dword [byte esp+04h]	; 4237F
@@ -730,7 +696,7 @@ lea eax, [dword esp+0358h]	; 42396
 call FileOpenRW	; 4239D
 mov edx, eax	; 423A2
 test eax, eax	; 423A4
-jne short loc_423D8	; 423A6
+jne short .5	; 423A6
 mov ebx, dword [leaguedbnames+10h]	; 423A8
 mov ecx, str_extDB	; 423AE
 mov edx, dword [byte esp+04h]	; 423B3
@@ -740,28 +706,28 @@ lea edx, [dword esp+03A0h]	; 423C3
 lea eax, [dword esp+0358h]	; 423CA
 call FileOpenRW	; 423D1
 mov edx, eax	; 423D6
-loc_423D8:
+.5:
 test edx, edx	; 423D8
-jne near loc_42606	; 423DA
+jne near .19	; 423DA
 xor edi, edi	; 423E0
-jmp near loc_42599	; 423E2
-loc_423E7:
+jmp near .15	; 423E2
+.6:
 mov ebx, edi	; 423E7
 lea edx, [dword esp+0394h]	; 423E9
 mov eax, dword [dword esp+039Ch]	; 423F0
-call sub_147A0	; 423F7
+call ReadSchedGame	; 423F7
 mov edx, eax	; 423FC
 test eax, eax	; 423FE
-jne near loc_42598	; 42400
+jne near .14	; 42400
 movzx esi, byte [dword esp+0396h]	; 42406
 xor ecx, ecx	; 4240E
 mov cl, byte [dword esp+0397h]	; 42410
 xor ebx, ebx	; 42417
-loc_42419:
-mov al, byte [dword esi+byte_C83DF]	; 42419
-mov dl, byte [dword esi+byte_C83F9]	; 4241F
+.7:
+mov al, byte [dword esi+teamdivision]	; 42419
+mov dl, byte [dword esi+teamdivslot]	; 4241F
 test esi, esi	; 42425
-jl short loc_42466	; 42427
+jl short .8	; 42427
 and eax, 0FFh	; 42429
 mov dword [dword esp+03A4h], eax	; 4242E
 shl eax, 3	; 42435
@@ -769,17 +735,17 @@ sub eax, dword [dword esp+03A4h]	; 42438
 and edx, 0FFh	; 4243F
 add eax, edx	; 42445
 xor edx, edx	; 42447
-mov dl, byte [dword eax+byte_C83C3]	; 42449
+mov dl, byte [dword eax+divisionteams]	; 42449
 cmp esi, edx	; 4244F
-jne short loc_42466	; 42451
+jne short .8	; 42451
 mov al, byte [dword esp+eax+0378h]	; 42453
 mov byte [dword esp+0396h], al	; 4245A
 mov esi, 0FFFFFFFFh	; 42461
-loc_42466:
-mov al, byte [dword ecx+byte_C83DF]	; 42466
-mov dl, byte [dword ecx+byte_C83F9]	; 4246C
+.8:
+mov al, byte [dword ecx+teamdivision]	; 42466
+mov dl, byte [dword ecx+teamdivslot]	; 4246C
 test ecx, ecx	; 42472
-jl short loc_424B3	; 42474
+jl short .9	; 42474
 and eax, 0FFh	; 42476
 mov dword [dword esp+03A4h], eax	; 4247B
 shl eax, 3	; 42482
@@ -787,40 +753,40 @@ sub eax, dword [dword esp+03A4h]	; 42485
 and edx, 0FFh	; 4248C
 add eax, edx	; 42492
 xor edx, edx	; 42494
-mov dl, byte [dword eax+byte_C83C3]	; 42496
+mov dl, byte [dword eax+divisionteams]	; 42496
 cmp ecx, edx	; 4249C
-jne short loc_424B3	; 4249E
+jne short .9	; 4249E
 mov al, byte [dword esp+eax+0378h]	; 424A0
 mov byte [dword esp+0397h], al	; 424A7
 mov ecx, 0FFFFFFFFh	; 424AE
-loc_424B3:
+.9:
 test esi, esi	; 424B3
-jge short loc_424C0	; 424B5
+jge short .10	; 424B5
 test ecx, ecx	; 424B7
-jge short loc_424C0	; 424B9
+jge short .10	; 424B9
 mov ebx, 1Ah	; 424BB
-loc_424C0:
+.10:
 inc ebx	; 424C0
 cmp ebx, byte 1Ah	; 424C1
-jl near loc_42419	; 424C4
+jl near RandomizeSchedule.7	; 424C4
 mov ebx, edi	; 424CA
 lea edx, [dword esp+0394h]	; 424CC
 mov eax, dword [dword esp+039Ch]	; 424D3
-call sub_3A28F	; 424DA
+call WriteSchedGame	; 424DA
 mov edx, eax	; 424DF
 test eax, eax	; 424E1
-jne short loc_4250A	; 424E3
+jne short .11	; 424E3
 movzx esi, byte [dword esp+0396h]	; 424E5
 xor ecx, ecx	; 424ED
 mov cl, byte [dword esp+0397h]	; 424EF
 mov ebx, esi	; 424F6
 lea edx, [byte esp+08h]	; 424F8
 mov eax, dword [dword esp+03A0h]	; 424FC
-call sub_147C9	; 42503
+call ReadTeamRec	; 42503
 mov edx, eax	; 42508
-loc_4250A:
+.11:
 test edx, edx	; 4250A
-jne short loc_42544	; 4250C
+jne short .12	; 4250C
 mov eax, edi	; 4250E
 shl eax, 2	; 42510
 sub eax, edi	; 42513
@@ -833,19 +799,19 @@ mov dword [dword esp+esi*4+02F0h], edx	; 42529
 mov ebx, esi	; 42530
 lea edx, [byte esp+08h]	; 42532
 mov eax, dword [dword esp+03A0h]	; 42536
-call sub_3A2B8	; 4253D
+call WriteTeamRec	; 4253D
 mov edx, eax	; 42542
-loc_42544:
+.12:
 test edx, edx	; 42544
-jne short loc_4255C	; 42546
+jne short .13	; 42546
 mov ebx, ecx	; 42548
 lea edx, [byte esp+08h]	; 4254A
 mov eax, dword [dword esp+03A0h]	; 4254E
-call sub_147C9	; 42555
+call ReadTeamRec	; 42555
 mov edx, eax	; 4255A
-loc_4255C:
+.13:
 test edx, edx	; 4255C
-jne short loc_42598	; 4255E
+jne short .14	; 4255E
 mov eax, edi	; 42560
 shl eax, 2	; 42562
 sub eax, edi	; 42565
@@ -858,18 +824,18 @@ mov dword [dword esp+ecx*4+02F0h], ebx	; 4257D
 mov ebx, ecx	; 42584
 lea edx, [byte esp+08h]	; 42586
 mov eax, dword [dword esp+03A0h]	; 4258A
-call sub_3A2B8	; 42591
+call WriteTeamRec	; 42591
 mov edx, eax	; 42596
-loc_42598:
+.14:
 inc edi	; 42598
-loc_42599:
+.15:
 cmp edi, 444h	; 42599
-jge short loc_425AF	; 4259F
+jge short .16	; 4259F
 test edx, edx	; 425A1
-jne short loc_425AF	; 425A3
+jne short .16	; 425A3
 cmp dword [esp], byte 0	; 425A5
-jne near loc_423E7	; 425A9
-loc_425AF:
+jne near RandomizeSchedule.6	; 425A9
+.16:
 mov ah, 0FFh	; 425AF
 mov byte [dword esp+0394h], ah	; 425B1
 mov byte [dword esp+0395h], ah	; 425B8
@@ -878,20 +844,20 @@ mov byte [dword esp+0397h], ah	; 425C6
 mov byte [dword esp+0398h], ah	; 425CD
 mov byte [dword esp+0399h], ah	; 425D4
 mov edi, 444h	; 425DB
-jmp short loc_425FA	; 425E0
-loc_425E2:
+jmp short .18	; 425E0
+.17:
 mov ebx, edi	; 425E2
 lea edx, [dword esp+0394h]	; 425E4
 mov eax, dword [dword esp+039Ch]	; 425EB
-call sub_3A28F	; 425F2
+call WriteSchedGame	; 425F2
 mov edx, eax	; 425F7
 inc edi	; 425F9
-loc_425FA:
+.18:
 cmp edi, 4ADh	; 425FA
-jge short loc_42606	; 42600
+jge short .19	; 42600
 test edx, edx	; 42602
-je short loc_425E2	; 42604
-loc_42606:
+je short RandomizeSchedule.17	; 42604
+.19:
 lea eax, [dword esp+03A0h]	; 42606
 call FileClose	; 4260D
 lea eax, [dword esp+039Ch]	; 42612
@@ -905,7 +871,7 @@ pop esi	; 4262D
 pop ecx	; 4262E
 pop ebx	; 4262F
 ret	; 42630
-sub_42631:
+SimScheduleDay:
 push dword 40h	; 42631
 call __CHK	; 42636
 push esi	; 4263B
@@ -920,33 +886,33 @@ xor edx, edx	; 4264F
 mov dword [byte esp+010h], edx	; 42651
 lea ebx, [byte ecx-01h]	; 42655
 mov edx, esp	; 42658
-call sub_147A0	; 4265A
+call ReadSchedGame	; 4265A
 mov ebx, eax	; 4265F
 test eax, eax	; 42661
-jne near loc_428A0	; 42663
+jne near .19	; 42663
 xor edx, edx	; 42669
 mov dl, byte [byte esp+01h]	; 4266B
 mov al, byte [esp]	; 4266F
-call sub_41C79	; 42672
+call DateKey	; 42672
 mov dword [byte esp+014h], eax	; 42677
 xor ecx, ecx	; 4267B
 mov dword [byte esp+018h], ecx	; 4267D
 xor esi, esi	; 42681
-jmp near loc_427C4	; 42683
-loc_42688:
+jmp near .12	; 42683
+.1:
 mov ebx, esi	; 42688
 mov edx, esp	; 4268A
 mov eax, edi	; 4268C
-call sub_147A0	; 4268E
+call ReadSchedGame	; 4268E
 mov ebx, eax	; 42693
 test eax, eax	; 42695
-jne near loc_427C3	; 42697
+jne near .11	; 42697
 xor edx, edx	; 4269D
 mov dl, byte [byte esp+01h]	; 4269F
 mov al, byte [esp]	; 426A3
-call sub_41C79	; 426A6
+call DateKey	; 426A6
 cmp eax, dword [byte esp+014h]	; 426AB
-jg near loc_42785	; 426AF
+jg near .9	; 426AF
 mov dword [byte esp+018h], esi	; 426B5
 xor edx, edx	; 426B9
 xor eax, eax	; 426BB
@@ -955,50 +921,50 @@ mov dword [byte esp+08h], eax	; 426C1
 shl eax, 4	; 426C5
 sub eax, dword [byte esp+08h]	; 426C8
 cmp byte [byte ebp+eax*2+017h], 1	; 426CC
-jne short loc_426D8	; 426D1
+jne short .2	; 426D1
 mov edx, 1	; 426D3
-loc_426D8:
+.2:
 xor eax, eax	; 426D8
 mov al, byte [byte esp+03h]	; 426DA
 mov dword [byte esp+08h], eax	; 426DE
 shl eax, 4	; 426E2
 sub eax, dword [byte esp+08h]	; 426E5
 cmp byte [byte ebp+eax*2+017h], 1	; 426E9
-jne short loc_426F1	; 426EE
+jne short .3	; 426EE
 inc edx	; 426F0
-loc_426F1:
+.3:
 cmp byte [byte esp+04h], 0FFh	; 426F1
-je short loc_42703	; 426F6
+je short .4	; 426F6
 cmp byte [byte esp+05h], 0FFh	; 426F8
-jne near loc_427C3	; 426FD
-loc_42703:
+jne near .11	; 426FD
+.4:
 cmp dword [byte esp+040h], byte 0FFFFFFFFh	; 42703
-je short loc_42726	; 42708
+je short .5	; 42708
 xor eax, eax	; 4270A
 mov al, byte [byte esp+02h]	; 4270C
 mov ecx, dword [byte esp+040h]	; 42710
 cmp eax, ecx	; 42714
-je short loc_42726	; 42716
+je short .5	; 42716
 xor eax, eax	; 42718
 mov al, byte [byte esp+03h]	; 4271A
 cmp eax, ecx	; 4271E
-jne near loc_427C3	; 42720
-loc_42726:
+jne near .11	; 42720
+.5:
 test byte [byte esp+044h], 1	; 42726
-je short loc_42732	; 4272B
+je short .6	; 4272B
 cmp edx, byte 2	; 4272D
-je short loc_42751	; 42730
-loc_42732:
+je short .8	; 42730
+.6:
 test byte [byte esp+044h], 4	; 42732
-je short loc_4273D	; 42737
+je short .7	; 42737
 test edx, edx	; 42739
-je short loc_42751	; 4273B
-loc_4273D:
+je short .8	; 4273B
+.7:
 test byte [byte esp+044h], 2	; 4273D
-je near loc_427C3	; 42742
+je near .11	; 42742
 cmp edx, byte 1	; 42748
-jne near loc_427C3	; 4274B
-loc_42751:
+jne near .11	; 4274B
+.8:
 push byte 0FFFFFFFFh	; 42751
 mov eax, dword [byte esp+010h]	; 42753
 push eax	; 42757
@@ -1008,77 +974,77 @@ lea ecx, [byte esp+0Ch]	; 4275D
 mov ebx, esi	; 42761
 mov edx, dword [byte esp+048h]	; 42763
 mov eax, dword [byte esp+044h]	; 42767
-call sub_452C5	; 4276B
+call SimulateGame	; 4276B
 mov ebx, eax	; 42770
 test eax, eax	; 42772
-jne short loc_427C3	; 42774
+jne short .11	; 42774
 mov ebx, esi	; 42776
 mov edx, esp	; 42778
 mov eax, edi	; 4277A
-call sub_3A28F	; 4277C
+call WriteSchedGame	; 4277C
 mov ebx, eax	; 42781
-jmp short loc_427C3	; 42783
-loc_42785:
+jmp short .11	; 42783
+.9:
 mov ah, byte [byte esp+02h]	; 42785
 cmp ah, 0FFh	; 42789
-je short loc_427C3	; 4278C
+je short .11	; 4278C
 cmp byte [byte esp+03h], 0FFh	; 4278E
-je short loc_427C3	; 42793
+je short .11	; 42793
 xor edx, edx	; 42795
 mov dl, ah	; 42797
 mov eax, edx	; 42799
 shl eax, 4	; 4279B
 sub eax, edx	; 4279E
 cmp byte [byte ebp+eax*2+017h], 1	; 427A0
-je short loc_427BB	; 427A5
+je short .10	; 427A5
 xor edx, edx	; 427A7
 mov dl, byte [byte esp+03h]	; 427A9
 mov eax, edx	; 427AD
 shl eax, 4	; 427AF
 sub eax, edx	; 427B2
 cmp byte [byte ebp+eax*2+017h], 1	; 427B4
-jne short loc_427C3	; 427B9
-loc_427BB:
+jne short .11	; 427B9
+.10:
 mov dword [byte esp+010h], 1	; 427BB
-loc_427C3:
+.11:
 inc esi	; 427C3
-loc_427C4:
+.12:
 cmp esi, 444h	; 427C4
-jge short loc_427DB	; 427CA
+jge short .13	; 427CA
 cmp dword [byte esp+010h], byte 0	; 427CC
-jne short loc_427DB	; 427D1
+jne short .13	; 427D1
 test ebx, ebx	; 427D3
-je near loc_42688	; 427D5
-loc_427DB:
+je near SimScheduleDay.1	; 427D5
+.13:
 cmp dword [byte esp+044h], byte 7	; 427DB
-jne near loc_428A0	; 427E0
+jne near .19	; 427E0
 cmp dword [byte esp+010h], byte 0	; 427E6
-jne near loc_428A0	; 427EB
+jne near .19	; 427EB
 test ebx, ebx	; 427F1
-jne near loc_428A0	; 427F3
+jne near .19	; 427F3
 mov esi, dword [byte esp+018h]	; 427F9
 cmp esi, 444h	; 427FD
-jge near loc_428A0	; 42803
+jge near .19	; 42803
 mov dword [byte esp+020h], 444h	; 42809
 mov ecx, 2	; 42811
 lea edx, [byte esp+020h]	; 42816
 mov eax, edi	; 4281A
 call FileWriteAt	; 4281C
 mov ebx, eax	; 42821
-jmp short loc_42877	; 42823
-loc_42825:
+jmp short .17	; 42823
+.14:
 mov ebx, esi	; 42825
 mov edx, esp	; 42827
 mov eax, edi	; 42829
-call sub_147A0	; 4282B
+call ReadSchedGame	; 4282B
 mov ebx, eax	; 42830
 test eax, eax	; 42832
-jne short loc_42876	; 42834
+jne short .16	; 42834
 cmp byte [byte esp+04h], 0FFh	; 42836
-je short loc_42844	; 4283B
+je short .15	; 4283B
 cmp byte [byte esp+05h], 0FFh	; 4283D
-jne short loc_42876	; 42842
-loc_42844:
+jne short .16	; 42842
+.15:
 push byte 0FFFFFFFFh	; 42844
 mov eax, dword [byte esp+010h]	; 42846
 push eax	; 4284A
@@ -1088,23 +1054,23 @@ lea ecx, [byte esp+0Ch]	; 42850
 mov ebx, esi	; 42854
 mov edx, dword [byte esp+048h]	; 42856
 mov eax, dword [byte esp+044h]	; 4285A
-call sub_452C5	; 4285E
+call SimulateGame	; 4285E
 mov ebx, eax	; 42863
 test eax, eax	; 42865
-jne short loc_42876	; 42867
+jne short .16	; 42867
 mov ebx, esi	; 42869
 mov edx, esp	; 4286B
 mov eax, edi	; 4286D
-call sub_3A28F	; 4286F
+call WriteSchedGame	; 4286F
 mov ebx, eax	; 42874
-loc_42876:
+.16:
 inc esi	; 42876
-loc_42877:
+.17:
 cmp esi, 444h	; 42877
-jge short loc_42883	; 4287D
+jge short .18	; 4287D
 test ebx, ebx	; 4287F
-je short loc_42825	; 42881
-loc_42883:
+je short SimScheduleDay.14	; 42881
+.18:
 mov ebx, dword [byte esp+03Ch]	; 42883
 push ebx	; 42887
 mov ecx, dword [byte esp+03Ch]	; 42888
@@ -1113,16 +1079,16 @@ mov ecx, ebp	; 4288D
 mov ebx, dword [byte esp+014h]	; 4288F
 mov edx, dword [byte esp+024h]	; 42893
 mov eax, edi	; 42897
-call sub_428AB	; 42899
+call BuildPlayoffs	; 42899
 mov ebx, eax	; 4289E
-loc_428A0:
+.19:
 mov eax, ebx	; 428A0
 add esp, byte 24h	; 428A2
 pop ebp	; 428A5
 pop edi	; 428A6
 pop esi	; 428A7
 ret 14h	; 428A8
-sub_428AB:
+BuildPlayoffs:
 push dword 0C0h	; 428AB
 call __CHK	; 428B0
 push esi	; 428B5
@@ -1138,20 +1104,20 @@ mov dword [dword esp+094h], edx	; 428CC
 mov ebx, ebp	; 428D3
 mov edx, eax	; 428D5
 lea eax, [byte esp+04h]	; 428D7
-call sub_42BBA	; 428DB
+call GetPlayoffSeeds	; 428DB
 test eax, eax	; 428E0
-je short loc_428EB	; 428E2
+je short .1	; 428E2
 mov ebx, eax	; 428E4
-jmp near loc_42BAD	; 428E6
-loc_428EB:
+jmp near .10	; 428E6
+.1:
 push byte 20h	; 428EB
 push dword 276h	; 428ED
-push asc_C1A70	; 428F2
+push str_sche	; 428F2
 call sub_8CCA8	; 428F7
 add esp, byte 0Ch	; 428FC
 mov esi, eax	; 428FF
 xor edx, edx	; 42901
-loc_42903:
+.2:
 mov eax, edx	; 42903
 shl eax, 2	; 42905
 sub eax, edx	; 42908
@@ -1164,9 +1130,9 @@ mov byte [byte esi+eax*2+01h], bl	; 4291F
 mov byte [esi+eax*2], bl	; 42923
 inc edx	; 42926
 cmp edx, byte 69h	; 42927
-jl short loc_42903	; 4292A
+jl short BuildPlayoffs.2	; 4292A
 xor edx, edx	; 4292C
-loc_4292E:
+.3:
 mov ebx, edx	; 4292E
 shl ebx, 2	; 42930
 mov ecx, dword [byte esp+ebx+04h]	; 42933
@@ -1174,57 +1140,57 @@ mov eax, ecx	; 42937
 shl eax, 4	; 42939
 sub eax, ecx	; 4293C
 cmp byte [byte edi+eax*2+017h], 1	; 4293E
-jne short loc_42952	; 42943
-loc_42945:
+jne short .5	; 42943
+.4:
 mov dword [dword esp+094h], 1	; 42945
-jmp short loc_4296A	; 42950
-loc_42952:
+jmp short .6	; 42950
+.5:
 mov ebx, dword [byte esp+ebx+03Ch]	; 42952
 mov eax, ebx	; 42956
 shl eax, 4	; 42958
 sub eax, ebx	; 4295B
 cmp byte [byte edi+eax*2+017h], 1	; 4295D
-je short loc_42945	; 42962
+je short BuildPlayoffs.4	; 42962
 inc edx	; 42964
 cmp edx, byte 8	; 42965
-jl short loc_4292E	; 42968
-loc_4296A:
+jl short BuildPlayoffs.3	; 42968
+.6:
 mov ecx, dword [gameopts]	; 4296A
 shl ecx, 11h	; 42970
 shr ecx, 1Dh	; 42973
 cmp dword [dword esp+094h], byte 0	; 42976
-je short loc_429AE	; 4297E
+je short .7	; 4297E
 push edi	; 42980
 mov ebx, ebp	; 42981
 mov edx, esi	; 42983
 lea eax, [byte esp+08h]	; 42985
-call sub_42FED	; 42989
+call SeedPlayoffRound1	; 42989
 mov dword [dword esp+09Ch], eax	; 4298E
 test eax, eax	; 42995
-jne near loc_42B9D	; 42997
+jne near .9	; 42997
 mov ecx, 276h	; 4299D
 mov ebx, 199Ah	; 429A2
 mov edx, esi	; 429A7
-jmp near loc_42B8E	; 429A9
-loc_429AE:
+jmp near .8	; 429A9
+.7:
 push edi	; 429AE
 mov ebx, ebp	; 429AF
 mov edx, esi	; 429B1
 lea eax, [byte esp+08h]	; 429B3
-call sub_42FED	; 429B7
+call SeedPlayoffRound1	; 429B7
 mov dword [dword esp+09Ch], eax	; 429BC
 test eax, eax	; 429C3
-jne near loc_42B9D	; 429C5
+jne near .9	; 429C5
 mov edx, dword [dword esp+0B8h]	; 429CB
 push edx	; 429D2
 mov ecx, dword [dword esp+0B8h]	; 429D3
 mov ebx, dword [dword esp+09Ch]	; 429DA
 mov edx, ebp	; 429E1
 mov eax, esi	; 429E3
-call sub_43644	; 429E5
+call SimPlayoffRound1	; 429E5
 mov dword [dword esp+09Ch], eax	; 429EA
 test eax, eax	; 429F1
-jne near loc_42B9D	; 429F3
+jne near .9	; 429F3
 lea eax, [dword esp+094h]	; 429F9
 push eax	; 42A00
 mov edx, dword [gameopts]	; 42A01
@@ -1233,20 +1199,20 @@ shr edx, 1Dh	; 42A0A
 mov ecx, edi	; 42A0D
 mov ebx, ebp	; 42A0F
 mov eax, esi	; 42A11
-call sub_43757	; 42A13
+call SeedPlayoffRound2	; 42A13
 mov dword [dword esp+09Ch], eax	; 42A18
 test eax, eax	; 42A1F
-jne near loc_42B9D	; 42A21
+jne near .9	; 42A21
 mov ebx, dword [dword esp+0B8h]	; 42A27
 push ebx	; 42A2E
 mov ecx, dword [dword esp+0B8h]	; 42A2F
 mov ebx, dword [dword esp+09Ch]	; 42A36
 mov edx, ebp	; 42A3D
 mov eax, esi	; 42A3F
-call sub_43E40	; 42A41
+call SimPlayoffRound2	; 42A41
 mov dword [dword esp+09Ch], eax	; 42A46
 test eax, eax	; 42A4D
-jne near loc_42B9D	; 42A4F
+jne near .9	; 42A4F
 lea eax, [dword esp+094h]	; 42A55
 push eax	; 42A5C
 mov edx, dword [gameopts]	; 42A5D
@@ -1255,20 +1221,20 @@ shr edx, 1Dh	; 42A66
 mov ecx, edi	; 42A69
 mov ebx, ebp	; 42A6B
 mov eax, esi	; 42A6D
-call sub_43F4B	; 42A6F
+call SeedPlayoffRound3	; 42A6F
 mov dword [dword esp+09Ch], eax	; 42A74
 test eax, eax	; 42A7B
-jne near loc_42B9D	; 42A7D
+jne near .9	; 42A7D
 mov ecx, dword [dword esp+0B8h]	; 42A83
 push ecx	; 42A8A
 mov ecx, dword [dword esp+0B8h]	; 42A8B
 mov ebx, dword [dword esp+09Ch]	; 42A92
 mov edx, ebp	; 42A99
 mov eax, esi	; 42A9B
-call sub_443B6	; 42A9D
+call SimPlayoffRound3	; 42A9D
 mov dword [dword esp+09Ch], eax	; 42AA2
 test eax, eax	; 42AA9
-jne near loc_42B9D	; 42AAB
+jne near .9	; 42AAB
 lea eax, [dword esp+094h]	; 42AB1
 push eax	; 42AB8
 mov eax, dword [byte esp+04h]	; 42AB9
@@ -1279,20 +1245,20 @@ shr edx, 1Dh	; 42AC7
 mov ecx, edi	; 42ACA
 mov ebx, ebp	; 42ACC
 mov eax, esi	; 42ACE
-call sub_444C9	; 42AD0
+call SeedPlayoffFinal	; 42AD0
 mov dword [dword esp+09Ch], eax	; 42AD5
 test eax, eax	; 42ADC
-jne near loc_42B9D	; 42ADE
+jne near .9	; 42ADE
 mov edx, dword [dword esp+0B8h]	; 42AE4
 push edx	; 42AEB
 mov ecx, dword [dword esp+0B8h]	; 42AEC
 mov ebx, dword [dword esp+09Ch]	; 42AF3
 mov edx, ebp	; 42AFA
 mov eax, esi	; 42AFC
-call sub_447A6	; 42AFE
+call SimPlayoffFinal	; 42AFE
 mov dword [dword esp+09Ch], eax	; 42B03
 test eax, eax	; 42B0A
-jne near loc_42B9D	; 42B0C
+jne near .9	; 42B0C
 mov ecx, 276h	; 42B12
 mov ebx, 199Ah	; 42B17
 mov edx, esi	; 42B1C
@@ -1300,15 +1266,15 @@ mov eax, dword [esp]	; 42B1E
 call FileWriteAt	; 42B21
 mov dword [dword esp+09Ch], eax	; 42B26
 test eax, eax	; 42B2D
-jne short loc_42B9D	; 42B2F
+jne short .9	; 42B2F
 mov ebx, dword [leaguedbnames+14h]	; 42B31
 mov ecx, dword [dword esp+0B8h]	; 42B37
 mov edx, dword [dword esp+0B4h]	; 42B3E
 lea eax, [byte esp+074h]	; 42B45
 call MakePath	; 42B49
-mov ebx, dword [dword_D07D3]	; 42B4E
+mov ebx, dword [seasondb_size]	; 42B4E
 push ebx	; 42B54
-mov ecx, dword [dword_D07BB]	; 42B55
+mov ecx, dword [seasondb]	; 42B55
 push ecx	; 42B5B
 lea eax, [byte esp+07Ch]	; 42B5C
 push eax	; 42B60
@@ -1320,20 +1286,20 @@ mov dword [dword esp+0A0h], 4ADh	; 42B75
 mov ecx, 2	; 42B80
 xor ebx, ebx	; 42B85
 lea edx, [dword esp+0A0h]	; 42B87
-loc_42B8E:
+.8:
 mov eax, dword [esp]	; 42B8E
 call FileWriteAt	; 42B91
 mov dword [dword esp+09Ch], eax	; 42B96
-loc_42B9D:
+.9:
 push esi	; 42B9D
 call jctime	; 42B9E
 add esp, byte 4	; 42BA3
 mov ebx, dword [dword esp+09Ch]	; 42BA6
-loc_42BAD:
+.10:
 mov eax, ebx	; 42BAD
 add esp, 0A4h	; 42BAF
-jmp near loc_41F5E	; 42BB5
-sub_42BBA:
+jmp near UpdateSeasonSchedule_pop3	; 42BB5
+GetPlayoffSeeds:
 push dword 3E4h	; 42BBA
 call __CHK	; 42BBF
 push ecx	; 42BC4
@@ -1344,15 +1310,15 @@ sub esp, 3C8h	; 42BC8
 mov edi, eax	; 42BCE
 mov ebp, ebx	; 42BD0
 xor ecx, ecx	; 42BD2
-loc_42BD4:
+.1:
 mov esi, ecx	; 42BD4
 shl esi, 2	; 42BD6
 mov ebx, dword [dword esi+dword_C55E9]	; 42BD9
 mov edx, esp	; 42BDF
 mov eax, ebp	; 42BE1
-call sub_147C9	; 42BE3
+call ReadTeamRec	; 42BE3
 test eax, eax	; 42BE8
-jne near loc_42D9F	; 42BEA
+jne near .x	; 42BEA
 mov edx, dword [dword esi+dword_C55E9]	; 42BF0
 mov dword [edi+esi], edx	; 42BF6
 mov al, byte [byte esp+029h]	; 42BF9
@@ -1370,7 +1336,7 @@ mov ax, word [byte esp+02Eh]	; 42C26
 mov dword [dword esp+esi+0320h], eax	; 42C2B
 inc ecx	; 42C32
 cmp ecx, byte 0Ch	; 42C33
-jl short loc_42BD4	; 42C36
+jl short GetPlayoffSeeds.1	; 42C36
 push byte 0Ch	; 42C38
 lea eax, [dword esp+0324h]	; 42C3A
 push eax	; 42C41
@@ -1378,49 +1344,49 @@ lea ecx, [dword esp+0360h]	; 42C42
 lea ebx, [dword esp+02F0h]	; 42C49
 lea edx, [dword esp+0398h]	; 42C50
 mov eax, edi	; 42C57
-call sub_42DAA	; 42C59
+call SortStandings	; 42C59
 mov edx, dword [byte edi+04h]	; 42C5E
 mov eax, dword [edi]	; 42C61
 mov eax, dword [nosplit eax*4+dword_C5519]	; 42C63
 or eax, dword [nosplit edx*4+dword_C5519]	; 42C6A
 cmp eax, byte 3	; 42C71
-je short loc_42CB4	; 42C74
+je short .6	; 42C74
 mov ecx, 2	; 42C76
-loc_42C7B:
+.2:
 mov eax, ecx	; 42C7B
 mov eax, dword [edi+eax*4]	; 42C7D
 mov esi, dword [edi]	; 42C80
 mov esi, dword [nosplit esi*4+dword_C5519]	; 42C82
 or esi, dword [nosplit eax*4+dword_C5519]	; 42C89
 cmp esi, byte 3	; 42C90
-je short loc_42C9B	; 42C93
+je short .3	; 42C93
 inc ecx	; 42C95
 cmp ecx, byte 0Ch	; 42C96
-jl short loc_42C7B	; 42C99
-loc_42C9B:
+jl short GetPlayoffSeeds.2	; 42C99
+.3:
 mov edx, ecx	; 42C9B
 mov edx, dword [edi+edx*4]	; 42C9D
-jmp short loc_42CAC	; 42CA0
-loc_42CA2:
+jmp short .5	; 42CA0
+.4:
 mov esi, ecx	; 42CA2
 mov eax, dword [byte edi+esi*4-04h]	; 42CA4
 mov dword [edi+esi*4], eax	; 42CA8
 dec ecx	; 42CAB
-loc_42CAC:
+.5:
 cmp ecx, byte 2	; 42CAC
-jge short loc_42CA2	; 42CAF
+jge short GetPlayoffSeeds.4	; 42CAF
 mov dword [byte edi+04h], edx	; 42CB1
-loc_42CB4:
+.6:
 xor ecx, ecx	; 42CB4
-loc_42CB6:
+.7:
 mov esi, ecx	; 42CB6
 shl esi, 2	; 42CB8
 mov ebx, dword [dword esi+dword_C5619]	; 42CBB
 mov edx, esp	; 42CC1
 mov eax, ebp	; 42CC3
-call sub_147C9	; 42CC5
+call ReadTeamRec	; 42CC5
 test eax, eax	; 42CCA
-jne near loc_42D9F	; 42CCC
+jne near .x	; 42CCC
 mov edx, dword [dword esi+dword_C5619]	; 42CD2
 mov dword [byte edi+esi+038h], edx	; 42CD8
 mov al, byte [byte esp+029h]	; 42CDC
@@ -1438,7 +1404,7 @@ mov ax, word [byte esp+02Eh]	; 42D09
 mov dword [dword esp+esi+0320h], eax	; 42D0E
 inc ecx	; 42D15
 cmp ecx, byte 0Eh	; 42D16
-jl short loc_42CB6	; 42D19
+jl short GetPlayoffSeeds.7	; 42D19
 push byte 0Eh	; 42D1B
 lea eax, [dword esp+0324h]	; 42D1D
 push eax	; 42D24
@@ -1446,48 +1412,48 @@ lea eax, [byte edi+038h]	; 42D25
 lea ecx, [dword esp+0360h]	; 42D28
 lea ebx, [dword esp+02F0h]	; 42D2F
 lea edx, [dword esp+0398h]	; 42D36
-call sub_42DAA	; 42D3D
+call SortStandings	; 42D3D
 mov eax, dword [byte edi+038h]	; 42D42
 mov edx, dword [byte edi+03Ch]	; 42D45
 mov eax, dword [nosplit eax*4+dword_C5519]	; 42D48
 or eax, dword [nosplit edx*4+dword_C5519]	; 42D4F
 cmp eax, byte 0Ch	; 42D56
-je short loc_42D9D	; 42D59
+je short .12	; 42D59
 mov ecx, 2	; 42D5B
-loc_42D60:
+.8:
 mov eax, ecx	; 42D60
 mov eax, dword [byte edi+eax*4+038h]	; 42D62
 mov esi, dword [byte edi+038h]	; 42D66
 mov esi, dword [nosplit esi*4+dword_C5519]	; 42D69
 or esi, dword [nosplit eax*4+dword_C5519]	; 42D70
 cmp esi, byte 0Ch	; 42D77
-je short loc_42D82	; 42D7A
+je short .9	; 42D7A
 inc ecx	; 42D7C
 cmp ecx, byte 0Eh	; 42D7D
-jl short loc_42D60	; 42D80
-loc_42D82:
+jl short GetPlayoffSeeds.8	; 42D80
+.9:
 mov edx, ecx	; 42D82
 mov edx, dword [byte edi+edx*4+038h]	; 42D84
-jmp short loc_42D95	; 42D88
-loc_42D8A:
+jmp short .11	; 42D88
+.10:
 mov esi, ecx	; 42D8A
 mov eax, dword [byte edi+esi*4+034h]	; 42D8C
 mov dword [byte edi+esi*4+038h], eax	; 42D90
 dec ecx	; 42D94
-loc_42D95:
+.11:
 cmp ecx, byte 2	; 42D95
-jge short loc_42D8A	; 42D98
+jge short GetPlayoffSeeds.10	; 42D98
 mov dword [byte edi+03Ch], edx	; 42D9A
-loc_42D9D:
+.12:
 xor eax, eax	; 42D9D
-loc_42D9F:
+.x:
 add esp, 3C8h	; 42D9F
 pop ebp	; 42DA5
 pop edi	; 42DA6
 pop esi	; 42DA7
 pop ecx	; 42DA8
 ret	; 42DA9
-sub_42DAA:
+SortStandings:
 push dword 38h	; 42DAA
 call __CHK	; 42DAF
 push esi	; 42DB4
@@ -1499,11 +1465,11 @@ push edx	; 42DBB
 push ebx	; 42DBC
 push ecx	; 42DBD
 xor esi, esi	; 42DBE
-jmp near loc_42F04	; 42DC0
-loc_42DC5:
+jmp near .11	; 42DC0
+.1:
 lea ecx, [byte esi+01h]	; 42DC5
-jmp near loc_42EF9	; 42DC8
-loc_42DCD:
+jmp near .10	; 42DC8
+.2:
 mov ebx, ecx	; 42DCD
 shl ebx, 2	; 42DCF
 mov edi, dword [byte esp+08h]	; 42DD2
@@ -1520,21 +1486,21 @@ add eax, ebx	; 42DF3
 mov edx, dword [edi]	; 42DF5
 mov ebp, dword [byte esp+018h]	; 42DF7
 cmp edx, dword [byte ebp+00h]	; 42DFB
-jle short loc_42E07	; 42DFE
-loc_42E00:
+jle short .4	; 42DFE
+.3:
 mov eax, dword [eax]	; 42E00
-jmp near loc_42EAB	; 42E02
-loc_42E07:
+jmp near .8	; 42E02
+.4:
 mov edx, dword [byte esp+0Ch]	; 42E07
 add edx, dword [byte esp+024h]	; 42E0B
 mov edi, dword [edi]	; 42E0F
 mov ebp, dword [byte esp+018h]	; 42E11
 cmp edi, dword [byte ebp+00h]	; 42E15
-jge short loc_42E21	; 42E18
-loc_42E1A:
+jge short .6	; 42E18
+.5:
 mov eax, dword [edx]	; 42E1A
-jmp near loc_42EAB	; 42E1C
-loc_42E21:
+jmp near .8	; 42E1C
+.6:
 mov edi, dword [byte esp+04h]	; 42E21
 add edi, ebx	; 42E25
 mov dword [byte esp+01Ch], edi	; 42E27
@@ -1546,11 +1512,11 @@ mov edi, dword [byte esp+01Ch]	; 42E39
 mov edi, dword [edi]	; 42E3D
 mov ebp, dword [byte esp+014h]	; 42E3F
 cmp edi, dword [byte ebp+00h]	; 42E43
-jg short loc_42E00	; 42E46
+jg short SortStandings.3	; 42E46
 mov edi, dword [byte esp+01Ch]	; 42E48
 mov edi, dword [edi]	; 42E4C
 cmp edi, dword [byte ebp+00h]	; 42E4E
-jl short loc_42E1A	; 42E51
+jl short SortStandings.5	; 42E51
 mov edi, dword [esp]	; 42E53
 add edi, ebx	; 42E56
 mov dword [byte esp+010h], edi	; 42E58
@@ -1562,69 +1528,69 @@ mov edi, dword [byte esp+010h]	; 42E69
 mov edi, dword [edi]	; 42E6D
 mov ebp, dword [byte esp+020h]	; 42E6F
 cmp edi, dword [byte ebp+00h]	; 42E73
-jg short loc_42E00	; 42E76
+jg short SortStandings.3	; 42E76
 mov edi, dword [byte esp+010h]	; 42E78
 mov edi, dword [edi]	; 42E7C
 cmp edi, dword [byte ebp+00h]	; 42E7E
-jl short loc_42E1A	; 42E81
+jl short SortStandings.5	; 42E81
 mov edi, dword [byte esp+038h]	; 42E83
 add ebx, edi	; 42E87
 add edi, dword [byte esp+024h]	; 42E89
 mov ebp, dword [ebx]	; 42E8D
 cmp ebp, dword [edi]	; 42E8F
-jg short loc_42E1A	; 42E91
+jg short SortStandings.5	; 42E91
 mov ebx, ebp	; 42E93
 cmp ebx, dword [edi]	; 42E95
-jl near loc_42E00	; 42E97
+jl near SortStandings.3	; 42E97
 mov ebx, dword [eax]	; 42E9D
 mov edi, dword [edx]	; 42E9F
 cmp ebx, edi	; 42EA1
-jle short loc_42EA9	; 42EA3
+jle short .7	; 42EA3
 mov eax, ebx	; 42EA5
-jmp short loc_42EAB	; 42EA7
-loc_42EA9:
+jmp short .8	; 42EA7
+.7:
 mov eax, edi	; 42EA9
-loc_42EAB:
+.8:
 mov edx, ecx	; 42EAB
 shl edx, 2	; 42EAD
 mov ebp, dword [byte esp+0Ch]	; 42EB0
 add edx, ebp	; 42EB4
 cmp eax, dword [edx]	; 42EB6
-jne short loc_42EF8	; 42EB8
+jne short .9	; 42EB8
 mov ebx, ebp	; 42EBA
 mov edx, ecx	; 42EBC
 mov eax, esi	; 42EBE
-call sub_42F19	; 42EC0
+call SwapInt	; 42EC0
 mov ebx, dword [byte esp+08h]	; 42EC5
 mov edx, ecx	; 42EC9
 mov eax, esi	; 42ECB
-call sub_42F19	; 42ECD
+call SwapInt	; 42ECD
 mov ebx, dword [byte esp+04h]	; 42ED2
 mov edx, ecx	; 42ED6
 mov eax, esi	; 42ED8
-call sub_42F19	; 42EDA
+call SwapInt	; 42EDA
 mov ebx, dword [esp]	; 42EDF
 mov edx, ecx	; 42EE2
 mov eax, esi	; 42EE4
-call sub_42F19	; 42EE6
+call SwapInt	; 42EE6
 mov ebx, dword [byte esp+038h]	; 42EEB
 mov edx, ecx	; 42EEF
 mov eax, esi	; 42EF1
-call sub_42F19	; 42EF3
-loc_42EF8:
+call SwapInt	; 42EF3
+.9:
 inc ecx	; 42EF8
-loc_42EF9:
+.10:
 cmp ecx, dword [byte esp+03Ch]	; 42EF9
-jl near loc_42DCD	; 42EFD
+jl near SortStandings.2	; 42EFD
 inc esi	; 42F03
-loc_42F04:
+.11:
 mov eax, dword [byte esp+03Ch]	; 42F04
 dec eax	; 42F08
 cmp esi, eax	; 42F09
-jl near loc_42DC5	; 42F0B
+jl near SortStandings.1	; 42F0B
 add esp, byte 28h	; 42F11
-jmp near loc_41F5E	; 42F14
-sub_42F19:
+jmp near UpdateSeasonSchedule_pop3	; 42F14
+SwapInt:
 push dword 0Ch	; 42F19
 call __CHK	; 42F1E
 push ecx	; 42F23
@@ -1644,16 +1610,16 @@ xor dword [eax], esi	; 42F3D
 pop esi	; 42F3F
 pop ecx	; 42F40
 ret	; 42F41
-sub_42F42:
+SetSeriesTeams:
 push dword 8	; 42F42
 call __CHK	; 42F47
 push esi	; 42F4C
 mov esi, dword [nosplit edx*4+dword_C5519]	; 42F4D
 or esi, dword [nosplit ebx*4+dword_C5519]	; 42F54
 cmp esi, byte 3	; 42F5B
-jne short loc_42F85	; 42F5E
+jne short .1	; 42F5E
 cmp ecx, byte 7	; 42F60
-jne short loc_42F85	; 42F63
+jne short .1	; 42F63
 mov byte [byte eax+026h], dl	; 42F65
 mov byte [byte eax+020h], dl	; 42F68
 mov byte [byte eax+01Bh], dl	; 42F6B
@@ -1664,10 +1630,10 @@ mov byte [byte eax+02h], dl	; 42F77
 mov byte [byte eax+027h], bl	; 42F7A
 mov byte [byte eax+021h], bl	; 42F7D
 mov byte [byte eax+01Ah], bl	; 42F80
-jmp short loc_42FA8	; 42F83
-loc_42F85:
+jmp short .3	; 42F83
+.1:
 cmp ecx, byte 7	; 42F85
-jne short loc_42FB6	; 42F88
+jne short .4	; 42F88
 mov byte [byte eax+026h], dl	; 42F8A
 mov byte [byte eax+021h], dl	; 42F8D
 mov byte [byte eax+01Ah], dl	; 42F90
@@ -1677,27 +1643,27 @@ mov byte [byte eax+08h], dl	; 42F99
 mov byte [byte eax+02h], dl	; 42F9C
 mov byte [byte eax+027h], bl	; 42F9F
 mov byte [byte eax+020h], bl	; 42FA2
-loc_42FA5:
+.2:
 mov byte [byte eax+01Bh], bl	; 42FA5
-loc_42FA8:
+.3:
 mov byte [byte eax+014h], bl	; 42FA8
 mov byte [byte eax+0Eh], bl	; 42FAB
 mov byte [byte eax+09h], bl	; 42FAE
 mov byte [byte eax+03h], bl	; 42FB1
 pop esi	; 42FB4
 ret	; 42FB5
-loc_42FB6:
+.4:
 cmp ecx, byte 5	; 42FB6
-jne short loc_42FCC	; 42FB9
+jne short .5	; 42FB9
 mov byte [byte eax+01Ah], dl	; 42FBB
 mov byte [byte eax+015h], dl	; 42FBE
 mov byte [byte eax+0Fh], dl	; 42FC1
 mov byte [byte eax+08h], dl	; 42FC4
 mov byte [byte eax+02h], dl	; 42FC7
-jmp short loc_42FA5	; 42FCA
-loc_42FCC:
+jmp short SetSeriesTeams.2	; 42FCA
+.5:
 cmp ecx, byte 3	; 42FCC
-jne short loc_42FE5	; 42FCF
+jne short .6	; 42FCF
 mov byte [byte eax+0Eh], dl	; 42FD1
 mov byte [byte eax+09h], dl	; 42FD4
 mov byte [byte eax+02h], dl	; 42FD7
@@ -1706,12 +1672,12 @@ mov byte [byte eax+08h], bl	; 42FDD
 mov byte [byte eax+03h], bl	; 42FE0
 pop esi	; 42FE3
 ret	; 42FE4
-loc_42FE5:
+.6:
 mov byte [byte eax+02h], dl	; 42FE5
 mov byte [byte eax+03h], bl	; 42FE8
 pop esi	; 42FEB
 ret	; 42FEC
-sub_42FED:
+SeedPlayoffRound1:
 push dword 5FCh	; 42FED
 call __CHK	; 42FF2
 push esi	; 42FF7
@@ -1724,7 +1690,7 @@ mov esi, ebx	; 43009
 mov edi, ecx	; 4300B
 xor edx, edx	; 4300D
 mov dword [dword esp+05D4h], edx	; 4300F
-loc_43016:
+.1:
 mov edx, dword [dword esp+05D4h]	; 43016
 shl edx, 2	; 4301D
 add edx, ebp	; 43020
@@ -1735,14 +1701,14 @@ sub eax, ebx	; 43029
 add eax, eax	; 4302B
 add eax, dword [dword esp+05FCh]	; 4302D
 cmp byte [byte eax+017h], 1	; 43034
-jne short loc_4304D	; 43038
+jne short .2	; 43038
 mov ebx, dword [edx]	; 4303A
 mov edx, esp	; 4303C
 mov eax, esi	; 4303E
-call sub_147C9	; 43040
+call ReadTeamRec	; 43040
 test eax, eax	; 43045
-jne near loc_43639	; 43047
-loc_4304D:
+jne near .23	; 43047
+.2:
 mov edx, dword [dword esp+05D4h]	; 4304D
 shl edx, 2	; 43054
 add edx, ebp	; 43057
@@ -1753,22 +1719,22 @@ sub eax, ebx	; 43061
 add eax, eax	; 43063
 add eax, dword [dword esp+05FCh]	; 43065
 cmp byte [byte eax+017h], 1	; 4306C
-jne short loc_4308B	; 43070
+jne short .3	; 43070
 mov ebx, dword [byte edx+038h]	; 43072
 lea edx, [dword esp+02E8h]	; 43075
 mov eax, esi	; 4307C
-call sub_147C9	; 4307E
+call ReadTeamRec	; 4307E
 test eax, eax	; 43083
-jne near loc_43639	; 43085
-loc_4308B:
+jne near .23	; 43085
+.3:
 xor eax, eax	; 4308B
 mov ebx, 0FFFFFFFFh	; 4308D
-loc_43092:
+.4:
 mov dword [dword esp+eax*4+0554h], ebx	; 43092
 mov dword [dword esp+eax*4+026Ch], ebx	; 43099
 inc eax	; 430A0
 cmp eax, byte 1Ch	; 430A1
-jl short loc_43092	; 430A4
+jl short SeedPlayoffRound1.4	; 430A4
 mov edx, dword [dword esp+05D4h]	; 430A6
 shl edx, 2	; 430AD
 add edx, ebp	; 430B0
@@ -1779,13 +1745,13 @@ sub eax, ebx	; 430B9
 add eax, eax	; 430BB
 add eax, dword [dword esp+05FCh]	; 430BD
 cmp byte [byte eax+017h], 1	; 430C4
-jne short loc_430DB	; 430C8
+jne short .5	; 430C8
 mov edx, esp	; 430CA
 mov eax, esi	; 430CC
-call sub_3A2B8	; 430CE
+call WriteTeamRec	; 430CE
 test eax, eax	; 430D3
-jne near loc_43639	; 430D5
-loc_430DB:
+jne near .23	; 430D5
+.5:
 mov edx, dword [dword esp+05D4h]	; 430DB
 shl edx, 2	; 430E2
 add edx, ebp	; 430E5
@@ -1796,22 +1762,22 @@ sub eax, ebx	; 430EF
 add eax, eax	; 430F1
 add eax, dword [dword esp+05FCh]	; 430F3
 cmp byte [byte eax+017h], 1	; 430FA
-jne short loc_43119	; 430FE
+jne short .6	; 430FE
 mov ebx, dword [byte edx+038h]	; 43100
 lea edx, [dword esp+02E8h]	; 43103
 mov eax, esi	; 4310A
-call sub_3A2B8	; 4310C
+call WriteTeamRec	; 4310C
 test eax, eax	; 43111
-jne near loc_43639	; 43113
-loc_43119:
+jne near .23	; 43113
+.6:
 mov ecx, dword [dword esp+05D4h]	; 43119
 inc ecx	; 43120
 mov dword [dword esp+05D4h], ecx	; 43121
 cmp ecx, byte 8	; 43128
-jl near loc_43016	; 4312B
+jl near SeedPlayoffRound1.1	; 4312B
 xor edx, edx	; 43131
 mov dword [dword esp+05D4h], edx	; 43133
-loc_4313A:
+.7:
 mov edx, dword [dword esp+05D4h]	; 4313A
 shl edx, 2	; 43141
 add edx, ebp	; 43144
@@ -1822,14 +1788,14 @@ sub eax, ebx	; 4314D
 add eax, eax	; 4314F
 add eax, dword [dword esp+05FCh]	; 43151
 cmp byte [byte eax+017h], 1	; 43158
-jne short loc_43171	; 4315C
+jne short .8	; 4315C
 mov ebx, dword [edx]	; 4315E
 mov edx, esp	; 43160
 mov eax, esi	; 43162
-call sub_147C9	; 43164
+call ReadTeamRec	; 43164
 test eax, eax	; 43169
-jne near loc_43639	; 4316B
-loc_43171:
+jne near .23	; 4316B
+.8:
 mov edx, 7	; 43171
 sub edx, dword [dword esp+05D4h]	; 43176
 shl edx, 2	; 4317D
@@ -1841,17 +1807,17 @@ sub eax, ebx	; 43189
 add eax, eax	; 4318B
 add eax, dword [dword esp+05FCh]	; 4318D
 cmp byte [byte eax+017h], 1	; 43194
-jne short loc_431B2	; 43198
+jne short .9	; 43198
 mov ebx, dword [edx]	; 4319A
 lea edx, [dword esp+02E8h]	; 4319C
 mov eax, esi	; 431A3
-call sub_147C9	; 431A5
+call ReadTeamRec	; 431A5
 test eax, eax	; 431AA
-jne near loc_43639	; 431AC
-loc_431B2:
+jne near .23	; 431AC
+.9:
 xor eax, eax	; 431B2
-jmp short loc_431E7	; 431B4
-loc_431B6:
+jmp short .11	; 431B4
+.10:
 mov ebx, dword [dword esp+05D4h]	; 431B6
 mov edx, ebx	; 431BD
 shl edx, 3	; 431BF
@@ -1865,9 +1831,9 @@ lea ebx, [byte edx+edx+02h]	; 431D4
 mov dword [dword esp+eax*4+0554h], ebx	; 431D8
 mov dword [dword esp+eax*4+026Ch], ebx	; 431DF
 inc eax	; 431E6
-loc_431E7:
+.11:
 cmp eax, edi	; 431E7
-jl short loc_431B6	; 431E9
+jl short SeedPlayoffRound1.10	; 431E9
 mov edx, dword [dword esp+05D4h]	; 431EB
 shl edx, 2	; 431F2
 add edx, ebp	; 431F5
@@ -1878,13 +1844,13 @@ sub eax, ebx	; 431FE
 add eax, eax	; 43200
 add eax, dword [dword esp+05FCh]	; 43202
 cmp byte [byte eax+017h], 1	; 43209
-jne short loc_43220	; 4320D
+jne short .12	; 4320D
 mov edx, esp	; 4320F
 mov eax, esi	; 43211
-call sub_3A2B8	; 43213
+call WriteTeamRec	; 43213
 test eax, eax	; 43218
-jne near loc_43639	; 4321A
-loc_43220:
+jne near .23	; 4321A
+.12:
 mov eax, 7	; 43220
 sub eax, dword [dword esp+05D4h]	; 43225
 shl eax, 2	; 4322C
@@ -1896,22 +1862,22 @@ sub eax, ebx	; 43239
 add eax, eax	; 4323B
 add eax, dword [dword esp+05FCh]	; 4323D
 cmp byte [byte eax+017h], 1	; 43244
-jne short loc_43262	; 43248
+jne short .13	; 43248
 mov ebx, dword [edx]	; 4324A
 lea edx, [dword esp+02E8h]	; 4324C
 mov eax, esi	; 43253
-call sub_3A2B8	; 43255
+call WriteTeamRec	; 43255
 test eax, eax	; 4325A
-jne near loc_43639	; 4325C
-loc_43262:
+jne near .23	; 4325C
+.13:
 mov ecx, dword [dword esp+05D4h]	; 43262
 inc ecx	; 43269
 mov dword [dword esp+05D4h], ecx	; 4326A
 cmp ecx, byte 4	; 43271
-jl near loc_4313A	; 43274
+jl near SeedPlayoffRound1.7	; 43274
 xor edx, edx	; 4327A
 mov dword [dword esp+05D4h], edx	; 4327C
-loc_43283:
+.14:
 mov edx, dword [dword esp+05D4h]	; 43283
 shl edx, 2	; 4328A
 add edx, ebp	; 4328D
@@ -1922,14 +1888,14 @@ sub eax, ebx	; 43297
 add eax, eax	; 43299
 add eax, dword [dword esp+05FCh]	; 4329B
 cmp byte [byte eax+017h], 1	; 432A2
-jne short loc_432BC	; 432A6
+jne short .15	; 432A6
 mov ebx, dword [byte edx+038h]	; 432A8
 mov edx, esp	; 432AB
 mov eax, esi	; 432AD
-call sub_147C9	; 432AF
+call ReadTeamRec	; 432AF
 test eax, eax	; 432B4
-jne near loc_43639	; 432B6
-loc_432BC:
+jne near .23	; 432B6
+.15:
 mov eax, 7	; 432BC
 sub eax, dword [dword esp+05D4h]	; 432C1
 shl eax, 2	; 432C8
@@ -1941,17 +1907,17 @@ sub eax, ebx	; 432D6
 add eax, eax	; 432D8
 add eax, dword [dword esp+05FCh]	; 432DA
 cmp byte [byte eax+017h], 1	; 432E1
-jne short loc_43300	; 432E5
+jne short .16	; 432E5
 mov ebx, dword [byte edx+038h]	; 432E7
 lea edx, [dword esp+02E8h]	; 432EA
 mov eax, esi	; 432F1
-call sub_147C9	; 432F3
+call ReadTeamRec	; 432F3
 test eax, eax	; 432F8
-jne near loc_43639	; 432FA
-loc_43300:
+jne near .23	; 432FA
+.16:
 xor eax, eax	; 43300
-jmp short loc_43335	; 43302
-loc_43304:
+jmp short .18	; 43302
+.17:
 mov ebx, dword [dword esp+05D4h]	; 43304
 mov edx, ebx	; 4330B
 shl edx, 3	; 4330D
@@ -1965,9 +1931,9 @@ lea ebx, [byte edx+edx+02h]	; 43322
 mov dword [dword esp+eax*4+0554h], ebx	; 43326
 mov dword [dword esp+eax*4+026Ch], ebx	; 4332D
 inc eax	; 43334
-loc_43335:
+.18:
 cmp eax, edi	; 43335
-jl short loc_43304	; 43337
+jl short SeedPlayoffRound1.17	; 43337
 mov edx, dword [dword esp+05D4h]	; 43339
 shl edx, 2	; 43340
 add edx, ebp	; 43343
@@ -1978,13 +1944,13 @@ sub eax, ebx	; 4334D
 add eax, eax	; 4334F
 add eax, dword [dword esp+05FCh]	; 43351
 cmp byte [byte eax+017h], 1	; 43358
-jne short loc_4336F	; 4335C
+jne short .19	; 4335C
 mov edx, esp	; 4335E
 mov eax, esi	; 43360
-call sub_3A2B8	; 43362
+call WriteTeamRec	; 43362
 test eax, eax	; 43367
-jne near loc_43639	; 43369
-loc_4336F:
+jne near .23	; 43369
+.19:
 mov eax, 7	; 4336F
 sub eax, dword [dword esp+05D4h]	; 43374
 shl eax, 2	; 4337B
@@ -1996,70 +1962,70 @@ sub eax, ebx	; 43389
 add eax, eax	; 4338B
 add eax, dword [dword esp+05FCh]	; 4338D
 cmp byte [byte eax+017h], 1	; 43394
-jne short loc_433B3	; 43398
+jne short .20	; 43398
 mov ebx, dword [byte edx+038h]	; 4339A
 lea edx, [dword esp+02E8h]	; 4339D
 mov eax, esi	; 433A4
-call sub_3A2B8	; 433A6
+call WriteTeamRec	; 433A6
 test eax, eax	; 433AB
-jne near loc_43639	; 433AD
-loc_433B3:
+jne near .23	; 433AD
+.20:
 mov ecx, dword [dword esp+05D4h]	; 433B3
 inc ecx	; 433BA
 mov dword [dword esp+05D4h], ecx	; 433BB
 cmp ecx, byte 4	; 433C2
-jl near loc_43283	; 433C5
+jl near SeedPlayoffRound1.14	; 433C5
 mov ebx, dword [byte ebp+01Ch]	; 433CB
 mov edx, dword [byte ebp+00h]	; 433CE
 mov ecx, edi	; 433D1
 mov eax, dword [dword esp+05E4h]	; 433D3
-call sub_42F42	; 433DA
+call SetSeriesTeams	; 433DA
 mov ebx, dword [byte ebp+018h]	; 433DF
 mov edx, dword [byte ebp+04h]	; 433E2
 mov eax, dword [dword esp+05E4h]	; 433E5
 add eax, byte 2Ah	; 433EC
 mov ecx, edi	; 433EF
-call sub_42F42	; 433F1
+call SetSeriesTeams	; 433F1
 mov ebx, dword [byte ebp+014h]	; 433F6
 mov edx, dword [byte ebp+08h]	; 433F9
 mov eax, dword [dword esp+05E4h]	; 433FC
 add eax, byte 54h	; 43403
 mov ecx, edi	; 43406
-call sub_42F42	; 43408
+call SetSeriesTeams	; 43408
 mov ebx, dword [byte ebp+010h]	; 4340D
 mov edx, dword [byte ebp+0Ch]	; 43410
 mov eax, dword [dword esp+05E4h]	; 43413
 add eax, byte 7Eh	; 4341A
 mov ecx, edi	; 4341D
-call sub_42F42	; 4341F
+call SetSeriesTeams	; 4341F
 mov ebx, dword [byte ebp+054h]	; 43424
 mov edx, dword [byte ebp+038h]	; 43427
 mov eax, dword [dword esp+05E4h]	; 4342A
 add eax, 0A8h	; 43431
 mov ecx, edi	; 43436
-call sub_42F42	; 43438
+call SetSeriesTeams	; 43438
 mov ebx, dword [byte ebp+050h]	; 4343D
 mov edx, dword [byte ebp+03Ch]	; 43440
 mov eax, dword [dword esp+05E4h]	; 43443
 add eax, 0D2h	; 4344A
 mov ecx, edi	; 4344F
-call sub_42F42	; 43451
+call SetSeriesTeams	; 43451
 mov ebx, dword [byte ebp+04Ch]	; 43456
 mov edx, dword [byte ebp+040h]	; 43459
 mov eax, dword [dword esp+05E4h]	; 4345C
 add eax, 0FCh	; 43463
 mov ecx, edi	; 43468
-call sub_42F42	; 4346A
+call SetSeriesTeams	; 4346A
 mov ebx, dword [byte ebp+048h]	; 4346F
 mov edx, dword [byte ebp+044h]	; 43472
 mov eax, dword [dword esp+05E4h]	; 43475
 add eax, 126h	; 4347C
 mov ecx, edi	; 43481
-call sub_42F42	; 43483
+call SetSeriesTeams	; 43483
 xor edx, edx	; 43488
 mov dword [dword esp+05D4h], edx	; 4348A
-jmp near loc_43628	; 43491
-loc_43496:
+jmp near .22	; 43491
+.21:
 lea edx, [byte ebx+031h]	; 43496
 mov eax, edx	; 43499
 shl eax, 2	; 4349B
@@ -2162,15 +2128,15 @@ mov byte [byte ebx+01h], dl	; 43614
 mov edx, dword [dword esp+05D8h]	; 43617
 mov byte [byte edx+01h], al	; 4361E
 inc dword [dword esp+05D4h]	; 43621
-loc_43628:
+.22:
 mov ebx, dword [dword esp+05D4h]	; 43628
 cmp edi, ebx	; 4362F
-jg near loc_43496	; 43631
+jg near SeedPlayoffRound1.21	; 43631
 xor eax, eax	; 43637
-loc_43639:
+.23:
 add esp, 5ECh	; 43639
-jmp near loc_43751	; 4363F
-sub_43644:
+jmp near SimPlayoffRound1_pop3	; 4363F
+SimPlayoffRound1:
 push dword 94h	; 43644
 call __CHK	; 43649
 push esi	; 4364E
@@ -2187,14 +2153,14 @@ xor edx, edx	; 43669
 mov eax, esp	; 4366B
 call __STOSD	; 4366D
 mov eax, edi	; 43672
-call sub_42221	; 43674
+call SeriesLength	; 43674
 mov ebp, eax	; 43679
 xor edx, edx	; 4367B
 mov dword [byte esp+074h], edx	; 4367D
-loc_43681:
+.1:
 xor edi, edi	; 43681
-jmp near loc_4372F	; 43683
-loc_43688:
+jmp near .9	; 43683
+.2:
 xor ecx, ecx	; 43688
 mov cl, byte [byte esi+02h]	; 4368A
 mov eax, ebp	; 4368D
@@ -2204,12 +2170,12 @@ LD sub, eax, edx	; 43694
 sar eax, 1	; 43696
 lea edx, [byte eax+01h]	; 43698
 cmp edx, dword [esp+ecx*4]	; 4369B
-je short loc_436AA	; 4369E
+je short .3	; 4369E
 xor eax, eax	; 436A0
 mov al, byte [byte esi+03h]	; 436A2
 cmp edx, dword [esp+eax*4]	; 436A5
-jne short loc_436C7	; 436A8
-loc_436AA:
+jne short .4	; 436A8
+.3:
 mov eax, edi	; 436AA
 shl eax, 2	; 436AC
 sub eax, edi	; 436AF
@@ -2218,15 +2184,15 @@ mov dl, byte [byte esi+eax*2+03h]	; 436B6
 mov byte [byte esi+eax*2+02h], dl	; 436BA
 mov byte [byte esi+eax*2+01h], dl	; 436BE
 mov byte [esi+eax*2], dl	; 436C2
-jmp short loc_4372E	; 436C5
-loc_436C7:
+jmp short .8	; 436C5
+.4:
 mov eax, edi	; 436C7
 shl eax, 2	; 436C9
 sub eax, edi	; 436CC
 add eax, eax	; 436CE
 lea ecx, [esi+eax]	; 436D0
 cmp byte [byte ecx+04h], 0FFh	; 436D3
-jne short loc_4370B	; 436D7
+jne short .5	; 436D7
 push byte 2	; 436D9
 mov eax, dword [byte esp+06Ch]	; 436DB
 push eax	; 436DF
@@ -2240,8 +2206,8 @@ add eax, 444h	; 436F3
 lea ebx, [eax+edi]	; 436F8
 mov edx, dword [dword esp+094h]	; 436FB
 mov eax, dword [byte esp+078h]	; 43702
-call sub_452C5	; 43706
-loc_4370B:
+call SimulateGame	; 43706
+.5:
 mov eax, edi	; 4370B
 shl eax, 2	; 4370D
 sub eax, edi	; 43710
@@ -2249,34 +2215,34 @@ add eax, eax	; 43712
 add eax, esi	; 43714
 mov dl, byte [byte eax+04h]	; 43716
 cmp dl, byte [byte eax+05h]	; 43719
-jbe short loc_43723	; 4371C
+jbe short .6	; 4371C
 mov al, byte [byte eax+02h]	; 4371E
-jmp short loc_43726	; 43721
-loc_43723:
+jmp short .7	; 43721
+.6:
 mov al, byte [byte eax+03h]	; 43723
-loc_43726:
+.7:
 and eax, 0FFh	; 43726
 inc dword [esp+eax*4]	; 4372B
-loc_4372E:
+.8:
 inc edi	; 4372E
-loc_4372F:
+.9:
 cmp edi, ebp	; 4372F
-jl near loc_43688	; 43731
+jl near SimPlayoffRound1.2	; 43731
 mov ebx, dword [byte esp+074h]	; 43737
 inc ebx	; 4373B
 mov dword [byte esp+074h], ebx	; 4373C
 add esi, byte 2Ah	; 43740
 cmp ebx, byte 8	; 43743
-jl near loc_43681	; 43746
-loc_4374C:
+jl near SimPlayoffRound1.1	; 43746
+SimPlayoffRound1_ok:
 xor eax, eax	; 4374C
 add esp, byte 78h	; 4374E
-loc_43751:
+SimPlayoffRound1_pop3:
 pop ebp	; 43751
 pop edi	; 43752
 pop esi	; 43753
 ret 4	; 43754
-sub_43757:
+SeedPlayoffRound2:
 push dword 618h	; 43757
 call __CHK	; 4375C
 push esi	; 43761
@@ -2288,25 +2254,25 @@ mov esi, edx	; 4376B
 mov edi, ebx	; 4376D
 mov dword [dword esp+05F8h], ecx	; 4376F
 mov ebp, eax	; 43776
-call sub_42221	; 43778
+call SeriesLength	; 43778
 mov dword [dword esp+05F4h], eax	; 4377D
 lea ecx, [byte eax-01h]	; 43784
-jmp near loc_43857	; 43787
-loc_4378C:
+jmp near .7	; 43787
+.1:
 mov eax, ecx	; 4378C
 shl eax, 2	; 4378E
 sub eax, ecx	; 43791
 add eax, eax	; 43793
 lea edx, [eax+ebp]	; 43795
 cmp byte [byte edx+04h], 0FFh	; 43798
-je short loc_437AE	; 4379C
-loc_4379E:
+je short .3	; 4379C
+.2:
 mov al, byte [edx]	; 4379E
 mov byte [dword esp+0600h], al	; 437A0
 mov al, byte [byte edx+01h]	; 437A7
 inc al	; 437AA
-jmp short loc_4380F	; 437AC
-loc_437AE:
+jmp short .5	; 437AC
+.3:
 lea edx, [byte ecx+07h]	; 437AE
 mov eax, edx	; 437B1
 shl eax, 2	; 437B3
@@ -2315,7 +2281,7 @@ add eax, eax	; 437B8
 lea edx, [eax+ebp]	; 437BA
 mov bl, byte [byte edx+04h]	; 437BD
 cmp bl, 0FFh	; 437C0
-jne short loc_4379E	; 437C3
+jne short SeedPlayoffRound2.2	; 437C3
 lea edx, [byte ecx+0Eh]	; 437C5
 mov eax, edx	; 437C8
 shl eax, 2	; 437CA
@@ -2324,7 +2290,7 @@ add eax, eax	; 437CF
 lea edx, [eax+ebp]	; 437D1
 mov bh, byte [byte edx+04h]	; 437D4
 cmp bh, bl	; 437D7
-jne short loc_4379E	; 437D9
+jne short SeedPlayoffRound2.2	; 437D9
 lea edx, [byte ecx+015h]	; 437DB
 mov eax, edx	; 437DE
 shl eax, 2	; 437E0
@@ -2332,7 +2298,7 @@ sub eax, edx	; 437E3
 add eax, eax	; 437E5
 lea edx, [eax+ebp]	; 437E7
 cmp bl, byte [byte edx+04h]	; 437EA
-jne short loc_4379E	; 437ED
+jne short SeedPlayoffRound2.2	; 437ED
 lea edx, [byte ecx+01Ch]	; 437EF
 mov eax, edx	; 437F2
 shl eax, 2	; 437F4
@@ -2340,15 +2306,15 @@ sub eax, edx	; 437F7
 add eax, eax	; 437F9
 lea edx, [eax+ebp]	; 437FB
 cmp bl, byte [byte edx+04h]	; 437FE
-je short loc_43818	; 43801
-loc_43803:
+je short .6	; 43801
+.4:
 mov al, byte [edx]	; 43803
 mov byte [dword esp+0600h], al	; 43805
 mov al, byte [byte edx+01h]	; 4380C
-loc_4380F:
+.5:
 mov byte [dword esp+05FCh], al	; 4380F
-jmp short loc_4385F	; 43816
-loc_43818:
+jmp short .8	; 43816
+.6:
 lea edx, [byte ecx+023h]	; 43818
 mov eax, edx	; 4381B
 shl eax, 2	; 4381D
@@ -2357,7 +2323,7 @@ add eax, eax	; 43822
 lea edx, [eax+ebp]	; 43824
 mov bl, byte [byte edx+04h]	; 43827
 cmp bl, bh	; 4382A
-jne short loc_43803	; 4382C
+jne short SeedPlayoffRound2.4	; 4382C
 lea edx, [byte ecx+02Ah]	; 4382E
 mov eax, edx	; 43831
 shl eax, 2	; 43833
@@ -2365,7 +2331,7 @@ sub eax, edx	; 43836
 add eax, eax	; 43838
 lea edx, [eax+ebp]	; 4383A
 cmp bl, byte [byte edx+04h]	; 4383D
-jne short loc_43803	; 43840
+jne short SeedPlayoffRound2.4	; 43840
 lea edx, [byte ecx+031h]	; 43842
 mov eax, edx	; 43845
 shl eax, 2	; 43847
@@ -2373,18 +2339,18 @@ sub eax, edx	; 4384A
 add eax, eax	; 4384C
 lea edx, [eax+ebp]	; 4384E
 cmp bl, byte [byte edx+04h]	; 43851
-jne short loc_43803	; 43854
+jne short SeedPlayoffRound2.4	; 43854
 dec ecx	; 43856
-loc_43857:
+.7:
 test ecx, ecx	; 43857
-jge near loc_4378C	; 43859
-loc_4385F:
+jge near SeedPlayoffRound2.1	; 43859
+.8:
 xor ecx, ecx	; 4385F
-jmp near loc_4392B	; 43861
-loc_43866:
+jmp near .10	; 43861
+.9:
 lea edx, [dword esp+05FCh]	; 43866
 lea eax, [dword esp+0600h]	; 4386D
-call sub_41C9B	; 43874
+call NormalizeDate	; 43874
 lea edx, [byte ecx+04Dh]	; 43879
 mov eax, edx	; 4387C
 shl eax, 2	; 4387E
@@ -2410,7 +2376,7 @@ inc ah	; 438BF
 mov byte [dword esp+05FCh], ah	; 438C1
 lea edx, [dword esp+05FCh]	; 438C8
 lea eax, [dword esp+0600h]	; 438CF
-call sub_41C9B	; 438D6
+call NormalizeDate	; 438D6
 lea edx, [byte ecx+03Fh]	; 438DB
 mov eax, edx	; 438DE
 shl eax, 2	; 438E0
@@ -2435,95 +2401,95 @@ mov dl, al	; 4391F
 inc dl	; 43921
 mov byte [dword esp+05FCh], dl	; 43923
 inc ecx	; 4392A
-loc_4392B:
+.10:
 cmp ecx, esi	; 4392B
-jl near loc_43866	; 4392D
+jl near SeedPlayoffRound2.9	; 4392D
 mov ecx, 8	; 43933
 mov edx, 0FFFFFFFFh	; 43938
 lea eax, [dword esp+05D4h]	; 4393D
 call __STOSD	; 43944
 mov edx, dword [dword esp+05F4h]	; 43949
 mov eax, ebp	; 43950
-call sub_87760	; 43952
+call SeriesWinner	; 43952
 xor edx, edx	; 43957
 mov dl, byte [byte ebp+02h]	; 43959
 cmp eax, edx	; 4395C
-jne short loc_43969	; 4395E
+jne short .11	; 4395E
 mov dword [dword esp+05D4h], edx	; 43960
-jmp short loc_43970	; 43967
-loc_43969:
+jmp short .12	; 43967
+.11:
 mov dword [dword esp+05F0h], eax	; 43969
-loc_43970:
+.12:
 lea eax, [byte ebp+02Ah]	; 43970
 mov edx, dword [dword esp+05F4h]	; 43973
-call sub_87760	; 4397A
+call SeriesWinner	; 4397A
 xor edx, edx	; 4397F
 mov dl, byte [byte ebp+02Ch]	; 43981
 cmp eax, edx	; 43984
-jne short loc_43991	; 43986
+jne short .13	; 43986
 mov dword [dword esp+05D8h], edx	; 43988
-jmp short loc_43998	; 4398F
-loc_43991:
+jmp short .14	; 4398F
+.13:
 mov dword [dword esp+05ECh], eax	; 43991
-loc_43998:
+.14:
 lea eax, [byte ebp+054h]	; 43998
 mov edx, dword [dword esp+05F4h]	; 4399B
-call sub_87760	; 439A2
+call SeriesWinner	; 439A2
 xor edx, edx	; 439A7
 mov dl, byte [byte ebp+056h]	; 439A9
 cmp eax, edx	; 439AC
-jne short loc_439B9	; 439AE
+jne short .15	; 439AE
 mov dword [dword esp+05DCh], edx	; 439B0
-jmp short loc_439C0	; 439B7
-loc_439B9:
+jmp short .16	; 439B7
+.15:
 mov dword [dword esp+05E8h], eax	; 439B9
-loc_439C0:
+.16:
 lea eax, [byte ebp+07Eh]	; 439C0
 mov edx, dword [dword esp+05F4h]	; 439C3
-call sub_87760	; 439CA
+call SeriesWinner	; 439CA
 xor edx, edx	; 439CF
 mov dl, byte [dword ebp+080h]	; 439D1
 cmp eax, edx	; 439D7
-jne short loc_439E4	; 439D9
+jne short .17	; 439D9
 mov dword [dword esp+05E0h], edx	; 439DB
-jmp short loc_439EB	; 439E2
-loc_439E4:
+jmp short .18	; 439E2
+.17:
 mov dword [dword esp+05E4h], eax	; 439E4
-loc_439EB:
+.18:
 xor ecx, ecx	; 439EB
 xor eax, eax	; 439ED
-jmp short loc_43A0F	; 439EF
-loc_439F1:
+jmp short .21	; 439EF
+.19:
 mov edx, ecx	; 439F1
 shl edx, 2	; 439F3
 mov ebx, dword [dword esp+edx+05D4h]	; 439F6
 test ebx, ebx	; 439FD
-jl short loc_43A0E	; 439FF
+jl short .20	; 439FF
 cmp ebx, byte 1Ah	; 43A01
-jge short loc_43A0E	; 43A04
+jge short .20	; 43A04
 mov dword [dword esp+eax*4+05D4h], ebx	; 43A06
 inc eax	; 43A0D
-loc_43A0E:
+.20:
 inc ecx	; 43A0E
-loc_43A0F:
+.21:
 cmp ecx, byte 8	; 43A0F
-jl short loc_439F1	; 43A12
+jl short SeedPlayoffRound2.19	; 43A12
 mov eax, dword [esp]	; 43A14
 add eax, 150h	; 43A17
 mov ecx, esi	; 43A1C
 mov ebx, dword [dword esp+05E0h]	; 43A1E
 mov edx, dword [dword esp+05D4h]	; 43A25
-call sub_42F42	; 43A2C
+call SetSeriesTeams	; 43A2C
 mov eax, dword [esp]	; 43A31
 add eax, 17Ah	; 43A34
 mov ecx, esi	; 43A39
 mov ebx, dword [dword esp+05DCh]	; 43A3B
 mov edx, dword [dword esp+05D8h]	; 43A42
-call sub_42F42	; 43A49
+call SetSeriesTeams	; 43A49
 mov eax, dword [dword esp+0618h]	; 43A4E
 mov dword [eax], 0	; 43A55
 xor ecx, ecx	; 43A5B
-loc_43A5D:
+.22:
 mov edx, ecx	; 43A5D
 shl edx, 2	; 43A5F
 mov ebx, dword [dword esp+edx+05D4h]	; 43A62
@@ -2533,16 +2499,16 @@ sub eax, ebx	; 43A6E
 add eax, eax	; 43A70
 add eax, dword [dword esp+05F8h]	; 43A72
 cmp byte [byte eax+017h], 1	; 43A79
-jne short loc_43AA6	; 43A7D
+jne short .23	; 43A7D
 mov eax, dword [dword esp+0618h]	; 43A7F
 mov dword [eax], 1	; 43A86
 mov ebx, dword [dword esp+edx+05D4h]	; 43A8C
 lea edx, [byte esp+04h]	; 43A93
 mov eax, edi	; 43A97
-call sub_147C9	; 43A99
+call ReadTeamRec	; 43A99
 test eax, eax	; 43A9E
-jne near loc_43E35	; 43AA0
-loc_43AA6:
+jne near .47	; 43AA0
+.23:
 mov edx, 3	; 43AA6
 sub edx, ecx	; 43AAB
 shl edx, 2	; 43AAD
@@ -2553,19 +2519,19 @@ sub eax, ebx	; 43ABC
 add eax, eax	; 43ABE
 add eax, dword [dword esp+05F8h]	; 43AC0
 cmp byte [byte eax+017h], 1	; 43AC7
-jne short loc_43AF7	; 43ACB
+jne short .24	; 43ACB
 mov eax, dword [dword esp+0618h]	; 43ACD
 mov dword [eax], 1	; 43AD4
 mov ebx, dword [dword esp+edx+05D4h]	; 43ADA
 lea edx, [dword esp+02ECh]	; 43AE1
 mov eax, edi	; 43AE8
-call sub_147C9	; 43AEA
+call ReadTeamRec	; 43AEA
 test eax, eax	; 43AEF
-jne near loc_43E35	; 43AF1
-loc_43AF7:
+jne near .47	; 43AF1
+.24:
 xor eax, eax	; 43AF7
-jmp short loc_43B24	; 43AF9
-loc_43AFB:
+jmp short .26	; 43AF9
+.25:
 mov edx, ecx	; 43AFB
 shl edx, 3	; 43AFD
 sub edx, ecx	; 43B00
@@ -2578,9 +2544,9 @@ lea ebx, [byte edx+edx+02h]	; 43B11
 mov dword [dword esp+eax*4+0574h], ebx	; 43B15
 mov dword [dword esp+eax*4+028Ch], ebx	; 43B1C
 inc eax	; 43B23
-loc_43B24:
+.26:
 cmp eax, esi	; 43B24
-jl short loc_43AFB	; 43B26
+jl short SeedPlayoffRound2.25	; 43B26
 mov edx, ecx	; 43B28
 shl edx, 2	; 43B2A
 mov ebx, dword [dword esp+edx+05D4h]	; 43B2D
@@ -2590,14 +2556,14 @@ sub eax, ebx	; 43B39
 add eax, eax	; 43B3B
 add eax, dword [dword esp+05F8h]	; 43B3D
 cmp byte [byte eax+017h], 1	; 43B44
-jne short loc_43B64	; 43B48
+jne short .27	; 43B48
 mov ebx, dword [dword esp+edx+05D4h]	; 43B4A
 lea edx, [byte esp+04h]	; 43B51
 mov eax, edi	; 43B55
-call sub_3A2B8	; 43B57
+call WriteTeamRec	; 43B57
 test eax, eax	; 43B5C
-jne near loc_43E35	; 43B5E
-loc_43B64:
+jne near .47	; 43B5E
+.27:
 mov edx, 3	; 43B64
 sub edx, ecx	; 43B69
 shl edx, 2	; 43B6B
@@ -2608,101 +2574,101 @@ sub eax, ebx	; 43B7A
 add eax, eax	; 43B7C
 add eax, dword [dword esp+05F8h]	; 43B7E
 cmp byte [byte eax+017h], 1	; 43B85
-jne short loc_43BA8	; 43B89
+jne short .28	; 43B89
 mov ebx, dword [dword esp+edx+05D4h]	; 43B8B
 lea edx, [dword esp+02ECh]	; 43B92
 mov eax, edi	; 43B99
-call sub_3A2B8	; 43B9B
+call WriteTeamRec	; 43B9B
 test eax, eax	; 43BA0
-jne near loc_43E35	; 43BA2
-loc_43BA8:
+jne near .47	; 43BA2
+.28:
 inc ecx	; 43BA8
 cmp ecx, byte 2	; 43BA9
-jl near loc_43A5D	; 43BAC
+jl near SeedPlayoffRound2.22	; 43BAC
 mov ecx, 8	; 43BB2
 mov edx, 0FFFFFFFFh	; 43BB7
 lea eax, [dword esp+05D4h]	; 43BBC
 call __STOSD	; 43BC3
 lea eax, [dword ebp+0A8h]	; 43BC8
 mov edx, dword [dword esp+05F4h]	; 43BCE
-call sub_87760	; 43BD5
+call SeriesWinner	; 43BD5
 xor edx, edx	; 43BDA
 mov dl, byte [dword ebp+0AAh]	; 43BDC
 cmp eax, edx	; 43BE2
-jne short loc_43BEF	; 43BE4
+jne short .29	; 43BE4
 mov dword [dword esp+05D4h], edx	; 43BE6
-jmp short loc_43BF6	; 43BED
-loc_43BEF:
+jmp short .30	; 43BED
+.29:
 mov dword [dword esp+05F0h], eax	; 43BEF
-loc_43BF6:
+.30:
 lea eax, [dword ebp+0D2h]	; 43BF6
 mov edx, dword [dword esp+05F4h]	; 43BFC
-call sub_87760	; 43C03
+call SeriesWinner	; 43C03
 xor edx, edx	; 43C08
 mov dl, byte [dword ebp+0D4h]	; 43C0A
 cmp eax, edx	; 43C10
-jne short loc_43C1D	; 43C12
+jne short .31	; 43C12
 mov dword [dword esp+05D8h], edx	; 43C14
-jmp short loc_43C24	; 43C1B
-loc_43C1D:
+jmp short .32	; 43C1B
+.31:
 mov dword [dword esp+05ECh], eax	; 43C1D
-loc_43C24:
+.32:
 lea eax, [dword ebp+0FCh]	; 43C24
 mov edx, dword [dword esp+05F4h]	; 43C2A
-call sub_87760	; 43C31
+call SeriesWinner	; 43C31
 xor edx, edx	; 43C36
 mov dl, byte [dword ebp+0FEh]	; 43C38
 cmp eax, edx	; 43C3E
-jne short loc_43C4B	; 43C40
+jne short .33	; 43C40
 mov dword [dword esp+05DCh], edx	; 43C42
-jmp short loc_43C52	; 43C49
-loc_43C4B:
+jmp short .34	; 43C49
+.33:
 mov dword [dword esp+05E8h], eax	; 43C4B
-loc_43C52:
+.34:
 lea eax, [dword ebp+0126h]	; 43C52
 mov edx, dword [dword esp+05F4h]	; 43C58
-call sub_87760	; 43C5F
+call SeriesWinner	; 43C5F
 xor edx, edx	; 43C64
 mov dl, byte [dword ebp+0128h]	; 43C66
 cmp eax, edx	; 43C6C
-jne short loc_43C79	; 43C6E
+jne short .35	; 43C6E
 mov dword [dword esp+05E0h], edx	; 43C70
-jmp short loc_43C80	; 43C77
-loc_43C79:
+jmp short .36	; 43C77
+.35:
 mov dword [dword esp+05E4h], eax	; 43C79
-loc_43C80:
+.36:
 xor ecx, ecx	; 43C80
 xor eax, eax	; 43C82
-jmp short loc_43CA4	; 43C84
-loc_43C86:
+jmp short .39	; 43C84
+.37:
 mov edx, ecx	; 43C86
 shl edx, 2	; 43C88
 mov ebp, dword [dword esp+edx+05D4h]	; 43C8B
 test ebp, ebp	; 43C92
-jl short loc_43CA3	; 43C94
+jl short .38	; 43C94
 cmp ebp, byte 1Ah	; 43C96
-jge short loc_43CA3	; 43C99
+jge short .38	; 43C99
 mov dword [dword esp+eax*4+05D4h], ebp	; 43C9B
 inc eax	; 43CA2
-loc_43CA3:
+.38:
 inc ecx	; 43CA3
-loc_43CA4:
+.39:
 cmp ecx, byte 8	; 43CA4
-jl short loc_43C86	; 43CA7
+jl short SeedPlayoffRound2.37	; 43CA7
 mov eax, dword [esp]	; 43CA9
 add eax, 1A4h	; 43CAC
 mov ecx, esi	; 43CB1
 mov ebx, dword [dword esp+05E0h]	; 43CB3
 mov edx, dword [dword esp+05D4h]	; 43CBA
-call sub_42F42	; 43CC1
+call SetSeriesTeams	; 43CC1
 mov eax, dword [esp]	; 43CC6
 add eax, 1CEh	; 43CC9
 mov ecx, esi	; 43CCE
 mov ebx, dword [dword esp+05DCh]	; 43CD0
 mov edx, dword [dword esp+05D8h]	; 43CD7
-call sub_42F42	; 43CDE
+call SetSeriesTeams	; 43CDE
 xor ecx, ecx	; 43CE3
-loc_43CE5:
+.40:
 mov edx, ecx	; 43CE5
 shl edx, 2	; 43CE7
 mov ebx, dword [dword esp+edx+05D4h]	; 43CEA
@@ -2712,16 +2678,16 @@ sub eax, ebx	; 43CF6
 add eax, eax	; 43CF8
 add eax, dword [dword esp+05F8h]	; 43CFA
 cmp byte [byte eax+017h], 1	; 43D01
-jne short loc_43D2E	; 43D05
+jne short .41	; 43D05
 mov eax, dword [dword esp+0618h]	; 43D07
 mov dword [eax], 1	; 43D0E
 mov ebx, dword [dword esp+edx+05D4h]	; 43D14
 lea edx, [byte esp+04h]	; 43D1B
 mov eax, edi	; 43D1F
-call sub_147C9	; 43D21
+call ReadTeamRec	; 43D21
 test eax, eax	; 43D26
-jne near loc_43E35	; 43D28
-loc_43D2E:
+jne near .47	; 43D28
+.41:
 mov edx, 3	; 43D2E
 sub edx, ecx	; 43D33
 shl edx, 2	; 43D35
@@ -2732,19 +2698,19 @@ sub eax, ebx	; 43D44
 add eax, eax	; 43D46
 add eax, dword [dword esp+05F8h]	; 43D48
 cmp byte [byte eax+017h], 1	; 43D4F
-jne short loc_43D7F	; 43D53
+jne short .42	; 43D53
 mov eax, dword [dword esp+0618h]	; 43D55
 mov dword [eax], 1	; 43D5C
 mov ebx, dword [dword esp+edx+05D4h]	; 43D62
 lea edx, [dword esp+02ECh]	; 43D69
 mov eax, edi	; 43D70
-call sub_147C9	; 43D72
+call ReadTeamRec	; 43D72
 test eax, eax	; 43D77
-jne near loc_43E35	; 43D79
-loc_43D7F:
+jne near .47	; 43D79
+.42:
 xor eax, eax	; 43D7F
-jmp short loc_43DAD	; 43D81
-loc_43D83:
+jmp short .44	; 43D81
+.43:
 mov edx, ecx	; 43D83
 shl edx, 3	; 43D85
 sub edx, ecx	; 43D88
@@ -2757,9 +2723,9 @@ lea ebx, [byte edx+edx+02h]	; 43D9A
 mov dword [dword esp+eax*4+0574h], ebx	; 43D9E
 mov dword [dword esp+eax*4+028Ch], ebx	; 43DA5
 inc eax	; 43DAC
-loc_43DAD:
+.44:
 cmp eax, esi	; 43DAD
-jl short loc_43D83	; 43DAF
+jl short SeedPlayoffRound2.43	; 43DAF
 mov edx, ecx	; 43DB1
 shl edx, 2	; 43DB3
 mov ebx, dword [dword esp+edx+05D4h]	; 43DB6
@@ -2769,14 +2735,14 @@ sub eax, ebx	; 43DC2
 add eax, eax	; 43DC4
 add eax, dword [dword esp+05F8h]	; 43DC6
 cmp byte [byte eax+017h], 1	; 43DCD
-jne short loc_43DE9	; 43DD1
+jne short .45	; 43DD1
 mov ebx, dword [dword esp+edx+05D4h]	; 43DD3
 lea edx, [byte esp+04h]	; 43DDA
 mov eax, edi	; 43DDE
-call sub_3A2B8	; 43DE0
+call WriteTeamRec	; 43DE0
 test eax, eax	; 43DE5
-jne short loc_43E35	; 43DE7
-loc_43DE9:
+jne short .47	; 43DE7
+.45:
 mov edx, 3	; 43DE9
 sub edx, ecx	; 43DEE
 shl edx, 2	; 43DF0
@@ -2787,22 +2753,22 @@ sub eax, ebx	; 43DFF
 add eax, eax	; 43E01
 add eax, dword [dword esp+05F8h]	; 43E03
 cmp byte [byte eax+017h], 1	; 43E0A
-jne short loc_43E29	; 43E0E
+jne short .46	; 43E0E
 mov ebx, dword [dword esp+edx+05D4h]	; 43E10
 lea edx, [dword esp+02ECh]	; 43E17
 mov eax, edi	; 43E1E
-call sub_3A2B8	; 43E20
+call WriteTeamRec	; 43E20
 test eax, eax	; 43E25
-jne short loc_43E35	; 43E27
-loc_43E29:
+jne short .47	; 43E27
+.46:
 inc ecx	; 43E29
 cmp ecx, byte 2	; 43E2A
-jl near loc_43CE5	; 43E2D
+jl near SeedPlayoffRound2.40	; 43E2D
 xor eax, eax	; 43E33
-loc_43E35:
+.47:
 add esp, 608h	; 43E35
-jmp near loc_43751	; 43E3B
-sub_43E40:
+jmp near SimPlayoffRound1_pop3	; 43E3B
+SimPlayoffRound2:
 push dword 94h	; 43E40
 call __CHK	; 43E45
 push esi	; 43E4A
@@ -2818,14 +2784,14 @@ xor edx, edx	; 43E5E
 lea eax, [byte esp+0Ch]	; 43E60
 call __STOSD	; 43E64
 mov eax, esi	; 43E69
-call sub_42221	; 43E6B
+call SeriesLength	; 43E6B
 mov ebp, eax	; 43E70
 xor edx, edx	; 43E72
 mov dword [byte esp+074h], edx	; 43E74
-loc_43E78:
+.1:
 xor edi, edi	; 43E78
-jmp near loc_43F29	; 43E7A
-loc_43E7F:
+jmp near .9	; 43E7A
+.2:
 xor ecx, ecx	; 43E7F
 mov cl, byte [byte esi+02h]	; 43E81
 mov eax, ebp	; 43E84
@@ -2835,12 +2801,12 @@ LD sub, eax, edx	; 43E8B
 sar eax, 1	; 43E8D
 lea edx, [byte eax+01h]	; 43E8F
 cmp edx, dword [byte esp+ecx*4+0Ch]	; 43E92
-je short loc_43EA3	; 43E96
+je short .3	; 43E96
 xor eax, eax	; 43E98
 mov al, byte [byte esi+03h]	; 43E9A
 cmp edx, dword [byte esp+eax*4+0Ch]	; 43E9D
-jne short loc_43EC0	; 43EA1
-loc_43EA3:
+jne short .4	; 43EA1
+.3:
 mov eax, edi	; 43EA3
 shl eax, 2	; 43EA5
 sub eax, edi	; 43EA8
@@ -2849,15 +2815,15 @@ mov dl, byte [byte esi+eax*2+02h]	; 43EAF
 mov byte [byte esi+eax*2+03h], dl	; 43EB3
 mov byte [byte esi+eax*2+01h], dl	; 43EB7
 mov byte [esi+eax*2], dl	; 43EBB
-jmp short loc_43F28	; 43EBE
-loc_43EC0:
+jmp short .8	; 43EBE
+.4:
 mov eax, edi	; 43EC0
 shl eax, 2	; 43EC2
 sub eax, edi	; 43EC5
 add eax, eax	; 43EC7
 lea ecx, [esi+eax]	; 43EC9
 cmp byte [byte ecx+04h], 0FFh	; 43ECC
-jne short loc_43F04	; 43ED0
+jne short .5	; 43ED0
 push byte 2	; 43ED2
 mov eax, dword [byte esp+08h]	; 43ED4
 push eax	; 43ED8
@@ -2871,8 +2837,8 @@ add eax, 47Ch	; 43EEC
 lea ebx, [eax+edi]	; 43EF1
 mov edx, dword [dword esp+094h]	; 43EF4
 mov eax, dword [byte esp+0Ch]	; 43EFB
-call sub_452C5	; 43EFF
-loc_43F04:
+call SimulateGame	; 43EFF
+.5:
 mov eax, edi	; 43F04
 shl eax, 2	; 43F06
 sub eax, edi	; 43F09
@@ -2880,27 +2846,27 @@ add eax, eax	; 43F0B
 add eax, esi	; 43F0D
 mov dl, byte [byte eax+04h]	; 43F0F
 cmp dl, byte [byte eax+05h]	; 43F12
-jbe short loc_43F1C	; 43F15
+jbe short .6	; 43F15
 mov al, byte [byte eax+02h]	; 43F17
-jmp short loc_43F1F	; 43F1A
-loc_43F1C:
+jmp short .7	; 43F1A
+.6:
 mov al, byte [byte eax+03h]	; 43F1C
-loc_43F1F:
+.7:
 and eax, 0FFh	; 43F1F
 inc dword [byte esp+eax*4+0Ch]	; 43F24
-loc_43F28:
+.8:
 inc edi	; 43F28
-loc_43F29:
+.9:
 cmp edi, ebp	; 43F29
-jl near loc_43E7F	; 43F2B
+jl near SimPlayoffRound2.2	; 43F2B
 mov ebx, dword [byte esp+074h]	; 43F31
 inc ebx	; 43F35
 mov dword [byte esp+074h], ebx	; 43F36
 add esi, byte 2Ah	; 43F3A
 cmp ebx, byte 4	; 43F3D
-jl near loc_43E78	; 43F40
-jmp near loc_4374C	; 43F46
-sub_43F4B:
+jl near SimPlayoffRound2.1	; 43F40
+jmp near SimPlayoffRound1_ok	; 43F46
+SeedPlayoffRound3:
 push dword 608h	; 43F4B
 call __CHK	; 43F50
 push esi	; 43F55
@@ -2913,25 +2879,25 @@ mov ebp, ebx	; 43F61
 mov dword [dword esp+05E4h], ecx	; 43F63
 lea esi, [dword eax+0150h]	; 43F6A
 mov eax, esi	; 43F70
-call sub_42221	; 43F72
+call SeriesLength	; 43F72
 mov dword [dword esp+05D8h], eax	; 43F77
 lea ebx, [byte eax-01h]	; 43F7E
-jmp near loc_43FFD	; 43F81
-loc_43F86:
+jmp near .7	; 43F81
+.1:
 mov eax, ebx	; 43F86
 shl eax, 2	; 43F88
 sub eax, ebx	; 43F8B
 add eax, eax	; 43F8D
 lea edx, [esi+eax]	; 43F8F
 cmp byte [byte edx+04h], 0FFh	; 43F92
-je short loc_43FA8	; 43F96
-loc_43F98:
+je short .3	; 43F96
+.2:
 mov al, byte [edx]	; 43F98
 mov byte [dword esp+05F4h], al	; 43F9A
 mov al, byte [byte edx+01h]	; 43FA1
 inc al	; 43FA4
-jmp short loc_43FDF	; 43FA6
-loc_43FA8:
+jmp short .5	; 43FA6
+.3:
 lea edx, [byte ebx+07h]	; 43FA8
 mov eax, edx	; 43FAB
 shl eax, 2	; 43FAD
@@ -2940,7 +2906,7 @@ add eax, eax	; 43FB2
 lea edx, [esi+eax]	; 43FB4
 mov cl, byte [byte edx+04h]	; 43FB7
 cmp cl, 0FFh	; 43FBA
-jne short loc_43F98	; 43FBD
+jne short SeedPlayoffRound3.2	; 43FBD
 lea edx, [byte ebx+0Eh]	; 43FBF
 mov eax, edx	; 43FC2
 shl eax, 2	; 43FC4
@@ -2948,15 +2914,15 @@ sub eax, edx	; 43FC7
 add eax, eax	; 43FC9
 lea edx, [esi+eax]	; 43FCB
 cmp cl, byte [byte edx+04h]	; 43FCE
-je short loc_43FE8	; 43FD1
-loc_43FD3:
+je short .6	; 43FD1
+.4:
 mov al, byte [edx]	; 43FD3
 mov byte [dword esp+05F4h], al	; 43FD5
 mov al, byte [byte edx+01h]	; 43FDC
-loc_43FDF:
+.5:
 mov byte [dword esp+05F0h], al	; 43FDF
-jmp short loc_44001	; 43FE6
-loc_43FE8:
+jmp short .8	; 43FE6
+.6:
 lea edx, [byte ebx+015h]	; 43FE8
 mov eax, edx	; 43FEB
 shl eax, 2	; 43FED
@@ -2964,18 +2930,18 @@ sub eax, edx	; 43FF0
 add eax, eax	; 43FF2
 lea edx, [esi+eax]	; 43FF4
 cmp cl, byte [byte edx+04h]	; 43FF7
-jne short loc_43FD3	; 43FFA
+jne short SeedPlayoffRound3.4	; 43FFA
 dec ebx	; 43FFC
-loc_43FFD:
+.7:
 test ebx, ebx	; 43FFD
-jge short loc_43F86	; 43FFF
-loc_44001:
+jge short SeedPlayoffRound3.1	; 43FFF
+.8:
 xor ebx, ebx	; 44001
-jmp near loc_44089	; 44003
-loc_44008:
+jmp near .10	; 44003
+.9:
 lea edx, [dword esp+05F0h]	; 44008
 lea eax, [dword esp+05F4h]	; 4400F
-call sub_41C9B	; 44016
+call NormalizeDate	; 44016
 lea edx, [byte ebx+023h]	; 4401B
 mov eax, edx	; 4401E
 shl eax, 2	; 44020
@@ -2991,7 +2957,7 @@ inc cl	; 4403F
 mov byte [dword esp+05F0h], cl	; 44041
 lea edx, [dword esp+05F0h]	; 44048
 lea eax, [dword esp+05F4h]	; 4404F
-call sub_41C9B	; 44056
+call NormalizeDate	; 44056
 lea edx, [byte ebx+01Ch]	; 4405B
 mov eax, edx	; 4405E
 shl eax, 2	; 44060
@@ -3006,17 +2972,17 @@ mov ch, al	; 4407D
 inc ch	; 4407F
 mov byte [dword esp+05F0h], ch	; 44081
 inc ebx	; 44088
-loc_44089:
+.10:
 cmp ebx, edi	; 44089
-jl near loc_44008	; 4408B
+jl near SeedPlayoffRound3.9	; 4408B
 mov edx, dword [dword esp+05D8h]	; 44091
 mov eax, esi	; 44098
-call sub_87760	; 4409A
+call SeriesWinner	; 4409A
 mov dword [dword esp+05DCh], eax	; 4409F
 mov dword [dword esp+05E8h], eax	; 440A6
 lea eax, [byte esi+02Ah]	; 440AD
 mov edx, dword [dword esp+05D8h]	; 440B0
-call sub_87760	; 440B7
+call SeriesWinner	; 440B7
 mov dword [dword esp+05ECh], eax	; 440BC
 xor edx, edx	; 440C3
 mov dl, byte [byte esi+02h]	; 440C5
@@ -3025,16 +2991,16 @@ add ebx, 1F8h	; 440CB
 mov dword [dword esp+05D4h], ebx	; 440D1
 mov ebx, dword [dword esp+05DCh]	; 440D8
 cmp edx, ebx	; 440DF
-jne short loc_440E9	; 440E1
+jne short .11	; 440E1
 mov ecx, edi	; 440E3
 mov ebx, eax	; 440E5
-jmp short loc_440ED	; 440E7
-loc_440E9:
+jmp short .12	; 440E7
+.11:
 mov ecx, edi	; 440E9
 mov edx, eax	; 440EB
-loc_440ED:
+.12:
 mov eax, dword [dword esp+05D4h]	; 440ED
-call sub_42F42	; 440F4
+call SetSeriesTeams	; 440F4
 mov eax, dword [dword esp+0608h]	; 440F9
 mov dword [eax], 0	; 44100
 mov eax, dword [dword esp+05E8h]	; 44106
@@ -3044,16 +3010,16 @@ sub eax, ecx	; 44117
 add eax, eax	; 44119
 add eax, dword [dword esp+05E4h]	; 4411B
 cmp byte [byte eax+017h], 1	; 44122
-jne short loc_4414D	; 44126
+jne short .13	; 44126
 mov eax, dword [dword esp+0608h]	; 44128
 mov dword [eax], 1	; 4412F
 mov ebx, ecx	; 44135
 lea edx, [dword esp+02ECh]	; 44137
 mov eax, ebp	; 4413E
-call sub_147C9	; 44140
+call ReadTeamRec	; 44140
 test eax, eax	; 44145
-jne near loc_443AB	; 44147
-loc_4414D:
+jne near .27	; 44147
+.13:
 mov eax, dword [dword esp+05ECh]	; 4414D
 shl eax, 4	; 44154
 mov ebx, dword [dword esp+05ECh]	; 44157
@@ -3061,18 +3027,18 @@ sub eax, ebx	; 4415E
 add eax, eax	; 44160
 add eax, dword [dword esp+05E4h]	; 44162
 cmp byte [byte eax+017h], 1	; 44169
-jne short loc_4418F	; 4416D
+jne short .14	; 4416D
 mov eax, dword [dword esp+0608h]	; 4416F
 mov dword [eax], 1	; 44176
 lea edx, [byte esp+04h]	; 4417C
 mov eax, ebp	; 44180
-call sub_147C9	; 44182
+call ReadTeamRec	; 44182
 test eax, eax	; 44187
-jne near loc_443AB	; 44189
-loc_4418F:
+jne near .27	; 44189
+.14:
 xor eax, eax	; 4418F
-jmp short loc_441B4	; 44191
-loc_44193:
+jmp short .16	; 44191
+.15:
 lea ebx, [dword eax+0498h]	; 44193
 mov edx, ebx	; 44199
 shl edx, 2	; 4419B
@@ -3082,23 +3048,23 @@ add edx, byte 2	; 441A2
 mov dword [dword esp+eax*4+02A8h], edx	; 441A5
 mov dword [dword esp+eax*4+0590h], edx	; 441AC
 inc eax	; 441B3
-loc_441B4:
+.16:
 cmp eax, edi	; 441B4
-jl short loc_44193	; 441B6
+jl short SeedPlayoffRound3.15	; 441B6
 mov eax, dword [dword esp+05E8h]	; 441B8
 shl eax, 4	; 441BF
 sub eax, dword [dword esp+05E8h]	; 441C2
 add eax, eax	; 441C9
 add eax, dword [dword esp+05E4h]	; 441CB
 cmp byte [byte eax+017h], 1	; 441D2
-jne short loc_441F5	; 441D6
+jne short .17	; 441D6
 mov ebx, dword [dword esp+05E8h]	; 441D8
 lea edx, [dword esp+02ECh]	; 441DF
 mov eax, ebp	; 441E6
-call sub_3A2B8	; 441E8
+call WriteTeamRec	; 441E8
 test eax, eax	; 441ED
-jne near loc_443AB	; 441EF
-loc_441F5:
+jne near .27	; 441EF
+.17:
 mov eax, dword [dword esp+05ECh]	; 441F5
 shl eax, 4	; 441FC
 mov ecx, dword [dword esp+05ECh]	; 441FF
@@ -3106,22 +3072,22 @@ sub eax, ecx	; 44206
 add eax, eax	; 44208
 add eax, dword [dword esp+05E4h]	; 4420A
 cmp byte [byte eax+017h], 1	; 44211
-jne short loc_4422C	; 44215
+jne short .18	; 44215
 mov ebx, ecx	; 44217
 lea edx, [byte esp+04h]	; 44219
 mov eax, ebp	; 4421D
-call sub_3A2B8	; 4421F
+call WriteTeamRec	; 4421F
 test eax, eax	; 44224
-jne near loc_443AB	; 44226
-loc_4422C:
+jne near .27	; 44226
+.18:
 lea eax, [byte esi+054h]	; 4422C
 mov edx, dword [dword esp+05D8h]	; 4422F
-call sub_87760	; 44236
+call SeriesWinner	; 44236
 mov dword [dword esp+05E0h], eax	; 4423B
 mov dword [dword esp+05E8h], eax	; 44242
 lea eax, [byte esi+07Eh]	; 44249
 mov edx, dword [dword esp+05D8h]	; 4424C
-call sub_87760	; 44253
+call SeriesWinner	; 44253
 mov dword [dword esp+05ECh], eax	; 44258
 xor edx, edx	; 4425F
 mov dl, byte [byte esi+056h]	; 44261
@@ -3129,16 +3095,16 @@ mov esi, dword [esp]	; 44264
 add esi, 222h	; 44267
 mov ebx, dword [dword esp+05E0h]	; 4426D
 cmp edx, ebx	; 44274
-jne short loc_4427E	; 44276
+jne short .19	; 44276
 mov ecx, edi	; 44278
 mov ebx, eax	; 4427A
-jmp short loc_44282	; 4427C
-loc_4427E:
+jmp short .20	; 4427C
+.19:
 mov ecx, edi	; 4427E
 mov edx, eax	; 44280
-loc_44282:
+.20:
 mov eax, esi	; 44282
-call sub_42F42	; 44284
+call SetSeriesTeams	; 44284
 mov eax, dword [dword esp+05E8h]	; 44289
 shl eax, 4	; 44290
 mov ecx, dword [dword esp+05E8h]	; 44293
@@ -3146,16 +3112,16 @@ sub eax, ecx	; 4429A
 add eax, eax	; 4429C
 add eax, dword [dword esp+05E4h]	; 4429E
 cmp byte [byte eax+017h], 1	; 442A5
-jne short loc_442D0	; 442A9
+jne short .21	; 442A9
 mov eax, dword [dword esp+0608h]	; 442AB
 mov dword [eax], 1	; 442B2
 mov ebx, ecx	; 442B8
 lea edx, [dword esp+02ECh]	; 442BA
 mov eax, ebp	; 442C1
-call sub_147C9	; 442C3
+call ReadTeamRec	; 442C3
 test eax, eax	; 442C8
-jne near loc_443AB	; 442CA
-loc_442D0:
+jne near .27	; 442CA
+.21:
 mov eax, dword [dword esp+05ECh]	; 442D0
 shl eax, 4	; 442D7
 mov edx, dword [dword esp+05ECh]	; 442DA
@@ -3163,19 +3129,19 @@ sub eax, edx	; 442E1
 add eax, eax	; 442E3
 add eax, dword [dword esp+05E4h]	; 442E5
 cmp byte [byte eax+017h], 1	; 442EC
-jne short loc_44314	; 442F0
+jne short .22	; 442F0
 mov eax, dword [dword esp+0608h]	; 442F2
 mov dword [eax], 1	; 442F9
 mov ebx, edx	; 442FF
 lea edx, [byte esp+04h]	; 44301
 mov eax, ebp	; 44305
-call sub_147C9	; 44307
+call ReadTeamRec	; 44307
 test eax, eax	; 4430C
-jne near loc_443AB	; 4430E
-loc_44314:
+jne near .27	; 4430E
+.22:
 xor eax, eax	; 44314
-jmp short loc_44339	; 44316
-loc_44318:
+jmp short .24	; 44316
+.23:
 lea edx, [dword eax+049Fh]	; 44318
 mov esi, edx	; 4431E
 shl esi, 2	; 44320
@@ -3185,23 +3151,23 @@ add esi, byte 2	; 44327
 mov dword [dword esp+eax*4+02A8h], esi	; 4432A
 mov dword [dword esp+eax*4+0590h], esi	; 44331
 inc eax	; 44338
-loc_44339:
+.24:
 cmp eax, edi	; 44339
-jl short loc_44318	; 4433B
+jl short SeedPlayoffRound3.23	; 4433B
 mov eax, dword [dword esp+05E8h]	; 4433D
 shl eax, 4	; 44344
 sub eax, dword [dword esp+05E8h]	; 44347
 add eax, eax	; 4434E
 add eax, dword [dword esp+05E4h]	; 44350
 cmp byte [byte eax+017h], 1	; 44357
-jne short loc_44376	; 4435B
+jne short .25	; 4435B
 mov ebx, dword [dword esp+05E8h]	; 4435D
 lea edx, [dword esp+02ECh]	; 44364
 mov eax, ebp	; 4436B
-call sub_3A2B8	; 4436D
+call WriteTeamRec	; 4436D
 test eax, eax	; 44372
-jne short loc_443AB	; 44374
-loc_44376:
+jne short .27	; 44374
+.25:
 mov eax, dword [dword esp+05ECh]	; 44376
 shl eax, 4	; 4437D
 mov edi, dword [dword esp+05ECh]	; 44380
@@ -3209,19 +3175,19 @@ sub eax, edi	; 44387
 add eax, eax	; 44389
 add eax, dword [dword esp+05E4h]	; 4438B
 cmp byte [byte eax+017h], 1	; 44392
-jne short loc_443A9	; 44396
+jne short .26	; 44396
 mov ebx, edi	; 44398
 lea edx, [byte esp+04h]	; 4439A
 mov eax, ebp	; 4439E
-call sub_3A2B8	; 443A0
+call WriteTeamRec	; 443A0
 test eax, eax	; 443A5
-jne short loc_443AB	; 443A7
-loc_443A9:
+jne short .27	; 443A7
+.26:
 xor eax, eax	; 443A9
-loc_443AB:
+.27:
 add esp, 5F8h	; 443AB
-jmp near loc_43751	; 443B1
-sub_443B6:
+jmp near SimPlayoffRound1_pop3	; 443B1
+SimPlayoffRound3:
 push dword 94h	; 443B6
 call __CHK	; 443BB
 push esi	; 443C0
@@ -3237,14 +3203,14 @@ xor edx, edx	; 443D4
 lea eax, [byte esp+0Ch]	; 443D6
 call __STOSD	; 443DA
 mov eax, esi	; 443DF
-call sub_42221	; 443E1
+call SeriesLength	; 443E1
 mov ebp, eax	; 443E6
 xor edx, edx	; 443E8
 mov dword [byte esp+074h], edx	; 443EA
-loc_443EE:
+.1:
 xor edi, edi	; 443EE
-jmp near loc_444A7	; 443F0
-loc_443F5:
+jmp near .9	; 443F0
+.2:
 xor ecx, ecx	; 443F5
 mov cl, byte [byte esi+02h]	; 443F7
 mov eax, ebp	; 443FA
@@ -3254,12 +3220,12 @@ LD sub, eax, edx	; 44401
 sar eax, 1	; 44403
 lea edx, [byte eax+01h]	; 44405
 cmp edx, dword [byte esp+ecx*4+0Ch]	; 44408
-je short loc_44419	; 4440C
+je short .3	; 4440C
 xor eax, eax	; 4440E
 mov al, byte [byte esi+03h]	; 44410
 cmp edx, dword [byte esp+eax*4+0Ch]	; 44413
-jne short loc_4443E	; 44417
-loc_44419:
+jne short .4	; 44417
+.3:
 mov eax, edi	; 44419
 shl eax, 2	; 4441B
 sub eax, edi	; 4441E
@@ -3270,15 +3236,15 @@ mov byte [byte esi+eax*2+03h], dl	; 4442D
 mov byte [byte esi+eax*2+02h], dl	; 44431
 mov byte [byte esi+eax*2+01h], dl	; 44435
 mov byte [esi+eax*2], dl	; 44439
-jmp short loc_444A6	; 4443C
-loc_4443E:
+jmp short .8	; 4443C
+.4:
 mov eax, edi	; 4443E
 shl eax, 2	; 44440
 sub eax, edi	; 44443
 add eax, eax	; 44445
 lea ecx, [esi+eax]	; 44447
 cmp byte [byte ecx+04h], 0FFh	; 4444A
-jne short loc_44482	; 4444E
+jne short .5	; 4444E
 push byte 2	; 44450
 mov eax, dword [byte esp+08h]	; 44452
 push eax	; 44456
@@ -3292,8 +3258,8 @@ add eax, 498h	; 4446A
 lea ebx, [eax+edi]	; 4446F
 mov edx, dword [dword esp+094h]	; 44472
 mov eax, dword [byte esp+0Ch]	; 44479
-call sub_452C5	; 4447D
-loc_44482:
+call SimulateGame	; 4447D
+.5:
 mov eax, edi	; 44482
 shl eax, 2	; 44484
 sub eax, edi	; 44487
@@ -3301,27 +3267,27 @@ add eax, eax	; 44489
 add eax, esi	; 4448B
 mov dl, byte [byte eax+04h]	; 4448D
 cmp dl, byte [byte eax+05h]	; 44490
-jbe short loc_4449A	; 44493
+jbe short .6	; 44493
 mov al, byte [byte eax+02h]	; 44495
-jmp short loc_4449D	; 44498
-loc_4449A:
+jmp short .7	; 44498
+.6:
 mov al, byte [byte eax+03h]	; 4449A
-loc_4449D:
+.7:
 and eax, 0FFh	; 4449D
 inc dword [byte esp+eax*4+0Ch]	; 444A2
-loc_444A6:
+.8:
 inc edi	; 444A6
-loc_444A7:
+.9:
 cmp edi, ebp	; 444A7
-jl near loc_443F5	; 444A9
+jl near SimPlayoffRound3.2	; 444A9
 mov ebx, dword [byte esp+074h]	; 444AF
 inc ebx	; 444B3
 mov dword [byte esp+074h], ebx	; 444B4
 add esi, byte 2Ah	; 444B8
 cmp ebx, byte 2	; 444BB
-jl near loc_443EE	; 444BE
-jmp near loc_4374C	; 444C4
-sub_444C9:
+jl near SimPlayoffRound3.1	; 444BE
+jmp near SimPlayoffRound1_ok	; 444C4
+SeedPlayoffFinal:
 push dword 638h	; 444C9
 call __CHK	; 444CE
 push esi	; 444D3
@@ -3334,25 +3300,25 @@ mov edi, ebx	; 444DF
 mov ebp, ecx	; 444E1
 lea ecx, [dword eax+01F8h]	; 444E3
 mov eax, ecx	; 444E9
-call sub_42221	; 444EB
+call SeriesLength	; 444EB
 mov dword [dword esp+0614h], eax	; 444F0
 lea ebx, [byte eax-01h]	; 444F7
-jmp short loc_44549	; 444FA
-loc_444FC:
+jmp short .5	; 444FA
+.1:
 mov eax, ebx	; 444FC
 shl eax, 2	; 444FE
 sub eax, ebx	; 44501
 add eax, eax	; 44503
 lea edx, [ecx+eax]	; 44505
 cmp byte [byte edx+04h], 0FFh	; 44508
-je short loc_44523	; 4450C
+je short .3	; 4450C
 mov al, byte [edx]	; 4450E
 mov byte [dword esp+061Ch], al	; 44510
 mov al, byte [byte edx+01h]	; 44517
-loc_4451A:
+.2:
 mov byte [dword esp+0618h], al	; 4451A
-jmp short loc_4454D	; 44521
-loc_44523:
+jmp short .6	; 44521
+.3:
 lea edx, [byte ebx+07h]	; 44523
 mov eax, edx	; 44526
 shl eax, 2	; 44528
@@ -3360,25 +3326,25 @@ sub eax, edx	; 4452B
 add eax, eax	; 4452D
 lea edx, [ecx+eax]	; 4452F
 cmp byte [byte edx+04h], 0FFh	; 44532
-je short loc_44548	; 44536
+je short .4	; 44536
 mov al, byte [edx]	; 44538
 mov byte [dword esp+061Ch], al	; 4453A
 mov al, byte [byte edx+01h]	; 44541
 inc al	; 44544
-jmp short loc_4451A	; 44546
-loc_44548:
+jmp short SeedPlayoffFinal.2	; 44546
+.4:
 dec ebx	; 44548
-loc_44549:
+.5:
 test ebx, ebx	; 44549
-jge short loc_444FC	; 4454B
-loc_4454D:
+jge short SeedPlayoffFinal.1	; 4454B
+.6:
 xor ebx, ebx	; 4454D
-jmp short loc_4458F	; 4454F
-loc_44551:
+jmp short .8	; 4454F
+.7:
 add byte [dword esp+0618h], 2	; 44551
 lea edx, [dword esp+0618h]	; 44559
 lea eax, [dword esp+061Ch]	; 44560
-call sub_41C9B	; 44567
+call NormalizeDate	; 44567
 lea edx, [byte ebx+0Eh]	; 4456C
 mov eax, edx	; 4456F
 shl eax, 2	; 44571
@@ -3390,16 +3356,16 @@ mov byte [edx], al	; 44582
 mov al, byte [dword esp+0618h]	; 44584
 mov byte [byte edx+01h], al	; 4458B
 inc ebx	; 4458E
-loc_4458F:
+.8:
 cmp ebx, esi	; 4458F
-jl short loc_44551	; 44591
+jl short SeedPlayoffFinal.7	; 44591
 mov edx, dword [dword esp+0614h]	; 44593
 mov eax, ecx	; 4459A
-call sub_87760	; 4459C
+call SeriesWinner	; 4459C
 mov dword [dword esp+05D4h], eax	; 445A1
 lea eax, [byte ecx+02Ah]	; 445A8
 mov edx, dword [dword esp+0614h]	; 445AB
-call sub_87760	; 445B2
+call SeriesWinner	; 445B2
 mov dword [dword esp+05D8h], eax	; 445B7
 mov eax, dword [dword esp+0634h]	; 445BE
 mov dword [eax], 0	; 445C5
@@ -3408,34 +3374,34 @@ mov eax, edx	; 445D2
 shl eax, 4	; 445D4
 sub eax, edx	; 445D7
 cmp byte [byte ebp+eax*2+017h], 1	; 445D9
-jne short loc_44607	; 445DE
+jne short .9	; 445DE
 mov eax, dword [dword esp+0634h]	; 445E0
 mov dword [eax], 1	; 445E7
 mov ebx, dword [dword esp+05D4h]	; 445ED
 lea edx, [byte esp+04h]	; 445F4
 mov eax, edi	; 445F8
-call sub_147C9	; 445FA
+call ReadTeamRec	; 445FA
 test eax, eax	; 445FF
-jne near loc_4479B	; 44601
-loc_44607:
+jne near .15	; 44601
+.9:
 mov edx, dword [dword esp+05D8h]	; 44607
 mov eax, edx	; 4460E
 shl eax, 4	; 44610
 sub eax, edx	; 44613
 cmp byte [byte ebp+eax*2+017h], 1	; 44615
-jne short loc_44646	; 4461A
+jne short .10	; 4461A
 mov eax, dword [dword esp+0634h]	; 4461C
 mov dword [eax], 1	; 44623
 mov ebx, dword [dword esp+05D8h]	; 44629
 lea edx, [dword esp+02ECh]	; 44630
 mov eax, edi	; 44637
-call sub_147C9	; 44639
+call ReadTeamRec	; 44639
 test eax, eax	; 4463E
-jne near loc_4479B	; 44640
-loc_44646:
+jne near .15	; 44640
+.10:
 xor edx, edx	; 44646
-jmp short loc_4466A	; 44648
-loc_4464A:
+jmp short .12	; 44648
+.11:
 lea ebx, [dword edx+04A6h]	; 4464A
 mov eax, ebx	; 44650
 shl eax, 2	; 44652
@@ -3444,35 +3410,35 @@ lea ebx, [byte eax+eax+02h]	; 44657
 mov dword [dword esp+edx*4+05ACh], ebx	; 4465B
 mov dword [dword esp+edx*4+02C4h], ebx	; 44662
 inc edx	; 44669
-loc_4466A:
+.12:
 cmp edx, esi	; 4466A
-jl short loc_4464A	; 4466C
+jl short SeedPlayoffFinal.11	; 4466C
 mov edx, dword [dword esp+05D4h]	; 4466E
 mov eax, edx	; 44675
 shl eax, 4	; 44677
 sub eax, edx	; 4467A
 cmp byte [byte ebp+eax*2+017h], 1	; 4467C
-jne short loc_4469D	; 44681
+jne short .13	; 44681
 mov ebx, dword [dword esp+05D4h]	; 44683
 lea edx, [byte esp+04h]	; 4468A
 mov eax, edi	; 4468E
-call sub_3A2B8	; 44690
+call WriteTeamRec	; 44690
 test eax, eax	; 44695
-jne near loc_4479B	; 44697
-loc_4469D:
+jne near .15	; 44697
+.13:
 mov edx, dword [dword esp+05D8h]	; 4469D
 mov eax, edx	; 446A4
 shl eax, 4	; 446A6
 sub eax, edx	; 446A9
 cmp byte [byte ebp+eax*2+017h], 1	; 446AB
-jne short loc_446CF	; 446B0
+jne short .14	; 446B0
 mov ebx, dword [dword esp+05D8h]	; 446B2
 lea edx, [dword esp+02ECh]	; 446B9
 mov eax, edi	; 446C0
-call sub_3A2B8	; 446C2
+call WriteTeamRec	; 446C2
 test eax, eax	; 446C7
-jne near loc_4479B	; 446C9
-loc_446CF:
+jne near .15	; 446C9
+.14:
 xor eax, eax	; 446CF
 mov al, byte [byte esp+02Dh]	; 446D1
 lea edx, [eax+eax]	; 446D5
@@ -3508,18 +3474,18 @@ lea ecx, [dword esp+05FCh]	; 4475B
 lea ebx, [dword esp+0604h]	; 44762
 lea edx, [dword esp+0614h]	; 44769
 lea eax, [dword esp+05DCh]	; 44770
-call sub_42DAA	; 44777
+call SortStandings	; 44777
 mov eax, dword [esp]	; 4477C
 add eax, 24Ch	; 4477F
 mov ecx, esi	; 44784
 mov ebx, dword [dword esp+05D8h]	; 44786
 mov edx, dword [dword esp+05D4h]	; 4478D
-call sub_42F42	; 44794
+call SetSeriesTeams	; 44794
 xor eax, eax	; 44799
-loc_4479B:
+.15:
 add esp, 620h	; 4479B
-jmp near loc_41F5E	; 447A1
-sub_447A6:
+jmp near UpdateSeasonSchedule_pop3	; 447A1
+SimPlayoffFinal:
 push dword 90h	; 447A6
 call __CHK	; 447AB
 push esi	; 447B0
@@ -3535,11 +3501,11 @@ xor edx, edx	; 447C4
 lea eax, [byte esp+0Ch]	; 447C6
 call __STOSD	; 447CA
 mov eax, esi	; 447CF
-call sub_42221	; 447D1
+call SeriesLength	; 447D1
 mov ebp, eax	; 447D6
 xor edi, edi	; 447D8
-jmp near loc_44877	; 447DA
-loc_447DF:
+jmp near .8	; 447DA
+.1:
 xor ecx, ecx	; 447DF
 mov cl, byte [byte esi+02h]	; 447E1
 mov eax, ebp	; 447E4
@@ -3549,12 +3515,12 @@ LD sub, eax, edx	; 447EB
 sar eax, 1	; 447ED
 inc eax	; 447EF
 cmp eax, dword [byte esp+ecx*4+0Ch]	; 447F0
-je short loc_44801	; 447F4
+je short .2	; 447F4
 xor ebx, ebx	; 447F6
 mov bl, byte [byte esi+03h]	; 447F8
 cmp eax, dword [byte esp+ebx*4+0Ch]	; 447FB
-jne short loc_4481E	; 447FF
-loc_44801:
+jne short .3	; 447FF
+.2:
 mov eax, edi	; 44801
 shl eax, 2	; 44803
 sub eax, edi	; 44806
@@ -3563,15 +3529,15 @@ mov bl, byte [byte esi+eax*2+03h]	; 4480D
 mov byte [byte esi+eax*2+02h], bl	; 44811
 mov byte [byte esi+eax*2+01h], bl	; 44815
 mov byte [esi+eax*2], bl	; 44819
-jmp short loc_44876	; 4481C
-loc_4481E:
+jmp short .7	; 4481C
+.3:
 mov eax, edi	; 4481E
 shl eax, 2	; 44820
 sub eax, edi	; 44823
 add eax, eax	; 44825
 lea ecx, [esi+eax]	; 44827
 cmp byte [byte ecx+04h], 0FFh	; 4482A
-jne short loc_44852	; 4482E
+jne short .4	; 4482E
 push byte 2	; 44830
 mov eax, dword [byte esp+08h]	; 44832
 push eax	; 44836
@@ -3580,8 +3546,8 @@ push edx	; 4483B
 lea ebx, [dword edi+04A6h]	; 4483C
 mov edx, dword [dword esp+090h]	; 44842
 mov eax, dword [byte esp+0Ch]	; 44849
-call sub_452C5	; 4484D
-loc_44852:
+call SimulateGame	; 4484D
+.4:
 mov eax, edi	; 44852
 shl eax, 2	; 44854
 sub eax, edi	; 44857
@@ -3589,28 +3555,28 @@ add eax, eax	; 44859
 add eax, esi	; 4485B
 mov bl, byte [byte eax+04h]	; 4485D
 cmp bl, byte [byte eax+05h]	; 44860
-jbe short loc_4486A	; 44863
+jbe short .5	; 44863
 mov al, byte [byte eax+02h]	; 44865
-jmp short loc_4486D	; 44868
-loc_4486A:
+jmp short .6	; 44868
+.5:
 mov al, byte [byte eax+03h]	; 4486A
-loc_4486D:
+.6:
 and eax, 0FFh	; 4486D
 inc dword [byte esp+eax*4+0Ch]	; 44872
-loc_44876:
+.7:
 inc edi	; 44876
-loc_44877:
+.8:
 cmp edi, ebp	; 44877
-jl near loc_447DF	; 44879
+jl near SimPlayoffFinal.1	; 44879
 xor eax, eax	; 4487F
 add esp, byte 74h	; 44881
-jmp near loc_43751	; 44884
-jpt_44889:
-dd loc_448C8
-dd loc_4490C
-dd loc_44952
-dd loc_4499D
-sub_44899:
+jmp near SimPlayoffRound1_pop3	; 44884
+FinishPlayoffs_jt:
+dd FinishPlayoffs_r1
+dd FinishPlayoffs_r2
+dd FinishPlayoffs_r3
+dd FinishPlayoffs_r4
+FinishPlayoffs:
 push dword 48h	; 44899
 call __CHK	; 4489E
 push esi	; 448A3
@@ -3624,17 +3590,17 @@ mov ebp, ecx	; 448AE
 mov eax, dword [byte esp+044h]	; 448B0
 sub eax, byte 2	; 448B4
 cmp eax, byte 3	; 448B7
-ja near loc_44A33	; 448BA
-jmp dword [nosplit cs:eax*4+jpt_44889]	; 448C0
-loc_448C8:
+ja near FinishPlayoffs_r4.5	; 448BA
+jmp dword [nosplit cs:eax*4+FinishPlayoffs_jt]	; 448C0
+FinishPlayoffs_r1:
 mov edx, dword [byte esp+040h]	; 448C8
 push edx	; 448CC
 mov eax, dword [dword_C8C61]	; 448CD
 mov ecx, dword [byte esp+040h]	; 448D2
 mov edx, esi	; 448D6
-call sub_43644	; 448D8
+call SimPlayoffRound1	; 448D8
 test eax, eax	; 448DD
-jne near loc_44A38	; 448DF
+jne near FinishPlayoffs_r4.x	; 448DF
 lea eax, [byte esp+024h]	; 448E5
 push eax	; 448E9
 mov edx, dword [gameopts]	; 448EA
@@ -3643,19 +3609,19 @@ shr edx, 1Dh	; 448F3
 mov eax, dword [dword_C8C61]	; 448F6
 mov ecx, ebp	; 448FB
 mov ebx, esi	; 448FD
-call sub_43757	; 448FF
+call SeedPlayoffRound2	; 448FF
 test eax, eax	; 44904
-jne near loc_44A38	; 44906
-loc_4490C:
+jne near FinishPlayoffs_r4.x	; 44906
+FinishPlayoffs_r2:
 mov ebx, dword [byte esp+040h]	; 4490C
 push ebx	; 44910
 mov eax, dword [dword_C8C61]	; 44911
 mov ecx, dword [byte esp+040h]	; 44916
 mov ebx, edi	; 4491A
 mov edx, esi	; 4491C
-call sub_43E40	; 4491E
+call SimPlayoffRound2	; 4491E
 test eax, eax	; 44923
-jne near loc_44A38	; 44925
+jne near FinishPlayoffs_r4.x	; 44925
 lea eax, [byte esp+024h]	; 4492B
 push eax	; 4492F
 mov edx, dword [gameopts]	; 44930
@@ -3664,19 +3630,19 @@ shr edx, 1Dh	; 44939
 mov eax, dword [dword_C8C61]	; 4493C
 mov ecx, ebp	; 44941
 mov ebx, esi	; 44943
-call sub_43F4B	; 44945
+call SeedPlayoffRound3	; 44945
 test eax, eax	; 4494A
-jne near loc_44A38	; 4494C
-loc_44952:
+jne near FinishPlayoffs_r4.x	; 4494C
+FinishPlayoffs_r3:
 mov ecx, dword [byte esp+040h]	; 44952
 push ecx	; 44956
 mov eax, dword [dword_C8C61]	; 44957
 mov ecx, dword [byte esp+040h]	; 4495C
 mov ebx, edi	; 44960
 mov edx, esi	; 44962
-call sub_443B6	; 44964
+call SimPlayoffRound3	; 44964
 test eax, eax	; 44969
-jne near loc_44A38	; 4496B
+jne near FinishPlayoffs_r4.x	; 4496B
 lea eax, [byte esp+024h]	; 44971
 push eax	; 44975
 mov eax, dword [byte esp+04h]	; 44976
@@ -3687,34 +3653,34 @@ shr edx, 1Dh	; 44984
 mov eax, dword [dword_C8C61]	; 44987
 mov ecx, ebp	; 4498C
 mov ebx, esi	; 4498E
-call sub_444C9	; 44990
+call SeedPlayoffFinal	; 44990
 test eax, eax	; 44995
-jne near loc_44A38	; 44997
-loc_4499D:
+jne near FinishPlayoffs_r4.x	; 44997
+FinishPlayoffs_r4:
 mov edx, dword [byte esp+040h]	; 4499D
 push edx	; 449A1
 mov eax, dword [dword_C8C61]	; 449A2
 mov ecx, dword [byte esp+040h]	; 449A7
 mov ebx, edi	; 449AB
 mov edx, esi	; 449AD
-call sub_447A6	; 449AF
+call SimPlayoffFinal	; 449AF
 test eax, eax	; 449B4
-jne near loc_44A38	; 449B6
+jne near .x	; 449B6
 mov edx, dword [dword_C8C61]	; 449BC
 mov ecx, 276h	; 449C2
 mov ebx, 199Ah	; 449C7
 mov eax, dword [esp]	; 449CC
 call FileWriteAt	; 449CF
 test eax, eax	; 449D4
-jne short loc_44A38	; 449D6
+jne short .x	; 449D6
 mov ebx, dword [leaguedbnames+14h]	; 449D8
 mov ecx, dword [byte esp+040h]	; 449DE
 mov edx, dword [byte esp+03Ch]	; 449E2
 lea eax, [byte esp+04h]	; 449E6
 call MakePath	; 449EA
-mov ebx, dword [dword_D07D3]	; 449EF
+mov ebx, dword [seasondb_size]	; 449EF
 push ebx	; 449F5
-mov ecx, dword [dword_D07BB]	; 449F6
+mov ecx, dword [seasondb]	; 449F6
 push ecx	; 449FC
 lea eax, [byte esp+0Ch]	; 449FD
 push eax	; 44A01
@@ -3728,16 +3694,16 @@ xor ebx, ebx	; 44A23
 lea edx, [byte esp+028h]	; 44A25
 mov eax, dword [esp]	; 44A29
 call FileWriteAt	; 44A2C
-jmp short loc_44A38	; 44A31
-loc_44A33:
+jmp short .x	; 44A31
+.5:
 mov eax, 0FFFFFFFFh	; 44A33
-loc_44A38:
+.x:
 add esp, byte 2Ch	; 44A38
 pop ebp	; 44A3B
 pop edi	; 44A3C
 pop esi	; 44A3D
 ret 0Ch	; 44A3E
-sub_44A41:
+AdvancePlayoffs:
 push dword 54h	; 44A41
 call __CHK	; 44A46
 push esi	; 44A4B
@@ -3752,70 +3718,70 @@ xor edx, edx	; 44A5D
 mov dword [byte esp+028h], edx	; 44A5F
 xor ebp, ebp	; 44A63
 xor ecx, ecx	; 44A65
-jmp near loc_44ADA	; 44A67
-loc_44A6C:
+jmp near .5	; 44A67
+.1:
 lea ebx, [dword ecx+0444h]	; 44A6C
 lea edx, [byte esp+020h]	; 44A72
 mov eax, esi	; 44A76
-call sub_147A0	; 44A78
+call ReadSchedGame	; 44A78
 mov ebp, eax	; 44A7D
 cmp byte [byte esp+022h], 0FFh	; 44A7F
-je short loc_44AD9	; 44A84
+je short .4	; 44A84
 cmp byte [byte esp+023h], 0FFh	; 44A86
-je short loc_44AD9	; 44A8B
+je short .4	; 44A8B
 xor edx, edx	; 44A8D
 mov dl, byte [byte esp+022h]	; 44A8F
 mov eax, edx	; 44A93
 shl eax, 4	; 44A95
 sub eax, edx	; 44A98
 cmp byte [byte edi+eax*2+017h], 1	; 44A9A
-je short loc_44AB5	; 44A9F
+je short .2	; 44A9F
 xor edx, edx	; 44AA1
 mov dl, byte [byte esp+023h]	; 44AA3
 mov eax, edx	; 44AA7
 shl eax, 4	; 44AA9
 sub eax, edx	; 44AAC
 cmp byte [byte edi+eax*2+017h], 1	; 44AAE
-jne short loc_44AD9	; 44AB3
-loc_44AB5:
+jne short .4	; 44AB3
+.2:
 cmp byte [byte esp+020h], 0FFh	; 44AB5
-je short loc_44AD9	; 44ABA
+je short .4	; 44ABA
 cmp byte [byte esp+021h], 0FFh	; 44ABC
-je short loc_44AD9	; 44AC1
+je short .4	; 44AC1
 cmp byte [byte esp+024h], 0FFh	; 44AC3
-je short loc_44AD1	; 44AC8
+je short .3	; 44AC8
 cmp byte [byte esp+025h], 0FFh	; 44ACA
-jne short loc_44AD9	; 44ACF
-loc_44AD1:
+jne short .4	; 44ACF
+.3:
 mov dword [byte esp+028h], 1	; 44AD1
-loc_44AD9:
+.4:
 inc ecx	; 44AD9
-loc_44ADA:
+.5:
 cmp ecx, byte 69h	; 44ADA
-jge short loc_44AEA	; 44ADD
+jge short .6	; 44ADD
 test ebp, ebp	; 44ADF
-jne short loc_44AEA	; 44AE1
+jne short .6	; 44AE1
 cmp dword [byte esp+028h], byte 0	; 44AE3
-je short loc_44A6C	; 44AE8
-loc_44AEA:
+je short AdvancePlayoffs.1	; 44AE8
+.6:
 test ebp, ebp	; 44AEA
-jne near loc_44D8C	; 44AEC
+jne near .12	; 44AEC
 cmp dword [byte esp+028h], byte 0	; 44AF2
-jne near loc_44D8C	; 44AF7
+jne near .12	; 44AF7
 cmp dword [byte esp+054h], byte 7	; 44AFD
-jne near loc_44D8C	; 44B02
+jne near .12	; 44B02
 cmp dword [byte esp+050h], byte 0FFFFFFFFh	; 44B08
-jne near loc_44D8C	; 44B0D
+jne near .12	; 44B0D
 mov ecx, 2	; 44B13
 xor ebx, ebx	; 44B18
 lea edx, [byte esp+034h]	; 44B1A
 mov eax, esi	; 44B1E
 call FileReadAt	; 44B20
 test eax, eax	; 44B25
-jne near loc_44DC6	; 44B27
+jne near .x	; 44B27
 push byte 20h	; 44B2D
 push dword 276h	; 44B2F
-push asc_C1A75	; 44B34
+push str_Sch	; 44B34
 call sub_8CCA8	; 44B39
 add esp, byte 0Ch	; 44B3E
 mov dword [dword_C8C61], eax	; 44B41
@@ -3826,10 +3792,10 @@ mov eax, esi	; 44B52
 call FileReadAt	; 44B54
 mov ebp, eax	; 44B59
 test eax, eax	; 44B5B
-jne near loc_44DA9	; 44B5D
+jne near .13	; 44B5D
 mov edx, dword [byte esp+034h]	; 44B63
 cmp dx, 47Ch	; 44B67
-jge near loc_44BF7	; 44B6C
+jge near .8	; 44B6C
 mov dword [byte esp+034h], 47Ch	; 44B72
 mov ebx, dword [byte esp+04Ch]	; 44B7A
 push ebx	; 44B7E
@@ -3837,10 +3803,10 @@ mov eax, dword [dword_C8C61]	; 44B7F
 mov ecx, dword [byte esp+04Ch]	; 44B84
 mov ebx, dword [byte esp+030h]	; 44B88
 mov edx, dword [byte esp+034h]	; 44B8C
-call sub_43644	; 44B90
+call SimPlayoffRound1	; 44B90
 mov ebp, eax	; 44B95
 test eax, eax	; 44B97
-jne near loc_44DA9	; 44B99
+jne near .13	; 44B99
 lea eax, [byte esp+028h]	; 44B9F
 push eax	; 44BA3
 mov edx, dword [gameopts]	; 44BA4
@@ -3849,27 +3815,27 @@ shr edx, 1Dh	; 44BAD
 mov eax, dword [dword_C8C61]	; 44BB0
 mov ecx, edi	; 44BB5
 mov ebx, dword [byte esp+034h]	; 44BB7
-call sub_43757	; 44BBB
+call SeedPlayoffRound2	; 44BBB
 mov ebp, eax	; 44BC0
 test eax, eax	; 44BC2
-jne near loc_44DA9	; 44BC4
+jne near .13	; 44BC4
 cmp dword [byte esp+028h], byte 0	; 44BCA
-jne near loc_44D74	; 44BCF
+jne near .11	; 44BCF
 push byte 3	; 44BD5
 mov ebp, dword [byte esp+050h]	; 44BD7
 push ebp	; 44BDB
 mov eax, dword [byte esp+050h]	; 44BDC
 push eax	; 44BE0
-loc_44BE1:
+.7:
 mov ecx, edi	; 44BE1
 mov ebx, dword [byte esp+038h]	; 44BE3
 mov edx, dword [byte esp+03Ch]	; 44BE7
 mov eax, esi	; 44BEB
-call sub_44899	; 44BED
-jmp near loc_44D74	; 44BF2
-loc_44BF7:
+call FinishPlayoffs	; 44BED
+jmp near .11	; 44BF2
+.8:
 cmp dx, 498h	; 44BF7
-jge short loc_44C72	; 44BFC
+jge short .9	; 44BFC
 mov dword [byte esp+034h], 498h	; 44BFE
 mov ecx, dword [byte esp+04Ch]	; 44C06
 push ecx	; 44C0A
@@ -3877,10 +3843,10 @@ mov eax, dword [dword_C8C61]	; 44C0B
 mov ecx, dword [byte esp+04Ch]	; 44C10
 mov ebx, dword [byte esp+030h]	; 44C14
 mov edx, dword [byte esp+034h]	; 44C18
-call sub_43E40	; 44C1C
+call SimPlayoffRound2	; 44C1C
 mov ebp, eax	; 44C21
 test eax, eax	; 44C23
-jne near loc_44DA9	; 44C25
+jne near .13	; 44C25
 lea eax, [byte esp+028h]	; 44C2B
 push eax	; 44C2F
 mov edx, dword [gameopts]	; 44C30
@@ -3889,21 +3855,21 @@ shr edx, 1Dh	; 44C39
 mov eax, dword [dword_C8C61]	; 44C3C
 mov ecx, edi	; 44C41
 mov ebx, dword [byte esp+034h]	; 44C43
-call sub_43F4B	; 44C47
+call SeedPlayoffRound3	; 44C47
 mov ebp, eax	; 44C4C
 test eax, eax	; 44C4E
-jne near loc_44DA9	; 44C50
+jne near .13	; 44C50
 cmp dword [byte esp+028h], byte 0	; 44C56
-jne near loc_44D74	; 44C5B
+jne near .11	; 44C5B
 push byte 4	; 44C61
 mov eax, dword [byte esp+050h]	; 44C63
 push eax	; 44C67
 mov edx, dword [byte esp+050h]	; 44C68
 push edx	; 44C6C
-jmp near loc_44BE1	; 44C6D
-loc_44C72:
+jmp near AdvancePlayoffs.7	; 44C6D
+.9:
 cmp dx, 4A6h	; 44C72
-jge near loc_44D08	; 44C77
+jge near .10	; 44C77
 mov dword [byte esp+034h], 4A6h	; 44C7D
 mov ebp, dword [byte esp+04Ch]	; 44C85
 push ebp	; 44C89
@@ -3911,10 +3877,10 @@ mov eax, dword [dword_C8C61]	; 44C8A
 mov ecx, dword [byte esp+04Ch]	; 44C8F
 mov ebx, dword [byte esp+030h]	; 44C93
 mov edx, dword [byte esp+034h]	; 44C97
-call sub_443B6	; 44C9B
+call SimPlayoffRound3	; 44C9B
 mov ebp, eax	; 44CA0
 test eax, eax	; 44CA2
-jne near loc_44DA9	; 44CA4
+jne near .13	; 44CA4
 lea eax, [byte esp+028h]	; 44CAA
 push eax	; 44CAE
 push esi	; 44CAF
@@ -3924,12 +3890,12 @@ shr edx, 1Dh	; 44CB9
 mov eax, dword [dword_C8C61]	; 44CBC
 mov ecx, edi	; 44CC1
 mov ebx, dword [byte esp+038h]	; 44CC3
-call sub_444C9	; 44CC7
+call SeedPlayoffFinal	; 44CC7
 mov ebp, eax	; 44CCC
 test eax, eax	; 44CCE
-jne near loc_44DA9	; 44CD0
+jne near .13	; 44CD0
 cmp dword [byte esp+028h], byte 0	; 44CD6
-jne near loc_44D74	; 44CDB
+jne near .11	; 44CDB
 push byte 5	; 44CE1
 mov edx, dword [byte esp+050h]	; 44CE3
 push edx	; 44CE7
@@ -3939,12 +3905,12 @@ mov ecx, edi	; 44CED
 mov ebx, dword [byte esp+038h]	; 44CEF
 mov edx, dword [byte esp+03Ch]	; 44CF3
 mov eax, esi	; 44CF7
-call sub_44899	; 44CF9
+call FinishPlayoffs	; 44CF9
 mov dword [byte esp+034h], 4ADh	; 44CFE
-jmp short loc_44D74	; 44D06
-loc_44D08:
+jmp short .11	; 44D06
+.10:
 cmp dx, 4ADh	; 44D08
-jge short loc_44D74	; 44D0D
+jge short .11	; 44D0D
 mov dword [byte esp+034h], 4ADh	; 44D0F
 mov ebx, dword [byte esp+04Ch]	; 44D17
 push ebx	; 44D1B
@@ -3952,18 +3918,18 @@ mov eax, dword [dword_C8C61]	; 44D1C
 mov ecx, dword [byte esp+04Ch]	; 44D21
 mov ebx, dword [byte esp+030h]	; 44D25
 mov edx, dword [byte esp+034h]	; 44D29
-call sub_447A6	; 44D2D
+call SimPlayoffFinal	; 44D2D
 mov ebp, eax	; 44D32
 test eax, eax	; 44D34
-jne short loc_44DA9	; 44D36
+jne short .13	; 44D36
 mov ebx, dword [leaguedbnames+14h]	; 44D38
 mov ecx, dword [byte esp+04Ch]	; 44D3E
 mov edx, dword [byte esp+048h]	; 44D42
 mov eax, esp	; 44D46
 call MakePath	; 44D48
-mov ecx, dword [dword_D07D3]	; 44D4D
+mov ecx, dword [seasondb_size]	; 44D4D
 push ecx	; 44D53
-mov edi, dword [dword_D07BB]	; 44D54
+mov edi, dword [seasondb]	; 44D54
 push edi	; 44D5A
 lea eax, [byte esp+08h]	; 44D5B
 push eax	; 44D5F
@@ -3971,7 +3937,7 @@ call sub_932D0	; 44D60
 add esp, byte 0Ch	; 44D65
 call sub_13320	; 44D68
 mov byte [byte_DE268], 0FFh	; 44D6D
-loc_44D74:
+.11:
 mov ecx, 2	; 44D74
 xor ebx, ebx	; 44D79
 lea edx, [byte esp+034h]	; 44D7B
@@ -3979,34 +3945,34 @@ mov eax, esi	; 44D7F
 call FileWriteAt	; 44D81
 mov ebp, eax	; 44D86
 test eax, eax	; 44D88
-jne short loc_44DA9	; 44D8A
-loc_44D8C:
+jne short .13	; 44D8A
+.12:
 mov edx, dword [dword_C8C61]	; 44D8C
 test edx, edx	; 44D92
-je short loc_44DA9	; 44D94
+je short .13	; 44D94
 mov ecx, 276h	; 44D96
 mov ebx, 199Ah	; 44D9B
 mov eax, esi	; 44DA0
 call FileWriteAt	; 44DA2
 mov ebp, eax	; 44DA7
-loc_44DA9:
+.13:
 mov ebx, dword [dword_C8C61]	; 44DA9
 test ebx, ebx	; 44DAF
-je short loc_44DC4	; 44DB1
+je short .14	; 44DB1
 push ebx	; 44DB3
 call jctime	; 44DB4
 add esp, byte 4	; 44DB9
 xor esi, esi	; 44DBC
 mov dword [dword_C8C61], esi	; 44DBE
-loc_44DC4:
+.14:
 mov eax, ebp	; 44DC4
-loc_44DC6:
+.x:
 add esp, byte 38h	; 44DC6
 pop ebp	; 44DC9
 pop edi	; 44DCA
 pop esi	; 44DCB
 ret 10h	; 44DCC
-sub_44DCF:
+CreateNewLeague:
 push dword 0A0h	; 44DCF
 call __CHK	; 44DD4
 push ebx	; 44DD9
@@ -4025,7 +3991,7 @@ call sub_30A0C	; 44DF5
 xor edi, edi	; 44DFA
 xor esi, esi	; 44DFC
 mov dword [byte esp+068h], edi	; 44DFE
-loc_44E02:
+.1:
 mov edx, dword [byte esp+068h]	; 44E02
 mov eax, edx	; 44E06
 shl eax, 4	; 44E08
@@ -4060,7 +4026,7 @@ mov ecx, dword [byte esp+068h]	; 44E75
 inc ecx	; 44E79
 mov dword [byte esp+068h], ecx	; 44E7A
 cmp ecx, byte 1Ah	; 44E7E
-jl near loc_44E02	; 44E81
+jl near CreateNewLeague.1	; 44E81
 push byte 5	; 44E87
 push ebx	; 44E89
 push ebx	; 44E8A
@@ -4069,13 +4035,13 @@ push ebx	; 44E8C
 mov ecx, 30h	; 44E8D
 mov ebx, 8	; 44E92
 lea edx, [byte esp+060h]	; 44E97
-mov eax, asc_C8227	; 44E9B
+mov eax, str_EnterLeagueName	; 44E9B
 call sub_2FEDF	; 44EA0
 mov dword [byte esp+068h], eax	; 44EA5
 cmp byte [byte esp+04Ch], 0	; 44EA9
-je near loc_45260	; 44EAE
+je near .22	; 44EAE
 cmp eax, byte 1Bh	; 44EB4
-je near loc_45260	; 44EB7
+je near .22	; 44EB7
 lea eax, [byte esp+060h]	; 44EBD
 push eax	; 44EC1
 lea eax, [byte esp+068h]	; 44EC2
@@ -4095,60 +4061,60 @@ mov edx, 10h	; 44EF2
 lea eax, [byte esp+04Ch]	; 44EF7
 call unknown_libname_1	; 44EFB
 test eax, eax	; 44F00
-jne short loc_44F46	; 44F02
+jne short .3	; 44F02
 push byte 0FFFFFFFFh	; 44F04
 lea eax, [byte esp+064h]	; 44F06
 push eax	; 44F0A
 lea eax, [byte esp+06Ch]	; 44F0B
 push eax	; 44F0F
 push byte 2	; 44F10
-push unk_C7733	; 44F12
+push btn_LeagueExists	; 44F12
 mov ecx, 2	; 44F17
-mov ebx, off_C772B	; 44F1C
+mov ebx, msg_LeagueExists	; 44F1C
 mov edx, 0FFFFFFFFh	; 44F21
 mov eax, edx	; 44F26
 call MessageBox	; 44F28
 mov dword [byte esp+06Ch], eax	; 44F2D
 cmp eax, byte 1	; 44F31
-jne short loc_44F41	; 44F34
+jne short .2	; 44F34
 lea eax, [byte esp+04Ch]	; 44F36
 call sub_14442	; 44F3A
-jmp short loc_44F46	; 44F3F
-loc_44F41:
+jmp short .3	; 44F3F
+.2:
 mov esi, 1	; 44F41
-loc_44F46:
+.3:
 test esi, esi	; 44F46
-jne short loc_44F7E	; 44F48
+jne short .4	; 44F48
 push byte 0FFFFFFFFh	; 44F4A
 lea eax, [byte esp+064h]	; 44F4C
 push eax	; 44F50
 lea eax, [byte esp+06Ch]	; 44F51
 push eax	; 44F55
 push byte 2	; 44F56
-push unk_C77AE	; 44F58
+push btn_WhichSchedule	; 44F58
 mov ecx, 1	; 44F5D
-mov ebx, unk_C77AA	; 44F62
+mov ebx, msg_WhichSchedule	; 44F62
 mov edx, 0FFFFFFFFh	; 44F67
 mov eax, edx	; 44F6C
 call MessageBox	; 44F6E
 mov dword [byte esp+06Ch], eax	; 44F73
 cmp eax, byte 0FFFFFFFFh	; 44F77
-jne short loc_44F7E	; 44F7A
+jne short .4	; 44F7A
 mov esi, eax	; 44F7C
-loc_44F7E:
+.4:
 test esi, esi	; 44F7E
-jne short loc_44F8E	; 44F80
+jne short .5	; 44F80
 call sub_2FDD1	; 44F82
 cmp eax, byte 0FFFFFFFFh	; 44F87
-jne short loc_44F8E	; 44F8A
+jne short .5	; 44F8A
 mov esi, eax	; 44F8C
-loc_44F8E:
+.5:
 test esi, esi	; 44F8E
-jne short loc_44FD9	; 44F90
+jne short .7	; 44F90
 xor eax, eax	; 44F92
 call sub_106C8	; 44F94
 cmp eax, 800h	; 44F99
-jge short loc_44FCE	; 44F9E
+jge short .6	; 44F9E
 push dword 1F4h	; 44FA0
 lea eax, [byte esp+064h]	; 44FA5
 push eax	; 44FA9
@@ -4157,21 +4123,21 @@ push eax	; 44FAE
 push esi	; 44FAF
 push esi	; 44FB0
 mov ecx, 1	; 44FB1
-mov ebx, unk_C8D02	; 44FB6
+mov ebx, msg_DiskFull	; 44FB6
 mov edx, 0FFFFFFFFh	; 44FBB
 mov eax, edx	; 44FC0
 call MessageBox	; 44FC2
 mov edi, 1	; 44FC7
-jmp short loc_44FD9	; 44FCC
-loc_44FCE:
+jmp short .7	; 44FCC
+.6:
 lea eax, [byte esp+04Ch]	; 44FCE
 call mkdir_	; 44FD2
 mov edi, eax	; 44FD7
-loc_44FD9:
+.7:
 test esi, esi	; 44FD9
-jne near loc_45203	; 44FDB
+jne near .19	; 44FDB
 test edi, edi	; 44FE1
-jne near loc_45203	; 44FE3
+jne near .19	; 44FE3
 mov ebx, dword [leaguedbnames+10h]	; 44FE9
 mov ecx, str_extDB	; 44FEF
 xor edx, edx	; 44FF4
@@ -4183,10 +4149,10 @@ lea eax, [byte esp+02Ch]	; 45009
 call sub_3DAB9	; 4500D
 mov edi, eax	; 45012
 test eax, eax	; 45014
-jne near loc_45203	; 45016
+jne near .19	; 45016
 lea eax, [byte esp+05Ch]	; 4501C
 push eax	; 45020
-push asc_C816D	; 45021
+push str_SelHumanTeams	; 45021
 push byte 1	; 45026
 mov ecx, leagueteams	; 45028
 mov ebx, unk_DDAC4	; 4502D
@@ -4194,31 +4160,31 @@ mov edx, humancount	; 45032
 mov eax, curleague	; 45037
 call sub_38B4F	; 4503C
 mov ebp, 0B6h	; 45041
-jmp short loc_45068	; 45046
-loc_45048:
+jmp short .10	; 45046
+.8:
 mov eax, esi	; 45048
 shl eax, 4	; 4504A
 sub eax, esi	; 4504D
 add eax, eax	; 4504F
 mov ch, byte [dword eax+byte_DD7CB]	; 45051
 cmp ch, 1	; 45057
-jne short loc_45067	; 4505A
+jne short .9	; 4505A
 cmp ch, byte [dword eax+byte_DD7CC]	; 4505C
-jne short loc_45067	; 45062
+jne short .9	; 45062
 sub ebp, byte 7	; 45064
-loc_45067:
+.9:
 inc esi	; 45067
-loc_45068:
+.10:
 cmp esi, byte 1Ah	; 45068
-jl short loc_45048	; 4506B
+jl short CreateNewLeague.8	; 4506B
 mov ebx, dword [dword_DD770]	; 4506D
 mov edx, dword_C8D06	; 45073
 xor eax, eax	; 45078
 call sub_149BF	; 4507A
 xor esi, esi	; 4507F
-loc_45081:
+.11:
 mov edx, 1	; 45081
-loc_45086:
+.12:
 mov eax, edx	; 45086
 shl eax, 3	; 45088
 sub eax, edx	; 4508B
@@ -4227,32 +4193,32 @@ mov ebx, dword [nosplit esi*4+dword_C8D06]	; 4508F
 mov dword [nosplit eax*4+dword_C8D06], ebx	; 45096
 inc edx	; 4509D
 cmp edx, byte 1Ah	; 4509E
-jle short loc_45086	; 450A1
+jle short CreateNewLeague.12	; 450A1
 inc esi	; 450A3
 cmp esi, byte 7	; 450A4
-jl short loc_45081	; 450A7
+jl short CreateNewLeague.11	; 450A7
 xor ecx, ecx	; 450A9
-mov ebx, asc_C1A7C	; 450AB
+mov ebx, str_gameset	; 450AB
 mov edx, curleague	; 450B0
 lea eax, [byte esp+02Ch]	; 450B5
 call MakePath	; 450B9
 lea eax, [byte esp+02Ch]	; 450BE
 call sub_142E7	; 450C2
 test eax, eax	; 450C7
-je short loc_450D2	; 450C9
+je short .13	; 450C9
 xor eax, eax	; 450CB
 mov dword [dword_C9002], eax	; 450CD
-loc_450D2:
+.13:
 mov edx, ebp	; 450D2
 shl edx, 2	; 450D4
 add edx, dword_C8D06	; 450D7
 xor eax, eax	; 450DD
 call sub_14825	; 450DF
 test eax, eax	; 450E4
-je short loc_45129	; 450E6
+je short .14	; 450E6
 push eax	; 450E8
-push asc_C1A85	; 450E9
-push asc_C8CA4	; 450EE
+push str_KbytesFree	; 450E9
+push str_KbytesFreeLine	; 450EE
 call sprintf_	; 450F3
 add esp, byte 0Ch	; 450F8
 push dword 320h	; 450FB
@@ -4263,23 +4229,23 @@ push eax	; 45109
 push byte 0	; 4510A
 push byte 0	; 4510C
 mov ecx, 3	; 4510E
-mov ebx, off_C8CC8	; 45113
+mov ebx, msg_NoDiskSpace	; 45113
 mov edx, 0FFFFFFFFh	; 45118
 mov eax, edx	; 4511D
 call MessageBox	; 4511F
 mov edi, 1	; 45124
-loc_45129:
+.14:
 test edi, edi	; 45129
-jne near loc_45203	; 4512B
+jne near .19	; 4512B
 cmp dword [byte esp+05Ch], byte 0	; 45131
-jl near loc_45203	; 45136
+jl near .19	; 45136
 push edi	; 4513C
 push edi	; 4513D
 push edi	; 4513E
 push edi	; 4513F
 push edi	; 45140
 mov ecx, 1	; 45141
-mov ebx, unk_C7BEA	; 45146
+mov ebx, msg_CreatingLeague	; 45146
 mov edx, 0FFFFFFFFh	; 4514B
 mov eax, edx	; 45150
 call MessageBox	; 45152
@@ -4298,8 +4264,8 @@ call WriteLeagueInfo	; 45186
 mov edi, eax	; 4518B
 xor ebp, ebp	; 4518D
 mov dword [byte esp+068h], ebp	; 4518F
-jmp short loc_451B9	; 45193
-loc_45195:
+jmp short .16	; 45193
+.15:
 push curleague	; 45195
 mov edx, dword [dword_DD770]	; 4519A
 mov eax, dword [nosplit eax*4+leaguedbnames]	; 451A0
@@ -4308,38 +4274,38 @@ mov ebx, str_extDB	; 451A9
 call sub_1466B	; 451AE
 mov edi, eax	; 451B3
 inc dword [byte esp+068h]	; 451B5
-loc_451B9:
+.16:
 mov eax, dword [byte esp+068h]	; 451B9
 cmp eax, byte 7	; 451BD
-jge short loc_451C6	; 451C0
+jge short .17	; 451C0
 test edi, edi	; 451C2
-je short loc_45195	; 451C4
-loc_451C6:
+je short CreateNewLeague.15	; 451C4
+.17:
 test edi, edi	; 451C6
-jne short loc_451E4	; 451C8
+jne short .18	; 451C8
 mov eax, dword_C5382	; 451CA
 call sub_32B1D	; 451CF
 mov edx, dword [byte esp+06Ch]	; 451D4
 mov eax, curleague	; 451D8
-call sub_42295	; 451DD
+call RandomizeSchedule	; 451DD
 mov edi, eax	; 451E2
-loc_451E4:
+.18:
 call sub_30F12	; 451E4
 test edi, edi	; 451E9
-jne short loc_45203	; 451EB
+jne short .19	; 451EB
 mov ebx, 0FFFFFFFFh	; 451ED
 mov edx, leagueteams	; 451F2
 mov eax, curleague	; 451F7
 call CopyHumanTeamDBs	; 451FC
 mov edi, eax	; 45201
-loc_45203:
+.19:
 test edi, edi	; 45203
-jne short loc_4520E	; 45205
+jne short .20	; 45205
 cmp dword [byte esp+05Ch], byte 0	; 45207
-jge short loc_45260	; 4520C
-loc_4520E:
+jge short .22	; 4520C
+.20:
 test edi, edi	; 4520E
-je short loc_4524F	; 45210
+je short .21	; 45210
 lea eax, [byte esp+060h]	; 45212
 push eax	; 45216
 lea eax, [byte esp+068h]	; 45217
@@ -4356,16 +4322,16 @@ push eax	; 45234
 push byte 0	; 45235
 push byte 0	; 45237
 mov ecx, 1	; 45239
-mov ebx, unk_C7826	; 4523E
+mov ebx, msg_CreateError	; 4523E
 mov edx, 0FFFFFFFFh	; 45243
 mov eax, edx	; 45248
 call MessageBox	; 4524A
-loc_4524F:
+.21:
 xor dh, dh	; 4524F
 mov byte [byte_C5386], dh	; 45251
 lea eax, [byte esp+04Ch]	; 45257
 call sub_14442	; 4525B
-loc_45260:
+.22:
 push byte 0	; 45260
 mov ecx, 3Fh	; 45262
 mov ebx, 17h	; 45267

@@ -4,8 +4,8 @@ bits 32
 section s_D075E progbits alloc noexec write align=1
 extern unk_D068A, unk_D0720, unk_D0740, unk_D0752
 global asc_D07B6, byte_D079E, byte_D079F, byte_D07A8, byte_D07A9, dword_D07AA, dword_D07AE, dword_D07B2
-global dword_D07BB, dword_D07BF, dword_D07C3, dword_D07C7, dword_D07CB, dword_D07CF, dword_D07D3, dword_D07D7
-global dword_D07DB, dword_D07DF, dword_D07E3, dword_D07E7, unk_D075E, unk_D07EB
+global seasondb, careerdb, dword_D07C3, keydb, dword_D07CB, dword_D07CF, seasondb_size, careerdb_size
+global dword_D07DB, keydb_size, dword_D07E3, dword_D07E7, unk_D075E, unk_D07EB
 unk_D075E:
 db 00h,00h,00h,00h,00h,00h,00h,00h,075h,00h,00h,00h,012h,00h,00h,00h
 dd unk_D0740
@@ -33,25 +33,25 @@ dword_D07B2:
 db 00h,00h,00h,00h
 asc_D07B6:
 db 02Eh,054h,04Dh,050h,00h
-dword_D07BB:
+seasondb:
 db 00h,00h,00h,00h
-dword_D07BF:
+careerdb:
 db 00h,00h,00h,00h
 dword_D07C3:
 db 00h,00h,00h,00h
-dword_D07C7:
+keydb:
 db 00h,00h,00h,00h
 dword_D07CB:
 db 00h,00h,00h,00h
 dword_D07CF:
 db 00h,00h,00h,00h
-dword_D07D3:
+seasondb_size:
 db 00h,00h,00h,00h
-dword_D07D7:
+careerdb_size:
 db 00h,00h,00h,00h
 dword_D07DB:
 db 00h,00h,00h,00h
-dword_D07DF:
+keydb_size:
 db 00h,00h,00h,00h
 dword_D07E3:
 db 00h,00h,00h,00h
