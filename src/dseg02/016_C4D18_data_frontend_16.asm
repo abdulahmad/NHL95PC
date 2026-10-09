@@ -22,7 +22,7 @@ global samesideflag, inputframes, escrequest, joyrec, palfadedin, screenw, scree
 global dword_C5131, dword_C5133, dword_C5135, dword_C513C, dword_C5168, dword_C51F0
 global postate
 global lgstate
-global dword_C53F7, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
+global gameresult, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
 global ctl2side, dword_C541F, off_C5194, off_C51C0, off_C51EC, off_C524F, off_C5253, off_C5257
 global off_C525B, off_C525F, off_C5263, off_C5267, off_C526F, off_C5273, off_C527B, off_C5439
 global off_C5441, teamcitynames, unk_C4E30, str_fmtpd, exhstate, unk_C5423, unk_C542E
@@ -261,7 +261,7 @@ db 010h,00h,00h,00h
 db 010h,00h,00h,00h
 db 00h,00h,00h,00h
 db 01h,00h,00h,00h
-dword_C53F7:
+gameresult:
 db 00h,00h,00h,00h
 gamemode:
 db 00h,00h,00h,00h

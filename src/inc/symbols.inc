@@ -14,13 +14,13 @@
 ;  1145F  ResetInputSampling                       cseg01/001_10010_main_startup.asm            3
 ;  1149A  RunGameFrames                            cseg01/001_10010_main_startup.asm            3
 ;  11598  FadePalette                              cseg01/001_10010_main_startup.asm            9
-;  1167B  sub_1167B                                cseg01/002_1167B_gamesave_io.asm             1
-;  11D09  sub_11D09                                cseg01/002_1167B_gamesave_io.asm             3
+;  1167B  GameLoop                                 cseg01/002_1167B_gamesave_io.asm             1
+;  11D09  PlayGame                                 cseg01/002_1167B_gamesave_io.asm             3
 ;  11FF4  assreplace                               cseg01/002_1167B_gamesave_io.asm             7
 ;  12011  assinsert                                cseg01/002_1167B_gamesave_io.asm             6
-;  12034  sub_12034                                cseg01/002_1167B_gamesave_io.asm             1
-;  1205D  sub_1205D                                cseg01/002_1167B_gamesave_io.asm             1
-;  12842  loc_12842                                cseg01/002_1167B_gamesave_io.asm             2
+;  12034  ReplayIsEmpty                            cseg01/002_1167B_gamesave_io.asm             1
+;  1205D  FindLeagueLeaders                        cseg01/002_1167B_gamesave_io.asm             1
+;  12842  FindLeagueLeaders_x                      cseg01/002_1167B_gamesave_io.asm             2
 ;  12849  sub_12849                                cseg01/003_12849_team_stats_screen.asm       1
 ;  13188  sub_13188                                cseg01/003_12849_team_stats_screen.asm       1
 ;  13320  sub_13320                                cseg01/004_13320_asset_loading.asm           1
@@ -1460,8 +1460,8 @@
 ;  C01D7  str_errd4                                dseg02/001_C0004_data_frontend_01.asm        1
 ;  C01DA  str_Temp3                                dseg02/001_C0004_data_frontend_01.asm        1
 ;  C01DF  str_ErrDiskFree3                         dseg02/001_C0004_data_frontend_01.asm        1
-;  C0200  unk_C0200                                dseg02/001_C0004_data_frontend_01.asm        1
-;  C0202  asc_C0202                                dseg02/001_C0004_data_frontend_01.asm        1
+;  C0200  str_backslash                            dseg02/001_C0004_data_frontend_01.asm        1
+;  C0202  str_GameSav2                             dseg02/001_C0004_data_frontend_01.asm        1
 ;  C020C  unk_C020C                                dseg02/001_C0004_data_frontend_01.asm        1
 ;  C0211  unk_C0211                                dseg02/001_C0004_data_frontend_01.asm        1
 ;  C0216  unk_C0216                                dseg02/001_C0004_data_frontend_01.asm        1
@@ -3438,7 +3438,7 @@
 ;  C5298  exhstate                                 dseg02/016_C4D18_data_frontend_16.asm        10
 ;  C530D  postate                                  dseg02/016_C4D18_data_frontend_16.asm        7
 ;  C5382  lgstate                                  dseg02/016_C4D18_data_frontend_16.asm        10
-;  C53F7  dword_C53F7                              dseg02/016_C4D18_data_frontend_16.asm        7
+;  C53F7  gameresult                               dseg02/016_C4D18_data_frontend_16.asm        7
 ;  C53FB  gamemode                                 dseg02/016_C4D18_data_frontend_16.asm        14
 ;  C53FF  gameopts                                 dseg02/016_C4D18_data_frontend_16.asm        31
 ;  C5403  ctl1team                                 dseg02/016_C4D18_data_frontend_16.asm        9
@@ -3817,7 +3817,7 @@
 ;  C811E  asc_C811E                                dseg02/026_C7F07_data_frontend_26.asm        2
 ;  C812D  asc_C812D                                dseg02/026_C7F07_data_frontend_26.asm        1
 ;  C8131  asc_C8131                                dseg02/026_C7F07_data_frontend_26.asm        1
-;  C8136  asc_C8136                                dseg02/026_C7F07_data_frontend_26.asm        6
+;  C8136  str_PPV                                  dseg02/026_C7F07_data_frontend_26.asm        6
 ;  C8140  asc_C8140                                dseg02/026_C7F07_data_frontend_26.asm        1
 ;  C8145  asc_C8145                                dseg02/026_C7F07_data_frontend_26.asm        2
 ;  C814A  str_VFN                                  dseg02/026_C7F07_data_frontend_26.asm        5
@@ -5582,7 +5582,7 @@
 ;  D8C40  dword_D8C40                              dseg02/072_D8B68_data_frontend_72.asm        6
 ;  D8C4C  dword_D8C4C                              dseg02/072_D8B68_data_frontend_72.asm        2
 ;  D8C68  dword_D8C68                              dseg02/072_D8B68_data_frontend_72.asm        3
-;  D8C6C  dword_D8C6C                              dseg02/072_D8B68_data_frontend_72.asm        6
+;  D8C6C  frameaccum                               dseg02/072_D8B68_data_frontend_72.asm        6
 ;  D8C70  rinkendart                               dseg02/072_D8B68_data_frontend_72.asm        2
 ;  D8C72  dword_D8C72                              dseg02/072_D8B68_data_frontend_72.asm        4
 ;  D8C74  dword_D8C74                              dseg02/072_D8B68_data_frontend_72.asm        4

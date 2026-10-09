@@ -4,7 +4,7 @@ bits 32
 section s_C0004 progbits alloc noexec write align=1
 global TeamList, str_NoDiskSpaceC, str_ErrDiskFree2, str_NoDiskSpaceCur, str_NoMemory, str_CheckRefCard, str_NoConvMemory, str_CheckRefCard2
 global str_Pointer3, str_Pntr, str_Scor2b, str_Scor3b, str_Kaufm020, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_GameSet2
-global str_Temp3, str_ErrDiskFree3, asc_C0202, asc_C039F, asc_C03BC, asc_C03C0, asc_C03C8, asc_C03D1
+global str_Temp3, str_ErrDiskFree3, str_GameSav2, asc_C039F, asc_C03BC, asc_C03C0, asc_C03C8, asc_C03D1
 global asc_C03D5, asc_C03E5, asc_C03EB, asc_C03F6, asc_C03FA, asc_C03FE, asc_C0402, asc_C0406
 global asc_C040B, asc_C0412, asc_C041A, asc_C041F, asc_C0424, asc_C0429, asc_C0430, asc_C0437
 global asc_C043E, asc_C0446, asc_C044F, asc_C0458, asc_C0460, asc_C0465, asc_C046E, asc_C0477
@@ -15,7 +15,7 @@ global asc_C0892, asc_C0897, asc_C089D, asc_C08A6, asc_C08AB, asc_C08B0, asc_C08
 global asc_C08C7, asc_C08D0, asc_C08D6, asc_C08DB, asc_C08E0, asc_C08E7, asc_C08F0, asc_C08F8
 global asc_C0900, asc_C0909, asc_C0910, asc_C0915, asc_C0944, asc_C094B, asc_C0952, asc_C0970
 global asc_C097A, asc_C097F, asc_C0984, asc_C098C, asc_C0991, asc_C0997, unk_C020C, str_S1
-global str_errd3, str_errd4, unk_C0200, unk_C0211, unk_C0216, unk_C021B, unk_C0220, unk_C0225
+global str_errd3, str_errd4, str_backslash, unk_C0211, unk_C0216, unk_C021B, unk_C0220, unk_C0225
 global unk_C022A, unk_C022F, unk_C0234, unk_C0239, unk_C023E, unk_C0243, unk_C0248, unk_C0251
 global unk_C0258, unk_C025E, unk_C0265, unk_C026E, unk_C0275, unk_C0280, unk_C028C, unk_C029A
 global unk_C02A7, unk_C02BC, unk_C02CA, unk_C02D9, unk_C02E9, unk_C0300, unk_C0310, unk_C032B
@@ -99,9 +99,9 @@ str_ErrDiskFree3:
 db 065h,072h,072h,06Fh,072h,020h,067h,065h,074h,074h,069h,06Eh,067h,020h,064h,069h
 db 073h,06Bh,020h,073h,070h,061h,063h,065h,020h,066h,072h,065h,065h,0Ah,00h,00h
 db 00h
-unk_C0200:
+str_backslash:
 db 05Ch,00h
-asc_C0202:
+str_GameSav2:
 db 067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h,00h
 unk_C020C:
 db 068h,061h,072h,074h,00h

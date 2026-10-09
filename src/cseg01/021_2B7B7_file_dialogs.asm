@@ -9,7 +9,7 @@ extern asc_C14F6, asc_C14FB, asc_C1506, asc_C150F, asc_C1516, asc_C151B, asc_C15
 extern asc_C152F, asc_C1534, asc_C153F, asc_C1543, asc_C154F, asc_C1553, asc_C155F, asc_C1569
 extern asc_C70A0, asc_C70B8, asc_C70C7, asc_CDB75, asc_CDB7C
 extern musicon, byte_DD2D4, byte_DD668, byte_DD669, byte_DD774, byte_DD788
-extern byte_ED82F, byte_ED992, postate, lgstate, dword_C53F7, dword_C6F78
+extern byte_ED82F, byte_ED992, postate, lgstate, gameresult, dword_C6F78
 extern dword_C6F88, dword_C6F8C, dword_C6F90, dword_C6F94, dword_C7008, dword_C700C, dword_C7010, dword_C7014
 extern dword_C7018, dword_C701C, dword_C7020, dword_C7024, dword_C7028, dword_C702C, dword_C7030, dword_C7034
 extern dword_C70E3, dword_C70E7, dword_CE4E3, dword_CE503, dword_CE527, dword_CE583, dword_CE5A3, dword_CE5C3
@@ -391,7 +391,7 @@ mov edi, eax	; 2BC50
 test byte [postate+5Ah], 80h	; 2BC52
 loc_2BC59:
 jne short loc_2BC6B	; 2BC59
-cmp dword [dword_C53F7], byte 1	; 2BC5B
+cmp dword [gameresult], byte 1	; 2BC5B
 jne short loc_2BC6B	; 2BC62
 mov eax, esp	; 2BC64
 call j_unlink_	; 2BC66

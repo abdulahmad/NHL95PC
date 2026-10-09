@@ -13,7 +13,7 @@ extern asc_C16E0, asc_C16E8, asc_C16F5, asc_C16FA, asc_C1703, asc_C1709, asc_C70
 extern str_extDB, str_VFN, curleague, byte_C8922, musicon, byte_D42C3, hmroster
 extern leaguedbfmt2, leaguedbfmt, byte_DD774, byte_DD775, byte_DD788, byte_DD789, byte_ED7ED, byte_ED824
 extern byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED8CE, byte_ED9AC, byte_ED9B0, byte_ED9E6
-extern dword_C53F7, gameopts, dword_C541F, songdata, cont2team, HomeTeam, dword_CCC94, musicslot
+extern gameresult, gameopts, dword_C541F, songdata, cont2team, HomeTeam, dword_CCC94, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_DBC7C, schedgameidx, dword_DD66C, dword_DD670, dword_DD730
 extern hmtmstruct, dword_DF61A
 extern dword_DF626, dword_DF62A, dword_DF636, fputchar, jctime, memcpy_
@@ -1659,7 +1659,7 @@ je near loc_2ECB9	; 2EC2C
 xor ebx, ebx	; 2EC32
 mov dword [dword esp+07A4h], ebx	; 2EC34
 mov dword [dword esp+0794h], ebx	; 2EC3B
-cmp dword [dword_C53F7], byte 1	; 2EC42
+cmp dword [gameresult], byte 1	; 2EC42
 je short loc_2EC5B	; 2EC49
 mov al, byte [dword esp+07E0h]	; 2EC4B
 cmp al, byte [dword esp+07DCh]	; 2EC52
@@ -1918,7 +1918,7 @@ cmp dword [dword esp+07A4h], byte 0	; 2F00D
 je short loc_2F056	; 2F015
 xor eax, eax	; 2F017
 mov dword [dword esp+07A4h], eax	; 2F019
-cmp dword [dword_C53F7], byte 1	; 2F020
+cmp dword [gameresult], byte 1	; 2F020
 je short loc_2F056	; 2F027
 mov al, byte [dword esp+07E0h]	; 2F029
 cmp al, byte [dword esp+07DCh]	; 2F030

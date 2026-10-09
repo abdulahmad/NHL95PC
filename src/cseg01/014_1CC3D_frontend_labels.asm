@@ -4,7 +4,7 @@ bits 32
 section s_1CC3D progbits alloc exec nowrite align=1
 extern __CHK, asc_C0A80, asc_C0A88, asc_C0AB5, asc_C0AE2, asc_C0B0F, asc_C0B1C, asc_C0B29
 extern asc_C0B2E, asc_C0B33, asc_C6748, asc_C675C, asc_C677A, asc_C6891, asc_C689A, asc_C68AD
-extern asc_C8136, asc_CE20B, asc_CE21A, asc_CE22A, asc_CE237, asc_CE247, asc_CE259, postate
+extern str_PPV, asc_CE20B, asc_CE21A, asc_CE22A, asc_CE237, asc_CE247, asc_CE259, postate
 extern byte_C671C, byte_C672F, byte_C6745, byte_C6759, byte_C6777, byte_C67A9, byte_DC8D8, lgstate
 extern byte_DC9D8, byte_ED938, dword_C65B4, dword_C66C8, dword_C6718, dword_C679D, dword_C67B9, dword_C67BD
 extern dword_C6956, dword_C695A, dword_C891E, dword_CE8EB, dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB
@@ -38,7 +38,7 @@ push esi	; 1CC4A
 push edi	; 1CC4B
 push ebp	; 1CC4C
 sub esp, byte 10h	; 1CC4D
-mov ecx, asc_C8136	; 1CC50
+mov ecx, str_PPV	; 1CC50
 mov ebx, asc_C0A80	; 1CC55
 cmp byte [byte_ED938], 1	; 1CC5A
 jne short loc_1CC6B	; 1CC61

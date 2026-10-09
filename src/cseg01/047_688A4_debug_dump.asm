@@ -10,7 +10,7 @@ extern str_dumpRule, str_dumpTeamHdrH, str_dumpHome, str_dumpPlHdrH, str_dumpPlL
 extern str_dumpAway, str_dumpPlHdrA, str_dumpPlLineA, str_dumpGlHdrA, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt
 extern gmode2, gamemode, sflags3, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 extern penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C, dbg_spalist, bailout_vec
-extern dword_D8C6C, dword_D8C78, hmtmstruct
+extern frameaccum, dword_D8C78, hmtmstruct
 extern hmtmpdst_m2, hmtmplstats, awtmstruct, hmscore
 extern awscore
 extern awtmplstats, dword_E9A14, fclose_, fopen_, fprintf_, gmode, puckc, PenBuf
@@ -552,7 +552,7 @@ jmp near .exit	; 68EAD
 .opened:
 mov edx, dword [gamemode]	; 68EB2
 push edx	; 68EB8
-mov esi, dword [dword_D8C6C]	; 68EB9
+mov esi, dword [frameaccum]	; 68EB9
 push esi	; 68EBF
 mov edi, dword [dword_D8C78]	; 68EC0
 push edi	; 68EC6

@@ -7,13 +7,13 @@ extern asc_C186B, asc_C1874, asc_C1879, asc_C1880, asc_C1885, asc_C78A8, asc_C7A
 extern str_PINFO, str_extDB, str_extxx, asc_C8158, str_dot, str_floppydrv, curleague, gameopts
 extern musicon, byte_D42C3, byte_DC267, byte_DC268, leaguedbfmt2, leaguedbfmt, leagueflags, byte_DD7CA
 extern byte_DD7CB, savedname, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_ED836
-extern byte_ED98E, dword_C53F7, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C71D8
+extern byte_ED98E, gameresult, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C71D8
 extern dword_C71DC, songdata, msg_InsertDisk_arg, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7E42, dword_C7F0B
 extern dword_C8998, HomeTeam, musichandle, dword_D2C6B, dword_DB088, schedgameidx, dword_DC23E, musicslot
 extern leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
 extern dword_DDD6C, awtmlines, startm_m2, hmtmlines, hmtmstruct
 extern fputchar, jctime, memset_, off_C57CC, off_C800C, leaguedbnames
-extern sprintf_, strcat_, strcpy_, SetupControllers, sub_11D09, sub_142E7, MakePath
+extern sprintf_, strcat_, strcpy_, SetupControllers, PlayGame, sub_142E7, MakePath
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, sub_1463D, sub_1478B
 extern ReadSchedGame, ReadTeamRec, sub_147FF, sub_148A5, sub_174C2, sub_17573, sub_175E2, sub_1BEFD
 extern sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A, sub_29F28, sub_30A0C, sub_30F12
@@ -1451,9 +1451,9 @@ mov dword [dword_C65CC], sub_203FA	; 3746F
 mov dword [dword_C65D0], sub_2051A	; 37479
 call sub_6B47C	; 37483
 mov eax, edi	; 37488
-call sub_11D09	; 3748A
+call PlayGame	; 3748A
 call sub_6B410	; 3748F
-cmp dword [dword_C53F7], byte 1	; 37494
+cmp dword [gameresult], byte 1	; 37494
 jne short loc_374BD	; 3749B
 mov al, byte [hmscore]	; 3749D
 mov byte [dword_DDD44], al	; 374A2
@@ -1461,11 +1461,11 @@ mov al, byte [awscore]	; 374A7
 mov byte [byte_DDD45], al	; 374AC
 jmp short loc_374BD	; 374B1
 loc_374B3:
-mov dword [dword_C53F7], 2	; 374B3
+mov dword [gameresult], 2	; 374B3
 loc_374BD:
 test esi, esi	; 374BD
 jne near loc_37A03	; 374BF
-cmp dword [dword_C53F7], byte 1	; 374C5
+cmp dword [gameresult], byte 1	; 374C5
 jne near loc_37A03	; 374CC
 mov eax, dword [dword_DDD44]	; 374D2
 sar eax, 10h	; 374D7

@@ -12,7 +12,7 @@ extern chk4lc, chk4shot, dirtab, chk4pass, doplayeracc, doshot, joysampling, inp
 extern gameopts, dword_C541F, dword_C5840, dword_C585C, dword_C5860, dword_C90B0, sflags3, HomeTeam
 extern dword_CBEBE, dword_CBECA, dword_CC0EC, dword_CC0F8, penshotplayer, dword_CC104, penshotmode, penshotstart
 extern penshotlive, dword_CC12C, dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144
-extern dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, dword_D8C6C
+extern dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, frameaccum
 extern dword_D8C84, dword_DB086, dword_DB088, hmtmstruct, dword_DF642, dword_DF648, dword_DF652
 extern hmtmpdst_m2, awtmstruct, dword_DF748, dword_DF752, dword_DF848, puckstruct
 extern sortobj15, dword_E0244, dword_E038E, dword_E03AE
@@ -1169,7 +1169,7 @@ call DoGameFrame	; 491D6
 call DoGameFrame	; 491DB
 call SprSort	; 491E0
 xor eax, eax	; 491E5
-mov dword [dword_D8C6C], eax	; 491E7
+mov dword [frameaccum], eax	; 491E7
 mov dword [inputframes], eax	; 491EC
 mov eax, dword [puckc]	; 491F1
 mov byte [eax], 0FFh	; 491F6

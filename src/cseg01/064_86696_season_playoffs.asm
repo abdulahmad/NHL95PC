@@ -12,7 +12,7 @@ extern byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, b
 extern byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, byte_C6DB2, str_dot, curleague
 extern musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A
 extern code_1A8AA, code_1A922, postate
-extern lgstate, dword_C53F7, gamemode, gameopts, ctl1team
+extern lgstate, gameresult, gamemode, gameopts, ctl1team
 extern ctl2team, ctl1side, ctl2side, teamdivflags, teamconf, confteams, dword_C65AC, dword_C65C0
 extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C6D26, dword_C6DBA, dword_C71CC, dword_C71D0
 extern dword_C71D4, dword_C71D8, dword_C71DC, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
@@ -22,7 +22,7 @@ extern dword_D2C6B, dword_D8B68, dword_D8B74, schedgameidx, dword_DC238, playoff
 extern dword_DD770, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, off_C5439, teamcitynames
 extern off_C6D22, leaguedbnames, off_CEF43, off_CEF63
 extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, msg_POHumanOut, msg_POTeamOut, msg_POGenFinal
-extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers, sub_11D09
+extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers, PlayGame
 extern sub_142E7, MakePath, sub_14442, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
 extern sub_1466B, sub_14825, sub_148A5, sub_149BF, sub_174C2, sub_17573, sub_175E2, sub_17636
 extern sub_17711, sub_1777E, sub_1BEFD, sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171
@@ -3840,7 +3840,7 @@ mov dword [dword_C65C8], sub_202E5	; 89416
 mov dword [dword_C65CC], sub_203FA	; 89420
 mov dword [dword_C65D0], sub_2051A	; 8942A
 mov eax, ebp	; 89434
-call sub_11D09	; 89436
+call PlayGame	; 89436
 mov dword [dword_C65C0], unk_208EF	; 8943B
 mov dword [dword_C65C4], unk_20A46	; 89445
 mov dword [dword_C65C8], unk_20BBD	; 8944F
@@ -3853,7 +3853,7 @@ lea eax, [byte esp+020h]	; 8947D
 call LoadScheduleDB	; 89481
 add dword [byte esp+020h], byte 2	; 89486
 .5:
-cmp dword [dword_C53F7], byte 1	; 8948B
+cmp dword [gameresult], byte 1	; 8948B
 jne short .7	; 89492
 xor ecx, ecx	; 89494
 mov ebx, str_GameSav	; 89496
@@ -4183,7 +4183,7 @@ mov dword [dword_C65C8], sub_202E5	; 8990A
 mov dword [dword_C65CC], sub_203FA	; 89914
 mov dword [dword_C65D0], sub_2051A	; 8991E
 mov eax, ebp	; 89928
-call sub_11D09	; 8992A
+call PlayGame	; 8992A
 mov dword [dword_C65C0], unk_208EF	; 8992F
 mov dword [dword_C65C4], unk_20A46	; 89939
 mov dword [dword_C65C8], unk_20BBD	; 89943
@@ -4208,7 +4208,7 @@ lea eax, [byte esp+020h]	; 89992
 call LoadScheduleDB	; 89996
 add dword [byte esp+020h], byte 2	; 8999B
 .32:
-cmp dword [dword_C53F7], byte 1	; 899A0
+cmp dword [gameresult], byte 1	; 899A0
 jne short .33	; 899A7
 test byte [byte esp+02Ch], 4	; 899A9
 jne short .33	; 899AE

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_644A8 progbits alloc exec nowrite align=1
-extern PBnum, __CHK, asc_C1DB6, asc_C1DBC, asc_C1DC5, asc_C1DCE, asc_C1DD6, asc_C8136
+extern PBnum, __CHK, asc_C1DB6, asc_C1DBC, asc_C1DC5, asc_C1DCE, asc_C1DD6, str_PPV
 extern str_extBIN, sflags, gmode2, byte_CC049, byte_CCE00, byte_CD418, byte_CD421, byte_CD473
 extern hmroster, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byte_DFFA6, byte_E0250
 extern byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E03C1, byte_E9DB4, byte_E9E18
@@ -2759,7 +2759,7 @@ mov ax, word [joysampling]	; 664C3
 mov word [joysampling_save], ax	; 664C9
 xor ebx, ebx	; 664CF
 mov dword [joysampling], ebx	; 664D1
-mov ecx, asc_C8136	; 664D7
+mov ecx, str_PPV	; 664D7
 mov ebx, dword [dword esi+off_CBED0]	; 664DC
 mov eax, dword [dword esi+dword_CC080]	; 664E2
 cmp byte [dword eax+byte_ED7CC], 1	; 664E8

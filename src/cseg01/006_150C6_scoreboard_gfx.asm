@@ -2,16 +2,16 @@
 bits 32
 %include "hockey.inc"
 section s_150C6 progbits alloc exec nowrite align=1
-extern StanleyCupTimer, __CHK, asc_C0784, asc_C078C, asc_C0791, asc_C079C, asc_C8136
+extern StanleyCupTimer, __CHK, asc_C0784, asc_C078C, asc_C0791, asc_C079C, str_PPV
 extern musicon, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, byte_EA0F4
 extern byte_ED823, byte_ED939, dword_C5130
-extern dword_C53F7, gamemode, gameopts, teamdivflags, dword_C5704
+extern gameresult, gamemode, gameopts, teamdivflags, dword_C5704
 extern dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
 extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
 extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, hmscore, awscore, hmtmstruct
 extern jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C8, off_C57CC, awtmstruct
-extern off_D3078, rand_, randomd0, SetupControllers, SetScreenSize, sub_1167B, sub_13BB4, sub_13FA7
+extern off_D3078, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, sub_13BB4, sub_13FA7
 extern MakePath, sub_14A20, sub_14F31, sub_1BEFD, LoadModeState, sub_3371C, sub_3377C, SeriesLength
 extern sub_479E9, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
 extern sub_7DC8B, LoadScheduleDB, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
@@ -74,7 +74,7 @@ mov dword [dword_C5854], ebx	; 1514E
 mov dword [dword_C5860], ebx	; 15154
 mov dword [dword_C585C], ebx	; 1515A
 call SelectScreenBM	; 15160
-mov ecx, asc_C8136	; 15165
+mov ecx, str_PPV	; 15165
 mov ebx, asc_C0784	; 1516A
 cmp byte [byte_ED939], 1	; 1516F
 jne short loc_15180	; 15176
@@ -157,7 +157,7 @@ mov esi, dword [byte esp+014h]	; 15264
 push esi	; 15268
 call jctime	; 15269
 add esp, byte 4	; 1526E
-mov ecx, asc_C8136	; 15271
+mov ecx, str_PPV	; 15271
 mov ebx, asc_C0791	; 15276
 cmp byte [byte_ED823], 1	; 1527B
 jne short loc_1528C	; 15282
@@ -1261,7 +1261,7 @@ call sub_13FA7	; 15F51
 xor eax, eax	; 15F56
 mov dword [dword_CC0EC], eax	; 15F58
 mov dword [dword_CC0F0], eax	; 15F5D
-mov dword [dword_C53F7], eax	; 15F62
+mov dword [gameresult], eax	; 15F62
 mov edx, 0C8h	; 15F67
 mov eax, 140h	; 15F6C
 call SetScreenSize	; 15F71
@@ -1279,7 +1279,7 @@ mov ecx, ebp	; 15FA2
 mov ebx, ebp	; 15FA4
 call sub_150C6	; 15FA6
 call joyq_flush	; 15FAB
-call sub_1167B	; 15FB0
+call GameLoop	; 15FB0
 mov edx, 1E0h	; 15FB5
 mov eax, 280h	; 15FBA
 call SetScreenSize	; 15FBF
@@ -1294,7 +1294,7 @@ movsb	; 15FE3
 mov eax, exhstate	; 15FE4
 call LoadModeState	; 15FE9
 call sub_6B410	; 15FEE
-cmp dword [dword_C53F7], byte 2	; 15FF3
+cmp dword [gameresult], byte 2	; 15FF3
 sete al	; 15FFA
 and eax, 0FFh	; 15FFD
 add esp, byte 78h	; 16002

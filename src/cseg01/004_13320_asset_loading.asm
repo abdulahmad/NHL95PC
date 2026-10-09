@@ -5,17 +5,17 @@ section s_13320 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, asc_C0406, asc_C040B, asc_C0412, asc_C041A, asc_C041F, asc_C0424
 extern asc_C0429, asc_C0430, asc_C0437, asc_C043E, asc_C0446, asc_C044F, asc_C0458, asc_C0460
 extern asc_C0465, asc_C046E, asc_C0477, asc_C0480, asc_C048A, asc_C0494, asc_C049C, asc_C04A1
-extern asc_C04A9, asc_C04B0, asc_C8136, str_VFN, assinsert, pad1dev, pad2dev, byte_CBEA8
+extern asc_C04A9, asc_C04B0, str_PPV, str_VFN, assinsert, pad1dev, pad2dev, byte_CBEA8
 extern musicon, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8, byte_E0308
 extern byte_E0344, byte_E9AC8, byte_E9AD3, byte_ED7CC, byte_ED7E4, byte_ED7E6, byte_ED85C, byte_ED86C
 extern byte_ED8C6, byte_ED8C8, byte_ED8D7, byte_ED976, byte_ED9AA, byte_ED9EC, byte_ED9F0, joysampling
 extern inputframes, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, songdata, cont2team
 extern HomeTeam, dword_CBECA, dword_CC0AC, dword_CC0E0, dword_CC0EC, dword_CC0F0, dword_CC0F8, penshotplayer
 extern penshotmode, penshotstart, dword_CC124, penshotlive, crowdsmooth, musichandle, dword_D2C6B, musicslot
-extern dword_D8B68, dword_D8C18, dword_D8C4C, dword_D8C68, dword_D8C6C, rinkendart, dword_D8C78, dword_D8C80
+extern dword_D8B68, dword_D8C18, dword_D8C4C, dword_D8C68, frameaccum, rinkendart, dword_D8C78, dword_D8C80
 extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E009C, dword_E00A0
-extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, loc_12842, memcpy_, nullsub_2
-extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, sub_1205D, sub_12849
+extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, FindLeagueLeaders_x, memcpy_, nullsub_2
+extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, FindLeagueLeaders, sub_12849
 extern sub_13188, MakePath, FileOpenRead, FileClose, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
 extern StartPreGame, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
 extern sub_64614, SetupTeamLines, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
@@ -275,7 +275,7 @@ loc_13634:
 push esi	; 13634
 call jctime	; 13635
 add esp, byte 4	; 1363A
-call sub_1205D	; 1363D
+call FindLeagueLeaders	; 1363D
 mov esi, eax	; 13642
 cmp byte [musicon], 0	; 13644
 je short loc_136B6	; 1364B
@@ -433,7 +433,7 @@ push eax	; 13856
 call sub_8EA00	; 13857
 add esp, byte 4	; 1385C
 add esp, byte 50h	; 1385F
-jmp near loc_12842	; 13862
+jmp near FindLeagueLeaders_x	; 13862
 sub_13867:
 push dword 34h	; 13867
 call __CHK	; 1386C
@@ -493,7 +493,7 @@ sub esp, byte 20h	; 138E0
 mov edx, dword [dword_CC0E0]	; 138E3
 test edx, edx	; 138E9
 jne short loc_13957	; 138EB
-mov ecx, asc_C8136	; 138ED
+mov ecx, str_PPV	; 138ED
 mov ebx, asc_C0465	; 138F2
 cmp byte [byte_ED85C], 1	; 138F7
 jne short loc_13906	; 138FE
@@ -585,7 +585,7 @@ lea eax, [byte esp+01Ch]	; 139CC
 push eax	; 139D0
 call sprintf_	; 139D1
 add esp, byte 10h	; 139D6
-mov ecx, asc_C8136	; 139D9
+mov ecx, str_PPV	; 139D9
 lea ebx, [byte esp+010h]	; 139DE
 cmp byte [dword esi+byte_ED7CC], 1	; 139E2
 jne short loc_139F3	; 139E9
@@ -618,7 +618,7 @@ push ebx	; 13A39
 push ecx	; 13A3A
 push edx	; 13A3B
 sub esp, byte 10h	; 13A3C
-mov ecx, asc_C8136	; 13A3F
+mov ecx, str_PPV	; 13A3F
 mov ebx, asc_C0494	; 13A44
 cmp byte [byte_ED976], 1	; 13A49
 jne short loc_13A5A	; 13A50
@@ -672,7 +672,7 @@ push eax	; 13ADA
 call sub_8E8A0	; 13ADB
 add esp, byte 8	; 13AE0
 mov dword [dword_ED700], eax	; 13AE3
-mov ecx, asc_C8136	; 13AE8
+mov ecx, str_PPV	; 13AE8
 mov ebx, asc_C04A9	; 13AED
 cmp byte [byte_ED8D7], 1	; 13AF2
 jne short loc_13B03	; 13AF9
@@ -758,7 +758,7 @@ push eax	; 13BF8
 call sub_8E8A0	; 13BF9
 add esp, byte 8	; 13BFE
 mov dword [dword_ED700], eax	; 13C01
-mov ecx, asc_C8136	; 13C06
+mov ecx, str_PPV	; 13C06
 mov ebx, asc_C04A9	; 13C0B
 cmp byte [byte_ED8D7], 1	; 13C10
 jne short loc_13C21	; 13C17
@@ -1203,7 +1203,7 @@ mov word [exitgame], cx	; 142B4
 xor esi, esi	; 142BB
 mov word [gameover], si	; 142BD
 mov dword [dword_D8C78], edi	; 142C4
-mov dword [dword_D8C6C], edi	; 142CA
+mov dword [frameaccum], edi	; 142CA
 mov dword [joysampling], edi	; 142D0
 mov word [joysampling_save], cx	; 142D6
 call joyq_flush	; 142DD

@@ -5,7 +5,7 @@ section s_12849 progbits alloc exec nowrite align=1
 extern __CHK, asc_C039F, asc_C03BC, asc_C03C0, asc_C03C8, asc_C03D1, asc_C03D5, asc_C03E5
 extern asc_C03EB, asc_C03F6, asc_C03FA, asc_C03FE, asc_C0402, asc_C0406, asc_C040B, asc_C5286
 extern asc_C528E, byte_C5244, byte_D42C3, byte_D9558, byte_ED7CC, dword_C513C, dword_C5168, dword_C51F0
-extern dword_D2C6B, fputchar, jctime, loc_12842, off_C5194, off_C51C0, off_C51EC, off_C524F
+extern dword_D2C6B, fputchar, jctime, FindLeagueLeaders_x, off_C5194, off_C51C0, off_C51EC, off_C524F
 extern off_C527B, sprintf_, strcat_, strcpy_, strnicmp_, MakePath, sub_174C2, sub_175E2
 extern sub_176AE, sub_176DB, sub_29C75, sub_33E6A, sub_6B3D7, sub_76429, sub_8CCA8, sub_8E83C
 extern sub_8FFB0, sub_9035C, sub_9061C, sub_B30B4, sub_B395C, unk_C03A3, unk_C03C4, unk_C03C6
@@ -759,7 +759,7 @@ jne near loc_1286C	; 13178
 loc_1317E:
 mov eax, edi	; 1317E
 add esp, byte 40h	; 13180
-jmp near loc_12842	; 13183
+jmp near FindLeagueLeaders_x	; 13183
 sub_13188:
 push dword 4Ch	; 13188
 call __CHK	; 1318D
@@ -895,4 +895,4 @@ mov dword [byte esp+02Ch], ecx	; 1330B
 cmp ecx, byte 0Bh	; 1330F
 jl near loc_131A1	; 13312
 add esp, byte 30h	; 13318
-jmp near loc_12842	; 1331B
+jmp near FindLeagueLeaders_x	; 1331B

@@ -5,7 +5,7 @@ section s_47C31 progbits alloc exec nowrite align=1
 extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, byte_DE26C
 extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, inputframes, escrequest
 extern dword_C7444, dword_C7448, dword_C9074, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
-extern dword_CC0F0, dword_CC9AD, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
+extern dword_CC0F0, dword_CC9AD, dword_D8C40, frameaccum, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
 extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, randomd0
 extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, sub_14CF1, sub_33DD3
@@ -299,7 +299,7 @@ call DoGameFrame	; 48028
 call DoGameFrame	; 4802D
 call SprSort	; 48032
 xor edi, edi	; 48037
-mov dword [dword_D8C6C], edi	; 48039
+mov dword [frameaccum], edi	; 48039
 mov dword [inputframes], edi	; 4803F
 mov eax, dword [puckc]	; 48045
 mov byte [eax], 0FFh	; 4804A
@@ -524,9 +524,9 @@ mov eax, edx	; 4838D
 shl eax, 2	; 4838F
 sub eax, edx	; 48392
 add eax, eax	; 48394
-mov ebp, dword [dword_D8C6C]	; 48396
+mov ebp, dword [frameaccum]	; 48396
 add ebp, eax	; 4839C
-mov dword [dword_D8C6C], ebp	; 4839E
+mov dword [frameaccum], ebp	; 4839E
 mov ebx, 0Ah	; 483A4
 mov eax, ebp	; 483A9
 mov edx, ebp	; 483AB
@@ -537,7 +537,7 @@ mov eax, ebp	; 483B4
 mov edx, ebp	; 483B6
 sar edx, 1Fh	; 483B8
 idiv ebx	; 483BB
-mov dword [dword_D8C6C], edx	; 483BD
+mov dword [frameaccum], edx	; 483BD
 movsx edx, si	; 483C3
 mov eax, edx	; 483C6
 call RunGameFrames	; 483C8

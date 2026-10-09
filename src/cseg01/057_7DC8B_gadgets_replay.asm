@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_7DC8B progbits alloc exec nowrite align=1
 extern __CHK, asc_C33D4, asc_C33DC, asc_C33E4, asc_C33EC, asc_C3411, asc_C3419, asc_C3421
-extern asc_C3426, asc_C8136, musicon, byte_ED7CC, byte_ED7EB, byte_ED862, byte_ED8CC, byte_ED92D
+extern asc_C3426, str_PPV, musicon, byte_ED7CC, byte_ED7EB, byte_ED862, byte_ED8CC, byte_ED92D
 extern byte_ED932, byte_ED9EF, gamemode, ctl1team, ctl2team, dword_C541F, dword_C66D0, dword_C66D4
 extern dword_C7444, dword_C7448, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, dword_D1C8B
 extern dword_D1CE6, dword_D1CEE, dword_D1DC8, dword_D1DCC, dword_D1DD0, dword_D1DD4, dword_D2C6B, dword_D8B74
@@ -515,7 +515,7 @@ call sub_B4BC4	; 7E1A1
 add esp, byte 10h	; 7E1A6
 cmp dword [dword_ED6F8], byte 0	; 7E1A9
 je short loc_7E1D1	; 7E1B0
-mov ecx, asc_C8136	; 7E1B2
+mov ecx, str_PPV	; 7E1B2
 mov ebx, asc_C3411	; 7E1B7
 cmp byte [byte_ED9EF], 1	; 7E1BC
 jne short loc_7E1CD	; 7E1C3
@@ -525,7 +525,7 @@ loc_7E1CD:
 xor edx, edx	; 7E1CD
 jmp short loc_7E1EE	; 7E1CF
 loc_7E1D1:
-mov ecx, asc_C8136	; 7E1D1
+mov ecx, str_PPV	; 7E1D1
 mov ebx, asc_C3419	; 7E1D6
 cmp byte [byte_ED862], 1	; 7E1DB
 jne short loc_7E1EC	; 7E1E2
@@ -1641,7 +1641,7 @@ mov esi, dword [dword_ED6D8]	; 7F1A8
 push esi	; 7F1AE
 call jctime	; 7F1AF
 add esp, byte 4	; 7F1B4
-mov ecx, asc_C8136	; 7F1B7
+mov ecx, str_PPV	; 7F1B7
 mov ebx, asc_C3411	; 7F1BC
 cmp byte [byte_ED9EF], 1	; 7F1C1
 jne short loc_7F1D2	; 7F1C8
@@ -1965,7 +1965,7 @@ mov esi, dword [dword_ED6D8]	; 7F5FB
 push esi	; 7F601
 call jctime	; 7F602
 add esp, byte 4	; 7F607
-mov ecx, asc_C8136	; 7F60A
+mov ecx, str_PPV	; 7F60A
 mov ebx, asc_C3411	; 7F60F
 cmp byte [byte_ED9EF], 1	; 7F614
 jne short loc_7F625	; 7F61B
