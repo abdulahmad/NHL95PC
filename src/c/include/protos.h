@@ -744,5 +744,6 @@ int WriteLeagueInfo(char *dir, void *teams, char *pw, int b, short a, short d, s
 int SeriesWinner(unsigned char *s, unsigned games);  /* 87760 */
 void SimulateGame(char *dir, char *ext, int a, unsigned char *game, int rwfh, int rdfh, int mode);  /* 452C5 */
 void POSimSeriesTo(unsigned char *lg, int n, int upto);  /* 88625 */
+int MergeUpdateDbs(void);  /* 3B8B0 */
 
 #endif

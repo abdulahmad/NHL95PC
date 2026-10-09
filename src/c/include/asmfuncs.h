@@ -440,7 +440,6 @@ extern void MergeScheduleDb(); /* 3AE1E */
 extern void LocateTeamDbCopy(); /* 3AF70 */
 extern void UpdateTeamDbs(); /* 3B039 */
 extern void UpdateTeamDbs_ret(); /* 3B254 */
-extern void MergeUpdateDbs(); /* 3B8B0 */
 extern void RebuildLeagueDbs(); /* 3B9CA */
 extern void ExportTeamToFloppy(); /* 3BB87 */
 extern void CopyLeagueFiles(); /* 3C310 */

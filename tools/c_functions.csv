@@ -159,6 +159,7 @@ TeamSelCancel,38B3A,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamS
 TeamSelDone,38B25,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelDone.c,matched,
 WriteTeamRec,3A2B8,54,029_380E9_league_setup,src/c/029_380E9_league_setup/WriteTeamRec.c,matched,
 ImportDbs,3CF5B,429,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ImportDbs.c,matched,
+MergeUpdateDbs,3B8B0,282,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/MergeUpdateDbs.c,matched,
 ReadTeamNames,3DAB9,136,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ReadTeamNames.c,matched,
 WaitLeagueFloppy,3D84F,142,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/WaitLeagueFloppy.c,nonmatching,"draft: file/name params in edi/esi swapped, local order and MessageBox result kept in eax not edx"
 DrawTradeRow,3E7B3,130,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/DrawTradeRow.c,nonmatching,"draft: row offset in ecx vs eax, add order; 1 byte longer"
