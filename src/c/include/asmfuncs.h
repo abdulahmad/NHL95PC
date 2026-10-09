@@ -1035,7 +1035,6 @@ extern void MoveToFreeAgents(); /* 70E8D */
 extern void LoadTempDatabases(); /* 710D8 */
 extern void SwapSelectedPlayers(); /* 71333 */
 extern void SelectMatchingPlayers(); /* 71690 */
-extern void SetRosterTeamMenus(); /* 7183D */
 extern void FindPlayer(); /* 71961 */
 extern void unk13_722FE(); /* 722FE */
 extern void LoadDbDialogShapes(); /* 7230B */
@@ -1173,7 +1172,6 @@ extern void ControlsDlgLeague(); /* 7CA70 */
 extern void MenuP1ControlsInGame(); /* 7CAF7 */
 extern void ControlsDlgInGame(); /* 7CB03 */
 extern void MenuP2ControlsInGame(); /* 7CB9F */
-extern void CtlSwapScoreFix(); /* 7CBB3 */
 extern void ReassignCtlPlayer(); /* 7CCE5 */
 extern void ClearCtlBlink(); /* 7CEA1 */
 extern void ControlsDlgInGame_side(); /* 7CFB9 */

@@ -281,6 +281,7 @@ DrawDBErrorsScreen,6EC95,164,052_6D2F8_create_player,src/c/052_6D2F8_create_play
 EditRostersReturn,6D5BB,21,052_6D2F8_create_player,src/c/052_6D2F8_create_player/EditRostersReturn.c,matched,
 RatingToFloat,6F6AD,39,052_6D2F8_create_player,src/c/052_6D2F8_create_player/RatingToFloat.c,matched,
 RemovePlayerFromTeam,71043,149,052_6D2F8_create_player,src/c/052_6D2F8_create_player/RemovePlayerFromTeam.c,matched,
+SetRosterTeamMenus,7183D,292,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SetRosterTeamMenus.c,nonmatching,
 ShowDBError,6ED39,86,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShowDBError.c,matched,
 DbDialogHitTest,72A5C,106,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/DbDialogHitTest.c,nonmatching,C matches the code; the asm block also holds the DrawDbList jump table after the ret (size 82 vs 106); mark with an end label or move the table
 GameRosterCmp,76A93,98,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/GameRosterCmp.c,matched,
@@ -290,6 +291,7 @@ SetPalette768,76614,74,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor
 MakeJerseyShape,7A099,161,055_78346_team_select,src/c/055_78346_team_select/MakeJerseyShape.c,matched,
 MenuReturnToLineEditor,79DD1,16,055_78346_team_select,src/c/055_78346_team_select/MenuReturnToLineEditor.c,matched,
 CtlDlgHitTest,7D61F,82,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlDlgHitTest.c,matched,
+CtlSwapScoreFix,7CBB3,215,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlSwapScoreFix.c,nonmatching,
 CtlSwapTeamFlag,7CC8A,91,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlSwapTeamFlag.c,matched,
 DrawCtlBoxes,7D671,64,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/DrawCtlBoxes.c,matched,
 DrawModeSetChecks,7B7BE,136,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/DrawModeSetChecks.c,matched,

@@ -524,5 +524,7 @@ int MenuNextLeagueGame(int *fh);  /* 33559 */
 void SetupStatsSourceMenu(int src);
 void SetScreenTitle(int title);
 void PlayLeagueGame(int *fh);
+void SetRosterTeamMenus(int side, int team);  /* 7183D */ 
+void CtlSwapScoreFix(int side);  /* 7CBB3 */              
 
 #endif
