@@ -99,9 +99,9 @@ StrPrefixDiffers,1D6BE,42,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_lab
 CmpGAA,1FC8F,367,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/CmpGAA.c,matched,
 CmpPoints,1FB7F,272,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/CmpPoints.c,nonmatching,
 InitMenuRemap,1FAA7,117,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/InitMenuRemap.c,nonmatching,draft: asm calls __STOSB for the 15h-byte clear (inline memset helper); default-flag memset calls memset_
-DrawPhotoWithPal,21C04,218,016_20016_easn_stats,src/c/016_20016_easn_stats/DrawPhotoWithPal.c,nonmatching,
+DrawPhotoWithPal,21C04,218,016_20016_easn_stats,src/c/016_20016_easn_stats/DrawPhotoWithPal.c,nonmatching,"register allocation only: the second statspalvalid read lands in eax/ecx/edx, the EXE uses ebx"
 FreeCalendarIfLowMem,212C6,56,016_20016_easn_stats,src/c/016_20016_easn_stats/FreeCalendarIfLowMem.c,matched,
-GameStandingsScreen,203FA,269,016_20016_easn_stats,src/c/016_20016_easn_stats/GameStandingsScreen.c,nonmatching,
+GameStandingsScreen,203FA,269,016_20016_easn_stats,src/c/016_20016_easn_stats/GameStandingsScreen.c,nonmatching,register allocation only: the saved dword_C65AC (MakePath extension 0) sits in edx instead of ecx; structure matches with one MakePath per branch
 CmpAssists,25237,238,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpAssists.c,matched,
 CmpGoalieWins,2586A,342,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpGoalieWins.c,matched,
 CmpGoals,25144,243,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpGoals.c,matched,
@@ -184,6 +184,7 @@ LoadTradeTeamPals,3E835,410,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jerse
 TradeCancel,3EF27,21,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeCancel.c,matched,
 TradeDone,3EDAA,381,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeDone.c,nonmatching,"register allocation only: sel / bad / the byte live in edx / ebx / cl in asm, ebx / ecx / dl in C"
 TradeRosterCmp,3FEF0,98,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeRosterCmp.c,matched,
+BuildLeagueList,411C8,367,033_40183_trades,src/c/033_40183_trades/BuildLeagueList.c,nonmatching,
 FmtFromLeague,41171,87,033_40183_trades,src/c/033_40183_trades/FmtFromLeague.c,matched,
 GetLeagueId,41344,137,033_40183_trades,src/c/033_40183_trades/GetLeagueId.c,matched,
 LeagueCheckStub,41337,13,033_40183_trades,src/c/033_40183_trades/LeagueCheckStub.c,matched,
@@ -213,23 +214,32 @@ SetLCmode,4D9FC,59,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_l
 StarEligible,487D9,98,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StarEligible.c,nonmatching,registers: asm copies pl to ecx and builds side*256 in edx / pl in ebx for the tmpdst read; C uses ebx/edx swapped (2 bytes)
 StartFaceoffLineChange,4DA37,68,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StartFaceoffLineChange.c,matched,
 StartShotPath,4F9EF,249,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StartShotPath.c,matched,
+SteerToTarget,492F9,359,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/SteerToTarget.c,nonmatching,
 StopIfFree,4A80E,36,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StopIfFree.c,matched,
 a2offsides,4DCDD,116,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/a2offsides.c,matched,
 a2touchpuck,4DE14,400,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/a2touchpuck.c,nonmatching,only diff: the original also saves edi (push/pop) though no edi use survives; body otherwise identical
+ass_pc_slot20,49460,344,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/ass_pc_slot20.c,nonmatching,
 assbenchside,49BC2,283,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assbenchside.c,nonmatching,
+assboxenter,499D8,490,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assboxenter.c,matched,
 asscenterd,4A53A,290,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/asscenterd.c,nonmatching,
+assdefo,49CDD,349,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assdefo.c,matched,
 assdopen,4AFFB,50,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assdopen.c,matched,
-asseben,4AAC2,197,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/asseben.c,nonmatching,"1 register: slot+2 goes through ebx in the asm (mov ebx,edx / add ebx,2), C adds in edx; rest matches"
+asseben,4AAC2,197,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/asseben.c,matched,"1 register: slot+2 goes through ebx in the asm (mov ebx,edx / add ebx,2), C adds in edx; rest matches"
 assepen,4B02D,255,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assepen.c,nonmatching,
 assexit,4D509,31,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assexit.c,matched,
+assfaceoffp1,4D528,396,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assfaceoffp1.c,matched,
+assgoalietopuck,4B5C2,306,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assgoalietopuck.c,nonmatching,
 assintrostand,4842A,176,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assintrostand.c,matched,
+asspuckc,4C6F3,458,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/asspuckc.c,matched,
 assrefatdot,4DFF7,198,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assrefatdot.c,matched,
+assscore,4A90F,435,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assscore.c,nonmatching,
 assstanley,4A832,221,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assstanley.c,matched,
 puckflip,4DFA4,83,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/puckflip.c,matched,
 pucknorm,4D8C7,54,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/pucknorm.c,matched,
 pucknothing puckunflip,4D8FD,59,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/pucknothing.c,matched,
 puckunflip,4D907,49,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/puckunflip.c,matched,
 rtss,4F990,11,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/rtss.c,matched,
+sub_4C8BD,4C8BD,320,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/sub_4C8BD.c,matched,
 Acheck,4FFAE,64,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/Acheck.c,matched,
 CenterMouse,50ADE,32,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CenterMouse.c,matched,
 Readjoy1,50A05,127,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/Readjoy1.c,nonmatching,registers: asm keeps the held buttons in eax and does regd1 = held & changed in ecx (saves ecx); C reuses eax/ebx; Readjoy2 is the clone (shared tail)
@@ -272,6 +282,7 @@ checkgoalp,53CE5,389,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_
 checkint,53E6A,290,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkint.c,matched,
 checkplcoll,58CE2,229,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkplcoll.c,nonmatching,stack slots: asm spills x (word) at [esp] and y at [esp+4]; C swaps the two slots; rest matches
 deflect,57A3E,90,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/deflect.c,matched,
+holdcheck,56B79,397,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/holdcheck.c,matched,
 newcheck,58084,113,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/newcheck.c,matched,
 passmode,5514E,97,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/passmode.c,matched,
 puckIChk,56E52,125,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/puckIChk.c,nonmatching,"draft: asm keeps |x| work in ebx (saves ebx, frame 8); ours saves edx"
@@ -374,6 +385,7 @@ SetRinkObject,614C2,180,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_p
 SetupPenaltyShot,63F72,400,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetupPenaltyShot.c,nonmatching,
 StartPenaltyShot,64398,161,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/StartPenaltyShot.c,matched,
 UpdatePowerPlayFlags,63C73,201,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/UpdatePowerPlayFlags.c,matched,
+checkfornewpen,637B5,373,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/checkfornewpen.c,nonmatching,
 chkatop,639A4,85,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/chkatop.c,nonmatching,original reads the puck y into dx (push edx) and t into ax; this draft uses ax for y. 10-min cap
 releasepl,6392A,122,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/releasepl.c,matched,
 updatePPTeamTime,63B57,46,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/updatePPTeamTime.c,matched,
@@ -442,7 +454,7 @@ GameDressPlayer,79F41,214,055_78346_team_select,src/c/055_78346_team_select/Game
 LoadJerseyColours,78A87,352,055_78346_team_select,src/c/055_78346_team_select/LoadJerseyColours.c,nonmatching,
 MakeJerseyShape,7A099,161,055_78346_team_select,src/c/055_78346_team_select/MakeJerseyShape.c,matched,
 MenuReturnToLineEditor,79DD1,16,055_78346_team_select,src/c/055_78346_team_select/MenuReturnToLineEditor.c,matched,
-PruneGameLines,79090,248,055_78346_team_select,src/c/055_78346_team_select/PruneGameLines.c,nonmatching,
+PruneGameLines,79090,248,055_78346_team_select,src/c/055_78346_team_select/PruneGameLines.c,nonmatching,C folds the side * 444h * 4 step into the hmroster address ([edi+edx*4]); the EXE adds it first and reads the status into ch
 CtlDlgHitTest,7D61F,82,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlDlgHitTest.c,matched,
 CtlSwapScoreFix,7CBB3,215,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlSwapScoreFix.c,nonmatching,
 CtlSwapTeamFlag,7CC8A,91,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlSwapTeamFlag.c,matched,
@@ -474,7 +486,7 @@ DrawSoundCardDlg,8261C,116,059_8034B_settings_lockerroom,src/c/059_8034B_setting
 DrawSoundCardOpts,82690,291,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/DrawSoundCardOpts.c,matched,
 LoadSettingsShapes,8034B,434,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LoadSettingsShapes.c,matched,
 LockerHitTest,81520,79,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerHitTest.c,matched,
-MenuSoundSettings,82579,163,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/MenuSoundSettings.c,nonmatching,
+MenuSoundSettings,82579,163,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/MenuSoundSettings.c,nonmatching,the EXE does not save edx (only ebx/ecx/esi/edi/ebp) though cdecl calls clobber it; C pushes edx too - some callee pragma differs
 RedrawSoundCardOpts,82805,281,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/RedrawSoundCardOpts.c,matched,
 SetModeMenuLabels,805C4,190,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/SetModeMenuLabels.c,matched,
 SoundCardHitTest,827B3,82,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/SoundCardHitTest.c,matched,

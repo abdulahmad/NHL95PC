@@ -4692,6 +4692,10 @@ pop ecx	; 56B76
 pop ebx	; 56B77
 ret	; 56B78
 %endif ; C
+; C: src/c/040_53294_engine_physics_ai/holdcheck.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/holdcheck.inc"
+%else
 holdcheck:
 push dword 10h	; 56B79
 call __CHK	; 56B7E
@@ -4812,6 +4816,7 @@ pop esi	; 56D02
 pop ecx	; 56D03
 pop ebx	; 56D04
 ret	; 56D05
+%endif ; C
 ; C: src/c/040_53294_engine_physics_ai/puckbody.c
 %ifdef CBUILD
 %include "c/040_53294_engine_physics_ai/puckbody.inc"

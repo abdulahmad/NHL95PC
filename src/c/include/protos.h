@@ -795,5 +795,24 @@ void PrintMenuText(int x, int y, char *s);  /* 6B88E */
 int ReadTeamRec(int fd, void *buf, int team);  /* 147C9 */
 void SortStandings(int *teams, int *pts, int *wins, int *gf, int *ga, int n);  /* 42DAA */
 int GetPlayoffSeeds(int *seeds, int b, int fd);  /* 42BBA */
+void holdcheck(Player *a, Player *b);  /* 56B79 */
+void Stop4Pen(short i);  /* 63543 */
+void checkfornewpen(void);  /* 637B5 */
+void skatetopuck(Player *p);  /* 5EB17 */
+void assgoalietopuck(Player *p);  /* 4B5C2 */
+void SteerToTarget(Player *p);  /* 492F9 */
+void sub_4C8BD(Player *p);  /* 4C8BD */
+void ass_pc_slot20(Player *p);  /* 49460 */
+void assfaceoffp1(Player *p);  /* 4D528 */
+void assdefo(Player *p);  /* 49CDD */
+int BuildLeagueList(char ***list, char **names, int flags);  /* 411C8 */
+void checkob(Player *p);  /* 53F8C */
+short chk4lc(Player *p);  /* 54AF9 */
+short chk4shot(Player *p);  /* 55804 */
+short chk4pass(Player *p);  /* 55493 */
+void asspuckc(Player *p);  /* 4C6F3 */
+void SkateToSpot(Player *p, int a);  /* 4E292 */
+void assboxenter(Player *p);  /* 499D8 */
+void assscore(Player *p);  /* 4A90F */
 
 #endif

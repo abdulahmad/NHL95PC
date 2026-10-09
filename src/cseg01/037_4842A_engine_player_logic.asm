@@ -1808,6 +1808,10 @@ call assinsert	; 499CB
 .16:
 add esp, byte 4	; 499D0
 jmp near PreGameIntro_popebp	; 499D3
+; C: src/c/037_4842A_engine_player_logic/assboxenter.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assboxenter.inc"
+%else
 assboxenter:
 push dword 14h	; 499D8
 call __CHK	; 499DD
@@ -1949,6 +1953,7 @@ pop edx	; 49BBE
 pop ecx	; 49BBF
 pop ebx	; 49BC0
 ret	; 49BC1
+%endif ; C
 assbenchside:
 push dword 10h	; 49BC2
 call __CHK	; 49BC7
@@ -2035,6 +2040,10 @@ pop edi	; 49CD9
 pop edx	; 49CDA
 pop ebx	; 49CDB
 ret	; 49CDC
+; C: src/c/037_4842A_engine_player_logic/assdefo.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assdefo.inc"
+%else
 assdefo:
 push dword 14h	; 49CDD
 call __CHK	; 49CE2
@@ -2154,6 +2163,7 @@ pop edx	; 49E36
 pop ecx	; 49E37
 pop ebx	; 49E38
 ret	; 49E39
+%endif ; C
 assdefd:
 push dword 18h	; 49E3A
 call __CHK	; 49E3F
@@ -3104,6 +3114,10 @@ pop edx	; 4AABE
 pop ecx	; 4AABF
 pop ebx	; 4AAC0
 ret	; 4AAC1
+; C: src/c/037_4842A_engine_player_logic/asseben.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/asseben.inc"
+%else
 asseben:
 push dword 10h	; 4AAC2
 call __CHK	; 4AAC7
@@ -3165,6 +3179,7 @@ pop edx	; 4AB83
 pop ecx	; 4AB84
 pop ebx	; 4AB85
 ret	; 4AB86
+%endif ; C
 assleaveice:
 push dword 14h	; 4AB87
 call __CHK	; 4AB8C
@@ -5410,6 +5425,10 @@ jl short CountPuckThreat.3	; 4C6EC
 jmp near ass_popx	; 4C6EE
 ; asspuckc: asstab 10h (93G logic93_3 asspuckc, player has the puck): checkob, chk4lc, chk4shot, chk4pass, then
 ;   skateto with asspuckc_chkdir as the collision routine.
+; C: src/c/037_4842A_engine_player_logic/asspuckc.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/asspuckc.inc"
+%else
 asspuckc:
 push dword 14h	; 4C6F3
 call __CHK	; 4C6F8
@@ -5566,6 +5585,11 @@ pop edx	; 4C8B9
 pop ecx	; 4C8BA
 pop ebx	; 4C8BB
 ret	; 4C8BC
+%endif ; C
+; C: src/c/037_4842A_engine_player_logic/sub_4C8BD.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/sub_4C8BD.inc"
+%else
 sub_4C8BD:
 push dword 18h	; 4C8BD
 call __CHK	; 4C8C2
@@ -5680,6 +5704,7 @@ pop edx	; 4C9F9
 pop ecx	; 4C9FA
 pop ebx	; 4C9FB
 ret	; 4C9FC
+%endif ; C
 asspuckc_chkdir:
 push dword 14h	; 4C9FD
 call __CHK	; 4CA02
@@ -6594,6 +6619,10 @@ or byte [byte eax+044h], 2	; 4D522
 pop edx	; 4D526
 ret	; 4D527
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/assfaceoffp1.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assfaceoffp1.inc"
+%else
 assfaceoffp1:
 push dword 10h	; 4D528
 call __CHK	; 4D52D
@@ -6722,6 +6751,7 @@ pop edx	; 4D6B0
 pop ecx	; 4D6B1
 pop ebx	; 4D6B2
 ret	; 4D6B3
+%endif ; C
 pucknorm_body:
 push dword 18h	; 4D6B4
 call __CHK	; 4D6B9

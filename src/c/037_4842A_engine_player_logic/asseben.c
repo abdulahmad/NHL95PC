@@ -8,16 +8,14 @@
    bits 2/5 cleared, SPA 0, Xvel 1000h, assexit. */
 void asseben(Player *p)
 {
-    short slot;
-
     if (p->pflags & 0x20) return;
     if (p->pflags & 2) {
         p->pflags &= 0xFD;                  /* clear pfna */
         p->Xvel = 0;
         p->Yvel = 0;
         *(short *)((char *)p + 0x48) = 0;
-        regd0.w = slot = p->SCnum - 6;
-        if (slot >= 0) regd0.w = slot + 2;
+        regd0.w = p->SCnum - 6;
+        if (regd0.w >= 0) regd0.w += 2;
         HIWORD(p->Ypos) = regd0.w * 0xE;
         HIWORD(p->Xpos) = -0xA0;
         p->facedir = 2;
