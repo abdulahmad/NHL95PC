@@ -5,10 +5,10 @@ section s_35FB9 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _fstrcspn_, str_Pal17, str_02d, str_GSUMMARY, str_Pal18, str_Temp5
 extern str_Easndesk2, str_GAME, str_SAV, str_Back, str_Callogo2, str_SelectATeamTo, str_MustBeImportedFrom, str_MustBeExportedTo
 extern str_PINFO, str_extDB, str_extxx, str_Xx, str_dot, str_floppydrv, curleague, gameopts
-extern musicon, byte_D42C3, byte_DC267, byte_DC268, leaguedbfmt2, leaguedbfmt, leagueflags, byte_DD7CA
-extern byte_DD7CB, savedname, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_ED836
+extern musicon, byte_D42C3, byte_DC267, byte_DC268, leaguedbfmt2, leaguedbfmt, leagueflags, lgteamflags
+extern lgteam_17, savedname, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_ED836
 extern byte_ED98E, gameresult, teamstatscb, skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dlgtextfg
-extern dlgtextbg, songdata, msg_InsertDisk_arg, dword_C7E42, dword_C7F0B
+extern dlgtextbg, songdata, msg_InsertDisk_arg, dword_C7F0B
 extern gridcellbuf, HomeTeam, musichandle, dword_D2C6B, dword_DB088, schedgameidx, dword_DC23E, musicslot
 extern leaguemaster, leaguesaved, humancount, dword_DDD34, lgplayteam, dword_DDD3C, dword_DDD44, gridcelly
 extern gridcellx, awtmlines, startm_m2, hmtmlines, hmtmstruct
@@ -18,12 +18,12 @@ extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWrite
 extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, SetTextColors, PrintCenteredText, PrintShadowText, InitGameSummary
 extern GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, PreGameScreen, SetDialogColors, RestoreDialogBg
 extern MessageBox, CalendarScreen, LeagueTeamSelect, WriteSeasonRec, ReadGoalieSeasonRec, WriteGoalieSeasonRec, WriteSchedGame, WriteTeamRec
-extern ReadLeagueTeamEntry, AskTeamPassword, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, ReadLeagueInfo, sub_3DAB9
+extern ReadLeagueTeamEntry, AskTeamPassword, UpdateTeamDbs, MergeLeagueFiles, FindLeagueFloppy, WaitLeagueFloppy, ReadLeagueInfo, ReadTeamNames
 extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSeasonSchedule, UpdatePlayoffSeries, sub_479E9, sub_6B410
 extern sub_6B47C, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_903F0, sub_91370, sub_91400, sub_92F50, sub_93000, sub_B2DCA, sub_B2E1B, sub_B30B4
-extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, leaguediskmsg, unk_C7E3E, btn_MasterDB, unk_C7F07
-extern unk_C7F1B, unk_C7F8E, str_backslash2, str_S4, awlinetab, hmlinetab, unk_DC240, leagueteams
+extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, leaguediskmsg, playerdbsmsg, btn_MasterDB, unk_C7F07
+extern unk_C7F1B, updschedmsg, str_backslash2, str_S4, awlinetab, hmlinetab, unk_DC240, leagueteams
 extern treeteamnames, masterpw, savleague1, savleague2, VisTeam, word_DB08A, word_DB08C, word_DB08E
 extern word_DB090, word_DB092, word_DB096, word_DC242, word_DC244, lggameidx, word_DDD48, word_DDD4A
 extern hmscore, hmtmgoalie, awscore, awtmgoalie, startm
@@ -79,13 +79,13 @@ mov dword [msg_InsertDisk_arg], eax	; 36066
 mov ebx, 0FFFFFFFFh	; 3606B
 mov edx, esi	; 36070
 mov eax, edi	; 36072
-call sub_3D694	; 36074
+call FindLeagueFloppy	; 36074
 jmp short .4	; 36079
 .3:
 mov ebx, 0FFFFFFFFh	; 3607B
 mov edx, esi	; 36080
 mov eax, edi	; 36082
-call sub_3D84F	; 36084
+call WaitLeagueFloppy	; 36084
 .4:
 mov ebp, eax	; 36089
 test ebp, ebp	; 3608B
@@ -913,7 +913,7 @@ mov ebx, unk_C7F07	; 36CE1
 jmp short .5	; 36CE6
 .4:
 lea eax, [byte esp+020h]	; 36CE8
-mov dword [dword_C7E42], eax	; 36CEC
+mov dword [playerdbsmsg+4], eax	; 36CEC
 push byte 0FFFFFFFFh	; 36CF1
 lea eax, [byte esp+050h]	; 36CF3
 push eax	; 36CF7
@@ -922,7 +922,7 @@ push eax	; 36CFC
 push byte 2	; 36CFD
 push btn_MasterDB	; 36CFF
 mov ecx, 4	; 36D04
-mov ebx, unk_C7E3E	; 36D09
+mov ebx, playerdbsmsg	; 36D09
 .5:
 mov edx, 0FFFFFFFFh	; 36D0E
 mov eax, edx	; 36D13
@@ -932,9 +932,9 @@ cmp dword [byte esp+054h], byte 0	; 36D1E
 jne short .7	; 36D23
 test byte [leagueflags], 8	; 36D25
 je short .6	; 36D2C
-call sub_3B25A	; 36D2E
+call MergeLeagueFiles	; 36D2E
 .6:
-call sub_3B039	; 36D33
+call UpdateTeamDbs	; 36D33
 mov dword [dword esp+090h], 0FFFFFFFFh	; 36D38
 jmp short .9	; 36D43
 .7:
@@ -949,7 +949,7 @@ call MakePath	; 36D5E
 mov ebx, 1	; 36D63
 mov edx, treeteamnames	; 36D68
 mov eax, esp	; 36D6D
-call sub_3DAB9	; 36D6F
+call ReadTeamNames	; 36D6F
 mov esi, eax	; 36D74
 .9:
 mov ecx, dword [dword esp+090h]	; 36D76
@@ -1012,7 +1012,7 @@ mov edx, dword [lgplayteam]	; 36E59
 mov eax, edx	; 36E5F
 shl eax, 4	; 36E61
 sub eax, edx	; 36E64
-test byte [nosplit eax*2+byte_DD7CA], 1	; 36E66
+test byte [nosplit eax*2+lgteamflags], 1	; 36E66
 je short .12	; 36E6E
 mov edx, curleague	; 36E70
 jmp short .13	; 36E75
@@ -1048,7 +1048,7 @@ call MakePath	; 36ED8
 xor ebx, ebx	; 36EDD
 mov edx, treeteamnames	; 36EDF
 mov eax, esp	; 36EE4
-call sub_3DAB9	; 36EE6
+call ReadTeamNames	; 36EE6
 mov esi, eax	; 36EEB
 .17:
 test esi, esi	; 36EED
@@ -1193,7 +1193,7 @@ mov edx, dword [dword_DDD34]	; 37101
 mov eax, edx	; 37107
 shl eax, 4	; 37109
 sub eax, edx	; 3710C
-cmp byte [nosplit eax*2+byte_DD7CB], 0	; 3710E
+cmp byte [nosplit eax*2+lgteam_17], 0	; 3710E
 jne short .30	; 37116
 xor ecx, ecx	; 37118
 mov dword [dword_DDD3C], ecx	; 3711A
@@ -1227,7 +1227,7 @@ mov edx, dword [dword_DDD34]	; 37186
 mov eax, edx	; 3718C
 shl eax, 4	; 3718E
 sub eax, edx	; 37191
-test byte [nosplit eax*2+byte_DD7CA], 1	; 37193
+test byte [nosplit eax*2+lgteamflags], 1	; 37193
 je short .31	; 3719B
 cmp dword [dword esp+088h], byte 0	; 3719D
 je short .31	; 371A5
@@ -1542,7 +1542,7 @@ mov edx, dword [dword_DDD34]	; 3761C
 mov eax, edx	; 37622
 shl eax, 4	; 37624
 sub eax, edx	; 37627
-test byte [nosplit eax*2+byte_DD7CA], 1	; 37629
+test byte [nosplit eax*2+lgteamflags], 1	; 37629
 je short .54	; 37631
 cmp dword [dword esp+088h], byte 0	; 37633
 je short .54	; 3763B
@@ -1587,7 +1587,7 @@ push esi	; 376B2
 push esi	; 376B3
 push esi	; 376B4
 mov ecx, 1	; 376B5
-mov ebx, unk_C7F8E	; 376BA
+mov ebx, updschedmsg	; 376BA
 mov edx, 0FFFFFFFFh	; 376BF
 mov eax, edx	; 376C4
 call MessageBox	; 376C6

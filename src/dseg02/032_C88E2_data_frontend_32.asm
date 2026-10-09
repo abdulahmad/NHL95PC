@@ -4,10 +4,10 @@ bits 32
 section s_C88E2 progbits alloc noexec write align=1
 extern unk_C1934, unk_C1936, unk_C67B1, unk_C88C2, unk_CE0A5, unk_CE1F5
 global teamstartlag, byte_C8B78, dword_C891E, calcolx, calrowy, calendarshapes
-global gridcellbuf, dword_C89E6, dword_C8A2B, dword_C8B7C, dword_C8B80, off_C89DE, off_C8A85, off_C8AB9
-global off_C8B37, off_C8BDD, unk_C88E2, unk_C899C, unk_C89BD, unk_C89EA, unk_C8A0F, unk_C8A27
-global unk_C8A33, unk_C8A51, unk_C8A6E, unk_C8A91, unk_C8AA6, unk_C8AC1, unk_C8AE0, unk_C8AE4
-global unk_C8B00, unk_C8B04, unk_C8B22, unk_C8B40, unk_C8B9C, unk_C8BB3, unk_C8BCE, unk_C8BE9
+global gridcellbuf, dword_C8B7C, dword_C8B80, masteronlymsg, mergeincompletemsg, updateerrmsg
+global exporterrmsg, off_C8BDD, unk_C88E2, unk_C899C, unk_C89BD, unk_C89EA, unk_C8A0F, masterctlmsg
+global unk_C8A33, unk_C8A51, unk_C8A6E, unk_C8A91, unk_C8AA6, unk_C8AC1, mergeerrmsg, unk_C8AE4
+global importmastermsg, unk_C8B04, unk_C8B22, drivebtns, unk_C8B9C, unk_C8BB3, unk_C8BCE, unk_C8BE9
 global unk_C8C0A
 unk_C88E2:
 db 00h,00h,00h,00h,00h,00h,00h,00h,045h,00h,00h,00h,012h,00h,00h,00h
@@ -46,10 +46,9 @@ unk_C89BD:
 db 06Fh,06Eh,020h,074h,068h,065h,020h,06Dh,061h,073h,074h,065h,072h,020h,063h,06Fh
 db 070h,079h,020h,06Fh,066h,020h,074h,068h,065h,020h,06Ch,065h,061h,067h,075h,065h
 db 00h
-off_C89DE:
+masteronlymsg:
 dd unk_C899C
 dd unk_C89BD
-dword_C89E6:
 db 00h,00h,00h,00h
 unk_C89EA:
 db 054h,068h,065h,020h,06Dh,061h,073h,074h,065h,072h,020h,063h,06Fh,06Eh,074h,072h
@@ -58,9 +57,8 @@ db 061h,067h,075h,065h,00h
 unk_C8A0F:
 db 06Dh,075h,073h,074h,020h,062h,065h,020h,069h,06Dh,070h,06Fh,072h,074h,065h,064h
 db 020h,066h,069h,072h,073h,074h,021h,00h
-unk_C8A27:
+masterctlmsg:
 dd unk_C89EA
-dword_C8A2B:
 db 00h,00h,00h,00h
 dd unk_C8A0F
 unk_C8A33:
@@ -72,7 +70,7 @@ db 065h,020h,075h,073h,065h,064h,020h,075h,06Eh,074h,069h,06Ch,00h
 unk_C8A6E:
 db 074h,068h,065h,020h,06Dh,065h,072h,067h,065h,020h,069h,073h,020h,063h,06Fh,06Dh
 db 070h,06Ch,065h,074h,065h,021h,00h
-off_C8A85:
+mergeincompletemsg:
 dd unk_C8A33
 dd unk_C8A51
 dd unk_C8A6E
@@ -82,18 +80,18 @@ db 074h,069h,06Eh,067h,00h
 unk_C8AA6:
 db 070h,06Ch,061h,079h,065h,072h,073h,020h,064h,061h,074h,061h,062h,061h,073h,065h
 db 073h,021h,00h
-off_C8AB9:
+updateerrmsg:
 dd unk_C8A91
 dd unk_C8AA6
 unk_C8AC1:
 db 045h,072h,072h,06Fh,072h,020h,077h,068h,069h,06Ch,065h,020h,06Dh,065h,072h,067h
 db 069h,06Eh,067h,020h,064h,061h,074h,061h,062h,061h,073h,065h,073h,021h,00h
-unk_C8AE0:
+mergeerrmsg:
 dd unk_C8AC1
 unk_C8AE4:
 db 049h,06Dh,070h,06Fh,072h,074h,069h,06Eh,067h,020h,04Dh,061h,073h,074h,065h,072h
 db 020h,044h,061h,074h,061h,062h,061h,073h,065h,073h,02Eh,00h
-unk_C8B00:
+importmastermsg:
 dd unk_C8AE4
 unk_C8B04:
 db 045h,072h,072h,06Fh,072h,020h,077h,068h,069h,06Ch,065h,020h,065h,078h,070h,06Fh
@@ -101,11 +99,11 @@ db 072h,074h,069h,06Eh,067h,020h,070h,06Ch,061h,079h,065h,072h,021h,00h
 unk_C8B22:
 db 050h,06Ch,061h,079h,065h,072h,020h,06Eh,06Fh,074h,020h,065h,078h,070h,06Fh,072h
 db 074h,065h,064h,021h,00h
-off_C8B37:
+exporterrmsg:
 dd unk_C8B04
 dd unk_C8B22
 db 00h
-unk_C8B40:
+drivebtns:
 db 08h,00h,00h,00h,018h,00h,00h,00h,020h,00h,00h,00h,0Ah,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd unk_C1934

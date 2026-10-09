@@ -13,7 +13,7 @@ extern fputchar, jctime, memset_, teamcitynames, msg_OneHuman, leaguedbnames
 extern msg_TradeDeadline, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, strncpy_, MakePath
 extern DeleteFiles, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
 extern CopyFile, ReadSchedGame, SetDialogColors, RestoreDialogBg, MessageBox, LeagueTeamSelect, WriteLeagueTeamEntry, AskTeamPassword
-extern AskMasterPassword, sub_3B25A, sub_3BB87, sub_3D46D, ReadLeagueInfo, sub_3DAB9, sub_3E390, sub_3FF52
+extern AskMasterPassword, MergeLeagueFiles, ExportTeamToFloppy, SelectFloppyDrive, ReadLeagueInfo, ReadTeamNames, sub_3E390, sub_3FF52
 extern sub_6B3D7, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
 extern sub_B4F8C, unk_3DC28, msg_AllHuman, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, msg_TradeError, msg_Copying
 extern msg_MasterDB, btn_MasterDB, msg_SavedGame, str_star, btn_TradeStats, leagueteams, treeteamnames, masterpw
@@ -140,7 +140,7 @@ call MessageBox	; 4036F
 mov dword [dword esp+0A8h], eax	; 40374
 test eax, eax	; 4037B
 jne short TradePlayers.3	; 4037D
-call sub_3B25A	; 4037F
+call MergeLeagueFiles	; 4037F
 mov esi, 0FFFFFFFFh	; 40384
 jmp short .6	; 40389
 .5:
@@ -152,7 +152,7 @@ call MakePath	; 4039F
 mov ebx, 1	; 403A4
 mov edx, treeteamnames	; 403A9
 lea eax, [byte esp+068h]	; 403AE
-call sub_3DAB9	; 403B2
+call ReadTeamNames	; 403B2
 mov ebp, eax	; 403B7
 .6:
 test esi, esi	; 403B9
@@ -602,7 +602,7 @@ call MessageBox	; 40A20
 mov dword [byte esp+038h], eax	; 40A25
 test eax, eax	; 40A29
 jne short .4	; 40A2B
-call sub_3B25A	; 40A2D
+call MergeLeagueFiles	; 40A2D
 mov edi, 0FFFFFFFFh	; 40A32
 jmp short .5	; 40A37
 .4:
@@ -690,7 +690,7 @@ call MakePath	; 40B49
 mov ebx, 1	; 40B4E
 mov edx, treeteamnames	; 40B53
 mov eax, esp	; 40B58
-call sub_3DAB9	; 40B5A
+call ReadTeamNames	; 40B5A
 lea eax, [byte esp+03Ch]	; 40B5F
 push eax	; 40B63
 push str_SelNewHuman	; 40B64
@@ -848,7 +848,7 @@ call MessageBox	; 40D54
 mov dword [byte esp+03Ch], eax	; 40D59
 test eax, eax	; 40D5D
 jne short .4	; 40D5F
-call sub_3B25A	; 40D61
+call MergeLeagueFiles	; 40D61
 mov edi, 0FFFFFFFFh	; 40D66
 jmp short .5	; 40D6B
 .4:
@@ -936,7 +936,7 @@ call MakePath	; 40E7D
 mov ebx, 1	; 40E82
 mov edx, treeteamnames	; 40E87
 mov eax, esp	; 40E8C
-call sub_3DAB9	; 40E8E
+call ReadTeamNames	; 40E8E
 lea eax, [byte esp+038h]	; 40E93
 push eax	; 40E97
 push str_SelRemoveHuman	; 40E98
@@ -1061,7 +1061,7 @@ call MessageBox	; 41035
 mov dword [byte esp+018h], eax	; 4103A
 test eax, eax	; 4103E
 jne short .3	; 41040
-call sub_3B25A	; 41042
+call MergeLeagueFiles	; 41042
 mov edi, 0FFFFFFFFh	; 41047
 jmp short .4	; 4104C
 .3:
@@ -1578,7 +1578,7 @@ test eax, eax	; 41660
 jne short .4	; 41662
 mov edx, edi	; 41664
 mov eax, esi	; 41666
-call sub_3D46D	; 41668
+call SelectFloppyDrive	; 41668
 mov ebp, eax	; 4166D
 .4:
 test ebp, ebp	; 4166F
@@ -1672,7 +1672,7 @@ mov ecx, dword [dword esp+0C0h]	; 417CD
 mov ebx, str_extxx	; 417D4
 mov edx, str_extDB	; 417D9
 mov eax, esi	; 417DE
-call sub_3BB87	; 417E0
+call ExportTeamToFloppy	; 417E0
 mov ebx, eax	; 417E5
 jmp near .17	; 417E7
 .10:

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_C7DEA progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450, unk_C7DA9, unk_C7DBE, unk_C7DD4
-global msg_MasterDB_arg, dword_C7E42, msg_MasterDB, unk_C7DFA, unk_C7E10, unk_C7E27, unk_C7E3E, btn_MasterDB
+global msg_MasterDB_arg, msg_MasterDB, unk_C7DFA, unk_C7E10, unk_C7E27, playerdbsmsg, btn_MasterDB
 global unk_C7E86, unk_C7E9B, unk_C7EB9, unk_C7EE2
 msg_MasterDB:
 dd unk_C7DA9
@@ -20,9 +20,8 @@ db 066h,069h,072h,073h,074h,021h,00h
 unk_C7E27:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,075h
 db 070h,064h,061h,074h,065h,03Fh,00h
-unk_C7E3E:
+playerdbsmsg:
 dd unk_C7DFA
-dword_C7E42:
 db 00h,00h,00h,00h
 dd unk_C7E10
 dd unk_C7E27

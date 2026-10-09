@@ -3,13 +3,12 @@ bits 32
 %include "hockey.inc"
 section s_C7C1D progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450, unk_C7BEE, unk_C7C06
-global asc_C7D75, asc_C7D88, dword_C7C25, dword_C7DA1, dword_C7DA5, off_C7C1D, off_C7C59, off_C7CE9
-global off_C7D62, unk_C7C29, unk_C7C42, unk_C7C61, unk_C7C99, unk_C7CB9, unk_C7CDB, unk_C7CE2
-global unk_C7CF1, unk_C7D29, unk_C7D47, unk_C7D6A, unk_C7D9D, unk_C7DA9, unk_C7DBE, unk_C7DD4
-off_C7C1D:
+global str_IsAlreadyMerged, str_HasNotBeenMerged, oldcopymsg, newfloppymsg, importtypemsg
+global lgexistsmsg, unk_C7C29, unk_C7C42, newfloppybtns, unk_C7C99, unk_C7CB9, unk_C7CDB, unk_C7CE2
+global importtypebtns, unk_C7D29, unk_C7D47, unk_C7D6A, mergestatemsg, unk_C7DA9, unk_C7DBE, unk_C7DD4
+oldcopymsg:
 dd unk_C7BEE
 dd unk_C7C06
-dword_C7C25:
 db 00h,00h,00h,00h
 unk_C7C29:
 db 041h,072h,065h,020h,079h,06Fh,075h,020h,073h,075h,072h,065h,020h,079h,06Fh,075h
@@ -17,10 +16,10 @@ db 020h,077h,061h,06Eh,074h,020h,074h,06Fh,00h
 unk_C7C42:
 db 075h,073h,065h,020h,061h,020h,06Eh,065h,077h,020h,066h,06Ch,06Fh,070h,070h,079h
 db 020h,064h,069h,073h,06Bh,03Fh,00h
-off_C7C59:
+newfloppymsg:
 dd unk_C7C29
 dd unk_C7C42
-unk_C7C61:
+newfloppybtns:
 db 010h,00h,00h,00h,03Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd unk_C744C
@@ -38,10 +37,10 @@ unk_C7CDB:
 db 04Dh,061h,073h,074h,065h,072h,00h
 unk_C7CE2:
 db 050h,06Ch,061h,079h,065h,072h,00h
-off_C7CE9:
+importtypemsg:
 dd unk_C7C99
 dd unk_C7CB9
-unk_C7CF1:
+importtypebtns:
 db 010h,00h,00h,00h,03Ch,00h,00h,00h,060h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd unk_C7CDB
@@ -54,22 +53,20 @@ db 061h,073h,074h,065h,072h,020h,06Ch,065h,061h,067h,075h,065h,021h,00h
 unk_C7D47:
 db 054h,068h,065h,020h,06Ch,065h,061h,067h,075h,065h,020h,061h,06Ch,072h,065h,061h
 db 064h,079h,020h,065h,078h,069h,073h,074h,073h,021h,00h
-off_C7D62:
+lgexistsmsg:
 dd unk_C7D29
 dd unk_C7D47
 unk_C7D6A:
 db 054h,068h,065h,020h,06Ch,065h,061h,067h,075h,065h,00h
-asc_C7D75:
+str_IsAlreadyMerged:
 db 069h,073h,020h,061h,06Ch,072h,065h,061h,064h,079h,020h,06Dh,065h,072h,067h,065h
 db 064h,02Eh,00h
-asc_C7D88:
+str_HasNotBeenMerged:
 db 068h,061h,073h,020h,06Eh,06Fh,074h,020h,062h,065h,065h,06Eh,020h,06Dh,065h,072h
 db 067h,065h,064h,02Eh,00h
-unk_C7D9D:
+mergestatemsg:
 dd unk_C7D6A
-dword_C7DA1:
 db 00h,00h,00h,00h
-dword_C7DA5:
 db 00h,00h,00h,00h
 unk_C7DA9:
 db 04Dh,061h,073h,074h,065h,072h,020h,064h,061h,074h,061h,062h,061h,073h,065h,073h

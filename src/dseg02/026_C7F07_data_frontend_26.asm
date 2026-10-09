@@ -3,12 +3,12 @@ bits 32
 %include "hockey.inc"
 section s_C7F07 progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450, unk_C7E86, unk_C7E9B, unk_C7EB9, unk_C7EE2
-global str_PINFO, str_PLAYER, str_LSSCHED, asc_C810C, str_extDB, str_ORG, asc_C812D, asc_C8131
+global str_PINFO, str_PLAYER, str_LSSCHED, str_GAME4, str_extDB, str_ORG, asc_C812D, str_SET2
 global str_PPV, str_KMS, asc_C8145, str_VFN, str_extBIN, str_extxx, str_Xx, str_extLP
 global str_extID, str_space, str_dot, str_floppydrv, dword_C7F0B, msg_SavedGame_arg, firstteammsg, pwmismatchmsg
 global leaguedbnames, unk_C7F07
-global unk_C7F1B, unk_C7F53, unk_C7F77, unk_C7F7B, unk_C7F8E, unk_C7F92, unk_C7FB9, unk_C7FBD
-global unk_C7FD6, str_FirstTeamSelected, str_PlayMustBeImported, str_PasswordEnteredDifferently, str_SecondTimeTryAgain, unk_C805D, unk_C8081, msg_SavedGame
+global unk_C7F1B, unk_C7F53, mergingmsg, unk_C7F7B, updschedmsg, unk_C7F92, insertfloppymsg, unk_C7FBD
+global whichdrivemsg, str_FirstTeamSelected, str_PlayMustBeImported, str_PasswordEnteredDifferently, str_SecondTimeTryAgain, unk_C805D, unk_C8081, msg_SavedGame
 global unk_C80A9, unk_C80AD, unk_C80B4, unk_C80B8, unk_C80C1, unk_C80C7, unk_C80CE, str_star
 global str_backslash2, str_S4
 unk_C7F07:
@@ -29,23 +29,23 @@ unk_C7F53:
 db 04Dh,065h,072h,067h,069h,06Eh,067h,020h,070h,06Ch,061h,079h,065h,072h,073h,020h
 db 074h,06Fh,020h,06Dh,061h,073h,074h,065h,072h,020h,064h,061h,074h,061h,062h,061h
 db 073h,065h,02Eh,00h
-unk_C7F77:
+mergingmsg:
 dd unk_C7F53
 unk_C7F7B:
 db 055h,070h,064h,061h,074h,069h,06Eh,067h,020h,073h,063h,068h,065h,064h,075h,06Ch
 db 065h,02Eh,00h
-unk_C7F8E:
+updschedmsg:
 dd unk_C7F7B
 unk_C7F92:
 db 050h,06Ch,065h,061h,073h,065h,020h,070h,075h,074h,020h,061h,020h,066h,06Ch,06Fh
 db 070h,070h,079h,020h,064h,069h,073h,06Bh,020h,069h,06Eh,020h,061h,06Eh,079h,020h
 db 064h,072h,069h,076h,065h,02Eh,00h
-unk_C7FB9:
+insertfloppymsg:
 dd unk_C7F92
 unk_C7FBD:
 db 055h,073h,065h,020h,066h,06Ch,06Fh,070h,070h,079h,020h,064h,072h,069h,076h,065h
 db 020h,041h,020h,06Fh,072h,020h,042h,03Fh,00h
-unk_C7FD6:
+whichdrivemsg:
 dd unk_C7FBD
 str_FirstTeamSelected:
 db 054h,068h,065h,020h,066h,069h,072h,073h,074h,020h,074h,065h,061h,06Dh,020h,073h
@@ -106,7 +106,7 @@ str_PLAYER:
 db 050h,04Ch,041h,059h,045h,052h,00h
 str_LSSCHED:
 db 04Ch,053h,053h,043h,048h,045h,044h,00h,050h,047h,053h,00h
-asc_C810C:
+str_GAME4:
 db 047h,041h,04Dh,045h,00h
 str_space:
 db 020h,00h
@@ -122,7 +122,7 @@ str_ORG:
 db 02Eh,04Fh,052h,047h,00h,02Eh,04Eh,053h,048h,00h,02Eh,04Dh,056h,049h,00h
 asc_C812D:
 db 02Eh,048h,049h,00h
-asc_C8131:
+str_SET2:
 db 02Eh,053h,045h,054h,00h
 str_PPV:
 db 02Eh,050h,050h,056h,00h,02Eh,056h,053h,048h,00h

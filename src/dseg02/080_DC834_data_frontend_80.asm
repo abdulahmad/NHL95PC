@@ -6,7 +6,7 @@ global byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DC9DD, byte_DC9DF, b
 global byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA1B, byte_DCA21, byte_DCA28, byte_DCA29
 global byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_DCAD7, menuremap, menuremap2
 global savefname, fdlgmask, leaguedbfmt2, leaguedbfmt, othergames, othergamesb
-global otherscores, otherscoresb, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname
+global otherscores, otherscoresb, leagueflags, lgteamflags, lgteam_17, lgteam_18, lgteam_19, savedname
 global byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_DDD8C, byte_DDD8D, byte_DDD8E
 global byte_DE268, byte_DE26C, byte_DEB70, byte_DEB71, dword_DC85C, dword_DC860, dword_DC868, dword_DC888
 global dword_DC88C, dword_DC8A0, dword_DC8C8, dirtyrectptr, statspalshape, statsbgshapes, statsteamrecs, statsteambuf
@@ -16,14 +16,14 @@ global lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open
 global fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp
 global fdlg_noarrow, hmcrestbmp, vscrestbmp, dlgsavex, dlgsavey, editcurw, editpos, editmaxw
 global editbuf, editcuron, edity, editx, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly
-global otherperiod, dword_DD748, dword_DD74C, dbextension, calsel, dword_DD784, calexit, teamselresult
-global dword_DD79C, calmonth, criterrflag, leaguemaster, leaguesaved, dword_DD7CE, humancount, calselday
+global otherperiod, floppyok, dbextension, calsel, floppyprobe, calexit, teamselresult
+global dword_DD79C, calmonth, criterrflag, leaguemaster, leaguesaved, lgteamver, humancount, calselday
 global dword_DDD2C, calselmonth, dword_DDD34, lgplayteam, dword_DDD3C, dword_DDD44, gridcelly, gridcellx
-global dword_DDD70, dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C
+global lgplayeridfile, dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C
 global dword_DE260, dword_DE264, dword_DE265, dword_DEB6C, dword_DEB74, statsplayer
 global unk_DC890, unk_DC998, unk_DCA98, printfbuf, leagueteams, treeteamnames, unk_DDCFB
 global masterpw, savleague1, savleague2, unk_DDFF4, scrolly, scrollx, bgscrollx, bgscrolly8
-global word_DD7D0, lggameidx, word_DDD48, word_DDD4A
+global lgteamver_hi, lggameidx, word_DDD48, word_DDD4A
 statsplayer:
 resb 2
 resb 1
@@ -212,9 +212,8 @@ leaguedbfmt2:
 resb 32
 otherperiod:
 resb 24
-dword_DD748:
+floppyok:
 resb 4
-dword_DD74C:
 resb 4
 leaguedbfmt:
 resb 32
@@ -226,7 +225,7 @@ othergamesb:
 resb 11
 calsel:
 resb 4
-dword_DD784:
+floppyprobe:
 resb 4
 otherscores:
 resb 1
@@ -250,17 +249,17 @@ leagueflags:
 resb 4
 leagueteams:
 resb 22
-byte_DD7CA:
+lgteamflags:
 resb 1
-byte_DD7CB:
+lgteam_17:
 resb 1
-byte_DD7CC:
+lgteam_18:
 resb 1
-byte_DD7CD:
+lgteam_19:
 resb 1
-dword_DD7CE:
+lgteamver:
 resb 2
-word_DD7D0:
+lgteamver_hi:
 resb 752
 humancount:
 resb 4
@@ -311,7 +310,7 @@ gridcelly:
 resb 4
 gridcellx:
 resb 4
-dword_DDD70:
+lgplayeridfile:
 resb 4
 dword_DDD74:
 resb 4

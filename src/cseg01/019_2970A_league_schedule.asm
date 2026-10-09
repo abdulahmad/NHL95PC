@@ -5,7 +5,7 @@ section s_2970A progbits alloc exec nowrite align=1
 extern __CHK, str_LSSCHED, str_extDB, str_space, statsfromleague, boxfillcolor, boxlitecolor, lgstate
 extern boxshadecolor, playofftree, playofftree_p1, pochampion, fputchar, jctime, teamcitynames, leaguedbnames
 extern strcat_, strcmp_, strcpy_, strlen_, MakePath, FileOpenRead, FileClose
-extern ReadSchedGame, PlayoffTreeScreen, sub_3DAB9, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, str_Space2
+extern ReadSchedGame, PlayoffTreeScreen, ReadTeamNames, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, str_Space2
 extern statsleague, treeteamnames
 global LoadPlayoffModeTree, TreeSeriesWinner, OpenStatsSchedule
 global LoadLeagueTree, FitPlayerName, DrawBevelBox
@@ -30,7 +30,7 @@ call MakePath	; 29741
 xor ebx, ebx	; 29746
 mov edx, treeteamnames	; 29748
 lea eax, [byte ebp-058h]	; 2974D
-call sub_3DAB9	; 29750
+call ReadTeamNames	; 29750
 mov dword [byte ebp-020h], eax	; 29755
 cmp word [byte ebp-020h], byte 0	; 29758
 jne short .1	; 2975D

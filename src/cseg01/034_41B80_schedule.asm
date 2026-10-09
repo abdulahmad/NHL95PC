@@ -4,15 +4,15 @@ bits 32
 section s_41B80 progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, str_sche, str_Sch, str_gameset, str_KbytesFree, str_extDB, str_extLP
 extern str_SelHumanTeams, str_EnterLeagueName, str_KbytesFreeLine, divisionteams, teamdivision, teamdivslot, monthdays_m1
-extern curleague, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname, byte_DDD40
+extern curleague, leagueflags, lgteamflags, lgteam_17, lgteam_18, lgteam_19, savedname, byte_DDD40
 extern byte_DE268, lgstate, gameopts, teamdivflags, confteams, dword_C5619, dword_C8C61, dword_C8D06
 extern dword_C9002, seasondb, careerdb, keydb, seasondb_size, careerdb_size, keydb_size, dbextension
-extern leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD34, lgplayteam, dword_DDD3C, jctime
+extern leaguemaster, leaguesaved, lgteamver, humancount, dword_DDD34, lgplayteam, dword_DDD3C, jctime
 extern memset_, mkdir_, msg_LeagueExists, leaguedbnames
 extern msg_GenSchedule, msg_NoDiskSpace, rand_, sprintf_, strcat_, strcpy_, DiskFreeBytes
 extern AwardsCeremony, FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenRW, FileClose, FileReadAt
 extern FileWriteAt, CopyFile, ReadSchedGame, ReadTeamRec, DiskSpaceShort, GetLeagueDBSizes, AskDatabaseChoice, TextInputDialog
-extern SetDialogColors, RestoreDialogBg, MessageBox, WriteModeState, LeagueTeamSelect, WriteSchedGame, WriteTeamRec, sub_3DAB9
+extern SetDialogColors, RestoreDialogBg, MessageBox, WriteModeState, LeagueTeamSelect, WriteSchedGame, WriteTeamRec, ReadTeamNames
 extern WriteLeagueInfo, CopyHumanTeamDBs, SimulateGame, SeriesWinner, sub_8CCA8, sub_8E8A0, sub_92DE0, sub_932D0
 extern sub_B2DCA, btn_LeagueExists, msg_WhichSchedule, btn_WhichSchedule, msg_CreateError, msg_CreatingLeague, msg_DiskFull, leagueteams
 extern treeteamnames, masterpw, savleague1, savleague2, unknown_libname_1, lggameidx, word_DDD48, word_DDD4A
@@ -4015,13 +4015,13 @@ mov edx, dword [byte esp+068h]	; 44E41
 mov eax, edx	; 44E45
 shl eax, 4	; 44E47
 sub eax, edx	; 44E4A
-mov byte [nosplit eax*2+byte_DD7CA], 1	; 44E4C
+mov byte [nosplit eax*2+lgteamflags], 1	; 44E4C
 xor dh, dh	; 44E54
-mov byte [nosplit eax*2+byte_DD7CB], dh	; 44E56
-mov byte [nosplit eax*2+byte_DD7CC], 2	; 44E5D
-mov byte [nosplit eax*2+byte_DD7CD], dh	; 44E65
+mov byte [nosplit eax*2+lgteam_17], dh	; 44E56
+mov byte [nosplit eax*2+lgteam_18], 2	; 44E5D
+mov byte [nosplit eax*2+lgteam_19], dh	; 44E65
 xor ebx, ebx	; 44E6C
-mov dword [nosplit eax*2+dword_DD7CE], ebx	; 44E6E
+mov dword [nosplit eax*2+lgteamver], ebx	; 44E6E
 mov ecx, dword [byte esp+068h]	; 44E75
 inc ecx	; 44E79
 mov dword [byte esp+068h], ecx	; 44E7A
@@ -4146,7 +4146,7 @@ call MakePath	; 44FFA
 mov ebx, 1	; 44FFF
 mov edx, treeteamnames	; 45004
 lea eax, [byte esp+02Ch]	; 45009
-call sub_3DAB9	; 4500D
+call ReadTeamNames	; 4500D
 mov edi, eax	; 45012
 test eax, eax	; 45014
 jne near .19	; 45016
@@ -4166,10 +4166,10 @@ mov eax, esi	; 45048
 shl eax, 4	; 4504A
 sub eax, esi	; 4504D
 add eax, eax	; 4504F
-mov ch, byte [dword eax+byte_DD7CB]	; 45051
+mov ch, byte [dword eax+lgteam_17]	; 45051
 cmp ch, 1	; 45057
 jne short .9	; 4505A
-cmp ch, byte [dword eax+byte_DD7CC]	; 4505C
+cmp ch, byte [dword eax+lgteam_18]	; 4505C
 jne short .9	; 45062
 sub ebp, byte 7	; 45064
 .9:

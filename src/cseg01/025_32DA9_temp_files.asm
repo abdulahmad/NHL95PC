@@ -9,8 +9,8 @@ extern standingscb, standingsmenucb, songdata, rinktilebm, rinkbm, currink, cont
 extern menuact_export, menuact_nextlg, menusub_lgmgr, musichandle, schedgameidx, jctime, MainDeskLoop_x, musicslot
 extern MainDeskLoop_x2, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRead, CheckGameDiskSpace, InitGameSummary
 extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
-extern EasnStandingsScreen, PreGameScreen, SaveModeState, LoadModeState, PlayLeagueGame, sub_3B039, sub_3B25A, sub_3B8B0
-extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
+extern EasnStandingsScreen, PreGameScreen, SaveModeState, LoadModeState, PlayLeagueGame, UpdateTeamDbs, MergeLeagueFiles, MergeUpdateDbs
+extern RebuildLeagueDbs, ImportDbs, ExportDbs, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
 extern sub_479E9, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, EasnTeamStatsScreen, EasnSkaterStatsScreen, EasnGoalieStatsScreen
 extern EasnStandingsMenu, exhstate, leaguemgrmenu
@@ -418,7 +418,7 @@ mov eax, exhstate	; 333A7
 call SaveModeState	; 333AC
 mov eax, lgstate	; 333B1
 call LoadModeState	; 333B6
-call sub_3B9CA	; 333BB
+call RebuildLeagueDbs	; 333BB
 MenuRebuildDbs_x:
 mov eax, lgstate	; 333C0
 call SaveModeState	; 333C5
@@ -437,7 +437,7 @@ mov eax, exhstate	; 333E5
 call SaveModeState	; 333EA
 mov eax, lgstate	; 333EF
 call LoadModeState	; 333F4
-call sub_3B8B0	; 333F9
+call MergeUpdateDbs	; 333F9
 mov esi, eax	; 333FE
 mov eax, lgstate	; 33400
 call SaveModeState	; 33405
@@ -488,7 +488,7 @@ mov eax, exhstate	; 33477
 call SaveModeState	; 3347C
 mov eax, lgstate	; 33481
 call LoadModeState	; 33486
-call sub_3B25A	; 3348B
+call MergeLeagueFiles	; 3348B
 mov esi, eax	; 33490
 mov eax, lgstate	; 33492
 call SaveModeState	; 33497
@@ -534,7 +534,7 @@ mov eax, exhstate	; 33505
 call SaveModeState	; 3350A
 mov eax, lgstate	; 3350F
 call LoadModeState	; 33514
-call sub_3B039	; 33519
+call UpdateTeamDbs	; 33519
 jmp near MenuRebuildDbs_x	; 3351E
 MenuTradePlayers:
 push dword 20h	; 33523
@@ -654,7 +654,7 @@ mov eax, exhstate	; 336C8
 call SaveModeState	; 336CD
 mov eax, lgstate	; 336D2
 call LoadModeState	; 336D7
-call sub_3CF5B	; 336DC
+call ImportDbs	; 336DC
 jmp near MenuRebuildDbs_x	; 336E1
 MenuExportDbs:
 push dword 20h	; 336E6
@@ -669,7 +669,7 @@ mov eax, lgstate	; 336FE
 call LoadModeState	; 33703
 mov eax, 3	; 33708
 call SetupStatsSourceMenu	; 3370D
-call sub_3D108	; 33712
+call ExportDbs	; 33712
 jmp near MenuAddTeam_common	; 33717
 DemoSetupStub:
 push dword 4	; 3371C

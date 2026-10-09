@@ -3,12 +3,12 @@ bits 32
 %include "hockey.inc"
 section s_C7868 progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450, str_DoYouReallyWantToRemove
-global str_SelectATeamTo, asc_C78BF, str_WhoWillControlThe, str_MustBeImportedFrom, str_MustBeExportedTo, dword_C79C0, dword_C79C8
-global dword_C7B16, dword_C7B1E, dword_C7B47, dword_C7B4F
-global dword_C7BA7, dword_C7BAF, off_C7905, removeteammsg, removeteambtns, unk_C78D8, unk_C78F0, unk_C790D
-global unk_C792B, unk_C792F, unk_C7951, unk_C7965, unk_C7986, unk_C79A0, unk_C79D0, str_DoYouWantToExport
+global str_SelectATeamTo, str_SelectATeamTo2, str_WhoWillControlThe, str_MustBeImportedFrom, str_MustBeExportedTo, forceexportmsg
+global notexportedmsg
+global insavegamemsg, importdiskmsg, removeteammsg, removeteambtns, unk_C78D8, unk_C78F0, unk_C790D
+global importerrmsg, unk_C792F, unk_C7951, unk_C7965, unk_C7986, unk_C79A0, forceexportbtns, str_DoYouWantToExport
 global str_ToAFloppyDisk, exportmsg, yesnobtns, str_TheLeague, str_BeforeAGameCanBePlayed, leaguediskmsg, unk_C7AF4, unk_C7AFF
-global unk_C7B12, unk_C7B22, unk_C7B53, unk_C7B73, unk_C7B91, unk_C7BBB
+global lgexistsformsg, unk_C7B22, unk_C7B53, unk_C7B73, unk_C7B91, unk_C7BBB
 removeteammsg:
 dd str_DoYouReallyWantToRemove
 db 00h,00h,00h,00h
@@ -22,7 +22,7 @@ dd unk_C7450
 str_SelectATeamTo:
 db 053h,065h,06Ch,065h,063h,074h,020h,061h,020h,074h,065h,061h,06Dh,020h,074h,06Fh
 db 020h,070h,06Ch,061h,079h,02Eh,00h
-asc_C78BF:
+str_SelectATeamTo2:
 db 053h,065h,06Ch,065h,063h,074h,020h,061h,020h,074h,065h,061h,06Dh,020h,074h,06Fh
 db 020h,065h,078h,070h,06Fh,072h,074h,02Eh,00h
 unk_C78D8:
@@ -31,13 +31,13 @@ db 061h,067h,075h,065h,020h,074h,06Fh,00h
 unk_C78F0:
 db 069h,06Dh,070h,06Fh,072h,074h,020h,069h,06Eh,020h,061h,06Eh,079h,020h,064h,072h
 db 069h,076h,065h,02Eh,00h
-off_C7905:
+importdiskmsg:
 dd unk_C78D8
 dd unk_C78F0
 unk_C790D:
 db 045h,072h,072h,06Fh,072h,020h,077h,068h,069h,06Ch,065h,020h,069h,06Dh,070h,06Fh
 db 072h,074h,069h,06Eh,067h,020h,06Ch,065h,061h,067h,075h,065h,021h,00h
-unk_C792B:
+importerrmsg:
 dd unk_C790D
 unk_C792F:
 db 045h,072h,072h,06Fh,072h,020h,077h,068h,069h,06Ch,065h,020h,065h,078h,070h,06Fh
@@ -57,13 +57,12 @@ db 06Fh,072h,074h,065h,064h,020h,066h,06Fh,072h,00h
 unk_C79A0:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,066h
 db 06Fh,072h,063h,065h,020h,061h,06Eh,020h,065h,078h,070h,06Fh,072h,074h,03Fh,00h
-dword_C79C0:
+forceexportmsg:
 db 00h,00h,00h,00h
 dd unk_C7986
-dword_C79C8:
 db 00h,00h,00h,00h
 dd unk_C79A0
-unk_C79D0:
+forceexportbtns:
 db 010h,00h,00h,00h,078h,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd unk_C744C
@@ -111,21 +110,18 @@ db 054h,068h,065h,020h,06Ch,065h,061h,067h,075h,065h,00h
 unk_C7AFF:
 db 061h,06Ch,072h,065h,061h,064h,079h,020h,065h,078h,069h,073h,074h,073h,020h,066h
 db 06Fh,072h,00h
-unk_C7B12:
+lgexistsformsg:
 dd unk_C7AF4
-dword_C7B16:
 db 00h,00h,00h,00h
 dd unk_C7AFF
-dword_C7B1E:
 db 00h,00h,00h,00h
 unk_C7B22:
 db 068h,061h,073h,020h,06Eh,06Fh,074h,020h,062h,065h,065h,06Eh,020h,065h,078h,070h
 db 06Fh,072h,074h,065h,064h,020h,066h,06Fh,072h,020h,074h,068h,065h,020h,06Ch,065h
 db 061h,067h,075h,065h,00h
-dword_C7B47:
+notexportedmsg:
 db 00h,00h,00h,00h
 dd unk_C7B22
-dword_C7B4F:
 db 00h,00h,00h,00h
 unk_C7B53:
 db 069h,073h,020h,069h,06Eh,020h,061h,020h,073h,061h,076h,065h,020h,067h,061h,06Dh
@@ -136,10 +132,9 @@ db 06Dh,070h,06Fh,072h,074h,065h,064h,020h,075h,06Eh,074h,069h,06Ch,00h
 unk_C7B91:
 db 074h,068h,065h,020h,067h,061h,06Dh,065h,020h,069h,073h,020h,066h,069h,06Eh,069h
 db 073h,068h,065h,064h,021h,00h
-dword_C7BA7:
+insavegamemsg:
 db 00h,00h,00h,00h
 dd unk_C7B53
-dword_C7BAF:
 db 00h,00h,00h,00h
 dd unk_C7B73
 dd unk_C7B91

@@ -4,7 +4,7 @@ bits 32
 section s_33FFD progbits alloc exec nowrite align=1
 extern __CHK, str_Boxr, str_Boxb, str_Bkgd7, str_02d9D, str_Home, str_Away, str_SDD2
 extern str_Pal17, str_Calendar, str_Callogo, str_Iff9, str_Pointer8, str_Menubuff5, monthdays, monthfirstday_m1
-extern monthfirstday, musicon, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, teamstatscb
+extern monthfirstday, musicon, lgteam_17, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, teamstatscb
 extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, songdata, calcolx, calrowy
 extern calendarshapes, musichandle, dword_D2C6B, fontcolor, dword_D8B74, pointerspr, musicslot
 extern calsel, calexit, calmonth, calselday, dword_DDD2C, calselmonth, dword_EA0DC, fputchar
@@ -656,7 +656,7 @@ mov edx, eax	; 347EA
 mov eax, edx	; 347EC
 shl eax, 4	; 347EE
 sub eax, edx	; 347F1
-cmp byte [nosplit eax*2+byte_DD7CB], 1	; 347F3
+cmp byte [nosplit eax*2+lgteam_17], 1	; 347F3
 je short .3	; 347FB
 mov edx, 0FFFFFFFFh	; 347FD
 .3:

@@ -43,8 +43,8 @@ global str_Boxr, str_Boxb, str_Bkgd7, str_02d9D, str_Home, str_Away, str_SDD2, s
 global str_Calendar, str_Callogo, str_Iff9, str_Pointer8, str_Menubuff5, str_02d, str_GSUMMARY, str_Pal18
 global str_Temp5, str_Easndesk2, str_GAME, str_SAV, str_Back, str_Callogo2, str_PLST, str_PTLS
 global str_Pal19, str_TPI, str_Embnhl, str_Bkgd8, str_Pointer9, str_Iff10, str_Leaguetm2, str_Tspal
-global str_Pal20, str_Menubuff6, str_WhoWillPlayThe, str_MightyDucksOfAnaheim3, asc_C1904, asc_C190A, asc_C190E, asc_C1919
-global asc_C191E, asc_C1923, asc_C1927, asc_C1938, asc_C193D, asc_C1942, asc_C1948, asc_C195C
+global str_Pal20, str_Menubuff6, str_WhoWillPlayThe, str_MightyDucksOfAnaheim3, str_02d2, str_SAV2, str_GAME2, str_SET
+global str_GAME3, str_SAV3, str_02d3, str_Game2, str_Sav2, asc_C1942, asc_C1948, asc_C195C
 global asc_C1964, asc_C1969, asc_C196F, asc_C1974, asc_C197A, asc_C1980, asc_C1987, asc_C198C
 global asc_C1994, asc_C19C1, asc_C19DC, asc_C19E0, asc_C19EA, asc_C19F3, asc_C19FA, asc_C19FF
 global asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, str_fe1, str_fe2, str_fe3, str_fe4
@@ -70,8 +70,8 @@ global str_D4, str_NHL, str_PO2, str_LP, str_fek1, str_fek2, str_fek3, str_fek4
 global str_fek5, str_fek6, str_fek7, str_fek8, str_feh7, str_feA1, str_fel1, str_feA2
 global str_fel2, str_fec6, str_fed2, str_fed3, str_fed4, str_D6, str_OT, str_S3
 global str_CommaSp, str_RParen2, str_D7, str_Dot, str_Space, str_fee2, str_fee3, str_fee4
-global unk_C17F0, str_D8, str_W5, str_L7, str_T5, unk_C1900, unk_C1914, unk_C1916
-global unk_C192D, unk_C1930, unk_C1934, unk_C1936, unk_C1946, unk_C1A15
+global unk_C17F0, str_D8, str_W5, str_L7, str_T5, unk_C1900, str_wildcard, str_ID
+global str_L1, str_L22, unk_C1934, unk_C1936, unk_C1946, unk_C1A15
 str_teams:
 db 074h,065h,061h,06Dh,073h,00h
 str_fe1:
@@ -1152,35 +1152,35 @@ db 04Dh,069h,067h,068h,074h,079h,020h,044h,075h,063h,06Bh,073h,020h,06Fh,066h,02
 db 041h,06Eh,061h,068h,065h,069h,06Dh,00h
 unk_C1900:
 db 03Fh,00h,00h,00h
-asc_C1904:
+str_02d2:
 db 02Eh,025h,030h,032h,064h,00h
-asc_C190A:
+str_SAV2:
 db 053h,041h,056h,00h
-asc_C190E:
+str_GAME2:
 db 047h,041h,04Dh,045h,00h,00h
-unk_C1914:
+str_wildcard:
 db 02Ah,00h
-unk_C1916:
+str_ID:
 db 049h,044h,00h
-asc_C1919:
+str_SET:
 db 02Eh,053h,045h,054h,00h
-asc_C191E:
+str_GAME3:
 db 047h,041h,04Dh,045h,00h
-asc_C1923:
+str_SAV3:
 db 053h,041h,056h,00h
-asc_C1927:
+str_02d3:
 db 02Eh,025h,030h,032h,064h,00h
-unk_C192D:
+str_L1:
 db 06Ch,031h,00h
-unk_C1930:
+str_L22:
 db 06Ch,032h,00h,00h
 unk_C1934:
 db 041h,00h
 unk_C1936:
 db 042h,00h
-asc_C1938:
+str_Game2:
 db 067h,061h,06Dh,065h,00h
-asc_C193D:
+str_Sav2:
 db 02Eh,073h,061h,076h,00h
 asc_C1942:
 db 04Eh,048h,04Ch,00h
