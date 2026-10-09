@@ -933,7 +933,6 @@ extern void TeamLineEnergy(); /* 5A2EE */
 extern void getlinee(); /* 5A30C */
 extern void calcpuckcross_ret6(); /* 5A41E */
 extern void calcpuckcross_ret5(); /* 5A41F */
-extern void GetHot(); /* 5A425 */
 extern void GetHotStick(); /* 5A4AD */
 extern void GetHotOrStick(); /* 5A534 */
 extern void SetCoachMode(); /* 5A581 */

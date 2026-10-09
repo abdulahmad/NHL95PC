@@ -2235,6 +2235,10 @@ mov byte [byte ebx+05Ah], al	; 5B81B
 .49:
 add esp, byte 1Ch	; 5B81E
 jmp near changeplayer_ret5	; 5B821
+; C: src/c/042_59D9A_engine_core/calcpuckcross.c (reenergizeteam)
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/calcpuckcross.reenergizeteam.inc"
+%else
 reenergizeteam:
 push dword 18h	; 5B826
 call __CHK	; 5B82B
@@ -2271,6 +2275,7 @@ inc edx	; 5B875
 cmp dx, byte 1Ch	; 5B876
 jl short reenergizeteam.1	; 5B87A
 jmp near calcpuckcross_ret5	; 5B87C
+%endif ; C
 ; clearteams: PC-new. Zero both team structs (200h bytes) and store their data pointers (tmsort, tmlines, tmroster, ...).
 clearteams:
 push dword 0Ch	; 5B881
