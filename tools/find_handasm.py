@@ -3,7 +3,7 @@
 
   python3 tools/find_handasm.py [--list]     writes tools/handasm.csv, prints counts (and the list with --list)
 
-Scope: the game segments of cseg01 (001-066; the Watcom C library, EA libraries, DOS/4GW glue and sound/video
+Scope: the game segments of cseg01 (001-066 without cmv_player, cdstream, zonemgr; the Watcom C library, EA libraries, DOS/4GW glue and sound/video
 drivers after them are library code and not scanned). A function is a non-local label that starts after an
 unconditional ret/jmp (or at the segment start); a non-local label reached by falling through is a mid-function
 entry of the function before it.
@@ -66,7 +66,9 @@ def refs():
 
 def scan():
     called, jumped, other = refs()
-    segs = [f for f in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/*.asm'))) if 1 <= int(os.path.basename(f)[:3]) <= 66]
+    from c_progress import is_lib
+    segs = [f for f in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/*.asm')))
+            if 1 <= int(os.path.basename(f)[:3]) <= 66 and not is_lib(os.path.basename(f)[:-4])]
     funcs = []
     for asm in segs:
         cur = None; prev = None
