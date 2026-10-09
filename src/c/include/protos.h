@@ -716,5 +716,6 @@ int TrackButtons(int *list, int n, int x, int y, int buttons);  /* 30A39 */
 int TeamGridHitTest(int x, int y, unsigned char *tab);  /* 37B92 */
 int DeskPenaltySummary(void);  /* 1A9AC */
 int DeskScoringSummary(void);  /* 1AA6D */
+int DeskGameStats(void);  /* 1A96D */
 
 #endif

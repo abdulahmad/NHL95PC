@@ -104,7 +104,7 @@ reassembles everything. Run `make fullcheck` once per commit batch; every pushed
   PanelAddPenalty, RunDeferredCalls, GetMemStats, PrintOutlinedText, MakeTeamDbFmt, LoadScheduleDB,
   IndexPhotoBank, LoadPhotoBankF + LoadPlayerPhotos and DrawSelBoxOn + DrawSelBoxOff (two-block files).
   c_candidates.py still lists some already matched functions (forcepldata inside forceteams.c): check the csv.
-* Breadth pass 2 (2026-10-09, 16:44-17:29): 33 matched in ~45 min (~44/hour), 8 new drafts (+1 old draft matched). Matched: PaGoal,
+* Breadth pass 2 (2026-10-09, 16:44-17:28): 33 matched in ~45 min (~44/hour), 8 new drafts (+1 old draft matched). Matched: PaGoal,
   PaPlayoffTonight, PaPenalty, PrintTextCopy, SaveScheduleDB (in LoadScheduleDB.c), FreeRinkGfx, FindTradeSlot,
   deflect, FreeClip, FileReadAt + FileWriteAt, ReadGSumHeader + ReadGSumTail + WriteGSumHeader (3-block file),
   FindRosterSlot, DitherRect, FormatHilightDesc, forcepldata, PostInjuryEvent, QueueDeferredCall, DrawBevelRect,
@@ -131,7 +131,8 @@ Use the "C matching prompt" in [PROMPT.md](PROMPT.md) for each session, with the
 0. Keep the breadth pass going (it gave ~47/hour): `python3 tools/c_candidates.py 100 330` across all segments,
    8-minute cap, draft at the first register-only diff. Not tried yet: MakeStatsTitle, POHiliteSlot, MoveSampleMem (far pointers),
    MenuMergeUpdateDbs, StatsSel*, SimPlayoffFinal, POSeedFinal, CopyLeagueFiles, OpenSelectedDb, DrawSpriteNumber,
-   DrawPanelScore, DeskGameStats / DeskTeamScratches / DeskVisitorLines / DeskHomeLines (end in DeskSummary_common, now in C: need DeskScoringSummary.c), ReadGameSettings, LocateTeamDbCopy. Many 150-250 B ones end in `jmp Other_ret`
+   DrawPanelScore, DeskGameStats / DeskTeamScratches / DeskVisitorLines / DeskHomeLines (end in DeskSummary_common / DeskItem_ret2 of DeskScoringSummary.c; tried DeskGameStats there: Watcom emits a
+   short jmp to the shared tail where the EXE has a near one (+3 bytes), so these stay asm unless that is solved), ReadGameSettings, LocateTeamDbCopy. Many 150-250 B ones end in `jmp Other_ret`
    (TickPanelPenalties / DrawEnergyBar -> DrawPanelLine_x, LoadSpeechSlot -> ReadBE24_ret, DressPlayer,
    FreeLeagueDbsMem): they need the owner's file. Brute-force local order on register-only drafts (see above); DrawCtlBoxOn/Off need ControlsDlg's file (they end in jmp ControlsDlg_ret).
 1. Throughput first: `python3 tools/c_candidates.py 300 800` with Hex-Rays drafts for structure; families with one

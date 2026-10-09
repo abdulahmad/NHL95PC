@@ -78,7 +78,6 @@ extern void DeskGoToReplay(); /* 1A817 */
 extern void DeskHomeLines(); /* 1A8AA */
 extern void DeskLines_common(); /* 1A8F0 */
 extern void DeskVisitorLines(); /* 1A922 */
-extern void DeskGameStats(); /* 1A96D */
 extern void DeskSummary_common(); /* 1AAB6 */
 extern void DeskItem_ret2(); /* 1AABB */
 extern void DeskTeamScratches(); /* 1AAC4 */
