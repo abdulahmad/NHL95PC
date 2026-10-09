@@ -7,7 +7,7 @@ extern str_Pointer19, str_PPV, musicon, fileoncd
 extern gamemode, ctl1team, ctl2team, sounddev, dword_C66D0, dword_C66D4
 extern rinkscrollx, rinkscrolly, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, rockcuepool
 extern teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1, cddriveptr, mainfont
-extern spritedrawcount, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, pointerspr, rinkwtiles, rinkhtiles
+extern spritedrawcount, dword_D8C72, viewscrolly, dword_D8C7A, viewscrollx, pointerspr, rinkwtiles, rinkhtiles
 extern bgscrolly, replayplay, dword_E9F16, dword_E9F38, ptrupdatefn, rockteamcues, rocktunes
 extern rockrandcues, dword_ED6D0, dword_ED6D4, gadgetfile, gadgetptry, gadgetptrx, gadgetshape
 extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED6FC, dword_ED704, dword_ED708
@@ -18,7 +18,7 @@ extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, GetInputEvent, Cle
 extern SaveHilight, NudgeRinkScroll, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
 extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B396E, sub_B3989, sub_B3999, sub_B4BA8, sub_B4BC4
-extern sub_B4CD8, sub_B4FAC, sub_B500C, sub_B5DB0, str_BothTeams, str_NeitherTeams, unk_DF014, unk_DF314
+extern sub_B4CD8, sub_B4FAC, sub_B500C, sub_B5DB0, str_BothTeams, str_NeitherTeams, savepal, gamepal
 extern camx, camy, crowdlevel, word_CD4FC, replaysfx, scrolly, word_E9F18, word_E9F3A
 extern word_ED758
 global ReplaySaveHilight_jt
@@ -555,8 +555,8 @@ mov ax, word [camx]	; 7E270
 mov dword [byte esp+01Ch], eax	; 7E276
 mov ax, word [camy]	; 7E27A
 mov dword [byte esp+020h], eax	; 7E280
-mov di, word [dword_D8C7C]	; 7E284
-mov ax, word [dword_D8C74]	; 7E28B
+mov di, word [viewscrollx]	; 7E284
+mov ax, word [viewscrolly]	; 7E28B
 mov word [byte esp+018h], ax	; 7E291
 mov si, word [crowdlevel]	; 7E296
 xor ecx, ecx	; 7E29D
@@ -583,38 +583,38 @@ mov dword [crowdsmooth], eax	; 7E303
 mov eax, dword [camx-2]	; 7E308
 sar eax, 10h	; 7E30D
 add eax, byte 20h	; 7E310
-mov dword [dword_D8C7C], eax	; 7E313
+mov dword [viewscrollx], eax	; 7E313
 cmp eax, byte 40h	; 7E318
 jle short .8	; 7E31B
-mov dword [dword_D8C7C], 40h	; 7E31D
+mov dword [viewscrollx], 40h	; 7E31D
 .8:
-cmp dword [dword_D8C7C], byte 0	; 7E327
+cmp dword [viewscrollx], byte 0	; 7E327
 jge short .9	; 7E32E
 xor ecx, ecx	; 7E330
-mov dword [dword_D8C7C], ecx	; 7E332
+mov dword [viewscrollx], ecx	; 7E332
 .9:
 mov eax, dword [camy-2]	; 7E338
 sar eax, 10h	; 7E33D
 mov edx, 140h	; 7E340
 sub edx, eax	; 7E345
 lea eax, [byte edx-054h]	; 7E347
-mov dword [dword_D8C74], eax	; 7E34A
+mov dword [viewscrolly], eax	; 7E34A
 cmp eax, 1A8h	; 7E34F
 jle short .10	; 7E354
-mov dword [dword_D8C74], 1A8h	; 7E356
+mov dword [viewscrolly], 1A8h	; 7E356
 .10:
-cmp dword [dword_D8C74], byte 0	; 7E360
+cmp dword [viewscrolly], byte 0	; 7E360
 jge short .11	; 7E367
 xor ebx, ebx	; 7E369
-mov dword [dword_D8C74], ebx	; 7E36B
+mov dword [viewscrolly], ebx	; 7E36B
 .11:
 call SelectRinkBM	; 7E371
 xor edx, edx	; 7E376
 xor eax, eax	; 7E378
 call sub_6AF97	; 7E37A
 call sub_6B008	; 7E37F
-mov edx, dword [dword_D8C74]	; 7E384
-mov eax, dword [dword_D8C7C]	; 7E38A
+mov edx, dword [viewscrolly]	; 7E384
+mov eax, dword [viewscrollx]	; 7E38A
 call SetRinkScroll	; 7E38F
 mov eax, dword [bgscrolly-2]	; 7E394
 sar eax, 10h	; 7E399
@@ -633,9 +633,9 @@ lea ebx, [dword eax+0140h]	; 7E3C6
 call sub_6AF52	; 7E3CC
 xor ecx, ecx	; 7E3D1
 mov dword [spritedrawcount], ecx	; 7E3D3
-mov edx, dword [dword_D8C74-2]	; 7E3D9
+mov edx, dword [viewscrolly-2]	; 7E3D9
 sar edx, 10h	; 7E3DF
-mov eax, dword [dword_D8C7C-2]	; 7E3E2
+mov eax, dword [viewscrollx-2]	; 7E3E2
 sar eax, 10h	; 7E3E7
 call sub_67DCC	; 7E3EA
 mov eax, dword [bgscrolly-2]	; 7E3EF
@@ -655,7 +655,7 @@ neg eax	; 7E41D
 call sub_6AF97	; 7E41F
 call sub_6ADA7	; 7E424
 mov ebx, 10h	; 7E429
-mov edx, unk_DF314	; 7E42E
+mov edx, gamepal	; 7E42E
 xor eax, eax	; 7E433
 call FadePalette	; 7E435
 call sub_B396E	; 7E43A
@@ -764,37 +764,37 @@ mov word [camy], 0FF44h	; 7E5DC
 mov eax, dword [camx-2]	; 7E5E5
 sar eax, 10h	; 7E5EA
 add eax, byte 20h	; 7E5ED
-mov dword [dword_D8C7C], eax	; 7E5F0
+mov dword [viewscrollx], eax	; 7E5F0
 cmp eax, byte 40h	; 7E5F5
 jle short .22	; 7E5F8
-mov dword [dword_D8C7C], 40h	; 7E5FA
+mov dword [viewscrollx], 40h	; 7E5FA
 .22:
-cmp dword [dword_D8C7C], byte 0	; 7E604
+cmp dword [viewscrollx], byte 0	; 7E604
 jge short .23	; 7E60B
 xor ebp, ebp	; 7E60D
-mov dword [dword_D8C7C], ebp	; 7E60F
+mov dword [viewscrollx], ebp	; 7E60F
 .23:
 mov eax, dword [camy-2]	; 7E615
 sar eax, 10h	; 7E61A
 mov edx, 140h	; 7E61D
 sub edx, eax	; 7E622
 lea eax, [byte edx-054h]	; 7E624
-mov dword [dword_D8C74], eax	; 7E627
+mov dword [viewscrolly], eax	; 7E627
 cmp eax, 1A8h	; 7E62C
 jle short .24	; 7E631
-mov dword [dword_D8C74], 1A8h	; 7E633
+mov dword [viewscrolly], 1A8h	; 7E633
 .24:
-cmp dword [dword_D8C74], byte 0	; 7E63D
+cmp dword [viewscrolly], byte 0	; 7E63D
 jge short .25	; 7E644
 xor ecx, ecx	; 7E646
-mov dword [dword_D8C74], ecx	; 7E648
+mov dword [viewscrolly], ecx	; 7E648
 .25:
 xor edx, edx	; 7E64E
 xor eax, eax	; 7E650
 call sub_6AF97	; 7E652
 call sub_6B008	; 7E657
-mov edx, dword [dword_D8C74]	; 7E65C
-mov eax, dword [dword_D8C7C]	; 7E662
+mov edx, dword [viewscrolly]	; 7E65C
+mov eax, dword [viewscrollx]	; 7E662
 call SetRinkScroll	; 7E667
 mov eax, dword [bgscrolly-2]	; 7E66C
 sar eax, 10h	; 7E671
@@ -813,9 +813,9 @@ lea ebx, [dword eax+0140h]	; 7E69E
 call sub_6AF52	; 7E6A4
 xor ebp, ebp	; 7E6A9
 mov dword [spritedrawcount], ebp	; 7E6AB
-mov edx, dword [dword_D8C74-2]	; 7E6B1
+mov edx, dword [viewscrolly-2]	; 7E6B1
 sar edx, 10h	; 7E6B7
-mov eax, dword [dword_D8C7C-2]	; 7E6BA
+mov eax, dword [viewscrollx-2]	; 7E6BA
 sar eax, 10h	; 7E6BF
 call sub_67DCC	; 7E6C2
 cmp dword [gadgetptry], 0A8h	; 7E6C7
@@ -918,23 +918,23 @@ mov word [camx], ax	; 7E84A
 mov eax, dword [byte esp+020h]	; 7E850
 mov word [camy], ax	; 7E854
 movsx eax, di	; 7E85A
-mov dword [dword_D8C7C], eax	; 7E85D
+mov dword [viewscrollx], eax	; 7E85D
 mov eax, dword [byte esp+016h]	; 7E862
 sar eax, 10h	; 7E866
-mov dword [dword_D8C74], eax	; 7E869
+mov dword [viewscrolly], eax	; 7E869
 mov word [crowdlevel], si	; 7E86E
 movsx eax, si	; 7E875
 mov dword [crowdsmooth], eax	; 7E878
 mov eax, 1	; 7E87D
 mov dword [dword_C66D4], eax	; 7E882
 mov dword [dword_C66D0], eax	; 7E887
-push unk_DF014	; 7E88C
+push savepal	; 7E88C
 push dword 100h	; 7E891
 push byte 0	; 7E896
 call sub_8FFB0	; 7E898
 add esp, byte 0Ch	; 7E89D
 mov ebx, 10h	; 7E8A0
-mov edx, unk_DF014	; 7E8A5
+mov edx, savepal	; 7E8A5
 mov eax, 1	; 7E8AA
 call FadePalette	; 7E8AF
 mov ebx, dword [gadgetfile]	; 7E8B4

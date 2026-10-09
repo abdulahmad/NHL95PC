@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_DF00C nobits alloc noexec write align=1
-global dword_DF00C, dword_DF010, hmtmstruct, hmpassatt, hmpasscmp
-global unk_DF014, unk_DF314, hmscore
-dword_DF00C:
+global savedmousex, savedmousey, hmtmstruct, hmpassatt, hmpasscmp
+global savepal, gamepal, hmscore
+savedmousex:
 resb 4
-dword_DF010:
+savedmousey:
 resb 4
-unk_DF014:
+savepal:
 resb 768
-unk_DF314:
+gamepal:
 resb 766
 resb 2
 hmtmstruct:

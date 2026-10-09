@@ -13,9 +13,9 @@ extern dword_C5135, gameopts
 extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, dword_C5840, screenbm
 extern songdata, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
 extern musichandle, cddriveptr, mousex, mousey, mousebtns, dword_D30D4, dword_D4158, dword_D415C
-extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, pntrshapes, scor2font, mainfont, dword_D8B78
+extern dword_D4160, dword_D4164, bailout_vec, kaufmfont, pntrshapes, scor2font, mainfont, scor3font
 extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, curperiod, photoptrs, s1font
-extern pointerspr, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
+extern pointerspr, savedmousex, savedmousey, dword_E9A9E, memlist1, memlist0, exit_, gmode
 extern int386_, mousepollfn, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
 extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, MainDeskLoop
 extern LoadModeState, LoadNhlCfg, ShowLoadingScreen, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
@@ -26,7 +26,7 @@ extern sub_8F633, sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FC8A, sub_8FC
 extern sub_B29F0, sub_B2CBE, FatalError, MouseSetPos, sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4
 extern sub_B30F4, sub_B33DB, sub_B3464, sub_B392C, sub_B3989, sub_B3999, PollKey, sub_B3A24
 extern sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C33, sub_B4C84, str_S1, str_errd3
-extern str_errd4, unk_C4E30, exhstate, joyqueue, unk_DF014, vtoa, cont1team, word_CBC44
+extern str_errd4, unk_C4E30, exhstate, joyqueue, savepal, vtoa, cont1team, word_CBC44
 extern exitgame, gameover, word_CBEC4, lcrequest, word_E0306, lcreqchoice, word_E0382, joysampling_save
 global HandleHotKey_ret
 global main_, GetMemListHead, GetMemStats, main_x, DiskFreeBytes, SetupControllers
@@ -324,7 +324,7 @@ lea eax, [byte esp+03Ch]	; 103C8
 push eax	; 103CC
 call sub_8E8A0	; 103CD
 add esp, byte 8	; 103D2
-mov dword [dword_D8B78], eax	; 103D5
+mov dword [scor3font], eax	; 103D5
 mov ecx, str_VFN	; 103DA
 mov ebx, str_Kaufm020	; 103DF
 cmp byte [fileoncd+01C4h], 1	; 103E4
@@ -341,7 +341,7 @@ lea eax, [byte esp+03Ch]	; 10402
 push eax	; 10406
 call sub_8E8A0	; 10407
 add esp, byte 8	; 1040C
-mov dword [dword_D8B68], eax	; 1040F
+mov dword [kaufmfont], eax	; 1040F
 mov edx, dword [s1font]	; 10414
 push edx	; 1041A
 call sub_8EA18	; 1041B
@@ -1362,13 +1362,13 @@ mov eax, dword [exitgame-2]	; 10F7A
 sar eax, 10h	; 10F7F
 cmp eax, byte 0FFFFFFFFh	; 10F82
 je short .3	; 10F85
-push unk_DF014	; 10F87
+push savepal	; 10F87
 push dword 100h	; 10F8C
 push byte 0	; 10F91
 call sub_8FFB0	; 10F93
 add esp, byte 0Ch	; 10F98
 mov ebx, 10h	; 10F9B
-mov edx, unk_DF014	; 10FA0
+mov edx, savepal	; 10FA0
 mov eax, 1	; 10FA5
 call FadePalette	; 10FAA
 mov edx, 1E0h	; 10FAF
@@ -1625,17 +1625,17 @@ cmp byte [pad2dev], 1	; 1129B
 jne short .12	; 112A2
 .11:
 mov eax, dword [mousex]	; 112A4
-mov dword [dword_DF00C], eax	; 112A9
+mov dword [savedmousex], eax	; 112A9
 mov eax, dword [mousey]	; 112AE
-mov dword [dword_DF010], eax	; 112B3
+mov dword [savedmousey], eax	; 112B3
 .12:
-push unk_DF014	; 112B8
+push savepal	; 112B8
 push dword 100h	; 112BD
 push byte 0	; 112C2
 call sub_8FFB0	; 112C4
 add esp, byte 0Ch	; 112C9
 mov ebx, 10h	; 112CC
-mov edx, unk_DF014	; 112D1
+mov edx, savepal	; 112D1
 mov eax, 1	; 112D6
 call FadePalette	; 112DB
 call CrowdFadeOut	; 112E0
@@ -1658,9 +1658,9 @@ je short .15	; 11324
 cmp byte [pad2dev], 1	; 11326
 jne short .16	; 1132D
 .15:
-mov edi, dword [dword_DF010]	; 1132F
+mov edi, dword [savedmousey]	; 1132F
 push edi	; 11335
-mov ebp, dword [dword_DF00C]	; 11336
+mov ebp, dword [savedmousex]	; 11336
 push ebp	; 1133C
 call MouseSetPos	; 1133D
 add esp, byte 8	; 11342

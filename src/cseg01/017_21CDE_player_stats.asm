@@ -16,7 +16,7 @@ extern str_fmt2d, str_fmt3d, str_fmt4d, str_fmt5d, str_fmtTenths, str_fmtPct, st
 extern str_fmtEmb, str_Bkgd2, treecolslots, treecol_Wr2
 extern treecol_Er2, treecol_Er1
 extern byte_ED909, teamdivflags, teamconf, statsplayoffs, fileoncd
-extern statsfromleague, westconfteams, eastconfteams, treerowy, cddriveptr, dword_D8B68, mainfont, statsnumgoalies
+extern statsfromleague, westconfteams, eastconfteams, treerowy, cddriveptr, kaufmfont, mainfont, statsnumgoalies
 extern statsskaterorder, statsgoalieorder, dword_DC734, statsgoalieplr, statsnumskaters, statsskaterplr, dword_DC85C, dword_DC860
 extern statspalshape, statsbgshapes, statsteamrecs, statsteambuf, statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf
 extern fputchar, j___close_, jctime, lseek_, memcpy_, statslabels, statsbgnames, statsplayerdbs
@@ -61,7 +61,7 @@ mov dword [dword esp+0FCh], edx	; 21CF6
 mov ebp, statsplayer	; 21CFD
 mov eax, dword [mainfont]	; 21D02
 mov dword [dword esp+0F8h], eax	; 21D07
-mov eax, dword [dword_D8B68]	; 21D0E
+mov eax, dword [kaufmfont]	; 21D0E
 mov dword [dword esp+0100h], eax	; 21D13
 mov eax, dword [statsfromleague]	; 21D1A
 mov ebx, dword [nosplit eax*4+statsplayerdbs]	; 21D1F
@@ -667,7 +667,7 @@ sub esp, 110h	; 22591
 mov ebp, statsplayer	; 22597
 mov eax, dword [mainfont]	; 2259C
 mov dword [dword esp+0104h], eax	; 225A1
-mov eax, dword [dword_D8B68]	; 225A8
+mov eax, dword [kaufmfont]	; 225A8
 mov dword [dword esp+0108h], eax	; 225AD
 mov eax, dword [statsfromleague]	; 225B4
 mov ebx, dword [nosplit eax*4+statsplayerdbs]	; 225B9
@@ -2393,7 +2393,7 @@ mov dword [dword esp+0258h], 8	; 23A9C
 mov eax, dword [dword esp+0254h]	; 23AA7
 call j___close_	; 23AAE
 mov esi, dword [mainfont]	; 23AB3
-mov edi, dword [dword_D8B68]	; 23AB9
+mov edi, dword [kaufmfont]	; 23AB9
 call sub_B4BA8	; 23ABF
 mov eax, dword [statsplayoffs]	; 23AC4
 shl eax, 2	; 23AC9
@@ -3126,7 +3126,7 @@ sub esp, 40Ch	; 244F2
 push eax	; 244F8
 mov eax, dword [mainfont]	; 244F9
 mov dword [dword esp+03FCh], eax	; 244FE
-mov eax, dword [dword_D8B68]	; 24505
+mov eax, dword [kaufmfont]	; 24505
 mov dword [dword esp+03F8h], eax	; 2450A
 mov ebx, dword [statsteamdbs+4]	; 24511
 xor ecx, ecx	; 24517
@@ -5449,7 +5449,7 @@ call j___close_	; 261EB
 mov eax, dword [dword esp+0260h]	; 261F0
 call j___close_	; 261F7
 mov edi, dword [mainfont]	; 261FC
-mov esi, dword [dword_D8B68]	; 26202
+mov esi, dword [kaufmfont]	; 26202
 call sub_B4BA8	; 26208
 xor ecx, ecx	; 2620D
 mov ebx, dword [statsplayoffs]	; 2620F

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_8FFD4 progbits alloc exec nowrite align=1
 extern __CMain, __FiniRtns, __InitRtns, byte_D4D06, byte_D4D07, byte_D4D0F, byte_D4D10, dword_D41F4
-extern dword_D4CD4, dword_D4CD8, dword_D4CDC, dword_D4CE0, dword_D4CE8, dword_D4CEC, dword_D4D09, dword_D8B68
+extern dword_D4CD4, dword_D4CD8, dword_D4CDC, dword_D4CE0, dword_D4CE8, dword_D4CEC, dword_D4D09, kaufmfont
 extern unk_10003, unk_F7B88, word_D41F8, word_D4CE4, word_D4D04, word_D4D0D
 global __STOSB, __STOSD, loc_90048, loc_9004A, loc_9004E, loc_90066, loc_90080, loc_90082
 global loc_90090, loc_900A1, loc_900B4, loc_900D0, loc_90108, loc_9010A, loc_90127, loc_9013B
@@ -234,7 +234,7 @@ mov dword [dword_D4CD4], ebx	; 90204
 db 03Eh,0B9h	; 9020A mov ecx,37B88h
 dd unk_F7B88
 db 03Eh,0BFh	; 90210 mov edi,18B68h
-dd dword_D8B68
+dd kaufmfont
 sub ecx, edi	; 90216
 cmp byte [byte_D4D06], 1	; 90218
 jne short loc_9022E	; 9021F

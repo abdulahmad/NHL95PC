@@ -8,7 +8,7 @@ extern str_GameMisconduct, str_DMinutes, str_02d02dSInjury, str_GoneForTheGame, 
 extern hmgoalcnt, awgoalcnt, sflags, gmode2, pendelaytab, byte_C9111
 extern penmintab, byte_C9142, byte_C9146, priolist, byte_CCE00, byte_CCE01, musicon, gsummarypath
 extern hmroster, hmrosterjersey, hmtmflags, byte_DF6E8, awtmflags, byte_DF7E8, byte_DF861, byte_E024C
-extern byte_E024D, byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E9A15, PenBuf
+extern byte_E024D, textline1, textline2, textline3, textline4, textline5, byte_E9A15, PenBuf
 extern PenBuf_pl, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD, byte_E9ACE
 extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, joysampling, gamemode, gameopts
 extern dword_C5840, dword_C90B0, sflags3, HomeTeam, dword_C9120, dword_CBEBE, dword_CBECA, dword_CC0AC
@@ -889,11 +889,11 @@ push edi	; 61EA7
 push ebp	; 61EA8
 sub esp, byte 0Ch	; 61EA9
 xor ah, ah	; 61EAC
-mov byte [byte_E0344], ah	; 61EAE
-mov byte [byte_E0308], ah	; 61EB4
-mov byte [byte_E028C], ah	; 61EBA
-mov byte [byte_E0250], ah	; 61EC0
-mov byte [byte_E02C8], ah	; 61EC6
+mov byte [textline5], ah	; 61EAE
+mov byte [textline4], ah	; 61EB4
+mov byte [textline2], ah	; 61EBA
+mov byte [textline1], ah	; 61EC0
+mov byte [textline3], ah	; 61EC6
 mov cl, byte [byte_E9AC8]	; 61ECC
 cmp cl, 1	; 61ED2
 jne near .8	; 61ED5
@@ -915,7 +915,7 @@ xor eax, eax	; 61F05
 mov al, byte [byte_E9ACF]	; 61F07
 push eax	; 61F0C
 push str_FmtClockEvent	; 61F0D
-push byte_E02C8	; 61F12
+push textline3	; 61F12
 call sprintf_	; 61F17
 add esp, byte 14h	; 61F1C
 xor eax, eax	; 61F1F
@@ -990,20 +990,20 @@ add ecx, byte 7	; 61FDE
 xor ebx, esi	; 61FE1
 mov bl, byte [dword edi+eax+hmrosterjersey]	; 61FE3
 mov edx, unk_C1B49	; 61FEA
-mov eax, byte_E0250	; 61FEF
+mov eax, textline1	; 61FEF
 call FormatPlayerName	; 61FF4
 xor edx, edx	; 61FF9
 mov dl, byte [byte_E9ACB]	; 61FFB
 cmp edx, 0FFh	; 62001
 jne short .5	; 62007
 push str_Unassisted	; 62009
-push byte_E028C	; 6200E
+push textline2	; 6200E
 call sprintf_	; 62013
 add esp, byte 8	; 62018
 jmp short .6	; 6201B
 .5:
 push str_Assists	; 6201D
-push byte_E028C	; 62022
+push textline2	; 62022
 call sprintf_	; 62027
 add esp, byte 8	; 6202C
 push unk_C1B49	; 6202F
@@ -1020,7 +1020,7 @@ lea ecx, [byte eax+07h]	; 62048
 xor ebx, ebx	; 6204B
 mov bl, byte [dword edx+edi+hmrosterjersey]	; 6204D
 mov edx, unk_C1B49	; 62054
-mov eax, byte_E0308	; 62059
+mov eax, textline4	; 62059
 call FormatPlayerName	; 6205E
 .6:
 xor edx, edx	; 62063
@@ -1048,7 +1048,7 @@ lea ecx, [byte edx+07h]	; 620A5
 mov bl, byte [dword ebx+eax+hmrosterjersey]	; 620A8
 and ebx, 0FFh	; 620AF
 mov edx, unk_C1B49	; 620B5
-mov eax, byte_E0344	; 620BA
+mov eax, textline5	; 620BA
 .7:
 call FormatPlayerName	; 620BF
 jmp near .14	; 620C4
@@ -1077,16 +1077,16 @@ xor eax, eax	; 62113
 mov al, byte [byte_E9ACE]	; 62115
 push eax	; 6211A
 push str_FmtClockEvent	; 6211B
-push byte_E02C8	; 62120
+push textline3	; 62120
 call sprintf_	; 62125
 add esp, byte 14h	; 6212A
-mov edi, byte_E0250	; 6212D
+mov edi, textline1	; 6212D
 mov esi, str_PenaltyShot	; 62132
 movsd	; 62137
 movsd	; 62138
 movsd	; 62139
 movsb	; 6213A
-mov edi, byte_E028C	; 6213B
+mov edi, textline2	; 6213B
 mov esi, str_ToBeTakenBy	; 62140
 movsd	; 62145
 movsd	; 62146
@@ -1117,7 +1117,7 @@ add eax, ebx	; 62188
 xor ebx, ebx	; 6218A
 mov bl, byte [dword eax+hmrosterjersey]	; 6218C
 mov edx, unk_C1B49	; 62192
-mov eax, byte_E0308	; 62197
+mov eax, textline4	; 62197
 jmp near BuildEventLines.7	; 6219C
 .9:
 mov eax, esi	; 621A1
@@ -1136,7 +1136,7 @@ xor eax, eax	; 621C0
 mov al, byte [byte_E9ACE]	; 621C2
 push eax	; 621C7
 push str_02d02dSPenalty	; 621C8
-push byte_E02C8	; 621CD
+push textline3	; 621CD
 call sprintf_	; 621D2
 add esp, byte 14h	; 621D7
 push unk_C1B49	; 621DA
@@ -1162,17 +1162,17 @@ lea eax, [ebx+edx]	; 6220C
 xor ebx, ebx	; 6220F
 mov bl, byte [dword eax+hmrosterjersey]	; 62211
 mov edx, unk_C1B49	; 62217
-mov eax, byte_E0250	; 6221C
+mov eax, textline1	; 6221C
 call FormatPlayerName	; 62221
 xor eax, eax	; 62226
 mov al, byte [byte_E9ACB]	; 62228
 mov edx, dword [nosplit eax*4+penaltynames]	; 6222D
-mov eax, byte_E028C	; 62234
+mov eax, textline2	; 62234
 call strcpy_	; 62239
 movzx edi, byte [byte_E9ACC]	; 6223E
 cmp edi, 0FFh	; 62245
 jne short .10	; 6224B
-mov edi, byte_E0308	; 6224D
+mov edi, textline4	; 6224D
 mov esi, str_GameMisconduct	; 62252
 movsd	; 62257
 movsd	; 62258
@@ -1182,7 +1182,7 @@ jmp near .14	; 6225B
 .10:
 push edi	; 62260
 push str_DMinutes	; 62261
-push byte_E0308	; 62266
+push textline4	; 62266
 call sprintf_	; 6226B
 add esp, byte 0Ch	; 62270
 jmp near .14	; 62273
@@ -1210,7 +1210,7 @@ xor eax, eax	; 622B8
 mov al, byte [byte_E9ACD]	; 622BA
 push eax	; 622BF
 push str_02d02dSInjury	; 622C0
-push byte_E02C8	; 622C5
+push textline3	; 622C5
 call sprintf_	; 622CA
 add esp, byte 14h	; 622CF
 push unk_C1B49	; 622D2
@@ -1234,7 +1234,7 @@ add ecx, byte 7	; 622FF
 mov bl, byte [dword ebx+eax+hmrosterjersey]	; 62302
 and ebx, 0FFh	; 62309
 mov edx, unk_C1B49	; 6230F
-mov eax, byte_E0250	; 62314
+mov eax, textline1	; 62314
 call FormatPlayerName	; 62319
 test edi, edi	; 6231E
 jle short .12	; 62320
@@ -1243,7 +1243,7 @@ jmp short .13	; 62327
 .12:
 push str_GoneFor1Period	; 62329
 .13:
-push byte_E028C	; 6232E
+push textline2	; 6232E
 call sprintf_	; 62333
 add esp, byte 8	; 62338
 .14:
@@ -2552,7 +2552,7 @@ xor eax, eax	; 633C3
 mov al, byte [byte ebx+05Eh]	; 633C5
 push eax	; 633C8
 push str_ServedByD	; 633C9
-push byte_E0344	; 633CE
+push textline5	; 633CE
 call sprintf_	; 633D3
 add esp, byte 0Ch	; 633D8
 .27:

@@ -16,7 +16,7 @@ extern sub_673C5, ClearInputQueue, FadePalStep, LoadRockMusic, FreeRockMusic, In
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
 extern sub_93000, FatalError, sub_B2DCA, sub_B4FAC, sub_B5DB0, bothneitherstrs, str_K1, unk_C3447
 extern str_F12, str_F3, str_F4, unk_C3470, str_star, msg_NoHilights, hmteamrec
-extern unk_DF314, unknown_libname_1, unknown_libname_2, VisTeam, awteamrec
+extern gamepal, unknown_libname_1, unknown_libname_2, VisTeam, awteamrec
 global HilightSaveToDlg, SaveHilight, NudgeRinkScroll, CmpInt, TeamFromHiName, FormatHilightDesc, SelectHilight, ViewHilights
 global PlayHilight
 HilightSaveToDlg:
@@ -911,7 +911,7 @@ mov edx, dword [VisTeam-2]	; 8025F
 sar edx, 10h	; 80265
 mov eax, dword [HomeTeam-2]	; 80268
 sar eax, 10h	; 8026D
-mov ebx, unk_DF314	; 80270
+mov ebx, gamepal	; 80270
 call sub_673C5	; 80275
 call LoadRockMusic	; 8027A
 call LoadGameGfx	; 8027F

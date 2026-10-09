@@ -11,7 +11,7 @@ extern dword_C66D4, dword_C90B0, sflags3, cont2team, HomeTeam, dword_CBC3E, dwor
 extern lastsfx, photobankf, onetimerflag, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 extern dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
 extern dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, crowdsmooth, frameaccum
-extern dword_D8C78, curperiod, photobanks, dword_DB088, dword_DC28C, dword_DF00C, dword_DF010, hmtmstruct
+extern dword_D8C78, curperiod, photobanks, dword_DB088, dword_DC28C, savedmousex, savedmousey, hmtmstruct
 extern dword_DF6F2, dword_DF6F6, hmtmplstats, dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
 extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2
 extern awtmsort, dword_E009C, dword_E0248, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
@@ -19,7 +19,7 @@ extern ltx, replaystart, off_CC01D, passspeed, LoadGameGfx, FileReadAt, FileWrit
 extern SaveModeState, LoadModeState, GetPeriodTime, SprSort, BuildEventLines, sub_673C5, ReplayRecordReset, LoadRockMusic
 extern FatalError, MouseSetPos, threat, exhstate, unk_C5423, unk_C542E, awlinetab, unk_DAC40
 extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240
-extern unk_DC252, unk_DF314, SortCords, hudpenhome, hudpenaway, camx, camy
+extern unk_DC252, gamepal, SortCords, hudpenhome, hudpenaway, camx, camy
 extern lastplayer, passdir, word_C90A6, passplayer, xc1, yc1, word_C90B2, word_C90B4
 extern fodir1, fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
@@ -370,10 +370,10 @@ add eax, byte 2	; 6001B
 mov dx, word [word_E0382]	; 6001E
 mov word [eax], dx	; 60025
 add eax, byte 2	; 60028
-mov dx, word [dword_DF00C]	; 6002B
+mov dx, word [savedmousex]	; 6002B
 mov word [eax], dx	; 60032
 add eax, byte 2	; 60035
-mov dx, word [dword_DF010]	; 60038
+mov dx, word [savedmousey]	; 60038
 mov word [eax], dx	; 6003F
 add eax, byte 2	; 60042
 mov dx, word [word_DEF84]	; 60045
@@ -1151,10 +1151,10 @@ mov ax, word [ebx]	; 60B71
 mov word [word_E0382], ax	; 60B74
 add ebx, byte 2	; 60B7A
 movsx eax, word [ebx]	; 60B7D
-mov dword [dword_DF00C], eax	; 60B80
+mov dword [savedmousex], eax	; 60B80
 add ebx, byte 2	; 60B85
 movsx eax, word [ebx]	; 60B88
-mov dword [dword_DF010], eax	; 60B8B
+mov dword [savedmousey], eax	; 60B8B
 add ebx, byte 2	; 60B90
 movsx eax, word [ebx]	; 60B93
 mov dword [word_DEF84], eax	; 60B96
@@ -1632,7 +1632,7 @@ mov edx, dword [VisTeam-2]	; 6125E
 sar edx, 10h	; 61264
 mov eax, dword [HomeTeam-2]	; 61267
 sar eax, 10h	; 6126C
-mov ebx, unk_DF314	; 6126F
+mov ebx, gamepal	; 6126F
 call sub_673C5	; 61274
 mov ebp, 1	; 61279
 mov dword [dword_C66D4], ebp	; 6127E

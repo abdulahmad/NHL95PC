@@ -17,7 +17,7 @@ extern ctl2side, sounddev, teamdivflags, songdata, cont2team, HomeTeam, settings
 extern dword_D2150, dword_D223C, lockerrects
 extern dword_D22DC, dword_D22E0, dword_D22EC, dword_D22F0
 extern soundcardrects, musichandle, dword_D2435, cddriveptr, musicslot
-extern dword_D8B68, mainfont, s1font, pointerspr, fdlg_cancel, ptrupdatefn, setbits, pl20spr
+extern kaufmfont, mainfont, s1font, pointerspr, fdlg_cancel, ptrupdatefn, setbits, pl20spr
 extern pl05spr, pl10spr, pg07spr, na05spr, pg01spr, acptspr, na03spr, pg03spr
 extern chkoffspr, pg05spr, chkonspr, na01spr, titlebckspr, homebckspr, homenamebckspr, visbckspr
 extern visnamebckspr, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
@@ -1246,7 +1246,7 @@ lea eax, [byte edi+02h]	; 81343
 mov ebx, str_VisitingTeam	; 81346
 mov edx, esi	; 8134B
 call PrintShadowText	; 8134D
-mov esi, dword [dword_D8B68]	; 81352
+mov esi, dword [kaufmfont]	; 81352
 push esi	; 81358
 call sub_8EA18	; 81359
 add esp, byte 4	; 8135E
@@ -1544,7 +1544,7 @@ mov ecx, dword [titlebckspr]	; 81758
 push ecx	; 8175E
 call sub_910E0	; 8175F
 add esp, byte 0Ch	; 81764
-mov esi, dword [dword_D8B68]	; 81767
+mov esi, dword [kaufmfont]	; 81767
 push esi	; 8176D
 call sub_8EA18	; 8176E
 add esp, byte 4	; 81773

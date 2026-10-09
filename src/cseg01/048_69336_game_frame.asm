@@ -5,8 +5,8 @@ section s_69336 progbits alloc exec nowrite align=1
 extern DoGameFrame, ResetBench, __CHK, assreplace, sflags, gmode2, musicon, bgscrollx, scrollx
 extern iflags, byte_E9AC1, joysampling, inputframes, escrequest, demomode, gameopts, hudclockmin
 extern hudclocksec, hudclockhund, rinkscrollx, rinkscrolly, dword_C90B0, sflags3, cont2team, HomeTeam
-extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, spritedrawcount, dword_D8C72, dword_D8C74
-extern dword_D8C78, dword_D8C7A, dword_D8C7C, curperiod, dword_DC28C, rinkwtiles, rinkhtiles, bgscrolly
+extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, spritedrawcount, dword_D8C72, viewscrolly
+extern dword_D8C78, dword_D8C7A, viewscrollx, curperiod, dword_DC28C, rinkwtiles, rinkhtiles, bgscrolly
 extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
 extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSize, ResetInputSampling, RunGameFrames
@@ -14,7 +14,7 @@ extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, DrawHudPanel, sub_1BAF3, L
 extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
 extern PaHighlightIntro, PaOpenBank, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
 extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, SpeechBusy
-extern MusicChanReset2, sub_8F633, sub_8FFB0, sub_B396E, awlinetab, hmlinetab, unk_DF014, unk_DF314
+extern MusicChanReset2, sub_8F633, sub_8FFB0, sub_B396E, awlinetab, hmlinetab, savepal, gamepal
 extern SortCords, vtoa, camx, camy, passplayer, xc1, yc1
 extern c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, refsignal, RefStep, RefPen
 extern word_C90D8, gsp, gameclock, clockticks, word_CBC44, exitgame, gameover, word_CBC52
@@ -129,7 +129,7 @@ mov edx, dword [VisTeam-2]	; 694B6
 sar edx, 10h	; 694BC
 mov eax, dword [HomeTeam-2]	; 694BF
 sar eax, 10h	; 694C4
-mov ebx, unk_DF314	; 694C7
+mov ebx, gamepal	; 694C7
 call sub_673C5	; 694CC
 call LoadPlayerPhotos	; 694D1
 xor ecx, ecx	; 694D6
@@ -446,41 +446,41 @@ call RunGameFrames	; 69A26
 mov eax, dword [camx-2]	; 69A2B
 sar eax, 10h	; 69A30
 add eax, byte 20h	; 69A33
-mov dword [dword_D8C7C], eax	; 69A36
+mov dword [viewscrollx], eax	; 69A36
 mov eax, dword [camy-2]	; 69A3B
 sar eax, 10h	; 69A40
 mov edx, 140h	; 69A43
 sub edx, eax	; 69A48
 lea eax, [byte edx-054h]	; 69A4A
-mov dword [dword_D8C74], eax	; 69A4D
-mov ebx, dword [dword_D8C7C]	; 69A52
+mov dword [viewscrolly], eax	; 69A4D
+mov ebx, dword [viewscrollx]	; 69A52
 cmp ebx, byte 40h	; 69A58
 jle short .18	; 69A5B
-mov dword [dword_D8C7C], 40h	; 69A5D
+mov dword [viewscrollx], 40h	; 69A5D
 jmp short .19	; 69A67
 .18:
 test ebx, ebx	; 69A69
 jge short .19	; 69A6B
 xor eax, eax	; 69A6D
-mov dword [dword_D8C7C], eax	; 69A6F
+mov dword [viewscrollx], eax	; 69A6F
 .19:
-mov ebx, dword [dword_D8C74]	; 69A74
+mov ebx, dword [viewscrolly]	; 69A74
 cmp ebx, 1A8h	; 69A7A
 jle short .20	; 69A80
-mov dword [dword_D8C74], 1A8h	; 69A82
+mov dword [viewscrolly], 1A8h	; 69A82
 jmp short .21	; 69A8C
 .20:
 test ebx, ebx	; 69A8E
 jge short .21	; 69A90
 xor eax, eax	; 69A92
-mov dword [dword_D8C74], eax	; 69A94
+mov dword [viewscrolly], eax	; 69A94
 .21:
 xor edx, edx	; 69A99
 xor eax, eax	; 69A9B
 call sub_6AF97	; 69A9D
 call sub_6B008	; 69AA2
-mov edx, dword [dword_D8C74]	; 69AA7
-mov eax, dword [dword_D8C7C]	; 69AAD
+mov edx, dword [viewscrolly]	; 69AA7
+mov eax, dword [viewscrollx]	; 69AAD
 call SetRinkScroll	; 69AB2
 mov eax, dword [bgscrolly-2]	; 69AB7
 sar eax, 10h	; 69ABC
@@ -499,9 +499,9 @@ lea ebx, [dword eax+0140h]	; 69AE9
 call sub_6AF52	; 69AEF
 xor ebx, ebx	; 69AF4
 mov dword [spritedrawcount], ebx	; 69AF6
-mov edx, dword [dword_D8C74-2]	; 69AFC
+mov edx, dword [viewscrolly-2]	; 69AFC
 sar edx, 10h	; 69B02
-mov eax, dword [dword_D8C7C-2]	; 69B05
+mov eax, dword [viewscrollx-2]	; 69B05
 sar eax, 10h	; 69B0A
 call DrawRinkOverlays	; 69B0D
 mov edx, dword [bgscrolly-2]	; 69B12
@@ -526,13 +526,13 @@ mov ax, word [joysampling]	; 69B56
 mov word [joysampling_save], ax	; 69B5C
 xor ecx, ecx	; 69B62
 mov dword [joysampling], ecx	; 69B64
-push unk_DF014	; 69B6A
+push savepal	; 69B6A
 push dword 100h	; 69B6F
 push ecx	; 69B74
 call sub_8FFB0	; 69B75
 add esp, byte 0Ch	; 69B7A
 mov ebx, 10h	; 69B7D
-mov edx, unk_DF014	; 69B82
+mov edx, savepal	; 69B82
 mov eax, 1	; 69B87
 call FadePalette	; 69B8C
 mov eax, dword [joysampling_save-2]	; 69B91
@@ -592,7 +592,7 @@ mov edx, dword [byte esp+04h]	; 69C52
 mov eax, dword [byte esp+08h]	; 69C56
 call PaHighlightIntro	; 69C5A
 mov ebx, 10h	; 69C5F
-mov edx, unk_DF314	; 69C64
+mov edx, gamepal	; 69C64
 xor eax, eax	; 69C69
 call FadePalette	; 69C6B
 xor esi, esi	; 69C70
@@ -642,13 +642,13 @@ mov word [word_CBECC], di	; 69D16
 xor ecx, ecx	; 69D1D
 mov dword [demomode], ecx	; 69D1F
 mov dword [dword_CCC98], ecx	; 69D25
-push unk_DF014	; 69D2B
+push savepal	; 69D2B
 push dword 100h	; 69D30
 push ecx	; 69D35
 call sub_8FFB0	; 69D36
 add esp, byte 0Ch	; 69D3B
 mov ebx, 10h	; 69D3E
-mov edx, unk_DF014	; 69D43
+mov edx, savepal	; 69D43
 mov eax, 1	; 69D48
 call FadePalette	; 69D4D
 call CrowdFadeOut	; 69D52
@@ -792,7 +792,7 @@ mov edx, dword [VisTeam-2]	; 69F76
 sar edx, 10h	; 69F7C
 mov eax, dword [HomeTeam-2]	; 69F7F
 sar eax, 10h	; 69F84
-mov ebx, unk_DF314	; 69F87
+mov ebx, gamepal	; 69F87
 call sub_673C5	; 69F8C
 mov word [word_CBC54], di	; 69F91
 mov word [word_CBC52], di	; 69F98

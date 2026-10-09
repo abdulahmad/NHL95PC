@@ -6,9 +6,9 @@ extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, award
 extern curleague, sflags, musicon, byte_D9299, awardwinners, fileoncd, joysampling, gameopts
 extern inputframes, escrequest, demomode, gameresult, gamemode, hudclockmin, hudclocksec, hudclockhund
 extern dword_C5840, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
-extern penshotlive, cddriveptr, mousex, mousey, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74
-extern dword_D8C78, dword_D8C7A, dword_D8C7C, curperiod, s1font, dword_DC28C, rinkwtiles, rinkhtiles
-extern bgscrolly, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, dword_E9A9E, j_unlink_
+extern penshotlive, cddriveptr, mousex, mousey, spritedrawcount, frameaccum, dword_D8C72, viewscrolly
+extern dword_D8C78, dword_D8C7A, viewscrollx, curperiod, s1font, dword_DC28C, rinkwtiles, rinkhtiles
+extern bgscrolly, dword_DEF8C, savedmousex, savedmousey, dword_E0244, recbpr, dword_E9A9E, j_unlink_
 extern HandleHotKey_ret, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
 extern off_C526F, off_C5273, teamabbrevs, leaguedbnames, replaystart, camx_m2
 extern off_CBED0, strcat_, strcpy_, SetScreenSize, ResetInputSampling, RunGameFrames, FadePalette, LoadGameGfx
@@ -20,7 +20,7 @@ extern sub_61A27, sub_61B85, sub_64614, SetupTeamLines, sub_65B48, sub_673C5, su
 extern sub_6AF97, sub_6B008, LoadRockMusic, SpeechStopQueue, MusicChanReset, SelectScreenBM, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8FFB0, sub_90354, sub_9035C, MouseSetPos, sub_B396E, sub_B4BA8, str_backslash
 extern cupteam, presidentsteam, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690
-extern unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, treeteamnames, unk_DF014, unk_DF314, camx
+extern unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, treeteamnames, savepal, gamepal, camx
 extern gsp, gameclock, word_CBC44, exitgame, gameover, word_CBEC4, word_CBECC, scrolly
 extern lcrequest, word_E0306, joysampling_save
 global assinsert, assreplace
@@ -68,41 +68,41 @@ call RunGameFrames	; 116F6
 mov eax, dword [camx-2]	; 116FB
 sar eax, 10h	; 11700
 add eax, byte 20h	; 11703
-mov dword [dword_D8C7C], eax	; 11706
+mov dword [viewscrollx], eax	; 11706
 mov eax, dword [camy-2]	; 1170B
 sar eax, 10h	; 11710
 mov edx, 140h	; 11713
 sub edx, eax	; 11718
 lea eax, [byte edx-054h]	; 1171A
-mov dword [dword_D8C74], eax	; 1171D
-mov eax, dword [dword_D8C7C]	; 11722
+mov dword [viewscrolly], eax	; 1171D
+mov eax, dword [viewscrollx]	; 11722
 cmp eax, byte 40h	; 11727
 jle short .3	; 1172A
-mov dword [dword_D8C7C], 40h	; 1172C
+mov dword [viewscrollx], 40h	; 1172C
 jmp short .4	; 11736
 .3:
 test eax, eax	; 11738
 jge short .4	; 1173A
 xor ebx, ebx	; 1173C
-mov dword [dword_D8C7C], ebx	; 1173E
+mov dword [viewscrollx], ebx	; 1173E
 .4:
-mov edi, dword [dword_D8C74]	; 11744
+mov edi, dword [viewscrolly]	; 11744
 cmp edi, 1A8h	; 1174A
 jle short .5	; 11750
-mov dword [dword_D8C74], 1A8h	; 11752
+mov dword [viewscrolly], 1A8h	; 11752
 jmp short .6	; 1175C
 .5:
 test edi, edi	; 1175E
 jge short .6	; 11760
 xor eax, eax	; 11762
-mov dword [dword_D8C74], eax	; 11764
+mov dword [viewscrolly], eax	; 11764
 .6:
 xor edx, edx	; 11769
 xor eax, eax	; 1176B
 call sub_6AF97	; 1176D
 call sub_6B008	; 11772
-mov edx, dword [dword_D8C74]	; 11777
-mov eax, dword [dword_D8C7C]	; 1177D
+mov edx, dword [viewscrolly]	; 11777
+mov eax, dword [viewscrollx]	; 1177D
 call SetRinkScroll	; 11782
 mov eax, dword [bgscrolly-2]	; 11787
 sar eax, 10h	; 1178C
@@ -121,9 +121,9 @@ lea ebx, [dword eax+0140h]	; 117B9
 call sub_6AF52	; 117BF
 xor ebx, ebx	; 117C4
 mov dword [spritedrawcount], ebx	; 117C6
-mov edx, dword [dword_D8C74-2]	; 117CC
+mov edx, dword [viewscrolly-2]	; 117CC
 sar edx, 10h	; 117D2
-mov eax, dword [dword_D8C7C-2]	; 117D5
+mov eax, dword [viewscrollx-2]	; 117D5
 sar eax, 10h	; 117DA
 call DrawRinkOverlays	; 117DD
 cmp word [word_CBEC4], byte 0	; 117E2
@@ -131,13 +131,13 @@ je short .7	; 117EA
 mov ax, word [joysampling]	; 117EC
 mov word [joysampling_save], ax	; 117F2
 mov dword [joysampling], ebx	; 117F8
-push unk_DF014	; 117FE
+push savepal	; 117FE
 push dword 100h	; 11803
 push ebx	; 11808
 call sub_8FFB0	; 11809
 add esp, byte 0Ch	; 1180E
 mov ebx, 10h	; 11811
-mov edx, unk_DF014	; 11816
+mov edx, savepal	; 11816
 mov eax, 1	; 1181B
 call FadePalette	; 11820
 call sub_61B85	; 11825
@@ -213,7 +213,7 @@ mov word [joysampling_save], ax	; 11920
 xor ebp, ebp	; 11926
 mov dword [joysampling], ebp	; 11928
 mov ebx, 10h	; 1192E
-mov edx, unk_DF314	; 11933
+mov edx, gamepal	; 11933
 xor eax, eax	; 11938
 call FadePalette	; 1193A
 xor esi, esi	; 1193F
@@ -228,7 +228,7 @@ mov edx, dword [demomode]	; 11962
 test edx, edx	; 11968
 je short .11	; 1196A
 mov ebx, 10h	; 1196C
-mov edx, unk_DF314	; 11971
+mov edx, gamepal	; 11971
 mov eax, 1	; 11976
 call FadePalette	; 1197B
 mov dword [gameresult], 2	; 11980
@@ -243,9 +243,9 @@ cmp byte [pad2dev], 1	; 119AA
 jne short .13	; 119B1
 .12:
 mov eax, dword [mousex]	; 119B3
-mov dword [dword_DF00C], eax	; 119B8
+mov dword [savedmousex], eax	; 119B8
 mov eax, dword [mousey]	; 119BD
-mov dword [dword_DF010], eax	; 119C2
+mov dword [savedmousey], eax	; 119C2
 .13:
 call CrowdFadeOut	; 119C7
 cmp byte [musicon], 0	; 119CC
@@ -262,13 +262,13 @@ mov ecx, dword [s1font]	; 119F0
 push ecx	; 119F6
 call sub_8EA18	; 119F7
 add esp, byte 4	; 119FC
-push unk_DF014	; 119FF
+push savepal	; 119FF
 push dword 100h	; 11A04
 push byte 0	; 11A09
 call sub_8FFB0	; 11A0B
 add esp, byte 0Ch	; 11A10
 mov ebx, 10h	; 11A13
-mov edx, unk_DF014	; 11A18
+mov edx, savepal	; 11A18
 mov eax, 1	; 11A1D
 call FadePalette	; 11A22
 mov edx, 1E0h	; 11A27
@@ -286,9 +286,9 @@ je short .16	; 11A60
 cmp byte [pad2dev], 1	; 11A62
 jne short .17	; 11A69
 .16:
-mov edi, dword [dword_DF010]	; 11A6B
+mov edi, dword [savedmousey]	; 11A6B
 push edi	; 11A71
-mov ebp, dword [dword_DF00C]	; 11A72
+mov ebp, dword [savedmousex]	; 11A72
 push ebp	; 11A78
 call MouseSetPos	; 11A79
 add esp, byte 8	; 11A7E
@@ -382,7 +382,7 @@ mov dword [joysampling], esi	; 11BDD
 cmp dword [demomode], byte 0	; 11BE3
 je short .25	; 11BEA
 mov ebx, 10h	; 11BEC
-mov edx, unk_DF314	; 11BF1
+mov edx, gamepal	; 11BF1
 mov eax, 1	; 11BF6
 call FadePalette	; 11BFB
 mov dword [gameresult], 1	; 11C00
@@ -465,7 +465,7 @@ mov edx, dword [VisTeam-2]	; 11D31
 sar edx, 10h	; 11D37
 mov eax, dword [HomeTeam-2]	; 11D3A
 sar eax, 10h	; 11D3F
-mov ebx, unk_DF314	; 11D42
+mov ebx, gamepal	; 11D42
 call sub_673C5	; 11D47
 call FadeOutPalCycle	; 11D4C
 mov edx, 0C8h	; 11D51
@@ -534,9 +534,9 @@ je short .7	; 11E52
 cmp byte [pad2dev], 1	; 11E54
 jne short .8	; 11E5B
 .7:
-mov edi, dword [dword_DF010]	; 11E5D
+mov edi, dword [savedmousey]	; 11E5D
 push edi	; 11E63
-mov ebp, dword [dword_DF00C]	; 11E64
+mov ebp, dword [savedmousex]	; 11E64
 push ebp	; 11E6A
 call MouseSetPos	; 11E6B
 add esp, byte 8	; 11E70

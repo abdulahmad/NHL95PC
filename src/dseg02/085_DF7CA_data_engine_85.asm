@@ -4,8 +4,8 @@ bits 32
 section s_DF7CA nobits alloc noexec write align=1
 global byte_DF7CA, byte_DF7E6, byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_DF861
 global byte_DF87F, byte_DFF3A, puckpflags2, byte_DFFA6, byte_DFFE0, byte_DFFE2, byte_E003A, byte_E0072
-global byte_E0073, byte_E0074, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8
-global byte_E0308, byte_E0344, PlList, byte_E038A, byte_E0393, byte_E0397, byte_E03C1, dword_DF7EA
+global byte_E0073, byte_E0074, byte_E024C, byte_E024D, byte_E024F, textline1, textline2, textline3
+global textline4, textline5, PlList, byte_E038A, byte_E0393, byte_E0397, byte_E03C1, dword_DF7EA
 global awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2, awtmsort
 global puckcross_m2, dword_DF848, puckstruct
 global sortobj15, dword_E009C, photoptrsf, dword_E0220, dword_E0230
@@ -171,19 +171,19 @@ word_E024E:
 resb 1
 byte_E024F:
 resb 1
-byte_E0250:
+textline1:
 resb 60
-byte_E028C:
+textline2:
 resb 60
-byte_E02C8:
+textline3:
 resb 60
 lcrequest:
 resb 2
 word_E0306:
 resb 2
-byte_E0308:
+textline4:
 resb 60
-byte_E0344:
+textline5:
 resb 58
 resb 2
 lcreqchoice:

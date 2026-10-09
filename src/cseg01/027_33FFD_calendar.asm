@@ -15,7 +15,7 @@ extern GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown, DrawMenuIt
 extern SetCtlTeams, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
 extern sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_91370, sub_913D0
 extern sub_91400, sub_91964, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4
-extern sub_B4DD4, sub_B4FAC, str_D8, str_W5, str_L7, str_T5, calmenubar, unk_DF014
+extern sub_B4DD4, sub_B4FAC, str_D8, str_W5, str_L7, str_T5, calmenubar, savepal
 global DrawCalendarDay, CalNextMonth, CalPrevMonth, CalReturn, ApplyShapePalette, SetGameSides, CalendarScreen
 DrawCalendarDay:
 push dword 0CCh	; 33FFD
@@ -704,13 +704,13 @@ mov ebx, 64h	; 34895
 mov edx, 3	; 3489A
 call sub_8FCDF	; 3489F
 .1:
-push unk_DF014	; 348A4
+push savepal	; 348A4
 push dword 100h	; 348A9
 push byte 0	; 348AE
 call sub_8FFB0	; 348B0
 add esp, byte 0Ch	; 348B5
 mov ebx, 10h	; 348B8
-mov edx, unk_DF014	; 348BD
+mov edx, savepal	; 348BD
 mov eax, 1	; 348C2
 call FadePalStep	; 348C7
 cmp byte [musicon], 0	; 348CC

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B195C progbits alloc exec nowrite align=1
-extern dword_D8B68, unk_D8B4A
+extern kaufmfont, unk_D8B4A
 global loc_B196D, loc_B197D, loc_B1986, loc_B199F, loc_B19A4, loc_B19BF, loc_B19C1, sub_B195C
 sub_B195C:
 push ebx	; B195C
@@ -11,7 +11,7 @@ push edx	; B195E
 push esi	; B195F
 push edi	; B1960
 mov esi, unk_D8B4A	; B1961
-mov edi, dword_D8B68	; B1966
+mov edi, kaufmfont	; B1966
 LD mov, ebx, esi	; B196B
 loc_B196D:
 LD cmp, ebx, edi	; B196D

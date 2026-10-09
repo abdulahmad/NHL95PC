@@ -4,8 +4,8 @@ bits 32
 section s_50AFE progbits alloc exec nowrite align=1
 extern Endfaceoff, Findhittype, ResetBench, SetSPA, Setplass, StartFaceoffLineChange, Stop4Pen, __CHK
 extern a2touchpuck, assexit, assinsert, assreplace, sflags, gmode2, byte_CBEA8, byte_CCBBA
-extern byte_CCBBB, hmroster, hmtmflags, awtmflags, byte_E0250, byte_E028C, puckcross
-extern byte_E02C8, byte_E0308, byte_E0344, byte_E0393, byte_E0397, iflags, checkwindow, doshot
+extern byte_CCBBB, hmroster, hmtmflags, awtmflags, textline1, textline2, puckcross
+extern textline3, textline4, textline5, byte_E0393, byte_E0397, iflags, checkwindow, doshot
 extern joysampling, gameopts, dword_C90B0, sflags3, cont2team, dword_CBECA, dword_CC0EC, dword_CC0F0
 extern onetimerflag, dword_CC0FA, penshotplayer, dword_CC104, penshotmode, penshotstart, hmtmstruct, awtmstruct
 extern dword_E0244, dword_E9A9E, forcepldata, puckvx, gmode
@@ -1454,15 +1454,15 @@ mov word [word_CBEC0], di	; 51CE6
 xor ecx, ecx	; 51CED
 mov word [dword_CBECA], cx	; 51CEF
 xor dh, ah	; 51CF6
-mov byte [byte_E0344], dh	; 51CF8
+mov byte [textline5], dh	; 51CF8
 xor bl, al	; 51CFE
-mov byte [byte_E0308], bl	; 51D00
+mov byte [textline4], bl	; 51D00
 xor bh, ah	; 51D06
-mov byte [byte_E028C], bh	; 51D08
+mov byte [textline2], bh	; 51D08
 xor cl, cl	; 51D0E
-mov byte [byte_E0250], cl	; 51D10
+mov byte [textline1], cl	; 51D10
 xor ch, ch	; 51D16
-mov byte [byte_E02C8], ch	; 51D18
+mov byte [textline3], ch	; 51D18
 cmp dword [dword_CC0EC], byte 0	; 51D1E
 jne short .4	; 51D25
 cmp word [gsp], byte 0	; 51D27

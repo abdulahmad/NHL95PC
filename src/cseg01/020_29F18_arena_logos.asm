@@ -9,7 +9,7 @@ extern str_Indus030, str_GIPK, str_Iff5, str_Tonights, str_Injured, str_extDB, s
 extern scoutcatidx, curleague, musicon, byte_D42C3, hmroster, fileoncd
 extern gameopts, ctl1team, ctl2team
 extern teamconf, boxfillcolor, boxlitecolor, boxshadecolor, songdata, cont2team, HomeTeam, musicslot
-extern musichandle, cddriveptr, dword_D8B68, mainfont, dword_DBC7C, schedgameidx, pointerspr, ptrupdatefn
+extern musichandle, cddriveptr, kaufmfont, mainfont, dword_DBC7C, schedgameidx, pointerspr, ptrupdatefn
 extern fputchar, jctime, memcpy_, teamabbrevs, crestnames, scoutcatnames, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, SetDialogColors, TrackButtons, DrawButtons
@@ -140,7 +140,7 @@ add esp, byte 4	; 2A0D3
 xor edi, edi	; 2A0D6
 mov dword [songdata], edi	; 2A0D8
 .6:
-mov ebp, dword [dword_D8B68]	; 2A0DE
+mov ebp, dword [kaufmfont]	; 2A0DE
 mov eax, dword [mainfont]	; 2A0E4
 mov dword [dword esp+0648h], eax	; 2A0E9
 lea eax, [dword esp+05D0h]	; 2A0F0

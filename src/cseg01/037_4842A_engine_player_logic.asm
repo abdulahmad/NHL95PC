@@ -5,8 +5,8 @@ section s_4842A progbits alloc exec nowrite align=1
 extern AddPenalty, AddPenalty2, DoGameFrame, Findhittype, GetHot, PBnum, SetSPA, SetShotMode, word_C90D8, word_DB08A, word_DC244, word_DF644, word_E0394, word_E9AB0
 extern Setplass, ShotMode, StopNA, __CHK, str_EASports, str_StarFmt, assinsert, assreplace
 extern sflags, gmode2, byte_CC9E4, byte_CC9E7, byte_CCA95, musicon, byte_DACB3
-extern byte_DAEA7, hmroster, hmrosterjersey, byte_DF87F, byte_DFFE0, byte_DFFE2, byte_E0250, byte_E028C
-extern byte_E02C8, byte_E0308, byte_E0344, PenBuf, iflags, byte_E9AC1, byte_E9AC8
+extern byte_DAEA7, hmroster, hmrosterjersey, byte_DF87F, byte_DFFE0, byte_DFFE2, textline1, textline2
+extern textline3, textline4, textline5, PenBuf, iflags, byte_E9AC1, byte_E9AC8
 extern byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, check4bench, check4check, checkob
 extern chk4lc, chk4shot, dirtab, chk4pass, doplayeracc, doshot, joysampling, inputframes
 extern gameopts, sounddev, dword_C5840, dword_C585C, dword_C5860, dword_C90B0, sflags3, HomeTeam
@@ -25,7 +25,7 @@ extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLa
 extern PaSpeechBusy, PaGoal, PaPlayerNumber, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
 extern EvadePC, sub_61576, FormatPlayerName, PostGoalEvent, sub_62807, sub_62C37, sub_64102, EndPenaltyShot
 extern RemoveFromLines, sub_66497, sub_66DDA, MusicChanReset, sub_8F633, sub_8FFB0, imul32, threat
-extern unk_C1B3E, unk_DACA0, hmteamrec, unk_DC240, unk_DF014, SortCords, updateanim
+extern unk_C1B3E, unk_DACA0, hmteamrec, unk_DC240, savepal, SortCords, updateanim
 extern vtoa, regd4, camx, camy, lastplayer, passdir, word_C90A6, xc1
 extern yc1, word_C90B2, word_C90B4, fodir1, fodir2, c1playernum, c2playernum, VisTeam
 extern Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, gsp, gameclock, clockticks
@@ -1033,13 +1033,13 @@ jne near PreGameIntro_popx	; 48F22
 mov esi, dword [curperiod]	; 48F28
 mov dword [joysampling], edx	; 48F2E
 call joyq_flush	; 48F34
-push unk_DF014	; 48F39
+push savepal	; 48F39
 push dword 100h	; 48F3E
 push edx	; 48F43
 call sub_8FFB0	; 48F44
 add esp, byte 0Ch	; 48F49
 mov ebx, 10h	; 48F4C
-mov edx, unk_DF014	; 48F51
+mov edx, savepal	; 48F51
 mov eax, 1	; 48F56
 call FadePalette	; 48F5B
 mov word [word_CBEC4], 1	; 48F60
@@ -1074,11 +1074,11 @@ mov word [word_CBEC8], dx	; 48FFA
 mov word [word_CBECE], dx	; 49001
 mov word [word_CBECC], dx	; 49008
 xor dl, dl	; 4900F
-mov byte [byte_E0344], dl	; 49011
-mov byte [byte_E0308], dl	; 49017
-mov byte [byte_E028C], dl	; 4901D
-mov byte [byte_E0250], dl	; 49023
-mov byte [byte_E02C8], dl	; 49029
+mov byte [textline5], dl	; 49011
+mov byte [textline4], dl	; 49017
+mov byte [textline2], dl	; 4901D
+mov byte [textline1], dl	; 49023
+mov byte [textline3], dl	; 49029
 mov dword [curperiod], 0FFFFFFFFh	; 4902F
 xor edi, edi	; 49039
 mov word [exitgame], di	; 4903B
@@ -1515,14 +1515,14 @@ je near .5	; 49603
 mov dl, ah	; 49609
 and dl, 0FDh	; 4960B
 mov byte [byte ebp+pflags], dl	; 4960E
-mov edi, byte_E02C8	; 49611
+mov edi, textline3	; 49611
 mov esi, str_EASports	; 49616
 movsd	; 4961B
 movsd	; 4961C
 movsw	; 4961D
 xor dh, dh	; 4961F
-mov byte [byte_E0344], dh	; 49621
-mov byte [byte_E0308], dh	; 49627
+mov byte [textline5], dh	; 49621
+mov byte [textline4], dh	; 49627
 mov word [byte ebp+temp1], 2	; 4962D
 mov eax, 14h	; 49633
 call randomd0	; 49638
@@ -1546,7 +1546,7 @@ sar edi, 10h	; 49681
 mov edx, dword [nosplit ebx*4+starordtab]	; 49684
 push edx	; 4968B
 push str_StarFmt	; 4968C
-push byte_E0250	; 49691
+push textline1	; 49691
 call sprintf_	; 49696
 add esp, byte 0Ch	; 4969B
 push unk_C1B3E	; 4969E
@@ -1582,7 +1582,7 @@ add eax, ebx	; 496F6
 mov ecx, dword [byte esp+08h]	; 496F8
 mov ebx, edx	; 496FC
 mov edx, eax	; 496FE
-mov eax, byte_E028C	; 49700
+mov eax, textline2	; 49700
 call FormatPlayerName	; 49705
 test esi, esi	; 4970A
 je short .3	; 4970C
@@ -1667,7 +1667,7 @@ sar edi, 10h	; 49829
 mov eax, dword [nosplit ebx*4+starordtab]	; 4982C
 push eax	; 49833
 push str_StarFmt	; 49834
-push byte_E0250	; 49839
+push textline1	; 49839
 call sprintf_	; 4983E
 add esp, byte 0Ch	; 49843
 push unk_C1B3E	; 49846
@@ -1701,7 +1701,7 @@ sub ebx, eax	; 49892
 mov edx, hmteamrec	; 49894
 add edx, ebx	; 49899
 mov ebx, dword [byte esp+08h]	; 4989B
-mov eax, byte_E028C	; 4989F
+mov eax, textline2	; 4989F
 call FormatPlayerName	; 498A4
 test esi, esi	; 498A9
 je short .9	; 498AB

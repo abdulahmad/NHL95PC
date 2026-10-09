@@ -13,7 +13,7 @@ extern str_D02d2, str_DDD, str_Iff7, str_Leaguetm, str_Mtsum2, str_Adsum2, str_N
 extern str_extDB, str_VFN, curleague, teamstartlag, musicon, byte_D42C3, hmroster
 extern leaguedbfmt2, leaguedbfmt, othergames, othergamesb, otherscores, otherscoresb, fileoncd
 extern gameresult, gameopts, sounddev, songdata, cont2team, HomeTeam, dword_CCC94, musicslot
-extern musichandle, cddriveptr, dword_D8B68, dword_DBC7C, schedgameidx, hmcrestbmp, vscrestbmp, otherperiod
+extern musichandle, cddriveptr, kaufmfont, dword_DBC7C, schedgameidx, hmcrestbmp, vscrestbmp, otherperiod
 extern hmtmstruct
 extern fputchar, jctime, memcpy_
 extern crestnames, gamestatlabels, leaguedbnames, penaltynames, rand_, sprintf_
@@ -2478,7 +2478,7 @@ lea eax, [byte ebp-074h]	; 2F764
 push eax	; 2F767
 call sub_8E9E8	; 2F768
 add esp, byte 4	; 2F76D
-mov edx, dword [dword_D8B68]	; 2F770
+mov edx, dword [kaufmfont]	; 2F770
 push edx	; 2F776
 call sub_8EA18	; 2F777
 add esp, byte 4	; 2F77C

@@ -9,7 +9,7 @@ extern str_Pion, str_Pio, str_Eaopen, str_Easports, str_Backwin, str_Credits, st
 extern str_KMS, musicon, byte_D42C3, fileoncd
 extern dword_C4CFC, demomode, sounddev, dword_C588A, textgrid, textgridon
 extern textcolor, textshadow, textoutlinedx, textoutlinedy, songdata, dword_CC0EC, dword_CCC94, musicslot
-extern musichandle, cddriveptr, fontcolor, dword_D8B68, mainfont, pointerspr, dword_DC33C, speechbank
+extern musichandle, cddriveptr, fontcolor, kaufmfont, mainfont, pointerspr, dword_DC33C, speechbank
 extern fputchar, jctime, RunDemoGame_x, memcpy_, memset_, off_C6399, rand_, sprintf_
 extern srand_, strlen_, MakePath, RunDemoGame, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
@@ -1270,7 +1270,7 @@ mov dword [dword esp+0364h], edi	; 17203
 .13:
 cmp dword [dword esp+0364h], byte 7	; 1720A
 jne short .14	; 17212
-mov edx, dword [dword_D8B68]	; 17214
+mov edx, dword [kaufmfont]	; 17214
 push edx	; 1721A
 call sub_8EA18	; 1721B
 add esp, byte 4	; 17220

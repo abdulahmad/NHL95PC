@@ -6,14 +6,14 @@ extern __CHK, __STOSB, str_Pal3, str_Palmem, str_Awardsi, str_Scrn, str_Titl, st
 extern str_Awards, str_Mtafan, str_Adafan, str_Awasong, str_Mtawards, str_Adawards, str_Summ, str_04d
 extern str_F000149, str_D50D99, str_D00D49, str_D50_D99, str_D00_D49, str_Trinknd, str_0000, str_HILIGHT
 extern str_Numshp, str_GfxIdList, str_PPV, str_VFN, assinsert, pad1dev, pad2dev, byte_CBEA8
-extern musicon, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8, byte_E0308
-extern byte_E0344, byte_E9AC8, byte_E9AD3, fileoncd
+extern musicon, byte_E024C, byte_E024D, byte_E024F, textline1, textline2, textline3, textline4
+extern textline5, byte_E9AC8, byte_E9AD3, fileoncd
 extern joysampling
 extern inputframes, gameopts, sounddev, dword_C5840, dword_C66D0, dword_C66D4, songdata, cont2team
 extern HomeTeam, dword_CBECA, dword_CC0AC, photobankf, dword_CC0EC, dword_CC0F0, dword_CC0F8, penshotplayer
 extern penshotmode, penshotstart, dword_CC124, penshotlive, crowdsmooth, musichandle, cddriveptr, musicslot
-extern dword_D8B68, numshapes, dword_D8C4C, rinkendbank, frameaccum, rinkendart, dword_D8C78, numshpbank
-extern curperiod, photobanks, photoptrs, dword_DF00C, dword_DF010, dword_E009C, photoptrsf
+extern kaufmfont, numshapes, dword_D8C4C, rinkendbank, frameaccum, rinkendart, dword_D8C78, numshpbank
+extern curperiod, photobanks, photoptrs, savedmousex, savedmousey, dword_E009C, photoptrsf
 extern dword_E9A9E, dword_E9AB6, hilightfont, jctime, PickAwardWinners_x, memcpy_, nullsub_2
 extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, PickAwardWinners, ShowAwardScreens
 extern DrawAwardsSummary, MakePath, FileOpenRead, FileClose, DrawHudPanel, SetTextColors, ClearPanelPenalties, WaitClickTimeout
@@ -21,7 +21,7 @@ extern StartPreGame, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample
 extern sub_64614, SetupTeamLines, ClearInputQueue, FadePalStep, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, MouseSetPos, sub_B30B4, sub_B30BB
-extern sub_B392C, sub_B4BA8, threat, unk_DF014, SortCords, vtoa, regd4, scrpitch
+extern sub_B392C, sub_B4BA8, threat, savepal, SortCords, vtoa, regd4, scrpitch
 extern lastplayer, passdir, word_C90A6, passplayer, word_C90B2, word_C90B4, Pencntdwn, Penaltytimer
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, word_CBC44, exitgame, gameover
 extern word_CBC52, word_CBC54, lcblink, word_CBC58, lcblinktime, lcsel, word_CBC60
@@ -92,7 +92,7 @@ mov eax, esp	; 133D4
 push eax	; 133D6
 call sub_8E9E8	; 133D7
 add esp, byte 4	; 133DC
-mov eax, dword [dword_D8B68]	; 133DF
+mov eax, dword [kaufmfont]	; 133DF
 push eax	; 133E4
 call sub_8EA18	; 133E5
 add esp, byte 4	; 133EA
@@ -978,13 +978,13 @@ call ResetGameVars	; 13F38
 mov dword [dword_CC0F0], edx	; 13F3D
 test edx, edx	; 13F43
 je short .3	; 13F45
-push unk_DF014	; 13F47
+push savepal	; 13F47
 push dword 100h	; 13F4C
 push byte 0	; 13F51
 call sub_8FFB0	; 13F53
 add esp, byte 0Ch	; 13F58
 mov ebx, 10h	; 13F5B
-mov edx, unk_DF014	; 13F60
+mov edx, savepal	; 13F60
 mov eax, 1	; 13F65
 call FadePalette	; 13F6A
 .3:
@@ -1117,9 +1117,9 @@ mov word [lcline], ax	; 14155
 mov word [word_CBC60], ax	; 1415B
 mov word [lcsel], ax	; 14161
 xor ebx, ebx	; 14167
-mov dword [dword_DF010], ebx	; 14169
+mov dword [savedmousey], ebx	; 14169
 xor ecx, ecx	; 1416F
-mov dword [dword_DF00C], ecx	; 14171
+mov dword [savedmousex], ecx	; 14171
 mov word [dword_CBECA], ax	; 14177
 mov word [word_CBEC6], ax	; 1417D
 mov word [word_CBEC2], ax	; 14183
@@ -1128,12 +1128,12 @@ mov word [word_CBEC8], dx	; 1418B
 mov word [word_CBECE], dx	; 14192
 mov word [word_CBECC], dx	; 14199
 xor ch, dh	; 141A0
-mov byte [byte_E0344], ch	; 141A2
+mov byte [textline5], ch	; 141A2
 xor al, al	; 141A8
-mov byte [byte_E0308], al	; 141AA
-mov byte [byte_E028C], al	; 141AF
-mov byte [byte_E0250], al	; 141B4
-mov byte [byte_E02C8], al	; 141B9
+mov byte [textline4], al	; 141AA
+mov byte [textline2], al	; 141AF
+mov byte [textline1], al	; 141B4
+mov byte [textline3], al	; 141B9
 xor esi, esi	; 141BE
 mov dword [penshotmode], ebx	; 141C0
 mov dword [penshotlive], ebx	; 141C6

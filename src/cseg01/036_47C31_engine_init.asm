@@ -3,16 +3,16 @@ bits 32
 %include "hockey.inc"
 section s_47C31 progbits alloc exec nowrite align=1
 extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, loadpals, VisTeam, bgscrollx, scrollx
-extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, inputframes, escrequest
+extern textline1, textline2, textline3, textline4, textline5, joysampling, inputframes, escrequest
 extern rinkscrollx, rinkscrolly, loadscreenon, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
-extern dword_CC0F0, dword_CC9AD, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
+extern dword_CC0F0, dword_CC9AD, spritedrawcount, frameaccum, dword_D8C72, viewscrolly, dword_D8C7A, viewscrollx
 extern curperiod, rinkwtiles, rinkhtiles, bgscrolly, palcyclelock, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, randomd0
 extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, UpdateHudPanel, SetRinkScroll
 extern LoadScreenPalTick, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
 extern PlayCrowdSample, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, SpeechStopQueue, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
-extern unk_DF014, unk_DF314, unk_DFD9C, camx, camy, xc1, yc1, SortCords
+extern savepal, gamepal, unk_DFD9C, camx, camy, xc1, yc1, SortCords
 extern word_C90B2, word_C90B4, c1playernum, c2playernum, RefStep, exitgame, word_CBC52, word_CBC54
 extern lcblink, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly
 extern word_E0022, word_E0028, word_E002A, word_E002E
@@ -108,13 +108,13 @@ add eax, byte 3	; 47D23
 cwde	; 47D26
 call sub_66497	; 47D27
 xor ah, ah	; 47D2C
-mov byte [byte_E0344], ah	; 47D2E
-mov byte [byte_E0308], ah	; 47D34
-mov byte [byte_E028C], ah	; 47D3A
+mov byte [textline5], ah	; 47D2E
+mov byte [textline4], ah	; 47D34
+mov byte [textline2], ah	; 47D3A
 xor bl, bl	; 47D40
-mov byte [byte_E0250], ah	; 47D42
+mov byte [textline1], ah	; 47D42
 xor bh, bh	; 47D48
-mov byte [byte_E02C8], ah	; 47D4A
+mov byte [textline3], ah	; 47D4A
 mov dword [curperiod], 0FFFFFFFFh	; 47D50
 mov word [word_C90B4], bx	; 47D5A
 xor ecx, ecx	; 47D61
@@ -310,8 +310,8 @@ mov word [camx], di	; 4805A
 mov word [xc1], si	; 48061
 mov word [camy], si	; 48068
 mov word [yc1], si	; 4806F
-mov dword [dword_D8C7C], 20h	; 48076
-mov dword [dword_D8C74], 0ECh	; 48080
+mov dword [viewscrollx], 20h	; 48076
+mov dword [viewscrolly], 0ECh	; 48080
 mov eax, dword [word_CBECC-2]	; 4808A
 sar eax, 10h	; 4808F
 cmp eax, byte 0FFFFFFFFh	; 48092
@@ -331,25 +331,25 @@ PreGameIntro_scroll:
 test ecx, ecx	; 480CC
 jge short PreGameIntro_frameloop	; 480CE
 xor ebp, ebp	; 480D0
-mov dword [dword_D8C7C], ebp	; 480D2
+mov dword [viewscrollx], ebp	; 480D2
 PreGameIntro_frameloop:
-mov edx, dword [dword_D8C74]	; 480D8
+mov edx, dword [viewscrolly]	; 480D8
 cmp edx, 1A8h	; 480DE
 jle short .1	; 480E4
-mov dword [dword_D8C74], 1A8h	; 480E6
+mov dword [viewscrolly], 1A8h	; 480E6
 jmp short .2	; 480F0
 .1:
 test edx, edx	; 480F2
 jge short .2	; 480F4
 xor ecx, ecx	; 480F6
-mov dword [dword_D8C74], ecx	; 480F8
+mov dword [viewscrolly], ecx	; 480F8
 .2:
 xor edx, edx	; 480FE
 xor eax, eax	; 48100
 call sub_6AF97	; 48102
 call sub_6B008	; 48107
-mov edx, dword [dword_D8C74]	; 4810C
-mov eax, dword [dword_D8C7C]	; 48112
+mov edx, dword [viewscrolly]	; 4810C
+mov eax, dword [viewscrollx]	; 48112
 call SetRinkScroll	; 48117
 mov edx, dword [bgscrolly-2]	; 4811C
 sar edx, 10h	; 48122
@@ -368,9 +368,9 @@ lea ebx, [dword eax+0140h]	; 4814E
 call sub_6AF52	; 48154
 xor ebp, ebp	; 48159
 mov dword [spritedrawcount], ebp	; 4815B
-mov edx, dword [dword_D8C74-2]	; 48161
+mov edx, dword [viewscrolly-2]	; 48161
 sar edx, 10h	; 48167
-mov eax, dword [dword_D8C7C-2]	; 4816A
+mov eax, dword [viewscrollx-2]	; 4816A
 sar eax, 10h	; 4816F
 call DrawRinkOverlays	; 48172
 mov edx, dword [bgscrolly-2]	; 48177
@@ -396,7 +396,7 @@ mov word [joysampling_save], ax	; 481C1
 xor eax, eax	; 481C7
 mov dword [joysampling], ebp	; 481C9
 mov ebx, 10h	; 481CF
-mov edx, unk_DF314	; 481D4
+mov edx, gamepal	; 481D4
 call FadePalette	; 481D9
 xor ebx, ebx	; 481DE
 mov word [word_CBEC4], bx	; 481E0
@@ -443,13 +443,13 @@ mov word [word_CBECC], 0FFFFh	; 48272
 mov ebp, dword [escrequest]	; 4827B
 test ebp, ebp	; 48281
 je short .2	; 48283
-push unk_DF014	; 48285
+push savepal	; 48285
 push dword 100h	; 4828A
 push byte 0	; 4828F
 call sub_8FFB0	; 48291
 add esp, byte 0Ch	; 48296
 mov ebx, 10h	; 48299
-mov edx, unk_DF014	; 4829E
+mov edx, savepal	; 4829E
 mov eax, 1	; 482A3
 call FadePalette	; 482A8
 call CrowdFadeOut	; 482AD
@@ -462,13 +462,13 @@ jmp short PreGameIntro_popebp	; 482C9
 .2:
 cmp dword [dword_CC0F0], byte 0	; 482CB
 je short .3	; 482D2
-push unk_DF014	; 482D4
+push savepal	; 482D4
 push dword 100h	; 482D9
 push ebp	; 482DE
 call sub_8FFB0	; 482DF
 add esp, byte 0Ch	; 482E4
 mov ebx, 10h	; 482E7
-mov edx, unk_DF014	; 482EC
+mov edx, savepal	; 482EC
 mov eax, 1	; 482F1
 call FadePalette	; 482F6
 .3:
@@ -552,15 +552,15 @@ mov dword [seqtimer], ebx	; 483DF
 mov eax, dword [camx-2]	; 483E5
 sar eax, 10h	; 483EA
 add eax, byte 20h	; 483ED
-mov dword [dword_D8C7C], eax	; 483F0
+mov dword [viewscrollx], eax	; 483F0
 mov eax, dword [camy-2]	; 483F5
 sar eax, 10h	; 483FA
 mov edx, 140h	; 483FD
 sub edx, eax	; 48402
 lea eax, [byte edx-054h]	; 48404
-mov dword [dword_D8C74], eax	; 48407
-mov ecx, dword [dword_D8C7C]	; 4840C
+mov dword [viewscrolly], eax	; 48407
+mov ecx, dword [viewscrollx]	; 4840C
 cmp ecx, byte 40h	; 48412
 jle near PreGameIntro_scroll	; 48415
-mov dword [dword_D8C7C], 40h	; 4841B
+mov dword [viewscrollx], 40h	; 4841B
 jmp near PreGameIntro_frameloop	; 48425

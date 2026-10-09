@@ -4,13 +4,13 @@ bits 32
 section s_644A8 progbits alloc exec nowrite align=1
 extern PBnum, __CHK, str_04d2, str_HOMEPALS4, str_AWAYPALS, str_Rinkpal, str_Pal30, str_PPV, cont2team
 extern str_extBIN, sflags, gmode2, byte_CC049, byte_CCE00, byte_CD418, byte_CD421, byte_CD473
-extern hmroster, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byte_DFFA6, byte_E0250
-extern byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E03C1, byte_E9DB4, byte_E9E18
+extern hmroster, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byte_DFFA6, textline1
+extern textline2, textline3, textline4, textline5, byte_E03C1, byte_E9DB4, byte_E9E18
 extern byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC
 extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, fileoncd
 extern joysampling, dword_C90B0, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, lastsfx
 extern dword_CCEF6, dword_CD41E, dword_CD4B0, cddriveptr, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1
-extern dword_D30BC, dword_D30C0, scor2font, dword_D8B78, spritedrawcount, curperiod, dword_DEF8C, dword_DEFE0
+extern dword_D30BC, dword_D30C0, scor2font, scor3font, spritedrawcount, curperiod, dword_DEF8C, dword_DEFE0
 extern dword_DF004, hmtmstruct, puckstruct, photoptrsf, dword_E0220, dword_E0230, dword_E0244, dword_E0248
 extern recbpr, replayplay, dword_E03AE, dword_E03B9, dword_E03BD
 extern dword_E9A9E, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38
@@ -3198,13 +3198,13 @@ movsx eax, si	; 66AA9
 call sub_65CA8	; 66AAC
 jmp near .33	; 66AB1
 .20:
-cmp byte [byte_E0344], 0	; 66AB6
+cmp byte [textline5], 0	; 66AB6
 je short .21	; 66ABD
 mov dword [byte esp+02Ch], 0Dh	; 66ABF
 add word [byte esp+01Ch], byte 8	; 66AC7
 jmp short .23	; 66ACD
 .21:
-cmp byte [byte_E0308], 0	; 66ACF
+cmp byte [textline4], 0	; 66ACF
 je short .22	; 66AD6
 mov dword [byte esp+02Ch], 0Fh	; 66AD8
 add word [byte esp+01Ch], byte 0Bh	; 66AE0
@@ -3213,7 +3213,7 @@ jmp short .23	; 66AE6
 mov dword [byte esp+02Ch], 12h	; 66AE8
 add word [byte esp+01Ch], byte 0Fh	; 66AF0
 .23:
-mov ecx, dword [dword_D8B78]	; 66AF6
+mov ecx, dword [scor3font]	; 66AF6
 push ecx	; 66AFC
 add esi, byte 3Eh	; 66AFD
 call sub_8EA18	; 66B00
@@ -3223,12 +3223,12 @@ push byte 25h	; 66B0D
 call sub_8E9C0	; 66B0F
 add esp, byte 8	; 66B14
 mov edi, dword [byte esp+01Ch]	; 66B17
-cmp byte [byte_E02C8], 0	; 66B1B
+cmp byte [textline3], 0	; 66B1B
 je short .24	; 66B22
 mov eax, dword [byte esp+01Ah]	; 66B24
 sar eax, 10h	; 66B28
 push eax	; 66B2B
-push byte_E02C8	; 66B2C
+push textline3	; 66B2C
 call fputchar	; 66B31
 mov edx, eax	; 66B36
 add esp, byte 4	; 66B38
@@ -3238,16 +3238,16 @@ sar eax, 1	; 66B40
 movsx edx, si	; 66B42
 sub edx, eax	; 66B45
 push edx	; 66B47
-push byte_E02C8	; 66B48
+push textline3	; 66B48
 call sub_91964	; 66B4D
 add esp, byte 0Ch	; 66B52
 .24:
-cmp byte [byte_E0250], 0	; 66B55
+cmp byte [textline1], 0	; 66B55
 je short .25	; 66B5C
 add edi, dword [byte esp+02Ch]	; 66B5E
 movsx eax, di	; 66B62
 push eax	; 66B65
-push byte_E0250	; 66B66
+push textline1	; 66B66
 call fputchar	; 66B6B
 mov edx, eax	; 66B70
 add esp, byte 4	; 66B72
@@ -3257,16 +3257,16 @@ sar eax, 1	; 66B7A
 movsx edx, si	; 66B7C
 sub edx, eax	; 66B7F
 push edx	; 66B81
-push byte_E0250	; 66B82
+push textline1	; 66B82
 call sub_91964	; 66B87
 add esp, byte 0Ch	; 66B8C
 .25:
-cmp byte [byte_E028C], 0	; 66B8F
+cmp byte [textline2], 0	; 66B8F
 je short .26	; 66B96
 add edi, dword [byte esp+02Ch]	; 66B98
 movsx eax, di	; 66B9C
 push eax	; 66B9F
-push byte_E028C	; 66BA0
+push textline2	; 66BA0
 call fputchar	; 66BA5
 mov edx, eax	; 66BAA
 add esp, byte 4	; 66BAC
@@ -3276,16 +3276,16 @@ sar eax, 1	; 66BB4
 movsx edx, si	; 66BB6
 sub edx, eax	; 66BB9
 push edx	; 66BBB
-push byte_E028C	; 66BBC
+push textline2	; 66BBC
 call sub_91964	; 66BC1
 add esp, byte 0Ch	; 66BC6
 .26:
-cmp byte [byte_E0308], 0	; 66BC9
+cmp byte [textline4], 0	; 66BC9
 je short .27	; 66BD0
 add edi, dword [byte esp+02Ch]	; 66BD2
 movsx eax, di	; 66BD6
 push eax	; 66BD9
-push byte_E0308	; 66BDA
+push textline4	; 66BDA
 call fputchar	; 66BDF
 mov edx, eax	; 66BE4
 add esp, byte 4	; 66BE6
@@ -3295,16 +3295,16 @@ sar eax, 1	; 66BEE
 movsx edx, si	; 66BF0
 sub edx, eax	; 66BF3
 push edx	; 66BF5
-push byte_E0308	; 66BF6
+push textline4	; 66BF6
 call sub_91964	; 66BFB
 add esp, byte 0Ch	; 66C00
 .27:
-cmp byte [byte_E0344], 0	; 66C03
+cmp byte [textline5], 0	; 66C03
 je short .28	; 66C0A
 add edi, dword [byte esp+02Ch]	; 66C0C
 movsx eax, di	; 66C10
 push eax	; 66C13
-push byte_E0344	; 66C14
+push textline5	; 66C14
 call fputchar	; 66C19
 mov edx, eax	; 66C1E
 add esp, byte 4	; 66C20
@@ -3314,7 +3314,7 @@ sar eax, 1	; 66C28
 movsx edx, si	; 66C2A
 sub edx, eax	; 66C2D
 push edx	; 66C2F
-push byte_E0344	; 66C30
+push textline5	; 66C30
 call sub_91964	; 66C35
 add esp, byte 0Ch	; 66C3A
 .28:
@@ -3327,12 +3327,12 @@ push byte 27h	; 66C51
 call sub_8E9C0	; 66C53
 add esp, byte 8	; 66C58
 mov edi, dword [byte esp+01Ch]	; 66C5B
-cmp byte [byte_E02C8], 0	; 66C5F
+cmp byte [textline3], 0	; 66C5F
 je short .29	; 66C66
 mov eax, dword [byte esp+01Ah]	; 66C68
 sar eax, 10h	; 66C6C
 push eax	; 66C6F
-push byte_E02C8	; 66C70
+push textline3	; 66C70
 call fputchar	; 66C75
 mov edx, eax	; 66C7A
 add esp, byte 4	; 66C7C
@@ -3342,16 +3342,16 @@ sar eax, 1	; 66C84
 movsx edx, si	; 66C86
 sub edx, eax	; 66C89
 push edx	; 66C8B
-push byte_E02C8	; 66C8C
+push textline3	; 66C8C
 call sub_91964	; 66C91
 add esp, byte 0Ch	; 66C96
 .29:
-cmp byte [byte_E0250], 0	; 66C99
+cmp byte [textline1], 0	; 66C99
 je short .30	; 66CA0
 add edi, dword [byte esp+02Ch]	; 66CA2
 movsx eax, di	; 66CA6
 push eax	; 66CA9
-push byte_E0250	; 66CAA
+push textline1	; 66CAA
 call fputchar	; 66CAF
 mov edx, eax	; 66CB4
 add esp, byte 4	; 66CB6
@@ -3361,16 +3361,16 @@ sar eax, 1	; 66CBE
 movsx edx, si	; 66CC0
 sub edx, eax	; 66CC3
 push edx	; 66CC5
-push byte_E0250	; 66CC6
+push textline1	; 66CC6
 call sub_91964	; 66CCB
 add esp, byte 0Ch	; 66CD0
 .30:
-cmp byte [byte_E028C], 0	; 66CD3
+cmp byte [textline2], 0	; 66CD3
 je short .31	; 66CDA
 add edi, dword [byte esp+02Ch]	; 66CDC
 movsx eax, di	; 66CE0
 push eax	; 66CE3
-push byte_E028C	; 66CE4
+push textline2	; 66CE4
 call fputchar	; 66CE9
 mov edx, eax	; 66CEE
 add esp, byte 4	; 66CF0
@@ -3380,16 +3380,16 @@ sar eax, 1	; 66CF8
 movsx edx, si	; 66CFA
 sub edx, eax	; 66CFD
 push edx	; 66CFF
-push byte_E028C	; 66D00
+push textline2	; 66D00
 call sub_91964	; 66D05
 add esp, byte 0Ch	; 66D0A
 .31:
-cmp byte [byte_E0308], 0	; 66D0D
+cmp byte [textline4], 0	; 66D0D
 je short .32	; 66D14
 add edi, dword [byte esp+02Ch]	; 66D16
 movsx eax, di	; 66D1A
 push eax	; 66D1D
-push byte_E0308	; 66D1E
+push textline4	; 66D1E
 call fputchar	; 66D23
 mov edx, eax	; 66D28
 add esp, byte 4	; 66D2A
@@ -3399,16 +3399,16 @@ sar eax, 1	; 66D32
 movsx edx, si	; 66D34
 sub edx, eax	; 66D37
 push edx	; 66D39
-push byte_E0308	; 66D3A
+push textline4	; 66D3A
 call sub_91964	; 66D3F
 add esp, byte 0Ch	; 66D44
 .32:
-cmp byte [byte_E0344], 0	; 66D47
+cmp byte [textline5], 0	; 66D47
 je short .33	; 66D4E
 add edi, dword [byte esp+02Ch]	; 66D50
 movsx eax, di	; 66D54
 push eax	; 66D57
-push byte_E0344	; 66D58
+push textline5	; 66D58
 call fputchar	; 66D5D
 mov edx, eax	; 66D62
 add esp, byte 4	; 66D64
@@ -3418,7 +3418,7 @@ sar eax, 1	; 66D6C
 movsx edx, si	; 66D6E
 sub edx, eax	; 66D71
 push edx	; 66D73
-push byte_E0344	; 66D74
+push textline5	; 66D74
 call sub_91964	; 66D79
 add esp, byte 0Ch	; 66D7E
 .33:
@@ -3564,11 +3564,11 @@ cmp word [word_CBEC0], 268h	; 66FA5
 jle near checkwindow_popx	; 66FAE
 mov word [word_CBEC0], 0FFFFh	; 66FB4
 xor dl, dl	; 66FBD
-mov byte [byte_E0344], dl	; 66FBF
-mov byte [byte_E0308], dl	; 66FC5
-mov byte [byte_E028C], dl	; 66FCB
-mov byte [byte_E0250], dl	; 66FD1
-mov byte [byte_E02C8], dl	; 66FD7
+mov byte [textline5], dl	; 66FBF
+mov byte [textline4], dl	; 66FC5
+mov byte [textline2], dl	; 66FCB
+mov byte [textline1], dl	; 66FD1
+mov byte [textline3], dl	; 66FD7
 jmp near checkwindow_popx	; 66FDD
 sub_66FE2:
 push dword 54h	; 66FE2
@@ -3589,7 +3589,7 @@ mov word [byte esp+01Ch], ax	; 6700C
 mov ax, word [scrolly]	; 67011
 add eax, 9Eh	; 67017
 mov word [byte esp+020h], ax	; 6701C
-mov edx, dword [dword_D8B78]	; 67021
+mov edx, dword [scor3font]	; 67021
 push edx	; 67027
 call sub_8EA18	; 67028
 add esp, byte 4	; 6702D

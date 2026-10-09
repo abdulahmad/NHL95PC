@@ -21,7 +21,7 @@ extern dword_C2CD8, dword_C2CDC, dword_C2CF0, dword_C4B69, teamdivflags, songdat
 extern roster2divmenus, menu_r1_tofa, menu_r1_toroster2, menu_r2_tofa, menu_r2_toroster1, falist, falistsel, facount
 extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0C10, dword_D0C20, dword_D0CDA
-extern cddriveptr, dword_D8B68, mainfont, pointerspr, ptrupdatefn, fullscrbmp, rosterteamptr, musicslot
+extern cddriveptr, kaufmfont, mainfont, pointerspr, ptrupdatefn, fullscrbmp, rosterteamptr, musicslot
 extern dword_EA994, rosterteamrec, dword_EAF7C, dbdirty, msglines, dword_EBCA4
 extern editptrspr, editrosters_exit, fputchar, j_unlink_, jctime, RunEditRosters_ret6, RunEditRosters_ret5, memcpy_
 extern memset_, teamcitynames, leaguedbnames
@@ -37,7 +37,7 @@ extern sub_90D20, sub_90F38, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_92D
 extern FatalError, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, SetDrawBitmap
 extern sub_B4FAC, sub_B5DB0, str_fmtpd, btn_LeagueExists, unk_D0450, unk_D05F4, unk_D0B80, unk_D0BB8
 extern unk_D0BF0, str_Two, unk_D0CA2, unk_D0EDD, unk_D0F80, unk_D0FA8, unk_D0FBC, unk_D0FD0
-extern unk_D0FF0, unk_D1000, hmteamrec, unk_DF014, unk_EA968, unk_EAC84, unk_EAFB8, word_C2D0E
+extern unk_D0FF0, unk_D1000, hmteamrec, savepal, unk_EA968, unk_EAC84, unk_EAFB8, word_C2D0E
 extern word_C2D10, VisTeam
 global LoadRosterList_faloop
 global LoadRosterList_team
@@ -96,7 +96,7 @@ call sub_B30B4	; 6D37B
 add esp, byte 8	; 6D380
 lea edx, [byte eax+010h]	; 6D383
 mov ebx, 300h	; 6D386
-mov eax, unk_DF014	; 6D38B
+mov eax, savepal	; 6D38B
 call memcpy_	; 6D390
 push str_ea	; 6D395
 push esi	; 6D39A
@@ -1137,7 +1137,7 @@ call LoadRosterList	; 6E063
 .7:
 call DrawEditRosters	; 6E068
 mov ebx, 10h	; 6E06D
-mov edx, unk_DF014	; 6E072
+mov edx, savepal	; 6E072
 xor eax, eax	; 6E077
 call FadePalStep	; 6E079
 add esp, 2F0h	; 6E07E
@@ -1214,7 +1214,7 @@ push esi	; 6E151
 call sub_91370	; 6E152
 add esp, byte 0Ch	; 6E157
 mov ebx, 10h	; 6E15A
-mov edx, unk_DF014	; 6E15F
+mov edx, savepal	; 6E15F
 xor eax, eax	; 6E164
 call FadePalStep	; 6E166
 push dword 1E0h	; 6E16B
@@ -4028,7 +4028,7 @@ call sub_B30B4	; 702BA
 add esp, byte 8	; 702BF
 lea edx, [byte eax+010h]	; 702C2
 mov ebx, 300h	; 702C5
-mov eax, unk_DF014	; 702CA
+mov eax, savepal	; 702CA
 call memcpy_	; 702CF
 push str_ea2	; 702D4
 push esi	; 702D9
@@ -4067,7 +4067,7 @@ add esp, byte 4	; 7033A
 push esi	; 7033D
 call jctime	; 7033E
 add esp, byte 4	; 70343
-mov ebx, dword [dword_D8B68]	; 70346
+mov ebx, dword [kaufmfont]	; 70346
 push ebx	; 7034C
 call sub_8EA18	; 7034D
 add esp, byte 4	; 70352

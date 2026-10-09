@@ -21,7 +21,7 @@ extern FreeNowBack, SayBackMoment, FreeBackMoment, CoachCutScene, sub_8CCA8, sub
 extern sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0
 extern sub_9061C, sub_91370, sub_91400, MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
 extern sub_B396E, sub_B4B58, sub_B4BA8, sub_B4FAC, unk_CEB8F, unk_CEC4F, unk_CF2EF, btn_POHumanOut
-extern awlinetab, hmlinetab, unk_DC890, unk_DF014, VisTeam, word_CBC44, exitgame, scrolly
+extern awlinetab, hmlinetab, unk_DC890, savepal, VisTeam, word_CBC44, exitgame, scrolly
 extern scrollx, hmscore, awscore
 global DeskGoToReplay, DeskHomeLines, DeskVisitorLines, DeskGameStats, DeskPenaltySummary, MenuCallbackTrue2
 global DeskLines_common
@@ -381,13 +381,13 @@ call __CHK	; 19214
 push ebx	; 19219
 push ecx	; 1921A
 push edx	; 1921B
-push unk_DF014	; 1921C
+push savepal	; 1921C
 push dword 100h	; 19221
 push byte 0	; 19226
 call sub_8FFB0	; 19228
 add esp, byte 0Ch	; 1922D
 mov ebx, 10h	; 19230
-mov edx, unk_DF014	; 19235
+mov edx, savepal	; 19235
 mov eax, 1	; 1923A
 call FadePalStep	; 1923F
 mov edx, 1E0h	; 19244
@@ -1588,13 +1588,13 @@ sar eax, 10h	; 1A557
 .2:
 call LoadRink	; 1A55A
 call LoadPlayerPhotos	; 1A55F
-push unk_DF014	; 1A564
+push savepal	; 1A564
 push dword 100h	; 1A569
 push byte 0	; 1A56E
 call sub_8FFB0	; 1A570
 add esp, byte 0Ch	; 1A575
 mov ebx, 10h	; 1A578
-mov edx, unk_DF014	; 1A57D
+mov edx, savepal	; 1A57D
 mov eax, 1	; 1A582
 call FadePalStep	; 1A587
 mov edx, 1	; 1A58C
@@ -1738,13 +1738,13 @@ call MessageBox	; 1A744
 mov dword [esp], eax	; 1A749
 test eax, eax	; 1A74C
 jle near .4	; 1A74E
-push unk_DF014	; 1A754
+push savepal	; 1A754
 push dword 100h	; 1A759
 push byte 0	; 1A75E
 call sub_8FFB0	; 1A760
 add esp, byte 0Ch	; 1A765
 mov ebx, 10h	; 1A768
-mov edx, unk_DF014	; 1A76D
+mov edx, savepal	; 1A76D
 mov eax, 1	; 1A772
 call FadePalStep	; 1A777
 call sub_B4BA8	; 1A77C
@@ -1772,13 +1772,13 @@ mov dword [songdata], ebp	; 1A7C4
 call ShowLoadingScreen	; 1A7CA
 call sub_1B982	; 1A7CF
 call ShowCredits	; 1A7D4
-push unk_DF014	; 1A7D9
+push savepal	; 1A7D9
 push dword 100h	; 1A7DE
 push byte 0	; 1A7E3
 call sub_8FFB0	; 1A7E5
 add esp, byte 0Ch	; 1A7EA
 mov ebx, 10h	; 1A7ED
-mov edx, unk_DF014	; 1A7F2
+mov edx, savepal	; 1A7F2
 mov eax, 1	; 1A7F7
 call FadePalStep	; 1A7FC
 call sub_B4B58	; 1A801
@@ -1808,13 +1808,13 @@ sar eax, 10h	; 1A83A
 .2:
 call LoadRink	; 1A83D
 call LoadPlayerPhotos	; 1A842
-push unk_DF014	; 1A847
+push savepal	; 1A847
 push dword 100h	; 1A84C
 push byte 0	; 1A851
 call sub_8FFB0	; 1A853
 add esp, byte 0Ch	; 1A858
 mov ebx, 10h	; 1A85B
-mov edx, unk_DF014	; 1A860
+mov edx, savepal	; 1A860
 mov eax, 1	; 1A865
 call FadePalette	; 1A86A
 mov edx, 0C8h	; 1A86F
@@ -1836,13 +1836,13 @@ call __CHK	; 1A8AF
 push ebx	; 1A8B4
 push ecx	; 1A8B5
 push edx	; 1A8B6
-push unk_DF014	; 1A8B7
+push savepal	; 1A8B7
 push dword 100h	; 1A8BC
 push byte 0	; 1A8C1
 call sub_8FFB0	; 1A8C3
 add esp, byte 0Ch	; 1A8C8
 mov ebx, 10h	; 1A8CB
-mov edx, unk_DF014	; 1A8D0
+mov edx, savepal	; 1A8D0
 mov eax, 1	; 1A8D5
 call FadePalStep	; 1A8DA
 mov ecx, 2	; 1A8DF
@@ -1851,13 +1851,13 @@ mov edx, hmlinetab	; 1A8E9
 xor eax, eax	; 1A8EE
 DeskLines_common:
 call GameLineEditor	; 1A8F0
-push unk_DF014	; 1A8F5
+push savepal	; 1A8F5
 push dword 100h	; 1A8FA
 push byte 0	; 1A8FF
 call sub_8FFB0	; 1A901
 add esp, byte 0Ch	; 1A906
 mov ebx, 10h	; 1A909
-mov edx, unk_DF014	; 1A90E
+mov edx, savepal	; 1A90E
 mov eax, 1	; 1A913
 call FadePalStep	; 1A918
 jmp near DeskItem_ret2	; 1A91D
@@ -1867,13 +1867,13 @@ call __CHK	; 1A927
 push ebx	; 1A92C
 push ecx	; 1A92D
 push edx	; 1A92E
-push unk_DF014	; 1A92F
+push savepal	; 1A92F
 push dword 100h	; 1A934
 push byte 0	; 1A939
 call sub_8FFB0	; 1A93B
 add esp, byte 0Ch	; 1A940
 mov ebx, 10h	; 1A943
-mov edx, unk_DF014	; 1A948
+mov edx, savepal	; 1A948
 mov eax, 1	; 1A94D
 call FadePalStep	; 1A952
 mov ecx, 2	; 1A957
@@ -1887,13 +1887,13 @@ call __CHK	; 1A972
 push ebx	; 1A977
 push ecx	; 1A978
 push edx	; 1A979
-push unk_DF014	; 1A97A
+push savepal	; 1A97A
 push dword 100h	; 1A97F
 push byte 0	; 1A984
 call sub_8FFB0	; 1A986
 add esp, byte 0Ch	; 1A98B
 mov ebx, 10h	; 1A98E
-mov edx, unk_DF014	; 1A993
+mov edx, savepal	; 1A993
 mov eax, 1	; 1A998
 call FadePalStep	; 1A99D
 call GameStatsScreen	; 1A9A2
@@ -1905,7 +1905,7 @@ push ebx	; 1A9B6
 push ecx	; 1A9B7
 push edx	; 1A9B8
 push esi	; 1A9B9
-push unk_DF014	; 1A9BA
+push savepal	; 1A9BA
 push dword 100h	; 1A9BF
 push byte 0	; 1A9C4
 call sub_8FFB0	; 1A9C6
@@ -1920,7 +1920,7 @@ mov edx, 3	; 1A9EA
 call sub_8FCDF	; 1A9EF
 .1:
 mov ebx, 10h	; 1A9F4
-mov edx, unk_DF014	; 1A9F9
+mov edx, savepal	; 1A9F9
 mov eax, 1	; 1A9FE
 call FadePalStep	; 1AA03
 cmp byte [musicon], 0	; 1AA08
@@ -1959,13 +1959,13 @@ call __CHK	; 1AA72
 push ebx	; 1AA77
 push ecx	; 1AA78
 push edx	; 1AA79
-push unk_DF014	; 1AA7A
+push savepal	; 1AA7A
 push dword 100h	; 1AA7F
 push byte 0	; 1AA84
 call sub_8FFB0	; 1AA86
 add esp, byte 0Ch	; 1AA8B
 mov ebx, 10h	; 1AA8E
-mov edx, unk_DF014	; 1AA93
+mov edx, savepal	; 1AA93
 mov eax, 1	; 1AA98
 call FadePalStep	; 1AA9D
 call ShowLoadingScreen	; 1AAA2
@@ -1987,13 +1987,13 @@ call __CHK	; 1AAC9
 push ebx	; 1AACE
 push ecx	; 1AACF
 push edx	; 1AAD0
-push unk_DF014	; 1AAD1
+push savepal	; 1AAD1
 push dword 100h	; 1AAD6
 push byte 0	; 1AADB
 call sub_8FFB0	; 1AADD
 add esp, byte 0Ch	; 1AAE2
 mov ebx, 10h	; 1AAE5
-mov edx, unk_DF014	; 1AAEA
+mov edx, savepal	; 1AAEA
 mov eax, 1	; 1AAEF
 call FadePalStep	; 1AAF4
 call ShowLoadingScreen	; 1AAF9
