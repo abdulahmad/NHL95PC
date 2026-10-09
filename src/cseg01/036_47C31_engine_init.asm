@@ -12,11 +12,11 @@ extern reenergizeteam, resetplstuff, setpersonel, sub_1145F, sub_1149A, sub_1159
 extern sub_47951, joyq_flush, Readjoy1, Readjoy2, sub_594CD, sub_597E3, sub_59863, sub_59981
 extern sub_59A11, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8374D, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
-extern unk_DF014, unk_DF314, unk_DFD9C, unk_E001C, camx, camy, xc1, yc1
+extern unk_DF014, unk_DF314, unk_DFD9C, camx, camy, xc1, yc1, SortCords
 extern word_C90B2, word_C90B4, c1playernum, c2playernum, word_C90D4, exitgame, word_CBC52, word_CBC54
 extern lcblink, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly, word_DFF1E
-extern word_DFF28, word_DFF2A, word_DFF44, word_E001E, word_E0022, word_E0028, word_E002A, word_E002E
-extern word_E0042, word_E0046, word_E0048, word_E004A, word_E0052, regd1, joysampling_save
+extern word_DFF28, word_DFF2A, word_DFF44, word_E0022, word_E0028, word_E002A, word_E002E
+extern word_E0042, word_E0046, word_E0048, word_E004A, regd1, joysampling_save
 global loc_47C4F, loc_47C60, loc_47C62, loc_47C89, loc_47CB1, loc_47CD0, loc_47E01, loc_47E05
 global loc_47E0E, loc_47E1B, loc_47E39, loc_47E3E, loc_47E64, loc_47E69, loc_47E7E, loc_47E8A
 global loc_47EA4, loc_47EE0, loc_47EE5, loc_47F35, loc_47F48, loc_47F56, loc_4809C, loc_480CC
@@ -277,23 +277,23 @@ call assreplace	; 47F99
 mov eax, dword [byte esp+08h]	; 47F9E
 mov word [word_E0042], ax	; 47FA2
 mov eax, 8Eh	; 47FA8
-mov word [word_E001E], ax	; 47FAD
+mov word [SortCords+802h], ax	; 47FAD
 mov word [word_E0046], ax	; 47FB3
 mov eax, 2	; 47FB9
 call randomd0	; 47FBE
-add word [word_E001E], ax	; 47FC3
+add word [SortCords+802h], ax	; 47FC3
 mov word [word_E0022], cx	; 47FCA
 mov word [word_E0048], cx	; 47FD1
-mov word [word_E0052], 4	; 47FD8
+mov word [SortCords+836h], 4	; 47FD8
 mov word [word_E002A], cx	; 47FE1
 mov word [word_E0028], cx	; 47FE8
 mov word [word_E004A], di	; 47FEF
 xor edx, edx	; 47FF6
-mov eax, unk_E001C	; 47FF8
+mov eax, SortCords+800h	; 47FF8
 call SetSPA	; 47FFD
 mov word [word_E002E], 289h	; 48002
 mov edx, 26h	; 4800B
-mov eax, unk_E001C	; 48010
+mov eax, SortCords+800h	; 48010
 call assreplace	; 48015
 mov word [word_C90D4], si	; 4801A
 or byte [sflags], 40h	; 48021

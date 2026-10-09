@@ -8,13 +8,13 @@ extern asc_C2445, asc_C244A, asc_C2451, asc_C246D, asc_C2473, asc_C247E, asc_C24
 extern asc_C24A8, asc_C24B2, asc_C24B6, asc_C24C8, asc_C24E5, asc_C24FB, asc_C24FF, asc_C2515
 extern asc_C2550, asc_C2584, asc_C25CA, asc_C25F5, asc_C2625, asc_C2652, asc_C2670, asc_C2689
 extern asc_C26CF, asc_C26FA, asc_C272A, asc_C2757, byte_C542F, byte_C5430, byte_C5431, byte_C5432
-extern gmode2, dword_C53FB, dword_C90C0, dword_CC0F8, dword_CC0FC, dword_CC100, dword_CC104, dword_CC108
-extern dword_CC118, dword_CC11C, dword_CC120, dword_CC124, dword_CC128, dword_CC12C, dword_CD504, dword_D41F0
+extern gmode2, dword_C53FB, dword_C90C0, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
+extern penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C, dword_CD504, dword_D41F0
 extern dword_D8C6C, dword_D8C78, dword_DF612, hmtmstruct, dword_DF616, dword_DF61C, dword_DF61E, dword_DF620
 extern dword_DF638, dword_DF63A, dword_DF63C, dword_DF690, dword_DF6FA, dword_DF712, awtmstruct, hmscore
 extern dword_DF716, dword_DF71C, dword_DF71E, dword_DF720, dword_DF738, dword_DF73A, dword_DF73C, awscore
 extern dword_DF7FA, dword_E9A13, dword_E9A14, fclose_, fopen_, fprintf_, gmode, puckc
-extern camx_m2, off_CD6E4, off_CD8C4, off_CD984, puckvz, sprintf_, joyq_flush, sub_51440
+extern camx_m2, off_CD6E4, off_CD8C4, off_CD984, puckvz, sprintf_, joyq_flush, AllInPlace
 extern sub_935E0, sub_93E38, sub_B39ED, sub_B3A18, threat, unk_C234B, unk_C234D, unk_C2478
 extern unk_C247A, unk_C247C, unk_C2485, unk_C24A0, SortCords, camx, xc1, c1playernum
 extern c2playernum, cont1team, word_C90CC, word_C90D0, refsignal, gsp, gameclock, word_CBC42
@@ -72,17 +72,17 @@ mov edi, dword [dword_CC104]	; 6892C
 push edi	; 68932
 mov eax, dword [dword_CC100]	; 68933
 push eax	; 68938
-mov edx, dword [dword_CC0FC]	; 68939
+mov edx, dword [penshotplayer]	; 68939
 push edx	; 6893F
 mov ebx, dword [dword_CC12C]	; 68940
 push ebx	; 68946
-mov ecx, dword [dword_CC120]	; 68947
+mov ecx, dword [penshottimer]	; 68947
 push ecx	; 6894D
-mov edi, dword [dword_CC11C]	; 6894E
+mov edi, dword [penshotstart]	; 6894E
 push edi	; 68954
-mov eax, dword [dword_CC128]	; 68955
+mov eax, dword [penshotlive]	; 68955
 push eax	; 6895A
-mov edx, dword [dword_CC118]	; 6895B
+mov edx, dword [penshotmode]	; 6895B
 push edx	; 68961
 push asc_C2373	; 68962
 lea eax, [byte ebp+07Eh]	; 68967
@@ -91,7 +91,7 @@ push eax	; 6896C
 call sprintf_	; 6896D
 add esp, byte 34h	; 68972
 add esi, eax	; 68975
-call sub_51440	; 68977
+call AllInPlace	; 68977
 push eax	; 6897C
 push asc_C239E	; 6897D
 call sub_935E0	; 68982

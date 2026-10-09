@@ -1131,7 +1131,7 @@ jmp short .6	; 5EF09
 mov edx, dword [byte ebx+pnum-3]	; 5EF0B	; pnum: energy level (93G getpde)
 sar edx, 18h	; 5EF0E
 mov eax, dword [byte ebx+06Ch]	; 5EF11
-mov edx, dword [byte eax+edx*2+044h]	; 5EF14
+mov edx, dword [byte eax+edx*2+tmpde-2]	; 5EF14
 sar edx, 10h	; 5EF18
 xor eax, eax	; 5EF1B
 mov al, byte [byte ebx+legspd]	; 5EF1D
@@ -1173,7 +1173,7 @@ jne near .x	; 5EFB4
 mov eax, dword [byte ebx+pnum-3]	; 5EFBA
 sar eax, 18h	; 5EFBD
 mov edx, dword [byte ebx+06Ch]	; 5EFC0
-mov ax, word [byte edx+eax*2+046h]	; 5EFC3
+mov ax, word [byte edx+eax*2+tmpde]	; 5EFC3
 sub eax, byte 28h	; 5EFC8	; subi.w #$21 (PC 28h)
 mov word [regd0], ax	; 5EFCB
 cmp ax, 0C00h	; 5EFD1	; cmp.w #$C00,d0
@@ -1190,7 +1190,7 @@ mov edx, eax	; 5EFE8
 mov eax, dword [byte ebx+pnum-3]	; 5EFEA
 sar eax, 18h	; 5EFED
 mov ebx, dword [byte ebx+06Ch]	; 5EFF0
-mov word [byte ebx+eax*2+046h], dx	; 5EFF3
+mov word [byte ebx+eax*2+tmpde], dx	; 5EFF3
 pop edi	; 5EFF8
 pop esi	; 5EFF9
 pop ecx	; 5EFFA
@@ -1218,7 +1218,7 @@ mov ecx, edx	; 5F039
 mov eax, dword [byte ebx+pnum-3]	; 5F03B
 sar eax, 18h	; 5F03E
 mov edx, dword [byte ebx+06Ch]	; 5F041
-mov word [byte edx+eax*2+046h], cx	; 5F044
+mov word [byte edx+eax*2+tmpde], cx	; 5F044
 .x:
 pop edi	; 5F049
 pop esi	; 5F04A

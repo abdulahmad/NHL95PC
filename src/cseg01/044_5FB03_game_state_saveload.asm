@@ -3,13 +3,13 @@ bits 32
 %include "hockey.inc"
 section s_5FB03 progbits alloc exec nowrite align=1
 extern PBnum, StanleyCupTimer, __CHK, __STOSB, __STOSD, asc_CCDD8, asc_CCDEC, byte_C4D1C
-extern byte_C4D1D, sflags, gmode2, byte_CCE00, byte_DB3A8, byte_DB7EC, byte_DC264, byte_DC265
+extern byte_C4D1D, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, byte_DC265
 extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, byte_E9A16, iflags, byte_E9AC8
 extern byte_E9AD3, OOlist, collflag, dword_C530D, dword_C5382, dword_C53FB, dword_C5403, dword_C5407
 extern dword_C540B, dword_C540F, dword_C5413, dword_C5704, dword_C5708, dword_C570C, dword_C5840, dword_C66D0
 extern dword_C66D4, dword_C90B0, dword_C90C0, cont2team, dword_C90CA, dword_CBC3E, dword_CBECA, dword_CC0AC
-extern dword_CC0DC, dword_CC0E0, dword_CC0F4, dword_CC0F8, dword_CC0FC, dword_CC100, dword_CC104, dword_CC108
-extern dword_CC110, dword_CC114, dword_CC118, dword_CC11C, dword_CC120, dword_CC124, dword_CC128, dword_CC12C
+extern dword_CC0DC, dword_CC0E0, onetimerflag, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
+extern dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
 extern dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, dword_CCC88, dword_D8C6C
 extern dword_D8C78, dword_D8C84, dword_D9980, dword_DB088, dword_DC28C, dword_DF00C, dword_DF010, hmtmstruct
 extern dword_DF6F2, dword_DF6F6, dword_DF6FA, dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
@@ -19,7 +19,7 @@ extern ltx, off_C9078, off_CC01D, passspeed, sub_13A91, sub_145A2, sub_145F9, su
 extern sub_3271B, sub_327A1, GetPeriodTime, SprSort, sub_61E99, sub_673C5, sub_67564, sub_7DC8B
 extern sub_B2CD8, MouseSetPos, threat, unk_C5298, unk_C5423, unk_C542E, unk_DABF0, unk_DAC40
 extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, unk_DC200, unk_DC240
-extern unk_DC252, unk_DF314, SortCords, unk_DFB1C, word_C571C, word_C575C, camx, camy
+extern unk_DC252, unk_DF314, SortCords, word_C571C, word_C575C, camx, camy
 extern lastplayer, passdir, word_C90A6, passplayer, xc1, yc1, word_C90B2, word_C90B4
 extern fodir1, fodir2, c1playernum, c2playernum, cont1team, word_C90CC, word_C90CE, word_C90D0
 extern refsignal, word_C90D4, word_C90D6, word_C90D8, gsp, gameclock, clockticks, word_CBC44
@@ -492,7 +492,7 @@ mov byte [byte eax+01h], dl	; 60207
 add eax, byte 2	; 6020A
 mov dl, byte [byte_DC266]	; 6020D
 mov byte [eax], dl	; 60213
-mov dl, byte [dword_CC0F4]	; 60215
+mov dl, byte [onetimerflag]	; 60215
 mov byte [byte eax+01h], dl	; 6021B
 mov ecx, 80h	; 6021E
 mov ebx, 0FFFFFFFFh	; 60223
@@ -535,7 +535,7 @@ add eax, byte 2	; 602A5
 mov dx, word [dword_CC0F8]	; 602A8
 mov word [eax], dx	; 602AF
 add eax, byte 2	; 602B2
-mov dx, word [dword_CC0FC]	; 602B5
+mov dx, word [penshotplayer]	; 602B5
 mov word [eax], dx	; 602BC
 add eax, byte 2	; 602BF
 mov dx, word [dword_CC100]	; 602C2
@@ -556,19 +556,19 @@ add eax, byte 2	; 60300
 mov dx, word [dword_CC114]	; 60303
 mov word [eax], dx	; 6030A
 add eax, byte 2	; 6030D
-mov dx, word [dword_CC118]	; 60310
+mov dx, word [penshotmode]	; 60310
 mov word [eax], dx	; 60317
 add eax, byte 2	; 6031A
-mov dx, word [dword_CC11C]	; 6031D
+mov dx, word [penshotstart]	; 6031D
 mov word [eax], dx	; 60324
 add eax, byte 2	; 60327
-mov dx, word [dword_CC120]	; 6032A
+mov dx, word [penshottimer]	; 6032A
 mov word [eax], dx	; 60331
 add eax, byte 2	; 60334
 mov dx, word [dword_CC124]	; 60337
 mov word [eax], dx	; 6033E
 add eax, byte 2	; 60341
-mov dx, word [dword_CC128]	; 60344
+mov dx, word [penshotlive]	; 60344
 mov word [eax], dx	; 6034B
 add eax, byte 2	; 6034E
 mov dx, word [dword_CC12C]	; 60351
@@ -1276,7 +1276,7 @@ add ebx, byte 2	; 60D32
 mov al, byte [ebx]	; 60D35
 mov byte [byte_DC266], al	; 60D37
 movsx eax, byte [byte ebx+01h]	; 60D3C
-mov dword [dword_CC0F4], eax	; 60D40
+mov dword [onetimerflag], eax	; 60D40
 mov ecx, 80h	; 60D45
 mov ebx, 0FFFFFFFFh	; 60D4A
 mov edx, esp	; 60D4F
@@ -1377,7 +1377,7 @@ movsx eax, word [ebx]	; 60EA9
 mov dword [dword_CC0F8], eax	; 60EAC
 add ebx, byte 2	; 60EB1
 movsx eax, word [ebx]	; 60EB4
-mov dword [dword_CC0FC], eax	; 60EB7
+mov dword [penshotplayer], eax	; 60EB7
 add ebx, byte 2	; 60EBC
 movsx eax, word [ebx]	; 60EBF
 mov dword [dword_CC100], eax	; 60EC2
@@ -1398,19 +1398,19 @@ movsx eax, word [ebx]	; 60EF6
 mov dword [dword_CC114], eax	; 60EF9
 add ebx, byte 2	; 60EFE
 movsx eax, word [ebx]	; 60F01
-mov dword [dword_CC118], eax	; 60F04
+mov dword [penshotmode], eax	; 60F04
 add ebx, byte 2	; 60F09
 movsx eax, word [ebx]	; 60F0C
-mov dword [dword_CC11C], eax	; 60F0F
+mov dword [penshotstart], eax	; 60F0F
 add ebx, byte 2	; 60F14
 movsx eax, word [ebx]	; 60F17
-mov dword [dword_CC120], eax	; 60F1A
+mov dword [penshottimer], eax	; 60F1A
 add ebx, byte 2	; 60F1F
 movsx eax, word [ebx]	; 60F22
 mov dword [dword_CC124], eax	; 60F25
 add ebx, byte 2	; 60F2A
 movsx eax, word [ebx]	; 60F2D
-mov dword [dword_CC128], eax	; 60F30
+mov dword [penshotlive], eax	; 60F30
 add ebx, byte 2	; 60F35
 movsx eax, word [ebx]	; 60F38
 mov dword [dword_CC12C], eax	; 60F3B
@@ -1684,15 +1684,15 @@ mov dword [dword_DF6F6], unk_DAC40	; 61331
 mov dword [hmtmlines], unk_DC200	; 6133B
 mov dword [dword_DF6FA], dword_DB088	; 61345
 mov dword [dword_DF6FE], unk_DC240	; 6134F
-mov dword [hmtmroster], byte_DB3A8	; 61359
+mov dword [hmtmroster], hmroster	; 61359
 mov dword [hmtmptrF2], unk_DBC30	; 61363
-mov dword [awtmsort], unk_DFB1C	; 6136D
+mov dword [awtmsort], SortCords+300h	; 6136D
 mov dword [dword_DF7F2], unk_DAE94	; 61377
 mov dword [dword_DF7F6], unk_DAC70	; 61381
 mov dword [awtmlines], unk_DABF0	; 6138B
 mov dword [dword_DF7FA], unk_DB218	; 61395
 mov dword [dword_DF7FE], unk_DC252	; 6139F
-mov dword [awtmroster], byte_DB7EC	; 613A9
+mov dword [awtmroster], awroster	; 613A9
 mov dword [awtmptrF2], unk_DBF18	; 613B3
 mov ebx, SortCords	; 613BD
 xor ebp, ebp	; 613C2

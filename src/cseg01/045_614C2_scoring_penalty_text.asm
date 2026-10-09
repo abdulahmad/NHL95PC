@@ -7,13 +7,13 @@ extern asc_C1CA8, asc_C1CAC, asc_C1CB3, asc_C1CB9, asc_C1CC4, asc_C1CCD, asc_C1C
 extern asc_C1CFE, asc_C1D0E, asc_C1D19, asc_C1D2D, asc_C1D3F, asc_C1D54, assinsert, assreplace
 extern byte_C5400, byte_C542F, byte_C5431, sflags, gmode2, byte_C90D5, byte_C9104, byte_C9111
 extern byte_C9123, byte_C9142, byte_C9146, byte_CBC36, byte_CCE00, byte_CCE01, musicon, byte_DAC20
-extern byte_DB3A8, byte_DB3AD, byte_DF658, byte_DF6E8, byte_DF758, byte_DF7E8, byte_DF861, byte_E024C
+extern hmroster, byte_DB3AD, hmtmflags, byte_DF6E8, awtmflags, byte_DF7E8, byte_DF861, byte_E024C
 extern byte_E024D, byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E9A15, byte_E9A16
 extern byte_E9A17, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD, byte_E9ACE
 extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, joysampling, dword_C53FB, gameopts
 extern dword_C5840, dword_C90B0, dword_C90C0, dword_C90CA, dword_C9120, dword_CBEBE, dword_CBECA, dword_CC0AC
-extern dword_CC0DC, dword_CC0F8, dword_CC0FC, dword_CC100, dword_CC104, dword_CC110, dword_CC114, dword_CC118
-extern dword_CC11C, dword_CC120, dword_CC124, dword_CC128, dword_CD2F8, dword_CD34C, dword_CD350, dword_D8B70
+extern dword_CC0DC, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC110, dword_CC114, penshotmode
+extern penshotstart, penshottimer, dword_CC124, penshotlive, dword_CD2F8, dword_CD34C, dword_CD350, dword_D8B70
 extern dword_D8C84, dword_DB086, dword_DB088, dword_DC230, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
 extern hmtmstruct, dword_DF646, awtmstruct, puckstruct, sortobj15, hmtmlines
 extern dword_E00A0, dword_E0220, dword_E0230, dword_E9A11
@@ -25,7 +25,7 @@ extern strcpy_, strlen_, sub_110E0, sub_14552, sub_1457C, sub_145F9, sub_14C22, 
 extern sub_18F74, sub_1CD73, sub_59A11, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
 extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, sub_B2CD8, unk_C1B49, unk_C1C58, unk_C1C5B
 extern unk_C1C5E, unk_C1C61, unk_C1C64, unk_C1C67, unk_C1CB0, unk_C5423, unk_C542E, unk_DBC30
-extern SortCords, unk_E001C, unk_E9B4C, word_C5428, word_C90B2, word_C90B4, c1playernum, c2playernum
+extern SortCords, unk_E9B4C, word_C5428, word_C90B2, word_C90B4, c1playernum, c2playernum
 extern cont1team, word_C90CC, word_C90CE, word_C90D0, refsignal, word_C90D4, word_C90D6, word_C90D8
 extern gsp, gameclock, clockticks, word_CBC44, word_CBEC0, word_CBEC6, word_CBEC8, word_CBECC
 extern word_CC0B0, crowdlevel, word_CCEF8, word_CD39C, word_DEE94, hmscore, word_DF644, hmtmap
@@ -1007,7 +1007,7 @@ add edi, esi	; 61FBA
 shl edi, 4	; 61FBC
 add edi, esi	; 61FBF
 shl edi, 2	; 61FC1
-mov ebp, byte_DB3A8	; 61FC4
+mov ebp, hmroster	; 61FC4
 add ebp, edi	; 61FC9
 mov eax, edx	; 61FCB
 shl eax, 2	; 61FCD
@@ -1065,7 +1065,7 @@ add ebx, esi	; 62081
 shl ebx, 4	; 62083
 add ebx, esi	; 62086
 shl ebx, 2	; 62088
-mov ecx, byte_DB3A8	; 6208B
+mov ecx, hmroster	; 6208B
 add ecx, ebx	; 62090
 mov eax, edx	; 62092
 shl eax, 2	; 62094
@@ -1132,7 +1132,7 @@ add ebx, edx	; 6215B
 shl ebx, 4	; 6215D
 add ebx, edx	; 62160
 shl ebx, 2	; 62162
-mov ecx, byte_DB3A8	; 62165
+mov ecx, hmroster	; 62165
 add ecx, ebx	; 6216A
 mov edx, dword [dword_CC100]	; 6216C
 mov eax, edx	; 62172
@@ -1177,7 +1177,7 @@ add ebx, esi	; 621E4
 shl ebx, 4	; 621E6
 add ebx, esi	; 621E9
 shl ebx, 2	; 621EB
-mov ecx, byte_DB3A8	; 621EE
+mov ecx, hmroster	; 621EE
 add ecx, ebx	; 621F3
 mov eax, edx	; 621F5
 shl eax, 2	; 621F7
@@ -1251,7 +1251,7 @@ add ebx, esi	; 622DC
 shl ebx, 4	; 622DE
 add ebx, esi	; 622E1
 shl ebx, 2	; 622E3
-mov ecx, byte_DB3A8	; 622E6
+mov ecx, hmroster	; 622E6
 add ecx, ebx	; 622EB
 mov eax, edx	; 622ED
 shl eax, 2	; 622EF
@@ -2061,7 +2061,7 @@ test byte [gmode], 1	; 62D06
 jne near loc_62D7E	; 62D0D
 cmp word [byte ebx+06Ah], byte 10h	; 62D13
 je near loc_62D7E	; 62D18
-cmp dword [dword_CC128], byte 0	; 62D1E
+cmp dword [penshotlive], byte 0	; 62D1E
 jne short loc_62D7E	; 62D25
 cmp dx, byte 6	; 62D27
 je short loc_62D74	; 62D2B
@@ -2105,7 +2105,7 @@ test byte [sflags], 80h	; 62D90
 jne near loc_62E9F	; 62D97
 cmp word [word_CBC44], byte 0	; 62D9D
 jne near loc_62E9F	; 62DA5
-cmp dword [dword_CC11C], byte 0	; 62DAB
+cmp dword [penshotstart], byte 0	; 62DAB
 jne short loc_62DF7	; 62DB2
 movsx edx, cx	; 62DB4
 shl edx, 2	; 62DB7
@@ -2202,7 +2202,7 @@ loc_62ED5:
 mov edx, 20h	; 62ED5
 loc_62EDA:
 movsx edx, dx	; 62EDA
-mov eax, unk_E001C	; 62EDD
+mov eax, SortCords+800h	; 62EDD
 call assreplace	; 62EE2
 loc_62EE7:
 pop edx	; 62EE7
@@ -2382,12 +2382,12 @@ shl eax, 2	; 6312D
 add eax, ebx	; 63130
 shl eax, 3	; 63132
 sub eax, ebx	; 63135
-mov edx, dword [dword edi+0EEh]	; 63137
+mov edx, dword [dword edi+tmroster]	; 63137
 mov byte [edx+eax], 8	; 6313D
 mov eax, dword [byte ebp-014h]	; 63141
 mov eax, dword [byte eax+044h]	; 63144
 sar eax, 18h	; 63147
-mov eax, dword [byte edi+eax*2+07Ch]	; 6314A
+mov eax, dword [byte edi+eax*2+tmpdst-2]	; 6314A
 sar eax, 10h	; 6314E
 cmp eax, byte 0FFFFFFFDh	; 63151
 jle short loc_63163	; 63154
@@ -2764,7 +2764,7 @@ mov edx, 258h	; 63637
 loc_6363C:
 mov word [word_C90B4], dx	; 6363C
 loc_63643:
-cmp dword [dword_CC11C], byte 0	; 63643
+cmp dword [penshotstart], byte 0	; 63643
 je short loc_63664	; 6364A
 mov ax, word [dword_CC110]	; 6364C
 mov word [word_C90B2], ax	; 63652
@@ -2932,7 +2932,7 @@ cmp word [word_CBEC6], byte 0	; 638B5
 je short loc_638C8	; 638BD
 mov word [word_C90CE], 140h	; 638BF
 loc_638C8:
-cmp dword [dword_CC11C], byte 0	; 638C8
+cmp dword [penshotstart], byte 0	; 638C8
 je short loc_638F5	; 638CF
 cmp bl, 5	; 638D1
 jne short loc_638F5	; 638D4
@@ -2976,8 +2976,8 @@ add ebx, 80h	; 63943
 jmp short loc_6393C	; 63949
 loc_6394B:
 inc word [byte eax+036h]	; 6394B
-or byte [byte_DF658], 1	; 6394F
-or byte [byte_DF758], 1	; 63956
+or byte [hmtmflags], 1	; 6394F
+or byte [awtmflags], 1	; 63956
 or byte [byte_DF6E8], 40h	; 6395D
 or byte [byte_DF7E8], 40h	; 63964
 cmp word [byte eax+038h], byte 0	; 6396B
@@ -3172,7 +3172,7 @@ and ah, 0BFh	; 63B96
 mov byte [dword_C90C0], ah	; 63B99
 test byte [gmode], 1	; 63B9F
 jne short loc_63BF6	; 63BA6
-cmp dword [dword_CC128], byte 0	; 63BA8
+cmp dword [penshotlive], byte 0	; 63BA8
 jne short loc_63BF6	; 63BAF
 mov dx, word [word_C90D0]	; 63BB1
 dec edx	; 63BB8
@@ -3469,8 +3469,8 @@ inc eax	; 63F55
 jmp short loc_63F3B	; 63F56
 loc_63F58:
 inc word [byte ebp+02h]	; 63F58
-or byte [byte_DF658], 1	; 63F5C
-or byte [byte_DF758], 1	; 63F63
+or byte [hmtmflags], 1	; 63F5C
+or byte [awtmflags], 1	; 63F63
 loc_63F6A:
 add esp, byte 4	; 63F6A
 jmp near loc_6346E	; 63F6D
@@ -3496,7 +3496,7 @@ mov word [edx], ax	; 63FB7
 mov edx, 18h	; 63FBA
 mov eax, puckstruct	; 63FBF
 call assreplace	; 63FC4
-mov ebx, dword [dword_CC0FC]	; 63FC9
+mov ebx, dword [penshotplayer]	; 63FC9
 shl ebx, 7	; 63FCF
 add ebx, SortCords	; 63FD2
 and byte [byte ebx+pflags2], 0DBh	; 63FD8
@@ -3561,16 +3561,16 @@ loc_640B4:
 mov ebx, dword [byte ebx+06Ch]	; 640B4
 mov word [byte ebx+034h], 0FFFFh	; 640B7
 mov ax, word [byte ebx+034h]	; 640BD
-mov word [byte ebx+Wallsin], ax	; 640C1
-mov word [byte ebx+Wallcos], ax	; 640C5
+mov word [byte ebx+032h], ax	; 640C1
+mov word [byte ebx+030h], ax	; 640C5
 mov edx, dword [puckc]	; 640C9
 add word [crowdlevel], byte 64h	; 640CF
-mov al, byte [dword_CC0FC]	; 640D7
+mov al, byte [penshotplayer]	; 640D7
 mov byte [edx], al	; 640DC
 mov esi, 1	; 640DE
-mov dword [dword_CC128], esi	; 640E3
-mov dword [dword_CC11C], esi	; 640E9
-mov dword [dword_CC120], 3E8h	; 640EF
+mov dword [penshotlive], esi	; 640E3
+mov dword [penshotstart], esi	; 640E9
+mov dword [penshottimer], 3E8h	; 640EF
 call sub_63D3C	; 640F9
 pop esi	; 640FE
 pop edx	; 640FF
@@ -3793,7 +3793,7 @@ mov dword [dword_CC0F8], eax	; 6434D
 test eax, eax	; 64352
 je short loc_64392	; 64354
 add word [crowdlevel], byte 64h	; 64356
-cmp dword [dword_CC118], byte 0	; 6435E
+cmp dword [penshotmode], byte 0	; 6435E
 jne short loc_64392	; 64365
 mov eax, dword [puckc]	; 64367
 cmp byte [eax], 5	; 6436C
@@ -3820,9 +3820,9 @@ push dword 0Ch	; 64398
 call __CHK	; 6439D
 push ebx	; 643A2
 push esi	; 643A3
-cmp dword [dword_CC118], byte 0	; 643A4
+cmp dword [penshotmode], byte 0	; 643A4
 jne near loc_64436	; 643AB
-cmp dword [dword_CC0FC], byte 5	; 643B1
+cmp dword [penshotplayer], byte 5	; 643B1
 setg al	; 643B8
 and eax, 0FFh	; 643BB
 mov dword [dword_CC104], eax	; 643C0
@@ -3837,12 +3837,12 @@ inc word [byte eax+020h]	; 643D5
 mov ebx, 1	; 643D9
 mov word [hmtmap], bx	; 643DE
 mov word [awtmap], bx	; 643E5
-mov eax, dword [dword_CC0FC]	; 643EC
+mov eax, dword [penshotplayer]	; 643EC
 shl eax, 7	; 643F1
 mov eax, dword [dword eax+SortCords+44h]	; 643F4
 sar eax, 18h	; 643FA
 mov dword [dword_CC100], eax	; 643FD
-mov dword [dword_CC118], 1	; 64402
+mov dword [penshotmode], 1	; 64402
 mov eax, dword [dword_C90B0]	; 6440C
 sar eax, 10h	; 64411
 mov dword [dword_CC110], eax	; 64414
@@ -3861,14 +3861,14 @@ push dword 0Ch	; 64439
 call __CHK	; 6443E
 push ecx	; 64443
 push edx	; 64444
-cmp dword [dword_CC128], byte 0	; 64445
+cmp dword [penshotlive], byte 0	; 64445
 je short loc_644A5	; 6444C
-cmp dword [dword_CC118], byte 0	; 6444E
+cmp dword [penshotmode], byte 0	; 6444E
 je short loc_644A5	; 64455
 xor ecx, ecx	; 64457
-mov dword [dword_CC118], ecx	; 64459
-mov dword [dword_CC128], ecx	; 6445F
-mov dword [dword_CC0FC], 0FFFFFFFFh	; 64465
+mov dword [penshotmode], ecx	; 64459
+mov dword [penshotlive], ecx	; 6445F
+mov dword [penshotplayer], 0FFFFFFFFh	; 64465
 mov edx, 5	; 6446F
 mov eax, puckstruct	; 64474
 call AddPenalty2	; 64479
@@ -3877,7 +3877,7 @@ mov word [ltx], ax	; 64484
 mov ax, word [dword_CC114]	; 6448A
 mov word [word_E9AC4], ax	; 64490
 mov edx, 21h	; 64496
-mov eax, unk_E001C	; 6449B
+mov eax, SortCords+800h	; 6449B
 call assreplace	; 644A0
 loc_644A5:
 pop edx	; 644A5

@@ -4,14 +4,14 @@ bits 32
 section s_59D9A progbits alloc exec nowrite align=1
 extern AddPenalty, AddPenalty2, PBnum, Sweepcheck, __CHK, assinsert, assreplace, asstab
 extern byte_C4D1C, byte_C4D1D, byte_C5400, sflags, gmode2, byte_CBC37
-extern lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5, byte_CCCA0, musicon, byte_DB3A8
-extern byte_DB7EC, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byte_DF7CA, byte_DF7E6
+extern lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5, byte_CCCA0, musicon, hmroster
+extern awroster, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byte_DF7CA, byte_DF7E6
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
 extern byte_E0074, PlList, byte_E038A, byte_E9A16, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
 extern checkcoll, sub_65D01, collflag, doinput, joysampling, gameopts, dword_C7444, dword_C7448
-extern dword_C90B0, dword_C90C0, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, dword_CC0DC, dword_CC0F4
-extern dword_CC0F8, dword_CC0FC, dword_CC104, dword_CC110, dword_CC114, dword_CC118, dword_CC11C, dword_CC120
-extern dword_CC124, dword_CC128, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D302C
+extern dword_C90B0, dword_C90C0, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, dword_CC0DC, onetimerflag
+extern dword_CC0F8, penshotplayer, dword_CC104, dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer
+extern dword_CC124, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D302C
 extern dword_D3030, dword_D30B0, dword_D30B8, dword_D30BC, dword_D30C0, dword_D8C84, dword_DB088, hmtmstruct
 extern dword_DF642, dword_DF652, dword_DF6EA, dword_DF6F2, dword_DF6F6, dword_DF6FA
 extern dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort, awtmstruct, dword_DF752, dword_DF7EA
@@ -21,12 +21,12 @@ extern dword_E009C, dword_E039C, dword_E03A8, dword_E03AE
 extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
 extern off_C9078, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
 extern passspeed, randomd0, sfx, vecdist, sub_10F6D, sub_11005, sub_110E0, sub_11136
-extern sub_14A20, sub_14AFE, sub_15C30, Readjoy1, Readjoy2, sub_510A9, ChkShotStat, ChkGoalies
+extern sub_14A20, sub_14AFE, sub_15C30, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
 extern sub_59A11, sub_59A7E, sub_61576, sub_615A2, sub_61862, sub_63BF8, sub_63C73, sub_63D3C
 extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, sub_67564, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, unk_DABF0, unk_DAC40, unk_DAC70, unk_DACA0
 extern unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, unk_DC200, unk_DC240, unk_DC252, SortCords
-extern unk_DFB1C, unk_E001C, unk_E9D50, unk_E9EE0, sub_675D6, vtoa, regd4, camx
+extern unk_E9D50, unk_E9EE0, sub_675D6, vtoa, regd4, camx
 extern camy, lastplayer, xc1, yc1, word_C90B2, word_C90B4, fodir1, fodir2
 extern c1playernum, c2playernum, cont1team, word_C90CE, word_C90D4, gsp, gameclock, clockticks
 extern word_CBC44, exitgame, gameover, PerTimeTab, word_CBC52, word_CBC54, lcblink, word_CBC58
@@ -34,7 +34,7 @@ extern lcline, word_CBC64, lcboxon, word_CBC6C, word_CBEC0, word_CBEC4, word_CBE
 extern word_CBECC, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CCCA8, hmscore, hmtmline
 extern hmtmlcnt, word_DF64C, word_DF656, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
 extern word_DF74C, word_DF756, word_DF80E, puckcross
-extern word_E0036, word_E0052, lcrequest, word_E0306
+extern word_E0036, lcrequest, word_E0306
 extern word_E03A0, regd2, regd3, word_E03B8, regd0, regd1, Ylist, OOlistpos
 extern joysampling_save, word_E9AA4, word_E9AA6, CwdExciteLvl, periodendtime, word_E9AB0, PerTimeTotal, lasttouch
 extern word_E9AC4
@@ -159,7 +159,7 @@ mov ax, word [cont1team]	; 59ECB
 .2:
 cmp ax, 1	; 59ED1
 je short .3	; 59ED5
-mov eax, unk_DFB1C	; 59ED7
+mov eax, SortCords+300h	; 59ED7
 jmp short .4	; 59EDC
 .3:
 mov eax, SortCords	; 59EDE
@@ -1260,7 +1260,7 @@ mov edx, 1Bh	; 5AC60
 call AddPenalty2	; 5AC65
 jmp near .60	; 5AC6A
 .11:
-cmp dword [dword_CC128], byte 0	; 5AC6F
+cmp dword [penshotlive], byte 0	; 5AC6F
 je short .12	; 5AC76
 mov eax, dword [byte esp+02h]	; 5AC78
 sar eax, 10h	; 5AC7C
@@ -1382,7 +1382,7 @@ shl eax, 4	; 5AE27
 mov edx, dword [dword esi+0E6h]	; 5AE2A
 inc word [byte edx+eax+0Ch]	; 5AE30
 .30:
-cmp dword [dword_CC118], byte 0	; 5AE35
+cmp dword [penshotmode], byte 0	; 5AE35
 je short .31	; 5AE3C
 inc word [byte esi+022h]	; 5AE3E
 jmp short .32	; 5AE42
@@ -1395,7 +1395,7 @@ mov ecx, dword [byte esp+02h]	; 5AE51
 sar ecx, 10h	; 5AE55
 mov eax, 1	; 5AE58
 shl eax, cl	; 5AE5D
-test dword [dword_CC0F4], eax	; 5AE5F
+test dword [onetimerflag], eax	; 5AE5F
 je short .33	; 5AE65
 inc word [byte esi+position]	; 5AE67
 .33:
@@ -1438,7 +1438,7 @@ sub eax, edx	; 5AEDA
 mov edx, dword [dword ebp+0EAh]	; 5AEDC
 inc word [byte edx+eax*2+04h]	; 5AEE2
 .36:
-cmp dword [dword_CC128], byte 0	; 5AEE7
+cmp dword [penshotlive], byte 0	; 5AEE7
 jne near .42	; 5AEEE
 mov ax, word [byte ebp+036h]	; 5AEF4
 cmp ax, word [byte esi+facedir]	; 5AEF8
@@ -1488,7 +1488,7 @@ mov word [word_C90B2], cx	; 5AF85
 .43:
 xor ecx, ecx	; 5AF8C
 mov dword [dword_CC0F8], ecx	; 5AF8E
-mov dword [dword_CC0F4], ecx	; 5AF94
+mov dword [onetimerflag], ecx	; 5AF94
 .44:
 mov edx, dword [byte esi+0Eh]	; 5AF9A
 sar edx, 10h	; 5AF9D
@@ -1564,7 +1564,7 @@ test byte [gmode], 10h	; 5B09A
 jne short .53	; 5B0A1
 call sub_64439	; 5B0A3
 mov edx, 1Fh	; 5B0A8
-mov eax, unk_E001C	; 5B0AD
+mov eax, SortCords+800h	; 5B0AD
 call assreplace	; 5B0B2
 xor edx, edx	; 5B0B7
 mov dword [dword_CC114], edx	; 5B0B9
@@ -2283,15 +2283,15 @@ mov dword [dword_DF6F6], unk_DAC40	; 5B8EB
 mov dword [hmtmlines], unk_DC200	; 5B8F5
 mov dword [dword_DF6FA], dword_DB088	; 5B8FF
 mov dword [dword_DF6FE], unk_DC240	; 5B909
-mov dword [hmtmroster], byte_DB3A8	; 5B913
+mov dword [hmtmroster], hmroster	; 5B913
 mov dword [hmtmptrF2], unk_DBC30	; 5B91D
-mov dword [awtmsort], unk_DFB1C	; 5B927
+mov dword [awtmsort], SortCords+300h	; 5B927
 mov dword [dword_DF7F2], unk_DAE94	; 5B931
 mov dword [dword_DF7F6], unk_DAC70	; 5B93B
 mov dword [awtmlines], unk_DABF0	; 5B945
 mov dword [dword_DF7FA], unk_DB218	; 5B94F
 mov dword [dword_DF7FE], unk_DC252	; 5B959
-mov dword [awtmroster], byte_DB7EC	; 5B963
+mov dword [awtmroster], awroster	; 5B963
 mov dword [awtmptrF2], unk_DBF18	; 5B96D
 pop edx	; 5B977
 pop ebx	; 5B978
@@ -2471,7 +2471,7 @@ add eax, 80h	; 5BB53
 inc ebx	; 5BB58
 cmp bx, byte 11h	; 5BB59
 jne near defaultsprites2.1	; 5BB5D
-mov word [word_E0052], 2	; 5BB63
+mov word [SortCords+836h], 2	; 5BB63
 mov ebx, 0FFFFFFFFh	; 5BB6C
 mov word [word_E0036], bx	; 5BB71
 mov byte [byte_E0072], 7	; 5BB78
@@ -2545,7 +2545,7 @@ inc eax	; 5BC34
 .2:
 cmp ax, 6	; 5BC35
 jl short SetPlList.1	; 5BC39
-cmp dword [dword_CC118], byte 0	; 5BC3B
+cmp dword [penshotmode], byte 0	; 5BC3B
 je short .3	; 5BC42
 cmp esi, awtmstruct	; 5BC44
 sete al	; 5BC4A
@@ -2919,13 +2919,13 @@ xor ecx, ecx	; 5C0C3
 mov word [dword_CBECA], cx	; 5C0C5
 mov word [word_CBEC0], bx	; 5C0CC
 xor edx, edx	; 5C0D3
-mov dword [dword_CC118], edx	; 5C0D5
-mov dword [dword_CC128], edx	; 5C0DB
-mov dword [dword_CC11C], edx	; 5C0E1
+mov dword [penshotmode], edx	; 5C0D5
+mov dword [penshotlive], edx	; 5C0DB
+mov dword [penshotstart], edx	; 5C0E1
 mov dword [dword_CC124], edx	; 5C0E7
 xor edi, edi	; 5C0ED
 mov dword [dword_CC0F8], edx	; 5C0EF
-mov dword [dword_CC0FC], 0FFFFFFFFh	; 5C0F5
+mov dword [penshotplayer], 0FFFFFFFFh	; 5C0F5
 xor edi, edx	; 5C0FF
 mov word [word_C90B2], di	; 5C101
 xor eax, eax	; 5C108
@@ -3122,7 +3122,7 @@ cmp word [byte eax+01Ah], byte 0	; 5C3BD
 jl short .5	; 5C3C2
 cmp byte [byte eax+043h], 0	; 5C3C4
 jl short .5	; 5C3C8
-cmp dword [dword_CC118], byte 0	; 5C3CA
+cmp dword [penshotmode], byte 0	; 5C3CA
 jne short .5	; 5C3D1
 test byte [lldispodd], 1	; 5C3D3
 je short .5	; 5C3DA
@@ -5000,7 +5000,7 @@ mov eax, ecx	; 5DC04
 call AddPenalty2	; 5DC06
 jmp near calcpuckcross_ret5	; 5DC0B
 ; ClockTick: PC-new, run from the main loop. Counts clockticks (18h per second) and gameclock down; horn sfx 97h at
-;   60 s (unless music plays), UpdateCoachModes each second. Debug playback (dword_CC128) ends via sub_64439.
+;   60 s (unless music plays), UpdateCoachModes each second. Debug playback (penshotlive) ends via sub_64439.
 ClockTick:
 push dword 14h	; 5DC10
 call __CHK	; 5DC15
@@ -5008,11 +5008,11 @@ push ebx	; 5DC1A
 push ecx	; 5DC1B
 push edx	; 5DC1C
 push edi	; 5DC1D
-cmp dword [dword_CC128], byte 0	; 5DC1E
+cmp dword [penshotlive], byte 0	; 5DC1E
 je short .1	; 5DC25
-mov edi, dword [dword_CC120]	; 5DC27
+mov edi, dword [penshottimer]	; 5DC27
 dec edi	; 5DC2D
-mov dword [dword_CC120], edi	; 5DC2E
+mov dword [penshottimer], edi	; 5DC2E
 test edi, edi	; 5DC34
 jg near .x	; 5DC36
 call sub_64439	; 5DC3C
@@ -5197,7 +5197,7 @@ jl short Intermission.1	; 5DE6B
 pop edx	; 5DE6D
 pop ebx	; 5DE6E
 ret	; 5DE6F
-; IntermissionStart: 93G hockey93_06 IntermissionStart. gsp 4 -> GameOver; else Intermission, StartPer, sub_510A9.
+; IntermissionStart: 93G hockey93_06 IntermissionStart. gsp 4 -> GameOver; else Intermission, StartPer, SetPenaltyStrength.
 IntermissionStart:
 push dword 4	; 5DE70
 call __CHK	; 5DE75
@@ -5209,7 +5209,7 @@ jle short .1	; 5DE95
 call sub_10F6D	; 5DE97
 .1:
 call StartPer	; 5DE9C
-jmp near sub_510A9	; 5DEA1
+jmp near SetPenaltyStrength	; 5DEA1
 ; PeriodOver: 93G hockey93_06 PeriodOver. Line change box reset, gsp+1, gmdir flips; after the 3rd period:
 ;   overtime (byte_C5400 bit 1 = playoffs) or game over (gsp 4) unless tied; then IntermissionStart.
 PeriodOver:

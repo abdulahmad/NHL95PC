@@ -10,7 +10,7 @@ extern asc_C1639, asc_C1641, asc_C1646, asc_C164E, asc_C1653, asc_C1657, asc_C16
 extern asc_C1663, asc_C1667, asc_C166B, asc_C1675, asc_C167E, asc_C1687, asc_C1693, asc_C16A1
 extern asc_C16AC, asc_C16B3, asc_C16B8, asc_C16BD, asc_C16C6, asc_C16CB, asc_C16D0, asc_C16DA
 extern asc_C16E0, asc_C16E8, asc_C16F5, asc_C16FA, asc_C1703, asc_C1709, asc_C70EC, asc_C70F8
-extern asc_C811A, asc_C814A, byte_C5400, byte_C8451, byte_C8922, musicon, byte_D42C3, byte_DB3A8
+extern asc_C811A, asc_C814A, byte_C5400, byte_C8451, byte_C8922, musicon, byte_D42C3, hmroster
 extern byte_DD710, byte_DD750, byte_DD774, byte_DD775, byte_DD788, byte_DD789, byte_ED7ED, byte_ED824
 extern byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED8CE, byte_ED9AC, byte_ED9B0, byte_ED9E6
 extern dword_C53F7, gameopts, dword_C541F, songdata, cont2team, dword_C90CA, dword_CCC94, musicslot
@@ -916,7 +916,7 @@ mov edx, dword [dword esp+07C4h]	; 2E12F
 add ebp, edx	; 2E136
 shl ebp, 3	; 2E138
 sub ebp, edx	; 2E13B
-cmp byte [dword ebp+eax*4+byte_DB3A8], 1	; 2E13D
+cmp byte [dword ebp+eax*4+hmroster], 1	; 2E13D
 jne short loc_2E158	; 2E145
 mov ebx, asc_C1639	; 2E147
 mov edx, edi	; 2E14C

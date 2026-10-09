@@ -6,7 +6,7 @@ extern __CHK, asc_C1370, asc_C1375, asc_C1379, asc_C137F, asc_C1384, asc_C1389, 
 extern asc_C13A0, asc_C13A8, asc_C13AD, asc_C13B6, asc_C13C0, asc_C13C7, asc_C13D0, asc_C13D9
 extern asc_C13E0, asc_C13E5, asc_C13EA, asc_C13F3, asc_C13F8, asc_C13FD, asc_C1402, asc_C1407
 extern asc_C140C, asc_C1415, asc_C141A, asc_C141F, asc_C1428, asc_C811A, asc_C814A, byte_C5400
-extern byte_C6F6C, byte_C8451, musicon, byte_D42C3, byte_DB3A8, byte_ED7F3, byte_ED824, byte_ED825
+extern byte_C6F6C, byte_C8451, musicon, byte_D42C3, hmroster, byte_ED7F3, byte_ED824, byte_ED825
 extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, dword_C5403, dword_C5407
 extern dword_C5581, dword_C71CC, dword_C71D0, dword_C71D4, songdata, cont2team, dword_C90CA, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, dword_DC234, dword_DC238, dword_EA0DC
@@ -1623,7 +1623,7 @@ shl eax, 2	; 2B60A
 add eax, edx	; 2B60D
 shl eax, 3	; 2B60F
 sub eax, edx	; 2B612
-cmp byte [dword ebx+eax+byte_DB3A8], 1	; 2B614
+cmp byte [dword ebx+eax+hmroster], 1	; 2B614
 jne short loc_2B62F	; 2B61C
 mov ebx, asc_C1428	; 2B61E
 mov edx, edi	; 2B623

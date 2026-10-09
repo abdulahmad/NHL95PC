@@ -9,7 +9,7 @@ extern asc_C3164, asc_C316C, asc_C3171, asc_C3180, asc_C3184, asc_C3189, asc_C31
 extern asc_C319D, asc_C31A2, asc_C31A7, asc_C31AF, asc_C31B6, asc_C31BB, asc_C31C2, asc_C31CB
 extern asc_C31D5, asc_C6903, asc_C6907, asc_C690B, asc_C6913, asc_C692B, asc_C6935, asc_C693B
 extern byte_C5400, byte_D079E, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238, byte_D12DE
-extern musicon, byte_DB3A8, byte_DB3AD, byte_DD750, byte_EA990, byte_EA991, byte_EA992, byte_EA993
+extern musicon, hmroster, byte_DB3AD, byte_DD750, byte_EA990, byte_EA991, byte_EA992, byte_EA993
 extern byte_EC7E0, byte_EC7E4, byte_ECAE4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED0F7, byte_ED0F8
 extern byte_ED0F9, byte_ED0FA, byte_ED83C, byte_ED85A, byte_ED8B4, byte_ED9E7, dword_C4E24, dword_C6956
 extern dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, songdata, dword_C90CA, dword_D0B16
@@ -4653,9 +4653,9 @@ shl eax, 4	; 76D1A
 add eax, edx	; 76D1D
 shl eax, 2	; 76D1F
 add eax, ebx	; 76D22
-cmp byte [dword eax+byte_DB3A8], 3	; 76D24
+cmp byte [dword eax+hmroster], 3	; 76D24
 jne short loc_76D34	; 76D2B
-mov byte [dword eax+byte_DB3A8], 2	; 76D2D
+mov byte [dword eax+hmroster], 2	; 76D2D
 loc_76D34:
 mov eax, dword [byte ebp+036h]	; 76D34
 inc eax	; 76D37
@@ -4892,7 +4892,7 @@ shl eax, 4	; 76FCE
 add eax, ebx	; 76FD1
 shl eax, 4	; 76FD3
 add eax, ebx	; 76FD6
-cmp byte [dword ecx+eax*4+byte_DB3A8], 2	; 76FD8
+cmp byte [dword ecx+eax*4+hmroster], 2	; 76FD8
 je short loc_7702C	; 76FE0
 xor ecx, ecx	; 76FE2
 mov cl, byte [byte ebp+06Ah]	; 76FE4
@@ -5460,7 +5460,7 @@ shl eax, 4	; 775F6
 add eax, edx	; 775F9
 shl eax, 4	; 775FB
 add eax, edx	; 775FE
-cmp byte [dword ebx+eax*4+byte_DB3A8], 2	; 77600
+cmp byte [dword ebx+eax*4+hmroster], 2	; 77600
 je near loc_77C15	; 77608
 push dword 0C1h	; 7760E
 push dword 0C0h	; 77613
@@ -5976,7 +5976,7 @@ shl eax, 4	; 77C56
 add eax, edx	; 77C59
 shl eax, 2	; 77C5B
 add eax, ebx	; 77C5E
-mov ch, byte [dword eax+byte_DB3A8]	; 77C60
+mov ch, byte [dword eax+hmroster]	; 77C60
 test ch, ch	; 77C66
 je near loc_77E2F	; 77C68
 cmp ch, 4	; 77C6E
@@ -6011,7 +6011,7 @@ shl eax, 4	; 77CC4
 add eax, edx	; 77CC7
 shl eax, 4	; 77CC9
 add eax, edx	; 77CCC
-cmp byte [dword ebx+eax*4+byte_DB3A8], 2	; 77CCE
+cmp byte [dword ebx+eax*4+hmroster], 2	; 77CCE
 jne short loc_77CE4	; 77CD6
 push dword 0C1h	; 77CD8
 push dword 0FCh	; 77CDD
@@ -6079,7 +6079,7 @@ shl eax, 4	; 77D9C
 add eax, edx	; 77D9F
 shl eax, 4	; 77DA1
 add eax, edx	; 77DA4
-cmp byte [dword ebx+eax*4+byte_DB3A8], 2	; 77DA6
+cmp byte [dword ebx+eax*4+hmroster], 2	; 77DA6
 jne short loc_77DBC	; 77DAE
 push dword 0C1h	; 77DB0
 push dword 0FDh	; 77DB5
@@ -6193,7 +6193,7 @@ shl eax, 4	; 77EDE
 add eax, ebx	; 77EE1
 shl eax, 4	; 77EE3
 add eax, ebx	; 77EE6
-cmp byte [dword ecx+eax*4+byte_DB3A8], 2	; 77EE8
+cmp byte [dword ecx+eax*4+hmroster], 2	; 77EE8
 je short loc_77F3C	; 77EF0
 xor ecx, ecx	; 77EF2
 mov cl, byte [byte ebp+06Ah]	; 77EF4

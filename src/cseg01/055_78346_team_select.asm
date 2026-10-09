@@ -6,7 +6,7 @@ extern __CHK, asc_C31BB, asc_C31CB, asc_C31F1, asc_C31F7, asc_C3200, asc_C3205, 
 extern asc_C3214, asc_C321B, asc_C3222, asc_C3229, asc_C322F, asc_C3236, asc_C323D, asc_C3245
 extern asc_C324C, asc_C3253, asc_C325B, asc_C3267, asc_C326D, asc_C3277, asc_C3288, asc_C328E
 extern asc_C32A4, asc_C32AA, asc_C32AF, asc_C32B5, asc_C814F, byte_D11BC, byte_D1238, byte_D12DE
-extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, byte_DB3A8, byte_DB3AD, byte_DD710, byte_DD750
+extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, byte_DB3AD, byte_DD710, byte_DD750
 extern byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED83C, byte_ED86D, byte_ED9E7, dword_C65B0
 extern dword_C65B8, cont2team, dword_C90CA, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
 extern dword_D0B2A, dword_D1338, dword_D133C, dword_D1478, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
@@ -124,7 +124,7 @@ shl eax, 4	; 78433
 add eax, edx	; 78436
 shl eax, 2	; 78438
 add eax, ebx	; 7843B
-mov dl, byte [dword eax+byte_DB3A8]	; 7843D
+mov dl, byte [dword eax+hmroster]	; 7843D
 test dl, dl	; 78443
 je near loc_784F8	; 78445
 mov al, dl	; 7844B
@@ -940,7 +940,7 @@ shl eax, 4	; 78F03
 add eax, ecx	; 78F06
 shl eax, 4	; 78F08
 add eax, ecx	; 78F0B
-cmp byte [dword esi+eax*4+byte_DB3A8], 3	; 78F0D
+cmp byte [dword esi+eax*4+hmroster], 3	; 78F0D
 jne short loc_78F2A	; 78F15
 cmp byte [dword edx+byte_ED0F4], 47h	; 78F17
 je short loc_78F29	; 78F1E
@@ -1115,7 +1115,7 @@ shl edx, 4	; 790D5
 add edx, ecx	; 790D8
 shl edx, 2	; 790DA
 add edx, edi	; 790DD
-mov ch, byte [dword edx+byte_DB3A8]	; 790DF
+mov ch, byte [dword edx+hmroster]	; 790DF
 cmp ch, 4	; 790E5
 je short loc_790F2	; 790E8
 cmp ch, 3	; 790EA
@@ -1143,9 +1143,9 @@ add edx, eax	; 79118
 shl edx, 3	; 7911A
 sub edx, eax	; 7911D
 add edx, ecx	; 7911F
-cmp byte [dword edx+byte_DB3A8], 2	; 79121
+cmp byte [dword edx+hmroster], 2	; 79121
 jne short loc_79131	; 79128
-mov byte [dword edx+byte_DB3A8], 3	; 7912A
+mov byte [dword edx+hmroster], 3	; 7912A
 loc_79131:
 inc eax	; 79131
 cmp eax, byte 1Ch	; 79132
@@ -1172,9 +1172,9 @@ shl edx, 4	; 79160
 add edx, ebx	; 79163
 shl edx, 2	; 79165
 add edx, ecx	; 79168
-cmp byte [dword edx+byte_DB3A8], 3	; 7916A
+cmp byte [dword edx+hmroster], 3	; 7916A
 jne short loc_7917A	; 79171
-mov byte [dword edx+byte_DB3A8], 2	; 79173
+mov byte [dword edx+hmroster], 2	; 79173
 loc_7917A:
 inc eax	; 7917A
 cmp eax, byte 8	; 7917B
@@ -1221,7 +1221,7 @@ add eax, edx	; 791D8
 shl eax, 3	; 791DA
 sub eax, edx	; 791DD
 add eax, ecx	; 791DF
-cmp byte [dword eax+byte_DB3A8], 0	; 791E1
+cmp byte [dword eax+hmroster], 0	; 791E1
 je short loc_79200	; 791E8
 mov ebx, dword [esp]	; 791EA
 mov bl, byte [esi+ebx]	; 791ED
@@ -1271,7 +1271,7 @@ add eax, ebx	; 79257
 shl eax, 3	; 79259
 sub eax, ebx	; 7925C
 add eax, ecx	; 7925E
-mov cl, byte [dword eax+byte_DB3A8]	; 79260
+mov cl, byte [dword eax+hmroster]	; 79260
 test cl, cl	; 79266
 je short loc_79277	; 79268
 cmp cl, 3	; 7926A
@@ -1597,7 +1597,7 @@ add eax, edx	; 7964D
 shl eax, 3	; 7964F
 sub eax, edx	; 79652
 add eax, ecx	; 79654
-cmp byte [dword eax+byte_DB3A8], 0	; 79656
+cmp byte [dword eax+hmroster], 0	; 79656
 je short loc_79681	; 7965D
 mov ebx, dword [dword esp+0308h]	; 7965F
 mov bl, byte [esi+ebx]	; 79666
@@ -1648,7 +1648,7 @@ add eax, ebx	; 796FF
 shl eax, 3	; 79701
 sub eax, ebx	; 79704
 add eax, ecx	; 79706
-mov bl, byte [dword eax+byte_DB3A8]	; 79708
+mov bl, byte [dword eax+hmroster]	; 79708
 test bl, bl	; 7970E
 je short loc_79726	; 79710
 cmp bl, 3	; 79712
@@ -1840,7 +1840,7 @@ add eax, ecx	; 79971
 shl eax, 3	; 79973
 sub eax, ecx	; 79976
 add eax, ebx	; 79978
-cmp byte [dword eax+byte_DB3A8], 0	; 7997A
+cmp byte [dword eax+hmroster], 0	; 7997A
 je short loc_799A5	; 79981
 mov edx, dword [dword esp+0308h]	; 79983
 mov dl, byte [edx+esi]	; 7998A
@@ -1889,7 +1889,7 @@ add eax, edx	; 79A18
 shl eax, 3	; 79A1A
 sub eax, edx	; 79A1D
 add eax, ebx	; 79A1F
-mov bh, byte [dword eax+byte_DB3A8]	; 79A21
+mov bh, byte [dword eax+hmroster]	; 79A21
 test bh, bh	; 79A27
 je short loc_79A3F	; 79A29
 cmp bh, 3	; 79A2B
@@ -2100,7 +2100,7 @@ shl eax, 4	; 79D1D
 add eax, edi	; 79D20
 shl eax, 4	; 79D22
 add eax, edi	; 79D25
-cmp byte [dword edx+eax*4+byte_DB3A8], 2	; 79D27
+cmp byte [dword edx+eax*4+hmroster], 2	; 79D27
 jne short loc_79D3D	; 79D2F
 push dword 0C1h	; 79D31
 push dword 0FDh	; 79D36
@@ -2227,7 +2227,7 @@ shl eax, 4	; 79EA9
 add eax, ebx	; 79EAC
 shl eax, 4	; 79EAE
 add eax, ebx	; 79EB1
-mov byte [dword ecx+eax*4+byte_DB3A8], 2	; 79EB3
+mov byte [dword ecx+eax*4+hmroster], 2	; 79EB3
 mov edx, dword [byte esp+034h]	; 79EBB
 mov eax, edi	; 79EBF
 call sub_78366	; 79EC1
@@ -2297,7 +2297,7 @@ shl eax, 4	; 79F7F
 add eax, ebx	; 79F82
 shl eax, 4	; 79F84
 add eax, ebx	; 79F87
-mov byte [dword ecx+eax*4+byte_DB3A8], 3	; 79F89
+mov byte [dword ecx+eax*4+hmroster], 3	; 79F89
 mov edx, dword [byte esp+02Ch]	; 79F91
 mov eax, edi	; 79F95
 call sub_78366	; 79F97

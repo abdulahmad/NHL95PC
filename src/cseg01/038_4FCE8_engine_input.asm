@@ -4,8 +4,8 @@ bits 32
 section s_4FCE8 progbits alloc exec nowrite align=1
 extern SetLCmode, SetSPA, SetShotMode, ShotMode, __CHK, burst, sflags, gmode2
 extern lchoicetab, byte_DFF3A, checkob, doplayeracc, joysampling, joyqhead, joyqcount, joyqtick
-extern joyrec, gameopts, cont2team, dword_CC0F0, dword_CC0F4, dword_CC118
-extern dword_CC128, dword_CCC9C, puckcross_m2, dword_E9A9E, gmode, lcreqchoice, puckstruct
+extern joyrec, gameopts, cont2team, dword_CC0F0, onetimerflag, penshotmode
+extern penshotlive, dword_CCC9C, puckcross_m2, dword_E9A9E, gmode, lcreqchoice, puckstruct
 extern sub_4D938, puckx, pucky, puckvy, puckc, setpassmode, setpersonel, vecdist
 extern sub_14AFE, BlockShotDive, passmode, changeplayer, restorepl, MouseSetPos, joyqueue, SortCords
 extern vtoa, lastplayer, passdir, passplayer, fodir1, fodir2, c1playernum
@@ -758,9 +758,9 @@ test byte [byte eax+pflags], 40h	; 504EC
 setne al	; 504F0
 mov edi, eax	; 504F3
 and edi, 0FFh	; 504F5
-cmp dword [dword_CC118], byte 0	; 504FB
+cmp dword [penshotmode], byte 0	; 504FB
 jne short .1	; 50502
-cmp dword [dword_CC128], byte 0	; 50504
+cmp dword [penshotlive], byte 0	; 50504
 je short .lcreq	; 5050B
 .1:
 test byte [gmode], 1	; 5050D
@@ -768,7 +768,7 @@ jne near .x	; 50514
 .lcreq:
 cmp word [nosplit edi*2+lcrequest], byte 0	; 5051A
 je near .nolcreq	; 50523
-cmp dword [dword_CC128], byte 0	; 50529
+cmp dword [penshotlive], byte 0	; 50529
 jne short .nolcreq	; 50530
 mov ax, word [cont1team]	; 50532
 cmp ax, word [cont2team]	; 50538
@@ -820,7 +820,7 @@ mov eax, dword [puckstruct+1Ah]	; 505B6
 sar eax, 10h	; 505BB
 cmp byte [dword eax+byte_DFF3A], 1Ch	; 505BE
 jne short .joycon	; 505C5
-cmp dword [dword_CC118], byte 0	; 505C7
+cmp dword [penshotmode], byte 0	; 505C7
 jne short .joycon	; 505CE
 mov al, byte [regd1]	; 505D0
 test al, 10h	; 505D5
@@ -863,7 +863,7 @@ mov ax, word [passplayer]	; 50640
 mov si, word [byte ebx+SCnum]	; 50646
 cmp ax, si	; 5064A
 jne short .6	; 5064D
-cmp dword [dword_CC0F4], byte 0	; 5064F
+cmp dword [onetimerflag], byte 0	; 5064F
 je near .x	; 50656
 .setpassdir:
 mov ax, word [regd0]	; 5065C
@@ -915,7 +915,7 @@ sar eax, 10h	; 50708
 call restorepl	; 5070B
 mov word [c1playernum], ax	; 50710
 .ot:
-mov dword [dword_CC0F4], 1	; 50716
+mov dword [onetimerflag], 1	; 50716
 pop edi	; 50720
 pop esi	; 50721
 pop ecx	; 50722
@@ -979,7 +979,7 @@ ret	; 507B9
 .10:
 test al, 40h	; 507BA
 je short .11	; 507BC
-cmp dword [dword_CC128], byte 0	; 507BE
+cmp dword [penshotlive], byte 0	; 507BE
 jne short .11	; 507C5
 mov eax, ebx	; 507C7
 call SetLCmode	; 507C9
@@ -1029,7 +1029,7 @@ je short .13	; 5084C
 mov eax, ebx	; 5084E
 call burst	; 50850
 .13:
-cmp dword [dword_CC0F4], byte 0	; 50855
+cmp dword [onetimerflag], byte 0	; 50855
 jne near doinput.setpassdir	; 5085C
 test byte [regd1], 10h	; 50862
 jne near doinput.change	; 50869

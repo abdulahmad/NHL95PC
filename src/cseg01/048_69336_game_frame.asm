@@ -15,15 +15,15 @@ extern sub_479E9, sub_47C31, joyq_flush, Readjoy1, Readjoy2, sub_594CD, sub_597E
 extern sub_59CA9, sub_59D54, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
 extern sub_61B85, sub_63D3C, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_836E4
 extern sub_8373E, sub_8F633, sub_8FFB0, sub_B396E, unk_DABF0, unk_DC200, unk_DF014, unk_DF314
-extern SortCords, unk_E001C, vtoa, camx, camy, passplayer, xc1, yc1
+extern SortCords, vtoa, camx, camy, passplayer, xc1, yc1
 extern c1playernum, c2playernum, cont1team, word_C90CC, word_C90CE, refsignal, word_C90D4, word_C90D6
 extern word_C90D8, gsp, gameclock, clockticks, word_CBC44, exitgame, gameover, word_CBC52
 extern word_CBC54, lcblink, word_CBC58, lcline, word_CBC64, lcboxon, word_CBC6C, word_CBEC0
 extern word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, scrolly, hmscore
 extern hmtmline, word_DF644, hmtmap, word_DF64C, awscore, awtmline, word_DF744, word_DF746
 extern awtmap, word_DF74C, word_DF816, word_DF81A, word_DFF1E, word_DFF28
-extern word_DFF2A, word_DFF44, word_DFF70, word_E001E, word_E0022, word_E0028, word_E002A
-extern word_E0052, regd1, joysampling_save, CwdExciteLvl
+extern word_DFF2A, word_DFF44, word_E0022, word_E0028, word_E002A
+extern regd1, joysampling_save, CwdExciteLvl
 global StartHL2, loc_69406, loc_69416, loc_694B6, loc_695EB, loc_695F3, loc_69641, loc_69648
 global loc_6964A, loc_69655, loc_697D9, loc_697E3, loc_697E8, loc_6983A, loc_6983F, loc_69851
 global loc_69856, loc_699EB, loc_69A69, loc_69A74, loc_69A8E, loc_69A99, loc_69B9E, loc_69C22
@@ -385,7 +385,7 @@ call randomd0	; 698FC
 db 081h,0E8h,0E8h,03h,00h,00h	; 69901 sub eax,3E8h
 mov word [word_DFF2A], ax	; 69907
 mov word [puckstruct+12h], 18Ah	; 6990D
-mov word [word_DFF70], di	; 69916
+mov word [puckstruct+54h], di	; 69916
 mov edx, 18h	; 6991D
 mov eax, puckstruct	; 69922
 call assreplace	; 69927
@@ -396,14 +396,14 @@ mov word [byte ebx+054h], di	; 6993D
 mov edx, 19h	; 69941
 mov eax, ebx	; 69946
 call assreplace	; 69948
-mov word [word_E001E], 0FF88h	; 6994D
+mov word [SortCords+802h], 0FF88h	; 6994D
 mov word [word_E0022], di	; 69956
 mov esi, 2	; 6995D
-mov word [word_E0052], si	; 69962
+mov word [SortCords+836h], si	; 69962
 mov word [word_E002A], di	; 69969
 mov word [word_E0028], di	; 69970
 mov edx, 1Fh	; 69977
-mov eax, unk_E001C	; 6997C
+mov eax, SortCords+800h	; 6997C
 call assreplace	; 69981
 call DoGameFrame	; 69986
 call DoGameFrame	; 6998B
@@ -813,7 +813,7 @@ mov dword [dword_D8C78], edx	; 69FD9
 mov word [refsignal], di	; 69FDF
 mov word [word_C90D4], cx	; 69FE6
 mov edx, 1Eh	; 69FED
-mov eax, unk_E001C	; 69FF2
+mov eax, SortCords+800h	; 69FF2
 call assreplace	; 69FF7
 call sub_63D3C	; 69FFC
 mov word [word_C90CE], cx	; 6A001

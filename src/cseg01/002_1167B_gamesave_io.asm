@@ -6,7 +6,7 @@ extern __CHK, __STOSB, asc_C0202, asc_C811A, asc_C8136, byte_C4D1C, byte_C4D1D, 
 extern byte_C5400, byte_C8451, sflags, musicon, byte_D9299, byte_D9558, byte_ED7CC, joysampling
 extern dword_C4E10, dword_C4E14, dword_C5130, dword_C53F7, dword_C53FB, dword_C5704, dword_C5708, dword_C570C
 extern dword_C5840, dword_C7444, dword_C7448, cont2team, dword_C90CA, dword_CBECA, dword_CC080, dword_CC0F0
-extern dword_CC128, dword_D2C6B, dword_D302C, dword_D3030, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74
+extern penshotlive, dword_D2C6B, dword_D302C, dword_D3030, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, dword_DD6A8, dword_DD6AE
 extern dword_DD6B0, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, dword_E039C, dword_E9A9E, j_unlink_
 extern loc_113E9, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
@@ -157,7 +157,7 @@ mov dword [joysampling], eax	; 11832
 loc_11837:
 movsx eax, si	; 11837
 call sub_594CD	; 1183A
-cmp dword [dword_CC128], byte 0	; 1183F
+cmp dword [penshotlive], byte 0	; 1183F
 je short loc_11855	; 11846
 xor edi, edi	; 11848
 mov dword [dword_DC28C], edi	; 1184A

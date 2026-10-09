@@ -6,7 +6,7 @@ extern __CHK, asc_C32BC, asc_C32C1, asc_C32CA, asc_C32CF, asc_C32D5, asc_C32DB, 
 extern asc_C32F5, asc_C3300, asc_C3305, asc_C330E, asc_C3317, asc_C331C, asc_C3322, asc_C3328
 extern asc_C3339, asc_C3344, asc_C3349, asc_C335A, asc_C3360, asc_C3366, asc_C336F, asc_C3374
 extern asc_C337C, asc_C3381, asc_C3388, asc_C338D, asc_C3393, asc_C3399, asc_C33A3, asc_C33B0
-extern asc_C33BD, asc_C33CA, byte_C4D1C, byte_C5400, musicon, byte_DF658, byte_DF758, byte_DF861
+extern asc_C33BD, asc_C33CA, byte_C4D1C, byte_C5400, musicon, hmtmflags, awtmflags, byte_DF861
 extern byte_DFF3A, byte_EA0F4, byte_ED361, byte_ED904, byte_ED93F, byte_ED940, byte_ED941, byte_ED942
 extern byte_ED943, dword_C4E0C, dword_C530D, dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C540B
 extern dword_C540F, dword_C5413, dword_C5417, dword_C541F, songdata, dword_C90C0, cont2team, dword_C90CA
@@ -24,7 +24,7 @@ extern sub_8B85B, sub_8B92F, sub_8CCA8, sub_8E83C, sub_8E9C0, sub_8F963, sub_8F9
 extern sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_90D20, sub_91284, sub_91370
 extern sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_96440, sub_B2DCA, sub_B30B4, sub_B4B88
 extern sub_B4BA8, sub_B4DD4, sub_B4FAC, unk_C5298, unk_D16A0, unk_D19CC, unk_D19DC, SortCords
-extern unk_DFB1C, c1playernum, c2playernum, cont1team, word_C90CC, gsp, gameclock, lcblink
+extern c1playernum, c2playernum, cont1team, word_C90CC, gsp, gameclock, lcblink
 extern word_CBC58, lcboxon, word_CBC6C, hmtmline, word_DF65A, word_DF75A, word_DFF42
 global jpt_7A872, loc_7A1F2, loc_7A1F5, loc_7A1F6, loc_7A263, loc_7A439, loc_7A43B, loc_7A500
 global loc_7A51D, loc_7A5B9, loc_7A5BD, loc_7A5D3, loc_7A652, loc_7A66F, loc_7A68A, loc_7A68F
@@ -1696,8 +1696,8 @@ inc eax	; 7B461
 loc_7B462:
 cmp ax, 0Ch	; 7B462
 jl short loc_7B454	; 7B466
-and byte [byte_DF658], 0FDh	; 7B468
-and byte [byte_DF758], 0FDh	; 7B46F
+and byte [hmtmflags], 0FDh	; 7B468
+and byte [awtmflags], 0FDh	; 7B46F
 xor eax, eax	; 7B476
 mov edi, 1000h	; 7B478
 jmp short loc_7B493	; 7B47D
@@ -3857,7 +3857,7 @@ jne short loc_7CDA9	; 7CDA0
 mov eax, SortCords	; 7CDA2
 jmp short loc_7CDAE	; 7CDA7
 loc_7CDA9:
-mov eax, unk_DFB1C	; 7CDA9
+mov eax, SortCords+300h	; 7CDA9
 loc_7CDAE:
 mov ebx, 6	; 7CDAE
 loc_7CDB3:
@@ -3981,7 +3981,7 @@ jl short loc_7CF1A	; 7CF2A
 loc_7CF2C:
 mov eax, ebx	; 7CF2C
 shl eax, 8	; 7CF2E
-and byte [dword eax+byte_DF658], 0FDh	; 7CF31
+and byte [dword eax+hmtmflags], 0FDh	; 7CF31
 test ebx, ebx	; 7CF38
 sete al	; 7CF3A
 and eax, 0FFh	; 7CF3D

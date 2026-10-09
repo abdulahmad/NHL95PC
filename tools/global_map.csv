@@ -122,3 +122,14 @@ crowdlevel,CC0DE,"93G crowdlevel: ChkShotStat +100 (64h), setInjuryType +12Ch, c
 puckcross_m2,DF812,"puckcross-2: the -5r load dword [edx*2+puckcross_m2] / sar 10h reads puckcross[edx]; nosplit use, so not folded"
 hmtmap,DF64A,"home tmap (hmtmstruct+36h), players in the penalty box count (6 = none in restoreteams)"
 awtmap,DF74A,visitor tmap (awtmstruct+36h)
+penshotmode,CC118,penalty shot pending: set by the penalty code (64402) with penshotplayer = the fouled player; PenShotAssign / asspsclear test it; cleared with penshotlive at the end (64459)
+penshotlive,CC128,"penalty shot in progress (set with penshotstart at 640E3, penshottimer 3E8h); ClockTick counts penshottimer down and ends it (sub_64439); many AI checks skip while set"
+penshotstart,CC11C,penalty shot started (set at 640E9 with penshotlive); PenShotStart / ChkDelayedOffside / ChkOffsides test it
+penshotplayer,CC0FC,SortCords index of the player awarded the penalty shot (set by checkcheck / Bcheck / holdcheck at 53BAE / 56B13 / 56C79 when they call the foul; -1 = none)
+penshottimer,CC120,"penalty shot time limit: 3E8h when it starts, ClockTick decrements it, at 0 sub_64439 ends the shot"
+hmroster,DB3A8,"home roster records, 27h bytes per player (byte 0 = status: 3 bench, 4 on ice, 7 penalty over); clearteams stores it in hmtmstruct+tmroster"
+awroster,DB7EC,"visitor roster records (awtmstruct+tmroster), as hmroster"
+hmtmpdst,DF692,home tmpdst array (hmtmstruct+7Eh); TakePlayerFromBox indexes it with team*100h + player*2
+hmtmflags,DF658,home tmflags (hmtmstruct+44h)
+awtmflags,DF758,visitor tmflags (awtmstruct+44h)
+onetimerflag,CC0F4,"one-timer pending (94G onetimerflags role): set by the input code at 50716, PassRecOneTimer shoots while it is set and clears it on exit"

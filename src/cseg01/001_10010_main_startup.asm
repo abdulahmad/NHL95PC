@@ -11,7 +11,7 @@ extern dword_C4D04, dword_C4D08, joysampling, joyqhead, joyqcount, joyqtick, dwo
 extern dword_C4E14, joyrec, dword_C4E24, dword_C4E28, dword_C4E2C, dword_C5130, dword_C5131, dword_C5133
 extern dword_C5135, dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5305, dword_C5309, gameopts
 extern dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413, dword_C5417, dword_C5840, screenbm
-extern songdata, dword_C7444, dword_C7448, cont2team, dword_C90CA, dword_CBC3E, dword_CC128, musicslot
+extern songdata, dword_C7444, dword_C7448, cont2team, dword_C90CA, dword_CBC3E, penshotlive, musicslot
 extern musichandle, dword_D2C6B, dword_D302C, dword_D3030, dword_D3034, dword_D30D4, dword_D4158, dword_D415C
 extern dword_D4160, dword_D4164, dword_D41F0, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
 extern dword_D8B7C, dword_D8C18, dword_D8C4C, dword_D8C70, dword_D8C78, dword_D8C84, dword_D9A38, dword_DC230
@@ -1811,7 +1811,7 @@ mov dword [dword_C4E10], 3	; 114E8
 loc_114F2:
 test byte [gmode], 1	; 114F2
 jne short loc_11510	; 114F9
-cmp dword [dword_CC128], byte 0	; 114FB
+cmp dword [penshotlive], byte 0	; 114FB
 jne short loc_1150B	; 11502
 add dword [dword_D8C78], byte 64h	; 11504
 loc_1150B:

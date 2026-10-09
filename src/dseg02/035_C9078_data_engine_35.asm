@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_C9078 progbits alloc noexec write align=1
 extern ass_pc_slot20, ass_pc_slot21, sub_4AB87, sub_4DFF7, sub_4E0BD, sub_4EB04, sub_4ED7C, sub_4F5BF
-extern sub_4F7D0, sub_4E8EF, sub_4842A, sub_484DA, sub_52720, sub_5147D, sub_526ED, sub_499D8
-extern sub_49BC2, sub_52FB0, sub_52DB0, sub_4FAE8, assbench, asscenterd, asscentero, assdefd
+extern sub_4F7D0, sub_4E8EF, sub_4842A, sub_484DA, sub_52720, assleavebox, sub_526ED, sub_499D8
+extern sub_49BC2, sub_52FB0, asspsclear, sub_4FAE8, assbench, asscenterd, asscentero, assdefd
 extern assdefo, sub_4AFFB, asseben, assepen, assfaceoff, assfaceoffp1, assgoalie, sub_4B5C2
-extern assnearest, sub_50F3F, asspenalty, sub_4C6F3, assscore, assshoot, assstanley, asswingd
-extern asswingo, sub_516E1, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
+extern assnearest, asspassrec, asspenalty, sub_4C6F3, assscore, assshoot, assstanley, asswingd
+extern asswingo, puckfaceoff, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
 extern unk_DFF5E, unk_E0416, word_DFF1E, word_DFF28, word_DFF2A, puckstruct
 global StanleyCupTimer, asstab, sflags, gmode2, byte_C90D5, byte_C9104
 global byte_C9111, byte_C9123, byte_C9142, byte_C9146, byte_CBC36, byte_CBC37, byte_CBEA8, collflag
@@ -160,7 +160,7 @@ dd sub_4B5C2
 dd sub_4C6F3
 dd assnearest
 dd assshoot
-dd sub_50F3F
+dd asspassrec
 dd ass_pc_slot20
 dd ass_pc_slot21
 dd assfaceoff
@@ -168,7 +168,7 @@ dd assfaceoffp1
 dd pucknorm
 dd puckshadow
 dd pucknothing
-dd sub_516E1
+dd puckfaceoff
 dd puckfaceoff2
 dd sub_4AB87
 dd sub_4DFF7
@@ -181,12 +181,12 @@ dd sub_4E8EF
 dd sub_4842A
 dd sub_484DA
 dd sub_52720
-dd sub_5147D
+dd assleavebox
 dd sub_526ED
 dd sub_499D8
 dd sub_49BC2
 dd sub_52FB0
-dd sub_52DB0
+dd asspsclear
 dd sub_4FAE8
 SPAtab:
 db 00h,00h,00h,080h,012h,00h,024h,00h,036h,00h,048h,00h,05Ah,00h,06Ch,00h
