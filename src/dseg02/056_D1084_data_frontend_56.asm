@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D1084 progbits alloc noexec write align=1
-extern dword_EC6B8, dword_EC710, dword_EC768, unk_C34D0, unk_C34D4, unk_C34D8, unk_C34DC, unk_C34E0
+extern dblistcur, dblisttemp, dblistorig, unk_C34D0, unk_C34D4, unk_C34D8, unk_C34DC, unk_C34E0
 extern unk_C34E4, unk_C34E8, unk_C34EC, unk_C34F0, unk_C34F4, unk_C34F8, unk_C34FB, unk_C34FF
 extern unk_C3502, unk_C3506, unk_C350A, unk_C350E, unk_C3512, unk_C3516, unk_C351A, unk_C351E
 extern unk_C3521, unk_C3524, unk_C3528, unk_C352C, unk_C3530, unk_C3534, unk_C3538, unk_C353C
@@ -17,9 +17,8 @@ global asc_D2628, asc_D2635, asc_D2641, asc_D2672, asc_D267F, asc_D26A4, asc_D26
 global asc_D26CB, asc_D26D7, asc_D26E4, asc_D26F1, asc_D26FE, asc_D270B, asc_D2718, asc_D2725
 global asc_D2732, asc_D27BF, asc_D281F, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238
 global byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, musicslot, musicon, byte_D2439
-global byte_D27B6, dword_D1084, dword_D1088, dword_D108C, dword_D1090, dword_D1104, dword_D1108, dword_D110C
-global dword_D1110, dword_D1114, dword_D1118, dword_D111C, dword_D1120, dword_D1124, dword_D1128, dword_D112C
-global dword_D1130, dword_D11B6, dword_D1229, dword_D122B, dword_D122F, dword_D1231, dword_D1233, dword_D1338
+global byte_D27B6, dbdlgrects
+global dword_D1229, dword_D122B, dword_D122F, dword_D1231, dword_D1233, dword_D1338
 global dword_D133C, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458
 global dword_D145C, dword_D1468, dword_D146C, dword_D1478, dword_D14F0, dword_D14F4, dword_D14F8, dword_D14FC
 global dword_D16AC, dword_D16B0, dword_D16B4, dword_D16B8, dword_D17EC, dword_D17F0, dword_D17F4, dword_D17F8
@@ -31,9 +30,9 @@ global dword_D229C, dword_D22A0, dword_D22A4, dword_D22A8, dword_D22AC, dword_D2
 global dword_D22C0, dword_D22C4, dword_D22C8, dword_D22CC, dword_D22D0, dword_D22D4, dword_D22DC, dword_D22E0
 global dword_D22EC, dword_D22F0, dword_D2350, dword_D23A3, dword_D23A7, dword_D23AB, dword_D23AF, dword_D2423
 global dword_D2427, dword_D242B, musichandle, dword_D2435, sounddevids, dword_D24A0, dword_D27A2
-global dword_D27B2, dword_D27B7, dword_D27BB, off_D1184, off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25
+global dword_D27B2, dword_D27B7, dword_D27BB, dbtablists, off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25
 global off_D21C0, off_D2230, off_D24D1, off_D273E, off_D2776, off_D27EF, off_D27F7, off_D2855
-global unk_D1190, unk_D11B2, unk_D12C8, unk_D16A0, unk_D19CC, unk_D19DC, unk_D19F0, unk_D19F5
+global unk_D1190, deldbmsg, unk_D12C8, unk_D16A0, unk_D19CC, unk_D19DC, unk_D19F0, unk_D19F5
 global unk_D19FA, unk_D19FF, unk_D1A05, unk_D1A0A, unk_D1A0F, unk_D1A14, unk_D1A19, unk_D1A1F
 global unk_D1A25, unk_D1A2B, unk_D1A30, unk_D1A35, unk_D1A39, unk_D1A3F, unk_D1A45, unk_D1A4B
 global unk_D1A4F, unk_D1A53, unk_D1A58, unk_D1A5D, unk_D1A62, unk_D1A68, unk_D1A6E, unk_D1A72
@@ -45,13 +44,10 @@ global unk_D1F0A, unk_D1F34, unk_D1F4B, unk_D1F4F, unk_D1F6B, unk_D1F8D, unk_D1F
 global unk_D1FFF, unk_D2028, unk_D2034, unk_D2050, unk_D23A0, unk_D2403, unk_D2413, unk_D2452
 global unk_D2463, unk_D249C, unk_D24A8, unk_D24C4, unk_D2782, unk_D278E, unk_D279A, unk_D27C4
 global unk_D27D3, unk_D27E0, unk_D27FF, unk_D2841
-dword_D1084:
+dbdlgrects:
 db 0Eh,00h,00h,00h
-dword_D1088:
 db 033h,00h,00h,00h
-dword_D108C:
 db 01Ah,00h,00h,00h
-dword_D1090:
 db 03Dh,00h,00h,00h,0Eh,00h,00h,00h,094h,00h,00h,00h,01Ah,00h,00h,00h
 db 09Eh,00h,00h,00h,019h,00h,00h,00h,0ACh,00h,00h,00h,04Bh,00h,00h,00h
 db 0BCh,00h,00h,00h,060h,00h,00h,00h,0ACh,00h,00h,00h,092h,00h,00h,00h
@@ -60,46 +56,33 @@ db 0BCh,00h,00h,00h,099h,00h,00h,00h,038h,00h,00h,00h,0E4h,00h,00h,00h
 db 049h,00h,00h,00h,099h,00h,00h,00h,050h,00h,00h,00h,0E4h,00h,00h,00h
 db 061h,00h,00h,00h,099h,00h,00h,00h,068h,00h,00h,00h,0E4h,00h,00h,00h
 db 079h,00h,00h,00h
-dword_D1104:
 db 0Fh,00h,00h,00h
-dword_D1108:
 db 041h,00h,00h,00h
-dword_D110C:
 db 019h,00h,00h,00h
-dword_D1110:
 db 090h,00h,00h,00h
-dword_D1114:
 db 086h,00h,00h,00h
-dword_D1118:
 db 09h,00h,00h,00h
-dword_D111C:
 db 0E9h,00h,00h,00h
-dword_D1120:
 db 01Ah,00h,00h,00h
-dword_D1124:
 db 025h,00h,00h,00h
-dword_D1128:
 db 03Bh,00h,00h,00h
-dword_D112C:
 db 082h,00h,00h,00h
-dword_D1130:
 db 046h,00h,00h,00h,025h,00h,00h,00h,04Bh,00h,00h,00h,082h,00h,00h,00h
 db 056h,00h,00h,00h,025h,00h,00h,00h,05Bh,00h,00h,00h,082h,00h,00h,00h
 db 066h,00h,00h,00h,025h,00h,00h,00h,06Bh,00h,00h,00h,082h,00h,00h,00h
 db 076h,00h,00h,00h,025h,00h,00h,00h,07Bh,00h,00h,00h,082h,00h,00h,00h
 db 086h,00h,00h,00h,025h,00h,00h,00h,08Bh,00h,00h,00h,082h,00h,00h,00h
 db 096h,00h,00h,00h
-off_D1184:
-dd dword_EC6B8
-dd dword_EC768
-dd dword_EC710
+dbtablists:
+dd dblistcur
+dd dblistorig
+dd dblisttemp
 unk_D1190:
 db 043h,06Fh,06Eh,066h,069h,072h,06Dh,020h,064h,065h,06Ch,065h,074h,069h,06Fh,06Eh
 db 020h,06Fh,066h,020h,074h,068h,065h,020h,064h,061h,074h,061h,062h,061h,073h,065h
 db 03Ah,00h
-unk_D11B2:
+deldbmsg:
 dd unk_D1190
-dword_D11B6:
 db 00h,00h,00h,00h,00h,00h
 byte_D11BC:
 db 0ADh,00h,00h,00h,0ADh,00h,00h,00h,0AAh,00h,00h,00h,0B0h,00h,00h,00h

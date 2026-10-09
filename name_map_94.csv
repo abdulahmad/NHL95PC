@@ -798,7 +798,18 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0007183D,sub_7183D,SetRosterTeamMenus,PC-new,,,,high,"(side, team): re-enables the old team's division item (or 'Free Agents ...'), disables the new one and sets 'Edit Team Lines ...'",create_player,manual-trace
 00071961,sub_71961,FindPlayer,PC-new,,,,high,"'Find Player ...' menu item: 'Enter name of player to find:', searches the free-agent list and the teams, 'Choose which team to display' / 'is already displayed on Roster N' / 'does not exist!', then SetRosterTeamMenus, LoadRosterList and SelectMatchingPlayers",create_player,manual-trace
 00071F0C,sub_71F0C,InputDialog,PC-new,,,,medium,"text-input message box (line table, line count, buffer, ...) returning FFh on Esc; FixJerseyNumber, AskLeftRight, EditSkaterRating, FindPlayer",database_dialogs,manual-trace
-00073703,sub_73703,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_dialogs,unmatched
+0007230B,sub_7230B,LoadDbDialogShapes,PC-new,,,,high,loads db_but (once) and its button shapes none / del / open / can / noar / up / down / arro and the tab shapes dbno / dbcu / dbtm / dbor into the fdlg_* slots,database_dialogs,manual-trace
+00072485,sub_72485,DbDialog_epilogue,PC-new,,,,high,shared epilogue (pop / ret) jumped to by the database dialog functions,database_dialogs,manual-trace
+0007248C,sub_7248C,ScanDbFiles,PC-new,,,,high,"fills the three database lists: *.db -> ""CURRENT"", *.org -> ""ORIGINAL"", *.dbx directories (max 16, qsort CmpFileNames) -> temporary list",database_dialogs,manual-trace
+00072605,sub_72605,DrawDbDialogButtons,PC-new,,,,high,Open / Delete / Done buttons and the Current / Original / Temporary tabs by fdlgtab / fdlgmask,database_dialogs,manual-trace
+000727EE,sub_727EE,DrawDbDialog,PC-new,,,,medium,"draws the ""dbdialog"" box (pdbx palette), tabs and the selected list",database_dialogs,manual-trace
+00072A5C,sub_72A5C,DbDialogHitTest,PC-new,,,,high,"(x, y, out): index of the dbdlgrects rect (16) under the point",database_dialogs,manual-trace
+00072AC6,sub_72AC6,DrawDbList,PC-new,,,,medium,(list): clears and prints the 6 visible names (scrolled by list+8) and the scroll bar,database_dialogs,manual-trace
+00072DE7,sub_72DE7,DbDialogLoop,PC-new,,,,medium,"database dialog input loop: tabs, list selection / scrolling, Open (OpenSelectedDb, LoadBothRosterLists, DrawEditRosters), Delete (DeleteSelectedDb), Done",database_dialogs,manual-trace
+000733C4,sub_733C4,OpenSelectedDb,PC-new,,,,high,"by tab: ""Current"" (.DB), ""Original"" (.ORG) or <name>.DBX directory: sets curdbname and LoadDbsFromDir",database_dialogs,manual-trace
+0007345B,sub_7345B,LoadDbsFromDir,PC-new,,,,high,"(dir, ext): FreeLeagueDbsMem then loads the six DBs into memory, dbdirty = 0",database_dialogs,manual-trace
+000735C3,sub_735C3,DeleteSelectedDb,PC-new,,,,high,"(list): ""Confirm deletion of the database:"" <name>, DeleteDir of <name>.DBX, removes it from the list and fixes tab / scroll state",database_dialogs,manual-trace
+00073703,sub_73703,MenuOpenDatabase,PC-new,,,,high,"Edit Rosters menu action: ScanDbFiles, pointer copy, LoadDbDialogShapes, DrawDbDialog, DbDialogLoop, frees the shapes",database_dialogs,manual-trace
 00075456,sub_75456,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),line_editor_rosters,unmatched
 00075BAA,sub_75BAA,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),line_editor_rosters,unmatched
 00075BDE,sub_75BDE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),line_editor_rosters,unmatched

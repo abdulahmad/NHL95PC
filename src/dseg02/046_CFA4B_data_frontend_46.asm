@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_CFA4B progbits alloc noexec write align=1
-extern MenuSaveDbs, MenuSaveDbsAs, EditRostersReturn, SelectRosterTeam, sub_73703, EasnStandingsMenu, unk_CDF56, unk_CDF64
+extern MenuSaveDbs, MenuSaveDbsAs, EditRostersReturn, SelectRosterTeam, MenuOpenDatabase, EasnStandingsMenu, unk_CDF56, unk_CDF64
 extern unk_CDF76, unk_CDF8A, unk_CE96F, unk_CEA2F, unk_CEB2F
 global str_XXXKbytesOfFree2, dword_CFA4B, dbexistsmsg, nodiskspacemsg, unk_CFAD5, unk_CFB01, unk_CFB24, unk_CFB46
 global unk_CFB98, unk_CFBA4, unk_CFBB0, unk_CFBBD, unk_CFBCD, unk_CFBDA, unk_CFBE8, unk_CFCA8
@@ -241,7 +241,7 @@ dd MenuSaveDbsAs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 080h,00h,00h,00h,035h,00h,00h,00h
 dd unk_D0055
-dd sub_73703
+dd MenuOpenDatabase
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 080h,00h,00h,00h,048h,00h,00h,00h
 dd unk_D0067

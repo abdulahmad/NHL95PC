@@ -2,46 +2,32 @@
 bits 32
 %include "hockey.inc"
 section s_71F0C progbits alloc exec nowrite align=1
-extern __CHK, asc_C3014, asc_C301C, asc_C3023, asc_C3028, asc_C302D, asc_C3032, asc_C3037
-extern asc_C303C, asc_C3041, asc_C3046, asc_C304B, asc_C3050, asc_C3055, asc_C305A, asc_C305F
-extern asc_C3064, asc_C306C, asc_C3072, asc_C307B, asc_C3081, asc_C3086, asc_C308D, asc_C3092
-extern asc_C309A, asc_C30A3, asc_C30AD, asc_C30B6, asc_C30BB, asc_C30C3, asc_C30C8, str_extDB
+extern __CHK, str_DSBOX, str_DbBut, str_None2, str_Del2, str_Open3, str_Can2, str_Noar2
+extern str_Up2, str_Down2, str_Arro2, str_Dbno, str_Dbcu, str_Dbtm, str_Dbor, str_Db3
+extern str_CURRENT, str_Org, str_ORIGINAL, str_Dbx, str_Open4, str_Delete2, str_Done2, str_Current4
+extern str_Original2, str_Temporary, str_Dbdialog, str_Pdbx, str_Pointer12, str_DBX2, str_Buf2, str_extDB
 extern str_ORG, byte_C4B6C, byte_D42C3, savefname, fdlgmask, byte_ED993
 extern byte_ED994, fdlgshapes, seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb
 extern seasondb_size, careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B16, dword_D0B1A
-extern dword_D0B1E, dword_D1084, dword_D1088, dword_D108C, dword_D1090, dword_D1104, dword_D1108, dword_D110C
-extern dword_D1110, dword_D1114, dword_D1118, dword_D111C, dword_D1120, dword_D1124, dword_D1128, dword_D112C
-extern dword_D1130, dword_D11B6, dword_D2C6B, dword_D42AC, pointerspr, fdlg_tabexh, fdlg_none, fdlg_tabpo
+extern dword_D0B1E, dbdlgrects
+extern dword_D2C6B, dword_D42AC, pointerspr, fdlg_tabexh, fdlg_none, fdlg_tabpo
 extern fdlg_open, fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow
-extern fdlg_tablp, fdlg_noarrow, ptrupdatefn, dbdirty, dword_EC6B8, dword_EC6BC, dword_EC6C0, dword_EC6C4
-extern dword_EC6C8, dword_EC710, dword_EC714, dword_EC718, dword_EC71C, dword_EC720, dword_EC768, dword_EC76C
-extern dword_EC770, dword_EC774, dword_EC778, fputchar, jctime, leaguedbnames
-extern off_D1184, qsort_, strcat_, strcpy_, strlen_
+extern fdlg_tablp, fdlg_noarrow, ptrupdatefn, dbdirty, dblistcur
+extern dblisttemp, dblisttempnames, dblistorig
+extern fputchar, jctime, leaguedbnames
+extern dbtablists, qsort_, strcat_, strcpy_, strlen_
 extern MakePath, DeleteDir, PrintShadowText, CmpFileNames, PrintTextCopy, FileDlgHitTest, DlgReturnZero, MeasureTextLine
 extern MessageBox, EditTextField, GetInputEvent, ClearInputQueue, FreeLeagueDbsMem, DrawEditRosters, LoadBothRosterLists, sub_78BE7
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284
 extern sub_91370, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_B2CBE, sub_B2DCA, sub_B30B4
-extern sub_B4BA8, sub_B4FAC, unk_D11B2, btn_POHumanOut, curdbname, unknown_libname_1, unknown_libname_2, unknown_libname_4
-global jpt_727D6, jpt_72AAE, loc_71F4B, loc_71F68, loc_71F84, loc_72082, loc_720BD, loc_72150
-global loc_72197, loc_7219F, loc_721BE, loc_721C4, loc_721D2, loc_721F0, loc_72200, loc_72248
-global loc_7224E, loc_72265, loc_7226A, loc_7226E, loc_722BE, loc_722CC, loc_722D0, loc_722E3
-global loc_722EB, loc_722F1, loc_72342, loc_72482, loc_72486, loc_72523, loc_72561, loc_7257A
-global loc_72595, loc_725AF, loc_725CC, loc_725F3, loc_725F8, loc_725FD, loc_726EA, loc_72707
-global loc_72724, loc_72741, loc_72754, loc_72768, loc_72778, loc_72786, loc_7278E, loc_727A9
-global loc_727CF, loc_7281E, loc_72820, loc_7288D, loc_728A7, loc_728BF, loc_72953, loc_7297D
-global loc_72A1A, loc_72A2A, loc_72A31, loc_72A38, loc_72A3F, loc_72A46, loc_72A4D, loc_72A54
-global loc_72A74, loc_72AA3, loc_72AEF, loc_72B3C, loc_72B45, loc_72B68, loc_72B6E, loc_72B70
-global loc_72B9B, loc_72BF5, loc_72C60, loc_72CB5, loc_72CBC, loc_72CC3, loc_72CCA, loc_72CD1
-global loc_72CD8, loc_72CE4, loc_72D8E, loc_72DA1, loc_72DB5, loc_72DC5, loc_72DD3, loc_72DDB
-global loc_72EC6, loc_72ECC, loc_72EEB, loc_72F0A, loc_72F4F, loc_72F6C, loc_72FB0, loc_73051
-global loc_73061, loc_7308B, loc_73099, loc_730A7, loc_730B4, loc_730BF, loc_73144, loc_73152
-global loc_7317A, loc_73184, loc_7319A, loc_731AA, loc_731D0, loc_731DB, loc_731E8, loc_73210
-global loc_7321C, loc_73257, loc_73265, loc_73283, loc_73287, loc_7328F, loc_73294, loc_732A6
-global loc_732B2, loc_732BE, loc_732D1, loc_73303, loc_7330B, loc_73340, loc_73347, loc_73361
-global loc_7338C, loc_73395, loc_733F2, loc_73409, loc_7341D, loc_7344D, loc_73454, loc_7366B
-global loc_73677, loc_73682, loc_7369C, loc_736A7, loc_736B3, loc_736CB, loc_736E0, loc_736F4
-global loc_736F9, loc_7377F, InputDialog, sub_7230B, sub_72485, sub_7248C, sub_72605, sub_727EE
-global sub_72A5C, sub_72AC6, sub_72DE7, sub_733C4, sub_7345B, sub_735C3, sub_73703, unk_722FE
+extern sub_B4BA8, sub_B4FAC, deldbmsg, btn_POHumanOut, curdbname, unknown_libname_1, unknown_libname_2, unknown_libname_4
+global DrawDbDialog_jt, DrawDbList_jt
+global DbDialog_ret
+global DrawDbDialog_n6, DrawDbDialog_n5, DrawDbDialog_n4, DrawDbDialog_n3, DrawDbDialog_n2, DrawDbDialog_n1
+global DrawDbList_n6, DrawDbList_n5, DrawDbList_n4, DrawDbList_n3, DrawDbList_n2
+global DrawDbList_n1
+global InputDialog, LoadDbDialogShapes, DbDialog_epilogue, ScanDbFiles, DrawDbDialogButtons, DrawDbDialog
+global DbDialogHitTest, DrawDbList, DbDialogLoop, OpenSelectedDb, LoadDbsFromDir, DeleteSelectedDb, MenuOpenDatabase, unk13_722FE
 InputDialog:
 push dword 90h	; 71F0C
 call __CHK	; 71F11
@@ -63,8 +49,8 @@ add eax, byte 2	; 71F3D
 mov dword [byte esp+058h], eax	; 71F40
 xor esi, esi	; 71F44
 mov edi, dword [esp]	; 71F46
-jmp short loc_71F68	; 71F49
-loc_71F4B:
+jmp short .2	; 71F49
+.1:
 mov eax, esi	; 71F4B
 shl eax, 2	; 71F4D
 add eax, dword [byte esp+04h]	; 71F50
@@ -74,16 +60,16 @@ lea ebx, [byte esp+044h]	; 71F5A
 lea edx, [byte esp+048h]	; 71F5E
 call MeasureTextLine	; 71F62
 inc esi	; 71F67
-loc_71F68:
+.2:
 cmp esi, edi	; 71F68
-jl short loc_71F4B	; 71F6A
+jl short InputDialog.1	; 71F6A
 mov eax, dword [dword esp+080h]	; 71F6C
 add eax, byte 8	; 71F73
 mov dword [byte esp+05Ch], eax	; 71F76
 cmp eax, dword [byte esp+048h]	; 71F7A
-jle short loc_71F84	; 71F7E
+jle short .3	; 71F7E
 mov dword [byte esp+048h], eax	; 71F80
-loc_71F84:
+.3:
 mov ebx, dword [byte esp+048h]	; 71F84
 add ebx, byte 10h	; 71F88
 mov dword [byte esp+048h], ebx	; 71F8B
@@ -131,7 +117,7 @@ imul ebx, eax	; 72006
 add ebx, byte 11h	; 72009
 push byte 0	; 7200C
 push ebx	; 7200E
-push asc_C3014	; 7200F
+push str_DSBOX	; 7200F
 call sub_8CCA8	; 72014
 mov edx, eax	; 72019
 add esp, byte 0Ch	; 7201B
@@ -168,8 +154,8 @@ mov eax, dword [byte esp+064h]	; 72070
 call sub_78BE7	; 72074
 xor esi, esi	; 72079
 add dword [byte esp+064h], byte 8	; 7207B
-jmp short loc_720BD	; 72080
-loc_72082:
+jmp short .5	; 72080
+.4:
 mov edi, esi	; 72082
 shl edi, 2	; 72084
 add edi, dword [byte esp+04h]	; 72087
@@ -190,9 +176,9 @@ call PrintShadowText	; 720AF
 mov eax, dword [byte esp+058h]	; 720B4
 add dword [byte esp+064h], eax	; 720B8
 inc esi	; 720BC
-loc_720BD:
+.5:
 cmp esi, dword [esp]	; 720BD
-jl short loc_72082	; 720C0
+jl short InputDialog.4	; 720C0
 mov edx, dword [byte esp+048h]	; 720C2
 mov ecx, dword [byte esp+05Ch]	; 720C6
 sub edx, ecx	; 720CA
@@ -225,9 +211,9 @@ mov dword [dword_D0B1A], edi	; 7212D
 mov dword [dword_D0B1E], esi	; 72133
 xor esi, esi	; 72139
 cmp dword [dword esp+084h], byte 0	; 7213B
-je near loc_721F0	; 72143
+je near .12	; 72143
 mov edi, dword [dword esp+08Ch]	; 72149
-loc_72150:
+.6:
 push byte 0Ch	; 72150
 push byte 0	; 72152
 push DlgReturnZero	; 72154
@@ -242,46 +228,46 @@ mov edx, dword [byte esp+078h]	; 7216F
 mov eax, ebp	; 72173
 call EditTextField	; 72175
 cmp eax, byte 1Bh	; 7217A
-je short loc_721C4	; 7217D
+je short .10	; 7217D
 mov dword [byte esp+06Ch], 0FFFFFFFFh	; 7217F
 cmp dword [dword esp+090h], byte 0	; 72187
-je short loc_72197	; 7218F
+je short .7	; 7218F
 cmp byte [byte ebp+00h], 0	; 72191
-je short loc_721D2	; 72195
-loc_72197:
+je short .11	; 72195
+.7:
 xor esi, esi	; 72197
 mov ecx, dword [byte esp+068h]	; 72199
-jmp short loc_721BE	; 7219D
-loc_7219F:
+jmp short .9	; 7219D
+.8:
 mov al, byte [esi+ebp]	; 7219F
 inc al	; 721A2
 and eax, 0FFh	; 721A4
 test byte [dword eax+byte_C4B6C], 20h	; 721A9
-je short loc_721D2	; 721B0
+je short .11	; 721B0
 mov eax, ebp	; 721B2
 call unknown_libname_4	; 721B4
 mov dword [byte esp+06Ch], eax	; 721B9
 inc esi	; 721BD
-loc_721BE:
+.9:
 cmp esi, ecx	; 721BE
-jl short loc_7219F	; 721C0
-jmp short loc_721D2	; 721C2
-loc_721C4:
+jl short InputDialog.8	; 721C0
+jmp short .11	; 721C2
+.10:
 cmp dword [dword esp+090h], byte 0	; 721C4
-je near loc_7226E	; 721CC
-loc_721D2:
+je near .18	; 721CC
+.11:
 mov eax, dword [byte esp+06Ch]	; 721D2
 cmp eax, dword [dword esp+088h]	; 721D6
-jl near loc_72150	; 721DD
+jl near InputDialog.6	; 721DD
 cmp eax, edi	; 721E3
-jg near loc_72150	; 721E5
-jmp near loc_7226E	; 721EB
-loc_721F0:
+jg near InputDialog.6	; 721E5
+jmp near .18	; 721EB
+.12:
 mov edx, ebp	; 721F0
 lea eax, [byte esp+08h]	; 721F2
 call strcpy_	; 721F6
 mov edi, 1	; 721FB
-loc_72200:
+.13:
 push byte 14h	; 72200
 push byte 0	; 72202
 push DlgReturnZero	; 72204
@@ -296,40 +282,40 @@ mov edx, dword [byte esp+078h]	; 7221F
 mov eax, ebp	; 72223
 call EditTextField	; 72225
 cmp eax, byte 1Bh	; 7222A
-je short loc_7224E	; 7222D
+je short .15	; 7222D
 mov esi, 1	; 7222F
 cmp dword [dword esp+090h], byte 0	; 72234
-je short loc_72248	; 7223C
+je short .14	; 7223C
 cmp byte [byte ebp+00h], 0	; 7223E
-jne short loc_72248	; 72242
+jne short .14	; 72242
 xor esi, esi	; 72244
-jmp short loc_7226A	; 72246
-loc_72248:
+jmp short .17	; 72246
+.14:
 mov dword [byte esp+06Ch], edi	; 72248
-jmp short loc_7226A	; 7224C
-loc_7224E:
+jmp short .17	; 7224C
+.15:
 cmp dword [dword esp+090h], byte 0	; 7224E
-je short loc_72265	; 72256
+je short .16	; 72256
 lea edx, [byte esp+08h]	; 72258
 mov eax, ebp	; 7225C
 call strcpy_	; 7225E
-jmp short loc_7226A	; 72263
-loc_72265:
+jmp short .17	; 72263
+.16:
 mov esi, 1	; 72265
-loc_7226A:
+.17:
 test esi, esi	; 7226A
-je short loc_72200	; 7226C
-loc_7226E:
+je short InputDialog.13	; 7226C
+.18:
 push byte 1	; 7226E
 call sub_B2CBE	; 72270
 add esp, byte 4	; 72275
 test eax, eax	; 72278
-jne short loc_7226E	; 7227A
+jne short InputDialog.18	; 7227A
 push byte 1Ch	; 7227C
 call sub_B2CBE	; 7227E
 add esp, byte 4	; 72283
 test eax, eax	; 72286
-jne short loc_7226E	; 72288
+jne short InputDialog.18	; 72288
 call ClearInputQueue	; 7228A
 mov eax, dword [byte esp+04Ch]	; 7228F
 push eax	; 72293
@@ -346,42 +332,42 @@ add esp, byte 4	; 722B0
 mov eax, ebp	; 722B3
 call strlen_	; 722B5
 mov ebx, eax	; 722BA
-jmp short loc_722CC	; 722BC
-loc_722BE:
+jmp short .20	; 722BC
+.19:
 lea eax, [ebx+ebp]	; 722BE
 cmp byte [byte eax-01h], 20h	; 722C1
-jne short loc_722D0	; 722C5
+jne short .21	; 722C5
 mov byte [byte eax-01h], 0	; 722C7
 dec ebx	; 722CB
-loc_722CC:
+.20:
 test ebx, ebx	; 722CC
-jg short loc_722BE	; 722CE
-loc_722D0:
+jg short InputDialog.19	; 722CE
+.21:
 cmp byte [byte ebp+00h], 20h	; 722D0
-jne short loc_722F1	; 722D4
+jne short .24	; 722D4
 mov eax, ebp	; 722D6
 call strlen_	; 722D8
 mov ebx, eax	; 722DD
 xor esi, esi	; 722DF
-jmp short loc_722EB	; 722E1
-loc_722E3:
+jmp short .23	; 722E1
+.22:
 mov dl, byte [byte esi+ebp+01h]	; 722E3
 mov byte [esi+ebp], dl	; 722E7
 inc esi	; 722EA
-loc_722EB:
+.23:
 cmp esi, ebx	; 722EB
-jl short loc_722E3	; 722ED
-jmp short loc_722D0	; 722EF
-loc_722F1:
+jl short InputDialog.22	; 722ED
+jmp short InputDialog.21	; 722EF
+.24:
 mov eax, dword [byte esp+06Ch]	; 722F1
 add esp, byte 70h	; 722F5
 pop ebp	; 722F8
 pop edi	; 722F9
 pop esi	; 722FA
 ret 14h	; 722FB
-unk_722FE:
+unk13_722FE:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_7230B:
+LoadDbDialogShapes:
 push dword 44h	; 7230B
 call __CHK	; 72310
 push ebx	; 72315
@@ -393,13 +379,13 @@ push ebp	; 7231A
 sub esp, byte 20h	; 7231B
 mov edx, dword [fdlgshapes]	; 7231E
 test edx, edx	; 72324
-jne near loc_72482	; 72326
+jne near .2	; 72326
 xor ecx, ecx	; 7232C
-mov ebx, asc_C301C	; 7232E
+mov ebx, str_DbBut	; 7232E
 cmp byte [byte_ED993], 1	; 72333
-jne short loc_72342	; 7233A
+jne short .1	; 7233A
 mov edx, dword [dword_D2C6B]	; 7233C
-loc_72342:
+.1:
 mov eax, esp	; 72342
 call MakePath	; 72344
 push byte 0	; 72349
@@ -408,89 +394,89 @@ push eax	; 7234F
 call sub_8E83C	; 72350
 add esp, byte 8	; 72355
 mov dword [fdlgshapes], eax	; 72358
-push asc_C3023	; 7235D
+push str_None2	; 7235D
 push eax	; 72362
 call sub_B30B4	; 72363
 add esp, byte 8	; 72368
 mov dword [fdlg_none], eax	; 7236B
-push asc_C3028	; 72370
+push str_Del2	; 72370
 mov ebx, dword [fdlgshapes]	; 72375
 push ebx	; 7237B
 call sub_B30B4	; 7237C
 add esp, byte 8	; 72381
 mov dword [fdlg_del], eax	; 72384
-push asc_C302D	; 72389
+push str_Open3	; 72389
 mov ecx, dword [fdlgshapes]	; 7238E
 push ecx	; 72394
 call sub_B30B4	; 72395
 add esp, byte 8	; 7239A
 mov dword [fdlg_open], eax	; 7239D
-push asc_C3032	; 723A2
+push str_Can2	; 723A2
 mov esi, dword [fdlgshapes]	; 723A7
 push esi	; 723AD
 call sub_B30B4	; 723AE
 add esp, byte 8	; 723B3
 mov dword [fdlg_cancel], eax	; 723B6
-push asc_C3037	; 723BB
+push str_Noar2	; 723BB
 mov edi, dword [fdlgshapes]	; 723C0
 push edi	; 723C6
 call sub_B30B4	; 723C7
 add esp, byte 8	; 723CC
 mov dword [fdlg_noarrow], eax	; 723CF
-push asc_C303C	; 723D4
+push str_Up2	; 723D4
 mov ebp, dword [fdlgshapes]	; 723D9
 push ebp	; 723DF
 call sub_B30B4	; 723E0
 add esp, byte 8	; 723E5
 mov dword [fdlg_up], eax	; 723E8
-push asc_C3041	; 723ED
+push str_Down2	; 723ED
 mov eax, dword [fdlgshapes]	; 723F2
 push eax	; 723F7
 call sub_B30B4	; 723F8
 add esp, byte 8	; 723FD
 mov dword [fdlg_down], eax	; 72400
-push asc_C3046	; 72405
+push str_Arro2	; 72405
 mov edx, dword [fdlgshapes]	; 7240A
 push edx	; 72410
 call sub_B30B4	; 72411
 add esp, byte 8	; 72416
 mov dword [fdlg_arrow], eax	; 72419
-push asc_C304B	; 7241E
+push str_Dbno	; 7241E
 mov ebx, dword [fdlgshapes]	; 72423
 push ebx	; 72429
 call sub_B30B4	; 7242A
 add esp, byte 8	; 7242F
 mov dword [fdlg_tabnone], eax	; 72432
-push asc_C3050	; 72437
+push str_Dbcu	; 72437
 mov ecx, dword [fdlgshapes]	; 7243C
 push ecx	; 72442
 call sub_B30B4	; 72443
 add esp, byte 8	; 72448
 mov dword [fdlg_tabexh], eax	; 7244B
-push asc_C3055	; 72450
+push str_Dbtm	; 72450
 mov esi, dword [fdlgshapes]	; 72455
 push esi	; 7245B
 call sub_B30B4	; 7245C
 add esp, byte 8	; 72461
 mov dword [fdlg_tablp], eax	; 72464
-push asc_C305A	; 72469
+push str_Dbor	; 72469
 mov edi, dword [fdlgshapes]	; 7246E
 push edi	; 72474
 call sub_B30B4	; 72475
 add esp, byte 8	; 7247A
 mov dword [fdlg_tabpo], eax	; 7247D
-loc_72482:
+.2:
 add esp, byte 20h	; 72482
-sub_72485:
+DbDialog_epilogue:
 pop ebp	; 72485
-loc_72486:
+DbDialog_ret:
 pop edi	; 72486
 pop esi	; 72487
 pop edx	; 72488
 pop ecx	; 72489
 pop ebx	; 7248A
 ret	; 7248B
-sub_7248C:
+ScanDbFiles:
 push dword 44h	; 7248C
 call __CHK	; 72491
 push ebx	; 72496
@@ -501,106 +487,106 @@ push edi	; 7249A
 sub esp, byte 2Ch	; 7249B
 xor ecx, ecx	; 7249E
 xor edx, edx	; 724A0
-mov dword [dword_EC710], ecx	; 724A2
-mov dword [dword_EC6B8], ecx	; 724A8
-mov dword [dword_EC768], ecx	; 724AE
-mov dword [dword_EC714], ecx	; 724B4
-mov dword [dword_EC6BC], ecx	; 724BA
-mov dword [dword_EC76C], ecx	; 724C0
-mov dword [dword_EC718], ecx	; 724C6
-mov dword [dword_EC6C0], ecx	; 724CC
-mov dword [dword_EC770], ecx	; 724D2
-mov dword [dword_EC71C], ecx	; 724D8
-mov dword [dword_EC6C4], ecx	; 724DE
-mov dword [dword_EC774], ecx	; 724E4
+mov dword [dblisttemp], ecx	; 724A2
+mov dword [dblistcur], ecx	; 724A8
+mov dword [dblistorig], ecx	; 724AE
+mov dword [dblisttemp+4], ecx	; 724B4
+mov dword [dblistcur+4], ecx	; 724BA
+mov dword [dblistorig+4], ecx	; 724C0
+mov dword [dblisttemp+8], ecx	; 724C6
+mov dword [dblistcur+8], ecx	; 724CC
+mov dword [dblistorig+8], ecx	; 724D2
+mov dword [dblisttemp+0Ch], ecx	; 724D8
+mov dword [dblistcur+0Ch], ecx	; 724DE
+mov dword [dblistorig+0Ch], ecx	; 724E4
 mov ebx, esp	; 724EA
-mov eax, asc_C305F	; 724EC
+mov eax, str_Db3	; 724EC
 call unknown_libname_1	; 724F1
 test eax, eax	; 724F6
-jne short loc_72523	; 724F8
-mov dword [dword_EC6C8], savefname	; 724FA
+jne short .1	; 724F8
+mov dword [dblistcur+10h], savefname	; 724FA
 mov edi, savefname	; 72504
-mov esi, asc_C3064	; 72509
+mov esi, str_CURRENT	; 72509
 movsd	; 7250E
 movsd	; 7250F
-inc dword [dword_EC6B8]	; 72510
+inc dword [dblistcur]	; 72510
 xor ah, ah	; 72516
 mov byte [savefname+8], ah	; 72518
 mov ecx, 9	; 7251E
-loc_72523:
+.1:
 mov ebx, esp	; 72523
 xor edx, edx	; 72525
-mov eax, asc_C306C	; 72527
+mov eax, str_Org	; 72527
 call unknown_libname_1	; 7252C
 test eax, eax	; 72531
-jne short loc_72561	; 72533
+jne short .2	; 72533
 mov eax, savefname	; 72535
 add eax, ecx	; 7253A
-mov dword [dword_EC778], eax	; 7253C
+mov dword [dblistorig+10h], eax	; 7253C
 lea edi, [dword ecx+savefname]	; 72541
-mov esi, asc_C3072	; 72547
+mov esi, str_ORIGINAL	; 72547
 movsd	; 7254C
 movsd	; 7254D
 movsb	; 7254E
-inc dword [dword_EC768]	; 7254F
+inc dword [dblistorig]	; 7254F
 add ecx, byte 8	; 72555
 xor dl, dl	; 72558
 mov byte [dword ecx+savefname], dl	; 7255A
 inc ecx	; 72560
-loc_72561:
+.2:
 mov ebx, esp	; 72561
 mov edx, 10h	; 72563
-mov eax, asc_C307B	; 72568
+mov eax, str_Dbx	; 72568
 call unknown_libname_1	; 7256D
 test eax, eax	; 72572
-jne near loc_725FD	; 72574
-loc_7257A:
+jne near .9	; 72574
+.3:
 mov edx, savefname	; 7257A
 add edx, ecx	; 7257F
-mov eax, dword [dword_EC710]	; 72581
-mov dword [nosplit eax*4+dword_EC720], edx	; 72586
+mov eax, dword [dblisttemp]	; 72581
+mov dword [nosplit eax*4+dblisttempnames], edx	; 72586
 xor eax, eax	; 7258D
-inc dword [dword_EC710]	; 7258F
-loc_72595:
+inc dword [dblisttemp]	; 7258F
+.4:
 mov dh, byte [byte esp+eax+01Eh]	; 72595
 test dh, dh	; 72599
-je short loc_725AF	; 7259B
+je short .5	; 7259B
 cmp dh, 2Eh	; 7259D
-je short loc_725AF	; 725A0
+je short .5	; 725A0
 mov byte [dword ecx+savefname], dh	; 725A2
 inc eax	; 725A8
 inc ecx	; 725A9
 cmp eax, byte 8	; 725AA
-jl short loc_72595	; 725AD
-loc_725AF:
+jl short ScanDbFiles.4	; 725AD
+.5:
 xor bh, bh	; 725AF
 mov byte [dword ecx+savefname], bh	; 725B1
 inc ecx	; 725B7
-cmp dword [dword_EC710], byte 10h	; 725B8
-jge short loc_725CC	; 725BF
+cmp dword [dblisttemp], byte 10h	; 725B8
+jge short .6	; 725BF
 mov eax, esp	; 725C1
 call unknown_libname_2	; 725C3
 test eax, eax	; 725C8
-je short loc_7257A	; 725CA
-loc_725CC:
-mov edx, dword [dword_EC710]	; 725CC
+je short ScanDbFiles.3	; 725CA
+.6:
+mov edx, dword [dblisttemp]	; 725CC
 mov ecx, CmpFileNames	; 725D2
 mov ebx, 4	; 725D7
-mov eax, dword_EC720	; 725DC
+mov eax, dblisttempnames	; 725DC
 call qsort_	; 725E1
-mov eax, dword [dword_EC710]	; 725E6
+mov eax, dword [dblisttemp]	; 725E6
 cmp eax, byte 6	; 725EB
-jge short loc_725F3	; 725EE
+jge short .7	; 725EE
 dec eax	; 725F0
-jmp short loc_725F8	; 725F1
-loc_725F3:
+jmp short .8	; 725F1
+.7:
 mov eax, 5	; 725F3
-loc_725F8:
-mov dword [dword_EC71C], eax	; 725F8
-loc_725FD:
+.8:
+mov dword [dblisttemp+0Ch], eax	; 725F8
+.9:
 add esp, byte 2Ch	; 725FD
-jmp near loc_72486	; 72600
-sub_72605:
+jmp near DbDialog_ret	; 72600
+DrawDbDialogButtons:
 push dword 24h	; 72605
 call __CHK	; 7260A
 push ebx	; 7260F
@@ -613,15 +599,15 @@ push dword 0F8h	; 72619
 call sub_8E9C0	; 7261E
 add esp, byte 8	; 72623
 cmp dword [fdlgtab], byte 0	; 72626
-jge near loc_726EA	; 7262D
+jge near .1	; 7262D
 push dword 0C0h	; 72633
 push byte 2Dh	; 72638
-push asc_C3081	; 7263A
+push str_Open4	; 7263A
 call sub_91964	; 7263F
 add esp, byte 0Ch	; 72644
 push dword 0C0h	; 72647
 push byte 6Eh	; 7264C
-push asc_C3086	; 7264E
+push str_Delete2	; 7264E
 call sub_91964	; 72653
 add esp, byte 0Ch	; 72658
 push dword 0FFh	; 7265B
@@ -630,7 +616,7 @@ call sub_8E9C0	; 72665
 add esp, byte 8	; 7266A
 push dword 0C0h	; 7266D
 push dword 0B5h	; 72672
-push asc_C308D	; 72677
+push str_Done2	; 72677
 call sub_91964	; 7267C
 add esp, byte 0Ch	; 72681
 push dword 0FFh	; 72684
@@ -639,17 +625,17 @@ call sub_8E9C0	; 7268E
 add esp, byte 8	; 72693
 push byte 4Ch	; 72696
 push dword 0B1h	; 72698
-push asc_C3092	; 7269D
+push str_Current4	; 7269D
 call sub_91964	; 726A2
 add esp, byte 0Ch	; 726A7
 push byte 64h	; 726AA
 push dword 0B1h	; 726AC
-push asc_C309A	; 726B1
+push str_Original2	; 726B1
 call sub_91964	; 726B6
 add esp, byte 0Ch	; 726BB
 push byte 7Ch	; 726BE
 push dword 0A7h	; 726C0
-push asc_C30A3	; 726C5
+push str_Temporary	; 726C5
 call sub_91964	; 726CA
 add esp, byte 0Ch	; 726CF
 push byte 46h	; 726D2
@@ -658,79 +644,79 @@ mov ebp, dword [fdlg_noarrow]	; 726D6
 push ebp	; 726DC
 call sub_91370	; 726DD
 add esp, byte 0Ch	; 726E2
-jmp near loc_727CF	; 726E5
-loc_726EA:
+jmp near .x	; 726E5
+.1:
 test byte [fdlgmask], 80h	; 726EA
-jne short loc_72707	; 726F1
+jne short .2	; 726F1
 push byte 7Ch	; 726F3
 push dword 0A7h	; 726F5
-push asc_C30A3	; 726FA
+push str_Temporary	; 726FA
 call sub_91964	; 726FF
 add esp, byte 0Ch	; 72704
-loc_72707:
+.2:
 test byte [fdlgmask], 40h	; 72707
-jne short loc_72724	; 7270E
+jne short .3	; 7270E
 push byte 64h	; 72710
 push dword 0B1h	; 72712
-push asc_C309A	; 72717
+push str_Original2	; 72717
 call sub_91964	; 7271C
 add esp, byte 0Ch	; 72721
-loc_72724:
+.3:
 test byte [fdlgmask], 20h	; 72724
-jne short loc_72741	; 7272B
+jne short .4	; 7272B
 push byte 4Ch	; 7272D
 push dword 0B1h	; 7272F
-push asc_C3092	; 72734
+push str_Current4	; 72734
 call sub_92CD0	; 72739
 add esp, byte 0Ch	; 7273E
-loc_72741:
+.4:
 mov eax, dword [fdlgtab]	; 72741
 cmp eax, byte 1	; 72746
-jb short loc_72754	; 72749
-jbe short loc_72768	; 7274B
+jb short .5	; 72749
+jbe short .6	; 7274B
 cmp eax, byte 2	; 7274D
-je short loc_72778	; 72750
-jmp short loc_7278E	; 72752
-loc_72754:
+je short .7	; 72750
+jmp short .9	; 72752
+.5:
 test eax, eax	; 72754
-jne short loc_7278E	; 72756
+jne short .9	; 72756
 push byte 4Bh	; 72758
 push dword 0A3h	; 7275A
 mov esi, dword [fdlg_tabexh]	; 7275F
 push esi	; 72765
-jmp short loc_72786	; 72766
-loc_72768:
+jmp short .8	; 72766
+.6:
 push byte 4Bh	; 72768
 push dword 0A3h	; 7276A
 mov ecx, dword [fdlg_tabpo]	; 7276F
 push ecx	; 72775
-jmp short loc_72786	; 72776
-loc_72778:
+jmp short .8	; 72776
+.7:
 push byte 4Bh	; 72778
 push dword 0A3h	; 7277A
 mov ebx, dword [fdlg_tablp]	; 7277F
 push ebx	; 72785
-loc_72786:
+.8:
 call sub_91370	; 72786
 add esp, byte 0Ch	; 7278B
-loc_7278E:
+.9:
 cmp dword [fdlgtab], byte 2	; 7278E
-jne short loc_727A9	; 72795
+jne short .10	; 72795
 push dword 0FFh	; 72797
 push dword 0FAh	; 7279C
 call sub_8E9C0	; 727A1
 add esp, byte 8	; 727A6
-loc_727A9:
+.10:
 push dword 0C0h	; 727A9
 push byte 6Eh	; 727AE
-push asc_C3086	; 727B0
+push str_Delete2	; 727B0
 call sub_91964	; 727B5
 add esp, byte 0Ch	; 727BA
 push dword 0FFh	; 727BD
 push dword 0F8h	; 727C2
 call sub_8E9C0	; 727C7
 add esp, byte 8	; 727CC
-loc_727CF:
+.x:
 pop ebp	; 727CF
 pop esi	; 727D0
 pop edx	; 727D1
@@ -738,14 +724,14 @@ pop ecx	; 727D2
 pop ebx	; 727D3
 ret	; 727D4
 db 090h
-jpt_727D6:
-dd loc_72A4D
-dd loc_72A46
-dd loc_72A3F
-dd loc_72A38
-dd loc_72A31
-dd loc_72A2A
-sub_727EE:
+DrawDbDialog_jt:
+dd DrawDbDialog_n1
+dd DrawDbDialog_n2
+dd DrawDbDialog_n3
+dd DrawDbDialog_n4
+dd DrawDbDialog_n5
+dd DrawDbDialog_n6
+DrawDbDialog:
 push dword 54h	; 727EE
 call __CHK	; 727F3
 push ebx	; 727F8
@@ -757,14 +743,14 @@ push ebp	; 727FD
 sub esp, byte 24h	; 727FE
 call sub_B4BA8	; 72801
 xor ecx, ecx	; 72806
-mov ebx, asc_C30AD	; 72808
+mov ebx, str_Dbdialog	; 72808
 cmp byte [byte_ED994], 1	; 7280D
-jne short loc_7281E	; 72814
+jne short .1	; 72814
 mov edx, dword [dword_D2C6B]	; 72816
-jmp short loc_72820	; 7281C
-loc_7281E:
+jmp short .2	; 7281C
+.1:
 xor edx, edx	; 7281E
-loc_72820:
+.2:
 mov eax, esp	; 72820
 call MakePath	; 72822
 push byte 0	; 72827
@@ -775,7 +761,7 @@ mov esi, eax	; 72833
 add esp, byte 8	; 72835
 push byte 13h	; 72838
 push byte 0Ah	; 7283A
-push asc_C30B6	; 7283C
+push str_Pdbx	; 7283C
 push eax	; 72841
 call sub_B30B4	; 72842
 add esp, byte 8	; 72847
@@ -787,35 +773,35 @@ call jctime	; 72854
 add esp, byte 4	; 72859
 mov dword [fdlgmask], 10h	; 7285C
 mov dword [fdlgtab], 0FFFFFFFFh	; 72866
-cmp dword [dword_EC710], byte 0	; 72870
-je short loc_7288D	; 72877
+cmp dword [dblisttemp], byte 0	; 72870
+je short .3	; 72877
 mov dword [fdlgmask], 90h	; 72879
 mov dword [fdlgtab], 2	; 72883
-loc_7288D:
-cmp dword [dword_EC768], byte 0	; 7288D
-je short loc_728A7	; 72894
+.3:
+cmp dword [dblistorig], byte 0	; 7288D
+je short .4	; 72894
 or byte [fdlgmask], 40h	; 72896
 mov dword [fdlgtab], 1	; 7289D
-loc_728A7:
-cmp dword [dword_EC6B8], byte 0	; 728A7
-je short loc_728BF	; 728AE
+.4:
+cmp dword [dblistcur], byte 0	; 728A7
+je short .5	; 728AE
 or byte [fdlgmask], 20h	; 728B0
 xor ebx, ebx	; 728B7
 mov dword [fdlgtab], ebx	; 728B9
-loc_728BF:
+.5:
 cmp dword [fdlgtab], byte 0	; 728BF
-jl near loc_72A54	; 728C6
+jl near DrawDbDialog_n1.1	; 728C6
 or word [fdlgmask], 204h	; 728CC
 push dword 0FFh	; 728D5
 push dword 0FAh	; 728DA
 call sub_8E9C0	; 728DF
 add esp, byte 8	; 728E4
 mov esi, dword [fdlgtab]	; 728E7
-mov esi, dword [nosplit esi*4+off_D1184]	; 728ED
-mov eax, dword [dword_D1118]	; 728F4
+mov esi, dword [nosplit esi*4+dbtablists]	; 728ED
+mov eax, dword [dbdlgrects+94h]	; 728F4
 add eax, byte 13h	; 728F9
 push eax	; 728FC
-mov eax, dword [dword_D1114]	; 728FD
+mov eax, dword [dbdlgrects+90h]	; 728FD
 add eax, byte 0Dh	; 72902
 push eax	; 72905
 mov eax, dword [byte esi+04h]	; 72906
@@ -824,13 +810,13 @@ push edi	; 7290D
 call sub_91964	; 7290E
 add esp, byte 0Ch	; 72913
 push dword 0F8h	; 72916
-mov eax, dword [dword_D1130]	; 7291B
-mov ebp, dword [dword_D1128]	; 72920
+mov eax, dword [dbdlgrects+0ACh]	; 7291B
+mov ebp, dword [dbdlgrects+0A4h]	; 72920
 sub eax, ebp	; 72926
 inc eax	; 72928
 push eax	; 72929
-mov eax, dword [dword_D112C]	; 7292A
-mov edx, dword [dword_D1124]	; 7292F
+mov eax, dword [dbdlgrects+0A8h]	; 7292A
+mov edx, dword [dbdlgrects+0A0h]	; 7292F
 sub eax, edx	; 72935
 inc eax	; 72937
 push eax	; 72938
@@ -842,14 +828,14 @@ call sub_90D20	; 72941
 add esp, byte 14h	; 72946
 mov edi, dword [byte esi+08h]	; 72949
 mov ebp, 0Ah	; 7294C
-jmp short loc_7297D	; 72951
-loc_72953:
+jmp short .7	; 72951
+.6:
 mov eax, ebp	; 72953
 shl eax, 4	; 72955
-mov edx, dword [dword eax+dword_D1088]	; 72958
+mov edx, dword [dword eax+dbdlgrects+4]	; 72958
 add edx, byte 10h	; 7295E
 push edx	; 72961
-mov eax, dword [dword eax+dword_D1084]	; 72962
+mov eax, dword [dword eax+dbdlgrects]	; 72962
 add eax, byte 0Ah	; 72968
 push eax	; 7296B
 mov eax, edi	; 7296C
@@ -859,30 +845,30 @@ call sub_91964	; 72973
 add esp, byte 0Ch	; 72978
 inc edi	; 7297B
 inc ebp	; 7297C
-loc_7297D:
+.7:
 cmp edi, dword [byte esi+0Ch]	; 7297D
-jle short loc_72953	; 72980
+jle short DrawDbDialog.6	; 72980
 mov ecx, dword [esi]	; 72982
 cmp ecx, byte 6	; 72984
-jle near loc_72A1A	; 72987
+jle near .8	; 72987
 or word [fdlgmask], 0FF03h	; 7298D
-mov ebp, dword [dword_D1104]	; 72996
+mov ebp, dword [dbdlgrects+80h]	; 72996
 add ebp, byte 0Ah	; 7299C
-mov edi, dword [dword_D1108]	; 7299F
+mov edi, dword [dbdlgrects+84h]	; 7299F
 add edi, byte 13h	; 729A5
-mov eax, dword [dword_D110C]	; 729A8
+mov eax, dword [dbdlgrects+88h]	; 729A8
 add eax, byte 0Ah	; 729AD
 mov dword [byte esp+020h], eax	; 729B0
 mov eax, 354h	; 729B4
 mov edx, eax	; 729B9
 sar edx, 1Fh	; 729BB
 idiv dword [esi]	; 729BE
-mov esi, dword [dword_D1108]	; 729C0
+mov esi, dword [dbdlgrects+84h]	; 729C0
 add esi, byte 12h	; 729C6
 add esi, eax	; 729C9
 push byte 7Dh	; 729CB
 push edi	; 729CD
-mov eax, dword [dword_D110C]	; 729CE
+mov eax, dword [dbdlgrects+88h]	; 729CE
 add eax, byte 9	; 729D3
 push eax	; 729D6
 push edi	; 729D7
@@ -916,28 +902,28 @@ dec ebp	; 72A0E
 push ebp	; 72A0F
 call sub_B4FAC	; 72A10
 add esp, byte 14h	; 72A15
-jmp short loc_72A54	; 72A18
-loc_72A1A:
+jmp short DrawDbDialog_n1.1	; 72A18
+.8:
 lea eax, [byte ecx-01h]	; 72A1A
 cmp eax, byte 5	; 72A1D
-ja short loc_72A54	; 72A20
-jmp dword [nosplit cs:eax*4+jpt_727D6]	; 72A22
-loc_72A2A:
+ja short DrawDbDialog_n1.1	; 72A20
+jmp dword [nosplit cs:eax*4+DrawDbDialog_jt]	; 72A22
+DrawDbDialog_n6:
 or byte [fdlgmask+1], 80h	; 72A2A
-loc_72A31:
+DrawDbDialog_n5:
 or byte [fdlgmask+1], 40h	; 72A31
-loc_72A38:
+DrawDbDialog_n4:
 or byte [fdlgmask+1], 20h	; 72A38
-loc_72A3F:
+DrawDbDialog_n3:
 or byte [fdlgmask+1], 10h	; 72A3F
-loc_72A46:
+DrawDbDialog_n2:
 or byte [fdlgmask+1], 8	; 72A46
-loc_72A4D:
+DrawDbDialog_n1:
 or byte [fdlgmask+1], 4	; 72A4D
-loc_72A54:
+.1:
 add esp, byte 24h	; 72A54
-jmp near sub_72485	; 72A57
-sub_72A5C:
+jmp near DbDialog_epilogue	; 72A57
+DbDialogHitTest:
 push dword 0Ch	; 72A5C
 call __CHK	; 72A61
 push ecx	; 72A66
@@ -947,38 +933,38 @@ mov esi, edx	; 72A6A
 xor edx, edx	; 72A6C
 lea ecx, [byte eax-06h]	; 72A6E
 sub esi, byte 13h	; 72A71
-loc_72A74:
+.1:
 mov eax, edx	; 72A74
 shl eax, 4	; 72A76
-cmp ecx, dword [dword eax+dword_D1084]	; 72A79
-jl short loc_72AA3	; 72A7F
-cmp ecx, dword [dword eax+dword_D108C]	; 72A81
-jg short loc_72AA3	; 72A87
-cmp esi, dword [dword eax+dword_D1088]	; 72A89
-jl short loc_72AA3	; 72A8F
-cmp esi, dword [dword eax+dword_D1090]	; 72A91
-jg short loc_72AA3	; 72A97
+cmp ecx, dword [dword eax+dbdlgrects]	; 72A79
+jl short .2	; 72A7F
+cmp ecx, dword [dword eax+dbdlgrects+8]	; 72A81
+jg short .2	; 72A87
+cmp esi, dword [dword eax+dbdlgrects+4]	; 72A89
+jl short .2	; 72A8F
+cmp esi, dword [dword eax+dbdlgrects+0Ch]	; 72A91
+jg short .2	; 72A97
 mov dword [ebx], edx	; 72A99
 mov eax, 1	; 72A9B
 pop esi	; 72AA0
 pop ecx	; 72AA1
 ret	; 72AA2
-loc_72AA3:
+.2:
 inc edx	; 72AA3
 cmp edx, byte 10h	; 72AA4
-jl short loc_72A74	; 72AA7
+jl short DbDialogHitTest.1	; 72AA7
 xor eax, eax	; 72AA9
 pop esi	; 72AAB
 pop ecx	; 72AAC
 ret	; 72AAD
-jpt_72AAE:
-dd loc_72CD8
-dd loc_72CD1
-dd loc_72CCA
-dd loc_72CC3
-dd loc_72CBC
-dd loc_72CB5
-sub_72AC6:
+DrawDbList_jt:
+dd DrawDbList_n1
+dd DrawDbList_n2
+dd DrawDbList_n3
+dd DrawDbList_n4
+dd DrawDbList_n5
+dd DrawDbList_n6
+DrawDbList:
 push dword 38h	; 72AC6
 call __CHK	; 72ACB
 push ebx	; 72AD0
@@ -994,17 +980,17 @@ push dword 0FAh	; 72AE0
 call sub_8E9C0	; 72AE5
 add esp, byte 8	; 72AEA
 xor esi, esi	; 72AED
-loc_72AEF:
+.1:
 push dword 0F9h	; 72AEF
 mov eax, esi	; 72AF4
 shl eax, 4	; 72AF6
-mov edx, dword [dword eax+dword_D1130]	; 72AF9
-mov ebx, dword [dword eax+dword_D1128]	; 72AFF
+mov edx, dword [dword eax+dbdlgrects+0ACh]	; 72AF9
+mov ebx, dword [dword eax+dbdlgrects+0A4h]	; 72AFF
 sub edx, ebx	; 72B05
 inc edx	; 72B07
 push edx	; 72B08
-mov edx, dword [dword eax+dword_D112C]	; 72B09
-mov ecx, dword [dword eax+dword_D1124]	; 72B0F
+mov edx, dword [dword eax+dbdlgrects+0A8h]	; 72B09
+mov ecx, dword [dword eax+dbdlgrects+0A0h]	; 72B0F
 sub edx, ecx	; 72B15
 inc edx	; 72B17
 push edx	; 72B18
@@ -1016,39 +1002,39 @@ call sub_90D20	; 72B21
 add esp, byte 14h	; 72B26
 inc esi	; 72B29
 cmp esi, byte 6	; 72B2A
-jl short loc_72AEF	; 72B2D
+jl short DrawDbList.1	; 72B2D
 test edi, edi	; 72B2F
-jne short loc_72B3C	; 72B31
+jne short .2	; 72B31
 mov dword [byte esp+04h], edi	; 72B33
-jmp near loc_72DDB	; 72B37
-loc_72B3C:
+jmp near DrawDbList_n1.7	; 72B37
+.2:
 cmp dword [edi], byte 6	; 72B3C
-jg short loc_72B6E	; 72B3F
+jg short .5	; 72B3F
 xor esi, esi	; 72B41
-jmp short loc_72B68	; 72B43
-loc_72B45:
+jmp short .4	; 72B43
+.3:
 mov eax, esi	; 72B45
 shl eax, 4	; 72B47
-mov ebx, dword [dword eax+dword_D1128]	; 72B4A
+mov ebx, dword [dword eax+dbdlgrects+0A4h]	; 72B4A
 add ebx, byte 10h	; 72B50
-mov edx, dword [dword eax+dword_D1124]	; 72B53
+mov edx, dword [dword eax+dbdlgrects+0A0h]	; 72B53
 add edx, byte 0Ah	; 72B59
 mov eax, esi	; 72B5C
 mov eax, dword [byte edi+eax*4+010h]	; 72B5E
 call PrintTextCopy	; 72B62
 inc esi	; 72B67
-loc_72B68:
+.4:
 cmp esi, dword [edi]	; 72B68
-jl short loc_72B45	; 72B6A
-jmp short loc_72B9B	; 72B6C
-loc_72B6E:
+jl short DrawDbList.3	; 72B6A
+jmp short .7	; 72B6C
+.5:
 xor esi, esi	; 72B6E
-loc_72B70:
+.6:
 mov eax, esi	; 72B70
 shl eax, 4	; 72B72
-mov ebx, dword [dword eax+dword_D1128]	; 72B75
+mov ebx, dword [dword eax+dbdlgrects+0A4h]	; 72B75
 add ebx, byte 10h	; 72B7B
-mov edx, dword [dword eax+dword_D1124]	; 72B7E
+mov edx, dword [dword eax+dbdlgrects+0A0h]	; 72B7E
 add edx, byte 0Ah	; 72B84
 mov eax, dword [byte edi+08h]	; 72B87
 add eax, esi	; 72B8A
@@ -1056,18 +1042,18 @@ mov eax, dword [byte edi+eax*4+010h]	; 72B8C
 call PrintTextCopy	; 72B90
 inc esi	; 72B95
 cmp esi, byte 6	; 72B96
-jl short loc_72B70	; 72B99
-loc_72B9B:
+jl short DrawDbList.6	; 72B99
+.7:
 cmp dword [edi], byte 0	; 72B9B
-jle short loc_72BF5	; 72B9E
+jle short .8	; 72B9E
 push dword 0F8h	; 72BA0
-mov eax, dword [dword_D1120]	; 72BA5
-mov edx, dword [dword_D1118]	; 72BAA
+mov eax, dword [dbdlgrects+9Ch]	; 72BA5
+mov edx, dword [dbdlgrects+94h]	; 72BAA
 sub eax, edx	; 72BB0
 sub eax, byte 5	; 72BB2
 push eax	; 72BB5
-mov eax, dword [dword_D111C]	; 72BB6
-mov ebx, dword [dword_D1114]	; 72BBB
+mov eax, dword [dbdlgrects+98h]	; 72BB6
+mov ebx, dword [dbdlgrects+90h]	; 72BBB
 sub eax, ebx	; 72BC1
 sub eax, byte 5	; 72BC3
 push eax	; 72BC6
@@ -1077,31 +1063,31 @@ lea eax, [byte ebx+0Dh]	; 72BCB
 push eax	; 72BCE
 call sub_90D20	; 72BCF
 add esp, byte 14h	; 72BD4
-mov ebx, dword [dword_D1118]	; 72BD7
+mov ebx, dword [dbdlgrects+94h]	; 72BD7
 add ebx, byte 13h	; 72BDD
-mov edx, dword [dword_D1114]	; 72BE0
+mov edx, dword [dbdlgrects+90h]	; 72BE0
 add edx, byte 0Dh	; 72BE6
 mov eax, dword [byte edi+04h]	; 72BE9
 mov eax, dword [byte edi+eax*4+010h]	; 72BEC
 call PrintTextCopy	; 72BF0
-loc_72BF5:
+.8:
 mov eax, dword [byte edi+04h]	; 72BF5
 mov ecx, dword [byte edi+08h]	; 72BF8
 cmp eax, ecx	; 72BFB
-jl short loc_72C60	; 72BFD
+jl short .9	; 72BFD
 cmp eax, dword [byte edi+0Ch]	; 72BFF
-jg short loc_72C60	; 72C02
+jg short .9	; 72C02
 mov esi, eax	; 72C04
 sub esi, ecx	; 72C06
 push dword 0F8h	; 72C08
 mov ebp, esi	; 72C0D
 shl ebp, 4	; 72C0F
-mov eax, dword [dword ebp+dword_D1130]	; 72C12
-mov edx, dword [dword ebp+dword_D1128]	; 72C18
+mov eax, dword [dword ebp+dbdlgrects+0ACh]	; 72C12
+mov edx, dword [dword ebp+dbdlgrects+0A4h]	; 72C18
 sub eax, edx	; 72C1E
 push eax	; 72C20
-mov eax, dword [dword ebp+dword_D112C]	; 72C21
-mov ebx, dword [dword ebp+dword_D1124]	; 72C27
+mov eax, dword [dword ebp+dbdlgrects+0A8h]	; 72C21
+mov ebx, dword [dword ebp+dbdlgrects+0A0h]	; 72C27
 sub eax, ebx	; 72C2D
 push eax	; 72C2F
 lea eax, [byte edx+013h]	; 72C30
@@ -1110,23 +1096,23 @@ lea eax, [byte ebx+0Ah]	; 72C34
 push eax	; 72C37
 call sub_90D20	; 72C38
 add esp, byte 14h	; 72C3D
-mov ebx, dword [dword ebp+dword_D1128]	; 72C40
+mov ebx, dword [dword ebp+dbdlgrects+0A4h]	; 72C40
 add ebx, byte 10h	; 72C46
-mov edx, dword [dword ebp+dword_D1124]	; 72C49
+mov edx, dword [dword ebp+dbdlgrects+0A0h]	; 72C49
 add edx, byte 0Ah	; 72C4F
 mov eax, dword [byte edi+08h]	; 72C52
 add eax, esi	; 72C55
 mov eax, dword [byte edi+eax*4+010h]	; 72C57
 call PrintTextCopy	; 72C5B
-loc_72C60:
+.9:
 push dword 0F9h	; 72C60
-mov eax, dword [dword_D1110]	; 72C65
-mov ecx, dword [dword_D1108]	; 72C6A
+mov eax, dword [dbdlgrects+8Ch]	; 72C65
+mov ecx, dword [dbdlgrects+84h]	; 72C6A
 sub eax, ecx	; 72C70
 inc eax	; 72C72
 push eax	; 72C73
-mov eax, dword [dword_D110C]	; 72C74
-mov esi, dword [dword_D1104]	; 72C79
+mov eax, dword [dbdlgrects+88h]	; 72C74
+mov esi, dword [dbdlgrects+80h]	; 72C79
 sub eax, esi	; 72C7F
 inc eax	; 72C81
 push eax	; 72C82
@@ -1137,29 +1123,29 @@ push eax	; 72C8A
 call sub_90D20	; 72C8B
 add esp, byte 14h	; 72C90
 cmp dword [edi], byte 6	; 72C93
-jg short loc_72CE4	; 72C96
+jg short DrawDbList_n1.1	; 72C96
 and word [fdlgmask], 6FCh	; 72C98
 mov eax, dword [edi]	; 72CA1
 dec eax	; 72CA3
 cmp eax, byte 5	; 72CA4
-ja near loc_72D8E	; 72CA7
-jmp dword [nosplit cs:eax*4+jpt_72AAE]	; 72CAD
-loc_72CB5:
+ja near DrawDbList_n1.2	; 72CA7
+jmp dword [nosplit cs:eax*4+DrawDbList_jt]	; 72CAD
+DrawDbList_n6:
 or byte [fdlgmask+1], 80h	; 72CB5
-loc_72CBC:
+DrawDbList_n5:
 or byte [fdlgmask+1], 40h	; 72CBC
-loc_72CC3:
+DrawDbList_n4:
 or byte [fdlgmask+1], 20h	; 72CC3
-loc_72CCA:
+DrawDbList_n3:
 or byte [fdlgmask+1], 10h	; 72CCA
-loc_72CD1:
+DrawDbList_n2:
 or byte [fdlgmask+1], 8	; 72CD1
-loc_72CD8:
+DrawDbList_n1:
 or byte [fdlgmask+1], 4	; 72CD8
-jmp near loc_72D8E	; 72CDF
-loc_72CE4:
+jmp near .2	; 72CDF
+.1:
 or word [fdlgmask], 0F903h	; 72CE4
-mov ebp, dword [dword_D1104]	; 72CED
+mov ebp, dword [dbdlgrects+80h]	; 72CED
 add ebp, byte 0Ah	; 72CF3
 mov edx, dword [byte edi+08h]	; 72CF6
 mov eax, edx	; 72CF9
@@ -1171,10 +1157,10 @@ add eax, eax	; 72D05
 mov edx, eax	; 72D07
 sar edx, 1Fh	; 72D09
 idiv dword [edi]	; 72D0C
-mov ebx, dword [dword_D1108]	; 72D0E
+mov ebx, dword [dbdlgrects+84h]	; 72D0E
 add ebx, byte 13h	; 72D14
 lea esi, [ebx+eax]	; 72D17
-mov eax, dword [dword_D110C]	; 72D1A
+mov eax, dword [dbdlgrects+88h]	; 72D1A
 add eax, byte 0Ah	; 72D1F
 mov dword [esp], eax	; 72D22
 mov edx, dword [byte edi+0Ch]	; 72D25
@@ -1191,7 +1177,7 @@ idiv dword [edi]	; 72D3C
 lea edi, [ebx+eax]	; 72D3E
 push byte 7Dh	; 72D41
 push esi	; 72D43
-mov eax, dword [dword_D110C]	; 72D44
+mov eax, dword [dbdlgrects+88h]	; 72D44
 add eax, byte 9	; 72D49
 push eax	; 72D4C
 push esi	; 72D4D
@@ -1224,41 +1210,41 @@ inc ebp	; 72D84
 push ebp	; 72D85
 call sub_B4FAC	; 72D86
 add esp, byte 14h	; 72D8B
-loc_72D8E:
+.2:
 mov eax, dword [fdlgtab]	; 72D8E
 cmp eax, byte 1	; 72D93
-jb short loc_72DA1	; 72D96
-jbe short loc_72DB5	; 72D98
+jb short .3	; 72D96
+jbe short .4	; 72D98
 cmp eax, byte 2	; 72D9A
-je short loc_72DC5	; 72D9D
-jmp short loc_72DDB	; 72D9F
-loc_72DA1:
+je short .5	; 72D9D
+jmp short .7	; 72D9F
+.3:
 test eax, eax	; 72DA1
-jne short loc_72DDB	; 72DA3
+jne short .7	; 72DA3
 push byte 4Bh	; 72DA5
 push dword 0A3h	; 72DA7
 mov edi, dword [fdlg_tabexh]	; 72DAC
 push edi	; 72DB2
-jmp short loc_72DD3	; 72DB3
-loc_72DB5:
+jmp short .6	; 72DB3
+.4:
 push byte 4Bh	; 72DB5
 push dword 0A3h	; 72DB7
 mov esi, dword [fdlg_tabpo]	; 72DBC
 push esi	; 72DC2
-jmp short loc_72DD3	; 72DC3
-loc_72DC5:
+jmp short .6	; 72DC3
+.5:
 push byte 4Bh	; 72DC5
 push dword 0A3h	; 72DC7
 mov ecx, dword [fdlg_tablp]	; 72DCC
 push ecx	; 72DD2
-loc_72DD3:
+.6:
 call sub_91370	; 72DD3
 add esp, byte 0Ch	; 72DD8
-loc_72DDB:
+.7:
 mov eax, dword [byte esp+04h]	; 72DDB
 add esp, byte 8	; 72DDF
-jmp near sub_72485	; 72DE2
-sub_72DE7:
+jmp near DbDialog_epilogue	; 72DE2
+DbDialogLoop:
 push dword 44h	; 72DE7
 call __CHK	; 72DEC
 push ebx	; 72DF1
@@ -1294,7 +1280,7 @@ imul eax, edx	; 72E3F
 add eax, byte 11h	; 72E42
 push byte 20h	; 72E45
 push eax	; 72E47
-push asc_C30BB	; 72E48
+push str_Pointer12	; 72E48
 call sub_8CCA8	; 72E4D
 add esp, byte 0Ch	; 72E52
 mov ebp, eax	; 72E55
@@ -1331,31 +1317,31 @@ push esi	; 72EAB
 call sub_91370	; 72EAC
 add esp, byte 0Ch	; 72EB1
 mov esi, dword [fdlgtab]	; 72EB4
-mov esi, dword [nosplit esi*4+off_D1184]	; 72EBA
+mov esi, dword [nosplit esi*4+dbtablists]	; 72EBA
 call ClearInputQueue	; 72EC1
-loc_72EC6:
+.1:
 xor edi, edi	; 72EC6
 mov dword [byte esp+04h], edi	; 72EC8
-loc_72ECC:
+.2:
 call GetInputEvent	; 72ECC
 test eax, eax	; 72ED1
-je short loc_72EEB	; 72ED3
+je short .3	; 72ED3
 lea ebx, [byte esp+08h]	; 72ED5
 lea edx, [byte esp+0Ch]	; 72ED9
 call dword [ptrupdatefn]	; 72EDD
 mov dword [byte esp+04h], eax	; 72EE3
 test eax, eax	; 72EE7
-je short loc_72ECC	; 72EE9
-loc_72EEB:
+je short DbDialogLoop.2	; 72EE9
+.3:
 cmp dword [byte esp+04h], byte 0	; 72EEB
-jne near loc_72F6C	; 72EF0
+jne near .6	; 72EF0
 mov eax, dword [byte esp+0Ch]	; 72EF6
 cmp eax, dword [byte esp+014h]	; 72EFA
-jne short loc_72F0A	; 72EFE
+jne short .4	; 72EFE
 mov eax, dword [byte esp+08h]	; 72F00
 cmp eax, dword [byte esp+010h]	; 72F04
-je short loc_72EC6	; 72F08
-loc_72F0A:
+je short DbDialogLoop.1	; 72F08
+.4:
 call sub_B4BA8	; 72F0A
 mov ecx, dword [byte esp+010h]	; 72F0F
 push ecx	; 72F13
@@ -1380,15 +1366,15 @@ sub eax, byte 4	; 72F44
 push eax	; 72F47
 mov edx, dword [pointerspr]	; 72F48
 push edx	; 72F4E
-loc_72F4F:
+.5:
 call sub_91370	; 72F4F
 add esp, byte 0Ch	; 72F54
 mov eax, dword [byte esp+0Ch]	; 72F57
 mov dword [byte esp+014h], eax	; 72F5B
 mov eax, dword [byte esp+08h]	; 72F5F
 mov dword [byte esp+010h], eax	; 72F63
-jmp near loc_72EC6	; 72F67
-loc_72F6C:
+jmp near DbDialogLoop.1	; 72F67
+.6:
 mov edx, dword [byte esp+010h]	; 72F6C
 push edx	; 72F70
 mov eax, dword [byte esp+018h]	; 72F71
@@ -1398,29 +1384,29 @@ push ebp	; 72F79
 call sub_910E0	; 72F7A
 add esp, byte 0Ch	; 72F7F
 test byte [byte esp+04h], 1	; 72F82
-je near loc_730BF	; 72F87
+je near .14	; 72F87
 test byte [fdlgmask+1], 1	; 72F8D
-je near loc_730BF	; 72F94
+je near .14	; 72F94
 mov eax, dword [byte esp+014h]	; 72F9A
 mov edi, dword [byte esp+08h]	; 72F9E
 cmp eax, edi	; 72FA2
-jne short loc_72FB0	; 72FA4
+jne short .7	; 72FA4
 cmp edi, dword [byte esp+010h]	; 72FA6
-je near loc_73395	; 72FAA
-loc_72FB0:
+je near .42	; 72FAA
+.7:
 mov ebx, esp	; 72FB0
 mov edx, dword [byte esp+08h]	; 72FB2
 mov eax, dword [byte esp+0Ch]	; 72FB6
-call sub_72A5C	; 72FBA
+call DbDialogHitTest	; 72FBA
 test eax, eax	; 72FBF
-je near loc_730B4	; 72FC1
+je near .13	; 72FC1
 cmp dword [esp], byte 8	; 72FC7
-jne near loc_730B4	; 72FCB
+jne near .13	; 72FCB
 cmp dword [byte esp+018h], byte 0	; 72FD1
-je near loc_730A7	; 72FD6
+je near .12	; 72FD6
 mov eax, dword [byte esp+010h]	; 72FDC
 sub eax, byte 13h	; 72FE0
-sub eax, dword [dword_D1108]	; 72FE3
+sub eax, dword [dbdlgrects+84h]	; 72FE3
 mov edx, dword [esi]	; 72FE9
 imul edx, eax	; 72FEB
 mov eax, edx	; 72FEE
@@ -1433,14 +1419,14 @@ mov ebx, dword [byte esi+0Ch]	; 72FFD
 mov eax, dword [byte esp+010h]	; 73000
 mov ecx, dword [byte esp+08h]	; 73004
 cmp eax, ecx	; 73008
-je near loc_73395	; 7300A
+je near .42	; 7300A
 mov edi, dword [byte esi+08h]	; 73010
 cmp edx, edi	; 73013
-jl near loc_73395	; 73015
+jl near .42	; 73015
 cmp edx, ebx	; 7301B
-jg near loc_73395	; 7301D
+jg near .42	; 7301D
 cmp eax, ecx	; 73023
-jge short loc_73061	; 73025
+jge short .9	; 73025
 mov edx, ecx	; 73027
 sub edx, eax	; 73029
 mov eax, dword [esi]	; 7302B
@@ -1454,20 +1440,20 @@ mov edx, eax	; 7303D
 add eax, ebx	; 7303F
 mov ecx, dword [esi]	; 73041
 cmp eax, ecx	; 73043
-jge short loc_73051	; 73045
+jge short .8	; 73045
 add edi, edx	; 73047
 mov dword [byte esi+08h], edi	; 73049
 add dword [byte esi+0Ch], edx	; 7304C
-jmp short loc_73099	; 7304F
-loc_73051:
+jmp short .11	; 7304F
+.8:
 lea eax, [byte ecx-01h]	; 73051
 mov dword [byte esi+0Ch], eax	; 73054
 mov eax, dword [esi]	; 73057
 sub eax, byte 6	; 73059
 mov dword [byte esi+08h], eax	; 7305C
-jmp short loc_73099	; 7305F
-loc_73061:
-jle short loc_73099	; 73061
+jmp short .11	; 7305F
+.9:
+jle short .11	; 73061
 mov edx, eax	; 73063
 sub edx, ecx	; 73065
 mov eax, dword [esi]	; 73067
@@ -1481,90 +1467,90 @@ mov edx, eax	; 73079
 mov eax, edi	; 7307B
 sub eax, edx	; 7307D
 test eax, eax	; 7307F
-jl short loc_7308B	; 73081
+jl short .10	; 73081
 mov dword [byte esi+08h], eax	; 73083
 sub dword [byte esi+0Ch], edx	; 73086
-jmp short loc_73099	; 73089
-loc_7308B:
+jmp short .11	; 73089
+.10:
 mov dword [byte esi+08h], 0	; 7308B
 mov dword [byte esi+0Ch], 5	; 73092
-loc_73099:
+.11:
 cmp ebx, dword [byte esi+0Ch]	; 73099
-je near loc_73395	; 7309C
-jmp near loc_732A6	; 730A2
-loc_730A7:
+je near .42	; 7309C
+jmp near .32	; 730A2
+.12:
 mov dword [byte esp+018h], 1	; 730A7
-jmp near loc_73395	; 730AF
-loc_730B4:
+jmp near .42	; 730AF
+.13:
 xor ecx, ecx	; 730B4
 mov dword [byte esp+018h], ecx	; 730B6
-jmp near loc_73395	; 730BA
-loc_730BF:
+jmp near .42	; 730BA
+.14:
 mov dh, byte [byte esp+04h]	; 730BF
 test dh, 2	; 730C3
-je near loc_7338C	; 730C6
+je near .41	; 730C6
 xor ebx, ebx	; 730CC
 mov dword [byte esp+018h], ebx	; 730CE
 mov ebx, esp	; 730D2
 mov edx, dword [byte esp+08h]	; 730D4
 mov eax, dword [byte esp+0Ch]	; 730D8
-call sub_72A5C	; 730DC
+call DbDialogHitTest	; 730DC
 test eax, eax	; 730E1
-je near loc_73395	; 730E3
+je near .42	; 730E3
 mov cl, byte [esp]	; 730E9
 mov eax, 1	; 730EC
 shl eax, cl	; 730F1
 mov dword [esp], eax	; 730F3
 mov ecx, dword [fdlgmask]	; 730F6
 test eax, ecx	; 730FC
-je near loc_73395	; 730FE
+je near .42	; 730FE
 cmp eax, byte 10h	; 73104
-jb short loc_73152	; 73107
-jbe near loc_73184	; 73109
+jb short .16	; 73107
+jbe near .18	; 73109
 mov eax, ecx	; 7310F
 and al, 0F7h	; 73111
 mov edx, dword [esp]	; 73113
 cmp edx, byte 40h	; 73116
-jb short loc_73144	; 73119
-jbe near loc_732B2	; 7311B
+jb short .15	; 73119
+jbe near .33	; 7311B
 cmp edx, 80h	; 73121
-jb near loc_73361	; 73127
-jbe near loc_732BE	; 7312D
+jb near .40	; 73127
+jbe near .34	; 7312D
 cmp edx, 100h	; 73133
-je near loc_7321C	; 73139
-jmp near loc_73361	; 7313F
-loc_73144:
+je near .25	; 73139
+jmp near .40	; 7313F
+.15:
 cmp edx, byte 20h	; 73144
-je near loc_73287	; 73147
-jmp near loc_73361	; 7314D
-loc_73152:
+je near .29	; 73147
+jmp near .40	; 7314D
+.16:
 cmp eax, byte 2	; 73152
-jb short loc_7317A	; 73155
-jbe near loc_731E8	; 73157
+jb short .17	; 73155
+jbe near .23	; 73157
 cmp eax, byte 4	; 7315D
-jb near loc_73361	; 73160
-jbe near loc_732D1	; 73166
+jb near .40	; 73160
+jbe near .35	; 73166
 cmp eax, byte 8	; 7316C
-je near loc_7330B	; 7316F
-jmp near loc_73361	; 73175
-loc_7317A:
+je near .37	; 7316F
+jmp near .40	; 73175
+.17:
 cmp eax, byte 1	; 7317A
-je short loc_731AA	; 7317D
-jmp near loc_73361	; 7317F
-loc_73184:
+je short .20	; 7317D
+jmp near .40	; 7317F
+.18:
 push dword 0BFh	; 73184
 push byte 23h	; 73189
 mov ebx, dword [fdlg_cancel]	; 7318B
 push ebx	; 73191
 call sub_91370	; 73192
 add esp, byte 0Ch	; 73197
-loc_7319A:
+.19:
 push ebp	; 7319A
 call jctime	; 7319B
 add esp, byte 4	; 731A0
 xor eax, eax	; 731A3
-jmp near loc_73303	; 731A5
-loc_731AA:
+jmp near .36	; 731A5
+.20:
 push byte 46h	; 731AA
 push byte 18h	; 731AC
 mov edi, dword [fdlg_up]	; 731AE
@@ -1572,21 +1558,21 @@ push edi	; 731B4
 call sub_91370	; 731B5
 add esp, byte 0Ch	; 731BA
 cmp dword [byte esi+08h], byte 0	; 731BD
-je short loc_731D0	; 731C1
+je short .21	; 731C1
 mov eax, esi	; 731C3
 dec dword [byte esi+08h]	; 731C5
 dec dword [byte esi+0Ch]	; 731C8
-call sub_72AC6	; 731CB
-loc_731D0:
+call DrawDbList	; 731CB
+.21:
 push byte 46h	; 731D0
 push byte 18h	; 731D2
 mov ecx, dword [fdlg_noarrow]	; 731D4
 push ecx	; 731DA
-loc_731DB:
+.22:
 call sub_91370	; 731DB
 add esp, byte 0Ch	; 731E0
-jmp near loc_73395	; 731E3
-loc_731E8:
+jmp near .42	; 731E3
+.23:
 push byte 46h	; 731E8
 push byte 18h	; 731EA
 mov edx, dword [fdlg_down]	; 731EC
@@ -1596,21 +1582,21 @@ add esp, byte 0Ch	; 731F8
 mov eax, dword [byte esi+0Ch]	; 731FB
 inc eax	; 731FE
 cmp eax, dword [esi]	; 731FF
-jge short loc_73210	; 73201
+jge short .24	; 73201
 mov eax, esi	; 73203
 inc dword [byte esi+08h]	; 73205
 inc dword [byte esi+0Ch]	; 73208
-call sub_72AC6	; 7320B
-loc_73210:
+call DrawDbList	; 7320B
+.24:
 push byte 46h	; 73210
 push byte 18h	; 73212
 mov eax, dword [fdlg_noarrow]	; 73214
 push eax	; 73219
-jmp short loc_731DB	; 7321A
-loc_7321C:
+jmp short DbDialogLoop.22	; 7321A
+.25:
 mov edx, dword [byte esp+08h]	; 7321C
 sub edx, byte 13h	; 73220
-sub edx, dword [dword_D1108]	; 73223
+sub edx, dword [dbdlgrects+84h]	; 73223
 mov ecx, dword [esi]	; 73229
 imul edx, ecx	; 7322B
 mov eax, edx	; 7322E
@@ -1620,54 +1606,54 @@ LD sbb, eax, edx	; 73236
 sar eax, 5	; 73238
 mov edx, eax	; 7323B
 cmp eax, dword [byte esi+08h]	; 7323D
-jge short loc_73265	; 73240
+jge short .27	; 73240
 cmp eax, byte 3	; 73242
-jge short loc_73257	; 73245
+jge short .26	; 73245
 mov dword [byte esi+08h], 0	; 73247
 mov dword [byte esi+0Ch], 5	; 7324E
-jmp short loc_732A6	; 73255
-loc_73257:
+jmp short .32	; 73255
+.26:
 sub eax, byte 3	; 73257
 mov dword [byte esi+08h], eax	; 7325A
 add edx, byte 2	; 7325D
 mov dword [byte esi+0Ch], edx	; 73260
-jmp short loc_732A6	; 73263
-loc_73265:
+jmp short .32	; 73263
+.27:
 cmp edx, dword [byte esi+0Ch]	; 73265
-jle near loc_73395	; 73268
+jle near .42	; 73268
 lea eax, [byte edx+03h]	; 7326E
 cmp eax, ecx	; 73271
-jle short loc_73283	; 73273
+jle short .28	; 73273
 lea eax, [byte ecx-06h]	; 73275
 mov dword [byte esi+08h], eax	; 73278
 mov eax, dword [esi]	; 7327B
 dec eax	; 7327D
 mov dword [byte esi+0Ch], eax	; 7327E
-jmp short loc_732A6	; 73281
-loc_73283:
+jmp short .32	; 73281
+.28:
 mov eax, edx	; 73283
-jmp short loc_73257	; 73285
-loc_73287:
+jmp short DbDialogLoop.26	; 73285
+.29:
 xor edx, edx	; 73287
 mov dword [fdlgtab], edx	; 73289
-loc_7328F:
+.30:
 mov dword [fdlgmask], eax	; 7328F
-loc_73294:
-call sub_72605	; 73294
+.31:
+call DrawDbDialogButtons	; 73294
 mov esi, dword [fdlgtab]	; 73299
-mov esi, dword [nosplit esi*4+off_D1184]	; 7329F
-loc_732A6:
+mov esi, dword [nosplit esi*4+dbtablists]	; 7329F
+.32:
 mov eax, esi	; 732A6
-call sub_72AC6	; 732A8
-jmp near loc_73395	; 732AD
-loc_732B2:
+call DrawDbList	; 732A8
+jmp near .42	; 732AD
+.33:
 mov dword [fdlgtab], 1	; 732B2
-jmp short loc_7328F	; 732BC
-loc_732BE:
+jmp short DbDialogLoop.30	; 732BC
+.34:
 mov dword [fdlgtab], 2	; 732BE
 or byte [fdlgmask], 8	; 732C8
-jmp short loc_73294	; 732CF
-loc_732D1:
+jmp short DbDialogLoop.31	; 732CF
+.35:
 push dword 0BFh	; 732D1
 push byte 23h	; 732D6
 mov eax, dword [fdlg_open]	; 732D8
@@ -1677,14 +1663,14 @@ add esp, byte 0Ch	; 732E3
 push ebp	; 732E6
 call jctime	; 732E7
 add esp, byte 4	; 732EC
-call sub_733C4	; 732EF
+call OpenSelectedDb	; 732EF
 call LoadBothRosterLists	; 732F4
 call DrawEditRosters	; 732F9
 mov eax, 1	; 732FE
-loc_73303:
+.36:
 add esp, byte 1Ch	; 73303
-jmp near sub_72485	; 73306
-loc_7330B:
+jmp near DbDialog_epilogue	; 73306
+.37:
 push dword 0BFh	; 7330B
 push byte 23h	; 73310
 mov ecx, dword [fdlg_del]	; 73312
@@ -1692,40 +1678,40 @@ push ecx	; 73318
 call sub_91370	; 73319
 add esp, byte 0Ch	; 7331E
 mov eax, dword [fdlgtab]	; 73321
-mov eax, dword [nosplit eax*4+off_D1184]	; 73326
-call sub_735C3	; 7332D
+mov eax, dword [nosplit eax*4+dbtablists]	; 73326
+call DeleteSelectedDb	; 7332D
 mov esi, dword [fdlgtab]	; 73332
 test esi, esi	; 73338
-jge short loc_73340	; 7333A
+jge short .38	; 7333A
 xor esi, esi	; 7333C
-jmp short loc_73347	; 7333E
-loc_73340:
-mov esi, dword [nosplit esi*4+off_D1184]	; 73340
-loc_73347:
+jmp short .39	; 7333E
+.38:
+mov esi, dword [nosplit esi*4+dbtablists]	; 73340
+.39:
 mov eax, esi	; 73347
-call sub_72AC6	; 73349
+call DrawDbList	; 73349
 push dword 0BFh	; 7334E
 push byte 23h	; 73353
 mov edi, dword [fdlg_none]	; 73355
 push edi	; 7335B
-jmp near loc_731DB	; 7335C
-loc_73361:
+jmp near DbDialogLoop.22	; 7335C
+.40:
 mov ebx, esp	; 73361
 mov edx, dword [byte esp+08h]	; 73363
 mov eax, dword [byte esp+0Ch]	; 73367
 call FileDlgHitTest	; 7336B
 mov ebx, dword [esp]	; 73370
 cmp ebx, byte 9	; 73373
-jle near loc_732A6	; 73376
+jle near DbDialogLoop.32	; 73376
 mov eax, dword [byte esi+08h]	; 7337C
 add eax, ebx	; 7337F
 sub eax, byte 0Ah	; 73381
 mov dword [byte esi+04h], eax	; 73384
-jmp near loc_732A6	; 73387
-loc_7338C:
+jmp near DbDialogLoop.32	; 73387
+.41:
 test dh, 4	; 7338C
-jne near loc_7319A	; 7338F
-loc_73395:
+jne near DbDialogLoop.19	; 7338F
+.42:
 mov ebx, dword [byte esp+08h]	; 73395
 push ebx	; 73399
 mov eax, dword [byte esp+010h]	; 7339A
@@ -1741,8 +1727,8 @@ sub eax, byte 4	; 733B4
 push eax	; 733B7
 mov edi, dword [pointerspr]	; 733B8
 push edi	; 733BE
-jmp near loc_72F4F	; 733BF
-sub_733C4:
+jmp near DbDialogLoop.5	; 733BF
+OpenSelectedDb:
 push dword 20h	; 733C4
 call __CHK	; 733C9
 push edx	; 733CE
@@ -1750,57 +1736,57 @@ push esi	; 733CF
 push edi	; 733D0
 sub esp, byte 10h	; 733D1
 mov edi, esp	; 733D4
-mov esi, unk_722FE	; 733D6
+mov esi, unk13_722FE	; 733D6
 movsd	; 733DB
 movsd	; 733DC
 movsd	; 733DD
 movsb	; 733DE
 mov eax, dword [fdlgtab]	; 733DF
 cmp eax, byte 1	; 733E4
-jb short loc_733F2	; 733E7
-jbe short loc_73409	; 733E9
+jb short .1	; 733E7
+jbe short .2	; 733E9
 cmp eax, byte 2	; 733EB
-je short loc_7341D	; 733EE
-jmp short loc_73454	; 733F0
-loc_733F2:
+je short .3	; 733EE
+jmp short .x	; 733F0
+.1:
 test eax, eax	; 733F2
-jne short loc_73454	; 733F4
+jne short .x	; 733F4
 mov edi, curdbname	; 733F6
-mov esi, asc_C3092	; 733FB
+mov esi, str_Current4	; 733FB
 movsd	; 73400
 movsd	; 73401
 mov edx, str_extDB	; 73402
-jmp short loc_7344D	; 73407
-loc_73409:
+jmp short .4	; 73407
+.2:
 mov edi, curdbname	; 73409
-mov esi, asc_C309A	; 7340E
+mov esi, str_Original2	; 7340E
 movsd	; 73413
 movsd	; 73414
 movsb	; 73415
 mov edx, str_ORG	; 73416
-jmp short loc_7344D	; 7341B
-loc_7341D:
-mov eax, dword [dword_EC714]	; 7341D
-mov edx, dword [nosplit eax*4+dword_EC720]	; 73422
+jmp short .4	; 7341B
+.3:
+mov eax, dword [dblisttemp+4]	; 7341D
+mov edx, dword [nosplit eax*4+dblisttempnames]	; 73422
 mov eax, esp	; 73429
 call strcpy_	; 7342B
 mov edx, esp	; 73430
 mov eax, curdbname	; 73432
 call strcpy_	; 73437
-mov edx, asc_C30C3	; 7343C
+mov edx, str_DBX2	; 7343C
 mov eax, esp	; 73441
 call strcat_	; 73443
 mov edx, str_extDB	; 73448
-loc_7344D:
+.4:
 mov eax, esp	; 7344D
-call sub_7345B	; 7344F
-loc_73454:
+call LoadDbsFromDir	; 7344F
+.x:
 add esp, byte 10h	; 73454
 pop edi	; 73457
 pop esi	; 73458
 pop edx	; 73459
 ret	; 7345A
-sub_7345B:
+LoadDbsFromDir:
 push dword 3Ch	; 7345B
 call __CHK	; 73460
 push ebx	; 73465
@@ -1915,7 +1901,7 @@ pop esi	; 735BF
 pop ecx	; 735C0
 pop ebx	; 735C1
 ret	; 735C2
-sub_735C3:
+DeleteSelectedDb:
 push dword 70h	; 735C3
 call __CHK	; 735C8
 push ebx	; 735CD
@@ -1929,7 +1915,7 @@ mov dword [byte esp+040h], 140h	; 735D7
 mov dword [byte esp+03Ch], 0F0h	; 735DF
 mov eax, dword [byte eax+04h]	; 735E7
 mov eax, dword [byte esi+eax*4+010h]	; 735EA
-mov dword [dword_D11B6], eax	; 735EE
+mov dword [deldbmsg+4], eax	; 735EE
 push byte 0FFFFFFFFh	; 735F3
 lea eax, [byte esp+040h]	; 735F5
 push eax	; 735F9
@@ -1938,17 +1924,17 @@ push eax	; 735FE
 push byte 2	; 735FF
 push btn_POHumanOut	; 73601
 mov ecx, 2	; 73606
-mov ebx, unk_D11B2	; 7360B
+mov ebx, deldbmsg	; 7360B
 mov edx, 0FFFFFFFFh	; 73610
 mov eax, edx	; 73615
 call MessageBox	; 73617
 cmp eax, byte 1	; 7361C
-jne near loc_736F9	; 7361F
+jne near .10	; 7361F
 mov edx, dword [byte esi+04h]	; 73625
 mov edx, dword [byte esi+edx*4+010h]	; 73628
 lea eax, [byte esp+02Ch]	; 7362C
 call strcpy_	; 73630
-mov edx, asc_C30C3	; 73635
+mov edx, str_DBX2	; 73635
 lea eax, [byte esp+02Ch]	; 7363A
 call strcat_	; 7363E
 mov ebx, esp	; 73643
@@ -1956,65 +1942,65 @@ mov edx, 10h	; 73645
 lea eax, [byte esp+02Ch]	; 7364A
 call unknown_libname_1	; 7364E
 test eax, eax	; 73653
-jne near loc_736F9	; 73655
+jne near .10	; 73655
 test byte [byte esp+015h], 10h	; 7365B
-je short loc_7366B	; 73660
+je short .1	; 73660
 lea eax, [byte esp+01Eh]	; 73662
 call DeleteDir	; 73666
-loc_7366B:
+.1:
 mov ecx, dword [esi]	; 7366B
 dec ecx	; 7366D
 mov dword [esi], ecx	; 7366E
-je short loc_736B3	; 73670
+je short .6	; 73670
 mov edx, dword [byte esi+04h]	; 73672
-jmp short loc_73682	; 73675
-loc_73677:
+jmp short .3	; 73675
+.2:
 mov eax, edx	; 73677
 mov ebx, dword [byte esi+eax*4+014h]	; 73679
 mov dword [byte esi+eax*4+010h], ebx	; 7367D
 inc edx	; 73681
-loc_73682:
+.3:
 mov edi, dword [esi]	; 73682
 cmp edx, edi	; 73684
-jl short loc_73677	; 73686
+jl short DeleteSelectedDb.2	; 73686
 cmp edi, byte 6	; 73688
-jge short loc_7369C	; 7368B
+jge short .4	; 7368B
 lea eax, [byte edi-01h]	; 7368D
 mov dword [byte esi+0Ch], eax	; 73690
 mov dword [byte esi+08h], 0	; 73693
-jmp short loc_736A7	; 7369A
-loc_7369C:
+jmp short .5	; 7369A
+.4:
 cmp edi, dword [byte esi+0Ch]	; 7369C
-jne short loc_736A7	; 7369F
+jne short .5	; 7369F
 dec dword [byte esi+08h]	; 736A1
 dec dword [byte esi+0Ch]	; 736A4
-loc_736A7:
+.5:
 mov eax, dword [byte esi+04h]	; 736A7
 cmp eax, dword [esi]	; 736AA
-jne short loc_736F9	; 736AC
+jne short .10	; 736AC
 dec dword [byte esi+04h]	; 736AE
-jmp short loc_736F9	; 736B1
-loc_736B3:
+jmp short .10	; 736B1
+.6:
 and byte [fdlgmask], 77h	; 736B3
-cmp dword [dword_EC6B8], byte 0	; 736BA
-je short loc_736CB	; 736C1
+cmp dword [dblistcur], byte 0	; 736BA
+je short .7	; 736C1
 mov dword [fdlgtab], ecx	; 736C3
-jmp short loc_736F4	; 736C9
-loc_736CB:
-cmp dword [dword_EC768], byte 0	; 736CB
-je short loc_736E0	; 736D2
+jmp short .9	; 736C9
+.7:
+cmp dword [dblistorig], byte 0	; 736CB
+je short .8	; 736D2
 mov dword [fdlgtab], 1	; 736D4
-jmp short loc_736F4	; 736DE
-loc_736E0:
+jmp short .9	; 736DE
+.8:
 mov dword [fdlgtab], 0FFFFFFFFh	; 736E0
 mov dword [fdlgmask], 10h	; 736EA
-loc_736F4:
-call sub_72605	; 736F4
-loc_736F9:
+.9:
+call DrawDbDialogButtons	; 736F4
+.10:
 xor eax, eax	; 736F9
 add esp, byte 44h	; 736FB
-jmp near loc_72486	; 736FE
-sub_73703:
+jmp near DbDialog_ret	; 736FE
+MenuOpenDatabase:
 push dword 2Ch	; 73703
 call __CHK	; 73708
 push ebx	; 7370D
@@ -2024,10 +2010,10 @@ push esi	; 73710
 push edi	; 73711
 push ebp	; 73712
 sub esp, byte 4	; 73713
-call sub_7248C	; 73716
+call ScanDbFiles	; 73716
 push byte 20h	; 7371B
 push dword 0BC03h	; 7371D
-push asc_C30C8	; 73722
+push str_Buf2	; 73722
 call sub_8CCA8	; 73727
 mov ebp, eax	; 7372C
 add esp, byte 0Ch	; 7372E
@@ -2046,18 +2032,18 @@ push byte 0Ah	; 7374F
 push eax	; 73751
 call sub_91400	; 73752
 add esp, byte 0Ch	; 73757
-call sub_7230B	; 7375A
-call sub_727EE	; 7375F
-call sub_72605	; 73764
-call sub_72DE7	; 73769
+call LoadDbDialogShapes	; 7375A
+call DrawDbDialog	; 7375F
+call DrawDbDialogButtons	; 73764
+call DbDialogLoop	; 73769
 test eax, eax	; 7376E
-jne short loc_7377F	; 73770
+jne short .1	; 73770
 push byte 13h	; 73772
 push byte 0Ah	; 73774
 push ebp	; 73776
 call sub_910E0	; 73777
 add esp, byte 0Ch	; 7377C
-loc_7377F:
+.1:
 mov edx, dword [fdlgshapes]	; 7377F
 push edx	; 73785
 call jctime	; 73786
@@ -2069,4 +2055,4 @@ push ecx	; 73799
 call jctime	; 7379A
 add esp, byte 4	; 7379F
 add esp, byte 4	; 737A2
-jmp near sub_72485	; 737A5
+jmp near DbDialog_epilogue	; 737A5

@@ -16,8 +16,8 @@ global byte_ED98C, byte_ED98D, byte_ED98E, byte_ED98F, byte_ED990, byte_ED991, b
 global byte_ED994, byte_ED9A6, byte_ED9A7, byte_ED9A8, byte_ED9A9, byte_ED9AA, byte_ED9AB, byte_ED9AC
 global byte_ED9AD, byte_ED9AE, byte_ED9AF, byte_ED9B0, byte_ED9B2, byte_ED9B3, byte_ED9E5, byte_ED9E6
 global byte_ED9E7, byte_ED9E8, byte_ED9E9, byte_ED9EA, byte_ED9EB, byte_ED9EC, byte_ED9EE, byte_ED9EF
-global byte_ED9F0, dword_EC6B8, dword_EC6BC, dword_EC6C0, dword_EC6C4, dword_EC6C8, dword_EC710, dword_EC714
-global dword_EC718, dword_EC71C, dword_EC720, dword_EC768, dword_EC76C, dword_EC770, dword_EC774, dword_EC778
+global byte_ED9F0, dblistcur, dblisttemp
+global dblisttempnames, dblistorig
 global dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0, dword_ED35C, dword_ED360, dword_ED364, dword_ED368
 global dword_ED374, dword_ED380, dword_ED384, dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8
 global dword_ED6DC, dword_ED6E0, dword_ED6E4, dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8
@@ -26,35 +26,24 @@ global dword_ED756, dword_ED75C, dword_ED760, dword_ED764, dword_ED768, dword_ED
 global dword_ED778, dword_ED77C, dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794
 global dword_ED798, dword_ED79C, dword_ED7A0, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, dword_ED7B4
 global dword_ED7B8, vgapage, memlist1, memlist0, curdbname, unk_ED7BC, word_ED758
-dword_EC6B8:
+dblistcur:
 resb 4
-dword_EC6BC:
 resb 4
-dword_EC6C0:
 resb 4
-dword_EC6C4:
 resb 4
-dword_EC6C8:
 resb 72
-dword_EC710:
+dblisttemp:
 resb 4
-dword_EC714:
 resb 4
-dword_EC718:
 resb 4
-dword_EC71C:
 resb 4
-dword_EC720:
+dblisttempnames:
 resb 72
-dword_EC768:
+dblistorig:
 resb 4
-dword_EC76C:
 resb 4
-dword_EC770:
 resb 4
-dword_EC774:
 resb 4
-dword_EC778:
 resb 72
 curdbname:
 resb 32

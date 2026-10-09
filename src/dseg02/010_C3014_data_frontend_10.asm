@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_C3014 progbits alloc noexec write align=1
-global asc_C3014, asc_C301C, asc_C3023, asc_C3028, asc_C302D, asc_C3032, asc_C3037, asc_C303C
-global asc_C3041, asc_C3046, asc_C304B, asc_C3050, asc_C3055, asc_C305A, asc_C305F, asc_C3064
-global asc_C306C, asc_C3072, asc_C307B, asc_C3081, asc_C3086, asc_C308D, asc_C3092, asc_C309A
-global asc_C30A3, asc_C30AD, asc_C30B6, asc_C30BB, asc_C30C3, asc_C30C8, asc_C30CC, asc_C30D0
+global str_DSBOX, str_DbBut, str_None2, str_Del2, str_Open3, str_Can2, str_Noar2, str_Up2
+global str_Down2, str_Arro2, str_Dbno, str_Dbcu, str_Dbtm, str_Dbor, str_Db3, str_CURRENT
+global str_Org, str_ORIGINAL, str_Dbx, str_Open4, str_Delete2, str_Done2, str_Current4, str_Original2
+global str_Temporary, str_Dbdialog, str_Pdbx, str_Pointer12, str_DBX2, str_Buf2, asc_C30CC, asc_C30D0
 global asc_C30D9, asc_C30DE, asc_C30E3, asc_C30EB, asc_C30F2, asc_C30F7, asc_C30FE, asc_C3107
 global asc_C3111, asc_C3122, asc_C3127, asc_C312D, asc_C3134, asc_C313F, asc_C3146, asc_C314E
 global asc_C3152, asc_C3156, asc_C315A, asc_C3160, asc_C3164, asc_C316C, asc_C3171, asc_C3180
@@ -44,65 +44,65 @@ global unk_C352C, unk_C3530, unk_C3534, unk_C3538, unk_C353C, unk_C355E, unk_C35
 global unk_C36AC, unk_C36D4, unk_C36E1, unk_C36EE, unk_C36FB, unk_C3706, unk_C3712, unk_C371F
 global unk_C372C, unk_C3738, unk_C3742, unk_C374F, unk_C375C, unk_C3769, unk_C3775, unk_C392C
 global unk_C392F, unk_C393B, unk_C393E, unk_C3941, unk_C3944, unk_C396F, unk_C397B, unk_C39A8
-asc_C3014:
+str_DSBOX:
 db 044h,053h,042h,04Fh,058h,00h,00h,00h
-asc_C301C:
+str_DbBut:
 db 064h,062h,05Fh,062h,075h,074h,00h
-asc_C3023:
+str_None2:
 db 06Eh,06Fh,06Eh,065h,00h
-asc_C3028:
+str_Del2:
 db 064h,065h,06Ch,020h,00h
-asc_C302D:
+str_Open3:
 db 06Fh,070h,065h,06Eh,00h
-asc_C3032:
+str_Can2:
 db 063h,061h,06Eh,020h,00h
-asc_C3037:
+str_Noar2:
 db 06Eh,06Fh,061h,072h,00h
-asc_C303C:
+str_Up2:
 db 075h,070h,020h,020h,00h
-asc_C3041:
+str_Down2:
 db 064h,06Fh,077h,06Eh,00h
-asc_C3046:
+str_Arro2:
 db 061h,072h,072h,06Fh,00h
-asc_C304B:
+str_Dbno:
 db 064h,062h,06Eh,06Fh,00h
-asc_C3050:
+str_Dbcu:
 db 064h,062h,063h,075h,00h
-asc_C3055:
+str_Dbtm:
 db 064h,062h,074h,06Dh,00h
-asc_C305A:
+str_Dbor:
 db 064h,062h,06Fh,072h,00h
-asc_C305F:
+str_Db3:
 db 02Ah,02Eh,064h,062h,00h
-asc_C3064:
+str_CURRENT:
 db 043h,055h,052h,052h,045h,04Eh,054h,00h
-asc_C306C:
+str_Org:
 db 02Ah,02Eh,06Fh,072h,067h,00h
-asc_C3072:
+str_ORIGINAL:
 db 04Fh,052h,049h,047h,049h,04Eh,041h,04Ch,00h
-asc_C307B:
+str_Dbx:
 db 02Ah,02Eh,064h,062h,078h,00h
-asc_C3081:
+str_Open4:
 db 04Fh,070h,065h,06Eh,00h
-asc_C3086:
+str_Delete2:
 db 044h,065h,06Ch,065h,074h,065h,00h
-asc_C308D:
+str_Done2:
 db 044h,06Fh,06Eh,065h,00h
-asc_C3092:
+str_Current4:
 db 043h,075h,072h,072h,065h,06Eh,074h,00h
-asc_C309A:
+str_Original2:
 db 04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,00h
-asc_C30A3:
+str_Temporary:
 db 054h,065h,06Dh,070h,06Fh,072h,061h,072h,079h,00h
-asc_C30AD:
+str_Dbdialog:
 db 064h,062h,064h,069h,061h,06Ch,06Fh,067h,00h
-asc_C30B6:
+str_Pdbx:
 db 070h,064h,062h,078h,00h
-asc_C30BB:
+str_Pointer12:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C30C3:
+str_DBX2:
 db 02Eh,044h,042h,058h,00h
-asc_C30C8:
+str_Buf2:
 db 062h,075h,066h,00h
 asc_C30CC:
 db 050h,061h,06Ch,00h
