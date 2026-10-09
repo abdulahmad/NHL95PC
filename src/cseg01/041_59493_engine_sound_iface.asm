@@ -16,6 +16,10 @@ global sfx, SndLoadFile, SndLoadFile2, CrowdNoiseUpdate, CrowdNoiseOff, CrowdFad
 global StopDigiSample, PlayDigiSample, WaitDigiSample, PlayCrowdSample, PaOneMinuteLeft, PaSpeechBusy, PaGoal, PaPlayerNumber
 global PaPenalty, PaPenaltyShot, PaTonightIntro, PaScoringPeriod, PaNhlIntro, PaGoodnight, PaLineups, PaElseNhl
 global PaHighlightIntro, PaPlayoffResult, PaPlayoffTonight, PaOpenBank, PaPreloadClips
+; C: src/c/041_59493_engine_sound_iface/SndLoadFile.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/SndLoadFile.inc"
+%else
 SndLoadFile:
 push dword 14h	; 59493
 call __CHK	; 59498
@@ -30,6 +34,7 @@ add esp, byte 8	; 594AC
 pop ecx	; 594AF
 pop ebx	; 594B0
 ret	; 594B1
+%endif ; C
 SndLoadFile2:
 push dword 14h	; 594B2
 call __CHK	; 594B7

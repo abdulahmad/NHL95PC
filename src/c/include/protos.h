@@ -607,5 +607,7 @@ int ReadPlayerRecs(int f1, int f2, int f3, int f4, long off, unsigned char *hdr,
 long lseek(int fh, long pos, int how);
 void SelectMatchingPlayers(char *first, char *last, int side);  /* 71690 */
 char *strlwr(char *s);
+void DrawGameLineJerseys(unsigned char *nums, int art, unsigned char side);  /* 78366 */
+void __cdecl sub_931FC(int art, int x, int y); /* graphics library: draw art (masked) */
 
 #endif

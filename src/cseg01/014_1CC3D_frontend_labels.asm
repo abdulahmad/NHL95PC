@@ -723,6 +723,10 @@ pop ecx	; 1D5D2
 pop ebx	; 1D5D3
 ret	; 1D5D4
 %endif ; C
+; C: src/c/014_1CC3D_frontend_labels/StrLenToDot.c
+%ifdef CBUILD
+%include "c/014_1CC3D_frontend_labels/StrLenToDot.inc"
+%else
 StrLenToDot:
 push dword 0Ch	; 1D5D5
 call __CHK	; 1D5DA
@@ -744,6 +748,7 @@ mov eax, edx	; 1D5F2
 pop edx	; 1D5F4
 pop ebx	; 1D5F5
 ret	; 1D5F6
+%endif ; C
 db 090h
 SetScreenTitle_jt:
 dd SetScreenTitle_central

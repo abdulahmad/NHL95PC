@@ -4876,6 +4876,10 @@ pop ecx	; 259BD
 pop ebx	; 259BE
 ret	; 259BF
 %endif ; C
+; C: src/c/017_21CDE_player_stats/CmpSavePct.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/CmpSavePct.inc"
+%else
 CmpSavePct:
 push dword 14h	; 259C0
 call __CHK	; 259C5
@@ -5006,6 +5010,7 @@ pop esi	; 25AF2
 pop ecx	; 25AF3
 pop ebx	; 25AF4
 ret	; 25AF5
+%endif ; C
 db 08Bh,0C0h
 LeadersScreen_coljt:
 dd LeadersScreen_colDefault

@@ -72,7 +72,7 @@ ResetGoalieMenu,1CB7F,89,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/Reset
 BuildSavedGameLabels,1D518,189,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/BuildSavedGameLabels.c,matched,
 NullBlit,1D019,11,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/NullBlit.c,matched,
 NullFunc_1D024,1D024,11,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/NullFunc_1D024.c,matched,
-StrLenToDot,1D5D5,59,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/StrLenToDot.c,nonmatching,size differs (34 vs 59): the original block probably runs past the ret (db 90h pad and more); check the label end before retrying
+StrLenToDot,1D5D5,34,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/StrLenToDot.c,matched,
 StrPrefixDiffers,1D6BE,42,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_labels/StrPrefixDiffers.c,matched,
 CmpGAA,1FC8F,367,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/CmpGAA.c,matched,
 CmpPoints,1FB7F,272,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/CmpPoints.c,nonmatching,
@@ -85,7 +85,7 @@ CmpPIM,25642,275,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpPIM.c,ma
 CmpPPGoals,25325,275,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpPPGoals.c,matched,
 CmpPlusMinus,2554B,247,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpPlusMinus.c,matched,
 CmpSHGoals,25438,275,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpSHGoals.c,matched,
-CmpSavePct,259C0,356,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpSavePct.c,nonmatching,
+CmpSavePct,259C0,310,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpSavePct.c,matched,
 CmpShootPct,25755,277,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpShootPct.c,nonmatching,
 PlayerFromMouseY,24453,143,017_21CDE_player_stats,src/c/017_21CDE_player_stats/PlayerFromMouseY.c,matched,
 FitPlayerName,29C75,139,019_2970A_league_schedule,src/c/019_2970A_league_schedule/FitPlayerName.c,matched,
@@ -213,7 +213,7 @@ PaPlayerNumber,59B0F,45,041_59493_engine_sound_iface,src/c/041_59493_engine_soun
 PaPreloadClips,59D71,41,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPreloadClips.c,matched,
 PaSpeechBusy,59AAD,35,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaSpeechBusy.c,matched,
 PlayDigiSample,599B9,53,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PlayDigiSample.c,matched,
-SndLoadFile,59493,25,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/SndLoadFile.c,nonmatching,C body is right but the asm block ends at sndcb_addesp8_x (a label other functions jump into); needs a multi-block file or an endlabel mark
+SndLoadFile,59493,31,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/SndLoadFile.c,matched,
 StopDigiSample,59981,56,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/StopDigiSample.c,nonmatching,"original copies digihandle to edx (push edx) and passes it with mov eax,edx; this draft loads eax directly. Maybe sub_8F80E's real prototype differs. 10-min cap"
 WaitDigiSample,599EE,35,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/WaitDigiSample.c,matched,
 sfx,59884,193,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/sfx.c,nonmatching,
@@ -240,10 +240,10 @@ reenergizeteam,5B826,91,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpu
 defaultsprites2,5BA89,277,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,matched,
 setpersonel,5BEF4,284,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,matched,
 ResetBench,5DF86,148,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,matched,
-calcpuckcross,5A341,221,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,nonmatching,"body 2 bytes short: the original keeps x in ebx and side in ecx and stores x with 16-bit mov bx,dx; this draft swaps the two registers and uses mov ebx,edx (declaration order did not change it). Its pop/ret tail (calcpuckcross_ret5/6) is shared by ~14 engine_core functions (Goal, SetPlList ...): they belong in this file; reenergizeteam already matches here because frag resolves the jump to the unique tail bytes of the draft"
-GetHot,5A425,136,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,nonmatching,"same size; the original saves esi and negates the hot spot x through it (mov esi,ebx / neg esi); tried -x, 0-x, -(int)x, ~x+1, -regd0.w, int x, a zero local: all negate ebx in place. regd0 = regd1 = 0 order fixed. Also the filler that makes reenergizeteam's exit a near jump"
+calcpuckcross,5A341,228,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,nonmatching,"body 2 bytes short: the original keeps x in ebx and side in ecx and stores x with 16-bit mov bx,dx; this draft swaps the two registers and uses mov ebx,edx (declaration order did not change it). Its pop/ret tail (calcpuckcross_ret5/6) is shared by ~14 engine_core functions (Goal, SetPlList ...): they belong in this file; reenergizeteam already matches here because frag resolves the jump to the unique tail bytes of the draft"
+GetHot,5A425,52,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,nonmatching,"same size; the original saves esi and negates the hot spot x through it (mov esi,ebx / neg esi); tried -x, 0-x, -(int)x, ~x+1, -regd0.w, int x, a zero local: all negate ebx in place. regd0 = regd1 = 0 order fixed. Also the filler that makes reenergizeteam's exit a near jump"
 StartPer,5C010,436,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,nonmatching,"3 bytes short: the original keeps cont1team in si and cont2team in bx (push ebx), then reuses ebx for -1, ecx for 0 (bannertimer, crowdlevel) and builds fox with xor edi,edi / xor edi,edx; this draft reloads the globals into ax. Locals for the two teams did not change it"
-changeplayer,59E69,370,042_59D9A_engine_core,src/c/042_59D9A_engine_core/changeplayer.c,nonmatching,"Same instructions and branch layout (370 bytes), only allocation differs: the original spills cont at [esp+4] (px [esp], py [esp+8]) and uses edx for the 6-player counter, ebx/ecx for dx/dy, si for SCnum, cx for c1/c2playernum; this draft puts cont at [esp+8] and the counter in ecx. Declaration order (120 permutations) does not change it. File also hosts setplayer / DrawRinkOverlays (share changeplayer_ret5)"
+changeplayer,59E69,376,042_59D9A_engine_core,src/c/042_59D9A_engine_core/changeplayer.c,nonmatching,"Same instructions and branch layout (370 bytes), only allocation differs: the original spills cont at [esp+4] (px [esp], py [esp+8]) and uses edx for the 6-player counter, ebx/ecx for dx/dy, si for SCnum, cx for c1/c2playernum; this draft puts cont at [esp+8] and the counter in ecx. Declaration order (120 permutations) does not change it. File also hosts setplayer / DrawRinkOverlays (share changeplayer_ret5)"
 forceteams forcepldata,5E0B0,189,042_59D9A_engine_core,src/c/042_59D9A_engine_core/forceteams.c,matched,
 periodicevents,5C302,269,042_59D9A_engine_core,src/c/042_59D9A_engine_core/periodicevents.c,nonmatching,
 restorepl,59FE1,90,042_59D9A_engine_core,src/c/042_59D9A_engine_core/restorepl.c,matched,
@@ -251,7 +251,7 @@ restoreteams,5B97A,87,042_59D9A_engine_core,src/c/042_59D9A_engine_core/restoret
 setupice,5D7F7,91,042_59D9A_engine_core,src/c/042_59D9A_engine_core/setupice.c,matched,
 updatecrowdf,5C248,186,042_59D9A_engine_core,src/c/042_59D9A_engine_core/updatecrowdf.c,nonmatching,"2 bytes short, only the randomd0 result register: the original widens it with movsx edx,ax and compares edx, this draft does cwde / eax. Tried int/short r, n reused, if/switch/return, a sound-number local. The (1000-crowdlevel)/4 clamp needs int t then short n = t"
 StopNA,5F82A,136,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/EvadePlayers.c,matched,
-EvadePlayers,5E4C4,819,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/EvadePlayers.c,nonmatching,"body matches to +1A7 (of 333h); the original frame has one more dword (sub esp,14h): a swap spill at [esp] for the vtoa args because ebp is busy there; this draft keeps ebp free (frame 10h)"
+EvadePlayers,5E4C4,826,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/EvadePlayers.c,nonmatching,"body matches to +1A7 (of 333h); the original frame has one more dword (sub esp,14h): a swap spill at [esp] for the vtoa args because ebp is busy there; this draft keeps ebp free (frame 10h)"
 skateto,5E93B,476,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/EvadePlayers.c,nonmatching,1 instruction off: the original loads the pucky pointer into eax and Xvel|Yvel as eax=Xvel/edx=Yvel; wcc picks edx in both (register cache of regd0 in eax?)
 dostop,5F745,229,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/dostop.c,matched,
 goalieacc,5F8B2,216,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/goalieacc.c,matched,
@@ -309,13 +309,14 @@ SelectMatchingPlayers,71690,429,052_6D2F8_create_player,src/c/052_6D2F8_create_p
 SetRosterTeamMenus,7183D,292,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SetRosterTeamMenus.c,nonmatching,
 ShowDBError,6ED39,86,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShowDBError.c,matched,
 SplitPlayerName,6F159,323,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SplitPlayerName.c,nonmatching,
-DbDialogHitTest,72A5C,106,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/DbDialogHitTest.c,nonmatching,C matches the code; the asm block also holds the DrawDbList jump table after the ret (size 82 vs 106); mark with an end label or move the table
+DbDialogHitTest,72A5C,82,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/DbDialogHitTest.c,matched,
 LoadDbsFromDir,7345B,360,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/LoadDbsFromDir.c,matched,
 CmpRosterGoalies,75A37,371,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/CmpRosterGoalies.c,matched,
 GameRosterCmp,76A93,98,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/GameRosterCmp.c,matched,
 PrintLineEdStatus,76771,95,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/PrintLineEdStatus.c,matched,
 RandLfsrByte,7665E,47,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/RandLfsrByte.c,nonmatching,"original does byte ops (dl = bit, dh = *s shr 1, bl = dh ^ B8h, push ebx too); this draft widens to 32 bits. 10-min cap"
 SetPalette768,76614,74,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/SetPalette768.c,matched,
+DrawGameLineJerseys,78366,410,055_78346_team_select,src/c/055_78346_team_select/DrawGameLineJerseys.c,nonmatching,"draft: structure matches (jump table, colours); side/c2 stack slots +24h/+28h swapped, nums[i] read via eax with xor edx first, hmroster index (side*444h + slot*39) folded differently; 401 vs 410 bytes"
 LoadJerseyColours,78A87,352,055_78346_team_select,src/c/055_78346_team_select/LoadJerseyColours.c,nonmatching,
 MakeJerseyShape,7A099,161,055_78346_team_select,src/c/055_78346_team_select/MakeJerseyShape.c,matched,
 MenuReturnToLineEditor,79DD1,16,055_78346_team_select,src/c/055_78346_team_select/MenuReturnToLineEditor.c,matched,
@@ -326,7 +327,7 @@ DrawCtlBoxes,7D671,64,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialog
 DrawModeSetChecks,7B7BE,136,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/DrawModeSetChecks.c,matched,
 ExhOptsToBits,7BF56,355,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ExhOptsToBits.c,matched,
 ExhSetHitTest,7C28D,138,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ExhSetHitTest.c,matched,
-LeagueOptsToBits,7A88E,273,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/LeagueOptsToBits.c,nonmatching,
+LeagueOptsToBits,7A88E,314,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/LeagueOptsToBits.c,matched,
 ModeOptsToBits,7B604,304,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ModeOptsToBits.c,matched,
 ModeSetHitTest,7B734,138,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ModeSetHitTest.c,matched,
 SetCtlTeams,7DB67,292,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SetCtlTeams.c,matched,

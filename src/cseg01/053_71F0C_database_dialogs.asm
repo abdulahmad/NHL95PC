@@ -923,6 +923,10 @@ or byte [fdlgmask+1], 4	; 72A4D
 .1:
 add esp, byte 24h	; 72A54
 jmp near DbDialog_epilogue	; 72A57
+; C: src/c/053_71F0C_database_dialogs/DbDialogHitTest.c
+%ifdef CBUILD
+%include "c/053_71F0C_database_dialogs/DbDialogHitTest.inc"
+%else
 DbDialogHitTest:
 push dword 0Ch	; 72A5C
 call __CHK	; 72A61
@@ -957,6 +961,7 @@ xor eax, eax	; 72AA9
 pop esi	; 72AAB
 pop ecx	; 72AAC
 ret	; 72AAD
+%endif ; C
 DrawDbList_jt:
 dd DrawDbList_n1
 dd DrawDbList_n2

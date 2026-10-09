@@ -643,6 +643,10 @@ dd LeagueOptsToBits_n0
 dd LeagueOptsToBits_n3
 dd LeagueOptsToBits_n0
 dd LeagueOptsToBits_n4
+; C: src/c/056_7A13A_settings_dialogs/LeagueOptsToBits.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/LeagueOptsToBits.inc"
+%else
 LeagueOptsToBits:
 push dword 8	; 7A88E
 call __CHK	; 7A893
@@ -752,6 +756,7 @@ LeagueOptsToBits_n0:
 call DrawLeagueSetChecks	; 7A9C1
 pop edx	; 7A9C6
 ret	; 7A9C7
+%endif ; C
 LeagueSetHitTest:
 push dword 10h	; 7A9C8
 call __CHK	; 7A9CD

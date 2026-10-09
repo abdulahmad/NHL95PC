@@ -1053,7 +1053,6 @@ extern void GameLineEditorLoop(); /* 76AF5 */
 extern void LineEdHitTest(); /* 77F6F */
 extern void LoadGameRoster(); /* 77FF5 */
 extern void DrawGameLineJerseys_jt(); /* 78346 */
-extern void DrawGameLineJerseys(); /* 78366 */
 extern void DrawGameLineJerseys_st1(); /* 78460 */
 extern void DrawGameLineJerseys_st2(); /* 78477 */
 extern void DrawGameLineJerseys_st0(); /* 7847E */
@@ -2233,7 +2232,6 @@ extern void sub_931D0(); /* 931D0 */
 extern void loc_931E4(); /* 931E4 */
 extern void loc_931F6(); /* 931F6 */
 extern void loc_931FB(); /* 931FB */
-extern void sub_931FC(); /* 931FC */
 extern void loc_9321D(); /* 9321D */
 extern void sub_93240(); /* 93240 */
 extern void loc_93296(); /* 93296 */
