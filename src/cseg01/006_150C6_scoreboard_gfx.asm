@@ -7,12 +7,12 @@ extern musicon, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte
 extern byte_ED823, byte_ED939, dword_C5130
 extern gameresult, gamemode, gameopts, teamdivflags, dword_C5704
 extern dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
-extern dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
-extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
+extern hudhomeline, hudawayline, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
+extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, linesprites
 extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, hmscore, awscore, hmtmstruct
-extern jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C8, off_C57CC, awtmstruct
+extern jctime, DrawPanelLine_x, UpdateHudPanel_x, off_C5439, off_C579C, off_C57C8, off_C57CC, awtmstruct
 extern off_D3078, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, ReloadGameGfx, SetupGameQuick
-extern MakePath, sub_14A20, sub_14F31, sub_1BEFD, LoadModeState, sub_3371C, sub_3377C, SeriesLength
+extern MakePath, DrawPanelScore, DrawPanelClock, sub_1BEFD, LoadModeState, sub_3371C, sub_3377C, SeriesLength
 extern sub_479E9, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
 extern sub_7DC8B, LoadScheduleDB, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
 extern PollKey, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, exhstate, unk_DF314, PerTimeTab
@@ -65,10 +65,10 @@ mov dword [dword_C5848], ebx	; 15122
 mov dword [dword_C5844], ebx	; 15128
 mov eax, dword [hmtmstruct+28h]	; 1512E
 sar eax, 10h	; 15133
-mov dword [dword_C584C], eax	; 15136
+mov dword [hudhomeline], eax	; 15136
 mov eax, dword [awtmstruct+28h]	; 1513B
 sar eax, 10h	; 15140
-mov dword [dword_C5850], eax	; 15143
+mov dword [hudawayline], eax	; 15143
 mov dword [dword_C5858], ebx	; 15148
 mov dword [dword_C5854], ebx	; 1514E
 mov dword [dword_C5860], ebx	; 15154
@@ -102,13 +102,13 @@ add esp, byte 4	; 151B4
 mov edx, dword [hmscore-2]	; 151B7
 sar edx, 10h	; 151BD
 xor eax, eax	; 151C0
-call sub_14A20	; 151C2
+call DrawPanelScore	; 151C2
 mov edx, dword [awscore-2]	; 151C7
 sar edx, 10h	; 151CD
 mov eax, 1	; 151D0
-call sub_14A20	; 151D5
+call DrawPanelScore	; 151D5
 call SelectScreenBM	; 151DA
-call sub_14F31	; 151DF
+call DrawPanelClock	; 151DF
 test esi, esi	; 151E4
 jne short loc_151F8	; 151E6
 push byte 16h	; 151E8
@@ -215,15 +215,15 @@ call jctime	; 15330
 add esp, byte 4	; 15335
 push byte 14h	; 15338
 push byte 2Ah	; 1533A
-mov eax, dword [dword_C584C]	; 1533C
-mov edx, dword [nosplit eax*4+dword_DC26C]	; 15341
+mov eax, dword [hudhomeline]	; 1533C
+mov edx, dword [nosplit eax*4+linesprites]	; 15341
 push edx	; 15348
 call sub_B4CD8	; 15349
 add esp, byte 0Ch	; 1534E
 push byte 14h	; 15351
 push dword 0FBh	; 15353
-mov eax, dword [dword_C5850]	; 15358
-mov ebx, dword [nosplit eax*4+dword_DC26C]	; 1535D
+mov eax, dword [hudawayline]	; 15358
+mov ebx, dword [nosplit eax*4+linesprites]	; 1535D
 push ebx	; 15364
 call sub_B4CD8	; 15365
 add esp, byte 0Ch	; 1536A
@@ -364,7 +364,7 @@ mov edx, eax	; 15500
 sar edx, 1Fh	; 15502
 idiv ecx	; 15505
 cmp ebx, eax	; 15507
-je near loc_14F2A	; 15509
+je near UpdateHudPanel_x	; 15509
 push byte 3	; 1550F
 push dword 0A1h	; 15511
 mov edi, dword [nosplit eax*4+dword_DC30C]	; 15516
@@ -424,7 +424,7 @@ add esp, byte 0Ch	; 155BF
 loc_155C2:
 mov eax, dword [dword_C5714]	; 155C2
 cmp eax, dword [dword_C5708]	; 155C7
-je near loc_14F2A	; 155CD
+je near UpdateHudPanel_x	; 155CD
 mov ebx, 0Ah	; 155D3
 mov edx, eax	; 155D8
 sar edx, 1Fh	; 155DA
@@ -456,7 +456,7 @@ mov edx, eax	; 1562A
 sar edx, 1Fh	; 1562C
 idiv ecx	; 1562F
 cmp ebx, edx	; 15631
-je near loc_14F2A	; 15633
+je near UpdateHudPanel_x	; 15633
 push byte 3	; 15639
 push dword 0AAh	; 1563B
 mov ecx, dword [nosplit edx*4+dword_DC30C]	; 15640
@@ -464,7 +464,7 @@ push ecx	; 15647
 loc_15648:
 call sub_B4CD8	; 15648
 add esp, byte 0Ch	; 1564D
-jmp near loc_14F2A	; 15650
+jmp near UpdateHudPanel_x	; 15650
 sub_15655:
 push dword 18h	; 15655
 call __CHK	; 1565A
@@ -537,7 +537,7 @@ loc_156FC:
 inc ebp	; 156FC
 cmp ebp, byte 7	; 156FD
 jl short loc_156C8	; 15700
-jmp near loc_14BE9	; 15702
+jmp near DrawPanelLine_x	; 15702
 sub_15707:
 push dword 38h	; 15707
 call __CHK	; 1570C
@@ -605,7 +605,7 @@ push esi	; 157AC
 call sub_90D20	; 157AD
 add esp, byte 14h	; 157B2
 add esp, byte 0Ch	; 157B5
-jmp near loc_14BE9	; 157B8
+jmp near DrawPanelLine_x	; 157B8
 sub_157BD:
 push dword 4Ch	; 157BD
 call __CHK	; 157C2
@@ -936,7 +936,7 @@ mov ebx, dword [byte esp+04h]	; 15B61
 cmp ebx, byte 4	; 15B65
 jl near loc_159BA	; 15B68
 add esp, byte 8	; 15B6E
-jmp near loc_14BE9	; 15B71
+jmp near DrawPanelLine_x	; 15B71
 sub_15B76:
 push dword 28h	; 15B76
 call __CHK	; 15B7B

@@ -10,7 +10,7 @@ extern byte_DC9D8, byte_ED938, dword_C65B4, dword_C66C8, dword_C6718, dword_C679
 extern dword_C6956, dword_C695A, dword_C891E, dword_CE8EB, dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB
 extern dword_CF5D7, dword_CF5F7, dword_CF617, dword_CF637, dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB
 extern dword_CF84B, dword_CF8CB, dword_CFA4B, dword_D2C6B, dword_D30AC, dword_D30B0, dword_D30B4, dword_D30B8
-extern dword_D8C40, dword_DC26C, dword_DC290, dword_DC2BC, dword_DC2C0, dword_DC2C4, dword_DC2F0, dword_DC30C
+extern dword_D8C40, linesprites, dword_DC290, dword_DC2BC, dword_DC2C0, scoredigits, dword_DC2F0, dword_DC30C
 extern dword_DC8D0, vgapage, off_C6821, off_C6825, off_C6841, off_C6845, off_C6881, off_C6885
 extern off_CF51F, off_CF5DF, off_CF61F, off_CF67F, strcpy_, strncpy_, MakePath, sub_17BE7
 extern sub_17CE0, sub_17D6E, sub_6AB7C, sub_8E8A0, sub_90B80, sub_B30B4, sub_B4CD8, sub_B4DD4
@@ -55,7 +55,7 @@ push eax	; 1CC7A
 call sub_8E8A0	; 1CC7B
 add esp, byte 8	; 1CC80
 mov dword [dword_DC2F0], eax	; 1CC83
-push dword_DC2C4	; 1CC88
+push scoredigits	; 1CC88
 push asc_C0A88	; 1CC8D
 push eax	; 1CC92
 call sub_90B80	; 1CC93
@@ -96,7 +96,7 @@ push ebp	; 1CD23
 call sub_B30B4	; 1CD24
 add esp, byte 8	; 1CD29
 mov dword [dword_DC2BC], eax	; 1CD2C
-push dword_DC26C	; 1CD31
+push linesprites	; 1CD31
 push asc_C0B33	; 1CD36
 mov eax, dword [dword_DC2F0]	; 1CD3B
 push eax	; 1CD40

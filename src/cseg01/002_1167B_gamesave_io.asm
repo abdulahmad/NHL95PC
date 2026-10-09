@@ -12,7 +12,7 @@ extern dword_DD6B0, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, 
 extern HandleHotKey_ret, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
 extern off_C526F, off_C5273, off_C5439, leaguedbnames, replaystart, camx_m2
 extern off_CBED0, strcat_, strcpy_, SetScreenSize, ResetInputSampling, RunGameFrames, FadePalette, LoadGameGfx
-extern SetupGame, MakePath, FileOpenRead, FileClose, sub_1463D, sub_1478B, ReadTeamRec, sub_14CF1
+extern SetupGame, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadSeasonRec, ReadTeamRec, UpdateHudPanel
 extern sub_150C6, sub_15B76, sub_1920F, sub_1935D, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
 extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71, DrawRinkOverlays, PeriodOver, LoadGameState
@@ -189,7 +189,7 @@ mov edx, dword [dword_C570C]	; 118C4
 add eax, edx	; 118CA
 mov dword [dword_DC28C], eax	; 118CC
 .9:
-call sub_14CF1	; 118D1
+call UpdateHudPanel	; 118D1
 mov edx, dword [dword_DD6AE]	; 118D6
 sar edx, 10h	; 118DC
 shl edx, 3	; 118DF
@@ -823,14 +823,14 @@ je near .30	; 12285
 mov ebx, eax	; 1228B
 lea edx, [dword esp+0354h]	; 1228D
 mov eax, dword [dword esp+03F4h]	; 12294
-call sub_1463D	; 1229B
+call ReadKeyRec	; 1229B
 mov ebx, eax	; 122A0
 test eax, eax	; 122A2
 jne short .13	; 122A4
 mov ebx, dword [dword esp+0380h]	; 122A6
 lea edx, [dword esp+0388h]	; 122AD
 mov eax, dword [dword esp+03F0h]	; 122B4
-call sub_1478B	; 122BB
+call ReadSeasonRec	; 122BB
 mov ebx, eax	; 122C0
 .13:
 test ebx, ebx	; 122C2
@@ -1064,7 +1064,7 @@ je near .42	; 12614
 mov ebx, eax	; 1261A
 lea edx, [dword esp+0320h]	; 1261C
 mov eax, dword [dword esp+03F4h]	; 12623
-call sub_1463D	; 1262A
+call ReadKeyRec	; 1262A
 mov ebx, eax	; 1262F
 test eax, eax	; 12631
 jne short .34	; 12633

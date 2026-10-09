@@ -10,7 +10,7 @@ global leaguedbnames, unk_C7F07
 global unk_C7F1B, unk_C7F53, unk_C7F77, unk_C7F7B, unk_C7F8E, unk_C7F92, unk_C7FB9, unk_C7FBD
 global unk_C7FD6, unk_C7FDA, unk_C7FF5, unk_C8014, unk_C8039, unk_C805D, unk_C8081, msg_SavedGame
 global unk_C80A9, unk_C80AD, unk_C80B4, unk_C80B8, unk_C80C1, unk_C80C7, unk_C80CE, str_star
-global unk_C8115, unk_C8117
+global str_backslash2, unk_C8117
 unk_C7F07:
 dd unk_C7E86
 dword_C7F0B:
@@ -112,7 +112,7 @@ str_space:
 db 020h,00h
 str_star:
 db 02Ah,00h
-unk_C8115:
+str_backslash2:
 db 05Ch,00h
 unk_C8117:
 db 025h,073h,00h

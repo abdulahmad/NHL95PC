@@ -18,8 +18,8 @@ extern musichandle, dword_D2C6B, dword_D8B68, dword_DBC7C, schedgameidx, dword_D
 extern hmtmstruct, dword_DF61A
 extern dword_DF626, dword_DF62A, dword_DF636, fputchar, jctime, memcpy_
 extern off_C57CC, off_C719C, leaguedbnames, off_CD304, rand_, sprintf_
-extern strcat_, strcpy_, FadePalette, MakePath, FileOpenRead, FileOpenRW, FileClose, sub_1463D
-extern sub_1478B, ReadTeamRec, sub_147FF, sub_174C2, sub_175E2, sub_1BAF3, sub_29C75, sub_33E6A
+extern strcat_, strcpy_, FadePalette, MakePath, FileOpenRead, FileOpenRW, FileClose, ReadKeyRec
+extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, sub_174C2, sub_175E2, sub_1BAF3, sub_29C75, sub_33E6A
 extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
 extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
@@ -437,7 +437,7 @@ jne short loc_2D90F	; 2D8F1
 xor ebx, ebx	; 2D8F3
 lea edx, [dword esp+0744h]	; 2D8F5
 mov eax, dword [dword esp+0760h]	; 2D8FC
-call sub_147FF	; 2D903
+call ReadGSummaryRec	; 2D903
 mov dword [dword esp+0788h], eax	; 2D908
 loc_2D90F:
 test byte [esp], 20h	; 2D90F
@@ -892,7 +892,7 @@ mov eax, dword [dword esp+07C4h]	; 2E0C0
 mov ebx, dword [dword ebp+eax*4+dword_DBC7C]	; 2E0C7
 lea edx, [dword esp+069Ch]	; 2E0CE
 mov eax, dword [dword esp+0764h]	; 2E0D5
-call sub_1463D	; 2E0DC
+call ReadKeyRec	; 2E0DC
 mov dword [dword esp+0788h], eax	; 2E0E1
 test eax, eax	; 2E0E8
 jne short loc_2E158	; 2E0EA
@@ -983,7 +983,7 @@ add esi, eax	; 2E242
 mov ebx, dword [dword esp+0778h]	; 2E244
 mov edx, esi	; 2E24B
 mov eax, dword [dword esp+0760h]	; 2E24D
-call sub_147FF	; 2E254
+call ReadGSummaryRec	; 2E254
 mov dword [dword esp+0788h], eax	; 2E259
 mov bh, byte [esi]	; 2E260
 cmp bh, 1	; 2E262
@@ -1184,7 +1184,7 @@ add eax, edx	; 2E526
 mov ebx, dword [byte esp+eax+050h]	; 2E528
 lea edx, [dword esp+069Ch]	; 2E52C
 mov eax, dword [dword esp+0764h]	; 2E533
-call sub_1463D	; 2E53A
+call ReadKeyRec	; 2E53A
 mov dword [dword esp+0788h], eax	; 2E53F
 test eax, eax	; 2E546
 jne near loc_2E5D1	; 2E548
@@ -1219,7 +1219,7 @@ mov al, byte [esi]	; 2E5AE
 mov eax, dword [dword esp+eax*4+0758h]	; 2E5B0
 mov ebx, dword [dword esp+06C8h]	; 2E5B7
 lea edx, [dword esp+0704h]	; 2E5BE
-call sub_1478B	; 2E5C5
+call ReadSeasonRec	; 2E5C5
 mov dword [dword esp+0788h], eax	; 2E5CA
 loc_2E5D1:
 cmp dword [dword esp+0788h], byte 0	; 2E5D1
@@ -1346,7 +1346,7 @@ add eax, edx	; 2E761
 mov ebx, dword [byte esp+eax+050h]	; 2E763
 lea edx, [dword esp+069Ch]	; 2E767
 mov eax, dword [dword esp+0764h]	; 2E76E
-call sub_1463D	; 2E775
+call ReadKeyRec	; 2E775
 mov dword [dword esp+0788h], eax	; 2E77A
 test eax, eax	; 2E781
 jne short loc_2E7BC	; 2E783
@@ -1384,7 +1384,7 @@ add ebx, esi	; 2E7F3
 mov ebx, dword [byte esp+ebx+050h]	; 2E7F5
 lea edx, [dword esp+069Ch]	; 2E7F9
 mov eax, dword [dword esp+0764h]	; 2E800
-call sub_1463D	; 2E807
+call ReadKeyRec	; 2E807
 mov dword [dword esp+0788h], eax	; 2E80C
 test eax, eax	; 2E813
 jne short loc_2E855	; 2E815
@@ -1461,7 +1461,7 @@ add ebp, eax	; 2E927
 mov ebx, dword [byte esp+ebp+050h]	; 2E929
 lea edx, [dword esp+069Ch]	; 2E92D
 mov eax, dword [dword esp+0764h]	; 2E934
-call sub_1463D	; 2E93B
+call ReadKeyRec	; 2E93B
 mov dword [dword esp+0788h], eax	; 2E940
 test eax, eax	; 2E947
 jne near loc_2EA52	; 2E949

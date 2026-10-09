@@ -10,7 +10,7 @@ extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC28C, dword_DD
 extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
 extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSize, ResetInputSampling, RunGameFrames
-extern FadePalette, LoadPlayerPhotos, sub_14CF1, sub_150C6, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
+extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, sub_150C6, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
 extern sub_479E9, FadeOutPalCycle, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
 extern sub_59CA9, sub_59D54, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
 extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_836E4
@@ -577,7 +577,7 @@ mov edx, dword [dword_C570C]	; 69C15
 add eax, edx	; 69C1B
 mov dword [dword_DC28C], eax	; 69C1D
 .23:
-call sub_14CF1	; 69C22
+call UpdateHudPanel	; 69C22
 mov bx, word [word_CBEC4]	; 69C27
 test bx, bx	; 69C2E
 je short .25	; 69C31

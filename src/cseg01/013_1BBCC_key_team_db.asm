@@ -15,8 +15,8 @@ extern unk_C0A2C, unk_C0A2F, unk_C0A32, unk_C0A35, unk_C0A37, unk_C0A39, unk_C0A
 extern unk_C0A3F, unk_C0A41, unk_C0A43, unk_C0A45, unk_C0A47, unk_C0A49, unk_C0A4B, unk_C0A51
 extern unk_C0A53, unk_C0A59, unk_C0A5B, unk_C0A64, unk_C0A66, unk_C0A6F, unk_C5423, unk_C542E
 extern unk_CDCD0, unk_CEE4F, unk_CEEAF, awlinetab, unk_DAC40, unk_DACA0, unk_DBC30, unk_DBCEC
-extern unk_DBF18, unk_DBFD4, hmlinetab, unk_DC240, unknown_libname_1, word_C5428, word_C571C, word_C571E
-extern word_C5720, word_C5722, word_C575C, word_C575E, word_C5760, word_C5762, VisTeam, word_DB08A
+extern unk_DBF18, unk_DBFD4, hmlinetab, unk_DC240, unknown_libname_1, word_C5428, hudpenhome, word_C571E
+extern word_C5720, word_C5722, hudpenaway, word_C575E, word_C5760, word_C5762, VisTeam, word_DB08A
 extern word_DB08C, word_DB08E, word_DB090, word_DB092, word_DB094, word_DB096, word_DC242, word_DC244
 extern hmtmap, hmtmgoalie, awtmap, awtmgoalie
 global loc_1BC16, loc_1BC34, loc_1BC52, loc_1BC8A, loc_1BCB3, loc_1BCF3, loc_1BD11, loc_1BD2F
@@ -1349,8 +1349,8 @@ push edx	; 1CBE4
 xor edx, edx	; 1CBE5
 mov ebx, 0FFFFFFFFh	; 1CBE7
 loc_1CBEC:
-mov word [nosplit edx*8+word_C575C], bx	; 1CBEC
-mov word [nosplit edx*8+word_C571C], bx	; 1CBF4
+mov word [nosplit edx*8+hudpenaway], bx	; 1CBEC
+mov word [nosplit edx*8+hudpenhome], bx	; 1CBF4
 xor ecx, ecx	; 1CBFC
 mov word [nosplit edx*8+word_C5762], cx	; 1CBFE
 mov word [nosplit edx*8+word_C5722], cx	; 1CC06

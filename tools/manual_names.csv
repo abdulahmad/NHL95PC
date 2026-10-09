@@ -39,6 +39,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00014056,sub_14056,ResetGameVars,PC-new,,,,medium,"clears the per-game state (penalty / referee / line-change / penalty-shot vars, pass state, crowd excitement, input counters, exitgame / gameover, frameaccum), calls StartGame, centres the mouse when a pad uses it, joyq_flush",asset_loading,manual-trace
 000142E7,sub_142E7,FileExists,PC-new,,,,high,(name): FileOpenRead then FileClose; returns 1 when the open succeeded,asset_loading,manual-trace
 0001431E,sub_1431E,MakePath,PC-new,,,,high,dst = dir + '\' (when dir non-empty) + name + ext,file_utils,manual-trace
+00014368,sub_14368,DeleteFiles,PC-new,,,,high,"(dir, name, ext): _dos_findfirst / _dos_findnext on dir\name.ext and unlinks every match",file_utils,manual-trace
+00014442,sub_14442,DeleteDir,PC-new,,,,high,(dir): unlinks dir\*.* (_dos_findfirst / _dos_findnext) then rmdir,file_utils,manual-trace
 00014525,sub_14525,FileOpenRead,PC-new,,,,high,"_dos_open(path, 40h read/deny-none, &handle)",file_utils,manual-trace
 0001453E,sub_1453E,FileOpenWrite,PC-new,,,,high,"_dos_open(path, 41h write/deny-none, &handle)",file_utils,manual-trace
 00014552,sub_14552,FileOpenRW,PC-new,,,,high,"_dos_open(path, 42h read-write/deny-none, &handle)",file_utils,manual-trace
@@ -46,8 +48,23 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0001457C,sub_1457C,FileClose,PC-new,,,,high,"_dos_close(*handle) when >= 0, then *handle = -1",file_utils,manual-trace
 000145A2,sub_145A2,FileReadAt,PC-new,,,,high,"(handle, buf, offset (<0 = current), len): lseek then _dos_read; 0 ok, 1 short read, -1 seek error",file_utils,manual-trace
 000145F9,sub_145F9,FileWriteAt,PC-new,,,,high,"(handle, buf, offset (<0 = current), len): lseek then _dos_write; 0 ok, 1 short write",file_utils,manual-trace
+0001463D,sub_1463D,ReadKeyRec,PC-new,,,,medium,"FileReadAt(handle, buf, offset, 34h): one KEY.DB player record (PickAwardWinners and game_setup pass the leaguedbnames[0] KEY handle)",file_utils,manual-trace
+00014654,sub_14654,WriteKeyRec,PC-new,,,,medium,"FileWriteAt(handle, buf, offset, 34h): KEY.DB record write counterpart of ReadKeyRec (roster_jersey)",file_utils,manual-trace
+0001466B,sub_1466B,CopyFile,PC-new,,,,high,"builds the source and destination paths with MakePath, FileOpenRead / FileCreate, copies in 400h-byte _dos_read / _dos_write blocks; returns 0 ok, else the error",file_utils,manual-trace
+0001478B,sub_1478B,ReadSeasonRec,PC-new,,,,medium,"FileReadAt(handle, buf, offset, 2Fh): one SEASON.DB player stat record (PickAwardWinners passes the leaguedbnames+14h SEASON handle)",file_utils,manual-trace
 000147A0,sub_147A0,ReadSchedGame,PC-new,,,,high,"FileReadAt(handle, buf, 2 + index*6, 6): one SCHEDULE.DB game (month, day, home, away, home score, away score; FFh = unplayed)",file_utils,manual-trace
 000147C9,sub_147C9,ReadTeamRec,PC-new,,,,high,"FileReadAt(handle, buf, index*2E8h, 2E8h): one TEAMS.DB record",file_utils,manual-trace
+000147FF,sub_147FF,ReadGSummaryRec,PC-new,,,,medium,"FileReadAt(handle, buf, index*0Bh, 0Bh): one gsummary.db record (game_setup opens <league>\gsummary.db for it)",file_utils,manual-trace
+00014825,sub_14825,DiskSpaceShort,PC-new,,,,medium,"(drive, 0-terminated file-size list): _dos_getdiskfree (""error getting disk space free"" -> FatalError), rounds each size up to clusters; returns 0 when they fit, else the bytes needed",file_utils,manual-trace
+000148A5,sub_148A5,CheckGameDiskSpace,PC-new,,,,medium,"free space on the current drive against the growth of <league>\gsummary.db; when short, centres the mouse and shows the ""To play the game, you require %2d Kbytes"" MessageBox and returns 1, else 0",file_utils,manual-trace
+000149BF,sub_149BF,GetLeagueDBSizes,PC-new,,,,high,"(out[7], ?, league dir): size in Kbytes of each of the 7 league DB files (leaguedbnames: KEY, CAREER, ATT, CARTEAMS, TEAMS, SEASON, SCHEDULE) via _dos_findfirst",file_utils,manual-trace
+00014A20,sub_14A20,DrawPanelScore,PC-new,,,,medium,"(side, score): on the screen bitmap draws the score mod 100 as two digit shapes (scoredigits) at x 0FFh / 109h (side 1) or 2Eh / 38h (side 0), y 4",file_utils,manual-trace
+00014AFE,sub_14AFE,DrawPanelLine,PC-new,,,,medium,"(side, line): draws the line indicator shape (linesprites[line]) at x 0FBh (side 1) or 2Ah (side 0), y 14h, saves it in hudawayline / hudhomeline and resets the side's energy-bar state when the line moves between the groups 0-3, 4-5, 6+; called from the line-change code (chk4lc, puckfaceoff)",file_utils,manual-trace
+00014BEF,sub_14BEF,GetLineEnergies,PC-new,,,,medium,"(team, out[8]): TeamLineEnergy of the 8 lines minus 60h",file_utils,manual-trace
+00014C22,sub_14C22,PanelAddPenalty,PC-new,,,,medium,"(side, player, time): puts the penalty in the first free (-1) slot of the 8-entry panel list (hudpenhome / hudpenaway) and flags the side for a redraw; called from the penalty code (InProgress)",file_utils,manual-trace
+00014CA0,sub_14CA0,PanelRemovePenalty,PC-new,,,,medium,"(side, player): clears the time of that player's panel penalty entry; called when a player leaves the box (sub_63D69 after releasepl)",file_utils,manual-trace
+00014CF1,sub_14CF1,UpdateHudPanel,PC-new,,,,medium,"per-frame redraw of the PC top panel on the screen bitmap: line energies (GetLineEnergies, sub_15707 bars), line indicators, penalty lists (sub_157BD), clock; called from GameLoop, the engine and game_f",file_utils,manual-trace
+00014F31,sub_14F31,DrawPanelClock,PC-new,,,,low,"draws the clock digits (dword_DC30C shapes, separator dword_DC334 at x 0AAh) from dword_C5704 / dword_C5708 and saves them in dword_C5710 / dword_C5714; called from the scoreboard segment",file_utils,manual-trace
 00031013,sub_31013,MessageBox,PC-new,,,,medium,"(x, y (-1 = centred), message line table, line count, buttons, button count, ...): the league/front-end message dialog used for every 'Copying databases' / 'Insert disk' / error box",misc_dialogs,manual-trace
 0003271B,sub_3271B,SaveModeState,PC-new,,,,high,"copies the current league name, DB path formats, HomeTeam/VisTeam, gameopts and controller teams/devices/sides into a 75h-byte mode state block",main_desk,manual-trace
 000327A1,sub_327A1,LoadModeState,PC-new,,,,high,"the reverse of SaveModeState: sets gamemode (+0), curleague, paths, HomeTeam/VisTeam, gameopts and controller fields from a mode state block",main_desk,manual-trace

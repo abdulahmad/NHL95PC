@@ -7,7 +7,7 @@ extern asc_C3976, asc_C397E, asc_C3986, asc_C398F, asc_C3994, asc_C399B, asc_C39
 extern asc_D281F, curleague, byte_DD774, byte_DD788, gameopts
 extern byte_ED92F, dword_C5130, postate, lgstate, gamemode, dword_D2C6B, dword_D8B74, dword_DC238
 extern dword_DC888, dword_DC88C, dword_DD730, dword_EA0DC, jctime, off_D27EF, off_D27F7, off_D2855
-extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, sub_1466B, sub_14825
+extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, CopyFile, DiskSpaceShort
 extern sub_30A0C, sub_30F12, MessageBox, sub_3170D, SaveModeState, LoadModeState, WriteModeState, SaveLeagueGameRef
 extern SaveGameState, sub_6B391, sub_6B3D7, sub_80075, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_903F0, sub_910E0, sub_91284, sub_91370, sub_91400
@@ -64,7 +64,7 @@ mov dword [dword esp+08Ch], eax	; 859AC
 xor eax, eax	; 859B3
 mov dword [dword esp+090h], ebx	; 859B5
 lea edx, [dword esp+08Ch]	; 859BC
-call sub_14825	; 859C3
+call DiskSpaceShort	; 859C3
 mov esi, eax	; 859C8
 test eax, eax	; 859CA
 je short loc_85A26	; 859CC
@@ -215,7 +215,7 @@ mov dword [dword esp+08Ch], eax	; 85BD9
 mov dword [dword esp+090h], 4	; 85BE0
 lea edx, [dword esp+08Ch]	; 85BEB
 xor eax, eax	; 85BF2
-call sub_14825	; 85BF4
+call DiskSpaceShort	; 85BF4
 mov esi, eax	; 85BF9
 test eax, eax	; 85BFB
 je short loc_85C21	; 85BFD
@@ -297,7 +297,7 @@ mov ecx, curleague	; 85D1E
 mov ebx, asc_C3976	; 85D23
 mov edx, asc_C3972	; 85D28
 mov eax, asc_C3932	; 85D2D
-call sub_1466B	; 85D32
+call CopyFile	; 85D32
 test eax, eax	; 85D37
 je short loc_85D48	; 85D39
 push unk_C397B	; 85D3B

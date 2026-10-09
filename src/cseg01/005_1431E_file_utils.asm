@@ -2,62 +2,57 @@
 bits 32
 %include "hockey.inc"
 section s_1431E progbits alloc exec nowrite align=1
-extern __CHK, _dos_close_, _dos_creat_, _dos_getdiskfree_, _dos_open_, _dos_read_, _dos_write_, asc_C064C
-extern asc_C066B, asc_C068A, asc_C0696, asc_C5679, str_dot, curleague, dword_C56C4, dword_C56E4
+extern __CHK, _dos_close_, _dos_creat_, _dos_getdiskfree_, _dos_open_, _dos_read_, _dos_write_, str_ErrDiskFree4
+extern str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, msg_NeedKbytes, str_dot, curleague, dword_C56C4, dword_C56E4
 extern dword_C5704, dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844
-extern dword_C5848, dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_DC26C
-extern dword_DC28C, dword_DC2BC, dword_DC2C0, dword_DC2C4, dword_DC30C, dword_DC334, gmode, j_unlink_
+extern dword_C5848, hudhomeline, hudawayline, dword_C5854, dword_C5858, dword_C585C, dword_C5860, linesprites
+extern dword_DC28C, dword_DC2BC, dword_DC2C0, scoredigits, dword_DC30C, dword_DC334, gmode, j_unlink_
 extern lseek_, off_C56B5, leaguedbnames, rmdir_, sprintf_, strcat_, strcpy_, sub_15374
 extern sub_1540A, sub_15655, sub_15707, sub_157BD, sub_15995, MessageBox, TeamLineEnergy, SelectScreenBM
-extern SelectRinkBM, FatalError, MouseSetPos, sub_B4CD8, sub_B4CF2, str_star, unk_C8115, unk_DC2F4
-extern unk_DC300, unknown_libname_1, unknown_libname_2, word_C571C, word_C575C, lcboxon, word_CBC6C
-global loc_14349, loc_1434C, loc_14359, loc_14366, loc_143FA, loc_14436, loc_1443A, loc_144D7
-global loc_14513, loc_14517, loc_14537, loc_14599, loc_145D0, loc_145E4, loc_145E6, loc_145F0
-global loc_14627, loc_1464D, loc_146ED, loc_146F5, loc_14758, loc_14766, loc_147F6, loc_14852
-global loc_14874, loc_14883, loc_14898, loc_1489D, loc_148E3, loc_14942, loc_14951, loc_149B6
-global loc_149D6, loc_14A45, loc_14A63, loc_14A72, loc_14AA2, loc_14AB3, loc_14AC2, loc_14AED
-global loc_14B5B, loc_14B63, loc_14B7C, loc_14BC0, loc_14BC8, loc_14BDC, loc_14BE9, loc_14C02
-global loc_14C4F, loc_14C54, loc_14C58, loc_14C86, loc_14C92, loc_14C96, loc_14CBA, loc_14CBF
-global loc_14CC5, loc_14CCE, loc_14CD2, loc_14CD8, loc_14CEE, loc_14D57, loc_14DD4, loc_14DFA
-global loc_14E34, loc_14E56, loc_14E6C, loc_14E88, loc_14EB4, loc_14EF1, loc_14F13, loc_14F2A
-global loc_14F7E, loc_14F9E, loc_14FF3, loc_15008, loc_15023, loc_1509B, MakePath, sub_14368
-global sub_14442, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
-global sub_1463D, sub_14654, sub_1466B, sub_1478B, ReadSchedGame, ReadTeamRec, sub_147FF, sub_14825
-global sub_148A5, sub_149BF, sub_14A20, sub_14AFE, sub_14BEF, sub_14C22, sub_14CA0, sub_14CF1
-global sub_14F31
+extern SelectRinkBM, FatalError, MouseSetPos, sub_B4CD8, sub_B4CF2, str_star, str_backslash2, unk_DC2F4
+extern unk_DC300, unknown_libname_1, unknown_libname_2, hudpenhome, hudpenaway, lcboxon, word_CBC6C
+global FileOpenRead_x, FileReadAt_x, FileReadAt_x2
+global ReadKeyRec_x, ReadTeamRec_x
+global DrawPanelLine_x
+global UpdateHudPanel_x
+global MakePath, DeleteFiles
+global DeleteDir, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
+global ReadKeyRec, WriteKeyRec, CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, ReadGSummaryRec, DiskSpaceShort
+global CheckGameDiskSpace, GetLeagueDBSizes, DrawPanelScore, DrawPanelLine, GetLineEnergies, PanelAddPenalty, PanelRemovePenalty, UpdateHudPanel
+global DrawPanelClock
 MakePath:
 push dword 8	; 1431E
 call __CHK	; 14323
 push esi	; 14328
 mov esi, eax	; 14329
 test edx, edx	; 1432B
-je short loc_14349	; 1432D
+je short .1	; 1432D
 cmp byte [edx], 0	; 1432F
-je short loc_14349	; 14332
+je short .1	; 14332
 mov eax, esi	; 14334
 call strcpy_	; 14336
-mov edx, unk_C8115	; 1433B
+mov edx, str_backslash2	; 1433B
 mov eax, esi	; 14340
 call strcat_	; 14342
-jmp short loc_1434C	; 14347
-loc_14349:
+jmp short .2	; 14347
+.1:
 mov byte [esi], 0	; 14349
-loc_1434C:
+.2:
 test ebx, ebx	; 1434C
-je short loc_14359	; 1434E
+je short .3	; 1434E
 mov edx, ebx	; 14350
 mov eax, esi	; 14352
 call strcat_	; 14354
-loc_14359:
+.3:
 test ecx, ecx	; 14359
-je short loc_14366	; 1435B
+je short .x	; 1435B
 mov edx, ecx	; 1435D
 mov eax, esi	; 1435F
 call strcat_	; 14361
-loc_14366:
+.x:
 pop esi	; 14366
 ret	; 14367
-sub_14368:
+DeleteFiles:
 push dword 58h	; 14368
 call __CHK	; 1436D
 push ecx	; 14372
@@ -68,7 +63,7 @@ mov esi, edx	; 14379
 mov edx, eax	; 1437B
 lea eax, [byte esp+02Ch]	; 1437D
 call strcpy_	; 14381
-mov edx, unk_C8115	; 14386
+mov edx, str_backslash2	; 14386
 lea eax, [byte esp+02Ch]	; 1438B
 call strcat_	; 1438F
 mov edx, esi	; 14394
@@ -86,11 +81,11 @@ lea eax, [byte esp+02Ch]	; 143BC
 call unknown_libname_1	; 143C0
 mov ebx, eax	; 143C5
 test eax, eax	; 143C7
-jne short loc_1443A	; 143C9
+jne short .3	; 143C9
 mov edx, ecx	; 143CB
 lea eax, [byte esp+02Ch]	; 143CD
 call strcpy_	; 143D1
-mov edx, unk_C8115	; 143D6
+mov edx, str_backslash2	; 143D6
 lea eax, [byte esp+02Ch]	; 143DB
 call strcat_	; 143DF
 lea edx, [byte esp+01Eh]	; 143E4
@@ -98,16 +93,16 @@ lea eax, [byte esp+02Ch]	; 143E8
 call strcat_	; 143EC
 lea eax, [byte esp+02Ch]	; 143F1
 call j_unlink_	; 143F5
-loc_143FA:
+.1:
 mov eax, esp	; 143FA
 call unknown_libname_2	; 143FC
 mov ebx, eax	; 14401
 test eax, eax	; 14403
-jne short loc_14436	; 14405
+jne short .2	; 14405
 mov edx, ecx	; 14407
 lea eax, [byte esp+02Ch]	; 14409
 call strcpy_	; 1440D
-mov edx, unk_C8115	; 14412
+mov edx, str_backslash2	; 14412
 lea eax, [byte esp+02Ch]	; 14417
 call strcat_	; 1441B
 lea edx, [byte esp+01Eh]	; 14420
@@ -115,16 +110,16 @@ lea eax, [byte esp+02Ch]	; 14424
 call strcat_	; 14428
 lea eax, [byte esp+02Ch]	; 1442D
 call j_unlink_	; 14431
-loc_14436:
+.2:
 test ebx, ebx	; 14436
-je short loc_143FA	; 14438
-loc_1443A:
+je short DeleteFiles.1	; 14438
+.3:
 mov eax, ebx	; 1443A
 add esp, byte 4Ch	; 1443C
 pop esi	; 1443F
 pop ecx	; 14440
 ret	; 14441
-sub_14442:
+DeleteDir:
 push dword 5Ch	; 14442
 call __CHK	; 14447
 push ebx	; 1444C
@@ -135,7 +130,7 @@ mov ecx, eax	; 14452
 mov edx, eax	; 14454
 lea eax, [byte esp+02Ch]	; 14456
 call strcpy_	; 1445A
-mov edx, unk_C8115	; 1445F
+mov edx, str_backslash2	; 1445F
 lea eax, [byte esp+02Ch]	; 14464
 call strcat_	; 14468
 mov edx, str_star	; 1446D
@@ -152,11 +147,11 @@ xor edx, edx	; 14499
 lea eax, [byte esp+02Ch]	; 1449B
 call unknown_libname_1	; 1449F
 test eax, eax	; 144A4
-jne short loc_14517	; 144A6
+jne short .3	; 144A6
 mov edx, ecx	; 144A8
 lea eax, [byte esp+02Ch]	; 144AA
 call strcpy_	; 144AE
-mov edx, unk_C8115	; 144B3
+mov edx, str_backslash2	; 144B3
 lea eax, [byte esp+02Ch]	; 144B8
 call strcat_	; 144BC
 lea edx, [byte esp+01Eh]	; 144C1
@@ -164,16 +159,16 @@ lea eax, [byte esp+02Ch]	; 144C5
 call strcat_	; 144C9
 lea eax, [byte esp+02Ch]	; 144CE
 call j_unlink_	; 144D2
-loc_144D7:
+.1:
 mov eax, esp	; 144D7
 call unknown_libname_2	; 144D9
 mov ebx, eax	; 144DE
 test eax, eax	; 144E0
-jne short loc_14513	; 144E2
+jne short .2	; 144E2
 mov edx, ecx	; 144E4
 lea eax, [byte esp+02Ch]	; 144E6
 call strcpy_	; 144EA
-mov edx, unk_C8115	; 144EF
+mov edx, str_backslash2	; 144EF
 lea eax, [byte esp+02Ch]	; 144F4
 call strcat_	; 144F8
 lea edx, [byte esp+01Eh]	; 144FD
@@ -181,10 +176,10 @@ lea eax, [byte esp+02Ch]	; 14501
 call strcat_	; 14505
 lea eax, [byte esp+02Ch]	; 1450A
 call j_unlink_	; 1450E
-loc_14513:
+.2:
 test ebx, ebx	; 14513
-je short loc_144D7	; 14515
-loc_14517:
+je short DeleteDir.1	; 14515
+.3:
 mov eax, ecx	; 14517
 call rmdir_	; 14519
 add esp, byte 4Ch	; 1451E
@@ -198,7 +193,7 @@ call __CHK	; 1452A
 push ebx	; 1452F
 mov ebx, edx	; 14530
 mov edx, 40h	; 14532
-loc_14537:
+FileOpenRead_x:
 call _dos_open_	; 14537
 pop ebx	; 1453C
 ret	; 1453D
@@ -208,14 +203,14 @@ call __CHK	; 14543
 push ebx	; 14548
 mov ebx, edx	; 14549
 mov edx, 41h	; 1454B
-jmp short loc_14537	; 14550
+jmp short FileOpenRead_x	; 14550
 FileOpenRW:
 push dword 8	; 14552
 call __CHK	; 14557
 push ebx	; 1455C
 mov ebx, edx	; 1455D
 mov edx, 42h	; 1455F
-jmp short loc_14537	; 14564
+jmp short FileOpenRead_x	; 14564
 FileCreate:
 push dword 8	; 14566
 call __CHK	; 1456B
@@ -234,10 +229,10 @@ mov edx, eax	; 14588
 xor eax, eax	; 1458A
 mov ebx, dword [edx]	; 1458C
 test ebx, ebx	; 1458E
-jl short loc_14599	; 14590
+jl short .1	; 14590
 mov eax, ebx	; 14592
 call _dos_close_	; 14594
-loc_14599:
+.1:
 mov dword [edx], 0FFFFFFFFh	; 14599
 pop edx	; 1459F
 pop ebx	; 145A0
@@ -255,15 +250,15 @@ mov edx, ebx	; 145B6
 mov edi, ecx	; 145B8
 xor ecx, ecx	; 145BA
 test ebx, ebx	; 145BC
-jl short loc_145D0	; 145BE
+jl short .1	; 145BE
 xor ebx, ebx	; 145C0
 call lseek_	; 145C2
 test eax, eax	; 145C7
-jge short loc_145D0	; 145C9
+jge short .1	; 145C9
 mov ecx, 0FFFFFFFFh	; 145CB
-loc_145D0:
+.1:
 test ecx, ecx	; 145D0
-jne short loc_145E6	; 145D2
+jne short FileReadAt_x2	; 145D2
 mov eax, esp	; 145D4
 push eax	; 145D6
 mov ecx, ds	; 145D7
@@ -271,13 +266,13 @@ mov edx, edi	; 145D9
 mov ebx, ebp	; 145DB
 mov eax, esi	; 145DD
 call _dos_read_	; 145DF
-loc_145E4:
+FileReadAt_x:
 mov ecx, eax	; 145E4
-loc_145E6:
+FileReadAt_x2:
 cmp edi, dword [esp]	; 145E6
-je short loc_145F0	; 145E9
+je short .4	; 145E9
 mov ecx, 1	; 145EB
-loc_145F0:
+.4:
 mov eax, ecx	; 145F0
 add esp, byte 4	; 145F2
 pop ebp	; 145F5
@@ -297,15 +292,15 @@ mov edx, ebx	; 1460D
 mov edi, ecx	; 1460F
 xor ecx, ecx	; 14611
 test ebx, ebx	; 14613
-jl short loc_14627	; 14615
+jl short .1	; 14615
 xor ebx, ebx	; 14617
 call lseek_	; 14619
 test eax, eax	; 1461E
-jge short loc_14627	; 14620
+jge short .1	; 14620
 mov ecx, 0FFFFFFFFh	; 14622
-loc_14627:
+.1:
 test ecx, ecx	; 14627
-jne short loc_145E6	; 14629
+jne short FileReadAt_x2	; 14629
 mov eax, esp	; 1462B
 push eax	; 1462D
 mov ecx, ds	; 1462E
@@ -313,17 +308,17 @@ mov edx, edi	; 14630
 mov ebx, ebp	; 14632
 mov eax, esi	; 14634
 call _dos_write_	; 14636
-jmp short loc_145E4	; 1463B
-sub_1463D:
+jmp short FileReadAt_x	; 1463B
+ReadKeyRec:
 push dword 8	; 1463D
 call __CHK	; 14642
 push ecx	; 14647
 mov ecx, 34h	; 14648
-loc_1464D:
+ReadKeyRec_x:
 call FileReadAt	; 1464D
 pop ecx	; 14652
 ret	; 14653
-sub_14654:
+WriteKeyRec:
 push dword 8	; 14654
 call __CHK	; 14659
 push ecx	; 1465E
@@ -331,7 +326,7 @@ mov ecx, 34h	; 1465F
 call FileWriteAt	; 14664
 pop ecx	; 14669
 ret	; 1466A
-sub_1466B:
+CopyFile:
 push dword 460h	; 1466B
 call __CHK	; 14670
 push esi	; 14675
@@ -353,7 +348,7 @@ lea eax, [dword esp+0400h]	; 146AF
 call FileOpenRead	; 146B6
 mov edx, eax	; 146BB
 test eax, eax	; 146BD
-jne short loc_146ED	; 146BF
+jne short .1	; 146BF
 mov ecx, edi	; 146C1
 mov ebx, esi	; 146C3
 mov edx, dword [dword esp+045Ch]	; 146C5
@@ -363,10 +358,10 @@ lea edx, [dword esp+044Ch]	; 146D8
 lea eax, [dword esp+0420h]	; 146DF
 call FileCreate	; 146E6
 mov edx, eax	; 146EB
-loc_146ED:
+.1:
 test edx, edx	; 146ED
-jne near loc_14766	; 146EF
-loc_146F5:
+jne near .4	; 146EF
+.2:
 lea eax, [dword esp+0440h]	; 146F5
 push eax	; 146FC
 mov edx, 400h	; 146FD
@@ -376,10 +371,10 @@ mov eax, dword [dword esp+0448h]	; 14708
 call _dos_read_	; 1470F
 mov edx, eax	; 14714
 test eax, eax	; 14716
-jne short loc_14758	; 14718
+jne short .3	; 14718
 mov esi, dword [dword esp+0440h]	; 1471A
 test esi, esi	; 14721
-jbe short loc_14758	; 14723
+jbe short .3	; 14723
 lea eax, [dword esp+0448h]	; 14725
 push eax	; 1472C
 mov edx, esi	; 1472D
@@ -390,14 +385,14 @@ call _dos_write_	; 1473C
 mov edx, eax	; 14741
 mov eax, dword [dword esp+0448h]	; 14743
 cmp eax, dword [dword esp+0440h]	; 1474A
-je short loc_14758	; 14751
+je short .3	; 14751
 mov edx, 1	; 14753
-loc_14758:
+.3:
 cmp dword [dword esp+0440h], byte 0	; 14758
-jbe short loc_14766	; 14760
+jbe short .4	; 14760
 test edx, edx	; 14762
-je short loc_146F5	; 14764
-loc_14766:
+je short CopyFile.2	; 14764
+.4:
 lea eax, [dword esp+044Ch]	; 14766
 call FileClose	; 1476D
 lea eax, [dword esp+0444h]	; 14772
@@ -407,12 +402,12 @@ add esp, 450h	; 14780
 pop edi	; 14786
 pop esi	; 14787
 ret 4	; 14788
-sub_1478B:
+ReadSeasonRec:
 push dword 8	; 1478B
 call __CHK	; 14790
 push ecx	; 14795
 mov ecx, 2Fh	; 14796
-jmp near loc_1464D	; 1479B
+jmp near ReadKeyRec_x	; 1479B
 ReadSchedGame:
 push dword 0Ch	; 147A0
 call __CHK	; 147A5
@@ -449,13 +444,13 @@ sub ebx, eax	; 147EB
 mov ecx, 2E8h	; 147ED
 mov edx, esi	; 147F2
 mov eax, edi	; 147F4
-loc_147F6:
+ReadTeamRec_x:
 call FileReadAt	; 147F6
 pop edi	; 147FB
 pop esi	; 147FC
 pop ecx	; 147FD
 ret	; 147FE
-sub_147FF:
+ReadGSummaryRec:
 push dword 10h	; 147FF
 call __CHK	; 14804
 push ecx	; 14809
@@ -470,8 +465,8 @@ shl ebx, 2	; 14817
 sub ebx, edx	; 1481A
 mov ecx, 0Bh	; 1481C
 mov edx, esi	; 14821
-jmp short loc_147F6	; 14823
-sub_14825:
+jmp short ReadTeamRec_x	; 14823
+DiskSpaceShort:
 push dword 20h	; 14825
 call __CHK	; 1482A
 push ebx	; 1482F
@@ -484,11 +479,11 @@ xor edi, edi	; 14838
 mov edx, esp	; 1483A
 call _dos_getdiskfree_	; 1483C
 test eax, eax	; 14841
-je short loc_14852	; 14843
-push asc_C064C	; 14845
+je short .1	; 14843
+push str_ErrDiskFree4	; 14845
 call FatalError	; 1484A
 add esp, byte 4	; 1484F
-loc_14852:
+.1:
 xor edx, edx	; 14852
 mov dx, word [byte esp+06h]	; 14854
 xor eax, eax	; 14859
@@ -500,8 +495,8 @@ shl edx, 0Ah	; 14868
 LD sbb, eax, edx	; 1486B
 sar eax, 0Ah	; 1486D
 mov ebx, eax	; 14870
-jmp short loc_14883	; 14872
-loc_14874:
+jmp short .3	; 14872
+.2:
 add edx, ebx	; 14874
 dec edx	; 14876
 mov eax, edx	; 14877
@@ -509,27 +504,27 @@ sar edx, 1Fh	; 14879
 idiv ebx	; 1487C
 add edi, eax	; 1487E
 add esi, byte 4	; 14880
-loc_14883:
+.3:
 mov edx, dword [esi]	; 14883
 test edx, edx	; 14885
-jne short loc_14874	; 14887
+jne short DiskSpaceShort.2	; 14887
 xor eax, eax	; 14889
 mov ax, word [byte esp+02h]	; 1488B
 cmp edi, eax	; 14890
-jg short loc_14898	; 14892
+jg short .4	; 14892
 xor eax, eax	; 14894
-jmp short loc_1489D	; 14896
-loc_14898:
+jmp short .x	; 14896
+.4:
 mov eax, edi	; 14898
 imul eax, ebx	; 1489A
-loc_1489D:
+.x:
 add esp, byte 8	; 1489D
 pop edi	; 148A0
 pop esi	; 148A1
 pop ecx	; 148A2
 pop ebx	; 148A3
 ret	; 148A4
-sub_148A5:
+CheckGameDiskSpace:
 push dword 88h	; 148A5
 call __CHK	; 148AA
 push ebx	; 148AF
@@ -544,11 +539,11 @@ lea edx, [byte esp+04Ch]	; 148C7
 xor eax, eax	; 148CB
 call _dos_getdiskfree_	; 148CD
 test eax, eax	; 148D2
-je short loc_148E3	; 148D4
-push asc_C066B	; 148D6
+je short .1	; 148D4
+push str_ErrDiskFree5	; 148D6
 call FatalError	; 148DB
 add esp, byte 4	; 148E0
-loc_148E3:
+.1:
 xor eax, eax	; 148E3
 mov ax, word [byte esp+050h]	; 148E5
 xor esi, esi	; 148EA
@@ -560,7 +555,7 @@ sar edx, 1Fh	; 148FC
 idiv esi	; 148FF
 mov edi, eax	; 14901
 xor ecx, ecx	; 14903
-mov ebx, asc_C068A	; 14905
+mov ebx, str_GsummaryDb	; 14905
 mov edx, curleague	; 1490A
 lea eax, [byte esp+02Ch]	; 1490F
 call MakePath	; 14913
@@ -569,23 +564,23 @@ xor edx, edx	; 1491A
 lea eax, [byte esp+02Ch]	; 1491C
 call unknown_libname_1	; 14920
 test eax, eax	; 14925
-jne short loc_14942	; 14927
+jne short .2	; 14927
 cmp esi, 2000h	; 14929
-jge near loc_149B6	; 1492F
+jge near .x	; 1492F
 mov eax, dword [byte esp+01Ah]	; 14935
 add eax, esi	; 14939
 dec eax	; 1493B
 xor edx, edx	; 1493C
 div esi	; 1493E
 sub edi, eax	; 14940
-loc_14942:
+.2:
 xor eax, eax	; 14942
 mov ax, word [byte esp+04Eh]	; 14944
 cmp edi, eax	; 14949
-jg short loc_14951	; 1494B
+jg short .3	; 1494B
 xor eax, eax	; 1494D
-jmp short loc_149B6	; 1494F
-loc_14951:
+jmp short .x	; 1494F
+.3:
 mov edx, edi	; 14951
 imul edx, esi	; 14953
 mov eax, edx	; 14956
@@ -594,8 +589,8 @@ shl edx, 0Ah	; 1495B
 LD sbb, eax, edx	; 1495E
 sar eax, 0Ah	; 14960
 push eax	; 14963
-push asc_C0696	; 14964
-push asc_C5679	; 14969
+push str_NeedKbytesFmt	; 14964
+push msg_NeedKbytes	; 14969
 call sprintf_	; 1496E
 add esp, byte 0Ch	; 14973
 mov ecx, dword [byte esp+054h]	; 14976
@@ -617,7 +612,7 @@ mov edx, 0FFFFFFFFh	; 149A5
 mov eax, edx	; 149AA
 call MessageBox	; 149AC
 mov eax, 1	; 149B1
-loc_149B6:
+.x:
 add esp, byte 5Ch	; 149B6
 pop edi	; 149B9
 pop esi	; 149BA
@@ -625,7 +620,7 @@ pop edx	; 149BB
 pop ecx	; 149BC
 pop ebx	; 149BD
 ret	; 149BE
-sub_149BF:
+GetLeagueDBSizes:
 push dword 68h	; 149BF
 call __CHK	; 149C4
 push ecx	; 149C9
@@ -637,7 +632,7 @@ push eax	; 149D0
 push edx	; 149D1
 mov ebp, ebx	; 149D2
 xor esi, esi	; 149D4
-loc_149D6:
+.1:
 mov edi, esi	; 149D6
 shl edi, 2	; 149D8
 mov ebx, dword [dword edi+leaguedbnames]	; 149DB
@@ -656,7 +651,7 @@ add edi, dword [esp]	; 14A0B
 mov dword [edi], eax	; 14A0E
 inc esi	; 14A10
 cmp esi, byte 7	; 14A11
-jl short loc_149D6	; 14A14
+jl short GetLeagueDBSizes.1	; 14A14
 xor eax, eax	; 14A16
 add esp, byte 54h	; 14A18
 pop ebp	; 14A1B
@@ -664,7 +659,7 @@ pop edi	; 14A1C
 pop esi	; 14A1D
 pop ecx	; 14A1E
 ret	; 14A1F
-sub_14A20:
+DrawPanelScore:
 push dword 1Ch	; 14A20
 call __CHK	; 14A25
 push ebx	; 14A2A
@@ -673,30 +668,30 @@ push esi	; 14A2C
 mov ebx, eax	; 14A2D
 mov esi, edx	; 14A2F
 cmp dx, byte 64h	; 14A31
-jl short loc_14A45	; 14A35
+jl short .1	; 14A35
 mov ecx, 64h	; 14A37
 mov eax, edx	; 14A3C
 cwd	; 14A3E
 idiv cx	; 14A40
 mov esi, edx	; 14A43
-loc_14A45:
+.1:
 call SelectScreenBM	; 14A45
 test bx, bx	; 14A4A
-je short loc_14AA2	; 14A4D
+je short .4	; 14A4D
 push byte 4	; 14A4F
 push dword 0FFh	; 14A51
 cmp si, byte 0Ah	; 14A56
-jge short loc_14A63	; 14A5A
+jge short .2	; 14A5A
 mov eax, 0Ah	; 14A5C
-jmp short loc_14A72	; 14A61
-loc_14A63:
+jmp short .3	; 14A61
+.2:
 movsx edx, si	; 14A63
 mov ebx, 0Ah	; 14A66
 mov eax, edx	; 14A6B
 sar edx, 1Fh	; 14A6D
 idiv ebx	; 14A70
-loc_14A72:
-mov ecx, dword [nosplit eax*4+dword_DC2C4]	; 14A72
+.3:
+mov ecx, dword [nosplit eax*4+scoredigits]	; 14A72
 push ecx	; 14A79
 call sub_B4CD8	; 14A7A
 add esp, byte 0Ch	; 14A7F
@@ -707,24 +702,24 @@ mov ebx, 0Ah	; 14A8C
 mov eax, edx	; 14A91
 sar edx, 1Fh	; 14A93
 idiv ebx	; 14A96
-mov esi, dword [nosplit edx*4+dword_DC2C4]	; 14A98
+mov esi, dword [nosplit edx*4+scoredigits]	; 14A98
 push esi	; 14A9F
-jmp short loc_14AED	; 14AA0
-loc_14AA2:
+jmp short .7	; 14AA0
+.4:
 push byte 4	; 14AA2
 push byte 2Eh	; 14AA4
 cmp si, byte 0Ah	; 14AA6
-jge short loc_14AB3	; 14AAA
+jge short .5	; 14AAA
 mov eax, 0Ah	; 14AAC
-jmp short loc_14AC2	; 14AB1
-loc_14AB3:
+jmp short .6	; 14AB1
+.5:
 movsx edx, si	; 14AB3
 mov ebx, 0Ah	; 14AB6
 mov eax, edx	; 14ABB
 sar edx, 1Fh	; 14ABD
 idiv ebx	; 14AC0
-loc_14AC2:
-mov edx, dword [nosplit eax*4+dword_DC2C4]	; 14AC2
+.6:
+mov edx, dword [nosplit eax*4+scoredigits]	; 14AC2
 push edx	; 14AC9
 call sub_B4CD8	; 14ACA
 add esp, byte 0Ch	; 14ACF
@@ -735,9 +730,9 @@ mov ebx, 0Ah	; 14AD9
 mov eax, edx	; 14ADE
 sar edx, 1Fh	; 14AE0
 idiv ebx	; 14AE3
-mov ebx, dword [nosplit edx*4+dword_DC2C4]	; 14AE5
+mov ebx, dword [nosplit edx*4+scoredigits]	; 14AE5
 push ebx	; 14AEC
-loc_14AED:
+.7:
 call sub_B4CD8	; 14AED
 add esp, byte 0Ch	; 14AF2
 call SelectRinkBM	; 14AF5
@@ -745,7 +740,7 @@ pop esi	; 14AFA
 pop ecx	; 14AFB
 pop ebx	; 14AFC
 ret	; 14AFD
-sub_14AFE:
+DrawPanelLine:
 push dword 24h	; 14AFE
 call __CHK	; 14B03
 push ebx	; 14B08
@@ -756,8 +751,8 @@ push ebp	; 14B0C
 mov ebx, eax	; 14B0D
 call SelectScreenBM	; 14B0F
 test bx, bx	; 14B14
-je short loc_14B7C	; 14B17
-mov ebp, dword [dword_C5850]	; 14B19
+je short .3	; 14B17
+mov ebp, dword [hudawayline]	; 14B19
 cmp ebp, byte 4	; 14B1F
 setl al	; 14B22
 mov ebx, eax	; 14B25
@@ -766,7 +761,7 @@ cmp dx, byte 4	; 14B2D
 setl al	; 14B31
 and eax, 0FFh	; 14B34
 xor eax, ebx	; 14B39
-jne short loc_14B5B	; 14B3B
+jne short .1	; 14B3B
 cmp ebp, byte 6	; 14B3D
 setl al	; 14B40
 mov ebx, eax	; 14B43
@@ -775,20 +770,20 @@ cmp dx, byte 6	; 14B4B
 setl al	; 14B4F
 and eax, 0FFh	; 14B52
 xor eax, ebx	; 14B57
-je short loc_14B63	; 14B59
-loc_14B5B:
+je short .2	; 14B59
+.1:
 xor ecx, ecx	; 14B5B
 mov dword [dword_C5860], ecx	; 14B5D
-loc_14B63:
+.2:
 movsx eax, dx	; 14B63
-mov dword [dword_C5850], eax	; 14B66
+mov dword [hudawayline], eax	; 14B66
 push byte 14h	; 14B6B
 push dword 0FBh	; 14B6D
-mov esi, dword [nosplit eax*4+dword_DC26C]	; 14B72
+mov esi, dword [nosplit eax*4+linesprites]	; 14B72
 push esi	; 14B79
-jmp short loc_14BDC	; 14B7A
-loc_14B7C:
-cmp dword [dword_C584C], byte 4	; 14B7C
+jmp short .6	; 14B7A
+.3:
+cmp dword [hudhomeline], byte 4	; 14B7C
 setl al	; 14B83
 mov ebx, eax	; 14B86
 and ebx, 0FFh	; 14B88
@@ -796,8 +791,8 @@ cmp dx, byte 4	; 14B8E
 setl al	; 14B92
 and eax, 0FFh	; 14B95
 xor eax, ebx	; 14B9A
-jne short loc_14BC0	; 14B9C
-cmp dword [dword_C584C], byte 6	; 14B9E
+jne short .4	; 14B9C
+cmp dword [hudhomeline], byte 6	; 14B9E
 setl al	; 14BA5
 mov ebx, eax	; 14BA8
 and ebx, 0FFh	; 14BAA
@@ -805,29 +800,29 @@ cmp dx, byte 6	; 14BB0
 setl al	; 14BB4
 and eax, 0FFh	; 14BB7
 xor eax, ebx	; 14BBC
-je short loc_14BC8	; 14BBE
-loc_14BC0:
+je short .5	; 14BBE
+.4:
 xor esi, esi	; 14BC0
 mov dword [dword_C585C], esi	; 14BC2
-loc_14BC8:
+.5:
 movsx eax, dx	; 14BC8
-mov dword [dword_C584C], eax	; 14BCB
+mov dword [hudhomeline], eax	; 14BCB
 push byte 14h	; 14BD0
 push byte 2Ah	; 14BD2
-mov edi, dword [nosplit eax*4+dword_DC26C]	; 14BD4
+mov edi, dword [nosplit eax*4+linesprites]	; 14BD4
 push edi	; 14BDB
-loc_14BDC:
+.6:
 call sub_B4CD8	; 14BDC
 add esp, byte 0Ch	; 14BE1
 call SelectRinkBM	; 14BE4
-loc_14BE9:
+DrawPanelLine_x:
 pop ebp	; 14BE9
 pop edi	; 14BEA
 pop esi	; 14BEB
 pop ecx	; 14BEC
 pop ebx	; 14BED
 ret	; 14BEE
-sub_14BEF:
+GetLineEnergies:
 push dword 10h	; 14BEF
 call __CHK	; 14BF4
 push ebx	; 14BF9
@@ -836,7 +831,7 @@ push esi	; 14BFB
 mov ecx, eax	; 14BFC
 mov esi, edx	; 14BFE
 xor ebx, ebx	; 14C00
-loc_14C02:
+.1:
 movsx edx, bx	; 14C02
 movsx eax, cx	; 14C05
 call TeamLineEnergy	; 14C08
@@ -846,12 +841,12 @@ sub edx, byte 60h	; 14C12
 mov dword [esi+eax*4], edx	; 14C15
 inc ebx	; 14C18
 cmp ebx, byte 8	; 14C19
-jl short loc_14C02	; 14C1C
+jl short GetLineEnergies.1	; 14C1C
 pop esi	; 14C1E
 pop ecx	; 14C1F
 pop ebx	; 14C20
 ret	; 14C21
-sub_14C22:
+PanelAddPenalty:
 push dword 10h	; 14C22
 call __CHK	; 14C27
 push ecx	; 14C2C
@@ -864,87 +859,87 @@ xor edx, edx	; 14C35
 mov dword [dword_C585C], edx	; 14C37
 mov dword [dword_C5860], edx	; 14C3D
 test ax, ax	; 14C43
-je short loc_14C4F	; 14C46
-mov eax, word_C575C	; 14C48
-jmp short loc_14C54	; 14C4D
-loc_14C4F:
-mov eax, word_C571C	; 14C4F
-loc_14C54:
+je short .1	; 14C46
+mov eax, hudpenaway	; 14C48
+jmp short .2	; 14C4D
+.1:
+mov eax, hudpenhome	; 14C4F
+.2:
 xor edx, edx	; 14C54
-jmp short loc_14C96	; 14C56
-loc_14C58:
+jmp short .6	; 14C56
+.3:
 movsx ebx, word [eax]	; 14C58
 cmp ebx, byte 0FFFFFFFFh	; 14C5B
-jne short loc_14C92	; 14C5E
+jne short .5	; 14C5E
 mov word [eax], di	; 14C60
 mov word [byte eax+02h], si	; 14C63
 mov word [byte eax+06h], 0	; 14C67
 mov dx, word [byte eax+06h]	; 14C6D
 mov word [byte eax+04h], dx	; 14C71
 test cx, cx	; 14C75
-je short loc_14C86	; 14C78
+je short .4	; 14C78
 xor esi, esi	; 14C7A
 mov dword [dword_C5848], esi	; 14C7C
 pop edi	; 14C82
 pop esi	; 14C83
 pop ecx	; 14C84
 ret	; 14C85
-loc_14C86:
+.4:
 xor ecx, ecx	; 14C86
 mov dword [dword_C5844], ecx	; 14C88
 pop edi	; 14C8E
 pop esi	; 14C8F
 pop ecx	; 14C90
 ret	; 14C91
-loc_14C92:
+.5:
 add eax, byte 8	; 14C92
 inc edx	; 14C95
-loc_14C96:
+.6:
 cmp dx, byte 8	; 14C96
-jl short loc_14C58	; 14C9A
+jl short PanelAddPenalty.3	; 14C9A
 pop edi	; 14C9C
 pop esi	; 14C9D
 pop ecx	; 14C9E
 ret	; 14C9F
-sub_14CA0:
+PanelRemovePenalty:
 push dword 0Ch	; 14CA0
 call __CHK	; 14CA5
 push ebx	; 14CAA
 push ecx	; 14CAB
 mov ecx, edx	; 14CAC
 test ax, ax	; 14CAE
-je short loc_14CBA	; 14CB1
-mov eax, word_C575C	; 14CB3
-jmp short loc_14CBF	; 14CB8
-loc_14CBA:
-mov eax, word_C571C	; 14CBA
-loc_14CBF:
+je short .1	; 14CB1
+mov eax, hudpenaway	; 14CB3
+jmp short .2	; 14CB8
+.1:
+mov eax, hudpenhome	; 14CBA
+.2:
 xor ebx, ebx	; 14CBF
 xor edx, edx	; 14CC1
-jmp short loc_14CD2	; 14CC3
-loc_14CC5:
+jmp short .5	; 14CC3
+.3:
 cmp cx, word [eax]	; 14CC5
-jne short loc_14CCE	; 14CC8
+jne short .4	; 14CC8
 mov ebx, eax	; 14CCA
-jmp short loc_14CD8	; 14CCC
-loc_14CCE:
+jmp short .6	; 14CCC
+.4:
 add eax, byte 8	; 14CCE
 inc edx	; 14CD1
-loc_14CD2:
+.5:
 cmp dx, byte 8	; 14CD2
-jl short loc_14CC5	; 14CD6
-loc_14CD8:
+jl short PanelRemovePenalty.3	; 14CD6
+.6:
 test ebx, ebx	; 14CD8
-je short loc_14CEE	; 14CDA
+je short .x	; 14CDA
 mov word [byte ebx+06h], 0	; 14CDC
 mov ax, word [byte ebx+06h]	; 14CE2
 mov word [byte ebx+04h], ax	; 14CE6
 mov word [byte ebx+02h], ax	; 14CEA
-loc_14CEE:
+.x:
 pop ecx	; 14CEE
 pop ebx	; 14CEF
 ret	; 14CF0
-sub_14CF1:
+UpdateHudPanel:
 push dword 20h	; 14CF1
 call __CHK	; 14CF6
 push ebx	; 14CFB
@@ -955,31 +950,31 @@ push edi	; 14CFF
 push ebp	; 14D00
 call SelectScreenBM	; 14D01
 cmp dword [dword_C5704], byte 0	; 14D06
-jl near loc_14F2A	; 14D0D
+jl near UpdateHudPanel_x	; 14D0D
 mov eax, dword [dword_DC28C]	; 14D13
 mov dword [dword_C583C], eax	; 14D18
 xor ebx, ebx	; 14D1D
 mov dword [dword_DC28C], ebx	; 14D1F
 call sub_15374	; 14D25
 test eax, eax	; 14D2A
-je short loc_14D57	; 14D2C
+je short .1	; 14D2C
 test byte [gmode], 10h	; 14D2E
-jne short loc_14D57	; 14D35
+jne short .1	; 14D35
 mov edx, dword [dword_C583C]	; 14D37
-mov eax, word_C571C	; 14D3D
+mov eax, hudpenhome	; 14D3D
 call sub_15655	; 14D42
 mov edx, dword [dword_C583C]	; 14D47
-mov eax, word_C575C	; 14D4D
+mov eax, hudpenaway	; 14D4D
 call sub_15655	; 14D52
-loc_14D57:
+.1:
 mov edx, dword_C56E4	; 14D57
 xor eax, eax	; 14D5C
-call sub_14BEF	; 14D5E
+call GetLineEnergies	; 14D5E
 mov edx, dword_C56C4	; 14D63
 mov eax, 1	; 14D68
-call sub_14BEF	; 14D6D
+call GetLineEnergies	; 14D6D
 call sub_1540A	; 14D72
-mov edx, dword [dword_C584C]	; 14D77
+mov edx, dword [hudhomeline]	; 14D77
 mov ebx, 1F4h	; 14D7D
 mov eax, dword [nosplit edx*4+dword_C56E4]	; 14D82
 mov edx, eax	; 14D89
@@ -987,7 +982,7 @@ sar edx, 1Fh	; 14D8B
 idiv ebx	; 14D8E
 mov edx, 2Bh	; 14D90
 call sub_15707	; 14D95
-mov edx, dword [dword_C5850]	; 14D9A
+mov edx, dword [hudawayline]	; 14D9A
 mov eax, dword [nosplit edx*4+dword_C56C4]	; 14DA0
 mov edx, eax	; 14DA7
 sar edx, 1Fh	; 14DA9
@@ -995,93 +990,93 @@ idiv ebx	; 14DAC
 mov edx, 0FCh	; 14DAE
 call sub_15707	; 14DB3
 cmp word [lcboxon], byte 0	; 14DB8
-jne short loc_14DD4	; 14DC0
+jne short .2	; 14DC0
 cmp dword [dword_C5844], byte 0	; 14DC2
-jne short loc_14DD4	; 14DC9
+jne short .2	; 14DC9
 test byte [gmode], 10h	; 14DCB
-je short loc_14DFA	; 14DD2
-loc_14DD4:
+je short .3	; 14DD2
+.2:
 push byte 4Ah	; 14DD4
-mov ebx, dword [dword_C584C]	; 14DD6
+mov ebx, dword [hudhomeline]	; 14DD6
 mov ecx, dword_C56E4	; 14DDC
 mov edx, unk_DC2F4	; 14DE1
 mov eax, dword_C585C	; 14DE6
 call sub_157BD	; 14DEB
 xor ecx, ecx	; 14DF0
 mov dword [dword_C5854], ecx	; 14DF2
-jmp short loc_14E6C	; 14DF8
-loc_14DFA:
-cmp word [word_C571C], byte 0	; 14DFA
-jge short loc_14E34	; 14E02
+jmp short .6	; 14DF8
+.3:
+cmp word [hudpenhome], byte 0	; 14DFA
+jge short .4	; 14E02
 mov dword [dword_C5844], 1	; 14E04
 push byte 4Ah	; 14E0E
-mov ebx, dword [dword_C584C]	; 14E10
+mov ebx, dword [hudhomeline]	; 14E10
 mov ecx, dword_C56E4	; 14E16
 mov edx, unk_DC2F4	; 14E1B
 mov eax, dword_C585C	; 14E20
 call sub_157BD	; 14E25
 xor ebx, ebx	; 14E2A
 mov dword [dword_C5854], ebx	; 14E2C
-jmp short loc_14E6C	; 14E32
-loc_14E34:
+jmp short .6	; 14E32
+.4:
 cmp dword [dword_C5854], byte 0	; 14E34
-jne short loc_14E56	; 14E3B
+jne short .5	; 14E3B
 mov edi, dword [dword_DC2BC]	; 14E3D
 push edi	; 14E43
 call sub_B4CF2	; 14E44
 add esp, byte 4	; 14E49
 mov dword [dword_C5854], 1	; 14E4C
-loc_14E56:
+.5:
 mov edx, 48h	; 14E56
-mov eax, word_C571C	; 14E5B
+mov eax, hudpenhome	; 14E5B
 call sub_15995	; 14E60
 xor eax, eax	; 14E65
 mov dword [dword_C585C], eax	; 14E67
-loc_14E6C:
+.6:
 cmp word [word_CBC6C], byte 0	; 14E6C
-jne short loc_14E88	; 14E74
+jne short .7	; 14E74
 cmp dword [dword_C5848], byte 0	; 14E76
-jne short loc_14E88	; 14E7D
+jne short .7	; 14E7D
 test byte [gmode], 10h	; 14E7F
-je short loc_14EB4	; 14E86
-loc_14E88:
+je short .8	; 14E86
+.7:
 push dword 0C1h	; 14E88
-mov ebx, dword [dword_C5850]	; 14E8D
+mov ebx, dword [hudawayline]	; 14E8D
 mov ecx, dword_C56C4	; 14E93
 mov edx, unk_DC300	; 14E98
 mov eax, dword_C5860	; 14E9D
 call sub_157BD	; 14EA2
 xor esi, esi	; 14EA7
 mov dword [dword_C5858], esi	; 14EA9
-jmp near loc_14F2A	; 14EAF
-loc_14EB4:
-cmp word [word_C575C], byte 0	; 14EB4
-jge short loc_14EF1	; 14EBC
+jmp near UpdateHudPanel_x	; 14EAF
+.8:
+cmp word [hudpenaway], byte 0	; 14EB4
+jge short .9	; 14EBC
 mov dword [dword_C5848], 1	; 14EBE
 push dword 0C1h	; 14EC8
-mov ebx, dword [dword_C5850]	; 14ECD
+mov ebx, dword [hudawayline]	; 14ECD
 mov ecx, dword_C56C4	; 14ED3
 mov edx, unk_DC300	; 14ED8
 mov eax, dword_C5860	; 14EDD
 call sub_157BD	; 14EE2
 xor ecx, ecx	; 14EE7
 mov dword [dword_C5858], ecx	; 14EE9
-jmp short loc_14F2A	; 14EEF
-loc_14EF1:
+jmp short UpdateHudPanel_x	; 14EEF
+.9:
 cmp dword [dword_C5858], byte 0	; 14EF1
-jne short loc_14F13	; 14EF8
+jne short .10	; 14EF8
 mov ebp, dword [dword_DC2C0]	; 14EFA
 push ebp	; 14F00
 call sub_B4CF2	; 14F01
 add esp, byte 4	; 14F06
 mov dword [dword_C5858], 1	; 14F09
-loc_14F13:
+.10:
 mov edx, 0BFh	; 14F13
-mov eax, word_C575C	; 14F18
+mov eax, hudpenaway	; 14F18
 call sub_15995	; 14F1D
 xor edx, edx	; 14F22
 mov dword [dword_C5860], edx	; 14F24
-loc_14F2A:
+UpdateHudPanel_x:
 pop ebp	; 14F2A
 pop edi	; 14F2B
 pop esi	; 14F2C
@@ -1089,7 +1084,7 @@ pop edx	; 14F2D
 pop ecx	; 14F2E
 pop ebx	; 14F2F
 ret	; 14F30
-sub_14F31:
+DrawPanelClock:
 push dword 28h	; 14F31
 call __CHK	; 14F36
 push ebx	; 14F3B
@@ -1100,7 +1095,7 @@ push edi	; 14F3F
 push ebp	; 14F40
 mov edx, dword [dword_C5704]	; 14F41
 test edx, edx	; 14F47
-jne near loc_14FF3	; 14F49
+jne near .3	; 14F49
 push byte 3	; 14F4F
 push dword 0AAh	; 14F51
 mov edx, dword [dword_DC334]	; 14F56
@@ -1108,13 +1103,13 @@ push edx	; 14F5C
 call sub_B4CD8	; 14F5D
 add esp, byte 0Ch	; 14F62
 cmp dword [dword_C5708], byte 0Ah	; 14F65
-jge short loc_14F7E	; 14F6C
+jge short .1	; 14F6C
 push byte 3	; 14F6E
 push dword 8Ch	; 14F70
 mov esi, dword [dword_DC334]	; 14F75
 push esi	; 14F7B
-jmp short loc_14F9E	; 14F7C
-loc_14F7E:
+jmp short .2	; 14F7C
+.1:
 push byte 3	; 14F7E
 push dword 8Ch	; 14F80
 mov ebx, 0Ah	; 14F85
@@ -1124,7 +1119,7 @@ sar edx, 1Fh	; 14F91
 idiv ebx	; 14F94
 mov ecx, dword [nosplit eax*4+dword_DC30C]	; 14F96
 push ecx	; 14F9D
-loc_14F9E:
+.2:
 call sub_B4CD8	; 14F9E
 add esp, byte 0Ch	; 14FA3
 push byte 3	; 14FA6
@@ -1147,16 +1142,16 @@ sar edx, 1Fh	; 14FE1
 idiv ebx	; 14FE4
 mov ebp, dword [nosplit eax*4+dword_DC30C]	; 14FE6
 push ebp	; 14FED
-jmp near loc_1509B	; 14FEE
-loc_14FF3:
+jmp near .6	; 14FEE
+.3:
 cmp edx, byte 0Ah	; 14FF3
-jge short loc_15008	; 14FF6
+jge short .4	; 14FF6
 push byte 3	; 14FF8
 push dword 8Ch	; 14FFA
 mov esi, dword [dword_DC334]	; 14FFF
 push esi	; 15005
-jmp short loc_15023	; 15006
-loc_15008:
+jmp short .5	; 15006
+.4:
 push byte 3	; 15008
 push dword 8Ch	; 1500A
 mov ebx, 0Ah	; 1500F
@@ -1165,7 +1160,7 @@ sar edx, 1Fh	; 15016
 idiv ebx	; 15019
 mov ecx, dword [nosplit eax*4+dword_DC30C]	; 1501B
 push ecx	; 15022
-loc_15023:
+.5:
 call sub_B4CD8	; 15023
 add esp, byte 0Ch	; 15028
 push byte 3	; 1502B
@@ -1199,7 +1194,7 @@ sar edx, 1Fh	; 1508E
 idiv ebx	; 15091
 mov eax, dword [nosplit edx*4+dword_DC30C]	; 15093
 push eax	; 1509A
-loc_1509B:
+.6:
 call sub_B4CD8	; 1509B
 add esp, byte 0Ch	; 150A0
 mov eax, dword [dword_C5704]	; 150A3
@@ -1208,4 +1203,4 @@ mov eax, dword [dword_C5708]	; 150AD
 mov dword [dword_C5714], eax	; 150B2
 mov eax, dword [dword_C570C]	; 150B7
 mov dword [dword_C5718], eax	; 150BC
-jmp near loc_14F2A	; 150C1
+jmp near UpdateHudPanel_x	; 150C1

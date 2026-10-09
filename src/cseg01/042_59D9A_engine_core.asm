@@ -21,7 +21,7 @@ extern dword_E009C, recbpr, dword_E03A8, dword_E03AE
 extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
 extern replaystart, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
 extern passspeed, randomd0, sfx, vecdist, IntermissionPC, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
-extern sub_14A20, sub_14AFE, sub_15C30, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
+extern DrawPanelScore, DrawPanelLine, sub_15C30, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
 extern PlayCrowdSample, sub_59A7E, sub_61576, sub_615A2, sub_61862, PenaltyManager, sub_63C73, ClearPenaltyBuffer
 extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, awlinetab, unk_DAC40, unk_DAC70, unk_DACA0
@@ -329,7 +329,7 @@ pop ebx	; 5A0A1
 ret	; 5A0A2
 ; CompLine: 93G logic93_4 CompLine (find good line for comp to switch to). eax = other team, edx = team.
 ;   tmap difference picks the power-play / penalty-kill lines, getlinee compares line energies, tmline/tmlcnt take
-;   the result (sub_14AFE is called on a change). Callers: chk4lc (54AF9) and puckfaceoff.
+;   the result (DrawPanelLine is called on a change). Callers: chk4lc (54AF9) and puckfaceoff.
 CompLine:
 push dword 1Ch	; 5A0A3
 call __CHK	; 5A0A8
@@ -488,7 +488,7 @@ cmp ebx, awtmstruct	; 5A268
 sete al	; 5A26E
 xor ah, ah	; 5A271
 cwde	; 5A273
-call sub_14AFE	; 5A274
+call DrawPanelLine	; 5A274
 and byte [dword ebx+0D4h], 0BFh	; 5A279
 .x:
 add esp, byte 8	; 5A280
@@ -1494,7 +1494,7 @@ mov edx, dword [byte esi+0Eh]	; 5AF9A
 sar edx, 10h	; 5AF9D
 mov eax, dword [byte esp+02h]	; 5AFA0
 sar eax, 10h	; 5AFA4
-call sub_14A20	; 5AFA7
+call DrawPanelScore	; 5AFA7
 mov ebx, dword [dword esi+tmsort]	; 5AFAC
 mov ecx, 6	; 5AFB2
 .45:

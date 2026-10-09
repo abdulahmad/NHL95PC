@@ -19,7 +19,7 @@ extern ltx, replaystart, off_CC01D, passspeed, LoadGameGfx, FileReadAt, FileWrit
 extern SaveModeState, LoadModeState, GetPeriodTime, SprSort, sub_61E99, sub_673C5, ReplayRecordReset, sub_7DC8B
 extern FatalError, MouseSetPos, threat, exhstate, unk_C5423, unk_C542E, awlinetab, unk_DAC40
 extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, hmlinetab, unk_DC240
-extern unk_DC252, unk_DF314, SortCords, word_C571C, word_C575C, camx, camy
+extern unk_DC252, unk_DF314, SortCords, hudpenhome, hudpenaway, camx, camy
 extern lastplayer, passdir, word_C90A6, passplayer, xc1, yc1, word_C90B2, word_C90B4
 extern fodir1, fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
@@ -651,7 +651,7 @@ add esp, byte 4	; 60495
 .19:
 mov ecx, 40h	; 60498
 mov ebx, 0FFFFFFFFh	; 6049D
-mov edx, word_C571C	; 604A2
+mov edx, hudpenhome	; 604A2
 mov eax, dword [esp]	; 604A7
 call FileWriteAt	; 604AA
 test eax, eax	; 604AF
@@ -662,7 +662,7 @@ add esp, byte 4	; 604BD
 .20:
 mov ecx, 40h	; 604C0
 mov ebx, 0FFFFFFFFh	; 604C5
-mov edx, word_C575C	; 604CA
+mov edx, hudpenaway	; 604CA
 mov eax, dword [esp]	; 604CF
 call FileWriteAt	; 604D2
 test eax, eax	; 604D7
@@ -1737,11 +1737,11 @@ xor ebx, ebx	; 61476
 mov dword [dword esp+010Ch], ebx	; 61478
 .41:
 mov ebx, dword [dword esp+010Ch]	; 6147F
-lea edi, [nosplit ebx*8+word_C571C]	; 61486
+lea edi, [nosplit ebx*8+hudpenhome]	; 61486
 lea esi, [dword esp+ebx*8+0C0h]	; 6148D
 movsd	; 61494
 movsd	; 61495
-lea edi, [nosplit ebx*8+word_C575C]	; 61496
+lea edi, [nosplit ebx*8+hudpenaway]	; 61496
 lea esi, [dword esp+ebx*8+080h]	; 6149D
 movsd	; 614A4
 movsd	; 614A5

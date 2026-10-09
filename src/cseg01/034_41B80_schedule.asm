@@ -10,8 +10,8 @@ extern dword_C9002, seasondb, careerdb, keydb, seasondb_size, careerdb_size, key
 extern leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, jctime
 extern memset_, mkdir_, msg_LeagueExists, leaguedbnames
 extern msg_GenSchedule, msg_NoDiskSpace, rand_, sprintf_, strcat_, strcpy_, DiskFreeBytes
-extern AwardsCeremony, FileExists, MakePath, sub_14442, FileOpenRead, FileOpenRW, FileClose, FileReadAt
-extern FileWriteAt, sub_1466B, ReadSchedGame, ReadTeamRec, sub_14825, sub_149BF, sub_2FDD1, sub_2FEDF
+extern AwardsCeremony, FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenRW, FileClose, FileReadAt
+extern FileWriteAt, CopyFile, ReadSchedGame, ReadTeamRec, DiskSpaceShort, GetLeagueDBSizes, sub_2FDD1, sub_2FEDF
 extern sub_30A0C, sub_30F12, MessageBox, WriteModeState, sub_38B4F, WriteSchedGame, WriteTeamRec, sub_3DAB9
 extern WriteLeagueInfo, CopyHumanTeamDBs, SimulateGame, SeriesWinner, sub_8CCA8, sub_8E8A0, sub_92DE0, sub_932D0
 extern sub_B2DCA, btn_LeagueExists, msg_WhichSchedule, btn_WhichSchedule, msg_CreateError, msg_CreatingLeague, msg_DiskFull, leagueteams
@@ -4078,7 +4078,7 @@ mov dword [byte esp+06Ch], eax	; 44F2D
 cmp eax, byte 1	; 44F31
 jne short .2	; 44F34
 lea eax, [byte esp+04Ch]	; 44F36
-call sub_14442	; 44F3A
+call DeleteDir	; 44F3A
 jmp short .3	; 44F3F
 .2:
 mov esi, 1	; 44F41
@@ -4180,7 +4180,7 @@ jl short CreateNewLeague.8	; 4506B
 mov ebx, dword [dword_DD770]	; 4506D
 mov edx, dword_C8D06	; 45073
 xor eax, eax	; 45078
-call sub_149BF	; 4507A
+call GetLeagueDBSizes	; 4507A
 xor esi, esi	; 4507F
 .11:
 mov edx, 1	; 45081
@@ -4213,7 +4213,7 @@ mov edx, ebp	; 450D2
 shl edx, 2	; 450D4
 add edx, dword_C8D06	; 450D7
 xor eax, eax	; 450DD
-call sub_14825	; 450DF
+call DiskSpaceShort	; 450DF
 test eax, eax	; 450E4
 je short .14	; 450E6
 push eax	; 450E8
@@ -4271,7 +4271,7 @@ mov edx, dword [dword_DD770]	; 4519A
 mov eax, dword [nosplit eax*4+leaguedbnames]	; 451A0
 xor ecx, ecx	; 451A7
 mov ebx, str_extDB	; 451A9
-call sub_1466B	; 451AE
+call CopyFile	; 451AE
 mov edi, eax	; 451B3
 inc dword [byte esp+068h]	; 451B5
 .16:
@@ -4330,7 +4330,7 @@ call MessageBox	; 4524A
 xor dh, dh	; 4524F
 mov byte [lgstate+4], dh	; 45251
 lea eax, [byte esp+04Ch]	; 45257
-call sub_14442	; 4525B
+call DeleteDir	; 4525B
 .22:
 push byte 0	; 45260
 mov ecx, 3Fh	; 45262

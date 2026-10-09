@@ -14,8 +14,8 @@ extern leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DDD38, dword_DD
 extern dword_DDD6C, awtmlines, startm_m2, hmtmlines, hmtmstruct
 extern fputchar, jctime, memset_, off_C57CC, off_C800C, leaguedbnames
 extern sprintf_, strcat_, strcpy_, SetupControllers, PlayGame, FileExists, MakePath
-extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, sub_1463D, sub_1478B
-extern ReadSchedGame, ReadTeamRec, sub_147FF, sub_148A5, sub_174C2, sub_17573, sub_175E2, sub_1BEFD
+extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, ReadKeyRec, ReadSeasonRec
+extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, sub_174C2, sub_17573, sub_175E2, sub_1BEFD
 extern sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A, sub_29F28, sub_30A0C, sub_30F12
 extern MessageBox, sub_34821, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, WriteSchedGame, WriteTeamRec
 extern sub_3A31E, AskTeamPassword, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, ReadLeagueInfo, sub_3DAB9
@@ -23,7 +23,7 @@ extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSea
 extern sub_6B47C, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_903F0, sub_91370, sub_91400, sub_92F50, sub_93000, sub_B2DCA, sub_B2E1B, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, unk_C7AE0, unk_C7E3E, btn_MasterDB, unk_C7F07
-extern unk_C7F1B, unk_C7F8E, unk_C8115, unk_C8117, awlinetab, hmlinetab, unk_DC240, leagueteams
+extern unk_C7F1B, unk_C7F8E, str_backslash2, unk_C8117, awlinetab, hmlinetab, unk_DC240, leagueteams
 extern unk_DDAC4, masterpw, savleague1, savleague2, VisTeam, word_DB08A, word_DB08C, word_DB08E
 extern word_DB090, word_DB092, word_DB096, word_DC242, word_DC244, word_DDD46, word_DDD48, word_DDD4A
 extern word_DF618, hmscore, hmtmgoalie, awscore, awtmgoalie, startm
@@ -227,7 +227,7 @@ call sprintf_	; 36230
 add esp, byte 0Ch	; 36235
 mov eax, esi	; 36238
 call strcpy_	; 3623A
-mov edx, unk_C8115	; 3623F
+mov edx, str_backslash2	; 3623F
 mov eax, esi	; 36244
 call strcat_	; 36246
 mov edx, unk_C8117	; 3624B
@@ -409,7 +409,7 @@ sar ebx, 10h	; 36523
 mov ebx, dword [byte esp+ebx*4+058h]	; 36526
 lea edx, [dword esp+032Ch]	; 3652A
 mov eax, dword [dword esp+03E8h]	; 36531
-call sub_1463D	; 36538
+call ReadKeyRec	; 36538
 mov ebx, eax	; 3653D
 test eax, eax	; 3653F
 jne short loc_36585	; 36541
@@ -424,7 +424,7 @@ loc_36569:
 mov ebx, dword [dword esp+0358h]	; 36569
 lea edx, [dword esp+0360h]	; 36570
 mov eax, dword [dword esp+03E4h]	; 36577
-call sub_1478B	; 3657E
+call ReadSeasonRec	; 3657E
 loc_36583:
 mov ebx, eax	; 36583
 loc_36585:
@@ -479,7 +479,7 @@ test ebx, ebx	; 36647
 jne short loc_36660	; 36649
 lea edx, [dword esp+03CCh]	; 3664B
 mov eax, dword [dword esp+03E0h]	; 36652
-call sub_147FF	; 36659
+call ReadGSummaryRec	; 36659
 mov ebx, eax	; 3665E
 loc_36660:
 test ebx, ebx	; 36660
@@ -498,7 +498,7 @@ loc_3669E:
 mov ebx, eax	; 3669E
 lea edx, [dword esp+03CCh]	; 366A0
 mov eax, dword [dword esp+03E0h]	; 366A7
-call sub_147FF	; 366AE
+call ReadGSummaryRec	; 366AE
 mov ebx, eax	; 366B3
 test eax, eax	; 366B5
 jne near loc_36728	; 366B7
@@ -572,14 +572,14 @@ je near loc_368BD	; 367C3
 mov ebx, edx	; 367C9
 lea edx, [dword esp+032Ch]	; 367CB
 mov eax, dword [dword esp+03E8h]	; 367D2
-call sub_1463D	; 367D9
+call ReadKeyRec	; 367D9
 mov ebx, eax	; 367DE
 test eax, eax	; 367E0
 jne short loc_36800	; 367E2
 mov ebx, dword [dword esp+0358h]	; 367E4
 lea edx, [dword esp+0360h]	; 367EB
 mov eax, dword [dword esp+03E4h]	; 367F2
-call sub_1478B	; 367F9
+call ReadSeasonRec	; 367F9
 mov ebx, eax	; 367FE
 loc_36800:
 test ebx, ebx	; 36800
@@ -670,7 +670,7 @@ je near loc_36B21	; 3695C
 mov ebx, edi	; 36962
 lea edx, [dword esp+032Ch]	; 36964
 mov eax, dword [dword esp+03E8h]	; 3696B
-call sub_1463D	; 36972
+call ReadKeyRec	; 36972
 mov ebx, eax	; 36977
 test eax, eax	; 36979
 jne short loc_36999	; 3697B
@@ -1425,7 +1425,7 @@ call SetupControllers	; 37408
 xor esi, esi	; 3740D
 cmp dword [edi], byte 0	; 3740F
 jge short loc_3744C	; 37412
-call sub_148A5	; 37414
+call CheckGameDiskSpace	; 37414
 test eax, eax	; 37419
 jne short loc_37447	; 3741B
 xor edx, edx	; 3741D

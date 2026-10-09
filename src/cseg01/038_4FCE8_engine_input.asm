@@ -7,7 +7,7 @@ extern lchoicetab, byte_DFF3A, checkob, doplayeracc, joysampling, joyqhead, joyq
 extern joyrec, gameopts, cont2team, dword_CC0F0, onetimerflag, penshotmode
 extern penshotlive, dword_CCC9C, puckcross_m2, dword_E9A9E, gmode, lcreqchoice, puckstruct
 extern sub_4D938, puckx, pucky, puckvy, puckc, setpassmode, setpersonel, vecdist
-extern sub_14AFE, BlockShotDive, passmode, changeplayer, restorepl, MouseSetPos, joyqueue, SortCords
+extern DrawPanelLine, BlockShotDive, passmode, changeplayer, restorepl, MouseSetPos, joyqueue, SortCords
 extern vtoa, lastplayer, passdir, passplayer, fodir1, fodir2, c1playernum
 extern c2playernum, cont1team, lcblink, lcblinktime, lcsel, word_CBC60, lcline
 extern lctimer, lcboxon, linenext, word_DFF42, lcrequest, regd2, regd3, regd0
@@ -729,7 +729,7 @@ test byte [byte eax+pflags], 40h	; 504BA
 setne al	; 504BE
 xor ah, ah	; 504C1
 cwde	; 504C3
-call sub_14AFE	; 504C4
+call DrawPanelLine	; 504C4
 mov eax, ebx	; 504C9
 call setpersonel	; 504CB
 .x:
@@ -1154,7 +1154,7 @@ setne al	; 509EC
 xor ah, ah	; 509EF
 cwde	; 509F1
 mov edx, ecx	; 509F2
-call sub_14AFE	; 509F4
+call DrawPanelLine	; 509F4
 mov eax, ebx	; 509F9
 call setpersonel	; 509FB
 .x:

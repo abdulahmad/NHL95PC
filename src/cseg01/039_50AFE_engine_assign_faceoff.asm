@@ -10,7 +10,7 @@ extern joysampling, gameopts, dword_C90B0, sflags3, cont2team, dword_CBECA, dwor
 extern onetimerflag, dword_CC0FA, penshotplayer, dword_CC104, penshotmode, penshotstart, hmtmstruct, awtmstruct
 extern dword_E0244, dword_E9A9E, forcepldata, puckvx, gmode
 extern jctime, CanBlockShot_ret5, ltx, puckx, pucky, puckvy, puckz, puckc
-extern puckvz, randomd0, resetplstuff, setpersonel, sfx, skateto, skatetopuck, sub_14AFE
+extern puckvz, randomd0, resetplstuff, setpersonel, sfx, skateto, skatetopuck, DrawPanelLine
 extern StopIfFree, SkateToSpot, lcfound, CenterMouse, ReturnGoalies, StopDigiSample, sub_59AAD, changeplayer
 extern restorepl, CompLine, setplayer, clockcont_0, SprSortVert, SprSort, SetExitGame, EvadePC
 extern sub_61B85, sub_63F72, threat, SortCords, updateanim
@@ -1371,10 +1371,10 @@ mov word [hmtmlcnt], cx	; 51B9E
 mov word [hmtmline], cx	; 51BA5
 xor edx, edx	; 51BAC
 xor eax, eax	; 51BAE
-call sub_14AFE	; 51BB0
+call DrawPanelLine	; 51BB0
 xor edx, edx	; 51BB5
 mov eax, 1	; 51BB7
-call sub_14AFE	; 51BBC
+call DrawPanelLine	; 51BBC
 .33:
 mov edx, 1Ch	; 51BC1
 mov eax, ebp	; 51BC6

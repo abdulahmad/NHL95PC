@@ -8,7 +8,7 @@ extern dword_C7444, dword_C7448, dword_C9074, cont2team, HomeTeam, dword_CBC3E, 
 extern dword_CC0F0, dword_CC9AD, dword_D8C40, frameaccum, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
 extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, randomd0
-extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, sub_14CF1, sub_33DD3
+extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, UpdateHudPanel, sub_33DD3
 extern sub_47951, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
 extern PlayCrowdSample, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8374D, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
@@ -324,7 +324,7 @@ mov word [word_CBC58], bx	; 480A3
 mov word [lcblink], bx	; 480AA
 mov word [word_CBC54], bx	; 480B1
 mov word [word_CBC52], bx	; 480B8
-call sub_14CF1	; 480BF
+call UpdateHudPanel	; 480BF
 add esp, byte 10h	; 480C4
 jmp near PreGameIntro_popx	; 480C7
 PreGameIntro_scroll:

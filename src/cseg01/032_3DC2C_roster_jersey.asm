@@ -13,13 +13,13 @@ extern dword_DC738, dword_DD100, dword_DD104, dword_DD10C, dword_DD110, dword_DD
 extern dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C, dword_DE260
 extern dword_DE264, dword_EA0DC, jctime, memcpy_, leaguedbnames, off_C8BDD, off_CF2A3
 extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
-extern FileOpenRW, FileClose, sub_1463D, sub_14654, ReadTeamRec, sub_1BBCC, sub_1D6E8, sub_1FAA7
+extern FileOpenRW, FileClose, ReadKeyRec, WriteKeyRec, ReadTeamRec, sub_1BBCC, sub_1D6E8, sub_1FAA7
 extern sub_244E2, sub_2FEDF, MessageBox, WriteTeamRec, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
 extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A099, ClearPlayerFromLines
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
 extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, MouseSetPos
 extern sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, SetDrawBitmap, unk_C1A15
-extern unk_C8115, unk_C8117, unk_C88E2, unk_CF3CF, unk_D12C8, awlinetab, hmlinetab, unk_DDFF4
+extern str_backslash2, unk_C8117, unk_C88E2, unk_CF3CF, unk_D12C8, awlinetab, hmlinetab, unk_DDFF4
 extern VisTeam
 global loc_3DC59, loc_3DCB5, loc_3DCE7, loc_3DCF5, loc_3DD15, loc_3DD5C, loc_3DD60, loc_3DD6D
 global loc_3DD75, loc_3DD9B, loc_3DDE2, loc_3DDE6, loc_3DDF3, loc_3DF06, loc_3DF08, loc_3E07E
@@ -126,7 +126,7 @@ loc_3DD15:
 mov ebx, eax	; 3DD15
 mov edx, esp	; 3DD17
 mov eax, dword [byte esp+054h]	; 3DD19
-call sub_1463D	; 3DD1D
+call ReadKeyRec	; 3DD1D
 mov ebx, eax	; 3DD22
 test eax, eax	; 3DD24
 jne short loc_3DD5C	; 3DD26
@@ -175,7 +175,7 @@ loc_3DD9B:
 mov ebx, eax	; 3DD9B
 mov edx, esp	; 3DD9D
 mov eax, dword [byte esp+054h]	; 3DD9F
-call sub_1463D	; 3DDA3
+call ReadKeyRec	; 3DDA3
 mov ebx, eax	; 3DDA8
 test eax, eax	; 3DDAA
 jne short loc_3DDE2	; 3DDAC
@@ -399,7 +399,7 @@ shl eax, 2	; 3E0A0
 lea edx, [byte esp+04h]	; 3E0A3
 add edx, eax	; 3E0A7
 mov eax, dword [esp]	; 3E0A9
-call sub_1463D	; 3E0AC
+call ReadKeyRec	; 3E0AC
 mov ecx, eax	; 3E0B1
 inc dword [dword esp+0634h]	; 3E0B3
 loc_3E0BA:
@@ -583,7 +583,7 @@ add eax, dword [dword esp+0640h]	; 3E35C
 mov ebx, dword [byte eax+04Ch]	; 3E363
 mov edx, dword [dword esp+063Ch]	; 3E366
 mov eax, dword [esp]	; 3E36D
-call sub_14654	; 3E370
+call WriteKeyRec	; 3E370
 mov ecx, eax	; 3E375
 loc_3E377:
 test esi, esi	; 3E377
@@ -670,7 +670,7 @@ mov ebp, dword [byte esp+ebp*4+04Ch]	; 3E49B
 mov ebx, ebp	; 3E49F
 lea edx, [dword esp+0604h]	; 3E4A1
 mov eax, dword [dword esp+0658h]	; 3E4A8
-call sub_1463D	; 3E4AF
+call ReadKeyRec	; 3E4AF
 mov esi, eax	; 3E4B4
 test eax, eax	; 3E4B6
 jne short loc_3E4FA	; 3E4B8
@@ -685,7 +685,7 @@ mov dword [dword esp+0660h], eax	; 3E4D7
 mov ebx, dword [dword esp+0660h]	; 3E4DE
 lea edx, [dword esp+05D0h]	; 3E4E5
 mov eax, dword [dword esp+0658h]	; 3E4EC
-call sub_1463D	; 3E4F3
+call ReadKeyRec	; 3E4F3
 mov esi, eax	; 3E4F8
 loc_3E4FA:
 test esi, esi	; 3E4FA
@@ -729,14 +729,14 @@ call ClearPlayerFromLines	; 3E59A
 mov ebx, ebp	; 3E59F
 lea edx, [dword esp+0604h]	; 3E5A1
 mov eax, dword [dword esp+0658h]	; 3E5A8
-call sub_14654	; 3E5AF
+call WriteKeyRec	; 3E5AF
 mov esi, eax	; 3E5B4
 test eax, eax	; 3E5B6
 jne short loc_3E5D6	; 3E5B8
 mov ebx, dword [dword esp+0660h]	; 3E5BA
 lea edx, [dword esp+05D0h]	; 3E5C1
 mov eax, dword [dword esp+0658h]	; 3E5C8
-call sub_14654	; 3E5CF
+call WriteKeyRec	; 3E5CF
 mov esi, eax	; 3E5D4
 loc_3E5D6:
 test esi, esi	; 3E5D6
@@ -797,7 +797,7 @@ mov word [VisTeam], ax	; 3E697
 mov edx, curleague	; 3E69D
 mov eax, leaguedbfmt	; 3E6A2
 call strcpy_	; 3E6A7
-mov edx, unk_C8115	; 3E6AC
+mov edx, str_backslash2	; 3E6AC
 mov eax, leaguedbfmt	; 3E6B1
 call strcat_	; 3E6B6
 mov edx, unk_C8117	; 3E6BB

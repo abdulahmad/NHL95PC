@@ -18,8 +18,8 @@ extern dword_DD1B4, dword_DD1B8, dword_DD1BC, dword_DD1C0, dword_DD1C4, dword_DD
 extern dword_DD250, dword_DD254, dword_DD634, dword_DD638, dword_DD63C, dword_DD640, dword_DD644, dword_DD648
 extern dword_DD64C, dword_DD650, dword_DD654, dword_DD658, dword_DD65C, dword_DD660, dword_DD664, dword_DD730
 extern dword_EA0DC, j_unlink_, jctime, off_C5439, off_C5441, off_C6F7C, off_C6F80, off_C6F84
-extern qsort_, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, MakePath, sub_14442
-extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, sub_1466B, sub_1D100, sub_1D518
+extern qsort_, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, MakePath, DeleteDir
+extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, CopyFile, sub_1D100, sub_1D518
 extern sub_30A0C, MessageBox, LoadModeState, sub_32DA9, sub_33559, sub_336E6, sub_6B391, sub_6B3D7
 extern sub_7A29C, sub_86647, PlayoffModeLoop, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0
 extern sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400, sub_91964, sub_92CD0, FatalError
@@ -359,7 +359,7 @@ mov ecx, postate+4	; 2BBD1
 mov ebx, asc_C14C0	; 2BBD6
 mov edx, asc_C14BB	; 2BBDB
 mov eax, asc_C14B2	; 2BBE0
-call sub_1466B	; 2BBE5
+call CopyFile	; 2BBE5
 test eax, eax	; 2BBEA
 je short loc_2BBFB	; 2BBEC
 push unk_C14C4	; 2BBEE
@@ -406,7 +406,7 @@ mov ecx, lgstate+4	; 2BC7E
 mov ebx, asc_C14C0	; 2BC83
 mov edx, asc_C14BB	; 2BC88
 mov eax, asc_C14B2	; 2BC8D
-call sub_1466B	; 2BC92
+call CopyFile	; 2BC92
 test eax, eax	; 2BC97
 je short loc_2BCA8	; 2BC99
 push unk_C14D7	; 2BC9B
@@ -1968,7 +1968,7 @@ mov dword [dword_CE5A3], eax	; 2CF7B
 mov dword [dword_CE5C3], eax	; 2CF80
 loc_2CF85:
 lea eax, [byte esp+01Eh]	; 2CF85
-call sub_14442	; 2CF89
+call DeleteDir	; 2CF89
 jmp short loc_2CFAA	; 2CF8E
 loc_2CF90:
 lea eax, [byte esp+01Eh]	; 2CF90

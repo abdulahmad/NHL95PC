@@ -11,8 +11,8 @@ extern dword_C87E0, dword_C87E8, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0
 extern dword_D2C6B, leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DE264
 extern fputchar, jctime, memset_, teamcitynames, msg_OneHuman, leaguedbnames
 extern msg_TradeDeadline, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, strncpy_, MakePath
-extern sub_14368, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
-extern sub_1466B, ReadSchedGame, sub_30A0C, sub_30F12, MessageBox, sub_38B4F, WriteLeagueTeamEntry, AskTeamPassword
+extern DeleteFiles, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
+extern CopyFile, ReadSchedGame, sub_30A0C, sub_30F12, MessageBox, sub_38B4F, WriteLeagueTeamEntry, AskTeamPassword
 extern AskMasterPassword, sub_3B25A, sub_3BB87, sub_3D46D, ReadLeagueInfo, sub_3DAB9, sub_3E390, sub_3FF52
 extern sub_6B3D7, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
 extern sub_B4F8C, unk_3DC28, msg_AllHuman, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, msg_TradeError, msg_Copying
@@ -1701,13 +1701,13 @@ call strcpy_	; 4183D
 lea ebx, [dword esp+08Dh]	; 41842
 lea edx, [byte esp+040h]	; 41849
 lea eax, [byte esp+060h]	; 4184D
-call sub_14368	; 41851
+call DeleteFiles	; 41851
 push esi	; 41856
 mov eax, dword [nosplit edi*4+leaguedbnames]	; 41857
 mov ecx, esi	; 4185E
 mov ebx, str_extxx	; 41860
 mov edx, str_extDB	; 41865
-call sub_1466B	; 4186A
+call CopyFile	; 4186A
 mov ebx, eax	; 4186F
 inc edi	; 41871
 .13:

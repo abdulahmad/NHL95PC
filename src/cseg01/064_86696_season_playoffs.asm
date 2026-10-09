@@ -23,8 +23,8 @@ extern dword_DD770, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, off_C5439,
 extern off_C6D22, leaguedbnames, off_CEF43, off_CEF63
 extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, msg_POHumanOut, msg_POTeamOut, msg_POGenFinal
 extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers, PlayGame
-extern FileExists, MakePath, sub_14442, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
-extern sub_1466B, sub_14825, sub_148A5, sub_149BF, sub_174C2, sub_17573, sub_175E2, sub_17636
+extern FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
+extern CopyFile, DiskSpaceShort, CheckGameDiskSpace, GetLeagueDBSizes, sub_174C2, sub_17573, sub_175E2, sub_17636
 extern sub_17711, sub_1777E, sub_1BEFD, sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171
 extern sub_202E5, sub_203FA, sub_2051A, sub_20D97, sub_27C34, sub_29F28, sub_2FDD1, sub_2FEDF
 extern sub_30A0C, sub_30F12, MessageBox, SaveModeState, LoadModeState, WriteModeState, sub_3626D, SimulateGame
@@ -295,7 +295,7 @@ and eax, 0FFh	; 86A60
 mov edi, eax	; 86A65
 jne short .14	; 86A67
 lea eax, [dword esp+08Ch]	; 86A69
-call sub_14442	; 86A70
+call DeleteDir	; 86A70
 jmp short .15	; 86A75
 .14:
 push ebp	; 86A77
@@ -347,7 +347,7 @@ jl near .18	; 86B29
 mov ebx, dword [dword_DD770]	; 86B2F
 mov edx, unk_D2864	; 86B35
 xor eax, eax	; 86B3A
-call sub_149BF	; 86B3C
+call GetLeagueDBSizes	; 86B3C
 xor ecx, ecx	; 86B41
 mov ebx, str_GameSet	; 86B43
 mov edx, curleague	; 86B48
@@ -362,7 +362,7 @@ mov dword [dword_D2884], edx	; 86B65
 .17:
 mov edx, unk_D2864	; 86B6B
 xor eax, eax	; 86B70
-call sub_14825	; 86B72
+call DiskSpaceShort	; 86B72
 mov edi, eax	; 86B77
 test eax, eax	; 86B79
 je short .18	; 86B7B
@@ -474,14 +474,14 @@ mov edx, dword [dword_DD770]	; 86CE3
 mov eax, dword [nosplit esi*4+leaguedbnames]	; 86CE9
 mov ecx, str_dot	; 86CF0
 mov ebx, str_extDB	; 86CF5
-call sub_1466B	; 86CFA
+call CopyFile	; 86CFA
 test eax, eax	; 86CFF
 je short .24	; 86D01
 push dword 190h	; 86D03
 call sub_B3989	; 86D08
 add esp, byte 4	; 86D0D
 lea eax, [dword esp+08Ch]	; 86D10
-call sub_14442	; 86D17
+call DeleteDir	; 86D17
 mov edi, 1	; 86D1C
 call sub_B3999	; 86D21
 jmp short .25	; 86D26
@@ -513,7 +513,7 @@ mov edx, 0FFFFFFFFh	; 86D72
 mov eax, edx	; 86D77
 call MessageBox	; 86D79
 lea eax, [dword esp+08Ch]	; 86D7E
-call sub_14442	; 86D85
+call DeleteDir	; 86D85
 call sub_B3999	; 86D8A
 call sub_30F12	; 86D8F
 .26:
@@ -3767,7 +3767,7 @@ mov eax, 0F9h	; 892EE
 call sub_30A0C	; 892F3
 cmp dword [byte ebp+00h], byte 0	; 892F8
 jl near .8	; 892FC
-call sub_148A5	; 89302
+call CheckGameDiskSpace	; 89302
 test eax, eax	; 89307
 jne near .8	; 89309
 lea eax, [byte esp+020h]	; 8930F
@@ -4120,7 +4120,7 @@ push dword 100h	; 89819
 push byte 0	; 8981E
 call sub_B4B88	; 89820
 add esp, byte 0Ch	; 89825
-call sub_148A5	; 89828
+call CheckGameDiskSpace	; 89828
 test eax, eax	; 8982D
 jne near .30	; 8982F
 mov ebx, 1	; 89835

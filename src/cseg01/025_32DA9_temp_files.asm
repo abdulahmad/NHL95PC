@@ -7,7 +7,7 @@ extern musicon, byte_DE268, byte_EA0F4, lgstate
 extern gamemode, dword_C65C0, dword_C65C4, dword_C65C8
 extern dword_C65CC, dword_C65D0, songdata, dword_C73D0, rinkbm, dword_C7440, cont2team, HomeTeam
 extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, schedgameidx, jctime, loc_32704, musicslot
-extern loc_32705, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRead, sub_148A5, sub_1BEFD
+extern loc_32705, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRead, CheckGameDiskSpace, sub_1BEFD
 extern sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
 extern sub_20D97, sub_29F28, SaveModeState, LoadModeState, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
 extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
@@ -32,7 +32,7 @@ push edi	; 32DB7
 push ebp	; 32DB8
 mov esi, eax	; 32DB9
 xor edx, edx	; 32DBB
-call sub_148A5	; 32DBD
+call CheckGameDiskSpace	; 32DBD
 test eax, eax	; 32DC2
 je short loc_32DCD	; 32DC4
 xor eax, eax	; 32DC6

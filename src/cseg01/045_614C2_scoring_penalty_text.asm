@@ -21,7 +21,7 @@ extern dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9
 extern dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, fputchar, puckvx, gmode, loc_18F86
 extern lseek_, ltx, off_C5439, puckx, pucky, puckvy, puckz, puckc
 extern off_CD304, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
-extern strcpy_, strlen_, DrawFrameSprite, FileOpenRW, FileClose, FileWriteAt, sub_14C22, sub_14CA0
+extern strcpy_, strlen_, DrawFrameSprite, FileOpenRW, FileClose, FileWriteAt, PanelAddPenalty, PanelRemovePenalty
 extern sub_18F74, sub_1CD73, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
 extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, FatalError, unk_C1B49, unk_C1C58, unk_C1C5B
 extern unk_C1C5E, unk_C1C61, unk_C1C64, unk_C1C67, unk_C1CB0, unk_C5423, unk_C542E, unk_DBC30
@@ -2457,7 +2457,7 @@ test byte [byte eax+044h], 40h	; 632A1
 setne al	; 632A5
 xor ah, ah	; 632A8
 cwde	; 632AA
-call sub_14C22	; 632AB
+call PanelAddPenalty	; 632AB
 mov dx, word [PerTimeTotal]	; 632B0
 mov cx, word [gameclock]	; 632B7
 sub edx, ecx	; 632BE
@@ -3424,7 +3424,7 @@ cmp word [esp], byte 0	; 63F26
 sete al	; 63F2B
 xor ah, ah	; 63F2E
 cwde	; 63F30
-call sub_14CA0	; 63F31
+call PanelRemovePenalty	; 63F31
 mov eax, 1	; 63F36
 .18:
 movsx edx, ax	; 63F3B

@@ -12,7 +12,7 @@ extern dword_D0C18, dword_D0C20, musichandle, dword_D8B74, dword_DC238, dword_EA
 extern dword_EA988, dword_EBC68, msglines, dword_EBCA4, dword_EBE9C, editrosters_exit, fputchar, jctime
 extern loc_6C03C, mkdir_, leaguedbnames
 extern off_CFB1C, off_CFB8A, rmdir_, sprintf_, strcat_, strcpy_, strlen_, strupr_
-extern MakePath, sub_14442, sub_17573, sub_175E2, sub_29C75, sub_2FEDF, sub_30AE2, sub_30C3D
+extern MakePath, DeleteDir, sub_17573, sub_175E2, sub_29C75, sub_2FEDF, sub_30AE2, sub_30C3D
 extern sub_30F12, MessageBox, sub_6C19B, DrawEditRosters, EditRosters, CheckDatabases, sub_76429, sub_8CCA8
 extern sub_8D2F0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90F38
 extern sub_91964, sub_932D0, FatalError, MouseSetPos, sub_B4BA8, sub_B4F8C, unk_6BF3D, unk_C28A9
@@ -145,7 +145,7 @@ call MessageBox	; 6C45B
 cmp eax, byte 1	; 6C460
 jne short loc_6C470	; 6C463
 lea eax, [byte esp+03Ch]	; 6C465
-call sub_14442	; 6C469
+call DeleteDir	; 6C469
 jmp short loc_6C475	; 6C46E
 loc_6C470:
 mov esi, 1	; 6C470

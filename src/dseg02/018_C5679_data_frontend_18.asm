@@ -26,7 +26,7 @@ extern unk_C10E9, unk_C10F9, unk_C1112, unk_C112C, unk_C1140, unk_C1158, unk_C11
 extern unk_C11AC, unk_C11C5, unk_C11C9, unk_C11CD, unk_C11D1, unk_C11D2, unk_C11D5, unk_C11D9
 extern unk_C11DE, unk_C11E2, unk_C11E8, unk_C11EE, unk_C11F3, unk_C11F7, unk_C11FD, unk_C1200
 extern unk_C1203, unk_C1206, unk_C120B, unk_C126C, unk_C1276, unk_C5654
-global CreditsList, asc_C5679, asc_C6570, asc_C65F8, asc_C6614, asc_C662E, asc_C664C, asc_C6678
+global CreditsList, msg_NeedKbytes, asc_C6570, asc_C65F8, asc_C6614, asc_C662E, asc_C664C, asc_C6678
 global asc_C668F, asc_C671E, asc_C6731, asc_C6747, asc_C6748, asc_C675B, asc_C675C, asc_C6779
 global asc_C677A, asc_C6891, asc_C689A, asc_C68AD, asc_C68FC, str_fmt2d, str_fmt3d, asc_C690B
 global asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B, asc_C6935, str_Bkgd2, asc_C6940
@@ -35,7 +35,7 @@ global byte_C672F, byte_C6745, byte_C6759, byte_C6777, byte_C67A9, byte_C6D72, b
 global byte_C6D7B, byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, byte_C6D9A
 global byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, byte_C6DB2, byte_C6DB3
 global byte_C6F6C, byte_C7218, dword_C56C4, dword_C56E4, dword_C5704, dword_C5708, dword_C570C, dword_C5710
-global dword_C5714, dword_C5718, dword_C583C, dword_C5840, dword_C5844, dword_C5848, dword_C584C, dword_C5850
+global dword_C5714, dword_C5718, dword_C583C, dword_C5840, dword_C5844, dword_C5848, hudhomeline, hudawayline
 global dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862, dword_C5886, dword_C588A
 global dword_C6410, dword_C6414, dword_C6418, dword_C641C, dword_C6420, dword_C6430, dword_C65A8, dword_C65AC
 global dword_C65B0, dword_C65B4, dword_C65B8, dword_C65BC, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC
@@ -77,9 +77,9 @@ global unk_C6F09, unk_C6F12, unk_C6F1A, unk_C6F22, unk_C6F2A, unk_C6F33, unk_C6F
 global unk_C70DF, unk_C7108, unk_C710E, unk_C7114, unk_C711F, unk_C7129, unk_C7136, unk_C7142
 global unk_C714E, unk_C7156, unk_C7161, unk_C7174, unk_C7185, unk_C7221, unk_C7243, unk_C7265
 global unk_C744C, unk_C7450, unk_C7453, unk_C746B, unk_C7483, unk_C749A, unk_C74A2, unk_C74B7
-global unk_C74EF, word_C571C, word_C571E, word_C5720, word_C5722, word_C575C, word_C575E, word_C5760
+global unk_C74EF, hudpenhome, word_C571E, word_C5720, word_C5722, hudpenaway, word_C575E, word_C5760
 global word_C5762, word_C6D24, word_C6E22, scrpitch
-asc_C5679:
+msg_NeedKbytes:
 db 070h,06Ch,061h,079h,020h,074h,068h,065h,020h,067h,061h,06Dh,065h,02Ch,020h,079h
 db 06Fh,075h,020h,072h,065h,071h,075h,069h,072h,065h,020h,058h,058h,020h,04Bh,062h
 db 079h,074h,065h,073h,020h,020h,020h,00h
@@ -88,7 +88,7 @@ db 06Fh,066h,020h,066h,072h,065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,06
 db 063h,065h,02Eh,00h
 off_C56B5:
 dd unk_C5654
-dd asc_C5679
+dd msg_NeedKbytes
 dd unk_C56A1
 db 00h,00h,00h
 dword_C56C4:
@@ -109,7 +109,7 @@ dword_C5714:
 db 063h,00h,00h,00h
 dword_C5718:
 db 063h,00h,00h,00h
-word_C571C:
+hudpenhome:
 db 0FFh,0FFh
 word_C571E:
 db 00h,00h
@@ -120,7 +120,7 @@ db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h
-word_C575C:
+hudpenaway:
 db 0FFh,0FFh
 word_C575E:
 db 00h,00h
@@ -182,9 +182,9 @@ dword_C5844:
 db 00h,00h,00h,00h
 dword_C5848:
 db 00h,00h,00h,00h
-dword_C584C:
+hudhomeline:
 db 00h,00h,00h,00h
-dword_C5850:
+hudawayline:
 db 00h,00h,00h,00h
 dword_C5854:
 db 00h,00h,00h,00h

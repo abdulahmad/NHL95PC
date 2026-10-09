@@ -11,7 +11,7 @@ extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, ctl
 extern teamconf, dword_C71CC, dword_C71D0, dword_C71D4, songdata, cont2team, HomeTeam, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, dword_DC238, dword_EA0DC
 extern fputchar, jctime, memcpy_, off_C5439, off_C57CC, off_C6F48, leaguedbnames
-extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, sub_1463D, ReadTeamRec
+extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern sub_174C2, sub_175E2, sub_17636, sub_29C75, sub_29D00, sub_30A0C, sub_30A39, sub_30AE2
 extern sub_33E6A, sub_479E9, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, sub_6B391
 extern sub_6B3D7, sub_76429, sub_767D0, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
@@ -1175,7 +1175,7 @@ shl eax, 2	; 2AF9C
 mov edx, dword [dword esp+010Ch]	; 2AF9F
 add edx, eax	; 2AFA6
 mov eax, dword [dword esp+0E8h]	; 2AFA8
-call sub_1463D	; 2AFAF
+call ReadKeyRec	; 2AFAF
 mov ebp, eax	; 2AFB4
 loc_2AFB6:
 inc esi	; 2AFB6
