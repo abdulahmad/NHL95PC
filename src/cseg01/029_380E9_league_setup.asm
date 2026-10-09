@@ -2345,6 +2345,10 @@ call __CHK	; 3A385
 push ecx	; 3A38A
 mov ecx, 2Ch	; 3A38B
 jmp near ReadGoalieSeasonRec_common	; 3A390
+; C: src/c/029_380E9_league_setup/AskTeamPassword.c
+%ifdef CBUILD
+%include "c/029_380E9_league_setup/AskTeamPassword.inc"
+%else
 AskTeamPassword:
 push dword 0A0h	; 3A395
 call __CHK	; 3A39A
@@ -2442,6 +2446,11 @@ pop esi	; 3A49A
 pop ecx	; 3A49B
 pop ebx	; 3A49C
 ret	; 3A49D
+%endif ; C
+; C: src/c/029_380E9_league_setup/AskMasterPassword.c
+%ifdef CBUILD
+%include "c/029_380E9_league_setup/AskMasterPassword.inc"
+%else
 AskMasterPassword:
 push dword 9Ch	; 3A49E
 call __CHK	; 3A4A3
@@ -2530,6 +2539,7 @@ pop edi	; 3A593
 pop esi	; 3A594
 pop ecx	; 3A595
 ret	; 3A596
+%endif ; C
 EncryptPassword:
 push dword 1Ch	; 3A597
 call __CHK	; 3A59C

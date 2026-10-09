@@ -297,6 +297,10 @@ pop edx	; 17BE3
 pop ecx	; 17BE4
 pop ebx	; 17BE5
 ret	; 17BE6
+; C: src/c/008_17816_output_files/StatsSelLeague.c
+%ifdef CBUILD
+%include "c/008_17816_output_files/StatsSelLeague.inc"
+%else
 StatsSelLeague:
 push dword 24h	; 17BE7
 call __CHK	; 17BEC
@@ -357,6 +361,7 @@ pop edx	; 17CDC
 pop ecx	; 17CDD
 pop ebx	; 17CDE
 ret	; 17CDF
+%endif ; C
 StatsSelLeaguePlayoffs:
 push dword 24h	; 17CE0
 call __CHK	; 17CE5

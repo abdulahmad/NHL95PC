@@ -747,5 +747,10 @@ void POSimSeriesTo(unsigned char *lg, int n, int upto);  /* 88625 */
 int MergeUpdateDbs(void);  /* 3B8B0 */
 void FormatPlayerName(char *out, char *prefix, short num, char *first, char *last, char *suffix);  /* 61D48 */
 void DrawTeamGridName(int team, char *names, int bm, unsigned char *tab);  /* 37C53 */
+void PostGoalEvent(int t, unsigned char scorer, unsigned char a1, unsigned char a2, unsigned char b, unsigned char c, unsigned char d);  /* 62343 */
+void StatsSelLeague(void);  /* 17BE7 */
+int AskMasterPassword(int t, char *names, char *key);  /* 3A49E */
+void EncryptPassword(char *pw, int t);  /* 3A597 */
+int AskTeamPassword(int t, char *ents);  /* 3A395 */
 
 #endif

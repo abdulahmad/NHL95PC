@@ -52,6 +52,7 @@ TextGridOpen,17711,69,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGrid
 TextGridPut,17793,131,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGridPut.c,nonmatching,original keeps y in esi from entry and builds y*36 as ((y<<3)+y)<<2 in edx; this draft uses eax as the temp. 10-min cap
 DeskSetExit1,179B6,26,008_17816_output_files,src/c/008_17816_output_files/DeskSetExit1.c,matched,
 StatsSel9394Season,17A00,243,008_17816_output_files,src/c/008_17816_output_files/StatsSel9394Season.c,matched,
+StatsSelLeague,17BE7,249,008_17816_output_files,src/c/008_17816_output_files/StatsSelLeague.c,matched,
 WriteScreenTextFile,17816,416,008_17816_output_files,src/c/008_17816_output_files/WriteScreenTextFile.c,matched,
 StatsMenuAssists,18508,227,009_17DFC_palette_fx,src/c/009_17DFC_palette_fx/StatsMenuAssists.c,matched,
 StatsMenuGAA,18A5A,227,009_17DFC_palette_fx,src/c/009_17DFC_palette_fx/StatsMenuGAA.c,matched,
@@ -147,11 +148,13 @@ CalPrevMonth,346FE,109,027_33FFD_calendar,src/c/027_33FFD_calendar/CalPrevMonth.
 CalReturn,3476B,30,027_33FFD_calendar,src/c/027_33FFD_calendar/CalReturn.c,matched,
 SetGameSides,347B7,106,027_33FFD_calendar,src/c/027_33FFD_calendar/SetGameSides.c,nonmatching,draft: record pointer built in edx (asm) vs eax; o kept in edx
 DrawTeamGrid,37FBA,303,028_35FB9_import_export,src/c/028_35FB9_import_export/DrawTeamGrid.c,nonmatching,
-DrawTeamGridName,37C53,279,028_35FB9_import_export,src/c/028_35FB9_import_export/DrawTeamGridName.c,nonmatching,
+DrawTeamGridName,37C53,279,028_35FB9_import_export,src/c/028_35FB9_import_export/DrawTeamGridName.c,nonmatching,register allocation: asm keeps the row in a stack slot and the column in edi (no order of the 5 locals matches)
 MakeTeamDbFmt,36207,102,028_35FB9_import_export,src/c/028_35FB9_import_export/MakeTeamDbFmt.c,matched,
 RestoreGridCellBg,37E5B,75,028_35FB9_import_export,src/c/028_35FB9_import_export/RestoreGridCellBg.c,matched,
 TeamGridHitTest,37B92,193,028_35FB9_import_export,src/c/028_35FB9_import_export/TeamGridHitTest.c,nonmatching,registers: x/y (ebp/edi) and cx/top (ebx/esi) swapped vs asm; local declaration order moves it (top before cx gets to +36)
 AskExportToFloppy,38386,306,029_380E9_league_setup,src/c/029_380E9_league_setup/AskExportToFloppy.c,nonmatching,
+AskMasterPassword,3A49E,249,029_380E9_league_setup,src/c/029_380E9_league_setup/AskMasterPassword.c,matched,
+AskTeamPassword,3A395,265,029_380E9_league_setup,src/c/029_380E9_league_setup/AskTeamPassword.c,matched,
 MergeGoalieRecDelta,3A826,388,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeGoalieRecDelta.c,matched,
 MergeSeasonRecDelta,3A71C,266,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeSeasonRecDelta.c,matched,
 MergeTeamRecDelta,3A5FC,288,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeTeamRecDelta.c,matched,
@@ -337,6 +340,7 @@ EndPenaltyShot,64439,111,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_
 FlushGSumQueue,61B85,58,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/FlushGSumQueue.c,matched,
 FormatPlayerName,61D48,337,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/FormatPlayerName.c,nonmatching,register allocation only: out / first swapped between edi and ebp
 GameTimeStamp,62CD7,34,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/GameTimeStamp.c,matched,
+PostGoalEvent,62343,374,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/PostGoalEvent.c,matched,
 PostInjuryEvent,62764,148,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/PostInjuryEvent.c,matched,
 QueueDeferredCall,619C8,95,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QueueDeferredCall.c,matched,
 QueueGoalieNote,62C37,160,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QueueGoalieNote.c,nonmatching,"draft: only the tail differs: ours keeps 1 in esi for deferpending and the result, asm stores immediates"

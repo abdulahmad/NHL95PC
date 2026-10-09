@@ -62,7 +62,6 @@ extern void DeskSetExit_ret1(); /* 179FA */
 extern void StatsSel9394Playoffs(); /* 17AF3 */
 extern void StatsSel_common(); /* 17B65 */
 extern void StatsSel_x(); /* 17BE1 */
-extern void StatsSelLeague(); /* 17BE7 */
 extern void StatsSelLeaguePlayoffs(); /* 17CE0 */
 extern void StatsSelPlayoffMode(); /* 17D6E */
 extern void DeskSetExit3b(); /* 18D03 */
@@ -430,10 +429,7 @@ extern void ReadDbRec4Ch(); /* 3A2EE */
 extern void WriteLeagueTeamEntry(); /* 3A347 */
 extern void ReadDbRec28h(); /* 3A36B */
 extern void ReadDbRec2Ch(); /* 3A380 */
-extern void AskTeamPassword(); /* 3A395 */
 extern void AskTeamPassword_ret(); /* 3A498 */
-extern void AskMasterPassword(); /* 3A49E */
-extern void EncryptPassword(); /* 3A597 */
 extern void MergeTeamDbs(); /* 3A9AA */
 extern void MergeTeamDbs_ret(); /* 3AE18 */
 extern void MergeScheduleDb(); /* 3AE1E */
@@ -643,7 +639,6 @@ extern void fileio_popebpx(); /* 61A83 */
 extern void fileio_tail_a(); /* 61BFB */
 extern void fileio_tail_b(); /* 61C0C */
 extern void fileio_tail_c(); /* 61C14 */
-extern void PostGoalEvent(); /* 62343 */
 extern void PostPenaltyEvent(); /* 624B9 */
 extern void NullCallback0C(); /* 627F8 */
 extern void ChkScorerMilestone(); /* 62807 */

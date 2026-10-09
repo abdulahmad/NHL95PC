@@ -1294,6 +1294,10 @@ add esp, byte 8	; 62338
 .14:
 add esp, byte 0Ch	; 6233B
 jmp near fileio_popebpx	; 6233E
+; C: src/c/045_614C2_scoring_penalty_text/PostGoalEvent.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/PostGoalEvent.inc"
+%else
 PostGoalEvent:
 push dword 10h	; 62343
 call __CHK	; 62348
@@ -1400,6 +1404,7 @@ add esp, byte 4	; 624B1
 pop edi	; 624B4
 pop esi	; 624B5
 ret 0Ch	; 624B6
+%endif ; C
 PostPenaltyEvent:
 push dword 2Ch	; 624B9
 call __CHK	; 624BE
