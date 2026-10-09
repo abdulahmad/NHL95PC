@@ -39,15 +39,15 @@ global dword_C5714, dword_C5718, dword_C583C, dword_C5840, dword_C5844, dword_C5
 global dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862, dword_C5886, dword_C588A
 global dword_C6410, dword_C6414, dword_C6418, dword_C641C, dword_C6420, dword_C6430, dword_C65A8, dword_C65AC
 global dword_C65B0, dword_C65B4, dword_C65B8, dword_C65BC, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC
-global dword_C65D0, dword_C65F4, dword_C66A4, dword_C66AC, dword_C66B0, dword_C66C4, dword_C66C8, dword_C66D0
+global dword_C65D0, dword_C65F4, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dword_C66C8, dword_C66D0
 global dword_C66D4, dword_C6718, dword_C679D, dword_C67B9, dword_C67BD, dword_C6956, dword_C695A, dword_C6A60
 global dword_C6AF8, dword_C6B30, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32, dword_C6E3A, dword_C6E4A
 global dword_C6F78, dword_C6F88, dword_C6F8C, dword_C6F90, dword_C6F94, dword_C7008, dword_C700C, dword_C7010
 global dword_C7014, dword_C7018, dword_C701C, dword_C7020, dword_C7024, dword_C7028, dword_C702C, dword_C7030
 global dword_C7034, dword_C70E3, dword_C70E7, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC
 global dword_C71E0, dword_C71E4, dword_C71E8, dword_C71EC, dword_C71F0, dword_C71F4, dword_C71FC, dword_C7208
-global dword_C7210, dword_C7219, dword_C721D, dword_C729A, dword_C729C, dword_C729E, dword_C72A0, dword_C73D0
-global dword_C73D4, dword_C73D8, dword_C7440, dword_C7444, dword_C7448, off_C56B5, off_C579C, off_C57C8
+global dword_C7210, dword_C7219, songdata, dword_C729A, dword_C729C, dword_C729E, dword_C72A0, dword_C73D0
+global rinkbm, dword_C73D8, dword_C7440, dword_C7444, dword_C7448, off_C56B5, off_C579C, off_C57C8
 global off_C57CC, off_C6399, off_C648E, off_C659A, off_C6821, off_C6825, off_C6841, off_C6845
 global off_C6881, off_C6885, off_C68BC, off_C68CC, off_C68E4, off_C68EC, off_C68F4, off_C68F8
 global off_C6A64, off_C6A99, off_C6AAC, off_C6AD1, off_C6AE0, off_C6B68, off_C6B6C, off_C6B70
@@ -78,7 +78,7 @@ global unk_C70DF, unk_C7108, unk_C710E, unk_C7114, unk_C711F, unk_C7129, unk_C71
 global unk_C714E, unk_C7156, unk_C7161, unk_C7174, unk_C7185, unk_C7221, unk_C7243, unk_C7265
 global unk_C744C, unk_C7450, unk_C7453, unk_C746B, unk_C7483, unk_C749A, unk_C74A2, unk_C74B7
 global unk_C74EF, word_C571C, word_C571E, word_C5720, word_C5722, word_C575C, word_C575E, word_C5760
-global word_C5762, word_C6D24, word_C6E22, word_C7290
+global word_C5762, word_C6D24, word_C6E22, scrpitch
 asc_C5679:
 db 070h,06Ch,061h,079h,020h,074h,068h,065h,020h,067h,061h,06Dh,065h,02Ch,020h,079h
 db 06Fh,075h,020h,072h,065h,071h,075h,069h,072h,065h,020h,058h,058h,020h,04Bh,062h
@@ -856,7 +856,7 @@ dword_C66B0:
 db 0Dh,00h,00h,00h
 byte_C66B4:
 db 07h,00h,04h,00h,03h,00h,06h,00h,01h,00h,08h,00h,02h,00h,00h,00h
-dword_C66C4:
+screenbm:
 db 00h,00h,00h,00h
 dword_C66C8:
 db 00h,00h,00h,00h,00h,00h,00h,00h
@@ -1468,7 +1468,7 @@ byte_C7218:
 db 01h
 dword_C7219:
 db 00h,00h,00h,00h
-dword_C721D:
+songdata:
 db 00h,00h,00h,00h
 unk_C7221:
 db 049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,064h,069h,073h
@@ -1486,7 +1486,7 @@ dd unk_C7221
 dd unk_C7243
 dd unk_C7265
 db 00h,00h
-word_C7290:
+scrpitch:
 db 050h,00h,00h,00h,00h,00h,00h,00h
 asc_C7298:
 db 042h,04Fh
@@ -1518,7 +1518,7 @@ db 015h,00h,026h,00h,0FFh,0FFh,0FFh,0FFh,041h,04Eh,048h,00h,015h,00h,025h,00h
 db 0FFh,0FFh,0FFh,0FFh,046h,04Ch,04Fh,00h,015h,00h,025h,00h,0FFh,0FFh,0FFh,0FFh
 dword_C73D0:
 db 00h,00h,00h,00h
-dword_C73D4:
+rinkbm:
 db 00h,00h,00h,00h
 dword_C73D8:
 db 02Ch,00h,00h,00h,035h,00h,00h,00h,048h,00h,00h,00h,04Ah,00h,00h,00h

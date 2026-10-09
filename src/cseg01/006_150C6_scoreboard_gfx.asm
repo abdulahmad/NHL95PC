@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_150C6 progbits alloc exec nowrite align=1
 extern StanleyCupTimer, __CHK, asc_C0784, asc_C078C, asc_C0791, asc_C079C, asc_C8136, byte_C5400
-extern byte_D2430, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, byte_EA0F4
+extern musicon, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, byte_EA0F4
 extern byte_ED823, byte_ED939, dword_C5130, dword_C52E9, dword_C52ED, dword_C52F5, dword_C52F9, dword_C52FD
 extern dword_C5301, dword_C5305, dword_C5309, dword_C53F7, dword_C53FB, gameopts, dword_C5519, dword_C5704
 extern dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
@@ -14,7 +14,7 @@ extern dword_DF73C, jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C
 extern off_D3078, rand_, randomd0, sub_10712, sub_10E9F, sub_1167B, sub_13BB4, sub_13FA7
 extern sub_1431E, sub_14A20, sub_14F31, sub_1BEFD, sub_327A1, sub_3371C, sub_3377C, sub_42221
 extern sub_479E9, sub_47C31, sub_4FD47, sub_59D71, sub_5B9D1, sub_673C5, sub_6B410, sub_6B47C
-extern sub_7DC8B, sub_891B2, sub_8C1C2, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
+extern sub_7DC8B, sub_891B2, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
 extern sub_B39ED, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, unk_C5298, unk_DF314, word_CBC4A
 extern word_CBC52, word_CBC56, word_CBC60, word_CBC6A
 global loc_1511A, loc_15180, loc_15182, loc_151F8, loc_15252, loc_1528C, loc_1528E, loc_15400
@@ -73,7 +73,7 @@ mov dword [dword_C5858], ebx	; 15148
 mov dword [dword_C5854], ebx	; 1514E
 mov dword [dword_C5860], ebx	; 15154
 mov dword [dword_C585C], ebx	; 1515A
-call sub_8C1C2	; 15160
+call SelectScreenBM	; 15160
 mov ecx, asc_C8136	; 15165
 mov ebx, asc_C0784	; 1516A
 cmp byte [byte_ED939], 1	; 1516F
@@ -107,7 +107,7 @@ mov edx, dword [dword_DF722]	; 151C7
 sar edx, 10h	; 151CD
 mov eax, 1	; 151D0
 call sub_14A20	; 151D5
-call sub_8C1C2	; 151DA
+call SelectScreenBM	; 151DA
 call sub_14F31	; 151DF
 test esi, esi	; 151E4
 jne short loc_151F8	; 151E6
@@ -1219,7 +1219,7 @@ mov dword [dword_C52F9], 0FFFFFFFEh	; 15E99
 mov eax, unk_C5298	; 15EA3
 call sub_327A1	; 15EA8
 or byte [gameopts], 0FFh	; 15EAD
-cmp byte [byte_D2430], 0	; 15EB4
+cmp byte [musicon], 0	; 15EB4
 je short loc_15EC6	; 15EBB
 or byte [byte_C5400], 1	; 15EBD
 jmp short loc_15ECD	; 15EC4

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_69336 progbits alloc exec nowrite align=1
-extern DoGameFrame, sub_5DF86, __CHK, assreplace, byte_C5400, byte_C90BC, gmode2, byte_D2430
+extern DoGameFrame, sub_5DF86, __CHK, assreplace, byte_C5400, byte_C90BC, gmode2, musicon
 extern byte_E9AC0, byte_E9AC1, dword_C4D0C, dword_C4E10, dword_C4E14, dword_C5130, gameopts, dword_C5704
 extern dword_C5708, dword_C570C, dword_C7444, dword_C7448, dword_C90B0, dword_C90C0, dword_C90C8, dword_C90CA
 extern dword_CBECA, dword_CC0DC, dword_CCC88, dword_CCC98, dword_CD9A0, dword_D8C40, dword_D8C72, dword_D8C74
@@ -19,7 +19,7 @@ extern SortCords, unk_E001C, vtoa, word_C9098, word_C909A, word_C90A8, xc1, yc1
 extern word_C90C2, word_C90C4, word_C90C6, word_C90CC, word_C90CE, refsignal, word_C90D4, word_C90D6
 extern word_C90D8, word_C90DA, word_C90DC, word_C90DE, word_CBC44, word_CBC46, word_CBC48, word_CBC52
 extern word_CBC54, word_CBC56, word_CBC58, word_CBC62, word_CBC64, word_CBC6A, word_CBC6C, word_CBEC0
-extern word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0DE, word_DD6AA, word_DF624
+extern word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0DE, scrolly, word_DF624
 extern word_DF63E, word_DF644, word_DF64A, word_DF64C, word_DF724, word_DF73E, word_DF744, word_DF746
 extern word_DF74A, word_DF74C, word_DF816, word_DF81A, word_DFF1E, word_DFF22, word_DFF26, word_DFF28
 extern word_DFF2A, word_DFF2E, word_DFF44, word_DFF70, word_E001E, word_E0022, word_E0028, word_E002A
@@ -496,7 +496,7 @@ lea ecx, [dword edx+0A8h]	; 69ACD
 mov ebx, dword [dword_DD6B0]	; 69AD3
 sar ebx, 10h	; 69AD9
 shl ebx, 3	; 69ADC
-mov eax, dword [word_DD6AA]	; 69ADF
+mov eax, dword [scrolly]	; 69ADF
 sar eax, 10h	; 69AE4
 add eax, ebx	; 69AE7
 lea ebx, [dword eax+0140h]	; 69AE9
@@ -518,7 +518,7 @@ neg edx	; 69B28
 mov eax, dword [dword_DD6B0]	; 69B2A
 sar eax, 10h	; 69B2F
 shl eax, 3	; 69B32
-mov ebx, dword [word_DD6AA]	; 69B35
+mov ebx, dword [scrolly]	; 69B35
 sar ebx, 10h	; 69B3B
 add eax, ebx	; 69B3E
 neg eax	; 69B40
@@ -660,7 +660,7 @@ xor ebx, ebx	; 69D57
 mov word [word_CC0DE], bx	; 69D59
 xor edi, edi	; 69D60
 mov dword [dword_CCC88], edi	; 69D62
-cmp byte [byte_D2430], 0	; 69D68
+cmp byte [musicon], 0	; 69D68
 je short loc_69D8A	; 69D6F
 test byte [byte_C5400], 1	; 69D71
 je short loc_69D8A	; 69D78

@@ -10,5 +10,17 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0005F745,sub_5F745,dostop,93G,logic93_5.asm,checks94.asm,,high,manual trace: called from doplayeracc 5E16D when dir==9; |Xvel| or |Yvel| > 1000h -> SetSPA stop/glide (pfrev bit 44h.4) else falls to StopNA 5F82A; same $1000 test as 93G/94G dostop,engine_skating,manual-trace
 0005F82A,sub_5F82A,StopNA,93G,logic93_5.asm,checks94.asm,,high,manual trace: moves Xvel/Yvel toward 0 by a per-axis step without overshoot; called from dostop and goalie path 5F8B2; PC step = 200+legstr (goalie +2*legstr) vs 93G/94G fixed $96,engine_skating,manual-trace
 0005F8B2,sub_5F8B2,goalieacc,93G,logic93_5.asm,,,high,"manual trace: called by doplayeracc when position=0, dir 9=stop, callees match 93G goalieacc",engine_skating,manual-trace
+0008BEDB,sub_8BEDB,PlayMVI,PC-new,,,,high,"plays an MVI movie (eax=path, edx/ebx=screen x/y 161h/54h from the coach/allfiles screen): opens the CD stream (cdstream sub_1B0F3), loops over chunks 'MVIh' header (sets frame delay 100/fps), 'MVIf' frame (decode + wait for the frame time), 'MVIe' end; a key press aborts (sub_1600C); fades/restarts the music around it. Returns the key",asm_helpers,manual-trace
+0008C1B7,sub_8C1B7,stub_8C1B7,PC-new,,,,medium,"empty function (__CHK; ret), no callers",asm_helpers,manual-trace
+0008C1C2,sub_8C1C2,SelectScreenBM,PC-new,,,,medium,SetDrawBitmap(*screenbm): makes the screen bitmap descriptor current (48-byte copy into D30A4); called by file_utils/engine_init,asm_helpers,manual-trace
+0008C1E2,sub_8C1E2,SelectRinkBM,PC-new,,,,medium,SetDrawBitmap(*rinkbm): makes the rink tile buffer bitmap current; called by file_utils/gadgets_replay,asm_helpers,manual-trace
+0008C1F7,sub_8C1F7,stub_8C1F7,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
+0008C202,sub_8C202,stub_8C202,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
+0008C20D,sub_8C20D,stub_8C20D,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
+0008C218,sub_8C218,stub_8C218,PC-new,,,,medium,"empty function; line_editor_rosters calls it with 6 stack args (vgapage==0, ...) and pops them: a removed routine",asm_helpers,manual-trace
+0008C223,sub_8C223,stub_8C223,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
+0008C290,sub_8C290,vgacopy_bg,PC-new,,,,medium,"unreferenced 16-bit-frame VGA routine: write mode 1 latched copy of rows from the circular background buffer in VRAM (86A0h + bgscrolly8*8 rows, wrap C8A0h->4200h) to the screen at (x,y) [bp+6..0Eh]",asm_helpers,manual-trace
+0008C944,sub_8C944,SaveSS,PC-new,,,,medium,stores SS in saved_ss (DOS/4GW selector for later real-mode calls),asm_helpers,manual-trace
 000933F0,sub_933F0,imul32,PC-new,,,,medium,EA math helper (cdecl): returns [esp+4]*[esp+8] signed (imul edx); skatetopuck squares x and y with it,ea_fileblock,manual-trace
 000B3D94,sub_B3D94,vecdist,PC-new,middle93_1.asm,video94.asm,92G sroot; 95G sroot,medium,"EA math helper (cdecl dx,dy): angle of (dx,dy) via sub_B49C0, then |dx|/cos or |dy|/sin (16.16) = the vector length; skatetopuck compares the player-puck distance with 18h. Plays the role of 93G sroot (sqrt of dx^2+dy^2)",ea_fileio,manual-trace
+000B4F70,sub_B4F70,SetDrawBitmap,PC-new,,,,medium,vga_blitters: copies the 48-byte bitmap descriptor at [esp+4] into the current one at D30A4 (640x480 default),vga_blitters,manual-trace

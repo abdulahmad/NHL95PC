@@ -5,7 +5,7 @@ section s_981AD progbits alloc exec nowrite align=1
 extern asc_C47E8, asc_C47FC, dword_D2FD8, dword_D30D4, dword_D41F0, off_D306C, off_D3070, off_D3074
 extern off_D3078, off_D45B4, off_D45B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_90267
 extern sub_90D20, sub_910E0, sub_9132C, sub_91400, sub_93000, sub_9C5A8, sub_9C5B0, sub_A1800
-extern sub_A1840, sub_B39D0, sub_B3A88, sub_B3AA1, sub_B3D74, sub_B4BA8, sub_B4F70, sub_B4F8C
+extern sub_A1840, sub_B39D0, sub_B3A88, sub_B3AA1, sub_B3D74, sub_B4BA8, SetDrawBitmap, sub_B4F8C
 extern sub_B6F84, unk_D45D8
 global loc_983B1, loc_983BB, loc_983DB, loc_983F1, loc_984CF, sub_981AD, sub_981B0, sub_981D4
 global sub_981F8, sub_984A8, sub_984D0, sub_9862C, sub_9864C, sub_98664, sub_9867E
@@ -111,7 +111,7 @@ call sub_B6F84	; 982D3
 add esp, byte 14h	; 982D8
 call dword [off_D3070]	; 982DB
 push esi	; 982E1
-call sub_B4F70	; 982E2
+call SetDrawBitmap	; 982E2
 add esp, byte 4	; 982E7
 mov ebx, dword [dword esp+0B8h]	; 982EA
 mov edx, dword [dword esp+0B4h]	; 982F1
@@ -277,7 +277,7 @@ push unk_D45D8	; 98523
 call sub_8EA18	; 98528
 add esp, byte 4	; 9852D
 push esi	; 98530
-call sub_B4F70	; 98531
+call SetDrawBitmap	; 98531
 add esp, byte 4	; 98536
 push dword 0C8h	; 98539
 push dword 0BEh	; 9853E

@@ -35,3 +35,17 @@ regd1,E03C0,"Watcom static for the ported 68k d1 (target y, new Yvel)"
 regd2,E03AC,"Watcom static for the ported 68k d2 (EvadePlayers/EvadePC x distance, playeracc accel factor and max speed)"
 regd3,E03B0,Watcom static for the ported 68k d3 (doplayeracc and playeracc speed squared)
 dirtab_y,C90E2,"93G dirtab y column (2(a0,d2.w) ""y inc"" in playeracc): the second word of each dirtab pair; a separate label because nasm drops nosplit on [nosplit esi*2+dirtab+2]"
+musicslot,D242F,"music driver slot byte read before fade/wait calls (sub_8FC8A(slot,3) polled until done) in PlayMVI, arena_logos, sound_config"
+vtoa_dt,D2C74,"93G vtoa .dt table, same 16 bytes 1,7,3,5,0,0,4,4,2,6,2,6,1,7,3,5"
+scrpitch,C7290,planar VGA bytes per row (50h): every vga* routine multiplies y by it
+scrolly,DD6AA,vgaflip: CRTC start = scrpitch*scrolly + scrollx/4 + page base
+scrollx,DD6AC,vgaflip: low 2 bits -> attribute 33h pixel panning
+vgapage,EDA04,vgaflip toggles it 0/1 and shows page 0B00h or 4400h
+bgscrolly8,DD70C,"background top row in 8-line units in the circular VRAM background buffer (vgacopy_bg, vgacopy_bgfull: *8 rows / *300h bytes)"
+bgscrollx,DD6B2,"background x offset (added twice, words) in the circular VRAM background buffer"
+musicon,D2430,music present/on flag tested before every song call (with songdata != 0)
+songdata,C721D,pointer to the loaded song (0 = none); freed and cleared after a fade in arena_logos; played with musichandle
+musichandle,D2431,music handle passed to the play (sub_8FB8E) and fade (sub_8FCDF) calls
+screenbm,C66C4,"pointer to the screen bitmap descriptor (set in main_ startup), selected by SelectScreenBM"
+rinkbm,C73D4,"pointer to the rink tile buffer bitmap (37840h-byte block, rink_tiles), selected by SelectRinkBM"
+saved_ss,D2F44,SS saved by SaveSS

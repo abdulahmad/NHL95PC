@@ -4,7 +4,7 @@ bits 32
 section s_9D090 progbits alloc exec nowrite align=1
 extern _os_handle, asc_C4934, asc_C493C, asc_C4944, asc_C494C, dword_D2F84, dword_D30A4, dword_D30A8
 extern dword_D30C4, dword_D5184, off_D517C, off_D518C, strncpy_, sub_8CC8C, sub_8D2F0, sub_8DBD4
-extern sub_8FFB0, sub_91538, sub_932EC, sub_B30B4, sub_B3A88, sub_B3AA1, sub_B4BA8, sub_B4F70
+extern sub_8FFB0, sub_91538, sub_932EC, sub_B30B4, sub_B3A88, sub_B3AA1, sub_B4BA8, SetDrawBitmap
 global loc_9D0B0, loc_9D0D7, loc_9D232, loc_9D24A, loc_9D251, loc_9D267, loc_9D269, loc_9D280
 global loc_9D298, loc_9D299, loc_9D2C8, loc_9D303, sub_9D090, sub_9D2E0
 sub_9D090:
@@ -201,7 +201,7 @@ call _os_handle	; 9D2EF
 add esp, byte 4	; 9D2F4
 mov dword [byte esi+02Ch], eax	; 9D2F7
 push esi	; 9D2FA
-call sub_B4F70	; 9D2FB
+call SetDrawBitmap	; 9D2FB
 add esp, byte 4	; 9D300
 loc_9D303:
 mov eax, esi	; 9D303

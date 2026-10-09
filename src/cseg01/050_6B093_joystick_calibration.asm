@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_6B093 progbits alloc exec nowrite align=1
 extern __CHK, asc_C27CC, asc_C27D3, asc_C27D8, asc_C27DD, asc_C27E2, asc_C27E7, asc_C27EC
-extern asc_C27F7, asc_C2805, byte_C8111, byte_C8164, byte_D2430, byte_D3040, byte_D416A, byte_EA0F4
+extern asc_C27F7, asc_C2805, byte_C8111, byte_C8164, musicon, byte_D3040, byte_D416A, byte_EA0F4
 extern byte_EA0FC, byte_EA0FD, byte_EA2A4, byte_EA2A5, dword_C4CFC, dword_C71E0, dword_CCC94, dword_CD9D0
 extern dword_CD9F4, dword_CDA1C, dword_CDA20, dword_CDA24, dword_CDA28, dword_CDA2C, dword_CDA30, dword_CDA34
 extern dword_CDA38, dword_CDA3C, dword_CDA40, dword_CDA44, dword_CDA48, dword_CDA4C, dword_D07AA, dword_D07AE
@@ -17,7 +17,7 @@ extern sub_8D2F0, sub_8E4C0, sub_8E4F8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9
 extern sub_8EA18, sub_90D20, sub_910E0, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_91964
 extern sub_92CD0, sub_92DE0, sub_B29F0, sub_B2CBE, sub_B2DB4, sub_B2F22, sub_B30B4, sub_B30F4
 extern sub_B340B, sub_B3464, sub_B384E, sub_B387E, sub_B392C, sub_B39D0, sub_B39ED, sub_B4B88
-extern sub_B4BA8, sub_B4C61, sub_B4FAC, unk_C27F5, unk_D45D8, word_C7290
+extern sub_B4BA8, sub_B4C61, sub_B4FAC, unk_C27F5, unk_D45D8, scrpitch
 global loc_6B0C7, loc_6B0CC, loc_6B17A, loc_6B17F, loc_6B21F, loc_6B23C, loc_6B29D, loc_6B2FA
 global loc_6B336, loc_6B345, loc_6B371, loc_6B3AC, loc_6B42F, loc_6B436, loc_6B478, loc_6B4B6
 global loc_6B4EC, loc_6B4F9, loc_6B50A, loc_6B521, loc_6B534, loc_6B560, loc_6B56D, loc_6B57A
@@ -1308,7 +1308,7 @@ push ecx	; 6BEA0
 push edx	; 6BEA1
 push esi	; 6BEA2
 push ebp	; 6BEA3
-cmp byte [byte_D2430], 0	; 6BEA4
+cmp byte [musicon], 0	; 6BEA4
 je short loc_6BEC1	; 6BEAB
 mov eax, dword [dword_ED7B0]	; 6BEAD
 mov edx, dword [dword eax+03B60h]	; 6BEB2
@@ -1316,7 +1316,7 @@ push edx	; 6BEB8
 call sub_8D2F0	; 6BEB9
 add esp, byte 4	; 6BEBE
 loc_6BEC1:
-mov dword [word_C7290], 0A0h	; 6BEC1
+mov dword [scrpitch], 0A0h	; 6BEC1
 xor ecx, ecx	; 6BECB
 mov dword [dword_C71E0], ecx	; 6BECD
 call sub_6CC20	; 6BED3
@@ -1338,7 +1338,7 @@ add esp, byte 4	; 6BF02
 xor ebx, ebx	; 6BF05
 mov dword [dword_D07AA], ebx	; 6BF07
 loc_6BF0D:
-cmp byte [byte_D2430], 0	; 6BF0D
+cmp byte [musicon], 0	; 6BF0D
 je short loc_6BF32	; 6BF14
 mov dword [dword_CCC94], 20h	; 6BF16
 mov eax, dword [dword_C4CFC]	; 6BF20

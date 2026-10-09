@@ -8,7 +8,7 @@ extern asc_C148E, asc_C14B2, asc_C14BB, asc_C14C0, asc_C14C7, asc_C14DA, asc_C14
 extern asc_C14F6, asc_C14FB, asc_C1506, asc_C150F, asc_C1516, asc_C151B, asc_C1520, asc_C1526
 extern asc_C152F, asc_C1534, asc_C153F, asc_C1543, asc_C154F, asc_C1553, asc_C155F, asc_C1569
 extern asc_C70A0, asc_C70B8, asc_C70C7, asc_CDB75, asc_CDB7C, byte_C52F2, byte_C5311, byte_C5367
-extern byte_C5386, byte_C53DC, byte_D2430, byte_DD2D4, byte_DD668, byte_DD669, byte_DD774, byte_DD788
+extern byte_C5386, byte_C53DC, musicon, byte_DD2D4, byte_DD668, byte_DD669, byte_DD774, byte_DD788
 extern byte_ED82F, byte_ED992, dword_C52E9, dword_C52ED, dword_C530D, dword_C5382, dword_C53F7, dword_C6F78
 extern dword_C6F88, dword_C6F8C, dword_C6F90, dword_C6F94, dword_C7008, dword_C700C, dword_C7010, dword_C7014
 extern dword_C7018, dword_C701C, dword_C7020, dword_C7024, dword_C7028, dword_C702C, dword_C7030, dword_C7034
@@ -2240,7 +2240,7 @@ mov esi, eax	; 2D31A
 loc_2D31C:
 test esi, esi	; 2D31C
 je short loc_2D334	; 2D31E
-cmp byte [byte_D2430], 0	; 2D320
+cmp byte [musicon], 0	; 2D320
 jne short loc_2D32D	; 2D327
 and byte [byte edi+05Ah], 0FEh	; 2D329
 loc_2D32D:

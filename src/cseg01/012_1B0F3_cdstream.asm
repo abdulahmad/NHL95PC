@@ -2,11 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_1B0F3 progbits alloc exec nowrite align=1
-extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, dword_C4D0C, dword_C66B0, dword_C73D4
+extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, dword_C4D0C, dword_C66B0, rinkbm
 extern dword_CBECA, dword_CC0E0, dword_D8C68, dword_D8C80, dword_D9980, dword_DC230, dword_DC2F0, dword_DC338
 extern dword_DC8A0, dword_DC8C8, dword_E0244, dword_ED700, jctime, sub_33727, sub_4FD47, sub_59748
 extern sub_5DD9E, sub_7DEC8, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E4F8, sub_8EA18, sub_91FA4
-extern sub_B2CD8, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, word_C7290
+extern sub_B2CD8, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, scrpitch
 global jpt_1B283, loc_1B1B7, loc_1B218, loc_1B225, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0
 global loc_1B2F0, loc_1B334, loc_1B3AE, loc_1B42A, loc_1B468, loc_1B46D, loc_1B485, loc_1B49D
 global loc_1B4BC, loc_1B534, loc_1B588, loc_1B5EB, loc_1B681, loc_1B721, loc_1B789, loc_1B799
@@ -815,7 +815,7 @@ mov ebp, dword [dword_DC230]	; 1BA61
 push ebp	; 1BA67
 call sub_8EA18	; 1BA68
 add esp, byte 4	; 1BA6D
-mov word [word_C7290], 50h	; 1BA70
+mov word [scrpitch], 50h	; 1BA70
 call sub_33727	; 1BA79
 loc_1BA7E:
 pop ebp	; 1BA7E
@@ -890,14 +890,14 @@ loc_1BB0E:
 mov eax, 1	; 1BB0E
 jmp near loc_1BA7E	; 1BB13
 loc_1BB18:
-mov edx, dword [dword_C73D4]	; 1BB18
+mov edx, dword [rinkbm]	; 1BB18
 test edx, edx	; 1BB1E
 je short loc_1BB33	; 1BB20
 push edx	; 1BB22
 call jctime	; 1BB23
 add esp, byte 4	; 1BB28
 xor ecx, ecx	; 1BB2B
-mov dword [dword_C73D4], ecx	; 1BB2D
+mov dword [rinkbm], ecx	; 1BB2D
 loc_1BB33:
 call sub_8DAB8	; 1BB33
 cmp eax, ebp	; 1BB38

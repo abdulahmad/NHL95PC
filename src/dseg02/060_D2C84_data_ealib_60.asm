@@ -35,7 +35,7 @@ global dword_D458C, dword_D4590, dword_D4594, dword_D4598, dword_D459C, dword_D4
 global off_D2F68, off_D2F6C, off_D2F70, off_D306C, off_D3070, off_D3074, off_D3078, off_D3088
 global off_D308C, off_D42A0, off_D42A4, off_D45B4, off_D45B8, unk_D41C8, unk_D41D2, unk_D4448
 global unk_D44B0, unk_D44CE, unk_D45D8, unk_D45F8, unk_D47B4, word_D2D60, word_D2D66, word_D2D6C
-global word_D2D6E, word_D2F44, word_D2FE8, word_D3004, word_D3006, word_D3008, word_D3094, word_D309A
+global word_D2D6E, saved_ss, word_D2FE8, word_D3004, word_D3006, word_D3008, word_D3094, word_D309A
 global word_D41F8, word_D41FA
 dword_D2C84:
 dd sub_B2CCD
@@ -118,7 +118,7 @@ db 0A0h,0A1h,0A2h,0A3h,0A4h,0A5h,0A6h,03Ah,022h,07Eh,00h,07Ch,0ACh,0ADh,0AEh,0AF
 db 0B0h,0B1h,0B2h,03Ch,03Eh,03Fh,00h,00h,00h,020h,00h,0F8h,0F9h,0FAh,0FBh,0FCh
 db 0FDh,0FEh,0FFh,080h,081h,00h,00h,0C7h,0C8h,0C9h,02Dh,0CBh,0CCh,0CDh,02Bh,0CFh
 db 0D0h,0D1h,0D2h,0D3h,00h,00h,00h,08Dh,08Eh,00h,00h,00h
-word_D2F44:
+saved_ss:
 db 00h,00h
 asc_D2F46:
 db 053h,074h,061h,063h,06Bh,020h,04Fh,076h,065h,072h,066h,06Ch,06Fh,077h,021h,0Dh

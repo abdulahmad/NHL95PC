@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_D8ACC progbits alloc noexec write align=1
 extern __InitFiles_, __chk8087_, __delay_init_, __full_io_exit_, __setEFGfmt_, __setenvp_, j___sys_fini_387_emulator, j___sys_init_387_emulator
-extern sub_8C944, sub_AB180, sub_AD434, sub_B0C5C, sub_B19E0, sub_B1C70
+extern SaveSS, sub_AB180, sub_AD434, sub_B0C5C, sub_B19E0, sub_B1C70
 global byte_D8AE4, byte_D8B0E, byte_D8B10, unk_D8B14, unk_D8B3E, unk_D8B4A, word_D8ACC
 word_D8ACC:
 db 0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh
@@ -18,7 +18,7 @@ byte_D8B10:
 db 00h,00h,00h,00h
 unk_D8B14:
 db 00h,020h
-dd sub_8C944
+dd SaveSS
 db 00h,020h
 dd __setEFGfmt_
 db 00h,01h

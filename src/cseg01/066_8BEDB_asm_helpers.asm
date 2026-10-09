@@ -2,21 +2,22 @@
 bits 32
 %include "hockey.inc"
 section s_8BEDB progbits alloc exec nowrite align=1
-extern StanleyCupTimer, __CHK, byte_D2430, byte_D2C74, dword_C66C4, dword_C721D, dword_C73D4, dword_D242C
-extern dword_D2431, dword_EDA04, sub_1600C, sub_16072, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002
+extern StanleyCupTimer, __CHK, musicon, vtoa_dt, screenbm, songdata, rinkbm, musicslot
+extern musichandle, vgapage, sub_1600C, sub_16072, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002
 extern sub_1B092, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
 extern sub_1B2A7, sub_1B8AC, sub_1B92E, sub_33E6A, sub_6B3D7, sub_8FB8E, sub_8FC8A, sub_8FCDF
-extern sub_90D20, sub_910E0, sub_B395C, sub_B3989, sub_B39A7, sub_B4B88, sub_B4BA8, sub_B4F70
-extern word_C7290, word_C9102, word_D2F44, word_DD6AA, word_DD6AC, word_DD6B2, word_DD70C
-global loc_8BF36, loc_8BF46, loc_8BF75, loc_8BF94, loc_8BFBE, loc_8BFCE, loc_8C00F, loc_8C046
-global loc_8C04F, loc_8C055, loc_8C0C2, loc_8C0C8, loc_8C0D0, loc_8C10F, loc_8C125, loc_8C12A
-global loc_8C135, loc_8C14B, loc_8C171, loc_8C199, loc_8C1AD, loc_8C1D5, loc_8C2FB, loc_8C33C
-global loc_8C353, loc_8C3C7, loc_8C441, loc_8C490, loc_8C4D3, loc_8C4D8, loc_8C4E4, loc_8C52D
-global loc_8C535, loc_8C543, loc_8C584, loc_8C5BD, loc_8C5C1, loc_8C5EF, loc_8C60C, loc_8C611
-global loc_8C625, loc_8C682, loc_8C6B5, loc_8C75C, loc_8C770, loc_8C8BF, loc_8C8FF, loc_8C910
-global loc_8C91B, loc_8C929, loc_8C934, randomd0, sub_8BEDB, sub_8C1B7, sub_8C1C2, sub_8C1E2
-global sub_8C1F7, sub_8C202, sub_8C20D, sub_8C218, sub_8C223, sub_8C290, sub_8C944, vtoa
-sub_8BEDB:
+extern sub_90D20, sub_910E0, sub_B395C, sub_B3989, sub_B39A7, sub_B4B88, sub_B4BA8, SetDrawBitmap
+extern scrpitch, saved_ss, scrolly, scrollx, bgscrollx, bgscrolly8
+global SelectScreenBM_set
+global randomd0, PlayMVI, stub_8C1B7, SelectScreenBM, SelectRinkBM
+global stub_8C1F7, stub_8C202, stub_8C20D, stub_8C218, stub_8C223, vgacopy_bg, SaveSS, vtoa
+; PlayMVI(eax=path, edx=x, ebx=y) -> eax key.  PC only (CD movie player).
+;  Opens the file through the cdstream reader, then per chunk:
+;   'MVIh' header: sets up the decoder (cmv_player) and the frame delay
+;   'MVIf' frame : decodes and waits for the frame time (sub_B395C ticks)
+;   'MVIe' end   : stops.  A key press (sub_1600C) aborts.
+;  Afterwards waits for the music fade and restarts the song if music is on.
+PlayMVI:
 push dword 58h	; 8BEDB
 call __CHK	; 8BEE0
 push ecx	; 8BEE5
@@ -44,13 +45,13 @@ mov edi, eax	; 8BF27
 push dword 96h	; 8BF29
 call sub_B3989	; 8BF2E
 add esp, byte 4	; 8BF33
-loc_8BF36:
+.prime:
 call sub_B39A7	; 8BF36
 test eax, eax	; 8BF3B
-jne short loc_8BF46	; 8BF3D
+jne short .1	; 8BF3D
 call sub_1B2A7	; 8BF3F
-jmp short loc_8BF36	; 8BF44
-loc_8BF46:
+jmp short PlayMVI.prime	; 8BF44
+.1:
 mov dword [byte esp+0Ch], 0Ah	; 8BF46
 xor ebp, ebp	; 8BF4E
 mov dword [byte esp+010h], ebp	; 8BF50
@@ -62,7 +63,7 @@ call sub_B395C	; 8BF63
 mov dword [byte esp+024h], eax	; 8BF68
 mov dword [byte esp+028h], ebp	; 8BF6C
 call sub_1B2A7	; 8BF70
-loc_8BF75:
+.chunk:
 mov ebx, dword [byte esp+020h]	; 8BF75
 push ebx	; 8BF79
 call sub_1B8AC	; 8BF7A
@@ -70,27 +71,27 @@ mov edx, eax	; 8BF7F
 add esp, byte 4	; 8BF81
 mov dword [byte esp+04h], eax	; 8BF84
 cmp eax, byte 0FFFFFFFFh	; 8BF88
-jne short loc_8BF94	; 8BF8B
+jne short .2	; 8BF8B
 mov esi, eax	; 8BF8D
-jmp near loc_8C12A	; 8BF8F
-loc_8BF94:
+jmp near .8	; 8BF8F
+.2:
 test eax, eax	; 8BF94
-je near loc_8C125	; 8BF96
+je near .7	; 8BF96
 call sub_16072	; 8BF9C
 mov dword [byte esp+08h], eax	; 8BFA1
 cmp eax, 4D564966h	; 8BFA5
-jb short loc_8BFBE	; 8BFAA
-jbe short loc_8BFCE	; 8BFAC
+jb short .3	; 8BFAA
+jbe short .frame	; 8BFAC
 cmp eax, 4D564968h	; 8BFAE
-je near loc_8C055	; 8BFB3
-jmp near loc_8C0C8	; 8BFB9
-loc_8BFBE:
+je near .header	; 8BFB3
+jmp near .other	; 8BFB9
+.3:
 cmp eax, 4D564965h	; 8BFBE
-je near loc_8C0C2	; 8BFC3
-jmp near loc_8C0C8	; 8BFC9
-loc_8BFCE:
+je near .end	; 8BFC3
+jmp near .other	; 8BFC9
+.frame:
 cmp ebp, byte 1	; 8BFCE
-jle near loc_8C0D0	; 8BFD1
+jle near .next	; 8BFD1
 mov eax, dword [byte esp+0Ch]	; 8BFD7
 add dword [byte esp+02Ch], eax	; 8BFDB
 mov eax, edi	; 8BFDF
@@ -99,7 +100,7 @@ mov dword [esp], eax	; 8BFE6
 call sub_B395C	; 8BFE9
 sub eax, dword [byte esp+024h]	; 8BFEE
 cmp eax, dword [byte esp+02Ch]	; 8BFF2
-jge short loc_8C00F	; 8BFF6
+jge short .4	; 8BFF6
 mov ebx, dword [byte esp+014h]	; 8BFF8
 push ebx	; 8BFFC
 mov ecx, dword [byte esp+01Ch]	; 8BFFD
@@ -108,28 +109,28 @@ mov eax, dword [byte esp+08h]	; 8C002
 push eax	; 8C006
 call sub_910E0	; 8C007
 add esp, byte 0Ch	; 8C00C
-loc_8C00F:
+.4:
 cmp dword [byte esp+028h], byte 0	; 8C00F
-jne short loc_8C04F	; 8C014
+jne short .6	; 8C014
 cmp ebp, dword [byte esp+010h]	; 8C016
-jne short loc_8C04F	; 8C01A
-cmp byte [byte_D2430], 0	; 8C01C
-je short loc_8C046	; 8C023
-mov ecx, dword [dword_C721D]	; 8C025
+jne short .6	; 8C01A
+cmp byte [musicon], 0	; 8C01C
+je short .5	; 8C023
+mov ecx, dword [songdata]	; 8C025
 test ecx, ecx	; 8C02B
-je short loc_8C046	; 8C02D
-mov edx, dword [dword_D2431]	; 8C02F
+je short .5	; 8C02D
+mov edx, dword [musichandle]	; 8C02F
 mov eax, ecx	; 8C035
 mov ecx, 7Fh	; 8C037
 mov ebx, 3	; 8C03C
 call sub_8FB8E	; 8C041
-loc_8C046:
+.5:
 call sub_B395C	; 8C046
 mov dword [byte esp+024h], eax	; 8C04B
-loc_8C04F:
+.6:
 dec ebp	; 8C04F
-jmp near loc_8C0D0	; 8C050
-loc_8C055:
+jmp near .next	; 8C050
+.header:
 mov eax, edi	; 8C055
 call sub_1AD16	; 8C057
 mov eax, edi	; 8C05C
@@ -164,13 +165,13 @@ mov edx, eax	; 8C0B5
 sar edx, 1Fh	; 8C0B7
 idiv ebx	; 8C0BA
 mov dword [byte esp+0Ch], eax	; 8C0BC
-jmp short loc_8C0D0	; 8C0C0
-loc_8C0C2:
+jmp short .next	; 8C0C0
+.end:
 inc dword [byte esp+028h]	; 8C0C2
-jmp short loc_8C0D0	; 8C0C6
-loc_8C0C8:
+jmp short .next	; 8C0C6
+.other:
 mov dword [byte esp+01Ch], 1	; 8C0C8
-loc_8C0D0:
+.next:
 mov ebx, dword [byte esp+04h]	; 8C0D0
 push ebx	; 8C0D4
 mov ecx, dword [byte esp+024h]	; 8C0D5
@@ -179,70 +180,70 @@ call sub_1B92E	; 8C0DA
 add esp, byte 8	; 8C0DF
 call sub_1B2A7	; 8C0E2
 cmp dword [byte esp+08h], 4D564966h	; 8C0E7
-jne short loc_8C12A	; 8C0EF
+jne short .8	; 8C0EF
 call sub_B395C	; 8C0F1
 sub eax, dword [byte esp+024h]	; 8C0F6
 mov ebx, dword [byte esp+02Ch]	; 8C0FA
 cmp eax, ebx	; 8C0FE
-jge short loc_8C12A	; 8C100
+jge short .8	; 8C100
 mov edx, ebx	; 8C102
 sub edx, eax	; 8C104
 push edx	; 8C106
 call sub_B3989	; 8C107
 add esp, byte 4	; 8C10C
-loc_8C10F:
+.wait:
 call sub_B39A7	; 8C10F
 test eax, eax	; 8C114
-jne short loc_8C12A	; 8C116
+jne short .8	; 8C116
 test esi, esi	; 8C118
-jne short loc_8C12A	; 8C11A
+jne short .8	; 8C11A
 call sub_1600C	; 8C11C
 mov esi, eax	; 8C121
-jmp short loc_8C10F	; 8C123
-loc_8C125:
+jmp short PlayMVI.wait	; 8C123
+.7:
 call sub_1B2A7	; 8C125
-loc_8C12A:
+.8:
 test esi, esi	; 8C12A
-jne short loc_8C135	; 8C12C
+jne short .9	; 8C12C
 call sub_1600C	; 8C12E
 mov esi, eax	; 8C133
-loc_8C135:
+.9:
 test esi, esi	; 8C135
-jne short loc_8C14B	; 8C137
+jne short .done	; 8C137
 cmp dword [byte esp+01Ch], byte 0	; 8C139
-jne short loc_8C14B	; 8C13E
+jne short .done	; 8C13E
 cmp dword [byte esp+028h], byte 3	; 8C140
-jne near loc_8BF75	; 8C145
-loc_8C14B:
+jne near PlayMVI.chunk	; 8C145
+.done:
 mov eax, edi	; 8C14B
 call sub_1ACF1	; 8C14D
 mov edx, dword [byte esp+020h]	; 8C152
 push edx	; 8C156
 call sub_1B18B	; 8C157
 add esp, byte 4	; 8C15C
-cmp byte [byte_D2430], 0	; 8C15F
-je short loc_8C1AD	; 8C166
-cmp dword [dword_C721D], byte 0	; 8C168
-je short loc_8C1AD	; 8C16F
-loc_8C171:
+cmp byte [musicon], 0	; 8C15F
+je short .x	; 8C166
+cmp dword [songdata], byte 0	; 8C168
+je short .x	; 8C16F
+.fade:
 test esi, esi	; 8C171
-jne short loc_8C199	; 8C173
-mov eax, dword [dword_D242C]	; 8C175
+jne short .10	; 8C173
+mov eax, dword [musicslot-3]	; 8C175
 sar eax, 18h	; 8C17A
 mov edx, 3	; 8C17D
 call sub_8FC8A	; 8C182
 test eax, eax	; 8C187
-jne short loc_8C199	; 8C189
+jne short .10	; 8C189
 mov eax, 0Ah	; 8C18B
 call sub_33E6A	; 8C190
 mov esi, eax	; 8C195
-jmp short loc_8C171	; 8C197
-loc_8C199:
-mov eax, dword [dword_D2431]	; 8C199
+jmp short PlayMVI.fade	; 8C197
+.10:
+mov eax, dword [musichandle]	; 8C199
 mov ebx, 50h	; 8C19E
 mov edx, 3	; 8C1A3
 call sub_8FCDF	; 8C1A8
-loc_8C1AD:
+.x:
 mov eax, esi	; 8C1AD
 add esp, byte 30h	; 8C1AF
 pop ebp	; 8C1B2
@@ -250,54 +251,60 @@ pop edi	; 8C1B3
 pop esi	; 8C1B4
 pop ecx	; 8C1B5
 ret	; 8C1B6
-sub_8C1B7:
+; stub_8C1B7..stub_8C223: empty functions (__CHK; ret).  Only stub_8C218
+; has a caller (line_editor_rosters, 6 stack args): removed routines.
+stub_8C1B7:
 push dword 4	; 8C1B7
 call __CHK	; 8C1BC
 ret	; 8C1C1
-sub_8C1C2:
+; SelectScreenBM / SelectRinkBM: SetDrawBitmap(*screenbm / *rinkbm),
+; i.e. make that 48-byte bitmap descriptor the current draw target.
+SelectScreenBM:
 push dword 14h	; 8C1C2
 call __CHK	; 8C1C7
 push ebx	; 8C1CC
 push ecx	; 8C1CD
 push edx	; 8C1CE
-mov edx, dword [dword_C66C4]	; 8C1CF
-loc_8C1D5:
+mov edx, dword [screenbm]	; 8C1CF
+SelectScreenBM_set:
 push edx	; 8C1D5
-call sub_B4F70	; 8C1D6
+call SetDrawBitmap	; 8C1D6
 add esp, byte 4	; 8C1DB
 pop edx	; 8C1DE
 pop ecx	; 8C1DF
 pop ebx	; 8C1E0
 ret	; 8C1E1
-sub_8C1E2:
+SelectRinkBM:
 push dword 14h	; 8C1E2
 call __CHK	; 8C1E7
 push ebx	; 8C1EC
 push ecx	; 8C1ED
 push edx	; 8C1EE
-mov edx, dword [dword_C73D4]	; 8C1EF
-jmp short loc_8C1D5	; 8C1F5
-sub_8C1F7:
+mov edx, dword [rinkbm]	; 8C1EF
+jmp short SelectScreenBM_set	; 8C1F5
+stub_8C1F7:
 push dword 4	; 8C1F7
 call __CHK	; 8C1FC
 ret	; 8C201
-sub_8C202:
+stub_8C202:
 push dword 4	; 8C202
 call __CHK	; 8C207
 ret	; 8C20C
-sub_8C20D:
+stub_8C20D:
 push dword 4	; 8C20D
 call __CHK	; 8C212
 ret	; 8C217
-sub_8C218:
+stub_8C218:
 push dword 4	; 8C218
 call __CHK	; 8C21D
 ret	; 8C222
-sub_8C223:
+stub_8C223:
 push dword 4	; 8C223
 call __CHK	; 8C228
 ret	; 8C22D
 db 00h,00h
+; randomd0 = 93G middle93_1 randomd0: 32-bit LCG seed = seed*BB40E62Dh + 1,
+; returns ((seed>>8)&FFFFh * ax) >> 16, i.e. a value in 0..ax-1.  The seed high word is StanleyCupTimer+2.
 randomd0:
 push ebp	; 8C230
 LD mov, ebp, esp	; 8C231
@@ -305,7 +312,7 @@ push ebx	; 8C233
 push ecx	; 8C234
 push edx	; 8C235
 push ax	; 8C236
-mov ax, word [word_C9102]	; 8C238
+mov ax, word [StanleyCupTimer+2]	; 8C238
 mov dx, 0E62Dh	; 8C23E
 mul dx	; 8C242
 LD mov, bx, ax	; 8C245
@@ -321,7 +328,7 @@ LD add, dx, bx	; 8C265
 add ax, byte 1	; 8C268
 adc dx, byte 0	; 8C26C
 mov word [StanleyCupTimer], ax	; 8C270
-mov word [word_C9102], dx	; 8C276
+mov word [StanleyCupTimer+2], dx	; 8C276
 LD mov, al, ah	; 8C27D
 LD mov, ah, dl	; 8C27F
 pop dx	; 8C281
@@ -333,7 +340,12 @@ pop ebx	; 8C28B
 pop ebp	; 8C28C
 ret	; 8C28D
 db 00h,00h
-sub_8C290:
+; vgacopy_bg .. vgacopy_pages (8C290-8C8E7): 16-bit-frame planar VGA
+; routines (args at [ebp+6..], o16 registers, ports 3C4h/3CEh/3D4h/3DAh/3C0h,
+; write mode 1 latched copies).  None has a caller or a fixup: dead code
+; from an earlier real-mode build.  The labels other than vgacopy_bg were
+; added here (no reference in the EXE).
+vgacopy_bg:
 push bp	; 8C290
 LD mov, bp, sp	; 8C292
 push ds	; 8C295
@@ -359,28 +371,28 @@ add ax, byte 0Fh	; 8C2BD
 out dx, al	; 8C2C1
 mov bx, word [byte ebp+0Ah]	; 8C2C2
 mov cx, word [byte ebp+08h]	; 8C2C6
-mov ax, word [word_C7290]	; 8C2CA
+mov ax, word [scrpitch]	; 8C2CA
 mul bx	; 8C2D0
 mov di, word [byte ebp+06h]	; 8C2D3
 LD add, di, ax	; 8C2D7
 LD add, di, cx	; 8C2DA
 mov ax, 60h	; 8C2DD
-mov dx, word [word_DD70C]	; 8C2E1
+mov dx, word [bgscrolly8]	; 8C2E1
 shl dx, 3	; 8C2E8
 LD add, bx, dx	; 8C2EC
 cmp bx, 0B0h	; 8C2EF
-jb short loc_8C2FB	; 8C2F4
+jb short .1	; 8C2F4
 sub bx, 0B0h	; 8C2F6
-loc_8C2FB:
+.1:
 mul bx	; 8C2FB
 mov si, 86A0h	; 8C2FE
 LD add, si, ax	; 8C302
 LD add, si, cx	; 8C305
-mov dx, word [word_DD6B2]	; 8C308
+mov dx, word [bgscrollx]	; 8C308
 LD add, si, dx	; 8C30F
 LD add, si, dx	; 8C312
 mov ax, word [byte ebp+0Ch]	; 8C315
-mov bx, word [word_C7290]	; 8C319
+mov bx, word [scrpitch]	; 8C319
 LD sub, bx, ax	; 8C320
 mov dx, 60h	; 8C323
 LD sub, dx, ax	; 8C327
@@ -389,19 +401,19 @@ mov cx, 0A000h	; 8C32B
 mov ds, cx	; 8C32F
 mov es, cx	; 8C332
 cmp ax, byte 52h	; 8C335
-jb short loc_8C33C	; 8C339
+jb short .loop	; 8C339
 nop	; 8C33B
-loc_8C33C:
+.loop:
 LD mov, cx, ax	; 8C33C
 rep movsb	; 8C33F
 LD add, di, bx	; 8C341
 LD add, si, dx	; 8C344
 cmp si, 0C8A0h	; 8C347
-jb short loc_8C353	; 8C34C
+jb short .2	; 8C34C
 sub si, 4200h	; 8C34E
-loc_8C353:
+.2:
 dec word [byte ebp+0Eh]	; 8C353
-jne short loc_8C33C	; 8C357
+jne short vgacopy_bg.loop	; 8C357
 mov dx, 3C5h	; 8C359
 pop ax	; 8C35D
 out dx, al	; 8C35F
@@ -413,6 +425,7 @@ pop di	; 8C369
 pop ds	; 8C36B
 pop bp	; 8C36C
 ret	; 8C36E
+vgacopy_rect:
 push bp	; 8C36F
 LD mov, bp, sp	; 8C371
 push ds	; 8C374
@@ -436,7 +449,7 @@ push ax	; 8C398
 and al, 0F0h	; 8C39A
 add ax, byte 0Fh	; 8C39C
 out dx, al	; 8C3A0
-mov bx, word [word_C7290]	; 8C3A1
+mov bx, word [scrpitch]	; 8C3A1
 sub bx, word [byte ebp+0Ah]	; 8C3A8
 mov ax, 0A000h	; 8C3AC
 mov ds, ax	; 8C3B0
@@ -446,12 +459,12 @@ mov di, word [byte ebp+08h]	; 8C3BA
 mov ax, word [byte ebp+0Ch]	; 8C3BE
 cld	; 8C3C2
 mov dx, word [byte ebp+0Ah]	; 8C3C3
-loc_8C3C7:
+.loop:
 LD mov, cx, dx	; 8C3C7
 rep movsb	; 8C3CA
 LD add, di, bx	; 8C3CC
 dec ax	; 8C3CF
-jne short loc_8C3C7	; 8C3D1
+jne short vgacopy_rect.loop	; 8C3D1
 mov dx, 3C5h	; 8C3D3
 pop ax	; 8C3D7
 out dx, al	; 8C3D9
@@ -463,6 +476,7 @@ pop di	; 8C3E3
 pop ds	; 8C3E5
 pop bp	; 8C3E6
 ret	; 8C3E8
+vgacopy_rect_src:
 push bp	; 8C3E9
 LD mov, bp, sp	; 8C3EB
 push ds	; 8C3EE
@@ -486,7 +500,7 @@ push ax	; 8C412
 and al, 0F0h	; 8C414
 add ax, byte 0Fh	; 8C416
 out dx, al	; 8C41A
-mov bx, word [word_C7290]	; 8C41B
+mov bx, word [scrpitch]	; 8C41B
 sub bx, word [byte ebp+0Ah]	; 8C422
 mov ax, 0A000h	; 8C426
 mov ds, ax	; 8C42A
@@ -496,12 +510,12 @@ mov di, word [byte ebp+08h]	; 8C434
 mov ax, word [byte ebp+0Ch]	; 8C438
 cld	; 8C43C
 mov dx, word [byte ebp+0Ah]	; 8C43D
-loc_8C441:
+.loop:
 LD mov, cx, dx	; 8C441
 rep movsb	; 8C444
 LD add, si, bx	; 8C446
 dec ax	; 8C449
-jne short loc_8C441	; 8C44B
+jne short vgacopy_rect_src.loop	; 8C44B
 mov dx, 3C5h	; 8C44D
 pop ax	; 8C451
 out dx, al	; 8C453
@@ -513,6 +527,7 @@ pop di	; 8C45D
 pop ds	; 8C45F
 pop bp	; 8C460
 ret	; 8C462
+vgadraw_tile:
 push bp	; 8C463
 LD mov, bp, sp	; 8C465
 push ds	; 8C468
@@ -526,9 +541,9 @@ mov si, word [byte ebp+06h]	; 8C47B
 mov di, word [byte ebp+08h]	; 8C47F
 mov dx, word [byte ebp+0Ah]	; 8C483
 test dx, 800h	; 8C487
-je short loc_8C490	; 8C48C
-jmp short loc_8C4E4	; 8C48E
-loc_8C490:
+je short .latched	; 8C48C
+jmp short .planar	; 8C48E
+.latched:
 mov dx, 3CEh	; 8C490
 mov ax, 5	; 8C494
 out dx, al	; 8C498
@@ -548,22 +563,22 @@ out dx, al	; 8C4B3
 mov cx, 8	; 8C4B4
 mov ax, word [byte ebp+0Ah]	; 8C4B8
 test ax, 1000h	; 8C4BC
-je short loc_8C4D3	; 8C4C0
+je short .1	; 8C4C0
 shl bx, 3	; 8C4C2
 LD add, di, bx	; 8C4C6
 shr bx, 3	; 8C4C9
 LD sub, di, bx	; 8C4CD
 neg bx	; 8C4D0
-loc_8C4D3:
+.1:
 sub bx, byte 2	; 8C4D3
 cld	; 8C4D7
-loc_8C4D8:
+.loop:
 movsb	; 8C4D8
 movsb	; 8C4D9
 LD add, di, bx	; 8C4DA
-loop loc_8C4D8	; 8C4DD
-jmp near loc_8C584	; 8C4DF
-loc_8C4E4:
+loop vgadraw_tile.loop	; 8C4DD
+jmp near .x	; 8C4DF
+.planar:
 mov dx, 3CEh	; 8C4E4
 mov ax, 5	; 8C4E8
 out dx, al	; 8C4EC
@@ -589,31 +604,31 @@ out dx, al	; 8C50E
 mov ah, 8	; 8C50F
 mov cx, word [byte ebp+0Ah]	; 8C511
 test cx, 1000h	; 8C515
-je short loc_8C52D	; 8C51A
+je short .2	; 8C51A
 shl bx, 3	; 8C51C
 LD add, di, bx	; 8C520
 shr bx, 3	; 8C523
 LD sub, di, bx	; 8C527
 neg bx	; 8C52A
-loc_8C52D:
+.2:
 push si	; 8C52D
 push di	; 8C52F
 mov cx, 4	; 8C531
-loc_8C535:
+.plane:
 pop di	; 8C535
 pop si	; 8C537
 push si	; 8C539
 push di	; 8C53B
 push cx	; 8C53D
 mov cx, 8	; 8C53F
-loc_8C543:
+.row:
 mov al, byte [esi]	; 8C543
 db 067h,026h,088h,045h,01h	; 8C545 mov [es:di+1],al
 mov al, byte [byte esi+01h]	; 8C54A
 db 067h,026h,088h,05h	; 8C54D mov [es:di],al
 LD add, di, bx	; 8C551
 add si, byte 2	; 8C554
-loop loc_8C543	; 8C558
+loop vgadraw_tile.row	; 8C558
 mov dx, 3C4h	; 8C55A
 mov al, 2	; 8C55E
 out dx, al	; 8C560
@@ -631,18 +646,19 @@ in al, dx	; 8C574
 inc al	; 8C575
 out dx, al	; 8C577
 pop cx	; 8C578
-loop loc_8C535	; 8C57A
+loop vgadraw_tile.plane	; 8C57A
 in al, dx	; 8C57C
 dec al	; 8C57D
 out dx, al	; 8C57F
 pop di	; 8C580
 pop si	; 8C582
-loc_8C584:
+.x:
 pop si	; 8C584
 pop di	; 8C586
 pop ds	; 8C588
 pop bp	; 8C589
 ret	; 8C58B
+vgaflip:
 push bp	; 8C58C
 LD mov, bp, sp	; 8C58E
 push di	; 8C591
@@ -650,20 +666,20 @@ push ax	; 8C593
 push bx	; 8C595
 push cx	; 8C597
 push dx	; 8C599
-mov bx, word [dword_EDA04]	; 8C59B
+mov bx, word [vgapage]	; 8C59B
 and bx, byte 1	; 8C5A2
 xor bx, byte 1	; 8C5A6
-mov word [dword_EDA04], bx	; 8C5AA
+mov word [vgapage], bx	; 8C5AA
 cmp bx, byte 1	; 8C5B1
-je short loc_8C5BD	; 8C5B5
+je short .1	; 8C5B5
 mov di, 0B00h	; 8C5B7
-jmp short loc_8C5C1	; 8C5BB
-loc_8C5BD:
+jmp short .2	; 8C5BB
+.1:
 mov di, 4400h	; 8C5BD
-loc_8C5C1:
-mov ax, word [word_C7290]	; 8C5C1
-mul word [word_DD6AA]	; 8C5C7
-mov bx, word [word_DD6AC]	; 8C5CE
+.2:
+mov ax, word [scrpitch]	; 8C5C1
+mul word [scrolly]	; 8C5C7
+mov bx, word [scrollx]	; 8C5CE
 LD mov, cx, bx	; 8C5D5
 shr bx, 1	; 8C5D8
 shr bx, 1	; 8C5DB
@@ -672,12 +688,12 @@ LD add, bx, di	; 8C5E1
 and cx, byte 3	; 8C5E4
 shl cx, 1	; 8C5E8
 mov dx, 3DAh	; 8C5EB
-loc_8C5EF:
+.vbl:
 in al, dx	; 8C5EF
 test al, 8	; 8C5F0
-jne short loc_8C5EF	; 8C5F2
+jne short vgaflip.vbl	; 8C5F2
 test al, 1	; 8C5F4
-je short loc_8C5EF	; 8C5F6
+je short vgaflip.vbl	; 8C5F6
 mov dx, 3D4h	; 8C5F8
 mov al, 0Ch	; 8C5FC
 LD mov, ah, bh	; 8C5FE
@@ -686,24 +702,24 @@ inc ax	; 8C602
 LD mov, ah, bl	; 8C604
 out dx, ax	; 8C606
 mov dx, 3DAh	; 8C608
-loc_8C60C:
+.3:
 in al, dx	; 8C60C
 test al, 8	; 8C60D
-jne short loc_8C60C	; 8C60F
-loc_8C611:
+jne short vgaflip.3	; 8C60F
+.4:
 in al, dx	; 8C611
 test al, 8	; 8C612
-je short loc_8C611	; 8C614
+je short vgaflip.4	; 8C614
 mov dx, 3C0h	; 8C616
 mov al, 33h	; 8C61A
 out dx, al	; 8C61C
 LD mov, ax, cx	; 8C61D
 out dx, al	; 8C620
 mov dx, 3DAh	; 8C621
-loc_8C625:
+.5:
 in al, dx	; 8C625
 test al, 8	; 8C626
-jne short loc_8C625	; 8C628
+jne short vgaflip.5	; 8C628
 pop dx	; 8C62A
 pop cx	; 8C62C
 pop bx	; 8C62E
@@ -711,6 +727,7 @@ pop ax	; 8C630
 pop di	; 8C632
 pop bp	; 8C634
 ret	; 8C636
+vgaload_planes:
 push bp	; 8C637
 LD mov, bp, sp	; 8C639
 push ds	; 8C63C
@@ -741,7 +758,7 @@ lds si, [esi]	; 8C674
 mov cx, 0A000h	; 8C677
 mov es, cx	; 8C67B
 mov cx, 4	; 8C67E
-loc_8C682:
+.1:
 LD add, al, ah	; 8C682
 out dx, al	; 8C684
 LD sub, al, ah	; 8C685
@@ -752,7 +769,7 @@ mov di, 0DA78h	; 8C68E
 cld	; 8C692
 rep movsb	; 8C693
 pop cx	; 8C695
-loop loc_8C682	; 8C697
+loop vgaload_planes.1	; 8C697
 pop ds	; 8C699
 push ds	; 8C69A
 mov si, word [byte ebp+08h]	; 8C69B
@@ -762,7 +779,7 @@ mov si, word [byte ebp+06h]	; 8C6A7
 lds si, [byte esi+04h]	; 8C6AB
 mov cx, 4	; 8C6AF
 mov ah, 1	; 8C6B3
-loc_8C6B5:
+.2:
 push di	; 8C6B5
 push cx	; 8C6B7
 LD add, al, ah	; 8C6B9
@@ -773,7 +790,7 @@ LD mov, cx, bx	; 8C6C0
 rep movsb	; 8C6C3
 pop cx	; 8C6C5
 pop di	; 8C6C7
-loop loc_8C6B5	; 8C6C9
+loop vgaload_planes.2	; 8C6C9
 pop ds	; 8C6CB
 mov dx, 3C4h	; 8C6CC
 mov ax, 2	; 8C6D0
@@ -792,6 +809,7 @@ pop si	; 8C6EA
 pop ds	; 8C6EC
 pop bp	; 8C6ED
 ret	; 8C6EF
+vgacopy_bgfull:
 push bp	; 8C6F0
 LD mov, bp, sp	; 8C6F2
 push ds	; 8C6F5
@@ -815,12 +833,12 @@ push ax	; 8C719
 and al, 0F0h	; 8C71B
 add al, 0Fh	; 8C71D
 out dx, al	; 8C71F
-mov ax, word [word_DD70C]	; 8C720
+mov ax, word [bgscrolly8]	; 8C720
 mov dx, 300h	; 8C726
 mul dx	; 8C72A
 LD mov, si, ax	; 8C72D
 add si, 86A0h	; 8C730
-mov dx, word [word_DD6B2]	; 8C735
+mov dx, word [bgscrollx]	; 8C735
 LD add, si, dx	; 8C73C
 LD add, si, dx	; 8C73F
 mov di, word [byte ebp+06h]	; 8C742
@@ -830,16 +848,16 @@ mov dx, 0Eh	; 8C74E
 mov cx, 0A000h	; 8C752
 mov ds, cx	; 8C756
 mov es, cx	; 8C759
-loc_8C75C:
+.loop:
 LD mov, cx, bx	; 8C75C
 rep movsb	; 8C75F
 LD add, si, dx	; 8C761
 cmp si, 0C8A0h	; 8C764
-jb short loc_8C770	; 8C769
+jb short .1	; 8C769
 sub si, 4200h	; 8C76B
-loc_8C770:
+.1:
 dec ax	; 8C770
-jne short loc_8C75C	; 8C772
+jne short vgacopy_bgfull.loop	; 8C772
 mov dx, 3C4h	; 8C774
 mov ax, 2	; 8C778
 out dx, al	; 8C77C
@@ -857,6 +875,7 @@ pop si	; 8C792
 pop ds	; 8C794
 pop bp	; 8C795
 ret	; 8C797
+vgacopy_A40:
 push bp	; 8C798
 LD mov, bp, sp	; 8C79A
 push ds	; 8C79D
@@ -898,6 +917,7 @@ pop di	; 8C7EF
 pop ds	; 8C7F1
 pop bp	; 8C7F2
 ret	; 8C7F4
+vgacopy_n:
 push bp	; 8C7F5
 LD mov, bp, sp	; 8C7F7
 push ds	; 8C7FA
@@ -939,6 +959,7 @@ pop di	; 8C84C
 pop ds	; 8C84E
 pop bp	; 8C84F
 ret	; 8C851
+vgacopy_pages:
 push bp	; 8C852
 LD mov, bp, sp	; 8C854
 push ds	; 8C857
@@ -964,7 +985,7 @@ add ax, byte 0Fh	; 8C87F
 out dx, al	; 8C883
 mov bx, word [byte ebp+0Ch]	; 8C884
 mov cx, word [byte ebp+0Ah]	; 8C888
-mov ax, word [word_C7290]	; 8C88C
+mov ax, word [scrpitch]	; 8C88C
 mul bx	; 8C892
 LD mov, di, ax	; 8C895
 LD add, di, cx	; 8C898
@@ -972,19 +993,19 @@ LD mov, si, di	; 8C89B
 add di, word [byte ebp+08h]	; 8C89E
 add si, word [byte ebp+06h]	; 8C8A2
 mov ax, word [byte ebp+0Eh]	; 8C8A6
-mov bx, word [word_C7290]	; 8C8AA
+mov bx, word [scrpitch]	; 8C8AA
 LD sub, bx, ax	; 8C8B1
 cld	; 8C8B4
 mov cx, 0A000h	; 8C8B5
 mov ds, cx	; 8C8B9
 mov es, cx	; 8C8BC
-loc_8C8BF:
+.loop:
 LD mov, cx, ax	; 8C8BF
 rep movsb	; 8C8C2
 LD add, di, bx	; 8C8C4
 LD add, si, bx	; 8C8C7
 dec word [byte ebp+010h]	; 8C8CA
-jne short loc_8C8BF	; 8C8CE
+jne short vgacopy_pages.loop	; 8C8CE
 mov dx, 3C5h	; 8C8D0
 pop ax	; 8C8D4
 out dx, al	; 8C8D6
@@ -997,6 +1018,9 @@ pop ds	; 8C8E2
 pop bp	; 8C8E3
 ret	; 8C8E5
 db 00h,00h
+; vtoa = 93G vtoa: (x,y) vector -> direction 0-7 via vtoa_dt.
+; .dir/.0-.3 follow the 93G code: x sign -> bit0, y sign -> bit1,
+; |x| vs |y| (and 2x) comparisons -> bits 2/3, then the table lookup.
 vtoa:
 push ebp	; 8C8E8
 LD mov, ebp, esp	; 8C8E9
@@ -1005,37 +1029,37 @@ push ecx	; 8C8EC
 push edx	; 8C8ED
 LD mov, cx, ax	; 8C8EE
 LD or, ax, dx	; 8C8F1
-jne short loc_8C8FF	; 8C8F4
+jne short .dir	; 8C8F4
 mov ax, 8	; 8C8F6
 pop edx	; 8C8FA
 pop ecx	; 8C8FB
 pop ebx	; 8C8FC
 pop ebp	; 8C8FD
 ret	; 8C8FE
-loc_8C8FF:
+.dir:
 mov ebx, 0	; 8C8FF
 cmp cx, byte 0	; 8C904
-jge short loc_8C910	; 8C908
+jge short .0	; 8C908
 neg cx	; 8C90A
 or ebx, byte 1	; 8C90D
-loc_8C910:
+.0:
 LD or, dx, dx	; 8C910
-jge short loc_8C91B	; 8C913
+jge short .1	; 8C913
 neg dx	; 8C915
 or ebx, byte 2	; 8C918
-loc_8C91B:
+.1:
 LD mov, ax, dx	; 8C91B
 shl dx, 1	; 8C91E
 LD cmp, dx, cx	; 8C921
-jb short loc_8C929	; 8C924
+jb short .2	; 8C924
 or ebx, byte 4	; 8C926
-loc_8C929:
+.2:
 shl cx, 1	; 8C929
 LD cmp, cx, ax	; 8C92C
-jb short loc_8C934	; 8C92F
+jb short .3	; 8C92F
 or ebx, byte 8	; 8C931
-loc_8C934:
-mov al, byte [dword ebx+byte_D2C74]	; 8C934
+.3:
+mov al, byte [dword ebx+vtoa_dt]	; 8C934
 cbw	; 8C93A
 pop edx	; 8C93C
 pop ecx	; 8C93D
@@ -1043,6 +1067,7 @@ pop ebx	; 8C93E
 pop ebp	; 8C93F
 ret	; 8C940
 db 00h,00h,00h
-sub_8C944:
-o16 mov word [word_D2F44], ss	; 8C944
+; SaveSS: saved_ss = SS.
+SaveSS:
+o16 mov word [saved_ss], ss	; 8C944
 ret	; 8C94B

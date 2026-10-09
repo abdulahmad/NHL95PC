@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_7F724 progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, asc_C342E, asc_C3436, asc_C3449, asc_C3450, asc_C3472, asc_C3477
-extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, byte_C8451, byte_C90BC, byte_D2430
+extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, byte_C8451, byte_C90BC, musicon
 extern byte_DB3AD, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
-extern byte_E03E3, byte_E03E4, dword_C5704, dword_C5708, dword_C570C, dword_C721D, dword_C7444, dword_C7448
-extern dword_C90C8, dword_C90CA, dword_D242C, dword_D2431, dword_D42A8, dword_D8C68, dword_D8C80, dword_D8C84
+extern byte_E03E3, byte_E03E4, dword_C5704, dword_C5708, dword_C570C, songdata, dword_C7444, dword_C7448
+extern dword_C90C8, dword_C90CA, musichandle, dword_D42A8, dword_D8C68, dword_D8C80, dword_D8C84, musicslot
 extern dword_DC230, dword_DC2F0, dword_E039C, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
 extern dword_ED6F8, dword_ED700, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, off_C54A9
 extern off_C9078, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, sub_10E9F
@@ -874,11 +874,11 @@ mov byte [dword eax+byte_DB7F1], bl	; 801C6
 inc edx	; 801CC
 cmp edx, byte 1Ch	; 801CD
 jl short loc_801A8	; 801D0
-cmp byte [byte_D2430], 0	; 801D2
+cmp byte [musicon], 0	; 801D2
 je short loc_801F8	; 801D9
-cmp dword [dword_C721D], byte 0	; 801DB
+cmp dword [songdata], byte 0	; 801DB
 je short loc_801F8	; 801E2
-mov eax, dword [dword_D2431]	; 801E4
+mov eax, dword [musichandle]	; 801E4
 mov ebx, 64h	; 801E9
 mov edx, 3	; 801EE
 call sub_8FCDF	; 801F3
@@ -893,23 +893,23 @@ mov ebx, 10h	; 8020A
 mov edx, esp	; 8020F
 mov eax, 1	; 80211
 call sub_76429	; 80216
-cmp byte [byte_D2430], 0	; 8021B
+cmp byte [musicon], 0	; 8021B
 je short loc_8025A	; 80222
-cmp dword [dword_C721D], byte 0	; 80224
+cmp dword [songdata], byte 0	; 80224
 je short loc_8025A	; 8022B
 loc_8022D:
-mov eax, dword [dword_D242C]	; 8022D
+mov eax, dword [musicslot-3]	; 8022D
 sar eax, 18h	; 80232
 mov edx, 3	; 80235
 call sub_8FC8A	; 8023A
 test eax, eax	; 8023F
 je short loc_8022D	; 80241
-mov esi, dword [dword_C721D]	; 80243
+mov esi, dword [songdata]	; 80243
 push esi	; 80249
 call sub_8D2F0	; 8024A
 add esp, byte 4	; 8024F
 xor edi, edi	; 80252
-mov dword [dword_C721D], edi	; 80254
+mov dword [songdata], edi	; 80254
 loc_8025A:
 call sub_479E9	; 8025A
 mov edx, dword [dword_C90CA]	; 8025F

@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_32DA9 progbits alloc exec nowrite align=1
 extern __CHK, asc_C177B, asc_C1783, asc_C1788, byte_C5386, byte_C53DC, byte_C5400, byte_C8451
-extern byte_D2430, byte_DE268, byte_EA0F4, dword_C5382, dword_C53D3, dword_C53D7, dword_C53DF, dword_C53E3
+extern musicon, byte_DE268, byte_EA0F4, dword_C5382, dword_C53D3, dword_C53D7, dword_C53DF, dword_C53E3
 extern dword_C53E7, dword_C53EB, dword_C53EF, dword_C53F3, dword_C53FB, dword_C65C0, dword_C65C4, dword_C65C8
-extern dword_C65CC, dword_C65D0, dword_C721D, dword_C73D0, dword_C73D4, dword_C7440, dword_C90C8, dword_C90CA
-extern dword_CE4E3, dword_CE503, dword_CE527, dword_D242C, dword_D2431, dword_DC234, jctime, loc_32704
+extern dword_C65CC, dword_C65D0, songdata, dword_C73D0, rinkbm, dword_C7440, dword_C90C8, dword_C90CA
+extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, dword_DC234, jctime, loc_32704, musicslot
 extern loc_32705, strcat_, strcpy_, sub_10712, sub_11D09, sub_14525, sub_148A5, sub_1BEFD
 extern sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
 extern sub_20D97, sub_29F28, sub_3271B, sub_327A1, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
@@ -75,11 +75,11 @@ push dword 100h	; 32E6D
 push byte 0	; 32E72
 call sub_8FFB0	; 32E74
 add esp, byte 0Ch	; 32E79
-cmp byte [byte_D2430], 0	; 32E7C
+cmp byte [musicon], 0	; 32E7C
 je short loc_32EA2	; 32E83
-cmp dword [dword_C721D], byte 0	; 32E85
+cmp dword [songdata], byte 0	; 32E85
 je short loc_32EA2	; 32E8C
-mov eax, dword [dword_D2431]	; 32E8E
+mov eax, dword [musichandle]	; 32E8E
 mov ebx, 64h	; 32E93
 mov edx, 3	; 32E98
 call sub_8FCDF	; 32E9D
@@ -91,23 +91,23 @@ call sub_76429	; 32EAE
 push edi	; 32EB3
 call jctime	; 32EB4
 add esp, byte 4	; 32EB9
-cmp byte [byte_D2430], 0	; 32EBC
+cmp byte [musicon], 0	; 32EBC
 je short loc_32EFB	; 32EC3
-cmp dword [dword_C721D], byte 0	; 32EC5
+cmp dword [songdata], byte 0	; 32EC5
 je short loc_32EFB	; 32ECC
 loc_32ECE:
-mov eax, dword [dword_D242C]	; 32ECE
+mov eax, dword [musicslot-3]	; 32ECE
 sar eax, 18h	; 32ED3
 mov edx, 3	; 32ED6
 call sub_8FC8A	; 32EDB
 test eax, eax	; 32EE0
 je short loc_32ECE	; 32EE2
-mov edx, dword [dword_C721D]	; 32EE4
+mov edx, dword [songdata]	; 32EE4
 push edx	; 32EEA
 call sub_8D2F0	; 32EEB
 add esp, byte 4	; 32EF0
 xor ebx, ebx	; 32EF3
-mov dword [dword_C721D], ebx	; 32EF5
+mov dword [songdata], ebx	; 32EF5
 loc_32EFB:
 call sub_479E9	; 32EFB
 loc_32F00:
@@ -122,11 +122,11 @@ push asc_C1783	; 32F15
 call sub_8CCA8	; 32F1A
 add esp, byte 0Ch	; 32F1F
 mov esi, eax	; 32F22
-cmp byte [byte_D2430], 0	; 32F24
+cmp byte [musicon], 0	; 32F24
 je short loc_32F4A	; 32F2B
-cmp dword [dword_C721D], byte 0	; 32F2D
+cmp dword [songdata], byte 0	; 32F2D
 je short loc_32F4A	; 32F34
-mov eax, dword [dword_D2431]	; 32F36
+mov eax, dword [musichandle]	; 32F36
 mov ebx, 19h	; 32F3B
 mov edx, 3	; 32F40
 call sub_8FCDF	; 32F45
@@ -143,23 +143,23 @@ call sub_76429	; 32F66
 push esi	; 32F6B
 call jctime	; 32F6C
 add esp, byte 4	; 32F71
-cmp byte [byte_D2430], 0	; 32F74
+cmp byte [musicon], 0	; 32F74
 je short loc_32FB3	; 32F7B
-cmp dword [dword_C721D], byte 0	; 32F7D
+cmp dword [songdata], byte 0	; 32F7D
 je short loc_32FB3	; 32F84
 loc_32F86:
-mov eax, dword [dword_D242C]	; 32F86
+mov eax, dword [musicslot-3]	; 32F86
 sar eax, 18h	; 32F8B
 mov edx, 3	; 32F8E
 call sub_8FC8A	; 32F93
 test eax, eax	; 32F98
 je short loc_32F86	; 32F9A
-mov edi, dword [dword_C721D]	; 32F9C
+mov edi, dword [songdata]	; 32F9C
 push edi	; 32FA2
 call sub_8D2F0	; 32FA3
 add esp, byte 4	; 32FA8
 xor ebp, ebp	; 32FAB
-mov dword [dword_C721D], ebp	; 32FAD
+mov dword [songdata], ebp	; 32FAD
 loc_32FB3:
 call sub_6B410	; 32FB3
 mov dword [dword_C65C0], unk_208EF	; 32FB8
@@ -182,7 +182,7 @@ mov dword [dword_C5382], 2	; 3300C
 mov dword [dword_C53D3], 0Ch	; 33016
 mov dword [dword_C53D7], 15h	; 33020
 or word [word_C53DB], 2FFh	; 3302A
-cmp byte [byte_D2430], 0	; 33033
+cmp byte [musicon], 0	; 33033
 je short loc_33045	; 3303A
 or byte [byte_C53DC], 1	; 3303C
 jmp short loc_3304C	; 33043
@@ -267,11 +267,11 @@ push dword 100h	; 3318F
 push byte 0	; 33194
 call sub_8FFB0	; 33196
 add esp, byte 0Ch	; 3319B
-cmp byte [byte_D2430], 0	; 3319E
+cmp byte [musicon], 0	; 3319E
 je short loc_331C4	; 331A5
-cmp dword [dword_C721D], byte 0	; 331A7
+cmp dword [songdata], byte 0	; 331A7
 je short loc_331C4	; 331AE
-mov eax, dword [dword_D2431]	; 331B0
+mov eax, dword [musichandle]	; 331B0
 mov ebx, 64h	; 331B5
 mov edx, 3	; 331BA
 call sub_8FCDF	; 331BF
@@ -283,23 +283,23 @@ call sub_76429	; 331D0
 push esi	; 331D5
 call jctime	; 331D6
 add esp, byte 4	; 331DB
-cmp byte [byte_D2430], 0	; 331DE
+cmp byte [musicon], 0	; 331DE
 je near loc_332B6	; 331E5
-cmp dword [dword_C721D], byte 0	; 331EB
+cmp dword [songdata], byte 0	; 331EB
 je near loc_332B6	; 331F2
 loc_331F8:
-mov eax, dword [dword_D242C]	; 331F8
+mov eax, dword [musicslot-3]	; 331F8
 sar eax, 18h	; 331FD
 mov edx, 3	; 33200
 call sub_8FC8A	; 33205
 test eax, eax	; 3320A
 je short loc_331F8	; 3320C
-mov ecx, dword [dword_C721D]	; 3320E
+mov ecx, dword [songdata]	; 3320E
 push ecx	; 33214
 call sub_8D2F0	; 33215
 add esp, byte 4	; 3321A
 xor esi, esi	; 3321D
-mov dword [dword_C721D], esi	; 3321F
+mov dword [songdata], esi	; 3321F
 jmp near loc_332B6	; 33225
 sub_3322A:
 push dword 20h	; 3322A
@@ -685,14 +685,14 @@ push ecx	; 33732
 push edx	; 33733
 push esi	; 33734
 push ebp	; 33735
-mov edx, dword [dword_C73D4]	; 33736
+mov edx, dword [rinkbm]	; 33736
 test edx, edx	; 3373C
 je short loc_33751	; 3373E
 push edx	; 33740
 call jctime	; 33741
 add esp, byte 4	; 33746
 xor ecx, ecx	; 33749
-mov dword [dword_C73D4], ecx	; 3374B
+mov dword [rinkbm], ecx	; 3374B
 loc_33751:
 mov esi, dword [dword_C73D0]	; 33751
 test esi, esi	; 33757

@@ -4,7 +4,7 @@ bits 32
 section s_59D9A progbits alloc exec nowrite align=1
 extern AddPenalty, AddPenalty2, PBnum, Sweepcheck, __CHK, assinsert, assreplace, asstab
 extern byte_C4D1C, byte_C4D1D, byte_C5400, byte_C90BC, gmode2, byte_C90C3, byte_C90C5, byte_CBC37
-extern byte_CC0D9, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5, byte_CCCA0, byte_D2430, byte_DB3A8
+extern byte_CC0D9, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5, byte_CCCA0, musicon, byte_DB3A8
 extern byte_DB7EC, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byte_DF7CA, byte_DF7E6
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_DF817, byte_DF81B, byte_E003A, byte_E0072, byte_E0073
 extern byte_E0074, byte_E0384, byte_E038A, byte_E9A16, byte_E9AD3, byte_E9ADE, byte_E9DB4, byte_E9E4A
@@ -1361,7 +1361,7 @@ cmp word [byte esp+04h], byte 0	; 5AD3A
 jne short loc_5AD6B	; 5AD40
 test byte [byte_C5400], 1	; 5AD42
 je short loc_5AD54	; 5AD49
-cmp byte [byte_D2430], 0	; 5AD4B
+cmp byte [musicon], 0	; 5AD4B
 jne short loc_5AD5B	; 5AD52
 loc_5AD54:
 mov eax, 1	; 5AD54
@@ -5088,7 +5088,7 @@ je short loc_5DCB5	; 5DCAD
 cmp cx, byte 3Ch	; 5DCAF
 jne short loc_5DD07	; 5DCB3
 loc_5DCB5:
-cmp byte [byte_D2430], 0	; 5DCB5
+cmp byte [musicon], 0	; 5DCB5
 je short loc_5DCC7	; 5DCBC
 test byte [byte_C5400], 1	; 5DCBE
 jne short loc_5DCD3	; 5DCC5

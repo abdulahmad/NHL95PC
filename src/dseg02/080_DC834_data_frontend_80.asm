@@ -22,7 +22,7 @@ global dword_DDD2C, dword_DDD30, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DD
 global dword_DDD70, dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C
 global dword_DE260, dword_DE264, dword_DE265, dword_DEB6C, dword_DEB74, unk_DC834, unk_DC837, unk_DC847
 global unk_DC890, unk_DC998, unk_DCA98, unk_DD0D8, unk_DD7B4, unk_DDAC4, unk_DDCE6, unk_DDCFB
-global unk_DDD1D, unk_DDD4C, unk_DDD59, unk_DDFF4, word_DD6AA, word_DD6AC, word_DD6B2, word_DD70C
+global unk_DDD1D, unk_DDD4C, unk_DDD59, unk_DDFF4, scrolly, scrollx, bgscrollx, bgscrolly8
 global word_DD7D0, word_DDD46, word_DDD48, word_DDD4A
 unk_DC834:
 resb 2
@@ -210,17 +210,17 @@ dword_DD6A6:
 resb 2
 dword_DD6A8:
 resb 2
-word_DD6AA:
+scrolly:
 resb 2
-word_DD6AC:
+scrollx:
 resb 2
 dword_DD6AE:
 resb 2
 dword_DD6B0:
 resb 2
-word_DD6B2:
+bgscrollx:
 resb 90
-word_DD70C:
+bgscrolly8:
 resb 4
 byte_DD710:
 resb 32

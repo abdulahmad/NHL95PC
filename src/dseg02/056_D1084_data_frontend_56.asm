@@ -16,7 +16,7 @@ global asc_D2587, asc_D259F, asc_D25AB, asc_D25B8, asc_D25CD, asc_D2608, asc_D26
 global asc_D2628, asc_D2635, asc_D2641, asc_D2672, asc_D267F, asc_D26A4, asc_D26B1, asc_D26BE
 global asc_D26CB, asc_D26D7, asc_D26E4, asc_D26F1, asc_D26FE, asc_D270B, asc_D2718, asc_D2725
 global asc_D2732, asc_D27BF, asc_D281F, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238
-global byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, byte_D242F, byte_D2430, byte_D2439
+global byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, musicslot, musicon, byte_D2439
 global byte_D27B6, dword_D1084, dword_D1088, dword_D108C, dword_D1090, dword_D1104, dword_D1108, dword_D110C
 global dword_D1110, dword_D1114, dword_D1118, dword_D111C, dword_D1120, dword_D1124, dword_D1128, dword_D112C
 global dword_D1130, dword_D11B6, dword_D1229, dword_D122B, dword_D122F, dword_D1231, dword_D1233, dword_D1338
@@ -30,7 +30,7 @@ global dword_D20A8, dword_D20E0, dword_D2150, dword_D223C, dword_D227C, dword_D2
 global dword_D229C, dword_D22A0, dword_D22A4, dword_D22A8, dword_D22AC, dword_D22B0, dword_D22B4, dword_D22BC
 global dword_D22C0, dword_D22C4, dword_D22C8, dword_D22CC, dword_D22D0, dword_D22D4, dword_D22DC, dword_D22E0
 global dword_D22EC, dword_D22F0, dword_D2350, dword_D23A3, dword_D23A7, dword_D23AB, dword_D23AF, dword_D2423
-global dword_D2427, dword_D242B, dword_D242C, dword_D2431, dword_D2435, dword_D243A, dword_D24A0, dword_D27A2
+global dword_D2427, dword_D242B, musichandle, dword_D2435, dword_D243A, dword_D24A0, dword_D27A2
 global dword_D27B2, dword_D27B7, dword_D27BB, off_D1184, off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25
 global off_D21C0, off_D2230, off_D24D1, off_D273E, off_D2776, off_D27EF, off_D27F7, off_D2855
 global unk_D1190, unk_D11B2, unk_D12C8, unk_D16A0, unk_D19CC, unk_D19DC, unk_D19F0, unk_D19F5
@@ -777,13 +777,12 @@ dword_D2427:
 db 0FFh,0FFh,0FFh,0FFh
 dword_D242B:
 db 0FFh
-dword_D242C:
 db 0FFh,0FFh,0FFh
-byte_D242F:
+musicslot:
 db 00h
-byte_D2430:
+musicon:
 db 00h
-dword_D2431:
+musichandle:
 db 00h,00h,00h,00h
 dword_D2435:
 db 00h,00h,00h,00h

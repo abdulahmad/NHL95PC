@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_8C94C progbits alloc exec nowrite align=1
-extern __fatal_runtime_error_, asc_D2F46, dword_D4CE8, word_D2F44
+extern __fatal_runtime_error_, asc_D2F46, dword_D4CE8, saved_ss
 global __CHK, __GRO, __STK, loc_8C970, sub_8C97D
 __CHK:
 xchg eax, dword [byte esp+04h]	; 8C94C
@@ -21,7 +21,7 @@ jbe short loc_8C970	; 8C96D
 ret	; 8C96F
 loc_8C970:
 mov ax, ss	; 8C970
-cmp ax, word [word_D2F44]	; 8C973
+cmp ax, word [saved_ss]	; 8C973
 je short sub_8C97D	; 8C97A
 ret	; 8C97C
 sub_8C97D:

@@ -5,14 +5,14 @@ section s_10010 progbits alloc exec nowrite align=1
 extern DoGameFrame, __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gettime_, asc_C0004, asc_C005B
 extern asc_C007A, asc_C00DB, asc_C00FB, asc_C0120, asc_C014D, asc_C0172, asc_C017B, asc_C0183
 extern asc_C018A, asc_C0191, asc_C019A, asc_C01B2, asc_C01CB, asc_C01DA, asc_C01DF, asc_C814A
-extern byte_C4D1C, byte_C4D1D, byte_C4D1E, byte_C5138, byte_D2430, byte_D3040, byte_D416A, byte_D8C88
+extern byte_C4D1C, byte_C4D1D, byte_C4D1E, byte_C5138, musicon, byte_D3040, byte_D416A, byte_D8C88
 extern byte_EA0F4, byte_ED906, byte_ED92E, byte_ED935, byte_ED936, byte_ED990, dword_C4CFC, dword_C4D00
 extern dword_C4D04, dword_C4D08, dword_C4D0C, dword_C4D10, dword_C4D14, dword_C4D18, dword_C4E0C, dword_C4E10
 extern dword_C4E14, dword_C4E18, dword_C4E24, dword_C4E28, dword_C4E2C, dword_C5130, dword_C5131, dword_C5133
 extern dword_C5135, dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5305, dword_C5309, gameopts
-extern dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413, dword_C5417, dword_C5840, dword_C66C4
-extern dword_C721D, dword_C7444, dword_C7448, dword_C90C8, dword_C90CA, dword_CBC3E, dword_CC128, dword_D242C
-extern dword_D2431, dword_D2C6B, dword_D302C, dword_D3030, dword_D3034, dword_D30D4, dword_D4158, dword_D415C
+extern dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413, dword_C5417, dword_C5840, screenbm
+extern songdata, dword_C7444, dword_C7448, dword_C90C8, dword_C90CA, dword_CBC3E, dword_CC128, musicslot
+extern musichandle, dword_D2C6B, dword_D302C, dword_D3030, dword_D3034, dword_D30D4, dword_D4158, dword_D415C
 extern dword_D4160, dword_D4164, dword_D41F0, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
 extern dword_D8B7C, dword_D8C18, dword_D8C4C, dword_D8C70, dword_D8C78, dword_D8C84, dword_D9A38, dword_DC230
 extern dword_DC238, dword_DF00C, dword_DF010, dword_E9A9E, dword_EDA08, dword_EDA0C, exit_, gmode
@@ -268,7 +268,7 @@ push byte 0	; 102B0
 push dword_D30D4	; 102B2
 call sub_8E7A0	; 102B7
 add esp, byte 14h	; 102BC
-mov dword [dword_C66C4], eax	; 102BF
+mov dword [screenbm], eax	; 102BF
 mov edx, 1E0h	; 102C4
 mov eax, 280h	; 102C9
 call sub_10E9F	; 102CE
@@ -497,11 +497,11 @@ push asc_C01DA	; 10610
 call sub_8CCA8	; 10615
 add esp, byte 0Ch	; 1061A
 mov esi, eax	; 1061D
-cmp byte [byte_D2430], 0	; 1061F
+cmp byte [musicon], 0	; 1061F
 je short loc_10645	; 10626
-cmp dword [dword_C721D], byte 0	; 10628
+cmp dword [songdata], byte 0	; 10628
 je short loc_10645	; 1062F
-mov eax, dword [dword_D2431]	; 10631
+mov eax, dword [musichandle]	; 10631
 mov ebx, 64h	; 10636
 mov edx, 3	; 1063B
 call sub_8FCDF	; 10640
@@ -515,23 +515,23 @@ mov ebx, 10h	; 10655
 mov edx, esi	; 1065A
 mov eax, 1	; 1065C
 call sub_76429	; 10661
-cmp byte [byte_D2430], 0	; 10666
+cmp byte [musicon], 0	; 10666
 je short loc_106A5	; 1066D
-cmp dword [dword_C721D], byte 0	; 1066F
+cmp dword [songdata], byte 0	; 1066F
 je short loc_106A5	; 10676
 loc_10678:
-mov eax, dword [dword_D242C]	; 10678
+mov eax, dword [musicslot-3]	; 10678
 sar eax, 18h	; 1067D
 mov edx, 3	; 10680
 call sub_8FC8A	; 10685
 test eax, eax	; 1068A
 je short loc_10678	; 1068C
-mov edx, dword [dword_C721D]	; 1068E
+mov edx, dword [songdata]	; 1068E
 push edx	; 10694
 call sub_8D2F0	; 10695
 add esp, byte 4	; 1069A
 xor ebx, ebx	; 1069D
-mov dword [dword_C721D], ebx	; 1069F
+mov dword [songdata], ebx	; 1069F
 loc_106A5:
 call sub_479E9	; 106A5
 call sub_6B410	; 106AA
@@ -1398,7 +1398,7 @@ mov edx, 1E0h	; 10FAF
 mov eax, 280h	; 10FB4
 call sub_10E9F	; 10FB9
 call sub_597E3	; 10FBE
-cmp byte [byte_D2430], 0	; 10FC3
+cmp byte [musicon], 0	; 10FC3
 je short loc_10FD3	; 10FCA
 call sub_837A8	; 10FCC
 jmp short loc_10FD8	; 10FD1
@@ -1662,7 +1662,7 @@ mov edx, unk_DF014	; 112D1
 mov eax, 1	; 112D6
 call sub_11598	; 112DB
 call sub_597E3	; 112E0
-cmp byte [byte_D2430], 0	; 112E5
+cmp byte [musicon], 0	; 112E5
 je short loc_112F5	; 112EC
 call sub_837A8	; 112EE
 jmp short loc_112FA	; 112F3
@@ -1737,7 +1737,7 @@ loc_113F0:
 test byte [gameopts], 80h	; 113F0
 je short loc_11418	; 113F7
 call sub_59748	; 113F9
-cmp byte [byte_D2430], 0	; 113FE
+cmp byte [musicon], 0	; 113FE
 je short loc_1140E	; 11405
 call sub_837A8	; 11407
 jmp short loc_11413	; 1140C

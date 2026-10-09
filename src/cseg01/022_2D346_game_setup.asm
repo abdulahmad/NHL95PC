@@ -10,11 +10,11 @@ extern asc_C1639, asc_C1641, asc_C1646, asc_C164E, asc_C1653, asc_C1657, asc_C16
 extern asc_C1663, asc_C1667, asc_C166B, asc_C1675, asc_C167E, asc_C1687, asc_C1693, asc_C16A1
 extern asc_C16AC, asc_C16B3, asc_C16B8, asc_C16BD, asc_C16C6, asc_C16CB, asc_C16D0, asc_C16DA
 extern asc_C16E0, asc_C16E8, asc_C16F5, asc_C16FA, asc_C1703, asc_C1709, asc_C70EC, asc_C70F8
-extern asc_C811A, asc_C814A, byte_C5400, byte_C8451, byte_C8922, byte_D2430, byte_D42C3, byte_DB3A8
+extern asc_C811A, asc_C814A, byte_C5400, byte_C8451, byte_C8922, musicon, byte_D42C3, byte_DB3A8
 extern byte_DD710, byte_DD750, byte_DD774, byte_DD775, byte_DD788, byte_DD789, byte_ED7ED, byte_ED824
 extern byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED8CE, byte_ED9AC, byte_ED9B0, byte_ED9E6
-extern dword_C53F7, gameopts, dword_C541F, dword_C721D, dword_C90C8, dword_C90CA, dword_CCC94, dword_D242C
-extern dword_D2431, dword_D2C6B, dword_D8B68, dword_DBC7C, dword_DC234, dword_DD66C, dword_DD670, dword_DD730
+extern dword_C53F7, gameopts, dword_C541F, songdata, dword_C90C8, dword_C90CA, dword_CCC94, musicslot
+extern musichandle, dword_D2C6B, dword_D8B68, dword_DBC7C, dword_DC234, dword_DD66C, dword_DD670, dword_DD730
 extern dword_DF612, dword_DF614, dword_DF616, dword_DF61A, dword_DF61C, dword_DF61E, dword_DF620, dword_DF622
 extern dword_DF626, dword_DF62A, dword_DF636, dword_DF638, dword_DF63A, fputchar, jctime, memcpy_
 extern off_C57CC, off_C719C, off_C80D7, off_C80E7, off_C80EB, off_CD304, rand_, sprintf_
@@ -24,7 +24,7 @@ extern sub_47C31, sub_4FD47, sub_59981, sub_599B9, sub_59BFC, sub_59C80, sub_59D
 extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_913B4, sub_913D0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88
-extern sub_B4BA8, sub_B4BC4, sub_B4F70, sub_B4F8C, unk_2D33E, unk_C160E, unk_C161D, unk_C164B
+extern sub_B4BA8, sub_B4BC4, SetDrawBitmap, sub_B4F8C, unk_2D33E, unk_C160E, unk_C161D, unk_C164B
 extern unk_C1679, unk_C167C, unk_C16D7, unk_DABF0, unk_DBC30, unk_DC200, word_DF618, word_DF624
 global jpt_2D346, loc_2D3D4, loc_2D401, loc_2D40F, loc_2D411, loc_2D4B5, loc_2D509, loc_2D50B
 global loc_2D551, loc_2D553, loc_2D675, loc_2D677, loc_2D6EF, loc_2D6F1, loc_2D781, loc_2D79B
@@ -78,27 +78,27 @@ movsd	; 2D39C
 mov dword [dword esp+0760h], edx	; 2D39D
 mov eax, 0AAE60h	; 2D3A4
 call sub_1BAF3	; 2D3A9
-cmp byte [byte_D2430], 0	; 2D3AE
+cmp byte [musicon], 0	; 2D3AE
 je short loc_2D401	; 2D3B5
-cmp dword [dword_C721D], byte 0	; 2D3B7
+cmp dword [songdata], byte 0	; 2D3B7
 je short loc_2D401	; 2D3BE
-mov eax, dword [dword_D2431]	; 2D3C0
+mov eax, dword [musichandle]	; 2D3C0
 mov ebx, 4Bh	; 2D3C5
 mov edx, 3	; 2D3CA
 call sub_8FCDF	; 2D3CF
 loc_2D3D4:
-mov eax, dword [dword_D242C]	; 2D3D4
+mov eax, dword [musicslot-3]	; 2D3D4
 sar eax, 18h	; 2D3D9
 mov edx, 3	; 2D3DC
 call sub_8FC8A	; 2D3E1
 test eax, eax	; 2D3E6
 je short loc_2D3D4	; 2D3E8
-mov edi, dword [dword_C721D]	; 2D3EA
+mov edi, dword [songdata]	; 2D3EA
 push edi	; 2D3F0
 call sub_8D2F0	; 2D3F1
 add esp, byte 4	; 2D3F6
 xor ebp, ebp	; 2D3F9
-mov dword [dword_C721D], ebp	; 2D3FB
+mov dword [songdata], ebp	; 2D3FB
 loc_2D401:
 call sub_6B3D7	; 2D401
 xor eax, eax	; 2D406
@@ -211,7 +211,7 @@ call sub_B4F8C	; 2D59E
 add esp, byte 0Ch	; 2D5A3
 mov dword [dword_DD66C], eax	; 2D5A6
 push eax	; 2D5AB
-call sub_B4F70	; 2D5AC
+call SetDrawBitmap	; 2D5AC
 add esp, byte 4	; 2D5B1
 push byte 0	; 2D5B4
 push byte 0	; 2D5B6
@@ -245,7 +245,7 @@ call sub_B4F8C	; 2D60C
 add esp, byte 0Ch	; 2D611
 mov dword [dword_DD670], eax	; 2D614
 push eax	; 2D619
-call sub_B4F70	; 2D61A
+call SetDrawBitmap	; 2D61A
 add esp, byte 4	; 2D61F
 push byte 0	; 2D622
 push byte 0	; 2D624
@@ -535,9 +535,9 @@ mov dword [dword esp+076Ch], ecx	; 2DADA
 test byte [esp], 20h	; 2DAE1
 jne near loc_2DBE0	; 2DAE5
 call sub_47C31	; 2DAEB
-cmp byte [byte_D2430], 0	; 2DAF0
+cmp byte [musicon], 0	; 2DAF0
 je short loc_2DB6B	; 2DAF7
-cmp dword [dword_C721D], byte 0	; 2DAF9
+cmp dword [songdata], byte 0	; 2DAF9
 jne short loc_2DB6B	; 2DB00
 mov ecx, asc_C15F5	; 2DB02
 mov ebx, asc_C15FA	; 2DB07
@@ -552,12 +552,12 @@ lea eax, [dword esp+05D4h]	; 2DB1F
 call sub_1431E	; 2DB26
 lea eax, [dword esp+05D4h]	; 2DB2B
 call sub_8F98F	; 2DB32
-mov dword [dword_C721D], eax	; 2DB37
+mov dword [songdata], eax	; 2DB37
 test eax, eax	; 2DB3C
 je near loc_2DBE0	; 2DB3E
 test byte [gameopts], 40h	; 2DB44
 je near loc_2DBE0	; 2DB4B
-mov edx, dword [dword_D2431]	; 2DB51
+mov edx, dword [musichandle]	; 2DB51
 mov ecx, 4Ch	; 2DB57
 mov ebx, 3	; 2DB5C
 call sub_8FB8E	; 2DB61
@@ -1985,11 +1985,11 @@ mov edx, 0FFFFFFFFh	; 2F11E
 xor eax, eax	; 2F123
 jmp near loc_2F051	; 2F125
 loc_2F12A:
-cmp byte [byte_D2430], 0	; 2F12A
+cmp byte [musicon], 0	; 2F12A
 je short loc_2F150	; 2F131
-cmp dword [dword_C721D], byte 0	; 2F133
+cmp dword [songdata], byte 0	; 2F133
 je short loc_2F150	; 2F13A
-mov eax, dword [dword_D2431]	; 2F13C
+mov eax, dword [musichandle]	; 2F13C
 mov ebx, 64h	; 2F141
 mov edx, 3	; 2F146
 call sub_8FCDF	; 2F14B
@@ -1998,23 +1998,23 @@ mov ebx, 10h	; 2F150
 mov edx, dword [dword esp+07A8h]	; 2F155
 mov eax, 1	; 2F15C
 call sub_76429	; 2F161
-cmp byte [byte_D2430], 0	; 2F166
+cmp byte [musicon], 0	; 2F166
 je short loc_2F1A7	; 2F16D
-cmp dword [dword_C721D], byte 0	; 2F16F
+cmp dword [songdata], byte 0	; 2F16F
 je short loc_2F1A7	; 2F176
 loc_2F178:
-mov eax, dword [dword_D242C]	; 2F178
+mov eax, dword [musicslot-3]	; 2F178
 sar eax, 18h	; 2F17D
 mov edx, 3	; 2F180
 call sub_8FC8A	; 2F185
 test eax, eax	; 2F18A
 je short loc_2F178	; 2F18C
-mov edi, dword [dword_C721D]	; 2F18E
+mov edi, dword [songdata]	; 2F18E
 push edi	; 2F194
 call sub_8D2F0	; 2F195
 add esp, byte 4	; 2F19A
 xor ebp, ebp	; 2F19D
-mov dword [dword_C721D], ebp	; 2F19F
+mov dword [songdata], ebp	; 2F19F
 jmp short loc_2F1AC	; 2F1A5
 loc_2F1A7:
 call sub_59981	; 2F1A7
@@ -2870,11 +2870,11 @@ call sub_2F580	; 2FBE0
 inc edi	; 2FBE5
 cmp edi, byte 2	; 2FBE6
 jl near loc_2F7CF	; 2FBE9
-cmp byte [byte_D2430], 0	; 2FBEF
+cmp byte [musicon], 0	; 2FBEF
 je near loc_2FCA4	; 2FBF6
-cmp dword [dword_C721D], byte 0	; 2FBFC
+cmp dword [songdata], byte 0	; 2FBFC
 je short loc_2FC3E	; 2FC03
-mov eax, dword [dword_D2431]	; 2FC05
+mov eax, dword [musichandle]	; 2FC05
 mov ebx, 28h	; 2FC0A
 mov edx, 3	; 2FC0F
 call sub_8FCDF	; 2FC14
@@ -2882,12 +2882,12 @@ push byte 28h	; 2FC19
 call sub_B3989	; 2FC1B
 add esp, byte 4	; 2FC20
 call sub_B3999	; 2FC23
-mov edi, dword [dword_C721D]	; 2FC28
+mov edi, dword [songdata]	; 2FC28
 push edi	; 2FC2E
 call sub_8D2F0	; 2FC2F
 add esp, byte 4	; 2FC34
 xor eax, eax	; 2FC37
-mov dword [dword_C721D], eax	; 2FC39
+mov dword [songdata], eax	; 2FC39
 loc_2FC3E:
 call sub_8378C	; 2FC3E
 mov ecx, asc_C16F5	; 2FC43
@@ -2903,12 +2903,12 @@ lea eax, [byte ebp-034h]	; 2FC60
 call sub_1431E	; 2FC63
 lea eax, [byte ebp-034h]	; 2FC68
 call sub_8F98F	; 2FC6B
-mov dword [dword_C721D], eax	; 2FC70
+mov dword [songdata], eax	; 2FC70
 test eax, eax	; 2FC75
 je near loc_2FD0D	; 2FC77
 test byte [gameopts], 40h	; 2FC7D
 je near loc_2FD0D	; 2FC84
-mov edx, dword [dword_D2431]	; 2FC8A
+mov edx, dword [musichandle]	; 2FC8A
 mov ecx, 7Fh	; 2FC90
 mov ebx, 3	; 2FC95
 call sub_8FB8E	; 2FC9A
@@ -2951,11 +2951,11 @@ xor eax, eax	; 2FD18
 call sub_76429	; 2FD1A
 mov eax, 7D0h	; 2FD1F
 call sub_33E6A	; 2FD24
-cmp byte [byte_D2430], 0	; 2FD29
+cmp byte [musicon], 0	; 2FD29
 je short loc_2FD4F	; 2FD30
-cmp dword [dword_C721D], byte 0	; 2FD32
+cmp dword [songdata], byte 0	; 2FD32
 je short loc_2FD4F	; 2FD39
-mov eax, dword [dword_D2431]	; 2FD3B
+mov eax, dword [musichandle]	; 2FD3B
 mov ebx, 64h	; 2FD40
 mov edx, 3	; 2FD45
 call sub_8FCDF	; 2FD4A
@@ -2964,23 +2964,23 @@ mov ebx, 10h	; 2FD4F
 lea edx, [dword ebp-0374h]	; 2FD54
 mov eax, 1	; 2FD5A
 call sub_76429	; 2FD5F
-cmp byte [byte_D2430], 0	; 2FD64
+cmp byte [musicon], 0	; 2FD64
 je short loc_2FDA5	; 2FD6B
-cmp dword [dword_C721D], byte 0	; 2FD6D
+cmp dword [songdata], byte 0	; 2FD6D
 je short loc_2FDB2	; 2FD74
 loc_2FD76:
-mov eax, dword [dword_D242C]	; 2FD76
+mov eax, dword [musicslot-3]	; 2FD76
 sar eax, 18h	; 2FD7B
 mov edx, 3	; 2FD7E
 call sub_8FC8A	; 2FD83
 test eax, eax	; 2FD88
 je short loc_2FD76	; 2FD8A
-mov ecx, dword [dword_C721D]	; 2FD8C
+mov ecx, dword [songdata]	; 2FD8C
 push ecx	; 2FD92
 call sub_8D2F0	; 2FD93
 add esp, byte 4	; 2FD98
 xor esi, esi	; 2FD9B
-mov dword [dword_C721D], esi	; 2FD9D
+mov dword [songdata], esi	; 2FD9D
 jmp short loc_2FDB2	; 2FDA3
 loc_2FDA5:
 call sub_59981	; 2FDA5

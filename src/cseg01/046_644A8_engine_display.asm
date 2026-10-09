@@ -25,7 +25,7 @@ extern unk_E001C, unk_E9CEC, unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E
 extern unk_E9EE0, word_C9098, word_C909A, xc1, yc1, word_C90B2, word_C90B4, word_C90C2
 extern word_C90C4, word_C90C6, word_C90CE, word_C90D4, word_C90DA, word_C90DC, word_C90DE, word_CBEC0
 extern word_CBEC8, word_CBECC, word_CBECE, word_CC054, word_CC0B0, word_CC0DE, word_CCEF8, word_CD4FC
-extern word_CD4FE, word_CD500, word_DD6AA, word_DD6AC, word_DEE94, word_DF64C, word_E001E, word_E0022
+extern word_CD4FE, word_CD500, scrolly, scrollx, word_DEE94, word_DF64C, word_E001E, word_E0022
 extern word_E0046, regd2, regd3, regd0, regd1, word_E9AA0, word_E9AB2, word_E9AB4
 extern word_E9F12, word_E9F14, word_E9F18, word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A
 extern word_E9FA7, word_E9FA9, word_E9FB0, word_E9FB2, word_E9FB4
@@ -2938,7 +2938,7 @@ mov ax, word [dword_D30B0]	; 66660
 mov word [byte esp+020h], ax	; 66666
 mov ax, word [dword_D30B8]	; 6666B
 mov word [byte esp+010h], ax	; 66671
-mov si, word [word_DD6AC]	; 66676
+mov si, word [scrollx]	; 66676
 add esi, byte 4Ah	; 6667D
 sub esi, dword [byte esp+018h]	; 66680
 cmp word [word_C90DA], byte 4	; 66684
@@ -2950,7 +2950,7 @@ add eax, esi	; 66698
 mov edx, dword [byte esp+018h]	; 6669A
 add edx, eax	; 6669E
 mov word [byte esp+024h], dx	; 666A0
-mov ax, word [word_DD6AA]	; 666A5
+mov ax, word [scrolly]	; 666A5
 add eax, 32h	; 666AB
 mov edx, dword [byte esp+02Ch]	; 666B0
 sub eax, edx	; 666B4
@@ -2959,11 +2959,11 @@ add eax, edx	; 666BB
 add edx, eax	; 666BD
 mov word [byte esp+014h], dx	; 666BF
 mov ax, word [dword_D30AC]	; 666C4
-sub ax, word [word_DD6AC]	; 666CA
+sub ax, word [scrollx]	; 666CA
 add esi, eax	; 666D1
 add word [byte esp+024h], ax	; 666D3
 mov ax, word [dword_D30B0]	; 666D8
-sub ax, word [word_DD6AA]	; 666DE
+sub ax, word [scrolly]	; 666DE
 add word [byte esp+01Ch], ax	; 666E5
 add word [byte esp+014h], ax	; 666EA
 mov eax, dword [byte esp+012h]	; 666EF
@@ -2980,27 +2980,27 @@ push eax	; 6670A
 call sub_B4BC4	; 6670B
 add esp, byte 10h	; 66710
 loc_66713:
-mov si, word [word_DD6AC]	; 66713
+mov si, word [scrollx]	; 66713
 add esi, byte 0Ch	; 6671A
 cmp word [word_C90DA], byte 4	; 6671D
 jne short loc_6672D	; 66725
 add esi, 0ACh	; 66727
 loc_6672D:
-mov ax, word [word_DD6AA]	; 6672D
+mov ax, word [scrolly]	; 6672D
 add eax, 0Ch	; 66733
 mov word [byte esp+01Ch], ax	; 66738
 mov eax, esi	; 6673D
 add eax, 7Bh	; 6673F
 mov word [byte esp+024h], ax	; 66744
-mov ax, word [word_DD6AA]	; 66749
+mov ax, word [scrolly]	; 66749
 add eax, 57h	; 6674F
 mov word [byte esp+014h], ax	; 66754
 mov ax, word [dword_D30AC]	; 66759
-sub ax, word [word_DD6AC]	; 6675F
+sub ax, word [scrollx]	; 6675F
 add esi, eax	; 66766
 add word [byte esp+024h], ax	; 66768
 mov ax, word [dword_D30B0]	; 6676D
-sub ax, word [word_DD6AA]	; 66773
+sub ax, word [scrolly]	; 66773
 add word [byte esp+01Ch], ax	; 6677A
 add word [byte esp+014h], ax	; 6677F
 test di, di	; 66784
@@ -3638,12 +3638,12 @@ push edi	; 66FF0
 push ebp	; 66FF1
 sub esp, byte 24h	; 66FF2
 mov edi, eax	; 66FF5
-mov si, word [word_DD6AC]	; 66FF7
+mov si, word [scrollx]	; 66FF7
 add esi, byte 0Ch	; 66FFE
-mov ax, word [word_DD6AA]	; 67001
+mov ax, word [scrolly]	; 67001
 add eax, 95h	; 67007
 mov word [byte esp+01Ch], ax	; 6700C
-mov ax, word [word_DD6AA]	; 67011
+mov ax, word [scrolly]	; 67011
 add eax, 9Eh	; 67017
 mov word [byte esp+020h], ax	; 6701C
 mov edx, dword [dword_D8B78]	; 67021
@@ -3660,11 +3660,11 @@ add eax, 4	; 67045
 mov word [byte esp+018h], ax	; 6704A
 add eax, esi	; 6704F
 mov di, word [dword_D30AC]	; 67051
-sub di, word [word_DD6AC]	; 67058
+sub di, word [scrollx]	; 67058
 add esi, edi	; 6705F
 add eax, edi	; 67061
 mov di, word [dword_D30B0]	; 67063
-sub di, word [word_DD6AA]	; 6706A
+sub di, word [scrolly]	; 6706A
 add word [byte esp+01Ch], di	; 67071
 add word [byte esp+020h], di	; 67076
 push byte 10h	; 6707B

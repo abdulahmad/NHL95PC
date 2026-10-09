@@ -4,12 +4,12 @@ bits 32
 section s_3377C progbits alloc exec nowrite align=1
 extern __CHK, asc_C1794, asc_C1799, asc_C179E, asc_C17B9, asc_C17BF, asc_C17D8, asc_C17E0
 extern asc_C17E8, asc_C7298, asc_C814F, byte_ED7CC, byte_ED7CD, byte_ED821, byte_ED927, dword_C729A
-extern dword_C729C, dword_C729E, dword_C72A0, dword_C73D0, dword_C73D4, dword_C73D8, dword_C7440, dword_C7444
+extern dword_C729C, dword_C729E, dword_C72A0, dword_C73D0, rinkbm, dword_C73D8, dword_C7440, dword_C7444
 extern dword_C7448, dword_D2C6B, dword_DD6A6, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_EA0DC, jctime
 extern sub_1431E, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52, sub_6AF97
 extern sub_6B391, sub_76429, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_913B4
-extern sub_92DE0, sub_92EE4, sub_B2CD8, sub_B30B4, sub_B395C, sub_B4F70, sub_B4F8C, unk_DC890
-extern word_DD6AA, word_DD6AC, word_DD6B2
+extern sub_92DE0, sub_92EE4, sub_B2CD8, sub_B30B4, sub_B395C, SetDrawBitmap, sub_B4F8C, unk_DC890
+extern scrolly, scrollx, bgscrollx
 global loc_337C2, loc_337F3, loc_3381F, loc_33843, loc_33845, loc_338CB, loc_338CD, loc_3390C
 global loc_33949, loc_33977, loc_33979, loc_33A0F, loc_33A2F, loc_33ACD, loc_33C40, loc_33C4B
 global loc_33CD0, loc_33D06, loc_33D25, loc_33D29, loc_33D2C, loc_33D2E, loc_33D30, loc_33D39
@@ -28,7 +28,7 @@ push edi	; 3378A
 push ebp	; 3378B
 sub esp, byte 20h	; 3378C
 mov edi, eax	; 3378F
-mov edx, dword [dword_C73D4]	; 33791
+mov edx, dword [rinkbm]	; 33791
 test edx, edx	; 33797
 je short loc_337C2	; 33799
 push edx	; 3379B
@@ -36,12 +36,12 @@ call sub_8DBC0	; 3379C
 add esp, byte 4	; 337A1
 cmp eax, 37840h	; 337A4
 je short loc_337C2	; 337A9
-mov ecx, dword [dword_C73D4]	; 337AB
+mov ecx, dword [rinkbm]	; 337AB
 push ecx	; 337B1
 call jctime	; 337B2
 add esp, byte 4	; 337B7
 xor esi, esi	; 337BA
-mov dword [dword_C73D4], esi	; 337BC
+mov dword [rinkbm], esi	; 337BC
 loc_337C2:
 mov ebp, dword [dword_C73D0]	; 337C2
 test ebp, ebp	; 337C8
@@ -92,7 +92,7 @@ mov word [dword_DD6AE], 4Ah	; 3385D
 mov word [dword_DD6A8], 30h	; 33866
 mov eax, dword [dword_C73D0]	; 3386F
 push eax	; 33874
-call sub_B4F70	; 33875
+call SetDrawBitmap	; 33875
 add esp, byte 4	; 3387A
 push asc_C1794	; 3387D
 push esi	; 33882
@@ -262,7 +262,7 @@ mov edx, eax	; 33A9D
 mov eax, dword [dword_C73D0]	; 33A9F
 mov eax, dword [byte eax+02Ch]	; 33AA4
 mov word [byte eax+08h], dx	; 33AA7
-mov esi, dword [dword_C73D4]	; 33AAB
+mov esi, dword [rinkbm]	; 33AAB
 test esi, esi	; 33AB1
 jne short loc_33ACD	; 33AB3
 push esi	; 33AB5
@@ -270,38 +270,38 @@ push dword 250h	; 33AB6
 push dword 180h	; 33ABB
 call sub_B4F8C	; 33AC0
 add esp, byte 0Ch	; 33AC5
-mov dword [dword_C73D4], eax	; 33AC8
+mov dword [rinkbm], eax	; 33AC8
 loc_33ACD:
 mov dx, word [dword_DD6A8]	; 33ACD
 shl edx, 3	; 33AD4
-mov eax, dword [dword_C73D4]	; 33AD7
+mov eax, dword [rinkbm]	; 33AD7
 mov eax, dword [byte eax+02Ch]	; 33ADC
 mov word [byte eax+04h], dx	; 33ADF
 mov dx, word [dword_DD6AE]	; 33AE3
 shl edx, 3	; 33AEA
-mov eax, dword [dword_C73D4]	; 33AED
+mov eax, dword [rinkbm]	; 33AED
 mov eax, dword [byte eax+02Ch]	; 33AF2
 mov word [byte eax+06h], dx	; 33AF5
-mov esi, dword [dword_C73D4]	; 33AF9
+mov esi, dword [rinkbm]	; 33AF9
 mov eax, dword [byte esi+02Ch]	; 33AFF
 mov byte [eax], 0	; 33B02
 mov edx, dword [byte esi+02Ch]	; 33B05
 and dword [edx], 0FFh	; 33B08
-mov edx, dword [dword_C73D4]	; 33B0E
+mov edx, dword [rinkbm]	; 33B0E
 mov edx, dword [byte edx+02Ch]	; 33B14
 mov word [byte edx+0Eh], 0	; 33B17
 mov ax, word [byte edx+0Eh]	; 33B1D
-mov edx, dword [dword_C73D4]	; 33B21
+mov edx, dword [rinkbm]	; 33B21
 mov edx, dword [byte edx+02Ch]	; 33B27
 mov word [byte edx+0Ch], ax	; 33B2A
-mov edx, dword [dword_C73D4]	; 33B2E
+mov edx, dword [rinkbm]	; 33B2E
 mov edx, dword [byte edx+02Ch]	; 33B34
 mov word [byte edx+0Ah], ax	; 33B37
 mov edx, eax	; 33B3B
-mov eax, dword [dword_C73D4]	; 33B3D
+mov eax, dword [rinkbm]	; 33B3D
 mov eax, dword [byte eax+02Ch]	; 33B42
 mov word [byte eax+08h], dx	; 33B45
-mov esi, dword [word_DD6AC]	; 33B49
+mov esi, dword [scrollx]	; 33B49
 sar esi, 10h	; 33B4F
 shl esi, 2	; 33B52
 sub esi, byte 3Ch	; 33B55
@@ -317,7 +317,7 @@ mov eax, esi	; 33B72
 mov edx, esi	; 33B74
 sar edx, 1Fh	; 33B76
 idiv ebx	; 33B79
-mov word [word_DD6AA], dx	; 33B7B
+mov word [scrolly], dx	; 33B7B
 mov esi, dword [dword_DD6A6]	; 33B82
 sar esi, 10h	; 33B88
 shl esi, 2	; 33B8B
@@ -326,12 +326,12 @@ mov edx, esi	; 33B90
 sar edx, 1Fh	; 33B92
 idiv ebx	; 33B95
 sub eax, byte 14h	; 33B97
-mov word [word_DD6B2], ax	; 33B9A
+mov word [bgscrollx], ax	; 33B9A
 mov eax, esi	; 33BA0
 mov edx, esi	; 33BA2
 sar edx, 1Fh	; 33BA4
 idiv ebx	; 33BA7
-mov word [word_DD6AC], dx	; 33BA9
+mov word [scrollx], dx	; 33BA9
 mov eax, 180h	; 33BB0
 call sub_6A033	; 33BB5
 xor edx, edx	; 33BBA
@@ -342,7 +342,7 @@ mov ebx, 180h	; 33BC8
 xor edx, edx	; 33BCD
 xor eax, eax	; 33BCF
 call sub_6AF52	; 33BD1
-mov eax, dword [dword_C73D4]	; 33BD6
+mov eax, dword [rinkbm]	; 33BD6
 call sub_6A0F6	; 33BDB
 mov eax, dword [dword_C73D0]	; 33BE0
 call sub_6A156	; 33BE5
@@ -549,12 +549,12 @@ cmp esi, dword [dword_C7444]	; 33DEA
 je short loc_33E16	; 33DF0
 mov edx, eax	; 33DF2
 sar edx, 3	; 33DF4
-mov word [word_DD6B2], dx	; 33DF7
+mov word [bgscrollx], dx	; 33DF7
 mov esi, 8	; 33DFE
 mov edx, eax	; 33E03
 sar edx, 1Fh	; 33E05
 idiv esi	; 33E08
-mov word [word_DD6AC], dx	; 33E0A
+mov word [scrollx], dx	; 33E0A
 mov edx, 1	; 33E11
 loc_33E16:
 mov esi, ecx	; 33E16
@@ -569,7 +569,7 @@ mov eax, ecx	; 33E33
 mov edx, ecx	; 33E35
 sar edx, 1Fh	; 33E37
 idiv esi	; 33E3A
-mov word [word_DD6AA], dx	; 33E3C
+mov word [scrolly], dx	; 33E3C
 mov edx, 1	; 33E43
 loc_33E48:
 test edx, edx	; 33E48

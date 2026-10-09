@@ -8,7 +8,7 @@ extern dword_EA060, dword_EA064, dword_EA068, dword_EA06C, dword_EA070, dword_EA
 extern dword_EA080, dword_EA084, dword_EA088, dword_EA08C, dword_EA090, dword_EA094, dword_EA098, dword_EA09C
 extern dword_EA0A0, dword_EA0A4, dword_EA0AC, dword_EA0B0, dword_EA0B4, dword_EA0B8, dword_EA0BC, dword_EA0C4
 extern dword_EA0C8, dword_EA0CC, dword_EA0D0, fputchar, jctime, memset_, sub_8CCA8, sub_903F0
-extern sub_B2CD8, sub_B4BA8, sub_B4BC4, sub_B4F70, sub_B4FAC
+extern sub_B2CD8, sub_B4BA8, sub_B4BC4, SetDrawBitmap, sub_B4FAC
 global loc_6A12A, loc_6A13E, loc_6A149, loc_6A18A, loc_6A3B9, loc_6A3BA, loc_6A3FA, loc_6A41D
 global loc_6A479, loc_6A4A8, loc_6A4AD, loc_6A4CB, loc_6A4FD, loc_6A4FF, loc_6A51E, loc_6A520
 global loc_6A535, loc_6A53C, loc_6A542, loc_6A549, loc_6A561, loc_6A563, loc_6A57E, loc_6A580
@@ -120,7 +120,7 @@ add esp, byte 4	; 6A127
 loc_6A12A:
 mov ebx, dword [dword_EA0AC]	; 6A12A
 push ebx	; 6A130
-call sub_B4F70	; 6A131
+call SetDrawBitmap	; 6A131
 add esp, byte 4	; 6A136
 mov eax, dword [dword_EA0AC]	; 6A139
 loc_6A13E:
@@ -158,7 +158,7 @@ add esp, byte 4	; 6A187
 loc_6A18A:
 mov ebx, dword [dword_EA0B0]	; 6A18A
 push ebx	; 6A190
-call sub_B4F70	; 6A191
+call SetDrawBitmap	; 6A191
 add esp, byte 4	; 6A196
 mov eax, dword [dword_EA0B0]	; 6A199
 jmp short loc_6A13E	; 6A19E
@@ -1592,7 +1592,7 @@ push edi	; 6B016
 push ebp	; 6B017
 mov edx, dword [dword_EA0AC]	; 6B018
 push edx	; 6B01E
-call sub_B4F70	; 6B01F
+call SetDrawBitmap	; 6B01F
 add esp, byte 4	; 6B024
 call sub_6A3C0	; 6B027
 test byte [byte_EA058], 1	; 6B02C

@@ -621,9 +621,19 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00082579,sub_82579,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),settings_lockerroom,unmatched
 00086637,sub_86637,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),demo_savegame,unmatched
 00086696,sub_86696,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),season_playoffs,unmatched
+0008BEDB,sub_8BEDB,PlayMVI,PC-new,,,,high,"plays an MVI movie (eax=path, edx/ebx=screen x/y 161h/54h from the coach/allfiles screen): opens the CD stream (cdstream sub_1B0F3), loops over chunks 'MVIh' header (sets frame delay 100/fps), 'MVIf' frame (decode + wait for the frame time), 'MVIe' end; a key press aborts (sub_1600C); fades/restarts the music around it. Returns the key",asm_helpers,manual-trace
+0008C1B7,sub_8C1B7,stub_8C1B7,PC-new,,,,medium,"empty function (__CHK; ret), no callers",asm_helpers,manual-trace
+0008C1C2,sub_8C1C2,SelectScreenBM,PC-new,,,,medium,SetDrawBitmap(*screenbm): makes the screen bitmap descriptor current (48-byte copy into D30A4); called by file_utils/engine_init,asm_helpers,manual-trace
+0008C1E2,sub_8C1E2,SelectRinkBM,PC-new,,,,medium,SetDrawBitmap(*rinkbm): makes the rink tile buffer bitmap current; called by file_utils/gadgets_replay,asm_helpers,manual-trace
+0008C1F7,sub_8C1F7,stub_8C1F7,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
+0008C202,sub_8C202,stub_8C202,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
+0008C20D,sub_8C20D,stub_8C20D,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
+0008C218,sub_8C218,stub_8C218,PC-new,,,,medium,"empty function; line_editor_rosters calls it with 6 stack args (vgapage==0, ...) and pops them: a removed routine",asm_helpers,manual-trace
+0008C223,sub_8C223,stub_8C223,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
 0008C230,sub_8C230,randomd0,93G,middle93_1.asm,video94.asm,92G randomd0; 95G randomd0,high,LCG multiplier E62D/BB40 identical to 93G randomd0 (seed StanleyCupTimer),asm_helpers,manual+constants
+0008C290,sub_8C290,vgacopy_bg,PC-new,,,,medium,"unreferenced 16-bit-frame VGA routine: write mode 1 latched copy of rows from the circular background buffer in VRAM (86A0h + bgscrolly8*8 rows, wrap C8A0h->4200h) to the screen at (x,y) [bp+6..0Eh]",asm_helpers,manual-trace
 0008C8E8,sub_8C8E8,vtoa,93G,logic93_5.asm,checks94.asm,92G vtoa; 95G vtoa,high,"returns 8 for x|y==0, same octant logic; 94G vtoa byte table found at D2C75 (data_tables)",asm_helpers,manual+constants
-0008C944,sub_8C944,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),asm_helpers,unmatched
+0008C944,sub_8C944,SaveSS,PC-new,,,,medium,stores SS in saved_ss (DOS/4GW selector for later real-mode calls),asm_helpers,manual-trace
 0008C94C,__CHK,__CHK,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 16 bytes),watcom_clib_01,flirt
 0008C95C,__GRO,__GRO,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 3 bytes),watcom_clib_01,flirt
 0008C95F,__STK,__STK,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 45 bytes),watcom_clib_01,flirt
@@ -911,6 +921,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B297E,sub_B297E,sub_B297E,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 2 bytes),watcom_clib_54,flirt
 000B2980,frexp_,frexp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 111 bytes),watcom_clib_54,flirt
 000B3D94,sub_B3D94,vecdist,PC-new,middle93_1.asm,video94.asm,92G sroot; 95G sroot,medium,"EA math helper (cdecl dx,dy): angle of (dx,dy) via sub_B49C0, then |dx|/cos or |dy|/sin (16.16) = the vector length; skatetopuck compares the player-puck distance with 18h. Plays the role of 93G sroot (sqrt of dx^2+dy^2)",ea_fileio,manual-trace
+000B4F70,sub_B4F70,SetDrawBitmap,PC-new,,,,medium,vga_blitters: copies the 48-byte bitmap descriptor at [esp+4] into the current one at D30A4 (640x480 default),vga_blitters,manual-trace
 000B52B4,sub_B52B4,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vga_blitters,unmatched
 000B5584,sub_B5584,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vga_blitters,unmatched
 000B56B8,sub_B56B8,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vga_blitters,unmatched

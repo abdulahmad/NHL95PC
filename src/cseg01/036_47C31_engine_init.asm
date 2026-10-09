@@ -11,10 +11,10 @@ extern dword_E0244, dword_E9A9E, dword_E9B04, forcepldata, jctime, puckc, off_C9
 extern sub_5B826, resetplstuff, setpersonel, sub_1145F, sub_1149A, sub_11598, sub_14CF1, sub_33DD3
 extern sub_47951, sub_4FD47, sub_50A05, sub_50A84, sub_594CD, sub_597E3, sub_59863, sub_59981
 extern sub_59A11, sub_5CE12, sub_5DD7C, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
-extern sub_6B008, sub_8374D, sub_8C1C2, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
+extern sub_6B008, sub_8374D, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
 extern unk_DF014, unk_DF314, unk_DFD9C, unk_E001C, word_C9098, word_C909A, xc1, yc1
 extern word_C90B2, word_C90B4, word_C90C2, word_C90C4, word_C90D4, word_CBC46, word_CBC52, word_CBC54
-extern word_CBC56, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, word_DD6AA, word_DFF1E, word_DFF22
+extern word_CBC56, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly, word_DFF1E, word_DFF22
 extern word_DFF28, word_DFF2A, word_DFF44, word_E001E, word_E0022, word_E0028, word_E002A, word_E002E
 extern word_E0042, word_E0046, word_E0048, word_E004A, word_E0052, regd1, word_E9AA0
 global loc_47C4F, loc_47C60, loc_47C62, loc_47C89, loc_47CB1, loc_47CD0, loc_47E01, loc_47E05
@@ -320,7 +320,7 @@ cmp eax, byte 0FFFFFFFFh	; 48092
 je short loc_4809C	; 48095
 call sub_66DDA	; 48097
 loc_4809C:
-call sub_8C1C2	; 4809C
+call SelectScreenBM	; 4809C
 xor ebx, ebx	; 480A1
 mov word [word_CBC58], bx	; 480A3
 mov word [word_CBC56], bx	; 480AA
@@ -363,7 +363,7 @@ lea ecx, [dword edx+0A8h]	; 48132
 mov eax, dword [dword_DD6B0]	; 48138
 sar eax, 10h	; 4813D
 shl eax, 3	; 48140
-mov ebx, dword [word_DD6AA]	; 48143
+mov ebx, dword [scrolly]	; 48143
 sar ebx, 10h	; 48149
 add eax, ebx	; 4814C
 lea ebx, [dword eax+0140h]	; 4814E
@@ -385,7 +385,7 @@ neg edx	; 4818D
 mov ebx, dword [dword_DD6B0]	; 4818F
 sar ebx, 10h	; 48195
 shl ebx, 3	; 48198
-mov eax, dword [word_DD6AA]	; 4819B
+mov eax, dword [scrolly]	; 4819B
 sar eax, 10h	; 481A0
 add eax, ebx	; 481A3
 neg eax	; 481A5

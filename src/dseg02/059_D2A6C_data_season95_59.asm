@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_D2A6C progbits alloc noexec write align=1
 extern unk_D29FF, unk_D2A1D, unk_D2A38, unk_D2A56, unk_D2A68
-global asc_D2A6C, asc_D2AAF, byte_D2C5C, byte_D2C68, byte_D2C74, dword_D2B70, dword_D2BEC, dword_D2C6B
+global asc_D2A6C, asc_D2AAF, byte_D2C5C, byte_D2C68, vtoa_dt, dword_D2B70, dword_D2BEC, dword_D2C6B
 global off_D2B0C, off_D2B1C, off_D2B34, unk_D2A82, unk_D2A9C, unk_D2AAB, unk_D2AC5, unk_D2ADF
 global unk_D2AE7, unk_D2AEB, unk_D2AEE, unk_D2B38
 asc_D2A6C:
@@ -76,5 +76,5 @@ db 061h,03Ah,00h
 dword_D2C6B:
 dd byte_D2C68
 db 00h,01h,00h,00h,00h
-byte_D2C74:
+vtoa_dt:
 db 01h,07h,03h,05h,00h,00h,04h,04h,02h,06h,02h,06h,01h,07h,03h,05h

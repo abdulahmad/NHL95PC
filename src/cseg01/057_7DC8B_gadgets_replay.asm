@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_7DC8B progbits alloc exec nowrite align=1
 extern __CHK, asc_C33D4, asc_C33DC, asc_C33E4, asc_C33EC, asc_C3411, asc_C3419, asc_C3421
-extern asc_C3426, asc_C8136, byte_D2430, byte_ED7CC, byte_ED7EB, byte_ED862, byte_ED8CC, byte_ED92D
+extern asc_C3426, asc_C8136, musicon, byte_ED7CC, byte_ED7EB, byte_ED862, byte_ED8CC, byte_ED92D
 extern byte_ED932, byte_ED9EF, dword_C53FB, dword_C5403, dword_C5407, dword_C541F, dword_C66D0, dword_C66D4
 extern dword_C7444, dword_C7448, dword_C90C8, dword_CC0DC, dword_CC9AD, dword_CCC88, dword_CCC94, dword_D1C8B
 extern dword_D1CE6, dword_D1CEE, dword_D1DC8, dword_D1DCC, dword_D1DD0, dword_D1DD4, dword_D2C6B, dword_D8B74
@@ -15,11 +15,11 @@ extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, jctime, 
 extern off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25, rand_, sub_10E9F, sub_110E0, sub_11598
 extern sub_1431E, sub_30A0C, sub_30F12, sub_31013, sub_33DD3, sub_59748, sub_67581, sub_67900
 extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_6B391, sub_6B3D7, sub_7F724
-extern sub_7FA10, sub_7FC12, sub_8C1C2, sub_8C1E2, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
+extern sub_7FA10, sub_7FC12, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
 extern sub_B2DB4, sub_B2E1B, sub_B30B4, sub_B396E, sub_B3989, sub_B3999, sub_B4BA8, sub_B4BC4
 extern sub_B4CD8, sub_B4FAC, sub_B500C, sub_B5DB0, unk_C33F8, unk_C3403, unk_DF014, unk_DF314
-extern word_C9098, word_C909A, word_CC0DE, word_CD4FC, word_CD500, word_DD6AA, word_E9F18, word_E9F3A
+extern word_C9098, word_C909A, word_CC0DE, word_CD4FC, word_CD500, scrolly, word_E9F18, word_E9F3A
 extern word_ED758
 global jpt_7F09F, loc_7DCC0, loc_7DCC2, loc_7DCFC, loc_7DCFE, loc_7DD15, loc_7DD1E, loc_7DD26
 global loc_7DD4A, loc_7DD6A, loc_7DD6B, loc_7DD74, loc_7DD78, loc_7DD87, loc_7DD88, loc_7DD90
@@ -173,7 +173,7 @@ je short loc_7DE27	; 7DDF8
 xor edx, edx	; 7DDFA
 jmp short loc_7DE31	; 7DDFC
 loc_7DDFE:
-cmp byte [byte_D2430], 0	; 7DDFE
+cmp byte [musicon], 0	; 7DDFE
 je short loc_7DE17	; 7DE05
 xor ecx, ecx	; 7DE07
 mov ebx, asc_C33DC	; 7DE09
@@ -506,7 +506,7 @@ mov esi, dword [dword_ED6E0]	; 7E182
 push esi	; 7E188
 call sub_B2DB4	; 7E189
 add esp, byte 8	; 7E18E
-call sub_8C1C2	; 7E191
+call SelectScreenBM	; 7E191
 push byte 20h	; 7E196
 push byte 0	; 7E198
 push dword 140h	; 7E19A
@@ -625,7 +625,7 @@ jge short loc_7E371	; 7E367
 xor ebx, ebx	; 7E369
 mov dword [dword_D8C74], ebx	; 7E36B
 loc_7E371:
-call sub_8C1E2	; 7E371
+call SelectRinkBM	; 7E371
 xor edx, edx	; 7E376
 xor eax, eax	; 7E378
 call sub_6AF97	; 7E37A
@@ -643,7 +643,7 @@ lea ecx, [dword edx+0A8h]	; 7E3AA
 mov eax, dword [dword_DD6B0]	; 7E3B0
 sar eax, 10h	; 7E3B5
 shl eax, 3	; 7E3B8
-mov ebx, dword [word_DD6AA]	; 7E3BB
+mov ebx, dword [scrolly]	; 7E3BB
 sar ebx, 10h	; 7E3C1
 add eax, ebx	; 7E3C4
 lea ebx, [dword eax+0140h]	; 7E3C6
@@ -665,7 +665,7 @@ neg edx	; 7E405
 mov eax, dword [dword_DD6B0]	; 7E407
 sar eax, 10h	; 7E40C
 shl eax, 3	; 7E40F
-mov ebx, dword [word_DD6AA]	; 7E412
+mov ebx, dword [scrolly]	; 7E412
 sar ebx, 10h	; 7E418
 add eax, ebx	; 7E41B
 neg eax	; 7E41D
@@ -680,7 +680,7 @@ call sub_6B3D7	; 7E43F
 xor ebp, ebp	; 7E444
 mov dword [byte esp+014h], ebp	; 7E446
 loc_7E44A:
-call sub_8C1C2	; 7E44A
+call SelectScreenBM	; 7E44A
 lea eax, [byte esp+014h]	; 7E44F
 call sub_7E9AC	; 7E453
 test eax, eax	; 7E458
@@ -711,7 +711,7 @@ sar eax, 10h	; 7E4AE
 call sub_67900	; 7E4B1
 cwde	; 7E4B6
 mov dword [byte esp+014h], eax	; 7E4B7
-call sub_8C1E2	; 7E4BB
+call SelectRinkBM	; 7E4BB
 cmp dword [dword_ED70C], byte 0	; 7E4C0
 je near loc_7E55D	; 7E4C7
 mov ax, word [dword_ED6F0]	; 7E4CD
@@ -823,7 +823,7 @@ lea ecx, [dword edx+0A8h]	; 7E682
 mov ebx, dword [dword_DD6B0]	; 7E688
 sar ebx, 10h	; 7E68E
 shl ebx, 3	; 7E691
-mov eax, dword [word_DD6AA]	; 7E694
+mov eax, dword [scrolly]	; 7E694
 sar eax, 10h	; 7E699
 add eax, ebx	; 7E69C
 lea ebx, [dword eax+0140h]	; 7E69E
@@ -916,7 +916,7 @@ neg edx	; 7E7FC
 mov eax, dword [dword_DD6B0]	; 7E7FE
 sar eax, 10h	; 7E803
 shl eax, 3	; 7E806
-mov ebx, dword [word_DD6AA]	; 7E809
+mov ebx, dword [scrolly]	; 7E809
 sar ebx, 10h	; 7E80F
 add eax, ebx	; 7E812
 neg eax	; 7E814
@@ -1520,7 +1520,7 @@ xor eax, eax	; 7F026
 call sub_7F0AF	; 7F028
 call sub_6B3D7	; 7F02D
 mov dword [dword_ED754], 4	; 7F032
-call sub_8C1C2	; 7F03C
+call SelectScreenBM	; 7F03C
 push byte 20h	; 7F041
 push ebp	; 7F043
 push dword 140h	; 7F044
@@ -1670,7 +1670,7 @@ loc_7F213:
 call sub_B3999	; 7F213
 jmp near loc_7F71C	; 7F218
 loc_7F21D:
-call sub_8C1C2	; 7F21D
+call SelectScreenBM	; 7F21D
 push byte 20h	; 7F222
 push byte 0	; 7F224
 push dword 0F0h	; 7F226

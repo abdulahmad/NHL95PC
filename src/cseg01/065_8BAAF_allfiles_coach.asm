@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_8BAAF progbits alloc exec nowrite align=1
 extern __CHK, asc_C3B0E, asc_C3B16, asc_C3B2A, asc_C3B38, asc_C3B45, asc_C3B67, asc_C3B6C
-extern asc_C3B75, asc_C3B7A, asc_C3B7F, asc_C3B84, asc_C3B8A, asc_C3B93, byte_C5400, byte_D2430
-extern byte_D2C68, byte_ED7CC, byte_ED9B2, byte_ED9B3, byte_ED9EB, dword_C721D, dword_D242C, dword_D2C6B
+extern asc_C3B75, asc_C3B7A, asc_C3B7F, asc_C3B84, asc_C3B8A, asc_C3B93, byte_C5400, musicon
+extern byte_D2C68, byte_ED7CC, byte_ED9B2, byte_ED9B3, byte_ED9EB, songdata, dword_D2C6B, musicslot
 extern fclose_, fgets_, fopen_, fscanf_, jctime, memcpy_, rand_, sprintf_
 extern strcat_, stricmp_, sub_11598, sub_1431E, sub_33E6A, sub_47C31, sub_6B410, sub_6B47C
-extern sub_836E4, sub_8373E, sub_8473A, sub_8474E, sub_8BEDB, sub_8D2F0, sub_8E83C, sub_8F98F
+extern sub_836E4, sub_8373E, sub_8473A, sub_8474E, PlayMVI, sub_8D2F0, sub_8E83C, sub_8F98F
 extern sub_8FC8A, sub_8FFB0, sub_9061C, sub_B2CD8, sub_B30B4, sub_B4BA8, unk_C3B0C
 global loc_8BAE6, loc_8BB72, loc_8BB76, loc_8BBA7, loc_8BBB0, loc_8BBCF, loc_8BBFF, loc_8BC02
 global loc_8BC4D, loc_8BC4F, loc_8BD01, loc_8BD03, loc_8BD20, loc_8BD3E, loc_8BD40, loc_8BDA9
@@ -186,9 +186,9 @@ call memcpy_	; 8BCC6
 push esi	; 8BCCB
 call jctime	; 8BCCC
 add esp, byte 4	; 8BCD1
-cmp byte [byte_D2430], 0	; 8BCD4
+cmp byte [musicon], 0	; 8BCD4
 je short loc_8BD20	; 8BCDB
-cmp dword [dword_C721D], byte 0	; 8BCDD
+cmp dword [songdata], byte 0	; 8BCDD
 jne short loc_8BD20	; 8BCE4
 mov ecx, asc_C3B7F	; 8BCE6
 mov ebx, asc_C3B84	; 8BCEB
@@ -203,9 +203,9 @@ lea eax, [dword esp+0300h]	; 8BD03
 call sub_1431E	; 8BD0A
 lea eax, [dword esp+0300h]	; 8BD0F
 call sub_8F98F	; 8BD16
-mov dword [dword_C721D], eax	; 8BD1B
+mov dword [songdata], eax	; 8BD1B
 loc_8BD20:
-cmp byte [byte_D2430], 0	; 8BD20
+cmp byte [musicon], 0	; 8BD20
 je short loc_8BD3E	; 8BD27
 test byte [byte_C5400], 1	; 8BD29
 je short loc_8BD3E	; 8BD30
@@ -247,7 +247,7 @@ xor edx, edx	; 8BDA9
 loc_8BDAB:
 lea eax, [dword esp+0300h]	; 8BDAB
 call sub_1431E	; 8BDB2
-cmp byte [byte_D2430], 0	; 8BDB7
+cmp byte [musicon], 0	; 8BDB7
 je short loc_8BDD2	; 8BDBE
 test byte [byte_C5400], 1	; 8BDC0
 je short loc_8BDD2	; 8BDC7
@@ -259,7 +259,7 @@ loc_8BDD2:
 mov ebx, 54h	; 8BDD2
 mov edx, 161h	; 8BDD7
 lea eax, [dword esp+0300h]	; 8BDDC
-call sub_8BEDB	; 8BDE3
+call PlayMVI	; 8BDE3
 mov esi, eax	; 8BDE8
 mov eax, esp	; 8BDEA
 push eax	; 8BDEC
@@ -271,7 +271,7 @@ mov ebx, 10h	; 8BDFC
 mov edx, esp	; 8BE01
 mov eax, 1	; 8BE03
 call sub_11598	; 8BE08
-cmp byte [byte_D2430], 0	; 8BE0D
+cmp byte [musicon], 0	; 8BE0D
 je short loc_8BE2D	; 8BE14
 test byte [byte_C5400], 1	; 8BE16
 je short loc_8BE2D	; 8BE1D
@@ -281,23 +281,23 @@ call sub_836E4	; 8BE24
 test eax, eax	; 8BE29
 jne short loc_8BE24	; 8BE2B
 loc_8BE2D:
-cmp byte [byte_D2430], 0	; 8BE2D
+cmp byte [musicon], 0	; 8BE2D
 je near loc_8BEBD	; 8BE34
-cmp dword [dword_C721D], byte 0	; 8BE3A
+cmp dword [songdata], byte 0	; 8BE3A
 je near loc_8BEBD	; 8BE41
 loc_8BE47:
-mov eax, dword [dword_D242C]	; 8BE47
+mov eax, dword [musicslot-3]	; 8BE47
 sar eax, 18h	; 8BE4C
 mov edx, 3	; 8BE4F
 call sub_8FC8A	; 8BE54
 test eax, eax	; 8BE59
 je short loc_8BE47	; 8BE5B
-mov edx, dword [dword_C721D]	; 8BE5D
+mov edx, dword [songdata]	; 8BE5D
 push edx	; 8BE63
 call sub_8D2F0	; 8BE64
 add esp, byte 4	; 8BE69
 xor ebx, ebx	; 8BE6C
-mov dword [dword_C721D], ebx	; 8BE6E
+mov dword [songdata], ebx	; 8BE6E
 jmp short loc_8BEBD	; 8BE74
 loc_8BE76:
 mov eax, esp	; 8BE76
@@ -310,16 +310,16 @@ mov ebx, 10h	; 8BE88
 mov edx, esp	; 8BE8D
 mov eax, 1	; 8BE8F
 call sub_11598	; 8BE94
-cmp byte [byte_D2430], 0	; 8BE99
+cmp byte [musicon], 0	; 8BE99
 je short loc_8BEBD	; 8BEA0
-mov ebx, dword [dword_C721D]	; 8BEA2
+mov ebx, dword [songdata]	; 8BEA2
 test ebx, ebx	; 8BEA8
 je short loc_8BEBD	; 8BEAA
 push ebx	; 8BEAC
 call sub_8D2F0	; 8BEAD
 add esp, byte 4	; 8BEB2
 xor ebp, ebp	; 8BEB5
-mov dword [dword_C721D], ebp	; 8BEB7
+mov dword [songdata], ebp	; 8BEB7
 loc_8BEBD:
 cmp edi, byte 1	; 8BEBD
 jne short loc_8BEC7	; 8BEC0

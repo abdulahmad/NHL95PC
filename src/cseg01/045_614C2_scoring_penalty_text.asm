@@ -6,7 +6,7 @@ extern PBnum, Setplass, __CHK, asc_C1C6A, asc_C1C78, asc_C1C87, asc_C1C92, asc_C
 extern asc_C1CA8, asc_C1CAC, asc_C1CB3, asc_C1CB9, asc_C1CC4, asc_C1CCD, asc_C1CDA, asc_C1CE9
 extern asc_C1CFE, asc_C1D0E, asc_C1D19, asc_C1D2D, asc_C1D3F, asc_C1D54, assinsert, assreplace
 extern byte_C5400, byte_C542F, byte_C5431, byte_C90BC, gmode2, byte_C90D5, byte_C9104, byte_C9111
-extern byte_C9123, byte_C9142, byte_C9146, byte_CBC36, byte_CCE00, byte_CCE01, byte_D2430, byte_DAC20
+extern byte_C9123, byte_C9142, byte_C9146, byte_CBC36, byte_CCE00, byte_CCE01, musicon, byte_DAC20
 extern byte_DB3A8, byte_DB3AD, byte_DF658, byte_DF6E8, byte_DF758, byte_DF7E8, byte_DF861, byte_E024C
 extern byte_E024D, byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E9A15, byte_E9A16
 extern byte_E9A17, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD, byte_E9ACE
@@ -3272,7 +3272,7 @@ test byte [gmode], 1	; 63CF8
 je short loc_63D38	; 63CFF
 test byte [byte_C5400], 1	; 63D01
 je short loc_63D13	; 63D08
-cmp byte [byte_D2430], 0	; 63D0A
+cmp byte [musicon], 0	; 63D0A
 jne short loc_63D1A	; 63D11
 loc_63D13:
 mov edx, 1	; 63D13

@@ -30,7 +30,7 @@ global loc_B5BEE, loc_B5BFD, loc_B5C0A, loc_B5C1C, loc_B5C35, loc_B5C38, loc_B5C
 global loc_B5C61, loc_B5C69, loc_B5C8B, loc_B5C96, loc_B5C9B, loc_B5CA1, loc_B5CA4, loc_B5CAF
 global loc_B5CCC, loc_B5CD3, loc_B5CD7, loc_B5CEB, loc_B5CFB, loc_B5CFF, loc_B5D2A, loc_B5D37
 global loc_B5D3C, loc_B5D3E, loc_B5D42, loc_B5D51, loc_B5D5B, loc_B5D72, loc_B5D77, sub_B4CD8
-global sub_B4CF2, sub_B4DD4, sub_B4DEC, sub_B4E50, sub_B4F70, sub_B4F8C, sub_B4FA6, sub_B4FAC
+global sub_B4CF2, sub_B4DD4, sub_B4DEC, sub_B4E50, SetDrawBitmap, sub_B4F8C, sub_B4FA6, sub_B4FAC
 global sub_B4FE8, sub_B500C, sub_B5290, sub_B52B4, sub_B555C, sub_B5584, sub_B5690, sub_B56B8
 global sub_B594C, sub_B5974, sub_B5AA0, sub_B5AC8
 sub_B4CD8:
@@ -337,7 +337,7 @@ LD or, ecx, ecx	; B4F64
 jg short loc_B4F26	; B4F66
 jmp near loc_B4EB4	; B4F68
 db 00h,00h,00h
-sub_B4F70:
+SetDrawBitmap:
 LD mov, edx, edi	; B4F70
 LD mov, eax, esi	; B4F72
 mov esi, dword [byte esp+04h]	; B4F74

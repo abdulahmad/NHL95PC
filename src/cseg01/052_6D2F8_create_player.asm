@@ -14,14 +14,14 @@ extern asc_C2F6C, asc_C2F8C, asc_C2FAA, asc_C2FBA, asc_C2FD7, asc_C2FEF, asc_C2F
 extern asc_C6903, asc_C6907, asc_D07B6, asc_D0819, asc_D0D68, asc_D0D81, asc_D0D95, asc_D0DB2
 extern asc_D0E18, asc_D0E3A, asc_D0E45, asc_D0E81, asc_D0E86, asc_D0EB4, asc_D1056, byte_C8111
 extern byte_C83C3, byte_D079E, byte_D079F, byte_D07A8, byte_D07A9, byte_D0AE6, byte_D0F94, byte_D0FE0
-extern byte_D2430, byte_D42C3, byte_EA990, byte_EA991, byte_EA992, byte_EA993, byte_EAC86, byte_EAF80
+extern musicon, byte_D42C3, byte_EA990, byte_EA991, byte_EA992, byte_EA993, byte_EAC86, byte_EAF80
 extern byte_EAF99, byte_EAF9C, byte_EAFB5, byte_ED908, byte_ED98F, dword_C2CAC, dword_C2CB0, dword_C2CB4
 extern dword_C2CB8, dword_C2CBC, dword_C2CC0, dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4
-extern dword_C2CD8, dword_C2CDC, dword_C2CF0, dword_C4B69, dword_C5519, dword_C721D, dword_C90CA, dword_D0151
+extern dword_C2CD8, dword_C2CDC, dword_C2CF0, dword_C4B69, dword_C5519, songdata, dword_C90CA, dword_D0151
 extern dword_D0211, dword_D0331, dword_D0351, dword_D03B1, dword_D03D1, dword_D07AA, dword_D07AE, dword_D07B2
 extern dword_D07BB, dword_D07BF, dword_D07C3, dword_D07C7, dword_D07CB, dword_D07CF, dword_D07D3, dword_D07D7
 extern dword_D07DB, dword_D07DF, dword_D07E3, dword_D07E7, dword_D0B12, dword_D0C10, dword_D0C20, dword_D0CDA
-extern dword_D242C, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DC238, dword_EA0DC, dword_EA2B4, dword_EA988
+extern dword_D2C6B, dword_D8B68, dword_D8B74, dword_DC238, dword_EA0DC, dword_EA2B4, dword_EA988, musicslot
 extern dword_EA994, dword_EAF78, dword_EAF7C, dword_EBC68, dword_EBC74, dword_EBC78, dword_EBC7C, dword_EBCA4
 extern dword_EBE9C, dword_EBEA0, fputchar, j_unlink_, jctime, loc_6CEF4, loc_6CEF5, memcpy_
 extern memset_, off_C54A9, off_C80D7, off_C80DB, off_C80DF, off_C80E3, off_C80E7, off_C80EB
@@ -34,7 +34,7 @@ extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_6BF4A, sub_6C043, sub_6C96C, sub_6CA
 extern sub_6CB90, sub_6CBB7, sub_6D299, sub_71F0C, sub_737E1, sub_76429, sub_78BE7, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8EA18, sub_8FC8A, sub_8FFB0, sub_903F0, sub_9061C
 extern sub_90D20, sub_90F38, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_92DE0, sub_B2CBE
-extern sub_B2CD8, sub_B2DB4, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4F70
+extern sub_B2CD8, sub_B2DB4, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, SetDrawBitmap
 extern sub_B4FAC, sub_B5DB0, unk_C5283, unk_C7733, unk_D0450, unk_D05F4, unk_D0B80, unk_D0BB8
 extern unk_D0BF0, unk_D0C5C, unk_D0CA2, unk_D0EDD, unk_D0F80, unk_D0FA8, unk_D0FBC, unk_D0FD0
 extern unk_D0FF0, unk_D1000, unk_DBC30, unk_DF014, unk_EA968, unk_EAC84, unk_EAFB8, word_C2D0E
@@ -110,7 +110,7 @@ push edi	; 6D306
 sub esp, byte 54h	; 6D307
 mov edx, dword [dword_EA2B4]	; 6D30A
 push edx	; 6D310
-call sub_B4F70	; 6D311
+call SetDrawBitmap	; 6D311
 add esp, byte 4	; 6D316
 mov edx, 43h	; 6D319
 mov eax, 40h	; 6D31E
@@ -1280,22 +1280,22 @@ add esp, byte 8	; 6E190
 call dword [off_D3078]	; 6E193
 call sub_6B3D7	; 6E199
 loc_6E19E:
-cmp byte [byte_D2430], 0	; 6E19E
+cmp byte [musicon], 0	; 6E19E
 je short loc_6E1DD	; 6E1A5
-cmp dword [dword_C721D], byte 0	; 6E1A7
+cmp dword [songdata], byte 0	; 6E1A7
 je short loc_6E1DD	; 6E1AE
-mov eax, dword [dword_D242C]	; 6E1B0
+mov eax, dword [musicslot-3]	; 6E1B0
 sar eax, 18h	; 6E1B5
 mov edx, 3	; 6E1B8
 call sub_8FC8A	; 6E1BD
 test eax, eax	; 6E1C2
 je short loc_6E1DD	; 6E1C4
-mov edx, dword [dword_C721D]	; 6E1C6
+mov edx, dword [songdata]	; 6E1C6
 push edx	; 6E1CC
 call sub_8D2F0	; 6E1CD
 add esp, byte 4	; 6E1D2
 xor ebx, ebx	; 6E1D5
-mov dword [dword_C721D], ebx	; 6E1D7
+mov dword [songdata], ebx	; 6E1D7
 loc_6E1DD:
 xor ecx, ecx	; 6E1DD
 mov dword [byte esp+078h], ecx	; 6E1DF
@@ -2212,7 +2212,7 @@ mov esi, edx	; 6ECA5
 mov edi, ebx	; 6ECA7
 mov edx, dword [dword_EA2B4]	; 6ECA9
 push edx	; 6ECAF
-call sub_B4F70	; 6ECB0
+call SetDrawBitmap	; 6ECB0
 add esp, byte 4	; 6ECB5
 push byte 41h	; 6ECB8
 call sub_B392C	; 6ECBA
@@ -4051,7 +4051,7 @@ mov ebp, eax	; 7026D
 mov dword [byte esp+040h], edx	; 7026F
 mov edx, dword [dword_EA2B4]	; 70273
 push edx	; 70279
-call sub_B4F70	; 7027A
+call SetDrawBitmap	; 7027A
 add esp, byte 4	; 7027F
 xor ecx, ecx	; 70282
 mov ebx, asc_C2D7D	; 70284

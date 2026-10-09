@@ -18,7 +18,7 @@ global unk_CBC6E, unk_CBC7E, unk_CBC9E, unk_CBCAE, unk_CBCBE, unk_CBCCE, unk_CBC
 global unk_CBCFE, unk_CBD0E, unk_CBD1E, unk_CBD5A, wcradiusx, word_C9098, word_C909A, word_C90A0
 global word_C90A4, word_C90A6, word_C90A8, xc1, yc1, word_C90B2, word_C90B4, word_C90B6
 global word_C90B8, word_C90C2, word_C90C4, word_C90C6, word_C90CC, word_C90CE, word_C90D0, refsignal
-global word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_C90DC, word_C90DE, dirtab_y, word_C9102
+global word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_C90DC, word_C90DE, dirtab_y
 global word_CBC42, word_CBC44, word_CBC46, word_CBC48, word_CBC4A, word_CBC52, word_CBC54, word_CBC56
 global word_CBC58, word_CBC5A, word_CBC5C, word_CBC5E, word_CBC60, word_CBC62, word_CBC64, word_CBC66
 global word_CBC68, word_CBC6A, word_CBC6C, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, word_CBEC0
@@ -127,7 +127,6 @@ db 0C8h,00h,08Dh,00h,08Dh,00h,0C8h,00h,00h,00h,08Dh,00h,073h,0FFh,00h,00h
 db 038h,0FFh,073h,0FFh,073h,0FFh,038h,0FFh,00h,00h,073h,0FFh,08Dh,00h
 StanleyCupTimer:
 db 021h,043h
-word_C9102:
 db 0CDh,0ABh
 byte_C9104:
 db 00h,0Ah,0Ah,03h,01h,00h,01h,01h,01h,0Ah,0Ah,04h,04h

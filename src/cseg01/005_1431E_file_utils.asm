@@ -8,8 +8,8 @@ extern dword_C5704, dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5
 extern dword_C5848, dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_DC26C
 extern dword_DC28C, dword_DC2BC, dword_DC2C0, dword_DC2C4, dword_DC30C, dword_DC334, gmode, j_unlink_
 extern lseek_, off_C56B5, off_C80D7, rmdir_, sprintf_, strcat_, strcpy_, sub_15374
-extern sub_1540A, sub_15655, sub_15707, sub_157BD, sub_15995, sub_31013, sub_5A2EE, sub_8C1C2
-extern sub_8C1E2, sub_B2CD8, sub_B2DB4, sub_B4CD8, sub_B4CF2, unk_C8113, unk_C8115, unk_DC2F4
+extern sub_1540A, sub_15655, sub_15707, sub_157BD, sub_15995, sub_31013, sub_5A2EE, SelectScreenBM
+extern SelectRinkBM, sub_B2CD8, sub_B2DB4, sub_B4CD8, sub_B4CF2, unk_C8113, unk_C8115, unk_DC2F4
 extern unk_DC300, unknown_libname_1, unknown_libname_2, word_C571C, word_C575C, word_CBC6A, word_CBC6C
 global loc_14349, loc_1434C, loc_14359, loc_14366, loc_143FA, loc_14436, loc_1443A, loc_144D7
 global loc_14513, loc_14517, loc_14537, loc_14599, loc_145D0, loc_145E4, loc_145E6, loc_145F0
@@ -680,7 +680,7 @@ cwd	; 14A3E
 idiv cx	; 14A40
 mov esi, edx	; 14A43
 loc_14A45:
-call sub_8C1C2	; 14A45
+call SelectScreenBM	; 14A45
 test bx, bx	; 14A4A
 je short loc_14AA2	; 14A4D
 push byte 4	; 14A4F
@@ -740,7 +740,7 @@ push ebx	; 14AEC
 loc_14AED:
 call sub_B4CD8	; 14AED
 add esp, byte 0Ch	; 14AF2
-call sub_8C1E2	; 14AF5
+call SelectRinkBM	; 14AF5
 pop esi	; 14AFA
 pop ecx	; 14AFB
 pop ebx	; 14AFC
@@ -754,7 +754,7 @@ push esi	; 14B0A
 push edi	; 14B0B
 push ebp	; 14B0C
 mov ebx, eax	; 14B0D
-call sub_8C1C2	; 14B0F
+call SelectScreenBM	; 14B0F
 test bx, bx	; 14B14
 je short loc_14B7C	; 14B17
 mov ebp, dword [dword_C5850]	; 14B19
@@ -819,7 +819,7 @@ push edi	; 14BDB
 loc_14BDC:
 call sub_B4CD8	; 14BDC
 add esp, byte 0Ch	; 14BE1
-call sub_8C1E2	; 14BE4
+call SelectRinkBM	; 14BE4
 loc_14BE9:
 pop ebp	; 14BE9
 pop edi	; 14BEA
@@ -953,7 +953,7 @@ push edx	; 14CFD
 push esi	; 14CFE
 push edi	; 14CFF
 push ebp	; 14D00
-call sub_8C1C2	; 14D01
+call SelectScreenBM	; 14D01
 cmp dword [dword_C5704], byte 0	; 14D06
 jl near loc_14F2A	; 14D0D
 mov eax, dword [dword_DC28C]	; 14D13

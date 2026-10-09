@@ -4,7 +4,7 @@ bits 32
 section s_4842A progbits alloc exec nowrite align=1
 extern AddPenalty, AddPenalty2, DoGameFrame, Findhittype, GetHot, PBnum, SetSPA, SetShotMode
 extern Setplass, ShotMode, StopNA, __CHK, asc_C1B2C, asc_C1B36, assinsert, assreplace
-extern byte_C5400, byte_C90BC, gmode2, byte_CC9E4, byte_CC9E7, byte_CCA95, byte_D2430, byte_DACB3
+extern byte_C5400, byte_C90BC, gmode2, byte_CC9E4, byte_CC9E7, byte_CCA95, musicon, byte_DACB3
 extern byte_DAEA7, byte_DB3A8, byte_DB3AD, byte_DF87F, byte_DFFE0, byte_DFFE2, byte_E0250, byte_E028C
 extern byte_E02C8, byte_E0308, byte_E0344, byte_E9A16, byte_E9ABB, byte_E9AC0, byte_E9AC1, byte_E9AC8
 extern byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, check4bench, check4check, checkob
@@ -1291,7 +1291,7 @@ mov dword [dword_D8C84], esi	; 4922F
 call sub_597E3	; 49235
 xor ebx, ebx	; 4923A
 mov word [word_CC0DE], bx	; 4923C
-cmp byte [byte_D2430], 0	; 49243
+cmp byte [musicon], 0	; 49243
 je short loc_49256	; 4924A
 call sub_837A8	; 4924C
 jmp near loc_48308	; 49251
@@ -1632,7 +1632,7 @@ add eax, 14h	; 4963D
 mov word [byte ebp+temp2], ax	; 49642
 test byte [byte_C5400], 1	; 49646
 je short loc_49664	; 4964D
-cmp byte [byte_D2430], 0	; 4964F
+cmp byte [musicon], 0	; 4964F
 je short loc_49664	; 49656
 mov esi, eax	; 49658
 add esi, 0DCh	; 4965A
@@ -1747,7 +1747,7 @@ add eax, 14h	; 497CF
 mov word [byte ebp+temp2], ax	; 497D4
 test byte [byte_C5400], 1	; 497D8
 je short loc_497F0	; 497DF
-cmp byte [byte_D2430], 0	; 497E1
+cmp byte [musicon], 0	; 497E1
 je short loc_497F0	; 497E8
 add word [byte ebp+temp2], 0DCh	; 497EA
 loc_497F0:
@@ -8162,7 +8162,7 @@ jmp short loc_4E7BA	; 4E7EB
 loc_4E7ED:
 test byte [byte_C5400], 1	; 4E7ED
 je short loc_4E837	; 4E7F4
-cmp byte [byte_D2430], 0	; 4E7F6
+cmp byte [musicon], 0	; 4E7F6
 je short loc_4E837	; 4E7FD
 mov eax, dword [dword_DF748]	; 4E7FF
 sar eax, 10h	; 4E804

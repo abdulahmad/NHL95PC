@@ -6,12 +6,12 @@ extern __CHK, __STOSB, asc_C0406, asc_C040B, asc_C0412, asc_C041A, asc_C041F, as
 extern asc_C0429, asc_C0430, asc_C0437, asc_C043E, asc_C0446, asc_C044F, asc_C0458, asc_C0460
 extern asc_C0465, asc_C046E, asc_C0477, asc_C0480, asc_C048A, asc_C0494, asc_C049C, asc_C04A1
 extern asc_C04A9, asc_C04B0, asc_C8136, asc_C814A, assinsert, byte_C4D1C, byte_C4D1D, byte_CBEA8
-extern byte_D2430, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8, byte_E0308
+extern musicon, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8, byte_E0308
 extern byte_E0344, byte_E9AC8, byte_E9AD3, byte_ED7CC, byte_ED7E4, byte_ED7E6, byte_ED85C, byte_ED86C
 extern byte_ED8C6, byte_ED8C8, byte_ED8D7, byte_ED976, byte_ED9AA, byte_ED9EC, byte_ED9F0, dword_C4D0C
-extern dword_C4E10, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, dword_C721D, dword_C90C8
+extern dword_C4E10, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, songdata, dword_C90C8
 extern dword_C90CA, dword_CBECA, dword_CC0AC, dword_CC0E0, dword_CC0EC, dword_CC0F0, dword_CC0F8, dword_CC0FC
-extern dword_CC118, dword_CC11C, dword_CC124, dword_CC128, dword_CCC88, dword_D242C, dword_D2431, dword_D2C6B
+extern dword_CC118, dword_CC11C, dword_CC124, dword_CC128, dword_CCC88, musichandle, dword_D2C6B, musicslot
 extern dword_D8B68, dword_D8C18, dword_D8C4C, dword_D8C68, dword_D8C6C, dword_D8C70, dword_D8C78, dword_D8C80
 extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E009C, dword_E00A0
 extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, loc_12842, memcpy_, nullsub_2
@@ -21,7 +21,7 @@ extern sub_4830E, sub_4FD47, sub_59863, sub_59981, sub_599B9, sub_599EE, sub_5E0
 extern sub_64614, sub_658F3, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, sub_B2DB4, sub_B30B4, sub_B30BB
-extern sub_B392C, sub_B4BA8, threat, unk_DF014, SortCords, vtoa, regd4, word_C7290
+extern sub_B392C, sub_B4BA8, threat, unk_DF014, SortCords, vtoa, regd4, scrpitch
 extern word_C90A0, word_C90A4, word_C90A6, word_C90A8, word_C90B2, word_C90B4, word_C90CE, word_C90D0
 extern refsignal, word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_CBC44, word_CBC46, word_CBC48
 extern word_CBC52, word_CBC54, word_CBC56, word_CBC58, word_CBC5A, word_CBC5C, word_CBC5E, word_CBC60
@@ -65,11 +65,11 @@ push dword 100h	; 1334F
 push byte 0	; 13354
 call sub_8FFB0	; 13356
 add esp, byte 0Ch	; 1335B
-cmp byte [byte_D2430], 0	; 1335E
+cmp byte [musicon], 0	; 1335E
 je short loc_13384	; 13365
-cmp dword [dword_C721D], byte 0	; 13367
+cmp dword [songdata], byte 0	; 13367
 je short loc_13384	; 1336E
-mov eax, dword [dword_D2431]	; 13370
+mov eax, dword [musichandle]	; 13370
 mov ebx, 32h	; 13375
 mov edx, 3	; 1337A
 call sub_8FCDF	; 1337F
@@ -78,23 +78,23 @@ mov ebx, 10h	; 13384
 mov edx, esi	; 13389
 mov eax, 1	; 1338B
 call sub_76429	; 13390
-cmp byte [byte_D2430], 0	; 13395
+cmp byte [musicon], 0	; 13395
 je short loc_133D4	; 1339C
-cmp dword [dword_C721D], byte 0	; 1339E
+cmp dword [songdata], byte 0	; 1339E
 je short loc_133D4	; 133A5
 loc_133A7:
-mov eax, dword [dword_D242C]	; 133A7
+mov eax, dword [musicslot-3]	; 133A7
 sar eax, 18h	; 133AC
 mov edx, 3	; 133AF
 call sub_8FC8A	; 133B4
 test eax, eax	; 133B9
 je short loc_133A7	; 133BB
-mov ecx, dword [dword_C721D]	; 133BD
+mov ecx, dword [songdata]	; 133BD
 push ecx	; 133C3
 call sub_8D2F0	; 133C4
 add esp, byte 4	; 133C9
 xor ebp, ebp	; 133CC
-mov dword [dword_C721D], ebp	; 133CE
+mov dword [songdata], ebp	; 133CE
 loc_133D4:
 mov eax, esp	; 133D4
 push eax	; 133D6
@@ -146,9 +146,9 @@ call memcpy_	; 13467
 push ebp	; 1346C
 call jctime	; 1346D
 add esp, byte 4	; 13472
-cmp byte [byte_D2430], 0	; 13475
+cmp byte [musicon], 0	; 13475
 je short loc_134E7	; 1347C
-cmp dword [dword_C721D], byte 0	; 1347E
+cmp dword [songdata], byte 0	; 1347E
 jne short loc_134E7	; 13485
 mov ecx, asc_C0424	; 13487
 mov ebx, asc_C0429	; 1348C
@@ -163,12 +163,12 @@ lea eax, [byte esp+040h]	; 134A4
 call sub_1431E	; 134A8
 lea eax, [byte esp+040h]	; 134AD
 call sub_8F98F	; 134B1
-mov dword [dword_C721D], eax	; 134B6
+mov dword [songdata], eax	; 134B6
 test eax, eax	; 134BB
 je near loc_13546	; 134BD
 test byte [gameopts], 40h	; 134C3
 je near loc_13546	; 134CA
-mov edx, dword [dword_D2431]	; 134D0
+mov edx, dword [musichandle]	; 134D0
 mov ecx, 4Ch	; 134D6
 mov ebx, 3	; 134DB
 call sub_8FB8E	; 134E0
@@ -209,7 +209,7 @@ mov ebx, 10h	; 13546
 mov edx, esi	; 1354B
 xor eax, eax	; 1354D
 call sub_76429	; 1354F
-cmp byte [byte_D2430], 0	; 13554
+cmp byte [musicon], 0	; 13554
 jne short loc_1358D	; 1355B
 cmp dword [dword_C541F], byte 1	; 1355D
 je short loc_1358D	; 13564
@@ -223,13 +223,13 @@ mov eax, edi	; 13581
 call sub_8F1FE	; 13583
 jmp near loc_13634	; 13588
 loc_1358D:
-cmp byte [byte_D2430], 0	; 1358D
+cmp byte [musicon], 0	; 1358D
 je near loc_13619	; 13594
 xor eax, eax	; 1359A
 loc_1359C:
 test eax, eax	; 1359C
 jne short loc_135C2	; 1359E
-mov eax, dword [dword_D242C]	; 135A0
+mov eax, dword [musicslot-3]	; 135A0
 sar eax, 18h	; 135A5
 mov edx, 3	; 135A8
 call sub_8FC8A	; 135AD
@@ -239,7 +239,7 @@ mov eax, 0Ah	; 135B6
 call sub_33E6A	; 135BB
 jmp short loc_1359C	; 135C0
 loc_135C2:
-mov eax, dword [dword_D2431]	; 135C2
+mov eax, dword [musichandle]	; 135C2
 mov ebx, 32h	; 135C7
 mov edx, 3	; 135CC
 call sub_8FCDF	; 135D1
@@ -248,13 +248,13 @@ mov edx, esi	; 135DB
 mov eax, 1	; 135DD
 call sub_76429	; 135E2
 loc_135E7:
-mov eax, dword [dword_D242C]	; 135E7
+mov eax, dword [musicslot-3]	; 135E7
 sar eax, 18h	; 135EC
 mov edx, 3	; 135EF
 call sub_8FC8A	; 135F4
 test eax, eax	; 135F9
 je short loc_135E7	; 135FB
-mov eax, dword [dword_C721D]	; 135FD
+mov eax, dword [songdata]	; 135FD
 test eax, eax	; 13602
 je short loc_1360F	; 13604
 push eax	; 13606
@@ -262,7 +262,7 @@ call sub_8D2F0	; 13607
 add esp, byte 4	; 1360C
 loc_1360F:
 xor ebx, ebx	; 1360F
-mov dword [dword_C721D], ebx	; 13611
+mov dword [songdata], ebx	; 13611
 jmp short loc_13634	; 13617
 loc_13619:
 mov eax, 140h	; 13619
@@ -277,9 +277,9 @@ call jctime	; 13635
 add esp, byte 4	; 1363A
 call sub_1205D	; 1363D
 mov esi, eax	; 13642
-cmp byte [byte_D2430], 0	; 13644
+cmp byte [musicon], 0	; 13644
 je short loc_136B6	; 1364B
-cmp dword [dword_C721D], byte 0	; 1364D
+cmp dword [songdata], byte 0	; 1364D
 jne short loc_136B6	; 13654
 mov ecx, asc_C0424	; 13656
 mov ebx, asc_C043E	; 1365B
@@ -294,12 +294,12 @@ lea eax, [byte esp+040h]	; 13673
 call sub_1431E	; 13677
 lea eax, [byte esp+040h]	; 1367C
 call sub_8F98F	; 13680
-mov dword [dword_C721D], eax	; 13685
+mov dword [songdata], eax	; 13685
 test eax, eax	; 1368A
 je near loc_1370E	; 1368C
 test byte [gameopts], 40h	; 13692
 je near loc_1370E	; 13699
-mov edx, dword [dword_D2431]	; 1369F
+mov edx, dword [musichandle]	; 1369F
 mov ecx, 7Fh	; 136A5
 mov ebx, 3	; 136AA
 call sub_8FB8E	; 136AF
@@ -400,20 +400,20 @@ push byte 0	; 137EE
 call sub_B392C	; 137F0
 add esp, byte 4	; 137F5
 loc_137F8:
-cmp byte [byte_D2430], 0	; 137F8
+cmp byte [musicon], 0	; 137F8
 je short loc_13848	; 137FF
-mov eax, dword [dword_D2431]	; 13801
+mov eax, dword [musichandle]	; 13801
 mov ebx, 78h	; 13806
 mov edx, 3	; 1380B
 call sub_8FCDF	; 13810
 loc_13815:
-mov eax, dword [dword_D242C]	; 13815
+mov eax, dword [musicslot-3]	; 13815
 sar eax, 18h	; 1381A
 mov edx, 3	; 1381D
 call sub_8FC8A	; 13822
 test eax, eax	; 13827
 je short loc_13815	; 13829
-mov ebp, dword [dword_C721D]	; 1382B
+mov ebp, dword [songdata]	; 1382B
 test ebp, ebp	; 13831
 je short loc_1383E	; 13833
 push ebp	; 13835
@@ -421,7 +421,7 @@ call sub_8D2F0	; 13836
 add esp, byte 4	; 1383B
 loc_1383E:
 xor edx, edx	; 1383E
-mov dword [dword_C721D], edx	; 13840
+mov dword [songdata], edx	; 13840
 jmp short loc_13854	; 13846
 loc_13848:
 call sub_59981	; 13848
@@ -654,7 +654,7 @@ push edx	; 13A9D
 push esi	; 13A9E
 sub esp, byte 1Ch	; 13A9F
 call sub_B4BA8	; 13AA2
-mov word [word_C7290], 52h	; 13AA7
+mov word [scrpitch], 52h	; 13AA7
 mov ecx, asc_C814A	; 13AB0
 mov ebx, asc_C04A1	; 13AB5
 cmp byte [byte_ED86C], 1	; 13ABA
@@ -740,7 +740,7 @@ push ecx	; 13BBF
 push edx	; 13BC0
 push esi	; 13BC1
 sub esp, byte 1Ch	; 13BC2
-mov word [word_C7290], 52h	; 13BC5
+mov word [scrpitch], 52h	; 13BC5
 mov ecx, asc_C814A	; 13BCE
 mov ebx, asc_C04A1	; 13BD3
 cmp byte [byte_ED86C], 1	; 13BD8
