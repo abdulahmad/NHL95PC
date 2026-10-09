@@ -16,7 +16,7 @@ extern dword_DF6F2, dword_DF6F6, hmtmplstats, dword_DF6FE, hmtmroster, hmtmlines
 extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2
 extern awtmsort, dword_E009C, dword_E0248, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
 extern ltx, replaystart, off_CC01D, passspeed, LoadGameGfx, FileReadAt, FileWriteAt, LoadGameTeams
-extern SaveModeState, LoadModeState, GetPeriodTime, SprSort, sub_61E99, sub_673C5, ReplayRecordReset, sub_7DC8B
+extern SaveModeState, LoadModeState, GetPeriodTime, SprSort, sub_61E99, sub_673C5, ReplayRecordReset, LoadRockMusic
 extern FatalError, MouseSetPos, threat, exhstate, unk_C5423, unk_C542E, awlinetab, unk_DAC40
 extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240
 extern unk_DC252, unk_DF314, SortCords, hudpenhome, hudpenaway, camx, camy
@@ -1639,7 +1639,7 @@ mov dword [dword_C66D4], ebp	; 6127E
 mov dword [dword_C66D0], ebp	; 61284
 xor edx, edx	; 6128A
 mov dword [dword_DC28C], edx	; 6128C
-call sub_7DC8B	; 61292
+call LoadRockMusic	; 61292
 mov ecx, 17h	; 61297
 mov edx, 0FFFFFFFFh	; 6129C
 mov eax, photobanks	; 612A1

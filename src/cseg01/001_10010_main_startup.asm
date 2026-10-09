@@ -20,7 +20,7 @@ extern int386_, mousepollfn, printf_, srand_, MakePath, FileOpenRead, FileClose,
 extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, MainDeskLoop
 extern LoadModeState, LoadNhlCfg, ShowLoadingScreen, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
 extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, JoystickCalScreen, ClearInputQueue, InputInstall
-extern InputRemove, FadePalStep, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
+extern InputRemove, FadePalStep, InstantReplay, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
 extern sub_8DF54, sub_8E080, sub_8E4C0, sub_8E5AC, sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_B29F0, sub_B2CBE, FatalError, MouseSetPos, sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4
@@ -1650,7 +1650,7 @@ call sub_8374D	; 112FA
 call StopDigiSample	; 112FF
 call InputInstall	; 11304
 mov eax, 1	; 11309
-call sub_7E0FA	; 1130E
+call InstantReplay	; 1130E
 call ClearInputQueue	; 11313
 call InputRemove	; 11318
 cmp byte [pad1dev], 1	; 1131D

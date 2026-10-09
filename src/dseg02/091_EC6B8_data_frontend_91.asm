@@ -18,9 +18,9 @@ global byte_ED9AD, byte_ED9AE, byte_ED9AF, byte_ED9B0, byte_ED9B2, byte_ED9B3, b
 global byte_ED9E7, byte_ED9E8, byte_ED9E9, byte_ED9EA, byte_ED9EB, byte_ED9EC, byte_ED9EE, byte_ED9EF
 global byte_ED9F0, dblistcur, dblisttemp
 global dblisttempnames, dblistorig
-global dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0, leaguesetimg, setbits, dword_ED364, dword_ED368
-global dword_ED374, dword_ED380, dword_ED384, dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8
-global dword_ED6DC, dword_ED6E0, dword_ED6E4, dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8
+global dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0, leaguesetimg, setbits, dword_ED364, rockteamcues
+global dword_ED374, rocktunes, rockrandcues, dword_ED6D0, dword_ED6D4, gadgetfile
+global gadgetptry, gadgetptrx, gadgetshape, dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8
 global dword_ED6FC, hilightfont, dword_ED704, dword_ED708, dword_ED70C, dword_ED74C, dword_ED750, dword_ED754
 global dword_ED756, dword_ED75C, dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774
 global dword_ED778, dword_ED77C, chkoffspr, dword_ED784, chkonspr, dword_ED78C, dword_ED790, dword_ED794
@@ -84,29 +84,27 @@ resb 1
 resb 3
 dword_ED364:
 resb 4
-dword_ED368:
+rockteamcues:
 resb 12
 dword_ED374:
 resb 12
-dword_ED380:
+rocktunes:
 resb 4
-dword_ED384:
 resb 4
-dword_ED388:
 resb 4
-dword_ED38C:
+rockrandcues:
 resb 836
 dword_ED6D0:
 resb 4
 dword_ED6D4:
 resb 4
-dword_ED6D8:
+gadgetfile:
 resb 4
-dword_ED6DC:
+gadgetptry:
 resb 4
-dword_ED6E0:
+gadgetptrx:
 resb 4
-dword_ED6E4:
+gadgetshape:
 resb 4
 dword_ED6E8:
 resb 4

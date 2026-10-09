@@ -1762,36 +1762,64 @@ modesetrects,D16AC,rects
 exhsetrects,D17EC,rects
 ctldlgrects,D195C,rects
 ctldlgalt,D19EC,alternate colour flag for controller dialog
-str_BKGD,C32BC,"string 'BKGD'"
-str_Setting5,C32C1,"string 'setting5'"
-str_Dbox2,C32CA,"string 'dbox'"
-str_Music,C32CF,"string 'Music'"
-str_Sound,C32D5,"string 'Sound'"
-str_DigitizedSpeech,C32DB,"string 'Digitized Speech'"
-str_Setting3,C32EC,"string 'setting3'"
-str_Pointer15,C32F5,"string 'Pointer'"
-str_BKGD2,C3300,"string 'BKGD'"
-str_Setting7,C3305,"string 'setting7'"
-str_Setting4,C330E,"string 'setting4'"
-str_Dbox3,C3317,"string 'dbox'"
-str_Music2,C331C,"string 'Music'"
-str_Sound2,C3322,"string 'Sound'"
-str_DigitizedSpeech2,C3328,"string 'Digitized Speech'"
-str_Pointer16,C3339,"string 'Pointer'"
-str_BKGD3,C3344,"string 'BKGD'"
-str_DigitizedSpeech3,C3349,"string 'Digitized Speech'"
-str_Music3,C335A,"string 'Music'"
-str_Sound3,C3360,"string 'Sound'"
-str_Setting6,C3366,"string 'setting6'"
-str_Dbox4,C336F,"string 'dbox'"
-str_Pointer17,C3374,"string 'Pointer'"
-str_BKGD4,C337C,"string 'BKGD'"
-str_PlayerImg,C3381,"string 'player'"
-str_Dbox5,C3388,"string 'dbox'"
+str_BKGD,C32BC,string 'BKGD'
+str_Setting5,C32C1,string 'setting5'
+str_Dbox2,C32CA,string 'dbox'
+str_Music,C32CF,string 'Music'
+str_Sound,C32D5,string 'Sound'
+str_DigitizedSpeech,C32DB,string 'Digitized Speech'
+str_Setting3,C32EC,string 'setting3'
+str_Pointer15,C32F5,string 'Pointer'
+str_BKGD2,C3300,string 'BKGD'
+str_Setting7,C3305,string 'setting7'
+str_Setting4,C330E,string 'setting4'
+str_Dbox3,C3317,string 'dbox'
+str_Music2,C331C,string 'Music'
+str_Sound2,C3322,string 'Sound'
+str_DigitizedSpeech2,C3328,string 'Digitized Speech'
+str_Pointer16,C3339,string 'Pointer'
+str_BKGD3,C3344,string 'BKGD'
+str_DigitizedSpeech3,C3349,string 'Digitized Speech'
+str_Music3,C335A,string 'Music'
+str_Sound3,C3360,string 'Sound'
+str_Setting6,C3366,string 'setting6'
+str_Dbox4,C336F,string 'dbox'
+str_Pointer17,C3374,string 'Pointer'
+str_BKGD4,C337C,string 'BKGD'
+str_PlayerImg,C3381,string 'player'
+str_Dbox5,C3388,string 'dbox'
 str_OneS,C338D,"string ""One's"""
 str_TwoS,C3393,"string ""Two's"""
-str_TheMouse,C3399,"string 'The Mouse'"
-str_JoystickOne,C33A3,"string 'Joystick One'"
-str_JoystickTwo,C33B0,"string 'Joystick Two'"
-str_TheKeyboard,C33BD,"string 'The Keyboard'"
-str_Pointer18,C33CA,"string 'Pointer'"
+str_TheMouse,C3399,string 'The Mouse'
+str_JoystickOne,C33A3,string 'Joystick One'
+str_JoystickTwo,C33B0,string 'Joystick Two'
+str_TheKeyboard,C33BD,string 'The Keyboard'
+str_Pointer18,C33CA,string 'Pointer'
+rockteamcues,ED368,6 loaded team music cue handles
+rockrandcues,ED38C,3 random cue handles
+rocktunes,ED380,"3 handles: device rock tune, team tune, ROCKDITI"
+rockcuepool,D1C8B,18 random cue ids
+teamrockcuetbl,D1BE0,"per-team 6 cue ids (6-byte rows, top byte)"
+rockcuefiles,D1B0B,cue file name pointers
+rockcuepathsel,D1CEE,per-cue path flag index into ED7CC flags
+teamtunefiles,D1CDE,team tune file name pointers
+teamtunepathsel,D1CE6,per-tune path flag index
+gadgetrects,D1DC8,gadget button rects (28-byte entries) x0
+gadgetrect_y0,D1DCC,rect y0 (own label: nosplit)
+gadgetrect_x1,D1DD0,rect x1 (own label: nosplit)
+gadgetrect_y1,D1DD4,rect y1 (own label: nosplit)
+gadgetfile,ED6D8,loaded gadget .PPV file
+gadgetshape,ED6E4,gad1 shape from gadget file
+gadgetptrx,ED6E0,pointer x (init 100h)
+gadgetptry,ED6DC,pointer y (init 0BCh)
+msg_NoHilightSpace,D1F25,message lines 'Insufficient disk space to' / 'save hilights.' / 'Current hilight not saved.'
+str_MTROCKU,C33D4,"string 'MTROCKU'"
+str_SBROCKU,C33DC,"string 'SBROCKU'"
+str_ADROCKU,C33E4,"string 'ADROCKU'"
+str_ROCKDITI,C33EC,"string 'ROCKDITI'"
+str_Gadget6,C3411,"string 'gadget6'"
+str_Gadget5,C3419,"string 'gadget5'"
+str_Gad1,C3421,"string 'gad1'"
+str_Pointer19,C3426,"string 'Pointer'"
+str_BothTeams,C33F8,"string 'Both Teams'"
+str_NeitherTeams,C3403,"string 'Neither Teams'"

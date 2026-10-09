@@ -23,13 +23,13 @@ global linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D141
 global dword_D145C, dword_D1468, dword_D146C, jerseydigits, leaguesetrects
 global modesetrects, exhsetrects
 global ctldlgrects
-global ctldlgalt, dword_D1C8B, dword_D1CE6, dword_D1CEE, dword_D1DC8, dword_D1DCC, dword_D1DD0, dword_D1DD4
+global ctldlgalt, rockcuepool, teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1
 global dword_D20A8, dword_D20E0, dword_D2150, dword_D223C, dword_D227C, dword_D2280, dword_D2284, dword_D2288
 global dword_D229C, dword_D22A0, dword_D22A4, dword_D22A8, dword_D22AC, dword_D22B0, dword_D22B4, dword_D22BC
 global dword_D22C0, dword_D22C4, dword_D22C8, dword_D22CC, dword_D22D0, dword_D22D4, dword_D22DC, dword_D22E0
 global dword_D22EC, dword_D22F0, dword_D2350, dword_D23A3, dword_D23A7, dword_D23AB, dword_D23AF, dword_D2423
 global dword_D2427, dword_D242B, musichandle, dword_D2435, sounddevids, dword_D24A0, dword_D27A2
-global dword_D27B2, dword_D27B7, dword_D27BB, dbtablists, off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25
+global dword_D27B2, dword_D27B7, dword_D27BB, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
 global off_D21C0, off_D2230, off_D24D1, off_D273E, off_D2776, off_D27EF, off_D27F7, off_D2855
 global unk_D1190, deldbmsg, unk_D12C8, unk_D16A0, unk_D19CC, unk_D19DC, unk_D19F0, unk_D19F5
 global unk_D19FA, unk_D19FF, unk_D1A05, unk_D1A0A, unk_D1A0F, unk_D1A14, unk_D1A19, unk_D1A1F
@@ -398,7 +398,7 @@ unk_D1AFC:
 db 057h,049h,04Eh,04Eh,032h,00h
 unk_D1B02:
 db 052h,04Fh,043h,04Bh,044h,049h,054h,049h,00h
-off_D1B0B:
+rockcuefiles:
 dd unk_D19F0
 dd unk_D19F5
 dd unk_D19FA
@@ -452,7 +452,7 @@ dd unk_D1AEC
 dd unk_D1AF1
 dd unk_D1AF6
 dd unk_D1AFC
-off_D1BE0 equ $+1
+teamrockcuetbl equ $+1
 dd unk_D1B02
 db 01h,00h,02h,0FFh,01Fh,01h,04h,0Fh,0Fh,04h,01Fh,0FFh,05h,07h,05h,07h
 db 06h,06h,08h,0Ah,09h,08h,01Fh,02Bh,0Bh,0Ch,0Ah,0FFh,01Fh,0Ch,0Dh,01h
@@ -465,7 +465,7 @@ db 012h,02Bh,01h,02Eh,02Eh,0FFh,01Fh,0FFh,02Fh,02Fh,030h,0FFh,01Fh,0FFh,031h,026
 db 032h,0FFh,01Fh,0FFh,0Ch,033h,0Ch,0FFh,01Fh,0Ch,0Fh,034h,0Ch,0FFh,01Fh,0FFh
 db 011h,02Fh,032h,0FFh,06h,02Bh,0Fh,020h,032h,0FFh,01Fh,013h,026h,06h,013h,015h
 db 012h,02Bh,01h,01Ah,0Fh,0FFh,01Fh,0FFh
-dword_D1C8B:
+rockcuepool:
 db 010h,00h,00h,00h,019h,00h,00h,00h,021h,00h,00h,00h,02Bh,00h,00h,00h
 db 02Ch,00h,00h,00h,035h,00h,00h,00h,011h,00h,00h,00h,012h,00h,00h,00h
 db 013h,00h,00h,00h,015h,00h,00h,00h,01Ch,00h,00h,00h,01Eh,00h,00h,00h
@@ -475,12 +475,12 @@ unk_D1CD3:
 db 043h,041h,04Eh,041h,044h,041h,00h
 unk_D1CDA:
 db 055h,053h,041h,00h
-off_D1CDE:
+teamtunefiles:
 dd unk_D1CD3
 dd unk_D1CDA
-dword_D1CE6:
+teamtunepathsel:
 db 042h,00h,00h,00h,0B0h,01h,00h,00h
-dword_D1CEE:
+rockcuepathsel:
 db 02Fh,00h,00h,00h,031h,00h,00h,00h,033h,00h,00h,00h,09Bh,00h,00h,00h
 db 039h,00h,00h,00h,03Bh,00h,00h,00h,03Dh,00h,00h,00h,03Fh,00h,00h,00h
 db 04Dh,00h,00h,00h,04Fh,00h,00h,00h,051h,00h,00h,00h,060h,00h,00h,00h
@@ -495,13 +495,13 @@ db 0F0h,00h,00h,00h,0F4h,00h,00h,00h,0E2h,00h,00h,00h,083h,01h,00h,00h
 db 085h,01h,00h,00h,031h,00h,00h,00h,09Ch,01h,00h,00h,0A6h,01h,00h,00h
 db 0A8h,01h,00h,00h,0B4h,01h,00h,00h,0B6h,01h,00h,00h,0B8h,01h,00h,00h
 db 0BAh,01h,00h,00h,061h,01h,00h,00h,00h,00h
-dword_D1DC8:
+gadgetrects:
 db 09Fh,00h,00h,00h
-dword_D1DCC:
+gadgetrect_y0:
 db 0ACh,00h,00h,00h
-dword_D1DD0:
+gadgetrect_x1:
 db 0AAh,00h,00h,00h
-dword_D1DD4:
+gadgetrect_y1:
 db 0B4h,00h,00h,00h,092h,02h,00h,00h,08h,00h,00h,00h,01h,00h,00h,00h
 db 0B3h,00h,00h,00h,0ACh,00h,00h,00h,0BEh,00h,00h,00h,0B4h,00h,00h,00h
 db 098h,02h,00h,00h,00h,00h,00h,00h,02h,00h,00h,00h,0C6h,00h,00h,00h
@@ -527,7 +527,7 @@ db 073h,061h,076h,065h,020h,068h,069h,06Ch,069h,067h,068h,074h,073h,02Eh,00h
 unk_D1F0A:
 db 043h,075h,072h,072h,065h,06Eh,074h,020h,068h,069h,06Ch,069h,067h,068h,074h,020h
 db 06Eh,06Fh,074h,020h,073h,061h,076h,065h,064h,02Eh,00h
-off_D1F25:
+msg_NoHilightSpace:
 dd unk_D1EE0
 dd unk_D1EFB
 dd unk_D1F0A

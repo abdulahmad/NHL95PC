@@ -17,8 +17,8 @@ global str_Teams2, str_ErrB2Perror, str_Tstat2, str_Keys4, str_Pstat4, str_Gstat
 global str_Dbox2, str_Music, str_Sound, str_DigitizedSpeech, str_Setting3, str_Pointer15, str_BKGD2, str_Setting7
 global str_Setting4, str_Dbox3, str_Music2, str_Sound2, str_DigitizedSpeech2, str_Pointer16, str_BKGD3, str_DigitizedSpeech3
 global str_Music3, str_Sound3, str_Setting6, str_Dbox4, str_Pointer17, str_BKGD4, str_PlayerImg, str_Dbox5
-global str_OneS, str_TwoS, str_TheMouse, str_JoystickOne, str_JoystickTwo, str_TheKeyboard, str_Pointer18, asc_C33D4
-global asc_C33DC, asc_C33E4, asc_C33EC, asc_C3411, asc_C3419, asc_C3421, asc_C3426, asc_C342E
+global str_OneS, str_TwoS, str_TheMouse, str_JoystickOne, str_JoystickTwo, str_TheKeyboard, str_Pointer18, str_MTROCKU
+global str_SBROCKU, str_ADROCKU, str_ROCKDITI, str_Gadget6, str_Gadget5, str_Gad1, str_Pointer19, asc_C342E
 global asc_C3436, asc_C3449, asc_C3450, asc_C3472, asc_C3477, asc_C347B, asc_C3480, asc_C3489
 global asc_C348E, asc_C3493, asc_C3498, asc_C349D, asc_C34A2, asc_C34A7, asc_C34AC, asc_C34B1
 global asc_C34B6, asc_C34BB, asc_C34C0, asc_C34C5, asc_C34CA, asc_C3594, asc_C359C, asc_C35A3
@@ -36,7 +36,7 @@ global asc_C3994, asc_C399B, asc_C39A0, qword_C37B0, qword_C37B8, qword_C37C0, q
 global unk_C311D, str_S6, str_No2, str_GP8, str_C5, str_W6, str_L8, str_T6
 global str_ErrA1, str_ErrA2, str_ErrA3, str_ErrA4, str_ErrA5, str_ErrA6, str_ErrA7, str_ErrA8
 global unk_C3283, str_S7, str_ErrB3, str_ErrB4, str_ErrB5, str_ErrB6, str_ErrB7, str_ErrB2
-global unk_C33F8, unk_C3403, unk_C3444, unk_C3447, unk_C344D, unk_C3468, unk_C346B, unk_C3470
+global str_BothTeams, str_NeitherTeams, unk_C3444, unk_C3447, unk_C344D, unk_C3468, unk_C346B, unk_C3470
 global unk_C34D0, unk_C34D4, unk_C34D8, unk_C34DC, unk_C34E0, unk_C34E4, unk_C34E8, unk_C34EC
 global unk_C34F0, unk_C34F4, unk_C34F8, unk_C34FB, unk_C34FF, unk_C3502, unk_C3506, unk_C350A
 global unk_C350E, unk_C3512, unk_C3516, unk_C351A, unk_C351E, unk_C3521, unk_C3524, unk_C3528
@@ -349,25 +349,25 @@ str_TheKeyboard:
 db 054h,068h,065h,020h,04Bh,065h,079h,062h,06Fh,061h,072h,064h,00h
 str_Pointer18:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h
-asc_C33D4:
+str_MTROCKU:
 db 04Dh,054h,052h,04Fh,043h,04Bh,055h,00h
-asc_C33DC:
+str_SBROCKU:
 db 053h,042h,052h,04Fh,043h,04Bh,055h,00h
-asc_C33E4:
+str_ADROCKU:
 db 041h,044h,052h,04Fh,043h,04Bh,055h,00h
-asc_C33EC:
+str_ROCKDITI:
 db 052h,04Fh,043h,04Bh,044h,049h,054h,049h,00h,00h,00h,00h
-unk_C33F8:
+str_BothTeams:
 db 042h,06Fh,074h,068h,020h,054h,065h,061h,06Dh,073h,00h
-unk_C3403:
+str_NeitherTeams:
 db 04Eh,065h,069h,074h,068h,065h,072h,020h,054h,065h,061h,06Dh,073h,00h
-asc_C3411:
+str_Gadget6:
 db 067h,061h,064h,067h,065h,074h,036h,00h
-asc_C3419:
+str_Gadget5:
 db 067h,061h,064h,067h,065h,074h,035h,00h
-asc_C3421:
+str_Gad1:
 db 067h,061h,064h,031h,00h
-asc_C3426:
+str_Pointer19:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
 asc_C342E:
 db 053h,061h,076h,065h,020h,054h,06Fh,00h

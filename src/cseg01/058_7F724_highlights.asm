@@ -8,13 +8,13 @@ extern hmrosterjersey, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C
 extern byte_E03E3, byte_E03E4, hudclockmin, hudclocksec, hudclockhund, songdata, rinkscrollx, rinkscrolly
 extern cont2team, HomeTeam, musichandle, fontcolor, rinkendbank, numshpbank, dword_D8C84, musicslot
 extern dword_DC230, scrbrdshapes, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
-extern dword_ED6F8, hilightfont, fputchar, jctime, loc_7E0F3, lseek_, teamabbrevs, teamcitynames
+extern dword_ED6F8, hilightfont, fputchar, jctime, DrawGadgetButton_ret, lseek_, teamabbrevs, teamcitynames
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, SetScreenSize
 extern LoadGameGfx, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
 extern sub_1BAB1, ListDialog, SetDialogColors, MessageBox, FreeRinkGfx, LoadRink, ShowLoadingScreen, FadeOutPalCycle
-extern sub_673C5, ClearInputQueue, FadePalStep, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
+extern sub_673C5, ClearInputQueue, FadePalStep, LoadRockMusic, FreeRockMusic, InstantReplay, sub_8CCA8, sub_8D2F0
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
-extern sub_93000, FatalError, sub_B2DCA, sub_B4FAC, sub_B5DB0, unk_7E05F, unk_C3444, unk_C3447
+extern sub_93000, FatalError, sub_B2DCA, sub_B4FAC, sub_B5DB0, bothneitherstrs, unk_C3444, unk_C3447
 extern unk_C344D, unk_C3468, unk_C346B, unk_C3470, str_star, unk_D1F4B, hmteamrec
 extern unk_DF314, unknown_libname_1, unknown_libname_2, VisTeam, word_E0410, awteamrec
 global loc_7F7B3, loc_7F829, loc_7FA3F, loc_7FA7C, loc_7FAEC, loc_7FB92, loc_7FBB5, loc_7FBEE
@@ -35,7 +35,7 @@ push edi	; 7F732
 push ebp	; 7F733
 sub esp, byte 50h	; 7F734
 lea edi, [byte esp+040h]	; 7F737
-mov esi, unk_7E05F	; 7F73B
+mov esi, bothneitherstrs	; 7F73B
 movsd	; 7F740
 movsd	; 7F741
 mov eax, esp	; 7F742
@@ -272,7 +272,7 @@ push ecx	; 7F9FF
 call sub_91964	; 7FA00
 add esp, byte 0Ch	; 7FA05
 add esp, byte 50h	; 7FA08
-jmp near loc_7E0F3	; 7FA0B
+jmp near DrawGadgetButton_ret	; 7FA0B
 sub_7FA10:
 push dword 74h	; 7FA10
 call __CHK	; 7FA15
@@ -918,7 +918,7 @@ mov eax, dword [cont2team]	; 80268
 sar eax, 10h	; 8026D
 mov ebx, unk_DF314	; 80270
 call sub_673C5	; 80275
-call sub_7DC8B	; 8027A
+call LoadRockMusic	; 8027A
 call LoadGameGfx	; 8027F
 call FadeOutPalCycle	; 80284
 mov edx, 0C8h	; 80289
@@ -934,7 +934,7 @@ sar eax, 10h	; 802AE
 loc_802B1:
 call LoadRink	; 802B1
 xor eax, eax	; 802B6
-call sub_7E0FA	; 802B8
+call InstantReplay	; 802B8
 mov eax, esp	; 802BD
 push eax	; 802BF
 push dword 100h	; 802C0
@@ -966,7 +966,7 @@ mov ecx, dword [hilightfont]	; 80320
 push ecx	; 80326
 call jctime	; 80327
 add esp, byte 4	; 8032C
-call sub_7DEC8	; 8032F
+call FreeRockMusic	; 8032F
 call FreeRinkGfx	; 80334
 call ClearInputQueue	; 80339
 add esp, 300h	; 8033E

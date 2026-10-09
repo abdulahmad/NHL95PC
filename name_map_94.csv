@@ -909,6 +909,15 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0007D671,sub_7D671,DrawCtlBoxes,PC-new,,,,medium,draws 9 boxes on/off by setbits,settings_dialogs,manual-trace
 0007D6B1,sub_7D6B1,ControlsDlgLoop,PC-new,,,,medium,"pointer loop, calls SetSideControls",settings_dialogs,manual-trace
 0007DB67,sub_7DB67,SetCtlTeams,PC-new,,,,medium,"sets HomeTeam/VisTeam, ctl1team/ctl1side/ctl2side; called by SetGameSides",settings_dialogs,manual-trace
+0007DC8B,sub_7DC8B,LoadRockMusic,PC-new,,,,medium,loads 6 team cues + 3 random of 18 pool + device rock tune (MT/SB/ADROCKU) + team tune + ROCKDITI via sub_8F13B,gadgets_replay,manual-trace
+0007DEC8,sub_7DEC8,FreeRockMusic,PC-new,,,,medium,"frees rockteamcues[6], rockrandcues[3], rocktunes[3] via sub_8F1FE",gadgets_replay,manual-trace
+0007E032,sub_7E032,GadgetStub0,PC-new,,,,low,__CHK; return 0; unreferenced,gadgets_replay,manual-trace
+0007E067,sub_7E067,DrawGadgetButton,PC-new,,,,medium,"draws frame around gadget button idx (28-byte rect table gadgetrects, y-0A8h)",gadgets_replay,manual-trace
+0007E0FA,sub_7E0FA,InstantReplay,PC-new,,,,medium,"replay gadget screen: gadget6/gadget5 .PPV panel, camera save, ReplayFirstFrame/ReplayStep; from main/frontend/highlights",gadgets_replay,manual-trace
+0007E8E5,sub_7E8E5,GadgetHitTest,PC-new,,,,medium,hit-test 10 gadget button rects,gadgets_replay,manual-trace
+0007E93E,sub_7E93E,PickNearestPlayer,PC-new,,,,low,nearest of 17 objects (skipping 12..15) within 10px of pointer,gadgets_replay,manual-trace
+0007E9AC,sub_7E9AC,ReplayControlLoop,PC-new,,,,medium,input loop for replay gadget buttons,gadgets_replay,manual-trace
+0007F0AF,sub_7F0AF,ReplaySaveHilight,PC-new,,,,medium,"gadget button 7: picks team, writes highlight (sub_7FA10), ""Insufficient disk space to save hilights."" message",gadgets_replay,manual-trace
 00082579,sub_82579,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),settings_lockerroom,unmatched
 00086637,sub_86637,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),demo_savegame,unmatched
 00086696,sub_86696,CreatePlayoffs,PC-new,,,,high,"main-menu handler (frontend menu table CDxxx dd entry): asks 'Please Enter New Play-Off Name' (sub_2FEDF), confirms replacing an existing .PO dir (msg 'There is already a Play-Off with that name!'), mkdir <name>.PO, checks free disk space ('Insufficient disk space to setup a Playoff Series'), copies the 7 league DBs, seeds 16 teams (POSeedTeams), builds schedule.db (POCreateSchedule) and installs PlayoffModeLoop as the mode loop (dword_CE583)",season_playoffs,manual-trace

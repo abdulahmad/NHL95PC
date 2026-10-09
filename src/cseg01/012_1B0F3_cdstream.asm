@@ -5,7 +5,7 @@ section s_1B0F3 progbits alloc exec nowrite align=1
 extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, joysampling, dword_C66B0, rinkbm
 extern dword_CBECA, photobankf, rinkendbank, numshpbank, photobanks, dword_DC230, scrbrdshapes, cupseries
 extern dword_DC8A0, dword_DC8C8, dword_E0244, hilightfont, jctime, FreeRinkGfx, joyq_flush, CrowdNoiseOff
-extern GameOver, sub_7DEC8, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E4F8, sub_8EA18, sub_91FA4
+extern GameOver, FreeRockMusic, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E4F8, sub_8EA18, sub_91FA4
 extern FatalError, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, scrpitch
 global jpt_1B283, loc_1B1B7, loc_1B218, loc_1B225, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0
 global loc_1B2F0, loc_1B334, loc_1B3AE, loc_1B42A, loc_1B468, loc_1B46D, loc_1B485, loc_1B49D
@@ -798,7 +798,7 @@ add esp, byte 4	; 1BA29
 xor edx, edx	; 1BA2C
 mov dword [hilightfont], edx	; 1BA2E
 loc_1BA34:
-call sub_7DEC8	; 1BA34
+call FreeRockMusic	; 1BA34
 mov ebx, dword [cupseries]	; 1BA39
 test ebx, ebx	; 1BA3F
 je short loc_1BA54	; 1BA41
