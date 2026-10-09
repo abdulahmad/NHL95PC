@@ -161,3 +161,10 @@ replaystart,C9078,pointer to the replay buffer (9600h bytes = 12Ch frames of 80h
 replayplay,E03A4,replay play-back frame pointer (94G a4 in ReplayMode); ReplayStep moves it between replaystart and recbpr
 replaytick,CD4FE,updatereplay tick counter: a frame is recorded every 2nd call; ReplayRecordReset sets 1
 replaysfx,CD500,sfx number kept from the off tick (lastsfx) for the next recorded frame (-1 = none)
+HomeTeam,C90CA,"93G HomeTeam (team number): the PC RAM keeps the 93G order c1playernum, c2playernum, cont1team, cont2team, HomeTeam, VisTeam, Pencntdwn, Penaltytimer, ..., RefStep, RefPen; team-name lookups index off_C5439 with it (>= 1Ah -> 0Ch); StartHL2 saves / restores it"
+VisTeam,C90CC,"93G VisTeam (visiting team number), right after HomeTeam as in ram93"
+sflags3,C90C0,"93G sflags3 (after sflags and gmode2 = 93G sflags2 slot): updatepentime clears / sets bit 6 once a second as 93G (bclr/bset #6,sflags3)"
+hmtmgoalie,DF64C,"home tmgoalie (hmtmstruct+38h); StartHL2 saves, zeroes and restores it"
+awtmgoalie,DF74C,visitor tmgoalie (awtmstruct+38h)
+hmlinetab,DC200,"home line table (30h bytes; tmlines of hmtmstruct, set by clearteams); SetupTeamLines / RemoveFromLines fill it, StartHL2 saves and restores it"
+awlinetab,DABF0,"visitor line table (tmlines of awtmstruct), as hmlinetab"

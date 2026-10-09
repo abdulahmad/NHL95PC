@@ -8,7 +8,7 @@ extern byte_ED823, byte_ED939, dword_C5130, dword_C52E9, dword_C52ED, dword_C52F
 extern dword_C5301, dword_C5305, dword_C5309, dword_C53F7, dword_C53FB, gameopts, dword_C5519, dword_C5704
 extern dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
-extern dword_C5886, cont2team, dword_C90CA, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
+extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
 extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, dword_DF63C, hmscore, awscore
 extern dword_DF73C, jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C8, off_C57CC
 extern off_D3078, rand_, randomd0, sub_10712, sub_10E9F, sub_1167B, sub_13BB4, sub_13FA7
@@ -948,7 +948,7 @@ push edi	; 15B84
 sub esp, byte 4	; 15B85
 mov eax, dword [cont2team]	; 15B88
 sar eax, 10h	; 15B8D
-mov edx, dword [dword_C90CA]	; 15B90
+mov edx, dword [HomeTeam]	; 15B90
 sar edx, 10h	; 15B96
 mov eax, dword [nosplit eax*4+dword_C5519]	; 15B99
 or eax, dword [nosplit edx*4+dword_C5519]	; 15BA0
@@ -1232,7 +1232,7 @@ mov byte [byte_C5400], bh	; 15ED6
 mov cl, bh	; 15EDC
 and cl, 3	; 15EDE
 mov byte [byte_C5400], cl	; 15EE1
-mov edx, dword [dword_C90CA]	; 15EE7
+mov edx, dword [HomeTeam]	; 15EE7
 sar edx, 10h	; 15EED
 mov edx, dword [nosplit edx*4+off_C5439]	; 15EF0
 mov eax, dword [cont2team]	; 15EF7
@@ -1243,7 +1243,7 @@ call sub_10712	; 15F0B
 xor edx, edx	; 15F10
 xor eax, eax	; 15F12
 call sub_1BEFD	; 15F14
-cmp word [dword_C90CA], byte 1Ah	; 15F19
+cmp word [HomeTeam], byte 1Ah	; 15F19
 jl short loc_15F2A	; 15F21
 mov eax, 0Ch	; 15F23
 jmp short loc_15F32	; 15F28
@@ -1265,13 +1265,13 @@ mov dword [dword_C53F7], eax	; 15F62
 mov edx, 0C8h	; 15F67
 mov eax, 140h	; 15F6C
 call sub_10E9F	; 15F71
-mov edx, dword [dword_C90CA]	; 15F76
+mov edx, dword [HomeTeam]	; 15F76
 sar edx, 10h	; 15F7C
 mov eax, dword [cont2team]	; 15F7F
 sar eax, 10h	; 15F84
 mov ebx, unk_DF314	; 15F87
 call sub_673C5	; 15F8C
-mov edx, dword [dword_C90CA]	; 15F91
+mov edx, dword [HomeTeam]	; 15F91
 sar edx, 10h	; 15F97
 mov eax, dword [cont2team]	; 15F9A
 sar eax, 10h	; 15F9F

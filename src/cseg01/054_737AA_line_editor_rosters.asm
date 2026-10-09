@@ -12,7 +12,7 @@ extern byte_C5400, byte_D079E, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, b
 extern musicon, hmroster, byte_DB3AD, byte_DD750, byte_EA990, byte_EA991, byte_EA992, byte_EA993
 extern byte_EC7E0, byte_EC7E4, byte_ECAE4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED0F7, byte_ED0F8
 extern byte_ED0F9, byte_ED0FA, byte_ED83C, byte_ED85A, byte_ED8B4, byte_ED9E7, dword_C4E24, dword_C6956
-extern dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, songdata, dword_C90CA, dword_D0B16
+extern dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, songdata, HomeTeam, dword_D0B16
 extern dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A, dword_D1229, dword_D122B, dword_D122F
 extern dword_D1231, dword_D1233, dword_D1338, dword_D133C, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC
 extern dword_D1418, dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, musichandle, musicslot
@@ -31,7 +31,7 @@ extern sub_90D20, sub_9121C, sub_913B4, sub_91400, sub_91964, sub_91FE0, sub_931
 extern MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4BC4
 extern sub_B4C84, sub_B4DD4, SetDrawBitmap, unk_7947F, unk_797B4, unk_C311D, unk_C311F, unk_C3143
 extern unk_C314B, unk_C3169, unk_C3177, unk_C317A, unk_C317D, unk_C31D9, unk_C31DC, unk_C31DF
-extern unk_C31E2, unk_C31E5, unk_C31E8, unk_C31EB, unk_C31EE, unk_D075E, unknown_libname_1, word_C90CC
+extern unk_C31E2, unk_C31E5, unk_C31E8, unk_C31EB, unk_C31EE, unk_D075E, unknown_libname_1, VisTeam
 global loc_73867, loc_738FA, loc_738FC, loc_739CF, loc_73A08, loc_73A0A, loc_73B47, loc_73B96
 global loc_73BB1, loc_73C14, loc_73C4F, loc_73C51, loc_73CFC, loc_73CFE, loc_73D61, loc_73D64
 global loc_73D6E, loc_73D71, loc_73D89, loc_73D8C, loc_73D96, loc_73D99, loc_73DF2, loc_73DF5
@@ -4705,10 +4705,10 @@ mov edx, dword [dword ebp+08Eh]	; 76DBC
 call sub_78A87	; 76DC2
 cmp byte [byte ebp+072h], 0	; 76DC7
 je short loc_76DD5	; 76DCB
-mov ax, word [word_C90CC]	; 76DCD
+mov ax, word [VisTeam]	; 76DCD
 jmp short loc_76DDB	; 76DD3
 loc_76DD5:
-mov ax, word [dword_C90CA]	; 76DD5
+mov ax, word [HomeTeam]	; 76DD5
 loc_76DDB:
 cwde	; 76DDB
 mov al, byte [nosplit eax*4+byte_D11BC]	; 76DDC

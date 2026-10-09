@@ -4,7 +4,7 @@ bits 32
 section s_47C31 progbits alloc exec nowrite align=1
 extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, byte_DE26C
 extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, dword_C4E10, dword_C4E14
-extern dword_C7444, dword_C7448, dword_C9074, cont2team, dword_C90CA, dword_CBC3E, dword_CBECA, dword_CC0EC
+extern dword_C7444, dword_C7448, dword_C9074, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
 extern dword_CC0F0, dword_CC9AD, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
 extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, dword_E9B04, forcepldata, jctime, puckc, camx_m2, randomd0
@@ -14,8 +14,8 @@ extern PlayCrowdSample, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6AD
 extern sub_6B008, sub_8374D, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
 extern unk_DF014, unk_DF314, unk_DFD9C, camx, camy, xc1, yc1, SortCords
 extern word_C90B2, word_C90B4, c1playernum, c2playernum, RefStep, exitgame, word_CBC52, word_CBC54
-extern lcblink, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly, word_DFF1E
-extern word_DFF28, word_DFF2A, word_DFF44, word_E0022, word_E0028, word_E002A, word_E002E
+extern lcblink, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly
+extern word_E0022, word_E0028, word_E002A, word_E002E
 extern word_E0042, word_E0046, word_E0048, word_E004A, regd1, joysampling_save
 global loc_47C4F, loc_47C60, loc_47C62, loc_47C89, loc_47CB1, loc_47CD0, loc_47E01, loc_47E05
 global loc_47E0E, loc_47E1B, loc_47E39, loc_47E3E, loc_47E64, loc_47E69, loc_47E7E, loc_47E8A
@@ -124,7 +124,7 @@ mov word [word_C90B2], cx	; 47D63
 mov edx, dword [cont2team]	; 47D6A
 sar edx, 10h	; 47D70
 shl edx, 10h	; 47D73
-mov eax, dword [dword_C90CA]	; 47D76
+mov eax, dword [HomeTeam]	; 47D76
 sar eax, 10h	; 47D7B
 add eax, edx	; 47D7E
 add dword [StanleyCupTimer], eax	; 47D80
@@ -264,13 +264,13 @@ inc dword [byte esp+0Ch]	; 47F52
 loc_47F56:
 cmp word [byte esp+0Ch], byte 2	; 47F56
 jl near loc_47E01	; 47F5C
-mov word [word_DFF44], 78h	; 47F62
-mov word [word_DFF1E], 0C8h	; 47F6B
+mov word [puckstruct+28h], 78h	; 47F62
+mov word [puckstruct+2], 0C8h	; 47F6B
 mov word [puckstruct+6], 0FED4h	; 47F74
 xor ecx, ecx	; 47F7D
-mov word [word_DFF28], cx	; 47F7F
+mov word [puckstruct+0Ch], cx	; 47F7F
 xor esi, esi	; 47F86
-mov word [word_DFF2A], cx	; 47F88
+mov word [puckstruct+0Eh], cx	; 47F88
 mov edx, 1Ah	; 47F8F
 mov eax, puckstruct	; 47F94
 call assreplace	; 47F99

@@ -52,7 +52,7 @@ tmap       equ 36h   ; tsize w; 93G $24; getlchoice/lcselect: other tmap - own t
 tmscore    equ 10h   ; tsize w; 93G $C; Goal adds 1 (inc word [esi+10h]); PeriodOver/clockcont_0 compare hmscore (DF624) with awscore (DF724)
 tmpde      equ 46h   ; tsize w array; 93G $32 (energy word per roster player, 1000h = full); burst subtracts 0CCh from [tmptr+pnum*2+46h] (93G setpde); reenergizeteam refills 1000h
 tmpdst     equ 7Eh   ; tsize w array; 93G $66 (-2 bench / -1 ice / 0+ box): word per roster player: -2 bench, -1 on ice (setplayer, forcepldata), >0 penalty box time; restoreteams sets all to -2; ResetBench counts >0 into PBnum
-tmlines    equ 0DAh  ; tsize d; 93G none; pointer to the team's line table (clearteams: home unk_DC200, away unk_DABF0); getlinee and setpersonel read it
+tmlines    equ 0DAh  ; tsize d; 93G none; pointer to the team's line table (clearteams: home hmlinetab, away awlinetab); getlinee and setpersonel read it
 tmroster   equ 0EEh  ; tsize d; 93G none; pointer to the team roster, 27h bytes per player (byte 0 = status: 3 bench, 4 on ice); clearteams: hmroster / awroster
 tmsort     equ 0F6h  ; tsize d; 93G $22; pointer to the team's first SortCords entry (home SortCords, away SortCords+300h); forcepldata/resetplstuff walk 6 entries from it
 tmflags    equ 44h   ; tsize b; 93G $30; lineinput: bit 0 'start lc mode' cleared before opening the box; lcfound/lcselect clear bit 1 (93G bclr #1,tmflags(a2))

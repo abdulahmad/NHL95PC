@@ -8,7 +8,7 @@ extern asc_C19FF, asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, asc_C811A, asc_C81
 extern byte_C8111, byte_C8164, byte_C8451, byte_D11BC, byte_D1238, byte_D12DE, byte_D1333, byte_D1334
 extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, byte_DD710, byte_DD750, byte_DDD8C
 extern byte_DDD8D, byte_DDD8E, byte_ED7F7, byte_ED858, byte_ED85A, byte_ED86D, byte_ED8B3, byte_ED8B4
-extern dword_C65B0, dword_C65B8, dword_C8B7C, dword_C8B80, dword_C90CA, dword_D2C6B, dword_D8C84, dword_DC238
+extern dword_C65B0, dword_C65B8, dword_C8B7C, dword_C8B80, HomeTeam, dword_D2C6B, dword_D8C84, dword_DC238
 extern dword_DC738, dword_DD100, dword_DD104, dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD79C
 extern dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C, dword_DE260
 extern dword_DE264, dword_EA0DC, jctime, memcpy_, off_C80D7, off_C80E7, off_C8BDD, off_CF2A3
@@ -19,8 +19,8 @@ extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A0
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
 extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, MouseSetPos
 extern sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, SetDrawBitmap, unk_C1A15
-extern unk_C8115, unk_C8117, unk_C88E2, unk_CF3CF, unk_D12C8, unk_DABF0, unk_DC200, unk_DDFF4
-extern word_C90CC
+extern unk_C8115, unk_C8117, unk_C88E2, unk_CF3CF, unk_D12C8, awlinetab, hmlinetab, unk_DDFF4
+extern VisTeam
 global loc_3DC59, loc_3DCB5, loc_3DCE7, loc_3DCF5, loc_3DD15, loc_3DD5C, loc_3DD60, loc_3DD6D
 global loc_3DD75, loc_3DD9B, loc_3DDE2, loc_3DDE6, loc_3DDF3, loc_3DF06, loc_3DF08, loc_3E07E
 global loc_3E0BA, loc_3E0CA, loc_3E0D2, loc_3E0DD, loc_3E10B, loc_3E112, loc_3E122, loc_3E377
@@ -791,9 +791,9 @@ jne near loc_3E7A6	; 3E676
 cmp dword [dword esp+0668h], byte 0	; 3E67C
 je near loc_3E7A6	; 3E684
 mov ax, word [edi]	; 3E68A
-mov word [dword_C90CA], ax	; 3E68D
+mov word [HomeTeam], ax	; 3E68D
 mov ax, word [byte edi+04h]	; 3E693
-mov word [word_C90CC], ax	; 3E697
+mov word [VisTeam], ax	; 3E697
 mov edx, byte_C8451	; 3E69D
 mov eax, byte_DD750	; 3E6A2
 call strcpy_	; 3E6A7
@@ -814,7 +814,7 @@ call sub_1BBCC	; 3E6EA
 mov dword [dword_D8C84], 0FFFFFFFEh	; 3E6EF
 mov ecx, 3	; 3E6F9
 mov ebx, unk_CF3CF	; 3E6FE
-mov edx, unk_DC200	; 3E703
+mov edx, hmlinetab	; 3E703
 xor eax, eax	; 3E708
 call sub_767D0	; 3E70A
 push byte 20h	; 3E70F
@@ -837,7 +837,7 @@ call jctime	; 3E746
 add esp, byte 4	; 3E74B
 mov ecx, 3	; 3E74E
 mov ebx, unk_CF3CF	; 3E753
-mov edx, unk_DABF0	; 3E758
+mov edx, awlinetab	; 3E758
 mov eax, 1	; 3E75D
 call sub_767D0	; 3E762
 push byte 20h	; 3E767

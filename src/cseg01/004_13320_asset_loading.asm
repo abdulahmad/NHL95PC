@@ -10,7 +10,7 @@ extern musicon, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte
 extern byte_E0344, byte_E9AC8, byte_E9AD3, byte_ED7CC, byte_ED7E4, byte_ED7E6, byte_ED85C, byte_ED86C
 extern byte_ED8C6, byte_ED8C8, byte_ED8D7, byte_ED976, byte_ED9AA, byte_ED9EC, byte_ED9F0, joysampling
 extern dword_C4E10, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, songdata, cont2team
-extern dword_C90CA, dword_CBECA, dword_CC0AC, dword_CC0E0, dword_CC0EC, dword_CC0F0, dword_CC0F8, penshotplayer
+extern HomeTeam, dword_CBECA, dword_CC0AC, dword_CC0E0, dword_CC0EC, dword_CC0F0, dword_CC0F8, penshotplayer
 extern penshotmode, penshotstart, dword_CC124, penshotlive, crowdsmooth, musichandle, dword_D2C6B, musicslot
 extern dword_D8B68, dword_D8C18, dword_D8C4C, dword_D8C68, dword_D8C6C, dword_D8C70, dword_D8C78, dword_D8C80
 extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E009C, dword_E00A0
@@ -952,7 +952,7 @@ call CrowdNoiseReset	; 13EC5
 xor edx, edx	; 13ECA
 mov dword [dword_CC0F0], edx	; 13ECC
 call sub_14056	; 13ED2
-mov edx, dword [dword_C90CA]	; 13ED7
+mov edx, dword [HomeTeam]	; 13ED7
 sar edx, 10h	; 13EDD
 mov eax, dword [cont2team]	; 13EE0
 sar eax, 10h	; 13EE5

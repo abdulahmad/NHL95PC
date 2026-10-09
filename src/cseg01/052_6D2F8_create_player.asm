@@ -17,7 +17,7 @@ extern byte_C83C3, byte_D079E, byte_D079F, byte_D07A8, byte_D07A9, byte_D0AE6, b
 extern musicon, byte_D42C3, byte_EA990, byte_EA991, byte_EA992, byte_EA993, byte_EAC86, byte_EAF80
 extern byte_EAF99, byte_EAF9C, byte_EAFB5, byte_ED908, byte_ED98F, dword_C2CAC, dword_C2CB0, dword_C2CB4
 extern dword_C2CB8, dword_C2CBC, dword_C2CC0, dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4
-extern dword_C2CD8, dword_C2CDC, dword_C2CF0, dword_C4B69, dword_C5519, songdata, dword_C90CA, dword_D0151
+extern dword_C2CD8, dword_C2CDC, dword_C2CF0, dword_C4B69, dword_C5519, songdata, HomeTeam, dword_D0151
 extern dword_D0211, dword_D0331, dword_D0351, dword_D03B1, dword_D03D1, dword_D07AA, dword_D07AE, dword_D07B2
 extern dword_D07BB, dword_D07BF, dword_D07C3, dword_D07C7, dword_D07CB, dword_D07CF, dword_D07D3, dword_D07D7
 extern dword_D07DB, dword_D07DF, dword_D07E3, dword_D07E7, dword_D0B12, dword_D0C10, dword_D0C20, dword_D0CDA
@@ -38,7 +38,7 @@ extern sub_B2CD8, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B
 extern sub_B4FAC, sub_B5DB0, unk_C5283, unk_C7733, unk_D0450, unk_D05F4, unk_D0B80, unk_D0BB8
 extern unk_D0BF0, unk_D0C5C, unk_D0CA2, unk_D0EDD, unk_D0F80, unk_D0FA8, unk_D0FBC, unk_D0FD0
 extern unk_D0FF0, unk_D1000, unk_DBC30, unk_DF014, unk_EA968, unk_EAC84, unk_EAFB8, word_C2D0E
-extern word_C2D10, word_C90CC
+extern word_C2D10, VisTeam
 global loc_6D35B, loc_6D35D, loc_6D541, loc_6D59D, loc_6D62F, loc_6D642, loc_6D647, loc_6D65D
 global loc_6D67F, loc_6D6B5, loc_6D6BF, loc_6D70B, loc_6D70D, loc_6D72A, loc_6D766, loc_6D76C
 global loc_6D7A7, loc_6D7B4, loc_6D7BC, loc_6D7C3, loc_6D7E6, loc_6D815, loc_6D81B, loc_6D827
@@ -1100,18 +1100,18 @@ setne al	; 6DF1E
 and eax, 0FFh	; 6DF21
 mov dword [dword esp+02E8h], eax	; 6DF26
 jne short loc_6DF4B	; 6DF2D
-mov ax, word [dword_C90CA]	; 6DF2F
+mov ax, word [HomeTeam]	; 6DF2F
 mov dword [dword esp+02ECh], eax	; 6DF35
 xor eax, eax	; 6DF3C
 mov al, byte [byte_D079E]	; 6DF3E
-mov word [dword_C90CA], ax	; 6DF43
+mov word [HomeTeam], ax	; 6DF43
 jmp short loc_6DF65	; 6DF49
 loc_6DF4B:
-mov ax, word [word_C90CC]	; 6DF4B
+mov ax, word [VisTeam]	; 6DF4B
 mov dword [dword esp+02ECh], eax	; 6DF51
 xor eax, eax	; 6DF58
 mov al, byte [byte_D079F]	; 6DF5A
-mov word [word_C90CC], ax	; 6DF5F
+mov word [VisTeam], ax	; 6DF5F
 loc_6DF65:
 mov ebx, dword [dword_D07AE]	; 6DF65
 test ebx, ebx	; 6DF6B
@@ -1166,11 +1166,11 @@ rep movsd	; 6E017
 cmp dword [dword esp+02E8h], byte 0	; 6E019
 jne short loc_6E032	; 6E021
 mov eax, dword [dword esp+02ECh]	; 6E023
-mov word [dword_C90CA], ax	; 6E02A
+mov word [HomeTeam], ax	; 6E02A
 jmp short loc_6E03F	; 6E030
 loc_6E032:
 mov eax, dword [dword esp+02ECh]	; 6E032
-mov word [word_C90CC], ax	; 6E039
+mov word [VisTeam], ax	; 6E039
 loc_6E03F:
 mov ebx, dword [dword esp+02E8h]	; 6E03F
 test ebx, ebx	; 6E046

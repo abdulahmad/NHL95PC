@@ -6,7 +6,7 @@ extern __CHK, asc_C0A18, asc_C0A4D, asc_C0A55, asc_C0A5D, asc_C0A68, asc_C0A71, 
 extern byte_C5424, byte_C5425, byte_C5426, byte_C5427, byte_C542F, byte_C5430, byte_C5431, byte_C5432
 extern byte_C66B4, byte_C8451, byte_DAC14, byte_DAC15, byte_DAC18, byte_DAC20, hmroster, byte_DB3AD
 extern byte_DB3AE, awroster, byte_DC224, byte_DC225, byte_DC228, byte_DC267, byte_DC268, byte_DD710
-extern byte_DD750, cont2team, dword_C90CA, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
+extern byte_DD750, cont2team, HomeTeam, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
 extern dword_DEB78, dword_DEB7C, dword_DEB80, dword_DF690, dword_DF6C2, fputchar, lseek_, off_CEE5F
 extern off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF, sprintf_, strcat_, strcpy_
 extern strncpy_, sub_14525, sub_14566, sub_1457C, sub_145A2, sub_145F9, sub_15B76, sub_1CC3D
@@ -14,11 +14,11 @@ extern sub_B2CD8, unk_C0A1E, unk_C0A20, unk_C0A22, unk_C0A24, unk_C0A26, unk_C0A
 extern unk_C0A2C, unk_C0A2F, unk_C0A32, unk_C0A35, unk_C0A37, unk_C0A39, unk_C0A3B, unk_C0A3D
 extern unk_C0A3F, unk_C0A41, unk_C0A43, unk_C0A45, unk_C0A47, unk_C0A49, unk_C0A4B, unk_C0A51
 extern unk_C0A53, unk_C0A59, unk_C0A5B, unk_C0A64, unk_C0A66, unk_C0A6F, unk_C5423, unk_C542E
-extern unk_CDCD0, unk_CEE4F, unk_CEEAF, unk_DABF0, unk_DAC40, unk_DACA0, unk_DBC30, unk_DBCEC
-extern unk_DBF18, unk_DBFD4, unk_DC200, unk_DC240, unknown_libname_1, word_C5428, word_C571C, word_C571E
-extern word_C5720, word_C5722, word_C575C, word_C575E, word_C5760, word_C5762, word_C90CC, word_DB08A
+extern unk_CDCD0, unk_CEE4F, unk_CEEAF, awlinetab, unk_DAC40, unk_DACA0, unk_DBC30, unk_DBCEC
+extern unk_DBF18, unk_DBFD4, hmlinetab, unk_DC240, unknown_libname_1, word_C5428, word_C571C, word_C571E
+extern word_C5720, word_C5722, word_C575C, word_C575E, word_C5760, word_C5762, VisTeam, word_DB08A
 extern word_DB08C, word_DB08E, word_DB090, word_DB092, word_DB094, word_DB096, word_DC242, word_DC244
-extern hmtmap, word_DF64C, awtmap, word_DF74C
+extern hmtmap, hmtmgoalie, awtmap, awtmgoalie
 global loc_1BC16, loc_1BC34, loc_1BC52, loc_1BC8A, loc_1BCB3, loc_1BCF3, loc_1BD11, loc_1BD2F
 global loc_1BD67, loc_1BD90, loc_1BE08, loc_1BE77, loc_1BE83, loc_1BEA5, loc_1BEA9, loc_1BECB
 global loc_1BEEE, loc_1BF73, loc_1BF95, loc_1BFBD, loc_1BFE5, loc_1C02F, loc_1C031, loc_1C07A
@@ -144,7 +144,7 @@ push unk_C0A22	; 1BD22
 call sub_B2CD8	; 1BD27
 add esp, byte 4	; 1BD2C
 loc_1BD2F:
-mov edx, dword [dword_C90CA]	; 1BD2F
+mov edx, dword [HomeTeam]	; 1BD2F
 sar edx, 10h	; 1BD35
 mov eax, edx	; 1BD38
 shl eax, 2	; 1BD3A
@@ -245,11 +245,11 @@ cmp edi, byte 2	; 1BE7E
 jne short loc_1BEA5	; 1BE81
 loc_1BE83:
 mov ecx, 0Ch	; 1BE83
-mov edi, unk_DC200	; 1BE88
+mov edi, hmlinetab	; 1BE88
 mov esi, unk_DBCEC	; 1BE8D
 rep movsd	; 1BE92
 mov ecx, 0Ch	; 1BE94
-mov edi, unk_DABF0	; 1BE99
+mov edi, awlinetab	; 1BE99
 mov esi, unk_DBFD4	; 1BE9E
 rep movsd	; 1BEA3
 loc_1BEA5:
@@ -302,9 +302,9 @@ mov byte [byte_DC267], dl	; 1BF13
 mov dword [dword_D8C84], 0FFFFFFFFh	; 1BF19
 mov byte [byte_C5424], al	; 1BF23
 mov byte [byte_C5425], dl	; 1BF28
-mov al, byte [dword_C90CA]	; 1BF2E
+mov al, byte [HomeTeam]	; 1BF2E
 mov byte [byte_C5426], al	; 1BF33
-mov al, byte [word_C90CC]	; 1BF38
+mov al, byte [VisTeam]	; 1BF38
 mov byte [byte_C5427], al	; 1BF3D
 mov word [word_C5428], 1	; 1BF42
 xor ah, ah	; 1BF4B
@@ -1169,7 +1169,7 @@ loc_1C9C6:
 mov dword [byte esi+048h], edx	; 1C9C6
 mov dword [byte esi+08h], edx	; 1C9C9
 loc_1C9CC:
-cmp word [word_DF64C], byte 0	; 1C9CC
+cmp word [hmtmgoalie], byte 0	; 1C9CC
 jge short loc_1C9DB	; 1C9D4
 mov eax, dword [byte esi+050h]	; 1C9D6
 jmp short loc_1C9EA	; 1C9D9
@@ -1301,7 +1301,7 @@ loc_1CB50:
 mov dword [byte esi+048h], ebx	; 1CB50
 mov dword [byte esi+08h], ebx	; 1CB53
 loc_1CB56:
-cmp word [word_DF74C], byte 0	; 1CB56
+cmp word [awtmgoalie], byte 0	; 1CB56
 jge short loc_1CB65	; 1CB5E
 mov eax, dword [byte esi+050h]	; 1CB60
 jmp short loc_1CB74	; 1CB63

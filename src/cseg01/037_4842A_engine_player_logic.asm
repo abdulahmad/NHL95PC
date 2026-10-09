@@ -9,7 +9,7 @@ extern byte_DAEA7, hmroster, byte_DB3AD, byte_DF87F, byte_DFFE0, byte_DFFE2, byt
 extern byte_E02C8, byte_E0308, byte_E0344, PenBuf, iflags, byte_E9AC1, byte_E9AC8
 extern byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, check4bench, check4check, checkob
 extern chk4lc, chk4shot, dirtab, chk4pass, doplayeracc, doshot, joysampling, dword_C4E10
-extern gameopts, dword_C541F, dword_C5840, dword_C585C, dword_C5860, dword_C90B0, dword_C90C0, dword_C90CA
+extern gameopts, dword_C541F, dword_C5840, dword_C585C, dword_C5860, dword_C90B0, sflags3, HomeTeam
 extern dword_CBEBE, dword_CBECA, dword_CC0EC, dword_CC0F8, penshotplayer, dword_CC104, penshotmode, penshotstart
 extern penshotlive, dword_CC12C, dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144
 extern dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, dword_D8C6C
@@ -27,15 +27,15 @@ extern EvadePC, sub_61576, sub_61D48, sub_62343, sub_62807, sub_62C37, sub_64102
 extern RemoveFromLines, sub_66497, sub_66DDA, sub_837A8, sub_8F633, sub_8FFB0, imul32, threat
 extern unk_C1B3E, unk_DACA0, unk_DBC30, unk_DC240, unk_DF014, SortCords, updateanim
 extern vtoa, regd4, camx, camy, lastplayer, passdir, word_C90A6, xc1
-extern yc1, word_C90B2, word_C90B4, fodir1, fodir2, c1playernum, c2playernum, word_C90CC
+extern yc1, word_C90B2, word_C90B4, fodir1, fodir2, c1playernum, c2playernum, VisTeam
 extern Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, gsp, gameclock, clockticks
 extern dirtab_y, word_CBC44, exitgame, gameover, word_CBC52, word_CBC54, lcblink, word_CBC58
 extern lcblinktime, lcsel, lcline, lctimer, lcboxon, word_CBC6C, word_CBEC0, word_CBEC4
 extern word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, word_CC9EA, word_CC9EC, word_CCA18
 extern word_CCA1A, word_CCA1C, word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E
 extern word_CCA70, word_CCA9C, word_DC242, word_DC248, word_DC24E, hmscore, hmtmap, word_DF65A
-extern awscore, awtmap, puckcross, word_DF816, word_DF81A, word_DFF1E
-extern word_DFF28, word_DFF2A, word_DFF42, word_DFF44, word_DFFC2, word_E0022, word_E0028
+extern awscore, awtmap, puckcross, word_DF816, word_DF81A
+extern word_DFF42, word_DFFC2, word_E0022, word_E0028
 extern word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, lcrequest, word_E0306, word_E0390
 extern word_E0392, word_E0396, regd2, regd3, regd0, regd1, joysampling_save, periodendtime
 extern word_E9AAE, PerTimeTotal, lj1, lasttouch, word_E9AC4, startm, starpl
@@ -1127,13 +1127,13 @@ add ebx, 80h	; 490F0
 cmp ecx, byte 0Ch	; 490F6
 jl short StartThreeStars.2	; 490F9
 mov ecx, 78h	; 490FB
-mov word [word_DFF44], cx	; 49100
+mov word [puckstruct+28h], cx	; 49100
 mov edi, 0C8h	; 49107
-mov word [word_DFF1E], di	; 4910C
+mov word [puckstruct+2], di	; 4910C
 mov word [puckstruct+6], 0FED4h	; 49113
 xor edx, edx	; 4911C
-mov word [word_DFF28], dx	; 4911E
-mov word [word_DFF2A], dx	; 49125
+mov word [puckstruct+0Ch], dx	; 4911E
+mov word [puckstruct+0Eh], dx	; 49125
 mov edx, 1Ah	; 4912C
 mov eax, puckstruct	; 49131
 call assreplace	; 49136
@@ -1586,10 +1586,10 @@ mov eax, byte_E028C	; 49700
 call sub_61D48	; 49705
 test esi, esi	; 4970A
 je short .3	; 4970C
-mov ax, word [word_C90CC]	; 4970E
+mov ax, word [VisTeam]	; 4970E
 jmp short .4	; 49714
 .3:
-mov ax, word [dword_C90CA]	; 49716
+mov ax, word [HomeTeam]	; 49716
 .4:
 movsx ecx, ax	; 4971C
 mov eax, esi	; 4971F
@@ -1705,10 +1705,10 @@ mov eax, byte_E028C	; 4989F
 call sub_61D48	; 498A4
 test esi, esi	; 498A9
 je short .9	; 498AB
-mov ax, word [word_C90CC]	; 498AD
+mov ax, word [VisTeam]	; 498AD
 jmp short .10	; 498B3
 .9:
-mov ax, word [dword_C90CA]	; 498B5
+mov ax, word [HomeTeam]	; 498B5
 .10:
 cwde	; 498BB
 mov edx, esi	; 498BC
@@ -6994,7 +6994,7 @@ call sfx	; 4DA96
 and byte [gmode2], 0FAh	; 4DA9B
 and byte [gmode], 0FEh	; 4DAA2
 and byte [byte ecx+pflags2], 0FEh	; 4DAA9
-or byte [dword_C90C0], 10h	; 4DAAD
+or byte [sflags3], 10h	; 4DAAD
 mov eax, dword [dword_E038E]	; 4DAB4
 sar eax, 10h	; 4DAB9
 movsx ax, byte [dword eax+byte_CCA95]	; 4DABC
@@ -8038,12 +8038,12 @@ cmp edx, eax	; 4E791
 jle short .4	; 4E793
 cmp word [gameclock], byte 3Ch	; 4E795
 jl short .4	; 4E79D
-mov dl, byte [dword_C90C0]	; 4E79F
+mov dl, byte [sflags3]	; 4E79F
 test dl, 80h	; 4E7A5
 je short .4	; 4E7A8
 mov ch, dl	; 4E7AA
 and ch, 7Fh	; 4E7AC
-mov byte [dword_C90C0], ch	; 4E7AF
+mov byte [sflags3], ch	; 4E7AF
 mov eax, 2	; 4E7B5
 .3:
 call PlayCrowdSample	; 4E7BA
@@ -8519,10 +8519,10 @@ inc eax	; 4EE30
 .2:
 test bx, bx	; 4EE31
 je short .3	; 4EE34
-mov cx, word [word_C90CC]	; 4EE36
+mov cx, word [VisTeam]	; 4EE36
 jmp short .4	; 4EE3D
 .3:
-mov cx, word [dword_C90CA]	; 4EE3F
+mov cx, word [HomeTeam]	; 4EE3F
 .4:
 mov word [byte esp+04h], cx	; 4EE46
 mov cx, word [joysampling]	; 4EE4B

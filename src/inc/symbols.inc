@@ -3970,13 +3970,13 @@
 ;  C90BB  gmode                                    dseg02/035_C9078_data_engine_35.asm          15
 ;  C90BC  sflags                                   dseg02/035_C9078_data_engine_35.asm          12
 ;  C90BE  gmode2                                   dseg02/035_C9078_data_engine_35.asm          11
-;  C90C0  dword_C90C0                              dseg02/035_C9078_data_engine_35.asm          9
+;  C90C0  sflags3                                  dseg02/035_C9078_data_engine_35.asm          9
 ;  C90C2  c1playernum                              dseg02/035_C9078_data_engine_35.asm          12
 ;  C90C4  c2playernum                              dseg02/035_C9078_data_engine_35.asm          12
 ;  C90C6  cont1team                                dseg02/035_C9078_data_engine_35.asm          11
 ;  C90C8  cont2team                                dseg02/035_C9078_data_engine_35.asm          22
-;  C90CA  dword_C90CA                              dseg02/035_C9078_data_engine_35.asm          24
-;  C90CC  word_C90CC                               dseg02/035_C9078_data_engine_35.asm          17
+;  C90CA  HomeTeam                                 dseg02/035_C9078_data_engine_35.asm          24
+;  C90CC  VisTeam                                  dseg02/035_C9078_data_engine_35.asm          17
 ;  C90CE  Pencntdwn                                dseg02/035_C9078_data_engine_35.asm          7
 ;  C90D0  Penaltytimer                             dseg02/035_C9078_data_engine_35.asm          5
 ;  C90D2  refsignal                                dseg02/035_C9078_data_engine_35.asm          8
@@ -5660,7 +5660,7 @@
 ;  D9950  unk_D9950                                dseg02/072_D8B68_data_frontend_72.asm        1
 ;  D9980  dword_D9980                              dseg02/073_D9980_data_eagfx_73.asm           3
 ;  D9A38  dword_D9A38                              dseg02/074_D9A38_data_frontend_74.asm        2
-;  DABF0  unk_DABF0                                dseg02/074_D9A38_data_frontend_74.asm        10
+;  DABF0  awlinetab                                dseg02/074_D9A38_data_frontend_74.asm        10
 ;  DAC14  byte_DAC14                               dseg02/074_D9A38_data_frontend_74.asm        1
 ;  DAC15  byte_DAC15                               dseg02/074_D9A38_data_frontend_74.asm        1
 ;  DAC18  byte_DAC18                               dseg02/074_D9A38_data_frontend_74.asm        1
@@ -5695,7 +5695,7 @@
 ;  DBF18  unk_DBF18                                dseg02/078_DB7EC_data_frontend_78.asm        3
 ;  DBF1D  unk_DBF1D                                dseg02/078_DB7EC_data_frontend_78.asm        1
 ;  DBFD4  unk_DBFD4                                dseg02/078_DB7EC_data_frontend_78.asm        1
-;  DC200  unk_DC200                                dseg02/078_DB7EC_data_frontend_78.asm        10
+;  DC200  hmlinetab                                dseg02/078_DB7EC_data_frontend_78.asm        10
 ;  DC224  byte_DC224                               dseg02/078_DB7EC_data_frontend_78.asm        1
 ;  DC225  byte_DC225                               dseg02/078_DB7EC_data_frontend_78.asm        1
 ;  DC228  byte_DC228                               dseg02/078_DB7EC_data_frontend_78.asm        1
@@ -5954,7 +5954,7 @@
 ;  DF646  dword_DF646                              dseg02/083_DF63E_data_engine_83.asm          2
 ;  DF648  dword_DF648                              dseg02/083_DF63E_data_engine_83.asm          3
 ;  DF64A  hmtmap                                   dseg02/083_DF63E_data_engine_83.asm          7
-;  DF64C  word_DF64C                               dseg02/083_DF63E_data_engine_83.asm          6
+;  DF64C  hmtmgoalie                               dseg02/083_DF63E_data_engine_83.asm          6
 ;  DF64D  byte_DF64D                               dseg02/083_DF63E_data_engine_83.asm          1
 ;  DF652  dword_DF652                              dseg02/083_DF63E_data_engine_83.asm          2
 ;  DF656  word_DF656                               dseg02/083_DF63E_data_engine_83.asm          1
@@ -5995,7 +5995,7 @@
 ;  DF746  word_DF746                               dseg02/083_DF63E_data_engine_83.asm          1
 ;  DF748  dword_DF748                              dseg02/083_DF63E_data_engine_83.asm          2
 ;  DF74A  awtmap                                   dseg02/083_DF63E_data_engine_83.asm          7
-;  DF74C  word_DF74C                               dseg02/083_DF63E_data_engine_83.asm          4
+;  DF74C  awtmgoalie                               dseg02/083_DF63E_data_engine_83.asm          4
 ;  DF752  dword_DF752                              dseg02/083_DF63E_data_engine_83.asm          2
 ;  DF756  word_DF756                               dseg02/083_DF63E_data_engine_83.asm          1
 ;  DF758  awtmflags                                dseg02/083_DF63E_data_engine_83.asm          3
@@ -6025,12 +6025,8 @@
 ;  DF87F  byte_DF87F                               dseg02/085_DF7CA_data_engine_85.asm          1
 ;  DFD9C  unk_DFD9C                                dseg02/085_DF7CA_data_engine_85.asm          1
 ;  DFF1C  puckstruct                               dseg02/085_DF7CA_data_engine_85.asm          10
-;  DFF1E  word_DFF1E                               dseg02/085_DF7CA_data_engine_85.asm          4
-;  DFF28  word_DFF28                               dseg02/085_DF7CA_data_engine_85.asm          4
-;  DFF2A  word_DFF2A                               dseg02/085_DF7CA_data_engine_85.asm          4
 ;  DFF3A  byte_DFF3A                               dseg02/085_DF7CA_data_engine_85.asm          2
 ;  DFF42  word_DFF42                               dseg02/085_DF7CA_data_engine_85.asm          4
-;  DFF44  word_DFF44                               dseg02/085_DF7CA_data_engine_85.asm          3
 ;  DFF5A  word_DFF5A                               dseg02/085_DF7CA_data_engine_85.asm          1
 ;  DFF5E  unk_DFF5E                                dseg02/085_DF7CA_data_engine_85.asm          1
 ;  DFF61  puckpflags2                              dseg02/085_DF7CA_data_engine_85.asm          1

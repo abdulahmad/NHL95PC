@@ -9,7 +9,7 @@ extern awroster, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byt
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
 extern byte_E0074, PlList, byte_E038A, PenBuf, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
 extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, dword_C7444, dword_C7448
-extern dword_C90B0, dword_C90C0, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
+extern dword_C90B0, sflags3, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
 extern dword_CC0F8, penshotplayer, dword_CC104, dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer
 extern dword_CC124, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D302C
 extern dword_D3030, dword_D30B0, dword_D30B8, dword_D30BC, dword_D30C0, dword_D8C84, dword_DB088, hmtmstruct
@@ -24,16 +24,16 @@ extern passspeed, randomd0, sfx, vecdist, sub_10F6D, sub_11005, sub_110E0, sub_1
 extern sub_14A20, sub_14AFE, sub_15C30, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
 extern PlayCrowdSample, sub_59A7E, sub_61576, sub_615A2, sub_61862, PenaltyManager, sub_63C73, ClearPenaltyBuffer
 extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
-extern threat, SPAtab, ds2list, unk_CCCC8, unk_DABF0, unk_DAC40, unk_DAC70, unk_DACA0
-extern unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, unk_DC200, unk_DC240, unk_DC252, SortCords
+extern threat, SPAtab, ds2list, unk_CCCC8, awlinetab, unk_DAC40, unk_DAC70, unk_DACA0
+extern unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, hmlinetab, unk_DC240, unk_DC252, SortCords
 extern unk_E9D50, unk_E9EE0, updatereplay, vtoa, regd4, camx
 extern camy, lastplayer, xc1, yc1, word_C90B2, word_C90B4, fodir1, fodir2
 extern c1playernum, c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks
 extern word_CBC44, exitgame, gameover, PerTimeTab, word_CBC52, word_CBC54, lcblink, word_CBC58
 extern lcline, word_CBC64, lcboxon, word_CBC6C, word_CBEC0, word_CBEC4, word_CBEC6, word_CBEC8
 extern word_CBECC, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CCCA8, hmscore, hmtmline
-extern hmtmlcnt, word_DF64C, word_DF656, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
-extern word_DF74C, word_DF756, word_DF80E, puckcross
+extern hmtmlcnt, hmtmgoalie, word_DF656, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
+extern awtmgoalie, word_DF756, word_DF80E, puckcross
 extern word_E0036, lcrequest, word_E0306
 extern word_E03A0, regd2, regd3, word_E03B8, regd0, regd1, Ylist, OOlistpos
 extern joysampling_save, word_E9AA4, word_E9AA6, CwdExciteLvl, periodendtime, word_E9AB0, PerTimeTotal, lasttouch
@@ -223,7 +223,7 @@ cmp word [byte esp+04h], byte 0	; 59F86
 jne short .12	; 59F8C
 cmp di, word [c1playernum]	; 59F8E
 je short .13	; 59F95
-mov edx, dword [dword_C90C0]	; 59F97
+mov edx, dword [sflags3]	; 59F97
 sar edx, 10h	; 59F9D
 mov eax, dword [byte esp+0Ah]	; 59FA0
 sar eax, 10h	; 59FA4
@@ -1583,12 +1583,12 @@ cmp word [cont1team], byte 1	; 5B0F1
 je short .54	; 5B0F9
 cmp word [cont2team], byte 1	; 5B0FB
 je short .54	; 5B103
-mov dl, byte [word_DF64C]	; 5B105
+mov dl, byte [hmtmgoalie]	; 5B105
 test dl, 1	; 5B10B
 jne short .54	; 5B10E
 mov dh, dl	; 5B110
 xor dh, 1	; 5B112
-mov byte [word_DF64C], dh	; 5B115
+mov byte [hmtmgoalie], dh	; 5B115
 .54:
 movsx eax, cx	; 5B11B
 cmp eax, byte 0FFFFFFFFh	; 5B11E
@@ -1617,12 +1617,12 @@ cmp word [cont1team], byte 2	; 5B160
 je short .57	; 5B168
 cmp word [cont2team], byte 2	; 5B16A
 je short .57	; 5B172
-mov dh, byte [word_DF74C]	; 5B174
+mov dh, byte [awtmgoalie]	; 5B174
 test dh, 1	; 5B17A
 jne short .57	; 5B17D
 mov bl, dh	; 5B17F
 xor bl, 1	; 5B181
-mov byte [word_DF74C], bl	; 5B184
+mov byte [awtmgoalie], bl	; 5B184
 .57:
 cmp cx, byte 1	; 5B18A
 jle short .58	; 5B18E
@@ -1699,7 +1699,7 @@ jne short .x	; 5B273
 cmp ax, word [c1playernum]	; 5B275
 je short .x	; 5B27C
 .4:
-mov edx, dword [dword_C90C0]	; 5B27E
+mov edx, dword [sflags3]	; 5B27E
 sar edx, 10h	; 5B284
 cwde	; 5B287
 call restorepl	; 5B288
@@ -2269,10 +2269,10 @@ movsx ebx, dx	; 5B89B
 cmp ebx, 200h	; 5B89E
 jb short clearteams.1	; 5B8A4
 xor edx, edx	; 5B8A6
-mov word [word_DF64C], dx	; 5B8A8
+mov word [hmtmgoalie], dx	; 5B8A8
 mov ebx, 0FFFFFFFFh	; 5B8AF
 mov word [dword_DF642], bx	; 5B8B4
-mov word [word_DF74C], dx	; 5B8BB
+mov word [awtmgoalie], dx	; 5B8BB
 mov word [word_DF742], bx	; 5B8C2
 mov ah, 0FFh	; 5B8C9
 mov byte [byte_DF6CA], ah	; 5B8CB
@@ -2280,7 +2280,7 @@ mov byte [byte_DF7CA], ah	; 5B8D1
 mov dword [hmtmsort], SortCords	; 5B8D7
 mov dword [dword_DF6F2], unk_DACA0	; 5B8E1
 mov dword [dword_DF6F6], unk_DAC40	; 5B8EB
-mov dword [hmtmlines], unk_DC200	; 5B8F5
+mov dword [hmtmlines], hmlinetab	; 5B8F5
 mov dword [dword_DF6FA], dword_DB088	; 5B8FF
 mov dword [dword_DF6FE], unk_DC240	; 5B909
 mov dword [hmtmroster], hmroster	; 5B913
@@ -2288,7 +2288,7 @@ mov dword [hmtmptrF2], unk_DBC30	; 5B91D
 mov dword [awtmsort], SortCords+300h	; 5B927
 mov dword [dword_DF7F2], unk_DAE94	; 5B931
 mov dword [dword_DF7F6], unk_DAC70	; 5B93B
-mov dword [awtmlines], unk_DABF0	; 5B945
+mov dword [awtmlines], awlinetab	; 5B945
 mov dword [dword_DF7FA], unk_DB218	; 5B94F
 mov dword [dword_DF7FE], unk_DC252	; 5B959
 mov dword [awtmroster], awroster	; 5B963
@@ -2948,7 +2948,7 @@ call DoGameFrame	; 5C15B
 mov word [CwdExciteLvl], 10h	; 5C160
 cmp word [gsp], byte 2	; 5C169
 jge short .7	; 5C171
-or byte [dword_C90C0], 80h	; 5C173
+or byte [sflags3], 80h	; 5C173
 .7:
 mov eax, dword [puckc]	; 5C17A
 mov byte [eax], 0FFh	; 5C17F
@@ -3309,7 +3309,7 @@ mov word [byte esi+040h], 0	; 5C620
 .14:
 cmp word [byte esi+SCnum], byte 10h	; 5C626
 je short .15	; 5C62B
-test byte [dword_C90C0], 40h	; 5C62D
+test byte [sflags3], 40h	; 5C62D
 je short .15	; 5C634
 mov bl, byte [byte esi+047h]	; 5C636
 test bl, bl	; 5C639
@@ -3889,7 +3889,7 @@ xor al, bl	; 5CDF2
 mov word [sflags], ax	; 5CDF4
 xor dh, dh	; 5CDFA
 mov word [gmode2], dx	; 5CDFC
-mov word [dword_C90C0], bx	; 5CE03
+mov word [sflags3], bx	; 5CE03
 call ClearPenaltyBuffer	; 5CE0A
 pop edx	; 5CE0F
 pop ebx	; 5CE10

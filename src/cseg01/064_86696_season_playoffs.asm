@@ -15,7 +15,7 @@ extern code_1A8AA, code_1A922, dword_C530D, dword_C535E, dword_C5362, dword_C536
 extern dword_C5376, dword_C537A, dword_C537E, dword_C5382, dword_C53F7, dword_C53FB, gameopts, dword_C5403
 extern dword_C5407, dword_C5413, dword_C5417, dword_C5519, dword_C5581, dword_C55E9, dword_C65AC, dword_C65C0
 extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C6D26, dword_C6DBA, dword_C71CC, dword_C71D0
-extern dword_C71D4, dword_C71D8, dword_C71DC, songdata, cont2team, dword_C90CA, dword_CE583, dword_CE5A3
+extern dword_C71D4, dword_C71D8, dword_C71DC, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
 extern dword_CE5C3, dword_CEDE7, dword_CEE07, dword_D07BB, dword_D07BF, dword_D07C7, dword_D07D3, dword_D07D7
 extern dword_D07DF, musichandle, dword_D2884, dword_D288C, dword_D29FB, dword_D2B70, dword_D2BEC, musicslot
 extern dword_D2C6B, dword_D8B68, dword_D8B74, dword_DC234, dword_DC238, dword_DC7B8, dword_DC7BC, dword_DC830
@@ -37,7 +37,7 @@ extern sub_B30B4, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4BC4, unk_208
 extern unk_20BBD, unk_20EB7, unk_86616, unk_C3A37, unk_C3A3A, unk_C3A3D, unk_C3A40, unk_C3A66
 extern unk_C3AE1, unk_C3AF8, unk_C5298, unk_C7733, unk_CEE4F, unk_CEEAF, unk_CF90F, unk_D2864
 extern unk_D2B38, unk_DBC30, unk_DDAC4, unk_DDCE6, unk_DDCFB, unk_ED7BC, unknown_libname_1, word_C5366
-extern word_C6D24, word_C6E22, scrpitch, word_C90CC, hmscore, awscore
+extern word_C6D24, word_C6E22, scrpitch, VisTeam, hmscore, awscore
 global loc_86791, loc_86793, loc_867E2, loc_867F6, loc_86811, loc_86813, loc_86976, loc_86987
 global loc_86998, loc_869A9, loc_869B3, loc_869C8, loc_869D2, loc_86A77, loc_86A8E, loc_86B18
 global loc_86B6B, loc_86BC4, loc_86C1C, loc_86C1E, loc_86C63, loc_86C77, loc_86CDE, loc_86D28
@@ -695,7 +695,7 @@ cmp ebx, byte 10h	; 86F12
 jl short loc_86EB3	; 86F15
 mov eax, dword [cont2team]	; 86F17
 sar eax, 10h	; 86F1C
-mov edx, dword [dword_C90CA]	; 86F1F
+mov edx, dword [HomeTeam]	; 86F1F
 sar edx, 10h	; 86F25
 mov eax, dword [nosplit eax*4+dword_C5581]	; 86F28
 cmp eax, dword [nosplit edx*4+dword_C5581]	; 86F2F
@@ -720,7 +720,7 @@ jmp short loc_86F64	; 86F61
 loc_86F63:
 dec ebx	; 86F63
 loc_86F64:
-mov edx, dword [dword_C90CA]	; 86F64
+mov edx, dword [HomeTeam]	; 86F64
 sar edx, 10h	; 86F6A
 mov ecx, dword [nosplit edx*4+dword_C5581]	; 86F6D
 neg ecx	; 86F74
@@ -768,7 +768,7 @@ xor ebx, ebx	; 86FDE
 mov edx, 0FFFFFFFFh	; 86FE0
 jmp short loc_87001	; 86FE5
 loc_86FE7:
-mov eax, dword [dword_C90CA]	; 86FE7
+mov eax, dword [HomeTeam]	; 86FE7
 sar eax, 10h	; 86FEC
 mov edi, dword [nosplit eax*4+dword_C5581]	; 86FEF
 neg edi	; 86FF6
@@ -781,7 +781,7 @@ inc ebx	; 87000
 loc_87001:
 cmp edx, ecx	; 87001
 jne short loc_86FE7	; 87003
-mov eax, dword [dword_C90CA]	; 87005
+mov eax, dword [HomeTeam]	; 87005
 sar eax, 10h	; 8700A
 dec ebx	; 8700D
 mov edx, ebx	; 8700E
@@ -813,14 +813,14 @@ shl eax, 2	; 8704E
 add eax, esi	; 87051
 cmp ecx, dword [eax]	; 87053
 jne short loc_8706D	; 87055
-mov edx, dword [dword_C90CA]	; 87057
+mov edx, dword [HomeTeam]	; 87057
 sar edx, 10h	; 8705D
 mov edx, dword [nosplit edx*4+dword_C5581]	; 87060
 neg edx	; 87067
 mov dword [eax], edx	; 87069
 jmp short loc_87085	; 8706B
 loc_8706D:
-mov edx, dword [dword_C90CA]	; 8706D
+mov edx, dword [HomeTeam]	; 8706D
 sar edx, 10h	; 87073
 mov edx, dword [nosplit edx*4+dword_C5581]	; 87076
 neg edx	; 8707D
@@ -877,7 +877,7 @@ mov eax, 1	; 870FF
 shl eax, cl	; 87104
 or esi, eax	; 87106
 loc_87108:
-mov eax, dword [dword_C90CA]	; 87108
+mov eax, dword [HomeTeam]	; 87108
 sar eax, 10h	; 8710D
 mov eax, dword [nosplit eax*4+dword_C5519]	; 87110
 test dword [esp], eax	; 87117
@@ -886,7 +886,7 @@ xor ebx, ebx	; 8711C
 jmp short loc_87136	; 8711E
 loc_87120:
 lea eax, [ebx+ebp]	; 87120
-mov edx, dword [dword_C90CA]	; 87123
+mov edx, dword [HomeTeam]	; 87123
 sar edx, 10h	; 87129
 cmp edx, dword [nosplit eax*4+dword_C55E9]	; 8712C
 je short loc_8713A	; 87133
@@ -1023,7 +1023,7 @@ mov eax, esi	; 872A8
 call sub_875A3	; 872AA
 mov eax, dword [cont2team]	; 872AF
 sar eax, 10h	; 872B4
-mov edx, dword [dword_C90CA]	; 872B7
+mov edx, dword [HomeTeam]	; 872B7
 sar edx, 10h	; 872BD
 mov eax, dword [nosplit eax*4+dword_C5581]	; 872C0
 cmp eax, dword [nosplit edx*4+dword_C5581]	; 872C7
@@ -1076,7 +1076,7 @@ push eax	; 8737A
 call sub_92DE0	; 8737B
 add esp, byte 4	; 87380
 mov dword [dword_D07DF], eax	; 87383
-mov ebx, dword [dword_C90CA]	; 87388
+mov ebx, dword [HomeTeam]	; 87388
 sar ebx, 10h	; 8738E
 mov edx, dword [cont2team]	; 87391
 sar edx, 10h	; 87397
@@ -1084,7 +1084,7 @@ mov eax, esi	; 8739A
 call sub_87F85	; 8739C
 mov eax, esi	; 873A1
 call sub_87863	; 873A3
-mov ebx, dword [dword_C90CA]	; 873A8
+mov ebx, dword [HomeTeam]	; 873A8
 sar ebx, 10h	; 873AE
 mov edx, dword [cont2team]	; 873B1
 sar edx, 10h	; 873B7
@@ -1092,7 +1092,7 @@ mov eax, esi	; 873BA
 call sub_87FE0	; 873BC
 mov eax, esi	; 873C1
 call sub_87B33	; 873C3
-mov ebx, dword [dword_C90CA]	; 873C8
+mov ebx, dword [HomeTeam]	; 873C8
 sar ebx, 10h	; 873CE
 mov edx, dword [cont2team]	; 873D1
 sar edx, 10h	; 873D7
@@ -1144,8 +1144,8 @@ mov dword [dword_D07DF], ebp	; 87472
 loc_87478:
 xor edx, edx	; 87478
 lea eax, [dword esi+01998h]	; 8747A
-mov di, word [word_C90CC]	; 87480
-mov cx, word [dword_C90CA]	; 87487
+mov di, word [VisTeam]	; 87480
+mov cx, word [HomeTeam]	; 87487
 jmp short loc_87496	; 8748E
 loc_87490:
 add edx, byte 7	; 87490
@@ -2916,7 +2916,7 @@ mov eax, byte_C8451	; 88779
 call sub_3626D	; 8877E
 push byte_C8451	; 88783
 push esi	; 88788
-mov ebx, dword [dword_C90CA]	; 88789
+mov ebx, dword [HomeTeam]	; 88789
 sar ebx, 10h	; 8878F
 mov ecx, 1	; 88792
 mov edx, asc_C3A4B	; 88797
@@ -3609,10 +3609,10 @@ mov edx, dword [esp]	; 8901E
 mov dword [byte edx+044h], eax	; 89021
 xor eax, eax	; 89024
 mov al, byte [byte esi+02h]	; 89026
-mov word [dword_C90CA], ax	; 89029
+mov word [HomeTeam], ax	; 89029
 xor eax, eax	; 8902F
 mov al, byte [byte esi+03h]	; 89031
-mov word [word_C90CC], ax	; 89034
+mov word [VisTeam], ax	; 89034
 mov ecx, dword [dword_C5403]	; 8903A
 cmp edi, ecx	; 89040
 jne short loc_89086	; 89042
@@ -3672,10 +3672,10 @@ jmp near loc_891A6	; 89123
 loc_89128:
 xor eax, eax	; 89128
 mov al, byte [byte esi+02h]	; 8912A
-mov word [dword_C90CA], ax	; 8912D
+mov word [HomeTeam], ax	; 8912D
 xor eax, eax	; 89133
 mov al, byte [byte esi+03h]	; 89135
-mov word [word_C90CC], ax	; 89138
+mov word [VisTeam], ax	; 89138
 mov esi, dword [dword_C5403]	; 8913E
 cmp esi, byte 0FFFFFFFFh	; 89144
 jne short loc_89151	; 89147
@@ -4219,7 +4219,7 @@ mov dl, byte [byte edi+01h]	; 898A3
 xor eax, eax	; 898A6
 mov al, byte [edi]	; 898A8
 call sub_1BEFD	; 898AA
-mov edx, dword [dword_C90CA]	; 898AF
+mov edx, dword [HomeTeam]	; 898AF
 sar edx, 10h	; 898B5
 mov eax, dword [cont2team]	; 898B8
 sar eax, 10h	; 898BD

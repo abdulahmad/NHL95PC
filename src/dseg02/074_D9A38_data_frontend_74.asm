@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_D9A38 nobits alloc noexec write align=1
-global byte_DAC14, byte_DAC15, byte_DAC18, byte_DAC20, dword_D9A38, unk_DABF0
+global byte_DAC14, byte_DAC15, byte_DAC18, byte_DAC20, dword_D9A38, awlinetab
 dword_D9A38:
 resb 4536
-unk_DABF0:
+awlinetab:
 resb 36
 byte_DAC14:
 resb 1

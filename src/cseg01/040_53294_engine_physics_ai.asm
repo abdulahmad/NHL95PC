@@ -5,7 +5,7 @@ section s_53294 progbits alloc exec nowrite align=1
 extern Acheck, AddPenalty, AddPenalty2, AvgCline, GetHot, Ylist_m2, PBnum
 extern SetSPA, Stop4Pen, __CHK, a2touchpuck, assexit, assinsert, assreplace
 extern byte_C4D1C, byte_C5400, byte_C5430, byte_C5432, sflags, gmode2, PenBuf, iflags
-extern OOlist, collflag, dirtab, doplayeracc, gameopts, wcradiusy, dword_C90C0
+extern OOlist, collflag, dirtab, doplayeracc, gameopts, wcradiusy, sflags3
 extern dword_CBECA, onetimerflag, dword_CC0F8, penshotplayer, dword_CC108, penshotmode, penshotstart, dword_CC124
 extern penshotlive, dword_CCC2C, dword_CCC4E, hmtmstruct, awtmstruct, puckcross_m2
 extern dword_E03AE, dword_E03B6, dword_E03B9, dword_E03BD, dword_E9A9E
@@ -827,7 +827,7 @@ jge near .44	; 53BA2
 mov eax, dword [byte ecx+SCnum-2]	; 53BA8
 sar eax, 10h	; 53BAB
 mov dword [penshotplayer], eax	; 53BAE
-mov eax, dword [dword_C90C0]	; 53BB3
+mov eax, dword [sflags3]	; 53BB3
 sar eax, 10h	; 53BB8
 mov edi, dword [penshotplayer]	; 53BBB
 cmp eax, edi	; 53BC1
@@ -2551,7 +2551,7 @@ cmp ax, dx	; 55065
 jne short .16	; 55068
 cmp dx, word [byte ebp+06Ah]	; 5506A
 je near .22	; 5506E
-mov edx, dword [dword_C90C0]	; 55074
+mov edx, dword [sflags3]	; 55074
 sar edx, 10h	; 5507A
 mov eax, dword [byte ebp+068h]	; 5507D
 sar eax, 10h	; 55080
@@ -4595,7 +4595,7 @@ jge short .7	; 56B0B
 mov eax, dword [byte ebx+SCnum-2]	; 56B0D
 sar eax, 10h	; 56B10
 mov dword [penshotplayer], eax	; 56B13
-mov eax, dword [dword_C90C0]	; 56B18
+mov eax, dword [sflags3]	; 56B18
 sar eax, 10h	; 56B1D
 mov ebx, dword [penshotplayer]	; 56B20
 cmp eax, ebx	; 56B26
@@ -4704,7 +4704,7 @@ jge near .10	; 56C6D
 mov eax, dword [byte ebx+SCnum-2]	; 56C73
 sar eax, 10h	; 56C76
 mov dword [penshotplayer], eax	; 56C79
-mov eax, dword [dword_C90C0]	; 56C7E
+mov eax, dword [sflags3]	; 56C7E
 sar eax, 10h	; 56C83
 mov ebx, dword [penshotplayer]	; 56C86
 cmp eax, ebx	; 56C8C
@@ -4970,12 +4970,12 @@ mov dword [dword_CC0F8], edi	; 56FA8
 mov byte [byte ecx+033h], 0FFh	; 56FAE
 mov byte [byte ecx+035h], 0FFh	; 56FB2
 or byte [byte ecx+044h], 8	; 56FB6
-mov cl, byte [dword_C90C0]	; 56FBA
+mov cl, byte [sflags3]	; 56FBA
 test cl, 10h	; 56FC0
 je near .6	; 56FC3
 mov ch, cl	; 56FC9
 and ch, 0EFh	; 56FCB
-mov byte [dword_C90C0], ch	; 56FCE
+mov byte [sflags3], ch	; 56FCE
 test byte [gmode], 10h	; 56FD4
 jne short .4	; 56FDB
 inc word [byte ebx+012h]	; 56FDD

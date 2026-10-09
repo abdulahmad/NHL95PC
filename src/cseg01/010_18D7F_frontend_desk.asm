@@ -8,7 +8,7 @@ extern byte_C5400, byte_C542F, byte_C5430, byte_C5431, byte_C5432, byte_CCCA0, m
 extern byte_DD775, byte_DD788, byte_DD789, byte_ED830, byte_ED9E8, joysampling, dword_C4E14, dword_C53F7
 extern dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C5581, dword_C5840, dword_C65F4, dword_C66A4
 extern dword_C66AC, dword_C66D0, dword_C66D4, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC
-extern songdata, cont2team, dword_C90CA, dword_CCC9D, musichandle, dword_D2C6B, dword_D41F0, musicslot
+extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, dword_D41F0, musicslot
 extern dword_D8C84, dword_DC230, dword_DC234, dword_DC238, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
 extern dword_EA0DC, jctime, off_CEE5F, off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF
 extern off_CEF23, off_D3078, randomd0, sprintf_, sub_10E9F, sub_11598, sub_12034, sub_1395F
@@ -21,7 +21,7 @@ extern sub_84704, sub_84715, sub_84729, sub_8BC15, sub_8CCA8, sub_8D2F0, sub_8E8
 extern sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0
 extern sub_9061C, sub_91370, sub_91400, MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
 extern sub_B396E, sub_B4B58, sub_B4BA8, sub_B4FAC, unk_CEB8F, unk_CEC4F, unk_CF2EF, unk_D2B38
-extern unk_DABF0, unk_DC200, unk_DC890, unk_DF014, word_C90CC, word_CBC44, exitgame, scrolly
+extern awlinetab, hmlinetab, unk_DC890, unk_DF014, VisTeam, word_CBC44, exitgame, scrolly
 extern scrollx, hmscore, awscore
 global code_1A817, code_1A8AA, code_1A922, code_1A96D, code_1A9AC, loc_18E13, loc_18F79, loc_18F86
 global loc_18FA2, loc_18FC9, loc_18FDF, loc_19045, loc_1909C, loc_1909E, loc_190B4, loc_19178
@@ -325,12 +325,12 @@ mov ecx, eax	; 19105
 call sub_6B47C	; 19107
 cmp dword [dword_C53FB], byte 0	; 1910C
 jne near loc_191C9	; 19113
-mov dx, word [dword_C90CA]	; 19119
+mov dx, word [HomeTeam]	; 19119
 cmp dx, byte 1Ah	; 19120
 je near loc_191C9	; 19124
 cmp dx, byte 1Bh	; 1912A
 je near loc_191C9	; 1912E
-mov si, word [word_C90CC]	; 19134
+mov si, word [VisTeam]	; 19134
 cmp si, byte 1Ah	; 1913B
 je near loc_191C9	; 1913F
 cmp si, byte 1Bh	; 19145
@@ -339,7 +339,7 @@ cmp dword [dword_D8C84], byte 1	; 1914F
 jne short loc_1918C	; 19156
 xor esi, esi	; 19158
 mov dword [dword_C65F4], esi	; 1915A
-mov edx, dword [dword_C90CA]	; 19160
+mov edx, dword [HomeTeam]	; 19160
 sar edx, 10h	; 19166
 mov eax, dword [cont2team]	; 19169
 sar eax, 10h	; 1916E
@@ -423,12 +423,12 @@ cmp dword [dword_C53FB], byte 0	; 19291
 jne near loc_19336	; 19298
 test dl, 4	; 1929E
 jne near loc_19336	; 192A1
-mov dx, word [dword_C90CA]	; 192A7
+mov dx, word [HomeTeam]	; 192A7
 cmp dx, byte 1Ah	; 192AE
 je near loc_19336	; 192B2
 cmp dx, byte 1Bh	; 192B8
 je near loc_19336	; 192BC
-mov cx, word [word_C90CC]	; 192C2
+mov cx, word [VisTeam]	; 192C2
 cmp cx, byte 1Ah	; 192C9
 je short loc_19336	; 192CD
 cmp cx, byte 1Bh	; 192CF
@@ -745,7 +745,7 @@ jle short loc_19795	; 1978B
 mov esi, dword [cont2team]	; 1978D
 jmp short loc_1979B	; 19793
 loc_19795:
-mov esi, dword [dword_C90CA]	; 19795
+mov esi, dword [HomeTeam]	; 19795
 loc_1979B:
 sar esi, 10h	; 1979B
 xor edi, edi	; 1979E
@@ -755,7 +755,7 @@ mov edi, 0FFFFFFFFh	; 197A9
 loc_197AE:
 mov edx, dword [cont2team]	; 197AE
 sar edx, 10h	; 197B4
-mov eax, dword [dword_C90CA]	; 197B7
+mov eax, dword [HomeTeam]	; 197B7
 sar eax, 10h	; 197BC
 shl eax, 2	; 197BF
 mov edx, dword [nosplit edx*4+dword_C5581]	; 197C2
@@ -1590,7 +1590,7 @@ call __CHK	; 1A539
 push ebx	; 1A53E
 push ecx	; 1A53F
 push edx	; 1A540
-cmp word [dword_C90CA], byte 1Ah	; 1A541
+cmp word [HomeTeam], byte 1Ah	; 1A541
 jl short loc_1A552	; 1A549
 mov eax, 0Ch	; 1A54B
 jmp short loc_1A55A	; 1A550
@@ -1810,7 +1810,7 @@ call __CHK	; 1A81C
 push ebx	; 1A821
 push ecx	; 1A822
 push edx	; 1A823
-cmp word [dword_C90CA], byte 1Ah	; 1A824
+cmp word [HomeTeam], byte 1Ah	; 1A824
 jl short loc_1A835	; 1A82C
 mov eax, 0Ch	; 1A82E
 jmp short loc_1A83D	; 1A833
@@ -1859,7 +1859,7 @@ mov eax, 1	; 1A8D5
 call sub_76429	; 1A8DA
 mov ecx, 2	; 1A8DF
 mov ebx, unk_CF2EF	; 1A8E4
-mov edx, unk_DC200	; 1A8E9
+mov edx, hmlinetab	; 1A8E9
 xor eax, eax	; 1A8EE
 loc_1A8F0:
 call sub_767D0	; 1A8F0
@@ -1890,7 +1890,7 @@ mov eax, 1	; 1A94D
 call sub_76429	; 1A952
 mov ecx, 2	; 1A957
 mov ebx, unk_CF2EF	; 1A95C
-mov edx, unk_DABF0	; 1A961
+mov edx, awlinetab	; 1A961
 mov eax, 1	; 1A966
 jmp short loc_1A8F0	; 1A96B
 code_1A96D:

@@ -9,7 +9,7 @@ extern musicon, byte_D42C3, byte_DC267, byte_DC268, byte_DD710, byte_DD750, byte
 extern byte_DD7CB, byte_DDD10, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_ED836
 extern byte_ED98E, dword_C53F7, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C71D8
 extern dword_C71DC, songdata, dword_C7615, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7E42, dword_C7F0B
-extern dword_C8998, dword_C90CA, musichandle, dword_D2C6B, dword_DB088, dword_DC234, dword_DC23E, musicslot
+extern dword_C8998, HomeTeam, musichandle, dword_D2C6B, dword_DB088, dword_DC234, dword_DC23E, musicslot
 extern dword_DD7A8, dword_DD7AC, dword_DDAC0, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
 extern dword_DDD6C, dword_DF616, dword_DF620, awtmlines, startm_m2, hmtmlines
 extern fputchar, jctime, memset_, off_C57CC, off_C800C, off_C80D7, off_C80E7, off_C80EB
@@ -23,10 +23,10 @@ extern sub_41171, sub_41337, sub_41344, sub_41B80, sub_41CC4, sub_41F64, sub_479
 extern sub_6B47C, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_903F0, sub_91370, sub_91400, sub_92F50, sub_93000, sub_B2DCA, sub_B2E1B, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, unk_C7AE0, unk_C7E3E, unk_C7E4E, unk_C7F07
-extern unk_C7F1B, unk_C7F8E, unk_C8115, unk_C8117, unk_DABF0, unk_DC200, unk_DC240, unk_DD7B4
-extern unk_DDAC4, unk_DDD1D, unk_DDD4C, unk_DDD59, word_C90CC, word_DB08A, word_DB08C, word_DB08E
+extern unk_C7F1B, unk_C7F8E, unk_C8115, unk_C8117, awlinetab, hmlinetab, unk_DC240, unk_DD7B4
+extern unk_DDAC4, unk_DDD1D, unk_DDD4C, unk_DDD59, VisTeam, word_DB08A, word_DB08C, word_DB08E
 extern word_DB090, word_DB092, word_DB096, word_DC242, word_DC244, word_DDD46, word_DDD48, word_DDD4A
-extern word_DF618, hmscore, word_DF64C, awscore, word_DF74C, startm
+extern word_DF618, hmscore, hmtmgoalie, awscore, awtmgoalie, startm
 global loc_3602E, loc_36047, loc_3607B, loc_36089, loc_360DA, loc_360FD, loc_36149, loc_3614E
 global loc_361F9, loc_36265, loc_362E4, loc_362FD, loc_3635F, loc_36392, loc_363C8, loc_363E1
 global loc_3641F, loc_3642B, loc_36437, loc_36453, loc_36477, loc_36509, loc_36569, loc_36583
@@ -260,8 +260,8 @@ mov dword [dword esp+03ECh], edx	; 3628A
 mov dword [dword esp+03E8h], edx	; 36291
 mov dword [dword esp+03E4h], edx	; 36298
 mov dword [dword esp+03E0h], edx	; 3629F
-mov dword [dword esp+03D8h], unk_DC200	; 362A6
-mov dword [dword esp+03DCh], unk_DABF0	; 362B1
+mov dword [dword esp+03D8h], hmlinetab	; 362A6
+mov dword [dword esp+03DCh], awlinetab	; 362B1
 cmp dword [dword esp+0420h], 444h	; 362BC
 jge short loc_362E4	; 362C7
 lea eax, [byte esp+034h]	; 362C9
@@ -459,14 +459,14 @@ je near loc_36509	; 365F9
 loc_365FF:
 cmp dword [dword esp+0400h], byte 0	; 365FF
 jge short loc_36647	; 36607
-mov ax, word [word_DF64C]	; 36609
+mov ax, word [hmtmgoalie]	; 36609
 xor ah, ah	; 3660F
 and al, 1	; 36611
 cwde	; 36613
 mov edx, dword [hmtmlines]	; 36614
 mov al, byte [byte edx+eax+024h]	; 3661A
 mov byte [dword esp+040Ch], al	; 3661E
-mov ax, word [word_DF74C]	; 36625
+mov ax, word [awtmgoalie]	; 36625
 xor ah, ah	; 3662B
 and al, 1	; 3662D
 movsx edx, ax	; 3662F
@@ -1416,10 +1416,10 @@ mov al, byte [byte_DDD41]	; 373E4
 mov byte [byte_DC267], al	; 373E9
 xor eax, eax	; 373EE
 mov al, byte [byte_DDD42]	; 373F0
-mov word [dword_C90CA], ax	; 373F5
+mov word [HomeTeam], ax	; 373F5
 xor eax, eax	; 373FB
 mov al, byte [byte_DDD43]	; 373FD
-mov word [word_C90CC], ax	; 37402
+mov word [VisTeam], ax	; 37402
 loc_37408:
 call sub_10712	; 37408
 xor esi, esi	; 3740D
@@ -1433,9 +1433,9 @@ mov dl, byte [byte_DC267]	; 3741F
 mov al, byte [byte_DC268]	; 37425
 call sub_1BEFD	; 3742A
 xor edx, edx	; 3742F
-mov dl, byte [word_C90CC]	; 37431
+mov dl, byte [VisTeam]	; 37431
 xor eax, eax	; 37437
-mov al, byte [dword_C90CA]	; 37439
+mov al, byte [HomeTeam]	; 37439
 call sub_29F28	; 3743E
 mov esi, eax	; 37443
 jmp short loc_3744C	; 37445

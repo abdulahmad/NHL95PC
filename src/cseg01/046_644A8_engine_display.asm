@@ -20,12 +20,12 @@ extern jctime, replaystart, puckz, puckc, camx_m2, off_CBED0, off_CC01D, off_CD4
 extern off_CD4A0, off_CD4DC, setpersonel, sfx, sprintf_, sub_11005, sub_110E0, sub_11136
 extern sub_1431E, sub_1CD73, CrowdNoiseUpdate, CrowdNoiseOff, sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8EA18, sub_90354, sub_90D20, sub_90EC0, sub_91964, sub_93540, sub_B30B4
-extern sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80, unk_DABF0, unk_DACA0, unk_DC200, SortCords
+extern sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80, awlinetab, unk_DACA0, hmlinetab, SortCords
 extern unk_E9CEC, unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE
 extern unk_E9EE0, camx, camy, xc1, yc1, word_C90B2, word_C90B4, c1playernum
 extern c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks, word_CBEC0
 extern word_CBEC8, word_CBECC, word_CBECE, word_CC054, word_CC0B0, crowdlevel, word_CCEF8, word_CD4FC
-extern replaytick, replaysfx, scrolly, scrollx, word_DEE94, word_DF64C, word_E0022
+extern replaytick, replaysfx, scrolly, scrollx, word_DEE94, hmtmgoalie, word_E0022
 extern word_E0046, regd2, regd3, regd0, regd1, joysampling_save, word_E9AB2, word_E9AB4
 extern word_E9F12, word_E9F14, word_E9F18, word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A
 extern word_E9FA7, word_E9FA9, word_E9FB0, word_E9FB2, word_E9FB4
@@ -429,10 +429,10 @@ cmp dx, byte 19h	; 649B6
 jl short sub_64614.7	; 649BA
 test si, si	; 649BC
 je short .9	; 649BF
-mov ebx, unk_DABF0	; 649C1
+mov ebx, awlinetab	; 649C1
 jmp short .10	; 649C6
 .9:
-mov ebx, unk_DC200	; 649C8
+mov ebx, hmlinetab	; 649C8
 .10:
 xor edx, edx	; 649CD
 jmp short .12	; 649CF
@@ -476,10 +476,10 @@ mov ecx, edx	; 64A1E
 mov edi, ebx	; 64A20
 test ax, ax	; 64A22
 je short .1	; 64A25
-mov ebp, unk_DABF0	; 64A27
+mov ebp, awlinetab	; 64A27
 jmp short .2	; 64A2C
 .1:
-mov ebp, unk_DC200	; 64A2E
+mov ebp, hmlinetab	; 64A2E
 .2:
 movsx eax, si	; 64A33
 mov dword [byte esp+04h], eax	; 64A36
@@ -784,10 +784,10 @@ sub eax, edx	; 64D88
 mov byte [dword ecx+eax+hmroster], 3	; 64D8A
 cmp word [esp], byte 0	; 64D92
 je short .3	; 64D97
-mov esi, unk_DABF0	; 64D99
+mov esi, awlinetab	; 64D99
 jmp short .4	; 64D9E
 .3:
-mov esi, unk_DC200	; 64DA0
+mov esi, hmlinetab	; 64DA0
 .4:
 mov ecx, 28h	; 64DA5
 mov edi, dword [byte esp+04h]	; 64DAA
@@ -862,10 +862,10 @@ push eax	; 64E72
 mov esi, edx	; 64E73
 test ax, ax	; 64E75
 je short .1	; 64E78
-mov ebp, unk_DABF0	; 64E7A
+mov ebp, awlinetab	; 64E7A
 jmp short .2	; 64E7F
 .1:
-mov ebp, unk_DC200	; 64E81
+mov ebp, hmlinetab	; 64E81
 .2:
 movsx eax, si	; 64E86
 movsx ax, byte [dword eax+byte_CD473]	; 64E89
@@ -1267,10 +1267,10 @@ mov edi, eax	; 652E6
 mov dword [esp], ebx	; 652E8
 test ax, ax	; 652EB
 je short .1	; 652EE
-mov eax, unk_DABF0	; 652F0
+mov eax, awlinetab	; 652F0
 jmp short .2	; 652F5
 .1:
-mov eax, unk_DC200	; 652F7
+mov eax, hmlinetab	; 652F7
 .2:
 mov ebx, eax	; 652FC
 cmp dx, byte 24h	; 652FE
@@ -1356,10 +1356,10 @@ mov edi, eax	; 653D0
 mov ebx, edx	; 653D2
 test ax, ax	; 653D4
 je short .1	; 653D7
-mov edx, unk_DABF0	; 653D9
+mov edx, awlinetab	; 653D9
 jmp short .2	; 653DE
 .1:
-mov edx, unk_DC200	; 653E0
+mov edx, hmlinetab	; 653E0
 .2:
 mov esi, edx	; 653E5
 movsx eax, di	; 653E7
@@ -1490,10 +1490,10 @@ mov edi, ebx	; 65541
 mov dword [byte esp+04h], ecx	; 65543
 test ax, ax	; 65547
 je short .1	; 6554A
-mov eax, unk_DABF0	; 6554C
+mov eax, awlinetab	; 6554C
 jmp short .2	; 65551
 .1:
-mov eax, unk_DC200	; 65553
+mov eax, hmlinetab	; 65553
 .2:
 mov ebp, eax	; 65558
 movsx ebx, si	; 6555A
@@ -1551,10 +1551,10 @@ push eax	; 655DD
 push edx	; 655DE
 test ax, ax	; 655DF
 je short .1	; 655E2
-mov esi, unk_DABF0	; 655E4
+mov esi, awlinetab	; 655E4
 jmp short .2	; 655E9
 .1:
-mov esi, unk_DC200	; 655EB
+mov esi, hmlinetab	; 655EB
 .2:
 mov edx, dword [byte esp+02h]	; 655F0
 sar edx, 10h	; 655F4
@@ -1833,10 +1833,10 @@ push ebp	; 65902
 mov esi, eax	; 65903
 test ax, ax	; 65905
 je short .1	; 65908
-mov ebp, unk_DABF0	; 6590A
+mov ebp, awlinetab	; 6590A
 jmp short .2	; 6590F
 .1:
-mov ebp, unk_DC200	; 65911
+mov ebp, hmlinetab	; 65911
 .2:
 xor edx, edx	; 65916
 mov word [word_E9F14], dx	; 65918
@@ -3739,7 +3739,7 @@ mov edx, eax	; 671F6
 cwde	; 671F8
 mov ebx, eax	; 671F9
 shl ebx, 8	; 671FB
-mov bx, word [dword ebx+word_DF64C]	; 671FE
+mov bx, word [dword ebx+hmtmgoalie]	; 671FE
 cmp dword [dword_D8C84], byte 0FFFFFFFFh	; 67205
 je near .x	; 6720C
 mov ecx, dword [c2playernum]	; 67212
@@ -3779,10 +3779,10 @@ mov eax, dword [dword ebx+off_CD4A0]	; 67282
 mov byte [eax], 2	; 67288
 mov eax, ecx	; 6728B
 shl eax, 8	; 6728D
-mov cx, word [dword eax+word_DF64C]	; 67290
+mov cx, word [dword eax+hmtmgoalie]	; 67290
 xor ch, ch	; 67297
 and cl, 0Fh	; 67299
-mov word [dword eax+word_DF64C], cx	; 6729C
+mov word [dword eax+hmtmgoalie], cx	; 6729C
 movsx eax, cx	; 672A3
 mov eax, dword [dword ebx+eax*4+off_CD498]	; 672A6
 jmp short .5	; 672AD
@@ -3799,7 +3799,7 @@ mov eax, dword [dword ecx+eax*4+off_CD498]	; 672C4
 mov byte [eax], 2	; 672CB
 mov eax, esi	; 672CE
 shl eax, 8	; 672D0
-or word [dword eax+word_DF64C], byte 0FFF0h	; 672D3
+or word [dword eax+hmtmgoalie], byte 0FFF0h	; 672D3
 mov eax, dword [dword ecx+off_CD4A0]	; 672DB
 .5:
 mov byte [eax], 1	; 672E1
@@ -3822,7 +3822,7 @@ push esi	; 67305
 movsx ebx, ax	; 67306
 mov ecx, ebx	; 67309
 shl ecx, 8	; 6730B
-mov cx, word [dword ecx+word_DF64C]	; 6730E
+mov cx, word [dword ecx+hmtmgoalie]	; 6730E
 mov esi, dword [c2playernum]	; 67315
 sar esi, 10h	; 6731B
 inc ebx	; 6731E
@@ -3837,12 +3837,12 @@ test dx, dx	; 67334
 jge short .2	; 67337
 movsx edx, ax	; 67339
 shl edx, 8	; 6733C
-or word [dword edx+word_DF64C], byte 0FFF0h	; 6733F
+or word [dword edx+hmtmgoalie], byte 0FFF0h	; 6733F
 jmp short .3	; 67347
 .2:
 movsx ebx, ax	; 67349
 shl ebx, 8	; 6734C
-mov word [dword ebx+word_DF64C], dx	; 6734F
+mov word [dword ebx+hmtmgoalie], dx	; 6734F
 mov dl, byte [gmode]	; 67356
 test dl, 1	; 6735C
 jne short .3	; 6735F
@@ -3864,14 +3864,14 @@ or byte [dword edx+byte_DF64D], 0FFh	; 6738A
 .3:
 movsx edx, ax	; 67391
 shl edx, 8	; 67394
-cmp word [dword edx+word_DF64C], byte 0	; 67397
+cmp word [dword edx+hmtmgoalie], byte 0	; 67397
 jge short .4	; 6739F
 test cx, cx	; 673A1
 jl short .x	; 673A4
 .4:
 movsx edx, ax	; 673A6
 shl edx, 8	; 673A9
-cmp cx, word [dword edx+word_DF64C]	; 673AC
+cmp cx, word [dword edx+hmtmgoalie]	; 673AC
 je short .x	; 673B3
 mov eax, hmtmstruct	; 673B5
 add eax, edx	; 673BA

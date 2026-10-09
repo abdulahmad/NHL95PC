@@ -7,7 +7,7 @@ extern asc_C1756, asc_C175F, asc_C1768, asc_C176D, asc_CDB75, asc_CDB7C, byte_C7
 extern byte_CDB77, byte_CDB7E, musicon, byte_DD710, byte_DD750, byte_EA0F4, byte_ED836, byte_ED9A7
 extern byte_ED9AB, dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413
 extern dword_C5417, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C7219, songdata
-extern cont2team, dword_C90CA, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
+extern cont2team, HomeTeam, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
 extern dword_D2C6B, dword_DC238, dword_EA0DC, jctime, memcpy_, off_C5439, off_C7282, off_D3078
 extern strcpy_, strncpy_, sub_106C8, sub_142E7, sub_1431E, sub_14525, sub_14552, sub_14566
 extern sub_1457C, sub_145A2, sub_145F9, sub_1D100, sub_1D610, sub_20D97, sub_31013, sub_47C31
@@ -15,7 +15,7 @@ extern sub_6B391, sub_6B3D7, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9
 extern sub_76429, sub_8B85B, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C, sub_91370
 extern sub_91400, sub_B2CD8, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_B4BC4, unk_208EF
-extern unk_20A46, unk_20BBD, unk_20EB7, unk_C1772, unk_C1775, unk_C1778, scrpitch, word_C90CC
+extern unk_20A46, unk_20BBD, unk_20EB7, unk_C1772, unk_C1775, unk_C1778, scrpitch, VisTeam
 global loc_31C7C, loc_31C7E, loc_31C91, loc_31CAC, loc_31CAE, loc_31CBE, loc_31CCC, loc_31CE4
 global loc_31CE6, loc_31DB7, loc_31DE2, loc_31DE4, loc_31E07, loc_31E30, loc_31E85, loc_31EAE
 global loc_31F40, loc_31F7C, loc_31F7D, loc_320A1, loc_320CF, loc_320D7, loc_3211D, loc_3211F
@@ -943,7 +943,7 @@ call strcpy_	; 3274B
 mov eax, dword [cont2team]	; 32750
 sar eax, 10h	; 32755
 mov dword [byte ebx+051h], eax	; 32758
-mov eax, dword [dword_C90CA]	; 3275B
+mov eax, dword [HomeTeam]	; 3275B
 sar eax, 10h	; 32760
 mov dword [byte ebx+055h], eax	; 32763
 mov eax, dword [gameopts]	; 32766
@@ -985,9 +985,9 @@ call strcpy_	; 327D5
 mov edx, dword [ebx]	; 327DA
 mov dword [dword_C53FB], edx	; 327DC
 mov dx, word [byte ebx+051h]	; 327E2
-mov word [dword_C90CA], dx	; 327E6
+mov word [HomeTeam], dx	; 327E6
 mov dx, word [byte ebx+055h]	; 327ED
-mov word [word_C90CC], dx	; 327F1
+mov word [VisTeam], dx	; 327F1
 mov edx, dword [byte ebx+059h]	; 327F8
 mov dword [gameopts], edx	; 327FB
 mov edx, dword [byte ebx+05Dh]	; 32801
@@ -1183,7 +1183,7 @@ mov eax, asc_CDB7C	; 32AC7
 call strncpy_	; 32ACC
 mov byte [byte_CDB7E], 20h	; 32AD1
 loc_32AD8:
-mov edx, dword [dword_C90CA]	; 32AD8
+mov edx, dword [HomeTeam]	; 32AD8
 sar edx, 10h	; 32ADE
 mov edx, dword [nosplit edx*4+off_C5439]	; 32AE1
 cmp byte [byte edx+02h], 0	; 32AE8
@@ -1246,7 +1246,7 @@ mov dword [byte ebp+00h], eax	; 32BA2
 mov eax, dword [cont2team]	; 32BA5
 sar eax, 10h	; 32BAA
 mov dword [byte ebp+051h], eax	; 32BAD
-mov eax, dword [dword_C90CA]	; 32BB0
+mov eax, dword [HomeTeam]	; 32BB0
 sar eax, 10h	; 32BB5
 mov dword [byte ebp+055h], eax	; 32BB8
 mov eax, dword [gameopts]	; 32BBB

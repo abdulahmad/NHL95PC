@@ -5,7 +5,7 @@ section s_1167B progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, asc_C0202, asc_C811A, asc_C8136, byte_C4D1C, byte_C4D1D, byte_C524D
 extern byte_C5400, byte_C8451, sflags, musicon, byte_D9299, byte_D9558, byte_ED7CC, joysampling
 extern dword_C4E10, dword_C4E14, dword_C5130, dword_C53F7, dword_C53FB, dword_C5704, dword_C5708, dword_C570C
-extern dword_C5840, dword_C7444, dword_C7448, cont2team, dword_C90CA, dword_CBECA, dword_CC080, dword_CC0F0
+extern dword_C5840, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
 extern penshotlive, dword_D2C6B, dword_D302C, dword_D3030, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, dword_DD6A8, dword_DD6AE
 extern dword_DD6B0, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, dword_E9A9E, j_unlink_
@@ -306,7 +306,7 @@ loc_11A81:
 mov word [word_CBEC4], 1	; 11A81
 xor eax, eax	; 11A8A
 mov dword [dword_C4E14], eax	; 11A8C
-mov eax, dword [dword_C90CA]	; 11A91
+mov eax, dword [HomeTeam]	; 11A91
 sar eax, 10h	; 11A96
 mov edx, dword [nosplit eax*4+off_C5439]	; 11A99
 mov eax, dword [cont2team]	; 11AA0
@@ -314,7 +314,7 @@ sar eax, 10h	; 11AA5
 mov eax, dword [nosplit eax*4+off_C5439]	; 11AA8
 call sub_59D71	; 11AAF
 mov ebx, dword [dword_D8C84]	; 11AB4
-mov edx, dword [dword_C90CA]	; 11ABA
+mov edx, dword [HomeTeam]	; 11ABA
 sar edx, 10h	; 11AC0
 mov eax, dword [cont2team]	; 11AC3
 sar eax, 10h	; 11AC8
@@ -404,7 +404,7 @@ je near loc_11CFC	; 11C1B
 cmp word [gameover], byte 0	; 11C21
 jne short loc_11C7C	; 11C29
 call SelectScreenBM	; 11C2B
-mov edx, dword [dword_C90CA]	; 11C30
+mov edx, dword [HomeTeam]	; 11C30
 sar edx, 10h	; 11C36
 mov edx, dword [nosplit edx*4+off_C5439]	; 11C39
 mov eax, dword [cont2team]	; 11C40
@@ -412,7 +412,7 @@ sar eax, 10h	; 11C45
 mov eax, dword [nosplit eax*4+off_C5439]	; 11C48
 call sub_59D71	; 11C4F
 mov ebx, dword [dword_D8C84]	; 11C54
-mov edx, dword [dword_C90CA]	; 11C5A
+mov edx, dword [HomeTeam]	; 11C5A
 sar edx, 10h	; 11C60
 mov eax, dword [cont2team]	; 11C63
 sar eax, 10h	; 11C68
@@ -471,7 +471,7 @@ cmp dword [eax], byte 0	; 11D1E
 jge near loc_11DB8	; 11D21
 call sub_7DC8B	; 11D27
 call sub_13A91	; 11D2C
-mov edx, dword [dword_C90CA]	; 11D31
+mov edx, dword [HomeTeam]	; 11D31
 sar edx, 10h	; 11D37
 mov eax, dword [cont2team]	; 11D3A
 sar eax, 10h	; 11D3F
@@ -481,7 +481,7 @@ call sub_47C31	; 11D4C
 mov edx, 0C8h	; 11D51
 mov eax, 140h	; 11D56
 call sub_10E9F	; 11D5B
-cmp word [dword_C90CA], byte 1Ah	; 11D60
+cmp word [HomeTeam], byte 1Ah	; 11D60
 jl short loc_11D71	; 11D68
 mov eax, 0Ch	; 11D6A
 jmp short loc_11D79	; 11D6F
@@ -555,7 +555,7 @@ mov word [word_CBEC4], 1	; 11E73
 xor eax, eax	; 11E7C
 mov dword [dword_C4E14], eax	; 11E7E
 mov ebx, dword [dword_D8C84]	; 11E83
-mov edx, dword [dword_C90CA]	; 11E89
+mov edx, dword [HomeTeam]	; 11E89
 sar edx, 10h	; 11E8F
 mov eax, dword [cont2team]	; 11E92
 sar eax, 10h	; 11E97
@@ -609,7 +609,7 @@ add esp, byte 4	; 11F49
 cmp esi, eax	; 11F4C
 jl short loc_11F26	; 11F4E
 loc_11F50:
-mov edx, dword [dword_C90CA]	; 11F50
+mov edx, dword [HomeTeam]	; 11F50
 sar edx, 10h	; 11F56
 mov edx, dword [nosplit edx*4+off_C5439]	; 11F59
 mov eax, dword [cont2team]	; 11F60

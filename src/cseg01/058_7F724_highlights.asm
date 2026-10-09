@@ -6,7 +6,7 @@ extern __CHK, _dos_getdiskfree_, asc_C342E, asc_C3436, asc_C3449, asc_C3450, asc
 extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, byte_C8451, sflags, musicon
 extern byte_DB3AD, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
 extern byte_E03E3, byte_E03E4, dword_C5704, dword_C5708, dword_C570C, songdata, dword_C7444, dword_C7448
-extern cont2team, dword_C90CA, musichandle, dword_D42A8, dword_D8C68, dword_D8C80, dword_D8C84, musicslot
+extern cont2team, HomeTeam, musichandle, dword_D42A8, dword_D8C68, dword_D8C80, dword_D8C84, musicslot
 extern dword_DC230, dword_DC2F0, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
 extern dword_ED6F8, dword_ED700, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, off_C54A9
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, sub_10E9F
@@ -16,7 +16,7 @@ extern sub_673C5, sub_6B3D7, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CC
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
 extern sub_93000, sub_B2CD8, sub_B2DCA, sub_B4FAC, sub_B5DB0, unk_7E05F, unk_C3444, unk_C3447
 extern unk_C344D, unk_C3468, unk_C346B, unk_C3470, unk_C8113, unk_D1F4B, unk_DBC30, unk_DBC35
-extern unk_DBF1D, unk_DF314, unknown_libname_1, unknown_libname_2, word_C90CC, word_E0410
+extern unk_DBF1D, unk_DF314, unknown_libname_1, unknown_libname_2, VisTeam, word_E0410
 global loc_7F7B3, loc_7F829, loc_7FA3F, loc_7FA7C, loc_7FAEC, loc_7FB92, loc_7FBB5, loc_7FBEE
 global loc_7FC08, loc_7FC0A, loc_7FC4F, loc_7FC56, loc_7FC81, loc_7FC95, loc_7FD76, loc_7FD99
 global loc_7FD9D, loc_7FDBE, loc_7FDD0, loc_7FEDC, loc_7FEEB, loc_7FEFA, loc_7FF08, loc_7FF97
@@ -315,9 +315,9 @@ mov al, byte [byte_DC268]	; 7FA7C
 mov byte [byte_E03C4], al	; 7FA81
 mov al, byte [byte_DC267]	; 7FA86
 mov byte [byte_E03C5], al	; 7FA8B
-mov al, byte [dword_C90CA]	; 7FA90
+mov al, byte [HomeTeam]	; 7FA90
 mov byte [byte_E03C6], al	; 7FA95
-mov al, byte [word_C90CC]	; 7FA9A
+mov al, byte [VisTeam]	; 7FA9A
 mov byte [byte_E03E3], al	; 7FA9F
 mov eax, dword [dword_D8C84]	; 7FAA4
 mov dword [dword_E0400], eax	; 7FAA9
@@ -842,10 +842,10 @@ mov al, byte [byte_E03C5]	; 8013C
 mov byte [byte_DC267], al	; 80141
 xor eax, eax	; 80146
 mov al, byte [byte_E03C6]	; 80148
-mov word [dword_C90CA], ax	; 8014D
+mov word [HomeTeam], ax	; 8014D
 xor eax, eax	; 80153
 mov al, byte [byte_E03E3]	; 80155
-mov word [word_C90CC], ax	; 8015A
+mov word [VisTeam], ax	; 8015A
 mov eax, dword [dword_E0400]	; 80160
 mov dword [dword_D8C84], eax	; 80165
 mov eax, dword [dword_E0404]	; 8016A
@@ -912,7 +912,7 @@ xor edi, edi	; 80252
 mov dword [songdata], edi	; 80254
 loc_8025A:
 call sub_479E9	; 8025A
-mov edx, dword [dword_C90CA]	; 8025F
+mov edx, dword [HomeTeam]	; 8025F
 sar edx, 10h	; 80265
 mov eax, dword [cont2team]	; 80268
 sar eax, 10h	; 8026D
@@ -924,7 +924,7 @@ call sub_47C31	; 80284
 mov edx, 0C8h	; 80289
 mov eax, 140h	; 8028E
 call sub_10E9F	; 80293
-cmp word [dword_C90CA], byte 1Ah	; 80298
+cmp word [HomeTeam], byte 1Ah	; 80298
 jl short loc_802A9	; 802A0
 mov eax, 0Ch	; 802A2
 jmp short loc_802B1	; 802A7

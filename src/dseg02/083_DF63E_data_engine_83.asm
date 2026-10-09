@@ -6,9 +6,9 @@ global byte_DF64D, hmtmflags, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, by
 global dword_DF642, dword_DF646, dword_DF648, dword_DF652, dword_DF690, dword_DF6C2, dword_DF6EA, hmtmlines
 global dword_DF6F2, dword_DF6F6, dword_DF6FA, dword_DF6FE, hmtmroster, hmtmptrF2, hmtmsort, dword_DF712
 global awtmstruct, dword_DF716, dword_DF71C, dword_DF71E, dword_DF720, dword_DF738, dword_DF73A
-global dword_DF73C, dword_DF748, dword_DF752, hmtmline, hmtmlcnt, word_DF644, hmtmap, word_DF64C
+global dword_DF73C, dword_DF748, dword_DF752, hmtmline, hmtmlcnt, word_DF644, hmtmap, hmtmgoalie
 global word_DF656, word_DF65A, hmtmpdst, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
-global word_DF744, word_DF746, awtmap, word_DF74C, word_DF756
+global word_DF744, word_DF746, awtmap, awtmgoalie, word_DF756
 hmtmline:
 resb 2
 hmtmlcnt:
@@ -23,7 +23,7 @@ dword_DF648:
 resb 2
 hmtmap:
 resb 2
-word_DF64C:
+hmtmgoalie:
 resb 1
 byte_DF64D:
 resb 5
@@ -106,7 +106,7 @@ dword_DF748:
 resb 2
 awtmap:
 resb 2
-word_DF74C:
+awtmgoalie:
 resb 6
 dword_DF752:
 resb 4

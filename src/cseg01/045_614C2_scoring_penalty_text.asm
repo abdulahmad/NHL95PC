@@ -11,7 +11,7 @@ extern hmroster, byte_DB3AD, hmtmflags, byte_DF6E8, awtmflags, byte_DF7E8, byte_
 extern byte_E024D, byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E9A15, PenBuf
 extern PenBuf_pl, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD, byte_E9ACE
 extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, joysampling, dword_C53FB, gameopts
-extern dword_C5840, dword_C90B0, dword_C90C0, dword_C90CA, dword_C9120, dword_CBEBE, dword_CBECA, dword_CC0AC
+extern dword_C5840, dword_C90B0, sflags3, HomeTeam, dword_C9120, dword_CBEBE, dword_CBECA, dword_CC0AC
 extern lastsfx, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC110, dword_CC114, penshotmode
 extern penshotstart, penshottimer, dword_CC124, penshotlive, dword_CD2F8, dword_CD34C, dword_CD350, dword_D8B70
 extern dword_D8C84, dword_DB086, dword_DB088, dword_DC230, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
@@ -26,10 +26,10 @@ extern sub_18F74, sub_1CD73, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, r
 extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, sub_B2CD8, unk_C1B49, unk_C1C58, unk_C1C5B
 extern unk_C1C5E, unk_C1C61, unk_C1C64, unk_C1C67, unk_C1CB0, unk_C5423, unk_C542E, unk_DBC30
 extern SortCords, unk_E9B4C, word_C5428, word_C90B2, word_C90B4, c1playernum, c2playernum
-extern cont1team, word_C90CC, Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, word_C90D8
+extern cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, word_C90D8
 extern gsp, gameclock, clockticks, word_CBC44, word_CBEC0, word_CBEC6, word_CBEC8, word_CBECC
 extern word_CC0B0, crowdlevel, word_CCEF8, word_CD39C, word_DEE94, hmscore, word_DF644, hmtmap
-extern word_DF64C, awscore, awtmap, word_DFF42, regd2, regd3, regd1
+extern hmtmgoalie, awscore, awtmap, word_DFF42, regd2, regd3, regd1
 extern joysampling_save, CwdExciteLvl, periodendtime, word_E9AAE, PerTimeTotal, word_E9AC4, word_E9B2C
 global AddPenalty, AddPenalty2, Stop4Pen
 global sfxslots_popx
@@ -1271,7 +1271,7 @@ mov al, byte [byte esp+018h]	; 6238D
 mov byte [byte_E9AD0], al	; 62391
 mov eax, dword [esp]	; 62396
 shl eax, 8	; 62399
-mov dx, word [dword eax+word_DF64C]	; 6239C
+mov dx, word [dword eax+hmtmgoalie]	; 6239C
 xor dh, dh	; 623A3
 and dl, 1	; 623A5
 movsx edx, dx	; 623A8
@@ -1282,7 +1282,7 @@ cmp dword [esp], byte 0	; 623BA
 sete al	; 623BE
 and eax, 0FFh	; 623C1
 shl eax, 8	; 623C6
-mov ax, word [dword eax+word_DF64C]	; 623C9
+mov ax, word [dword eax+hmtmgoalie]	; 623C9
 xor ah, ah	; 623D0
 and al, 1	; 623D2
 movsx edx, ax	; 623D4
@@ -1454,20 +1454,20 @@ mov word [crowdlevel], 190h	; 62607
 .7:
 cmp dword [byte esp+04h], byte 0	; 62610
 je short .8	; 62615
-mov ax, word [word_C90CC]	; 62617
+mov ax, word [VisTeam]	; 62617
 jmp short .9	; 6261D
 .8:
-mov ax, word [dword_C90CA]	; 6261F
+mov ax, word [HomeTeam]	; 6261F
 .9:
 movsx esi, ax	; 62625
 cmp ebx, byte 11h	; 62628
 jne short .12	; 6262B
 cmp dword [dword_CC104], byte 0	; 6262D
 je short .10	; 62634
-mov ax, word [word_C90CC]	; 62636
+mov ax, word [VisTeam]	; 62636
 jmp short .11	; 6263C
 .10:
-mov ax, word [dword_C90CA]	; 6263E
+mov ax, word [HomeTeam]	; 6263E
 .11:
 movsx esi, ax	; 62644
 mov edx, dword [dword_CC104]	; 62647
@@ -3136,9 +3136,9 @@ updatepentime:
 push dword 8	; 63B85
 call __CHK	; 63B8A
 push edx	; 63B8F
-mov ah, byte [dword_C90C0]	; 63B90
+mov ah, byte [sflags3]	; 63B90
 and ah, 0BFh	; 63B96
-mov byte [dword_C90C0], ah	; 63B99
+mov byte [sflags3], ah	; 63B99
 test byte [gmode], 1	; 63B9F
 jne short .x	; 63BA6
 cmp dword [penshotlive], byte 0	; 63BA8
@@ -3150,7 +3150,7 @@ test dx, dx	; 63BC0
 jge short .x	; 63BC3
 mov dh, ah	; 63BC5
 or dh, 40h	; 63BC7
-mov byte [dword_C90C0], dh	; 63BCA
+mov byte [sflags3], dh	; 63BCA
 add word [Penaltytimer], byte 18h	; 63BD0
 call chkatop	; 63BD8
 call ChkPowerPlayTime	; 63BDD
@@ -3502,7 +3502,7 @@ sar edx, 10h	; 64055
 inc eax	; 64058
 cmp edx, eax	; 64059
 jne short .1	; 6405B
-mov edx, dword [dword_C90C0]	; 6405D
+mov edx, dword [sflags3]	; 6405D
 sar edx, 10h	; 64063
 cmp edx, byte 0FFFFFFFFh	; 64066
 je short .1	; 64069

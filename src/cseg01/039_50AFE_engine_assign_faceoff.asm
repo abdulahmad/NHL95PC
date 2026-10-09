@@ -6,7 +6,7 @@ extern Endfaceoff, Findhittype, ResetBench, SetSPA, Setplass, StartFaceoffLineCh
 extern a2touchpuck, assexit, assinsert, assreplace, sflags, gmode2, byte_CBEA8, byte_CCBBA
 extern byte_CCBBB, hmroster, hmtmflags, awtmflags, byte_E0250, byte_E028C, puckcross
 extern byte_E02C8, byte_E0308, byte_E0344, byte_E0393, byte_E0397, iflags, checkwindow, doshot
-extern joysampling, gameopts, dword_C90B0, dword_C90C0, cont2team, dword_CBECA, dword_CC0EC, dword_CC0F0
+extern joysampling, gameopts, dword_C90B0, sflags3, cont2team, dword_CBECA, dword_CC0EC, dword_CC0F0
 extern onetimerflag, dword_CC0FA, penshotplayer, dword_CC104, penshotmode, penshotstart, hmtmstruct, awtmstruct
 extern dword_E0244, dword_E9A9E, forcepldata, puckvx, gmode
 extern jctime, CanBlockShot_ret5, ltx, puckx, pucky, puckvy, puckz, puckc
@@ -1155,7 +1155,7 @@ cmp bx, cx	; 51874
 je short .12	; 51877
 cmp cx, word [c1playernum]	; 51879
 je short .14	; 51880
-mov edx, dword [dword_C90C0]	; 51882
+mov edx, dword [sflags3]	; 51882
 sar edx, 10h	; 51888
 mov eax, dword [byte eax+SCnum-2]	; 5188B
 sar eax, 10h	; 5188E
@@ -1497,7 +1497,7 @@ mov dword [dword_CC0F0], ebp	; 51D99
 xor ecx, ecx	; 51D9F
 mov word [word_CBEC6], cx	; 51DA1
 and byte [sflags], 0FEh	; 51DA8
-and byte [dword_C90C0], 0FEh	; 51DAF
+and byte [sflags3], 0FEh	; 51DAF
 xor dl, dl	; 51DB6
 mov byte [iflags], dl	; 51DB8
 xor edi, edi	; 51DBE
@@ -1615,7 +1615,7 @@ call checkwindow	; 51FBA
 cmp dword [penshotmode], byte 0	; 51FBF
 je near .25	; 51FC6
 call SprSort	; 51FCC
-mov eax, dword [dword_C90C0]	; 51FD1
+mov eax, dword [sflags3]	; 51FD1
 sar eax, 10h	; 51FD6
 mov ebx, dword [penshotplayer]	; 51FD9
 cmp eax, ebx	; 51FDF
@@ -1684,7 +1684,7 @@ sar edx, 10h	; 520B7
 inc eax	; 520BA
 cmp edx, eax	; 520BB
 jne short .23	; 520BD
-mov edx, dword [dword_C90C0]	; 520BF
+mov edx, dword [sflags3]	; 520BF
 sar edx, 10h	; 520C5
 cmp edx, byte 0FFFFFFFFh	; 520C8
 je short .24	; 520CB
@@ -1714,7 +1714,7 @@ call StopDigiSample	; 5211A
 and byte [gmode2], 0FAh	; 5211F
 and byte [gmode], 0FEh	; 52126
 and byte [byte esi+pflags2], 0FEh	; 5212D
-or byte [dword_C90C0], 10h	; 52131
+or byte [sflags3], 10h	; 52131
 and byte [byte esi+pflags], 0FBh	; 52138
 mov edx, 18h	; 5213C
 mov eax, esi	; 52141

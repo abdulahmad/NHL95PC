@@ -13,8 +13,7 @@ global dword_E0244, dword_E0248, dword_E038E, recbpr, replayplay, dword_E03A8
 global dword_E03AE, dword_E03B6, dword_E03B9, dword_E03BD, SortCords
 global unk_DFD9C, unk_DFF5E, regd4, word_DF80E, puckcross
 global word_DF816, word_DF81A
-global word_DFF1E, word_DFF28, word_DFF2A
-global word_DFF42, word_DFF44, word_DFF5A
+global word_DFF42, word_DFF5A
 global word_DFFC2, word_E0022, word_E0028, word_E002A, word_E002E
 global word_E0036, word_E0042, word_E0046, word_E0048, word_E004A, word_E024E, lcrequest
 global word_E0306, lcreqchoice, word_E0382, word_E0390, word_E0392, word_E0394, word_E0396, word_E0398
@@ -84,15 +83,12 @@ resb 2
 resb 242
 puckstruct:
 resb 2
-word_DFF1E:
 resb 2
 resb 2
 resb 2
 resb 2
 resb 2
-word_DFF28:
 resb 2
-word_DFF2A:
 resb 2
 resb 2
 resb 8
@@ -101,7 +97,6 @@ byte_DFF3A:
 resb 8
 word_DFF42:
 resb 2
-word_DFF44:
 resb 22
 word_DFF5A:
 resb 4

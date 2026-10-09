@@ -8,7 +8,7 @@ extern asc_C324C, asc_C3253, asc_C325B, asc_C3267, asc_C326D, asc_C3277, asc_C32
 extern asc_C32A4, asc_C32AA, asc_C32AF, asc_C32B5, asc_C814F, byte_D11BC, byte_D1238, byte_D12DE
 extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, byte_DB3AD, byte_DD710, byte_DD750
 extern byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED83C, byte_ED86D, byte_ED9E7, dword_C65B0
-extern dword_C65B8, cont2team, dword_C90CA, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
+extern dword_C65B8, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
 extern dword_D0B2A, dword_D1338, dword_D133C, dword_D1478, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
 extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, exit_, j___close_, jctime, lseek_
 extern off_C57CC, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
@@ -17,7 +17,7 @@ extern sub_6B5E4, sub_76429, sub_76771, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9
 extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, sub_B2CD8, sub_B30B4, sub_B3A18
 extern sub_B4B58, sub_B4DD4, sub_B4FAC, sub_B5DB0, unk_7673A, unk_76742, unk_76748, unk_7674F
 extern unk_76756, unk_C3283, unk_C3285, unk_C3292, unk_C3295, unk_C3298, unk_C329B, unk_C329E
-extern unk_C32A1, unk_CF48F, unk_DBC30, unk_DBCEC, unk_DBD1C, word_C90CC, write_
+extern unk_C32A1, unk_CF48F, unk_DBC30, unk_DBCEC, unk_DBD1C, VisTeam, write_
 global jpt_78346, loc_7838A, loc_78390, loc_783B7, loc_78403, loc_78460, loc_78470, loc_78477
 global loc_7847E, loc_78483, loc_784F8, loc_7857C, loc_7857E, loc_785A0, loc_785C6, loc_785C8
 global loc_785F4, loc_785FA, loc_78614, loc_786C3, loc_786C5, loc_786F1, loc_786F7, loc_78AB7
@@ -62,10 +62,10 @@ mov ebp, edx	; 78378
 mov byte [byte esp+024h], bl	; 7837A
 test bl, bl	; 7837E
 je short loc_7838A	; 78380
-mov ax, word [word_C90CC]	; 78382
+mov ax, word [VisTeam]	; 78382
 jmp short loc_78390	; 78388
 loc_7838A:
-mov ax, word [dword_C90CA]	; 7838A
+mov ax, word [HomeTeam]	; 7838A
 loc_78390:
 cwde	; 78390
 mov al, byte [nosplit eax*4+byte_D11BC]	; 78391
@@ -258,10 +258,10 @@ add esp, byte 8	; 785E3
 mov ecx, eax	; 785E6
 test edi, edi	; 785E8
 je short loc_785F4	; 785EA
-mov ax, word [word_C90CC]	; 785EC
+mov ax, word [VisTeam]	; 785EC
 jmp short loc_785FA	; 785F2
 loc_785F4:
-mov ax, word [dword_C90CA]	; 785F4
+mov ax, word [HomeTeam]	; 785F4
 loc_785FA:
 movsx edx, ax	; 785FA
 mov eax, edx	; 785FD
@@ -332,10 +332,10 @@ add esp, byte 8	; 786E0
 mov esi, eax	; 786E3
 test edi, edi	; 786E5
 je short loc_786F1	; 786E7
-mov ax, word [word_C90CC]	; 786E9
+mov ax, word [VisTeam]	; 786E9
 jmp short loc_786F7	; 786EF
 loc_786F1:
-mov ax, word [dword_C90CA]	; 786F1
+mov ax, word [HomeTeam]	; 786F1
 loc_786F7:
 cwde	; 786F7
 mov edi, dword [nosplit eax*4+off_C57CC]	; 786F8
@@ -589,10 +589,10 @@ add esp, byte 8	; 78ACC
 mov ebp, eax	; 78ACF
 test edi, edi	; 78AD1
 je short loc_78ADD	; 78AD3
-mov ax, word [word_C90CC]	; 78AD5
+mov ax, word [VisTeam]	; 78AD5
 jmp short loc_78AE3	; 78ADB
 loc_78ADD:
-mov ax, word [dword_C90CA]	; 78ADD
+mov ax, word [HomeTeam]	; 78ADD
 loc_78AE3:
 movsx edx, ax	; 78AE3
 mov eax, edx	; 78AE6
@@ -1501,7 +1501,7 @@ add esp, byte 4	; 7953C
 loc_7953F:
 cmp byte [dword esp+030Ch], 0	; 7953F
 je short loc_79551	; 79547
-mov edx, dword [dword_C90CA]	; 79549
+mov edx, dword [HomeTeam]	; 79549
 jmp short loc_79557	; 7954F
 loc_79551:
 mov edx, dword [cont2team]	; 79551
@@ -1560,7 +1560,7 @@ je short loc_795F0	; 795E4
 cmp byte [dword esp+030Ch], 0	; 795E6
 je short loc_79618	; 795EE
 loc_795F0:
-mov edx, dword [dword_C90CA]	; 795F0
+mov edx, dword [HomeTeam]	; 795F0
 sar edx, 10h	; 795F6
 mov eax, edx	; 795F9
 shl eax, 2	; 795FB
@@ -1744,7 +1744,7 @@ add esp, byte 4	; 79860
 loc_79863:
 cmp byte [dword esp+030Ch], 0	; 79863
 je short loc_79875	; 7986B
-mov edx, dword [dword_C90CA]	; 7986D
+mov edx, dword [HomeTeam]	; 7986D
 jmp short loc_7987B	; 79873
 loc_79875:
 mov edx, dword [cont2team]	; 79875
@@ -1803,7 +1803,7 @@ je short loc_79914	; 79908
 cmp byte [dword esp+030Ch], 0	; 7990A
 je short loc_7993C	; 79912
 loc_79914:
-mov edx, dword [dword_C90CA]	; 79914
+mov edx, dword [HomeTeam]	; 79914
 sar edx, 10h	; 7991A
 mov eax, edx	; 7991D
 shl eax, 2	; 7991F
@@ -1952,7 +1952,7 @@ mov dword [dword_DC734], edx	; 79AF2
 mov dword [dword_C65B8], sub_244E2	; 79AF8
 test bl, bl	; 79B02
 je short loc_79B0D	; 79B04
-mov eax, dword [dword_C90CA]	; 79B06
+mov eax, dword [HomeTeam]	; 79B06
 jmp short loc_79B12	; 79B0B
 loc_79B0D:
 mov eax, dword [cont2team]	; 79B0D
@@ -2001,7 +2001,7 @@ mov eax, 1	; 79BAC
 call sub_76429	; 79BB1
 cmp byte [dword esp+0320h], 0	; 79BB6
 je short loc_79BC7	; 79BBE
-mov eax, dword [dword_C90CA]	; 79BC0
+mov eax, dword [HomeTeam]	; 79BC0
 jmp short loc_79BCC	; 79BC5
 loc_79BC7:
 mov eax, dword [cont2team]	; 79BC7

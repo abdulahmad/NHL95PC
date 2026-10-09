@@ -13,7 +13,7 @@ extern asc_C16E0, asc_C16E8, asc_C16F5, asc_C16FA, asc_C1703, asc_C1709, asc_C70
 extern asc_C811A, asc_C814A, byte_C5400, byte_C8451, byte_C8922, musicon, byte_D42C3, hmroster
 extern byte_DD710, byte_DD750, byte_DD774, byte_DD775, byte_DD788, byte_DD789, byte_ED7ED, byte_ED824
 extern byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED8CE, byte_ED9AC, byte_ED9B0, byte_ED9E6
-extern dword_C53F7, gameopts, dword_C541F, songdata, cont2team, dword_C90CA, dword_CCC94, musicslot
+extern dword_C53F7, gameopts, dword_C541F, songdata, cont2team, HomeTeam, dword_CCC94, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_DBC7C, dword_DC234, dword_DD66C, dword_DD670, dword_DD730
 extern dword_DF612, hmtmstruct, dword_DF616, dword_DF61A, dword_DF61C, dword_DF61E, dword_DF620
 extern dword_DF626, dword_DF62A, dword_DF636, dword_DF638, dword_DF63A, fputchar, jctime, memcpy_
@@ -25,7 +25,7 @@ extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_913B4, sub_913D0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, SetDrawBitmap, sub_B4F8C, unk_2D33E, unk_C160E, unk_C161D, unk_C164B
-extern unk_C1679, unk_C167C, unk_C16D7, unk_DABF0, unk_DBC30, unk_DC200, word_DF618, hmscore
+extern unk_C1679, unk_C167C, unk_C16D7, awlinetab, unk_DBC30, hmlinetab, word_DF618, hmscore
 global jpt_2D346, loc_2D3D4, loc_2D401, loc_2D40F, loc_2D411, loc_2D4B5, loc_2D509, loc_2D50B
 global loc_2D551, loc_2D553, loc_2D675, loc_2D677, loc_2D6EF, loc_2D6F1, loc_2D781, loc_2D79B
 global loc_2D7BC, loc_2D7BE, loc_2D83E, loc_2D85B, loc_2D85D, loc_2D8AE, loc_2D90F, loc_2D986
@@ -226,7 +226,7 @@ mov eax, dword [dword_DD66C]	; 2D5D1
 mov eax, dword [byte eax+02Ch]	; 2D5D6
 mov dx, word [byte esi+0Ah]	; 2D5D9
 mov word [byte eax+0Ah], dx	; 2D5DD
-mov eax, dword [dword_C90CA]	; 2D5E1
+mov eax, dword [HomeTeam]	; 2D5E1
 sar eax, 10h	; 2D5E6
 mov ecx, dword [nosplit eax*4+off_C57CC]	; 2D5E9
 push ecx	; 2D5F0
@@ -596,8 +596,8 @@ call PlayDigiSample	; 2DBDB
 loc_2DBE0:
 call sub_6B3D7	; 2DBE0
 call joyq_flush	; 2DBE5
-mov dword [dword esp+0750h], unk_DC200	; 2DBEA
-mov dword [dword esp+0754h], unk_DABF0	; 2DBF5
+mov dword [dword esp+0750h], hmlinetab	; 2DBEA
+mov dword [dword esp+0754h], awlinetab	; 2DBF5
 mov bl, byte [esp]	; 2DC00
 test bl, 24h	; 2DC03
 jne near loc_2DCAD	; 2DC06
@@ -2386,7 +2386,7 @@ sub esp, 374h	; 2F600
 mov eax, dword [cont2team]	; 2F606
 sar eax, 10h	; 2F60B
 mov dword [byte ebp-020h], eax	; 2F60E
-mov eax, dword [dword_C90CA]	; 2F611
+mov eax, dword [HomeTeam]	; 2F611
 sar eax, 10h	; 2F616
 mov dword [byte ebp-01Ch], eax	; 2F619
 call sub_6B3D7	; 2F61C

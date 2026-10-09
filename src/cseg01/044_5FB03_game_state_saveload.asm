@@ -7,7 +7,7 @@ extern byte_C4D1D, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, b
 extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, PenBuf, iflags, byte_E9AC8
 extern byte_E9AD3, OOlist, collflag, dword_C530D, dword_C5382, dword_C53FB, dword_C5403, dword_C5407
 extern dword_C540B, dword_C540F, dword_C5413, dword_C5704, dword_C5708, dword_C570C, dword_C5840, dword_C66D0
-extern dword_C66D4, dword_C90B0, dword_C90C0, cont2team, dword_C90CA, dword_CBC3E, dword_CBECA, dword_CC0AC
+extern dword_C66D4, dword_C90B0, sflags3, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0AC
 extern lastsfx, dword_CC0E0, onetimerflag, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 extern dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
 extern dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, crowdsmooth, dword_D8C6C
@@ -17,11 +17,11 @@ extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, dword_DF7FA, dword_DF7FE
 extern awtmsort, dword_E009C, dword_E0248, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
 extern ltx, replaystart, off_CC01D, passspeed, sub_13A91, sub_145A2, sub_145F9, sub_1BBCC
 extern sub_3271B, sub_327A1, GetPeriodTime, SprSort, sub_61E99, sub_673C5, ReplayRecordReset, sub_7DC8B
-extern sub_B2CD8, MouseSetPos, threat, unk_C5298, unk_C5423, unk_C542E, unk_DABF0, unk_DAC40
-extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, unk_DC200, unk_DC240
+extern sub_B2CD8, MouseSetPos, threat, unk_C5298, unk_C5423, unk_C542E, awlinetab, unk_DAC40
+extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, hmlinetab, unk_DC240
 extern unk_DC252, unk_DF314, SortCords, word_C571C, word_C575C, camx, camy
 extern lastplayer, passdir, word_C90A6, passplayer, xc1, yc1, word_C90B2, word_C90B4
-extern fodir1, fodir2, c1playernum, c2playernum, cont1team, word_C90CC, Pencntdwn, Penaltytimer
+extern fodir1, fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
 extern exitgame, gameover, word_CBC52, word_CBC54, lcblink, word_CBC58, lcblinktime
 extern lcsel, word_CBC60, lcline, word_CBC64, lctimer, word_CBC68, lcboxon, word_CBC6C
@@ -99,7 +99,7 @@ cmp ebp, byte 2	; 5FBA6
 jl short loc_5FB77	; 5FBA9
 mov ecx, 30h	; 5FBAB
 mov ebx, 0FFFFFFFFh	; 5FBB0
-mov edx, unk_DC200	; 5FBB5
+mov edx, hmlinetab	; 5FBB5
 mov eax, dword [esp]	; 5FBBA
 call sub_145F9	; 5FBBD
 test eax, eax	; 5FBC2
@@ -110,7 +110,7 @@ add esp, byte 4	; 5FBD0
 loc_5FBD3:
 mov ecx, 30h	; 5FBD3
 mov ebx, 0FFFFFFFFh	; 5FBD8
-mov edx, unk_DABF0	; 5FBDD
+mov edx, awlinetab	; 5FBDD
 mov eax, dword [esp]	; 5FBE2
 call sub_145F9	; 5FBE5
 test eax, eax	; 5FBEA
@@ -119,11 +119,11 @@ push asc_CCDEC	; 5FBEE
 call sub_B2CD8	; 5FBF3
 add esp, byte 4	; 5FBF8
 loc_5FBFB:
-mov ax, word [dword_C90CA]	; 5FBFB
+mov ax, word [HomeTeam]	; 5FBFB
 mov word [byte esp+04h], ax	; 5FC01
 lea eax, [byte esp+04h]	; 5FC06
 add eax, byte 2	; 5FC0A
-mov dx, word [word_C90CC]	; 5FC0D
+mov dx, word [VisTeam]	; 5FC0D
 mov word [eax], dx	; 5FC14
 add eax, byte 2	; 5FC17
 mov dx, word [camx]	; 5FC1A
@@ -208,7 +208,7 @@ add eax, byte 2	; 5FD54
 mov dx, word [gmode2]	; 5FD57
 mov word [eax], dx	; 5FD5E
 add eax, byte 2	; 5FD61
-mov dx, word [dword_C90C0]	; 5FD64
+mov dx, word [sflags3]	; 5FD64
 mov word [eax], dx	; 5FD6B
 add eax, byte 2	; 5FD6E
 mov dx, word [c1playernum]	; 5FD71
@@ -859,7 +859,7 @@ cmp edi, byte 2	; 606E8
 jl short loc_606A7	; 606EB
 mov ecx, 30h	; 606ED
 mov ebx, 0FFFFFFFFh	; 606F2
-mov edx, unk_DC200	; 606F7
+mov edx, hmlinetab	; 606F7
 mov eax, ebp	; 606FC
 call sub_145A2	; 606FE
 test eax, eax	; 60703
@@ -870,7 +870,7 @@ add esp, byte 4	; 60711
 loc_60714:
 mov ecx, 30h	; 60714
 mov ebx, 0FFFFFFFFh	; 60719
-mov edx, unk_DABF0	; 6071E
+mov edx, awlinetab	; 6071E
 mov eax, ebp	; 60723
 call sub_145A2	; 60725
 test eax, eax	; 6072A
@@ -891,11 +891,11 @@ call sub_B2CD8	; 60757
 add esp, byte 4	; 6075C
 loc_6075F:
 mov eax, dword [esp]	; 6075F
-mov word [dword_C90CA], ax	; 60762
+mov word [HomeTeam], ax	; 60762
 mov ebx, esp	; 60768
 add ebx, byte 2	; 6076A
 mov ax, word [ebx]	; 6076D
-mov word [word_C90CC], ax	; 60770
+mov word [VisTeam], ax	; 60770
 add ebx, byte 2	; 60776
 mov ax, word [ebx]	; 60779
 mov word [camx], ax	; 6077C
@@ -986,7 +986,7 @@ mov ax, word [ebx]	; 608CD
 mov word [gmode2], ax	; 608D0
 add ebx, byte 2	; 608D6
 mov ax, word [ebx]	; 608D9
-mov word [dword_C90C0], ax	; 608DC
+mov word [sflags3], ax	; 608DC
 add ebx, byte 2	; 608E2
 mov ax, word [ebx]	; 608E5
 mov word [c1playernum], ax	; 608E8
@@ -1636,7 +1636,7 @@ call GetPeriodTime	; 61249
 mov word [PerTimeTotal], ax	; 6124E
 mov eax, 1	; 61254
 call sub_1BBCC	; 61259
-mov edx, dword [dword_C90CA]	; 6125E
+mov edx, dword [HomeTeam]	; 6125E
 sar edx, 10h	; 61264
 mov eax, dword [cont2team]	; 61267
 sar eax, 10h	; 6126C
@@ -1681,7 +1681,7 @@ mov word [word_CBEC4], 1	; 61314
 mov dword [hmtmsort], SortCords	; 6131D
 mov dword [dword_DF6F2], unk_DACA0	; 61327
 mov dword [dword_DF6F6], unk_DAC40	; 61331
-mov dword [hmtmlines], unk_DC200	; 6133B
+mov dword [hmtmlines], hmlinetab	; 6133B
 mov dword [dword_DF6FA], dword_DB088	; 61345
 mov dword [dword_DF6FE], unk_DC240	; 6134F
 mov dword [hmtmroster], hmroster	; 61359
@@ -1689,7 +1689,7 @@ mov dword [hmtmptrF2], unk_DBC30	; 61363
 mov dword [awtmsort], SortCords+300h	; 6136D
 mov dword [dword_DF7F2], unk_DAE94	; 61377
 mov dword [dword_DF7F6], unk_DAC70	; 61381
-mov dword [awtmlines], unk_DABF0	; 6138B
+mov dword [awtmlines], awlinetab	; 6138B
 mov dword [dword_DF7FA], unk_DB218	; 61395
 mov dword [dword_DF7FE], unk_DC252	; 6139F
 mov dword [awtmroster], awroster	; 613A9

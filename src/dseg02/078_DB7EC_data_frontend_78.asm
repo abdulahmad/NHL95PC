@@ -8,7 +8,7 @@ global dword_DC26C, dword_DC28C, dword_DC290, dword_DC2B8, dword_DC2BC, dword_DC
 global dword_DC30C, dword_DC334, dword_DC338, dword_DC33C, dword_DC640, dword_DC6A8, dword_DC6AC, dword_DC6B0
 global dword_DC6B4, dword_DC6B8, dword_DC6BC, dword_DC720, dword_DC734, dword_DC738, dword_DC73C, dword_DC750
 global dword_DC754, dword_DC7B8, unk_DBC30, unk_DBC35, unk_DBCEC, unk_DBD1C, unk_DBF18, unk_DBF1D
-global unk_DBFD4, unk_DC200, unk_DC240, unk_DC252, unk_DC2F4, unk_DC300, unk_DC340, word_DC242
+global unk_DBFD4, hmlinetab, unk_DC240, unk_DC252, unk_DC2F4, unk_DC300, unk_DC340, word_DC242
 global word_DC244, word_DC248, word_DC24E
 awroster:
 resb 5
@@ -32,7 +32,7 @@ unk_DBF1D:
 resb 183
 unk_DBFD4:
 resb 556
-unk_DC200:
+hmlinetab:
 resb 36
 byte_DC224:
 resb 1

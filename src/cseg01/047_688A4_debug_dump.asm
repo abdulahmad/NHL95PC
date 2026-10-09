@@ -8,7 +8,7 @@ extern asc_C2445, asc_C244A, asc_C2451, asc_C246D, asc_C2473, asc_C247E, asc_C24
 extern asc_C24A8, asc_C24B2, asc_C24B6, asc_C24C8, asc_C24E5, asc_C24FB, asc_C24FF, asc_C2515
 extern asc_C2550, asc_C2584, asc_C25CA, asc_C25F5, asc_C2625, asc_C2652, asc_C2670, asc_C2689
 extern asc_C26CF, asc_C26FA, asc_C272A, asc_C2757, byte_C542F, byte_C5430, byte_C5431, byte_C5432
-extern gmode2, dword_C53FB, dword_C90C0, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
+extern gmode2, dword_C53FB, sflags3, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 extern penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C, dword_CD504, dword_D41F0
 extern dword_D8C6C, dword_D8C78, dword_DF612, hmtmstruct, dword_DF616, dword_DF61C, dword_DF61E, dword_DF620
 extern dword_DF638, dword_DF63A, dword_DF63C, dword_DF690, dword_DF6FA, dword_DF712, awtmstruct, hmscore
@@ -17,7 +17,7 @@ extern dword_DF7FA, dword_E9A14, fclose_, fopen_, fprintf_, gmode, puckc, PenBuf
 extern camx_m2, off_CD6E4, off_CD8C4, off_CD984, puckvz, sprintf_, joyq_flush, AllInPlace
 extern sub_935E0, sub_93E38, sub_B39ED, sub_B3A18, threat, unk_C234B, unk_C234D, unk_C2478
 extern unk_C247A, unk_C247C, unk_C2485, unk_C24A0, SortCords, camx, xc1, c1playernum
-extern c2playernum, cont1team, word_C90CC, Penaltytimer, refsignal, gsp, gameclock, word_CBC42
+extern c2playernum, cont1team, VisTeam, Penaltytimer, refsignal, gsp, gameclock, word_CBC42
 extern word_CBC44, exitgame, hmtmap, awtmap
 global loc_688E0, loc_688E5, loc_68B33, loc_68C39, loc_68C3E, loc_68CC1, loc_68D06, loc_68D21
 global loc_68D3A, loc_68D4D, loc_68D53, loc_68D6C, loc_68D7A, loc_68D98, loc_68DCC, loc_68DEB
@@ -198,7 +198,7 @@ push eax	; 68AB5
 mov eax, dword [c1playernum]	; 68AB6
 sar eax, 10h	; 68ABB
 push eax	; 68ABE
-mov eax, dword [dword_C90C0]	; 68ABF
+mov eax, dword [sflags3]	; 68ABF
 sar eax, 10h	; 68AC4
 push eax	; 68AC7
 push asc_C23FD	; 68AC8
@@ -208,7 +208,7 @@ push eax	; 68AD2
 call sprintf_	; 68AD3
 add esp, byte 18h	; 68AD8
 add esi, eax	; 68ADB
-mov eax, dword [word_C90CC]	; 68ADD
+mov eax, dword [VisTeam]	; 68ADD
 sar eax, 10h	; 68AE2
 push eax	; 68AE5
 mov bh, byte [gmode]	; 68AE6
