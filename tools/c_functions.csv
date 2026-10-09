@@ -1,4 +1,5 @@
 function,address,size,segment,c_file,status,notes
+NextPathPoint,4F99B,84,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/NextPathPoint.c,matched,
 SetLCmode,4D9FC,59,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/SetLCmode.c,matched,
 StartFaceoffLineChange,4DA37,68,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StartFaceoffLineChange.c,matched,
 StopIfFree,4A80E,36,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StopIfFree.c,matched,
@@ -13,6 +14,7 @@ joyq_peek,4FD62,44,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/joyq_peek
 AllInPlace,51440,61,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/AllInPlace.c,matched,
 ForceStartLineup,5125F,72,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/ForceStartLineup.c,matched,
 PassCompleted,50AFE,87,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/PassCompleted.c,matched,
+assbenchwait,526ED,51,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/assbenchwait.c,matched,
 Findhittype,579FF,63,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/Findhittype.c,matched,
 Sweepcheck,532A2,27,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/Sweepcheck.c,matched,
 ToFixed,53294,14,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ToFixed.c,matched,

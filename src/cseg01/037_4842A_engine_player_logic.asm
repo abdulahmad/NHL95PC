@@ -9428,6 +9428,10 @@ rtss:
 push dword 4	; 4F990
 call __CHK	; 4F995
 ret	; 4F99A
+; C: src/c/037_4842A_engine_player_logic/NextPathPoint.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/NextPathPoint.inc"
+%else
 NextPathPoint:
 push dword 8	; 4F99B
 call __CHK	; 4F9A0
@@ -9451,6 +9455,7 @@ mov dword [sopathend], eax	; 4F9E2
 inc dword [sopathpoint]	; 4F9E7
 pop edx	; 4F9ED
 ret	; 4F9EE
+%endif ; C
 StartShotPath:
 push dword 0Ch	; 4F9EF
 call __CHK	; 4F9F4

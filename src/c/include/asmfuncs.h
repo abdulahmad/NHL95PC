@@ -787,7 +787,6 @@ extern void assrefgoalpa(); /* 4ED7C */
 extern void assrefdrop(); /* 4F5BF */
 extern void assrefgoalline(); /* 4F7D0 */
 extern void rtss(); /* 4F990 */
-extern void NextPathPoint(); /* 4F99B */
 extern void StartShotPath(); /* 4F9EF */
 extern void asspenshooter(); /* 4FAE8 */
 extern void joyq_pop(); /* 4FCE8 */
@@ -818,9 +817,7 @@ extern void PenShotAssign(); /* 512A7 */
 extern void assleavebox(); /* 5147D */
 extern void puckfaceoff(); /* 516E1 */
 extern void puckfaceoff2(); /* 51BDB */
-extern void assbenchwait(); /* 526ED */
 extern void asstakeposition(); /* 52720 */
-extern void check4bench(); /* 52BB6 */
 extern void asspsclear(); /* 52DB0 */
 extern void assrefpenshot(); /* 52FB0 */
 extern void burst(); /* 532BD */

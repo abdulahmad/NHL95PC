@@ -2115,6 +2115,10 @@ jmp near TakePlayerFromBox_ret6	; 526DC
 mov eax, esi	; 526E1
 call Endfaceoff	; 526E3
 jmp near TakePlayerFromBox_ret6	; 526E8
+; C: src/c/039_50AFE_engine_assign_faceoff/assbenchwait.c
+%ifdef CBUILD
+%include "c/039_50AFE_engine_assign_faceoff/assbenchwait.inc"
+%else
 assbenchwait:
 push dword 8	; 526ED
 call __CHK	; 526F2
@@ -2132,6 +2136,7 @@ mov word [byte edx+02Eh], 0	; 52718
 .x:
 pop edx	; 5271E
 ret	; 5271F
+%endif ; C
 asstakeposition:
 push dword 18h	; 52720
 call __CHK	; 52725
