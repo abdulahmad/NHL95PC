@@ -10,7 +10,7 @@ extern dword_C898E, calendarshapes, musichandle, dword_D2C6B, fontcolor, dword_D
 extern dword_DD780, dword_DD794, dword_DD7A0, dword_DDD28, dword_DDD2C, dword_DDD30, dword_EA0DC, fputchar
 extern jctime, crestnames, off_C85F6, off_C8616, sprintf_, MakePath, FileOpenRead, leaguedbnames
 extern FileClose, FileReadAt, ReadSchedGame, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
-extern CalTeamStatsScreen, CalSkaterStatsScreen, CalGoalieStatsScreen, CalStandingsScreen, CalStandingsMenu, sub_30A0C, sub_479E9, FadeOutPalCycle
+extern CalTeamStatsScreen, CalSkaterStatsScreen, CalGoalieStatsScreen, CalStandingsScreen, CalStandingsMenu, SetDialogColors, sub_479E9, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
 extern sub_7DB67, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
 extern sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_91370, sub_913D0
@@ -756,7 +756,7 @@ mov ecx, 0C0h	; 34947
 mov ebx, 67h	; 3494C
 mov edx, ecx	; 34951
 mov eax, 0Ch	; 34953
-call sub_30A0C	; 34958
+call SetDialogColors	; 34958
 xor edx, edx	; 3495D
 mov word [dword esp+07B8h], dx	; 3495F
 mov dword [dword_DD780], 0FFFFFFFFh	; 34967

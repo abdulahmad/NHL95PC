@@ -42,16 +42,16 @@ global standingsmenucb, hlplayedmask, dword_C66A4, dword_C66AC, dword_C66B0, scr
 global dword_C66D4, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD, statsplayoffs, statsfromleague, statspalvalid
 global westconfteams, eastconfteams, dword_C6D26, dword_C6DBA, dword_C6E20, treerowy, divx, divy
 global fdlgshapes, fdlgrects
-global boxfillcolor, boxlitecolor, boxshadecolor, dword_C71D8, dword_C71DC
-global dword_C71E0, dword_C71E4, dword_C71E8, dword_C71EC, dword_C71F0, dword_C71F4, dword_C71FC, dword_C7208
-global dword_C7210, dword_C7219, songdata, dword_C729A, dword_C729C, dword_C729E, dword_C72A0, dword_C73D0
+global boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
+global dword_C71E0, dlgsavebuf, listscroll
+global dword_C7219, songdata, dword_C729A, dword_C729C, dword_C729E, dword_C72A0, dword_C73D0
 global rinkbm, dword_C73D8, dword_C7440, dword_C7444, dword_C7448, off_C56B5, perioddigits, off_C57C8
 global crestnames, off_C6399, off_C648E, off_C659A, off_C6821, off_C6825, off_C6841, off_C6845
 global off_C6881, off_C6885, divisionnames, statslabels, statsbgnames, statsplayerdbs, statsteamdbs
 global skaterratingnames, off_C6A99, goalieratingnames, off_C6AD1, teamsortfns, westconfname, eastconfname, teamstattitles
 global teamcolhdrs, leadersortfns, leadertitles, off_C6C40, off_C6C44
 global off_C6C48, off_C6C4C, off_C6C50, off_C6D22, scoutcatnames, off_C6F7C, off_C6F80, off_C6F84
-global gamestatlabels, off_C7282, off_C74AB, unk_C56A1, unk_C588E, unk_C588F, unk_C58A3, unk_C58B2
+global gamestatlabels, off_C7282, dbchoicelines, unk_C56A1, unk_C588E, unk_C588F, unk_C58A3, unk_C58B2
 global unk_C58CA, unk_C58EA, unk_C590D, unk_C592F, unk_C5969, unk_C5996, unk_C59B3, unk_C59D4
 global unk_C59F5, unk_C5A0D, unk_C5A2B, unk_C5A4E, unk_C5A6C, unk_C5A78, unk_C5AA5, unk_C5AC8
 global unk_C5AE8, unk_C5AF5, unk_C5B13, unk_C5B35, unk_C5B54, unk_C5B72, unk_C5B93, unk_C5BC0
@@ -74,7 +74,7 @@ global str_AwayLines, str_Play, str_Cancel, str_HomeLines, pregamebuttons, str_P
 global str_Shooting, str_Skating, str_Passing, str_Defense2, str_Checking, str_Goaltending, str_Overall, unk_C7088
 global delmsgbox, str_gsScore, str_gsShots, str_gsPowerPlay, str_gsPenalties, str_gsFaceoffsWon, str_gsBodyChecks, str_gsAttackZone
 global str_gsPassing, str_gsOneTimers, str_gsPPMinutes, str_gsPPShots, str_gsOffFaceoffs, unk_C7221, unk_C7243, unk_C7265
-global unk_C744C, unk_C7450, unk_C7453, unk_C746B, unk_C7483, unk_C749A, unk_C74A2, unk_C74B7
+global unk_C744C, unk_C7450, str_DoYouWishToUse, str_CurrentDbOr, str_OriginalNHLDb, str_Current, str_Original, dbchoicebtns
 global unk_C74EF, hudpenhome, word_C571E, word_C5720, word_C5722, hudpenaway, word_C575E, word_C5760
 global word_C5762, word_C6D24, treecolx, scrpitch
 msg_NeedKbytes:
@@ -1400,27 +1400,21 @@ boxlitecolor:
 db 03Fh,00h,00h,00h
 boxshadecolor:
 db 017h,00h,00h,00h
-dword_C71D8:
+dlgtextfg:
 db 03Fh,00h,00h,00h
-dword_C71DC:
+dlgtextbg:
 db 00h,00h,00h,00h
 dword_C71E0:
 db 00h,00h,00h,00h
-dword_C71E4:
+dlgsavebuf:
 db 00h,00h,00h,00h
-dword_C71E8:
+listscroll:
 db 00h,00h,00h,00h
-dword_C71EC:
 db 00h,00h,00h,00h
-dword_C71F0:
 db 00h,00h,00h,00h
-dword_C71F4:
 db 00h,00h,00h,00h,00h,00h,00h,00h
-dword_C71FC:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_C7208:
 db 00h,00h,00h,00h,00h,00h,00h,00h
-dword_C7210:
 db 00h,00h,00h,00h,00h,00h,00h,00h
 byte_C7218:
 db 01h
@@ -1496,30 +1490,30 @@ unk_C744C:
 db 059h,065h,073h,00h
 unk_C7450:
 db 04Eh,06Fh,00h
-unk_C7453:
+str_DoYouWishToUse:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,069h,073h,068h,020h,074h,06Fh,020h,075h
 db 073h,065h,020h,079h,06Fh,075h,072h,00h
-unk_C746B:
+str_CurrentDbOr:
 db 043h,075h,072h,072h,065h,06Eh,074h,020h,064h,061h,074h,061h,062h,061h,073h,065h
 db 020h,06Fh,072h,020h,074h,068h,065h,00h
-unk_C7483:
+str_OriginalNHLDb:
 db 04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,020h,04Eh,048h,04Ch,020h,064h,061h,074h
 db 061h,062h,061h,073h,065h,03Fh,00h
-unk_C749A:
+str_Current:
 db 043h,075h,072h,072h,065h,06Eh,074h,00h
-unk_C74A2:
+str_Original:
 db 04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,00h
-off_C74AB:
-dd unk_C7453
-dd unk_C746B
-dd unk_C7483
-unk_C74B7:
+dbchoicelines:
+dd str_DoYouWishToUse
+dd str_CurrentDbOr
+dd str_OriginalNHLDb
+dbchoicebtns:
 db 010h,00h,00h,00h,050h,00h,00h,00h,060h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
-dd unk_C749A
+dd str_Current
 db 0F0h,0FFh,0FFh,0FFh,050h,00h,00h,00h,060h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,06h,00h,00h,00h
-dd unk_C74A2
+dd str_Original
 unk_C74EF:
 db 041h,06Ch,06Ch,020h,074h,068h,065h,020h,074h,065h,061h,06Dh,073h,020h,061h,072h
 db 065h,020h,061h,06Ch,072h,065h,061h,064h,079h,020h,068h,075h,06Dh,061h,06Eh,00h

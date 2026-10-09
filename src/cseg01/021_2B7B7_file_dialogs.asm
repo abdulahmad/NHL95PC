@@ -19,7 +19,7 @@ extern fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp, fd
 extern dword_EA0DC, j_unlink_, jctime, off_C5439, off_C5441, off_C6F7C, off_C6F80, off_C6F84
 extern qsort_, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, MakePath, DeleteDir
 extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, CopyFile, SetupStatsSourceMenu, BuildSavedGameLabels
-extern sub_30A0C, MessageBox, LoadModeState, sub_32DA9, sub_33559, sub_336E6, sub_6B391, sub_6B3D7
+extern SetDialogColors, MessageBox, LoadModeState, sub_32DA9, sub_33559, sub_336E6, sub_6B391, sub_6B3D7
 extern sub_7A29C, sub_86647, PlayoffModeLoop, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0
 extern sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400, sub_91964, sub_92CD0, FatalError
 extern MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3CC8, sub_B4BA8, sub_B4FAC, str_NHL, str_PO2
@@ -1885,7 +1885,7 @@ mov ecx, 0FAh	; 2CE99
 mov ebx, 0F8h	; 2CE9E
 mov edx, ecx	; 2CEA3
 mov eax, 0F9h	; 2CEA5
-call sub_30A0C	; 2CEAA
+call SetDialogColors	; 2CEAA
 push byte 0FFFFFFFFh	; 2CEAF
 lea eax, [byte esp+04Ch]	; 2CEB1
 push eax	; 2CEB5

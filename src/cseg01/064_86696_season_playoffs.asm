@@ -14,19 +14,19 @@ extern DeskHomeLines, DeskVisitorLines, postate
 extern lgstate, gameresult, gamemode, gameopts, ctl1team
 extern ctl2team, ctl1side, ctl2side, teamdivflags, teamconf, confteams, dword_C65AC, teamstatscb
 extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dword_C6D26, dword_C6DBA, boxfillcolor, boxlitecolor
-extern boxshadecolor, dword_C71D8, dword_C71DC, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
+extern boxshadecolor, dlgtextfg, dlgtextbg, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
 extern dword_CE5C3, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
 extern keydb_size, musichandle, dword_D2884, dword_D288C, seriesgameno, dword_D2B70, dword_D2BEC, musicslot
 extern dword_D2C6B, dword_D8B68, dword_D8B74, schedgameidx, pointerspr, playofftree, playofftree_p1, pochampion
-extern dword_DD770, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, off_C5439, teamcitynames
+extern dbextension, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, off_C5439, teamcitynames
 extern off_C6D22, leaguedbnames, off_CEF43, off_CEF63
 extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, msg_POHumanOut, msg_POTeamOut, msg_POGenFinal
 extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers, PlayGame
 extern FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
 extern CopyFile, DiskSpaceShort, CheckGameDiskSpace, GetLeagueDBSizes, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText
 extern TextGridOpen, TextGridOff, InitGameSummary, SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen
-extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, CountSeriesWins, PreGameScreen, sub_2FDD1, sub_2FEDF
-extern sub_30A0C, sub_30F12, MessageBox, SaveModeState, LoadModeState, WriteModeState, sub_3626D, SimulateGame
+extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, CountSeriesWins, PreGameScreen, AskDatabaseChoice, TextInputDialog
+extern SetDialogColors, RestoreDialogBg, MessageBox, SaveModeState, LoadModeState, WriteModeState, sub_3626D, SimulateGame
 extern sub_479E9, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E
 extern sub_6B9EB, sub_6BA4D, sub_76429, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E8B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
@@ -66,16 +66,16 @@ mov eax, dword [boxlitecolor]	; 866C8
 mov dword [dword esp+0B0h], eax	; 866CD
 mov eax, dword [boxshadecolor]	; 866D4
 mov dword [dword esp+0B8h], eax	; 866D9
-mov eax, dword [dword_C71D8]	; 866E0
+mov eax, dword [dlgtextfg]	; 866E0
 mov dword [dword esp+0BCh], eax	; 866E5
-mov eax, dword [dword_C71DC]	; 866EC
+mov eax, dword [dlgtextbg]	; 866EC
 mov dword [dword esp+0B4h], eax	; 866F1
 mov dword [boxfillcolor], 41h	; 866F8
 mov ebx, 40h	; 86702
 mov dword [boxlitecolor], ebx	; 86707
 mov dword [boxshadecolor], 42h	; 8670D
-mov dword [dword_C71D8], ebx	; 86717
-mov dword [dword_C71DC], 43h	; 8671D
+mov dword [dlgtextfg], ebx	; 86717
+mov dword [dlgtextbg], 43h	; 8671D
 mov eax, exhstate	; 86727
 call SaveModeState	; 8672C
 push byte 20h	; 86731
@@ -174,7 +174,7 @@ mov ecx, 40h	; 86858
 mov ebx, 42h	; 8685D
 mov edx, ecx	; 86862
 mov eax, 41h	; 86864
-call sub_30A0C	; 86869
+call SetDialogColors	; 86869
 mov dh, 3Fh	; 8686E
 mov byte [dword esp+0C2h], dh	; 86870
 mov byte [dword esp+0C1h], dh	; 86877
@@ -200,7 +200,7 @@ mov ecx, 36h	; 868B7
 mov ebx, 8	; 868BC
 lea edx, [dword esp+0A0h]	; 868C1
 mov eax, str_PleaseEnterNewPlay	; 868C8
-call sub_2FEDF	; 868CD
+call TextInputDialog	; 868CD
 mov edi, eax	; 868D2
 lea eax, [dword esp+0C4h]	; 868D4
 push eax	; 868DB
@@ -339,11 +339,11 @@ mov edi, 1	; 86B13
 .16:
 test edi, edi	; 86B18
 jne near .29	; 86B1A
-call sub_2FDD1	; 86B20
+call AskDatabaseChoice	; 86B20
 mov edi, eax	; 86B25
 test eax, eax	; 86B27
 jl near .18	; 86B29
-mov ebx, dword [dword_DD770]	; 86B2F
+mov ebx, dword [dbextension]	; 86B2F
 mov edx, unk_D2864	; 86B35
 xor eax, eax	; 86B3A
 call GetLeagueDBSizes	; 86B3C
@@ -469,7 +469,7 @@ call MessageBox	; 86CD7
 xor esi, esi	; 86CDC
 .23:
 push curleague	; 86CDE
-mov edx, dword [dword_DD770]	; 86CE3
+mov edx, dword [dbextension]	; 86CE3
 mov eax, dword [nosplit esi*4+leaguedbnames]	; 86CE9
 mov ecx, str_dot	; 86CF0
 mov ebx, str_extDB	; 86CF5
@@ -514,7 +514,7 @@ call MessageBox	; 86D79
 lea eax, [dword esp+08Ch]	; 86D7E
 call DeleteDir	; 86D85
 call sub_B3999	; 86D8A
-call sub_30F12	; 86D8F
+call RestoreDialogBg	; 86D8F
 .26:
 mov eax, postate	; 86D94
 call WriteModeState	; 86D99
@@ -527,7 +527,7 @@ mov dword [dword_CE5C3], sub_86647	; 86DBE
 xor edi, edi	; 86DC8
 mov dword [seriesgameno], edi	; 86DCA
 .27:
-call sub_30F12	; 86DD0
+call RestoreDialogBg	; 86DD0
 jmp short .29	; 86DD5
 .28:
 lea eax, [dword esp+08Ch]	; 86DD7
@@ -566,9 +566,9 @@ mov dword [boxlitecolor], eax	; 86E52
 mov eax, dword [dword esp+0B8h]	; 86E57
 mov dword [boxshadecolor], eax	; 86E5E
 mov eax, dword [dword esp+0BCh]	; 86E63
-mov dword [dword_C71D8], eax	; 86E6A
+mov dword [dlgtextfg], eax	; 86E6A
 mov eax, dword [dword esp+0B4h]	; 86E6F
-mov dword [dword_C71DC], eax	; 86E76
+mov dword [dlgtextbg], eax	; 86E76
 mov eax, 2	; 86E7B
 add esp, 0C8h	; 86E80
 jmp near POSeedRound2_x	; 86E86
@@ -2359,7 +2359,7 @@ mov ecx, 40h	; 8814B
 mov ebx, 42h	; 88150
 mov edx, ecx	; 88155
 mov eax, 41h	; 88157
-call sub_30A0C	; 8815C
+call SetDialogColors	; 8815C
 mov ebx, dword [leaguedbnames+14h]	; 88161
 mov ecx, str_extDB	; 88167
 mov edx, curleague	; 8816C
@@ -2641,7 +2641,7 @@ cmp eax, byte 0FFFFFFFFh	; 884CC
 jne short .28	; 884CF
 mov dword [pochampion], 1Ah	; 884D1
 .28:
-call sub_30F12	; 884DB
+call RestoreDialogBg	; 884DB
 jmp short .30	; 884E0
 .29:
 push dword 3E8h	; 884E2
@@ -2664,7 +2664,7 @@ mov edx, 0FFFFFFFFh	; 88519
 mov eax, edx	; 8851E
 call MessageBox	; 88520
 call sub_B3999	; 88525
-call sub_30F12	; 8852A
+call RestoreDialogBg	; 8852A
 .30:
 mov ebx, 10h	; 8852F
 mov edx, dword [byte esp+06Ch]	; 88534
@@ -3763,7 +3763,7 @@ mov ecx, 0FAh	; 892E2
 mov ebx, 0F8h	; 892E7
 mov edx, ecx	; 892EC
 mov eax, 0F9h	; 892EE
-call sub_30A0C	; 892F3
+call SetDialogColors	; 892F3
 cmp dword [byte ebp+00h], byte 0	; 892F8
 jl near .8	; 892FC
 call CheckGameDiskSpace	; 89302
@@ -4110,7 +4110,7 @@ mov ecx, 40h	; 897F8
 mov ebx, 42h	; 897FD
 mov edx, ecx	; 89802
 mov eax, 41h	; 89804
-call sub_30A0C	; 89809
+call SetDialogColors	; 89809
 push byte 0	; 8980E
 call sub_910B0	; 89810
 add esp, byte 4	; 89815

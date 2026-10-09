@@ -13,7 +13,7 @@ extern dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8, dword_ED
 extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED6FC, dword_ED704, dword_ED708
 extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, jctime, camx_m2, off_CD4FA
 extern off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25, rand_, SetScreenSize, DrawFrameSprite, FadePalette
-extern MakePath, sub_30A0C, sub_30F12, MessageBox, sub_33DD3, CrowdNoiseOff, ReplayFirstFrame, ReplayStep
+extern MakePath, SetDialogColors, RestoreDialogBg, MessageBox, sub_33DD3, CrowdNoiseOff, ReplayFirstFrame, ReplayStep
 extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_6B391, sub_6B3D7, sub_7F724
 extern sub_7FA10, sub_7FC12, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
@@ -1622,7 +1622,7 @@ mov ecx, 59h	; 7F168
 mov ebx, 11h	; 7F16D
 mov edx, ecx	; 7F172
 mov eax, 14h	; 7F174
-call sub_30A0C	; 7F179
+call SetDialogColors	; 7F179
 push byte 0	; 7F17E
 push byte 0	; 7F180
 push byte 0	; 7F182
@@ -1664,7 +1664,7 @@ call sub_B30B4	; 7F1F7
 add esp, byte 8	; 7F1FC
 mov dword [dword_ED6E4], eax	; 7F1FF
 call sub_B3999	; 7F204
-call sub_30F12	; 7F209
+call RestoreDialogBg	; 7F209
 jmp near loc_7F71C	; 7F20E
 loc_7F213:
 call sub_B3999	; 7F213
@@ -1950,7 +1950,7 @@ mov ecx, 59h	; 7F5C8
 mov ebx, 11h	; 7F5CD
 mov edx, ecx	; 7F5D2
 mov eax, 14h	; 7F5D4
-call sub_30A0C	; 7F5D9
+call SetDialogColors	; 7F5D9
 push byte 0	; 7F5DE
 push byte 0	; 7F5E0
 push byte 0	; 7F5E2
@@ -1988,7 +1988,7 @@ call sub_B30B4	; 7F64A
 add esp, byte 8	; 7F64F
 mov dword [dword_ED6E4], eax	; 7F652
 call sub_B3999	; 7F657
-call sub_30F12	; 7F65C
+call RestoreDialogBg	; 7F65C
 jmp short loc_7F668	; 7F661
 loc_7F663:
 call sub_B3999	; 7F663
@@ -2013,7 +2013,7 @@ mov ecx, 59h	; 7F6A2
 mov ebx, 11h	; 7F6A7
 mov edx, ecx	; 7F6AC
 mov eax, 14h	; 7F6AE
-call sub_30A0C	; 7F6B3
+call SetDialogColors	; 7F6B3
 call sub_B4BA8	; 7F6B8
 push byte 0	; 7F6BD
 push byte 0	; 7F6BF
@@ -2026,7 +2026,7 @@ mov edx, 0FFFFFFFFh	; 7F6D1
 mov eax, edx	; 7F6D6
 call MessageBox	; 7F6D8
 call sub_B3999	; 7F6DD
-call sub_30F12	; 7F6E2
+call RestoreDialogBg	; 7F6E2
 loc_7F6E7:
 push dword 0C8h	; 7F6E7
 push byte 0	; 7F6EC

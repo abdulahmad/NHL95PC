@@ -7,13 +7,13 @@ extern str_Pause, str_Menubuff3, str_ReturningToSportsCentral, str_ReturningOutO
 extern hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, byte_CCCA0, musicon, othergames
 extern othergamesb, otherscores, otherscoresb, byte_ED830, byte_ED9E8, joysampling, escrequest, gameresult
 extern gamemode, gameopts, ctl1team, ctl2team, teamconf, dword_C5840, hlplayedmask, dword_C66A4
-extern dword_C66AC, dword_C66D0, dword_C66D4, boxfillcolor, boxlitecolor, boxshadecolor, dword_C71D8, dword_C71DC
+extern dword_C66AC, dword_C66D0, dword_C66D4, boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
 extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, bailout_vec, musicslot
 extern dword_D8C84, dword_DC230, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, otherperiod
 extern dword_EA0DC, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
 extern off_CEF23, off_D3078, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
 extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, GameSummaryScreen, PickOtherGames
-extern UpdateOtherScores, GameStatsScreen, sub_2FEDF, sub_30A0C, MessageBox, sub_3377C, sub_33E6A, sub_479E9
+extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, MessageBox, sub_3377C, sub_33E6A, sub_479E9
 extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB
 extern sub_6BA4D, sub_76429, sub_767D0, sub_7E0FA, sub_805C4, sub_836E4, sub_837A8, sub_846F0
@@ -44,15 +44,15 @@ mov dword [byte esp+010h], eax	; 18D97
 mov eax, dword [boxlitecolor]	; 18D9B
 mov dword [byte esp+0Ch], eax	; 18DA0
 mov ebp, dword [boxshadecolor]	; 18DA4
-mov edi, dword [dword_C71D8]	; 18DAA
-mov esi, dword [dword_C71DC]	; 18DB0
+mov edi, dword [dlgtextfg]	; 18DAA
+mov esi, dword [dlgtextbg]	; 18DB0
 mov dword [boxfillcolor], 41h	; 18DB6
 mov ebx, 40h	; 18DC0
 mov dword [boxlitecolor], ebx	; 18DC5
 mov dword [boxshadecolor], 42h	; 18DCB
-mov dword [dword_C71D8], ebx	; 18DD5
+mov dword [dlgtextfg], ebx	; 18DD5
 xor edx, edx	; 18DDB
-mov dword [dword_C71DC], edx	; 18DDD
+mov dword [dlgtextbg], edx	; 18DDD
 push byte 5	; 18DE3
 push edx	; 18DE5
 push edx	; 18DE6
@@ -62,7 +62,7 @@ mov ecx, 22h	; 18DE9
 mov ebx, 8	; 18DEE
 lea edx, [byte esp+014h]	; 18DF3
 mov eax, str_PleaseEnterOutputFile	; 18DF7
-call sub_2FEDF	; 18DFC
+call TextInputDialog	; 18DFC
 cmp eax, byte 1Bh	; 18E01
 je short .1	; 18E04
 cmp byte [esp], 0	; 18E06
@@ -75,8 +75,8 @@ mov dword [boxfillcolor], eax	; 18E17
 mov eax, dword [byte esp+0Ch]	; 18E1C
 mov dword [boxlitecolor], eax	; 18E20
 mov dword [boxshadecolor], ebp	; 18E25
-mov dword [dword_C71D8], edi	; 18E2B
-mov dword [dword_C71DC], esi	; 18E31
+mov dword [dlgtextfg], edi	; 18E2B
+mov dword [dlgtextbg], esi	; 18E31
 xor eax, eax	; 18E37
 add esp, byte 14h	; 18E39
 pop ebp	; 18E3C
@@ -1659,7 +1659,7 @@ mov ecx, 0FAh	; 1A63F
 mov ebx, 0F8h	; 1A644
 mov edx, ecx	; 1A649
 mov eax, 0F9h	; 1A64B
-call sub_30A0C	; 1A650
+call SetDialogColors	; 1A650
 push byte 0FFFFFFFFh	; 1A655
 lea eax, [byte esp+08h]	; 1A657
 push eax	; 1A65B
@@ -1722,7 +1722,7 @@ mov ecx, 0FAh	; 1A70A
 mov ebx, 0F8h	; 1A70F
 mov edx, ecx	; 1A714
 mov eax, 0F9h	; 1A716
-call sub_30A0C	; 1A71B
+call SetDialogColors	; 1A71B
 push byte 0FFFFFFFFh	; 1A720
 lea eax, [byte esp+08h]	; 1A722
 push eax	; 1A726

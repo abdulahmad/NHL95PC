@@ -12,7 +12,7 @@ extern dword_D2C6B, leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DD
 extern fputchar, jctime, memset_, teamcitynames, msg_OneHuman, leaguedbnames
 extern msg_TradeDeadline, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, strncpy_, MakePath
 extern DeleteFiles, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
-extern CopyFile, ReadSchedGame, sub_30A0C, sub_30F12, MessageBox, sub_38B4F, WriteLeagueTeamEntry, AskTeamPassword
+extern CopyFile, ReadSchedGame, SetDialogColors, RestoreDialogBg, MessageBox, sub_38B4F, WriteLeagueTeamEntry, AskTeamPassword
 extern AskMasterPassword, sub_3B25A, sub_3BB87, sub_3D46D, ReadLeagueInfo, sub_3DAB9, sub_3E390, sub_3FF52
 extern sub_6B3D7, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
 extern sub_B4F8C, unk_3DC28, msg_AllHuman, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, msg_TradeError, msg_Copying
@@ -84,7 +84,7 @@ mov ecx, 0FAh	; 40286
 mov ebx, 0F8h	; 4028B
 mov edx, ecx	; 40290
 mov eax, 0F9h	; 40292
-call sub_30A0C	; 40297
+call SetDialogColors	; 40297
 lea eax, [dword esp+0B0h]	; 4029C
 push eax	; 402A3
 lea eax, [dword esp+0B8h]	; 402A4
@@ -219,7 +219,7 @@ mov ecx, 0FAh	; 404B1
 mov ebx, 0F8h	; 404B6
 mov edx, ecx	; 404BB
 mov eax, 0F9h	; 404BD
-call sub_30A0C	; 404C2
+call SetDialogColors	; 404C2
 lea eax, [dword esp+0B0h]	; 404C7
 push eax	; 404CE
 lea eax, [dword esp+0B8h]	; 404CF
@@ -251,7 +251,7 @@ mov ecx, 0FAh	; 4052E
 mov ebx, 0F8h	; 40533
 mov edx, ecx	; 40538
 mov eax, 0F9h	; 4053A
-call sub_30A0C	; 4053F
+call SetDialogColors	; 4053F
 lea eax, [dword esp+0B0h]	; 40544
 push eax	; 4054B
 lea eax, [dword esp+0B8h]	; 4054C
@@ -564,7 +564,7 @@ mov ecx, 0FAh	; 4099C
 mov ebx, 0F8h	; 409A1
 mov edx, ecx	; 409A6
 mov eax, 0F9h	; 409A8
-call sub_30A0C	; 409AD
+call SetDialogColors	; 409AD
 cmp dword [leaguesaved], byte 0	; 409B2
 je short .3	; 409B9
 lea eax, [byte esp+020h]	; 409BB
@@ -810,7 +810,7 @@ mov ecx, 0FAh	; 40CD0
 mov ebx, 0F8h	; 40CD5
 mov edx, ecx	; 40CDA
 mov eax, 0F9h	; 40CDC
-call sub_30A0C	; 40CE1
+call SetDialogColors	; 40CE1
 cmp dword [leaguesaved], byte 0	; 40CE6
 je short .3	; 40CED
 lea eax, [byte esp+020h]	; 40CEF
@@ -969,7 +969,7 @@ mov ecx, 0FAh	; 40F04
 mov ebx, 0F8h	; 40F09
 mov edx, ecx	; 40F0E
 mov eax, 0F9h	; 40F10
-call sub_30A0C	; 40F15
+call SetDialogColors	; 40F15
 lea eax, [byte esp+030h]	; 40F1A
 push eax	; 40F1E
 lea eax, [byte esp+038h]	; 40F1F
@@ -1037,7 +1037,7 @@ mov ecx, 0FAh	; 40FE4
 mov ebx, 0F8h	; 40FE9
 mov edx, ecx	; 40FEE
 mov eax, 0F9h	; 40FF0
-call sub_30A0C	; 40FF5
+call SetDialogColors	; 40FF5
 lea eax, [byte esp+010h]	; 40FFA
 push eax	; 40FFE
 lea eax, [byte esp+018h]	; 40FFF
@@ -1112,7 +1112,7 @@ mov ecx, 0FAh	; 410DD
 mov ebx, 0F8h	; 410E2
 mov edx, ecx	; 410E7
 mov eax, 0F9h	; 410E9
-call sub_30A0C	; 410EE
+call SetDialogColors	; 410EE
 mov eax, dword [leaguemaster]	; 410F3
 mov ebx, masterpw	; 410F8
 mov edx, leagueteams	; 410FD
@@ -1745,7 +1745,7 @@ mov ebx, eax	; 418DA
 .16:
 lea eax, [dword esp+098h]	; 418DC
 call FileClose	; 418E3
-call sub_30F12	; 418E8
+call RestoreDialogBg	; 418E8
 .17:
 inc dword [dword esp+0B4h]	; 418ED
 .18:

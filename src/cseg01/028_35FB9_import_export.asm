@@ -7,8 +7,8 @@ extern asc_C186B, asc_C1874, asc_C1879, asc_C1880, asc_C1885, asc_C78A8, asc_C7A
 extern str_PINFO, str_extDB, str_extxx, asc_C8158, str_dot, str_floppydrv, curleague, gameopts
 extern musicon, byte_D42C3, byte_DC267, byte_DC268, leaguedbfmt2, leaguedbfmt, leagueflags, byte_DD7CA
 extern byte_DD7CB, savedname, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_ED836
-extern byte_ED98E, gameresult, teamstatscb, skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dword_C71D8
-extern dword_C71DC, songdata, msg_InsertDisk_arg, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7E42, dword_C7F0B
+extern byte_ED98E, gameresult, teamstatscb, skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dlgtextfg
+extern dlgtextbg, songdata, msg_InsertDisk_arg, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7E42, dword_C7F0B
 extern dword_C8998, HomeTeam, musichandle, dword_D2C6B, dword_DB088, schedgameidx, dword_DC23E, musicslot
 extern leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
 extern dword_DDD6C, awtmlines, startm_m2, hmtmlines, hmtmstruct
@@ -16,7 +16,7 @@ extern fputchar, jctime, memset_, crestnames, off_C800C, leaguedbnames
 extern sprintf_, strcat_, strcpy_, SetupControllers, PlayGame, FileExists, MakePath
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, ReadKeyRec, ReadSeasonRec
 extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, SetTextColors, PrintCenteredText, PrintShadowText, InitGameSummary
-extern GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, PreGameScreen, sub_30A0C, sub_30F12
+extern GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, PreGameScreen, SetDialogColors, RestoreDialogBg
 extern MessageBox, sub_34821, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, WriteSchedGame, WriteTeamRec
 extern sub_3A31E, AskTeamPassword, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, ReadLeagueInfo, sub_3DAB9
 extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSeasonSchedule, UpdatePlayoffSeries, sub_479E9, sub_6B410
@@ -919,7 +919,7 @@ mov ecx, 0FAh	; 36CA1
 mov ebx, 0F8h	; 36CA6
 mov edx, ecx	; 36CAB
 mov eax, 0F9h	; 36CAD
-call sub_30A0C	; 36CB2
+call SetDialogColors	; 36CB2
 test byte [leagueflags], 8	; 36CB7
 je short loc_36CE8	; 36CBE
 lea eax, [byte esp+020h]	; 36CC0
@@ -988,7 +988,7 @@ mov ecx, 0FAh	; 36D9A
 mov ebx, 0F8h	; 36D9F
 mov edx, ecx	; 36DA4
 mov eax, 0F9h	; 36DA6
-call sub_30A0C	; 36DAB
+call SetDialogColors	; 36DAB
 lea edx, [byte esp+044h]	; 36DB0
 mov eax, curleague	; 36DB4
 call GetLeagueId	; 36DB9
@@ -1054,7 +1054,7 @@ mov ecx, 0FAh	; 36E9B
 mov ebx, 0F8h	; 36EA0
 mov edx, ecx	; 36EA5
 mov eax, 0F9h	; 36EA7
-call sub_30A0C	; 36EAC
+call SetDialogColors	; 36EAC
 loc_36EB1:
 mov eax, dword [dword_DDD38]	; 36EB1
 mov edx, leagueteams	; 36EB6
@@ -1131,7 +1131,7 @@ mov ecx, 0FAh	; 36FC4
 mov ebx, 0F8h	; 36FC9
 mov edx, ecx	; 36FCE
 mov eax, 0F9h	; 36FD0
-call sub_30A0C	; 36FD5
+call SetDialogColors	; 36FD5
 mov edx, dword [dword_DDD38]	; 36FDA
 push edx	; 36FE0
 push asc_C1853	; 36FE1
@@ -1539,7 +1539,7 @@ mov ecx, 0FAh	; 375B1
 mov ebx, 0F8h	; 375B6
 mov edx, ecx	; 375BB
 mov eax, 0F9h	; 375BD
-call sub_30A0C	; 375C2
+call SetDialogColors	; 375C2
 cmp dword [dword_DDD3C], byte 0	; 375C7
 je near loc_37653	; 375CE
 push byte 0FFFFFFFFh	; 375D4
@@ -1843,7 +1843,7 @@ loc_379ED:
 call sub_3626D	; 379ED
 mov esi, eax	; 379F2
 loc_379F4:
-call sub_30F12	; 379F4
+call RestoreDialogBg	; 379F4
 push byte 0	; 379F9
 call sub_B392C	; 379FB
 add esp, byte 4	; 37A00
@@ -2054,8 +2054,8 @@ push eax	; 37C63
 push edx	; 37C64
 push ebx	; 37C65
 push ecx	; 37C66
-mov edx, dword [dword_C71DC]	; 37C67
-mov eax, dword [dword_C71D8]	; 37C6D
+mov edx, dword [dlgtextbg]	; 37C67
+mov eax, dword [dlgtextfg]	; 37C6D
 call SetTextColors	; 37C72
 xor edx, edx	; 37C77
 mov dword [byte esp+014h], edx	; 37C79

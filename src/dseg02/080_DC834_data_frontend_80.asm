@@ -14,10 +14,10 @@ global statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf, statspal, 
 global exhfilenames, pofiles, pofilenames, lgfiles
 global lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open
 global fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp
-global fdlg_noarrow, hmcrestbmp, vscrestbmp, dword_DD678, dword_DD688, dword_DD68C, dword_DD690, dword_DD694
-global dword_DD698, dword_DD69C, dword_DD6A0, dword_DD6A4, dword_DD6A6, dword_DD6A8, dword_DD6AE, dword_DD6B0
-global otherperiod, dword_DD748, dword_DD74C, dword_DD770, dword_DD780, dword_DD784, dword_DD794, dword_DD798
-global dword_DD79C, dword_DD7A0, dword_DD7A4, leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD28
+global fdlg_noarrow, hmcrestbmp, vscrestbmp, dlgsavex, dlgsavey, editcurw, editpos, editmaxw
+global editbuf, editcuron, edity, editx, dword_DD6A6, dword_DD6A8, dword_DD6AE, dword_DD6B0
+global otherperiod, dword_DD748, dword_DD74C, dbextension, dword_DD780, dword_DD784, dword_DD794, dword_DD798
+global dword_DD79C, dword_DD7A0, criterrflag, leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD28
 global dword_DDD2C, dword_DDD30, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68, dword_DDD6C
 global dword_DDD70, dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C
 global dword_DE260, dword_DE264, dword_DE265, dword_DEB6C, dword_DEB74, statsplayer
@@ -174,23 +174,23 @@ hmcrestbmp:
 resb 4
 vscrestbmp:
 resb 8
-dword_DD678:
+dlgsavex:
 resb 16
-dword_DD688:
+dlgsavey:
 resb 4
-dword_DD68C:
+editcurw:
 resb 4
-dword_DD690:
+editpos:
 resb 4
-dword_DD694:
+editmaxw:
 resb 4
-dword_DD698:
+editbuf:
 resb 4
-dword_DD69C:
+editcuron:
 resb 4
-dword_DD6A0:
+edity:
 resb 4
-dword_DD6A4:
+editx:
 resb 2
 dword_DD6A6:
 resb 2
@@ -218,7 +218,7 @@ dword_DD74C:
 resb 4
 leaguedbfmt:
 resb 32
-dword_DD770:
+dbextension:
 resb 4
 othergames:
 resb 1
@@ -240,7 +240,7 @@ dword_DD79C:
 resb 4
 dword_DD7A0:
 resb 4
-dword_DD7A4:
+criterrflag:
 resb 4
 leaguemaster:
 resb 4

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_3DB41 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1942, asc_C1948, asc_C195C, asc_C8145, byte_C8B78, dword_D243A, fclose_
-extern fopen_, fscanf_, MakePath, sub_30A0C, sub_82D7A, sub_8EB93, sub_8FE83, FatalError
+extern fopen_, fscanf_, MakePath, SetDialogColors, sub_82D7A, sub_8EB93, sub_8FE83, FatalError
 extern MouseSetPos, sub_B3454, sub_B4B88, unk_C1946
 global loc_3DB85, loc_3DBAA, loc_3DBAF, loc_3DBB8, sub_3DB41, unk_3DC28
 sub_3DB41:
@@ -73,7 +73,7 @@ mov ecx, 3	; 3DBF8
 mov ebx, 1	; 3DBFD
 mov edx, ecx	; 3DC02
 mov eax, 2	; 3DC04
-call sub_30A0C	; 3DC09
+call SetDialogColors	; 3DC09
 mov eax, 1	; 3DC0E
 call sub_8FE83	; 3DC13
 mov eax, edi	; 3DC18

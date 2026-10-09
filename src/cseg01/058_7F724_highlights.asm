@@ -11,7 +11,7 @@ extern dword_DC230, scrbrdshapes, recbpr, dword_E0400, dword_E0404, dword_E0408,
 extern dword_ED6F8, hilightfont, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, teamcitynames
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, SetScreenSize
 extern LoadGameGfx, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
-extern sub_1BAB1, sub_303FB, sub_30A0C, MessageBox, sub_33727, sub_3377C, sub_479E9, FadeOutPalCycle
+extern sub_1BAB1, ListDialog, SetDialogColors, MessageBox, sub_33727, sub_3377C, sub_479E9, FadeOutPalCycle
 extern sub_673C5, sub_6B3D7, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
 extern sub_93000, FatalError, sub_B2DCA, sub_B4FAC, sub_B5DB0, unk_7E05F, unk_C3444, unk_C3447
@@ -593,7 +593,7 @@ mov ecx, 2	; 7FDEC
 mov ebx, asc_C8208	; 7FDF1
 mov edx, esi	; 7FDF6
 lea eax, [byte esp+018h]	; 7FDF8
-call sub_303FB	; 7FDFC
+call ListDialog	; 7FDFC
 test eax, eax	; 7FE01
 jl near loc_80062	; 7FE03
 mov ebx, dword [byte esp+eax*4+078h]	; 7FE09
@@ -718,7 +718,7 @@ mov ecx, 2	; 7FFB7
 mov ebx, asc_C8216	; 7FFBC
 mov edx, esi	; 7FFC1
 mov eax, dword [dword esp+01E0h]	; 7FFC3
-call sub_303FB	; 7FFCA
+call ListDialog	; 7FFCA
 mov edx, dword [byte esp+08h]	; 7FFCF
 mov dword [edx], eax	; 7FFD3
 test eax, eax	; 7FFD5
@@ -785,7 +785,7 @@ mov ecx, 0FAh	; 8008F
 mov ebx, 0F8h	; 80094
 mov edx, ecx	; 80099
 mov eax, 0F9h	; 8009B
-call sub_30A0C	; 800A0
+call SetDialogColors	; 800A0
 push byte 0	; 800A5
 xor ecx, ecx	; 800A7
 mov ebx, curleague	; 800A9

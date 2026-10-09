@@ -12,7 +12,7 @@ extern rosterteam, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238, b
 extern musicon, hmroster, byte_DB3AD, leaguedbfmt, rosterlist, byte_EA991, byte_EA992, byte_EA993
 extern byte_EC7E0, byte_EC7E4, byte_ECAE4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED0F7, byte_ED0F8
 extern byte_ED0F9, byte_ED0FA, byte_ED83C, byte_ED85A, byte_ED8B4, byte_ED9E7, palfadedin, statsplayoffs
-extern boxfillcolor, boxlitecolor, boxshadecolor, dword_C71D8, dword_C71DC, songdata, HomeTeam, dword_D0B16
+extern boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg, songdata, HomeTeam, dword_D0B16
 extern dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A, dword_D1229, dword_D122B, dword_D122F
 extern dword_D1231, dword_D1233, dword_D1338, dword_D133C, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC
 extern dword_D1418, dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, musichandle, musicslot
@@ -4321,15 +4321,15 @@ mov eax, dword [boxlitecolor]	; 7691C
 mov dword [byte esp+014h], eax	; 76921
 mov eax, dword [boxshadecolor]	; 76925
 mov dword [byte esp+034h], eax	; 7692A
-mov eax, dword [dword_C71D8]	; 7692E
+mov eax, dword [dlgtextfg]	; 7692E
 mov dword [byte esp+030h], eax	; 76933
-mov eax, dword [dword_C71DC]	; 76937
+mov eax, dword [dlgtextbg]	; 76937
 mov dword [byte esp+02Ch], eax	; 7693C
 mov dword [boxfillcolor], edi	; 76940
 mov dword [boxlitecolor], ebp	; 76946
 mov dword [boxshadecolor], edi	; 7694C
-mov dword [dword_C71D8], ebp	; 76952
-mov dword [dword_C71DC], edi	; 76958
+mov dword [dlgtextfg], ebp	; 76952
+mov dword [dlgtextbg], edi	; 76958
 call sub_B4BA8	; 7695E
 push dword 1E0h	; 76963
 push byte 0	; 76968
@@ -4410,9 +4410,9 @@ mov dword [boxlitecolor], eax	; 76A6C
 mov eax, dword [byte esp+034h]	; 76A71
 mov dword [boxshadecolor], eax	; 76A75
 mov eax, dword [byte esp+030h]	; 76A7A
-mov dword [dword_C71D8], eax	; 76A7E
+mov dword [dlgtextfg], eax	; 76A7E
 mov eax, dword [byte esp+02Ch]	; 76A83
-mov dword [dword_C71DC], eax	; 76A87
+mov dword [dlgtextbg], eax	; 76A87
 add esp, byte 48h	; 76A8C
 pop ebp	; 76A8F
 pop edi	; 76A90

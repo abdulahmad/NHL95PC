@@ -12,7 +12,7 @@ extern teamconf, boxfillcolor, boxlitecolor, boxshadecolor, songdata, cont2team,
 extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, pointerspr, dword_EA0DC
 extern fputchar, jctime, memcpy_, off_C5439, crestnames, scoutcatnames, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
-extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, sub_30A0C, sub_30A39, sub_30AE2
+extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, SetDialogColors, TrackButtons, DrawButtons
 extern sub_33E6A, sub_479E9, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, sub_6B391
 extern sub_6B3D7, sub_76429, sub_767D0, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
@@ -45,7 +45,7 @@ mov ecx, 0FAh	; 29F60
 mov ebx, 0F8h	; 29F65
 mov edx, ecx	; 29F6A
 mov eax, 0F9h	; 29F6C
-call sub_30A0C	; 29F71
+call SetDialogColors	; 29F71
 mov edx, 0F7h	; 29F76
 mov eax, 0FAh	; 29F7B
 call SetTextColors	; 29F80
@@ -450,7 +450,7 @@ xor eax, eax	; 2A547
 call DrawBevelBox	; 2A549
 mov edx, dword [dword esp+0650h]	; 2A54E
 mov eax, dword [dword esp+0654h]	; 2A555
-call sub_30AE2	; 2A55C
+call DrawButtons	; 2A55C
 mov eax, dword [pointerspr]	; 2A561
 mov edx, dword [byte eax+02h]	; 2A566
 sar edx, 10h	; 2A569
@@ -664,7 +664,7 @@ mov ecx, dword [dword esp+0638h]	; 2A871
 mov ebx, dword [dword esp+0634h]	; 2A878
 mov edx, dword [dword esp+0654h]	; 2A87F
 mov eax, dword [dword esp+0658h]	; 2A886
-call sub_30A39	; 2A88D
+call TrackButtons	; 2A88D
 mov edx, eax	; 2A892
 test eax, eax	; 2A894
 jl near PreGameScreen_homelines.4	; 2A896

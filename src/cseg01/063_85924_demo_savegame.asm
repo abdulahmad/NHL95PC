@@ -8,7 +8,7 @@ extern asc_D281F, curleague, othergames, otherscores, gameopts
 extern byte_ED92F, demomode, postate, lgstate, gamemode, dword_D2C6B, dword_D8B74, pointerspr
 extern dword_DC888, dword_DC88C, otherperiod, dword_EA0DC, jctime, off_D27EF, off_D27F7, off_D2855
 extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, CopyFile, DiskSpaceShort
-extern sub_30A0C, sub_30F12, MessageBox, sub_3170D, SaveModeState, LoadModeState, WriteModeState, SaveLeagueGameRef
+extern SetDialogColors, RestoreDialogBg, MessageBox, EditTextField, SaveModeState, LoadModeState, WriteModeState, SaveLeagueGameRef
 extern SaveGameState, sub_6B391, sub_6B3D7, sub_80075, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_903F0, sub_910E0, sub_91284, sub_91370, sub_91400
 extern sub_92CD0, sub_92DE0, FatalError, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3989, sub_B3999
@@ -73,7 +73,7 @@ db 0B9h,0FAh,00h,00h,00h	; 859CF mov ecx,0FAh
 mov ebx, 0F8h	; 859D4
 mov edx, ecx	; 859D9
 mov eax, 0F9h	; 859DB
-call sub_30A0C	; 859E0
+call SetDialogColors	; 859E0
 push esi	; 859E5
 push asc_C3904	; 859E6
 loc_859EB:
@@ -224,7 +224,7 @@ mov ecx, 0FAh	; 85C00
 mov ebx, 0F8h	; 85C05
 mov edx, ecx	; 85C0A
 mov eax, 0F9h	; 85C0C
-call sub_30A0C	; 85C11
+call SetDialogColors	; 85C11
 push esi	; 85C16
 push asc_C3947	; 85C17
 jmp near loc_859EB	; 85C1C
@@ -237,7 +237,7 @@ mov ecx, 0FAh	; 85C2F
 mov ebx, 0F8h	; 85C34
 mov edx, ecx	; 85C39
 mov eax, 0F9h	; 85C3B
-call sub_30A0C	; 85C40
+call SetDialogColors	; 85C40
 xor ecx, ecx	; 85C45
 mov ebx, asc_C3966	; 85C47
 mov edx, curleague	; 85C4C
@@ -305,7 +305,7 @@ call FatalError	; 85D40
 add esp, byte 4	; 85D45
 loc_85D48:
 call sub_B3999	; 85D48
-call sub_30F12	; 85D4D
+call RestoreDialogBg	; 85D4D
 loc_85D52:
 mov eax, esp	; 85D52
 push eax	; 85D54
@@ -479,7 +479,7 @@ push edi	; 85F4B
 mov ecx, esi	; 85F4C
 mov ebx, 64h	; 85F4E
 mov edx, 8	; 85F53
-call sub_3170D	; 85F58
+call EditTextField	; 85F58
 mov edx, asc_C399B	; 85F5D
 mov eax, dword [esp]	; 85F62
 call strcat_	; 85F65
@@ -961,7 +961,7 @@ mov ecx, esi	; 86561
 mov ebx, 64h	; 86563
 mov edx, 8	; 86568
 mov eax, dword [byte esp+010h]	; 8656D
-call sub_3170D	; 86571
+call EditTextField	; 86571
 mov edx, asc_C399B	; 86576
 mov eax, dword [esp]	; 8657B
 call strcat_	; 8657E

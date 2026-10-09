@@ -244,7 +244,34 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0002F3D7,sub_2F3D7,UpdateOtherScores,PC-new,,,,medium,"(period): advances the 6 other games to period + teamstartlag difference, adding rand % 3 goals per period; ties go to OT (70% chance each side scores) and finish as 5 (final OT) or 6 (final)",game_setup,manual-trace
 0002F580,sub_2F580,PrintClampedText,PC-new,,,,medium,PrintShadowText with x clamped into the left (8..F0h) or right (..280h) half by the text width,game_setup,manual-trace
 0002F5EE,sub_2F5EE,GameStatsScreen,PC-new,,,,high,"DeskGameStats: gsta / leaguetm screen listing gamestatlabels with both teams' values (score, shots, one timers, PP goals/chances, PP time and shots, penalties/min, faceoffs, body checks, attack zone time, passing %)",game_setup,manual-trace
+0002FDD1,sub_2FDD1,AskDatabaseChoice,PC-new,,,,high,"MessageBox ""Do you wish to use your Current database or the Original NHL database?"" (Current / Original); sets dbextension to "".ORG"" or "".DB""",misc_dialogs,manual-trace
+0002FE49,sub_2FE49,DrawBevelRect,PC-new,,,,high,"(x, y, w, h, fill, lite, shade): fills the rect and draws the lit top/left and shaded bottom/right edges",misc_dialogs,manual-trace
+0002FED2,sub_2FED2,DlgReturnZero,PC-new,,,,low,returns 0; passed as a callback by database_dialogs,misc_dialogs,manual-trace
+0002FEDF,sub_2FEDF,TextInputDialog,PC-new,,,,high,"(prompt, buf, maxlen, width, ...): DBOX prompt box with an EditTextField; used for ""Enter league name"" and league_setup names",misc_dialogs,manual-trace
+00030203,sub_30203,DlgNullCallback,PC-new,,,,low,empty stdcall stub (ret 14h),misc_dialogs,manual-trace
+00030209,sub_30209,SetListItemColors,PC-new,,,,medium,"(item, sel): text colours dlgtextfg/dlgtextbg, swapped for the selected item",misc_dialogs,manual-trace
+0003023E,sub_3023E,ListHitTest,PC-new,,,,high,"(mx, my, x, y, w, count): row under the mouse or -1 (row height font height + 2)",misc_dialogs,manual-trace
+000302B9,sub_302B9,DrawListItem,PC-new,,,,medium,fills one list row (disabled rows in boxfillcolor) and prints its text left / right / centred,misc_dialogs,manual-trace
+0003039C,sub_3039C,DrawListItems,PC-new,,,,medium,DrawListItem for each visible row,misc_dialogs,manual-trace
+000303FB,sub_303FB,ListDialog,PC-new,,,,high,"(items, count, title, ...): DBOX list box with scroll bar; returns the chosen item (""Choose which team to ..."", league_setup, highlights)",misc_dialogs,manual-trace
+000309E4,sub_309E4,MeasureTextLine,PC-new,,,,high,"(str, &maxw, &h, lineh): widens maxw to the text width and adds lineh to h",misc_dialogs,manual-trace
+00030A0C,sub_30A0C,SetDialogColors,PC-new,,,,high,sets boxfillcolor / boxlitecolor / boxshadecolor and dlgtextfg / dlgtextbg,misc_dialogs,manual-trace
+00030A39,sub_30A39,TrackButtons,PC-new,,,,high,"(btns, n, mx, my, flags): presses / releases 1Ch-byte buttons under the mouse, returns the clicked index",misc_dialogs,manual-trace
+00030AE2,sub_30AE2,DrawButtons,PC-new,,,,high,clears the pressed flag and draws each button,misc_dialogs,manual-trace
+00030B16,sub_30B16,DrawButton,PC-new,,,,high,bevel box (lite / shade swapped when pressed) with the label centred,misc_dialogs,manual-trace
+00030BF3,sub_30BF3,InitScrollBar,PC-new,,,,medium,"(sb, pos, range): sets the scroll-bar thumb size and clears its state",misc_dialogs,manual-trace
+00030C3D,sub_30C3D,DrawScrollBar,PC-new,,,,medium,trough and thumb bevel boxes (inverted while dragged),misc_dialogs,manual-trace
+00030D0E,sub_30D0E,TrackScrollBars,PC-new,,,,medium,"drags the thumb under the mouse, recomputes the position, redraws; returns the bar index",misc_dialogs,manual-trace
+00030E66,sub_30E66,SaveDialogBg,PC-new,,,,high,allocates DBOX and saves the screen under the dialog rect (x rounded to 4),misc_dialogs,manual-trace
+00030F12,sub_30F12,RestoreDialogBg,PC-new,,,,high,puts back and frees the DBOX save,misc_dialogs,manual-trace
+00030F5F,sub_30F5F,GrowToButton,PC-new,,,,low,widens w / h to fit one button (unused),misc_dialogs,manual-trace
+00030FB4,sub_30FB4,GrowToButtons,PC-new,,,,medium,widens w / h to fit the button row,misc_dialogs,manual-trace
 00031013,sub_31013,MessageBox,PC-new,,,,medium,"(x, y (-1 = centred), message line table, line count, buttons, button count, ...): the league/front-end message dialog used for every 'Copying databases' / 'Insert disk' / error box",misc_dialogs,manual-trace
+00031250,sub_31250,RunMessageBox,PC-new,,,,medium,"MessageBox mouse loop: Pointer sprite, TrackButtons until a button is released; returns its index",misc_dialogs,manual-trace
+0003149D,sub_3149D,CritErrHandler,PC-new,,,,high,INT 24h handler installed at startup (sub_B3036): sets criterrflag = -1 and returns 0 (ignore); checked by database_merge disk-space code,misc_dialogs,manual-trace
+000314B4,sub_314B4,DrawEditCursor,PC-new,,,,high,"XOR-draws the edit cursor (width 1, or font height in overwrite mode) at editpos",misc_dialogs,manual-trace
+00031599,sub_31599,DrawEditText,PC-new,,,,high,"trims editbuf to editmaxw pixels, draws it and clears the rest of the field",misc_dialogs,manual-trace
+0003170D,sub_3170D,EditTextField,PC-new,,,,high,"(buf, maxlen, maxw, x, y, idlecb, ..., flags): line editor with Left / Right / Home / End / Ins / Del / Backspace, digit-only or letters-only flags; Enter / Esc ends",misc_dialogs,manual-trace
 0003271B,sub_3271B,SaveModeState,PC-new,,,,high,"copies the current league name, DB path formats, HomeTeam/VisTeam, gameopts and controller teams/devices/sides into a 75h-byte mode state block",main_desk,manual-trace
 000327A1,sub_327A1,LoadModeState,PC-new,,,,high,"the reverse of SaveModeState: sets gamemode (+0), curleague, paths, HomeTeam/VisTeam, gameopts and controller fields from a mode state block",main_desk,manual-trace
 00032B1D,sub_32B1D,WriteModeState,PC-new,,,,medium,"fills a mode state block from the current globals and writes its 75h bytes to the mode's settings file (root for gamemode 0, else in the league dir)",main_desk,manual-trace

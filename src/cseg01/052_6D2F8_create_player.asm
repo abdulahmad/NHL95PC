@@ -28,8 +28,8 @@ extern memset_, teamcitynames, leaguedbnames
 extern menu_r1_freeagents, menu_r2_freeagents, menu_r1_editlines, menu_r2_editlines, off_D0880, off_D08B9, off_D09DB, off_D0A04
 extern off_D0AC2, off_D1077, off_D3078, qword_C2CE0, qword_C2CE8, randomd0, sprintf_, strcat_
 extern strcmp_, strcpy_, strlen_, strlwr_, strupr_, MakePath, FileOpenWrite, FileClose
-extern FileWriteAt, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, sub_303FB, sub_30A39
-extern sub_30AE2, sub_30BF3, sub_30D0E, MessageBox, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
+extern FileWriteAt, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, ListDialog, TrackButtons
+extern DrawButtons, InitScrollBar, TrackScrollBars, MessageBox, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
 extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_6BF4A, sub_6C043, sub_6C96C, sub_6CA8F, CarTeamRecPtr
 extern TeamRecPtr, KeyDbPtr, sub_6D299, InputDialog, sub_737E1, sub_76429, sub_78BE7, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8EA18, sub_8FC8A, sub_8FFB0, sub_903F0, sub_9061C
@@ -231,7 +231,7 @@ cmp ecx, byte 9	; 6D589
 jl short DrawEditRosters.3	; 6D58C
 mov edx, 2	; 6D58E
 mov eax, unk_D0B80	; 6D593
-call sub_30AE2	; 6D598
+call DrawButtons	; 6D598
 .4:
 call sub_B4BA8	; 6D59D
 mov eax, dword [dword_EA2B4]	; 6D5A2
@@ -561,7 +561,7 @@ mov dword [dword_D0C20], 0FFFFFFFFh	; 6D94C
 mov ebx, ecx	; 6D956
 mov edx, 1Ch	; 6D958
 mov eax, unk_D0BF0	; 6D95D
-call sub_30BF3	; 6D962
+call InitScrollBar	; 6D962
 .6:
 test esi, esi	; 6D967
 jne short .7	; 6D969
@@ -1291,7 +1291,7 @@ mov ecx, dword [byte esp+05Ch]	; 6E261
 mov ebx, dword [byte esp+060h]	; 6E265
 mov edx, 2	; 6E269
 mov eax, unk_D0BB8	; 6E26E
-call sub_30A39	; 6E273
+call TrackButtons	; 6E273
 mov edx, eax	; 6E278
 test eax, eax	; 6E27A
 jne short .9	; 6E27C
@@ -1320,7 +1320,7 @@ mov ecx, dword [byte esp+05Ch]	; 6E2BC
 mov ebx, dword [byte esp+060h]	; 6E2C0
 mov edx, 1	; 6E2C4
 mov eax, unk_D0BF0	; 6E2C9
-call sub_30D0E	; 6E2CE
+call TrackScrollBars	; 6E2CE
 test eax, eax	; 6E2D3
 jl short .12	; 6E2D5
 mov eax, dword [dword_EBCA4]	; 6E2D7
@@ -1369,7 +1369,7 @@ mov ecx, dword [byte esp+05Ch]	; 6E361
 mov ebx, dword [byte esp+060h]	; 6E365
 mov edx, 2	; 6E369
 mov eax, unk_D0B80	; 6E36E
-call sub_30A39	; 6E373
+call TrackButtons	; 6E373
 mov ecx, dword [byte esp+058h]	; 6E378
 push ecx	; 6E37C
 mov esi, dword [byte esp+060h]	; 6E37D
@@ -2059,7 +2059,7 @@ push ebx	; 6EB85
 mov ecx, dword [byte esp+014h]	; 6EB86
 mov ebx, dword [byte esp+018h]	; 6EB8A
 mov eax, dword [byte esp+08h]	; 6EB8E
-call sub_30A39	; 6EB92
+call TrackButtons	; 6EB92
 mov dword [byte esp+018h], eax	; 6EB97
 test eax, eax	; 6EB9B
 jl short .6	; 6EB9D
@@ -2184,7 +2184,7 @@ call sub_90D20	; 6ECED
 add esp, byte 14h	; 6ECF2
 mov edx, 2	; 6ECF5
 mov eax, unk_D0CA2	; 6ECFA
-call sub_30AE2	; 6ECFF
+call DrawButtons	; 6ECFF
 mov dword [byte ebp+00h], 0	; 6ED04
 cmp dword [edi], byte 0	; 6ED0B
 je short .x	; 6ED0E
@@ -4175,7 +4175,7 @@ mov eax, 110h	; 7046E
 call PrintCenteredText	; 70473
 mov edx, 2	; 70478
 mov eax, unk_D0C5C	; 7047D
-call sub_30AE2	; 70482
+call DrawButtons	; 70482
 call sub_B4BA8	; 70487
 mov eax, dword [dword_EA2B4]	; 7048C
 mov edi, dword [byte eax+02Ch]	; 70491
@@ -4350,7 +4350,7 @@ mov ecx, dword [byte esp+04h]	; 7066D
 mov ebx, dword [byte esp+08h]	; 70671
 mov edx, 2	; 70675
 mov eax, unk_D0C5C	; 7067A
-call sub_30A39	; 7067F
+call TrackButtons	; 7067F
 mov dword [byte esp+010h], eax	; 70684
 test eax, eax	; 70688
 jl short .12	; 7068A
@@ -5918,7 +5918,7 @@ xor ecx, ecx	; 71C1E
 mov ebx, str_ChooseWhichTeamTo	; 71C20
 mov edx, esi	; 71C25
 lea eax, [byte esp+010h]	; 71C27
-call sub_303FB	; 71C2B
+call ListDialog	; 71C2B
 mov eax, dword [dword esp+eax*4+0E8h]	; 71C30
 jmp short .20	; 71C37
 .19:

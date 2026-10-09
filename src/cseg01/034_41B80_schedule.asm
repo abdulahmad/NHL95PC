@@ -6,13 +6,13 @@ extern __CHK, __STOSD, str_sche, str_Sch, str_gameset, str_KbytesFree, str_extDB
 extern str_SelHumanTeams, str_EnterLeagueName, str_KbytesFreeLine, divisionteams, teamdivision, teamdivslot, monthdays_m1
 extern curleague, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname, byte_DDD40
 extern byte_DE268, lgstate, gameopts, teamdivflags, confteams, dword_C5619, dword_C8C61, dword_C8D06
-extern dword_C9002, seasondb, careerdb, keydb, seasondb_size, careerdb_size, keydb_size, dword_DD770
+extern dword_C9002, seasondb, careerdb, keydb, seasondb_size, careerdb_size, keydb_size, dbextension
 extern leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, jctime
 extern memset_, mkdir_, msg_LeagueExists, leaguedbnames
 extern msg_GenSchedule, msg_NoDiskSpace, rand_, sprintf_, strcat_, strcpy_, DiskFreeBytes
 extern AwardsCeremony, FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenRW, FileClose, FileReadAt
-extern FileWriteAt, CopyFile, ReadSchedGame, ReadTeamRec, DiskSpaceShort, GetLeagueDBSizes, sub_2FDD1, sub_2FEDF
-extern sub_30A0C, sub_30F12, MessageBox, WriteModeState, sub_38B4F, WriteSchedGame, WriteTeamRec, sub_3DAB9
+extern FileWriteAt, CopyFile, ReadSchedGame, ReadTeamRec, DiskSpaceShort, GetLeagueDBSizes, AskDatabaseChoice, TextInputDialog
+extern SetDialogColors, RestoreDialogBg, MessageBox, WriteModeState, sub_38B4F, WriteSchedGame, WriteTeamRec, sub_3DAB9
 extern WriteLeagueInfo, CopyHumanTeamDBs, SimulateGame, SeriesWinner, sub_8CCA8, sub_8E8A0, sub_92DE0, sub_932D0
 extern sub_B2DCA, btn_LeagueExists, msg_WhichSchedule, btn_WhichSchedule, msg_CreateError, msg_CreatingLeague, msg_DiskFull, leagueteams
 extern treeteamnames, masterpw, savleague1, savleague2, unknown_libname_1, word_DDD46, word_DDD48, word_DDD4A
@@ -862,7 +862,7 @@ lea eax, [dword esp+03A0h]	; 42606
 call FileClose	; 4260D
 lea eax, [dword esp+039Ch]	; 42612
 call FileClose	; 42619
-call sub_30F12	; 4261E
+call RestoreDialogBg	; 4261E
 mov eax, edx	; 42623
 add esp, 3A8h	; 42625
 pop ebp	; 4262B
@@ -3987,7 +3987,7 @@ mov ecx, 0FAh	; 44DE4
 mov ebx, 0F8h	; 44DE9
 mov edx, ecx	; 44DEE
 mov eax, 0F9h	; 44DF0
-call sub_30A0C	; 44DF5
+call SetDialogColors	; 44DF5
 xor edi, edi	; 44DFA
 xor esi, esi	; 44DFC
 mov dword [byte esp+068h], edi	; 44DFE
@@ -4036,7 +4036,7 @@ mov ecx, 30h	; 44E8D
 mov ebx, 8	; 44E92
 lea edx, [byte esp+060h]	; 44E97
 mov eax, str_EnterLeagueName	; 44E9B
-call sub_2FEDF	; 44EA0
+call TextInputDialog	; 44EA0
 mov dword [byte esp+068h], eax	; 44EA5
 cmp byte [byte esp+04Ch], 0	; 44EA9
 je near .22	; 44EAE
@@ -4104,7 +4104,7 @@ mov esi, eax	; 44F7C
 .4:
 test esi, esi	; 44F7E
 jne short .5	; 44F80
-call sub_2FDD1	; 44F82
+call AskDatabaseChoice	; 44F82
 cmp eax, byte 0FFFFFFFFh	; 44F87
 jne short .5	; 44F8A
 mov esi, eax	; 44F8C
@@ -4177,7 +4177,7 @@ inc esi	; 45067
 .10:
 cmp esi, byte 1Ah	; 45068
 jl short CreateNewLeague.8	; 4506B
-mov ebx, dword [dword_DD770]	; 4506D
+mov ebx, dword [dbextension]	; 4506D
 mov edx, dword_C8D06	; 45073
 xor eax, eax	; 45078
 call GetLeagueDBSizes	; 4507A
@@ -4267,7 +4267,7 @@ mov dword [byte esp+068h], ebp	; 4518F
 jmp short .16	; 45193
 .15:
 push curleague	; 45195
-mov edx, dword [dword_DD770]	; 4519A
+mov edx, dword [dbextension]	; 4519A
 mov eax, dword [nosplit eax*4+leaguedbnames]	; 451A0
 xor ecx, ecx	; 451A7
 mov ebx, str_extDB	; 451A9
@@ -4290,7 +4290,7 @@ mov eax, curleague	; 451D8
 call RandomizeSchedule	; 451DD
 mov edi, eax	; 451E2
 .18:
-call sub_30F12	; 451E4
+call RestoreDialogBg	; 451E4
 test edi, edi	; 451E9
 jne short .19	; 451EB
 mov ebx, 0FFFFFFFFh	; 451ED
@@ -4337,7 +4337,7 @@ mov ecx, 3Fh	; 45262
 mov ebx, 17h	; 45267
 mov edx, ecx	; 4526C
 mov eax, 2Ah	; 4526E
-call sub_30A0C	; 45273
+call SetDialogColors	; 45273
 add esp, byte 70h	; 45278
 pop ebp	; 4527B
 pop edi	; 4527C

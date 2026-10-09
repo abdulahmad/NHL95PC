@@ -6,15 +6,15 @@ extern __CHK, _dos_getdiskfree_, _fstrcspn_, asc_C1904, asc_C190A, asc_C190E, as
 extern asc_C1923, asc_C1927, asc_C1938, asc_C193D, asc_C78BF, asc_C7D75, asc_C7D88, str_PINFO
 extern str_PLAYER, asc_C810C, str_extDB, asc_C8131, str_extxx, asc_C8158, str_extID
 extern str_dot, str_floppydrv, curleague, leagueflags, byte_DD7CA, byte_DD7CB, savedname, byte_DE268
-extern lgstate, dword_C71E4, dword_C756D, dword_C760D, msg_InsertDisk_arg, msg_WrongDisk_arg, dword_C79C0, dword_C79C8
+extern lgstate, dlgsavebuf, dword_C756D, dword_C760D, msg_InsertDisk_arg, msg_WrongDisk_arg, dword_C79C0, dword_C79C8
 extern dword_C7B16, dword_C7B1E, dword_C7B47, dword_C7B4F, dword_C7BA7, dword_C7BAF, dword_C7C25, dword_C7DA1
 extern dword_C7DA5, dword_C7E42, msg_SavedGame_arg, dword_C89E6, dword_C8A2B, dword_CE4E3, dword_CE503, dword_CE527
-extern dword_DD748, dword_DD74C, dword_DD784, dword_DD7A4, leaguemaster, leaguesaved, dword_DD7CE, humancount
+extern dword_DD748, dword_DD74C, dword_DD784, criterrflag, leaguemaster, leaguesaved, dword_DD7CE, humancount
 extern dword_DDD70, dword_DE265, mkdir_, off_C7905, off_C7C1D, off_C7C59, off_C7CE9, off_C7D62
 extern leaguedbnames, off_C89DE, off_C8A85, off_C8AB9, off_C8B37
 extern sprintf_, strcmp_, strcpy_, stricmp_, FileExists, MakePath, DeleteFiles, DeleteDir
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt, ReadKeyRec
-extern CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, SetupStatsSourceMenu, BuildSavedGameLabels, sub_30A0C, sub_30F12
+extern CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, SetupStatsSourceMenu, BuildSavedGameLabels, SetDialogColors, RestoreDialogBg
 extern MessageBox, LoadModeState, sub_32C9E, sub_33559, sub_336E6, sub_38B4F, sub_3A24F, sub_3A266
 extern sub_3A27D, WriteSchedGame, WriteTeamRec, sub_3A31E, WriteLeagueTeamEntry, AskTeamPassword, AskMasterPassword, sub_3A5FC
 extern sub_3A71C, sub_3A826, FmtFromLeague, LeagueCheckStub, GetLeagueId, MsgCopyingDatabases, CopyHumanTeamDBs, UpdateSeasonSchedule
@@ -543,7 +543,7 @@ mov ecx, 0FAh	; 3B057
 mov ebx, 0F8h	; 3B05C
 mov edx, ecx	; 3B061
 mov eax, 0F9h	; 3B063
-call sub_30A0C	; 3B068
+call SetDialogColors	; 3B068
 mov edx, 2	; 3B06D
 mov eax, curleague	; 3B072
 call LeagueCheckStub	; 3B077
@@ -686,7 +686,7 @@ mov ecx, 3Fh	; 3B23A
 mov ebx, 17h	; 3B23F
 mov edx, ecx	; 3B244
 mov eax, 2Ah	; 3B246
-call sub_30A0C	; 3B24B
+call SetDialogColors	; 3B24B
 add esp, byte 44h	; 3B250
 pop ebp	; 3B253
 loc_3B254:
@@ -714,7 +714,7 @@ mov ecx, 0FAh	; 3B27F
 mov ebx, 0F8h	; 3B284
 mov edx, ecx	; 3B289
 mov eax, 0F9h	; 3B28B
-call sub_30A0C	; 3B290
+call SetDialogColors	; 3B290
 mov edx, 2	; 3B295
 mov eax, curleague	; 3B29A
 call LeagueCheckStub	; 3B29F
@@ -911,7 +911,7 @@ call sub_3AF70	; 3B529
 mov esi, eax	; 3B52E
 test eax, eax	; 3B530
 jne short loc_3B57A	; 3B532
-cmp dword [dword_C71E4], byte 0	; 3B534
+cmp dword [dlgsavebuf], byte 0	; 3B534
 jne short loc_3B558	; 3B53B
 push eax	; 3B53D
 push eax	; 3B53E
@@ -1051,7 +1051,7 @@ mov edx, asc_C8158	; 3B703
 call CopyFile	; 3B708
 mov esi, eax	; 3B70D
 loc_3B70F:
-call sub_30F12	; 3B70F
+call RestoreDialogBg	; 3B70F
 test esi, esi	; 3B714
 jne short loc_3B73C	; 3B716
 mov ebx, dword [leaguedbnames+18h]	; 3B718
@@ -1107,7 +1107,7 @@ mov eax, dword [byte esp+044h]	; 3B7BC
 call FileWriteAt	; 3B7C0
 mov esi, eax	; 3B7C5
 loc_3B7C7:
-call sub_30F12	; 3B7C7
+call RestoreDialogBg	; 3B7C7
 lea eax, [byte esp+044h]	; 3B7CC
 call FileClose	; 3B7D0
 lea eax, [byte esp+048h]	; 3B7D5
@@ -1176,7 +1176,7 @@ mov ecx, 3Fh	; 3B88A
 mov ebx, 17h	; 3B88F
 mov edx, ecx	; 3B894
 mov eax, 2Ah	; 3B896
-call sub_30A0C	; 3B89B
+call SetDialogColors	; 3B89B
 mov eax, dword [dword_DE265]	; 3B8A0
 sar eax, 18h	; 3B8A5
 add esp, byte 60h	; 3B8A8
@@ -1290,7 +1290,7 @@ mov ecx, 0FAh	; 3B9E6
 mov ebx, 0F8h	; 3B9EB
 mov edx, ecx	; 3B9F0
 mov eax, 0F9h	; 3B9F2
-call sub_30A0C	; 3B9F7
+call SetDialogColors	; 3B9F7
 mov edx, 2	; 3B9FC
 mov eax, curleague	; 3BA01
 call LeagueCheckStub	; 3BA06
@@ -1404,7 +1404,7 @@ mov ecx, 3Fh	; 3BB69
 mov ebx, 17h	; 3BB6E
 mov edx, ecx	; 3BB73
 mov eax, 2Ah	; 3BB75
-call sub_30A0C	; 3BB7A
+call SetDialogColors	; 3BB7A
 add esp, byte 34h	; 3BB7F
 jmp near loc_3B254	; 3BB82
 sub_3BB87:
@@ -1818,7 +1818,7 @@ mov eax, dword [dword esp+0D0h]	; 3C1EF
 call WriteLeagueTeamEntry	; 3C1F6
 mov esi, eax	; 3C1FB
 loc_3C1FD:
-call sub_30F12	; 3C1FD
+call RestoreDialogBg	; 3C1FD
 test esi, esi	; 3C202
 je near loc_3C2F6	; 3C204
 mov byte [byte ebp+016h], 1	; 3C20A
@@ -2074,7 +2074,7 @@ mov edx, ebx	; 3C536
 mov eax, asc_C191E	; 3C538
 call CopyFile	; 3C53D
 loc_3C542:
-call sub_30F12	; 3C542
+call RestoreDialogBg	; 3C542
 mov edx, curleague	; 3C547
 lea eax, [byte esp+02Ch]	; 3C54C
 call strcpy_	; 3C550
@@ -2152,7 +2152,7 @@ mov ecx, 0FAh	; 3C638
 mov ebx, 0F8h	; 3C63D
 mov edx, ecx	; 3C642
 mov eax, 0F9h	; 3C644
-call sub_30A0C	; 3C649
+call SetDialogColors	; 3C649
 push byte 0FFFFFFFFh	; 3C64E
 lea eax, [byte esp+060h]	; 3C650
 push eax	; 3C654
@@ -2181,7 +2181,7 @@ mov ecx, 0FAh	; 3C691
 mov ebx, 0F8h	; 3C696
 mov edx, ecx	; 3C69B
 mov eax, 0F9h	; 3C69D
-call sub_30A0C	; 3C6A2
+call SetDialogColors	; 3C6A2
 push byte 0FFFFFFFFh	; 3C6A7
 lea eax, [byte esp+060h]	; 3C6A9
 push eax	; 3C6AD
@@ -2229,7 +2229,7 @@ mov ecx, 0FAh	; 3C715
 mov ebx, 0F8h	; 3C71A
 mov edx, ecx	; 3C71F
 mov eax, 0F9h	; 3C721
-call sub_30A0C	; 3C726
+call SetDialogColors	; 3C726
 mov ecx, str_extID	; 3C72B
 mov ebx, str_PLAYER	; 3C730
 mov edx, str_floppydrv	; 3C735
@@ -2339,7 +2339,7 @@ mov ecx, 0FAh	; 3C8D1
 mov ebx, 0F8h	; 3C8D6
 mov edx, ecx	; 3C8DB
 mov eax, 0F9h	; 3C8DD
-call sub_30A0C	; 3C8E2
+call SetDialogColors	; 3C8E2
 lea eax, [byte esp+07Ch]	; 3C8E7
 mov dword [dword_C7BA7], eax	; 3C8EB
 lea eax, [byte esp+06Ch]	; 3C8F0
@@ -2403,7 +2403,7 @@ mov ecx, 0FAh	; 3C9C9
 mov ebx, 0F8h	; 3C9CE
 mov edx, ecx	; 3C9D3
 mov eax, 0F9h	; 3C9D5
-call sub_30A0C	; 3C9DA
+call SetDialogColors	; 3C9DA
 lea eax, [dword esp+0A8h]	; 3C9DF
 push eax	; 3C9E6
 lea eax, [dword esp+094h]	; 3C9E7
@@ -2461,7 +2461,7 @@ mov ecx, 0FAh	; 3CA9B
 mov ebx, 0F8h	; 3CAA0
 mov edx, ecx	; 3CAA5
 mov eax, 0F9h	; 3CAA7
-call sub_30A0C	; 3CAAC
+call SetDialogColors	; 3CAAC
 test esi, esi	; 3CAB1
 jne near loc_3CED4	; 3CAB3
 test ebp, ebp	; 3CAB9
@@ -2491,7 +2491,7 @@ mov ecx, 0FAh	; 3CB17
 mov ebx, 0F8h	; 3CB1C
 mov edx, ecx	; 3CB21
 mov eax, 0F9h	; 3CB23
-call sub_30A0C	; 3CB28
+call SetDialogColors	; 3CB28
 lea eax, [byte esp+07Ch]	; 3CB2D
 mov dword [dword_C7B47], eax	; 3CB31
 lea eax, [byte esp+06Ch]	; 3CB36
@@ -2751,7 +2751,7 @@ call strcpy_	; 3CEEB
 lea eax, [byte esp+06Ch]	; 3CEF0
 call DeleteDir	; 3CEF4
 loc_3CEF9:
-call sub_30F12	; 3CEF9
+call RestoreDialogBg	; 3CEF9
 test esi, esi	; 3CEFE
 je short loc_3CF4E	; 3CF00
 lea eax, [dword esp+0A8h]	; 3CF02
@@ -2790,7 +2790,7 @@ mov ecx, 0FAh	; 3CF6D
 mov ebx, 0F8h	; 3CF72
 mov edx, ecx	; 3CF77
 mov eax, 0F9h	; 3CF79
-call sub_30A0C	; 3CF7E
+call SetDialogColors	; 3CF7E
 lea eax, [byte esp+020h]	; 3CF83
 push eax	; 3CF87
 lea eax, [byte esp+030h]	; 3CF88
@@ -2896,7 +2896,7 @@ mov ecx, 3Fh	; 3D0EB
 mov ebx, 17h	; 3D0F0
 mov edx, ecx	; 3D0F5
 mov eax, 2Ah	; 3D0F7
-call sub_30A0C	; 3D0FC
+call SetDialogColors	; 3D0FC
 add esp, byte 30h	; 3D101
 pop edx	; 3D104
 pop ecx	; 3D105
@@ -2945,7 +2945,7 @@ mov ecx, 0FAh	; 3D18C
 mov ebx, 0F8h	; 3D191
 mov edx, ecx	; 3D196
 mov eax, 0F9h	; 3D198
-call sub_30A0C	; 3D19D
+call SetDialogColors	; 3D19D
 lea eax, [byte esp+034h]	; 3D1A2
 push eax	; 3D1A6
 lea eax, [byte esp+048h]	; 3D1A7
@@ -3034,7 +3034,7 @@ mov ecx, 0FAh	; 3D2CD
 mov ebx, 0F8h	; 3D2D2
 mov edx, ecx	; 3D2D7
 mov eax, 0F9h	; 3D2D9
-call sub_30A0C	; 3D2DE
+call SetDialogColors	; 3D2DE
 jmp short loc_3D2E7	; 3D2E3
 loc_3D2E5:
 xor ebp, ebp	; 3D2E5
@@ -3106,7 +3106,7 @@ mov ecx, 0FAh	; 3D3C3
 mov ebx, 0F8h	; 3D3C8
 mov edx, ecx	; 3D3CD
 mov eax, 0F9h	; 3D3CF
-call sub_30A0C	; 3D3D4
+call SetDialogColors	; 3D3D4
 loc_3D3D9:
 mov esi, dword [byte esp+040h]	; 3D3D9
 push esi	; 3D3DD
@@ -3149,7 +3149,7 @@ mov ecx, 3Fh	; 3D44F
 mov ebx, 17h	; 3D454
 mov edx, ecx	; 3D459
 mov eax, 2Ah	; 3D45B
-call sub_30A0C	; 3D460
+call SetDialogColors	; 3D460
 add esp, byte 48h	; 3D465
 jmp near loc_3C6DB	; 3D468
 sub_3D46D:
@@ -3173,12 +3173,12 @@ xor ebp, ebp	; 3D498
 mov dword [byte esp+050h], ecx	; 3D49A
 jmp near loc_3D577	; 3D49E
 loc_3D4A3:
-mov dword [dword_DD7A4], ebp	; 3D4A3
+mov dword [criterrflag], ebp	; 3D4A3
 mov dword [nosplit edx*4+dword_DD748], 0FFFFFFFFh	; 3D4A9
 lea eax, [byte edx+01h]	; 3D4B4
 lea edx, [byte esp+03Ch]	; 3D4B7
 call _dos_getdiskfree_	; 3D4BB
-cmp dword [dword_DD7A4], byte 0	; 3D4C0
+cmp dword [criterrflag], byte 0	; 3D4C0
 je short loc_3D4D9	; 3D4C7
 mov eax, dword [byte esp+050h]	; 3D4C9
 mov dword [nosplit eax*4+dword_DD748], ebp	; 3D4CD
@@ -3335,13 +3335,13 @@ mov dword [dword esp+08Ch], ecx	; 3D6C4
 jmp near loc_3D7AA	; 3D6CB
 loc_3D6D0:
 xor esi, esi	; 3D6D0
-mov dword [dword_DD7A4], esi	; 3D6D2
+mov dword [criterrflag], esi	; 3D6D2
 mov ecx, 0FFFFFFFFh	; 3D6D8
 mov dword [nosplit eax*4+dword_DD748], ecx	; 3D6DD
 inc eax	; 3D6E4
 lea edx, [byte esp+07Ch]	; 3D6E5
 call _dos_getdiskfree_	; 3D6E9
-cmp dword [dword_DD7A4], byte 0	; 3D6EE
+cmp dword [criterrflag], byte 0	; 3D6EE
 jne near loc_3D7A1	; 3D6F5
 mov al, byte [dword esp+08Ch]	; 3D6FB
 add al, 41h	; 3D702
@@ -3537,7 +3537,7 @@ mov ecx, 11h	; 3D95D
 mov ebx, 5	; 3D962
 mov edx, ecx	; 3D967
 mov eax, 0Bh	; 3D969
-call sub_30A0C	; 3D96E
+call SetDialogColors	; 3D96E
 lea eax, [byte esp+03Ch]	; 3D973
 push eax	; 3D977
 lea eax, [byte esp+034h]	; 3D978

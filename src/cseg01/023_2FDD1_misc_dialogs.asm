@@ -2,42 +2,23 @@
 bits 32
 %include "hockey.inc"
 section s_2FDD1 progbits alloc exec nowrite align=1
-extern __CHK, asc_C1710, asc_C1718, str_extDB, asc_C811E, byte_C4B6C, byte_D42C3, byte_D42C5
-extern dword_C4B69, boxfillcolor, boxlitecolor, boxshadecolor, dword_C71D8, dword_C71DC, dword_C71E4, dword_C71E8
-extern dword_C71EC, dword_C71F0, dword_C71F4, dword_C71FC, dword_C7208, dword_C7210, fontcolor, dword_D42AC
-extern pointerspr, dword_DD678, dword_DD688, dword_DD68C, dword_DD690, dword_DD694, dword_DD698, dword_DD69C
-extern dword_DD6A0, dword_DD6A4, dword_DD770, dword_DD7A4, dword_EA0DC, fputchar, jctime, off_C74AB
+extern __CHK, str_Pointer6, str_DBOX, str_extDB, str_ORG, byte_C4B6C, byte_D42C3, byte_D42C5
+extern dword_C4B69, boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg, dlgsavebuf, listscroll
+extern fontcolor, dword_D42AC
+extern pointerspr, dlgsavex, dlgsavey, editcurw, editpos, editmaxw, editbuf, editcuron
+extern edity, editx, dbextension, criterrflag, dword_EA0DC, fputchar, jctime, dbchoicelines
 extern strlen_, SetTextColors, PrintShadowText, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B88E
 extern sub_8CCA8, sub_8E9C0, sub_903F0, sub_90A40, sub_90D20, sub_90EC0, sub_91044, sub_91370
 extern sub_91400, sub_92CD0, sub_B2CBE, MouseSetPos, sub_B2DCA, sub_B3989, sub_B39A7, PollKey
-extern sub_B3D46, sub_B3D64, sub_B4BA8, sub_B4FAC, unk_C1720, unk_C1722, unk_C74B7, unknown_libname_4
-global loc_2FE34, loc_2FE3E, loc_2FF09, loc_2FF0E, loc_2FF37, loc_2FF5C, loc_300BD, loc_300EC
-global loc_3012C, loc_3014F, loc_30159, loc_3015D, loc_30175, loc_301CC, loc_301D0, loc_30226
-global loc_30231, loc_30278, loc_302A4, loc_302A5, loc_302AF, loc_3030A, loc_3031C, loc_30322
-global loc_30358, loc_3036B, loc_30384, loc_30386, loc_30396, loc_303B9, loc_303F0, loc_30433
-global loc_30444, loc_3045D, loc_3046D, loc_3048E, loc_30492, loc_304AD, loc_305C8, loc_305DD
-global loc_30751, loc_30757, loc_30774, loc_3077F, loc_3079E, loc_307E2, loc_30850, loc_3085C
-global loc_308AD, loc_308DF, loc_308F6, loc_308FD, loc_308FF, loc_30908, loc_3096C, loc_30994
-global loc_309AC, loc_30A06, loc_30A5C, loc_30A9C, loc_30AB3, loc_30AC5, loc_30AD1, loc_30AD2
-global loc_30ADC, loc_30AF6, loc_30B0F, loc_30B55, loc_30BA6, loc_30BEC, loc_30CA5, loc_30D39
-global loc_30D95, loc_30DB3, loc_30DEB, loc_30DFC, loc_30E31, loc_30E4A, loc_30E4F, loc_30E50
-global loc_30F0B, loc_30F59, loc_30F7E, loc_30F8A, loc_30F8C, loc_30FA3, loc_30FB2, loc_30FC9
-global loc_30FD6, loc_30FDB, loc_30FE6, loc_30FFB, loc_31008, loc_3100A, loc_3100B, loc_31054
-global loc_3106F, loc_310AB, loc_310C8, loc_310CC, loc_31124, loc_3115F, loc_31169, loc_31181
-global loc_3118C, loc_311A6, loc_311B0, loc_311B4, loc_311EF, loc_311F3, loc_3120B, loc_31216
-global loc_31230, loc_3123A, loc_3123E, loc_31301, loc_31324, loc_31378, loc_3139A, loc_313AD
-global loc_313B2, loc_313B7, loc_313D7, loc_313E3, loc_31426, loc_3142E, loc_31502, loc_3151C
-global loc_31529, loc_31536, loc_31538, loc_31548, loc_3155E, loc_3158C, loc_3158F, loc_315CC
-global loc_31608, loc_31644, loc_3165D, loc_31667, loc_31687, loc_3168D, loc_316AA, loc_316C2
-global loc_316D3, loc_31791, loc_317A5, loc_317CF, loc_31803, loc_3180E, loc_3183B, loc_31850
-global loc_31863, loc_3187A, loc_318A2, loc_318B0, loc_318DE, loc_318E6, loc_318EA, loc_318EF
-global loc_318F8, loc_31901, loc_31921, loc_31974, loc_319A0, loc_319A8, loc_319B1, loc_319C6
-global loc_319D1, loc_319E5, loc_319F7, loc_31A3F, loc_31A5C, loc_31A63, loc_31A68, loc_31A70
-global loc_31A7C, loc_31A9F, sub_2FDD1, sub_2FE49, sub_2FED2, sub_2FEDF, sub_30203, sub_30209
-global sub_3023E, sub_302B9, sub_3039C, sub_303FB, sub_309E4, sub_30A0C, sub_30A39, sub_30AE2
-global sub_30B16, sub_30BF3, sub_30C3D, sub_30D0E, sub_30E66, sub_30F12, sub_30F5F, sub_30FB4
-global MessageBox, sub_31250, sub_3149D, sub_314B4, sub_31599, sub_3170D
-sub_2FDD1:
+extern sub_B3D46, sub_B3D64, sub_B4BA8, sub_B4FAC, str_Dot, str_Space, dbchoicebtns, unknown_libname_4
+global DrawListItem_x
+global TrackButtons_x, DrawButton_x
+global DrawEditCursor_x, DrawEditCursor_ret
+global AskDatabaseChoice, DrawBevelRect, DlgReturnZero, TextInputDialog, DlgNullCallback, SetListItemColors
+global ListHitTest, DrawListItem, DrawListItems, ListDialog, MeasureTextLine, SetDialogColors, TrackButtons, DrawButtons
+global DrawButton, InitScrollBar, DrawScrollBar, TrackScrollBars, SaveDialogBg, RestoreDialogBg, GrowToButton, GrowToButtons
+global MessageBox, RunMessageBox, CritErrHandler, DrawEditCursor, DrawEditText, EditTextField
+AskDatabaseChoice:
 push dword 30h	; 2FDD1
 call __CHK	; 2FDD6
 push ebx	; 2FDDB
@@ -58,27 +39,27 @@ push eax	; 2FDFC
 lea eax, [byte esp+0Ch]	; 2FDFD
 push eax	; 2FE01
 push byte 2	; 2FE02
-push unk_C74B7	; 2FE04
+push dbchoicebtns	; 2FE04
 mov ecx, 3	; 2FE09
-mov ebx, off_C74AB	; 2FE0E
+mov ebx, dbchoicelines	; 2FE0E
 mov edx, 0FFFFFFFFh	; 2FE13
 mov eax, edx	; 2FE18
 call MessageBox	; 2FE1A
 mov dword [byte esp+08h], eax	; 2FE1F
 cmp eax, byte 1	; 2FE23
-jne short loc_2FE34	; 2FE26
-mov dword [dword_DD770], asc_C811E	; 2FE28
-jmp short loc_2FE3E	; 2FE32
-loc_2FE34:
-mov dword [dword_DD770], str_extDB	; 2FE34
-loc_2FE3E:
+jne short .1	; 2FE26
+mov dword [dbextension], str_ORG	; 2FE28
+jmp short .2	; 2FE32
+.1:
+mov dword [dbextension], str_extDB	; 2FE34
+.2:
 mov eax, dword [byte esp+08h]	; 2FE3E
 add esp, byte 0Ch	; 2FE42
 pop edx	; 2FE45
 pop ecx	; 2FE46
 pop ebx	; 2FE47
 ret	; 2FE48
-sub_2FE49:
+DrawBevelRect:
 push dword 28h	; 2FE49
 call __CHK	; 2FE4E
 push esi	; 2FE53
@@ -138,12 +119,12 @@ pop ebp	; 2FECC
 pop edi	; 2FECD
 pop esi	; 2FECE
 ret 0Ch	; 2FECF
-sub_2FED2:
+DlgReturnZero:
 push dword 4	; 2FED2
 call __CHK	; 2FED7
 xor eax, eax	; 2FEDC
 ret	; 2FEDE
-sub_2FEDF:
+TextInputDialog:
 push dword 138h	; 2FEDF
 call __CHK	; 2FEE4
 push esi	; 2FEE9
@@ -158,13 +139,13 @@ call sub_6B47C	; 2FEF9
 call sub_B4BA8	; 2FEFE
 xor edx, edx	; 2FF03
 mov bl, 4Dh	; 2FF05
-jmp short loc_2FF0E	; 2FF07
-loc_2FF09:
+jmp short .2	; 2FF07
+.1:
 mov byte [byte esp+edx+04h], bl	; 2FF09
 inc edx	; 2FF0D
-loc_2FF0E:
+.2:
 cmp edx, edi	; 2FF0E
-jl short loc_2FF09	; 2FF10
+jl short TextInputDialog.1	; 2FF10
 xor ah, ah	; 2FF12
 mov byte [byte esp+edi+04h], ah	; 2FF14
 lea eax, [byte esp+04h]	; 2FF18
@@ -173,9 +154,9 @@ call fputchar	; 2FF1D
 add esp, byte 4	; 2FF22
 mov dword [dword esp+0114h], eax	; 2FF25
 cmp eax, ebp	; 2FF2C
-jge short loc_2FF37	; 2FF2E
+jge short .3	; 2FF2E
 mov dword [dword esp+0114h], ebp	; 2FF30
-loc_2FF37:
+.3:
 mov edx, dword [esp]	; 2FF37
 push edx	; 2FF3A
 add dword [dword esp+0118h], byte 0Ch	; 2FF3B
@@ -184,9 +165,9 @@ add esp, byte 4	; 2FF48
 lea ebp, [byte eax+010h]	; 2FF4B
 mov ecx, dword [dword esp+0114h]	; 2FF4E
 cmp ebp, ecx	; 2FF55
-jge short loc_2FF5C	; 2FF57
+jge short .4	; 2FF57
 lea ebp, [byte ecx+010h]	; 2FF59
-loc_2FF5C:
+.4:
 xor eax, eax	; 2FF5C
 mov al, byte [byte_D42C3]	; 2FF5E
 add eax, eax	; 2FF63
@@ -211,9 +192,9 @@ mov ecx, dword [dword esp+0104h]	; 2FFA4
 mov ebx, ebp	; 2FFAB
 mov edx, eax	; 2FFAD
 mov eax, dword [dword esp+0110h]	; 2FFAF
-call sub_30E66	; 2FFB6
-mov edx, dword [dword_C71DC]	; 2FFBB
-mov eax, dword [dword_C71D8]	; 2FFC1
+call SaveDialogBg	; 2FFB6
+mov edx, dword [dlgtextbg]	; 2FFBB
+mov eax, dword [dlgtextfg]	; 2FFC1
 call SetTextColors	; 2FFC6
 mov edx, dword [boxshadecolor]	; 2FFCB
 push edx	; 2FFD1
@@ -225,10 +206,10 @@ mov ecx, dword [dword esp+0110h]	; 2FFE0
 mov ebx, ebp	; 2FFE7
 mov edx, dword [dword esp+0118h]	; 2FFE9
 mov eax, dword [dword esp+011Ch]	; 2FFF0
-call sub_2FE49	; 2FFF7
-mov eax, dword [dword_C71DC]	; 2FFFC
+call DrawBevelRect	; 2FFF7
+mov eax, dword [dlgtextbg]	; 2FFFC
 push eax	; 30001
-mov edx, dword [dword_C71D8]	; 30002
+mov edx, dword [dlgtextfg]	; 30002
 push edx	; 30008
 call sub_8E9C0	; 30009
 add esp, byte 8	; 3000E
@@ -263,40 +244,40 @@ mov ebx, dword [boxlitecolor]	; 30071
 push ebx	; 30077
 mov ecx, dword [boxshadecolor]	; 30078
 push ecx	; 3007E
-mov ebp, dword [dword_C71DC]	; 3007F
+mov ebp, dword [dlgtextbg]	; 3007F
 push ebp	; 30085
 mov edx, dword [dword esp+0118h]	; 30086
 add edx, byte 1Fh	; 3008D
 mov ecx, 12h	; 30090
 mov ebx, dword [dword esp+0120h]	; 30095
 mov eax, dword [dword esp+011Ch]	; 3009C
-call sub_2FE49	; 300A3
-mov eax, dword [dword_C71DC]	; 300A8
+call DrawBevelRect	; 300A3
+mov eax, dword [dlgtextbg]	; 300A8
 push eax	; 300AD
-mov edx, dword [dword_C71D8]	; 300AE
+mov edx, dword [dlgtextfg]	; 300AE
 push edx	; 300B4
 call sub_8E9C0	; 300B5
 add esp, byte 8	; 300BA
-loc_300BD:
+.5:
 push byte 1	; 300BD
 call sub_B2CBE	; 300BF
 add esp, byte 4	; 300C4
 test eax, eax	; 300C7
-jne short loc_300BD	; 300C9
+jne short TextInputDialog.5	; 300C9
 push byte 1Ch	; 300CB
 call sub_B2CBE	; 300CD
 add esp, byte 4	; 300D2
 test eax, eax	; 300D5
-jne short loc_300BD	; 300D7
+jne short TextInputDialog.5	; 300D7
 call sub_6B3D7	; 300D9
 cmp dword [dword esp+0128h], byte 0	; 300DE
-je near loc_30175	; 300E6
-loc_300EC:
+je near .11	; 300E6
+.6:
 mov byte [esi], 0	; 300EC
 mov ecx, dword [dword esp+0138h]	; 300EF
 push ecx	; 300F6
 push byte 0	; 300F7
-push sub_2FED2	; 300F9
+push DlgReturnZero	; 300F9
 mov eax, dword [dword esp+0118h]	; 300FE
 add eax, byte 20h	; 30105
 push eax	; 30108
@@ -306,43 +287,43 @@ mov ebx, dword [dword esp+0124h]	; 30113
 sub ebx, byte 8	; 3011A
 mov edx, edi	; 3011D
 mov eax, esi	; 3011F
-call sub_3170D	; 30121
+call EditTextField	; 30121
 xor ebp, ebp	; 30126
 xor edx, edx	; 30128
-jmp short loc_30159	; 3012A
-loc_3012C:
+jmp short .9	; 3012A
+.7:
 mov al, byte [edx+esi]	; 3012C
 inc al	; 3012F
 and eax, 0FFh	; 30131
 test byte [dword eax+byte_C4B6C], 20h	; 30136
-jne short loc_3014F	; 3013D
+jne short .8	; 3013D
 mov ch, byte [esi]	; 3013F
 cmp ch, 20h	; 30141
-je short loc_3014F	; 30144
+je short .8	; 30144
 test ch, ch	; 30146
-je short loc_3014F	; 30148
+je short .8	; 30148
 cmp ch, 2Dh	; 3014A
-jne short loc_3015D	; 3014D
-loc_3014F:
+jne short .10	; 3014D
+.8:
 mov eax, esi	; 3014F
 call unknown_libname_4	; 30151
 mov ebp, eax	; 30156
 inc edx	; 30158
-loc_30159:
+.9:
 cmp edx, edi	; 30159
-jl short loc_3012C	; 3015B
-loc_3015D:
+jl short TextInputDialog.7	; 3015B
+.10:
 cmp ebp, dword [dword esp+012Ch]	; 3015D
-jl short loc_300EC	; 30164
+jl short TextInputDialog.6	; 30164
 cmp ebp, dword [dword esp+0130h]	; 30166
-jg near loc_300EC	; 3016D
-jmp short loc_301D0	; 30173
-loc_30175:
+jg near TextInputDialog.6	; 3016D
+jmp short .13	; 30173
+.11:
 mov byte [esi], 0	; 30175
 mov ecx, dword [dword esp+0138h]	; 30178
 push ecx	; 3017F
 push byte 0	; 30180
-push sub_2FED2	; 30182
+push DlgReturnZero	; 30182
 mov eax, dword [dword esp+0118h]	; 30187
 add eax, byte 20h	; 3018E
 push eax	; 30191
@@ -352,54 +333,54 @@ mov ebx, dword [dword esp+0124h]	; 3019C
 sub ebx, byte 8	; 301A3
 mov edx, edi	; 301A6
 mov eax, esi	; 301A8
-call sub_3170D	; 301AA
+call EditTextField	; 301AA
 mov ebp, eax	; 301AF
 mov edx, 1	; 301B1
 cmp dword [dword esp+0134h], byte 0	; 301B6
-je short loc_301CC	; 301BE
+je short .12	; 301BE
 cmp byte [esi], 0	; 301C0
-jne short loc_301CC	; 301C3
+jne short .12	; 301C3
 cmp eax, byte 1Bh	; 301C5
-je short loc_301CC	; 301C8
+je short .12	; 301C8
 xor edx, edx	; 301CA
-loc_301CC:
+.12:
 test edx, edx	; 301CC
-je short loc_30175	; 301CE
-loc_301D0:
+je short TextInputDialog.11	; 301CE
+.13:
 push byte 1	; 301D0
 call sub_B2CBE	; 301D2
 add esp, byte 4	; 301D7
 test eax, eax	; 301DA
-jne short loc_301D0	; 301DC
+jne short TextInputDialog.13	; 301DC
 push byte 1Ch	; 301DE
 call sub_B2CBE	; 301E0
 add esp, byte 4	; 301E5
 test eax, eax	; 301E8
-jne short loc_301D0	; 301EA
+jne short TextInputDialog.13	; 301EA
 call sub_6B3D7	; 301EC
-call sub_30F12	; 301F1
+call RestoreDialogBg	; 301F1
 call sub_6B410	; 301F6
 mov eax, ebp	; 301FB
 add esp, 118h	; 301FD
-sub_30203:
+DlgNullCallback:
 pop ebp	; 30203
 pop edi	; 30204
 pop esi	; 30205
 ret 14h	; 30206
-sub_30209:
+SetListItemColors:
 push dword 14h	; 30209
 call __CHK	; 3020E
 push ebx	; 30213
 push ecx	; 30214
 cmp edx, eax	; 30215
-jne short loc_30226	; 30217
-mov edx, dword [dword_C71DC]	; 30219
-mov eax, dword [dword_C71D8]	; 3021F
-jmp short loc_30231	; 30224
-loc_30226:
-mov edx, dword [dword_C71D8]	; 30226
-mov eax, dword [dword_C71DC]	; 3022C
-loc_30231:
+jne short .1	; 30217
+mov edx, dword [dlgtextbg]	; 30219
+mov eax, dword [dlgtextfg]	; 3021F
+jmp short .2	; 30224
+.1:
+mov edx, dword [dlgtextfg]	; 30226
+mov eax, dword [dlgtextbg]	; 3022C
+.2:
 push eax	; 30231
 push edx	; 30232
 call sub_8E9C0	; 30233
@@ -407,7 +388,7 @@ add esp, byte 8	; 30238
 pop ecx	; 3023B
 pop ebx	; 3023C
 ret	; 3023D
-sub_3023E:
+ListHitTest:
 push dword 18h	; 3023E
 call __CHK	; 30243
 push esi	; 30248
@@ -426,8 +407,8 @@ add ebx, eax	; 30269
 mov dword [byte esp+04h], ebx	; 3026B
 mov ecx, 0FFFFFFFFh	; 3026F
 xor eax, eax	; 30274
-jmp short loc_302A5	; 30276
-loc_30278:
+jmp short .3	; 30276
+.1:
 xor edx, edx	; 30278
 mov dl, byte [byte_D42C3]	; 3027A
 lea ebx, [byte edx+02h]	; 30280
@@ -436,28 +417,28 @@ add ebx, dword [byte esp+08h]	; 30286
 add edx, ebx	; 3028A
 add edx, byte 2	; 3028C
 cmp esi, dword [esp]	; 3028F
-jl short loc_302A4	; 30292
+jl short .2	; 30292
 cmp esi, dword [byte esp+04h]	; 30294
-jg short loc_302A4	; 30298
+jg short .2	; 30298
 cmp edi, ebx	; 3029A
-jl short loc_302A4	; 3029C
+jl short .2	; 3029C
 cmp edi, edx	; 3029E
-jg short loc_302A4	; 302A0
+jg short .2	; 302A0
 mov ecx, eax	; 302A2
-loc_302A4:
+.2:
 inc eax	; 302A4
-loc_302A5:
+.3:
 cmp eax, dword [byte esp+01Ch]	; 302A5
-jge short loc_302AF	; 302A9
+jge short .4	; 302A9
 test ecx, ecx	; 302AB
-jl short loc_30278	; 302AD
-loc_302AF:
+jl short ListHitTest.1	; 302AD
+.4:
 mov eax, ecx	; 302AF
 add esp, byte 0Ch	; 302B1
 pop edi	; 302B4
 pop esi	; 302B5
 ret 8	; 302B6
-sub_302B9:
+DrawListItem:
 push dword 28h	; 302B9
 call __CHK	; 302BE
 push esi	; 302C3
@@ -478,22 +459,22 @@ add edi, eax	; 302E6
 add esi, byte 2	; 302E8
 lea ebp, [byte ecx-04h]	; 302EB
 cmp dword [byte esp+024h], byte 0	; 302EE
-je short loc_3030A	; 302F3
+je short .1	; 302F3
 mov edx, dword [byte esp+028h]	; 302F5
 add edx, dword [byte esp+018h]	; 302F9
 cmp byte [edx], 0	; 302FD
-je short loc_3030A	; 30300
+je short .1	; 30300
 mov edx, dword [boxfillcolor]	; 30302
-jmp short loc_30322	; 30308
-loc_3030A:
+jmp short .3	; 30308
+.1:
 mov eax, dword [byte esp+01Ch]	; 3030A
 cmp eax, dword [byte esp+018h]	; 3030E
-jne short loc_3031C	; 30312
-mov edx, dword [dword_C71D8]	; 30314
-jmp short loc_30322	; 3031A
-loc_3031C:
-mov edx, dword [dword_C71DC]	; 3031C
-loc_30322:
+jne short .2	; 30312
+mov edx, dword [dlgtextfg]	; 30314
+jmp short .3	; 3031A
+.2:
+mov edx, dword [dlgtextbg]	; 3031C
+.3:
 push edx	; 30322
 xor eax, eax	; 30323
 mov al, byte [byte_D42C3]	; 30325
@@ -506,23 +487,23 @@ call sub_90D20	; 30331
 add esp, byte 14h	; 30336
 mov edx, dword [byte esp+01Ch]	; 30339
 mov eax, dword [byte esp+018h]	; 3033D
-call sub_30209	; 30341
+call SetListItemColors	; 30341
 mov ebx, dword [byte esp+020h]	; 30346
 cmp ebx, byte 1	; 3034A
-jb short loc_30386	; 3034D
-jbe short loc_30358	; 3034F
+jb short .7	; 3034D
+jbe short .4	; 3034F
 cmp ebx, byte 2	; 30351
-je short loc_3036B	; 30354
-jmp short loc_30386	; 30356
-loc_30358:
+je short .5	; 30354
+jmp short .7	; 30356
+.4:
 mov ebx, dword [esp]	; 30358
 push ebx	; 3035B
 call fputchar	; 3035C
 add esp, byte 4	; 30361
 sub ebp, eax	; 30364
 lea eax, [byte ebp-04h]	; 30366
-jmp short loc_30384	; 30369
-loc_3036B:
+jmp short .6	; 30369
+.5:
 mov edx, dword [esp]	; 3036B
 push edx	; 3036E
 call fputchar	; 3036F
@@ -533,20 +514,20 @@ mov eax, edx	; 3037B
 sar edx, 1Fh	; 3037D
 LD sub, eax, edx	; 30380
 sar eax, 1	; 30382
-loc_30384:
+.6:
 add esi, eax	; 30384
-loc_30386:
+.7:
 lea edx, [byte edi+01h]	; 30386
 mov ebx, dword [esp]	; 30389
 mov eax, esi	; 3038C
 call sub_6B88E	; 3038E
 add esp, byte 4	; 30393
-loc_30396:
+DrawListItem_x:
 pop ebp	; 30396
 pop edi	; 30397
 pop esi	; 30398
 ret 18h	; 30399
-sub_3039C:
+DrawListItems:
 push dword 30h	; 3039C
 call __CHK	; 303A1
 push esi	; 303A6
@@ -558,8 +539,8 @@ mov ebp, edx	; 303AD
 mov edi, ebx	; 303AF
 mov dword [byte esp+04h], ecx	; 303B1
 xor esi, esi	; 303B5
-jmp short loc_303F0	; 303B7
-loc_303B9:
+jmp short .2	; 303B7
+.1:
 mov ebx, dword [byte esp+02Ch]	; 303B9
 push ebx	; 303BD
 mov ecx, dword [byte esp+02Ch]	; 303BE
@@ -579,14 +560,14 @@ mov eax, dword [eax]	; 303E0
 mov ecx, dword [byte esp+01Ch]	; 303E2
 mov ebx, edi	; 303E6
 mov edx, ebp	; 303E8
-call sub_302B9	; 303EA
+call DrawListItem	; 303EA
 inc esi	; 303EF
-loc_303F0:
+.2:
 cmp esi, dword [byte esp+020h]	; 303F0
-jl short loc_303B9	; 303F4
+jl short DrawListItems.1	; 303F4
 add esp, byte 8	; 303F6
-jmp short loc_30396	; 303F9
-sub_303FB:
+jmp short DrawListItem_x	; 303F9
+ListDialog:
 push dword 84h	; 303FB
 call __CHK	; 30400
 push esi	; 30405
@@ -603,14 +584,14 @@ mov dword [byte esp+034h], edx	; 3041D
 mov dword [byte esp+054h], edx	; 30421
 xor ebp, ebp	; 30425
 cmp dword [byte esp+06Ch], byte 0	; 30427
-je short loc_30433	; 3042C
+je short .1	; 3042C
 mov ebp, 0FFFFFFFFh	; 3042E
-loc_30433:
+.1:
 mov dword [byte esp+03Ch], esi	; 30433
 cmp esi, byte 14h	; 30437
-jle short loc_30444	; 3043A
+jle short .2	; 3043A
 mov dword [byte esp+03Ch], 14h	; 3043C
-loc_30444:
+.2:
 mov edx, dword [byte esp+01Ch]	; 30444
 push edx	; 30448
 call fputchar	; 30449
@@ -618,14 +599,14 @@ add esp, byte 4	; 3044E
 mov dword [byte esp+04Ch], eax	; 30451
 xor ebx, ebx	; 30455
 mov dword [byte esp+014h], ebx	; 30457
-jmp short loc_30492	; 3045B
-loc_3045D:
+jmp short .6	; 3045B
+.3:
 cmp dword [byte esp+06Ch], byte 0	; 3045D
-je short loc_3046D	; 30462
+je short .4	; 30462
 mov eax, dword [byte esp+070h]	; 30464
 add eax, ecx	; 30468
 mov byte [eax], 0	; 3046A
-loc_3046D:
+.4:
 mov eax, dword [byte esp+014h]	; 3046D
 shl eax, 2	; 30471
 add eax, dword [esp]	; 30474
@@ -635,21 +616,21 @@ call fputchar	; 3047A
 add esp, byte 4	; 3047F
 mov edi, eax	; 30482
 cmp eax, dword [byte esp+04Ch]	; 30484
-jle short loc_3048E	; 30488
+jle short .5	; 30488
 mov dword [byte esp+04Ch], eax	; 3048A
-loc_3048E:
+.5:
 inc dword [byte esp+014h]	; 3048E
-loc_30492:
+.6:
 mov ecx, dword [byte esp+014h]	; 30492
 cmp esi, ecx	; 30496
-jg short loc_3045D	; 30498
+jg short ListDialog.3	; 30498
 mov eax, dword [byte esp+04Ch]	; 3049A
 add eax, byte 9	; 3049E
 mov dword [byte esp+04Ch], eax	; 304A1
 cmp edi, eax	; 304A5
-jle short loc_304AD	; 304A7
+jle short .7	; 304A7
 mov dword [byte esp+04Ch], edi	; 304A9
-loc_304AD:
+.7:
 mov ebx, dword [byte esp+01Ch]	; 304AD
 push ebx	; 304B1
 call fputchar	; 304B2
@@ -691,7 +672,7 @@ mov eax, dword [byte esp+02Ch]	; 30525
 add eax, byte 18h	; 30529
 mov dword [byte esp+040h], eax	; 3052C
 cmp esi, ecx	; 30530
-jle near loc_305C8	; 30532
+jle near .8	; 30532
 mov dword [byte esp+034h], 0FFFFFFFFh	; 30538
 sub dword [byte esp+048h], byte 0Ah	; 30540
 mov ebx, dword [byte esp+030h]	; 30545
@@ -699,39 +680,39 @@ sub ebx, byte 0Ah	; 30549
 mov dword [byte esp+030h], ebx	; 3054C
 mov ecx, dword [byte esp+028h]	; 30550
 lea eax, [ebx+ecx]	; 30554
-mov dword [dword_C71E8], eax	; 30557
+mov dword [listscroll], eax	; 30557
 mov eax, dword [byte esp+02Ch]	; 3055C
-mov dword [dword_C71EC], eax	; 30560
-mov dword [dword_C71F0], 0Ah	; 30565
+mov dword [listscroll+4], eax	; 30560
+mov dword [listscroll+8], 0Ah	; 30565
 mov eax, dword [byte esp+024h]	; 3056F
-mov dword [dword_C71F4], eax	; 30573
+mov dword [listscroll+0Ch], eax	; 30573
 mov ebx, esi	; 30578
 mov edx, dword [byte esp+03Ch]	; 3057A
-mov eax, dword_C71E8	; 3057E
-call sub_30BF3	; 30583
+mov eax, listscroll	; 3057E
+call InitScrollBar	; 30583
 xor edx, edx	; 30588
-mov dword [dword_C7208], edx	; 3058A
-mov eax, dword [dword_C71F4]	; 30590
+mov dword [listscroll+20h], edx	; 3058A
+mov eax, dword [listscroll+0Ch]	; 30590
 sub eax, byte 4	; 30595
 imul eax, edx	; 30598
-mov ebx, dword [dword_C7210]	; 3059B
+mov ebx, dword [listscroll+28h]	; 3059B
 div ebx	; 305A1
-mov dword [dword_C71FC], eax	; 305A3
+mov dword [listscroll+14h], eax	; 305A3
 lea ebx, [byte ecx+0Ah]	; 305A8
 mov ecx, dword [byte esp+024h]	; 305AB
 mov edx, dword [byte esp+02Ch]	; 305AF
 mov eax, dword [byte esp+030h]	; 305B3
-call sub_30E66	; 305B7
-mov eax, dword_C71E8	; 305BC
-call sub_30C3D	; 305C1
-jmp short loc_305DD	; 305C6
-loc_305C8:
+call SaveDialogBg	; 305B7
+mov eax, listscroll	; 305BC
+call DrawScrollBar	; 305C1
+jmp short .9	; 305C6
+.8:
 mov ecx, dword [byte esp+024h]	; 305C8
 mov ebx, dword [byte esp+028h]	; 305CC
 mov edx, dword [byte esp+02Ch]	; 305D0
 mov eax, dword [byte esp+030h]	; 305D4
-call sub_30E66	; 305D8
-loc_305DD:
+call SaveDialogBg	; 305D8
+.9:
 mov ebx, dword [boxshadecolor]	; 305DD
 push ebx	; 305E3
 mov ecx, dword [boxlitecolor]	; 305E4
@@ -742,9 +723,9 @@ mov ecx, dword [byte esp+030h]	; 305F2
 mov ebx, dword [byte esp+034h]	; 305F6
 mov edx, dword [byte esp+038h]	; 305FA
 mov eax, dword [byte esp+03Ch]	; 305FE
-call sub_2FE49	; 30602
-mov edx, dword [dword_C71DC]	; 30607
-mov eax, dword [dword_C71D8]	; 3060D
+call DrawBevelRect	; 30602
+mov edx, dword [dlgtextbg]	; 30607
+mov eax, dword [dlgtextfg]	; 3060D
 call SetTextColors	; 30612
 mov ecx, dword [byte esp+02Ch]	; 30617
 add ecx, byte 6	; 3061B
@@ -762,13 +743,13 @@ mov eax, dword [boxlitecolor]	; 3063C
 push eax	; 30641
 mov edx, dword [boxshadecolor]	; 30642
 push edx	; 30648
-mov ebx, dword [dword_C71DC]	; 30649
+mov ebx, dword [dlgtextbg]	; 30649
 push ebx	; 3064F
 mov ecx, dword [byte esp+02Ch]	; 30650
 mov ebx, dword [byte esp+058h]	; 30654
 mov edx, dword [byte esp+04Ch]	; 30658
 mov eax, dword [byte esp+054h]	; 3065C
-call sub_2FE49	; 30660
+call DrawBevelRect	; 30660
 mov ecx, dword [byte esp+070h]	; 30665
 push ecx	; 30669
 mov esi, dword [byte esp+070h]	; 3066A
@@ -784,7 +765,7 @@ mov ecx, dword [byte esp+064h]	; 3067F
 mov ebx, dword [byte esp+058h]	; 30683
 mov edx, dword [byte esp+060h]	; 30687
 mov eax, dword [byte esp+018h]	; 3068B
-call sub_3039C	; 3068F
+call DrawListItems	; 3068F
 mov eax, dword [pointerspr]	; 30694
 mov edx, dword [byte eax+02h]	; 30699
 sar edx, 10h	; 3069C
@@ -797,7 +778,7 @@ imul eax, edx	; 306AC
 add eax, byte 11h	; 306AF
 push byte 20h	; 306B2
 push eax	; 306B4
-push asc_C1710	; 306B5
+push str_Pointer6	; 306B5
 call sub_8CCA8	; 306BA
 mov dword [byte esp+024h], eax	; 306BF
 add esp, byte 0Ch	; 306C3
@@ -847,33 +828,33 @@ call sub_91370	; 30742
 add esp, byte 0Ch	; 30747
 call sub_6B3D7	; 3074A
 xor esi, esi	; 3074F
-loc_30751:
+.10:
 xor edi, edi	; 30751
 mov dword [byte esp+058h], edi	; 30753
-loc_30757:
+.11:
 call sub_6B391	; 30757
 mov ecx, eax	; 3075C
 test eax, eax	; 3075E
-je short loc_30774	; 30760
+je short .12	; 30760
 lea ebx, [byte esp+04h]	; 30762
 lea edx, [byte esp+08h]	; 30766
 call dword [dword_EA0DC]	; 3076A
 mov dword [byte esp+058h], eax	; 30770
-loc_30774:
+.12:
 test ecx, ecx	; 30774
-je short loc_3077F	; 30776
+je short .13	; 30776
 test byte [byte esp+058h], 2	; 30778
-je short loc_30757	; 3077D
-loc_3077F:
+je short ListDialog.11	; 3077D
+.13:
 cmp dword [byte esp+058h], byte 0	; 3077F
-jne short loc_307E2	; 30784
+jne short .15	; 30784
 mov eax, dword [byte esp+08h]	; 30786
 cmp eax, dword [byte esp+010h]	; 3078A
-jne short loc_3079E	; 3078E
+jne short .14	; 3078E
 mov eax, dword [byte esp+04h]	; 30790
 cmp eax, dword [byte esp+0Ch]	; 30794
-je near loc_309AC	; 30798
-loc_3079E:
+je near .26	; 30798
+.14:
 mov ecx, dword [byte esp+0Ch]	; 3079E
 push ecx	; 307A2
 mov edi, dword [byte esp+014h]	; 307A3
@@ -896,8 +877,8 @@ mov eax, dword [byte esp+0Ch]	; 307D1
 push eax	; 307D5
 mov edx, dword [pointerspr]	; 307D6
 push edx	; 307DC
-jmp near loc_30994	; 307DD
-loc_307E2:
+jmp near .25	; 307DD
+.15:
 mov edx, dword [byte esp+0Ch]	; 307E2
 push edx	; 307E6
 mov ebx, dword [byte esp+014h]	; 307E7
@@ -907,7 +888,7 @@ push ecx	; 307F0
 call sub_903F0	; 307F1
 add esp, byte 0Ch	; 307F6
 test byte [byte esp+058h], 2	; 307F9
-je near loc_30908	; 307FE
+je near .23	; 307FE
 mov edi, dword [byte esp+03Ch]	; 30804
 push edi	; 30808
 mov eax, dword [byte esp+050h]	; 30809
@@ -916,36 +897,36 @@ mov ecx, dword [byte esp+048h]	; 3080E
 mov ebx, dword [byte esp+050h]	; 30812
 mov edx, dword [byte esp+0Ch]	; 30816
 mov eax, dword [byte esp+010h]	; 3081A
-call sub_3023E	; 3081E
+call ListHitTest	; 3081E
 mov dword [byte esp+014h], eax	; 30823
 test eax, eax	; 30827
-jl near loc_308DF	; 30829
+jl near .19	; 30829
 mov dword [byte esp+050h], ebp	; 3082F
 mov ebp, dword [byte esp+054h]	; 30833
 add ebp, eax	; 30837
 cmp dword [byte esp+06Ch], byte 0	; 30839
-je short loc_3085C	; 3083E
+je short .17	; 3083E
 cmp ebp, dword [byte esp+050h]	; 30840
-jne short loc_30850	; 30844
+jne short .16	; 30844
 mov eax, dword [byte esp+070h]	; 30846
 cmp byte [eax+ebp], 0	; 3084A
-jne short loc_3085C	; 3084E
-loc_30850:
+jne short .17	; 3084E
+.16:
 mov eax, dword [byte esp+070h]	; 30850
 mov dl, byte [eax+ebp]	; 30854
 not dl	; 30857
 mov byte [eax+ebp], dl	; 30859
-loc_3085C:
+.17:
 mov ecx, dword [byte esp+050h]	; 3085C
 test ecx, ecx	; 30860
-jl short loc_308AD	; 30862
+jl short .18	; 30862
 mov edi, dword [byte esp+054h]	; 30864
 cmp ecx, edi	; 30868
-jl short loc_308AD	; 3086A
+jl short .18	; 3086A
 mov edx, dword [byte esp+03Ch]	; 3086C
 lea eax, [edi+edx]	; 30870
 cmp eax, ecx	; 30873
-jle short loc_308AD	; 30875
+jle short .18	; 30875
 mov ecx, dword [byte esp+070h]	; 30877
 push ecx	; 3087B
 mov edi, dword [byte esp+070h]	; 3087C
@@ -964,8 +945,8 @@ mov eax, dword [eax]	; 3089A
 mov ecx, dword [byte esp+064h]	; 3089C
 mov ebx, dword [byte esp+058h]	; 308A0
 mov edx, dword [byte esp+060h]	; 308A4
-call sub_302B9	; 308A8
-loc_308AD:
+call DrawListItem	; 308A8
+.18:
 mov edi, dword [byte esp+070h]	; 308AD
 push edi	; 308B1
 mov eax, dword [byte esp+070h]	; 308B2
@@ -983,40 +964,40 @@ mov eax, dword [eax]	; 308CC
 mov ecx, dword [byte esp+064h]	; 308CE
 mov ebx, dword [byte esp+058h]	; 308D2
 mov edx, dword [byte esp+060h]	; 308D6
-call sub_302B9	; 308DA
-loc_308DF:
+call DrawListItem	; 308DA
+.19:
 cmp ebp, dword [byte esp+050h]	; 308DF
-jne short loc_30908	; 308E3
+jne short .23	; 308E3
 cmp dword [byte esp+06Ch], byte 0	; 308E5
-je short loc_308F6	; 308EA
+je short .20	; 308EA
 mov eax, dword [byte esp+070h]	; 308EC
 cmp byte [eax+ebp], 0	; 308F0
-je short loc_308FD	; 308F4
-loc_308F6:
+je short .21	; 308F4
+.20:
 mov eax, 1	; 308F6
-jmp short loc_308FF	; 308FB
-loc_308FD:
+jmp short .22	; 308FB
+.21:
 xor eax, eax	; 308FD
-loc_308FF:
+.22:
 test eax, eax	; 308FF
-je short loc_30908	; 30901
+je short .23	; 30901
 mov esi, 1	; 30903
-loc_30908:
+.23:
 cmp dword [byte esp+034h], byte 0	; 30908
-je short loc_3096C	; 3090D
+je short .24	; 3090D
 mov ebx, dword [byte esp+058h]	; 3090F
 push ebx	; 30913
 mov ecx, dword [byte esp+08h]	; 30914
 mov ebx, dword [byte esp+0Ch]	; 30918
 mov edx, 1	; 3091C
-mov eax, dword_C71E8	; 30921
-call sub_30D0E	; 30926
+mov eax, listscroll	; 30921
+call TrackScrollBars	; 30926
 test eax, eax	; 3092B
-jl short loc_3096C	; 3092D
+jl short .24	; 3092D
 mov eax, dword [byte esp+054h]	; 3092F
-mov ecx, dword [dword_C7208]	; 30933
+mov ecx, dword [listscroll+20h]	; 30933
 cmp eax, ecx	; 30939
-je short loc_3096C	; 3093B
+je short .24	; 3093B
 mov dword [byte esp+054h], ecx	; 3093D
 mov edi, dword [byte esp+070h]	; 30941
 push edi	; 30945
@@ -1032,8 +1013,8 @@ mov ecx, dword [byte esp+064h]	; 30957
 mov ebx, dword [byte esp+058h]	; 3095B
 mov edx, dword [byte esp+060h]	; 3095F
 mov eax, dword [byte esp+018h]	; 30963
-call sub_3039C	; 30967
-loc_3096C:
+call DrawListItems	; 30967
+.24:
 mov edi, dword [byte esp+04h]	; 3096C
 push edi	; 30970
 mov eax, dword [byte esp+0Ch]	; 30971
@@ -1048,16 +1029,16 @@ mov ecx, dword [byte esp+0Ch]	; 30988
 push ecx	; 3098C
 mov edi, dword [pointerspr]	; 3098D
 push edi	; 30993
-loc_30994:
+.25:
 call sub_91370	; 30994
 add esp, byte 0Ch	; 30999
 mov eax, dword [byte esp+08h]	; 3099C
 mov dword [byte esp+010h], eax	; 309A0
 mov eax, dword [byte esp+04h]	; 309A4
 mov dword [byte esp+0Ch], eax	; 309A8
-loc_309AC:
+.26:
 test esi, esi	; 309AC
-je near loc_30751	; 309AE
+je near ListDialog.10	; 309AE
 mov ebx, dword [byte esp+0Ch]	; 309B4
 push ebx	; 309B8
 mov ecx, dword [byte esp+014h]	; 309B9
@@ -1069,14 +1050,14 @@ add esp, byte 0Ch	; 309C8
 push esi	; 309CB
 call jctime	; 309CC
 add esp, byte 4	; 309D1
-call sub_30F12	; 309D4
+call RestoreDialogBg	; 309D4
 mov eax, ebp	; 309D9
 add esp, byte 5Ch	; 309DB
 pop ebp	; 309DE
 pop edi	; 309DF
 pop esi	; 309E0
 ret 8	; 309E1
-sub_309E4:
+MeasureTextLine:
 push dword 14h	; 309E4
 call __CHK	; 309E9
 push esi	; 309EE
@@ -1089,25 +1070,25 @@ push eax	; 309F7
 call fputchar	; 309F8
 add esp, byte 4	; 309FD
 cmp eax, dword [edi]	; 30A00
-jle short loc_30A06	; 30A02
+jle short .1	; 30A02
 mov dword [edi], eax	; 30A04
-loc_30A06:
+.1:
 add dword [esi], ebp	; 30A06
 pop ebp	; 30A08
 pop edi	; 30A09
 pop esi	; 30A0A
 ret	; 30A0B
-sub_30A0C:
+SetDialogColors:
 push dword 4	; 30A0C
 call __CHK	; 30A11
 mov dword [boxfillcolor], eax	; 30A16
 mov dword [boxlitecolor], edx	; 30A1B
 mov dword [boxshadecolor], ebx	; 30A21
-mov dword [dword_C71D8], ecx	; 30A27
+mov dword [dlgtextfg], ecx	; 30A27
 mov eax, dword [byte esp+04h]	; 30A2D
-mov dword [dword_C71DC], eax	; 30A31
+mov dword [dlgtextbg], eax	; 30A31
 ret 4	; 30A36
-sub_30A39:
+TrackButtons:
 push dword 14h	; 30A39
 call __CHK	; 30A3E
 push esi	; 30A43
@@ -1119,8 +1100,8 @@ mov dword [esp], edx	; 30A4B
 mov edi, ebx	; 30A4E
 mov ebp, 0FFFFFFFFh	; 30A50
 xor edx, edx	; 30A55
-jmp near loc_30AD2	; 30A57
-loc_30A5C:
+jmp near .6	; 30A57
+.1:
 mov eax, edx	; 30A5C
 shl eax, 3	; 30A5E
 sub eax, edx	; 30A61
@@ -1128,56 +1109,56 @@ shl eax, 2	; 30A63
 add eax, esi	; 30A66
 mov ebx, dword [eax]	; 30A68
 cmp edi, ebx	; 30A6A
-jl short loc_30AB3	; 30A6C
+jl short .3	; 30A6C
 add ebx, dword [byte eax+08h]	; 30A6E
 cmp edi, ebx	; 30A71
-jge short loc_30AB3	; 30A73
+jge short .3	; 30A73
 mov ebx, dword [byte eax+04h]	; 30A75
 cmp ecx, ebx	; 30A78
-jl short loc_30AB3	; 30A7A
+jl short .3	; 30A7A
 add ebx, dword [byte eax+0Ch]	; 30A7C
 cmp ecx, ebx	; 30A7F
-jge short loc_30AB3	; 30A81
+jge short .3	; 30A81
 cmp dword [byte eax+010h], byte 0	; 30A83
-jne short loc_30A9C	; 30A87
+jne short .2	; 30A87
 test byte [byte esp+014h], 1	; 30A89
-je short loc_30A9C	; 30A8E
+je short .2	; 30A8E
 mov dword [byte eax+010h], 0FFFFFFFFh	; 30A90
-call sub_30B16	; 30A97
-loc_30A9C:
+call DrawButton	; 30A97
+.2:
 test byte [byte esp+014h], 2	; 30A9C
-je short loc_30AD1	; 30AA1
+je short .5	; 30AA1
 mov ebp, edx	; 30AA3
 mov eax, edx	; 30AA5
 shl eax, 3	; 30AA7
 sub eax, edx	; 30AAA
 shl eax, 2	; 30AAC
 add eax, esi	; 30AAF
-jmp short loc_30AC5	; 30AB1
-loc_30AB3:
+jmp short .4	; 30AB1
+.3:
 mov eax, edx	; 30AB3
 shl eax, 3	; 30AB5
 sub eax, edx	; 30AB8
 shl eax, 2	; 30ABA
 add eax, esi	; 30ABD
 cmp dword [byte eax+010h], byte 0	; 30ABF
-je short loc_30AD1	; 30AC3
-loc_30AC5:
+je short .5	; 30AC3
+.4:
 mov dword [byte eax+010h], 0	; 30AC5
-call sub_30B16	; 30ACC
-loc_30AD1:
+call DrawButton	; 30ACC
+.5:
 inc edx	; 30AD1
-loc_30AD2:
+.6:
 cmp edx, dword [esp]	; 30AD2
-jl short loc_30A5C	; 30AD5
+jl short TrackButtons.1	; 30AD5
 mov eax, ebp	; 30AD7
 add esp, byte 4	; 30AD9
-loc_30ADC:
+TrackButtons_x:
 pop ebp	; 30ADC
 pop edi	; 30ADD
 pop esi	; 30ADE
 ret 4	; 30ADF
-sub_30AE2:
+DrawButtons:
 push dword 0Ch	; 30AE2
 call __CHK	; 30AE7
 push ecx	; 30AEC
@@ -1185,23 +1166,23 @@ push esi	; 30AED
 mov esi, eax	; 30AEE
 mov ecx, edx	; 30AF0
 xor edx, edx	; 30AF2
-jmp short loc_30B0F	; 30AF4
-loc_30AF6:
+jmp short .2	; 30AF4
+.1:
 mov eax, edx	; 30AF6
 shl eax, 3	; 30AF8
 sub eax, edx	; 30AFB
 shl eax, 2	; 30AFD
 add eax, esi	; 30B00
 mov dword [byte eax+010h], 0	; 30B02
-call sub_30B16	; 30B09
+call DrawButton	; 30B09
 inc edx	; 30B0E
-loc_30B0F:
+.2:
 cmp edx, ecx	; 30B0F
-jl short loc_30AF6	; 30B11
+jl short DrawButtons.1	; 30B11
 pop esi	; 30B13
 pop ecx	; 30B14
 ret	; 30B15
-sub_30B16:
+DrawButton:
 push dword 28h	; 30B16
 call __CHK	; 30B1B
 push ebx	; 30B20
@@ -1212,7 +1193,7 @@ push edi	; 30B24
 push ebp	; 30B25
 mov esi, eax	; 30B26
 cmp dword [byte eax+010h], byte 0	; 30B28
-je short loc_30B55	; 30B2C
+je short .1	; 30B2C
 mov eax, dword [boxshadecolor]	; 30B2E
 mov ebx, dword [boxlitecolor]	; 30B33
 xor ebx, eax	; 30B39
@@ -1223,7 +1204,7 @@ mov dword [boxshadecolor], ecx	; 30B45
 mov edi, ebx	; 30B4B
 xor edi, ecx	; 30B4D
 mov dword [boxlitecolor], edi	; 30B4F
-loc_30B55:
+.1:
 mov ebp, dword [boxshadecolor]	; 30B55
 push ebp	; 30B5B
 mov eax, dword [boxlitecolor]	; 30B5C
@@ -1234,9 +1215,9 @@ mov ecx, dword [byte esi+0Ch]	; 30B69
 mov ebx, dword [byte esi+08h]	; 30B6C
 mov edx, dword [byte esi+04h]	; 30B6F
 mov eax, dword [esi]	; 30B72
-call sub_2FE49	; 30B74
+call DrawBevelRect	; 30B74
 cmp dword [byte esi+010h], byte 0	; 30B79
-je short loc_30BA6	; 30B7D
+je short .2	; 30B7D
 mov eax, dword [boxshadecolor]	; 30B7F
 mov ecx, dword [boxlitecolor]	; 30B84
 xor ecx, eax	; 30B8A
@@ -1247,10 +1228,10 @@ mov dword [boxshadecolor], edi	; 30B96
 mov ebp, ecx	; 30B9C
 xor ebp, edi	; 30B9E
 mov dword [boxlitecolor], ebp	; 30BA0
-loc_30BA6:
+.2:
 mov eax, dword [byte esi+018h]	; 30BA6
 test eax, eax	; 30BA9
-je short loc_30BEC	; 30BAB
+je short DrawButton_x	; 30BAB
 mov edi, eax	; 30BAD
 xor edx, edx	; 30BAF
 mov dl, byte [byte_D42C3]	; 30BB1
@@ -1275,7 +1256,7 @@ add eax, dword [esi]	; 30BE1
 mov ebx, edi	; 30BE3
 mov edx, ebp	; 30BE5
 call PrintShadowText	; 30BE7
-loc_30BEC:
+DrawButton_x:
 pop ebp	; 30BEC
 pop edi	; 30BED
 pop esi	; 30BEE
@@ -1283,7 +1264,7 @@ pop edx	; 30BEF
 pop ecx	; 30BF0
 pop ebx	; 30BF1
 ret	; 30BF2
-sub_30BF3:
+InitScrollBar:
 push dword 8	; 30BF3
 call __CHK	; 30BF8
 push ecx	; 30BFD
@@ -1306,7 +1287,7 @@ idiv ebx	; 30C36
 mov dword [byte ecx+01Ch], eax	; 30C38
 pop ecx	; 30C3B
 ret	; 30C3C
-sub_30C3D:
+DrawScrollBar:
 push dword 28h	; 30C3D
 call __CHK	; 30C42
 push ebx	; 30C47
@@ -1328,9 +1309,9 @@ mov ecx, dword [byte eax+0Ch]	; 30C69
 mov ebx, dword [byte eax+08h]	; 30C6C
 mov edx, ebp	; 30C6F
 mov eax, edi	; 30C71
-call sub_2FE49	; 30C73
+call DrawBevelRect	; 30C73
 cmp dword [byte esi+02Ch], byte 0	; 30C78
-je short loc_30CA5	; 30C7C
+je short .1	; 30C7C
 mov ebx, dword [boxshadecolor]	; 30C7E
 mov edx, dword [boxlitecolor]	; 30C84
 xor edx, ebx	; 30C8A
@@ -1341,7 +1322,7 @@ mov dword [boxshadecolor], ecx	; 30C96
 mov eax, edx	; 30C9C
 xor eax, ecx	; 30C9E
 mov dword [boxlitecolor], eax	; 30CA0
-loc_30CA5:
+.1:
 mov ebx, dword [byte esi+010h]	; 30CA5
 add ebx, byte 2	; 30CA8
 lea eax, [edi+ebx]	; 30CAB
@@ -1357,9 +1338,9 @@ push ecx	; 30CCA
 mov ecx, dword [byte esi+01Ch]	; 30CCB
 mov ebx, dword [byte esi+018h]	; 30CCE
 mov edx, ebp	; 30CD1
-call sub_2FE49	; 30CD3
+call DrawBevelRect	; 30CD3
 cmp dword [byte esi+02Ch], byte 0	; 30CD8
-je near loc_30BEC	; 30CDC
+je near DrawButton_x	; 30CDC
 mov ebx, dword [boxshadecolor]	; 30CE2
 mov ebp, dword [boxlitecolor]	; 30CE8
 xor ebp, ebx	; 30CEE
@@ -1370,8 +1351,8 @@ mov dword [boxshadecolor], eax	; 30CFA
 mov edx, ebp	; 30CFF
 xor edx, eax	; 30D01
 mov dword [boxlitecolor], edx	; 30D03
-jmp near loc_30BEC	; 30D09
-sub_30D0E:
+jmp near DrawButton_x	; 30D09
+TrackScrollBars:
 push dword 20h	; 30D0E
 call __CHK	; 30D13
 push esi	; 30D18
@@ -1384,8 +1365,8 @@ mov dword [byte esp+0Ch], ebx	; 30D24
 mov ebp, ecx	; 30D28
 mov dword [byte esp+08h], 0FFFFFFFFh	; 30D2A
 xor ecx, ecx	; 30D32
-jmp near loc_30E50	; 30D34
-loc_30D39:
+jmp near .9	; 30D34
+.1:
 mov eax, ecx	; 30D39
 shl eax, 2	; 30D3B
 sub eax, ecx	; 30D3E
@@ -1394,34 +1375,34 @@ add eax, esi	; 30D43
 mov edx, dword [byte esp+0Ch]	; 30D45
 mov edi, dword [eax]	; 30D49
 cmp edx, edi	; 30D4B
-jl near loc_30E31	; 30D4D
+jl near .6	; 30D4D
 mov ebx, dword [byte eax+08h]	; 30D53
 lea edx, [edi+ebx]	; 30D56
 cmp edx, dword [byte esp+0Ch]	; 30D59
-jle near loc_30E31	; 30D5D
+jle near .6	; 30D5D
 mov edx, dword [byte eax+04h]	; 30D63
 cmp ebp, edx	; 30D66
-jl near loc_30E31	; 30D68
+jl near .6	; 30D68
 add edx, dword [byte eax+0Ch]	; 30D6E
 cmp ebp, edx	; 30D71
-jge near loc_30E31	; 30D73
+jge near .6	; 30D73
 mov edi, dword [byte eax+014h]	; 30D79
 test byte [byte esp+020h], 1	; 30D7C
-je short loc_30D95	; 30D81
+je short .2	; 30D81
 cmp dword [byte eax+02Ch], byte 0	; 30D83
-jne short loc_30D95	; 30D87
+jne short .2	; 30D87
 mov dword [byte eax+02Ch], 0FFFFFFFFh	; 30D89
 mov edi, 0FFFFFFFFh	; 30D90
-loc_30D95:
+.2:
 test byte [byte esp+020h], 2	; 30D95
-je short loc_30DB3	; 30D9A
+je short .3	; 30D9A
 mov eax, ecx	; 30D9C
 shl eax, 2	; 30D9E
 sub eax, ecx	; 30DA1
 shl eax, 4	; 30DA3
 mov dword [byte esi+eax+02Ch], 0	; 30DA6
 mov edi, 0FFFFFFFFh	; 30DAE
-loc_30DB3:
+.3:
 mov eax, ecx	; 30DB3
 shl eax, 2	; 30DB5
 sub eax, ecx	; 30DB8
@@ -1440,17 +1421,17 @@ mov edx, dword [esp]	; 30DD6
 sub edx, eax	; 30DD9
 mov dword [byte ebx+014h], edx	; 30DDB
 test edx, edx	; 30DDE
-jge short loc_30DEB	; 30DE0
+jge short .4	; 30DE0
 mov dword [byte ebx+014h], 0	; 30DE2
-jmp short loc_30DFC	; 30DE9
-loc_30DEB:
+jmp short .5	; 30DE9
+.4:
 mov eax, dword [byte ebx+0Ch]	; 30DEB
 sub eax, dword [byte ebx+01Ch]	; 30DEE
 sub eax, byte 4	; 30DF1
 cmp eax, dword [byte ebx+014h]	; 30DF4
-jge short loc_30DFC	; 30DF7
+jge short .5	; 30DF7
 mov dword [byte ebx+014h], eax	; 30DF9
-loc_30DFC:
+.5:
 mov eax, ecx	; 30DFC
 shl eax, 2	; 30DFE
 sub eax, ecx	; 30E01
@@ -1467,29 +1448,29 @@ idiv dword [esp]	; 30E1E
 mov dword [byte ebx+020h], eax	; 30E21
 mov dword [byte esp+08h], ecx	; 30E24
 cmp edi, dword [byte ebx+014h]	; 30E28
-je short loc_30E4F	; 30E2B
+je short .8	; 30E2B
 mov eax, ebx	; 30E2D
-jmp short loc_30E4A	; 30E2F
-loc_30E31:
+jmp short .7	; 30E2F
+.6:
 mov eax, ecx	; 30E31
 shl eax, 2	; 30E33
 sub eax, ecx	; 30E36
 shl eax, 4	; 30E38
 add eax, esi	; 30E3B
 cmp dword [byte eax+02Ch], byte 0	; 30E3D
-je short loc_30E4F	; 30E41
+je short .8	; 30E41
 mov dword [byte eax+02Ch], 0	; 30E43
-loc_30E4A:
-call sub_30C3D	; 30E4A
-loc_30E4F:
+.7:
+call DrawScrollBar	; 30E4A
+.8:
 inc ecx	; 30E4F
-loc_30E50:
+.9:
 cmp ecx, dword [byte esp+04h]	; 30E50
-jl near loc_30D39	; 30E54
+jl near TrackScrollBars.1	; 30E54
 mov eax, dword [byte esp+08h]	; 30E5A
 add esp, byte 10h	; 30E5E
-jmp near loc_30ADC	; 30E61
-sub_30E66:
+jmp near TrackButtons_x	; 30E61
+SaveDialogBg:
 push dword 28h	; 30E66
 call __CHK	; 30E6B
 push esi	; 30E70
@@ -1506,12 +1487,12 @@ imul eax, esi	; 30E89
 add eax, byte 11h	; 30E8C
 push byte 20h	; 30E8F
 push eax	; 30E91
-push asc_C1718	; 30E92
+push str_DBOX	; 30E92
 call sub_8CCA8	; 30E97
 add esp, byte 0Ch	; 30E9C
-mov dword [dword_C71E4], eax	; 30E9F
+mov dword [dlgsavebuf], eax	; 30E9F
 test eax, eax	; 30EA4
-je short loc_30F0B	; 30EA6
+je short .x	; 30EA6
 mov esi, dword [pointerspr]	; 30EA8
 mov edi, eax	; 30EAE
 movsd	; 30EB0
@@ -1521,11 +1502,11 @@ movsd	; 30EB3
 movsb	; 30EB4
 mov esi, dword [byte esp+08h]	; 30EB5
 add esi, byte 7	; 30EB9
-mov eax, dword [dword_C71E4]	; 30EBC
+mov eax, dword [dlgsavebuf]	; 30EBC
 mov word [byte eax+04h], si	; 30EC1
 mov esi, dword [byte esp+04h]	; 30EC5
 add esi, byte 4	; 30EC9
-mov eax, dword [dword_C71E4]	; 30ECC
+mov eax, dword [dlgsavebuf]	; 30ECC
 mov word [byte eax+06h], si	; 30ED1
 mov eax, ebp	; 30ED5
 mov edx, ebp	; 30ED7
@@ -1534,23 +1515,23 @@ shl edx, 2	; 30EDC
 LD sbb, eax, edx	; 30EDF
 sar eax, 2	; 30EE1
 shl eax, 2	; 30EE4
-mov dword [dword_DD678], eax	; 30EE7
+mov dword [dlgsavex], eax	; 30EE7
 mov eax, dword [esp]	; 30EEC
-mov dword [dword_DD688], eax	; 30EEF
+mov dword [dlgsavey], eax	; 30EEF
 push eax	; 30EF4
-mov ebx, dword [dword_DD678]	; 30EF5
+mov ebx, dword [dlgsavex]	; 30EF5
 push ebx	; 30EFB
-mov ecx, dword [dword_C71E4]	; 30EFC
+mov ecx, dword [dlgsavebuf]	; 30EFC
 push ecx	; 30F02
 call sub_91400	; 30F03
 add esp, byte 0Ch	; 30F08
-loc_30F0B:
+.x:
 add esp, byte 0Ch	; 30F0B
 pop ebp	; 30F0E
 pop edi	; 30F0F
 pop esi	; 30F10
 ret	; 30F11
-sub_30F12:
+RestoreDialogBg:
 push dword 24h	; 30F12
 call __CHK	; 30F17
 push ebx	; 30F1C
@@ -1558,71 +1539,71 @@ push ecx	; 30F1D
 push edx	; 30F1E
 push edi	; 30F1F
 push ebp	; 30F20
-mov edx, dword [dword_C71E4]	; 30F21
+mov edx, dword [dlgsavebuf]	; 30F21
 test edx, edx	; 30F27
-je short loc_30F59	; 30F29
-mov ebx, dword [dword_DD688]	; 30F2B
+je short .x	; 30F29
+mov ebx, dword [dlgsavey]	; 30F2B
 push ebx	; 30F31
-mov ecx, dword [dword_DD678]	; 30F32
+mov ecx, dword [dlgsavex]	; 30F32
 push ecx	; 30F38
 push edx	; 30F39
 call sub_903F0	; 30F3A
 add esp, byte 0Ch	; 30F3F
-mov edi, dword [dword_C71E4]	; 30F42
+mov edi, dword [dlgsavebuf]	; 30F42
 push edi	; 30F48
 call jctime	; 30F49
 add esp, byte 4	; 30F4E
 xor ebp, ebp	; 30F51
-mov dword [dword_C71E4], ebp	; 30F53
-loc_30F59:
+mov dword [dlgsavebuf], ebp	; 30F53
+.x:
 pop ebp	; 30F59
 pop edi	; 30F5A
 pop edx	; 30F5B
 pop ecx	; 30F5C
 pop ebx	; 30F5D
 ret	; 30F5E
-sub_30F5F:
+GrowToButton:
 push dword 8	; 30F5F
 call __CHK	; 30F64
 push ecx	; 30F69
 test byte [byte eax+014h], 1	; 30F6A
-je short loc_30F7E	; 30F6E
+je short .1	; 30F6E
 mov ecx, dword [eax]	; 30F70
 add ecx, dword [byte eax+08h]	; 30F72
 add ecx, byte 8	; 30F75
 cmp ecx, dword [edx]	; 30F78
-jle short loc_30F8C	; 30F7A
-jmp short loc_30F8A	; 30F7C
-loc_30F7E:
+jle short .3	; 30F7A
+jmp short .2	; 30F7C
+.1:
 mov ecx, dword [byte eax+08h]	; 30F7E
 sub ecx, dword [eax]	; 30F81
 add ecx, byte 8	; 30F83
 cmp ecx, dword [edx]	; 30F86
-jle short loc_30F8C	; 30F88
-loc_30F8A:
+jle short .3	; 30F88
+.2:
 mov dword [edx], ecx	; 30F8A
-loc_30F8C:
+.3:
 test byte [byte eax+014h], 4	; 30F8C
-je short loc_30FA3	; 30F90
+je short .4	; 30F90
 mov edx, dword [byte eax+04h]	; 30F92
 add edx, dword [byte eax+0Ch]	; 30F95
 lea eax, [byte edx+08h]	; 30F98
 cmp eax, dword [ebx]	; 30F9B
-jle short loc_30FB2	; 30F9D
+jle short .x	; 30F9D
 mov dword [ebx], eax	; 30F9F
 pop ecx	; 30FA1
 ret	; 30FA2
-loc_30FA3:
+.4:
 mov edx, dword [byte eax+0Ch]	; 30FA3
 sub edx, dword [byte eax+04h]	; 30FA6
 lea eax, [byte edx+08h]	; 30FA9
 cmp eax, dword [ebx]	; 30FAC
-jle short loc_30FB2	; 30FAE
+jle short .x	; 30FAE
 mov dword [ebx], eax	; 30FB0
-loc_30FB2:
+.x:
 pop ecx	; 30FB2
 ret	; 30FB3
-sub_30FB4:
+GrowToButtons:
 push dword 10h	; 30FB4
 call __CHK	; 30FB9
 push esi	; 30FBE
@@ -1631,44 +1612,44 @@ push ebp	; 30FC0
 mov ebp, edx	; 30FC1
 xor edx, edx	; 30FC3
 xor edi, edi	; 30FC5
-jmp short loc_3100B	; 30FC7
-loc_30FC9:
+jmp short .8	; 30FC7
+.1:
 test byte [byte eax+014h], 1	; 30FC9
-je short loc_30FD6	; 30FCD
+je short .2	; 30FCD
 mov esi, dword [eax]	; 30FCF
 add esi, dword [byte eax+08h]	; 30FD1
-jmp short loc_30FDB	; 30FD4
-loc_30FD6:
+jmp short .3	; 30FD4
+.2:
 mov esi, dword [byte eax+08h]	; 30FD6
 sub esi, dword [eax]	; 30FD9
-loc_30FDB:
+.3:
 add esi, byte 8	; 30FDB
 add edx, esi	; 30FDE
 cmp edx, dword [ebx]	; 30FE0
-jle short loc_30FE6	; 30FE2
+jle short .4	; 30FE2
 mov dword [ebx], edx	; 30FE4
-loc_30FE6:
+.4:
 test byte [byte eax+014h], 4	; 30FE6
-je short loc_30FFB	; 30FEA
+je short .5	; 30FEA
 mov esi, dword [byte eax+04h]	; 30FEC
 add esi, dword [byte eax+0Ch]	; 30FEF
 add esi, byte 8	; 30FF2
 cmp esi, dword [ecx]	; 30FF5
-jle short loc_3100A	; 30FF7
-jmp short loc_31008	; 30FF9
-loc_30FFB:
+jle short .7	; 30FF7
+jmp short .6	; 30FF9
+.5:
 mov esi, dword [byte eax+0Ch]	; 30FFB
 sub esi, dword [byte eax+04h]	; 30FFE
 add esi, byte 8	; 31001
 cmp esi, dword [ecx]	; 31004
-jle short loc_3100A	; 31006
-loc_31008:
+jle short .7	; 31006
+.6:
 mov dword [ecx], esi	; 31008
-loc_3100A:
+.7:
 inc edi	; 3100A
-loc_3100B:
+.8:
 cmp edi, ebp	; 3100B
-jl short loc_30FC9	; 3100D
+jl short GrowToButtons.1	; 3100D
 pop ebp	; 3100F
 pop edi	; 31010
 pop esi	; 31011
@@ -1685,7 +1666,7 @@ mov ebp, edx	; 31025
 mov dword [byte esp+010h], ebx	; 31027
 mov dword [byte esp+0Ch], ecx	; 3102B
 call sub_B4BA8	; 3102F
-call sub_30F12	; 31034
+call RestoreDialogBg	; 31034
 xor edx, edx	; 31039
 mov dword [byte esp+04h], edx	; 3103B
 mov dword [esp], edx	; 3103F
@@ -1694,8 +1675,8 @@ mov al, byte [byte_D42C3]	; 31044
 add eax, byte 2	; 31049
 mov dword [byte esp+014h], eax	; 3104C
 xor esi, esi	; 31050
-jmp short loc_3106F	; 31052
-loc_31054:
+jmp short .2	; 31052
+.1:
 mov eax, esi	; 31054
 shl eax, 2	; 31056
 add eax, dword [byte esp+010h]	; 31059
@@ -1703,20 +1684,20 @@ mov eax, dword [eax]	; 3105D
 mov ecx, dword [byte esp+014h]	; 3105F
 mov ebx, esp	; 31063
 lea edx, [byte esp+04h]	; 31065
-call sub_309E4	; 31069
+call MeasureTextLine	; 31069
 inc esi	; 3106E
-loc_3106F:
+.2:
 cmp esi, dword [byte esp+0Ch]	; 3106F
-jl short loc_31054	; 31073
+jl short MessageBox.1	; 31073
 add dword [byte esp+04h], byte 10h	; 31075
 add dword [esp], byte 10h	; 3107A
 mov ecx, esp	; 3107E
 lea ebx, [byte esp+04h]	; 31080
 mov edx, dword [byte esp+034h]	; 31084
 mov eax, dword [byte esp+030h]	; 31088
-call sub_30FB4	; 3108C
+call GrowToButtons	; 3108C
 test edi, edi	; 31091
-jge short loc_310AB	; 31093
+jge short .3	; 31093
 mov edx, 280h	; 31095
 mov ebx, dword [byte esp+04h]	; 3109A
 sub edx, ebx	; 3109E
@@ -1725,9 +1706,9 @@ sar edx, 1Fh	; 310A2
 LD sub, eax, edx	; 310A5
 sar eax, 1	; 310A7
 mov edi, eax	; 310A9
-loc_310AB:
+.3:
 test ebp, ebp	; 310AB
-jge short loc_310C8	; 310AD
+jge short .4	; 310AD
 mov edx, 1E0h	; 310AF
 mov ecx, dword [esp]	; 310B4
 sub edx, ecx	; 310B7
@@ -1736,15 +1717,15 @@ sar edx, 1Fh	; 310BB
 LD sub, eax, edx	; 310BE
 sar eax, 1	; 310C0
 mov dword [byte esp+01Ch], eax	; 310C2
-jmp short loc_310CC	; 310C6
-loc_310C8:
+jmp short .5	; 310C6
+.4:
 mov dword [byte esp+01Ch], ebp	; 310C8
-loc_310CC:
+.5:
 mov ecx, dword [esp]	; 310CC
 mov ebx, dword [byte esp+04h]	; 310CF
 mov edx, dword [byte esp+01Ch]	; 310D3
 mov eax, edi	; 310D7
-call sub_30E66	; 310D9
+call SaveDialogBg	; 310D9
 mov esi, dword [boxshadecolor]	; 310DE
 push esi	; 310E4
 mov ebp, dword [boxlitecolor]	; 310E5
@@ -1755,16 +1736,16 @@ mov ecx, dword [byte esp+0Ch]	; 310F2
 mov ebx, dword [byte esp+010h]	; 310F6
 mov edx, dword [byte esp+028h]	; 310FA
 mov eax, edi	; 310FE
-call sub_2FE49	; 31100
+call DrawBevelRect	; 31100
 mov eax, dword [byte esp+01Ch]	; 31105
 add eax, byte 8	; 31109
 mov dword [byte esp+018h], eax	; 3110C
-mov edx, dword [dword_C71DC]	; 31110
-mov eax, dword [dword_C71D8]	; 31116
+mov edx, dword [dlgtextbg]	; 31110
+mov eax, dword [dlgtextfg]	; 31116
 call SetTextColors	; 3111B
 xor esi, esi	; 31120
-jmp short loc_3115F	; 31122
-loc_31124:
+jmp short .7	; 31122
+.6:
 mov ebp, esi	; 31124
 shl ebp, 2	; 31126
 add ebp, dword [byte esp+010h]	; 31129
@@ -1785,102 +1766,102 @@ call PrintShadowText	; 31151
 mov eax, dword [byte esp+014h]	; 31156
 add dword [byte esp+018h], eax	; 3115A
 inc esi	; 3115E
-loc_3115F:
+.7:
 cmp esi, dword [byte esp+0Ch]	; 3115F
-jl short loc_31124	; 31163
+jl short MessageBox.6	; 31163
 xor esi, esi	; 31165
-jmp short loc_311B4	; 31167
-loc_31169:
+jmp short .13	; 31167
+.8:
 mov eax, esi	; 31169
 shl eax, 3	; 3116B
 sub eax, esi	; 3116E
 shl eax, 2	; 31170
 add eax, dword [byte esp+030h]	; 31173
 test byte [byte eax+014h], 1	; 31177
-je short loc_31181	; 3117B
+je short .9	; 3117B
 add dword [eax], edi	; 3117D
-jmp short loc_3118C	; 3117F
-loc_31181:
+jmp short .10	; 3117F
+.9:
 mov edx, dword [byte esp+04h]	; 31181
 add edx, edi	; 31185
 sub edx, dword [byte eax+08h]	; 31187
 add dword [eax], edx	; 3118A
-loc_3118C:
+.10:
 mov eax, esi	; 3118C
 shl eax, 3	; 3118E
 sub eax, esi	; 31191
 shl eax, 2	; 31193
 add eax, dword [byte esp+030h]	; 31196
 test byte [byte eax+014h], 4	; 3119A
-je short loc_311A6	; 3119E
+je short .11	; 3119E
 mov edx, dword [byte esp+01Ch]	; 311A0
-jmp short loc_311B0	; 311A4
-loc_311A6:
+jmp short .12	; 311A4
+.11:
 mov edx, dword [byte esp+01Ch]	; 311A6
 add edx, dword [esp]	; 311AA
 sub edx, dword [byte eax+0Ch]	; 311AD
-loc_311B0:
+.12:
 add dword [byte eax+04h], edx	; 311B0
 inc esi	; 311B3
-loc_311B4:
+.13:
 mov ebx, dword [byte esp+034h]	; 311B4
 cmp esi, ebx	; 311B8
-jl short loc_31169	; 311BA
+jl short MessageBox.8	; 311BA
 mov edx, ebx	; 311BC
 mov eax, dword [byte esp+030h]	; 311BE
-call sub_30AE2	; 311C2
+call DrawButtons	; 311C2
 call sub_6B3D7	; 311C7
 cmp dword [byte esp+040h], byte 0	; 311CC
-je short loc_311EF	; 311D1
+je short .14	; 311D1
 mov ecx, ebx	; 311D3
 mov ebx, dword [byte esp+030h]	; 311D5
 mov edx, dword [byte esp+03Ch]	; 311D9
 mov eax, dword [byte esp+038h]	; 311DD
-call sub_31250	; 311E1
+call RunMessageBox	; 311E1
 mov dword [byte esp+08h], eax	; 311E6
-call sub_30F12	; 311EA
-loc_311EF:
+call RestoreDialogBg	; 311EA
+.14:
 xor esi, esi	; 311EF
-jmp short loc_3123E	; 311F1
-loc_311F3:
+jmp short .20	; 311F1
+.15:
 mov eax, esi	; 311F3
 shl eax, 3	; 311F5
 sub eax, esi	; 311F8
 shl eax, 2	; 311FA
 add eax, dword [byte esp+030h]	; 311FD
 test byte [byte eax+014h], 1	; 31201
-je short loc_3120B	; 31205
+je short .16	; 31205
 sub dword [eax], edi	; 31207
-jmp short loc_31216	; 31209
-loc_3120B:
+jmp short .17	; 31209
+.16:
 mov edx, dword [byte esp+04h]	; 3120B
 add edx, edi	; 3120F
 sub edx, dword [byte eax+08h]	; 31211
 sub dword [eax], edx	; 31214
-loc_31216:
+.17:
 mov eax, esi	; 31216
 shl eax, 3	; 31218
 sub eax, esi	; 3121B
 shl eax, 2	; 3121D
 add eax, dword [byte esp+030h]	; 31220
 test byte [byte eax+014h], 4	; 31224
-je short loc_31230	; 31228
+je short .18	; 31228
 mov edx, dword [byte esp+01Ch]	; 3122A
-jmp short loc_3123A	; 3122E
-loc_31230:
+jmp short .19	; 3122E
+.18:
 mov edx, dword [byte esp+01Ch]	; 31230
 add edx, dword [esp]	; 31234
 sub edx, dword [byte eax+0Ch]	; 31237
-loc_3123A:
+.19:
 sub dword [byte eax+04h], edx	; 3123A
 inc esi	; 3123D
-loc_3123E:
+.20:
 cmp esi, dword [byte esp+034h]	; 3123E
-jl short loc_311F3	; 31242
+jl short MessageBox.15	; 31242
 mov eax, dword [byte esp+08h]	; 31244
 add esp, byte 20h	; 31248
-jmp near sub_30203	; 3124B
-sub_31250:
+jmp near DlgNullCallback	; 3124B
+RunMessageBox:
 push dword 40h	; 31250
 call __CHK	; 31255
 push esi	; 3125A
@@ -1903,7 +1884,7 @@ imul eax, edx	; 3127C
 add eax, byte 11h	; 3127F
 push byte 20h	; 31282
 push eax	; 31284
-push asc_C1710	; 31285
+push str_Pointer6	; 31285
 call sub_8CCA8	; 3128A
 mov ebp, eax	; 3128F
 add esp, byte 0Ch	; 31291
@@ -1946,29 +1927,29 @@ mov ebx, dword [pointerspr]	; 312F2
 push ebx	; 312F8
 call sub_91370	; 312F9
 add esp, byte 0Ch	; 312FE
-loc_31301:
+.1:
 push byte 1	; 31301
 call sub_B2CBE	; 31303
 add esp, byte 4	; 31308
 test eax, eax	; 3130B
-jne short loc_31301	; 3130D
+jne short RunMessageBox.1	; 3130D
 push byte 1Ch	; 3130F
 call sub_B2CBE	; 31311
 add esp, byte 4	; 31316
 test eax, eax	; 31319
-jne short loc_31301	; 3131B
+jne short RunMessageBox.1	; 3131B
 call sub_6B3D7	; 3131D
 xor ebp, ebp	; 31322
-loc_31324:
+.2:
 call sub_6B391	; 31324
 test eax, eax	; 31329
-je near loc_31426	; 3132B
+je near .10	; 3132B
 lea ebx, [byte esp+010h]	; 31331
 lea edx, [byte esp+014h]	; 31335
 call dword [dword_EA0DC]	; 31339
 mov dword [byte esp+020h], eax	; 3133F
 test byte [byte esp+020h], 2Fh	; 31343
-je near loc_313D7	; 31348
+je near .8	; 31348
 push edi	; 3134E
 push esi	; 3134F
 mov ecx, dword [byte esp+024h]	; 31350
@@ -1977,37 +1958,37 @@ call sub_903F0	; 31355
 add esp, byte 0Ch	; 3135A
 mov eax, dword [esp]	; 3135D
 test eax, eax	; 31360
-jle short loc_3139A	; 31362
+jle short .4	; 31362
 test byte [byte esp+020h], 4	; 31364
-je short loc_31378	; 31369
+je short .3	; 31369
 mov ecx, 0FFFFFFFFh	; 3136B
 mov dword [byte esp+018h], ecx	; 31370
 mov ebp, ecx	; 31374
-jmp short loc_313B7	; 31376
-loc_31378:
+jmp short .7	; 31376
+.3:
 mov ebx, dword [byte esp+020h]	; 31378
 push ebx	; 3137C
 mov ecx, dword [byte esp+014h]	; 3137D
 mov ebx, dword [byte esp+018h]	; 31381
 mov edx, eax	; 31385
 mov eax, dword [byte esp+08h]	; 31387
-call sub_30A39	; 3138B
+call TrackButtons	; 3138B
 mov dword [byte esp+018h], eax	; 31390
 test eax, eax	; 31394
-jl short loc_313B7	; 31396
-jmp short loc_313B2	; 31398
-loc_3139A:
+jl short .7	; 31396
+jmp short .6	; 31398
+.4:
 mov dl, byte [byte esp+020h]	; 3139A
 test dl, 4	; 3139E
-je short loc_313AD	; 313A1
+je short .5	; 313A1
 mov dword [byte esp+018h], 4	; 313A3
-jmp short loc_313B2	; 313AB
-loc_313AD:
+jmp short .6	; 313AB
+.5:
 test dl, 2Ah	; 313AD
-je short loc_313B7	; 313B0
-loc_313B2:
+je short .7	; 313B0
+.6:
 mov ebp, 0FFFFFFFFh	; 313B2
-loc_313B7:
+.7:
 push edi	; 313B7
 push esi	; 313B8
 mov eax, dword [byte esp+024h]	; 313B9
@@ -2020,12 +2001,12 @@ mov edx, dword [pointerspr]	; 313C8
 push edx	; 313CE
 call sub_91370	; 313CF
 add esp, byte 0Ch	; 313D4
-loc_313D7:
+.8:
 cmp esi, dword [byte esp+014h]	; 313D7
-jne short loc_313E3	; 313DB
+jne short .9	; 313DB
 cmp edi, dword [byte esp+010h]	; 313DD
-je short loc_31426	; 313E1
-loc_313E3:
+je short .10	; 313E1
+.9:
 push edi	; 313E3
 push esi	; 313E4
 mov esi, dword [byte esp+024h]	; 313E5
@@ -2049,20 +2030,20 @@ call sub_91370	; 31416
 add esp, byte 0Ch	; 3141B
 mov esi, dword [byte esp+014h]	; 3141E
 mov edi, dword [byte esp+010h]	; 31422
-loc_31426:
+.10:
 test ebp, ebp	; 31426
-je near loc_31324	; 31428
-loc_3142E:
+je near RunMessageBox.2	; 31428
+.11:
 push byte 1	; 3142E
 call sub_B2CBE	; 31430
 add esp, byte 4	; 31435
 test eax, eax	; 31438
-jne short loc_3142E	; 3143A
+jne short RunMessageBox.11	; 3143A
 push byte 1Ch	; 3143C
 call sub_B2CBE	; 3143E
 add esp, byte 4	; 31443
 test eax, eax	; 31446
-jne short loc_3142E	; 31448
+jne short RunMessageBox.11	; 31448
 call sub_6B3D7	; 3144A
 push edi	; 3144F
 push esi	; 31450
@@ -2092,13 +2073,13 @@ pop ebp	; 31499
 pop edi	; 3149A
 pop esi	; 3149B
 ret	; 3149C
-sub_3149D:
+CritErrHandler:
 push dword 4	; 3149D
 call __CHK	; 314A2
-mov dword [dword_DD7A4], 0FFFFFFFFh	; 314A7
+mov dword [criterrflag], 0FFFFFFFFh	; 314A7
 xor eax, eax	; 314B1
 ret	; 314B3
-sub_314B4:
+DrawEditCursor:
 push dword 34h	; 314B4
 call __CHK	; 314B9
 push ebx	; 314BE
@@ -2108,58 +2089,58 @@ push esi	; 314C1
 push edi	; 314C2
 push ebp	; 314C3
 push eax	; 314C4
-push unk_C1720	; 314C5
+push str_Dot	; 314C5
 call fputchar	; 314CA
 add esp, byte 4	; 314CF
 mov edi, eax	; 314D2
-cmp dword [dword_DD69C], byte 0	; 314D4
-je near loc_3158F	; 314DB
-mov eax, dword [dword_DD698]	; 314E1
+cmp dword [editcuron], byte 0	; 314D4
+je near DrawEditCursor_ret	; 314DB
+mov eax, dword [editbuf]	; 314E1
 call strlen_	; 314E6
-cmp eax, dword [dword_DD690]	; 314EB
-jge short loc_31502	; 314F1
-mov eax, dword [dword_DD698]	; 314F3
+cmp eax, dword [editpos]	; 314EB
+jge short .1	; 314F1
+mov eax, dword [editbuf]	; 314F3
 call strlen_	; 314F8
-mov dword [dword_DD690], eax	; 314FD
-loc_31502:
-mov eax, dword [dword_DD698]	; 31502
-add eax, dword [dword_DD690]	; 31507
+mov dword [editpos], eax	; 314FD
+.1:
+mov eax, dword [editbuf]	; 31502
+add eax, dword [editpos]	; 31507
 cmp byte [eax], 0	; 3150D
-je short loc_31529	; 31510
+je short .3	; 31510
 test byte [esp], 2	; 31512
-je short loc_3151C	; 31516
+je short .2	; 31516
 mov esi, edi	; 31518
-jmp short loc_31538	; 3151A
-loc_3151C:
+jmp short .5	; 3151A
+.2:
 push byte 1	; 3151C
 push eax	; 3151E
 call sub_90A40	; 3151F
 add esp, byte 8	; 31524
-jmp short loc_31536	; 31527
-loc_31529:
-push unk_C1722	; 31529
+jmp short .4	; 31527
+.3:
+push str_Space	; 31529
 call fputchar	; 3152E
 add esp, byte 4	; 31533
-loc_31536:
+.4:
 mov esi, eax	; 31536
-loc_31538:
+.5:
 test byte [esp], 2	; 31538
-je short loc_31548	; 3153C
-mov eax, dword [dword_DD690]	; 3153E
+je short .6	; 3153C
+mov eax, dword [editpos]	; 3153E
 imul eax, edi	; 31543
-jmp short loc_3155E	; 31546
-loc_31548:
-mov edi, dword [dword_DD690]	; 31548
+jmp short .7	; 31546
+.6:
+mov edi, dword [editpos]	; 31548
 push edi	; 3154E
-mov ebp, dword [dword_DD698]	; 3154F
+mov ebp, dword [editbuf]	; 3154F
 push ebp	; 31555
 call sub_90A40	; 31556
 add esp, byte 8	; 3155B
-loc_3155E:
-add eax, dword [dword_DD6A4]	; 3155E
+.7:
+add eax, dword [editx]	; 3155E
 movzx edi, byte [byte_D42C5]	; 31564
-add edi, dword [dword_DD6A0]	; 3156B
-mov ebp, dword [dword_DD68C]	; 31571
+add edi, dword [edity]	; 3156B
+mov ebp, dword [editcurw]	; 31571
 sub edi, ebp	; 31577
 sub edi, byte 2	; 31579
 mov edx, dword [fontcolor]	; 3157C
@@ -2169,9 +2150,9 @@ push esi	; 31584
 push edi	; 31585
 push eax	; 31586
 call sub_91044	; 31587
-loc_3158C:
+DrawEditCursor_x:
 add esp, byte 14h	; 3158C
-loc_3158F:
+DrawEditCursor_ret:
 add esp, byte 4	; 3158F
 pop ebp	; 31592
 pop edi	; 31593
@@ -2180,7 +2161,7 @@ pop edx	; 31595
 pop ecx	; 31596
 pop ebx	; 31597
 ret	; 31598
-sub_31599:
+DrawEditText:
 push dword 34h	; 31599
 call __CHK	; 3159E
 push ebx	; 315A3
@@ -2190,113 +2171,113 @@ push esi	; 315A6
 push edi	; 315A7
 push ebp	; 315A8
 push eax	; 315A9
-push unk_C1720	; 315AA
+push str_Dot	; 315AA
 call fputchar	; 315AF
 add esp, byte 4	; 315B4
 mov ebp, eax	; 315B7
-cmp dword [dword_DD694], byte 0	; 315B9
-je near loc_31644	; 315C0
+cmp dword [editmaxw], byte 0	; 315B9
+je near .3	; 315C0
 test byte [esp], 2	; 315C6
-je short loc_31608	; 315CA
-loc_315CC:
-mov eax, dword [dword_DD698]	; 315CC
+je short .2	; 315CA
+.1:
+mov eax, dword [editbuf]	; 315CC
 call strlen_	; 315D1
 mov edi, eax	; 315D6
 imul edi, ebp	; 315D8
-cmp edi, dword [dword_DD694]	; 315DB
-jle short loc_31644	; 315E1
-mov eax, dword [dword_DD698]	; 315E3
+cmp edi, dword [editmaxw]	; 315DB
+jle short .3	; 315E1
+mov eax, dword [editbuf]	; 315E3
 call strlen_	; 315E8
 test eax, eax	; 315ED
-je short loc_31644	; 315EF
-mov eax, dword [dword_DD698]	; 315F1
+je short .3	; 315EF
+mov eax, dword [editbuf]	; 315F1
 call strlen_	; 315F6
-mov esi, dword [dword_DD698]	; 315FB
+mov esi, dword [editbuf]	; 315FB
 mov byte [byte esi+eax-01h], 0	; 31601
-jmp short loc_315CC	; 31606
-loc_31608:
-mov ebx, dword [dword_DD698]	; 31608
+jmp short DrawEditText.1	; 31606
+.2:
+mov ebx, dword [editbuf]	; 31608
 push ebx	; 3160E
 call fputchar	; 3160F
 add esp, byte 4	; 31614
-cmp eax, dword [dword_DD694]	; 31617
-jle short loc_31644	; 3161D
-mov eax, dword [dword_DD698]	; 3161F
+cmp eax, dword [editmaxw]	; 31617
+jle short .3	; 3161D
+mov eax, dword [editbuf]	; 3161F
 call strlen_	; 31624
 test eax, eax	; 31629
-je short loc_31644	; 3162B
-mov eax, dword [dword_DD698]	; 3162D
+je short .3	; 3162B
+mov eax, dword [editbuf]	; 3162D
 call strlen_	; 31632
-mov esi, dword [dword_DD698]	; 31637
+mov esi, dword [editbuf]	; 31637
 mov byte [byte esi+eax-01h], 0	; 3163D
-jmp short loc_31608	; 31642
-loc_31644:
-mov eax, dword [dword_DD698]	; 31644
+jmp short DrawEditText.2	; 31642
+.3:
+mov eax, dword [editbuf]	; 31644
 call strlen_	; 31649
 mov edi, eax	; 3164E
-cmp eax, dword [dword_DD690]	; 31650
-jge short loc_3165D	; 31656
-mov dword [dword_DD690], eax	; 31658
-loc_3165D:
+cmp eax, dword [editpos]	; 31650
+jge short .4	; 31656
+mov dword [editpos], eax	; 31658
+.4:
 test byte [esp], 2	; 3165D
-je short loc_3168D	; 31661
+je short .7	; 31661
 xor esi, esi	; 31663
-jmp short loc_31687	; 31665
-loc_31667:
-mov eax, dword [dword_DD6A0]	; 31667
+jmp short .6	; 31665
+.5:
+mov eax, dword [edity]	; 31667
 push eax	; 3166C
 mov eax, ebp	; 3166D
 imul eax, esi	; 3166F
-add eax, dword [dword_DD6A4]	; 31672
+add eax, dword [editx]	; 31672
 push eax	; 31678
-push unk_C1720	; 31679
+push str_Dot	; 31679
 call sub_92CD0	; 3167E
 add esp, byte 0Ch	; 31683
 inc esi	; 31686
-loc_31687:
+.6:
 cmp esi, edi	; 31687
-jl short loc_31667	; 31689
-jmp short loc_316AA	; 3168B
-loc_3168D:
-mov ebx, dword [dword_DD6A0]	; 3168D
+jl short DrawEditText.5	; 31689
+jmp short .8	; 3168B
+.7:
+mov ebx, dword [edity]	; 3168D
 push ebx	; 31693
-mov ecx, dword [dword_DD6A4]	; 31694
+mov ecx, dword [editx]	; 31694
 push ecx	; 3169A
-mov esi, dword [dword_DD698]	; 3169B
+mov esi, dword [editbuf]	; 3169B
 push esi	; 316A1
 call sub_92CD0	; 316A2
 add esp, byte 0Ch	; 316A7
-loc_316AA:
-cmp dword [dword_DD694], byte 0	; 316AA
-je near loc_3158F	; 316B1
+.8:
+cmp dword [editmaxw], byte 0	; 316AA
+je near DrawEditCursor_ret	; 316B1
 test byte [esp], 2	; 316B7
-je short loc_316C2	; 316BB
+je short .9	; 316BB
 imul edi, ebp	; 316BD
-jmp short loc_316D3	; 316C0
-loc_316C2:
-mov ecx, dword [dword_DD698]	; 316C2
+jmp short .10	; 316C0
+.9:
+mov ecx, dword [editbuf]	; 316C2
 push ecx	; 316C8
 call fputchar	; 316C9
 add esp, byte 4	; 316CE
 mov edi, eax	; 316D1
-loc_316D3:
-mov eax, dword [dword_DD694]	; 316D3
+.10:
+mov eax, dword [editmaxw]	; 316D3
 sub eax, edi	; 316D8
 test eax, eax	; 316DA
-jle near loc_3158F	; 316DC
+jle near DrawEditCursor_ret	; 316DC
 mov esi, dword [dword_D42AC]	; 316E2
 push esi	; 316E8
 movzx esi, byte [byte_D42C5]	; 316E9
 sub esi, byte 2	; 316F0
 push esi	; 316F3
 push eax	; 316F4
-mov ebp, dword [dword_DD6A0]	; 316F5
+mov ebp, dword [edity]	; 316F5
 push ebp	; 316FB
-add edi, dword [dword_DD6A4]	; 316FC
+add edi, dword [editx]	; 316FC
 push edi	; 31702
 call sub_90EC0	; 31703
-jmp near loc_3158C	; 31708
-sub_3170D:
+jmp near DrawEditCursor_x	; 31708
+EditTextField:
 push dword 1Ch	; 3170D
 call __CHK	; 31712
 push esi	; 31717
@@ -2308,22 +2289,22 @@ mov edi, edx	; 3171F
 mov dword [esp], ebx	; 31721
 mov ebp, ecx	; 31724
 call sub_B4BA8	; 31726
-mov dword [dword_DD6A4], ebp	; 3172B
+mov dword [editx], ebp	; 3172B
 mov eax, dword [byte esp+018h]	; 31731
-mov dword [dword_DD6A0], eax	; 31735
-mov dword [dword_DD698], esi	; 3173A
+mov dword [edity], eax	; 31735
+mov dword [editbuf], esi	; 3173A
 mov eax, dword [esp]	; 31740
-mov dword [dword_DD694], eax	; 31743
+mov dword [editmaxw], eax	; 31743
 xor edx, edx	; 31748
-mov dword [dword_DD690], edx	; 3174A
+mov dword [editpos], edx	; 3174A
 mov eax, dword [byte esp+024h]	; 31750
-call sub_31599	; 31754
+call DrawEditText	; 31754
 mov ebx, 1	; 31759
-mov dword [dword_DD68C], ebx	; 3175E
-mov dword [dword_DD69C], ebx	; 31764
+mov dword [editcurw], ebx	; 3175E
+mov dword [editcuron], ebx	; 31764
 xor ebp, ebp	; 3176A
 mov eax, dword [byte esp+024h]	; 3176C
-call sub_314B4	; 31770
+call DrawEditCursor	; 31770
 mov eax, dword [byte esp+020h]	; 31775
 push eax	; 31779
 call sub_B3989	; 3177A
@@ -2331,245 +2312,245 @@ add esp, byte 4	; 3177F
 push byte 4	; 31782
 call sub_B3D46	; 31784
 add esp, byte 4	; 31789
-jmp near loc_31901	; 3178C
-loc_31791:
+jmp near .17	; 3178C
+.1:
 cmp dword [byte esp+01Ch], byte 0	; 31791
-je near loc_31901	; 31796
+je near .17	; 31796
 call dword [byte esp+01Ch]	; 3179C
-jmp near loc_31901	; 317A0
-loc_317A5:
+jmp near .17	; 317A0
+.2:
 mov eax, dword [byte esp+020h]	; 317A5
 push eax	; 317A9
 call sub_B3989	; 317AA
 add esp, byte 4	; 317AF
 mov edx, dword [byte esp+04h]	; 317B2
 cmp edx, byte 0Dh	; 317B6
-je near loc_31A9F	; 317B9
+je near .33	; 317B9
 cmp edx, byte 1Bh	; 317BF
-jne short loc_317CF	; 317C2
+jne short .3	; 317C2
 test byte [byte esp+024h], 4	; 317C4
-jne near loc_31A9F	; 317C9
-loc_317CF:
+jne near .33	; 317C9
+.3:
 mov ecx, dword [byte esp+04h]	; 317CF
 cmp ecx, 4D00h	; 317D3
-jne short loc_3180E	; 317D9
-mov eax, dword [dword_DD690]	; 317DB
+jne short .5	; 317D9
+mov eax, dword [editpos]	; 317DB
 cmp byte [esi+eax], 0	; 317E0
-je near loc_31901	; 317E4
+je near .17	; 317E4
 mov eax, dword [byte esp+024h]	; 317EA
-call sub_314B4	; 317EE
-mov eax, dword [dword_DD690]	; 317F3
+call DrawEditCursor	; 317EE
+mov eax, dword [editpos]	; 317F3
 cmp edi, eax	; 317F8
-jle near loc_318F8	; 317FA
+jle near .16	; 317FA
 lea edx, [byte eax+01h]	; 31800
-loc_31803:
-mov dword [dword_DD690], edx	; 31803
-jmp near loc_318F8	; 31809
-loc_3180E:
+.4:
+mov dword [editpos], edx	; 31803
+jmp near .16	; 31809
+.5:
 cmp ecx, 4B00h	; 3180E
-jne short loc_3183B	; 31814
+jne short .6	; 31814
 mov eax, dword [byte esp+024h]	; 31816
-call sub_314B4	; 3181A
-mov ebx, dword [dword_DD690]	; 3181F
+call DrawEditCursor	; 3181A
+mov ebx, dword [editpos]	; 3181F
 test ebx, ebx	; 31825
-je near loc_318F8	; 31827
+je near .16	; 31827
 lea ecx, [byte ebx-01h]	; 3182D
-mov dword [dword_DD690], ecx	; 31830
-jmp near loc_318F8	; 31836
-loc_3183B:
+mov dword [editpos], ecx	; 31830
+jmp near .16	; 31836
+.6:
 cmp ecx, 4700h	; 3183B
-jne short loc_31850	; 31841
+jne short .7	; 31841
 mov eax, dword [byte esp+024h]	; 31843
-call sub_314B4	; 31847
+call DrawEditCursor	; 31847
 xor edx, edx	; 3184C
-jmp short loc_31803	; 3184E
-loc_31850:
+jmp short EditTextField.4	; 3184E
+.7:
 cmp ecx, 4F00h	; 31850
-jne short loc_3187A	; 31856
+jne short .9	; 31856
 mov eax, dword [byte esp+024h]	; 31858
-call sub_314B4	; 3185C
+call DrawEditCursor	; 3185C
 xor eax, eax	; 31861
-loc_31863:
-mov dword [dword_DD690], eax	; 31863
-mov eax, dword [dword_DD690]	; 31868
+.8:
+mov dword [editpos], eax	; 31863
+mov eax, dword [editpos]	; 31868
 cmp byte [esi+eax], 0	; 3186D
-je near loc_318F8	; 31871
+je near .16	; 31871
 inc eax	; 31877
-jmp short loc_31863	; 31878
-loc_3187A:
+jmp short EditTextField.8	; 31878
+.9:
 cmp ecx, 5200h	; 3187A
-jne short loc_318B0	; 31880
+jne short .11	; 31880
 mov eax, dword [byte esp+024h]	; 31882
-call sub_314B4	; 31886
+call DrawEditCursor	; 31886
 test ebp, ebp	; 3188B
-jne short loc_318A2	; 3188D
+jne short .10	; 3188D
 mov ebp, 1	; 3188F
 xor eax, eax	; 31894
 mov al, byte [byte_D42C3]	; 31896
-mov dword [dword_DD68C], eax	; 3189B
-jmp short loc_318F8	; 318A0
-loc_318A2:
+mov dword [editcurw], eax	; 3189B
+jmp short .16	; 318A0
+.10:
 xor ebp, ebp	; 318A2
-mov dword [dword_DD68C], 1	; 318A4
-jmp short loc_318F8	; 318AE
-loc_318B0:
+mov dword [editcurw], 1	; 318A4
+jmp short .16	; 318AE
+.11:
 cmp ecx, 5300h	; 318B0
-jne near loc_31974	; 318B6
-mov ebx, dword [dword_DD690]	; 318BC
+jne near .19	; 318B6
+mov ebx, dword [editpos]	; 318BC
 cmp edi, ebx	; 318C2
-jle short loc_31901	; 318C4
+jle short .17	; 318C4
 mov eax, ebx	; 318C6
 cmp byte [esi+eax], 0	; 318C8
-je short loc_31901	; 318CC
+je short .17	; 318CC
 mov eax, dword [byte esp+024h]	; 318CE
-call sub_314B4	; 318D2
-mov eax, dword [dword_DD690]	; 318D7
-jmp short loc_318E6	; 318DC
-loc_318DE:
+call DrawEditCursor	; 318D2
+mov eax, dword [editpos]	; 318D7
+jmp short .13	; 318DC
+.12:
 mov bl, byte [byte esi+eax+01h]	; 318DE
 mov byte [esi+eax], bl	; 318E2
 inc eax	; 318E5
-loc_318E6:
+.13:
 cmp eax, edi	; 318E6
-jl short loc_318DE	; 318E8
-loc_318EA:
+jl short EditTextField.12	; 318E8
+.14:
 mov byte [byte edi+esi-01h], 0	; 318EA
-loc_318EF:
+.15:
 mov eax, dword [byte esp+024h]	; 318EF
-call sub_31599	; 318F3
-loc_318F8:
+call DrawEditText	; 318F3
+.16:
 mov eax, dword [byte esp+024h]	; 318F8
-call sub_314B4	; 318FC
-loc_31901:
+call DrawEditCursor	; 318FC
+.17:
 call PollKey	; 31901
 mov dword [byte esp+04h], eax	; 31906
 test eax, eax	; 3190A
-jne short loc_31921	; 3190C
+jne short .18	; 3190C
 call sub_B3D64	; 3190E
 test eax, eax	; 31913
-je near loc_31791	; 31915
+je near EditTextField.1	; 31915
 xor ebx, ebx	; 3191B
 mov dword [byte esp+04h], ebx	; 3191D
-loc_31921:
+.18:
 cmp dword [byte esp+04h], byte 0	; 31921
-jne near loc_317A5	; 31926
+jne near EditTextField.2	; 31926
 push byte 4	; 3192C
 call sub_B3D46	; 3192E
 add esp, byte 4	; 31933
-mov edx, dword [dword_DD69C]	; 31936
-mov dword [dword_DD69C], 1	; 3193C
+mov edx, dword [editcuron]	; 31936
+mov dword [editcuron], 1	; 3193C
 mov eax, dword [byte esp+024h]	; 31946
-call sub_314B4	; 3194A
+call DrawEditCursor	; 3194A
 test edx, edx	; 3194F
 sete al	; 31951
 and eax, 0FFh	; 31954
-mov dword [dword_DD69C], eax	; 31959
+mov dword [editcuron], eax	; 31959
 cmp dword [byte esp+020h], byte 0	; 3195E
-je short loc_31901	; 31963
+je short EditTextField.17	; 31963
 call sub_B39A7	; 31965
 test eax, eax	; 3196A
-jne near loc_31A9F	; 3196C
-jmp short loc_31901	; 31972
-loc_31974:
+jne near .33	; 3196C
+jmp short EditTextField.17	; 31972
+.19:
 cmp ecx, byte 8	; 31974
-jne short loc_319B1	; 31977
-cmp dword [dword_DD690], byte 0	; 31979
-je near loc_31901	; 31980
+jne short .22	; 31977
+cmp dword [editpos], byte 0	; 31979
+je near EditTextField.17	; 31980
 mov eax, dword [byte esp+024h]	; 31986
-call sub_314B4	; 3198A
-mov edx, dword [dword_DD690]	; 3198F
+call DrawEditCursor	; 3198A
+mov edx, dword [editpos]	; 3198F
 dec edx	; 31995
-mov dword [dword_DD690], edx	; 31996
+mov dword [editpos], edx	; 31996
 mov eax, edx	; 3199C
-jmp short loc_319A8	; 3199E
-loc_319A0:
+jmp short .21	; 3199E
+.20:
 mov bl, byte [byte esi+eax+01h]	; 319A0
 mov byte [esi+eax], bl	; 319A4
 inc eax	; 319A7
-loc_319A8:
+.21:
 cmp eax, edi	; 319A8
-jl short loc_319A0	; 319AA
-jmp near loc_318EA	; 319AC
-loc_319B1:
+jl short EditTextField.20	; 319AA
+jmp near EditTextField.14	; 319AC
+.22:
 mov dl, byte [byte esp+024h]	; 319B1
 test dl, 8	; 319B5
-je short loc_319D1	; 319B8
+je short .24	; 319B8
 cmp ecx, byte 30h	; 319BA
-jl near loc_31901	; 319BD
+jl near EditTextField.17	; 319BD
 cmp ecx, byte 39h	; 319C3
-loc_319C6:
-jle near loc_31A3F	; 319C6
-jmp near loc_31901	; 319CC
-loc_319D1:
+.23:
+jle near .27	; 319C6
+jmp near EditTextField.17	; 319CC
+.24:
 test dl, 10h	; 319D1
-je short loc_319F7	; 319D4
+je short .26	; 319D4
 cmp ecx, byte 20h	; 319D6
-je short loc_31A3F	; 319D9
+je short .27	; 319D9
 cmp ecx, byte 41h	; 319DB
-jl short loc_319E5	; 319DE
+jl short .25	; 319DE
 cmp ecx, byte 5Ah	; 319E0
-jle short loc_31A3F	; 319E3
-loc_319E5:
+jle short .27	; 319E3
+.25:
 mov eax, dword [byte esp+04h]	; 319E5
 cmp eax, byte 61h	; 319E9
-jl near loc_31901	; 319EC
+jl near EditTextField.17	; 319EC
 cmp eax, byte 7Ah	; 319F2
-jmp short loc_319C6	; 319F5
-loc_319F7:
+jmp short EditTextField.23	; 319F5
+.26:
 cmp ecx, byte 20h	; 319F7
-jl near loc_31901	; 319FA
+jl near EditTextField.17	; 319FA
 cmp ecx, byte 7Ah	; 31A00
-jg near loc_31901	; 31A03
-cmp edi, dword [dword_DD690]	; 31A09
-jle near loc_31901	; 31A0F
+jg near EditTextField.17	; 31A03
+cmp edi, dword [editpos]	; 31A09
+jle near EditTextField.17	; 31A0F
 test dl, 1	; 31A15
-je short loc_31A3F	; 31A18
+je short .27	; 31A18
 test dl, 1	; 31A1A
-je near loc_31901	; 31A1D
+je near EditTextField.17	; 31A1D
 mov al, byte [byte esp+04h]	; 31A23
 inc al	; 31A27
 and eax, 0FFh	; 31A29
 mov eax, dword [dword eax+dword_C4B69]	; 31A2E
 sar eax, 18h	; 31A34
 test al, 0E0h	; 31A37
-je near loc_31901	; 31A39
-loc_31A3F:
+je near EditTextField.17	; 31A39
+.27:
 mov eax, dword [byte esp+024h]	; 31A3F
-call sub_314B4	; 31A43
+call DrawEditCursor	; 31A43
 test ebp, ebp	; 31A48
-jne short loc_31A63	; 31A4A
-mov eax, dword [dword_DD690]	; 31A4C
+jne short .29	; 31A4A
+mov eax, dword [editpos]	; 31A4C
 mov cl, byte [esi+eax]	; 31A51
 test cl, cl	; 31A54
-jne short loc_31A5C	; 31A56
+jne short .28	; 31A56
 mov byte [byte esi+eax+01h], cl	; 31A58
-loc_31A5C:
-mov eax, dword [dword_DD690]	; 31A5C
-jmp short loc_31A7C	; 31A61
-loc_31A63:
+.28:
+mov eax, dword [editpos]	; 31A5C
+jmp short .32	; 31A61
+.29:
 lea eax, [byte edi-02h]	; 31A63
-jmp short loc_31A70	; 31A66
-loc_31A68:
+jmp short .31	; 31A66
+.30:
 mov bl, byte [esi+eax]	; 31A68
 mov byte [byte esi+eax+01h], bl	; 31A6B
 dec eax	; 31A6F
-loc_31A70:
-mov edx, dword [dword_DD690]	; 31A70
+.31:
+mov edx, dword [editpos]	; 31A70
 cmp eax, edx	; 31A76
-jge short loc_31A68	; 31A78
+jge short EditTextField.30	; 31A78
 mov eax, edx	; 31A7A
-loc_31A7C:
+.32:
 mov dl, byte [byte esp+04h]	; 31A7C
 mov byte [esi+eax], dl	; 31A80
-mov ebx, dword [dword_DD690]	; 31A83
+mov ebx, dword [editpos]	; 31A83
 cmp edi, ebx	; 31A89
-jle near loc_318EF	; 31A8B
+jle near EditTextField.15	; 31A8B
 lea ecx, [byte ebx+01h]	; 31A91
-mov dword [dword_DD690], ecx	; 31A94
-jmp near loc_318EF	; 31A9A
-loc_31A9F:
+mov dword [editpos], ecx	; 31A94
+jmp near EditTextField.15	; 31A9A
+.33:
 mov eax, dword [byte esp+024h]	; 31A9F
-call sub_314B4	; 31AA3
+call DrawEditCursor	; 31AA3
 mov eax, dword [byte esp+04h]	; 31AA8
 add esp, byte 8	; 31AAC
 pop ebp	; 31AAF

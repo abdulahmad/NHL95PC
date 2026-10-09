@@ -9,7 +9,7 @@ extern musicslot, musicon, byte_D2439, byte_ED8C3, byte_ED95B, byte_ED9A7, dword
 extern dword_C541F, songdata, dword_CCC94, dword_D2350, dword_D2423, dword_D2427, dword_D242B
 extern musichandle, dword_D2435, dword_D243A, dword_D24A0, dword_D27B2, dword_D27BB, dword_D2C6B, pointerspr
 extern dword_EA0DC, dword_ED360, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, fclose_, fopen_
-extern fprintf_, jctime, loc_836C4, off_D24D1, strcpy_, MakePath, sub_30A0C, sub_30F12
+extern fprintf_, jctime, loc_836C4, off_D24D1, strcpy_, MakePath, SetDialogColors, RestoreDialogBg
 extern MessageBox, PlayDigiSample, WaitDigiSample, sub_6B391, sub_6B3D7, sub_8245A, sub_824F8, sub_827B3
 extern sub_82805, sub_8357A, sub_8363C, sub_8CCA8, sub_8D2F0, sub_8EB5B, sub_8EB93, sub_8ECC0
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A, sub_8FCDF
@@ -227,7 +227,7 @@ mov ecx, 0FAh	; 82B72
 mov ebx, 0F8h	; 82B77
 mov edx, ecx	; 82B7C
 mov eax, 0F9h	; 82B7E
-call sub_30A0C	; 82B83
+call SetDialogColors	; 82B83
 cmp byte [musicon], 0	; 82B88
 je short loc_82BDA	; 82B8F
 cmp dword [songdata], byte 0	; 82B91
@@ -589,7 +589,7 @@ call PlayDigiSample	; 8309F
 call WaitDigiSample	; 830A4
 mov eax, edx	; 830A9
 call sub_8F1FE	; 830AB
-call sub_30F12	; 830B0
+call RestoreDialogBg	; 830B0
 loc_830B5:
 mov dword [dword_C541F], esi	; 830B5
 cmp byte [byte_D2439], 0	; 830BB
@@ -708,7 +708,7 @@ mov dword [byte esp+040h], eax	; 83221
 loc_83225:
 test byte [byte esp+040h], 2	; 83225
 je short loc_8320A	; 8322A
-call sub_30F12	; 8322C
+call RestoreDialogBg	; 8322C
 mov esi, 10h	; 83231
 jmp short loc_83242	; 83236
 loc_83238:

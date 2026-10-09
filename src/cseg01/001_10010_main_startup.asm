@@ -17,7 +17,7 @@ extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8
 extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84, photoptrs, dword_DC230
 extern pointerspr, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
-extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, sub_3149D, sub_31AB5
+extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, sub_31AB5
 extern LoadModeState, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
 extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
 extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
@@ -231,7 +231,7 @@ or byte [byte_EA0F4], 1	; 10271
 .8:
 call sub_6B410	; 10278
 call dword [off_D3078]	; 1027D
-push sub_3149D	; 10283
+push CritErrHandler	; 10283
 call sub_B3036	; 10288
 add esp, byte 4	; 1028D
 call sub_8BAAF	; 10290

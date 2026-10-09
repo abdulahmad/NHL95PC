@@ -14,7 +14,7 @@ extern dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DD
 extern dword_DE264, dword_EA0DC, jctime, memcpy_, leaguedbnames, off_C8BDD, off_CF2A3
 extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
 extern FileOpenRW, FileClose, ReadKeyRec, WriteKeyRec, ReadTeamRec, LoadGameTeams, RunMenu, InitMenuRemap
-extern TeamRosterScreen, sub_2FEDF, MessageBox, WriteTeamRec, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
+extern TeamRosterScreen, TextInputDialog, MessageBox, WriteTeamRec, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
 extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A099, ClearPlayerFromLines
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
 extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, MouseSetPos
@@ -575,7 +575,7 @@ mov ecx, 16h	; 3E336
 mov ebx, 2	; 3E33B
 lea edx, [dword esp+063Ch]	; 3E340
 lea eax, [dword esp+05C8h]	; 3E347
-call sub_2FEDF	; 3E34E
+call TextInputDialog	; 3E34E
 mov byte [byte esp+ebp+05h], al	; 3E353
 mov eax, edi	; 3E357
 shl eax, 2	; 3E359

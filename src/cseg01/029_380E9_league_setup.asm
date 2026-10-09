@@ -9,8 +9,8 @@ extern divisionteams, musicon, leagueflags, savedname, byte_ED858, byte_ED979, b
 extern songdata, dword_C786C, dword_C7A34, dword_C87B0, musichandle, dword_D2C6B, dword_D8B74, musicslot
 extern pointerspr, dword_DD798, leaguemaster, leaguesaved, dword_EA0DC, jctime, memcpy_, memset_
 extern off_C8055, strcat_, strcmp_, strcpy_, stricmp_, strlen_, MakePath, leaguedbnames
-extern FileOpenRead, FileClose, FileReadAt, FileWriteAt, ReadTeamRec, SetTextColors, sub_2FEDF, sub_303FB
-extern sub_30A0C, MessageBox, sub_37B92, sub_37C53, sub_37D6A, sub_37E5B, sub_37EA6, sub_37FBA
+extern FileOpenRead, FileClose, FileReadAt, FileWriteAt, ReadTeamRec, SetTextColors, TextInputDialog, ListDialog
+extern SetDialogColors, MessageBox, sub_37B92, sub_37C53, sub_37D6A, sub_37E5B, sub_37EA6, sub_37FBA
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
 extern sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_91370, sub_91400, MouseSetPos, sub_B2DCA
@@ -114,7 +114,7 @@ xor ecx, ecx	; 381D0
 mov ebx, asc_C7969	; 381D2
 mov edx, dword [dword esp+0DCh]	; 381D7
 mov eax, dword [dword esp+0ECh]	; 381DE
-call sub_303FB	; 381E5
+call ListDialog	; 381E5
 mov esi, eax	; 381EA
 jmp short loc_3820E	; 381EC
 loc_381EE:
@@ -169,7 +169,7 @@ mov ecx, 3Ch	; 38270
 mov ebx, 0Ah	; 38275
 lea edx, [dword esp+0D0h]	; 3827A
 lea eax, [byte esp+07Ch]	; 38281
-call sub_2FEDF	; 38285
+call TextInputDialog	; 38285
 mov edx, asc_C830C	; 3828A
 lea eax, [byte esp+068h]	; 3828F
 call strcpy_	; 38293
@@ -190,7 +190,7 @@ mov ecx, 3Ch	; 382BA
 mov ebx, 0Ah	; 382BF
 lea edx, [dword esp+0DCh]	; 382C4
 lea eax, [byte esp+07Ch]	; 382CB
-call sub_2FEDF	; 382CF
+call TextInputDialog	; 382CF
 lea edx, [dword esp+0C8h]	; 382D4
 lea eax, [dword esp+0BCh]	; 382DB
 call strcmp_	; 382E2
@@ -803,7 +803,7 @@ mov ecx, 40h	; 38BFE
 mov ebx, 42h	; 38C03
 mov edx, ecx	; 38C08
 mov eax, 41h	; 38C0A
-call sub_30A0C	; 38C0F
+call SetDialogColors	; 38C0F
 test byte [dword esp+02A0h], 1	; 38C14
 je short loc_38C38	; 38C1C
 xor ecx, ecx	; 38C1E
@@ -1885,7 +1885,7 @@ mov ecx, 46h	; 39DA5
 mov ebx, 0Ah	; 39DAA
 lea edx, [dword esp+0210h]	; 39DAF
 lea eax, [dword esp+0114h]	; 39DB6
-call sub_2FEDF	; 39DBD
+call TextInputDialog	; 39DBD
 mov ecx, eax	; 39DC2
 cmp eax, byte 1Bh	; 39DC4
 je near loc_39E6A	; 39DC7
@@ -1973,7 +1973,7 @@ mov ecx, 3Ch	; 39EC6
 mov ebx, 0Ah	; 39ECB
 lea edx, [dword esp+0210h]	; 39ED0
 lea eax, [dword esp+0114h]	; 39ED7
-call sub_2FEDF	; 39EDE
+call TextInputDialog	; 39EDE
 mov ecx, eax	; 39EE3
 cmp eax, byte 1Bh	; 39EE5
 je short loc_39F3E	; 39EE8
@@ -1997,7 +1997,7 @@ mov ecx, 3Ch	; 39F1F
 mov ebx, 0Ah	; 39F24
 lea edx, [dword esp+0204h]	; 39F29
 lea eax, [dword esp+0114h]	; 39F30
-call sub_2FEDF	; 39F37
+call TextInputDialog	; 39F37
 mov ecx, eax	; 39F3C
 loc_39F3E:
 cmp ecx, byte 1Bh	; 39F3E
@@ -2376,7 +2376,7 @@ mov ecx, 3Ch	; 3A3E3
 mov ebx, 0Ah	; 3A3E8
 lea edx, [byte esp+068h]	; 3A3ED
 lea eax, [byte esp+014h]	; 3A3F1
-call sub_2FEDF	; 3A3F5
+call TextInputDialog	; 3A3F5
 cmp eax, byte 1Bh	; 3A3FA
 jne short loc_3A409	; 3A3FD
 mov eax, 0FFFFFFFFh	; 3A3FF
@@ -2472,7 +2472,7 @@ mov ecx, 3Ch	; 3A4EB
 mov ebx, 0Ah	; 3A4F0
 lea edx, [byte esp+068h]	; 3A4F5
 lea eax, [byte esp+014h]	; 3A4F9
-call sub_2FEDF	; 3A4FD
+call TextInputDialog	; 3A4FD
 cmp eax, byte 1Bh	; 3A502
 jne short loc_3A511	; 3A505
 mov eax, 0FFFFFFFFh	; 3A507

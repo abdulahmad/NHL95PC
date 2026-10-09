@@ -6,7 +6,7 @@ extern __CHK, asc_C3014, asc_C301C, asc_C3023, asc_C3028, asc_C302D, asc_C3032, 
 extern asc_C303C, asc_C3041, asc_C3046, asc_C304B, asc_C3050, asc_C3055, asc_C305A, asc_C305F
 extern asc_C3064, asc_C306C, asc_C3072, asc_C307B, asc_C3081, asc_C3086, asc_C308D, asc_C3092
 extern asc_C309A, asc_C30A3, asc_C30AD, asc_C30B6, asc_C30BB, asc_C30C3, asc_C30C8, str_extDB
-extern asc_C811E, byte_C4B6C, byte_D42C3, savefname, fdlgmask, byte_ED993
+extern str_ORG, byte_C4B6C, byte_D42C3, savefname, fdlgmask, byte_ED993
 extern byte_ED994, fdlgshapes, seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb
 extern seasondb_size, careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B16, dword_D0B1A
 extern dword_D0B1E, dword_D1084, dword_D1088, dword_D108C, dword_D1090, dword_D1104, dword_D1108, dword_D110C
@@ -17,8 +17,8 @@ extern fdlg_tablp, fdlg_noarrow, dword_EA0DC, dword_EBC68, dword_EC6B8, dword_EC
 extern dword_EC6C8, dword_EC710, dword_EC714, dword_EC718, dword_EC71C, dword_EC720, dword_EC768, dword_EC76C
 extern dword_EC770, dword_EC774, dword_EC778, fputchar, jctime, leaguedbnames
 extern off_D1184, qsort_, strcat_, strcpy_, strlen_
-extern MakePath, DeleteDir, PrintShadowText, CmpFileNames, PrintTextCopy, FileDlgHitTest, sub_2FED2, sub_309E4
-extern MessageBox, sub_3170D, sub_6B391, sub_6B3D7, sub_6CA8F, DrawEditRosters, LoadBothRosterLists, sub_78BE7
+extern MakePath, DeleteDir, PrintShadowText, CmpFileNames, PrintTextCopy, FileDlgHitTest, DlgReturnZero, MeasureTextLine
+extern MessageBox, EditTextField, sub_6B391, sub_6B3D7, sub_6CA8F, DrawEditRosters, LoadBothRosterLists, sub_78BE7
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284
 extern sub_91370, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_B2CBE, sub_B2DCA, sub_B30B4
 extern sub_B4BA8, sub_B4FAC, unk_D11B2, btn_POHumanOut, unk_EC7C0, unknown_libname_1, unknown_libname_2, unknown_libname_4
@@ -72,7 +72,7 @@ mov eax, dword [eax]	; 71F54
 mov ecx, dword [byte esp+058h]	; 71F56
 lea ebx, [byte esp+044h]	; 71F5A
 lea edx, [byte esp+048h]	; 71F5E
-call sub_309E4	; 71F62
+call MeasureTextLine	; 71F62
 inc esi	; 71F67
 loc_71F68:
 cmp esi, edi	; 71F68
@@ -230,7 +230,7 @@ mov edi, dword [dword esp+08Ch]	; 72149
 loc_72150:
 push byte 0Ch	; 72150
 push byte 0	; 72152
-push sub_2FED2	; 72154
+push DlgReturnZero	; 72154
 mov eax, dword [byte esp+070h]	; 72159
 add eax, byte 2	; 7215D
 push eax	; 72160
@@ -240,7 +240,7 @@ mov ebx, dword [byte esp+06Ch]	; 72168
 sub ebx, byte 8	; 7216C
 mov edx, dword [byte esp+078h]	; 7216F
 mov eax, ebp	; 72173
-call sub_3170D	; 72175
+call EditTextField	; 72175
 cmp eax, byte 1Bh	; 7217A
 je short loc_721C4	; 7217D
 mov dword [byte esp+06Ch], 0FFFFFFFFh	; 7217F
@@ -284,7 +284,7 @@ mov edi, 1	; 721FB
 loc_72200:
 push byte 14h	; 72200
 push byte 0	; 72202
-push sub_2FED2	; 72204
+push DlgReturnZero	; 72204
 mov eax, dword [byte esp+070h]	; 72209
 add eax, byte 2	; 7220D
 push eax	; 72210
@@ -294,7 +294,7 @@ mov ebx, dword [byte esp+06Ch]	; 72218
 sub ebx, byte 8	; 7221C
 mov edx, dword [byte esp+078h]	; 7221F
 mov eax, ebp	; 72223
-call sub_3170D	; 72225
+call EditTextField	; 72225
 cmp eax, byte 1Bh	; 7222A
 je short loc_7224E	; 7222D
 mov esi, 1	; 7222F
@@ -1777,7 +1777,7 @@ mov esi, asc_C309A	; 7340E
 movsd	; 73413
 movsd	; 73414
 movsb	; 73415
-mov edx, asc_C811E	; 73416
+mov edx, str_ORG	; 73416
 jmp short loc_7344D	; 7341B
 loc_7341D:
 mov eax, dword [dword_EC714]	; 7341D

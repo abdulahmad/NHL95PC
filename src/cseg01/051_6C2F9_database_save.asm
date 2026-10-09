@@ -5,15 +5,15 @@ section s_6C2F9 progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, asc_C2814, asc_C282C, asc_C2834, asc_C284F, asc_C2854, asc_C2873
 extern asc_C2894, asc_C2899, asc_C28A1, asc_C28AC, asc_C28B8, str_fmt2d, str_extDB, asc_CFB69
 extern asc_D0F15, rosterisfa, musicon, byte_D42C3, rosterlist, byte_EA991, rostersel, boxfillcolor
-extern boxlitecolor, boxshadecolor, dword_C71D8, dword_C71DC, songdata, falist, falistsel, facount
+extern boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg, songdata, falist, falistsel, facount
 extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0BFC, dword_D0C04, dword_D0C10
 extern dword_D0C18, dword_D0C20, musichandle, dword_D8B74, pointerspr, dword_EA2B0, dword_EA2B4, musicslot
 extern dword_EA988, dword_EBC68, msglines, dword_EBCA4, dword_EBE9C, editrosters_exit, fputchar, jctime
 extern loc_6C03C, mkdir_, leaguedbnames
 extern off_CFB1C, off_CFB8A, rmdir_, sprintf_, strcat_, strcpy_, strlen_, strupr_
-extern MakePath, DeleteDir, PrintCenteredText, PrintShadowText, FitPlayerName, sub_2FEDF, sub_30AE2, sub_30C3D
-extern sub_30F12, MessageBox, sub_6C19B, DrawEditRosters, EditRosters, CheckDatabases, sub_76429, sub_8CCA8
+extern MakePath, DeleteDir, PrintCenteredText, PrintShadowText, FitPlayerName, TextInputDialog, DrawButtons, DrawScrollBar
+extern RestoreDialogBg, MessageBox, sub_6C19B, DrawEditRosters, EditRosters, CheckDatabases, sub_76429, sub_8CCA8
 extern sub_8D2F0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90F38
 extern sub_91964, sub_932D0, FatalError, MouseSetPos, sub_B4BA8, sub_B4F8C, unk_6BF3D, unk_C28A9
 extern btn_LeagueExists, unk_D0450, unk_D07EB, unk_D0BB8, unk_D0BF0, unk_D0C24, unk_EC7C0, unknown_libname_1
@@ -83,7 +83,7 @@ call MessageBox	; 6C396
 mov edx, str_extDB	; 6C39B
 lea eax, [byte esp+04h]	; 6C3A0
 call sub_6C4BA	; 6C3A4
-call sub_30F12	; 6C3A9
+call RestoreDialogBg	; 6C3A9
 call DrawEditRosters	; 6C3AE
 loc_6C3B3:
 add esp, byte 14h	; 6C3B3
@@ -113,7 +113,7 @@ mov ecx, 30h	; 6C3DC
 mov ebx, 8	; 6C3E1
 lea edx, [byte esp+050h]	; 6C3E6
 mov eax, asc_C2834	; 6C3EA
-call sub_2FEDF	; 6C3EF
+call TextInputDialog	; 6C3EF
 cmp byte [byte esp+03Ch], 0	; 6C3F4
 je near loc_6C4B2	; 6C3F9
 cmp eax, byte 1Bh	; 6C3FF
@@ -779,17 +779,17 @@ mov eax, dword [boxshadecolor]	; 6CC3C
 mov dword [byte esp+04Ch], eax	; 6CC41
 mov eax, dword [boxfillcolor]	; 6CC45
 mov dword [byte esp+050h], eax	; 6CC4A
-mov eax, dword [dword_C71D8]	; 6CC4E
+mov eax, dword [dlgtextfg]	; 6CC4E
 mov dword [byte esp+048h], eax	; 6CC53
-mov eax, dword [dword_C71DC]	; 6CC57
+mov eax, dword [dlgtextbg]	; 6CC57
 mov dword [byte esp+044h], eax	; 6CC5C
 mov dword [boxfillcolor], 41h	; 6CC60
 mov ebx, 40h	; 6CC6A
 mov dword [boxlitecolor], ebx	; 6CC6F
 mov ecx, 42h	; 6CC75
 mov dword [boxshadecolor], ecx	; 6CC7A
-mov dword [dword_C71D8], ebx	; 6CC80
-mov dword [dword_C71DC], ecx	; 6CC86
+mov dword [dlgtextfg], ebx	; 6CC80
+mov dword [dlgtextbg], ecx	; 6CC86
 xor ebp, ebp	; 6CC8C
 mov dword [editrosters_exit], ebp	; 6CC8E
 mov dword [dword_D0B12], ebp	; 6CC94
@@ -936,9 +936,9 @@ mov dword [boxlitecolor], eax	; 6CE92
 mov eax, dword [byte esp+04Ch]	; 6CE97
 mov dword [boxshadecolor], eax	; 6CE9B
 mov eax, dword [byte esp+048h]	; 6CEA0
-mov dword [dword_C71D8], eax	; 6CEA4
+mov dword [dlgtextfg], eax	; 6CEA4
 mov eax, dword [byte esp+044h]	; 6CEA9
-mov dword [dword_C71DC], eax	; 6CEAD
+mov dword [dlgtextbg], eax	; 6CEAD
 cmp byte [musicon], 0	; 6CEB2
 je short loc_6CEF1	; 6CEB9
 cmp dword [songdata], byte 0	; 6CEBB
@@ -1245,7 +1245,7 @@ cmp dword [dword_D0C20], byte 0	; 6D205
 je short loc_6D24F	; 6D20C
 mov edx, 2	; 6D20E
 mov eax, unk_D0BB8	; 6D213
-call sub_30AE2	; 6D218
+call DrawButtons	; 6D218
 mov eax, dword [dword_EBCA4]	; 6D21D
 mov dword [dword_D0C10], eax	; 6D222
 mov eax, dword [dword_D0BFC]	; 6D227
@@ -1256,7 +1256,7 @@ xor edx, edx	; 6D23C
 div ebx	; 6D23E
 mov dword [dword_D0C04], eax	; 6D240
 mov eax, unk_D0BF0	; 6D245
-call sub_30C3D	; 6D24A
+call DrawScrollBar	; 6D24A
 loc_6D24F:
 mov esp, ebp	; 6D24F
 pop ebp	; 6D251
