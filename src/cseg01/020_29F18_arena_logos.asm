@@ -5,7 +5,7 @@ section s_29F18 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1370, asc_C1375, asc_C1379, asc_C137F, asc_C1384, asc_C1389, asc_C1390
 extern asc_C13A0, asc_C13A8, asc_C13AD, asc_C13B6, asc_C13C0, asc_C13C7, asc_C13D0, asc_C13D9
 extern asc_C13E0, asc_C13E5, asc_C13EA, asc_C13F3, asc_C13F8, asc_C13FD, asc_C1402, asc_C1407
-extern asc_C140C, asc_C1415, asc_C141A, asc_C141F, asc_C1428, str_extDB, asc_C814A
+extern asc_C140C, asc_C1415, asc_C141A, asc_C141F, asc_C1428, str_extDB, str_VFN
 extern byte_C6F6C, curleague, musicon, byte_D42C3, hmroster, byte_ED7F3, byte_ED824, byte_ED825
 extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, ctl1team, ctl2team
 extern teamconf, dword_C71CC, dword_C71D0, dword_C71D4, songdata, cont2team, HomeTeam, musicslot
@@ -1099,7 +1099,7 @@ lea eax, [byte esp+054h]	; 2AE9C
 push eax	; 2AEA0
 call sub_8E9E8	; 2AEA1
 add esp, byte 4	; 2AEA6
-mov ecx, asc_C814A	; 2AEA9
+mov ecx, str_VFN	; 2AEA9
 mov ebx, asc_C140C	; 2AEAE
 cmp byte [byte_ED9E6], 1	; 2AEB3
 jne short loc_2AEC4	; 2AEBA

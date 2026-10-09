@@ -15,26 +15,25 @@ extern unk_C0581, unk_C0588, unk_C0591, unk_C059C, unk_C05A9, unk_C05B4, unk_C05
 extern unk_C05D3, unk_C05DA, unk_C05E3, unk_C05EC, unk_C05F6, unk_C05FE, unk_C0608, unk_C0613
 extern unk_C061C, unk_C0624, unk_C062C, unk_C063B, unk_D97CA, unk_D9800, unk_D9836, unk_D9865
 extern unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
-global asc_C5286, asc_C528E, byte_C4D1C, byte_C4D1D, byte_C4D1E, byte_C5138, byte_C5244, byte_C524D
-global byte_C52F2, byte_C5311, byte_C5386, byte_C53DC, byte_C541B, byte_C5424
+global asc_C5286, asc_C528E, pad1dev, pad2dev, lasthotkey, byte_C5138, byte_C5244, byte_C524D
+global byte_C541B, byte_C5424
 global byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, joyqtick
-global dword_C4E0C, dword_C4E10, dword_C4E14, joyrec, dword_C4E24, dword_C4E28, dword_C4E2C, dword_C5130
-global dword_C5131, dword_C5133, dword_C5135, dword_C513C, dword_C5168, dword_C51F0, dword_C52E9, dword_C52ED
-global dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5305, dword_C5309, postate
+global samesideflag, inputframes, escrequest, joyrec, palfadedin, screenw, screenh, dword_C5130
+global dword_C5131, dword_C5133, dword_C5135, dword_C513C, dword_C5168, dword_C51F0
+global postate
 global lgstate
-global dword_C53D3, dword_C53D7, dword_C53DF, dword_C53E3, dword_C53E7, dword_C53EB, dword_C53EF, dword_C53F3
 global dword_C53F7, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
 global ctl2side, dword_C541F, off_C5194, off_C51C0, off_C51EC, off_C524F, off_C5253, off_C5257
 global off_C525B, off_C525F, off_C5263, off_C5267, off_C526F, off_C5273, off_C527B, off_C5439
-global off_C5441, teamcitynames, unk_C4E30, str_fmtpd, exhstate, unk_C529C, unk_C5423, unk_C542E
-global word_C53DB, word_C5428
+global off_C5441, teamcitynames, unk_C4E30, str_fmtpd, exhstate, unk_C5423, unk_C542E
+global word_C5428
 joyqtick:
 db 00h,00h,00h,00h
-byte_C4D1C:
+pad1dev:
 db 08h
-byte_C4D1D:
+pad2dev:
 db 02h
-byte_C4D1E:
+lasthotkey:
 db 00h,08h,00h,04h,08h,02h,01h,03h,02h,06h,07h,05h,06h,08h,00h,04h
 db 08h,00h,0DCh,07Bh,00h,00h,0CFh,0BDh,00h,00h,0F7h,00h,00h,00h,0C0h,08h
 db 00h,00h,062h,04h,00h,00h,00h,00h,00h,00h,0DFh,0FFh,00h,00h,0FFh,0DFh
@@ -50,19 +49,19 @@ db 00h,00h,0FFh,03h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_C4E0C:
+samesideflag:
 db 00h,00h,00h,00h
-dword_C4E10:
+inputframes:
 db 00h,00h,00h,00h
-dword_C4E14:
+escrequest:
 db 00h,00h,00h,00h
 joyrec:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_C4E24:
+palfadedin:
 db 00h,00h,00h,00h
-dword_C4E28:
+screenw:
 db 080h,02h,00h,00h
-dword_C4E2C:
+screenh:
 db 0E0h,01h,00h,00h
 unk_C4E30:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -214,33 +213,22 @@ asc_C528E:
 db 025h,064h,02Eh,025h,030h,031h,064h,00h,00h,00h
 exhstate:
 db 00h,00h,00h,00h
-unk_C529C:
 db 02Eh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
 db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
 db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_C52E9:
 db 0Ch,00h,00h,00h
-dword_C52ED:
 db 015h,00h,00h,00h,0FFh
-byte_C52F2:
 db 07Bh,00h,00h
-dword_C52F5:
 db 0FFh,0FFh,0FFh,0FFh
-dword_C52F9:
 db 0FEh,0FFh,0FFh,0FFh
-dword_C52FD:
 db 010h,00h,00h,00h
-dword_C5301:
 db 010h,00h,00h,00h
-dword_C5305:
 db 00h,00h,00h,00h
-dword_C5309:
 db 01h,00h,00h,00h
 postate:
 db 01h,00h,00h,00h
-byte_C5311:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
 db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
@@ -258,31 +246,20 @@ db 00h,00h,00h,00h
 db 01h,00h,00h,00h
 lgstate:
 db 02h,00h,00h,00h
-byte_C5386:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
 db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
 db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_C53D3:
 db 0Ch,00h,00h,00h
-dword_C53D7:
 db 015h,00h,00h,00h
-word_C53DB:
 db 0FFh
-byte_C53DC:
 db 07Bh,00h,00h
-dword_C53DF:
 db 0FFh,0FFh,0FFh,0FFh
-dword_C53E3:
 db 0FEh,0FFh,0FFh,0FFh
-dword_C53E7:
 db 010h,00h,00h,00h
-dword_C53EB:
 db 010h,00h,00h,00h
-dword_C53EF:
 db 00h,00h,00h,00h
-dword_C53F3:
 db 01h,00h,00h,00h
 dword_C53F7:
 db 00h,00h,00h,00h

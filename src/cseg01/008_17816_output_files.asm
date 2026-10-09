@@ -2,11 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_17816 progbits alloc exec nowrite align=1
-extern __CHK, asc_C0910, asc_C0915, asc_C6570, byte_C5311, byte_C5386, byte_C671C, byte_C672F
+extern __CHK, asc_C0910, asc_C0915, asc_C6570, byte_C671C, byte_C672F, postate, lgstate
 extern byte_C6745, byte_C6759, byte_C6777, dword_C6410, dword_C65B0, dword_C65B4, dword_C65B8, dword_C65BC
 extern dword_C6956, dword_C695A, dword_C6A60, dword_DC6B4, dword_DC738, dword_DD120, fclose_, fopen_
 extern fputs_, off_C648E, off_C659A, sprintf_, strcat_, strcmp_, strcpy_, strncpy_
-extern sub_142E7, sub_14825, MessageBox, sub_76429, sub_8FFB0, unk_C093C, unk_C093F, unk_C529C
+extern sub_142E7, sub_14825, MessageBox, sub_76429, sub_8FFB0, unk_C093C, unk_C093F, exhstate
 extern unk_C6499, unk_C64F5, unk_C652A, unk_C65D4, unk_DC340
 global loc_1787A, loc_1787C, loc_178BB, loc_17910, loc_1792C, loc_17980, loc_1799E, loc_179AA
 global loc_179FA, loc_17A24, loc_17A5C, loc_17AEE, loc_17B18, loc_17B50, loc_17B65, loc_17C0C
@@ -190,7 +190,7 @@ loc_17A5C:
 xor ebp, ebp	; 17A5C
 mov dword [dword_C6956], ebp	; 17A5E
 mov ebx, 1Fh	; 17A64
-mov edx, unk_C529C	; 17A69
+mov edx, exhstate+4	; 17A69
 mov eax, unk_C65D4	; 17A6E
 call strncpy_	; 17A73
 cmp dword [dword_DC738], byte 0	; 17A78
@@ -249,7 +249,7 @@ loc_17B50:
 mov ebp, 1	; 17B50
 mov dword [dword_C6956], ebp	; 17B55
 mov ebx, 1Fh	; 17B5B
-mov edx, unk_C529C	; 17B60
+mov edx, exhstate+4	; 17B60
 loc_17B65:
 mov eax, unk_C65D4	; 17B65
 call strncpy_	; 17B6A
@@ -311,7 +311,7 @@ loc_17C48:
 xor ebp, ebp	; 17C48
 mov dword [dword_C6956], ebp	; 17C4A
 mov ebx, 1Fh	; 17C50
-mov edx, byte_C5386	; 17C55
+mov edx, lgstate+4	; 17C55
 mov eax, unk_C65D4	; 17C5A
 call strncpy_	; 17C5F
 cmp dword [dword_DC738], byte 0	; 17C64
@@ -356,7 +356,7 @@ cmp edx, byte 1	; 17CF5
 jne short loc_17D19	; 17CF8
 cmp edx, dword [dword_C6956]	; 17CFA
 jne short loc_17D19	; 17D00
-mov edx, byte_C5386	; 17D02
+mov edx, lgstate+4	; 17D02
 mov eax, unk_C65D4	; 17D07
 call strcmp_	; 17D0C
 test eax, eax	; 17D11
@@ -377,7 +377,7 @@ loc_17D54:
 mov ebp, 1	; 17D54
 mov dword [dword_C6956], ebp	; 17D59
 mov ebx, 1Fh	; 17D5F
-mov edx, byte_C5386	; 17D64
+mov edx, lgstate+4	; 17D64
 jmp near loc_17B65	; 17D69
 sub_17D6E:
 push dword 24h	; 17D6E
@@ -392,7 +392,7 @@ cmp edx, byte 1	; 17D83
 jne short loc_17DA7	; 17D86
 cmp edx, dword [dword_C6956]	; 17D88
 jne short loc_17DA7	; 17D8E
-mov edx, byte_C5311	; 17D90
+mov edx, postate+4	; 17D90
 mov eax, unk_C65D4	; 17D95
 call strcmp_	; 17D9A
 test eax, eax	; 17D9F
@@ -413,5 +413,5 @@ loc_17DE2:
 mov ebp, 1	; 17DE2
 mov dword [dword_C6956], ebp	; 17DE7
 mov ebx, 1Fh	; 17DED
-mov edx, byte_C5311	; 17DF2
+mov edx, postate+4	; 17DF2
 jmp near loc_17B65	; 17DF7

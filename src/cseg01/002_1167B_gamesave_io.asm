@@ -2,16 +2,16 @@
 bits 32
 %include "hockey.inc"
 section s_1167B progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, asc_C0202, str_extDB, asc_C8136, byte_C4D1C, byte_C4D1D, byte_C524D
+extern __CHK, __STOSB, asc_C0202, str_extDB, asc_C8136, pad1dev, pad2dev, byte_C524D
 extern curleague, sflags, musicon, byte_D9299, byte_D9558, byte_ED7CC, joysampling, gameopts
-extern dword_C4E10, dword_C4E14, dword_C5130, dword_C53F7, gamemode, dword_C5704, dword_C5708, dword_C570C
+extern inputframes, escrequest, dword_C5130, dword_C53F7, gamemode, dword_C5704, dword_C5708, dword_C570C
 extern dword_C5840, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
 extern penshotlive, dword_D2C6B, dword_D302C, dword_D3030, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, dword_DD6A8, dword_DD6AE
 extern dword_DD6B0, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, dword_E9A9E, j_unlink_
-extern loc_113E9, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
+extern HandleHotKey_ret, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
 extern off_C526F, off_C5273, off_C5439, leaguedbnames, replaystart, camx_m2
-extern off_CBED0, strcat_, strcpy_, sub_10E9F, sub_1145F, sub_1149A, sub_11598, sub_13A91
+extern off_CBED0, strcat_, strcpy_, SetScreenSize, ResetInputSampling, RunGameFrames, FadePalette, sub_13A91
 extern sub_13E8F, MakePath, FileOpenRead, FileClose, sub_1463D, sub_1478B, ReadTeamRec, sub_14CF1
 extern sub_150C6, sub_15B76, sub_1920F, sub_1935D, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
 extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
@@ -54,7 +54,7 @@ jne near loc_11CDB	; 116A5
 loc_116AB:
 cmp word [exitgame], byte 0	; 116AB
 jne near loc_11BDB	; 116B3
-call sub_1145F	; 116B9
+call ResetInputSampling	; 116B9
 mov edx, eax	; 116BE
 shl eax, 2	; 116C0
 sub eax, edx	; 116C3
@@ -74,7 +74,7 @@ sar edx, 1Fh	; 116E9
 idiv ebx	; 116EC
 mov dword [dword_D8C6C], edx	; 116EE
 mov eax, esi	; 116F4
-call sub_1149A	; 116F6
+call RunGameFrames	; 116F6
 mov eax, dword [camx_m2]	; 116FB
 sar eax, 10h	; 11700
 add eax, byte 20h	; 11703
@@ -149,7 +149,7 @@ add esp, byte 0Ch	; 1180E
 mov ebx, 10h	; 11811
 mov edx, unk_DF014	; 11816
 mov eax, 1	; 1181B
-call sub_11598	; 11820
+call FadePalette	; 11820
 call sub_61B85	; 11825
 mov eax, dword [dword_E9A9E]	; 1182A
 sar eax, 10h	; 1182F
@@ -225,14 +225,14 @@ mov dword [joysampling], ebp	; 11928
 mov ebx, 10h	; 1192E
 mov edx, unk_DF314	; 11933
 xor eax, eax	; 11938
-call sub_11598	; 1193A
+call FadePalette	; 1193A
 xor esi, esi	; 1193F
 mov word [word_CBEC4], si	; 11941
 mov eax, dword [dword_E9A9E]	; 11948
 sar eax, 10h	; 1194D
 mov dword [joysampling], eax	; 11950
 loc_11955:
-cmp dword [dword_C4E14], byte 0	; 11955
+cmp dword [escrequest], byte 0	; 11955
 je near loc_11B98	; 1195C
 mov edx, dword [dword_C5130]	; 11962
 test edx, edx	; 11968
@@ -240,16 +240,16 @@ je short loc_1198F	; 1196A
 mov ebx, 10h	; 1196C
 mov edx, unk_DF314	; 11971
 mov eax, 1	; 11976
-call sub_11598	; 1197B
+call FadePalette	; 1197B
 mov dword [dword_C53F7], 2	; 11980
 jmp near loc_11CFC	; 1198A
 loc_1198F:
 mov ax, word [joysampling]	; 1198F
 mov word [joysampling_save], ax	; 11995
 mov dword [joysampling], edx	; 1199B
-cmp byte [byte_C4D1C], 1	; 119A1
+cmp byte [pad1dev], 1	; 119A1
 je short loc_119B3	; 119A8
-cmp byte [byte_C4D1D], 1	; 119AA
+cmp byte [pad2dev], 1	; 119AA
 jne short loc_119C7	; 119B1
 loc_119B3:
 mov eax, dword [dword_D302C]	; 119B3
@@ -280,20 +280,20 @@ add esp, byte 0Ch	; 11A10
 mov ebx, 10h	; 11A13
 mov edx, unk_DF014	; 11A18
 mov eax, 1	; 11A1D
-call sub_11598	; 11A22
+call FadePalette	; 11A22
 mov edx, 1E0h	; 11A27
 mov eax, 280h	; 11A2C
-call sub_10E9F	; 11A31
+call SetScreenSize	; 11A31
 xor eax, eax	; 11A36
 call sub_1935D	; 11A38
 cmp dword [dword_C53F7], byte 2	; 11A3D
 je near loc_11CFC	; 11A44
 mov edx, 0C8h	; 11A4A
 mov eax, 140h	; 11A4F
-call sub_10E9F	; 11A54
-cmp byte [byte_C4D1C], 1	; 11A59
+call SetScreenSize	; 11A54
+cmp byte [pad1dev], 1	; 11A59
 je short loc_11A6B	; 11A60
-cmp byte [byte_C4D1D], 1	; 11A62
+cmp byte [pad2dev], 1	; 11A62
 jne short loc_11A81	; 11A69
 loc_11A6B:
 mov edi, dword [dword_DF010]	; 11A6B
@@ -305,7 +305,7 @@ add esp, byte 8	; 11A7E
 loc_11A81:
 mov word [word_CBEC4], 1	; 11A81
 xor eax, eax	; 11A8A
-mov dword [dword_C4E14], eax	; 11A8C
+mov dword [escrequest], eax	; 11A8C
 mov eax, dword [HomeTeam]	; 11A91
 sar eax, 10h	; 11A96
 mov edx, dword [nosplit eax*4+off_C5439]	; 11A99
@@ -394,7 +394,7 @@ je short loc_11C0F	; 11BEA
 mov ebx, 10h	; 11BEC
 mov edx, unk_DF314	; 11BF1
 mov eax, 1	; 11BF6
-call sub_11598	; 11BFB
+call FadePalette	; 11BFB
 mov dword [dword_C53F7], 1	; 11C00
 jmp near loc_11CFC	; 11C0A
 loc_11C0F:
@@ -421,9 +421,9 @@ call sub_150C6	; 11C70
 xor eax, eax	; 11C75
 call PlayCrowdSample	; 11C77
 loc_11C7C:
-cmp byte [byte_C4D1C], 1	; 11C7C
+cmp byte [pad1dev], 1	; 11C7C
 je short loc_11C8E	; 11C83
-cmp byte [byte_C4D1D], 1	; 11C85
+cmp byte [pad2dev], 1	; 11C85
 jne short loc_11C9D	; 11C8C
 loc_11C8E:
 push byte 64h	; 11C8E
@@ -437,7 +437,7 @@ mov word [lcrequest], si	; 11CA6
 xor eax, eax	; 11CAD
 mov dword [dword_C5840], eax	; 11CAF
 xor edx, edx	; 11CB4
-mov dword [dword_C4E10], eax	; 11CB6
+mov dword [inputframes], eax	; 11CB6
 xor eax, eax	; 11CBB
 mov word [exitgame], ax	; 11CBD
 xor ebx, ebx	; 11CC3
@@ -455,7 +455,7 @@ mov dword [dword_C53F7], 1	; 11CF2
 loc_11CFC:
 call sub_1B982	; 11CFC
 add esp, byte 20h	; 11D01
-jmp near loc_113E9	; 11D04
+jmp near HandleHotKey_ret	; 11D04
 sub_11D09:
 push dword 64h	; 11D09
 call __CHK	; 11D0E
@@ -480,7 +480,7 @@ call sub_673C5	; 11D47
 call FadeOutPalCycle	; 11D4C
 mov edx, 0C8h	; 11D51
 mov eax, 140h	; 11D56
-call sub_10E9F	; 11D5B
+call SetScreenSize	; 11D5B
 cmp word [HomeTeam], byte 1Ah	; 11D60
 jl short loc_11D71	; 11D68
 mov eax, 0Ch	; 11D6A
@@ -538,10 +538,10 @@ jmp near loc_11FEC	; 11E37
 loc_11E3C:
 mov edx, 0C8h	; 11E3C
 mov eax, 140h	; 11E41
-call sub_10E9F	; 11E46
-cmp byte [byte_C4D1C], 1	; 11E4B
+call SetScreenSize	; 11E46
+cmp byte [pad1dev], 1	; 11E4B
 je short loc_11E5D	; 11E52
-cmp byte [byte_C4D1D], 1	; 11E54
+cmp byte [pad2dev], 1	; 11E54
 jne short loc_11E73	; 11E5B
 loc_11E5D:
 mov edi, dword [dword_DF010]	; 11E5D
@@ -553,7 +553,7 @@ add esp, byte 8	; 11E70
 loc_11E73:
 mov word [word_CBEC4], 1	; 11E73
 xor eax, eax	; 11E7C
-mov dword [dword_C4E14], eax	; 11E7E
+mov dword [escrequest], eax	; 11E7E
 mov ebx, dword [dword_D8C84]	; 11E83
 mov edx, dword [HomeTeam]	; 11E89
 sar edx, 10h	; 11E8F
@@ -642,10 +642,10 @@ call j_unlink_	; 11FD8
 loc_11FDD:
 mov edx, 1E0h	; 11FDD
 mov eax, 280h	; 11FE2
-call sub_10E9F	; 11FE7
+call SetScreenSize	; 11FE7
 loc_11FEC:
 add esp, byte 40h	; 11FEC
-jmp near loc_113E9	; 11FEF
+jmp near HandleHotKey_ret	; 11FEF
 assreplace:
 push dword 8	; 11FF4
 call __CHK	; 11FF9

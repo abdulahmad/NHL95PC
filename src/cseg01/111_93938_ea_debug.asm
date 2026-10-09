@@ -14,8 +14,8 @@ extern asc_C45D4, asc_C45F8, asc_C4608, asc_C4624, asc_C4640, asc_C4658, asc_C46
 extern asc_C46A0, asc_C46C4, asc_C46D4, asc_C46E0, asc_C46EC, asc_C46F8, asc_C4700, asc_C470C
 extern asc_C471C, byte_D4544, byte_EDE7D, dword_D2F78, dword_D2F7A, dword_D2F80, dword_D3024, dword_D3044
 extern dword_D3048, dword_D4534, dword_D4548, dword_D457C, dword_D4580, dword_D4584, dword_D4588, dword_D458C
-extern dword_D4590, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0, dword_EDA08
-extern dword_EDA0C, dword_EDAB4, dword_EDE60, dword_EDE64, dword_EDE68, dword_EDE6C, dword_EDE70, dword_EDE74
+extern dword_D4590, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0, memlist1
+extern memlist0, dword_EDAB4, dword_EDE60, dword_EDE64, dword_EDE68, dword_EDE6C, dword_EDE70, dword_EDE74
 extern dword_EDE78, dword_EDE7C, dword_EDE80, dword_EDE84, fclose_, fopen_, fprintf_, fputs_
 extern j___fprtf_, sprintf_, strncpy_, sub_8D2F0, sub_8D484, sub_8E9C0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_8FFB0, sub_90354, sub_9035C, sub_90373, sub_903F0, sub_9061C, sub_90D20
@@ -541,12 +541,12 @@ add eax, edx	; 93E5D
 shl eax, 2	; 93E5F
 cmp ebx, byte 1	; 93E62
 jne short loc_93E70	; 93E65
-mov eax, dword [dword eax+dword_EDA08]	; 93E67
+mov eax, dword [dword eax+memlist1]	; 93E67
 pop edx	; 93E6D
 pop ebx	; 93E6E
 ret	; 93E6F
 loc_93E70:
-mov eax, dword [dword eax+dword_EDA0C]	; 93E70
+mov eax, dword [dword eax+memlist0]	; 93E70
 pop edx	; 93E76
 pop ebx	; 93E77
 ret	; 93E78
@@ -1390,7 +1390,7 @@ mov dword [esi], eax	; 947FC
 mov ebp, dword [dword_D4598]	; 947FE
 lea eax, [nosplit ebp*4+00h]	; 94804
 add eax, ebp	; 9480B
-mov eax, dword [nosplit eax*4+dword_EDA08]	; 9480D
+mov eax, dword [nosplit eax*4+memlist1]	; 9480D
 mov edx, dword [eax]	; 94814
 push edx	; 94816
 call _os_handle_0	; 94817
@@ -1410,7 +1410,7 @@ mov dword [edx], eax	; 94845
 mov edx, dword [dword_D4598]	; 94847
 lea eax, [nosplit edx*4+00h]	; 9484D
 add eax, edx	; 94854
-mov eax, dword [nosplit eax*4+dword_EDA08]	; 94856
+mov eax, dword [nosplit eax*4+memlist1]	; 94856
 jmp short loc_948C7	; 9485D
 loc_9485F:
 mov edx, dword [dword_EDE6C]	; 9485F

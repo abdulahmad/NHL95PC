@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_59D9A progbits alloc exec nowrite align=1
 extern AddPenalty, AddPenalty2, PBnum, Sweepcheck, __CHK, assinsert, assreplace, asstab
-extern byte_C4D1C, byte_C4D1D, sflags, gmode2, byte_CBC37
+extern pad1dev, pad2dev, sflags, gmode2, byte_CBC37
 extern lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5, byte_CCCA0, musicon, hmroster
 extern awroster, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byte_DF7CA, byte_DF7E6
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
@@ -20,7 +20,7 @@ extern puckstruct, sortobj15
 extern dword_E009C, recbpr, dword_E03A8, dword_E03AE
 extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
 extern replaystart, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
-extern passspeed, randomd0, sfx, vecdist, sub_10F6D, sub_11005, sub_110E0, sub_11136
+extern passspeed, randomd0, sfx, vecdist, IntermissionPC, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
 extern sub_14A20, sub_14AFE, sub_15C30, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
 extern PlayCrowdSample, sub_59A7E, sub_61576, sub_615A2, sub_61862, PenaltyManager, sub_63C73, ClearPenaltyBuffer
 extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
@@ -3937,7 +3937,7 @@ movsx ebx, ax	; 5CE8C
 xor ecx, ecx	; 5CE8F
 mov edx, 0B3h	; 5CE91
 mov eax, 17Eh	; 5CE96
-call sub_110E0	; 5CE9B
+call DrawFrameSprite	; 5CE9B
 inc edi	; 5CEA0
 .3:
 movsx ax, byte [PBnum]	; 5CEA1
@@ -3970,7 +3970,7 @@ movsx ebx, ax	; 5CEEF
 xor ecx, ecx	; 5CEF2
 mov edx, 0B3h	; 5CEF4
 mov eax, 17Eh	; 5CEF9
-call sub_110E0	; 5CEFE
+call DrawFrameSprite	; 5CEFE
 dec edi	; 5CF03
 .7:
 test di, di	; 5CF04
@@ -4213,7 +4213,7 @@ mov eax, dword [nosplit eax*2+word_CC0B0]	; 5D1BD
 sar eax, 10h	; 5D1C4
 xor ecx, ecx	; 5D1C7
 .28:
-call sub_110E0	; 5D1C9
+call DrawFrameSprite	; 5D1C9
 .29:
 inc word [byte ebp-0Ch]	; 5D1CE
 .30:
@@ -4264,7 +4264,7 @@ mov eax, dword [byte esi+010h]	; 5D25F
 sar eax, 10h	; 5D262
 xor ecx, ecx	; 5D265
 .34:
-call sub_110E0	; 5D267
+call DrawFrameSprite	; 5D267
 .35:
 mov eax, dword [puckc]	; 5D26C
 cmp byte [eax], 10h	; 5D271
@@ -4299,7 +4299,7 @@ sar edx, 10h	; 5D2B6
 mov eax, dword [byte esi+010h]	; 5D2B9
 sar eax, 10h	; 5D2BC
 xor ecx, ecx	; 5D2BF
-call sub_110E0	; 5D2C1
+call DrawFrameSprite	; 5D2C1
 .38:
 mov edi, 10h	; 5D2C6
 jmp near .58	; 5D2CB
@@ -4406,7 +4406,7 @@ mov eax, dword [esi]	; 5D407
 sar eax, 10h	; 5D409
 mov ecx, 0FFFFFFFFh	; 5D40C
 .47:
-call sub_11005	; 5D411
+call DrawSpriteNumber	; 5D411
 .48:
 cmp word [byte esi+SCnum], byte 6	; 5D416
 jge short .49	; 5D41B
@@ -4425,7 +4425,7 @@ mov edx, dword [esi]	; 5D435
 sar edx, 10h	; 5D437
 mov eax, dword [byte esi+010h]	; 5D43A
 sar eax, 10h	; 5D43D
-call sub_110E0	; 5D440
+call DrawFrameSprite	; 5D440
 cmp word [byte esi+SCnum], byte 0Ch	; 5D445
 jne near .57	; 5D44A
 mov eax, dword [puckc]	; 5D450
@@ -4490,7 +4490,7 @@ mov eax, dword [puckstruct+10h]	; 5D4F1
 .56:
 sar eax, 10h	; 5D4F6
 xor ecx, ecx	; 5D4F9
-call sub_110E0	; 5D4FB
+call DrawFrameSprite	; 5D4FB
 .57:
 dec edi	; 5D500
 .58:
@@ -4536,7 +4536,7 @@ movsx edx, word [eax]	; 5D576
 mov eax, dword [puckstruct+10h]	; 5D579
 sar eax, 10h	; 5D57E
 xor ecx, ecx	; 5D581
-call sub_110E0	; 5D583
+call DrawFrameSprite	; 5D583
 .61:
 mov eax, dword [camx]	; 5D588
 sar eax, 10h	; 5D58D
@@ -4558,7 +4558,7 @@ mov eax, dword [camx]	; 5D5BA
 sar eax, 10h	; 5D5BF
 cmp eax, 0FFFFFF70h	; 5D5C2
 jge short .63	; 5D5C7
-call sub_11136	; 5D5C9
+call DrawRinkEndArt	; 5D5C9
 .63:
 cmp word [sortobj15+6], byte 0	; 5D5CE
 jge short .64	; 5D5D6
@@ -4575,7 +4575,7 @@ sar edx, 10h	; 5D5FE
 mov eax, dword [sortobj15+10h]	; 5D601
 sar eax, 10h	; 5D606
 xor ecx, ecx	; 5D609
-call sub_110E0	; 5D60B
+call DrawFrameSprite	; 5D60B
 .64:
 mov eax, dword [pucky]	; 5D610
 movsx eax, word [eax]	; 5D615
@@ -4613,7 +4613,7 @@ sar edx, 10h	; 5D672
 mov eax, dword [puckstruct+10h]	; 5D675
 sar eax, 10h	; 5D67A
 xor ecx, ecx	; 5D67D
-call sub_110E0	; 5D67F
+call DrawFrameSprite	; 5D67F
 .67:
 cmp word [word_CBEC0], byte 0	; 5D684
 jl short .68	; 5D68C
@@ -4636,16 +4636,16 @@ xor eax, eax	; 5D6C0
 mov word [dword_CBECA], ax	; 5D6C2
 mov word [word_CBEC8], 0FFFFh	; 5D6C8
 .69:
-cmp byte [byte_C4D1C], 1	; 5D6D1
+cmp byte [pad1dev], 1	; 5D6D1
 je short .70	; 5D6D8
-cmp byte [byte_C4D1D], 1	; 5D6DA
+cmp byte [pad2dev], 1	; 5D6DA
 jne near .77	; 5D6E1
 .70:
 cmp dword [dword_D8C84], byte 0FFFFFFFFh	; 5D6E7
 je near .77	; 5D6EE
 cmp dword [dword_CCC9C], byte 0	; 5D6F4
 jne near .77	; 5D6FB
-cmp byte [byte_C4D1C], 1	; 5D701
+cmp byte [pad1dev], 1	; 5D701
 jne short .71	; 5D708
 mov eax, dword [byte ebp-014h]	; 5D70A
 jmp short .72	; 5D70D
@@ -4717,7 +4717,7 @@ sar eax, 10h	; 5D7E2
 mov ecx, edx	; 5D7E5
 mov ebx, edi	; 5D7E7
 mov edx, esi	; 5D7E9
-call sub_110E0	; 5D7EB
+call DrawFrameSprite	; 5D7EB
 .77:
 mov esp, ebp	; 5D7F0
 jmp near changeplayer_ret5	; 5D7F2
@@ -5206,7 +5206,7 @@ je near GameOver	; 5DE82
 call Intermission	; 5DE88
 cmp word [gsp], byte 0	; 5DE8D
 jle short .1	; 5DE95
-call sub_10F6D	; 5DE97
+call IntermissionPC	; 5DE97
 .1:
 call StartPer	; 5DE9C
 jmp near SetPenaltyStrength	; 5DEA1

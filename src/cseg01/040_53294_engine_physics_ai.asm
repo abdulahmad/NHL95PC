@@ -4,7 +4,7 @@ bits 32
 section s_53294 progbits alloc exec nowrite align=1
 extern Acheck, AddPenalty, AddPenalty2, AvgCline, GetHot, Ylist_m2, PBnum
 extern SetSPA, Stop4Pen, __CHK, a2touchpuck, assexit, assinsert, assreplace
-extern byte_C4D1C, hmshotcnt, awshotcnt, sflags, gmode2, PenBuf, iflags
+extern pad1dev, hmshotcnt, awshotcnt, sflags, gmode2, PenBuf, iflags
 extern OOlist, collflag, dirtab, doplayeracc, gameopts, wcradiusy, sflags3
 extern dword_CBECA, onetimerflag, dword_CC0F8, penshotplayer, dword_CC108, penshotmode, penshotstart, dword_CC124
 extern penshotlive, dword_CCC2C, dword_CCC4E, hmtmstruct, awtmstruct, puckcross_m2
@@ -2634,7 +2634,7 @@ mov dx, word [byte eax+06Ah]	; 5518B
 cmp dx, word [c1playernum]	; 5518F
 setne dl	; 55196
 and edx, 0FFh	; 55199
-cmp byte [dword edx+byte_C4D1C], 1	; 5519F
+cmp byte [dword edx+pad1dev], 1	; 5519F
 je short .x	; 551A6
 .1:
 call dopass	; 551A8

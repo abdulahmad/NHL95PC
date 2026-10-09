@@ -10,7 +10,7 @@ extern asc_C1639, asc_C1641, asc_C1646, asc_C164E, asc_C1653, asc_C1657, asc_C16
 extern asc_C1663, asc_C1667, asc_C166B, asc_C1675, asc_C167E, asc_C1687, asc_C1693, asc_C16A1
 extern asc_C16AC, asc_C16B3, asc_C16B8, asc_C16BD, asc_C16C6, asc_C16CB, asc_C16D0, asc_C16DA
 extern asc_C16E0, asc_C16E8, asc_C16F5, asc_C16FA, asc_C1703, asc_C1709, asc_C70EC, asc_C70F8
-extern str_extDB, asc_C814A, curleague, byte_C8922, musicon, byte_D42C3, hmroster
+extern str_extDB, str_VFN, curleague, byte_C8922, musicon, byte_D42C3, hmroster
 extern leaguedbfmt2, leaguedbfmt, byte_DD774, byte_DD775, byte_DD788, byte_DD789, byte_ED7ED, byte_ED824
 extern byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED8CE, byte_ED9AC, byte_ED9B0, byte_ED9E6
 extern dword_C53F7, gameopts, dword_C541F, songdata, cont2team, HomeTeam, dword_CCC94, musicslot
@@ -18,7 +18,7 @@ extern musichandle, dword_D2C6B, dword_D8B68, dword_DBC7C, schedgameidx, dword_D
 extern hmtmstruct, dword_DF61A
 extern dword_DF626, dword_DF62A, dword_DF636, fputchar, jctime, memcpy_
 extern off_C57CC, off_C719C, leaguedbnames, off_CD304, rand_, sprintf_
-extern strcat_, strcpy_, sub_11598, MakePath, FileOpenRead, FileOpenRW, FileClose, sub_1463D
+extern strcat_, strcpy_, FadePalette, MakePath, FileOpenRead, FileOpenRW, FileClose, sub_1463D
 extern sub_1478B, ReadTeamRec, sub_147FF, sub_174C2, sub_175E2, sub_1BAF3, sub_29C75, sub_33E6A
 extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
 extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
@@ -155,7 +155,7 @@ lea eax, [dword esp+0628h]	; 2D4DE
 push eax	; 2D4E5
 call sub_8E9E8	; 2D4E6
 add esp, byte 4	; 2D4EB
-mov ecx, asc_C814A	; 2D4EE
+mov ecx, str_VFN	; 2D4EE
 mov ebx, asc_C1574	; 2D4F3
 cmp byte [byte_ED9E6], 1	; 2D4F8
 jne short loc_2D509	; 2D4FF
@@ -1853,7 +1853,7 @@ je short loc_2EF46	; 2EF0A
 mov ebx, 10h	; 2EF0C
 mov edx, dword [dword esp+07A8h]	; 2EF11
 mov eax, 1	; 2EF18
-call sub_11598	; 2EF1D
+call FadePalette	; 2EF1D
 mov dword [dword esp+0798h], 1	; 2EF22
 mov dword [dword esp+0774h], ebp	; 2EF2D
 push dword 1E0h	; 2EF34

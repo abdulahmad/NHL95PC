@@ -13,7 +13,7 @@ extern dword_C8998, HomeTeam, musichandle, dword_D2C6B, dword_DB088, schedgameid
 extern leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
 extern dword_DDD6C, awtmlines, startm_m2, hmtmlines, hmtmstruct
 extern fputchar, jctime, memset_, off_C57CC, off_C800C, leaguedbnames
-extern sprintf_, strcat_, strcpy_, sub_10712, sub_11D09, sub_142E7, MakePath
+extern sprintf_, strcat_, strcpy_, SetupControllers, sub_11D09, sub_142E7, MakePath
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, sub_1463D, sub_1478B
 extern ReadSchedGame, ReadTeamRec, sub_147FF, sub_148A5, sub_174C2, sub_17573, sub_175E2, sub_1BEFD
 extern sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A, sub_29F28, sub_30A0C, sub_30F12
@@ -1421,7 +1421,7 @@ xor eax, eax	; 373FB
 mov al, byte [byte_DDD43]	; 373FD
 mov word [VisTeam], ax	; 37402
 loc_37408:
-call sub_10712	; 37408
+call SetupControllers	; 37408
 xor esi, esi	; 3740D
 cmp dword [edi], byte 0	; 3740F
 jge short loc_3744C	; 37412

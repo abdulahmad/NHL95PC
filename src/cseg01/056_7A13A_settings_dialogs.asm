@@ -6,9 +6,9 @@ extern __CHK, asc_C32BC, asc_C32C1, asc_C32CA, asc_C32CF, asc_C32D5, asc_C32DB, 
 extern asc_C32F5, asc_C3300, asc_C3305, asc_C330E, asc_C3317, asc_C331C, asc_C3322, asc_C3328
 extern asc_C3339, asc_C3344, asc_C3349, asc_C335A, asc_C3360, asc_C3366, asc_C336F, asc_C3374
 extern asc_C337C, asc_C3381, asc_C3388, asc_C338D, asc_C3393, asc_C3399, asc_C33A3, asc_C33B0
-extern asc_C33BD, asc_C33CA, byte_C4D1C, musicon, hmtmflags, awtmflags, byte_DF861
+extern asc_C33BD, asc_C33CA, pad1dev, musicon, hmtmflags, awtmflags, byte_DF861
 extern byte_DFF3A, byte_EA0F4, byte_ED361, byte_ED904, byte_ED93F, byte_ED940, byte_ED941, byte_ED942
-extern byte_ED943, dword_C4E0C, postate, gamemode, gameopts, ctl1team, ctl2team, ctl1dev
+extern byte_ED943, samesideflag, postate, gamemode, gameopts, ctl1team, ctl2team, ctl1dev
 extern ctl2dev, ctl1side, ctl2side, dword_C541F, songdata, sflags3, cont2team, HomeTeam
 extern dword_D14F0, dword_D14F4, dword_D14F8, dword_D14FC, dword_D16AC, dword_D16B0, dword_D16B4, dword_D16B8
 extern dword_D17EC, dword_D17F0, dword_D17F4, dword_D17F8, dword_D195C, dword_D1960, dword_D1964, dword_D1968
@@ -4052,11 +4052,11 @@ jl short loc_7D01F	; 7D004
 mov eax, dword [ctl1side]	; 7D006
 cmp eax, dword [ctl2side]	; 7D00B
 jne short loc_7D01F	; 7D011
-mov dword [dword_C4E0C], 1	; 7D013
+mov dword [samesideflag], 1	; 7D013
 jmp short loc_7D026	; 7D01D
 loc_7D01F:
 xor eax, eax	; 7D01F
-mov dword [dword_C4E0C], eax	; 7D021
+mov dword [samesideflag], eax	; 7D021
 loc_7D026:
 mov eax, dword [nosplit ebp*4+ctl1dev]	; 7D026
 cmp eax, byte 4	; 7D02D
@@ -4076,20 +4076,20 @@ cmp eax, byte 2	; 7D049
 je short loc_7D059	; 7D04C
 jmp short loc_7D07C	; 7D04E
 loc_7D050:
-mov byte [dword ebp+byte_C4D1C], 1	; 7D050
+mov byte [dword ebp+pad1dev], 1	; 7D050
 jmp short loc_7D07C	; 7D057
 loc_7D059:
-mov byte [dword ebp+byte_C4D1C], 2	; 7D059
+mov byte [dword ebp+pad1dev], 2	; 7D059
 jmp short loc_7D07C	; 7D060
 loc_7D062:
-mov byte [dword ebp+byte_C4D1C], 4	; 7D062
+mov byte [dword ebp+pad1dev], 4	; 7D062
 jmp short loc_7D07C	; 7D069
 loc_7D06B:
-mov byte [dword ebp+byte_C4D1C], 8	; 7D06B
+mov byte [dword ebp+pad1dev], 8	; 7D06B
 jmp short loc_7D07C	; 7D072
 loc_7D074:
 xor ah, ah	; 7D074
-mov byte [dword ebp+byte_C4D1C], ah	; 7D076
+mov byte [dword ebp+pad1dev], ah	; 7D076
 loc_7D07C:
 mov eax, ebp	; 7D07C
 call sub_7CCE5	; 7D07E
@@ -4245,11 +4245,11 @@ jl short loc_7D236	; 7D21B
 mov eax, dword [ctl1side]	; 7D21D
 cmp eax, dword [ctl2side]	; 7D222
 jne short loc_7D236	; 7D228
-mov dword [dword_C4E0C], 1	; 7D22A
+mov dword [samesideflag], 1	; 7D22A
 jmp short loc_7D23D	; 7D234
 loc_7D236:
 xor eax, eax	; 7D236
-mov dword [dword_C4E0C], eax	; 7D238
+mov dword [samesideflag], eax	; 7D238
 loc_7D23D:
 mov ebx, dword [byte esp+04h]	; 7D23D
 push ebx	; 7D241

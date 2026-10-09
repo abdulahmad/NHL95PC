@@ -4,7 +4,7 @@ bits 32
 section s_3A9AA progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, _fstrcspn_, asc_C1904, asc_C190A, asc_C190E, asc_C1919, asc_C191E
 extern asc_C1923, asc_C1927, asc_C1938, asc_C193D, asc_C78BF, asc_C7D75, asc_C7D88, str_PINFO
-extern str_PLAYER, asc_C810C, str_extDB, asc_C8131, str_extxx, asc_C8158, str_extID, byte_C5386
+extern str_PLAYER, asc_C810C, str_extDB, asc_C8131, str_extxx, asc_C8158, str_extID
 extern str_dot, str_floppydrv, curleague, leagueflags, byte_DD7CA, byte_DD7CB, savedname, byte_DE268
 extern lgstate, dword_C71E4, dword_C756D, dword_C760D, msg_InsertDisk_arg, msg_WrongDisk_arg, dword_C79C0, dword_C79C8
 extern dword_C7B16, dword_C7B1E, dword_C7B47, dword_C7B4F, dword_C7BA7, dword_C7BAF, dword_C7C25, dword_C7DA1
@@ -2882,7 +2882,7 @@ mov dword [dword_CE527], unk_CE64F	; 3D0B5
 jmp short loc_3D0E9	; 3D0BF
 loc_3D0C1:
 xor ah, ah	; 3D0C1
-mov byte [byte_C5386], ah	; 3D0C3
+mov byte [lgstate+4], ah	; 3D0C3
 call sub_1D518	; 3D0C9
 xor eax, eax	; 3D0CE
 call sub_1D100	; 3D0D0

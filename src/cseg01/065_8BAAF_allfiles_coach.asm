@@ -6,7 +6,7 @@ extern __CHK, asc_C3B0E, asc_C3B16, asc_C3B2A, asc_C3B38, asc_C3B45, asc_C3B67, 
 extern asc_C3B75, asc_C3B7A, asc_C3B7F, asc_C3B84, asc_C3B8A, asc_C3B93, musicon, gameopts
 extern byte_D2C68, byte_ED7CC, byte_ED9B2, byte_ED9B3, byte_ED9EB, songdata, dword_D2C6B, musicslot
 extern fclose_, fgets_, fopen_, fscanf_, jctime, memcpy_, rand_, sprintf_
-extern strcat_, stricmp_, sub_11598, MakePath, sub_33E6A, FadeOutPalCycle, sub_6B410, sub_6B47C
+extern strcat_, stricmp_, FadePalette, MakePath, sub_33E6A, FadeOutPalCycle, sub_6B410, sub_6B47C
 extern sub_836E4, sub_8373E, sub_8473A, sub_8474E, PlayMVI, sub_8D2F0, sub_8E83C, sub_8F98F
 extern sub_8FC8A, sub_8FFB0, sub_9061C, FatalError, sub_B30B4, sub_B4BA8, unk_C3B0C
 global loc_8BAE6, loc_8BB72, loc_8BB76, loc_8BBA7, loc_8BBB0, loc_8BBCF, loc_8BBFF, loc_8BC02
@@ -166,7 +166,7 @@ add esp, byte 0Ch	; 8BC7E
 mov ebx, 10h	; 8BC81
 mov edx, esp	; 8BC86
 mov eax, 1	; 8BC88
-call sub_11598	; 8BC8D
+call FadePalette	; 8BC8D
 call sub_B4BA8	; 8BC92
 push asc_C3B75	; 8BC97
 push esi	; 8BC9C
@@ -218,7 +218,7 @@ loc_8BD40:
 mov ebx, 10h	; 8BD40
 mov edx, esp	; 8BD45
 xor eax, eax	; 8BD47
-call sub_11598	; 8BD49
+call FadePalette	; 8BD49
 mov eax, 0Ah	; 8BD4E
 call sub_33E6A	; 8BD53
 mov esi, eax	; 8BD58
@@ -270,7 +270,7 @@ add esp, byte 0Ch	; 8BDF9
 mov ebx, 10h	; 8BDFC
 mov edx, esp	; 8BE01
 mov eax, 1	; 8BE03
-call sub_11598	; 8BE08
+call FadePalette	; 8BE08
 cmp byte [musicon], 0	; 8BE0D
 je short loc_8BE2D	; 8BE14
 test byte [gameopts+1], 1	; 8BE16
@@ -309,7 +309,7 @@ add esp, byte 0Ch	; 8BE85
 mov ebx, 10h	; 8BE88
 mov edx, esp	; 8BE8D
 mov eax, 1	; 8BE8F
-call sub_11598	; 8BE94
+call FadePalette	; 8BE94
 cmp byte [musicon], 0	; 8BE99
 je short loc_8BEBD	; 8BEA0
 mov ebx, dword [songdata]	; 8BEA2

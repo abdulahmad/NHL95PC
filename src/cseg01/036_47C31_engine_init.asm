@@ -3,12 +3,12 @@ bits 32
 %include "hockey.inc"
 section s_47C31 progbits alloc exec nowrite align=1
 extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, byte_DE26C
-extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, dword_C4E10, dword_C4E14
+extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, inputframes, escrequest
 extern dword_C7444, dword_C7448, dword_C9074, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
 extern dword_CC0F0, dword_CC9AD, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
 extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, randomd0
-extern reenergizeteam, resetplstuff, setpersonel, sub_1145F, sub_1149A, sub_11598, sub_14CF1, sub_33DD3
+extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, sub_14CF1, sub_33DD3
 extern sub_47951, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
 extern PlayCrowdSample, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8374D, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
@@ -300,7 +300,7 @@ call DoGameFrame	; 4802D
 call SprSort	; 48032
 xor edi, edi	; 48037
 mov dword [dword_D8C6C], edi	; 48039
-mov dword [dword_C4E10], edi	; 4803F
+mov dword [inputframes], edi	; 4803F
 mov eax, dword [puckc]	; 48045
 mov byte [eax], 0FFh	; 4804A
 mov dword [joysampling], edi	; 4804D
@@ -397,7 +397,7 @@ xor eax, eax	; 481C7
 mov dword [joysampling], ebp	; 481C9
 mov ebx, 10h	; 481CF
 mov edx, unk_DF314	; 481D4
-call sub_11598	; 481D9
+call FadePalette	; 481D9
 xor ebx, ebx	; 481DE
 mov word [word_CBEC4], bx	; 481E0
 mov eax, dword [dword_E9A9E]	; 481E7
@@ -406,7 +406,7 @@ mov dword [joysampling], eax	; 481EF
 .3:
 movsx eax, si	; 481F4
 call CrowdNoiseUpdate	; 481F7
-cmp dword [dword_C4E14], byte 0	; 481FC
+cmp dword [escrequest], byte 0	; 481FC
 jne short PreGameIntro_end	; 48203
 call Readjoy1	; 48205
 mov ah, byte [regd1]	; 4820A
@@ -440,7 +440,7 @@ call jctime	; 4826A
 add esp, byte 4	; 4826F
 mov word [word_CBECC], 0FFFFh	; 48272
 .1:
-mov ebp, dword [dword_C4E14]	; 4827B
+mov ebp, dword [escrequest]	; 4827B
 test ebp, ebp	; 48281
 je short .2	; 48283
 push unk_DF014	; 48285
@@ -451,12 +451,12 @@ add esp, byte 0Ch	; 48296
 mov ebx, 10h	; 48299
 mov edx, unk_DF014	; 4829E
 mov eax, 1	; 482A3
-call sub_11598	; 482A8
+call FadePalette	; 482A8
 call CrowdFadeOut	; 482AD
 call StopDigiSample	; 482B2
 call sub_8374D	; 482B7
 xor edx, edx	; 482BC
-mov dword [dword_C4E14], edx	; 482BE
+mov dword [escrequest], edx	; 482BE
 mov eax, 0FFFFFFFFh	; 482C4
 jmp short PreGameIntro_popebp	; 482C9
 .2:
@@ -470,7 +470,7 @@ add esp, byte 0Ch	; 482E4
 mov ebx, 10h	; 482E7
 mov edx, unk_DF014	; 482EC
 mov eax, 1	; 482F1
-call sub_11598	; 482F6
+call FadePalette	; 482F6
 .3:
 call StopDigiSample	; 482FB
 call sub_8374D	; 48300
@@ -509,7 +509,7 @@ push ebp	; 48342
 call sub_B396E	; 48343
 mov dword [joysampling], 1	; 48348
 xor ebx, ebx	; 48352
-mov dword [dword_C4E14], ebx	; 48354
+mov dword [escrequest], ebx	; 48354
 add dword [dword_C7444], 3E8h	; 4835A
 add dword [dword_C7448], 3E8h	; 48364
 ThreeStarsLoop_tick:
@@ -518,7 +518,7 @@ je near PreGameIntro_end	; 48375
 push byte 4	; 4837B
 call sub_B3989	; 4837D
 add esp, byte 4	; 48382
-call sub_1145F	; 48385
+call ResetInputSampling	; 48385
 movsx edx, ax	; 4838A
 mov eax, edx	; 4838D
 shl eax, 2	; 4838F
@@ -540,7 +540,7 @@ idiv ebx	; 483BB
 mov dword [dword_D8C6C], edx	; 483BD
 movsx edx, si	; 483C3
 mov eax, edx	; 483C6
-call sub_1149A	; 483C8
+call RunGameFrames	; 483C8
 mov eax, dword [seqtimer]	; 483CD
 sub eax, edx	; 483D2
 mov dword [seqtimer], eax	; 483D4

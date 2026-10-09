@@ -7,9 +7,9 @@ extern asc_C1464, asc_C1469, asc_C146E, asc_C1473, asc_C1478, asc_C147D, asc_C14
 extern asc_C148E, asc_C14B2, asc_C14BB, asc_C14C0, asc_C14C7, asc_C14DA, asc_C14EA, asc_C14EF
 extern asc_C14F6, asc_C14FB, asc_C1506, asc_C150F, asc_C1516, asc_C151B, asc_C1520, asc_C1526
 extern asc_C152F, asc_C1534, asc_C153F, asc_C1543, asc_C154F, asc_C1553, asc_C155F, asc_C1569
-extern asc_C70A0, asc_C70B8, asc_C70C7, asc_CDB75, asc_CDB7C, byte_C52F2, byte_C5311
-extern byte_C5386, byte_C53DC, musicon, byte_DD2D4, byte_DD668, byte_DD669, byte_DD774, byte_DD788
-extern byte_ED82F, byte_ED992, dword_C52E9, dword_C52ED, postate, lgstate, dword_C53F7, dword_C6F78
+extern asc_C70A0, asc_C70B8, asc_C70C7, asc_CDB75, asc_CDB7C
+extern musicon, byte_DD2D4, byte_DD668, byte_DD669, byte_DD774, byte_DD788
+extern byte_ED82F, byte_ED992, postate, lgstate, dword_C53F7, dword_C6F78
 extern dword_C6F88, dword_C6F8C, dword_C6F90, dword_C6F94, dword_C7008, dword_C700C, dword_C7010, dword_C7014
 extern dword_C7018, dword_C701C, dword_C7020, dword_C7024, dword_C7028, dword_C702C, dword_C7030, dword_C7034
 extern dword_C70E3, dword_C70E7, dword_CE4E3, dword_CE503, dword_CE527, dword_CE583, dword_CE5A3, dword_CE5C3
@@ -345,7 +345,7 @@ push unk_C14AF	; 2BB9F
 call FatalError	; 2BBA4
 add esp, byte 4	; 2BBA9
 loc_2BBAC:
-and byte [byte_C52F2], 7Fh	; 2BBAC
+and byte [exhstate+5Ah], 7Fh	; 2BBAC
 lea eax, [byte esp+030h]	; 2BBB3
 call sub_32DA9	; 2BBB7
 mov edx, eax	; 2BBBC
@@ -354,8 +354,8 @@ call sub_1D100	; 2BBC0
 mov eax, edx	; 2BBC5
 jmp near loc_2BD0D	; 2BBC7
 loc_2BBCC:
-push byte_C5311	; 2BBCC
-mov ecx, byte_C5311	; 2BBD1
+push postate+4	; 2BBCC
+mov ecx, postate+4	; 2BBD1
 mov ebx, asc_C14C0	; 2BBD6
 mov edx, asc_C14BB	; 2BBDB
 mov eax, asc_C14B2	; 2BBE0
@@ -401,8 +401,8 @@ call sub_1D100	; 2BC6D
 mov eax, edi	; 2BC72
 jmp near loc_2BD0D	; 2BC74
 loc_2BC79:
-push byte_C5386	; 2BC79
-mov ecx, byte_C5386	; 2BC7E
+push lgstate+4	; 2BC79
+mov ecx, lgstate+4	; 2BC7E
 mov ebx, asc_C14C0	; 2BC83
 mov edx, asc_C14BB	; 2BC88
 mov eax, asc_C14B2	; 2BC8D
@@ -431,11 +431,11 @@ push unk_C14E7	; 2BCE0
 call FatalError	; 2BCE5
 add esp, byte 4	; 2BCEA
 loc_2BCED:
-and byte [byte_C53DC], 7Fh	; 2BCED
+and byte [lgstate+5Ah], 7Fh	; 2BCED
 lea eax, [byte esp+030h]	; 2BCF4
 call sub_33559	; 2BCF8
 mov edi, eax	; 2BCFD
-test byte [byte_C53DC], 80h	; 2BCFF
+test byte [lgstate+5Ah], 80h	; 2BCFF
 jmp near loc_2BC59	; 2BD06
 loc_2BD0B:
 xor eax, eax	; 2BD0B
@@ -1944,25 +1944,25 @@ jmp near loc_2D08D	; 2CF25
 loc_2CF2A:
 test byte [byte esp+015h], 10h	; 2CF2A
 je short loc_2CF90	; 2CF2F
-mov edx, byte_C5386	; 2CF31
+mov edx, lgstate+4	; 2CF31
 lea eax, [byte esp+02Ch]	; 2CF36
 call stricmp_	; 2CF3A
 test eax, eax	; 2CF3F
 jne short loc_2CF5C	; 2CF41
 xor dh, dh	; 2CF43
-mov byte [byte_C5386], dh	; 2CF45
+mov byte [lgstate+4], dh	; 2CF45
 mov dword [dword_CE4E3], eax	; 2CF4B
 mov dword [dword_CE503], eax	; 2CF50
 mov dword [dword_CE527], eax	; 2CF55
 jmp short loc_2CF85	; 2CF5A
 loc_2CF5C:
-mov edx, byte_C5311	; 2CF5C
+mov edx, postate+4	; 2CF5C
 lea eax, [byte esp+02Ch]	; 2CF61
 call stricmp_	; 2CF65
 test eax, eax	; 2CF6A
 jne short loc_2CF85	; 2CF6C
 xor dl, dl	; 2CF6E
-mov byte [byte_C5311], dl	; 2CF70
+mov byte [postate+4], dl	; 2CF70
 mov dword [dword_CE583], eax	; 2CF76
 mov dword [dword_CE5A3], eax	; 2CF7B
 mov dword [dword_CE5C3], eax	; 2CF80
@@ -2087,7 +2087,7 @@ mov eax, exhstate	; 2D0FD
 call sub_2D260	; 2D102
 mov eax, exhstate	; 2D107
 call LoadModeState	; 2D10C
-mov edx, dword [dword_C52E9]	; 2D111
+mov edx, dword [exhstate+51h]	; 2D111
 cmp edx, byte 18h	; 2D117
 jge short loc_2D125	; 2D11A
 mov edx, dword [nosplit edx*4+off_C5439]	; 2D11C
@@ -2098,7 +2098,7 @@ loc_2D12C:
 mov ebx, 3	; 2D12C
 mov eax, asc_CDB75	; 2D131
 call strncpy_	; 2D136
-mov ebx, dword [dword_C52ED]	; 2D13B
+mov ebx, dword [exhstate+55h]	; 2D13B
 cmp ebx, byte 18h	; 2D141
 jge short loc_2D14F	; 2D144
 mov edx, dword [nosplit ebx*4+off_C5439]	; 2D146

@@ -4,7 +4,7 @@ bits 32
 section s_85924 progbits alloc exec nowrite align=1
 extern __CHK, asc_C38F8, asc_C3904, asc_C3923, asc_C3932, asc_C3947, asc_C3966, asc_C3972
 extern asc_C3976, asc_C397E, asc_C3986, asc_C398F, asc_C3994, asc_C399B, asc_C39A0, str_extDB
-extern asc_D281F, byte_C52F2, byte_C53DC, curleague, byte_DD774, byte_DD788, gameopts
+extern asc_D281F, curleague, byte_DD774, byte_DD788, gameopts
 extern byte_ED92F, dword_C5130, postate, lgstate, gamemode, dword_D2C6B, dword_D8B74, dword_DC238
 extern dword_DC888, dword_DC88C, dword_DD730, dword_EA0DC, jctime, off_D27EF, off_D27F7, off_D2855
 extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, sub_1466B, sub_14825
@@ -112,7 +112,7 @@ add esp, byte 4	; 85A52
 xor ebp, ebp	; 85A55
 jmp near loc_85D5D	; 85A57
 loc_85A5C:
-or byte [byte_C52F2], 80h	; 85A5C
+or byte [exhstate+5Ah], 80h	; 85A5C
 or byte [gameopts+1], 80h	; 85A63
 mov eax, exhstate	; 85A6A
 call WriteModeState	; 85A6F
@@ -265,7 +265,7 @@ mov ebx, off_D27EF	; 85C92
 mov edx, 0FFFFFFFFh	; 85C97
 mov eax, edx	; 85C9C
 call MessageBox	; 85C9E
-or byte [byte_C53DC], 80h	; 85CA3
+or byte [lgstate+5Ah], 80h	; 85CA3
 or byte [gameopts+1], 80h	; 85CAA
 mov eax, lgstate	; 85CB1
 call WriteModeState	; 85CB6

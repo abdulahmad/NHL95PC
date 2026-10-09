@@ -11,7 +11,7 @@ extern asc_C31D5, str_fmt2d, str_fmt3d, asc_C690B, asc_C6913, asc_C692B, asc_C69
 extern rosterteam, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238, byte_D12DE, gameopts
 extern musicon, hmroster, byte_DB3AD, leaguedbfmt, rosterlist, byte_EA991, byte_EA992, byte_EA993
 extern byte_EC7E0, byte_EC7E4, byte_ECAE4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED0F7, byte_ED0F8
-extern byte_ED0F9, byte_ED0FA, byte_ED83C, byte_ED85A, byte_ED8B4, byte_ED9E7, dword_C4E24, dword_C6956
+extern byte_ED0F9, byte_ED0FA, byte_ED83C, byte_ED85A, byte_ED8B4, byte_ED9E7, palfadedin, dword_C6956
 extern dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, songdata, HomeTeam, dword_D0B16
 extern dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A, dword_D1229, dword_D122B, dword_D122F
 extern dword_D1231, dword_D1233, dword_D1338, dword_D133C, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC
@@ -3896,7 +3896,7 @@ mov esi, edx	; 7643C
 mov dword [esp], ebx	; 7643E
 test eax, eax	; 76441
 je short loc_7646E	; 76443
-cmp dword [dword_C4E24], byte 0	; 76445
+cmp dword [palfadedin], byte 0	; 76445
 je short loc_76462	; 7644C
 mov ecx, dword [esp]	; 7644E
 cmp ecx, byte 2	; 76451
@@ -3908,10 +3908,10 @@ mov eax, ecx	; 7645D
 loc_7645F:
 mov dword [esp], eax	; 7645F
 loc_76462:
-mov dword [dword_C4E24], 1	; 76462
+mov dword [palfadedin], 1	; 76462
 jmp short loc_76473	; 7646C
 loc_7646E:
-mov dword [dword_C4E24], eax	; 7646E
+mov dword [palfadedin], eax	; 7646E
 loc_76473:
 cmp dword [esp], byte 2	; 76473
 jge short loc_764B0	; 76477
@@ -3984,7 +3984,7 @@ mov esi, edx	; 7652E
 mov dword [esp], ebx	; 76530
 test eax, eax	; 76533
 je short loc_76560	; 76535
-cmp dword [dword_C4E24], byte 0	; 76537
+cmp dword [palfadedin], byte 0	; 76537
 je short loc_76554	; 7653E
 mov ecx, dword [esp]	; 76540
 cmp ecx, byte 2	; 76543
@@ -3996,10 +3996,10 @@ mov eax, ecx	; 7654F
 loc_76551:
 mov dword [esp], eax	; 76551
 loc_76554:
-mov dword [dword_C4E24], 1	; 76554
+mov dword [palfadedin], 1	; 76554
 jmp short loc_76565	; 7655E
 loc_76560:
-mov dword [dword_C4E24], eax	; 76560
+mov dword [palfadedin], eax	; 76560
 loc_76565:
 cmp dword [esp], byte 2	; 76565
 jge short loc_765A2	; 76569

@@ -5,17 +5,17 @@ section s_13320 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, asc_C0406, asc_C040B, asc_C0412, asc_C041A, asc_C041F, asc_C0424
 extern asc_C0429, asc_C0430, asc_C0437, asc_C043E, asc_C0446, asc_C044F, asc_C0458, asc_C0460
 extern asc_C0465, asc_C046E, asc_C0477, asc_C0480, asc_C048A, asc_C0494, asc_C049C, asc_C04A1
-extern asc_C04A9, asc_C04B0, asc_C8136, asc_C814A, assinsert, byte_C4D1C, byte_C4D1D, byte_CBEA8
+extern asc_C04A9, asc_C04B0, asc_C8136, str_VFN, assinsert, pad1dev, pad2dev, byte_CBEA8
 extern musicon, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8, byte_E0308
 extern byte_E0344, byte_E9AC8, byte_E9AD3, byte_ED7CC, byte_ED7E4, byte_ED7E6, byte_ED85C, byte_ED86C
 extern byte_ED8C6, byte_ED8C8, byte_ED8D7, byte_ED976, byte_ED9AA, byte_ED9EC, byte_ED9F0, joysampling
-extern dword_C4E10, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, songdata, cont2team
+extern inputframes, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, songdata, cont2team
 extern HomeTeam, dword_CBECA, dword_CC0AC, dword_CC0E0, dword_CC0EC, dword_CC0F0, dword_CC0F8, penshotplayer
 extern penshotmode, penshotstart, dword_CC124, penshotlive, crowdsmooth, musichandle, dword_D2C6B, musicslot
-extern dword_D8B68, dword_D8C18, dword_D8C4C, dword_D8C68, dword_D8C6C, dword_D8C70, dword_D8C78, dword_D8C80
+extern dword_D8B68, dword_D8C18, dword_D8C4C, dword_D8C68, dword_D8C6C, rinkendart, dword_D8C78, dword_D8C80
 extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E009C, dword_E00A0
 extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, loc_12842, memcpy_, nullsub_2
-extern puckx, pucky, passspeed, randomd0, sprintf_, sub_11598, sub_1205D, sub_12849
+extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, sub_1205D, sub_12849
 extern sub_13188, MakePath, FileOpenRead, FileClose, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
 extern StartPreGame, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
 extern sub_64614, SetupTeamLines, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
@@ -639,7 +639,7 @@ push asc_C049C	; 13A77
 push eax	; 13A7C
 call sub_B30B4	; 13A7D
 add esp, byte 8	; 13A82
-mov dword [dword_D8C70], eax	; 13A85
+mov dword [rinkendart], eax	; 13A85
 add esp, byte 10h	; 13A8A
 pop edx	; 13A8D
 pop ecx	; 13A8E
@@ -655,7 +655,7 @@ push esi	; 13A9E
 sub esp, byte 1Ch	; 13A9F
 call sub_B4BA8	; 13AA2
 mov word [scrpitch], 52h	; 13AA7
-mov ecx, asc_C814A	; 13AB0
+mov ecx, str_VFN	; 13AB0
 mov ebx, asc_C04A1	; 13AB5
 cmp byte [byte_ED86C], 1	; 13ABA
 jne short loc_13ACB	; 13AC1
@@ -741,7 +741,7 @@ push edx	; 13BC0
 push esi	; 13BC1
 sub esp, byte 1Ch	; 13BC2
 mov word [scrpitch], 52h	; 13BC5
-mov ecx, asc_C814A	; 13BCE
+mov ecx, str_VFN	; 13BCE
 mov ebx, asc_C04A1	; 13BD3
 cmp byte [byte_ED86C], 1	; 13BD8
 jne short loc_13BE9	; 13BDF
@@ -994,7 +994,7 @@ add esp, byte 0Ch	; 13F58
 mov ebx, 10h	; 13F5B
 mov edx, unk_DF014	; 13F60
 mov eax, 1	; 13F65
-call sub_11598	; 13F6A
+call FadePalette	; 13F6A
 loc_13F6F:
 test byte [gameopts], 4	; 13F6F
 jne short loc_13F81	; 13F76
@@ -1185,9 +1185,9 @@ mov dword [dword_E009C], ecx	; 14265
 mov word [word_E9A9C], 0FFFFh	; 1426B
 call StartGame	; 14274
 mov dword [dword_D8C84], 1	; 14279
-cmp byte [byte_C4D1C], 1	; 14283
+cmp byte [pad1dev], 1	; 14283
 je short loc_14295	; 1428A
-cmp byte [byte_C4D1D], 1	; 1428C
+cmp byte [pad2dev], 1	; 1428C
 jne short loc_142A4	; 14293
 loc_14295:
 push byte 64h	; 14295
@@ -1197,7 +1197,7 @@ add esp, byte 8	; 142A1
 loc_142A4:
 xor edi, edi	; 142A4
 mov dword [dword_C5840], edi	; 142A6
-mov dword [dword_C4E10], edi	; 142AC
+mov dword [inputframes], edi	; 142AC
 xor ecx, ecx	; 142B2
 mov word [exitgame], cx	; 142B4
 xor esi, esi	; 142BB

@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_C0004 progbits alloc noexec write align=1
-global TeamList, asc_C0004, asc_C005B, asc_C007A, asc_C00DB, asc_C00FB, asc_C0120, asc_C014D
-global asc_C0172, asc_C017B, asc_C0183, asc_C018A, asc_C0191, asc_C019A, asc_C01B2, asc_C01CB
-global asc_C01DA, asc_C01DF, asc_C0202, asc_C039F, asc_C03BC, asc_C03C0, asc_C03C8, asc_C03D1
+global TeamList, str_NoDiskSpaceC, str_ErrDiskFree2, str_NoDiskSpaceCur, str_NoMemory, str_CheckRefCard, str_NoConvMemory, str_CheckRefCard2
+global str_Pointer3, str_Pntr, str_Scor2b, str_Scor3b, str_Kaufm020, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_GameSet2
+global str_Temp3, str_ErrDiskFree3, asc_C0202, asc_C039F, asc_C03BC, asc_C03C0, asc_C03C8, asc_C03D1
 global asc_C03D5, asc_C03E5, asc_C03EB, asc_C03F6, asc_C03FA, asc_C03FE, asc_C0402, asc_C0406
 global asc_C040B, asc_C0412, asc_C041A, asc_C041F, asc_C0424, asc_C0429, asc_C0430, asc_C0437
 global asc_C043E, asc_C0446, asc_C044F, asc_C0458, asc_C0460, asc_C0465, asc_C046E, asc_C0477
@@ -14,8 +14,8 @@ global asc_C0861, asc_C0866, asc_C086B, asc_C0870, asc_C0875, asc_C087A, asc_C08
 global asc_C0892, asc_C0897, asc_C089D, asc_C08A6, asc_C08AB, asc_C08B0, asc_C08B5, asc_C08BE
 global asc_C08C7, asc_C08D0, asc_C08D6, asc_C08DB, asc_C08E0, asc_C08E7, asc_C08F0, asc_C08F8
 global asc_C0900, asc_C0909, asc_C0910, asc_C0915, asc_C0944, asc_C094B, asc_C0952, asc_C0970
-global asc_C097A, asc_C097F, asc_C0984, asc_C098C, asc_C0991, asc_C0997, unk_C020C, unk_C0180
-global unk_C01D4, unk_C01D7, unk_C0200, unk_C0211, unk_C0216, unk_C021B, unk_C0220, unk_C0225
+global asc_C097A, asc_C097F, asc_C0984, asc_C098C, asc_C0991, asc_C0997, unk_C020C, str_S1
+global str_errd3, str_errd4, unk_C0200, unk_C0211, unk_C0216, unk_C021B, unk_C0220, unk_C0225
 global unk_C022A, unk_C022F, unk_C0234, unk_C0239, unk_C023E, unk_C0243, unk_C0248, unk_C0251
 global unk_C0258, unk_C025E, unk_C0265, unk_C026E, unk_C0275, unk_C0280, unk_C028C, unk_C029A
 global unk_C02A7, unk_C02BC, unk_C02CA, unk_C02D9, unk_C02E9, unk_C0300, unk_C0310, unk_C032B
@@ -36,17 +36,17 @@ global unk_C0757, unk_C075C, unk_C0761, unk_C0766, unk_C076B, unk_C0770, unk_C07
 global unk_C077F, unk_C07A4, unk_C07A6, unk_C07AF, unk_C07B8, unk_C07C1, unk_C07CA, unk_C07D3
 global unk_C07DC, unk_C07E5, unk_C07EE, unk_C07F7, unk_C0800, unk_C0809, unk_C0812, unk_C081B
 global unk_C0824, unk_C082D, unk_C0836, unk_C083F, unk_C0848, unk_C0851, unk_C093C, unk_C093F
-asc_C0004:
+str_NoDiskSpaceC:
 db 0Ah,049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,044h,069h
 db 073h,06Bh,020h,053h,070h,061h,063h,065h,020h,066h,072h,065h,065h,020h,06Fh,06Eh
 db 020h,027h,043h,03Ah,027h,02Eh,0Ah,050h,06Ch,065h,061h,073h,065h,020h,066h,072h
 db 065h,065h,020h,075h,070h,020h,061h,074h,020h,06Ch,065h,061h,073h,074h,020h,032h
 db 020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,064h,069h,073h,06Bh,020h
 db 073h,070h,061h,063h,065h,0Ah,00h
-asc_C005B:
+str_ErrDiskFree2:
 db 065h,072h,072h,06Fh,072h,020h,067h,065h,074h,074h,069h,06Eh,067h,020h,064h,069h
 db 073h,06Bh,020h,073h,070h,061h,063h,065h,020h,066h,072h,065h,065h,0Ah,00h
-asc_C007A:
+str_NoDiskSpaceCur:
 db 0Ah,049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,044h,069h
 db 073h,06Bh,020h,053h,070h,061h,063h,065h,020h,066h,072h,065h,065h,020h,06Fh,06Eh
 db 020h,063h,075h,072h,072h,065h,06Eh,074h,020h,064h,072h,069h,076h,065h,02Eh,0Ah
@@ -54,48 +54,48 @@ db 050h,06Ch,065h,061h,073h,065h,020h,066h,072h,065h,065h,020h,075h,070h,020h,06
 db 074h,020h,06Ch,065h,061h,073h,074h,020h,025h,064h,020h,04Bh,062h,079h,074h,065h
 db 073h,020h,06Fh,066h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,0Ah
 db 00h
-asc_C00DB:
+str_NoMemory:
 db 0Ah,049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,06Dh,065h
 db 06Dh,06Fh,072h,079h,020h,061h,076h,061h,069h,06Ch,061h,062h,06Ch,065h,02Eh,00h
-asc_C00FB:
+str_CheckRefCard:
 db 0Ah,050h,06Ch,065h,061h,073h,065h,020h,063h,068h,065h,063h,06Bh,020h,079h,06Fh
 db 075h,072h,020h,072h,065h,066h,065h,072h,065h,06Eh,063h,065h,020h,063h,061h,072h
 db 064h,02Eh,0Ah,0Ah,00h
-asc_C0120:
+str_NoConvMemory:
 db 0Ah,049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,063h,06Fh
 db 06Eh,076h,065h,06Eh,074h,069h,06Fh,06Eh,061h,06Ch,020h,06Dh,065h,06Dh,06Fh,072h
 db 079h,020h,061h,076h,061h,069h,06Ch,061h,062h,06Ch,065h,02Eh,00h
-asc_C014D:
+str_CheckRefCard2:
 db 0Ah,050h,06Ch,065h,061h,073h,065h,020h,063h,068h,065h,063h,06Bh,020h,079h,06Fh
 db 075h,072h,020h,072h,065h,066h,065h,072h,065h,06Eh,063h,065h,020h,063h,061h,072h
 db 064h,02Eh,0Ah,0Ah,00h
-asc_C0172:
+str_Pointer3:
 db 070h,06Fh,069h,06Eh,074h,065h,072h,033h,00h
-asc_C017B:
+str_Pntr:
 db 070h,06Eh,074h,072h,00h
-unk_C0180:
+str_S1:
 db 073h,031h,00h
-asc_C0183:
+str_Scor2b:
 db 073h,063h,06Fh,072h,032h,062h,00h
-asc_C018A:
+str_Scor3b:
 db 073h,063h,06Fh,072h,033h,062h,00h
-asc_C0191:
+str_Kaufm020:
 db 06Bh,061h,075h,066h,06Dh,030h,032h,030h,00h
-asc_C019A:
+str_ConfigureLeftJoystick:
 db 043h,06Fh,06Eh,066h,069h,067h,075h,072h,065h,020h,04Ch,065h,066h,074h,020h,04Ah
 db 06Fh,079h,073h,074h,069h,063h,06Bh,00h
-asc_C01B2:
+str_ConfigureRightJoystick:
 db 043h,06Fh,06Eh,066h,069h,067h,075h,072h,065h,020h,052h,069h,067h,068h,074h,020h
 db 04Ah,06Fh,079h,073h,074h,069h,063h,06Bh,00h
-asc_C01CB:
+str_GameSet2:
 db 067h,061h,06Dh,065h,02Eh,073h,065h,074h,00h
-unk_C01D4:
+str_errd3:
 db 064h,033h,00h
-unk_C01D7:
+str_errd4:
 db 064h,034h,00h
-asc_C01DA:
+str_Temp3:
 db 074h,065h,06Dh,070h,00h
-asc_C01DF:
+str_ErrDiskFree3:
 db 065h,072h,072h,06Fh,072h,020h,067h,065h,074h,074h,069h,06Eh,067h,020h,064h,069h
 db 073h,06Bh,020h,073h,070h,061h,063h,065h,020h,066h,072h,065h,065h,0Ah,00h,00h
 db 00h

@@ -3,14 +3,14 @@ bits 32
 %include "hockey.inc"
 section s_69336 progbits alloc exec nowrite align=1
 extern DoGameFrame, ResetBench, __CHK, assreplace, sflags, gmode2, musicon
-extern iflags, byte_E9AC1, joysampling, dword_C4E10, dword_C4E14, dword_C5130, gameopts, dword_C5704
+extern iflags, byte_E9AC1, joysampling, inputframes, escrequest, dword_C5130, gameopts, dword_C5704
 extern dword_C5708, dword_C570C, dword_C7444, dword_C7448, dword_C90B0, sflags3, cont2team, HomeTeam
 extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, dword_D8C40, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC28C, dword_DD6A8, dword_DD6AE, dword_DD6B0
 extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
-extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, sub_10E9F, sub_1145F, sub_1149A
-extern sub_11598, sub_1395F, sub_14CF1, sub_150C6, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
+extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSize, ResetInputSampling, RunGameFrames
+extern FadePalette, sub_1395F, sub_14CF1, sub_150C6, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
 extern sub_479E9, FadeOutPalCycle, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
 extern sub_59CA9, sub_59D54, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
 extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_836E4
@@ -189,7 +189,7 @@ mov word [awtmline], dx	; 695BF
 call FadeOutPalCycle	; 695C6
 mov edx, 0C8h	; 695CB
 mov eax, 140h	; 695D0
-call sub_10E9F	; 695D5
+call SetScreenSize	; 695D5
 cmp word [HomeTeam], byte 1Ah	; 695DA
 jl short .4	; 695E2
 mov eax, 0Ch	; 695E4
@@ -407,7 +407,7 @@ call SprSort	; 69990
 xor edi, edi	; 69995
 xor edx, edx	; 69997
 mov dword [dword_D8C78], edi	; 69999
-mov dword [dword_C4E10], edi	; 6999F
+mov dword [inputframes], edi	; 6999F
 mov eax, dword [puckc]	; 699A5
 mov byte [eax], 0FFh	; 699AA
 mov dword [joysampling], edi	; 699AD
@@ -420,11 +420,11 @@ call sub_B396E	; 699CF
 mov esi, 1	; 699D4
 mov dword [joysampling], esi	; 699D9
 mov dword [dword_C5130], esi	; 699DF
-mov dword [dword_C4E14], edi	; 699E5
+mov dword [escrequest], edi	; 699E5
 .17:
 cmp word [exitgame], byte 0	; 699EB
 jne near .26	; 699F3
-call sub_1145F	; 699F9
+call ResetInputSampling	; 699F9
 mov edx, eax	; 699FE
 shl eax, 2	; 69A00
 sub eax, edx	; 69A03
@@ -442,7 +442,7 @@ sar edx, 1Fh	; 69A1D
 idiv ebx	; 69A20
 mov edi, edx	; 69A22
 mov eax, esi	; 69A24
-call sub_1149A	; 69A26
+call RunGameFrames	; 69A26
 mov eax, dword [camx_m2]	; 69A2B
 sar eax, 10h	; 69A30
 add eax, byte 20h	; 69A33
@@ -534,7 +534,7 @@ add esp, byte 0Ch	; 69B7A
 mov ebx, 10h	; 69B7D
 mov edx, unk_DF014	; 69B82
 mov eax, 1	; 69B87
-call sub_11598	; 69B8C
+call FadePalette	; 69B8C
 mov eax, dword [dword_E9A9E]	; 69B91
 sar eax, 10h	; 69B96
 mov dword [joysampling], eax	; 69B99
@@ -594,7 +594,7 @@ call sub_59CA9	; 69C5A
 mov ebx, 10h	; 69C5F
 mov edx, unk_DF314	; 69C64
 xor eax, eax	; 69C69
-call sub_11598	; 69C6B
+call FadePalette	; 69C6B
 xor esi, esi	; 69C70
 mov word [word_CBEC4], si	; 69C72
 mov eax, 0C8h	; 69C79
@@ -609,7 +609,7 @@ mov eax, dword [dword_E9A9E]	; 69C9B
 sar eax, 10h	; 69CA0
 mov dword [joysampling], eax	; 69CA3
 .25:
-cmp dword [dword_C4E14], byte 0	; 69CA8
+cmp dword [escrequest], byte 0	; 69CA8
 jne short .26	; 69CAF
 call Readjoy1	; 69CB1
 mov dl, byte [regd1]	; 69CB6
@@ -650,7 +650,7 @@ add esp, byte 0Ch	; 69D3B
 mov ebx, 10h	; 69D3E
 mov edx, unk_DF014	; 69D43
 mov eax, 1	; 69D48
-call sub_11598	; 69D4D
+call FadePalette	; 69D4D
 call CrowdFadeOut	; 69D52
 xor ebx, ebx	; 69D57
 mov word [crowdlevel], bx	; 69D59
@@ -673,8 +673,8 @@ call StopDigiSample	; 69D8F
 mov word [exitgame], 0FFFFh	; 69D94
 mov edx, 1E0h	; 69D9D
 mov eax, 280h	; 69DA2
-call sub_10E9F	; 69DA7
-cmp dword [dword_C4E14], byte 0	; 69DAC
+call SetScreenSize	; 69DA7
+cmp dword [escrequest], byte 0	; 69DAC
 jne short .31	; 69DB3
 mov eax, 222E0h	; 69DB5
 call sub_1BAF3	; 69DBA
@@ -814,10 +814,10 @@ call assreplace	; 69FF7
 call ClearPenaltyBuffer	; 69FFC
 mov word [Pencntdwn], cx	; 6A001
 call joyq_flush	; 6A008
-cmp dword [dword_C4E14], byte 0	; 6A00D
+cmp dword [escrequest], byte 0	; 6A00D
 je short .38	; 6A014
 xor ecx, ecx	; 6A016
-mov dword [dword_C4E14], ecx	; 6A018
+mov dword [escrequest], ecx	; 6A018
 mov eax, 0FFFFFFFFh	; 6A01E
 jmp short .x	; 6A023
 .38:

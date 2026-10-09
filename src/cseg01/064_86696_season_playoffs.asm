@@ -22,7 +22,7 @@ extern dword_D2C6B, dword_D8B68, dword_D8B74, schedgameidx, dword_DC238, playoff
 extern dword_DD770, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, off_C5439, teamcitynames
 extern off_C6D22, leaguedbnames, off_CEF43, off_CEF63
 extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, msg_POHumanOut, msg_POTeamOut, msg_POGenFinal
-extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, sub_10712, sub_11D09
+extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers, sub_11D09
 extern sub_142E7, MakePath, sub_14442, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
 extern sub_1466B, sub_14825, sub_148A5, sub_149BF, sub_174C2, sub_17573, sub_175E2, sub_17636
 extern sub_17711, sub_1777E, sub_1BEFD, sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171
@@ -3833,7 +3833,7 @@ mov dword [byte esp+024h], 1	; 893EB
 .4:
 call sub_479E9	; 893F3
 call SetSideControls	; 893F8
-call sub_10712	; 893FD
+call SetupControllers	; 893FD
 mov dword [dword_C65C0], sub_20016	; 89402
 mov dword [dword_C65C4], sub_20171	; 8940C
 mov dword [dword_C65C8], sub_202E5	; 89416
@@ -4130,7 +4130,7 @@ call sub_76429	; 8983E
 push esi	; 89843
 call jctime	; 89844
 add esp, byte 4	; 89849
-call sub_10712	; 8984C
+call SetupControllers	; 8984C
 mov eax, postate	; 89851
 call WriteModeState	; 89856
 mov eax, dword [byte esp+020h]	; 8985B

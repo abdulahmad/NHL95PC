@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_8D2F0 progbits alloc exec nowrite align=1
-extern asc_C3D60, dword_D2F58, dword_D2F64, dword_EDA08, dword_EDAAC, dword_EDAB0, dword_EDAB4, sub_8CD4C
+extern asc_C3D60, dword_D2F58, dword_D2F64, memlist1, dword_EDAAC, dword_EDAB0, dword_EDAB4, sub_8CD4C
 extern sub_8D2A0, sub_8E3F8, sub_8E44C, sub_986E4, FatalError, sub_B3ABC, unknown_libname_22
 global loc_8D340, loc_8D379, loc_8D38E, loc_8D40C, loc_8D427, loc_8D438, loc_8D45C, loc_8D45E
 global loc_8D521, loc_8D53A, loc_8D542, loc_8D591, loc_8D5B0, loc_8D5B8, loc_8D640, loc_8D653
@@ -113,7 +113,7 @@ sar edx, 8	; 8D3E9
 lea eax, [nosplit edx*4+00h]	; 8D3EC
 add eax, edx	; 8D3F3
 shl eax, 2	; 8D3F5
-mov ebp, dword_EDA08	; 8D3F8
+mov ebp, memlist1	; 8D3F8
 add ebp, eax	; 8D3FD
 and ebx, byte 7	; 8D3FF
 xor edi, edi	; 8D402
@@ -221,7 +221,7 @@ sar esi, 8	; 8D4F5
 lea eax, [nosplit esi*4+00h]	; 8D4F8
 add eax, esi	; 8D4FF
 shl eax, 2	; 8D501
-mov edi, dword_EDA08	; 8D504
+mov edi, memlist1	; 8D504
 add edi, eax	; 8D509
 mov edx, dword [byte esp+010h]	; 8D50B
 push edx	; 8D50F
@@ -272,7 +272,7 @@ sar esi, 8	; 8D565
 lea eax, [nosplit esi*4+00h]	; 8D568
 add eax, esi	; 8D56F
 shl eax, 2	; 8D571
-mov edi, dword_EDA08	; 8D574
+mov edi, memlist1	; 8D574
 add edi, eax	; 8D579
 mov edx, dword [byte esp+010h]	; 8D57B
 push edx	; 8D57F
@@ -347,7 +347,7 @@ sar edx, 8	; 8D616
 lea eax, [nosplit edx*4+00h]	; 8D619
 add eax, edx	; 8D620
 shl eax, 2	; 8D622
-mov ebx, dword_EDA08	; 8D625
+mov ebx, memlist1	; 8D625
 add ebx, eax	; 8D62A
 cmp dword [byte ebx+010h], byte 0	; 8D62C
 jne short loc_8D640	; 8D630
@@ -544,7 +544,7 @@ loc_8D7EA:
 and esi, 700h	; 8D7EA
 sar esi, 8	; 8D7F0
 imul esi, byte 14h	; 8D7F3
-add esi, dword_EDA08	; 8D7F6
+add esi, memlist1	; 8D7F6
 mov esi, dword [byte esi+010h]	; 8D7FC
 test esi, esi	; 8D7FF
 jne short loc_8D79E	; 8D801

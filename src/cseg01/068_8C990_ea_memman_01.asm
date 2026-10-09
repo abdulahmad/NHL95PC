@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_8C990 progbits alloc exec nowrite align=1
 extern asc_C3B98, asc_C3BA0, asc_C3BAC, asc_C3BB0, asc_C3BCC, asc_C3C10, asc_C3C4C, asc_C3C88
-extern asc_C3CB0, asc_C3CF4, asc_C3D38, dword_D2F58, dword_D2F5C, dword_D2F60, dword_D2F64, dword_EDA08
+extern asc_C3CB0, asc_C3CF4, asc_C3D38, dword_D2F58, dword_D2F5C, dword_D2F60, dword_D2F64, memlist1
 extern dword_EDAB0, sub_8D604, sub_8D844, sub_8D990, sub_8DA98, sub_8DAB8, sub_8DB78, sub_8DB8C
 extern sub_8E3E4, sub_8E424, sub_986E4, FatalError, unknown_libname_22
 global loc_8CAC8, loc_8CAE8, loc_8CBD2, loc_8CBE3, loc_8CBF5, loc_8CC1D, loc_8CC37, loc_8CC53
@@ -26,7 +26,7 @@ sar edi, 8	; 8C9A1
 lea esi, [nosplit edi*4+00h]	; 8C9A4
 add esi, edi	; 8C9AB
 shl esi, 2	; 8C9AD
-add esi, dword_EDA08	; 8C9B0
+add esi, memlist1	; 8C9B0
 mov eax, dword [byte esp+01Ch]	; 8C9B6
 dec eax	; 8C9BA
 mov dword [byte esi+08h], eax	; 8C9BB
@@ -93,7 +93,7 @@ sar edx, 8	; 8CA79
 lea eax, [nosplit edx*4+00h]	; 8CA7C
 add eax, edx	; 8CA83
 shl eax, 2	; 8CA85
-mov esi, dword_EDA08	; 8CA88
+mov esi, memlist1	; 8CA88
 add esi, eax	; 8CA8D
 mov edx, dword [byte esp+028h]	; 8CA8F
 push edx	; 8CA93
@@ -151,7 +151,7 @@ sar eax, 8	; 8CB04
 lea esi, [nosplit eax*4+00h]	; 8CB07
 add esi, eax	; 8CB0E
 shl esi, 2	; 8CB10
-mov edi, dword_EDA08	; 8CB13
+mov edi, memlist1	; 8CB13
 add edi, esi	; 8CB18
 mov edx, dword [byte edi+08h]	; 8CB1A
 add ebp, edx	; 8CB1D
@@ -210,7 +210,7 @@ sar esi, 8	; 8CBB5
 lea eax, [nosplit esi*4+00h]	; 8CBB8
 add eax, esi	; 8CBBF
 shl eax, 2	; 8CBC1
-mov edi, dword_EDA08	; 8CBC4
+mov edi, memlist1	; 8CBC4
 add edi, eax	; 8CBC9
 mov esi, dword [edi]	; 8CBCB
 cmp esi, dword [byte edi+04h]	; 8CBCD
@@ -398,7 +398,7 @@ sar edx, 8	; 8CD9A
 lea eax, [nosplit edx*4+00h]	; 8CD9D
 add eax, edx	; 8CDA4
 shl eax, 2	; 8CDA6
-mov esi, dword_EDA08	; 8CDA9
+mov esi, memlist1	; 8CDA9
 add esi, eax	; 8CDAE
 mov ebx, dword [byte esp+014h]	; 8CDB0
 push ebx	; 8CDB4
@@ -771,7 +771,7 @@ shr edx, 8	; 8D16C
 lea eax, [nosplit edx*4+00h]	; 8D16F
 add eax, edx	; 8D176
 shl eax, 2	; 8D178
-mov edi, dword_EDA08	; 8D17B
+mov edi, memlist1	; 8D17B
 add edi, eax	; 8D180
 mov edx, dword [dword_EDAB0]	; 8D182
 push edx	; 8D188

@@ -17,7 +17,7 @@ extern dword_E9A9E, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9
 extern dword_E9F54, dword_E9F56, dword_E9F5A, dword_E9F76, dword_E9F78, dword_E9F7B, dword_E9F8C, dword_E9F98
 extern dword_E9FA5, dword_E9FA8, dword_E9FAA, dword_E9FD9, dword_E9FF0, dword_ED74C, fputchar, gmode
 extern jctime, replaystart, puckz, puckc, camx_m2, off_CBED0, off_CC01D, off_CD498
-extern off_CD4A0, off_CD4DC, setpersonel, sfx, sprintf_, sub_11005, sub_110E0, sub_11136
+extern off_CD4A0, off_CD4DC, setpersonel, sfx, sprintf_, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
 extern MakePath, sub_1CD73, CrowdNoiseUpdate, CrowdNoiseOff, sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8EA18, sub_90354, sub_90D20, sub_90EC0, sub_91964, sub_93540, sub_B30B4
 extern sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80, awlinetab, unk_DACA0, hmlinetab, SortCords
@@ -4685,7 +4685,7 @@ movsx ebx, ax	; 67E1C
 xor ecx, ecx	; 67E1F
 mov edx, 0B3h	; 67E21
 mov eax, 17Eh	; 67E26
-call sub_110E0	; 67E2B
+call DrawFrameSprite	; 67E2B
 inc esi	; 67E30
 .2:
 movsx ax, byte [byte_E9FAE]	; 67E31
@@ -4718,7 +4718,7 @@ movsx ebx, ax	; 67E7F
 xor ecx, ecx	; 67E82
 mov edx, 0B3h	; 67E84
 mov eax, 17Eh	; 67E89
-call sub_110E0	; 67E8E
+call DrawFrameSprite	; 67E8E
 dec esi	; 67E93
 .6:
 test si, si	; 67E94
@@ -4865,7 +4865,7 @@ sar edx, 10h	; 6805E
 mov eax, dword [byte ebp-0Ah]	; 68061
 sar eax, 10h	; 68064
 xor ecx, ecx	; 68067
-call sub_110E0	; 68069
+call DrawFrameSprite	; 68069
 .22:
 dec esi	; 6806E
 .23:
@@ -5094,7 +5094,7 @@ mov eax, dword [nosplit eax*2+word_CC0B0]	; 68333
 sar eax, 10h	; 6833A
 xor ecx, ecx	; 6833D
 .41:
-call sub_110E0	; 6833F
+call DrawFrameSprite	; 6833F
 .42:
 inc edi	; 68344
 .43:
@@ -5149,7 +5149,7 @@ mov eax, dword [byte ebp-0Ah]	; 683F3
 sar eax, 10h	; 683F6
 xor ecx, ecx	; 683F9
 .47:
-call sub_110E0	; 683FB
+call DrawFrameSprite	; 683FB
 .48:
 cmp byte [byte_E9FAD], 10h	; 68400
 je short .49	; 68407
@@ -5174,7 +5174,7 @@ sar edx, 10h	; 68442
 mov eax, dword [dword_E9F76]	; 68445
 sar eax, 10h	; 6844A
 xor ecx, ecx	; 6844D
-call sub_110E0	; 6844F
+call DrawFrameSprite	; 6844F
 .49:
 xor edi, edi	; 68454
 jmp near .68	; 68456
@@ -5296,7 +5296,7 @@ mov eax, dword [nosplit eax*2+dword_E9F16]	; 6860E
 sar eax, 10h	; 68615
 mov ecx, 0FFFFFFFFh	; 68618
 .59:
-call sub_11005	; 6861D
+call DrawSpriteNumber	; 6861D
 .60:
 cmp si, byte 5	; 68622
 setg al	; 68626
@@ -5312,7 +5312,7 @@ mov edx, dword [nosplit eax*2+dword_E9F16]	; 68643
 sar edx, 10h	; 6864A
 mov eax, dword [nosplit eax*2+dword_E9F5A]	; 6864D
 sar eax, 10h	; 68654
-call sub_110E0	; 68657
+call DrawFrameSprite	; 68657
 cmp si, byte 0Ch	; 6865C
 jne near .67	; 68660
 cmp byte [byte_E9FAD], 10h	; 68666
@@ -5372,7 +5372,7 @@ mov eax, dword [dword_E9F76]	; 68713
 sar eax, 10h	; 68718
 xor ecx, ecx	; 6871B
 .66:
-call sub_110E0	; 6871D
+call DrawFrameSprite	; 6871D
 .67:
 inc edi	; 68722
 .68:
@@ -5417,7 +5417,7 @@ sar edx, 10h	; 687A3
 mov eax, dword [dword_E9F76]	; 687A6
 sar eax, 10h	; 687AB
 xor ecx, ecx	; 687AE
-call sub_110E0	; 687B0
+call DrawFrameSprite	; 687B0
 .71:
 mov eax, dword [camx]	; 687B5
 sar eax, 10h	; 687BA
@@ -5439,7 +5439,7 @@ mov eax, dword [camx]	; 687E7
 sar eax, 10h	; 687EC
 cmp eax, 0FFFFFF70h	; 687EF
 jge short .73	; 687F4
-call sub_11136	; 687F6
+call DrawRinkEndArt	; 687F6
 .73:
 cmp word [word_E9F58], byte 0	; 687FB
 jge short .74	; 68803
@@ -5456,7 +5456,7 @@ sar edx, 10h	; 6882B
 mov eax, dword [dword_E9F78]	; 6882E
 sar eax, 10h	; 68833
 xor ecx, ecx	; 68836
-call sub_110E0	; 68838
+call DrawFrameSprite	; 68838
 .74:
 mov ebx, dword [dword_E9F54]	; 6883D
 sar ebx, 10h	; 68843
@@ -5485,7 +5485,7 @@ sar edx, 10h	; 6888B
 mov eax, dword [dword_E9F76]	; 6888E
 sar eax, 10h	; 68893
 xor ecx, ecx	; 68896
-call sub_110E0	; 68898
+call DrawFrameSprite	; 68898
 .75:
 mov esp, ebp	; 6889D
 jmp near ReplayStep_popx	; 6889F

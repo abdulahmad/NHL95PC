@@ -12,7 +12,7 @@ extern dword_DD6B0, replayplay, dword_E9F16, dword_E9F38, dword_EA0DC, dword_ED3
 extern dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8, dword_ED6DC, dword_ED6E0, dword_ED6E4
 extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED6FC, dword_ED704, dword_ED708
 extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, jctime, camx_m2, off_CD4FA
-extern off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25, rand_, sub_10E9F, sub_110E0, sub_11598
+extern off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25, rand_, SetScreenSize, DrawFrameSprite, FadePalette
 extern MakePath, sub_30A0C, sub_30F12, MessageBox, sub_33DD3, CrowdNoiseOff, ReplayFirstFrame, ReplayStep
 extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_6B391, sub_6B3D7, sub_7F724
 extern sub_7FA10, sub_7FC12, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
@@ -674,7 +674,7 @@ call sub_6ADA7	; 7E424
 mov ebx, 10h	; 7E429
 mov edx, unk_DF314	; 7E42E
 xor eax, eax	; 7E433
-call sub_11598	; 7E435
+call FadePalette	; 7E435
 call sub_B396E	; 7E43A
 call sub_6B3D7	; 7E43F
 xor ebp, ebp	; 7E444
@@ -860,7 +860,7 @@ inc eax	; 7E728
 movsx edx, ax	; 7E729
 xor ecx, ecx	; 7E72C
 mov eax, 188h	; 7E72E
-call sub_110E0	; 7E733
+call DrawFrameSprite	; 7E733
 jmp near loc_7E7E6	; 7E738
 loc_7E73D:
 push byte 1	; 7E73D
@@ -873,7 +873,7 @@ inc eax	; 7E755
 movsx edx, ax	; 7E756
 xor ecx, ecx	; 7E759
 mov eax, 188h	; 7E75B
-call sub_110E0	; 7E760
+call DrawFrameSprite	; 7E760
 mov eax, dword [dword_ED6EC]	; 7E765
 mov ebx, dword [dword_ED74C]	; 7E76A
 cmp eax, ebx	; 7E770
@@ -953,7 +953,7 @@ add esp, byte 0Ch	; 7E89D
 mov ebx, 10h	; 7E8A0
 mov edx, unk_DF014	; 7E8A5
 mov eax, 1	; 7E8AA
-call sub_11598	; 7E8AF
+call FadePalette	; 7E8AF
 mov ebx, dword [dword_ED6D8]	; 7E8B4
 push ebx	; 7E8BA
 call jctime	; 7E8BB
@@ -963,7 +963,7 @@ cmp dword [esp], byte 0	; 7E8C8
 jne short loc_7E8DD	; 7E8CC
 mov edx, 1E0h	; 7E8CE
 mov eax, 280h	; 7E8D3
-call sub_10E9F	; 7E8D8
+call SetScreenSize	; 7E8D8
 loc_7E8DD:
 add esp, byte 24h	; 7E8DD
 jmp near loc_7E0F3	; 7E8E0

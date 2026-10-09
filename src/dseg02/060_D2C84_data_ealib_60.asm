@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D2C84 progbits alloc noexec write align=1
-extern __null_int23_exit_, dword_EDA08, sub_B2CCD, sub_B300C, sub_B345D, sub_B3ABC, sub_B40BF, unk_C4004
+extern __null_int23_exit_, memlist1, sub_B2CCD, sub_B300C, sub_B345D, sub_B3ABC, sub_B40BF, unk_C4004
 extern unk_C4008, unk_C400C, unk_C4010, unk_C4014, unk_C4018, unk_C401C, unk_C4020, unk_C4024
 extern unk_C4028, unk_C402C, unk_C4030
 global asc_D2F46, asc_D43F4, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14
@@ -124,7 +124,7 @@ asc_D2F46:
 db 053h,074h,061h,063h,06Bh,020h,04Fh,076h,065h,072h,066h,06Ch,06Fh,077h,021h,0Dh
 db 0Ah,00h
 dword_D2F58:
-dd dword_EDA08
+dd memlist1
 dword_D2F5C:
 db 00h,0Eh,00h,00h
 dword_D2F60:

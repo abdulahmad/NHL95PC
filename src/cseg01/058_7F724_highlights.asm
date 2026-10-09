@@ -9,7 +9,7 @@ extern byte_E03E3, byte_E03E4, dword_C5704, dword_C5708, dword_C570C, songdata, 
 extern cont2team, HomeTeam, musichandle, dword_D42A8, dword_D8C68, dword_D8C80, dword_D8C84, musicslot
 extern dword_DC230, dword_DC2F0, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
 extern dword_ED6F8, dword_ED700, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, teamcitynames
-extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, sub_10E9F
+extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, SetScreenSize
 extern sub_13A91, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
 extern sub_1BAB1, sub_303FB, sub_30A0C, MessageBox, sub_33727, sub_3377C, sub_479E9, FadeOutPalCycle
 extern sub_673C5, sub_6B3D7, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
@@ -923,7 +923,7 @@ call sub_13A91	; 8027F
 call FadeOutPalCycle	; 80284
 mov edx, 0C8h	; 80289
 mov eax, 140h	; 8028E
-call sub_10E9F	; 80293
+call SetScreenSize	; 80293
 cmp word [HomeTeam], byte 1Ah	; 80298
 jl short loc_802A9	; 802A0
 mov eax, 0Ch	; 802A2

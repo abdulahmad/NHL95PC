@@ -4,14 +4,14 @@ bits 32
 section s_150C6 progbits alloc exec nowrite align=1
 extern StanleyCupTimer, __CHK, asc_C0784, asc_C078C, asc_C0791, asc_C079C, asc_C8136
 extern musicon, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, byte_EA0F4
-extern byte_ED823, byte_ED939, dword_C5130, dword_C52E9, dword_C52ED, dword_C52F5, dword_C52F9, dword_C52FD
-extern dword_C5301, dword_C5305, dword_C5309, dword_C53F7, gamemode, gameopts, teamdivflags, dword_C5704
+extern byte_ED823, byte_ED939, dword_C5130
+extern dword_C53F7, gamemode, gameopts, teamdivflags, dword_C5704
 extern dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
 extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
 extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, hmscore, awscore, hmtmstruct
 extern jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C8, off_C57CC, awtmstruct
-extern off_D3078, rand_, randomd0, sub_10712, sub_10E9F, sub_1167B, sub_13BB4, sub_13FA7
+extern off_D3078, rand_, randomd0, SetupControllers, SetScreenSize, sub_1167B, sub_13BB4, sub_13FA7
 extern MakePath, sub_14A20, sub_14F31, sub_1BEFD, LoadModeState, sub_3371C, sub_3377C, SeriesLength
 extern sub_479E9, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
 extern sub_7DC8B, LoadScheduleDB, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
@@ -1172,8 +1172,8 @@ rep movsd	; 15DDC
 movsb	; 15DDE
 cmp edx, byte 2	; 15DDF
 jne short loc_15DFA	; 15DE2
-mov dword [dword_C52E9], 1Bh	; 15DE4
-mov dword [dword_C52ED], 1Ah	; 15DEE
+mov dword [exhstate+51h], 1Bh	; 15DE4
+mov dword [exhstate+55h], 1Ah	; 15DEE
 jmp short loc_15E5E	; 15DF8
 loc_15DFA:
 cmp edx, byte 1	; 15DFA
@@ -1183,10 +1183,10 @@ call randomd0	; 15E04
 movsx edx, ax	; 15E09
 mov eax, dword [nosplit edx*2+dword_C5861]	; 15E0C
 sar eax, 18h	; 15E13
-mov dword [dword_C52E9], eax	; 15E16
+mov dword [exhstate+51h], eax	; 15E16
 mov eax, dword [nosplit edx*2+dword_C5862]	; 15E1B
 sar eax, 18h	; 15E22
-mov dword [dword_C52ED], eax	; 15E25
+mov dword [exhstate+55h], eax	; 15E25
 jmp short loc_15E5E	; 15E2A
 loc_15E2C:
 call rand_	; 15E2C
@@ -1194,7 +1194,7 @@ mov edx, eax	; 15E31
 mov ebx, 1Ah	; 15E33
 sar edx, 1Fh	; 15E38
 idiv ebx	; 15E3B
-mov dword [dword_C52E9], edx	; 15E3D
+mov dword [exhstate+51h], edx	; 15E3D
 inc edx	; 15E43
 mov eax, 19h	; 15E44
 call randomd0	; 15E49
@@ -1203,19 +1203,19 @@ add edx, eax	; 15E4F
 mov eax, edx	; 15E51
 sar edx, 1Fh	; 15E53
 idiv ebx	; 15E56
-mov dword [dword_C52ED], edx	; 15E58
+mov dword [exhstate+55h], edx	; 15E58
 loc_15E5E:
 mov ebp, 10h	; 15E5E
-mov dword [dword_C52FD], ebp	; 15E63
+mov dword [exhstate+65h], ebp	; 15E63
 xor eax, eax	; 15E69
 mov dword [gamemode], eax	; 15E6B
-mov dword [dword_C5301], ebp	; 15E70
-mov dword [dword_C5305], eax	; 15E76
-mov dword [dword_C5309], 1	; 15E7B
-mov eax, dword [dword_C52E9]	; 15E85
-mov dword [dword_C52F5], eax	; 15E8A
-mov dword [dword_C52F5], 0FFFFFFFFh	; 15E8F
-mov dword [dword_C52F9], 0FFFFFFFEh	; 15E99
+mov dword [exhstate+69h], ebp	; 15E70
+mov dword [exhstate+6Dh], eax	; 15E76
+mov dword [exhstate+71h], 1	; 15E7B
+mov eax, dword [exhstate+51h]	; 15E85
+mov dword [exhstate+5Dh], eax	; 15E8A
+mov dword [exhstate+5Dh], 0FFFFFFFFh	; 15E8F
+mov dword [exhstate+61h], 0FFFFFFFEh	; 15E99
 mov eax, exhstate	; 15EA3
 call LoadModeState	; 15EA8
 or byte [gameopts], 0FFh	; 15EAD
@@ -1239,7 +1239,7 @@ mov eax, dword [cont2team]	; 15EF7
 sar eax, 10h	; 15EFC
 mov eax, dword [nosplit eax*4+off_C5439]	; 15EFF
 call sub_59D71	; 15F06
-call sub_10712	; 15F0B
+call SetupControllers	; 15F0B
 xor edx, edx	; 15F10
 xor eax, eax	; 15F12
 call sub_1BEFD	; 15F14
@@ -1264,7 +1264,7 @@ mov dword [dword_CC0F0], eax	; 15F5D
 mov dword [dword_C53F7], eax	; 15F62
 mov edx, 0C8h	; 15F67
 mov eax, 140h	; 15F6C
-call sub_10E9F	; 15F71
+call SetScreenSize	; 15F71
 mov edx, dword [HomeTeam]	; 15F76
 sar edx, 10h	; 15F7C
 mov eax, dword [cont2team]	; 15F7F
@@ -1282,7 +1282,7 @@ call joyq_flush	; 15FAB
 call sub_1167B	; 15FB0
 mov edx, 1E0h	; 15FB5
 mov eax, 280h	; 15FBA
-call sub_10E9F	; 15FBF
+call SetScreenSize	; 15FBF
 mov word [PerTimeTab], 12Ch	; 15FC4
 xor ecx, ecx	; 15FCD
 mov dword [dword_C5130], ecx	; 15FCF

@@ -9,7 +9,7 @@ extern byte_ED9AB, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl
 extern ctl2side, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C7219, songdata
 extern cont2team, HomeTeam, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
 extern dword_D2C6B, dword_DC238, dword_EA0DC, jctime, memcpy_, off_C5439, off_C7282, off_D3078
-extern strcpy_, strncpy_, sub_106C8, sub_142E7, MakePath, FileOpenRead, FileOpenRW, FileCreate
+extern strcpy_, strncpy_, DiskFreeBytes, sub_142E7, MakePath, FileOpenRead, FileOpenRW, FileCreate
 extern FileClose, FileReadAt, FileWriteAt, sub_1D100, sub_1D610, sub_20D97, MessageBox, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D
 extern sub_76429, SetSideControls, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E, sub_8F979
@@ -1228,7 +1228,7 @@ mov eax, esp	; 32B5D
 call sub_142E7	; 32B5F
 test eax, eax	; 32B64
 jne short loc_32B76	; 32B66
-call sub_106C8	; 32B68
+call DiskFreeBytes	; 32B68
 cmp eax, byte 75h	; 32B6D
 jb near loc_32C51	; 32B70
 loc_32B76:

@@ -4,7 +4,7 @@ bits 32
 section s_3DC2C progbits alloc exec nowrite align=1
 extern __CHK, asc_C1964, asc_C1969, asc_C196F, asc_C1974, asc_C197A, asc_C1980, asc_C1987
 extern asc_C198C, asc_C1994, asc_C19C1, asc_C19DC, asc_C19E0, asc_C19EA, asc_C19F3, asc_C19FA
-extern asc_C19FF, asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, str_extDB, asc_C814A, str_extBIN
+extern asc_C19FF, asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, str_extDB, str_VFN, str_extBIN
 extern str_space, str_dot, curleague, byte_D11BC, byte_D1238, byte_D12DE, byte_D1333, byte_D1334
 extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, leaguedbfmt2, leaguedbfmt, byte_DDD8C
 extern byte_DDD8D, byte_DDD8E, byte_ED7F7, byte_ED858, byte_ED85A, byte_ED86D, byte_ED8B3, byte_ED8B4
@@ -2873,7 +2873,7 @@ lea eax, [dword esp+05D0h]	; 3FFD5
 push eax	; 3FFDC
 call sub_8E9E8	; 3FFDD
 add esp, byte 4	; 3FFE2
-mov ecx, asc_C814A	; 3FFE5
+mov ecx, str_VFN	; 3FFE5
 mov ebx, unk_C1A15	; 3FFEA
 cmp byte [byte_ED8B3], 1	; 3FFEF
 jne short loc_40000	; 3FFF6

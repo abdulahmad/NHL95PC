@@ -4,8 +4,8 @@ bits 32
 section s_1CC3D progbits alloc exec nowrite align=1
 extern __CHK, asc_C0A80, asc_C0A88, asc_C0AB5, asc_C0AE2, asc_C0B0F, asc_C0B1C, asc_C0B29
 extern asc_C0B2E, asc_C0B33, asc_C6748, asc_C675C, asc_C677A, asc_C6891, asc_C689A, asc_C68AD
-extern asc_C8136, asc_CE20B, asc_CE21A, asc_CE22A, asc_CE237, asc_CE247, asc_CE259, byte_C5311
-extern byte_C5386, byte_C671C, byte_C672F, byte_C6745, byte_C6759, byte_C6777, byte_C67A9, byte_DC8D8
+extern asc_C8136, asc_CE20B, asc_CE21A, asc_CE22A, asc_CE237, asc_CE247, asc_CE259, postate
+extern byte_C671C, byte_C672F, byte_C6745, byte_C6759, byte_C6777, byte_C67A9, byte_DC8D8, lgstate
 extern byte_DC9D8, byte_ED938, dword_C65B4, dword_C66C8, dword_C6718, dword_C679D, dword_C67B9, dword_C67BD
 extern dword_C6956, dword_C695A, dword_C891E, dword_CE8EB, dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB
 extern dword_CF5D7, dword_CF5F7, dword_CF617, dword_CF637, dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB
@@ -14,7 +14,7 @@ extern dword_D8C40, dword_DC26C, dword_DC290, dword_DC2BC, dword_DC2C0, dword_DC
 extern dword_DC8D0, vgapage, off_C6821, off_C6825, off_C6841, off_C6845, off_C6881, off_C6885
 extern off_CF51F, off_CF5DF, off_CF61F, off_CF67F, strcpy_, strncpy_, MakePath, sub_17BE7
 extern sub_17CE0, sub_17D6E, sub_6AB7C, sub_8E8A0, sub_90B80, sub_B30B4, sub_B4CD8, sub_B4DD4
-extern sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8, sub_B5974, sub_B5AC8, unk_C529C
+extern sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8, sub_B5974, sub_B5AC8, exhstate
 extern unk_C65D4, unk_DC2F4, unk_DC300, unk_DC998, unk_DCA98
 global code_1D02F, jpt_1CD53, jpt_1D0F0, jpt_1D5F8, loc_1CC6B, loc_1CC6D, loc_1CDAC, loc_1CDB7
 global loc_1CE33, loc_1CE3B, loc_1CE48, loc_1CE87, loc_1CE8C, loc_1CE8E, loc_1CED4, loc_1CEE3
@@ -428,17 +428,17 @@ push edi	; 1D10E
 push ebp	; 1D10F
 test eax, eax	; 1D110
 jne short loc_1D14B	; 1D112
-cmp byte [byte_C5311], 0	; 1D114
+cmp byte [postate+4], 0	; 1D114
 je short loc_1D126	; 1D11B
-cmp byte [byte_C5386], 0	; 1D11D
+cmp byte [lgstate+4], 0	; 1D11D
 jne short loc_1D14B	; 1D124
 loc_1D126:
-cmp byte [byte_C5311], 0	; 1D126
+cmp byte [postate+4], 0	; 1D126
 je short loc_1D136	; 1D12D
 mov eax, 2	; 1D12F
 jmp short loc_1D14B	; 1D134
 loc_1D136:
-cmp byte [byte_C5386], 0	; 1D136
+cmp byte [lgstate+4], 0	; 1D136
 je short loc_1D146	; 1D13D
 mov eax, 3	; 1D13F
 jmp short loc_1D14B	; 1D144
@@ -490,7 +490,7 @@ loc_1D219:
 mov dword [dword_C6956], 1	; 1D219
 loc_1D223:
 mov ebx, 1Fh	; 1D223
-mov edx, byte_C5386	; 1D228
+mov edx, lgstate+4	; 1D228
 mov eax, unk_C65D4	; 1D22D
 call strncpy_	; 1D232
 loc_1D237:
@@ -520,7 +520,7 @@ mov dword [dword_C65B4], ebx	; 1D2A5
 loc_1D2AB:
 mov dword [dword_C6956], 1	; 1D2AB
 mov ebx, 1Fh	; 1D2B5
-mov edx, byte_C5311	; 1D2BA
+mov edx, postate+4	; 1D2BA
 mov eax, unk_C65D4	; 1D2BF
 call strncpy_	; 1D2C4
 loc_1D2C9:
@@ -546,7 +546,7 @@ loc_1D31C:
 xor edx, edx	; 1D31C
 mov dword [dword_C6956], edx	; 1D31E
 mov ebx, 1Fh	; 1D324
-mov edx, unk_C529C	; 1D329
+mov edx, exhstate+4	; 1D329
 mov eax, unk_C65D4	; 1D32E
 call strncpy_	; 1D333
 loc_1D338:
@@ -576,7 +576,7 @@ xor edi, edi	; 1D3B8
 mov dword [dword_C6956], edi	; 1D3BA
 loc_1D3C0:
 mov ebx, 1Fh	; 1D3C0
-mov edx, byte_C5386	; 1D3C5
+mov edx, lgstate+4	; 1D3C5
 jmp near loc_1D469	; 1D3CA
 loc_1D3CF:
 cmp byte [byte_C6759], 1	; 1D3CF
@@ -610,7 +610,7 @@ mov dword [dword_C65B4], ebx	; 1D44F
 loc_1D455:
 mov dword [dword_C6956], 1	; 1D455
 mov ebx, 1Fh	; 1D45F
-mov edx, byte_C5311	; 1D464
+mov edx, postate+4	; 1D464
 loc_1D469:
 mov eax, unk_C65D4	; 1D469
 call strncpy_	; 1D46E
@@ -667,33 +667,33 @@ call __CHK	; 1D51D
 push ebx	; 1D522
 push ecx	; 1D523
 push edx	; 1D524
-cmp byte [byte_C5311], 0	; 1D525
+cmp byte [postate+4], 0	; 1D525
 je short loc_1D56A	; 1D52C
-mov eax, byte_C5311	; 1D52E
+mov eax, postate+4	; 1D52E
 call sub_1D5D5	; 1D533
 mov ebx, eax	; 1D538
 xor dl, dl	; 1D53A
-mov byte [dword eax+byte_C5311], dl	; 1D53C
-mov edx, byte_C5311	; 1D542
+mov byte [dword eax+postate+4], dl	; 1D53C
+mov edx, postate+4	; 1D542
 mov eax, asc_C677A	; 1D547
 call strcpy_	; 1D54C
 lea eax, [byte ebx+03h]	; 1D551
 add eax, byte_C6777	; 1D554
 mov edx, asc_C68AD	; 1D559
 call strcpy_	; 1D55E
-mov byte [dword ebx+byte_C5311], 2Eh	; 1D563
+mov byte [dword ebx+postate+4], 2Eh	; 1D563
 loc_1D56A:
-cmp byte [byte_C5386], 0	; 1D56A
+cmp byte [lgstate+4], 0	; 1D56A
 je short loc_1D5D1	; 1D571
-mov eax, byte_C5386	; 1D573
+mov eax, lgstate+4	; 1D573
 call sub_1D5D5	; 1D578
 mov ebx, eax	; 1D57D
 xor cl, cl	; 1D57F
-mov byte [dword eax+byte_C5386], cl	; 1D581
-mov edx, byte_C5386	; 1D587
+mov byte [dword eax+lgstate+4], cl	; 1D581
+mov edx, lgstate+4	; 1D587
 mov eax, asc_C6748	; 1D58C
 call strcpy_	; 1D591
-mov edx, byte_C5386	; 1D596
+mov edx, lgstate+4	; 1D596
 mov eax, asc_C675C	; 1D59B
 call strcpy_	; 1D5A0
 lea ecx, [byte ebx+03h]	; 1D5A5
@@ -705,7 +705,7 @@ mov eax, byte_C6759	; 1D5B9
 add eax, ecx	; 1D5BE
 mov edx, asc_C689A	; 1D5C0
 call strcpy_	; 1D5C5
-mov byte [dword ebx+byte_C5386], 2Eh	; 1D5CA
+mov byte [dword ebx+lgstate+4], 2Eh	; 1D5CA
 loc_1D5D1:
 pop edx	; 1D5D1
 pop ecx	; 1D5D2

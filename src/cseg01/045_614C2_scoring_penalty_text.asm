@@ -21,7 +21,7 @@ extern dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9
 extern dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, fputchar, puckvx, gmode, loc_18F86
 extern lseek_, ltx, off_C5439, puckx, pucky, puckvy, puckz, puckc
 extern off_CD304, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
-extern strcpy_, strlen_, sub_110E0, FileOpenRW, FileClose, FileWriteAt, sub_14C22, sub_14CA0
+extern strcpy_, strlen_, DrawFrameSprite, FileOpenRW, FileClose, FileWriteAt, sub_14C22, sub_14CA0
 extern sub_18F74, sub_1CD73, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
 extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, FatalError, unk_C1B49, unk_C1C58, unk_C1C5B
 extern unk_C1C5E, unk_C1C61, unk_C1C64, unk_C1C67, unk_C1CB0, unk_C5423, unk_C542E, unk_DBC30
@@ -458,7 +458,7 @@ sar edx, 10h	; 619A1
 mov eax, dword [sortobj15+10h]	; 619A4
 sar eax, 10h	; 619A9
 xor ecx, ecx	; 619AC
-call sub_110E0	; 619AE
+call DrawFrameSprite	; 619AE
 .11:
 dec edi	; 619B3
 sub esi, byte 0Ch	; 619B4

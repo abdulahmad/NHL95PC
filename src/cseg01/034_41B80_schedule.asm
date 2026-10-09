@@ -3,13 +3,13 @@ bits 32
 %include "hockey.inc"
 section s_41B80 progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, str_sche, str_Sch, str_gameset, str_KbytesFree, str_extDB, str_extLP
-extern str_SelHumanTeams, str_EnterLeagueName, str_KbytesFreeLine, byte_C5386, divisionteams, teamdivision, teamdivslot, monthdays_m1
+extern str_SelHumanTeams, str_EnterLeagueName, str_KbytesFreeLine, divisionteams, teamdivision, teamdivslot, monthdays_m1
 extern curleague, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname, byte_DDD40
 extern byte_DE268, lgstate, gameopts, teamdivflags, confteams, dword_C5619, dword_C8C61, dword_C8D06
 extern dword_C9002, seasondb, careerdb, keydb, seasondb_size, careerdb_size, keydb_size, dword_DD770
 extern leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, jctime
 extern memset_, mkdir_, msg_LeagueExists, leaguedbnames
-extern msg_GenSchedule, msg_NoDiskSpace, rand_, sprintf_, strcat_, strcpy_, sub_106C8
+extern msg_GenSchedule, msg_NoDiskSpace, rand_, sprintf_, strcat_, strcpy_, DiskFreeBytes
 extern sub_13320, sub_142E7, MakePath, sub_14442, FileOpenRead, FileOpenRW, FileClose, FileReadAt
 extern FileWriteAt, sub_1466B, ReadSchedGame, ReadTeamRec, sub_14825, sub_149BF, sub_2FDD1, sub_2FEDF
 extern sub_30A0C, sub_30F12, MessageBox, WriteModeState, sub_38B4F, WriteSchedGame, WriteTeamRec, sub_3DAB9
@@ -4112,7 +4112,7 @@ mov esi, eax	; 44F8C
 test esi, esi	; 44F8E
 jne short .7	; 44F90
 xor eax, eax	; 44F92
-call sub_106C8	; 44F94
+call DiskFreeBytes	; 44F94
 cmp eax, 800h	; 44F99
 jge short .6	; 44F9E
 push dword 1F4h	; 44FA0
@@ -4328,7 +4328,7 @@ mov eax, edx	; 45248
 call MessageBox	; 4524A
 .21:
 xor dh, dh	; 4524F
-mov byte [byte_C5386], dh	; 45251
+mov byte [lgstate+4], dh	; 45251
 lea eax, [byte esp+04Ch]	; 45257
 call sub_14442	; 4525B
 .22:

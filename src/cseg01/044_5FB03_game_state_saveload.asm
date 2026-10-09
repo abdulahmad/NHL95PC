@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_5FB03 progbits alloc exec nowrite align=1
-extern PBnum, StanleyCupTimer, __CHK, __STOSB, __STOSD, str_ErrLoadGame, str_ErrSaveGame, byte_C4D1C
-extern byte_C4D1D, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, byte_DC265
+extern PBnum, StanleyCupTimer, __CHK, __STOSB, __STOSD, str_ErrLoadGame, str_ErrSaveGame, pad1dev
+extern pad2dev, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, byte_DC265
 extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, PenBuf, iflags, byte_E9AC8
 extern byte_E9AD3, OOlist, collflag, postate, lgstate, gamemode, ctl1team, ctl2team
 extern ctl1dev, ctl2dev, ctl1side, dword_C5704, dword_C5708, dword_C570C, dword_C5840, dword_C66D0
@@ -306,9 +306,9 @@ add eax, byte 2	; 5FF10
 inc ebp	; 5FF13
 cmp ebp, byte 6	; 5FF14
 jl short SaveGameState.11	; 5FF17
-mov dl, byte [byte_C4D1C]	; 5FF19
+mov dl, byte [pad1dev]	; 5FF19
 mov byte [eax], dl	; 5FF1F
-mov dl, byte [byte_C4D1D]	; 5FF21
+mov dl, byte [pad2dev]	; 5FF21
 mov byte [byte eax+01h], dl	; 5FF27
 add eax, byte 2	; 5FF2A
 mov dl, byte [collflag]	; 5FF2D
@@ -1087,9 +1087,9 @@ mov dword [dword esp+010Ch], esi	; 60A75
 cmp esi, byte 6	; 60A7C
 jl short LoadGameState.12	; 60A7F
 mov al, byte [ebx]	; 60A81
-mov byte [byte_C4D1C], al	; 60A83
+mov byte [pad1dev], al	; 60A83
 mov al, byte [byte ebx+01h]	; 60A88
-mov byte [byte_C4D1D], al	; 60A8B
+mov byte [pad2dev], al	; 60A8B
 add ebx, byte 2	; 60A90
 mov al, byte [ebx]	; 60A93
 mov byte [collflag], al	; 60A95
@@ -1588,9 +1588,9 @@ inc esi	; 611CE
 mov dword [dword esp+010Ch], esi	; 611CF
 cmp esi, byte 6	; 611D6
 jl short LoadGameState.27	; 611D9
-cmp byte [byte_C4D1C], 1	; 611DB
+cmp byte [pad1dev], 1	; 611DB
 je short .28	; 611E2
-cmp byte [byte_C4D1D], 1	; 611E4
+cmp byte [pad2dev], 1	; 611E4
 jne short .29	; 611EB
 .28:
 push byte 64h	; 611ED

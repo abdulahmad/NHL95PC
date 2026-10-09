@@ -8,7 +8,7 @@ extern sflags, gmode2, byte_CC9E4, byte_CC9E7, byte_CCA95, musicon, byte_DACB3
 extern byte_DAEA7, hmroster, byte_DB3AD, byte_DF87F, byte_DFFE0, byte_DFFE2, byte_E0250, byte_E028C
 extern byte_E02C8, byte_E0308, byte_E0344, PenBuf, iflags, byte_E9AC1, byte_E9AC8
 extern byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, check4bench, check4check, checkob
-extern chk4lc, chk4shot, dirtab, chk4pass, doplayeracc, doshot, joysampling, dword_C4E10
+extern chk4lc, chk4shot, dirtab, chk4pass, doplayeracc, doshot, joysampling, inputframes
 extern gameopts, dword_C541F, dword_C5840, dword_C585C, dword_C5860, dword_C90B0, sflags3, HomeTeam
 extern dword_CBEBE, dword_CBECA, dword_CC0EC, dword_CC0F8, penshotplayer, dword_CC104, penshotmode, penshotstart
 extern penshotlive, dword_CC12C, dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144
@@ -20,7 +20,7 @@ extern dword_E9A9E, dword_E9AB6, dword_E9AB7, gwgteam, gwgplayer, startm_m2
 extern seqtimer, puckvx, gmode, goalieacc, jctime, PreGameIntro_popebp, PreGameIntro_popx, ltx
 extern off_C5439, puckx, pucky, puckvy, puckz, puckc, camx_m2, starordtab
 extern playeracc, puckshadow, puckvz, qsort_, randomd0, sfx, skateto, skatetopuck
-extern sprintf_, vecdist, sub_11598, sub_15C30, ThreeStarsLoop, joyq_flush, getlchoice, PenShotAssign
+extern sprintf_, vecdist, FadePalette, sub_15C30, ThreeStarsLoop, joyq_flush, getlchoice, PenShotAssign
 extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
 extern sub_59AAD, sub_59AD0, sub_59B0F, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
 extern EvadePC, sub_61576, sub_61D48, sub_62343, sub_62807, sub_62C37, sub_64102, sub_64439
@@ -1041,7 +1041,7 @@ add esp, byte 0Ch	; 48F49
 mov ebx, 10h	; 48F4C
 mov edx, unk_DF014	; 48F51
 mov eax, 1	; 48F56
-call sub_11598	; 48F5B
+call FadePalette	; 48F5B
 mov word [word_CBEC4], 1	; 48F60
 call PickThreeStars	; 48F69
 mov byte [byte_E9AC8], 0FFh	; 48F6E
@@ -1170,7 +1170,7 @@ call DoGameFrame	; 491DB
 call SprSort	; 491E0
 xor eax, eax	; 491E5
 mov dword [dword_D8C6C], eax	; 491E7
-mov dword [dword_C4E10], eax	; 491EC
+mov dword [inputframes], eax	; 491EC
 mov eax, dword [puckc]	; 491F1
 mov byte [eax], 0FFh	; 491F6
 mov ebx, 0FFFFFFE0h	; 491F9

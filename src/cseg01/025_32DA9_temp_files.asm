@@ -2,18 +2,18 @@
 bits 32
 %include "hockey.inc"
 section s_32DA9 progbits alloc exec nowrite align=1
-extern __CHK, asc_C177B, asc_C1783, asc_C1788, byte_C5386, byte_C53DC, curleague, gameopts
-extern musicon, byte_DE268, byte_EA0F4, lgstate, dword_C53D3, dword_C53D7, dword_C53DF, dword_C53E3
-extern dword_C53E7, dword_C53EB, dword_C53EF, dword_C53F3, gamemode, dword_C65C0, dword_C65C4, dword_C65C8
+extern __CHK, asc_C177B, asc_C1783, asc_C1788, curleague, gameopts
+extern musicon, byte_DE268, byte_EA0F4, lgstate
+extern gamemode, dword_C65C0, dword_C65C4, dword_C65C8
 extern dword_C65CC, dword_C65D0, songdata, dword_C73D0, rinkbm, dword_C7440, cont2team, HomeTeam
 extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, schedgameidx, jctime, loc_32704, musicslot
-extern loc_32705, strcat_, strcpy_, sub_10712, sub_11D09, FileOpenRead, sub_148A5, sub_1BEFD
+extern loc_32705, strcat_, strcpy_, SetupControllers, sub_11D09, FileOpenRead, sub_148A5, sub_1BEFD
 extern sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
 extern sub_20D97, sub_29F28, SaveModeState, LoadModeState, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
 extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
 extern sub_479E9, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, unk_208EF, unk_20A46, unk_20BBD
-extern unk_20EB7, exhstate, unk_CE64F, word_C53DB
+extern unk_20EB7, exhstate, unk_CE64F
 global loc_32DCD, loc_32E3A, loc_32EA2, loc_32ECE, loc_32EFB, loc_32F00, loc_32F0E, loc_32F4A
 global loc_32F86, loc_32FB3, loc_33045, loc_3304C, loc_3307D, loc_3308E, loc_3309F, loc_330B0
 global loc_330BA, loc_330CF, loc_330D9, loc_3314E, loc_3316E, loc_331C4, loc_331F8, loc_3325B
@@ -44,7 +44,7 @@ mov dword [dword_C65C4], sub_20171	; 32DDD
 mov dword [dword_C65C8], sub_202E5	; 32DE7
 mov dword [dword_C65CC], sub_203FA	; 32DF1
 mov dword [dword_C65D0], sub_2051A	; 32DFB
-call sub_10712	; 32E05
+call SetupControllers	; 32E05
 or byte [gameopts+1], 2	; 32E0A
 cmp dword [esi], byte 0	; 32E11
 jge short loc_32E3A	; 32E14
@@ -179,64 +179,64 @@ push esi	; 33001
 mov eax, exhstate	; 33002
 call SaveModeState	; 33007
 mov dword [lgstate], 2	; 3300C
-mov dword [dword_C53D3], 0Ch	; 33016
-mov dword [dword_C53D7], 15h	; 33020
-or word [word_C53DB], 2FFh	; 3302A
+mov dword [lgstate+51h], 0Ch	; 33016
+mov dword [lgstate+55h], 15h	; 33020
+or word [lgstate+59h], 2FFh	; 3302A
 cmp byte [musicon], 0	; 33033
 je short loc_33045	; 3303A
-or byte [byte_C53DC], 1	; 3303C
+or byte [lgstate+5Ah], 1	; 3303C
 jmp short loc_3304C	; 33043
 loc_33045:
-and byte [byte_C53DC], 0FEh	; 33045
+and byte [lgstate+5Ah], 0FEh	; 33045
 loc_3304C:
-mov bl, byte [byte_C53DC]	; 3304C
+mov bl, byte [lgstate+5Ah]	; 3304C
 and bl, 83h	; 33052
-mov byte [byte_C53DC], bl	; 33055
+mov byte [lgstate+5Ah], bl	; 33055
 mov bh, bl	; 3305B
 or bh, 78h	; 3305D
-mov byte [byte_C53DC], bh	; 33060
+mov byte [lgstate+5Ah], bh	; 33060
 mov cl, byte [byte_EA0F4]	; 33066
 test cl, 2	; 3306C
 je short loc_3307D	; 3306F
-mov dword [dword_C53E7], 2	; 33071
+mov dword [lgstate+65h], 2	; 33071
 jmp short loc_330BA	; 3307B
 loc_3307D:
 test cl, 4	; 3307D
 je short loc_3308E	; 33080
-mov dword [dword_C53E7], 4	; 33082
+mov dword [lgstate+65h], 4	; 33082
 jmp short loc_330BA	; 3308C
 loc_3308E:
 test cl, 8	; 3308E
 je short loc_3309F	; 33091
-mov dword [dword_C53E7], 8	; 33093
+mov dword [lgstate+65h], 8	; 33093
 jmp short loc_330BA	; 3309D
 loc_3309F:
 test cl, 1	; 3309F
 je short loc_330B0	; 330A2
-mov dword [dword_C53E7], 1	; 330A4
+mov dword [lgstate+65h], 1	; 330A4
 jmp short loc_330BA	; 330AE
 loc_330B0:
-mov dword [dword_C53E7], 10h	; 330B0
+mov dword [lgstate+65h], 10h	; 330B0
 loc_330BA:
-cmp dword [dword_C53E7], byte 10h	; 330BA
+cmp dword [lgstate+65h], byte 10h	; 330BA
 je short loc_330CF	; 330C1
-mov dword [dword_C53DF], 0Ch	; 330C3
+mov dword [lgstate+5Dh], 0Ch	; 330C3
 jmp short loc_330D9	; 330CD
 loc_330CF:
-mov dword [dword_C53DF], 0FFFFFFFFh	; 330CF
+mov dword [lgstate+5Dh], 0FFFFFFFFh	; 330CF
 loc_330D9:
-mov dword [dword_C53EB], 10h	; 330D9
-mov dword [dword_C53E3], 0FFFFFFFEh	; 330E3
+mov dword [lgstate+69h], 10h	; 330D9
+mov dword [lgstate+61h], 0FFFFFFFEh	; 330E3
 xor eax, eax	; 330ED
-mov dword [dword_C53EF], eax	; 330EF
-mov dword [dword_C53F3], 1	; 330F4
+mov dword [lgstate+6Dh], eax	; 330EF
+mov dword [lgstate+71h], 1	; 330F4
 mov eax, lgstate	; 330FE
 call LoadModeState	; 33103
 xor eax, eax	; 33108
 call sub_7A6AD	; 3310A
 call CreateNewLeague	; 3310F
 call sub_7B39C	; 33114
-cmp byte [byte_C5386], 0	; 33119
+cmp byte [lgstate+4], 0	; 33119
 je short loc_3314E	; 33120
 call sub_1D518	; 33122
 xor eax, eax	; 33127

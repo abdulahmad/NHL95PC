@@ -17,7 +17,7 @@ global CanBlockShot_ret6, CanBlockShot_ret5
 global Readjoy_tail, joyq_pop, joyq_flush, joyq_peek, lineinput
 global faceoffinput, CanBlockShot, OppInReach, holdplayer, lcselect, getlchoice, lcfound, Readjoy1
 global Readjoy2, CenterMouse
-; Input queue (PC only).  The timer ISR (main_startup sub_10DCD) samples both pads every 5 ticks
+; Input queue (PC only).  The timer ISR (main_startup SampleInputTick) samples both pads every 5 ticks
 ; into joyqueue (50 records of 3 bytes) while joysampling is set.  The main loop takes the
 ; frame's record with joyq_peek (-> joyrec, read by Readjoy1/Readjoy2) and drops it with joyq_pop.
 joyq_pop:
