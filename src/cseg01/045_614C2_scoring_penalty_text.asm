@@ -2739,6 +2739,10 @@ pop esi	; 6353F
 pop edx	; 63540
 pop ebx	; 63541
 ret	; 63542
+; C: src/c/045_614C2_scoring_penalty_text/Stop4Pen.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/Stop4Pen.inc"
+%else
 Stop4Pen:
 push dword 0Ch	; 63543
 call __CHK	; 63548
@@ -2904,6 +2908,7 @@ call SetPA	; 637AD
 pop esi	; 637B2
 pop edx	; 637B3
 ret	; 637B4
+%endif ; C
 checkfornewpen:
 push dword 10h	; 637B5
 call __CHK	; 637BA

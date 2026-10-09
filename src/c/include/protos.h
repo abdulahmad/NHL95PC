@@ -814,5 +814,13 @@ void asspuckc(Player *p);  /* 4C6F3 */
 void SkateToSpot(Player *p, int a);  /* 4E292 */
 void assboxenter(Player *p);  /* 499D8 */
 void assscore(Player *p);  /* 4A90F */
+void asspsclear(Player *p);  /* 52DB0 */
+void RemoveFromLines(short side, int pnum);  /* 655CC */
+void assleaveice(Player *p);  /* 4AB87 */
+void assleavebox(Player *p);  /* 5147D */
+void updateanim(Player *p);  /* 5CAEF */
+void doshot(Player *p);  /* 57C0B */
+void asspenshooter(Player *p);  /* 4FAE8 */
+void PenShotAssign(void);  /* 512A7 */
 
 #endif

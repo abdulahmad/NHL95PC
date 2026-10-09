@@ -491,7 +491,6 @@ extern void asswingo(); /* 4A343 */
 extern void asswingo_evade(); /* 4A530 */
 extern void asscentero(); /* 4A65C */
 extern void asseben(); /* 4AAC2 */
-extern void assleaveice(); /* 4AB87 */
 extern void asspenalty(); /* 4ADAB */
 extern void assbench(); /* 4B12C */
 extern void assgoalie(); /* 4B774 */
@@ -515,7 +514,6 @@ extern void assrefsignal(); /* 4EB04 */
 extern void assrefgoalpa(); /* 4ED7C */
 extern void assrefdrop(); /* 4F5BF */
 extern void assrefgoalline(); /* 4F7D0 */
-extern void asspenshooter(); /* 4FAE8 */
 extern void lineinput(); /* 4FD8E */
 extern void CanBlockShot_ret6(); /* 50336 */
 extern void CanBlockShot_ret5(); /* 50337 */
@@ -525,12 +523,9 @@ extern void PassRecOneTimer(); /* 50B55 */
 extern void asspassrec(); /* 50F3F */
 extern void TakePlayerFromBox_ret6(); /* 511AD */
 extern void TakePlayerFromBox_ret5(); /* 511AE */
-extern void PenShotAssign(); /* 512A7 */
-extern void assleavebox(); /* 5147D */
 extern void puckfaceoff(); /* 516E1 */
 extern void puckfaceoff2(); /* 51BDB */
 extern void asstakeposition(); /* 52720 */
-extern void asspsclear(); /* 52DB0 */
 extern void assrefpenshot(); /* 52FB0 */
 extern void burst(); /* 532BD */
 extern void check4check(); /* 53537 */
@@ -552,7 +547,6 @@ extern void puckglue(); /* 56F5A */
 extern void puckgoalie(); /* 57096 */
 extern void puckstick(); /* 57483 */
 extern void checkgoalp_CalcGoalShotDir(); /* 57A98 */
-extern void doshot(); /* 57C0B */
 extern void checkcoll(); /* 580F5 */
 extern void checkwallcoll(); /* 582C9 */
 extern void checkgoal(); /* 584AA */
@@ -584,7 +578,6 @@ extern void Goal(); /* 5AB36 */
 extern void ResetClock(); /* 5BA07 */
 extern void SetPlList(); /* 5BBFA */
 extern void updateplayers(); /* 5C40F */
-extern void updateanim(); /* 5CAEF */
 extern void DrawRinkOverlays(); /* 5CE12 */
 extern void SprSortVert(); /* 5DD6B */
 extern void SprSort(); /* 5DD7C */
@@ -620,7 +613,6 @@ extern void lines_addesp10_x(); /* 64CA0 */
 extern void FillDressedSlots(); /* 64CA8 */
 extern void lines_popx2(); /* 652D0 */
 extern void PickExtraSkater(); /* 653BE */
-extern void RemoveFromLines(); /* 655CC */
 extern void checkwindow(); /* 65D01 */
 extern void checkwindow_popebp(); /* 66490 */
 extern void checkwindow_popx(); /* 66491 */

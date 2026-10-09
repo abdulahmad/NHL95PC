@@ -11,9 +11,12 @@
    then count reset and a wait of at least 30. Else, unless pflags bit 3, skate to the spot. */
 void assscore(Player *p)
 {
+    Player *o;
+
     if (*puckc == p->SCnum) {
         *puckc = -1;
-        if (((unsigned char *)(PUCK->assnum + (int)puckstruct))[0x1E] == 0x18) assreplace(PUCK, 0x1A);
+        o = PUCK;
+        if (((unsigned char *)o + o->assnum)[0x1E] == 0x18) assreplace(o, 0x1A);
     }
     if (p->pflags & 0x20) return;
     if (check4bench(p)) return;

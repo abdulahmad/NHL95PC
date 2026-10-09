@@ -2984,6 +2984,10 @@ pop ecx	; 4A90C
 pop ebx	; 4A90D
 ret	; 4A90E
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/assscore.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assscore.inc"
+%else
 assscore:
 push dword 14h	; 4A90F
 call __CHK	; 4A914
@@ -3114,6 +3118,7 @@ pop edx	; 4AABE
 pop ecx	; 4AABF
 pop ebx	; 4AAC0
 ret	; 4AAC1
+%endif ; C
 ; C: src/c/037_4842A_engine_player_logic/asseben.c
 %ifdef CBUILD
 %include "c/037_4842A_engine_player_logic/asseben.inc"
@@ -3180,6 +3185,10 @@ pop ecx	; 4AB84
 pop ebx	; 4AB85
 ret	; 4AB86
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/assleaveice.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assleaveice.inc"
+%else
 assleaveice:
 push dword 14h	; 4AB87
 call __CHK	; 4AB8C
@@ -3348,6 +3357,7 @@ pop edx	; 4ADA7
 pop ecx	; 4ADA8
 pop ebx	; 4ADA9
 ret	; 4ADAA
+%endif ; C
 asspenalty:
 push dword 18h	; 4ADAB
 call __CHK	; 4ADB0

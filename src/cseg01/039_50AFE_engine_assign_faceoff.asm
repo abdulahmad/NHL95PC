@@ -872,6 +872,10 @@ pop edx	; 5147A
 pop ebx	; 5147B
 ret	; 5147C
 %endif ; C
+; C: src/c/039_50AFE_engine_assign_faceoff/assleavebox.c
+%ifdef CBUILD
+%include "c/039_50AFE_engine_assign_faceoff/assleavebox.inc"
+%else
 assleavebox:
 push dword 14h	; 5147D
 call __CHK	; 51482
@@ -1070,6 +1074,7 @@ pop edx	; 516DD
 pop ecx	; 516DE
 pop ebx	; 516DF
 ret	; 516E0
+%endif ; C
 ; puckfaceoff: 93G logic93_4 puckfaceoff (asstab 1Bh, puck assignment at a stoppage, 'this is where the action
 ;   starts'): end of period (clockcont_0), penalties (Stop4Pen), computer line choice (CompLine, setpersonel),
 ;   ReturnGoalies, restorepl, then the faceoff set-up. PC adds the penalty shot (PenShotStart) and ForceStartLineup.
@@ -2670,6 +2675,10 @@ pop edx	; 52DAC
 pop ecx	; 52DAD
 pop ebx	; 52DAE
 ret	; 52DAF
+; C: src/c/039_50AFE_engine_assign_faceoff/asspsclear.c
+%ifdef CBUILD
+%include "c/039_50AFE_engine_assign_faceoff/asspsclear.inc"
+%else
 asspsclear:
 push dword 14h	; 52DB0
 call __CHK	; 52DB5
@@ -2827,6 +2836,7 @@ pop edx	; 52FAC
 pop ecx	; 52FAD
 pop ebx	; 52FAE
 ret	; 52FAF
+%endif ; C
 assrefpenshot:
 push dword 10h	; 52FB0
 call __CHK	; 52FB5
