@@ -2,49 +2,30 @@
 bits 32
 %include "hockey.inc"
 section s_3DC2C progbits alloc exec nowrite align=1
-extern __CHK, asc_C1964, asc_C1969, asc_C196F, asc_C1974, asc_C197A, asc_C1980, asc_C1987
-extern asc_C198C, asc_C1994, asc_C19C1, asc_C19DC, asc_C19E0, asc_C19EA, asc_C19F3, asc_C19FA
-extern asc_C19FF, asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, str_extDB, str_VFN, str_extBIN
+extern __CHK, str_Temp6, str_Tstat, str_Keys2, str_Pstat2, str_Gstat2, str_Embpal3, str_Pal21
+extern str_Donepal, str_TheJerseyNumber2d2, str_EnterJerseyNumberFor, str_Pal22, str_C2dS, str_HOMEPALS2, str_Embnhl2, str_Bkgd9
+extern str_Pntr2, str_Pointer10, str_Menubuff7, str_Lineditp, str_Shrt, str_extDB, str_VFN, str_extBIN
 extern str_space, str_dot, curleague, byte_D11BC, byte_D1238, byte_D12DE, byte_D1333, byte_D1334
-extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, leaguedbfmt2, leaguedbfmt, byte_DDD8C
-extern byte_DDD8D, byte_DDD8E, byte_ED7F7, byte_ED858, byte_ED85A, byte_ED86D, byte_ED8B3, byte_ED8B4
-extern statscategory, statsredrawcb, dword_C8B7C, dword_C8B80, HomeTeam, dword_D2C6B, dword_D8C84, pointerspr
-extern dword_DC738, statspalshape, statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, dword_DD79C
-extern dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C, dword_DE260
-extern dword_DE264, dword_EA0DC, jctime, memcpy_, leaguedbnames, off_C8BDD, off_CF2A3
+extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, leaguedbfmt2, leaguedbfmt, traderoster
+extern tradejersey, tradeslot, byte_ED7F7, byte_ED858, byte_ED85A, byte_ED86D, byte_ED8B3, byte_ED8B4
+extern statscategory, statsredrawcb, tradebtnx, tradebtny, HomeTeam, dword_D2C6B, dword_D8C84, pointerspr
+extern dword_DC738, statspalshape, statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, traderesult
+extern tradeclick, traderemap1, traderemap2, tradecursor, jerseymsg, tradeside
+extern dword_DE264, dword_EA0DC, jctime, memcpy_, leaguedbnames, unequaltrademsg, off_CF2A3
 extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
 extern FileOpenRW, FileClose, ReadKeyRec, WriteKeyRec, ReadTeamRec, LoadGameTeams, RunMenu, InitMenuRemap
 extern TeamRosterScreen, TextInputDialog, MessageBox, WriteTeamRec, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
 extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A099, ClearPlayerFromLines
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
 extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, MouseSetPos
-extern sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, SetDrawBitmap, unk_C1A15
-extern str_backslash2, str_S4, unk_C88E2, unk_CF3CF, unk_D12C8, awlinetab, hmlinetab, unk_DDFF4
+extern sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, SetDrawBitmap, str_S12
+extern str_backslash2, str_S4, unk_C88E2, unk_CF3CF, unk_D12C8, awlinetab, hmlinetab
 extern VisTeam
-global loc_3DC59, loc_3DCB5, loc_3DCE7, loc_3DCF5, loc_3DD15, loc_3DD5C, loc_3DD60, loc_3DD6D
-global loc_3DD75, loc_3DD9B, loc_3DDE2, loc_3DDE6, loc_3DDF3, loc_3DF06, loc_3DF08, loc_3E07E
-global loc_3E0BA, loc_3E0CA, loc_3E0D2, loc_3E0DD, loc_3E10B, loc_3E112, loc_3E122, loc_3E377
-global loc_3E383, loc_3E40F, loc_3E42B, loc_3E45D, loc_3E46C, loc_3E4FA, loc_3E5D6, loc_3E5EC
-global loc_3E608, loc_3E628, loc_3E64E, loc_3E64F, loc_3E65C, loc_3E7A6, loc_3E867, loc_3E869
-global loc_3E891, loc_3E8AB, loc_3E8E0, loc_3E8E2, loc_3E90A, loc_3E924, loc_3E93A, loc_3EA0E
-global loc_3EA10, loc_3EB28, loc_3EBC1, loc_3EBC3, loc_3EBF2, loc_3EBF6, loc_3EC68, loc_3ECEA
-global loc_3ED21, loc_3ED40, loc_3ED45, loc_3ED4D, loc_3ED9F, loc_3EDA4, loc_3EDC2, loc_3EDD4
-global loc_3EDE5, loc_3EDEA, loc_3EF16, loc_3EF20, loc_3EF5E, loc_3EF7A, loc_3EF80, loc_3EFC2
-global loc_3F0F2, loc_3F0F5, loc_3F102, loc_3F105, loc_3F138, loc_3F13A, loc_3F153, loc_3F15C
-global loc_3F179, loc_3F185, loc_3F188, loc_3F195, loc_3F198, loc_3F1B1, loc_3F1B4, loc_3F1C1
-global loc_3F1C4, loc_3F246, loc_3F2F8, loc_3F358, loc_3F365, loc_3F368, loc_3F380, loc_3F3BF
-global loc_3F3C2, loc_3F464, loc_3F48A, loc_3F492, loc_3F49F, loc_3F4A2, loc_3F4E9, loc_3F505
-global loc_3F50F, loc_3F521, loc_3F52E, loc_3F531, loc_3F54B, loc_3F59D, loc_3F5A0, loc_3F5AD
-global loc_3F62F, loc_3F631, loc_3F65A, loc_3F662, loc_3F75E, loc_3F766, loc_3F773, loc_3F776
-global loc_3F7C2, loc_3F7CA, loc_3F7D7, loc_3F7DA, loc_3F813, loc_3F84D, loc_3F850, loc_3F8A8
-global loc_3F906, loc_3F965, loc_3F974, loc_3FA32, loc_3FA6F, loc_3FA9A, loc_3FB20, loc_3FB55
-global loc_3FB7B, loc_3FBAA, loc_3FBBD, loc_3FC6E, loc_3FCF2, loc_3FD0D, loc_3FD36, loc_3FD4F
-global loc_3FD52, loc_3FD5F, loc_3FD62, loc_3FDE5, loc_3FE92, loc_3FEB8, loc_3FEE2, loc_3FEE7
-global loc_3FF0C, loc_3FF19, loc_3FF21, loc_3FF28, loc_3FF4B, loc_40000, loc_40002, loc_40048
-global loc_4004A, loc_400D5, loc_40146, sub_3DC2C, sub_3DE05, sub_3E055, sub_3E390, sub_3E7B3
-global sub_3E835, sub_3E9CF, sub_3ECAE, sub_3EDAA, sub_3EF27, sub_3EF3C, sub_3EF89, sub_3FEF0
-global sub_3FF52
-sub_3DC2C:
+global TradeHitTest_ret
+global BuildTradeRoster, TradeShowStats, FixJerseyConflict, ExecuteTrade, DrawTradeRow
+global LoadTradeTeamPals, DrawTradeScreen, TradeHitTest, TradeDone, TradeCancel, FindTradeSlot, TradeScreenLoop, TradeRosterCmp
+global TradeScreen
+BuildTradeRoster:
 push dword 74h	; 3DC2C
 call __CHK	; 3DC31
 push esi	; 3DC36
@@ -60,7 +41,7 @@ mov dword [byte esp+058h], edx	; 3DC4B
 mov dword [byte esp+054h], edx	; 3DC4F
 xor ecx, ecx	; 3DC53
 mov dword [byte esp+05Ch], ecx	; 3DC55
-loc_3DC59:
+.1:
 mov eax, dword [byte esp+05Ch]	; 3DC59
 mov ecx, eax	; 3DC5D
 shl ecx, 2	; 3DC5F
@@ -72,7 +53,7 @@ mov byte [byte esi+ecx*2+02h], dl	; 3DC6D
 inc eax	; 3DC71
 mov dword [byte esp+05Ch], eax	; 3DC72
 cmp eax, byte 1Ch	; 3DC76
-jl short loc_3DC59	; 3DC79
+jl short BuildTradeRoster.1	; 3DC79
 mov ebx, dword [leaguedbnames+10h]	; 3DC7B
 mov ecx, str_extDB	; 3DC81
 mov edx, ebp	; 3DC86
@@ -83,17 +64,17 @@ lea eax, [byte esp+034h]	; 3DC95
 call FileOpenRead	; 3DC99
 mov ebx, eax	; 3DC9E
 test eax, eax	; 3DCA0
-jne short loc_3DCB5	; 3DCA2
+jne short .2	; 3DCA2
 mov ebx, dword [byte esp+060h]	; 3DCA4
 mov edx, edi	; 3DCA8
 mov eax, dword [byte esp+058h]	; 3DCAA
 call ReadTeamRec	; 3DCAE
 mov ebx, eax	; 3DCB3
-loc_3DCB5:
+.2:
 lea eax, [byte esp+058h]	; 3DCB5
 call FileClose	; 3DCB9
 test ebx, ebx	; 3DCBE
-jne short loc_3DCE7	; 3DCC0
+jne short .3	; 3DCC0
 mov ebx, dword [leaguedbnames]	; 3DCC2
 mov ecx, str_extDB	; 3DCC8
 mov edx, ebp	; 3DCCD
@@ -103,12 +84,12 @@ lea edx, [byte esp+054h]	; 3DCD8
 lea eax, [byte esp+034h]	; 3DCDC
 call FileOpenRead	; 3DCE0
 mov ebx, eax	; 3DCE5
-loc_3DCE7:
+.3:
 test ebx, ebx	; 3DCE7
-jne near loc_3DDF3	; 3DCE9
+jne near .13	; 3DCE9
 mov dword [byte esp+05Ch], ebx	; 3DCEF
-jmp short loc_3DD60	; 3DCF3
-loc_3DCF5:
+jmp short .7	; 3DCF3
+.4:
 mov eax, ebp	; 3DCF5
 mov eax, dword [byte edi+eax*4+04Ch]	; 3DCF7
 mov ecx, ebp	; 3DCFB
@@ -119,17 +100,17 @@ sub ecx, ebp	; 3DD05
 add ecx, ecx	; 3DD07
 add ecx, esi	; 3DD09
 cmp eax, byte 0FFFFFFFFh	; 3DD0B
-jne short loc_3DD15	; 3DD0E
+jne short .5	; 3DD0E
 mov byte [ecx], 0	; 3DD10
-jmp short loc_3DD5C	; 3DD13
-loc_3DD15:
+jmp short .6	; 3DD13
+.5:
 mov ebx, eax	; 3DD15
 mov edx, esp	; 3DD17
 mov eax, dword [byte esp+054h]	; 3DD19
 call ReadKeyRec	; 3DD1D
 mov ebx, eax	; 3DD22
 test eax, eax	; 3DD24
-jne short loc_3DD5C	; 3DD26
+jne short .6	; 3DD26
 mov al, byte [byte esp+02h]	; 3DD28
 mov byte [ecx], al	; 3DD2C
 mov al, byte [byte esp+01h]	; 3DD2E
@@ -144,19 +125,19 @@ mov byte [byte ecx+06h], 0	; 3DD4C
 lea eax, [byte ecx+03h]	; 3DD50
 lea edx, [byte esp+013h]	; 3DD53
 call strcat_	; 3DD57
-loc_3DD5C:
+.6:
 inc dword [byte esp+05Ch]	; 3DD5C
-loc_3DD60:
+.7:
 mov ebp, dword [byte esp+05Ch]	; 3DD60
 cmp ebp, byte 19h	; 3DD64
-jge short loc_3DD6D	; 3DD67
+jge short .8	; 3DD67
 test ebx, ebx	; 3DD69
-je short loc_3DCF5	; 3DD6B
-loc_3DD6D:
+je short BuildTradeRoster.4	; 3DD6B
+.8:
 xor eax, eax	; 3DD6D
 mov dword [byte esp+05Ch], eax	; 3DD6F
-jmp short loc_3DDE6	; 3DD73
-loc_3DD75:
+jmp short .12	; 3DD73
+.9:
 mov eax, ecx	; 3DD75
 mov eax, dword [dword edi+eax*4+0B0h]	; 3DD77
 lea edx, [byte ecx+019h]	; 3DD7E
@@ -168,17 +149,17 @@ sub ecx, edx	; 3DD8B
 add ecx, ecx	; 3DD8D
 add ecx, esi	; 3DD8F
 cmp eax, byte 0FFFFFFFFh	; 3DD91
-jne short loc_3DD9B	; 3DD94
+jne short .10	; 3DD94
 mov byte [ecx], 0	; 3DD96
-jmp short loc_3DDE2	; 3DD99
-loc_3DD9B:
+jmp short .11	; 3DD99
+.10:
 mov ebx, eax	; 3DD9B
 mov edx, esp	; 3DD9D
 mov eax, dword [byte esp+054h]	; 3DD9F
 call ReadKeyRec	; 3DDA3
 mov ebx, eax	; 3DDA8
 test eax, eax	; 3DDAA
-jne short loc_3DDE2	; 3DDAC
+jne short .11	; 3DDAC
 mov al, byte [byte esp+02h]	; 3DDAE
 mov byte [ecx], al	; 3DDB2
 mov al, byte [byte esp+01h]	; 3DDB4
@@ -193,15 +174,15 @@ mov byte [byte ecx+06h], 0	; 3DDD2
 lea eax, [byte ecx+03h]	; 3DDD6
 lea edx, [byte esp+013h]	; 3DDD9
 call strcat_	; 3DDDD
-loc_3DDE2:
+.11:
 inc dword [byte esp+05Ch]	; 3DDE2
-loc_3DDE6:
+.12:
 mov ecx, dword [byte esp+05Ch]	; 3DDE6
 cmp ecx, byte 3	; 3DDEA
-jge short loc_3DDF3	; 3DDED
+jge short .13	; 3DDED
 test ebx, ebx	; 3DDEF
-je short loc_3DD75	; 3DDF1
-loc_3DDF3:
+je short BuildTradeRoster.9	; 3DDF1
+.13:
 lea eax, [byte esp+054h]	; 3DDF3
 call FileClose	; 3DDF7
 mov eax, ebx	; 3DDFC
@@ -210,7 +191,7 @@ pop ebp	; 3DE01
 pop edi	; 3DE02
 pop esi	; 3DE03
 ret	; 3DE04
-sub_3DE05:
+TradeShowStats:
 push dword 38h	; 3DE05
 call __CHK	; 3DE0A
 push esi	; 3DE0F
@@ -224,7 +205,7 @@ mov dword [byte esp+014h], ecx	; 3DE1F
 call sub_B4BA8	; 3DE23
 push byte 20h	; 3DE28
 push dword 300h	; 3DE2A
-push asc_C1964	; 3DE2F
+push str_Temp6	; 3DE2F
 call sub_8CCA8	; 3DE34
 mov edi, eax	; 3DE39
 add esp, byte 0Ch	; 3DE3B
@@ -248,37 +229,37 @@ mov al, byte [byte esp+018h]	; 3DE81
 mov dword [statscategory], eax	; 3DE85
 push byte 20h	; 3DE8A
 push dword 2A4h	; 3DE8C
-push asc_C1969	; 3DE91
+push str_Tstat	; 3DE91
 call sub_8CCA8	; 3DE96
 add esp, byte 0Ch	; 3DE9B
 mov dword [statsteambuf], eax	; 3DE9E
 push byte 20h	; 3DEA3
 push dword 5B0h	; 3DEA5
-push asc_C196F	; 3DEAA
+push str_Keys2	; 3DEAA
 call sub_8CCA8	; 3DEAF
 add esp, byte 0Ch	; 3DEB4
 mov dword [statsplayerbuf], eax	; 3DEB7
 push byte 20h	; 3DEBC
 push dword 497h	; 3DEBE
-push asc_C1974	; 3DEC3
+push str_Pstat2	; 3DEC3
 call sub_8CCA8	; 3DEC8
 add esp, byte 0Ch	; 3DECD
 mov dword [statsskaterbuf], eax	; 3DED0
 push byte 20h	; 3DED5
 push dword 10Eh	; 3DED7
-push asc_C197A	; 3DEDC
+push str_Gstat2	; 3DEDC
 call sub_8CCA8	; 3DEE1
 add esp, byte 0Ch	; 3DEE6
 mov dword [statsgoaliebuf], eax	; 3DEE9
 xor ecx, ecx	; 3DEEE
-mov ebx, asc_C1980	; 3DEF0
+mov ebx, str_Embpal3	; 3DEF0
 cmp byte [byte_ED85A], 1	; 3DEF5
-jne short loc_3DF06	; 3DEFC
+jne short .1	; 3DEFC
 mov edx, dword [dword_D2C6B]	; 3DEFE
-jmp short loc_3DF08	; 3DF04
-loc_3DF06:
+jmp short .2	; 3DF04
+.1:
 xor edx, edx	; 3DF06
-loc_3DF08:
+.2:
 mov eax, esp	; 3DF08
 call MakePath	; 3DF0A
 push byte 0	; 3DF0F
@@ -287,7 +268,7 @@ push eax	; 3DF15
 call sub_8E83C	; 3DF16
 mov edi, eax	; 3DF1B
 add esp, byte 8	; 3DF1D
-push asc_C1987	; 3DF20
+push str_Pal21	; 3DF20
 push eax	; 3DF25
 call sub_B30B4	; 3DF26
 add esp, byte 8	; 3DF2B
@@ -364,13 +345,13 @@ mov ecx, dword [byte esp+03Ch]	; 3E039
 mov ebx, dword [byte esp+040h]	; 3E03D
 mov edx, dword [byte esp+038h]	; 3E041
 mov eax, ebp	; 3E045
-call sub_3E9CF	; 3E047
+call DrawTradeScreen	; 3E047
 add esp, byte 1Ch	; 3E04C
 pop ebp	; 3E04F
 pop edi	; 3E050
 pop esi	; 3E051
 ret 14h	; 3E052
-sub_3E055:
+FixJerseyConflict:
 push dword 670h	; 3E055
 call __CHK	; 3E05A
 push ecx	; 3E05F
@@ -383,8 +364,8 @@ mov edi, edx	; 3E06A
 mov dword [dword esp+0640h], ebx	; 3E06C
 xor ecx, ecx	; 3E073
 mov dword [dword esp+0634h], ecx	; 3E075
-jmp short loc_3E0BA	; 3E07C
-loc_3E07E:
+jmp short .2	; 3E07C
+.1:
 mov eax, ebx	; 3E07E
 shl eax, 2	; 3E080
 add eax, dword [dword esp+0640h]	; 3E083
@@ -402,22 +383,22 @@ mov eax, dword [esp]	; 3E0A9
 call ReadKeyRec	; 3E0AC
 mov ecx, eax	; 3E0B1
 inc dword [dword esp+0634h]	; 3E0B3
-loc_3E0BA:
+.2:
 mov ebx, dword [dword esp+0634h]	; 3E0BA
 cmp ebx, byte 1Ch	; 3E0C1
-jge short loc_3E0CA	; 3E0C4
+jge short .3	; 3E0C4
 test ecx, ecx	; 3E0C6
-je short loc_3E07E	; 3E0C8
-loc_3E0CA:
+je short FixJerseyConflict.1	; 3E0C8
+.3:
 test ecx, ecx	; 3E0CA
-jne near loc_3E383	; 3E0CC
-loc_3E0D2:
+jne near .10	; 3E0CC
+.4:
 xor esi, esi	; 3E0D2
 mov dword [dword esp+0634h], esi	; 3E0D4
-jmp short loc_3E112	; 3E0DB
-loc_3E0DD:
+jmp short .7	; 3E0DB
+.5:
 cmp edi, eax	; 3E0DD
-je short loc_3E10B	; 3E0DF
+je short .6	; 3E0DF
 mov ebx, edi	; 3E0E1
 shl ebx, 2	; 3E0E3
 sub ebx, edi	; 3E0E6
@@ -431,22 +412,22 @@ shl eax, 2	; 3E0F7
 add eax, edx	; 3E0FA
 mov dl, byte [byte esp+ebx+05h]	; 3E0FC
 cmp dl, byte [byte esp+eax*4+05h]	; 3E100
-jne short loc_3E10B	; 3E104
+jne short .6	; 3E104
 mov esi, 0FFFFFFFFh	; 3E106
-loc_3E10B:
+.6:
 inc dword [dword esp+0634h]	; 3E10B
-loc_3E112:
+.7:
 mov eax, dword [dword esp+0634h]	; 3E112
 cmp eax, byte 1Ch	; 3E119
-jge short loc_3E122	; 3E11C
+jge short .8	; 3E11C
 test esi, esi	; 3E11E
-je short loc_3E0DD	; 3E120
-loc_3E122:
+je short FixJerseyConflict.5	; 3E120
+.8:
 test esi, esi	; 3E122
-je near loc_3E377	; 3E124
+je near .9	; 3E124
 push byte 20h	; 3E12A
 push byte 0Ch	; 3E12C
-push asc_C198C	; 3E12E
+push str_Donepal	; 3E12E
 call sub_8CCA8	; 3E133
 mov dword [dword esp+0644h], eax	; 3E138
 add esp, byte 0Ch	; 3E13F
@@ -520,13 +501,13 @@ push eax	; 3E26A
 xor eax, eax	; 3E26B
 mov al, byte [byte esp+ebp+09h]	; 3E26D
 push eax	; 3E271
-push asc_C1994	; 3E272
+push str_TheJerseyNumber2d2	; 3E272
 lea eax, [dword esp+05C0h]	; 3E277
 push eax	; 3E27E
 call sprintf_	; 3E27F
 add esp, byte 10h	; 3E284
 lea eax, [dword esp+05B4h]	; 3E287
-mov dword [dword_DE25C], eax	; 3E28E
+mov dword [jerseymsg], eax	; 3E28E
 lea eax, [dword esp+062Ch]	; 3E293
 push eax	; 3E29A
 lea eax, [dword esp+0634h]	; 3E29B
@@ -543,7 +524,7 @@ push eax	; 3E2C4
 push byte 0	; 3E2C5
 push byte 0	; 3E2C7
 mov ecx, 1	; 3E2C9
-mov ebx, dword_DE25C	; 3E2CE
+mov ebx, jerseymsg	; 3E2CE
 mov edx, 0FFFFFFFFh	; 3E2D3
 mov eax, edx	; 3E2D8
 call MessageBox	; 3E2DA
@@ -559,7 +540,7 @@ call jctime	; 3E2FE
 add esp, byte 4	; 3E303
 lea eax, [dword esp+0608h]	; 3E306
 push eax	; 3E30D
-push asc_C19C1	; 3E30E
+push str_EnterJerseyNumberFor	; 3E30E
 lea eax, [dword esp+05BCh]	; 3E313
 push eax	; 3E31A
 call sprintf_	; 3E31B
@@ -585,12 +566,12 @@ mov edx, dword [dword esp+063Ch]	; 3E366
 mov eax, dword [esp]	; 3E36D
 call WriteKeyRec	; 3E370
 mov ecx, eax	; 3E375
-loc_3E377:
+.9:
 test esi, esi	; 3E377
-je short loc_3E383	; 3E379
+je short .10	; 3E379
 test ecx, ecx	; 3E37B
-je near loc_3E0D2	; 3E37D
-loc_3E383:
+je near FixJerseyConflict.4	; 3E37D
+.10:
 mov eax, ecx	; 3E383
 add esp, 648h	; 3E385
 pop ebp	; 3E38B
@@ -598,7 +579,7 @@ pop edi	; 3E38C
 pop esi	; 3E38D
 pop ecx	; 3E38E
 ret	; 3E38F
-sub_3E390:
+ExecuteTrade:
 push dword 68Ch	; 3E390
 call __CHK	; 3E395
 push ecx	; 3E39A
@@ -624,23 +605,23 @@ lea eax, [dword esp+0638h]	; 3E3EB
 call FileOpenRW	; 3E3F2
 mov esi, eax	; 3E3F7
 test eax, eax	; 3E3F9
-jne short loc_3E40F	; 3E3FB
+jne short .1	; 3E3FB
 mov ebx, dword [edi]	; 3E3FD
 mov edx, esp	; 3E3FF
 mov eax, dword [dword esp+065Ch]	; 3E401
 call ReadTeamRec	; 3E408
 mov esi, eax	; 3E40D
-loc_3E40F:
+.1:
 test esi, esi	; 3E40F
-jne short loc_3E42B	; 3E411
+jne short .2	; 3E411
 mov ebx, dword [byte edi+04h]	; 3E413
 lea edx, [dword esp+02E8h]	; 3E416
 mov eax, dword [dword esp+065Ch]	; 3E41D
 call ReadTeamRec	; 3E424
 mov esi, eax	; 3E429
-loc_3E42B:
+.2:
 test esi, esi	; 3E42B
-jne short loc_3E45D	; 3E42D
+jne short .3	; 3E42D
 mov ebx, dword [leaguedbnames]	; 3E42F
 mov ecx, str_extDB	; 3E435
 mov edx, ebp	; 3E43A
@@ -650,19 +631,19 @@ lea edx, [dword esp+0658h]	; 3E448
 lea eax, [dword esp+0638h]	; 3E44F
 call FileOpenRW	; 3E456
 mov esi, eax	; 3E45B
-loc_3E45D:
+.3:
 test esi, esi	; 3E45D
-jne near loc_3E65C	; 3E45F
+jne near .12	; 3E45F
 xor ecx, ecx	; 3E465
-jmp near loc_3E64F	; 3E467
-loc_3E46C:
+jmp near .11	; 3E467
+.4:
 mov eax, dword [dword esp+0664h]	; 3E46C
 add eax, ecx	; 3E473
 mov dl, byte [eax]	; 3E475
 cmp dl, 0FFh	; 3E477
-je near loc_3E64E	; 3E47A
+je near .10	; 3E47A
 cmp byte [byte eax+02h], 0FFh	; 3E480
-je near loc_3E64E	; 3E484
+je near .10	; 3E484
 mov dword [dword esp+0668h], 0FFFFFFFFh	; 3E48A
 cmp dl, 19h	; 3E495
 movzx ebp, dl	; 3E498
@@ -673,7 +654,7 @@ mov eax, dword [dword esp+0658h]	; 3E4A8
 call ReadKeyRec	; 3E4AF
 mov esi, eax	; 3E4B4
 test eax, eax	; 3E4B6
-jne short loc_3E4FA	; 3E4B8
+jne short .5	; 3E4B8
 mov eax, dword [dword esp+0664h]	; 3E4BA
 add eax, ecx	; 3E4C1
 mov bh, byte [byte eax+02h]	; 3E4C3
@@ -687,9 +668,9 @@ lea edx, [dword esp+05D0h]	; 3E4E5
 mov eax, dword [dword esp+0658h]	; 3E4EC
 call ReadKeyRec	; 3E4F3
 mov esi, eax	; 3E4F8
-loc_3E4FA:
+.5:
 test esi, esi	; 3E4FA
-jne near loc_3E64E	; 3E4FC
+jne near .10	; 3E4FC
 mov al, byte [byte edi+04h]	; 3E502
 mov byte [dword esp+0604h], al	; 3E505
 mov al, byte [edi]	; 3E50C
@@ -732,64 +713,64 @@ mov eax, dword [dword esp+0658h]	; 3E5A8
 call WriteKeyRec	; 3E5AF
 mov esi, eax	; 3E5B4
 test eax, eax	; 3E5B6
-jne short loc_3E5D6	; 3E5B8
+jne short .6	; 3E5B8
 mov ebx, dword [dword esp+0660h]	; 3E5BA
 lea edx, [dword esp+05D0h]	; 3E5C1
 mov eax, dword [dword esp+0658h]	; 3E5C8
 call WriteKeyRec	; 3E5CF
 mov esi, eax	; 3E5D4
-loc_3E5D6:
+.6:
 test esi, esi	; 3E5D6
-jne short loc_3E5EC	; 3E5D8
+jne short .7	; 3E5D8
 mov ebx, dword [edi]	; 3E5DA
 mov edx, esp	; 3E5DC
 mov eax, dword [dword esp+065Ch]	; 3E5DE
 call WriteTeamRec	; 3E5E5
 mov esi, eax	; 3E5EA
-loc_3E5EC:
+.7:
 test esi, esi	; 3E5EC
-jne short loc_3E608	; 3E5EE
+jne short .8	; 3E5EE
 mov ebx, dword [byte edi+04h]	; 3E5F0
 lea edx, [dword esp+02E8h]	; 3E5F3
 mov eax, dword [dword esp+065Ch]	; 3E5FA
 call WriteTeamRec	; 3E601
 mov esi, eax	; 3E606
-loc_3E608:
+.8:
 test esi, esi	; 3E608
-jne short loc_3E628	; 3E60A
+jne short .9	; 3E60A
 mov eax, dword [dword esp+0664h]	; 3E60C
 xor edx, edx	; 3E613
 mov dl, byte [ecx+eax]	; 3E615
 mov ebx, esp	; 3E618
 mov eax, dword [dword esp+0658h]	; 3E61A
-call sub_3E055	; 3E621
+call FixJerseyConflict	; 3E621
 mov esi, eax	; 3E626
-loc_3E628:
+.9:
 test esi, esi	; 3E628
-jne short loc_3E64E	; 3E62A
+jne short .10	; 3E62A
 mov eax, dword [dword esp+0664h]	; 3E62C
 xor edx, edx	; 3E633
 mov dl, byte [byte ecx+eax+02h]	; 3E635
 lea ebx, [dword esp+02E8h]	; 3E639
 mov eax, dword [dword esp+0658h]	; 3E640
-call sub_3E055	; 3E647
+call FixJerseyConflict	; 3E647
 mov esi, eax	; 3E64C
-loc_3E64E:
+.10:
 inc ecx	; 3E64E
-loc_3E64F:
+.11:
 cmp ecx, byte 2	; 3E64F
-jge short loc_3E65C	; 3E652
+jge short .12	; 3E652
 test esi, esi	; 3E654
-je near loc_3E46C	; 3E656
-loc_3E65C:
+je near ExecuteTrade.4	; 3E656
+.12:
 lea eax, [dword esp+0658h]	; 3E65C
 call FileClose	; 3E663
 lea eax, [dword esp+065Ch]	; 3E668
 call FileClose	; 3E66F
 test esi, esi	; 3E674
-jne near loc_3E7A6	; 3E676
+jne near .13	; 3E676
 cmp dword [dword esp+0668h], byte 0	; 3E67C
-je near loc_3E7A6	; 3E684
+je near .13	; 3E684
 mov ax, word [edi]	; 3E68A
 mov word [HomeTeam], ax	; 3E68D
 mov ax, word [byte edi+04h]	; 3E693
@@ -819,7 +800,7 @@ xor eax, eax	; 3E708
 call sub_767D0	; 3E70A
 push byte 20h	; 3E70F
 push dword 300h	; 3E711
-push asc_C19DC	; 3E716
+push str_Pal22	; 3E716
 call sub_8CCA8	; 3E71B
 mov edi, eax	; 3E720
 add esp, byte 0Ch	; 3E722
@@ -842,7 +823,7 @@ mov eax, 1	; 3E75D
 call sub_767D0	; 3E762
 push byte 20h	; 3E767
 push dword 300h	; 3E769
-push asc_C19DC	; 3E76E
+push str_Pal22	; 3E76E
 call sub_8CCA8	; 3E773
 mov edi, eax	; 3E778
 add esp, byte 0Ch	; 3E77A
@@ -858,7 +839,7 @@ call sub_76429	; 3E798
 push edi	; 3E79D
 call jctime	; 3E79E
 add esp, byte 4	; 3E7A3
-loc_3E7A6:
+.13:
 mov eax, esi	; 3E7A6
 add esp, 66Ch	; 3E7A8
 pop ebp	; 3E7AE
@@ -866,7 +847,7 @@ pop edi	; 3E7AF
 pop esi	; 3E7B0
 pop ecx	; 3E7B1
 ret	; 3E7B2
-sub_3E7B3:
+DrawTradeRow:
 push dword 2Ch	; 3E7B3
 call __CHK	; 3E7B8
 push ebx	; 3E7BD
@@ -874,7 +855,7 @@ push ecx	; 3E7BE
 push edx	; 3E7BF
 push esi	; 3E7C0
 mov edx, eax	; 3E7C1
-mov ecx, dword [nosplit eax*4+dword_DDD84]	; 3E7C3
+mov ecx, dword [nosplit eax*4+tradecursor]	; 3E7C3
 mov eax, ecx	; 3E7CA
 shl eax, 2	; 3E7CC
 sub eax, ecx	; 3E7CF
@@ -882,22 +863,22 @@ shl eax, 2	; 3E7D1
 sub eax, ecx	; 3E7D4
 add eax, eax	; 3E7D6
 imul ecx, edx, dword 268h	; 3E7D8
-mov esi, byte_DDD8C	; 3E7DE
+mov esi, traderoster	; 3E7DE
 add esi, ecx	; 3E7E3
 add esi, eax	; 3E7E5
 add esi, byte 3	; 3E7E7
 push esi	; 3E7EA
 add eax, ecx	; 3E7EB
 xor ecx, ecx	; 3E7ED
-mov cl, byte [dword eax+byte_DDD8D]	; 3E7EF
+mov cl, byte [dword eax+tradejersey]	; 3E7EF
 push ecx	; 3E7F5
-mov al, byte [dword eax+byte_DDD8C]	; 3E7F6
+mov al, byte [dword eax+traderoster]	; 3E7F6
 and eax, 0FFh	; 3E7FC
 push eax	; 3E801
-push asc_C19E0	; 3E802
+push str_C2dS	; 3E802
 xor eax, eax	; 3E807
 mov al, byte [byte_D42C3]	; 3E809
-imul eax, dword [nosplit edx*4+dword_DDD84]	; 3E80E
+imul eax, dword [nosplit edx*4+tradecursor]	; 3E80E
 add eax, byte 1Dh	; 3E816
 push eax	; 3E819
 mov eax, edx	; 3E81A
@@ -913,7 +894,7 @@ pop edx	; 3E831
 pop ecx	; 3E832
 pop ebx	; 3E833
 ret	; 3E834
-sub_3E835:
+LoadTradeTeamPals:
 push dword 2Ch	; 3E835
 call __CHK	; 3E83A
 push ecx	; 3E83F
@@ -925,14 +906,14 @@ mov edi, eax	; 3E846
 mov ebp, edx	; 3E848
 mov esi, ebx	; 3E84A
 mov ecx, str_extBIN	; 3E84C
-mov ebx, asc_C19EA	; 3E851
+mov ebx, str_HOMEPALS2	; 3E851
 cmp byte [byte_ED86D], 1	; 3E856
-jne short loc_3E867	; 3E85D
+jne short .1	; 3E85D
 mov edx, dword [dword_D2C6B]	; 3E85F
-jmp short loc_3E869	; 3E865
-loc_3E867:
+jmp short .2	; 3E865
+.1:
 xor edx, edx	; 3E867
-loc_3E869:
+.2:
 mov eax, esp	; 3E869
 call MakePath	; 3E86B
 push byte 0	; 3E870
@@ -948,32 +929,32 @@ sub eax, edi	; 3E888
 shl eax, 6	; 3E88A
 add edx, eax	; 3E88D
 xor eax, eax	; 3E88F
-loc_3E891:
+.3:
 mov bl, byte [edx+eax]	; 3E891
 mov byte [dword esi+eax+0180h], bl	; 3E894
 inc eax	; 3E89B
 cmp eax, 0C0h	; 3E89C
-jl short loc_3E891	; 3E8A1
+jl short LoadTradeTeamPals.3	; 3E8A1
 xor eax, eax	; 3E8A3
 add edx, 0C0h	; 3E8A5
-loc_3E8AB:
+.4:
 mov bl, byte [edx+eax]	; 3E8AB
 mov byte [dword eax+byte_DC9D8], bl	; 3E8AE
 inc eax	; 3E8B4
 cmp eax, 100h	; 3E8B5
-jl short loc_3E8AB	; 3E8BA
+jl short LoadTradeTeamPals.4	; 3E8BA
 push ecx	; 3E8BC
 call jctime	; 3E8BD
 add esp, byte 4	; 3E8C2
 mov ecx, str_extBIN	; 3E8C5
-mov ebx, asc_C19EA	; 3E8CA
+mov ebx, str_HOMEPALS2	; 3E8CA
 cmp byte [byte_ED7F7], 1	; 3E8CF
-jne short loc_3E8E0	; 3E8D6
+jne short .5	; 3E8D6
 mov edx, dword [dword_D2C6B]	; 3E8D8
-jmp short loc_3E8E2	; 3E8DE
-loc_3E8E0:
+jmp short .6	; 3E8DE
+.5:
 xor edx, edx	; 3E8E0
-loc_3E8E2:
+.6:
 mov eax, esp	; 3E8E2
 call MakePath	; 3E8E4
 push byte 0	; 3E8E9
@@ -989,28 +970,28 @@ sub eax, ebp	; 3E901
 shl eax, 6	; 3E903
 add edx, eax	; 3E906
 xor eax, eax	; 3E908
-loc_3E90A:
+.7:
 mov bl, byte [edx+eax]	; 3E90A
 mov byte [dword esi+eax+0240h], bl	; 3E90D
 inc eax	; 3E914
 cmp eax, 0C0h	; 3E915
-jl short loc_3E90A	; 3E91A
+jl short LoadTradeTeamPals.7	; 3E91A
 xor eax, eax	; 3E91C
 add edx, 0C0h	; 3E91E
-loc_3E924:
+.8:
 mov bl, byte [edx+eax]	; 3E924
 mov byte [dword eax+byte_DC8D8], bl	; 3E927
 inc eax	; 3E92D
 cmp eax, 90h	; 3E92E
-jl short loc_3E924	; 3E933
+jl short LoadTradeTeamPals.8	; 3E933
 mov eax, 90h	; 3E935
-loc_3E93A:
+.9:
 mov bl, byte [edx+eax]	; 3E93A
 add bl, 40h	; 3E93D
 mov byte [dword eax+byte_DC8D8], bl	; 3E940
 inc eax	; 3E946
 cmp eax, 100h	; 3E947
-jl short loc_3E93A	; 3E94C
+jl short LoadTradeTeamPals.9	; 3E94C
 push ecx	; 3E94E
 call jctime	; 3E94F
 add esp, byte 4	; 3E954
@@ -1036,7 +1017,7 @@ pop edi	; 3E9CB
 pop esi	; 3E9CC
 pop ecx	; 3E9CD
 ret	; 3E9CE
-sub_3E9CF:
+DrawTradeScreen:
 push dword 60h	; 3E9CF
 call __CHK	; 3E9D4
 push esi	; 3E9D9
@@ -1051,14 +1032,14 @@ push edx	; 3E9ED
 call SetDrawBitmap	; 3E9EE
 add esp, byte 4	; 3E9F3
 xor ecx, ecx	; 3E9F6
-mov ebx, asc_C19F3	; 3E9F8
+mov ebx, str_Embnhl2	; 3E9F8
 cmp byte [byte_ED858], 1	; 3E9FD
-jne short loc_3EA0E	; 3EA04
+jne short .1	; 3EA04
 mov edx, dword [dword_D2C6B]	; 3EA06
-jmp short loc_3EA10	; 3EA0C
-loc_3EA0E:
+jmp short .2	; 3EA0C
+.1:
 xor edx, edx	; 3EA0E
-loc_3EA10:
+.2:
 lea eax, [byte esp+020h]	; 3EA10
 call MakePath	; 3EA14
 push byte 0	; 3EA19
@@ -1069,7 +1050,7 @@ mov dword [byte esp+038h], eax	; 3EA25
 add esp, byte 8	; 3EA29
 push byte 0	; 3EA2C
 push byte 0	; 3EA2E
-push asc_C19FA	; 3EA30
+push str_Bkgd9	; 3EA30
 push eax	; 3EA35
 call sub_B30B4	; 3EA36
 add esp, byte 8	; 3EA3B
@@ -1100,13 +1081,13 @@ xor eax, eax	; 3EA91
 call sub_78BE7	; 3EA93
 push byte 20h	; 3EA98
 push dword 300h	; 3EA9A
-push asc_C19DC	; 3EA9F
+push str_Pal22	; 3EA9F
 call sub_8CCA8	; 3EAA4
 mov esi, eax	; 3EAA9
 add esp, byte 0Ch	; 3EAAB
 mov dword [byte esp+034h], eax	; 3EAAE
 xor ecx, ecx	; 3EAB2
-mov ebx, asc_C1980	; 3EAB4
+mov ebx, str_Embpal3	; 3EAB4
 xor edx, edx	; 3EAB9
 mov eax, esp	; 3EABB
 call MakePath	; 3EABD
@@ -1116,7 +1097,7 @@ push eax	; 3EAC8
 call sub_8E83C	; 3EAC9
 add esp, byte 8	; 3EACE
 mov dword [statsbgshapes], eax	; 3EAD1
-push asc_C1987	; 3EAD6
+push str_Pal21	; 3EAD6
 push eax	; 3EADB
 call sub_B30B4	; 3EADC
 add esp, byte 8	; 3EAE1
@@ -1132,14 +1113,14 @@ add esp, byte 4	; 3EB03
 mov edx, dword [byte edi+04h]	; 3EB06
 mov eax, dword [edi]	; 3EB09
 mov ebx, esi	; 3EB0B
-call sub_3E835	; 3EB0D
-mov dword [dword_DDD7C], byte_DC9D8	; 3EB12
-mov dword [dword_DDD80], byte_DC8D8	; 3EB1C
+call LoadTradeTeamPals	; 3EB0D
+mov dword [traderemap1], byte_DC9D8	; 3EB12
+mov dword [traderemap2], byte_DC8D8	; 3EB1C
 xor esi, esi	; 3EB26
-loc_3EB28:
+.3:
 mov ecx, esi	; 3EB28
 sar ecx, 1	; 3EB2A
-mov edx, dword [nosplit ecx*4+dword_DDD7C]	; 3EB2C
+mov edx, dword [nosplit ecx*4+traderemap1]	; 3EB2C
 add edx, 90h	; 3EB33
 mov ebx, 30h	; 3EB39
 mov eax, unk_D12C8	; 3EB3E
@@ -1166,41 +1147,41 @@ call sub_7A099	; 3EB8A
 push byte_D1238	; 3EB8F
 call sub_B4DD4	; 3EB94
 add esp, byte 4	; 3EB99
-mov ecx, dword [nosplit esi*8+dword_C8B80]	; 3EB9C
+mov ecx, dword [nosplit esi*8+tradebtny]	; 3EB9C
 push ecx	; 3EBA3
-mov edx, dword [nosplit esi*8+dword_C8B7C]	; 3EBA4
+mov edx, dword [nosplit esi*8+tradebtnx]	; 3EBA4
 push edx	; 3EBAB
 push ebp	; 3EBAC
 call sub_931FC	; 3EBAD
 add esp, byte 0Ch	; 3EBB2
 inc esi	; 3EBB5
 cmp esi, byte 4	; 3EBB6
-jl near loc_3EB28	; 3EBB9
+jl near DrawTradeScreen.3	; 3EBB9
 xor edi, edi	; 3EBBF
-loc_3EBC1:
+.4:
 xor esi, esi	; 3EBC1
-loc_3EBC3:
+.5:
 imul ebx, edi, dword 268h	; 3EBC3
 mov eax, esi	; 3EBC9
 shl eax, 2	; 3EBCB
 sub eax, esi	; 3EBCE
 shl eax, 2	; 3EBD0
 sub eax, esi	; 3EBD3
-cmp byte [dword ebx+eax*2+byte_DDD8C], 0	; 3EBD5
-je near loc_3EC68	; 3EBDD
-cmp esi, dword [nosplit edi*4+dword_DDD84]	; 3EBE3
-jne short loc_3EBF2	; 3EBEA
+cmp byte [dword ebx+eax*2+traderoster], 0	; 3EBD5
+je near .8	; 3EBDD
+cmp esi, dword [nosplit edi*4+tradecursor]	; 3EBE3
+jne short .6	; 3EBEA
 push byte 41h	; 3EBEC
 push byte 42h	; 3EBEE
-jmp short loc_3EBF6	; 3EBF0
-loc_3EBF2:
+jmp short .7	; 3EBF0
+.6:
 push byte 41h	; 3EBF2
 push byte 40h	; 3EBF4
-loc_3EBF6:
+.7:
 call sub_8E9C0	; 3EBF6
 add esp, byte 8	; 3EBFB
 imul ebx, edi, dword 268h	; 3EBFE
-mov ecx, byte_DDD8C	; 3EC04
+mov ecx, traderoster	; 3EC04
 add ecx, ebx	; 3EC09
 mov eax, esi	; 3EC0B
 shl eax, 2	; 3EC0D
@@ -1211,12 +1192,12 @@ add eax, eax	; 3EC17
 lea edx, [byte ecx+eax+03h]	; 3EC19
 push edx	; 3EC1D
 xor edx, edx	; 3EC1E
-mov dl, byte [dword ebx+eax+byte_DDD8D]	; 3EC20
+mov dl, byte [dword ebx+eax+tradejersey]	; 3EC20
 push edx	; 3EC27
-mov al, byte [dword ebx+eax+byte_DDD8C]	; 3EC28
+mov al, byte [dword ebx+eax+traderoster]	; 3EC28
 and eax, 0FFh	; 3EC2F
 push eax	; 3EC34
-push asc_C19E0	; 3EC35
+push str_C2dS	; 3EC35
 xor eax, eax	; 3EC3A
 mov al, byte [byte_D42C3]	; 3EC3C
 imul eax, esi	; 3EC41
@@ -1232,11 +1213,11 @@ call sub_93170	; 3EC56
 add esp, byte 18h	; 3EC5B
 inc esi	; 3EC5E
 cmp esi, byte 1Ch	; 3EC5F
-jl near loc_3EBC3	; 3EC62
-loc_3EC68:
+jl near DrawTradeScreen.5	; 3EC62
+.8:
 inc edi	; 3EC68
 cmp edi, byte 2	; 3EC69
-jl near loc_3EBC1	; 3EC6C
+jl near DrawTradeScreen.4	; 3EC6C
 call sub_B4BA8	; 3EC72
 mov eax, dword [dword_DE264]	; 3EC77
 mov ecx, dword [byte eax+02Ch]	; 3EC7C
@@ -1256,7 +1237,7 @@ pop ebp	; 3ECA8
 pop edi	; 3ECA9
 pop esi	; 3ECAA
 ret 0Ch	; 3ECAB
-sub_3ECAE:
+TradeHitTest:
 push dword 14h	; 3ECAE
 call __CHK	; 3ECB3
 push esi	; 3ECB8
@@ -1271,33 +1252,33 @@ mov eax, dword [byte esp+014h]	; 3ECC7
 mov dword [eax], edx	; 3ECCB
 add esi, byte 4	; 3ECCD
 cmp esi, 0BEh	; 3ECD0
-jle near loc_3ED4D	; 3ECD6
+jle near .5	; 3ECD6
 cmp esi, 1C0h	; 3ECDC
-jge near loc_3ED4D	; 3ECE2
+jge near .5	; 3ECE2
 xor ebx, ebx	; 3ECE8
-loc_3ECEA:
+.1:
 mov eax, ebx	; 3ECEA
 shl eax, 3	; 3ECEC
-mov ebp, dword [dword eax+dword_C8B7C]	; 3ECEF
+mov ebp, dword [dword eax+tradebtnx]	; 3ECEF
 cmp esi, ebp	; 3ECF5
-jl short loc_3ED45	; 3ECF7
+jl short .4	; 3ECF7
 add ebp, byte 3Ah	; 3ECF9
 cmp esi, ebp	; 3ECFC
-jge short loc_3ED45	; 3ECFE
-mov ebp, dword [dword eax+dword_C8B80]	; 3ED00
+jge short .4	; 3ECFE
+mov ebp, dword [dword eax+tradebtny]	; 3ED00
 cmp edi, ebp	; 3ED06
-jl short loc_3ED45	; 3ED08
+jl short .4	; 3ED08
 lea eax, [byte ebp+028h]	; 3ED0A
 cmp edi, eax	; 3ED0D
-jge short loc_3ED45	; 3ED0F
+jge short .4	; 3ED0F
 mov eax, dword [ecx]	; 3ED11
 test eax, eax	; 3ED13
-jl short loc_3ED21	; 3ED15
+jl short .2	; 3ED15
 shl eax, 2	; 3ED17
 add eax, dword [esp]	; 3ED1A
 mov dword [eax], ebx	; 3ED1D
-jmp short loc_3ED40	; 3ED1F
-loc_3ED21:
+jmp short .3	; 3ED1F
+.2:
 mov eax, ebx	; 3ED21
 mov edx, ebx	; 3ED23
 sar edx, 1Fh	; 3ED25
@@ -1309,16 +1290,16 @@ add eax, dword [esp]	; 3ED31
 mov dword [eax], ebx	; 3ED34
 mov eax, dword [byte esp+014h]	; 3ED36
 mov dword [eax], 0FFFFFFFFh	; 3ED3A
-loc_3ED40:
+.3:
 mov edx, 1	; 3ED40
-loc_3ED45:
+.4:
 inc ebx	; 3ED45
 cmp ebx, byte 4	; 3ED46
-jl short loc_3ECEA	; 3ED49
-jmp short loc_3ED9F	; 3ED4B
-loc_3ED4D:
+jl short TradeHitTest.1	; 3ED49
+jmp short .6	; 3ED4B
+.5:
 cmp edi, byte 1Dh	; 3ED4D
-jl short loc_3ED9F	; 3ED50
+jl short .6	; 3ED50
 xor ebx, ebx	; 3ED52
 mov bl, byte [byte_D42C3]	; 3ED54
 mov eax, ebx	; 3ED5A
@@ -1327,7 +1308,7 @@ sub eax, ebx	; 3ED5F
 shl eax, 2	; 3ED61
 add eax, byte 1Dh	; 3ED64
 cmp edi, eax	; 3ED67
-jge short loc_3ED9F	; 3ED69
+jge short .6	; 3ED69
 cmp esi, 0BEh	; 3ED6B
 setge al	; 3ED71
 and eax, 0FFh	; 3ED74
@@ -1344,15 +1325,15 @@ add edx, dword [esp]	; 3ED92
 add eax, byte 64h	; 3ED95
 mov dword [edx], eax	; 3ED98
 mov edx, 1	; 3ED9A
-loc_3ED9F:
+.6:
 mov eax, edx	; 3ED9F
 add esp, byte 4	; 3EDA1
-loc_3EDA4:
+TradeHitTest_ret:
 pop ebp	; 3EDA4
 pop edi	; 3EDA5
 pop esi	; 3EDA6
 ret 4	; 3EDA7
-sub_3EDAA:
+TradeDone:
 push dword 2Ch	; 3EDAA
 call __CHK	; 3EDAF
 push esi	; 3EDB4
@@ -1360,34 +1341,34 @@ sub esp, byte 10h	; 3EDB5
 mov edx, dword [byte esp+028h]	; 3EDB8
 xor ebx, ebx	; 3EDBC
 mov dword [byte esp+08h], ebx	; 3EDBE
-loc_3EDC2:
+.1:
 mov eax, dword [byte esp+08h]	; 3EDC2
 add eax, edx	; 3EDC6
 mov cl, byte [eax]	; 3EDC8
 cmp cl, 0FFh	; 3EDCA
-jne short loc_3EDD4	; 3EDCD
+jne short .2	; 3EDCD
 cmp cl, byte [byte eax+02h]	; 3EDCF
-jne short loc_3EDE5	; 3EDD2
-loc_3EDD4:
+jne short .3	; 3EDD2
+.2:
 mov eax, dword [byte esp+08h]	; 3EDD4
 add eax, edx	; 3EDD8
 cmp byte [eax], 0FFh	; 3EDDA
-je short loc_3EDEA	; 3EDDD
+je short .4	; 3EDDD
 cmp byte [byte eax+02h], 0FFh	; 3EDDF
-jne short loc_3EDEA	; 3EDE3
-loc_3EDE5:
+jne short .4	; 3EDE3
+.3:
 mov ebx, 0FFFFFFFFh	; 3EDE5
-loc_3EDEA:
+.4:
 mov esi, dword [byte esp+08h]	; 3EDEA
 inc esi	; 3EDEE
 mov dword [byte esp+08h], esi	; 3EDEF
 cmp esi, byte 2	; 3EDF3
-jl short loc_3EDC2	; 3EDF6
+jl short TradeDone.1	; 3EDF6
 test ebx, ebx	; 3EDF8
-je near loc_3EF16	; 3EDFA
+je near .5	; 3EDFA
 push byte 20h	; 3EE00
 push byte 0Ch	; 3EE02
-push asc_C198C	; 3EE04
+push str_Donepal	; 3EE04
 call sub_8CCA8	; 3EE09
 mov esi, eax	; 3EE0E
 add esp, byte 0Ch	; 3EE10
@@ -1452,7 +1433,7 @@ push eax	; 3EECF
 push byte 0	; 3EED0
 push byte 0	; 3EED2
 mov ecx, 3	; 3EED4
-mov ebx, off_C8BDD	; 3EED9
+mov ebx, unequaltrademsg	; 3EED9
 mov edx, 0FFFFFFFFh	; 3EEDE
 mov eax, edx	; 3EEE3
 call MessageBox	; 3EEE5
@@ -1470,19 +1451,19 @@ mov edx, dword [byte esp+08h]	; 3EF07
 push edx	; 3EF0B
 call MouseSetPos	; 3EF0C
 add esp, byte 8	; 3EF11
-jmp short loc_3EF20	; 3EF14
-loc_3EF16:
-mov dword [dword_DD79C], 1	; 3EF16
-loc_3EF20:
+jmp short .x	; 3EF14
+.5:
+mov dword [traderesult], 1	; 3EF16
+.x:
 add esp, byte 10h	; 3EF20
 pop esi	; 3EF23
 ret 14h	; 3EF24
-sub_3EF27:
+TradeCancel:
 push dword 4	; 3EF27
 call __CHK	; 3EF2C
-mov dword [dword_DD79C], 0FFFFFFFFh	; 3EF31
+mov dword [traderesult], 0FFFFFFFFh	; 3EF31
 ret	; 3EF3B
-sub_3EF3C:
+FindTradeSlot:
 push dword 14h	; 3EF3C
 call __CHK	; 3EF41
 push ecx	; 3EF46
@@ -1494,29 +1475,29 @@ mov byte [esp], dl	; 3EF4E
 mov edi, 0FFFFFFFFh	; 3EF51
 xor edx, edx	; 3EF56
 imul ecx, esi, dword 268h	; 3EF58
-loc_3EF5E:
+.1:
 mov eax, edx	; 3EF5E
 shl eax, 2	; 3EF60
 sub eax, edx	; 3EF63
 shl eax, 2	; 3EF65
 sub eax, edx	; 3EF68
-mov al, byte [dword ecx+eax*2+byte_DDD8E]	; 3EF6A
+mov al, byte [dword ecx+eax*2+tradeslot]	; 3EF6A
 cmp al, byte [esp]	; 3EF71
-jne short loc_3EF7A	; 3EF74
+jne short .2	; 3EF74
 mov edi, edx	; 3EF76
-jmp short loc_3EF80	; 3EF78
-loc_3EF7A:
+jmp short .3	; 3EF78
+.2:
 inc edx	; 3EF7A
 cmp edx, byte 1Ch	; 3EF7B
-jl short loc_3EF5E	; 3EF7E
-loc_3EF80:
+jl short FindTradeSlot.1	; 3EF7E
+.3:
 mov eax, edi	; 3EF80
 add esp, byte 4	; 3EF82
 pop edi	; 3EF85
 pop esi	; 3EF86
 pop ecx	; 3EF87
 ret	; 3EF88
-sub_3EF89:
+TradeScreenLoop:
 push dword 140h	; 3EF89
 call __CHK	; 3EF8E
 push esi	; 3EF93
@@ -1535,7 +1516,7 @@ mov dword [byte ebp+05Ah], 40h	; 3EFAA
 mov dword [byte ebp+056h], 41h	; 3EFB1
 mov dword [byte ebp+052h], 42h	; 3EFB8
 mov dword [byte ebp+042h], edx	; 3EFBF
-loc_3EFC2:
+.1:
 mov edx, dword [byte ebp+042h]	; 3EFC2
 mov eax, edx	; 3EFC5
 shl eax, 2	; 3EFC7
@@ -1547,7 +1528,7 @@ mov eax, dword [byte ebp+042h]	; 3EFD9
 inc eax	; 3EFDC
 mov dword [byte ebp+042h], eax	; 3EFDD
 cmp eax, byte 4	; 3EFE0
-jl short loc_3EFC2	; 3EFE3
+jl short TradeScreenLoop.1	; 3EFE3
 mov ebx, dword [dword ebp-0A6h]	; 3EFE5
 push ebx	; 3EFEB
 lea eax, [dword ebp-09Ah]	; 3EFEC
@@ -1558,8 +1539,8 @@ mov ecx, dword [dword ebp+08Ah]	; 3EFFA
 mov ebx, dword [dword ebp+082h]	; 3F000
 mov edx, dword [dword ebp-09Eh]	; 3F006
 mov eax, dword [dword ebp-0A2h]	; 3F00C
-call sub_3E9CF	; 3F012
-push asc_C19FF	; 3F017
+call DrawTradeScreen	; 3F012
+push str_Pntr2	; 3F017
 mov esi, dword [dword ebp+086h]	; 3F01C
 push esi	; 3F022
 call sub_B30B4	; 3F023
@@ -1598,7 +1579,7 @@ imul eax, edx	; 3F08E
 add eax, byte 11h	; 3F091
 push byte 20h	; 3F094
 push eax	; 3F096
-push asc_C1A04	; 3F097
+push str_Pointer10	; 3F097
 call sub_8CCA8	; 3F09C
 add esp, byte 0Ch	; 3F0A1
 mov dword [byte ebp+05Eh], eax	; 3F0A4
@@ -1630,21 +1611,21 @@ mov dword [byte ebp+032h], eax	; 3F0E0
 mov eax, dword [byte ebp+036h]	; 3F0E3
 mov dword [byte ebp+02Eh], eax	; 3F0E6
 cmp eax, byte 20h	; 3F0E9
-jge short loc_3F0F2	; 3F0EC
+jge short .2	; 3F0EC
 xor eax, eax	; 3F0EE
-jmp short loc_3F0F5	; 3F0F0
-loc_3F0F2:
+jmp short .3	; 3F0F0
+.2:
 sub eax, byte 20h	; 3F0F2
-loc_3F0F5:
+.3:
 push eax	; 3F0F5
 mov ecx, dword [byte ebp+03Ah]	; 3F0F6
 cmp ecx, byte 1Ch	; 3F0F9
-jge short loc_3F102	; 3F0FC
+jge short .4	; 3F0FC
 xor eax, eax	; 3F0FE
-jmp short loc_3F105	; 3F100
-loc_3F102:
+jmp short .5	; 3F100
+.4:
 lea eax, [byte ecx-01Ch]	; 3F102
-loc_3F105:
+.5:
 push eax	; 3F105
 mov esi, dword [byte ebp+05Eh]	; 3F106
 push esi	; 3F109
@@ -1661,50 +1642,50 @@ call sub_91FE0	; 3F123
 add esp, byte 0Ch	; 3F128
 call sub_6B3D7	; 3F12B
 xor edx, edx	; 3F130
-mov dword [dword_DD79C], edx	; 3F132
-loc_3F138:
+mov dword [traderesult], edx	; 3F132
+.6:
 xor edx, edx	; 3F138
-loc_3F13A:
+.7:
 call sub_6B391	; 3F13A
 mov ecx, eax	; 3F13F
 test eax, eax	; 3F141
-je short loc_3F153	; 3F143
+je short .8	; 3F143
 lea ebx, [byte ebp+02Eh]	; 3F145
 lea edx, [byte ebp+032h]	; 3F148
 call dword [dword_EA0DC]	; 3F14B
 mov edx, eax	; 3F151
-loc_3F153:
+.8:
 test ecx, ecx	; 3F153
-je short loc_3F15C	; 3F155
+je short .9	; 3F155
 test dl, 2	; 3F157
-je short loc_3F13A	; 3F15A
-loc_3F15C:
+je short TradeScreenLoop.7	; 3F15A
+.9:
 test dl, 2	; 3F15C
-jne near loc_3F2F8	; 3F15F
+jne near .20	; 3F15F
 mov eax, dword [byte ebp+032h]	; 3F165
 cmp eax, dword [byte ebp+03Ah]	; 3F168
-jne short loc_3F179	; 3F16B
+jne short .10	; 3F16B
 mov eax, dword [byte ebp+02Eh]	; 3F16D
 cmp eax, dword [byte ebp+036h]	; 3F170
-je near loc_3FEB8	; 3F173
-loc_3F179:
+je near .79	; 3F173
+.10:
 mov esi, dword [byte ebp+036h]	; 3F179
 cmp esi, byte 20h	; 3F17C
-jge short loc_3F185	; 3F17F
+jge short .11	; 3F17F
 xor eax, eax	; 3F181
-jmp short loc_3F188	; 3F183
-loc_3F185:
+jmp short .12	; 3F183
+.11:
 lea eax, [byte esi-020h]	; 3F185
-loc_3F188:
+.12:
 push eax	; 3F188
 mov edi, dword [byte ebp+03Ah]	; 3F189
 cmp edi, byte 1Ch	; 3F18C
-jge short loc_3F195	; 3F18F
+jge short .13	; 3F18F
 xor eax, eax	; 3F191
-jmp short loc_3F198	; 3F193
-loc_3F195:
+jmp short .14	; 3F193
+.13:
 lea eax, [byte edi-01Ch]	; 3F195
-loc_3F198:
+.14:
 push eax	; 3F198
 mov eax, dword [byte ebp+05Eh]	; 3F199
 push eax	; 3F19C
@@ -1712,21 +1693,21 @@ call sub_903F0	; 3F19D
 add esp, byte 0Ch	; 3F1A2
 mov edx, dword [byte ebp+02Eh]	; 3F1A5
 cmp edx, byte 20h	; 3F1A8
-jge short loc_3F1B1	; 3F1AB
+jge short .15	; 3F1AB
 xor eax, eax	; 3F1AD
-jmp short loc_3F1B4	; 3F1AF
-loc_3F1B1:
+jmp short .16	; 3F1AF
+.15:
 lea eax, [byte edx-020h]	; 3F1B1
-loc_3F1B4:
+.16:
 push eax	; 3F1B4
 mov ebx, dword [byte ebp+032h]	; 3F1B5
 cmp ebx, byte 1Ch	; 3F1B8
-jge short loc_3F1C1	; 3F1BB
+jge short .17	; 3F1BB
 xor eax, eax	; 3F1BD
-jmp short loc_3F1C4	; 3F1BF
-loc_3F1C1:
+jmp short .18	; 3F1BF
+.17:
 lea eax, [byte ebx-01Ch]	; 3F1C1
-loc_3F1C4:
+.18:
 push eax	; 3F1C4
 mov ecx, dword [byte ebp+05Eh]	; 3F1C5
 push ecx	; 3F1C8
@@ -1735,19 +1716,19 @@ add esp, byte 0Ch	; 3F1CE
 mov eax, dword [byte ebp+02Eh]	; 3F1D1
 mov edx, dword [byte ebp+0Eh]	; 3F1D4
 cmp eax, dword [byte edx+0Ch]	; 3F1D7
-jle near loc_3FE92	; 3F1DA
+jle near .78	; 3F1DA
 mov edi, dword [byte ebp+032h]	; 3F1E0
 cmp edi, 0BEh	; 3F1E3
-jle near loc_3FE92	; 3F1E9
+jle near .78	; 3F1E9
 cmp edi, 1C0h	; 3F1EF
-jge near loc_3FE92	; 3F1F5
-mov edx, dword [dword_DE260]	; 3F1FB
+jge near .78	; 3F1F5
+mov edx, dword [tradeside]	; 3F1FB
 cmp edx, byte 0FFFFFFFFh	; 3F201
-je near loc_3FE92	; 3F204
-cmp dword [nosplit edx*4+dword_DDD84], byte 0FFFFFFFFh	; 3F20A
-je near loc_3FE92	; 3F212
+je near .78	; 3F204
+cmp dword [nosplit edx*4+tradecursor], byte 0FFFFFFFFh	; 3F20A
+je near .78	; 3F212
 cmp dword [byte ebp+012h], byte 0	; 3F218
-je short loc_3F246	; 3F21C
+je short .19	; 3F21C
 lea eax, [byte ebp+026h]	; 3F21E
 push eax	; 3F221
 lea eax, [byte ebp+02Ah]	; 3F222
@@ -1762,15 +1743,15 @@ mov edx, dword [byte ebp+02Eh]	; 3F234
 mov eax, edi	; 3F237
 call sub_6BA4D	; 3F239
 test eax, eax	; 3F23E
-jne near loc_3FE92	; 3F240
-loc_3F246:
-mov eax, dword [dword_DE260]	; 3F246
-mov edx, dword [nosplit eax*4+dword_DDD7C]	; 3F24B
+jne near .78	; 3F240
+.19:
+mov eax, dword [tradeside]	; 3F246
+mov edx, dword [nosplit eax*4+traderemap1]	; 3F24B
 add edx, 90h	; 3F252
 mov ebx, 30h	; 3F258
 mov eax, unk_D12C8	; 3F25D
 call memcpy_	; 3F262
-mov eax, dword [dword_DE260]	; 3F267
+mov eax, dword [tradeside]	; 3F267
 mov edx, dword [dword ebp-0A6h]	; 3F26C
 mov edx, dword [edx+eax*4]	; 3F272
 mov dl, byte [nosplit edx*4+byte_D11BC]	; 3F275
@@ -1781,17 +1762,17 @@ xor ecx, ecx	; 3F28E
 mov cl, dh	; 3F290
 xor ebx, ebx	; 3F292
 mov bl, dl	; 3F294
-mov edx, dword [nosplit eax*4+dword_DDD84]	; 3F296
+mov edx, dword [nosplit eax*4+tradecursor]	; 3F296
 mov eax, edx	; 3F29D
 shl eax, 2	; 3F29F
 sub eax, edx	; 3F2A2
 shl eax, 2	; 3F2A4
 sub eax, edx	; 3F2A7
 add eax, eax	; 3F2A9
-imul edx, dword [dword_DE260], dword 268h	; 3F2AB
+imul edx, dword [tradeside], dword 268h	; 3F2AB
 add eax, edx	; 3F2B5
 xor edx, edx	; 3F2B7
-mov dl, byte [dword eax+byte_DDD8D]	; 3F2B9
+mov dl, byte [dword eax+tradejersey]	; 3F2B9
 mov eax, byte_D1238	; 3F2BF
 call sub_7A099	; 3F2C4
 push byte_D1238	; 3F2C9
@@ -1807,8 +1788,8 @@ mov edi, dword [dword ebp-09Eh]	; 3F2E4
 push edi	; 3F2EA
 call sub_91FE0	; 3F2EB
 add esp, byte 0Ch	; 3F2F0
-jmp near loc_3FE92	; 3F2F3
-loc_3F2F8:
+jmp near .78	; 3F2F3
+.20:
 lea eax, [byte ebp+026h]	; 3F2F8
 push eax	; 3F2FB
 lea eax, [byte ebp+02Ah]	; 3F2FC
@@ -1825,7 +1806,7 @@ call sub_6BA4D	; 3F314
 mov edx, dword [byte ebp+036h]	; 3F319
 sub edx, byte 20h	; 3F31C
 test eax, eax	; 3F31F
-je near loc_3F7C2	; 3F321
+je near .50	; 3F321
 mov ebx, dword [byte ebp+02Ah]	; 3F327
 shl ebx, 2	; 3F32A
 mov eax, dword [byte ebp+026h]	; 3F32D
@@ -1833,23 +1814,23 @@ shl eax, 5	; 3F330
 mov ecx, dword [byte ebx+ebp+0Eh]	; 3F333
 add eax, ecx	; 3F337
 cmp dword [byte eax+014h], byte 0	; 3F339
-je near loc_3F50F	; 3F33D
+je near .34	; 3F33D
 mov eax, dword [byte ebp+026h]	; 3F343
 cmp eax, dword [byte ebx+ebp-012h]	; 3F346
-jne near loc_3F48A	; 3F34A
+jne near .28	; 3F34A
 cmp dword [byte ebp+036h], byte 20h	; 3F350
-jge short loc_3F358	; 3F354
+jge short .21	; 3F354
 xor edx, edx	; 3F356
-loc_3F358:
+.21:
 push edx	; 3F358
 mov eax, dword [byte ebp+03Ah]	; 3F359
 cmp eax, byte 1Ch	; 3F35C
-jge short loc_3F365	; 3F35F
+jge short .22	; 3F35F
 xor eax, eax	; 3F361
-jmp short loc_3F368	; 3F363
-loc_3F365:
+jmp short .23	; 3F363
+.22:
 sub eax, byte 1Ch	; 3F365
-loc_3F368:
+.23:
 push eax	; 3F368
 mov edx, dword [byte ebp+05Eh]	; 3F369
 push edx	; 3F36C
@@ -1857,12 +1838,12 @@ call sub_903F0	; 3F36D
 add esp, byte 0Ch	; 3F372
 mov eax, dword [dword ebp+08Eh]	; 3F375
 mov dword [byte ebp+042h], eax	; 3F37B
-jmp short loc_3F3C2	; 3F37E
-loc_3F380:
+jmp short .26	; 3F37E
+.24:
 mov edx, ebx	; 3F380
 shl edx, 2	; 3F382
 cmp dword [byte edx+ebp-022h], byte 0	; 3F385
-je short loc_3F3BF	; 3F38A
+je short .25	; 3F38A
 mov eax, ebx	; 3F38C
 mov ebx, dword [byte ebp+ebx*8-03Eh]	; 3F38E
 push ebx	; 3F392
@@ -1880,12 +1861,12 @@ mov edx, dword [byte ebp+eax*4-022h]	; 3F3B2
 push edx	; 3F3B6
 call jctime	; 3F3B7
 add esp, byte 4	; 3F3BC
-loc_3F3BF:
+.25:
 dec dword [byte ebp+042h]	; 3F3BF
-loc_3F3C2:
+.26:
 mov ebx, dword [byte ebp+042h]	; 3F3C2
 test ebx, ebx	; 3F3C5
-jge short loc_3F380	; 3F3C7
+jge short TradeScreenLoop.24	; 3F3C7
 xor ecx, ecx	; 3F3C9
 mov dword [byte ebp+06Eh], ecx	; 3F3CB
 mov eax, dword [byte ebp+02Ah]	; 3F3CE
@@ -1926,15 +1907,15 @@ mov dword [byte ebp+0Ah], edx	; 3F43E
 mov dword [byte ebp+06h], edx	; 3F441
 mov dword [byte ebp+02h], edx	; 3F444
 cmp eax, byte 1	; 3F447
-jne short loc_3F464	; 3F44A
+jne short .27	; 3F44A
 call sub_6B3D7	; 3F44C
 mov edi, dword [byte ebp+05Eh]	; 3F451
 push edi	; 3F454
 call jctime	; 3F455
 add esp, byte 4	; 3F45A
 xor eax, eax	; 3F45D
-jmp near loc_3FEE7	; 3F45F
-loc_3F464:
+jmp near .81	; 3F45F
+.27:
 mov ecx, dword [byte ebp+036h]	; 3F464
 push ecx	; 3F467
 mov esi, dword [byte ebp+03Ah]	; 3F468
@@ -1946,21 +1927,21 @@ mov dword [byte ebp+032h], eax	; 3F477
 mov eax, dword [byte ebp+036h]	; 3F47A
 mov dword [byte ebp+02Eh], eax	; 3F47D
 call sub_6B3D7	; 3F480
-jmp near loc_3FD36	; 3F485
-loc_3F48A:
+jmp near .72	; 3F485
+.28:
 cmp dword [byte ebp+036h], byte 20h	; 3F48A
-jge short loc_3F492	; 3F48E
+jge short .29	; 3F48E
 xor edx, edx	; 3F490
-loc_3F492:
+.29:
 push edx	; 3F492
 mov edi, dword [byte ebp+03Ah]	; 3F493
 cmp edi, byte 1Ch	; 3F496
-jge short loc_3F49F	; 3F499
+jge short .30	; 3F499
 xor eax, eax	; 3F49B
-jmp short loc_3F4A2	; 3F49D
-loc_3F49F:
+jmp short .31	; 3F49D
+.30:
 lea eax, [byte edi-01Ch]	; 3F49F
-loc_3F4A2:
+.31:
 push eax	; 3F4A2
 mov eax, dword [byte ebp+05Eh]	; 3F4A3
 push eax	; 3F4A6
@@ -1986,7 +1967,7 @@ mov ecx, dword [byte ebp+052h]	; 3F4E1
 push ecx	; 3F4E4
 mov esi, dword [byte ebp+056h]	; 3F4E5
 push esi	; 3F4E8
-loc_3F4E9:
+.32:
 mov ebx, dword [byte ebp+edx*8-03Eh]	; 3F4E9
 mov eax, dword [byte ebp+edx*8-042h]	; 3F4ED
 mov esi, dword [byte ebp+edx*4-012h]	; 3F4F1
@@ -1996,25 +1977,25 @@ add esi, edx	; 3F4FC
 mov ecx, dword [byte ebp+05Ah]	; 3F4FE
 mov edx, eax	; 3F501
 mov eax, esi	; 3F503
-loc_3F505:
+.33:
 call sub_6B9EB	; 3F505
-jmp near loc_3FD36	; 3F50A
-loc_3F50F:
+jmp near .72	; 3F50A
+.34:
 cmp dword [byte eax+018h], byte 0	; 3F50F
-je near loc_3F75E	; 3F513
+je near .46	; 3F513
 cmp dword [byte ebp+036h], byte 20h	; 3F519
-jge short loc_3F521	; 3F51D
+jge short .35	; 3F51D
 xor edx, edx	; 3F51F
-loc_3F521:
+.35:
 push edx	; 3F521
 mov edi, dword [byte ebp+03Ah]	; 3F522
 cmp edi, byte 1Ch	; 3F525
-jge short loc_3F52E	; 3F528
+jge short .36	; 3F528
 xor eax, eax	; 3F52A
-jmp short loc_3F531	; 3F52C
-loc_3F52E:
+jmp short .37	; 3F52C
+.36:
 lea eax, [byte edi-01Ch]	; 3F52E
-loc_3F531:
+.37:
 push eax	; 3F531
 mov eax, dword [byte ebp+05Eh]	; 3F532
 push eax	; 3F535
@@ -2022,16 +2003,16 @@ call sub_903F0	; 3F536
 add esp, byte 0Ch	; 3F53B
 mov eax, dword [byte ebp+06Eh]	; 3F53E
 cmp eax, dword [byte ebp+02Ah]	; 3F541
-je short loc_3F5AD	; 3F544
+je short .41	; 3F544
 mov dword [byte ebp+042h], eax	; 3F546
-jmp short loc_3F5A0	; 3F549
-loc_3F54B:
+jmp short .40	; 3F549
+.38:
 shl eax, 2	; 3F54B
 xor ebx, ebx	; 3F54E
 mov dword [byte eax+ebp-012h], ebx	; 3F550
 mov ecx, dword [byte eax+ebp-022h]	; 3F554
 test ecx, ecx	; 3F558
-je short loc_3F59D	; 3F55A
+je short .39	; 3F55A
 mov edx, dword [byte ebp+042h]	; 3F55C
 mov esi, dword [byte ebp+edx*8-03Eh]	; 3F55F
 push esi	; 3F563
@@ -2053,15 +2034,15 @@ xor esi, esi	; 3F58F
 mov dword [byte ebp+eax*4-022h], esi	; 3F591
 mov dword [byte ebp+eax*4+0Eh], esi	; 3F595
 mov dword [byte ebp+eax*4-02h], esi	; 3F599
-loc_3F59D:
+.39:
 dec dword [byte ebp+042h]	; 3F59D
-loc_3F5A0:
+.40:
 mov eax, dword [byte ebp+042h]	; 3F5A0
 mov edx, dword [byte ebp+02Ah]	; 3F5A3
 cmp eax, edx	; 3F5A6
-jg short loc_3F54B	; 3F5A8
+jg short TradeScreenLoop.38	; 3F5A8
 mov dword [byte ebp+06Eh], edx	; 3F5AA
-loc_3F5AD:
+.41:
 mov ecx, dword [byte ebp+052h]	; 3F5AD
 push ecx	; 3F5B0
 mov esi, dword [byte ebp+056h]	; 3F5B1
@@ -2101,12 +2082,12 @@ add eax, ecx	; 3F61C
 mov ebx, dword [byte eax+01Ch]	; 3F61E
 mov dword [byte ebp+esi*4-02h], ebx	; 3F621
 cmp esi, byte 1	; 3F625
-je short loc_3F62F	; 3F628
+je short .42	; 3F628
 mov edx, dword [byte eax+08h]	; 3F62A
-jmp short loc_3F631	; 3F62D
-loc_3F62F:
+jmp short .43	; 3F62D
+.42:
 mov edx, dword [eax]	; 3F62F
-loc_3F631:
+.43:
 mov eax, dword [byte ebp+06Eh]	; 3F631
 mov ebx, dword [byte ebp+eax*8-04Ah]	; 3F634
 add edx, ebx	; 3F638
@@ -2116,14 +2097,14 @@ shl edx, 5	; 3F641
 mov eax, dword [byte ebp+02Ah]	; 3F644
 shl eax, 2	; 3F647
 cmp dword [byte ebp+06Eh], byte 1	; 3F64A
-je short loc_3F65A	; 3F64E
+je short .44	; 3F64E
 mov eax, dword [byte eax+ebp+0Eh]	; 3F650
 mov eax, dword [byte edx+eax+04h]	; 3F654
-jmp short loc_3F662	; 3F658
-loc_3F65A:
+jmp short .45	; 3F658
+.44:
 mov eax, dword [byte eax+ebp+0Eh]	; 3F65A
 mov eax, dword [byte edx+eax+0Ch]	; 3F65E
-loc_3F662:
+.45:
 mov edx, dword [byte ebp+06Eh]	; 3F662
 shl edx, 3	; 3F665
 mov dword [byte ebp+062h], edx	; 3F668
@@ -2150,7 +2131,7 @@ shl eax, 2	; 3F6A3
 imul eax, edx	; 3F6A6
 add eax, byte 11h	; 3F6A9
 push eax	; 3F6AC
-push asc_C1A0C	; 3F6AD
+push str_Menubuff7	; 3F6AD
 call sub_8CCA8	; 3F6B2
 add esp, byte 0Ch	; 3F6B7
 mov edx, dword [byte ebp+066h]	; 3F6BA
@@ -2208,21 +2189,21 @@ mov edx, dword [byte edx+ebp-042h]	; 3F74C
 mov eax, dword [byte ebp+066h]	; 3F750
 mov eax, dword [byte eax+ebp+0Eh]	; 3F753
 mov ecx, esi	; 3F757
-jmp near loc_3F505	; 3F759
-loc_3F75E:
+jmp near TradeScreenLoop.33	; 3F759
+.46:
 cmp dword [byte ebp+036h], byte 20h	; 3F75E
-jge short loc_3F766	; 3F762
+jge short .47	; 3F762
 xor edx, edx	; 3F764
-loc_3F766:
+.47:
 push edx	; 3F766
 mov esi, dword [byte ebp+03Ah]	; 3F767
 cmp esi, byte 1Ch	; 3F76A
-jge short loc_3F773	; 3F76D
+jge short .48	; 3F76D
 xor eax, eax	; 3F76F
-jmp short loc_3F776	; 3F771
-loc_3F773:
+jmp short .49	; 3F771
+.48:
 lea eax, [byte esi-01Ch]	; 3F773
-loc_3F776:
+.49:
 push eax	; 3F776
 mov edi, dword [byte ebp+05Eh]	; 3F777
 push edi	; 3F77A
@@ -2248,21 +2229,21 @@ mov ebx, dword [byte ebp+052h]	; 3F7B5
 push ebx	; 3F7B8
 mov ecx, dword [byte ebp+056h]	; 3F7B9
 push ecx	; 3F7BC
-jmp near loc_3F4E9	; 3F7BD
-loc_3F7C2:
+jmp near TradeScreenLoop.32	; 3F7BD
+.50:
 cmp dword [byte ebp+036h], byte 20h	; 3F7C2
-jge short loc_3F7CA	; 3F7C6
+jge short .51	; 3F7C6
 xor edx, edx	; 3F7C8
-loc_3F7CA:
+.51:
 push edx	; 3F7CA
 mov ecx, dword [byte ebp+03Ah]	; 3F7CB
 cmp ecx, byte 1Ch	; 3F7CE
-jge short loc_3F7D7	; 3F7D1
+jge short .52	; 3F7D1
 xor eax, eax	; 3F7D3
-jmp short loc_3F7DA	; 3F7D5
-loc_3F7D7:
+jmp short .53	; 3F7D5
+.52:
 lea eax, [byte ecx-01Ch]	; 3F7D7
-loc_3F7DA:
+.53:
 push eax	; 3F7DA
 mov esi, dword [byte ebp+05Eh]	; 3F7DB
 push esi	; 3F7DE
@@ -2270,22 +2251,22 @@ call sub_903F0	; 3F7DF
 add esp, byte 0Ch	; 3F7E4
 lea eax, [byte ebp+03Eh]	; 3F7E7
 push eax	; 3F7EA
-mov ecx, dword_DE260	; 3F7EB
-mov ebx, dword_DDD74	; 3F7F0
+mov ecx, tradeside	; 3F7EB
+mov ebx, tradeclick	; 3F7F0
 mov edx, dword [byte ebp+02Eh]	; 3F7F5
 mov eax, dword [byte ebp+032h]	; 3F7F8
-call sub_3ECAE	; 3F7FB
+call TradeHitTest	; 3F7FB
 test eax, eax	; 3F800
-je near loc_3FD36	; 3F802
+je near .72	; 3F802
 mov eax, dword [dword ebp+08Eh]	; 3F808
 mov dword [byte ebp+042h], eax	; 3F80E
-jmp short loc_3F850	; 3F811
-loc_3F813:
+jmp short .56	; 3F811
+.54:
 mov eax, ebx	; 3F813
 shl eax, 2	; 3F815
 mov esi, dword [byte eax+ebp-022h]	; 3F818
 test esi, esi	; 3F81C
-je short loc_3F84D	; 3F81E
+je short .55	; 3F81E
 mov edi, dword [byte ebp+ebx*8-03Eh]	; 3F820
 push edi	; 3F824
 mov ebx, dword [byte ebp+ebx*8-042h]	; 3F825
@@ -2301,12 +2282,12 @@ mov edi, dword [byte ebp+eax*4-022h]	; 3F840
 push edi	; 3F844
 call jctime	; 3F845
 add esp, byte 4	; 3F84A
-loc_3F84D:
+.55:
 dec dword [byte ebp+042h]	; 3F84D
-loc_3F850:
+.56:
 mov ebx, dword [byte ebp+042h]	; 3F850
 test ebx, ebx	; 3F853
-jge short loc_3F813	; 3F855
+jge short TradeScreenLoop.54	; 3F855
 xor ecx, ecx	; 3F857
 mov dword [byte ebp+06Eh], ecx	; 3F859
 mov dword [byte ebp+01Ah], ecx	; 3F85C
@@ -2321,57 +2302,57 @@ mov dword [byte ebp-0Eh], ecx	; 3F874
 mov dword [byte ebp+0Ah], ecx	; 3F877
 mov dword [byte ebp+06h], ecx	; 3F87A
 mov dword [byte ebp+02h], ecx	; 3F87D
-mov eax, dword [dword_DE260]	; 3F880
+mov eax, dword [tradeside]	; 3F880
 shl eax, 2	; 3F885
-cmp dword [dword eax+dword_DDD74], byte 64h	; 3F888
-jge near loc_3FC6E	; 3F88F
-cmp dword [dword eax+dword_DDD84], byte 0FFFFFFFFh	; 3F895
-jne short loc_3F8A8	; 3F89C
+cmp dword [dword eax+tradeclick], byte 64h	; 3F888
+jge near .69	; 3F88F
+cmp dword [dword eax+tradecursor], byte 0FFFFFFFFh	; 3F895
+jne short .57	; 3F89C
 cmp dword [byte ebp+03Eh], byte 0	; 3F89E
-je near loc_3FC6E	; 3F8A2
-loc_3F8A8:
+je near .69	; 3F8A2
+.57:
 xor edi, edi	; 3F8A8
-mov eax, dword [dword_DE260]	; 3F8AA
-mov edx, dword [nosplit eax*4+dword_DDD74]	; 3F8AF
+mov eax, dword [tradeside]	; 3F8AA
+mov edx, dword [nosplit eax*4+tradeclick]	; 3F8AF
 mov dword [byte ebp+06Ah], edx	; 3F8B6
-mov eax, dword [nosplit eax*4+dword_DDD84]	; 3F8B9
+mov eax, dword [nosplit eax*4+tradecursor]	; 3F8B9
 mov dword [byte ebp+04Ah], eax	; 3F8C0
 mov esi, dword [dword ebp-0AAh]	; 3F8C3
 add esi, edx	; 3F8C9
 cmp dword [byte ebp+03Eh], byte 0	; 3F8CB
-je near loc_3F974	; 3F8CF
+je near .60	; 3F8CF
 mov cl, byte [esi]	; 3F8D5
 cmp cl, 0FFh	; 3F8D7
-je near loc_3F965	; 3F8DA
+je near .59	; 3F8DA
 mov edi, dword [byte ebp+04Ah]	; 3F8E0
 cmp edi, byte 0FFFFFFFFh	; 3F8E3
-je short loc_3F906	; 3F8E6
+je short .58	; 3F8E6
 xor eax, eax	; 3F8E8
 mov al, cl	; 3F8EA
 cmp eax, edi	; 3F8EC
-je short loc_3F906	; 3F8EE
+je short .58	; 3F8EE
 push byte 41h	; 3F8F0
 push byte 40h	; 3F8F2
 call sub_8E9C0	; 3F8F4
 add esp, byte 8	; 3F8F9
-mov eax, dword [dword_DE260]	; 3F8FC
-call sub_3E7B3	; 3F901
-loc_3F906:
+mov eax, dword [tradeside]	; 3F8FC
+call DrawTradeRow	; 3F901
+.58:
 mov esi, dword [dword ebp-0AAh]	; 3F906
 add esi, dword [byte ebp+06Ah]	; 3F90C
 xor edx, edx	; 3F90F
 mov dl, byte [esi]	; 3F911
-mov eax, dword [dword_DE260]	; 3F913
-call sub_3EF3C	; 3F918
+mov eax, dword [tradeside]	; 3F913
+call FindTradeSlot	; 3F918
 mov edx, eax	; 3F91D
-mov eax, dword [dword_DE260]	; 3F91F
-mov dword [nosplit eax*4+dword_DDD84], edx	; 3F924
+mov eax, dword [tradeside]	; 3F91F
+mov dword [nosplit eax*4+tradecursor], edx	; 3F924
 push byte 41h	; 3F92B
 push byte 42h	; 3F92D
 call sub_8E9C0	; 3F92F
 add esp, byte 8	; 3F934
-mov eax, dword [dword_DE260]	; 3F937
-call sub_3E7B3	; 3F93C
+mov eax, dword [tradeside]	; 3F937
+call DrawTradeRow	; 3F93C
 mov byte [esi], 0FFh	; 3F941
 mov edx, dword [byte ebp+06Ah]	; 3F944
 mov eax, edx	; 3F947
@@ -2381,11 +2362,11 @@ shl eax, 2	; 3F94E
 sub eax, edx	; 3F951
 mov byte [dword ebp+eax*2-099h], 0FFh	; 3F953
 mov edi, 0FFFFFFFFh	; 3F95B
-jmp near loc_3FBAA	; 3F960
-loc_3F965:
-mov dword [dword_DE260], 0FFFFFFFFh	; 3F965
-jmp near loc_3FBAA	; 3F96F
-loc_3F974:
+jmp near .67	; 3F960
+.59:
+mov dword [tradeside], 0FFFFFFFFh	; 3F965
+jmp near .67	; 3F96F
+.60:
 mov eax, edx	; 3F974
 shl eax, 2	; 3F976
 sub eax, edx	; 3F979
@@ -2400,27 +2381,27 @@ shl eax, 2	; 3F98D
 sub eax, ebx	; 3F990
 add eax, eax	; 3F992
 mov dword [byte ebp+04Eh], eax	; 3F994
-imul eax, dword [dword_DE260], dword 268h	; 3F997
+imul eax, dword [tradeside], dword 268h	; 3F997
 add eax, dword [byte ebp+04Eh]	; 3F9A1
 mov ebx, dword [byte ebp+06Ah]	; 3F9A4
 cmp ebx, byte 2	; 3F9A7
-jge near loc_3FA9A	; 3F9AA
-cmp dword [dword_DE260], byte 0	; 3F9B0
-jne near loc_3FBAA	; 3F9B7
+jge near .63	; 3F9AA
+cmp dword [tradeside], byte 0	; 3F9B0
+jne near .67	; 3F9B7
 mov ebx, dword [dword ebp-0AAh]	; 3F9BD
 mov bl, byte [ebx]	; 3F9C3
-cmp bl, byte [dword eax+byte_DDD8E]	; 3F9C5
-je near loc_3FBAA	; 3F9CB
+cmp bl, byte [dword eax+tradeslot]	; 3F9C5
+je near .67	; 3F9CB
 mov ebx, dword [dword ebp-0AAh]	; 3F9D1
 mov bl, byte [byte ebx+01h]	; 3F9D7
-mov cl, byte [dword eax+byte_DDD8E]	; 3F9DA
+mov cl, byte [dword eax+tradeslot]	; 3F9DA
 cmp bl, cl	; 3F9E0
-je near loc_3FBAA	; 3F9E2
+je near .67	; 3F9E2
 mov byte [esi], cl	; 3F9E8
-imul esi, dword [dword_DE260], dword 268h	; 3F9EA
+imul esi, dword [tradeside], dword 268h	; 3F9EA
 add esi, dword [byte ebp+04Eh]	; 3F9F4
 lea edi, [dword edx+ebp-09Ah]	; 3F9F7
-lea esi, [dword esi+byte_DDD8C]	; 3F9FE
+lea esi, [dword esi+traderoster]	; 3F9FE
 movsd	; 3FA04
 movsd	; 3FA05
 movsd	; 3FA06
@@ -2429,7 +2410,7 @@ movsd	; 3FA08
 movsw	; 3FA09
 mov ch, byte [dword edx+ebp-09Ah]	; 3FA0B
 cmp ch, 47h	; 3FA12
-jne short loc_3FA32	; 3FA15
+jne short .61	; 3FA15
 mov edx, dword [byte ebp+06Ah]	; 3FA17
 add edx, byte 2	; 3FA1A
 mov eax, edx	; 3FA1D
@@ -2438,8 +2419,8 @@ sub eax, edx	; 3FA22
 shl eax, 2	; 3FA24
 sub eax, edx	; 3FA27
 cmp ch, byte [dword ebp+eax*2-09Ah]	; 3FA29
-jne short loc_3FA6F	; 3FA30
-loc_3FA32:
+jne short .62	; 3FA30
+.61:
 mov edx, dword [byte ebp+06Ah]	; 3FA32
 mov eax, edx	; 3FA35
 shl eax, 2	; 3FA37
@@ -2447,7 +2428,7 @@ sub eax, edx	; 3FA3A
 shl eax, 2	; 3FA3C
 sub eax, edx	; 3FA3F
 cmp byte [dword ebp+eax*2-09Ah], 47h	; 3FA41
-je near loc_3FB7B	; 3FA49
+je near .66	; 3FA49
 mov edx, dword [byte ebp+06Ah]	; 3FA4F
 add edx, byte 2	; 3FA52
 mov eax, edx	; 3FA55
@@ -2456,8 +2437,8 @@ sub eax, edx	; 3FA5A
 shl eax, 2	; 3FA5C
 sub eax, edx	; 3FA5F
 cmp byte [dword ebp+eax*2-09Ah], 47h	; 3FA61
-jne near loc_3FB7B	; 3FA69
-loc_3FA6F:
+jne near .66	; 3FA69
+.62:
 mov eax, dword [dword ebp-0AAh]	; 3FA6F
 mov edx, dword [byte ebp+06Ah]	; 3FA75
 add eax, edx	; 3FA78
@@ -2469,25 +2450,25 @@ sub eax, edx	; 3FA86
 shl eax, 2	; 3FA88
 sub eax, edx	; 3FA8B
 mov byte [dword ebp+eax*2-099h], 0FFh	; 3FA8D
-jmp near loc_3FB7B	; 3FA95
-loc_3FA9A:
+jmp near .66	; 3FA95
+.63:
 cmp ebx, byte 4	; 3FA9A
-jge near loc_3FBAA	; 3FA9D
-cmp dword [dword_DE260], byte 1	; 3FAA3
-jne near loc_3FBAA	; 3FAAA
+jge near .67	; 3FA9D
+cmp dword [tradeside], byte 1	; 3FAA3
+jne near .67	; 3FAAA
 mov ebx, dword [dword ebp-0AAh]	; 3FAB0
 mov bl, byte [byte ebx+02h]	; 3FAB6
-mov ch, byte [dword eax+byte_DDD8E]	; 3FAB9
+mov ch, byte [dword eax+tradeslot]	; 3FAB9
 cmp bl, ch	; 3FABF
-je near loc_3FBAA	; 3FAC1
+je near .67	; 3FAC1
 mov ebx, dword [dword ebp-0AAh]	; 3FAC7
 cmp ch, byte [byte ebx+03h]	; 3FACD
-je near loc_3FBAA	; 3FAD0
+je near .67	; 3FAD0
 mov byte [esi], ch	; 3FAD6
-imul esi, dword [dword_DE260], dword 268h	; 3FAD8
+imul esi, dword [tradeside], dword 268h	; 3FAD8
 add esi, dword [byte ebp+04Eh]	; 3FAE2
 lea edi, [dword edx+ebp-09Ah]	; 3FAE5
-lea esi, [dword esi+byte_DDD8C]	; 3FAEC
+lea esi, [dword esi+traderoster]	; 3FAEC
 movsd	; 3FAF2
 movsd	; 3FAF3
 movsd	; 3FAF4
@@ -2496,7 +2477,7 @@ movsd	; 3FAF6
 movsw	; 3FAF7
 mov cl, byte [dword edx+ebp-09Ah]	; 3FAF9
 cmp cl, 47h	; 3FB00
-jne short loc_3FB20	; 3FB03
+jne short .64	; 3FB03
 mov edx, dword [byte ebp+06Ah]	; 3FB05
 sub edx, byte 2	; 3FB08
 mov eax, edx	; 3FB0B
@@ -2505,8 +2486,8 @@ sub eax, edx	; 3FB10
 shl eax, 2	; 3FB12
 sub eax, edx	; 3FB15
 cmp cl, byte [dword ebp+eax*2-09Ah]	; 3FB17
-jne short loc_3FB55	; 3FB1E
-loc_3FB20:
+jne short .65	; 3FB1E
+.64:
 mov edx, dword [byte ebp+06Ah]	; 3FB20
 mov eax, edx	; 3FB23
 shl eax, 2	; 3FB25
@@ -2514,7 +2495,7 @@ sub eax, edx	; 3FB28
 shl eax, 2	; 3FB2A
 sub eax, edx	; 3FB2D
 cmp byte [dword ebp+eax*2-09Ah], 47h	; 3FB2F
-je short loc_3FB7B	; 3FB37
+je short .66	; 3FB37
 mov edx, dword [byte ebp+06Ah]	; 3FB39
 sub edx, byte 2	; 3FB3C
 mov eax, edx	; 3FB3F
@@ -2523,8 +2504,8 @@ sub eax, edx	; 3FB44
 shl eax, 2	; 3FB46
 sub eax, edx	; 3FB49
 cmp byte [dword ebp+eax*2-09Ah], 47h	; 3FB4B
-jne short loc_3FB7B	; 3FB53
-loc_3FB55:
+jne short .66	; 3FB53
+.65:
 mov eax, dword [dword ebp-0AAh]	; 3FB55
 mov edx, dword [byte ebp+06Ah]	; 3FB5B
 add eax, edx	; 3FB5E
@@ -2536,28 +2517,28 @@ sub eax, edx	; 3FB6C
 shl eax, 2	; 3FB6E
 sub eax, edx	; 3FB71
 mov byte [dword ebp+eax*2-099h], 0FFh	; 3FB73
-loc_3FB7B:
+.66:
 push byte 41h	; 3FB7B
 push byte 40h	; 3FB7D
 call sub_8E9C0	; 3FB7F
 add esp, byte 8	; 3FB84
-mov eax, dword [dword_DE260]	; 3FB87
-call sub_3E7B3	; 3FB8C
-mov eax, dword [dword_DE260]	; 3FB91
+mov eax, dword [tradeside]	; 3FB87
+call DrawTradeRow	; 3FB8C
+mov eax, dword [tradeside]	; 3FB91
 mov ebx, 0FFFFFFFFh	; 3FB96
-mov dword [nosplit eax*4+dword_DDD84], ebx	; 3FB9B
-mov dword [dword_DE260], ebx	; 3FBA2
+mov dword [nosplit eax*4+tradecursor], ebx	; 3FB9B
+mov dword [tradeside], ebx	; 3FBA2
 mov edi, ebx	; 3FBA8
-loc_3FBAA:
+.67:
 test edi, edi	; 3FBAA
-je near loc_3FD36	; 3FBAC
+je near .72	; 3FBAC
 xor ecx, ecx	; 3FBB2
 mov dword [byte ebp+042h], ecx	; 3FBB4
 mov esi, dword [dword ebp-09Eh]	; 3FBB7
-loc_3FBBD:
+.68:
 mov eax, dword [byte ebp+042h]	; 3FBBD
 sar eax, 1	; 3FBC0
-mov edx, dword [nosplit eax*4+dword_DDD7C]	; 3FBC2
+mov edx, dword [nosplit eax*4+traderemap1]	; 3FBC2
 add edx, 90h	; 3FBC9
 mov ebx, 30h	; 3FBCF
 mov eax, unk_D12C8	; 3FBD4
@@ -2589,9 +2570,9 @@ push byte_D1238	; 3FC30
 call sub_B4DD4	; 3FC35
 add esp, byte 4	; 3FC3A
 mov eax, dword [byte ebp+042h]	; 3FC3D
-mov ebx, dword [nosplit eax*8+dword_C8B80]	; 3FC40
+mov ebx, dword [nosplit eax*8+tradebtny]	; 3FC40
 push ebx	; 3FC47
-mov ecx, dword [nosplit eax*8+dword_C8B7C]	; 3FC48
+mov ecx, dword [nosplit eax*8+tradebtnx]	; 3FC48
 push ecx	; 3FC4F
 push esi	; 3FC50
 call sub_931FC	; 3FC51
@@ -2600,78 +2581,78 @@ mov edi, dword [byte ebp+042h]	; 3FC59
 inc edi	; 3FC5C
 mov dword [byte ebp+042h], edi	; 3FC5D
 cmp edi, byte 4	; 3FC60
-jl near loc_3FBBD	; 3FC63
-jmp near loc_3FD36	; 3FC69
-loc_3FC6E:
-mov eax, dword [dword_DE260]	; 3FC6E
+jl near TradeScreenLoop.68	; 3FC63
+jmp near .72	; 3FC69
+.69:
+mov eax, dword [tradeside]	; 3FC6E
 shl eax, 2	; 3FC73
-mov edx, dword [dword eax+dword_DDD74]	; 3FC76
+mov edx, dword [dword eax+tradeclick]	; 3FC76
 cmp edx, byte 64h	; 3FC7C
-jl near loc_3FD36	; 3FC7F
+jl near .72	; 3FC7F
 lea ebx, [byte edx-064h]	; 3FC85
-mov dword [dword eax+dword_DDD74], ebx	; 3FC88
+mov dword [dword eax+tradeclick], ebx	; 3FC88
 mov edx, ebx	; 3FC8E
 shl edx, 2	; 3FC90
 sub edx, ebx	; 3FC93
 shl edx, 2	; 3FC95
 sub edx, ebx	; 3FC98
 lea ebx, [edx+edx]	; 3FC9A
-imul edx, dword [dword_DE260], dword 268h	; 3FC9D
-cmp byte [dword edx+ebx+byte_DDD8C], 0	; 3FCA7
-je near loc_3FD36	; 3FCAF
-mov edx, dword [dword eax+dword_DDD84]	; 3FCB5
-cmp edx, dword [dword eax+dword_DDD74]	; 3FCBB
-jne short loc_3FCF2	; 3FCC1
+imul edx, dword [tradeside], dword 268h	; 3FC9D
+cmp byte [dword edx+ebx+traderoster], 0	; 3FCA7
+je near .72	; 3FCAF
+mov edx, dword [dword eax+tradecursor]	; 3FCB5
+cmp edx, dword [dword eax+tradeclick]	; 3FCBB
+jne short .70	; 3FCC1
 push byte 41h	; 3FCC3
 push byte 40h	; 3FCC5
 call sub_8E9C0	; 3FCC7
 add esp, byte 8	; 3FCCC
-mov eax, dword [dword_DE260]	; 3FCCF
-call sub_3E7B3	; 3FCD4
-mov eax, dword [dword_DE260]	; 3FCD9
+mov eax, dword [tradeside]	; 3FCCF
+call DrawTradeRow	; 3FCD4
+mov eax, dword [tradeside]	; 3FCD9
 mov edx, 0FFFFFFFFh	; 3FCDE
-mov dword [nosplit eax*4+dword_DDD84], edx	; 3FCE3
-mov dword [dword_DE260], edx	; 3FCEA
-jmp short loc_3FD36	; 3FCF0
-loc_3FCF2:
+mov dword [nosplit eax*4+tradecursor], edx	; 3FCE3
+mov dword [tradeside], edx	; 3FCEA
+jmp short .72	; 3FCF0
+.70:
 cmp edx, byte 0FFFFFFFFh	; 3FCF2
-je short loc_3FD0D	; 3FCF5
+je short .71	; 3FCF5
 push byte 41h	; 3FCF7
 push byte 40h	; 3FCF9
 call sub_8E9C0	; 3FCFB
 add esp, byte 8	; 3FD00
-mov eax, dword [dword_DE260]	; 3FD03
-call sub_3E7B3	; 3FD08
-loc_3FD0D:
-mov eax, dword [dword_DE260]	; 3FD0D
-mov edx, dword [nosplit eax*4+dword_DDD74]	; 3FD12
-mov dword [nosplit eax*4+dword_DDD84], edx	; 3FD19
+mov eax, dword [tradeside]	; 3FD03
+call DrawTradeRow	; 3FD08
+.71:
+mov eax, dword [tradeside]	; 3FD0D
+mov edx, dword [nosplit eax*4+tradeclick]	; 3FD12
+mov dword [nosplit eax*4+tradecursor], edx	; 3FD19
 push byte 41h	; 3FD20
 push byte 42h	; 3FD22
 call sub_8E9C0	; 3FD24
 add esp, byte 8	; 3FD29
-mov eax, dword [dword_DE260]	; 3FD2C
-call sub_3E7B3	; 3FD31
-loc_3FD36:
-cmp dword [dword_DD79C], byte 0	; 3FD36
-jne near loc_3FEB8	; 3FD3D
+mov eax, dword [tradeside]	; 3FD2C
+call DrawTradeRow	; 3FD31
+.72:
+cmp dword [traderesult], byte 0	; 3FD36
+jne near .79	; 3FD3D
 mov esi, dword [byte ebp+02Eh]	; 3FD43
 cmp esi, byte 20h	; 3FD46
-jge short loc_3FD4F	; 3FD49
+jge short .73	; 3FD49
 xor eax, eax	; 3FD4B
-jmp short loc_3FD52	; 3FD4D
-loc_3FD4F:
+jmp short .74	; 3FD4D
+.73:
 lea eax, [byte esi-020h]	; 3FD4F
-loc_3FD52:
+.74:
 push eax	; 3FD52
 mov edi, dword [byte ebp+032h]	; 3FD53
 cmp edi, byte 1Ch	; 3FD56
-jge short loc_3FD5F	; 3FD59
+jge short .75	; 3FD59
 xor eax, eax	; 3FD5B
-jmp short loc_3FD62	; 3FD5D
-loc_3FD5F:
+jmp short .76	; 3FD5D
+.75:
 lea eax, [byte edi-01Ch]	; 3FD5F
-loc_3FD62:
+.76:
 push eax	; 3FD62
 mov eax, dword [byte ebp+05Eh]	; 3FD63
 push eax	; 3FD66
@@ -2680,19 +2661,19 @@ add esp, byte 0Ch	; 3FD6C
 mov eax, dword [byte ebp+02Eh]	; 3FD6F
 mov edx, dword [byte ebp+0Eh]	; 3FD72
 cmp eax, dword [byte edx+0Ch]	; 3FD75
-jle near loc_3FE92	; 3FD78
+jle near .78	; 3FD78
 mov ecx, dword [byte ebp+032h]	; 3FD7E
 cmp ecx, 0BEh	; 3FD81
-jle near loc_3FE92	; 3FD87
+jle near .78	; 3FD87
 cmp ecx, 1C0h	; 3FD8D
-jge near loc_3FE92	; 3FD93
-mov edi, dword [dword_DE260]	; 3FD99
+jge near .78	; 3FD93
+mov edi, dword [tradeside]	; 3FD99
 cmp edi, byte 0FFFFFFFFh	; 3FD9F
-je near loc_3FE92	; 3FDA2
-cmp dword [nosplit edi*4+dword_DDD84], byte 0FFFFFFFFh	; 3FDA8
-je near loc_3FE92	; 3FDB0
+je near .78	; 3FDA2
+cmp dword [nosplit edi*4+tradecursor], byte 0FFFFFFFFh	; 3FDA8
+je near .78	; 3FDB0
 cmp dword [byte ebp+012h], byte 0	; 3FDB6
-je short loc_3FDE5	; 3FDBA
+je short .77	; 3FDBA
 lea eax, [byte ebp+026h]	; 3FDBC
 push eax	; 3FDBF
 lea eax, [byte ebp+02Ah]	; 3FDC0
@@ -2707,15 +2688,15 @@ mov edx, dword [byte ebp+02Eh]	; 3FDD2
 mov eax, dword [byte ebp+032h]	; 3FDD5
 call sub_6BA4D	; 3FDD8
 test eax, eax	; 3FDDD
-jne near loc_3FE92	; 3FDDF
-loc_3FDE5:
-mov eax, dword [dword_DE260]	; 3FDE5
-mov edx, dword [nosplit eax*4+dword_DDD7C]	; 3FDEA
+jne near .78	; 3FDDF
+.77:
+mov eax, dword [tradeside]	; 3FDE5
+mov edx, dword [nosplit eax*4+traderemap1]	; 3FDEA
 add edx, 90h	; 3FDF1
 mov ebx, 30h	; 3FDF7
 mov eax, unk_D12C8	; 3FDFC
 call memcpy_	; 3FE01
-mov edx, dword [dword_DE260]	; 3FE06
+mov edx, dword [tradeside]	; 3FE06
 mov eax, dword [dword ebp-0A6h]	; 3FE0C
 mov eax, dword [eax+edx*4]	; 3FE12
 mov al, byte [nosplit eax*4+byte_D11BC]	; 3FE15
@@ -2726,17 +2707,17 @@ xor ecx, ecx	; 3FE2D
 mov cl, ah	; 3FE2F
 xor ebx, ebx	; 3FE31
 mov bl, al	; 3FE33
-mov edx, dword [nosplit edx*4+dword_DDD84]	; 3FE35
+mov edx, dword [nosplit edx*4+tradecursor]	; 3FE35
 mov eax, edx	; 3FE3C
 shl eax, 2	; 3FE3E
 sub eax, edx	; 3FE41
 shl eax, 2	; 3FE43
 sub eax, edx	; 3FE46
 add eax, eax	; 3FE48
-imul edx, dword [dword_DE260], dword 268h	; 3FE4A
+imul edx, dword [tradeside], dword 268h	; 3FE4A
 add eax, edx	; 3FE54
 xor edx, edx	; 3FE56
-mov dl, byte [dword eax+byte_DDD8D]	; 3FE58
+mov dl, byte [dword eax+tradejersey]	; 3FE58
 mov eax, byte_D1238	; 3FE5E
 call sub_7A099	; 3FE63
 push byte_D1238	; 3FE68
@@ -2752,7 +2733,7 @@ mov edi, dword [dword ebp-09Eh]	; 3FE83
 push edi	; 3FE89
 call sub_91FE0	; 3FE8A
 add esp, byte 0Ch	; 3FE8F
-loc_3FE92:
+.78:
 mov eax, dword [byte ebp+02Eh]	; 3FE92
 push eax	; 3FE95
 mov eax, dword [byte ebp+032h]	; 3FE96
@@ -2766,73 +2747,73 @@ mov eax, dword [byte ebp+032h]	; 3FEAC
 mov dword [byte ebp+03Ah], eax	; 3FEAF
 mov eax, dword [byte ebp+02Eh]	; 3FEB2
 mov dword [byte ebp+036h], eax	; 3FEB5
-loc_3FEB8:
-cmp dword [dword_DD79C], byte 0	; 3FEB8
-je near loc_3F138	; 3FEBF
+.79:
+cmp dword [traderesult], byte 0	; 3FEB8
+je near TradeScreenLoop.6	; 3FEBF
 mov ecx, dword [byte ebp+05Eh]	; 3FEC5
 push ecx	; 3FEC8
 call jctime	; 3FEC9
 add esp, byte 4	; 3FECE
-cmp dword [dword_DD79C], byte 0	; 3FED1
-jle short loc_3FEE2	; 3FED8
+cmp dword [traderesult], byte 0	; 3FED1
+jle short .80	; 3FED8
 xor edi, edi	; 3FEDA
-mov dword [dword_DD79C], edi	; 3FEDC
-loc_3FEE2:
-mov eax, dword [dword_DD79C]	; 3FEE2
-loc_3FEE7:
+mov dword [traderesult], edi	; 3FEDC
+.80:
+mov eax, dword [traderesult]	; 3FEE2
+.81:
 lea esp, [byte ebp+072h]	; 3FEE7
 pop ebp	; 3FEEA
 pop edi	; 3FEEB
 pop esi	; 3FEEC
 ret 10h	; 3FEED
-sub_3FEF0:
+TradeRosterCmp:
 push dword 8	; 3FEF0
 call __CHK	; 3FEF5
 push ebx	; 3FEFA
 mov bl, byte [eax]	; 3FEFB
 mov bh, byte [edx]	; 3FEFD
 cmp bl, bh	; 3FEFF
-jne short loc_3FF19	; 3FF01
+jne short .2	; 3FF01
 cmp byte [eax], 0	; 3FF03
-jne short loc_3FF0C	; 3FF06
+jne short .1	; 3FF06
 xor eax, eax	; 3FF08
 pop ebx	; 3FF0A
 ret	; 3FF0B
-loc_3FF0C:
+.1:
 add edx, byte 6	; 3FF0C
 add eax, byte 6	; 3FF0F
 call strcmp_	; 3FF12
 pop ebx	; 3FF17
 ret	; 3FF18
-loc_3FF19:
+.2:
 test bl, bl	; 3FF19
-je short loc_3FF4B	; 3FF1B
+je short .5	; 3FF1B
 test bh, bh	; 3FF1D
-jne short loc_3FF28	; 3FF1F
-loc_3FF21:
+jne short .4	; 3FF1F
+.3:
 mov eax, 0FFFFFFFFh	; 3FF21
 pop ebx	; 3FF26
 ret	; 3FF27
-loc_3FF28:
+.4:
 cmp bl, 4Ch	; 3FF28
-je short loc_3FF21	; 3FF2B
+je short TradeRosterCmp.3	; 3FF2B
 cmp bh, 4Ch	; 3FF2D
-je short loc_3FF4B	; 3FF30
+je short .5	; 3FF30
 cmp bl, 43h	; 3FF32
-je short loc_3FF21	; 3FF35
+je short TradeRosterCmp.3	; 3FF35
 cmp bh, 43h	; 3FF37
-je short loc_3FF4B	; 3FF3A
+je short .5	; 3FF3A
 cmp bl, 52h	; 3FF3C
-je short loc_3FF21	; 3FF3F
+je short TradeRosterCmp.3	; 3FF3F
 cmp bh, 52h	; 3FF41
-je short loc_3FF4B	; 3FF44
+je short .5	; 3FF44
 cmp bl, 44h	; 3FF46
-je short loc_3FF21	; 3FF49
-loc_3FF4B:
+je short TradeRosterCmp.3	; 3FF49
+.5:
 mov eax, 1	; 3FF4B
 pop ebx	; 3FF50
 ret	; 3FF51
-sub_3FF52:
+TradeScreen:
 push dword 654h	; 3FF52
 call __CHK	; 3FF57
 push esi	; 3FF5C
@@ -2846,7 +2827,7 @@ mov dword [dword esp+0628h], ecx	; 3FF70
 call sub_B4BA8	; 3FF77
 push byte 20h	; 3FF7C
 push dword 300h	; 3FF7E
-push asc_C1964	; 3FF83
+push str_Temp6	; 3FF83
 call sub_8CCA8	; 3FF88
 mov edi, eax	; 3FF8D
 add esp, byte 0Ch	; 3FF8F
@@ -2874,14 +2855,14 @@ push eax	; 3FFDC
 call sub_8E9E8	; 3FFDD
 add esp, byte 4	; 3FFE2
 mov ecx, str_VFN	; 3FFE5
-mov ebx, unk_C1A15	; 3FFEA
+mov ebx, str_S12	; 3FFEA
 cmp byte [byte_ED8B3], 1	; 3FFEF
-jne short loc_40000	; 3FFF6
+jne short .1	; 3FFF6
 mov edx, dword [dword_D2C6B]	; 3FFF8
-jmp short loc_40002	; 3FFFE
-loc_40000:
+jmp short .2	; 3FFFE
+.1:
 xor edx, edx	; 40000
-loc_40002:
+.2:
 lea eax, [dword esp+0610h]	; 40002
 call MakePath	; 40009
 push byte 0	; 4000E
@@ -2894,14 +2875,14 @@ push eax	; 40027
 call sub_8EA18	; 40028
 add esp, byte 4	; 4002D
 xor ecx, ecx	; 40030
-mov ebx, asc_C1A18	; 40032
+mov ebx, str_Lineditp	; 40032
 cmp byte [byte_ED8B4], 1	; 40037
-jne short loc_40048	; 4003E
+jne short .3	; 4003E
 mov edx, dword [dword_D2C6B]	; 40040
-jmp short loc_4004A	; 40046
-loc_40048:
+jmp short .4	; 40046
+.3:
 xor edx, edx	; 40048
-loc_4004A:
+.4:
 lea eax, [dword esp+0610h]	; 4004A
 call MakePath	; 40051
 push byte 0	; 40056
@@ -2910,43 +2891,43 @@ push eax	; 4005F
 call sub_8E83C	; 40060
 add esp, byte 8	; 40065
 mov dword [dword esp+062Ch], eax	; 40068
-push asc_C1A21	; 4006F
+push str_Shrt	; 4006F
 push eax	; 40074
 call sub_B30B4	; 40075
 add esp, byte 8	; 4007A
 mov dword [dword esp+0620h], eax	; 4007D
 mov ebx, 0FFFFFFFFh	; 40084
-mov dword [dword_DDD84], ebx	; 40089
-mov dword [dword_DDD88], ebx	; 4008F
-mov dword [dword_DDD74], ebx	; 40095
-mov dword [dword_DDD78], ebx	; 4009B
-mov dword [dword_DE260], ebx	; 400A1
+mov dword [tradecursor], ebx	; 40089
+mov dword [tradecursor+4], ebx	; 4008F
+mov dword [tradeclick], ebx	; 40095
+mov dword [tradeclick+4], ebx	; 4009B
+mov dword [tradeside], ebx	; 400A1
 mov edx, dword [esi]	; 400A7
 mov ecx, esp	; 400A9
-mov ebx, byte_DDD8C	; 400AB
+mov ebx, traderoster	; 400AB
 mov eax, ebp	; 400B0
-call sub_3DC2C	; 400B2
+call BuildTradeRoster	; 400B2
 mov edi, eax	; 400B7
 test eax, eax	; 400B9
-jne short loc_400D5	; 400BB
+jne short .5	; 400BB
 mov edx, dword [byte esi+04h]	; 400BD
 lea ecx, [dword esp+02E8h]	; 400C0
-mov ebx, unk_DDFF4	; 400C7
+mov ebx, traderoster+268h	; 400C7
 mov eax, ebp	; 400CC
-call sub_3DC2C	; 400CE
+call BuildTradeRoster	; 400CE
 mov edi, eax	; 400D3
-loc_400D5:
+.5:
 test edi, edi	; 400D5
-jne short loc_40146	; 400D7
-mov ecx, sub_3FEF0	; 400D9
+jne short .6	; 400D7
+mov ecx, TradeRosterCmp	; 400D9
 mov ebx, 16h	; 400DE
 mov edx, 1Ch	; 400E3
-mov eax, byte_DDD8C	; 400E8
+mov eax, traderoster	; 400E8
 call qsort_	; 400ED
-mov ecx, sub_3FEF0	; 400F2
+mov ecx, TradeRosterCmp	; 400F2
 mov ebx, 16h	; 400F7
 mov edx, 1Ch	; 400FC
-mov eax, unk_DDFF4	; 40101
+mov eax, traderoster+268h	; 40101
 call qsort_	; 40106
 mov ebx, dword [dword esp+0644h]	; 4010B
 push ebx	; 40112
@@ -2960,9 +2941,9 @@ mov ecx, dword [dword esp+0634h]	; 4012B
 mov ebx, esi	; 40132
 lea edx, [byte esp+010h]	; 40134
 mov eax, dword [dword esp+0630h]	; 40138
-call sub_3EF89	; 4013F
+call TradeScreenLoop	; 4013F
 mov edi, eax	; 40144
-loc_40146:
+.6:
 mov eax, dword [dword esp+062Ch]	; 40146
 push eax	; 4014D
 call jctime	; 4014E
@@ -2977,4 +2958,4 @@ call jctime	; 4016E
 add esp, byte 4	; 40173
 mov eax, edi	; 40176
 add esp, 634h	; 40178
-jmp near loc_3EDA4	; 4017E
+jmp near TradeHitTest_ret	; 4017E

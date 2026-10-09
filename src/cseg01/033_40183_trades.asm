@@ -13,7 +13,7 @@ extern fputchar, jctime, memset_, teamcitynames, msg_OneHuman, leaguedbnames
 extern msg_TradeDeadline, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, strncpy_, MakePath
 extern DeleteFiles, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
 extern CopyFile, ReadSchedGame, SetDialogColors, RestoreDialogBg, MessageBox, LeagueTeamSelect, WriteLeagueTeamEntry, AskTeamPassword
-extern AskMasterPassword, MergeLeagueFiles, ExportTeamToFloppy, SelectFloppyDrive, ReadLeagueInfo, ReadTeamNames, sub_3E390, sub_3FF52
+extern AskMasterPassword, MergeLeagueFiles, ExportTeamToFloppy, SelectFloppyDrive, ReadLeagueInfo, ReadTeamNames, ExecuteTrade, TradeScreen
 extern sub_6B3D7, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
 extern sub_B4F8C, negone_3DC28, msg_AllHuman, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, msg_TradeError, msg_Copying
 extern msg_MasterDB, btn_MasterDB, msg_SavedGame, str_star, btn_TradeStats, leagueteams, treeteamnames, masterpw
@@ -345,14 +345,14 @@ mov ecx, btn_TradeStats	; 406A3
 lea ebx, [dword esp+0B0h]	; 406A8
 lea edx, [dword esp+09Ch]	; 406AF
 mov eax, curleague	; 406B6
-call sub_3FF52	; 406BB
+call TradeScreen	; 406BB
 .16:
 test eax, eax	; 406C0
 jne short .17	; 406C2
 lea ebx, [dword esp+0ACh]	; 406C4
 lea edx, [dword esp+098h]	; 406CB
 mov eax, curleague	; 406D2
-call sub_3E390	; 406D7
+call ExecuteTrade	; 406D7
 mov ebp, eax	; 406DC
 .17:
 test ebp, ebp	; 406DE

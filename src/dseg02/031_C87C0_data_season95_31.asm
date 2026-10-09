@@ -2,20 +2,20 @@
 bits 32
 %include "hockey.inc"
 section s_C87C0 progbits alloc noexec write align=1
-extern sub_3DE05, sub_3EDAA, sub_3EF27, sub_79DD1, unk_C17F0, unk_C87B8
+extern TradeShowStats, TradeDone, TradeCancel, sub_79DD1, unk_C17F0, unk_C87B8
 global dword_C87C0, dword_C87C8, dword_C87E0, dword_C87E8, unk_C87F8, unk_C87FD, unk_C8804, unk_C8844
 global unk_C884A, btn_TradeStats, unk_C88BC, unk_C88C2
 dword_C87C0:
 db 0BAh,00h,00h,00h,011h,00h,00h,00h
 dword_C87C8:
 db 00h,00h,00h,00h
-dd sub_3DE05
+dd TradeShowStats
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 dword_C87E0:
 db 0BAh,00h,00h,00h,024h,00h,00h,00h
 dword_C87E8:
 db 00h,00h,00h,00h
-dd sub_3DE05
+dd TradeShowStats
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_C87F8:
 db 044h,06Fh,06Eh,065h,00h
@@ -24,11 +24,11 @@ db 043h,061h,06Eh,063h,065h,06Ch,00h
 unk_C8804:
 db 00h,00h,00h,00h,00h,00h,00h,00h,034h,00h,00h,00h,011h,00h,00h,00h
 dd unk_C87F8
-dd sub_3EDAA
+dd TradeDone
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 034h,00h,00h,00h,024h,00h,00h,00h
 dd unk_C87FD
-dd sub_3EF27
+dd TradeCancel
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_C8844:
 db 054h,072h,061h,064h,065h,00h

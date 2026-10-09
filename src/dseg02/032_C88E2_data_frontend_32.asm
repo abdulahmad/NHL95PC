@@ -4,8 +4,8 @@ bits 32
 section s_C88E2 progbits alloc noexec write align=1
 extern unk_C1934, unk_C1936, unk_C67B1, unk_C88C2, unk_CE0A5, unk_CE1F5
 global teamstartlag, greyramp, dword_C891E, calcolx, calrowy, calendarshapes
-global gridcellbuf, dword_C8B7C, dword_C8B80, masteronlymsg, mergeincompletemsg, updateerrmsg
-global exporterrmsg, off_C8BDD, unk_C88E2, unk_C899C, unk_C89BD, unk_C89EA, unk_C8A0F, masterctlmsg
+global gridcellbuf, tradebtnx, tradebtny, masteronlymsg, mergeincompletemsg, updateerrmsg
+global exporterrmsg, unequaltrademsg, unk_C88E2, unk_C899C, unk_C89BD, unk_C89EA, unk_C8A0F, masterctlmsg
 global unk_C8A33, unk_C8A51, unk_C8A6E, unk_C8A91, unk_C8AA6, unk_C8AC1, mergeerrmsg, unk_C8AE4
 global importmastermsg, unk_C8B04, unk_C8B22, drivebtns, unk_C8B9C, unk_C8BB3, unk_C8BCE, unk_C8BE9
 global unk_C8C0A
@@ -112,9 +112,9 @@ db 00h,00h,00h,00h,06h,00h,00h,00h
 dd unk_C1936
 greyramp:
 db 00h,017h,02Ah,03Fh
-dword_C8B7C:
+tradebtnx:
 db 0E6h,00h,00h,00h
-dword_C8B80:
+tradebtny:
 db 080h,00h,00h,00h,0E6h,00h,00h,00h,0F0h,00h,00h,00h,068h,01h,00h,00h
 db 080h,00h,00h,00h,068h,01h,00h,00h,0F0h,00h,00h,00h
 unk_C8B9C:
@@ -125,7 +125,7 @@ db 06Eh,075h,06Dh,062h,065h,072h,020h,06Fh,066h,020h,070h,06Ch,061h,079h,065h,07
 db 073h,020h,073h,065h,06Ch,065h,063h,074h,065h,064h,00h
 unk_C8BCE:
 db 06Fh,06Eh,020h,062h,06Fh,074h,068h,020h,074h,065h,061h,06Dh,073h,021h,00h
-off_C8BDD:
+unequaltrademsg:
 dd unk_C8B9C
 dd unk_C8BB3
 dd unk_C8BCE

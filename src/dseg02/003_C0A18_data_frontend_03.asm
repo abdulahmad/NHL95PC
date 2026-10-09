@@ -45,9 +45,9 @@ global str_Temp5, str_Easndesk2, str_GAME, str_SAV, str_Back, str_Callogo2, str_
 global str_Pal19, str_TPI, str_Embnhl, str_Bkgd8, str_Pointer9, str_Iff10, str_Leaguetm2, str_Tspal
 global str_Pal20, str_Menubuff6, str_WhoWillPlayThe, str_MightyDucksOfAnaheim3, str_02d2, str_SAV2, str_GAME2, str_SET
 global str_GAME3, str_SAV3, str_02d3, str_Game2, str_Sav2, str_NHL2, str_CannotOpenNhlCfg, str_fmt4x
-global asc_C1964, asc_C1969, asc_C196F, asc_C1974, asc_C197A, asc_C1980, asc_C1987, asc_C198C
-global asc_C1994, asc_C19C1, asc_C19DC, asc_C19E0, asc_C19EA, asc_C19F3, asc_C19FA, asc_C19FF
-global asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, str_fe1, str_fe2, str_fe3, str_fe4
+global str_Temp6, str_Tstat, str_Keys2, str_Pstat2, str_Gstat2, str_Embpal3, str_Pal21, str_Donepal
+global str_TheJerseyNumber2d2, str_EnterJerseyNumberFor, str_Pal22, str_C2dS, str_HOMEPALS2, str_Embnhl2, str_Bkgd9, str_Pntr2
+global str_Pointer10, str_Menubuff7, str_Lineditp, str_Shrt, str_fe1, str_fe2, str_fe3, str_fe4
 global str_fe5, str_fe7, str_fe8, str_feB1, str_feB5, str_feB8, str_feD, str_feE
 global str_feF, str_feG, str_feH, str_feI, str_feL, str_feM, str_feN, str_feO
 global str_feP, str_feQ, str_fe9, str_feA, str_feB, str_feC, str_feJ, str_feK
@@ -71,7 +71,7 @@ global str_fek5, str_fek6, str_fek7, str_fek8, str_feh7, str_feA1, str_fel1, str
 global str_fel2, str_fec6, str_fed2, str_fed3, str_fed4, str_D6, str_OT, str_S3
 global str_CommaSp, str_RParen2, str_D7, str_Dot, str_Space, str_fee2, str_fee3, str_fee4
 global unk_C17F0, str_D8, str_W5, str_L7, str_T5, unk_C1900, str_wildcard, str_ID
-global str_L1, str_L22, unk_C1934, unk_C1936, str_R3, unk_C1A15
+global str_L1, str_L22, unk_C1934, unk_C1936, str_R3, str_S12
 str_teams:
 db 074h,065h,061h,06Dh,073h,00h
 str_fe1:
@@ -1191,48 +1191,48 @@ db 063h,061h,06Eh,06Eh,06Fh,074h,020h,06Fh,070h,065h,06Eh,020h,06Eh,068h,06Ch,02
 db 063h,066h,067h,00h
 str_fmt4x:
 db 025h,034h,078h,0Ah,00h,00h,00h,00h
-asc_C1964:
+str_Temp6:
 db 074h,065h,06Dh,070h,00h
-asc_C1969:
+str_Tstat:
 db 074h,073h,074h,061h,074h,00h
-asc_C196F:
+str_Keys2:
 db 06Bh,065h,079h,073h,00h
-asc_C1974:
+str_Pstat2:
 db 070h,073h,074h,061h,074h,00h
-asc_C197A:
+str_Gstat2:
 db 067h,073h,074h,061h,074h,00h
-asc_C1980:
+str_Embpal3:
 db 065h,06Dh,062h,070h,061h,06Ch,00h
-asc_C1987:
+str_Pal21:
 db 021h,070h,061h,06Ch,00h
-asc_C198C:
+str_Donepal:
 db 064h,06Fh,06Eh,065h,070h,061h,06Ch,00h
-asc_C1994:
+str_TheJerseyNumber2d2:
 db 054h,068h,065h,020h,06Ah,065h,072h,073h,065h,079h,020h,06Eh,075h,06Dh,062h,065h
 db 072h,020h,025h,032h,064h,020h,069h,073h,020h,061h,06Ch,072h,065h,061h,064h,079h
 db 020h,075h,073h,065h,064h,020h,06Fh,06Eh,020h,025h,073h,021h,00h
-asc_C19C1:
+str_EnterJerseyNumberFor:
 db 045h,06Eh,074h,065h,072h,020h,06Ah,065h,072h,073h,065h,079h,020h,06Eh,075h,06Dh
 db 062h,065h,072h,020h,066h,06Fh,072h,020h,025h,073h,00h
-asc_C19DC:
+str_Pal22:
 db 050h,061h,06Ch,00h
-asc_C19E0:
+str_C2dS:
 db 025h,063h,020h,025h,032h,064h,020h,025h,073h,00h
-asc_C19EA:
+str_HOMEPALS2:
 db 048h,04Fh,04Dh,045h,050h,041h,04Ch,053h,00h
-asc_C19F3:
+str_Embnhl2:
 db 065h,06Dh,062h,06Eh,068h,06Ch,00h
-asc_C19FA:
+str_Bkgd9:
 db 062h,06Bh,067h,064h,00h
-asc_C19FF:
+str_Pntr2:
 db 070h,06Eh,074h,072h,00h
-asc_C1A04:
+str_Pointer10:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C1A0C:
+str_Menubuff7:
 db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
-unk_C1A15:
+str_S12:
 db 073h,031h,00h
-asc_C1A18:
+str_Lineditp:
 db 06Ch,069h,06Eh,065h,064h,069h,074h,070h,00h
-asc_C1A21:
+str_Shrt:
 db 073h,068h,072h,074h,00h
