@@ -9,9 +9,9 @@ extern str_Numshp, str_GfxIdList, str_PPV, str_VFN, assinsert, pad1dev, pad2dev,
 extern musicon, byte_E024C, byte_E024D, byte_E024F, textline1, textline2, textline3, textline4
 extern textline5, byte_E9AC8, byte_E9AD3, fileoncd
 extern joysampling
-extern inputframes, gameopts, sounddev, dword_C5840, dword_C66D0, dword_C66D4, songdata, cont2team
-extern HomeTeam, dword_CBECA, dword_CC0AC, photobankf, dword_CC0EC, dword_CC0F0, dword_CC0F8, penshotplayer
-extern penshotmode, penshotstart, dword_CC124, penshotlive, crowdsmooth, musichandle, cddriveptr, musicslot
+extern inputframes, gameopts, sounddev, deferpending, dword_C66D0, dword_C66D4, songdata, cont2team
+extern HomeTeam, dword_CBECA, dword_CC0AC, photobankf, dword_CC0EC, introskipped, shotongoal, penshotplayer
+extern penshotmode, penshotstart, shotontarget, penshotlive, crowdsmooth, musichandle, cddriveptr, musicslot
 extern kaufmfont, numshapes, dword_D8C4C, rinkendbank, frameaccum, rinkendart, dword_D8C78, numshpbank
 extern curperiod, photobanks, photoptrs, savedmousex, savedmousey, dword_E009C, photoptrsf
 extern dword_E9A9E, dword_E9AB6, hilightfont, jctime, PickAwardWinners_x, memcpy_, nullsub_2
@@ -24,11 +24,11 @@ extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, MouseSetPos, sub_B
 extern sub_B392C, sub_B4BA8, threat, savepal, SortCords, vtoa, regd4, scrpitch
 extern lastplayer, passdir, word_C90A6, passplayer, fox, foy, Pencntdwn, Penaltytimer
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, word_CBC44, exitgame, gameover
-extern word_CBC52, word_CBC54, lcblink, word_CBC58, lcblinktime, lcsel, word_CBC60
-extern lcline, word_CBC64, lctimer, word_CBC68, lcboxon, word_CBC6C, word_CBE8C, word_CBE8E
-extern ovltimer, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0B0
-extern crowdlevel, word_DEE94, hmtmap, awtmap, word_E024E, lcrequest, word_E0306, lcreqchoice
-extern word_E0382, regd2, regd0, regd1, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4
+extern energywarn, lcblink, lcblinktime, lcsel, word_CBC60
+extern lcline, lctimer, lcboxon, word_CBE8C, word_CBE8E
+extern ovltimer, word_CBEC2, fadeinpending, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0B0
+extern crowdlevel, word_DEE94, hmtmap, awtmap, word_E024E, lcrequest, lcreqchoice
+extern regd2, regd0, regd1, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4
 extern word_E9AA6, CwdExciteLvl, word_E9AAA, word_E9AAE, word_E9B2C
 global LoadTransparentRinkEndOverlay
 global IndexPhotoBank_x
@@ -714,7 +714,7 @@ call sub_8E9C0	; 13B80
 add esp, byte 8	; 13B85
 call LoadPlayerPhotos	; 13B88
 call nullsub_2	; 13B8D
-mov word [word_CBEC4], 1	; 13B92
+mov word [fadeinpending], 1	; 13B92
 mov ecx, 1	; 13B9B
 mov dword [dword_C66D4], ecx	; 13BA0
 mov dword [dword_C66D0], ecx	; 13BA6
@@ -942,7 +942,7 @@ xor ebx, ebx	; 13EBC
 mov word [crowdlevel], bx	; 13EBE
 call CrowdNoiseReset	; 13EC5
 xor edx, edx	; 13ECA
-mov dword [dword_CC0F0], edx	; 13ECC
+mov dword [introskipped], edx	; 13ECC
 call ResetGameVars	; 13ED2
 mov edx, dword [VisTeam-2]	; 13ED7
 sar edx, 10h	; 13EDD
@@ -967,15 +967,15 @@ pop ecx	; 13F19
 pop ebx	; 13F1A
 ret	; 13F1B
 .1:
-mov edx, dword [dword_CC0F0]	; 13F1C
+mov edx, dword [introskipped]	; 13F1C
 test edx, edx	; 13F22
 je short .2	; 13F24
-mov word [word_CBEC4], 1	; 13F26
+mov word [fadeinpending], 1	; 13F26
 .2:
 xor edi, edi	; 13F2F
 mov word [gsp], di	; 13F31
 call ResetGameVars	; 13F38
-mov dword [dword_CC0F0], edx	; 13F3D
+mov dword [introskipped], edx	; 13F3D
 test edx, edx	; 13F43
 je short .3	; 13F45
 push savepal	; 13F47
@@ -990,17 +990,17 @@ call FadePalette	; 13F6A
 .3:
 test byte [gameopts], 4	; 13F6F
 jne short .4	; 13F76
-cmp dword [dword_CC0F0], byte 0	; 13F78
+cmp dword [introskipped], byte 0	; 13F78
 jne short .5	; 13F7F
 .4:
 call PlacePlayersAtStart	; 13F81
 .5:
 cmp dword [dword_CC0EC], byte 0	; 13F86
 jne short .6	; 13F8D
-cmp dword [dword_CC0F0], byte 0	; 13F8F
+cmp dword [introskipped], byte 0	; 13F8F
 jne short .6	; 13F96
 xor eax, eax	; 13F98
-mov word [word_CBEC4], ax	; 13F9A
+mov word [fadeinpending], ax	; 13F9A
 .6:
 xor eax, eax	; 13FA0
 pop edi	; 13FA2
@@ -1025,7 +1025,7 @@ xor ebx, ebx	; 13FD4
 mov word [crowdlevel], bx	; 13FD6
 call CrowdNoiseReset	; 13FDD
 xor edx, edx	; 13FE2
-mov dword [dword_CC0F0], edx	; 13FE4
+mov dword [introskipped], edx	; 13FE4
 call ResetGameVars	; 13FEA
 xor ecx, ecx	; 13FEF
 mov word [crowdlevel], cx	; 13FF1
@@ -1041,21 +1041,21 @@ pop ecx	; 14010
 pop ebx	; 14011
 ret	; 14012
 .1:
-mov edx, dword [dword_CC0F0]	; 14013
+mov edx, dword [introskipped]	; 14013
 test edx, edx	; 14019
 je short .2	; 1401B
-mov word [word_CBEC4], 1	; 1401D
+mov word [fadeinpending], 1	; 1401D
 .2:
 xor edi, edi	; 14026
 mov word [gsp], di	; 14028
 call ResetGameVars	; 1402F
-mov dword [dword_CC0F0], edx	; 14034
+mov dword [introskipped], edx	; 14034
 cmp dword [dword_CC0EC], byte 0	; 1403A
 jne short .3	; 14041
 test edx, edx	; 14043
 jne short .3	; 14045
 xor eax, eax	; 14047
-mov word [word_CBEC4], ax	; 14049
+mov word [fadeinpending], ax	; 14049
 .3:
 xor eax, eax	; 1404F
 pop edi	; 14051
@@ -1100,19 +1100,19 @@ mov word [refsignal], ax	; 140EF
 mov word [Penaltytimer], ax	; 140F5
 mov word [lcblinktime+2], ax	; 140FB
 mov word [lcblinktime], ax	; 14101
-mov word [word_CBC58], ax	; 14107
+mov word [lcblink+2], ax	; 14107
 mov word [lcblink], ax	; 1410D
-mov word [word_CBC54], ax	; 14113
-mov word [word_CBC52], ax	; 14119
-mov word [word_E0382], ax	; 1411F
+mov word [energywarn+2], ax	; 14113
+mov word [energywarn], ax	; 14119
+mov word [lcreqchoice+2], ax	; 1411F
 mov word [lcreqchoice], ax	; 14125
-mov word [word_E0306], ax	; 1412B
+mov word [lcrequest+2], ax	; 1412B
 mov word [lcrequest], ax	; 14131
-mov word [word_CBC6C], ax	; 14137
+mov word [lcboxon+2], ax	; 14137
 mov word [lcboxon], ax	; 1413D
-mov word [word_CBC68], ax	; 14143
+mov word [lctimer+2], ax	; 14143
 mov word [lctimer], ax	; 14149
-mov word [word_CBC64], ax	; 1414F
+mov word [lcline+2], ax	; 1414F
 mov word [lcline], ax	; 14155
 mov word [word_CBC60], ax	; 1415B
 mov word [lcsel], ax	; 14161
@@ -1139,8 +1139,8 @@ mov dword [penshotmode], ebx	; 141C0
 mov dword [penshotlive], ebx	; 141C6
 mov dword [penshotstart], ebx	; 141CC
 xor eax, eax	; 141D2
-mov dword [dword_CC124], ebx	; 141D4
-mov dword [dword_CC0F8], ebx	; 141DA
+mov dword [shotontarget], ebx	; 141D4
+mov dword [shotongoal], ebx	; 141DA
 mov dword [penshotplayer], 0FFFFFFFFh	; 141E0
 xor eax, esi	; 141EA
 mov word [CwdExciteLvl], ax	; 141EC
@@ -1188,7 +1188,7 @@ call MouseSetPos	; 1429C
 add esp, byte 8	; 142A1
 .3:
 xor edi, edi	; 142A4
-mov dword [dword_C5840], edi	; 142A6
+mov dword [deferpending], edi	; 142A6
 mov dword [inputframes], edi	; 142AC
 xor ecx, ecx	; 142B2
 mov word [exitgame], cx	; 142B4

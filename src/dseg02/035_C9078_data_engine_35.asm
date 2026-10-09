@@ -19,10 +19,10 @@ global unk_CBCFE, unk_CBD0E, unk_CBD1E, ds2list, wcradiusx, camx, camy, lastplay
 global passdir, word_C90A6, passplayer, xc1, yc1, fox, foy, fodir1
 global fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal
 global RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, dirtab_y
-global debugstep, word_CBC44, exitgame, gameover, PerTimeTab, word_CBC52, word_CBC54, lcblink
-global word_CBC58, lcblinktime, lcsel, word_CBC60, lcline, word_CBC64, lctimer
-global word_CBC68, lcboxon, word_CBC6C, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, ovltimer
-global word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE
+global debugstep, word_CBC44, exitgame, gameover, PerTimeTab, energywarn, lcblink
+global lcblinktime, lcsel, word_CBC60, lcline, lctimer
+global lcboxon, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, ovltimer
+global word_CBEC2, fadeinpending, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE
 replaystart:
 dd unk_E0416
 puckx:
@@ -878,13 +878,11 @@ gameover:
 db 01h,00h
 PerTimeTab:
 db 02Ch,01h,058h,02h,0B0h,04h,0B0h,04h
-word_CBC52:
+energywarn:
 db 00h,00h
-word_CBC54:
 db 00h,00h
 lcblink:
 db 00h,00h
-word_CBC58:
 db 00h,00h
 lcblinktime:
 db 00h,00h
@@ -895,15 +893,12 @@ word_CBC60:
 db 00h,00h
 lcline:
 db 00h,00h
-word_CBC64:
 db 00h,00h
 lctimer:
 db 00h,00h
-word_CBC68:
 db 00h,00h
 lcboxon:
 db 00h,00h
-word_CBC6C:
 db 00h,00h
 unk_CBC6E:
 db 02h,01h,00h,03h,00h,03h,02h,01h,03h,02h,01h,00h,01h,00h,03h,02h
@@ -978,7 +973,7 @@ ovltimer:
 db 0FFh,0FFh
 word_CBEC2:
 db 00h,00h
-word_CBEC4:
+fadeinpending:
 db 00h,00h
 word_CBEC6:
 db 00h,00h

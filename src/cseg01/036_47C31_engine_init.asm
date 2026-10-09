@@ -5,7 +5,7 @@ section s_47C31 progbits alloc exec nowrite align=1
 extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, loadpals, VisTeam, bgscrollx, scrollx
 extern textline1, textline2, textline3, textline4, textline5, joysampling, inputframes, escrequest
 extern rinkscrollx, rinkscrolly, loadscreenon, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
-extern dword_CC0F0, dword_CC9AD, spritedrawcount, frameaccum, dword_D8C72, viewscrolly, dword_D8C7A, viewscrollx
+extern introskipped, dword_CC9AD, spritedrawcount, frameaccum, dword_D8C72, viewscrolly, dword_D8C7A, viewscrollx
 extern curperiod, rinkwtiles, rinkhtiles, bgscrolly, palcyclelock, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, randomd0
 extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, UpdateHudPanel, SetRinkScroll
@@ -13,8 +13,8 @@ extern LoadScreenPalTick, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, Crow
 extern PlayCrowdSample, DrawRinkOverlays, SprSort, LoadTeamPPV, CloseTextOverlay, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, SpeechStopQueue, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
 extern savepal, gamepal, unk_DFD9C, camx, camy, xc1, yc1, SortCords
-extern fox, foy, c1playernum, c2playernum, RefStep, exitgame, word_CBC52, word_CBC54
-extern lcblink, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly
+extern fox, foy, c1playernum, c2playernum, RefStep, exitgame, energywarn
+extern lcblink, fadeinpending, word_CBECC, word_CC9CC, scrolly
 extern word_E0022, word_E0028, word_E002A, word_E002E
 extern word_E0042, word_E0046, word_E0048, word_E004A, regd1, joysampling_save
 global PreGameIntro_scroll
@@ -320,10 +320,10 @@ call CloseTextOverlay	; 48097
 .17:
 call SelectScreenBM	; 4809C
 xor ebx, ebx	; 480A1
-mov word [word_CBC58], bx	; 480A3
+mov word [lcblink+2], bx	; 480A3
 mov word [lcblink], bx	; 480AA
-mov word [word_CBC54], bx	; 480B1
-mov word [word_CBC52], bx	; 480B8
+mov word [energywarn+2], bx	; 480B1
+mov word [energywarn], bx	; 480B8
 call UpdateHudPanel	; 480BF
 add esp, byte 10h	; 480C4
 jmp near PreGameIntro_popx	; 480C7
@@ -389,7 +389,7 @@ add eax, ebx	; 481A3
 neg eax	; 481A5
 call sub_6AF97	; 481A7
 call sub_6ADA7	; 481AC
-cmp word [word_CBEC4], byte 0	; 481B1
+cmp word [fadeinpending], byte 0	; 481B1
 je short .3	; 481B9
 mov ax, word [joysampling]	; 481BB
 mov word [joysampling_save], ax	; 481C1
@@ -399,7 +399,7 @@ mov ebx, 10h	; 481CF
 mov edx, gamepal	; 481D4
 call FadePalette	; 481D9
 xor ebx, ebx	; 481DE
-mov word [word_CBEC4], bx	; 481E0
+mov word [fadeinpending], bx	; 481E0
 mov eax, dword [joysampling_save-2]	; 481E7
 sar eax, 10h	; 481EC
 mov dword [joysampling], eax	; 481EF
@@ -415,8 +415,8 @@ jne short .4	; 48213
 test ah, 20h	; 48215
 je short .5	; 48218
 .4:
-mov dword [dword_CC0F0], 1	; 4821A
-mov word [word_CBEC4], 1	; 48224
+mov dword [introskipped], 1	; 4821A
+mov word [fadeinpending], 1	; 48224
 jmp short PreGameIntro_end	; 4822D
 .5:
 call Readjoy2	; 4822F
@@ -460,7 +460,7 @@ mov dword [escrequest], edx	; 482BE
 mov eax, 0FFFFFFFFh	; 482C4
 jmp short PreGameIntro_popebp	; 482C9
 .2:
-cmp dword [dword_CC0F0], byte 0	; 482CB
+cmp dword [introskipped], byte 0	; 482CB
 je short .3	; 482D2
 push savepal	; 482D4
 push dword 100h	; 482D9

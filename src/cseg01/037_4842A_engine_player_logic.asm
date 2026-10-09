@@ -9,9 +9,9 @@ extern byte_DAEA7, hmroster, hmrosterjersey, byte_DF87F, byte_DFFE0, byte_DFFE2,
 extern textline3, textline4, textline5, PenBuf, iflags, byte_E9AC1, byte_E9AC8
 extern byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, check4bench, check4check, checkob
 extern chk4lc, chk4shot, dirtab, chk4pass, doplayeracc, doshot, joysampling, inputframes
-extern gameopts, sounddev, dword_C5840, dword_C585C, dword_C5860, yleader, sflags3, HomeTeam
-extern dword_CBEBE, dword_CBECA, dword_CC0EC, dword_CC0F8, penshotplayer, dword_CC104, penshotmode, penshotstart
-extern penshotlive, dword_CC12C, dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144
+extern gameopts, sounddev, deferpending, dword_C585C, dword_C5860, yleader, sflags3, HomeTeam
+extern dword_CBEBE, dword_CBECA, dword_CC0EC, shotongoal, penshotplayer, penshotteam, penshotmode, penshotstart
+extern penshotlive, psendcount, sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir
 extern dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, frameaccum
 extern curperiod, dword_DB086, dword_DB088, hmtmstruct, dword_DF642, dword_DF648, dword_DF652
 extern hmtmpdst_m2, awtmstruct, dword_DF748, dword_DF752, dword_DF848, puckstruct
@@ -29,14 +29,14 @@ extern unk_C1B3E, unk_DACA0, hmteamrec, unk_DC240, savepal, SortCords, updateani
 extern vtoa, regd4, camx, camy, lastplayer, passdir, word_C90A6, xc1
 extern yc1, fox, foy, fodir1, fodir2, c1playernum, c2playernum, VisTeam
 extern Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, gsp, gameclock, clockticks
-extern dirtab_y, word_CBC44, exitgame, gameover, word_CBC52, word_CBC54, lcblink, word_CBC58
-extern lcblinktime, lcsel, lcline, lctimer, lcboxon, word_CBC6C, ovltimer, word_CBEC4
+extern dirtab_y, word_CBC44, exitgame, gameover, energywarn, lcblink
+extern lcblinktime, lcsel, lcline, lctimer, lcboxon, ovltimer, fadeinpending
 extern word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, word_CC9EA, word_CC9EC, word_CCA18
 extern word_CCA1A, word_CCA1C, word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E
 extern word_CCA70, word_CCA9C, word_DC242, word_DC248, word_DC24E, hmscore, hmtmap, word_DF65A
 extern awscore, awtmap, puckcross, word_DF816, word_DF81A
 extern word_DFF42, word_DFFC2, word_E0022, word_E0028
-extern word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, lcrequest, word_E0306, word_E0390
+extern word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, lcrequest, word_E0390
 extern word_E0392, word_E0396, regd2, regd3, regd0, regd1, joysampling_save, periodendtime
 extern word_E9AAE, PerTimeTotal, lj1, lasttouch, lty, startm, starpl
 global ClampYPosition, Endfaceoff, SetLCmode, StartFaceoffLineChange, a2offsides, a2touchpuck, ass_pc_slot20, assthreestars
@@ -52,9 +52,9 @@ global assshoot_ret
 global ass_replace_popx, ass_popx
 global ass_skate_temp34
 global puckflip, pucknorm, pucknorm_body, pucknothing, puckunflip, rtss
-global PickShotAim, AddStar, StarEligible, StarCompare, PickThreeStars, StartThreeStars, MoveInDir, SteerToTarget
+global StartShotPath, AddStar, StarEligible, StarCompare, PickThreeStars, StartThreeStars, MoveInDir, SteerToTarget
 global StopIfFree, GoalieToPuckVec, TurnTowardDir, CountPuckThreat, sub_4C8BD, asspuckc_chkdir, ChkTwoLinePass, SkateToSpot
-global CrowdOnStoppage, sub_4F99B
+global CrowdOnStoppage, NextPathPoint
 assintrostand:
 push dword 10h	; 4842A
 call __CHK	; 4842F
@@ -1042,7 +1042,7 @@ mov ebx, 10h	; 48F4C
 mov edx, savepal	; 48F51
 mov eax, 1	; 48F56
 call FadePalette	; 48F5B
-mov word [word_CBEC4], 1	; 48F60
+mov word [fadeinpending], 1	; 48F60
 call PickThreeStars	; 48F69
 mov byte [byte_E9AC8], 0FFh	; 48F6E
 xor ebx, ebx	; 48F75
@@ -1052,13 +1052,13 @@ mov word [refsignal], bx	; 48F85
 mov word [Penaltytimer], bx	; 48F8C
 mov word [dword_CBECA], bx	; 48F93
 mov word [word_CBEC6], bx	; 48F9A
-mov word [word_CBC6C], bx	; 48FA1
+mov word [lcboxon+2], bx	; 48FA1
 mov word [lcboxon], bx	; 48FA8
-mov word [word_CBC58], bx	; 48FAF
+mov word [lcblink+2], bx	; 48FAF
 mov word [lcblink], bx	; 48FB6
-mov word [word_CBC54], bx	; 48FBD
-mov word [word_CBC52], bx	; 48FC4
-mov word [word_E0306], bx	; 48FCB
+mov word [energywarn+2], bx	; 48FBD
+mov word [energywarn], bx	; 48FC4
+mov word [lcrequest+2], bx	; 48FCB
 mov word [lcrequest], bx	; 48FD2
 mov eax, dword [word_CBECC-2]	; 48FD9
 sar eax, 10h	; 48FDE
@@ -5424,7 +5424,7 @@ mov al, byte [byte ebx+059h]	; 4C78A
 mov byte [byte ebx+027h], al	; 4C78D
 mov eax, ebx	; 4C790
 call checkob	; 4C792
-cmp dword [dword_CC0F8], byte 0	; 4C797
+cmp dword [shotongoal], byte 0	; 4C797
 je short .7	; 4C79E
 cmp word [byte ebx+Ypos+2], byte 0	; 4C7A0
 jge short .5	; 4C7A5
@@ -6745,7 +6745,7 @@ mov eax, dword [puckc]	; 4D78E
 cmp byte [eax], 0	; 4D793
 jl short .4	; 4D796
 xor esi, esi	; 4D798
-mov dword [dword_CC12C], esi	; 4D79A
+mov dword [psendcount], esi	; 4D79A
 .3:
 mov word [byte ebx+temp2], 78h	; 4D7A0
 jmp near .14	; 4D7A6
@@ -6753,7 +6753,7 @@ jmp near .14	; 4D7A6
 test dl, 2	; 4D7AB
 sete al	; 4D7AE
 and eax, 0FFh	; 4D7B1
-xor eax, dword [dword_CC104]	; 4D7B6
+xor eax, dword [penshotteam]	; 4D7B6
 cmp dword [penshotlive], byte 0	; 4D7BC
 je short .7	; 4D7C3
 test eax, eax	; 4D7C5
@@ -6768,18 +6768,18 @@ mov eax, dword [puckvy]	; 4D7D9
 cmp word [eax], byte 0	; 4D7DE
 jg short .7	; 4D7E2
 .6:
-mov edi, dword [dword_CC12C]	; 4D7E4
+mov edi, dword [psendcount]	; 4D7E4
 inc edi	; 4D7EA
-mov dword [dword_CC12C], edi	; 4D7EB
+mov dword [psendcount], edi	; 4D7EB
 cmp edi, byte 1Eh	; 4D7F1
 jl short .8	; 4D7F4
 call EndPenaltyShot	; 4D7F6
 xor eax, eax	; 4D7FB
-mov dword [dword_CC12C], eax	; 4D7FD
+mov dword [psendcount], eax	; 4D7FD
 jmp short .8	; 4D802
 .7:
 xor esi, esi	; 4D804
-mov dword [dword_CC12C], esi	; 4D806
+mov dword [psendcount], esi	; 4D806
 .8:
 mov ax, word [byte ebx+Xpos+2]	; 4D80C
 cmp ax, word [byte ebx+OldXpos+2]	; 4D810
@@ -6858,7 +6858,7 @@ mov byte [byte eax+pflags], dh	; 4D8DF
 mov word [byte eax+temp1], 0	; 4D8E2
 mov word [byte eax+temp2], 78h	; 4D8E8
 xor edx, edx	; 4D8EE
-mov dword [dword_CC12C], edx	; 4D8F0
+mov dword [psendcount], edx	; 4D8F0
 .1:
 call pucknorm_body	; 4D8F6
 pop edx	; 4D8FB
@@ -8694,7 +8694,7 @@ cmp word [ovltimer], 100h	; 4F0C6
 jne short .21	; 4F0CF
 mov word [ovltimer], 258h	; 4F0D1
 .21:
-cmp dword [dword_C5840], byte 0	; 4F0DA
+cmp dword [deferpending], byte 0	; 4F0DA
 jne near .64	; 4F0E1
 mov eax, dword [puckc]	; 4F0E7
 cmp byte [eax], 0	; 4F0EC
@@ -9388,30 +9388,30 @@ rtss:
 push dword 4	; 4F990
 call __CHK	; 4F995
 ret	; 4F99A
-sub_4F99B:
+NextPathPoint:
 push dword 8	; 4F99B
 call __CHK	; 4F9A0
 push edx	; 4F9A5
-mov edx, dword [dword_CC13C]	; 4F9A6
+mov edx, dword [sopathpoint]	; 4F9A6
 mov eax, edx	; 4F9AC
 shl eax, 2	; 4F9AE
 sub eax, edx	; 4F9B1
 mov edx, eax	; 4F9B3
 mov eax, dword [nosplit eax*4+dword_CCB18]	; 4F9B5
-cmp dword [dword_CC140], byte 0	; 4F9BC
+cmp dword [pspathside], byte 0	; 4F9BC
 jge short .1	; 4F9C3
 neg eax	; 4F9C5
 .1:
-mov dword [dword_CC130], eax	; 4F9C7
+mov dword [sopathx], eax	; 4F9C7
 mov eax, edx	; 4F9CC
 mov edx, dword [nosplit edx*4+dword_CCB1C]	; 4F9CE
-mov dword [dword_CC134], edx	; 4F9D5
+mov dword [sopathy], edx	; 4F9D5
 mov eax, dword [nosplit eax*4+dword_CCB20]	; 4F9DB
-mov dword [dword_CC138], eax	; 4F9E2
-inc dword [dword_CC13C]	; 4F9E7
+mov dword [sopathend], eax	; 4F9E2
+inc dword [sopathpoint]	; 4F9E7
 pop edx	; 4F9ED
 ret	; 4F9EE
-PickShotAim:
+StartShotPath:
 push dword 0Ch	; 4F9EF
 call __CHK	; 4F9F4
 push ebx	; 4F9F9
@@ -9428,8 +9428,8 @@ neg edx	; 4FA0F
 cmp edx, byte 14h	; 4FA11
 jle short .2	; 4FA14
 xor ecx, ecx	; 4FA16
-mov dword [dword_CC130], ecx	; 4FA18
-mov dword [dword_CC140], ecx	; 4FA1E
+mov dword [sopathx], ecx	; 4FA18
+mov dword [pspathside], ecx	; 4FA1E
 jmp short .7	; 4FA24
 .2:
 mov edx, 2Ch	; 4FA26
@@ -9452,12 +9452,12 @@ test byte [byte ebx+044h], 80h	; 4FA57
 jne short .6	; 4FA5B
 neg edx	; 4FA5D
 .6:
-mov dword [dword_CC130], edx	; 4FA5F
-mov dword [dword_CC140], edx	; 4FA65
+mov dword [sopathx], edx	; 4FA5F
+mov dword [pspathside], edx	; 4FA65
 .7:
-mov dword [dword_CC13C], 2	; 4FA6B
-mov dword [dword_CC134], 97h	; 4FA75
-mov dword [dword_CC138], 66h	; 4FA7F
+mov dword [sopathpoint], 2	; 4FA6B
+mov dword [sopathy], 97h	; 4FA75
+mov dword [sopathend], 66h	; 4FA7F
 pop ecx	; 4FA89
 pop ebx	; 4FA8A
 ret	; 4FA8B
@@ -9482,10 +9482,10 @@ test byte [byte ebx+044h], 80h	; 4FABD
 jne short .12	; 4FAC1
 neg edx	; 4FAC3
 .12:
-mov dword [dword_CC130], edx	; 4FAC5
-mov dword [dword_CC140], edx	; 4FACB
-mov dword [dword_CC134], 3Ch	; 4FAD1
-mov dword [dword_CC138], 1Eh	; 4FADB
+mov dword [sopathx], edx	; 4FAC5
+mov dword [pspathside], edx	; 4FACB
+mov dword [sopathy], 3Ch	; 4FAD1
+mov dword [sopathend], 1Eh	; 4FADB
 pop ecx	; 4FAE5
 pop ebx	; 4FAE6
 ret	; 4FAE7
@@ -9545,20 +9545,20 @@ mov word [byte ebx+temp1], 0	; 4FB69
 mov byte [byte ebx+029h], 0	; 4FB6F
 mov byte [byte ebx+028h], 8	; 4FB73
 xor edx, edx	; 4FB77
-mov dword [dword_CC13C], edx	; 4FB79
+mov dword [sopathpoint], edx	; 4FB79
 mov eax, 4	; 4FB7F
 call randomd0	; 4FB84
 mov word [byte ebx+temp3], ax	; 4FB89
 mov edx, ecx	; 4FB8D
 mov eax, ebx	; 4FB8F
-call PickShotAim	; 4FB91
+call StartShotPath	; 4FB91
 .5:
-mov esi, dword [dword_CC138]	; 4FB96
+mov esi, dword [sopathend]	; 4FB96
 test esi, esi	; 4FB9C
 jge near .13	; 4FB9E
 mov ecx, dword [byte ebx+facedir-2]	; 4FBA4
 sar ecx, 10h	; 4FBA7
-sub ecx, dword [dword_CC144]	; 4FBAA
+sub ecx, dword [pspathdir]	; 4FBAA
 je near .14	; 4FBB0
 inc ecx	; 4FBB6
 and ecx, byte 7	; 4FBB7
@@ -9580,7 +9580,7 @@ mov eax, 2	; 4FBEA
 call randomd0	; 4FBEF
 movsx ecx, ax	; 4FBF4
 add ecx, byte 2	; 4FBF7
-cmp dword [dword_CC140], byte 0	; 4FBFA
+cmp dword [pspathside], byte 0	; 4FBFA
 jge short .8	; 4FC01
 add ecx, byte 3	; 4FC03
 .8:
@@ -9632,14 +9632,14 @@ ret	; 4FC98
 .13:
 cmp ecx, esi	; 4FC99
 jl short .14	; 4FC9B
-call sub_4F99B	; 4FC9D
+call NextPathPoint	; 4FC9D
 mov eax, dword [byte ebx+facedir-2]	; 4FCA2
 sar eax, 10h	; 4FCA5
-mov dword [dword_CC144], eax	; 4FCA8
+mov dword [pspathdir], eax	; 4FCA8
 .14:
-mov ax, word [dword_CC130]	; 4FCAD
+mov ax, word [sopathx]	; 4FCAD
 mov word [regd0], ax	; 4FCB3
-mov ax, word [dword_CC134]	; 4FCB9
+mov ax, word [sopathy]	; 4FCB9
 mov word [regd1], ax	; 4FCBF
 test byte [byte ebx+pflags], 80h	; 4FCC5
 jne short .15	; 4FCC9

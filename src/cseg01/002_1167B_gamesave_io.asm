@@ -5,7 +5,7 @@ section s_1167B progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, awardtype, VisTeam, bgscrollx, camy, clockticks, scrollx, word_CBECE
 extern curleague, sflags, musicon, byte_D9299, awardwinners, fileoncd, joysampling, gameopts
 extern inputframes, escrequest, demomode, gameresult, gamemode, hudclockmin, hudclocksec, hudclockhund
-extern dword_C5840, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
+extern deferpending, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBECA, dword_CC080, introskipped
 extern penshotlive, cddriveptr, mousex, mousey, spritedrawcount, frameaccum, dword_D8C72, viewscrolly
 extern dword_D8C78, dword_D8C7A, viewscrollx, curperiod, s1font, dword_DC28C, rinkwtiles, rinkhtiles
 extern bgscrolly, dword_DEF8C, savedmousex, savedmousey, dword_E0244, recbpr, dword_E9A9E, j_unlink_
@@ -21,8 +21,8 @@ extern sub_6AF97, sub_6B008, LoadRockMusic, SpeechStopQueue, MusicChanReset, Sel
 extern sub_8F633, sub_8FFB0, sub_90354, sub_9035C, MouseSetPos, sub_B396E, sub_B4BA8, str_backslash
 extern cupteam, presidentsteam, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690
 extern unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, treeteamnames, savepal, gamepal, camx
-extern gsp, gameclock, word_CBC44, exitgame, gameover, word_CBEC4, word_CBECC, scrolly
-extern lcrequest, word_E0306, joysampling_save
+extern gsp, gameclock, word_CBC44, exitgame, gameover, fadeinpending, word_CBECC, scrolly
+extern lcrequest, joysampling_save
 global assinsert, assreplace
 global PickAwardWinners_x
 global GameLoop, PlayGame, ReplayIsEmpty, PickAwardWinners
@@ -126,7 +126,7 @@ sar edx, 10h	; 117D2
 mov eax, dword [viewscrollx-2]	; 117D5
 sar eax, 10h	; 117DA
 call DrawRinkOverlays	; 117DD
-cmp word [word_CBEC4], byte 0	; 117E2
+cmp word [fadeinpending], byte 0	; 117E2
 je short .7	; 117EA
 mov ax, word [joysampling]	; 117EC
 mov word [joysampling_save], ax	; 117F2
@@ -206,7 +206,7 @@ add eax, ebx	; 11902
 neg eax	; 11904
 call sub_6AF97	; 11906
 call sub_6ADA7	; 1190B
-cmp word [word_CBEC4], byte 0	; 11910
+cmp word [fadeinpending], byte 0	; 11910
 je short .10	; 11918
 mov ax, word [joysampling]	; 1191A
 mov word [joysampling_save], ax	; 11920
@@ -217,7 +217,7 @@ mov edx, gamepal	; 11933
 xor eax, eax	; 11938
 call FadePalette	; 1193A
 xor esi, esi	; 1193F
-mov word [word_CBEC4], si	; 11941
+mov word [fadeinpending], si	; 11941
 mov eax, dword [joysampling_save-2]	; 11948
 sar eax, 10h	; 1194D
 mov dword [joysampling], eax	; 11950
@@ -293,7 +293,7 @@ push ebp	; 11A78
 call MouseSetPos	; 11A79
 add esp, byte 8	; 11A7E
 .17:
-mov word [word_CBEC4], 1	; 11A81
+mov word [fadeinpending], 1	; 11A81
 xor eax, eax	; 11A8A
 mov dword [escrequest], eax	; 11A8C
 mov eax, dword [VisTeam-2]	; 11A91
@@ -363,14 +363,14 @@ sar eax, 10h	; 11B8B
 mov dword [joysampling], eax	; 11B8E
 call joyq_flush	; 11B93
 .23:
-cmp dword [dword_C5840], byte 0	; 11B98
+cmp dword [deferpending], byte 0	; 11B98
 je near GameLoop.2	; 11B9F
 mov ax, word [joysampling]	; 11BA5
 mov word [joysampling_save], ax	; 11BAB
 xor edx, edx	; 11BB1
 mov dword [joysampling], edx	; 11BB3
 call RunDeferredCalls	; 11BB9
-mov dword [dword_C5840], edx	; 11BBE
+mov dword [deferpending], edx	; 11BBE
 mov eax, dword [joysampling_save-2]	; 11BC4
 sar eax, 10h	; 11BC9
 mov dword [joysampling], eax	; 11BCC
@@ -422,10 +422,10 @@ call MouseSetPos	; 11C95
 add esp, byte 8	; 11C9A
 .28:
 xor esi, esi	; 11C9D
-mov word [word_E0306], si	; 11C9F
+mov word [lcrequest+2], si	; 11C9F
 mov word [lcrequest], si	; 11CA6
 xor eax, eax	; 11CAD
-mov dword [dword_C5840], eax	; 11CAF
+mov dword [deferpending], eax	; 11CAF
 xor edx, edx	; 11CB4
 mov dword [inputframes], eax	; 11CB6
 xor eax, eax	; 11CBB
@@ -541,7 +541,7 @@ push ebp	; 11E6A
 call MouseSetPos	; 11E6B
 add esp, byte 8	; 11E70
 .8:
-mov word [word_CBEC4], 1	; 11E73
+mov word [fadeinpending], 1	; 11E73
 xor eax, eax	; 11E7C
 mov dword [escrequest], eax	; 11E7E
 mov ebx, dword [curperiod]	; 11E83
@@ -608,7 +608,7 @@ mov eax, dword [nosplit eax*4+teamabbrevs]	; 11F68
 call PaPreloadClips	; 11F6F
 .14:
 xor ebx, ebx	; 11F74
-mov dword [dword_CC0F0], ebx	; 11F76
+mov dword [introskipped], ebx	; 11F76
 mov dword [gameresult], ebx	; 11F7C
 call joyq_flush	; 11F82
 call GameLoop	; 11F87

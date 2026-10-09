@@ -11,9 +11,9 @@ extern hmroster, hmrosterjersey, hmtmflags, byte_DF6E8, awtmflags, byte_DF7E8, b
 extern byte_E024D, textline1, textline2, textline3, textline4, textline5, byte_E9A15, PenBuf
 extern PenBuf_pl, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD, byte_E9ACE
 extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, joysampling, gamemode, gameopts
-extern dword_C5840, yleader, sflags3, HomeTeam, dword_C9120, dword_CBEBE, dword_CBECA, dword_CC0AC
-extern lastsfx, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC110, dword_CC114, penshotmode
-extern penshotstart, penshottimer, dword_CC124, penshotlive, dword_CD2F8, dword_CD34C, dword_CD350, scor2font
+extern deferpending, yleader, sflags3, HomeTeam, dword_C9120, dword_CBEBE, dword_CBECA, dword_CC0AC
+extern lastsfx, shotongoal, penshotplayer, penshotpnum, penshotteam, penshotfox, penshotfoy, penshotmode
+extern penshotstart, penshottimer, shotontarget, penshotlive, dword_CD2F8, gsumqcount, defercount, scor2font
 extern curperiod, dword_DB086, dword_DB088, s1font, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
 extern hmtmstruct, dword_DF646, awtmstruct, puckstruct, sortobj15, hmtmlines
 extern photoptrsf, dword_E0220, dword_E0230, PenBuf_m5
@@ -473,7 +473,7 @@ push dword 8	; 619C8
 call __CHK	; 619CD
 push esi	; 619D2
 mov esi, eax	; 619D3
-mov eax, dword [dword_CD350]	; 619D5
+mov eax, dword [defercount]	; 619D5
 shl eax, 5	; 619DA
 mov dword [dword eax+dword_E9BC0], esi	; 619DD
 mov dword [dword eax+dword_E9BA4], edx	; 619E3
@@ -487,7 +487,7 @@ mov edx, dword [byte esp+010h]	; 61A09
 mov dword [dword eax+dword_E9BB8], edx	; 61A0D
 mov edx, dword [byte esp+014h]	; 61A13
 mov dword [dword eax+dword_E9BBC], edx	; 61A17
-inc dword [dword_CD350]	; 61A1D
+inc dword [defercount]	; 61A1D
 pop esi	; 61A23
 ret 10h	; 61A24
 RunDeferredCalls:
@@ -517,10 +517,10 @@ mov eax, dword [dword esi+dword_E9BA4]	; 61A67
 call dword [dword esi+dword_E9BC0]	; 61A6D
 inc edi	; 61A73
 .2:
-cmp edi, dword [dword_CD350]	; 61A74
+cmp edi, dword [defercount]	; 61A74
 jl short RunDeferredCalls.1	; 61A7A
 xor eax, eax	; 61A7C
-mov dword [dword_CD350], eax	; 61A7E
+mov dword [defercount], eax	; 61A7E
 fileio_popebpx:
 pop ebp	; 61A83
 pop edi	; 61A84
@@ -626,10 +626,10 @@ add eax, unk_E9B4C	; 61BA1
 call AppendGSumRecord	; 61BA6
 inc edx	; 61BAB
 .2:
-cmp edx, dword [dword_CD34C]	; 61BAC
+cmp edx, dword [gsumqcount]	; 61BAC
 jl short FlushGSumQueue.1	; 61BB2
 xor ecx, ecx	; 61BB4
-mov dword [dword_CD34C], ecx	; 61BB6
+mov dword [gsumqcount], ecx	; 61BB6
 pop edx	; 61BBC
 pop ecx	; 61BBD
 ret	; 61BBE
@@ -1060,7 +1060,7 @@ xor edx, edx	; 620D9
 mov dl, byte [byte_E9ACA]	; 620DB
 cmp byte [byte_E9ACB], 11h	; 620E1
 jne near .9	; 620E8
-mov edx, dword [dword_CC104]	; 620EE
+mov edx, dword [penshotteam]	; 620EE
 mov eax, edx	; 620F4
 shl eax, 2	; 620F6
 sub eax, edx	; 620F9
@@ -1094,7 +1094,7 @@ movsd	; 62147
 movsw	; 62148
 movsb	; 6214A
 push unk_C1B49	; 6214B
-mov edx, dword [dword_CC104]	; 62150
+mov edx, dword [penshotteam]	; 62150
 mov ebx, edx	; 62156
 shl ebx, 4	; 62158
 add ebx, edx	; 6215B
@@ -1103,7 +1103,7 @@ add ebx, edx	; 62160
 shl ebx, 2	; 62162
 mov ecx, hmroster	; 62165
 add ecx, ebx	; 6216A
-mov edx, dword [dword_CC100]	; 6216C
+mov edx, dword [penshotpnum]	; 6216C
 mov eax, edx	; 62172
 shl eax, 2	; 62174
 add eax, edx	; 62177
@@ -1295,7 +1295,7 @@ mov al, byte [byte edx+eax+024h]	; 623EC
 mov byte [byte_E9AD2], al	; 623F0
 test byte [gmode], 10h	; 623F5
 jne short .3	; 623FC
-mov edx, dword [dword_CD34C]	; 623FE
+mov edx, dword [gsumqcount]	; 623FE
 mov eax, edx	; 62404
 shl eax, 2	; 62406
 sub eax, edx	; 62409
@@ -1307,13 +1307,13 @@ movsd	; 6241B
 movsd	; 6241C
 movsw	; 6241D
 movsb	; 6241F
-mov ecx, dword [dword_CD34C]	; 62420
+mov ecx, dword [gsumqcount]	; 62420
 inc ecx	; 62426
-mov dword [dword_CD34C], ecx	; 62427
+mov dword [gsumqcount], ecx	; 62427
 cmp ecx, byte 8	; 6242D
 jl short .1	; 62430
 lea edi, [byte ecx-01h]	; 62432
-mov dword [dword_CD34C], edi	; 62435
+mov dword [gsumqcount], edi	; 62435
 .1:
 cmp dword [esp], byte 0	; 6243B
 je short .2	; 6243F
@@ -1379,7 +1379,7 @@ mov al, byte [byte esp+018h]	; 62505
 mov byte [byte_E9ACE], al	; 62509
 mov al, byte [byte esp+01Ch]	; 6250E
 mov byte [byte_E9ACF], al	; 62512
-mov ecx, dword [dword_CD34C]	; 62517
+mov ecx, dword [gsumqcount]	; 62517
 mov eax, ecx	; 6251D
 shl eax, 2	; 6251F
 sub eax, ecx	; 62522
@@ -1391,13 +1391,13 @@ movsd	; 62534
 movsd	; 62535
 movsw	; 62536
 movsb	; 62538
-mov ecx, dword [dword_CD34C]	; 62539
+mov ecx, dword [gsumqcount]	; 62539
 inc ecx	; 6253F
-mov dword [dword_CD34C], ecx	; 62540
+mov dword [gsumqcount], ecx	; 62540
 cmp ecx, byte 8	; 62546
 jl short .1	; 62549
 lea edi, [byte ecx-01h]	; 6254B
-mov dword [dword_CD34C], edi	; 6254E
+mov dword [gsumqcount], edi	; 6254E
 .1:
 mov eax, dword [ovltimer-2]	; 62554
 sar eax, 10h	; 62559
@@ -1462,7 +1462,7 @@ mov ax, word [HomeTeam]	; 6261F
 movsx esi, ax	; 62625
 cmp ebx, byte 11h	; 62628
 jne short .12	; 6262B
-cmp dword [dword_CC104], byte 0	; 6262D
+cmp dword [penshotteam], byte 0	; 6262D
 je short .10	; 62634
 mov ax, word [VisTeam]	; 62636
 jmp short .11	; 6263C
@@ -1470,14 +1470,14 @@ jmp short .11	; 6263C
 mov ax, word [HomeTeam]	; 6263E
 .11:
 movsx esi, ax	; 62644
-mov edx, dword [dword_CC104]	; 62647
+mov edx, dword [penshotteam]	; 62647
 mov ebx, edx	; 6264D
 shl ebx, 4	; 6264F
 add ebx, edx	; 62652
 shl ebx, 4	; 62654
 add ebx, edx	; 62657
 shl ebx, 2	; 62659
-mov edx, dword [dword_CC100]	; 6265C
+mov edx, dword [penshotpnum]	; 6265C
 mov eax, edx	; 62662
 shl eax, 2	; 62664
 add eax, edx	; 62667
@@ -1577,7 +1577,7 @@ mov byte [byte_E9ACC], al	; 62796
 mov byte [byte_E9ACD], cl	; 6279B
 mov al, byte [byte esp+0Ch]	; 627A1
 mov byte [byte_E9ACE], al	; 627A5
-mov edx, dword [dword_CD34C]	; 627AA
+mov edx, dword [gsumqcount]	; 627AA
 mov eax, edx	; 627B0
 shl eax, 2	; 627B2
 sub eax, edx	; 627B5
@@ -1589,13 +1589,13 @@ movsd	; 627C7
 movsd	; 627C8
 movsw	; 627C9
 movsb	; 627CB
-mov edx, dword [dword_CD34C]	; 627CC
+mov edx, dword [gsumqcount]	; 627CC
 inc edx	; 627D2
-mov dword [dword_CD34C], edx	; 627D3
+mov dword [gsumqcount], edx	; 627D3
 cmp edx, byte 8	; 627D9
 jl short .1	; 627DC
 lea ecx, [byte edx-01h]	; 627DE
-mov dword [dword_CD34C], ecx	; 627E1
+mov dword [gsumqcount], ecx	; 627E1
 .1:
 call BuildEventLines	; 627E7
 call CloseTextOverlay	; 627EC
@@ -1948,7 +1948,7 @@ mov ebx, edi	; 62C0E
 mov edx, ebp	; 62C10
 mov eax, MenuCallbackTrue2	; 62C12
 call QueueDeferredCall	; 62C17
-mov dword [dword_C5840], 1	; 62C1C
+mov dword [deferpending], 1	; 62C1C
 mov word [ovltimer], 0FFFFh	; 62C26
 .17:
 add esp, byte 4	; 62C2F
@@ -2006,7 +2006,7 @@ xor ecx, ecx	; 62CB5
 mov edx, esi	; 62CB7
 mov eax, MenuCallbackTrue	; 62CB9
 call QueueDeferredCall	; 62CBE
-mov dword [dword_C5840], 1	; 62CC3
+mov dword [deferpending], 1	; 62CC3
 mov eax, 1	; 62CCD
 pop esi	; 62CD2
 pop edx	; 62CD3
@@ -2735,9 +2735,9 @@ mov word [foy], dx	; 6363C
 .7:
 cmp dword [penshotstart], byte 0	; 63643
 je short .8	; 6364A
-mov ax, word [dword_CC110]	; 6364C
+mov ax, word [penshotfox]	; 6364C
 mov word [fox], ax	; 63652
-mov ax, word [dword_CC114]	; 63658
+mov ax, word [penshotfoy]	; 63658
 mov word [foy], ax	; 6365E
 .8:
 cmp word [fox], byte 60h	; 63664
@@ -3494,7 +3494,7 @@ call assinsert	; 6402F
 mov edx, 2Eh	; 64034
 mov eax, ebx	; 64039
 call assinsert	; 6403B
-cmp dword [dword_CC104], byte 0	; 64040
+cmp dword [penshotteam], byte 0	; 64040
 sete al	; 64047
 and eax, 0FFh	; 6404A
 mov edx, dword [cont1team-2]	; 6404F
@@ -3510,7 +3510,7 @@ mov eax, 0FFFFFFFFh	; 6406B
 call restorepl	; 64070
 mov word [c1playernum], ax	; 64075
 .1:
-cmp dword [dword_CC104], byte 0	; 6407B
+cmp dword [penshotteam], byte 0	; 6407B
 sete al	; 64082
 xor edx, edx	; 64085
 mov dl, al	; 64087
@@ -3556,7 +3556,7 @@ push edi	; 64110
 push ebp	; 64111
 sub esp, byte 8	; 64112
 xor edx, edx	; 64115
-mov dword [dword_CC124], edx	; 64117
+mov dword [shotontarget], edx	; 64117
 mov eax, dword [puckc]	; 6411D
 mov dl, byte [eax]	; 64122
 test dl, dl	; 64124
@@ -3678,7 +3678,7 @@ cmp edi, byte 6	; 64265
 jl short sub_64102.11	; 64268
 .14:
 mov esi, 1	; 6426A
-mov dword [dword_CC124], esi	; 6426F
+mov dword [shotontarget], esi	; 6426F
 mov eax, esi	; 64275
 .15:
 add esp, byte 8	; 64277
@@ -3698,7 +3698,7 @@ mov eax, dword [puckc]	; 642A0
 movsx ax, byte [eax]	; 642A5
 cmp ax, word [byte edx+SCnum]	; 642A9
 jne short .1	; 642AD
-cmp dword [dword_CC0F8], byte 0	; 642AF
+cmp dword [shotongoal], byte 0	; 642AF
 jne short .2	; 642B6
 .1:
 xor eax, eax	; 642B8
@@ -3727,8 +3727,8 @@ cmp si, byte 6	; 642EE
 jge short sub_6427F.1	; 642F2
 .4:
 call sub_64102	; 642F4
-mov eax, dword [dword_CC124]	; 642F9
-mov dword [dword_CC0F8], eax	; 642FE
+mov eax, dword [shotontarget]	; 642F9
+mov dword [shotongoal], eax	; 642FE
 test eax, eax	; 64303
 je short .x	; 64305
 cmp word [byte edx+Ypos+2], byte 0	; 64307
@@ -3757,8 +3757,8 @@ push dword 8	; 64338
 call __CHK	; 6433D
 push edx	; 64342
 call sub_64102	; 64343
-mov eax, dword [dword_CC124]	; 64348
-mov dword [dword_CC0F8], eax	; 6434D
+mov eax, dword [shotontarget]	; 64348
+mov dword [shotongoal], eax	; 6434D
 test eax, eax	; 64352
 je short .3	; 64354
 add word [crowdlevel], byte 64h	; 64356
@@ -3794,7 +3794,7 @@ jne near .x	; 643AB
 cmp dword [penshotplayer], byte 5	; 643B1
 setg al	; 643B8
 and eax, 0FFh	; 643BB
-mov dword [dword_CC104], eax	; 643C0
+mov dword [penshotteam], eax	; 643C0
 test eax, eax	; 643C5
 jle short .1	; 643C7
 mov eax, awtmstruct	; 643C9
@@ -3810,14 +3810,14 @@ mov eax, dword [penshotplayer]	; 643EC
 shl eax, 7	; 643F1
 mov eax, dword [dword eax+SortCords+44h]	; 643F4
 sar eax, 18h	; 643FA
-mov dword [dword_CC100], eax	; 643FD
+mov dword [penshotpnum], eax	; 643FD
 mov dword [penshotmode], 1	; 64402
 mov eax, dword [fox-2]	; 6440C
 sar eax, 10h	; 64411
-mov dword [dword_CC110], eax	; 64414
+mov dword [penshotfox], eax	; 64414
 mov eax, dword [foy-2]	; 64419
 sar eax, 10h	; 6441E
-mov dword [dword_CC114], eax	; 64421
+mov dword [penshotfoy], eax	; 64421
 xor esi, esi	; 64426
 mov word [fox], si	; 64428
 mov word [foy], si	; 6442F
@@ -3841,9 +3841,9 @@ mov dword [penshotplayer], 0FFFFFFFFh	; 64465
 mov edx, 5	; 6446F
 mov eax, puckstruct	; 64474
 call AddPenalty2	; 64479
-mov ax, word [dword_CC110]	; 6447E
+mov ax, word [penshotfox]	; 6447E
 mov word [ltx], ax	; 64484
-mov ax, word [dword_CC114]	; 6448A
+mov ax, word [penshotfoy]	; 6448A
 mov word [lty], ax	; 64490
 mov edx, 21h	; 64496
 mov eax, SortCords+800h	; 6449B

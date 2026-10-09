@@ -4,7 +4,7 @@ bits 32
 section s_4FCE8 progbits alloc exec nowrite align=1
 extern SetLCmode, SetSPA, SetShotMode, ShotMode, __CHK, burst, sflags, gmode2
 extern lchoicetab, byte_DFF3A, checkob, doplayeracc, joysampling, joyqhead, joyqcount, joyqtick
-extern joyrec, gameopts, cont2team, dword_CC0F0, onetimerflag, penshotmode
+extern joyrec, gameopts, cont2team, introskipped, onetimerflag, penshotmode
 extern penshotlive, dword_CCC9C, puckcross_m2, dword_E9A9E, gmode, lcreqchoice, puckstruct
 extern RequestLineChange, puckx, pucky, puckvy, puckc, setpassmode, setpersonel, vecdist
 extern DrawPanelLine, BlockShotDive, passmode, changeplayer, restorepl, MouseSetPos, joyqueue, SortCords
@@ -828,7 +828,7 @@ jne short .skip	; 505D7
 test al, 20h	; 505D9
 je near .x	; 505DB
 .skip:
-mov dword [dword_CC0F0], 1	; 505E1
+mov dword [introskipped], 1	; 505E1
 pop edi	; 505EB
 pop esi	; 505EC
 pop ecx	; 505ED

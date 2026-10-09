@@ -28,12 +28,12 @@ extern unk_C22D3, unk_C22DB, unk_C22E6, unk_C22EE, unk_C22F3, unk_C22F9, unk_C23
 extern unk_C2311, unk_C231A, unk_C2323, unk_C232B, unk_C2332, unk_C2338, unk_C233A, unk_C233D
 extern unk_C2340, unk_C2343, unk_C2345, unk_C2348, unk_CDC47, unk_CDC60, unk_CDC79, unk_CDC97
 extern unk_CDCB0, unk_CDCC9
-global byte_CD418, byte_CD421, byte_CD473, dword_CD34C, dword_CD350, dword_CD41E, dword_CD4B0, dbg_spalist
+global byte_CD418, byte_CD421, byte_CD473, gsumqcount, defercount, dword_CD41E, dword_CD4B0, dbg_spalist
 global dword_CD9A0, off_CD354, off_CD498, off_CD4A0, off_CD4DC, off_CD4FA, dbg_spanames, dbg_assnames
 global dbg_posnames, word_CD39C, word_CD4FC, replaytick, replaysfx
-dword_CD34C:
+gsumqcount:
 db 00h,00h,00h,00h
-dword_CD350:
+defercount:
 db 00h,00h,00h,00h
 off_CD354:
 dd unk_C1BE3

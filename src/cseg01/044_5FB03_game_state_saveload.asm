@@ -6,11 +6,11 @@ extern PBnum, StanleyCupTimer, __CHK, __STOSB, __STOSD, str_ErrLoadGame, str_Err
 extern pad2dev, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, byte_DC265
 extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, PenBuf, iflags, byte_E9AC8
 extern byte_E9AD3, OOlist, collflag, postate, lgstate, gamemode, ctl1team, ctl2team
-extern ctl1dev, ctl2dev, ctl1side, hudclockmin, hudclocksec, hudclockhund, dword_C5840, dword_C66D0
+extern ctl1dev, ctl2dev, ctl1side, hudclockmin, hudclocksec, hudclockhund, deferpending, dword_C66D0
 extern dword_C66D4, yleader, sflags3, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0AC
-extern lastsfx, photobankf, onetimerflag, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
-extern dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
-extern dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, crowdsmooth, frameaccum
+extern lastsfx, photobankf, onetimerflag, shotongoal, penshotplayer, penshotpnum, penshotteam, penshotctl
+extern penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount
+extern sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, crowdsmooth, frameaccum
 extern dword_D8C78, curperiod, photobanks, dword_DB088, dword_DC28C, savedmousex, savedmousey, hmtmstruct
 extern dword_DF6F2, dword_DF6F6, hmtmplstats, dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
 extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2
@@ -23,12 +23,12 @@ extern unk_DC252, gamepal, SortCords, hudpenhome, hudpenaway, camx, camy
 extern lastplayer, passdir, word_C90A6, passplayer, xc1, yc1, fox, foy
 extern fodir1, fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
-extern exitgame, gameover, word_CBC52, word_CBC54, lcblink, word_CBC58, lcblinktime
-extern lcsel, word_CBC60, lcline, word_CBC64, lctimer, word_CBC68, lcboxon, word_CBC6C
-extern word_CBD64, word_CBD66, ovltimer, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC
+extern exitgame, gameover, energywarn, lcblink, lcblinktime
+extern lcsel, word_CBC60, lcline, lctimer, lcboxon
+extern word_CBD64, word_CBD66, ovltimer, word_CBEC2, fadeinpending, word_CBEC6, word_CBEC8, word_CBECC
 extern word_CBECE, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CC10C, word_CCEF8, word_DEE94
-extern word_DEE96, word_DEF84, word_DEF88, puckcross, word_E024E, lcrequest, word_E0306, lcreqchoice
-extern word_E0382, word_E0390, OOlistpos, word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, CwdExciteLvl
+extern word_DEE96, word_DEF84, word_DEF88, puckcross, word_E024E, lcrequest, lcreqchoice
+extern word_E0390, OOlistpos, word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, CwdExciteLvl
 extern word_E9AAA, periodendtime, word_E9AAE, word_E9AB0, word_E9AB2, word_E9AB4, PerTimeTotal, lj2
 extern lj1, lasttouch, lty, word_E9B2C
 global SaveGameState, SaveGameState_popx, LoadGameState
@@ -260,10 +260,10 @@ add eax, byte 2	; 5FE58
 mov dx, word [word_CBEC2]	; 5FE5B
 mov word [eax], dx	; 5FE62
 add eax, byte 2	; 5FE65
-mov dx, word [word_CBEC4]	; 5FE68
+mov dx, word [fadeinpending]	; 5FE68
 mov word [eax], dx	; 5FE6F
 add eax, byte 2	; 5FE72
-mov dx, word [dword_C5840]	; 5FE75
+mov dx, word [deferpending]	; 5FE75
 mov word [eax], dx	; 5FE7C
 add eax, byte 2	; 5FE7F
 mov dx, word [word_CBEC6]	; 5FE82
@@ -316,16 +316,16 @@ mov byte [eax], dl	; 5FF33
 mov dl, byte [gmode]	; 5FF35
 mov byte [byte eax+01h], dl	; 5FF3B
 add eax, byte 2	; 5FF3E
-mov dx, word [word_CBC52]	; 5FF41
+mov dx, word [energywarn]	; 5FF41
 mov word [eax], dx	; 5FF48
 add eax, byte 2	; 5FF4B
-mov dx, word [word_CBC54]	; 5FF4E
+mov dx, word [energywarn+2]	; 5FF4E
 mov word [eax], dx	; 5FF55
 add eax, byte 2	; 5FF58
 mov dx, word [lcblink]	; 5FF5B
 mov word [eax], dx	; 5FF62
 add eax, byte 2	; 5FF65
-mov dx, word [word_CBC58]	; 5FF68
+mov dx, word [lcblink+2]	; 5FF68
 mov word [eax], dx	; 5FF6F
 add eax, byte 2	; 5FF72
 mov dx, word [lcblinktime]	; 5FF75
@@ -343,31 +343,31 @@ add eax, byte 2	; 5FFA6
 mov dx, word [lcline]	; 5FFA9
 mov word [eax], dx	; 5FFB0
 add eax, byte 2	; 5FFB3
-mov dx, word [word_CBC64]	; 5FFB6
+mov dx, word [lcline+2]	; 5FFB6
 mov word [eax], dx	; 5FFBD
 add eax, byte 2	; 5FFC0
 mov dx, word [lctimer]	; 5FFC3
 mov word [eax], dx	; 5FFCA
 add eax, byte 2	; 5FFCD
-mov dx, word [word_CBC68]	; 5FFD0
+mov dx, word [lctimer+2]	; 5FFD0
 mov word [eax], dx	; 5FFD7
 add eax, byte 2	; 5FFDA
 mov dx, word [lcboxon]	; 5FFDD
 mov word [eax], dx	; 5FFE4
 add eax, byte 2	; 5FFE7
-mov dx, word [word_CBC6C]	; 5FFEA
+mov dx, word [lcboxon+2]	; 5FFEA
 mov word [eax], dx	; 5FFF1
 add eax, byte 2	; 5FFF4
 mov dx, word [lcrequest]	; 5FFF7
 mov word [eax], dx	; 5FFFE
 add eax, byte 2	; 60001
-mov dx, word [word_E0306]	; 60004
+mov dx, word [lcrequest+2]	; 60004
 mov word [eax], dx	; 6000B
 add eax, byte 2	; 6000E
 mov dx, word [lcreqchoice]	; 60011
 mov word [eax], dx	; 60018
 add eax, byte 2	; 6001B
-mov dx, word [word_E0382]	; 6001E
+mov dx, word [lcreqchoice+2]	; 6001E
 mov word [eax], dx	; 60025
 add eax, byte 2	; 60028
 mov dx, word [savedmousex]	; 6002B
@@ -524,28 +524,28 @@ add eax, byte 2	; 60298
 mov dx, word [word_E9AB4]	; 6029B
 mov word [eax], dx	; 602A2
 add eax, byte 2	; 602A5
-mov dx, word [dword_CC0F8]	; 602A8
+mov dx, word [shotongoal]	; 602A8
 mov word [eax], dx	; 602AF
 add eax, byte 2	; 602B2
 mov dx, word [penshotplayer]	; 602B5
 mov word [eax], dx	; 602BC
 add eax, byte 2	; 602BF
-mov dx, word [dword_CC100]	; 602C2
+mov dx, word [penshotpnum]	; 602C2
 mov word [eax], dx	; 602C9
 add eax, byte 2	; 602CC
-mov dx, word [dword_CC104]	; 602CF
+mov dx, word [penshotteam]	; 602CF
 mov word [eax], dx	; 602D6
 add eax, byte 2	; 602D9
-mov dx, word [dword_CC108]	; 602DC
+mov dx, word [penshotctl]	; 602DC
 mov word [eax], dx	; 602E3
 add eax, byte 2	; 602E6
 mov dx, word [word_CC10C]	; 602E9
 mov word [eax], dx	; 602F0
 add eax, byte 2	; 602F3
-mov dx, word [dword_CC110]	; 602F6
+mov dx, word [penshotfox]	; 602F6
 mov word [eax], dx	; 602FD
 add eax, byte 2	; 60300
-mov dx, word [dword_CC114]	; 60303
+mov dx, word [penshotfoy]	; 60303
 mov word [eax], dx	; 6030A
 add eax, byte 2	; 6030D
 mov dx, word [penshotmode]	; 60310
@@ -557,31 +557,31 @@ add eax, byte 2	; 60327
 mov dx, word [penshottimer]	; 6032A
 mov word [eax], dx	; 60331
 add eax, byte 2	; 60334
-mov dx, word [dword_CC124]	; 60337
+mov dx, word [shotontarget]	; 60337
 mov word [eax], dx	; 6033E
 add eax, byte 2	; 60341
 mov dx, word [penshotlive]	; 60344
 mov word [eax], dx	; 6034B
 add eax, byte 2	; 6034E
-mov dx, word [dword_CC12C]	; 60351
+mov dx, word [psendcount]	; 60351
 mov word [eax], dx	; 60358
 add eax, byte 2	; 6035B
-mov dx, word [dword_CC130]	; 6035E
+mov dx, word [sopathx]	; 6035E
 mov word [eax], dx	; 60365
 add eax, byte 2	; 60368
-mov dx, word [dword_CC134]	; 6036B
+mov dx, word [sopathy]	; 6036B
 mov word [eax], dx	; 60372
 add eax, byte 2	; 60375
-mov dx, word [dword_CC138]	; 60378
+mov dx, word [sopathend]	; 60378
 mov word [eax], dx	; 6037F
 add eax, byte 2	; 60382
-mov dx, word [dword_CC13C]	; 60385
+mov dx, word [sopathpoint]	; 60385
 mov word [eax], dx	; 6038C
 add eax, byte 2	; 6038F
-mov dx, word [dword_CC140]	; 60392
+mov dx, word [pspathside]	; 60392
 mov word [eax], dx	; 60399
 add eax, byte 2	; 6039C
-mov dx, word [dword_CC144]	; 6039F
+mov dx, word [pspathdir]	; 6039F
 mov word [eax], dx	; 603A6
 mov ecx, 80h	; 603A9
 mov ebx, 0FFFFFFFFh	; 603AE
@@ -1038,10 +1038,10 @@ mov ax, word [ebx]	; 609BC
 mov word [word_CBEC2], ax	; 609BF
 add ebx, byte 2	; 609C5
 mov ax, word [ebx]	; 609C8
-mov word [word_CBEC4], ax	; 609CB
+mov word [fadeinpending], ax	; 609CB
 add ebx, byte 2	; 609D1
 movsx eax, word [ebx]	; 609D4
-mov dword [dword_C5840], eax	; 609D7
+mov dword [deferpending], eax	; 609D7
 add ebx, byte 2	; 609DC
 mov ax, word [ebx]	; 609DF
 mov word [word_CBEC6], ax	; 609E2
@@ -1097,16 +1097,16 @@ mov al, byte [byte ebx+01h]	; 60A9A
 mov byte [gmode], al	; 60A9D
 add ebx, byte 2	; 60AA2
 mov ax, word [ebx]	; 60AA5
-mov word [word_CBC52], ax	; 60AA8
+mov word [energywarn], ax	; 60AA8
 add ebx, byte 2	; 60AAE
 mov ax, word [ebx]	; 60AB1
-mov word [word_CBC54], ax	; 60AB4
+mov word [energywarn+2], ax	; 60AB4
 add ebx, byte 2	; 60ABA
 mov ax, word [ebx]	; 60ABD
 mov word [lcblink], ax	; 60AC0
 add ebx, byte 2	; 60AC6
 mov ax, word [ebx]	; 60AC9
-mov word [word_CBC58], ax	; 60ACC
+mov word [lcblink+2], ax	; 60ACC
 add ebx, byte 2	; 60AD2
 mov ax, word [ebx]	; 60AD5
 mov word [lcblinktime], ax	; 60AD8
@@ -1124,31 +1124,31 @@ mov ax, word [ebx]	; 60B05
 mov word [lcline], ax	; 60B08
 add ebx, byte 2	; 60B0E
 mov ax, word [ebx]	; 60B11
-mov word [word_CBC64], ax	; 60B14
+mov word [lcline+2], ax	; 60B14
 add ebx, byte 2	; 60B1A
 mov ax, word [ebx]	; 60B1D
 mov word [lctimer], ax	; 60B20
 add ebx, byte 2	; 60B26
 mov ax, word [ebx]	; 60B29
-mov word [word_CBC68], ax	; 60B2C
+mov word [lctimer+2], ax	; 60B2C
 add ebx, byte 2	; 60B32
 mov ax, word [ebx]	; 60B35
 mov word [lcboxon], ax	; 60B38
 add ebx, byte 2	; 60B3E
 mov ax, word [ebx]	; 60B41
-mov word [word_CBC6C], ax	; 60B44
+mov word [lcboxon+2], ax	; 60B44
 add ebx, byte 2	; 60B4A
 mov ax, word [ebx]	; 60B4D
 mov word [lcrequest], ax	; 60B50
 add ebx, byte 2	; 60B56
 mov ax, word [ebx]	; 60B59
-mov word [word_E0306], ax	; 60B5C
+mov word [lcrequest+2], ax	; 60B5C
 add ebx, byte 2	; 60B62
 mov ax, word [ebx]	; 60B65
 mov word [lcreqchoice], ax	; 60B68
 add ebx, byte 2	; 60B6E
 mov ax, word [ebx]	; 60B71
-mov word [word_E0382], ax	; 60B74
+mov word [lcreqchoice+2], ax	; 60B74
 add ebx, byte 2	; 60B7A
 movsx eax, word [ebx]	; 60B7D
 mov dword [savedmousex], eax	; 60B80
@@ -1366,28 +1366,28 @@ mov ax, word [ebx]	; 60E9D
 mov word [word_E9AB4], ax	; 60EA0
 add ebx, byte 2	; 60EA6
 movsx eax, word [ebx]	; 60EA9
-mov dword [dword_CC0F8], eax	; 60EAC
+mov dword [shotongoal], eax	; 60EAC
 add ebx, byte 2	; 60EB1
 movsx eax, word [ebx]	; 60EB4
 mov dword [penshotplayer], eax	; 60EB7
 add ebx, byte 2	; 60EBC
 movsx eax, word [ebx]	; 60EBF
-mov dword [dword_CC100], eax	; 60EC2
+mov dword [penshotpnum], eax	; 60EC2
 add ebx, byte 2	; 60EC7
 movsx eax, word [ebx]	; 60ECA
-mov dword [dword_CC104], eax	; 60ECD
+mov dword [penshotteam], eax	; 60ECD
 add ebx, byte 2	; 60ED2
 movsx eax, word [ebx]	; 60ED5
-mov dword [dword_CC108], eax	; 60ED8
+mov dword [penshotctl], eax	; 60ED8
 add ebx, byte 2	; 60EDD
 movsx eax, word [ebx]	; 60EE0
 mov dword [word_CC10C], eax	; 60EE3
 add ebx, byte 2	; 60EE8
 movsx eax, word [ebx]	; 60EEB
-mov dword [dword_CC110], eax	; 60EEE
+mov dword [penshotfox], eax	; 60EEE
 add ebx, byte 2	; 60EF3
 movsx eax, word [ebx]	; 60EF6
-mov dword [dword_CC114], eax	; 60EF9
+mov dword [penshotfoy], eax	; 60EF9
 add ebx, byte 2	; 60EFE
 movsx eax, word [ebx]	; 60F01
 mov dword [penshotmode], eax	; 60F04
@@ -1399,31 +1399,31 @@ movsx eax, word [ebx]	; 60F17
 mov dword [penshottimer], eax	; 60F1A
 add ebx, byte 2	; 60F1F
 movsx eax, word [ebx]	; 60F22
-mov dword [dword_CC124], eax	; 60F25
+mov dword [shotontarget], eax	; 60F25
 add ebx, byte 2	; 60F2A
 movsx eax, word [ebx]	; 60F2D
 mov dword [penshotlive], eax	; 60F30
 add ebx, byte 2	; 60F35
 movsx eax, word [ebx]	; 60F38
-mov dword [dword_CC12C], eax	; 60F3B
+mov dword [psendcount], eax	; 60F3B
 add ebx, byte 2	; 60F40
 movsx eax, word [ebx]	; 60F43
-mov dword [dword_CC130], eax	; 60F46
+mov dword [sopathx], eax	; 60F46
 add ebx, byte 2	; 60F4B
 movsx eax, word [ebx]	; 60F4E
-mov dword [dword_CC134], eax	; 60F51
+mov dword [sopathy], eax	; 60F51
 add ebx, byte 2	; 60F56
 movsx eax, word [ebx]	; 60F59
-mov dword [dword_CC138], eax	; 60F5C
+mov dword [sopathend], eax	; 60F5C
 add ebx, byte 2	; 60F61
 movsx eax, word [ebx]	; 60F64
-mov dword [dword_CC13C], eax	; 60F67
+mov dword [sopathpoint], eax	; 60F67
 add ebx, byte 2	; 60F6C
 movsx eax, word [ebx]	; 60F6F
-mov dword [dword_CC140], eax	; 60F72
+mov dword [pspathside], eax	; 60F72
 add ebx, byte 2	; 60F77
 movsx eax, word [ebx]	; 60F7A
-mov dword [dword_CC144], eax	; 60F7D
+mov dword [pspathdir], eax	; 60F7D
 mov ecx, 42h	; 60F82
 mov ebx, 0FFFFFFFFh	; 60F87
 mov edx, PenBuf	; 60F8C
@@ -1669,7 +1669,7 @@ mov eax, dword [replaystart]	; 612FE
 mov dword [recbpr], eax	; 61303
 call ReplayRecordReset	; 61308
 and byte [sflags], 0EFh	; 6130D
-mov word [word_CBEC4], 1	; 61314
+mov word [fadeinpending], 1	; 61314
 mov dword [hmtmsort], SortCords	; 6131D
 mov dword [dword_DF6F2], unk_DACA0	; 61327
 mov dword [dword_DF6F6], unk_DAC40	; 61331

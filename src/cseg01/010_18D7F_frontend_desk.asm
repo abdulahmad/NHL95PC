@@ -6,7 +6,7 @@ extern StartHL2, __CHK, str_PleaseEnterOutputFile, str_Eadesk1d, str_Desk, str_P
 extern str_Pause, str_Menubuff3, str_ReturningToSportsCentral, str_ReturningOutOfThe, str_ReturningToThePlayoff, str_ExitingTheGame, str_DoYouWishToReturn, str_DoYouWishToExit
 extern hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, byte_CCCA0, musicon, othergames
 extern othergamesb, otherscores, otherscoresb, joysampling, escrequest, gameresult, fileoncd
-extern gamemode, gameopts, ctl1team, ctl2team, teamconf, dword_C5840, hlplayedmask, dword_C66A4
+extern gamemode, gameopts, ctl1team, ctl2team, teamconf, deferpending, hlplayedmask, dword_C66A4
 extern dword_C66AC, dword_C66D0, dword_C66D4, boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
 extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, cddriveptr, bailout_vec, musicslot
 extern curperiod, s1font, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, otherperiod
@@ -840,7 +840,7 @@ add esp, byte 10h	; 19927
 mov word [scrolly], ax	; 1992A
 mov word [scrollx], ax	; 19930
 xor ecx, ecx	; 19936
-mov dword [dword_C5840], ecx	; 19938
+mov dword [deferpending], ecx	; 19938
 mov esi, dword [dword esp+03D4h]	; 1993E
 push esi	; 19945
 mov edi, dword [dword esp+03DCh]	; 19946
@@ -1078,7 +1078,7 @@ push byte 0	; 19D23
 call sub_B2E1B	; 19D25
 add esp, byte 10h	; 19D2A
 xor ecx, ecx	; 19D2D
-mov dword [dword_C5840], ecx	; 19D2F
+mov dword [deferpending], ecx	; 19D2F
 mov esi, dword [dword esp+03D4h]	; 19D35
 push esi	; 19D3C
 mov edi, dword [dword esp+03DCh]	; 19D3D

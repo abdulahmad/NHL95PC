@@ -7,9 +7,9 @@ extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
 global str_ErrLoadGame, str_ErrSaveGame, byte_CC049, lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5
 global byte_CC9B0, byte_CC9E4, byte_CC9E7, byte_CCA95, lchoicetab, byte_CCBBA, byte_CCBBB, byte_CCCA0
 global byte_CCE00, byte_CCE01, dword_CC080, dword_CC0AC, dword_CC0B4, lastsfx, photobankf, dword_CC0EC
-global dword_CC0F0, onetimerflag, dword_CC0F8, dword_CC0FA, penshotplayer, dword_CC100, dword_CC104, dword_CC108
-global dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
-global dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, dword_CC9AD, dword_CC9CE
+global introskipped, onetimerflag, shotongoal, dword_CC0FA, penshotplayer, penshotpnum, penshotteam, penshotctl
+global penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount
+global sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, dword_CC9AD, dword_CC9CE
 global dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, dword_CCC2C, dword_CCC4E
 global digihandle, crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_CCC9C, dword_CCC9D
 global dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, doplayeracc_ftab, MaxSpeed, dword_CCEF6, dword_CD2F8
@@ -62,27 +62,27 @@ photobankf:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 dword_CC0EC:
 db 00h,00h,00h,00h
-dword_CC0F0:
+introskipped:
 db 00h,00h,00h,00h
 onetimerflag:
 db 00h,00h,00h,00h
-dword_CC0F8:
+shotongoal:
 db 00h,00h
 dword_CC0FA:
 db 00h,00h
 penshotplayer:
 db 00h,00h,00h,00h
-dword_CC100:
+penshotpnum:
 db 00h,00h,00h,00h
-dword_CC104:
+penshotteam:
 db 00h,00h,00h,00h
-dword_CC108:
+penshotctl:
 db 00h,00h,00h,00h
 word_CC10C:
 db 00h,00h,00h,00h
-dword_CC110:
+penshotfox:
 db 00h,00h,00h,00h
-dword_CC114:
+penshotfoy:
 db 00h,00h,00h,00h
 penshotmode:
 db 00h,00h,00h,00h
@@ -90,23 +90,23 @@ penshotstart:
 db 00h,00h,00h,00h
 penshottimer:
 db 00h,00h,00h,00h
-dword_CC124:
+shotontarget:
 db 00h,00h,00h,00h
 penshotlive:
 db 00h,00h,00h,00h
-dword_CC12C:
+psendcount:
 db 00h,00h,00h,00h
-dword_CC130:
+sopathx:
 db 00h,00h,00h,00h
-dword_CC134:
+sopathy:
 db 00h,00h,00h,00h
-dword_CC138:
+sopathend:
 db 00h,00h,00h,00h
-dword_CC13C:
+sopathpoint:
 db 00h,00h,00h,00h
-dword_CC140:
+pspathside:
 db 00h,00h,00h,00h
-dword_CC144:
+pspathdir:
 db 00h,00h,00h,00h
 byte_CC148:
 db 0FCh

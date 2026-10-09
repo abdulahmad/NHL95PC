@@ -10,8 +10,8 @@ extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
 extern byte_E0074, PlList, byte_E038A, PenBuf, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
 extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, rinkscrollx, rinkscrolly
 extern yleader, sflags3, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
-extern dword_CC0F8, penshotplayer, dword_CC104, dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer
-extern dword_CC124, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, mousex
+extern shotongoal, penshotplayer, penshotteam, penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer
+extern shotontarget, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, mousex
 extern mousey, cliprect_y0, cliprect_y1, dword_D30BC, dword_D30C0, curperiod, dword_DB088, hmtmstruct
 extern dword_DF642, dword_DF652, dword_DF6EA, dword_DF6F2, dword_DF6F6, hmtmplstats
 extern dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort, awtmstruct, dword_DF752, dword_DF7EA
@@ -29,12 +29,12 @@ extern unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240, unk_DC2
 extern unk_E9D50, unk_E9EE0, updatereplay, vtoa, regd4, camx
 extern camy, lastplayer, xc1, yc1, fox, foy, fodir1, fodir2
 extern c1playernum, c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks
-extern word_CBC44, exitgame, gameover, PerTimeTab, word_CBC52, word_CBC54, lcblink, word_CBC58
-extern lcline, word_CBC64, lcboxon, word_CBC6C, ovltimer, word_CBEC4, word_CBEC6, word_CBEC8
+extern word_CBC44, exitgame, gameover, PerTimeTab, energywarn, lcblink
+extern lcline, lcboxon, ovltimer, fadeinpending, word_CBEC6, word_CBEC8
 extern word_CBECC, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CCCA8, hmscore, hmtmline
 extern hmtmlcnt, hmtmgoalie, word_DF656, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
 extern awtmgoalie, word_DF756, word_DF80E, puckcross
-extern word_E0036, lcrequest, word_E0306
+extern word_E0036, lcrequest
 extern word_E03A0, regd2, regd3, word_E03B8, regd0, regd1, Ylist, OOlistpos
 extern joysampling_save, word_E9AA4, word_E9AA6, CwdExciteLvl, periodendtime, word_E9AB0, PerTimeTotal, lasttouch
 extern lty
@@ -1264,7 +1264,7 @@ cmp dword [penshotlive], byte 0	; 5AC6F
 je short .12	; 5AC76
 mov eax, dword [byte esp+02h]	; 5AC78
 sar eax, 10h	; 5AC7C
-cmp eax, dword [dword_CC104]	; 5AC7F
+cmp eax, dword [penshotteam]	; 5AC7F
 je short .12	; 5AC85
 call EndPenaltyShot	; 5AC87
 jmp near .60	; 5AC8C
@@ -1387,7 +1387,7 @@ je short .31	; 5AE3C
 inc word [byte esi+022h]	; 5AE3E
 jmp short .32	; 5AE42
 .31:
-cmp dword [dword_CC0F8], byte 0	; 5AE44
+cmp dword [shotongoal], byte 0	; 5AE44
 je short .32	; 5AE4B
 inc word [byte esi+01Eh]	; 5AE4D
 .32:
@@ -1487,7 +1487,7 @@ mov word [foy], cx	; 5AF7E
 mov word [fox], cx	; 5AF85
 .43:
 xor ecx, ecx	; 5AF8C
-mov dword [dword_CC0F8], ecx	; 5AF8E
+mov dword [shotongoal], ecx	; 5AF8E
 mov dword [onetimerflag], ecx	; 5AF94
 .44:
 mov edx, dword [byte esi+0Eh]	; 5AF9A
@@ -1567,8 +1567,8 @@ mov edx, 1Fh	; 5B0A8
 mov eax, SortCords+800h	; 5B0AD
 call assreplace	; 5B0B2
 xor edx, edx	; 5B0B7
-mov dword [dword_CC114], edx	; 5B0B9
-mov dword [dword_CC110], edx	; 5B0BF
+mov dword [penshotfoy], edx	; 5B0B9
+mov dword [penshotfox], edx	; 5B0BF
 .53:
 test byte [gmode], 10h	; 5B0C5
 jne near .60	; 5B0CC
@@ -2551,7 +2551,7 @@ cmp esi, awtmstruct	; 5BC44
 sete al	; 5BC4A
 xor edx, edx	; 5BC4D
 mov dl, al	; 5BC4F
-cmp edx, dword [dword_CC104]	; 5BC51
+cmp edx, dword [penshotteam]	; 5BC51
 jne short .4	; 5BC57
 .3:
 cmp word [byte esi+SPA], byte 0	; 5BC59
@@ -2877,7 +2877,7 @@ push edx	; 5C01C
 push esi	; 5C01D
 push edi	; 5C01E
 xor edx, edx	; 5C01F
-mov word [word_E0306], dx	; 5C021
+mov word [lcrequest+2], dx	; 5C021
 mov word [lcrequest], dx	; 5C028
 call InitCoachModes	; 5C02F
 mov word [dword_E9A9E], dx	; 5C034
@@ -2922,9 +2922,9 @@ xor edx, edx	; 5C0D3
 mov dword [penshotmode], edx	; 5C0D5
 mov dword [penshotlive], edx	; 5C0DB
 mov dword [penshotstart], edx	; 5C0E1
-mov dword [dword_CC124], edx	; 5C0E7
+mov dword [shotontarget], edx	; 5C0E7
 xor edi, edi	; 5C0ED
-mov dword [dword_CC0F8], edx	; 5C0EF
+mov dword [shotongoal], edx	; 5C0EF
 mov dword [penshotplayer], 0FFFFFFFFh	; 5C0F5
 xor edi, edx	; 5C0FF
 mov word [fox], di	; 5C101
@@ -2958,7 +2958,7 @@ mov word [camx], ax	; 5C18A
 mov word [yleader], ax	; 5C190
 mov word [yc1], ax	; 5C196
 mov word [xc1], ax	; 5C19C
-mov word [word_CBEC4], 1	; 5C1A2
+mov word [fadeinpending], 1	; 5C1A2
 add dword [rinkscrollx], 3E8h	; 5C1AB
 add dword [rinkscrolly], 3E8h	; 5C1B5
 jmp near calcpuckcross_ret5	; 5C1BF
@@ -3127,7 +3127,7 @@ jne short .5	; 5C3D1
 test byte [lldispodd], 1	; 5C3D3
 je short .5	; 5C3DA
 movsx eax, bx	; 5C3DC
-mov word [nosplit eax*2+word_CBC52], 1	; 5C3DF
+mov word [nosplit eax*2+energywarn], 1	; 5C3DF
 pop edx	; 5C3E9
 pop ebx	; 5C3EA
 ret	; 5C3EB
@@ -3136,7 +3136,7 @@ add eax, 80h	; 5C3EC
 dec dx	; 5C3F1
 jne short periodicevents.4	; 5C3F3
 movsx eax, bx	; 5C3F5
-mov word [nosplit eax*2+word_CBC52], dx	; 5C3F8
+mov word [nosplit eax*2+energywarn], dx	; 5C3F8
 mov eax, awtmstruct	; 5C400
 inc ebx	; 5C405
 .6:
@@ -5220,14 +5220,14 @@ push ecx	; 5DEB1
 push edx	; 5DEB2
 push edi	; 5DEB3
 xor edx, edx	; 5DEB4
-mov word [word_CBC54], dx	; 5DEB6
-mov word [word_CBC52], dx	; 5DEBD
-mov word [word_CBC58], dx	; 5DEC4
+mov word [energywarn+2], dx	; 5DEB6
+mov word [energywarn], dx	; 5DEBD
+mov word [lcblink+2], dx	; 5DEC4
 mov word [lcblink], dx	; 5DECB
 mov edi, 0FFFFFFFFh	; 5DED2
-mov word [word_CBC64], di	; 5DED7
+mov word [lcline+2], di	; 5DED7
 mov word [lcline], di	; 5DEDE
-mov word [word_CBC6C], dx	; 5DEE5
+mov word [lcboxon+2], dx	; 5DEE5
 mov word [lcboxon], dx	; 5DEEC
 mov eax, dword [exitgame-2]	; 5DEF3
 sar eax, 10h	; 5DEF8

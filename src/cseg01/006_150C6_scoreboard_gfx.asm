@@ -8,7 +8,7 @@ extern demomode, fileoncd
 extern gameresult, gamemode, gameopts, teamdivflags, hudclockmin
 extern hudclocksec, hudclockhund, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern hudhomeline, hudawayline, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
-extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, cddriveptr, mousebtns, linesprites
+extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, introskipped, cddriveptr, mousebtns, linesprites
 extern penaltydigits, dword_DC2B8, clockdigits, clockcolon, cupseries, hmscore, awscore, hmtmstruct
 extern jctime, DrawPanelLine_x, UpdateHudPanel_x, teamabbrevs, perioddigits, off_C57C8, crestnames, awtmstruct
 extern mousepollfn, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, ReloadGameGfx, SetupDemoGame
@@ -16,7 +16,7 @@ extern MakePath, DrawPanelScore, DrawPanelClock, InitGameSummary, LoadModeState,
 extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, PaPreloadClips, GetPeriodTime, LoadTeamPalette, InputInstall, InputRemove
 extern LoadRockMusic, LoadScheduleDB, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
 extern PollKey, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, exhstate, gamepal, PerTimeTab
-extern word_CBC52, lcblink, word_CBC60, lcboxon
+extern energywarn, lcblink, word_CBC60, lcboxon
 global RunDemoGame_x
 global DrawHudPanel, TickPanelClock, DrawPanelClockDigits, TickPanelPenalties
 global DrawEnergyBar, DrawLineGroupBars, DrawPanelPenalties, LoadCupFinalSeries, IsCupClinched, CupSeriesWinner, RunDemoGame, AnyInputPressed
@@ -545,7 +545,7 @@ setg al	; 15723
 mov ebp, eax	; 15726
 and ebp, 0FFh	; 15728
 add ebp, ebp	; 1572E
-cmp word [dword ebp+word_CBC52], byte 0	; 15730
+cmp word [dword ebp+energywarn], byte 0	; 15730
 je short .1	; 15738
 xor ebx, ebx	; 1573A
 mov dword [byte esp+08h], ebx	; 1573C
@@ -1251,7 +1251,7 @@ mov dword [dword_CC0EC], ebp	; 15F4B
 call SetupDemoGame	; 15F51
 xor eax, eax	; 15F56
 mov dword [dword_CC0EC], eax	; 15F58
-mov dword [dword_CC0F0], eax	; 15F5D
+mov dword [introskipped], eax	; 15F5D
 mov dword [gameresult], eax	; 15F62
 mov edx, 0C8h	; 15F67
 mov eax, 140h	; 15F6C

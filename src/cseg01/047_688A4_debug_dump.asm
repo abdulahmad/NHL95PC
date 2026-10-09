@@ -8,8 +8,8 @@ extern str_dbgDRb, str_dbgDS, str_dbgPosVel, str_dbgVz, str_dbgAss, str_dbgSpa, 
 extern str_statslog, str_fmode_at, str_ErrDumpStats, str_dumpPool, str_dumpTmstructs, str_dumpHex, str_dumpSortcords, str_dumpSortLine
 extern str_dumpRule, str_dumpTeamHdrH, str_dumpHome, str_dumpPlHdrH, str_dumpPlLineH, str_dumpGlHdrH, str_dumpGlLine, str_dumpTeamHdrA
 extern str_dumpAway, str_dumpPlHdrA, str_dumpPlLineA, str_dumpGlHdrA, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt
-extern gmode2, gamemode, sflags3, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
-extern penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C, dbg_spalist, bailout_vec
+extern gmode2, gamemode, sflags3, shotongoal, penshotplayer, penshotpnum, penshotteam, penshotctl
+extern penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount, dbg_spalist, bailout_vec
 extern frameaccum, dword_D8C78, hmtmstruct
 extern hmtmpdst_m2, hmtmplstats, awtmstruct, hmscore
 extern awscore
@@ -58,19 +58,19 @@ push eax	; 6890C
 call sprintf_	; 6890D
 add esp, byte 10h	; 68912
 mov esi, eax	; 68915
-mov edx, dword [dword_CC0F8]	; 68917
+mov edx, dword [shotongoal]	; 68917
 push edx	; 6891D
-mov ebx, dword [dword_CC124]	; 6891E
+mov ebx, dword [shotontarget]	; 6891E
 push ebx	; 68924
-mov ecx, dword [dword_CC108]	; 68925
+mov ecx, dword [penshotctl]	; 68925
 push ecx	; 6892B
-mov edi, dword [dword_CC104]	; 6892C
+mov edi, dword [penshotteam]	; 6892C
 push edi	; 68932
-mov eax, dword [dword_CC100]	; 68933
+mov eax, dword [penshotpnum]	; 68933
 push eax	; 68938
 mov edx, dword [penshotplayer]	; 68939
 push edx	; 6893F
-mov ebx, dword [dword_CC12C]	; 68940
+mov ebx, dword [psendcount]	; 68940
 push ebx	; 68946
 mov ecx, dword [penshottimer]	; 68947
 push ecx	; 6894D

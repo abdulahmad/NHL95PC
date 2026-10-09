@@ -6,8 +6,8 @@ extern Endfaceoff, Findhittype, ResetBench, SetSPA, Setplass, StartFaceoffLineCh
 extern a2touchpuck, assexit, assinsert, assreplace, sflags, gmode2, byte_CBEA8, byte_CCBBA
 extern byte_CCBBB, hmroster, hmtmflags, awtmflags, textline1, textline2, puckcross
 extern textline3, textline4, textline5, byte_E0393, byte_E0397, iflags, checkwindow, doshot
-extern joysampling, gameopts, yleader, sflags3, cont2team, dword_CBECA, dword_CC0EC, dword_CC0F0
-extern onetimerflag, dword_CC0FA, penshotplayer, dword_CC104, penshotmode, penshotstart, hmtmstruct, awtmstruct
+extern joysampling, gameopts, yleader, sflags3, cont2team, dword_CBECA, dword_CC0EC, introskipped
+extern onetimerflag, dword_CC0FA, penshotplayer, penshotteam, penshotmode, penshotstart, hmtmstruct, awtmstruct
 extern dword_E0244, dword_E9A9E, forcepldata, puckvx, gmode
 extern jctime, CanBlockShot_ret5, ltx, puckx, pucky, puckvy, puckz, puckc
 extern puckvz, randomd0, resetplstuff, setpersonel, sfx, skateto, skatetopuck, DrawPanelLine
@@ -17,8 +17,8 @@ extern FlushGSumQueue, SetupPenaltyShot, threat, SortCords, updateanim
 extern vtoa, regd4, camx, camy, passdir, word_C90A6, passplayer, xc1
 extern yc1, fox, foy, fodir1, fodir2, c1playernum, c2playernum, cont1team
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
-extern word_CBC52, word_CBC54, lcblink, word_CBC58, lcboxon, word_CBC6C, word_CBE8C, word_CBE8E
-extern ovltimer, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, hmscore
+extern energywarn, lcblink, lcboxon, word_CBE8C, word_CBE8E
+extern ovltimer, fadeinpending, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, hmscore
 extern hmtmline, hmtmlcnt, hmtmpdst, awscore, awtmline, awtmlcnt
 extern puckstruct, sortobj15
 extern word_E0390, word_E0392, word_E0394, word_E0396
@@ -719,7 +719,7 @@ mov word [byte ebx+temp5], di	; 51311
 test byte [byte ebx+pflags], 40h	; 51315
 setne al	; 51319
 and eax, 0FFh	; 5131C
-xor eax, dword [dword_CC104]	; 51321
+xor eax, dword [penshotteam]	; 51321
 je short .5	; 51327
 mov byte [byte ebx+newpnum], 0FFh	; 51329
 mov byte [byte ebx+newpos], 0FFh	; 5132D
@@ -1118,15 +1118,15 @@ call setpersonel	; 517D4
 mov eax, 1	; 517D9
 call PenShotStart	; 517DE
 xor edi, edi	; 517E3
-mov word [word_CBC58], di	; 517E5
-mov word [word_CBC54], di	; 517EC
-mov word [word_CBC6C], di	; 517F3
+mov word [lcblink+2], di	; 517E5
+mov word [energywarn+2], di	; 517EC
+mov word [lcboxon+2], di	; 517F3
 mov eax, hmtmstruct	; 517FA
 call setpersonel	; 517FF
 xor eax, eax	; 51804
 call PenShotStart	; 51806
 mov word [lcblink], di	; 5180B
-mov word [word_CBC52], di	; 51812
+mov word [energywarn], di	; 51812
 mov word [lcboxon], di	; 51819
 jmp near .33	; 51820
 .8:
@@ -1402,7 +1402,7 @@ test dx, dx	; 51C00
 jle near .2	; 51C03
 cmp dword [dword_CC0EC], byte 0	; 51C09
 jne short .2	; 51C10
-cmp dword [dword_CC0F0], byte 0	; 51C12
+cmp dword [introskipped], byte 0	; 51C12
 jne short .2	; 51C19
 cmp word [word_CBEC6], byte 0	; 51C1B
 jne short .2	; 51C23
@@ -1423,7 +1423,7 @@ test eax, eax	; 51C69
 je near TakePlayerFromBox_ret6	; 51C6B
 .2:
 and byte [byte esi+pflags], 0FDh	; 51C71
-cmp dword [dword_CC0F0], byte 0	; 51C75
+cmp dword [introskipped], byte 0	; 51C75
 je short .3	; 51C7C
 mov eax, dword [word_CBECC-2]	; 51C7E
 sar eax, 10h	; 51C83
@@ -1472,28 +1472,28 @@ cmp ax, word [PerTimeTotal]	; 51D37
 jne short .4	; 51D3E
 cmp word [clockticks], byte 0	; 51D40
 jne short .4	; 51D48
-cmp dword [dword_CC0F0], byte 0	; 51D4A
+cmp dword [introskipped], byte 0	; 51D4A
 jne short .4	; 51D51
 xor edx, edx	; 51D53
-mov word [word_CBEC4], dx	; 51D55
+mov word [fadeinpending], dx	; 51D55
 jmp short .7	; 51D5C
 .4:
 cmp dword [dword_CC0EC], byte 0	; 51D5E
 jne short .5	; 51D65
-cmp dword [dword_CC0F0], byte 0	; 51D67
+cmp dword [introskipped], byte 0	; 51D67
 jne short .5	; 51D6E
 mov cx, word [word_CBEC6]	; 51D70
 test cx, cx	; 51D77
 je short .6	; 51D7A
 .5:
-mov word [word_CBEC4], 1	; 51D7C
+mov word [fadeinpending], 1	; 51D7C
 jmp short .7	; 51D85
 .6:
-mov word [word_CBEC4], cx	; 51D87
+mov word [fadeinpending], cx	; 51D87
 .7:
 mov word [RefStep], 0FFFFh	; 51D8E
 xor ebp, ebp	; 51D97
-mov dword [dword_CC0F0], ebp	; 51D99
+mov dword [introskipped], ebp	; 51D99
 xor ecx, ecx	; 51D9F
 mov word [word_CBEC6], cx	; 51DA1
 and byte [sflags], 0FEh	; 51DA8
@@ -1624,7 +1624,7 @@ mov edx, dword [c2playernum-2]	; 51FE7
 sar edx, 10h	; 51FED
 cmp edx, ebx	; 51FF0
 je short .18	; 51FF2
-mov ebx, dword [dword_CC104]	; 51FF4
+mov ebx, dword [penshotteam]	; 51FF4
 inc ebx	; 51FFA
 mov ecx, dword [cont1team-2]	; 51FFB
 sar ecx, 10h	; 52001
@@ -1660,7 +1660,7 @@ jne short .20	; 5205F
 test byte [byte ebx+pflags], 40h	; 52061
 setne dl	; 52065
 and edx, 0FFh	; 52068
-xor edx, dword [dword_CC104]	; 5206E
+xor edx, dword [penshotteam]	; 5206E
 jne short .22	; 52074
 .20:
 inc eax	; 52076
@@ -1675,7 +1675,7 @@ mov word [byte ebx+04Ah], 0	; 5208F
 mov byte [byte ebx+053h], 0	; 52095
 and byte [byte ebx+pflags2], 0DBh	; 52099
 and byte [byte ebx+pflags], 0FBh	; 5209D
-mov edi, dword [dword_CC104]	; 520A1
+mov edi, dword [penshotteam]	; 520A1
 test edi, edi	; 520A7
 sete al	; 520A9
 and eax, 0FFh	; 520AC
@@ -2972,7 +2972,7 @@ mov word [byte ebx+temp3], 96h	; 531F2
 test byte [gmode], 2	; 531F8
 sete al	; 531FF
 and eax, 0FFh	; 53202
-xor eax, dword [dword_CC104]	; 53207
+xor eax, dword [penshotteam]	; 53207
 je short .13	; 5320D
 mov eax, 0FFFFFFF6h	; 5320F
 jmp short .14	; 53214

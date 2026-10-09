@@ -10,7 +10,7 @@ extern dword_DC28C, hmpanelspr, awpanelspr, scoredigits, clockdigits, clockcolon
 extern lseek_, off_C56B5, leaguedbnames, rmdir_, sprintf_, strcat_, strcpy_, TickPanelClock
 extern DrawPanelClockDigits, TickPanelPenalties, DrawEnergyBar, DrawLineGroupBars, DrawPanelPenalties, MessageBox, TeamLineEnergy, SelectScreenBM
 extern SelectRinkBM, FatalError, MouseSetPos, sub_B4CD8, sub_B4CF2, str_star, str_backslash2, hmlineind
-extern awlineind, unknown_libname_1, unknown_libname_2, hudpenhome, hudpenaway, lcboxon, word_CBC6C
+extern awlineind, unknown_libname_1, unknown_libname_2, hudpenhome, hudpenaway, lcboxon
 global FileOpenRead_x, FileReadAt_x, FileReadAt_x2
 global ReadKeyRec_x, ReadTeamRec_x
 global DrawPanelLine_x
@@ -1033,7 +1033,7 @@ call DrawPanelPenalties	; 14E60
 xor eax, eax	; 14E65
 mov dword [dword_C585C], eax	; 14E67
 .6:
-cmp word [word_CBC6C], byte 0	; 14E6C
+cmp word [lcboxon+2], byte 0	; 14E6C
 jne short .7	; 14E74
 cmp dword [dword_C5848], byte 0	; 14E76
 jne short .7	; 14E7D

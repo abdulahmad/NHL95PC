@@ -24,7 +24,7 @@ extern sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_90D20, sub_912
 extern sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_96440, sub_B2DCA, sub_B30B4, sub_B4B88
 extern sub_B4BA8, sub_B4DD4, sub_B4FAC, exhstate, unk_D16A0, unk_D19CC, unk_D19DC, SortCords
 extern c1playernum, c2playernum, cont1team, VisTeam, gsp, gameclock, lcblink
-extern word_CBC58, lcboxon, word_CBC6C, hmtmline, word_DF65A, word_DF75A, word_DFF42
+extern lcboxon, hmtmline, word_DF65A, word_DF75A, word_DFF42
 global LeagueOptsToBits_jt, LeagueSettingsDlg_ret4, LeagueSettingsDlg_ret, LeagueSettingsDlg_ret0, MenuPlayoffSettings_edit
 global LeagueOptsToBits_n1, LeagueOptsToBits_n2, LeagueOptsToBits_n3, LeagueOptsToBits_n4, LeagueOptsToBits_n0
 global DrawCtlBox_common, ControlsDlg_done
@@ -1640,9 +1640,9 @@ add esp, byte 0Ch	; 7B426
 test byte [gameopts], 4	; 7B429
 jne short .7	; 7B430
 xor edx, edx	; 7B432
-mov word [word_CBC58], dx	; 7B434
+mov word [lcblink+2], dx	; 7B434
 mov word [lcblink], dx	; 7B43B
-mov word [word_CBC6C], dx	; 7B442
+mov word [lcboxon+2], dx	; 7B442
 mov word [lcboxon], dx	; 7B449
 xor eax, eax	; 7B450
 jmp short .4	; 7B452

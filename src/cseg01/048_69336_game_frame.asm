@@ -17,9 +17,9 @@ extern FlushGSumQueue, ClearPenaltyBuffer, LoadTeamPalette, sub_6ADA7, sub_6AF52
 extern MusicChanReset2, sub_8F633, sub_8FFB0, sub_B396E, awlinetab, hmlinetab, savepal, gamepal
 extern SortCords, vtoa, camx, camy, passplayer, xc1, yc1
 extern c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, refsignal, RefStep, RefPen
-extern word_C90D8, gsp, gameclock, clockticks, word_CBC44, exitgame, gameover, word_CBC52
-extern word_CBC54, lcblink, word_CBC58, lcline, word_CBC64, lcboxon, word_CBC6C, ovltimer
-extern word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, scrolly, hmscore
+extern word_C90D8, gsp, gameclock, clockticks, word_CBC44, exitgame, gameover, energywarn
+extern lcblink, lcline, lcboxon, ovltimer
+extern fadeinpending, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, scrolly, hmscore
 extern hmtmline, word_DF644, hmtmap, hmtmgoalie, awscore, awtmline, word_DF744, word_DF746
 extern awtmap, awtmgoalie, word_DF816, word_DF81A
 extern word_E0022, word_E0028, word_E002A
@@ -415,7 +415,7 @@ call joyq_flush	; 699B3
 xor edx, edi	; 699B8
 mov word [exitgame], dx	; 699BA
 mov word [gameover], dx	; 699C1
-mov word [word_CBEC4], si	; 699C8
+mov word [fadeinpending], si	; 699C8
 call sub_B396E	; 699CF
 mov esi, 1	; 699D4
 mov dword [joysampling], esi	; 699D9
@@ -520,7 +520,7 @@ add eax, ebx	; 69B3E
 neg eax	; 69B40
 call sub_6AF97	; 69B42
 call sub_6ADA7	; 69B47
-cmp word [word_CBEC4], byte 0	; 69B4C
+cmp word [fadeinpending], byte 0	; 69B4C
 je short .22	; 69B54
 mov ax, word [joysampling]	; 69B56
 mov word [joysampling_save], ax	; 69B5C
@@ -578,7 +578,7 @@ add eax, edx	; 69C1B
 mov dword [dword_DC28C], eax	; 69C1D
 .23:
 call UpdateHudPanel	; 69C22
-mov bx, word [word_CBEC4]	; 69C27
+mov bx, word [fadeinpending]	; 69C27
 test bx, bx	; 69C2E
 je short .25	; 69C31
 mov ax, word [joysampling]	; 69C33
@@ -596,7 +596,7 @@ mov edx, gamepal	; 69C64
 xor eax, eax	; 69C69
 call FadePalette	; 69C6B
 xor esi, esi	; 69C70
-mov word [word_CBEC4], si	; 69C72
+mov word [fadeinpending], si	; 69C72
 mov eax, 0C8h	; 69C79
 call randomd0	; 69C7E
 add eax, 64h	; 69C83
@@ -794,16 +794,16 @@ mov eax, dword [HomeTeam-2]	; 69F7F
 sar eax, 10h	; 69F84
 mov ebx, gamepal	; 69F87
 call LoadTeamPalette	; 69F8C
-mov word [word_CBC54], di	; 69F91
-mov word [word_CBC52], di	; 69F98
-mov word [word_CBC58], di	; 69F9F
+mov word [energywarn+2], di	; 69F91
+mov word [energywarn], di	; 69F98
+mov word [lcblink+2], di	; 69F9F
 mov word [lcblink], di	; 69FA6
 mov ecx, 0FFFFFFFFh	; 69FAD
-mov word [word_CBC64], cx	; 69FB2
+mov word [lcline+2], cx	; 69FB2
 mov word [lcline], cx	; 69FB9
-mov word [word_CBC6C], di	; 69FC0
+mov word [lcboxon+2], di	; 69FC0
 mov word [lcboxon], di	; 69FC7
-mov word [word_CBEC4], 1	; 69FCE
+mov word [fadeinpending], 1	; 69FCE
 xor edx, edx	; 69FD7
 mov dword [dword_D8C78], edx	; 69FD9
 mov word [refsignal], di	; 69FDF

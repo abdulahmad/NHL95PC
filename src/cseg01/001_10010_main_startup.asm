@@ -10,7 +10,7 @@ extern ctlavailmask, dword_C4CFC, joypresent, fileoncd
 extern inputticks, joysampling, joyqhead, joyqcount, joyqtick, samesideflag, inputframes
 extern escrequest, joyrec, palfadedin, screenw, screenh, demomode, dword_C5131, dword_C5133
 extern dword_C5135, gameopts
-extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, dword_C5840, screenbm
+extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, deferpending, screenbm
 extern songdata, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
 extern musichandle, cddriveptr, mousex, mousey, mousebtns, dword_D30D4, dword_D4158, dword_D415C
 extern dword_D4160, dword_D4164, bailout_vec, kaufmfont, pntrshapes, scor2font, mainfont, scor3font
@@ -27,7 +27,7 @@ extern sub_B29F0, sub_B2CBE, FatalError, MouseSetPos, sub_B2E1B, sub_B2F22, sub_
 extern sub_B30F4, sub_B33DB, sub_B3464, sub_B392C, sub_B3989, sub_B3999, PollKey, sub_B3A24
 extern sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C33, sub_B4C84, str_S1, str_errd3
 extern str_errd4, unk_C4E30, exhstate, joyqueue, savepal, vtoa, cont1team, word_CBC44
-extern exitgame, gameover, word_CBEC4, lcrequest, word_E0306, lcreqchoice, word_E0382, joysampling_save
+extern exitgame, gameover, fadeinpending, lcrequest, lcreqchoice, joysampling_save
 global HandleHotKey_ret
 global main_, GetMemListHead, GetMemStats, main_x, DiskFreeBytes, SetupControllers
 global ReadKeyboardPad, ReadJoyPad, ReadMousePad, ReadControllerPad, ReadHotKeys, ReadSkipKeys, SampleInputTick, SetScreenSize
@@ -1591,10 +1591,10 @@ sub eax, byte 3Bh	; 11211
 mov word [lcreqchoice], ax	; 11214
 jmp near .19	; 1121A
 .5:
-mov word [word_E0306], 1	; 1121F
+mov word [lcrequest+2], 1	; 1121F
 xor ah, ah	; 11228
 sub eax, byte 3Fh	; 1122A
-mov word [word_E0382], ax	; 1122D
+mov word [lcreqchoice+2], ax	; 1122D
 jmp near .19	; 11233
 .6:
 xor eax, eax	; 11238
@@ -1671,7 +1671,7 @@ push byte 0	; 11351
 call sub_B2E1B	; 11353
 add esp, byte 10h	; 11358
 .16:
-mov word [word_CBEC4], 1	; 1135B
+mov word [fadeinpending], 1	; 1135B
 mov ebx, dword [curperiod]	; 11364
 mov edx, dword [VisTeam-2]	; 1136A
 sar edx, 10h	; 11370
@@ -1801,7 +1801,7 @@ mov dword [inputframes], eax	; 1151B
 jne short .6	; 11520
 call joyq_pop	; 11522
 .6:
-cmp dword [dword_C5840], byte 0	; 11527
+cmp dword [deferpending], byte 0	; 11527
 jne short .x	; 1152E
 cmp word [exitgame], byte 0	; 11530
 jne short .x	; 11538

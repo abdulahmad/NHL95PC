@@ -16,7 +16,7 @@ global word_DF816, word_DF81A
 global word_DFF42, word_DFF5A
 global word_DFFC2, word_E0022, word_E0028, word_E002A, word_E002E
 global word_E0036, word_E0042, word_E0046, word_E0048, word_E004A, word_E024E, lcrequest
-global word_E0306, lcreqchoice, word_E0382, word_E0390, word_E0392, word_E0394, word_E0396, word_E0398
+global lcreqchoice, word_E0390, word_E0392, word_E0394, word_E0396, word_E0398
 global word_E039A, word_E03A0, regd2, regd3, word_E03B8, regd0, regd1
 byte_DF7CA:
 resb 28
@@ -179,7 +179,6 @@ textline3:
 resb 60
 lcrequest:
 resb 2
-word_E0306:
 resb 2
 textline4:
 resb 60
@@ -188,7 +187,6 @@ resb 58
 resb 2
 lcreqchoice:
 resb 2
-word_E0382:
 resb 2
 PlList:
 resb 6

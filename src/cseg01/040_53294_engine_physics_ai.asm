@@ -6,7 +6,7 @@ extern Acheck, AddPenalty, AddPenalty2, AvgCline, GetHot, Ylist_m2, PBnum, PerTi
 extern SetSPA, Stop4Pen, __CHK, a2touchpuck, assexit, assinsert, assreplace
 extern pad1dev, hmshotcnt, awshotcnt, sflags, gmode2, PenBuf, iflags
 extern OOlist, collflag, dirtab, doplayeracc, gameopts, wcradiusy, sflags3
-extern dword_CBECA, onetimerflag, dword_CC0F8, penshotplayer, dword_CC108, penshotmode, penshotstart, dword_CC124
+extern dword_CBECA, onetimerflag, shotongoal, penshotplayer, penshotctl, penshotmode, penshotstart, shotontarget
 extern penshotlive, dword_CCC2C, dword_CCC4E, hmtmstruct, awtmstruct, puckcross_m2
 extern dword_E03AE, dword_E03B6, dword_E03B9, dword_E03BD, dword_E9A9E
 extern dword_E9AB6, puckvx, gmode, puckx, pucky, puckvy, puckz
@@ -832,14 +832,14 @@ sar eax, 10h	; 53BB8
 mov edi, dword [penshotplayer]	; 53BBB
 cmp eax, edi	; 53BC1
 jne short .32	; 53BC3
-mov dword [dword_CC108], 1	; 53BC5
+mov dword [penshotctl], 1	; 53BC5
 jmp short .34	; 53BCF
 .32:
 jne short .33	; 53BD1
-mov dword [dword_CC108], 2	; 53BD3
+mov dword [penshotctl], 2	; 53BD3
 jmp short .34	; 53BDD
 .33:
-mov dword [dword_CC108], 0FFFFFFFFh	; 53BDF
+mov dword [penshotctl], 0FFFFFFFFh	; 53BDF
 .34:
 mov edx, 1Ah	; 53BE9
 jmp near .43	; 53BEE
@@ -4600,14 +4600,14 @@ sar eax, 10h	; 56B1D
 mov ebx, dword [penshotplayer]	; 56B20
 cmp eax, ebx	; 56B26
 jne short .2	; 56B28
-mov dword [dword_CC108], 1	; 56B2A
+mov dword [penshotctl], 1	; 56B2A
 jmp short .4	; 56B34
 .2:
 jne short .3	; 56B36
-mov dword [dword_CC108], 2	; 56B38
+mov dword [penshotctl], 2	; 56B38
 jmp short .4	; 56B42
 .3:
-mov dword [dword_CC108], 0FFFFFFFFh	; 56B44
+mov dword [penshotctl], 0FFFFFFFFh	; 56B44
 .4:
 mov edx, 1Ah	; 56B4E
 jmp short .6	; 56B53
@@ -4709,14 +4709,14 @@ sar eax, 10h	; 56C83
 mov ebx, dword [penshotplayer]	; 56C86
 cmp eax, ebx	; 56C8C
 jne short .4	; 56C8E
-mov dword [dword_CC108], 1	; 56C90
+mov dword [penshotctl], 1	; 56C90
 jmp short .6	; 56C9A
 .4:
 jne short .5	; 56C9C
-mov dword [dword_CC108], 2	; 56C9E
+mov dword [penshotctl], 2	; 56C9E
 jmp short .6	; 56CA8
 .5:
-mov dword [dword_CC108], 0FFFFFFFFh	; 56CAA
+mov dword [penshotctl], 0FFFFFFFFh	; 56CAA
 .6:
 mov edx, 1Ah	; 56CB4
 mov eax, ecx	; 56CB9
@@ -4965,7 +4965,7 @@ jne short .1	; 56F99
 call EndPenaltyShot	; 56F9B
 xor edi, edi	; 56FA0
 mov dword [onetimerflag], edi	; 56FA2
-mov dword [dword_CC0F8], edi	; 56FA8
+mov dword [shotongoal], edi	; 56FA8
 .1:
 mov byte [byte ecx+033h], 0FFh	; 56FAE
 mov byte [byte ecx+035h], 0FFh	; 56FB2
@@ -6068,11 +6068,11 @@ sar eax, 10h	; 57D3C
 imul eax, dword 5249h	; 57D3F
 shr eax, 10h	; 57D45
 mov word [word_C90A6], ax	; 57D48
-cmp dword [dword_CC0F8], byte 0	; 57D4E
+cmp dword [shotongoal], byte 0	; 57D4E
 je short .13	; 57D55
 call sub_64102	; 57D57
-mov eax, dword [dword_CC124]	; 57D5C
-mov dword [dword_CC0F8], eax	; 57D61
+mov eax, dword [shotontarget]	; 57D5C
+mov dword [shotongoal], eax	; 57D61
 .13:
 mov eax, dword [passdir]	; 57D66
 sar eax, 14h	; 57D6B
@@ -6836,7 +6836,7 @@ call puckflip	; 5877A
 call EndPenaltyShot	; 5877F
 xor edx, edx	; 58784
 mov dword [onetimerflag], edx	; 58786
-mov dword [dword_CC0F8], edx	; 5878C
+mov dword [shotongoal], edx	; 5878C
 pop ebp	; 58792
 pop edi	; 58793
 pop esi	; 58794
@@ -7027,7 +7027,7 @@ call EndPenaltyShot	; 589FC
 .13:
 xor ebp, ebp	; 58A01
 mov dword [onetimerflag], ebp	; 58A03
-mov dword [dword_CC0F8], ebp	; 58A09
+mov dword [shotongoal], ebp	; 58A09
 jmp near .25	; 58A0F
 .14:
 cmp word [regd2], 3E8h	; 58A14
@@ -7240,7 +7240,7 @@ call AddPenalty2	; 58CC5
 call EndPenaltyShot	; 58CCA
 xor edx, edx	; 58CCF
 mov dword [onetimerflag], edx	; 58CD1
-mov dword [dword_CC0F8], edx	; 58CD7
+mov dword [shotongoal], edx	; 58CD7
 pop edi	; 58CDD
 pop edx	; 58CDE
 pop ecx	; 58CDF
