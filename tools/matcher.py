@@ -5,6 +5,8 @@ against the listing and written to tools/fm95_check.json (gitignored); its funct
 match are also listed in the CSV as unmatched rows. The CSV itself has no FUNCTION_MAPPINGS95 columns.
 Hand-made rows live in tools/manual_names.csv (committed, same columns as the CSV) and are merged in last
 with priority: a manual row replaces whatever the evidence passes produced at that address, or is added.
+A manual row with method 'manual-reject' and an empty proposed_name withdraws an automatic proposal (e.g. a
+low-confidence name that a manual trace placed at another address); duplicate proposed names are reported.
 Address universe for the 'unmatched' rows: FUNCTION_MAPPINGS95.md when present (default --universe auto),
 otherwise every code function in tools/funcs.pkl (IDA procs + synthetic code functions from build_funcs.py).
 Run after build_segmap.py.  Writes name_map_94.csv and tools/matcher_stats.json
@@ -191,8 +193,8 @@ for m in manual:
     if a in byrow: out[byrow[a]] = row; n_repl += 1
     else: out.append(row); byrow[a] = len(out) - 1; n_add += 1
 out.sort(key=lambda r: r[0])
-dup = Counter(r[2].split(' ')[0] for r in out if r[2])
-dups = {n: [r[0] for r in out if r[2].split(' ')[0] == n] for n, c in dup.items() if c > 1}
+dup = Counter(r[2] for r in out if r[2])
+dups = {n: [r[0] for r in out if r[2] == n] for n, c in dup.items() if c > 1}
 for n, al in sorted(dups.items()):
     print('warning: name %s proposed at %d addresses: %s' % (n, len(al), ' '.join(al)), file=sys.stderr)
 with open(ARGS.out, 'w', newline='') as fh:
@@ -203,6 +205,7 @@ gen_rows = [r for r in rows95 if r['gen'] not in ('(PC-specific)', 'Unknown')]
 st = dict(csv_rows=len(out), universe=UNIVERSE, manual_rows=len(manual), manual_replaced=n_repl, manual_added=n_add,
           mapping_conf_94=dict(conf),
           library_rows=sum(1 for r in out if r[3] == 'library' and r[7] == 'high'))
+st['duplicate_names'] = {n: al for n, al in sorted(dups.items())}
 json.dump(st, open('tools/matcher_stats.json', 'w'), indent=1)
 if rows95:   # local-only cross-check of FUNCTION_MAPPINGS95.md (gitignored output)
     json.dump(dict(fm95_rows=len(rows95), fm95_status=dict(stat), fm95_genesis_claims=len(gen_rows),

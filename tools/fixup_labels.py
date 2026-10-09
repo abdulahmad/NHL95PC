@@ -45,7 +45,11 @@ def load_parts(parts):
 
 def ident(n):
     """sanitise a name-map name into an assembler identifier"""
-    n = n.strip().split(' ')[0]
+    n = n.strip()
+    if '::' in n:   # demangled C++ name (FLIRT): drop cv/return-type words and the argument list, '::' -> '__'
+        n = n.split('(')[0].split()[-1].replace('::', '__')
+    else:
+        n = n.split(' ')[0]
     n = re.sub(r'[^A-Za-z0-9_@$?]', '_', n)
     if n and n[0].isdigit(): n = '_' + n
     return n

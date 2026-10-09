@@ -57,10 +57,10 @@ obj1: last 0x77A file bytes after vsize are page padding. obj2: initialised data
 | 20016-21CDE | 6F26A-70F32 | 1CC8 | 18 | easn_stats | frontend | PC-new | EASN stats screens (embpal, tstat, keys, pstat, gstat) | stats94 (role only) | medium |
 | 21CDE-27080 | 70F32-762D4 | 53A2 | 20 | player_stats | frontend | PC-new | player stats / portraits / sort (PORTR, pstatbar, addsort, trad) | stats94 (role only) | medium |
 | 27080-2970A | 762D4-7895E | 268A | 7 | standings_playoffs | frontend | PC-new | standings, conferences, playoff seeding screens | - | medium |
-| 2970A-29F28 | 7895E-7917C | 81E | 6 | league_schedule | frontend | PC-new | LSSCHED schedule loading/drawing | - | medium |
-| 29F28-2B7B7 | 7917C-7AA0B | 188F | 2 | arena_logos | frontend | PC-new | arena / rink / team logo screens | - | medium |
-| 2B7B7-2D35A | 7AA0B-7C5AE | 1BA3 | 13 | file_dialogs | frontend | PC-new | Open/Delete/Done file dialogs (*.nhl, *.po, *.lp), dialog boxes | - | medium |
-| 2D35A-2FDD1 | 7C5AE-7F025 | 2A77 | 5 | game_setup | frontend | PC-new | pre-game setup / matchup screen (indus030, ctlogo, No Penalties, game.set) | - | medium |
+| 2970A-29F18 | 7895E-7916C | 80E | 6 | league_schedule | frontend | PC-new | LSSCHED schedule loading/drawing | - | medium |
+| 29F18-2B7B7 | 7916C-7AA0B | 189F | 2 | arena_logos | frontend | PC-new | arena / rink / team logo screens | - | medium |
+| 2B7B7-2D346 | 7AA0B-7C59A | 1B8F | 13 | file_dialogs | frontend | PC-new | Open/Delete/Done file dialogs (*.nhl, *.po, *.lp), dialog boxes | - | medium |
+| 2D346-2FDD1 | 7C59A-7F025 | 2A8B | 5 | game_setup | frontend | PC-new | pre-game setup / matchup screen (indus030, ctlogo, No Penalties, game.set) | - | medium |
 | 2FDD1-31AB5 | 7F025-80D09 | 1CE4 | 28 | misc_dialogs | frontend | PC-new | misc dialog/menu helpers (.DB/.ORG, DBOX) | - | low |
 | 31AB5-32DA9 | 80D09-81FFD | 12F4 | 6 | main_desk | frontend | PC-new | main desk / tonight screen (maindesk, tonights, easndesk), game.set | - | medium |
 | 32DA9-3377C | 81FFD-829D0 | 9D3 | 16 | temp_files | frontend | PC-new | temp file / palette save/restore | - | low |
@@ -92,8 +92,8 @@ obj1: last 0x77A file bytes after vsize are page padding. obj2: initialised data
 | 6C2F9-6D2F8 | BB54D-BC54C | FFF | 18 | database_save | frontend | PC-new | save databases, free disk space, Free Agents list | - | medium |
 | 6D2F8-71F0C | BC54C-C1160 | 4C14 | 41 | create_player | season95 | 95G role only; PC-original code (no 95G strings shared except award names) | player editor: ratings, shoots/glove hand, jersey, free-agent creation | 95G create95 (role) | medium |
 | 71F0C-737AA | C1160-C29FE | 189E | 13 | database_dialogs | frontend | PC-new | database open/delete dialogs (*.db/*.org/*.dbx) | - | medium |
-| 737AA-78366 | C29FE-C75BA | 4BBC | 24 | line_editor_rosters | frontend | PC-new | line editor / rosters (scratch, dress, roster printout) | stats94 line editor (role only) | medium |
-| 78366-7A13A | C75BA-C938E | 1DD4 | 16 | team_select | frontend | PC-new | team selection / lineups / logos | - | low |
+| 737AA-78346 | C29FE-C759A | 4B9C | 24 | line_editor_rosters | frontend | PC-new | line editor / rosters (scratch, dress, roster printout) | stats94 line editor (role only) | medium |
+| 78346-7A13A | C759A-C938E | 1DF4 | 16 | team_select | frontend | PC-new | team selection / lineups / logos | - | low |
 | 7A13A-7DC8B | C938E-CCEDF | 3B51 | 52 | settings_dialogs | frontend | PC-new | settings dialogs: Music/Sound/Digitized Speech, controllers | - | medium |
 | 7DC8B-7F724 | CCEDF-CE978 | 1A99 | 11 | gadgets_replay | frontend | PC-new | rock music cues, gadget UI (instant replay controls) | replay94 (role only) | low |
 | 7F724-8034B | CE978-CF59F | C27 | 9 | highlights | frontend | PC-new | highlight reel save/load (.HI) | - | medium |
@@ -261,7 +261,7 @@ Rule used: Watcom wlink keeps each object file contiguous and a function (incl. 
 * **EACSNDF.LIB** (Jul 28 1994) high-level + core + 7 driver dispatch tables (dseg D4BA0..D4CA8): `snd_pcspeaker`, `snd_adlib`, `snd_soundblaster`, `snd_mt32_mpu401`, `snd_gus` and the low-level `snd_hw_*` / `snd_gus_sdk` (GF1PATCH110) ranges. Driver starts = first function referenced by each dispatch table (high); ends = next table target (medium). No PAS-specific driver found.
 * **File formats**: SHPI (A2000, magic "SHPI"/"SHPM"), QFS/RefPack-like unpack (97300, "INVALID PACK CODE"), FORM/RIFF/VHDR IFF loader in ea_sound_hl (8F98F), MVIh/MVIe/MVIf in title_intro/asm_helpers callers, FNTM in ea_gfx, .VIV (XBRUCE2) referenced from the speech/announcer code. No BIGF magic present; no SHPS magic. PPV handled by name only (.PPV strings in gamesave_io/asset_loading).
 
-## 6. dseg02 segments (107, tile C0000-FAB90 exactly; owner = majority group of referencing code)
+## 6. dseg02 segments (106, tile C0000-FAB90 exactly; owner = majority group of referencing code)
 
 | start-end | file range | size | funcs | module | group | lineage | contents | Genesis counterpart | conf |
 |---|---|---|---|---|---|---|---|---|---|
@@ -336,41 +336,40 @@ Rule used: Watcom wlink keeps each object file contiguous and a function (incl. 
 | D7178-D71F0 | 11E3CC-11E444 | 78 | 0 | data_ealib_68 | ealib | library (EA PC) | initialized data for EA in-house PC library (graphics/memory/files/input) |  | medium |
 | D71F0-D89E4 | 11E444-11FC38 | 17F4 | 0 | data_sounddrv_69 | sounddrv | library (EACSNDF drivers) | initialized data for sound card drivers (also ealib) |  | low |
 | D89E4-D8ACC | 11FC38-11FD20 | E8 | 0 | data_ealib_70 | ealib | library (EA PC) | initialized data for EA in-house PC library (graphics/memory/files/input) |  | medium |
-| D8ACC-D8B67 | 11FD20-11FDBB | 9B | 0 | data_sounddrv_71 | sounddrv | library (EACSNDF drivers) | initialized data for sound card drivers |  | medium |
-| D8B67-D8B7C | (BSS) | 15 | 0 | data_sounddrv_72 | sounddrv | library (EACSNDF drivers) | bss for sound card drivers (also engine, frontend) |  | low |
-| D8B7C-D9980 | (BSS) | E04 | 0 | data_frontend_73 | frontend | PC-new | bss for front end / menus / league & database UI (also engine, frontend) |  | low |
-| D9980-D9A38 | (BSS) | B8 | 0 | data_eagfx_74 | eagfx | library (EA PC) | bss for EA video/stream libs |  | medium |
-| D9A38-DAC40 | (BSS) | 1208 | 0 | data_frontend_75 | frontend | PC-new | bss for front end / menus / league & database UI (also engine, frontend) |  | low |
-| DAC40-DB08A | (BSS) | 44A | 0 | data_engine_76 | engine | 93G via 94 PC (+94G additions) | bss for in-game engine |  | medium |
-| DB08A-DB218 | (BSS) | 18E | 0 | data_frontend_77 | frontend | PC-new | bss for front end / menus / league & database UI |  | medium |
-| DB218-DB7EC | (BSS) | 5D4 | 0 | data_engine_78 | engine | 93G via 94 PC (+94G additions) | bss for in-game engine (also frontend) |  | low |
-| DB7EC-DC7BC | (BSS) | FD0 | 0 | data_frontend_79 | frontend | PC-new | bss for front end / menus / league & database UI (also engine, frontend) |  | low |
-| DC7BC-DC834 | (BSS) | 78 | 0 | data_season95_80 | season95 | 95G role only (season95/trade95/create95/awards95); PC-original code | bss for NHL 95 season/trade/create-player features |  | medium |
-| DC834-DEB78 | (BSS) | 2344 | 0 | data_frontend_81 | frontend | PC-new | bss for front end / menus / league & database UI (also eagfx, engine, season95) |  | low |
-| DEB78-DF00C | (BSS) | 494 | 0 | data_engine_82 | engine | 93G via 94 PC (+94G additions) | bss for in-game engine |  | medium |
-| DF00C-DF63E | (BSS) | 632 | 0 | data_frontend_83 | frontend | PC-new | bss for front end / menus / league & database UI (also engine, frontend) |  | low |
-| DF63E-DF75A | (BSS) | 11C | 0 | data_engine_84 | engine | 93G via 94 PC (+94G additions) | bss for in-game engine (also engine, frontend) |  | low |
-| DF75A-DF7CA | (BSS) | 70 | 0 | data_frontend_85 | frontend | PC-new | bss for front end / menus / league & database UI |  | medium |
-| DF7CA-E03C4 | (BSS) | BFA | 0 | data_engine_86 | engine | 93G via 94 PC (+94G additions) | bss for in-game engine (also frontend) |  | low |
-| E03C4-E9A11 | (BSS) | 964D | 0 | data_frontend_87 | frontend | PC-new | bss for front end / menus / league & database UI |  | medium |
-| E9A11-EA034 | (BSS) | 623 | 0 | data_engine_88 | engine | 93G via 94 PC (+94G additions) | bss for in-game engine |  | medium |
-| EA034-EA0DC | (BSS) | A8 | 0 | data_eagfx_89 | eagfx | library (EA PC) | bss for EA video/stream libs |  | medium |
-| EA0DC-EA994 | (BSS) | 8B8 | 0 | data_frontend_90 | frontend | PC-new | bss for front end / menus / league & database UI (also frontend, season95) |  | low |
-| EA994-EC6B8 | (BSS) | 1D24 | 0 | data_season95_91 | season95 | 95G role only (season95/trade95/create95/awards95); PC-original code | bss for NHL 95 season/trade/create-player features (also frontend) |  | low |
-| EC6B8-EDAA8 | (BSS) | 13F0 | 0 | data_frontend_92 | frontend | PC-new | bss for front end / menus / league & database UI (also ealib, engine, season95) |  | low |
-| EDAA8-EDCFC | (BSS) | 254 | 0 | data_ealib_93 | ealib | library (EA PC) | bss for EA in-house PC library (graphics/memory/files/input) |  | medium |
-| EDCFC-EDF04 | (BSS) | 208 | 0 | data_eacsndf_94 | eacsndf | library (EACSNDF) | bss for EACSNDF sound library (also ealib, watcom) |  | low |
-| EDF04-F0000 | (BSS) | 20FC | 0 | data_ealib_95 | ealib | library (EA PC) | bss for EA in-house PC library (graphics/memory/files/input) |  | medium |
-| F0000-F1704 | (BSS) | 1704 | 0 | data_sounddrv_96 | sounddrv | library (EACSNDF drivers) | bss for sound card drivers |  | medium |
-| F1704-F18A4 | (BSS) | 1A0 | 0 | data_ealib_97 | ealib | library (EA PC) | bss for EA in-house PC library (graphics/memory/files/input) |  | medium |
-| F18A4-F21FC | (BSS) | 958 | 0 | data_eacsndf_98 | eacsndf | library (EACSNDF) | bss for EACSNDF sound library |  | medium |
-| F21FC-F22FC | (BSS) | 100 | 0 | data_ealib_99 | ealib | library (EA PC) | bss for EA in-house PC library (graphics/memory/files/input) |  | medium |
-| F22FC-F234D | (BSS) | 51 | 0 | data_eacsndf_100 | eacsndf | library (EACSNDF) | bss for EACSNDF sound library |  | medium |
-| F234D-F23BC | (BSS) | 6F | 0 | data_ealib_101 | ealib | library (EA PC) | bss for EA in-house PC library (graphics/memory/files/input) |  | medium |
-| F23BC-F24D8 | (BSS) | 11C | 0 | data_eacsndf_102 | eacsndf | library (EACSNDF) | bss for EACSNDF sound library (also watcom) |  | low |
-| F24D8-F6138 | (BSS) | 3C60 | 0 | data_sounddrv_103 | sounddrv | library (EACSNDF drivers) | bss for sound card drivers |  | medium |
-| F6138-F7978 | (BSS) | 1840 | 0 | data_ealib_104 | ealib | library (EA PC) | bss for EA in-house PC library (graphics/memory/files/input) |  | medium |
-| F7978-F7B88 | (BSS) | 210 | 0 | data_sounddrv_105 | sounddrv | library (EACSNDF drivers) | bss for sound card drivers |  | medium |
+| D8ACC-D8B68 | 11FD20-11FDBB +BSS | 9C | 0 | data_sounddrv_71 | sounddrv | library (EACSNDF drivers) | initialized data for sound card drivers |  | medium |
+| D8B68-D9980 | (BSS) | E18 | 0 | data_frontend_72 | frontend | PC-new | bss for front end / menus / league & database UI (also engine, frontend) |  | low |
+| D9980-D9A38 | (BSS) | B8 | 0 | data_eagfx_73 | eagfx | library (EA PC) | bss for EA video/stream libs |  | medium |
+| D9A38-DAC40 | (BSS) | 1208 | 0 | data_frontend_74 | frontend | PC-new | bss for front end / menus / league & database UI (also engine, frontend) |  | low |
+| DAC40-DB08A | (BSS) | 44A | 0 | data_engine_75 | engine | 93G via 94 PC (+94G additions) | bss for in-game engine |  | medium |
+| DB08A-DB218 | (BSS) | 18E | 0 | data_frontend_76 | frontend | PC-new | bss for front end / menus / league & database UI |  | medium |
+| DB218-DB7EC | (BSS) | 5D4 | 0 | data_engine_77 | engine | 93G via 94 PC (+94G additions) | bss for in-game engine (also frontend) |  | low |
+| DB7EC-DC7BC | (BSS) | FD0 | 0 | data_frontend_78 | frontend | PC-new | bss for front end / menus / league & database UI (also engine, frontend) |  | low |
+| DC7BC-DC834 | (BSS) | 78 | 0 | data_season95_79 | season95 | 95G role only (season95/trade95/create95/awards95); PC-original code | bss for NHL 95 season/trade/create-player features |  | medium |
+| DC834-DEB78 | (BSS) | 2344 | 0 | data_frontend_80 | frontend | PC-new | bss for front end / menus / league & database UI (also eagfx, engine, season95) |  | low |
+| DEB78-DF00C | (BSS) | 494 | 0 | data_engine_81 | engine | 93G via 94 PC (+94G additions) | bss for in-game engine |  | medium |
+| DF00C-DF63E | (BSS) | 632 | 0 | data_frontend_82 | frontend | PC-new | bss for front end / menus / league & database UI (also engine, frontend) |  | low |
+| DF63E-DF75A | (BSS) | 11C | 0 | data_engine_83 | engine | 93G via 94 PC (+94G additions) | bss for in-game engine (also engine, frontend) |  | low |
+| DF75A-DF7CA | (BSS) | 70 | 0 | data_frontend_84 | frontend | PC-new | bss for front end / menus / league & database UI |  | medium |
+| DF7CA-E03C4 | (BSS) | BFA | 0 | data_engine_85 | engine | 93G via 94 PC (+94G additions) | bss for in-game engine (also frontend) |  | low |
+| E03C4-E9A11 | (BSS) | 964D | 0 | data_frontend_86 | frontend | PC-new | bss for front end / menus / league & database UI |  | medium |
+| E9A11-EA034 | (BSS) | 623 | 0 | data_engine_87 | engine | 93G via 94 PC (+94G additions) | bss for in-game engine |  | medium |
+| EA034-EA0DC | (BSS) | A8 | 0 | data_eagfx_88 | eagfx | library (EA PC) | bss for EA video/stream libs |  | medium |
+| EA0DC-EA994 | (BSS) | 8B8 | 0 | data_frontend_89 | frontend | PC-new | bss for front end / menus / league & database UI (also frontend, season95) |  | low |
+| EA994-EC6B8 | (BSS) | 1D24 | 0 | data_season95_90 | season95 | 95G role only (season95/trade95/create95/awards95); PC-original code | bss for NHL 95 season/trade/create-player features (also frontend) |  | low |
+| EC6B8-EDAA8 | (BSS) | 13F0 | 0 | data_frontend_91 | frontend | PC-new | bss for front end / menus / league & database UI (also ealib, engine, season95) |  | low |
+| EDAA8-EDCFC | (BSS) | 254 | 0 | data_ealib_92 | ealib | library (EA PC) | bss for EA in-house PC library (graphics/memory/files/input) |  | medium |
+| EDCFC-EDF04 | (BSS) | 208 | 0 | data_eacsndf_93 | eacsndf | library (EACSNDF) | bss for EACSNDF sound library (also ealib, watcom) |  | low |
+| EDF04-F0000 | (BSS) | 20FC | 0 | data_ealib_94 | ealib | library (EA PC) | bss for EA in-house PC library (graphics/memory/files/input) |  | medium |
+| F0000-F1704 | (BSS) | 1704 | 0 | data_sounddrv_95 | sounddrv | library (EACSNDF drivers) | bss for sound card drivers |  | medium |
+| F1704-F18A4 | (BSS) | 1A0 | 0 | data_ealib_96 | ealib | library (EA PC) | bss for EA in-house PC library (graphics/memory/files/input) |  | medium |
+| F18A4-F21FC | (BSS) | 958 | 0 | data_eacsndf_97 | eacsndf | library (EACSNDF) | bss for EACSNDF sound library |  | medium |
+| F21FC-F22FC | (BSS) | 100 | 0 | data_ealib_98 | ealib | library (EA PC) | bss for EA in-house PC library (graphics/memory/files/input) |  | medium |
+| F22FC-F234D | (BSS) | 51 | 0 | data_eacsndf_99 | eacsndf | library (EACSNDF) | bss for EACSNDF sound library |  | medium |
+| F234D-F23BC | (BSS) | 6F | 0 | data_ealib_100 | ealib | library (EA PC) | bss for EA in-house PC library (graphics/memory/files/input) |  | medium |
+| F23BC-F24D8 | (BSS) | 11C | 0 | data_eacsndf_101 | eacsndf | library (EACSNDF) | bss for EACSNDF sound library (also watcom) |  | low |
+| F24D8-F6138 | (BSS) | 3C60 | 0 | data_sounddrv_102 | sounddrv | library (EACSNDF drivers) | bss for sound card drivers |  | medium |
+| F6138-F7978 | (BSS) | 1840 | 0 | data_ealib_103 | ealib | library (EA PC) | bss for EA in-house PC library (graphics/memory/files/input) |  | medium |
+| F7978-F7B88 | (BSS) | 210 | 0 | data_sounddrv_104 | sounddrv | library (EACSNDF drivers) | bss for sound card drivers |  | medium |
 | F7B88-FAB90 | (BSS) | 3008 | 0 | watcom_stack | watcom | library (Watcom) | stack (0x3008 bytes): bottom unk_F7B88 referenced by Watcom cstart (start+1B9); top = LE initial ESP 2:0003AB90 |  | high |
 
 Data counterparts: C1B40 PenaltyList (data94) names (penalty name strings Roughing..Holding.. match 94 PenaltyList text); C5951 Credits / CreditsList (teamdata94) (shared credit names (Jim Simmons, Scott Orr, Chip Lange, Steve Babineau)); C053C teamdata94 team city names (all 26 team cities incl. ANAHEIM/FLORIDA (94 teams)); C9161 asstab (93G hockey93_11 / 94G data94) (player-assignment function table, 47 entries; first 29 = 93G asstab order, next 7 = 94G additions); C9100 StanleyCupTimer (93G ram93) = RNGseed (94G ram94) (seed used by randomd0 port (LCG E62D/BB40))
@@ -380,7 +379,7 @@ Data counterparts: C1B40 PenaltyList (data94) names (penalty name strings Roughi
 Rows: 949. By source game / confidence:
 
 * 93G / high: 27
-* 93G / low: 34
+* 93G / low: 33
 * 93G / medium: 54
 * 94G / high: 2
 * 94G / low: 2
@@ -388,7 +387,7 @@ Rows: 949. By source game / confidence:
 * 95G / low: 1
 * PC-new / low: 18
 * PC-new / medium: 2
-* PC-new / none: 456
+* PC-new / none: 457
 * library / high: 240
 * library / none: 111
 
@@ -402,13 +401,13 @@ Methods: (1) player-struct field correspondence learned by aligning 68k field-ac
 | source/conf | before | after |
 |---|---|---|
 | 93G / high | 3 | 27 |
-| 93G / low | 28 | 34 |
+| 93G / low | 28 | 33 |
 | 93G / medium | 6 | 54 |
 | 94G / high | 1 | 2 |
 | 94G / low | 7 | 2 |
 | 94G / medium | 1 | 2 |
 | 95G / low | 1 | 1 |
-| total Genesis-named | 47 | 122 |
+| total Genesis-named | 47 | 121 |
 
 Engine region (47C31-6A033, 8BEDB-8C94C): 356 functions (IDA procs + recovered); 109 named from Genesis (31%), 20 labelled PC-new assignments, total labelled 36%.
 
@@ -461,7 +460,7 @@ Hard areas: engine_display (VGA rendering, 1 match), engine_sound_iface (EACSNDF
 ## 8. Verification
 
 * obj1: 198 segments, tiles exactly = True; concatenated file slices == object pages = True (686214 bytes, sha1 85dd8be78410c58dc36dd79fef4518027e8d0fcd); BSS 0; file padding after vsize 77A.
-* obj2: 107 segments, tiles exactly = True; concatenated file slices == object pages = True (101223 bytes, sha1 64b58913c223660c2da2d6f852ba26d88026e878); BSS 22029; file padding after vsize 0.
+* obj2: 106 segments, tiles exactly = True; concatenated file slices == object pages = True (101223 bytes, sha1 64b58913c223660c2da2d6f852ba26d88026e878); BSS 22029; file padding after vsize 0.
 * File regions tile 0..EOF: True. Stub signatures: {'mz0': True, 'bw_at_F474': True, 'bound_mz': True, 'le': True}.
 * Listing string literals vs EXE bytes via lin→file mapping: 2112 matched, 1 mismatched (mapping sanity check).
 

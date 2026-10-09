@@ -1,12 +1,12 @@
 {
  "csv_rows": 949,
  "universe": "fm95",
- "manual_rows": 4,
- "manual_replaced": 2,
+ "manual_rows": 5,
+ "manual_replaced": 3,
  "manual_added": 2,
  "mapping_conf_94": {
   "93G/high": 27,
-  "93G/low": 34,
+  "93G/low": 33,
   "93G/medium": 54,
   "94G/high": 2,
   "94G/low": 2,
@@ -14,9 +14,10 @@
   "95G/low": 1,
   "PC-new/low": 18,
   "PC-new/medium": 2,
-  "PC-new/none": 456,
+  "PC-new/none": 457,
   "library/high": 240,
   "library/none": 111
  },
- "library_rows": 240
+ "library_rows": 240,
+ "duplicate_names": {}
 }

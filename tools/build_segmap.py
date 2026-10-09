@@ -16,6 +16,10 @@ O1, O2 = info['objects']
 CB, CE = O1['base'], O1['base'] + O1['virtual_size']
 DB, DE = O2['base'], O2['base'] + O2['virtual_size']
 DFILE_END = O2['base'] + O2['file_bytes']
+# split between initialised data and BSS; moved up when a fixup dword straddles the end of the file data
+# (D8B64: its last byte is in BSS), so that every fixup dword lies inside one segment
+for f_ in fixups:
+    if f_['src_lin'] < DFILE_END < f_['src_lin'] + 4: DFILE_END = f_['src_lin'] + 4
 fstarts = [f['start'] for f in F]
 def fidx(a):
     j = bisect.bisect_right(fstarts, a) - 1
