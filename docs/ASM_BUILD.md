@@ -1,13 +1,57 @@
 # Assembly build: symbolic labels for the LE fixups, and the asm toolchain
 
-Status (Oct 2026): **prototype works on the whole EXE.** Every one of the 270 segment slices that has file bytes
-(198 code, 72 data) is disassembled to NASM source with symbolic labels, assembled, linked by a small Python linker,
-and reproduces the original bytes **and** the original LE fixup set. Feeding all of them back through
-`rebuild_exe.build()` (fixups re-ordered by `order_fixups()`) gives a `HOCKEY.EXE` with the original sha1
-`3961e0eba6b0338fad1613bb534efafd9406ed4a`. This holds with or without the IDA-derived caches.
+Status (Oct 2026): **the EXE builds from committed NASM sources.** All 304 segments (198 code, 106 data, of which
+72 have initialised bytes and 34 are BSS only) are in `src/` as NASM source with symbolic labels. `make` (or
+`./build.sh`) assembles them, links them with a small Python linker, re-orders the harvested fixups like wlink and
+writes a `HOCKEY.EXE` with the original sha1 `3961e0eba6b0338fad1613bb534efafd9406ed4a`.
 
-Nothing produced here is committed except the tools and count summaries. The `.asm` files contain the game's code
-as text and stay in `build/asm/` (gitignored).
+Like the Genesis sister repos (NHL94Genesis commits its full disassembly under `src/`), the source tree is committed.
+It contains the game's code and data as assembler text. The only parts taken from your `HOCKEY.EXE` at build time are
+the third-party stubs (DOS/16M loader, DOS/4GW kernel, Watcom wstub), the LE header fields and the fixup record order.
+
+## 0. Committed source tree and one-command build
+
+```
+cp /path/to/HOCKEY.EXE .        # your retail EXE (sha1 3961e0eb…), never committed
+make -j8                        # or: ./build.sh [path/to/HOCKEY.EXE]
+# ... MATCH: build/HOCKEY.EXE is byte-identical to the retail HOCKEY.EXE
+```
+Needs `nasm` (2.15 or newer; tested with 2.16.03) and Python 3. No iced-x86, no listing, no Genesis sources.
+
+| path | what |
+|---|---|
+| `src/cseg01/NNN_ADDR_module.asm` (198) | code object, one file per segment of `segmap95pc.json`, one NASM section `s_<ADDR>` per file |
+| `src/dseg02/NNN_ADDR_module.asm` (106) | data object: `db`/`dd sym` for initialised data, `resb` (nobits section) for BSS, labels in both |
+| `src/inc/x86enc.inc` | the `LD op, dst, src` macro (load-form reg,reg encodings), included by every file |
+| `src/inc/symbols.inc` | reference table of the 6,755 cross-segment symbols: address, name, defining file, number of users |
+| `src/segments.txt` | link list: object, start, end, initialised bytes, module, file |
+
+Build steps (`Makefile`; `build.sh` does the same without make):
+1. `rebuild_exe.py extract HOCKEY.EXE build/parts`: checks the sha1 and extracts the stubs, `le.json` and
+   `le_fixups.tsv`. It also writes the segment slices, but the link does not use them.
+2. `nasm -O0 -f elf32 -I src/inc/` for every file → `build/obj/**.o`.
+3. `tools/link_src.py`. Each section `s_<ADDR>` is placed at `ADDR`, and globals are resolved by name across all
+   objects. `R_386_32` becomes an LE fixup (the stored value is object-relative), and `PC32`/`PC8` are resolved in
+   place. A segment that assembles to a different size, or has non-zero BSS bytes, is an error. The segment slices go
+   to `build/link/`; stubs and `le.json` are copied from the extract.
+4. The fixup **set** comes from the relocations only. `order_fixups()` sorts it into wlink record order using the
+   EXE's table. The linker also reports how the set differs from the EXE's (0 missing, 0 extra today).
+5. `rebuild_exe.build()` → `build/HOCKEY.EXE`, then a sha1 check. The exit status is 1 (and make removes the file)
+   on mismatch.
+
+Editing: the segment layout is fixed. Each section is placed at its original address, and `segments.txt` gives its
+size. A change must keep the segment the same size (for example, replace an instruction with one of the same length,
+or pad with `nop`). Moving code between segments needs `segmap95pc.json` + `gen_src.py` changes. A changed fixup
+target just works. A new fixup source is appended as a new chunk by `order_fixups()`, so the EXE stays valid but no
+longer matches the sha1.
+
+Regenerating `src/` (maintainers; overwrites hand edits):
+```
+python3 tools/rebuild_exe.py extract && python3 tools/gen_src.py      # needs iced-x86 + the listing caches for names
+```
+`gen_src.py` runs the `asm_proto.py` emitter on every segment and assembles each one. It checks bytes and fixups
+against the EXE before writing. The output is deterministic: a second run gives identical files.
+`--no-listing` works too, but gives fewer function names and a few more fallbacks.
 
 ```
 python3 tools/rebuild_exe.py extract                 # build/parts from your HOCKEY.EXE
@@ -82,7 +126,7 @@ the switch-table length rule is less precise. The asm round trip still matches (
 * Its reg,reg default (store form, opcode `01/29/31/89`) is what `wcc386` emits. The C game code therefore
   round-trips with almost no help: `league_schedule` has 664 instructions with 0 fallbacks.
 * The opposite direction (load form `03/2B/33/8B`, which MASM/TASM-assembled library and driver modules use) is
-  one macro in `tools/nasm/x86enc.inc`: `LD op, dst, src`.
+  one macro in `src/inc/x86enc.inc`: `LD op, dst, src`.
 
 GNU as could also express direction (`{load}`/`{store}`) and displacement size (`{disp8}`/`{disp32}`). In a
 smoke test I found no pseudo-prefix that forces imm32 for a small value, and the `push N / call __CHK` prologue alone
@@ -142,20 +186,21 @@ Per-segment counts: `tools/asm_proto_summary.json`.
 10. **wasm needs `-fpi87`** (or `-fp3`) for x87 code. `-fpi` would add emulator fixups (`FIWRQQ`…) that the EXE does
     not have. Both MASM-family assemblers reject `smsw eax` with a 32-bit operand.
 
-## 5. Segment-map issues the prototype exposed
-* Three switch tables sit at the end of one slice but are dispatched from the next slice: 29F18 (in
+## 5. Segment-map issues the prototype exposed (fixed)
+* Three switch tables sat at the end of one slice but are dispatched from the next slice: 29F18 (in
   `league_schedule`, used by `arena_logos`), 2D346 (`file_dialogs` / `game_setup`), 78346 (`line_editor_rosters` /
-  `team_select`). Watcom emits a switch table **before** its function in 28 of 46 cases, so the module boundary
-  should move up to the table start. Assembling still works (cross-segment `dd` relocations), but the boundaries
-  are off by the table size.
-* The last dword fixup of `data_sounddrv_71` (D8B64) runs one byte past the end of the initialised data into BSS.
-  The verifier allows that (the extra byte is zero).
+  `team_select`). Watcom emits a switch table **before** its function in 28 of 46 cases. The module boundaries in
+  `segdef.py` now start at the table (29F18, 2D346, 78346).
+* The last dword fixup of `data_sounddrv_71` (D8B64) ran one byte past the end of the initialised data (D8B67) into
+  BSS. `build_segmap.py` now moves the data/BSS split up to the end of any fixup dword that straddles it, so
+  `data_sounddrv_71` is D8ACC-D8B68 (155 file bytes + 1 zero byte of BSS, emitted as part of the `dd`). The
+  verifier's tolerance for trailing bytes is gone: every segment must assemble to exactly its size. The 21-byte
+  BSS piece that was `data_sounddrv_72` (it existed only because of that one byte) is now part of
+  `data_frontend_72`, so dseg02 has 106 segments (was 107) and the later data segments are numbered one lower.
 
 ## 6. Plan / next steps
-1. Fix the three switch-table boundaries in `segdef.py` / `segmap95pc.json`, then regenerate the parts.
-2. Make `asm_proto.py` write a stable, committed-tree layout (`build/asm/` → per-module `.asm` with `%include`d
-   shared extern lists), plus a `make`-style driver: assemble all → `link` → `order_fixups` → `build`. Then turn
-   `rebuild_exe.py` parts into "asm in, EXE out", with the opaque stubs as the only binary inputs.
+1. Done: switch-table boundaries and the D8B64 split (section 5).
+2. Done: committed `src/` tree + `make` / `build.sh` (section 0).
 3. Prettier operands: emit `parent+off` (e.g. `dword_EDA08+4`) for `mid_item` targets once data item extents
    are curated, plus struct-field names from `tools/struct_fieldmap.csv` for `[reg+disp8]` accesses.
 4. Replace the remaining 113 db fallbacks with macros (`ALU_EAX_LONG`, `XCHG_RM` …) so every instruction is

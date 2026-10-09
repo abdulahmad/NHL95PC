@@ -1,6 +1,6 @@
 # NHL 95 PC
 
-Bitwise rebuild of NHL 95 for DOS (`HOCKEY.EXE`, EA Sports 1994). No code segment is matched in source form yet.
+Bitwise rebuild of NHL 95 for DOS (`HOCKEY.EXE`, EA Sports 1994). The whole EXE builds byte-exact from the NASM sources in `src/`. No function is matched in C yet.
 
 `HOCKEY.EXE` is a Watcom C/C++32 10.0 program linked as a Linear Executable (LE) and bound to the DOS/4GW Professional extender (Rational DOS/16M loader, then a Watcom wstub, then the LE). The goal is a bit-perfect assembly rebuild first, then a matching C decompilation built with the same compiler.
 
@@ -18,7 +18,17 @@ The game binary is not in this repo and never will be. Copy your own retail `HOC
 
 `.gitignore` keeps it out of commits, along with the IDA listing (`*.lst`), everything under `build/` (the extracted EXE parts), the Watcom compilers and libraries, and the local Genesis source copies (`ref/`).
 
-## Byte-exact rebuild
+## Build from source
+
+Needs `nasm` (2.15+) and Python 3. Run from the repo root, with your `HOCKEY.EXE` there:
+
+```
+make -j8            # or ./build.sh [path/to/HOCKEY.EXE]
+```
+
+This assembles the 304 files in `src/` (one per segment: 198 code, 106 data), links them with `tools/link_src.py`, and writes `build/HOCKEY.EXE`. It ends with `MATCH` when the result is byte-identical to the retail EXE; otherwise it fails. From your EXE the build takes only the three third-party stubs (DOS/16M loader, DOS/4GW kernel, Watcom wstub), the LE header fields and the fixup record order. Code, data and the fixups themselves come from `src/`. `src/` holds the game's code and data as assembler text, as the Genesis sister repos do. Layout, editing rules and how `src/` is regenerated (`tools/gen_src.py`): [docs/ASM_BUILD.md](docs/ASM_BUILD.md).
+
+## Byte-exact rebuild from the EXE's own parts
 
 Needs Python 3 only. Run from the repo root.
 
@@ -61,7 +71,7 @@ python3 tools/libmatch.py $WATCOM_ROOT/w10a/WATCOM/LIB386/DOS/CLIB3R.LIB   # lib
 * [BUILD_NOTES.md](BUILD_NOTES.md): rebuild format, fixup ordering (wlink algorithm), compiler fingerprint, next steps
 * [EXE_SEGMAP95PC.md](EXE_SEGMAP95PC.md): segment map
 * [docs/SKATING_AND_RINK.md](docs/SKATING_AND_RINK.md): skating physics and rink geometry vs. 93 Genesis
-* [docs/ASM_BUILD.md](docs/ASM_BUILD.md): LE fixups as symbolic labels (`tools/fixup_labels.py`), the NASM toolchain, and the asm round trip (`tools/asm_proto.py`). All 270 segments reassemble byte- and fixup-exact, and the EXE rebuilt from them matches the original sha1
+* [docs/ASM_BUILD.md](docs/ASM_BUILD.md): the `src/` tree and `make` build, LE fixups as symbolic labels (`tools/fixup_labels.py`), the NASM toolchain, and the asm emitter (`tools/asm_proto.py`, `tools/gen_src.py`)
 
 ## Segment queue
 

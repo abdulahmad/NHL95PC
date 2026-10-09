@@ -285,17 +285,17 @@
    "insns": 664,
    "ld_macro": 0,
    "db_fallback": 0,
-   "fixups": 57,
+   "fixups": 53,
    "match": true
   },
   {
-   "segment": "29F28",
+   "segment": "29F18",
    "module": "arena_logos",
    "obj": 1,
    "insns": 1587,
    "ld_macro": 4,
    "db_fallback": 0,
-   "fixups": 158,
+   "fixups": 162,
    "match": true
   },
   {
@@ -305,17 +305,17 @@
    "insns": 1978,
    "ld_macro": 0,
    "db_fallback": 0,
-   "fixups": 381,
+   "fixups": 376,
    "match": true
   },
   {
-   "segment": "2D35A",
+   "segment": "2D346",
    "module": "game_setup",
    "obj": 1,
    "insns": 2739,
    "ld_macro": 4,
    "db_fallback": 0,
-   "fixups": 275,
+   "fixups": 280,
    "match": true
   },
   {
@@ -635,17 +635,17 @@
    "insns": 6017,
    "ld_macro": 8,
    "db_fallback": 0,
-   "fixups": 553,
+   "fixups": 545,
    "match": true
   },
   {
-   "segment": "78366",
+   "segment": "78346",
    "module": "team_select",
    "obj": 1,
    "insns": 2236,
    "ld_macro": 1,
    "db_fallback": 0,
-   "fixups": 259,
+   "fixups": 267,
    "match": true
   },
   {

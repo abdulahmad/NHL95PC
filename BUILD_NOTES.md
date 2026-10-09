@@ -13,6 +13,8 @@ python3 tools/rebuild_exe.py build  [PARTS] [OUT]   # uses only the parts dir; n
 
 Result: **MATCH**. Rebuilt file is 1,179,067 bytes, sha1 `3961e0eba6b0338fad1613bb534efafd9406ed4a` (same as the original).
 
+The source build (`make`, see README) uses the same `build()`. It takes `stub/`, `le.json` and the fixup order from this extract, and the segment slices and fixup set from the assembled `src/`.
+
 ### Parts layout (`build/parts/`, 2.3 MB)
 | part | form | regenerated / opaque |
 |---|---|---|
@@ -22,7 +24,7 @@ Result: **MATCH**. Rebuilt file is 1,179,067 bytes, sha1 `3961e0eba6b0338fad1613
 | `le.json` | full LE header (all 46 fields), object table, resident names (`hockey`), empty entry table, import tables (1 zero byte) | **regenerated**. 15 derived header fields are recomputed from the tables and asserted equal to the recorded values: num_pages, last_page_size, every table offset, fixup/loader section sizes, data_pages_off (512-aligned, bound-MZ relative) |
 | page map | – | **regenerated** (sequential 1..193, type 0) |
 | `le_fixups.tsv` | 26,790 rows `chunk, src_linear, target_obj, target_offset`, kept in linker insertion order | fixup page table + record table **regenerated** (see below) |
-| `cseg01/NNN_ADDR_module.bin` (198), `dseg02/...` (107) | segment slices from segmap95pc.json | object pages = concatenation of the slices + obj1 0x77A zero pad + zero fill up to data_pages_off |
+| `cseg01/NNN_ADDR_module.bin` (198), `dseg02/...` (106) | segment slices from segmap95pc.json | object pages = concatenation of the slices + obj1 0x77A zero pad + zero fill up to data_pages_off |
 | `manifest.json` | slice order, sizes, source sha1 | – |
 
 Only three things stay opaque: the third-party DOS/16M loader body, the BW DOS/4GW kernel, and the wstub body. Everything belonging to the LE is generated from structured data.
@@ -76,6 +78,6 @@ Confidence: version family 10.0 = very high. GA rather than 10.0a/LA = high. Fla
 ## 3. Next steps
 1. Use **10.0 LA `wcc386` (defaults)** as the reference compiler for matching game C code. Re-test against 10.0a if a function fails, and keep a list of LA-vs-GA discrepancies. Keep looking for a 10.0 GA disc (June 1994) to close the gap.
 2. Link the libc side from the matched objects: take the 10.0a CLIB3R modules that match exactly, and treat cstrt386/scnf/grownear/sscanf/strspn/fstrspn (GA versions) as binary blobs from the EXE.
-3. Assembler-based build: emit per-segment asm → assemble → harvest absolute relocations → `order_fixups()` → `rebuild_exe.build()`. Remember that stored values are **object-relative** offsets. **Prototype done:** see [docs/ASM_BUILD.md](docs/ASM_BUILD.md). NASM round-trips all 270 segments, and the rebuilt EXE matches the original sha1.
+3. Assembler-based build: emit per-segment asm → assemble → harvest absolute relocations → `order_fixups()` → `rebuild_exe.build()`. Remember that stored values are **object-relative** offsets. **Done:** the NASM sources are committed in `src/` and `make` / `./build.sh` (`tools/link_src.py`) builds a sha1-identical EXE from them plus the stubs, LE header and fixup order extracted from your EXE. See [docs/ASM_BUILD.md](docs/ASM_BUILD.md).
 4. Optionally run real wlink 10.0a/LA on synthetic OBJs to confirm the chunk/FIXUPP-order theory, so a fully native wcc386+wlink path can reproduce the order without the table.
 5. Run the remaining -o letter tests (-oe inlining, -om, -op, -oa) on functions that exercise them, plus FP-heavy functions (-fp3 vs -fp5).
