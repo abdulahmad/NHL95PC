@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_C4B6C progbits alloc noexec write align=1
 global byte_C4B6C, byte_C4C70, byte_C4C78, dword_C4C90, dword_C4C94, dword_C4C98, dword_C4C9C, dword_C4CA0
-global dword_C4CA4, dword_C4CFC, dword_C4D00, dword_C4D04, dword_C4D08, dword_C4D0C, dword_C4D10, dword_C4D14
+global dword_C4CA4, dword_C4CFC, dword_C4D00, dword_C4D04, dword_C4D08, joysampling, joyqhead, joyqcount
 global qword_C4C80, qword_C4C88, qword_C4CAA, unk_C4CA8
 byte_C4B6C:
 db 00h,01h,01h,01h,01h,01h,01h,01h,01h,01h,03h,03h,03h,03h,03h,01h
@@ -60,9 +60,9 @@ dword_C4D04:
 db 00h,00h,00h,00h
 dword_C4D08:
 db 00h,00h,00h,00h
-dword_C4D0C:
+joysampling:
 db 00h,00h,00h,00h
-dword_C4D10:
+joyqhead:
 db 00h,00h,00h,00h
-dword_C4D14:
+joyqcount:
 db 00h,00h,00h,00h

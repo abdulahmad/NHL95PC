@@ -6,7 +6,7 @@ extern __CHK, asc_C0A18, asc_C0A4D, asc_C0A55, asc_C0A5D, asc_C0A68, asc_C0A71, 
 extern byte_C5424, byte_C5425, byte_C5426, byte_C5427, byte_C542F, byte_C5430, byte_C5431, byte_C5432
 extern byte_C66B4, byte_C8451, byte_DAC14, byte_DAC15, byte_DAC18, byte_DAC20, byte_DB3A8, byte_DB3AD
 extern byte_DB3AE, byte_DB7EC, byte_DC224, byte_DC225, byte_DC228, byte_DC267, byte_DC268, byte_DD710
-extern byte_DD750, dword_C90C8, dword_C90CA, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
+extern byte_DD750, cont2team, dword_C90CA, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
 extern dword_DEB78, dword_DEB7C, dword_DEB80, dword_DF690, dword_DF6C2, fputchar, lseek_, off_CEE5F
 extern off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF, sprintf_, strcat_, strcpy_
 extern strncpy_, sub_14525, sub_14566, sub_1457C, sub_145A2, sub_145F9, sub_15B76, sub_1CC3D
@@ -77,7 +77,7 @@ push unk_C0A22	; 1BC45
 call sub_B2CD8	; 1BC4A
 add esp, byte 4	; 1BC4F
 loc_1BC52:
-mov edx, dword [dword_C90C8]	; 1BC52
+mov edx, dword [cont2team]	; 1BC52
 sar edx, 10h	; 1BC58
 mov eax, edx	; 1BC5B
 shl eax, 2	; 1BC5D

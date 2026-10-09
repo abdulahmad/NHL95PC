@@ -14,7 +14,7 @@ extern sub_21350, sub_214B1, sub_215C4, sub_216D7, sub_217FE, sub_30A0C, sub_479
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
 extern sub_7DB67, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
 extern sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_91370, sub_913D0
-extern sub_91400, sub_91964, sub_B2DB4, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4
+extern sub_91400, sub_91964, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4
 extern sub_B4DD4, sub_B4FAC, unk_C1815, unk_C1818, unk_C1823, unk_C1825, unk_C8657, unk_DF014
 global loc_3411C, loc_3412B, loc_3416A, loc_341F0, loc_34216, loc_342AE, loc_342B9, loc_342C5
 global loc_342CD, loc_342DF, loc_3430A, loc_34318, loc_34328, loc_3435F, loc_343E9, loc_344C7
@@ -1301,7 +1301,7 @@ mov esi, dword [dword esp+0774h]	; 3521A
 push esi	; 35221
 mov edi, dword [dword esp+077Ch]	; 35222
 push edi	; 35229
-call sub_B2DB4	; 3522A
+call MouseSetPos	; 3522A
 add esp, byte 8	; 3522F
 mov eax, dword [dword esp+0778h]	; 35232
 mov dword [dword esp+0770h], eax	; 35239

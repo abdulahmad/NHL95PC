@@ -8,7 +8,7 @@ extern asc_C13E0, asc_C13E5, asc_C13EA, asc_C13F3, asc_C13F8, asc_C13FD, asc_C14
 extern asc_C140C, asc_C1415, asc_C141A, asc_C141F, asc_C1428, asc_C811A, asc_C814A, byte_C5400
 extern byte_C6F6C, byte_C8451, musicon, byte_D42C3, byte_DB3A8, byte_ED7F3, byte_ED824, byte_ED825
 extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, dword_C5403, dword_C5407
-extern dword_C5581, dword_C71CC, dword_C71D0, dword_C71D4, songdata, dword_C90C8, dword_C90CA, musicslot
+extern dword_C5581, dword_C71CC, dword_C71D0, dword_C71D4, songdata, cont2team, dword_C90CA, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, dword_DC234, dword_DC238, dword_EA0DC
 extern fputchar, jctime, memcpy_, off_C5439, off_C57CC, off_C6F48, off_C80D7, off_C80E7
 extern off_CEF43, off_CEF63, sprintf_, sub_1431E, sub_14525, sub_1457C, sub_1463D, sub_147C9
@@ -17,7 +17,7 @@ extern sub_33E6A, sub_479E9, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D
 extern sub_6B3D7, sub_76429, sub_767D0, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_91370, sub_913D0, sub_91400
-extern sub_B2DB4, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4FAC, unk_C139D
+extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4FAC, unk_C139D
 extern unk_C6E7E, unk_C6E9A, unk_CF1AF, unk_DABF0, unk_DC200
 global jpt_29F18, loc_29FEF, loc_2A01F, loc_2A028, loc_2A075, loc_2A0B1, loc_2A0DE, loc_2A128
 global loc_2A12A, loc_2A1BC, loc_2A1BE, loc_2A2F3, loc_2A36A, loc_2A3BB, loc_2A3E9, loc_2A3F0
@@ -509,7 +509,7 @@ mov ecx, dword [dword esp+0634h]	; 2A5EE
 push ecx	; 2A5F5
 mov edi, dword [dword esp+0634h]	; 2A5F6
 push edi	; 2A5FD
-call sub_B2DB4	; 2A5FE
+call MouseSetPos	; 2A5FE
 add esp, byte 8	; 2A603
 push ebp	; 2A606
 push ebp	; 2A607
@@ -728,7 +728,7 @@ mov dword [dword esp+0664h], 0FFFFFFFFh	; 2A93A
 mov dword [dword esp+0640h], 3	; 2A945
 jmp near loc_2AA3B	; 2A950
 loc_2A955:
-mov eax, dword [dword_C90C8]	; 2A955
+mov eax, dword [cont2team]	; 2A955
 sar eax, 10h	; 2A95A
 cmp eax, dword [dword_C5403]	; 2A95D
 je short loc_2A971	; 2A963
@@ -936,7 +936,7 @@ push eax	; 2AC43
 call sub_8E83C	; 2AC44
 mov dword [dword esp+0104h], eax	; 2AC49
 add esp, byte 8	; 2AC50
-mov eax, dword [dword_C90C8]	; 2AC53
+mov eax, dword [cont2team]	; 2AC53
 sar eax, 10h	; 2AC58
 mov ebx, dword [nosplit eax*4+off_C57CC]	; 2AC5B
 push ebx	; 2AC62

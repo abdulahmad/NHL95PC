@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_7F724 progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, asc_C342E, asc_C3436, asc_C3449, asc_C3450, asc_C3472, asc_C3477
-extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, byte_C8451, byte_C90BC, musicon
+extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, byte_C8451, sflags, musicon
 extern byte_DB3AD, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
 extern byte_E03E3, byte_E03E4, dword_C5704, dword_C5708, dword_C570C, songdata, dword_C7444, dword_C7448
-extern dword_C90C8, dword_C90CA, musichandle, dword_D42A8, dword_D8C68, dword_D8C80, dword_D8C84, musicslot
+extern cont2team, dword_C90CA, musichandle, dword_D42A8, dword_D8C68, dword_D8C80, dword_D8C84, musicslot
 extern dword_DC230, dword_DC2F0, dword_E039C, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
 extern dword_ED6F8, dword_ED700, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, off_C54A9
 extern off_C9078, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, sub_10E9F
@@ -327,7 +327,7 @@ mov eax, dword [dword_C5708]	; 7FAB8
 mov dword [dword_E0408], eax	; 7FABD
 mov eax, dword [dword_C570C]	; 7FAC2
 mov dword [dword_E040C], eax	; 7FAC7
-mov ax, word [byte_C90BC]	; 7FACC
+mov ax, word [sflags]	; 7FACC
 mov word [word_E0410], ax	; 7FAD2
 mov eax, dword [dword_E039C]	; 7FAD8
 mov edx, dword [off_C9078]	; 7FADD
@@ -855,7 +855,7 @@ mov dword [dword_C5708], eax	; 80179
 mov eax, dword [dword_E040C]	; 8017E
 mov dword [dword_C570C], eax	; 80183
 mov ax, word [word_E0410]	; 80188
-mov word [byte_C90BC], ax	; 8018E
+mov word [sflags], ax	; 8018E
 mov eax, dword [off_C9078]	; 80194
 mov edx, dword [dword_E0412]	; 80199
 add eax, edx	; 8019F
@@ -914,7 +914,7 @@ loc_8025A:
 call sub_479E9	; 8025A
 mov edx, dword [dword_C90CA]	; 8025F
 sar edx, 10h	; 80265
-mov eax, dword [dword_C90C8]	; 80268
+mov eax, dword [cont2team]	; 80268
 sar eax, 10h	; 8026D
 mov ebx, unk_DF314	; 80270
 call sub_673C5	; 80275
@@ -929,7 +929,7 @@ jl short loc_802A9	; 802A0
 mov eax, 0Ch	; 802A2
 jmp short loc_802B1	; 802A7
 loc_802A9:
-mov eax, dword [dword_C90C8]	; 802A9
+mov eax, dword [cont2team]	; 802A9
 sar eax, 10h	; 802AE
 loc_802B1:
 call sub_3377C	; 802B1

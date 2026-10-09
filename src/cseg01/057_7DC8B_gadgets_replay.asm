@@ -5,7 +5,7 @@ section s_7DC8B progbits alloc exec nowrite align=1
 extern __CHK, asc_C33D4, asc_C33DC, asc_C33E4, asc_C33EC, asc_C3411, asc_C3419, asc_C3421
 extern asc_C3426, asc_C8136, musicon, byte_ED7CC, byte_ED7EB, byte_ED862, byte_ED8CC, byte_ED92D
 extern byte_ED932, byte_ED9EF, dword_C53FB, dword_C5403, dword_C5407, dword_C541F, dword_C66D0, dword_C66D4
-extern dword_C7444, dword_C7448, dword_C90C8, dword_CC0DC, dword_CC9AD, dword_CCC88, dword_CCC94, dword_D1C8B
+extern dword_C7444, dword_C7448, cont2team, dword_CC0DC, dword_CC9AD, dword_CCC88, dword_CCC94, dword_D1C8B
 extern dword_D1CE6, dword_D1CEE, dword_D1DC8, dword_D1DCC, dword_D1DD0, dword_D1DD4, dword_D2C6B, dword_D8B74
 extern dword_D8C40, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, dword_DC238, dword_DD6A8, dword_DD6AE
 extern dword_DD6B0, dword_E03A4, dword_E9F16, dword_E9F38, dword_EA0DC, dword_ED368, dword_ED380, dword_ED384
@@ -17,7 +17,7 @@ extern sub_1431E, sub_30A0C, sub_30F12, sub_31013, sub_33DD3, sub_59748, sub_675
 extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_6B391, sub_6B3D7, sub_7F724
 extern sub_7FA10, sub_7FC12, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
-extern sub_B2DB4, sub_B2E1B, sub_B30B4, sub_B396E, sub_B3989, sub_B3999, sub_B4BA8, sub_B4BC4
+extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B396E, sub_B3989, sub_B3999, sub_B4BA8, sub_B4BC4
 extern sub_B4CD8, sub_B4FAC, sub_B500C, sub_B5DB0, unk_C33F8, unk_C3403, unk_DF014, unk_DF314
 extern word_C9098, word_C909A, word_CC0DE, word_CD4FC, word_CD500, scrolly, word_E9F18, word_E9F3A
 extern word_ED758
@@ -55,7 +55,7 @@ push esi	; 7DC98
 push edi	; 7DC99
 sub esp, byte 20h	; 7DC9A
 mov dword [dword_CCC94], 20h	; 7DC9D
-mov eax, dword [dword_C90C8]	; 7DCA7
+mov eax, dword [cont2team]	; 7DCA7
 sar eax, 10h	; 7DCAC
 mov dword [byte esp+01Ch], eax	; 7DCAF
 cmp eax, byte 1Ah	; 7DCB3
@@ -195,7 +195,7 @@ call sub_1431E	; 7DE33
 mov eax, esp	; 7DE38
 call sub_8F13B	; 7DE3A
 mov dword [dword_ED380], eax	; 7DE3F
-mov eax, dword [dword_C90C8]	; 7DE44
+mov eax, dword [cont2team]	; 7DE44
 sar eax, 10h	; 7DE49
 mov eax, dword [dword eax+dword_CC9AD]	; 7DE4C
 sar eax, 18h	; 7DE52
@@ -504,7 +504,7 @@ mov ecx, dword [dword_ED6DC]	; 7E17B
 push ecx	; 7E181
 mov esi, dword [dword_ED6E0]	; 7E182
 push esi	; 7E188
-call sub_B2DB4	; 7E189
+call MouseSetPos	; 7E189
 add esp, byte 8	; 7E18E
 call SelectScreenBM	; 7E191
 push byte 20h	; 7E196
@@ -901,7 +901,7 @@ mov eax, dword [dword_ED6DC]	; 7E7C7
 push eax	; 7E7CC
 mov edx, dword [dword_ED6E0]	; 7E7CD
 push edx	; 7E7D3
-call sub_B2DB4	; 7E7D4
+call MouseSetPos	; 7E7D4
 add esp, byte 8	; 7E7D9
 mov eax, dword [dword_ED74C]	; 7E7DC
 mov dword [dword_ED6EC], eax	; 7E7E1
@@ -1334,7 +1334,7 @@ mov edx, dword [dword_ED6DC]	; 7EDA5
 push edx	; 7EDAB
 mov ebx, dword [dword_ED6E0]	; 7EDAC
 push ebx	; 7EDB2
-call sub_B2DB4	; 7EDB3
+call MouseSetPos	; 7EDB3
 add esp, byte 8	; 7EDB8
 jmp near loc_7EEAC	; 7EDBB
 loc_7EDC0:
@@ -1387,7 +1387,7 @@ mov eax, dword [dword_ED6DC]	; 7EE8D
 push eax	; 7EE92
 mov edx, dword [dword_ED6E0]	; 7EE93
 push edx	; 7EE99
-call sub_B2DB4	; 7EE9A
+call MouseSetPos	; 7EE9A
 add esp, byte 8	; 7EE9F
 mov eax, dword [dword_ED74C]	; 7EEA2
 mov dword [dword_ED6EC], eax	; 7EEA7
@@ -1582,7 +1582,7 @@ add esp, byte 4	; 7F0EA
 mov edi, dword [dword_C5403]	; 7F0ED
 test edi, edi	; 7F0F3
 jl short loc_7F10E	; 7F0F5
-mov eax, dword [dword_C90C8]	; 7F0F7
+mov eax, dword [cont2team]	; 7F0F7
 sar eax, 10h	; 7F0FC
 cmp eax, edi	; 7F0FF
 jne short loc_7F107	; 7F101
@@ -1592,7 +1592,7 @@ loc_7F107:
 mov eax, 1	; 7F107
 jmp short loc_7F129	; 7F10C
 loc_7F10E:
-mov eax, dword [dword_C90C8]	; 7F10E
+mov eax, dword [cont2team]	; 7F10E
 sar eax, 10h	; 7F113
 mov ebp, dword [dword_C5407]	; 7F116
 cmp eax, ebp	; 7F11C
@@ -1731,7 +1731,7 @@ call sub_B2E1B	; 7F2F3
 add esp, byte 10h	; 7F2F8
 push dword 8Ah	; 7F2FB
 push dword 0EEh	; 7F300
-call sub_B2DB4	; 7F305
+call MouseSetPos	; 7F305
 add esp, byte 8	; 7F30A
 push dword 8Ah	; 7F30D
 push dword 0EEh	; 7F312
@@ -2001,7 +2001,7 @@ mov dword [dword_ED6DC], eax	; 7F679
 push eax	; 7F67E
 mov eax, dword [byte esp+08h]	; 7F67F
 push eax	; 7F683
-call sub_B2DB4	; 7F684
+call MouseSetPos	; 7F684
 add esp, byte 8	; 7F689
 cmp dword [byte esp+068h], byte 0	; 7F68C
 je short loc_7F6E7	; 7F691

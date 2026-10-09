@@ -9,8 +9,8 @@ extern dword_C5848, dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C5
 extern dword_DC28C, dword_DC2BC, dword_DC2C0, dword_DC2C4, dword_DC30C, dword_DC334, gmode, j_unlink_
 extern lseek_, off_C56B5, off_C80D7, rmdir_, sprintf_, strcat_, strcpy_, sub_15374
 extern sub_1540A, sub_15655, sub_15707, sub_157BD, sub_15995, sub_31013, sub_5A2EE, SelectScreenBM
-extern SelectRinkBM, sub_B2CD8, sub_B2DB4, sub_B4CD8, sub_B4CF2, unk_C8113, unk_C8115, unk_DC2F4
-extern unk_DC300, unknown_libname_1, unknown_libname_2, word_C571C, word_C575C, word_CBC6A, word_CBC6C
+extern SelectRinkBM, sub_B2CD8, MouseSetPos, sub_B4CD8, sub_B4CF2, unk_C8113, unk_C8115, unk_DC2F4
+extern unk_DC300, unknown_libname_1, unknown_libname_2, word_C571C, word_C575C, lcboxon, word_CBC6C
 global loc_14349, loc_1434C, loc_14359, loc_14366, loc_143FA, loc_14436, loc_1443A, loc_144D7
 global loc_14513, loc_14517, loc_14537, loc_14599, loc_145D0, loc_145E4, loc_145E6, loc_145F0
 global loc_14627, loc_1464D, loc_146ED, loc_146F5, loc_14758, loc_14766, loc_147F6, loc_14852
@@ -602,7 +602,7 @@ mov ecx, dword [byte esp+054h]	; 14976
 push ecx	; 1497A
 mov esi, dword [byte esp+05Ch]	; 1497B
 push esi	; 1497F
-call sub_B2DB4	; 14980
+call MouseSetPos	; 14980
 add esp, byte 8	; 14985
 push dword 320h	; 14988
 lea eax, [byte esp+058h]	; 1498D
@@ -994,7 +994,7 @@ sar edx, 1Fh	; 14DA9
 idiv ebx	; 14DAC
 mov edx, 0FCh	; 14DAE
 call sub_15707	; 14DB3
-cmp word [word_CBC6A], byte 0	; 14DB8
+cmp word [lcboxon], byte 0	; 14DB8
 jne short loc_14DD4	; 14DC0
 cmp dword [dword_C5844], byte 0	; 14DC2
 jne short loc_14DD4	; 14DC9

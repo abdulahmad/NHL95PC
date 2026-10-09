@@ -4,7 +4,7 @@ bits 32
 section s_D8B68 nobits alloc noexec write align=1
 global byte_D8C88, byte_D9299, byte_D9558, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
 global dword_D8B7C, dword_D8C18, dword_D8C40, dword_D8C4C, dword_D8C68, dword_D8C6C, dword_D8C70, dword_D8C72
-global dword_D8C74, dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C80, dword_D8C84, unk_D8B80, unk_D8F88
+global dword_D8C74, dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C80, dword_D8C84, joyqueue, unk_D8F88
 global unk_D8F8D, unk_D9270, unk_D9275, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C
 global unk_D9690, unk_D96F8, unk_D972C, unk_D9794, unk_D97CA, unk_D9800, unk_D9836, unk_D9865
 global unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
@@ -20,7 +20,7 @@ dword_D8B78:
 resb 4
 dword_D8B7C:
 resb 4
-unk_D8B80:
+joyqueue:
 resb 152
 dword_D8C18:
 resb 40

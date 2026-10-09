@@ -15,7 +15,7 @@ extern off_C80E7, off_C80EB, off_D3078, off_D45B4, off_D45B8, strcat_, sub_1431E
 extern sub_175E2, sub_6CA8F, sub_6CB90, sub_6CBB7, sub_6CC20, sub_76429, sub_83459, sub_8CCA8
 extern sub_8D2F0, sub_8E4C0, sub_8E4F8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_90D20, sub_910E0, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_91964
-extern sub_92CD0, sub_92DE0, sub_B29F0, sub_B2CBE, sub_B2DB4, sub_B2F22, sub_B30B4, sub_B30F4
+extern sub_92CD0, sub_92DE0, sub_B29F0, sub_B2CBE, MouseSetPos, sub_B2F22, sub_B30B4, sub_B30F4
 extern sub_B340B, sub_B3464, sub_B384E, sub_B387E, sub_B392C, sub_B39D0, sub_B39ED, sub_B4B88
 extern sub_B4BA8, sub_B4C61, sub_B4FAC, unk_C27F5, unk_D45D8, scrpitch
 global loc_6B0C7, loc_6B0CC, loc_6B17A, loc_6B17F, loc_6B21F, loc_6B23C, loc_6B29D, loc_6B2FA
@@ -444,7 +444,7 @@ mov ebx, dword [esi]	; 6B5BE
 push ebx	; 6B5C0
 mov ecx, dword [edi]	; 6B5C1
 push ecx	; 6B5C3
-call sub_B2DB4	; 6B5C4
+call MouseSetPos	; 6B5C4
 add esp, byte 8	; 6B5C9
 mov eax, dword [edi]	; 6B5CC
 mov dword [dword_D302C], eax	; 6B5CE

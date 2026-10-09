@@ -5,7 +5,7 @@ section s_32DA9 progbits alloc exec nowrite align=1
 extern __CHK, asc_C177B, asc_C1783, asc_C1788, byte_C5386, byte_C53DC, byte_C5400, byte_C8451
 extern musicon, byte_DE268, byte_EA0F4, dword_C5382, dword_C53D3, dword_C53D7, dword_C53DF, dword_C53E3
 extern dword_C53E7, dword_C53EB, dword_C53EF, dword_C53F3, dword_C53FB, dword_C65C0, dword_C65C4, dword_C65C8
-extern dword_C65CC, dword_C65D0, songdata, dword_C73D0, rinkbm, dword_C7440, dword_C90C8, dword_C90CA
+extern dword_C65CC, dword_C65D0, songdata, dword_C73D0, rinkbm, dword_C7440, cont2team, dword_C90CA
 extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, dword_DC234, jctime, loc_32704, musicslot
 extern loc_32705, strcat_, strcpy_, sub_10712, sub_11D09, sub_14525, sub_148A5, sub_1BEFD
 extern sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
@@ -52,7 +52,7 @@ xor eax, eax	; 32E16
 call sub_1BEFD	; 32E18
 mov edx, dword [dword_C90CA]	; 32E1D
 sar edx, 10h	; 32E23
-mov eax, dword [dword_C90C8]	; 32E26
+mov eax, dword [cont2team]	; 32E26
 sar eax, 10h	; 32E2B
 call sub_29F28	; 32E2E
 mov edx, eax	; 32E33

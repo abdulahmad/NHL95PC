@@ -9,7 +9,7 @@ extern dword_DC238, dword_DD678, dword_DD688, dword_DD68C, dword_DD690, dword_DD
 extern dword_DD6A0, dword_DD6A4, dword_DD770, dword_DD7A4, dword_EA0DC, fputchar, jctime, off_C74AB
 extern strlen_, sub_174C2, sub_175E2, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B88E
 extern sub_8CCA8, sub_8E9C0, sub_903F0, sub_90A40, sub_90D20, sub_90EC0, sub_91044, sub_91370
-extern sub_91400, sub_92CD0, sub_B2CBE, sub_B2DB4, sub_B2DCA, sub_B3989, sub_B39A7, sub_B39ED
+extern sub_91400, sub_92CD0, sub_B2CBE, MouseSetPos, sub_B2DCA, sub_B3989, sub_B39A7, sub_B39ED
 extern sub_B3D46, sub_B3D64, sub_B4BA8, sub_B4FAC, unk_C1720, unk_C1722, unk_C74B7, unknown_libname_4
 global loc_2FE34, loc_2FE3E, loc_2FF09, loc_2FF0E, loc_2FF37, loc_2FF5C, loc_300BD, loc_300EC
 global loc_3012C, loc_3014F, loc_30159, loc_3015D, loc_30175, loc_301CC, loc_301D0, loc_30226
@@ -1933,7 +1933,7 @@ mov edi, dword [edi]	; 312D5
 mov dword [byte esp+010h], edi	; 312D7
 push edi	; 312DB
 push esi	; 312DC
-call sub_B2DB4	; 312DD
+call MouseSetPos	; 312DD
 add esp, byte 8	; 312E2
 push edi	; 312E5
 push esi	; 312E6
@@ -2075,7 +2075,7 @@ mov ebp, dword [byte esp+010h]	; 31463
 push ebp	; 31467
 mov eax, dword [byte esp+018h]	; 31468
 push eax	; 3146C
-call sub_B2DB4	; 3146D
+call MouseSetPos	; 3146D
 add esp, byte 8	; 31472
 mov eax, dword [byte esp+014h]	; 31475
 mov edx, dword [byte esp+0Ch]	; 31479

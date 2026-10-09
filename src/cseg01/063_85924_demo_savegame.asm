@@ -11,7 +11,7 @@ extern sprintf_, strcat_, sub_1431E, sub_14566, sub_1457C, sub_145F9, sub_1466B,
 extern sub_30A0C, sub_30F12, sub_31013, sub_3170D, sub_3271B, sub_327A1, sub_32B1D, sub_41978
 extern sub_5FB03, sub_6B391, sub_6B3D7, sub_80075, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_903F0, sub_910E0, sub_91284, sub_91370, sub_91400
-extern sub_92CD0, sub_92DE0, sub_B2CD8, sub_B2DB4, sub_B2DCA, sub_B30B4, sub_B3989, sub_B3999
+extern sub_92CD0, sub_92DE0, sub_B2CD8, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3989, sub_B3999
 extern sub_B4BA8, unk_C392C, unk_C392F, unk_C393B, unk_C393E, unk_C3941, unk_C3944, unk_C396F
 extern unk_C397B, unk_C5298, unknown_libname_1
 global loc_859EB, loc_85A26, loc_85A3D, loc_85A5C, loc_85A95, loc_85AC1, loc_85B1C, loc_85B51
@@ -621,7 +621,7 @@ add esp, byte 0Ch	; 8610F
 call sub_6B3D7	; 86112
 push dword 0FEh	; 86117
 push dword 181h	; 8611C
-call sub_B2DB4	; 86121
+call MouseSetPos	; 86121
 add esp, byte 8	; 86126
 push dword 0FEh	; 86129
 push dword 181h	; 8612E

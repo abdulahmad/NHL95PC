@@ -4,7 +4,7 @@ bits 32
 section s_3DB41 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1942, asc_C1948, asc_C195C, asc_C8145, byte_C8B78, dword_D243A, fclose_
 extern fopen_, fscanf_, sub_1431E, sub_30A0C, sub_82D7A, sub_8EB93, sub_8FE83, sub_B2CD8
-extern sub_B2DB4, sub_B3454, sub_B4B88, unk_C1946
+extern MouseSetPos, sub_B3454, sub_B4B88, unk_C1946
 global loc_3DB85, loc_3DBAA, loc_3DBAF, loc_3DBB8, sub_3DB41, unk_3DC28
 sub_3DB41:
 push dword 38h	; 3DB41
@@ -66,7 +66,7 @@ call sub_B3454	; 3DBE2
 add esp, byte 4	; 3DBE7
 push byte 0	; 3DBEA
 push byte 0	; 3DBEC
-call sub_B2DB4	; 3DBEE
+call MouseSetPos	; 3DBEE
 add esp, byte 8	; 3DBF3
 push byte 0	; 3DBF6
 mov ecx, 3	; 3DBF8

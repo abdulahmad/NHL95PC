@@ -29,3 +29,11 @@ weight,$67,56h,"playeracc: byte >>3 subtracted from 32, as 93G move.b weight(a3)
 legstr,$68,57h,playeracc: added to the accel factor (twice for the goalie) as 93G legstr; StopNA step 200+legstr
 legspd,$69,58h,"playeracc: times the energy level for the MaxSpeed index, as 93G move.b legspd(a3),d2 / mulu d0,d2"
 endurance,$72,61h,"playeracc .sube: added to the energy level, as 93G move.b endurance(a3),d2 / add d2,d0"
+impactp,$2E,14h,"holdplayer: Acheck target SortCords[impactp] when impact != 0, as 93G move.w impactp(a3),d0 / asl #7"
+impact,$32,18h,"holdplayer and Acheck: cmp word [x+18h],0 where 93G does tst.w impact(a3)"
+tmptr,none,6Ch,"pointer to own team struct: lineinput/lcselect/getlchoice read tmflags/tmline/tmap through it (93G loadTeamStruct)"
+optmptr,none,70h,"pointer to the other team struct: lcselect/getlchoice compare its tmap with the own team's"
+tmline,$16 (team),2Ah (team),"getlchoice adds tmline*4 to the choice index (93G tmline*3); lcfound stores the new line then setpersonel; player_logic reads [DF614/DF714+2Ah]"
+tmlcnt,none (team),2Ch (team),"lcfound/lcselect: incremented and wrapped at 3 when the new line is < 4"
+tmap,$24 (team),36h (team),"getlchoice/lcselect: other tmap - own tmap picks the even / PK / PP choices, as 93G getlchoice"
+tmflags,$30 (team),44h (team),"lineinput: bit 0 cleared before opening the box; lcfound clears bit 1, as 93G lineinput/lcfound"

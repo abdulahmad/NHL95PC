@@ -8,8 +8,8 @@ extern asc_C0465, asc_C046E, asc_C0477, asc_C0480, asc_C048A, asc_C0494, asc_C04
 extern asc_C04A9, asc_C04B0, asc_C8136, asc_C814A, assinsert, byte_C4D1C, byte_C4D1D, byte_CBEA8
 extern musicon, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8, byte_E0308
 extern byte_E0344, byte_E9AC8, byte_E9AD3, byte_ED7CC, byte_ED7E4, byte_ED7E6, byte_ED85C, byte_ED86C
-extern byte_ED8C6, byte_ED8C8, byte_ED8D7, byte_ED976, byte_ED9AA, byte_ED9EC, byte_ED9F0, dword_C4D0C
-extern dword_C4E10, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, songdata, dword_C90C8
+extern byte_ED8C6, byte_ED8C8, byte_ED8D7, byte_ED976, byte_ED9AA, byte_ED9EC, byte_ED9F0, joysampling
+extern dword_C4E10, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, songdata, cont2team
 extern dword_C90CA, dword_CBECA, dword_CC0AC, dword_CC0E0, dword_CC0EC, dword_CC0F0, dword_CC0F8, dword_CC0FC
 extern dword_CC118, dword_CC11C, dword_CC124, dword_CC128, dword_CCC88, musichandle, dword_D2C6B, musicslot
 extern dword_D8B68, dword_D8C18, dword_D8C4C, dword_D8C68, dword_D8C6C, dword_D8C70, dword_D8C78, dword_D8C80
@@ -17,18 +17,18 @@ extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E0
 extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, loc_12842, memcpy_, nullsub_2
 extern puckx, pucky, passspeed, randomd0, sprintf_, sub_11598, sub_1205D, sub_12849
 extern sub_13188, sub_1431E, sub_14525, sub_1457C, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
-extern sub_4830E, sub_4FD47, sub_59863, sub_59981, sub_599B9, sub_599EE, sub_5E086, sub_5E0B0
+extern sub_4830E, joyq_flush, sub_59863, sub_59981, sub_599B9, sub_599EE, sub_5E086, sub_5E0B0
 extern sub_64614, sub_658F3, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
-extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, sub_B2DB4, sub_B30B4, sub_B30BB
+extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, MouseSetPos, sub_B30B4, sub_B30BB
 extern sub_B392C, sub_B4BA8, threat, unk_DF014, SortCords, vtoa, regd4, scrpitch
-extern word_C90A0, word_C90A4, word_C90A6, word_C90A8, word_C90B2, word_C90B4, word_C90CE, word_C90D0
+extern lastplayer, passdir, word_C90A6, passplayer, word_C90B2, word_C90B4, word_C90CE, word_C90D0
 extern refsignal, word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_CBC44, word_CBC46, word_CBC48
-extern word_CBC52, word_CBC54, word_CBC56, word_CBC58, word_CBC5A, word_CBC5C, word_CBC5E, word_CBC60
-extern word_CBC62, word_CBC64, word_CBC66, word_CBC68, word_CBC6A, word_CBC6C, word_CBE8C, word_CBE8E
+extern word_CBC52, word_CBC54, lcblink, word_CBC58, lcblinktime, lcsel, word_CBC60
+extern lcline, word_CBC64, lctimer, word_CBC68, lcboxon, word_CBC6C, word_CBE8C, word_CBE8E
 extern word_CBEC0, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0B0
-extern word_CC0DE, word_DEE94, word_DF64A, word_DF74A, word_E024E, word_E0304, word_E0306, word_E0380
-extern word_E0382, regd2, regd0, regd1, word_E9A9C, word_E9AA0, word_E9AA2, word_E9AA4
+extern word_CC0DE, word_DEE94, word_DF64A, word_DF74A, word_E024E, lcrequest, word_E0306, lcreqchoice
+extern word_E0382, regd2, regd0, regd1, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4
 extern word_E9AA6, word_E9AA8, word_E9AAA, word_E9AAE, word_E9B2C
 global LoadTransparentRinkEndOverlay, loc_13384, loc_133A7, loc_133D4, loc_13405, loc_13407, loc_134A2, loc_134A4
 global loc_134E7, loc_1350F, loc_13513, loc_1352B, loc_1352D, loc_13546, loc_1358D, loc_1359C
@@ -954,7 +954,7 @@ mov dword [dword_CC0F0], edx	; 13ECC
 call sub_14056	; 13ED2
 mov edx, dword [dword_C90CA]	; 13ED7
 sar edx, 10h	; 13EDD
-mov eax, dword [dword_C90C8]	; 13EE0
+mov eax, dword [cont2team]	; 13EE0
 sar eax, 10h	; 13EE5
 mov ecx, 1	; 13EE8
 mov ebx, ecx	; 13EED
@@ -1097,33 +1097,33 @@ mov word [word_C90CE], dx	; 140AF
 mov word [word_CC0B0], dx	; 140B6
 xor eax, eax	; 140BD
 mov word [threat], ax	; 140BF
-mov word [word_C90A8], ax	; 140C5
+mov word [passplayer], ax	; 140C5
 mov word [word_C90A6], ax	; 140CB
-mov word [word_C90A4], ax	; 140D1
+mov word [passdir], ax	; 140D1
 mov word [passspeed], ax	; 140D7
-mov word [word_C90A0], ax	; 140DD
+mov word [lastplayer], ax	; 140DD
 mov word [word_CBC44], ax	; 140E3
 mov word [word_C90D6], ax	; 140E9
 mov word [refsignal], ax	; 140EF
 mov word [word_C90D0], ax	; 140F5
-mov word [word_CBC5C], ax	; 140FB
-mov word [word_CBC5A], ax	; 14101
+mov word [lcblinktime+2], ax	; 140FB
+mov word [lcblinktime], ax	; 14101
 mov word [word_CBC58], ax	; 14107
-mov word [word_CBC56], ax	; 1410D
+mov word [lcblink], ax	; 1410D
 mov word [word_CBC54], ax	; 14113
 mov word [word_CBC52], ax	; 14119
 mov word [word_E0382], ax	; 1411F
-mov word [word_E0380], ax	; 14125
+mov word [lcreqchoice], ax	; 14125
 mov word [word_E0306], ax	; 1412B
-mov word [word_E0304], ax	; 14131
+mov word [lcrequest], ax	; 14131
 mov word [word_CBC6C], ax	; 14137
-mov word [word_CBC6A], ax	; 1413D
+mov word [lcboxon], ax	; 1413D
 mov word [word_CBC68], ax	; 14143
-mov word [word_CBC66], ax	; 14149
+mov word [lctimer], ax	; 14149
 mov word [word_CBC64], ax	; 1414F
-mov word [word_CBC62], ax	; 14155
+mov word [lcline], ax	; 14155
 mov word [word_CBC60], ax	; 1415B
-mov word [word_CBC5E], ax	; 14161
+mov word [lcsel], ax	; 14161
 xor ebx, ebx	; 14167
 mov dword [dword_DF010], ebx	; 14169
 xor ecx, ecx	; 1416F
@@ -1192,7 +1192,7 @@ jne short loc_142A4	; 14293
 loc_14295:
 push byte 64h	; 14295
 push dword 0A0h	; 14297
-call sub_B2DB4	; 1429C
+call MouseSetPos	; 1429C
 add esp, byte 8	; 142A1
 loc_142A4:
 xor edi, edi	; 142A4
@@ -1204,9 +1204,9 @@ xor esi, esi	; 142BB
 mov word [word_CBC48], si	; 142BD
 mov dword [dword_D8C78], edi	; 142C4
 mov dword [dword_D8C6C], edi	; 142CA
-mov dword [dword_C4D0C], edi	; 142D0
-mov word [word_E9AA0], cx	; 142D6
-call sub_4FD47	; 142DD
+mov dword [joysampling], edi	; 142D0
+mov word [joysampling_save], cx	; 142D6
+call joyq_flush	; 142DD
 jmp near loc_138CC	; 142E2
 sub_142E7:
 push dword 10h	; 142E7

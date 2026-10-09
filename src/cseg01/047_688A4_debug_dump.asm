@@ -14,10 +14,10 @@ extern dword_D8C6C, dword_D8C78, dword_DF612, dword_DF614, dword_DF616, dword_DF
 extern dword_DF622, dword_DF638, dword_DF63A, dword_DF63C, dword_DF690, dword_DF6FA, dword_DF712, dword_DF714
 extern dword_DF716, dword_DF71C, dword_DF71E, dword_DF720, dword_DF722, dword_DF738, dword_DF73A, dword_DF73C
 extern dword_DF7FA, dword_E9A13, dword_E9A14, fclose_, fopen_, fprintf_, gmode, puckc
-extern off_C9096, off_CD6E4, off_CD8C4, off_CD984, puckvz, sprintf_, sub_4FD47, sub_51440
+extern off_C9096, off_CD6E4, off_CD8C4, off_CD984, puckvz, sprintf_, joyq_flush, sub_51440
 extern sub_935E0, sub_93E38, sub_B39ED, sub_B3A18, threat, unk_C234B, unk_C234D, unk_C2478
-extern unk_C247A, unk_C247C, unk_C2485, unk_C24A0, SortCords, word_C9098, xc1, word_C90C2
-extern word_C90C4, word_C90C6, word_C90CC, word_C90D0, refsignal, word_C90DA, word_C90DC, word_CBC42
+extern unk_C247A, unk_C247C, unk_C2485, unk_C24A0, SortCords, word_C9098, xc1, c1playernum
+extern c2playernum, cont1team, word_C90CC, word_C90D0, refsignal, word_C90DA, word_C90DC, word_CBC42
 extern word_CBC44, word_CBC46, word_DF64A, word_DF74A
 global loc_688E0, loc_688E5, loc_68B33, loc_68C39, loc_68C3E, loc_68CC1, loc_68D06, loc_68D21
 global loc_68D3A, loc_68D4D, loc_68D53, loc_68D6C, loc_68D7A, loc_68D98, loc_68DCC, loc_68DEB
@@ -189,13 +189,13 @@ push eax	; 68A99
 call sprintf_	; 68A9A
 add esp, byte 10h	; 68A9F
 add esi, eax	; 68AA2
-mov eax, dword [word_C90C6]	; 68AA4
+mov eax, dword [cont1team]	; 68AA4
 sar eax, 10h	; 68AA9
 push eax	; 68AAC
-mov eax, dword [word_C90C4]	; 68AAD
+mov eax, dword [c2playernum]	; 68AAD
 sar eax, 10h	; 68AB2
 push eax	; 68AB5
-mov eax, dword [word_C90C2]	; 68AB6
+mov eax, dword [c1playernum]	; 68AB6
 sar eax, 10h	; 68ABB
 push eax	; 68ABE
 mov eax, dword [dword_C90C0]	; 68ABF
@@ -517,7 +517,7 @@ cmp ax, 5Ch	; 68E46
 jne short loc_68E6E	; 68E4A
 cmp word [word_CBC42], byte 0	; 68E4C
 je short loc_68E5B	; 68E54
-call sub_4FD47	; 68E56
+call joyq_flush	; 68E56
 loc_68E5B:
 cmp word [word_CBC42], byte 0	; 68E5B
 sete al	; 68E63

@@ -5,12 +5,12 @@ section s_614C2 progbits alloc exec nowrite align=1
 extern PBnum, Setplass, __CHK, asc_C1C6A, asc_C1C78, asc_C1C87, asc_C1C92, asc_C1C9B
 extern asc_C1CA8, asc_C1CAC, asc_C1CB3, asc_C1CB9, asc_C1CC4, asc_C1CCD, asc_C1CDA, asc_C1CE9
 extern asc_C1CFE, asc_C1D0E, asc_C1D19, asc_C1D2D, asc_C1D3F, asc_C1D54, assinsert, assreplace
-extern byte_C5400, byte_C542F, byte_C5431, byte_C90BC, gmode2, byte_C90D5, byte_C9104, byte_C9111
+extern byte_C5400, byte_C542F, byte_C5431, sflags, gmode2, byte_C90D5, byte_C9104, byte_C9111
 extern byte_C9123, byte_C9142, byte_C9146, byte_CBC36, byte_CCE00, byte_CCE01, musicon, byte_DAC20
 extern byte_DB3A8, byte_DB3AD, byte_DF658, byte_DF6E8, byte_DF758, byte_DF7E8, byte_DF861, byte_E024C
 extern byte_E024D, byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E9A15, byte_E9A16
 extern byte_E9A17, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD, byte_E9ACE
-extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, dword_C4D0C, dword_C53FB, gameopts
+extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, joysampling, dword_C53FB, gameopts
 extern dword_C5840, dword_C90B0, dword_C90C0, dword_C90CA, dword_C9120, dword_CBEBE, dword_CBECA, dword_CC0AC
 extern dword_CC0DC, dword_CC0F8, dword_CC0FC, dword_CC100, dword_CC104, dword_CC110, dword_CC114, dword_CC118
 extern dword_CC11C, dword_CC120, dword_CC124, dword_CC128, dword_CD2F8, dword_CD34C, dword_CD350, dword_D8B70
@@ -25,12 +25,12 @@ extern strcpy_, strlen_, sub_110E0, sub_14552, sub_1457C, sub_145F9, sub_14C22, 
 extern sub_18F74, sub_1CD73, sub_59A11, sub_59AAD, sub_59B3C, sub_59B88, sub_59FE1, sub_5B2C5
 extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, sub_B2CD8, unk_C1B49, unk_C1C58, unk_C1C5B
 extern unk_C1C5E, unk_C1C61, unk_C1C64, unk_C1C67, unk_C1CB0, unk_C5423, unk_C542E, unk_DBC30
-extern SortCords, unk_E001C, unk_E9B4C, word_C5428, word_C90B2, word_C90B4, word_C90C2, word_C90C4
-extern word_C90C6, word_C90CC, word_C90CE, word_C90D0, refsignal, word_C90D4, word_C90D6, word_C90D8
+extern SortCords, unk_E001C, unk_E9B4C, word_C5428, word_C90B2, word_C90B4, c1playernum, c2playernum
+extern cont1team, word_C90CC, word_C90CE, word_C90D0, refsignal, word_C90D4, word_C90D6, word_C90D8
 extern word_C90DA, word_C90DC, word_C90DE, word_CBC44, word_CBEC0, word_CBEC6, word_CBEC8, word_CBECC
 extern word_CC0B0, word_CC0DE, word_CCEF8, word_CD39C, word_DEE94, word_DF624, word_DF644, word_DF64A
 extern word_DF64C, word_DF724, word_DF74A, word_DFF42, word_DFFAE, regd2, regd3, regd1
-extern word_E9AA0, word_E9AA8, word_E9AAC, word_E9AAE, word_E9AB8, word_E9AC4, word_E9B2C
+extern joysampling_save, word_E9AA8, word_E9AAC, word_E9AAE, word_E9AB8, word_E9AC4, word_E9B2C
 global AddPenalty, AddPenalty2, Stop4Pen, loc_61591, loc_6159B, loc_615D0, loc_615E3, loc_6161F
 global loc_6162A, loc_61679, loc_61696, loc_616BF, loc_616CB, loc_6170E, loc_61722, loc_61742
 global loc_61748, loc_61772, loc_617A3, loc_61812, loc_61824, loc_6183B, loc_61845, loc_61848
@@ -1369,10 +1369,10 @@ call sub_66497	; 62472
 loc_62477:
 call sub_61E99	; 62477
 call sub_66DDA	; 6247C
-mov ax, word [dword_C4D0C]	; 62481
-mov word [word_E9AA0], ax	; 62487
+mov ax, word [joysampling]	; 62481
+mov word [joysampling_save], ax	; 62487
 xor edx, edx	; 6248D
-mov dword [dword_C4D0C], edx	; 6248F
+mov dword [joysampling], edx	; 6248F
 mov edi, byte_E9AD3	; 62495
 mov esi, byte_E9AC8	; 6249A
 movsd	; 6249F
@@ -1381,7 +1381,7 @@ movsw	; 624A1
 movsb	; 624A3
 mov eax, dword [dword_E9A9E]	; 624A4
 sar eax, 10h	; 624A9
-mov dword [dword_C4D0C], eax	; 624AC
+mov dword [joysampling], eax	; 624AC
 add esp, byte 4	; 624B1
 pop edi	; 624B4
 pop esi	; 624B5
@@ -1475,10 +1475,10 @@ call sub_66497	; 625DA
 loc_625DF:
 call sub_61E99	; 625DF
 call sub_66DDA	; 625E4
-mov ax, word [dword_C4D0C]	; 625E9
-mov word [word_E9AA0], ax	; 625EF
+mov ax, word [joysampling]	; 625E9
+mov word [joysampling_save], ax	; 625EF
 xor eax, eax	; 625F5
-mov dword [dword_C4D0C], eax	; 625F7
+mov dword [joysampling], eax	; 625F7
 cmp word [word_CC0DE], 190h	; 625FC
 jle short loc_62610	; 62605
 mov word [word_CC0DE], 190h	; 62607
@@ -1584,7 +1584,7 @@ mov word [word_E9AAE], 0FFFFh	; 62743
 loc_6274C:
 mov eax, dword [dword_E9A9E]	; 6274C
 sar eax, 10h	; 62751
-mov dword [dword_C4D0C], eax	; 62754
+mov dword [joysampling], eax	; 62754
 loc_62759:
 xor eax, eax	; 62759
 add esp, byte 8	; 6275B
@@ -2101,7 +2101,7 @@ push ebx	; 62D8A
 push ecx	; 62D8B
 mov ebx, eax	; 62D8C
 mov ecx, edx	; 62D8E
-test byte [byte_C90BC], 80h	; 62D90
+test byte [sflags], 80h	; 62D90
 jne near loc_62E9F	; 62D97
 cmp word [word_CBC44], byte 0	; 62D9D
 jne near loc_62E9F	; 62DA5
@@ -2448,7 +2448,7 @@ mov word [word_C90D8], dx	; 6320C
 xor dl, dl	; 63213
 mov byte [dword eax+byte_E9A17], dl	; 63215
 mov byte [dword eax+byte_E9A16], dl	; 6321B
-test byte [byte_C90BC], 80h	; 63221
+test byte [sflags], 80h	; 63221
 jne short loc_63238	; 63228
 cmp word [word_CBC44], byte 0	; 6322A
 je near loc_63461	; 63232
@@ -2866,7 +2866,7 @@ call __CHK	; 637BA
 push ebx	; 637BF
 push ecx	; 637C0
 push edx	; 637C1
-test byte [byte_C90BC], 80h	; 637C2
+test byte [sflags], 80h	; 637C2
 jne near loc_63926	; 637C9
 mov dx, word [word_CBC44]	; 637CF
 test dx, dx	; 637D6
@@ -3528,7 +3528,7 @@ call assinsert	; 6403B
 cmp dword [dword_CC104], byte 0	; 64040
 sete al	; 64047
 and eax, 0FFh	; 6404A
-mov edx, dword [word_C90C4]	; 6404F
+mov edx, dword [c2playernum]	; 6404F
 sar edx, 10h	; 64055
 inc eax	; 64058
 cmp edx, eax	; 64059
@@ -3539,24 +3539,24 @@ cmp edx, byte 0FFFFFFFFh	; 64066
 je short loc_6407B	; 64069
 mov eax, 0FFFFFFFFh	; 6406B
 call sub_59FE1	; 64070
-mov word [word_C90C2], ax	; 64075
+mov word [c1playernum], ax	; 64075
 loc_6407B:
 cmp dword [dword_CC104], byte 0	; 6407B
 sete al	; 64082
 xor edx, edx	; 64085
 mov dl, al	; 64087
-mov eax, dword [word_C90C6]	; 64089
+mov eax, dword [cont1team]	; 64089
 sar eax, 10h	; 6408E
 inc edx	; 64091
 cmp eax, edx	; 64092
 jne short loc_640B4	; 64094
-mov edx, dword [word_C90C2]	; 64096
+mov edx, dword [c1playernum]	; 64096
 sar edx, 10h	; 6409C
 cmp edx, byte 0FFFFFFFFh	; 6409F
 je short loc_640B4	; 640A2
 mov eax, 0FFFFFFFFh	; 640A4
 call sub_59FE1	; 640A9
-mov word [word_C90C4], ax	; 640AE
+mov word [c2playernum], ax	; 640AE
 loc_640B4:
 mov ebx, dword [byte ebx+06Ch]	; 640B4
 mov word [byte ebx+034h], 0FFFFh	; 640B7

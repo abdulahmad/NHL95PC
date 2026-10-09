@@ -17,8 +17,8 @@ extern unk_C061C, unk_C0624, unk_C062C, unk_C063B, unk_D97CA, unk_D9800, unk_D98
 extern unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
 global asc_C5286, asc_C528E, byte_C4D1C, byte_C4D1D, byte_C4D1E, byte_C5138, byte_C5244, byte_C524D
 global byte_C52F2, byte_C5311, byte_C5367, byte_C5386, byte_C53DC, byte_C5400, byte_C541B, byte_C5424
-global byte_C5425, byte_C5426, byte_C5427, byte_C542F, byte_C5430, byte_C5431, byte_C5432, dword_C4D18
-global dword_C4E0C, dword_C4E10, dword_C4E14, dword_C4E18, dword_C4E24, dword_C4E28, dword_C4E2C, dword_C5130
+global byte_C5425, byte_C5426, byte_C5427, byte_C542F, byte_C5430, byte_C5431, byte_C5432, joyqtick
+global dword_C4E0C, dword_C4E10, dword_C4E14, joyrec, dword_C4E24, dword_C4E28, dword_C4E2C, dword_C5130
 global dword_C5131, dword_C5133, dword_C5135, dword_C513C, dword_C5168, dword_C51F0, dword_C52E9, dword_C52ED
 global dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5305, dword_C5309, dword_C530D, dword_C535E
 global dword_C5362, dword_C536A, dword_C536E, dword_C5372, dword_C5376, dword_C537A, dword_C537E, dword_C5382
@@ -28,7 +28,7 @@ global dword_C5417, dword_C541F, off_C5194, off_C51C0, off_C51EC, off_C524F, off
 global off_C525B, off_C525F, off_C5263, off_C5267, off_C526F, off_C5273, off_C527B, off_C5439
 global off_C5441, off_C54A9, unk_C4E30, unk_C5283, unk_C5298, unk_C529C, unk_C5423, unk_C542E
 global word_C5366, word_C53DB, word_C5428
-dword_C4D18:
+joyqtick:
 db 00h,00h,00h,00h
 byte_C4D1C:
 db 08h
@@ -56,7 +56,7 @@ dword_C4E10:
 db 00h,00h,00h,00h
 dword_C4E14:
 db 00h,00h,00h,00h
-dword_C4E18:
+joyrec:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 dword_C4E24:
 db 00h,00h,00h,00h

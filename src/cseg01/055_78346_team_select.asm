@@ -8,7 +8,7 @@ extern asc_C324C, asc_C3253, asc_C325B, asc_C3267, asc_C326D, asc_C3277, asc_C32
 extern asc_C32A4, asc_C32AA, asc_C32AF, asc_C32B5, asc_C814F, byte_D11BC, byte_D1238, byte_D12DE
 extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, byte_DB3A8, byte_DB3AD, byte_DD710, byte_DD750
 extern byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED83C, byte_ED86D, byte_ED9E7, dword_C65B0
-extern dword_C65B8, dword_C90C8, dword_C90CA, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
+extern dword_C65B8, cont2team, dword_C90CA, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
 extern dword_D0B2A, dword_D1338, dword_D133C, dword_D1478, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
 extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, exit_, j___close_, jctime, lseek_
 extern off_C57CC, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
@@ -1504,7 +1504,7 @@ je short loc_79551	; 79547
 mov edx, dword [dword_C90CA]	; 79549
 jmp short loc_79557	; 7954F
 loc_79551:
-mov edx, dword [dword_C90C8]	; 79551
+mov edx, dword [cont2team]	; 79551
 loc_79557:
 sar edx, 10h	; 79557
 mov eax, edx	; 7955A
@@ -1546,7 +1546,7 @@ mov ecx, eax	; 795C0
 mov ebx, eax	; 795C2
 test eax, eax	; 795C4
 jge short loc_79625	; 795C6
-mov edx, dword [dword_C90C8]	; 795C8
+mov edx, dword [cont2team]	; 795C8
 sar edx, 10h	; 795CE
 mov eax, edx	; 795D1
 shl eax, 2	; 795D3
@@ -1747,7 +1747,7 @@ je short loc_79875	; 7986B
 mov edx, dword [dword_C90CA]	; 7986D
 jmp short loc_7987B	; 79873
 loc_79875:
-mov edx, dword [dword_C90C8]	; 79875
+mov edx, dword [cont2team]	; 79875
 loc_7987B:
 sar edx, 10h	; 7987B
 mov eax, edx	; 7987E
@@ -1789,7 +1789,7 @@ mov ecx, eax	; 798E4
 mov ebx, eax	; 798E6
 test eax, eax	; 798E8
 jge short loc_79949	; 798EA
-mov edx, dword [dword_C90C8]	; 798EC
+mov edx, dword [cont2team]	; 798EC
 sar edx, 10h	; 798F2
 mov eax, edx	; 798F5
 shl eax, 2	; 798F7
@@ -1955,7 +1955,7 @@ je short loc_79B0D	; 79B04
 mov eax, dword [dword_C90CA]	; 79B06
 jmp short loc_79B12	; 79B0B
 loc_79B0D:
-mov eax, dword [dword_C90C8]	; 79B0D
+mov eax, dword [cont2team]	; 79B0D
 loc_79B12:
 sar eax, 10h	; 79B12
 mov dword [dword_C65B0], eax	; 79B15
@@ -2004,7 +2004,7 @@ je short loc_79BC7	; 79BBE
 mov eax, dword [dword_C90CA]	; 79BC0
 jmp short loc_79BCC	; 79BC5
 loc_79BC7:
-mov eax, dword [dword_C90C8]	; 79BC7
+mov eax, dword [cont2team]	; 79BC7
 loc_79BCC:
 sar eax, 10h	; 79BCC
 call sub_244E2	; 79BCF

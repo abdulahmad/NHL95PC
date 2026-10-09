@@ -23,7 +23,7 @@ extern sub_14525, sub_14566, sub_1457C, sub_145A2, sub_145F9, sub_1466B, sub_1D1
 extern sub_30A0C, sub_31013, sub_327A1, sub_32DA9, sub_33559, sub_336E6, sub_6B391, sub_6B3D7
 extern sub_7A29C, sub_86647, sub_89268, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0
 extern sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400, sub_91964, sub_92CD0, sub_B2CD8
-extern sub_B2DB4, sub_B2DCA, sub_B30B4, sub_B3CC8, sub_B4BA8, sub_B4FAC, unk_C1430, unk_C1435
+extern MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3CC8, sub_B4BA8, sub_B4FAC, unk_C1430, unk_C1435
 extern unk_C1439, unk_C148B, unk_C149A, unk_C149D, unk_C14A0, unk_C14A3, unk_C14A6, unk_C14A9
 extern unk_C14AC, unk_C14AF, unk_C14C4, unk_C14D4, unk_C14D7, unk_C14E7, unk_C153C, unk_C155C
 extern unk_C1563, unk_C1566, unk_C5298, unk_C70DF, unk_CE64F, unk_D2B38, unknown_libname_1, unknown_libname_2
@@ -1828,7 +1828,7 @@ mov edx, dword [byte esp+08h]	; 2CDA2
 push edx	; 2CDA6
 mov ebx, dword [byte esp+010h]	; 2CDA7
 push ebx	; 2CDAB
-call sub_B2DB4	; 2CDAC
+call MouseSetPos	; 2CDAC
 add esp, byte 8	; 2CDB1
 mov ecx, dword [dword_DD658]	; 2CDB4
 test ecx, ecx	; 2CDBA

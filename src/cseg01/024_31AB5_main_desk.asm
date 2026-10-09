@@ -7,14 +7,14 @@ extern asc_C1756, asc_C175F, asc_C1768, asc_C176D, asc_CDB75, asc_CDB7C, byte_C7
 extern byte_CDB77, byte_CDB7E, musicon, byte_DD710, byte_DD750, byte_EA0F4, byte_ED836, byte_ED9A7
 extern byte_ED9AB, dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413
 extern dword_C5417, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C7219, songdata
-extern dword_C90C8, dword_C90CA, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
+extern cont2team, dword_C90CA, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
 extern dword_D2C6B, dword_DC238, dword_EA0DC, jctime, memcpy_, off_C5439, off_C7282, off_D3078
 extern strcpy_, strncpy_, sub_106C8, sub_142E7, sub_1431E, sub_14525, sub_14552, sub_14566
 extern sub_1457C, sub_145A2, sub_145F9, sub_1D100, sub_1D610, sub_20D97, sub_31013, sub_47C31
 extern sub_6B391, sub_6B3D7, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D
 extern sub_76429, sub_8B85B, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C, sub_91370
-extern sub_91400, sub_B2CD8, sub_B2DB4, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_B4BC4, unk_208EF
+extern sub_91400, sub_B2CD8, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_B4BC4, unk_208EF
 extern unk_20A46, unk_20BBD, unk_20EB7, unk_C1772, unk_C1775, unk_C1778, scrpitch, word_C90CC
 global loc_31C7C, loc_31C7E, loc_31C91, loc_31CAC, loc_31CAE, loc_31CBE, loc_31CCC, loc_31CE4
 global loc_31CE6, loc_31DB7, loc_31DE2, loc_31DE4, loc_31E07, loc_31E30, loc_31E85, loc_31EAE
@@ -89,7 +89,7 @@ mov ebp, dword [dword esp+098h]	; 31B87
 push ebp	; 31B8E
 mov eax, dword [dword esp+098h]	; 31B8F
 push eax	; 31B96
-call sub_B2DB4	; 31B97
+call MouseSetPos	; 31B97
 add esp, byte 8	; 31B9C
 call dword [off_D3078]	; 31B9F
 call sub_8B85B	; 31BA5
@@ -562,7 +562,7 @@ mov ecx, dword [dword esp+098h]	; 3224F
 push ecx	; 32256
 mov esi, dword [dword esp+098h]	; 32257
 push esi	; 3225E
-call sub_B2DB4	; 3225F
+call MouseSetPos	; 3225F
 add esp, byte 8	; 32264
 call sub_6B3D7	; 32267
 jmp near loc_326AD	; 3226C
@@ -940,7 +940,7 @@ call strcpy_	; 3273E
 lea eax, [byte ebx+031h]	; 32743
 mov edx, byte_DD710	; 32746
 call strcpy_	; 3274B
-mov eax, dword [dword_C90C8]	; 32750
+mov eax, dword [cont2team]	; 32750
 sar eax, 10h	; 32755
 mov dword [byte ebx+051h], eax	; 32758
 mov eax, dword [dword_C90CA]	; 3275B
@@ -1168,7 +1168,7 @@ loc_32A89:
 call sub_8B85B	; 32A89
 cmp dword [dword_C53FB], byte 0	; 32A8E
 jne near loc_32704	; 32A95
-mov edx, dword [dword_C90C8]	; 32A9B
+mov edx, dword [cont2team]	; 32A9B
 sar edx, 10h	; 32AA1
 mov edx, dword [nosplit edx*4+off_C5439]	; 32AA4
 cmp byte [byte edx+02h], 0	; 32AAB
@@ -1243,7 +1243,7 @@ mov edx, byte_DD710	; 32B93
 call strcpy_	; 32B98
 mov eax, dword [dword_C53FB]	; 32B9D
 mov dword [byte ebp+00h], eax	; 32BA2
-mov eax, dword [dword_C90C8]	; 32BA5
+mov eax, dword [cont2team]	; 32BA5
 sar eax, 10h	; 32BAA
 mov dword [byte ebp+051h], eax	; 32BAD
 mov eax, dword [dword_C90CA]	; 32BB0
@@ -1298,7 +1298,7 @@ mov ecx, 0F0h	; 32C5A
 mov dword [byte esp+024h], ecx	; 32C5F
 push ecx	; 32C63
 push ebx	; 32C64
-call sub_B2DB4	; 32C65
+call MouseSetPos	; 32C65
 add esp, byte 8	; 32C6A
 push dword 320h	; 32C6D
 lea eax, [byte esp+028h]	; 32C72

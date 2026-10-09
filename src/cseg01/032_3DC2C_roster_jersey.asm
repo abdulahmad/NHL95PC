@@ -17,7 +17,7 @@ extern sub_14552, sub_1457C, sub_1463D, sub_14654, sub_147C9, sub_1BBCC, sub_1D6
 extern sub_244E2, sub_2FEDF, sub_31013, sub_3A2B8, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
 extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A099, sub_8B96D
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
-extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, sub_B2DB4
+extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, MouseSetPos
 extern sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, SetDrawBitmap, unk_C1A15
 extern unk_C8115, unk_C8117, unk_C88E2, unk_CF3CF, unk_D12C8, unk_DABF0, unk_DC200, unk_DDFF4
 extern word_C90CC
@@ -1468,7 +1468,7 @@ mov eax, dword [esp]	; 3EF03
 push eax	; 3EF06
 mov edx, dword [byte esp+08h]	; 3EF07
 push edx	; 3EF0B
-call sub_B2DB4	; 3EF0C
+call MouseSetPos	; 3EF0C
 add esp, byte 8	; 3EF11
 jmp short loc_3EF20	; 3EF14
 loc_3EF16:
@@ -1939,7 +1939,7 @@ mov ecx, dword [byte ebp+036h]	; 3F464
 push ecx	; 3F467
 mov esi, dword [byte ebp+03Ah]	; 3F468
 push esi	; 3F46B
-call sub_B2DB4	; 3F46C
+call MouseSetPos	; 3F46C
 add esp, byte 8	; 3F471
 mov eax, dword [byte ebp+03Ah]	; 3F474
 mov dword [byte ebp+032h], eax	; 3F477

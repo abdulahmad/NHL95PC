@@ -13,14 +13,14 @@ extern asc_C16E0, asc_C16E8, asc_C16F5, asc_C16FA, asc_C1703, asc_C1709, asc_C70
 extern asc_C811A, asc_C814A, byte_C5400, byte_C8451, byte_C8922, musicon, byte_D42C3, byte_DB3A8
 extern byte_DD710, byte_DD750, byte_DD774, byte_DD775, byte_DD788, byte_DD789, byte_ED7ED, byte_ED824
 extern byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED8CE, byte_ED9AC, byte_ED9B0, byte_ED9E6
-extern dword_C53F7, gameopts, dword_C541F, songdata, dword_C90C8, dword_C90CA, dword_CCC94, musicslot
+extern dword_C53F7, gameopts, dword_C541F, songdata, cont2team, dword_C90CA, dword_CCC94, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_DBC7C, dword_DC234, dword_DD66C, dword_DD670, dword_DD730
 extern dword_DF612, dword_DF614, dword_DF616, dword_DF61A, dword_DF61C, dword_DF61E, dword_DF620, dword_DF622
 extern dword_DF626, dword_DF62A, dword_DF636, dword_DF638, dword_DF63A, fputchar, jctime, memcpy_
 extern off_C57CC, off_C719C, off_C80D7, off_C80E7, off_C80EB, off_CD304, rand_, sprintf_
 extern strcat_, strcpy_, sub_11598, sub_1431E, sub_14525, sub_14552, sub_1457C, sub_1463D
 extern sub_1478B, sub_147C9, sub_147FF, sub_174C2, sub_175E2, sub_1BAF3, sub_29C75, sub_33E6A
-extern sub_47C31, sub_4FD47, sub_59981, sub_599B9, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
+extern sub_47C31, joyq_flush, sub_59981, sub_599B9, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
 extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_913B4, sub_913D0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88
@@ -192,7 +192,7 @@ push eax	; 2D568
 call sub_8E83C	; 2D569
 mov edi, eax	; 2D56E
 add esp, byte 8	; 2D570
-mov eax, dword [dword_C90C8]	; 2D573
+mov eax, dword [cont2team]	; 2D573
 sar eax, 10h	; 2D578
 mov ebx, dword [nosplit eax*4+off_C57CC]	; 2D57B
 push ebx	; 2D582
@@ -595,7 +595,7 @@ mov dword [dword_CCC94], edx	; 2DBD5
 call sub_599B9	; 2DBDB
 loc_2DBE0:
 call sub_6B3D7	; 2DBE0
-call sub_4FD47	; 2DBE5
+call joyq_flush	; 2DBE5
 mov dword [dword esp+0750h], unk_DC200	; 2DBEA
 mov dword [dword esp+0754h], unk_DABF0	; 2DBF5
 mov bl, byte [esp]	; 2DC00
@@ -2218,7 +2218,7 @@ mov al, byte [nosplit edi*2+byte_DD774]	; 2F3ED
 and eax, 0FFh	; 2F3F4
 xor edx, edx	; 2F3F9
 mov dl, byte [dword eax+byte_C8922]	; 2F3FB
-mov eax, dword [dword_C90C8]	; 2F401
+mov eax, dword [cont2team]	; 2F401
 sar eax, 10h	; 2F406
 mov al, byte [dword eax+byte_C8922]	; 2F409
 and eax, 0FFh	; 2F40F
@@ -2383,7 +2383,7 @@ push edi	; 2F5FC
 push ebp	; 2F5FD
 mov ebp, esp	; 2F5FE
 sub esp, 374h	; 2F600
-mov eax, dword [dword_C90C8]	; 2F606
+mov eax, dword [cont2team]	; 2F606
 sar eax, 10h	; 2F60B
 mov dword [byte ebp-020h], eax	; 2F60E
 mov eax, dword [dword_C90CA]	; 2F611

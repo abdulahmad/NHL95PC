@@ -37,3 +37,15 @@ weight     equ 56h   ; size b; 93G $67; playeracc: byte >>3 subtracted from 32, 
 legstr     equ 57h   ; size b; 93G $68; playeracc: added to the accel factor (twice for the goalie) as 93G legstr; StopNA step 200+legstr
 legspd     equ 58h   ; size b; 93G $69; playeracc: times the energy level for the MaxSpeed index, as 93G move.b legspd(a3),d2 / mulu d0,d2
 endurance  equ 61h   ; size b; 93G $72; playeracc .sube: added to the energy level, as 93G move.b endurance(a3),d2 / add d2,d0
+impactp    equ 14h   ; size w; 93G $2E; holdplayer: Acheck target SortCords[impactp] when impact != 0 (dword [x+12h] / sar 10h), as 93G move.w impactp(a3),d0 / asl #7
+impact     equ 18h   ; size w; 93G $32; holdplayer and Acheck: cmp word [x+18h],0 where 93G does tst.w impact(a3)
+tmptr      equ 6Ch   ; size d; 93G none (loadTeamStruct by pfteam); pointer to the player's own team structure: lineinput, lcselect, getlchoice read tmflags/tmline/tmap through it
+optmptr    equ 70h   ; size d; 93G none; pointer to the other team's structure: lcselect and getlchoice compare its tmap with tmptr's (93G tmap(a2) vs the other tmstruct)
+
+; ---- team structure (93G hmtmstruct/awtmstruct; PC home DF614, away DF714, 100h apart). No 'size' tag on purpose:
+; these offsets collide with player fields, so tools/struct_operands.py must not apply them; write them by hand
+; on a register loaded from [reg+tmptr] / [reg+optmptr].
+tmline     equ 2Ah   ; 93G $16; getlchoice adds tmline*4 to the choice index (93G adds tmline*3); lcfound/lcselect store the new line, then setpersonel
+tmlcnt     equ 2Ch   ; 93G none; lcfound/lcselect: when the new line is < 4 it is incremented and wrapped at 3 (even-strength line rotation count)
+tmap       equ 36h   ; 93G $24; getlchoice/lcselect: other tmap - own tmap selects the even / short-handed / power-play choices (93G 'number I'm short')
+tmflags    equ 44h   ; 93G $30; lineinput: bit 0 'start lc mode' cleared before opening the box; lcfound/lcselect clear bit 1 (93G bclr #1,tmflags(a2))

@@ -2,21 +2,21 @@
 bits 32
 %include "hockey.inc"
 section s_47C31 progbits alloc exec nowrite align=1
-extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, byte_C90BC, byte_CC9B0, byte_DE26C
-extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, dword_C4D0C, dword_C4E10, dword_C4E14
-extern dword_C7444, dword_C7448, dword_C9074, dword_C90C8, dword_C90CA, dword_CBC3E, dword_CBECA, dword_CC0EC
+extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, byte_DE26C
+extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, dword_C4E10, dword_C4E14
+extern dword_C7444, dword_C7448, dword_C9074, cont2team, dword_C90CA, dword_CBC3E, dword_CBECA, dword_CC0EC
 extern dword_CC0F0, dword_CC9AD, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
 extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, dword_DF614, dword_DF714, dword_DFF1C
 extern dword_E0244, dword_E9A9E, dword_E9B04, forcepldata, jctime, puckc, off_C9096, randomd0
 extern sub_5B826, resetplstuff, setpersonel, sub_1145F, sub_1149A, sub_11598, sub_14CF1, sub_33DD3
-extern sub_47951, sub_4FD47, sub_50A05, sub_50A84, sub_594CD, sub_597E3, sub_59863, sub_59981
+extern sub_47951, joyq_flush, Readjoy1, Readjoy2, sub_594CD, sub_597E3, sub_59863, sub_59981
 extern sub_59A11, sub_5CE12, sub_5DD7C, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8374D, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
 extern unk_DF014, unk_DF314, unk_DFD9C, unk_E001C, word_C9098, word_C909A, xc1, yc1
-extern word_C90B2, word_C90B4, word_C90C2, word_C90C4, word_C90D4, word_CBC46, word_CBC52, word_CBC54
-extern word_CBC56, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly, word_DFF1E, word_DFF22
+extern word_C90B2, word_C90B4, c1playernum, c2playernum, word_C90D4, word_CBC46, word_CBC52, word_CBC54
+extern lcblink, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly, word_DFF1E, word_DFF22
 extern word_DFF28, word_DFF2A, word_DFF44, word_E001E, word_E0022, word_E0028, word_E002A, word_E002E
-extern word_E0042, word_E0046, word_E0048, word_E004A, word_E0052, regd1, word_E9AA0
+extern word_E0042, word_E0046, word_E0048, word_E004A, word_E0052, regd1, joysampling_save
 global loc_47C4F, loc_47C60, loc_47C62, loc_47C89, loc_47CB1, loc_47CD0, loc_47E01, loc_47E05
 global loc_47E0E, loc_47E1B, loc_47E39, loc_47E3E, loc_47E64, loc_47E69, loc_47E7E, loc_47E8A
 global loc_47EA4, loc_47EE0, loc_47EE5, loc_47F35, loc_47F48, loc_47F56, loc_4809C, loc_480CC
@@ -96,7 +96,7 @@ push edi	; 47CE4
 sub esp, byte 10h	; 47CE5
 mov eax, 0Ah	; 47CE8
 call sub_59A11	; 47CED
-mov eax, dword [dword_C90C8]	; 47CF2
+mov eax, dword [cont2team]	; 47CF2
 sar eax, 10h	; 47CF7
 movsx dx, byte [dword eax+byte_CC9B0]	; 47CFA
 mov dword [byte esp+08h], edx	; 47D02
@@ -121,7 +121,7 @@ mov dword [dword_D8C84], 0FFFFFFFFh	; 47D50
 mov word [word_C90B4], bx	; 47D5A
 xor ecx, ecx	; 47D61
 mov word [word_C90B2], cx	; 47D63
-mov edx, dword [dword_C90C8]	; 47D6A
+mov edx, dword [cont2team]	; 47D6A
 sar edx, 10h	; 47D70
 shl edx, 10h	; 47D73
 mov eax, dword [dword_C90CA]	; 47D76
@@ -134,8 +134,8 @@ mov dword [dword_E9B04], 708h	; 47D8E
 xor esi, esi	; 47D98
 mov word [word_CBC46], si	; 47D9A
 mov eax, 0FFFFFFFFh	; 47DA1
-mov word [word_C90C4], ax	; 47DA6
-mov word [word_C90C2], ax	; 47DAC
+mov word [c2playernum], ax	; 47DA6
+mov word [c1playernum], ax	; 47DAC
 mov eax, dword_DF614	; 47DB2
 call sub_5B826	; 47DB7
 mov eax, dword_DF614	; 47DBC
@@ -296,7 +296,7 @@ mov edx, 26h	; 4800B
 mov eax, unk_E001C	; 48010
 call assreplace	; 48015
 mov word [word_C90D4], si	; 4801A
-or byte [byte_C90BC], 40h	; 48021
+or byte [sflags], 40h	; 48021
 call DoGameFrame	; 48028
 call DoGameFrame	; 4802D
 call sub_5DD7C	; 48032
@@ -305,8 +305,8 @@ mov dword [dword_D8C6C], edi	; 48039
 mov dword [dword_C4E10], edi	; 4803F
 mov eax, dword [puckc]	; 48045
 mov byte [eax], 0FFh	; 4804A
-mov dword [dword_C4D0C], edi	; 4804D
-call sub_4FD47	; 48053
+mov dword [joysampling], edi	; 4804D
+call joyq_flush	; 48053
 xor edi, edi	; 48058
 mov word [word_C9098], di	; 4805A
 mov word [xc1], si	; 48061
@@ -323,7 +323,7 @@ loc_4809C:
 call SelectScreenBM	; 4809C
 xor ebx, ebx	; 480A1
 mov word [word_CBC58], bx	; 480A3
-mov word [word_CBC56], bx	; 480AA
+mov word [lcblink], bx	; 480AA
 mov word [word_CBC54], bx	; 480B1
 mov word [word_CBC52], bx	; 480B8
 call sub_14CF1	; 480BF
@@ -393,10 +393,10 @@ call sub_6AF97	; 481A7
 call sub_6ADA7	; 481AC
 cmp word [word_CBEC4], byte 0	; 481B1
 je short loc_481F4	; 481B9
-mov ax, word [dword_C4D0C]	; 481BB
-mov word [word_E9AA0], ax	; 481C1
+mov ax, word [joysampling]	; 481BB
+mov word [joysampling_save], ax	; 481C1
 xor eax, eax	; 481C7
-mov dword [dword_C4D0C], ebp	; 481C9
+mov dword [joysampling], ebp	; 481C9
 mov ebx, 10h	; 481CF
 mov edx, unk_DF314	; 481D4
 call sub_11598	; 481D9
@@ -404,13 +404,13 @@ xor ebx, ebx	; 481DE
 mov word [word_CBEC4], bx	; 481E0
 mov eax, dword [dword_E9A9E]	; 481E7
 sar eax, 10h	; 481EC
-mov dword [dword_C4D0C], eax	; 481EF
+mov dword [joysampling], eax	; 481EF
 loc_481F4:
 movsx eax, si	; 481F4
 call sub_594CD	; 481F7
 cmp dword [dword_C4E14], byte 0	; 481FC
 jne short loc_4824E	; 48203
-call sub_50A05	; 48205
+call Readjoy1	; 48205
 mov ah, byte [regd1]	; 4820A
 test ah, 10h	; 48210
 jne short loc_4821A	; 48213
@@ -421,7 +421,7 @@ mov dword [dword_CC0F0], 1	; 4821A
 mov word [word_CBEC4], 1	; 48224
 jmp short loc_4824E	; 4822D
 loc_4822F:
-call sub_50A84	; 4822F
+call Readjoy2	; 4822F
 mov dh, byte [regd1]	; 48234
 test dh, 10h	; 4823A
 jne short loc_4821A	; 4823D
@@ -431,7 +431,7 @@ call sub_B3999	; 48244
 jmp near loc_4836E	; 48249
 loc_4824E:
 xor esi, esi	; 4824E
-mov dword [dword_C4D0C], esi	; 48250
+mov dword [joysampling], esi	; 48250
 mov eax, dword [dword_CBECA]	; 48256
 sar eax, 10h	; 4825B
 cmp eax, byte 0FFFFFFFFh	; 4825E
@@ -509,7 +509,7 @@ push esi	; 48340
 push edi	; 48341
 push ebp	; 48342
 call sub_B396E	; 48343
-mov dword [dword_C4D0C], 1	; 48348
+mov dword [joysampling], 1	; 48348
 xor ebx, ebx	; 48352
 mov dword [dword_C4E14], ebx	; 48354
 add dword [dword_C7444], 3E8h	; 4835A

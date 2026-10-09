@@ -49,3 +49,33 @@ musichandle,D2431,music handle passed to the play (sub_8FB8E) and fade (sub_8FCD
 screenbm,C66C4,"pointer to the screen bitmap descriptor (set in main_ startup), selected by SelectScreenBM"
 rinkbm,C73D4,"pointer to the rink tile buffer bitmap (37840h-byte block, rink_tiles), selected by SelectRinkBM"
 saved_ss,D2F44,SS saved by SaveSS
+joysampling,C4D0C,"timer ISR sub_10DCD samples the pads into joyqueue only while this is non-zero; joyq_pop and the sound calls save it in joysampling_save, clear it and restore it"
+joysampling_save,E9AA0,"saved joysampling while it is switched off (joyq_pop, engine_core, scoring_penalty_text, player_logic: mov [E9AA0],C4D0C / C4D0C=0 / ... / C4D0C=[E9AA0])"
+joyqhead,C4D10,input queue read index 0-49 (joyq_pop wraps it at 32h; ISR writes at (head+count) mod 50)
+joyqcount,C4D14,"input queue entries (ISR increments up to 50, joyq_pop decrements)"
+joyqtick,C4D18,ISR countdown: a pad sample every 5 ticks (reset to 4)
+joyqueue,D8B80,"input queue: 50 records of 3 bytes (pad 1, pad 2, flags; flags bit 7 = key event), filled by the timer ISR"
+joyrec,C4E18,"pointer to the input record of this frame (joyq_peek), read by Readjoy1 (byte 0) and Readjoy2 (byte 1)"
+lj1,E9ABE,93G lj1: Readjoy1 last buttons for the debounce (regd2 = lj1 ^ new)
+lj2,E9ABC,93G lj2: Readjoy2 last buttons
+lastplayer,C90A0,93G lastplayer (player who last touched the puck): CanBlockShot takes it as the shooter when the puck is loose; sits after shotplayer as in 93G ram
+passdir,C90A4,"93G passdir: setpassmode stores facedir&7, passmode/doinput store the dpad&7"
+passplayer,C90A8,94G passplayer: passtoa0 stores the receiver's SCnum; doinput compares it with the current player for the one-timer control switch
+fodir1,C90B6,93G fodir1: faceoffinput stores the dpad here for the pfgoal=0 player
+fodir2,C90B8,93G fodir2: faceoffinput stores the dpad here for the pfgoal=1 player
+sflags,C90BC,"93G sflags: bit 2 sfspdir (setpassmode sets it, doinput -> passmode), bit 3 sfssdir (-> ShotMode)"
+c1playernum,C90C2,93G c1playernum: player controlled by pad 1 (FFFF none); doinput switches it to the pass receiver via sub_59FE1
+c2playernum,C90C4,93G c2playernum: player controlled by pad 2 (FFFF none)
+cont1team,C90C6,93G cont1team (follows c2playernum as in 93G ram): doinput takes a line change request when cont1team != cont2team or the player is c1playernum
+cont2team,C90C8,"93G cont2team, see cont1team"
+lcblink,CBC56,per team: line change box highlight blink state (toggled every 12 frames by lineinput); cleared with lcboxon when the box closes
+lcblinktime,CBC5A,per team: blink countdown (12 frames) in lineinput
+lcsel,CBC5E,per team: highlighted line change choice; lineinput passes it to lcfound on a press and advances it every 60 frames mod 4 (mod 2 when lcline > 3)
+lcline,CBC62,"per team: line offered in the line change box, advanced through linenext; the box opener sets it from tmline or getlchoice(1)"
+lctimer,CBC66,per team: 60-frame countdown that advances lcsel/lcline in lineinput
+lcboxon,CBC6A,"per team: line change box open (set with lcblink by the box opener sub_4D938, cleared by lineinput/doinput when a line is chosen)"
+linenext,CCB4A,"table of the next line: 1,2,3,0 (even strength), 5,4 (PK), 7,6 (PP)"
+lchoicetab,CCB5A,"93G getlchoice .tab: 4 bytes per tmline, +20h/+40h sections for the short-handed / power-play cases, FF = no line"
+lcrequest,E0304,"per team: line change requested by number (PC keys); doinput hands it to lcselect, then clears it"
+lcreqchoice,E0380,per team: the requested line choice passed to lcselect
+wcradiusy,C909E,pair with wcradiusx: sub_580F5 stores [ecx+66h] in wcradiusx and [ecx+68h] here (93G radiusx/radiusy order); engine_input reads lastplayer through it as the -5r load wcradiusy+2... (dword [C909E] / sar 10h = word C90A0)

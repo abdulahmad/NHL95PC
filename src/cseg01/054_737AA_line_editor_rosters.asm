@@ -28,7 +28,7 @@ extern sub_6CBE8, sub_6CBFD, sub_78366, sub_78500, sub_78A87, sub_79188, sub_79D
 extern sub_7A099, sub_836E4, sub_8373E, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C
 extern sub_90D20, sub_9121C, sub_913B4, sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_B2CD8
-extern sub_B2DB4, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4BC4
+extern MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4BC4
 extern sub_B4C84, sub_B4DD4, SetDrawBitmap, unk_7947F, unk_797B4, unk_C311D, unk_C311F, unk_C3143
 extern unk_C314B, unk_C3169, unk_C3177, unk_C317A, unk_C317D, unk_C31D9, unk_C31DC, unk_C31DF
 extern unk_C31E2, unk_C31E5, unk_C31E8, unk_C31EB, unk_C31EE, unk_D075E, unknown_libname_1, word_C90CC
@@ -154,7 +154,7 @@ mov dword [dword_D0B26], 0C3h	; 738AA
 mov dword [dword_D0B2A], ebp	; 738B4
 push dword 0F0h	; 738BA
 push dword 140h	; 738BF
-call sub_B2DB4	; 738C4
+call MouseSetPos	; 738C4
 add esp, byte 8	; 738C9
 push dword 1E0h	; 738CC
 push byte 0	; 738D1
@@ -592,7 +592,7 @@ call sub_B2E1B	; 73DC8
 add esp, byte 10h	; 73DCD
 push edi	; 73DD0
 push esi	; 73DD1
-call sub_B2DB4	; 73DD2
+call MouseSetPos	; 73DD2
 add esp, byte 8	; 73DD7
 lea eax, [byte ebp+042h]	; 73DDA
 push eax	; 73DDD
@@ -4339,7 +4339,7 @@ call sub_B4BC4	; 76971
 add esp, byte 10h	; 76976
 push dword 0C8h	; 76979
 push dword 140h	; 7697E
-call sub_B2DB4	; 76983
+call MouseSetPos	; 76983
 add esp, byte 8	; 76988
 xor ecx, ecx	; 7698B
 mov ebx, asc_C3194	; 7698D
@@ -4797,7 +4797,7 @@ call sub_B2E1B	; 76ED9
 add esp, byte 10h	; 76EDE
 push edi	; 76EE1
 push esi	; 76EE2
-call sub_B2DB4	; 76EE3
+call MouseSetPos	; 76EE3
 add esp, byte 8	; 76EE8
 lea eax, [byte ebp+036h]	; 76EEB
 push eax	; 76EEE

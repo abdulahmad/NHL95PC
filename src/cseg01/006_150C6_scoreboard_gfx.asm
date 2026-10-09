@@ -8,15 +8,15 @@ extern byte_ED823, byte_ED939, dword_C5130, dword_C52E9, dword_C52ED, dword_C52F
 extern dword_C5301, dword_C5305, dword_C5309, dword_C53F7, dword_C53FB, gameopts, dword_C5519, dword_C5704
 extern dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
-extern dword_C5886, dword_C90C8, dword_C90CA, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
+extern dword_C5886, cont2team, dword_C90CA, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
 extern dword_DC290, dword_DC2B8, dword_DC30C, dword_DC334, dword_DC338, dword_DF622, dword_DF63C, dword_DF722
 extern dword_DF73C, jctime, loc_14BE9, loc_14F2A, off_C5439, off_C579C, off_C57C8, off_C57CC
 extern off_D3078, rand_, randomd0, sub_10712, sub_10E9F, sub_1167B, sub_13BB4, sub_13FA7
 extern sub_1431E, sub_14A20, sub_14F31, sub_1BEFD, sub_327A1, sub_3371C, sub_3377C, sub_42221
-extern sub_479E9, sub_47C31, sub_4FD47, sub_59D71, sub_5B9D1, sub_673C5, sub_6B410, sub_6B47C
+extern sub_479E9, sub_47C31, joyq_flush, sub_59D71, sub_5B9D1, sub_673C5, sub_6B410, sub_6B47C
 extern sub_7DC8B, sub_891B2, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
 extern sub_B39ED, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, unk_C5298, unk_DF314, word_CBC4A
-extern word_CBC52, word_CBC56, word_CBC60, word_CBC6A
+extern word_CBC52, lcblink, word_CBC60, lcboxon
 global loc_1511A, loc_15180, loc_15182, loc_151F8, loc_15252, loc_1528C, loc_1528E, loc_15400
 global loc_15446, loc_1548D, loc_1549C, loc_154A4, loc_154E3, loc_15523, loc_1556C, loc_1557B
 global loc_15583, loc_155C2, loc_1560D, loc_15648, loc_15668, loc_156C0, loc_156C8, loc_156D8
@@ -621,7 +621,7 @@ setg al	; 157DF
 movzx ebp, al	; 157E2
 mov dword [byte esp+0Ch], ebp	; 157E5
 add ebp, ebp	; 157E9
-cmp word [dword ebp+word_CBC6A], byte 0	; 157EB
+cmp word [dword ebp+lcboxon], byte 0	; 157EB
 je short loc_15800	; 157F3
 mov ebp, dword [dword ebp+word_CBC60]	; 157F5
 sar ebp, 10h	; 157FB
@@ -684,7 +684,7 @@ loc_158AE:
 cmp ebp, dword [byte esp+01Ch]	; 158AE
 jne short loc_158D5	; 158B2
 mov edx, dword [byte esp+0Ch]	; 158B4
-cmp word [nosplit edx*2+word_CBC56], byte 0	; 158B8
+cmp word [nosplit edx*2+lcblink], byte 0	; 158B8
 je short loc_158D5	; 158C1
 mov dword [byte esp+024h], 61h	; 158C3
 mov dword [byte esp+020h], 7	; 158CB
@@ -946,7 +946,7 @@ push edx	; 15B82
 push esi	; 15B83
 push edi	; 15B84
 sub esp, byte 4	; 15B85
-mov eax, dword [dword_C90C8]	; 15B88
+mov eax, dword [cont2team]	; 15B88
 sar eax, 10h	; 15B8D
 mov edx, dword [dword_C90CA]	; 15B90
 sar edx, 10h	; 15B96
@@ -1235,7 +1235,7 @@ mov byte [byte_C5400], cl	; 15EE1
 mov edx, dword [dword_C90CA]	; 15EE7
 sar edx, 10h	; 15EED
 mov edx, dword [nosplit edx*4+off_C5439]	; 15EF0
-mov eax, dword [dword_C90C8]	; 15EF7
+mov eax, dword [cont2team]	; 15EF7
 sar eax, 10h	; 15EFC
 mov eax, dword [nosplit eax*4+off_C5439]	; 15EFF
 call sub_59D71	; 15F06
@@ -1248,7 +1248,7 @@ jl short loc_15F2A	; 15F21
 mov eax, 0Ch	; 15F23
 jmp short loc_15F32	; 15F28
 loc_15F2A:
-mov eax, dword [dword_C90C8]	; 15F2A
+mov eax, dword [cont2team]	; 15F2A
 sar eax, 10h	; 15F2F
 loc_15F32:
 call sub_3377C	; 15F32
@@ -1267,18 +1267,18 @@ mov eax, 140h	; 15F6C
 call sub_10E9F	; 15F71
 mov edx, dword [dword_C90CA]	; 15F76
 sar edx, 10h	; 15F7C
-mov eax, dword [dword_C90C8]	; 15F7F
+mov eax, dword [cont2team]	; 15F7F
 sar eax, 10h	; 15F84
 mov ebx, unk_DF314	; 15F87
 call sub_673C5	; 15F8C
 mov edx, dword [dword_C90CA]	; 15F91
 sar edx, 10h	; 15F97
-mov eax, dword [dword_C90C8]	; 15F9A
+mov eax, dword [cont2team]	; 15F9A
 sar eax, 10h	; 15F9F
 mov ecx, ebp	; 15FA2
 mov ebx, ebp	; 15FA4
 call sub_150C6	; 15FA6
-call sub_4FD47	; 15FAB
+call joyq_flush	; 15FAB
 call sub_1167B	; 15FB0
 mov edx, 1E0h	; 15FB5
 mov eax, 280h	; 15FBA

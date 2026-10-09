@@ -7,27 +7,27 @@ extern asc_C007A, asc_C00DB, asc_C00FB, asc_C0120, asc_C014D, asc_C0172, asc_C01
 extern asc_C018A, asc_C0191, asc_C019A, asc_C01B2, asc_C01CB, asc_C01DA, asc_C01DF, asc_C814A
 extern byte_C4D1C, byte_C4D1D, byte_C4D1E, byte_C5138, musicon, byte_D3040, byte_D416A, byte_D8C88
 extern byte_EA0F4, byte_ED906, byte_ED92E, byte_ED935, byte_ED936, byte_ED990, dword_C4CFC, dword_C4D00
-extern dword_C4D04, dword_C4D08, dword_C4D0C, dword_C4D10, dword_C4D14, dword_C4D18, dword_C4E0C, dword_C4E10
-extern dword_C4E14, dword_C4E18, dword_C4E24, dword_C4E28, dword_C4E2C, dword_C5130, dword_C5131, dword_C5133
+extern dword_C4D04, dword_C4D08, joysampling, joyqhead, joyqcount, joyqtick, dword_C4E0C, dword_C4E10
+extern dword_C4E14, joyrec, dword_C4E24, dword_C4E28, dword_C4E2C, dword_C5130, dword_C5131, dword_C5133
 extern dword_C5135, dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5305, dword_C5309, gameopts
 extern dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413, dword_C5417, dword_C5840, screenbm
-extern songdata, dword_C7444, dword_C7448, dword_C90C8, dword_C90CA, dword_CBC3E, dword_CC128, musicslot
+extern songdata, dword_C7444, dword_C7448, cont2team, dword_C90CA, dword_CBC3E, dword_CC128, musicslot
 extern musichandle, dword_D2C6B, dword_D302C, dword_D3030, dword_D3034, dword_D30D4, dword_D4158, dword_D415C
 extern dword_D4160, dword_D4164, dword_D41F0, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
 extern dword_D8B7C, dword_D8C18, dword_D8C4C, dword_D8C70, dword_D8C78, dword_D8C84, dword_D9A38, dword_DC230
 extern dword_DC238, dword_DF00C, dword_DF010, dword_E9A9E, dword_EDA08, dword_EDA0C, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, sub_1431E, sub_14525, sub_1457C, sub_145A2
 extern sub_150C6, sub_1672A, sub_16F9A, sub_190BE, sub_1BAF3, sub_1CD73, sub_3149D, sub_31AB5
-extern sub_327A1, sub_3DB41, sub_479E9, sub_4FCE8, sub_4FD47, sub_4FD62, sub_59748, sub_597E3
+extern sub_327A1, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, sub_59748, sub_597E3
 extern sub_59863, sub_59981, sub_5DC10, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
 extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
 extern sub_8DF54, sub_8E080, sub_8E4C0, sub_8E5AC, sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0
-extern sub_B29F0, sub_B2CBE, sub_B2CD8, sub_B2DB4, sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4
+extern sub_B29F0, sub_B2CBE, sub_B2CD8, MouseSetPos, sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4
 extern sub_B30F4, sub_B33DB, sub_B3464, sub_B392C, sub_B3989, sub_B3999, sub_B39ED, sub_B3A24
 extern sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C33, sub_B4C84, unk_C0180, unk_C01D4
-extern unk_C01D7, unk_C4E30, unk_C5298, unk_D8B80, unk_DF014, vtoa, word_C90C6, word_CBC44
-extern word_CBC46, word_CBC48, word_CBEC4, word_E0304, word_E0306, word_E0380, word_E0382, word_E9AA0
+extern unk_C01D7, unk_C4E30, unk_C5298, joyqueue, unk_DF014, vtoa, cont1team, word_CBC44
+extern word_CBC46, word_CBC48, word_CBEC4, lcrequest, word_E0306, lcreqchoice, word_E0382, joysampling_save
 global loc_10024, loc_1005B, loc_10075, loc_1007D, loc_10084, loc_100DB, loc_100F7, loc_10167
 global loc_101E3, loc_10216, loc_1022C, loc_10236, loc_10278, loc_102F5, loc_102F7, loc_10342
 global loc_10344, loc_10381, loc_10383, loc_103BB, loc_103BD, loc_103F5, loc_103F7, loc_10476
@@ -241,7 +241,7 @@ call sub_8E080	; 10240
 add esp, byte 8	; 10245
 call sub_8E5AC	; 10248
 xor eax, eax	; 1024D
-mov dword [dword_C4D0C], eax	; 1024F
+mov dword [joysampling], eax	; 1024F
 db 068h	; 10254 push 0DCDh
 dd sub_10DCD
 call sub_8E4C0	; 10259
@@ -584,28 +584,28 @@ push ebp	; 1071F
 cmp dword [dword_C5403], byte 0	; 10720
 jge short loc_10734	; 10727
 xor ecx, ecx	; 10729
-mov word [word_C90C6], cx	; 1072B
+mov word [cont1team], cx	; 1072B
 jmp short loc_10751	; 10732
 loc_10734:
 cmp dword [dword_C5413], byte 0	; 10734
 jne short loc_10748	; 1073B
-mov word [word_C90C6], 1	; 1073D
+mov word [cont1team], 1	; 1073D
 jmp short loc_10751	; 10746
 loc_10748:
-mov word [word_C90C6], 2	; 10748
+mov word [cont1team], 2	; 10748
 loc_10751:
 cmp dword [dword_C5407], byte 0	; 10751
 jge short loc_10764	; 10758
 xor eax, eax	; 1075A
-mov word [dword_C90C8], ax	; 1075C
+mov word [cont2team], ax	; 1075C
 jmp short loc_10781	; 10762
 loc_10764:
 cmp dword [dword_C5417], byte 0	; 10764
 jne short loc_10778	; 1076B
-mov word [dword_C90C8], 1	; 1076D
+mov word [cont2team], 1	; 1076D
 jmp short loc_10781	; 10776
 loc_10778:
-mov word [dword_C90C8], 2	; 10778
+mov word [cont2team], 2	; 10778
 loc_10781:
 mov eax, dword [dword_C5413]	; 10781
 cmp eax, dword [dword_C5417]	; 10786
@@ -682,11 +682,11 @@ loc_10844:
 call sub_B2F22	; 10844
 push byte 64h	; 10849
 push dword 0A0h	; 1084B
-call sub_B2DB4	; 10850
+call MouseSetPos	; 10850
 add esp, byte 8	; 10855
 call sub_B29F0	; 10858
 xor ebp, ebp	; 1085D
-mov dword [dword_C4D0C], ebp	; 1085F
+mov dword [joysampling], ebp	; 1085F
 pop ebp	; 10865
 pop edx	; 10866
 pop ecx	; 10867
@@ -1246,7 +1246,7 @@ push ebx	; 10DCD
 push ecx	; 10DCE
 push edx	; 10DCF
 push esi	; 10DD0
-cmp dword [dword_C4D0C], byte 0	; 10DD1
+cmp dword [joysampling], byte 0	; 10DD1
 je near loc_10E9A	; 10DD8
 mov ebx, dword [dword_C4D08]	; 10DDE
 cmp ebx, 3E8h	; 10DE4
@@ -1254,16 +1254,16 @@ jge short loc_10DF5	; 10DEA
 lea ecx, [byte ebx+01h]	; 10DEC
 mov dword [dword_C4D08], ecx	; 10DEF
 loc_10DF5:
-mov esi, dword [dword_C4D18]	; 10DF5
+mov esi, dword [joyqtick]	; 10DF5
 dec esi	; 10DFB
-mov dword [dword_C4D18], esi	; 10DFC
+mov dword [joyqtick], esi	; 10DFC
 cmp esi, byte 0FFFFFFFFh	; 10E02
 jne near loc_10E9A	; 10E05
-mov dword [dword_C4D18], 4	; 10E0B
-mov eax, dword [dword_C4D14]	; 10E15
+mov dword [joyqtick], 4	; 10E0B
+mov eax, dword [joyqcount]	; 10E15
 cmp eax, byte 32h	; 10E1A
 jge near loc_10E9A	; 10E1D
-mov edx, dword [dword_C4D10]	; 10E23
+mov edx, dword [joyqhead]	; 10E23
 add edx, eax	; 10E29
 mov ebx, 32h	; 10E2B
 mov eax, edx	; 10E30
@@ -1282,7 +1282,7 @@ mov eax, esi	; 10E55
 mov ebx, esi	; 10E57
 shl ebx, 2	; 10E59
 sub ebx, esi	; 10E5C
-add ebx, unk_D8B80	; 10E5E
+add ebx, joyqueue	; 10E5E
 mov edx, ebx	; 10E64
 xor eax, esi	; 10E66
 call sub_10A86	; 10E68
@@ -1298,7 +1298,7 @@ jmp short loc_10E94	; 10E8D
 loc_10E8F:
 call sub_10AC6	; 10E8F
 loc_10E94:
-inc dword [dword_C4D14]	; 10E94
+inc dword [joyqcount]	; 10E94
 loc_10E9A:
 pop esi	; 10E9A
 pop edx	; 10E9B
@@ -1608,10 +1608,10 @@ cmp al, 1	; 111F9
 je near loc_11450	; 111FB
 jmp near loc_113E7	; 11201
 loc_11206:
-mov word [word_E0304], 1	; 11206
+mov word [lcrequest], 1	; 11206
 xor ah, ah	; 1120F
 sub eax, byte 3Bh	; 11211
-mov word [word_E0380], ax	; 11214
+mov word [lcreqchoice], ax	; 11214
 jmp near loc_113E7	; 1121A
 loc_1121F:
 mov word [word_E0306], 1	; 1121F
@@ -1638,10 +1638,10 @@ test byte [gmode], 10h	; 11264
 jne near loc_113E7	; 1126B
 cmp dword [dword_D8C84], byte 0FFFFFFFFh	; 11271
 je near loc_113E7	; 11278
-mov ax, word [dword_C4D0C]	; 1127E
-mov word [word_E9AA0], ax	; 11284
+mov ax, word [joysampling]	; 1127E
+mov word [joysampling_save], ax	; 11284
 xor esi, esi	; 1128A
-mov dword [dword_C4D0C], esi	; 1128C
+mov dword [joysampling], esi	; 1128C
 cmp byte [byte_C4D1C], 1	; 11292
 je short loc_112A4	; 11299
 cmp byte [byte_C4D1D], 1	; 1129B
@@ -1685,7 +1685,7 @@ mov edi, dword [dword_DF010]	; 1132F
 push edi	; 11335
 mov ebp, dword [dword_DF00C]	; 11336
 push ebp	; 1133C
-call sub_B2DB4	; 1133D
+call MouseSetPos	; 1133D
 add esp, byte 8	; 11342
 push dword 0C8h	; 11345
 push dword 140h	; 1134A
@@ -1698,13 +1698,13 @@ mov word [word_CBEC4], 1	; 1135B
 mov ebx, dword [dword_D8C84]	; 11364
 mov edx, dword [dword_C90CA]	; 1136A
 sar edx, 10h	; 11370
-mov eax, dword [dword_C90C8]	; 11373
+mov eax, dword [cont2team]	; 11373
 sar eax, 10h	; 11378
 xor ecx, ecx	; 1137B
 call sub_150C6	; 1137D
 mov eax, dword [dword_E9A9E]	; 11382
 sar eax, 10h	; 11387
-mov dword [dword_C4D0C], eax	; 1138A
+mov dword [joysampling], eax	; 1138A
 mov eax, 1	; 1138F
 add dword [dword_C7444], 3E8h	; 11394
 add dword [dword_C7448], 3E8h	; 1139E
@@ -1769,15 +1769,15 @@ sub_1145F:
 push dword 8	; 1145F
 call __CHK	; 11464
 push edx	; 11469
-mov ax, word [dword_C4D0C]	; 1146A
-mov word [word_E9AA0], ax	; 11470
+mov ax, word [joysampling]	; 1146A
+mov word [joysampling_save], ax	; 11470
 xor edx, edx	; 11476
-mov dword [dword_C4D0C], edx	; 11478
+mov dword [joysampling], edx	; 11478
 mov eax, dword [dword_C4D08]	; 1147E
 mov dword [dword_C4D08], edx	; 11483
 mov edx, dword [dword_E9A9E]	; 11489
 sar edx, 10h	; 1148F
-mov dword [dword_C4D0C], edx	; 11492
+mov dword [joysampling], edx	; 11492
 pop edx	; 11498
 ret	; 11499
 sub_1149A:
@@ -1791,8 +1791,8 @@ jmp near loc_11545	; 114AA
 loc_114AF:
 cmp dword [dword_C4E10], byte 0	; 114AF
 jne short loc_114F2	; 114B6
-call sub_4FD62	; 114B8
-mov dword [dword_C4E18], eax	; 114BD
+call joyq_peek	; 114B8
+mov dword [joyrec], eax	; 114BD
 test eax, eax	; 114C2
 je near loc_1154D	; 114C4
 mov al, byte [byte eax+02h]	; 114CA
@@ -1802,7 +1802,7 @@ and eax, 0FFh	; 114D1
 call sub_1118F	; 114D6
 cmp eax, byte 1	; 114DB
 jne short loc_114E8	; 114DE
-call sub_4FD47	; 114E0
+call joyq_flush	; 114E0
 pop edx	; 114E5
 pop ebx	; 114E6
 ret	; 114E7
@@ -1822,7 +1822,7 @@ mov eax, dword [dword_C4E10]	; 11515
 dec eax	; 1151A
 mov dword [dword_C4E10], eax	; 1151B
 jne short loc_11527	; 11520
-call sub_4FCE8	; 11522
+call joyq_pop	; 11522
 loc_11527:
 cmp dword [dword_C5840], byte 0	; 11527
 jne short loc_1154D	; 1152E

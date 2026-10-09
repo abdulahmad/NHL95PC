@@ -5,7 +5,7 @@ section s_CC01D progbits alloc noexec write align=1
 extern unk_C1B20, unk_C1B24, unk_C1B28, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60
 extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
 global asc_CCDD8, asc_CCDEC, byte_CC049, byte_CC0D9, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5
-global byte_CC9B0, byte_CC9E4, byte_CC9E7, byte_CCA95, byte_CCB5A, byte_CCBBA, byte_CCBBB, byte_CCCA0
+global byte_CC9B0, byte_CC9E4, byte_CC9E7, byte_CCA95, lchoicetab, byte_CCBBA, byte_CCBBB, byte_CCCA0
 global byte_CCE00, byte_CCE01, dword_CC080, dword_CC0AC, dword_CC0B4, dword_CC0DC, dword_CC0E0, dword_CC0EC
 global dword_CC0F0, dword_CC0F4, dword_CC0F8, dword_CC0FA, dword_CC0FC, dword_CC100, dword_CC104, dword_CC108
 global dword_CC110, dword_CC114, dword_CC118, dword_CC11C, dword_CC120, dword_CC124, dword_CC128, dword_CC12C
@@ -16,7 +16,7 @@ global dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, doplayeracc_ftab, Max
 global off_CC01D, off_CCA0A, shotsets, unk_CCCC8, word_CC054, word_CC0B0, word_CC0D8, word_CC0DA
 global word_CC0DE, word_CC10C, word_CC9CC, word_CC9EA, word_CC9EC, word_CCA18, word_CCA1A, word_CCA1C
 global word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E, word_CCA70, word_CCA9C
-global word_CCB4A, word_CCBCC, word_CCBDC, word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, word_CCC30
+global linenext, word_CCBCC, word_CCBDC, word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, word_CCC30
 global word_CCC32, word_CCC62, word_CCCA8, word_CCEF8
 off_CC01D:
 dd unk_CBF18
@@ -322,9 +322,9 @@ dword_CCB20:
 db 03Eh,00h,00h,00h,0EAh,0FFh,0FFh,0FFh,097h,00h,00h,00h,066h,00h,00h,00h
 db 0EAh,0FFh,0FFh,0FFh,0C0h,00h,00h,00h,091h,00h,00h,00h,02Ch,00h,00h,00h
 db 0C3h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh,00h,00h
-word_CCB4A:
+linenext:
 db 01h,00h,02h,00h,03h,00h,00h,00h,05h,00h,04h,00h,07h,00h,06h,00h
-byte_CCB5A:
+lchoicetab:
 db 00h,01h,02h,03h,01h,02h,03h,00h,02h,03h,00h,01h,03h,00h,01h,02h
 db 00h,01h,02h,03h,00h,01h,02h,03h,00h,01h,02h,03h,00h,01h,02h,03h
 db 04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh

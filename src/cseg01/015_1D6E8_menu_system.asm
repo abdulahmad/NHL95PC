@@ -10,7 +10,7 @@ extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD120, dword_EA
 extern memcpy_, off_D3078, sprintf_, strcat_, strlen_, strncpy_, sub_14525, sub_1457C
 extern sub_145A2, sub_18D03, sub_18D0D, sub_1D6BE, sub_24453, sub_26B5A, sub_27BC3, sub_27F9C
 extern sub_29681, sub_6B391, sub_6B3D7, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_8CCA8
-extern sub_903F0, sub_90F38, sub_91370, sub_91400, sub_91964, sub_B2DB4, sub_B2E1B, sub_B4DD4
+extern sub_903F0, sub_90F38, sub_91370, sub_91400, sub_91964, MouseSetPos, sub_B2E1B, sub_B4DD4
 extern unk_DC834, unk_DC837, unk_DC847, unk_DD0D8
 global loc_1D83A, loc_1D83C, loc_1D859, loc_1D87C, loc_1D8C0, loc_1D8E3, loc_1D970, loc_1D9A7
 global loc_1D9A8, loc_1DA3D, loc_1DAC0, loc_1DAFB, loc_1DB4A, loc_1DB4B, loc_1DB5A, loc_1DBF1
@@ -144,7 +144,7 @@ add esp, byte 10h	; 1D820
 mov ecx, edi	; 1D823
 push ecx	; 1D825
 push ebp	; 1D826
-call sub_B2DB4	; 1D827
+call MouseSetPos	; 1D827
 add esp, byte 8	; 1D82C
 call dword [off_D3078]	; 1D82F
 call sub_6B3D7	; 1D835
@@ -287,7 +287,7 @@ mov eax, dword [dword esp+08Ch]	; 1DA05
 push eax	; 1DA0C
 mov edx, dword [dword esp+08Ch]	; 1DA0D
 push edx	; 1DA14
-call sub_B2DB4	; 1DA15
+call MouseSetPos	; 1DA15
 add esp, byte 8	; 1DA1A
 mov eax, dword [dword esp+088h]	; 1DA1D
 mov dword [byte esp+074h], eax	; 1DA24
@@ -849,7 +849,7 @@ call sub_B2E1B	; 1E147
 add esp, byte 10h	; 1E14C
 push esi	; 1E14F
 push edi	; 1E150
-call sub_B2DB4	; 1E151
+call MouseSetPos	; 1E151
 add esp, byte 8	; 1E156
 call dword [off_D3078]	; 1E159
 call sub_6B3D7	; 1E15F
@@ -1245,7 +1245,7 @@ mov esi, dword [dword esp+094h]	; 1E65A
 push esi	; 1E661
 mov edi, dword [dword esp+094h]	; 1E662
 push edi	; 1E669
-call sub_B2DB4	; 1E66A
+call MouseSetPos	; 1E66A
 add esp, byte 8	; 1E66F
 mov dword [byte esp+07Ch], edi	; 1E672
 mov dword [byte esp+078h], esi	; 1E676
@@ -2007,7 +2007,7 @@ call sub_B2E1B	; 1F020
 add esp, byte 10h	; 1F025
 push ebp	; 1F028
 push esi	; 1F029
-call sub_B2DB4	; 1F02A
+call MouseSetPos	; 1F02A
 add esp, byte 8	; 1F02F
 call dword [off_D3078]	; 1F032
 call sub_6B3D7	; 1F038
@@ -2310,7 +2310,7 @@ mov ecx, dword [dword esp+090h]	; 1F3F0
 push ecx	; 1F3F7
 mov esi, dword [dword esp+090h]	; 1F3F8
 push esi	; 1F3FF
-call sub_B2DB4	; 1F400
+call MouseSetPos	; 1F400
 add esp, byte 8	; 1F405
 mov dword [byte esp+078h], esi	; 1F408
 mov eax, dword [dword esp+090h]	; 1F40C

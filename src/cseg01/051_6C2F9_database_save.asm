@@ -15,7 +15,7 @@ extern off_CFB1C, off_CFB8A, rmdir_, sprintf_, strcat_, strcpy_, strlen_, strupr
 extern sub_1431E, sub_14442, sub_17573, sub_175E2, sub_29C75, sub_2FEDF, sub_30AE2, sub_30C3D
 extern sub_30F12, sub_31013, sub_6C19B, sub_6D2F8, sub_6E089, sub_6EF84, sub_76429, sub_8CCA8
 extern sub_8D2F0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90F38
-extern sub_91964, sub_932D0, sub_B2CD8, sub_B2DB4, sub_B4BA8, sub_B4F8C, unk_6BF3D, unk_C28A9
+extern sub_91964, sub_932D0, sub_B2CD8, MouseSetPos, sub_B4BA8, sub_B4F8C, unk_6BF3D, unk_C28A9
 extern unk_C7733, unk_D0450, unk_D07EB, unk_D0BB8, unk_D0BF0, unk_D0C24, unk_EC7C0, unknown_libname_1
 global loc_6C3B3, loc_6C470, loc_6C475, loc_6C486, loc_6C4B2, loc_6C4F7, loc_6C53F, loc_6C54F
 global loc_6C580, loc_6C590, loc_6C5C1, loc_6C5D1, loc_6C602, loc_6C612, loc_6C63F, loc_6C64B
@@ -397,7 +397,7 @@ mov edx, 0F0h	; 6C790
 mov dword [dword esp+094h], edx	; 6C795
 push edx	; 6C79C
 push eax	; 6C79D
-call sub_B2DB4	; 6C79E
+call MouseSetPos	; 6C79E
 add esp, byte 8	; 6C7A3
 xor ebx, ebx	; 6C7A6
 loc_6C7A8:

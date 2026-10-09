@@ -5,10 +5,10 @@ section s_18D7F progbits alloc exec nowrite align=1
 extern StartHL2, __CHK, asc_C0952, asc_C0970, asc_C097A, asc_C097F, asc_C0984, asc_C098C
 extern asc_C0991, asc_C0997, asc_C65F8, asc_C6614, asc_C662E, asc_C664C, asc_C6678, asc_C668F
 extern byte_C5400, byte_C542F, byte_C5430, byte_C5431, byte_C5432, byte_CCCA0, musicon, byte_DD774
-extern byte_DD775, byte_DD788, byte_DD789, byte_ED830, byte_ED9E8, dword_C4D0C, dword_C4E14, dword_C53F7
+extern byte_DD775, byte_DD788, byte_DD789, byte_ED830, byte_ED9E8, joysampling, dword_C4E14, dword_C53F7
 extern dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C5581, dword_C5840, dword_C65F4, dword_C66A4
 extern dword_C66AC, dword_C66D0, dword_C66D4, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC
-extern songdata, dword_C90C8, dword_C90CA, dword_CCC9D, musichandle, dword_D2C6B, dword_D41F0, musicslot
+extern songdata, cont2team, dword_C90CA, dword_CCC9D, musichandle, dword_D2C6B, dword_D41F0, musicslot
 extern dword_D8C84, dword_DC230, dword_DC234, dword_DC238, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
 extern dword_EA0DC, jctime, off_CEE5F, off_CEE7F, off_CEE9F, off_CEEBF, off_CEEDF, off_CEEFF
 extern off_CEF23, off_D3078, randomd0, sprintf_, sub_10E9F, sub_11598, sub_12034, sub_1395F
@@ -19,7 +19,7 @@ extern sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B9
 extern sub_6BA4D, sub_76429, sub_767D0, sub_7E0FA, sub_805C4, sub_836E4, sub_837A8, sub_846F0
 extern sub_84704, sub_84715, sub_84729, sub_8BC15, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0
-extern sub_9061C, sub_91370, sub_91400, sub_B2DB4, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
+extern sub_9061C, sub_91370, sub_91400, MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
 extern sub_B396E, sub_B4B58, sub_B4BA8, sub_B4FAC, unk_CEB8F, unk_CEC4F, unk_CF2EF, unk_D2B38
 extern unk_DABF0, unk_DC200, unk_DC890, unk_DF014, word_C90CC, word_CBC44, word_CBC46, scrolly
 extern scrollx, word_DF624, word_DF724
@@ -341,7 +341,7 @@ xor esi, esi	; 19158
 mov dword [dword_C65F4], esi	; 1915A
 mov edx, dword [dword_C90CA]	; 19160
 sar edx, 10h	; 19166
-mov eax, dword [dword_C90C8]	; 19169
+mov eax, dword [cont2team]	; 19169
 sar eax, 10h	; 1916E
 call sub_2F2B1	; 19171
 xor edx, edx	; 19176
@@ -507,7 +507,7 @@ call sub_B2DCA	; 193D7
 add esp, byte 0Ch	; 193DC
 xor ebp, ebp	; 193DF
 mov dword [dword_C4E14], ebp	; 193E1
-mov dword [dword_C4D0C], ebp	; 193E7
+mov dword [joysampling], ebp	; 193E7
 cmp dword [esp], byte 0	; 193ED
 jne short loc_19423	; 193F1
 mov eax, 0AAE60h	; 193F3
@@ -721,7 +721,7 @@ mov ecx, dword [dword esp+03ECh]	; 1971B
 push ecx	; 19722
 mov esi, dword [dword esp+0404h]	; 19723
 push esi	; 1972A
-call sub_B2DB4	; 1972B
+call MouseSetPos	; 1972B
 add esp, byte 8	; 19730
 call dword [off_D3078]	; 19733
 call sub_6B3D7	; 19739
@@ -742,7 +742,7 @@ jl near loc_19844	; 19778
 mov ax, word [word_DF624]	; 1977E
 cmp ax, word [word_DF724]	; 19784
 jle short loc_19795	; 1978B
-mov esi, dword [dword_C90C8]	; 1978D
+mov esi, dword [cont2team]	; 1978D
 jmp short loc_1979B	; 19793
 loc_19795:
 mov esi, dword [dword_C90CA]	; 19795
@@ -753,7 +753,7 @@ cmp dword [dword_D8C84], byte 3	; 197A0
 jle short loc_197AE	; 197A7
 mov edi, 0FFFFFFFFh	; 197A9
 loc_197AE:
-mov edx, dword [dword_C90C8]	; 197AE
+mov edx, dword [cont2team]	; 197AE
 sar edx, 10h	; 197B4
 mov eax, dword [dword_C90CA]	; 197B7
 sar eax, 10h	; 197BC
@@ -857,7 +857,7 @@ mov esi, dword [dword esp+03D4h]	; 1993E
 push esi	; 19945
 mov edi, dword [dword esp+03DCh]	; 19946
 push edi	; 1994D
-call sub_B2DB4	; 1994E
+call MouseSetPos	; 1994E
 add esp, byte 8	; 19953
 lea eax, [byte esp+04h]	; 19956
 push eax	; 1995A
@@ -1095,7 +1095,7 @@ mov esi, dword [dword esp+03D4h]	; 19D35
 push esi	; 19D3C
 mov edi, dword [dword esp+03DCh]	; 19D3D
 push edi	; 19D44
-call sub_B2DB4	; 19D45
+call MouseSetPos	; 19D45
 add esp, byte 8	; 19D4A
 lea eax, [byte esp+04h]	; 19D4D
 push eax	; 19D51
@@ -1243,7 +1243,7 @@ mov ecx, dword [dword esp+03ECh]	; 19F68
 push ecx	; 19F6F
 mov esi, dword [dword esp+0404h]	; 19F70
 push esi	; 19F77
-call sub_B2DB4	; 19F78
+call MouseSetPos	; 19F78
 add esp, byte 8	; 19F7D
 call sub_6B3D7	; 19F80
 jmp near loc_1A4F8	; 19F85
@@ -1595,7 +1595,7 @@ jl short loc_1A552	; 1A549
 mov eax, 0Ch	; 1A54B
 jmp short loc_1A55A	; 1A550
 loc_1A552:
-mov eax, dword [dword_C90C8]	; 1A552
+mov eax, dword [cont2team]	; 1A552
 sar eax, 10h	; 1A557
 loc_1A55A:
 call sub_3377C	; 1A55A
@@ -1815,7 +1815,7 @@ jl short loc_1A835	; 1A82C
 mov eax, 0Ch	; 1A82E
 jmp short loc_1A83D	; 1A833
 loc_1A835:
-mov eax, dword [dword_C90C8]	; 1A835
+mov eax, dword [cont2team]	; 1A835
 sar eax, 10h	; 1A83A
 loc_1A83D:
 call sub_3377C	; 1A83D

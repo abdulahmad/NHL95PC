@@ -9,19 +9,19 @@ extern assdefo, sub_4AFFB, asseben, assepen, assfaceoff, assfaceoffp1, assgoalie
 extern assnearest, sub_50F3F, asspenalty, sub_4C6F3, assscore, assshoot, assstanley, asswingd
 extern asswingo, dword_DFF2C, sub_516E1, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
 extern unk_DFF5E, unk_E0416, word_DFF1E, word_DFF22, word_DFF26, word_DFF28, word_DFF2A
-global StanleyCupTimer, asstab, byte_C90BC, gmode2, byte_C90C3, byte_C90C5, byte_C90D5, byte_C9104
+global StanleyCupTimer, asstab, sflags, gmode2, byte_C90C3, byte_C90C5, byte_C90D5, byte_C9104
 global byte_C9111, byte_C9123, byte_C9142, byte_C9146, byte_CBC36, byte_CBC37, byte_CBEA8, collflag
-global dirtab, dword_C909E, dword_C90B0, dword_C90C0, dword_C90C8, dword_C90CA, dword_C9120, dword_CBC3E
+global dirtab, wcradiusy, dword_C90B0, dword_C90C0, cont2team, dword_C90CA, dword_C9120, dword_CBC3E
 global dword_CBEBE, dword_CBECA, puckvx, gmode, off_C9078, puckx, pucky, puckvy
 global puckz, puckc, off_C9096, off_CBD2E, passspeed, puckvz, threat, unk_C921D
 global unk_CBC6E, unk_CBC7E, unk_CBC9E, unk_CBCAE, unk_CBCBE, unk_CBCCE, unk_CBCDE, unk_CBCEE
-global unk_CBCFE, unk_CBD0E, unk_CBD1E, unk_CBD5A, wcradiusx, word_C9098, word_C909A, word_C90A0
-global word_C90A4, word_C90A6, word_C90A8, xc1, yc1, word_C90B2, word_C90B4, word_C90B6
-global word_C90B8, word_C90C2, word_C90C4, word_C90C6, word_C90CC, word_C90CE, word_C90D0, refsignal
+global unk_CBCFE, unk_CBD0E, unk_CBD1E, unk_CBD5A, wcradiusx, word_C9098, word_C909A, lastplayer
+global passdir, word_C90A6, passplayer, xc1, yc1, word_C90B2, word_C90B4, fodir1
+global fodir2, c1playernum, c2playernum, cont1team, word_C90CC, word_C90CE, word_C90D0, refsignal
 global word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_C90DC, word_C90DE, dirtab_y
-global word_CBC42, word_CBC44, word_CBC46, word_CBC48, word_CBC4A, word_CBC52, word_CBC54, word_CBC56
-global word_CBC58, word_CBC5A, word_CBC5C, word_CBC5E, word_CBC60, word_CBC62, word_CBC64, word_CBC66
-global word_CBC68, word_CBC6A, word_CBC6C, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, word_CBEC0
+global word_CBC42, word_CBC44, word_CBC46, word_CBC48, word_CBC4A, word_CBC52, word_CBC54, lcblink
+global word_CBC58, lcblinktime, lcsel, word_CBC60, lcline, word_CBC64, lctimer
+global word_CBC68, lcboxon, word_CBC6C, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, word_CBEC0
 global word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE
 off_C9078:
 dd unk_E0416
@@ -46,17 +46,17 @@ word_C909A:
 db 00h,00h
 wcradiusx:
 db 00h,00h
-dword_C909E:
+wcradiusy:
 db 00h,00h
-word_C90A0:
+lastplayer:
 db 00h,00h
 passspeed:
 db 00h,00h
-word_C90A4:
+passdir:
 db 00h,00h
 word_C90A6:
 db 00h,00h
-word_C90A8:
+passplayer:
 db 00h,00h
 threat:
 db 00h,00h
@@ -70,31 +70,31 @@ word_C90B2:
 db 00h,00h
 word_C90B4:
 db 00h,00h
-word_C90B6:
+fodir1:
 db 00h,00h
-word_C90B8:
+fodir2:
 db 00h,00h
 collflag:
 db 00h
 gmode:
 db 00h
-byte_C90BC:
+sflags:
 db 00h,00h
 gmode2:
 db 00h,00h
 dword_C90C0:
 db 00h,00h
-word_C90C2:
+c1playernum:
 db 0FFh
 byte_C90C3:
 db 0FFh
-word_C90C4:
+c2playernum:
 db 0FFh
 byte_C90C5:
 db 0FFh
-word_C90C6:
+cont1team:
 db 00h,00h
-dword_C90C8:
+cont2team:
 db 00h,00h
 dword_C90CA:
 db 0Ch,00h
@@ -885,27 +885,26 @@ word_CBC52:
 db 00h,00h
 word_CBC54:
 db 00h,00h
-word_CBC56:
+lcblink:
 db 00h,00h
 word_CBC58:
 db 00h,00h
-word_CBC5A:
+lcblinktime:
 db 00h,00h
-word_CBC5C:
 db 00h,00h
-word_CBC5E:
+lcsel:
 db 00h,00h
 word_CBC60:
 db 00h,00h
-word_CBC62:
+lcline:
 db 00h,00h
 word_CBC64:
 db 00h,00h
-word_CBC66:
+lctimer:
 db 00h,00h
 word_CBC68:
 db 00h,00h
-word_CBC6A:
+lcboxon:
 db 00h,00h
 word_CBC6C:
 db 00h,00h

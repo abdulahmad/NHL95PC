@@ -14,8 +14,8 @@ global dword_E9BC0, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9
 global dword_E9F54, dword_E9F56, dword_E9F5A, dword_E9F76, dword_E9F78, dword_E9F7B, dword_E9F8C, dword_E9F98
 global dword_E9FA5, dword_E9FA8, dword_E9FAA, dword_E9FD9, dword_E9FF0, ltx, unk_E9B4C, unk_E9CEC
 global unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE, unk_E9EE0, word_E9A58
-global word_E9A7A, word_E9A9C, word_E9AA0, word_E9AA2, word_E9AA4, word_E9AA6, word_E9AA8, word_E9AAA
-global word_E9AAC, word_E9AAE, word_E9AB0, word_E9AB2, word_E9AB4, word_E9AB8, word_E9ABC, word_E9ABE
+global word_E9A7A, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4, word_E9AA6, word_E9AA8, word_E9AAA
+global word_E9AAC, word_E9AAE, word_E9AB0, word_E9AB2, word_E9AB4, word_E9AB8, lj2, lj1
 global word_E9AC2, word_E9AC4, word_E9AF8, word_E9AFA, word_E9B28, word_E9B2C, word_E9F12, word_E9F14
 global word_E9F18, word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A, word_E9FA7, word_E9FA9
 global word_E9FB0, word_E9FB2, word_E9FB4
@@ -41,7 +41,7 @@ word_E9A9C:
 resb 2
 dword_E9A9E:
 resb 2
-word_E9AA0:
+joysampling_save:
 resb 2
 word_E9AA2:
 resb 2
@@ -73,9 +73,9 @@ PBnum:
 resb 1
 byte_E9ABB:
 resb 1
-word_E9ABC:
+lj2:
 resb 2
-word_E9ABE:
+lj1:
 resb 2
 byte_E9AC0:
 resb 1

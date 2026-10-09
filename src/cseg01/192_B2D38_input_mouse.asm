@@ -6,7 +6,7 @@ extern dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8, dword_D2FFC, dword_D3
 extern dword_D302C, dword_D3030, dword_D3034, dword_D3038, dword_D303C, dword_D3044, dword_D3048, off_D306C
 extern off_D3070, off_D3074, off_D3078, sub_B3454, word_D3004, word_D3006, word_D3008
 global loc_B2D57, loc_B2D5E, loc_B2D92, loc_B2DB2, loc_B2E94, loc_B2EA5, loc_B2EB3, loc_B2EC2
-global loc_B2EEA, loc_B2F7C, loc_B3006, sub_B2D38, sub_B2D74, sub_B2D94, sub_B2DB4, sub_B2DCA
+global loc_B2EEA, loc_B2F7C, loc_B3006, sub_B2D38, sub_B2D74, sub_B2D94, MouseSetPos, sub_B2DCA
 global sub_B2DEF, sub_B2E1B, sub_B2E43, sub_B2EF6, sub_B2EFD, sub_B2F04, sub_B2F22
 sub_B2D38:
 LD xor, eax, eax	; B2D38
@@ -55,7 +55,7 @@ int 33h	; B2DB0
 loc_B2DB2:
 leave	; B2DB2
 ret	; B2DB3
-sub_B2DB4:
+MouseSetPos:
 push ebp	; B2DB4
 LD mov, ebp, esp	; B2DB5
 mov eax, dword [byte ebp+08h]	; B2DB7

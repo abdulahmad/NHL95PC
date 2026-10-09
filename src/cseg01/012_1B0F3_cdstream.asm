@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_1B0F3 progbits alloc exec nowrite align=1
-extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, dword_C4D0C, dword_C66B0, rinkbm
+extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, joysampling, dword_C66B0, rinkbm
 extern dword_CBECA, dword_CC0E0, dword_D8C68, dword_D8C80, dword_D9980, dword_DC230, dword_DC2F0, dword_DC338
-extern dword_DC8A0, dword_DC8C8, dword_E0244, dword_ED700, jctime, sub_33727, sub_4FD47, sub_59748
+extern dword_DC8A0, dword_DC8C8, dword_E0244, dword_ED700, jctime, sub_33727, joyq_flush, sub_59748
 extern sub_5DD9E, sub_7DEC8, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E4F8, sub_8EA18, sub_91FA4
 extern sub_B2CD8, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, scrpitch
 global jpt_1B283, loc_1B1B7, loc_1B218, loc_1B225, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0
@@ -809,8 +809,8 @@ xor esi, esi	; 1BA4C
 mov dword [dword_DC338], esi	; 1BA4E
 loc_1BA54:
 xor edi, edi	; 1BA54
-mov dword [dword_C4D0C], edi	; 1BA56
-call sub_4FD47	; 1BA5C
+mov dword [joysampling], edi	; 1BA56
+call joyq_flush	; 1BA5C
 mov ebp, dword [dword_DC230]	; 1BA61
 push ebp	; 1BA67
 call sub_8EA18	; 1BA68
