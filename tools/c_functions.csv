@@ -112,9 +112,9 @@ CritErrHandler,3149D,23,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/Crit
 DlgReturnZero,2FED2,13,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DlgReturnZero.c,matched,
 DrawButtons,30AE2,52,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawButtons.c,matched,
 GrowToButton,30F5F,85,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButton.c,nonmatching,same blocks; original keeps w in edx and v in ecx (then edx / eax in the second half); this draft moves w to ecx. 10-min cap
-GrowToButtons,30FB4,95,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButtons.c,nonmatching,
+GrowToButtons,30FB4,95,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButtons.c,nonmatching,registers: asm sums in edx and builds each width in esi; C swaps them
 InitScrollBar,30BF3,74,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/InitScrollBar.c,matched,
-ListHitTest,3023E,123,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/ListHitTest.c,nonmatching,
+ListHitTest,3023E,123,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/ListHitTest.c,nonmatching,"scheduling: asm loads w (stack arg) before top+2 and keeps x1 at [esp], x2 at [esp+4]; C swaps the slots"
 MeasureTextLine,309E4,40,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/MeasureTextLine.c,matched,
 RestoreDialogBg,30F12,77,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/RestoreDialogBg.c,matched,
 SaveDialogBg,30E66,172,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/SaveDialogBg.c,matched,
@@ -196,6 +196,7 @@ puckunflip,4D907,49,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_
 rtss,4F990,11,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/rtss.c,matched,
 Acheck,4FFAE,64,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/Acheck.c,matched,
 CenterMouse,50ADE,32,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CenterMouse.c,matched,
+Readjoy1,50A05,127,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/Readjoy1.c,nonmatching,
 faceoffinput,4FF0D,161,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/faceoffinput.c,nonmatching,draft: pflags2 kept in al (ours) vs cl then copied to al
 getlchoice,50908,109,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/getlchoice.c,nonmatching,draft: asm loads tmptr into edx first and computes the tmap difference in ax; ours keeps p in eax
 holdplayer,503CD,103,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/holdplayer.c,matched,
@@ -286,6 +287,7 @@ GetHot,5A425,52,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.
 StartPer,5C010,436,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,nonmatching,"3 bytes short: the original keeps cont1team in si and cont2team in bx (push ebx), then reuses ebx for -1, ecx for 0 (bannertimer, crowdlevel) and builds fox with xor edi,edi / xor edi,edx; this draft reloads the globals into ax. Locals for the two teams did not change it"
 changeplayer,59E69,376,042_59D9A_engine_core,src/c/042_59D9A_engine_core/changeplayer.c,nonmatching,"Same instructions and branch layout (370 bytes), only allocation differs: the original spills cont at [esp+4] (px [esp], py [esp+8]) and uses edx for the 6-player counter, ebx/ecx for dx/dy, si for SCnum, cx for c1/c2playernum; this draft puts cont at [esp+8] and the counter in ecx. Declaration order (120 permutations) does not change it. File also hosts setplayer / DrawRinkOverlays (share changeplayer_ret5)"
 cleargamevars,5CD4F,195,042_59D9A_engine_core,src/c/042_59D9A_engine_core/cleargamevars.c,matched,
+forcepldata,5E0DD,144,042_59D9A_engine_core,src/c/042_59D9A_engine_core/forcepldata.c,matched,
 forceteams forcepldata,5E0B0,189,042_59D9A_engine_core,src/c/042_59D9A_engine_core/forceteams.c,matched,
 periodicevents,5C302,269,042_59D9A_engine_core,src/c/042_59D9A_engine_core/periodicevents.c,nonmatching,
 resetplstuff,5E01A,108,042_59D9A_engine_core,src/c/042_59D9A_engine_core/resetplstuff.c,matched,
@@ -308,6 +310,7 @@ CountShotOnGoal,64338,96,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_
 EndPenaltyShot,64439,111,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/EndPenaltyShot.c,matched,
 FlushGSumQueue,61B85,58,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/FlushGSumQueue.c,matched,
 GameTimeStamp,62CD7,34,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/GameTimeStamp.c,matched,
+PostInjuryEvent,62764,148,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/PostInjuryEvent.c,matched,
 QueueGoalieNote,62C37,160,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QueueGoalieNote.c,nonmatching,"draft: only the tail differs: ours keeps 1 in esi for deferpending and the result, asm stores immediates"
 QuickShotChk,6427F,185,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QuickShotChk.c,nonmatching,"asm keeps facedir in bx and si (2 saved regs, frame 10h); C saves only edx"
 ReadGSumHeader,61BBF,99,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/ReadGSumHeader.c,matched,

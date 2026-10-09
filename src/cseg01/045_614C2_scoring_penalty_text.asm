@@ -1596,6 +1596,10 @@ pop ebp	; 6275E
 pop edi	; 6275F
 pop esi	; 62760
 ret 0Ch	; 62761
+; C: src/c/045_614C2_scoring_penalty_text/PostInjuryEvent.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/PostInjuryEvent.inc"
+%else
 PostInjuryEvent:
 push dword 0Ch	; 62764
 call __CHK	; 62769
@@ -1639,6 +1643,7 @@ xor eax, eax	; 627F1
 pop edi	; 627F3
 pop esi	; 627F4
 ret 0Ch	; 627F5
+%endif ; C
 NullCallback0C:
 push dword 4	; 627F8
 call __CHK	; 627FD

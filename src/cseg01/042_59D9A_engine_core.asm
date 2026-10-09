@@ -5521,6 +5521,10 @@ call setpersonel	; 5E0D3
 mov eax, awtmstruct	; 5E0D8
 ; forcepldata: 93G hockey93_05 forcepldata (no skating on/off, faceoffs only). eax = team: newpos -> position,
 ;   Setplass, center gets anearest (11h), tmpdst -1, setplayer with newpnum.
+; C: src/c/042_59D9A_engine_core/forcepldata.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/forcepldata.inc"
+%else
 forcepldata:
 push dword 14h	; 5E0DD
 call __CHK	; 5E0E2
@@ -5571,4 +5575,5 @@ pop edx	; 5E169
 pop ecx	; 5E16A
 pop ebx	; 5E16B
 ret	; 5E16C
+%endif ; C
 %endif ; C

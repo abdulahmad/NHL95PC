@@ -692,5 +692,10 @@ unsigned char FindRosterSlot(unsigned char pl, unsigned char side);  /* 739B6 */
 void __cdecl sub_B5D80(int x, int y, int c);  /* B5D80: plot a pixel */
 void FormatHilightDesc(char *out, unsigned char *h);  /* 7FCA2 */
 int ListHitTest(int mx, int my, int left, int top, int w, int n);  /* 3023E */
+void forcepldata(Team *t);  /* 5E0DD */
+int PostInjuryEvent(unsigned char a, unsigned char b, unsigned char c, unsigned char d, unsigned char e, int f, int g);  /* 62764 */
+void BuildEventLines(void);  /* 61E99 */
+short Readjoy1(void);  /* 50A05 */
+short Readjoy2(void);  /* 50A84 */
 
 #endif

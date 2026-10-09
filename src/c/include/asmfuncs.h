@@ -569,9 +569,7 @@ extern void lineinput(); /* 4FD8E */
 extern void CanBlockShot_ret6(); /* 50336 */
 extern void CanBlockShot_ret5(); /* 50337 */
 extern void doinput(); /* 504DA */
-extern void Readjoy1(); /* 50A05 */
 extern void Readjoy_tail(); /* 50A59 */
-extern void Readjoy2(); /* 50A84 */
 extern void PassRecOneTimer(); /* 50B55 */
 extern void asspassrec(); /* 50F3F */
 extern void TakePlayerFromBox(); /* 51115 */
@@ -671,10 +669,8 @@ extern void fileio_tail_a(); /* 61BFB */
 extern void fileio_tail_b(); /* 61C0C */
 extern void fileio_tail_c(); /* 61C14 */
 extern void FormatPlayerName(); /* 61D48 */
-extern void BuildEventLines(); /* 61E99 */
 extern void PostGoalEvent(); /* 62343 */
 extern void PostPenaltyEvent(); /* 624B9 */
-extern void PostInjuryEvent(); /* 62764 */
 extern void NullCallback0C(); /* 627F8 */
 extern void ChkScorerMilestone(); /* 62807 */
 extern void InProgress(); /* 62EE9 */
