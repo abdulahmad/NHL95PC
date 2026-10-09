@@ -24,6 +24,7 @@
 #define SPAgready       0x001   /* goalie ready stance (93G 2) */
 #define SPAgskate       0x1F1   /* goalie skate (93G $3F8) */
 #define SPAsweep        0x589   /* sweep check (93G $B24) */
+#define SPApflip        0x239   /* puck flip (94G puckflip #SPApflip $46A) */
 #define SPAholdchk      0x873   /* hold check (94G Acheck $1122 'normal hold check') */
 #define SPAholdchkair   0x639   /* hold check, stick in the air (94G Acheck $C90) */
 #define sfwrap          0x10    /* sflags bit 4: the replay buffer has wrapped (94G sfwrap) */
@@ -51,5 +52,6 @@
                                    the faceoff drop clears it) */
 #define gmdir           0x02    /* gmode bit 1: 0 = home team goes up (93G gmdir) */
 #define gmpendel        0x08    /* gmode bit 3: delayed penalty has been called (93G gmpendel) */
+#define gmhl            0x10    /* gmode bit 4: highlight mode (93G gmhl) */
 
 #endif

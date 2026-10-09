@@ -5792,6 +5792,10 @@ pop edx	; 579FB
 pop ecx	; 579FC
 pop ebx	; 579FD
 ret	; 579FE
+; C: src/c/040_53294_engine_physics_ai/Findhittype.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/Findhittype.inc"
+%else
 Findhittype:
 push dword 8	; 579FF
 call __CHK	; 57A04
@@ -5818,6 +5822,7 @@ setne al	; 57A37
 xor ah, ah	; 57A3A
 pop ecx	; 57A3C
 ret	; 57A3D
+%endif ; C
 deflect:
 push dword 8	; 57A3E
 call __CHK	; 57A43

@@ -7397,6 +7397,10 @@ pop edx	; 4DFA0
 pop ecx	; 4DFA1
 pop ebx	; 4DFA2
 ret	; 4DFA3
+; C: src/c/037_4842A_engine_player_logic/puckflip.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/puckflip.inc"
+%else
 puckflip:
 push dword 0Ch	; 4DFA4
 call __CHK	; 4DFA9
@@ -7427,6 +7431,7 @@ call SetSPA	; 4DFEF
 pop edx	; 4DFF4
 pop ebx	; 4DFF5
 ret	; 4DFF6
+%endif ; C
 assrefatdot:
 push dword 0Ch	; 4DFF7
 call __CHK	; 4DFFC

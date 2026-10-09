@@ -774,7 +774,6 @@ extern void Endfaceoff(); /* 4DA7B */
 extern void a2offsides(); /* 4DCDD */
 extern void ChkTwoLinePass(); /* 4DD51 */
 extern void a2touchpuck(); /* 4DE14 */
-extern void puckflip(); /* 4DFA4 */
 extern void assrefatdot(); /* 4DFF7 */
 extern void assreffollow(); /* 4E0BD */
 extern void SkateToSpot(); /* 4E292 */
@@ -807,7 +806,6 @@ extern void Readjoy1(); /* 50A05 */
 extern void Readjoy_tail(); /* 50A59 */
 extern void Readjoy2(); /* 50A84 */
 extern void CenterMouse(); /* 50ADE */
-extern void PassCompleted(); /* 50AFE */
 extern void PassRecOneTimer(); /* 50B55 */
 extern void OneTimerChk(); /* 50E5C */
 extern void asspassrec(); /* 50F3F */
@@ -872,7 +870,6 @@ extern void puckgoalie(); /* 57096 */
 extern void puckstick(); /* 57483 */
 extern void SetShotMode(); /* 5786E */
 extern void ShotMode(); /* 578FA */
-extern void Findhittype(); /* 579FF */
 extern void deflect(); /* 57A3E */
 extern void checkgoalp_CalcGoalShotDir(); /* 57A98 */
 extern void doshot(); /* 57C0B */

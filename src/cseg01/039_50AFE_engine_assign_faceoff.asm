@@ -28,6 +28,10 @@ global asstakeposition, assleavebox, assbenchwait, assrefpenshot, asspsclear, Pa
 global TakePlayerFromBox_ret6, TakePlayerFromBox_ret5
 global puckfaceoff, puckfaceoff2, PassCompleted, OneTimerChk, SetPenaltyStrength, TakePlayerFromBox
 global PenShotStart, ForceStartLineup, PenShotAssign, AllInPlace
+; C: src/c/039_50AFE_engine_assign_faceoff/PassCompleted.c
+%ifdef CBUILD
+%include "c/039_50AFE_engine_assign_faceoff/PassCompleted.inc"
+%else
 PassCompleted:
 push dword 0Ch	; 50AFE
 call __CHK	; 50B03
@@ -53,6 +57,7 @@ mov word [passplayer], 0FFFFh	; 50B49
 pop edx	; 50B52
 pop ebx	; 50B53
 ret	; 50B54
+%endif ; C
 PassRecOneTimer:
 push dword 18h	; 50B55
 call __CHK	; 50B5A

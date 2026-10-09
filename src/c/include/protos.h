@@ -46,6 +46,9 @@ void updatecrowdf(void);                                    /* 5C248 */
 int AllInPlace(void);                                      /* 51440 */
 void ForceStartLineup(short team);                          /* 5125F */
 void StartFaceoffLineChange(struct Player *r, struct Player *p); /* 4DA37 */
+void PassCompleted(struct Player *p);                     /* 50AFE */
+short Findhittype(struct Player *p, short dir);            /* 579FF */
+void puckflip(struct Player *p);                          /* 4DFA4 */
 void reenergizeteam(struct Team *t);                      /* 5B826 */
 void RestBench(void);                                     /* 5C1E2 */
 void restoreteams(void);                                  /* 5B97A */
