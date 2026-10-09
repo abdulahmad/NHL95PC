@@ -65,7 +65,7 @@ global unk_C10DB, unk_C10E9, unk_C10F9, unk_C1112, unk_C112C, unk_C1140, unk_C11
 global unk_C1194, unk_C11AC, unk_C11C5, unk_C11C9, unk_C11CD, unk_C11D1, unk_C11D2, unk_C11D5
 global unk_C11D9, unk_C11DE, unk_C11E2, unk_C11E8, unk_C11EE, unk_C11F3, unk_C11F7, unk_C11FD
 global unk_C1200, unk_C1203, unk_C1206, unk_C120B, str_NO, str_GP6, str_C2, unk_C126C
-global unk_C1276, str_GP7, str_W4, str_L6, str_T4, str_D3, str_TwoSpaces, unk_C136D
+global unk_C1276, str_GP7, str_W4, str_L6, str_T4, str_D3, str_TwoSpaces, str_Space2
 global unk_C139D, unk_C1430, unk_C1435, unk_C1439, unk_C148B, unk_C149A, unk_C149D, unk_C14A0
 global unk_C14A3, unk_C14A6, unk_C14A9, unk_C14AC, unk_C14AF, unk_C14C4, unk_C14D4, unk_C14D7
 global unk_C14E7, unk_C153C, unk_C155C, unk_C1563, unk_C1566, unk_C160E, unk_C161D, unk_C164B
@@ -694,7 +694,7 @@ str_Adn22:
 db 061h,064h,06Eh,032h,00h
 str_Adn12:
 db 061h,064h,06Eh,031h,00h
-unk_C136D:
+str_Space2:
 db 020h,00h,00h
 asc_C1370:
 db 061h,070h,061h,06Ch,00h

@@ -8,11 +8,11 @@ extern asc_C13E0, asc_C13E5, asc_C13EA, asc_C13F3, asc_C13F8, asc_C13FD, asc_C14
 extern asc_C140C, asc_C1415, asc_C141A, asc_C141F, asc_C1428, str_extDB, str_VFN
 extern byte_C6F6C, curleague, musicon, byte_D42C3, hmroster, byte_ED7F3, byte_ED824, byte_ED825
 extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, ctl1team, ctl2team
-extern teamconf, dword_C71CC, dword_C71D0, dword_C71D4, songdata, cont2team, HomeTeam, musicslot
+extern teamconf, boxfillcolor, boxlitecolor, boxshadecolor, songdata, cont2team, HomeTeam, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, pointerspr, dword_EA0DC
 extern fputchar, jctime, memcpy_, off_C5439, crestnames, off_C6F48, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
-extern SetTextColors, PrintShadowText, PrintOutlinedText, sub_29C75, sub_29D00, sub_30A0C, sub_30A39, sub_30AE2
+extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, sub_30A0C, sub_30A39, sub_30AE2
 extern sub_33E6A, sub_479E9, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, sub_6B391
 extern sub_6B3D7, sub_76429, sub_767D0, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
@@ -274,7 +274,7 @@ sar eax, 1	; 2A281
 lea ebx, [dword esp+0610h]	; 2A283
 mov edx, 93h	; 2A28A
 call PrintOutlinedText	; 2A28F
-mov ecx, dword [dword_C71CC]	; 2A294
+mov ecx, dword [boxfillcolor]	; 2A294
 push ecx	; 2A29A
 push byte 5	; 2A29B
 push dword 1AEh	; 2A29D
@@ -282,7 +282,7 @@ push dword 0CFh	; 2A2A2
 push byte 6Eh	; 2A2A7
 call sub_90D20	; 2A2A9
 add esp, byte 14h	; 2A2AE
-mov esi, dword [dword_C71D0]	; 2A2B1
+mov esi, dword [boxlitecolor]	; 2A2B1
 push esi	; 2A2B7
 push dword 0CFh	; 2A2B8
 push dword 21Ch	; 2A2BD
@@ -290,7 +290,7 @@ push dword 0CFh	; 2A2C2
 push byte 6Eh	; 2A2C7
 call sub_B4FAC	; 2A2C9
 add esp, byte 14h	; 2A2CE
-mov edi, dword [dword_C71D4]	; 2A2D1
+mov edi, dword [boxshadecolor]	; 2A2D1
 push edi	; 2A2D7
 push dword 0D3h	; 2A2D8
 push dword 21Ch	; 2A2DD
@@ -307,7 +307,7 @@ imul eax, esi	; 2A2FD
 lea edi, [dword eax+0DAh]	; 2A300
 cmp esi, byte 8	; 2A306
 jne short loc_2A36A	; 2A309
-mov ebp, dword [dword_C71CC]	; 2A30B
+mov ebp, dword [boxfillcolor]	; 2A30B
 push ebp	; 2A311
 push byte 5	; 2A312
 push dword 1AEh	; 2A314
@@ -316,7 +316,7 @@ push ebp	; 2A31C
 push byte 6Eh	; 2A31D
 call sub_90D20	; 2A31F
 add esp, byte 14h	; 2A324
-mov eax, dword [dword_C71D0]	; 2A327
+mov eax, dword [boxlitecolor]	; 2A327
 push eax	; 2A32C
 push ebp	; 2A32D
 push dword 21Ch	; 2A32E
@@ -326,7 +326,7 @@ push ebp	; 2A33D
 push byte 6Eh	; 2A33E
 call sub_B4FAC	; 2A340
 add esp, byte 14h	; 2A345
-mov edx, dword [dword_C71D4]	; 2A348
+mov edx, dword [boxshadecolor]	; 2A348
 push edx	; 2A34E
 mov ebx, dword [dword esp+0640h]	; 2A34F
 push ebx	; 2A356
@@ -459,7 +459,7 @@ mov ecx, 1DFh	; 2A538
 mov ebx, 26Bh	; 2A53D
 mov edx, 1AEh	; 2A542
 xor eax, eax	; 2A547
-call sub_29D00	; 2A549
+call DrawBevelBox	; 2A549
 mov edx, dword [dword esp+0650h]	; 2A54E
 mov eax, dword [dword esp+0654h]	; 2A555
 call sub_30AE2	; 2A55C
@@ -1342,7 +1342,7 @@ lea ebx, [byte edx+013h]	; 2B212
 mov ecx, 0C8h	; 2B215
 xor edx, edx	; 2B21A
 mov eax, esp	; 2B21C
-call sub_29C75	; 2B21E
+call FitPlayerName	; 2B21E
 mov eax, esp	; 2B223
 push eax	; 2B225
 call fputchar	; 2B226
@@ -1478,7 +1478,7 @@ lea ebx, [byte edx+013h]	; 2B3FF
 mov ecx, 0C8h	; 2B402
 xor edx, edx	; 2B407
 mov eax, esp	; 2B409
-call sub_29C75	; 2B40B
+call FitPlayerName	; 2B40B
 mov eax, esp	; 2B410
 push eax	; 2B412
 call fputchar	; 2B413
@@ -1605,7 +1605,7 @@ lea ebx, [byte edx+013h]	; 2B5CC
 mov ecx, 0C8h	; 2B5CF
 xor edx, edx	; 2B5D4
 mov eax, esp	; 2B5D6
-call sub_29C75	; 2B5D8
+call FitPlayerName	; 2B5D8
 mov ebx, esp	; 2B5DD
 mov edx, edi	; 2B5DF
 mov eax, 0B4h	; 2B5E1

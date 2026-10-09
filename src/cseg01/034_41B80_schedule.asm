@@ -15,7 +15,7 @@ extern FileWriteAt, CopyFile, ReadSchedGame, ReadTeamRec, DiskSpaceShort, GetLea
 extern sub_30A0C, sub_30F12, MessageBox, WriteModeState, sub_38B4F, WriteSchedGame, WriteTeamRec, sub_3DAB9
 extern WriteLeagueInfo, CopyHumanTeamDBs, SimulateGame, SeriesWinner, sub_8CCA8, sub_8E8A0, sub_92DE0, sub_932D0
 extern sub_B2DCA, btn_LeagueExists, msg_WhichSchedule, btn_WhichSchedule, msg_CreateError, msg_CreatingLeague, msg_DiskFull, leagueteams
-extern unk_DDAC4, masterpw, savleague1, savleague2, unknown_libname_1, word_DDD46, word_DDD48, word_DDD4A
+extern treeteamnames, masterpw, savleague1, savleague2, unknown_libname_1, word_DDD46, word_DDD48, word_DDD4A
 global SeriesLength_jt, FinishPlayoffs_jt
 global UpdateSeasonSchedule_pop3
 global SeriesLength_bo1, SeriesLength_bo3, SeriesLength_n3
@@ -4144,7 +4144,7 @@ xor edx, edx	; 44FF4
 lea eax, [byte esp+02Ch]	; 44FF6
 call MakePath	; 44FFA
 mov ebx, 1	; 44FFF
-mov edx, unk_DDAC4	; 45004
+mov edx, treeteamnames	; 45004
 lea eax, [byte esp+02Ch]	; 45009
 call sub_3DAB9	; 4500D
 mov edi, eax	; 45012
@@ -4155,7 +4155,7 @@ push eax	; 45020
 push str_SelHumanTeams	; 45021
 push byte 1	; 45026
 mov ecx, leagueteams	; 45028
-mov ebx, unk_DDAC4	; 4502D
+mov ebx, treeteamnames	; 4502D
 mov edx, humancount	; 45032
 mov eax, curleague	; 45037
 call sub_38B4F	; 4503C

@@ -2,22 +2,14 @@
 bits 32
 %include "hockey.inc"
 section s_2970A progbits alloc exec nowrite align=1
-extern __CHK, asc_C8100, str_extDB, str_space, statsfromleague, dword_C71CC, dword_C71D0, lgstate
-extern dword_C71D4, playofftree, playofftree_p1, pochampion, fputchar, jctime, teamcitynames, leaguedbnames
+extern __CHK, str_LSSCHED, str_extDB, str_space, statsfromleague, boxfillcolor, boxlitecolor, lgstate
+extern boxshadecolor, playofftree, playofftree_p1, pochampion, fputchar, jctime, teamcitynames, leaguedbnames
 extern strcat_, strcmp_, strcpy_, strlen_, MakePath, FileOpenRead, FileClose
-extern ReadSchedGame, PlayoffTreeScreen, sub_3DAB9, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, unk_C136D
-extern statsleague, unk_DDAC4, unk_DDCE6
-global loc_29781, loc_2978F, loc_2979D, loc_2979F, loc_297A5, loc_297F4, loc_29808, loc_29816
-global loc_2981B, loc_29821, loc_29855, loc_29868, loc_2987B, loc_2987D, loc_29882, loc_29885
-global loc_29897, loc_298A9, loc_298AB, loc_298BB, loc_298CD, loc_298DF, loc_298E1, loc_298F1
-global loc_298F6, loc_2990A, loc_29971, loc_29981, loc_29983, loc_29989, loc_2999E, loc_299C1
-global loc_299C4, loc_299C6, loc_299D9, loc_299DC, loc_299DE, loc_299E3, loc_299F8, loc_29A0C
-global loc_29A1A, loc_29A1C, loc_29A25, loc_29A37, loc_29A5A, loc_29A5D, loc_29A5F, loc_29A72
-global loc_29A75, loc_29A77, loc_29A87, loc_29A8D, loc_29AD5, loc_29AE9, loc_29B3D, loc_29B45
-global loc_29B4A, loc_29B68, loc_29B95, loc_29BA0, loc_29BAA, loc_29BF4, loc_29C16, loc_29C18
-global loc_29C4F, loc_29CD7, loc_29CDE, loc_29CF9, loc_29F0C, sub_2970A, sub_2991C, sub_29A97
-global sub_29B07, sub_29C75, sub_29D00
-sub_2970A:
+extern ReadSchedGame, PlayoffTreeScreen, sub_3DAB9, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, str_Space2
+extern statsleague, treeteamnames
+global LoadPlayoffModeTree, TreeSeriesWinner, OpenStatsSchedule
+global LoadLeagueTree, FitPlayerName, DrawBevelBox
+LoadPlayoffModeTree:
 push dword 0B0h	; 2970A
 call __CHK	; 2970F
 push ebx	; 29714
@@ -36,14 +28,14 @@ mov edx, statsleague	; 29739
 lea eax, [byte ebp-058h]	; 2973E
 call MakePath	; 29741
 xor ebx, ebx	; 29746
-mov edx, unk_DDAC4	; 29748
+mov edx, treeteamnames	; 29748
 lea eax, [byte ebp-058h]	; 2974D
 call sub_3DAB9	; 29750
 mov dword [byte ebp-020h], eax	; 29755
 cmp word [byte ebp-020h], byte 0	; 29758
-jne short loc_29781	; 2975D
+jne short .1	; 2975D
 mov ecx, str_extDB	; 2975F
-mov ebx, asc_C8100	; 29764
+mov ebx, str_LSSCHED	; 29764
 xor edx, edx	; 29769
 lea eax, [byte ebp-058h]	; 2976B
 call MakePath	; 2976E
@@ -51,20 +43,20 @@ lea edx, [byte ebp-08h]	; 29773
 lea eax, [byte ebp-058h]	; 29776
 call FileOpenRead	; 29779
 mov dword [byte ebp-020h], eax	; 2977E
-loc_29781:
+.1:
 mov dword [byte ebp-014h], 0	; 29781
 mov dword [byte ebp-010h], 0	; 29788
-loc_2978F:
+.2:
 cmp word [byte ebp-010h], byte 69h	; 2978F
-jge short loc_2979D	; 29794
+jge short .3	; 29794
 cmp word [byte ebp-020h], byte 0	; 29796
-je short loc_297A5	; 2979B
-loc_2979D:
-jmp short loc_297F4	; 2979D
-loc_2979F:
+je short .5	; 2979B
+.3:
+jmp short .6	; 2979D
+.4:
 add dword [byte ebp-010h], byte 7	; 2979F
-jmp short loc_2978F	; 297A3
-loc_297A5:
+jmp short LoadPlayoffModeTree.2	; 297A3
+.5:
 mov ebx, dword [byte ebp-012h]	; 297A5
 sar ebx, 10h	; 297A8
 add ebx, 444h	; 297AB
@@ -87,22 +79,22 @@ sar eax, 10h	; 297E2
 shl eax, 2	; 297E5
 mov dword [dword eax+playofftree], edx	; 297E8
 inc word [byte ebp-014h]	; 297EE
-jmp short loc_2979F	; 297F2
-loc_297F4:
+jmp short LoadPlayoffModeTree.4	; 297F2
+.6:
 mov dword [byte ebp-018h], 0	; 297F4
 mov dword [byte ebp-0Ch], 0	; 297FB
 mov word [byte ebp-010h], 0	; 29802
-loc_29808:
+.7:
 cmp word [byte ebp-010h], byte 7	; 29808
-jge short loc_29816	; 2980D
+jge short .8	; 2980D
 cmp word [byte ebp-020h], byte 0	; 2980F
-je short loc_29821	; 29814
-loc_29816:
-jmp near loc_298F6	; 29816
-loc_2981B:
+je short .10	; 29814
+.8:
+jmp near .25	; 29816
+.9:
 inc word [byte ebp-010h]	; 2981B
-jmp short loc_29808	; 2981F
-loc_29821:
+jmp short LoadPlayoffModeTree.7	; 2981F
+.10:
 mov ebx, dword [byte ebp-012h]	; 29821
 sar ebx, 10h	; 29824
 add ebx, 4A6h	; 29827
@@ -112,87 +104,87 @@ sar eax, 10h	; 29833
 call ReadSchedGame	; 29836
 mov dword [byte ebp-020h], eax	; 2983B
 cmp word [byte ebp-010h], byte 0	; 2983E
-jne short loc_29855	; 29843
+jne short .11	; 29843
 xor eax, eax	; 29845
 mov al, byte [byte ebp-036h]	; 29847
 mov dword [byte ebp-04h], eax	; 2984A
 xor eax, eax	; 2984D
 mov al, byte [byte ebp-035h]	; 2984F
 mov dword [byte ebp-01Ch], eax	; 29852
-loc_29855:
+.11:
 mov al, byte [byte ebp-034h]	; 29855
 cmp al, byte [byte ebp-033h]	; 29858
-jbe short loc_29868	; 2985B
+jbe short .12	; 2985B
 xor eax, eax	; 2985D
 mov al, byte [byte ebp-036h]	; 2985F
 cmp ax, word [byte ebp-04h]	; 29862
-je short loc_2987D	; 29866
-loc_29868:
+je short .14	; 29866
+.12:
 mov al, byte [byte ebp-033h]	; 29868
 cmp al, byte [byte ebp-034h]	; 2986B
-jbe short loc_2987B	; 2986E
+jbe short .13	; 2986E
 xor eax, eax	; 29870
 mov al, byte [byte ebp-035h]	; 29872
 cmp ax, word [byte ebp-04h]	; 29875
-je short loc_2987D	; 29879
-loc_2987B:
-jmp short loc_29882	; 2987B
-loc_2987D:
+je short .14	; 29879
+.13:
+jmp short .15	; 2987B
+.14:
 inc dword [byte ebp-018h]	; 2987D
-jmp short loc_29885	; 29880
-loc_29882:
+jmp short .16	; 29880
+.15:
 inc dword [byte ebp-0Ch]	; 29882
-loc_29885:
+.16:
 cmp word [byte ebp-018h], byte 4	; 29885
-jne short loc_29897	; 2988A
+jne short .17	; 2988A
 xor eax, eax	; 2988C
 mov al, byte [byte ebp-036h]	; 2988E
 cmp ax, word [byte ebp-04h]	; 29891
-je short loc_298AB	; 29895
-loc_29897:
+je short .19	; 29895
+.17:
 cmp word [byte ebp-0Ch], byte 4	; 29897
-jne short loc_298A9	; 2989C
+jne short .18	; 2989C
 xor eax, eax	; 2989E
 mov al, byte [byte ebp-036h]	; 298A0
 cmp ax, word [byte ebp-01Ch]	; 298A3
-je short loc_298AB	; 298A7
-loc_298A9:
-jmp short loc_298BB	; 298A9
-loc_298AB:
+je short .19	; 298A7
+.18:
+jmp short .20	; 298A9
+.19:
 xor eax, eax	; 298AB
 mov al, byte [byte ebp-036h]	; 298AD
 mov dword [pochampion], eax	; 298B0
 mov word [byte ebp-010h], 7	; 298B5
-loc_298BB:
+.20:
 cmp word [byte ebp-0Ch], byte 4	; 298BB
-jne short loc_298CD	; 298C0
+jne short .21	; 298C0
 xor eax, eax	; 298C2
 mov al, byte [byte ebp-035h]	; 298C4
 cmp ax, word [byte ebp-01Ch]	; 298C7
-je short loc_298E1	; 298CB
-loc_298CD:
+je short .23	; 298CB
+.21:
 cmp word [byte ebp-018h], byte 4	; 298CD
-jne short loc_298DF	; 298D2
+jne short .22	; 298D2
 xor eax, eax	; 298D4
 mov al, byte [byte ebp-035h]	; 298D6
 cmp ax, word [byte ebp-04h]	; 298D9
-je short loc_298E1	; 298DD
-loc_298DF:
-jmp short loc_298F1	; 298DF
-loc_298E1:
+je short .23	; 298DD
+.22:
+jmp short .24	; 298DF
+.23:
 xor eax, eax	; 298E1
 mov al, byte [byte ebp-035h]	; 298E3
 mov dword [pochampion], eax	; 298E6
 mov word [byte ebp-010h], 7	; 298EB
-loc_298F1:
-jmp near loc_2981B	; 298F1
-loc_298F6:
+.24:
+jmp near LoadPlayoffModeTree.9	; 298F1
+.25:
 lea eax, [byte ebp-08h]	; 298F6
 call FileClose	; 298F9
 cmp word [byte ebp-020h], byte 0	; 298FE
-jne short loc_2990A	; 29903
+jne short .26	; 29903
 call PlayoffTreeScreen	; 29905
-loc_2990A:
+.26:
 mov dword [byte ebp-02Ch], 0	; 2990A
 mov eax, dword [byte ebp-02Ch]	; 29911
 mov esp, ebp	; 29914
@@ -202,7 +194,7 @@ pop esi	; 29918
 pop ecx	; 29919
 pop ebx	; 2991A
 ret	; 2991B
-sub_2991C:
+TreeSeriesWinner:
 push dword 38h	; 2991C
 call __CHK	; 29921
 push ecx	; 29926
@@ -223,7 +215,7 @@ mov edx, dword [byte ebp-014h]	; 29948
 mov al, byte [byte edx+03h]	; 2994B
 mov dword [byte ebp-010h], eax	; 2994E
 cmp dword [byte ebp-018h], byte 0	; 29951
-je near loc_299E3	; 29955
+je near .12	; 29955
 mov eax, dword [byte ebp-01Ch]	; 2995B
 shr eax, 1	; 2995E
 inc eax	; 29960
@@ -231,124 +223,124 @@ mov dword [byte ebp-01Ch], eax	; 29961
 mov dword [byte ebp-020h], 0	; 29964
 mov eax, dword [byte ebp-020h]	; 2996B
 mov dword [byte ebp-024h], eax	; 2996E
-loc_29971:
+.1:
 mov eax, dword [byte ebp-024h]	; 29971
 cmp eax, dword [byte ebp-01Ch]	; 29974
-jae short loc_29981	; 29977
+jae short .2	; 29977
 mov eax, dword [byte ebp-020h]	; 29979
 cmp eax, dword [byte ebp-01Ch]	; 2997C
-jb short loc_29989	; 2997F
-loc_29981:
-jmp short loc_299DE	; 29981
-loc_29983:
+jb short .4	; 2997F
+.2:
+jmp short .11	; 29981
+.3:
 add dword [byte ebp-014h], byte 6	; 29983
-jmp short loc_29971	; 29987
-loc_29989:
+jmp short TreeSeriesWinner.1	; 29987
+.4:
 mov eax, dword [byte ebp-014h]	; 29989
 cmp byte [byte eax+04h], 0FFh	; 2998C
-jne short loc_2999E	; 29990
+jne short .5	; 29990
 mov dword [byte ebp-04h], 0FFFFFFFFh	; 29992
-jmp near loc_29A8D	; 29999
-loc_2999E:
+jmp near .26	; 29999
+.5:
 mov eax, dword [byte ebp-014h]	; 2999E
 mov al, byte [byte eax+02h]	; 299A1
 and eax, 0FFh	; 299A4
 cmp eax, dword [byte ebp-0Ch]	; 299A9
-jne short loc_299C6	; 299AC
+jne short .8	; 299AC
 mov eax, dword [byte ebp-014h]	; 299AE
 mov dl, byte [byte eax+04h]	; 299B1
 mov eax, dword [byte ebp-014h]	; 299B4
 cmp dl, byte [byte eax+05h]	; 299B7
-jbe short loc_299C1	; 299BA
+jbe short .6	; 299BA
 inc dword [byte ebp-024h]	; 299BC
-jmp short loc_299C4	; 299BF
-loc_299C1:
+jmp short .7	; 299BF
+.6:
 inc dword [byte ebp-020h]	; 299C1
-loc_299C4:
-jmp short loc_299DC	; 299C4
-loc_299C6:
+.7:
+jmp short .10	; 299C4
+.8:
 mov eax, dword [byte ebp-014h]	; 299C6
 mov dl, byte [byte eax+04h]	; 299C9
 mov eax, dword [byte ebp-014h]	; 299CC
 cmp dl, byte [byte eax+05h]	; 299CF
-jbe short loc_299D9	; 299D2
+jbe short .9	; 299D2
 inc dword [byte ebp-020h]	; 299D4
-jmp short loc_299DC	; 299D7
-loc_299D9:
+jmp short .10	; 299D7
+.9:
 inc dword [byte ebp-024h]	; 299D9
-loc_299DC:
-jmp short loc_29983	; 299DC
-loc_299DE:
-jmp near loc_29A77	; 299DE
-loc_299E3:
+.10:
+jmp short TreeSeriesWinner.3	; 299DC
+.11:
+jmp near .24	; 299DE
+.12:
 mov eax, dword [byte ebp-014h]	; 299E3
 cmp byte [byte eax+04h], 0FFh	; 299E6
-jne short loc_299F8	; 299EA
+jne short .13	; 299EA
 mov dword [byte ebp-04h], 0FFFFFFFFh	; 299EC
-jmp near loc_29A8D	; 299F3
-loc_299F8:
+jmp near .26	; 299F3
+.13:
 mov dword [byte ebp-08h], 0	; 299F8
 mov dword [byte ebp-020h], 0	; 299FF
 mov eax, dword [byte ebp-020h]	; 29A06
 mov dword [byte ebp-024h], eax	; 29A09
-loc_29A0C:
+.14:
 mov eax, dword [byte ebp-014h]	; 29A0C
 cmp byte [eax], 0FFh	; 29A0F
-je short loc_29A1A	; 29A12
+je short .15	; 29A12
 cmp dword [byte ebp-08h], byte 7	; 29A14
-jl short loc_29A25	; 29A18
-loc_29A1A:
-jmp short loc_29A77	; 29A1A
-loc_29A1C:
+jl short .17	; 29A18
+.15:
+jmp short .24	; 29A1A
+.16:
 add dword [byte ebp-014h], byte 6	; 29A1C
 inc dword [byte ebp-08h]	; 29A20
-jmp short loc_29A0C	; 29A23
-loc_29A25:
+jmp short TreeSeriesWinner.14	; 29A23
+.17:
 mov eax, dword [byte ebp-014h]	; 29A25
 cmp byte [byte eax+04h], 0FFh	; 29A28
-jne short loc_29A37	; 29A2C
+jne short .18	; 29A2C
 mov dword [byte ebp-04h], 0FFFFFFFFh	; 29A2E
-jmp short loc_29A8D	; 29A35
-loc_29A37:
+jmp short .26	; 29A35
+.18:
 mov eax, dword [byte ebp-014h]	; 29A37
 mov al, byte [byte eax+02h]	; 29A3A
 and eax, 0FFh	; 29A3D
 cmp eax, dword [byte ebp-0Ch]	; 29A42
-jne short loc_29A5F	; 29A45
+jne short .21	; 29A45
 mov eax, dword [byte ebp-014h]	; 29A47
 mov dl, byte [byte eax+04h]	; 29A4A
 mov eax, dword [byte ebp-014h]	; 29A4D
 cmp dl, byte [byte eax+05h]	; 29A50
-jbe short loc_29A5A	; 29A53
+jbe short .19	; 29A53
 inc dword [byte ebp-024h]	; 29A55
-jmp short loc_29A5D	; 29A58
-loc_29A5A:
+jmp short .20	; 29A58
+.19:
 inc dword [byte ebp-020h]	; 29A5A
-loc_29A5D:
-jmp short loc_29A75	; 29A5D
-loc_29A5F:
+.20:
+jmp short .23	; 29A5D
+.21:
 mov eax, dword [byte ebp-014h]	; 29A5F
 mov dl, byte [byte eax+04h]	; 29A62
 mov eax, dword [byte ebp-014h]	; 29A65
 cmp dl, byte [byte eax+05h]	; 29A68
-jbe short loc_29A72	; 29A6B
+jbe short .22	; 29A6B
 inc dword [byte ebp-020h]	; 29A6D
-jmp short loc_29A75	; 29A70
-loc_29A72:
+jmp short .23	; 29A70
+.22:
 inc dword [byte ebp-024h]	; 29A72
-loc_29A75:
-jmp short loc_29A1C	; 29A75
-loc_29A77:
+.23:
+jmp short TreeSeriesWinner.16	; 29A75
+.24:
 mov eax, dword [byte ebp-024h]	; 29A77
 cmp eax, dword [byte ebp-020h]	; 29A7A
-jle short loc_29A87	; 29A7D
+jle short .25	; 29A7D
 mov eax, dword [byte ebp-0Ch]	; 29A7F
 mov dword [byte ebp-04h], eax	; 29A82
-jmp short loc_29A8D	; 29A85
-loc_29A87:
+jmp short .26	; 29A85
+.25:
 mov eax, dword [byte ebp-010h]	; 29A87
 mov dword [byte ebp-04h], eax	; 29A8A
-loc_29A8D:
+.26:
 mov eax, dword [byte ebp-04h]	; 29A8D
 mov esp, ebp	; 29A90
 pop ebp	; 29A92
@@ -356,7 +348,7 @@ pop edi	; 29A93
 pop esi	; 29A94
 pop ecx	; 29A95
 ret	; 29A96
-sub_29A97:
+OpenStatsSchedule:
 push dword 48h	; 29A97
 call __CHK	; 29A9C
 push ebx	; 29AA1
@@ -369,20 +361,20 @@ mov ebp, esp	; 29AA7
 sub esp, 24h	; 29AA9
 mov dword [byte ebp-04h], eax	; 29AAF
 cmp dword [statsfromleague], byte 0	; 29AB2
-je short loc_29AD5	; 29AB9
+je short .1	; 29AB9
 mov ecx, str_extDB	; 29ABB
 mov ebx, dword [leaguedbnames+18h]	; 29AC0
 mov edx, statsleague	; 29AC6
 lea eax, [byte ebp-024h]	; 29ACB
 call MakePath	; 29ACE
-jmp short loc_29AE9	; 29AD3
-loc_29AD5:
+jmp short .2	; 29AD3
+.1:
 mov ecx, str_extDB	; 29AD5
-mov ebx, asc_C8100	; 29ADA
+mov ebx, str_LSSCHED	; 29ADA
 xor edx, edx	; 29ADF
 lea eax, [byte ebp-024h]	; 29AE1
 call MakePath	; 29AE4
-loc_29AE9:
+.2:
 push byte 20h	; 29AE9
 lea eax, [byte ebp-024h]	; 29AEB
 push eax	; 29AEE
@@ -399,7 +391,7 @@ pop edx	; 29B03
 pop ecx	; 29B04
 pop ebx	; 29B05
 ret	; 29B06
-sub_29B07:
+LoadLeagueTree:
 push dword 5Ch	; 29B07
 call __CHK	; 29B0C
 push ebx	; 29B11
@@ -416,42 +408,42 @@ mov eax, statsleague	; 29B29
 call strcmp_	; 29B2E
 mov dword [byte ebp-018h], eax	; 29B33
 mov dword [byte ebp-04h], 0	; 29B36
-loc_29B3D:
+.1:
 cmp dword [byte ebp-04h], byte 1Ah	; 29B3D
-jl short loc_29B4A	; 29B41
-jmp short loc_29B68	; 29B43
-loc_29B45:
+jl short .3	; 29B41
+jmp short .4	; 29B43
+.2:
 inc dword [byte ebp-04h]	; 29B45
-jmp short loc_29B3D	; 29B48
-loc_29B4A:
+jmp short LoadLeagueTree.1	; 29B48
+.3:
 mov eax, dword [byte ebp-04h]	; 29B4A
 shl eax, 2	; 29B4D
 mov edx, dword [dword eax+teamcitynames]	; 29B50
 imul eax, dword [byte ebp-04h], byte 15h	; 29B56
-mov ebx, unk_DDAC4	; 29B5A
+mov ebx, treeteamnames	; 29B5A
 add eax, ebx	; 29B5F
 call strcpy_	; 29B61
-jmp short loc_29B45	; 29B66
-loc_29B68:
-mov edx, unk_C136D	; 29B68
-mov eax, unk_DDCE6	; 29B6D
+jmp short LoadLeagueTree.2	; 29B66
+.4:
+mov edx, str_Space2	; 29B68
+mov eax, treeteamnames+222h	; 29B6D
 call strcpy_	; 29B72
 lea eax, [byte ebp-01Ch]	; 29B77
-call sub_29A97	; 29B7A
+call OpenStatsSchedule	; 29B7A
 add dword [byte ebp-01Ch], byte 2	; 29B7F
 mov eax, dword [byte ebp-01Ch]	; 29B83
 add eax, 1998h	; 29B86
 mov dword [byte ebp-020h], eax	; 29B8B
 mov dword [byte ebp-04h], 0	; 29B8E
-loc_29B95:
+.5:
 cmp dword [byte ebp-04h], byte 1Eh	; 29B95
-jl short loc_29BAA	; 29B99
-jmp near loc_29C18	; 29B9B
-loc_29BA0:
+jl short .7	; 29B99
+jmp near .10	; 29B9B
+.6:
 add dword [byte ebp-04h], byte 2	; 29BA0
 add dword [byte ebp-020h], byte 2Ah	; 29BA4
-jmp short loc_29B95	; 29BA8
-loc_29BAA:
+jmp short LoadLeagueTree.5	; 29BA8
+.7:
 mov eax, dword [byte ebp-020h]	; 29BAA
 xor edx, edx	; 29BAD
 mov dl, byte [byte eax+02h]	; 29BAF
@@ -467,21 +459,21 @@ mov dword [dword eax+playofftree_p1], edx	; 29BCC
 mov eax, dword [byte ebp-04h]	; 29BD2
 shl eax, 2	; 29BD5
 cmp dword [dword eax+playofftree], 0FFh	; 29BD8
-jne short loc_29BF4	; 29BE2
+jne short .8	; 29BE2
 mov eax, dword [byte ebp-04h]	; 29BE4
 shl eax, 2	; 29BE7
 mov dword [dword eax+playofftree], 1Ah	; 29BEA
-loc_29BF4:
+.8:
 mov eax, dword [byte ebp-04h]	; 29BF4
 shl eax, 2	; 29BF7
 cmp dword [dword eax+playofftree_p1], 0FFh	; 29BFA
-jne short loc_29C16	; 29C04
+jne short .9	; 29C04
 mov eax, dword [byte ebp-04h]	; 29C06
 shl eax, 2	; 29C09
 mov dword [dword eax+playofftree_p1], 1Ah	; 29C0C
-loc_29C16:
-jmp short loc_29BA0	; 29C16
-loc_29C18:
+.9:
+jmp short LoadLeagueTree.6	; 29C16
+.10:
 mov eax, dword [byte ebp-01Ch]	; 29C18
 add eax, 1BE4h	; 29C1B
 mov dword [byte ebp-020h], eax	; 29C20
@@ -489,12 +481,12 @@ mov ebx, dword [byte ebp-018h]	; 29C23
 mov eax, dword [byte ebp-01Ch]	; 29C26
 mov edx, dword [dword eax+088h]	; 29C29
 mov eax, dword [byte ebp-020h]	; 29C2F
-call sub_2991C	; 29C32
+call TreeSeriesWinner	; 29C32
 mov dword [pochampion], eax	; 29C37
 cmp dword [pochampion], byte 0FFFFFFFFh	; 29C3C
-jne short loc_29C4F	; 29C43
+jne short .11	; 29C43
 mov dword [pochampion], 1Ah	; 29C45
-loc_29C4F:
+.11:
 mov eax, dword [byte ebp-01Ch]	; 29C4F
 sub eax, byte 2	; 29C52
 push eax	; 29C55
@@ -510,7 +502,7 @@ pop esi	; 29C71
 pop ecx	; 29C72
 pop ebx	; 29C73
 ret	; 29C74
-sub_29C75:
+FitPlayerName:
 push dword 18h	; 29C75
 call __CHK	; 29C7A
 push esi	; 29C7F
@@ -522,7 +514,7 @@ mov dword [esp], edx	; 29C87
 mov ebp, ebx	; 29C8A
 mov edi, ecx	; 29C8C
 test edx, edx	; 29C8E
-je short loc_29CD7	; 29C90
+je short .1	; 29C90
 call strcpy_	; 29C92
 mov edx, str_space	; 29C97
 mov eax, esi	; 29C9C
@@ -534,7 +526,7 @@ push esi	; 29CAC
 call fputchar	; 29CAD
 add esp, byte 4	; 29CB2
 cmp eax, edi	; 29CB5
-jle short loc_29CDE	; 29CB7
+jle short .2	; 29CB7
 mov eax, dword [esp]	; 29CB9
 mov al, byte [eax]	; 29CBC
 mov byte [esi], al	; 29CBE
@@ -544,27 +536,27 @@ mov byte [byte esi+03h], 0	; 29CC8
 mov edx, ebp	; 29CCC
 mov eax, esi	; 29CCE
 call strcat_	; 29CD0
-jmp short loc_29CDE	; 29CD5
-loc_29CD7:
+jmp short .2	; 29CD5
+.1:
 mov edx, ebx	; 29CD7
 call strcpy_	; 29CD9
-loc_29CDE:
+.2:
 push esi	; 29CDE
 call fputchar	; 29CDF
 add esp, byte 4	; 29CE4
 cmp eax, edi	; 29CE7
-jle short loc_29CF9	; 29CE9
+jle short .x	; 29CE9
 mov eax, esi	; 29CEB
 call strlen_	; 29CED
 mov byte [byte esi+eax-01h], 0	; 29CF2
-jmp short loc_29CDE	; 29CF7
-loc_29CF9:
+jmp short FitPlayerName.2	; 29CF7
+.x:
 add esp, byte 4	; 29CF9
 pop ebp	; 29CFC
 pop edi	; 29CFD
 pop esi	; 29CFE
 ret	; 29CFF
-sub_29D00:
+DrawBevelBox:
 push dword 38h	; 29D00
 call __CHK	; 29D05
 push esi	; 29D0A
@@ -575,7 +567,7 @@ mov edi, eax	; 29D10
 mov esi, edx	; 29D12
 mov ebp, ebx	; 29D14
 mov dword [byte esp+010h], ecx	; 29D16
-mov edx, dword [dword_C71CC]	; 29D1A
+mov edx, dword [boxfillcolor]	; 29D1A
 push edx	; 29D20
 mov eax, ecx	; 29D21
 sub eax, esi	; 29D23
@@ -589,7 +581,7 @@ push esi	; 29D2D
 push edi	; 29D2E
 call sub_90D20	; 29D2F
 add esp, byte 14h	; 29D34
-mov ebx, dword [dword_C71D0]	; 29D37
+mov ebx, dword [boxlitecolor]	; 29D37
 push ebx	; 29D3D
 push esi	; 29D3E
 push ebp	; 29D3F
@@ -597,7 +589,7 @@ push esi	; 29D40
 push edi	; 29D41
 call sub_B4FAC	; 29D42
 add esp, byte 14h	; 29D47
-mov ecx, dword [dword_C71D0]	; 29D4A
+mov ecx, dword [boxlitecolor]	; 29D4A
 push ecx	; 29D50
 mov eax, dword [byte esp+014h]	; 29D51
 push eax	; 29D55
@@ -606,7 +598,7 @@ push esi	; 29D57
 push edi	; 29D58
 call sub_B4FAC	; 29D59
 add esp, byte 14h	; 29D5E
-mov edx, dword [dword_C71D4]	; 29D61
+mov edx, dword [boxshadecolor]	; 29D61
 push edx	; 29D67
 mov ebx, dword [byte esp+014h]	; 29D68
 push ebx	; 29D6C
@@ -615,7 +607,7 @@ push esi	; 29D6E
 push ebp	; 29D6F
 call sub_B4FAC	; 29D70
 add esp, byte 14h	; 29D75
-mov ecx, dword [dword_C71D4]	; 29D78
+mov ecx, dword [boxshadecolor]	; 29D78
 push ecx	; 29D7E
 mov eax, dword [byte esp+014h]	; 29D7F
 push eax	; 29D83
@@ -625,8 +617,8 @@ push edi	; 29D86
 call sub_B4FAC	; 29D87
 add esp, byte 14h	; 29D8C
 cmp dword [byte esp+024h], byte 0	; 29D8F
-je near loc_29F0C	; 29D94
-mov ecx, dword [dword_C71D0]	; 29D9A
+je near .x	; 29D94
+mov ecx, dword [boxlitecolor]	; 29D9A
 push ecx	; 29DA0
 mov eax, esi	; 29DA1
 add eax, byte 2	; 29DA3
@@ -638,7 +630,7 @@ mov dword [byte esp+0Ch], eax	; 29DB0
 push eax	; 29DB4
 call sub_B5DB0	; 29DB5
 add esp, byte 0Ch	; 29DBA
-mov ebx, dword [dword_C71D0]	; 29DBD
+mov ebx, dword [boxlitecolor]	; 29DBD
 push ebx	; 29DC3
 add esi, byte 3	; 29DC4
 push esi	; 29DC7
@@ -646,21 +638,21 @@ add edi, byte 3	; 29DC8
 push edi	; 29DCB
 call sub_B5DB0	; 29DCC
 add esp, byte 0Ch	; 29DD1
-mov ecx, dword [dword_C71D4]	; 29DD4
+mov ecx, dword [boxshadecolor]	; 29DD4
 push ecx	; 29DDA
 mov eax, dword [byte esp+04h]	; 29DDB
 push eax	; 29DDF
 push edi	; 29DE0
 call sub_B5DB0	; 29DE1
 add esp, byte 0Ch	; 29DE6
-mov edx, dword [dword_C71D4]	; 29DE9
+mov edx, dword [boxshadecolor]	; 29DE9
 push edx	; 29DEF
 push esi	; 29DF0
 mov ebx, dword [byte esp+0Ch]	; 29DF1
 push ebx	; 29DF5
 call sub_B5DB0	; 29DF6
 add esp, byte 0Ch	; 29DFB
-mov ecx, dword [dword_C71D4]	; 29DFE
+mov ecx, dword [boxshadecolor]	; 29DFE
 push ecx	; 29E04
 mov eax, dword [byte esp+014h]	; 29E05
 sub eax, byte 2	; 29E09
@@ -670,7 +662,7 @@ mov edx, dword [byte esp+0Ch]	; 29E11
 push edx	; 29E15
 call sub_B5DB0	; 29E16
 add esp, byte 0Ch	; 29E1B
-mov ebx, dword [dword_C71D4]	; 29E1E
+mov ebx, dword [boxshadecolor]	; 29E1E
 push ebx	; 29E24
 mov eax, dword [byte esp+014h]	; 29E25
 sub eax, byte 3	; 29E29
@@ -679,14 +671,14 @@ push eax	; 29E30
 push edi	; 29E31
 call sub_B5DB0	; 29E32
 add esp, byte 0Ch	; 29E37
-mov eax, dword [dword_C71D0]	; 29E3A
+mov eax, dword [boxlitecolor]	; 29E3A
 push eax	; 29E3F
 mov edx, dword [byte esp+0Ch]	; 29E40
 push edx	; 29E44
 push edi	; 29E45
 call sub_B5DB0	; 29E46
 add esp, byte 0Ch	; 29E4B
-mov ebx, dword [dword_C71D0]	; 29E4E
+mov ebx, dword [boxlitecolor]	; 29E4E
 push ebx	; 29E54
 mov ecx, dword [byte esp+010h]	; 29E55
 push ecx	; 29E59
@@ -694,7 +686,7 @@ mov edi, dword [byte esp+0Ch]	; 29E5A
 push edi	; 29E5E
 call sub_B5DB0	; 29E5F
 add esp, byte 0Ch	; 29E64
-mov eax, dword [dword_C71D0]	; 29E67
+mov eax, dword [boxlitecolor]	; 29E67
 push eax	; 29E6C
 mov edx, dword [byte esp+04h]	; 29E6D
 push edx	; 29E71
@@ -702,55 +694,55 @@ lea edi, [byte ebp-03h]	; 29E72
 push edi	; 29E75
 call sub_B5DB0	; 29E76
 add esp, byte 0Ch	; 29E7B
-mov ebx, dword [dword_C71D0]	; 29E7E
+mov ebx, dword [boxlitecolor]	; 29E7E
 push ebx	; 29E84
 push esi	; 29E85
 sub ebp, byte 2	; 29E86
 push ebp	; 29E89
 call sub_B5DB0	; 29E8A
 add esp, byte 0Ch	; 29E8F
-mov ecx, dword [dword_C71D4]	; 29E92
+mov ecx, dword [boxshadecolor]	; 29E92
 push ecx	; 29E98
 mov eax, dword [byte esp+04h]	; 29E99
 push eax	; 29E9D
 push ebp	; 29E9E
 call sub_B5DB0	; 29E9F
 add esp, byte 0Ch	; 29EA4
-mov edx, dword [dword_C71D4]	; 29EA7
+mov edx, dword [boxshadecolor]	; 29EA7
 push edx	; 29EAD
 push esi	; 29EAE
 push edi	; 29EAF
 call sub_B5DB0	; 29EB0
 add esp, byte 0Ch	; 29EB5
-mov ebx, dword [dword_C71D4]	; 29EB8
+mov ebx, dword [boxshadecolor]	; 29EB8
 push ebx	; 29EBE
 mov ecx, dword [byte esp+0Ch]	; 29EBF
 push ecx	; 29EC3
 push edi	; 29EC4
 call sub_B5DB0	; 29EC5
 add esp, byte 0Ch	; 29ECA
-mov esi, dword [dword_C71D4]	; 29ECD
+mov esi, dword [boxshadecolor]	; 29ECD
 push esi	; 29ED3
 mov eax, dword [byte esp+010h]	; 29ED4
 push eax	; 29ED8
 push ebp	; 29ED9
 call sub_B5DB0	; 29EDA
 add esp, byte 0Ch	; 29EDF
-mov edx, dword [dword_C71D0]	; 29EE2
+mov edx, dword [boxlitecolor]	; 29EE2
 push edx	; 29EE8
 mov ebx, dword [byte esp+0Ch]	; 29EE9
 push ebx	; 29EED
 push ebp	; 29EEE
 call sub_B5DB0	; 29EEF
 add esp, byte 0Ch	; 29EF4
-mov ecx, dword [dword_C71D0]	; 29EF7
+mov ecx, dword [boxlitecolor]	; 29EF7
 push ecx	; 29EFD
 mov esi, dword [byte esp+010h]	; 29EFE
 push esi	; 29F02
 push edi	; 29F03
 call sub_B5DB0	; 29F04
 add esp, byte 0Ch	; 29F09
-loc_29F0C:
+.x:
 add esp, byte 14h	; 29F0C
 pop ebp	; 29F0F
 pop edi	; 29F10

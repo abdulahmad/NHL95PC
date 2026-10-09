@@ -20,7 +20,7 @@ extern sub_61A27, sub_61B85, sub_64614, SetupTeamLines, sub_65B48, sub_673C5, su
 extern sub_6AF97, sub_6B008, sub_7DC8B, sub_8374D, sub_837A8, SelectScreenBM, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8FFB0, sub_90354, sub_9035C, MouseSetPos, sub_B396E, sub_B4BA8, str_backslash
 extern cupteam, presidentsteam, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690
-extern unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, unk_DDAC4, unk_DF014, unk_DF314, camx
+extern unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, treeteamnames, unk_DF014, unk_DF314, camx
 extern gsp, gameclock, word_CBC44, exitgame, gameover, word_CBEC4, word_CBECC, scrolly
 extern lcrequest, word_E0306, joysampling_save
 global assinsert, assreplace
@@ -693,7 +693,7 @@ mov edx, curleague	; 12098
 lea eax, [dword esp+03B8h]	; 1209D
 call MakePath	; 120A4
 mov ebx, 1	; 120A9
-mov edx, unk_DDAC4	; 120AE
+mov edx, treeteamnames	; 120AE
 lea eax, [dword esp+03B8h]	; 120B3
 call sub_3DAB9	; 120BA
 mov ebx, eax	; 120BF

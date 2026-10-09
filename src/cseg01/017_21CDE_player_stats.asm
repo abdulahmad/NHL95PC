@@ -25,7 +25,7 @@ extern eastconfname, teamstattitles, teamcolhdrs, leadersortfns, leadertitles
 extern off_C6C40, off_C6C44, off_C6C48, off_C6C4C, off_C6C50, open_, qsort_, read_
 extern sprintf_, strcat_, strnicmp_, MakePath, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText
 extern PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff, CmpPoints, CmpGAA, MakeStatsTitle, DrawPhotoWithPal
-extern sub_29A97, sub_29C75, sub_8CCA8, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_91370
+extern OpenStatsSchedule, FitPlayerName, sub_8CCA8, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_91370
 extern sub_913B4, sub_B30B4, sub_B30BB, sub_B4BA8, sub_B4BC4, str_GP2, str_GP3, str_W2
 extern str_L4, str_T2, str_SO2, str_EN2, str_GP4, str_S, str_No, str_GP5
 extern str_C, str_W3, str_L5, str_T3, str_NO, str_GP6, str_C2, statsleague
@@ -2076,7 +2076,7 @@ mov dword [dword esp+0258h], 1Ah	; 23676
 jmp short .9	; 23681
 .5:
 lea eax, [dword esp+0244h]	; 23683
-call sub_29A97	; 2368A
+call OpenStatsSchedule	; 2368A
 mov eax, dword [dword esp+0244h]	; 2368F
 add eax, 199Ah	; 23696
 add dword [dword esp+0244h], byte 2	; 2369B
@@ -3608,7 +3608,7 @@ mov ecx, 0A6h	; 24C62
 lea ebx, [dword esp+0377h]	; 24C67
 lea edx, [dword esp+0367h]	; 24C6E
 mov eax, printfbuf	; 24C75
-call sub_29C75	; 24C7A
+call FitPlayerName	; 24C7A
 mov edx, dword [dword esp+040Ah]	; 24C7F
 sar edx, 10h	; 24C86
 mov ebx, printfbuf	; 24C89
@@ -3779,7 +3779,7 @@ mov ecx, 0A6h	; 24F19
 lea ebx, [dword esp+0377h]	; 24F1E
 lea edx, [dword esp+0367h]	; 24F25
 mov eax, printfbuf	; 24F2C
-call sub_29C75	; 24F31
+call FitPlayerName	; 24F31
 mov edx, dword [dword esp+040Ah]	; 24F36
 sar edx, 10h	; 24F3D
 mov ebx, printfbuf	; 24F40
@@ -5676,7 +5676,7 @@ mov ecx, 0A0h	; 26561
 lea ebx, [dword esp+01E7h]	; 26566
 lea edx, [dword esp+01D7h]	; 2656D
 mov eax, printfbuf	; 26574
-call sub_29C75	; 26579
+call FitPlayerName	; 26579
 mov edi, dword [dword esp+0262h]	; 2657E
 sar edi, 10h	; 26585
 mov ebx, printfbuf	; 26588

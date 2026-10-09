@@ -4,15 +4,15 @@ bits 32
 section s_6C2F9 progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, asc_C2814, asc_C282C, asc_C2834, asc_C284F, asc_C2854, asc_C2873
 extern asc_C2894, asc_C2899, asc_C28A1, asc_C28AC, asc_C28B8, str_fmt2d, str_extDB, asc_CFB69
-extern asc_D0F15, rosterisfa, musicon, byte_D42C3, rosterlist, byte_EA991, rostersel, dword_C71CC
-extern dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, songdata, falist, falistsel, facount
+extern asc_D0F15, rosterisfa, musicon, byte_D42C3, rosterlist, byte_EA991, rostersel, boxfillcolor
+extern boxlitecolor, boxshadecolor, dword_C71D8, dword_C71DC, songdata, falist, falistsel, facount
 extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0BFC, dword_D0C04, dword_D0C10
 extern dword_D0C18, dword_D0C20, musichandle, dword_D8B74, pointerspr, dword_EA2B0, dword_EA2B4, musicslot
 extern dword_EA988, dword_EBC68, msglines, dword_EBCA4, dword_EBE9C, editrosters_exit, fputchar, jctime
 extern loc_6C03C, mkdir_, leaguedbnames
 extern off_CFB1C, off_CFB8A, rmdir_, sprintf_, strcat_, strcpy_, strlen_, strupr_
-extern MakePath, DeleteDir, PrintCenteredText, PrintShadowText, sub_29C75, sub_2FEDF, sub_30AE2, sub_30C3D
+extern MakePath, DeleteDir, PrintCenteredText, PrintShadowText, FitPlayerName, sub_2FEDF, sub_30AE2, sub_30C3D
 extern sub_30F12, MessageBox, sub_6C19B, DrawEditRosters, EditRosters, CheckDatabases, sub_76429, sub_8CCA8
 extern sub_8D2F0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90F38
 extern sub_91964, sub_932D0, FatalError, MouseSetPos, sub_B4BA8, sub_B4F8C, unk_6BF3D, unk_C28A9
@@ -773,21 +773,21 @@ push esi	; 6CC2D
 push edi	; 6CC2E
 push ebp	; 6CC2F
 sub esp, byte 54h	; 6CC30
-mov eax, dword [dword_C71D0]	; 6CC33
+mov eax, dword [boxlitecolor]	; 6CC33
 mov dword [byte esp+040h], eax	; 6CC38
-mov eax, dword [dword_C71D4]	; 6CC3C
+mov eax, dword [boxshadecolor]	; 6CC3C
 mov dword [byte esp+04Ch], eax	; 6CC41
-mov eax, dword [dword_C71CC]	; 6CC45
+mov eax, dword [boxfillcolor]	; 6CC45
 mov dword [byte esp+050h], eax	; 6CC4A
 mov eax, dword [dword_C71D8]	; 6CC4E
 mov dword [byte esp+048h], eax	; 6CC53
 mov eax, dword [dword_C71DC]	; 6CC57
 mov dword [byte esp+044h], eax	; 6CC5C
-mov dword [dword_C71CC], 41h	; 6CC60
+mov dword [boxfillcolor], 41h	; 6CC60
 mov ebx, 40h	; 6CC6A
-mov dword [dword_C71D0], ebx	; 6CC6F
+mov dword [boxlitecolor], ebx	; 6CC6F
 mov ecx, 42h	; 6CC75
-mov dword [dword_C71D4], ecx	; 6CC7A
+mov dword [boxshadecolor], ecx	; 6CC7A
 mov dword [dword_C71D8], ebx	; 6CC80
 mov dword [dword_C71DC], ecx	; 6CC86
 xor ebp, ebp	; 6CC8C
@@ -930,11 +930,11 @@ push ebx	; 6CE7C
 call jctime	; 6CE7D
 add esp, byte 4	; 6CE82
 mov eax, dword [byte esp+050h]	; 6CE85
-mov dword [dword_C71CC], eax	; 6CE89
+mov dword [boxfillcolor], eax	; 6CE89
 mov eax, dword [byte esp+040h]	; 6CE8E
-mov dword [dword_C71D0], eax	; 6CE92
+mov dword [boxlitecolor], eax	; 6CE92
 mov eax, dword [byte esp+04Ch]	; 6CE97
-mov dword [dword_C71D4], eax	; 6CE9B
+mov dword [boxshadecolor], eax	; 6CE9B
 mov eax, dword [byte esp+048h]	; 6CEA0
 mov dword [dword_C71D8], eax	; 6CEA4
 mov eax, dword [byte esp+044h]	; 6CEA9
@@ -1093,7 +1093,7 @@ add ebx, byte 8	; 6D04A
 mov ecx, 91h	; 6D04D
 xor edx, edx	; 6D052
 lea eax, [byte ebp-060h]	; 6D054
-call sub_29C75	; 6D057
+call FitPlayerName	; 6D057
 xor eax, eax	; 6D05C
 mov al, byte [byte_D42C3]	; 6D05E
 imul eax, esi	; 6D063
@@ -1198,7 +1198,7 @@ add ebx, byte 8	; 6D180
 mov ecx, 91h	; 6D183
 xor edx, edx	; 6D188
 lea eax, [byte ebp-060h]	; 6D18A
-call sub_29C75	; 6D18D
+call FitPlayerName	; 6D18D
 xor eax, eax	; 6D192
 mov al, byte [byte_D42C3]	; 6D194
 imul eax, esi	; 6D199

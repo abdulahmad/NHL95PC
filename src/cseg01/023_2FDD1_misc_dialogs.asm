@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_2FDD1 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1710, asc_C1718, str_extDB, asc_C811E, byte_C4B6C, byte_D42C3, byte_D42C5
-extern dword_C4B69, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, dword_C71E4, dword_C71E8
+extern dword_C4B69, boxfillcolor, boxlitecolor, boxshadecolor, dword_C71D8, dword_C71DC, dword_C71E4, dword_C71E8
 extern dword_C71EC, dword_C71F0, dword_C71F4, dword_C71FC, dword_C7208, dword_C7210, fontcolor, dword_D42AC
 extern pointerspr, dword_DD678, dword_DD688, dword_DD68C, dword_DD690, dword_DD694, dword_DD698, dword_DD69C
 extern dword_DD6A0, dword_DD6A4, dword_DD770, dword_DD7A4, dword_EA0DC, fputchar, jctime, off_C74AB
@@ -215,11 +215,11 @@ call sub_30E66	; 2FFB6
 mov edx, dword [dword_C71DC]	; 2FFBB
 mov eax, dword [dword_C71D8]	; 2FFC1
 call SetTextColors	; 2FFC6
-mov edx, dword [dword_C71D4]	; 2FFCB
+mov edx, dword [boxshadecolor]	; 2FFCB
 push edx	; 2FFD1
-mov ebx, dword [dword_C71D0]	; 2FFD2
+mov ebx, dword [boxlitecolor]	; 2FFD2
 push ebx	; 2FFD8
-mov ecx, dword [dword_C71CC]	; 2FFD9
+mov ecx, dword [boxfillcolor]	; 2FFD9
 push ecx	; 2FFDF
 mov ecx, dword [dword esp+0110h]	; 2FFE0
 mov ebx, ebp	; 2FFE7
@@ -259,9 +259,9 @@ LD sub, eax, edx	; 30063
 sar eax, 1	; 30065
 lea edx, [ecx+eax]	; 30067
 mov dword [dword esp+0110h], edx	; 3006A
-mov ebx, dword [dword_C71D0]	; 30071
+mov ebx, dword [boxlitecolor]	; 30071
 push ebx	; 30077
-mov ecx, dword [dword_C71D4]	; 30078
+mov ecx, dword [boxshadecolor]	; 30078
 push ecx	; 3007E
 mov ebp, dword [dword_C71DC]	; 3007F
 push ebp	; 30085
@@ -483,7 +483,7 @@ mov edx, dword [byte esp+028h]	; 302F5
 add edx, dword [byte esp+018h]	; 302F9
 cmp byte [edx], 0	; 302FD
 je short loc_3030A	; 30300
-mov edx, dword [dword_C71CC]	; 30302
+mov edx, dword [boxfillcolor]	; 30302
 jmp short loc_30322	; 30308
 loc_3030A:
 mov eax, dword [byte esp+01Ch]	; 3030A
@@ -732,11 +732,11 @@ mov edx, dword [byte esp+02Ch]	; 305D0
 mov eax, dword [byte esp+030h]	; 305D4
 call sub_30E66	; 305D8
 loc_305DD:
-mov ebx, dword [dword_C71D4]	; 305DD
+mov ebx, dword [boxshadecolor]	; 305DD
 push ebx	; 305E3
-mov ecx, dword [dword_C71D0]	; 305E4
+mov ecx, dword [boxlitecolor]	; 305E4
 push ecx	; 305EA
-mov esi, dword [dword_C71CC]	; 305EB
+mov esi, dword [boxfillcolor]	; 305EB
 push esi	; 305F1
 mov ecx, dword [byte esp+030h]	; 305F2
 mov ebx, dword [byte esp+034h]	; 305F6
@@ -758,9 +758,9 @@ add eax, dword [byte esp+030h]	; 3062D
 mov ebx, dword [byte esp+01Ch]	; 30631
 mov edx, ecx	; 30635
 call PrintShadowText	; 30637
-mov eax, dword [dword_C71D0]	; 3063C
+mov eax, dword [boxlitecolor]	; 3063C
 push eax	; 30641
-mov edx, dword [dword_C71D4]	; 30642
+mov edx, dword [boxshadecolor]	; 30642
 push edx	; 30648
 mov ebx, dword [dword_C71DC]	; 30649
 push ebx	; 3064F
@@ -1100,9 +1100,9 @@ ret	; 30A0B
 sub_30A0C:
 push dword 4	; 30A0C
 call __CHK	; 30A11
-mov dword [dword_C71CC], eax	; 30A16
-mov dword [dword_C71D0], edx	; 30A1B
-mov dword [dword_C71D4], ebx	; 30A21
+mov dword [boxfillcolor], eax	; 30A16
+mov dword [boxlitecolor], edx	; 30A1B
+mov dword [boxshadecolor], ebx	; 30A21
 mov dword [dword_C71D8], ecx	; 30A27
 mov eax, dword [byte esp+04h]	; 30A2D
 mov dword [dword_C71DC], eax	; 30A31
@@ -1213,22 +1213,22 @@ push ebp	; 30B25
 mov esi, eax	; 30B26
 cmp dword [byte eax+010h], byte 0	; 30B28
 je short loc_30B55	; 30B2C
-mov eax, dword [dword_C71D4]	; 30B2E
-mov ebx, dword [dword_C71D0]	; 30B33
+mov eax, dword [boxshadecolor]	; 30B2E
+mov ebx, dword [boxlitecolor]	; 30B33
 xor ebx, eax	; 30B39
-mov dword [dword_C71D0], ebx	; 30B3B
+mov dword [boxlitecolor], ebx	; 30B3B
 mov ecx, eax	; 30B41
 xor ecx, ebx	; 30B43
-mov dword [dword_C71D4], ecx	; 30B45
+mov dword [boxshadecolor], ecx	; 30B45
 mov edi, ebx	; 30B4B
 xor edi, ecx	; 30B4D
-mov dword [dword_C71D0], edi	; 30B4F
+mov dword [boxlitecolor], edi	; 30B4F
 loc_30B55:
-mov ebp, dword [dword_C71D4]	; 30B55
+mov ebp, dword [boxshadecolor]	; 30B55
 push ebp	; 30B5B
-mov eax, dword [dword_C71D0]	; 30B5C
+mov eax, dword [boxlitecolor]	; 30B5C
 push eax	; 30B61
-mov edx, dword [dword_C71CC]	; 30B62
+mov edx, dword [boxfillcolor]	; 30B62
 push edx	; 30B68
 mov ecx, dword [byte esi+0Ch]	; 30B69
 mov ebx, dword [byte esi+08h]	; 30B6C
@@ -1237,16 +1237,16 @@ mov eax, dword [esi]	; 30B72
 call sub_2FE49	; 30B74
 cmp dword [byte esi+010h], byte 0	; 30B79
 je short loc_30BA6	; 30B7D
-mov eax, dword [dword_C71D4]	; 30B7F
-mov ecx, dword [dword_C71D0]	; 30B84
+mov eax, dword [boxshadecolor]	; 30B7F
+mov ecx, dword [boxlitecolor]	; 30B84
 xor ecx, eax	; 30B8A
-mov dword [dword_C71D0], ecx	; 30B8C
+mov dword [boxlitecolor], ecx	; 30B8C
 mov edi, eax	; 30B92
 xor edi, ecx	; 30B94
-mov dword [dword_C71D4], edi	; 30B96
+mov dword [boxshadecolor], edi	; 30B96
 mov ebp, ecx	; 30B9C
 xor ebp, edi	; 30B9E
-mov dword [dword_C71D0], ebp	; 30BA0
+mov dword [boxlitecolor], ebp	; 30BA0
 loc_30BA6:
 mov eax, dword [byte esi+018h]	; 30BA6
 test eax, eax	; 30BA9
@@ -1318,11 +1318,11 @@ push ebp	; 30C4C
 mov esi, eax	; 30C4D
 mov edi, dword [eax]	; 30C4F
 mov ebp, dword [byte eax+04h]	; 30C51
-mov edx, dword [dword_C71D4]	; 30C54
+mov edx, dword [boxshadecolor]	; 30C54
 push edx	; 30C5A
-mov ebx, dword [dword_C71D0]	; 30C5B
+mov ebx, dword [boxlitecolor]	; 30C5B
 push ebx	; 30C61
-mov ecx, dword [dword_C71CC]	; 30C62
+mov ecx, dword [boxfillcolor]	; 30C62
 push ecx	; 30C68
 mov ecx, dword [byte eax+0Ch]	; 30C69
 mov ebx, dword [byte eax+08h]	; 30C6C
@@ -1331,16 +1331,16 @@ mov eax, edi	; 30C71
 call sub_2FE49	; 30C73
 cmp dword [byte esi+02Ch], byte 0	; 30C78
 je short loc_30CA5	; 30C7C
-mov ebx, dword [dword_C71D4]	; 30C7E
-mov edx, dword [dword_C71D0]	; 30C84
+mov ebx, dword [boxshadecolor]	; 30C7E
+mov edx, dword [boxlitecolor]	; 30C84
 xor edx, ebx	; 30C8A
-mov dword [dword_C71D0], edx	; 30C8C
+mov dword [boxlitecolor], edx	; 30C8C
 mov ecx, ebx	; 30C92
 xor ecx, edx	; 30C94
-mov dword [dword_C71D4], ecx	; 30C96
+mov dword [boxshadecolor], ecx	; 30C96
 mov eax, edx	; 30C9C
 xor eax, ecx	; 30C9E
-mov dword [dword_C71D0], eax	; 30CA0
+mov dword [boxlitecolor], eax	; 30CA0
 loc_30CA5:
 mov ebx, dword [byte esi+010h]	; 30CA5
 add ebx, byte 2	; 30CA8
@@ -1348,11 +1348,11 @@ lea eax, [edi+ebx]	; 30CAB
 mov ebx, dword [byte esi+014h]	; 30CAE
 add ebx, byte 2	; 30CB1
 add ebp, ebx	; 30CB4
-mov edx, dword [dword_C71D4]	; 30CB6
+mov edx, dword [boxshadecolor]	; 30CB6
 push edx	; 30CBC
-mov ebx, dword [dword_C71D0]	; 30CBD
+mov ebx, dword [boxlitecolor]	; 30CBD
 push ebx	; 30CC3
-mov ecx, dword [dword_C71CC]	; 30CC4
+mov ecx, dword [boxfillcolor]	; 30CC4
 push ecx	; 30CCA
 mov ecx, dword [byte esi+01Ch]	; 30CCB
 mov ebx, dword [byte esi+018h]	; 30CCE
@@ -1360,16 +1360,16 @@ mov edx, ebp	; 30CD1
 call sub_2FE49	; 30CD3
 cmp dword [byte esi+02Ch], byte 0	; 30CD8
 je near loc_30BEC	; 30CDC
-mov ebx, dword [dword_C71D4]	; 30CE2
-mov ebp, dword [dword_C71D0]	; 30CE8
+mov ebx, dword [boxshadecolor]	; 30CE2
+mov ebp, dword [boxlitecolor]	; 30CE8
 xor ebp, ebx	; 30CEE
-mov dword [dword_C71D0], ebp	; 30CF0
+mov dword [boxlitecolor], ebp	; 30CF0
 mov eax, ebx	; 30CF6
 xor eax, ebp	; 30CF8
-mov dword [dword_C71D4], eax	; 30CFA
+mov dword [boxshadecolor], eax	; 30CFA
 mov edx, ebp	; 30CFF
 xor edx, eax	; 30D01
-mov dword [dword_C71D0], edx	; 30D03
+mov dword [boxlitecolor], edx	; 30D03
 jmp near loc_30BEC	; 30D09
 sub_30D0E:
 push dword 20h	; 30D0E
@@ -1745,11 +1745,11 @@ mov ebx, dword [byte esp+04h]	; 310CF
 mov edx, dword [byte esp+01Ch]	; 310D3
 mov eax, edi	; 310D7
 call sub_30E66	; 310D9
-mov esi, dword [dword_C71D4]	; 310DE
+mov esi, dword [boxshadecolor]	; 310DE
 push esi	; 310E4
-mov ebp, dword [dword_C71D0]	; 310E5
+mov ebp, dword [boxlitecolor]	; 310E5
 push ebp	; 310EB
-mov eax, dword [dword_C71CC]	; 310EC
+mov eax, dword [boxfillcolor]	; 310EC
 push eax	; 310F1
 mov ecx, dword [byte esp+0Ch]	; 310F2
 mov ebx, dword [byte esp+010h]	; 310F6

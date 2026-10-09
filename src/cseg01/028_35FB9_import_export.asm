@@ -24,7 +24,7 @@ extern sub_6B47C, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FC
 extern sub_903F0, sub_91370, sub_91400, sub_92F50, sub_93000, sub_B2DCA, sub_B2E1B, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, unk_C7AE0, unk_C7E3E, btn_MasterDB, unk_C7F07
 extern unk_C7F1B, unk_C7F8E, str_backslash2, unk_C8117, awlinetab, hmlinetab, unk_DC240, leagueteams
-extern unk_DDAC4, masterpw, savleague1, savleague2, VisTeam, word_DB08A, word_DB08C, word_DB08E
+extern treeteamnames, masterpw, savleague1, savleague2, VisTeam, word_DB08A, word_DB08C, word_DB08E
 extern word_DB090, word_DB092, word_DB096, word_DC242, word_DC244, word_DDD46, word_DDD48, word_DDD4A
 extern word_DF618, hmscore, hmtmgoalie, awscore, awtmgoalie, startm
 global loc_3602E, loc_36047, loc_3607B, loc_36089, loc_360DA, loc_360FD, loc_36149, loc_3614E
@@ -970,7 +970,7 @@ mov edx, curleague	; 36D57
 mov eax, esp	; 36D5C
 call MakePath	; 36D5E
 mov ebx, 1	; 36D63
-mov edx, unk_DDAC4	; 36D68
+mov edx, treeteamnames	; 36D68
 mov eax, esp	; 36D6D
 call sub_3DAB9	; 36D6F
 mov esi, eax	; 36D74
@@ -1002,7 +1002,7 @@ push dword_DDD38	; 36DD0
 push asc_C78A8	; 36DD5
 push byte 8	; 36DDA
 mov ecx, leagueteams	; 36DDC
-mov ebx, unk_DDAC4	; 36DE1
+mov ebx, treeteamnames	; 36DE1
 mov edx, humancount	; 36DE6
 mov eax, curleague	; 36DEB
 call sub_38B4F	; 36DF0
@@ -1069,7 +1069,7 @@ mov edx, curleague	; 36ED1
 mov eax, esp	; 36ED6
 call MakePath	; 36ED8
 xor ebx, ebx	; 36EDD
-mov edx, unk_DDAC4	; 36EDF
+mov edx, treeteamnames	; 36EDF
 mov eax, esp	; 36EE4
 call sub_3DAB9	; 36EE6
 mov esi, eax	; 36EEB

@@ -7,10 +7,10 @@ extern str_Pct, str_PIM, str_PlusMinus, str_PPG, str_SHG, str_Pal3, str_Palmem, 
 extern str_D01d, awardtype, byte_D42C3, awardwinners, byte_ED7CC, dword_C513C, dword_C5168
 extern dword_D2C6B, fputchar, jctime, PickAwardWinners_x, awardart, awardnames, awardtitles, off_C524F
 extern off_C527B, sprintf_, strcat_, strcpy_, strnicmp_, MakePath, SetTextColors, PrintShadowText
-extern PrintFmt1, PrintFmt2, sub_29C75, sub_33E6A, sub_6B3D7, sub_76429, sub_8CCA8, sub_8E83C
+extern PrintFmt1, PrintFmt2, FitPlayerName, sub_33E6A, sub_6B3D7, sub_76429, sub_8CCA8, sub_8E83C
 extern sub_8FFB0, sub_9035C, sub_9061C, sub_B30B4, sub_B395C, str_MightyDucks, unk_C03C4, unk_C03C6
 extern str_GP, str_W, str_L, str_T, str_SO, str_EN, str_G, str_A
-extern str_Pt, str_fmtpd, cupteam, presidentsteam, unk_DDAC4
+extern str_Pt, str_fmtpd, cupteam, presidentsteam, treeteamnames
 global ShowAwardScreens, DrawAwardsSummary
 ShowAwardScreens:
 push dword 6Ch	; 12849
@@ -163,7 +163,7 @@ shl eax, 2	; 12A06
 add eax, edx	; 12A09
 shl eax, 2	; 12A0B
 add eax, edx	; 12A0E
-mov edx, unk_DDAC4	; 12A10
+mov edx, treeteamnames	; 12A10
 add edx, eax	; 12A15
 mov eax, esp	; 12A17
 call strcpy_	; 12A19
@@ -834,7 +834,7 @@ lea ebx, [byte eax+013h]	; 13268
 lea edx, [byte eax+03h]	; 1326B
 mov ecx, 0D2h	; 1326E
 mov eax, esp	; 13273
-call sub_29C75	; 13275
+call FitPlayerName	; 13275
 mov ebx, esp	; 1327A
 mov edx, ebp	; 1327C
 mov eax, 0B4h	; 1327E
@@ -846,7 +846,7 @@ shl eax, 2	; 13292
 add eax, edx	; 13295
 shl eax, 2	; 13297
 add eax, edx	; 1329A
-mov edx, unk_DDAC4	; 1329C
+mov edx, treeteamnames	; 1329C
 add edx, eax	; 132A1
 mov eax, esp	; 132A3
 call strcpy_	; 132A5

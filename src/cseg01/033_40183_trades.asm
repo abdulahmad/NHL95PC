@@ -16,7 +16,7 @@ extern CopyFile, ReadSchedGame, sub_30A0C, sub_30F12, MessageBox, sub_38B4F, Wri
 extern AskMasterPassword, sub_3B25A, sub_3BB87, sub_3D46D, ReadLeagueInfo, sub_3DAB9, sub_3E390, sub_3FF52
 extern sub_6B3D7, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
 extern sub_B4F8C, unk_3DC28, msg_AllHuman, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, msg_TradeError, msg_Copying
-extern msg_MasterDB, btn_MasterDB, msg_SavedGame, str_star, btn_TradeStats, leagueteams, unk_DDAC4, masterpw
+extern msg_MasterDB, btn_MasterDB, msg_SavedGame, str_star, btn_TradeStats, leagueteams, treeteamnames, masterpw
 extern savleague1, savleague2, unknown_libname_1, unknown_libname_2, word_DDD46, word_DDD48, word_DDD4A
 global AddHumanTeam_msgbox, AddHumanTeam_exit
 global TradePlayers
@@ -150,7 +150,7 @@ mov edx, curleague	; 40396
 lea eax, [byte esp+068h]	; 4039B
 call MakePath	; 4039F
 mov ebx, 1	; 403A4
-mov edx, unk_DDAC4	; 403A9
+mov edx, treeteamnames	; 403A9
 lea eax, [byte esp+068h]	; 403AE
 call sub_3DAB9	; 403B2
 mov ebp, eax	; 403B7
@@ -276,7 +276,7 @@ push eax	; 4058E
 push str_SelTradeTeams	; 4058F
 push byte 10h	; 40594
 mov ecx, leagueteams	; 40596
-mov ebx, unk_DDAC4	; 4059B
+mov ebx, treeteamnames	; 4059B
 mov edx, humancount	; 405A0
 mov eax, curleague	; 405A5
 call sub_38B4F	; 405AA
@@ -688,7 +688,7 @@ mov edx, curleague	; 40B42
 mov eax, esp	; 40B47
 call MakePath	; 40B49
 mov ebx, 1	; 40B4E
-mov edx, unk_DDAC4	; 40B53
+mov edx, treeteamnames	; 40B53
 mov eax, esp	; 40B58
 call sub_3DAB9	; 40B5A
 lea eax, [byte esp+03Ch]	; 40B5F
@@ -696,7 +696,7 @@ push eax	; 40B63
 push str_SelNewHuman	; 40B64
 push byte 2	; 40B69
 mov ecx, leagueteams	; 40B6B
-mov ebx, unk_DDAC4	; 40B70
+mov ebx, treeteamnames	; 40B70
 mov edx, humancount	; 40B75
 mov eax, curleague	; 40B7A
 call sub_38B4F	; 40B7F
@@ -934,7 +934,7 @@ mov edx, curleague	; 40E76
 mov eax, esp	; 40E7B
 call MakePath	; 40E7D
 mov ebx, 1	; 40E82
-mov edx, unk_DDAC4	; 40E87
+mov edx, treeteamnames	; 40E87
 mov eax, esp	; 40E8C
 call sub_3DAB9	; 40E8E
 lea eax, [byte esp+038h]	; 40E93
@@ -942,7 +942,7 @@ push eax	; 40E97
 push str_SelRemoveHuman	; 40E98
 push byte 4	; 40E9D
 mov ecx, leagueteams	; 40E9F
-mov ebx, unk_DDAC4	; 40EA4
+mov ebx, treeteamnames	; 40EA4
 mov edx, humancount	; 40EA9
 mov eax, curleague	; 40EAE
 call sub_38B4F	; 40EB3

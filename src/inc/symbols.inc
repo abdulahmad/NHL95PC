@@ -223,11 +223,11 @@
 ;  27F9C  PlayoffTreeScreen                        cseg01/018_27080_standings_playoffs.asm      2
 ;  29681  PlayoffTreeHitTest                       cseg01/018_27080_standings_playoffs.asm      1
 ;  296BA  ShowPlayoffTree                          cseg01/018_27080_standings_playoffs.asm      1
-;  2970A  sub_2970A                                cseg01/019_2970A_league_schedule.asm         1
-;  29A97  sub_29A97                                cseg01/019_2970A_league_schedule.asm         2
-;  29B07  sub_29B07                                cseg01/019_2970A_league_schedule.asm         1
-;  29C75  sub_29C75                                cseg01/019_2970A_league_schedule.asm         6
-;  29D00  sub_29D00                                cseg01/019_2970A_league_schedule.asm         1
+;  2970A  LoadPlayoffModeTree                      cseg01/019_2970A_league_schedule.asm         1
+;  29A97  OpenStatsSchedule                        cseg01/019_2970A_league_schedule.asm         2
+;  29B07  LoadLeagueTree                           cseg01/019_2970A_league_schedule.asm         1
+;  29C75  FitPlayerName                            cseg01/019_2970A_league_schedule.asm         6
+;  29D00  DrawBevelBox                             cseg01/019_2970A_league_schedule.asm         1
 ;  29F28  sub_29F28                                cseg01/020_29F18_arena_logos.asm             3
 ;  2B944  sub_2B944                                cseg01/021_2B7B7_file_dialogs.asm            1
 ;  2BEEA  sub_2BEEA                                cseg01/021_2B7B7_file_dialogs.asm            1
@@ -2009,7 +2009,7 @@
 ;  C135E  str_Adn32                                dseg02/003_C0A18_data_frontend_03.asm        1
 ;  C1363  str_Adn22                                dseg02/003_C0A18_data_frontend_03.asm        1
 ;  C1368  str_Adn12                                dseg02/003_C0A18_data_frontend_03.asm        1
-;  C136D  unk_C136D                                dseg02/003_C0A18_data_frontend_03.asm        1
+;  C136D  str_Space2                               dseg02/003_C0A18_data_frontend_03.asm        1
 ;  C1370  asc_C1370                                dseg02/003_C0A18_data_frontend_03.asm        1
 ;  C1375  asc_C1375                                dseg02/003_C0A18_data_frontend_03.asm        1
 ;  C1379  asc_C1379                                dseg02/003_C0A18_data_frontend_03.asm        1
@@ -3652,9 +3652,9 @@
 ;  C70EC  asc_C70EC                                dseg02/018_C5679_data_frontend_18.asm        1
 ;  C70F8  asc_C70F8                                dseg02/018_C5679_data_frontend_18.asm        1
 ;  C719C  off_C719C                                dseg02/018_C5679_data_frontend_18.asm        1
-;  C71CC  dword_C71CC                              dseg02/018_C5679_data_frontend_18.asm        7
-;  C71D0  dword_C71D0                              dseg02/018_C5679_data_frontend_18.asm        7
-;  C71D4  dword_C71D4                              dseg02/018_C5679_data_frontend_18.asm        7
+;  C71CC  boxfillcolor                             dseg02/018_C5679_data_frontend_18.asm        7
+;  C71D0  boxlitecolor                             dseg02/018_C5679_data_frontend_18.asm        7
+;  C71D4  boxshadecolor                            dseg02/018_C5679_data_frontend_18.asm        7
 ;  C71D8  dword_C71D8                              dseg02/018_C5679_data_frontend_18.asm        6
 ;  C71DC  dword_C71DC                              dseg02/018_C5679_data_frontend_18.asm        6
 ;  C71E0  dword_C71E0                              dseg02/018_C5679_data_frontend_18.asm        1
@@ -3783,7 +3783,7 @@
 ;  C80D7  leaguedbnames                            dseg02/026_C7F07_data_frontend_26.asm        17
 ;  C80F3  str_PINFO                                dseg02/026_C7F07_data_frontend_26.asm        3
 ;  C80F9  str_PLAYER                               dseg02/026_C7F07_data_frontend_26.asm        2
-;  C8100  asc_C8100                                dseg02/026_C7F07_data_frontend_26.asm        1
+;  C8100  str_LSSCHED                              dseg02/026_C7F07_data_frontend_26.asm        1
 ;  C810C  asc_C810C                                dseg02/026_C7F07_data_frontend_26.asm        1
 ;  C8111  str_space                                dseg02/026_C7F07_data_frontend_26.asm        4
 ;  C8113  str_star                                 dseg02/026_C7F07_data_frontend_26.asm        3
@@ -5795,8 +5795,7 @@
 ;  DD7CE  dword_DD7CE                              dseg02/080_DC834_data_frontend_80.asm        2
 ;  DD7D0  word_DD7D0                               dseg02/080_DC834_data_frontend_80.asm        1
 ;  DDAC0  humancount                               dseg02/080_DC834_data_frontend_80.asm        4
-;  DDAC4  unk_DDAC4                                dseg02/080_DC834_data_frontend_80.asm        9
-;  DDCE6  unk_DDCE6                                dseg02/080_DC834_data_frontend_80.asm        2
+;  DDAC4  treeteamnames                            dseg02/080_DC834_data_frontend_80.asm        9
 ;  DDCFB  unk_DDCFB                                dseg02/080_DC834_data_frontend_80.asm        1
 ;  DDD10  savedname                                dseg02/080_DC834_data_frontend_80.asm        5
 ;  DDD1D  masterpw                                 dseg02/080_DC834_data_frontend_80.asm        5

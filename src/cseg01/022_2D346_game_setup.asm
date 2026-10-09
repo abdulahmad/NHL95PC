@@ -19,7 +19,7 @@ extern hmtmstruct, dword_DF61A
 extern dword_DF626, dword_DF62A, dword_DF636, fputchar, jctime, memcpy_
 extern crestnames, off_C719C, leaguedbnames, off_CD304, rand_, sprintf_
 extern strcat_, strcpy_, FadePalette, MakePath, FileOpenRead, FileOpenRW, FileClose, ReadKeyRec
-extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, SetTextColors, PrintShadowText, sub_1BAF3, sub_29C75, sub_33E6A
+extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, SetTextColors, PrintShadowText, sub_1BAF3, FitPlayerName, sub_33E6A
 extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
 extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
@@ -900,7 +900,7 @@ mov ecx, 0C8h	; 2E0EC
 lea ebx, [dword esp+06AFh]	; 2E0F1
 xor edx, edx	; 2E0F8
 lea eax, [dword esp+05D4h]	; 2E0FA
-call sub_29C75	; 2E101
+call FitPlayerName	; 2E101
 lea ebx, [dword esp+05D4h]	; 2E106
 mov edx, edi	; 2E10D
 mov eax, 0B4h	; 2E10F
@@ -1213,7 +1213,7 @@ mov ecx, 0C8h	; 2E592
 lea ebx, [dword esp+06AFh]	; 2E597
 xor edx, edx	; 2E59E
 lea eax, [dword esp+05D4h]	; 2E5A0
-call sub_29C75	; 2E5A7
+call FitPlayerName	; 2E5A7
 xor eax, eax	; 2E5AC
 mov al, byte [esi]	; 2E5AE
 mov eax, dword [dword esp+eax*4+0758h]	; 2E5B0
@@ -1354,7 +1354,7 @@ mov ecx, 0C8h	; 2E785
 lea ebx, [dword esp+06AFh]	; 2E78A
 xor edx, edx	; 2E791
 lea eax, [dword esp+0734h]	; 2E793
-call sub_29C75	; 2E79A
+call FitPlayerName	; 2E79A
 lea eax, [dword esp+0734h]	; 2E79F
 push eax	; 2E7A6
 push asc_C1675	; 2E7A7
@@ -1392,7 +1392,7 @@ mov ecx, 0C8h	; 2E817
 lea ebx, [dword esp+06AFh]	; 2E81C
 xor edx, edx	; 2E823
 lea eax, [dword esp+0734h]	; 2E825
-call sub_29C75	; 2E82C
+call FitPlayerName	; 2E82C
 mov edx, unk_C1679	; 2E831
 lea eax, [dword esp+05D4h]	; 2E836
 call strcat_	; 2E83D

@@ -14,10 +14,10 @@ extern divx, divy, dword_D2C6B, dword_D8B68, dword_D8B74, playofftree, statspals
 extern statspal, fputchar, j___close_, jctime, lseek_, memcpy_, divisionnames, statsbgnames
 extern statsteamdbs, off_CF6A3, open_, qsort_, read_, sprintf_, strcat_, MakePath
 extern SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff
-extern DeskSetExit3b, MakeStatsTitle, stand_tmpl2, sub_2970A, sub_29A97, sub_29B07, LoadScheduleDB, sub_8E83C
+extern DeskSetExit3b, MakeStatsTitle, stand_tmpl2, LoadPlayoffModeTree, OpenStatsSchedule, LoadLeagueTree, LoadScheduleDB, sub_8E83C
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_91044, sub_91370, sub_913B4, sub_B30B4, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, stand_tmpl1, CmpConfStandings, str_GP7, str_W4, str_L6, str_T4
-extern str_D3, str_TwoSpaces, statsleague, unk_DDAC4, treecolx
+extern str_D3, str_TwoSpaces, statsleague, treeteamnames, treecolx
 global StandingsScreen, HighlightTreeSlot, MoveTreeHighlight, CountSeriesWins, PlayoffTreeScreen, PlayoffTreeHitTest, ShowPlayoffTree
 StandingsScreen:
 push dword 468h	; 27080
@@ -961,7 +961,7 @@ call LoadScheduleDB	; 27C5C
 jmp short .2	; 27C61
 .1:
 lea eax, [byte ebp-08h]	; 27C63
-call sub_29A97	; 27C66
+call OpenStatsSchedule	; 27C66
 .2:
 add dword [byte ebp-08h], byte 2	; 27C6B
 mov eax, dword [byte ebp-08h]	; 27C6F
@@ -1753,7 +1753,7 @@ mov eax, dword [byte ebp-0Ah]	; 2862B
 sar eax, 10h	; 2862E
 shl eax, 2	; 28631
 imul edx, dword [dword eax+playofftree], byte 15h	; 28634
-mov eax, unk_DDAC4	; 2863B
+mov eax, treeteamnames	; 2863B
 add edx, eax	; 28640
 lea eax, [dword ebp-0F0h]	; 28642
 call strcat_	; 28648
@@ -1942,7 +1942,7 @@ mov eax, dword [byte ebp-0Ah]	; 288AC
 sar eax, 10h	; 288AF
 shl eax, 2	; 288B2
 imul edx, dword [dword eax+playofftree], byte 15h	; 288B5
-mov eax, unk_DDAC4	; 288BC
+mov eax, treeteamnames	; 288BC
 add edx, eax	; 288C1
 lea eax, [dword ebp-0F0h]	; 288C3
 call strcat_	; 288C9
@@ -2058,7 +2058,7 @@ mov eax, dword [byte ebp-0Ah]	; 28A5C
 sar eax, 10h	; 28A5F
 shl eax, 2	; 28A62
 imul eax, dword [dword eax+playofftree], byte 15h	; 28A65
-mov edx, unk_DDAC4	; 28A6C
+mov edx, treeteamnames	; 28A6C
 add edx, eax	; 28A71
 lea eax, [dword ebp-0F0h]	; 28A73
 call strcat_	; 28A79
@@ -2137,7 +2137,7 @@ mov eax, dword [byte ebp-0Ah]	; 28B84
 sar eax, 10h	; 28B87
 shl eax, 2	; 28B8A
 imul eax, dword [dword eax+playofftree], byte 15h	; 28B8D
-mov edx, unk_DDAC4	; 28B94
+mov edx, treeteamnames	; 28B94
 add edx, eax	; 28B99
 lea eax, [dword ebp-0F0h]	; 28B9B
 call strcat_	; 28BA1
@@ -2235,7 +2235,7 @@ mov eax, dword [byte ebp-0Ah]	; 28CF9
 sar eax, 10h	; 28CFC
 shl eax, 2	; 28CFF
 imul edx, dword [dword eax+playofftree], byte 15h	; 28D02
-mov eax, unk_DDAC4	; 28D09
+mov eax, treeteamnames	; 28D09
 add edx, eax	; 28D0E
 lea eax, [dword ebp-0F0h]	; 28D10
 call strcat_	; 28D16
@@ -2332,7 +2332,7 @@ mov eax, dword [byte ebp-0Ah]	; 28E6D
 sar eax, 10h	; 28E70
 shl eax, 2	; 28E73
 imul eax, dword [dword eax+playofftree], byte 15h	; 28E76
-mov edx, unk_DDAC4	; 28E7D
+mov edx, treeteamnames	; 28E7D
 add edx, eax	; 28E82
 lea eax, [dword ebp-0F0h]	; 28E84
 call strcat_	; 28E8A
@@ -2426,7 +2426,7 @@ mov eax, dword [byte ebp-0Ah]	; 28FC6
 sar eax, 10h	; 28FC9
 shl eax, 2	; 28FCC
 imul edx, dword [dword eax+playofftree], byte 15h	; 28FCF
-mov eax, unk_DDAC4	; 28FD6
+mov eax, treeteamnames	; 28FD6
 add edx, eax	; 28FDB
 lea eax, [dword ebp-0F0h]	; 28FDD
 call strcat_	; 28FE3
@@ -2505,7 +2505,7 @@ mov eax, dword [byte ebp-0Ah]	; 290EE
 sar eax, 10h	; 290F1
 shl eax, 2	; 290F4
 imul eax, dword [dword eax+playofftree], byte 15h	; 290F7
-mov edx, unk_DDAC4	; 290FE
+mov edx, treeteamnames	; 290FE
 add edx, eax	; 29103
 lea eax, [dword ebp-0F0h]	; 29105
 call strcat_	; 2910B
@@ -2663,7 +2663,7 @@ mov eax, dword [byte ebp-0Ah]	; 292FE
 sar eax, 10h	; 29301
 shl eax, 2	; 29304
 imul eax, dword [dword eax+playofftree], byte 15h	; 29307
-mov edx, unk_DDAC4	; 2930E
+mov edx, treeteamnames	; 2930E
 add edx, eax	; 29313
 lea eax, [dword ebp-0F0h]	; 29315
 call strcat_	; 2931B
@@ -2811,7 +2811,7 @@ mov eax, dword [byte ebp-0Ah]	; 29503
 sar eax, 10h	; 29506
 shl eax, 2	; 29509
 imul edx, dword [dword eax+playofftree], byte 15h	; 2950C
-mov eax, unk_DDAC4	; 29513
+mov eax, treeteamnames	; 29513
 add edx, eax	; 29518
 lea eax, [dword ebp-0F0h]	; 2951A
 call strcat_	; 29520
@@ -2958,12 +2958,12 @@ cmp dword [statsfromleague], byte 0	; 296D7
 jne short .1	; 296DE
 mov edx, dword [byte ebp-08h]	; 296E0
 mov eax, dword [byte ebp-0Ch]	; 296E3
-call sub_2970A	; 296E6
+call LoadPlayoffModeTree	; 296E6
 jmp short .2	; 296EB
 .1:
 mov edx, dword [byte ebp-08h]	; 296ED
 mov eax, dword [byte ebp-0Ch]	; 296F0
-call sub_29B07	; 296F3
+call LoadLeagueTree	; 296F3
 .2:
 mov dword [byte ebp-04h], 0	; 296F8
 mov eax, dword [byte ebp-04h]	; 296FF

@@ -249,12 +249,12 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00027F9C,sub_27F9C,PlayoffTreeScreen,PC-new,,,,high,"playoff tree: ""Playoffs have not been seeded yet"", rst1 / rst2, scuparrw, Western / Eastern Conference, aup / midl / adn arrows",standings_playoffs,manual-trace
 00029681,sub_29681,PlayoffTreeHitTest,PC-new,,,,low,"stub, always returns 0 (ret 4); called by RunTeamPickMenu",standings_playoffs,manual-trace
 000296BA,sub_296BA,ShowPlayoffTree,PC-new,,,,medium,statsfromleague ? sub_29B07 : sub_2970A (both end in PlayoffTreeScreen); called by the *StandingsScreen callbacks,standings_playoffs,manual-trace
-0002970A,sub_2970A,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_schedule,unmatched
-0002991C,sub_2991C,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_schedule,unmatched
-00029A97,sub_29A97,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_schedule,unmatched
-00029B07,sub_29B07,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_schedule,unmatched
-00029C75,sub_29C75,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_schedule,unmatched
-00029D00,sub_29D00,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_schedule,unmatched
+0002970A,sub_2970A,LoadPlayoffModeTree,PC-new,,,,medium,"statsfromleague == 0 path of ShowPlayoffTree: reads team names into treeteamnames (sub_3DAB9 on leaguedbnames[4]) or LSSCHED.DB, fills playofftree from the playoff games (ReadSchedGame 444h.., final 4A6h -> pochampion), then PlayoffTreeScreen",league_schedule,manual-trace
+0002991C,sub_2991C,TreeSeriesWinner,PC-new,,,,medium,"same code as SeriesWinner (season_playoffs) with an extra is-series flag: walks 6-byte game entries of a series; returns the team that reached len/2+1 wins, -1 if a game is unplayed",league_schedule,manual-trace
+00029A97,sub_29A97,OpenStatsSchedule,PC-new,,,,medium,opens the league schedule DB (leaguedbnames[6]) or LSSCHED.DB as a shape-style file (sub_8E8A0) into *out,league_schedule,manual-trace
+00029B07,sub_29B07,LoadLeagueTree,PC-new,,,,medium,"statsfromleague path: copies teamcitynames into treeteamnames, reads the playoff pairs from the schedule into playofftree, resolves winners with SeriesWinner, then PlayoffTreeScreen",league_schedule,manual-trace
+00029C75,sub_29C75,FitPlayerName,PC-new,,,,high,"dest = ""First Last"", falls back to ""F. Last"", then trims chars until the text width fits",league_schedule,manual-trace
+00029D00,sub_29D00,DrawBevelBox,PC-new,,,,medium,"fills a rect with boxfillcolor and draws lit / shaded edges (boxlitecolor / boxshadecolor), double edge when the stack flag is set",league_schedule,manual-trace
 00029F28,sub_29F28,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),arena_logos,unmatched
 0002ABDF,sub_2ABDF,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),arena_logos,unmatched
 0002B7C3,sub_2B7C3,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),file_dialogs,unmatched

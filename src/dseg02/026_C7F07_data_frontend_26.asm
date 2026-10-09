@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_C7F07 progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450, unk_C7E86, unk_C7E9B, unk_C7EB9, unk_C7EE2
-global str_PINFO, str_PLAYER, asc_C8100, asc_C810C, str_extDB, asc_C811E, asc_C812D, asc_C8131
+global str_PINFO, str_PLAYER, str_LSSCHED, asc_C810C, str_extDB, asc_C811E, asc_C812D, asc_C8131
 global str_PPV, str_KMS, asc_C8145, str_VFN, str_extBIN, str_extxx, asc_C8158, str_extLP
 global str_extID, str_space, str_dot, str_floppydrv, dword_C7F0B, msg_SavedGame_arg, off_C800C, off_C8055
 global leaguedbnames, unk_C7F07
@@ -104,7 +104,7 @@ str_PINFO:
 db 050h,049h,04Eh,046h,04Fh,00h
 str_PLAYER:
 db 050h,04Ch,041h,059h,045h,052h,00h
-asc_C8100:
+str_LSSCHED:
 db 04Ch,053h,053h,043h,048h,045h,044h,00h,050h,047h,053h,00h
 asc_C810C:
 db 047h,041h,04Dh,045h,00h

@@ -7,7 +7,7 @@ extern str_Pause, str_Menubuff3, str_ReturningToSportsCentral, str_ReturningOutO
 extern hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, byte_CCCA0, musicon, byte_DD774
 extern byte_DD775, byte_DD788, byte_DD789, byte_ED830, byte_ED9E8, joysampling, escrequest, gameresult
 extern gamemode, gameopts, ctl1team, ctl2team, teamconf, dword_C5840, hlplayedmask, dword_C66A4
-extern dword_C66AC, dword_C66D0, dword_C66D4, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC
+extern dword_C66AC, dword_C66D0, dword_C66D4, boxfillcolor, boxlitecolor, boxshadecolor, dword_C71D8, dword_C71DC
 extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, bailout_vec, musicslot
 extern dword_D8C84, dword_DC230, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
 extern dword_EA0DC, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
@@ -39,17 +39,17 @@ push esi	; 18D8C
 push edi	; 18D8D
 push ebp	; 18D8E
 sub esp, byte 14h	; 18D8F
-mov eax, dword [dword_C71CC]	; 18D92
+mov eax, dword [boxfillcolor]	; 18D92
 mov dword [byte esp+010h], eax	; 18D97
-mov eax, dword [dword_C71D0]	; 18D9B
+mov eax, dword [boxlitecolor]	; 18D9B
 mov dword [byte esp+0Ch], eax	; 18DA0
-mov ebp, dword [dword_C71D4]	; 18DA4
+mov ebp, dword [boxshadecolor]	; 18DA4
 mov edi, dword [dword_C71D8]	; 18DAA
 mov esi, dword [dword_C71DC]	; 18DB0
-mov dword [dword_C71CC], 41h	; 18DB6
+mov dword [boxfillcolor], 41h	; 18DB6
 mov ebx, 40h	; 18DC0
-mov dword [dword_C71D0], ebx	; 18DC5
-mov dword [dword_C71D4], 42h	; 18DCB
+mov dword [boxlitecolor], ebx	; 18DC5
+mov dword [boxshadecolor], 42h	; 18DCB
 mov dword [dword_C71D8], ebx	; 18DD5
 xor edx, edx	; 18DDB
 mov dword [dword_C71DC], edx	; 18DDD
@@ -71,10 +71,10 @@ mov eax, esp	; 18E0C
 call WriteScreenTextFile	; 18E0E
 .1:
 mov eax, dword [byte esp+010h]	; 18E13
-mov dword [dword_C71CC], eax	; 18E17
+mov dword [boxfillcolor], eax	; 18E17
 mov eax, dword [byte esp+0Ch]	; 18E1C
-mov dword [dword_C71D0], eax	; 18E20
-mov dword [dword_C71D4], ebp	; 18E25
+mov dword [boxlitecolor], eax	; 18E20
+mov dword [boxshadecolor], ebp	; 18E25
 mov dword [dword_C71D8], edi	; 18E2B
 mov dword [dword_C71DC], esi	; 18E31
 xor eax, eax	; 18E37

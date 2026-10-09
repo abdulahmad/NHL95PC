@@ -43,7 +43,7 @@ global dword_C66D4, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD, statspl
 global westconfteams, eastconfteams, dword_C6D26, dword_C6DBA, dword_C6E20, treerowy, divx, divy
 global dword_C6F78, dword_C6F88, dword_C6F8C, dword_C6F90, dword_C6F94, dword_C7008, dword_C700C, dword_C7010
 global dword_C7014, dword_C7018, dword_C701C, dword_C7020, dword_C7024, dword_C7028, dword_C702C, dword_C7030
-global dword_C7034, dword_C70E3, dword_C70E7, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC
+global dword_C7034, dword_C70E3, dword_C70E7, boxfillcolor, boxlitecolor, boxshadecolor, dword_C71D8, dword_C71DC
 global dword_C71E0, dword_C71E4, dword_C71E8, dword_C71EC, dword_C71F0, dword_C71F4, dword_C71FC, dword_C7208
 global dword_C7210, dword_C7219, songdata, dword_C729A, dword_C729C, dword_C729E, dword_C72A0, dword_C73D0
 global rinkbm, dword_C73D8, dword_C7440, dword_C7444, dword_C7448, off_C56B5, perioddigits, off_C57C8
@@ -1413,11 +1413,11 @@ dd unk_C7185
 dd unk_C7136
 dd unk_C7142
 dd unk_C714E
-dword_C71CC:
+boxfillcolor:
 db 02Ah,00h,00h,00h
-dword_C71D0:
+boxlitecolor:
 db 03Fh,00h,00h,00h
-dword_C71D4:
+boxshadecolor:
 db 017h,00h,00h,00h
 dword_C71D8:
 db 03Fh,00h,00h,00h

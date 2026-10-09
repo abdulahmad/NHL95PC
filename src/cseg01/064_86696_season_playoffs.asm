@@ -13,8 +13,8 @@ extern musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED859, byte_ED85A, b
 extern DeskHomeLines, DeskVisitorLines, postate
 extern lgstate, gameresult, gamemode, gameopts, ctl1team
 extern ctl2team, ctl1side, ctl2side, teamdivflags, teamconf, confteams, dword_C65AC, teamstatscb
-extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dword_C6D26, dword_C6DBA, dword_C71CC, dword_C71D0
-extern dword_C71D4, dword_C71D8, dword_C71DC, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
+extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dword_C6D26, dword_C6DBA, boxfillcolor, boxlitecolor
+extern boxshadecolor, dword_C71D8, dword_C71DC, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
 extern dword_CE5C3, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
 extern keydb_size, musichandle, dword_D2884, dword_D288C, seriesgameno, dword_D2B70, dword_D2BEC, musicslot
 extern dword_D2C6B, dword_D8B68, dword_D8B74, schedgameidx, pointerspr, playofftree, playofftree_p1, pochampion
@@ -35,7 +35,7 @@ extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, FatalError, MouseSetPos, sub_
 extern sub_B30B4, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4BC4, EasnTeamStatsScreen, EasnSkaterStatsScreen
 extern EasnGoalieStatsScreen, EasnStandingsMenu, unk_86616, str_E1, str_E2, str_F1, str_F2, unk_C3A66
 extern str_D, unk_C3AF8, exhstate, btn_LeagueExists, unk_CEE4F, unk_CEEAF, unk_CF90F, unk_D2864
-extern btn_POHumanOut, hmteamrec, unk_DDAC4, unk_DDCE6, unk_DDCFB, unk_ED7BC, unknown_libname_1
+extern btn_POHumanOut, hmteamrec, treeteamnames, unk_DDCFB, unk_ED7BC, unknown_libname_1
 extern word_C6D24, treecolx, scrpitch, VisTeam, hmscore, awscore
 global POSeedRound2_x30, POSeedRound2_x
 global POSeedConfFinals_pair, POSeedConfFinals_x
@@ -60,20 +60,20 @@ movsd	; 866B8
 movsd	; 866B9
 movsd	; 866BA
 movsb	; 866BB
-mov eax, dword [dword_C71CC]	; 866BC
+mov eax, dword [boxfillcolor]	; 866BC
 mov dword [dword esp+0ACh], eax	; 866C1
-mov eax, dword [dword_C71D0]	; 866C8
+mov eax, dword [boxlitecolor]	; 866C8
 mov dword [dword esp+0B0h], eax	; 866CD
-mov eax, dword [dword_C71D4]	; 866D4
+mov eax, dword [boxshadecolor]	; 866D4
 mov dword [dword esp+0B8h], eax	; 866D9
 mov eax, dword [dword_C71D8]	; 866E0
 mov dword [dword esp+0BCh], eax	; 866E5
 mov eax, dword [dword_C71DC]	; 866EC
 mov dword [dword esp+0B4h], eax	; 866F1
-mov dword [dword_C71CC], 41h	; 866F8
+mov dword [boxfillcolor], 41h	; 866F8
 mov ebx, 40h	; 86702
-mov dword [dword_C71D0], ebx	; 86707
-mov dword [dword_C71D4], 42h	; 8670D
+mov dword [boxlitecolor], ebx	; 86707
+mov dword [boxshadecolor], 42h	; 8670D
 mov dword [dword_C71D8], ebx	; 86717
 mov dword [dword_C71DC], 43h	; 8671D
 mov eax, exhstate	; 86727
@@ -560,11 +560,11 @@ add esp, byte 4	; 86E32
 mov eax, exhstate	; 86E35
 call LoadModeState	; 86E3A
 mov eax, dword [dword esp+0ACh]	; 86E3F
-mov dword [dword_C71CC], eax	; 86E46
+mov dword [boxfillcolor], eax	; 86E46
 mov eax, dword [dword esp+0B0h]	; 86E4B
-mov dword [dword_C71D0], eax	; 86E52
+mov dword [boxlitecolor], eax	; 86E52
 mov eax, dword [dword esp+0B8h]	; 86E57
-mov dword [dword_C71D4], eax	; 86E5E
+mov dword [boxshadecolor], eax	; 86E5E
 mov eax, dword [dword esp+0BCh]	; 86E63
 mov dword [dword_C71D8], eax	; 86E6A
 mov eax, dword [dword esp+0B4h]	; 86E6F
@@ -3952,14 +3952,14 @@ shl edi, 2	; 895E4
 add edi, esi	; 895E7
 shl edi, 2	; 895E9
 add edi, esi	; 895EC
-mov eax, unk_DDAC4	; 895EE
+mov eax, treeteamnames	; 895EE
 add eax, edi	; 895F3
 call strcpy_	; 895F5
 inc esi	; 895FA
 cmp esi, byte 1Ah	; 895FB
 jl short PlayoffModeLoop.15	; 895FE
 mov edx, unk_C3A66	; 89600
-mov eax, unk_DDCE6	; 89605
+mov eax, treeteamnames+222h	; 89605
 call strcpy_	; 8960A
 mov ecx, dword [dword_C65AC]	; 8960F
 test ecx, ecx	; 89615
@@ -5423,7 +5423,7 @@ shl eax, 2	; 8AA67
 add eax, ebp	; 8AA6A
 shl eax, 2	; 8AA6C
 add eax, ebp	; 8AA6F
-mov edx, unk_DDAC4	; 8AA71
+mov edx, treeteamnames	; 8AA71
 add edx, eax	; 8AA76
 lea eax, [dword esp+0B8h]	; 8AA78
 call strcat_	; 8AA7F
@@ -5548,7 +5548,7 @@ shl eax, 2	; 8AC5F
 add eax, ebp	; 8AC62
 shl eax, 2	; 8AC64
 add eax, ebp	; 8AC67
-mov edx, unk_DDAC4	; 8AC69
+mov edx, treeteamnames	; 8AC69
 add edx, eax	; 8AC6E
 lea eax, [dword esp+0B8h]	; 8AC70
 call strcat_	; 8AC77
@@ -5638,7 +5638,7 @@ shl eax, 2	; 8ADD7
 add eax, edx	; 8ADDA
 shl eax, 2	; 8ADDC
 add eax, edx	; 8ADDF
-mov edx, unk_DDAC4	; 8ADE1
+mov edx, treeteamnames	; 8ADE1
 add edx, eax	; 8ADE6
 lea eax, [dword esp+0B8h]	; 8ADE8
 call strcat_	; 8ADEF
@@ -5703,7 +5703,7 @@ shl eax, 2	; 8AEE1
 add eax, edx	; 8AEE4
 shl eax, 2	; 8AEE6
 add eax, edx	; 8AEE9
-mov edx, unk_DDAC4	; 8AEEB
+mov edx, treeteamnames	; 8AEEB
 add edx, eax	; 8AEF0
 lea eax, [dword esp+0B8h]	; 8AEF2
 call strcat_	; 8AEF9
@@ -5787,7 +5787,7 @@ shl eax, 2	; 8B035
 add eax, edx	; 8B038
 shl eax, 2	; 8B03A
 add eax, edx	; 8B03D
-mov edx, unk_DDAC4	; 8B03F
+mov edx, treeteamnames	; 8B03F
 add edx, eax	; 8B044
 lea eax, [dword esp+0B8h]	; 8B046
 call strcat_	; 8B04D
@@ -5871,7 +5871,7 @@ shl eax, 2	; 8B187
 add eax, edx	; 8B18A
 shl eax, 2	; 8B18C
 add eax, edx	; 8B18F
-mov edx, unk_DDAC4	; 8B191
+mov edx, treeteamnames	; 8B191
 add edx, eax	; 8B196
 lea eax, [dword esp+0B8h]	; 8B198
 call strcat_	; 8B19F
@@ -5946,7 +5946,7 @@ shl eax, 2	; 8B2C5
 add eax, edx	; 8B2C8
 shl eax, 2	; 8B2CA
 add eax, edx	; 8B2CD
-mov edx, unk_DDAC4	; 8B2CF
+mov edx, treeteamnames	; 8B2CF
 add edx, eax	; 8B2D4
 lea eax, [dword esp+0B8h]	; 8B2D6
 call strcat_	; 8B2DD
@@ -6011,7 +6011,7 @@ shl eax, 2	; 8B3CF
 add eax, edx	; 8B3D2
 shl eax, 2	; 8B3D4
 add eax, edx	; 8B3D7
-mov edx, unk_DDAC4	; 8B3D9
+mov edx, treeteamnames	; 8B3D9
 add edx, eax	; 8B3DE
 lea eax, [dword esp+0B8h]	; 8B3E0
 call strcat_	; 8B3E7
@@ -6127,7 +6127,7 @@ shl eax, 2	; 8B591
 add eax, ebp	; 8B594
 shl eax, 2	; 8B596
 add eax, ebp	; 8B599
-mov edx, unk_DDAC4	; 8B59B
+mov edx, treeteamnames	; 8B59B
 add edx, eax	; 8B5A0
 lea eax, [dword esp+0B8h]	; 8B5A2
 call strcat_	; 8B5A9
@@ -6238,7 +6238,7 @@ shl eax, 2	; 8B734
 add eax, ebp	; 8B737
 shl eax, 2	; 8B739
 add eax, ebp	; 8B73C
-mov edx, unk_DDAC4	; 8B73E
+mov edx, treeteamnames	; 8B73E
 add edx, eax	; 8B743
 lea eax, [dword esp+0B8h]	; 8B745
 call strcat_	; 8B74C

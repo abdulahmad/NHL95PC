@@ -22,7 +22,7 @@ extern FatalError, sub_B2DCA, sub_B392C, sub_B3CC8, sub_B4B88, unk_C1914, unk_C1
 extern unk_C1930, unk_C7569, unk_C7609, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, unk_C792B, unk_C79D0
 extern unk_C7B12, unk_C7C61, unk_C7CF1, unk_C7D9D, unk_C7E3E, btn_MasterDB, unk_C7F77, unk_C7F8E
 extern unk_C7FB9, unk_C7FD6, msg_SavedGame, unk_C8A27, unk_C8AE0, unk_C8B00, unk_C8B40, unk_CE64F
-extern leagueteams, unk_DDAC4, masterpw, unknown_libname_1, word_DD7D0
+extern leagueteams, treeteamnames, masterpw, unknown_libname_1, word_DD7D0
 global loc_3AA73, loc_3AAA7, loc_3AAD9, loc_3AB0B, loc_3AB44, loc_3AB78, loc_3AB7A, loc_3AB95
 global loc_3ABAB, loc_3ABC6, loc_3ABFB, loc_3AC0A, loc_3AC4E, loc_3AC6E, loc_3AC8E, loc_3ACCB
 global loc_3ACCC, loc_3ACD9, loc_3ACE0, loc_3AD27, loc_3AD47, loc_3AD67, loc_3ADA4, loc_3ADA5
@@ -3006,7 +3006,7 @@ mov edx, curleague	; 3D25E
 mov eax, esp	; 3D263
 call MakePath	; 3D265
 mov ebx, 1	; 3D26A
-mov edx, unk_DDAC4	; 3D26F
+mov edx, treeteamnames	; 3D26F
 mov eax, esp	; 3D274
 call sub_3DAB9	; 3D276
 test eax, eax	; 3D27B
@@ -3023,7 +3023,7 @@ push eax	; 3D2A2
 push asc_C78BF	; 3D2A3
 push byte 8	; 3D2A8
 mov ecx, leagueteams	; 3D2AA
-mov ebx, unk_DDAC4	; 3D2AF
+mov ebx, treeteamnames	; 3D2AF
 mov edx, humancount	; 3D2B4
 mov eax, curleague	; 3D2B9
 call sub_38B4F	; 3D2BE

@@ -21,7 +21,7 @@ global dword_DD79C, dword_DD7A0, dword_DD7A4, leaguemaster, leaguesaved, dword_D
 global dword_DDD2C, dword_DDD30, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68, dword_DDD6C
 global dword_DDD70, dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C
 global dword_DE260, dword_DE264, dword_DE265, dword_DEB6C, dword_DEB74, statsplayer
-global unk_DC890, unk_DC998, unk_DCA98, printfbuf, leagueteams, unk_DDAC4, unk_DDCE6, unk_DDCFB
+global unk_DC890, unk_DC998, unk_DCA98, printfbuf, leagueteams, treeteamnames, unk_DDCFB
 global masterpw, savleague1, savleague2, unk_DDFF4, scrolly, scrollx, bgscrollx, bgscrolly8
 global word_DD7D0, word_DDD46, word_DDD48, word_DDD4A
 statsplayer:
@@ -275,9 +275,8 @@ word_DD7D0:
 resb 752
 humancount:
 resb 4
-unk_DDAC4:
+treeteamnames:
 resb 546
-unk_DDCE6:
 resb 21
 unk_DDCFB:
 resb 21
