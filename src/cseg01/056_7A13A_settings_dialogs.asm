@@ -9,7 +9,7 @@ extern str_BKGD4, str_PlayerImg, str_Dbox5, str_OneS, str_TwoS, str_TheMouse, st
 extern str_TheKeyboard, str_Pointer18, pad1dev, musicon, hmtmflags, awtmflags, byte_DF861
 extern byte_DFF3A, ctlavailmask, byte_ED904, byte_ED93F, byte_ED940, byte_ED941, byte_ED942
 extern byte_ED943, samesideflag, postate, gamemode, gameopts, ctl1team, ctl2team, ctl1dev
-extern ctl2dev, ctl1side, ctl2side, dword_C541F, songdata, sflags3, cont2team, HomeTeam
+extern ctl2dev, ctl1side, ctl2side, sounddev, songdata, sflags3, cont2team, HomeTeam
 extern leaguesetrects, modesetrects
 extern exhsetrects, ctldlgrects
 extern ctldlgalt, settingsfile, musichandle, musicslot
@@ -349,7 +349,7 @@ push dword 0FFh	; 7A4BD
 push dword 0F8h	; 7A4C2
 call sub_8E9C0	; 7A4C7
 add esp, byte 8	; 7A4CC
-cmp dword [dword_C541F], byte 10h	; 7A4CF
+cmp dword [sounddev], byte 10h	; 7A4CF
 jne short .3	; 7A4D6
 push dword 0AAh	; 7A4D8
 push byte 68h	; 7A4DD
@@ -449,7 +449,7 @@ push dword 0FFh	; 7A60F
 push dword 0F8h	; 7A614
 call sub_8E9C0	; 7A619
 add esp, byte 8	; 7A61E
-cmp dword [dword_C541F], byte 10h	; 7A621
+cmp dword [sounddev], byte 10h	; 7A621
 jne short .4	; 7A628
 push dword 0AAh	; 7A62A
 push byte 68h	; 7A62F
@@ -564,7 +564,7 @@ push dword 0F8h	; 7A785
 .6:
 call sub_8E9C0	; 7A78A
 add esp, byte 8	; 7A78F
-cmp dword [dword_C541F], byte 10h	; 7A792
+cmp dword [sounddev], byte 10h	; 7A792
 jne short .7	; 7A799
 push dword 0AAh	; 7A79B
 push byte 68h	; 7A7A0
@@ -669,7 +669,7 @@ shl eax, 1Ah	; 7A8E6
 shr eax, 1Fh	; 7A8E9
 shl eax, 5	; 7A8EC
 or edx, eax	; 7A8EF
-test byte [dword_C541F], 10h	; 7A8F1
+test byte [sounddev], 10h	; 7A8F1
 je short .1	; 7A8F8
 xor eax, eax	; 7A8FA
 jmp short .2	; 7A8FC
@@ -680,7 +680,7 @@ shr eax, 1Fh	; 7A906
 shl eax, 6	; 7A909
 .2:
 or edx, eax	; 7A90C
-test byte [dword_C541F], 10h	; 7A90E
+test byte [sounddev], 10h	; 7A90E
 je short .3	; 7A915
 xor eax, eax	; 7A917
 jmp short .4	; 7A919
@@ -691,7 +691,7 @@ shr eax, 1Fh	; 7A923
 shl eax, 7	; 7A926
 .4:
 or edx, eax	; 7A929
-test byte [dword_C541F], 22h	; 7A92B
+test byte [sounddev], 22h	; 7A92B
 je short .5	; 7A932
 mov eax, dword [gameopts]	; 7A934
 shl eax, 17h	; 7A939
@@ -795,7 +795,7 @@ cmp edx, byte 0Ah	; 7AA3E
 jb near .13	; 7AA41
 cmp edx, byte 0Bh	; 7AA47
 jbe short .11	; 7AA4A
-cmp dword [dword_C541F], byte 10h	; 7AA4C
+cmp dword [sounddev], byte 10h	; 7AA4C
 .6:
 jne short .13	; 7AA53
 jmp short .11	; 7AA55
@@ -1387,7 +1387,7 @@ and eax, byte 1	; 7B0FD
 and byte [gameopts], 0DFh	; 7B100
 shl eax, 5	; 7B107
 or dword [gameopts], eax	; 7B10A
-cmp dword [dword_C541F], byte 10h	; 7B110
+cmp dword [sounddev], byte 10h	; 7B110
 je short .13	; 7B117
 mov dh, byte [setbits]	; 7B119
 test dh, 40h	; 7B11F
@@ -1403,7 +1403,7 @@ and byte [gameopts], 7Fh	; 7B141
 shl eax, 7	; 7B148
 or dword [gameopts], eax	; 7B14B
 .13:
-test byte [dword_C541F], 22h	; 7B151
+test byte [sounddev], 22h	; 7B151
 je short .14	; 7B158
 test byte [setbits+1], 1	; 7B15A
 setne al	; 7B161
@@ -1753,7 +1753,7 @@ push dword 0FFh	; 7B578
 push dword 0F8h	; 7B57D
 call sub_8E9C0	; 7B582
 add esp, byte 8	; 7B587
-cmp dword [dword_C541F], byte 10h	; 7B58A
+cmp dword [sounddev], byte 10h	; 7B58A
 jne short .5	; 7B591
 push dword 0AAh	; 7B593
 push byte 60h	; 7B598
@@ -1820,7 +1820,7 @@ shl eax, 1Ah	; 7B65E
 shr eax, 1Fh	; 7B661
 shl eax, 5	; 7B664
 or edx, eax	; 7B667
-test byte [dword_C541F], 10h	; 7B669
+test byte [sounddev], 10h	; 7B669
 je short .1	; 7B670
 xor eax, eax	; 7B672
 jmp short .2	; 7B674
@@ -1831,7 +1831,7 @@ shr eax, 1Fh	; 7B67E
 shl eax, 6	; 7B681
 .2:
 or edx, eax	; 7B684
-test byte [dword_C541F], 10h	; 7B686
+test byte [sounddev], 10h	; 7B686
 je short .3	; 7B68D
 xor eax, eax	; 7B68F
 jmp short .4	; 7B691
@@ -1842,7 +1842,7 @@ shr eax, 1Fh	; 7B69B
 shl eax, 7	; 7B69E
 .4:
 or edx, eax	; 7B6A1
-test byte [dword_C541F], 22h	; 7B6A3
+test byte [sounddev], 22h	; 7B6A3
 je short .5	; 7B6AA
 mov eax, dword [gameopts]	; 7B6AC
 shl eax, 17h	; 7B6B1
@@ -1859,7 +1859,7 @@ push dword 0FFh	; 7B6CB
 push dword 0F8h	; 7B6D0
 call sub_8E9C0	; 7B6D5
 add esp, byte 8	; 7B6DA
-cmp dword [dword_C541F], byte 10h	; 7B6DD
+cmp dword [sounddev], byte 10h	; 7B6DD
 jne short .7	; 7B6E4
 push dword 0AAh	; 7B6E6
 push byte 60h	; 7B6EB
@@ -1914,7 +1914,7 @@ cmp edx, byte 0Ch	; 7B77F
 jl short .2	; 7B782
 cmp edx, byte 0Fh	; 7B784
 jg short .2	; 7B787
-cmp dword [dword_C541F], byte 10h	; 7B789
+cmp dword [sounddev], byte 10h	; 7B789
 je short .6	; 7B790
 .2:
 cmp edx, byte 10h	; 7B792
@@ -2388,7 +2388,7 @@ and eax, byte 1	; 7BCE2
 and byte [gameopts], 0DFh	; 7BCE5
 shl eax, 5	; 7BCEC
 or dword [gameopts], eax	; 7BCEF
-cmp dword [dword_C541F], byte 10h	; 7BCF5
+cmp dword [sounddev], byte 10h	; 7BCF5
 je short .13	; 7BCFC
 mov dh, byte [setbits]	; 7BCFE
 test dh, 40h	; 7BD04
@@ -2609,7 +2609,7 @@ shl eax, 1Ah	; 7BFB0
 shr eax, 1Fh	; 7BFB3
 shl eax, 5	; 7BFB6
 or edx, eax	; 7BFB9
-test byte [dword_C541F], 10h	; 7BFBB
+test byte [sounddev], 10h	; 7BFBB
 je short .1	; 7BFC2
 xor eax, eax	; 7BFC4
 jmp short .2	; 7BFC6
@@ -2620,7 +2620,7 @@ shr eax, 1Fh	; 7BFD0
 shl eax, 6	; 7BFD3
 .2:
 or edx, eax	; 7BFD6
-test byte [dword_C541F], 10h	; 7BFD8
+test byte [sounddev], 10h	; 7BFD8
 je short .3	; 7BFDF
 xor eax, eax	; 7BFE1
 jmp short .4	; 7BFE3
@@ -2631,7 +2631,7 @@ shr eax, 1Fh	; 7BFED
 shl eax, 7	; 7BFF0
 .4:
 or edx, eax	; 7BFF3
-test byte [dword_C541F], 22h	; 7BFF5
+test byte [sounddev], 22h	; 7BFF5
 je short .5	; 7BFFC
 mov eax, dword [gameopts]	; 7BFFE
 shl eax, 17h	; 7C003
@@ -2678,7 +2678,7 @@ push str_DigitizedSpeech3	; 7C077
 call sub_91964	; 7C07C
 add esp, byte 0Ch	; 7C081
 .12:
-cmp dword [dword_C541F], byte 10h	; 7C084
+cmp dword [sounddev], byte 10h	; 7C084
 jne short .x	; 7C08B
 push dword 0AAh	; 7C08D
 push byte 60h	; 7C092
@@ -2831,7 +2831,7 @@ add esp, byte 0Ch	; 7C20C
 push esi	; 7C20F
 call jctime	; 7C210
 add esp, byte 4	; 7C215
-cmp dword [dword_C541F], byte 10h	; 7C218
+cmp dword [sounddev], byte 10h	; 7C218
 jne short .3	; 7C21F
 push dword 0AAh	; 7C221
 push byte 60h	; 7C226
@@ -2893,7 +2893,7 @@ cmp edx, byte 0Ch	; 7C2D8
 jl short .2	; 7C2DB
 cmp edx, byte 0Fh	; 7C2DD
 jg short .2	; 7C2E0
-cmp dword [dword_C541F], byte 10h	; 7C2E2
+cmp dword [sounddev], byte 10h	; 7C2E2
 je short .6	; 7C2E9
 .2:
 cmp edx, byte 10h	; 7C2EB
@@ -3164,7 +3164,7 @@ and eax, byte 1	; 7C617
 and byte [gameopts], 0DFh	; 7C61A
 shl eax, 5	; 7C621
 or dword [gameopts], eax	; 7C624
-cmp dword [dword_C541F], byte 10h	; 7C62A
+cmp dword [sounddev], byte 10h	; 7C62A
 je short .11	; 7C631
 test ch, 40h	; 7C633
 setne al	; 7C636
@@ -3179,7 +3179,7 @@ and byte [gameopts], 7Fh	; 7C655
 shl eax, 7	; 7C65C
 or dword [gameopts], eax	; 7C65F
 .11:
-test byte [dword_C541F], 22h	; 7C665
+test byte [sounddev], 22h	; 7C665
 je short .12	; 7C66C
 test byte [setbits+1], 1	; 7C66E
 setne al	; 7C675

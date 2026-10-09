@@ -9,7 +9,7 @@ extern byte_DAEA7, hmroster, hmrosterjersey, byte_DF87F, byte_DFFE0, byte_DFFE2,
 extern byte_E02C8, byte_E0308, byte_E0344, PenBuf, iflags, byte_E9AC1, byte_E9AC8
 extern byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, check4bench, check4check, checkob
 extern chk4lc, chk4shot, dirtab, chk4pass, doplayeracc, doshot, joysampling, inputframes
-extern gameopts, dword_C541F, dword_C5840, dword_C585C, dword_C5860, dword_C90B0, sflags3, HomeTeam
+extern gameopts, sounddev, dword_C5840, dword_C585C, dword_C5860, dword_C90B0, sflags3, HomeTeam
 extern dword_CBEBE, dword_CBECA, dword_CC0EC, dword_CC0F8, penshotplayer, dword_CC104, penshotmode, penshotstart
 extern penshotlive, dword_CC12C, dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144
 extern dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, frameaccum
@@ -8093,7 +8093,7 @@ test edx, edx	; 4E84D
 jne short .8	; 4E84F
 test byte [gameopts], 80h	; 4E851
 je near .12	; 4E858
-test byte [dword_C541F], 2Ah	; 4E85E
+test byte [sounddev], 2Ah	; 4E85E
 je near .12	; 4E865
 cmp word [crowdlevel], 2BCh	; 4E86B
 jg near .12	; 4E874

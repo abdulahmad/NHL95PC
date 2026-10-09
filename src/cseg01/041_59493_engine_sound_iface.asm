@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_59493 progbits alloc exec nowrite align=1
-extern __CHK, musicon, byte_D2439, gameopts, dword_C541F, lastsfx, digihandle
+extern __CHK, musicon, byte_D2439, gameopts, sounddev, lastsfx, digihandle
 extern crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_D2427, leaguesetimg, rockteamcues
 extern dword_ED374, dword_ED7A4, gmode, teamabbrevs, rand_, randomd0, sub_836E4, sub_837A8
 extern sub_846B4, sub_846C8, sub_846DC, sub_847BA, sub_847CE, sub_8490D, sub_84A7D, sub_84B0D
@@ -49,7 +49,7 @@ push edx	; 594D9
 push esi	; 594DA
 test byte [gameopts], 80h	; 594DB
 je near .x	; 594E2
-test byte [dword_C541F], 2Ah	; 594E8
+test byte [sounddev], 2Ah	; 594E8
 je near .x	; 594EF
 cwde	; 594F5
 mov esi, eax	; 594F6
@@ -94,7 +94,7 @@ mov eax, edx	; 5955E
 sar edx, 1Fh	; 59560
 idiv ebx	; 59563
 mov ecx, eax	; 59565
-test byte [dword_C541F], 8	; 59567
+test byte [sounddev], 8	; 59567
 je short .8	; 5956E
 lea ecx, [byte eax+020h]	; 59570
 jmp short .8	; 59573
@@ -102,7 +102,7 @@ jmp short .8	; 59573
 lea eax, [dword ecx-0390h]	; 59575
 sar eax, 2	; 5957B
 lea ecx, [byte eax+028h]	; 5957E
-test byte [dword_C541F], 8	; 59581
+test byte [sounddev], 8	; 59581
 je short .8	; 59588
 add ecx, byte 20h	; 5958A
 .8:
@@ -116,7 +116,7 @@ mov edx, eax	; 595A1
 sar edx, 1Fh	; 595A3
 idiv ebx	; 595A6
 lea esi, [byte eax+0Ah]	; 595A8
-test byte [dword_C541F], 8	; 595AB
+test byte [sounddev], 8	; 595AB
 je short .10	; 595B2
 add esi, byte 32h	; 595B4
 .10:
@@ -219,7 +219,7 @@ mov edx, esi	; 596FC
 sar edx, 1Fh	; 596FE
 idiv ebx	; 59701
 lea ebx, [byte eax+020h]	; 59703
-test byte [dword_C541F], 8	; 59706
+test byte [sounddev], 8	; 59706
 je short .20	; 5970D
 mov eax, 32h	; 5970F
 jmp short .21	; 59714
@@ -253,7 +253,7 @@ push edx	; 59753
 push esi	; 59754
 test byte [gameopts], 80h	; 59755
 je near .x	; 5975C
-test byte [dword_C541F], 2Ah	; 59762
+test byte [sounddev], 2Ah	; 59762
 je short .x	; 59769
 cmp dword [crowdvol8], byte 0	; 5976B
 jle short .1	; 59772
@@ -301,7 +301,7 @@ mov esi, dword [crowdlevel-2]	; 597F2
 sar esi, 10h	; 597F8
 test byte [gameopts], 80h	; 597FB
 je short .x	; 59802
-test byte [dword_C541F], 2Ah	; 59804
+test byte [sounddev], 2Ah	; 59804
 je short .x	; 5980B
 .1:
 cmp word [crowdlevel], byte 0	; 5980D
@@ -358,7 +358,7 @@ je short .1	; 598B4
 cmp dword [dword_CCC98], byte 0	; 598B6
 je near .x	; 598BD
 .1:
-mov ecx, dword [dword_C541F]	; 598C3
+mov ecx, dword [sounddev]	; 598C3
 cmp ecx, byte 8	; 598C9
 je short .2	; 598CC
 cmp ecx, byte 4	; 598CE
@@ -376,7 +376,7 @@ pop edx	; 598F5
 pop ecx	; 598F6
 ret	; 598F7
 .4:
-cmp dword [dword_C541F], byte 4	; 598F8
+cmp dword [sounddev], byte 4	; 598F8
 jne short .5	; 598FF
 cmp edx, 0AAh	; 59901
 jne short .5	; 59907
@@ -389,7 +389,7 @@ ret	; 5991B
 .5:
 cmp edx, 90h	; 5991C
 jne short .7	; 59922
-cmp dword [dword_C541F], byte 4	; 59924
+cmp dword [sounddev], byte 4	; 59924
 jne short .6	; 5992B
 xor eax, eax	; 5992D
 mov ax, dx	; 5992F
@@ -448,7 +448,7 @@ push ebx	; 599C3
 push edx	; 599C4
 mov ebx, eax	; 599C5
 call StopDigiSample	; 599C7
-test byte [dword_C541F], 11h	; 599CC
+test byte [sounddev], 11h	; 599CC
 jne short .x	; 599D3
 test ebx, ebx	; 599D5
 je short .x	; 599D7

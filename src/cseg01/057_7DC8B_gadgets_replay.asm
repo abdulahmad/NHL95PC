@@ -4,7 +4,7 @@ bits 32
 section s_7DC8B progbits alloc exec nowrite align=1
 extern __CHK, str_MTROCKU, str_SBROCKU, str_ADROCKU, str_ROCKDITI, str_Gadget6, str_Gadget5, str_Gad1
 extern str_Pointer19, str_PPV, musicon, byte_ED7CC, byte_ED7EB, byte_ED862, byte_ED8CC, byte_ED92D
-extern byte_ED932, byte_ED9EF, gamemode, ctl1team, ctl2team, dword_C541F, dword_C66D0, dword_C66D4
+extern byte_ED932, byte_ED9EF, gamemode, ctl1team, ctl2team, sounddev, dword_C66D0, dword_C66D4
 extern rinkscrollx, rinkscrolly, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, rockcuepool
 extern teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1, dword_D2C6B, dword_D8B74
 extern spritedrawcount, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, pointerspr, rinkwtiles, rinkhtiles
@@ -146,7 +146,7 @@ mov dword [nosplit edi*4+rockrandcues], eax	; 7DDD0
 inc edi	; 7DDD7
 cmp edi, byte 3	; 7DDD8
 jl near LoadRockMusic.7	; 7DDDB
-cmp dword [dword_C541F], byte 8	; 7DDE1
+cmp dword [sounddev], byte 8	; 7DDE1
 jne short .19	; 7DDE8
 xor ecx, ecx	; 7DDEA
 mov ebx, str_MTROCKU	; 7DDEC

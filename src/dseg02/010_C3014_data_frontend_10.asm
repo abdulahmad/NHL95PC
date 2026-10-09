@@ -25,8 +25,8 @@ global str_Pg05, str_Pg07, str_Pl05, str_Pl10, str_Pl20, str_HomeBck, str_VisBck
 global str_VisNameBck, str_TitleBck, str_Lockroom, str_P01, str_Room, str_JERSH, str_00002, str_JERSV
 global str_Accept, str_Cancel2, str_HomeTeam, str_VisitingTeam, str_ExhibitionGame, str_Iff11, str_Jersey, str_Pointer20
 global str_Temp8, str_Buffer, str_Sound4, str_Dbx2, str_PCSpeaker, str_SoundBlaster, str_ADLib, str_MT32
-global str_UltraSound, asc_C3680, asc_C3688, asc_C368D, asc_C3696, asc_C369F, asc_C36A8, asc_C36AF
-global asc_C36C3, asc_C36C9, asc_C3782, asc_C378C, asc_C3795, asc_C37A4, asc_C37D8, asc_C37DC
+global str_UltraSound, str_Pointer21, str_Iff12, str_Maindesk2, str_Slapshot, str_MT32HOCK, str_NHL3, str_CantOpenNhlCfg
+global asc_C36C3, str_Emmcopybuf, asc_C3782, asc_C378C, asc_C3795, asc_C37A4, asc_C37D8, asc_C37DC
 global asc_C37E8, asc_C37F5, asc_C3802, asc_C380F, asc_C381C, asc_C3829, asc_C3836, asc_C3843
 global asc_C3850, asc_C385D, asc_C386A, asc_C3877, asc_C3884, asc_C3891, asc_C389E, asc_C38A6
 global asc_C38B2, asc_C38B6, asc_C38BA, asc_C38BE, asc_C38C2, asc_C38CA, asc_C38D2, asc_C38D6
@@ -551,26 +551,26 @@ str_MT32:
 db 04Dh,054h,02Dh,033h,032h,00h
 str_UltraSound:
 db 055h,06Ch,074h,072h,061h,053h,06Fh,075h,06Eh,064h,00h
-asc_C3680:
+str_Pointer21:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C3688:
+str_Iff12:
 db 02Eh,069h,066h,066h,00h
-asc_C368D:
+str_Maindesk2:
 db 06Dh,061h,069h,06Eh,064h,065h,073h,06Bh,00h
-asc_C3696:
+str_Slapshot:
 db 073h,06Ch,061h,070h,073h,068h,06Fh,074h,00h
-asc_C369F:
+str_MT32HOCK:
 db 04Dh,054h,033h,032h,048h,04Fh,043h,04Bh,00h
-asc_C36A8:
+str_NHL3:
 db 04Eh,048h,04Ch,00h
 unk_C36AC:
 db 072h,02Bh,00h
-asc_C36AF:
+str_CantOpenNhlCfg:
 db 063h,061h,06Eh,06Eh,06Fh,074h,020h,06Fh,070h,065h,06Eh,020h,06Eh,068h,06Ch,02Eh
 db 063h,066h,067h,00h
 asc_C36C3:
 db 025h,030h,034h,078h,0Ah,00h
-asc_C36C9:
+str_Emmcopybuf:
 db 065h,06Dh,06Dh,063h,06Fh,070h,079h,062h,075h,066h,00h
 unk_C36D4:
 db 072h,06Fh,075h,067h,068h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h

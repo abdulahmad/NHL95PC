@@ -13,7 +13,7 @@ extern str_ShowLeague, str_Settings3, byte_C541B, musicon, byte_DC9D8, byte_DC9D
 extern byte_DC9DF, byte_DC9E8, byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA21, byte_DCA28
 extern byte_DCA29, byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_ED7CC, byte_ED8B5
 extern byte_ED95D, byte_ED991, byte_ED9A9, gamemode, gameopts, ctl1team, ctl2team, ctl1side
-extern ctl2side, dword_C541F, teamdivflags, songdata, cont2team, HomeTeam, settingsfile, dword_D20E0
+extern ctl2side, sounddev, teamdivflags, songdata, cont2team, HomeTeam, settingsfile, dword_D20E0
 extern dword_D2150, dword_D223C, lockerrects
 extern dword_D22DC, dword_D22E0, dword_D22EC, dword_D22F0
 extern soundcardrects, musichandle, dword_D2435, dword_D2C6B, musicslot
@@ -22,7 +22,7 @@ extern pl05spr, pl10spr, pg07spr, na05spr, pg01spr, acptspr, na03spr, pg03spr
 extern chkoffspr, pg05spr, chkonspr, na01spr, titlebckspr, homebckspr, homenamebckspr, visbckspr
 extern visnamebckspr, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
 extern sprintf_, strcpy_, strncpy_, MakePath, SetTextColors, PrintShadowText, PrintOutlinedText, ShowLoadingScreen
-extern FadeOutPalCycle, GetInputEvent, ClearInputQueue, FadePalStep, sub_8291E, WriteCurModeState, sub_8CCA8, sub_8D2F0
+extern FadeOutPalCycle, GetInputEvent, ClearInputQueue, FadePalStep, SoundCardDlgLoop, WriteCurModeState, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_912C8, sub_91400
 extern sub_91964, sub_91FE0, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8, sub_B4DD4
@@ -2659,7 +2659,7 @@ call sub_91400	; 825E7
 add esp, byte 0Ch	; 825EC
 call DrawSoundCardDlg	; 825EF
 call DrawSoundCardOpts	; 825F4
-call sub_8291E	; 825F9
+call SoundCardDlgLoop	; 825F9
 push byte 13h	; 825FE
 push byte 0Ah	; 82600
 push ebp	; 82602
@@ -2726,7 +2726,7 @@ push ebx	; 8269A
 push ecx	; 8269B
 push edx	; 8269C
 push esi	; 8269D
-mov eax, dword [dword_C541F]	; 8269E
+mov eax, dword [sounddev]	; 8269E
 mov dword [setbits], eax	; 826A3
 xor edx, edx	; 826A8
 .1:

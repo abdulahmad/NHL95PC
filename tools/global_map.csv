@@ -1861,55 +1861,79 @@ titlebckspr,ED790,TitleBck
 lockerrects,D227C,16-byte rects
 soundcardrects,D23A3,16-byte rects
 modesetlabel,CDBDC,"menu label buffer ""xxxxxxx..."" patched with mode name"
-str_Settings,C3480,"string 'settings'"
-str_On,C3489,"string 'On  '"
-str_Off,C348E,"string 'Off '"
-str_Acpt,C3493,"string 'acpt'"
-str_Canc,C3498,"string 'canc'"
-str_Na01,C349D,"string 'na01'"
-str_Na03,C34A2,"string 'na03'"
-str_Na05,C34A7,"string 'na05'"
-str_Pg01,C34AC,"string 'pg01'"
-str_Pg03,C34B1,"string 'pg03'"
-str_Pg05,C34B6,"string 'pg05'"
-str_Pg07,C34BB,"string 'pg07'"
-str_Pl05,C34C0,"string 'pl05'"
-str_Pl10,C34C5,"string 'pl10'"
-str_Pl20,C34CA,"string 'pl20'"
-str_HomeBck,C3594,"string 'HomeBck'"
-str_VisBck,C359C,"string 'VisBck'"
-str_HomeNameBck,C35A3,"string 'HomeNameBck'"
-str_VisNameBck,C35AF,"string 'VisNameBck'"
-str_TitleBck,C35BA,"string 'TitleBck'"
-str_Lockroom,C35C3,"string 'lockroom'"
-str_P01,C35CC,"string '!p01'"
-str_Room,C35D1,"string 'room'"
-str_JERSH,C35D6,"string 'JER%sH'"
-str_00002,C35DD,"string '0000'"
-str_JERSV,C35E2,"string 'JER%sV'"
-str_Accept,C35EC,"string 'Accept'"
-str_Cancel2,C35F3,"string 'Cancel'"
-str_HomeTeam,C35FA,"string 'Home Team'"
-str_VisitingTeam,C3604,"string 'Visiting Team'"
-str_ExhibitionGame,C3612,"string 'Exhibition Game'"
-str_Iff11,C3622,"string '.iff'"
-str_Jersey,C3627,"string 'jersey'"
-str_Pointer20,C362E,"string 'Pointer'"
-str_Temp8,C3638,"string 'temp'"
-str_Buffer,C363D,"string 'buffer'"
-str_Sound4,C3644,"string 'sound'"
-str_Dbx2,C364A,"string 'dbx2'"
-str_PCSpeaker,C364F,"string 'PC Speaker'"
-str_SoundBlaster,C365A,"string 'Sound Blaster'"
-str_ADLib,C3668,"string 'AD Lib'"
-str_MT32,C366F,"string 'MT-32'"
-str_UltraSound,C3675,"string 'UltraSound'"
-str_SportsCentral2,CDD4F,"string 'Sports Central'"
-str_PlayoffTree2,CDD5E,"string 'Playoff Tree'"
-str_Return,CDD6B,"string 'Return'"
-str_Exhibition2,D20AC,"string 'Exhibition'"
-str_Playoff,D20B7,"string 'Playoff'"
-str_League2,D20BF,"string 'League'"
-str_ShowLeague,D20C6,"string 'Show League'"
-str_Settings3,D20D2,"string ' Settings ...'"
-str_Vs,C35E9,"string 'vs'"
+str_Settings,C3480,string 'settings'
+str_On,C3489,string 'On  '
+str_Off,C348E,string 'Off '
+str_Acpt,C3493,string 'acpt'
+str_Canc,C3498,string 'canc'
+str_Na01,C349D,string 'na01'
+str_Na03,C34A2,string 'na03'
+str_Na05,C34A7,string 'na05'
+str_Pg01,C34AC,string 'pg01'
+str_Pg03,C34B1,string 'pg03'
+str_Pg05,C34B6,string 'pg05'
+str_Pg07,C34BB,string 'pg07'
+str_Pl05,C34C0,string 'pl05'
+str_Pl10,C34C5,string 'pl10'
+str_Pl20,C34CA,string 'pl20'
+str_HomeBck,C3594,string 'HomeBck'
+str_VisBck,C359C,string 'VisBck'
+str_HomeNameBck,C35A3,string 'HomeNameBck'
+str_VisNameBck,C35AF,string 'VisNameBck'
+str_TitleBck,C35BA,string 'TitleBck'
+str_Lockroom,C35C3,string 'lockroom'
+str_P01,C35CC,string '!p01'
+str_Room,C35D1,string 'room'
+str_JERSH,C35D6,string 'JER%sH'
+str_00002,C35DD,string '0000'
+str_JERSV,C35E2,string 'JER%sV'
+str_Accept,C35EC,string 'Accept'
+str_Cancel2,C35F3,string 'Cancel'
+str_HomeTeam,C35FA,string 'Home Team'
+str_VisitingTeam,C3604,string 'Visiting Team'
+str_ExhibitionGame,C3612,string 'Exhibition Game'
+str_Iff11,C3622,string '.iff'
+str_Jersey,C3627,string 'jersey'
+str_Pointer20,C362E,string 'Pointer'
+str_Temp8,C3638,string 'temp'
+str_Buffer,C363D,string 'buffer'
+str_Sound4,C3644,string 'sound'
+str_Dbx2,C364A,string 'dbx2'
+str_PCSpeaker,C364F,string 'PC Speaker'
+str_SoundBlaster,C365A,string 'Sound Blaster'
+str_ADLib,C3668,string 'AD Lib'
+str_MT32,C366F,string 'MT-32'
+str_UltraSound,C3675,string 'UltraSound'
+str_SportsCentral2,CDD4F,string 'Sports Central'
+str_PlayoffTree2,CDD5E,string 'Playoff Tree'
+str_Return,CDD6B,string 'Return'
+str_Exhibition2,D20AC,string 'Exhibition'
+str_Playoff,D20B7,string 'Playoff'
+str_League2,D20BF,string 'League'
+str_ShowLeague,D20C6,string 'Show League'
+str_Settings3,D20D2,string ' Settings ...'
+str_Vs,C35E9,string 'vs'
+sounddev,C541F,"sound device bits 1 PC speaker, 2 Sound Blaster, 4 AdLib, 8 MT-32, 20h UltraSound (set by SetSoundDevice, saved to nhl.cfg)"
+sndcardname,D24A0,card name string pointer (SoundBlaster/Adlib/MT32/ULTRASOUND)
+msg_InitMT32,D24D1,message 'Initializing the MT32 card.' / 'Please wait.'
+speechq,ED7AC,speech queue struct (20 entries + counters at +50h..+60h)
+speechinit,D27BB,"1 after InitSpeech, 0 after shutdown"
+str_Pointer21,C3680,"string 'Pointer'"
+str_Iff12,C3688,"string '.iff'"
+str_Maindesk2,C368D,"string 'maindesk'"
+str_Slapshot,C3696,"string 'slapshot'"
+str_MT32HOCK,C369F,"string 'MT32HOCK'"
+str_NHL3,C36A8,"string 'NHL'"
+str_CantOpenNhlCfg,C36AF,"string 'cannot open nhl.cfg'"
+str_Emmcopybuf,C36C9,"string 'emmcopybuf'"
+str_PCBEEP,D236F,"string 'PCBEEP'"
+str_SBDAC,D2379,"string 'SBDAC'"
+str_ADLIB,D2382,"string 'ADLIB'"
+str_MT322,D238B,"string 'MT32'"
+str_SBDAC2,D2390,"string 'SBDAC'"
+str_PCBEEP2,D2399,"string 'PCBEEP'"
+str_SoundBlaster2,D2479,"string 'SoundBlaster'"
+str_Adlib,D2486,"string 'Adlib'"
+str_MT323,D248C,"string 'MT32'"
+str_ULTRASOUND,D2491,"string 'ULTRASOUND'"
+str_PC,D23A0,"string 'PC'"

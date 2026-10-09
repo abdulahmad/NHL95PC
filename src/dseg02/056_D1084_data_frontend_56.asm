@@ -8,8 +8,8 @@ extern unk_C3502, unk_C3506, unk_C350A, unk_C350E, unk_C3512, unk_C3516, unk_C35
 extern unk_C3521, unk_C3524, unk_C3528, unk_C352C, unk_C3530, unk_C3534, unk_C3538, unk_C353C
 extern unk_C355E, unk_C3580, unk_C36D4, unk_C36E1, unk_C36EE, unk_C36FB, unk_C3706, unk_C3712
 extern unk_C371F, unk_C372C, unk_C3738, unk_C3742, unk_C374F, unk_C375C, unk_C3769, unk_C3775
-global str_HilightDescFmt, str_Exhibition2, str_Playoff, str_League2, str_ShowLeague, str_Settings3, asc_D236F, asc_D2379
-global asc_D2382, asc_D238B, asc_D2390, asc_D2399, asc_D2479, asc_D2486, asc_D248C, asc_D2491
+global str_HilightDescFmt, str_Exhibition2, str_Playoff, str_League2, str_ShowLeague, str_Settings3, str_PCBEEP, str_SBDAC
+global str_ADLIB, str_MT322, str_SBDAC2, str_PCBEEP2, str_SoundBlaster2, str_Adlib, str_MT323, str_ULTRASOUND
 global asc_D24DC, asc_D24E2, asc_D24EC, asc_D24F3, asc_D24FF, asc_D250B, asc_D2517, asc_D2523
 global asc_D252E, asc_D253A, asc_D2546, asc_D2552, asc_D255E, asc_D2569, asc_D2575, asc_D257E
 global asc_D2587, asc_D259F, asc_D25AB, asc_D25B8, asc_D25CD, asc_D2608, asc_D2610, asc_D261C
@@ -27,9 +27,9 @@ global ctldlgalt, rockcuepool, teamtunepathsel, rockcuepathsel, gadgetrects, gad
 global settingsfile, dword_D20E0, dword_D2150, dword_D223C, lockerrects
 global dword_D22DC, dword_D22E0
 global dword_D22EC, dword_D22F0, dword_D2350, soundcardrects, dword_D2423
-global dword_D2427, dword_D242B, musichandle, dword_D2435, sounddevids, dword_D24A0, dword_D27A2
-global dword_D27B2, dword_D27B7, dword_D27BB, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
-global off_D21C0, off_D2230, off_D24D1, off_D273E, off_D2776, off_D27EF, off_D27F7, off_D2855
+global dword_D2427, dword_D242B, musichandle, dword_D2435, sounddevids, sndcardname, dword_D27A2
+global dword_D27B2, dword_D27B7, speechinit, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
+global off_D21C0, off_D2230, msg_InitMT32, off_D273E, off_D2776, off_D27EF, off_D27F7, off_D2855
 global unk_D1190, deldbmsg, unk_D12C8, unk_D16A0, unk_D19CC, unk_D19DC, unk_D19F0, unk_D19F5
 global unk_D19FA, unk_D19FF, unk_D1A05, unk_D1A0A, unk_D1A0F, unk_D1A14, unk_D1A19, unk_D1A1F
 global unk_D1A25, unk_D1A2B, unk_D1A30, unk_D1A35, unk_D1A39, unk_D1A3F, unk_D1A45, unk_D1A4B
@@ -39,7 +39,7 @@ global unk_D1AA7, unk_D1AAB, unk_D1AAF, unk_D1AB3, unk_D1AB7, unk_D1ABC, unk_D1A
 global unk_D1ACB, unk_D1ACF, unk_D1AD4, unk_D1AD9, unk_D1ADE, unk_D1AE2, unk_D1AE7, unk_D1AEC
 global unk_D1AF1, unk_D1AF6, unk_D1AFC, unk_D1B02, unk_D1CD3, unk_D1CDA, unk_D1EE0, unk_D1EFB
 global unk_D1F0A, unk_D1F34, msg_NoHilights, unk_D1F4F, unk_D1F6B, unk_D1F8D, unk_D1FC3, unk_D1FDF
-global unk_D1FFF, unk_D2028, unk_D2034, unk_D2050, unk_D23A0, unk_D2403, unk_D2413, unk_D2452
+global unk_D1FFF, unk_D2028, unk_D2034, unk_D2050, str_PC, unk_D2403, unk_D2413, unk_D2452
 global unk_D2463, unk_D249C, unk_D24A8, unk_D24C4, unk_D2782, unk_D278E, unk_D279A, unk_D27C4
 global unk_D27D3, unk_D27E0, unk_D27FF, unk_D2841
 dbdlgrects:
@@ -680,19 +680,19 @@ db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 dword_D2350:
 db 00h,00h,00h,00h,02Eh,053h,043h,04Eh,00h,02Eh,050h,041h,054h,00h,02Eh,054h
 db 049h,04Dh,00h,050h,043h,046h,046h,025h,030h,033h,064h,00h,050h,043h,00h
-asc_D236F:
+str_PCBEEP:
 db 050h,043h,042h,045h,045h,050h,00h,053h,042h,00h
-asc_D2379:
+str_SBDAC:
 db 053h,042h,044h,041h,043h,00h,059h,04Dh,00h
-asc_D2382:
+str_ADLIB:
 db 041h,044h,04Ch,049h,042h,00h,04Dh,054h,00h
-asc_D238B:
+str_MT322:
 db 04Dh,054h,033h,032h,00h
-asc_D2390:
+str_SBDAC2:
 db 053h,042h,044h,041h,043h,00h,04Eh,04Ch,00h
-asc_D2399:
+str_PCBEEP2:
 db 050h,043h,042h,045h,045h,050h,00h
-unk_D23A0:
+str_PC:
 db 050h,043h,00h
 soundcardrects:
 db 0Eh,00h,00h,00h
@@ -734,17 +734,17 @@ db 00h
 unk_D2463:
 db 063h,061h,072h,064h,020h,069h,06Eh,020h,074h,068h,069h,073h,020h,06Dh,061h,063h
 db 068h,069h,06Eh,065h,021h,00h
-asc_D2479:
+str_SoundBlaster2:
 db 053h,06Fh,075h,06Eh,064h,042h,06Ch,061h,073h,074h,065h,072h,00h
-asc_D2486:
+str_Adlib:
 db 041h,064h,06Ch,069h,062h,00h
-asc_D248C:
+str_MT323:
 db 04Dh,054h,033h,032h,00h
-asc_D2491:
+str_ULTRASOUND:
 db 055h,04Ch,054h,052h,041h,053h,04Fh,055h,04Eh,044h,00h
 unk_D249C:
 dd unk_D2452
-dword_D24A0:
+sndcardname:
 db 00h,00h,00h,00h
 dd unk_D2463
 unk_D24A8:
@@ -752,7 +752,7 @@ db 049h,06Eh,069h,074h,069h,061h,06Ch,069h,07Ah,069h,06Eh,067h,020h,074h,068h,06
 db 020h,04Dh,054h,033h,032h,020h,063h,061h,072h,064h,02Eh,00h
 unk_D24C4:
 db 050h,06Ch,065h,061h,073h,065h,020h,077h,061h,069h,074h,02Eh,00h
-off_D24D1:
+msg_InitMT32:
 dd unk_D24A8
 dd unk_D24C4
 db 00h,00h,00h
@@ -884,7 +884,7 @@ byte_D27B6:
 db 00h
 dword_D27B7:
 db 00h,00h,00h,00h
-dword_D27BB:
+speechinit:
 db 00h,00h,00h,00h
 asc_D27BF:
 db 02Eh,056h,049h,056h,00h

@@ -9,7 +9,7 @@ extern str_Numshp, str_GfxIdList, str_PPV, str_VFN, assinsert, pad1dev, pad2dev,
 extern musicon, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8, byte_E0308
 extern byte_E0344, byte_E9AC8, byte_E9AD3, byte_ED7CC, byte_ED7E4, byte_ED7E6, byte_ED85C, byte_ED86C
 extern byte_ED8C6, byte_ED8C8, byte_ED8D7, byte_ED976, byte_ED9AA, byte_ED9EC, byte_ED9F0, joysampling
-extern inputframes, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, songdata, cont2team
+extern inputframes, gameopts, sounddev, dword_C5840, dword_C66D0, dword_C66D4, songdata, cont2team
 extern HomeTeam, dword_CBECA, dword_CC0AC, photobankf, dword_CC0EC, dword_CC0F0, dword_CC0F8, penshotplayer
 extern penshotmode, penshotstart, dword_CC124, penshotlive, crowdsmooth, musichandle, dword_D2C6B, musicslot
 extern dword_D8B68, numshapes, dword_D8C4C, rinkendbank, frameaccum, rinkendart, dword_D8C78, numshpbank
@@ -166,7 +166,7 @@ mov ebx, 3	; 134DB
 call sub_8FB8E	; 134E0
 jmp short .13	; 134E5
 .8:
-mov ebx, dword [dword_C541F]	; 134E7
+mov ebx, dword [sounddev]	; 134E7
 cmp ebx, byte 1	; 134ED
 je short .13	; 134F0
 cmp ebx, byte 8	; 134F2
@@ -203,7 +203,7 @@ xor eax, eax	; 1354D
 call FadePalStep	; 1354F
 cmp byte [musicon], 0	; 13554
 jne short .14	; 1355B
-cmp dword [dword_C541F], byte 1	; 1355D
+cmp dword [sounddev], byte 1	; 1355D
 je short .14	; 13564
 call WaitDigiSample	; 13566
 mov ebx, 10h	; 1356B
@@ -297,7 +297,7 @@ mov ebx, 3	; 136AA
 call sub_8FB8E	; 136AF
 jmp short .28	; 136B4
 .23:
-cmp dword [dword_C541F], byte 8	; 136B6
+cmp dword [sounddev], byte 8	; 136B6
 jne short .25	; 136BD
 xor ecx, ecx	; 136BF
 mov ebx, str_Mtawards	; 136C1

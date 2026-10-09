@@ -13,7 +13,7 @@ extern str_D02d2, str_DDD, str_Iff7, str_Leaguetm, str_Mtsum2, str_Adsum2, str_N
 extern str_extDB, str_VFN, curleague, teamstartlag, musicon, byte_D42C3, hmroster
 extern leaguedbfmt2, leaguedbfmt, othergames, othergamesb, otherscores, otherscoresb, byte_ED7ED, byte_ED824
 extern byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED8CE, byte_ED9AC, byte_ED9B0, byte_ED9E6
-extern gameresult, gameopts, dword_C541F, songdata, cont2team, HomeTeam, dword_CCC94, musicslot
+extern gameresult, gameopts, sounddev, songdata, cont2team, HomeTeam, dword_CCC94, musicslot
 extern musichandle, dword_D2C6B, dword_D8B68, dword_DBC7C, schedgameidx, hmcrestbmp, vscrestbmp, otherperiod
 extern hmtmstruct
 extern fputchar, jctime, memcpy_
@@ -543,7 +543,7 @@ mov ebx, 3	; 2DB5C
 call sub_8FB8E	; 2DB61
 jmp near .37	; 2DB66
 .32:
-cmp dword [dword_C541F], byte 8	; 2DB6B
+cmp dword [sounddev], byte 8	; 2DB6B
 jne short .34	; 2DB72
 xor ecx, ecx	; 2DB74
 mov ebx, str_Mtsum	; 2DB76
@@ -2894,7 +2894,7 @@ mov ebx, 3	; 2FC95
 call sub_8FB8E	; 2FC9A
 jmp near .21	; 2FC9F
 .16:
-cmp dword [dword_C541F], byte 8	; 2FCA4
+cmp dword [sounddev], byte 8	; 2FCA4
 jne short .18	; 2FCAB
 xor ecx, ecx	; 2FCAD
 mov ebx, str_Mtsum2	; 2FCAF

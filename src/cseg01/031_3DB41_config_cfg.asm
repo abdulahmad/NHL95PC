@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_3DB41 progbits alloc exec nowrite align=1
 extern __CHK, str_NHL2, str_CannotOpenNhlCfg, str_fmt4x, str_CFG, greyramp, sounddevids, fclose_
-extern fopen_, fscanf_, MakePath, SetDialogColors, sub_82D7A, sub_8EB93, sub_8FE83, FatalError
+extern fopen_, fscanf_, MakePath, SetDialogColors, SetSoundDevice, sub_8EB93, sub_8FE83, FatalError
 extern MouseSetPos, sub_B3454, sub_B4B88, str_R3
 global LoadNhlCfg, negone_3DC28
 LoadNhlCfg:
@@ -77,7 +77,7 @@ call SetDialogColors	; 3DC09
 mov eax, 1	; 3DC0E
 call sub_8FE83	; 3DC13
 mov eax, edi	; 3DC18
-call sub_82D7A	; 3DC1A
+call SetSoundDevice	; 3DC1A
 add esp, byte 14h	; 3DC1F
 pop edi	; 3DC22
 pop esi	; 3DC23

@@ -4,9 +4,9 @@ bits 32
 section s_83459 progbits alloc exec nowrite align=1
 extern __CHK, __CHP, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _os_handle_3, asc_C3782
 extern asc_C378C, asc_C3795, asc_C37A4, byte_D27B6, dword_CCC94, musichandle, dword_D27B2, dword_D27B7
-extern dword_D27BB, dword_ED7AC, dword_ED7B0, dword_ED7B4, dword_ED7B8, jctime, loc_847B7, lseek_
-extern qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0, strncpy_, sub_832BC, sub_833C5
-extern sub_833FA, sub_8CC70, sub_8CCA8, sub_8D2F0, sub_8DBD4, sub_8E4C0, sub_8E4F8, sub_8FCAC
+extern speechinit, speechq, dword_ED7B0, dword_ED7B4, dword_ED7B8, jctime, loc_847B7, lseek_
+extern qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0, strncpy_, SpeechTimerTick, ClearSpeechSlot
+extern ResetSpeechQueue, sub_8CC70, sub_8CCA8, sub_8D2F0, sub_8DBD4, sub_8E4C0, sub_8E4F8, sub_8FCAC
 extern sub_98028
 global loc_8346A, loc_8352E, loc_83636, loc_8367B, loc_836C3, loc_836C4, loc_83702, loc_83708
 global loc_8370E, loc_83724, loc_83727, loc_83788, loc_837D7, loc_83857, loc_83874, loc_838ED
@@ -37,7 +37,7 @@ sub eax, edx	; 83474
 add eax, eax	; 83476
 mov ebx, dword [dword_ED7B0]	; 83478
 add eax, ebx	; 8347E
-call sub_833C5	; 83480
+call ClearSpeechSlot	; 83480
 inc edx	; 83485
 cmp edx, 190h	; 83486
 jl short loc_8346A	; 8348C
@@ -120,8 +120,8 @@ push byte 64h	; 835BE
 push asc_C378C	; 835C0
 call sub_8CCA8	; 835C5
 add esp, byte 0Ch	; 835CA
-mov dword [dword_ED7AC], eax	; 835CD
-call sub_833FA	; 835D2
+mov dword [speechq], eax	; 835CD
+call ResetSpeechQueue	; 835D2
 mov ecx, dword [dword_CCC94]	; 835D7
 push ecx	; 835DD
 push dword 110h	; 835DE
@@ -139,10 +139,10 @@ add esp, byte 0Ch	; 83610
 mov dword [dword_ED7B0], eax	; 83613
 mov eax, esi	; 83618
 call sub_83459	; 8361A
-push sub_832BC	; 8361F
+push SpeechTimerTick	; 8361F
 call sub_8E4C0	; 83624
 add esp, byte 4	; 83629
-mov dword [dword_D27BB], 1	; 8362C
+mov dword [speechinit], 1	; 8362C
 loc_83636:
 add esp, byte 4	; 83636
 pop edi	; 83639
@@ -157,9 +157,9 @@ push edx	; 83648
 push esi	; 83649
 push edi	; 8364A
 push ebp	; 8364B
-cmp dword [dword_D27BB], byte 0	; 8364C
+cmp dword [speechinit], byte 0	; 8364C
 je short loc_836C3	; 83653
-push sub_832BC	; 83655
+push SpeechTimerTick	; 83655
 call sub_8E4F8	; 8365A
 add esp, byte 4	; 8365F
 mov eax, dword [dword_ED7B0]	; 83662
@@ -168,7 +168,7 @@ je short loc_8367B	; 8366E
 mov eax, dword [dword eax+03B7Ch]	; 83670
 call _dos_close_	; 83676
 loc_8367B:
-mov ecx, dword [dword_ED7AC]	; 8367B
+mov ecx, dword [speechq]	; 8367B
 push ecx	; 83681
 call jctime	; 83682
 add esp, byte 4	; 83687
@@ -186,7 +186,7 @@ push ebp	; 836B3
 call jctime	; 836B4
 add esp, byte 4	; 836B9
 xor eax, eax	; 836BC
-mov dword [dword_D27BB], eax	; 836BE
+mov dword [speechinit], eax	; 836BE
 loc_836C3:
 pop ebp	; 836C3
 loc_836C4:
@@ -199,16 +199,16 @@ ret	; 836C9
 sub_836CA:
 push dword 4	; 836CA
 call __CHK	; 836CF
-cmp dword [dword_D27BB], byte 0	; 836D4
+cmp dword [speechinit], byte 0	; 836D4
 setne al	; 836DB
 and eax, 0FFh	; 836DE
 ret	; 836E3
 sub_836E4:
 push dword 4	; 836E4
 call __CHK	; 836E9
-cmp dword [dword_D27BB], byte 0	; 836EE
+cmp dword [speechinit], byte 0	; 836EE
 je short loc_8370E	; 836F5
-mov eax, dword [dword_ED7AC]	; 836F7
+mov eax, dword [speechq]	; 836F7
 cmp dword [byte eax+060h], byte 0	; 836FC
 je short loc_83708	; 83700
 loc_83702:
@@ -223,13 +223,13 @@ ret	; 83710
 sub_83711:
 push dword 4	; 83711
 call __CHK	; 83716
-cmp dword [dword_D27BB], byte 0	; 8371B
+cmp dword [speechinit], byte 0	; 8371B
 jne short loc_83727	; 83722
 loc_83724:
 xor eax, eax	; 83724
 ret	; 83726
 loc_83727:
-mov eax, dword [dword_ED7AC]	; 83727
+mov eax, dword [speechq]	; 83727
 cmp dword [byte eax+060h], byte 0	; 8372C
 jne short loc_83724	; 83730
 cmp dword [byte eax+05Ch], byte 0	; 83732
@@ -246,11 +246,11 @@ call __CHK	; 83752
 push ebx	; 83757
 push ecx	; 83758
 push edx	; 83759
-cmp dword [dword_D27BB], byte 0	; 8375A
+cmp dword [speechinit], byte 0	; 8375A
 je short loc_83788	; 83761
-mov eax, dword [dword_ED7AC]	; 83763
+mov eax, dword [speechq]	; 83763
 mov dword [byte eax+060h], 0	; 83768
-mov eax, dword [dword_ED7AC]	; 8376F
+mov eax, dword [speechq]	; 8376F
 mov ebx, dword [dword_ED7B0]	; 83774
 mov edx, dword [byte eax+050h]	; 8377A
 mov ecx, dword [dword ebx+03B70h]	; 8377D
@@ -274,7 +274,7 @@ sub_837A8:
 push dword 8	; 837A8
 call __CHK	; 837AD
 push edx	; 837B2
-cmp dword [dword_D27BB], byte 0	; 837B3
+cmp dword [speechinit], byte 0	; 837B3
 je short loc_837D7	; 837BA
 mov eax, dword [musichandle]	; 837BC
 xor edx, edx	; 837C1
@@ -376,7 +376,7 @@ push ebp	; 838A5
 sub esp, byte 24h	; 838A6
 mov esi, eax	; 838A9
 mov edi, edx	; 838AB
-cmp dword [dword_D27BB], byte 0	; 838AD
+cmp dword [speechinit], byte 0	; 838AD
 je near loc_83BBE	; 838B4
 mov eax, dword [dword_ED7B0]	; 838BA
 cmp dword [dword eax+03B78h], byte 0	; 838BF
@@ -577,7 +577,7 @@ sub eax, esi	; 83BA4
 add eax, eax	; 83BA6
 mov edx, dword [dword_ED7B0]	; 83BA8
 add eax, edx	; 83BAE
-call sub_833C5	; 83BB0
+call ClearSpeechSlot	; 83BB0
 inc esi	; 83BB5
 loc_83BB6:
 cmp esi, 190h	; 83BB6

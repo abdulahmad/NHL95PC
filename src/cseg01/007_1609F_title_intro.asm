@@ -8,7 +8,7 @@ extern str_Pioneer1, str_Pl2, str_Pl1, str_Bkgd3, str_Pioneer2, str_Pioneer4, st
 extern str_Pion, str_Pio, str_Eaopen, str_Easports, str_Backwin, str_Credits, str_Rockditi, str_Shp0
 extern str_KMS, musicon, byte_D42C3, byte_ED7F0, byte_ED833, byte_ED834, byte_ED8D0, byte_ED8F3
 extern byte_ED8F4, byte_ED8F6, byte_ED8F7, byte_ED8F8, byte_ED92D, byte_ED9A6, byte_ED9A8, byte_ED9AD
-extern byte_ED9E9, byte_ED9EA, dword_C4CFC, demomode, dword_C541F, dword_C588A, textgrid, textgridon
+extern byte_ED9E9, byte_ED9EA, dword_C4CFC, demomode, sounddev, dword_C588A, textgrid, textgridon
 extern textcolor, textshadow, textoutlinedx, textoutlinedy, songdata, dword_CC0EC, dword_CCC94, musicslot
 extern musichandle, dword_D2C6B, fontcolor, dword_D8B68, dword_D8B74, pointerspr, dword_DC33C, dword_ED7B0
 extern fputchar, jctime, RunDemoGame_x, memcpy_, memset_, off_C6399, rand_, sprintf_
@@ -139,7 +139,7 @@ call sub_8F98F	; 16216
 mov dword [songdata], eax	; 1621B
 jmp short .13	; 16220
 .8:
-cmp dword [dword_C541F], byte 8	; 16222
+cmp dword [sounddev], byte 8	; 16222
 jne short .10	; 16229
 mov ecx, str_KMS	; 1622B
 mov ebx, str_Mttitle	; 16230
@@ -1217,7 +1217,7 @@ mov ebx, 3	; 1712C
 call sub_8FB8E	; 17131
 jmp near .12	; 17136
 .5:
-cmp dword [dword_C541F], byte 8	; 1713B
+cmp dword [sounddev], byte 8	; 1713B
 jne short .7	; 17142
 mov ecx, str_KMS	; 17144
 mov ebx, str_Adtitle	; 17149
