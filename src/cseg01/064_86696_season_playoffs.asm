@@ -3715,6 +3715,10 @@ pop ecx	; 89220
 pop ebx	; 89221
 ret	; 89222
 %endif ; C
+; C: src/c/064_86696_season_playoffs/LoadScheduleDB.c (SaveScheduleDB)
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/LoadScheduleDB.SaveScheduleDB.inc"
+%else
 SaveScheduleDB:
 push dword 60h	; 89223
 call __CHK	; 89228
@@ -3741,6 +3745,7 @@ push eax	; 8925D
 call sub_932D0	; 8925E
 add esp, byte 0Ch	; 89263
 jmp short LoadScheduleDB_x	; 89266
+%endif ; C
 PlayoffModeLoop:
 push dword 58h	; 89268
 call __CHK	; 8926D

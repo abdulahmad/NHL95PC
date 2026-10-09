@@ -240,6 +240,7 @@ def frag(src, obj, out):
     except ImportError:
         Cs = None
     xb = {}
+    xb8 = {}
     if multi:
         if Cs is None: raise SystemExit('capstone needed for multi-block C files (pip install capstone)')
         for i in Cs(CS_ARCH_X86, CS_MODE_32).disasm(text[s0:s0 + n], s0):
@@ -248,7 +249,8 @@ def frag(src, obj, out):
             if any(k in fx for k in range(a, a + i.size)): continue
             t = int(i.op_str, 16)
             if s0 <= t < s0 + n: continue
-            if i.size == 2: raise SystemExit('%s: short branch at %s+%X leaves the block' % (src, func, a))
+            if i.size == 2:  # short branch into another block of the file (a shared tail): rel8 to its label
+                xb8[a + 1] = textlabel(t); continue
             xb[a + i.size - 4] = textlabel(t)
     cuts = {}
     for nm, a in labels: cuts.setdefault(a - start, []).append(nm)
@@ -267,10 +269,12 @@ def frag(src, obj, out):
                 tgt = '%s%+d' % (f['target'], f['addend']) if f['addend'] else f['target']
             lines.append('dd %s' % tgt if f['kind'] == 'abs32' else 'dd (%s)-($+4)' % tgt)
             pos += 4; continue
+        if pos in xb8:
+            flush(); lines.append('db (%s)-($+1)' % xb8[pos]); pos += 1; continue
         if pos in xb:
             flush(); lines.append('dd (%s)-($+4)' % xb[pos]); pos += 4; continue
         row.append(text[s0 + pos]); pos += 1
-        if len(row) == 16 or pos in cuts or pos in fx or pos in xb: flush()
+        if len(row) == 16 or pos in cuts or pos in fx or pos in xb or pos in xb8: flush()
     flush()
     for nm in cuts.get(pos, []): lines.append('%s:' % nm)
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
