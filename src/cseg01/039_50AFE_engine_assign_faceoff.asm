@@ -18,7 +18,7 @@ extern vtoa, regd4, camx, camy, passdir, word_C90A6, passplayer, xc1
 extern yc1, fox, foy, fodir1, fodir2, c1playernum, c2playernum, cont1team
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
 extern energywarn, lcblink, lcboxon, word_CBE8C, word_CBE8E
-extern ovltimer, fadeinpending, word_CBEC6, bannermsg, word_CBECC, word_CBECE, crowdlevel, hmscore
+extern ovltimer, fadeinpending, word_CBEC6, bannermsg, ovlseq, ovlstep, crowdlevel, hmscore
 extern hmtmline, hmtmlcnt, hmtmpdst, awscore, awtmline, awtmlcnt
 extern puckstruct, sortobj15
 extern word_E0390, word_E0392, word_E0394, word_E0396
@@ -1425,7 +1425,7 @@ je near TakePlayerFromBox_ret6	; 51C6B
 and byte [byte esi+pflags], 0FDh	; 51C71
 cmp dword [introskipped], byte 0	; 51C75
 je short .3	; 51C7C
-mov eax, dword [word_CBECC-2]	; 51C7E
+mov eax, dword [ovlseq-2]	; 51C7E
 sar eax, 10h	; 51C83
 cmp eax, byte 0FFFFFFFFh	; 51C86
 je short .3	; 51C89
@@ -1446,9 +1446,9 @@ mov dword [joysampling], eax	; 51CC1
 mov edi, 0FFFFFFFFh	; 51CC6
 mov word [bannermsg], di	; 51CCB
 mov eax, edi	; 51CD2
-mov word [word_CBECE], di	; 51CD4
+mov word [ovlstep], di	; 51CD4
 mov edx, edi	; 51CDB
-mov word [word_CBECC], di	; 51CDD
+mov word [ovlseq], di	; 51CDD
 mov ebx, edi	; 51CE4
 mov word [ovltimer], di	; 51CE6
 xor ecx, ecx	; 51CED
@@ -2992,7 +2992,7 @@ ret	; 53236
 call PaSpeechBusy	; 53237
 test eax, eax	; 5323C
 jne short .x	; 5323E
-mov eax, dword [word_CBECC-2]	; 53240
+mov eax, dword [ovlseq-2]	; 53240
 sar eax, 10h	; 53245
 cmp eax, byte 0FFFFFFFFh	; 53248
 jne short .x	; 5324B

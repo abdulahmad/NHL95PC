@@ -556,7 +556,7 @@
 ;  66497  LoadTeamPPV                              cseg01/046_644A8_engine_display.asm          3
 ;  665AD  DrawTextOverlay                          cseg01/046_644A8_engine_display.asm          1
 ;  66DDA  CloseTextOverlay                         cseg01/046_644A8_engine_display.asm          3
-;  66E06  sub_66E06                                cseg01/046_644A8_engine_display.asm          1
+;  66E06  UpdateTextOverlay                        cseg01/046_644A8_engine_display.asm          1
 ;  66FE2  DrawCallBanner                           cseg01/046_644A8_engine_display.asm          1
 ;  671E8  ShowGoalieBanner                         cseg01/046_644A8_engine_display.asm          1
 ;  672F9  SetTeamGoalie                            cseg01/046_644A8_engine_display.asm          1
@@ -565,7 +565,7 @@
 ;  67581  ReplayFirstFrame                         cseg01/046_644A8_engine_display.asm          1
 ;  675D6  updatereplay                             cseg01/046_644A8_engine_display.asm          1
 ;  67900  ReplayStep                               cseg01/046_644A8_engine_display.asm          1
-;  67DCC  sub_67DCC                                cseg01/046_644A8_engine_display.asm          1
+;  67DCC  DrawRinkSideObjects                      cseg01/046_644A8_engine_display.asm          1
 ;  69336  StartHL2                                 cseg01/048_69336_game_frame.asm              1
 ;  6A033  sub_6A033                                cseg01/049_6A033_zonemgr.asm                 1
 ;  6A0F6  sub_6A0F6                                cseg01/049_6A033_zonemgr.asm                 1
@@ -3916,8 +3916,8 @@
 ;  CBEC6  word_CBEC6                               dseg02/035_C9078_data_engine_35.asm          8
 ;  CBEC8  bannermsg                                dseg02/035_C9078_data_engine_35.asm          9
 ;  CBECA  bannertimer                              dseg02/035_C9078_data_engine_35.asm          12
-;  CBECC  word_CBECC                               dseg02/035_C9078_data_engine_35.asm          11
-;  CBECE  word_CBECE                               dseg02/035_C9078_data_engine_35.asm          7
+;  CBECC  ovlseq                                   dseg02/035_C9078_data_engine_35.asm          11
+;  CBECE  ovlstep                                  dseg02/035_C9078_data_engine_35.asm          7
 ;  CBED0  off_CBED0                                dseg02/036_CBED0_data_frontend_36.asm        2
 ;  CBEFC  unk_CBEFC                                dseg02/036_CBED0_data_frontend_36.asm        1
 ;  CBF04  unk_CBF04                                dseg02/036_CBED0_data_frontend_36.asm        1
@@ -5818,7 +5818,7 @@
 ;  E0220  dword_E0220                              dseg02/085_DF7CA_data_engine_85.asm          2
 ;  E0230  dword_E0230                              dseg02/085_DF7CA_data_engine_85.asm          2
 ;  E0244  dword_E0244                              dseg02/085_DF7CA_data_engine_85.asm          7
-;  E0248  dword_E0248                              dseg02/085_DF7CA_data_engine_85.asm          2
+;  E0248  ovlscript                                dseg02/085_DF7CA_data_engine_85.asm          2
 ;  E024C  byte_E024C                               dseg02/085_DF7CA_data_engine_85.asm          3
 ;  E024D  byte_E024D                               dseg02/085_DF7CA_data_engine_85.asm          2
 ;  E024E  word_E024E                               dseg02/085_DF7CA_data_engine_85.asm          2
@@ -5877,8 +5877,8 @@
 ;  E9AAC  periodendtime                            dseg02/087_E9A11_data_engine_87.asm          4
 ;  E9AAE  word_E9AAE                               dseg02/087_E9A11_data_engine_87.asm          5
 ;  E9AB0  word_E9AB0                               dseg02/087_E9A11_data_engine_87.asm          3
-;  E9AB2  word_E9AB2                               dseg02/087_E9A11_data_engine_87.asm          2
-;  E9AB4  word_E9AB4                               dseg02/087_E9A11_data_engine_87.asm          2
+;  E9AB2  ovlsteptimer                             dseg02/087_E9A11_data_engine_87.asm          2
+;  E9AB4  ovlstepidx                               dseg02/087_E9A11_data_engine_87.asm          2
 ;  E9AB6  dword_E9AB6                              dseg02/087_E9A11_data_engine_87.asm          5
 ;  E9AB7  dword_E9AB7                              dseg02/087_E9A11_data_engine_87.asm          1
 ;  E9AB8  PerTimeTotal                             dseg02/087_E9A11_data_engine_87.asm          6

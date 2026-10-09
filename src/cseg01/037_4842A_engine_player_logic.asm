@@ -31,7 +31,7 @@ extern yc1, fox, foy, fodir1, fodir2, c1playernum, c2playernum, VisTeam
 extern Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, gsp, gameclock, clockticks
 extern dirtab_y, word_CBC44, exitgame, gameover, energywarn, lcblink
 extern lcblinktime, lcsel, lcline, lctimer, lcboxon, ovltimer, fadeinpending
-extern word_CBEC6, bannermsg, word_CBECC, word_CBECE, crowdlevel, word_CC9EA, word_CC9EC, word_CCA18
+extern word_CBEC6, bannermsg, ovlseq, ovlstep, crowdlevel, word_CC9EA, word_CC9EC, word_CCA18
 extern word_CCA1A, word_CCA1C, word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E
 extern word_CCA70, word_CCA9C, word_DC242, word_DC248, word_DC24E, hmscore, hmtmap, word_DF65A
 extern awscore, awtmap, puckcross, word_DF816, word_DF81A
@@ -1060,7 +1060,7 @@ mov word [energywarn+2], bx	; 48FBD
 mov word [energywarn], bx	; 48FC4
 mov word [lcrequest+2], bx	; 48FCB
 mov word [lcrequest], bx	; 48FD2
-mov eax, dword [word_CBECC-2]	; 48FD9
+mov eax, dword [ovlseq-2]	; 48FD9
 sar eax, 10h	; 48FDE
 cmp eax, byte 0FFFFFFFFh	; 48FE1
 je short .1	; 48FE4
@@ -1071,8 +1071,8 @@ add esp, byte 4	; 48FF2
 .1:
 mov edx, 0FFFFFFFFh	; 48FF5
 mov word [bannermsg], dx	; 48FFA
-mov word [word_CBECE], dx	; 49001
-mov word [word_CBECC], dx	; 49008
+mov word [ovlstep], dx	; 49001
+mov word [ovlseq], dx	; 49008
 xor dl, dl	; 4900F
 mov byte [textline5], dl	; 49011
 mov byte [textline4], dl	; 49017
@@ -8099,7 +8099,7 @@ cmp word [crowdlevel], 2BCh	; 4E86B
 jg near .12	; 4E874
 xor eax, eax	; 4E87A
 call LoadTeamPPV	; 4E87C
-mov eax, dword [word_CBECC-2]	; 4E881
+mov eax, dword [ovlseq-2]	; 4E881
 sar eax, 10h	; 4E886
 cmp eax, byte 0FFFFFFFFh	; 4E889
 je short .12	; 4E88C
@@ -8115,7 +8115,7 @@ cmp edx, byte 1	; 4E8A4
 jne short .9	; 4E8A7
 mov eax, 2	; 4E8A9
 call LoadTeamPPV	; 4E8AE
-mov eax, dword [word_CBECC-2]	; 4E8B3
+mov eax, dword [ovlseq-2]	; 4E8B3
 sar eax, 10h	; 4E8B8
 cmp eax, byte 0FFFFFFFFh	; 4E8BB
 je short .12	; 4E8BE
@@ -8483,7 +8483,7 @@ sub esp, byte 8	; 4ED8C
 mov ebx, eax	; 4ED8F
 test byte [byte eax+pflags], 20h	; 4ED91
 jne near .64	; 4ED95
-mov dx, word [word_CBECC]	; 4ED9B
+mov dx, word [ovlseq]	; 4ED9B
 cmp dx, byte 2	; 4EDA2
 je near .5	; 4EDA6
 test dx, dx	; 4EDAC
@@ -8668,7 +8668,7 @@ xor dh, dh	; 4F063
 mov byte [dword eax+byte_DF87F], dh	; 4F065
 mov eax, 8	; 4F06B
 call LoadTeamPPV	; 4F070
-mov eax, dword [word_CBECC-2]	; 4F075
+mov eax, dword [ovlseq-2]	; 4F075
 sar eax, 10h	; 4F07A
 cmp eax, byte 0FFFFFFFFh	; 4F07D
 je short .20	; 4F080
@@ -9231,7 +9231,7 @@ mov word [byte ebx+Xvel], ax	; 4F799
 call PaSpeechBusy	; 4F79D
 test eax, eax	; 4F7A2
 jne near ass_popx	; 4F7A4
-mov eax, dword [word_CBECC-2]	; 4F7AA
+mov eax, dword [ovlseq-2]	; 4F7AA
 sar eax, 10h	; 4F7AF
 cmp eax, byte 0FFFFFFFFh	; 4F7B2
 jne near ass_popx	; 4F7B5

@@ -23,11 +23,11 @@ extern lseek_, ltx, teamabbrevs, puckx, pucky, puckvy, puckz, puckc
 extern penaltynames, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
 extern strcpy_, strlen_, DrawFrameSprite, FileOpenRW, FileClose, FileWriteAt, PanelAddPenalty, PanelRemovePenalty
 extern MenuCallbackTrue, DrawSprite, PlayCrowdSample, PaSpeechBusy, PaPenalty, PaPenaltyShot, restorepl, setplayer
-extern LoadTeamPPV, CloseTextOverlay, sub_66E06, sub_8EA18, FatalError, unk_C1B49, str_B3, str_B4
+extern LoadTeamPPV, CloseTextOverlay, UpdateTextOverlay, sub_8EA18, FatalError, unk_C1B49, str_B3, str_B4
 extern str_B5, str_B6, str_B7, str_B8, str_S8, unk_C5423, unk_C542E, hmteamrec
 extern SortCords, unk_E9B4C, word_C5428, fox, foy, c1playernum, c2playernum
 extern cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, word_C90D8
-extern gsp, gameclock, clockticks, word_CBC44, ovltimer, word_CBEC6, bannermsg, word_CBECC
+extern gsp, gameclock, clockticks, word_CBC44, ovltimer, word_CBEC6, bannermsg, ovlseq
 extern word_CC0B0, crowdlevel, word_CCEF8, word_CD39C, word_DEE94, hmscore, word_DF644, hmtmap
 extern hmtmgoalie, awscore, awtmap, word_DFF42, regd2, regd3, regd1
 extern joysampling_save, CwdExciteLvl, periodendtime, word_E9AAE, PerTimeTotal, lty, word_E9B2C
@@ -2195,7 +2195,7 @@ jne near .33	; 62F13
 .1:
 cmp byte [PenBuf], 0	; 62F19
 jne near .8	; 62F20
-mov bx, word [word_CBECC]	; 62F26
+mov bx, word [ovlseq]	; 62F26
 test bx, bx	; 62F2D
 je short .2	; 62F30
 cmp bx, byte 2	; 62F32
@@ -3175,7 +3175,7 @@ push esi	; 63C18
 push edi	; 63C19
 test byte [gmode], 1	; 63C1A
 je near chkprogress_x	; 63C21
-call sub_66E06	; 63C27
+call UpdateTextOverlay	; 63C27
 mov dx, word [word_CC0B0]	; 63C2C
 test dx, dx	; 63C33
 jl short .1	; 63C36

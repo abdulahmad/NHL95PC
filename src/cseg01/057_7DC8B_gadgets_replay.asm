@@ -14,7 +14,7 @@ extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED
 extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, jctime, camx_m2, off_CD4FA
 extern rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace, rand_, SetScreenSize, DrawFrameSprite, FadePalette
 extern MakePath, SetDialogColors, RestoreDialogBg, MessageBox, SetRinkScroll, CrowdNoiseOff, ReplayFirstFrame, ReplayStep
-extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, GetInputEvent, ClearInputQueue, HilightSaveToDlg
+extern DrawRinkSideObjects, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, GetInputEvent, ClearInputQueue, HilightSaveToDlg
 extern SaveHilight, NudgeRinkScroll, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
 extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B396E, sub_B3989, sub_B3999, sub_B4BA8, sub_B4BC4
@@ -637,7 +637,7 @@ mov edx, dword [viewscrolly-2]	; 7E3D9
 sar edx, 10h	; 7E3DF
 mov eax, dword [viewscrollx-2]	; 7E3E2
 sar eax, 10h	; 7E3E7
-call sub_67DCC	; 7E3EA
+call DrawRinkSideObjects	; 7E3EA
 mov eax, dword [bgscrolly-2]	; 7E3EF
 sar eax, 10h	; 7E3F4
 shl eax, 3	; 7E3F7
@@ -817,7 +817,7 @@ mov edx, dword [viewscrolly-2]	; 7E6B1
 sar edx, 10h	; 7E6B7
 mov eax, dword [viewscrollx-2]	; 7E6BA
 sar eax, 10h	; 7E6BF
-call sub_67DCC	; 7E6C2
+call DrawRinkSideObjects	; 7E6C2
 cmp dword [gadgetptry], 0A8h	; 7E6C7
 jge near .28	; 7E6D1
 mov edx, dword [dword_ED74C]	; 7E6D7

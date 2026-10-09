@@ -31,7 +31,7 @@ extern camy, lastplayer, xc1, yc1, fox, foy, fodir1, fodir2
 extern c1playernum, c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks
 extern word_CBC44, exitgame, gameover, PerTimeTab, energywarn, lcblink
 extern lcline, lcboxon, ovltimer, fadeinpending, word_CBEC6, bannermsg
-extern word_CBECC, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CCCA8, hmscore, hmtmline
+extern ovlseq, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CCCA8, hmscore, hmtmline
 extern hmtmlcnt, hmtmgoalie, word_DF656, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
 extern awtmgoalie, word_DF756, word_DF80E, puckcross
 extern word_E0036, lcrequest
@@ -3176,7 +3176,7 @@ cmp bx, byte 20h	; 5C472
 je short .5	; 5C476
 cmp bx, byte 23h	; 5C478
 je short .5	; 5C47C
-mov si, word [word_CBECC]	; 5C47E
+mov si, word [ovlseq]	; 5C47E
 cmp si, byte 2	; 5C485
 je short .1	; 5C489
 test si, si	; 5C48B

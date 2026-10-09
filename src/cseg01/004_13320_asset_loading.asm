@@ -26,7 +26,7 @@ extern lastplayer, passdir, word_C90A6, passplayer, fox, foy, Pencntdwn, Penalty
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, word_CBC44, exitgame, gameover
 extern energywarn, lcblink, lcblinktime, lcsel, word_CBC60
 extern lcline, lctimer, lcboxon, word_CBE8C, word_CBE8E
-extern ovltimer, word_CBEC2, fadeinpending, word_CBEC6, bannermsg, word_CBECC, word_CBECE, word_CC0B0
+extern ovltimer, word_CBEC2, fadeinpending, word_CBEC6, bannermsg, ovlseq, ovlstep, word_CC0B0
 extern crowdlevel, word_DEE94, hmtmap, awtmap, word_E024E, lcrequest, lcreqchoice
 extern regd2, regd0, regd1, word_E9A9C, joysampling_save, word_E9AA2, word_E9AA4
 extern word_E9AA6, CwdExciteLvl, word_E9AAA, word_E9AAE, word_E9B2C
@@ -1125,8 +1125,8 @@ mov word [word_CBEC6], ax	; 1417D
 mov word [word_CBEC2], ax	; 14183
 mov ecx, edx	; 14189
 mov word [bannermsg], dx	; 1418B
-mov word [word_CBECE], dx	; 14192
-mov word [word_CBECC], dx	; 14199
+mov word [ovlstep], dx	; 14192
+mov word [ovlseq], dx	; 14199
 xor ch, dh	; 141A0
 mov byte [textline5], ch	; 141A2
 xor al, al	; 141A8

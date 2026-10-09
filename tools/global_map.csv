@@ -2174,11 +2174,16 @@ energywarn,CBC52,"per-team word (home, away): 1 while one of the team's skaters 
 bannermsg,CBEC8,"index into the call banner strings off_CD4DC (-1 none); set by offside/icing/faceoff/penalty code, drawn by DrawCallBanner"
 bannertimer,CBECA,word: frames left for the call banner (50h typical); cleared with bannermsg
 bannerstrs,CD4DC,pointer table of the call banner strings indexed by bannermsg (DrawCallBanner)
-str_BnReturnGoalie,C1D64,"string 'RETURN GOALIE'"
-str_BnPullGoalie,C1D72,"string 'PULL GOALIE'"
-str_BnFaceOff,C1D7E,"string 'FACE-OFF'"
-str_BnTwoLinePass,C1D87,"string '2 LINE PASS'"
-str_BnOffside,C1D93,"string 'OFFSIDE'"
-str_BnIcing,C1D9B,"string 'ICING'"
-str_BnPenalty,C1DA1,"string 'PENALTY'"
-str_BnPenaltyShot,C1DA9,"string 'PENALTY SHOT'"
+str_BnReturnGoalie,C1D64,string 'RETURN GOALIE'
+str_BnPullGoalie,C1D72,string 'PULL GOALIE'
+str_BnFaceOff,C1D7E,string 'FACE-OFF'
+str_BnTwoLinePass,C1D87,string '2 LINE PASS'
+str_BnOffside,C1D93,string 'OFFSIDE'
+str_BnIcing,C1D9B,string 'ICING'
+str_BnPenalty,C1DA1,string 'PENALTY'
+str_BnPenaltyShot,C1DA9,string 'PENALTY SHOT'
+ovlseq,CBECC,current overlay script id (-1 none); UpdateTextOverlay indexes byte_CC049 / word_CC054 with it
+ovlstep,CBECE,current overlay script step value (byte of the script at ovlstepidx); DrawTextOverlay and sub_665AD callers read it
+ovlstepidx,E9AB4,"index of the current step in the overlay script, advanced by UpdateTextOverlay"
+ovlsteptimer,E9AB2,frames left in the current overlay step (from word_CC054[ovlseq])
+ovlscript,E0248,pointer to the loaded overlay script bytes (cleared when the sequence ends)

@@ -14,7 +14,7 @@ extern sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, crowdsmo
 extern dword_D8C78, curperiod, photobanks, dword_DB088, dword_DC28C, savedmousex, savedmousey, hmtmstruct
 extern dword_DF6F2, dword_DF6F6, hmtmplstats, dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
 extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2
-extern awtmsort, dword_E009C, dword_E0248, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
+extern awtmsort, dword_E009C, ovlscript, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
 extern ltx, replaystart, off_CC01D, passspeed, LoadGameGfx, FileReadAt, FileWriteAt, LoadGameTeams
 extern SaveModeState, LoadModeState, GetPeriodTime, SprSort, BuildEventLines, LoadTeamPalette, ReplayRecordReset, LoadRockMusic
 extern FatalError, MouseSetPos, threat, exhstate, unk_C5423, unk_C542E, awlinetab, unk_DAC40
@@ -25,11 +25,11 @@ extern fodir1, fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, 
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
 extern exitgame, gameover, energywarn, lcblink, lcblinktime
 extern lcsel, word_CBC60, lcline, lctimer, lcboxon
-extern word_CBD64, word_CBD66, ovltimer, word_CBEC2, fadeinpending, word_CBEC6, bannermsg, word_CBECC
-extern word_CBECE, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CC10C, word_CCEF8, word_DEE94
+extern word_CBD64, word_CBD66, ovltimer, word_CBEC2, fadeinpending, word_CBEC6, bannermsg, ovlseq
+extern ovlstep, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CC10C, word_CCEF8, word_DEE94
 extern word_DEE96, word_DEF84, word_DEF88, puckcross, word_E024E, lcrequest, lcreqchoice
 extern word_E0390, OOlistpos, word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, CwdExciteLvl
-extern word_E9AAA, periodendtime, word_E9AAE, word_E9AB0, word_E9AB2, word_E9AB4, PerTimeTotal, lj2
+extern word_E9AAA, periodendtime, word_E9AAE, word_E9AB0, ovlsteptimer, ovlstepidx, PerTimeTotal, lj2
 extern lj1, lasttouch, lty, word_E9B2C
 global SaveGameState, SaveGameState_popx, LoadGameState
 SaveGameState:
@@ -512,16 +512,16 @@ add eax, byte 2	; 6026B
 inc ebp	; 6026E
 cmp ebp, byte 14h	; 6026F
 jl short SaveGameState.13	; 60272
-mov dx, word [word_CBECC]	; 60274
+mov dx, word [ovlseq]	; 60274
 mov word [eax], dx	; 6027B
 add eax, byte 2	; 6027E
-mov dx, word [word_CBECE]	; 60281
+mov dx, word [ovlstep]	; 60281
 mov word [eax], dx	; 60288
 add eax, byte 2	; 6028B
-mov dx, word [word_E9AB2]	; 6028E
+mov dx, word [ovlsteptimer]	; 6028E
 mov word [eax], dx	; 60295
 add eax, byte 2	; 60298
-mov dx, word [word_E9AB4]	; 6029B
+mov dx, word [ovlstepidx]	; 6029B
 mov word [eax], dx	; 602A2
 add eax, byte 2	; 602A5
 mov dx, word [shotongoal]	; 602A8
@@ -1354,16 +1354,16 @@ mov dword [dword esp+010Ch], ecx	; 60E69
 cmp ecx, byte 14h	; 60E70
 jl near LoadGameState.14	; 60E73
 mov ax, word [ebx]	; 60E79
-mov word [word_CBECC], ax	; 60E7C
+mov word [ovlseq], ax	; 60E7C
 add ebx, byte 2	; 60E82
 mov ax, word [ebx]	; 60E85
-mov word [word_CBECE], ax	; 60E88
+mov word [ovlstep], ax	; 60E88
 add ebx, byte 2	; 60E8E
 mov ax, word [ebx]	; 60E91
-mov word [word_E9AB2], ax	; 60E94
+mov word [ovlsteptimer], ax	; 60E94
 add ebx, byte 2	; 60E9A
 mov ax, word [ebx]	; 60E9D
-mov word [word_E9AB4], ax	; 60EA0
+mov word [ovlstepidx], ax	; 60EA0
 add ebx, byte 2	; 60EA6
 movsx eax, word [ebx]	; 60EA9
 mov dword [shotongoal], eax	; 60EAC
@@ -1653,16 +1653,16 @@ mov eax, photobanks	; 612C2
 call __STOSD	; 612C7
 xor ecx, ecx	; 612CC
 mov dword [photobankf], ecx	; 612CE
-mov eax, dword [word_CBECC-2]	; 612D4
+mov eax, dword [ovlseq-2]	; 612D4
 sar eax, 10h	; 612D9
 cmp eax, ebx	; 612DC
 je short .35	; 612DE
-mov edx, dword [word_CBECE-2]	; 612E0
+mov edx, dword [ovlstep-2]	; 612E0
 sar edx, 10h	; 612E6
 cmp edx, ebx	; 612E9
 je short .35	; 612EB
 mov eax, dword [nosplit eax*4+off_CC01D]	; 612ED
-mov dword [dword_E0248], eax	; 612F4
+mov dword [ovlscript], eax	; 612F4
 .35:
 call BuildEventLines	; 612F9
 mov eax, dword [replaystart]	; 612FE

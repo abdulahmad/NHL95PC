@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_1167B progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, awardtype, VisTeam, bgscrollx, camy, clockticks, scrollx, word_CBECE
+extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, awardtype, VisTeam, bgscrollx, camy, clockticks, scrollx, ovlstep
 extern curleague, sflags, musicon, byte_D9299, awardwinners, fileoncd, joysampling, gameopts
 extern inputframes, escrequest, demomode, gameresult, gamemode, hudclockmin, hudclocksec, hudclockhund
 extern deferpending, rinkscrollx, rinkscrolly, cont2team, HomeTeam, bannertimer, dword_CC080, introskipped
@@ -21,7 +21,7 @@ extern sub_6AF97, sub_6B008, LoadRockMusic, SpeechStopQueue, MusicChanReset, Sel
 extern sub_8F633, sub_8FFB0, sub_90354, sub_9035C, MouseSetPos, sub_B396E, sub_B4BA8, str_backslash
 extern cupteam, presidentsteam, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690
 extern unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, treeteamnames, savepal, gamepal, camx
-extern gsp, gameclock, word_CBC44, exitgame, gameover, fadeinpending, word_CBECC, scrolly
+extern gsp, gameclock, word_CBC44, exitgame, gameover, fadeinpending, ovlseq, scrolly
 extern lcrequest, joysampling_save
 global assinsert, assreplace
 global PickAwardWinners_x
@@ -310,13 +310,13 @@ mov eax, dword [HomeTeam-2]	; 11AC3
 sar eax, 10h	; 11AC8
 xor ecx, ecx	; 11ACB
 call DrawHudPanel	; 11ACD
-mov eax, dword [word_CBECC-2]	; 11AD2
+mov eax, dword [ovlseq-2]	; 11AD2
 sar eax, 10h	; 11AD7
 add dword [rinkscrollx], 3E8h	; 11ADA
 add dword [rinkscrolly], 3E8h	; 11AE4
 cmp eax, byte 0FFFFFFFFh	; 11AEE
 je near .22	; 11AF1
-mov edx, dword [word_CBECE-2]	; 11AF7
+mov edx, dword [ovlstep-2]	; 11AF7
 sar edx, 10h	; 11AFD
 cmp edx, byte 0FFFFFFFFh	; 11B00
 je near .22	; 11B03
@@ -551,13 +551,13 @@ mov eax, dword [HomeTeam-2]	; 11E92
 sar eax, 10h	; 11E97
 xor ecx, ecx	; 11E9A
 call DrawHudPanel	; 11E9C
-mov eax, dword [word_CBECC-2]	; 11EA1
+mov eax, dword [ovlseq-2]	; 11EA1
 sar eax, 10h	; 11EA6
 add dword [rinkscrollx], 3E8h	; 11EA9
 add dword [rinkscrolly], 3E8h	; 11EB3
 cmp eax, byte 0FFFFFFFFh	; 11EBD
 je near .13	; 11EC0
-mov edx, dword [word_CBECE-2]	; 11EC6
+mov edx, dword [ovlstep-2]	; 11EC6
 sar edx, 10h	; 11ECC
 cmp edx, byte 0FFFFFFFFh	; 11ECF
 je near .13	; 11ED2

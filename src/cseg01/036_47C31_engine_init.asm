@@ -14,7 +14,7 @@ extern PlayCrowdSample, DrawRinkOverlays, SprSort, LoadTeamPPV, CloseTextOverlay
 extern sub_6B008, SpeechStopQueue, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
 extern savepal, gamepal, unk_DFD9C, camx, camy, xc1, yc1, SortCords
 extern fox, foy, c1playernum, c2playernum, RefStep, exitgame, energywarn
-extern lcblink, fadeinpending, word_CBECC, word_CC9CC, scrolly
+extern lcblink, fadeinpending, ovlseq, word_CC9CC, scrolly
 extern word_E0022, word_E0028, word_E002A, word_E002E
 extern word_E0042, word_E0046, word_E0048, word_E004A, regd1, joysampling_save
 global PreGameIntro_scroll
@@ -312,7 +312,7 @@ mov word [camy], si	; 48068
 mov word [yc1], si	; 4806F
 mov dword [viewscrollx], 20h	; 48076
 mov dword [viewscrolly], 0ECh	; 48080
-mov eax, dword [word_CBECC-2]	; 4808A
+mov eax, dword [ovlseq-2]	; 4808A
 sar eax, 10h	; 4808F
 cmp eax, byte 0FFFFFFFFh	; 48092
 je short .17	; 48095
@@ -430,7 +430,7 @@ jmp near ThreeStarsLoop_tick	; 48249
 PreGameIntro_end:
 xor esi, esi	; 4824E
 mov dword [joysampling], esi	; 48250
-mov eax, dword [word_CBECC-2]	; 48256
+mov eax, dword [ovlseq-2]	; 48256
 sar eax, 10h	; 4825B
 cmp eax, byte 0FFFFFFFFh	; 4825E
 je short .1	; 48261
@@ -438,7 +438,7 @@ mov edi, dword [dword_E0244]	; 48263
 push edi	; 48269
 call jctime	; 4826A
 add esp, byte 4	; 4826F
-mov word [word_CBECC], 0FFFFh	; 48272
+mov word [ovlseq], 0FFFFh	; 48272
 .1:
 mov ebp, dword [escrequest]	; 4827B
 test ebp, ebp	; 48281

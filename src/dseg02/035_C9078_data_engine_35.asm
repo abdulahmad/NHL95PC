@@ -22,7 +22,7 @@ global RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, dirtab_y
 global debugstep, word_CBC44, exitgame, gameover, PerTimeTab, energywarn, lcblink
 global lcblinktime, lcsel, word_CBC60, lcline, lctimer
 global lcboxon, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, ovltimer
-global word_CBEC2, fadeinpending, word_CBEC6, bannermsg, word_CBECC, word_CBECE
+global word_CBEC2, fadeinpending, word_CBEC6, bannermsg, ovlseq, ovlstep
 replaystart:
 dd unk_E0416
 puckx:
@@ -981,7 +981,7 @@ bannermsg:
 db 0FFh,0FFh
 bannertimer:
 db 00h,00h
-word_CBECC:
+ovlseq:
 db 0FFh,0FFh
-word_CBECE:
+ovlstep:
 db 0FFh,0FFh

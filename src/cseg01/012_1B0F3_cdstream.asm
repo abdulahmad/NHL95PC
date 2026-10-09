@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_1B0F3 progbits alloc exec nowrite align=1
-extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, joysampling, dword_C66B0, rinkbm, word_CBECC
+extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, joysampling, dword_C66B0, rinkbm, ovlseq
 extern bannertimer, photobankf, rinkendbank, numshpbank, photobanks, s1font, scrbrdshapes, cupseries
 extern dword_DC8A0, dword_DC8C8, dword_E0244, hilightfont, jctime, FreeRinkGfx, joyq_flush, CrowdNoiseOff
 extern GameOver, FreeRockMusic, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E4F8, sub_8EA18, sub_91FA4
@@ -748,7 +748,7 @@ push edi	; 1B990
 push ebp	; 1B991
 call CrowdNoiseOff	; 1B992
 call GameOver	; 1B997
-mov eax, dword [word_CBECC-2]	; 1B99C
+mov eax, dword [ovlseq-2]	; 1B99C
 sar eax, 10h	; 1B9A1
 cmp eax, byte 0FFFFFFFFh	; 1B9A4
 je short loc_1B9C4	; 1B9A7
@@ -906,7 +906,7 @@ call FreeRinkGfx	; 1BB3C
 call sub_8DAB8	; 1BB41
 cmp eax, ebp	; 1BB46
 jge short loc_1BB0E	; 1BB48
-mov eax, dword [word_CBECC-2]	; 1BB4A
+mov eax, dword [ovlseq-2]	; 1BB4A
 sar eax, 10h	; 1BB4F
 cmp eax, byte 0FFFFFFFFh	; 1BB52
 je short loc_1BB71	; 1BB55

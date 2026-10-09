@@ -19,7 +19,7 @@ extern SortCords, vtoa, camx, camy, passplayer, xc1, yc1
 extern c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, refsignal, RefStep, RefPen
 extern word_C90D8, gsp, gameclock, clockticks, word_CBC44, exitgame, gameover, energywarn
 extern lcblink, lcline, lcboxon, ovltimer
-extern fadeinpending, word_CBEC6, bannermsg, word_CBECC, word_CBECE, crowdlevel, scrolly, hmscore
+extern fadeinpending, word_CBEC6, bannermsg, ovlseq, ovlstep, crowdlevel, scrolly, hmscore
 extern hmtmline, word_DF644, hmtmap, hmtmgoalie, awscore, awtmline, word_DF744, word_DF746
 extern awtmap, awtmgoalie, word_DF816, word_DF81A
 extern word_E0022, word_E0028, word_E002A
@@ -116,7 +116,7 @@ mov eax, dword [byte esp+04h]	; 69486
 mov word [VisTeam], ax	; 6948A
 mov eax, 2	; 69490
 call LoadGameTeams	; 69495
-mov eax, dword [word_CBECC-2]	; 6949A
+mov eax, dword [ovlseq-2]	; 6949A
 sar eax, 10h	; 6949F
 cmp eax, byte 0FFFFFFFFh	; 694A2
 je short .3	; 694A5
@@ -252,9 +252,9 @@ mov word [word_C90D8], si	; 696C2
 mov word [ovltimer], si	; 696C9
 mov word [word_CBC44], di	; 696D0
 mov word [bannermsg], si	; 696D7
-mov word [word_CBECE], si	; 696DE
+mov word [ovlstep], si	; 696DE
 mov ebx, esi	; 696E5
-mov word [word_CBECC], si	; 696E7
+mov word [ovlseq], si	; 696E7
 xor ecx, esi	; 696EE
 mov word [bannertimer], cx	; 696F0
 xor esi, esi	; 696F7
@@ -626,7 +626,7 @@ je near StartHL2.17	; 69CD9
 .26:
 xor edx, edx	; 69CDF
 mov dword [joysampling], edx	; 69CE1
-mov eax, dword [word_CBECC-2]	; 69CE7
+mov eax, dword [ovlseq-2]	; 69CE7
 sar eax, 10h	; 69CEC
 cmp eax, byte 0FFFFFFFFh	; 69CEF
 je short .27	; 69CF2
@@ -637,8 +637,8 @@ add esp, byte 4	; 69D00
 .27:
 mov edi, 0FFFFFFFFh	; 69D03
 mov word [bannermsg], di	; 69D08
-mov word [word_CBECE], di	; 69D0F
-mov word [word_CBECC], di	; 69D16
+mov word [ovlstep], di	; 69D0F
+mov word [ovlseq], di	; 69D16
 xor ecx, ecx	; 69D1D
 mov dword [demomode], ecx	; 69D1F
 mov dword [dword_CCC98], ecx	; 69D25
