@@ -3,10 +3,23 @@
 Optional: if a local FUNCTION_MAPPINGS95.md is present (it is not in the repo), its claims are fact-checked
 against the listing and written to tools/fm95_check.json (gitignored); its function addresses without a Genesis
 match are also listed in the CSV as unmatched rows. The CSV itself has no FUNCTION_MAPPINGS95 columns.
-Run after build_segmap.py.  Writes name_map_94.csv and tools/matcher_stats.json"""
-import os, re, csv, json, pickle, bisect
+Hand-made rows live in tools/manual_names.csv (committed, same columns as the CSV) and are merged in last
+with priority: a manual row replaces whatever the evidence passes produced at that address, or is added.
+Address universe for the 'unmatched' rows: FUNCTION_MAPPINGS95.md when present (default --universe auto),
+otherwise every code function in tools/funcs.pkl (IDA procs + synthetic code functions from build_funcs.py).
+Run after build_segmap.py.  Writes name_map_94.csv and tools/matcher_stats.json
+  python3 tools/matcher.py [--universe auto|fm95|funcs] [--out name_map_94.csv]"""
+import os, re, csv, json, pickle, bisect, argparse, sys
 from collections import Counter
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+AP = argparse.ArgumentParser()
+AP.add_argument('--universe', choices=('auto', 'fm95', 'funcs'), default='auto')
+AP.add_argument('--out', default='name_map_94.csv')
+AP.add_argument('--manual', default='tools/manual_names.csv')
+ARGS = AP.parse_args()
+FM95 = 'FUNCTION_MAPPINGS95.md'
+UNIVERSE = ARGS.universe if ARGS.universe != 'auto' else ('fm95' if os.path.isfile(FM95) else 'funcs')
+if UNIVERSE == 'fm95' and not os.path.isfile(FM95): sys.exit('--universe fm95 needs a local ' + FM95)
 FD = pickle.load(open('tools/funcs.pkl', 'rb')); F = FD['funcs']; S = FD['strings']; n2a = FD['name2addr']
 R = pickle.load(open('tools/ref94.pkl', 'rb'))
 L94 = {}
@@ -35,11 +48,13 @@ def any_genesis(n):
     k = n.lower(); return k in R93 or k in L94 or k in L95 or k in L92
 # listing text per address range (for FM95 fact checks)
 LA, LT = [], []
-for ln in open('HOCKEY.EXE.lst', encoding='latin1', errors='replace'):
-    if ln.startswith('cseg01:'):
-        try: LA.append(int(ln[7:15], 16)); LT.append(ln)
-        except ValueError: pass
+def _load_lst():   # only needed for the optional FM95 cross-check
+    for ln in open('HOCKEY.EXE.lst', encoding='latin1', errors='replace'):
+        if ln.startswith('cseg01:'):
+            try: LA.append(int(ln[7:15], 16)); LT.append(ln)
+            except ValueError: pass
 def rtext(a, b):
+    if not LA: _load_lst()
     i = bisect.bisect_left(LA, a); j = bisect.bisect_left(LA, b)
     return ''.join(LT[i:j])
 SG = pickle.load(open('tools/segs.pkl', 'rb'))
@@ -64,7 +79,6 @@ DATA = [(0xC9161, 'asstab', 'data94.asm', 'medium', 'code-pointer table (47 dseg
         (0xC020C, 'awards names (95G awards95 role)', '', 'low', 'award name strings (Conn Smythe ...) - same role as 95G awards95 table; PC text/case differs', '95G', 'awards95')]
 
 # ---------------- FUNCTION_MAPPINGS95 (optional, local only) ----------------
-FM95 = 'FUNCTION_MAPPINGS95.md'
 rows95 = []
 for ln in (open(FM95, encoding='utf-8', errors='replace') if os.path.isfile(FM95) else []):
     if not ln.startswith('| `'): continue
@@ -153,7 +167,11 @@ for i, f in enumerate(F):
         else:
             out.append(['%08X' % f['start'], f['name'], f['name'], 'library', lib, '', '', conf, ev, segof(f['start']), 'flirt'])
         done.add(f['start'])
-for a, x in sorted(fm.items(), key=lambda t: t[0] or 0):
+if UNIVERSE == 'fm95':
+    univ = sorted(fm.items(), key=lambda t: t[0] or 0)
+else:   # function list from the listing: IDA procs + synthetic code functions (build_funcs.py)
+    univ = [(f['start'], dict(fname=f['name'])) for f in F if f['kind'] in ('proc', 'synth')]
+for a, x in univ:
     if a in done: continue
     i = byaddr.get(a)
     sg = segof(a) if a else ''
@@ -161,13 +179,29 @@ for a, x in sorted(fm.items(), key=lambda t: t[0] or 0):
     sgame = 'library' if seggrp in ('watcom', 'dos4gw', 'ealib', 'eacsndf', 'sounddrv', 'eagfx') else 'PC-new'
     out.append(['%08X' % a if a is not None else '', F[i]['name'] if i is not None else x['fname'], '', sgame, '', '', '', 'none',
                 'no Genesis counterpart established (front end/menus/PC libs are PC-original)', segof(a) if a else '', 'unmatched'])
+# ---------------- hand-made rows (tools/manual_names.csv) win ----------------
+manual = list(csv.DictReader(open(ARGS.manual, newline=''))) if os.path.isfile(ARGS.manual) else []
+byrow = {r[0]: k for k, r in enumerate(out)}
+n_repl = n_add = 0
+for m in manual:
+    a = '%08X' % int(m['pc_address'], 16)
+    row = [m.get(c, '') for c in cols]; row[0] = a
+    if not row[9]: row[9] = segof(int(a, 16))
+    if not row[1] and byaddr.get(int(a, 16)) is not None: row[1] = F[byaddr[int(a, 16)]]['name']
+    if a in byrow: out[byrow[a]] = row; n_repl += 1
+    else: out.append(row); byrow[a] = len(out) - 1; n_add += 1
 out.sort(key=lambda r: r[0])
-with open('name_map_94.csv', 'w', newline='') as fh:
+dup = Counter(r[2].split(' ')[0] for r in out if r[2])
+dups = {n: [r[0] for r in out if r[2].split(' ')[0] == n] for n, c in dup.items() if c > 1}
+for n, al in sorted(dups.items()):
+    print('warning: name %s proposed at %d addresses: %s' % (n, len(al), ' '.join(al)), file=sys.stderr)
+with open(ARGS.out, 'w', newline='') as fh:
     w = csv.writer(fh); w.writerow(cols); w.writerows(out)
 conf = Counter((r[3], r[7]) for r in out)
 conf = {'%s/%s' % k: v for k, v in sorted(conf.items())}
 gen_rows = [r for r in rows95 if r['gen'] not in ('(PC-specific)', 'Unknown')]
-st = dict(csv_rows=len(out), mapping_conf_94=dict(conf),
+st = dict(csv_rows=len(out), universe=UNIVERSE, manual_rows=len(manual), manual_replaced=n_repl, manual_added=n_add,
+          mapping_conf_94=dict(conf),
           library_rows=sum(1 for r in out if r[3] == 'library' and r[7] == 'high'))
 json.dump(st, open('tools/matcher_stats.json', 'w'), indent=1)
 if rows95:   # local-only cross-check of FUNCTION_MAPPINGS95.md (gitignored output)

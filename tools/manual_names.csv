@@ -1,0 +1,5 @@
+pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_game_names,confidence,evidence,segment,method
+000532BD,sub_532BD,burst,93G,logic93_1.asm,,,high,"manual trace: CCh energy cost, energy>>7 dir-vector push, same constants as 93G burst",engine_physics_ai,manual-trace
+0005F745,sub_5F745,dostop,93G,logic93_5.asm,checks94.asm,,high,manual trace: called from doplayeracc 5E16D when dir==9; |Xvel| or |Yvel| > 1000h -> SetSPA stop/glide (pfrev bit 44h.4) else falls to StopNA 5F82A; same $1000 test as 93G/94G dostop,engine_skating,manual-trace
+0005F82A,sub_5F82A,StopNA,93G,logic93_5.asm,checks94.asm,,high,manual trace: moves Xvel/Yvel toward 0 by a per-axis step without overshoot; called from dostop and goalie path 5F8B2; PC step = 200+legstr (goalie +2*legstr) vs 93G/94G fixed $96,engine_skating,manual-trace
+0005F8B2,sub_5F8B2,goalieacc,93G,logic93_5.asm,,,high,"manual trace: called by doplayeracc when position=0, dir 9=stop, callees match 93G goalieacc",engine_skating,manual-trace
