@@ -22,8 +22,10 @@ Needs `nasm` (2.15 or newer; tested with 2.16.03) and Python 3. No iced-x86, no 
 |---|---|
 | `src/cseg01/NNN_ADDR_module.asm` (198) | code object, one file per segment of `segmap95pc.json`, one NASM section `s_<ADDR>` per file |
 | `src/dseg02/NNN_ADDR_module.asm` (106) | data object: `db`/`dd sym` for initialised data, `resb` (nobits section) for BSS, labels in both |
-| `src/inc/x86enc.inc` | the `LD op, dst, src` macro (load-form reg,reg encodings), included by every file |
-| `src/inc/symbols.inc` | reference table of the 6,755 cross-segment symbols: address, name, defining file, number of users |
+| `src/inc/hockey.inc` | included by every file: `x86enc.inc` + `structs.inc` (equates and macros only, no bytes) |
+| `src/inc/x86enc.inc` | the `LD op, dst, src` macro (load-form reg,reg encodings) |
+| `src/inc/structs.inc` | structure field offsets with the Genesis names (player struct), from `tools/struct_fieldmap.csv` |
+| `src/inc/symbols.inc` | index of the 6,755 cross-segment symbols: address, name, defining file, number of users (`tools/update_symbols.py`) |
 | `src/segments.txt` | link list: object, start, end, initialised bytes, module, file |
 
 Build steps (`Makefile`; `build.sh` does the same without make):
@@ -45,9 +47,12 @@ or pad with `nop`). Moving code between segments needs `segmap95pc.json` + `gen_
 target just works. A new fixup source is appended as a new chunk by `order_fixups()`, so the EXE stays valid but no
 longer matches the sha1.
 
-Regenerating `src/` (maintainers; overwrites hand edits):
+Renaming: `tools/rename_symbol.py OLD NEW` changes a label everywhere, rebuilds (must MATCH, else everything is
+restored) and records the name in the maps; see SEGMENT_AGENT.md. `src/` is edited by hand from here on.
+
+Regenerating `src/` (maintainers only; it would overwrite hand edits, so it needs `--force` for `src/`):
 ```
-python3 tools/rebuild_exe.py extract && python3 tools/gen_src.py      # needs iced-x86 + the listing caches for names
+python3 tools/rebuild_exe.py extract && python3 tools/gen_src.py --out /tmp/src_fresh   # needs iced-x86 + the listing caches
 ```
 `gen_src.py` runs the `asm_proto.py` emitter on every segment and assembles each one. It checks bytes and fixups
 against the EXE before writing. The output is deterministic: a second run gives identical files.

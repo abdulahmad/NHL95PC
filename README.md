@@ -75,4 +75,7 @@ python3 tools/libmatch.py $WATCOM_ROOT/w10a/WATCOM/LIB386/DOS/CLIB3R.LIB   # lib
 
 ## Segment queue
 
-Not set up yet. `SEGMENT_AGENT.md` is a placeholder. The queue will follow the NHL95Genesis layout.
+[SEGMENT_AGENT.md](SEGMENT_AGENT.md) is the queue of the game segments of `src/` to name and comment. It follows the NHL94Genesis/NHL95Genesis layout. It has a current-segment marker, and the per-segment workflow, rules and conventions (Watcom register calls, NASM encodings, Genesis lineage). [PROMPT.md](PROMPT.md) is the prompt for one agent session, one segment. Tools:
+* `tools/rename_symbol.py` renames a symbol across `src/`, rebuilds (must MATCH) and records the name in the maps.
+* `tools/auto_names.py` lists what is still unnamed in a segment.
+* `tools/update_symbols.py` regenerates `src/inc/symbols.inc`.
