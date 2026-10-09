@@ -477,6 +477,10 @@ pop ecx	; 33466
 pop ebx	; 33467
 nullsub_6:
 ret	; 33468
+; C: src/c/025_32DA9_temp_files/MenuMergeLeagueFiles.c
+%ifdef CBUILD
+%include "c/025_32DA9_temp_files/MenuMergeLeagueFiles.inc"
+%else
 MenuMergeLeagueFiles:
 push dword 20h	; 33469
 call __CHK	; 3346E
@@ -527,6 +531,7 @@ pop edx	; 334F7
 pop ecx	; 334F8
 pop ebx	; 334F9
 ret	; 334FA
+%endif ; C
 MenuUpdateTeamDbs:
 push dword 4	; 334FB
 call __CHK	; 33500

@@ -57,6 +57,10 @@ mov edx, str_2minCor	; 842FA
 call strcpy_	; 842FF
 pop ebx	; 84304
 ret	; 84305
+; C: src/c/062_842BA_announcer/PlayoffRoundClipD.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/PlayoffRoundClipD.inc"
+%else
 PlayoffRoundClipD:
 push dword 10h	; 84306
 call __CHK	; 8430B
@@ -119,6 +123,11 @@ add esp, byte 8	; 8438A
 .x:
 pop ecx	; 8438D
 ret	; 8438E
+%endif ; C
+; C: src/c/062_842BA_announcer/PlayoffRoundClipU.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/PlayoffRoundClipU.inc"
+%else
 PlayoffRoundClipU:
 push dword 10h	; 8438F
 call __CHK	; 84394
@@ -181,6 +190,7 @@ add esp, byte 8	; 84413
 .x:
 pop ecx	; 84416
 ret	; 84417
+%endif ; C
 QueueSpeechClip:
 push dword 54h	; 84418
 call __CHK	; 8441D

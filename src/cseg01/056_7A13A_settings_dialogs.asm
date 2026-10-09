@@ -1895,6 +1895,10 @@ pop edx	; 7B730
 pop ecx	; 7B731
 pop ebx	; 7B732
 ret	; 7B733
+; C: src/c/056_7A13A_settings_dialogs/ModeSetHitTest.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/ModeSetHitTest.inc"
+%else
 ModeSetHitTest:
 push dword 0Ch	; 7B734
 call __CHK	; 7B739
@@ -1951,6 +1955,11 @@ mov eax, edx	; 7B7B9
 pop esi	; 7B7BB
 pop ecx	; 7B7BC
 ret	; 7B7BD
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/DrawModeSetChecks.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/DrawModeSetChecks.inc"
+%else
 DrawModeSetChecks:
 push dword 28h	; 7B7BE
 call __CHK	; 7B7C3
@@ -2010,6 +2019,7 @@ pop edx	; 7B842
 pop ecx	; 7B843
 pop ebx	; 7B844
 ret	; 7B845
+%endif ; C
 ModeSetViewLoop:
 push dword 3Ch	; 7B846
 call __CHK	; 7B84B
@@ -2874,6 +2884,10 @@ pop edx	; 7C289
 pop ecx	; 7C28A
 pop ebx	; 7C28B
 ret	; 7C28C
+; C: src/c/056_7A13A_settings_dialogs/ExhSetHitTest.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/ExhSetHitTest.inc"
+%else
 ExhSetHitTest:
 push dword 0Ch	; 7C28D
 call __CHK	; 7C292
@@ -2930,6 +2944,7 @@ mov eax, edx	; 7C312
 pop esi	; 7C314
 pop ecx	; 7C315
 ret	; 7C316
+%endif ; C
 ExhSetEditLoop:
 push dword 40h	; 7C317
 call __CHK	; 7C31C

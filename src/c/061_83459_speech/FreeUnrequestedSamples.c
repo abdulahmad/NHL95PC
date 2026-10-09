@@ -12,7 +12,7 @@ int FreeUnrequestedSamples(void)
 
     for (i = 0x18F; i >= 0; i--) {
         n = speechbank[i].loaded;
-        if (n == 1 && !IsSampleRequested(&speechbank[i])) {
+        if (n == 1 && !IsSampleRequested((char *)&speechbank[i])) {
             speechbank[i].loaded = 0;
             *(int *)((unsigned char *)speechbank + 0x3B6C) -= speechbank[i].size;
             r = n;

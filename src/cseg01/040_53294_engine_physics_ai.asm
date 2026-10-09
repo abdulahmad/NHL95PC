@@ -1288,6 +1288,10 @@ pop edx	; 54130
 pop ecx	; 54131
 pop ebx	; 54132
 ret	; 54133
+; C: src/c/040_53294_engine_physics_ai/SkillForAnim.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/SkillForAnim.inc"
+%else
 SkillForAnim:
 push dword 8	; 54134
 call __CHK	; 54139
@@ -1349,6 +1353,7 @@ mov al, byte [byte eax+05Bh]	; 541C0
 and eax, 0FFh	; 541C3
 pop edx	; 541C8
 ret	; 541C9
+%endif ; C
 ; ChkDelayedOffside: PC-new. Offsides option: the flagged team touches the puck in the zone -> AddPenalty2 8 on
 ;   SortCords[lasttouch], returns 1. Called from checkpuckcoll before puckstick / puckgoalie.
 ChkDelayedOffside:
@@ -2323,6 +2328,10 @@ pop esi	; 54D5F
 pop ecx	; 54D60
 pop ebx	; 54D61
 ret	; 54D62
+; C: src/c/040_53294_engine_physics_ai/ScatterPass.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/ScatterPass.inc"
+%else
 ScatterPass:
 push dword 0Ch	; 54D63
 call __CHK	; 54D68
@@ -2366,6 +2375,7 @@ mov word [word_DFF5A], si	; 54DEA
 pop esi	; 54DF1
 pop ebx	; 54DF2
 ret	; 54DF3
+%endif ; C
 dopass:
 push dword 28h	; 54DF4
 call __CHK	; 54DF9

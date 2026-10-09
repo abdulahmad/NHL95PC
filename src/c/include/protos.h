@@ -344,7 +344,7 @@ void EndPenaltyShot(void);  /* 64439 */
 void AddPenalty2(void *obj, int kind);
 void newcheck(short kind);  /* 58084 */                   
 int FreeUnrequestedSamples(void);  /* 84036 */            
-int IsSampleRequested(SpeechSlot *s);
+int IsSampleRequested(char *name);
 int a2offsides(Player *p);  /* 4DCDD */                   
 void AddPenalty(Player *p, int kind);
 void DrawSoundCardDlg(void);  /* 8261C */                 
@@ -370,5 +370,19 @@ int FindLeagueFloppy(char *file, char *name, char *dir);
 int PlayerFromMouseY(int x, int y, int *idx);  /* 24453 */
 void RemovePlayerFromTeam(unsigned char team, int key);  /* 71043 */
 int TickPanelClock(int hund);  /* 15374 */                
+int SkillForAnim(Player *p);  /* 54134 */                 
+void ScatterPass(Player *p, Player *to);  /* 54D63 */     
+void PlayoffRoundClipD(char *buf, unsigned conf, unsigned round);  /* 84306 */
+void PlayoffRoundClipU(char *buf, unsigned conf, unsigned round);  /* 8438F */
+void SetGameSides(int team, unsigned char *games, int g);  /* 347B7 */
+void SetCtlTeams(int t1, int t2, int home, int away);
+char *strncpy(char *d, const char *s, unsigned n);  /* Watcom CRT strncpy_ */
+int ExhSetHitTest(int x, int y, int *hit);  /* 7C28D */   
+int ModeSetHitTest(int x, int y, int *hit);  /* 7B734 */  
+int MenuMergeLeagueFiles(void);  /* 33469 */              
+int MergeLeagueFiles(void);
+int __cdecl sub_8CCA8(char *name, int size, int flags);  /* file library: load file */
+int CupSeriesWinner(unsigned char *s, unsigned games);  /* 15CE1 */
+void DrawModeSetChecks(void);  /* 7B7BE */                
 
 #endif

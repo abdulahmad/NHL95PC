@@ -73,7 +73,6 @@ extern void DrawLineGroupBars(); /* 157BD */
 extern void DrawPanelPenalties(); /* 15995 */
 extern void LoadCupFinalSeries(); /* 15B76 */
 extern void IsCupClinched(); /* 15C30 */
-extern void CupSeriesWinner(); /* 15CE1 */
 extern void RunDemoGame(); /* 15D6B */
 extern void RunDemoGame_x(); /* 16005 */
 extern void TitleScreen(); /* 1609F */
@@ -497,7 +496,6 @@ extern void MenuRebuildDbs(); /* 3339D */
 extern void MenuRebuildDbs_x(); /* 333C0 */
 extern void MenuMergeUpdateDbs(); /* 333D7 */
 extern void nullsub_6(); /* 33468 */
-extern void MenuMergeLeagueFiles(); /* 33469 */
 extern void MenuUpdateTeamDbs(); /* 334FB */
 extern void MenuTradePlayers(); /* 33523 */
 extern void MenuNextLeagueGame(); /* 33559 */
@@ -510,7 +508,6 @@ extern void WaitClickTimeout(); /* 33E6A */
 extern void LoadCrestsPalette(); /* 33F02 */
 extern void DrawCalendarDay(); /* 33FFD */
 extern void ApplyShapePalette(); /* 34789 */
-extern void SetGameSides(); /* 347B7 */
 extern void CalendarScreen(); /* 34821 */
 extern void CheckLeagueDiskSync(); /* 35FB9 */
 extern void MakeTeamDbFmt(); /* 36207 */
@@ -549,7 +546,6 @@ extern void MergeScheduleDb(); /* 3AE1E */
 extern void LocateTeamDbCopy(); /* 3AF70 */
 extern void UpdateTeamDbs(); /* 3B039 */
 extern void UpdateTeamDbs_ret(); /* 3B254 */
-extern void MergeLeagueFiles(); /* 3B25A */
 extern void MergeUpdateDbs(); /* 3B8B0 */
 extern void RebuildLeagueDbs(); /* 3B9CA */
 extern void ExportTeamToFloppy(); /* 3BB87 */
@@ -730,7 +726,6 @@ extern void checkint(); /* 53E6A */
 extern void checkob(); /* 53F8C */
 extern void checkob_ret5a(); /* 5412B */
 extern void checkob_ret5(); /* 5412E */
-extern void SkillForAnim(); /* 54134 */
 extern void ChkDelayedOffside(); /* 541CA */
 extern void checkpuckcoll(); /* 5428A */
 extern void PuckCheckColl(); /* 548AC */
@@ -741,7 +736,6 @@ extern void chk4lc_shoot(); /* 54BF8 */
 extern void PassLaneChk(); /* 54C09 */
 extern void PassLaneChk_ret5a(); /* 54D5A */
 extern void PassLaneChk_ret5(); /* 54D5D */
-extern void ScatterPass(); /* 54D63 */
 extern void dopass_ret6(); /* 55148 */
 extern void passtoa0(); /* 551CF */
 extern void chk4pass(); /* 55493 */
@@ -1270,8 +1264,6 @@ extern void MenuModeSettings(); /* 7B3A7 */
 extern void ModeSettings_epilogue(); /* 7B4E5 */
 extern void DrawModeSetDlg(); /* 7B4EC */
 extern void ModeOptsToBits(); /* 7B604 */
-extern void ModeSetHitTest(); /* 7B734 */
-extern void DrawModeSetChecks(); /* 7B7BE */
 extern void ModeSetViewLoop(); /* 7B846 */
 extern void ModeSetEditLoop(); /* 7B9E8 */
 extern void MenuExhibitionSettings(); /* 7BEBB */
@@ -1279,7 +1271,6 @@ extern void ExhSettings_ret(); /* 7BF4F */
 extern void ExhOptsToBits(); /* 7BF56 */
 extern void DrawExhSetChecks(); /* 7C0B9 */
 extern void DrawExhSetDlg(); /* 7C1AC */
-extern void ExhSetHitTest(); /* 7C28D */
 extern void ExhSetEditLoop(); /* 7C317 */
 extern void DrawCtlBox_common(); /* 7C8DF */
 extern void MenuP1ControlsExh(); /* 7C993 */
@@ -1306,7 +1297,6 @@ extern void ControlsDlgPlayoff(); /* 7D154 */
 extern void DrawControlsDlg(); /* 7D254 */
 extern void DrawControlsOpts(); /* 7D3F0 */
 extern void ControlsDlgLoop(); /* 7D6B1 */
-extern void SetCtlTeams(); /* 7DB67 */
 extern void LoadRockMusic(); /* 7DC8B */
 extern void LoadRockMusic_ret(); /* 7DEC2 */
 extern void FreeRockMusic(); /* 7DEC8 */
@@ -1380,8 +1370,6 @@ extern void PlaceSpeechSlot(); /* 83D78 */
 extern void MoveSampleMem(); /* 840A9 */
 extern void CompactSpeechSlot(); /* 84125 */
 extern void CompactSpeechMem(); /* 8427E */
-extern void PlayoffRoundClipD(); /* 84306 */
-extern void PlayoffRoundClipU(); /* 8438F */
 extern void LoadClipSlot(); /* 84539 */
 extern void SayClip_body(); /* 8460F */
 extern void SayNhlIntro(); /* 846B4 */
@@ -1480,7 +1468,6 @@ extern void loc_8CC53(); /* 8CC53 */
 extern void sub_8CC5C(); /* 8CC5C */
 extern void sub_8CC70(); /* 8CC70 */
 extern void sub_8CC8C(); /* 8CC8C */
-extern void sub_8CCA8(); /* 8CCA8 */
 extern void sub_8CCC4(); /* 8CCC4 */
 extern void sub_8CCE0(); /* 8CCE0 */
 extern void sub_8CD04(); /* 8CD04 */

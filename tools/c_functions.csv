@@ -19,6 +19,7 @@ PanelRemovePenalty,14CA0,81,005_1431E_file_utils,src/c/005_1431E_file_utils/Pane
 ReadSchedGame,147A0,41,005_1431E_file_utils,src/c/005_1431E_file_utils/ReadSchedGame.c,matched,
 WriteKeyRec,14654,23,005_1431E_file_utils,src/c/005_1431E_file_utils/WriteKeyRec.c,matched,
 AnyInputPressed,1600C,102,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/AnyInputPressed.c,nonmatching,draft: asm keeps result in esi and saves 4 regs; ours uses edx
+CupSeriesWinner,15CE1,138,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/CupSeriesWinner.c,nonmatching,"draft: need computed in ebp (mov ebp,edx / shr / inc) vs lea; same logic"
 ReadBE32,16072,45,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/ReadBE32.c,matched,
 TickPanelClock,15374,150,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/TickPanelClock.c,matched,
 PrintCenteredText,17573,111,007_1609F_title_intro,src/c/007_1609F_title_intro/PrintCenteredText.c,matched,
@@ -57,9 +58,11 @@ MenuExit,3270B,16,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MenuExit.c,match
 SaveModeState,3271B,134,024_31AB5_main_desk,src/c/024_31AB5_main_desk/SaveModeState.c,matched,
 DemoSetupStub,3371C,11,025_32DA9_temp_files,src/c/025_32DA9_temp_files/DemoSetupStub.c,matched,
 MenuLeagueHilights,3366F,79,025_32DA9_temp_files,src/c/025_32DA9_temp_files/MenuLeagueHilights.c,matched,
+MenuMergeLeagueFiles,33469,146,025_32DA9_temp_files,src/c/025_32DA9_temp_files/MenuMergeLeagueFiles.c,matched,
 CalNextMonth,34691,109,027_33FFD_calendar,src/c/027_33FFD_calendar/CalNextMonth.c,matched,
 CalPrevMonth,346FE,109,027_33FFD_calendar,src/c/027_33FFD_calendar/CalPrevMonth.c,matched,
 CalReturn,3476B,30,027_33FFD_calendar,src/c/027_33FFD_calendar/CalReturn.c,matched,
+SetGameSides,347B7,106,027_33FFD_calendar,src/c/027_33FFD_calendar/SetGameSides.c,nonmatching,draft: record pointer built in edx (asm) vs eax; o kept in edx
 RestoreGridCellBg,37E5B,75,028_35FB9_import_export,src/c/028_35FB9_import_export/RestoreGridCellBg.c,matched,
 ReadLeagueTeamEntry,3A31E,41,029_380E9_league_setup,src/c/029_380E9_league_setup/ReadLeagueTeamEntry.c,matched,
 TeamSelCancel,38B3A,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelCancel.c,matched,
@@ -106,7 +109,9 @@ SetPenaltyStrength,510A9,108,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_eng
 assbenchwait,526ED,51,039_50AFE_engine_assign_faceoff,src/c/039_50AFE_engine_assign_faceoff/assbenchwait.c,matched,
 CompShoot,55A35,106,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/CompShoot.c,matched,
 Findhittype,579FF,63,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/Findhittype.c,matched,
+ScatterPass,54D63,145,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ScatterPass.c,matched,
 SetShotMode,5786E,140,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/SetShotMode.c,nonmatching,"draft: vtoa result copied to edx before the regd0 store; asm stores ax then movsx edx,ax after word_C90A6"
+SkillForAnim,54134,150,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/SkillForAnim.c,matched,
 Sweepcheck,532A2,27,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/Sweepcheck.c,matched,
 ToFixed,53294,14,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ToFixed.c,matched,
 TryBlockShot,534BB,124,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/TryBlockShot.c,nonmatching,"registers only: original p in ecx, n in ebx, gmode2 temp in edx; this draft p in ebx, n in edx. 10-min cap"
@@ -207,6 +212,9 @@ MenuReturnToLineEditor,79DD1,16,055_78346_team_select,src/c/055_78346_team_selec
 CtlDlgHitTest,7D61F,82,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlDlgHitTest.c,matched,
 CtlSwapTeamFlag,7CC8A,91,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlSwapTeamFlag.c,matched,
 DrawCtlBoxes,7D671,64,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/DrawCtlBoxes.c,matched,
+DrawModeSetChecks,7B7BE,136,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/DrawModeSetChecks.c,matched,
+ExhSetHitTest,7C28D,138,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ExhSetHitTest.c,matched,
+ModeSetHitTest,7B734,138,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ModeSetHitTest.c,matched,
 SetLeagueSetImage,7A6AD,16,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SetLeagueSetImage.c,matched,
 SettingsStub,7B39C,11,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SettingsStub.c,matched,
 GadgetHitTest,7E8E5,89,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/GadgetHitTest.c,matched,
@@ -224,6 +232,7 @@ FreeUnrequestedSamples,84036,115,061_83459_speech,src/c/061_83459_speech/FreeUnr
 MakeSampleRoom,84205,106,061_83459_speech,src/c/061_83459_speech/MakeSampleRoom.c,matched,
 MusicChanCmd3,8378C,28,061_83459_speech,src/c/061_83459_speech/MusicChanCmd3.c,matched,
 ReadCString,8385F,56,061_83459_speech,src/c/061_83459_speech/ReadCString.c,matched,
+RequestSample,83FAF,135,061_83459_speech,src/c/061_83459_speech/RequestSample.c,matched,
 ResetSampleReq,83520,90,061_83459_speech,src/c/061_83459_speech/ResetSampleReq.c,matched,
 SpeechIdle,83711,45,061_83459_speech,src/c/061_83459_speech/SpeechIdle.c,matched,
 SpeechIsInit,836CA,26,061_83459_speech,src/c/061_83459_speech/SpeechIsInit.c,matched,
@@ -233,6 +242,8 @@ SpeechStopQueue,8374D,63,061_83459_speech,src/c/061_83459_speech/SpeechStopQueue
 StrEqNoCase,83E32,59,061_83459_speech,src/c/061_83459_speech/StrEqNoCase.c,nonmatching,original widens each char (movsx) before and 0DFh; this draft does the and on bytes. 10-min cap
 Swap16,837D9,34,061_83459_speech,src/c/061_83459_speech/Swap16.c,matched,
 PenaltyLenClip,842BA,76,062_842BA_announcer,src/c/062_842BA_announcer/PenaltyLenClip.c,nonmatching,"switch tree and blocks match; original keeps len in ebx and out in eax (out moved early), this draft the reverse. 10-min cap"
+PlayoffRoundClipD,84306,137,062_842BA_announcer,src/c/062_842BA_announcer/PlayoffRoundClipD.c,matched,
+PlayoffRoundClipU,8438F,137,062_842BA_announcer,src/c/062_842BA_announcer/PlayoffRoundClipU.c,matched,
 SayOneMinuteLeft,854AC,91,062_842BA_announcer,src/c/062_842BA_announcer/SayOneMinuteLeft.c,matched,
 SayScorePeriod,84657,93,062_842BA_announcer,src/c/062_842BA_announcer/SayScorePeriod.c,matched,
 MenuPlayNextGame,86627,16,063_85924_demo_savegame,src/c/063_85924_demo_savegame/MenuPlayNextGame.c,matched,

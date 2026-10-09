@@ -1016,6 +1016,10 @@ pop edx	; 83FAB
 pop ecx	; 83FAC
 pop ebx	; 83FAD
 ret	; 83FAE
+; C: src/c/061_83459_speech/RequestSample.c
+%ifdef CBUILD
+%include "c/061_83459_speech/RequestSample.inc"
+%else
 RequestSample:
 push dword 14h	; 83FAF
 call __CHK	; 83FB4
@@ -1062,6 +1066,7 @@ pop edx	; 84032
 pop ecx	; 84033
 pop ebx	; 84034
 ret	; 84035
+%endif ; C
 FreeUnrequestedSamples:
 push dword 10h	; 84036
 call __CHK	; 8403B
