@@ -28,12 +28,12 @@ extern TextGridOpen, TextGridOff, InitGameSummary, SetupStatsSourceMenu, BuildSa
 extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, CountSeriesWins, PreGameScreen, AskDatabaseChoice, TextInputDialog
 extern SetDialogColors, RestoreDialogBg, MessageBox, SaveModeState, LoadModeState, WriteModeState, PostGameToTeamDb, SimulateGame
 extern ShowLoadingScreen, GetInputEvent, ClearInputQueue, InputInstall, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel
-extern DrawMenuItemNorm, MenuHitTest, FadePalStep, EditPlayoffSettings, LockerRoomScreen, sub_86627, sub_86647, sub_8CCA8
+extern DrawMenuItemNorm, MenuHitTest, FadePalStep, EditPlayoffSettings, LockerRoomScreen, MenuPlayNextGame, ViewPlayoffHilights, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E8B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_910B0, sub_9121C, sub_91370, sub_913B4
 extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, FatalError, MouseSetPos, sub_B2DCA, sub_B2E1B
 extern sub_B30B4, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4BC4, EasnTeamStatsScreen, EasnSkaterStatsScreen
-extern EasnGoalieStatsScreen, EasnStandingsMenu, unk_86616, str_E1, str_E2, str_F1, str_F2, unk_C3A66
+extern EasnGoalieStatsScreen, EasnStandingsMenu, savenamedefault, str_E1, str_E2, str_F1, str_F2, unk_C3A66
 extern str_D, unk_C3AF8, exhstate, btn_LeagueExists, unk_CEE4F, unk_CEEAF, unk_CF90F, unk_D2864
 extern btn_POHumanOut, hmteamrec, treeteamnames, unk_DDCFB, unk_ED7BC, unknown_libname_1
 extern word_C6D24, treecolx, scrpitch, VisTeam, hmscore, awscore
@@ -55,7 +55,7 @@ push edi	; 866A4
 push ebp	; 866A5
 sub esp, 0C8h	; 866A6
 lea edi, [dword esp+08Ch]	; 866AC
-mov esi, unk_86616	; 866B3
+mov esi, savenamedefault	; 866B3
 movsd	; 866B8
 movsd	; 866B9
 movsd	; 866BA
@@ -523,7 +523,7 @@ xor eax, eax	; 86DA3
 call SetupStatsSourceMenu	; 86DA5
 mov dword [menuact_nextpo], PlayoffModeLoop	; 86DAA
 mov dword [menuact_posettings], EditPlayoffSettings	; 86DB4
-mov dword [menuact_pohilights], sub_86647	; 86DBE
+mov dword [menuact_pohilights], ViewPlayoffHilights	; 86DBE
 xor edi, edi	; 86DC8
 mov dword [seriesgameno], edi	; 86DCA
 .27:
@@ -4055,7 +4055,7 @@ sar edx, 1Fh	; 8973A
 idiv ecx	; 8973D
 cmp eax, byte 0Fh	; 8973F
 jge short .23	; 89742
-mov dword [off_CF983], sub_86627	; 89744
+mov dword [off_CF983], MenuPlayNextGame	; 89744
 jmp short .24	; 8974E
 .23:
 xor ecx, ecx	; 89750

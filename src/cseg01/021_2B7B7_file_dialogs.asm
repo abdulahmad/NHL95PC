@@ -20,7 +20,7 @@ extern ptrupdatefn, j_unlink_, jctime, teamabbrevs, off_C5441, off_C6F7C, off_C6
 extern qsort_, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, MakePath, DeleteDir
 extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, CopyFile, SetupStatsSourceMenu, BuildSavedGameLabels
 extern SetDialogColors, MessageBox, LoadModeState, MenuNewExhibition, MenuNextLeagueGame, MenuExportDbs, GetInputEvent, ClearInputQueue
-extern EditPlayoffSettings, sub_86647, PlayoffModeLoop, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0
+extern EditPlayoffSettings, ViewPlayoffHilights, PlayoffModeLoop, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0
 extern sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400, sub_91964, sub_92CD0, FatalError
 extern MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3CC8, sub_B4BA8, sub_B4FAC, str_NHL, str_PO2
 extern str_LP, str_fek1, str_fek2, str_fek3, str_fek4, str_fek5, str_fek6, str_fek7
@@ -2106,7 +2106,7 @@ call ReadGameSettings	; 2D19D
 mov esi, eax	; 2D1A2
 mov dword [menuact_nextpo], PlayoffModeLoop	; 2D1A4
 mov dword [menuact_posettings], EditPlayoffSettings	; 2D1AE
-mov dword [menuact_pohilights], sub_86647	; 2D1B8
+mov dword [menuact_pohilights], ViewPlayoffHilights	; 2D1B8
 xor ecx, ecx	; 2D1C2
 mov ebx, str_ScheduleDb2	; 2D1C4
 lea edx, [byte esp+020h]	; 2D1C9

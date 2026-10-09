@@ -2,11 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_85924 progbits alloc exec nowrite align=1
-extern __CHK, asc_C38F8, asc_C3904, asc_C3923, asc_C3932, asc_C3947, asc_C3966, asc_C3972
-extern asc_C3976, asc_C397E, asc_C3986, asc_C398F, asc_C3994, asc_C399B, asc_C39A0, str_extDB
-extern asc_D281F, curleague, othergames, otherscores, gameopts
+extern __CHK, str_GsummaryDb4, str_AGameYouRequire, str_DemoNhl, str_Gsummary3, str_AGameYouRequire2, str_GameSav5, str_Db4
+extern str_Sav3, str_Pointer22, str_Savegame, str_Prmt, str_Dialog, str_Nhl3, str_Err1, str_extDB
+extern str_AGameYouRequire3, curleague, othergames, otherscores, gameopts
 extern byte_ED92F, demomode, postate, lgstate, gamemode, dword_D2C6B, dword_D8B74, pointerspr
-extern dword_DC888, dword_DC88C, otherperiod, ptrupdatefn, jctime, off_D27EF, off_D27F7, off_D2855
+extern dword_DC888, dword_DC88C, otherperiod, ptrupdatefn, jctime, msg_SavingLeagueGame, msg_SavingPlayoffGame, msg_NoSaveSpace
 extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, CopyFile, DiskSpaceShort
 extern SetDialogColors, RestoreDialogBg, MessageBox, EditTextField, SaveModeState, LoadModeState, WriteModeState, SaveLeagueGameRef
 extern SaveGameState, GetInputEvent, ClearInputQueue, ViewHilights, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
@@ -14,14 +14,9 @@ extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_903F0, sub_910E0, sub_91284, sub_913
 extern sub_92CD0, sub_92DE0, FatalError, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3989, sub_B3999
 extern sub_B4BA8, unk_C392C, unk_C392F, unk_C393B, unk_C393E, unk_C3941, unk_C3944, unk_C396F
 extern unk_C397B, exhstate, unknown_libname_1
-global loc_859EB, loc_85A26, loc_85A3D, loc_85A5C, loc_85A95, loc_85AC1, loc_85B1C, loc_85B51
-global loc_85B7D, loc_85BA9, loc_85BC6, loc_85C21, loc_85C7B, loc_85CC9, loc_85D01, loc_85D48
-global loc_85D52, loc_85D5D, loc_85E34, loc_85E36, loc_85F7D, loc_85F98, loc_860E3, loc_860E4
-global loc_86177, loc_86179, loc_86199, loc_861B5, loc_861F2, loc_86212, loc_862D8, loc_8637D
-global loc_86391, loc_863D3, loc_8652D, loc_86531, loc_86532, loc_86542, loc_86588, loc_86609
-global loc_8660B, loc_86688, sub_85924, sub_85D65, sub_85D6C, sub_86627, sub_86637, sub_86647
-global unk_86616
-sub_85924:
+global MenuSaveGame, SaveGameStub, SaveGameNameDlg, MenuPlayNextGame, MenuReturnToSportsCentral, ViewPlayoffHilights
+global savenamedefault
+MenuSaveGame:
 push dword 0CCh	; 85924
 call __CHK	; 85929
 push ebx	; 8592E
@@ -40,7 +35,7 @@ push edx	; 8594B
 call sub_8EA18	; 8594C
 add esp, byte 4	; 85951
 xor ecx, ecx	; 85954
-mov ebx, asc_C38F8	; 85956
+mov ebx, str_GsummaryDb4	; 85956
 mov edx, curleague	; 8595B
 lea eax, [byte esp+06Ch]	; 85960
 call MakePath	; 85964
@@ -53,7 +48,7 @@ mov dword [dword esp+08Ch], eax	; 8597C
 xor ebx, ebx	; 85983
 mov dword [dword esp+094h], ebx	; 85985
 cmp dword [gamemode], byte 0	; 8598C
-jne near loc_85BC6	; 85993
+jne near .11	; 85993
 lea edx, [dword eax+01328h]	; 85999
 mov eax, edx	; 8599F
 sar edx, 1Fh	; 859A1
@@ -67,7 +62,7 @@ lea edx, [dword esp+08Ch]	; 859BC
 call DiskSpaceShort	; 859C3
 mov esi, eax	; 859C8
 test eax, eax	; 859CA
-je short loc_85A26	; 859CC
+je short .2	; 859CC
 db 053h	; 859CE push ebx
 db 0B9h,0FAh,00h,00h,00h	; 859CF mov ecx,0FAh
 mov ebx, 0F8h	; 859D4
@@ -75,9 +70,9 @@ mov edx, ecx	; 859D9
 mov eax, 0F9h	; 859DB
 call SetDialogColors	; 859E0
 push esi	; 859E5
-push asc_C3904	; 859E6
-loc_859EB:
-push asc_D281F	; 859EB
+push str_AGameYouRequire	; 859E6
+.1:
+push str_AGameYouRequire3	; 859EB
 call sprintf_	; 859F0
 add esp, byte 0Ch	; 859F5
 push dword 320h	; 859F8
@@ -86,32 +81,32 @@ push dword_DC88C	; 85A02
 push byte 0	; 85A07
 push byte 0	; 85A09
 mov ecx, 3	; 85A0B
-mov ebx, off_D2855	; 85A10
+mov ebx, msg_NoSaveSpace	; 85A10
 mov edx, 0FFFFFFFFh	; 85A15
 mov eax, edx	; 85A1A
 call MessageBox	; 85A1C
-jmp near loc_85D52	; 85A21
-loc_85A26:
+jmp near .17	; 85A21
+.2:
 cmp dword [demomode], byte 0	; 85A26
-je short loc_85A3D	; 85A2D
+je short .3	; 85A2D
 lea edi, [byte esp+06Ch]	; 85A2F
-mov esi, asc_C3923	; 85A33
+mov esi, str_DemoNhl	; 85A33
 movsd	; 85A38
 movsd	; 85A39
 movsb	; 85A3A
-jmp short loc_85A5C	; 85A3B
-loc_85A3D:
+jmp short .4	; 85A3B
+.3:
 lea eax, [byte esp+06Ch]	; 85A3D
-call sub_85D6C	; 85A41
+call SaveGameNameDlg	; 85A41
 test eax, eax	; 85A46
-je short loc_85A5C	; 85A48
+je short .4	; 85A48
 mov eax, esp	; 85A4A
 push eax	; 85A4C
 call sub_8EA00	; 85A4D
 add esp, byte 4	; 85A52
 xor ebp, ebp	; 85A55
-jmp near loc_85D5D	; 85A57
-loc_85A5C:
+jmp near .18	; 85A57
+.4:
 or byte [exhstate+5Ah], 80h	; 85A5C
 or byte [gameopts+1], 80h	; 85A63
 mov eax, exhstate	; 85A6A
@@ -120,24 +115,24 @@ lea edx, [dword esp+098h]	; 85A74
 lea eax, [byte esp+06Ch]	; 85A7B
 call FileCreate	; 85A7F
 test eax, eax	; 85A84
-je short loc_85A95	; 85A86
+je short .5	; 85A86
 push unk_C392C	; 85A88
 call FatalError	; 85A8D
 add esp, byte 4	; 85A92
-loc_85A95:
+.5:
 mov ecx, 75h	; 85A95
 mov ebx, 0FFFFFFFFh	; 85A9A
 mov edx, exhstate	; 85A9F
 mov eax, dword [dword esp+098h]	; 85AA4
 call FileWriteAt	; 85AAB
 test eax, eax	; 85AB0
-je short loc_85AC1	; 85AB2
+je short .6	; 85AB2
 push unk_C392F	; 85AB4
 call FatalError	; 85AB9
 add esp, byte 4	; 85ABE
-loc_85AC1:
+.6:
 mov ecx, str_extDB	; 85AC1
-mov ebx, asc_C3932	; 85AC6
+mov ebx, str_Gsummary3	; 85AC6
 xor edx, edx	; 85ACB
 lea eax, [byte esp+06Ch]	; 85ACD
 call MakePath	; 85AD1
@@ -158,11 +153,11 @@ mov edx, esi	; 85AFD
 mov eax, dword [dword esp+098h]	; 85AFF
 call FileWriteAt	; 85B06
 test eax, eax	; 85B0B
-je short loc_85B1C	; 85B0D
+je short .7	; 85B0D
 push unk_C393B	; 85B0F
 call FatalError	; 85B14
 add esp, byte 4	; 85B19
-loc_85B1C:
+.7:
 push edi	; 85B1C
 call jctime	; 85B1D
 add esp, byte 4	; 85B22
@@ -172,39 +167,39 @@ mov edx, othergames	; 85B2F
 mov eax, dword [dword esp+098h]	; 85B34
 call FileWriteAt	; 85B3B
 test eax, eax	; 85B40
-je short loc_85B51	; 85B42
+je short .8	; 85B42
 push unk_C393E	; 85B44
 call FatalError	; 85B49
 add esp, byte 4	; 85B4E
-loc_85B51:
+.8:
 mov ecx, 0Ch	; 85B51
 mov ebx, 0FFFFFFFFh	; 85B56
 mov edx, otherscores	; 85B5B
 mov eax, dword [dword esp+098h]	; 85B60
 call FileWriteAt	; 85B67
 test eax, eax	; 85B6C
-je short loc_85B7D	; 85B6E
+je short .9	; 85B6E
 push unk_C3941	; 85B70
 call FatalError	; 85B75
 add esp, byte 4	; 85B7A
-loc_85B7D:
+.9:
 mov ecx, 18h	; 85B7D
 mov ebx, 0FFFFFFFFh	; 85B82
 mov edx, otherperiod	; 85B87
 mov eax, dword [dword esp+098h]	; 85B8C
 call FileWriteAt	; 85B93
 test eax, eax	; 85B98
-je short loc_85BA9	; 85B9A
+je short .10	; 85B9A
 push unk_C3944	; 85B9C
 call FatalError	; 85BA1
 add esp, byte 4	; 85BA6
-loc_85BA9:
+.10:
 mov eax, dword [dword esp+098h]	; 85BA9
 call SaveGameState	; 85BB0
 lea eax, [dword esp+098h]	; 85BB5
 call FileClose	; 85BBC
-jmp near loc_85D52	; 85BC1
-loc_85BC6:
+jmp near .17	; 85BC1
+.11:
 lea edx, [dword eax+03FFh]	; 85BC6
 mov eax, edx	; 85BCC
 sar edx, 1Fh	; 85BCE
@@ -218,7 +213,7 @@ xor eax, eax	; 85BF2
 call DiskSpaceShort	; 85BF4
 mov esi, eax	; 85BF9
 test eax, eax	; 85BFB
-je short loc_85C21	; 85BFD
+je short .12	; 85BFD
 push ebx	; 85BFF
 mov ecx, 0FAh	; 85C00
 mov ebx, 0F8h	; 85C05
@@ -226,9 +221,9 @@ mov edx, ecx	; 85C0A
 mov eax, 0F9h	; 85C0C
 call SetDialogColors	; 85C11
 push esi	; 85C16
-push asc_C3947	; 85C17
-jmp near loc_859EB	; 85C1C
-loc_85C21:
+push str_AGameYouRequire2	; 85C17
+jmp near MenuSaveGame.1	; 85C1C
+.12:
 push dword 0C8h	; 85C21
 call sub_B3989	; 85C26
 add esp, byte 4	; 85C2B
@@ -239,7 +234,7 @@ mov edx, ecx	; 85C39
 mov eax, 0F9h	; 85C3B
 call SetDialogColors	; 85C40
 xor ecx, ecx	; 85C45
-mov ebx, asc_C3966	; 85C47
+mov ebx, str_GameSav5	; 85C47
 mov edx, curleague	; 85C4C
 lea eax, [byte esp+06Ch]	; 85C51
 call MakePath	; 85C55
@@ -247,21 +242,21 @@ lea edx, [dword esp+098h]	; 85C5A
 lea eax, [byte esp+06Ch]	; 85C61
 call FileCreate	; 85C65
 test eax, eax	; 85C6A
-je short loc_85C7B	; 85C6C
+je short .13	; 85C6C
 push unk_C396F	; 85C6E
 call FatalError	; 85C73
 add esp, byte 4	; 85C78
-loc_85C7B:
+.13:
 mov edi, dword [gamemode]	; 85C7B
 cmp edi, byte 2	; 85C81
-jne short loc_85CC9	; 85C84
+jne short .14	; 85C84
 push byte 0	; 85C86
 push byte 0	; 85C88
 push byte 0	; 85C8A
 push byte 0	; 85C8C
 push byte 0	; 85C8E
 mov ecx, edi	; 85C90
-mov ebx, off_D27EF	; 85C92
+mov ebx, msg_SavingLeagueGame	; 85C92
 mov edx, 0FFFFFFFFh	; 85C97
 mov eax, edx	; 85C9C
 call MessageBox	; 85C9E
@@ -271,15 +266,15 @@ mov eax, lgstate	; 85CB1
 call WriteModeState	; 85CB6
 mov eax, dword [dword esp+098h]	; 85CBB
 call SaveLeagueGameRef	; 85CC2
-jmp short loc_85D01	; 85CC7
-loc_85CC9:
+jmp short .15	; 85CC7
+.14:
 push byte 0	; 85CC9
 push byte 0	; 85CCB
 push byte 0	; 85CCD
 push byte 0	; 85CCF
 push byte 0	; 85CD1
 mov ecx, 2	; 85CD3
-mov ebx, off_D27F7	; 85CD8
+mov ebx, msg_SavingPlayoffGame	; 85CD8
 mov edx, 0FFFFFFFFh	; 85CDD
 mov eax, edx	; 85CE2
 call MessageBox	; 85CE4
@@ -287,34 +282,34 @@ or byte [postate+5Ah], 80h	; 85CE9
 or byte [gameopts+1], 80h	; 85CF0
 mov eax, postate	; 85CF7
 call WriteModeState	; 85CFC
-loc_85D01:
+.15:
 mov eax, dword [dword esp+098h]	; 85D01
 call SaveGameState	; 85D08
 lea eax, [dword esp+098h]	; 85D0D
 call FileClose	; 85D14
 push curleague	; 85D19
 mov ecx, curleague	; 85D1E
-mov ebx, asc_C3976	; 85D23
-mov edx, asc_C3972	; 85D28
-mov eax, asc_C3932	; 85D2D
+mov ebx, str_Sav3	; 85D23
+mov edx, str_Db4	; 85D28
+mov eax, str_Gsummary3	; 85D2D
 call CopyFile	; 85D32
 test eax, eax	; 85D37
-je short loc_85D48	; 85D39
+je short .16	; 85D39
 push unk_C397B	; 85D3B
 call FatalError	; 85D40
 add esp, byte 4	; 85D45
-loc_85D48:
+.16:
 call sub_B3999	; 85D48
 call RestoreDialogBg	; 85D4D
-loc_85D52:
+.17:
 mov eax, esp	; 85D52
 push eax	; 85D54
 call sub_8EA00	; 85D55
 add esp, byte 4	; 85D5A
-loc_85D5D:
+.18:
 mov eax, ebp	; 85D5D
 add esp, 9Ch	; 85D5F
-sub_85D65:
+SaveGameStub:
 pop ebp	; 85D65
 pop edi	; 85D66
 pop esi	; 85D67
@@ -322,7 +317,7 @@ pop edx	; 85D68
 pop ecx	; 85D69
 pop ebx	; 85D6A
 ret	; 85D6B
-sub_85D6C:
+SaveGameNameDlg:
 push dword 0C0h	; 85D6C
 call __CHK	; 85D71
 push ebx	; 85D76
@@ -344,7 +339,7 @@ add eax, byte 11h	; 85D9A
 mov dword [byte esp+07Ch], eax	; 85D9D
 push byte 20h	; 85DA1
 push eax	; 85DA3
-push asc_C397E	; 85DA4
+push str_Pointer22	; 85DA4
 call sub_8CCA8	; 85DA9
 add esp, byte 0Ch	; 85DAE
 mov ebp, eax	; 85DB1
@@ -384,14 +379,14 @@ push edx	; 85E13
 call sub_91284	; 85E14
 add esp, byte 0Ch	; 85E19
 xor ecx, ecx	; 85E1C
-mov ebx, asc_C3986	; 85E1E
+mov ebx, str_Savegame	; 85E1E
 cmp byte [byte_ED92F], 1	; 85E23
-jne short loc_85E34	; 85E2A
+jne short .1	; 85E2A
 mov edx, dword [dword_D2C6B]	; 85E2C
-jmp short loc_85E36	; 85E32
-loc_85E34:
+jmp short .2	; 85E32
+.1:
 xor edx, edx	; 85E34
-loc_85E36:
+.2:
 lea eax, [byte esp+04h]	; 85E36
 call MakePath	; 85E3A
 push byte 0	; 85E3F
@@ -400,7 +395,7 @@ push eax	; 85E45
 call sub_8E83C	; 85E46
 add esp, byte 8	; 85E4B
 mov dword [dword esp+088h], eax	; 85E4E
-push asc_C398F	; 85E55
+push str_Prmt	; 85E55
 push eax	; 85E5A
 call sub_B30B4	; 85E5B
 mov dword [dword esp+08Ch], eax	; 85E60
@@ -417,7 +412,7 @@ add eax, byte 11h	; 85E8A
 mov dword [byte esp+07Ch], eax	; 85E8D
 push byte 20h	; 85E91
 push eax	; 85E93
-push asc_C3994	; 85E94
+push str_Dialog	; 85E94
 call sub_8CCA8	; 85E99
 mov ebx, eax	; 85E9E
 add esp, byte 0Ch	; 85EA0
@@ -480,7 +475,7 @@ mov ecx, esi	; 85F4C
 mov ebx, 64h	; 85F4E
 mov edx, 8	; 85F53
 call EditTextField	; 85F58
-mov edx, asc_C399B	; 85F5D
+mov edx, str_Nhl3	; 85F5D
 mov eax, dword [esp]	; 85F62
 call strcat_	; 85F65
 mov eax, dword [byte esp+074h]	; 85F6A
@@ -490,19 +485,19 @@ push edx	; 85F73
 push ebp	; 85F74
 call sub_910E0	; 85F75
 add esp, byte 0Ch	; 85F7A
-loc_85F7D:
+.3:
 mov eax, dword [esp]	; 85F7D
 cmp byte [eax], 2Eh	; 85F80
-je short loc_85F98	; 85F83
+je short .4	; 85F83
 lea ebx, [byte esp+044h]	; 85F85
 xor edx, edx	; 85F89
 call unknown_libname_1	; 85F8B
 test eax, eax	; 85F90
-jne near loc_86588	; 85F92
-loc_85F98:
+jne near .21	; 85F92
+.4:
 mov eax, dword [esp]	; 85F98
 cmp byte [eax], 2Eh	; 85F9B
-je near loc_8652D	; 85F9E
+je near .17	; 85F9E
 mov edx, dword [dword esp+090h]	; 85FA4
 mov edx, dword [byte edx+02h]	; 85FAB
 sar edx, 10h	; 85FAE
@@ -531,7 +526,7 @@ mov edx, dword [dword esp+08Ch]	; 85FF0
 push edx	; 85FF7
 call jctime	; 85FF8
 add esp, byte 4	; 85FFD
-push asc_C39A0	; 86000
+push str_Err1	; 86000
 mov ebx, dword [dword esp+08Ch]	; 86005
 push ebx	; 8600C
 call sub_B30B4	; 8600D
@@ -549,7 +544,7 @@ add eax, byte 11h	; 8603C
 mov dword [byte esp+07Ch], eax	; 8603F
 push byte 20h	; 86043
 push eax	; 86045
-push asc_C3994	; 86046
+push str_Dialog	; 86046
 call sub_8CCA8	; 8604B
 mov ebx, eax	; 86050
 add esp, byte 0Ch	; 86052
@@ -599,14 +594,14 @@ mov eax, dword [byte eax+08h]	; 860D7
 sar eax, 10h	; 860DA
 add edi, eax	; 860DD
 xor eax, eax	; 860DF
-jmp short loc_860E4	; 860E1
-loc_860E3:
+jmp short .6	; 860E1
+.5:
 inc eax	; 860E3
-loc_860E4:
+.6:
 mov edx, dword [esp]	; 860E4
 add edx, eax	; 860E7
 cmp byte [edx], 2Eh	; 860E9
-jne short loc_860E3	; 860EC
+jne short SaveGameNameDlg.5	; 860EC
 mov byte [edx], 0	; 860EE
 push dword 0F9h	; 860F1
 push dword 0FAh	; 860F6
@@ -641,28 +636,28 @@ mov edi, 0FEh	; 86162
 mov dword [dword esp+080h], edi	; 86167
 mov dword [byte esp+074h], edi	; 8616E
 call ClearInputQueue	; 86172
-loc_86177:
+.7:
 xor ecx, ecx	; 86177
-loc_86179:
+.8:
 call GetInputEvent	; 86179
 test eax, eax	; 8617E
-je short loc_86199	; 86180
+je short .9	; 86180
 lea ebx, [dword esp+080h]	; 86182
 lea edx, [byte esp+070h]	; 86189
 call dword [ptrupdatefn]	; 8618D
 mov ecx, eax	; 86193
 test al, 2	; 86195
-je short loc_86179	; 86197
-loc_86199:
+je short SaveGameNameDlg.8	; 86197
+.9:
 test cl, 2	; 86199
-jne short loc_86212	; 8619C
+jne short .12	; 8619C
 mov eax, dword [byte esp+070h]	; 8619E
 cmp eax, dword [byte esp+078h]	; 861A2
-jne short loc_861B5	; 861A6
+jne short .10	; 861A6
 mov eax, dword [dword esp+080h]	; 861A8
 cmp eax, dword [byte esp+074h]	; 861AF
-je short loc_86177	; 861B3
-loc_861B5:
+je short SaveGameNameDlg.7	; 861B3
+.10:
 mov ecx, dword [byte esp+074h]	; 861B5
 push ecx	; 861B9
 mov esi, dword [byte esp+07Ch]	; 861BA
@@ -683,25 +678,25 @@ mov ebx, dword [byte esp+074h]	; 861E6
 push ebx	; 861EA
 mov ecx, dword [pointerspr]	; 861EB
 push ecx	; 861F1
-loc_861F2:
+.11:
 call sub_91370	; 861F2
 add esp, byte 0Ch	; 861F7
 mov eax, dword [byte esp+070h]	; 861FA
 mov dword [byte esp+078h], eax	; 861FE
 mov eax, dword [dword esp+080h]	; 86202
 mov dword [byte esp+074h], eax	; 86209
-jmp near loc_86177	; 8620D
-loc_86212:
+jmp near SaveGameNameDlg.7	; 8620D
+.12:
 mov edx, dword [dword esp+080h]	; 86212
 cmp edx, 109h	; 86219
-jge short loc_861B5	; 8621F
+jge short SaveGameNameDlg.10	; 8621F
 cmp edx, 0F8h	; 86221
-jl short loc_861B5	; 86227
+jl short SaveGameNameDlg.10	; 86227
 mov esi, dword [byte esp+070h]	; 86229
 cmp esi, 0DAh	; 8622D
-jle near loc_862D8	; 86233
+jle near .13	; 86233
 cmp esi, 107h	; 86239
-jge near loc_862D8	; 8623F
+jge near .13	; 8623F
 mov ebx, dword [byte esp+074h]	; 86245
 push ebx	; 86249
 mov ecx, dword [byte esp+07Ch]	; 8624A
@@ -743,16 +738,16 @@ mov ebp, dword [dword esp+088h]	; 862B6
 push ebp	; 862BD
 call jctime	; 862BE
 add esp, byte 4	; 862C3
-mov edx, asc_C399B	; 862C6
+mov edx, str_Nhl3	; 862C6
 mov eax, dword [esp]	; 862CB
 call strcat_	; 862CE
-jmp near loc_86609	; 862D3
-loc_862D8:
+jmp near .22	; 862D3
+.13:
 mov eax, dword [byte esp+070h]	; 862D8
 cmp eax, 114h	; 862DC
-jle near loc_8637D	; 862E1
+jle near .14	; 862E1
 cmp eax, 148h	; 862E7
-jge near loc_8637D	; 862EC
+jge near .14	; 862EC
 mov ecx, dword [byte esp+074h]	; 862F2
 push ecx	; 862F6
 mov esi, dword [byte esp+07Ch]	; 862F7
@@ -795,14 +790,14 @@ push edx	; 8636A
 call jctime	; 8636B
 add esp, byte 4	; 86370
 mov eax, 1	; 86373
-jmp near loc_8660B	; 86378
-loc_8637D:
+jmp near .23	; 86378
+.14:
 mov ebx, dword [byte esp+070h]	; 8637D
 cmp ebx, 15Dh	; 86381
-jle short loc_86391	; 86387
+jle short .15	; 86387
 cmp ebx, 1A2h	; 86389
-jl short loc_863D3	; 8638F
-loc_86391:
+jl short .16	; 8638F
+.15:
 mov esi, dword [byte esp+074h]	; 86391
 push esi	; 86395
 mov edi, dword [byte esp+07Ch]	; 86396
@@ -823,8 +818,8 @@ mov ecx, dword [byte esp+074h]	; 863C2
 push ecx	; 863C6
 mov esi, dword [pointerspr]	; 863C7
 push esi	; 863CD
-jmp near loc_861F2	; 863CE
-loc_863D3:
+jmp near SaveGameNameDlg.11	; 863CE
+.16:
 mov edi, dword [byte esp+074h]	; 863D3
 push edi	; 863D7
 mov eax, dword [byte esp+07Ch]	; 863D8
@@ -860,7 +855,7 @@ mov ebx, dword [dword esp+08Ch]	; 86432
 push ebx	; 86439
 call jctime	; 8643A
 add esp, byte 4	; 8643F
-push asc_C398F	; 86442
+push str_Prmt	; 86442
 mov ecx, dword [dword esp+08Ch]	; 86447
 push ecx	; 8644E
 call sub_B30B4	; 8644F
@@ -877,7 +872,7 @@ add eax, byte 11h	; 86477
 mov dword [byte esp+07Ch], eax	; 8647A
 push byte 20h	; 8647E
 push eax	; 86480
-push asc_C3994	; 86481
+push str_Dialog	; 86481
 call sub_8CCA8	; 86486
 mov ebx, eax	; 8648B
 add esp, byte 0Ch	; 8648D
@@ -933,20 +928,20 @@ push ebx	; 86523
 push ebp	; 86524
 call sub_91400	; 86525
 add esp, byte 0Ch	; 8652A
-loc_8652D:
+.17:
 xor eax, eax	; 8652D
-jmp short loc_86532	; 8652F
-loc_86531:
+jmp short .19	; 8652F
+.18:
 inc eax	; 86531
-loc_86532:
+.19:
 mov edx, dword [esp]	; 86532
 add edx, eax	; 86535
 mov bh, byte [edx]	; 86537
 cmp bh, 2Eh	; 86539
-je short loc_86542	; 8653C
+je short .20	; 8653C
 test bh, bh	; 8653E
-jne short loc_86531	; 86540
-loc_86542:
+jne short SaveGameNameDlg.18	; 86540
+.20:
 add eax, dword [esp]	; 86542
 mov byte [eax], 0	; 86545
 push dword 0F8h	; 86548
@@ -962,11 +957,11 @@ mov ebx, 64h	; 86563
 mov edx, 8	; 86568
 mov eax, dword [byte esp+010h]	; 8656D
 call EditTextField	; 86571
-mov edx, asc_C399B	; 86576
+mov edx, str_Nhl3	; 86576
 mov eax, dword [esp]	; 8657B
 call strcat_	; 8657E
-jmp near loc_85F7D	; 86583
-loc_86588:
+jmp near SaveGameNameDlg.3	; 86583
+.21:
 mov ebx, dword [byte esp+074h]	; 86588
 push ebx	; 8658C
 mov ecx, dword [byte esp+07Ch]	; 8658D
@@ -1008,25 +1003,25 @@ mov ebp, dword [dword esp+088h]	; 865F9
 push ebp	; 86600
 call jctime	; 86601
 add esp, byte 4	; 86606
-loc_86609:
+.22:
 xor eax, eax	; 86609
-loc_8660B:
+.23:
 add esp, 94h	; 8660B
-jmp near sub_85D65	; 86611
-unk_86616:
+jmp near SaveGameStub	; 86611
+savenamedefault:
 db 02Eh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h
-sub_86627:
+MenuPlayNextGame:
 push dword 4	; 86627
 call __CHK	; 8662C
 mov eax, 4	; 86631
 ret	; 86636
-sub_86637:
+MenuReturnToSportsCentral:
 push dword 4	; 86637
 call __CHK	; 8663C
 mov eax, 1	; 86641
 ret	; 86646
-sub_86647:
+ViewPlayoffHilights:
 push dword 8	; 86647
 call __CHK	; 8664C
 push edx	; 86651
@@ -1038,13 +1033,13 @@ xor edx, edx	; 86666
 mov dword [gamemode], edx	; 86668
 call ViewHilights	; 8666E
 test eax, eax	; 86673
-jne short loc_86688	; 86675
+jne short .1	; 86675
 mov eax, exhstate	; 86677
 call LoadModeState	; 8667C
 mov eax, 2	; 86681
 pop edx	; 86686
 ret	; 86687
-loc_86688:
+.1:
 mov eax, exhstate	; 86688
 call LoadModeState	; 8668D
 xor eax, eax	; 86692

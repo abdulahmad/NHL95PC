@@ -30,9 +30,9 @@ global asc_C36C3, str_Emmcopybuf, str_Speechbuf, str_Sentence, str_SampleMemMan,
 global str_EastquadBar, str_EastsemdBar, str_EastfindBar, str_WestquadBar, str_WestsemdBar, str_WestfindBar, str_StanleydBar, str_EastquauBar
 global str_EastsemuBar, str_EastfinuBar, str_WestquauBar, str_WestsemuBar, str_WestfinuBar, str_StanleyuBar, str_NhlInt, str_ElsenhlInt
 global str_Rnk, str_Awa, str_Hom, str_Bar, str_Gamenum, str_SSS, str_Num, str_DS
-global str_02dS, str_Tea, str_Pen, str_Frm, str_XBRUCE2, asc_C38F8, asc_C3904, asc_C3923
-global asc_C3932, asc_C3947, asc_C3966, asc_C3972, asc_C3976, asc_C397E, asc_C3986, asc_C398F
-global asc_C3994, asc_C399B, asc_C39A0, qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0
+global str_02dS, str_Tea, str_Pen, str_Frm, str_XBRUCE2, str_GsummaryDb4, str_AGameYouRequire, str_DemoNhl
+global str_Gsummary3, str_AGameYouRequire2, str_GameSav5, str_Db4, str_Sav3, str_Pointer22, str_Savegame, str_Prmt
+global str_Dialog, str_Nhl3, str_Err1, qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0
 global unk_C311D, str_S6, str_No2, str_GP8, str_C5, str_W6, str_L8, str_T6
 global str_ErrA1, str_ErrA2, str_ErrA3, str_ErrA4, str_ErrA5, str_ErrA6, str_ErrA7, str_ErrA8
 global unk_C3283, str_S7, str_ErrB3, str_ErrB4, str_ErrB5, str_ErrB6, str_ErrB7, str_ErrB2
@@ -680,18 +680,18 @@ str_Frm:
 db 066h,072h,06Dh,00h
 str_XBRUCE2:
 db 058h,042h,052h,055h,043h,045h,032h,00h
-asc_C38F8:
+str_GsummaryDb4:
 db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,02Eh,064h,062h,00h
-asc_C3904:
+str_AGameYouRequire:
 db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h
 db 069h,072h,065h,020h,025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,00h
-asc_C3923:
+str_DemoNhl:
 db 064h,065h,06Dh,06Fh,02Eh,06Eh,068h,06Ch,00h
 unk_C392C:
 db 068h,032h,00h
 unk_C392F:
 db 068h,033h,00h
-asc_C3932:
+str_Gsummary3:
 db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,00h
 unk_C393B:
 db 068h,034h,00h
@@ -701,30 +701,30 @@ unk_C3941:
 db 068h,036h,00h
 unk_C3944:
 db 068h,037h,00h
-asc_C3947:
+str_AGameYouRequire2:
 db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h
 db 069h,072h,065h,020h,025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,00h
-asc_C3966:
+str_GameSav5:
 db 067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h
 unk_C396F:
 db 068h,031h,00h
-asc_C3972:
+str_Db4:
 db 02Eh,064h,062h,00h
-asc_C3976:
+str_Sav3:
 db 02Eh,073h,061h,076h,00h
 unk_C397B:
 db 041h,033h,00h
-asc_C397E:
+str_Pointer22:
 db 070h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C3986:
+str_Savegame:
 db 073h,061h,076h,065h,067h,061h,06Dh,065h,00h
-asc_C398F:
+str_Prmt:
 db 070h,072h,06Dh,074h,00h
-asc_C3994:
+str_Dialog:
 db 064h,069h,061h,06Ch,06Fh,067h,00h
-asc_C399B:
+str_Nhl3:
 db 02Eh,06Eh,068h,06Ch,00h
-asc_C39A0:
+str_Err1:
 db 065h,072h,072h,031h,00h,00h,00h,00h
 unk_C39A8:
 db 025h,073h,020h,025h,064h,020h,02Dh,020h,025h,064h,00h

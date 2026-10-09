@@ -15,7 +15,7 @@ global str_PensnumCor, str_PenshotCor, str_GoalnumCor, str_AsstnumCor, str_Andnu
 global str_NumberCor, str_NowbackInt, str_BackmomtInt, str_CoachclpInt, str_OfBar, str_AndBar, str_BetweenBar, str_GamenumBar
 global str_EasportsBar, str_TonightBar, str_GamebtwnBar, str_GoodniteInt, str_LineupsInt, str_TakeynowBar, str_HighliteBar, str_OvertimeBar
 global str_HavewonBar, str_Scor1perBar, str_Scor2perBar, str_Scor3perBar, str_Scor1otpBar, str_Scor2otpBar, str_Scor3otpBar, str_ScortotpBar
-global str_ThegameBar, str_VIV, asc_D281F, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238
+global str_ThegameBar, str_VIV, str_AGameYouRequire3, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238
 global byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, musicslot, musicon, byte_D2439
 global byte_D27B6, dbdlgrects
 global dword_D1229, dword_D122B, dword_D122F, dword_D1231, dword_D1233, lineslotx
@@ -29,7 +29,7 @@ global dword_D22DC, dword_D22E0
 global dword_D22EC, dword_D22F0, dword_D2350, soundcardrects, dword_D2423
 global dword_D2427, dword_D242B, musichandle, dword_D2435, sounddevids, sndcardname, dword_D27A2
 global dword_D27B2, speechcopylen, speechinit, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
-global off_D21C0, off_D2230, msg_InitMT32, penaltyclips, scorperclips, off_D27EF, off_D27F7, off_D2855
+global off_D21C0, off_D2230, msg_InitMT32, penaltyclips, scorperclips, msg_SavingLeagueGame, msg_SavingPlayoffGame, msg_NoSaveSpace
 global unk_D1190, deldbmsg, unk_D12C8, unk_D16A0, unk_D19CC, unk_D19DC, unk_D19F0, unk_D19F5
 global unk_D19FA, unk_D19FF, unk_D1A05, unk_D1A0A, unk_D1A0F, unk_D1A14, unk_D1A19, unk_D1A1F
 global unk_D1A25, unk_D1A2B, unk_D1A30, unk_D1A35, unk_D1A39, unk_D1A3F, unk_D1A45, unk_D1A4B
@@ -894,24 +894,24 @@ unk_D27D3:
 db 04Ch,065h,061h,067h,075h,065h,020h,047h,061h,06Dh,065h,02Eh,00h
 unk_D27E0:
 db 050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,020h,047h,061h,06Dh,065h,02Eh,00h
-off_D27EF:
+msg_SavingLeagueGame:
 dd unk_D27C4
 dd unk_D27D3
-off_D27F7:
+msg_SavingPlayoffGame:
 dd unk_D27C4
 dd unk_D27E0
 unk_D27FF:
 db 049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,064h,069h,073h
 db 06Bh,020h,073h,070h,061h,063h,065h,020h,074h,06Fh,020h,073h,061h,076h,065h,00h
-asc_D281F:
+str_AGameYouRequire3:
 db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h
 db 069h,072h,065h,020h,058h,058h,058h,020h,04Bh,062h,079h,074h,065h,073h,020h,020h
 db 020h,00h
 unk_D2841:
 db 06Fh,066h,020h,066h,072h,065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h
 db 063h,065h,02Eh,00h
-off_D2855:
+msg_NoSaveSpace:
 dd unk_D27FF
-dd asc_D281F
+dd str_AGameYouRequire3
 dd unk_D2841
 db 00h,00h,00h

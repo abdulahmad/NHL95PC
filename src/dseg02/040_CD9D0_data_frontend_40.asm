@@ -7,7 +7,7 @@ extern StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus,
 extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, MenuOpenSaved, MenuExit, MenuNewExhibition
 extern MenuNewLeague, MenuAddTeam, MenuRemoveTeam, MenuLeagueSettings, MenuRebuildDbs, MenuMergeUpdateDbs, MenuMergeLeagueFiles, MenuUpdateTeamDbs
 extern MenuTradePlayers, MenuLeagueHilights, MenuImportDbs, MenuCentralRegistry, MenuExhibitionSettings, MenuP1ControlsExh, MenuP2ControlsExh, MenuP1ControlsInGame
-extern MenuP2ControlsInGame, LockerRoomScreen, MenuSoundSettings, sub_85924, CreatePlayoffs, EasnStandingsMenu, unk_C67B1, unk_CEF0F
+extern MenuP2ControlsInGame, LockerRoomScreen, MenuSoundSettings, MenuSaveGame, CreatePlayoffs, EasnStandingsMenu, unk_C67B1, unk_CEF0F
 extern unk_CEF2F, unk_CEF6F, unk_CEFEF
 global str_LAAtMTL, modesetlabel, str_SportsCentral2, str_PlayoffTree2
 global str_Return, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide
@@ -745,7 +745,7 @@ dd DeskBackToGame
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 076h,00h,00h,00h,023h,00h,00h,00h
 dd unk_CDD35
-dd sub_85924
+dd MenuSaveGame
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 076h,00h,00h,00h,035h,00h,00h,00h
 off_CECFF:
