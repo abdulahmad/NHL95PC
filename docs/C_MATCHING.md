@@ -164,6 +164,8 @@ or callback pieces of a C function reached through a pointer table, and a few ar
   gives `cmp si,-1`. A loop counter reused for an earlier loop keeps its register (setpersonel).
 * **Locals vs fields**: `pos = p->position` then `Setplass_alist[pos]` gives `movsx edx,dx`; indexing with the
   field re-reads it as a dword. `t = expr; n = t; if (t < 25) n = 25;` gives updatecrowdf's clamp.
+* **Parameter reuse**: assigning the result back to a parameter (`dir = (p->facedir - dir) & 7`) keeps it in the
+  parameter's register (Findhittype `mov edx,ecx`); a new local takes another one.
 * **Early return first** reproduces the original block order (Acheck: `impact == 0` path first).
 * **Declaration order** of locals changes register allocation in some functions (calcpuckcross), not in others.
 * **gmode bit 0** (`gmclock`) means "game clock stopped" (93G ram93): ResetClock sets it, the faceoff drop
