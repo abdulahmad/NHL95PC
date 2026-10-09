@@ -4,7 +4,7 @@ This file is the queue. Do not rewrite it as a whole file. Edit the current row 
 
 ## Current segment
 
-Queue complete (rows 0-63 done). Next: short-load rewrite pass, then leftover auto names via tools/auto_names.py --summary.
+Queue complete (rows 0-63 done). Short-load pass done 2026-10-09 (45f6df5: 554 loads rewritten as target-label-k). Still raw: 53 candidates in nosplit / two-register operands (rewriting changes the encoding: puckcross_m2, Ylist_m2, lcline, E9F16 / E9F38 arrays, CCCC5), and loads whose target has no label (fade tables D1229..D1236 +3, hmtmstruct+24h/+26h, CCCB8, CC0B4, CD2F8, D6B00, pad1dev). Next: leftover auto names via tools/auto_names.py --summary.
 
 The data segments are not queue segments. `src/dseg02/*.asm` holds the initialised data and the BSS, the PC's RAM. It has no code to transcribe, and the queue never stops on it. That does not put data off limits. Data and BSS names come from the code segments as they are worked through, not from a separate first pass. Name each data or BSS label the current segment uses in its `src/dseg02` file, which is where it is defined, in the same session. `src/inc/symbols.inc` is the shared index of every label used across files (the PC analogue of the Genesis `ram_addrs.inc`). `tools/update_symbols.py` regenerates it and `tools/rename_symbol.py` keeps it current, so never edit it by hand. You may name any data label, structure field or library routine whenever the evidence is there, inside or outside the current segment.
 
