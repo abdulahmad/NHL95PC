@@ -24,7 +24,7 @@ extern puckstruct, sortobj15
 extern word_E0390, word_E0392, word_E0394, word_E0396
 extern word_E0398, word_E039A, regd2, regd0, regd1, joysampling_save, word_E9AAE, PerTimeTotal
 extern word_E9AC4
-global sub_52720, assleavebox, sub_526ED, sub_52FB0, asspsclear, PassRecOneTimer, asspassrec, check4bench
+global asstakeposition, assleavebox, assbenchwait, assrefpenshot, asspsclear, PassRecOneTimer, asspassrec, check4bench
 global TakePlayerFromBox_ret6, TakePlayerFromBox_ret5
 global puckfaceoff, puckfaceoff2, PassCompleted, OneTimerChk, SetPenaltyStrength, TakePlayerFromBox
 global PenShotStart, ForceStartLineup, PenShotAssign, AllInPlace
@@ -2100,7 +2100,7 @@ jmp near TakePlayerFromBox_ret6	; 526DC
 mov eax, esi	; 526E1
 call Endfaceoff	; 526E3
 jmp near TakePlayerFromBox_ret6	; 526E8
-sub_526ED:
+assbenchwait:
 push dword 8	; 526ED
 call __CHK	; 526F2
 push edx	; 526F7
@@ -2117,7 +2117,7 @@ mov word [byte edx+02Eh], 0	; 52718
 .x:
 pop edx	; 5271E
 ret	; 5271F
-sub_52720:
+asstakeposition:
 push dword 18h	; 52720
 call __CHK	; 52725
 push ebx	; 5272A
@@ -2792,7 +2792,7 @@ pop edx	; 52FAC
 pop ecx	; 52FAD
 pop ebx	; 52FAE
 ret	; 52FAF
-sub_52FB0:
+assrefpenshot:
 push dword 10h	; 52FB0
 call __CHK	; 52FB5
 push ebx	; 52FBA

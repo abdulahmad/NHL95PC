@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_C9078 progbits alloc noexec write align=1
-extern ass_pc_slot20, assthreestars, sub_4AB87, sub_4DFF7, sub_4E0BD, sub_4EB04, sub_4ED7C, sub_4F5BF
-extern sub_4F7D0, sub_4E8EF, sub_4842A, sub_484DA, sub_52720, assleavebox, sub_526ED, sub_499D8
-extern sub_49BC2, sub_52FB0, asspsclear, sub_4FAE8, assbench, asscenterd, asscentero, assdefd
+extern ass_pc_slot20, assthreestars, assleaveice, assrefatdot, assreffollow, assrefsignal, assrefgoalpa, assrefdrop
+extern assrefgoalline, assrefwhistle, assintrostand, assintroline, asstakeposition, assleavebox, assbenchwait, assboxenter
+extern assbenchside, assrefpenshot, asspsclear, asspenshooter, assbench, asscenterd, asscentero, assdefd
 extern assdefo, assdopen, asseben, assepen, assfaceoff, assfaceoffp1, assgoalie, assgoalietopuck
 extern assnearest, asspassrec, asspenalty, asspuckc, assscore, assshoot, assstanley, asswingd
 extern asswingo, puckfaceoff, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
@@ -169,24 +169,24 @@ dd puckshadow
 dd pucknothing
 dd puckfaceoff
 dd puckfaceoff2
-dd sub_4AB87
-dd sub_4DFF7
-dd sub_4E0BD
-dd sub_4EB04
-dd sub_4ED7C
-dd sub_4F5BF
-dd sub_4F7D0
-dd sub_4E8EF
-dd sub_4842A
-dd sub_484DA
-dd sub_52720
+dd assleaveice
+dd assrefatdot
+dd assreffollow
+dd assrefsignal
+dd assrefgoalpa
+dd assrefdrop
+dd assrefgoalline
+dd assrefwhistle
+dd assintrostand
+dd assintroline
+dd asstakeposition
 dd assleavebox
-dd sub_526ED
-dd sub_499D8
-dd sub_49BC2
-dd sub_52FB0
+dd assbenchwait
+dd assboxenter
+dd assbenchside
+dd assrefpenshot
 dd asspsclear
-dd sub_4FAE8
+dd asspenshooter
 SPAtab:
 db 00h,00h,00h,080h,012h,00h,024h,00h,036h,00h,048h,00h,05Ah,00h,06Ch,00h
 db 07Eh,00h,096h,01h,0B4h,00h,01Ah,02h,0Ah,00h,01Bh,02h,0Ah,00h,01Ah,02h

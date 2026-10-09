@@ -40,8 +40,8 @@ extern word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, lcrequest, wo
 extern word_E0392, word_E0396, regd2, regd3, regd0, regd1, joysampling_save, periodendtime
 extern word_E9AAE, PerTimeTotal, lj1, lasttouch, word_E9AC4, startm, starpl
 global ClampYPosition, Endfaceoff, SetLCmode, StartFaceoffLineChange, a2offsides, a2touchpuck, ass_pc_slot20, assthreestars
-global sub_4AB87, sub_4DFF7, sub_4E0BD, sub_4EB04, sub_4ED7C, sub_4F5BF, sub_4F7D0, sub_4E8EF
-global sub_4842A, sub_484DA, sub_499D8, sub_49BC2, sub_4FAE8, assbench, asscenterd, asscentero
+global assleaveice, assrefatdot, assreffollow, assrefsignal, assrefgoalpa, assrefdrop, assrefgoalline, assrefwhistle
+global assintrostand, assintroline, assboxenter, assbenchside, asspenshooter, assbench, asscenterd, asscentero
 global assdefd, assdefo, assdopen, asseben, assepen, assexit, assfaceoff, assfaceoffp1
 global assgoalie, assgoalietopuck, assnearest, asspenalty, asspuckc, assscore, assshoot, assstanley
 global asswingd, asswingo, RequestLineChange
@@ -55,7 +55,7 @@ global puckflip, pucknorm, pucknorm_body, pucknothing, puckunflip, rtss
 global PickShotAim, AddStar, sub_487D9, StarCompare, PickThreeStars, StartThreeStars, sub_49260, sub_492F9
 global StopIfFree, GoalieToPuckVec, sub_4B4E9, sub_4C632, sub_4C8BD, asspuckc_chkdir, ChkTwoLinePass, SkateToSpot
 global sub_4E71A, sub_4F99B
-sub_4842A:
+assintrostand:
 push dword 10h	; 4842A
 call __CHK	; 4842F
 push ebx	; 48434
@@ -114,7 +114,7 @@ pop edx	; 484D6
 pop ecx	; 484D7
 pop ebx	; 484D8
 ret	; 484D9
-sub_484DA:
+assintroline:
 push dword 14h	; 484DA
 call __CHK	; 484DF
 push ebx	; 484E4
@@ -142,7 +142,7 @@ jne near .x	; 48521
 inc eax	; 48527
 .2:
 cmp eax, byte 0Ch	; 48528
-jl short sub_484DA.1	; 4852B
+jl short assintroline.1	; 4852B
 mov dword [seqtimer], 0Ah	; 4852D
 pop edi	; 48537
 pop edx	; 48538
@@ -1793,7 +1793,7 @@ call assinsert	; 499CB
 .16:
 add esp, byte 4	; 499D0
 jmp near PreGameIntro_popebp	; 499D3
-sub_499D8:
+assboxenter:
 push dword 14h	; 499D8
 call __CHK	; 499DD
 push ebx	; 499E2
@@ -1934,7 +1934,7 @@ pop edx	; 49BBE
 pop ecx	; 49BBF
 pop ebx	; 49BC0
 ret	; 49BC1
-sub_49BC2:
+assbenchside:
 push dword 10h	; 49BC2
 call __CHK	; 49BC7
 push ebx	; 49BCC
@@ -3140,7 +3140,7 @@ pop edx	; 4AB83
 pop ecx	; 4AB84
 pop ebx	; 4AB85
 ret	; 4AB86
-sub_4AB87:
+assleaveice:
 push dword 14h	; 4AB87
 call __CHK	; 4AB8C
 push ebx	; 4AB91
@@ -7392,7 +7392,7 @@ call SetSPA	; 4DFEF
 pop edx	; 4DFF4
 pop ebx	; 4DFF5
 ret	; 4DFF6
-sub_4DFF7:
+assrefatdot:
 push dword 0Ch	; 4DFF7
 call __CHK	; 4DFFC
 push ebx	; 4E001
@@ -7450,7 +7450,7 @@ mov word [byte ebx+Xvel], ax	; 4E0B6
 pop edx	; 4E0BA
 pop ebx	; 4E0BB
 ret	; 4E0BC
-sub_4E0BD:
+assreffollow:
 push dword 18h	; 4E0BD
 call __CHK	; 4E0C2
 push ebx	; 4E0C7
@@ -8141,7 +8141,7 @@ xor eax, eax	; 4E8EA
 pop edx	; 4E8EC
 pop ecx	; 4E8ED
 ret	; 4E8EE
-sub_4E8EF:
+assrefwhistle:
 push dword 18h	; 4E8EF
 call __CHK	; 4E8F4
 push ebx	; 4E8F9
@@ -8284,7 +8284,7 @@ xor edx, edx	; 4EAF6
 mov eax, ebx	; 4EAF8
 call SkateToSpot	; 4EAFA
 jmp near ass_popx	; 4EAFF
-sub_4EB04:
+assrefsignal:
 push dword 2Ch	; 4EB04
 call __CHK	; 4EB09
 push ebx	; 4EB0E
@@ -8458,7 +8458,7 @@ mov edx, dword [nosplit eax*2+dword_CCAD8]	; 4ED42
 sar edx, 10h	; 4ED49
 mov eax, esi	; 4ED4C
 call SetSPA	; 4ED4E
-jmp near sub_4EB04.8	; 4ED53
+jmp near assrefsignal.8	; 4ED53
 .16:
 mov ax, word [byte esi+temp3]	; 4ED58
 mov word [regd0], ax	; 4ED5C
@@ -8470,7 +8470,7 @@ call SkateToSpot	; 4ED70
 .17:
 mov esp, ebp	; 4ED75
 jmp near assgoalie_popebp	; 4ED77
-sub_4ED7C:
+assrefgoalpa:
 push dword 28h	; 4ED7C
 call __CHK	; 4ED81
 push ebx	; 4ED86
@@ -9064,7 +9064,7 @@ or byte [byte ebx+pflags], 20h	; 4F572
 mov edx, 0C03h	; 4F576
 mov eax, ebx	; 4F57B
 call SetSPA	; 4F57D
-jmp near sub_4ED7C.23	; 4F582
+jmp near assrefgoalpa.23	; 4F582
 .62:
 mov edx, dword [byte ebx+facedir-2]	; 4F587
 sar edx, 10h	; 4F58A
@@ -9083,7 +9083,7 @@ call SkateToSpot	; 4F5B2
 .64:
 add esp, byte 8	; 4F5B7
 jmp near assgoalie_popebp	; 4F5BA
-sub_4F5BF:
+assrefdrop:
 push dword 18h	; 4F5BF
 call __CHK	; 4F5C4
 push ebx	; 4F5C9
@@ -9238,8 +9238,8 @@ jne near ass_popx	; 4F7B5
 mov word [RefStep], 0FFFFh	; 4F7BB
 mov edx, 1Eh	; 4F7C4
 mov eax, ebx	; 4F7C9
-jmp near sub_4F5BF.1	; 4F7CB
-sub_4F7D0:
+jmp near assrefdrop.1	; 4F7CB
+assrefgoalline:
 push dword 18h	; 4F7D0
 call __CHK	; 4F7D5
 push ebx	; 4F7DA
@@ -9489,7 +9489,7 @@ mov dword [dword_CC138], 1Eh	; 4FADB
 pop ecx	; 4FAE5
 pop ebx	; 4FAE6
 ret	; 4FAE7
-sub_4FAE8:
+asspenshooter:
 push dword 14h	; 4FAE8
 call __CHK	; 4FAED
 push ebx	; 4FAF2
@@ -9512,7 +9512,7 @@ ret	; 4FB13
 .2:
 mov ah, byte [byte ebx+pflags]	; 4FB14
 test ah, 8	; 4FB17
-jne short sub_4FAE8.1	; 4FB1A
+jne short asspenshooter.1	; 4FB1A
 test ah, 20h	; 4FB1C
 jne near .x	; 4FB1F
 test byte [gmode], 1	; 4FB25
