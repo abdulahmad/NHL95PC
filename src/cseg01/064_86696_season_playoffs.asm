@@ -3666,6 +3666,10 @@ mov eax, dword [byte esp+048h]	; 891A6
 .84:
 add esp, byte 60h	; 891AA
 jmp near POSeedRound2_x	; 891AD
+; C: src/c/064_86696_season_playoffs/LoadScheduleDB.c
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/LoadScheduleDB.inc"
+%else
 LoadScheduleDB:
 push dword 60h	; 891B2
 call __CHK	; 891B7
@@ -3710,6 +3714,7 @@ pop edx	; 8921F
 pop ecx	; 89220
 pop ebx	; 89221
 ret	; 89222
+%endif ; C
 SaveScheduleDB:
 push dword 60h	; 89223
 call __CHK	; 89228

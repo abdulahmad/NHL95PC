@@ -185,6 +185,10 @@ pop ebp	; 36201
 pop edi	; 36202
 pop esi	; 36203
 ret 4	; 36204
+; C: src/c/028_35FB9_import_export/MakeTeamDbFmt.c
+%ifdef CBUILD
+%include "c/028_35FB9_import_export/MakeTeamDbFmt.inc"
+%else
 MakeTeamDbFmt:
 push dword 18h	; 36207
 call __CHK	; 3620C
@@ -221,6 +225,7 @@ mov byte [esi], 0	; 36265
 add esp, byte 4	; 36268
 pop esi	; 3626B
 ret	; 3626C
+%endif ; C
 PostGameToTeamDb:
 push dword 420h	; 3626D
 call __CHK	; 36272

@@ -129,7 +129,7 @@ void SaveModeState(unsigned char *st);
 char *strcpy(char *d, const char *s);  /* Watcom CRT strcpy_ */
 int DeskSetExit1(void);  /* 179B6 */                      
 void SndLoadFile(int unused, char *name);
-void __cdecl sub_8E8B8(char *name, int bank);  /* sound library loader, stack args */
+void *__cdecl sub_8E8B8(char *name, int bank);  /* sound library loader, stack args */
 void NudgeRinkScroll(void);  /* 7FC12 */                  
 void ClampYPosition(Player *p);  /* 4B6F4 */              
 void CrowdFadeOut(void);
@@ -442,7 +442,7 @@ void SortNonDefPlayers(short side, signed char *out, short *keys);  /* 6455F */
 void __cdecl sub_93540(int n, int *keys, int *idx);  /* sort library */
 void SortPlayersByPos(short side, signed char *out, short *keys, char pos);  /* 644A8 */
 void LoadCupFinalSeries(void);  /* 15B76 */               
-void LoadScheduleDB(int *db);
+int LoadScheduleDB(int *db);  /* 891B2 */
 void InitSpeechSlots(int size);  /* 83459 */              
 int __cdecl sub_8CC70(char *name, int size, int flags);  /* memory library: allocate */
 int __cdecl sub_8DBD4(int buf);  /* memory library */     
@@ -658,5 +658,13 @@ void lcfound(Player *p);  /* 50975 */
 int POSeriesScore(unsigned char *s, int *hw, int *aw, int *home, int *away);  /* 877E9 */
 int GetLeagueId(char *dir, void *out);  /* 41344 */
 void PanelAddPenalty(short away, short pl, short t);  /* 14C22 */
+int LineEdHitTest(int x, int y, int *item);  /* 77F6F */
+void RunDeferredCalls(void);  /* 61A27 */
+void GetMemStats(unsigned *total, unsigned *used, unsigned *gaps, unsigned *biggest);  /* 1002A */
+int sub_B2F22(void);  /* mouse library: mouse present */
+void sub_B29F0(void);  /* mouse library: init */
+void InputInstall(void);  /* 6B410 */
+void PrintOutlinedText(int x, int y, char *s);  /* 17636 */
+void MakeTeamDbFmt(char *out, char *dir, unsigned char *tab, int n);  /* 36207 */
 
 #endif

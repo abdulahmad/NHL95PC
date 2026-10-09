@@ -6,7 +6,6 @@
 
 extern void sub_10000(); /* 10000 */
 extern void unk_10003(); /* 10003 */
-extern void GetMemStats(); /* 1002A */
 extern void main_x(); /* 106BF */
 extern void SetupControllers(); /* 10712 */
 extern void ReadKeyboardPad(); /* 1086A */
@@ -59,7 +58,6 @@ extern void RunDemoGame(); /* 15D6B */
 extern void RunDemoGame_x(); /* 16005 */
 extern void TitleScreen(); /* 1609F */
 extern void RunIntro(); /* 1672A */
-extern void PrintOutlinedText(); /* 17636 */
 extern void PrintFmt1(); /* 176AE */
 extern void PrintFmt2(); /* 176DB */
 extern void DeskSetExit2(); /* 179D0 */
@@ -434,7 +432,6 @@ extern void DrawCalendarDay(); /* 33FFD */
 extern void ApplyShapePalette(); /* 34789 */
 extern void CalendarScreen(); /* 34821 */
 extern void CheckLeagueDiskSync(); /* 35FB9 */
-extern void MakeTeamDbFmt(); /* 36207 */
 extern void PostGameToTeamDb(); /* 3626D */
 extern void TeamGridHitTest(); /* 37B92 */
 extern void SaveGridCellBg(); /* 37D6A */
@@ -681,7 +678,6 @@ extern void SaveGameState_popx(); /* 6060B */
 extern void LoadGameState(); /* 60612 */
 extern void sfxslots_popx(); /* 6185C */
 extern void DrawRinkObjects(); /* 61862 */
-extern void RunDeferredCalls(); /* 61A27 */
 extern void fileio_popebpx(); /* 61A83 */
 extern void fileio_tail_a(); /* 61BFB */
 extern void fileio_tail_b(); /* 61C0C */
@@ -1021,7 +1017,6 @@ extern void str_GoalieW2(); /* 7674F */
 extern void str_RosterIncomplete2(); /* 76756 */
 extern void GameLineEditor(); /* 767D0 */
 extern void GameLineEditorLoop(); /* 76AF5 */
-extern void LineEdHitTest(); /* 77F6F */
 extern void LoadGameRoster(); /* 77FF5 */
 extern void DrawGameLineJerseys_jt(); /* 78346 */
 extern void DrawGameLineJerseys_st1(); /* 78460 */
@@ -6362,7 +6357,6 @@ extern void sub_B28C9(); /* B28C9 */
 extern void sub_B297E(); /* B297E */
 extern void loc_B29A7(); /* B29A7 */
 extern void loc_B29DC(); /* B29DC */
-extern void sub_B29F0(); /* B29F0 */
 extern void loc_B2A9A(); /* B2A9A */
 extern void sub_B2A9B(); /* B2A9B */
 extern void loc_B2B09(); /* B2B09 */
@@ -6409,7 +6403,6 @@ extern void loc_B2EEA(); /* B2EEA */
 extern void sub_B2EF6(); /* B2EF6 */
 extern void sub_B2EFD(); /* B2EFD */
 extern void sub_B2F04(); /* B2F04 */
-extern void sub_B2F22(); /* B2F22 */
 extern void loc_B2F7C(); /* B2F7C */
 extern void loc_B3006(); /* B3006 */
 extern void sub_B300C(); /* B300C */

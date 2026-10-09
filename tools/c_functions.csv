@@ -2,6 +2,7 @@ function,address,size,segment,c_file,status,notes
 DiskFreeBytes,106C8,74,001_10010_main_startup,src/c/001_10010_main_startup/DiskFreeBytes.c,matched,
 DrawRinkEndArt,11136,43,001_10010_main_startup,src/c/001_10010_main_startup/DrawRinkEndArt.c,matched,
 GetMemListHead,10010,26,001_10010_main_startup,src/c/001_10010_main_startup/GetMemListHead.c,matched,
+GetMemStats,1002A,106,001_10010_main_startup,src/c/001_10010_main_startup/GetMemStats.c,matched,
 IntermissionPC,10F6D,152,001_10010_main_startup,src/c/001_10010_main_startup/IntermissionPC.c,matched,
 ResetInputSampling,1145F,59,001_10010_main_startup,src/c/001_10010_main_startup/ResetInputSampling.c,matched,
 RunGameFrames,1149A,182,001_10010_main_startup,src/c/001_10010_main_startup/RunGameFrames.c,nonmatching,"extra ecx: n/i get ecx/ebx (asm ebx/edx), hot-key byte reuses eax in asm"
@@ -32,6 +33,7 @@ LoadCupFinalSeries,15B76,186,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard
 ReadBE32,16072,45,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/ReadBE32.c,matched,
 TickPanelClock,15374,150,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/TickPanelClock.c,matched,
 PrintCenteredText,17573,111,007_1609F_title_intro,src/c/007_1609F_title_intro/PrintCenteredText.c,matched,
+PrintOutlinedText,17636,120,007_1609F_title_intro,src/c/007_1609F_title_intro/PrintOutlinedText.c,matched,
 PrintShadowText,175E2,84,007_1609F_title_intro,src/c/007_1609F_title_intro/PrintShadowText.c,matched,
 RenderTextLine,174D8,155,007_1609F_title_intro,src/c/007_1609F_title_intro/RenderTextLine.c,matched,
 SetTextColors,174C2,22,007_1609F_title_intro,src/c/007_1609F_title_intro/SetTextColors.c,matched,
@@ -122,6 +124,7 @@ CalPrevMonth,346FE,109,027_33FFD_calendar,src/c/027_33FFD_calendar/CalPrevMonth.
 CalReturn,3476B,30,027_33FFD_calendar,src/c/027_33FFD_calendar/CalReturn.c,matched,
 SetGameSides,347B7,106,027_33FFD_calendar,src/c/027_33FFD_calendar/SetGameSides.c,nonmatching,draft: record pointer built in edx (asm) vs eax; o kept in edx
 DrawTeamGrid,37FBA,303,028_35FB9_import_export,src/c/028_35FB9_import_export/DrawTeamGrid.c,nonmatching,
+MakeTeamDbFmt,36207,102,028_35FB9_import_export,src/c/028_35FB9_import_export/MakeTeamDbFmt.c,matched,
 RestoreGridCellBg,37E5B,75,028_35FB9_import_export,src/c/028_35FB9_import_export/RestoreGridCellBg.c,matched,
 AskExportToFloppy,38386,306,029_380E9_league_setup,src/c/029_380E9_league_setup/AskExportToFloppy.c,nonmatching,
 MergeGoalieRecDelta,3A826,388,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeGoalieRecDelta.c,matched,
@@ -161,7 +164,7 @@ GoalieToPuckVec,4B467,130,037_4842A_engine_player_logic,src/c/037_4842A_engine_p
 MoveInDir,49260,153,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/MoveInDir.c,matched,
 NextPathPoint,4F99B,84,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/NextPathPoint.c,matched,
 SetLCmode,4D9FC,59,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/SetLCmode.c,matched,
-StarEligible,487D9,98,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StarEligible.c,nonmatching,
+StarEligible,487D9,98,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StarEligible.c,nonmatching,registers: asm copies pl to ecx and builds side*256 in edx / pl in ebx for the tmpdst read; C uses ebx/edx swapped (2 bytes)
 StartFaceoffLineChange,4DA37,68,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StartFaceoffLineChange.c,matched,
 StartShotPath,4F9EF,249,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StartShotPath.c,matched,
 StopIfFree,4A80E,36,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StopIfFree.c,matched,
@@ -243,7 +246,7 @@ AvgCline,5A03B,104,042_59D9A_engine_core,src/c/042_59D9A_engine_core/AvgCline.c,
 ClearSortCords,5BA4E,59,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ClearSortCords.c,matched,
 GameOver,5DD9E,30,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GameOver.c,matched,
 GetHotOrStick,5A534,77,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetHotOrStick.c,matched,
-GetHotStick,5A4AD,70,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetHotStick.c,nonmatching,
+GetHotStick,5A4AD,70,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetHotStick.c,nonmatching,"1 register: the X-flip negate goes through a fresh esi (mov esi,ebx / neg esi), same open issue as GetHot; rest matches"
 GetPeriodTime,5B9D1,54,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetPeriodTime.c,matched,
 GiveControl,5B1CE,202,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GiveControl.c,nonmatching,"3 bytes short, same branch layout: the original loads regd1 into cx on the pad-1-first path and into si on the pad-2-first path (push esi, __CHK 14h) and keeps c2playernum in bx; this draft uses one register for both. Without the c2 local the layout breaks (no cross-jump into the pad 2 tail)"
 InitCoachModes,5A669,275,042_59D9A_engine_core,src/c/042_59D9A_engine_core/InitCoachModes.c,matched,
@@ -292,6 +295,7 @@ FlushGSumQueue,61B85,58,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_p
 GameTimeStamp,62CD7,34,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/GameTimeStamp.c,matched,
 QueueGoalieNote,62C37,160,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QueueGoalieNote.c,nonmatching,"draft: only the tail differs: ours keeps 1 in esi for deferpending and the result, asm stores immediates"
 QuickShotChk,6427F,185,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QuickShotChk.c,nonmatching,"asm keeps facedir in bx and si (2 saved regs, frame 10h); C saves only edx"
+RunDeferredCalls,61A27,99,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/RunDeferredCalls.c,matched,
 SetBoxDoorObject,61576,44,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetBoxDoorObject.c,matched,
 SetPA,62EA2,71,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetPA.c,matched,
 SetRinkObject,614C2,180,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetRinkObject.c,matched,
@@ -301,7 +305,7 @@ UpdatePowerPlayFlags,63C73,201,045_614C2_scoring_penalty_text,src/c/045_614C2_sc
 chkatop,639A4,85,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/chkatop.c,nonmatching,original reads the puck y into dx (push edx) and t into ax; this draft uses ax for y. 10-min cap
 releasepl,6392A,122,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/releasepl.c,matched,
 updatePPTeamTime,63B57,46,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/updatePPTeamTime.c,matched,
-updatepentime,63B85,115,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/updatepentime.c,nonmatching,
+updatepentime,63B85,115,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/updatepentime.c,nonmatching,registers: sflags3 & BFh kept in ah and reused as dh for the |40h; C uses al/dl or memory RMW; Penaltytimer += 24 must stay a memory add
 CloseTextOverlay,66DDA,44,046_644A8_engine_display,src/c/046_644A8_engine_display/CloseTextOverlay.c,matched,
 LoadTeamPalette,673C5,415,046_644A8_engine_display,src/c/046_644A8_engine_display/LoadTeamPalette.c,matched,
 NormalizeDressFlags,65B48,59,046_644A8_engine_display,src/c/046_644A8_engine_display/NormalizeDressFlags.c,matched,
@@ -315,6 +319,7 @@ BuildTeamRosterList,6C043,344,050_6B093_joystick_calibration,src/c/050_6B093_joy
 ClearInputQueue,6B3D7,57,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/ClearInputQueue.c,matched,
 EventToPointer,6B4BB,297,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/EventToPointer.c,matched,
 GetInputEvent,6B391,70,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/GetInputEvent.c,matched,
+InputInstall,6B410,108,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/InputInstall.c,nonmatching,
 InputRemove,6B47C,63,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/InputRemove.c,matched,
 LoadLeagueDbsMem,6C19B,350,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/LoadLeagueDbsMem.c,matched,
 CarTeamRecPtr,6CB6B,37,051_6C2F9_database_save,src/c/051_6C2F9_database_save/CarTeamRecPtr.c,matched,
@@ -344,9 +349,11 @@ LoadDbDialogShapes,7230B,385,053_71F0C_database_dialogs,src/c/053_71F0C_database
 LoadDbsFromDir,7345B,360,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/LoadDbsFromDir.c,matched,
 CmpRosterGoalies,75A37,371,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/CmpRosterGoalies.c,matched,
 GameRosterCmp,76A93,98,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/GameRosterCmp.c,matched,
+LineEdHitTest,77F6F,134,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/LineEdHitTest.c,nonmatching,
 PrintLineEdStatus,76771,95,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/PrintLineEdStatus.c,matched,
 RandLfsrByte,7665E,47,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/RandLfsrByte.c,nonmatching,"original does byte ops (dl = bit, dh = *s shr 1, bl = dh ^ B8h, push ebx too); this draft widens to 32 bits. 10-min cap"
 SetPalette768,76614,74,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/SetPalette768.c,matched,
+BlitJerseyDigit,7A017,130,055_78346_team_select,src/c/055_78346_team_select/BlitJerseyDigit.c,nonmatching,
 DrawGameLineJerseys,78366,410,055_78346_team_select,src/c/055_78346_team_select/DrawGameLineJerseys.c,nonmatching,"draft: structure matches (jump table, colours); side/c2 stack slots +24h/+28h swapped, nums[i] read via eax with xor edx first, hmroster index (side*444h + slot*39) folded differently; 401 vs 410 bytes"
 LoadJerseyColours,78A87,352,055_78346_team_select,src/c/055_78346_team_select/LoadJerseyColours.c,nonmatching,
 MakeJerseyShape,7A099,161,055_78346_team_select,src/c/055_78346_team_select/MakeJerseyShape.c,matched,
@@ -416,11 +423,12 @@ SayTonightIntro,84B0D,299,062_842BA_announcer,src/c/062_842BA_announcer/SayTonig
 MenuPlayNextGame,86627,16,063_85924_demo_savegame,src/c/063_85924_demo_savegame/MenuPlayNextGame.c,matched,
 MenuReturnToSportsCentral,86637,16,063_85924_demo_savegame,src/c/063_85924_demo_savegame/MenuReturnToSportsCentral.c,matched,
 ClearPlayerFromLines,8B96D,322,064_86696_season_playoffs,src/c/064_86696_season_playoffs/ClearPlayerFromLines.c,matched,
+LoadScheduleDB,891B2,113,064_86696_season_playoffs,src/c/064_86696_season_playoffs/LoadScheduleDB.c,matched,
 POPreSimConfFinals,8803B,91,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POPreSimConfFinals.c,matched,
 POPreSimRound1,87F85,91,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POPreSimRound1.c,matched,
 POPreSimRound2,87FE0,91,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POPreSimRound2.c,matched,
 POReturnZero,89B5C,13,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POReturnZero.c,matched,
-POSeriesScore,877E9,122,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeriesScore.c,nonmatching,
+POSeriesScore,877E9,122,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeriesScore.c,nonmatching,"registers/layout: asm returns through one exit (result in ecx), keeps *aw+1 in ebp on one arm and inc edi on the other; C merges the two arms"
 POSetSeriesTeams,87520,131,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSetSeriesTeams.c,nonmatching,original keeps s in eax and ORs the flags into ecx; this draft moves s to ecx. 10-min cap
 SetSideControls,8B85B,212,064_86696_season_playoffs,src/c/064_86696_season_playoffs/SetSideControls.c,matched,
 InitFileLocations,8BAAF,358,065_8BAAF_allfiles_coach,src/c/065_8BAAF_allfiles_coach/InitFileLocations.c,matched,

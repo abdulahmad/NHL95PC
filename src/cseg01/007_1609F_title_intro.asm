@@ -1623,6 +1623,10 @@ pop esi	; 17633
 pop ecx	; 17634
 ret	; 17635
 %endif ; C
+; C: src/c/007_1609F_title_intro/PrintOutlinedText.c
+%ifdef CBUILD
+%include "c/007_1609F_title_intro/PrintOutlinedText.inc"
+%else
 PrintOutlinedText:
 push dword 24h	; 17636
 call __CHK	; 1763B
@@ -1669,6 +1673,7 @@ pop edi	; 176AA
 pop esi	; 176AB
 pop ecx	; 176AC
 ret	; 176AD
+%endif ; C
 PrintFmt1:
 push dword 68h	; 176AE
 call __CHK	; 176B3

@@ -48,6 +48,10 @@ ret	; 10023
 mov eax, dword [memlist0]	; 10024
 ret	; 10029
 %endif ; C
+; C: src/c/001_10010_main_startup/GetMemStats.c
+%ifdef CBUILD
+%include "c/001_10010_main_startup/GetMemStats.inc"
+%else
 GetMemStats:
 push dword 14h	; 1002A
 call __CHK	; 1002F
@@ -97,6 +101,7 @@ pop ebp	; 10090
 pop edi	; 10091
 pop esi	; 10092
 ret	; 10093
+%endif ; C
 main_:
 push dword 9Ch	; 10094
 call __CHK	; 10099

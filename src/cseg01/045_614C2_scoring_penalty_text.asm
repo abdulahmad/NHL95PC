@@ -500,6 +500,10 @@ mov dword [dword eax+dword_E9BBC], edx	; 61A17
 inc dword [defercount]	; 61A1D
 pop esi	; 61A23
 ret 10h	; 61A24
+; C: src/c/045_614C2_scoring_penalty_text/RunDeferredCalls.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/RunDeferredCalls.inc"
+%else
 RunDeferredCalls:
 push dword 28h	; 61A27
 call __CHK	; 61A2C
@@ -539,6 +543,7 @@ pop edx	; 61A86
 pop ecx	; 61A87
 pop ebx	; 61A88
 ret	; 61A89
+%endif ; C
 AppendGSumRecord:
 push dword 1Ch	; 61A8A
 call __CHK	; 61A8F
