@@ -1,0 +1,86 @@
+{
+ "fixup_records": 26809,
+ "unique_fixups": 26790,
+ "page_straddles": 19,
+ "targets": 6776,
+ "named": 92,
+ "auto": 6684,
+ "per_class": {
+  "code_func": {
+   "total": 459,
+   "auto": 388,
+   "named": 71
+  },
+  "code_mid": {
+   "total": 285,
+   "auto": 285
+  },
+  "code_table": {
+   "total": 121,
+   "auto": 121
+  },
+  "data": {
+   "total": 5911,
+   "auto": 5890,
+   "named": 21
+  }
+ },
+ "per_subclass": {
+  "code_func/call_target": 33,
+  "code_func/listing_or_prologue": 355,
+  "code_func/named": 71,
+  "code_mid/other": 7,
+  "code_mid/ptr_table_target": 84,
+  "code_mid/switch_case": 194,
+  "code_table/data_in_code": 75,
+  "code_table/jump_table": 46,
+  "data/bss": 1137,
+  "data/ptr_table": 195,
+  "data/scalar_or_array": 3312,
+  "data/string": 1267,
+  "flag/mid_function": 285,
+  "flag/mid_item": 293
+ },
+ "site_kinds": {
+  "code_data_dword": 161,
+  "code_jump_table_entry": 398,
+  "data_dword": 369,
+  "data_ptr_table_entry": 1638,
+  "insn_disp32": 19279,
+  "insn_imm32": 4945
+ },
+ "jump_tables": 46,
+ "jump_table_entries": 398,
+ "ptr_tables": {
+  "code_obj_data_ptrs": 6,
+  "code_obj_ptr_table": 13,
+  "data_ptr_table": 114,
+  "code_ptr_table": 15,
+  "mixed_ptr_table": 160
+ },
+ "ptr_table_entries": 1929,
+ "function_entries": {
+  "total": 2589,
+  "name_map_or_listing": 2570,
+  "call_targets": 1783,
+  "chk_prologues": 1191
+ },
+ "decoded": {
+  "insn": 200998,
+  "data": 549
+ },
+ "code_data_ranges": 545,
+ "code_data_bytes": 5810,
+ "sweep_iterations": 3,
+ "listing_crosscheck": {
+  "listing_insns": 192331,
+  "decoded_insns": 200998,
+  "common": 192331,
+  "listing_only": 0,
+  "decoded_only": 8667
+ },
+ "used_listing": {
+  "funcs_pkl": true,
+  "lst_index_pkl": true
+ }
+}

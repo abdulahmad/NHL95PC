@@ -46,3 +46,6 @@ logs
 # Local-only FUNCTION_MAPPINGS95 cross-check output
 FM95_CHECK.md
 tools/fm95_check.json
+
+# assembler error files (contain disassembly)
+*.err

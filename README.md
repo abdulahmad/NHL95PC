@@ -61,6 +61,7 @@ python3 tools/libmatch.py $WATCOM_ROOT/w10a/WATCOM/LIB386/DOS/CLIB3R.LIB   # lib
 * [BUILD_NOTES.md](BUILD_NOTES.md): rebuild format, fixup ordering (wlink algorithm), compiler fingerprint, next steps
 * [EXE_SEGMAP95PC.md](EXE_SEGMAP95PC.md): segment map
 * [docs/SKATING_AND_RINK.md](docs/SKATING_AND_RINK.md): skating physics and rink geometry vs. 93 Genesis
+* [docs/ASM_BUILD.md](docs/ASM_BUILD.md): LE fixups as symbolic labels (`tools/fixup_labels.py`), the NASM toolchain, and the asm round trip (`tools/asm_proto.py`). All 270 segments reassemble byte- and fixup-exact, and the EXE rebuilt from them matches the original sha1
 
 ## Segment queue
 

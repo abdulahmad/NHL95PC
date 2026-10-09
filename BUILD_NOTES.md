@@ -76,6 +76,6 @@ Confidence: version family 10.0 = very high. GA rather than 10.0a/LA = high. Fla
 ## 3. Next steps
 1. Use **10.0 LA `wcc386` (defaults)** as the reference compiler for matching game C code. Re-test against 10.0a if a function fails, and keep a list of LA-vs-GA discrepancies. Keep looking for a 10.0 GA disc (June 1994) to close the gap.
 2. Link the libc side from the matched objects: take the 10.0a CLIB3R modules that match exactly, and treat cstrt386/scnf/grownear/sscanf/strspn/fstrspn (GA versions) as binary blobs from the EXE.
-3. Assembler-based build: emit per-segment asm → assemble → harvest absolute relocations → `order_fixups()` → `rebuild_exe.build()`. Remember that stored values are **object-relative** offsets.
+3. Assembler-based build: emit per-segment asm → assemble → harvest absolute relocations → `order_fixups()` → `rebuild_exe.build()`. Remember that stored values are **object-relative** offsets. **Prototype done:** see [docs/ASM_BUILD.md](docs/ASM_BUILD.md). NASM round-trips all 270 segments, and the rebuilt EXE matches the original sha1.
 4. Optionally run real wlink 10.0a/LA on synthetic OBJs to confirm the chunk/FIXUPP-order theory, so a fully native wcc386+wlink path can reproduce the order without the table.
 5. Run the remaining -o letter tests (-oe inlining, -om, -op, -oa) on functions that exercise them, plus FP-heavy functions (-fp3 vs -fp5).
