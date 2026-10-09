@@ -1,6 +1,8 @@
 # NHL 95 PC
 
-Bitwise rebuild of NHL 95 for DOS (`HOCKEY.EXE`, EA Sports 1994). The whole EXE builds byte-exact from the NASM sources in `src/`. No function is matched in C yet.
+**Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
+
+Bitwise rebuild of NHL 95 for DOS (`HOCKEY.EXE`, EA Sports 1994). The whole EXE builds byte-exact from the NASM sources in `src/`. C matching is in progress: see [C_PROGRESS.md](C_PROGRESS.md).
 
 `HOCKEY.EXE` is a Watcom C/C++32 10.0 program linked as a Linear Executable (LE) and bound to the DOS/4GW Professional extender (Rational DOS/16M loader, then a Watcom wstub, then the LE). The goal is a bit-perfect assembly rebuild first, then a matching C decompilation built with the same compiler.
 

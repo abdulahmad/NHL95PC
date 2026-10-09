@@ -61,7 +61,7 @@ types: `size b` is `signed char`, `size w` `short`, `size d` `int`; overrides in
 
 ## Workflow (one function)
 
-1. Pick a compiled-C function (starts with `push dword N` / `call __CHK`; not hand-written asm like `randomd0`,
+1. Pick a compiled-C function in a game segment (library segments stay asm; starts with `push dword N` / `call __CHK`; not hand-written asm like `randomd0`,
    `vtoa`). Check its block has no jumps into other functions (shared tails) and that the previous function does
    not fall into it (see "Tail calls" below); otherwise take the whole group into one file.
 2. Read the asm, its comment, its `name_map_94.csv` row and the 93G/94G routine. Write
@@ -160,6 +160,11 @@ or callback pieces of a C function reached through a pointer table, and a few ar
   `Reg68` unions (`.w`, `.l`, `.ul`); `.ul` gives the unsigned `ja` of playeracc's max speed check.
 * **Shared tails need the whole file**: StopNA matched only once EvadePlayers and skateto (drafts) were in the
   same file before it, see "Multi-block files".
+* **16-bit loop compares**: `while (--i != -1)` compares as int (`movsx eax,si / cmp eax,-1`); `(short)-1`
+  gives `cmp si,-1`. A loop counter reused for an earlier loop keeps its register (setpersonel).
+* **Locals vs fields**: `pos = p->position` then `Setplass_alist[pos]` gives `movsx edx,dx`; indexing with the
+  field re-reads it as a dword. `t = expr; n = t; if (t < 25) n = 25;` gives updatecrowdf's clamp.
+* **Early return first** reproduces the original block order (Acheck: `impact == 0` path first).
 * **Declaration order** of locals changes register allocation in some functions (calcpuckcross), not in others.
 * **gmode bit 0** (`gmclock`) means "game clock stopped" (93G ram93): ResetClock sets it, the faceoff drop
   clears it. Code that tests it and skips work does so while the clock is stopped.

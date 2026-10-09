@@ -77,7 +77,7 @@ Confidence: version family 10.0 = very high. GA rather than 10.0a/LA = high. Fla
 
 ## 2b. C matching (Oct 2026)
 
-The 10.0 LA `wcc386` with default flags is the reference compiler for the C phase: 32 game functions match byte for byte and are built from C by `make` (see [docs/C_MATCHING.md](docs/C_MATCHING.md) for the pipeline and the codegen learnings, [C_PROGRESS.md](C_PROGRESS.md) for the list).
+The 10.0 LA `wcc386` with default flags is the reference compiler for the C phase: game functions match byte for byte and are built from C by `make` (count in C_PROGRESS.md) (see [docs/C_MATCHING.md](docs/C_MATCHING.md) for the pipeline and the codegen learnings, [C_PROGRESS.md](C_PROGRESS.md) for the list).
 
 ## 3. Next steps
 1. Use **10.0 LA `wcc386` (defaults)** as the reference compiler for matching game C code. Re-test against 10.0a if a function fails, and keep a list of LA-vs-GA discrepancies. Keep looking for a 10.0 GA disc (June 1994) to close the gap.
