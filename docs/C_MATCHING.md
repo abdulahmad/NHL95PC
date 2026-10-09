@@ -165,5 +165,6 @@ or callback pieces of a C function reached through a pointer table, and a few ar
   clears it. Code that tests it and skips work does so while the clock is stopped.
 * **Still open**: EvadePlayers needs one more stack dword (a swap spill for the vtoa args while ebp is busy);
   skateto picks edx where the original picks eax for two short-lived loads (Xvel|Yvel, the pucky pointer);
-  calcpuckcross is 2 bytes short (x/side registers swapped, a 16-bit `mov bx,dx`). reenergizeteam ends in
-  calcpuckcross's tail, so it waits for calcpuckcross.c to match (or for a draft whose tail bytes are unique).
+  calcpuckcross is 2 bytes short (x/side registers swapped, a 16-bit `mov bx,dx`). reenergizeteam (ends in
+  calcpuckcross's tail) matched in calcpuckcross.c anyway: the draft's tail bytes are unique, and GetHot (draft)
+  between them gives the distance for the near jump. GetHot keeps the flip negate in a fresh register (esi).
