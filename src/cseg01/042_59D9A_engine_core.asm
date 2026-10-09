@@ -23,7 +23,7 @@ extern replaystart, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
 extern passspeed, randomd0, sfx, vecdist, IntermissionPC, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
 extern DrawPanelScore, DrawPanelLine, IsCupClinched, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
 extern PlayCrowdSample, PaOneMinuteLeft, sub_61576, sub_615A2, sub_61862, PenaltyManager, sub_63C73, ClearPenaltyBuffer
-extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
+extern sub_63D69, EndPenaltyShot, sub_665AD, sub_66FE2, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, awlinetab, unk_DAC40, unk_DAC70, unk_DACA0
 extern unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240, unk_DC252, SortCords
 extern unk_E9D50, unk_E9EE0, updatereplay, vtoa, regd4, camx
@@ -1266,7 +1266,7 @@ mov eax, dword [byte esp+02h]	; 5AC78
 sar eax, 10h	; 5AC7C
 cmp eax, dword [dword_CC104]	; 5AC7F
 je short .12	; 5AC85
-call sub_64439	; 5AC87
+call EndPenaltyShot	; 5AC87
 jmp near .60	; 5AC8C
 .12:
 inc word [byte esi+tmscore]	; 5AC91
@@ -1562,7 +1562,7 @@ mov edx, 7	; 5B090
 call AddPenalty2	; 5B095
 test byte [gmode], 10h	; 5B09A
 jne short .53	; 5B0A1
-call sub_64439	; 5B0A3
+call EndPenaltyShot	; 5B0A3
 mov edx, 1Fh	; 5B0A8
 mov eax, SortCords+800h	; 5B0AD
 call assreplace	; 5B0B2
@@ -5000,7 +5000,7 @@ mov eax, ecx	; 5DC04
 call AddPenalty2	; 5DC06
 jmp near calcpuckcross_ret5	; 5DC0B
 ; ClockTick: PC-new, run from the main loop. Counts clockticks (18h per second) and gameclock down; horn sfx 97h at
-;   60 s (unless music plays), UpdateCoachModes each second. Debug playback (penshotlive) ends via sub_64439.
+;   60 s (unless music plays), UpdateCoachModes each second. Debug playback (penshotlive) ends via EndPenaltyShot.
 ClockTick:
 push dword 14h	; 5DC10
 call __CHK	; 5DC15
@@ -5015,7 +5015,7 @@ dec edi	; 5DC2D
 mov dword [penshottimer], edi	; 5DC2E
 test edi, edi	; 5DC34
 jg near .x	; 5DC36
-call sub_64439	; 5DC3C
+call EndPenaltyShot	; 5DC3C
 pop edi	; 5DC41
 pop edx	; 5DC42
 pop ecx	; 5DC43

@@ -13,7 +13,7 @@ extern jctime, CanBlockShot_ret5, ltx, puckx, pucky, puckvy, puckz, puckc
 extern puckvz, randomd0, resetplstuff, setpersonel, sfx, skateto, skatetopuck, DrawPanelLine
 extern StopIfFree, SkateToSpot, lcfound, CenterMouse, ReturnGoalies, StopDigiSample, PaSpeechBusy, changeplayer
 extern restorepl, CompLine, setplayer, clockcont_0, SprSortVert, SprSort, SetExitGame, EvadePC
-extern sub_61B85, sub_63F72, threat, SortCords, updateanim
+extern sub_61B85, SetupPenaltyShot, threat, SortCords, updateanim
 extern vtoa, regd4, camx, camy, passdir, word_C90A6, passplayer, xc1
 extern yc1, word_C90B2, word_C90B4, fodir1, fodir2, c1playernum, c2playernum, cont1team
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
@@ -1719,7 +1719,7 @@ and byte [byte esi+pflags], 0FBh	; 52138
 mov edx, 18h	; 5213C
 mov eax, esi	; 52141
 call assreplace	; 52143
-call sub_63F72	; 52148
+call SetupPenaltyShot	; 52148
 jmp near TakePlayerFromBox_ret6	; 5214D
 .25:
 call ResetBench	; 52152

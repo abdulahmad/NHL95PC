@@ -38,11 +38,11 @@ global fileio_tail_a, fileio_tail_b, fileio_tail_c
 global InProgress_popebp, InProgress_popx
 global chkprogress_x
 global sub_614C2, sub_61576, sub_615A2, sub_61862
-global sub_619C8, sub_61A27, sub_61A8A, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_61D48
-global sub_61E99, sub_62343, sub_624B9, sub_62764, sub_627F8, sub_62807, sub_62C37, GameTimeStamp
+global sub_619C8, sub_61A27, sub_61A8A, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, FormatPlayerName
+global BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, sub_627F8, sub_62807, sub_62C37, GameTimeStamp
 global SetPA, InProgress, chkprogress_go, checkfornewpen, releasepl, chkatop, CheckAndReleasePlayer, ProcessPenaltyList
-global ChkPowerPlayTime, updatepentime, PenaltyManager, chkprogress, sub_63C73, ClearPenaltyBuffer, sub_63D69, sub_63F72
-global sub_64102, sub_6427F, sub_64338, sub_64398, sub_64439
+global ChkPowerPlayTime, updatepentime, PenaltyManager, chkprogress, sub_63C73, ClearPenaltyBuffer, sub_63D69, SetupPenaltyShot
+global sub_64102, sub_6427F, sub_64338, StartPenaltyShot, EndPenaltyShot
 sub_614C2:
 push dword 14h	; 614C2
 call __CHK	; 614C7
@@ -756,7 +756,7 @@ test eax, eax	; 61D36
 je near fileio_tail_c	; 61D38
 push unk_C1C67	; 61D3E
 jmp near fileio_tail_b	; 61D43
-sub_61D48:
+FormatPlayerName:
 push dword 48h	; 61D48
 call __CHK	; 61D4D
 push esi	; 61D52
@@ -853,7 +853,7 @@ jle short .2	; 61E53
 dec esi	; 61E55
 xor ah, ah	; 61E56
 mov byte [esp+esi], ah	; 61E58
-jmp short sub_61D48.1	; 61E5B
+jmp short FormatPlayerName.1	; 61E5B
 .2:
 mov esi, dword [byte esp+030h]	; 61E5D
 push esi	; 61E61
@@ -878,7 +878,7 @@ pop ebp	; 61E93
 pop edi	; 61E94
 pop esi	; 61E95
 ret 8	; 61E96
-sub_61E99:
+BuildEventLines:
 push dword 3Ch	; 61E99
 call __CHK	; 61E9E
 push ebx	; 61EA3
@@ -991,7 +991,7 @@ xor ebx, esi	; 61FE1
 mov bl, byte [dword edi+eax+hmrosterjersey]	; 61FE3
 mov edx, unk_C1B49	; 61FEA
 mov eax, byte_E0250	; 61FEF
-call sub_61D48	; 61FF4
+call FormatPlayerName	; 61FF4
 xor edx, edx	; 61FF9
 mov dl, byte [byte_E9ACB]	; 61FFB
 cmp edx, 0FFh	; 62001
@@ -1021,7 +1021,7 @@ xor ebx, ebx	; 6204B
 mov bl, byte [dword edx+edi+hmrosterjersey]	; 6204D
 mov edx, unk_C1B49	; 62054
 mov eax, byte_E0308	; 62059
-call sub_61D48	; 6205E
+call FormatPlayerName	; 6205E
 .6:
 xor edx, edx	; 62063
 mov dl, byte [byte_E9ACC]	; 62065
@@ -1050,7 +1050,7 @@ and ebx, 0FFh	; 620AF
 mov edx, unk_C1B49	; 620B5
 mov eax, byte_E0344	; 620BA
 .7:
-call sub_61D48	; 620BF
+call FormatPlayerName	; 620BF
 jmp near .14	; 620C4
 .8:
 cmp cl, 2	; 620C9
@@ -1118,7 +1118,7 @@ xor ebx, ebx	; 6218A
 mov bl, byte [dword eax+hmrosterjersey]	; 6218C
 mov edx, unk_C1B49	; 62192
 mov eax, byte_E0308	; 62197
-jmp near sub_61E99.7	; 6219C
+jmp near BuildEventLines.7	; 6219C
 .9:
 mov eax, esi	; 621A1
 shl eax, 2	; 621A3
@@ -1163,7 +1163,7 @@ xor ebx, ebx	; 6220F
 mov bl, byte [dword eax+hmrosterjersey]	; 62211
 mov edx, unk_C1B49	; 62217
 mov eax, byte_E0250	; 6221C
-call sub_61D48	; 62221
+call FormatPlayerName	; 62221
 xor eax, eax	; 62226
 mov al, byte [byte_E9ACB]	; 62228
 mov edx, dword [nosplit eax*4+penaltynames]	; 6222D
@@ -1235,7 +1235,7 @@ mov bl, byte [dword ebx+eax+hmrosterjersey]	; 62302
 and ebx, 0FFh	; 62309
 mov edx, unk_C1B49	; 6230F
 mov eax, byte_E0250	; 62314
-call sub_61D48	; 62319
+call FormatPlayerName	; 62319
 test edi, edi	; 6231E
 jle short .12	; 62320
 push asc_C1D2D	; 62322
@@ -1249,7 +1249,7 @@ add esp, byte 8	; 62338
 .14:
 add esp, byte 0Ch	; 6233B
 jmp near fileio_popebpx	; 6233E
-sub_62343:
+PostGoalEvent:
 push dword 10h	; 62343
 call __CHK	; 62348
 push esi	; 6234D
@@ -1336,7 +1336,7 @@ mov eax, 5	; 6246C
 cwde	; 62471
 call sub_66497	; 62472
 .6:
-call sub_61E99	; 62477
+call BuildEventLines	; 62477
 call sub_66DDA	; 6247C
 mov ax, word [joysampling]	; 62481
 mov word [joysampling_save], ax	; 62487
@@ -1355,7 +1355,7 @@ add esp, byte 4	; 624B1
 pop edi	; 624B4
 pop esi	; 624B5
 ret 0Ch	; 624B6
-sub_624B9:
+PostPenaltyEvent:
 push dword 2Ch	; 624B9
 call __CHK	; 624BE
 push esi	; 624C3
@@ -1442,7 +1442,7 @@ mov eax, 9	; 625D5
 .5:
 call sub_66497	; 625DA
 .6:
-call sub_61E99	; 625DF
+call BuildEventLines	; 625DF
 call sub_66DDA	; 625E4
 mov ax, word [joysampling]	; 625E9
 mov word [joysampling_save], ax	; 625EF
@@ -1561,7 +1561,7 @@ pop ebp	; 6275E
 pop edi	; 6275F
 pop esi	; 62760
 ret 0Ch	; 62761
-sub_62764:
+PostInjuryEvent:
 push dword 0Ch	; 62764
 call __CHK	; 62769
 push esi	; 6276E
@@ -1597,7 +1597,7 @@ jl short .1	; 627DC
 lea ecx, [byte edx-01h]	; 627DE
 mov dword [dword_CD34C], ecx	; 627E1
 .1:
-call sub_61E99	; 627E7
+call BuildEventLines	; 627E7
 call sub_66DDA	; 627EC
 .2:
 xor eax, eax	; 627F1
@@ -2283,7 +2283,7 @@ movsx dx, byte [dword eax+PenBuf]	; 6303A
 mov word [byte ebp-08h], dx	; 63042
 cmp dx, byte 1Ah	; 63046
 jne near .13	; 6304A
-call sub_64398	; 63050
+call StartPenaltyShot	; 63050
 mov dx, word [PerTimeTotal]	; 63055
 mov cx, word [gameclock]	; 6305C
 sub edx, ecx	; 63063
@@ -2327,7 +2327,7 @@ mov eax, dword [byte ebp-014h]	; 630D2
 test byte [byte eax+044h], 40h	; 630D5
 setne al	; 630D9
 and eax, 0FFh	; 630DC
-call sub_624B9	; 630E1
+call PostPenaltyEvent	; 630E1
 jmp near .32	; 630E6
 .13:
 mov edi, dword [byte ebp-0Ah]	; 630EB
@@ -2403,7 +2403,7 @@ mov eax, dword [byte ebp-014h]	; 631CC
 test byte [byte eax+044h], 40h	; 631CF
 setne al	; 631D3
 and eax, 0FFh	; 631D6
-call sub_624B9	; 631DB
+call PostPenaltyEvent	; 631DB
 movsx eax, si	; 631E0
 movsx dx, byte [nosplit eax*2+PenBuf_pl]	; 631E3
 mov word [word_C90D8], dx	; 631EC
@@ -2494,7 +2494,7 @@ test byte [byte eax+044h], 40h	; 6330C
 setne byte [byte ebp-04h]	; 63310
 xor eax, eax	; 63314
 mov al, byte [byte ebp-04h]	; 63316
-call sub_624B9	; 63319
+call PostPenaltyEvent	; 63319
 mov ecx, dword [byte ebp-010h]	; 6331E
 imul eax, ecx, byte 3Ch	; 63321
 mov word [byte ebp-010h], ax	; 63324
@@ -3443,7 +3443,7 @@ or byte [awtmflags], 1	; 63F63
 .20:
 add esp, byte 4	; 63F6A
 jmp near InProgress_popebp	; 63F6D
-sub_63F72:
+SetupPenaltyShot:
 push dword 10h	; 63F72
 call __CHK	; 63F77
 push ebx	; 63F7C
@@ -3784,7 +3784,7 @@ xor edx, edx	; 64392
 mov eax, edx	; 64394
 pop edx	; 64396
 ret	; 64397
-sub_64398:
+StartPenaltyShot:
 push dword 0Ch	; 64398
 call __CHK	; 6439D
 push ebx	; 643A2
@@ -3825,7 +3825,7 @@ mov word [word_C90B4], si	; 6442F
 pop esi	; 64436
 pop ebx	; 64437
 ret	; 64438
-sub_64439:
+EndPenaltyShot:
 push dword 0Ch	; 64439
 call __CHK	; 6443E
 push ecx	; 64443

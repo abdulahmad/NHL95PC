@@ -12,8 +12,8 @@ extern dword_E03AE, dword_E03B6, dword_E03B9, dword_E03BD, dword_E9A9E
 extern dword_E9AB6, puckvx, gmode, puckx, pucky, puckvy, puckz
 extern puckc, off_CD498, off_CD4A0, passspeed, puckflip, puckvz, randomd0, CanRemovePlayer
 extern setpersonel, sfx, shotsets, vecdist, CanBlockShot, PassCompleted, changeplayer, restorepl
-extern CompLine, GetHotStick, GetHotOrStick, Goal, GiveControl, sub_61576, sub_62764, sub_64102
-extern sub_6427F, sub_64338, sub_64439, RemoveFromLines, imul32, sub_93470, threat, SortCords
+extern CompLine, GetHotStick, GetHotOrStick, Goal, GiveControl, sub_61576, PostInjuryEvent, sub_64102
+extern sub_6427F, sub_64338, EndPenaltyShot, RemoveFromLines, imul32, sub_93470, threat, SortCords
 extern vtoa, wcradiusx, regd4, camx, camy, lastplayer, passdir
 extern word_C90A6, passplayer, xc1, yc1, word_C90B2, c1playernum, c2playernum, cont1team
 extern gsp, gameclock, clockticks, dirtab_y, word_CBEC2, word_CBEC6, word_CBEC8, word_CC0DA
@@ -3748,7 +3748,7 @@ setne cl	; 55FF4
 movzx edi, cl	; 55FF7
 mov ecx, eax	; 55FFA
 mov eax, edi	; 55FFC
-call sub_62764	; 55FFE
+call PostInjuryEvent	; 55FFE
 mov edx, dword [byte esi+044h]	; 56003
 sar edx, 18h	; 56006
 test byte [byte esi+pflags], 40h	; 56009
@@ -4962,7 +4962,7 @@ je short .1	; 56F8E
 movsx ax, byte [byte edx+pnum]	; 56F90
 cmp ax, word [byte ebx+030h]	; 56F95
 jne short .1	; 56F99
-call sub_64439	; 56F9B
+call EndPenaltyShot	; 56F9B
 xor edi, edi	; 56FA0
 mov dword [onetimerflag], edi	; 56FA2
 mov dword [dword_CC0F8], edi	; 56FA8
@@ -5018,7 +5018,7 @@ and byte [sflags], 0F3h	; 57056
 cmp word [byte edx+position], byte 0	; 5705D
 jne short .9	; 57062
 call ChkShotStat	; 57064
-call sub_64439	; 57069
+call EndPenaltyShot	; 57069
 cmp word [byte edx+SPA], 181h	; 5706E
 jne short .8	; 57074
 mov word [byte edx+temp5], 5	; 57076
@@ -6833,7 +6833,7 @@ db 081h,0E8h,00h,010h,00h,00h	; 5876E sub eax,1000h
 mov word [byte esi+010h], ax	; 58774
 mov eax, esi	; 58778
 call puckflip	; 5877A
-call sub_64439	; 5877F
+call EndPenaltyShot	; 5877F
 xor edx, edx	; 58784
 mov dword [onetimerflag], edx	; 58786
 mov dword [dword_CC0F8], edx	; 5878C
@@ -7023,7 +7023,7 @@ movsx eax, di	; 589F2
 cmp eax, 0E8h	; 589F5
 jle short .13	; 589FA
 .12:
-call sub_64439	; 589FC
+call EndPenaltyShot	; 589FC
 .13:
 xor ebp, ebp	; 58A01
 mov dword [onetimerflag], ebp	; 58A03
@@ -7237,7 +7237,7 @@ add eax, SortCords	; 58CBB
 mov edx, 3	; 58CC0
 call AddPenalty2	; 58CC5
 .14:
-call sub_64439	; 58CCA
+call EndPenaltyShot	; 58CCA
 xor edx, edx	; 58CCF
 mov dword [onetimerflag], edx	; 58CD1
 mov dword [dword_CC0F8], edx	; 58CD7

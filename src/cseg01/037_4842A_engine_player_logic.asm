@@ -23,7 +23,7 @@ extern playeracc, puckshadow, puckvz, qsort_, randomd0, sfx, skateto, skatetopuc
 extern sprintf_, vecdist, FadePalette, IsCupClinched, ThreeStarsLoop, joyq_flush, getlchoice, PenShotAssign
 extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
 extern PaSpeechBusy, PaGoal, PaPlayerNumber, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
-extern EvadePC, sub_61576, sub_61D48, sub_62343, sub_62807, sub_62C37, sub_64102, sub_64439
+extern EvadePC, sub_61576, FormatPlayerName, PostGoalEvent, sub_62807, sub_62C37, sub_64102, EndPenaltyShot
 extern RemoveFromLines, sub_66497, sub_66DDA, MusicChanReset, sub_8F633, sub_8FFB0, imul32, threat
 extern unk_C1B3E, unk_DACA0, hmteamrec, unk_DC240, unk_DF014, SortCords, updateanim
 extern vtoa, regd4, camx, camy, lastplayer, passdir, word_C90A6, xc1
@@ -1583,7 +1583,7 @@ mov ecx, dword [byte esp+08h]	; 496F8
 mov ebx, edx	; 496FC
 mov edx, eax	; 496FE
 mov eax, byte_E028C	; 49700
-call sub_61D48	; 49705
+call FormatPlayerName	; 49705
 test esi, esi	; 4970A
 je short .3	; 4970C
 mov ax, word [VisTeam]	; 4970E
@@ -1702,7 +1702,7 @@ mov edx, hmteamrec	; 49894
 add edx, ebx	; 49899
 mov ebx, dword [byte esp+08h]	; 4989B
 mov eax, byte_E028C	; 4989F
-call sub_61D48	; 498A4
+call FormatPlayerName	; 498A4
 test esi, esi	; 498A9
 je short .9	; 498AB
 mov ax, word [VisTeam]	; 498AD
@@ -6773,7 +6773,7 @@ inc edi	; 4D7EA
 mov dword [dword_CC12C], edi	; 4D7EB
 cmp edi, byte 1Eh	; 4D7F1
 jl short .8	; 4D7F4
-call sub_64439	; 4D7F6
+call EndPenaltyShot	; 4D7F6
 xor eax, eax	; 4D7FB
 mov dword [dword_CC12C], eax	; 4D7FD
 jmp short .8	; 4D802
@@ -8371,7 +8371,7 @@ mov edx, dword [byte ecx+02Eh]	; 4EC0C
 sar edx, 10h	; 4EC0F
 mov ecx, eax	; 4EC12
 mov eax, edi	; 4EC14
-call sub_62343	; 4EC16
+call PostGoalEvent	; 4EC16
 .8:
 mov edx, 21h	; 4EC1B
 mov eax, esi	; 4EC20

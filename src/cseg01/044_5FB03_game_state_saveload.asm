@@ -16,7 +16,7 @@ extern dword_DF6F2, dword_DF6F6, hmtmplstats, dword_DF6FE, hmtmroster, hmtmlines
 extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2
 extern awtmsort, dword_E009C, dword_E0248, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
 extern ltx, replaystart, off_CC01D, passspeed, LoadGameGfx, FileReadAt, FileWriteAt, LoadGameTeams
-extern SaveModeState, LoadModeState, GetPeriodTime, SprSort, sub_61E99, sub_673C5, ReplayRecordReset, LoadRockMusic
+extern SaveModeState, LoadModeState, GetPeriodTime, SprSort, BuildEventLines, sub_673C5, ReplayRecordReset, LoadRockMusic
 extern FatalError, MouseSetPos, threat, exhstate, unk_C5423, unk_C542E, awlinetab, unk_DAC40
 extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240
 extern unk_DC252, unk_DF314, SortCords, hudpenhome, hudpenaway, camx, camy
@@ -1664,7 +1664,7 @@ je short .35	; 612EB
 mov eax, dword [nosplit eax*4+off_CC01D]	; 612ED
 mov dword [dword_E0248], eax	; 612F4
 .35:
-call sub_61E99	; 612F9
+call BuildEventLines	; 612F9
 mov eax, dword [replaystart]	; 612FE
 mov dword [recbpr], eax	; 61303
 call ReplayRecordReset	; 61308
