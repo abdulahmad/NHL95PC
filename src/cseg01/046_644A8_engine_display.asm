@@ -2186,6 +2186,10 @@ setg al	; 65C98
 and eax, 0FFh	; 65C9B
 add esp, byte 8	; 65CA0
 jmp near lines_popx	; 65CA3
+; C: src/c/046_644A8_engine_display/DitherRect.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/DitherRect.inc"
+%else
 DitherRect:
 push dword 28h	; 65CA8
 call __CHK	; 65CAD
@@ -2226,6 +2230,7 @@ pop ebp	; 65CFB
 pop edi	; 65CFC
 pop esi	; 65CFD
 ret 4	; 65CFE
+%endif ; C
 checkwindow:
 push dword 20h	; 65D01
 call __CHK	; 65D06

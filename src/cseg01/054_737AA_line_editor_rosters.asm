@@ -179,6 +179,10 @@ pop ebp	; 739B2
 pop edi	; 739B3
 pop esi	; 739B4
 ret	; 739B5
+; C: src/c/054_737AA_line_editor_rosters/FindRosterSlot.c
+%ifdef CBUILD
+%include "c/054_737AA_line_editor_rosters/FindRosterSlot.inc"
+%else
 FindRosterSlot:
 push dword 14h	; 739B6
 call __CHK	; 739BB
@@ -222,6 +226,7 @@ add esp, byte 8	; 73A12
 pop ecx	; 73A15
 pop ebx	; 73A16
 ret	; 73A17
+%endif ; C
 DbLineEditorLoop:
 push dword 158h	; 73A18
 call __CHK	; 73A1D

@@ -488,6 +488,10 @@ pop ecx	; 7FC9F
 pop ebx	; 7FCA0
 ret	; 7FCA1
 %endif ; C
+; C: src/c/058_7F724_highlights/FormatHilightDesc.c
+%ifdef CBUILD
+%include "c/058_7F724_highlights/FormatHilightDesc.inc"
+%else
 FormatHilightDesc:
 push dword 3Ch	; 7FCA2
 call __CHK	; 7FCA7
@@ -527,6 +531,7 @@ pop esi	; 7FCF4
 pop ecx	; 7FCF5
 pop ebx	; 7FCF6
 ret	; 7FCF7
+%endif ; C
 SelectHilight:
 push dword 204h	; 7FCF8
 call __CHK	; 7FCFD

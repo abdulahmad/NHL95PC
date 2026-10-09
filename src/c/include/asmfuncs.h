@@ -385,7 +385,6 @@ extern void GameStatsScreen(); /* 2F5EE */
 extern void DrawBevelRect(); /* 2FE49 */
 extern void TextInputDialog(); /* 2FEDF */
 extern void DlgNullCallback(); /* 30203 */
-extern void ListHitTest(); /* 3023E */
 extern void DrawListItem(); /* 302B9 */
 extern void DrawListItem_x(); /* 30396 */
 extern void DrawListItems(); /* 3039C */
@@ -395,7 +394,6 @@ extern void TrackButtons_x(); /* 30ADC */
 extern void DrawButton_x(); /* 30BEC */
 extern void DrawScrollBar(); /* 30C3D */
 extern void TrackScrollBars(); /* 30D0E */
-extern void GrowToButtons(); /* 30FB4 */
 extern void RunMessageBox(); /* 31250 */
 extern void DrawEditCursor(); /* 314B4 */
 extern void DrawEditCursor_x(); /* 3158C */
@@ -700,7 +698,6 @@ extern void PickGoalie(); /* 652D6 */
 extern void PickExtraSkater(); /* 653BE */
 extern void RefillLineSlots(); /* 6552E */
 extern void RemoveFromLines(); /* 655CC */
-extern void DitherRect(); /* 65CA8 */
 extern void checkwindow(); /* 65D01 */
 extern void checkwindow_popebp(); /* 66490 */
 extern void checkwindow_popx(); /* 66491 */
@@ -982,7 +979,6 @@ extern void str_Dress(); /* 737CD */
 extern void str_Player(); /* 737D3 */
 extern void str_GoalieW(); /* 737DA */
 extern void DbLineEditor(); /* 737E1 */
-extern void FindRosterSlot(); /* 739B6 */
 extern void DbLineEditorLoop(); /* 73A18 */
 extern void DrawLineJerseys(); /* 75046 */
 extern void CheckRosterComplete(); /* 751FC */
@@ -1109,7 +1105,6 @@ extern void ReplaySaveHilight_n3(); /* 7F5A8 */
 extern void HilightSaveToDlg(); /* 7F724 */
 extern void SaveHilight(); /* 7FA10 */
 extern void CmpInt(); /* 7FC31 */
-extern void FormatHilightDesc(); /* 7FCA2 */
 extern void LoadSettingsShapes(); /* 8034B */
 extern void DrawSettingsHeading_jt(); /* 804FF */
 extern void DrawSettingsHeading(); /* 8050F */
@@ -6967,7 +6962,6 @@ extern void loc_B5D51(); /* B5D51 */
 extern void loc_B5D5B(); /* B5D5B */
 extern void loc_B5D72(); /* B5D72 */
 extern void loc_B5D77(); /* B5D77 */
-extern void sub_B5D80(); /* B5D80 */
 extern void loc_B5DAC(); /* B5DAC */
 extern void sub_B5DB0(); /* B5DB0 */
 extern void loc_B5DBC(); /* B5DBC */

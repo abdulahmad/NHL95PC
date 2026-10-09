@@ -686,5 +686,11 @@ unsigned _dos_write(int fh, void __far *buf, unsigned n, unsigned *got);  /* Wat
 void ReadGSumHeader(void);  /* 61BBF */
 void ReadGSumTail(void);  /* 61C22 */
 void WriteGSumHeader(void);  /* 61C86 */
+void DitherRect(int x, int y, int w, int h, int c);  /* 65CA8 */
+void GrowToButtons(int *b, int n, int *w, int *h);  /* 30FB4 */
+unsigned char FindRosterSlot(unsigned char pl, unsigned char side);  /* 739B6 */
+void __cdecl sub_B5D80(int x, int y, int c);  /* B5D80: plot a pixel */
+void FormatHilightDesc(char *out, unsigned char *h);  /* 7FCA2 */
+int ListHitTest(int mx, int my, int left, int top, int w, int n);  /* 3023E */
 
 #endif
