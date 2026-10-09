@@ -25,9 +25,7 @@ extern void PickAwardWinners(); /* 1205D */
 extern void PickAwardWinners_x(); /* 12842 */
 extern void ShowAwardScreens(); /* 12849 */
 extern void DrawAwardsSummary(); /* 13188 */
-extern void IndexPhotoBank(); /* 13867 */
 extern void IndexPhotoBank_x(); /* 138CC */
-extern void LoadPhotoBankF(); /* 138D2 */
 extern void LoadPhotoBankF_x(); /* 13957 */
 extern void LoadGameGfx(); /* 13A91 */
 extern void LoadGameGfx_common(); /* 13B56 */
@@ -6411,7 +6409,6 @@ extern void sub_B3036(); /* B3036 */
 extern void loc_B3089(); /* B3089 */
 extern void sub_B308B(); /* B308B */
 extern void loc_B30B0(); /* B30B0 */
-extern void sub_B30BB(); /* B30BB */
 extern void loc_B30BD(); /* B30BD */
 extern void loc_B30D1(); /* B30D1 */
 extern void loc_B30E3(); /* B30E3 */

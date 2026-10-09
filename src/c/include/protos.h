@@ -666,5 +666,9 @@ void sub_B29F0(void);  /* mouse library: init */
 void InputInstall(void);  /* 6B410 */
 void PrintOutlinedText(int x, int y, char *s);  /* 17636 */
 void MakeTeamDbFmt(char *out, char *dir, unsigned char *tab, int n);  /* 36207 */
+void IndexPhotoBank(int b);  /* 13867 */
+int __cdecl sub_B30BB(int bank, char *name);  /* graphics library: find art (second entry) */
+void LoadPhotoBankF(void);  /* 138D2 */
+void LoadPlayerPhotos(void);  /* 1395F */
 
 #endif

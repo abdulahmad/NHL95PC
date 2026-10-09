@@ -2512,6 +2512,10 @@ add esp, byte 4	; 8244A
 xor ebp, ebp	; 8244D
 mov dword [songdata], ebp	; 8244F
 jmp near LockerRoomLoop_n7.3	; 82455
+; C: src/c/059_8034B_settings_lockerroom/DrawSelBoxOn.c
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/DrawSelBoxOn.inc"
+%else
 DrawSelBoxOn:
 push dword 28h	; 8245A
 call __CHK	; 8245F
@@ -2578,6 +2582,11 @@ pop edx	; 824F4
 pop ecx	; 824F5
 pop ebx	; 824F6
 ret	; 824F7
+%endif ; C
+; C: src/c/059_8034B_settings_lockerroom/DrawSelBoxOn.c (DrawSelBoxOff)
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/DrawSelBoxOn.DrawSelBoxOff.inc"
+%else
 DrawSelBoxOff:
 push dword 28h	; 824F8
 call __CHK	; 824FD
@@ -2627,6 +2636,7 @@ call sub_B4FAC	; 82567
 add esp, byte 14h	; 8256C
 push dword 0F8h	; 8256F
 jmp near DrawSelBox_common	; 82574
+%endif ; C
 MenuSoundSettings:
 push dword 24h	; 82579
 call __CHK	; 8257E

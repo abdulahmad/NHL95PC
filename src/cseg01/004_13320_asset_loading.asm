@@ -426,6 +426,10 @@ call sub_8EA00	; 13857
 add esp, byte 4	; 1385C
 add esp, byte 50h	; 1385F
 jmp near PickAwardWinners_x	; 13862
+; C: src/c/004_13320_asset_loading/IndexPhotoBank.c
+%ifdef CBUILD
+%include "c/004_13320_asset_loading/IndexPhotoBank.inc"
+%else
 IndexPhotoBank:
 push dword 34h	; 13867
 call __CHK	; 1386C
@@ -474,6 +478,11 @@ pop edx	; 138CE
 pop ecx	; 138CF
 pop ebx	; 138D0
 ret	; 138D1
+%endif ; C
+; C: src/c/004_13320_asset_loading/LoadPhotoBankF.c
+%ifdef CBUILD
+%include "c/004_13320_asset_loading/LoadPhotoBankF.inc"
+%else
 LoadPhotoBankF:
 push dword 40h	; 138D2
 call __CHK	; 138D7
@@ -524,6 +533,11 @@ pop edx	; 1395B
 pop ecx	; 1395C
 pop ebx	; 1395D
 ret	; 1395E
+%endif ; C
+; C: src/c/004_13320_asset_loading/LoadPhotoBankF.c (LoadPlayerPhotos)
+%ifdef CBUILD
+%include "c/004_13320_asset_loading/LoadPhotoBankF.LoadPlayerPhotos.inc"
+%else
 LoadPlayerPhotos:
 push dword 44h	; 1395F
 call __CHK	; 13964
@@ -603,6 +617,7 @@ cmp esi, byte 17h	; 13A1C
 jl near LoadPlayerPhotos.1	; 13A1F
 call LoadPhotoBankF	; 13A25
 jmp near LoadPhotoBankF_x	; 13A2A
+%endif ; C
 ; C: src/c/004_13320_asset_loading/LoadTransparentRinkEndOverlay.c
 %ifdef CBUILD
 %include "c/004_13320_asset_loading/LoadTransparentRinkEndOverlay.inc"
