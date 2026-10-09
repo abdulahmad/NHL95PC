@@ -388,7 +388,6 @@ extern void DrawListItem(); /* 302B9 */
 extern void DrawListItem_x(); /* 30396 */
 extern void DrawListItems(); /* 3039C */
 extern void ListDialog(); /* 303FB */
-extern void TrackButtons(); /* 30A39 */
 extern void TrackButtons_x(); /* 30ADC */
 extern void DrawButton_x(); /* 30BEC */
 extern void DrawScrollBar(); /* 30C3D */
@@ -425,7 +424,6 @@ extern void ApplyShapePalette(); /* 34789 */
 extern void CalendarScreen(); /* 34821 */
 extern void CheckLeagueDiskSync(); /* 35FB9 */
 extern void PostGameToTeamDb(); /* 3626D */
-extern void TeamGridHitTest(); /* 37B92 */
 extern void SaveGridCellBg(); /* 37D6A */
 extern void HighlightGridCell(); /* 37EA6 */
 extern void ChooseLeagueController(); /* 380E9 */
