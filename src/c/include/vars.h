@@ -29,6 +29,7 @@ extern short *puckx;          /* C907C: points at the puck's x word (puckstruct+
 extern short *pucky;          /* C9084: points at the puck's y word (puckstruct+6) */
 extern short *puckvx;         /* C9080: points at the puck's x velocity word (puckstruct+0Ch) */
 extern short *puckvy;         /* C9088: points at the puck's y velocity word (puckstruct+0Eh) */
+extern signed char Setplass_alist[]; /* CCCA1: 94G Setplass .alist, initial assignment per position 0-6 (signed: loaded as dword [x-3] / sar 18h) */
 extern signed char *puckc;   /* C9094: points at the puck's controller byte (SortCords number of the carrier, -1 none; 93G puckc) */
 /* regd0-regd4: the 68k data registers of the Genesis code, kept as 4-byte statics. The PC code reads and writes
    them as words (.w, the 68k .w ops) and as whole longs (.l / .ul, the .l ops and unsigned compares). */

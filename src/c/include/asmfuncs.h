@@ -32,7 +32,6 @@ extern void SetFullPalette(); /* 11550 */
 extern void FadePalette(); /* 11598 */
 extern void GameLoop(); /* 1167B */
 extern void PlayGame(); /* 11D09 */
-extern void assreplace(); /* 11FF4 */
 extern void assinsert(); /* 12011 */
 extern void ReplayIsEmpty(); /* 12034 */
 extern void PickAwardWinners(); /* 1205D */
@@ -940,12 +939,10 @@ extern void InitCoachModes(); /* 5A669 */
 extern void UpdateCoachModes(); /* 5A77C */
 extern void Goal(); /* 5AB36 */
 extern void GiveControl(); /* 5B1CE */
-extern void Setplass(); /* 5B298 */
 extern void setplayer(); /* 5B2C5 */
 extern void clearteams(); /* 5B881 */
 extern void ResetClock(); /* 5BA07 */
 extern void defaultsprites2(); /* 5BA89 */
-extern void TryAddPlayerToList(); /* 5BB9E */
 extern void SetPlList(); /* 5BBFA */
 extern void setpersonel(); /* 5BEF4 */
 extern void StartPer(); /* 5C010 */

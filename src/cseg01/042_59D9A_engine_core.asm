@@ -11,7 +11,7 @@ extern byte_E0074, PlList, byte_E038A, PenBuf, byte_E9AD3, OOlist, byte_E9DB4, b
 extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, rinkscrollx, rinkscrolly
 extern yleader, sflags3, cont2team, shownumbers, bannertimer, dword_CC0B4, lastsfx, onetimerflag
 extern shotongoal, penshotplayer, penshotteam, penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer
-extern shotontarget, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, mousex
+extern Setplass_alist, shotontarget, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, mousex
 extern mousey, cliprect_y0, cliprect_y1, dword_D30BC, dword_D30C0, curperiod, dword_DB088, hmtmstruct
 extern dword_DF642, dword_DF652, dword_DF6EA, dword_DF6F2, dword_DF6F6, hmtmplstats
 extern dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort, awtmstruct, dword_DF752, dword_DF7EA
@@ -1730,6 +1730,10 @@ pop edx	; 5B294
 pop ecx	; 5B295
 pop ebx	; 5B296
 ret	; 5B297
+; C: src/c/042_59D9A_engine_core/Setplass.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/Setplass.inc"
+%else
 Setplass:
 push dword 8	; 5B298
 call __CHK	; 5B29D
@@ -1746,6 +1750,7 @@ call assreplace	; 5B2BE
 .x:
 pop edx	; 5B2C3
 ret	; 5B2C4
+%endif ; C
 ; setplayer: 93G hockey93_05 setplayer (bring player onto the ice and set his stats). eax = sort object, edx = roster
 ;   number. pnum = edx, tmpdst entry -1 (ice), roster status byte 4, then the attribute bytes from the roster record.
 setplayer:

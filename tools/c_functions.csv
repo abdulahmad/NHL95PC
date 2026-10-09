@@ -20,10 +20,13 @@ GetPeriodTime,5B9D1,54,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetPeri
 Intermission,5DE42,46,042_59D9A_engine_core,src/c/042_59D9A_engine_core/Intermission.c,matched,
 LockScroll,5CD25,42,042_59D9A_engine_core,src/c/042_59D9A_engine_core/LockScroll.c,matched,
 PenTeamScored,5AAAE,136,042_59D9A_engine_core,src/c/042_59D9A_engine_core/PenTeamScored.c,matched,
+ResetClock,5BA07,71,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ResetClock.c,nonmatching,"2 bytes long: the original keeps the clockticks zero in edx (only push edx, __CHK 8); every variant tried (temp, chained stores, PerTimeTotal/2, int temp) zeroes ebx and saves it too (__CHK 0Ch). Maybe randomd0/GetPeriodTime were declared with other types in the original file"
 RestBench,5C1E2,102,042_59D9A_engine_core,src/c/042_59D9A_engine_core/RestBench.c,matched,
 SetExitGame,5DDBC,30,042_59D9A_engine_core,src/c/042_59D9A_engine_core/SetExitGame.c,matched,
 SetSPA,59D9A,33,042_59D9A_engine_core,src/c/042_59D9A_engine_core/SetSPA.c,matched,
+Setplass,5B298,45,042_59D9A_engine_core,src/c/042_59D9A_engine_core/Setplass.c,matched,
 StartGame,5E086,42,042_59D9A_engine_core,src/c/042_59D9A_engine_core/StartGame.c,matched,
+TryAddPlayerToList,5BB9E,92,042_59D9A_engine_core,src/c/042_59D9A_engine_core/TryAddPlayerToList.c,nonmatching,"same size, register choice only: the original computes &tmpdst[pl] in edx (add edx,eax) and indexes PlList[slot] with edx; this draft uses eax for both. Tried a tmpdst pointer, < -2, int i, nested if: no change or worse"
 reenergizeteam,5B826,91,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,matched,
 calcpuckcross,5A341,221,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,nonmatching,"body 2 bytes short: the original keeps x in ebx and side in ecx and stores x with 16-bit mov bx,dx; this draft swaps the two registers and uses mov ebx,edx (declaration order did not change it). Its pop/ret tail (calcpuckcross_ret5/6) is shared by ~14 engine_core functions (Goal, SetPlList ...): they belong in this file; reenergizeteam already matches here because frag resolves the jump to the unique tail bytes of the draft"
 GetHot,5A425,136,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,nonmatching,"same size; the original saves esi and negates the hot spot x through it (mov esi,ebx / neg esi), this draft negates in place and skips push esi. Also the filler that makes reenergizeteam's exit a near jump"

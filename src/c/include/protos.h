@@ -5,6 +5,9 @@
 #define PROTOS_H
 struct Player; struct Team;
 
+/* 001_10010_main_startup */
+void assreplace(struct Player *p, int ass);                /* 11FF4: replace p's current assignment (94G checks94 assreplace) */
+
 /* 037_4842A_engine_player_logic */
 void StopIfFree(struct Player *p);                        /* 4A80E */
 void pucknorm(struct Player *p);                          /* 4D8C7 */
@@ -29,6 +32,8 @@ short restorepl(short newpl, short oldpl);                /* 59FE1 */
 void AvgCline(struct Team *t);                            /* 5A03B */
 void calcpuckcross(void);                                 /* 5A341 */
 void GetHot(struct Player *p);                             /* 5A425 */
+void Setplass(struct Player *p);                          /* 5B298 */
+int TryAddPlayerToList(struct Team *t, short pl, short slot); /* 5BB9E */
 void reenergizeteam(struct Team *t);                      /* 5B826 */
 void RestBench(void);                                     /* 5C1E2 */
 void restoreteams(void);                                  /* 5B97A */

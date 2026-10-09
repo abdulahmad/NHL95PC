@@ -17,7 +17,7 @@ global off_CC01D, starordtab, shotsets, unk_CCCC8, word_CC054, word_CC0B0, lldis
 global crowdlevel, word_CC10C, word_CC9CC, word_CC9EA, word_CC9EC, word_CCA18, word_CCA1A, word_CCA1C
 global word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E, word_CCA70, word_CCA9C
 global linenext, word_CCBCC, word_CCBDC, word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, word_CCC30
-global word_CCC32, word_CCC62, word_CCCA8, word_CCEF8
+global word_CCC32, word_CCC62, word_CCCA8, word_CCEF8, Setplass_alist
 off_CC01D:
 dd unk_CBF18
 dd unk_CBEFC
@@ -383,7 +383,9 @@ db 00h
 dword_CCC9E:
 db 00h,00h
 byte_CCCA0:
-db 00h,0Eh,02h,02h,03h,05h,03h,05h
+db 00h
+Setplass_alist:	; 94G Setplass .alist: initial assignment by position (0Eh assgoalie, 2 assdefd, 3 asswingd, 5 asscenterd)
+db 0Eh,02h,02h,03h,05h,03h,05h
 word_CCCA8:
 db 0F9h,0FFh,0FCh,0FFh,0FAh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh
 dword_CCCB8:
