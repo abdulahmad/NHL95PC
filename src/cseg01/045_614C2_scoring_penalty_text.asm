@@ -41,7 +41,7 @@ global SetRinkObject, SetBoxDoorObject, DecayCrowdLevel, DrawRinkObjects
 global QueueDeferredCall, RunDeferredCalls, AppendGSumRecord, FlushGSumQueue, ReadGSumHeader, ReadGSumTail, WriteGSumHeader, FormatPlayerName
 global BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCallback0C, ChkScorerMilestone, QueueGoalieNote, GameTimeStamp
 global SetPA, InProgress, chkprogress_go, checkfornewpen, releasepl, chkatop, CheckAndReleasePlayer, ProcessPenaltyList
-global ChkPowerPlayTime, updatepentime, PenaltyManager, chkprogress, UpdatePowerPlayFlags, ClearPenaltyBuffer, PenGoalStuff, SetupPenaltyShot
+global updatePPTeamTime, updatepentime, PenaltyManager, chkprogress, UpdatePowerPlayFlags, ClearPenaltyBuffer, PenGoalStuff, SetupPenaltyShot
 global ShotLaneOpen, QuickShotChk, CountShotOnGoal, StartPenaltyShot, EndPenaltyShot
 SetRinkObject:
 push dword 14h	; 614C2
@@ -3116,7 +3116,7 @@ call CheckAndReleasePlayer	; 63B4A
 .10:
 add esp, byte 4	; 63B4F
 jmp near InProgress_popx	; 63B52
-ChkPowerPlayTime:
+updatePPTeamTime:
 push dword 4	; 63B57
 call __CHK	; 63B5C
 mov ah, byte [gmode2]	; 63B61
@@ -3153,7 +3153,7 @@ or dh, 40h	; 63BC7
 mov byte [sflags3], dh	; 63BCA
 add word [Penaltytimer], byte 18h	; 63BD0
 call chkatop	; 63BD8
-call ChkPowerPlayTime	; 63BDD
+call updatePPTeamTime	; 63BDD
 mov eax, hmtmstruct	; 63BE2
 call ProcessPenaltyList	; 63BE7
 mov eax, awtmstruct	; 63BEC

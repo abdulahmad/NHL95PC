@@ -30,7 +30,7 @@ global chk4lc_shoot
 global PassLaneChk_ret5a, PassLaneChk_ret5
 global dopass_ret6
 global passtoa0, puckbody, puckglue, puckgoalie, puckshadow, puckstick, setpassmode
-global ToFixed, BlockShotDive, TryBlockShot, FacingBoards, SkillForAnim, ChkDelayedOffside, PuckCheckColl, PenTimeDiff
+global ToFixed, BlockShotDive, TryBlockShot, FacingBoards, SkillForAnim, ChkDelayedOffside, PuckCheckColl, GetLowestPen
 global PassLaneChk, ScatterPass, passmode, CompShoot, ChkOffsides, MarkTwoLinePlayers, ChkShotStat, setInjuryType
 global NetCollide, puckIChk, newcheck, ChkGoalies, ReturnGoalies, ChkPullGoalieLate, wallcoll, wallcollb
 ToFixed:
@@ -2019,7 +2019,7 @@ pop esi	; 54A4F
 pop ecx	; 54A50
 pop ebx	; 54A51
 ret	; 54A52
-PenTimeDiff:
+GetLowestPen:
 push dword 18h	; 54A53
 call __CHK	; 54A58
 push ebx	; 54A5D
@@ -2053,12 +2053,12 @@ jl short .5	; 54AA5
 cwde	; 54AA7
 mov ax, word [byte edi+eax*2+07Eh]	; 54AA8
 test ax, ax	; 54AAD
-jl short PenTimeDiff.4	; 54AB0
+jl short GetLowestPen.4	; 54AB0
 and ah, 3Fh	; 54AB2
 sub eax, ecx	; 54AB5
 add ebx, eax	; 54AB7
 mov ecx, eax	; 54AB9
-jmp short PenTimeDiff.4	; 54ABB
+jmp short GetLowestPen.4	; 54ABB
 .5:
 cmp word [byte esi+tmap], byte 6	; 54ABD
 jne short .7	; 54AC2
@@ -2072,19 +2072,19 @@ lea edx, [dword esi+0B6h]	; 54ACD
 movsx ax, byte [edx]	; 54AD3
 inc edx	; 54AD7
 test ax, ax	; 54AD8
-jl short PenTimeDiff.6	; 54ADB
+jl short GetLowestPen.6	; 54ADB
 cwde	; 54ADD
 mov ax, word [byte esi+eax*2+07Eh]	; 54ADE
 test ax, ax	; 54AE3
-jl short PenTimeDiff.8	; 54AE6
+jl short GetLowestPen.8	; 54AE6
 and ah, 3Fh	; 54AE8
 cmp bx, ax	; 54AEB
-jl short PenTimeDiff.6	; 54AEE
+jl short GetLowestPen.6	; 54AEE
 mov eax, ebx	; 54AF0
 add eax, ecx	; 54AF2
 jmp near checkob_ret5	; 54AF4
 ; chk4lc: 93G logic93_3 chk4lc (see if computer should call line change). Puck in own half below the blue line,
-;   1 in 4, not pflags2 bit 3; PC adds clock / penalty checks (PenTimeDiff). Then CompLine, setpersonel and
+;   1 in 4, not pflags2 bit 3; PC adds clock / penalty checks (GetLowestPen). Then CompLine, setpersonel and
 ;   chk4lc_shoot: CompShoot dumps the puck. Returns 1 when it did.
 chk4lc:
 push dword 18h	; 54AF9
@@ -2130,7 +2130,7 @@ jl short .3	; 54B8A
 .2:
 test dx, dx	; 54B8C
 je short .8	; 54B8F
-call PenTimeDiff	; 54B91
+call GetLowestPen	; 54B91
 cmp ax, 0Fh	; 54B96
 jge short .8	; 54B9A
 .3:
