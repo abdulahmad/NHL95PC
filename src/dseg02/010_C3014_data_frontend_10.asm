@@ -18,8 +18,8 @@ global str_Dbox2, str_Music, str_Sound, str_DigitizedSpeech, str_Setting3, str_P
 global str_Setting4, str_Dbox3, str_Music2, str_Sound2, str_DigitizedSpeech2, str_Pointer16, str_BKGD3, str_DigitizedSpeech3
 global str_Music3, str_Sound3, str_Setting6, str_Dbox4, str_Pointer17, str_BKGD4, str_PlayerImg, str_Dbox5
 global str_OneS, str_TwoS, str_TheMouse, str_JoystickOne, str_JoystickTwo, str_TheKeyboard, str_Pointer18, str_MTROCKU
-global str_SBROCKU, str_ADROCKU, str_ROCKDITI, str_Gadget6, str_Gadget5, str_Gad1, str_Pointer19, asc_C342E
-global asc_C3436, asc_C3449, asc_C3450, asc_C3472, asc_C3477, asc_C347B, asc_C3480, asc_C3489
+global str_SBROCKU, str_ADROCKU, str_ROCKDITI, str_Gadget6, str_Gadget5, str_Gad1, str_Pointer19, str_SaveTo
+global str_HilightsReel, str_HI, str_CantOpenFile, str_HLTL, str_HLT, str_HLTS, asc_C3480, asc_C3489
 global asc_C348E, asc_C3493, asc_C3498, asc_C349D, asc_C34A2, asc_C34A7, asc_C34AC, asc_C34B1
 global asc_C34B6, asc_C34BB, asc_C34C0, asc_C34C5, asc_C34CA, asc_C3594, asc_C359C, asc_C35A3
 global asc_C35AF, asc_C35BA, asc_C35C3, asc_C35CC, asc_C35D1, asc_C35D6, asc_C35DD, asc_C35E2
@@ -36,7 +36,7 @@ global asc_C3994, asc_C399B, asc_C39A0, qword_C37B0, qword_C37B8, qword_C37C0, q
 global unk_C311D, str_S6, str_No2, str_GP8, str_C5, str_W6, str_L8, str_T6
 global str_ErrA1, str_ErrA2, str_ErrA3, str_ErrA4, str_ErrA5, str_ErrA6, str_ErrA7, str_ErrA8
 global unk_C3283, str_S7, str_ErrB3, str_ErrB4, str_ErrB5, str_ErrB6, str_ErrB7, str_ErrB2
-global str_BothTeams, str_NeitherTeams, unk_C3444, unk_C3447, unk_C344D, unk_C3468, unk_C346B, unk_C3470
+global str_BothTeams, str_NeitherTeams, str_K1, unk_C3447, str_F12, str_F3, str_F4, unk_C3470
 global unk_C34D0, unk_C34D4, unk_C34D8, unk_C34DC, unk_C34E0, unk_C34E4, unk_C34E8, unk_C34EC
 global unk_C34F0, unk_C34F4, unk_C34F8, unk_C34FB, unk_C34FF, unk_C3502, unk_C3506, unk_C350A
 global unk_C350E, unk_C3512, unk_C3516, unk_C351A, unk_C351E, unk_C3521, unk_C3524, unk_C3528
@@ -369,32 +369,32 @@ str_Gad1:
 db 067h,061h,064h,031h,00h
 str_Pointer19:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C342E:
+str_SaveTo:
 db 053h,061h,076h,065h,020h,054h,06Fh,00h
-asc_C3436:
+str_HilightsReel:
 db 048h,069h,06Ch,069h,067h,068h,074h,073h,020h,052h,065h,065h,06Ch,00h
-unk_C3444:
+str_K1:
 db 06Bh,031h,00h
 unk_C3447:
 db 05Ch,00h
-asc_C3449:
+str_HI:
 db 02Eh,048h,049h,00h
-unk_C344D:
+str_F12:
 db 066h,031h,00h
-asc_C3450:
+str_CantOpenFile:
 db 043h,061h,06Eh,020h,06Eh,06Fh,074h,020h,06Fh,070h,065h,06Eh,020h,060h,025h,073h
 db 027h,020h,066h,069h,06Ch,065h,0Ah,00h
-unk_C3468:
+str_F3:
 db 066h,033h,00h
-unk_C346B:
+str_F4:
 db 066h,034h,00h,00h,00h
 unk_C3470:
 db 02Eh,00h
-asc_C3472:
+str_HLTL:
 db 048h,04Ch,054h,04Ch,00h
-asc_C3477:
+str_HLT:
 db 048h,04Ch,054h,00h
-asc_C347B:
+str_HLTS:
 db 048h,04Ch,054h,053h,00h
 asc_C3480:
 db 073h,065h,074h,074h,069h,06Eh,067h,073h,00h

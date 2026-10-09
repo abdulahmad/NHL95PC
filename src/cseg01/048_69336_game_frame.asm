@@ -6,7 +6,7 @@ extern DoGameFrame, ResetBench, __CHK, assreplace, sflags, gmode2, musicon
 extern iflags, byte_E9AC1, joysampling, inputframes, escrequest, demomode, gameopts, hudclockmin
 extern hudclocksec, hudclockhund, rinkscrollx, rinkscrolly, dword_C90B0, sflags3, cont2team, HomeTeam
 extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, spritedrawcount, dword_D8C72, dword_D8C74
-extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC28C, rinkwtiles, rinkhtiles, bgscrolly
+extern dword_D8C78, dword_D8C7A, dword_D8C7C, curperiod, dword_DC28C, rinkwtiles, rinkhtiles, bgscrolly
 extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
 extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSize, ResetInputSampling, RunGameFrames
@@ -59,7 +59,7 @@ add eax, byte 2	; 693A6
 mov dx, word [cont2team]	; 693A9
 mov word [eax], dx	; 693B0
 add eax, byte 2	; 693B3
-mov dx, word [dword_D8C84]	; 693B6
+mov dx, word [curperiod]	; 693B6
 mov word [eax], dx	; 693BD
 add eax, byte 2	; 693C0
 mov dx, word [gsp]	; 693C3
@@ -162,7 +162,7 @@ mov dword [hudclocksec], edx	; 6954D
 xor ecx, ecx	; 69553
 mov dword [hudclockhund], ecx	; 69555
 mov eax, dword [dword esp+0114h]	; 6955B
-mov dword [dword_D8C84], eax	; 69562
+mov dword [curperiod], eax	; 69562
 mov eax, dword [dword esp+0114h]	; 69567
 dec eax	; 6956E
 mov word [gsp], ax	; 6956F
@@ -199,7 +199,7 @@ mov eax, dword [cont2team]	; 695EB
 sar eax, 10h	; 695F0
 .5:
 call LoadRink	; 695F3
-mov ebx, dword [dword_D8C84]	; 695F8
+mov ebx, dword [curperiod]	; 695F8
 mov edx, dword [HomeTeam]	; 695FE
 sar edx, 10h	; 69604
 mov eax, dword [cont2team]	; 69607
@@ -702,7 +702,7 @@ mov dx, word [eax]	; 69E16
 mov word [cont2team], dx	; 69E19
 add eax, byte 2	; 69E20
 movsx edx, word [eax]	; 69E23
-mov dword [dword_D8C84], edx	; 69E26
+mov dword [curperiod], edx	; 69E26
 add eax, byte 2	; 69E2C
 mov dx, word [eax]	; 69E2F
 mov word [gsp], dx	; 69E32

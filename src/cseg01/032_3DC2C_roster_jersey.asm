@@ -8,7 +8,7 @@ extern str_Pntr2, str_Pointer10, str_Menubuff7, str_Lineditp, str_Shrt, str_extD
 extern str_space, str_dot, curleague, byte_D11BC, byte_D1238, byte_D12DE, byte_D1333, byte_D1334
 extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, leaguedbfmt2, leaguedbfmt, traderoster
 extern tradejersey, tradeslot, byte_ED7F7, byte_ED858, byte_ED85A, byte_ED86D, byte_ED8B3, byte_ED8B4
-extern statscategory, statsredrawcb, tradebtnx, tradebtny, HomeTeam, dword_D2C6B, dword_D8C84, pointerspr
+extern statscategory, statsredrawcb, tradebtnx, tradebtny, HomeTeam, dword_D2C6B, curperiod, pointerspr
 extern dword_DC738, statspalshape, statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, traderesult
 extern tradeclick, traderemap1, traderemap2, tradecursor, jerseymsg, tradeside
 extern dword_DE264, ptrupdatefn, jctime, memcpy_, leaguedbnames, unequaltrademsg, off_CF2A3
@@ -792,7 +792,7 @@ mov eax, leaguedbfmt2	; 3E6DE
 call strcpy_	; 3E6E3
 xor eax, eax	; 3E6E8
 call LoadGameTeams	; 3E6EA
-mov dword [dword_D8C84], 0FFFFFFFEh	; 3E6EF
+mov dword [curperiod], 0FFFFFFFEh	; 3E6EF
 mov ecx, 3	; 3E6F9
 mov ebx, unk_CF3CF	; 3E6FE
 mov edx, hmlinetab	; 3E703

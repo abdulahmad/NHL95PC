@@ -9,7 +9,7 @@ extern str_Tstat2, str_Keys4, str_Pstat4, str_Gstat4, str_extBIN, byte_D11BC, by
 extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, hmrosterjersey, leaguedbfmt2, leaguedbfmt
 extern byte_ECDF4, gmroster, gmrosterjersey, gmrosterslot, byte_ED83C, byte_ED86D, byte_ED9E7, statscategory
 extern statsredrawcb, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
-extern dword_D0B2A, lineslotx, linesloty, jerseydigits, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
+extern dword_D0B2A, lineslotx, linesloty, jerseydigits, dword_D2C6B, curperiod, dword_DC734, dword_DC738
 extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, exit_, j___close_, jctime, lseek_
 extern crestnames, menuact_uselines2, menuact_savedeflines2, off_CF2A3, off_CF2C3, menuact_uselines, menuact_savedeflines, menuact_savelines
 extern open_, perror_, read_, sprintf_, MakePath, RunMenu, TeamRosterScreen, MessageBox
@@ -119,7 +119,7 @@ ja short DrawGameLineJerseys_join	; 78451
 and eax, 0FFh	; 78453
 jmp dword [nosplit cs:eax*4+DrawGameLineJerseys_jt]	; 78458
 DrawGameLineJerseys_st1:
-cmp dword [dword_D8C84], byte 0	; 78460
+cmp dword [curperiod], byte 0	; 78460
 jge short .1	; 78467
 mov edi, 0FCh	; 78469
 jmp short DrawGameLineJerseys_join	; 7846E
@@ -901,7 +901,7 @@ movsb	; 78EB8
 lea eax, [byte esp+038h]	; 78EB9
 mov dword [byte esp+054h], eax	; 78EBD
 mov edi, 1	; 78EC1
-cmp dword [dword_D8C84], byte 0	; 78EC6
+cmp dword [curperiod], byte 0	; 78EC6
 jge near .19	; 78ECD
 xor ebx, ebx	; 78ED3
 .1:
@@ -1077,7 +1077,7 @@ push edi	; 7909D
 sub esp, byte 4	; 7909E
 mov byte [esp], al	; 790A1
 mov esi, edx	; 790A4
-cmp dword [dword_D8C84], byte 0	; 790A6
+cmp dword [curperiod], byte 0	; 790A6
 jl short .3	; 790AD
 xor eax, eax	; 790AF
 .1:
@@ -1225,7 +1225,7 @@ inc ebx	; 79209
 mov dword [esp], ebx	; 7920A
 cmp ebx, byte 28h	; 7920D
 jl short MenuUseTheseLines.1	; 79210
-cmp dword [dword_D8C84], byte 0	; 79212
+cmp dword [curperiod], byte 0	; 79212
 jge short .9	; 79219
 xor ebp, ebp	; 7921B
 mov dword [esp], ebp	; 7921D
@@ -1601,7 +1601,7 @@ inc ebx	; 7968E
 mov dword [dword esp+0308h], ebx	; 7968F
 cmp ebx, byte 28h	; 79696
 jl short MenuSaveDefaultLines.13	; 79699
-cmp dword [dword_D8C84], byte 0	; 7969B
+cmp dword [curperiod], byte 0	; 7969B
 jge near .21	; 796A2
 xor edi, edi	; 796A8
 mov dword [dword esp+0308h], edi	; 796AA

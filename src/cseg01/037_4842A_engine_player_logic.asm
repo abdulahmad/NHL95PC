@@ -13,7 +13,7 @@ extern gameopts, dword_C541F, dword_C5840, dword_C585C, dword_C5860, dword_C90B0
 extern dword_CBEBE, dword_CBECA, dword_CC0EC, dword_CC0F8, penshotplayer, dword_CC104, penshotmode, penshotstart
 extern penshotlive, dword_CC12C, dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144
 extern dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, frameaccum
-extern dword_D8C84, dword_DB086, dword_DB088, hmtmstruct, dword_DF642, dword_DF648, dword_DF652
+extern curperiod, dword_DB086, dword_DB088, hmtmstruct, dword_DF642, dword_DF648, dword_DF652
 extern hmtmpdst_m2, awtmstruct, dword_DF748, dword_DF752, dword_DF848, puckstruct
 extern sortobj15, dword_E0244, dword_E038E, dword_E03AE
 extern dword_E9A9E, dword_E9AB6, dword_E9AB7, gwgteam, gwgplayer, startm_m2
@@ -705,7 +705,7 @@ jl short PickThreeStars.1	; 48B01
 mov edx, 0FFFFFFFFh	; 48B03
 mov dword [gwgplayer], edx	; 48B08
 mov dword [gwgteam], edx	; 48B0E
-cmp dword [dword_D8C84], byte 3	; 48B14
+cmp dword [curperiod], byte 3	; 48B14
 jle near .3	; 48B1B
 mov cx, word [awscore]	; 48B21
 sub cx, word [hmscore]	; 48B28
@@ -1030,7 +1030,7 @@ push edi	; 48F19
 mov edx, dword [dword_CC0EC]	; 48F1A
 test edx, edx	; 48F20
 jne near PreGameIntro_popx	; 48F22
-mov esi, dword [dword_D8C84]	; 48F28
+mov esi, dword [curperiod]	; 48F28
 mov dword [joysampling], edx	; 48F2E
 call joyq_flush	; 48F34
 push unk_DF014	; 48F39
@@ -1079,7 +1079,7 @@ mov byte [byte_E0308], dl	; 49017
 mov byte [byte_E028C], dl	; 4901D
 mov byte [byte_E0250], dl	; 49023
 mov byte [byte_E02C8], dl	; 49029
-mov dword [dword_D8C84], 0FFFFFFFFh	; 4902F
+mov dword [curperiod], 0FFFFFFFFh	; 4902F
 xor edi, edi	; 49039
 mov word [exitgame], di	; 4903B
 mov word [gameover], di	; 49042
@@ -1184,7 +1184,7 @@ test eax, eax	; 49224
 jge short .3	; 49226
 mov word [crowdlevel], cx	; 49228
 .3:
-mov dword [dword_D8C84], esi	; 4922F
+mov dword [curperiod], esi	; 4922F
 call CrowdFadeOut	; 49235
 xor ebx, ebx	; 4923A
 mov word [crowdlevel], bx	; 4923C

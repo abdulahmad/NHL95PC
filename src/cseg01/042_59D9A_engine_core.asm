@@ -12,7 +12,7 @@ extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, rinkscr
 extern dword_C90B0, sflags3, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
 extern dword_CC0F8, penshotplayer, dword_CC104, dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer
 extern dword_CC124, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, mousex
-extern mousey, cliprect_y0, cliprect_y1, dword_D30BC, dword_D30C0, dword_D8C84, dword_DB088, hmtmstruct
+extern mousey, cliprect_y0, cliprect_y1, dword_D30BC, dword_D30C0, curperiod, dword_DB088, hmtmstruct
 extern dword_DF642, dword_DF652, dword_DF6EA, dword_DF6F2, dword_DF6F6, hmtmplstats
 extern dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort, awtmstruct, dword_DF752, dword_DF7EA
 extern awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2, awtmsort
@@ -858,7 +858,7 @@ mov bl, 2	; 5A68D
 mov byte [byte_DF6E7], bl	; 5A68F
 mov byte [byte_DF7E6], dh	; 5A695
 mov byte [byte_DF7E7], bl	; 5A69B
-mov edx, dword [dword_D8C84]	; 5A6A1
+mov edx, dword [curperiod]	; 5A6A1
 cmp edx, byte 3	; 5A6A7
 jle short .1	; 5A6AA
 mov edi, 0D9Ah	; 5A6AC
@@ -920,7 +920,7 @@ test byte [gmode], 10h	; 5A789
 jne near .x	; 5A790
 mov dx, word [hmscore]	; 5A796
 sub dx, word [awscore]	; 5A79D
-cmp dword [dword_D8C84], byte 2	; 5A7A4
+cmp dword [curperiod], byte 2	; 5A7A4
 jne near .6	; 5A7AB
 cmp word [gameclock], 258h	; 5A7B1
 jg near .6	; 5A7BA
@@ -977,7 +977,7 @@ pop ecx	; 5A874
 pop ebx	; 5A875
 ret	; 5A876
 .6:
-cmp dword [dword_D8C84], byte 3	; 5A877
+cmp dword [curperiod], byte 3	; 5A877
 jne near .x	; 5A87E
 mov bl, byte [byte_DF6E9]	; 5A884
 cmp word [gameclock], byte 3Ch	; 5A88A
@@ -2343,7 +2343,7 @@ shr eax, 1Eh	; 5B9E3
 mov ax, word [nosplit eax*2+PerTimeTab]	; 5B9E6
 test byte [gameopts+1], 2	; 5B9EE
 je short .x	; 5B9F5
-cmp dword [dword_D8C84], byte 3	; 5B9F7
+cmp dword [curperiod], byte 3	; 5B9F7
 jle short .x	; 5B9FE
 mov ax, word [PerTimeTab]	; 5BA00
 .x:
@@ -4641,7 +4641,7 @@ je short .70	; 5D6D8
 cmp byte [pad2dev], 1	; 5D6DA
 jne near .77	; 5D6E1
 .70:
-cmp dword [dword_D8C84], byte 0FFFFFFFFh	; 5D6E7
+cmp dword [curperiod], byte 0FFFFFFFFh	; 5D6E7
 je near .77	; 5D6EE
 cmp dword [dword_CCC9C], byte 0	; 5D6F4
 jne near .77	; 5D6FB
@@ -5080,7 +5080,7 @@ sar edx, 1Fh	; 5DD17
 idiv ebx	; 5DD1A
 test edx, edx	; 5DD1C
 jne short .x	; 5DD1E
-cmp dword [dword_D8C84], byte 3	; 5DD20
+cmp dword [curperiod], byte 3	; 5DD20
 jne short .9	; 5DD27
 mov ax, word [gameclock]	; 5DD29
 cmp ax, 3Ch	; 5DD2F
@@ -5094,7 +5094,7 @@ je short .10	; 5DD45
 cmp ax, 258h	; 5DD47
 je short .10	; 5DD4B
 .9:
-cmp dword [dword_D8C84], byte 2	; 5DD4D
+cmp dword [curperiod], byte 2	; 5DD4D
 jne short .x	; 5DD54
 cmp word [gameclock], 258h	; 5DD56
 jne short .x	; 5DD5F

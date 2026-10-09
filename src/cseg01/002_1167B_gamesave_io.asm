@@ -7,7 +7,7 @@ extern curleague, sflags, musicon, byte_D9299, awardwinners, byte_ED7CC, joysamp
 extern inputframes, escrequest, demomode, gameresult, gamemode, hudclockmin, hudclocksec, hudclockhund
 extern dword_C5840, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
 extern penshotlive, dword_D2C6B, mousex, mousey, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74
-extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, rinkwtiles, rinkhtiles
+extern dword_D8C78, dword_D8C7A, dword_D8C7C, curperiod, dword_DC230, dword_DC28C, rinkwtiles, rinkhtiles
 extern bgscrolly, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, dword_E9A9E, j_unlink_
 extern HandleHotKey_ret, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
 extern off_C526F, off_C5273, teamabbrevs, leaguedbnames, replaystart, camx_m2
@@ -303,7 +303,7 @@ mov eax, dword [cont2team]	; 11AA0
 sar eax, 10h	; 11AA5
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 11AA8
 call sub_59D71	; 11AAF
-mov ebx, dword [dword_D8C84]	; 11AB4
+mov ebx, dword [curperiod]	; 11AB4
 mov edx, dword [HomeTeam]	; 11ABA
 sar edx, 10h	; 11AC0
 mov eax, dword [cont2team]	; 11AC3
@@ -401,7 +401,7 @@ mov eax, dword [cont2team]	; 11C40
 sar eax, 10h	; 11C45
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 11C48
 call sub_59D71	; 11C4F
-mov ebx, dword [dword_D8C84]	; 11C54
+mov ebx, dword [curperiod]	; 11C54
 mov edx, dword [HomeTeam]	; 11C5A
 sar edx, 10h	; 11C60
 mov eax, dword [cont2team]	; 11C63
@@ -544,7 +544,7 @@ add esp, byte 8	; 11E70
 mov word [word_CBEC4], 1	; 11E73
 xor eax, eax	; 11E7C
 mov dword [escrequest], eax	; 11E7E
-mov ebx, dword [dword_D8C84]	; 11E83
+mov ebx, dword [curperiod]	; 11E83
 mov edx, dword [HomeTeam]	; 11E89
 sar edx, 10h	; 11E8F
 mov eax, dword [cont2team]	; 11E92

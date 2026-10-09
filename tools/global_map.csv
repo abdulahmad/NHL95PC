@@ -1813,13 +1813,31 @@ gadgetshape,ED6E4,gad1 shape from gadget file
 gadgetptrx,ED6E0,pointer x (init 100h)
 gadgetptry,ED6DC,pointer y (init 0BCh)
 msg_NoHilightSpace,D1F25,message lines 'Insufficient disk space to' / 'save hilights.' / 'Current hilight not saved.'
-str_MTROCKU,C33D4,"string 'MTROCKU'"
-str_SBROCKU,C33DC,"string 'SBROCKU'"
-str_ADROCKU,C33E4,"string 'ADROCKU'"
-str_ROCKDITI,C33EC,"string 'ROCKDITI'"
-str_Gadget6,C3411,"string 'gadget6'"
-str_Gadget5,C3419,"string 'gadget5'"
-str_Gad1,C3421,"string 'gad1'"
-str_Pointer19,C3426,"string 'Pointer'"
-str_BothTeams,C33F8,"string 'Both Teams'"
-str_NeitherTeams,C3403,"string 'Neither Teams'"
+str_MTROCKU,C33D4,string 'MTROCKU'
+str_SBROCKU,C33DC,string 'SBROCKU'
+str_ADROCKU,C33E4,string 'ADROCKU'
+str_ROCKDITI,C33EC,string 'ROCKDITI'
+str_Gadget6,C3411,string 'gadget6'
+str_Gadget5,C3419,string 'gadget5'
+str_Gad1,C3421,string 'gad1'
+str_Pointer19,C3426,string 'Pointer'
+str_BothTeams,C33F8,string 'Both Teams'
+str_NeitherTeams,C3403,string 'Neither Teams'
+hilightrec,E03C4,9652h-byte highlight record buffer (.HI file record)
+curperiod,D8C84,"period number (hilight record +3Ch printed as ""Period %d""; compared with 3)"
+msg_NoHilights,D1F4B,message 'There are no hilights!'
+str_CantOpenFile,C3450,"string ""Can not open `%s' file\n"""
+str_SaveTo,C342E,"string 'Save To'"
+str_HilightsReel,C3436,"string 'Hilights Reel'"
+str_HI,C3449,"string '.HI'"
+str_HLTL,C3472,"string 'HLTL'"
+str_HLT,C3477,"string 'HLT'"
+str_HLTS,C347B,"string 'HLTS'"
+str_HI2,C812D,"string '.HI'"
+str_SelectATeam,C8208,"string 'Select a team'"
+str_SelectAHilight,C8216,"string 'Select a hilight'"
+str_HilightDescFmt,D207A,"string '%d %d, %s vs %s, Period %d, Time %02d:%02d.'"
+str_K1,C3444,"string 'k1'"
+str_F12,C344D,"string 'f1'"
+str_F3,C3468,"string 'f3'"
+str_F4,C346B,"string 'f4'"

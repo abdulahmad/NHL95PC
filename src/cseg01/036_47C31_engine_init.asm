@@ -6,7 +6,7 @@ extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9
 extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, inputframes, escrequest
 extern rinkscrollx, rinkscrolly, loadscreenon, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
 extern dword_CC0F0, dword_CC9AD, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
-extern dword_D8C84, rinkwtiles, rinkhtiles, bgscrolly, palcyclelock, hmtmstruct, awtmstruct, puckstruct
+extern curperiod, rinkwtiles, rinkhtiles, bgscrolly, palcyclelock, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, randomd0
 extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, UpdateHudPanel, SetRinkScroll
 extern LoadScreenPalTick, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
@@ -115,7 +115,7 @@ xor bl, bl	; 47D40
 mov byte [byte_E0250], ah	; 47D42
 xor bh, bh	; 47D48
 mov byte [byte_E02C8], ah	; 47D4A
-mov dword [dword_D8C84], 0FFFFFFFFh	; 47D50
+mov dword [curperiod], 0FFFFFFFFh	; 47D50
 mov word [word_C90B4], bx	; 47D5A
 xor ecx, ecx	; 47D61
 mov word [word_C90B2], cx	; 47D63

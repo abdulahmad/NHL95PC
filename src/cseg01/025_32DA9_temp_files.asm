@@ -11,7 +11,7 @@ extern MainDeskLoop_x2, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRe
 extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
 extern EasnStandingsScreen, PreGameScreen, SaveModeState, LoadModeState, PlayLeagueGame, UpdateTeamDbs, MergeLeagueFiles, MergeUpdateDbs
 extern RebuildLeagueDbs, ImportDbs, ExportDbs, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
-extern ShowLoadingScreen, InputInstall, InputRemove, FadePalStep, LeagueSettingsDlg, SetLeagueSetImage, SettingsStub, sub_80075
+extern ShowLoadingScreen, InputInstall, InputRemove, FadePalStep, LeagueSettingsDlg, SetLeagueSetImage, SettingsStub, ViewHilights
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, EasnTeamStatsScreen, EasnSkaterStatsScreen, EasnGoalieStatsScreen
 extern EasnStandingsMenu, exhstate, leaguemgrmenu
 global MenuAddTeam_common
@@ -633,7 +633,7 @@ mov eax, lgstate	; 33684
 call LoadModeState	; 33689
 xor edx, edx	; 3368E
 mov dword [gamemode], edx	; 33690
-call sub_80075	; 33696
+call ViewHilights	; 33696
 test eax, eax	; 3369B
 jne short .1	; 3369D
 mov eax, exhstate	; 3369F

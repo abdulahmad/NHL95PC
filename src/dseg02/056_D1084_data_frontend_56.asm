@@ -8,7 +8,7 @@ extern unk_C3502, unk_C3506, unk_C350A, unk_C350E, unk_C3512, unk_C3516, unk_C35
 extern unk_C3521, unk_C3524, unk_C3528, unk_C352C, unk_C3530, unk_C3534, unk_C3538, unk_C353C
 extern unk_C355E, unk_C3580, unk_C36D4, unk_C36E1, unk_C36EE, unk_C36FB, unk_C3706, unk_C3712
 extern unk_C371F, unk_C372C, unk_C3738, unk_C3742, unk_C374F, unk_C375C, unk_C3769, unk_C3775
-global asc_D207A, asc_D20AC, asc_D20B7, asc_D20BF, asc_D20C6, asc_D20D2, asc_D236F, asc_D2379
+global str_HilightDescFmt, asc_D20AC, asc_D20B7, asc_D20BF, asc_D20C6, asc_D20D2, asc_D236F, asc_D2379
 global asc_D2382, asc_D238B, asc_D2390, asc_D2399, asc_D2479, asc_D2486, asc_D248C, asc_D2491
 global asc_D24DC, asc_D24E2, asc_D24EC, asc_D24F3, asc_D24FF, asc_D250B, asc_D2517, asc_D2523
 global asc_D252E, asc_D253A, asc_D2546, asc_D2552, asc_D255E, asc_D2569, asc_D2575, asc_D257E
@@ -39,7 +39,7 @@ global unk_D1A76, unk_D1A7A, unk_D1A80, unk_D1A86, unk_D1A8B, unk_D1A92, unk_D1A
 global unk_D1AA7, unk_D1AAB, unk_D1AAF, unk_D1AB3, unk_D1AB7, unk_D1ABC, unk_D1AC1, unk_D1AC6
 global unk_D1ACB, unk_D1ACF, unk_D1AD4, unk_D1AD9, unk_D1ADE, unk_D1AE2, unk_D1AE7, unk_D1AEC
 global unk_D1AF1, unk_D1AF6, unk_D1AFC, unk_D1B02, unk_D1CD3, unk_D1CDA, unk_D1EE0, unk_D1EFB
-global unk_D1F0A, unk_D1F34, unk_D1F4B, unk_D1F4F, unk_D1F6B, unk_D1F8D, unk_D1FC3, unk_D1FDF
+global unk_D1F0A, unk_D1F34, msg_NoHilights, unk_D1F4F, unk_D1F6B, unk_D1F8D, unk_D1FC3, unk_D1FDF
 global unk_D1FFF, unk_D2028, unk_D2034, unk_D2050, unk_D23A0, unk_D2403, unk_D2413, unk_D2452
 global unk_D2463, unk_D249C, unk_D24A8, unk_D24C4, unk_D2782, unk_D278E, unk_D279A, unk_D27C4
 global unk_D27D3, unk_D27E0, unk_D27FF, unk_D2841
@@ -535,7 +535,7 @@ db 00h,00h,00h
 unk_D1F34:
 db 054h,068h,065h,072h,065h,020h,061h,072h,065h,020h,06Eh,06Fh,020h,068h,069h,06Ch
 db 069h,067h,068h,074h,073h,021h,00h
-unk_D1F4B:
+msg_NoHilights:
 dd unk_D1F34
 unk_D1F4F:
 db 054h,068h,065h,072h,065h,020h,069h,073h,020h,06Eh,06Fh,074h,020h,065h,06Eh,06Fh
@@ -575,7 +575,7 @@ db 045h,078h,070h,06Fh,072h,074h,069h,06Eh,067h,020h,068h,069h,06Ch,069h,067h,06
 db 074h,073h,00h,049h,06Dh,070h,06Fh,072h,074h,069h,06Eh,067h,020h,068h,069h,06Ch
 db 069h,067h,068h,074h,073h,00h
 dd unk_D2050
-asc_D207A:
+str_HilightDescFmt:
 db 025h,064h,020h,025h,064h,02Ch,020h,025h,073h,020h,076h,073h,020h,025h,073h,02Ch
 db 020h,050h,065h,072h,069h,06Fh,064h,020h,025h,064h,02Ch,020h,054h,069h,06Dh,065h
 db 020h,025h,030h,032h,064h,03Ah,025h,030h,032h,064h,02Eh,00h,00h,00h

@@ -14,8 +14,8 @@ extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED
 extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, jctime, camx_m2, off_CD4FA
 extern rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace, rand_, SetScreenSize, DrawFrameSprite, FadePalette
 extern MakePath, SetDialogColors, RestoreDialogBg, MessageBox, SetRinkScroll, CrowdNoiseOff, ReplayFirstFrame, ReplayStep
-extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, GetInputEvent, ClearInputQueue, sub_7F724
-extern sub_7FA10, sub_7FC12, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
+extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, GetInputEvent, ClearInputQueue, HilightSaveToDlg
+extern SaveHilight, NudgeRinkScroll, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
 extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B396E, sub_B3989, sub_B3999, sub_B4BA8, sub_B4BC4
 extern sub_B4CD8, sub_B4FAC, sub_B500C, sub_B5DB0, str_BothTeams, str_NeitherTeams, unk_DF014, unk_DF314
@@ -1585,7 +1585,7 @@ jmp short .5	; 7F122
 .4:
 mov eax, 1	; 7F124
 .5:
-call sub_7FA10	; 7F129
+call SaveHilight	; 7F129
 mov dword [byte esp+068h], eax	; 7F12E
 cmp dword [byte esp+068h], byte 0	; 7F132
 je near .8	; 7F137
@@ -1702,7 +1702,7 @@ mov word [byte edx+04h], ax	; 7F2B1
 mov eax, dword [pointerspr]	; 7F2B5
 mov ax, word [byte eax+06h]	; 7F2BA
 mov word [byte edx+06h], ax	; 7F2BE
-call sub_7F724	; 7F2C2
+call HilightSaveToDlg	; 7F2C2
 mov dword [dword_ED6D4], 3	; 7F2C7
 mov dword [gadgetptrx], 0EEh	; 7F2D1
 mov dword [gadgetptry], 8Ah	; 7F2DB
@@ -1909,14 +1909,14 @@ xor eax, eax	; 7F585
 jmp short ReplaySaveHilight_n1.1	; 7F587
 ReplaySaveHilight_n2:
 xor eax, eax	; 7F589
-call sub_7FA10	; 7F58B
+call SaveHilight	; 7F58B
 mov dword [byte esp+068h], eax	; 7F590
 test eax, eax	; 7F594
 jne short ReplaySaveHilight_n3.1	; 7F596
 ReplaySaveHilight_n1:
 mov eax, 1	; 7F598
 .1:
-call sub_7FA10	; 7F59D
+call SaveHilight	; 7F59D
 mov dword [byte esp+068h], eax	; 7F5A2
 jmp short ReplaySaveHilight_n3.1	; 7F5A6
 ReplaySaveHilight_n3:
@@ -1976,7 +1976,7 @@ jmp short .5	; 7F661
 .4:
 call sub_B3999	; 7F663
 .5:
-call sub_7FC12	; 7F668
+call NudgeRinkScroll	; 7F668
 mov eax, dword [byte esp+04h]	; 7F66D
 mov dword [gadgetptrx], eax	; 7F671
 mov eax, dword [esp]	; 7F676

@@ -16,7 +16,7 @@ extern boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg, songdata
 extern dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A, dword_D1229, dword_D122B, dword_D122F
 extern dword_D1231, dword_D1233, lineslotx, linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC
 extern dword_D1418, dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, musichandle, musicslot
-extern dword_D2C6B, dword_D8B74, dword_D8C84, dword_DBC7C, dword_DBCE0, pointerspr, statsskaterorder, statsgoalieorder
+extern dword_D2C6B, dword_D8B74, curperiod, dword_DBC7C, dword_DBCE0, pointerspr, statsskaterorder, statsgoalieorder
 extern statsgoalieplr, statsskaterplr, statsplayerbuf, ptrupdatefn, dword_EA2B4, rosterteamrec, rostergstat, rosterpstat
 extern msglines, editptrspr, dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0
 extern vgapage, fputchar, j___close_, j___delay_, jctime, lseek_, memcpy_, menuact_uselines2
@@ -4580,7 +4580,7 @@ inc ecx	; 76CD6
 mov dword [byte ebp+036h], ecx	; 76CD7
 cmp ecx, byte 28h	; 76CDA
 jl short GameLineEditorLoop.4	; 76CDD
-cmp dword [dword_D8C84], byte 0	; 76CDF
+cmp dword [curperiod], byte 0	; 76CDF
 jge short .9	; 76CE6
 xor ebx, ebx	; 76CE8
 mov dword [byte ebp+036h], ebx	; 76CEA
@@ -5938,7 +5938,7 @@ cmp ch, 3	; 77C73
 je short .98	; 77C76
 cmp ch, 2	; 77C78
 jne near .104	; 77C7B
-cmp dword [dword_D8C84], byte 0	; 77C81
+cmp dword [curperiod], byte 0	; 77C81
 jge near .104	; 77C88
 .98:
 mov esi, dword [byte ebp+022h]	; 77C8E

@@ -9,7 +9,7 @@ extern byte_ED92F, demomode, postate, lgstate, gamemode, dword_D2C6B, dword_D8B7
 extern dword_DC888, dword_DC88C, otherperiod, ptrupdatefn, jctime, off_D27EF, off_D27F7, off_D2855
 extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, CopyFile, DiskSpaceShort
 extern SetDialogColors, RestoreDialogBg, MessageBox, EditTextField, SaveModeState, LoadModeState, WriteModeState, SaveLeagueGameRef
-extern SaveGameState, GetInputEvent, ClearInputQueue, sub_80075, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
+extern SaveGameState, GetInputEvent, ClearInputQueue, ViewHilights, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_903F0, sub_910E0, sub_91284, sub_91370, sub_91400
 extern sub_92CD0, sub_92DE0, FatalError, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3989, sub_B3999
 extern sub_B4BA8, unk_C392C, unk_C392F, unk_C393B, unk_C393E, unk_C3941, unk_C3944, unk_C396F
@@ -1036,7 +1036,7 @@ mov eax, postate	; 8665C
 call LoadModeState	; 86661
 xor edx, edx	; 86666
 mov dword [gamemode], edx	; 86668
-call sub_80075	; 8666E
+call ViewHilights	; 8666E
 test eax, eax	; 86673
 jne short loc_86688	; 86675
 mov eax, exhstate	; 86677

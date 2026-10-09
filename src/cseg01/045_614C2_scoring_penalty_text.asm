@@ -14,7 +14,7 @@ extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, joysampling, 
 extern dword_C5840, dword_C90B0, sflags3, HomeTeam, dword_C9120, dword_CBEBE, dword_CBECA, dword_CC0AC
 extern lastsfx, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC110, dword_CC114, penshotmode
 extern penshotstart, penshottimer, dword_CC124, penshotlive, dword_CD2F8, dword_CD34C, dword_CD350, dword_D8B70
-extern dword_D8C84, dword_DB086, dword_DB088, dword_DC230, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
+extern curperiod, dword_DB086, dword_DB088, dword_DC230, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
 extern hmtmstruct, dword_DF646, awtmstruct, puckstruct, sortobj15, hmtmlines
 extern photoptrsf, dword_E0220, dword_E0230, PenBuf_m5
 extern dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9BAC, dword_E9BB0
@@ -1263,7 +1263,7 @@ mov byte [byte_E9ACB], bl	; 62365
 mov byte [byte_E9ACC], cl	; 6236B
 mov al, byte [byte esp+010h]	; 62371
 mov byte [byte_E9ACD], al	; 62375
-mov al, byte [dword_D8C84]	; 6237A
+mov al, byte [curperiod]	; 6237A
 mov byte [byte_E9ACE], al	; 6237F
 mov al, byte [byte esp+014h]	; 62384
 mov byte [byte_E9ACF], al	; 62388
@@ -1373,7 +1373,7 @@ mov al, byte [esp]	; 624E7
 mov byte [byte_E9ACA], al	; 624EA
 mov byte [byte_E9ACB], bl	; 624EF
 mov byte [byte_E9ACC], dl	; 624F5
-mov al, byte [dword_D8C84]	; 624FB
+mov al, byte [curperiod]	; 624FB
 mov byte [byte_E9ACD], al	; 62500
 mov al, byte [byte esp+018h]	; 62505
 mov byte [byte_E9ACE], al	; 62509
@@ -1572,7 +1572,7 @@ mov byte [byte_E9AC8], 3	; 62779
 mov byte [byte_E9AC9], al	; 62780
 mov byte [byte_E9ACA], dl	; 62785
 mov byte [byte_E9ACB], bl	; 6278B
-mov al, byte [dword_D8C84]	; 62791
+mov al, byte [curperiod]	; 62791
 mov byte [byte_E9ACC], al	; 62796
 mov byte [byte_E9ACD], cl	; 6279B
 mov al, byte [byte esp+0Ch]	; 627A1

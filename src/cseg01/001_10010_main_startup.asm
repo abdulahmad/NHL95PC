@@ -14,7 +14,7 @@ extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, dword_C5840, sc
 extern songdata, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
 extern musichandle, dword_D2C6B, mousex, mousey, mousebtns, dword_D30D4, dword_D4158, dword_D415C
 extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
-extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84, photoptrs, dword_DC230
+extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, curperiod, photoptrs, dword_DC230
 extern pointerspr, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
 extern int386_, mousepollfn, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
 extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, MainDeskLoop
@@ -1391,7 +1391,7 @@ push edx	; 10FED
 call sub_8EA18	; 10FEE
 add esp, byte 4	; 10FF3
 call IntermissionDesk	; 10FF6
-inc dword [dword_D8C84]	; 10FFB
+inc dword [curperiod]	; 10FFB
 pop edx	; 11001
 pop ecx	; 11002
 pop ebx	; 11003
@@ -1613,7 +1613,7 @@ jmp near .19	; 1125F
 .10:
 test byte [gmode], 10h	; 11264
 jne near .19	; 1126B
-cmp dword [dword_D8C84], byte 0FFFFFFFFh	; 11271
+cmp dword [curperiod], byte 0FFFFFFFFh	; 11271
 je near .19	; 11278
 mov ax, word [joysampling]	; 1127E
 mov word [joysampling_save], ax	; 11284
@@ -1672,7 +1672,7 @@ call sub_B2E1B	; 11353
 add esp, byte 10h	; 11358
 .16:
 mov word [word_CBEC4], 1	; 1135B
-mov ebx, dword [dword_D8C84]	; 11364
+mov ebx, dword [curperiod]	; 11364
 mov edx, dword [HomeTeam]	; 1136A
 sar edx, 10h	; 11370
 mov eax, dword [cont2team]	; 11373

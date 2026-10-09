@@ -10,7 +10,7 @@ extern byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, b
 extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, byte_ED7CC, byte_ED7F7, byte_ED86D
 extern byte_ED92B, joysampling, dword_C90B0, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, lastsfx
 extern dword_CCEF6, dword_CD41E, dword_CD4B0, dword_D2C6B, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1
-extern dword_D30BC, dword_D30C0, dword_D8B70, dword_D8B78, spritedrawcount, dword_D8C84, dword_DEF8C, dword_DEFE0
+extern dword_D30BC, dword_D30C0, dword_D8B70, dword_D8B78, spritedrawcount, curperiod, dword_DEF8C, dword_DEFE0
 extern dword_DF004, hmtmstruct, puckstruct, photoptrsf, dword_E0220, dword_E0230, dword_E0244, dword_E0248
 extern recbpr, replayplay, dword_E03AE, dword_E03B9, dword_E03BD
 extern dword_E9A9E, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38
@@ -3740,7 +3740,7 @@ cwde	; 671F8
 mov ebx, eax	; 671F9
 shl ebx, 8	; 671FB
 mov bx, word [dword ebx+hmtmgoalie]	; 671FE
-cmp dword [dword_D8C84], byte 0FFFFFFFFh	; 67205
+cmp dword [curperiod], byte 0FFFFFFFFh	; 67205
 je near .x	; 6720C
 mov ecx, dword [c2playernum]	; 67212
 sar ecx, 10h	; 67218

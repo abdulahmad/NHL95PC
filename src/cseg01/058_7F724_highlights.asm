@@ -2,29 +2,24 @@
 bits 32
 %include "hockey.inc"
 section s_7F724 progbits alloc exec nowrite align=1
-extern __CHK, _dos_getdiskfree_, asc_C342E, asc_C3436, asc_C3449, asc_C3450, asc_C3472, asc_C3477
-extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, curleague, sflags, musicon
-extern hmrosterjersey, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
-extern byte_E03E3, byte_E03E4, hudclockmin, hudclocksec, hudclockhund, songdata, rinkscrollx, rinkscrolly
-extern cont2team, HomeTeam, musichandle, fontcolor, rinkendbank, numshpbank, dword_D8C84, musicslot
-extern dword_DC230, scrbrdshapes, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
+extern __CHK, _dos_getdiskfree_, str_SaveTo, str_HilightsReel, str_HI, str_CantOpenFile, str_HLTL, str_HLT
+extern str_HLTS, str_HI2, str_SelectATeam, str_SelectAHilight, str_HilightDescFmt, curleague, sflags, musicon
+extern hmrosterjersey, byte_DB7F1, byte_DC267, byte_DC268, hilightrec
+extern hudclockmin, hudclocksec, hudclockhund, songdata, rinkscrollx, rinkscrolly
+extern cont2team, HomeTeam, musichandle, fontcolor, rinkendbank, numshpbank, curperiod, musicslot
+extern dword_DC230, scrbrdshapes, recbpr
 extern dword_ED6F8, hilightfont, fputchar, jctime, DrawGadgetButton_ret, lseek_, teamabbrevs, teamcitynames
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, SetScreenSize
 extern LoadGameGfx, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
 extern sub_1BAB1, ListDialog, SetDialogColors, MessageBox, FreeRinkGfx, LoadRink, ShowLoadingScreen, FadeOutPalCycle
 extern sub_673C5, ClearInputQueue, FadePalStep, LoadRockMusic, FreeRockMusic, InstantReplay, sub_8CCA8, sub_8D2F0
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
-extern sub_93000, FatalError, sub_B2DCA, sub_B4FAC, sub_B5DB0, bothneitherstrs, unk_C3444, unk_C3447
-extern unk_C344D, unk_C3468, unk_C346B, unk_C3470, str_star, unk_D1F4B, hmteamrec
-extern unk_DF314, unknown_libname_1, unknown_libname_2, VisTeam, word_E0410, awteamrec
-global loc_7F7B3, loc_7F829, loc_7FA3F, loc_7FA7C, loc_7FAEC, loc_7FB92, loc_7FBB5, loc_7FBEE
-global loc_7FC08, loc_7FC0A, loc_7FC4F, loc_7FC56, loc_7FC81, loc_7FC95, loc_7FD76, loc_7FD99
-global loc_7FD9D, loc_7FDBE, loc_7FDD0, loc_7FEDC, loc_7FEEB, loc_7FEFA, loc_7FF08, loc_7FF97
-global loc_7FFAA, loc_7FFDE, loc_7FFEA, loc_8000A, loc_80018, loc_80062, loc_80067, loc_800E0
-global loc_80101, loc_80113, loc_801A8, loc_801F8, loc_8022D, loc_8025A, loc_802A9, loc_802B1
-global sub_7F724, sub_7FA10, sub_7FC12, sub_7FC31, sub_7FC5C, sub_7FCA2, sub_7FCF8, sub_80075
-global sub_8011C
-sub_7F724:
+extern sub_93000, FatalError, sub_B2DCA, sub_B4FAC, sub_B5DB0, bothneitherstrs, str_K1, unk_C3447
+extern str_F12, str_F3, str_F4, unk_C3470, str_star, msg_NoHilights, hmteamrec
+extern unk_DF314, unknown_libname_1, unknown_libname_2, VisTeam, awteamrec
+global HilightSaveToDlg, SaveHilight, NudgeRinkScroll, CmpInt, TeamFromHiName, FormatHilightDesc, SelectHilight, ViewHilights
+global PlayHilight
+HilightSaveToDlg:
 push dword 80h	; 7F724
 call __CHK	; 7F729
 push ebx	; 7F72E
@@ -71,8 +66,8 @@ mov edi, 4Eh	; 7F7A1
 mov esi, 50h	; 7F7A6
 xor ebx, ebx	; 7F7AB
 mov dword [byte esp+04Ch], ebx	; 7F7AD
-jmp short loc_7F829	; 7F7B1
-loc_7F7B3:
+jmp short .2	; 7F7B1
+.1:
 push byte 59h	; 7F7B3
 lea ebp, [byte esi+0Eh]	; 7F7B5
 push ebp	; 7F7B8
@@ -121,18 +116,18 @@ call sub_B5DB0	; 7F81A
 add esp, byte 0Ch	; 7F81F
 inc dword [byte esp+04Ch]	; 7F822
 add esi, byte 11h	; 7F826
-loc_7F829:
+.2:
 cmp dword [byte esp+04Ch], byte 4	; 7F829
-jl short loc_7F7B3	; 7F82E
+jl short HilightSaveToDlg.1	; 7F82E
 mov dword [fontcolor], 10h	; 7F830
 push byte 6Dh	; 7F83A
 push byte 0Eh	; 7F83C
-push asc_C342E	; 7F83E
+push str_SaveTo	; 7F83E
 call sub_91964	; 7F843
 add esp, byte 0Ch	; 7F848
 push byte 6Dh	; 7F84B
 push dword 0DFh	; 7F84D
-push asc_C3436	; 7F852
+push str_HilightsReel	; 7F852
 call sub_91964	; 7F857
 add esp, byte 0Ch	; 7F85C
 push byte 54h	; 7F85F
@@ -201,12 +196,12 @@ add esp, byte 0Ch	; 7F91B
 mov dword [fontcolor], 59h	; 7F91E
 push byte 6Ch	; 7F928
 push byte 0Dh	; 7F92A
-push asc_C342E	; 7F92C
+push str_SaveTo	; 7F92C
 call sub_91964	; 7F931
 add esp, byte 0Ch	; 7F936
 push byte 6Ch	; 7F939
 push dword 0DEh	; 7F93B
-push asc_C3436	; 7F940
+push str_HilightsReel	; 7F940
 call sub_91964	; 7F945
 add esp, byte 0Ch	; 7F94A
 push byte 53h	; 7F94D
@@ -273,7 +268,7 @@ call sub_91964	; 7FA00
 add esp, byte 0Ch	; 7FA05
 add esp, byte 50h	; 7FA08
 jmp near DrawGadgetButton_ret	; 7FA0B
-sub_7FA10:
+SaveHilight:
 push dword 74h	; 7FA10
 call __CHK	; 7FA15
 push ebx	; 7FA1A
@@ -286,11 +281,11 @@ lea edx, [byte esp+04Ch]	; 7FA23
 xor eax, eax	; 7FA27
 call _dos_getdiskfree_	; 7FA29
 test eax, eax	; 7FA2E
-je short loc_7FA3F	; 7FA30
-push unk_C3444	; 7FA32
+je short .1	; 7FA30
+push str_K1	; 7FA32
 call FatalError	; 7FA37
 add esp, byte 4	; 7FA3C
-loc_7FA3F:
+.1:
 xor ebx, ebx	; 7FA3F
 mov bx, word [byte esp+052h]	; 7FA41
 xor edx, edx	; 7FA46
@@ -305,48 +300,48 @@ mov edx, eax	; 7FA5D
 xor eax, eax	; 7FA5F
 mov ax, word [byte esp+04Eh]	; 7FA61
 cmp edx, eax	; 7FA66
-jle short loc_7FA7C	; 7FA68
+jle short .2	; 7FA68
 mov ebx, 1	; 7FA6A
 mov dword [dword_ED6F8], ebx	; 7FA6F
 mov eax, ebx	; 7FA75
-jmp near loc_7FC0A	; 7FA77
-loc_7FA7C:
+jmp near .x	; 7FA77
+.2:
 mov al, byte [byte_DC268]	; 7FA7C
-mov byte [byte_E03C4], al	; 7FA81
+mov byte [hilightrec], al	; 7FA81
 mov al, byte [byte_DC267]	; 7FA86
-mov byte [byte_E03C5], al	; 7FA8B
+mov byte [hilightrec+1], al	; 7FA8B
 mov al, byte [HomeTeam]	; 7FA90
-mov byte [byte_E03C6], al	; 7FA95
+mov byte [hilightrec+2], al	; 7FA95
 mov al, byte [VisTeam]	; 7FA9A
-mov byte [byte_E03E3], al	; 7FA9F
-mov eax, dword [dword_D8C84]	; 7FAA4
-mov dword [dword_E0400], eax	; 7FAA9
+mov byte [hilightrec+1Fh], al	; 7FA9F
+mov eax, dword [curperiod]	; 7FAA4
+mov dword [hilightrec+3Ch], eax	; 7FAA9
 mov eax, dword [hudclockmin]	; 7FAAE
-mov dword [dword_E0404], eax	; 7FAB3
+mov dword [hilightrec+40h], eax	; 7FAB3
 mov eax, dword [hudclocksec]	; 7FAB8
-mov dword [dword_E0408], eax	; 7FABD
+mov dword [hilightrec+44h], eax	; 7FABD
 mov eax, dword [hudclockhund]	; 7FAC2
-mov dword [dword_E040C], eax	; 7FAC7
+mov dword [hilightrec+48h], eax	; 7FAC7
 mov ax, word [sflags]	; 7FACC
-mov word [word_E0410], ax	; 7FAD2
+mov word [hilightrec+4Ch], ax	; 7FAD2
 mov eax, dword [recbpr]	; 7FAD8
 mov edx, dword [replaystart]	; 7FADD
 sub eax, edx	; 7FAE3
-mov dword [dword_E0412], eax	; 7FAE5
+mov dword [hilightrec+4Eh], eax	; 7FAE5
 xor edx, edx	; 7FAEA
-loc_7FAEC:
+.3:
 mov eax, edx	; 7FAEC
 shl eax, 2	; 7FAEE
 add eax, edx	; 7FAF1
 shl eax, 3	; 7FAF3
 sub eax, edx	; 7FAF6
 mov bl, byte [dword eax+hmrosterjersey]	; 7FAF8
-mov byte [dword edx+byte_E03C7], bl	; 7FAFE
+mov byte [dword edx+hilightrec+3], bl	; 7FAFE
 mov al, byte [dword eax+byte_DB7F1]	; 7FB04
-mov byte [dword edx+byte_E03E4], al	; 7FB0A
+mov byte [dword edx+hilightrec+20h], al	; 7FB0A
 inc edx	; 7FB10
 cmp edx, byte 1Ch	; 7FB11
-jl short loc_7FAEC	; 7FB14
+jl short SaveHilight.3	; 7FB14
 mov edx, curleague	; 7FB16
 lea eax, [byte esp+02Ch]	; 7FB1B
 call strcpy_	; 7FB1F
@@ -364,7 +359,7 @@ mov edx, hmteamrec	; 7FB43
 add edx, eax	; 7FB48
 lea eax, [byte esp+02Ch]	; 7FB4A
 call strcat_	; 7FB4E
-mov edx, asc_C3449	; 7FB53
+mov edx, str_HI	; 7FB53
 lea eax, [byte esp+02Ch]	; 7FB58
 call strcat_	; 7FB5C
 mov ebx, esp	; 7FB61
@@ -372,66 +367,66 @@ xor edx, edx	; 7FB63
 lea eax, [byte esp+02Ch]	; 7FB65
 call unknown_libname_1	; 7FB69
 test eax, eax	; 7FB6E
-je short loc_7FB92	; 7FB70
+je short .4	; 7FB70
 lea edx, [byte esp+054h]	; 7FB72
 lea eax, [byte esp+02Ch]	; 7FB76
 call FileCreate	; 7FB7A
 test eax, eax	; 7FB7F
-je short loc_7FBB5	; 7FB81
-push unk_C344D	; 7FB83
+je short .5	; 7FB81
+push str_F12	; 7FB83
 call FatalError	; 7FB88
 add esp, byte 4	; 7FB8D
-jmp short loc_7FBB5	; 7FB90
-loc_7FB92:
+jmp short .5	; 7FB90
+.4:
 lea edx, [byte esp+054h]	; 7FB92
 lea eax, [byte esp+02Ch]	; 7FB96
 call FileOpenWrite	; 7FB9A
 test eax, eax	; 7FB9F
-je short loc_7FBB5	; 7FBA1
+je short .5	; 7FBA1
 lea eax, [byte esp+02Ch]	; 7FBA3
 push eax	; 7FBA7
-push asc_C3450	; 7FBA8
+push str_CantOpenFile	; 7FBA8
 call FatalError	; 7FBAD
 add esp, byte 8	; 7FBB2
-loc_7FBB5:
+.5:
 mov ebx, 2	; 7FBB5
 xor edx, edx	; 7FBBA
 mov eax, dword [byte esp+054h]	; 7FBBC
 call lseek_	; 7FBC0
 mov ecx, 9652h	; 7FBC5
 mov ebx, 0FFFFFFFFh	; 7FBCA
-mov edx, byte_E03C4	; 7FBCF
+mov edx, hilightrec	; 7FBCF
 mov eax, dword [byte esp+054h]	; 7FBD4
 call FileWriteAt	; 7FBD8
 test eax, eax	; 7FBDD
-je short loc_7FBEE	; 7FBDF
-push unk_C3468	; 7FBE1
+je short .6	; 7FBDF
+push str_F3	; 7FBE1
 call FatalError	; 7FBE6
 add esp, byte 4	; 7FBEB
-loc_7FBEE:
+.6:
 lea eax, [byte esp+054h]	; 7FBEE
 call FileClose	; 7FBF2
 test eax, eax	; 7FBF7
-je short loc_7FC08	; 7FBF9
-push unk_C346B	; 7FBFB
+je short .7	; 7FBF9
+push str_F4	; 7FBFB
 call FatalError	; 7FC00
 add esp, byte 4	; 7FC05
-loc_7FC08:
+.7:
 xor eax, eax	; 7FC08
-loc_7FC0A:
+.x:
 add esp, byte 58h	; 7FC0A
 pop esi	; 7FC0D
 pop edx	; 7FC0E
 pop ecx	; 7FC0F
 pop ebx	; 7FC10
 ret	; 7FC11
-sub_7FC12:
+NudgeRinkScroll:
 push dword 4	; 7FC12
 call __CHK	; 7FC17
 add dword [rinkscrollx], 3E8h	; 7FC1C
 add dword [rinkscrolly], 3E8h	; 7FC26
 ret	; 7FC30
-sub_7FC31:
+CmpInt:
 push dword 10h	; 7FC31
 call __CHK	; 7FC36
 push ebx	; 7FC3B
@@ -441,19 +436,19 @@ xor ebx, ebx	; 7FC3E
 mov ecx, dword [eax]	; 7FC40
 mov esi, dword [edx]	; 7FC42
 cmp ecx, esi	; 7FC44
-jle short loc_7FC4F	; 7FC46
+jle short .1	; 7FC46
 mov ebx, 1	; 7FC48
-jmp short loc_7FC56	; 7FC4D
-loc_7FC4F:
-jge short loc_7FC56	; 7FC4F
+jmp short .2	; 7FC4D
+.1:
+jge short .2	; 7FC4F
 mov ebx, 0FFFFFFFFh	; 7FC51
-loc_7FC56:
+.2:
 mov eax, ebx	; 7FC56
 pop esi	; 7FC58
 pop ecx	; 7FC59
 pop ebx	; 7FC5A
 ret	; 7FC5B
-sub_7FC5C:
+TeamFromHiName:
 push dword 14h	; 7FC5C
 call __CHK	; 7FC61
 push ebx	; 7FC66
@@ -466,24 +461,24 @@ mov edx, unk_C3470	; 7FC71
 call strcspn_	; 7FC76
 mov byte [ecx+eax], 0	; 7FC7B
 xor ebx, ebx	; 7FC7F
-loc_7FC81:
+.1:
 mov edx, dword [nosplit ebx*4+teamabbrevs]	; 7FC81
 mov eax, ecx	; 7FC88
 call stricmp_	; 7FC8A
 test eax, eax	; 7FC8F
-jne short loc_7FC95	; 7FC91
+jne short .2	; 7FC91
 mov esi, ebx	; 7FC93
-loc_7FC95:
+.2:
 inc ebx	; 7FC95
 cmp ebx, byte 1Ah	; 7FC96
-jl short loc_7FC81	; 7FC99
+jl short TeamFromHiName.1	; 7FC99
 mov eax, esi	; 7FC9B
 pop esi	; 7FC9D
 pop edx	; 7FC9E
 pop ecx	; 7FC9F
 pop ebx	; 7FCA0
 ret	; 7FCA1
-sub_7FCA2:
+FormatHilightDesc:
 push dword 3Ch	; 7FCA2
 call __CHK	; 7FCA7
 push ebx	; 7FCAC
@@ -512,7 +507,7 @@ push eax	; 7FCDE
 xor eax, eax	; 7FCDF
 mov al, byte [edx]	; 7FCE1
 push eax	; 7FCE3
-push asc_D207A	; 7FCE4
+push str_HilightDescFmt	; 7FCE4
 push ebx	; 7FCE9
 call sprintf_	; 7FCEA
 add esp, byte 24h	; 7FCEF
@@ -522,7 +517,7 @@ pop esi	; 7FCF4
 pop ecx	; 7FCF5
 pop ebx	; 7FCF6
 ret	; 7FCF7
-sub_7FCF8:
+SelectHilight:
 push dword 204h	; 7FCF8
 call __CHK	; 7FCFD
 push esi	; 7FD02
@@ -536,7 +531,7 @@ push ecx	; 7FD0E
 mov ebp, dword [dword esp+01F0h]	; 7FD0F
 mov dword [dword esp+01C8h], 0FFFFFFFFh	; 7FD16
 xor esi, esi	; 7FD21
-mov ecx, asc_C812D	; 7FD23
+mov ecx, str_HI2	; 7FD23
 mov ebx, str_star	; 7FD28
 mov edx, dword [byte esp+04h]	; 7FD2D
 lea eax, [dword esp+0E0h]	; 7FD31
@@ -546,59 +541,59 @@ xor edx, edx	; 7FD44
 lea eax, [dword esp+0E0h]	; 7FD46
 call unknown_libname_1	; 7FD4D
 test eax, eax	; 7FD52
-jne short loc_7FD9D	; 7FD54
+jne short .3	; 7FD54
 lea eax, [dword esp+019Eh]	; 7FD56
-call sub_7FC5C	; 7FD5D
+call TeamFromHiName	; 7FD5D
 mov dword [byte esp+078h], eax	; 7FD62
 mov eax, dword [nosplit eax*4+teamcitynames]	; 7FD66
 mov dword [byte esp+010h], eax	; 7FD6D
 mov esi, 1	; 7FD71
-loc_7FD76:
+.1:
 lea eax, [dword esp+0180h]	; 7FD76
 call unknown_libname_2	; 7FD7D
 mov edi, eax	; 7FD82
 test eax, eax	; 7FD84
-jne short loc_7FD99	; 7FD86
+jne short .2	; 7FD86
 lea eax, [dword esp+019Eh]	; 7FD88
-call sub_7FC5C	; 7FD8F
+call TeamFromHiName	; 7FD8F
 mov dword [byte esp+esi*4+078h], eax	; 7FD94
 inc esi	; 7FD98
-loc_7FD99:
+.2:
 test edi, edi	; 7FD99
-je short loc_7FD76	; 7FD9B
-loc_7FD9D:
+je short SelectHilight.1	; 7FD9B
+.3:
 test esi, esi	; 7FD9D
-je near loc_80018	; 7FD9F
-mov ecx, sub_7FC31	; 7FDA5
+je near .15	; 7FD9F
+mov ecx, CmpInt	; 7FDA5
 mov ebx, 4	; 7FDAA
 mov edx, esi	; 7FDAF
 lea eax, [byte esp+078h]	; 7FDB1
 call qsort_	; 7FDB5
 xor ebx, ebx	; 7FDBA
-jmp short loc_7FDD0	; 7FDBC
-loc_7FDBE:
+jmp short .5	; 7FDBC
+.4:
 mov edx, dword [byte esp+ecx*4+078h]	; 7FDBE
 mov edx, dword [nosplit edx*4+teamcitynames]	; 7FDC2
 mov dword [byte esp+ecx*4+010h], edx	; 7FDC9
 lea ebx, [byte ecx+01h]	; 7FDCD
-loc_7FDD0:
+.5:
 mov dword [dword esp+01D4h], ebx	; 7FDD0
 mov ecx, dword [dword esp+01D4h]	; 7FDD7
 cmp esi, ecx	; 7FDDE
-jg short loc_7FDBE	; 7FDE0
+jg short SelectHilight.4	; 7FDE0
 lea eax, [dword esp+01ACh]	; 7FDE2
 push eax	; 7FDE9
 push byte 0	; 7FDEA
 mov ecx, 2	; 7FDEC
-mov ebx, asc_C8208	; 7FDF1
+mov ebx, str_SelectATeam	; 7FDF1
 mov edx, esi	; 7FDF6
 lea eax, [byte esp+018h]	; 7FDF8
 call ListDialog	; 7FDFC
 test eax, eax	; 7FE01
-jl near loc_80062	; 7FE03
+jl near .16	; 7FE03
 mov ebx, dword [byte esp+eax*4+078h]	; 7FE09
 mov ebx, dword [nosplit ebx*4+teamabbrevs]	; 7FE0D
-mov ecx, asc_C812D	; 7FE14
+mov ecx, str_HI2	; 7FE14
 xor edx, edx	; 7FE19
 mov eax, dword [byte esp+0Ch]	; 7FE1B
 call MakePath	; 7FE1F
@@ -617,7 +612,7 @@ lea eax, [dword esp+0E0h]	; 7FE53
 call FileOpenRead	; 7FE5A
 mov edi, eax	; 7FE5F
 test eax, eax	; 7FE61
-jne near loc_8000A	; 7FE63
+jne near .14	; 7FE63
 mov esi, 9652h	; 7FE69
 mov eax, ebx	; 7FE6E
 mov edx, ebx	; 7FE70
@@ -627,7 +622,7 @@ mov esi, eax	; 7FE77
 push byte 20h	; 7FE79
 shl eax, 2	; 7FE7B
 push eax	; 7FE7E
-push asc_C3472	; 7FE7F
+push str_HLTL	; 7FE7F
 call sub_8CCA8	; 7FE84
 add esp, byte 0Ch	; 7FE89
 mov dword [dword esp+01D8h], eax	; 7FE8C
@@ -639,37 +634,37 @@ add eax, edx	; 7FE9C
 shl eax, 4	; 7FE9E
 add eax, edx	; 7FEA1
 push eax	; 7FEA3
-push asc_C3477	; 7FEA4
+push str_HLT	; 7FEA4
 call sub_8CCA8	; 7FEA9
 add esp, byte 0Ch	; 7FEAE
 mov dword [dword esp+01DCh], eax	; 7FEB1
 cmp dword [esp], byte 0	; 7FEB8
-je short loc_7FEFA	; 7FEBC
+je short .8	; 7FEBC
 push byte 20h	; 7FEBE
 push esi	; 7FEC0
-push asc_C347B	; 7FEC1
+push str_HLTS	; 7FEC1
 call sub_8CCA8	; 7FEC6
 add esp, byte 0Ch	; 7FECB
 mov dword [byte ebp+00h], eax	; 7FECE
 xor edx, edx	; 7FED1
 mov dword [dword esp+01D4h], edx	; 7FED3
-jmp short loc_7FEEB	; 7FEDA
-loc_7FEDC:
+jmp short .7	; 7FEDA
+.6:
 mov eax, dword [byte ebp+00h]	; 7FEDC
 add eax, ecx	; 7FEDF
 mov byte [eax], 0	; 7FEE1
 inc dword [dword esp+01D4h]	; 7FEE4
-loc_7FEEB:
+.7:
 mov ecx, dword [dword esp+01D4h]	; 7FEEB
 cmp esi, ecx	; 7FEF2
-jle short loc_7FEFA	; 7FEF4
+jle short .8	; 7FEF4
 test edi, edi	; 7FEF6
-je short loc_7FEDC	; 7FEF8
-loc_7FEFA:
+je short SelectHilight.6	; 7FEF8
+.8:
 xor ecx, ecx	; 7FEFA
 mov dword [dword esp+01D4h], ecx	; 7FEFC
-jmp near loc_7FF97	; 7FF03
-loc_7FF08:
+jmp near .10	; 7FF03
+.9:
 imul ebx, eax, dword 9652h	; 7FF08
 mov ecx, 4Ch	; 7FF0E
 lea edx, [dword esp+0134h]	; 7FF13
@@ -690,7 +685,7 @@ add eax, dword [dword esp+01D8h]	; 7FF4E
 mov dword [eax], edx	; 7FF55
 lea edx, [dword esp+0134h]	; 7FF57
 lea eax, [dword esp+0E0h]	; 7FF5E
-call sub_7FCA2	; 7FF65
+call FormatHilightDesc	; 7FF65
 mov edx, dword [dword esp+01D4h]	; 7FF6A
 mov eax, edx	; 7FF71
 shl eax, 2	; 7FF73
@@ -701,35 +696,35 @@ add eax, dword [dword esp+01DCh]	; 7FF7D
 lea edx, [dword esp+0E0h]	; 7FF84
 call strcpy_	; 7FF8B
 inc dword [dword esp+01D4h]	; 7FF90
-loc_7FF97:
+.10:
 mov eax, dword [dword esp+01D4h]	; 7FF97
 cmp esi, eax	; 7FF9E
-jle short loc_7FFAA	; 7FFA0
+jle short .11	; 7FFA0
 test edi, edi	; 7FFA2
-je near loc_7FF08	; 7FFA4
-loc_7FFAA:
+je near SelectHilight.9	; 7FFA4
+.11:
 test edi, edi	; 7FFAA
-jne short loc_7FFEA	; 7FFAC
+jne short .13	; 7FFAC
 mov edx, dword [byte ebp+00h]	; 7FFAE
 push edx	; 7FFB1
 mov ebx, dword [byte esp+04h]	; 7FFB2
 push ebx	; 7FFB6
 mov ecx, 2	; 7FFB7
-mov ebx, asc_C8216	; 7FFBC
+mov ebx, str_SelectAHilight	; 7FFBC
 mov edx, esi	; 7FFC1
 mov eax, dword [dword esp+01E0h]	; 7FFC3
 call ListDialog	; 7FFCA
 mov edx, dword [byte esp+08h]	; 7FFCF
 mov dword [edx], eax	; 7FFD3
 test eax, eax	; 7FFD5
-jge short loc_7FFDE	; 7FFD7
+jge short .12	; 7FFD7
 mov edi, 0FFFFFFFFh	; 7FFD9
-loc_7FFDE:
+.12:
 cmp dword [esp], byte 0	; 7FFDE
-je short loc_7FFEA	; 7FFE2
+je short .13	; 7FFE2
 mov eax, dword [byte esp+08h]	; 7FFE4
 mov dword [eax], esi	; 7FFE8
-loc_7FFEA:
+.13:
 mov eax, dword [dword esp+01DCh]	; 7FFEA
 push eax	; 7FFF1
 call jctime	; 7FFF2
@@ -738,11 +733,11 @@ mov edx, dword [dword esp+01D8h]	; 7FFFA
 push edx	; 80001
 call jctime	; 80002
 add esp, byte 4	; 80007
-loc_8000A:
+.14:
 lea eax, [dword esp+01C8h]	; 8000A
 call FileClose	; 80011
-jmp short loc_80067	; 80016
-loc_80018:
+jmp short .17	; 80016
+.15:
 lea eax, [dword esp+01CCh]	; 80018
 push eax	; 8001F
 lea eax, [dword esp+01D4h]	; 80020
@@ -759,20 +754,20 @@ push eax	; 80049
 push esi	; 8004A
 push esi	; 8004B
 mov ecx, 1	; 8004C
-mov ebx, unk_D1F4B	; 80051
+mov ebx, msg_NoHilights	; 80051
 mov edx, 0FFFFFFFFh	; 80056
 mov eax, edx	; 8005B
 call MessageBox	; 8005D
-loc_80062:
+.16:
 mov edi, 0FFFFFFFFh	; 80062
-loc_80067:
+.17:
 mov eax, edi	; 80067
 add esp, 1E0h	; 80069
 pop ebp	; 8006F
 pop edi	; 80070
 pop esi	; 80071
 ret 4	; 80072
-sub_80075:
+ViewHilights:
 push dword 4Ch	; 80075
 call __CHK	; 8007A
 push ebx	; 8007F
@@ -791,10 +786,10 @@ xor ecx, ecx	; 800A7
 mov ebx, curleague	; 800A9
 lea edx, [byte esp+034h]	; 800AE
 lea eax, [byte esp+024h]	; 800B2
-call sub_7FCF8	; 800B6
+call SelectHilight	; 800B6
 mov edx, eax	; 800BB
 test eax, eax	; 800BD
-jne short loc_800E0	; 800BF
+jne short .1	; 800BF
 xor ecx, ecx	; 800C1
 lea ebx, [byte esp+020h]	; 800C3
 mov edx, curleague	; 800C7
@@ -804,29 +799,29 @@ lea edx, [byte esp+034h]	; 800D3
 mov eax, esp	; 800D7
 call FileOpenRead	; 800D9
 mov edx, eax	; 800DE
-loc_800E0:
+.1:
 test edx, edx	; 800E0
-jne short loc_80101	; 800E2
+jne short .2	; 800E2
 imul ebx, dword [byte esp+030h], dword 9652h	; 800E4
 mov ecx, 9652h	; 800EC
-mov edx, byte_E03C4	; 800F1
+mov edx, hilightrec	; 800F1
 mov eax, dword [byte esp+034h]	; 800F6
 call FileReadAt	; 800FA
 mov edx, eax	; 800FF
-loc_80101:
+.2:
 lea eax, [byte esp+034h]	; 80101
 call FileClose	; 80105
 test edx, edx	; 8010A
-jne short loc_80113	; 8010C
-call sub_8011C	; 8010E
-loc_80113:
+jne short .3	; 8010C
+call PlayHilight	; 8010E
+.3:
 mov eax, edx	; 80113
 add esp, byte 38h	; 80115
 pop edx	; 80118
 pop ecx	; 80119
 pop ebx	; 8011A
 ret	; 8011B
-sub_8011C:
+PlayHilight:
 push dword 328h	; 8011C
 call __CHK	; 80121
 push ebx	; 80126
@@ -836,53 +831,53 @@ push esi	; 80129
 push edi	; 8012A
 push ebp	; 8012B
 sub esp, 300h	; 8012C
-mov al, byte [byte_E03C4]	; 80132
+mov al, byte [hilightrec]	; 80132
 mov byte [byte_DC268], al	; 80137
-mov al, byte [byte_E03C5]	; 8013C
+mov al, byte [hilightrec+1]	; 8013C
 mov byte [byte_DC267], al	; 80141
 xor eax, eax	; 80146
-mov al, byte [byte_E03C6]	; 80148
+mov al, byte [hilightrec+2]	; 80148
 mov word [HomeTeam], ax	; 8014D
 xor eax, eax	; 80153
-mov al, byte [byte_E03E3]	; 80155
+mov al, byte [hilightrec+1Fh]	; 80155
 mov word [VisTeam], ax	; 8015A
-mov eax, dword [dword_E0400]	; 80160
-mov dword [dword_D8C84], eax	; 80165
-mov eax, dword [dword_E0404]	; 8016A
+mov eax, dword [hilightrec+3Ch]	; 80160
+mov dword [curperiod], eax	; 80165
+mov eax, dword [hilightrec+40h]	; 8016A
 mov dword [hudclockmin], eax	; 8016F
-mov eax, dword [dword_E0408]	; 80174
+mov eax, dword [hilightrec+44h]	; 80174
 mov dword [hudclocksec], eax	; 80179
-mov eax, dword [dword_E040C]	; 8017E
+mov eax, dword [hilightrec+48h]	; 8017E
 mov dword [hudclockhund], eax	; 80183
-mov ax, word [word_E0410]	; 80188
+mov ax, word [hilightrec+4Ch]	; 80188
 mov word [sflags], ax	; 8018E
 mov eax, dword [replaystart]	; 80194
-mov edx, dword [dword_E0412]	; 80199
+mov edx, dword [hilightrec+4Eh]	; 80199
 add eax, edx	; 8019F
 mov dword [recbpr], eax	; 801A1
 xor edx, edx	; 801A6
-loc_801A8:
+.1:
 mov eax, edx	; 801A8
 shl eax, 2	; 801AA
 add eax, edx	; 801AD
 shl eax, 3	; 801AF
 sub eax, edx	; 801B2
-mov bl, byte [dword edx+byte_E03C7]	; 801B4
+mov bl, byte [dword edx+hilightrec+3]	; 801B4
 mov byte [dword eax+hmrosterjersey], bl	; 801BA
-mov bl, byte [dword edx+byte_E03E4]	; 801C0
+mov bl, byte [dword edx+hilightrec+20h]	; 801C0
 mov byte [dword eax+byte_DB7F1], bl	; 801C6
 inc edx	; 801CC
 cmp edx, byte 1Ch	; 801CD
-jl short loc_801A8	; 801D0
+jl short PlayHilight.1	; 801D0
 cmp byte [musicon], 0	; 801D2
-je short loc_801F8	; 801D9
+je short .2	; 801D9
 cmp dword [songdata], byte 0	; 801DB
-je short loc_801F8	; 801E2
+je short .2	; 801E2
 mov eax, dword [musichandle]	; 801E4
 mov ebx, 64h	; 801E9
 mov edx, 3	; 801EE
 call sub_8FCDF	; 801F3
-loc_801F8:
+.2:
 mov eax, esp	; 801F8
 push eax	; 801FA
 push dword 100h	; 801FB
@@ -894,23 +889,23 @@ mov edx, esp	; 8020F
 mov eax, 1	; 80211
 call FadePalStep	; 80216
 cmp byte [musicon], 0	; 8021B
-je short loc_8025A	; 80222
+je short .4	; 80222
 cmp dword [songdata], byte 0	; 80224
-je short loc_8025A	; 8022B
-loc_8022D:
+je short .4	; 8022B
+.3:
 mov eax, dword [musicslot-3]	; 8022D
 sar eax, 18h	; 80232
 mov edx, 3	; 80235
 call sub_8FC8A	; 8023A
 test eax, eax	; 8023F
-je short loc_8022D	; 80241
+je short PlayHilight.3	; 80241
 mov esi, dword [songdata]	; 80243
 push esi	; 80249
 call sub_8D2F0	; 8024A
 add esp, byte 4	; 8024F
 xor edi, edi	; 80252
 mov dword [songdata], edi	; 80254
-loc_8025A:
+.4:
 call ShowLoadingScreen	; 8025A
 mov edx, dword [HomeTeam]	; 8025F
 sar edx, 10h	; 80265
@@ -925,13 +920,13 @@ mov edx, 0C8h	; 80289
 mov eax, 140h	; 8028E
 call SetScreenSize	; 80293
 cmp word [HomeTeam], byte 1Ah	; 80298
-jl short loc_802A9	; 802A0
+jl short .5	; 802A0
 mov eax, 0Ch	; 802A2
-jmp short loc_802B1	; 802A7
-loc_802A9:
+jmp short .6	; 802A7
+.5:
 mov eax, dword [cont2team]	; 802A9
 sar eax, 10h	; 802AE
-loc_802B1:
+.6:
 call LoadRink	; 802B1
 xor eax, eax	; 802B6
 call InstantReplay	; 802B8

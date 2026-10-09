@@ -11,7 +11,7 @@ extern dword_C66D4, dword_C90B0, sflags3, cont2team, HomeTeam, dword_CBC3E, dwor
 extern lastsfx, photobankf, onetimerflag, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 extern dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
 extern dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, crowdsmooth, frameaccum
-extern dword_D8C78, dword_D8C84, photobanks, dword_DB088, dword_DC28C, dword_DF00C, dword_DF010, hmtmstruct
+extern dword_D8C78, curperiod, photobanks, dword_DB088, dword_DC28C, dword_DF00C, dword_DF010, hmtmstruct
 extern dword_DF6F2, dword_DF6F6, hmtmplstats, dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
 extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2
 extern awtmsort, dword_E009C, dword_E0248, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
@@ -382,7 +382,7 @@ add eax, byte 2	; 6004F
 mov dx, word [word_DEF88]	; 60052
 mov word [eax], dx	; 60059
 add eax, byte 2	; 6005C
-mov dx, word [dword_D8C84]	; 6005F
+mov dx, word [curperiod]	; 6005F
 mov word [eax], dx	; 60066
 add eax, byte 2	; 60069
 mov dx, word [lldispodd]	; 6006C
@@ -1163,7 +1163,7 @@ movsx eax, word [ebx]	; 60B9E
 mov dword [word_DEF88], eax	; 60BA1
 add ebx, byte 2	; 60BA6
 movsx eax, word [ebx]	; 60BA9
-mov dword [dword_D8C84], eax	; 60BAC
+mov dword [curperiod], eax	; 60BAC
 add ebx, byte 2	; 60BB1
 mov ax, word [ebx]	; 60BB4
 mov word [lldispodd], ax	; 60BB7

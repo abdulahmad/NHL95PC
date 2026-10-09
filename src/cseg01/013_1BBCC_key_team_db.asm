@@ -6,7 +6,7 @@ extern __CHK, str_teams, str_key, str_att, str_season, str_career, str_GsummaryD
 extern byte_C5424, byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt
 extern byte_C66B4, curleague, awgoalieidx, awscratch, gsummarypath, hmroster, hmrosterjersey
 extern byte_DB3AE, awroster, hmgoalieidx, hmscratch, byte_DC267, byte_DC268, leaguedbfmt2
-extern leaguedbfmt, cont2team, HomeTeam, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
+extern leaguedbfmt, cont2team, HomeTeam, curperiod, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
 extern dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_m2, dword_DF6C2, fputchar, lseek_, mi_HomeGoalie1
 extern mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone, sprintf_, strcat_, strcpy_
 extern strncpy_, FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, LoadCupFinalSeries, LoadScoreboardGfx
@@ -289,7 +289,7 @@ push edi	; 1BF0A
 sub esp, byte 4	; 1BF0B
 mov byte [byte_DC268], al	; 1BF0E
 mov byte [byte_DC267], dl	; 1BF13
-mov dword [dword_D8C84], 0FFFFFFFFh	; 1BF19
+mov dword [curperiod], 0FFFFFFFFh	; 1BF19
 mov byte [byte_C5424], al	; 1BF23
 mov byte [byte_C5425], dl	; 1BF28
 mov al, byte [HomeTeam]	; 1BF2E

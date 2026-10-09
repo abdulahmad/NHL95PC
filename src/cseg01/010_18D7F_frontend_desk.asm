@@ -9,7 +9,7 @@ extern othergamesb, otherscores, otherscoresb, byte_ED830, byte_ED9E8, joysampli
 extern gamemode, gameopts, ctl1team, ctl2team, teamconf, dword_C5840, hlplayedmask, dword_C66A4
 extern dword_C66AC, dword_C66D0, dword_C66D4, boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
 extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, bailout_vec, musicslot
-extern dword_D8C84, dword_DC230, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, otherperiod
+extern curperiod, dword_DC230, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, otherperiod
 extern ptrupdatefn, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
 extern off_CEF23, mousepollfn, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
 extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, GameSummaryScreen, PickOtherGames
@@ -304,7 +304,7 @@ call ShowLoadingScreen	; 190DD
 call sub_61B85	; 190E2
 call sub_61C22	; 190E7
 call InputInstall	; 190EC
-mov edx, dword [dword_D8C84]	; 190F1
+mov edx, dword [curperiod]	; 190F1
 xor ecx, ecx	; 190F7
 mov ebx, edx	; 190F9
 mov eax, 1	; 190FB
@@ -323,7 +323,7 @@ cmp si, byte 1Ah	; 1913B
 je near .4	; 1913F
 cmp si, byte 1Bh	; 19145
 je near .4	; 19149
-cmp dword [dword_D8C84], byte 1	; 1914F
+cmp dword [curperiod], byte 1	; 1914F
 jne short .2	; 19156
 xor esi, esi	; 19158
 mov dword [hlplayedmask], esi	; 1915A
@@ -342,13 +342,13 @@ jl short IntermissionDesk.1	; 1918A
 .2:
 test cl, 4	; 1918C
 jne short .4	; 1918F
-mov eax, dword [dword_D8C84]	; 19191
+mov eax, dword [curperiod]	; 19191
 call UpdateOtherScores	; 19196
 call PlayRandomHighlight	; 1919B
 test eax, eax	; 191A0
 jl short .4	; 191A2
 call InputInstall	; 191A4
-mov edx, dword [dword_D8C84]	; 191A9
+mov edx, dword [curperiod]	; 191A9
 xor ecx, ecx	; 191AF
 xor ebx, ebx	; 191B1
 mov eax, 20h	; 191B3
@@ -400,7 +400,7 @@ call sub_61B85	; 19262
 call sub_61C22	; 19267
 call sub_61BBF	; 1926C
 call InputInstall	; 19271
-mov ebx, dword [dword_D8C84]	; 19276
+mov ebx, dword [curperiod]	; 19276
 xor ecx, ecx	; 1927C
 mov edx, 1	; 1927E
 mov eax, edx	; 19283
@@ -421,7 +421,7 @@ cmp cx, byte 1Ah	; 192C9
 je short .2	; 192CD
 cmp cx, byte 1Bh	; 192CF
 je short .2	; 192D3
-mov eax, dword [dword_D8C84]	; 192D5
+mov eax, dword [curperiod]	; 192D5
 call UpdateOtherScores	; 192DA
 call PlayRandomHighlight	; 192DF
 mov edx, 1E0h	; 192E4
@@ -440,7 +440,7 @@ test edx, edx	; 1930F
 jne short .2	; 19311
 call ShowLoadingScreen	; 19313
 call InputInstall	; 19318
-mov edx, dword [dword_D8C84]	; 1931D
+mov edx, dword [curperiod]	; 1931D
 xor ecx, ecx	; 19323
 xor ebx, ebx	; 19325
 mov eax, 20h	; 19327
@@ -737,7 +737,7 @@ mov esi, dword [HomeTeam]	; 19795
 .15:
 sar esi, 10h	; 1979B
 xor edi, edi	; 1979E
-cmp dword [dword_D8C84], byte 3	; 197A0
+cmp dword [curperiod], byte 3	; 197A0
 jle short .16	; 197A7
 mov edi, 0FFFFFFFFh	; 197A9
 .16:
@@ -1942,7 +1942,7 @@ xor esi, esi	; 1AA3F
 mov dword [songdata], esi	; 1AA41
 .3:
 call ShowLoadingScreen	; 1AA47
-mov ebx, dword [dword_D8C84]	; 1AA4C
+mov ebx, dword [curperiod]	; 1AA4C
 xor ecx, ecx	; 1AA52
 mov edx, 1	; 1AA54
 mov eax, 2	; 1AA59
@@ -1969,7 +1969,7 @@ mov edx, unk_DF014	; 1AA93
 mov eax, 1	; 1AA98
 call FadePalStep	; 1AA9D
 call ShowLoadingScreen	; 1AAA2
-mov ebx, dword [dword_D8C84]	; 1AAA7
+mov ebx, dword [curperiod]	; 1AAA7
 xor ecx, ecx	; 1AAAD
 mov edx, 1	; 1AAAF
 mov eax, edx	; 1AAB4

@@ -13,7 +13,7 @@ extern inputframes, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4
 extern HomeTeam, dword_CBECA, dword_CC0AC, photobankf, dword_CC0EC, dword_CC0F0, dword_CC0F8, penshotplayer
 extern penshotmode, penshotstart, dword_CC124, penshotlive, crowdsmooth, musichandle, dword_D2C6B, musicslot
 extern dword_D8B68, numshapes, dword_D8C4C, rinkendbank, frameaccum, rinkendart, dword_D8C78, numshpbank
-extern dword_D8C84, photobanks, photoptrs, dword_DF00C, dword_DF010, dword_E009C, photoptrsf
+extern curperiod, photobanks, photoptrs, dword_DF00C, dword_DF010, dword_E009C, photoptrsf
 extern dword_E9A9E, dword_E9AB6, hilightfont, jctime, PickAwardWinners_x, memcpy_, nullsub_2
 extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, PickAwardWinners, ShowAwardScreens
 extern DrawAwardsSummary, MakePath, FileOpenRead, FileClose, DrawHudPanel, SetTextColors, ClearPanelPenalties, WaitClickTimeout
@@ -1176,7 +1176,7 @@ xor ecx, ecx	; 14263
 mov dword [dword_E009C], ecx	; 14265
 mov word [word_E9A9C], 0FFFFh	; 1426B
 call StartGame	; 14274
-mov dword [dword_D8C84], 1	; 14279
+mov dword [curperiod], 1	; 14279
 cmp byte [pad1dev], 1	; 14283
 je short .2	; 1428A
 cmp byte [pad2dev], 1	; 1428C
