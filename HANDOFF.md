@@ -71,7 +71,7 @@ Use the "C matching prompt" in [PROMPT.md](PROMPT.md) for each session, with the
 
 **Picking the next function:**
 1. Throughput first: small-to-medium (<= 150 bytes) functions in any game segment (front-end segments have many
-   small menu / helper functions). List candidates by size with the snippet in C_MATCHING or by scanning
+   small menu / helper functions). List candidates by size by scanning
    `src/cseg01` for unmarked `push dword N / call __CHK` labels. Skip blocks that contain a second global label
    (another function jumps into them, e.g. ReadKeyRec_x, sndcb_addesp8_x) or data after the ret; skip
    `ret N` callbacks and printf-style stack calls for now.
