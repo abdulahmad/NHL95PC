@@ -682,5 +682,9 @@ void DrawFrameSprite(short n, short x, short y, short a, short b);  /* 110E0 */
 void deflect(Player *p);  /* 57A3E */
 void ResetSpeechQueue(void);  /* 833FA */
 void FreeClip(char *name);  /* 8475D */
+unsigned _dos_write(int fh, void __far *buf, unsigned n, unsigned *got);  /* Watcom CRT _dos_write_ */
+void ReadGSumHeader(void);  /* 61BBF */
+void ReadGSumTail(void);  /* 61C22 */
+void WriteGSumHeader(void);  /* 61C86 */
 
 #endif

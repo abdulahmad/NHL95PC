@@ -653,6 +653,10 @@ pop edx	; 61BBC
 pop ecx	; 61BBD
 ret	; 61BBE
 %endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/ReadGSumHeader.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/ReadGSumHeader.inc"
+%else
 ReadGSumHeader:
 push dword 18h	; 61BBF
 call __CHK	; 61BC4
@@ -689,6 +693,11 @@ pop edx	; 61C1E
 pop ecx	; 61C1F
 pop ebx	; 61C20
 ret	; 61C21
+%endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/ReadGSumHeader.c (ReadGSumTail)
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/ReadGSumHeader.ReadGSumTail.inc"
+%else
 ReadGSumTail:
 push dword 18h	; 61C22
 call __CHK	; 61C27
@@ -719,6 +728,11 @@ mov ecx, 0Bh	; 61C72
 mov ebx, 0FFFFFFFFh	; 61C77
 mov edx, unk_C542E	; 61C7C
 jmp near fileio_tail_a	; 61C81
+%endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/ReadGSumHeader.c (WriteGSumHeader)
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/ReadGSumHeader.WriteGSumHeader.inc"
+%else
 WriteGSumHeader:
 push dword 18h	; 61C86
 call __CHK	; 61C8B
@@ -776,6 +790,7 @@ test eax, eax	; 61D36
 je near fileio_tail_c	; 61D38
 push str_B8	; 61D3E
 jmp near fileio_tail_b	; 61D43
+%endif ; C
 FormatPlayerName:
 push dword 48h	; 61D48
 call __CHK	; 61D4D

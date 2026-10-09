@@ -262,6 +262,10 @@ pop edx	; 1459F
 pop ebx	; 145A0
 ret	; 145A1
 %endif ; C
+; C: src/c/005_1431E_file_utils/FileReadAt.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/FileReadAt.inc"
+%else
 FileReadAt:
 push dword 18h	; 145A2
 call __CHK	; 145A7
@@ -304,6 +308,11 @@ pop ebp	; 145F5
 pop edi	; 145F6
 pop esi	; 145F7
 ret	; 145F8
+%endif ; C
+; C: src/c/005_1431E_file_utils/FileReadAt.c (FileWriteAt)
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/FileReadAt.FileWriteAt.inc"
+%else
 FileWriteAt:
 push dword 18h	; 145F9
 call __CHK	; 145FE
@@ -334,6 +343,7 @@ mov ebx, ebp	; 14632
 mov eax, esi	; 14634
 call _dos_write_	; 14636
 jmp short FileReadAt_x	; 1463B
+%endif ; C
 ReadKeyRec:
 push dword 8	; 1463D
 call __CHK	; 14642

@@ -23,6 +23,8 @@ DeleteFiles,14368,218,005_1431E_file_utils,src/c/005_1431E_file_utils/DeleteFile
 DiskSpaceShort,14825,128,005_1431E_file_utils,src/c/005_1431E_file_utils/DiskSpaceShort.c,matched,
 FileClose,1457C,38,005_1431E_file_utils,src/c/005_1431E_file_utils/FileClose.c,matched,
 FileCreate,14566,22,005_1431E_file_utils,src/c/005_1431E_file_utils/FileCreate.c,matched,
+FileReadAt,145A2,87,005_1431E_file_utils,src/c/005_1431E_file_utils/FileReadAt.c,matched,
+FileWriteAt,145F9,68,005_1431E_file_utils,src/c/005_1431E_file_utils/FileReadAt.c,matched,
 GetLeagueDBSizes,149BF,97,005_1431E_file_utils,src/c/005_1431E_file_utils/GetLeagueDBSizes.c,matched,
 GetLineEnergies,14BEF,51,005_1431E_file_utils,src/c/005_1431E_file_utils/GetLineEnergies.c,matched,
 MakePath,1431E,74,005_1431E_file_utils,src/c/005_1431E_file_utils/MakePath.c,matched,
@@ -306,6 +308,9 @@ FlushGSumQueue,61B85,58,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_p
 GameTimeStamp,62CD7,34,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/GameTimeStamp.c,matched,
 QueueGoalieNote,62C37,160,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QueueGoalieNote.c,nonmatching,"draft: only the tail differs: ours keeps 1 in esi for deferpending and the result, asm stores immediates"
 QuickShotChk,6427F,185,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QuickShotChk.c,nonmatching,"asm keeps facedir in bx and si (2 saved regs, frame 10h); C saves only edx"
+ReadGSumHeader,61BBF,99,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/ReadGSumHeader.c,matched,
+ReadGSumTail,61C22,100,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/ReadGSumHeader.c,matched,
+WriteGSumHeader,61C86,194,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/ReadGSumHeader.c,matched,
 RunDeferredCalls,61A27,99,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/RunDeferredCalls.c,matched,
 SetBoxDoorObject,61576,44,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetBoxDoorObject.c,matched,
 SetPA,62EA2,71,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/SetPA.c,matched,
@@ -396,7 +401,7 @@ LockerHitTest,81520,79,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lo
 RedrawSoundCardOpts,82805,281,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/RedrawSoundCardOpts.c,matched,
 SoundCardHitTest,827B3,82,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/SoundCardHitTest.c,matched,
 ClearSpeechSlot,833C5,53,060_8291E_sound_config,src/c/060_8291E_sound_config/ClearSpeechSlot.c,matched,
-ResetSpeechQueue,833FA,95,060_8291E_sound_config,src/c/060_8291E_sound_config/ResetSpeechQueue.c,nonmatching,
+ResetSpeechQueue,833FA,95,060_8291E_sound_config,src/c/060_8291E_sound_config/ResetSpeechQueue.c,nonmatching,memset(-1) compiles to memset_ with ebx count; asm calls __STOSD (ecx 14h dwords) - need the C form that emits __STOSD
 FindFreeSpeechSlot,83E6D,63,061_83459_speech,src/c/061_83459_speech/FindFreeSpeechSlot.c,nonmatching,"registers only: speechbank in ebx in the original, ecx here. 10-min cap"
 FindLoadedSpeechSlot,83EAC,63,061_83459_speech,src/c/061_83459_speech/FindLoadedSpeechSlot.c,nonmatching,"registers only: speechbank in ebx in the original, ecx here. 10-min cap"
 FindSpeechSlot,83EEB,74,061_83459_speech,src/c/061_83459_speech/FindSpeechSlot.c,matched,
