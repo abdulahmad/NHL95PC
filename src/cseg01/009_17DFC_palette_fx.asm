@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_17DFC progbits alloc exec nowrite align=1
-extern __CHK, asc_C0944, asc_C094B, byte_DC836, dword_C65A8, dword_C65AC, dword_C65B0, dword_C65BC
+extern __CHK, asc_C0944, asc_C094B, byte_DC836, dword_C65A8, dword_C65AC, dword_C65B0, deskexit
 extern dword_C65C0, dword_C65C4, dword_C65C8, dword_DC6A8, dword_DC6AC, dword_DC6B0, dword_DC738, jctime
-extern loc_179FA, sub_179EB, sub_17BE1, sub_235BE, sub_25B24, sub_76429, sub_8CCA8, sub_8FFB0
+extern DeskSetExit_ret1, DeskSetExit3_body, StatsSel_x, sub_235BE, sub_25B24, sub_76429, sub_8CCA8, sub_8FFB0
 global loc_17ED2, loc_17FAF, loc_18092, loc_18175, loc_18258, loc_1833B, loc_18418, loc_184FB
 global loc_185DE, loc_186C1, loc_187A4, loc_18887, loc_1896A, loc_18A4D, loc_18B30, loc_18C13
 global loc_18CF6, loc_18D5D, loc_18D78, sub_17DFC, sub_17EDF, sub_17FBC, sub_1809F, sub_18182
@@ -1134,7 +1134,7 @@ pop ebx	; 18D01
 ret	; 18D02
 sub_18D03:
 push dword 4	; 18D03
-jmp near sub_179EB	; 18D08
+jmp near DeskSetExit3_body	; 18D08
 sub_18D0D:
 push dword 4	; 18D0D
 call __CHK	; 18D12
@@ -1142,8 +1142,8 @@ cmp byte [byte_DC836], 47h	; 18D17
 setne al	; 18D1E
 and eax, 0FFh	; 18D21
 add eax, byte 4	; 18D26
-mov dword [dword_C65BC], eax	; 18D29
-jmp near loc_179FA	; 18D2E
+mov dword [deskexit], eax	; 18D29
+jmp near DeskSetExit_ret1	; 18D2E
 sub_18D33:
 push dword 1Ch	; 18D33
 call __CHK	; 18D38
@@ -1171,4 +1171,4 @@ xor ebp, ebp	; 18D70
 mov dword [dword_C65A8], ebp	; 18D72
 loc_18D78:
 xor eax, eax	; 18D78
-jmp near sub_17BE1	; 18D7A
+jmp near StatsSel_x	; 18D7A

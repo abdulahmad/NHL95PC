@@ -96,12 +96,15 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00017756,sub_17756,TextGridFree,PC-new,,,,medium,frees textgrid,title_intro,manual-trace
 0001777E,sub_1777E,TextGridOff,PC-new,,,,medium,textgridon = 0,title_intro,manual-trace
 00017793,sub_17793,TextGridPut,PC-new,,,,medium,"(x, y, text): when textgridon, copies the text into textgrid at column x*100/640, row y*36/480",title_intro,manual-trace
-00017816,sub_17816,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),output_files,unmatched
-000179B6,sub_179B6,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),output_files,unmatched
-000179D0,sub_179D0,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),output_files,unmatched
-000179E6,sub_179E6,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),output_files,unmatched
-00017A00,sub_17A00,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),output_files,unmatched
-00017AF3,sub_17AF3,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),output_files,unmatched
+00017816,sub_17816,WriteScreenTextFile,PC-new,,,,high,"(name): ""Output Current Data"" on the sports desk: writes the 36 text rows of textgrid as 100-column lines to name.OUT (fopen ""wt""), checking free space first (FileExists / DiskSpaceShort, ""require %2d Kbytes of free disk space."" MessageBox) and asking before overwriting an existing file; reports the result with a MessageBox",output_files,manual-trace
+000179B6,sub_179B6,DeskSetExit1,PC-new,,,,low,"menu action: deskexit = 1, return 1 (the ""Sports Desk"" item of the sports desk menus)",output_files,manual-trace
+000179D0,sub_179D0,DeskSetExit2,PC-new,,,,low,"menu action: deskexit = 2, return 1",output_files,manual-trace
+000179E6,sub_179E6,DeskSetExit3,PC-new,,,,low,"menu action: deskexit = 3, return 1 (palette_fx also jumps into its body)",output_files,manual-trace
+00017A00,sub_17A00,StatsSel9394Season,PC-new,,,,high,"""Statistics Type"" menu item ""'93 - '94 Season"": marks it (byte 1, the others 2), statsfromleague = 0, statsplayoffs = 0, copies the league name (exhstate+4) to statsleague and redraws the stats screen through the dword_C65B8 callback with a fade",output_files,manual-trace
+00017AF3,sub_17AF3,StatsSel9394Playoffs,PC-new,,,,high,"""'93 - '94 Play-Offs"" item: statsfromleague = 0, statsplayoffs = 1, exhstate+4 name, redraw",output_files,manual-trace
+00017BE7,sub_17BE7,StatsSelLeague,PC-new,,,,high,"""<league> Season"" item: statsfromleague = 1, statsplayoffs = 0, league name from lgstate+4, redraw",output_files,manual-trace
+00017CE0,sub_17CE0,StatsSelLeaguePlayoffs,PC-new,,,,high,"""<league> Season Play-Offs"" item: statsfromleague = 1, statsplayoffs = 1, lgstate+4 name (skipped when already selected), redraw",output_files,manual-trace
+00017D6E,sub_17D6E,StatsSelPlayoffMode,PC-new,,,,high,"""<name> Play-Offs"" item (stand-alone Play-Off mode): statsfromleague = 1, statsplayoffs = 1, name from postate+4, redraw",output_files,manual-trace
 00017EDF,sub_17EDF,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),palette_fx,unmatched
 00017FBC,sub_17FBC,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),palette_fx,unmatched
 0001809F,sub_1809F,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),palette_fx,unmatched

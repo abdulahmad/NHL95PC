@@ -9,7 +9,7 @@ extern asc_C1356, asc_C135E, asc_C1363, asc_C1368, str_fmt2d, str_fmt3d, asc_C69
 extern str_Bkgd2, byte_C6D72, byte_C6D7A, byte_C6D7B, byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83
 extern byte_C6D8A, byte_C6D92, byte_C6D9A, byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC
 extern byte_C6DAD, byte_C6DB2, byte_ED858, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A, teamconf
-extern dword_C65AC, dword_C6956, dword_C695A, dword_C6A60, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32
+extern dword_C65AC, statsplayoffs, statsfromleague, dword_C6A60, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32
 extern dword_C6E3A, dword_C6E4A, dword_D2C6B, dword_D8B68, dword_D8B74, playofftree, dword_DD100, dword_DD104
 extern dword_DD120, fputchar, j___close_, jctime, lseek_, memcpy_, off_C68BC, off_C68E4
 extern off_C68F4, off_CF6A3, open_, qsort_, read_, sprintf_, strcat_, MakePath
@@ -17,7 +17,7 @@ extern SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, Pri
 extern sub_18D03, sub_1FF86, sub_269F4, sub_2970A, sub_29A97, sub_29B07, LoadScheduleDB, sub_8E83C
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_91044, sub_91370, sub_913B4, sub_B30B4, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, unk_269EA, unk_269FE, unk_C12BB, unk_C12BE, unk_C12C1, unk_C12C4
-extern unk_C1344, unk_C135B, unk_C65D4, unk_DDAC4, word_C6E22
+extern unk_C1344, unk_C135B, statsleague, unk_DDAC4, word_C6E22
 global loc_27115, loc_2711F, loc_27138, loc_27143, loc_27148, loc_271CE, loc_271D7, loc_27205
 global loc_2725D, loc_27267, loc_27320, loc_2732A, loc_274F6, loc_27501, loc_27506, loc_2766A
 global loc_2767C, loc_2767E, loc_27683, loc_277DE, loc_27830, loc_27839, loc_27881, loc_2788D
@@ -79,10 +79,10 @@ mov dword [byte ebp-08h], eax	; 270C4
 mov eax, dword [dword_D8B68]	; 270C7
 mov dword [byte ebp-0Ch], eax	; 270CC
 xor ecx, ecx	; 270CF
-mov eax, dword [dword_C695A]	; 270D1
+mov eax, dword [statsfromleague]	; 270D1
 shl eax, 2	; 270D6
 mov ebx, dword [dword eax+off_C68F4]	; 270D9
-mov edx, unk_C65D4	; 270DF
+mov edx, statsleague	; 270DF
 lea eax, [byte ebp-074h]	; 270E4
 call MakePath	; 270E7
 push dword 200h	; 270EC
@@ -91,7 +91,7 @@ push eax	; 270F4
 call open_	; 270F5
 add esp, byte 8	; 270FA
 mov dword [byte ebp-010h], eax	; 270FD
-cmp dword [dword_C695A], byte 0	; 27100
+cmp dword [statsfromleague], byte 0	; 27100
 jne short loc_27115	; 27107
 mov dword [dword ebp-0428h], 4Ch	; 27109
 jmp short loc_2711F	; 27113
@@ -182,7 +182,7 @@ mov eax, dword [byte ebp-03Ch]	; 2721C
 call qsort_	; 2721F
 call sub_B4BA8	; 27224
 mov dword [dword ebp-042Ch], 0	; 27229
-mov eax, dword [dword_C6956]	; 27233
+mov eax, dword [statsplayoffs]	; 27233
 shl eax, 2	; 27238
 mov eax, dword [dword eax+off_C68E4]	; 2723B
 mov dword [dword ebp-0430h], eax	; 27241
@@ -474,7 +474,7 @@ cwde	; 27660
 call PrintShadowText	; 27661
 add dword [byte ebp-024h], byte 13h	; 27666
 loc_2766A:
-cmp dword [dword_C695A], byte 0	; 2766A
+cmp dword [statsfromleague], byte 0	; 2766A
 jne short loc_2767C	; 27671
 mov eax, dword [byte ebp-01Ch]	; 27673
 cmp byte [byte eax+0Eh], 0	; 27676
@@ -1357,7 +1357,7 @@ call sub_B4BA8	; 27FEA
 cmp dword [dword_C65AC], byte 0	; 27FEF
 jne near loc_280CA	; 27FF6
 mov dword [dword ebp-01CCh], 0	; 27FFC
-mov eax, dword [dword_C6956]	; 28006
+mov eax, dword [statsplayoffs]	; 28006
 shl eax, 2	; 2800B
 mov eax, dword [dword eax+off_C68E4]	; 2800E
 mov dword [dword ebp-01D0h], eax	; 28014
@@ -2986,7 +2986,7 @@ mov ebp, esp	; 296C9
 sub esp, 0Ch	; 296CB
 mov dword [byte ebp-0Ch], eax	; 296D1
 mov dword [byte ebp-08h], edx	; 296D4
-cmp dword [dword_C695A], byte 0	; 296D7
+cmp dword [statsfromleague], byte 0	; 296D7
 jne short loc_296ED	; 296DE
 mov edx, dword [byte ebp-08h]	; 296E0
 mov eax, dword [byte ebp-0Ch]	; 296E3

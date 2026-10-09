@@ -11,7 +11,7 @@ extern asc_C31D5, str_fmt2d, str_fmt3d, asc_C690B, asc_C6913, asc_C692B, asc_C69
 extern rosterteam, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238, byte_D12DE, gameopts
 extern musicon, hmroster, byte_DB3AD, leaguedbfmt, rosterlist, byte_EA991, byte_EA992, byte_EA993
 extern byte_EC7E0, byte_EC7E4, byte_ECAE4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED0F7, byte_ED0F8
-extern byte_ED0F9, byte_ED0FA, byte_ED83C, byte_ED85A, byte_ED8B4, byte_ED9E7, palfadedin, dword_C6956
+extern byte_ED0F9, byte_ED0FA, byte_ED83C, byte_ED85A, byte_ED8B4, byte_ED9E7, palfadedin, statsplayoffs
 extern dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, songdata, HomeTeam, dword_D0B16
 extern dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A, dword_D1229, dword_D122B, dword_D122F
 extern dword_D1231, dword_D1233, dword_D1338, dword_D133C, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC
@@ -3032,7 +3032,7 @@ push ebx	; 7593B
 push ecx	; 7593C
 push esi	; 7593D
 push edi	; 7593E
-cmp dword [dword_C6956], byte 0	; 7593F
+cmp dword [statsplayoffs], byte 0	; 7593F
 jne short loc_7595D	; 75946
 mov ebx, dword [eax]	; 75948
 mov eax, ebx	; 7594A
@@ -3052,7 +3052,7 @@ mov ebx, dword [dword_EBC70]	; 75969
 add eax, ebx	; 7596F
 add eax, byte 12h	; 75971
 loc_75974:
-cmp dword [dword_C6956], byte 0	; 75974
+cmp dword [statsplayoffs], byte 0	; 75974
 jne short loc_75993	; 7597B
 mov ebx, dword [edx]	; 7597D
 mov edx, ebx	; 7597F
@@ -3140,7 +3140,7 @@ push ebx	; 75A41
 push ecx	; 75A42
 push esi	; 75A43
 push edi	; 75A44
-cmp dword [dword_C6956], byte 0	; 75A45
+cmp dword [statsplayoffs], byte 0	; 75A45
 jne short loc_75A69	; 75A4C
 mov ebx, dword [eax]	; 75A4E
 mov eax, ebx	; 75A50
@@ -3164,7 +3164,7 @@ mov ebx, dword [dword_EBC6C]	; 75A7A
 add eax, ebx	; 75A80
 add eax, byte 16h	; 75A82
 loc_75A85:
-cmp dword [dword_C6956], byte 0	; 75A85
+cmp dword [statsplayoffs], byte 0	; 75A85
 jne short loc_75AA9	; 75A8C
 mov ebx, dword [edx]	; 75A8E
 mov edx, ebx	; 75A90
@@ -3286,7 +3286,7 @@ push ebx	; 75BB4
 push ecx	; 75BB5
 push edx	; 75BB6
 xor edx, edx	; 75BB7
-mov dword [dword_C6956], edx	; 75BB9
+mov dword [statsplayoffs], edx	; 75BB9
 loc_75BBF:
 mov ecx, 0C3h	; 75BBF
 mov ebx, 0C2h	; 75BC4
@@ -3304,7 +3304,7 @@ call __CHK	; 75BE3
 push ebx	; 75BE8
 push ecx	; 75BE9
 push edx	; 75BEA
-mov dword [dword_C6956], 1	; 75BEB
+mov dword [statsplayoffs], 1	; 75BEB
 jmp short loc_75BBF	; 75BF5
 sub_75BF7:
 push dword 0C8h	; 75BF7
@@ -3608,7 +3608,7 @@ mov ebx, eax	; 76041
 shl ebx, 2	; 76043
 add ebx, eax	; 76046
 shl ebx, 3	; 76048
-cmp dword [dword_C6956], byte 0	; 7604B
+cmp dword [statsplayoffs], byte 0	; 7604B
 jne short loc_7605E	; 76052
 mov edi, dword [dword_EBC70]	; 76054
 add edi, ebx	; 7605A
@@ -3698,7 +3698,7 @@ mov ebx, unk_C317A	; 76195
 mov edx, esi	; 7619A
 mov eax, 1AEh	; 7619C
 call PrintShadowText	; 761A1
-cmp dword [dword_C6956], byte 0	; 761A6
+cmp dword [statsplayoffs], byte 0	; 761A6
 jne short loc_761C0	; 761AD
 mov ebx, unk_C317D	; 761AF
 mov edx, esi	; 761B4
@@ -3769,7 +3769,7 @@ sub edi, eax	; 7629D
 shl edi, 2	; 7629F
 sub edi, eax	; 762A2
 shl edi, 2	; 762A4
-cmp dword [dword_C6956], byte 0	; 762A7
+cmp dword [statsplayoffs], byte 0	; 762A7
 jne short loc_762B9	; 762AE
 mov eax, dword [dword_EBC6C]	; 762B0
 add edi, eax	; 762B5
@@ -3821,7 +3821,7 @@ mov ebx, str_fmt2d	; 76345
 mov edx, esi	; 7634A
 mov eax, 1AEh	; 7634C
 call PrintFmt1	; 76351
-mov ecx, dword [dword_C6956]	; 76356
+mov ecx, dword [statsplayoffs]	; 76356
 test ecx, ecx	; 7635C
 jne short loc_76375	; 7635E
 mov cx, word [byte edi+06h]	; 76360

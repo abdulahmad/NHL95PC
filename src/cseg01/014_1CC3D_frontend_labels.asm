@@ -5,17 +5,17 @@ section s_1CC3D progbits alloc exec nowrite align=1
 extern __CHK, asc_C0A80, asc_C0A88, asc_C0AB5, asc_C0AE2, asc_C0B0F, asc_C0B1C, asc_C0B29
 extern asc_C0B2E, asc_C0B33, asc_C6748, asc_C675C, asc_C677A, asc_C6891, asc_C689A, asc_C68AD
 extern str_PPV, asc_CE20B, asc_CE21A, asc_CE22A, asc_CE237, asc_CE247, asc_CE259, postate
-extern byte_C671C, byte_C672F, byte_C6745, byte_C6759, byte_C6777, byte_C67A9, byte_DC8D8, lgstate
+extern mi_9394Season, mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, byte_DC8D8, lgstate
 extern byte_DC9D8, byte_ED938, dword_C65B4, dword_C66C8, dword_C6718, dword_C679D, dword_C67B9, dword_C67BD
-extern dword_C6956, dword_C695A, dword_C891E, dword_CE8EB, dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB
+extern statsplayoffs, statsfromleague, dword_C891E, dword_CE8EB, dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB
 extern dword_CF5D7, dword_CF5F7, dword_CF617, dword_CF637, dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB
 extern dword_CF84B, dword_CF8CB, dword_CFA4B, dword_D2C6B, dword_D30AC, dword_D30B0, dword_D30B4, dword_D30B8
 extern dword_D8C40, linesprites, dword_DC290, dword_DC2BC, dword_DC2C0, scoredigits, dword_DC2F0, clockdigits
 extern dword_DC8D0, vgapage, off_C6821, off_C6825, off_C6841, off_C6845, off_C6881, off_C6885
-extern off_CF51F, off_CF5DF, off_CF61F, off_CF67F, strcpy_, strncpy_, MakePath, sub_17BE7
-extern sub_17CE0, sub_17D6E, sub_6AB7C, sub_8E8A0, sub_90B80, sub_B30B4, sub_B4CD8, sub_B4DD4
+extern off_CF51F, off_CF5DF, off_CF61F, off_CF67F, strcpy_, strncpy_, MakePath, StatsSelLeague
+extern StatsSelLeaguePlayoffs, StatsSelPlayoffMode, sub_6AB7C, sub_8E8A0, sub_90B80, sub_B30B4, sub_B4CD8, sub_B4DD4
 extern sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8, sub_B5974, sub_B5AC8, exhstate
-extern unk_C65D4, unk_DC2F4, unk_DC300, unk_DC998, unk_DCA98
+extern statsleague, unk_DC2F4, unk_DC300, unk_DC998, unk_DCA98
 global code_1D02F, jpt_1CD53, jpt_1D0F0, jpt_1D5F8, loc_1CC6B, loc_1CC6D, loc_1CDAC, loc_1CDB7
 global loc_1CE33, loc_1CE3B, loc_1CE48, loc_1CE87, loc_1CE8C, loc_1CE8E, loc_1CED4, loc_1CEE3
 global loc_1CEE8, loc_1CF08, loc_1CF0D, loc_1CF0F, loc_1CF53, loc_1CF59, loc_1CF5E, loc_1CF6F
@@ -449,170 +449,170 @@ cmp eax, byte 3	; 1D14B
 ja near loc_1D478	; 1D14E
 jmp dword [nosplit cs:eax*4+jpt_1D0F0]	; 1D154
 loc_1D15C:
-mov dword [off_C6825], sub_17BE7	; 1D15C
-mov dword [off_C6845], sub_17CE0	; 1D166
-mov dword [off_C6821], byte_C6745	; 1D170
-mov dword [off_C6841], byte_C6759	; 1D17A
-cmp byte [byte_C6777], 1	; 1D184
+mov dword [off_C6825], StatsSelLeague	; 1D15C
+mov dword [off_C6845], StatsSelLeaguePlayoffs	; 1D166
+mov dword [off_C6821], mi_LeagueSeason	; 1D170
+mov dword [off_C6841], mi_LeaguePlayoffs	; 1D17A
+cmp byte [mi_PlayoffMode], 1	; 1D184
 je short loc_1D196	; 1D18B
-cmp byte [byte_C6745], 1	; 1D18D
+cmp byte [mi_LeagueSeason], 1	; 1D18D
 jne short loc_1D1DC	; 1D194
 loc_1D196:
-mov byte [byte_C6745], 1	; 1D196
+mov byte [mi_LeagueSeason], 1	; 1D196
 mov ch, 2	; 1D19D
-mov byte [byte_C6777], ch	; 1D19F
-mov byte [byte_C6759], ch	; 1D1A5
-mov byte [byte_C672F], ch	; 1D1AB
-mov byte [byte_C671C], ch	; 1D1B1
-mov dword [dword_C695A], 1	; 1D1B7
-cmp dword [dword_C6956], byte 0	; 1D1C1
+mov byte [mi_PlayoffMode], ch	; 1D19F
+mov byte [mi_LeaguePlayoffs], ch	; 1D1A5
+mov byte [mi_9394Playoffs], ch	; 1D1AB
+mov byte [mi_9394Season], ch	; 1D1B1
+mov dword [statsfromleague], 1	; 1D1B7
+cmp dword [statsplayoffs], byte 0	; 1D1C1
 je short loc_1D1D2	; 1D1C8
 xor esi, esi	; 1D1CA
 mov dword [dword_C65B4], esi	; 1D1CC
 loc_1D1D2:
 xor edi, edi	; 1D1D2
-mov dword [dword_C6956], edi	; 1D1D4
+mov dword [statsplayoffs], edi	; 1D1D4
 jmp short loc_1D223	; 1D1DA
 loc_1D1DC:
-cmp byte [byte_C6759], 1	; 1D1DC
+cmp byte [mi_LeaguePlayoffs], 1	; 1D1DC
 jne short loc_1D237	; 1D1E3
 mov dl, 2	; 1D1E5
-mov byte [byte_C6777], dl	; 1D1E7
-mov byte [byte_C6745], dl	; 1D1ED
-mov byte [byte_C672F], dl	; 1D1F3
-mov byte [byte_C671C], dl	; 1D1F9
-mov dword [dword_C695A], 1	; 1D1FF
-mov ebp, dword [dword_C6956]	; 1D209
+mov byte [mi_PlayoffMode], dl	; 1D1E7
+mov byte [mi_LeagueSeason], dl	; 1D1ED
+mov byte [mi_9394Playoffs], dl	; 1D1F3
+mov byte [mi_9394Season], dl	; 1D1F9
+mov dword [statsfromleague], 1	; 1D1FF
+mov ebp, dword [statsplayoffs]	; 1D209
 test ebp, ebp	; 1D20F
 jne short loc_1D219	; 1D211
 mov dword [dword_C65B4], ebp	; 1D213
 loc_1D219:
-mov dword [dword_C6956], 1	; 1D219
+mov dword [statsplayoffs], 1	; 1D219
 loc_1D223:
 mov ebx, 1Fh	; 1D223
 mov edx, lgstate+4	; 1D228
-mov eax, unk_C65D4	; 1D22D
+mov eax, statsleague	; 1D22D
 call strncpy_	; 1D232
 loc_1D237:
 mov ecx, 5	; 1D237
 jmp near loc_1D478	; 1D23C
 loc_1D241:
-mov dword [off_C6825], sub_17D6E	; 1D241
-mov dword [off_C6821], byte_C6777	; 1D24B
-cmp byte [byte_C6745], 1	; 1D255
+mov dword [off_C6825], StatsSelPlayoffMode	; 1D241
+mov dword [off_C6821], mi_PlayoffMode	; 1D24B
+cmp byte [mi_LeagueSeason], 1	; 1D255
 je short loc_1D270	; 1D25C
-cmp byte [byte_C6759], 1	; 1D25E
+cmp byte [mi_LeaguePlayoffs], 1	; 1D25E
 je short loc_1D270	; 1D265
-cmp byte [byte_C6777], 1	; 1D267
+cmp byte [mi_PlayoffMode], 1	; 1D267
 jne short loc_1D2C9	; 1D26E
 loc_1D270:
-mov byte [byte_C6777], 1	; 1D270
+mov byte [mi_PlayoffMode], 1	; 1D270
 mov ch, 2	; 1D277
-mov byte [byte_C6759], ch	; 1D279
-mov byte [byte_C6745], ch	; 1D27F
-mov byte [byte_C672F], ch	; 1D285
-mov byte [byte_C671C], ch	; 1D28B
-mov dword [dword_C695A], 1	; 1D291
-mov ebx, dword [dword_C6956]	; 1D29B
+mov byte [mi_LeaguePlayoffs], ch	; 1D279
+mov byte [mi_LeagueSeason], ch	; 1D27F
+mov byte [mi_9394Playoffs], ch	; 1D285
+mov byte [mi_9394Season], ch	; 1D28B
+mov dword [statsfromleague], 1	; 1D291
+mov ebx, dword [statsplayoffs]	; 1D29B
 test ebx, ebx	; 1D2A1
 jne short loc_1D2AB	; 1D2A3
 mov dword [dword_C65B4], ebx	; 1D2A5
 loc_1D2AB:
-mov dword [dword_C6956], 1	; 1D2AB
+mov dword [statsplayoffs], 1	; 1D2AB
 mov ebx, 1Fh	; 1D2B5
 mov edx, postate+4	; 1D2BA
-mov eax, unk_C65D4	; 1D2BF
+mov eax, statsleague	; 1D2BF
 call strncpy_	; 1D2C4
 loc_1D2C9:
 mov ecx, 4	; 1D2C9
 jmp near loc_1D478	; 1D2CE
 loc_1D2D3:
-mov dh, byte [byte_C671C]	; 1D2D3
+mov dh, byte [mi_9394Season]	; 1D2D3
 cmp dh, 2	; 1D2D9
 jne short loc_1D338	; 1D2DC
-cmp dh, byte [byte_C672F]	; 1D2DE
+cmp dh, byte [mi_9394Playoffs]	; 1D2DE
 jne short loc_1D338	; 1D2E4
-mov byte [byte_C671C], 1	; 1D2E6
-mov byte [byte_C6777], dh	; 1D2ED
-mov byte [byte_C6759], dh	; 1D2F3
-mov byte [byte_C6745], dh	; 1D2F9
-mov byte [byte_C672F], dh	; 1D2FF
+mov byte [mi_9394Season], 1	; 1D2E6
+mov byte [mi_PlayoffMode], dh	; 1D2ED
+mov byte [mi_LeaguePlayoffs], dh	; 1D2F3
+mov byte [mi_LeagueSeason], dh	; 1D2F9
+mov byte [mi_9394Playoffs], dh	; 1D2FF
 xor edi, edi	; 1D305
-mov dword [dword_C695A], edi	; 1D307
-cmp dword [dword_C6956], byte 0	; 1D30D
+mov dword [statsfromleague], edi	; 1D307
+cmp dword [statsplayoffs], byte 0	; 1D30D
 je short loc_1D31C	; 1D314
 mov dword [dword_C65B4], edi	; 1D316
 loc_1D31C:
 xor edx, edx	; 1D31C
-mov dword [dword_C6956], edx	; 1D31E
+mov dword [statsplayoffs], edx	; 1D31E
 mov ebx, 1Fh	; 1D324
 mov edx, exhstate+4	; 1D329
-mov eax, unk_C65D4	; 1D32E
+mov eax, statsleague	; 1D32E
 call strncpy_	; 1D333
 loc_1D338:
 mov ecx, 2	; 1D338
 jmp near loc_1D478	; 1D33D
 loc_1D342:
-mov dword [off_C6825], sub_17BE7	; 1D342
-mov dword [off_C6845], sub_17CE0	; 1D34C
-mov dword [off_C6885], sub_17D6E	; 1D356
-mov dword [off_C6821], byte_C6745	; 1D360
-mov dword [off_C6841], byte_C6759	; 1D36A
-mov dword [off_C6881], byte_C6777	; 1D374
-cmp byte [byte_C6745], 1	; 1D37E
+mov dword [off_C6825], StatsSelLeague	; 1D342
+mov dword [off_C6845], StatsSelLeaguePlayoffs	; 1D34C
+mov dword [off_C6885], StatsSelPlayoffMode	; 1D356
+mov dword [off_C6821], mi_LeagueSeason	; 1D360
+mov dword [off_C6841], mi_LeaguePlayoffs	; 1D36A
+mov dword [off_C6881], mi_PlayoffMode	; 1D374
+cmp byte [mi_LeagueSeason], 1	; 1D37E
 jne short loc_1D3CF	; 1D385
 mov al, 2	; 1D387
-mov byte [byte_C6777], al	; 1D389
-mov byte [byte_C6759], al	; 1D38E
-mov byte [byte_C672F], al	; 1D393
-mov byte [byte_C671C], al	; 1D398
-mov dword [dword_C695A], 1	; 1D39D
-cmp dword [dword_C6956], byte 0	; 1D3A7
+mov byte [mi_PlayoffMode], al	; 1D389
+mov byte [mi_LeaguePlayoffs], al	; 1D38E
+mov byte [mi_9394Playoffs], al	; 1D393
+mov byte [mi_9394Season], al	; 1D398
+mov dword [statsfromleague], 1	; 1D39D
+cmp dword [statsplayoffs], byte 0	; 1D3A7
 je short loc_1D3B8	; 1D3AE
 xor esi, esi	; 1D3B0
 mov dword [dword_C65B4], esi	; 1D3B2
 loc_1D3B8:
 xor edi, edi	; 1D3B8
-mov dword [dword_C6956], edi	; 1D3BA
+mov dword [statsplayoffs], edi	; 1D3BA
 loc_1D3C0:
 mov ebx, 1Fh	; 1D3C0
 mov edx, lgstate+4	; 1D3C5
 jmp near loc_1D469	; 1D3CA
 loc_1D3CF:
-cmp byte [byte_C6759], 1	; 1D3CF
+cmp byte [mi_LeaguePlayoffs], 1	; 1D3CF
 jne short loc_1D418	; 1D3D6
 mov dh, 2	; 1D3D8
-mov byte [byte_C6777], dh	; 1D3DA
-mov byte [byte_C6745], dh	; 1D3E0
-mov byte [byte_C672F], dh	; 1D3E6
-mov byte [byte_C671C], dh	; 1D3EC
-mov dword [dword_C695A], 1	; 1D3F2
-mov ebp, dword [dword_C6956]	; 1D3FC
+mov byte [mi_PlayoffMode], dh	; 1D3DA
+mov byte [mi_LeagueSeason], dh	; 1D3E0
+mov byte [mi_9394Playoffs], dh	; 1D3E6
+mov byte [mi_9394Season], dh	; 1D3EC
+mov dword [statsfromleague], 1	; 1D3F2
+mov ebp, dword [statsplayoffs]	; 1D3FC
 test ebp, ebp	; 1D402
 jne short loc_1D40C	; 1D404
 mov dword [dword_C65B4], ebp	; 1D406
 loc_1D40C:
-mov dword [dword_C6956], 1	; 1D40C
+mov dword [statsplayoffs], 1	; 1D40C
 jmp short loc_1D3C0	; 1D416
 loc_1D418:
-cmp byte [byte_C6777], 1	; 1D418
+cmp byte [mi_PlayoffMode], 1	; 1D418
 jne short loc_1D473	; 1D41F
 mov cl, 2	; 1D421
-mov byte [byte_C6759], cl	; 1D423
-mov byte [byte_C6745], cl	; 1D429
-mov byte [byte_C672F], cl	; 1D42F
-mov byte [byte_C671C], cl	; 1D435
-mov dword [dword_C695A], 1	; 1D43B
-mov ebx, dword [dword_C6956]	; 1D445
+mov byte [mi_LeaguePlayoffs], cl	; 1D423
+mov byte [mi_LeagueSeason], cl	; 1D429
+mov byte [mi_9394Playoffs], cl	; 1D42F
+mov byte [mi_9394Season], cl	; 1D435
+mov dword [statsfromleague], 1	; 1D43B
+mov ebx, dword [statsplayoffs]	; 1D445
 test ebx, ebx	; 1D44B
 jne short loc_1D455	; 1D44D
 mov dword [dword_C65B4], ebx	; 1D44F
 loc_1D455:
-mov dword [dword_C6956], 1	; 1D455
+mov dword [statsplayoffs], 1	; 1D455
 mov ebx, 1Fh	; 1D45F
 mov edx, postate+4	; 1D464
 loc_1D469:
-mov eax, unk_C65D4	; 1D469
+mov eax, statsleague	; 1D469
 call strncpy_	; 1D46E
 loc_1D473:
 mov ecx, 7	; 1D473
@@ -678,7 +678,7 @@ mov edx, postate+4	; 1D542
 mov eax, asc_C677A	; 1D547
 call strcpy_	; 1D54C
 lea eax, [byte ebx+03h]	; 1D551
-add eax, byte_C6777	; 1D554
+add eax, mi_PlayoffMode	; 1D554
 mov edx, asc_C68AD	; 1D559
 call strcpy_	; 1D55E
 mov byte [dword ebx+postate+4], 2Eh	; 1D563
@@ -697,11 +697,11 @@ mov edx, lgstate+4	; 1D596
 mov eax, asc_C675C	; 1D59B
 call strcpy_	; 1D5A0
 lea ecx, [byte ebx+03h]	; 1D5A5
-mov eax, byte_C6745	; 1D5A8
+mov eax, mi_LeagueSeason	; 1D5A8
 add eax, ecx	; 1D5AD
 mov edx, asc_C6891	; 1D5AF
 call strcpy_	; 1D5B4
-mov eax, byte_C6759	; 1D5B9
+mov eax, mi_LeaguePlayoffs	; 1D5B9
 add eax, ecx	; 1D5BE
 mov edx, asc_C689A	; 1D5C0
 call strcpy_	; 1D5C5

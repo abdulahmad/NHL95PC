@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_C5679 progbits alloc noexec write align=1
-extern dword_DD124, dword_DD1B4, dword_DD244, sub_17A00, sub_17AF3, sub_17BE7, sub_17CE0, sub_17D6E
+extern dword_DD124, dword_DD1B4, dword_DD244, StatsSel9394Season, StatsSel9394Playoffs, StatsSelLeague, StatsSelLeaguePlayoffs, StatsSelPlayoffMode
 extern sub_1D019, sub_1FB7F, sub_1FC8F, sub_22DDE, sub_22F2E, sub_23051, sub_2312D, sub_232B7
 extern sub_23437, sub_25144, sub_25237, sub_25325, sub_25438, sub_2554B, sub_25642, sub_25755
 extern sub_2586A, sub_259C0, sub_B4CD8, sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8
@@ -26,21 +26,21 @@ extern unk_C10E9, unk_C10F9, unk_C1112, unk_C112C, unk_C1140, unk_C1158, unk_C11
 extern unk_C11AC, unk_C11C5, unk_C11C9, unk_C11CD, unk_C11D1, unk_C11D2, unk_C11D5, unk_C11D9
 extern unk_C11DE, unk_C11E2, unk_C11E8, unk_C11EE, unk_C11F3, unk_C11F7, unk_C11FD, unk_C1200
 extern unk_C1203, unk_C1206, unk_C120B, unk_C126C, unk_C1276, unk_C5654
-global CreditsList, msg_NeedKbytes, asc_C6570, asc_C65F8, asc_C6614, asc_C662E, asc_C664C, asc_C6678
+global CreditsList, msg_NeedKbytes, msg_NeedKbytes2, asc_C65F8, asc_C6614, asc_C662E, asc_C664C, asc_C6678
 global asc_C668F, asc_C671E, asc_C6731, asc_C6747, asc_C6748, asc_C675B, asc_C675C, asc_C6779
 global asc_C677A, asc_C6891, asc_C689A, asc_C68AD, asc_C68FC, str_fmt2d, str_fmt3d, asc_C690B
 global asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B, asc_C6935, str_Bkgd2, asc_C6940
-global asc_C70A0, asc_C70B8, asc_C70C7, asc_C70EC, asc_C70F8, asc_C7298, byte_C66B4, byte_C671C
-global byte_C672F, byte_C6745, byte_C6759, byte_C6777, byte_C67A9, byte_C6D72, byte_C6D73, byte_C6D7A
+global asc_C70A0, asc_C70B8, asc_C70C7, asc_C70EC, asc_C70F8, asc_C7298, byte_C66B4, mi_9394Season
+global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, byte_C6D72, byte_C6D73, byte_C6D7A
 global byte_C6D7B, byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, byte_C6D9A
 global byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, byte_C6DB2, byte_C6DB3
 global byte_C6F6C, byte_C7218, dword_C56C4, dword_C56E4, hudclockmin, hudclocksec, hudclockhund, dword_C5710
 global dword_C5714, dword_C5718, dword_C583C, dword_C5840, dword_C5844, dword_C5848, hudhomeline, hudawayline
 global dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862, dword_C5886, dword_C588A
 global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, dword_C65A8, dword_C65AC
-global dword_C65B0, dword_C65B4, dword_C65B8, dword_C65BC, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC
+global dword_C65B0, dword_C65B4, dword_C65B8, deskexit, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC
 global dword_C65D0, dword_C65F4, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dword_C66C8, dword_C66D0
-global dword_C66D4, dword_C6718, dword_C679D, dword_C67B9, dword_C67BD, dword_C6956, dword_C695A, dword_C6A60
+global dword_C66D4, dword_C6718, dword_C679D, dword_C67B9, dword_C67BD, statsplayoffs, statsfromleague, dword_C6A60
 global dword_C6AF8, dword_C6B30, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32, dword_C6E3A, dword_C6E4A
 global dword_C6F78, dword_C6F88, dword_C6F8C, dword_C6F90, dword_C6F94, dword_C7008, dword_C700C, dword_C7010
 global dword_C7014, dword_C7018, dword_C701C, dword_C7020, dword_C7024, dword_C7028, dword_C702C, dword_C7030
@@ -71,7 +71,7 @@ global unk_C6189, unk_C619A, unk_C61CB, unk_C61DD, unk_C61E9, unk_C61FC, unk_C62
 global unk_C6232, unk_C6263, unk_C6279, unk_C6289, unk_C6299, unk_C62A8, unk_C62C4, unk_C62D3
 global unk_C62FC, unk_C630F, unk_C631F, unk_C632F, unk_C633D, unk_C634F, unk_C6359, unk_C6363
 global unk_C638C, unk_C6440, unk_C6467, unk_C6496, unk_C6499, unk_C64D1, unk_C64F5, unk_C64F9
-global unk_C652A, unk_C652E, unk_C654F, unk_C65D4, unk_C665D, unk_C678E, unk_C67B1, unk_C6960
+global unk_C652A, unk_C652E, unk_C654F, statsleague, unk_C665D, unk_C678E, unk_C67B1, unk_C6960
 global unk_C6E5C, unk_C6E67, unk_C6E6C, unk_C6E73, unk_C6E7E, unk_C6E9A, unk_C6EEE, unk_C6EFE
 global unk_C6F09, unk_C6F12, unk_C6F1A, unk_C6F22, unk_C6F2A, unk_C6F33, unk_C6F3F, unk_C7088
 global unk_C70DF, unk_C7108, unk_C710E, unk_C7114, unk_C711F, unk_C7129, unk_C7136, unk_C7142
@@ -790,14 +790,14 @@ unk_C654F:
 db 074h,068h,065h,020h,064h,069h,073h,070h,06Ch,061h,079h,065h,064h,020h,073h,074h
 db 061h,074h,069h,073h,074h,069h,063h,073h,020h,074h,06Fh,02Ch,020h,079h,06Fh,075h
 db 00h
-asc_C6570:
+msg_NeedKbytes2:
 db 072h,065h,071h,075h,069h,072h,065h,020h,058h,058h,020h,04Bh,062h,079h,074h,065h
 db 073h,020h,06Fh,066h,020h,066h,072h,065h,065h,020h,064h,069h,073h,06Bh,020h,073h
 db 070h,061h,063h,065h,02Eh,020h,020h,020h,020h,00h
 off_C659A:
 dd unk_C652E
 dd unk_C654F
-dd asc_C6570
+dd msg_NeedKbytes2
 db 00h,00h
 dword_C65A8:
 db 00h,00h,00h,00h
@@ -809,7 +809,7 @@ dword_C65B4:
 db 00h,00h,00h,00h
 dword_C65B8:
 db 00h,00h,00h,00h
-dword_C65BC:
+deskexit:
 db 00h,00h,00h,00h
 dword_C65C0:
 db 00h,00h,00h,00h
@@ -821,7 +821,7 @@ dword_C65CC:
 db 00h,00h,00h,00h
 dword_C65D0:
 db 00h,00h,00h,00h
-unk_C65D4:
+statsleague:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 dword_C65F4:
@@ -882,31 +882,31 @@ dd sub_B5974
 dd sub_B5AC8
 dword_C6718:
 db 0FFh,0FFh,0FFh,0FFh
-byte_C671C:
+mi_9394Season:
 db 01h,020h
 asc_C671E:
 db 027h,039h,033h,020h,02Dh,020h,027h,039h,034h,020h,053h,065h,061h,073h,06Fh,06Eh
 db 00h
-byte_C672F:
+mi_9394Playoffs:
 db 02h,020h
 asc_C6731:
 db 027h,039h,033h,020h,02Dh,020h,027h,039h,034h,020h,050h,06Ch,061h,079h,02Dh,04Fh
 db 066h,066h,073h,00h
-byte_C6745:
+mi_LeagueSeason:
 db 02h,020h
 asc_C6747:
 db 022h
 asc_C6748:
 db 057h,057h,057h,057h,057h,057h,057h,057h,022h,020h,053h,065h,061h,073h,06Fh,06Eh
 db 00h
-byte_C6759:
+mi_LeaguePlayoffs:
 db 02h,020h
 asc_C675B:
 db 022h
 asc_C675C:
 db 057h,057h,057h,057h,057h,057h,057h,057h,022h,020h,053h,065h,061h,073h,06Fh,06Eh
 db 020h,050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,073h,00h
-byte_C6777:
+mi_PlayoffMode:
 db 02h,020h
 asc_C6779:
 db 022h
@@ -925,36 +925,36 @@ dword_C67B9:
 db 0F7h,00h,00h,00h
 dword_C67BD:
 db 011h,00h,00h,00h
-dd byte_C671C
-dd sub_17A00
+dd mi_9394Season
+dd StatsSel9394Season
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 0F7h,00h,00h,00h,023h,00h,00h,00h
-dd byte_C672F
-dd sub_17AF3
+dd mi_9394Playoffs
+dd StatsSel9394Playoffs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 0F7h,00h,00h,00h,035h,00h,00h,00h
 dd unk_C678E
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 036h,00h,00h,00h,0F7h,00h,00h,00h,047h,00h,00h,00h
 off_C6821:
-dd byte_C6745
+dd mi_LeagueSeason
 off_C6825:
-dd sub_17BE7
+dd StatsSelLeague
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
 db 0F7h,00h,00h,00h,059h,00h,00h,00h
 off_C6841:
-dd byte_C6759
+dd mi_LeaguePlayoffs
 off_C6845:
-dd sub_17CE0
+dd StatsSelLeaguePlayoffs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 0F7h,00h,00h,00h,06Bh,00h,00h,00h
 dd unk_C678E
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 06Ch,00h,00h,00h,0F7h,00h,00h,00h,07Eh,00h,00h,00h
 off_C6881:
-dd byte_C6777
+dd mi_PlayoffMode
 off_C6885:
-dd sub_17D6E
+dd StatsSelPlayoffMode
 db 00h,00h,00h,00h,00h,00h,00h,00h
 asc_C6891:
 db 022h,020h,053h,065h,061h,073h,06Fh,06Eh,00h
@@ -1010,9 +1010,9 @@ db 062h,06Bh,067h,064h,00h
 asc_C6940:
 db 045h,041h,053h,04Eh,02Eh,076h,066h,06Eh,00h,077h,069h,074h,074h,06Ch,065h,030h
 db 036h,02Eh,076h,066h,06Eh,00h
-dword_C6956:
+statsplayoffs:
 db 00h,00h,00h,00h
-dword_C695A:
+statsfromleague:
 db 00h,00h,00h,00h,00h,00h
 unk_C6960:
 db 044h,045h,046h,047h,048h,049h,04Ah,04Bh,04Ch,04Dh,04Eh,04Fh,050h,051h,052h,053h

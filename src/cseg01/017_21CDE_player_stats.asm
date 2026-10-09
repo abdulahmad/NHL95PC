@@ -15,8 +15,8 @@ extern asc_C122A, asc_C1231, asc_C123A, asc_C123F, asc_C1251, asc_C1258, asc_C12
 extern str_fmt2d, str_fmt3d, asc_C690B, asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B
 extern asc_C6935, str_Bkgd2, byte_C6D72, byte_C6D73, byte_C6D7A, byte_C6D7B, byte_C6D82, byte_C6D83
 extern byte_C6D8A, byte_C6D9A, byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DB2, byte_C6DB3
-extern byte_ED83C, byte_ED858, byte_ED859, byte_ED908, byte_ED909, teamdivflags, teamconf, dword_C6956
-extern dword_C695A, dword_C6AF8, dword_C6B30, dword_C6E32, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DC6B8
+extern byte_ED83C, byte_ED858, byte_ED859, byte_ED908, byte_ED909, teamdivflags, teamconf, statsplayoffs
+extern statsfromleague, dword_C6AF8, dword_C6B30, dword_C6E32, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DC6B8
 extern dword_DC6BC, dword_DC720, dword_DC734, dword_DC73C, dword_DC750, dword_DC754, dword_DC85C, dword_DC860
 extern dword_DD100, dword_DD104, dword_DD108, dword_DD10C, dword_DD110, dword_DD114, dword_DD118, dword_DD11C
 extern fputchar, j___close_, jctime, lseek_, memcpy_, off_C68CC, off_C68E4, off_C68EC
@@ -28,7 +28,7 @@ extern PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff, sub_1FB7F, sub_1FC8F, su
 extern sub_29A97, sub_29C75, sub_8CCA8, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_91370
 extern sub_913B4, sub_B30B4, sub_B30BB, sub_B4BA8, sub_B4BC4, unk_C0DA6, unk_C0E9A, unk_C0EA8
 extern unk_C0EAB, unk_C0EAE, unk_C0EB1, unk_C0EB4, unk_C0FD4, unk_C1055, unk_C107F, unk_C1087
-extern unk_C10A5, unk_C10B3, unk_C10B6, unk_C10B9, unk_C1255, unk_C1264, unk_C1267, unk_C65D4
+extern unk_C10A5, unk_C10B3, unk_C10B6, unk_C10B9, unk_C1255, unk_C1264, unk_C1267, statsleague
 extern unk_DC834, unk_DD0D8, word_C6E22
 global jpt_2359A, jpt_235AA, jpt_25AF8, loc_21D63, loc_21D69, loc_21E82, loc_21E84, loc_21F5F
 global loc_21F61, loc_21FED, loc_21FEF, loc_22019, loc_2203A, loc_2203C, loc_22064, loc_22084
@@ -113,10 +113,10 @@ mov eax, dword [dword_D8B74]	; 21D02
 mov dword [dword esp+0F8h], eax	; 21D07
 mov eax, dword [dword_D8B68]	; 21D0E
 mov dword [dword esp+0100h], eax	; 21D13
-mov eax, dword [dword_C695A]	; 21D1A
+mov eax, dword [statsfromleague]	; 21D1A
 mov ebx, dword [nosplit eax*4+off_C68EC]	; 21D1F
 xor ecx, ecx	; 21D26
-mov edx, unk_C65D4	; 21D28
+mov edx, statsleague	; 21D28
 lea eax, [dword esp+0B8h]	; 21D2D
 call MakePath	; 21D34
 push dword 200h	; 21D39
@@ -126,7 +126,7 @@ call open_	; 21D46
 add esp, byte 8	; 21D4B
 mov ecx, eax	; 21D4E
 xor ebx, ebx	; 21D50
-cmp dword [dword_C695A], byte 0	; 21D52
+cmp dword [statsfromleague], byte 0	; 21D52
 jne short loc_21D63	; 21D59
 mov edx, dword [dword_DC85C]	; 21D5B
 jmp short loc_21D69	; 21D61
@@ -143,7 +143,7 @@ mov eax, ecx	; 21D83
 call j___close_	; 21D85
 xor ecx, ecx	; 21D8A
 mov ebx, asc_C68FC	; 21D8C
-mov edx, unk_C65D4	; 21D91
+mov edx, statsleague	; 21D91
 lea eax, [dword esp+0B8h]	; 21D96
 call MakePath	; 21D9D
 push dword 200h	; 21DA2
@@ -163,7 +163,7 @@ mov eax, ecx	; 21DD6
 call j___close_	; 21DD8
 mov ebx, dword [off_C68F4]	; 21DDD
 xor ecx, ecx	; 21DE3
-mov edx, unk_C65D4	; 21DE5
+mov edx, statsleague	; 21DE5
 lea eax, [dword esp+0B8h]	; 21DEA
 call MakePath	; 21DF1
 push dword 200h	; 21DF6
@@ -719,10 +719,10 @@ mov eax, dword [dword_D8B74]	; 2259C
 mov dword [dword esp+0104h], eax	; 225A1
 mov eax, dword [dword_D8B68]	; 225A8
 mov dword [dword esp+0108h], eax	; 225AD
-mov eax, dword [dword_C695A]	; 225B4
+mov eax, dword [statsfromleague]	; 225B4
 mov ebx, dword [nosplit eax*4+off_C68EC]	; 225B9
 xor ecx, ecx	; 225C0
-mov edx, unk_C65D4	; 225C2
+mov edx, statsleague	; 225C2
 lea eax, [dword esp+0C8h]	; 225C7
 call MakePath	; 225CE
 push dword 200h	; 225D3
@@ -732,7 +732,7 @@ call open_	; 225E0
 add esp, byte 8	; 225E5
 mov ecx, eax	; 225E8
 xor ebx, ebx	; 225EA
-cmp dword [dword_C695A], byte 0	; 225EC
+cmp dword [statsfromleague], byte 0	; 225EC
 jne short loc_225FD	; 225F3
 mov edx, dword [dword_DC85C]	; 225F5
 jmp short loc_22603	; 225FB
@@ -749,7 +749,7 @@ mov eax, ecx	; 2261D
 call j___close_	; 2261F
 xor ecx, ecx	; 22624
 mov ebx, asc_C68FC	; 22626
-mov edx, unk_C65D4	; 2262B
+mov edx, statsleague	; 2262B
 lea eax, [dword esp+0C8h]	; 22630
 call MakePath	; 22637
 push dword 200h	; 2263C
@@ -769,7 +769,7 @@ mov eax, ecx	; 22670
 call j___close_	; 22672
 mov ebx, dword [off_C68F4]	; 22677
 xor ecx, ecx	; 2267D
-mov edx, unk_C65D4	; 2267F
+mov edx, statsleague	; 2267F
 lea eax, [dword esp+0C8h]	; 22684
 call MakePath	; 2268B
 push dword 200h	; 22690
@@ -1301,7 +1301,7 @@ push ebp	; 22DEC
 sub esp, byte 0Ch	; 22DED
 mov ebx, eax	; 22DF0
 mov esi, edx	; 22DF2
-cmp dword [dword_C6956], byte 0	; 22DF4
+cmp dword [statsplayoffs], byte 0	; 22DF4
 jne short loc_22E1B	; 22DFB
 mov edx, dword [eax]	; 22DFD
 mov eax, edx	; 22DFF
@@ -1327,7 +1327,7 @@ add eax, edx	; 22E32
 add eax, byte 3Ah	; 22E34
 loc_22E37:
 mov edx, eax	; 22E37
-cmp dword [dword_C6956], byte 0	; 22E39
+cmp dword [statsplayoffs], byte 0	; 22E39
 jne short loc_22E60	; 22E40
 mov ecx, dword [esi]	; 22E42
 mov eax, ecx	; 22E44
@@ -1433,7 +1433,7 @@ push ebp	; 22F3C
 sub esp, byte 8	; 22F3D
 mov esi, eax	; 22F40
 mov ebx, edx	; 22F42
-cmp dword [dword_C6956], byte 0	; 22F44
+cmp dword [statsplayoffs], byte 0	; 22F44
 jne short loc_22F6B	; 22F4B
 mov edx, dword [eax]	; 22F4D
 mov eax, edx	; 22F4F
@@ -1459,7 +1459,7 @@ add eax, edx	; 22F82
 add eax, byte 3Ah	; 22F84
 loc_22F87:
 mov edx, eax	; 22F87
-cmp dword [dword_C6956], byte 0	; 22F89
+cmp dword [statsplayoffs], byte 0	; 22F89
 jne short loc_22FB0	; 22F90
 mov ecx, dword [ebx]	; 22F92
 mov eax, ecx	; 22F94
@@ -1550,7 +1550,7 @@ push ebp	; 2305F
 sub esp, byte 8	; 23060
 mov esi, eax	; 23063
 mov ebx, edx	; 23065
-cmp dword [dword_C6956], byte 0	; 23067
+cmp dword [statsplayoffs], byte 0	; 23067
 jne short loc_2308E	; 2306E
 mov edx, dword [eax]	; 23070
 mov eax, edx	; 23072
@@ -1576,7 +1576,7 @@ add eax, edx	; 230A5
 add eax, byte 3Ah	; 230A7
 loc_230AA:
 mov edx, eax	; 230AA
-cmp dword [dword_C6956], byte 0	; 230AC
+cmp dword [statsplayoffs], byte 0	; 230AC
 jne short loc_230D3	; 230B3
 mov ecx, dword [ebx]	; 230B5
 mov eax, ecx	; 230B7
@@ -1649,7 +1649,7 @@ loc_23160:
 sub eax, edi	; 23160
 jmp near loc_233BC	; 23162
 loc_23167:
-cmp dword [dword_C6956], byte 0	; 23167
+cmp dword [statsplayoffs], byte 0	; 23167
 jne short loc_2318E	; 2316E
 mov edx, dword [ebx]	; 23170
 mov eax, edx	; 23172
@@ -1675,7 +1675,7 @@ add eax, edx	; 231A5
 add eax, byte 3Ah	; 231A7
 loc_231AA:
 mov edx, eax	; 231AA
-cmp dword [dword_C6956], byte 0	; 231AC
+cmp dword [statsplayoffs], byte 0	; 231AC
 jne short loc_231D3	; 231B3
 mov ecx, dword [esi]	; 231B5
 mov eax, ecx	; 231B7
@@ -1798,7 +1798,7 @@ loc_232EA:
 sub eax, edi	; 232EA
 jmp near loc_233BC	; 232EC
 loc_232F1:
-cmp dword [dword_C6956], byte 0	; 232F1
+cmp dword [statsplayoffs], byte 0	; 232F1
 jne short loc_23318	; 232F8
 mov edx, dword [ebx]	; 232FA
 mov eax, edx	; 232FC
@@ -1824,7 +1824,7 @@ add eax, edx	; 2332F
 add eax, byte 3Ah	; 23331
 loc_23334:
 mov edx, eax	; 23334
-cmp dword [dword_C6956], byte 0	; 23336
+cmp dword [statsplayoffs], byte 0	; 23336
 jne short loc_2335D	; 2333D
 mov ecx, dword [esi]	; 2333F
 mov eax, ecx	; 23341
@@ -1951,7 +1951,7 @@ mov eax, edi	; 23469
 sub eax, ecx	; 2346B
 jmp near loc_233BC	; 2346D
 loc_23472:
-cmp dword [dword_C6956], byte 0	; 23472
+cmp dword [statsplayoffs], byte 0	; 23472
 jne short loc_2349A	; 23479
 mov edx, dword [ebx]	; 2347B
 mov eax, edx	; 2347D
@@ -1979,7 +1979,7 @@ add eax, edx	; 234B2
 add eax, byte 3Ah	; 234B4
 loc_234B7:
 mov edx, eax	; 234B7
-cmp dword [dword_C6956], byte 0	; 234B9
+cmp dword [statsplayoffs], byte 0	; 234B9
 jne short loc_234E0	; 234C0
 mov ecx, dword [esi]	; 234C2
 mov eax, ecx	; 234C4
@@ -2094,10 +2094,10 @@ call sub_8CCA8	; 235FD
 add esp, byte 0Ch	; 23602
 mov dword [dword_DD118], eax	; 23605
 loc_2360A:
-mov eax, dword [dword_C695A]	; 2360A
+mov eax, dword [statsfromleague]	; 2360A
 mov ebx, dword [nosplit eax*4+off_C68F4]	; 2360F
 xor ecx, ecx	; 23616
-mov edx, unk_C65D4	; 23618
+mov edx, statsleague	; 23618
 lea eax, [dword esp+0224h]	; 2361D
 call MakePath	; 23624
 push dword 200h	; 23629
@@ -2106,7 +2106,7 @@ push eax	; 23635
 call open_	; 23636
 add esp, byte 8	; 2363B
 mov dword [dword esp+0254h], eax	; 2363E
-cmp dword [dword_C695A], byte 0	; 23645
+cmp dword [statsfromleague], byte 0	; 23645
 jne short loc_23655	; 2364C
 mov eax, 4Ch	; 2364E
 jmp short loc_2365A	; 23653
@@ -2114,7 +2114,7 @@ loc_23655:
 mov eax, 2E8h	; 23655
 loc_2365A:
 mov dword [dword esp+0250h], eax	; 2365A
-cmp dword [dword_C6956], byte 0	; 23661
+cmp dword [statsplayoffs], byte 0	; 23661
 jne short loc_23683	; 23668
 xor ebp, ebp	; 2366A
 loc_2366C:
@@ -2182,7 +2182,7 @@ add edi, eax	; 23756
 mov ecx, 13h	; 23758
 lea esi, [dword esp+0198h]	; 2375D
 rep movsd	; 23764
-cmp dword [dword_C6956], byte 0	; 23766
+cmp dword [statsplayoffs], byte 0	; 23766
 jne short loc_23778	; 2376D
 lea eax, [dword esp+01C0h]	; 2376F
 jmp short loc_2377F	; 23776
@@ -2302,9 +2302,9 @@ lea eax, [dword esp+0DCh]	; 238C4
 call qsort_	; 238CB
 jmp near loc_23AA7	; 238D0
 loc_238D5:
-cmp dword [dword_C6956], byte 0	; 238D5
+cmp dword [statsplayoffs], byte 0	; 238D5
 jne near loc_23A3C	; 238DC
-mov ebp, dword [dword_C695A]	; 238E2
+mov ebp, dword [statsfromleague]	; 238E2
 test ebp, ebp	; 238E8
 jne short loc_23918	; 238EA
 mov dword [dword esp+0258h], 0Eh	; 238EC
@@ -2445,9 +2445,9 @@ call j___close_	; 23AAE
 mov esi, dword [dword_D8B74]	; 23AB3
 mov edi, dword [dword_D8B68]	; 23AB9
 call sub_B4BA8	; 23ABF
-mov eax, dword [dword_C6956]	; 23AC4
+mov eax, dword [statsplayoffs]	; 23AC4
 shl eax, 2	; 23AC9
-cmp dword [dword_C6956], byte 0	; 23ACC
+cmp dword [statsplayoffs], byte 0	; 23ACC
 jne short loc_23AF2	; 23AD3
 xor ecx, ecx	; 23AD5
 mov ebx, dword [dword eax+off_C68E4]	; 23AD7
@@ -2613,7 +2613,7 @@ mov ebx, unk_C0FD4	; 23D2F
 mov edx, ecx	; 23D34
 mov eax, 21Ch	; 23D36
 call PrintShadowText	; 23D3B
-cmp dword [dword_C6956], byte 0	; 23D40
+cmp dword [statsplayoffs], byte 0	; 23D40
 setne al	; 23D47
 mov edx, eax	; 23D4A
 and edx, 0FFh	; 23D4C
@@ -2625,7 +2625,7 @@ mov edx, dword [dword esp+025Eh]	; 23D62
 sar edx, 10h	; 23D69
 mov eax, 114h	; 23D6C
 call PrintShadowText	; 23D71
-cmp dword [dword_C6956], byte 0	; 23D76
+cmp dword [statsplayoffs], byte 0	; 23D76
 setne al	; 23D7D
 and eax, 0FFh	; 23D80
 mov edx, dword [esp]	; 23D85
@@ -2652,7 +2652,7 @@ mov ebx, dword [dword esi+off_C6B8C]	; 23DD8
 mov edx, ecx	; 23DDE
 mov eax, 1B8h	; 23DE0
 call PrintShadowText	; 23DE5
-cmp dword [dword_C6956], byte 0	; 23DEA
+cmp dword [statsplayoffs], byte 0	; 23DEA
 je short loc_23DFC	; 23DF1
 cmp edi, byte 1	; 23DF3
 je short loc_23E1C	; 23DF6
@@ -2699,7 +2699,7 @@ add esi, eax	; 23E92
 mov ecx, 13h	; 23E94
 lea edi, [dword esp+0198h]	; 23E99
 rep movsd	; 23EA0
-cmp dword [dword_C6956], byte 0	; 23EA2
+cmp dword [statsplayoffs], byte 0	; 23EA2
 jne short loc_23EB4	; 23EA9
 lea eax, [dword esp+01C0h]	; 23EAB
 jmp short loc_23EBB	; 23EB2
@@ -2707,7 +2707,7 @@ loc_23EB4:
 lea eax, [dword esp+01D2h]	; 23EB4
 loc_23EBB:
 mov esi, eax	; 23EBB
-cmp dword [dword_C695A], byte 0	; 23EBD
+cmp dword [statsfromleague], byte 0	; 23EBD
 jne short loc_23ECF	; 23EC4
 cmp byte [eax], 0	; 23EC6
 je near loc_24138	; 23EC9
@@ -2752,7 +2752,7 @@ mov edx, edi	; 23F5B
 call PrintFmt1	; 23F5D
 mov eax, dword [dword esp+0248h]	; 23F62
 add eax, 114h	; 23F69
-cmp dword [dword_C6956], byte 0	; 23F6E
+cmp dword [statsplayoffs], byte 0	; 23F6E
 jne short loc_23F92	; 23F75
 xor edx, edx	; 23F77
 mov dl, byte [byte esi+01h]	; 23F79
@@ -2788,7 +2788,7 @@ add esi, eax	; 23FCF
 mov ecx, 13h	; 23FD1
 lea edi, [dword esp+0198h]	; 23FD6
 rep movsd	; 23FDD
-cmp dword [dword_C6956], byte 0	; 23FDF
+cmp dword [statsplayoffs], byte 0	; 23FDF
 jne short loc_23FF1	; 23FE6
 lea eax, [dword esp+01C0h]	; 23FE8
 jmp short loc_23FF8	; 23FEF
@@ -2796,7 +2796,7 @@ loc_23FF1:
 lea eax, [dword esp+01D2h]	; 23FF1
 loc_23FF8:
 mov esi, eax	; 23FF8
-cmp dword [dword_C695A], byte 0	; 23FFA
+cmp dword [statsfromleague], byte 0	; 23FFA
 jne short loc_2400C	; 24001
 cmp byte [eax], 0	; 24003
 je near loc_24138	; 24006
@@ -2840,7 +2840,7 @@ mov edx, edi	; 24098
 call PrintFmt1	; 2409A
 mov eax, dword [dword esp+0248h]	; 2409F
 add eax, 104h	; 240A6
-cmp dword [dword_C6956], byte 0	; 240AB
+cmp dword [statsplayoffs], byte 0	; 240AB
 jne short loc_240CD	; 240B2
 xor edx, edx	; 240B4
 mov dl, byte [byte esi+01h]	; 240B6
@@ -2865,7 +2865,7 @@ inc ebx	; 240E6
 mov dword [dword esp+025Ch], ebx	; 240E7
 cmp ebx, byte 9	; 240EE
 jne short loc_24130	; 240F1
-cmp dword [dword_C6956], byte 0	; 240F3
+cmp dword [statsplayoffs], byte 0	; 240F3
 jne short loc_24130	; 240FA
 add dword [dword esp+0260h], byte 0Dh	; 240FC
 mov esi, dword [dword esp+025Eh]	; 24104
@@ -2903,7 +2903,7 @@ add esi, eax	; 24175
 mov ecx, 13h	; 24177
 lea edi, [dword esp+0198h]	; 2417C
 rep movsd	; 24183
-cmp dword [dword_C6956], byte 0	; 24185
+cmp dword [statsplayoffs], byte 0	; 24185
 jne short loc_24197	; 2418C
 lea eax, [dword esp+01C0h]	; 2418E
 jmp short loc_2419E	; 24195
@@ -2911,7 +2911,7 @@ loc_24197:
 lea eax, [dword esp+01D2h]	; 24197
 loc_2419E:
 mov esi, eax	; 2419E
-cmp dword [dword_C695A], byte 0	; 241A0
+cmp dword [statsfromleague], byte 0	; 241A0
 jne short loc_241B2	; 241A7
 cmp byte [eax], 0	; 241A9
 je near loc_243FD	; 241AC
@@ -2968,7 +2968,7 @@ mov ebx, str_fmt2d	; 24273
 mov edx, edi	; 24278
 mov eax, 1B8h	; 2427A
 call PrintFmt1	; 2427F
-cmp dword [dword_C6956], byte 0	; 24284
+cmp dword [statsplayoffs], byte 0	; 24284
 jne short loc_242A3	; 2428B
 xor ecx, ecx	; 2428D
 mov cl, byte [byte esi+03h]	; 2428F
@@ -2999,7 +2999,7 @@ mov ebx, str_fmt2d	; 242E2
 mov edx, edi	; 242E7
 mov eax, 1B8h	; 242E9
 call PrintFmt1	; 242EE
-cmp dword [dword_C6956], byte 0	; 242F3
+cmp dword [statsplayoffs], byte 0	; 242F3
 jne short loc_24312	; 242FA
 xor ecx, ecx	; 242FC
 mov cl, byte [byte esi+03h]	; 242FE
@@ -3180,7 +3180,7 @@ mov eax, dword [dword_D8B68]	; 24505
 mov dword [dword esp+03F8h], eax	; 2450A
 mov ebx, dword [off_C68F8]	; 24511
 xor ecx, ecx	; 24517
-mov edx, unk_C65D4	; 24519
+mov edx, statsleague	; 24519
 lea eax, [dword esp+03C8h]	; 2451E
 call MakePath	; 24525
 push dword 200h	; 2452A
@@ -3208,7 +3208,7 @@ mov eax, ecx	; 24570
 call read_	; 24572
 xor ecx, ecx	; 24577
 mov ebx, asc_C1040	; 24579
-mov edx, unk_C65D4	; 2457E
+mov edx, statsleague	; 2457E
 lea eax, [dword esp+03C8h]	; 24583
 call MakePath	; 2458A
 push dword 200h	; 2458F
@@ -3217,10 +3217,10 @@ push eax	; 2459B
 call open_	; 2459C
 add esp, byte 8	; 245A1
 mov dword [dword esp+03E8h], eax	; 245A4
-mov ebx, dword [dword_C695A]	; 245AB
+mov ebx, dword [statsfromleague]	; 245AB
 mov ebx, dword [nosplit ebx*4+off_C68EC]	; 245B1
 xor ecx, ecx	; 245B8
-mov edx, unk_C65D4	; 245BA
+mov edx, statsleague	; 245BA
 lea eax, [dword esp+03C8h]	; 245BF
 call MakePath	; 245C6
 push dword 200h	; 245CB
@@ -3259,7 +3259,7 @@ mov ecx, 0Dh	; 24648
 lea esi, [dword esp+0364h]	; 2464D
 rep movsd	; 24654
 xor ebx, ebx	; 24656
-cmp dword [dword_C695A], byte 0	; 24658
+cmp dword [statsfromleague], byte 0	; 24658
 jne short loc_2466A	; 2465F
 mov edx, dword [dword esp+038Ch]	; 24661
 jmp short loc_24671	; 24668
@@ -3325,7 +3325,7 @@ mov ecx, 0Dh	; 2474A
 lea esi, [dword esp+0364h]	; 2474F
 rep movsd	; 24756
 xor ebx, ebx	; 24758
-cmp dword [dword_C695A], byte 0	; 2475A
+cmp dword [statsfromleague], byte 0	; 2475A
 jne short loc_2476C	; 24761
 mov edx, dword [dword esp+038Ch]	; 24763
 jmp short loc_24773	; 2476A
@@ -3670,7 +3670,7 @@ shl esi, 2	; 24CA1
 sub esi, edx	; 24CA4
 shl esi, 4	; 24CA6
 sub esi, edx	; 24CA9
-cmp dword [dword_C6956], byte 0	; 24CAB
+cmp dword [statsplayoffs], byte 0	; 24CAB
 jne short loc_24CBD	; 24CB2
 mov eax, dword [dword_DD110]	; 24CB4
 add esi, eax	; 24CB9
@@ -3763,7 +3763,7 @@ mov ebx, unk_C10B6	; 24E10
 mov edx, ecx	; 24E15
 mov eax, 1AEh	; 24E17
 call PrintShadowText	; 24E1C
-cmp dword [dword_C6956], byte 0	; 24E21
+cmp dword [statsplayoffs], byte 0	; 24E21
 jne short loc_24E3B	; 24E28
 mov ebx, unk_C10B9	; 24E2A
 mov edx, ecx	; 24E2F
@@ -3842,7 +3842,7 @@ sub esi, edx	; 24F5B
 shl esi, 2	; 24F5D
 sub esi, edx	; 24F60
 add esi, esi	; 24F62
-cmp dword [dword_C6956], byte 0	; 24F64
+cmp dword [statsplayoffs], byte 0	; 24F64
 jne short loc_24F76	; 24F6B
 mov eax, dword [dword_DD114]	; 24F6D
 add esi, eax	; 24F72
@@ -3896,7 +3896,7 @@ mov ebx, str_fmt2d	; 2500D
 mov edx, edi	; 25012
 mov eax, 1AEh	; 25014
 call PrintFmt1	; 25019
-cmp dword [dword_C6956], byte 0	; 2501E
+cmp dword [statsplayoffs], byte 0	; 2501E
 jne short loc_2503E	; 25025
 mov ecx, dword [byte esi+04h]	; 25027
 sar ecx, 10h	; 2502A
@@ -3988,7 +3988,7 @@ push ecx	; 2514F
 push esi	; 25150
 push edi	; 25151
 mov ebx, edx	; 25152
-cmp dword [dword_C6956], byte 0	; 25154
+cmp dword [statsplayoffs], byte 0	; 25154
 jne short loc_25175	; 2515B
 mov edx, dword [eax]	; 2515D
 mov eax, edx	; 2515F
@@ -4011,7 +4011,7 @@ add eax, edx	; 25189
 add eax, byte 12h	; 2518B
 loc_2518E:
 mov edx, eax	; 2518E
-cmp dword [dword_C6956], byte 0	; 25190
+cmp dword [statsplayoffs], byte 0	; 25190
 jne short loc_251B1	; 25197
 mov ebx, dword [ebx]	; 25199
 mov eax, ebx	; 2519B
@@ -4089,7 +4089,7 @@ push ecx	; 25242
 push esi	; 25243
 push edi	; 25244
 mov ebx, edx	; 25245
-cmp dword [dword_C6956], byte 0	; 25247
+cmp dword [statsplayoffs], byte 0	; 25247
 jne short loc_25268	; 2524E
 mov edx, dword [eax]	; 25250
 mov eax, edx	; 25252
@@ -4112,7 +4112,7 @@ add eax, edx	; 2527C
 add eax, byte 12h	; 2527E
 loc_25281:
 mov edx, eax	; 25281
-cmp dword [dword_C6956], byte 0	; 25283
+cmp dword [statsplayoffs], byte 0	; 25283
 jne short loc_252A4	; 2528A
 mov ebx, dword [ebx]	; 2528C
 mov eax, ebx	; 2528E
@@ -4190,7 +4190,7 @@ push ecx	; 25330
 push esi	; 25331
 push edi	; 25332
 mov ebx, edx	; 25333
-cmp dword [dword_C6956], byte 0	; 25335
+cmp dword [statsplayoffs], byte 0	; 25335
 jne short loc_25356	; 2533C
 mov edx, dword [eax]	; 2533E
 mov eax, edx	; 25340
@@ -4213,7 +4213,7 @@ add eax, edx	; 2536A
 add eax, byte 12h	; 2536C
 loc_2536F:
 mov edx, eax	; 2536F
-cmp dword [dword_C6956], byte 0	; 25371
+cmp dword [statsplayoffs], byte 0	; 25371
 jne short loc_25392	; 25378
 mov ebx, dword [ebx]	; 2537A
 mov eax, ebx	; 2537C
@@ -4306,7 +4306,7 @@ push ecx	; 25443
 push esi	; 25444
 push edi	; 25445
 mov ebx, edx	; 25446
-cmp dword [dword_C6956], byte 0	; 25448
+cmp dword [statsplayoffs], byte 0	; 25448
 jne short loc_25469	; 2544F
 mov edx, dword [eax]	; 25451
 mov eax, edx	; 25453
@@ -4329,7 +4329,7 @@ add eax, edx	; 2547D
 add eax, byte 12h	; 2547F
 loc_25482:
 mov edx, eax	; 25482
-cmp dword [dword_C6956], byte 0	; 25484
+cmp dword [statsplayoffs], byte 0	; 25484
 jne short loc_254A5	; 2548B
 mov ebx, dword [ebx]	; 2548D
 mov eax, ebx	; 2548F
@@ -4421,7 +4421,7 @@ push ebx	; 25555
 push esi	; 25556
 push edi	; 25557
 mov ebx, edx	; 25558
-cmp dword [dword_C6956], byte 0	; 2555A
+cmp dword [statsplayoffs], byte 0	; 2555A
 jne short loc_2557B	; 25561
 mov edx, dword [eax]	; 25563
 mov eax, edx	; 25565
@@ -4444,7 +4444,7 @@ add eax, edx	; 2558F
 add eax, byte 12h	; 25591
 loc_25594:
 mov edx, eax	; 25594
-cmp dword [dword_C6956], byte 0	; 25596
+cmp dword [statsplayoffs], byte 0	; 25596
 jne short loc_255B7	; 2559D
 mov ebx, dword [ebx]	; 2559F
 mov eax, ebx	; 255A1
@@ -4519,7 +4519,7 @@ push ecx	; 2564D
 push esi	; 2564E
 push edi	; 2564F
 mov ebx, edx	; 25650
-cmp dword [dword_C6956], byte 0	; 25652
+cmp dword [statsplayoffs], byte 0	; 25652
 jne short loc_25673	; 25659
 mov edx, dword [eax]	; 2565B
 mov eax, edx	; 2565D
@@ -4542,7 +4542,7 @@ add eax, edx	; 25687
 add eax, byte 12h	; 25689
 loc_2568C:
 mov edx, eax	; 2568C
-cmp dword [dword_C6956], byte 0	; 2568E
+cmp dword [statsplayoffs], byte 0	; 2568E
 jne short loc_256AF	; 25695
 mov ebx, dword [ebx]	; 25697
 mov eax, ebx	; 25699
@@ -4654,7 +4654,7 @@ pop ecx	; 25787
 pop ebx	; 25788
 ret	; 25789
 loc_2578A:
-cmp dword [dword_C6956], byte 0	; 2578A
+cmp dword [statsplayoffs], byte 0	; 2578A
 jne short loc_257AB	; 25791
 mov edx, dword [eax]	; 25793
 mov eax, edx	; 25795
@@ -4678,7 +4678,7 @@ add eax, edx	; 257C0
 add eax, byte 12h	; 257C2
 loc_257C5:
 mov edx, eax	; 257C5
-cmp dword [dword_C6956], byte 0	; 257C7
+cmp dword [statsplayoffs], byte 0	; 257C7
 jne short loc_257E8	; 257CE
 mov ebx, dword [ebx]	; 257D0
 mov eax, ebx	; 257D2
@@ -4754,7 +4754,7 @@ push ebx	; 25874
 push ecx	; 25875
 push esi	; 25876
 push edi	; 25877
-cmp dword [dword_C6956], byte 0	; 25878
+cmp dword [statsplayoffs], byte 0	; 25878
 jne short loc_2589B	; 2587F
 mov ebx, dword [eax]	; 25881
 mov eax, ebx	; 25883
@@ -4778,7 +4778,7 @@ mov ebx, dword [dword_DD114]	; 258AB
 add eax, ebx	; 258B1
 add eax, byte 16h	; 258B3
 loc_258B6:
-cmp dword [dword_C6956], byte 0	; 258B6
+cmp dword [statsplayoffs], byte 0	; 258B6
 jne short loc_258D9	; 258BD
 mov ebx, dword [edx]	; 258BF
 mov edx, ebx	; 258C1
@@ -4812,7 +4812,7 @@ mov dx, cx	; 25905
 mov eax, esi	; 25908
 jmp near loc_259B2	; 2590A
 loc_2590F:
-cmp dword [dword_C6956], byte 0	; 2590F
+cmp dword [statsplayoffs], byte 0	; 2590F
 jne short loc_25931	; 25916
 mov cx, word [byte ebx+06h]	; 25918
 mov di, word [byte eax+06h]	; 2591C
@@ -4894,7 +4894,7 @@ push ecx	; 259CB
 push esi	; 259CC
 push edi	; 259CD
 mov ebx, edx	; 259CE
-cmp dword [dword_C6956], byte 0	; 259D0
+cmp dword [statsplayoffs], byte 0	; 259D0
 jne short loc_259F3	; 259D7
 mov edx, dword [eax]	; 259D9
 mov eax, edx	; 259DB
@@ -4919,7 +4919,7 @@ add eax, edx	; 25A09
 add eax, byte 16h	; 25A0B
 loc_25A0E:
 mov edx, eax	; 25A0E
-cmp dword [dword_C6956], byte 0	; 25A10
+cmp dword [statsplayoffs], byte 0	; 25A10
 jne short loc_25A33	; 25A17
 mov ebx, dword [ebx]	; 25A19
 mov eax, ebx	; 25A1B
@@ -5084,10 +5084,10 @@ je short loc_25BCE	; 25BC3
 cmp esi, byte 7	; 25BC5
 jne near loc_25CB0	; 25BC8
 loc_25BCE:
-mov eax, dword [dword_C695A]	; 25BCE
+mov eax, dword [statsfromleague]	; 25BCE
 mov ebx, dword [nosplit eax*4+off_C68F4]	; 25BD3
 xor ecx, ecx	; 25BDA
-mov edx, unk_C65D4	; 25BDC
+mov edx, statsleague	; 25BDC
 lea eax, [dword esp+0238h]	; 25BE1
 call MakePath	; 25BE8
 push dword 200h	; 25BED
@@ -5096,7 +5096,7 @@ push eax	; 25BF9
 call open_	; 25BFA
 add esp, byte 8	; 25BFF
 mov esi, eax	; 25C02
-cmp dword [dword_C695A], byte 0	; 25C04
+cmp dword [statsfromleague], byte 0	; 25C04
 jne short loc_25C14	; 25C0B
 mov ecx, 4Ch	; 25C0D
 jmp short loc_25C19	; 25C12
@@ -5115,7 +5115,7 @@ mov ebx, 4Ch	; 25C35
 lea edx, [dword esp+0110h]	; 25C3A
 mov eax, esi	; 25C41
 call read_	; 25C43
-cmp dword [dword_C6956], byte 0	; 25C48
+cmp dword [statsplayoffs], byte 0	; 25C48
 jne short loc_25C5A	; 25C4F
 mov al, byte [dword esp+0138h]	; 25C51
 jmp short loc_25C61	; 25C58
@@ -5127,10 +5127,10 @@ mov dl, al	; 25C63
 mov eax, dword [dword esp+026Ch]	; 25C65
 shl eax, 2	; 25C6C
 mov dword [byte esp+eax+04h], edx	; 25C6F
-mov edx, dword [dword_C695A]	; 25C73
+mov edx, dword [statsfromleague]	; 25C73
 test edx, edx	; 25C79
 jne short loc_25C91	; 25C7B
-cmp dword [dword_C6956], byte 0	; 25C7D
+cmp dword [statsplayoffs], byte 0	; 25C7D
 jne short loc_25C91	; 25C84
 cmp dword [byte esp+eax+04h], byte 0	; 25C86
 jne short loc_25C91	; 25C8B
@@ -5146,7 +5146,7 @@ call j___close_	; 25CAB
 loc_25CB0:
 xor ecx, ecx	; 25CB0
 mov ebx, asc_C122A	; 25CB2
-mov edx, unk_C65D4	; 25CB7
+mov edx, statsleague	; 25CB7
 lea eax, [dword esp+0238h]	; 25CBC
 call MakePath	; 25CC3
 push dword 200h	; 25CC8
@@ -5155,10 +5155,10 @@ push eax	; 25CD4
 call open_	; 25CD5
 add esp, byte 8	; 25CDA
 mov dword [dword esp+0260h], eax	; 25CDD
-mov eax, dword [dword_C695A]	; 25CE4
+mov eax, dword [statsfromleague]	; 25CE4
 mov ebx, dword [nosplit eax*4+off_C68EC]	; 25CE9
 xor ecx, ecx	; 25CF0
-mov edx, unk_C65D4	; 25CF2
+mov edx, statsleague	; 25CF2
 lea eax, [dword esp+0238h]	; 25CF7
 call MakePath	; 25CFE
 push dword 200h	; 25D03
@@ -5177,7 +5177,7 @@ mov ebx, 36h	; 25D37
 lea edx, [dword esp+019Ch]	; 25D3C
 mov eax, dword [dword esp+025Ch]	; 25D43
 call read_	; 25D4A
-cmp dword [dword_C6956], byte 0	; 25D4F
+cmp dword [statsplayoffs], byte 0	; 25D4F
 jne short loc_25D61	; 25D56
 mov eax, dword [dword esp+019Ch]	; 25D58
 jmp short loc_25D68	; 25D5F
@@ -5212,7 +5212,7 @@ jmp short loc_25DDF	; 25DB6
 loc_25DB8:
 cmp edx, byte 9	; 25DB8
 jne short loc_25DDF	; 25DBB
-cmp dword [dword_C6956], byte 0	; 25DBD
+cmp dword [statsplayoffs], byte 0	; 25DBD
 jne short loc_25DCF	; 25DC4
 mov eax, dword [dword esp+019Eh]	; 25DC6
 jmp short loc_25DD6	; 25DCD
@@ -5315,7 +5315,7 @@ jne short loc_25F5E	; 25F3B
 cmp dword [esp], byte 8	; 25F3D
 jl short loc_25F08	; 25F41
 xor ebx, ebx	; 25F43
-cmp dword [dword_C695A], byte 0	; 25F45
+cmp dword [statsfromleague], byte 0	; 25F45
 jne near loc_25D24	; 25F4C
 mov edx, dword [dword esp+01FCh]	; 25F52
 jmp near loc_25D2B	; 25F59
@@ -5323,7 +5323,7 @@ loc_25F5E:
 cmp dword [esp], byte 8	; 25F5E
 jge short loc_25F08	; 25F62
 xor ebx, ebx	; 25F64
-cmp dword [dword_C695A], byte 0	; 25F66
+cmp dword [statsfromleague], byte 0	; 25F66
 jne short loc_25F78	; 25F6D
 mov edx, dword [dword esp+01FCh]	; 25F6F
 jmp short loc_25F7F	; 25F76
@@ -5336,7 +5336,7 @@ mov ebx, 2Fh	; 25F8B
 lea edx, [dword esp+0208h]	; 25F90
 mov eax, dword [dword esp+025Ch]	; 25F97
 call read_	; 25F9E
-cmp dword [dword_C6956], byte 0	; 25FA3
+cmp dword [statsplayoffs], byte 0	; 25FA3
 jne short loc_25FB5	; 25FAA
 mov eax, dword [dword esp+0208h]	; 25FAC
 jmp short loc_25FBC	; 25FB3
@@ -5383,7 +5383,7 @@ movsw	; 26033
 movsb	; 26035
 cmp dword [esp], byte 7	; 26036
 jne near loc_260E0	; 2603A
-cmp dword [dword_C6956], byte 0	; 26040
+cmp dword [statsplayoffs], byte 0	; 26040
 jne short loc_26052	; 26047
 mov eax, dword [dword esp+0216h]	; 26049
 jmp short loc_26059	; 26050
@@ -5393,7 +5393,7 @@ loc_26059:
 and eax, 0FFFFh	; 26059
 mov dword [dword esp+0270h], eax	; 2605E
 je short loc_260CC	; 26065
-cmp dword [dword_C6956], byte 0	; 26067
+cmp dword [statsplayoffs], byte 0	; 26067
 jne short loc_26079	; 2606E
 mov eax, dword [dword esp+020Ah]	; 26070
 jmp short loc_26080	; 26077
@@ -5502,7 +5502,7 @@ mov edi, dword [dword_D8B74]	; 261FC
 mov esi, dword [dword_D8B68]	; 26202
 call sub_B4BA8	; 26208
 xor ecx, ecx	; 2620D
-mov ebx, dword [dword_C6956]	; 2620F
+mov ebx, dword [statsplayoffs]	; 2620F
 mov ebx, dword [nosplit ebx*4+off_C68E4]	; 26215
 cmp byte [byte_ED858], 1	; 2621C
 jne short loc_2622D	; 26223
@@ -5659,7 +5659,7 @@ mov eax, 1F4h	; 2645C
 call PrintShadowText	; 26461
 cmp dword [esp], byte 9	; 26466
 jne short loc_26475	; 2646A
-cmp dword [dword_C6956], byte 1	; 2646C
+cmp dword [statsplayoffs], byte 1	; 2646C
 je short loc_2649A	; 26473
 loc_26475:
 mov edx, dword [esp]	; 26475
@@ -5735,7 +5735,7 @@ mov eax, 50h	; 2658F
 call PrintShadowText	; 26594
 mov ebx, dword [off_C68F4]	; 26599
 xor ecx, ecx	; 2659F
-mov edx, unk_C65D4	; 265A1
+mov edx, statsleague	; 265A1
 lea eax, [dword esp+0238h]	; 265A6
 call MakePath	; 265AD
 push dword 200h	; 265B2
@@ -5774,7 +5774,7 @@ shl eax, 2	; 2662C
 sub eax, edx	; 2662F
 shl eax, 4	; 26631
 sub eax, edx	; 26634
-cmp dword [dword_C6956], byte 0	; 26636
+cmp dword [statsplayoffs], byte 0	; 26636
 jne short loc_26649	; 2663D
 mov esi, dword [dword_DD110]	; 2663F
 add esi, eax	; 26645
@@ -5818,7 +5818,7 @@ sub eax, edx	; 266C6
 shl eax, 2	; 266C8
 sub eax, edx	; 266CB
 add eax, eax	; 266CD
-cmp dword [dword_C6956], byte 0	; 266CF
+cmp dword [statsplayoffs], byte 0	; 266CF
 jne short loc_266E2	; 266D6
 mov esi, dword [dword_DD114]	; 266D8
 add esi, eax	; 266DE
@@ -5975,7 +5975,7 @@ mov ebx, str_fmt2d	; 268F0
 mov edx, esi	; 268F5
 mov eax, 1F4h	; 268F7
 call PrintFmt1	; 268FC
-cmp dword [dword_C6956], byte 0	; 26901
+cmp dword [statsplayoffs], byte 0	; 26901
 jne near loc_26811	; 26908
 mov ecx, dword [byte ebp+04h]	; 2690E
 sar ecx, 10h	; 26911
@@ -6195,7 +6195,7 @@ mov dword [byte ebp-028h], eax	; 26B70
 mov dword [byte ebp-024h], edx	; 26B73
 mov dword [byte ebp-020h], ebx	; 26B76
 add dword [byte ebp-028h], byte 4	; 26B79
-cmp dword [dword_C6956], byte 0	; 26B7D
+cmp dword [statsplayoffs], byte 0	; 26B7D
 jne near loc_26CB5	; 26B84
 mov eax, dword [byte ebp-020h]	; 26B8A
 mov dword [eax], 0	; 26B8D

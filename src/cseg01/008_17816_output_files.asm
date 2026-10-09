@@ -2,18 +2,17 @@
 bits 32
 %include "hockey.inc"
 section s_17816 progbits alloc exec nowrite align=1
-extern __CHK, asc_C0910, asc_C0915, asc_C6570, byte_C671C, byte_C672F, postate, lgstate
-extern byte_C6745, byte_C6759, byte_C6777, textgrid, dword_C65B0, dword_C65B4, dword_C65B8, dword_C65BC
-extern dword_C6956, dword_C695A, dword_C6A60, dword_DC6B4, dword_DC738, dword_DD120, fclose_, fopen_
+extern __CHK, str_OUT, str_NeedKbytesFmt2, msg_NeedKbytes2, mi_9394Season, mi_9394Playoffs, postate, lgstate
+extern mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, textgrid, dword_C65B0, dword_C65B4, dword_C65B8, deskexit
+extern statsplayoffs, statsfromleague, dword_C6A60, dword_DC6B4, dword_DC738, dword_DD120, fclose_, fopen_
 extern fputs_, off_C648E, off_C659A, sprintf_, strcat_, strcmp_, strcpy_, strncpy_
-extern FileExists, DiskSpaceShort, MessageBox, sub_76429, sub_8FFB0, unk_C093C, unk_C093F, exhstate
-extern unk_C6499, unk_C64F5, unk_C652A, unk_C65D4, unk_DC340
-global loc_1787A, loc_1787C, loc_178BB, loc_17910, loc_1792C, loc_17980, loc_1799E, loc_179AA
-global loc_179FA, loc_17A24, loc_17A5C, loc_17AEE, loc_17B18, loc_17B50, loc_17B65, loc_17C0C
-global loc_17C48, loc_17CDA, loc_17D19, loc_17D54, loc_17DA7, loc_17DE2, sub_17816, sub_179B6
-global sub_179D0, sub_179E6, sub_179EB, sub_17A00, sub_17AF3, sub_17BE1, sub_17BE7, sub_17CE0
-global sub_17D6E
-sub_17816:
+extern FileExists, DiskSpaceShort, MessageBox, sub_76429, sub_8FFB0, str_rt, str_wt, exhstate
+extern unk_C6499, unk_C64F5, unk_C652A, statsleague, unk_DC340
+global DeskSetExit_ret1, StatsSel_common
+global WriteScreenTextFile, DeskSetExit1
+global DeskSetExit2, DeskSetExit3, DeskSetExit3_body, StatsSel9394Season, StatsSel9394Playoffs, StatsSel_x, StatsSelLeague, StatsSelLeaguePlayoffs
+global StatsSelPlayoffMode
+WriteScreenTextFile:
 push dword 0B8h	; 17816
 call __CHK	; 1781B
 push ebx	; 17820
@@ -23,31 +22,31 @@ push esi	; 17823
 push edi	; 17824
 sub esp, 8Ch	; 17825
 cmp dword [textgrid], byte 0	; 1782B
-je near loc_179AA	; 17832
+je near .x	; 17832
 mov dword [byte esp+07Ch], 4	; 17838
 xor ecx, ecx	; 17840
 mov dword [dword esp+080h], ecx	; 17842
 mov edx, eax	; 17849
 lea eax, [byte esp+068h]	; 1784B
 call strcpy_	; 1784F
-mov edx, asc_C0910	; 17854
+mov edx, str_OUT	; 17854
 lea eax, [byte esp+068h]	; 17859
 call strcat_	; 1785D
 lea eax, [byte esp+068h]	; 17862
 call FileExists	; 17866
 test eax, eax	; 1786B
-jne short loc_1787A	; 1786D
+jne short .1	; 1786D
 lea edx, [byte esp+07Ch]	; 1786F
 call DiskSpaceShort	; 17873
-jmp short loc_1787C	; 17878
-loc_1787A:
+jmp short .2	; 17878
+.1:
 xor eax, eax	; 1787A
-loc_1787C:
+.2:
 test eax, eax	; 1787C
-je short loc_178BB	; 1787E
+je short .3	; 1787E
 push eax	; 17880
-push asc_C0915	; 17881
-push asc_C6570	; 17886
+push str_NeedKbytesFmt2	; 17881
+push msg_NeedKbytes2	; 17886
 call sprintf_	; 1788B
 add esp, byte 0Ch	; 17890
 push dword 320h	; 17893
@@ -59,15 +58,15 @@ push byte 0	; 178A8
 push byte 0	; 178AA
 mov ecx, 3	; 178AC
 mov ebx, off_C659A	; 178B1
-jmp near loc_1799E	; 178B6
-loc_178BB:
+jmp near .7	; 178B6
+.3:
 xor ah, ah	; 178BB
 mov byte [byte esp+065h], ah	; 178BD
-mov edx, unk_C093C	; 178C1
+mov edx, str_rt	; 178C1
 lea eax, [byte esp+068h]	; 178C6
 call fopen_	; 178CA
 test eax, eax	; 178CF
-je short loc_17910	; 178D1
+je short .4	; 178D1
 call fclose_	; 178D3
 push byte 0FFFFFFFFh	; 178D8
 lea eax, [dword esp+088h]	; 178DA
@@ -82,17 +81,17 @@ mov edx, 0FFFFFFFFh	; 178FB
 mov eax, edx	; 17900
 call MessageBox	; 17902
 cmp eax, byte 1	; 17907
-jne near loc_179AA	; 1790A
-loc_17910:
-mov edx, unk_C093F	; 17910
+jne near .x	; 1790A
+.4:
+mov edx, str_wt	; 17910
 lea eax, [byte esp+068h]	; 17915
 call fopen_	; 17919
 mov edi, eax	; 1791E
 test eax, eax	; 17920
-je short loc_17980	; 17922
+je short .6	; 17922
 mov ecx, dword [textgrid]	; 17924
 xor esi, esi	; 1792A
-loc_1792C:
+.5:
 mov ebx, 64h	; 1792C
 mov edx, ecx	; 17931
 mov eax, esp	; 17933
@@ -106,7 +105,7 @@ call fputs_	; 17949
 add ecx, byte 64h	; 1794E
 inc esi	; 17951
 cmp esi, byte 24h	; 17952
-jl short loc_1792C	; 17955
+jl short WriteScreenTextFile.5	; 17955
 mov eax, edi	; 17957
 call fclose_	; 17959
 push byte 0FFFFFFFFh	; 1795E
@@ -118,8 +117,8 @@ push byte 0	; 17970
 push byte 0	; 17972
 mov ecx, 1	; 17974
 mov ebx, unk_C64F5	; 17979
-jmp short loc_1799E	; 1797E
-loc_17980:
+jmp short .7	; 1797E
+.6:
 push byte 0FFFFFFFFh	; 17980
 lea eax, [dword esp+088h]	; 17982
 push eax	; 17989
@@ -129,11 +128,11 @@ push edi	; 17992
 push edi	; 17993
 mov ecx, 1	; 17994
 mov ebx, unk_C652A	; 17999
-loc_1799E:
+.7:
 mov edx, 0FFFFFFFFh	; 1799E
 mov eax, edx	; 179A3
 call MessageBox	; 179A5
-loc_179AA:
+.x:
 add esp, 8Ch	; 179AA
 pop edi	; 179B0
 pop esi	; 179B1
@@ -141,60 +140,60 @@ pop edx	; 179B2
 pop ecx	; 179B3
 pop ebx	; 179B4
 ret	; 179B5
-sub_179B6:
+DeskSetExit1:
 push dword 8	; 179B6
 call __CHK	; 179BB
 push edx	; 179C0
 mov edx, 1	; 179C1
-mov dword [dword_C65BC], edx	; 179C6
+mov dword [deskexit], edx	; 179C6
 mov eax, edx	; 179CC
 pop edx	; 179CE
 ret	; 179CF
-sub_179D0:
+DeskSetExit2:
 push dword 4	; 179D0
 call __CHK	; 179D5
-mov dword [dword_C65BC], 2	; 179DA
-jmp short loc_179FA	; 179E4
-sub_179E6:
+mov dword [deskexit], 2	; 179DA
+jmp short DeskSetExit_ret1	; 179E4
+DeskSetExit3:
 push dword 4	; 179E6
-sub_179EB:
+DeskSetExit3_body:
 call __CHK	; 179EB
-mov dword [dword_C65BC], 3	; 179F0
-loc_179FA:
+mov dword [deskexit], 3	; 179F0
+DeskSetExit_ret1:
 mov eax, 1	; 179FA
 ret	; 179FF
-sub_17A00:
+StatsSel9394Season:
 push dword 20h	; 17A00
 call __CHK	; 17A05
 push ebx	; 17A0A
 push ecx	; 17A0B
 push edx	; 17A0C
 push ebp	; 17A0D
-cmp dword [dword_C695A], byte 0	; 17A0E
-jne short loc_17A24	; 17A15
-cmp dword [dword_C6956], byte 0	; 17A17
-je near loc_17AEE	; 17A1E
-loc_17A24:
-mov byte [byte_C671C], 1	; 17A24
+cmp dword [statsfromleague], byte 0	; 17A0E
+jne short .1	; 17A15
+cmp dword [statsplayoffs], byte 0	; 17A17
+je near .x	; 17A1E
+.1:
+mov byte [mi_9394Season], 1	; 17A24
 mov dl, 2	; 17A2B
-mov byte [byte_C6777], dl	; 17A2D
-mov byte [byte_C6759], dl	; 17A33
-mov byte [byte_C6745], dl	; 17A39
-mov byte [byte_C672F], dl	; 17A3F
+mov byte [mi_PlayoffMode], dl	; 17A2D
+mov byte [mi_LeaguePlayoffs], dl	; 17A33
+mov byte [mi_LeagueSeason], dl	; 17A39
+mov byte [mi_9394Playoffs], dl	; 17A3F
 xor ecx, ecx	; 17A45
-mov dword [dword_C695A], ecx	; 17A47
-cmp dword [dword_C6956], byte 0	; 17A4D
-je short loc_17A5C	; 17A54
+mov dword [statsfromleague], ecx	; 17A47
+cmp dword [statsplayoffs], byte 0	; 17A4D
+je short .2	; 17A54
 mov dword [dword_C65B4], ecx	; 17A56
-loc_17A5C:
+.2:
 xor ebp, ebp	; 17A5C
-mov dword [dword_C6956], ebp	; 17A5E
+mov dword [statsplayoffs], ebp	; 17A5E
 mov ebx, 1Fh	; 17A64
 mov edx, exhstate+4	; 17A69
-mov eax, unk_C65D4	; 17A6E
+mov eax, statsleague	; 17A6E
 call strncpy_	; 17A73
 cmp dword [dword_DC738], byte 0	; 17A78
-je short loc_17AEE	; 17A7F
+je short .x	; 17A7F
 push unk_DC340	; 17A81
 push dword 100h	; 17A86
 push ebp	; 17A8B
@@ -215,13 +214,13 @@ mov ebx, 10h	; 17ADD
 mov edx, unk_DC340	; 17AE2
 xor eax, eax	; 17AE7
 call sub_76429	; 17AE9
-loc_17AEE:
+.x:
 pop ebp	; 17AEE
 pop edx	; 17AEF
 pop ecx	; 17AF0
 pop ebx	; 17AF1
 ret	; 17AF2
-sub_17AF3:
+StatsSel9394Playoffs:
 push dword 24h	; 17AF3
 call __CHK	; 17AF8
 push ebx	; 17AFD
@@ -229,32 +228,32 @@ push ecx	; 17AFE
 push edx	; 17AFF
 push esi	; 17B00
 push ebp	; 17B01
-cmp dword [dword_C695A], byte 0	; 17B02
-jne short loc_17B18	; 17B09
-cmp dword [dword_C6956], byte 1	; 17B0B
-je near sub_17BE1	; 17B12
-loc_17B18:
-mov byte [byte_C672F], 1	; 17B18
+cmp dword [statsfromleague], byte 0	; 17B02
+jne short .1	; 17B09
+cmp dword [statsplayoffs], byte 1	; 17B0B
+je near StatsSel_x	; 17B12
+.1:
+mov byte [mi_9394Playoffs], 1	; 17B18
 mov dl, 2	; 17B1F
-mov byte [byte_C6777], dl	; 17B21
-mov byte [byte_C6759], dl	; 17B27
-mov byte [byte_C6745], dl	; 17B2D
-mov byte [byte_C671C], dl	; 17B33
+mov byte [mi_PlayoffMode], dl	; 17B21
+mov byte [mi_LeaguePlayoffs], dl	; 17B27
+mov byte [mi_LeagueSeason], dl	; 17B2D
+mov byte [mi_9394Season], dl	; 17B33
 xor ecx, ecx	; 17B39
-mov dword [dword_C695A], ecx	; 17B3B
-cmp dword [dword_C6956], byte 0	; 17B41
-jne short loc_17B50	; 17B48
+mov dword [statsfromleague], ecx	; 17B3B
+cmp dword [statsplayoffs], byte 0	; 17B41
+jne short .2	; 17B48
 mov dword [dword_C65B4], ecx	; 17B4A
-loc_17B50:
+.2:
 mov ebp, 1	; 17B50
-mov dword [dword_C6956], ebp	; 17B55
+mov dword [statsplayoffs], ebp	; 17B55
 mov ebx, 1Fh	; 17B5B
 mov edx, exhstate+4	; 17B60
-loc_17B65:
-mov eax, unk_C65D4	; 17B65
+StatsSel_common:
+mov eax, statsleague	; 17B65
 call strncpy_	; 17B6A
 cmp dword [dword_DC738], byte 0	; 17B6F
-je short sub_17BE1	; 17B76
+je short StatsSel_x	; 17B76
 push unk_DC340	; 17B78
 push dword 100h	; 17B7D
 push byte 0	; 17B82
@@ -276,14 +275,14 @@ mov ebx, 10h	; 17BD0
 mov edx, unk_DC340	; 17BD5
 xor eax, eax	; 17BDA
 call sub_76429	; 17BDC
-sub_17BE1:
+StatsSel_x:
 pop ebp	; 17BE1
 pop esi	; 17BE2
 pop edx	; 17BE3
 pop ecx	; 17BE4
 pop ebx	; 17BE5
 ret	; 17BE6
-sub_17BE7:
+StatsSelLeague:
 push dword 24h	; 17BE7
 call __CHK	; 17BEC
 push ebx	; 17BF1
@@ -291,31 +290,31 @@ push ecx	; 17BF2
 push edx	; 17BF3
 push edi	; 17BF4
 push ebp	; 17BF5
-cmp dword [dword_C695A], byte 1	; 17BF6
-jne short loc_17C0C	; 17BFD
-cmp dword [dword_C6956], byte 0	; 17BFF
-je near loc_17CDA	; 17C06
-loc_17C0C:
-mov byte [byte_C6745], 1	; 17C0C
+cmp dword [statsfromleague], byte 1	; 17BF6
+jne short .1	; 17BFD
+cmp dword [statsplayoffs], byte 0	; 17BFF
+je near .x	; 17C06
+.1:
+mov byte [mi_LeagueSeason], 1	; 17C0C
 mov dl, 2	; 17C13
-mov byte [byte_C6777], dl	; 17C15
-mov byte [byte_C6759], dl	; 17C1B
-mov byte [byte_C672F], dl	; 17C21
-mov byte [byte_C671C], dl	; 17C27
-mov dword [dword_C695A], 1	; 17C2D
-cmp dword [dword_C6956], byte 0	; 17C37
-je short loc_17C48	; 17C3E
+mov byte [mi_PlayoffMode], dl	; 17C15
+mov byte [mi_LeaguePlayoffs], dl	; 17C1B
+mov byte [mi_9394Playoffs], dl	; 17C21
+mov byte [mi_9394Season], dl	; 17C27
+mov dword [statsfromleague], 1	; 17C2D
+cmp dword [statsplayoffs], byte 0	; 17C37
+je short .2	; 17C3E
 xor edi, edi	; 17C40
 mov dword [dword_C65B4], edi	; 17C42
-loc_17C48:
+.2:
 xor ebp, ebp	; 17C48
-mov dword [dword_C6956], ebp	; 17C4A
+mov dword [statsplayoffs], ebp	; 17C4A
 mov ebx, 1Fh	; 17C50
 mov edx, lgstate+4	; 17C55
-mov eax, unk_C65D4	; 17C5A
+mov eax, statsleague	; 17C5A
 call strncpy_	; 17C5F
 cmp dword [dword_DC738], byte 0	; 17C64
-je short loc_17CDA	; 17C6B
+je short .x	; 17C6B
 push unk_DC340	; 17C6D
 push dword 100h	; 17C72
 push ebp	; 17C77
@@ -336,14 +335,14 @@ mov ebx, 10h	; 17CC9
 mov edx, unk_DC340	; 17CCE
 xor eax, eax	; 17CD3
 call sub_76429	; 17CD5
-loc_17CDA:
+.x:
 pop ebp	; 17CDA
 pop edi	; 17CDB
 pop edx	; 17CDC
 pop ecx	; 17CDD
 pop ebx	; 17CDE
 ret	; 17CDF
-sub_17CE0:
+StatsSelLeaguePlayoffs:
 push dword 24h	; 17CE0
 call __CHK	; 17CE5
 push ebx	; 17CEA
@@ -351,35 +350,35 @@ push ecx	; 17CEB
 push edx	; 17CEC
 push esi	; 17CED
 push ebp	; 17CEE
-mov edx, dword [dword_C695A]	; 17CEF
+mov edx, dword [statsfromleague]	; 17CEF
 cmp edx, byte 1	; 17CF5
-jne short loc_17D19	; 17CF8
-cmp edx, dword [dword_C6956]	; 17CFA
-jne short loc_17D19	; 17D00
+jne short .1	; 17CF8
+cmp edx, dword [statsplayoffs]	; 17CFA
+jne short .1	; 17D00
 mov edx, lgstate+4	; 17D02
-mov eax, unk_C65D4	; 17D07
+mov eax, statsleague	; 17D07
 call strcmp_	; 17D0C
 test eax, eax	; 17D11
-je near sub_17BE1	; 17D13
-loc_17D19:
-mov byte [byte_C6759], 1	; 17D19
+je near StatsSel_x	; 17D13
+.1:
+mov byte [mi_LeaguePlayoffs], 1	; 17D19
 mov dl, 2	; 17D20
-mov byte [byte_C6777], dl	; 17D22
-mov byte [byte_C6745], dl	; 17D28
-mov byte [byte_C672F], dl	; 17D2E
-mov byte [byte_C671C], dl	; 17D34
-mov dword [dword_C695A], 1	; 17D3A
-mov esi, dword [dword_C6956]	; 17D44
+mov byte [mi_PlayoffMode], dl	; 17D22
+mov byte [mi_LeagueSeason], dl	; 17D28
+mov byte [mi_9394Playoffs], dl	; 17D2E
+mov byte [mi_9394Season], dl	; 17D34
+mov dword [statsfromleague], 1	; 17D3A
+mov esi, dword [statsplayoffs]	; 17D44
 test esi, esi	; 17D4A
-jne short loc_17D54	; 17D4C
+jne short .2	; 17D4C
 mov dword [dword_C65B4], esi	; 17D4E
-loc_17D54:
+.2:
 mov ebp, 1	; 17D54
-mov dword [dword_C6956], ebp	; 17D59
+mov dword [statsplayoffs], ebp	; 17D59
 mov ebx, 1Fh	; 17D5F
 mov edx, lgstate+4	; 17D64
-jmp near loc_17B65	; 17D69
-sub_17D6E:
+jmp near StatsSel_common	; 17D69
+StatsSelPlayoffMode:
 push dword 24h	; 17D6E
 call __CHK	; 17D73
 push ebx	; 17D78
@@ -387,31 +386,31 @@ push ecx	; 17D79
 push edx	; 17D7A
 push esi	; 17D7B
 push ebp	; 17D7C
-mov edx, dword [dword_C695A]	; 17D7D
+mov edx, dword [statsfromleague]	; 17D7D
 cmp edx, byte 1	; 17D83
-jne short loc_17DA7	; 17D86
-cmp edx, dword [dword_C6956]	; 17D88
-jne short loc_17DA7	; 17D8E
+jne short .1	; 17D86
+cmp edx, dword [statsplayoffs]	; 17D88
+jne short .1	; 17D8E
 mov edx, postate+4	; 17D90
-mov eax, unk_C65D4	; 17D95
+mov eax, statsleague	; 17D95
 call strcmp_	; 17D9A
 test eax, eax	; 17D9F
-je near sub_17BE1	; 17DA1
-loc_17DA7:
-mov byte [byte_C6777], 1	; 17DA7
+je near StatsSel_x	; 17DA1
+.1:
+mov byte [mi_PlayoffMode], 1	; 17DA7
 mov dl, 2	; 17DAE
-mov byte [byte_C6759], dl	; 17DB0
-mov byte [byte_C6745], dl	; 17DB6
-mov byte [byte_C672F], dl	; 17DBC
-mov byte [byte_C671C], dl	; 17DC2
-mov dword [dword_C695A], 1	; 17DC8
-mov esi, dword [dword_C6956]	; 17DD2
+mov byte [mi_LeaguePlayoffs], dl	; 17DB0
+mov byte [mi_LeagueSeason], dl	; 17DB6
+mov byte [mi_9394Playoffs], dl	; 17DBC
+mov byte [mi_9394Season], dl	; 17DC2
+mov dword [statsfromleague], 1	; 17DC8
+mov esi, dword [statsplayoffs]	; 17DD2
 test esi, esi	; 17DD8
-jne short loc_17DE2	; 17DDA
+jne short .2	; 17DDA
 mov dword [dword_C65B4], esi	; 17DDC
-loc_17DE2:
+.2:
 mov ebp, 1	; 17DE2
-mov dword [dword_C6956], ebp	; 17DE7
+mov dword [statsplayoffs], ebp	; 17DE7
 mov ebx, 1Fh	; 17DED
 mov edx, postate+4	; 17DF2
-jmp near loc_17B65	; 17DF7
+jmp near StatsSel_common	; 17DF7

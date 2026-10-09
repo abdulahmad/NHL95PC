@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_1D6E8 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, asc_C0B54, asc_C0B5C, asc_C0C28, asc_C0C2C, asc_C671E, asc_C6731
-extern asc_C6747, asc_C675B, asc_C6779, byte_C671C, byte_C672F, byte_C6745, byte_C6759, byte_C6777
-extern byte_DC836, byte_DCFD8, byte_DD058, dword_C65B0, dword_C65B4, dword_C6956, dword_C6A60, dword_DC238
+extern asc_C6747, asc_C675B, asc_C6779, mi_9394Season, mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode
+extern byte_DC836, byte_DCFD8, byte_DD058, dword_C65B0, dword_C65B4, statsplayoffs, dword_C6A60, dword_DC238
 extern dword_DC640, dword_DC6B8, dword_DC6BC, dword_DC720, dword_DC73C, dword_DC750, dword_DC754, playofftree
 extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD120, dword_EA0DC, jctime, memcmp_
 extern memcpy_, off_D3078, sprintf_, strcat_, strlen_, strncpy_, FileOpenRead, FileClose
@@ -742,7 +742,7 @@ LD sub, eax, edx	; 1DFF8
 sar eax, 1	; 1DFFA
 mov dword [dword esp+094h], eax	; 1DFFC
 mov dword [byte esp+078h], eax	; 1E003
-cmp dword [dword_C6956], byte 0	; 1E007
+cmp dword [statsplayoffs], byte 0	; 1E007
 jne near loc_1E0EA	; 1E00E
 xor esi, esi	; 1E014
 mov edx, dword [dword_C65B4]	; 1E016
@@ -957,7 +957,7 @@ test cl, 2	; 1E2A6
 jne short loc_1E30D	; 1E2A9
 xor edx, edx	; 1E2AB
 mov dword [dword esp+09Ch], edx	; 1E2AD
-cmp dword [dword_C6956], byte 1	; 1E2B4
+cmp dword [statsplayoffs], byte 1	; 1E2B4
 jne near loc_1E1FA	; 1E2BB
 mov edx, dword [dword esp+094h]	; 1E2C1
 push edx	; 1E2C8
@@ -1040,7 +1040,7 @@ xor esi, esi	; 1E3D6
 mov dword [dword esp+098h], esi	; 1E3D8
 mov eax, dword [byte esp+070h]	; 1E3DF
 shl eax, 2	; 1E3E3
-cmp dword [dword_C6956], byte 0	; 1E3E6
+cmp dword [statsplayoffs], byte 0	; 1E3E6
 jne short loc_1E400	; 1E3ED
 mov eax, dword [dword eax+dword_DC640]	; 1E3EF
 mov dword [byte esp+074h], eax	; 1E3F5
@@ -1052,7 +1052,7 @@ mov dword [dword_C65B0], eax	; 1E406
 mov eax, dword [byte esp+070h]	; 1E40B
 loc_1E40F:
 mov dword [dword_C65B4], eax	; 1E40F
-cmp dword [dword_C6956], byte 0	; 1E414
+cmp dword [statsplayoffs], byte 0	; 1E414
 jne near loc_1E4DC	; 1E41B
 mov edx, dword [byte esp+070h]	; 1E421
 mov edx, dword [nosplit edx*4+dword_DC640]	; 1E425
@@ -1155,7 +1155,7 @@ add esp, byte 4	; 1E551
 xor eax, eax	; 1E554
 jmp near loc_1ED8B	; 1E556
 loc_1E55B:
-mov esi, dword [dword_C6956]	; 1E55B
+mov esi, dword [statsplayoffs]	; 1E55B
 test esi, esi	; 1E561
 jne near loc_1E63C	; 1E563
 mov eax, dword [byte esp+074h]	; 1E569
@@ -1537,7 +1537,7 @@ mov eax, dword [byte esp+070h]	; 1EA50
 mov esi, dword [byte esp+074h]	; 1EA54
 cmp eax, esi	; 1EA58
 je near loc_1EC0D	; 1EA5A
-cmp dword [dword_C6956], byte 0	; 1EA60
+cmp dword [statsplayoffs], byte 0	; 1EA60
 jne near loc_1EBE0	; 1EA67
 mov edx, dword [dword edx+dword_DC640]	; 1EA6D
 mov eax, edx	; 1EA73
@@ -1677,7 +1677,7 @@ lea eax, [byte esp+070h]	; 1EBFF
 call sub_27BC3	; 1EC03
 jmp near loc_1ED71	; 1EC08
 loc_1EC0D:
-cmp dword [dword_C6956], byte 0	; 1EC0D
+cmp dword [statsplayoffs], byte 0	; 1EC0D
 je short loc_1EC23	; 1EC14
 cmp dword [dword edx+playofftree], byte 1Ah	; 1EC16
 je near loc_1ED71	; 1EC1D
@@ -1711,7 +1711,7 @@ test esi, esi	; 1EC62
 jge short loc_1EC2A	; 1EC64
 mov eax, dword [byte esp+070h]	; 1EC66
 shl eax, 2	; 1EC6A
-cmp dword [dword_C6956], byte 0	; 1EC6D
+cmp dword [statsplayoffs], byte 0	; 1EC6D
 jne short loc_1EC87	; 1EC74
 mov eax, dword [dword eax+dword_DC640]	; 1EC76
 mov dword [byte esp+074h], eax	; 1EC7C
@@ -2918,7 +2918,7 @@ push ebx	; 1FB89
 push ecx	; 1FB8A
 push esi	; 1FB8B
 push edi	; 1FB8C
-cmp dword [dword_C6956], byte 0	; 1FB8D
+cmp dword [statsplayoffs], byte 0	; 1FB8D
 jne short loc_1FBAF	; 1FB94
 mov ebx, dword [eax]	; 1FB96
 mov eax, ebx	; 1FB98
@@ -2941,7 +2941,7 @@ mov ebx, dword [dword_DD110]	; 1FBBD
 add eax, ebx	; 1FBC3
 add eax, byte 12h	; 1FBC5
 loc_1FBC8:
-cmp dword [dword_C6956], byte 0	; 1FBC8
+cmp dword [statsplayoffs], byte 0	; 1FBC8
 jne short loc_1FBE9	; 1FBCF
 mov ebx, dword [edx]	; 1FBD1
 mov edx, ebx	; 1FBD3
@@ -3031,7 +3031,7 @@ push ebx	; 1FC99
 push ecx	; 1FC9A
 push esi	; 1FC9B
 push edi	; 1FC9C
-cmp dword [dword_C6956], byte 0	; 1FC9D
+cmp dword [statsplayoffs], byte 0	; 1FC9D
 jne short loc_1FCC0	; 1FCA4
 mov ebx, dword [eax]	; 1FCA6
 mov eax, ebx	; 1FCA8
@@ -3055,7 +3055,7 @@ mov ebx, dword [dword_DD114]	; 1FCD0
 add eax, ebx	; 1FCD6
 add eax, byte 16h	; 1FCD8
 loc_1FCDB:
-cmp dword [dword_C6956], byte 0	; 1FCDB
+cmp dword [statsplayoffs], byte 0	; 1FCDB
 jne short loc_1FCFE	; 1FCE2
 mov ebx, dword [edx]	; 1FCE4
 mov edx, ebx	; 1FCE6
@@ -3311,29 +3311,29 @@ push edi	; 1FF93
 push ebp	; 1FF94
 mov esi, eax	; 1FF95
 mov ebp, edx	; 1FF97
-cmp byte [byte_C671C], 1	; 1FF99
+cmp byte [mi_9394Season], 1	; 1FF99
 jne short loc_1FFAB	; 1FFA0
 mov ecx, asc_C671E	; 1FFA2
 loc_1FFA7:
 xor ebx, ebx	; 1FFA7
 jmp short loc_1FFEE	; 1FFA9
 loc_1FFAB:
-cmp byte [byte_C672F], 1	; 1FFAB
+cmp byte [mi_9394Playoffs], 1	; 1FFAB
 jne short loc_1FFBB	; 1FFB2
 mov ecx, asc_C6731	; 1FFB4
 jmp short loc_1FFE9	; 1FFB9
 loc_1FFBB:
-cmp byte [byte_C6745], 1	; 1FFBB
+cmp byte [mi_LeagueSeason], 1	; 1FFBB
 jne short loc_1FFCB	; 1FFC2
 mov ecx, asc_C6747	; 1FFC4
 jmp short loc_1FFA7	; 1FFC9
 loc_1FFCB:
-cmp byte [byte_C6759], 1	; 1FFCB
+cmp byte [mi_LeaguePlayoffs], 1	; 1FFCB
 jne short loc_1FFDB	; 1FFD2
 mov ecx, asc_C675B	; 1FFD4
 jmp short loc_1FFE9	; 1FFD9
 loc_1FFDB:
-cmp byte [byte_C6777], 1	; 1FFDB
+cmp byte [mi_PlayoffMode], 1	; 1FFDB
 jne short loc_1FFEE	; 1FFE2
 mov ecx, asc_C6779	; 1FFE4
 loc_1FFE9:

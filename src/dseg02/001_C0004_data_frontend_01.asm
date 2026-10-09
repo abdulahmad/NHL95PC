@@ -13,7 +13,7 @@ global str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_Scrbrd2, str_Srb
 global str_Pal4, str_Scrn2, str_Msk1, str_MASK, str_Iff2, str_Title30, str_Mttitle, str_Adtitle
 global str_Cmv, str_Title, str_Pioneer1, str_Pl2, str_Pl1, str_Bkgd3, str_Pioneer2, str_Pioneer4
 global str_Pioneer3, str_FlaD, str_Pion, str_Pio, str_Eaopen, str_Easports, str_Backwin, str_Credits
-global str_Rockditi, str_Shp0, asc_C0910, asc_C0915, asc_C0944, asc_C094B, asc_C0952, asc_C0970
+global str_Rockditi, str_Shp0, str_OUT, str_NeedKbytesFmt2, asc_C0944, asc_C094B, asc_C0952, asc_C0970
 global asc_C097A, asc_C097F, asc_C0984, asc_C098C, asc_C0991, asc_C0997, unk_C020C, str_S1
 global str_errd3, str_errd4, str_backslash, unk_C0211, unk_C0216, unk_C021B, unk_C0220, unk_C0225
 global unk_C022A, unk_C022F, unk_C0234, unk_C0239, unk_C023E, unk_C0243, unk_C0248, unk_C0251
@@ -35,7 +35,7 @@ global unk_C072F, unk_C0734, unk_C0739, unk_C073E, unk_C0743, unk_C0748, unk_C07
 global unk_C0757, unk_C075C, unk_C0761, unk_C0766, unk_C076B, unk_C0770, unk_C0775, unk_C077A
 global unk_C077F, unk_C07A4, unk_C07A6, unk_C07AF, unk_C07B8, unk_C07C1, unk_C07CA, unk_C07D3
 global unk_C07DC, unk_C07E5, unk_C07EE, unk_C07F7, unk_C0800, unk_C0809, unk_C0812, unk_C081B
-global unk_C0824, unk_C082D, unk_C0836, unk_C083F, unk_C0848, unk_C0851, unk_C093C, unk_C093F
+global unk_C0824, unk_C082D, unk_C0836, unk_C083F, unk_C0848, unk_C0851, str_rt, str_wt
 str_NoDiskSpaceC:
 db 0Ah,049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,044h,069h
 db 073h,06Bh,020h,053h,070h,061h,063h,065h,020h,066h,072h,065h,065h,020h,06Fh,06Eh
@@ -588,15 +588,15 @@ str_Rockditi:
 db 072h,06Fh,063h,06Bh,064h,069h,074h,069h,00h
 str_Shp0:
 db 073h,068h,070h,030h,00h,00h,00h
-asc_C0910:
+str_OUT:
 db 02Eh,04Fh,055h,054h,00h
-asc_C0915:
+str_NeedKbytesFmt2:
 db 072h,065h,071h,075h,069h,072h,065h,020h,025h,032h,064h,020h,04Bh,062h,079h,074h
 db 065h,073h,020h,06Fh,066h,020h,066h,072h,065h,065h,020h,064h,069h,073h,06Bh,020h
 db 073h,070h,061h,063h,065h,02Eh,00h
-unk_C093C:
+str_rt:
 db 072h,074h,00h
-unk_C093F:
+str_wt:
 db 077h,074h,00h,00h,00h
 asc_C0944:
 db 053h,066h,050h,061h,06Ch,031h,00h

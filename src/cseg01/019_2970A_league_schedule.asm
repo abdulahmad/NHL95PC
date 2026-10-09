@@ -2,11 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_2970A progbits alloc exec nowrite align=1
-extern __CHK, asc_C8100, str_extDB, str_space, dword_C695A, dword_C71CC, dword_C71D0, lgstate
+extern __CHK, asc_C8100, str_extDB, str_space, statsfromleague, dword_C71CC, dword_C71D0, lgstate
 extern dword_C71D4, playofftree, playofftree_p1, pochampion, fputchar, jctime, teamcitynames, leaguedbnames
 extern strcat_, strcmp_, strcpy_, strlen_, MakePath, FileOpenRead, FileClose
 extern ReadSchedGame, sub_27F9C, sub_3DAB9, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, unk_C136D
-extern unk_C65D4, unk_DDAC4, unk_DDCE6
+extern statsleague, unk_DDAC4, unk_DDCE6
 global loc_29781, loc_2978F, loc_2979D, loc_2979F, loc_297A5, loc_297F4, loc_29808, loc_29816
 global loc_2981B, loc_29821, loc_29855, loc_29868, loc_2987B, loc_2987D, loc_29882, loc_29885
 global loc_29897, loc_298A9, loc_298AB, loc_298BB, loc_298CD, loc_298DF, loc_298E1, loc_298F1
@@ -32,7 +32,7 @@ mov dword [byte ebp-028h], edx	; 29724
 mov dword [byte ebp-08h], 0FFFFFFFFh	; 29727
 mov ecx, str_extDB	; 2972E
 mov ebx, dword [leaguedbnames+10h]	; 29733
-mov edx, unk_C65D4	; 29739
+mov edx, statsleague	; 29739
 lea eax, [byte ebp-058h]	; 2973E
 call MakePath	; 29741
 xor ebx, ebx	; 29746
@@ -368,11 +368,11 @@ push ebp	; 29AA6
 mov ebp, esp	; 29AA7
 sub esp, 24h	; 29AA9
 mov dword [byte ebp-04h], eax	; 29AAF
-cmp dword [dword_C695A], byte 0	; 29AB2
+cmp dword [statsfromleague], byte 0	; 29AB2
 je short loc_29AD5	; 29AB9
 mov ecx, str_extDB	; 29ABB
 mov ebx, dword [leaguedbnames+18h]	; 29AC0
-mov edx, unk_C65D4	; 29AC6
+mov edx, statsleague	; 29AC6
 lea eax, [byte ebp-024h]	; 29ACB
 call MakePath	; 29ACE
 jmp short loc_29AE9	; 29AD3
@@ -412,7 +412,7 @@ sub esp, 40h	; 29B18
 mov dword [byte ebp-030h], eax	; 29B1E
 mov dword [byte ebp-028h], edx	; 29B21
 mov edx, lgstate+4	; 29B24
-mov eax, unk_C65D4	; 29B29
+mov eax, statsleague	; 29B29
 call strcmp_	; 29B2E
 mov dword [byte ebp-018h], eax	; 29B33
 mov dword [byte ebp-04h], 0	; 29B36
