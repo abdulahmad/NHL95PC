@@ -2083,6 +2083,10 @@ call AddPenalty2	; 62D79
 .x:
 pop ebx	; 62D7E
 ret	; 62D7F
+; C: src/c/045_614C2_scoring_penalty_text/AddPenalty2.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/AddPenalty2.inc"
+%else
 AddPenalty2:
 push dword 0Ch	; 62D80
 call __CHK	; 62D85
@@ -2172,6 +2176,7 @@ jl short AddPenalty2.6	; 62E9D
 pop ecx	; 62E9F
 pop ebx	; 62EA0
 ret	; 62EA1
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/SetPA.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/SetPA.inc"

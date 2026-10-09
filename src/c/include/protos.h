@@ -341,7 +341,7 @@ void CalPrevMonth(void);  /* 346FE */
 void getlchoice(Player *p);  /* 50908 */                  
 void PrintClampedText(int x, int y, char *s);  /* 2F580 */
 void EndPenaltyShot(void);  /* 64439 */                   
-void AddPenalty2(void *obj, int kind);
+void AddPenalty2(struct Player *p, short pen);
 void newcheck(short kind);  /* 58084 */                   
 int FreeUnrequestedSamples(void);  /* 84036 */            
 int IsSampleRequested(char *name);
@@ -507,5 +507,22 @@ void MergeTeamRecDelta(unsigned char *old, unsigned char *cur, unsigned char *ds
 int LoadLeagueGameRef(int fh);  /* 41B80 */               
 short checkagr(Player *p);  /* 5369F */                   
 void assepen(Player *p);  /* 4B02D */                     
+void StartShotPath(Player *p, int dist);  /* 4F9EF */     
+void Bcheck(Player *a, Player *b);  /* 56A54 */           
+void FallDown(Player *p, Player *by);
+void periodicevents(void);  /* 5C302 */                   
+void PenaltyManager(void);
+void DecayCrowdLevel(void);
+void clockcont_0(void);
+void UpdatePowerPlayFlags(void);
+void ShotMode(Player *p);  /* 578FA */                    
+void asscenterd(Player *p);  /* 4A53A */                  
+void assbenchside(Player *p);  /* 49BC2 */                
+int CopyGameSettings(char *src, char *dst);  /* 32C9E */  
+int FileOpenRW(char *name, int *h);  /* 14552: 0 = ok */  
+int MenuNextLeagueGame(int *fh);  /* 33559 */             
+void SetupStatsSourceMenu(int src);
+void SetScreenTitle(int title);
+void PlayLeagueGame(int *fh);
 
 #endif

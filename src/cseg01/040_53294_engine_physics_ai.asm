@@ -4581,6 +4581,10 @@ pop esi	; 56A50
 pop ecx	; 56A51
 pop ebx	; 56A52
 ret	; 56A53
+; C: src/c/040_53294_engine_physics_ai/Bcheck.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/Bcheck.inc"
+%else
 Bcheck:
 push dword 10h	; 56A54
 call __CHK	; 56A59
@@ -4672,6 +4676,7 @@ pop esi	; 56B75
 pop ecx	; 56B76
 pop ebx	; 56B77
 ret	; 56B78
+%endif ; C
 holdcheck:
 push dword 10h	; 56B79
 call __CHK	; 56B7E
@@ -5721,6 +5726,10 @@ pop edx	; 578F6
 pop ecx	; 578F7
 pop ebx	; 578F8
 ret	; 578F9
+; C: src/c/040_53294_engine_physics_ai/ShotMode.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/ShotMode.inc"
+%else
 ShotMode:
 push dword 14h	; 578FA
 call __CHK	; 578FF
@@ -5827,6 +5836,7 @@ pop edx	; 579FB
 pop ecx	; 579FC
 pop ebx	; 579FD
 ret	; 579FE
+%endif ; C
 ; C: src/c/040_53294_engine_physics_ai/Findhittype.c
 %ifdef CBUILD
 %include "c/040_53294_engine_physics_ai/Findhittype.inc"

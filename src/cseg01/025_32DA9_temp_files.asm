@@ -556,6 +556,10 @@ mov eax, 3	; 33545
 call SetupStatsSourceMenu	; 3354A
 call TradePlayers	; 3354F
 jmp near MenuAddTeam_common	; 33554
+; C: src/c/025_32DA9_temp_files/MenuNextLeagueGame.c
+%ifdef CBUILD
+%include "c/025_32DA9_temp_files/MenuNextLeagueGame.inc"
+%else
 MenuNextLeagueGame:
 push dword 40h	; 33559
 call __CHK	; 3355E
@@ -628,6 +632,7 @@ pop edx	; 3366B
 pop ecx	; 3366C
 pop ebx	; 3366D
 ret	; 3366E
+%endif ; C
 ; C: src/c/025_32DA9_temp_files/MenuLeagueHilights.c
 %ifdef CBUILD
 %include "c/025_32DA9_temp_files/MenuLeagueHilights.inc"

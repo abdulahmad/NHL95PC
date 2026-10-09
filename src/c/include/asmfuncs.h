@@ -36,7 +36,6 @@ extern void LoadGameGfx_common(); /* 13B56 */
 extern void ReloadGameGfx(); /* 13BB4 */
 extern void FileOpenRead_x(); /* 14537 */
 extern void FileOpenWrite(); /* 1453E */
-extern void FileOpenRW(); /* 14552 */
 extern void FileReadAt_x(); /* 145E4 */
 extern void FileReadAt_x2(); /* 145E6 */
 extern void ReadKeyRec(); /* 1463D */
@@ -240,13 +239,11 @@ extern void DrawSprite_b6(); /* 1D005 */
 extern void DrawSprite_b7(); /* 1D00F */
 extern void AddDirtyRect(); /* 1D02F */
 extern void SetupStatsSourceMenu_jt(); /* 1D0F0 */
-extern void SetupStatsSourceMenu(); /* 1D100 */
 extern void SetupStatsSourceMenu_lg(); /* 1D15C */
 extern void SetupStatsSourceMenu_po(); /* 1D241 */
 extern void SetupStatsSourceMenu_exh(); /* 1D2D3 */
 extern void SetupStatsSourceMenu_all(); /* 1D342 */
 extern void SetScreenTitle_jt(); /* 1D5F8 */
-extern void SetScreenTitle(); /* 1D610 */
 extern void SetScreenTitle_central(); /* 1D629 */
 extern void SetScreenTitle_calendar(); /* 1D635 */
 extern void SetScreenTitle_tree(); /* 1D641 */
@@ -436,7 +433,6 @@ extern void MainDeskLoop(); /* 31AB5 */
 extern void MainDeskLoop_x(); /* 32704 */
 extern void MainDeskLoop_x2(); /* 32705 */
 extern void WriteModeState(); /* 32B1D */
-extern void CopyGameSettings(); /* 32C9E */
 extern void MenuNewExhibition(); /* 32DA9 */
 extern void MenuNewLeague(); /* 32FF4 */
 extern void MenuAddTeam(); /* 3322A */
@@ -450,7 +446,6 @@ extern void MenuMergeUpdateDbs(); /* 333D7 */
 extern void nullsub_6(); /* 33468 */
 extern void MenuUpdateTeamDbs(); /* 334FB */
 extern void MenuTradePlayers(); /* 33523 */
-extern void MenuNextLeagueGame(); /* 33559 */
 extern void MenuImportDbs(); /* 336BE */
 extern void MenuExportDbs(); /* 336E6 */
 extern void FreeRinkGfx(); /* 33727 */
@@ -463,7 +458,6 @@ extern void CalendarScreen(); /* 34821 */
 extern void CheckLeagueDiskSync(); /* 35FB9 */
 extern void MakeTeamDbFmt(); /* 36207 */
 extern void PostGameToTeamDb(); /* 3626D */
-extern void PlayLeagueGame(); /* 36B93 */
 extern void TeamGridHitTest(); /* 37B92 */
 extern void DrawTeamGridName(); /* 37C53 */
 extern void SaveGridCellBg(); /* 37D6A */
@@ -586,7 +580,6 @@ extern void SteerToTarget(); /* 492F9 */
 extern void ass_pc_slot20(); /* 49460 */
 extern void assthreestars(); /* 495B8 */
 extern void assboxenter(); /* 499D8 */
-extern void assbenchside(); /* 49BC2 */
 extern void assdefo(); /* 49CDD */
 extern void assdefd(); /* 49E3A */
 extern void asswingd(); /* 4A1A6 */
@@ -594,7 +587,6 @@ extern void asswingd_skate0(); /* 4A335 */
 extern void asswingd_skateto(); /* 4A337 */
 extern void asswingo(); /* 4A343 */
 extern void asswingo_evade(); /* 4A530 */
-extern void asscenterd(); /* 4A53A */
 extern void asscentero(); /* 4A65C */
 extern void assscore(); /* 4A90F */
 extern void asseben(); /* 4AAC2 */
@@ -628,7 +620,6 @@ extern void assrefsignal(); /* 4EB04 */
 extern void assrefgoalpa(); /* 4ED7C */
 extern void assrefdrop(); /* 4F5BF */
 extern void assrefgoalline(); /* 4F7D0 */
-extern void StartShotPath(); /* 4F9EF */
 extern void asspenshooter(); /* 4FAE8 */
 extern void lineinput(); /* 4FD8E */
 extern void CanBlockShot_ret6(); /* 50336 */
@@ -676,14 +667,11 @@ extern void ChkOffsides(); /* 55A9F */
 extern void ChkShotStat(); /* 55D28 */
 extern void setInjuryType(); /* 55E72 */
 extern void NetCollide(); /* 5601D */
-extern void FallDown(); /* 562DB */
-extern void Bcheck(); /* 56A54 */
 extern void holdcheck(); /* 56B79 */
 extern void puckbody(); /* 56D06 */
 extern void puckglue(); /* 56F5A */
 extern void puckgoalie(); /* 57096 */
 extern void puckstick(); /* 57483 */
-extern void ShotMode(); /* 578FA */
 extern void deflect(); /* 57A3E */
 extern void checkgoalp_CalcGoalShotDir(); /* 57A98 */
 extern void doshot(); /* 57C0B */
@@ -727,12 +715,10 @@ extern void Goal(); /* 5AB36 */
 extern void clearteams(); /* 5B881 */
 extern void ResetClock(); /* 5BA07 */
 extern void SetPlList(); /* 5BBFA */
-extern void periodicevents(); /* 5C302 */
 extern void updateplayers(); /* 5C40F */
 extern void updateanim(); /* 5CAEF */
 extern void cleargamevars(); /* 5CD4F */
 extern void DrawRinkOverlays(); /* 5CE12 */
-extern void clockcont_0(); /* 5D852 */
 extern void SprSortVert(); /* 5DD6B */
 extern void SprSort(); /* 5DD7C */
 extern void resetplstuff(); /* 5E01A */
@@ -747,7 +733,6 @@ extern void noturn0(); /* 5F98A */
 extern void SaveGameState(); /* 5FB03 */
 extern void SaveGameState_popx(); /* 6060B */
 extern void LoadGameState(); /* 60612 */
-extern void DecayCrowdLevel(); /* 615A2 */
 extern void sfxslots_popx(); /* 6185C */
 extern void DrawRinkObjects(); /* 61862 */
 extern void RunDeferredCalls(); /* 61A27 */
@@ -774,9 +759,7 @@ extern void Stop4Pen(); /* 63543 */
 extern void checkfornewpen(); /* 637B5 */
 extern void ProcessPenaltyList(); /* 63A37 */
 extern void updatepentime(); /* 63B85 */
-extern void PenaltyManager(); /* 63BF8 */
 extern void chkprogress(); /* 63C0C */
-extern void UpdatePowerPlayFlags(); /* 63C73 */
 extern void PenGoalStuff(); /* 63D69 */
 extern void SetupPenaltyShot(); /* 63F72 */
 extern void lines_popx(); /* 64A04 */

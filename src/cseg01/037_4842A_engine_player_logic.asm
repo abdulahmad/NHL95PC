@@ -9511,6 +9511,10 @@ inc dword [sopathpoint]	; 4F9E7
 pop edx	; 4F9ED
 ret	; 4F9EE
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/StartShotPath.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/StartShotPath.inc"
+%else
 StartShotPath:
 push dword 0Ch	; 4F9EF
 call __CHK	; 4F9F4
@@ -9589,6 +9593,7 @@ mov dword [sopathend], 1Eh	; 4FADB
 pop ecx	; 4FAE5
 pop ebx	; 4FAE6
 ret	; 4FAE7
+%endif ; C
 asspenshooter:
 push dword 14h	; 4FAE8
 call __CHK	; 4FAED

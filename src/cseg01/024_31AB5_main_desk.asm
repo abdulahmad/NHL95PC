@@ -1314,6 +1314,10 @@ call MessageBox	; 32C91
 .7:
 add esp, byte 2Ch	; 32C96
 jmp near MainDeskLoop_x	; 32C99
+; C: src/c/024_31AB5_main_desk/CopyGameSettings.c
+%ifdef CBUILD
+%include "c/024_31AB5_main_desk/CopyGameSettings.inc"
+%else
 CopyGameSettings:
 push dword 108h	; 32C9E
 call __CHK	; 32CA3
@@ -1391,3 +1395,4 @@ pop esi	; 32DA5
 pop ecx	; 32DA6
 pop ebx	; 32DA7
 ret	; 32DA8
+%endif ; C

@@ -9,7 +9,7 @@ void EndPenaltyShot(void)
     if (penshotlive && penshotmode) {
         penshotlive = penshotmode = 0;
         penshotplayer = -1;
-        AddPenalty2(puckstruct, 5);
+        AddPenalty2((Player *)puckstruct, 5);
         ltx = penshotfox;
         lty = penshotfoy;
         assreplace(&SortCords[16], 0x21);
