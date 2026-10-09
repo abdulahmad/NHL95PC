@@ -926,8 +926,6 @@ extern void SprSort_loop(); /* 59DBB */
 extern void SprSort_test(); /* 59DDD */
 extern void changeplayer(); /* 59E69 */
 extern void changeplayer_ret5(); /* 59FDB */
-extern void restorepl(); /* 59FE1 */
-extern void AvgCline(); /* 5A03B */
 extern void CompLine(); /* 5A0A3 */
 extern void getlinee_pp(); /* 5A288 */
 extern void getlinee_sum(); /* 5A2C6 */
@@ -942,14 +940,12 @@ extern void GetHotOrStick(); /* 5A534 */
 extern void SetCoachMode(); /* 5A581 */
 extern void InitCoachModes(); /* 5A669 */
 extern void UpdateCoachModes(); /* 5A77C */
-extern void PenTeamScored(); /* 5AAAE */
 extern void Goal(); /* 5AB36 */
 extern void GiveControl(); /* 5B1CE */
 extern void Setplass(); /* 5B298 */
 extern void setplayer(); /* 5B2C5 */
 extern void reenergizeteam(); /* 5B826 */
 extern void clearteams(); /* 5B881 */
-extern void restoreteams(); /* 5B97A */
 extern void ResetClock(); /* 5BA07 */
 extern void defaultsprites2(); /* 5BA89 */
 extern void TryAddPlayerToList(); /* 5BB9E */
@@ -957,7 +953,6 @@ extern void SetPlList(); /* 5BBFA */
 extern void setpersonel(); /* 5BEF4 */
 extern void StartPer(); /* 5C010 */
 extern void DoGameFrame(); /* 5C1C4 */
-extern void RestBench(); /* 5C1E2 */
 extern void updatecrowdf(); /* 5C248 */
 extern void periodicevents(); /* 5C302 */
 extern void updateplayers(); /* 5C40F */

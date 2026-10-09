@@ -25,6 +25,11 @@ void PaPlayerNumber(char *team, int phrase, int number);  /* 59B0F */
 void PaOpenBank(void);                                    /* 59D54 */
 void CrowdNoiseReset(void);                               /* 59863 */
 /* 042_59D9A_engine_core */
+short restorepl(short newpl, short oldpl);                /* 59FE1 */
+void AvgCline(struct Team *t);                            /* 5A03B */
+void RestBench(void);                                     /* 5C1E2 */
+void restoreteams(void);                                  /* 5B97A */
+int PenTeamScored(void);                                  /* 5AAAE */
 void Intermission(void);                                  /* 5DE42 */
 void StartGame(void);                                     /* 5E086 */
 void forceteams(void);                                    /* 5E0B0 */

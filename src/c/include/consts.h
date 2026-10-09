@@ -16,6 +16,7 @@
 #define pfalock         0x20    /* pflags bit 5: animation lock (93G pfalock) */
 #define pfjoy           0x08    /* pflags bit 3: player under joystick control */
 #define pf2aip          0x02    /* pflags2 bit 1: animation in progress (93G pf2aip) */
+#define pf2lcm          0x08    /* pflags2 bit 3: line change mode, keeps the joystick (93G pf2lcm) */
 
 #define SPAgready       0x001   /* goalie ready stance (93G 2) */
 #define SPAgskate       0x1F1   /* goalie skate (93G $3F8) */
@@ -32,7 +33,14 @@
 #define TEMP2_DIR(p)    (((signed char *)&(p)->temp2)[0])   /* low byte: skate direction for doplayeracc */
 #define TEMP2_TICKS(p)  (((signed char *)&(p)->temp2)[1])   /* high byte: re-aim countdown, 12 ticks */
 
+/* tmpdst values (per roster player): -2 bench, -1 on the ice, 0+ penalty box time */
+#define PDbench         (-2)
+#define PDice           (-1)
+#define ENERGYMAX       0x1000  /* tmpde: full energy */
+
 /* game mode bits */
 #define gmclock         0x01    /* gmode bit 0: game clock running (93G gmclock) */
+#define gmdir           0x02    /* gmode bit 1: 0 = home team goes up (93G gmdir) */
+#define gmpendel        0x08    /* gmode bit 3: delayed penalty has been called (93G gmpendel) */
 
 #endif

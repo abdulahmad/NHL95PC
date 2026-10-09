@@ -254,6 +254,10 @@ pop ecx	; 59FDE
 pop ebx	; 59FDF
 ret	; 59FE0
 ; restorepl: 93G logic93_1. eax = new controlled player, edx = old one.
+; C: src/c/042_59D9A_engine_core/restorepl.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/restorepl.inc"
+%else
 restorepl:
 push dword 0Ch	; 59FE1
 call __CHK	; 59FE6
@@ -292,6 +296,11 @@ mov eax, ebx	; 5A036
 pop ecx	; 5A038
 pop ebx	; 5A039
 ret	; 5A03A
+%endif ; C
+; C: src/c/042_59D9A_engine_core/AvgCline.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/AvgCline.inc"
+%else
 AvgCline:
 push dword 14h	; 5A03B
 call __CHK	; 5A040
@@ -332,6 +341,7 @@ pop edx	; 5A09F
 pop ecx	; 5A0A0
 pop ebx	; 5A0A1
 ret	; 5A0A2
+%endif ; C
 ; CompLine: 93G logic93_4 CompLine (find good line for comp to switch to). eax = other team, edx = team.
 ;   tmap difference picks the power-play / penalty-kill lines, getlinee compares line energies, tmline/tmlcnt take
 ;   the result (DrawPanelLine is called on a change). Callers: chk4lc (54AF9) and puckfaceoff.
@@ -1124,6 +1134,10 @@ pop ebx	; 5AAAC
 ret	; 5AAAD
 ; PenTeamScored: PC-new. During a delayed penalty (gmode bit 3, 93G gmpendel): 1 if the scoring team has a skater
 ;   with pflags2 bit 4 (caused a penalty), else 0. Goal then disallows the goal.
+; C: src/c/042_59D9A_engine_core/PenTeamScored.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/PenTeamScored.inc"
+%else
 PenTeamScored:
 push dword 8	; 5AAAE
 call __CHK	; 5AAB3
@@ -1168,6 +1182,7 @@ jl short PenTeamScored.2	; 5AB30
 xor eax, eax	; 5AB32
 pop edx	; 5AB34
 ret	; 5AB35
+%endif ; C
 ; Goal: 93G hockey93_04 Goal (puck in goal). eax = the goal struct the puck went into.
 ;   esi = scoring team, ebp = the other (puck Ypos sign xor gmdir, as 93G a2/a1). Puck stopped in the net, assreplace
 ;   puck 1Ah. Offside (tmflags bit 4) -> AddPenalty 8 + AddPenalty2 1Bh; PenTeamScored (delayed penalty) -> no goal;
@@ -2302,6 +2317,10 @@ pop edx	; 5B977
 pop ebx	; 5B978
 ret	; 5B979
 ; restoreteams: 93G hockey93_01 restoreteams. Both teams: tmap = 6, every tmpdst entry = -2 (bench).
+; C: src/c/042_59D9A_engine_core/restoreteams.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/restoreteams.inc"
+%else
 restoreteams:
 push dword 14h	; 5B97A
 call __CHK	; 5B97F
@@ -2339,6 +2358,7 @@ pop edx	; 5B9CD
 pop ecx	; 5B9CE
 pop ebx	; 5B9CF
 ret	; 5B9D0
+%endif ; C
 ; C: src/c/042_59D9A_engine_core/GetPeriodTime.c
 %ifdef CBUILD
 %include "c/042_59D9A_engine_core/GetPeriodTime.inc"
@@ -2984,6 +3004,10 @@ call periodicevents	; 5C1CE
 call updateplayers	; 5C1D3
 call checkwindow	; 5C1D8
 jmp near updatereplay	; 5C1DD
+; C: src/c/042_59D9A_engine_core/RestBench.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/RestBench.inc"
+%else
 RestBench:
 push dword 14h	; 5C1E2
 call __CHK	; 5C1E7
@@ -3027,6 +3051,7 @@ pop edx	; 5C244
 pop ecx	; 5C245
 pop ebx	; 5C246
 ret	; 5C247
+%endif ; C
 updatecrowdf:
 push dword 10h	; 5C248
 call __CHK	; 5C24D
