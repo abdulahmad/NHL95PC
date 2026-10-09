@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_1167B progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, byte_C524D
-extern curleague, sflags, musicon, byte_D9299, byte_D9558, byte_ED7CC, joysampling, gameopts
+extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, awardtype
+extern curleague, sflags, musicon, byte_D9299, awardwinners, byte_ED7CC, joysampling, gameopts
 extern inputframes, escrequest, dword_C5130, gameresult, gamemode, dword_C5704, dword_C5708, dword_C570C
 extern dword_C5840, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
 extern penshotlive, dword_D2C6B, dword_D302C, dword_D3030, dword_D8C40, frameaccum, dword_D8C72, dword_D8C74
@@ -19,13 +19,13 @@ extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71
 extern sub_61A27, sub_61B85, sub_64614, SetupTeamLines, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
 extern sub_6AF97, sub_6B008, sub_7DC8B, sub_8374D, sub_837A8, SelectScreenBM, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8FFB0, sub_90354, sub_9035C, MouseSetPos, sub_B396E, sub_B4BA8, str_backslash
-extern unk_D8F88, unk_D9270, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690
+extern cupteam, presidentsteam, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690
 extern unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, unk_DDAC4, unk_DF014, unk_DF314, camx
 extern gsp, gameclock, word_CBC44, exitgame, gameover, word_CBEC4, word_CBECC, scrolly
 extern lcrequest, word_E0306, joysampling_save
 global assinsert, assreplace
-global FindLeagueLeaders_x
-global GameLoop, PlayGame, ReplayIsEmpty, FindLeagueLeaders
+global PickAwardWinners_x
+global GameLoop, PlayGame, ReplayIsEmpty, PickAwardWinners
 GameLoop:
 push dword 48h	; 1167B
 call __CHK	; 11680
@@ -673,7 +673,7 @@ ret	; 12059
 .1:
 xor eax, eax	; 1205A
 ret	; 1205C
-FindLeagueLeaders:
+PickAwardWinners:
 push dword 41Ch	; 1205D
 call __CHK	; 12062
 push ebx	; 12067
@@ -791,7 +791,7 @@ cmp al, byte [byte_D9299]	; 1220F
 jbe short .9	; 12215
 .8:
 mov ecx, 0BAh	; 12217
-mov edi, unk_D9270	; 1221C
+mov edi, presidentsteam	; 1221C
 mov esi, esp	; 12221
 rep movsd	; 12223
 mov dword [dword esp+03ECh], ebp	; 12225
@@ -806,7 +806,7 @@ cmp eax, dword [dword esp+03E4h]	; 1224B
 jle short .11	; 12252
 .10:
 mov ecx, 0BAh	; 12254
-mov edi, unk_D8F88	; 12259
+mov edi, cupteam	; 12259
 mov esi, esp	; 1225E
 rep movsd	; 12260
 xor eax, eax	; 12262
@@ -850,7 +850,7 @@ cmp ax, word [edx]	; 12302
 jae short .15	; 12305
 .14:
 mov ecx, 0Dh	; 12307
-mov edi, byte_D9558	; 1230C
+mov edi, awardwinners	; 1230C
 lea esi, [dword esp+0354h]	; 12311
 rep movsd	; 12318
 mov ecx, 0Bh	; 1231A
@@ -995,7 +995,7 @@ movsw	; 12528
 movsb	; 1252A
 mov byte [dword esp+03E0h], 0FFh	; 1252B
 .26:
-cmp byte [byte_C524D], 1	; 12533
+cmp byte [awardtype+9], 1	; 12533
 jne short .27	; 1253A
 mov edx, dword [off_C5273]	; 1253C
 xor esi, esi	; 12542
@@ -1045,7 +1045,7 @@ rep movsd	; 125D7
 movsw	; 125D9
 movsb	; 125DB
 mov dword [off_C5273], unk_D98C3	; 125DC
-mov byte [byte_C524D], 1	; 125E6
+mov byte [awardtype+9], 1	; 125E6
 mov byte [dword esp+03E1h], 0FFh	; 125ED
 .30:
 inc ebp	; 125F5
@@ -1053,7 +1053,7 @@ inc ebp	; 125F5
 cmp ebp, byte 19h	; 125F6
 jge short .32	; 125F9
 test ebx, ebx	; 125FB
-je near FindLeagueLeaders.12	; 125FD
+je near PickAwardWinners.12	; 125FD
 .32:
 xor ebp, ebp	; 12603
 jmp near .43	; 12605
@@ -1126,7 +1126,7 @@ rep movsd	; 1271F
 movsw	; 12721
 mov byte [dword esp+03DDh], 0FFh	; 12723
 .38:
-cmp byte [byte_C524D], 1	; 1272B
+cmp byte [awardtype+9], 1	; 1272B
 jne short .39	; 12732
 mov edx, dword [off_C5273]	; 12734
 xor esi, esi	; 1273A
@@ -1176,7 +1176,7 @@ rep movsd	; 127CF
 movsw	; 127D1
 mov dword [off_C5273], unk_D9794	; 127D3
 xor cl, cl	; 127DD
-mov byte [byte_C524D], cl	; 127DF
+mov byte [awardtype+9], cl	; 127DF
 mov byte [dword esp+03E1h], 0FFh	; 127E5
 .42:
 inc ebp	; 127ED
@@ -1184,7 +1184,7 @@ inc ebp	; 127ED
 cmp ebp, byte 3	; 127EE
 jge short .44	; 127F1
 test ebx, ebx	; 127F3
-je near FindLeagueLeaders.33	; 127F5
+je near PickAwardWinners.33	; 127F5
 .44:
 inc dword [dword esp+03FCh]	; 127FB
 .45:
@@ -1192,7 +1192,7 @@ mov edi, dword [dword esp+03FCh]	; 12802
 cmp edi, byte 1Ah	; 12809
 jge short .46	; 1280C
 test ebx, ebx	; 1280E
-je near FindLeagueLeaders.4	; 12810
+je near PickAwardWinners.4	; 12810
 .46:
 lea eax, [dword esp+03F0h]	; 12816
 call FileClose	; 1281D
@@ -1202,7 +1202,7 @@ lea eax, [dword esp+03F8h]	; 1282E
 call FileClose	; 12835
 mov eax, ebx	; 1283A
 add esp, 400h	; 1283C
-FindLeagueLeaders_x:
+PickAwardWinners_x:
 pop ebp	; 12842
 pop edi	; 12843
 pop esi	; 12844

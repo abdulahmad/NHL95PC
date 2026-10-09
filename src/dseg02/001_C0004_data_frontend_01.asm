@@ -4,9 +4,9 @@ bits 32
 section s_C0004 progbits alloc noexec write align=1
 global TeamList, str_NoDiskSpaceC, str_ErrDiskFree2, str_NoDiskSpaceCur, str_NoMemory, str_CheckRefCard, str_NoConvMemory, str_CheckRefCard2
 global str_Pointer3, str_Pntr, str_Scor2b, str_Scor3b, str_Kaufm020, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_GameSet2
-global str_Temp3, str_ErrDiskFree3, str_GameSav2, asc_C039F, asc_C03BC, asc_C03C0, asc_C03C8, asc_C03D1
-global asc_C03D5, asc_C03E5, asc_C03EB, asc_C03F6, asc_C03FA, asc_C03FE, asc_C0402, asc_C0406
-global asc_C040B, asc_C0412, asc_C041A, asc_C041F, asc_C0424, asc_C0429, asc_C0430, asc_C0437
+global str_Temp3, str_ErrDiskFree3, str_GameSav2, str_ANA, str_Cal, str_Flo, str_SS, str_Min
+global str_GAA, str_Shots, str_Pct, str_PIM, str_PlusMinus, str_PPG, str_SHG, str_Pal3
+global str_Palmem, asc_C0412, asc_C041A, asc_C041F, asc_C0424, asc_C0429, asc_C0430, asc_C0437
 global asc_C043E, asc_C0446, asc_C044F, asc_C0458, asc_C0460, asc_C0465, asc_C046E, asc_C0477
 global asc_C0480, asc_C048A, asc_C0494, asc_C049C, asc_C04A1, asc_C04A9, asc_C04B0, asc_C064C
 global asc_C066B, asc_C068A, asc_C0696, asc_C0784, asc_C078C, asc_C0791, asc_C079C, asc_C085A
@@ -19,9 +19,9 @@ global str_errd3, str_errd4, str_backslash, unk_C0211, unk_C0216, unk_C021B, unk
 global unk_C022A, unk_C022F, unk_C0234, unk_C0239, unk_C023E, unk_C0243, unk_C0248, unk_C0251
 global unk_C0258, unk_C025E, unk_C0265, unk_C026E, unk_C0275, unk_C0280, unk_C028C, unk_C029A
 global unk_C02A7, unk_C02BC, unk_C02CA, unk_C02D9, unk_C02E9, unk_C0300, unk_C0310, unk_C032B
-global unk_C0337, unk_C0352, unk_C0362, unk_C0379, unk_C0390, unk_C0397, unk_C03A3, unk_C03C4
-global unk_C03C6, unk_C03CE, unk_C03D9, unk_C03DB, unk_C03DD, unk_C03DF, unk_C03E2, unk_C03EF
-global unk_C03F1, unk_C03F3, unk_C04D0, unk_C04D4, unk_C04D8, unk_C04DC, unk_C04E0, unk_C04E4
+global unk_C0337, unk_C0352, unk_C0362, unk_C0379, unk_C0390, unk_C0397, str_MightyDucks, unk_C03C4
+global unk_C03C6, str_GP, str_W, str_L, str_T, str_SO, str_EN, str_G
+global str_A, str_Pt, unk_C04D0, unk_C04D4, unk_C04D8, unk_C04DC, unk_C04E0, unk_C04E4
 global unk_C04E8, unk_C04EC, unk_C04EF, unk_C04F3, unk_C04F7, unk_C04FA, unk_C04FE, unk_C0502
 global unk_C0506, unk_C050A, unk_C050E, unk_C0512, unk_C0516, unk_C0519, unk_C051C, unk_C0520
 global unk_C0524, unk_C0528, unk_C052C, unk_C0530, unk_C0534, unk_C0538, unk_C0543, unk_C054B
@@ -181,58 +181,58 @@ unk_C0390:
 db 053h,065h,061h,073h,06Fh,06Eh,00h
 unk_C0397:
 db 050h,06Ch,061h,079h,06Fh,066h,066h,00h
-asc_C039F:
+str_ANA:
 db 041h,04Eh,041h,00h
-unk_C03A3:
+str_MightyDucks:
 db 04Dh,069h,067h,068h,074h,079h,020h,044h,075h,063h,06Bh,073h,07h,020h,06Fh,066h
 db 020h,041h,06Eh,061h,068h,065h,069h,06Dh,00h
-asc_C03BC:
+str_Cal:
 db 043h,061h,06Ch,00h
-asc_C03C0:
+str_Flo:
 db 046h,06Ch,06Fh,00h
 unk_C03C4:
 db 07h,00h
 unk_C03C6:
 db 06h,00h
-asc_C03C8:
+str_SS:
 db 025h,073h,020h,025h,073h,00h
-unk_C03CE:
+str_GP:
 db 047h,050h,00h
-asc_C03D1:
+str_Min:
 db 04Dh,069h,06Eh,00h
-asc_C03D5:
+str_GAA:
 db 047h,041h,041h,00h
-unk_C03D9:
+str_W:
 db 057h,00h
-unk_C03DB:
+str_L:
 db 04Ch,00h
-unk_C03DD:
+str_T:
 db 054h,00h
-unk_C03DF:
+str_SO:
 db 053h,04Fh,00h
-unk_C03E2:
+str_EN:
 db 045h,04Eh,00h
-asc_C03E5:
+str_Shots:
 db 053h,068h,06Fh,074h,073h,00h
-asc_C03EB:
+str_Pct:
 db 050h,063h,074h,00h
-unk_C03EF:
+str_G:
 db 047h,00h
-unk_C03F1:
+str_A:
 db 041h,00h
-unk_C03F3:
+str_Pt:
 db 050h,074h,00h
-asc_C03F6:
+str_PIM:
 db 050h,049h,04Dh,00h
-asc_C03FA:
+str_PlusMinus:
 db 02Bh,02Fh,02Dh,00h
-asc_C03FE:
+str_PPG:
 db 050h,050h,047h,00h
-asc_C0402:
+str_SHG:
 db 053h,048h,047h,00h
-asc_C0406:
+str_Pal3:
 db 021h,070h,061h,06Ch,00h
-asc_C040B:
+str_Palmem:
 db 070h,061h,06Ch,06Dh,065h,06Dh,00h
 asc_C0412:
 db 061h,077h,061h,072h,064h,073h,069h,00h

@@ -15,15 +15,15 @@ extern unk_C0581, unk_C0588, unk_C0591, unk_C059C, unk_C05A9, unk_C05B4, unk_C05
 extern unk_C05D3, unk_C05DA, unk_C05E3, unk_C05EC, unk_C05F6, unk_C05FE, unk_C0608, unk_C0613
 extern unk_C061C, unk_C0624, unk_C062C, unk_C063B, unk_D97CA, unk_D9800, unk_D9836, unk_D9865
 extern unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
-global asc_C5286, asc_C528E, pad1dev, pad2dev, lasthotkey, byte_C5138, byte_C5244, byte_C524D
+global str_D02d, str_D01d, pad1dev, pad2dev, lasthotkey, byte_C5138, awardtype
 global byte_C541B, byte_C5424
 global byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, joyqtick
 global samesideflag, inputframes, escrequest, joyrec, palfadedin, screenw, screenh, dword_C5130
-global dword_C5131, dword_C5133, dword_C5135, dword_C513C, dword_C5168, dword_C51F0
+global dword_C5131, dword_C5133, dword_C5135, dword_C513C, dword_C5168
 global postate
 global lgstate
 global gameresult, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
-global ctl2side, dword_C541F, off_C5194, off_C51C0, off_C51EC, off_C524F, off_C5253, off_C5257
+global ctl2side, dword_C541F, awardart, awardnames, awardtitles, off_C524F, off_C5253, off_C5257
 global off_C525B, off_C525F, off_C5263, off_C5267, off_C526F, off_C5273, off_C527B, off_C5439
 global off_C5441, teamcitynames, unk_C4E30, str_fmtpd, exhstate, unk_C5423, unk_C542E
 global word_C5428
@@ -130,7 +130,7 @@ dword_C5168:
 db 0CEh,01h,00h,00h,0CFh,01h,00h,00h,0CBh,01h,00h,00h,0CCh,01h,00h,00h
 db 0C9h,01h,00h,00h,0CAh,01h,00h,00h,0D1h,01h,00h,00h,0CDh,01h,00h,00h
 db 0D2h,01h,00h,00h,0D0h,01h,00h,00h,0D3h,01h,00h,00h
-off_C5194:
+awardart:
 dd unk_C020C
 dd unk_C0211
 dd unk_C0216
@@ -142,7 +142,7 @@ dd unk_C022F
 dd unk_C0234
 dd unk_C0239
 dd unk_C023E
-off_C51C0:
+awardnames:
 dd unk_C0243
 dd unk_C0248
 dd unk_C0251
@@ -154,9 +154,8 @@ dd unk_C0275
 dd unk_C0280
 dd unk_C028C
 dd unk_C029A
-off_C51EC:
+awardtitles:
 dd unk_C02A7
-dword_C51F0:
 db 00h,00h,00h,00h
 dd unk_C02BC
 dd unk_C02CA
@@ -178,9 +177,8 @@ dd unk_C0362
 db 00h,00h,00h,00h
 dd unk_C0379
 db 00h,00h,00h,00h
-byte_C5244:
+awardtype:
 db 01h,01h,01h,01h,00h,00h,01h,02h,01h
-byte_C524D:
 db 01h,02h
 off_C524F:
 dd unk_D9921
@@ -207,9 +205,9 @@ dd unk_C0390
 dd unk_C0397
 str_fmtpd:
 db 025h,064h,00h
-asc_C5286:
+str_D02d:
 db 025h,064h,02Eh,025h,030h,032h,064h,00h
-asc_C528E:
+str_D01d:
 db 025h,064h,02Eh,025h,030h,031h,064h,00h,00h,00h
 exhstate:
 db 00h,00h,00h,00h

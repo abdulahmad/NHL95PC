@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_13320 progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, asc_C0406, asc_C040B, asc_C0412, asc_C041A, asc_C041F, asc_C0424
+extern __CHK, __STOSB, str_Pal3, str_Palmem, asc_C0412, asc_C041A, asc_C041F, asc_C0424
 extern asc_C0429, asc_C0430, asc_C0437, asc_C043E, asc_C0446, asc_C044F, asc_C0458, asc_C0460
 extern asc_C0465, asc_C046E, asc_C0477, asc_C0480, asc_C048A, asc_C0494, asc_C049C, asc_C04A1
 extern asc_C04A9, asc_C04B0, str_PPV, str_VFN, assinsert, pad1dev, pad2dev, byte_CBEA8
@@ -14,9 +14,9 @@ extern HomeTeam, dword_CBECA, dword_CC0AC, dword_CC0E0, dword_CC0EC, dword_CC0F0
 extern penshotmode, penshotstart, dword_CC124, penshotlive, crowdsmooth, musichandle, dword_D2C6B, musicslot
 extern dword_D8B68, dword_D8C18, dword_D8C4C, dword_D8C68, frameaccum, rinkendart, dword_D8C78, dword_D8C80
 extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E009C, dword_E00A0
-extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, FindLeagueLeaders_x, memcpy_, nullsub_2
-extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, FindLeagueLeaders, sub_12849
-extern sub_13188, MakePath, FileOpenRead, FileClose, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
+extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, PickAwardWinners_x, memcpy_, nullsub_2
+extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, PickAwardWinners, ShowAwardScreens
+extern DrawAwardsSummary, MakePath, FileOpenRead, FileClose, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
 extern StartPreGame, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
 extern sub_64614, SetupTeamLines, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
@@ -56,7 +56,7 @@ sub esp, byte 50h	; 13330
 call sub_6B3D7	; 13333
 push byte 20h	; 13338
 push dword 300h	; 1333A
-push asc_C040B	; 1333F
+push str_Palmem	; 1333F
 call sub_8CCA8	; 13344
 add esp, byte 0Ch	; 13349
 mov esi, eax	; 1334C
@@ -135,7 +135,7 @@ add esp, byte 8	; 13443
 push eax	; 13446
 call sub_9061C	; 13447
 add esp, byte 4	; 1344C
-push asc_C0406	; 1344F
+push str_Pal3	; 1344F
 push ebp	; 13454
 call sub_B30B4	; 13455
 add esp, byte 8	; 1345A
@@ -275,7 +275,7 @@ loc_13634:
 push esi	; 13634
 call jctime	; 13635
 add esp, byte 4	; 1363A
-call FindLeagueLeaders	; 1363D
+call PickAwardWinners	; 1363D
 mov esi, eax	; 13642
 cmp byte [musicon], 0	; 13644
 je short loc_136B6	; 1364B
@@ -335,7 +335,7 @@ call PlayDigiSample	; 13709
 loc_1370E:
 test esi, esi	; 1370E
 jne near loc_137F8	; 13710
-call sub_12849	; 13716
+call ShowAwardScreens	; 13716
 cmp eax, byte 3	; 1371B
 jge near loc_137E9	; 1371E
 xor ecx, ecx	; 13724
@@ -374,9 +374,9 @@ add esp, byte 8	; 13790
 push eax	; 13793
 call sub_9061C	; 13794
 add esp, byte 4	; 13799
-call sub_13188	; 1379C
+call DrawAwardsSummary	; 1379C
 call sub_B4BA8	; 137A1
-push asc_C0406	; 137A6
+push str_Pal3	; 137A6
 push esi	; 137AB
 call sub_B30B4	; 137AC
 add esp, byte 8	; 137B1
@@ -433,7 +433,7 @@ push eax	; 13856
 call sub_8EA00	; 13857
 add esp, byte 4	; 1385C
 add esp, byte 50h	; 1385F
-jmp near FindLeagueLeaders_x	; 13862
+jmp near PickAwardWinners_x	; 13862
 sub_13867:
 push dword 34h	; 13867
 call __CHK	; 1386C

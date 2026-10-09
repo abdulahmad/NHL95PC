@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_D8B68 nobits alloc noexec write align=1
-global byte_D8C88, byte_D9299, byte_D9558, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
+global byte_D8C88, byte_D9299, awardwinners, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
 global joyrawbits, dword_D8C18, dword_D8C40, dword_D8C4C, dword_D8C68, frameaccum, rinkendart, dword_D8C72
-global dword_D8C74, dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C80, dword_D8C84, joyqueue, unk_D8F88
-global unk_D8F8D, unk_D9270, unk_D9275, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C
+global dword_D8C74, dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C80, dword_D8C84, joyqueue, cupteam
+global presidentsteam, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C
 global unk_D9690, unk_D96F8, unk_D972C, unk_D9794, unk_D97CA, unk_D9800, unk_D9836, unk_D9865
 global unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
 dword_D8B68:
@@ -50,17 +50,15 @@ dword_D8C84:
 resb 4
 byte_D8C88:
 resb 768
-unk_D8F88:
+cupteam:
 resb 5
-unk_D8F8D:
 resb 739
-unk_D9270:
+presidentsteam:
 resb 5
-unk_D9275:
 resb 36
 byte_D9299:
 resb 703
-byte_D9558:
+awardwinners:
 resb 52
 unk_D958C:
 resb 52

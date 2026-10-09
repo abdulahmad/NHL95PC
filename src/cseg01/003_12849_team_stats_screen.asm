@@ -2,22 +2,17 @@
 bits 32
 %include "hockey.inc"
 section s_12849 progbits alloc exec nowrite align=1
-extern __CHK, asc_C039F, asc_C03BC, asc_C03C0, asc_C03C8, asc_C03D1, asc_C03D5, asc_C03E5
-extern asc_C03EB, asc_C03F6, asc_C03FA, asc_C03FE, asc_C0402, asc_C0406, asc_C040B, asc_C5286
-extern asc_C528E, byte_C5244, byte_D42C3, byte_D9558, byte_ED7CC, dword_C513C, dword_C5168, dword_C51F0
-extern dword_D2C6B, fputchar, jctime, FindLeagueLeaders_x, off_C5194, off_C51C0, off_C51EC, off_C524F
+extern __CHK, str_ANA, str_Cal, str_Flo, str_SS, str_Min, str_GAA, str_Shots
+extern str_Pct, str_PIM, str_PlusMinus, str_PPG, str_SHG, str_Pal3, str_Palmem, str_D02d
+extern str_D01d, awardtype, byte_D42C3, awardwinners, byte_ED7CC, dword_C513C, dword_C5168
+extern dword_D2C6B, fputchar, jctime, PickAwardWinners_x, awardart, awardnames, awardtitles, off_C524F
 extern off_C527B, sprintf_, strcat_, strcpy_, strnicmp_, MakePath, sub_174C2, sub_175E2
 extern sub_176AE, sub_176DB, sub_29C75, sub_33E6A, sub_6B3D7, sub_76429, sub_8CCA8, sub_8E83C
-extern sub_8FFB0, sub_9035C, sub_9061C, sub_B30B4, sub_B395C, unk_C03A3, unk_C03C4, unk_C03C6
-extern unk_C03CE, unk_C03D9, unk_C03DB, unk_C03DD, unk_C03DF, unk_C03E2, unk_C03EF, unk_C03F1
-extern unk_C03F3, str_fmtpd, unk_D8F88, unk_D8F8D, unk_D9270, unk_D9275, unk_DDAC4
-global loc_1286C, loc_128A2, loc_128A4, loc_128F4, loc_128F9, loc_12930, loc_1293E, loc_1294C
-global loc_12951, loc_12982, loc_12989, loc_1298E, loc_129AD, loc_12A44, loc_12A59, loc_12A60
-global loc_12A65, loc_12A6C, loc_12BCD, loc_12CC5, loc_12D8A, loc_12EAB, loc_13027, loc_13029
-global loc_1307A, loc_130C1, loc_1316C, loc_1317E, loc_131A1, loc_131F6, loc_13202, loc_13207
-global loc_13238, loc_1323F, loc_13244, loc_13252, loc_132D0, loc_132E5, loc_132EC, loc_132F1
-global loc_132F8, loc_132FA, sub_12849, sub_13188
-sub_12849:
+extern sub_8FFB0, sub_9035C, sub_9061C, sub_B30B4, sub_B395C, str_MightyDucks, unk_C03C4, unk_C03C6
+extern str_GP, str_W, str_L, str_T, str_SO, str_EN, str_G, str_A
+extern str_Pt, str_fmtpd, cupteam, presidentsteam, unk_DDAC4
+global ShowAwardScreens, DrawAwardsSummary
+ShowAwardScreens:
 push dword 6Ch	; 12849
 call __CHK	; 1284E
 push ebx	; 12853
@@ -30,23 +25,23 @@ sub esp, byte 40h	; 12859
 xor edi, edi	; 1285C
 call sub_6B3D7	; 1285E
 mov dword [byte esp+038h], edi	; 12863
-jmp near loc_1316C	; 12867
-loc_1286C:
+jmp near .27	; 12867
+.1:
 mov esi, ebx	; 1286C
 mov eax, dword [nosplit ebx*4+dword_C513C]	; 1286E
 xor edx, edx	; 12875
 call sub_174C2	; 12877
 call sub_B395C	; 1287C
 xor ecx, ecx	; 12881
-mov ebx, dword [nosplit esi*4+off_C5194]	; 12883
+mov ebx, dword [nosplit esi*4+awardart]	; 12883
 mov eax, dword [nosplit esi*4+dword_C5168]	; 1288A
 cmp byte [dword eax+byte_ED7CC], 1	; 12891
-jne short loc_128A2	; 12898
+jne short .2	; 12898
 mov edx, dword [dword_D2C6B]	; 1289A
-jmp short loc_128A4	; 128A0
-loc_128A2:
+jmp short .3	; 128A0
+.2:
 xor edx, edx	; 128A2
-loc_128A4:
+.3:
 mov eax, esp	; 128A4
 call MakePath	; 128A6
 push byte 0	; 128AB
@@ -64,63 +59,63 @@ call sub_9061C	; 128CA
 add esp, byte 4	; 128CF
 mov ebp, 76h	; 128D2
 mov eax, dword [byte esp+038h]	; 128D7
-cmp byte [dword eax+byte_C5244], 2	; 128DB
-jne near loc_129AD	; 128E2
+cmp byte [dword eax+awardtype], 2	; 128DB
+jne near .13	; 128E2
 cmp eax, byte 0Ah	; 128E8
-jne short loc_128F4	; 128EB
-mov edx, unk_D8F88	; 128ED
-jmp short loc_128F9	; 128F2
-loc_128F4:
-mov edx, unk_D9270	; 128F4
-loc_128F9:
+jne short .4	; 128EB
+mov edx, cupteam	; 128ED
+jmp short .5	; 128F2
+.4:
+mov edx, presidentsteam	; 128F4
+.5:
 mov eax, esp	; 128F9
 call strcpy_	; 128FB
 mov ebx, 3	; 12900
-mov edx, asc_C039F	; 12905
+mov edx, str_ANA	; 12905
 mov eax, esp	; 1290A
 call strnicmp_	; 1290C
 test eax, eax	; 12911
-jne short loc_1293E	; 12913
-push unk_C03A3	; 12915
+jne short .7	; 12913
+push str_MightyDucks	; 12915
 call fputchar	; 1291A
 add esp, byte 4	; 1291F
 sar eax, 1	; 12922
 mov esi, 1FEh	; 12924
 sub esi, eax	; 12929
-mov ebx, unk_C03A3	; 1292B
-loc_12930:
+mov ebx, str_MightyDucks	; 1292B
+.6:
 mov edx, ebp	; 12930
 mov eax, esi	; 12932
 call sub_175E2	; 12934
-jmp near loc_1307A	; 12939
-loc_1293E:
+jmp near .25	; 12939
+.7:
 cmp dword [byte esp+038h], byte 0Ah	; 1293E
-jne short loc_1294C	; 12943
-mov edx, unk_D8F8D	; 12945
-jmp short loc_12951	; 1294A
-loc_1294C:
-mov edx, unk_D9275	; 1294C
-loc_12951:
+jne short .8	; 12943
+mov edx, cupteam+5	; 12945
+jmp short .9	; 1294A
+.8:
+mov edx, presidentsteam+5	; 1294C
+.9:
 mov eax, esp	; 12951
 call strcpy_	; 12953
 mov ebx, 3	; 12958
-mov edx, asc_C03BC	; 1295D
+mov edx, str_Cal	; 1295D
 mov eax, esp	; 12962
 call strnicmp_	; 12964
 test eax, eax	; 12969
-je short loc_12982	; 1296B
+je short .10	; 1296B
 mov ebx, 3	; 1296D
-mov edx, asc_C03C0	; 12972
+mov edx, str_Flo	; 12972
 mov eax, esp	; 12977
 call strnicmp_	; 12979
 test eax, eax	; 1297E
-jne short loc_12989	; 12980
-loc_12982:
+jne short .11	; 12980
+.10:
 mov edx, unk_C03C4	; 12982
-jmp short loc_1298E	; 12987
-loc_12989:
+jmp short .12	; 12987
+.11:
 mov edx, unk_C03C6	; 12989
-loc_1298E:
+.12:
 mov eax, esp	; 1298E
 call strcat_	; 12990
 mov eax, esp	; 12995
@@ -131,21 +126,21 @@ sar eax, 1	; 129A0
 mov esi, 1FEh	; 129A2
 sub esi, eax	; 129A7
 mov ebx, esp	; 129A9
-jmp short loc_12930	; 129AB
-loc_129AD:
+jmp short ShowAwardScreens.6	; 129AB
+.13:
 mov edi, eax	; 129AD
 shl edi, 2	; 129AF
 sub edi, eax	; 129B2
 shl edi, 2	; 129B4
 add edi, eax	; 129B7
 shl edi, 2	; 129B9
-mov eax, byte_D9558	; 129BC
+mov eax, awardwinners	; 129BC
 add eax, edi	; 129C1
 lea edx, [byte eax+013h]	; 129C3
 push edx	; 129C6
 add eax, byte 3	; 129C7
 push eax	; 129CA
-push asc_C03C8	; 129CB
+push str_SS	; 129CB
 lea eax, [byte esp+0Ch]	; 129D0
 push eax	; 129D4
 call sprintf_	; 129D5
@@ -162,7 +157,7 @@ mov edx, ebp	; 129F3
 mov eax, esi	; 129F5
 call sub_175E2	; 129F7
 xor edx, edx	; 129FC
-mov dl, byte [dword edi+byte_D9558]	; 129FE
+mov dl, byte [dword edi+awardwinners]	; 129FE
 mov eax, edx	; 12A04
 shl eax, 2	; 12A06
 add eax, edx	; 12A09
@@ -173,34 +168,34 @@ add edx, eax	; 12A15
 mov eax, esp	; 12A17
 call strcpy_	; 12A19
 mov ebx, 3	; 12A1E
-mov edx, asc_C039F	; 12A23
+mov edx, str_ANA	; 12A23
 mov eax, esp	; 12A28
 call strnicmp_	; 12A2A
 test eax, eax	; 12A2F
-jne short loc_12A44	; 12A31
+jne short .14	; 12A31
 mov ecx, 6	; 12A33
 mov edi, esp	; 12A38
-mov esi, unk_C03A3	; 12A3A
+mov esi, str_MightyDucks	; 12A3A
 rep movsd	; 12A3F
 movsb	; 12A41
-jmp short loc_12A6C	; 12A42
-loc_12A44:
-mov bl, byte [dword edi+byte_D9558]	; 12A44
+jmp short .18	; 12A42
+.14:
+mov bl, byte [dword edi+awardwinners]	; 12A44
 cmp bl, 2	; 12A4A
-je short loc_12A59	; 12A4D
+je short .15	; 12A4D
 cmp bl, 18h	; 12A4F
-je short loc_12A59	; 12A52
+je short .15	; 12A52
 cmp bl, 19h	; 12A54
-jne short loc_12A60	; 12A57
-loc_12A59:
+jne short .16	; 12A57
+.15:
 mov edx, unk_C03C4	; 12A59
-jmp short loc_12A65	; 12A5E
-loc_12A60:
+jmp short .17	; 12A5E
+.16:
 mov edx, unk_C03C6	; 12A60
-loc_12A65:
+.17:
 mov eax, esp	; 12A65
 call strcat_	; 12A67
-loc_12A6C:
+.18:
 mov eax, esp	; 12A6C
 push eax	; 12A6E
 call fputchar	; 12A6F
@@ -220,24 +215,24 @@ add ebp, byte 2Ch	; 12A99
 mov edi, dword [byte esp+038h]	; 12A9C
 shl edi, 2	; 12AA0
 mov eax, dword [byte esp+038h]	; 12AA3
-mov ch, byte [dword eax+byte_C5244]	; 12AA7
+mov ch, byte [dword eax+awardtype]	; 12AA7
 test ch, ch	; 12AAD
-jne near loc_12D8A	; 12AAF
-mov ebx, unk_C03CE	; 12AB5
+jne near .21	; 12AAF
+mov ebx, str_GP	; 12AB5
 mov edx, ebp	; 12ABA
 mov eax, esi	; 12ABC
 call sub_175E2	; 12ABE
 xor edx, edx	; 12AC3
 mov dl, byte [byte_D42C3]	; 12AC5
 add edx, ebp	; 12ACB
-mov ebx, asc_C03D1	; 12ACD
+mov ebx, str_Min	; 12ACD
 mov eax, esi	; 12AD2
 call sub_175E2	; 12AD4
 xor edx, edx	; 12AD9
 mov dl, byte [byte_D42C3]	; 12ADB
 add edx, edx	; 12AE1
 add edx, ebp	; 12AE3
-mov ebx, asc_C03D5	; 12AE5
+mov ebx, str_GAA	; 12AE5
 mov eax, esi	; 12AEA
 call sub_175E2	; 12AEC
 xor edx, edx	; 12AF1
@@ -246,14 +241,14 @@ mov eax, edx	; 12AF9
 shl eax, 2	; 12AFB
 sub eax, edx	; 12AFE
 lea edx, [eax+ebp]	; 12B00
-mov ebx, unk_C03D9	; 12B03
+mov ebx, str_W	; 12B03
 mov eax, esi	; 12B08
 call sub_175E2	; 12B0A
 xor eax, eax	; 12B0F
 mov al, byte [byte_D42C3]	; 12B11
 shl eax, 2	; 12B16
 lea edx, [eax+ebp]	; 12B19
-mov ebx, unk_C03DB	; 12B1C
+mov ebx, str_L	; 12B1C
 mov eax, esi	; 12B21
 call sub_175E2	; 12B23
 xor edx, edx	; 12B28
@@ -262,7 +257,7 @@ mov eax, edx	; 12B30
 shl eax, 2	; 12B32
 add eax, edx	; 12B35
 lea edx, [eax+ebp]	; 12B37
-mov ebx, unk_C03DD	; 12B3A
+mov ebx, str_T	; 12B3A
 mov eax, esi	; 12B3F
 call sub_175E2	; 12B41
 xor edx, edx	; 12B46
@@ -272,7 +267,7 @@ shl eax, 2	; 12B50
 sub eax, edx	; 12B53
 add eax, eax	; 12B55
 lea edx, [eax+ebp]	; 12B57
-mov ebx, unk_C03DF	; 12B5A
+mov ebx, str_SO	; 12B5A
 mov eax, esi	; 12B5F
 call sub_175E2	; 12B61
 xor edx, edx	; 12B66
@@ -281,14 +276,14 @@ mov eax, edx	; 12B6E
 shl eax, 3	; 12B70
 sub eax, edx	; 12B73
 lea edx, [eax+ebp]	; 12B75
-mov ebx, unk_C03E2	; 12B78
+mov ebx, str_EN	; 12B78
 mov eax, esi	; 12B7D
 call sub_175E2	; 12B7F
 xor edx, edx	; 12B84
 mov dl, byte [byte_D42C3]	; 12B86
 shl edx, 3	; 12B8C
 add edx, ebp	; 12B8F
-mov ebx, asc_C03E5	; 12B91
+mov ebx, str_Shots	; 12B91
 mov eax, esi	; 12B96
 call sub_175E2	; 12B98
 xor edx, edx	; 12B9D
@@ -297,7 +292,7 @@ mov eax, edx	; 12BA5
 shl eax, 3	; 12BA7
 add eax, edx	; 12BAA
 lea edx, [eax+ebp]	; 12BAC
-mov ebx, asc_C03EB	; 12BAF
+mov ebx, str_Pct	; 12BAF
 mov eax, esi	; 12BB4
 call sub_175E2	; 12BB6
 mov eax, dword [dword edi+off_C524F]	; 12BBB
@@ -305,7 +300,7 @@ mov dword [byte esp+034h], eax	; 12BC1
 mov edi, eax	; 12BC5
 xor eax, eax	; 12BC7
 mov dword [byte esp+03Ch], eax	; 12BC9
-loc_12BCD:
+.19:
 mov eax, dword [byte esp+03Ch]	; 12BCD
 mov ebx, dword [nosplit eax*4+off_C527B]	; 12BD1
 xor edx, edx	; 12BD8
@@ -347,7 +342,7 @@ mov dl, byte [byte_D42C3]	; 12C40
 add edx, edx	; 12C46
 add edx, ebp	; 12C48
 mov ecx, eax	; 12C4A
-mov ebx, asc_C5286	; 12C4C
+mov ebx, str_D02d	; 12C4C
 mov eax, esi	; 12C51
 call sub_176DB	; 12C53
 xor ecx, ecx	; 12C58
@@ -372,7 +367,7 @@ mov eax, esi	; 12C94
 call sub_176AE	; 12C96
 mov edx, dword [byte esp+03Ch]	; 12C9B
 test edx, edx	; 12C9F
-jne short loc_12CC5	; 12CA1
+jne short .20	; 12CA1
 xor ecx, ecx	; 12CA3
 mov cx, word [byte edi+06h]	; 12CA5
 mov dl, byte [byte_D42C3]	; 12CA9
@@ -383,7 +378,7 @@ lea edx, [eax+ebp]	; 12CB6
 mov ebx, str_fmtpd	; 12CB9
 mov eax, esi	; 12CBE
 call sub_176AE	; 12CC0
-loc_12CC5:
+.20:
 xor ecx, ecx	; 12CC5
 mov cx, word [byte edi+08h]	; 12CC7
 xor edx, edx	; 12CCB
@@ -435,7 +430,7 @@ mov eax, edx	; 12D56
 shl eax, 3	; 12D58
 add eax, edx	; 12D5B
 lea edx, [eax+ebp]	; 12D5D
-mov ebx, asc_C528E	; 12D60
+mov ebx, str_D01d	; 12D60
 mov eax, esi	; 12D65
 call sub_176DB	; 12D67
 mov edi, dword [byte esp+034h]	; 12D6C
@@ -444,26 +439,26 @@ mov ebx, dword [byte esp+03Ch]	; 12D73
 inc ebx	; 12D77
 mov dword [byte esp+03Ch], ebx	; 12D78
 cmp ebx, byte 2	; 12D7C
-jl near loc_12BCD	; 12D7F
-jmp near loc_1307A	; 12D85
-loc_12D8A:
+jl near ShowAwardScreens.19	; 12D7F
+jmp near .25	; 12D85
+.21:
 cmp ch, 1	; 12D8A
-jne near loc_1307A	; 12D8D
-mov ebx, unk_C03CE	; 12D93
+jne near .25	; 12D8D
+mov ebx, str_GP	; 12D93
 mov edx, ebp	; 12D98
 mov eax, esi	; 12D9A
 call sub_175E2	; 12D9C
 xor edx, edx	; 12DA1
 mov dl, byte [byte_D42C3]	; 12DA3
 add edx, ebp	; 12DA9
-mov ebx, unk_C03EF	; 12DAB
+mov ebx, str_G	; 12DAB
 mov eax, esi	; 12DB0
 call sub_175E2	; 12DB2
 xor edx, edx	; 12DB7
 mov dl, byte [byte_D42C3]	; 12DB9
 add edx, edx	; 12DBF
 add edx, ebp	; 12DC1
-mov ebx, unk_C03F1	; 12DC3
+mov ebx, str_A	; 12DC3
 mov eax, esi	; 12DC8
 call sub_175E2	; 12DCA
 xor edx, edx	; 12DCF
@@ -472,14 +467,14 @@ mov eax, edx	; 12DD7
 shl eax, 2	; 12DD9
 sub eax, edx	; 12DDC
 lea edx, [eax+ebp]	; 12DDE
-mov ebx, unk_C03F3	; 12DE1
+mov ebx, str_Pt	; 12DE1
 mov eax, esi	; 12DE6
 call sub_175E2	; 12DE8
 xor edx, edx	; 12DED
 mov dl, byte [byte_D42C3]	; 12DEF
 shl edx, 2	; 12DF5
 add edx, ebp	; 12DF8
-mov ebx, asc_C03F6	; 12DFA
+mov ebx, str_PIM	; 12DFA
 mov eax, esi	; 12DFF
 call sub_175E2	; 12E01
 xor edx, edx	; 12E06
@@ -488,7 +483,7 @@ mov eax, edx	; 12E0E
 shl eax, 2	; 12E10
 add eax, edx	; 12E13
 lea edx, [eax+ebp]	; 12E15
-mov ebx, asc_C03FA	; 12E18
+mov ebx, str_PlusMinus	; 12E18
 mov eax, esi	; 12E1D
 call sub_175E2	; 12E1F
 xor edx, edx	; 12E24
@@ -498,7 +493,7 @@ shl eax, 2	; 12E2E
 sub eax, edx	; 12E31
 add eax, eax	; 12E33
 lea edx, [eax+ebp]	; 12E35
-mov ebx, asc_C03FE	; 12E38
+mov ebx, str_PPG	; 12E38
 mov eax, esi	; 12E3D
 call sub_175E2	; 12E3F
 xor edx, edx	; 12E44
@@ -507,14 +502,14 @@ mov eax, edx	; 12E4C
 shl eax, 3	; 12E4E
 sub eax, edx	; 12E51
 lea edx, [eax+ebp]	; 12E53
-mov ebx, asc_C0402	; 12E56
+mov ebx, str_SHG	; 12E56
 mov eax, esi	; 12E5B
 call sub_175E2	; 12E5D
 xor edx, edx	; 12E62
 mov dl, byte [byte_D42C3]	; 12E64
 shl edx, 3	; 12E6A
 add edx, ebp	; 12E6D
-mov ebx, asc_C03E5	; 12E6F
+mov ebx, str_Shots	; 12E6F
 mov eax, esi	; 12E74
 call sub_175E2	; 12E76
 xor edx, edx	; 12E7B
@@ -523,7 +518,7 @@ mov eax, edx	; 12E83
 shl eax, 3	; 12E85
 add eax, edx	; 12E88
 lea edx, [eax+ebp]	; 12E8A
-mov ebx, asc_C03EB	; 12E8D
+mov ebx, str_Pct	; 12E8D
 mov eax, esi	; 12E92
 call sub_175E2	; 12E94
 mov eax, dword [dword edi+off_C524F]	; 12E99
@@ -531,7 +526,7 @@ mov dword [byte esp+030h], eax	; 12E9F
 mov edi, eax	; 12EA3
 xor ecx, ecx	; 12EA5
 mov dword [byte esp+03Ch], ecx	; 12EA7
-loc_12EAB:
+.22:
 mov eax, dword [byte esp+03Ch]	; 12EAB
 mov ebx, dword [nosplit eax*4+off_C527B]	; 12EAF
 xor edx, edx	; 12EB6
@@ -629,7 +624,7 @@ mov ebx, str_fmtpd	; 12FE0
 mov eax, esi	; 12FE5
 call sub_176AE	; 12FE7
 cmp word [byte edi+0Eh], byte 0	; 12FEC
-je short loc_13027	; 12FF1
+je short .23	; 12FF1
 xor edx, edx	; 12FF3
 mov dx, word [byte edi+02h]	; 12FF5
 mov ecx, edx	; 12FF9
@@ -650,10 +645,10 @@ mov eax, edx	; 1301C
 sar edx, 1Fh	; 1301E
 idiv ebx	; 13021
 mov edi, eax	; 13023
-jmp short loc_13029	; 13025
-loc_13027:
+jmp short .24	; 13025
+.23:
 xor edi, edi	; 13027
-loc_13029:
+.24:
 mov ebx, 0Ah	; 13029
 mov eax, edi	; 1302E
 mov edx, edi	; 13030
@@ -671,7 +666,7 @@ mov eax, edx	; 1304B
 shl eax, 3	; 1304D
 add eax, edx	; 13050
 lea edx, [eax+ebp]	; 13052
-mov ebx, asc_C528E	; 13055
+mov ebx, str_D01d	; 13055
 mov eax, esi	; 1305A
 call sub_176DB	; 1305C
 mov edi, dword [byte esp+030h]	; 13061
@@ -680,21 +675,21 @@ mov ecx, dword [byte esp+03Ch]	; 13068
 inc ecx	; 1306C
 mov dword [byte esp+03Ch], ecx	; 1306D
 cmp ecx, byte 2	; 13071
-jl near loc_12EAB	; 13074
-loc_1307A:
+jl near ShowAwardScreens.22	; 13074
+.25:
 mov ebp, 1BAh	; 1307A
 mov edi, dword [byte esp+038h]	; 1307F
 shl edi, 3	; 13083
-mov esi, dword [dword edi+dword_C51F0]	; 13086
+mov esi, dword [dword edi+awardtitles+4]	; 13086
 test esi, esi	; 1308C
-je short loc_130C1	; 1308E
+je short .26	; 1308E
 push esi	; 13090
 call fputchar	; 13091
 add esp, byte 4	; 13096
 sar eax, 1	; 13099
 mov esi, 1FEh	; 1309B
 sub esi, eax	; 130A0
-mov ebx, dword [dword edi+dword_C51F0]	; 130A2
+mov ebx, dword [dword edi+awardtitles+4]	; 130A2
 mov edx, ebp	; 130A8
 mov eax, esi	; 130AA
 call sub_175E2	; 130AC
@@ -702,20 +697,20 @@ movzx ebp, byte [byte_D42C3]	; 130B1
 mov eax, 1BAh	; 130B8
 sub eax, ebp	; 130BD
 mov ebp, eax	; 130BF
-loc_130C1:
+.26:
 mov edi, dword [byte esp+038h]	; 130C1
-mov eax, dword [nosplit edi*8+off_C51EC]	; 130C5
+mov eax, dword [nosplit edi*8+awardtitles]	; 130C5
 push eax	; 130CC
 call fputchar	; 130CD
 add esp, byte 4	; 130D2
 sar eax, 1	; 130D5
 mov esi, 1FEh	; 130D7
 sub esi, eax	; 130DC
-mov ebx, dword [nosplit edi*8+off_C51EC]	; 130DE
+mov ebx, dword [nosplit edi*8+awardtitles]	; 130DE
 mov edx, ebp	; 130E5
 mov eax, esi	; 130E7
 call sub_175E2	; 130E9
-push asc_C0406	; 130EE
+push str_Pal3	; 130EE
 mov edx, dword [byte esp+030h]	; 130F3
 push edx	; 130F7
 call sub_B30B4	; 130F8
@@ -733,7 +728,7 @@ call sub_33E6A	; 13121
 mov edi, eax	; 13126
 push byte 0	; 13128
 push dword 300h	; 1312A
-push asc_C040B	; 1312F
+push str_Palmem	; 1312F
 call sub_8CCA8	; 13134
 mov esi, eax	; 13139
 add esp, byte 0Ch	; 1313B
@@ -750,17 +745,17 @@ push esi	; 1315F
 call jctime	; 13160
 add esp, byte 4	; 13165
 inc dword [byte esp+038h]	; 13168
-loc_1316C:
+.27:
 mov ebx, dword [byte esp+038h]	; 1316C
 cmp ebx, byte 0Bh	; 13170
-jge short loc_1317E	; 13173
+jge short .28	; 13173
 cmp edi, byte 3	; 13175
-jne near loc_1286C	; 13178
-loc_1317E:
+jne near ShowAwardScreens.1	; 13178
+.28:
 mov eax, edi	; 1317E
 add esp, byte 40h	; 13180
-jmp near FindLeagueLeaders_x	; 13183
-sub_13188:
+jmp near PickAwardWinners_x	; 13183
+DrawAwardsSummary:
 push dword 4Ch	; 13188
 call __CHK	; 1318D
 push ebx	; 13192
@@ -772,7 +767,7 @@ push ebp	; 13197
 sub esp, byte 30h	; 13198
 xor edx, edx	; 1319B
 mov dword [byte esp+02Ch], edx	; 1319D
-loc_131A1:
+.1:
 mov esi, dword [byte esp+02Ch]	; 131A1
 mov eax, esi	; 131A5
 shl eax, 2	; 131A7
@@ -780,60 +775,60 @@ add eax, esi	; 131AA
 shl eax, 2	; 131AC
 sub eax, esi	; 131AF
 lea ebp, [dword eax+08Ch]	; 131B1
-mov ebx, dword [nosplit esi*4+off_C51C0]	; 131B7
+mov ebx, dword [nosplit esi*4+awardnames]	; 131B7
 mov edx, ebp	; 131BE
 mov eax, 14h	; 131C0
 call sub_175E2	; 131C5
-cmp byte [dword esi+byte_C5244], 2	; 131CA
-jne near loc_13252	; 131D1
+cmp byte [dword esi+awardtype], 2	; 131CA
+jne near .8	; 131D1
 mov ebx, 3	; 131D7
-mov edx, asc_C039F	; 131DC
+mov edx, str_ANA	; 131DC
 mov eax, esp	; 131E1
 call strnicmp_	; 131E3
 test eax, eax	; 131E8
-jne short loc_131F6	; 131EA
-mov ebx, unk_C03A3	; 131EC
-jmp near loc_132FA	; 131F1
-loc_131F6:
+jne short .2	; 131EA
+mov ebx, str_MightyDucks	; 131EC
+jmp near .14	; 131F1
+.2:
 cmp esi, byte 0Ah	; 131F6
-jne short loc_13202	; 131F9
-mov edx, unk_D8F8D	; 131FB
-jmp short loc_13207	; 13200
-loc_13202:
-mov edx, unk_D9275	; 13202
-loc_13207:
+jne short .3	; 131F9
+mov edx, cupteam+5	; 131FB
+jmp short .4	; 13200
+.3:
+mov edx, presidentsteam+5	; 13202
+.4:
 mov eax, esp	; 13207
 call strcpy_	; 13209
 mov ebx, 3	; 1320E
-mov edx, asc_C03BC	; 13213
+mov edx, str_Cal	; 13213
 mov eax, esp	; 13218
 call strnicmp_	; 1321A
 test eax, eax	; 1321F
-je short loc_13238	; 13221
+je short .5	; 13221
 mov ebx, 3	; 13223
-mov edx, asc_C03C0	; 13228
+mov edx, str_Flo	; 13228
 mov eax, esp	; 1322D
 call strnicmp_	; 1322F
 test eax, eax	; 13234
-jne short loc_1323F	; 13236
-loc_13238:
+jne short .6	; 13236
+.5:
 mov edx, unk_C03C4	; 13238
-jmp short loc_13244	; 1323D
-loc_1323F:
+jmp short .7	; 1323D
+.6:
 mov edx, unk_C03C6	; 1323F
-loc_13244:
+.7:
 mov eax, esp	; 13244
 call strcat_	; 13246
 mov ebx, esp	; 1324B
-jmp near loc_132FA	; 1324D
-loc_13252:
+jmp near .14	; 1324D
+.8:
 mov eax, esi	; 13252
 shl eax, 2	; 13254
 sub eax, esi	; 13257
 shl eax, 2	; 13259
 add esi, eax	; 1325C
 shl esi, 2	; 1325E
-mov eax, byte_D9558	; 13261
+mov eax, awardwinners	; 13261
 add eax, esi	; 13266
 lea ebx, [byte eax+013h]	; 13268
 lea edx, [byte eax+03h]	; 1326B
@@ -845,7 +840,7 @@ mov edx, ebp	; 1327C
 mov eax, 0B4h	; 1327E
 call sub_175E2	; 13283
 xor edx, edx	; 13288
-mov dl, byte [dword esi+byte_D9558]	; 1328A
+mov dl, byte [dword esi+awardwinners]	; 1328A
 mov eax, edx	; 13290
 shl eax, 2	; 13292
 add eax, edx	; 13295
@@ -856,36 +851,36 @@ add edx, eax	; 132A1
 mov eax, esp	; 132A3
 call strcpy_	; 132A5
 mov ebx, 3	; 132AA
-mov edx, asc_C039F	; 132AF
+mov edx, str_ANA	; 132AF
 mov eax, esp	; 132B4
 call strnicmp_	; 132B6
 test eax, eax	; 132BB
-jne short loc_132D0	; 132BD
+jne short .9	; 132BD
 mov ecx, 6	; 132BF
 mov edi, esp	; 132C4
-mov esi, unk_C03A3	; 132C6
+mov esi, str_MightyDucks	; 132C6
 rep movsd	; 132CB
 movsb	; 132CD
-jmp short loc_132F8	; 132CE
-loc_132D0:
-mov dh, byte [dword esi+byte_D9558]	; 132D0
+jmp short .13	; 132CE
+.9:
+mov dh, byte [dword esi+awardwinners]	; 132D0
 cmp dh, 2	; 132D6
-je short loc_132E5	; 132D9
+je short .10	; 132D9
 cmp dh, 18h	; 132DB
-je short loc_132E5	; 132DE
+je short .10	; 132DE
 cmp dh, 19h	; 132E0
-jne short loc_132EC	; 132E3
-loc_132E5:
+jne short .11	; 132E3
+.10:
 mov edx, unk_C03C4	; 132E5
-jmp short loc_132F1	; 132EA
-loc_132EC:
+jmp short .12	; 132EA
+.11:
 mov edx, unk_C03C6	; 132EC
-loc_132F1:
+.12:
 mov eax, esp	; 132F1
 call strcat_	; 132F3
-loc_132F8:
+.13:
 mov ebx, esp	; 132F8
-loc_132FA:
+.14:
 mov edx, ebp	; 132FA
 mov eax, 190h	; 132FC
 call sub_175E2	; 13301
@@ -893,6 +888,6 @@ mov ecx, dword [byte esp+02Ch]	; 13306
 inc ecx	; 1330A
 mov dword [byte esp+02Ch], ecx	; 1330B
 cmp ecx, byte 0Bh	; 1330F
-jl near loc_131A1	; 13312
+jl near DrawAwardsSummary.1	; 13312
 add esp, byte 30h	; 13318
-jmp near FindLeagueLeaders_x	; 1331B
+jmp near PickAwardWinners_x	; 1331B
