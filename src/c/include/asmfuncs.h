@@ -654,7 +654,6 @@ extern void EvadePlayers_popedi(); /* 5E7F8 */
 extern void EvadePC(); /* 5E7FE */
 extern void EvadePC_x(); /* 5E933 */
 extern void skatetopuck(); /* 5EB17 */
-extern void avdgoal_box(); /* 5F04E */
 extern void avdgoal_jt(); /* 5F11D */
 extern void SaveGameState(); /* 5FB03 */
 extern void SaveGameState_popx(); /* 6060B */
@@ -1379,7 +1378,6 @@ extern void loc_8DFB0(); /* 8DFB0 */
 extern void loc_8DFEA(); /* 8DFEA */
 extern void loc_8E011(); /* 8E011 */
 extern void loc_8E06C(); /* 8E06C */
-extern void sub_8E080(); /* 8E080 */
 extern void loc_8E0A0(); /* 8E0A0 */
 extern void loc_8E0AE(); /* 8E0AE */
 extern void loc_8E0C6(); /* 8E0C6 */
@@ -6365,7 +6363,6 @@ extern void loc_B2D92(); /* B2D92 */
 extern void sub_B2D94(); /* B2D94 */
 extern void loc_B2DB2(); /* B2DB2 */
 extern void sub_B2DEF(); /* B2DEF */
-extern void sub_B2E1B(); /* B2E1B */
 extern void sub_B2E43(); /* B2E43 */
 extern void loc_B2E94(); /* B2E94 */
 extern void loc_B2EA5(); /* B2EA5 */
@@ -6712,13 +6709,11 @@ extern void loc_B4B27(); /* B4B27 */
 extern void loc_B4B39(); /* B4B39 */
 extern void loc_B4B3B(); /* B4B3B */
 extern void loc_B4BA0(); /* B4BA0 */
-extern void sub_B4BC4(); /* B4BC4 */
 extern void loc_B4BDE(); /* B4BDE */
 extern void loc_B4BE8(); /* B4BE8 */
 extern void loc_B4BF6(); /* B4BF6 */
 extern void loc_B4C04(); /* B4C04 */
 extern void sub_B4C28(); /* B4C28 */
-extern void sub_B4C33(); /* B4C33 */
 extern void loc_B4C48(); /* B4C48 */
 extern void loc_B4C4F(); /* B4C4F */
 extern void loc_B4C56(); /* B4C56 */

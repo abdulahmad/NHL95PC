@@ -1297,6 +1297,10 @@ pop edx	; 10E9B
 pop ecx	; 10E9C
 pop ebx	; 10E9D
 ret	; 10E9E
+; C: src/c/001_10010_main_startup/SetScreenSize.c
+%ifdef CBUILD
+%include "c/001_10010_main_startup/SetScreenSize.inc"
+%else
 SetScreenSize:
 push dword 28h	; 10E9F
 call __CHK	; 10EA4
@@ -1367,6 +1371,7 @@ pop esi	; 10F69
 pop ecx	; 10F6A
 pop ebx	; 10F6B
 ret	; 10F6C
+%endif ; C
 ; C: src/c/001_10010_main_startup/IntermissionPC.c
 %ifdef CBUILD
 %include "c/001_10010_main_startup/IntermissionPC.inc"
