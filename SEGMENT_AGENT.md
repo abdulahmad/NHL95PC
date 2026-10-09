@@ -21,7 +21,7 @@ The segment boundaries come from `segmap95pc.json` (`tools/segdef.py`, `EXE_SEGM
   - `EXE_SEGMAP95PC.md` and `segmap95pc.json`: the segment notes and Genesis counterparts.
   - `tools/struct_fieldmap.csv`: player structure fields.
   - `tools/global_map.csv`: globals. The seeded rows are weak alignments (`aligned 2/3 accesses ...`), not proof. When the code shows a seeded name is wrong, rename it and say why in the evidence (engine_skating: `gameclock` C9080 was the pointer to the puck's Xvel, `wcradiusy` E03B4 was the d4 static).
-- Style source: the matching routine in https://github.com/abdulahmad/NHLPA93Genesis (`src/logic93_*.asm`, `hockey93_*.asm`, `penalty93_*.asm` ...). Use https://github.com/abdulahmad/NHL94Genesis for what 94 added. Use https://github.com/abdulahmad/NHL95Genesis (listing `lst/nhl95.bin.lst`) for what 95 added.
+- Style source: the matching routine in https://github.com/abdulahmad/NHLPA93Genesis (`src/logic93_*.asm`, `hockey93_*.asm`, `penalty93_*.asm` ...). Use https://github.com/abdulahmad/NHL94Genesis for what 94 added. Do not use NHL95Genesis as a naming reference yet: its disassembly is incomplete (see Lineage).
 - A local checkout of the three Genesis repos works the same as the GitHub pages; search it with `rg` (for example `rg -n '^skateto' src/logic93_*.asm`).
 - Docs: `docs/ASM_BUILD.md` covers the source tree, the encoding rules and the linker. `BUILD_NOTES.md` covers the compiler fingerprint and fixups. `docs/SKATING_AND_RINK.md` covers skating physics compared with 93G.
 
@@ -32,10 +32,10 @@ How the PC code relates to the Genesis games:
 - NHL 95 PC is NHL 94 PC plus NHL 94 and 95 Genesis additions: season mode, trades and create player (Genesis `season95`, `trade95`, `create95`).
 - The game engine's C code mostly follows 93G, routine for routine. Look there first.
   - Use 94G for one-timers, breakaways, the extra assignment slots (asstab slots 30 and up) and `doinput_ispc`.
-  - Use 95G for the season code.
+  - Do not take names from 95G (season, trades, create player) until its disassembly is complete; name that code from what it does (strings, callers, data it touches).
 - The front end (menus, desk screens, file dialogs, configuration) is PC-new. Genesis only matches by role (`stats94` screens, `optsetup94`, `menu94`). Name those routines from what they do.
 
-Name preference: a 93G name when the body is the same routine, else the 94G name, else the 95G name, else a name from what it does. This is the same order `tools/matcher.py` uses.
+Name preference: a 93G name when the body is the same routine, else the 94G name, else a name from what it does. 95G names come in (after 94G) only once the 95G disassembly is complete; `tools/matcher.py` still lists 95G as the third source, so treat its 95G proposals as unconfirmed.
 
 ## Build
 
@@ -75,7 +75,7 @@ After the segment's last change, also run `python3 tools/update_symbols.py --che
 1. Take the current row. Run `make` (MATCH) and `python3 tools/auto_names.py <module>`.
 2. For each function (`sub_` or already named), find the Genesis counterpart:
    - Read the `name_map_94.csv` row (source game, file, evidence and confidence: `low` means unconfirmed).
-   - Open that routine in NHLPA93Genesis (or 94G or 95G).
+   - Open that routine in NHLPA93Genesis (or 94G; not 95G for now).
    - Line up the instruction sequences by:
      - the calls (callees with known names)
      - the constants (`cmp ..., 1000h` is 93G `cmp.w #$1000`)
@@ -172,7 +172,7 @@ The first row that is not `done` is the current segment. The order is engine fir
 | 11 | `cseg01/048_69336_game_frame.asm` | done 2026-10-09: the one function StartHL2 was already named (93G penalty93_2 StartHL2 role: saves the game state, plays another game's highlight with gmode bit 4, restores). Data: HomeTeam / VisTeam / sflags3 (the PC RAM keeps the 93G ram93 order around cont1team), hmtmgoalie / awtmgoalie, hmlinetab / awlinetab, 4 puckstruct folds. 39 locals. Left: 53 data labels (word_CBEC0..CBECE big-screen animation state, D8C72-D8C84, C5704-C570C, DD6A8-DD6B0, team words DF644-DF648 = team fields 30h-34h) | 69336-6A032 | 3325 | 1 | 39 / 121 | one 0xCFD-byte in-game driver, 56 callees; 93G hockey93_02 main loop / penalty93_2 StartHL2 (role, unverified) |
 | 12 | `cseg01/036_47C31_engine_init.asm` | done 2026-10-09: 4 functions named, all PC-new: PreGameIntro (pre-game ceremony: line-up, big-screen animation, crowd sample, frame loop until a button), ThreeStarsLoop (the three-stars ceremony loop, shares PreGameIntro's frame loop), StartPreGame (low), FadeOutPalCycle (low). Data: seqtimer (E9B04). 5 shared tails (PreGameIntro_frameloop, PreGameIntro_popx ... used by player logic), 34 locals. Left: ~49 data labels (dword_CC0EC skips the intro and the stars, dword_C9074, palette cycle DE26C/DEB6C-DEB71) | 47C31-48429 | 2041 | 4 | 44 / 79 | in-game init helpers; 93G hockey93_01 / 94G hockey94, setup94 (role) |
 | 13 | `cseg01/044_5FB03_game_state_saveload.asm` | done 2026-10-09: 2 functions named, PC-new: SaveGameState / LoadGameState (write / read the open file with sub_145F9 / sub_145A2: dword_C5413, 17 SortCords entries x 66h, both team structs x D4h, hmlinetab / awlinetab, then the game globals one at a time, PenBuf, ...), + tail SaveGameState_popx, strings str_ErrSaveGame / str_ErrLoadGame. 69 locals. Left: ~125 data labels (the globals the two routines copy one by one; their order is a ready-made inventory of the in-game state) | 5FB03-614C1 | 6591 | 3 | 72 / 204 | PC-new: in-game save/load (Error Saving/Loading Game) |
-| 14 | `cseg01/047_688A4_debug_dump.asm` | done 2026-10-09: 2 functions (DebugMonitor - unreferenced PC debug monitor; DumpStatsLog - stats.log dump) plus DebugPrintf, WaitKey, PollKey in other segments. Team stat fields from the dump headers: tmshots/tmppg/tmpp/tmpen/tmpenmin/tmpass/tmpasscomp, tmplstats E6h (skater stats, 10h each), tmglstats EAh (goalie stats, 6 each). Data: debugstep, hm/awshotcnt, hm/awgoalcnt, hm/awtmplstats, hmtmpdst_m2, dbg_posnames/assnames/spalist/spanames, bailout_vec (low), str_* strings; 16 DF6xx/DF7xx aliases folded into hmtmstruct/awtmstruct. Left: penalty-shot debug vars CC0F8-CC12C, pool counters D8C6C/D8C78, gm C53FB, word_CBC44, sub_93E38; SortCords bytes 56h-65h unnamed. Counts 48/118 -> 0/17. | 688A4-69335 | 2706 | 2 | 48 / 118 | PC-new: debug state dump to stats.log (puckc, gmclock, gmpen, tmstructs, sortcords) |
+| 14 | `cseg01/047_688A4_debug_dump.asm` | done 2026-10-09: 2 functions (DebugMonitor - unreferenced PC debug monitor; DumpStatsLog - stats.log dump) plus DebugPrintf, WaitKey, PollKey in other segments. Team stat fields from the dump headers: tmshots/tmppg/tmpp/tmpen/tmpenmin/tmpass/tmpasscomp, tmplstats E6h (skater stats, 10h each), tmglstats EAh (goalie stats, 6 each). Data: debugstep, hm/awshotcnt, hm/awgoalcnt, hm/awtmplstats, hmtmpdst_m2, dbg_posnames/assnames/spalist/spanames, bailout_vec (low), str_* strings; 16 DF6xx/DF7xx aliases folded into hmtmstruct/awtmstruct. Left: penalty-shot debug vars CC0F8-CC12C, pool counters D8C6C/D8C78, gm C53FB, word_CBC44, sub_93E38; SortCords bytes 56h-65h unnamed. Counts 48/118 -> 0/11. | 688A4-69335 | 2706 | 2 | 48 / 118 | PC-new: debug state dump to stats.log (puckc, gmclock, gmpen, tmstructs, sortcords) |
 | | **season95 (new in 95; Genesis season95 / trade95 / create95)** | | | | | | |
 | 15 | `cseg01/033_40183_trades.asm` | not done | 40183-41B7F | 6653 | 13 | 124 / 79 | trades / human team selection / free agents (Select two teams for trading) ; NEW in 95 (Genesis trade95) |
 | 16 | `cseg01/034_41B80_schedule.asm` | not done | 41B80-45281 | 14082 | 24 | 352 / 68 | season schedule (sche/Sch), human team selection ; NEW in 95 (Genesis trade95 schedule half) |
