@@ -1,5 +1,5 @@
 pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_game_names,confidence,evidence,segment,method
-00010010,sub_10010,GetMemListHead,PC-new,,,,low,returns dword_EDA08 when eax != 0 else dword_EDA0C (heads of the two runtime memory block lists walked by GetMemStats),main_startup,manual-trace
+00010010,sub_10010,GetMemListHead,PC-new,,,,high,returns memlist1 when eax != 0 else memlist0 [reviewed: body re-read],main_startup,manual-trace
 0001002A,sub_1002A,GetMemStats,PC-new,,,,medium,"walks the memory block list from GetMemListHead(1) (next at +20h) and returns total, free, used and largest block through four pointers; main_ refuses to start ('Insufficient memory available.') when the total is below 1E5D70h",main_startup,manual-trace
 00010094,main_,main_ (role: Begin),93G,hockey93_01.asm,hockey94.asm,94G Begin,high,Watcom main_ entry (called from the C runtime start); front-end entry like 94G Begin,main_startup,role
 000106C8,sub_106C8,DiskFreeBytes,PC-new,,,,high,"_dos_getdiskfree_(drive) -> clusters * sectors * bytes; FatalError 'error getting disk space free' on failure (main_, CreateNewLeague, WriteModeState)",main_startup,manual-trace
@@ -124,9 +124,9 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00018C20,sub_18C20,StatsMenuSavePct,PC-new,,,,high,"menu action for the ""Save Percentage ..."" stats item: statscategory = 10; on first entry (dword_DC738) fades through the SfPal1 / SfPal2 palettes into the goalie stats screen (sub_25B24), else redraws through goaliestatscb",palette_fx,manual-trace
 00018D03,sub_18D03,DeskSetExit3b,PC-new,,,,high,"second entry to the DeskSetExit3 body (deskexit = 3, return 1), used by a sports desk menu item [reviewed: whole body is the stub/flag-set described, no other behaviour]",palette_fx,manual-trace
 00018D0D,sub_18D0D,ShowPlayerStatsItem,PC-new,,,,medium,"""Show Player Statistics And Attributes"" menu action: deskexit = 4, or 5 when byte_DC836 is not 'G'; returns 1 via DeskSetExit_ret1",palette_fx,manual-trace
-00018D33,sub_18D33,FreeDeskBuffers,PC-new,,,,low,releases the two buffers in dword_C65AC / dword_C65A8 (jctime) and clears them; returns 0 (easn_stats),palette_fx,manual-trace
+00018D33,sub_18D33,FreeDeskBuffers,PC-new,,,,medium,releases the two buffers in dword_C65AC / dword_C65A8 (jctime) and clears them; returns 0 (easn_stats) [reviewed: body re-read],palette_fx,manual-trace
 00018D7F,sub_18D7F,OutputCurrentData,PC-new,,,,high,"""Output Current Data ..."" sports desk item: prompts ""Please enter output file name"" (sub_2FEDF text entry with temporary dword_C71CC..C71DC colours) and, unless Esc or empty, WriteScreenTextFile",frontend_desk,manual-trace
-00018E43,sub_18E43,DrawDeskFrames,PC-new,,,,low,"draws three nested rectangles (sub_B4FAC lines, colours 22h / 21h / 20h) around 0Eh,21h - 0AFh,86h",frontend_desk,manual-trace
+00018E43,sub_18E43,DrawDeskFrames,PC-new,,,,medium,"draws three nested rectangles (sub_B4FAC lines, colours 22h / 21h / 20h) around 0Eh,21h - 0AFh,86h [reviewed: body re-read]",frontend_desk,manual-trace
 00018F74,sub_18F74,MenuCallbackTrue,PC-new,,,,high,"callback that returns 1 (ret 0Ch; second entry loc_18F86); its address is passed by the penalty text code (62CB9) [reviewed: whole body is the stub/flag-set described, no other behaviour]",frontend_desk,manual-trace
 00018F8D,sub_18F8D,PlayRandomHighlight,PC-new,,,,medium,"marks the highlights already shown (dword_DD730 state >= 5 and unchanged) in hlplayedmask, picks a random unplayed one of the 6 and plays it with StartHL2; returns -1 / its result",frontend_desk,manual-trace
 000190BE,sub_190BE,IntermissionDesk,PC-new,,,,medium,"between periods (called from IntermissionPC): in an exhibition between real teams plays the period highlights (sub_2F3D7, PlayRandomHighlight), then the sports desk in intermission mode (SportsDesk 1), clears the goal / shot counters and restores 320x200",frontend_desk,manual-trace
@@ -199,9 +199,9 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0001D6E8,sub_1D6E8,RunMenu,PC-new,,,,medium,"mouse-driven menu loop: saves ""Pointer"" bg, tracks mouse, hit-tests menu items (32-byte items, +14h action fn), calls action; eax=menu list, edx=count, ebx/ecx/stack=colors",menu_system,manual-trace
 0001DF03,sub_1DF03,RunTeamPickMenu,PC-new,,,,medium,"RunMenu variant with a 26-team picker (statsteamorder / playofftree), sets statscategory + statsteamsel; used by EASN team stats screens",menu_system,manual-trace
 0001ED96,sub_1ED96,RunPlayerPickMenu,PC-new,,,,medium,"RunMenu variant with a skater + goalie picker; copies picked record to statsplayer, calls ShowPlayerStatsItem",menu_system,manual-trace
-0001FAA7,sub_1FAA7,InitMenuRemap,PC-new,,,,low,"fills 256-byte remap table menuremap (mode 0: shift 15h-3Fh down, else identity) and installs it via sub_B4DD4",menu_system,manual-trace
-0001FB1C,sub_1FB1C,TextPrintf,PC-new,,,,low,sprintf into printfbuf then sub_91964 text draw; no refs,menu_system,manual-trace
-0001FB49,sub_1FB49,TextPrintf2,PC-new,,,,low,as TextPrintf with one more format arg; no refs,menu_system,manual-trace
+0001FAA7,sub_1FAA7,InitMenuRemap,PC-new,,,,medium,"mode 0: menuremap 0..14h = 0, 15h..3Fh shifted down by 15h, rest identity; else menuremap / menuremap2 0..7Fh identity; installs menuremap via sub_B4DD4 [reviewed: body re-read]",menu_system,manual-trace
+0001FB1C,sub_1FB1C,TextPrintf,PC-new,,,,high,sprintf into printfbuf then sub_91964 text draw; no refs [reviewed: body re-read],menu_system,manual-trace
+0001FB49,sub_1FB49,TextPrintf2,PC-new,,,,high,as TextPrintf with one more format arg; no refs [reviewed: body re-read],menu_system,manual-trace
 0001FB7F,sub_1FB7F,CmpPoints,PC-new,,,,high,off_C6BE8[0] (Point Leaders); also the default skater roster sort,menu_system,manual-trace
 0001FC8F,sub_1FC8F,CmpGAA,PC-new,,,,high,off_C6BE8[8] (Goals Against Average Leaders); also the default goalie roster sort,menu_system,manual-trace
 0001FDFE,sub_1FDFE,LoadShapeByTag,PC-new,,,,low,"opens file, reads tag directory (""sfh""), finds 4-char tag, allocs ""shape"" and reads it; no refs",menu_system,manual-trace
@@ -262,7 +262,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0002BD16,sub_2BD16,DrawFileDlgTabs,PC-new,,,,medium,draws Open / Delete / Done and the Exhibition / Playoffs / League tab labels for the current tab,file_dialogs,manual-trace
 0002BEEA,sub_2BEEA,CmpFileNames,PC-new,,,,high,"qsort comparator: strcmp(*a, *b); also used by database_dialogs",file_dialogs,manual-trace
 0002BEFD,sub_2BEFD,ScanSavedGames,PC-new,,,,high,"findfirst / findnext over *.lp, *.po, *.nhl into the three per-tab file lists, qsort CmpFileNames",file_dialogs,manual-trace
-0002C135,sub_2C135,PrintTextCopy,PC-new,,,,low,copies the string to a local buffer and draws it with sub_91964; also used by database_dialogs,file_dialogs,manual-trace
+0002C135,sub_2C135,PrintTextCopy,PC-new,,,,medium,copies the string to a local buffer and draws it with sub_91964; also used by database_dialogs [reviewed: body re-read],file_dialogs,manual-trace
 0002C18F,sub_2C18F,DrawFileDlg,PC-new,,,,medium,"dialogbx / dbox frame, file list rows, sets the item mask fdlgmask (bits per visible row, _jt cases)",file_dialogs,manual-trace
 0002C3FF,sub_2C3FF,FileDlgHitTest,PC-new,,,,high,"(x, y, out*): finds which of the 16 fdlgrects contains the point",file_dialogs,manual-trace
 0002C46B,sub_2C46B,DrawFileDlgList,PC-new,,,,medium,redraws the file name rows and the up / down arrows for the scroll position,file_dialogs,manual-trace
@@ -295,7 +295,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00030D0E,sub_30D0E,TrackScrollBars,PC-new,,,,medium,"drags the thumb under the mouse, recomputes the position, redraws; returns the bar index",misc_dialogs,manual-trace
 00030E66,sub_30E66,SaveDialogBg,PC-new,,,,high,allocates DBOX and saves the screen under the dialog rect (x rounded to 4),misc_dialogs,manual-trace
 00030F12,sub_30F12,RestoreDialogBg,PC-new,,,,high,puts back and frees the DBOX save,misc_dialogs,manual-trace
-00030F5F,sub_30F5F,GrowToButton,PC-new,,,,low,widens w / h to fit one button (unused),misc_dialogs,manual-trace
+00030F5F,sub_30F5F,GrowToButton,PC-new,,,,medium,widens w / h to fit one button (unused) [reviewed: body re-read],misc_dialogs,manual-trace
 00030FB4,sub_30FB4,GrowToButtons,PC-new,,,,medium,widens w / h to fit the button row,misc_dialogs,manual-trace
 00031013,sub_31013,MessageBox,PC-new,,,,medium,"(x, y (-1 = centred), message line table, line count, buttons, button count, ...): the league/front-end message dialog used for every 'Copying databases' / 'Insert disk' / error box",misc_dialogs,manual-trace
 00031250,sub_31250,RunMessageBox,PC-new,,,,medium,"MessageBox mouse loop: Pointer sprite, TrackButtons until a button is released; returns its index",misc_dialogs,manual-trace
@@ -359,11 +359,11 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0003A27D,sub_3A27D,WriteGoalieSeasonRec,PC-new,,,,medium,FileWriteAt 36h: SEASON.DB goalie record,league_setup,manual-trace
 0003A28F,sub_3A28F,WriteSchedGame,PC-new,,,,high,"FileWriteAt counterpart of ReadSchedGame (2 + index*6, 6 bytes)",league_setup,manual-trace
 0003A2B8,sub_3A2B8,WriteTeamRec,PC-new,,,,high,"FileWriteAt counterpart of ReadTeamRec (index*2E8h, 2E8h bytes)",league_setup,manual-trace
-0003A2EE,sub_3A2EE,ReadDbRec4Ch,PC-new,,,,low,FileReadAt of a 4Ch-byte record at index * 4Ch (options_settings),league_setup,manual-trace
+0003A2EE,sub_3A2EE,ReadDbRec4Ch,PC-new,,,,medium,FileReadAt of a 4Ch-byte record at index * 4Ch (options_settings) [reviewed: body re-read],league_setup,manual-trace
 0003A31E,sub_3A31E,ReadLeagueTeamEntry,PC-new,,,,high,FileReadAt 1Eh at 20h + team * 1Eh: PINFO league team entry (pair of WriteLeagueTeamEntry),league_setup,manual-trace
 0003A347,sub_3A347,WriteLeagueTeamEntry,PC-new,,,,high,"FileWriteAt of one PINFO.DB team entry (20h + index*1Eh, 1Eh bytes)",league_setup,manual-trace
-0003A36B,sub_3A36B,ReadDbRec28h,PC-new,,,,low,FileReadAt 28h-byte record (unused),league_setup,manual-trace
-0003A380,sub_3A380,ReadDbRec2Ch,PC-new,,,,low,FileReadAt 2Ch-byte record (unused),league_setup,manual-trace
+0003A36B,sub_3A36B,ReadDbRec28h,PC-new,,,,medium,FileReadAt of a 28h-byte record (shared tail ReadGoalieSeasonRec_common); unused [reviewed: body re-read],league_setup,manual-trace
+0003A380,sub_3A380,ReadDbRec2Ch,PC-new,,,,medium,FileReadAt of a 2Ch-byte record (shared tail ReadGoalieSeasonRec_common); unused [reviewed: body re-read],league_setup,manual-trace
 0003A395,sub_3A395,AskTeamPassword,PC-new,,,,medium,"'Enter password for <team>' input and check (sub_3A597), 'Incorrect password!' on mismatch; TradePlayers asks it for both teams",league_setup,manual-trace
 0003A49E,sub_3A49E,AskMasterPassword,PC-new,,,,high,"up to 3 tries: '<team> enter master password.' input, compare with the master password, 'Incorrect password!'; -1 on Esc",league_setup,manual-trace
 0003A597,sub_3A597,EncryptPassword,PC-new,,,,high,"XORs the password with the key ""NHLHockey"" forwards and backwards (symmetric)",league_setup,manual-trace
@@ -613,7 +613,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000597E3,sub_597E3,CrowdFadeOut,PC-new,,,,medium,"saves crowdlevel, then while it is > 0: wait a tick (sub_B3989/sub_B3999), crowdlevel -= 32h, CrowdNoiseUpdate(2); then CrowdNoiseOff and restores crowdlevel; called at game exit / screen changes",engine_sound_iface,manual-trace
 00059863,sub_59863,CrowdNoiseReset,PC-new,,,,medium,"clears crowdsmooth, crowdvol8, crowdvol7 (called with crowdlevel = 0 at game start)",engine_sound_iface,manual-trace
 00059884,sub_59884,sfx,93G,middle93_1.asm,video94.asm,92G sfx; 95G sfx,medium,"callee alignment under 4 matched caller(s) checkgoal, puckgoalie, wallcoll, wallcollb; cosine: 0.00; fieldseq: 0.00; shared: ; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 53 / G 10",engine_sound_iface,callgraph(it1)
-00059945,sub_59945,FreeDigiSample,PC-new,,,,low,as StopDigiSample but calls sub_8F7AE; no callers,engine_sound_iface,manual-trace
+00059945,sub_59945,FreeDigiSample,PC-new,,,,medium,"when digihandle is set and sub_8F80E says it is not playing, frees it with sub_8F7AE and sets digihandle -1; no callers [reviewed: body re-read]",engine_sound_iface,manual-trace
 00059981,sub_59981,StopDigiSample,PC-new,,,,medium,if digihandle is set and still playing (sub_8F80E returns 0) stops it (sub_8F67D); digihandle = -1,engine_sound_iface,manual-trace
 000599B9,sub_599B9,PlayDigiSample,PC-new,,,,medium,"StopDigiSample, then unless the sound device (dword_C541F) has bits 11h, plays sample eax via sub_8F270 on dword_D2427 and keeps the handle in digihandle",engine_sound_iface,manual-trace
 000599EE,sub_599EE,WaitDigiSample,PC-new,,,,medium,busy-waits until the sample in digihandle is done (sub_8F80E non-zero),engine_sound_iface,manual-trace
@@ -772,7 +772,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0006B7FC,sub_6B7FC,DrawMenuBox,PC-new,,,,medium,"(x1, y1, x2, y2, fill, light, dark): fill rect plus four edge lines",joystick_calibration,manual-trace
 0006B88E,sub_6B88E,PrintMenuText,PC-new,,,,medium,copies up to 79 chars and PrintShadowText,joystick_calibration,manual-trace
 0006B8CB,sub_6B8CB,PrintMenuTextGrey,PC-new,,,,medium,copies up to 79 chars and prints with sub_91964 (disabled item),joystick_calibration,manual-trace
-0006B910,sub_6B910,PrintMenuTextAlt,PC-new,,,,low,copies up to 79 chars and prints with sub_92CD0 (no refs),joystick_calibration,manual-trace
+0006B910,sub_6B910,PrintMenuTextAlt,PC-new,,,,medium,copies up to 79 chars to a local buffer and prints with sub_92CD0 (shares PrintMenuTextGrey tail); no refs [reviewed: body re-read],joystick_calibration,manual-trace
 0006B94E,sub_6B94E,DrawMenuItemSel,PC-new,,,,medium,fills an enabled menu item with the selected colour and redraws its label,joystick_calibration,manual-trace
 0006B9EB,sub_6B9EB,DrawMenuItemNorm,PC-new,,,,medium,same with the normal colour,joystick_calibration,manual-trace
 0006BA4D,sub_6BA4D,MenuHitTest,PC-new,,,,medium,"(levels, x, y, ...): finds the open menu level and item under the point, top level first",joystick_calibration,manual-trace
@@ -961,12 +961,12 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0007E067,sub_7E067,DrawGadgetButton,PC-new,,,,medium,"draws frame around gadget button idx (28-byte rect table gadgetrects, y-0A8h)",gadgets_replay,manual-trace
 0007E0FA,sub_7E0FA,InstantReplay,PC-new,,,,medium,"replay gadget screen: gadget6/gadget5 .PPV panel, camera save, ReplayFirstFrame/ReplayStep; from main/frontend/highlights",gadgets_replay,manual-trace
 0007E8E5,sub_7E8E5,GadgetHitTest,PC-new,,,,medium,hit-test 10 gadget button rects,gadgets_replay,manual-trace
-0007E93E,sub_7E93E,PickNearestPlayer,PC-new,,,,low,nearest of 17 objects (skipping 12..15) within 10px of pointer,gadgets_replay,manual-trace
+0007E93E,sub_7E93E,PickNearestPlayer,PC-new,,,,medium,nearest of 17 objects (skipping 12..15) within 10px of pointer [reviewed: body re-read],gadgets_replay,manual-trace
 0007E9AC,sub_7E9AC,ReplayControlLoop,PC-new,,,,medium,input loop for replay gadget buttons,gadgets_replay,manual-trace
 0007F0AF,sub_7F0AF,ReplaySaveHilight,PC-new,,,,medium,"gadget button 7: picks team, writes highlight (sub_7FA10), ""Insufficient disk space to save hilights."" message",gadgets_replay,manual-trace
 0007F724,sub_7F724,HilightSaveToDlg,PC-new,,,,medium,"""Save To"" / ""Hilights Reel"" dialog with team / Both Teams / Neither Teams choices (hilightfont); called by ReplaySaveHilight",highlights,manual-trace
 0007FA10,sub_7FA10,SaveHilight,PC-new,,,,medium,"checks _dos_getdiskfree, builds .HI path, fills hilightrec from game state, appends 9652h-byte record",highlights,manual-trace
-0007FC12,sub_7FC12,NudgeRinkScroll,PC-new,,,,low,adds 3E8h to rinkscrollx/rinkscrolly (forces redraw); called by ReplaySaveHilight,highlights,manual-trace
+0007FC12,sub_7FC12,NudgeRinkScroll,PC-new,,,,high,adds 3E8h to rinkscrollx/rinkscrolly (forces redraw); called by ReplaySaveHilight [reviewed: body re-read],highlights,manual-trace
 0007FC31,sub_7FC31,CmpInt,PC-new,,,,medium,qsort comparator on ints (-1/0/1),highlights,manual-trace
 0007FC5C,sub_7FC5C,TeamFromHiName,PC-new,,,,medium,"strips extension at '.', matches teamabbrevs (26) -> team index or -1",highlights,manual-trace
 0007FCA2,sub_7FCA2,FormatHilightDesc,PC-new,,,,medium,"sprintf ""%d %d, %s vs %s, Period %d, Time %02d:%02d."" from a hilight record",highlights,manual-trace
