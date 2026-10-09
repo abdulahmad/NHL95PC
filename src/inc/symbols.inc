@@ -3401,6 +3401,7 @@
 ;  C4D1C  pad1dev                                  dseg02/016_C4D18_data_frontend_16.asm        7
 ;  C4D1D  pad2dev                                  dseg02/016_C4D18_data_frontend_16.asm        5
 ;  C4D1E  lasthotkey                               dseg02/016_C4D18_data_frontend_16.asm        1
+;  C4D1F  keydirtab                                dseg02/016_C4D18_data_frontend_16.asm        1
 ;  C4E0C  samesideflag                             dseg02/016_C4D18_data_frontend_16.asm        2
 ;  C4E10  inputframes                              dseg02/016_C4D18_data_frontend_16.asm        6
 ;  C4E14  escrequest                               dseg02/016_C4D18_data_frontend_16.asm        5
@@ -4356,12 +4357,14 @@
 ;  D11BC  byte_D11BC                               dseg02/056_D1084_data_frontend_56.asm        3
 ;  D1229  dword_D1229                              dseg02/056_D1084_data_frontend_56.asm        1
 ;  D122B  dword_D122B                              dseg02/056_D1084_data_frontend_56.asm        1
-;  D122D  byte_D122D                               dseg02/056_D1084_data_frontend_56.asm        1
+;  D122C  fadestart                                dseg02/056_D1084_data_frontend_56.asm        1
+;  D122E  fadestep                                 dseg02/056_D1084_data_frontend_56.asm        1
 ;  D122F  dword_D122F                              dseg02/056_D1084_data_frontend_56.asm        1
-;  D1230  byte_D1230                               dseg02/056_D1084_data_frontend_56.asm        1
+;  D1230  fadeend                                  dseg02/056_D1084_data_frontend_56.asm        1
 ;  D1231  dword_D1231                              dseg02/056_D1084_data_frontend_56.asm        1
-;  D1233  dword_D1233                              dseg02/056_D1084_data_frontend_56.asm        1
-;  D1236  byte_D1236                               dseg02/056_D1084_data_frontend_56.asm        1
+;  D1232  fadestart2                               dseg02/056_D1084_data_frontend_56.asm        1
+;  D1234  fadestep2                                dseg02/056_D1084_data_frontend_56.asm        1
+;  D1236  fadeend2                                 dseg02/056_D1084_data_frontend_56.asm        1
 ;  D1238  byte_D1238                               dseg02/056_D1084_data_frontend_56.asm        3
 ;  D12C8  unk_D12C8                                dseg02/056_D1084_data_frontend_56.asm        1
 ;  D12DE  byte_D12DE                               dseg02/056_D1084_data_frontend_56.asm        3
@@ -5724,6 +5727,8 @@
 ;  DF314  unk_DF314                                dseg02/082_DF00C_data_frontend_82.asm        7
 ;  DF614  hmtmstruct                               dseg02/082_DF00C_data_frontend_82.asm        14
 ;  DF624  hmscore                                  dseg02/082_DF00C_data_frontend_82.asm        12
+;  DF63A  hmpassatt                                dseg02/082_DF00C_data_frontend_82.asm        1
+;  DF63C  hmpasscmp                                dseg02/082_DF00C_data_frontend_82.asm        1
 ;  DF63E  hmtmline                                 dseg02/083_DF63E_data_engine_83.asm          5
 ;  DF640  hmtmlcnt                                 dseg02/083_DF63E_data_engine_83.asm          2
 ;  DF642  dword_DF642                              dseg02/083_DF63E_data_engine_83.asm          2

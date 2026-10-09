@@ -15,7 +15,7 @@ extern unk_C0581, unk_C0588, unk_C0591, unk_C059C, unk_C05A9, unk_C05B4, unk_C05
 extern unk_C05D3, unk_C05DA, unk_C05E3, unk_C05EC, unk_C05F6, unk_C05FE, unk_C0608, unk_C0613
 extern unk_C061C, unk_C0624, unk_C062C, unk_C063B, unk_D97CA, unk_D9800, unk_D9836, unk_D9865
 extern unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
-global str_D02d, str_D01d, pad1dev, pad2dev, lasthotkey, byte_C5138, awardtype
+global str_D02d, str_D01d, pad1dev, pad2dev, lasthotkey, byte_C5138, awardtype, keydirtab
 global byte_C541B, byte_C5424
 global byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, joyqtick
 global samesideflag, inputframes, escrequest, joyrec, palfadedin, screenw, screenh, demomode
@@ -34,7 +34,9 @@ db 08h
 pad2dev:
 db 02h
 lasthotkey:
-db 00h,08h,00h,04h,08h,02h,01h,03h,02h,06h,07h,05h,06h,08h,00h,04h
+db 00h
+keydirtab:
+db 08h,00h,04h,08h,02h,01h,03h,02h,06h,07h,05h,06h,08h,00h,04h
 db 08h,00h,0DCh,07Bh,00h,00h,0CFh,0BDh,00h,00h,0F7h,00h,00h,00h,0C0h,08h
 db 00h,00h,062h,04h,00h,00h,00h,00h,00h,00h,0DFh,0FFh,00h,00h,0FFh,0DFh
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FEh,0EFh,00h,00h,0FFh,0FFh

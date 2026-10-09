@@ -2,19 +2,19 @@
 bits 32
 %include "hockey.inc"
 section s_737AA progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, str_Pal25, str_Lineditp2, str_Shrt2, str_Pntr3, str_Pointer13, str_Embpal4
+extern __CHK, __STOSB, str_Pal25, str_Lineditp2, str_Shrt2, str_Pntr3, str_Pointer13, str_Embpal4, fadestep, fadestep2
 extern str_Pal26, str_Lelogo, str_Menubuff8, str_C2dS2, str_S2dSS, str_Keys3, str_Pstat3, str_Gstat3
 extern str_SRoster, str_Pos2, str_Name2, str_G4, str_A4, str_PT2, str_Shots4, str_PIM4
 extern asc_C3164, str_Min4, str_GAA4, str_GA3, str_SA3, str_PCT2, str_Pal27, str_Lineditp3
 extern str_Shrt3, str_Pntr4, str_Pointer14, str_Embpal5, str_Pal28, str_Lelogo2, str_Menubuff9, str_C2dS3
 extern str_Key, str_fmt2d, str_fmt3d, str_fmt4d, str_fmtTenths, str_fmtMinSec, str_fmtEmb, str_Bkgd2
-extern rosterteam, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238, byte_D12DE, gameopts
+extern rosterteam, byte_D11BC, fadeend, fadeend2, byte_D1238, byte_D12DE, gameopts, fadestart
 extern musicon, hmroster, hmrosterjersey, leaguedbfmt, rosterlist, rosterjersey, rosterslot, rosterstat
 extern lineedpanel, fadepal, fadepal2, gmroster, gmrosterjersey, gmrosterslot, byte_ED0F7, byte_ED0F8
 extern byte_ED0F9, byte_ED0FA, palfadedin, statsplayoffs, fileoncd
 extern boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg, songdata, HomeTeam, dword_D0B16
 extern dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A, dword_D1229, dword_D122B, dword_D122F
-extern dword_D1231, dword_D1233, lineslotx, linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC
+extern dword_D1231, lineslotx, linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, fadestart2
 extern dword_D1418, dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, musichandle, musicslot
 extern cddriveptr, dword_D8B74, curperiod, dword_DBC7C, dword_DBCE0, pointerspr, statsskaterorder, statsgoalieorder
 extern statsgoalieplr, statsskaterplr, statsplayerbuf, ptrupdatefn, dword_EA2B4, rosterteamrec, rostergstat, rosterpstat
@@ -3887,11 +3887,11 @@ jmp short FadePalStep_ret	; 764AE
 .7:
 mov al, byte [esp]	; 764B0
 dec al	; 764B3
-mov byte [byte_D122D], al	; 764B5
+mov byte [fadestart+1], al	; 764B5
 mov al, byte [esp]	; 764BA
 inc al	; 764BD
-mov byte [byte_D1230], al	; 764BF
-mov ecx, dword [dword edi+dword_D1229]	; 764C4
+mov byte [fadeend], al	; 764BF
+mov ecx, dword [dword edi+fadestart-3]	; 764C4
 sar ecx, 18h	; 764CA
 mov ebp, dword [esp]	; 764CD
 jmp short .10	; 764D0
@@ -3909,11 +3909,11 @@ cmp ebx, 300h	; 764E9
 jl short FadePalStep.9	; 764EF
 mov eax, fadepal	; 764F1
 call SetPalette768	; 764F6
-mov eax, dword [dword edi+dword_D122B]	; 764FB
+mov eax, dword [dword edi+fadestep-3]	; 764FB
 sar eax, 18h	; 76501
 add ecx, eax	; 76504
 .10:
-mov eax, dword [dword edi+byte_D1230-3]	; 76506
+mov eax, dword [dword edi+fadeend-3]	; 76506
 sar eax, 18h	; 7650C
 cmp ecx, eax	; 7650F
 jne short FadePalStep.8	; 76511
@@ -3975,11 +3975,11 @@ jmp near FadePalStep_ret	; 7659D
 .7:
 mov al, byte [esp]	; 765A2
 dec al	; 765A5
-mov byte [dword_D1233], al	; 765A7
+mov byte [fadestart2+1], al	; 765A7
 mov al, byte [esp]	; 765AC
 inc al	; 765AF
-mov byte [byte_D1236], al	; 765B1
-mov ecx, dword [dword edi+dword_D122F]	; 765B6
+mov byte [fadeend2], al	; 765B1
+mov ecx, dword [dword edi+fadestart2-3]	; 765B6
 sar ecx, 18h	; 765BC
 mov ebp, dword [esp]	; 765BF
 jmp short .10	; 765C2
@@ -3999,11 +3999,11 @@ mov eax, 2Dh	; 765E3
 call j___delay_	; 765E8
 mov eax, fadepal2	; 765ED
 call SetPalette768	; 765F2
-mov eax, dword [dword edi+dword_D1231]	; 765F7
+mov eax, dword [dword edi+fadestep2-3]	; 765F7
 sar eax, 18h	; 765FD
 add ecx, eax	; 76600
 .10:
-mov eax, dword [dword edi+byte_D1236-3]	; 76602
+mov eax, dword [dword edi+fadeend2-3]	; 76602
 sar eax, 18h	; 76608
 cmp ecx, eax	; 7660B
 jne short FadePalStepSlow.8	; 7660D

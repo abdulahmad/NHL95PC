@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_10010 progbits alloc exec nowrite align=1
-extern DoGameFrame, __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gettime_, str_NoDiskSpaceC, str_ErrDiskFree2, VisTeam
+extern DoGameFrame, __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gettime_, str_NoDiskSpaceC, str_ErrDiskFree2, VisTeam, keydirtab
 extern str_NoDiskSpaceCur, str_NoMemory, str_CheckRefCard, str_NoConvMemory, str_CheckRefCard2, str_Pointer3, str_Pntr, str_Scor2b
 extern str_Scor3b, str_Kaufm020, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_GameSet2, str_Temp3, str_ErrDiskFree3, str_VFN
 extern pad1dev, pad2dev, lasthotkey, byte_C5138, musicon, joyenablemask, byte_D416A, byte_D8C88
@@ -733,7 +733,7 @@ je short .8	; 10902
 or byte [esp], 0Ah	; 10904
 .8:
 mov eax, dword [esp]	; 10908
-mov eax, dword [dword eax+pad1dev]	; 1090B
+mov eax, dword [dword eax+keydirtab-3]	; 1090B
 sar eax, 18h	; 10911
 mov dword [esp], eax	; 10914
 push byte 52h	; 10917
@@ -813,7 +813,7 @@ and edx, 0FFh	; 109C8
 .3:
 mov eax, edx	; 109CE
 and eax, byte 0Fh	; 109D0
-mov eax, dword [dword eax+pad1dev]	; 109D3
+mov eax, dword [dword eax+keydirtab-3]	; 109D3
 sar eax, 18h	; 109D9
 test dl, 10h	; 109DC
 je short .4	; 109DF

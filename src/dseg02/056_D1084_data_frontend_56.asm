@@ -8,17 +8,17 @@ extern unk_C3502, unk_C3506, unk_C350A, unk_C350E, unk_C3512, unk_C3516, unk_C35
 extern unk_C3521, unk_C3524, unk_C3528, unk_C352C, unk_C3530, unk_C3534, unk_C3538, unk_C353C
 extern unk_C355E, unk_C3580, unk_C36D4, unk_C36E1, unk_C36EE, unk_C36FB, unk_C3706, unk_C3712
 extern unk_C371F, unk_C372C, unk_C3738, unk_C3742, unk_C374F, unk_C375C, unk_C3769, unk_C3775
-global str_HilightDescFmt, str_Exhibition2, str_Playoff, str_League2, str_ShowLeague, str_Settings3, str_PCBEEP, str_SBDAC
+global str_HilightDescFmt, str_Exhibition2, str_Playoff, str_League2, str_ShowLeague, str_Settings3, str_PCBEEP, str_SBDAC, fadestart, fadestep, fadestart2, fadestep2
 global str_ADLIB, str_MT322, str_SBDAC2, str_PCBEEP2, str_SoundBlaster2, str_Adlib, str_MT323, str_ULTRASOUND
 global str_SS5, str_PauseCor, str_AtCor, str_1minuteCor, str_MinutesCor, str_1secondCor, str_SecondsCor, str_PennumCor
 global str_PensnumCor, str_PenshotCor, str_GoalnumCor, str_AsstnumCor, str_AndnumCor, str_OneleftCor, str_2minCor, str_5minCor
 global str_NumberCor, str_NowbackInt, str_BackmomtInt, str_CoachclpInt, str_OfBar, str_AndBar, str_BetweenBar, str_GamenumBar
 global str_EasportsBar, str_TonightBar, str_GamebtwnBar, str_GoodniteInt, str_LineupsInt, str_TakeynowBar, str_HighliteBar, str_OvertimeBar
 global str_HavewonBar, str_Scor1perBar, str_Scor2perBar, str_Scor3perBar, str_Scor1otpBar, str_Scor2otpBar, str_Scor3otpBar, str_ScortotpBar
-global str_ThegameBar, str_VIV, str_AGameYouRequire3, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238
+global str_ThegameBar, str_VIV, str_AGameYouRequire3, byte_D11BC, fadeend, fadeend2, byte_D1238
 global byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, musicslot, musicon, byte_D2439
 global byte_D27B6, dbdlgrects
-global dword_D1229, dword_D122B, dword_D122F, dword_D1231, dword_D1233, lineslotx
+global dword_D1229, dword_D122B, dword_D122F, dword_D1231, lineslotx
 global linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458
 global dword_D145C, dword_D1468, dword_D146C, jerseydigits, leaguesetrects
 global modesetrects, exhsetrects
@@ -93,18 +93,24 @@ db 0AAh,00h,00h,00h,0AAh,00h,00h,00h,0BCh,00h,00h,00h,09Ch
 dword_D1229:
 db 00h,00h
 dword_D122B:
-db 00h,01h
-byte_D122D:
-db 0Fh,01h
+db 00h
+fadestart:
+db 01h
+db 0Fh
+fadestep:
+db 01h
 dword_D122F:
 db 0FFh
-byte_D1230:
+fadeend:
 db 011h
 dword_D1231:
-db 0FFh,01h
-dword_D1233:
-db 0Fh,01h,0FFh
-byte_D1236:
+db 0FFh
+fadestart2:
+db 01h
+db 0Fh
+fadestep2:
+db 01h,0FFh
+fadeend2:
 db 011h,0FFh
 byte_D1238:
 db 00h,01h,02h,03h,04h,05h,06h,07h,08h,09h,0Ah,0Bh,0Ch,0Dh,0Eh,0Fh

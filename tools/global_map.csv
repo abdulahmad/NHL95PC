@@ -2041,15 +2041,24 @@ str_AGameYouRequire3,D281F,"string 'a game, you require XXX Kbytes   '"
 fileoncd,ED7CC,"549 per-file flags: 1 = load from CD (MakePath prefix cddriveptr), 0 = installed locally (from ALLFILES.TXT)"
 cddrivestr,D2C68,"'a:' drive string, letter patched from nhl.cfg"
 cddriveptr,D2C6B,"pointer to cddrivestr, MakePath prefix for CD files"
-str_NhlCfg,C3B0E,"string 'nhl.cfg'"
-str_CantOpenNhlCfg2,C3B16,"string 'cannot open nhl.cfg'"
-str_ALLFILESTXT,C3B2A,"string ':ALLFILES.TXT'"
-str_ALLFILESTXT2,C3B38,"string 'ALLFILES.TXT'"
-str_CouldNotOpenALLFILES,C3B45,"string 'Could not open ALLFILES.TXT file.'"
-str_Coachcut,C3B6C,"string 'coachcut'"
-str_Scrn4,C3B75,"string 'scrn'"
-str_Pal29,C3B7A,"string '!pal'"
-str_Iff13,C3B7F,"string '.iff'"
-str_Coach,C3B84,"string 'coach'"
-str_Clip04d,C3B8A,"string 'clip%04d'"
-str_Cmv2,C3B93,"string '.cmv'"
+str_NhlCfg,C3B0E,string 'nhl.cfg'
+str_CantOpenNhlCfg2,C3B16,string 'cannot open nhl.cfg'
+str_ALLFILESTXT,C3B2A,string ':ALLFILES.TXT'
+str_ALLFILESTXT2,C3B38,string 'ALLFILES.TXT'
+str_CouldNotOpenALLFILES,C3B45,string 'Could not open ALLFILES.TXT file.'
+str_Coachcut,C3B6C,string 'coachcut'
+str_Scrn4,C3B75,string 'scrn'
+str_Pal29,C3B7A,string '!pal'
+str_Iff13,C3B7F,string '.iff'
+str_Coach,C3B84,string 'coach'
+str_Clip04d,C3B8A,string 'clip%04d'
+str_Cmv2,C3B93,string '.cmv'
+fadeend,D1230,"FadePalStep end value per direction (word table, [edi] index; [1] patched to steps+1)"
+fadeend2,D1236,FadePalStepSlow end value per direction
+fadestart,D122C,FadePalStep start value per direction (word table indexed by edi; [0]+1 patched to steps-1)
+fadestep,D122E,FadePalStep step per direction (+1/-1)
+fadestart2,D1232,FadePalStepSlow start value per direction
+fadestep2,D1234,FadePalStepSlow step per direction
+hmpassatt,DF63A,hmtmstruct+26h word: passing attempts (stats screen 'Passing' %d/%d (%d%%) denominator)
+hmpasscmp,DF63C,hmtmstruct+28h word: passes completed (stats screen 'Passing' numerator)
+keydirtab,C4D1F,byte table indexed by the 4-bit arrow-key mask built in keyboard pad read (1090B/109D3) -> direction code

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_2D346 progbits alloc exec nowrite align=1
-extern __CHK, str_Indus0302, str_Ctlogo2, str_Ctbkgd2, str_Bkgd5, str_Pal13, str_Cttitle2, str_Summ2, VisTeam
+extern __CHK, str_Indus0302, str_Ctlogo2, str_Ctbkgd2, str_Bkgd5, str_Pal13, str_Cttitle2, str_Summ2, VisTeam, hmpassatt, hmpasscmp
 extern str_OtShape, str_Per1, str_Per2, str_Per3, str_Top2, str_Cttitle12, str_Def2, str_Fowa2
 extern str_Scra2, str_Tlu2, str_Cttitle3, str_Ots, str_Colm, str_Gsummary2, str_Iff6, str_Gamesum
 extern str_Mtsum, str_Adsum, str_1st2, str_2nd2, str_3rd2, str_FinalOT, str_Final, str_Period
@@ -2798,9 +2798,9 @@ mov edx, 1A0h	; 2FB45
 call PrintClampedText	; 2FB4A
 xor ebx, ebx	; 2FB4F
 mov dword [byte ebp-0Ch], 1B8h	; 2FB51
-cmp word [dword esi+hmtmstruct+26h], byte 0	; 2FB58
+cmp word [dword esi+hmpassatt], byte 0	; 2FB58
 je short .12	; 2FB60
-mov edx, dword [dword esi+hmtmstruct+26h]	; 2FB62
+mov edx, dword [dword esi+hmpasscmp-2]	; 2FB62
 sar edx, 10h	; 2FB68
 mov eax, edx	; 2FB6B
 shl eax, 2	; 2FB6D
@@ -2808,7 +2808,7 @@ sub eax, edx	; 2FB70
 shl eax, 3	; 2FB72
 add edx, eax	; 2FB75
 shl edx, 2	; 2FB77
-mov ebx, dword [dword esi+hmtmstruct+24h]	; 2FB7A
+mov ebx, dword [dword esi+hmpassatt-2]	; 2FB7A
 sar ebx, 10h	; 2FB80
 mov eax, edx	; 2FB83
 sar edx, 1Fh	; 2FB85
@@ -2818,10 +2818,10 @@ mov ebx, eax	; 2FB8A
 push ebx	; 2FB8C
 mov eax, edi	; 2FB8D
 shl eax, 8	; 2FB8F
-mov edx, dword [dword eax+hmtmstruct+24h]	; 2FB92
+mov edx, dword [dword eax+hmpassatt-2]	; 2FB92
 sar edx, 10h	; 2FB98
 push edx	; 2FB9B
-mov eax, dword [dword eax+hmtmstruct+26h]	; 2FB9C
+mov eax, dword [dword eax+hmpasscmp-2]	; 2FB9C
 sar eax, 10h	; 2FBA2
 push eax	; 2FBA5
 push str_DDD	; 2FBA6
