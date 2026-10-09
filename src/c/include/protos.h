@@ -34,6 +34,7 @@ void calcpuckcross(void);                                 /* 5A341 */
 void GetHot(struct Player *p);                             /* 5A425 */
 void Setplass(struct Player *p);                          /* 5B298 */
 void Acheck(struct Player *p, struct Player *q);           /* 4FFAE */
+void SetLCmode(struct Player *p);                         /* 4D9FC */
 int TryAddPlayerToList(struct Team *t, short pl, short slot); /* 5BB9E */
 void reenergizeteam(struct Team *t);                      /* 5B826 */
 void RestBench(void);                                     /* 5C1E2 */

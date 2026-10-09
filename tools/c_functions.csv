@@ -1,4 +1,5 @@
 function,address,size,segment,c_file,status,notes
+SetLCmode,4D9FC,59,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/SetLCmode.c,matched,
 StopIfFree,4A80E,36,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StopIfFree.c,matched,
 assexit,4D509,31,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assexit.c,matched,
 pucknorm,4D8C7,54,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/pucknorm.c,matched,

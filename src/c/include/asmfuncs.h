@@ -771,7 +771,6 @@ extern void assfaceoff(); /* 4D4F0 */
 extern void assfaceoffp1(); /* 4D528 */
 extern void pucknorm_body(); /* 4D6B4 */
 extern void RequestLineChange(); /* 4D938 */
-extern void SetLCmode(); /* 4D9FC */
 extern void StartFaceoffLineChange(); /* 4DA37 */
 extern void Endfaceoff(); /* 4DA7B */
 extern void a2offsides(); /* 4DCDD */

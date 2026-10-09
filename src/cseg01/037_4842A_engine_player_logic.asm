@@ -6954,6 +6954,10 @@ jmp near ass_popx	; 4D9EA
 xor edx, edx	; 4D9EF
 mov dword [dword_C585C], edx	; 4D9F1
 jmp near ass_popx	; 4D9F7
+; C: src/c/037_4842A_engine_player_logic/SetLCmode.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/SetLCmode.inc"
+%else
 SetLCmode:
 push dword 0Ch	; 4D9FC
 call __CHK	; 4DA01
@@ -6975,6 +6979,7 @@ call RequestLineChange	; 4DA2F
 pop edx	; 4DA34
 pop ebx	; 4DA35
 ret	; 4DA36
+%endif ; C
 StartFaceoffLineChange:
 push dword 8	; 4DA37
 call __CHK	; 4DA3C

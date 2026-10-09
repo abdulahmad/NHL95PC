@@ -17,6 +17,7 @@
 #define pfjoy           0x08    /* pflags bit 3: player under joystick control */
 #define pfgoal          0x80    /* pflags bit 7: goal to shoot at, 0 = bottom, 1 = top (93G pfgoal) */
 #define pf2aip          0x02    /* pflags2 bit 1: animation in progress (93G pf2aip) */
+#define tmflcm          0x02    /* tmflags bit 1: line change mode is on for the team (94G SetLCmode bset #1,tmflags) */
 #define pf2lcm          0x08    /* pflags2 bit 3: line change mode, keeps the joystick (93G pf2lcm) */
 
 #define SPAgready       0x001   /* goalie ready stance (93G 2) */
