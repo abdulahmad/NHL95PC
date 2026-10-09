@@ -623,6 +623,10 @@ pop edx	; 3366B
 pop ecx	; 3366C
 pop ebx	; 3366D
 ret	; 3366E
+; C: src/c/025_32DA9_temp_files/MenuLeagueHilights.c
+%ifdef CBUILD
+%include "c/025_32DA9_temp_files/MenuLeagueHilights.inc"
+%else
 MenuLeagueHilights:
 push dword 8	; 3366F
 call __CHK	; 33674
@@ -647,6 +651,7 @@ call LoadModeState	; 336B5
 xor eax, eax	; 336BA
 pop edx	; 336BC
 ret	; 336BD
+%endif ; C
 MenuImportDbs:
 push dword 4	; 336BE
 call __CHK	; 336C3

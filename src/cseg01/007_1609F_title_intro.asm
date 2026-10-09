@@ -1694,6 +1694,10 @@ add esp, byte 54h	; 17709
 pop edi	; 1770C
 pop esi	; 1770D
 ret 4	; 1770E
+; C: src/c/007_1609F_title_intro/TextGridOpen.c
+%ifdef CBUILD
+%include "c/007_1609F_title_intro/TextGridOpen.inc"
+%else
 TextGridOpen:
 push dword 0Ch	; 17711
 call __CHK	; 17716
@@ -1713,6 +1717,7 @@ call memset_	; 1774E
 pop edx	; 17753
 pop ebx	; 17754
 ret	; 17755
+%endif ; C
 ; C: src/c/007_1609F_title_intro/TextGridFree.c
 %ifdef CBUILD
 %include "c/007_1609F_title_intro/TextGridFree.inc"

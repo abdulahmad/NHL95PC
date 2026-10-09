@@ -1010,6 +1010,10 @@ cmp ebp, byte 3	; 1C7F3
 jl near LoadTeamRoster.14	; 1C7F6
 add esp, 100h	; 1C7FC
 jmp near OpenPlayerDBs_x	; 1C802
+; C: src/c/013_1BBCC_key_team_db/MakeGSummaryPath.c
+%ifdef CBUILD
+%include "c/013_1BBCC_key_team_db/MakeGSummaryPath.inc"
+%else
 MakeGSummaryPath:
 push dword 8	; 1C807
 call __CHK	; 1C80C
@@ -1030,6 +1034,7 @@ mov eax, gsummarypath	; 1C846
 call strcat_	; 1C84B
 pop edx	; 1C850
 ret	; 1C851
+%endif ; C
 SetupGoalieMenu:
 push dword 38h	; 1C852
 call __CHK	; 1C857

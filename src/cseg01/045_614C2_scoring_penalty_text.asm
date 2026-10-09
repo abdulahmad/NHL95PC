@@ -614,6 +614,10 @@ pop edx	; 61B81
 pop ecx	; 61B82
 pop ebx	; 61B83
 ret	; 61B84
+; C: src/c/045_614C2_scoring_penalty_text/FlushGSumQueue.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/FlushGSumQueue.inc"
+%else
 FlushGSumQueue:
 push dword 0Ch	; 61B85
 call __CHK	; 61B8A
@@ -638,6 +642,7 @@ mov dword [gsumqcount], ecx	; 61BB6
 pop edx	; 61BBC
 pop ecx	; 61BBD
 ret	; 61BBE
+%endif ; C
 ReadGSumHeader:
 push dword 18h	; 61BBF
 call __CHK	; 61BC4
@@ -2162,6 +2167,10 @@ jl short AddPenalty2.6	; 62E9D
 pop ecx	; 62E9F
 pop ebx	; 62EA0
 ret	; 62EA1
+; C: src/c/045_614C2_scoring_penalty_text/SetPA.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/SetPA.inc"
+%else
 SetPA:
 push dword 8	; 62EA2
 call __CHK	; 62EA7
@@ -2186,6 +2195,7 @@ call assreplace	; 62EE2
 .x:
 pop edx	; 62EE7
 ret	; 62EE8
+%endif ; C
 InProgress:
 push dword 3Ch	; 62EE9
 call __CHK	; 62EEE

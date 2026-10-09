@@ -245,6 +245,10 @@ push byte 1	; 6B389
 push byte 8	; 6B38B
 push byte 2	; 6B38D
 jmp short CalLeftJoystick_common	; 6B38F
+; C: src/c/050_6B093_joystick_calibration/GetInputEvent.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/GetInputEvent.inc"
+%else
 GetInputEvent:
 push dword 0Ch	; 6B391
 call __CHK	; 6B396
@@ -273,6 +277,7 @@ add eax, inputqueue	; 6B3CF
 pop edx	; 6B3D4
 pop ebx	; 6B3D5
 ret	; 6B3D6
+%endif ; C
 ; C: src/c/050_6B093_joystick_calibration/ClearInputQueue.c
 %ifdef CBUILD
 %include "c/050_6B093_joystick_calibration/ClearInputQueue.inc"
@@ -323,6 +328,10 @@ pop edx	; 6B478
 pop ecx	; 6B479
 pop ebx	; 6B47A
 ret	; 6B47B
+; C: src/c/050_6B093_joystick_calibration/InputRemove.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/InputRemove.inc"
+%else
 InputRemove:
 push dword 18h	; 6B47C
 call __CHK	; 6B481
@@ -346,6 +355,7 @@ pop edx	; 6B4B7
 pop ecx	; 6B4B8
 pop ebx	; 6B4B9
 ret	; 6B4BA
+%endif ; C
 EventToPointer:
 push dword 1Ch	; 6B4BB
 call __CHK	; 6B4C0

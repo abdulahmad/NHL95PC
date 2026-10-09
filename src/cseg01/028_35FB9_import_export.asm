@@ -2209,6 +2209,10 @@ pop ebp	; 37E55
 pop edi	; 37E56
 pop esi	; 37E57
 ret 4	; 37E58
+; C: src/c/028_35FB9_import_export/RestoreGridCellBg.c
+%ifdef CBUILD
+%include "c/028_35FB9_import_export/RestoreGridCellBg.inc"
+%else
 RestoreGridCellBg:
 push dword 20h	; 37E5B
 call __CHK	; 37E60
@@ -2238,6 +2242,7 @@ pop edi	; 37EA2
 pop ecx	; 37EA3
 pop ebx	; 37EA4
 ret	; 37EA5
+%endif ; C
 HighlightGridCell:
 push dword 48h	; 37EA6
 call __CHK	; 37EAB

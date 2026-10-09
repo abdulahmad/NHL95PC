@@ -218,5 +218,46 @@ void NormalizeDressFlags(void);  /* 65B48 */
 void CheckAndReleasePlayer(Team *t, short i);  /* 639F9 */
 void releasepl(Team *t);  /* 6392A */                     
 void sfx(int n);  /* 59884 */                             
+void ReadCString(char *s, int fh);  /* 8385F */           
+unsigned _dos_read(int fh, void __far *buf, unsigned n, unsigned *got);  /* Watcom CRT _dos_read_ */
+void FlushGSumQueue(void);  /* 61B85 */                   
+void AppendGSumRecord(unsigned char *rec);  /* 61A8A */   
+int CountSelected(char *list);  /* 6DA88 */               
+int StrEqNoCase(char *a, char *b);  /* 83E32 */           
+void InputRemove(void);  /* 6B47C */                      
+void __cdecl sub_8E4F8(void (*f)(void));  /* timer library: remove a tick handler */
+void InputPollTick(void);  /* input tick handler */       
+int FindFreeSpeechSlot(int i);  /* 83E6D */               
+int FindLoadedSpeechSlot(int i);  /* 83EAC */             
+void SpeechStopQueue(void);  /* 8374D */                  
+void DrawCtlBoxes(void);  /* 7D671 */                     
+void DrawCtlBoxOn(int *r);  /* 7C852 */                   
+void DrawCtlBoxOff(int *r);  /* 7C901 */                  
+void TextGridOpen(void);  /* 17711 */                     
+void *_nmalloc(unsigned n);  /* Watcom CRT _nmalloc_ */   
+void *memset(void *d, int c, unsigned n);  /* Watcom CRT memset_ */
+unsigned char *GetInputEvent(void);  /* 6B391 */          
+int TeamFromHiName(char *s);  /* 7FC5C */                 
+unsigned strcspn(const char *s, const char *set);  /* Watcom CRT strcspn_ */
+int stricmp(const char *a, const char *b);  /* Watcom CRT stricmp_ */
+void SetPA(short pa);  /* 62EA2 */                        
+void MakePath(char *out, char *dir, char *name, char *ext);  /* 1431E */
+char *strcat(char *d, const char *s);  /* Watcom CRT strcat_ */
+void InitScrollBar(int *sb, int visible, int total);  /* 30BF3 */
+int FindSpeechSlot(char *name);  /* 83EEB */              
+void MakeGSummaryPath(void);  /* 1C807 */                 
+void RestoreGridCellBg(int unused1, int unused2);  /* 37E5B */                
+void __cdecl sub_903F0(int buf, int x, int y);  /* graphics library: put a saved block */
+void RestoreDialogBg(void);  /* 30F12 */                  
+void PenaltyLenClip(int len, char *out);  /* 842BA */     
+int sprintf(char *d, const char *fmt, ...);  /* Watcom CRT sprintf_ */
+void GetHotOrStick(Player *p);  /* 5A534 */               
+void GetHotStick(Player *p);  /* 5A4AD */                 
+int MenuLeagueHilights(void);  /* 3366F */                
+void LoadModeState(void *st);  /* 327A1 */                
+int ViewHilights(void);  /* 80075 */                      
+int LockerHitTest(int x, int y, int *hit);  /* 81520 */   
+int AddStar(short n, short team, short pl);  /* 48789 */  
+void PanelRemovePenalty(short away, short pl);  /* 14CA0 */
 
 #endif

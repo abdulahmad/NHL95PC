@@ -1279,6 +1279,10 @@ pop edx	; 30BEF
 pop ecx	; 30BF0
 pop ebx	; 30BF1
 ret	; 30BF2
+; C: src/c/023_2FDD1_misc_dialogs/InitScrollBar.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/InitScrollBar.inc"
+%else
 InitScrollBar:
 push dword 8	; 30BF3
 call __CHK	; 30BF8
@@ -1302,6 +1306,7 @@ idiv ebx	; 30C36
 mov dword [byte ecx+01Ch], eax	; 30C38
 pop ecx	; 30C3B
 ret	; 30C3C
+%endif ; C
 DrawScrollBar:
 push dword 28h	; 30C3D
 call __CHK	; 30C42
@@ -1546,6 +1551,10 @@ pop ebp	; 30F0E
 pop edi	; 30F0F
 pop esi	; 30F10
 ret	; 30F11
+; C: src/c/023_2FDD1_misc_dialogs/RestoreDialogBg.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/RestoreDialogBg.inc"
+%else
 RestoreDialogBg:
 push dword 24h	; 30F12
 call __CHK	; 30F17
@@ -1577,6 +1586,7 @@ pop edx	; 30F5B
 pop ecx	; 30F5C
 pop ebx	; 30F5D
 ret	; 30F5E
+%endif ; C
 GrowToButton:
 push dword 8	; 30F5F
 call __CHK	; 30F64

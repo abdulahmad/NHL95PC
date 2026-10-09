@@ -453,6 +453,10 @@ pop esi	; 7FC58
 pop ecx	; 7FC59
 pop ebx	; 7FC5A
 ret	; 7FC5B
+; C: src/c/058_7F724_highlights/TeamFromHiName.c
+%ifdef CBUILD
+%include "c/058_7F724_highlights/TeamFromHiName.inc"
+%else
 TeamFromHiName:
 push dword 14h	; 7FC5C
 call __CHK	; 7FC61
@@ -483,6 +487,7 @@ pop edx	; 7FC9E
 pop ecx	; 7FC9F
 pop ebx	; 7FCA0
 ret	; 7FCA1
+%endif ; C
 FormatHilightDesc:
 push dword 3Ch	; 7FCA2
 call __CHK	; 7FCA7

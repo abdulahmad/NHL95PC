@@ -20,6 +20,10 @@ global DeleteDir, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose
 global ReadKeyRec, WriteKeyRec, CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, ReadGSummaryRec, DiskSpaceShort
 global CheckGameDiskSpace, GetLeagueDBSizes, DrawPanelScore, DrawPanelLine, GetLineEnergies, PanelAddPenalty, PanelRemovePenalty, UpdateHudPanel
 global DrawPanelClock
+; C: src/c/005_1431E_file_utils/MakePath.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/MakePath.inc"
+%else
 MakePath:
 push dword 8	; 1431E
 call __CHK	; 14323
@@ -52,6 +56,7 @@ call strcat_	; 14361
 .x:
 pop esi	; 14366
 ret	; 14367
+%endif ; C
 DeleteFiles:
 push dword 58h	; 14368
 call __CHK	; 1436D
@@ -926,6 +931,10 @@ pop edi	; 14C9C
 pop esi	; 14C9D
 pop ecx	; 14C9E
 ret	; 14C9F
+; C: src/c/005_1431E_file_utils/PanelRemovePenalty.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/PanelRemovePenalty.inc"
+%else
 PanelRemovePenalty:
 push dword 0Ch	; 14CA0
 call __CHK	; 14CA5
@@ -964,6 +973,7 @@ mov word [byte ebx+02h], ax	; 14CEA
 pop ecx	; 14CEE
 pop ebx	; 14CEF
 ret	; 14CF0
+%endif ; C
 UpdateHudPanel:
 push dword 20h	; 14CF1
 call __CHK	; 14CF6

@@ -1351,6 +1351,10 @@ call sub_B4DD4	; 8150D
 add esp, byte 4	; 81512
 add esp, 354h	; 81515
 jmp near LockerStub	; 8151B
+; C: src/c/059_8034B_settings_lockerroom/LockerHitTest.c
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/LockerHitTest.inc"
+%else
 LockerHitTest:
 push dword 0Ch	; 81520
 call __CHK	; 81525
@@ -1384,6 +1388,7 @@ xor eax, eax	; 8156A
 pop esi	; 8156C
 pop ecx	; 8156D
 ret	; 8156E
+%endif ; C
 DrawLockerJersey:
 push dword 148h	; 8156F
 call __CHK	; 81574

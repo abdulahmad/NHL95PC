@@ -347,6 +347,10 @@ pop ebx	; 48787
 ret	; 48788
 ; AddStar: PC three stars. eax = list index (0-2), edx = team, ebx = player. Stores (team, player) in startm/starpl
 ;   unless the pair is already in the first eax entries. Returns 1 if added, 0 if a duplicate.
+; C: src/c/037_4842A_engine_player_logic/AddStar.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/AddStar.inc"
+%else
 AddStar:
 push dword 0Ch	; 48789
 call __CHK	; 4878E
@@ -379,6 +383,7 @@ mov eax, 1	; 487D1
 pop esi	; 487D6
 pop ecx	; 487D7
 ret	; 487D8
+%endif ; C
 StarEligible:
 push dword 0Ch	; 487D9
 call __CHK	; 487DE

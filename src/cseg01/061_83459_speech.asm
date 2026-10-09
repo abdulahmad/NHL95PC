@@ -245,6 +245,10 @@ MusicChanReset2:
 push dword 4	; 8373E
 call __CHK	; 83743
 call MusicChanReset	; 83748
+; C: src/c/061_83459_speech/SpeechStopQueue.c
+%ifdef CBUILD
+%include "c/061_83459_speech/SpeechStopQueue.inc"
+%else
 SpeechStopQueue:
 push dword 10h	; 8374D
 call __CHK	; 83752
@@ -266,6 +270,7 @@ pop edx	; 83788
 pop ecx	; 83789
 pop ebx	; 8378A
 ret	; 8378B
+%endif ; C
 ; C: src/c/061_83459_speech/MusicChanCmd3.c
 %ifdef CBUILD
 %include "c/061_83459_speech/MusicChanCmd3.inc"
@@ -352,6 +357,10 @@ pop edx	; 8385B
 pop ecx	; 8385C
 pop ebx	; 8385D
 ret	; 8385E
+; C: src/c/061_83459_speech/ReadCString.c
+%ifdef CBUILD
+%include "c/061_83459_speech/ReadCString.inc"
+%else
 ReadCString:
 push dword 1Ch	; 8385F
 call __CHK	; 83864
@@ -380,6 +389,7 @@ pop esi	; 83893
 pop ecx	; 83894
 pop ebx	; 83895
 ret	; 83896
+%endif ; C
 OpenSpeechBank:
 push dword 40h	; 83897
 call __CHK	; 8389C
@@ -902,6 +912,10 @@ mov eax, 0FFFFFFFFh	; 83EE3
 pop edx	; 83EE8
 pop ebx	; 83EE9
 ret	; 83EEA
+; C: src/c/061_83459_speech/FindSpeechSlot.c
+%ifdef CBUILD
+%include "c/061_83459_speech/FindSpeechSlot.inc"
+%else
 FindSpeechSlot:
 push dword 10h	; 83EEB
 call __CHK	; 83EF0
@@ -937,6 +951,7 @@ pop edx	; 83F31
 pop ecx	; 83F32
 pop ebx	; 83F33
 ret	; 83F34
+%endif ; C
 ; C: src/c/061_83459_speech/SpeechSlotLoaded.c
 %ifdef CBUILD
 %include "c/061_83459_speech/SpeechSlotLoaded.inc"

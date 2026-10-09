@@ -4560,6 +4560,10 @@ xor eax, eax	; 7D66C
 pop esi	; 7D66E
 pop ecx	; 7D66F
 ret	; 7D670
+; C: src/c/056_7A13A_settings_dialogs/DrawCtlBoxes.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/DrawCtlBoxes.inc"
+%else
 DrawCtlBoxes:
 push dword 10h	; 7D671
 call __CHK	; 7D676
@@ -4588,6 +4592,7 @@ pop edx	; 7D6AD
 pop ecx	; 7D6AE
 pop ebx	; 7D6AF
 ret	; 7D6B0
+%endif ; C
 ControlsDlgLoop:
 push dword 44h	; 7D6B1
 call __CHK	; 7D6B6
