@@ -13,11 +13,11 @@ global str_SA3, str_PCT2, str_Pal27, str_Lineditp3, str_Shrt3, str_Pntr4, str_Po
 global str_Pal28, str_Lelogo2, str_Menubuff9, str_C2dS3, str_Key, str_EmbS, str_HOMEPALS3, str_Bkgd10
 global str_Forward, str_Line1, str_Line2, str_Line3, str_Line4, str_Power, str_Play1, str_Play2
 global str_Penalty, str_Kill1, str_Kill2, str_Defense3, str_Goaltenders, str_Extra, str_Attackers, str_S2dSS2
-global str_Teams2, str_ErrB2Perror, str_Tstat2, str_Keys4, str_Pstat4, str_Gstat4, asc_C32BC, asc_C32C1
-global asc_C32CA, asc_C32CF, asc_C32D5, asc_C32DB, asc_C32EC, asc_C32F5, asc_C3300, asc_C3305
-global asc_C330E, asc_C3317, asc_C331C, asc_C3322, asc_C3328, asc_C3339, asc_C3344, asc_C3349
-global asc_C335A, asc_C3360, asc_C3366, asc_C336F, asc_C3374, asc_C337C, asc_C3381, asc_C3388
-global asc_C338D, asc_C3393, asc_C3399, asc_C33A3, asc_C33B0, asc_C33BD, asc_C33CA, asc_C33D4
+global str_Teams2, str_ErrB2Perror, str_Tstat2, str_Keys4, str_Pstat4, str_Gstat4, str_BKGD, str_Setting5
+global str_Dbox2, str_Music, str_Sound, str_DigitizedSpeech, str_Setting3, str_Pointer15, str_BKGD2, str_Setting7
+global str_Setting4, str_Dbox3, str_Music2, str_Sound2, str_DigitizedSpeech2, str_Pointer16, str_BKGD3, str_DigitizedSpeech3
+global str_Music3, str_Sound3, str_Setting6, str_Dbox4, str_Pointer17, str_BKGD4, str_PlayerImg, str_Dbox5
+global str_OneS, str_TwoS, str_TheMouse, str_JoystickOne, str_JoystickTwo, str_TheKeyboard, str_Pointer18, asc_C33D4
 global asc_C33DC, asc_C33E4, asc_C33EC, asc_C3411, asc_C3419, asc_C3421, asc_C3426, asc_C342E
 global asc_C3436, asc_C3449, asc_C3450, asc_C3472, asc_C3477, asc_C347B, asc_C3480, asc_C3489
 global asc_C348E, asc_C3493, asc_C3498, asc_C349D, asc_C34A2, asc_C34A7, asc_C34AC, asc_C34B1
@@ -280,74 +280,74 @@ str_Pstat4:
 db 070h,073h,074h,061h,074h,00h
 str_Gstat4:
 db 067h,073h,074h,061h,074h,00h,00h
-asc_C32BC:
+str_BKGD:
 db 042h,04Bh,047h,044h,00h
-asc_C32C1:
+str_Setting5:
 db 073h,065h,074h,074h,069h,06Eh,067h,035h,00h
-asc_C32CA:
+str_Dbox2:
 db 064h,062h,06Fh,078h,00h
-asc_C32CF:
+str_Music:
 db 04Dh,075h,073h,069h,063h,00h
-asc_C32D5:
+str_Sound:
 db 053h,06Fh,075h,06Eh,064h,00h
-asc_C32DB:
+str_DigitizedSpeech:
 db 044h,069h,067h,069h,074h,069h,07Ah,065h,064h,020h,053h,070h,065h,065h,063h,068h
 db 00h
-asc_C32EC:
+str_Setting3:
 db 073h,065h,074h,074h,069h,06Eh,067h,033h,00h
-asc_C32F5:
+str_Pointer15:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h,00h
-asc_C3300:
+str_BKGD2:
 db 042h,04Bh,047h,044h,00h
-asc_C3305:
+str_Setting7:
 db 073h,065h,074h,074h,069h,06Eh,067h,037h,00h
-asc_C330E:
+str_Setting4:
 db 073h,065h,074h,074h,069h,06Eh,067h,034h,00h
-asc_C3317:
+str_Dbox3:
 db 064h,062h,06Fh,078h,00h
-asc_C331C:
+str_Music2:
 db 04Dh,075h,073h,069h,063h,00h
-asc_C3322:
+str_Sound2:
 db 053h,06Fh,075h,06Eh,064h,00h
-asc_C3328:
+str_DigitizedSpeech2:
 db 044h,069h,067h,069h,074h,069h,07Ah,065h,064h,020h,053h,070h,065h,065h,063h,068h
 db 00h
-asc_C3339:
+str_Pointer16:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h,00h
-asc_C3344:
+str_BKGD3:
 db 042h,04Bh,047h,044h,00h
-asc_C3349:
+str_DigitizedSpeech3:
 db 044h,069h,067h,069h,074h,069h,07Ah,065h,064h,020h,053h,070h,065h,065h,063h,068h
 db 00h
-asc_C335A:
+str_Music3:
 db 04Dh,075h,073h,069h,063h,00h
-asc_C3360:
+str_Sound3:
 db 053h,06Fh,075h,06Eh,064h,00h
-asc_C3366:
+str_Setting6:
 db 073h,065h,074h,074h,069h,06Eh,067h,036h,00h
-asc_C336F:
+str_Dbox4:
 db 064h,062h,06Fh,078h,00h
-asc_C3374:
+str_Pointer17:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C337C:
+str_BKGD4:
 db 042h,04Bh,047h,044h,00h
-asc_C3381:
+str_PlayerImg:
 db 070h,06Ch,061h,079h,065h,072h,00h
-asc_C3388:
+str_Dbox5:
 db 064h,062h,06Fh,078h,00h
-asc_C338D:
+str_OneS:
 db 04Fh,06Eh,065h,027h,073h,00h
-asc_C3393:
+str_TwoS:
 db 054h,077h,06Fh,027h,073h,00h
-asc_C3399:
+str_TheMouse:
 db 054h,068h,065h,020h,04Dh,06Fh,075h,073h,065h,00h
-asc_C33A3:
+str_JoystickOne:
 db 04Ah,06Fh,079h,073h,074h,069h,063h,06Bh,020h,04Fh,06Eh,065h,00h
-asc_C33B0:
+str_JoystickTwo:
 db 04Ah,06Fh,079h,073h,074h,069h,063h,06Bh,020h,054h,077h,06Fh,00h
-asc_C33BD:
+str_TheKeyboard:
 db 054h,068h,065h,020h,04Bh,065h,079h,062h,06Fh,061h,072h,064h,00h
-asc_C33CA:
+str_Pointer18:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h
 asc_C33D4:
 db 04Dh,054h,052h,04Fh,043h,04Bh,055h,00h

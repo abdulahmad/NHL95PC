@@ -12,7 +12,7 @@ extern jctime, crestnames, calnextslot, calprevslot, sprintf_, MakePath, FileOpe
 extern FileClose, FileReadAt, ReadSchedGame, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
 extern CalTeamStatsScreen, CalSkaterStatsScreen, CalGoalieStatsScreen, CalStandingsScreen, CalStandingsMenu, SetDialogColors, ShowLoadingScreen, FadeOutPalCycle
 extern GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, FadePalStep
-extern sub_7DB67, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
+extern SetCtlTeams, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
 extern sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_91370, sub_913D0
 extern sub_91400, sub_91964, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4
 extern sub_B4DD4, sub_B4FAC, str_D8, str_W5, str_L7, str_T5, calmenubar, unk_DF014
@@ -670,7 +670,7 @@ mov cl, byte [byte eax+03h]	; 3480F
 xor ebx, ebx	; 34812
 mov bl, byte [byte eax+02h]	; 34814
 mov eax, esi	; 34817
-call sub_7DB67	; 34819
+call SetCtlTeams	; 34819
 pop esi	; 3481E
 pop ecx	; 3481F
 ret	; 34820

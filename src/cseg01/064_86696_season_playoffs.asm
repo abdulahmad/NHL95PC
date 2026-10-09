@@ -28,7 +28,7 @@ extern TextGridOpen, TextGridOff, InitGameSummary, SetupStatsSourceMenu, BuildSa
 extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, CountSeriesWins, PreGameScreen, AskDatabaseChoice, TextInputDialog
 extern SetDialogColors, RestoreDialogBg, MessageBox, SaveModeState, LoadModeState, WriteModeState, PostGameToTeamDb, SimulateGame
 extern ShowLoadingScreen, GetInputEvent, ClearInputQueue, InputInstall, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel
-extern DrawMenuItemNorm, MenuHitTest, FadePalStep, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
+extern DrawMenuItemNorm, MenuHitTest, FadePalStep, EditPlayoffSettings, sub_80830, sub_86627, sub_86647, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E8B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_910B0, sub_9121C, sub_91370, sub_913B4
 extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, FatalError, MouseSetPos, sub_B2DCA, sub_B2E1B
@@ -522,7 +522,7 @@ call BuildSavedGameLabels	; 86D9E
 xor eax, eax	; 86DA3
 call SetupStatsSourceMenu	; 86DA5
 mov dword [menuact_nextpo], PlayoffModeLoop	; 86DAA
-mov dword [menuact_posettings], sub_7A29C	; 86DB4
+mov dword [menuact_posettings], EditPlayoffSettings	; 86DB4
 mov dword [menuact_pohilights], sub_86647	; 86DBE
 xor edi, edi	; 86DC8
 mov dword [seriesgameno], edi	; 86DCA

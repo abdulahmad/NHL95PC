@@ -20,11 +20,10 @@ global byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, musicslot, mu
 global byte_D27B6, dbdlgrects
 global dword_D1229, dword_D122B, dword_D122F, dword_D1231, dword_D1233, lineslotx
 global linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458
-global dword_D145C, dword_D1468, dword_D146C, jerseydigits, dword_D14F0, dword_D14F4, dword_D14F8, dword_D14FC
-global dword_D16AC, dword_D16B0, dword_D16B4, dword_D16B8, dword_D17EC, dword_D17F0, dword_D17F4, dword_D17F8
-global dword_D195C, dword_D1960, dword_D1964, dword_D1968, dword_D196C, dword_D1970, dword_D1974, dword_D1978
-global dword_D197C, dword_D1980, dword_D198C, dword_D1990, dword_D199C, dword_D19A0, dword_D19AC, dword_D19B0
-global dword_D19EC, dword_D1C8B, dword_D1CE6, dword_D1CEE, dword_D1DC8, dword_D1DCC, dword_D1DD0, dword_D1DD4
+global dword_D145C, dword_D1468, dword_D146C, jerseydigits, leaguesetrects
+global modesetrects, exhsetrects
+global ctldlgrects
+global ctldlgalt, dword_D1C8B, dword_D1CE6, dword_D1CEE, dword_D1DC8, dword_D1DCC, dword_D1DD0, dword_D1DD4
 global dword_D20A8, dword_D20E0, dword_D2150, dword_D223C, dword_D227C, dword_D2280, dword_D2284, dword_D2288
 global dword_D229C, dword_D22A0, dword_D22A4, dword_D22A8, dword_D22AC, dword_D22B0, dword_D22B4, dword_D22BC
 global dword_D22C0, dword_D22C4, dword_D22C8, dword_D22CC, dword_D22D0, dword_D22D4, dword_D22DC, dword_D22E0
@@ -183,13 +182,10 @@ db 018h,083h,031h,038h,0FFh,0C3h,07h,00h,0FEh,0F7h,0FFh,061h,018h,086h,061h,078h
 db 0FEh,086h,07h,00h,07h,070h,00h,01h,01Eh,0FEh,0FDh,0F3h,03h,07h,00h,00h
 db 09Eh,0F7h,0FFh,061h,018h,086h,061h,0F8h,0FFh,09Eh,07h,00h,01Eh,0F6h,0E7h,061h
 db 018h,086h,061h,0F8h,0FFh,0FEh,07h,00h
-dword_D14F0:
+leaguesetrects:
 db 020h,00h,00h,00h
-dword_D14F4:
 db 028h,00h,00h,00h
-dword_D14F8:
 db 03Ah,00h,00h,00h
-dword_D14FC:
 db 038h,00h,00h,00h,03Eh,00h,00h,00h,028h,00h,00h,00h,058h,00h,00h,00h
 db 038h,00h,00h,00h,020h,00h,00h,00h,03Eh,00h,00h,00h,03Ah,00h,00h,00h
 db 04Eh,00h,00h,00h,03Eh,00h,00h,00h,03Eh,00h,00h,00h,058h,00h,00h,00h
@@ -219,13 +215,10 @@ db 045h,01h,00h,00h,07Fh,00h,00h,00h,035h,01h,00h,00h,0B0h,00h,00h,00h
 db 045h,01h,00h,00h
 unk_D16A0:
 db 00h,00h,00h,014h,014h,014h,02Eh,02Eh,02Eh,03Fh,03Fh,03Fh
-dword_D16AC:
+modesetrects:
 db 018h,00h,00h,00h
-dword_D16B0:
 db 028h,00h,00h,00h
-dword_D16B4:
 db 032h,00h,00h,00h
-dword_D16B8:
 db 038h,00h,00h,00h,036h,00h,00h,00h,028h,00h,00h,00h,050h,00h,00h,00h
 db 038h,00h,00h,00h,018h,00h,00h,00h,03Eh,00h,00h,00h,032h,00h,00h,00h
 db 04Eh,00h,00h,00h,036h,00h,00h,00h,03Eh,00h,00h,00h,050h,00h,00h,00h
@@ -246,13 +239,10 @@ db 0D2h,00h,00h,00h,036h,00h,00h,00h,0C2h,00h,00h,00h,050h,00h,00h,00h
 db 0D2h,00h,00h,00h,02Dh,00h,00h,00h,0E5h,00h,00h,00h,05Eh,00h,00h,00h
 db 0F5h,00h,00h,00h,077h,00h,00h,00h,0E5h,00h,00h,00h,0A8h,00h,00h,00h
 db 0F5h,00h,00h,00h
-dword_D17EC:
+exhsetrects:
 db 018h,00h,00h,00h
-dword_D17F0:
 db 028h,00h,00h,00h
-dword_D17F4:
 db 032h,00h,00h,00h
-dword_D17F8:
 db 038h,00h,00h,00h,036h,00h,00h,00h,028h,00h,00h,00h,050h,00h,00h,00h
 db 038h,00h,00h,00h,018h,00h,00h,00h,03Eh,00h,00h,00h,032h,00h,00h,00h
 db 04Eh,00h,00h,00h,036h,00h,00h,00h,03Eh,00h,00h,00h,050h,00h,00h,00h
@@ -276,44 +266,29 @@ db 0FAh,00h,00h,00h,0AAh,00h,00h,00h,0EAh,00h,00h,00h,0C1h,00h,00h,00h
 db 0FAh,00h,00h,00h,02Dh,00h,00h,00h,0Dh,01h,00h,00h,05Eh,00h,00h,00h
 db 01Dh,01h,00h,00h,077h,00h,00h,00h,0Dh,01h,00h,00h,0A8h,00h,00h,00h
 db 01Dh,01h,00h,00h
-dword_D195C:
+ctldlgrects:
 db 010h,00h,00h,00h
-dword_D1960:
 db 021h,00h,00h,00h
-dword_D1964:
 db 087h,00h,00h,00h
-dword_D1968:
 db 032h,00h,00h,00h
-dword_D196C:
 db 010h,00h,00h,00h
-dword_D1970:
 db 037h,00h,00h,00h
-dword_D1974:
 db 087h,00h,00h,00h
-dword_D1978:
 db 048h,00h,00h,00h
-dword_D197C:
 db 01Bh,00h,00h,00h
-dword_D1980:
 db 065h,00h,00h,00h,07Ch,00h,00h,00h,076h,00h,00h,00h
-dword_D198C:
 db 01Bh,00h,00h,00h
-dword_D1990:
 db 07Ah,00h,00h,00h,07Ch,00h,00h,00h,08Bh,00h,00h,00h
-dword_D199C:
 db 01Bh,00h,00h,00h
-dword_D19A0:
 db 08Fh,00h,00h,00h,07Ch,00h,00h,00h,0A0h,00h,00h,00h
-dword_D19AC:
 db 01Bh,00h,00h,00h
-dword_D19B0:
 db 0A4h,00h,00h,00h,07Ch,00h,00h,00h,0B5h,00h,00h,00h,01Bh,00h,00h,00h
 db 0B9h,00h,00h,00h,07Ch,00h,00h,00h,0CAh,00h,00h,00h
 unk_D19CC:
 db 0Eh,00h,00h,00h,0D4h,00h,00h,00h,03Fh,00h,00h,00h,0E4h,00h,00h,00h
 unk_D19DC:
 db 058h,00h,00h,00h,0D4h,00h,00h,00h,089h,00h,00h,00h,0E4h,00h,00h,00h
-dword_D19EC:
+ctldlgalt:
 db 00h,00h,00h,00h
 unk_D19F0:
 db 042h,04Fh,053h,031h,00h

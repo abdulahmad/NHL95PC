@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_59493 progbits alloc exec nowrite align=1
 extern __CHK, musicon, byte_D2439, gameopts, dword_C541F, lastsfx, digihandle
-extern crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_D2427, dword_ED35C, dword_ED368
+extern crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_D2427, leaguesetimg, dword_ED368
 extern dword_ED374, dword_ED7A4, gmode, teamabbrevs, rand_, randomd0, sub_836E4, sub_837A8
 extern sub_846B4, sub_846C8, sub_846DC, sub_847BA, sub_847CE, sub_8490D, sub_84A7D, sub_84B0D
 extern sub_84C38, sub_84F7B, sub_8511E, sub_85213, sub_8531F, sub_854AC, sub_85507, sub_8579E
@@ -506,7 +506,7 @@ jmp short .4	; 59A69
 .3:
 cmp eax, byte 0Ch	; 59A6B
 jge short .5	; 59A6E
-mov eax, dword [dword edx+dword_ED35C]	; 59A70
+mov eax, dword [dword edx+leaguesetimg]	; 59A70
 .4:
 call PlayDigiSample	; 59A76
 .5:

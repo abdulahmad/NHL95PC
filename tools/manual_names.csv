@@ -711,6 +711,62 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00079F41,sub_79F41,GameDressPlayer,PC-new,,,,high,"hmroster status 3, redraw, status line",team_select,manual-trace
 0007A017,sub_7A017,BlitJerseyDigit,PC-new,,,,high,"(dst, digit, colour, right): 1-bit 84-pixel digit glyph from jerseydigits into a jersey shape",team_select,manual-trace
 0007A099,sub_7A099,MakeJerseyShape,PC-new,,,,high,"(buf, number, body, digit colour): fills the jersey colours and blits one or two digits",team_select,manual-trace
+0007A13A,sub_7A13A,LeagueSettingsDlg,PC-new,,,,medium,"called by MenuLeagueSettings; BKGD+setting3 dialog, preserves seriesgameno",settings_dialogs,manual-trace
+0007A1FC,sub_7A1FC,MenuPlayoffSettings,PC-new,,,,medium,"menu action for ""Play-Off Settings ...""; draws setting dialog with playoff flag",settings_dialogs,manual-trace
+0007A268,sub_7A268,SettingsDlgClose,PC-new,,,,medium,"shared tail: restore screen, clear D20A8",settings_dialogs,manual-trace
+0007A29C,sub_7A29C,EditPlayoffSettings,PC-new,,,,medium,swaps exhstate/postate via Save/LoadModeState around settings edit; called by SelectSavedFile/CreatePlayoffs,settings_dialogs,manual-trace
+0007A335,sub_7A335,MenuLeagueSettingsEdit,PC-new,,,,medium,"menu action ""League settings"": DrawLeagueSetDlgSel + edit loop",settings_dialogs,manual-trace
+0007A39F,sub_7A39F,MenuShowLeagueSettings,PC-new,,,,medium,"menu action ""Show League settings"": view-only loop",settings_dialogs,manual-trace
+0007A404,sub_7A404,MenuShowLeagueSettings2,PC-new,,,,medium,"menu action ""Show League Settings ..."": setting5 image + view loop",settings_dialogs,manual-trace
+0007A57E,sub_7A57E,DrawLeagueSetDlgSel,PC-new,,,,medium,draws setting5 or setting3 dialog depending on leaguesetimg,settings_dialogs,manual-trace
+0007A6AD,sub_7A6AD,SetLeagueSetImage,PC-new,,,,medium,stores eax to leaguesetimg; called by MenuNewLeague/MenuNextLeagueGame,settings_dialogs,manual-trace
+0007A6BD,sub_7A6BD,DrawLeagueSetDlg,PC-new,,,,medium,"loads setting3 + dbox, greys Music/Sound/Digitized Speech when unavailable",settings_dialogs,manual-trace
+0007A88E,sub_7A88E,LeagueOptsToBits,PC-new,,,,medium,packs gameopts bitfields into setbits,settings_dialogs,manual-trace
+0007A9C8,sub_7A9C8,LeagueSetHitTest,PC-new,,,,medium,mouse hit-test over 27 rects at leaguesetrects,settings_dialogs,manual-trace
+0007AAAA,sub_7AAAA,DrawLeagueSetChecks,PC-new,,,,medium,draws chkon/chkoff shapes per setbits bit,settings_dialogs,manual-trace
+0007AC31,sub_7AC31,LeagueSetViewLoop,PC-new,,,,medium,pointer loop without editing (show settings),settings_dialogs,manual-trace
+0007ADD3,sub_7ADD3,LeagueSetEditLoop,PC-new,,,,medium,"pointer loop toggling setbits, writes gameopts",settings_dialogs,manual-trace
+0007B39C,sub_7B39C,SettingsStub,PC-new,,,,low,"empty __CHK/ret, unreferenced",settings_dialogs,manual-trace
+0007B3A7,sub_7B3A7,MenuModeSettings,PC-new,,,,medium,"menu action ""xxxxxxxxxxx Settings ..."" (mode name patched); gamemode 2 -> view only",settings_dialogs,manual-trace
+0007B4E5,sub_7B4E5,ModeSettings_epilogue,PC-new,,,,low,unreferenced pop/ret epilogue,settings_dialogs,manual-trace
+0007B4EC,sub_7B4EC,DrawModeSetDlg,PC-new,,,,medium,setting7 (gamemode 2) or setting4 dialog,settings_dialogs,manual-trace
+0007B604,sub_7B604,ModeOptsToBits,PC-new,,,,medium,gameopts -> setbits (mode settings),settings_dialogs,manual-trace
+0007B734,sub_7B734,ModeSetHitTest,PC-new,,,,medium,hit-test over modesetrects,settings_dialogs,manual-trace
+0007B7BE,sub_7B7BE,DrawModeSetChecks,PC-new,,,,medium,checkbox draw over modesetrects,settings_dialogs,manual-trace
+0007B846,sub_7B846,ModeSetViewLoop,PC-new,,,,medium,view-only pointer loop,settings_dialogs,manual-trace
+0007B9E8,sub_7B9E8,ModeSetEditLoop,PC-new,,,,medium,editing pointer loop,settings_dialogs,manual-trace
+0007BEBB,sub_7BEBB,MenuExhibitionSettings,PC-new,,,,medium,"menu action ""Exhibition Settings ...""",settings_dialogs,manual-trace
+0007BF4F,sub_7BF4F,ExhSettings_ret,PC-new,,,,low,"lone ret, unreferenced",settings_dialogs,manual-trace
+0007BF56,sub_7BF56,ExhOptsToBits,PC-new,,,,medium,gameopts -> setbits (exhibition),settings_dialogs,manual-trace
+0007C0B9,sub_7C0B9,DrawExhSetChecks,PC-new,,,,medium,checkbox draw over exhsetrects,settings_dialogs,manual-trace
+0007C1AC,sub_7C1AC,DrawExhSetDlg,PC-new,,,,medium,setting6 + dbox dialog,settings_dialogs,manual-trace
+0007C28D,sub_7C28D,ExhSetHitTest,PC-new,,,,medium,hit-test over exhsetrects,settings_dialogs,manual-trace
+0007C317,sub_7C317,ExhSetEditLoop,PC-new,,,,medium,editing pointer loop,settings_dialogs,manual-trace
+0007C852,sub_7C852,DrawCtlBoxOn,PC-new,,,,medium,draws selected box frame (colours by ctldlgalt),settings_dialogs,manual-trace
+0007C901,sub_7C901,DrawCtlBoxOff,PC-new,,,,medium,draws unselected box frame,settings_dialogs,manual-trace
+0007C993,sub_7C993,MenuP1ControlsExh,PC-new,,,,medium,"""Player 1 Controls ..."" exhibition menu, eax=0",settings_dialogs,manual-trace
+0007C9A1,sub_7C9A1,MenuP2ControlsExh,PC-new,,,,medium,"""Player 2 Controls ..."" exhibition menu, eax=1",settings_dialogs,manual-trace
+0007C9B0,sub_7C9B0,ControlsDlgExh,PC-new,,,,medium,"controller dialog (player image, Mouse/Joystick/Keyboard)",settings_dialogs,manual-trace
+0007CA53,sub_7CA53,MenuP1ControlsLeague,PC-new,,,,medium,"""Player 1 Controls ..."" league menu",settings_dialogs,manual-trace
+0007CA61,sub_7CA61,MenuP2ControlsLeague,PC-new,,,,medium,"""Player 2 Controls ..."" league menu",settings_dialogs,manual-trace
+0007CA70,sub_7CA70,ControlsDlgLeague,PC-new,,,,medium,"controller dialog, league variant",settings_dialogs,manual-trace
+0007CAF7,sub_7CAF7,MenuP1ControlsInGame,PC-new,,,,medium,"""Player 1 Controls ..."" in-game menu",settings_dialogs,manual-trace
+0007CB03,sub_7CB03,ControlsDlgInGame,PC-new,,,,medium,"controller dialog; afterwards updates cont1team/cont2team, samesideflag",settings_dialogs,manual-trace
+0007CB9F,sub_7CB9F,MenuP2ControlsInGame,PC-new,,,,medium,"""Player 2 Controls ..."" in-game menu",settings_dialogs,manual-trace
+0007CBB3,sub_7CBB3,CtlSwapScoreFix,PC-new,,,,low,"adjusts hmtmstruct+38h flags after controller change, uses score diff",settings_dialogs,manual-trace
+0007CC8A,sub_7CC8A,CtlSwapTeamFlag,PC-new,,,,low,sets hmtmstruct+38h high nibble depending on puck possession,settings_dialogs,manual-trace
+0007CCE5,sub_7CCE5,ReassignCtlPlayer,PC-new,,,,medium,re-picks c1/c2playernum for cont1team/cont2team,settings_dialogs,manual-trace
+0007CEA1,sub_7CEA1,ClearCtlBlink,PC-new,,,,medium,clears lcblink/lcboxon and player flags for released sides,settings_dialogs,manual-trace
+0007CFB9,sub_7CFB9,ControlsDlgInGame_side,PC-new,,,,medium,code label inside ControlsDlgInGame: pick side 1/2,settings_dialogs,manual-trace
+0007D137,sub_7D137,MenuP1ControlsPlayoff,PC-new,,,,medium,"""Player 1 Controls ..."" playoff menu",settings_dialogs,manual-trace
+0007D145,sub_7D145,MenuP2ControlsPlayoff,PC-new,,,,medium,"""Player 2 Controls ..."" playoff menu",settings_dialogs,manual-trace
+0007D154,sub_7D154,ControlsDlgPlayoff,PC-new,,,,medium,"controller dialog, playoff variant",settings_dialogs,manual-trace
+0007D254,sub_7D254,DrawControlsDlg,PC-new,,,,medium,BKGD/player/dbox with teamcitynames,settings_dialogs,manual-trace
+0007D3F0,sub_7D3F0,DrawControlsOpts,PC-new,,,,medium,"One's/Two's, The Mouse/Joystick One/Two/The Keyboard by ctlavailmask",settings_dialogs,manual-trace
+0007D61F,sub_7D61F,CtlDlgHitTest,PC-new,,,,medium,hit-test 9 rects at ctldlgrects,settings_dialogs,manual-trace
+0007D671,sub_7D671,DrawCtlBoxes,PC-new,,,,medium,draws 9 boxes on/off by setbits,settings_dialogs,manual-trace
+0007D6B1,sub_7D6B1,ControlsDlgLoop,PC-new,,,,medium,"pointer loop, calls SetSideControls",settings_dialogs,manual-trace
+0007DB67,sub_7DB67,SetCtlTeams,PC-new,,,,medium,"sets HomeTeam/VisTeam, ctl1team/ctl1side/ctl2side; called by SetGameSides",settings_dialogs,manual-trace
 00086696,sub_86696,CreatePlayoffs,PC-new,,,,high,"main-menu handler (frontend menu table CDxxx dd entry): asks 'Please Enter New Play-Off Name' (sub_2FEDF), confirms replacing an existing .PO dir (msg 'There is already a Play-Off with that name!'), mkdir <name>.PO, checks free disk space ('Insufficient disk space to setup a Playoff Series'), copies the 7 league DBs, seeds 16 teams (POSeedTeams), builds schedule.db (POCreateSchedule) and installs PlayoffModeLoop as the mode loop (dword_CE583)",season_playoffs,manual-trace
 00086E8B,sub_86E8B,POSeedTeams,PC-new,,,,medium,"fills the 16 seed slots: 8 placeholders per conference (-3 west / -12 east, random slots), puts HomeTeam and VisTeam into their conference's slots (opposite ends if same conference), then POPickConfTeams fills the remaining placeholders with random teams of each conference",season_playoffs,manual-trace
 000870B6,sub_870B6,POPickConfTeams,PC-new,,,,medium,"(slots, confflag, first, count): picks 8 distinct random teams from confteams[first..first+count) excluding HomeTeam/VisTeam, keeps the first two from different divisions, and writes them over the -confflag placeholders",season_playoffs,manual-trace

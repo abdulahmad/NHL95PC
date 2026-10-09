@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_CF90F progbits alloc noexec write align=1
-extern sub_7A1FC, sub_7D137, sub_7D145, sub_86627, sub_86637, unk_C67B1, unk_CDB84, unk_CDB98
+extern MenuPlayoffSettings, MenuP1ControlsPlayoff, MenuP2ControlsPlayoff, sub_86627, sub_86637, unk_C67B1, unk_CDB84, unk_CDB98
 extern unk_CDBAE, unk_CDBF5, unk_CDEFF, unk_CDF04, unk_CDF0D, unk_CDF18, unk_CDF2B, unk_CDF44
 global off_CF983, unk_CF90F, unk_CF96F, unk_CF9AF, unk_CFA2F
 unk_CF90F:
@@ -34,18 +34,18 @@ db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CF9AF:
 db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
 dd unk_CDB98
-dd sub_7D137
+dd MenuP1ControlsPlayoff
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 08Ch,00h,00h,00h,023h,00h,00h,00h
 dd unk_CDBAE
-dd sub_7D145
+dd MenuP2ControlsPlayoff
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 08Ch,00h,00h,00h,035h,00h,00h,00h
 dd unk_CDB84
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 036h,00h,00h,00h,08Ch,00h,00h,00h,048h,00h,00h,00h
 dd unk_CDBF5
-dd sub_7A1FC
+dd MenuPlayoffSettings
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CFA2F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h

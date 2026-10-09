@@ -8,7 +8,7 @@ extern asc_D2390, asc_D2399, asc_D2479, asc_D2486, asc_D248C, asc_D2491, byte_C5
 extern musicslot, musicon, byte_D2439, byte_ED8C3, byte_ED95B, byte_ED9A7, dword_C4CFC, gameopts
 extern dword_C541F, songdata, dword_CCC94, dword_D2350, dword_D2423, dword_D2427, dword_D242B
 extern musichandle, dword_D2435, sounddevids, dword_D24A0, dword_D27B2, dword_D27BB, dword_D2C6B, pointerspr
-extern ptrupdatefn, dword_ED360, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, fclose_, fopen_
+extern ptrupdatefn, setbits, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, fclose_, fopen_
 extern fprintf_, jctime, loc_836C4, off_D24D1, strcpy_, MakePath, SetDialogColors, RestoreDialogBg
 extern MessageBox, PlayDigiSample, WaitDigiSample, GetInputEvent, ClearInputQueue, sub_8245A, sub_824F8, sub_827B3
 extern sub_82805, sub_8357A, sub_8363C, sub_8CCA8, sub_8D2F0, sub_8EB5B, sub_8EB93, sub_8ECC0
@@ -186,7 +186,7 @@ mov cl, byte [byte esp+020h]	; 82AE8
 mov eax, 1	; 82AEC
 shl eax, cl	; 82AF1
 mov dword [byte esp+020h], eax	; 82AF3
-test dword [dword_ED360], eax	; 82AF7
+test dword [setbits], eax	; 82AF7
 jne near loc_82D0C	; 82AFD
 test dword [byte_C541B], eax	; 82B03
 je near loc_82D0C	; 82B09
@@ -217,7 +217,7 @@ cmp eax, byte 2	; 82B4C
 ja near loc_82D07	; 82B4F
 loc_82B55:
 mov eax, dword [byte esp+020h]	; 82B55
-mov dword [dword_ED360], eax	; 82B59
+mov dword [setbits], eax	; 82B59
 jmp near loc_82D07	; 82B5E
 loc_82B63:
 mov eax, unk_D2403	; 82B63
@@ -250,11 +250,11 @@ add esp, byte 4	; 82BCF
 xor edx, edx	; 82BD2
 mov dword [songdata], edx	; 82BD4
 loc_82BDA:
-mov eax, dword [dword_ED360]	; 82BDA
+mov eax, dword [setbits]	; 82BDA
 call sub_82D7A	; 82BDF
 test eax, eax	; 82BE4
 je near loc_82C84	; 82BE6
-mov eax, dword [dword_ED360]	; 82BEC
+mov eax, dword [setbits]	; 82BEC
 mov dword [dword_C541F], eax	; 82BF1
 push ebp	; 82BF6
 call jctime	; 82BF7
@@ -294,10 +294,10 @@ loc_82C78:
 and byte [gameopts+1], 0FEh	; 82C78
 jmp near loc_82D4E	; 82C7F
 loc_82C84:
-mov eax, dword [dword_ED360]	; 82C84
+mov eax, dword [setbits]	; 82C84
 xor dword [byte_C541B], eax	; 82C89
 mov eax, dword [dword_C541F]	; 82C8F
-mov dword [dword_ED360], eax	; 82C94
+mov dword [setbits], eax	; 82C94
 cmp byte [musicon], 0	; 82C99
 je short loc_82CFD	; 82CA0
 cmp dword [songdata], byte 0	; 82CA2
@@ -603,7 +603,7 @@ mov byte [byte_D2439], al	; 830CC
 mov al, byte [byte esp+03Ch]	; 830D1
 mov byte [musicslot], al	; 830D5
 mov eax, dword [dword_C541F]	; 830DA
-mov dword [dword_ED360], eax	; 830DF
+mov dword [setbits], eax	; 830DF
 mov ecx, str_CFG	; 830E4
 mov ebx, asc_C36A8	; 830E9
 xor edx, edx	; 830EE

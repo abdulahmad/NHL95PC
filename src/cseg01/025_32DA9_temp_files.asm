@@ -11,7 +11,7 @@ extern MainDeskLoop_x2, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRe
 extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
 extern EasnStandingsScreen, PreGameScreen, SaveModeState, LoadModeState, PlayLeagueGame, UpdateTeamDbs, MergeLeagueFiles, MergeUpdateDbs
 extern RebuildLeagueDbs, ImportDbs, ExportDbs, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
-extern ShowLoadingScreen, InputInstall, InputRemove, FadePalStep, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
+extern ShowLoadingScreen, InputInstall, InputRemove, FadePalStep, LeagueSettingsDlg, SetLeagueSetImage, SettingsStub, sub_80075
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, EasnTeamStatsScreen, EasnSkaterStatsScreen, EasnGoalieStatsScreen
 extern EasnStandingsMenu, exhstate, leaguemgrmenu
 global MenuAddTeam_common
@@ -231,9 +231,9 @@ mov dword [lgstate+71h], 1	; 330F4
 mov eax, lgstate	; 330FE
 call LoadModeState	; 33103
 xor eax, eax	; 33108
-call sub_7A6AD	; 3310A
+call SetLeagueSetImage	; 3310A
 call CreateNewLeague	; 3310F
-call sub_7B39C	; 33114
+call SettingsStub	; 33114
 cmp byte [lgstate+4], 0	; 33119
 je short .10	; 33120
 call BuildSavedGameLabels	; 33122
@@ -403,7 +403,7 @@ mov esi, 2	; 33374
 .2:
 test edi, edi	; 33379
 je short .3	; 3337B
-call sub_7A13A	; 3337D
+call LeagueSettingsDlg	; 3337D
 .3:
 mov eax, lgstate	; 33382
 call SaveModeState	; 33387
@@ -567,7 +567,7 @@ call LoadModeState	; 3357B
 mov eax, 3	; 33580
 call SetupStatsSourceMenu	; 33585
 mov eax, 1	; 3358A
-call sub_7A6AD	; 3358F
+call SetLeagueSetImage	; 3358F
 mov eax, 2	; 33594
 call SetScreenTitle	; 33599
 cmp dword [ebx], byte 0	; 3359E

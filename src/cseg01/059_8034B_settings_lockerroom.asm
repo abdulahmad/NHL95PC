@@ -18,9 +18,9 @@ extern dword_D2150, dword_D223C, dword_D227C, dword_D2280, dword_D2284, dword_D2
 extern dword_D22A4, dword_D22A8, dword_D22AC, dword_D22B0, dword_D22B4, dword_D22BC, dword_D22C0, dword_D22C4
 extern dword_D22C8, dword_D22CC, dword_D22D0, dword_D22D4, dword_D22DC, dword_D22E0, dword_D22EC, dword_D22F0
 extern dword_D23A3, dword_D23A7, dword_D23AB, dword_D23AF, musichandle, dword_D2435, dword_D2C6B, musicslot
-extern dword_D8B68, dword_D8B74, dword_DC230, pointerspr, fdlg_cancel, ptrupdatefn, dword_ED360, dword_ED75C
+extern dword_D8B68, dword_D8B74, dword_DC230, pointerspr, fdlg_cancel, ptrupdatefn, setbits, dword_ED75C
 extern dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C
-extern dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794, dword_ED798, dword_ED79C
+extern chkoffspr, dword_ED784, chkonspr, dword_ED78C, dword_ED790, dword_ED794, dword_ED798, dword_ED79C
 extern dword_ED7A0, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
 extern sprintf_, strcpy_, strncpy_, MakePath, SetTextColors, PrintShadowText, PrintOutlinedText, ShowLoadingScreen
 extern FadeOutPalCycle, GetInputEvent, ClearInputQueue, FadePalStep, sub_8291E, WriteCurModeState, sub_8CCA8, sub_8D2F0
@@ -81,13 +81,13 @@ push asc_C3489	; 8039D
 push eax	; 803A2
 call sub_B30B4	; 803A3
 add esp, byte 8	; 803A8
-mov dword [dword_ED788], eax	; 803AB
+mov dword [chkonspr], eax	; 803AB
 push asc_C348E	; 803B0
 mov ebx, dword [dword_D20A8]	; 803B5
 push ebx	; 803BB
 call sub_B30B4	; 803BC
 add esp, byte 8	; 803C1
-mov dword [dword_ED780], eax	; 803C4
+mov dword [chkoffspr], eax	; 803C4
 push asc_C3493	; 803C9
 mov ecx, dword [dword_D20A8]	; 803CE
 push ecx	; 803D4
@@ -2740,7 +2740,7 @@ push ecx	; 8269B
 push edx	; 8269C
 push esi	; 8269D
 mov eax, dword [dword_C541F]	; 8269E
-mov dword [dword_ED360], eax	; 826A3
+mov dword [setbits], eax	; 826A3
 xor edx, edx	; 826A8
 loc_826AA:
 mov cl, dl	; 826AA
@@ -2749,7 +2749,7 @@ shl esi, cl	; 826B1
 mov eax, edx	; 826B3
 shl eax, 4	; 826B5
 add eax, dword_D23A3	; 826B8
-test dword [dword_ED360], esi	; 826BD
+test dword [setbits], esi	; 826BD
 je short loc_826CC	; 826C3
 call sub_8245A	; 826C5
 jmp short loc_826D1	; 826CA
@@ -2882,7 +2882,7 @@ shl esi, cl	; 8281C
 mov eax, edx	; 8281E
 shl eax, 4	; 82820
 add eax, dword_D23A3	; 82823
-test dword [dword_ED360], esi	; 82828
+test dword [setbits], esi	; 82828
 je short loc_82837	; 8282E
 call sub_8245A	; 82830
 jmp short loc_8283C	; 82835

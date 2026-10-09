@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_EC6B8 nobits alloc noexec write align=1
 global lineedpanel, fadepal, fadepal2, byte_ECDF4, gmroster, gmrosterjersey, gmrosterslot, byte_ED0F7
-global byte_ED0F8, byte_ED0F9, byte_ED0FA, byte_ED361, byte_ED7CC, byte_ED7CD, byte_ED7E4, byte_ED7E6
+global byte_ED0F8, byte_ED0F9, byte_ED0FA, byte_ED7CC, byte_ED7CD, byte_ED7E4, byte_ED7E6
 global byte_ED7EB, byte_ED7ED, byte_ED7F0, byte_ED7F3, byte_ED7F7, byte_ED821, byte_ED823, byte_ED824
 global byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED82F, byte_ED830, byte_ED833, byte_ED834
 global byte_ED836, byte_ED83C, byte_ED858, byte_ED859, byte_ED85A, byte_ED85C, byte_ED862, byte_ED86C
@@ -18,12 +18,12 @@ global byte_ED9AD, byte_ED9AE, byte_ED9AF, byte_ED9B0, byte_ED9B2, byte_ED9B3, b
 global byte_ED9E7, byte_ED9E8, byte_ED9E9, byte_ED9EA, byte_ED9EB, byte_ED9EC, byte_ED9EE, byte_ED9EF
 global byte_ED9F0, dblistcur, dblisttemp
 global dblisttempnames, dblistorig
-global dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0, dword_ED35C, dword_ED360, dword_ED364, dword_ED368
+global dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0, leaguesetimg, setbits, dword_ED364, dword_ED368
 global dword_ED374, dword_ED380, dword_ED384, dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8
 global dword_ED6DC, dword_ED6E0, dword_ED6E4, dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8
 global dword_ED6FC, hilightfont, dword_ED704, dword_ED708, dword_ED70C, dword_ED74C, dword_ED750, dword_ED754
 global dword_ED756, dword_ED75C, dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774
-global dword_ED778, dword_ED77C, dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794
+global dword_ED778, dword_ED77C, chkoffspr, dword_ED784, chkonspr, dword_ED78C, dword_ED790, dword_ED794
 global dword_ED798, dword_ED79C, dword_ED7A0, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, dword_ED7B4
 global dword_ED7B8, vgapage, memlist1, memlist0, curdbname, unk_ED7BC, word_ED758
 dblistcur:
@@ -77,11 +77,10 @@ byte_ED0F9:
 resb 1
 byte_ED0FA:
 resb 610
-dword_ED35C:
+leaguesetimg:
 resb 4
-dword_ED360:
+setbits:
 resb 1
-byte_ED361:
 resb 3
 dword_ED364:
 resb 4
@@ -157,11 +156,11 @@ dword_ED778:
 resb 4
 dword_ED77C:
 resb 4
-dword_ED780:
+chkoffspr:
 resb 4
 dword_ED784:
 resb 4
-dword_ED788:
+chkonspr:
 resb 4
 dword_ED78C:
 resb 4

@@ -6,8 +6,8 @@ extern StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense, StatsMenu
 extern StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus, StatsMenuPIM, StatsMenuShootPct, StatsMenuGAA, StatsMenuGoalieWins
 extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, MenuOpenSaved, MenuExit, MenuNewExhibition
 extern MenuNewLeague, MenuAddTeam, MenuRemoveTeam, MenuLeagueSettings, MenuRebuildDbs, MenuMergeUpdateDbs, MenuMergeLeagueFiles, MenuUpdateTeamDbs
-extern MenuTradePlayers, MenuLeagueHilights, MenuImportDbs, MenuCentralRegistry, sub_7BEBB, sub_7C993, sub_7C9A1, sub_7CAF7
-extern sub_7CB9F, sub_80830, sub_82579, sub_85924, CreatePlayoffs, EasnStandingsMenu, unk_C67B1, unk_CEF0F
+extern MenuTradePlayers, MenuLeagueHilights, MenuImportDbs, MenuCentralRegistry, MenuExhibitionSettings, MenuP1ControlsExh, MenuP2ControlsExh, MenuP1ControlsInGame
+extern MenuP2ControlsInGame, sub_80830, sub_82579, sub_85924, CreatePlayoffs, EasnStandingsMenu, unk_C67B1, unk_CEF0F
 extern unk_CEF2F, unk_CEF6F, unk_CEFEF
 global str_LAAtMTL, asc_CDBDC, asc_CDBE3, asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_CDD5E
 global asc_CDD6B, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide
@@ -577,18 +577,18 @@ dd sub_80830
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 092h,00h,00h,00h,023h,00h,00h,00h
 dd unk_CDBC4
-dd sub_7BEBB
+dd MenuExhibitionSettings
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 092h,00h,00h,00h,035h,00h,00h,00h
 dd unk_CDB84
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 036h,00h,00h,00h,092h,00h,00h,00h,047h,00h,00h,00h
 dd unk_CDB98
-dd sub_7C993
+dd MenuP1ControlsExh
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
 db 092h,00h,00h,00h,059h,00h,00h,00h
 dd unk_CDBAE
-dd sub_7C9A1
+dd MenuP2ControlsExh
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 092h,00h,00h,00h,06Bh,00h,00h,00h
 dd unk_CDB84
@@ -772,11 +772,11 @@ db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CED6F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0A9h,00h,00h,00h,011h,00h,00h,00h
 dd unk_CDB98
-dd sub_7CAF7
+dd MenuP1ControlsInGame
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 0A9h,00h,00h,00h,023h,00h,00h,00h
 dd unk_CDBAE
-dd sub_7CB9F
+dd MenuP2ControlsInGame
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 0A9h,00h,00h,00h,035h,00h,00h,00h
 dd unk_CDC1E
