@@ -643,7 +643,6 @@ extern void fileio_popebpx(); /* 61A83 */
 extern void fileio_tail_a(); /* 61BFB */
 extern void fileio_tail_b(); /* 61C0C */
 extern void fileio_tail_c(); /* 61C14 */
-extern void FormatPlayerName(); /* 61D48 */
 extern void PostGoalEvent(); /* 62343 */
 extern void PostPenaltyEvent(); /* 624B9 */
 extern void NullCallback0C(); /* 627F8 */
