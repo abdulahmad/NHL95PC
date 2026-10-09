@@ -930,6 +930,10 @@ mov eax, 1	; 84DD1
 add esp, byte 60h	; 84DD6
 pop esi	; 84DD9
 ret 8	; 84DDA
+; C: src/c/062_842BA_announcer/RequestTimeClips.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/RequestTimeClips.inc"
+%else
 RequestTimeClips:
 push dword 38h	; 84DDD
 call __CHK	; 84DE2
@@ -1005,6 +1009,11 @@ call RequestSample	; 84EA2
 add esp, byte 20h	; 84EA7
 pop ebx	; 84EAA
 ret	; 84EAB
+%endif ; C
+; C: src/c/062_842BA_announcer/QueueTimeClips.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/QueueTimeClips.inc"
+%else
 QueueTimeClips:
 push dword 38h	; 84EAC
 call __CHK	; 84EB1
@@ -1080,6 +1089,7 @@ call QueueSpeechClip	; 84F71
 add esp, byte 20h	; 84F76
 pop ebx	; 84F79
 ret	; 84F7A
+%endif ; C
 SayPenalty:
 push dword 60h	; 84F7B
 call __CHK	; 84F80
@@ -1475,6 +1485,10 @@ mov eax, ebx	; 85503
 pop ebx	; 85505
 ret	; 85506
 %endif ; C
+; C: src/c/062_842BA_announcer/OpenAnnouncerBank.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/OpenAnnouncerBank.inc"
+%else
 OpenAnnouncerBank:
 push dword 20h	; 85507
 call __CHK	; 8550C
@@ -1513,6 +1527,7 @@ pop edx	; 8556C
 pop ecx	; 8556D
 pop ebx	; 8556E
 ret	; 8556F
+%endif ; C
 QueuePenaltyType:
 push dword 28h	; 85570
 call __CHK	; 85575

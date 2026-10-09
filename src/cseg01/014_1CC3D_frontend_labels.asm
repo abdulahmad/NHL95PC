@@ -757,6 +757,10 @@ dd SetScreenTitle_calendar
 dd SetScreenTitle_booth
 dd SetScreenTitle_desk
 dd SetScreenTitle_rink
+; C: src/c/014_1CC3D_frontend_labels/SetScreenTitle.c
+%ifdef CBUILD
+%include "c/014_1CC3D_frontend_labels/SetScreenTitle.inc"
+%else
 SetScreenTitle:
 push dword 0Ch	; 1D610
 call __CHK	; 1D615
@@ -807,6 +811,7 @@ mov dword [dword_CF5F7], edx	; 1D6B5
 pop edx	; 1D6BB
 pop ebx	; 1D6BC
 ret	; 1D6BD
+%endif ; C
 ; C: src/c/014_1CC3D_frontend_labels/StrPrefixDiffers.c
 %ifdef CBUILD
 %include "c/014_1CC3D_frontend_labels/StrPrefixDiffers.inc"

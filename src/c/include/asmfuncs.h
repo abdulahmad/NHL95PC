@@ -6527,7 +6527,6 @@ extern void loc_B38BD(); /* B38BD */
 extern void loc_B38DC(); /* B38DC */
 extern void loc_B38FB(); /* B38FB */
 extern void loc_B391A(); /* B391A */
-extern void sub_B395C(); /* B395C */
 extern void sub_B3962(); /* B3962 */
 extern void sub_B396E(); /* B396E */
 extern void sub_B3981(); /* B3981 */

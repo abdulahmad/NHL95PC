@@ -218,6 +218,10 @@ setne al	; 836DB
 and eax, 0FFh	; 836DE
 ret	; 836E3
 %endif ; C
+; C: src/c/061_83459_speech/SpeechBusy.c
+%ifdef CBUILD
+%include "c/061_83459_speech/SpeechBusy.inc"
+%else
 SpeechBusy:
 push dword 4	; 836E4
 call __CHK	; 836E9
@@ -235,6 +239,7 @@ jne short SpeechBusy.1	; 8370C
 .3:
 xor eax, eax	; 8370E
 ret	; 83710
+%endif ; C
 ; C: src/c/061_83459_speech/SpeechIdle.c
 %ifdef CBUILD
 %include "c/061_83459_speech/SpeechIdle.inc"
@@ -300,6 +305,10 @@ call sub_8FCAC	; 837A1
 pop edx	; 837A6
 ret	; 837A7
 %endif ; C
+; C: src/c/061_83459_speech/MusicChanReset.c
+%ifdef CBUILD
+%include "c/061_83459_speech/MusicChanReset.inc"
+%else
 MusicChanReset:
 push dword 8	; 837A8
 call __CHK	; 837AD
@@ -315,6 +324,7 @@ call sub_8FCAC	; 837D2
 .x:
 pop edx	; 837D7
 ret	; 837D8
+%endif ; C
 ; C: src/c/061_83459_speech/Swap16.c
 %ifdef CBUILD
 %include "c/061_83459_speech/Swap16.inc"
@@ -987,6 +997,10 @@ and eax, 0FFh	; 83F5A
 pop edx	; 83F5F
 ret	; 83F60
 %endif ; C
+; C: src/c/061_83459_speech/IsSampleRequested.c
+%ifdef CBUILD
+%include "c/061_83459_speech/IsSampleRequested.inc"
+%else
 IsSampleRequested:
 push dword 14h	; 83F61
 call __CHK	; 83F66
@@ -1026,6 +1040,7 @@ pop edx	; 83FAB
 pop ecx	; 83FAC
 pop ebx	; 83FAD
 ret	; 83FAE
+%endif ; C
 ; C: src/c/061_83459_speech/RequestSample.c
 %ifdef CBUILD
 %include "c/061_83459_speech/RequestSample.inc"

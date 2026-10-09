@@ -639,5 +639,14 @@ void SetSeriesTeams(unsigned char *s, int a, int b, int games);  /* 42F42 */
 void UpdatePowerPlayFlags(void);  /* 63C73 */
 int CheckBump(Player *p, Player *c);  /* 54990 */
 int ChkDelayedOffside(Player *p);  /* 541CA */
+int sub_B395C(void);  /* timer library: tick count */
+int WaitClickTimeout(int ticks);  /* 33E6A */
+void SetScreenTitle(int n);  /* 1D610 */
+void QueueTimeClips(int min, int sec);  /* 84EAC */
+void RequestTimeClips(int min, int sec);  /* 84DDD */
+void MusicChanReset(void);  /* 837A8 */
+int SpeechBusy(void);  /* 836E4 */
+int IsSampleRequested(char *name);  /* 83F61 */
+int OpenAnnouncerBank(void);  /* 85507 */
 
 #endif
