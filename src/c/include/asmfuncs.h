@@ -929,7 +929,6 @@ extern void Goal(); /* 5AB36 */
 extern void setplayer(); /* 5B2C5 */
 extern void clearteams(); /* 5B881 */
 extern void ResetClock(); /* 5BA07 */
-extern void defaultsprites2(); /* 5BA89 */
 extern void SetPlList(); /* 5BBFA */
 extern void DoGameFrame(); /* 5C1C4 */
 extern void periodicevents(); /* 5C302 */

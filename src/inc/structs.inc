@@ -10,6 +10,7 @@
 Xpos       equ 00h   ; size d; 93G $00; seed: SetSPA/asseben hand alignment
 Ypos       equ 04h   ; size d; 93G $14; seed: SetSPA/asseben hand alignment
 OldXpos    equ 74h   ; size d; 93G $1C; aligned 2/3 accesses in puckfaceoff2, updateplayers
+Zpos       equ 08h   ; size d; 93G $18; defaultsprites2 writes the integer word at +0Ah from the 94G .list zcord column, as it writes Xpos+2 / Ypos+2 from xcord / ycord
 Xvel       equ 0Ch   ; size w; 93G $28; seed: SetSPA/asseben hand alignment
 Yvel       equ 0Eh   ; size w; 93G $2A; seed: SetSPA/asseben hand alignment
 position   equ 1Ah   ; size w; 93G $34; aligned 9/13 accesses in assbench, assdefd, assdefo, assnearest, asswingd, asswingo
@@ -21,6 +22,8 @@ temp4      equ 2Ch   ; size w; 93G $46; aligned 13/20 accesses in assbench, assc
 temp5      equ 2Eh   ; size w; 93G $48; aligned 8/12 accesses in asscentero, assgoalie, asswingo
 Wallcos    equ 30h   ; size w; 93G $4E; aligned 2/2 accesses in asspenalty, updateplayers
 Wallsin    equ 32h   ; size w; 93G $50; aligned 2/2 accesses in asspenalty, updateplayers
+radiusx    equ 66h   ; size w; 93G $4A; defaultsprites2 writes word [x+66h] from the 94G .list radx column (93G radiusx 'width of this graphic')
+radiusy    equ 68h   ; size w; 93G $4C; defaultsprites2 writes word [x+68h] from the 94G .list rady column (93G radiusy 'height of this graphic')
 SCnum      equ 6Ah   ; size w; 93G $52; seed: SetSPA/asseben hand alignment
 facedir    equ 36h   ; size w; 93G $54; seed: SetSPA/asseben hand alignment
 SPA        equ 38h   ; size w; 93G $58; seed: SetSPA/asseben hand alignment
@@ -34,6 +37,7 @@ asslist    equ 1Eh   ; size b; 93G $38; byte array indexed by assnum: avdgoal/go
 pnum       equ 47h   ; size b; 93G $66; engine_skating playeracc: byte (dword [x-3] / sar 18h) *2 indexes the team energy words, as 93G getpde move.b pnum(a3),d1 / add d1,d1
 puckdist   equ 4Eh   ; size w; 93G none; updateplayers: word vecdist(puck - player) per frame (mov word [esi+4Eh],ax after vecdist of puckx/pucky minus Xpos/Ypos)
 puckdir    equ 52h   ; size b; 93G none; updateplayers: byte vtoa(puck - player), the direction to the puck; goalieacc/skatetopuck/chk4pass read it
+attrlo     equ 54h   ; size b; 93G $4 low byte; low byte of the 94G attribute word: defaultsprites2 writes word [x+54h] from the .list att column; its high byte is attribute (55h), the byte 68k btst reads
 attribute  equ 55h   ; size b; 93G $4; doplayeracc .s1 and noturn0 .nostop: test byte [reg+55h],8 where 93G does btst #3,attribute(a3) (PC keeps only the flip bits byte)
 weight     equ 56h   ; size b; 93G $67; playeracc: byte >>3 subtracted from 32, as 93G move.b weight(a3),d2 / lsr #3
 legstr     equ 57h   ; size b; 93G $68; playeracc: added to the accel factor (twice for the goalie) as 93G legstr; StopNA step 200+legstr

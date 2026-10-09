@@ -8,7 +8,7 @@
 typedef struct Player {
     int Xpos;                    /* 000h 93G $00; seed: SetSPA/asseben hand alignment */
     int Ypos;                    /* 004h 93G $14; seed: SetSPA/asseben hand alignment */
-    unsigned char pad_08[0x4];
+    int Zpos;                    /* 008h 93G $18; defaultsprites2 writes the integer word at +0Ah from the 94G .list zcord column, as it writes Xpos+2 / Ypos+2 from xcord / ycord */
     short Xvel;                  /* 00Ch 93G $28; seed: SetSPA/asseben hand alignment */
     short Yvel;                  /* 00Eh 93G $2A; seed: SetSPA/asseben hand alignment */
     unsigned char pad_10[0x2];
@@ -42,14 +42,17 @@ typedef struct Player {
     short puckdist;              /* 04Eh 93G none; updateplayers: word vecdist(puck - player) per frame (mov word [esi+4Eh],ax after vecdist of puckx/pucky minus Xpos/Ypos) */
     unsigned char pad_50[0x2];
     signed char puckdir;         /* 052h 93G none; updateplayers: byte vtoa(puck - player), the direction to the puck; goalieacc/skatetopuck/chk4pass read it */
-    unsigned char pad_53[0x2];
+    unsigned char pad_53[0x1];
+    signed char attrlo;          /* 054h 93G $4 low byte; low byte of the 94G attribute word: defaultsprites2 writes word [x+54h] from the .list att column; its high byte is attribute (55h),  */
     signed char attribute;       /* 055h 93G $4; doplayeracc .s1 and noturn0 .nostop: test byte [reg+55h],8 where 93G does btst #3,attribute(a3) (PC keeps only the flip bits byte) */
     unsigned char weight;        /* 056h 93G $67; playeracc: byte >>3 subtracted from 32, as 93G move.b weight(a3),d2 / lsr #3 */
     unsigned char legstr;        /* 057h 93G $68; playeracc: added to the accel factor (twice for the goalie) as 93G legstr; StopNA step 200+legstr */
     unsigned char legspd;        /* 058h 93G $69; playeracc: times the energy level for the MaxSpeed index, as 93G move.b legspd(a3),d2 / mulu d0,d2 */
     unsigned char pad_59[0x8];
     unsigned char endurance;     /* 061h 93G $72; playeracc .sube: added to the energy level, as 93G move.b endurance(a3),d2 / add d2,d0 */
-    unsigned char pad_62[0x8];
+    unsigned char pad_62[0x4];
+    short radiusx;               /* 066h 93G $4A; defaultsprites2 writes word [x+66h] from the 94G .list radx column (93G radiusx 'width of this graphic') */
+    short radiusy;               /* 068h 93G $4C; defaultsprites2 writes word [x+68h] from the 94G .list rady column (93G radiusy 'height of this graphic') */
     short SCnum;                 /* 06Ah 93G $52; seed: SetSPA/asseben hand alignment */
     struct Team * tmptr;         /* 06Ch 93G none (loadTeamStruct by pfteam); pointer to the player's own team structure: lineinput, lcselect, getlchoice read tmflags/tmline/tmap through it */
     struct Team * optmptr;       /* 070h 93G none; pointer to the other team's structure: lcselect and getlchoice compare its tmap with tmptr's (93G tmap(a2) vs the other tmstruct) */
@@ -59,6 +62,7 @@ typedef struct Player {
 
 #define OFS_Player_Xpos 0x00
 #define OFS_Player_Ypos 0x04
+#define OFS_Player_Zpos 0x08
 #define OFS_Player_Xvel 0x0C
 #define OFS_Player_Yvel 0x0E
 #define OFS_Player_frame 0x12
@@ -85,11 +89,14 @@ typedef struct Player {
 #define OFS_Player_pnum 0x47
 #define OFS_Player_puckdist 0x4E
 #define OFS_Player_puckdir 0x52
+#define OFS_Player_attrlo 0x54
 #define OFS_Player_attribute 0x55
 #define OFS_Player_weight 0x56
 #define OFS_Player_legstr 0x57
 #define OFS_Player_legspd 0x58
 #define OFS_Player_endurance 0x61
+#define OFS_Player_radiusx 0x66
+#define OFS_Player_radiusy 0x68
 #define OFS_Player_SCnum 0x6A
 #define OFS_Player_tmptr 0x6C
 #define OFS_Player_optmptr 0x70

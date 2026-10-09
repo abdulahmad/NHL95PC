@@ -2444,6 +2444,10 @@ pop ecx	; 5BA86
 pop ebx	; 5BA87
 ret	; 5BA88
 %endif ; C
+; C: src/c/042_59D9A_engine_core/calcpuckcross.c (defaultsprites2)
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/calcpuckcross.defaultsprites2.inc"
+%else
 defaultsprites2:
 push dword 18h	; 5BA89
 call __CHK	; 5BA8E
@@ -2526,6 +2530,7 @@ mov byte [byte_E0074], ah	; 5BB87
 mov word [RefStep], bx	; 5BB8D
 call SprSort	; 5BB94
 jmp near calcpuckcross_ret5	; 5BB99
+%endif ; C
 TryAddPlayerToList:
 push dword 8	; 5BB9E
 call __CHK	; 5BBA3

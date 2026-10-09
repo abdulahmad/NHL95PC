@@ -37,6 +37,7 @@ void Acheck(struct Player *p, struct Player *q);           /* 4FFAE */
 void SetLCmode(struct Player *p);                         /* 4D9FC */
 void assdopen(struct Player *p);                          /* 4AFFB */
 int TryAddPlayerToList(struct Team *t, short pl, short slot); /* 5BB9E */
+void defaultsprites2(void);                                 /* 5BA89 */
 void setpersonel(struct Team *t);                          /* 5BEF4 */
 void StartPer(void);                                       /* 5C010 */
 void SetupTeamForIntermission(void);                       /* 5DDDA */

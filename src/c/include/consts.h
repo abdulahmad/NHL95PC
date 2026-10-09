@@ -42,6 +42,9 @@
 #define TEMP2_DIR(p)    (((signed char *)&(p)->temp2)[0])   /* low byte: skate direction for doplayeracc */
 #define TEMP2_TICKS(p)  (((signed char *)&(p)->temp2)[1])   /* high byte: re-aim countdown, 12 ticks */
 
+/* the 94G attribute word: attrlo (54h) is its low byte, attribute (55h) the high byte 68k btst reads */
+#define ATTRWORD(p)     (*(short *)&(p)->attrlo)
+
 /* tmpdst values (per roster player): -2 bench, -1 on the ice, 0+ penalty box time */
 #define PDbench         (-2)
 #define PDice           (-1)

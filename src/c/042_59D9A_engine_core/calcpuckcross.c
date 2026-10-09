@@ -83,6 +83,58 @@ void reenergizeteam(Team *t)
     }
 }
 
+/* defaultsprites2 (5BA89) - the 17 default sort objects (94G setup94 defaultsprites2: "objects which are tied
+   to screen scrolling and have velocity"): ClearSortCords, then for each object i from ds2list (9 words each:
+   x, y, z, frame, attribute word, radiusx, radiusy, asslist[0] byte, pflags byte; the PC has no crsize column):
+   SCnum = i, pnum = newpos = newpnum = -1, the integer words of Xpos/Ypos/Zpos, frame, ATTRWORD, radii, first
+   assignment, pflags; tmptr / optmptr from pfteam; temp5 = 0; OOlist[i] = i, OOlistpos[i] = i. Then the
+   referee (SCref): facedir 2, position -1, weight 7, legstr / legspd 0Fh; RefStep = -1; SprSort. */
+void defaultsprites2(void)
+{
+    Player *p;
+    short *src;
+    unsigned char *ol;
+    short *op;
+    short i;
+
+    ClearSortCords();
+    src = (short *)ds2list;
+    p = SortCords;
+    ol = OOlist;
+    op = OOlistpos;
+    i = 0;
+    do {
+        p->SCnum = i;
+        p->pnum = -1;                           /* st pnum */
+        p->newpos = -1;
+        p->newpnum = p->newpos;
+        HIWORD(p->Xpos) = *src; src++;
+        HIWORD(p->Ypos) = *src; src++;
+        HIWORD(p->Zpos) = *src; src++;
+        p->frame = *src; src++;
+        ATTRWORD(p) = *src; src++;
+        p->radiusx = *src; src++;
+        p->radiusy = *src; src++;
+        p->asslist[0] = *(signed char *)src; src++;
+        p->pflags = *(signed char *)src; src++;
+        p->tmptr = (p->pflags & pfteam) ? &awtmstruct : &hmtmstruct;
+        p->optmptr = !(p->pflags & pfteam) ? &awtmstruct : &hmtmstruct;
+        p->temp5 = 0;
+        *ol = i;
+        *op = i;
+        ol++;
+        op++;
+        p++;
+        i++;
+    } while (i != 17);
+    SortCords[SCref].facedir = 2;
+    SortCords[SCref].position = -1;
+    SortCords[SCref].weight = 7;
+    SortCords[SCref].legspd = SortCords[SCref].legstr = 0x0F;
+    RefStep[0] = -1;
+    SprSort();
+}
+
 /* setpersonel (5BEF4) - set the personnel of team t (93G setpersonel, 94G collide94 SetPersonel): clear newpos /
    newpnum of the team's 6 sort objects, build PlList (SetPlList: pnum per wanted player, -1 none, the new
    positions at PlList+6 = byte_E038A). Pass 1: a wanted player already on the ice keeps his sort object (newpos
