@@ -15,8 +15,8 @@ extern sub_1BAB1, sub_303FB, sub_30A0C, MessageBox, sub_33727, sub_3377C, sub_47
 extern sub_673C5, sub_6B3D7, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
 extern sub_93000, FatalError, sub_B2DCA, sub_B4FAC, sub_B5DB0, unk_7E05F, unk_C3444, unk_C3447
-extern unk_C344D, unk_C3468, unk_C346B, unk_C3470, str_star, unk_D1F4B, unk_DBC30, unk_DBC35
-extern unk_DBF1D, unk_DF314, unknown_libname_1, unknown_libname_2, VisTeam, word_E0410
+extern unk_C344D, unk_C3468, unk_C346B, unk_C3470, str_star, unk_D1F4B, hmteamrec
+extern unk_DF314, unknown_libname_1, unknown_libname_2, VisTeam, word_E0410, awteamrec
 global loc_7F7B3, loc_7F829, loc_7FA3F, loc_7FA7C, loc_7FAEC, loc_7FB92, loc_7FBB5, loc_7FBEE
 global loc_7FC08, loc_7FC0A, loc_7FC4F, loc_7FC56, loc_7FC81, loc_7FC95, loc_7FD76, loc_7FD99
 global loc_7FD9D, loc_7FDBE, loc_7FDD0, loc_7FEDC, loc_7FEEB, loc_7FEFA, loc_7FF08, loc_7FF97
@@ -136,7 +136,7 @@ push asc_C3436	; 7F852
 call sub_91964	; 7F857
 add esp, byte 0Ch	; 7F85C
 push byte 54h	; 7F85F
-push unk_DBC35	; 7F861
+push hmteamrec+5	; 7F861
 call fputchar	; 7F866
 add esp, byte 4	; 7F86B
 mov edx, 85h	; 7F86E
@@ -147,11 +147,11 @@ LD sub, eax, edx	; 7F87A
 sar eax, 1	; 7F87C
 add eax, byte 52h	; 7F87E
 push eax	; 7F881
-push unk_DBC35	; 7F882
+push hmteamrec+5	; 7F882
 call sub_91964	; 7F887
 add esp, byte 0Ch	; 7F88C
 push byte 65h	; 7F88F
-push unk_DBF1D	; 7F891
+push awteamrec+5	; 7F891
 call fputchar	; 7F896
 add esp, byte 4	; 7F89B
 mov edx, 85h	; 7F89E
@@ -162,7 +162,7 @@ LD sub, eax, edx	; 7F8AA
 sar eax, 1	; 7F8AC
 add eax, byte 52h	; 7F8AE
 push eax	; 7F8B1
-push unk_DBF1D	; 7F8B2
+push awteamrec+5	; 7F8B2
 call sub_91964	; 7F8B7
 add esp, byte 0Ch	; 7F8BC
 push byte 76h	; 7F8BF
@@ -210,7 +210,7 @@ push asc_C3436	; 7F940
 call sub_91964	; 7F945
 add esp, byte 0Ch	; 7F94A
 push byte 53h	; 7F94D
-push unk_DBC35	; 7F94F
+push hmteamrec+5	; 7F94F
 call fputchar	; 7F954
 add esp, byte 4	; 7F959
 mov edx, 85h	; 7F95C
@@ -221,11 +221,11 @@ LD sub, eax, edx	; 7F968
 sar eax, 1	; 7F96A
 add eax, byte 51h	; 7F96C
 push eax	; 7F96F
-push unk_DBC35	; 7F970
+push hmteamrec+5	; 7F970
 call sub_91964	; 7F975
 add esp, byte 0Ch	; 7F97A
 push byte 64h	; 7F97D
-push unk_DBF1D	; 7F97F
+push awteamrec+5	; 7F97F
 call fputchar	; 7F984
 add esp, byte 4	; 7F989
 mov edx, 85h	; 7F98C
@@ -236,7 +236,7 @@ LD sub, eax, edx	; 7F998
 sar eax, 1	; 7F99A
 add eax, byte 51h	; 7F99C
 push eax	; 7F99F
-push unk_DBF1D	; 7F9A0
+push awteamrec+5	; 7F9A0
 call sub_91964	; 7F9A5
 add esp, byte 0Ch	; 7F9AA
 push byte 75h	; 7F9AD
@@ -360,7 +360,7 @@ shl eax, 3	; 7FB39
 mov edx, eax	; 7FB3C
 shl eax, 5	; 7FB3E
 sub eax, edx	; 7FB41
-mov edx, unk_DBC30	; 7FB43
+mov edx, hmteamrec	; 7FB43
 add edx, eax	; 7FB48
 lea eax, [byte esp+02Ch]	; 7FB4A
 call strcat_	; 7FB4E

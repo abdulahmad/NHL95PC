@@ -17,7 +17,7 @@ extern sub_6B5E4, sub_76429, sub_76771, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9
 extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, FatalError, sub_B30B4, WaitKey
 extern sub_B4B58, sub_B4DD4, sub_B4FAC, sub_B5DB0, unk_7673A, unk_76742, unk_76748, unk_7674F
 extern unk_76756, unk_C3283, unk_C3285, unk_C3292, unk_C3295, unk_C3298, unk_C329B, unk_C329E
-extern unk_C32A1, unk_CF48F, unk_DBC30, unk_DBCEC, unk_DBD1C, VisTeam, write_
+extern unk_C32A1, unk_CF48F, hmteamrec, unk_DBD1C, VisTeam, write_
 global jpt_78346, loc_7838A, loc_78390, loc_783B7, loc_78403, loc_78460, loc_78470, loc_78477
 global loc_7847E, loc_78483, loc_784F8, loc_7857C, loc_7857E, loc_785A0, loc_785C6, loc_785C8
 global loc_785F4, loc_785FA, loc_78614, loc_786C3, loc_786C5, loc_786F1, loc_786F7, loc_78AB7
@@ -209,7 +209,7 @@ shl eax, 3	; 7853D
 mov edx, eax	; 78540
 shl eax, 5	; 78542
 sub eax, edx	; 78545
-add eax, unk_DBC30	; 78547
+add eax, hmteamrec	; 78547
 push eax	; 7854C
 push asc_C31F1	; 7854D
 lea eax, [dword esp+0148h]	; 78552
@@ -1311,7 +1311,7 @@ shl eax, 3	; 792C2
 mov edx, eax	; 792C5
 shl eax, 5	; 792C7
 sub eax, edx	; 792CA
-mov ebp, unk_DBC30	; 792CC
+mov ebp, hmteamrec	; 792CC
 add ebp, eax	; 792D1
 add ebp, 0ECh	; 792D3
 mov edx, ebp	; 792D9
@@ -1395,7 +1395,7 @@ shl eax, 3	; 793CA
 mov edx, eax	; 793CD
 shl eax, 5	; 793CF
 sub eax, edx	; 793D2
-mov ebp, unk_DBC30	; 793D4
+mov ebp, hmteamrec	; 793D4
 add ebp, eax	; 793D9
 add ebp, 0BCh	; 793DB
 mov edx, ebp	; 793E1
@@ -1685,7 +1685,7 @@ mov edx, eax	; 79770
 shl eax, 5	; 79772
 sub eax, edx	; 79775
 mov ecx, 0Ch	; 79777
-lea edi, [dword eax+unk_DBCEC]	; 7977C
+lea edi, [dword eax+hmteamrec+0BCh]	; 7977C
 lea esi, [dword esp+0BCh]	; 79782
 rep movsd	; 79789
 mov ecx, 0Ch	; 7978B
@@ -1925,7 +1925,7 @@ mov edx, eax	; 79A89
 shl eax, 5	; 79A8B
 sub eax, edx	; 79A8E
 mov ecx, 0Ch	; 79A90
-lea edi, [dword eax+unk_DBCEC]	; 79A95
+lea edi, [dword eax+hmteamrec+0BCh]	; 79A95
 lea esi, [dword esp+0BCh]	; 79A9B
 rep movsd	; 79AA2
 mov ecx, 0Ch	; 79AA4

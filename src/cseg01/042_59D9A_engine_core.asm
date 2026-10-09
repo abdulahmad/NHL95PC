@@ -25,7 +25,7 @@ extern DrawPanelScore, DrawPanelLine, IsCupClinched, Readjoy1, Readjoy2, SetPena
 extern PlayCrowdSample, sub_59A7E, sub_61576, sub_615A2, sub_61862, PenaltyManager, sub_63C73, ClearPenaltyBuffer
 extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, awlinetab, unk_DAC40, unk_DAC70, unk_DACA0
-extern unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, hmlinetab, unk_DC240, unk_DC252, SortCords
+extern unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240, unk_DC252, SortCords
 extern unk_E9D50, unk_E9EE0, updatereplay, vtoa, regd4, camx
 extern camy, lastplayer, xc1, yc1, word_C90B2, word_C90B4, fodir1, fodir2
 extern c1playernum, c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks
@@ -2284,7 +2284,7 @@ mov dword [hmtmlines], hmlinetab	; 5B8F5
 mov dword [hmtmplstats], dword_DB088	; 5B8FF
 mov dword [dword_DF6FE], unk_DC240	; 5B909
 mov dword [hmtmroster], hmroster	; 5B913
-mov dword [hmtmptrF2], unk_DBC30	; 5B91D
+mov dword [hmtmptrF2], hmteamrec	; 5B91D
 mov dword [awtmsort], SortCords+300h	; 5B927
 mov dword [dword_DF7F2], unk_DAE94	; 5B931
 mov dword [dword_DF7F6], unk_DAC70	; 5B93B
@@ -2292,7 +2292,7 @@ mov dword [awtmlines], awlinetab	; 5B945
 mov dword [awtmplstats], unk_DB218	; 5B94F
 mov dword [dword_DF7FE], unk_DC252	; 5B959
 mov dword [awtmroster], awroster	; 5B963
-mov dword [awtmptrF2], unk_DBF18	; 5B96D
+mov dword [awtmptrF2], awteamrec	; 5B96D
 pop edx	; 5B977
 pop ebx	; 5B978
 ret	; 5B979

@@ -2,37 +2,27 @@
 bits 32
 %include "hockey.inc"
 section s_1BBCC progbits alloc exec nowrite align=1
-extern __CHK, asc_C0A18, asc_C0A4D, asc_C0A55, asc_C0A5D, asc_C0A68, asc_C0A71, gameopts
+extern __CHK, str_teams, str_key, str_att, str_season, str_career, str_GsummaryDb2, gameopts
 extern byte_C5424, byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt
-extern byte_C66B4, curleague, byte_DAC14, byte_DAC15, byte_DAC18, byte_DAC20, hmroster, byte_DB3AD
-extern byte_DB3AE, awroster, byte_DC224, byte_DC225, byte_DC228, byte_DC267, byte_DC268, leaguedbfmt2
+extern byte_C66B4, curleague, awgoalieidx, awscratch, gsummarypath, hmroster, byte_DB3AD
+extern byte_DB3AE, awroster, hmgoalieidx, hmscratch, byte_DC267, byte_DC268, leaguedbfmt2
 extern leaguedbfmt, cont2team, HomeTeam, dword_D8C84, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
 extern dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_m2, dword_DF6C2, fputchar, lseek_, mi_HomeGoalie1
 extern mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone, sprintf_, strcat_, strcpy_
 extern strncpy_, FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, LoadCupFinalSeries, sub_1CC3D
-extern FatalError, unk_C0A1E, unk_C0A20, unk_C0A22, unk_C0A24, unk_C0A26, unk_C0A28, unk_C0A2A
-extern unk_C0A2C, unk_C0A2F, unk_C0A32, unk_C0A35, unk_C0A37, unk_C0A39, unk_C0A3B, unk_C0A3D
-extern unk_C0A3F, unk_C0A41, unk_C0A43, unk_C0A45, unk_C0A47, unk_C0A49, unk_C0A4B, unk_C0A51
-extern unk_C0A53, unk_C0A59, unk_C0A5B, unk_C0A64, unk_C0A66, unk_C0A6F, unk_C5423, unk_C542E
-extern unk_CDCD0, unk_CEE4F, unk_CEEAF, awlinetab, unk_DAC40, unk_DACA0, unk_DBC30, unk_DBCEC
-extern unk_DBF18, unk_DBFD4, hmlinetab, unk_DC240, unknown_libname_1, word_C5428, hudpenhome, word_C571E
+extern FatalError, str_fe1, str_fe2, str_fe3, str_fe4, str_fe5, str_fe7, str_fe8
+extern str_feB1, str_feB5, str_feB8, str_feD, str_feE, str_feF, str_feG, str_feH
+extern str_feI, str_feL, str_feM, str_feN, str_feO, str_feP, str_feQ, str_fe9
+extern str_feA, str_feB, str_feC, str_feJ, str_feK, str_backslash3, unk_C5423, unk_C542E
+extern str_GoalieItemTmpl, unk_CEE4F, unk_CEEAF, awlinetab, unk_DAC40, unk_DACA0, hmteamrec
+extern awteamrec, hmlinetab, unk_DC240, unknown_libname_1, word_C5428, hudpenhome, word_C571E
 extern word_C5720, word_C5722, hudpenaway, word_C575E, word_C5760, word_C5762, VisTeam, word_DB08A
 extern word_DB08C, word_DB08E, word_DB090, word_DB092, word_DB094, word_DB096, word_DC242, word_DC244
 extern hmtmap, hmtmgoalie, awtmap, awtmgoalie
-global loc_1BC16, loc_1BC34, loc_1BC52, loc_1BC8A, loc_1BCB3, loc_1BCF3, loc_1BD11, loc_1BD2F
-global loc_1BD67, loc_1BD90, loc_1BE08, loc_1BE77, loc_1BE83, loc_1BEA5, loc_1BEA9, loc_1BECB
-global loc_1BEEE, loc_1BF73, loc_1BF95, loc_1BFBD, loc_1BFE5, loc_1C02F, loc_1C031, loc_1C07A
-global loc_1C07C, loc_1C0E3, loc_1C101, loc_1C127, loc_1C143, loc_1C164, loc_1C189, loc_1C1A7
-global loc_1C1CA, loc_1C1F1, loc_1C1FE, loc_1C21A, loc_1C23B, loc_1C260, loc_1C2BA, loc_1C2D6
-global loc_1C30D, loc_1C329, loc_1C360, loc_1C37C, loc_1C38E, loc_1C3C5, loc_1C3E3, loc_1C3ED
-global loc_1C3F0, loc_1C40F, loc_1C4F1, loc_1C525, loc_1C52E, loc_1C530, loc_1C539, loc_1C549
-global loc_1C56C, loc_1C57B, loc_1C619, loc_1C623, loc_1C64F, loc_1C657, loc_1C663, loc_1C739
-global loc_1C76D, loc_1C776, loc_1C778, loc_1C781, loc_1C78E, loc_1C7B1, loc_1C7C0, loc_1C7EA
-global loc_1C7F2, loc_1C841, loc_1C8A1, loc_1C8BE, loc_1C944, loc_1C962, loc_1C9C6, loc_1C9CC
-global loc_1C9DB, loc_1C9EA, loc_1CA29, loc_1CA47, loc_1CACF, loc_1CAEC, loc_1CB50, loc_1CB56
-global loc_1CB65, loc_1CB74, loc_1CBEC, sub_1BBCC, sub_1BEFD, sub_1C0AF, sub_1C26C, sub_1C3F6
-global sub_1C807, sub_1C852, sub_1CB7F, sub_1CBD8
-sub_1BBCC:
+global OpenPlayerDBs_x
+global LoadGameTeams, InitGameSummary, ReadPlayerRecs, OpenPlayerDBs, LoadTeamRoster
+global MakeGSummaryPath, SetupGoalieMenu, ResetGoalieMenu, ClearPanelPenalties
+LoadGameTeams:
 push dword 88h	; 1BBCC
 call __CHK	; 1BBD1
 push ebx	; 1BBD6
@@ -42,7 +32,7 @@ push esi	; 1BBD9
 push edi	; 1BBDA
 sub esp, byte 60h	; 1BBDB
 push eax	; 1BBDE
-push asc_C0A18	; 1BBDF
+push str_teams	; 1BBDF
 push leaguedbfmt	; 1BBE4
 lea eax, [byte esp+038h]	; 1BBE9
 push eax	; 1BBED
@@ -53,30 +43,30 @@ xor edx, edx	; 1BBFA
 lea eax, [byte esp+030h]	; 1BBFC
 call unknown_libname_1	; 1BC00
 test eax, eax	; 1BC05
-je short loc_1BC16	; 1BC07
-push unk_C0A1E	; 1BC09
+je short .1	; 1BC07
+push str_fe1	; 1BC09
 call FatalError	; 1BC0E
 add esp, byte 4	; 1BC13
-loc_1BC16:
+.1:
 lea edx, [byte esp+060h]	; 1BC16
 lea eax, [byte esp+030h]	; 1BC1A
 call FileOpenRead	; 1BC1E
 test eax, eax	; 1BC23
-je short loc_1BC34	; 1BC25
-push unk_C0A20	; 1BC27
+je short .2	; 1BC25
+push str_fe2	; 1BC27
 call FatalError	; 1BC2C
 add esp, byte 4	; 1BC31
-loc_1BC34:
+.2:
 xor ebx, ebx	; 1BC34
 xor edx, edx	; 1BC36
 mov eax, dword [byte esp+060h]	; 1BC38
 call lseek_	; 1BC3C
 test eax, eax	; 1BC41
-je short loc_1BC52	; 1BC43
-push unk_C0A22	; 1BC45
+je short .3	; 1BC43
+push str_fe3	; 1BC45
 call FatalError	; 1BC4A
 add esp, byte 4	; 1BC4F
-loc_1BC52:
+.3:
 mov edx, dword [cont2team]	; 1BC52
 sar edx, 10h	; 1BC58
 mov eax, edx	; 1BC5B
@@ -91,25 +81,25 @@ mov edx, eax	; 1BC6E
 mov eax, dword [byte esp+060h]	; 1BC70
 call lseek_	; 1BC74
 test eax, eax	; 1BC79
-jge short loc_1BC8A	; 1BC7B
-push unk_C0A24	; 1BC7D
+jge short .4	; 1BC7B
+push str_fe4	; 1BC7D
 call FatalError	; 1BC82
 add esp, byte 4	; 1BC87
-loc_1BC8A:
+.4:
 mov ecx, 2E8h	; 1BC8A
 mov ebx, 0FFFFFFFFh	; 1BC8F
-mov edx, unk_DBC30	; 1BC94
+mov edx, hmteamrec	; 1BC94
 mov eax, dword [byte esp+060h]	; 1BC99
 call FileReadAt	; 1BC9D
 test eax, eax	; 1BCA2
-je short loc_1BCB3	; 1BCA4
-push unk_C0A26	; 1BCA6
+je short .5	; 1BCA4
+push str_fe5	; 1BCA6
 call FatalError	; 1BCAB
 add esp, byte 4	; 1BCB0
-loc_1BCB3:
+.5:
 lea eax, [byte esp+060h]	; 1BCB3
 call FileClose	; 1BCB7
-push asc_C0A18	; 1BCBC
+push str_teams	; 1BCBC
 push leaguedbfmt2	; 1BCC1
 lea eax, [byte esp+038h]	; 1BCC6
 push eax	; 1BCCA
@@ -120,30 +110,30 @@ xor edx, edx	; 1BCD7
 lea eax, [byte esp+030h]	; 1BCD9
 call unknown_libname_1	; 1BCDD
 test eax, eax	; 1BCE2
-je short loc_1BCF3	; 1BCE4
-push unk_C0A1E	; 1BCE6
+je short .6	; 1BCE4
+push str_fe1	; 1BCE6
 call FatalError	; 1BCEB
 add esp, byte 4	; 1BCF0
-loc_1BCF3:
+.6:
 lea edx, [byte esp+060h]	; 1BCF3
 lea eax, [byte esp+030h]	; 1BCF7
 call FileOpenRead	; 1BCFB
 test eax, eax	; 1BD00
-je short loc_1BD11	; 1BD02
-push unk_C0A20	; 1BD04
+je short .7	; 1BD02
+push str_fe2	; 1BD04
 call FatalError	; 1BD09
 add esp, byte 4	; 1BD0E
-loc_1BD11:
+.7:
 xor ebx, ebx	; 1BD11
 xor edx, edx	; 1BD13
 mov eax, dword [byte esp+060h]	; 1BD15
 call lseek_	; 1BD19
 test eax, eax	; 1BD1E
-je short loc_1BD2F	; 1BD20
-push unk_C0A22	; 1BD22
+je short .8	; 1BD20
+push str_fe3	; 1BD22
 call FatalError	; 1BD27
 add esp, byte 4	; 1BD2C
-loc_1BD2F:
+.8:
 mov edx, dword [HomeTeam]	; 1BD2F
 sar edx, 10h	; 1BD35
 mov eax, edx	; 1BD38
@@ -158,22 +148,22 @@ mov edx, eax	; 1BD4B
 mov eax, dword [byte esp+060h]	; 1BD4D
 call lseek_	; 1BD51
 test eax, eax	; 1BD56
-jge short loc_1BD67	; 1BD58
-push unk_C0A28	; 1BD5A
+jge short .9	; 1BD58
+push str_fe7	; 1BD5A
 call FatalError	; 1BD5F
 add esp, byte 4	; 1BD64
-loc_1BD67:
+.9:
 mov ecx, 2E8h	; 1BD67
 mov ebx, 0FFFFFFFFh	; 1BD6C
-mov edx, unk_DBF18	; 1BD71
+mov edx, awteamrec	; 1BD71
 mov eax, dword [byte esp+060h]	; 1BD76
 call FileReadAt	; 1BD7A
 test eax, eax	; 1BD7F
-je short loc_1BD90	; 1BD81
-push unk_C0A2A	; 1BD83
+je short .10	; 1BD81
+push str_fe8	; 1BD83
 call FatalError	; 1BD88
 add esp, byte 4	; 1BD8D
-loc_1BD90:
+.10:
 lea eax, [byte esp+060h]	; 1BD90
 call FileClose	; 1BD94
 lea eax, [byte esp+050h]	; 1BD99
@@ -185,7 +175,7 @@ lea ecx, [byte esp+064h]	; 1BDA8
 lea ebx, [byte esp+068h]	; 1BDAC
 lea edx, [byte esp+06Ch]	; 1BDB0
 mov eax, dword [byte esp+0Ch]	; 1BDB4
-call sub_1C26C	; 1BDB8
+call OpenPlayerDBs	; 1BDB8
 push byte 0	; 1BDBD
 mov edx, dword [byte esp+054h]	; 1BDBF
 push edx	; 1BDC3
@@ -195,7 +185,7 @@ mov ecx, dword [byte esp+064h]	; 1BDC9
 mov ebx, dword [byte esp+068h]	; 1BDCD
 mov edx, dword [byte esp+06Ch]	; 1BDD1
 mov eax, dword [byte esp+0Ch]	; 1BDD5
-call sub_1C3F6	; 1BDD9
+call LoadTeamRoster	; 1BDD9
 lea eax, [byte esp+060h]	; 1BDDE
 call FileClose	; 1BDE2
 lea eax, [byte esp+05Ch]	; 1BDE7
@@ -203,10 +193,10 @@ call FileClose	; 1BDEB
 lea eax, [byte esp+058h]	; 1BDF0
 call FileClose	; 1BDF4
 test byte [esp], 6	; 1BDF9
-jne short loc_1BE08	; 1BDFD
+jne short .11	; 1BDFD
 lea eax, [byte esp+054h]	; 1BDFF
 call FileClose	; 1BE03
-loc_1BE08:
+.11:
 lea eax, [byte esp+050h]	; 1BE08
 push eax	; 1BE0C
 push leaguedbfmt2	; 1BE0D
@@ -216,7 +206,7 @@ lea ecx, [byte esp+064h]	; 1BE17
 lea ebx, [byte esp+068h]	; 1BE1B
 lea edx, [byte esp+06Ch]	; 1BE1F
 mov eax, dword [byte esp+0Ch]	; 1BE23
-call sub_1C26C	; 1BE27
+call OpenPlayerDBs	; 1BE27
 push byte 1	; 1BE2C
 mov ecx, dword [byte esp+054h]	; 1BE2E
 push ecx	; 1BE32
@@ -226,7 +216,7 @@ mov ecx, dword [byte esp+064h]	; 1BE38
 mov ebx, dword [byte esp+068h]	; 1BE3C
 mov edx, dword [byte esp+06Ch]	; 1BE40
 mov eax, dword [byte esp+0Ch]	; 1BE44
-call sub_1C3F6	; 1BE48
+call LoadTeamRoster	; 1BE48
 lea eax, [byte esp+060h]	; 1BE4D
 call FileClose	; 1BE51
 lea eax, [byte esp+05Ch]	; 1BE56
@@ -234,31 +224,31 @@ call FileClose	; 1BE5A
 lea eax, [byte esp+058h]	; 1BE5F
 call FileClose	; 1BE63
 test byte [esp], 6	; 1BE68
-jne short loc_1BE77	; 1BE6C
+jne short .12	; 1BE6C
 lea eax, [byte esp+054h]	; 1BE6E
 call FileClose	; 1BE72
-loc_1BE77:
+.12:
 mov edi, dword [esp]	; 1BE77
 test edi, edi	; 1BE7A
-je short loc_1BE83	; 1BE7C
+je short .13	; 1BE7C
 cmp edi, byte 2	; 1BE7E
-jne short loc_1BEA5	; 1BE81
-loc_1BE83:
+jne short .14	; 1BE81
+.13:
 mov ecx, 0Ch	; 1BE83
 mov edi, hmlinetab	; 1BE88
-mov esi, unk_DBCEC	; 1BE8D
+mov esi, hmteamrec+0BCh	; 1BE8D
 rep movsd	; 1BE92
 mov ecx, 0Ch	; 1BE94
 mov edi, awlinetab	; 1BE99
-mov esi, unk_DBFD4	; 1BE9E
+mov esi, awteamrec+0BCh	; 1BE9E
 rep movsd	; 1BEA3
-loc_1BEA5:
+.14:
 xor eax, eax	; 1BEA5
 mov cl, 2	; 1BEA7
-loc_1BEA9:
-mov dh, byte [dword eax+byte_DC228]	; 1BEA9
+.15:
+mov dh, byte [dword eax+hmscratch]	; 1BEA9
 cmp dh, 64h	; 1BEAF
-je short loc_1BECB	; 1BEB2
+je short .16	; 1BEB2
 xor ebx, ebx	; 1BEB4
 mov bl, dh	; 1BEB6
 mov edx, ebx	; 1BEB8
@@ -267,21 +257,21 @@ add edx, ebx	; 1BEBD
 shl edx, 3	; 1BEBF
 sub edx, ebx	; 1BEC2
 mov byte [dword edx+hmroster], 2	; 1BEC4
-loc_1BECB:
-cmp byte [dword eax+byte_DAC18], 64h	; 1BECB
-je short loc_1BEEE	; 1BED2
+.16:
+cmp byte [dword eax+awscratch], 64h	; 1BECB
+je short .17	; 1BED2
 xor ebx, ebx	; 1BED4
-mov bl, byte [dword eax+byte_DAC18]	; 1BED6
+mov bl, byte [dword eax+awscratch]	; 1BED6
 mov edx, ebx	; 1BEDC
 shl edx, 2	; 1BEDE
 add edx, ebx	; 1BEE1
 shl edx, 3	; 1BEE3
 sub edx, ebx	; 1BEE6
 mov byte [dword edx+awroster], cl	; 1BEE8
-loc_1BEEE:
+.17:
 inc eax	; 1BEEE
 cmp eax, byte 8	; 1BEEF
-jl short loc_1BEA9	; 1BEF2
+jl short LoadGameTeams.15	; 1BEF2
 add esp, byte 64h	; 1BEF4
 pop edi	; 1BEF7
 pop esi	; 1BEF8
@@ -289,7 +279,7 @@ pop edx	; 1BEF9
 pop ecx	; 1BEFA
 pop ebx	; 1BEFB
 ret	; 1BEFC
-sub_1BEFD:
+InitGameSummary:
 push dword 1Ch	; 1BEFD
 call __CHK	; 1BF02
 push ebx	; 1BF07
@@ -313,45 +303,45 @@ mov byte [hmshotcnt], ah	; 1BF53
 mov byte [awgoalcnt], ah	; 1BF59
 mov byte [awshotcnt], ah	; 1BF5F
 test byte [gameopts+1], 2	; 1BF65
-jne short loc_1BF73	; 1BF6C
+jne short .1	; 1BF6C
 call LoadCupFinalSeries	; 1BF6E
-loc_1BF73:
-call sub_1C807	; 1BF73
+.1:
+call MakeGSummaryPath	; 1BF73
 mov edx, esp	; 1BF78
-mov eax, byte_DAC20	; 1BF7A
+mov eax, gsummarypath	; 1BF7A
 call FileCreate	; 1BF7F
 test eax, eax	; 1BF84
-je short loc_1BF95	; 1BF86
-push unk_C0A2C	; 1BF88
+je short .2	; 1BF86
+push str_feB1	; 1BF88
 call FatalError	; 1BF8D
 add esp, byte 4	; 1BF92
-loc_1BF95:
+.2:
 mov ecx, 0Bh	; 1BF95
 mov ebx, 0FFFFFFFFh	; 1BF9A
 mov edx, unk_C5423	; 1BF9F
 mov eax, dword [esp]	; 1BFA4
 call FileWriteAt	; 1BFA7
 test eax, eax	; 1BFAC
-je short loc_1BFBD	; 1BFAE
-push unk_C0A2F	; 1BFB0
+je short .3	; 1BFAE
+push str_feB5	; 1BFB0
 call FatalError	; 1BFB5
 add esp, byte 4	; 1BFBA
-loc_1BFBD:
+.3:
 mov ecx, 0Bh	; 1BFBD
 mov ebx, 0FFFFFFFFh	; 1BFC2
 mov edx, unk_C542E	; 1BFC7
 mov eax, dword [esp]	; 1BFCC
 call FileWriteAt	; 1BFCF
 test eax, eax	; 1BFD4
-je short loc_1BFE5	; 1BFD6
-push unk_C0A32	; 1BFD8
+je short .4	; 1BFD6
+push str_feB8	; 1BFD8
 call FatalError	; 1BFDD
 add esp, byte 4	; 1BFE2
-loc_1BFE5:
+.4:
 mov eax, esp	; 1BFE5
 call FileClose	; 1BFE7
 xor eax, eax	; 1BFEC
-call sub_1BBCC	; 1BFEE
+call LoadGameTeams	; 1BFEE
 xor ebx, ebx	; 1BFF3
 mov word [word_DB096], bx	; 1BFF5
 mov word [word_DB094], bx	; 1BFFC
@@ -362,9 +352,9 @@ mov word [word_DB08C], bx	; 1C018
 mov word [word_DB08A], bx	; 1C01F
 mov word [dword_DB088], bx	; 1C026
 xor ecx, ecx	; 1C02D
-loc_1C02F:
+.5:
 xor edx, edx	; 1C02F
-loc_1C031:
+.6:
 mov eax, ecx	; 1C031
 shl eax, 2	; 1C033
 sub eax, ecx	; 1C036
@@ -381,18 +371,18 @@ movsd	; 1C053
 movsd	; 1C054
 inc edx	; 1C055
 cmp edx, byte 19h	; 1C056
-jl short loc_1C031	; 1C059
+jl short InitGameSummary.6	; 1C059
 inc ecx	; 1C05B
 cmp ecx, byte 2	; 1C05C
-jl short loc_1C02F	; 1C05F
+jl short InitGameSummary.5	; 1C05F
 xor esi, esi	; 1C061
 mov word [word_DC244], si	; 1C063
 mov word [word_DC242], si	; 1C06A
 mov word [unk_DC240], si	; 1C071
 xor ecx, ecx	; 1C078
-loc_1C07A:
+.7:
 xor edx, edx	; 1C07A
-loc_1C07C:
+.8:
 mov esi, ecx	; 1C07C
 shl esi, 3	; 1C07E
 add esi, ecx	; 1C081
@@ -406,17 +396,17 @@ movsd	; 1C098
 movsw	; 1C099
 inc edx	; 1C09B
 cmp edx, byte 3	; 1C09C
-jl short loc_1C07C	; 1C09F
+jl short InitGameSummary.8	; 1C09F
 inc ecx	; 1C0A1
 cmp ecx, byte 2	; 1C0A2
-jl short loc_1C07A	; 1C0A5
+jl short InitGameSummary.7	; 1C0A5
 add esp, byte 4	; 1C0A7
 pop edi	; 1C0AA
 pop esi	; 1C0AB
 pop ecx	; 1C0AC
 pop ebx	; 1C0AD
 ret	; 1C0AE
-sub_1C0AF:
+ReadPlayerRecs:
 push dword 1Ch	; 1C0AF
 call __CHK	; 1C0B4
 push esi	; 1C0B9
@@ -431,141 +421,141 @@ xor ebx, ebx	; 1C0C9
 xor edx, edx	; 1C0CB
 call lseek_	; 1C0CD
 test eax, eax	; 1C0D2
-je short loc_1C0E3	; 1C0D4
-push unk_C0A35	; 1C0D6
+je short .1	; 1C0D4
+push str_feD	; 1C0D6
 call FatalError	; 1C0DB
 add esp, byte 4	; 1C0E0
-loc_1C0E3:
+.1:
 xor ebx, ebx	; 1C0E3
 mov edx, dword [byte esp+018h]	; 1C0E5
 mov eax, edi	; 1C0E9
 call lseek_	; 1C0EB
 test eax, eax	; 1C0F0
-jge short loc_1C101	; 1C0F2
-push unk_C0A37	; 1C0F4
+jge short .2	; 1C0F2
+push str_feE	; 1C0F4
 call FatalError	; 1C0F9
 add esp, byte 4	; 1C0FE
-loc_1C101:
+.2:
 mov ecx, 34h	; 1C101
 mov ebx, 0FFFFFFFFh	; 1C106
 mov edx, dword [byte esp+01Ch]	; 1C10B
 mov eax, edi	; 1C10F
 call FileReadAt	; 1C111
 test eax, eax	; 1C116
-je short loc_1C127	; 1C118
-push unk_C0A39	; 1C11A
+je short .3	; 1C118
+push str_feF	; 1C11A
 call FatalError	; 1C11F
 add esp, byte 4	; 1C124
-loc_1C127:
+.3:
 xor ebx, ebx	; 1C127
 xor edx, edx	; 1C129
 mov eax, ebp	; 1C12B
 call lseek_	; 1C12D
 test eax, eax	; 1C132
-je short loc_1C143	; 1C134
-push unk_C0A3B	; 1C136
+je short .4	; 1C134
+push str_feG	; 1C136
 call FatalError	; 1C13B
 add esp, byte 4	; 1C140
-loc_1C143:
+.4:
 mov edx, dword [byte esp+01Ch]	; 1C143
 mov edx, dword [byte edx+024h]	; 1C147
 xor ebx, ebx	; 1C14A
 mov eax, ebp	; 1C14C
 call lseek_	; 1C14E
 test eax, eax	; 1C153
-jge short loc_1C164	; 1C155
-push unk_C0A3D	; 1C157
+jge short .5	; 1C155
+push str_feH	; 1C157
 call FatalError	; 1C15C
 add esp, byte 4	; 1C161
-loc_1C164:
+.5:
 mov ecx, dword [byte esp+024h]	; 1C164
 mov ebx, 0FFFFFFFFh	; 1C168
 mov edx, dword [byte esp+020h]	; 1C16D
 mov eax, ebp	; 1C171
 call FileReadAt	; 1C173
 test eax, eax	; 1C178
-je short loc_1C189	; 1C17A
-push unk_C0A3F	; 1C17C
+je short .6	; 1C17A
+push str_feI	; 1C17C
 call FatalError	; 1C181
 add esp, byte 4	; 1C186
-loc_1C189:
+.6:
 xor ebx, ebx	; 1C189
 xor edx, edx	; 1C18B
 mov eax, dword [byte esp+04h]	; 1C18D
 call lseek_	; 1C191
 test eax, eax	; 1C196
-je short loc_1C1A7	; 1C198
-push unk_C0A41	; 1C19A
+je short .7	; 1C198
+push str_feL	; 1C19A
 call FatalError	; 1C19F
 add esp, byte 4	; 1C1A4
-loc_1C1A7:
+.7:
 mov edx, dword [byte esp+01Ch]	; 1C1A7
 mov edx, dword [byte edx+02Ch]	; 1C1AB
 xor ebx, ebx	; 1C1AE
 mov eax, dword [byte esp+04h]	; 1C1B0
 call lseek_	; 1C1B4
 test eax, eax	; 1C1B9
-jge short loc_1C1CA	; 1C1BB
-push unk_C0A43	; 1C1BD
+jge short .8	; 1C1BB
+push str_feM	; 1C1BD
 call FatalError	; 1C1C2
 add esp, byte 4	; 1C1C7
-loc_1C1CA:
+.8:
 mov ecx, dword [byte esp+02Ch]	; 1C1CA
 mov ebx, 0FFFFFFFFh	; 1C1CE
 mov edx, dword [byte esp+028h]	; 1C1D3
 mov eax, dword [byte esp+04h]	; 1C1D7
 call FileReadAt	; 1C1DB
 test eax, eax	; 1C1E0
-je short loc_1C1F1	; 1C1E2
-push unk_C0A45	; 1C1E4
+je short .9	; 1C1E2
+push str_feN	; 1C1E4
 call FatalError	; 1C1E9
 add esp, byte 4	; 1C1EE
-loc_1C1F1:
+.9:
 mov edx, dword [byte esp+034h]	; 1C1F1
 test edx, edx	; 1C1F5
-jne short loc_1C1FE	; 1C1F7
+jne short .10	; 1C1F7
 mov dword [esp], edx	; 1C1F9
-jmp short loc_1C260	; 1C1FC
-loc_1C1FE:
+jmp short .13	; 1C1FC
+.10:
 xor ebx, ebx	; 1C1FE
 xor edx, edx	; 1C200
 mov eax, esi	; 1C202
 call lseek_	; 1C204
 test eax, eax	; 1C209
-je short loc_1C21A	; 1C20B
-push unk_C0A47	; 1C20D
+je short .11	; 1C20B
+push str_feO	; 1C20D
 call FatalError	; 1C212
 add esp, byte 4	; 1C217
-loc_1C21A:
+.11:
 mov edx, dword [byte esp+01Ch]	; 1C21A
 mov edx, dword [byte edx+028h]	; 1C21E
 xor ebx, ebx	; 1C221
 mov eax, esi	; 1C223
 call lseek_	; 1C225
 test eax, eax	; 1C22A
-jge short loc_1C23B	; 1C22C
-push unk_C0A49	; 1C22E
+jge short .12	; 1C22C
+push str_feP	; 1C22E
 call FatalError	; 1C233
 add esp, byte 4	; 1C238
-loc_1C23B:
+.12:
 mov ecx, dword [byte esp+034h]	; 1C23B
 mov ebx, 0FFFFFFFFh	; 1C23F
 mov edx, dword [byte esp+030h]	; 1C244
 mov eax, esi	; 1C248
 call FileReadAt	; 1C24A
 test eax, eax	; 1C24F
-je short loc_1C260	; 1C251
-push unk_C0A4B	; 1C253
+je short .13	; 1C251
+push str_feQ	; 1C253
 call FatalError	; 1C258
 add esp, byte 4	; 1C25D
-loc_1C260:
+.13:
 mov eax, dword [esp]	; 1C260
 add esp, byte 8	; 1C263
 pop ebp	; 1C266
 pop edi	; 1C267
 pop esi	; 1C268
 ret 20h	; 1C269
-sub_1C26C:
+OpenPlayerDBs:
 push dword 6Ch	; 1C26C
 call __CHK	; 1C271
 push esi	; 1C276
@@ -576,7 +566,7 @@ push eax	; 1C27C
 mov edi, edx	; 1C27D
 mov ebp, ebx	; 1C27F
 mov esi, ecx	; 1C281
-push asc_C0A4D	; 1C283
+push str_key	; 1C283
 mov edx, dword [byte esp+068h]	; 1C288
 push edx	; 1C28C
 lea eax, [byte esp+038h]	; 1C28D
@@ -588,21 +578,21 @@ xor edx, edx	; 1C29E
 lea eax, [byte esp+030h]	; 1C2A0
 call unknown_libname_1	; 1C2A4
 test eax, eax	; 1C2A9
-je short loc_1C2BA	; 1C2AB
-push unk_C0A51	; 1C2AD
+je short .1	; 1C2AB
+push str_fe9	; 1C2AD
 call FatalError	; 1C2B2
 add esp, byte 4	; 1C2B7
-loc_1C2BA:
+.1:
 mov edx, edi	; 1C2BA
 lea eax, [byte esp+030h]	; 1C2BC
 call FileOpenRead	; 1C2C0
 test eax, eax	; 1C2C5
-je short loc_1C2D6	; 1C2C7
-push unk_C0A53	; 1C2C9
+je short .2	; 1C2C7
+push str_feA	; 1C2C9
 call FatalError	; 1C2CE
 add esp, byte 4	; 1C2D3
-loc_1C2D6:
-push asc_C0A55	; 1C2D6
+.2:
+push str_att	; 1C2D6
 mov ebx, dword [byte esp+068h]	; 1C2DB
 push ebx	; 1C2DF
 lea eax, [byte esp+038h]	; 1C2E0
@@ -614,21 +604,21 @@ xor edx, edx	; 1C2F1
 lea eax, [byte esp+030h]	; 1C2F3
 call unknown_libname_1	; 1C2F7
 test eax, eax	; 1C2FC
-je short loc_1C30D	; 1C2FE
-push unk_C0A59	; 1C300
+je short .3	; 1C2FE
+push str_feB	; 1C300
 call FatalError	; 1C305
 add esp, byte 4	; 1C30A
-loc_1C30D:
+.3:
 mov edx, ebp	; 1C30D
 lea eax, [byte esp+030h]	; 1C30F
 call FileOpenRead	; 1C313
 test eax, eax	; 1C318
-je short loc_1C329	; 1C31A
-push unk_C0A5B	; 1C31C
+je short .4	; 1C31A
+push str_feC	; 1C31C
 call FatalError	; 1C321
 add esp, byte 4	; 1C326
-loc_1C329:
-push asc_C0A5D	; 1C329
+.4:
+push str_season	; 1C329
 mov ecx, dword [byte esp+068h]	; 1C32E
 push ecx	; 1C332
 lea eax, [byte esp+038h]	; 1C333
@@ -640,27 +630,27 @@ xor edx, edx	; 1C344
 lea eax, [byte esp+030h]	; 1C346
 call unknown_libname_1	; 1C34A
 test eax, eax	; 1C34F
-je short loc_1C360	; 1C351
-push unk_C0A64	; 1C353
+je short .5	; 1C351
+push str_feJ	; 1C353
 call FatalError	; 1C358
 add esp, byte 4	; 1C35D
-loc_1C360:
+.5:
 mov edx, esi	; 1C360
 lea eax, [byte esp+030h]	; 1C362
 call FileOpenRead	; 1C366
 test eax, eax	; 1C36B
-je short loc_1C37C	; 1C36D
-push unk_C0A66	; 1C36F
+je short .6	; 1C36D
+push str_feK	; 1C36F
 call FatalError	; 1C374
 add esp, byte 4	; 1C379
-loc_1C37C:
+.6:
 test byte [esp], 6	; 1C37C
-je short loc_1C38E	; 1C380
+je short .7	; 1C380
 mov eax, dword [byte esp+068h]	; 1C382
 mov dword [eax], 0	; 1C386
-jmp short loc_1C3ED	; 1C38C
-loc_1C38E:
-push asc_C0A68	; 1C38E
+jmp short .10	; 1C38C
+.7:
+push str_career	; 1C38E
 mov esi, dword [byte esp+068h]	; 1C393
 push esi	; 1C397
 lea eax, [byte esp+038h]	; 1C398
@@ -672,30 +662,30 @@ xor edx, edx	; 1C3A9
 lea eax, [byte esp+030h]	; 1C3AB
 call unknown_libname_1	; 1C3AF
 test eax, eax	; 1C3B4
-je short loc_1C3C5	; 1C3B6
-push unk_C0A41	; 1C3B8
+je short .8	; 1C3B6
+push str_feL	; 1C3B8
 call FatalError	; 1C3BD
 add esp, byte 4	; 1C3C2
-loc_1C3C5:
+.8:
 mov edx, dword [byte esp+060h]	; 1C3C5
 lea eax, [byte esp+030h]	; 1C3C9
 call FileOpenRead	; 1C3CD
 test eax, eax	; 1C3D2
-je short loc_1C3E3	; 1C3D4
-push unk_C0A43	; 1C3D6
+je short .9	; 1C3D4
+push str_feM	; 1C3D6
 call FatalError	; 1C3DB
 add esp, byte 4	; 1C3E0
-loc_1C3E3:
+.9:
 mov eax, dword [byte esp+068h]	; 1C3E3
 mov dword [eax], 28h	; 1C3E7
-loc_1C3ED:
+.10:
 add esp, byte 50h	; 1C3ED
-loc_1C3F0:
+OpenPlayerDBs_x:
 pop ebp	; 1C3F0
 pop edi	; 1C3F1
 pop esi	; 1C3F2
 ret 0Ch	; 1C3F3
-sub_1C3F6:
+LoadTeamRoster:
 push dword 130h	; 1C3F6
 call __CHK	; 1C3FB
 push esi	; 1C400
@@ -707,7 +697,7 @@ push edx	; 1C40A
 push ebx	; 1C40B
 push ecx	; 1C40C
 xor ebp, ebp	; 1C40D
-loc_1C40F:
+.1:
 mov edx, dword [dword esp+0118h]	; 1C40F
 mov eax, edx	; 1C416
 shl eax, 2	; 1C418
@@ -735,7 +725,7 @@ shl edi, 2	; 1C454
 lea esi, [eax+edi]	; 1C457
 mov ebx, dword [dword edx+dword_DBC7C]	; 1C45A
 test ebx, ebx	; 1C460
-jl near loc_1C64F	; 1C462
+jl near .12	; 1C462
 mov ecx, dword [dword esp+0114h]	; 1C468
 push ecx	; 1C46F
 lea eax, [dword esp+0B0h]	; 1C470
@@ -753,7 +743,7 @@ mov ecx, dword [dword esp+0130h]	; 1C492
 mov ebx, dword [byte esp+020h]	; 1C499
 mov edx, dword [byte esp+024h]	; 1C49D
 mov eax, dword [byte esp+028h]	; 1C4A1
-call sub_1C0AF	; 1C4A5
+call ReadPlayerRecs	; 1C4A5
 mov al, byte [byte esp+049h]	; 1C4AA
 mov byte [dword esi+byte_DB3AD], al	; 1C4AE
 mov al, byte [byte esp+04Ah]	; 1C4B4
@@ -769,10 +759,10 @@ lea edx, [byte esp+05Bh]	; 1C4DB
 call strcpy_	; 1C4DF
 mov ebx, dword [byte esp+0Ch]	; 1C4E4
 test ebx, ebx	; 1C4E8
-je short loc_1C4F1	; 1C4EA
+je short .2	; 1C4EA
 cmp ebx, byte 2	; 1C4EC
-jne short loc_1C549	; 1C4EF
-loc_1C4F1:
+jne short .7	; 1C4EF
+.2:
 mov esi, ebp	; 1C4F1
 shl esi, 2	; 1C4F3
 add esi, ebp	; 1C4F6
@@ -789,35 +779,35 @@ add esi, eax	; 1C513
 mov al, byte [byte_DC268]	; 1C515
 mov dh, byte [dword esp+0A2h]	; 1C51A
 cmp al, dh	; 1C521
-jae short loc_1C52E	; 1C523
-loc_1C525:
+jae short .4	; 1C523
+.3:
 mov byte [dword esi+hmroster], 1	; 1C525
-jmp short loc_1C57B	; 1C52C
-loc_1C52E:
-jbe short loc_1C539	; 1C52E
-loc_1C530:
+jmp short .9	; 1C52C
+.4:
+jbe short .6	; 1C52E
+.5:
 mov byte [dword esi+hmroster], 3	; 1C530
-jmp short loc_1C57B	; 1C537
-loc_1C539:
+jmp short .9	; 1C537
+.6:
 mov al, byte [byte_DC267]	; 1C539
 cmp al, byte [dword esp+0A3h]	; 1C53E
-jb short loc_1C525	; 1C545
-jmp short loc_1C530	; 1C547
-loc_1C549:
+jb short LoadTeamRoster.3	; 1C545
+jmp short LoadTeamRoster.5	; 1C547
+.7:
 mov edx, dword [dword esp+0118h]	; 1C549
 shl edx, 8	; 1C550
 mov eax, ebp	; 1C553
 mov eax, dword [dword edx+eax*2+hmtmpdst_m2]	; 1C555
 sar eax, 10h	; 1C55C
 test eax, eax	; 1C55F
-jle short loc_1C56C	; 1C561
+jle short .8	; 1C561
 mov byte [dword esi+hmroster], 5	; 1C563
-jmp short loc_1C57B	; 1C56A
-loc_1C56C:
+jmp short .9	; 1C56A
+.8:
 neg eax	; 1C56C
 mov al, byte [nosplit eax*2+byte_C66B4]	; 1C56E
 mov byte [dword esi+hmroster], al	; 1C575
-loc_1C57B:
+.9:
 mov edx, dword [dword esp+0118h]	; 1C57B
 mov esi, edx	; 1C582
 shl esi, 5	; 1C584
@@ -836,7 +826,7 @@ movsd	; 1C5A8
 movsd	; 1C5A9
 movsd	; 1C5AA
 test byte [byte esp+0Ch], 6	; 1C5AB
-jne near loc_1C657	; 1C5B0
+jne near .13	; 1C5B0
 mov edx, dword [dword esp+0118h]	; 1C5B6
 mov eax, edx	; 1C5BD
 shl eax, 2	; 1C5BF
@@ -848,7 +838,7 @@ mov edx, ebp	; 1C5CC
 shl edx, 4	; 1C5CE
 add eax, edx	; 1C5D1
 test byte [gameopts+1], 2	; 1C5D3
-je short loc_1C623	; 1C5DA
+je short .11	; 1C5DA
 xor edx, edx	; 1C5DC
 mov dx, word [dword esp+0D0h]	; 1C5DE
 mov dword [dword eax+dword_DEB74], edx	; 1C5E6
@@ -863,11 +853,11 @@ mov dword [dword eax+dword_DEB7C], edx	; 1C607
 mov ebx, edx	; 1C60D
 xor edx, edx	; 1C60F
 mov dx, word [dword esp+080h]	; 1C611
-loc_1C619:
+.10:
 add edx, ebx	; 1C619
 mov dword [dword eax+dword_DEB80], edx	; 1C61B
-jmp short loc_1C657	; 1C621
-loc_1C623:
+jmp short .13	; 1C621
+.11:
 xor esi, esi	; 1C623
 mov dword [dword eax+dword_DEB74], esi	; 1C625
 mov edx, esi	; 1C62B
@@ -877,16 +867,16 @@ mov dword [dword eax+dword_DEB7C], edx	; 1C63B
 mov ebx, edx	; 1C641
 xor edx, edx	; 1C643
 mov dx, word [dword esp+092h]	; 1C645
-jmp short loc_1C619	; 1C64D
-loc_1C64F:
+jmp short LoadTeamRoster.10	; 1C64D
+.12:
 xor ah, ah	; 1C64F
 mov byte [dword esi+hmroster], ah	; 1C651
-loc_1C657:
+.13:
 inc ebp	; 1C657
 cmp ebp, byte 19h	; 1C658
-jl near loc_1C40F	; 1C65B
+jl near LoadTeamRoster.1	; 1C65B
 xor ebp, ebp	; 1C661
-loc_1C663:
+.14:
 mov edx, dword [dword esp+0118h]	; 1C663
 mov eax, edx	; 1C66A
 shl eax, 2	; 1C66C
@@ -914,7 +904,7 @@ shl edi, 3	; 1C6A9
 sub edi, ebx	; 1C6AC
 lea esi, [eax+edi]	; 1C6AE
 cmp dword [dword edx+dword_DBCE0], byte 0	; 1C6B1
-jl near loc_1C7EA	; 1C6B8
+jl near .23	; 1C6B8
 push byte 0	; 1C6BE
 push byte 0	; 1C6C0
 push byte 36h	; 1C6C2
@@ -931,7 +921,7 @@ xor ecx, ecx	; 1C6DF
 mov ebx, dword [byte esp+020h]	; 1C6E1
 mov edx, dword [byte esp+024h]	; 1C6E5
 mov eax, dword [byte esp+028h]	; 1C6E9
-call sub_1C0AF	; 1C6ED
+call ReadPlayerRecs	; 1C6ED
 mov al, byte [byte esp+049h]	; 1C6F2
 mov byte [dword esi+byte_DB3AD], al	; 1C6F6
 mov al, byte [byte esp+04Ah]	; 1C6FC
@@ -947,10 +937,10 @@ lea edx, [byte esp+05Bh]	; 1C723
 call strcpy_	; 1C727
 mov edi, dword [byte esp+0Ch]	; 1C72C
 test edi, edi	; 1C730
-je short loc_1C739	; 1C732
+je short .15	; 1C732
 cmp edi, byte 2	; 1C734
-jne short loc_1C78E	; 1C737
-loc_1C739:
+jne short .20	; 1C737
+.15:
 lea ebx, [byte ebp+019h]	; 1C739
 mov edx, dword [dword esp+0118h]	; 1C73C
 mov esi, edx	; 1C743
@@ -968,35 +958,35 @@ add esi, eax	; 1C75E
 mov al, byte [byte_DC268]	; 1C760
 mov cl, byte [byte esp+03Eh]	; 1C765
 cmp al, cl	; 1C769
-jae short loc_1C776	; 1C76B
-loc_1C76D:
+jae short .17	; 1C76B
+.16:
 mov byte [dword esi+hmroster], 1	; 1C76D
-jmp short loc_1C7C0	; 1C774
-loc_1C776:
-jbe short loc_1C781	; 1C776
-loc_1C778:
+jmp short .22	; 1C774
+.17:
+jbe short .19	; 1C776
+.18:
 mov byte [dword esi+hmroster], 3	; 1C778
-jmp short loc_1C7C0	; 1C77F
-loc_1C781:
+jmp short .22	; 1C77F
+.19:
 mov al, byte [byte_DC267]	; 1C781
 cmp al, byte [byte esp+03Fh]	; 1C786
-jb short loc_1C76D	; 1C78A
-jmp short loc_1C778	; 1C78C
-loc_1C78E:
+jb short LoadTeamRoster.16	; 1C78A
+jmp short LoadTeamRoster.18	; 1C78C
+.20:
 mov eax, dword [dword esp+0118h]	; 1C78E
 shl eax, 8	; 1C795
 mov edx, ebp	; 1C798
 mov eax, dword [dword eax+edx*2+dword_DF6C2]	; 1C79A
 sar eax, 10h	; 1C7A1
 test eax, eax	; 1C7A4
-jle short loc_1C7B1	; 1C7A6
+jle short .21	; 1C7A6
 mov byte [dword esi+hmroster], 5	; 1C7A8
-jmp short loc_1C7C0	; 1C7AF
-loc_1C7B1:
+jmp short .22	; 1C7AF
+.21:
 neg eax	; 1C7B1
 mov al, byte [nosplit eax*2+byte_C66B4]	; 1C7B3
 mov byte [dword esi+hmroster], al	; 1C7BA
-loc_1C7C0:
+.22:
 mov edx, dword [dword esp+0118h]	; 1C7C0
 mov eax, edx	; 1C7C7
 shl eax, 2	; 1C7C9
@@ -1010,37 +1000,37 @@ movsd	; 1C7E4
 movsd	; 1C7E5
 movsd	; 1C7E6
 movsd	; 1C7E7
-jmp short loc_1C7F2	; 1C7E8
-loc_1C7EA:
+jmp short .24	; 1C7E8
+.23:
 xor bl, bl	; 1C7EA
 mov byte [dword esi+hmroster], bl	; 1C7EC
-loc_1C7F2:
+.24:
 inc ebp	; 1C7F2
 cmp ebp, byte 3	; 1C7F3
-jl near loc_1C663	; 1C7F6
+jl near LoadTeamRoster.14	; 1C7F6
 add esp, 100h	; 1C7FC
-jmp near loc_1C3F0	; 1C802
-sub_1C807:
+jmp near OpenPlayerDBs_x	; 1C802
+MakeGSummaryPath:
 push dword 8	; 1C807
 call __CHK	; 1C80C
 push edx	; 1C811
 xor ah, ah	; 1C812
-mov byte [byte_DAC20], ah	; 1C814
+mov byte [gsummarypath], ah	; 1C814
 cmp byte [curleague], 0	; 1C81A
-je short loc_1C841	; 1C821
+je short .1	; 1C821
 mov edx, curleague	; 1C823
-mov eax, byte_DAC20	; 1C828
+mov eax, gsummarypath	; 1C828
 call strcpy_	; 1C82D
-mov edx, unk_C0A6F	; 1C832
-mov eax, byte_DAC20	; 1C837
+mov edx, str_backslash3	; 1C832
+mov eax, gsummarypath	; 1C837
 call strcat_	; 1C83C
-loc_1C841:
-mov edx, asc_C0A71	; 1C841
-mov eax, byte_DAC20	; 1C846
+.1:
+mov edx, str_GsummaryDb2	; 1C841
+mov eax, gsummarypath	; 1C846
 call strcat_	; 1C84B
 pop edx	; 1C850
 ret	; 1C851
-sub_1C852:
+SetupGoalieMenu:
 push dword 38h	; 1C852
 call __CHK	; 1C857
 push ebx	; 1C85C
@@ -1050,7 +1040,7 @@ push esi	; 1C85F
 sub esp, byte 20h	; 1C860
 mov esi, unk_CEE4F	; 1C863
 xor edx, edx	; 1C868
-mov dl, byte [byte_DC224]	; 1C86A
+mov dl, byte [hmgoalieidx]	; 1C86A
 mov ebx, edx	; 1C870
 shl ebx, 2	; 1C872
 add ebx, edx	; 1C875
@@ -1062,11 +1052,11 @@ mov eax, esp	; 1C888
 call strcpy_	; 1C88A
 mov ah, byte [byte ebx+05h]	; 1C88F
 cmp ah, 0Ah	; 1C892
-jae short loc_1C8A1	; 1C895
+jae short .1	; 1C895
 mov al, byte [byte esp+01h]	; 1C897
 mov byte [byte esp+02h], al	; 1C89B
-jmp short loc_1C8BE	; 1C89F
-loc_1C8A1:
+jmp short .2	; 1C89F
+.1:
 xor edx, edx	; 1C8A1
 mov dl, ah	; 1C8A3
 mov ecx, 0Ah	; 1C8A5
@@ -1077,7 +1067,7 @@ mov edx, dword [byte esp-01h]	; 1C8B1
 sar edx, 18h	; 1C8B5
 add edx, eax	; 1C8B8
 mov byte [byte esp+02h], dl	; 1C8BA
-loc_1C8BE:
+.2:
 xor edx, edx	; 1C8BE
 mov dl, byte [byte ebx+05h]	; 1C8C0
 mov ecx, 0Ah	; 1C8C3
@@ -1105,7 +1095,7 @@ mov eax, dword [byte esi+010h]	; 1C906
 mov edx, esp	; 1C909
 call strcpy_	; 1C90B
 xor edx, edx	; 1C910
-mov dl, byte [byte_DC225]	; 1C912
+mov dl, byte [hmgoalieidx+1]	; 1C912
 mov ebx, edx	; 1C918
 shl ebx, 2	; 1C91A
 add ebx, edx	; 1C91D
@@ -1116,11 +1106,11 @@ mov edx, dword [byte esi+030h]	; 1C92A
 mov eax, esp	; 1C92D
 call strcpy_	; 1C92F
 cmp byte [byte ebx+05h], 0Ah	; 1C934
-jae short loc_1C944	; 1C938
+jae short .3	; 1C938
 mov al, byte [byte esp+01h]	; 1C93A
 mov byte [byte esp+02h], al	; 1C93E
-jmp short loc_1C962	; 1C942
-loc_1C944:
+jmp short .4	; 1C942
+.3:
 xor edx, edx	; 1C944
 mov dl, byte [byte ebx+05h]	; 1C946
 mov ecx, 0Ah	; 1C949
@@ -1131,7 +1121,7 @@ mov edx, dword [byte esp-01h]	; 1C955
 sar edx, 18h	; 1C959
 add edx, eax	; 1C95C
 mov byte [byte esp+02h], dl	; 1C95E
-loc_1C962:
+.4:
 xor edx, edx	; 1C962
 mov dl, byte [byte ebx+05h]	; 1C964
 mov ecx, 0Ah	; 1C967
@@ -1161,28 +1151,28 @@ call strcpy_	; 1C9AF
 mov eax, dword [byte esi+08h]	; 1C9B4
 mov edx, dword [byte esi+028h]	; 1C9B7
 cmp eax, edx	; 1C9BA
-jle short loc_1C9C6	; 1C9BC
+jle short .5	; 1C9BC
 mov dword [byte esi+048h], eax	; 1C9BE
 mov dword [byte esi+028h], eax	; 1C9C1
-jmp short loc_1C9CC	; 1C9C4
-loc_1C9C6:
+jmp short .6	; 1C9C4
+.5:
 mov dword [byte esi+048h], edx	; 1C9C6
 mov dword [byte esi+08h], edx	; 1C9C9
-loc_1C9CC:
+.6:
 cmp word [hmtmgoalie], byte 0	; 1C9CC
-jge short loc_1C9DB	; 1C9D4
+jge short .7	; 1C9D4
 mov eax, dword [byte esi+050h]	; 1C9D6
-jmp short loc_1C9EA	; 1C9D9
-loc_1C9DB:
+jmp short .8	; 1C9D9
+.7:
 mov eax, dword [hmtmap]	; 1C9DB
 sar eax, 10h	; 1C9E0
 shl eax, 5	; 1C9E3
 mov eax, dword [byte esi+eax+010h]	; 1C9E6
-loc_1C9EA:
+.8:
 mov byte [eax], 1	; 1C9EA
 mov esi, unk_CEEAF	; 1C9ED
 xor edx, edx	; 1C9F2
-mov dl, byte [byte_DAC14]	; 1C9F4
+mov dl, byte [awgoalieidx]	; 1C9F4
 mov ebx, edx	; 1C9FA
 shl ebx, 2	; 1C9FC
 add ebx, edx	; 1C9FF
@@ -1193,11 +1183,11 @@ mov edx, dword [mi_AwayGoalie1]	; 1CA0C
 mov eax, esp	; 1CA12
 call strcpy_	; 1CA14
 cmp byte [byte ebx+05h], 0Ah	; 1CA19
-jae short loc_1CA29	; 1CA1D
+jae short .9	; 1CA1D
 mov al, byte [byte esp+01h]	; 1CA1F
 mov byte [byte esp+02h], al	; 1CA23
-jmp short loc_1CA47	; 1CA27
-loc_1CA29:
+jmp short .10	; 1CA27
+.9:
 xor edx, edx	; 1CA29
 mov dl, byte [byte ebx+05h]	; 1CA2B
 mov ecx, 0Ah	; 1CA2E
@@ -1208,7 +1198,7 @@ mov edx, dword [byte esp-01h]	; 1CA3A
 sar edx, 18h	; 1CA3E
 add edx, eax	; 1CA41
 mov byte [byte esp+02h], dl	; 1CA43
-loc_1CA47:
+.10:
 xor edx, edx	; 1CA47
 mov dl, byte [byte ebx+05h]	; 1CA49
 mov ecx, 0Ah	; 1CA4C
@@ -1236,7 +1226,7 @@ mov eax, dword [byte esi+010h]	; 1CA8F
 mov edx, esp	; 1CA92
 call strcpy_	; 1CA94
 xor edx, edx	; 1CA99
-mov dl, byte [byte_DAC15]	; 1CA9B
+mov dl, byte [awgoalieidx+1]	; 1CA9B
 mov ebx, edx	; 1CAA1
 shl ebx, 2	; 1CAA3
 add ebx, edx	; 1CAA6
@@ -1248,11 +1238,11 @@ mov eax, esp	; 1CAB6
 call strcpy_	; 1CAB8
 mov cl, byte [byte ebx+05h]	; 1CABD
 cmp cl, 0Ah	; 1CAC0
-jae short loc_1CACF	; 1CAC3
+jae short .11	; 1CAC3
 mov al, byte [byte esp+01h]	; 1CAC5
 mov byte [byte esp+02h], al	; 1CAC9
-jmp short loc_1CAEC	; 1CACD
-loc_1CACF:
+jmp short .12	; 1CACD
+.11:
 xor edx, edx	; 1CACF
 mov dl, cl	; 1CAD1
 mov ecx, 0Ah	; 1CAD3
@@ -1263,7 +1253,7 @@ mov edx, dword [byte esp-01h]	; 1CADF
 sar edx, 18h	; 1CAE3
 add edx, eax	; 1CAE6
 mov byte [byte esp+02h], dl	; 1CAE8
-loc_1CAEC:
+.12:
 xor edx, edx	; 1CAEC
 mov dl, byte [byte ebx+05h]	; 1CAEE
 mov ecx, 0Ah	; 1CAF1
@@ -1293,24 +1283,24 @@ call strcpy_	; 1CB39
 mov eax, dword [byte esi+08h]	; 1CB3E
 mov ebx, dword [byte esi+028h]	; 1CB41
 cmp eax, ebx	; 1CB44
-jle short loc_1CB50	; 1CB46
+jle short .13	; 1CB46
 mov dword [byte esi+048h], eax	; 1CB48
 mov dword [byte esi+028h], eax	; 1CB4B
-jmp short loc_1CB56	; 1CB4E
-loc_1CB50:
+jmp short .14	; 1CB4E
+.13:
 mov dword [byte esi+048h], ebx	; 1CB50
 mov dword [byte esi+08h], ebx	; 1CB53
-loc_1CB56:
+.14:
 cmp word [awtmgoalie], byte 0	; 1CB56
-jge short loc_1CB65	; 1CB5E
+jge short .15	; 1CB5E
 mov eax, dword [byte esi+050h]	; 1CB60
-jmp short loc_1CB74	; 1CB63
-loc_1CB65:
+jmp short .16	; 1CB63
+.15:
 mov eax, dword [awtmap]	; 1CB65
 sar eax, 10h	; 1CB6A
 shl eax, 5	; 1CB6D
 mov eax, dword [byte esi+eax+010h]	; 1CB70
-loc_1CB74:
+.16:
 mov byte [eax], 1	; 1CB74
 add esp, byte 20h	; 1CB77
 pop esi	; 1CB7A
@@ -1318,29 +1308,29 @@ pop edx	; 1CB7B
 pop ecx	; 1CB7C
 pop ebx	; 1CB7D
 ret	; 1CB7E
-sub_1CB7F:
+ResetGoalieMenu:
 push dword 8	; 1CB7F
 call __CHK	; 1CB84
 push edx	; 1CB89
 mov eax, dword [mi_HomeGoalie1]	; 1CB8A
-mov edx, unk_CDCD0	; 1CB8F
+mov edx, str_GoalieItemTmpl	; 1CB8F
 call strcpy_	; 1CB94
 mov eax, dword [mi_HomeGoalie2]	; 1CB99
-mov edx, unk_CDCD0	; 1CB9E
+mov edx, str_GoalieItemTmpl	; 1CB9E
 call strcpy_	; 1CBA3
 mov eax, dword [mi_HomeGoalieNone]	; 1CBA8
 mov byte [eax], 2	; 1CBAD
 mov eax, dword [mi_AwayGoalie1]	; 1CBB0
-mov edx, unk_CDCD0	; 1CBB5
+mov edx, str_GoalieItemTmpl	; 1CBB5
 call strcpy_	; 1CBBA
 mov eax, dword [mi_AwayGoalie2]	; 1CBBF
-mov edx, unk_CDCD0	; 1CBC4
+mov edx, str_GoalieItemTmpl	; 1CBC4
 call strcpy_	; 1CBC9
 mov eax, dword [mi_AwayGoalieNone]	; 1CBCE
 mov byte [eax], 2	; 1CBD3
 pop edx	; 1CBD6
 ret	; 1CBD7
-sub_1CBD8:
+ClearPanelPenalties:
 push dword 10h	; 1CBD8
 call __CHK	; 1CBDD
 push ebx	; 1CBE2
@@ -1348,7 +1338,7 @@ push ecx	; 1CBE3
 push edx	; 1CBE4
 xor edx, edx	; 1CBE5
 mov ebx, 0FFFFFFFFh	; 1CBE7
-loc_1CBEC:
+.1:
 mov word [nosplit edx*8+hudpenaway], bx	; 1CBEC
 mov word [nosplit edx*8+hudpenhome], bx	; 1CBF4
 xor ecx, ecx	; 1CBFC
@@ -1360,7 +1350,7 @@ mov word [nosplit edx*8+word_C575E], cx	; 1CC1E
 mov word [nosplit edx*8+word_C571E], cx	; 1CC26
 inc edx	; 1CC2E
 cmp edx, byte 8	; 1CC2F
-jl short loc_1CBEC	; 1CC32
+jl short ClearPanelPenalties.1	; 1CC32
 call sub_1CC3D	; 1CC34
 pop edx	; 1CC39
 pop ecx	; 1CC3A

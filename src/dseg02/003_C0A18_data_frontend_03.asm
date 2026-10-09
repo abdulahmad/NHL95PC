@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_C0A18 progbits alloc noexec write align=1
-global asc_C0A18, asc_C0A4D, asc_C0A55, asc_C0A5D, asc_C0A68, asc_C0A71, asc_C0A80, asc_C0A88
+global str_teams, str_key, str_att, str_season, str_career, str_GsummaryDb2, asc_C0A80, asc_C0A88
 global asc_C0AB5, asc_C0AE2, asc_C0B0F, asc_C0B1C, asc_C0B29, asc_C0B2E, asc_C0B33, asc_C0B54
 global asc_C0B5C, asc_C0C28, asc_C0C2C, asc_C0C34, asc_C0C3B, asc_C0C40, asc_C0C46, asc_C0C4B
 global asc_C0C51, asc_C0C58, asc_C0C5F, asc_C0C64, asc_C0C6D, asc_C0C73, asc_C0C78, asc_C0C7E
@@ -47,11 +47,11 @@ global asc_C18C7, asc_C18CC, asc_C18D5, asc_C18E8, asc_C1904, asc_C190A, asc_C19
 global asc_C191E, asc_C1923, asc_C1927, asc_C1938, asc_C193D, asc_C1942, asc_C1948, asc_C195C
 global asc_C1964, asc_C1969, asc_C196F, asc_C1974, asc_C197A, asc_C1980, asc_C1987, asc_C198C
 global asc_C1994, asc_C19C1, asc_C19DC, asc_C19E0, asc_C19EA, asc_C19F3, asc_C19FA, asc_C19FF
-global asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, unk_C0A1E, unk_C0A20, unk_C0A22, unk_C0A24
-global unk_C0A26, unk_C0A28, unk_C0A2A, unk_C0A2C, unk_C0A2F, unk_C0A32, unk_C0A35, unk_C0A37
-global unk_C0A39, unk_C0A3B, unk_C0A3D, unk_C0A3F, unk_C0A41, unk_C0A43, unk_C0A45, unk_C0A47
-global unk_C0A49, unk_C0A4B, unk_C0A51, unk_C0A53, unk_C0A59, unk_C0A5B, unk_C0A64, unk_C0A66
-global unk_C0A6F, unk_C0B68, unk_C0B79, unk_C0B8A, unk_C0B9D, unk_C0BAF, unk_C0BB7, unk_C0BC0
+global asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, str_fe1, str_fe2, str_fe3, str_fe4
+global str_fe5, str_fe7, str_fe8, str_feB1, str_feB5, str_feB8, str_feD, str_feE
+global str_feF, str_feG, str_feH, str_feI, str_feL, str_feM, str_feN, str_feO
+global str_feP, str_feQ, str_fe9, str_feA, str_feB, str_feC, str_feJ, str_feK
+global str_backslash3, unk_C0B68, unk_C0B79, unk_C0B8A, unk_C0B9D, unk_C0BAF, unk_C0BB7, unk_C0BC0
 global unk_C0BCC, unk_C0BD8, unk_C0BE4, unk_C0BF0, unk_C0BF7, unk_C0BFF, unk_C0C09, unk_C0C13
 global unk_C0C1F, unk_C0CB0, unk_C0CB6, unk_C0CBE, unk_C0CC5, unk_C0CD0, unk_C0CD9, unk_C0CE7
 global unk_C0CF0, unk_C0CF8, unk_C0D0C, unk_C0D20, unk_C0D2F, unk_C0D39, unk_C0D49, unk_C0DA6
@@ -72,75 +72,75 @@ global unk_C14E7, unk_C153C, unk_C155C, unk_C1563, unk_C1566, unk_C160E, unk_C16
 global unk_C1679, unk_C167C, unk_C16D7, unk_C1720, unk_C1722, unk_C1772, unk_C1775, unk_C1778
 global unk_C17F0, unk_C1815, unk_C1818, unk_C1823, unk_C1825, unk_C1900, unk_C1914, unk_C1916
 global unk_C192D, unk_C1930, unk_C1934, unk_C1936, unk_C1946, unk_C1A15
-asc_C0A18:
+str_teams:
 db 074h,065h,061h,06Dh,073h,00h
-unk_C0A1E:
+str_fe1:
 db 031h,00h
-unk_C0A20:
+str_fe2:
 db 032h,00h
-unk_C0A22:
+str_fe3:
 db 033h,00h
-unk_C0A24:
+str_fe4:
 db 034h,00h
-unk_C0A26:
+str_fe5:
 db 035h,00h
-unk_C0A28:
+str_fe7:
 db 037h,00h
-unk_C0A2A:
+str_fe8:
 db 038h,00h
-unk_C0A2C:
+str_feB1:
 db 042h,031h,00h
-unk_C0A2F:
+str_feB5:
 db 042h,035h,00h
-unk_C0A32:
+str_feB8:
 db 042h,038h,00h
-unk_C0A35:
+str_feD:
 db 044h,00h
-unk_C0A37:
+str_feE:
 db 045h,00h
-unk_C0A39:
+str_feF:
 db 046h,00h
-unk_C0A3B:
+str_feG:
 db 047h,00h
-unk_C0A3D:
+str_feH:
 db 048h,00h
-unk_C0A3F:
+str_feI:
 db 049h,00h
-unk_C0A41:
+str_feL:
 db 04Ch,00h
-unk_C0A43:
+str_feM:
 db 04Dh,00h
-unk_C0A45:
+str_feN:
 db 04Eh,00h
-unk_C0A47:
+str_feO:
 db 04Fh,00h
-unk_C0A49:
+str_feP:
 db 050h,00h
-unk_C0A4B:
+str_feQ:
 db 051h,00h
-asc_C0A4D:
+str_key:
 db 06Bh,065h,079h,00h
-unk_C0A51:
+str_fe9:
 db 039h,00h
-unk_C0A53:
+str_feA:
 db 041h,00h
-asc_C0A55:
+str_att:
 db 061h,074h,074h,00h
-unk_C0A59:
+str_feB:
 db 042h,00h
-unk_C0A5B:
+str_feC:
 db 043h,00h
-asc_C0A5D:
+str_season:
 db 073h,065h,061h,073h,06Fh,06Eh,00h
-unk_C0A64:
+str_feJ:
 db 04Ah,00h
-unk_C0A66:
+str_feK:
 db 04Bh,00h
-asc_C0A68:
+str_career:
 db 063h,061h,072h,065h,065h,072h,00h
-unk_C0A6F:
+str_backslash3:
 db 05Ch,00h
-asc_C0A71:
+str_GsummaryDb2:
 db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,02Eh,064h,062h,00h,00h,00h,00h
 asc_C0A80:
 db 073h,063h,072h,062h,072h,064h,031h,00h

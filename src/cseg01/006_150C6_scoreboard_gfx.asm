@@ -12,7 +12,7 @@ extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, 
 extern dword_DC290, dword_DC2B8, clockdigits, clockcolon, cupseries, hmscore, awscore, hmtmstruct
 extern jctime, DrawPanelLine_x, UpdateHudPanel_x, off_C5439, perioddigits, off_C57C8, crestnames, awtmstruct
 extern off_D3078, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, ReloadGameGfx, SetupDemoGame
-extern MakePath, DrawPanelScore, DrawPanelClock, sub_1BEFD, LoadModeState, sub_3371C, sub_3377C, SeriesLength
+extern MakePath, DrawPanelScore, DrawPanelClock, InitGameSummary, LoadModeState, sub_3371C, sub_3377C, SeriesLength
 extern sub_479E9, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
 extern sub_7DC8B, LoadScheduleDB, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
 extern PollKey, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, exhstate, unk_DF314, PerTimeTab
@@ -1233,7 +1233,7 @@ call sub_59D71	; 15F06
 call SetupControllers	; 15F0B
 xor edx, edx	; 15F10
 xor eax, eax	; 15F12
-call sub_1BEFD	; 15F14
+call InitGameSummary	; 15F14
 cmp word [HomeTeam], byte 1Ah	; 15F19
 jl short .6	; 15F21
 mov eax, 0Ch	; 15F23

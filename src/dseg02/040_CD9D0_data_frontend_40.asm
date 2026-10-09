@@ -18,7 +18,7 @@ global dword_CE5A3, dword_CE5C3, dword_CE8EB, off_CECFF, off_CED3F, unk_CDA50, u
 global unk_CDA65, unk_CDA6E, unk_CDA83, unk_CDA9B, unk_CDAB3, unk_CDACA, unk_CDAE0, unk_CDAF6
 global unk_CDB05, unk_CDB1A, unk_CDB2F, unk_CDB44, unk_CDB55, unk_CDB6A, unk_CDB6F, unk_CDB84
 global unk_CDB98, unk_CDBAE, unk_CDBC4, unk_CDBF5, unk_CDC0B, unk_CDC1E, unk_CDC34, unk_CDC47
-global unk_CDC60, unk_CDC79, unk_CDC80, unk_CDC97, unk_CDCB0, unk_CDCC9, unk_CDCD0, unk_CDCE9
+global unk_CDC60, unk_CDC79, unk_CDC80, unk_CDC97, unk_CDCB0, unk_CDCC9, str_GoalieItemTmpl, unk_CDCE9
 global unk_CDCF0, unk_CDCF5, unk_CDD04, unk_CDD10, unk_CDD1B, unk_CDD28, unk_CDD35, unk_CDD43
 global unk_CDD72, unk_CDD77, unk_CDD88, unk_CDD96, unk_CDDA8, unk_CDDBC, unk_CDDD0, unk_CDDE4
 global unk_CDDF7, unk_CDE19, unk_CDE30, unk_CDE4C, unk_CDE63, unk_CDE76, unk_CDE8C, unk_CDEB0
@@ -173,7 +173,7 @@ db 02h,020h,030h,030h,020h,058h,02Eh,020h,058h,058h,058h,058h,058h,058h,058h,058
 db 058h,058h,058h,058h,058h,058h,058h,058h,00h
 unk_CDCC9:
 db 02h,020h,04Eh,04Fh,04Eh,045h,00h
-unk_CDCD0:
+str_GoalieItemTmpl:
 db 02h,020h,030h,030h,020h,058h,02Eh,020h,058h,058h,058h,058h,058h,058h,058h,058h
 db 058h,058h,058h,058h,058h,058h,058h,058h,00h
 unk_CDCE9:

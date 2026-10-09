@@ -25,7 +25,7 @@ extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpa
 extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers, PlayGame
 extern FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
 extern CopyFile, DiskSpaceShort, CheckGameDiskSpace, GetLeagueDBSizes, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText
-extern TextGridOpen, TextGridOff, sub_1BEFD, sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171
+extern TextGridOpen, TextGridOff, InitGameSummary, sub_1D100, sub_1D518, sub_1D610, sub_20016, sub_20171
 extern sub_202E5, sub_203FA, sub_2051A, sub_20D97, sub_27C34, sub_29F28, sub_2FDD1, sub_2FEDF
 extern sub_30A0C, sub_30F12, MessageBox, SaveModeState, LoadModeState, WriteModeState, sub_3626D, SimulateGame
 extern sub_479E9, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E
@@ -36,7 +36,7 @@ extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, FatalError, MouseSetPos, sub_
 extern sub_B30B4, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4BC4, unk_208EF, unk_20A46
 extern unk_20BBD, unk_20EB7, unk_86616, str_E1, str_E2, str_F1, str_F2, unk_C3A66
 extern str_D, unk_C3AF8, exhstate, btn_LeagueExists, unk_CEE4F, unk_CEEAF, unk_CF90F, unk_D2864
-extern btn_POHumanOut, unk_DBC30, unk_DDAC4, unk_DDCE6, unk_DDCFB, unk_ED7BC, unknown_libname_1
+extern btn_POHumanOut, hmteamrec, unk_DDAC4, unk_DDCE6, unk_DDCFB, unk_ED7BC, unknown_libname_1
 extern word_C6D24, word_C6E22, scrpitch, VisTeam, hmscore, awscore
 global POSeedRound2_x30, POSeedRound2_x
 global POSeedConfFinals_pair, POSeedConfFinals_x
@@ -3505,7 +3505,7 @@ shl eax, 3	; 88F8C
 mov edx, eax	; 88F8F
 shl eax, 5	; 88F91
 sub eax, edx	; 88F94
-add eax, unk_DBC30	; 88F96
+add eax, hmteamrec	; 88F96
 lea edx, [byte eax+05h]	; 88F9B
 mov eax, msg_POTeamOut_arg	; 88F9E
 call strcpy_	; 88FA3
@@ -3519,7 +3519,7 @@ shl eax, 3	; 88FBC
 mov edx, eax	; 88FBF
 shl eax, 5	; 88FC1
 sub eax, edx	; 88FC4
-mov edx, unk_DBC30	; 88FC6
+mov edx, hmteamrec	; 88FC6
 add edx, eax	; 88FCB
 add edx, byte 5	; 88FCD
 mov eax, msg_POTeamOut_arg2	; 88FD0
@@ -4155,7 +4155,7 @@ xor edx, edx	; 898A1
 mov dl, byte [byte edi+01h]	; 898A3
 xor eax, eax	; 898A6
 mov al, byte [edi]	; 898A8
-call sub_1BEFD	; 898AA
+call InitGameSummary	; 898AA
 mov edx, dword [VisTeam-2]	; 898AF
 sar edx, 10h	; 898B5
 mov eax, dword [HomeTeam-2]	; 898B8

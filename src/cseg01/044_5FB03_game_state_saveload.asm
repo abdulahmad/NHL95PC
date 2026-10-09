@@ -15,10 +15,10 @@ extern dword_D8C78, dword_D8C84, photobanks, dword_DB088, dword_DC28C, dword_DF0
 extern dword_DF6F2, dword_DF6F6, hmtmplstats, dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
 extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2
 extern awtmsort, dword_E009C, dword_E0248, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
-extern ltx, replaystart, off_CC01D, passspeed, LoadGameGfx, FileReadAt, FileWriteAt, sub_1BBCC
+extern ltx, replaystart, off_CC01D, passspeed, LoadGameGfx, FileReadAt, FileWriteAt, LoadGameTeams
 extern SaveModeState, LoadModeState, GetPeriodTime, SprSort, sub_61E99, sub_673C5, ReplayRecordReset, sub_7DC8B
 extern FatalError, MouseSetPos, threat, exhstate, unk_C5423, unk_C542E, awlinetab, unk_DAC40
-extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, hmlinetab, unk_DC240
+extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240
 extern unk_DC252, unk_DF314, SortCords, hudpenhome, hudpenaway, camx, camy
 extern lastplayer, passdir, word_C90A6, passplayer, xc1, yc1, word_C90B2, word_C90B4
 extern fodir1, fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer
@@ -1627,7 +1627,7 @@ call LoadModeState	; 61244
 call GetPeriodTime	; 61249
 mov word [PerTimeTotal], ax	; 6124E
 mov eax, 1	; 61254
-call sub_1BBCC	; 61259
+call LoadGameTeams	; 61259
 mov edx, dword [HomeTeam]	; 6125E
 sar edx, 10h	; 61264
 mov eax, dword [cont2team]	; 61267
@@ -1677,7 +1677,7 @@ mov dword [hmtmlines], hmlinetab	; 6133B
 mov dword [hmtmplstats], dword_DB088	; 61345
 mov dword [dword_DF6FE], unk_DC240	; 6134F
 mov dword [hmtmroster], hmroster	; 61359
-mov dword [hmtmptrF2], unk_DBC30	; 61363
+mov dword [hmtmptrF2], hmteamrec	; 61363
 mov dword [awtmsort], SortCords+300h	; 6136D
 mov dword [dword_DF7F2], unk_DAE94	; 61377
 mov dword [dword_DF7F6], unk_DAC70	; 61381
@@ -1685,7 +1685,7 @@ mov dword [awtmlines], awlinetab	; 6138B
 mov dword [awtmplstats], unk_DB218	; 61395
 mov dword [dword_DF7FE], unk_DC252	; 6139F
 mov dword [awtmroster], awroster	; 613A9
-mov dword [awtmptrF2], unk_DBF18	; 613B3
+mov dword [awtmptrF2], awteamrec	; 613B3
 mov ebx, SortCords	; 613BD
 xor ebp, ebp	; 613C2
 mov dword [dword esp+010Ch], ebp	; 613C4

@@ -25,7 +25,7 @@ extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLa
 extern sub_59AAD, sub_59AD0, sub_59B0F, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
 extern EvadePC, sub_61576, sub_61D48, sub_62343, sub_62807, sub_62C37, sub_64102, sub_64439
 extern RemoveFromLines, sub_66497, sub_66DDA, sub_837A8, sub_8F633, sub_8FFB0, imul32, threat
-extern unk_C1B3E, unk_DACA0, unk_DBC30, unk_DC240, unk_DF014, SortCords, updateanim
+extern unk_C1B3E, unk_DACA0, hmteamrec, unk_DC240, unk_DF014, SortCords, updateanim
 extern vtoa, regd4, camx, camy, lastplayer, passdir, word_C90A6, xc1
 extern yc1, word_C90B2, word_C90B4, fodir1, fodir2, c1playernum, c2playernum, VisTeam
 extern Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, gsp, gameclock, clockticks
@@ -1577,7 +1577,7 @@ shl ebx, 3	; 496E7
 mov eax, ebx	; 496EA
 shl ebx, 5	; 496EC
 sub ebx, eax	; 496EF
-mov eax, unk_DBC30	; 496F1
+mov eax, hmteamrec	; 496F1
 add eax, ebx	; 496F6
 mov ecx, dword [byte esp+08h]	; 496F8
 mov ebx, edx	; 496FC
@@ -1698,7 +1698,7 @@ shl ebx, 3	; 4988A
 mov eax, ebx	; 4988D
 shl ebx, 5	; 4988F
 sub ebx, eax	; 49892
-mov edx, unk_DBC30	; 49894
+mov edx, hmteamrec	; 49894
 add edx, ebx	; 49899
 mov ebx, dword [byte esp+08h]	; 4989B
 mov eax, byte_E028C	; 4989F

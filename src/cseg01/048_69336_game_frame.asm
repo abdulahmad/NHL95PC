@@ -10,7 +10,7 @@ extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC28C, dword_DD
 extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
 extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSize, ResetInputSampling, RunGameFrames
-extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, DrawHudPanel, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
+extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, DrawHudPanel, sub_1BAF3, LoadGameTeams, sub_3377C, sub_33DD3
 extern sub_479E9, FadeOutPalCycle, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
 extern sub_59CA9, sub_59D54, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
 extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_836E4
@@ -115,7 +115,7 @@ mov word [HomeTeam], ax	; 69480
 mov eax, dword [byte esp+04h]	; 69486
 mov word [VisTeam], ax	; 6948A
 mov eax, 2	; 69490
-call sub_1BBCC	; 69495
+call LoadGameTeams	; 69495
 mov eax, dword [dword_CBECA]	; 6949A
 sar eax, 10h	; 6949F
 cmp eax, byte 0FFFFFFFFh	; 694A2
@@ -755,7 +755,7 @@ mov edi, awlinetab	; 69ED8
 lea esi, [dword esp+094h]	; 69EDD
 rep movsd	; 69EE4
 mov eax, 4	; 69EE6
-call sub_1BBCC	; 69EEB
+call LoadGameTeams	; 69EEB
 call Intermission	; 69EF0
 xor al, al	; 69EF5
 mov byte [gmode], al	; 69EF7

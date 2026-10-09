@@ -37,7 +37,7 @@ extern sub_90D20, sub_90F38, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_92D
 extern FatalError, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, SetDrawBitmap
 extern sub_B4FAC, sub_B5DB0, str_fmtpd, btn_LeagueExists, unk_D0450, unk_D05F4, unk_D0B80, unk_D0BB8
 extern unk_D0BF0, unk_D0C5C, unk_D0CA2, unk_D0EDD, unk_D0F80, unk_D0FA8, unk_D0FBC, unk_D0FD0
-extern unk_D0FF0, unk_D1000, unk_DBC30, unk_DF014, unk_EA968, unk_EAC84, unk_EAFB8, word_C2D0E
+extern unk_D0FF0, unk_D1000, hmteamrec, unk_DF014, unk_EA968, unk_EAC84, unk_EAFB8, word_C2D0E
 extern word_C2D10, VisTeam
 global LoadRosterList_faloop
 global LoadRosterList_team
@@ -1093,12 +1093,12 @@ shl eax, 5	; 6DFAD
 sub eax, edx	; 6DFB0
 mov ecx, 0BAh	; 6DFB2
 mov edi, esp	; 6DFB7
-lea esi, [dword eax+unk_DBC30]	; 6DFB9
+lea esi, [dword eax+hmteamrec]	; 6DFB9
 rep movsd	; 6DFBF
 mov edx, dword [dword esp+02E8h]	; 6DFC1
 mov edx, dword [nosplit edx*4+rosterteamrec]	; 6DFC8
 mov ecx, 0BAh	; 6DFCF
-lea edi, [dword eax+unk_DBC30]	; 6DFD4
+lea edi, [dword eax+hmteamrec]	; 6DFD4
 mov esi, edx	; 6DFDA
 rep movsd	; 6DFDC
 add edx, 0BCh	; 6DFDE
@@ -1112,7 +1112,7 @@ push byte 0	; 6E001
 call sub_B392C	; 6E003
 add esp, byte 4	; 6E008
 mov ecx, 0BAh	; 6E00B
-mov edi, unk_DBC30	; 6E010
+mov edi, hmteamrec	; 6E010
 mov esi, esp	; 6E015
 rep movsd	; 6E017
 cmp dword [dword esp+02E8h], byte 0	; 6E019

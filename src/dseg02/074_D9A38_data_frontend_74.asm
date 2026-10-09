@@ -2,16 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_D9A38 nobits alloc noexec write align=1
-global byte_DAC14, byte_DAC15, byte_DAC18, byte_DAC20, photoptrs, awlinetab
+global awgoalieidx, awscratch, gsummarypath, photoptrs, awlinetab
 photoptrs:
 resb 4536
 awlinetab:
 resb 36
-byte_DAC14:
+awgoalieidx:
 resb 1
-byte_DAC15:
 resb 3
-byte_DAC18:
+awscratch:
 resb 8
-byte_DAC20:
+gsummarypath:
 resb 32

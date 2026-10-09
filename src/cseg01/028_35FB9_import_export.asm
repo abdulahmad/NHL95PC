@@ -15,7 +15,7 @@ extern dword_DDD6C, awtmlines, startm_m2, hmtmlines, hmtmstruct
 extern fputchar, jctime, memset_, crestnames, off_C800C, leaguedbnames
 extern sprintf_, strcat_, strcpy_, SetupControllers, PlayGame, FileExists, MakePath
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, ReadKeyRec, ReadSeasonRec
-extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, SetTextColors, PrintCenteredText, PrintShadowText, sub_1BEFD
+extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, SetTextColors, PrintCenteredText, PrintShadowText, InitGameSummary
 extern sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A, sub_29F28, sub_30A0C, sub_30F12
 extern MessageBox, sub_34821, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, WriteSchedGame, WriteTeamRec
 extern sub_3A31E, AskTeamPassword, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, ReadLeagueInfo, sub_3DAB9
@@ -1431,7 +1431,7 @@ jne short loc_37447	; 3741B
 xor edx, edx	; 3741D
 mov dl, byte [byte_DC267]	; 3741F
 mov al, byte [byte_DC268]	; 37425
-call sub_1BEFD	; 3742A
+call InitGameSummary	; 3742A
 xor edx, edx	; 3742F
 mov dl, byte [VisTeam]	; 37431
 xor eax, eax	; 37437

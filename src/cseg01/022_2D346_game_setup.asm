@@ -25,7 +25,7 @@ extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_913B4, sub_913D0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, SetDrawBitmap, sub_B4F8C, unk_2D33E, unk_C160E, unk_C161D, unk_C164B
-extern unk_C1679, unk_C167C, unk_C16D7, awlinetab, unk_DBC30, hmlinetab, word_DF618, hmscore
+extern unk_C1679, unk_C167C, unk_C16D7, awlinetab, hmteamrec, hmlinetab, word_DF618, hmscore
 global jpt_2D346, loc_2D3D4, loc_2D401, loc_2D40F, loc_2D411, loc_2D4B5, loc_2D509, loc_2D50B
 global loc_2D551, loc_2D553, loc_2D675, loc_2D677, loc_2D6EF, loc_2D6F1, loc_2D781, loc_2D79B
 global loc_2D7BC, loc_2D7BE, loc_2D83E, loc_2D85B, loc_2D85D, loc_2D8AE, loc_2D90F, loc_2D986
@@ -2562,7 +2562,7 @@ shl eax, 3	; 2F81D
 mov edx, eax	; 2F820
 shl eax, 5	; 2F822
 sub eax, edx	; 2F825
-add eax, unk_DBC30	; 2F827
+add eax, hmteamrec	; 2F827
 lea esi, [byte eax+01Ah]	; 2F82C
 push esi	; 2F82F
 call fputchar	; 2F830

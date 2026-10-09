@@ -13,7 +13,7 @@ extern dword_DC738, dword_DD100, dword_DD104, dword_DD10C, dword_DD110, dword_DD
 extern dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C, dword_DE260
 extern dword_DE264, dword_EA0DC, jctime, memcpy_, leaguedbnames, off_C8BDD, off_CF2A3
 extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
-extern FileOpenRW, FileClose, ReadKeyRec, WriteKeyRec, ReadTeamRec, sub_1BBCC, sub_1D6E8, sub_1FAA7
+extern FileOpenRW, FileClose, ReadKeyRec, WriteKeyRec, ReadTeamRec, LoadGameTeams, sub_1D6E8, sub_1FAA7
 extern sub_244E2, sub_2FEDF, MessageBox, WriteTeamRec, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
 extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A099, ClearPlayerFromLines
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
@@ -810,7 +810,7 @@ mov edx, leaguedbfmt	; 3E6D9
 mov eax, leaguedbfmt2	; 3E6DE
 call strcpy_	; 3E6E3
 xor eax, eax	; 3E6E8
-call sub_1BBCC	; 3E6EA
+call LoadGameTeams	; 3E6EA
 mov dword [dword_D8C84], 0FFFFFFFEh	; 3E6EF
 mov ecx, 3	; 3E6F9
 mov ebx, unk_CF3CF	; 3E6FE
