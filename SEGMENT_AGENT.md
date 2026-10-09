@@ -140,6 +140,24 @@ After the segment's last change, also run `python3 tools/update_symbols.py --che
 - Hand-written asm (`randomd0`, `vtoa`, the 16-bit VGA routines in `asm_helpers`, and the libraries) does not follow the C conventions: there is no `__CHK` and arguments can be in any register. A file can mix the two: `asm_helpers` also holds Watcom C (`PlayMVI`, the empty stubs).
 - Unreferenced code: gen_src only labels addresses something refers to, so dead routines can sit unlabelled under the previous function. Add a label line by hand at the routine's first instruction (no byte change) before converting `loc_` labels to locals, and say in a comment that it has no caller.
 
+## C matching (phase 2)
+
+The queue above is done; the next phase rewrites the game's C functions in C that compiles to the same bytes. Full
+workflow and compiler notes: [docs/C_MATCHING.md](docs/C_MATCHING.md); progress: [C_PROGRESS.md](C_PROGRESS.md).
+- A matched function lives in `src/c/<segment>/<Func>.c` and replaces its asm block through the `%ifdef CBUILD`
+  marker (`tools/cc.py mark`). The asm stays inside the marker unchanged; both `make` and `make CBUILD=0` must MATCH.
+- Compiler: Watcom C/C++32 10.0 LA `wcc386`, default flags, under DOSBox (`$WATCOM_ROOT`, default `~/watcom`, never
+  in the repo). Compare with `python3 tools/cdiff.py src/c/<segment>/<Func>.c`.
+- Names and comments: the asm labels and `structs.inc` fields, 93G/94G names or behaviour (no 95G names). Every C
+  function gets a comment (address, Genesis routine or "PC only", what it does, arguments, result); bring the asm
+  comments over. Constants in `src/c/include/consts.h`, typed globals in `vars.h`, prototypes in `protos.h`.
+- One file per function, except groups that must compile together (tail call into the next function, shared
+  epilogues): one file, address order, named after the first function.
+- Pick compiled-C functions only (`push dword N` / `call __CHK` prologue). Leave hand-written asm alone.
+- Commit each batch with `make` MATCH (both CBUILD settings), `python3 tools/c_progress.py`, and the headers
+  regenerated with `python3 tools/gen_cheaders.py` when names changed. Never commit compiler binaries, OMF objects
+  or generated `.inc` fragments (they are under `build/`).
+
 ## Libraries (not in the queue, may be named)
 
 These segments are skipped by the queue: there is no Genesis code to follow. Name a library routine or its data whenever you know it, for example a call from the current segment into `ea_gfx` that is clearly a text print. Use the library's own name when it is known (FLIRT names such as `printf_`, the EA library strings), else a name from what it does.

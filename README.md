@@ -28,6 +28,8 @@ make -j8            # or ./build.sh [path/to/HOCKEY.EXE]
 
 This assembles the 304 files in `src/` (one per segment: 198 code, 106 data), links them with `tools/link_src.py`, and writes `build/HOCKEY.EXE`. It ends with `MATCH` when the result is byte-identical to the retail EXE; otherwise it fails. From your EXE the build takes only the three third-party stubs (DOS/16M loader, DOS/4GW kernel, Watcom wstub), the LE header fields and the fixup record order. Code, data and the fixups themselves come from `src/`. `src/` holds the game's code and data as assembler text, as the Genesis sister repos do. Layout, editing rules and how `src/` is regenerated (`tools/gen_src.py`): [docs/ASM_BUILD.md](docs/ASM_BUILD.md).
 
+Matched C: functions rewritten in C under `src/c/` replace their asm when the Watcom 10.0 compiler is installed (`~/watcom`, run under DOSBox); without it `make` uses the asm, with the same result. See [docs/C_MATCHING.md](docs/C_MATCHING.md) and [C_PROGRESS.md](C_PROGRESS.md).
+
 ## Byte-exact rebuild from the EXE's own parts
 
 Needs Python 3 only. Run from the repo root.
@@ -71,6 +73,7 @@ python3 tools/libmatch.py $WATCOM_ROOT/w10a/WATCOM/LIB386/DOS/CLIB3R.LIB   # lib
 * [BUILD_NOTES.md](BUILD_NOTES.md): rebuild format, fixup ordering (wlink algorithm), compiler fingerprint, next steps
 * [EXE_SEGMAP95PC.md](EXE_SEGMAP95PC.md): segment map
 * [docs/SKATING_AND_RINK.md](docs/SKATING_AND_RINK.md): skating physics and rink geometry vs. 93 Genesis
+* [docs/C_MATCHING.md](docs/C_MATCHING.md): C matching decompilation (wcc386 10.0 LA → OMF → spliced into the asm build), headers, workflow, compiler learnings; progress in [C_PROGRESS.md](C_PROGRESS.md)
 * [docs/ASM_BUILD.md](docs/ASM_BUILD.md): the `src/` tree and `make` build, LE fixups as symbolic labels (`tools/fixup_labels.py`), the NASM toolchain, and the asm emitter (`tools/asm_proto.py`, `tools/gen_src.py`)
 
 ## Segment queue

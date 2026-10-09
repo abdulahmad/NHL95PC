@@ -21,3 +21,20 @@ Follow the rules already in SEGMENT_AGENT.md. Style source is the matching routi
 
 Stop after 5 failed builds. Report the file, the first differing address make printed, the built byte, the retail byte, and the line you changed. Do not continue.
 ```
+
+## C matching prompt
+
+Paste this into a new session for the C phase (one batch of functions per session). Do not edit this prompt.
+
+```text
+Read docs/C_MATCHING.md and the "C matching" section of SEGMENT_AGENT.md first. Build before you change anything: make must end with "MATCH: build/HOCKEY.EXE is byte-identical to the retail HOCKEY.EXE" and make cinfo must say CBUILD=1 (the Watcom 10.0 LA toolchain under ~/watcom and dosbox are needed). If not, stop and say what you ran and what it printed.
+
+1. Pick compiled-C functions (prologue push dword N / call __CHK) from C_PROGRESS.md's segments, starting with small leaf functions in the engine segments. Skip hand-written asm (no __CHK). Check for shared tails and fall-through tail calls; such a group goes into one file.
+2. Write src/c/<segment>/<Func>.c: #include "nhl95.h", the asm label names, structs.inc fields, 93G/94G names or names from behaviour (no 95G names), and a comment on every function (address, Genesis routine or PC only, what it does, arguments, result) with the asm comments brought over. Add its prototype to src/c/include/protos.h; constants to consts.h, typed globals to vars.h, then python3 tools/gen_cheaders.py.
+3. Iterate with python3 tools/cdiff.py <file> until it prints MATCH. Do not use compiler flags other than the defaults without writing down why in docs/C_MATCHING.md.
+4. python3 tools/cc.py mark <file> [--end Label]. make must MATCH, and make CBUILD=0 must MATCH too. Do not edit the asm inside the marker.
+5. python3 tools/c_progress.py; put the reason for any non-matching draft in the notes column of tools/c_functions.csv. Record new compiler learnings in docs/C_MATCHING.md.
+6. Commit: the C files, src/c/include, the marked asm files, C_PROGRESS.md, tools/c_functions.csv. Never commit HOCKEY.EXE, objects, .inc fragments, listings or compiler files.
+
+Stop after 5 failed builds and report the file, the first differing address, and the change.
+```
