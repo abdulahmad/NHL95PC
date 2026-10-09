@@ -8,7 +8,7 @@ extern hmroster, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byt
 extern byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E03C1, byte_E9DB4, byte_E9E18
 extern byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC
 extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, byte_ED7CC, byte_ED7F7, byte_ED86D
-extern byte_ED92B, joysampling, dword_C90B0, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, dword_CC0DC
+extern byte_ED92B, joysampling, dword_C90B0, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, lastsfx
 extern dword_CCEF6, dword_CD41E, dword_CD4B0, dword_D2C6B, dword_D30AC, dword_D30B0, dword_D30B4, dword_D30B8
 extern dword_D30BC, dword_D30C0, dword_D8B70, dword_D8B78, dword_D8C40, dword_D8C84, dword_DEF8C, dword_DEFE0
 extern dword_DF004, hmtmstruct, puckstruct, dword_E00A0, dword_E0220, dword_E0230, dword_E0244, dword_E0248
@@ -18,7 +18,7 @@ extern dword_E9F54, dword_E9F56, dword_E9F5A, dword_E9F76, dword_E9F78, dword_E9
 extern dword_E9FA5, dword_E9FA8, dword_E9FAA, dword_E9FD9, dword_E9FF0, dword_ED74C, fputchar, gmode
 extern jctime, off_C9078, puckz, puckc, camx_m2, off_CBED0, off_CC01D, off_CD498
 extern off_CD4A0, off_CD4DC, setpersonel, sfx, sprintf_, sub_11005, sub_110E0, sub_11136
-extern sub_1431E, sub_1CD73, sub_594CD, sub_59748, sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0
+extern sub_1431E, sub_1CD73, CrowdNoiseUpdate, CrowdNoiseOff, sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8EA18, sub_90354, sub_90D20, sub_90EC0, sub_91964, sub_93540, sub_B30B4
 extern sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80, unk_DABF0, unk_DACA0, unk_DC200, SortCords
 extern unk_E9CEC, unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE
@@ -3179,7 +3179,7 @@ jne near loc_66D81	; 66990
 add word [byte esp+01Ch], byte 23h	; 66996
 cmp word [crowdlevel], 2EEh	; 6699C
 jle short loc_669F5	; 669A5
-mov eax, dword [dword_CC0DC]	; 669A7
+mov eax, dword [crowdlevel-2]	; 669A7
 sar eax, 10h	; 669AC
 sub eax, 2EEh	; 669AF
 cmp eax, 0C8h	; 669B4
@@ -3204,7 +3204,7 @@ call sub_65CA8	; 669F0
 loc_669F5:
 cmp word [crowdlevel], 3B6h	; 669F5
 jle short loc_66A51	; 669FE
-mov eax, dword [dword_CC0DC]	; 66A00
+mov eax, dword [crowdlevel-2]	; 66A00
 sar eax, 10h	; 66A05
 add esi, byte 28h	; 66A08
 sub eax, 3B6h	; 66A0B
@@ -3230,7 +3230,7 @@ call sub_65CA8	; 66A4C
 loc_66A51:
 cmp word [crowdlevel], 47Eh	; 66A51
 jle near loc_66D81	; 66A5A
-mov eax, dword [dword_CC0DC]	; 66A60
+mov eax, dword [crowdlevel-2]	; 66A60
 sar eax, 10h	; 66A65
 add esi, byte 28h	; 66A68
 sub eax, 47Eh	; 66A6B
@@ -4143,10 +4143,10 @@ je short loc_6761E	; 67611
 mov word [word_CD500], 0FFFFh	; 67613
 jmp short loc_6762A	; 6761C
 loc_6761E:
-mov ax, word [dword_CC0DC]	; 6761E
+mov ax, word [lastsfx]	; 6761E
 mov word [word_CD500], ax	; 67624
 loc_6762A:
-mov word [dword_CC0DC], 0FFFFh	; 6762A
+mov word [lastsfx], 0FFFFh	; 6762A
 jmp near loc_678F7	; 67633
 loc_67638:
 mov edi, edx	; 67638
@@ -4255,10 +4255,10 @@ mov byte [eax], dl	; 6778B
 mov eax, dword [dword_E039C]	; 6778D
 lea ebx, [byte eax+01h]	; 67792
 mov dword [dword_E039C], ebx	; 67795
-mov dl, byte [dword_CC0DC]	; 6779B
+mov dl, byte [lastsfx]	; 6779B
 mov byte [eax], dl	; 677A1
 mov eax, 0FFFFFFFFh	; 677A3
-mov word [dword_CC0DC], ax	; 677A8
+mov word [lastsfx], ax	; 677A8
 mov word [word_CD500], ax	; 677AE
 mov dl, byte [c2playernum]	; 677B4
 and dl, 0Fh	; 677BA
@@ -4676,10 +4676,10 @@ je short loc_67D7C	; 67D6C
 mov eax, dword [byte esp+044h]	; 67D6E
 add eax, eax	; 67D72
 cwde	; 67D74
-call sub_594CD	; 67D75
+call CrowdNoiseUpdate	; 67D75
 jmp short loc_67D81	; 67D7A
 loc_67D7C:
-call sub_59748	; 67D7C
+call CrowdNoiseOff	; 67D7C
 loc_67D81:
 xor eax, eax	; 67D81
 sub dword [dword_E03A4], 80h	; 67D83

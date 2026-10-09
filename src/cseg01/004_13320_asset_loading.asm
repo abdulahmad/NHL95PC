@@ -11,13 +11,13 @@ extern byte_E0344, byte_E9AC8, byte_E9AD3, byte_ED7CC, byte_ED7E4, byte_ED7E6, b
 extern byte_ED8C6, byte_ED8C8, byte_ED8D7, byte_ED976, byte_ED9AA, byte_ED9EC, byte_ED9F0, joysampling
 extern dword_C4E10, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, songdata, cont2team
 extern dword_C90CA, dword_CBECA, dword_CC0AC, dword_CC0E0, dword_CC0EC, dword_CC0F0, dword_CC0F8, penshotplayer
-extern penshotmode, penshotstart, dword_CC124, penshotlive, dword_CCC88, musichandle, dword_D2C6B, musicslot
+extern penshotmode, penshotstart, dword_CC124, penshotlive, crowdsmooth, musichandle, dword_D2C6B, musicslot
 extern dword_D8B68, dword_D8C18, dword_D8C4C, dword_D8C68, dword_D8C6C, dword_D8C70, dword_D8C78, dword_D8C80
 extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E009C, dword_E00A0
 extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, loc_12842, memcpy_, nullsub_2
 extern puckx, pucky, passspeed, randomd0, sprintf_, sub_11598, sub_1205D, sub_12849
 extern sub_13188, sub_1431E, sub_14525, sub_1457C, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
-extern sub_4830E, joyq_flush, sub_59863, sub_59981, sub_599B9, sub_599EE, StartGame, forceteams
+extern sub_4830E, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
 extern sub_64614, sub_658F3, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, MouseSetPos, sub_B30B4, sub_B30BB
@@ -203,7 +203,7 @@ call sub_1431E	; 13531
 lea eax, [byte esp+040h]	; 13536
 call sub_8F13B	; 1353A
 mov edi, eax	; 1353F
-call sub_599B9	; 13541
+call PlayDigiSample	; 13541
 loc_13546:
 mov ebx, 10h	; 13546
 mov edx, esi	; 1354B
@@ -213,12 +213,12 @@ cmp byte [musicon], 0	; 13554
 jne short loc_1358D	; 1355B
 cmp dword [dword_C541F], byte 1	; 1355D
 je short loc_1358D	; 13564
-call sub_599EE	; 13566
+call WaitDigiSample	; 13566
 mov ebx, 10h	; 1356B
 mov edx, esi	; 13570
 mov eax, 1	; 13572
 call sub_76429	; 13577
-call sub_59981	; 1357C
+call StopDigiSample	; 1357C
 mov eax, edi	; 13581
 call sub_8F1FE	; 13583
 jmp near loc_13634	; 13588
@@ -331,7 +331,7 @@ call sub_1431E	; 136F9
 lea eax, [byte esp+040h]	; 136FE
 call sub_8F13B	; 13702
 mov edi, eax	; 13707
-call sub_599B9	; 13709
+call PlayDigiSample	; 13709
 loc_1370E:
 test esi, esi	; 1370E
 jne near loc_137F8	; 13710
@@ -424,7 +424,7 @@ xor edx, edx	; 1383E
 mov dword [songdata], edx	; 13840
 jmp short loc_13854	; 13846
 loc_13848:
-call sub_59981	; 13848
+call StopDigiSample	; 13848
 mov eax, edi	; 1384D
 call sub_8F1FE	; 1384F
 loc_13854:
@@ -948,7 +948,7 @@ call sub_658F3	; 13EAE
 mov word [gsp], 0FFFFh	; 13EB3
 xor ebx, ebx	; 13EBC
 mov word [crowdlevel], bx	; 13EBE
-call sub_59863	; 13EC5
+call CrowdNoiseReset	; 13EC5
 xor edx, edx	; 13ECA
 mov dword [dword_CC0F0], edx	; 13ECC
 call sub_14056	; 13ED2
@@ -962,7 +962,7 @@ call sub_150C6	; 13EEF
 xor ecx, ecx	; 13EF4
 mov word [crowdlevel], cx	; 13EF6
 xor ebx, ebx	; 13EFD
-mov dword [dword_CCC88], ebx	; 13EFF
+mov dword [crowdsmooth], ebx	; 13EFF
 xor edx, edx	; 13F05
 xor eax, eax	; 13F07
 call sub_4830E	; 13F09
@@ -1031,13 +1031,13 @@ call sub_658F3	; 13FC6
 mov word [gsp], 0FFFFh	; 13FCB
 xor ebx, ebx	; 13FD4
 mov word [crowdlevel], bx	; 13FD6
-call sub_59863	; 13FDD
+call CrowdNoiseReset	; 13FDD
 xor edx, edx	; 13FE2
 mov dword [dword_CC0F0], edx	; 13FE4
 call sub_14056	; 13FEA
 xor ecx, ecx	; 13FEF
 mov word [crowdlevel], cx	; 13FF1
-mov dword [dword_CCC88], edx	; 13FF8
+mov dword [crowdsmooth], edx	; 13FF8
 xor eax, eax	; 13FFE
 call sub_4830E	; 14000
 test eax, eax	; 14005

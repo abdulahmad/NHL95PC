@@ -9,7 +9,7 @@ extern awroster, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byt
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
 extern byte_E0074, PlList, byte_E038A, byte_E9A16, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
 extern checkcoll, sub_65D01, collflag, doinput, joysampling, gameopts, dword_C7444, dword_C7448
-extern dword_C90B0, dword_C90C0, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, dword_CC0DC, onetimerflag
+extern dword_C90B0, dword_C90C0, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
 extern dword_CC0F8, penshotplayer, dword_CC104, dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer
 extern dword_CC124, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D302C
 extern dword_D3030, dword_D30B0, dword_D30B8, dword_D30BC, dword_D30C0, dword_D8C84, dword_DB088, hmtmstruct
@@ -22,7 +22,7 @@ extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
 extern off_C9078, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
 extern passspeed, randomd0, sfx, vecdist, sub_10F6D, sub_11005, sub_110E0, sub_11136
 extern sub_14A20, sub_14AFE, sub_15C30, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
-extern sub_59A11, sub_59A7E, sub_61576, sub_615A2, sub_61862, sub_63BF8, sub_63C73, sub_63D3C
+extern PlayCrowdSample, sub_59A7E, sub_61576, sub_615A2, sub_61862, sub_63BF8, sub_63C73, sub_63D3C
 extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, sub_67564, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, unk_DABF0, unk_DAC40, unk_DAC70, unk_DACA0
 extern unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, unk_DC200, unk_DC240, unk_DC252, SortCords
@@ -1322,7 +1322,7 @@ xor eax, eax	; 5AD5B
 test eax, eax	; 5AD5D
 je short .20	; 5AD5F
 mov eax, 3	; 5AD61
-call sub_59A11	; 5AD66
+call PlayCrowdSample	; 5AD66
 .20:
 cmp word [byte esp+04h], byte 1	; 5AD6B
 jne short .21	; 5AD71
@@ -2942,7 +2942,7 @@ and byte [sflags], 0AFh	; 5C137
 mov eax, dword [off_C9078]	; 5C13E
 mov dword [dword_E039C], eax	; 5C143
 call sub_67564	; 5C148
-mov word [dword_CC0DC], 0FFFFh	; 5C14D
+mov word [lastsfx], 0FFFFh	; 5C14D
 call DoGameFrame	; 5C156
 call DoGameFrame	; 5C15B
 mov word [CwdExciteLvl], 10h	; 5C160
@@ -3039,7 +3039,7 @@ test byte [gmode], 1	; 5C29C
 je short .x	; 5C2A3
 cmp word [crowdlevel], 258h	; 5C2A5
 jle short .x	; 5C2AE
-mov edx, dword [dword_CC0DC]	; 5C2B0
+mov edx, dword [crowdlevel-2]	; 5C2B0
 sar edx, 10h	; 5C2B6
 mov eax, 3E8h	; 5C2B9
 sub eax, edx	; 5C2BE
@@ -3882,7 +3882,7 @@ mov byte [collflag], ah	; 5CDC6
 mov word [threat], dx	; 5CDCC
 mov word [lldispodd], dx	; 5CDD3
 mov word [word_CC0DA], dx	; 5CDDA
-mov word [dword_CC0DC], 0FFFFh	; 5CDE1
+mov word [lastsfx], 0FFFFh	; 5CDE1
 xor dl, dl	; 5CDEA
 mov byte [gmode], dl	; 5CDEC
 xor al, bl	; 5CDF2

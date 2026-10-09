@@ -19,7 +19,7 @@ extern dword_EA0DC, dword_ED35C, dword_ED360, dword_ED364, dword_ED75C, dword_ED
 extern dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C, dword_ED780, dword_ED784
 extern dword_ED788, dword_ED78C, puckvx, gmode, jctime, off_C54A9, puckx, pucky
 extern puckvy, puckc, off_CD498, off_CD4A0, setpersonel, sub_1431E, sub_3271B, sub_327A1
-extern sub_32B1D, sub_59748, sub_59863, restorepl, sub_6B391, sub_6B3D7, sub_8034B, sub_8050F
+extern sub_32B1D, CrowdNoiseOff, CrowdNoiseReset, restorepl, sub_6B391, sub_6B3D7, sub_8034B, sub_8050F
 extern sub_8B85B, sub_8B92F, sub_8CCA8, sub_8E83C, sub_8E9C0, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_90D20, sub_91284, sub_91370
 extern sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_96440, sub_B2DCA, sub_B30B4, sub_B4B88
@@ -2454,7 +2454,7 @@ test byte [gameopts], 80h	; 7BD47
 je short loc_7BD59	; 7BD4E
 test eax, eax	; 7BD50
 jne short loc_7BD59	; 7BD52
-call sub_59748	; 7BD54
+call CrowdNoiseOff	; 7BD54
 loc_7BD59:
 mov bh, byte [gameopts]	; 7BD59
 test bh, 80h	; 7BD5F
@@ -2467,7 +2467,7 @@ and ch, 7Fh	; 7BD6D
 mov byte [gameopts], ch	; 7BD70
 shl edx, 7	; 7BD76
 or dword [gameopts], edx	; 7BD79
-call sub_59863	; 7BD7F
+call CrowdNoiseReset	; 7BD7F
 jmp short loc_7BD9B	; 7BD84
 loc_7BD86:
 mov eax, edx	; 7BD86

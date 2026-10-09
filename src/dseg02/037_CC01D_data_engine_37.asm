@@ -6,12 +6,12 @@ extern str_1st, str_2nd, str_3rd, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, un
 extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
 global asc_CCDD8, asc_CCDEC, byte_CC049, lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5
 global byte_CC9B0, byte_CC9E4, byte_CC9E7, byte_CCA95, lchoicetab, byte_CCBBA, byte_CCBBB, byte_CCCA0
-global byte_CCE00, byte_CCE01, dword_CC080, dword_CC0AC, dword_CC0B4, dword_CC0DC, dword_CC0E0, dword_CC0EC
+global byte_CCE00, byte_CCE01, dword_CC080, dword_CC0AC, dword_CC0B4, lastsfx, dword_CC0E0, dword_CC0EC
 global dword_CC0F0, onetimerflag, dword_CC0F8, dword_CC0FA, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 global dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
 global dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, dword_CC9AD, dword_CC9CE
 global dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, dword_CCC2C, dword_CCC4E
-global dword_CCC84, dword_CCC88, dword_CCC8C, dword_CCC90, dword_CCC94, dword_CCC98, dword_CCC9C, dword_CCC9D
+global digihandle, crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_CCC9C, dword_CCC9D
 global dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, doplayeracc_ftab, MaxSpeed, dword_CCEF6, dword_CD2F8
 global off_CC01D, starordtab, shotsets, unk_CCCC8, word_CC054, word_CC0B0, lldispodd, word_CC0DA
 global crowdlevel, word_CC10C, word_CC9CC, word_CC9EA, word_CC9EC, word_CCA18, word_CCA1A, word_CCA1C
@@ -54,7 +54,7 @@ lldisp:
 db 00h
 word_CC0DA:
 db 00h,00h
-dword_CC0DC:
+lastsfx:
 db 0FFh,0FFh
 crowdlevel:
 db 00h,00h
@@ -364,13 +364,13 @@ word_CCC62:
 db 0Ch,00h,010h,00h,0Ch,00h,010h,00h,06h,00h,010h,00h,00h,00h,00h,00h
 db 00h,00h,0F0h,0FFh,00h,00h,0F0h,0FFh,06h,00h,0F0h,0FFh,0Ch,00h,00h,00h
 db 06h,00h
-dword_CCC84:
+digihandle:
 db 0FFh,0FFh,0FFh,0FFh
-dword_CCC88:
+crowdsmooth:
 db 00h,00h,00h,00h
-dword_CCC8C:
+crowdvol8:
 db 00h,00h,00h,00h
-dword_CCC90:
+crowdvol7:
 db 00h,00h,00h,00h
 dword_CCC94:
 db 00h,00h,00h,00h

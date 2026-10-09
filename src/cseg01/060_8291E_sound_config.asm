@@ -10,7 +10,7 @@ extern dword_C541F, songdata, dword_CCC94, dword_D2350, dword_D2423, dword_D2427
 extern musichandle, dword_D2435, dword_D243A, dword_D24A0, dword_D27B2, dword_D27BB, dword_D2C6B, dword_DC238
 extern dword_EA0DC, dword_ED360, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, fclose_, fopen_
 extern fprintf_, jctime, loc_836C4, off_D24D1, strcpy_, sub_1431E, sub_30A0C, sub_30F12
-extern sub_31013, sub_599B9, sub_599EE, sub_6B391, sub_6B3D7, sub_8245A, sub_824F8, sub_827B3
+extern sub_31013, PlayDigiSample, WaitDigiSample, sub_6B391, sub_6B3D7, sub_8245A, sub_824F8, sub_827B3
 extern sub_82805, sub_8357A, sub_8363C, sub_8CCA8, sub_8D2F0, sub_8EB5B, sub_8EB93, sub_8ECC0
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_91370, sub_91400, sub_97079, sub_B2CD8, sub_B2DCA, sub_B3989, sub_B3999
@@ -585,8 +585,8 @@ call sub_8F13B	; 83084
 mov edx, eax	; 83089
 mov dword [dword_D2350], 0FFFFFFFFh	; 8308B
 mov dword [dword_C541F], 8	; 83095
-call sub_599B9	; 8309F
-call sub_599EE	; 830A4
+call PlayDigiSample	; 8309F
+call WaitDigiSample	; 830A4
 mov eax, edx	; 830A9
 call sub_8F1FE	; 830AB
 call sub_30F12	; 830B0

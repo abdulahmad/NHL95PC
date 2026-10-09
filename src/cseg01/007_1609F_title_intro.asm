@@ -15,7 +15,7 @@ extern fputchar, jctime, loc_16005, memcpy_, memset_, off_C6399, rand_, sprintf_
 extern srand_, strlen_, sub_1431E, sub_15D6B, sub_1600C, sub_16072, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
 extern sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2, sub_1B2A7, sub_1B8AC, sub_1B92E, sub_33E6A
-extern sub_47C31, sub_59981, sub_599B9, sub_59C1D, sub_59C3E, sub_59D54, sub_6B3D7, sub_76429
+extern sub_47C31, StopDigiSample, PlayDigiSample, sub_59C1D, sub_59C3E, sub_59D54, sub_6B3D7, sub_76429
 extern sub_83459, sub_8374D, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C
 extern sub_9087C, sub_9121C, sub_91284, sub_912C8, sub_9132C, sub_91370, sub_913B4, sub_91400
@@ -245,7 +245,7 @@ call sub_1B2A7	; 16362
 jmp short loc_16359	; 16367
 loc_16369:
 mov eax, dword [dword_DC33C]	; 16369
-call sub_599B9	; 1636E
+call PlayDigiSample	; 1636E
 mov ebx, 10h	; 16373
 mov edx, esp	; 16378
 xor eax, eax	; 1637A
@@ -499,7 +499,7 @@ xor ebp, ebp	; 166F4
 mov dword [songdata], ebp	; 166F6
 jmp short loc_1670D	; 166FC
 loc_166FE:
-call sub_59981	; 166FE
+call StopDigiSample	; 166FE
 mov eax, dword [dword_DC33C]	; 16703
 call sub_8F1FE	; 16708
 loc_1670D:
@@ -1273,7 +1273,7 @@ lea eax, [dword esp+0340h]	; 171C8
 call sub_8F13B	; 171CF
 mov dword [dword esp+0350h], eax	; 171D4
 mov eax, dword [dword esp+0354h]	; 171DB
-call sub_599B9	; 171E2
+call PlayDigiSample	; 171E2
 loc_171E7:
 mov ebx, 10h	; 171E7
 mov edx, esp	; 171EC
@@ -1453,7 +1453,7 @@ xor eax, eax	; 17462
 mov dword [songdata], eax	; 17464
 jmp short loc_17488	; 17469
 loc_1746B:
-call sub_59981	; 1746B
+call StopDigiSample	; 1746B
 mov eax, dword [dword esp+0354h]	; 17470
 call sub_8F1FE	; 17477
 mov eax, dword [dword esp+0350h]	; 1747C

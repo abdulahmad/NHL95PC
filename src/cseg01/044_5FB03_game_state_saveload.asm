@@ -8,9 +8,9 @@ extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, byte_E9A16, iflag
 extern byte_E9AD3, OOlist, collflag, dword_C530D, dword_C5382, dword_C53FB, dword_C5403, dword_C5407
 extern dword_C540B, dword_C540F, dword_C5413, dword_C5704, dword_C5708, dword_C570C, dword_C5840, dword_C66D0
 extern dword_C66D4, dword_C90B0, dword_C90C0, cont2team, dword_C90CA, dword_CBC3E, dword_CBECA, dword_CC0AC
-extern dword_CC0DC, dword_CC0E0, onetimerflag, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
+extern lastsfx, dword_CC0E0, onetimerflag, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC108
 extern dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_CC12C
-extern dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, dword_CCC88, dword_D8C6C
+extern dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC144, crowdsmooth, dword_D8C6C
 extern dword_D8C78, dword_D8C84, dword_D9980, dword_DB088, dword_DC28C, dword_DF00C, dword_DF010, hmtmstruct
 extern dword_DF6F2, dword_DF6F6, dword_DF6FA, dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
 extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, dword_DF7FA, dword_DF7FE, awtmroster, awtmptrF2
@@ -411,7 +411,7 @@ add eax, byte 2	; 600AA
 mov dx, word [word_CC0DA]	; 600AD
 mov word [eax], dx	; 600B4
 add eax, byte 2	; 600B7
-mov dx, word [dword_CC0DC]	; 600BA
+mov dx, word [lastsfx]	; 600BA
 mov word [eax], dx	; 600C1
 add eax, byte 2	; 600C4
 mov dx, word [word_E9A9C]	; 600C7
@@ -1192,16 +1192,16 @@ mov ax, word [ebx]	; 60BF0
 mov word [word_CC0DA], ax	; 60BF3
 add ebx, byte 2	; 60BF9
 mov ax, word [ebx]	; 60BFC
-mov word [dword_CC0DC], ax	; 60BFF
+mov word [lastsfx], ax	; 60BFF
 add ebx, byte 2	; 60C05
 mov ax, word [ebx]	; 60C08
 mov word [word_E9A9C], ax	; 60C0B
 add ebx, byte 2	; 60C11
 mov ax, word [ebx]	; 60C14
 mov word [crowdlevel], ax	; 60C17
-mov eax, dword [dword_CC0DC]	; 60C1D
+mov eax, dword [crowdlevel-2]	; 60C1D
 sar eax, 10h	; 60C22
-mov dword [dword_CCC88], eax	; 60C25
+mov dword [crowdsmooth], eax	; 60C25
 add ebx, byte 2	; 60C2A
 mov ax, word [ebx]	; 60C2D
 mov word [word_E9AAA], ax	; 60C30

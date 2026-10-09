@@ -21,7 +21,7 @@ extern dword_E9B04, puckvx, gmode, goalieacc, jctime, loc_48307, loc_48308, ltx
 extern off_C5439, puckx, pucky, puckvy, puckz, puckc, camx_m2, starordtab
 extern playeracc, puckshadow, puckvz, qsort_, randomd0, sfx, skateto, skatetopuck
 extern sprintf_, vecdist, sub_11598, sub_15C30, sub_48333, joyq_flush, getlchoice, PenShotAssign
-extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLate, sub_597E3, sub_59981, sub_59A11
+extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
 extern sub_59AAD, sub_59AD0, sub_59B0F, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
 extern EvadePC, sub_61576, sub_61D48, sub_62343, sub_62807, sub_62C37, sub_64102, sub_64439
 extern sub_655CC, sub_66497, sub_66DDA, sub_837A8, sub_8F633, sub_8FFB0, imul32, threat
@@ -1185,7 +1185,7 @@ jge short .3	; 49226
 mov word [crowdlevel], cx	; 49228
 .3:
 mov dword [dword_D8C84], esi	; 4922F
-call sub_597E3	; 49235
+call CrowdFadeOut	; 49235
 xor ebx, ebx	; 4923A
 mov word [crowdlevel], bx	; 4923C
 cmp byte [musicon], 0	; 49243
@@ -6988,7 +6988,7 @@ push edx	; 4DA87
 push esi	; 4DA88
 push edi	; 4DA89
 mov ecx, eax	; 4DA8A
-call sub_59981	; 4DA8C
+call StopDigiSample	; 4DA8C
 mov eax, 0ABh	; 4DA91
 call sfx	; 4DA96
 and byte [gmode2], 0FAh	; 4DA9B
@@ -8046,7 +8046,7 @@ and ch, 7Fh	; 4E7AC
 mov byte [dword_C90C0], ch	; 4E7AF
 mov eax, 2	; 4E7B5
 .3:
-call sub_59A11	; 4E7BA
+call PlayCrowdSample	; 4E7BA
 xor eax, eax	; 4E7BF
 pop edx	; 4E7C1
 pop ecx	; 4E7C2
@@ -8120,7 +8120,7 @@ sar eax, 10h	; 4E8B8
 cmp eax, byte 0FFFFFFFFh	; 4E8BB
 je short .12	; 4E8BE
 mov eax, 9	; 4E8C0
-call sub_59A11	; 4E8C5
+call PlayCrowdSample	; 4E8C5
 call sub_66DDA	; 4E8CA
 mov eax, edx	; 4E8CF
 pop edx	; 4E8D1
@@ -8135,7 +8135,7 @@ jmp short .11	; 4E8DC
 jne short .12	; 4E8DE
 mov eax, 0Bh	; 4E8E0
 .11:
-call sub_59A11	; 4E8E5
+call PlayCrowdSample	; 4E8E5
 .12:
 xor eax, eax	; 4E8EA
 pop edx	; 4E8EC

@@ -5,13 +5,13 @@ section s_69336 progbits alloc exec nowrite align=1
 extern DoGameFrame, ResetBench, __CHK, assreplace, byte_C5400, sflags, gmode2, musicon
 extern iflags, byte_E9AC1, joysampling, dword_C4E10, dword_C4E14, dword_C5130, gameopts, dword_C5704
 extern dword_C5708, dword_C570C, dword_C7444, dword_C7448, dword_C90B0, dword_C90C0, cont2team, dword_C90CA
-extern dword_CBECA, dword_CC0DC, dword_CCC88, dword_CCC98, dword_CD9A0, dword_D8C40, dword_D8C72, dword_D8C74
+extern dword_CBECA, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, dword_D8C40, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC28C, dword_DD6A8, dword_DD6AE, dword_DD6B0
 extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
 extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, sub_10E9F, sub_1145F, sub_1149A
 extern sub_11598, sub_1395F, sub_14CF1, sub_150C6, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
-extern sub_479E9, sub_47C31, joyq_flush, Readjoy1, Readjoy2, sub_594CD, sub_597E3, sub_59981
+extern sub_479E9, sub_47C31, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
 extern sub_59CA9, sub_59D54, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
 extern sub_61B85, sub_63D3C, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_836E4
 extern sub_8373E, sub_8F633, sub_8FFB0, sub_B396E, unk_DABF0, unk_DC200, unk_DF014, unk_DF314
@@ -265,7 +265,7 @@ xor esi, esi	; 696F7
 mov word [word_CBEC6], si	; 696F9
 mov word [crowdlevel], si	; 69700
 xor esi, esi	; 69707
-mov dword [dword_CCC88], esi	; 69709
+mov dword [crowdsmooth], esi	; 69709
 mov word [word_DF81A], ax	; 6970F
 mov word [word_DF816], ax	; 69715
 call setupice	; 6971B
@@ -544,7 +544,7 @@ sar eax, 10h	; 69B96
 mov dword [joysampling], eax	; 69B99
 loc_69B9E:
 movsx eax, si	; 69B9E
-call sub_594CD	; 69BA1
+call CrowdNoiseUpdate	; 69BA1
 mov edx, dword [dword_D8C78]	; 69BA6
 mov ebx, 18h	; 69BAC
 mov eax, edx	; 69BB1
@@ -605,9 +605,9 @@ mov eax, 0C8h	; 69C79
 call randomd0	; 69C7E
 add eax, 64h	; 69C83
 mov word [crowdlevel], ax	; 69C88
-mov eax, dword [dword_CC0DC]	; 69C8E
+mov eax, dword [crowdlevel-2]	; 69C8E
 sar eax, 10h	; 69C93
-mov dword [dword_CCC88], eax	; 69C96
+mov dword [crowdsmooth], eax	; 69C96
 loc_69C9B:
 mov eax, dword [dword_E9A9E]	; 69C9B
 sar eax, 10h	; 69CA0
@@ -655,11 +655,11 @@ mov ebx, 10h	; 69D3E
 mov edx, unk_DF014	; 69D43
 mov eax, 1	; 69D48
 call sub_11598	; 69D4D
-call sub_597E3	; 69D52
+call CrowdFadeOut	; 69D52
 xor ebx, ebx	; 69D57
 mov word [crowdlevel], bx	; 69D59
 xor edi, edi	; 69D60
-mov dword [dword_CCC88], edi	; 69D62
+mov dword [crowdsmooth], edi	; 69D62
 cmp byte [musicon], 0	; 69D68
 je short loc_69D8A	; 69D6F
 test byte [byte_C5400], 1	; 69D71
@@ -673,7 +673,7 @@ jmp short loc_69D8F	; 69D88
 loc_69D8A:
 call sub_8F633	; 69D8A
 loc_69D8F:
-call sub_59981	; 69D8F
+call StopDigiSample	; 69D8F
 mov word [exitgame], 0FFFFh	; 69D94
 mov edx, 1E0h	; 69D9D
 mov eax, 280h	; 69DA2

@@ -9,8 +9,8 @@ extern dword_CC0F0, dword_CC9AD, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8
 extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, dword_E9B04, forcepldata, jctime, puckc, camx_m2, randomd0
 extern reenergizeteam, resetplstuff, setpersonel, sub_1145F, sub_1149A, sub_11598, sub_14CF1, sub_33DD3
-extern sub_47951, joyq_flush, Readjoy1, Readjoy2, sub_594CD, sub_597E3, sub_59863, sub_59981
-extern sub_59A11, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
+extern sub_47951, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
+extern PlayCrowdSample, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8374D, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
 extern unk_DF014, unk_DF314, unk_DFD9C, camx, camy, xc1, yc1, SortCords
 extern word_C90B2, word_C90B4, c1playernum, c2playernum, word_C90D4, exitgame, word_CBC52, word_CBC54
@@ -95,7 +95,7 @@ push esi	; 47CE3
 push edi	; 47CE4
 sub esp, byte 10h	; 47CE5
 mov eax, 0Ah	; 47CE8
-call sub_59A11	; 47CED
+call PlayCrowdSample	; 47CED
 mov eax, dword [cont2team]	; 47CF2
 sar eax, 10h	; 47CF7
 movsx dx, byte [dword eax+byte_CC9B0]	; 47CFA
@@ -407,7 +407,7 @@ sar eax, 10h	; 481EC
 mov dword [joysampling], eax	; 481EF
 loc_481F4:
 movsx eax, si	; 481F4
-call sub_594CD	; 481F7
+call CrowdNoiseUpdate	; 481F7
 cmp dword [dword_C4E14], byte 0	; 481FC
 jne short loc_4824E	; 48203
 call Readjoy1	; 48205
@@ -454,8 +454,8 @@ mov ebx, 10h	; 48299
 mov edx, unk_DF014	; 4829E
 mov eax, 1	; 482A3
 call sub_11598	; 482A8
-call sub_597E3	; 482AD
-call sub_59981	; 482B2
+call CrowdFadeOut	; 482AD
+call StopDigiSample	; 482B2
 call sub_8374D	; 482B7
 xor edx, edx	; 482BC
 mov dword [dword_C4E14], edx	; 482BE
@@ -474,7 +474,7 @@ mov edx, unk_DF014	; 482EC
 mov eax, 1	; 482F1
 call sub_11598	; 482F6
 loc_482FB:
-call sub_59981	; 482FB
+call StopDigiSample	; 482FB
 call sub_8374D	; 48300
 xor eax, eax	; 48305
 loc_48307:
@@ -498,7 +498,7 @@ test ax, ax	; 48324
 jne short loc_4832E	; 48327
 call sub_47CD6	; 48329
 loc_4832E:
-call sub_59863	; 4832E
+call CrowdNoiseReset	; 4832E
 sub_48333:
 push dword 28h	; 48333
 call __CHK	; 48338

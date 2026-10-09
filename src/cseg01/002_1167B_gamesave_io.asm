@@ -14,8 +14,8 @@ extern off_C526F, off_C5273, off_C5439, off_C80D7, off_C80E7, off_C80EB, off_C90
 extern off_CBED0, strcat_, strcpy_, sub_10E9F, sub_1145F, sub_1149A, sub_11598, sub_13A91
 extern sub_13E8F, sub_1431E, sub_14525, sub_1457C, sub_1463D, sub_1478B, sub_147C9, sub_14CF1
 extern sub_150C6, sub_15B76, sub_1920F, sub_1935D, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
-extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, sub_47C31, StartThreeStars, joyq_flush, sub_594CD
-extern sub_597E3, sub_59863, sub_59981, sub_59A11, sub_59D71, DrawRinkOverlays, PeriodOver, sub_60612
+extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, sub_47C31, StartThreeStars, joyq_flush, CrowdNoiseUpdate
+extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71, DrawRinkOverlays, PeriodOver, sub_60612
 extern sub_61A27, sub_61B85, sub_64614, sub_658F3, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
 extern sub_6AF97, sub_6B008, sub_7DC8B, sub_8374D, sub_837A8, SelectScreenBM, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8FFB0, sub_90354, sub_9035C, MouseSetPos, sub_B396E, sub_B4BA8, unk_C0200
@@ -156,7 +156,7 @@ sar eax, 10h	; 1182F
 mov dword [joysampling], eax	; 11832
 loc_11837:
 movsx eax, si	; 11837
-call sub_594CD	; 1183A
+call CrowdNoiseUpdate	; 1183A
 cmp dword [penshotlive], byte 0	; 1183F
 je short loc_11855	; 11846
 xor edi, edi	; 11848
@@ -257,7 +257,7 @@ mov dword [dword_DF00C], eax	; 119B8
 mov eax, dword [dword_D3030]	; 119BD
 mov dword [dword_DF010], eax	; 119C2
 loc_119C7:
-call sub_597E3	; 119C7
+call CrowdFadeOut	; 119C7
 cmp byte [musicon], 0	; 119CC
 je short loc_119DC	; 119D3
 call sub_837A8	; 119D5
@@ -265,7 +265,7 @@ jmp short loc_119E1	; 119DA
 loc_119DC:
 call sub_8F633	; 119DC
 loc_119E1:
-call sub_59981	; 119E1
+call StopDigiSample	; 119E1
 call sub_8374D	; 119E6
 call sub_61B85	; 119EB
 mov ecx, dword [dword_DC230]	; 119F0
@@ -419,7 +419,7 @@ sar eax, 10h	; 11C68
 mov ecx, 1	; 11C6B
 call sub_150C6	; 11C70
 xor eax, eax	; 11C75
-call sub_59A11	; 11C77
+call PlayCrowdSample	; 11C77
 loc_11C7C:
 cmp byte [byte_C4D1C], 1	; 11C7C
 je short loc_11C8E	; 11C83
@@ -520,7 +520,7 @@ call sub_658F3	; 11DE6
 mov eax, 1	; 11DEB
 call sub_658F3	; 11DF0
 call sub_1C807	; 11DF5
-call sub_59863	; 11DFA
+call CrowdNoiseReset	; 11DFA
 call sub_1C852	; 11DFF
 mov eax, dword [word_CBC44]	; 11E04
 sar eax, 10h	; 11E09

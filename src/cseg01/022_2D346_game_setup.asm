@@ -20,7 +20,7 @@ extern dword_DF626, dword_DF62A, dword_DF636, dword_DF638, dword_DF63A, fputchar
 extern off_C57CC, off_C719C, off_C80D7, off_C80E7, off_C80EB, off_CD304, rand_, sprintf_
 extern strcat_, strcpy_, sub_11598, sub_1431E, sub_14525, sub_14552, sub_1457C, sub_1463D
 extern sub_1478B, sub_147C9, sub_147FF, sub_174C2, sub_175E2, sub_1BAF3, sub_29C75, sub_33E6A
-extern sub_47C31, joyq_flush, sub_59981, sub_599B9, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
+extern sub_47C31, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
 extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_913B4, sub_913D0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88
@@ -592,7 +592,7 @@ call sub_8F13B	; 2DBC7
 mov dword [dword esp+076Ch], eax	; 2DBCC
 xor edx, edx	; 2DBD3
 mov dword [dword_CCC94], edx	; 2DBD5
-call sub_599B9	; 2DBDB
+call PlayDigiSample	; 2DBDB
 loc_2DBE0:
 call sub_6B3D7	; 2DBE0
 call joyq_flush	; 2DBE5
@@ -2017,7 +2017,7 @@ xor ebp, ebp	; 2F19D
 mov dword [songdata], ebp	; 2F19F
 jmp short loc_2F1AC	; 2F1A5
 loc_2F1A7:
-call sub_59981	; 2F1A7
+call StopDigiSample	; 2F1A7
 loc_2F1AC:
 call sub_B4BA8	; 2F1AC
 push byte 0	; 2F1B1
@@ -2943,7 +2943,7 @@ call sub_8F13B	; 2FCF8
 mov dword [byte ebp-014h], eax	; 2FCFD
 xor ecx, ecx	; 2FD00
 mov dword [dword_CCC94], ecx	; 2FD02
-call sub_599B9	; 2FD08
+call PlayDigiSample	; 2FD08
 loc_2FD0D:
 mov ebx, 10h	; 2FD0D
 lea edx, [dword ebp-0374h]	; 2FD12
@@ -2983,7 +2983,7 @@ xor esi, esi	; 2FD9B
 mov dword [songdata], esi	; 2FD9D
 jmp short loc_2FDB2	; 2FDA3
 loc_2FDA5:
-call sub_59981	; 2FDA5
+call StopDigiSample	; 2FDA5
 mov eax, dword [byte ebp-014h]	; 2FDAA
 call sub_8F1FE	; 2FDAD
 loc_2FDB2:

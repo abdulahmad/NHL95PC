@@ -11,7 +11,7 @@ extern onetimerflag, dword_CC0FA, penshotplayer, dword_CC104, penshotmode, pensh
 extern dword_E0244, dword_E9A9E, forcepldata, puckvx, gmode
 extern jctime, CanBlockShot_ret5, ltx, puckx, pucky, puckvy, puckz, puckc
 extern puckvz, randomd0, resetplstuff, setpersonel, sfx, skateto, skatetopuck, sub_14AFE
-extern StopIfFree, SkateToSpot, lcfound, CenterMouse, ReturnGoalies, sub_59981, sub_59AAD, changeplayer
+extern StopIfFree, SkateToSpot, lcfound, CenterMouse, ReturnGoalies, StopDigiSample, sub_59AAD, changeplayer
 extern restorepl, CompLine, setplayer, clockcont_0, SprSortVert, SprSort, SetExitGame, EvadePC
 extern sub_61B85, sub_63F72, threat, SortCords, updateanim
 extern vtoa, regd4, camx, camy, passdir, word_C90A6, passplayer, xc1
@@ -1710,7 +1710,7 @@ call restorepl	; 5210A
 mov word [c2playernum], ax	; 5210F
 .24:
 call CenterMouse	; 52115
-call sub_59981	; 5211A
+call StopDigiSample	; 5211A
 and byte [gmode2], 0FAh	; 5211F
 and byte [gmode], 0FEh	; 52126
 and byte [byte esi+pflags2], 0FEh	; 5212D

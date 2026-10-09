@@ -143,3 +143,8 @@ starordtab,CCA0A,"dd str_1st, str_2nd, str_3rd: star ordinal strings indexed by 
 str_1st,C1B20,"""1st"" (starordtab)"
 str_2nd,C1B24,"""2nd"" (starordtab)"
 str_3rd,C1B28,"""3rd"" (starordtab)"
+lastsfx,CC0DC,"sound effect number last requested: sfx stores its argument here; the replay recorder (engine_display 6761E/6779B) saves it per frame and resets it to -1. dword loads of it + sar 10h are crowdlevel short loads, written [crowdlevel-2]"
+crowdsmooth,CCC88,"MIDI crowd noise: crowdlevel eased by CrowdNoiseUpdate (step 30*eax per call); drives the channel 8/7 volumes"
+crowdvol8,CCC8C,"MIDI crowd noise: current volume of channel 8 (0 = note off); CrowdNoiseUpdate / CrowdNoiseOff"
+crowdvol7,CCC90,"MIDI crowd noise: current volume of channel 7 (0 = note off); CrowdNoiseUpdate / CrowdNoiseOff"
+digihandle,CCC84,"handle of the digital sample PlayDigiSample started (-1 = none); StopDigiSample / WaitDigiSample poll it"

@@ -18,8 +18,8 @@ extern dword_D8B7C, dword_D8C18, dword_D8C4C, dword_D8C70, dword_D8C78, dword_D8
 extern dword_DC238, dword_DF00C, dword_DF010, dword_E9A9E, dword_EDA08, dword_EDA0C, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, sub_1431E, sub_14525, sub_1457C, sub_145A2
 extern sub_150C6, sub_1672A, sub_16F9A, sub_190BE, sub_1BAF3, sub_1CD73, sub_3149D, sub_31AB5
-extern sub_327A1, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, sub_59748, sub_597E3
-extern sub_59863, sub_59981, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
+extern sub_327A1, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
+extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
 extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
 extern sub_8DF54, sub_8E080, sub_8E4C0, sub_8E5AC, sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0
@@ -1397,7 +1397,7 @@ call sub_11598	; 10FAA
 mov edx, 1E0h	; 10FAF
 mov eax, 280h	; 10FB4
 call sub_10E9F	; 10FB9
-call sub_597E3	; 10FBE
+call CrowdFadeOut	; 10FBE
 cmp byte [musicon], 0	; 10FC3
 je short loc_10FD3	; 10FCA
 call sub_837A8	; 10FCC
@@ -1405,7 +1405,7 @@ jmp short loc_10FD8	; 10FD1
 loc_10FD3:
 call sub_8F633	; 10FD3
 loc_10FD8:
-call sub_59981	; 10FD8
+call StopDigiSample	; 10FD8
 mov eax, 222E0h	; 10FDD
 call sub_1BAF3	; 10FE2
 loc_10FE7:
@@ -1661,7 +1661,7 @@ mov ebx, 10h	; 112CC
 mov edx, unk_DF014	; 112D1
 mov eax, 1	; 112D6
 call sub_11598	; 112DB
-call sub_597E3	; 112E0
+call CrowdFadeOut	; 112E0
 cmp byte [musicon], 0	; 112E5
 je short loc_112F5	; 112EC
 call sub_837A8	; 112EE
@@ -1670,7 +1670,7 @@ loc_112F5:
 call sub_8F633	; 112F5
 loc_112FA:
 call sub_8374D	; 112FA
-call sub_59981	; 112FF
+call StopDigiSample	; 112FF
 call sub_6B410	; 11304
 mov eax, 1	; 11309
 call sub_7E0FA	; 1130E
@@ -1721,7 +1721,7 @@ je short loc_113DD	; 113D1
 call sub_8F979	; 113D3
 jmp near loc_113E7	; 113D8
 loc_113DD:
-call sub_59981	; 113DD
+call StopDigiSample	; 113DD
 call sub_8F984	; 113E2
 loc_113E7:
 xor eax, eax	; 113E7
@@ -1736,7 +1736,7 @@ ret	; 113EF
 loc_113F0:
 test byte [gameopts], 80h	; 113F0
 je short loc_11418	; 113F7
-call sub_59748	; 113F9
+call CrowdNoiseOff	; 113F9
 cmp byte [musicon], 0	; 113FE
 je short loc_1140E	; 11405
 call sub_837A8	; 11407
@@ -1757,7 +1757,7 @@ shl eax, 7	; 11432
 or dword [gameopts], eax	; 11435
 test byte [gameopts], 80h	; 1143B
 je short loc_113E7	; 11442
-call sub_59863	; 11444
+call CrowdNoiseReset	; 11444
 call sub_8F963	; 11449
 jmp short loc_113E7	; 1144E
 loc_11450:

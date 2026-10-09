@@ -12,7 +12,7 @@ extern byte_E024D, byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, b
 extern byte_E9A17, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD, byte_E9ACE
 extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, joysampling, dword_C53FB, gameopts
 extern dword_C5840, dword_C90B0, dword_C90C0, dword_C90CA, dword_C9120, dword_CBEBE, dword_CBECA, dword_CC0AC
-extern dword_CC0DC, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC110, dword_CC114, penshotmode
+extern lastsfx, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC110, dword_CC114, penshotmode
 extern penshotstart, penshottimer, dword_CC124, penshotlive, dword_CD2F8, dword_CD34C, dword_CD350, dword_D8B70
 extern dword_D8C84, dword_DB086, dword_DB088, dword_DC230, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
 extern hmtmstruct, dword_DF646, awtmstruct, puckstruct, sortobj15, hmtmlines
@@ -22,7 +22,7 @@ extern dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, fputchar, puckvx, gmo
 extern lseek_, ltx, off_C5439, puckx, pucky, puckvy, puckz, puckc
 extern off_CD304, off_CD354, puckvz, randomd0, sub_65B83, sfx, sprintf_, vecdist
 extern strcpy_, strlen_, sub_110E0, sub_14552, sub_1457C, sub_145F9, sub_14C22, sub_14CA0
-extern sub_18F74, sub_1CD73, sub_59A11, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
+extern sub_18F74, sub_1CD73, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
 extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, sub_B2CD8, unk_C1B49, unk_C1C58, unk_C1C5B
 extern unk_C1C5E, unk_C1C61, unk_C1C64, unk_C1C67, unk_C1CB0, unk_C5423, unk_C542E, unk_DBC30
 extern SortCords, unk_E9B4C, word_C5428, word_C90B2, word_C90B4, c1playernum, c2playernum
@@ -333,7 +333,7 @@ sar eax, 10h	; 617D7
 and eax, edx	; 617DA
 mov word [dword edi+word_E9B2C], ax	; 617DC
 mov word [ebx], 0FFFFh	; 617E3
-mov edx, dword [dword_CC0DC]	; 617E8
+mov edx, dword [crowdlevel-2]	; 617E8
 sar edx, 10h	; 617EE
 mov eax, 3E8h	; 617F1
 sub eax, edx	; 617F6
@@ -3289,7 +3289,7 @@ jmp short loc_63D33	; 63D2C
 loc_63D2E:
 mov eax, 4	; 63D2E
 loc_63D33:
-call sub_59A11	; 63D33
+call PlayCrowdSample	; 63D33
 loc_63D38:
 pop edx	; 63D38
 pop ecx	; 63D39
