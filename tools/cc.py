@@ -97,6 +97,40 @@ def file_blocks(src):
 LABEL = re.compile(r'^([A-Za-z_.][\w.$?@]*):')
 ADDR = re.compile(r';\s*([0-9A-F]{5})\s*$')
 
+DATA = re.compile(r'^\s*(db|dw|dd)\s+(.*)$')
+
+def data_size(l):
+    """bytes of a db/dw/dd line without an address comment (jump tables, alignment padding), else None"""
+    m = DATA.match(l.split(';')[0])
+    if not m: return None
+    n = len([x for x in re.split(r',(?=(?:[^"\']*["\'][^"\']*["\'])*[^"\']*$)', m.group(2)) if x.strip()])
+    return n * {'db': 1, 'dw': 2, 'dd': 4}[m.group(1)]
+
+def falls_through(L, k):
+    """the code line before L[k] can run into it (not ret/jmp): a label there is an entry point inside the function
+    (e.g. sndcb_addesp8_x in SndLoadFile, a tail other functions jump into), not the start of the next one"""
+    for l in reversed(L[:k]):
+        if LABEL.match(l) or not l.strip() or l.startswith(';'): continue
+        if data_size(l) and not ADDR.search(l): return False
+        op = l.split()[0] if l.split() else ''
+        return ADDR.search(l) is not None and op not in ('ret', 'retn', 'jmp', 'iret')
+    return False
+
+def own_label(func, name):
+    """labels that belong to func's block although they are global: Func_n1 (switch cases), Func_x / Func_common
+    (entry points other code jumps to) - but not Func_jt-style data that precedes the next function"""
+    return name.startswith(func + '_')
+
+def trailing_data(L, j):
+    """L[j] is the first line after a block: bytes of the data lines (padding, the next function's jump table)
+    between it and the next line with an address"""
+    n = 0
+    for l in L[j:]:
+        if ADDR.search(l): break
+        d = data_size(l)
+        if d: n += d
+    return n
+
 def seg_end(stem):
     for ln in open(os.path.join(ROOT, 'src/segments.txt')):
         if ln.startswith('#') or not ln.strip(): continue
@@ -127,8 +161,24 @@ def block(src, func=None):
         a = ADDR.search(l)
         if a: end = int(a.group(1), 16); break
     if end is None: end = seg_end(stem)
+    end -= trailing_data(L, j + 1)
     if pend: labels += [(n, end) for n in pend]
     return first, end, labels, body
+
+def leading_labels(src, func=None):
+    """data labels right before the marked block (Watcom puts a switch's jump table, then padding, in front of the
+    function): {label: address}, walking back over db/dd lines from the block start"""
+    stem, func, asm, inc = c_paths(src, func)
+    L = open(asm).read().split('\n')
+    i = next(k for k, l in enumerate(L) if l.strip() == '%%include "%s"' % inc) - 2
+    start = block(src, func)[0]
+    out = {}; a = start; k = i - 1
+    while k >= 0 and not ADDR.search(L[k]):
+        d = data_size(L[k]); m = LABEL.match(L[k])
+        if d: a -= d
+        elif m: out[m.group(1)] = a
+        k -= 1
+    return out
 
 def asm_range(src, func=None):
     """(start, end) of the original code: the marked block, else label func up to the next non-local label"""
@@ -143,11 +193,12 @@ def asm_range(src, func=None):
             continue
         a = ADDR.search(l)
         if start == -1 and a: start = int(a.group(1), 16); continue
-        if m and not m.group(1).startswith('.') and start != -1: break
+        if m and not m.group(1).startswith('.') and not own_label(func, m.group(1)) and not falls_through(L, k) and start != -1: break
+        if start != -1 and data_size(l) and not a: break
     for l in L[k:]:
         a = ADDR.search(l)
-        if a: return start, int(a.group(1), 16)
-    return start, seg_end(stem)
+        if a: return start, int(a.group(1), 16) - trailing_data(L, k)
+    return start, seg_end(stem) - trailing_data(L, k)
 
 def frag(src, obj, out):
     stem, fil, asm, inc = c_paths(src)
@@ -162,11 +213,22 @@ def frag(src, obj, out):
     s0 = pubs.get(func, 0) if multi else 0
     if func not in pubs and multi: raise SystemExit('%s: no public %s in the object' % (src, func))
     n = end - start
-    if (not multi and len(text) != n) or (multi and s0 + n > len(text)):
+    lead = {}
+    if not multi and pubs.get(func, 0) > 0 and len(text) - pubs[func] == n:
+        # the switch jump table (+ padding) Watcom emits in front of the function: not part of the block; the
+        # asm has the same table as data labels before it
+        s0 = pubs[func]; lead = leading_labels(src, func)
+    if (not multi and len(text) - s0 != n) or (multi and s0 + n > len(text)):
         raise SystemExit('%s: compiled %d bytes for %s, asm block %05X-%05X is %d bytes (see tools/cdiff.py %s --func %s)'
                          % (os.path.relpath(src, ROOT), len(text) - s0, func, start, end, n, os.path.relpath(src, ROOT), func))
     tt = TextTargets(src, r)
-    textlabel = lambda t: tt.resolve(t, func)[0]
+    def textlabel(t):
+        if t < s0 and lead:
+            a = start - (s0 - t)
+            hit = [x for x, v in lead.items() if v == a]
+            if not hit: raise SystemExit('%s: reference to _TEXT+%X (before %s): no data label at %05X' % (src, t, func, a))
+            return hit[0]
+        return tt.resolve(t, func)[0]
     for nm, off in pubs.items():
         la = dict((x, a) for x, a in labels).get(nm)
         if la is not None and la - start != off - s0:
@@ -287,8 +349,9 @@ def mark(src, endlabel=None, func=None):
         m = LABEL.match(L[j])
         if endlabel:
             if m and m.group(1) == endlabel: break
-        elif m and not m.group(1).startswith('.'): break
+        elif m and not m.group(1).startswith('.') and not own_label(func, m.group(1)) and not falls_through(L, j): break
         if L[j].startswith('%'): break
+        if data_size(L[j]) and not ADDR.search(L[j]) and not endlabel: break
         j += 1
     while j > i + 1 and (not L[j - 1].strip() or L[j - 1].startswith(';')): j -= 1   # the next function's comment block
     rel = os.path.relpath(os.path.abspath(src), ROOT) + ('' if inc.endswith('/%s.inc' % func) else ' (%s)' % func)

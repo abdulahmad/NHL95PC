@@ -95,7 +95,7 @@ def main():
         for k in range(i.address, i.address + i.size):
             f = cfx.get(k)
             if f:
-                t = addr if f['target'] == 'TEXT' else labaddr.get(f['target'])
+                t = addr - c0 if f['target'] == 'TEXT' else labaddr.get(f['target'])
                 if t is None: return ('?' + f['target'], f['kind'])
                 return (t + f['addend'] + (0 if f['kind'] == 'abs32' else 0), f['kind'], k)
         return None
