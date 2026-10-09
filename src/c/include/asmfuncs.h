@@ -797,7 +797,6 @@ extern void asspenshooter(); /* 4FAE8 */
 extern void joyq_pop(); /* 4FCE8 */
 extern void lineinput(); /* 4FD8E */
 extern void faceoffinput(); /* 4FF0D */
-extern void Acheck(); /* 4FFAE */
 extern void CanBlockShot(); /* 4FFEE */
 extern void CanBlockShot_ret6(); /* 50336 */
 extern void CanBlockShot_ret5(); /* 50337 */

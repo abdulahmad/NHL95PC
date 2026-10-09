@@ -252,6 +252,10 @@ pop edx	; 4FFAA
 pop ecx	; 4FFAB
 pop ebx	; 4FFAC
 ret	; 4FFAD
+; C: src/c/038_4FCE8_engine_input/Acheck.c
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/Acheck.inc"
+%else
 Acheck:
 push dword 8	; 4FFAE
 call __CHK	; 4FFB3
@@ -277,6 +281,7 @@ mov edx, 639h	; 4FFE2
 call SetSPA	; 4FFE7
 pop ebx	; 4FFEC
 ret	; 4FFED
+%endif ; C
 ; CanBlockShot (PC only): may this player dive to block a shot?  Shooter = puck carrier, or
 ; lastplayer if the puck is loose and heading at his goal; shooter must be in a shooting SPA, the
 ; player between him and the puck, facing him, and closer than the puck.  Returns 0, or the dive

@@ -15,12 +15,15 @@
 #define pfna            0x02    /* pflags bit 1: start the next assignment (93G pfna) */
 #define pfalock         0x20    /* pflags bit 5: animation lock (93G pfalock) */
 #define pfjoy           0x08    /* pflags bit 3: player under joystick control */
+#define pfgoal          0x80    /* pflags bit 7: goal to shoot at, 0 = bottom, 1 = top (93G pfgoal) */
 #define pf2aip          0x02    /* pflags2 bit 1: animation in progress (93G pf2aip) */
 #define pf2lcm          0x08    /* pflags2 bit 3: line change mode, keeps the joystick (93G pf2lcm) */
 
 #define SPAgready       0x001   /* goalie ready stance (93G 2) */
 #define SPAgskate       0x1F1   /* goalie skate (93G $3F8) */
 #define SPAsweep        0x589   /* sweep check (93G $B24) */
+#define SPAholdchk      0x873   /* hold check (94G Acheck $1122 'normal hold check') */
+#define SPAholdchkair   0x639   /* hold check, stick in the air (94G Acheck $C90) */
 #define sfwrap          0x10    /* sflags bit 4: the replay buffer has wrapped (94G sfwrap) */
 #define REPLAYSIZE      0x9600  /* replay buffer bytes, 80h per frame */
 
