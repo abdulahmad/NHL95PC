@@ -448,8 +448,8 @@
 ;  59265  ChkGoalies                               cseg01/040_53294_engine_physics_ai.asm       1
 ;  59352  ReturnGoalies                            cseg01/040_53294_engine_physics_ai.asm       1
 ;  593F5  ChkPullGoalieLate                        cseg01/040_53294_engine_physics_ai.asm       1
-;  59493  sub_59493                                cseg01/041_59493_engine_sound_iface.asm      1
-;  594B2  sub_594B2                                cseg01/041_59493_engine_sound_iface.asm      1
+;  59493  SndLoadFile                              cseg01/041_59493_engine_sound_iface.asm      1
+;  594B2  SndLoadFile2                             cseg01/041_59493_engine_sound_iface.asm      1
 ;  594CD  CrowdNoiseUpdate                         cseg01/041_59493_engine_sound_iface.asm      4
 ;  59748  CrowdNoiseOff                            cseg01/041_59493_engine_sound_iface.asm      5
 ;  597E3  CrowdFadeOut                             cseg01/041_59493_engine_sound_iface.asm      5

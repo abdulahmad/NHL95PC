@@ -32,7 +32,7 @@ global dopass_ret6
 global passtoa0, puckbody, puckglue, puckgoalie, puckshadow, puckstick, setpassmode
 global ToFixed, BlockShotDive, TryBlockShot, FacingBoards, SkillForAnim, ChkDelayedOffside, PuckCheckColl, PenTimeDiff
 global PassLaneChk, ScatterPass, passmode, CompShoot, ChkOffsides, MarkTwoLinePlayers, ChkShotStat, setInjuryType
-global sub_5601D, puckIChk, newcheck, ChkGoalies, ReturnGoalies, ChkPullGoalieLate, wallcoll, wallcollb
+global NetCollide, puckIChk, newcheck, ChkGoalies, ReturnGoalies, ChkPullGoalieLate, wallcoll, wallcollb
 ToFixed:
 push dword 4	; 53294
 call __CHK	; 53299
@@ -3757,7 +3757,7 @@ xor ah, ah	; 56010
 cwde	; 56012
 call RemoveFromLines	; 56013
 jmp near checkob_ret5	; 56018
-sub_5601D:
+NetCollide:
 push dword 2Ch	; 5601D
 call __CHK	; 56022
 push ebx	; 56027
@@ -3972,7 +3972,7 @@ add eax, 9Ah	; 562B3
 add word [byte esi+Xpos+2], ax	; 562B8
 .22:
 test byte [byte esi+055h], 8	; 562BC
-jne near sub_5601D.17	; 562C0
+jne near NetCollide.17	; 562C0
 .23:
 mov eax, 0FE1h	; 562C6
 jmp short .25	; 562CB
@@ -4114,7 +4114,7 @@ cmp eax, 0CAh	; 56491
 jl short .13	; 56496
 movsx edx, di	; 56498
 mov eax, ebx	; 5649B
-call sub_5601D	; 5649D
+call NetCollide	; 5649D
 mov esi, eax	; 564A2
 cmp ax, word [byte ebx+SPA]	; 564A4
 jne near .27	; 564A8
@@ -4130,7 +4130,7 @@ jge short .15	; 564CD
 .14:
 movsx edx, di	; 564CF
 mov eax, ebx	; 564D2
-call sub_5601D	; 564D4
+call NetCollide	; 564D4
 mov esi, eax	; 564D9
 jmp near .27	; 564DB
 .15:

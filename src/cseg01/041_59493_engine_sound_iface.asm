@@ -12,11 +12,11 @@ extern sub_8FDB2, sub_8FDE5, sub_8FE1C, sub_8FE4F, sub_B3989, sub_B3999, crowdle
 global sndcb_addesp8_x
 global PlayCrowdSample_ret
 global nullsub_5
-global sfx, sub_59493, sub_594B2, CrowdNoiseUpdate, CrowdNoiseOff, CrowdFadeOut, CrowdNoiseReset, FreeDigiSample
+global sfx, SndLoadFile, SndLoadFile2, CrowdNoiseUpdate, CrowdNoiseOff, CrowdFadeOut, CrowdNoiseReset, FreeDigiSample
 global StopDigiSample, PlayDigiSample, WaitDigiSample, PlayCrowdSample, PaOneMinuteLeft, PaSpeechBusy, PaGoal, PaPlayerNumber
 global PaPenalty, PaPenaltyShot, PaTonightIntro, PaScoringPeriod, PaNhlIntro, PaGoodnight, PaLineups, PaElseNhl
 global PaHighlightIntro, PaPlayoffResult, PaPlayoffTonight, PaOpenBank, PaPreloadClips
-sub_59493:
+SndLoadFile:
 push dword 14h	; 59493
 call __CHK	; 59498
 push ebx	; 5949D
@@ -30,7 +30,7 @@ add esp, byte 8	; 594AC
 pop ecx	; 594AF
 pop ebx	; 594B0
 ret	; 594B1
-sub_594B2:
+SndLoadFile2:
 push dword 14h	; 594B2
 call __CHK	; 594B7
 push ebx	; 594BC

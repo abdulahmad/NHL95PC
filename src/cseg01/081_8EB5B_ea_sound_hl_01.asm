@@ -7,8 +7,8 @@ extern byte_D41CC, byte_D41CD, byte_F1A1C, byte_F1A1D, byte_F1D61, byte_F234D, b
 extern byte_F23CD, byte_F23CF, byte_F23E0, byte_F243E, dword_D41CE, dword_D41EA, dword_D4F64, dword_D4F8A
 extern dword_D4F8E, dword_D4F92, dword_D4F96, dword_D4F9A, dword_EDCFC, dword_EDD00, dword_EDD04, dword_EDE34
 extern dword_EDE5C, dword_F189C, dword_F18A4, dword_F1A1E, dword_F22FC, dword_F2300, dword_F2304, dword_F2308
-extern dword_F230C, dword_F23EA, dword_F23EE, dword_F2416, jctime, sprintf_, strlen_, sub_59493
-extern sub_594B2, sub_8D144, sub_8D2F0, sub_8DBD4, sub_8DBDC, sub_8E4C0, sub_8E4F8, sub_902A0
+extern dword_F230C, dword_F23EA, dword_F23EE, dword_F2416, jctime, sprintf_, strlen_, SndLoadFile
+extern SndLoadFile2, sub_8D144, sub_8D2F0, sub_8DBD4, sub_8DBDC, sub_8E4C0, sub_8E4F8, sub_902A0
 extern sub_97166, sub_971BE, sub_971F8, sub_9720B, sub_97268, sub_98F11, sub_98F46, sub_99522
 extern sub_99620, sub_996B0, sub_99700, sub_997B7, sub_998A0, sub_B3454, sub_B3ABC, sub_B3FB0
 extern unk_C3FD5, unk_D41D2, unk_F21FC, word_D4F68, word_D4F88
@@ -197,7 +197,7 @@ mov eax, ecx	; 8ECE5
 call sub_8FED2	; 8ECE7
 mov edx, esp	; 8ECEC
 mov eax, 1	; 8ECEE
-call sub_594B2	; 8ECF3
+call SndLoadFile2	; 8ECF3
 mov dword [byte esp+010h], eax	; 8ECF8
 test eax, eax	; 8ECFC
 jne short loc_8ED0A	; 8ECFE
@@ -311,7 +311,7 @@ sub_8EE2F:
 push edx	; 8EE2F
 mov edx, eax	; 8EE30
 mov eax, 2	; 8EE32
-call sub_59493	; 8EE37
+call SndLoadFile	; 8EE37
 mov dword [dword_EDE5C], eax	; 8EE3C
 pop edx	; 8EE41
 ret	; 8EE42
@@ -332,7 +332,7 @@ push edx	; 8EE57
 mov dword [edx], 0	; 8EE58
 mov edx, eax	; 8EE5E
 mov eax, 3	; 8EE60
-call sub_59493	; 8EE65
+call SndLoadFile	; 8EE65
 mov dword [byte esp+04h], eax	; 8EE6A
 test eax, eax	; 8EE6E
 je near loc_8EF47	; 8EE70
@@ -350,7 +350,7 @@ test eax, eax	; 8EE99
 je near loc_8EF43	; 8EE9B
 mov edx, eax	; 8EEA1
 mov eax, 4	; 8EEA3
-call sub_594B2	; 8EEA8
+call SndLoadFile2	; 8EEA8
 mov edx, dword [esp]	; 8EEAD
 mov dword [edx], eax	; 8EEB0
 test eax, eax	; 8EEB2
@@ -655,7 +655,7 @@ mov eax, ebp	; 8F1AA
 call sub_8FED2	; 8F1AC
 mov edx, esp	; 8F1B1
 mov eax, 5	; 8F1B3
-call sub_59493	; 8F1B8
+call SndLoadFile	; 8F1B8
 mov dword [byte ecx+04h], eax	; 8F1BD
 test eax, eax	; 8F1C0
 je short loc_8F1F4	; 8F1C2
@@ -665,7 +665,7 @@ mov eax, ebp	; 8F1CB
 call sub_8FED2	; 8F1CD
 mov edx, esp	; 8F1D2
 mov eax, 6	; 8F1D4
-call sub_59493	; 8F1D9
+call SndLoadFile	; 8F1D9
 mov dword [byte ecx+08h], eax	; 8F1DE
 test eax, eax	; 8F1E1
 jne short loc_8F1F2	; 8F1E3
@@ -1436,7 +1436,7 @@ push ebp	; 8F994
 sub esp, byte 5Ch	; 8F995
 mov edx, eax	; 8F998
 mov eax, 7	; 8F99A
-call sub_594B2	; 8F99F
+call SndLoadFile2	; 8F99F
 mov dword [byte esp+054h], eax	; 8F9A4
 test eax, eax	; 8F9A8
 je near loc_8FAEA	; 8F9AA

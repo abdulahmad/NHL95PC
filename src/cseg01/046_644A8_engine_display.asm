@@ -35,8 +35,8 @@ global lines_addesp10_x
 global lines_popx2
 global checkwindow_popebp, checkwindow_popx
 global ReplayStep_popx
-global CanRemovePlayer, SortPlayersByPos, SortNonDefPlayers, BuildDefaultLines, sub_64A0B, sub_64CA8
-global sub_64E60, sub_652D6, sub_653BE, sub_6552E, RemoveFromLines, SetupTeamLines, NormalizeDressFlags, DitherRect
+global CanRemovePlayer, SortPlayersByPos, SortNonDefPlayers, BuildDefaultLines, CanFillLineSlot, FillDressedSlots
+global PickForLineSlot, PickGoalie, PickExtraSkater, RefillLineSlots, RemoveFromLines, SetupTeamLines, NormalizeDressFlags, DitherRect
 global LoadTeamPPV, DrawTextOverlay, CloseTextOverlay, sub_66E06, DrawCallBanner, ShowGoalieBanner, SetTeamGoalie, LoadTeamPalette
 global ReplayRecordReset, ReplayFirstFrame, ReplayPrevFrame, ReplayStep, sub_67DCC, updatereplay
 SortPlayersByPos:
@@ -463,7 +463,7 @@ pop edx	; 64A07
 pop ecx	; 64A08
 pop ebx	; 64A09
 ret	; 64A0A
-sub_64A0B:
+CanFillLineSlot:
 push dword 24h	; 64A0B
 call __CHK	; 64A10
 push ecx	; 64A15
@@ -515,7 +515,7 @@ shl eax, 3	; 64A8D
 add eax, edx	; 64A90
 add eax, dword [byte esp+08h]	; 64A92
 cmp byte [dword eax+byte_E9E18], 2	; 64A96
-jne short sub_64A0B.3	; 64A9D
+jne short CanFillLineSlot.3	; 64A9D
 .5:
 movsx edx, si	; 64A9F
 mov ebx, edx	; 64AA2
@@ -563,11 +563,11 @@ inc esi	; 64B1B
 inc ebx	; 64B1C
 .9:
 cmp bx, byte 0Ch	; 64B1D
-jl short sub_64A0B.6	; 64B21
+jl short CanFillLineSlot.6	; 64B21
 cmp si, byte 2	; 64B23
 jl short .10	; 64B27
 cmp word [word_E9F12], byte 6	; 64B29
-jg near sub_64A0B.3	; 64B31
+jg near CanFillLineSlot.3	; 64B31
 .10:
 movsx edx, cx	; 64B37
 mov ebx, 3	; 64B3A
@@ -615,9 +615,9 @@ inc esi	; 64BB8
 inc ebx	; 64BB9
 .15:
 cmp bx, byte 12h	; 64BBA
-jl short sub_64A0B.12	; 64BBE
+jl short CanFillLineSlot.12	; 64BBE
 cmp si, byte 2	; 64BC0
-jge near sub_64A0B.3	; 64BC4
+jge near CanFillLineSlot.3	; 64BC4
 .16:
 mov edx, ecx	; 64BCA
 and dl, 0FEh	; 64BCC
@@ -701,7 +701,7 @@ jmp short .34	; 64C91
 inc ebx	; 64C93
 .33:
 cmp bx, si	; 64C94
-jle short sub_64A0B.28	; 64C97
+jle short CanFillLineSlot.28	; 64C97
 mov edx, 1	; 64C99
 .34:
 mov eax, edx	; 64C9E
@@ -712,7 +712,7 @@ pop edi	; 64CA4
 pop esi	; 64CA5
 pop ecx	; 64CA6
 ret	; 64CA7
-sub_64CA8:
+FillDressedSlots:
 push dword 24h	; 64CA8
 call __CHK	; 64CAD
 push ecx	; 64CB2
@@ -743,7 +743,7 @@ mov edx, dword [byte esp+06h]	; 64CFA
 sar edx, 10h	; 64CFE
 mov ebx, edi	; 64D01
 mov eax, ecx	; 64D03
-call sub_64A0B	; 64D05
+call CanFillLineSlot	; 64D05
 test ax, ax	; 64D0A
 je near .10	; 64D0D
 cmp byte [dword esi+byte_E9E18], 2	; 64D13
@@ -803,7 +803,7 @@ mov byte [eax], 64h	; 64DBE
 inc ecx	; 64DC1
 .7:
 cmp cx, byte 30h	; 64DC2
-jl short sub_64CA8.5	; 64DC6
+jl short FillDressedSlots.5	; 64DC6
 mov esi, dword [byte esp-02h]	; 64DC8
 sar esi, 10h	; 64DCC
 mov eax, esi	; 64DCF
@@ -845,11 +845,11 @@ sar eax, 10h	; 64E40
 movsx ax, byte [eax+ebp]	; 64E43
 mov word [byte esp+04h], ax	; 64E48
 test ax, ax	; 64E4D
-jge near sub_64CA8.1	; 64E50
+jge near FillDressedSlots.1	; 64E50
 .12:
 mov eax, 0FFFFFFFFh	; 64E56
 jmp near lines_addesp10_x	; 64E5B
-sub_64E60:
+PickForLineSlot:
 push dword 24h	; 64E60
 call __CHK	; 64E65
 push ebx	; 64E6A
@@ -876,7 +876,7 @@ movsx eax, cx	; 64E97
 movsx ax, byte [dword eax+byte_CD421]	; 64E9A
 inc ecx	; 64EA2
 cmp ax, si	; 64EA3
-jne short sub_64E60.3	; 64EA6
+jne short PickForLineSlot.3	; 64EA6
 .4:
 movsx eax, cx	; 64EA8
 cmp byte [dword eax+byte_CD421], 0	; 64EAB
@@ -888,7 +888,7 @@ movsx ebx, byte [eax+ebp]	; 64EC2
 movsx edx, si	; 64EC6
 mov eax, dword [byte esp-02h]	; 64EC9
 sar eax, 10h	; 64ECD
-call sub_64A0B	; 64ED0
+call CanFillLineSlot	; 64ED0
 test ax, ax	; 64ED5
 je short .6	; 64ED8
 .5:
@@ -896,7 +896,7 @@ mov esi, edi	; 64EDA
 jmp near .48	; 64EDC
 .6:
 inc ecx	; 64EE1
-jmp short sub_64E60.4	; 64EE2
+jmp short PickForLineSlot.4	; 64EE2
 .7:
 movsx ebx, si	; 64EE4
 movsx edx, byte [ebx+ebp]	; 64EE7
@@ -942,7 +942,7 @@ add eax, byte_E9DB4	; 64F55
 .9:
 mov edx, ecx	; 64F5A
 .10:
-call sub_64CA8	; 64F5C
+call FillDressedSlots	; 64F5C
 test ax, ax	; 64F61
 jl near .31	; 64F64
 .11:
@@ -958,9 +958,9 @@ jmp short .14	; 64F86
 .13:
 add eax, unk_E9D82	; 64F88
 .14:
-call sub_64CA8	; 64F8D
+call FillDressedSlots	; 64F8D
 test ax, ax	; 64F92
-jge short sub_64E60.11	; 64F95
+jge short PickForLineSlot.11	; 64F95
 movsx ecx, si	; 64F97
 mov edx, dword [byte esp-02h]	; 64F9A
 sar edx, 10h	; 64F9E
@@ -977,9 +977,9 @@ jmp short .16	; 64FB8
 add eax, unk_E9E7C	; 64FBA
 .16:
 mov ebx, ecx	; 64FBF
-call sub_64CA8	; 64FC1
+call FillDressedSlots	; 64FC1
 test ax, ax	; 64FC6
-jge short sub_64E60.11	; 64FC9
+jge short PickForLineSlot.11	; 64FC9
 movsx ebx, si	; 64FCB
 mov ecx, dword [byte esp-02h]	; 64FCE
 sar ecx, 10h	; 64FD2
@@ -991,10 +991,10 @@ add eax, ecx	; 64FDF
 cmp si, byte 1Ch	; 64FE1
 jge short .17	; 64FE5
 add eax, unk_E9EAE	; 64FE7
-jmp near sub_64E60.9	; 64FEC
+jmp near PickForLineSlot.9	; 64FEC
 .17:
 add eax, unk_E9D1E	; 64FF1
-jmp near sub_64E60.9	; 64FF6
+jmp near PickForLineSlot.9	; 64FF6
 .18:
 cmp cx, byte 52h	; 64FFB
 jne near .25	; 64FFF
@@ -1005,9 +1005,9 @@ jmp short .20	; 65010
 .19:
 add eax, unk_E9D1E	; 65012
 .20:
-call sub_64CA8	; 65017
+call FillDressedSlots	; 65017
 test ax, ax	; 6501C
-jge near sub_64E60.11	; 6501F
+jge near PickForLineSlot.11	; 6501F
 movsx ecx, si	; 65025
 mov edx, dword [byte esp-02h]	; 65028
 sar edx, 10h	; 6502C
@@ -1024,9 +1024,9 @@ jmp short .22	; 65046
 add eax, unk_E9E7C	; 65048
 .22:
 mov ebx, ecx	; 6504D
-call sub_64CA8	; 6504F
+call FillDressedSlots	; 6504F
 test ax, ax	; 65054
-jge near sub_64E60.11	; 65057
+jge near PickForLineSlot.11	; 65057
 movsx ecx, si	; 6505D
 mov edx, dword [byte esp-02h]	; 65060
 sar edx, 10h	; 65064
@@ -1043,7 +1043,7 @@ jmp short .24	; 6507E
 add eax, unk_E9D82	; 65080
 .24:
 mov ebx, ecx	; 65085
-jmp near sub_64E60.10	; 65087
+jmp near PickForLineSlot.10	; 65087
 .25:
 cmp cx, byte 4Ch	; 6508C
 jne near .31	; 65090
@@ -1054,9 +1054,9 @@ jmp short .27	; 650A1
 .26:
 add eax, unk_E9E7C	; 650A3
 .27:
-call sub_64CA8	; 650A8
+call FillDressedSlots	; 650A8
 test ax, ax	; 650AD
-jge near sub_64E60.11	; 650B0
+jge near PickForLineSlot.11	; 650B0
 movsx ebx, si	; 650B6
 mov ecx, dword [byte esp-02h]	; 650B9
 sar ecx, 10h	; 650BD
@@ -1073,9 +1073,9 @@ jmp short .29	; 650D7
 add eax, unk_E9D1E	; 650D9
 .29:
 mov edx, ecx	; 650DE
-call sub_64CA8	; 650E0
+call FillDressedSlots	; 650E0
 test ax, ax	; 650E5
-jge near sub_64E60.11	; 650E8
+jge near PickForLineSlot.11	; 650E8
 movsx ebx, si	; 650EE
 mov ecx, dword [byte esp-02h]	; 650F1
 sar ecx, 10h	; 650F5
@@ -1087,10 +1087,10 @@ add eax, ecx	; 65102
 cmp si, byte 1Ch	; 65104
 jge short .30	; 65108
 add eax, unk_E9CEC	; 6510A
-jmp near sub_64E60.9	; 6510F
+jmp near PickForLineSlot.9	; 6510F
 .30:
 add eax, unk_E9D82	; 65114
-jmp near sub_64E60.9	; 65119
+jmp near PickForLineSlot.9	; 65119
 .31:
 mov ecx, dword [byte esp+04h]	; 6511E
 .32:
@@ -1105,11 +1105,11 @@ movsx ebx, byte [eax+ebp]	; 65140
 movsx edx, si	; 65144
 mov eax, dword [byte esp-02h]	; 65147
 sar eax, 10h	; 6514B
-call sub_64A0B	; 6514E
+call CanFillLineSlot	; 6514E
 test ax, ax	; 65153
-jne near sub_64E60.5	; 65156
+jne near PickForLineSlot.5	; 65156
 inc ecx	; 6515C
-jmp short sub_64E60.32	; 6515D
+jmp short PickForLineSlot.32	; 6515D
 .33:
 cmp word [byte esp+08h], byte 44h	; 6515F
 jne short .35	; 65165
@@ -1170,13 +1170,13 @@ movsx ebx, di	; 651F2
 movsx edx, si	; 651F5
 mov eax, dword [byte esp-02h]	; 651F8
 sar eax, 10h	; 651FC
-call sub_64A0B	; 651FF
+call CanFillLineSlot	; 651FF
 test ax, ax	; 65204
-jne near sub_64E60.5	; 65207
+jne near PickForLineSlot.5	; 65207
 inc ecx	; 6520D
 .39:
 cmp cx, byte 19h	; 6520E
-jl short sub_64E60.38	; 65212
+jl short PickForLineSlot.38	; 65212
 .40:
 cmp word [byte esp+08h], byte 44h	; 65214
 jne short .42	; 6521A
@@ -1237,13 +1237,13 @@ movsx ebx, di	; 652A7
 movsx edx, si	; 652AA
 mov eax, dword [byte esp-02h]	; 652AD
 sar eax, 10h	; 652B1
-call sub_64A0B	; 652B4
+call CanFillLineSlot	; 652B4
 test ax, ax	; 652B9
-jne near sub_64E60.5	; 652BC
+jne near PickForLineSlot.5	; 652BC
 inc ecx	; 652C2
 .46:
 cmp cx, byte 19h	; 652C3
-jl short sub_64E60.45	; 652C7
+jl short PickForLineSlot.45	; 652C7
 .47:
 xor esi, esi	; 652C9
 .48:
@@ -1256,7 +1256,7 @@ pop esi	; 652D2
 pop ecx	; 652D3
 pop ebx	; 652D4
 ret	; 652D5
-sub_652D6:
+PickGoalie:
 push dword 14h	; 652D6
 call __CHK	; 652DB
 push ecx	; 652E0
@@ -1328,13 +1328,13 @@ mov byte [eax], 64h	; 6539A
 inc ecx	; 6539D
 .9:
 cmp cx, byte 30h	; 6539E
-jl short sub_652D6.7	; 653A2
-jmp short sub_652D6.5	; 653A4
+jl short PickGoalie.7	; 653A2
+jmp short PickGoalie.5	; 653A4
 .10:
 inc edx	; 653A6
 .11:
 cmp dx, byte 1Ch	; 653A7
-jl near sub_652D6.4	; 653AB
+jl near PickGoalie.4	; 653AB
 mov al, byte [byte ebx+024h]	; 653B1
 mov byte [byte ebx+025h], al	; 653B4
 .x:
@@ -1343,7 +1343,7 @@ pop edi	; 653BA
 pop esi	; 653BB
 pop ecx	; 653BC
 ret	; 653BD
-sub_653BE:
+PickExtraSkater:
 push dword 20h	; 653BE
 call __CHK	; 653C3
 push ebx	; 653C8
@@ -1428,7 +1428,7 @@ jmp short .7	; 654A3
 inc edx	; 654A5
 .6:
 cmp dx, byte 19h	; 654A6
-jl short sub_653BE.4	; 654AA
+jl short PickExtraSkater.4	; 654AA
 .7:
 movsx edx, di	; 654AC
 mov eax, edx	; 654AF
@@ -1473,11 +1473,11 @@ jmp short .11	; 6551D
 inc edx	; 6551F
 .10:
 cmp dx, byte 19h	; 65520
-jl short sub_653BE.8	; 65524
+jl short PickExtraSkater.8	; 65524
 .11:
 add esp, byte 8	; 65526
 jmp near lines_popx2	; 65529
-sub_6552E:
+RefillLineSlots:
 push dword 18h	; 6552E
 call __CHK	; 65533
 push esi	; 65538
@@ -1515,7 +1515,7 @@ mov ebx, dword [byte esp-02h]	; 65587
 sar ebx, 10h	; 6558B
 mov edx, ecx	; 6558E
 mov eax, ebx	; 65590
-call sub_64E60	; 65592
+call PickForLineSlot	; 65592
 mov edx, eax	; 65597
 lea eax, [ecx+ebp]	; 65599
 mov byte [eax], dl	; 6559C
@@ -1532,7 +1532,7 @@ mov byte [dword ecx+eax+byte_E9E18], dh	; 655B5
 .4:
 inc edi	; 655BC
 add esi, dword [byte esp+018h]	; 655BD
-jmp short sub_6552E.3	; 655C1
+jmp short RefillLineSlots.3	; 655C1
 .x:
 add esp, byte 8	; 655C3
 pop ebp	; 655C6
@@ -1677,7 +1677,7 @@ movsx edx, di	; 65760
 mov eax, dword [byte esp+06h]	; 65763
 sar eax, 10h	; 65767
 mov ecx, 4	; 6576A
-call sub_6552E	; 6576F
+call RefillLineSlots	; 6576F
 .13:
 inc edi	; 65774
 inc dword [byte esp+08h]	; 65775
@@ -1707,7 +1707,7 @@ movsx edx, di	; 657B3
 mov eax, dword [byte esp+06h]	; 657B6
 sar eax, 10h	; 657BA
 mov ecx, 3	; 657BD
-call sub_6552E	; 657C2
+call RefillLineSlots	; 657C2
 .18:
 inc edi	; 657C7
 inc dword [byte esp+08h]	; 657C8
@@ -1737,7 +1737,7 @@ movsx edx, di	; 65806
 mov eax, dword [byte esp+06h]	; 65809
 sar eax, 10h	; 6580D
 mov ecx, 2	; 65810
-call sub_6552E	; 65815
+call RefillLineSlots	; 65815
 .23:
 inc edi	; 6581A
 inc dword [byte esp+08h]	; 6581B
@@ -1767,7 +1767,7 @@ movsx edx, di	; 65859
 mov eax, dword [byte esp+06h]	; 6585C
 sar eax, 10h	; 65860
 mov ecx, 2	; 65863
-call sub_6552E	; 65868
+call RefillLineSlots	; 65868
 .28:
 inc edi	; 6586D
 inc dword [byte esp+08h]	; 6586E
@@ -1790,7 +1790,7 @@ movsx edx, di	; 6589B
 mov eax, dword [byte esp+02h]	; 6589E
 sar eax, 10h	; 658A2
 xor ebx, ebx	; 658A5
-call sub_652D6	; 658A7
+call PickGoalie	; 658A7
 .32:
 inc edi	; 658AC
 inc word [byte esp+0Ch]	; 658AD
@@ -1808,7 +1808,7 @@ jne short .35	; 658CC
 movsx edx, di	; 658CE
 mov eax, dword [byte esp+02h]	; 658D1
 sar eax, 10h	; 658D5
-call sub_653BE	; 658D8
+call PickExtraSkater	; 658D8
 .35:
 inc edi	; 658DD
 inc word [byte esp+0Ch]	; 658DE
@@ -2004,7 +2004,7 @@ jne short .21	; 65AE9
 movsx edx, cx	; 65AEB
 movsx eax, si	; 65AEE
 mov ebx, 1	; 65AF1
-call sub_652D6	; 65AF6
+call PickGoalie	; 65AF6
 .21:
 inc ecx	; 65AFB
 .22:
