@@ -8,18 +8,18 @@ extern byte_ED932, byte_ED9EF, dword_C53FB, dword_C5403, dword_C5407, dword_C541
 extern dword_C7444, dword_C7448, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, dword_D1C8B
 extern dword_D1CE6, dword_D1CEE, dword_D1DC8, dword_D1DCC, dword_D1DD0, dword_D1DD4, dword_D2C6B, dword_D8B74
 extern dword_D8C40, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, dword_DC238, dword_DD6A8, dword_DD6AE
-extern dword_DD6B0, dword_E03A4, dword_E9F16, dword_E9F38, dword_EA0DC, dword_ED368, dword_ED380, dword_ED384
+extern dword_DD6B0, replayplay, dword_E9F16, dword_E9F38, dword_EA0DC, dword_ED368, dword_ED380, dword_ED384
 extern dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8, dword_ED6DC, dword_ED6E0, dword_ED6E4
 extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED6FC, dword_ED704, dword_ED708
 extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, jctime, camx_m2, off_CD4FA
 extern off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25, rand_, sub_10E9F, sub_110E0, sub_11598
-extern sub_1431E, sub_30A0C, sub_30F12, sub_31013, sub_33DD3, CrowdNoiseOff, sub_67581, sub_67900
+extern sub_1431E, sub_30A0C, sub_30F12, sub_31013, sub_33DD3, CrowdNoiseOff, ReplayFirstFrame, ReplayStep
 extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_6B391, sub_6B3D7, sub_7F724
 extern sub_7FA10, sub_7FC12, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
 extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B396E, sub_B3989, sub_B3999, sub_B4BA8, sub_B4BC4
 extern sub_B4CD8, sub_B4FAC, sub_B500C, sub_B5DB0, unk_C33F8, unk_C3403, unk_DF014, unk_DF314
-extern camx, camy, crowdlevel, word_CD4FC, word_CD500, scrolly, word_E9F18, word_E9F3A
+extern camx, camy, crowdlevel, word_CD4FC, replaysfx, scrolly, word_E9F18, word_E9F3A
 extern word_ED758
 global jpt_7F09F, loc_7DCC0, loc_7DCC2, loc_7DCFC, loc_7DCFE, loc_7DD15, loc_7DD1E, loc_7DD26
 global loc_7DD4A, loc_7DD6A, loc_7DD6B, loc_7DD74, loc_7DD78, loc_7DD87, loc_7DD88, loc_7DD90
@@ -588,12 +588,12 @@ xor ebx, ebx	; 7E2C7
 mov word [word_ED758], bx	; 7E2C9
 add dword [dword_C7444], 3E8h	; 7E2D0
 add dword [dword_C7448], 3E8h	; 7E2DA
-call sub_67581	; 7E2E4
-mov dword [dword_E03A4], eax	; 7E2E9
+call ReplayFirstFrame	; 7E2E4
+mov dword [replayplay], eax	; 7E2E9
 xor ebp, ebp	; 7E2EE
 mov dword [byte esp+014h], ebp	; 7E2F0
 xor eax, eax	; 7E2F4
-call sub_67900	; 7E2F6
+call ReplayStep	; 7E2F6
 mov eax, dword [crowdlevel-2]	; 7E2FB
 sar eax, 10h	; 7E300
 mov dword [crowdsmooth], eax	; 7E303
@@ -708,7 +708,7 @@ xor ah, ah	; 7E4A5
 movsx edx, ax	; 7E4A7
 mov eax, dword [byte esp+012h]	; 7E4AA
 sar eax, 10h	; 7E4AE
-call sub_67900	; 7E4B1
+call ReplayStep	; 7E4B1
 cwde	; 7E4B6
 mov dword [byte esp+014h], eax	; 7E4B7
 call SelectRinkBM	; 7E4BB
@@ -929,7 +929,7 @@ loc_7E82E:
 call CrowdNoiseOff	; 7E82E
 mov ecx, 0FFFFFFFFh	; 7E833
 mov word [lastsfx], cx	; 7E838
-mov word [word_CD500], cx	; 7E83F
+mov word [replaysfx], cx	; 7E83F
 mov eax, dword [byte esp+01Ch]	; 7E846
 mov word [camx], ax	; 7E84A
 mov eax, dword [byte esp+020h]	; 7E850

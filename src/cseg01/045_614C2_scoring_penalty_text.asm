@@ -20,7 +20,7 @@ extern dword_E00A0, dword_E0220, dword_E0230, PenBuf_m5
 extern dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9BAC, dword_E9BB0
 extern dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, fputchar, puckvx, gmode, loc_18F86
 extern lseek_, ltx, off_C5439, puckx, pucky, puckvy, puckz, puckc
-extern off_CD304, off_CD354, puckvz, randomd0, sub_65B83, sfx, sprintf_, vecdist
+extern off_CD304, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
 extern strcpy_, strlen_, sub_110E0, sub_14552, sub_1457C, sub_145F9, sub_14C22, sub_14CA0
 extern sub_18F74, sub_1CD73, PlayCrowdSample, sub_59AAD, sub_59B3C, sub_59B88, restorepl, setplayer
 extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, sub_B2CD8, unk_C1B49, unk_C1C58, unk_C1C5B
@@ -2052,7 +2052,7 @@ and eax, 0FFh	; 62D5B
 cmp byte [dword eax+PBnum], 8	; 62D60
 jge short .x	; 62D67
 mov eax, ebx	; 62D69
-call sub_65B83	; 62D6B
+call CanRemovePlayer	; 62D6B
 test eax, eax	; 62D70
 .3:
 je short .x	; 62D72

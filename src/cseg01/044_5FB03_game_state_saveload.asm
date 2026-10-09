@@ -14,9 +14,9 @@ extern dword_CC130, dword_CC134, dword_CC138, dword_CC13C, dword_CC140, dword_CC
 extern dword_D8C78, dword_D8C84, dword_D9980, dword_DB088, dword_DC28C, dword_DF00C, dword_DF010, hmtmstruct
 extern dword_DF6F2, dword_DF6F6, dword_DF6FA, dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
 extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, dword_DF7FA, dword_DF7FE, awtmroster, awtmptrF2
-extern awtmsort, dword_E009C, dword_E0248, dword_E039C, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
-extern ltx, off_C9078, off_CC01D, passspeed, sub_13A91, sub_145A2, sub_145F9, sub_1BBCC
-extern sub_3271B, sub_327A1, GetPeriodTime, SprSort, sub_61E99, sub_673C5, sub_67564, sub_7DC8B
+extern awtmsort, dword_E009C, dword_E0248, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
+extern ltx, replaystart, off_CC01D, passspeed, sub_13A91, sub_145A2, sub_145F9, sub_1BBCC
+extern sub_3271B, sub_327A1, GetPeriodTime, SprSort, sub_61E99, sub_673C5, ReplayRecordReset, sub_7DC8B
 extern sub_B2CD8, MouseSetPos, threat, unk_C5298, unk_C5423, unk_C542E, unk_DABF0, unk_DAC40
 extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, unk_DC200, unk_DC240
 extern unk_DC252, unk_DF314, SortCords, word_C571C, word_C575C, camx, camy
@@ -1673,9 +1673,9 @@ mov eax, dword [nosplit eax*4+off_CC01D]	; 612ED
 mov dword [dword_E0248], eax	; 612F4
 loc_612F9:
 call sub_61E99	; 612F9
-mov eax, dword [off_C9078]	; 612FE
-mov dword [dword_E039C], eax	; 61303
-call sub_67564	; 61308
+mov eax, dword [replaystart]	; 612FE
+mov dword [recbpr], eax	; 61303
+call ReplayRecordReset	; 61308
 and byte [sflags], 0EFh	; 6130D
 mov word [word_CBEC4], 1	; 61314
 mov dword [hmtmsort], SortCords	; 6131D

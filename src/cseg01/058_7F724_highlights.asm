@@ -7,9 +7,9 @@ extern asc_C347B, asc_C812D, asc_C8208, asc_C8216, asc_D207A, byte_C8451, sflags
 extern byte_DB3AD, byte_DB7F1, byte_DC267, byte_DC268, byte_E03C4, byte_E03C5, byte_E03C6, byte_E03C7
 extern byte_E03E3, byte_E03E4, dword_C5704, dword_C5708, dword_C570C, songdata, dword_C7444, dword_C7448
 extern cont2team, dword_C90CA, musichandle, dword_D42A8, dword_D8C68, dword_D8C80, dword_D8C84, musicslot
-extern dword_DC230, dword_DC2F0, dword_E039C, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
+extern dword_DC230, dword_DC2F0, recbpr, dword_E0400, dword_E0404, dword_E0408, dword_E040C, dword_E0412
 extern dword_ED6F8, dword_ED700, fputchar, jctime, loc_7E0F3, lseek_, off_C5439, off_C54A9
-extern off_C9078, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, sub_10E9F
+extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, sub_10E9F
 extern sub_13A91, sub_1431E, sub_14525, sub_1453E, sub_14566, sub_1457C, sub_145A2, sub_145F9
 extern sub_1BAB1, sub_303FB, sub_30A0C, sub_31013, sub_33727, sub_3377C, sub_479E9, sub_47C31
 extern sub_673C5, sub_6B3D7, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
@@ -329,8 +329,8 @@ mov eax, dword [dword_C570C]	; 7FAC2
 mov dword [dword_E040C], eax	; 7FAC7
 mov ax, word [sflags]	; 7FACC
 mov word [word_E0410], ax	; 7FAD2
-mov eax, dword [dword_E039C]	; 7FAD8
-mov edx, dword [off_C9078]	; 7FADD
+mov eax, dword [recbpr]	; 7FAD8
+mov edx, dword [replaystart]	; 7FADD
 sub eax, edx	; 7FAE3
 mov dword [dword_E0412], eax	; 7FAE5
 xor edx, edx	; 7FAEA
@@ -856,10 +856,10 @@ mov eax, dword [dword_E040C]	; 8017E
 mov dword [dword_C570C], eax	; 80183
 mov ax, word [word_E0410]	; 80188
 mov word [sflags], ax	; 8018E
-mov eax, dword [off_C9078]	; 80194
+mov eax, dword [replaystart]	; 80194
 mov edx, dword [dword_E0412]	; 80199
 add eax, edx	; 8019F
-mov dword [dword_E039C], eax	; 801A1
+mov dword [recbpr], eax	; 801A1
 xor edx, edx	; 801A6
 loc_801A8:
 mov eax, edx	; 801A8

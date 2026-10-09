@@ -24,7 +24,7 @@ extern sprintf_, vecdist, sub_11598, sub_15C30, sub_48333, joyq_flush, getlchoic
 extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
 extern sub_59AAD, sub_59AD0, sub_59B0F, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
 extern EvadePC, sub_61576, sub_61D48, sub_62343, sub_62807, sub_62C37, sub_64102, sub_64439
-extern sub_655CC, sub_66497, sub_66DDA, sub_837A8, sub_8F633, sub_8FFB0, imul32, threat
+extern RemoveFromLines, sub_66497, sub_66DDA, sub_837A8, sub_8F633, sub_8FFB0, imul32, threat
 extern unk_C1B3E, unk_DACA0, unk_DBC30, unk_DC240, unk_DF014, SortCords, updateanim
 extern vtoa, regd4, camx, camy, lastplayer, passdir, word_C90A6, xc1
 extern yc1, word_C90B2, word_C90B4, fodir1, fodir2, c1playernum, c2playernum, word_C90CC
@@ -3275,7 +3275,7 @@ test byte [byte ebx+pflags], 40h	; 4AD54
 setne al	; 4AD58
 xor ah, ah	; 4AD5B
 cwde	; 4AD5D
-call sub_655CC	; 4AD5E
+call RemoveFromLines	; 4AD5E
 pop edi	; 4AD63
 pop edx	; 4AD64
 pop ecx	; 4AD65

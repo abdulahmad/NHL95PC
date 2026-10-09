@@ -30,7 +30,7 @@ extern unk_C2340, unk_C2343, unk_C2345, unk_C2348, unk_CDC47, unk_CDC60, unk_CDC
 extern unk_CDCB0, unk_CDCC9
 global byte_CD418, byte_CD421, byte_CD473, dword_CD34C, dword_CD350, dword_CD41E, dword_CD4B0, dword_CD504
 global dword_CD9A0, off_CD354, off_CD498, off_CD4A0, off_CD4DC, off_CD4FA, off_CD6E4, off_CD8C4
-global off_CD984, word_CD39C, word_CD4FC, word_CD4FE, word_CD500
+global off_CD984, word_CD39C, word_CD4FC, replaytick, replaysfx
 dword_CD34C:
 db 00h,00h,00h,00h
 dword_CD350:
@@ -102,9 +102,9 @@ off_CD4FA equ $+2
 dd unk_C1DA9
 word_CD4FC:
 db 0FFh,0FFh
-word_CD4FE:
+replaytick:
 db 01h,00h
-word_CD500:
+replaysfx:
 db 0FFh,0FFh,00h,00h
 dword_CD504:
 db 01h,00h,00h,00h,099h,00h,00h,00h,0B1h,00h,00h,00h,0C9h,00h,00h,00h

@@ -18,7 +18,7 @@ extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, loc_12842, memcpy_, nullsu
 extern puckx, pucky, passspeed, randomd0, sprintf_, sub_11598, sub_1205D, sub_12849
 extern sub_13188, sub_1431E, sub_14525, sub_1457C, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
 extern sub_4830E, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
-extern sub_64614, sub_658F3, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
+extern sub_64614, SetupTeamLines, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, MouseSetPos, sub_B30B4, sub_B30BB
 extern sub_B392C, sub_B4BA8, threat, unk_DF014, SortCords, vtoa, regd4, scrpitch
@@ -942,9 +942,9 @@ push edx	; 13E9B
 push edi	; 13E9C
 call sub_64614	; 13E9D
 xor eax, eax	; 13EA2
-call sub_658F3	; 13EA4
+call SetupTeamLines	; 13EA4
 mov eax, 1	; 13EA9
-call sub_658F3	; 13EAE
+call SetupTeamLines	; 13EAE
 mov word [gsp], 0FFFFh	; 13EB3
 xor ebx, ebx	; 13EBC
 mov word [crowdlevel], bx	; 13EBE
@@ -1025,9 +1025,9 @@ push edx	; 13FB3
 push edi	; 13FB4
 call sub_64614	; 13FB5
 xor eax, eax	; 13FBA
-call sub_658F3	; 13FBC
+call SetupTeamLines	; 13FBC
 mov eax, 1	; 13FC1
-call sub_658F3	; 13FC6
+call SetupTeamLines	; 13FC6
 mov word [gsp], 0FFFFh	; 13FCB
 xor ebx, ebx	; 13FD4
 mov word [crowdlevel], bx	; 13FD6

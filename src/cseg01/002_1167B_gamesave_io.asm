@@ -8,15 +8,15 @@ extern dword_C4E10, dword_C4E14, dword_C5130, dword_C53F7, dword_C53FB, dword_C5
 extern dword_C5840, dword_C7444, dword_C7448, cont2team, dword_C90CA, dword_CBECA, dword_CC080, dword_CC0F0
 extern penshotlive, dword_D2C6B, dword_D302C, dword_D3030, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, dword_DD6A8, dword_DD6AE
-extern dword_DD6B0, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, dword_E039C, dword_E9A9E, j_unlink_
+extern dword_DD6B0, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, dword_E9A9E, j_unlink_
 extern loc_113E9, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
-extern off_C526F, off_C5273, off_C5439, off_C80D7, off_C80E7, off_C80EB, off_C9078, camx_m2
+extern off_C526F, off_C5273, off_C5439, off_C80D7, off_C80E7, off_C80EB, replaystart, camx_m2
 extern off_CBED0, strcat_, strcpy_, sub_10E9F, sub_1145F, sub_1149A, sub_11598, sub_13A91
 extern sub_13E8F, sub_1431E, sub_14525, sub_1457C, sub_1463D, sub_1478B, sub_147C9, sub_14CF1
 extern sub_150C6, sub_15B76, sub_1920F, sub_1935D, sub_1B982, sub_1C807, sub_1C852, sub_1CB7F
 extern sub_3377C, sub_33DD3, sub_3A266, sub_3DAB9, sub_47C31, StartThreeStars, joyq_flush, CrowdNoiseUpdate
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71, DrawRinkOverlays, PeriodOver, sub_60612
-extern sub_61A27, sub_61B85, sub_64614, sub_658F3, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
+extern sub_61A27, sub_61B85, sub_64614, SetupTeamLines, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
 extern sub_6AF97, sub_6B008, sub_7DC8B, sub_8374D, sub_837A8, SelectScreenBM, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8FFB0, sub_90354, sub_9035C, MouseSetPos, sub_B396E, sub_B4BA8, unk_C0200
 extern unk_D8F88, unk_D9270, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690
@@ -516,9 +516,9 @@ mov dword [edx], 0FFFFFFFFh	; 11DD4
 call sub_64614	; 11DDA
 call sub_65B48	; 11DDF
 xor eax, eax	; 11DE4
-call sub_658F3	; 11DE6
+call SetupTeamLines	; 11DE6
 mov eax, 1	; 11DEB
-call sub_658F3	; 11DF0
+call SetupTeamLines	; 11DF0
 call sub_1C807	; 11DF5
 call CrowdNoiseReset	; 11DFA
 call sub_1C852	; 11DFF
@@ -673,8 +673,8 @@ ret	; 12033
 sub_12034:
 push dword 4	; 12034
 call __CHK	; 12039
-mov eax, dword [dword_E039C]	; 1203E
-cmp eax, dword [off_C9078]	; 12043
+mov eax, dword [recbpr]	; 1203E
+cmp eax, dword [replaystart]	; 12043
 jne short loc_1205A	; 12049
 test byte [sflags], 10h	; 1204B
 jne short loc_1205A	; 12052

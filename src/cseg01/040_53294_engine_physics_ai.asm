@@ -10,10 +10,10 @@ extern dword_CBECA, onetimerflag, dword_CC0F8, penshotplayer, dword_CC108, pensh
 extern penshotlive, dword_CCC2C, dword_CCC4E, hmtmstruct, awtmstruct, puckcross_m2
 extern dword_E03AE, dword_E03B6, dword_E03B9, dword_E03BD, dword_E9A9E
 extern dword_E9AB6, puckvx, gmode, puckx, pucky, puckvy, puckz
-extern puckc, off_CD498, off_CD4A0, passspeed, puckflip, puckvz, randomd0, sub_65B83
+extern puckc, off_CD498, off_CD4A0, passspeed, puckflip, puckvz, randomd0, CanRemovePlayer
 extern setpersonel, sfx, shotsets, vecdist, CanBlockShot, PassCompleted, changeplayer, restorepl
 extern CompLine, GetHotStick, GetHotOrStick, Goal, GiveControl, sub_61576, sub_62764, sub_64102
-extern sub_6427F, sub_64338, sub_64439, sub_655CC, imul32, sub_93470, threat, SortCords
+extern sub_6427F, sub_64338, sub_64439, RemoveFromLines, imul32, sub_93470, threat, SortCords
 extern vtoa, wcradiusx, regd4, camx, camy, lastplayer, passdir
 extern word_C90A6, passplayer, xc1, yc1, word_C90B2, c1playernum, c2playernum, cont1team
 extern gsp, gameclock, clockticks, dirtab_y, word_CBEC2, word_CBEC6, word_CBEC8, word_CC0DA
@@ -3755,7 +3755,7 @@ test byte [byte esi+pflags], 40h	; 56009
 setne al	; 5600D
 xor ah, ah	; 56010
 cwde	; 56012
-call sub_655CC	; 56013
+call RemoveFromLines	; 56013
 jmp near checkob_ret5	; 56018
 sub_5601D:
 push dword 2Ch	; 5601D
@@ -4310,7 +4310,7 @@ call randomd0	; 56762
 cmp ax, 14h	; 56767
 jg near .38	; 5676B
 mov eax, ebx	; 56771
-call sub_65B83	; 56773
+call CanRemovePlayer	; 56773
 test eax, eax	; 56778
 je near .38	; 5677A
 mov dx, word [crowdlevel]	; 56780
@@ -4452,7 +4452,7 @@ jg near .54	; 56951
 test byte [gmode], 1	; 56957
 jne near .54	; 5695E
 mov eax, ebx	; 56964
-call sub_65B83	; 56966
+call CanRemovePlayer	; 56966
 test eax, eax	; 5696B
 je near .54	; 5696D
 or byte [byte ebx+pflags], 20h	; 56973
@@ -4471,7 +4471,7 @@ and eax, 0FFh	; 569A1
 cmp byte [dword eax+PBnum], 8	; 569A6
 jge short .47	; 569AD
 mov eax, ecx	; 569AF
-call sub_65B83	; 569B1
+call CanRemovePlayer	; 569B1
 test eax, eax	; 569B6
 jne short .48	; 569B8
 .47:

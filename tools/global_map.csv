@@ -156,3 +156,8 @@ RefStep,C90D4,"93G RefStep: SetPA clears it; chkprogress sets it to -1 (93G st R
 pendelaytab,C9104,per penalty number: delay before stopping play (93G PenaltyList entry byte 0); checkfornewpen shifts it left 5 into Pencntdwn
 penmintab,C9123,"per penalty number: penalty minutes (93G PenaltyList entry byte 1, 0 = no time: called at once); checkfornewpen / chkprogress_go test it"
 priolist,CBC36,"93G priolist: position for the player released from the box, indexed by tmap (+1 when the goalie is pulled); releasepl"
+recbpr,E039C,"94G recbpr: replay record pointer (80h-byte frames); updatereplay writes through it, ReplayPrevFrame / ReplayStep compare with it"
+replaystart,C9078,pointer to the replay buffer (9600h bytes = 12Ch frames of 80h); 94G replaystart / M68K_RAM role
+replayplay,E03A4,replay play-back frame pointer (94G a4 in ReplayMode); ReplayStep moves it between replaystart and recbpr
+replaytick,CD4FE,updatereplay tick counter: a frame is recorded every 2nd call; ReplayRecordReset sets 1
+replaysfx,CD500,sfx number kept from the off tick (lastsfx) for the next recorded frame (-1 = none)

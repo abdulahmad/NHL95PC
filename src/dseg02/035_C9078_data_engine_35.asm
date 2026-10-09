@@ -12,7 +12,7 @@ extern unk_DFF5E, unk_E0416, word_DFF1E, word_DFF28, word_DFF2A, puckstruct
 global StanleyCupTimer, asstab, sflags, gmode2, pendelaytab
 global byte_C9111, penmintab, byte_C9142, byte_C9146, priolist, byte_CBC37, byte_CBEA8, collflag
 global dirtab, wcradiusy, dword_C90B0, dword_C90C0, cont2team, dword_C90CA, dword_C9120, dword_CBC3E
-global dword_CBEBE, dword_CBECA, puckvx, gmode, off_C9078, puckx, pucky, puckvy
+global dword_CBEBE, dword_CBECA, puckvx, gmode, replaystart, puckx, pucky, puckvy
 global puckz, puckc, camx_m2, off_CBD2E, passspeed, puckvz, threat, SPAtab
 global unk_CBC6E, unk_CBC7E, unk_CBC9E, unk_CBCAE, unk_CBCBE, unk_CBCCE, unk_CBCDE, unk_CBCEE
 global unk_CBCFE, unk_CBD0E, unk_CBD1E, ds2list, wcradiusx, camx, camy, lastplayer
@@ -23,7 +23,7 @@ global word_CBC42, word_CBC44, exitgame, gameover, PerTimeTab, word_CBC52, word_
 global word_CBC58, lcblinktime, lcsel, word_CBC60, lcline, word_CBC64, lctimer
 global word_CBC68, lcboxon, word_CBC6C, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, word_CBEC0
 global word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE
-off_C9078:
+replaystart:
 dd unk_E0416
 puckx:
 dd word_DFF1E

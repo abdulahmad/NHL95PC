@@ -8,7 +8,7 @@ extern lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5, byte_CCCA0, music
 extern awroster, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byte_DF7CA, byte_DF7E6
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
 extern byte_E0074, PlList, byte_E038A, PenBuf, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
-extern checkcoll, sub_65D01, collflag, doinput, joysampling, gameopts, dword_C7444, dword_C7448
+extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, dword_C7444, dword_C7448
 extern dword_C90B0, dword_C90C0, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
 extern dword_CC0F8, penshotplayer, dword_CC104, dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer
 extern dword_CC124, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D302C
@@ -17,16 +17,16 @@ extern dword_DF642, dword_DF652, dword_DF6EA, dword_DF6F2, dword_DF6F6, dword_DF
 extern dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort, awtmstruct, dword_DF752, dword_DF7EA
 extern awtmlines, dword_DF7F2, dword_DF7F6, dword_DF7FA, dword_DF7FE, awtmroster, awtmptrF2, awtmsort
 extern puckstruct, sortobj15
-extern dword_E009C, dword_E039C, dword_E03A8, dword_E03AE
+extern dword_E009C, recbpr, dword_E03A8, dword_E03AE
 extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
-extern off_C9078, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
+extern replaystart, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
 extern passspeed, randomd0, sfx, vecdist, sub_10F6D, sub_11005, sub_110E0, sub_11136
 extern sub_14A20, sub_14AFE, sub_15C30, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
 extern PlayCrowdSample, sub_59A7E, sub_61576, sub_615A2, sub_61862, PenaltyManager, sub_63C73, ClearPenaltyBuffer
-extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, sub_67564, sub_93540, sub_B340B, sub_B4BC4
+extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, unk_DABF0, unk_DAC40, unk_DAC70, unk_DACA0
 extern unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, unk_DC200, unk_DC240, unk_DC252, SortCords
-extern unk_E9D50, unk_E9EE0, sub_675D6, vtoa, regd4, camx
+extern unk_E9D50, unk_E9EE0, updatereplay, vtoa, regd4, camx
 extern camy, lastplayer, xc1, yc1, word_C90B2, word_C90B4, fodir1, fodir2
 extern c1playernum, c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks
 extern word_CBC44, exitgame, gameover, PerTimeTab, word_CBC52, word_CBC54, lcblink, word_CBC58
@@ -2939,9 +2939,9 @@ mov word [crowdlevel], cx	; 5C129
 .6:
 or byte [gmode2], 4	; 5C130
 and byte [sflags], 0AFh	; 5C137
-mov eax, dword [off_C9078]	; 5C13E
-mov dword [dword_E039C], eax	; 5C143
-call sub_67564	; 5C148
+mov eax, dword [replaystart]	; 5C13E
+mov dword [recbpr], eax	; 5C143
+call ReplayRecordReset	; 5C148
 mov word [lastsfx], 0FFFFh	; 5C14D
 call DoGameFrame	; 5C156
 call DoGameFrame	; 5C15B
@@ -2967,8 +2967,8 @@ push dword 4	; 5C1C4
 call __CHK	; 5C1C9
 call periodicevents	; 5C1CE
 call updateplayers	; 5C1D3
-call sub_65D01	; 5C1D8
-jmp near sub_675D6	; 5C1DD
+call checkwindow	; 5C1D8
+jmp near updatereplay	; 5C1DD
 RestBench:
 push dword 14h	; 5C1E2
 call __CHK	; 5C1E7
