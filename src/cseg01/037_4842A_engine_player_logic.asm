@@ -53,7 +53,7 @@ global ass_replace_popx, ass_popx
 global ass_skate_temp34
 global puckflip, pucknorm, pucknorm_body, pucknothing, puckunflip, rtss
 global StartShotPath, AddStar, StarEligible, StarCompare, PickThreeStars, StartThreeStars, MoveInDir, SteerToTarget
-global StopIfFree, GoalieToPuckVec, TurnTowardDir, CountPuckThreat, sub_4C8BD, asspuckc_chkdir, ChkTwoLinePass, SkateToSpot
+global StopIfFree, GoalieToPuckVec, AdjustFacingDirection, CountPuckThreat, sub_4C8BD, asspuckc_chkdir, ChkTwoLinePass, SkateToSpot
 global CrowdOnStoppage, NextPathPoint
 assintrostand:
 push dword 10h	; 4842A
@@ -3886,7 +3886,7 @@ pop edx	; 4B4E5
 pop ecx	; 4B4E6
 pop ebx	; 4B4E7
 ret	; 4B4E8
-TurnTowardDir:
+AdjustFacingDirection:
 push dword 14h	; 4B4E9
 call __CHK	; 4B4EE
 push ebx	; 4B4F3
@@ -3934,7 +3934,7 @@ jg short .4	; 4B566
 cmp cx, byte 5	; 4B568
 jl short .4	; 4B56C
 cmp cx, byte 7	; 4B56E
-jle short TurnTowardDir.2	; 4B572
+jle short AdjustFacingDirection.2	; 4B572
 .4:
 cmp bx, byte 5	; 4B574
 jl short .6	; 4B578
