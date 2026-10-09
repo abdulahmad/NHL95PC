@@ -570,7 +570,6 @@ extern void doinput(); /* 504DA */
 extern void Readjoy_tail(); /* 50A59 */
 extern void PassRecOneTimer(); /* 50B55 */
 extern void asspassrec(); /* 50F3F */
-extern void TakePlayerFromBox(); /* 51115 */
 extern void TakePlayerFromBox_ret6(); /* 511AD */
 extern void TakePlayerFromBox_ret5(); /* 511AE */
 extern void PenShotAssign(); /* 512A7 */
@@ -686,11 +685,9 @@ extern void lines_popx(); /* 64A04 */
 extern void CanFillLineSlot(); /* 64A0B */
 extern void lines_addesp10_x(); /* 64CA0 */
 extern void FillDressedSlots(); /* 64CA8 */
-extern void PickForLineSlot(); /* 64E60 */
 extern void lines_popx2(); /* 652D0 */
 extern void PickGoalie(); /* 652D6 */
 extern void PickExtraSkater(); /* 653BE */
-extern void RefillLineSlots(); /* 6552E */
 extern void RemoveFromLines(); /* 655CC */
 extern void checkwindow(); /* 65D01 */
 extern void checkwindow_popebp(); /* 66490 */

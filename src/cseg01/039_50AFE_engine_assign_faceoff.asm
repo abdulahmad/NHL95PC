@@ -544,6 +544,10 @@ ret	; 51114
 %endif ; C
 ; TakePlayerFromBox: PC-new. Sort object eax takes the first roster player whose status is 7 (penalty over):
 ;   leaves the box (SPA 7BFh, temp1 5Ah), roster status 3, tmpdst -2.
+; C: src/c/039_50AFE_engine_assign_faceoff/TakePlayerFromBox.c
+%ifdef CBUILD
+%include "c/039_50AFE_engine_assign_faceoff/TakePlayerFromBox.inc"
+%else
 TakePlayerFromBox:
 push dword 20h	; 51115
 call __CHK	; 5111A
@@ -607,6 +611,7 @@ pop edx	; 511B0
 pop ecx	; 511B1
 pop ebx	; 511B2
 ret	; 511B3
+%endif ; C
 ; C: src/c/039_50AFE_engine_assign_faceoff/PenShotStart.c
 %ifdef CBUILD
 %include "c/039_50AFE_engine_assign_faceoff/PenShotStart.inc"

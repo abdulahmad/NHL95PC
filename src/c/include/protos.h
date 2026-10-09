@@ -701,5 +701,8 @@ void QueueDeferredCall(void (*fn)(int, int, int, int, int, int, int), int a, int
 void DrawBevelRect(int x, int y, int w, int h, int fill, int light, int dark);  /* 2FE49 */
 void DrawGadgetButton(int n);  /* 7E067 */
 int ReadTeamNames(char *path, char *out, int full);  /* 3DAB9 */
+void TakePlayerFromBox(Player *p);  /* 51115 */
+signed char PickForLineSlot(int side, int slot);  /* 64E60 */
+void RefillLineSlots(short side, short slot, short from, short to, short step);  /* 6552E */
 
 #endif
