@@ -211,7 +211,6 @@ extern void DrawSprite_b4(); /* 1CFF1 */
 extern void DrawSprite_b5(); /* 1CFFB */
 extern void DrawSprite_b6(); /* 1D005 */
 extern void DrawSprite_b7(); /* 1D00F */
-extern void AddDirtyRect(); /* 1D02F */
 extern void SetupStatsSourceMenu_jt(); /* 1D0F0 */
 extern void SetupStatsSourceMenu_lg(); /* 1D15C */
 extern void SetupStatsSourceMenu_po(); /* 1D241 */
@@ -979,7 +978,6 @@ extern void MenuSaveTheseLines(); /* 797B4 */
 extern void MenuSaveTheseLines_x(); /* 797FE */
 extern void MenuGameShowPlayerStats(); /* 79AC9 */
 extern void GameScratchPlayer(); /* 79DE1 */
-extern void GameDressPlayer(); /* 79F41 */
 extern void LeagueSettingsDlg(); /* 7A13A */
 extern void LeagueSettingsDlg_ret4(); /* 7A1F2 */
 extern void LeagueSettingsDlg_ret(); /* 7A1F5 */

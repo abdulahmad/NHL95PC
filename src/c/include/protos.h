@@ -769,5 +769,7 @@ void PaPlayoffResult(int team, int game, unsigned conf, unsigned round, int ot, 
 int PickNearestPlayer(int x, int y);  /* 7E93E */
 void DrawGadgetByType(unsigned type, unsigned char state, int b, int *shp, int c, int d);  /* 7DF4E */
 void __cdecl sub_913B4(int shape);  /* graphics library: draw a shape */
+void AddDirtyRect(short x, short y, short w, short h);  /* 1D02F */
+int GameDressPlayer(unsigned char *nums, int a, unsigned char side, int *sel, int art, int b, int c, int d, int e, int f);  /* 79F41 */
 
 #endif

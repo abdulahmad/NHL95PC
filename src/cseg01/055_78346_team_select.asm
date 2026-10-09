@@ -2260,6 +2260,10 @@ call PrintLineEdStatus	; 79F32
 xor eax, eax	; 79F37
 add esp, byte 24h	; 79F39
 jmp near MenuSaveDefaultLines_pop	; 79F3C
+; C: src/c/055_78346_team_select/GameDressPlayer.c
+%ifdef CBUILD
+%include "c/055_78346_team_select/GameDressPlayer.inc"
+%else
 GameDressPlayer:
 push dword 40h	; 79F41
 call __CHK	; 79F46
@@ -2332,6 +2336,7 @@ add esp, byte 20h	; 7A00F
 pop edi	; 7A012
 pop esi	; 7A013
 ret 18h	; 7A014
+%endif ; C
 BlitJerseyDigit:
 push dword 18h	; 7A017
 call __CHK	; 7A01C

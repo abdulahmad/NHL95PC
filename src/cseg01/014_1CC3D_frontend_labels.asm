@@ -373,6 +373,10 @@ push dword 4	; 1D024
 call __CHK	; 1D029
 ret	; 1D02E
 %endif ; C
+; C: src/c/014_1CC3D_frontend_labels/AddDirtyRect.c
+%ifdef CBUILD
+%include "c/014_1CC3D_frontend_labels/AddDirtyRect.inc"
+%else
 AddDirtyRect:	;IDA: code_1D02F
 push dword 0Ch	; 1D02F
 call __CHK	; 1D034
@@ -424,6 +428,7 @@ add dword [nosplit eax*4+dirtyrectptr], byte 10h	; 1D0E5
 pop edi	; 1D0ED
 pop esi	; 1D0EE
 ret	; 1D0EF
+%endif ; C
 SetupStatsSourceMenu_jt:
 dd SetupStatsSourceMenu_all
 dd SetupStatsSourceMenu_exh
