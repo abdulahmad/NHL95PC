@@ -8,7 +8,7 @@ extern asc_D0F15, rosterisfa, musicon, byte_D42C3, rosterlist, byte_EA991, roste
 extern dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, songdata, falist, falistsel, facount
 extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0BFC, dword_D0C04, dword_D0C10
-extern dword_D0C18, dword_D0C20, musichandle, dword_D8B74, dword_DC238, dword_EA2B0, dword_EA2B4, musicslot
+extern dword_D0C18, dword_D0C20, musichandle, dword_D8B74, pointerspr, dword_EA2B0, dword_EA2B4, musicslot
 extern dword_EA988, dword_EBC68, msglines, dword_EBCA4, dword_EBE9C, editrosters_exit, fputchar, jctime
 extern loc_6C03C, mkdir_, leaguedbnames
 extern off_CFB1C, off_CFB8A, rmdir_, sprintf_, strcat_, strcpy_, strlen_, strupr_
@@ -855,7 +855,7 @@ push dword 280h	; 6CD6C
 call sub_B4F8C	; 6CD71
 add esp, byte 0Ch	; 6CD76
 mov dword [dword_EA2B4], eax	; 6CD79
-mov eax, dword [dword_DC238]	; 6CD7E
+mov eax, dword [pointerspr]	; 6CD7E
 mov esi, dword [byte eax+02h]	; 6CD83
 sar esi, 10h	; 6CD86
 mov eax, dword [byte eax+04h]	; 6CD89
@@ -870,19 +870,19 @@ push asc_C28A1	; 6CD9E
 call sub_8CCA8	; 6CDA3
 add esp, byte 0Ch	; 6CDA8
 mov dword [dword_EBE9C], eax	; 6CDAB
-mov esi, dword [dword_DC238]	; 6CDB0
+mov esi, dword [pointerspr]	; 6CDB0
 mov edi, eax	; 6CDB6
 movsd	; 6CDB8
 movsd	; 6CDB9
 movsd	; 6CDBA
 movsd	; 6CDBB
 movsb	; 6CDBC
-mov eax, dword [dword_DC238]	; 6CDBD
+mov eax, dword [pointerspr]	; 6CDBD
 mov si, word [byte eax+04h]	; 6CDC2
 inc esi	; 6CDC6
 mov eax, dword [dword_EBE9C]	; 6CDC7
 mov word [byte eax+04h], si	; 6CDCC
-mov eax, dword [dword_DC238]	; 6CDD0
+mov eax, dword [pointerspr]	; 6CDD0
 mov si, word [byte eax+06h]	; 6CDD5
 inc esi	; 6CDD9
 mov eax, dword [dword_EBE9C]	; 6CDDA

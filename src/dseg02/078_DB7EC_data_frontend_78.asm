@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_DB7EC nobits alloc noexec write align=1
 global awroster, byte_DB7F1, hmgoalieidx, hmscratch, byte_DC264, byte_DC265, byte_DC266
-global byte_DC267, byte_DC268, dword_DBC7C, dword_DBCE0, dword_DC230, schedgameidx, dword_DC238, dword_DC23E
+global byte_DC267, byte_DC268, dword_DBC7C, dword_DBCE0, dword_DC230, schedgameidx, pointerspr, dword_DC23E
 global linesprites, dword_DC28C, penaltydigits, dword_DC2B8, hmpanelspr, awpanelspr, scoredigits, scrbrdshapes
-global clockdigits, clockcolon, cupseries, dword_DC33C, dword_DC640, dword_DC6A8, sfpal2, sfpal1
-global dword_DC6B4, dword_DC6B8, dword_DC6BC, dword_DC720, dword_DC734, dword_DC738, dword_DC73C, dword_DC750
-global dword_DC754, playofftree, hmteamrec, unk_DBD1C, awteamrec
+global clockdigits, clockcolon, cupseries, dword_DC33C, statsteamorder, dword_DC6A8, sfpal2, sfpal1
+global dword_DC6B4, statsnumgoalies, statsskaterorder, statsgoalieorder, dword_DC734, dword_DC738, statsgoalieplr, statsnumskaters
+global statsskaterplr, playofftree, hmteamrec, unk_DBD1C, awteamrec
 global hmlinetab, unk_DC240, unk_DC252, hmlineind, awlineind, unk_DC340, word_DC242
 global word_DC244, word_DC248, word_DC24E
 awroster:
@@ -39,7 +39,7 @@ dword_DC230:
 resb 4
 schedgameidx:
 resb 4
-dword_DC238:
+pointerspr:
 resb 6
 dword_DC23E:
 resb 2
@@ -95,7 +95,7 @@ dword_DC33C:
 resb 4
 unk_DC340:
 resb 768
-dword_DC640:
+statsteamorder:
 resb 104
 dword_DC6A8:
 resb 4
@@ -105,21 +105,21 @@ sfpal1:
 resb 4
 dword_DC6B4:
 resb 4
-dword_DC6B8:
+statsnumgoalies:
 resb 4
-dword_DC6BC:
+statsskaterorder:
 resb 100
-dword_DC720:
+statsgoalieorder:
 resb 20
 dword_DC734:
 resb 4
 dword_DC738:
 resb 4
-dword_DC73C:
+statsgoalieplr:
 resb 20
-dword_DC750:
+statsnumskaters:
 resb 4
-dword_DC754:
+statsskaterplr:
 resb 100
 playofftree:
 resb 4

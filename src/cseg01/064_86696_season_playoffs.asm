@@ -6,7 +6,7 @@ extern __CHK, __STOSD, str_Palette, str_Embscup, str_Bkgd, str_Embpal, str_BangP
 extern str_PO, str_fmtSlashDb, str_GameSet, str_4dKbytesOfFree, str_Temp2, str_ScheduleDb, str_E31, str_E32
 extern str_Db, str_Tied, str_Schedule, str_GameSav, str_Pointer, str_Menubuff2, str_PlayoffsHaveNotBeen, str_Pstatbar2
 extern str_Rst1, str_Rst2, str_Scuparrw, str_WesternConference, str_EasternConference, str_fmtcsp, str_Aup1, str_Aup2
-extern str_Aup3, str_Midl, str_Adn3, str_Adn2, str_Adn1, asc_C6779, str_Bkgd2, str_extDB
+extern str_Aup3, str_Midl, str_Adn3, str_Adn2, str_Adn1, str_POTitle, str_Bkgd2, str_extDB
 extern msg_PODiskSpace_arg, msg_POTeamOut_arg, msg_POTeamOut_arg2, byte_C6D72, byte_C6D7A, byte_C6D7B
 extern byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, byte_C6D9A, byte_C6DA2
 extern byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, byte_C6DB2, str_dot, curleague
@@ -18,7 +18,7 @@ extern skaterstatscb, goaliestatscb, dword_C65CC, dword_C65D0, dword_C6D26, dwor
 extern dword_C71D4, dword_C71D8, dword_C71DC, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
 extern dword_CE5C3, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
 extern keydb_size, musichandle, dword_D2884, dword_D288C, seriesgameno, dword_D2B70, dword_D2BEC, musicslot
-extern dword_D2C6B, dword_D8B68, dword_D8B74, schedgameidx, dword_DC238, playofftree, playofftree_p1, pochampion
+extern dword_D2C6B, dword_D8B68, dword_D8B74, schedgameidx, pointerspr, playofftree, playofftree_p1, pochampion
 extern dword_DD770, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, off_C5439, teamcitynames
 extern off_C6D22, leaguedbnames, off_CEF43, off_CEF63
 extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, msg_POHumanOut, msg_POTeamOut, msg_POGenFinal
@@ -4411,7 +4411,7 @@ mov dword [byte esp+054h], edx	; 89C25
 mov dword [byte esp+050h], edx	; 89C29
 mov dword [byte esp+014h], edx	; 89C2D
 mov dword [byte esp+010h], edx	; 89C31
-mov eax, dword [dword_DC238]	; 89C35
+mov eax, dword [pointerspr]	; 89C35
 mov edx, dword [byte eax+02h]	; 89C3A
 sar edx, 10h	; 89C3D
 shl edx, 2	; 89C40
@@ -4428,18 +4428,18 @@ call sub_8CCA8	; 89C5B
 mov ebp, eax	; 89C60
 add esp, byte 0Ch	; 89C62
 mov dword [dword esp+0B0h], eax	; 89C65
-mov esi, dword [dword_DC238]	; 89C6C
+mov esi, dword [pointerspr]	; 89C6C
 mov edi, eax	; 89C72
 movsd	; 89C74
 movsd	; 89C75
 movsd	; 89C76
 movsd	; 89C77
 movsb	; 89C78
-mov eax, dword [dword_DC238]	; 89C79
+mov eax, dword [pointerspr]	; 89C79
 mov ax, word [byte eax+04h]	; 89C7E
 inc eax	; 89C82
 mov word [byte ebp+04h], ax	; 89C83
-mov eax, dword [dword_DC238]	; 89C87
+mov eax, dword [pointerspr]	; 89C87
 mov ax, word [byte eax+06h]	; 89C8C
 inc eax	; 89C90
 mov word [byte ebp+06h], ax	; 89C91
@@ -4475,7 +4475,7 @@ call sub_91400	; 89CF8
 add esp, byte 0Ch	; 89CFD
 push esi	; 89D00
 push edi	; 89D01
-mov edx, dword [dword_DC238]	; 89D02
+mov edx, dword [pointerspr]	; 89D02
 push edx	; 89D08
 call sub_91370	; 89D09
 add esp, byte 0Ch	; 89D0E
@@ -4546,7 +4546,7 @@ mov ebx, dword [dword esp+0A4h]	; 89DF5
 push ebx	; 89DFC
 mov ecx, dword [dword esp+0ACh]	; 89DFD
 push ecx	; 89E04
-mov esi, dword [dword_DC238]	; 89E05
+mov esi, dword [pointerspr]	; 89E05
 push esi	; 89E0B
 call sub_91370	; 89E0C
 add esp, byte 0Ch	; 89E11
@@ -4666,7 +4666,7 @@ shl edx, 5	; 89FEF
 mov eax, dword [byte esp+eax*4+070h]	; 89FF2
 call dword [byte edx+eax+014h]	; 89FF6
 mov ebp, eax	; 89FFA
-mov eax, dword [dword_DC238]	; 89FFC
+mov eax, dword [pointerspr]	; 89FFC
 mov edx, dword [byte eax+02h]	; 8A001
 sar edx, 10h	; 8A004
 shl edx, 2	; 8A007
@@ -4682,7 +4682,7 @@ push str_Pointer	; 8A01D
 call sub_8CCA8	; 8A022
 add esp, byte 0Ch	; 8A027
 mov dword [dword esp+0B0h], eax	; 8A02A
-mov esi, dword [dword_DC238]	; 8A031
+mov esi, dword [pointerspr]	; 8A031
 mov edi, eax	; 8A037
 movsd	; 8A039
 movsd	; 8A03A
@@ -4987,7 +4987,7 @@ push str_Menubuff2	; 8A467
 call sub_8CCA8	; 8A46C
 add esp, byte 0Ch	; 8A471
 mov dword [byte esp+ebp*4+060h], eax	; 8A474
-mov esi, dword [dword_DC238]	; 8A478
+mov esi, dword [pointerspr]	; 8A478
 mov edi, eax	; 8A47E
 movsd	; 8A480
 movsd	; 8A481
@@ -5295,7 +5295,7 @@ add esp, byte 4	; 8A893
 mov edx, 43h	; 8A896
 mov eax, 40h	; 8A89B
 call SetTextColors	; 8A8A0
-mov edx, asc_C6779	; 8A8A5
+mov edx, str_POTitle	; 8A8A5
 lea eax, [dword esp+0B8h]	; 8A8AA
 call strcpy_	; 8A8B1
 lea edx, [dword esp+0B8h]	; 8A8B6

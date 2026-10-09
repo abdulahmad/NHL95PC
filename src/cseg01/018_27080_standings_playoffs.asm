@@ -14,7 +14,7 @@ extern dword_C6E3A, dword_C6E4A, dword_D2C6B, dword_D8B68, dword_D8B74, playofft
 extern dword_DD120, fputchar, j___close_, jctime, lseek_, memcpy_, off_C68BC, off_C68E4
 extern off_C68F4, off_CF6A3, open_, qsort_, read_, sprintf_, strcat_, MakePath
 extern SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff
-extern DeskSetExit3b, sub_1FF86, sub_269F4, sub_2970A, sub_29A97, sub_29B07, LoadScheduleDB, sub_8E83C
+extern DeskSetExit3b, MakeStatsTitle, sub_269F4, sub_2970A, sub_29A97, sub_29B07, LoadScheduleDB, sub_8E83C
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_91044, sub_91370, sub_913B4, sub_B30B4, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, unk_269EA, unk_269FE, unk_C12BB, unk_C12BE, unk_C12C1, unk_C12C4
 extern unk_C1344, unk_C135B, statsleague, unk_DDAC4, word_C6E22
@@ -279,7 +279,7 @@ call SetTextColors	; 273B9
 mov dword [byte ebp-024h], 31h	; 273BE
 mov edx, asc_C1290	; 273C5
 lea eax, [dword ebp-013Ch]	; 273CA
-call sub_1FF86	; 273D0
+call MakeStatsTitle	; 273D0
 lea esi, [dword ebp-013Ch]	; 273D5
 mov edi, dword [byte ebp-024h]	; 273DB
 lea eax, [dword ebp-013Ch]	; 273DE
@@ -1597,7 +1597,7 @@ call sub_8EA18	; 283CB
 add esp, byte 4	; 283D0
 mov edx, asc_C1290	; 283D3
 lea eax, [dword ebp-0F0h]	; 283D8
-call sub_1FF86	; 283DE
+call MakeStatsTitle	; 283DE
 lea edx, [dword ebp-0F0h]	; 283E3
 mov eax, 16h	; 283E9
 call PrintCenteredText	; 283EE

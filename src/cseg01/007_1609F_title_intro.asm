@@ -10,7 +10,7 @@ extern str_KMS, musicon, byte_D42C3, byte_ED7F0, byte_ED833, byte_ED834, byte_ED
 extern byte_ED8F4, byte_ED8F6, byte_ED8F7, byte_ED8F8, byte_ED92D, byte_ED9A6, byte_ED9A8, byte_ED9AD
 extern byte_ED9E9, byte_ED9EA, dword_C4CFC, demomode, dword_C541F, dword_C588A, textgrid, textgridon
 extern textcolor, textshadow, textoutlinedx, textoutlinedy, songdata, dword_CC0EC, dword_CCC94, musicslot
-extern musichandle, dword_D2C6B, fontcolor, dword_D8B68, dword_D8B74, dword_DC238, dword_DC33C, dword_ED7B0
+extern musichandle, dword_D2C6B, fontcolor, dword_D8B68, dword_D8B74, pointerspr, dword_DC33C, dword_ED7B0
 extern fputchar, jctime, RunDemoGame_x, memcpy_, memset_, off_C6399, rand_, sprintf_
 extern srand_, strlen_, MakePath, RunDemoGame, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
@@ -1168,7 +1168,7 @@ push ebp	; 1706F
 call sub_B30B4	; 17070
 mov edx, eax	; 17075
 add esp, byte 8	; 17077
-mov esi, dword [dword_DC238]	; 1707A
+mov esi, dword [pointerspr]	; 1707A
 mov edi, dword [dword esp+0360h]	; 17080
 movsd	; 17087
 movsd	; 17088

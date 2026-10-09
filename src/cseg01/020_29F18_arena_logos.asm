@@ -9,7 +9,7 @@ extern asc_C140C, asc_C1415, asc_C141A, asc_C141F, asc_C1428, str_extDB, str_VFN
 extern byte_C6F6C, curleague, musicon, byte_D42C3, hmroster, byte_ED7F3, byte_ED824, byte_ED825
 extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, ctl1team, ctl2team
 extern teamconf, dword_C71CC, dword_C71D0, dword_C71D4, songdata, cont2team, HomeTeam, musicslot
-extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, dword_DC238, dword_EA0DC
+extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, pointerspr, dword_EA0DC
 extern fputchar, jctime, memcpy_, off_C5439, crestnames, off_C6F48, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern SetTextColors, PrintShadowText, PrintOutlinedText, sub_29C75, sub_29D00, sub_30A0C, sub_30A39, sub_30AE2
@@ -463,7 +463,7 @@ call sub_29D00	; 2A549
 mov edx, dword [dword esp+0650h]	; 2A54E
 mov eax, dword [dword esp+0654h]	; 2A555
 call sub_30AE2	; 2A55C
-mov eax, dword [dword_DC238]	; 2A561
+mov eax, dword [pointerspr]	; 2A561
 mov edx, dword [byte eax+02h]	; 2A566
 sar edx, 10h	; 2A569
 mov eax, dword [byte eax+04h]	; 2A56C
@@ -479,19 +479,19 @@ call sub_8CCA8	; 2A582
 mov dword [dword esp+0648h], eax	; 2A587
 add esp, byte 0Ch	; 2A58E
 mov dword [dword esp+0660h], eax	; 2A591
-mov esi, dword [dword_DC238]	; 2A598
+mov esi, dword [pointerspr]	; 2A598
 mov edi, eax	; 2A59E
 movsd	; 2A5A0
 movsd	; 2A5A1
 movsd	; 2A5A2
 movsd	; 2A5A3
 movsb	; 2A5A4
-mov eax, dword [dword_DC238]	; 2A5A5
+mov eax, dword [pointerspr]	; 2A5A5
 mov ax, word [byte eax+04h]	; 2A5AA
 inc eax	; 2A5AE
 mov edx, dword [dword esp+063Ch]	; 2A5AF
 mov word [byte edx+04h], ax	; 2A5B6
-mov eax, dword [dword_DC238]	; 2A5BA
+mov eax, dword [pointerspr]	; 2A5BA
 mov ax, word [byte eax+06h]	; 2A5BF
 inc eax	; 2A5C3
 mov word [byte edx+06h], ax	; 2A5C4
@@ -519,7 +519,7 @@ call sub_91400	; 2A610
 add esp, byte 0Ch	; 2A615
 push ebp	; 2A618
 push ebp	; 2A619
-mov edx, dword [dword_DC238]	; 2A61A
+mov edx, dword [pointerspr]	; 2A61A
 push edx	; 2A620
 call sub_91370	; 2A621
 add esp, byte 0Ch	; 2A626
@@ -654,7 +654,7 @@ mov eax, dword [dword esp+0634h]	; 2A816
 push eax	; 2A81D
 mov edx, dword [dword esp+0634h]	; 2A81E
 push edx	; 2A825
-mov ebx, dword [dword_DC238]	; 2A826
+mov ebx, dword [pointerspr]	; 2A826
 push ebx	; 2A82C
 jmp near loc_2AA81	; 2A82D
 loc_2A832:
@@ -701,7 +701,7 @@ push asc_C13B6	; 2A8DC
 call sub_8CCA8	; 2A8E1
 mov ebp, eax	; 2A8E6
 add esp, byte 0Ch	; 2A8E8
-mov esi, dword [dword_DC238]	; 2A8EB
+mov esi, dword [pointerspr]	; 2A8EB
 mov edi, eax	; 2A8F1
 movsd	; 2A8F3
 movsd	; 2A8F4
@@ -741,7 +741,7 @@ push asc_C13B6	; 2A978
 call sub_8CCA8	; 2A97D
 mov ebp, eax	; 2A982
 add esp, byte 0Ch	; 2A984
-mov esi, dword [dword_DC238]	; 2A987
+mov esi, dword [pointerspr]	; 2A987
 mov edi, eax	; 2A98D
 movsd	; 2A98F
 movsd	; 2A990
@@ -811,7 +811,7 @@ mov edx, dword [dword esp+0634h]	; 2AA6A
 push edx	; 2AA71
 mov ebx, dword [dword esp+0634h]	; 2AA72
 push ebx	; 2AA79
-mov ecx, dword [dword_DC238]	; 2AA7A
+mov ecx, dword [pointerspr]	; 2AA7A
 push ecx	; 2AA80
 loc_2AA81:
 call sub_91370	; 2AA81

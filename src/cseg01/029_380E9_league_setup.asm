@@ -7,7 +7,7 @@ extern asc_C18B3, asc_C18B8, asc_C18C1, asc_C18C7, asc_C18CC, asc_C18D5, asc_C18
 extern str_extDB, asc_C82A5, asc_C82B9, asc_C82CE, asc_C82E6, asc_C830C, asc_C8333, byte_C8332
 extern divisionteams, musicon, leagueflags, savedname, byte_ED858, byte_ED979, byte_ED9AC, gameopts
 extern songdata, dword_C786C, dword_C7A34, dword_C87B0, musichandle, dword_D2C6B, dword_D8B74, musicslot
-extern dword_DC238, dword_DD798, leaguemaster, leaguesaved, dword_EA0DC, jctime, memcpy_, memset_
+extern pointerspr, dword_DD798, leaguemaster, leaguesaved, dword_EA0DC, jctime, memcpy_, memset_
 extern off_C8055, strcat_, strcmp_, strcpy_, stricmp_, strlen_, MakePath, leaguedbnames
 extern FileOpenRead, FileClose, FileReadAt, FileWriteAt, ReadTeamRec, SetTextColors, sub_2FEDF, sub_303FB
 extern sub_30A0C, MessageBox, sub_37B92, sub_37C53, sub_37D6A, sub_37E5B, sub_37EA6, sub_37FBA
@@ -987,7 +987,7 @@ mov eax, dword [dword esp+0250h]	; 38EF2
 mov eax, dword [eax]	; 38EF9
 mov dword [dword esp+0264h], eax	; 38EFB
 loc_38F02:
-mov eax, dword [dword_DC238]	; 38F02
+mov eax, dword [pointerspr]	; 38F02
 mov edx, dword [byte eax+02h]	; 38F07
 sar edx, 10h	; 38F0A
 shl edx, 2	; 38F0D
@@ -1003,18 +1003,18 @@ push asc_C18AB	; 38F23
 call sub_8CCA8	; 38F28
 add esp, byte 0Ch	; 38F2D
 mov dword [dword esp+0280h], eax	; 38F30
-mov esi, dword [dword_DC238]	; 38F37
+mov esi, dword [pointerspr]	; 38F37
 mov edi, eax	; 38F3D
 movsd	; 38F3F
 movsd	; 38F40
 movsd	; 38F41
 movsd	; 38F42
 movsb	; 38F43
-mov edx, dword [dword_DC238]	; 38F44
+mov edx, dword [pointerspr]	; 38F44
 mov dx, word [byte edx+04h]	; 38F4A
 inc edx	; 38F4E
 mov word [byte eax+04h], dx	; 38F4F
-mov edx, dword [dword_DC238]	; 38F53
+mov edx, dword [pointerspr]	; 38F53
 mov dx, word [byte edx+06h]	; 38F59
 inc edx	; 38F5D
 mov word [byte eax+06h], dx	; 38F5E
@@ -1098,7 +1098,7 @@ push ecx	; 3908F
 mov eax, dword [dword esp+0240h]	; 39090
 sub eax, byte 4	; 39097
 push eax	; 3909A
-mov esi, dword [dword_DC238]	; 3909B
+mov esi, dword [pointerspr]	; 3909B
 push esi	; 390A1
 call sub_91370	; 390A2
 add esp, byte 0Ch	; 390A7
@@ -1499,7 +1499,7 @@ call sub_8CCA8	; 39748
 add esp, byte 0Ch	; 3974D
 mov edx, dword [dword esp+027Ch]	; 39750
 mov dword [dword esp+edx+0210h], eax	; 39757
-mov esi, dword [dword_DC238]	; 3975E
+mov esi, dword [pointerspr]	; 3975E
 mov edi, eax	; 39764
 movsd	; 39766
 movsd	; 39767
@@ -2122,7 +2122,7 @@ push edx	; 3A0E5
 mov eax, dword [dword esp+0238h]	; 3A0E6
 sub eax, byte 4	; 3A0ED
 push eax	; 3A0F0
-mov ebx, dword [dword_DC238]	; 3A0F1
+mov ebx, dword [pointerspr]	; 3A0F1
 push ebx	; 3A0F7
 call sub_91370	; 3A0F8
 add esp, byte 0Ch	; 3A0FD

@@ -165,6 +165,16 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0001D5D5,sub_1D5D5,StrLenToDot,PC-new,,,,high,counts chars until NUL or '.',frontend_labels,manual-trace
 0001D610,sub_1D610,SetScreenTitle,PC-new,,,,high,mode 0-5 -> Sports Central/Playoff Tree/League Calendar/Broadcast Booth/Intermission Desk/Rink Side title + width into screen headers,frontend_labels,manual-trace
 0001D6BE,sub_1D6BE,StrPrefixDiffers,PC-new,,,,high,returns 1 on first mismatching char before either NUL,frontend_labels,manual-trace
+0001D6E8,sub_1D6E8,RunMenu,PC-new,,,,medium,"mouse-driven menu loop: saves ""Pointer"" bg, tracks mouse, hit-tests menu items (32-byte items, +14h action fn), calls action; eax=menu list, edx=count, ebx/ecx/stack=colors",menu_system,manual-trace
+0001DF03,sub_1DF03,RunTeamPickMenu,PC-new,,,,medium,"RunMenu variant with a 26-team picker (statsteamorder / playofftree), sets statscategory + statsteamsel; used by EASN team stats screens",menu_system,manual-trace
+0001ED96,sub_1ED96,RunPlayerPickMenu,PC-new,,,,medium,"RunMenu variant with a skater + goalie picker; copies picked record to statsplayer, calls ShowPlayerStatsItem",menu_system,manual-trace
+0001FAA7,sub_1FAA7,InitMenuRemap,PC-new,,,,low,"fills 256-byte remap table menuremap (mode 0: shift 15h-3Fh down, else identity) and installs it via sub_B4DD4",menu_system,manual-trace
+0001FB1C,sub_1FB1C,TextPrintf,PC-new,,,,low,sprintf into printfbuf then sub_91964 text draw; no refs,menu_system,manual-trace
+0001FB49,sub_1FB49,TextPrintf2,PC-new,,,,low,as TextPrintf with one more format arg; no refs,menu_system,manual-trace
+0001FB7F,sub_1FB7F,CompareSkaterStats,PC-new,,,,high,qsort comparator on statsskaterorder over 47-byte skater stat records (season / playoff +12h),menu_system,manual-trace
+0001FC8F,sub_1FC8F,CompareGoalieStats,PC-new,,,,high,qsort comparator on statsgoalieorder over 54-byte goalie stat records (season / playoff +16h),menu_system,manual-trace
+0001FDFE,sub_1FDFE,LoadShapeByTag,PC-new,,,,low,"opens file, reads tag directory (""sfh""), finds 4-char tag, allocs ""shape"" and reads it; no refs",menu_system,manual-trace
+0001FF86,sub_1FF86,MakeStatsTitle,PC-new,,,,high,dest = selected stats source label ('93-'94 Season / league / playoffs) + suffix,menu_system,manual-trace
 00031013,sub_31013,MessageBox,PC-new,,,,medium,"(x, y (-1 = centred), message line table, line count, buttons, button count, ...): the league/front-end message dialog used for every 'Copying databases' / 'Insert disk' / error box",misc_dialogs,manual-trace
 0003271B,sub_3271B,SaveModeState,PC-new,,,,high,"copies the current league name, DB path formats, HomeTeam/VisTeam, gameopts and controller teams/devices/sides into a 75h-byte mode state block",main_desk,manual-trace
 000327A1,sub_327A1,LoadModeState,PC-new,,,,high,"the reverse of SaveModeState: sets gamemode (+0), curleague, paths, HomeTeam/VisTeam, gameopts and controller fields from a mode state block",main_desk,manual-trace

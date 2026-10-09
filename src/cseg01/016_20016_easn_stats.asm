@@ -4,16 +4,16 @@ bits 32
 section s_20016 progbits alloc exec nowrite align=1
 extern __CHK, asc_C0C34, asc_C0C3B, asc_C0C40, asc_C0C46, asc_C0C4B, asc_C0C51, asc_C0C58
 extern asc_C0C5F, asc_C0C64, asc_C0C6D, asc_C0C73, asc_C0C78, asc_C0C7E, asc_C0C84, asc_C0C8D
-extern asc_C0C94, asc_C0C99, asc_C0C9F, asc_C0CA4, asc_C0CAA, asc_C6940, byte_DC836, byte_ED836
+extern asc_C0C94, asc_C0C99, asc_C0C9F, asc_C0CA4, asc_C0CAA, asc_C6940, byte_ED836
 extern byte_ED858, byte_ED859, byte_ED85A, byte_ED98D, gamemode, dword_C65A8, dword_C65AC, statscategory
-extern dword_C65B4, statsredrawcb, deskexit, dword_C65CC, statsplayoffs, dword_C6A60, dword_C6D26, dword_C7219
-extern dword_C8992, dword_D2C6B, dword_DC640, dword_DC6B4, dword_DC734, dword_DC738, playofftree, dword_DD100
-extern dword_DD104, dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD120, dword_DDD2C, jctime
-extern memcpy_, off_C68E4, MakePath, FreeDeskBuffers, sub_1D6E8, sub_1DF03, sub_1ED96, sub_1FAA7
+extern statsteamsel, statsredrawcb, deskexit, dword_C65CC, statsplayoffs, dword_C6A60, dword_C6D26, dword_C7219
+extern dword_C8992, dword_D2C6B, statsteamorder, dword_DC6B4, dword_DC734, dword_DC738, playofftree, dword_DD100
+extern dword_DD104, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, dword_DD120, dword_DDD2C, jctime
+extern memcpy_, off_C68E4, MakePath, FreeDeskBuffers, RunMenu, RunTeamPickMenu, RunPlayerPickMenu, InitMenuRemap
 extern sub_21CDE, sub_22581, sub_235BE, sub_244E2, sub_25B24, sub_27080, sub_296BA, sub_6B5E4
 extern sub_76429, sub_8CCA8, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_91FE0, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, unk_C6960, unk_CF54F, unk_CF6AF, unk_CF74F
-extern unk_CF78F, unk_CF80F, unk_CF88F, unk_DC834
+extern unk_CF78F, unk_CF80F, unk_CF88F, statsplayer
 global jpt_2050A, jpt_20EA7, jpt_217EE, loc_200B1, loc_200B3, loc_2012B, loc_20219, loc_2021B
 global loc_202DF, loc_2037B, loc_2037D, loc_20434, loc_20466, loc_2046A, loc_20481, loc_20483
 global loc_2049E, loc_204CA, loc_204FE, loc_20648, loc_2064A, loc_206CB, loc_206EA, loc_20740
@@ -54,7 +54,7 @@ mov eax, 1	; 2005E
 call sub_76429	; 20063
 call sub_B4BA8	; 20068
 mov eax, 1	; 2006D
-call sub_1FAA7	; 20072
+call InitMenuRemap	; 20072
 mov eax, esi	; 20077
 call sub_235BE	; 20079
 push byte 42h	; 2007E
@@ -103,7 +103,7 @@ mov ebx, 40h	; 2011C
 mov edx, 4	; 20121
 mov eax, unk_CF78F	; 20126
 loc_2012B:
-call sub_1D6E8	; 2012B
+call RunMenu	; 2012B
 mov eax, esp	; 20130
 push eax	; 20132
 push dword 100h	; 20133
@@ -152,7 +152,7 @@ mov eax, 1	; 201C6
 call sub_76429	; 201CB
 call sub_B4BA8	; 201D0
 mov eax, 1	; 201D5
-call sub_1FAA7	; 201DA
+call InitMenuRemap	; 201DA
 mov eax, esi	; 201DF
 call sub_25B24	; 201E1
 push byte 42h	; 201E6
@@ -203,7 +203,7 @@ mov ecx, 41h	; 2028D
 mov ebx, 40h	; 20292
 mov edx, 4	; 20297
 mov eax, unk_CF80F	; 2029C
-call sub_1D6E8	; 202A1
+call RunMenu	; 202A1
 mov eax, esp	; 202A6
 push eax	; 202A8
 push dword 100h	; 202A9
@@ -248,7 +248,7 @@ mov edx, esp	; 2032B
 mov eax, 1	; 2032D
 call sub_76429	; 20332
 mov eax, 1	; 20337
-call sub_1FAA7	; 2033C
+call InitMenuRemap	; 2033C
 mov eax, esi	; 20341
 call sub_25B24	; 20343
 push byte 42h	; 20348
@@ -348,8 +348,8 @@ call sub_8E83C	; 20491
 add esp, byte 8	; 20496
 mov dword [dword_C65AC], eax	; 20499
 loc_2049E:
-mov eax, dword [dword_DD10C]	; 2049E
-mov edx, dword_DC640	; 204A3
+mov eax, dword [statsteambuf]	; 2049E
+mov edx, statsteamorder	; 204A3
 call sub_296BA	; 204A8
 push byte 42h	; 204AD
 mov ecx, 41h	; 204AF
@@ -367,8 +367,8 @@ mov ebx, 40h	; 204DB
 mov edx, 4	; 204E0
 mov eax, unk_CF54F	; 204E5
 call sub_6B5E4	; 204EA
-mov eax, dword [dword_DD10C]	; 204EF
-mov edx, dword_DC640	; 204F4
+mov eax, dword [statsteambuf]	; 204EF
+mov edx, statsteamorder	; 204F4
 call sub_27080	; 204F9
 loc_204FE:
 xor eax, eax	; 204FE
@@ -397,10 +397,10 @@ mov dword [dword_DC738], 1	; 20530
 mov eax, dword [dword_C65CC]	; 2053A
 mov dword [statsredrawcb], eax	; 2053F
 xor ebx, ebx	; 20544
-mov dword [dword_C65B4], ebx	; 20546
+mov dword [statsteamsel], ebx	; 20546
 mov dword [statscategory], ebx	; 2054C
 xor ah, ah	; 20552
-mov byte [byte_DC836], ah	; 20554
+mov byte [statsplayer+2], ah	; 20554
 mov eax, esp	; 2055A
 push eax	; 2055C
 push dword 100h	; 2055D
@@ -418,31 +418,31 @@ add esp, byte 4	; 20588
 xor esi, esi	; 2058B
 mov dword [dword_C6D26], esi	; 2058D
 mov eax, 1	; 20593
-call sub_1FAA7	; 20598
+call InitMenuRemap	; 20598
 push byte 20h	; 2059D
 push dword 2A4h	; 2059F
 push asc_C0C40	; 205A4
 call sub_8CCA8	; 205A9
 add esp, byte 0Ch	; 205AE
-mov dword [dword_DD10C], eax	; 205B1
+mov dword [statsteambuf], eax	; 205B1
 push byte 20h	; 205B6
 push dword 5B0h	; 205B8
 push asc_C0C46	; 205BD
 call sub_8CCA8	; 205C2
 add esp, byte 0Ch	; 205C7
-mov dword [dword_DD11C], eax	; 205CA
+mov dword [statsplayerbuf], eax	; 205CA
 push byte 20h	; 205CF
 push dword 497h	; 205D1
 push asc_C0C4B	; 205D6
 call sub_8CCA8	; 205DB
 add esp, byte 0Ch	; 205E0
-mov dword [dword_DD110], eax	; 205E3
+mov dword [statsskaterbuf], eax	; 205E3
 push byte 20h	; 205E8
 push dword 10Eh	; 205EA
 push asc_C0C51	; 205EF
 call sub_8CCA8	; 205F4
 add esp, byte 0Ch	; 205F9
-mov dword [dword_DD114], eax	; 205FC
+mov dword [statsgoaliebuf], eax	; 205FC
 xor eax, eax	; 20601
 call dword [dword_C65CC]	; 20603
 push byte 42h	; 20609
@@ -452,7 +452,7 @@ mov edx, 4	; 20615
 mov eax, unk_CF54F	; 2061A
 call sub_6B5E4	; 2061F
 mov dword [statscategory], esi	; 20624
-mov dword [dword_C65B4], esi	; 2062A
+mov dword [statsteamsel], esi	; 2062A
 xor ecx, ecx	; 20630
 mov ebx, asc_C0C34	; 20632
 cmp byte [byte_ED85A], 1	; 20637
@@ -490,7 +490,7 @@ mov ecx, 41h	; 206A3
 mov ebx, 40h	; 206A8
 mov edx, 4	; 206AD
 mov eax, unk_CF54F	; 206B2
-call sub_1DF03	; 206B7
+call RunTeamPickMenu	; 206B7
 call FreeDeskBuffers	; 206BC
 mov edi, sub_22581	; 206C1
 mov esi, 1	; 206C6
@@ -518,7 +518,7 @@ mov ecx, 41h	; 20719
 mov ebx, 40h	; 2071E
 mov edx, 4	; 20723
 mov eax, unk_CF54F	; 20728
-call sub_1DF03	; 2072D
+call RunTeamPickMenu	; 2072D
 cmp dword [statsplayoffs], byte 0	; 20732
 je short loc_20740	; 20739
 call FreeDeskBuffers	; 2073B
@@ -543,13 +543,13 @@ mov ecx, 41h	; 20782
 mov ebx, 40h	; 20787
 mov edx, 4	; 2078C
 mov eax, unk_CF6AF	; 20791
-call sub_1ED96	; 20796
+call RunPlayerPickMenu	; 20796
 jmp near loc_206CB	; 2079B
 loc_207A0:
 mov dword [statsredrawcb], edi	; 207A0
 xor ebp, ebp	; 207A6
 mov dword [dword_DC6B4], ebp	; 207A8
-mov eax, unk_DC834	; 207AE
+mov eax, statsplayer	; 207AE
 call sub_22581	; 207B3
 push byte 42h	; 207B8
 mov ecx, 41h	; 207BA
@@ -562,13 +562,13 @@ mov ecx, 41h	; 207D5
 mov ebx, 40h	; 207DA
 mov edx, 2	; 207DF
 mov eax, unk_CF74F	; 207E4
-call sub_1D6E8	; 207E9
+call RunMenu	; 207E9
 jmp near loc_206CB	; 207EE
 loc_207F3:
 mov dword [statsredrawcb], sub_21CDE	; 207F3
 xor ecx, ecx	; 207FD
 mov dword [dword_DC6B4], ecx	; 207FF
-mov eax, unk_DC834	; 20805
+mov eax, statsplayer	; 20805
 call sub_21CDE	; 2080A
 push byte 42h	; 2080F
 mov ecx, 41h	; 20811
@@ -581,7 +581,7 @@ mov ecx, 41h	; 2082C
 mov ebx, 40h	; 20831
 mov edx, 2	; 20836
 mov eax, unk_CF74F	; 2083B
-call sub_1D6E8	; 20840
+call RunMenu	; 20840
 mov dword [dword_C6D26], esi	; 20845
 jmp near loc_206CB	; 2084B
 loc_20850:
@@ -598,26 +598,26 @@ mov edx, esp	; 2086E
 mov eax, 1	; 20870
 call sub_76429	; 20875
 call FreeDeskBuffers	; 2087A
-mov edi, dword [dword_DD10C]	; 2087F
+mov edi, dword [statsteambuf]	; 2087F
 push edi	; 20885
 call jctime	; 20886
 add esp, byte 4	; 2088B
-mov ebp, dword [dword_DD114]	; 2088E
+mov ebp, dword [statsgoaliebuf]	; 2088E
 push ebp	; 20894
 call jctime	; 20895
 add esp, byte 4	; 2089A
-mov eax, dword [dword_DD110]	; 2089D
+mov eax, dword [statsskaterbuf]	; 2089D
 push eax	; 208A2
 call jctime	; 208A3
 add esp, byte 4	; 208A8
-mov edx, dword [dword_DD11C]	; 208AB
+mov edx, dword [statsplayerbuf]	; 208AB
 push edx	; 208B1
 call jctime	; 208B2
 add esp, byte 4	; 208B7
-mov dword [dword_DD11C], esi	; 208BA
-mov dword [dword_DD10C], esi	; 208C0
-mov dword [dword_DD114], esi	; 208C6
-mov dword [dword_DD110], esi	; 208CC
+mov dword [statsplayerbuf], esi	; 208BA
+mov dword [statsteambuf], esi	; 208C0
+mov dword [statsgoaliebuf], esi	; 208C6
+mov dword [statsskaterbuf], esi	; 208CC
 mov dword [dword_DC738], esi	; 208D2
 mov dword [statsredrawcb], esi	; 208D8
 mov eax, 2	; 208DE
@@ -648,7 +648,7 @@ mov dword [statscategory], esi	; 20929
 mov dword [statsredrawcb], sub_235BE	; 2092F
 call sub_B4BA8	; 20939
 mov eax, 1	; 2093E
-call sub_1FAA7	; 20943
+call InitMenuRemap	; 20943
 mov ebx, 10h	; 20948
 mov edx, esp	; 2094D
 mov eax, 1	; 2094F
@@ -696,7 +696,7 @@ mov ecx, 41h	; 209EB
 mov ebx, 40h	; 209F0
 mov edx, 4	; 209F5
 mov eax, unk_CF78F	; 209FA
-call sub_1D6E8	; 209FF
+call RunMenu	; 209FF
 mov eax, esp	; 20A04
 push eax	; 20A06
 push dword 100h	; 20A07
@@ -741,7 +741,7 @@ mov dword [statscategory], esi	; 20A83
 mov dword [statsredrawcb], sub_25B24	; 20A89
 call sub_B4BA8	; 20A93
 mov eax, 1	; 20A98
-call sub_1FAA7	; 20A9D
+call InitMenuRemap	; 20A9D
 mov ebx, 10h	; 20AA2
 mov edx, esp	; 20AA7
 mov eax, 1	; 20AA9
@@ -789,7 +789,7 @@ mov ecx, 41h	; 20B45
 mov ebx, 40h	; 20B4A
 mov edx, 4	; 20B4F
 mov eax, unk_CF80F	; 20B54
-call sub_1D6E8	; 20B59
+call RunMenu	; 20B59
 mov eax, esp	; 20B5E
 push eax	; 20B60
 push dword 100h	; 20B61
@@ -840,7 +840,7 @@ mov dword [statscategory], esi	; 20BFA
 mov dword [statsredrawcb], sub_25B24	; 20C00
 call sub_B4BA8	; 20C0A
 mov eax, 1	; 20C0F
-call sub_1FAA7	; 20C14
+call InitMenuRemap	; 20C14
 mov ebx, 10h	; 20C19
 mov edx, esp	; 20C1E
 mov eax, 1	; 20C20
@@ -888,7 +888,7 @@ mov ecx, 41h	; 20CBC
 mov ebx, 40h	; 20CC1
 mov edx, 4	; 20CC6
 mov eax, unk_CF88F	; 20CCB
-call sub_1D6E8	; 20CD0
+call RunMenu	; 20CD0
 mov eax, esp	; 20CD5
 push eax	; 20CD7
 push dword 100h	; 20CD8
@@ -996,8 +996,8 @@ call sub_8E83C	; 20E2E
 add esp, byte 8	; 20E33
 mov dword [dword_C65AC], eax	; 20E36
 loc_20E3B:
-mov eax, dword [dword_DD10C]	; 20E3B
-mov edx, dword_DC640	; 20E40
+mov eax, dword [statsteambuf]	; 20E3B
+mov edx, statsteamorder	; 20E40
 call sub_296BA	; 20E45
 push byte 42h	; 20E4A
 mov ecx, 41h	; 20E4C
@@ -1015,8 +1015,8 @@ mov ebx, 40h	; 20E78
 mov edx, 4	; 20E7D
 mov eax, unk_CF54F	; 20E82
 call sub_6B5E4	; 20E87
-mov eax, dword [dword_DD10C]	; 20E8C
-mov edx, dword_DC640	; 20E91
+mov eax, dword [statsteambuf]	; 20E8C
+mov edx, statsteamorder	; 20E91
 call sub_27080	; 20E96
 loc_20E9B:
 xor eax, eax	; 20E9B
@@ -1054,13 +1054,13 @@ mov dword [dword_DC738], edx	; 20EE8
 mov eax, dword [dword_C65CC]	; 20EEE
 mov dword [statsredrawcb], eax	; 20EF3
 xor ebx, ebx	; 20EF8
-mov dword [dword_C65B4], ebx	; 20EFA
+mov dword [statsteamsel], ebx	; 20EFA
 mov dword [statscategory], ebx	; 20F00
 mov dword [dword_C6D26], ebx	; 20F06
 mov edi, edx	; 20F0C
 mov dword [dword_C7219], edx	; 20F0E
 xor ah, ah	; 20F14
-mov byte [byte_DC836], ah	; 20F16
+mov byte [statsplayer+2], ah	; 20F16
 mov eax, esp	; 20F1C
 push eax	; 20F1E
 push dword 100h	; 20F1F
@@ -1072,31 +1072,31 @@ mov edx, esp	; 20F32
 mov eax, edi	; 20F34
 call sub_76429	; 20F36
 mov eax, edi	; 20F3B
-call sub_1FAA7	; 20F3D
+call InitMenuRemap	; 20F3D
 push byte 20h	; 20F42
 push dword 2A4h	; 20F44
 push asc_C0C6D	; 20F49
 call sub_8CCA8	; 20F4E
 add esp, byte 0Ch	; 20F53
-mov dword [dword_DD10C], eax	; 20F56
+mov dword [statsteambuf], eax	; 20F56
 push byte 20h	; 20F5B
 push dword 5B0h	; 20F5D
 push asc_C0C73	; 20F62
 call sub_8CCA8	; 20F67
 add esp, byte 0Ch	; 20F6C
-mov dword [dword_DD11C], eax	; 20F6F
+mov dword [statsplayerbuf], eax	; 20F6F
 push byte 20h	; 20F74
 push dword 497h	; 20F76
 push asc_C0C78	; 20F7B
 call sub_8CCA8	; 20F80
 add esp, byte 0Ch	; 20F85
-mov dword [dword_DD110], eax	; 20F88
+mov dword [statsskaterbuf], eax	; 20F88
 push byte 20h	; 20F8D
 push dword 10Eh	; 20F8F
 push asc_C0C7E	; 20F94
 call sub_8CCA8	; 20F99
 add esp, byte 0Ch	; 20F9E
-mov dword [dword_DD114], eax	; 20FA1
+mov dword [statsgoaliebuf], eax	; 20FA1
 xor eax, eax	; 20FA6
 call dword [dword_C65CC]	; 20FA8
 push byte 42h	; 20FAE
@@ -1107,7 +1107,7 @@ mov eax, unk_CF54F	; 20FBF
 call sub_6B5E4	; 20FC4
 xor ebp, ebp	; 20FC9
 mov dword [statscategory], ebp	; 20FCB
-mov dword [dword_C65B4], ebp	; 20FD1
+mov dword [statsteamsel], ebp	; 20FD1
 xor ecx, ecx	; 20FD7
 mov ebx, asc_C0C58	; 20FD9
 cmp byte [byte_ED85A], 1	; 20FDE
@@ -1143,7 +1143,7 @@ mov ecx, 41h	; 21047
 mov ebx, 40h	; 2104C
 mov edx, 4	; 21051
 mov eax, unk_CF54F	; 21056
-call sub_1DF03	; 2105B
+call RunTeamPickMenu	; 2105B
 call FreeDeskBuffers	; 21060
 call sub_B4BA8	; 21065
 mov edi, sub_22581	; 2106A
@@ -1172,7 +1172,7 @@ mov ecx, 41h	; 210C2
 mov ebx, 40h	; 210C7
 mov edx, 4	; 210CC
 mov eax, unk_CF54F	; 210D1
-call sub_1DF03	; 210D6
+call RunTeamPickMenu	; 210D6
 cmp dword [statsplayoffs], byte 0	; 210DB
 je short loc_210EE	; 210E2
 call FreeDeskBuffers	; 210E4
@@ -1198,13 +1198,13 @@ mov ecx, 41h	; 21133
 mov ebx, 40h	; 21138
 mov edx, 4	; 2113D
 mov eax, unk_CF6AF	; 21142
-call sub_1ED96	; 21147
+call RunPlayerPickMenu	; 21147
 jmp near loc_21074	; 2114C
 loc_21151:
 mov dword [statsredrawcb], edi	; 21151
 xor ebp, ebp	; 21157
 mov dword [dword_DC6B4], ebp	; 21159
-mov eax, unk_DC834	; 2115F
+mov eax, statsplayer	; 2115F
 call sub_22581	; 21164
 push byte 42h	; 21169
 mov ecx, 41h	; 2116B
@@ -1217,7 +1217,7 @@ mov ecx, 41h	; 21186
 mov ebx, 40h	; 2118B
 mov edx, 2	; 21190
 mov eax, unk_CF74F	; 21195
-call sub_1D6E8	; 2119A
+call RunMenu	; 2119A
 jmp near loc_21074	; 2119F
 loc_211A4:
 mov dword [statsredrawcb], sub_21CDE	; 211A4
@@ -1225,7 +1225,7 @@ xor edx, edx	; 211AE
 mov dword [dword_DC6B4], edx	; 211B0
 mov dword [dword_C6A60], edx	; 211B6
 mov dword [dword_DD120], edx	; 211BC
-mov eax, unk_DC834	; 211C2
+mov eax, statsplayer	; 211C2
 call sub_21CDE	; 211C7
 push byte 42h	; 211CC
 mov ecx, 41h	; 211CE
@@ -1238,34 +1238,34 @@ mov ecx, 41h	; 211E9
 mov ebx, 40h	; 211EE
 mov edx, 2	; 211F3
 mov eax, unk_CF74F	; 211F8
-call sub_1D6E8	; 211FD
+call RunMenu	; 211FD
 mov dword [dword_C6D26], esi	; 21202
 jmp near loc_21074	; 21208
 loc_2120D:
 xor ecx, ecx	; 2120D
 mov dword [dword_C6D26], ecx	; 2120F
 call FreeDeskBuffers	; 21215
-mov esi, dword [dword_DD10C]	; 2121A
+mov esi, dword [statsteambuf]	; 2121A
 push esi	; 21220
 call jctime	; 21221
 add esp, byte 4	; 21226
-mov edi, dword [dword_DD114]	; 21229
+mov edi, dword [statsgoaliebuf]	; 21229
 push edi	; 2122F
 call jctime	; 21230
 add esp, byte 4	; 21235
-mov ebp, dword [dword_DD110]	; 21238
+mov ebp, dword [statsskaterbuf]	; 21238
 push ebp	; 2123E
 call jctime	; 2123F
 add esp, byte 4	; 21244
-mov eax, dword [dword_DD11C]	; 21247
+mov eax, dword [statsplayerbuf]	; 21247
 push eax	; 2124C
 call jctime	; 2124D
 add esp, byte 4	; 21252
 xor edx, edx	; 21255
-mov dword [dword_DD11C], edx	; 21257
-mov dword [dword_DD10C], edx	; 2125D
-mov dword [dword_DD114], edx	; 21263
-mov dword [dword_DD110], edx	; 21269
+mov dword [statsplayerbuf], edx	; 21257
+mov dword [statsteambuf], edx	; 2125D
+mov dword [statsgoaliebuf], edx	; 21263
+mov dword [statsskaterbuf], edx	; 21269
 mov eax, esp	; 2126F
 push eax	; 21271
 push dword 100h	; 21272
@@ -1364,7 +1364,7 @@ mov dword [statscategory], esi	; 21383
 mov dword [statsredrawcb], sub_235BE	; 21389
 call sub_B4BA8	; 21393
 mov eax, 1	; 21398
-call sub_1FAA7	; 2139D
+call InitMenuRemap	; 2139D
 mov ebx, 10h	; 213A2
 mov edx, esp	; 213A7
 mov eax, 1	; 213A9
@@ -1414,7 +1414,7 @@ mov ebx, 40h	; 2144F
 mov edx, 4	; 21454
 mov eax, unk_CF78F	; 21459
 loc_2145E:
-call sub_1D6E8	; 2145E
+call RunMenu	; 2145E
 mov eax, esp	; 21463
 push eax	; 21465
 push dword 100h	; 21466
@@ -1460,7 +1460,7 @@ mov dword [statscategory], esi	; 214E4
 mov dword [statsredrawcb], sub_25B24	; 214EA
 call sub_B4BA8	; 214F4
 mov eax, 1	; 214F9
-call sub_1FAA7	; 214FE
+call InitMenuRemap	; 214FE
 mov ebx, 10h	; 21503
 mov edx, esp	; 21508
 mov eax, 1	; 2150A
@@ -1531,7 +1531,7 @@ mov dword [statscategory], esi	; 215F7
 mov dword [statsredrawcb], sub_25B24	; 215FD
 call sub_B4BA8	; 21607
 mov eax, 1	; 2160C
-call sub_1FAA7	; 21611
+call InitMenuRemap	; 21611
 mov ebx, 10h	; 21616
 mov edx, esp	; 2161B
 mov eax, 1	; 2161D
@@ -1633,8 +1633,8 @@ call sub_8E83C	; 21773
 add esp, byte 8	; 21778
 mov dword [dword_C65AC], eax	; 2177B
 loc_21780:
-mov eax, dword [dword_DD10C]	; 21780
-mov edx, dword_DC640	; 21785
+mov eax, dword [statsteambuf]	; 21780
+mov edx, statsteamorder	; 21785
 call sub_296BA	; 2178A
 push byte 42h	; 2178F
 mov ecx, 41h	; 21791
@@ -1652,8 +1652,8 @@ mov ebx, 40h	; 217BD
 mov edx, 4	; 217C2
 mov eax, unk_CF54F	; 217C7
 call sub_6B5E4	; 217CC
-mov eax, dword [dword_DD10C]	; 217D1
-mov edx, dword_DC640	; 217D6
+mov eax, dword [statsteambuf]	; 217D1
+mov edx, statsteamorder	; 217D6
 call sub_27080	; 217DB
 loc_217E0:
 call sub_212FE	; 217E0
@@ -1689,10 +1689,10 @@ mov dword [dword_DC738], 1	; 2182A
 mov eax, dword [dword_C65CC]	; 21834
 mov dword [statsredrawcb], eax	; 21839
 xor ebx, ebx	; 2183E
-mov dword [dword_C65B4], ebx	; 21840
+mov dword [statsteamsel], ebx	; 21840
 mov dword [statscategory], ebx	; 21846
 xor ah, ah	; 2184C
-mov byte [byte_DC836], ah	; 2184E
+mov byte [statsplayer+2], ah	; 2184E
 mov eax, esp	; 21854
 push eax	; 21856
 push dword 100h	; 21857
@@ -1707,31 +1707,31 @@ call sub_212C6	; 21876
 xor esi, esi	; 2187B
 mov dword [dword_C6D26], esi	; 2187D
 mov eax, 1	; 21883
-call sub_1FAA7	; 21888
+call InitMenuRemap	; 21888
 push byte 20h	; 2188D
 push dword 2A4h	; 2188F
 push asc_C0C99	; 21894
 call sub_8CCA8	; 21899
 add esp, byte 0Ch	; 2189E
-mov dword [dword_DD10C], eax	; 218A1
+mov dword [statsteambuf], eax	; 218A1
 push byte 20h	; 218A6
 push dword 5B0h	; 218A8
 push asc_C0C9F	; 218AD
 call sub_8CCA8	; 218B2
 add esp, byte 0Ch	; 218B7
-mov dword [dword_DD11C], eax	; 218BA
+mov dword [statsplayerbuf], eax	; 218BA
 push byte 20h	; 218BF
 push dword 497h	; 218C1
 push asc_C0CA4	; 218C6
 call sub_8CCA8	; 218CB
 add esp, byte 0Ch	; 218D0
-mov dword [dword_DD110], eax	; 218D3
+mov dword [statsskaterbuf], eax	; 218D3
 push byte 20h	; 218D8
 push dword 10Eh	; 218DA
 push asc_C0CAA	; 218DF
 call sub_8CCA8	; 218E4
 add esp, byte 0Ch	; 218E9
-mov dword [dword_DD114], eax	; 218EC
+mov dword [statsgoaliebuf], eax	; 218EC
 xor eax, eax	; 218F1
 call dword [dword_C65CC]	; 218F3
 push byte 42h	; 218F9
@@ -1741,7 +1741,7 @@ mov edx, 4	; 21905
 mov eax, unk_CF54F	; 2190A
 call sub_6B5E4	; 2190F
 mov dword [statscategory], esi	; 21914
-mov dword [dword_C65B4], esi	; 2191A
+mov dword [statsteamsel], esi	; 2191A
 xor ecx, ecx	; 21920
 mov ebx, asc_C0C8D	; 21922
 cmp byte [byte_ED85A], 1	; 21927
@@ -1777,7 +1777,7 @@ mov ecx, 41h	; 2198F
 mov ebx, 40h	; 21994
 mov edx, 4	; 21999
 mov eax, unk_CF54F	; 2199E
-call sub_1DF03	; 219A3
+call RunTeamPickMenu	; 219A3
 call FreeDeskBuffers	; 219A8
 call sub_B4BA8	; 219AD
 mov edi, sub_244E2	; 219B2
@@ -1805,7 +1805,7 @@ mov ecx, 41h	; 21A05
 mov ebx, 40h	; 21A0A
 mov edx, 4	; 21A0F
 mov eax, unk_CF54F	; 21A14
-call sub_1DF03	; 21A19
+call RunTeamPickMenu	; 21A19
 cmp dword [statsplayoffs], byte 0	; 21A1E
 je short loc_21A31	; 21A25
 call FreeDeskBuffers	; 21A27
@@ -1831,13 +1831,13 @@ mov ecx, 41h	; 21A72
 mov ebx, 40h	; 21A77
 mov edx, 4	; 21A7C
 mov eax, unk_CF6AF	; 21A81
-call sub_1ED96	; 21A86
+call RunPlayerPickMenu	; 21A86
 jmp near loc_219B7	; 21A8B
 loc_21A90:
 mov dword [statsredrawcb], sub_22581	; 21A90
 xor ecx, ecx	; 21A9A
 mov dword [dword_DC6B4], ecx	; 21A9C
-mov eax, unk_DC834	; 21AA2
+mov eax, statsplayer	; 21AA2
 call sub_22581	; 21AA7
 push byte 42h	; 21AAC
 mov ecx, 41h	; 21AAE
@@ -1850,13 +1850,13 @@ mov ecx, 41h	; 21AC9
 mov ebx, 40h	; 21ACE
 mov edx, 2	; 21AD3
 mov eax, unk_CF74F	; 21AD8
-call sub_1D6E8	; 21ADD
+call RunMenu	; 21ADD
 jmp near loc_219B7	; 21AE2
 loc_21AE7:
 mov dword [statsredrawcb], sub_21CDE	; 21AE7
 xor eax, eax	; 21AF1
 mov dword [dword_DC6B4], eax	; 21AF3
-mov eax, unk_DC834	; 21AF8
+mov eax, statsplayer	; 21AF8
 call sub_21CDE	; 21AFD
 push byte 42h	; 21B02
 mov ecx, 41h	; 21B04
@@ -1869,34 +1869,34 @@ mov ecx, 41h	; 21B1F
 mov ebx, 40h	; 21B24
 mov edx, 2	; 21B29
 mov eax, unk_CF74F	; 21B2E
-call sub_1D6E8	; 21B33
+call RunMenu	; 21B33
 mov dword [dword_C6D26], 1	; 21B38
 jmp near loc_219B7	; 21B42
 loc_21B47:
 xor ebx, ebx	; 21B47
 mov dword [dword_C6D26], ebx	; 21B49
 call FreeDeskBuffers	; 21B4F
-mov ecx, dword [dword_DD10C]	; 21B54
+mov ecx, dword [statsteambuf]	; 21B54
 push ecx	; 21B5A
 call jctime	; 21B5B
 add esp, byte 4	; 21B60
-mov esi, dword [dword_DD114]	; 21B63
+mov esi, dword [statsgoaliebuf]	; 21B63
 push esi	; 21B69
 call jctime	; 21B6A
 add esp, byte 4	; 21B6F
-mov edi, dword [dword_DD110]	; 21B72
+mov edi, dword [statsskaterbuf]	; 21B72
 push edi	; 21B78
 call jctime	; 21B79
 add esp, byte 4	; 21B7E
-mov ebp, dword [dword_DD11C]	; 21B81
+mov ebp, dword [statsplayerbuf]	; 21B81
 push ebp	; 21B87
 call jctime	; 21B88
 add esp, byte 4	; 21B8D
 xor eax, eax	; 21B90
-mov dword [dword_DD11C], eax	; 21B92
-mov dword [dword_DD10C], eax	; 21B97
-mov dword [dword_DD114], eax	; 21B9C
-mov dword [dword_DD110], eax	; 21BA1
+mov dword [statsplayerbuf], eax	; 21B92
+mov dword [statsteambuf], eax	; 21B97
+mov dword [statsgoaliebuf], eax	; 21B9C
+mov dword [statsskaterbuf], eax	; 21BA1
 mov dword [dword_DC738], eax	; 21BA6
 mov dword [statsredrawcb], eax	; 21BAB
 loc_21BB0:

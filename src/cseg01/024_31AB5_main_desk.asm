@@ -8,7 +8,7 @@ extern byte_CDB77, byte_CDB7E, musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, b
 extern byte_ED9AB, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
 extern ctl2side, teamstatscb, skaterstatscb, goaliestatscb, dword_C65CC, dword_C65D0, dword_C7219, songdata
 extern cont2team, HomeTeam, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
-extern dword_D2C6B, dword_DC238, dword_EA0DC, jctime, memcpy_, off_C5439, off_C7282, off_D3078
+extern dword_D2C6B, pointerspr, dword_EA0DC, jctime, memcpy_, off_C5439, off_C7282, off_D3078
 extern strcpy_, strncpy_, DiskFreeBytes, FileExists, MakePath, FileOpenRead, FileOpenRW, FileCreate
 extern FileClose, FileReadAt, FileWriteAt, SetupStatsSourceMenu, SetScreenTitle, sub_20D97, MessageBox, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D
@@ -100,7 +100,7 @@ mov dword [skaterstatscb], unk_20A46	; 31BBB
 mov dword [goaliestatscb], unk_20BBD	; 31BC5
 mov dword [dword_C65CC], sub_20D97	; 31BCF
 mov dword [dword_C65D0], unk_20EB7	; 31BD9
-mov eax, dword [dword_DC238]	; 31BE3
+mov eax, dword [pointerspr]	; 31BE3
 mov edx, dword [byte eax+02h]	; 31BE8
 sar edx, 10h	; 31BEB
 mov eax, dword [byte eax+04h]	; 31BEE
@@ -115,18 +115,18 @@ push asc_C1724	; 31BFF
 call sub_8CCA8	; 31C04
 add esp, byte 0Ch	; 31C09
 mov dword [dword esp+090h], eax	; 31C0C
-mov esi, dword [dword_DC238]	; 31C13
+mov esi, dword [pointerspr]	; 31C13
 mov edi, eax	; 31C19
 movsd	; 31C1B
 movsd	; 31C1C
 movsd	; 31C1D
 movsd	; 31C1E
 movsb	; 31C1F
-mov edx, dword [dword_DC238]	; 31C20
+mov edx, dword [pointerspr]	; 31C20
 mov dx, word [byte edx+04h]	; 31C26
 inc edx	; 31C2A
 mov word [byte eax+04h], dx	; 31C2B
-mov edx, dword [dword_DC238]	; 31C2F
+mov edx, dword [pointerspr]	; 31C2F
 mov dx, word [byte edx+06h]	; 31C35
 inc edx	; 31C39
 mov word [byte eax+06h], dx	; 31C3A
@@ -213,7 +213,7 @@ mov ecx, dword [dword esp+098h]	; 31D5F
 push ecx	; 31D66
 mov esi, dword [dword esp+098h]	; 31D67
 push esi	; 31D6E
-mov edi, dword [dword_DC238]	; 31D6F
+mov edi, dword [pointerspr]	; 31D6F
 push edi	; 31D75
 call sub_91370	; 31D76
 add esp, byte 0Ch	; 31D7B
@@ -284,7 +284,7 @@ mov ecx, dword [dword esp+084h]	; 31E6E
 push ecx	; 31E75
 mov esi, dword [dword esp+08Ch]	; 31E76
 push esi	; 31E7D
-mov edi, dword [dword_DC238]	; 31E7E
+mov edi, dword [pointerspr]	; 31E7E
 push edi	; 31E84
 loc_31E85:
 call sub_91370	; 31E85
@@ -375,7 +375,7 @@ call dword [byte edx+ebx+014h]	; 31FB8
 mov ebp, eax	; 31FBC
 lea eax, [dword esp+080h]	; 31FBE
 call FileClose	; 31FC5
-mov eax, dword [dword_DC238]	; 31FCA
+mov eax, dword [pointerspr]	; 31FCA
 mov edx, dword [byte eax+02h]	; 31FCF
 sar edx, 10h	; 31FD2
 mov eax, dword [byte eax+04h]	; 31FD5
@@ -391,18 +391,18 @@ call sub_8CCA8	; 31FEB
 mov edx, eax	; 31FF0
 add esp, byte 0Ch	; 31FF2
 mov dword [dword esp+090h], eax	; 31FF5
-mov esi, dword [dword_DC238]	; 31FFC
+mov esi, dword [pointerspr]	; 31FFC
 mov edi, eax	; 32002
 movsd	; 32004
 movsd	; 32005
 movsd	; 32006
 movsd	; 32007
 movsb	; 32008
-mov eax, dword [dword_DC238]	; 32009
+mov eax, dword [pointerspr]	; 32009
 mov ax, word [byte eax+04h]	; 3200E
 inc eax	; 32012
 mov word [byte edx+04h], ax	; 32013
-mov eax, dword [dword_DC238]	; 32017
+mov eax, dword [pointerspr]	; 32017
 mov ax, word [byte eax+06h]	; 3201C
 inc eax	; 32020
 mov word [byte edx+06h], ax	; 32021
@@ -781,7 +781,7 @@ push asc_C1756	; 32527
 call sub_8CCA8	; 3252C
 add esp, byte 0Ch	; 32531
 mov dword [byte esp+ebp*4+050h], eax	; 32534
-mov esi, dword [dword_DC238]	; 32538
+mov esi, dword [pointerspr]	; 32538
 mov edi, eax	; 3253E
 movsd	; 32540
 movsd	; 32541
@@ -900,7 +900,7 @@ mov edx, dword [dword esp+084h]	; 326CD
 push edx	; 326D4
 mov ebx, dword [dword esp+08Ch]	; 326D5
 push ebx	; 326DC
-mov ecx, dword [dword_DC238]	; 326DD
+mov ecx, dword [pointerspr]	; 326DD
 push ecx	; 326E3
 jmp near loc_31E85	; 326E4
 loc_326E9:

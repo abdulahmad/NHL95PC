@@ -9,7 +9,7 @@ extern byte_DD775, byte_DD788, byte_DD789, byte_ED830, byte_ED9E8, joysampling, 
 extern gamemode, gameopts, ctl1team, ctl2team, teamconf, dword_C5840, hlplayedmask, dword_C66A4
 extern dword_C66AC, dword_C66D0, dword_C66D4, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC
 extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, bailout_vec, musicslot
-extern dword_D8C84, dword_DC230, schedgameidx, dword_DC238, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
+extern dword_D8C84, dword_DC230, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
 extern dword_EA0DC, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
 extern off_CEF23, off_D3078, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
 extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, sub_2D35A, sub_2F2B1
@@ -594,7 +594,7 @@ mov dword [dword esp+0398h], ecx	; 19565
 mov dword [dword esp+0394h], ecx	; 1956C
 mov dword [dword esp+0368h], ecx	; 19573
 mov dword [dword esp+0364h], ecx	; 1957A
-mov eax, dword [dword_DC238]	; 19581
+mov eax, dword [pointerspr]	; 19581
 mov edx, dword [byte eax+02h]	; 19586
 sar edx, 10h	; 19589
 mov eax, dword [byte eax+04h]	; 1958C
@@ -610,18 +610,18 @@ call sub_8CCA8	; 195A6
 mov ebp, eax	; 195AB
 add esp, byte 0Ch	; 195AD
 mov dword [dword esp+03F8h], eax	; 195B0
-mov esi, dword [dword_DC238]	; 195B7
+mov esi, dword [pointerspr]	; 195B7
 mov edi, eax	; 195BD
 movsd	; 195BF
 movsd	; 195C0
 movsd	; 195C1
 movsd	; 195C2
 movsb	; 195C3
-mov eax, dword [dword_DC238]	; 195C4
+mov eax, dword [pointerspr]	; 195C4
 mov ax, word [byte eax+04h]	; 195C9
 inc eax	; 195CD
 mov word [byte ebp+04h], ax	; 195CE
-mov eax, dword [dword_DC238]	; 195D2
+mov eax, dword [pointerspr]	; 195D2
 mov ax, word [byte eax+06h]	; 195D7
 inc eax	; 195DB
 mov word [byte ebp+06h], ax	; 195DC
@@ -664,7 +664,7 @@ add esp, byte 0Ch	; 19671
 mov ebp, esi	; 19674
 push ebp	; 19676
 push edi	; 19677
-mov edx, dword [dword_DC238]	; 19678
+mov edx, dword [pointerspr]	; 19678
 push edx	; 1967E
 call sub_91370	; 1967F
 add esp, byte 0Ch	; 19684
@@ -945,7 +945,7 @@ mov esi, dword [dword esp+03E0h]	; 19ABB
 push esi	; 19AC2
 mov edi, dword [dword esp+03E8h]	; 19AC3
 push edi	; 19ACA
-mov ebp, dword [dword_DC238]	; 19ACB
+mov ebp, dword [pointerspr]	; 19ACB
 push ebp	; 19AD1
 .33:
 call sub_91370	; 19AD2
@@ -1450,7 +1450,7 @@ push str_Menubuff3	; 1A305
 call sub_8CCA8	; 1A30A
 add esp, byte 0Ch	; 1A30F
 mov dword [dword esp+ebp*4+0384h], eax	; 1A312
-mov esi, dword [dword_DC238]	; 1A319
+mov esi, dword [pointerspr]	; 1A319
 mov edi, eax	; 1A31F
 movsd	; 1A321
 movsd	; 1A322
@@ -1569,7 +1569,7 @@ mov edx, dword [dword esp+03E0h]	; 1A518
 push edx	; 1A51F
 mov ebx, dword [dword esp+03E8h]	; 1A520
 push ebx	; 1A527
-mov ecx, dword [dword_DC238]	; 1A528
+mov ecx, dword [pointerspr]	; 1A528
 push ecx	; 1A52E
 jmp near SportsDesk.33	; 1A52F
 DeskReloadGame:

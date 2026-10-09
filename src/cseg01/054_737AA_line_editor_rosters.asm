@@ -16,13 +16,13 @@ extern dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, songdata
 extern dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A, dword_D1229, dword_D122B, dword_D122F
 extern dword_D1231, dword_D1233, dword_D1338, dword_D133C, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC
 extern dword_D1418, dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, musichandle, musicslot
-extern dword_D2C6B, dword_D8B74, dword_D8C84, dword_DBC7C, dword_DBCE0, dword_DC238, dword_DC6BC, dword_DC720
-extern dword_DC73C, dword_DC754, dword_DD11C, dword_EA0DC, dword_EA2B4, rosterteamrec, dword_EBC6C, dword_EBC70
+extern dword_D2C6B, dword_D8B74, dword_D8C84, dword_DBC7C, dword_DBCE0, pointerspr, statsskaterorder, statsgoalieorder
+extern statsgoalieplr, statsskaterplr, statsplayerbuf, dword_EA0DC, dword_EA2B4, rosterteamrec, dword_EBC6C, dword_EBC70
 extern msglines, dword_EBE9C, dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0
 extern vgapage, fputchar, j___close_, j___delay_, jctime, lseek_, memcpy_, off_CF223
 extern off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443, off_D056C, off_D058C
 extern open_, qsort_, read_, sprintf_, strcmp_, MakePath, SetTextColors, PrintCenteredText
-extern PrintShadowText, PrintFmt1, PrintFmt2, sub_1D6E8, sub_29C75, MessageBox, sub_479E9, FadeOutPalCycle
+extern PrintShadowText, PrintFmt1, PrintFmt2, RunMenu, sub_29C75, MessageBox, sub_479E9, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, KeyDbPtr
 extern sub_6CBE8, sub_6CBFD, sub_78366, sub_78500, sub_78A87, sub_79188, sub_79DE1, sub_79F41
 extern sub_7A099, sub_836E4, sub_8373E, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0
@@ -580,7 +580,7 @@ add esp, byte 0Ch	; 73DA3
 push edi	; 73DA6
 lea eax, [byte esi-03h]	; 73DA7
 push eax	; 73DAA
-mov ebx, dword [dword_DC238]	; 73DAB
+mov ebx, dword [pointerspr]	; 73DAB
 push ebx	; 73DB1
 call sub_91FE0	; 73DB2
 add esp, byte 0Ch	; 73DB7
@@ -711,7 +711,7 @@ push edx	; 73F05
 mov eax, dword [byte ebp+03Eh]	; 73F06
 sub eax, byte 3	; 73F09
 push eax	; 73F0C
-mov ebx, dword [dword_DC238]	; 73F0D
+mov ebx, dword [pointerspr]	; 73F0D
 push ebx	; 73F13
 loc_73F14:
 call sub_91FE0	; 73F14
@@ -1063,7 +1063,7 @@ call sub_8CCA8	; 742CB
 add esp, byte 0Ch	; 742D0
 mov edx, dword [byte ebp+062h]	; 742D3
 mov dword [byte edx+ebp+02h], eax	; 742D6
-mov esi, dword [dword_DC238]	; 742DA
+mov esi, dword [pointerspr]	; 742DA
 mov edi, eax	; 742E0
 movsd	; 742E2
 movsd	; 742E3
@@ -2205,7 +2205,7 @@ push ecx	; 74FF8
 mov eax, dword [byte ebp+03Eh]	; 74FF9
 sub eax, byte 3	; 74FFC
 push eax	; 74FFF
-mov esi, dword [dword_DC238]	; 75000
+mov esi, dword [pointerspr]	; 75000
 push esi	; 75006
 jmp near loc_73F14	; 75007
 loc_7500C:
@@ -2731,7 +2731,7 @@ push dword 5B0h	; 75588
 push asc_C3122	; 7558D
 call sub_8CCA8	; 75592
 add esp, byte 0Ch	; 75597
-mov dword [dword_DD11C], eax	; 7559A
+mov dword [statsplayerbuf], eax	; 7559A
 push byte 0	; 7559F
 push dword 497h	; 755A1
 push asc_C3127	; 755A6
@@ -2754,7 +2754,7 @@ mov ecx, 0C1h	; 755EF
 mov ebx, 0C0h	; 755F4
 mov edx, 2	; 755F9
 mov eax, unk_D075E	; 755FE
-call sub_1D6E8	; 75603
+call RunMenu	; 75603
 mov edx, dword [dword_EBC6C]	; 75608
 push edx	; 7560E
 call jctime	; 7560F
@@ -2763,12 +2763,12 @@ mov ebx, dword [dword_EBC70]	; 75617
 push ebx	; 7561D
 call jctime	; 7561E
 add esp, byte 4	; 75623
-mov ecx, dword [dword_DD11C]	; 75626
+mov ecx, dword [statsplayerbuf]	; 75626
 push ecx	; 7562C
 call jctime	; 7562D
 add esp, byte 4	; 75632
 xor edi, edi	; 75635
-mov dword [dword_DD11C], edi	; 75637
+mov dword [statsplayerbuf], edi	; 75637
 mov dword [dword_EBC6C], edi	; 7563D
 mov dword [dword_EBC70], edi	; 75643
 mov ebx, dword [dword_EA2B4]	; 75649
@@ -3339,7 +3339,7 @@ sub esi, ebp	; 75C47
 shl esi, 2	; 75C49
 add esi, ebp	; 75C4C
 shl esi, 2	; 75C4E
-mov edi, dword [dword_DD11C]	; 75C51
+mov edi, dword [statsplayerbuf]	; 75C51
 add edi, esi	; 75C57
 mov ecx, 0Dh	; 75C59
 mov esi, eax	; 75C5E
@@ -3356,8 +3356,8 @@ add edi, ebx	; 75C81
 mov ecx, 0Ah	; 75C83
 mov esi, eax	; 75C88
 rep movsd	; 75C8A
-mov dword [nosplit edx*4+dword_DC754], ebp	; 75C8C
-mov dword [nosplit edx*4+dword_DC6BC], edx	; 75C93
+mov dword [nosplit edx*4+statsskaterplr], ebp	; 75C8C
+mov dword [nosplit edx*4+statsskaterorder], edx	; 75C93
 lea esi, [byte edx+01h]	; 75C9A
 mov dword [dword esp+0A0h], esi	; 75C9D
 loc_75CA4:
@@ -3388,7 +3388,7 @@ sub esi, edx	; 75CED
 shl esi, 2	; 75CEF
 add esi, edx	; 75CF2
 shl esi, 2	; 75CF4
-mov edi, dword [dword_DD11C]	; 75CF7
+mov edi, dword [statsplayerbuf]	; 75CF7
 add edi, esi	; 75CFD
 mov ecx, 0Dh	; 75CFF
 mov esi, eax	; 75D04
@@ -3408,8 +3408,8 @@ add edi, esi	; 75D2E
 mov ecx, 0Bh	; 75D30
 mov esi, ebx	; 75D35
 rep movsd	; 75D37
-mov dword [nosplit eax*4+dword_DC73C], edx	; 75D39
-mov dword [nosplit eax*4+dword_DC720], eax	; 75D40
+mov dword [nosplit eax*4+statsgoalieplr], edx	; 75D39
+mov dword [nosplit eax*4+statsgoalieorder], eax	; 75D40
 lea ecx, [byte eax+01h]	; 75D47
 mov dword [dword esp+0A4h], ecx	; 75D4A
 loc_75D51:
@@ -3420,12 +3420,12 @@ jl near loc_75CBE	; 75D55
 mov ecx, sub_75931	; 75D5B
 mov ebx, 4	; 75D60
 mov edx, dword [dword esp+0A0h]	; 75D65
-mov eax, dword_DC6BC	; 75D6C
+mov eax, statsskaterorder	; 75D6C
 call qsort_	; 75D71
 mov ecx, sub_75A37	; 75D76
 mov ebx, 4	; 75D7B
 mov edx, dword [dword esp+0A4h]	; 75D80
-mov eax, dword_DC720	; 75D87
+mov eax, statsgoalieorder	; 75D87
 call qsort_	; 75D8C
 mov edi, dword [dword_EA2B4]	; 75D91
 push edi	; 75D97
@@ -3562,16 +3562,16 @@ xor ebp, ebp	; 75F9B
 mov esi, 40h	; 75F9D
 jmp near loc_7610C	; 75FA2
 loc_75FA7:
-mov eax, dword [nosplit ebp*4+dword_DC6BC]	; 75FA7
+mov eax, dword [nosplit ebp*4+statsskaterorder]	; 75FA7
 mov dword [dword esp+09Ch], eax	; 75FAE
-mov eax, dword [nosplit eax*4+dword_DC754]	; 75FB5
+mov eax, dword [nosplit eax*4+statsskaterplr]	; 75FB5
 mov edi, eax	; 75FBC
 shl edi, 2	; 75FBE
 sub edi, eax	; 75FC1
 shl edi, 2	; 75FC3
 add edi, eax	; 75FC6
 shl edi, 2	; 75FC8
-mov eax, dword [dword_DD11C]	; 75FCB
+mov eax, dword [statsplayerbuf]	; 75FCB
 add edi, eax	; 75FD0
 movsx eax, byte [byte edi+02h]	; 75FD2
 push eax	; 75FD6
@@ -3721,16 +3721,16 @@ xor ebp, ebp	; 761F3
 add esi, byte 10h	; 761F5
 jmp near loc_763ED	; 761F8
 loc_761FD:
-mov eax, dword [nosplit ebp*4+dword_DC720]	; 761FD
+mov eax, dword [nosplit ebp*4+statsgoalieorder]	; 761FD
 mov dword [dword esp+09Ch], eax	; 76204
-mov eax, dword [nosplit eax*4+dword_DC73C]	; 7620B
+mov eax, dword [nosplit eax*4+statsgoalieplr]	; 7620B
 mov edi, eax	; 76212
 shl edi, 2	; 76214
 sub edi, eax	; 76217
 shl edi, 2	; 76219
 add eax, edi	; 7621C
 shl eax, 2	; 7621E
-mov edi, dword [dword_DD11C]	; 76221
+mov edi, dword [statsplayerbuf]	; 76221
 add edi, eax	; 76227
 movsx eax, byte [byte edi+02h]	; 76229
 push eax	; 7622D
@@ -4785,7 +4785,7 @@ add esp, byte 0Ch	; 76EB5
 push edi	; 76EB8
 lea eax, [byte esi-03h]	; 76EB9
 push eax	; 76EBC
-mov eax, dword [dword_DC238]	; 76EBD
+mov eax, dword [pointerspr]	; 76EBD
 push eax	; 76EC2
 call sub_91FE0	; 76EC3
 add esp, byte 0Ch	; 76EC8
@@ -4921,7 +4921,7 @@ push edx	; 7702F
 mov eax, dword [byte ebp+032h]	; 77030
 sub eax, byte 3	; 77033
 push eax	; 77036
-mov ebx, dword [dword_DC238]	; 77037
+mov ebx, dword [pointerspr]	; 77037
 push ebx	; 7703D
 loc_7703E:
 call sub_91FE0	; 7703E
@@ -5269,7 +5269,7 @@ call sub_8CCA8	; 773E9
 add esp, byte 0Ch	; 773EE
 mov edx, dword [byte ebp+062h]	; 773F1
 mov dword [byte edx+ebp-022h], eax	; 773F4
-mov esi, dword [dword_DC238]	; 773F8
+mov esi, dword [pointerspr]	; 773F8
 mov edi, eax	; 773FE
 movsd	; 77400
 movsd	; 77401
@@ -6222,7 +6222,7 @@ push ecx	; 77F3F
 mov eax, dword [byte ebp+032h]	; 77F40
 sub eax, byte 3	; 77F43
 push eax	; 77F46
-mov esi, dword [dword_DC238]	; 77F47
+mov esi, dword [pointerspr]	; 77F47
 push esi	; 77F4D
 jmp near loc_7703E	; 77F4E
 loc_77F53:

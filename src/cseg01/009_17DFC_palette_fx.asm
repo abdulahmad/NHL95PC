@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_17DFC progbits alloc exec nowrite align=1
-extern __CHK, str_SfPal1, str_SfPal2, byte_DC836, dword_C65A8, dword_C65AC, statscategory, deskexit
+extern __CHK, str_SfPal1, str_SfPal2, dword_C65A8, dword_C65AC, statscategory, deskexit, statsplayer
 extern teamstatscb, skaterstatscb, goaliestatscb, dword_DC6A8, sfpal2, sfpal1, dword_DC738, jctime
 extern DeskSetExit_ret1, DeskSetExit3_body, StatsSel_x, sub_235BE, sub_25B24, sub_76429, sub_8CCA8, sub_8FFB0
 global StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense, StatsMenuPenaltyKilling, StatsMenuPowerPlay
@@ -1136,7 +1136,7 @@ jmp near DeskSetExit3_body	; 18D08
 ShowPlayerStatsItem:
 push dword 4	; 18D0D
 call __CHK	; 18D12
-cmp byte [byte_DC836], 47h	; 18D17
+cmp byte [statsplayer+2], 47h	; 18D17
 setne al	; 18D1E
 and eax, 0FFh	; 18D21
 add eax, byte 4	; 18D26

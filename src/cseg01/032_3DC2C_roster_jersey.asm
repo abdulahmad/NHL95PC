@@ -8,12 +8,12 @@ extern asc_C19FF, asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, str_extDB, str_VFN
 extern str_space, str_dot, curleague, byte_D11BC, byte_D1238, byte_D12DE, byte_D1333, byte_D1334
 extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, leaguedbfmt2, leaguedbfmt, byte_DDD8C
 extern byte_DDD8D, byte_DDD8E, byte_ED7F7, byte_ED858, byte_ED85A, byte_ED86D, byte_ED8B3, byte_ED8B4
-extern statscategory, statsredrawcb, dword_C8B7C, dword_C8B80, HomeTeam, dword_D2C6B, dword_D8C84, dword_DC238
-extern dword_DC738, dword_DD100, dword_DD104, dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, dword_DD79C
+extern statscategory, statsredrawcb, dword_C8B7C, dword_C8B80, HomeTeam, dword_D2C6B, dword_D8C84, pointerspr
+extern dword_DC738, dword_DD100, dword_DD104, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, dword_DD79C
 extern dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C, dword_DE260
 extern dword_DE264, dword_EA0DC, jctime, memcpy_, leaguedbnames, off_C8BDD, off_CF2A3
 extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
-extern FileOpenRW, FileClose, ReadKeyRec, WriteKeyRec, ReadTeamRec, LoadGameTeams, sub_1D6E8, sub_1FAA7
+extern FileOpenRW, FileClose, ReadKeyRec, WriteKeyRec, ReadTeamRec, LoadGameTeams, RunMenu, InitMenuRemap
 extern sub_244E2, sub_2FEDF, MessageBox, WriteTeamRec, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
 extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A099, ClearPlayerFromLines
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
@@ -251,25 +251,25 @@ push dword 2A4h	; 3DE8C
 push asc_C1969	; 3DE91
 call sub_8CCA8	; 3DE96
 add esp, byte 0Ch	; 3DE9B
-mov dword [dword_DD10C], eax	; 3DE9E
+mov dword [statsteambuf], eax	; 3DE9E
 push byte 20h	; 3DEA3
 push dword 5B0h	; 3DEA5
 push asc_C196F	; 3DEAA
 call sub_8CCA8	; 3DEAF
 add esp, byte 0Ch	; 3DEB4
-mov dword [dword_DD11C], eax	; 3DEB7
+mov dword [statsplayerbuf], eax	; 3DEB7
 push byte 20h	; 3DEBC
 push dword 497h	; 3DEBE
 push asc_C1974	; 3DEC3
 call sub_8CCA8	; 3DEC8
 add esp, byte 0Ch	; 3DECD
-mov dword [dword_DD110], eax	; 3DED0
+mov dword [statsskaterbuf], eax	; 3DED0
 push byte 20h	; 3DED5
 push dword 10Eh	; 3DED7
 push asc_C197A	; 3DEDC
 call sub_8CCA8	; 3DEE1
 add esp, byte 0Ch	; 3DEE6
-mov dword [dword_DD114], eax	; 3DEE9
+mov dword [statsgoaliebuf], eax	; 3DEE9
 xor ecx, ecx	; 3DEEE
 mov ebx, asc_C1980	; 3DEF0
 cmp byte [byte_ED85A], 1	; 3DEF5
@@ -299,7 +299,7 @@ push edi	; 3DF3D
 call jctime	; 3DF3E
 add esp, byte 4	; 3DF43
 mov eax, 1	; 3DF46
-call sub_1FAA7	; 3DF4B
+call InitMenuRemap	; 3DF4B
 xor eax, eax	; 3DF50
 mov al, byte [byte esp+018h]	; 3DF52
 call sub_244E2	; 3DF56
@@ -318,31 +318,31 @@ mov ecx, 41h	; 3DF86
 mov ebx, 40h	; 3DF8B
 mov edx, 2	; 3DF90
 mov eax, unk_C88E2	; 3DF95
-call sub_1D6E8	; 3DF9A
+call RunMenu	; 3DF9A
 xor ecx, ecx	; 3DF9F
 mov dword [dword_DC738], ecx	; 3DFA1
 mov dword [statsredrawcb], ecx	; 3DFA7
-mov eax, dword [dword_DD10C]	; 3DFAD
+mov eax, dword [statsteambuf]	; 3DFAD
 push eax	; 3DFB2
 call jctime	; 3DFB3
 add esp, byte 4	; 3DFB8
-mov edx, dword [dword_DD114]	; 3DFBB
+mov edx, dword [statsgoaliebuf]	; 3DFBB
 push edx	; 3DFC1
 call jctime	; 3DFC2
 add esp, byte 4	; 3DFC7
-mov ebx, dword [dword_DD110]	; 3DFCA
+mov ebx, dword [statsskaterbuf]	; 3DFCA
 push ebx	; 3DFD0
 call jctime	; 3DFD1
 add esp, byte 4	; 3DFD6
-mov ecx, dword [dword_DD11C]	; 3DFD9
+mov ecx, dword [statsplayerbuf]	; 3DFD9
 push ecx	; 3DFDF
 call jctime	; 3DFE0
 add esp, byte 4	; 3DFE5
 xor edi, edi	; 3DFE8
-mov dword [dword_DD11C], edi	; 3DFEA
-mov dword [dword_DD10C], edi	; 3DFF0
-mov dword [dword_DD114], edi	; 3DFF6
-mov dword [dword_DD110], edi	; 3DFFC
+mov dword [statsplayerbuf], edi	; 3DFEA
+mov dword [statsteambuf], edi	; 3DFF0
+mov dword [statsgoaliebuf], edi	; 3DFF6
+mov dword [statsskaterbuf], edi	; 3DFFC
 call sub_B4BA8	; 3E002
 mov ebx, 10h	; 3E007
 mov edx, esi	; 3E00C
@@ -1655,7 +1655,7 @@ push edi	; 3F115
 mov eax, dword [byte ebp+03Ah]	; 3F116
 sub eax, byte 3	; 3F119
 push eax	; 3F11C
-mov eax, dword [dword_DC238]	; 3F11D
+mov eax, dword [pointerspr]	; 3F11D
 push eax	; 3F122
 call sub_91FE0	; 3F123
 add esp, byte 0Ch	; 3F128
@@ -2155,7 +2155,7 @@ call sub_8CCA8	; 3F6B2
 add esp, byte 0Ch	; 3F6B7
 mov edx, dword [byte ebp+066h]	; 3F6BA
 mov dword [byte edx+ebp-022h], eax	; 3F6BD
-mov esi, dword [dword_DC238]	; 3F6C1
+mov esi, dword [pointerspr]	; 3F6C1
 mov edi, eax	; 3F6C7
 movsd	; 3F6C9
 movsd	; 3F6CA
@@ -2758,7 +2758,7 @@ push eax	; 3FE95
 mov eax, dword [byte ebp+032h]	; 3FE96
 sub eax, byte 3	; 3FE99
 push eax	; 3FE9C
-mov edx, dword [dword_DC238]	; 3FE9D
+mov edx, dword [pointerspr]	; 3FE9D
 push edx	; 3FEA3
 call sub_91FE0	; 3FEA4
 add esp, byte 0Ch	; 3FEA9

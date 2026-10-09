@@ -7,7 +7,7 @@ extern asc_C36AF, asc_C36C3, asc_C36C9, asc_C8145, asc_D236F, asc_D2379, asc_D23
 extern asc_D2390, asc_D2399, asc_D2479, asc_D2486, asc_D248C, asc_D2491, byte_C541B
 extern musicslot, musicon, byte_D2439, byte_ED8C3, byte_ED95B, byte_ED9A7, dword_C4CFC, gameopts
 extern dword_C541F, songdata, dword_CCC94, dword_D2350, dword_D2423, dword_D2427, dword_D242B
-extern musichandle, dword_D2435, dword_D243A, dword_D24A0, dword_D27B2, dword_D27BB, dword_D2C6B, dword_DC238
+extern musichandle, dword_D2435, dword_D243A, dword_D24A0, dword_D27B2, dword_D27BB, dword_D2C6B, pointerspr
 extern dword_EA0DC, dword_ED360, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, fclose_, fopen_
 extern fprintf_, jctime, loc_836C4, off_D24D1, strcpy_, MakePath, sub_30A0C, sub_30F12
 extern MessageBox, PlayDigiSample, WaitDigiSample, sub_6B391, sub_6B3D7, sub_8245A, sub_824F8, sub_827B3
@@ -36,7 +36,7 @@ push esi	; 8292B
 push edi	; 8292C
 push ebp	; 8292D
 sub esp, byte 38h	; 8292E
-mov eax, dword [dword_DC238]	; 82931
+mov eax, dword [pointerspr]	; 82931
 mov edx, dword [byte eax+02h]	; 82936
 sar edx, 10h	; 82939
 mov eax, dword [byte eax+04h]	; 8293C
@@ -51,18 +51,18 @@ push asc_C3680	; 8294D
 call sub_8CCA8	; 82952
 add esp, byte 0Ch	; 82957
 mov ebp, eax	; 8295A
-mov esi, dword [dword_DC238]	; 8295C
+mov esi, dword [pointerspr]	; 8295C
 mov edi, eax	; 82962
 movsd	; 82964
 movsd	; 82965
 movsd	; 82966
 movsd	; 82967
 movsb	; 82968
-mov edx, dword [dword_DC238]	; 82969
+mov edx, dword [pointerspr]	; 82969
 mov dx, word [byte edx+04h]	; 8296F
 inc edx	; 82973
 mov word [byte eax+04h], dx	; 82974
-mov edx, dword [dword_DC238]	; 82978
+mov edx, dword [pointerspr]	; 82978
 mov dx, word [byte edx+06h]	; 8297E
 inc edx	; 82982
 mov word [byte eax+06h], dx	; 82983
@@ -101,7 +101,7 @@ push edi	; 829E8
 mov eax, dword [byte esp+030h]	; 829E9
 sub eax, byte 4	; 829ED
 push eax	; 829F0
-mov eax, dword [dword_DC238]	; 829F1
+mov eax, dword [pointerspr]	; 829F1
 push eax	; 829F6
 call sub_91370	; 829F7
 add esp, byte 0Ch	; 829FC
@@ -154,7 +154,7 @@ push esi	; 82A7F
 mov eax, dword [byte esp+030h]	; 82A80
 sub eax, byte 4	; 82A84
 push eax	; 82A87
-mov edi, dword [dword_DC238]	; 82A88
+mov edi, dword [pointerspr]	; 82A88
 push edi	; 82A8E
 loc_82A8F:
 call sub_91370	; 82A8F
@@ -343,7 +343,7 @@ push eax	; 82D26
 mov eax, dword [byte esp+030h]	; 82D27
 sub eax, byte 4	; 82D2B
 push eax	; 82D2E
-mov edx, dword [dword_DC238]	; 82D2F
+mov edx, dword [pointerspr]	; 82D2F
 push edx	; 82D35
 jmp near loc_82A8F	; 82D36
 loc_82D3B:

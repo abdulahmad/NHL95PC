@@ -5,7 +5,7 @@ section s_85924 progbits alloc exec nowrite align=1
 extern __CHK, asc_C38F8, asc_C3904, asc_C3923, asc_C3932, asc_C3947, asc_C3966, asc_C3972
 extern asc_C3976, asc_C397E, asc_C3986, asc_C398F, asc_C3994, asc_C399B, asc_C39A0, str_extDB
 extern asc_D281F, curleague, byte_DD774, byte_DD788, gameopts
-extern byte_ED92F, demomode, postate, lgstate, gamemode, dword_D2C6B, dword_D8B74, dword_DC238
+extern byte_ED92F, demomode, postate, lgstate, gamemode, dword_D2C6B, dword_D8B74, pointerspr
 extern dword_DC888, dword_DC88C, dword_DD730, dword_EA0DC, jctime, off_D27EF, off_D27F7, off_D2855
 extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, CopyFile, DiskSpaceShort
 extern sub_30A0C, sub_30F12, MessageBox, sub_3170D, SaveModeState, LoadModeState, WriteModeState, SaveLeagueGameRef
@@ -333,7 +333,7 @@ push edi	; 85D7A
 push ebp	; 85D7B
 sub esp, 90h	; 85D7C
 push eax	; 85D82
-mov eax, dword [dword_DC238]	; 85D83
+mov eax, dword [pointerspr]	; 85D83
 mov edx, dword [byte eax+02h]	; 85D88
 sar edx, 10h	; 85D8B
 mov eax, dword [byte eax+04h]	; 85D8E
@@ -348,7 +348,7 @@ push asc_C397E	; 85DA4
 call sub_8CCA8	; 85DA9
 add esp, byte 0Ch	; 85DAE
 mov ebp, eax	; 85DB1
-mov esi, dword [dword_DC238]	; 85DB3
+mov esi, dword [pointerspr]	; 85DB3
 mov edi, eax	; 85DB9
 movsd	; 85DBB
 movsd	; 85DBC
@@ -379,7 +379,7 @@ mov edi, dword [byte esp+074h]	; 85E03
 push edi	; 85E07
 mov eax, dword [byte esp+07Ch]	; 85E08
 push eax	; 85E0C
-mov edx, dword [dword_DC238]	; 85E0D
+mov edx, dword [pointerspr]	; 85E0D
 push edx	; 85E13
 call sub_91284	; 85E14
 add esp, byte 0Ch	; 85E19
@@ -630,7 +630,7 @@ call sub_91400	; 86134
 add esp, byte 0Ch	; 86139
 push dword 0FEh	; 8613C
 push dword 181h	; 86141
-mov ebx, dword [dword_DC238]	; 86146
+mov ebx, dword [pointerspr]	; 86146
 push ebx	; 8614C
 call sub_91284	; 8614D
 add esp, byte 0Ch	; 86152
@@ -681,7 +681,7 @@ mov edx, dword [dword esp+080h]	; 861DE
 push edx	; 861E5
 mov ebx, dword [byte esp+074h]	; 861E6
 push ebx	; 861EA
-mov ecx, dword [dword_DC238]	; 861EB
+mov ecx, dword [pointerspr]	; 861EB
 push ecx	; 861F1
 loc_861F2:
 call sub_91370	; 861F2
@@ -821,7 +821,7 @@ mov ebx, dword [dword esp+080h]	; 863BA
 push ebx	; 863C1
 mov ecx, dword [byte esp+074h]	; 863C2
 push ecx	; 863C6
-mov esi, dword [dword_DC238]	; 863C7
+mov esi, dword [pointerspr]	; 863C7
 push esi	; 863CD
 jmp near loc_861F2	; 863CE
 loc_863D3:

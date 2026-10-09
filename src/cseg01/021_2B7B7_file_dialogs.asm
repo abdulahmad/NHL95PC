@@ -13,7 +13,7 @@ extern byte_ED82F, byte_ED992, postate, lgstate, gameresult, dword_C6F78
 extern dword_C6F88, dword_C6F8C, dword_C6F90, dword_C6F94, dword_C7008, dword_C700C, dword_C7010, dword_C7014
 extern dword_C7018, dword_C701C, dword_C7020, dword_C7024, dword_C7028, dword_C702C, dword_C7030, dword_C7034
 extern dword_C70E3, dword_C70E7, dword_CE4E3, dword_CE503, dword_CE527, dword_CE583, dword_CE5A3, dword_CE5C3
-extern seriesgameno, dword_D2C6B, dword_DC238, dword_DD124, dword_DD128, dword_DD12C, dword_DD130, dword_DD134
+extern seriesgameno, dword_D2C6B, pointerspr, dword_DD124, dword_DD128, dword_DD12C, dword_DD130, dword_DD134
 extern dword_DD1B4, dword_DD1B8, dword_DD1BC, dword_DD1C0, dword_DD1C4, dword_DD244, dword_DD248, dword_DD24C
 extern dword_DD250, dword_DD254, dword_DD634, dword_DD638, dword_DD63C, dword_DD640, dword_DD644, dword_DD648
 extern dword_DD64C, dword_DD650, dword_DD654, dword_DD658, dword_DD65C, dword_DD660, dword_DD664, dword_DD730
@@ -182,7 +182,7 @@ push asc_C1482	; 2B962
 call sub_8CCA8	; 2B967
 mov ebp, eax	; 2B96C
 add esp, byte 0Ch	; 2B96E
-mov esi, dword [dword_DC238]	; 2B971
+mov esi, dword [pointerspr]	; 2B971
 mov edi, eax	; 2B977
 movsd	; 2B979
 movsd	; 2B97A
@@ -1375,7 +1375,7 @@ mov dword [byte esp+0Ch], eax	; 2C837
 mov eax, dword [byte esp+010h]	; 2C83B
 mov dword [byte esp+08h], eax	; 2C83F
 call sub_B4BA8	; 2C843
-mov eax, dword [dword_DC238]	; 2C848
+mov eax, dword [pointerspr]	; 2C848
 mov edx, dword [byte eax+02h]	; 2C84D
 sar edx, 10h	; 2C850
 mov eax, dword [byte eax+04h]	; 2C853
@@ -1390,18 +1390,18 @@ push asc_C1534	; 2C864
 call sub_8CCA8	; 2C869
 add esp, byte 0Ch	; 2C86E
 mov dword [byte esp+01Ch], eax	; 2C871
-mov esi, dword [dword_DC238]	; 2C875
+mov esi, dword [pointerspr]	; 2C875
 mov edi, eax	; 2C87B
 movsd	; 2C87D
 movsd	; 2C87E
 movsd	; 2C87F
 movsd	; 2C880
 movsb	; 2C881
-mov edx, dword [dword_DC238]	; 2C882
+mov edx, dword [pointerspr]	; 2C882
 mov dx, word [byte edx+04h]	; 2C888
 inc edx	; 2C88C
 mov word [byte eax+04h], dx	; 2C88D
-mov edx, dword [dword_DC238]	; 2C891
+mov edx, dword [pointerspr]	; 2C891
 mov dx, word [byte edx+06h]	; 2C897
 inc edx	; 2C89B
 mov word [byte eax+06h], dx	; 2C89C
@@ -1418,7 +1418,7 @@ push ecx	; 2C8BA
 mov eax, dword [byte esp+010h]	; 2C8BB
 sub eax, byte 4	; 2C8BF
 push eax	; 2C8C2
-mov esi, dword [dword_DC238]	; 2C8C3
+mov esi, dword [pointerspr]	; 2C8C3
 push esi	; 2C8C9
 call sub_91370	; 2C8CA
 add esp, byte 0Ch	; 2C8CF
@@ -1472,7 +1472,7 @@ push edx	; 2C965
 mov eax, dword [byte esp+010h]	; 2C966
 sub eax, byte 4	; 2C96A
 push eax	; 2C96D
-mov ebx, dword [dword_DC238]	; 2C96E
+mov ebx, dword [pointerspr]	; 2C96E
 push ebx	; 2C974
 loc_2C975:
 call sub_91370	; 2C975
@@ -1647,7 +1647,7 @@ push ebx	; 2CB64
 mov eax, dword [byte esp+010h]	; 2CB65
 sub eax, byte 4	; 2CB69
 push eax	; 2CB6C
-mov ecx, dword [dword_DC238]	; 2CB6D
+mov ecx, dword [pointerspr]	; 2CB6D
 push ecx	; 2CB73
 jmp near loc_2C975	; 2CB74
 loc_2CB79:

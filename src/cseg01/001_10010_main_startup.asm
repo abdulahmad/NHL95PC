@@ -15,7 +15,7 @@ extern songdata, dword_C7444, dword_C7448, cont2team, HomeTeam, dword_CBC3E, pen
 extern musichandle, dword_D2C6B, dword_D302C, dword_D3030, dword_D3034, dword_D30D4, dword_D4158, dword_D415C
 extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
 extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84, photoptrs, dword_DC230
-extern dword_DC238, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
+extern pointerspr, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
 extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, sub_3149D, sub_31AB5
 extern LoadModeState, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
@@ -272,7 +272,7 @@ push str_Pntr	; 10314
 push eax	; 10319
 call sub_B30B4	; 1031A
 add esp, byte 8	; 1031F
-mov dword [dword_DC238], eax	; 10322
+mov dword [pointerspr], eax	; 10322
 mov ecx, str_VFN	; 10327
 mov ebx, str_S1	; 1032C
 cmp byte [byte_ED92E], 1	; 10331

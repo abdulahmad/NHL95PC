@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_1CC3D progbits alloc exec nowrite align=1
 extern __CHK, str_scrbrd1, asc_C0A88, asc_C0AB5, asc_C0AE2, asc_C0B0F, asc_C0B1C, asc_C0B29
-extern asc_C0B2E, asc_C0B33, str_LgSeasonLabel, str_LgPlayoffsLabel, str_POStateLabel, str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx
+extern asc_C0B2E, asc_C0B33, str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle
 extern str_PPV, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide, postate
 extern mi_9394Season, mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, byte_DC8D8, lgstate
-extern byte_DC9D8, byte_ED938, dword_C65B4, dirtyrectcount, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD
+extern byte_DC9D8, byte_ED938, statsteamsel, dirtyrectcount, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD
 extern statsplayoffs, statsfromleague, dword_C891E, dword_CE8EB, dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB
 extern dword_CF5D7, dword_CF5F7, dword_CF617, dword_CF637, dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB
 extern dword_CF84B, dword_CF8CB, dword_CFA4B, dword_D2C6B, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1
@@ -465,7 +465,7 @@ mov dword [statsfromleague], 1	; 1D1B7
 cmp dword [statsplayoffs], byte 0	; 1D1C1
 je short .2	; 1D1C8
 xor esi, esi	; 1D1CA
-mov dword [dword_C65B4], esi	; 1D1CC
+mov dword [statsteamsel], esi	; 1D1CC
 .2:
 xor edi, edi	; 1D1D2
 mov dword [statsplayoffs], edi	; 1D1D4
@@ -482,7 +482,7 @@ mov dword [statsfromleague], 1	; 1D1FF
 mov ebp, dword [statsplayoffs]	; 1D209
 test ebp, ebp	; 1D20F
 jne short .4	; 1D211
-mov dword [dword_C65B4], ebp	; 1D213
+mov dword [statsteamsel], ebp	; 1D213
 .4:
 mov dword [statsplayoffs], 1	; 1D219
 .5:
@@ -513,7 +513,7 @@ mov dword [statsfromleague], 1	; 1D291
 mov ebx, dword [statsplayoffs]	; 1D29B
 test ebx, ebx	; 1D2A1
 jne short .2	; 1D2A3
-mov dword [dword_C65B4], ebx	; 1D2A5
+mov dword [statsteamsel], ebx	; 1D2A5
 .2:
 mov dword [statsplayoffs], 1	; 1D2AB
 mov ebx, 1Fh	; 1D2B5
@@ -538,7 +538,7 @@ xor edi, edi	; 1D305
 mov dword [statsfromleague], edi	; 1D307
 cmp dword [statsplayoffs], byte 0	; 1D30D
 je short .1	; 1D314
-mov dword [dword_C65B4], edi	; 1D316
+mov dword [statsteamsel], edi	; 1D316
 .1:
 xor edx, edx	; 1D31C
 mov dword [statsplayoffs], edx	; 1D31E
@@ -567,7 +567,7 @@ mov dword [statsfromleague], 1	; 1D39D
 cmp dword [statsplayoffs], byte 0	; 1D3A7
 je short .1	; 1D3AE
 xor esi, esi	; 1D3B0
-mov dword [dword_C65B4], esi	; 1D3B2
+mov dword [statsteamsel], esi	; 1D3B2
 .1:
 xor edi, edi	; 1D3B8
 mov dword [statsplayoffs], edi	; 1D3BA
@@ -587,7 +587,7 @@ mov dword [statsfromleague], 1	; 1D3F2
 mov ebp, dword [statsplayoffs]	; 1D3FC
 test ebp, ebp	; 1D402
 jne short .4	; 1D404
-mov dword [dword_C65B4], ebp	; 1D406
+mov dword [statsteamsel], ebp	; 1D406
 .4:
 mov dword [statsplayoffs], 1	; 1D40C
 jmp short SetupStatsSourceMenu_all.2	; 1D416
@@ -603,7 +603,7 @@ mov dword [statsfromleague], 1	; 1D43B
 mov ebx, dword [statsplayoffs]	; 1D445
 test ebx, ebx	; 1D44B
 jne short .6	; 1D44D
-mov dword [dword_C65B4], ebx	; 1D44F
+mov dword [statsteamsel], ebx	; 1D44F
 .6:
 mov dword [statsplayoffs], 1	; 1D455
 mov ebx, 1Fh	; 1D45F
@@ -672,7 +672,7 @@ mov ebx, eax	; 1D538
 xor dl, dl	; 1D53A
 mov byte [dword eax+postate+4], dl	; 1D53C
 mov edx, postate+4	; 1D542
-mov eax, str_POStateLabel	; 1D547
+mov eax, str_POTitle+1	; 1D547
 call strcpy_	; 1D54C
 lea eax, [byte ebx+03h]	; 1D551
 add eax, mi_PlayoffMode	; 1D554
@@ -688,10 +688,10 @@ mov ebx, eax	; 1D57D
 xor cl, cl	; 1D57F
 mov byte [dword eax+lgstate+4], cl	; 1D581
 mov edx, lgstate+4	; 1D587
-mov eax, str_LgSeasonLabel	; 1D58C
+mov eax, str_LgSeasonTitle+1	; 1D58C
 call strcpy_	; 1D591
 mov edx, lgstate+4	; 1D596
-mov eax, str_LgPlayoffsLabel	; 1D59B
+mov eax, str_LgPlayoffsTitle+1	; 1D59B
 call strcpy_	; 1D5A0
 lea ecx, [byte ebx+03h]	; 1D5A5
 mov eax, mi_LeagueSeason	; 1D5A8

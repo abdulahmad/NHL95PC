@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_C0A18 progbits alloc noexec write align=1
 global str_teams, str_key, str_att, str_season, str_career, str_GsummaryDb2, str_scrbrd1, asc_C0A88
-global asc_C0AB5, asc_C0AE2, asc_C0B0F, asc_C0B1C, asc_C0B29, asc_C0B2E, asc_C0B33, asc_C0B54
-global asc_C0B5C, asc_C0C28, asc_C0C2C, asc_C0C34, asc_C0C3B, asc_C0C40, asc_C0C46, asc_C0C4B
+global asc_C0AB5, asc_C0AE2, asc_C0B0F, asc_C0B1C, asc_C0B29, asc_C0B2E, asc_C0B33, str_PointerMenu
+global str_menubuff, str_sfh, str_shape, asc_C0C34, asc_C0C3B, asc_C0C40, asc_C0C46, asc_C0C4B
 global asc_C0C51, asc_C0C58, asc_C0C5F, asc_C0C64, asc_C0C6D, asc_C0C73, asc_C0C78, asc_C0C7E
 global asc_C0C84, asc_C0C8D, asc_C0C94, asc_C0C99, asc_C0C9F, asc_C0CA4, asc_C0CAA, asc_C0D52
 global asc_C0D58, asc_C0D61, asc_C0D66, asc_C0D6B, asc_C0D78, asc_C0D7E, asc_C0D82, asc_C0D89
@@ -168,9 +168,9 @@ asc_C0B33:
 db 06Ch,069h,06Eh,031h,06Ch,069h,06Eh,032h,06Ch,069h,06Eh,033h,06Ch,069h,06Eh,034h
 db 050h,050h,031h,020h,050h,050h,032h,020h,050h,04Bh,031h,020h,050h,04Bh,032h,020h
 db 00h
-asc_C0B54:
+str_PointerMenu:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C0B5C:
+str_menubuff:
 db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h,00h,00h,00h
 unk_C0B68:
 db 050h,061h,063h,069h,066h,069h,063h,020h,044h,069h,076h,069h,073h,069h,06Fh,06Eh
@@ -208,9 +208,9 @@ unk_C0C13:
 db 063h,061h,072h,074h,065h,061h,06Dh,073h,02Eh,064h,062h,00h
 unk_C0C1F:
 db 074h,065h,061h,06Dh,073h,02Eh,064h,062h,00h
-asc_C0C28:
+str_sfh:
 db 073h,066h,068h,00h
-asc_C0C2C:
+str_shape:
 db 073h,068h,061h,070h,065h,00h,00h,00h
 asc_C0C34:
 db 065h,06Dh,062h,070h,061h,06Ch,00h

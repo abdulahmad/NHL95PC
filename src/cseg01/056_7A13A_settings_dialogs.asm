@@ -14,7 +14,7 @@ extern dword_D14F0, dword_D14F4, dword_D14F8, dword_D14FC, dword_D16AC, dword_D1
 extern dword_D17EC, dword_D17F0, dword_D17F4, dword_D17F8, dword_D195C, dword_D1960, dword_D1964, dword_D1968
 extern dword_D196C, dword_D1970, dword_D1974, dword_D1978, dword_D197C, dword_D1980, dword_D198C, dword_D1990
 extern dword_D199C, dword_D19A0, dword_D19AC, dword_D19B0, dword_D19EC, dword_D20A8, musichandle, musicslot
-extern seriesgameno, dword_D2C6B, dword_DC238, dword_DD64C, hmtmstruct, dword_DF648, hmscore
+extern seriesgameno, dword_D2C6B, pointerspr, dword_DD64C, hmtmstruct, dword_DF648, hmscore
 extern dword_EA0DC, dword_ED35C, dword_ED360, dword_ED364, dword_ED75C, dword_ED760, dword_ED764, puckstruct
 extern dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C, dword_ED780, dword_ED784
 extern dword_ED788, dword_ED78C, puckvx, gmode, jctime, teamcitynames, puckx, pucky
@@ -103,7 +103,7 @@ push asc_C32BC	; 7A16F
 call sub_8CCA8	; 7A174
 mov ebp, eax	; 7A179
 add esp, byte 0Ch	; 7A17B
-mov esi, dword [dword_DC238]	; 7A17E
+mov esi, dword [pointerspr]	; 7A17E
 mov edi, eax	; 7A184
 movsd	; 7A186
 movsd	; 7A187
@@ -167,7 +167,7 @@ push asc_C32BC	; 7A21D
 call sub_8CCA8	; 7A222
 mov ebp, eax	; 7A227
 add esp, byte 0Ch	; 7A229
-mov esi, dword [dword_DC238]	; 7A22C
+mov esi, dword [pointerspr]	; 7A22C
 mov edi, eax	; 7A232
 movsd	; 7A234
 movsd	; 7A235
@@ -221,7 +221,7 @@ push asc_C32BC	; 7A2BD
 call sub_8CCA8	; 7A2C2
 mov ebp, eax	; 7A2C7
 add esp, byte 0Ch	; 7A2C9
-mov esi, dword [dword_DC238]	; 7A2CC
+mov esi, dword [pointerspr]	; 7A2CC
 mov edi, eax	; 7A2D2
 movsd	; 7A2D4
 movsd	; 7A2D5
@@ -266,7 +266,7 @@ push asc_C32BC	; 7A356
 call sub_8CCA8	; 7A35B
 mov ebp, eax	; 7A360
 add esp, byte 0Ch	; 7A362
-mov esi, dword [dword_DC238]	; 7A365
+mov esi, dword [pointerspr]	; 7A365
 mov edi, eax	; 7A36B
 movsd	; 7A36D
 movsd	; 7A36E
@@ -300,7 +300,7 @@ push asc_C32BC	; 7A3BB
 call sub_8CCA8	; 7A3C0
 mov ebp, eax	; 7A3C5
 add esp, byte 0Ch	; 7A3C7
-mov esi, dword [dword_DC238]	; 7A3CA
+mov esi, dword [pointerspr]	; 7A3CA
 mov edi, eax	; 7A3D0
 movsd	; 7A3D2
 movsd	; 7A3D3
@@ -1055,7 +1055,7 @@ mov dword [byte esp+08h], eax	; 7AC73
 mov eax, dword [byte esp+0Ch]	; 7AC77
 mov dword [byte esp+04h], eax	; 7AC7B
 call sub_B4BA8	; 7AC7F
-mov eax, dword [dword_DC238]	; 7AC84
+mov eax, dword [pointerspr]	; 7AC84
 mov edx, dword [byte eax+02h]	; 7AC89
 sar edx, 10h	; 7AC8C
 mov eax, dword [byte eax+04h]	; 7AC8F
@@ -1070,18 +1070,18 @@ push asc_C32F5	; 7ACA0
 call sub_8CCA8	; 7ACA5
 add esp, byte 0Ch	; 7ACAA
 mov ebp, eax	; 7ACAD
-mov esi, dword [dword_DC238]	; 7ACAF
+mov esi, dword [pointerspr]	; 7ACAF
 mov edi, eax	; 7ACB5
 movsd	; 7ACB7
 movsd	; 7ACB8
 movsd	; 7ACB9
 movsd	; 7ACBA
 movsb	; 7ACBB
-mov edx, dword [dword_DC238]	; 7ACBC
+mov edx, dword [pointerspr]	; 7ACBC
 mov dx, word [byte edx+04h]	; 7ACC2
 inc edx	; 7ACC6
 mov word [byte eax+04h], dx	; 7ACC7
-mov edx, dword [dword_DC238]	; 7ACCB
+mov edx, dword [pointerspr]	; 7ACCB
 mov dx, word [byte edx+06h]	; 7ACD1
 inc edx	; 7ACD5
 mov word [byte eax+06h], dx	; 7ACD6
@@ -1098,7 +1098,7 @@ push ebx	; 7ACF4
 mov eax, dword [byte esp+0Ch]	; 7ACF5
 sub eax, byte 4	; 7ACF9
 push eax	; 7ACFC
-mov ecx, dword [dword_DC238]	; 7ACFD
+mov ecx, dword [pointerspr]	; 7ACFD
 push ecx	; 7AD03
 call sub_91370	; 7AD04
 add esp, byte 0Ch	; 7AD09
@@ -1147,7 +1147,7 @@ push edi	; 7AD7E
 mov eax, dword [byte esp+0Ch]	; 7AD7F
 sub eax, byte 4	; 7AD83
 push eax	; 7AD86
-mov eax, dword [dword_DC238]	; 7AD87
+mov eax, dword [pointerspr]	; 7AD87
 push eax	; 7AD8C
 call sub_91370	; 7AD8D
 add esp, byte 0Ch	; 7AD92
@@ -1206,7 +1206,7 @@ shl eax, 19h	; 7AE2A
 shr eax, 1Fh	; 7AE2D
 mov dword [byte esp+018h], eax	; 7AE30
 call sub_B4BA8	; 7AE34
-mov eax, dword [dword_DC238]	; 7AE39
+mov eax, dword [pointerspr]	; 7AE39
 mov edx, dword [byte eax+02h]	; 7AE3E
 sar edx, 10h	; 7AE41
 mov eax, dword [byte eax+04h]	; 7AE44
@@ -1221,18 +1221,18 @@ push asc_C32F5	; 7AE55
 call sub_8CCA8	; 7AE5A
 add esp, byte 0Ch	; 7AE5F
 mov ebp, eax	; 7AE62
-mov esi, dword [dword_DC238]	; 7AE64
+mov esi, dword [pointerspr]	; 7AE64
 mov edi, eax	; 7AE6A
 movsd	; 7AE6C
 movsd	; 7AE6D
 movsd	; 7AE6E
 movsd	; 7AE6F
 movsb	; 7AE70
-mov edx, dword [dword_DC238]	; 7AE71
+mov edx, dword [pointerspr]	; 7AE71
 mov dx, word [byte edx+04h]	; 7AE77
 inc edx	; 7AE7B
 mov word [byte eax+04h], dx	; 7AE7C
-mov edx, dword [dword_DC238]	; 7AE80
+mov edx, dword [pointerspr]	; 7AE80
 mov dx, word [byte edx+06h]	; 7AE86
 inc edx	; 7AE8A
 mov word [byte eax+06h], dx	; 7AE8B
@@ -1249,7 +1249,7 @@ push ebx	; 7AEA9
 mov eax, dword [byte esp+010h]	; 7AEAA
 sub eax, byte 4	; 7AEAE
 push eax	; 7AEB1
-mov ecx, dword [dword_DC238]	; 7AEB2
+mov ecx, dword [pointerspr]	; 7AEB2
 push ecx	; 7AEB8
 call sub_91370	; 7AEB9
 add esp, byte 0Ch	; 7AEBE
@@ -1298,7 +1298,7 @@ push esi	; 7AF36
 mov eax, dword [byte esp+010h]	; 7AF37
 sub eax, byte 4	; 7AF3B
 push eax	; 7AF3E
-mov edi, dword [dword_DC238]	; 7AF3F
+mov edi, dword [pointerspr]	; 7AF3F
 push edi	; 7AF45
 loc_7AF46:
 call sub_91370	; 7AF46
@@ -1595,7 +1595,7 @@ push ecx	; 7B336
 mov eax, dword [byte esp+010h]	; 7B337
 sub eax, byte 4	; 7B33B
 push eax	; 7B33E
-mov esi, dword [dword_DC238]	; 7B33F
+mov esi, dword [pointerspr]	; 7B33F
 push esi	; 7B345
 jmp near loc_7AF46	; 7B346
 loc_7B34B:
@@ -1627,7 +1627,7 @@ push edx	; 7B387
 mov eax, dword [byte esp+010h]	; 7B388
 sub eax, byte 4	; 7B38C
 push eax	; 7B38F
-mov ebx, dword [dword_DC238]	; 7B390
+mov ebx, dword [pointerspr]	; 7B390
 push ebx	; 7B396
 jmp near loc_7AF46	; 7B397
 sub_7B39C:
@@ -1651,7 +1651,7 @@ push asc_C3300	; 7B3C8
 call sub_8CCA8	; 7B3CD
 add esp, byte 0Ch	; 7B3D2
 mov ebp, eax	; 7B3D5
-mov esi, dword [dword_DC238]	; 7B3D7
+mov esi, dword [pointerspr]	; 7B3D7
 mov edi, eax	; 7B3DD
 movsd	; 7B3DF
 movsd	; 7B3E0
@@ -2070,7 +2070,7 @@ mov dword [byte esp+08h], eax	; 7B888
 mov eax, dword [byte esp+0Ch]	; 7B88C
 mov dword [byte esp+04h], eax	; 7B890
 call sub_B4BA8	; 7B894
-mov eax, dword [dword_DC238]	; 7B899
+mov eax, dword [pointerspr]	; 7B899
 mov edx, dword [byte eax+02h]	; 7B89E
 sar edx, 10h	; 7B8A1
 mov eax, dword [byte eax+04h]	; 7B8A4
@@ -2085,18 +2085,18 @@ push asc_C3339	; 7B8B5
 call sub_8CCA8	; 7B8BA
 add esp, byte 0Ch	; 7B8BF
 mov ebp, eax	; 7B8C2
-mov esi, dword [dword_DC238]	; 7B8C4
+mov esi, dword [pointerspr]	; 7B8C4
 mov edi, eax	; 7B8CA
 movsd	; 7B8CC
 movsd	; 7B8CD
 movsd	; 7B8CE
 movsd	; 7B8CF
 movsb	; 7B8D0
-mov edx, dword [dword_DC238]	; 7B8D1
+mov edx, dword [pointerspr]	; 7B8D1
 mov dx, word [byte edx+04h]	; 7B8D7
 inc edx	; 7B8DB
 mov word [byte eax+04h], dx	; 7B8DC
-mov edx, dword [dword_DC238]	; 7B8E0
+mov edx, dword [pointerspr]	; 7B8E0
 mov dx, word [byte edx+06h]	; 7B8E6
 inc edx	; 7B8EA
 mov word [byte eax+06h], dx	; 7B8EB
@@ -2113,7 +2113,7 @@ push ebx	; 7B909
 mov eax, dword [byte esp+0Ch]	; 7B90A
 sub eax, byte 4	; 7B90E
 push eax	; 7B911
-mov ecx, dword [dword_DC238]	; 7B912
+mov ecx, dword [pointerspr]	; 7B912
 push ecx	; 7B918
 call sub_91370	; 7B919
 add esp, byte 0Ch	; 7B91E
@@ -2162,7 +2162,7 @@ push edi	; 7B993
 mov eax, dword [byte esp+0Ch]	; 7B994
 sub eax, byte 4	; 7B998
 push eax	; 7B99B
-mov eax, dword [dword_DC238]	; 7B99C
+mov eax, dword [pointerspr]	; 7B99C
 push eax	; 7B9A1
 call sub_91370	; 7B9A2
 add esp, byte 0Ch	; 7B9A7
@@ -2218,7 +2218,7 @@ mov eax, dword [gameopts]	; 7BA3B
 shl eax, 19h	; 7BA40
 shr eax, 1Fh	; 7BA43
 mov dword [byte esp+018h], eax	; 7BA46
-mov eax, dword [dword_DC238]	; 7BA4A
+mov eax, dword [pointerspr]	; 7BA4A
 mov edx, dword [byte eax+02h]	; 7BA4F
 sar edx, 10h	; 7BA52
 mov eax, dword [byte eax+04h]	; 7BA55
@@ -2233,18 +2233,18 @@ push asc_C3339	; 7BA66
 call sub_8CCA8	; 7BA6B
 add esp, byte 0Ch	; 7BA70
 mov ebp, eax	; 7BA73
-mov esi, dword [dword_DC238]	; 7BA75
+mov esi, dword [pointerspr]	; 7BA75
 mov edi, eax	; 7BA7B
 movsd	; 7BA7D
 movsd	; 7BA7E
 movsd	; 7BA7F
 movsd	; 7BA80
 movsb	; 7BA81
-mov edx, dword [dword_DC238]	; 7BA82
+mov edx, dword [pointerspr]	; 7BA82
 mov dx, word [byte edx+04h]	; 7BA88
 inc edx	; 7BA8C
 mov word [byte eax+04h], dx	; 7BA8D
-mov edx, dword [dword_DC238]	; 7BA91
+mov edx, dword [pointerspr]	; 7BA91
 mov dx, word [byte edx+06h]	; 7BA97
 inc edx	; 7BA9B
 mov word [byte eax+06h], dx	; 7BA9C
@@ -2261,7 +2261,7 @@ push ebx	; 7BABA
 mov eax, dword [byte esp+010h]	; 7BABB
 sub eax, byte 4	; 7BABF
 push eax	; 7BAC2
-mov ecx, dword [dword_DC238]	; 7BAC3
+mov ecx, dword [pointerspr]	; 7BAC3
 push ecx	; 7BAC9
 call sub_91370	; 7BACA
 add esp, byte 0Ch	; 7BACF
@@ -2312,7 +2312,7 @@ push edx	; 7BB47
 mov eax, dword [byte esp+010h]	; 7BB48
 sub eax, byte 4	; 7BB4C
 push eax	; 7BB4F
-mov ebx, dword [dword_DC238]	; 7BB50
+mov ebx, dword [pointerspr]	; 7BB50
 push ebx	; 7BB56
 call sub_91370	; 7BB57
 add esp, byte 0Ch	; 7BB5C
@@ -2577,7 +2577,7 @@ push asc_C3344	; 7BED7
 call sub_8CCA8	; 7BEDC
 mov ebp, eax	; 7BEE1
 add esp, byte 0Ch	; 7BEE3
-mov esi, dword [dword_DC238]	; 7BEE6
+mov esi, dword [pointerspr]	; 7BEE6
 mov edi, eax	; 7BEEC
 movsd	; 7BEEE
 movsd	; 7BEEF
@@ -2990,7 +2990,7 @@ mov dword [byte esp+0Ch], eax	; 7C359
 mov eax, dword [byte esp+010h]	; 7C35D
 mov dword [byte esp+08h], eax	; 7C361
 call sub_B4BA8	; 7C365
-mov eax, dword [dword_DC238]	; 7C36A
+mov eax, dword [pointerspr]	; 7C36A
 mov edx, dword [byte eax+02h]	; 7C36F
 sar edx, 10h	; 7C372
 mov eax, dword [byte eax+04h]	; 7C375
@@ -3005,18 +3005,18 @@ push asc_C3374	; 7C386
 call sub_8CCA8	; 7C38B
 add esp, byte 0Ch	; 7C390
 mov ebp, eax	; 7C393
-mov esi, dword [dword_DC238]	; 7C395
+mov esi, dword [pointerspr]	; 7C395
 mov edi, eax	; 7C39B
 movsd	; 7C39D
 movsd	; 7C39E
 movsd	; 7C39F
 movsd	; 7C3A0
 movsb	; 7C3A1
-mov edx, dword [dword_DC238]	; 7C3A2
+mov edx, dword [pointerspr]	; 7C3A2
 mov dx, word [byte edx+04h]	; 7C3A8
 inc edx	; 7C3AC
 mov word [byte eax+04h], dx	; 7C3AD
-mov edx, dword [dword_DC238]	; 7C3B1
+mov edx, dword [pointerspr]	; 7C3B1
 mov dx, word [byte edx+06h]	; 7C3B7
 inc edx	; 7C3BB
 mov word [byte eax+06h], dx	; 7C3BC
@@ -3033,7 +3033,7 @@ push ebx	; 7C3DA
 mov eax, dword [byte esp+010h]	; 7C3DB
 sub eax, byte 4	; 7C3DF
 push eax	; 7C3E2
-mov ecx, dword [dword_DC238]	; 7C3E3
+mov ecx, dword [pointerspr]	; 7C3E3
 push ecx	; 7C3E9
 call sub_91370	; 7C3EA
 add esp, byte 0Ch	; 7C3EF
@@ -3085,7 +3085,7 @@ push ebx	; 7C473
 mov eax, dword [byte esp+010h]	; 7C474
 sub eax, byte 4	; 7C478
 push eax	; 7C47B
-mov ecx, dword [dword_DC238]	; 7C47C
+mov ecx, dword [pointerspr]	; 7C47C
 push ecx	; 7C482
 loc_7C483:
 call sub_91370	; 7C483
@@ -3342,7 +3342,7 @@ push edx	; 7C7F1
 mov eax, dword [byte esp+010h]	; 7C7F2
 sub eax, byte 4	; 7C7F6
 push eax	; 7C7F9
-mov ebx, dword [dword_DC238]	; 7C7FA
+mov ebx, dword [pointerspr]	; 7C7FA
 push ebx	; 7C800
 jmp near loc_7C483	; 7C801
 loc_7C806:
@@ -3373,7 +3373,7 @@ push ecx	; 7C83D
 mov eax, dword [byte esp+010h]	; 7C83E
 sub eax, byte 4	; 7C842
 push eax	; 7C845
-mov edi, dword [dword_DC238]	; 7C846
+mov edi, dword [pointerspr]	; 7C846
 push edi	; 7C84C
 jmp near loc_7C483	; 7C84D
 sub_7C852:
@@ -3535,7 +3535,7 @@ push asc_C337C	; 7C9CC
 call sub_8CCA8	; 7C9D1
 add esp, byte 0Ch	; 7C9D6
 mov dword [esp], eax	; 7C9D9
-mov esi, dword [dword_DC238]	; 7C9DC
+mov esi, dword [pointerspr]	; 7C9DC
 mov edi, eax	; 7C9E2
 movsd	; 7C9E4
 movsd	; 7C9E5
@@ -3598,7 +3598,7 @@ push asc_C337C	; 7CA88
 call sub_8CCA8	; 7CA8D
 mov ebp, eax	; 7CA92
 add esp, byte 0Ch	; 7CA94
-mov esi, dword [dword_DC238]	; 7CA97
+mov esi, dword [pointerspr]	; 7CA97
 mov edi, eax	; 7CA9D
 movsd	; 7CA9F
 movsd	; 7CAA0
@@ -3653,7 +3653,7 @@ call sub_8CCA8	; 7CB2A
 mov dword [byte esp+0Ch], eax	; 7CB2F
 add esp, byte 0Ch	; 7CB33
 mov dword [byte esp+08h], eax	; 7CB36
-mov esi, dword [dword_DC238]	; 7CB3A
+mov esi, dword [pointerspr]	; 7CB3A
 mov edi, eax	; 7CB40
 movsd	; 7CB42
 movsd	; 7CB43
@@ -4192,7 +4192,7 @@ call sub_8CCA8	; 7D174
 mov ebp, eax	; 7D179
 add esp, byte 0Ch	; 7D17B
 mov dword [byte esp+04h], eax	; 7D17E
-mov esi, dword [dword_DC238]	; 7D182
+mov esi, dword [pointerspr]	; 7D182
 mov edi, eax	; 7D188
 movsd	; 7D18A
 movsd	; 7D18B
@@ -4643,7 +4643,7 @@ mov eax, dword [byte esp+018h]	; 7D6DC
 mov dword [byte esp+010h], eax	; 7D6E0
 mov eax, dword [byte esp+014h]	; 7D6E4
 mov dword [byte esp+0Ch], eax	; 7D6E8
-mov eax, dword [dword_DC238]	; 7D6EC
+mov eax, dword [pointerspr]	; 7D6EC
 mov edx, dword [byte eax+02h]	; 7D6F1
 sar edx, 10h	; 7D6F4
 mov eax, dword [byte eax+04h]	; 7D6F7
@@ -4658,18 +4658,18 @@ push asc_C33CA	; 7D708
 call sub_8CCA8	; 7D70D
 add esp, byte 0Ch	; 7D712
 mov ebp, eax	; 7D715
-mov esi, dword [dword_DC238]	; 7D717
+mov esi, dword [pointerspr]	; 7D717
 mov edi, eax	; 7D71D
 movsd	; 7D71F
 movsd	; 7D720
 movsd	; 7D721
 movsd	; 7D722
 movsb	; 7D723
-mov edx, dword [dword_DC238]	; 7D724
+mov edx, dword [pointerspr]	; 7D724
 mov dx, word [byte edx+04h]	; 7D72A
 inc edx	; 7D72E
 mov word [byte eax+04h], dx	; 7D72F
-mov edx, dword [dword_DC238]	; 7D733
+mov edx, dword [pointerspr]	; 7D733
 mov dx, word [byte edx+06h]	; 7D739
 inc edx	; 7D73D
 mov word [byte eax+06h], dx	; 7D73E
@@ -4686,7 +4686,7 @@ push ebx	; 7D75C
 mov eax, dword [byte esp+014h]	; 7D75D
 sub eax, byte 4	; 7D761
 push eax	; 7D764
-mov ecx, dword [dword_DC238]	; 7D765
+mov ecx, dword [pointerspr]	; 7D765
 push ecx	; 7D76B
 call sub_91370	; 7D76C
 add esp, byte 0Ch	; 7D771
@@ -4740,7 +4740,7 @@ push edx	; 7D7F4
 mov eax, dword [byte esp+014h]	; 7D7F5
 sub eax, byte 4	; 7D7F9
 push eax	; 7D7FC
-mov ebx, dword [dword_DC238]	; 7D7FD
+mov ebx, dword [pointerspr]	; 7D7FD
 push ebx	; 7D803
 call sub_91370	; 7D804
 add esp, byte 0Ch	; 7D809

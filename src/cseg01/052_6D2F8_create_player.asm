@@ -21,7 +21,7 @@ extern dword_C2CD8, dword_C2CDC, dword_C2CF0, dword_C4B69, teamdivflags, songdat
 extern roster2divmenus, menu_r1_tofa, menu_r1_toroster2, menu_r2_tofa, menu_r2_toroster1, falist, falistsel, facount
 extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0C10, dword_D0C20, dword_D0CDA
-extern dword_D2C6B, dword_D8B68, dword_D8B74, dword_DC238, dword_EA0DC, dword_EA2B4, dword_EA988, musicslot
+extern dword_D2C6B, dword_D8B68, dword_D8B74, pointerspr, dword_EA0DC, dword_EA2B4, dword_EA988, musicslot
 extern dword_EA994, rosterteamrec, dword_EAF7C, dword_EBC68, msglines, dword_EBCA4
 extern dword_EBE9C, editrosters_exit, fputchar, j_unlink_, jctime, loc_6CEF4, loc_6CEF5, memcpy_
 extern memset_, teamcitynames, leaguedbnames
@@ -1209,7 +1209,7 @@ mov ebx, dword [byte esp+060h]	; 6E141
 push ebx	; 6E145
 mov ecx, dword [byte esp+068h]	; 6E146
 push ecx	; 6E14A
-mov esi, dword [dword_DC238]	; 6E14B
+mov esi, dword [pointerspr]	; 6E14B
 push esi	; 6E151
 call sub_91370	; 6E152
 add esp, byte 0Ch	; 6E157
@@ -1342,7 +1342,7 @@ mov ebp, dword [byte esp+058h]	; 6E30A
 push ebp	; 6E30E
 mov eax, dword [byte esp+060h]	; 6E30F
 push eax	; 6E313
-mov edx, dword [dword_DC238]	; 6E314
+mov edx, dword [pointerspr]	; 6E314
 push edx	; 6E31A
 call sub_91370	; 6E31B
 add esp, byte 0Ch	; 6E320
@@ -1382,7 +1382,7 @@ mov ebp, dword [byte esp+058h]	; 6E391
 push ebp	; 6E395
 mov eax, dword [byte esp+060h]	; 6E396
 push eax	; 6E39A
-mov edx, dword [dword_DC238]	; 6E39B
+mov edx, dword [pointerspr]	; 6E39B
 push edx	; 6E3A1
 jmp near .47	; 6E3A2
 .14:
@@ -1415,7 +1415,7 @@ mov ecx, dword [byte esp+058h]	; 6E3F8
 push ecx	; 6E3FC
 mov esi, dword [byte esp+060h]	; 6E3FD
 push esi	; 6E401
-mov edi, dword [dword_DC238]	; 6E402
+mov edi, dword [pointerspr]	; 6E402
 push edi	; 6E408
 jmp near .47	; 6E409
 .16:
@@ -1761,7 +1761,7 @@ push str_Menubuff	; 6E804
 call sub_8CCA8	; 6E809
 add esp, byte 0Ch	; 6E80E
 mov dword [byte esp+ebp*4+024h], eax	; 6E811
-mov esi, dword [dword_DC238]	; 6E815
+mov esi, dword [pointerspr]	; 6E815
 mov edi, eax	; 6E81B
 movsd	; 6E81D
 movsd	; 6E81E
@@ -1931,7 +1931,7 @@ mov edx, dword [byte esp+058h]	; 6EA03
 push edx	; 6EA07
 mov ebx, dword [byte esp+060h]	; 6EA08
 push ebx	; 6EA0C
-mov ecx, dword [dword_DC238]	; 6EA0D
+mov ecx, dword [pointerspr]	; 6EA0D
 push ecx	; 6EA13
 .47:
 call sub_91370	; 6EA14
@@ -2010,7 +2010,7 @@ call sub_91400	; 6EAF4
 add esp, byte 0Ch	; 6EAF9
 push edi	; 6EAFC
 push esi	; 6EAFD
-mov ecx, dword [dword_DC238]	; 6EAFE
+mov ecx, dword [pointerspr]	; 6EAFE
 push ecx	; 6EB04
 call sub_91370	; 6EB05
 add esp, byte 0Ch	; 6EB0A
@@ -2078,7 +2078,7 @@ call sub_91400	; 6EBB6
 add esp, byte 0Ch	; 6EBBB
 push edi	; 6EBBE
 push esi	; 6EBBF
-mov eax, dword [dword_DC238]	; 6EBC0
+mov eax, dword [pointerspr]	; 6EBC0
 push eax	; 6EBC5
 call sub_91370	; 6EBC6
 add esp, byte 0Ch	; 6EBCB
@@ -2106,7 +2106,7 @@ mov ebx, dword [byte esp+010h]	; 6EC04
 push ebx	; 6EC08
 mov ecx, dword [byte esp+018h]	; 6EC09
 push ecx	; 6EC0D
-mov esi, dword [dword_DC238]	; 6EC0E
+mov esi, dword [pointerspr]	; 6EC0E
 push esi	; 6EC14
 call sub_91370	; 6EC15
 add esp, byte 0Ch	; 6EC1A
@@ -4251,7 +4251,7 @@ call sub_91400	; 7054E
 add esp, byte 0Ch	; 70553
 push esi	; 70556
 push edi	; 70557
-mov edx, dword [dword_DC238]	; 70558
+mov edx, dword [pointerspr]	; 70558
 push edx	; 7055E
 call sub_91370	; 7055F
 add esp, byte 0Ch	; 70564
@@ -4314,7 +4314,7 @@ mov eax, dword [esp]	; 7060B
 push eax	; 7060E
 mov edx, dword [byte esp+08h]	; 7060F
 push edx	; 70613
-mov ebx, dword [dword_DC238]	; 70614
+mov ebx, dword [pointerspr]	; 70614
 push ebx	; 7061A
 jmp near .13	; 7061B
 .8:
@@ -4368,7 +4368,7 @@ mov ebx, dword [esp]	; 706AC
 push ebx	; 706AF
 mov ecx, dword [byte esp+08h]	; 706B0
 push ecx	; 706B4
-mov esi, dword [dword_DC238]	; 706B5
+mov esi, dword [pointerspr]	; 706B5
 push esi	; 706BB
 .13:
 call sub_91370	; 706BC

@@ -11,7 +11,7 @@ extern byte_ED994, dword_C6F78, seasondb, careerdb, carteamsdb, keydb, teamsdb, 
 extern seasondb_size, careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B16, dword_D0B1A
 extern dword_D0B1E, dword_D1084, dword_D1088, dword_D108C, dword_D1090, dword_D1104, dword_D1108, dword_D110C
 extern dword_D1110, dword_D1114, dword_D1118, dword_D111C, dword_D1120, dword_D1124, dword_D1128, dword_D112C
-extern dword_D1130, dword_D11B6, dword_D2C6B, dword_D42AC, dword_DC238, dword_DD634, dword_DD638, dword_DD63C
+extern dword_D1130, dword_D11B6, dword_D2C6B, dword_D42AC, pointerspr, dword_DD634, dword_DD638, dword_DD63C
 extern dword_DD640, dword_DD644, dword_DD648, dword_DD64C, dword_DD650, dword_DD654, dword_DD658, dword_DD65C
 extern dword_DD660, dword_DD664, dword_EA0DC, dword_EBC68, dword_EC6B8, dword_EC6BC, dword_EC6C0, dword_EC6C4
 extern dword_EC6C8, dword_EC710, dword_EC714, dword_EC718, dword_EC71C, dword_EC720, dword_EC768, dword_EC76C
@@ -136,7 +136,7 @@ call sub_8CCA8	; 72014
 mov edx, eax	; 72019
 add esp, byte 0Ch	; 7201B
 mov dword [byte esp+050h], eax	; 7201E
-mov esi, dword [dword_DC238]	; 72022
+mov esi, dword [pointerspr]	; 72022
 mov edi, eax	; 72028
 movsd	; 7202A
 movsd	; 7202B
@@ -1283,7 +1283,7 @@ mov dword [byte esp+0Ch], eax	; 72E1B
 mov eax, dword [byte esp+010h]	; 72E1F
 mov dword [byte esp+08h], eax	; 72E23
 call sub_B4BA8	; 72E27
-mov eax, dword [dword_DC238]	; 72E2C
+mov eax, dword [pointerspr]	; 72E2C
 mov edx, dword [byte eax+02h]	; 72E31
 sar edx, 10h	; 72E34
 mov eax, dword [byte eax+04h]	; 72E37
@@ -1298,18 +1298,18 @@ push asc_C30BB	; 72E48
 call sub_8CCA8	; 72E4D
 add esp, byte 0Ch	; 72E52
 mov ebp, eax	; 72E55
-mov esi, dword [dword_DC238]	; 72E57
+mov esi, dword [pointerspr]	; 72E57
 mov edi, eax	; 72E5D
 movsd	; 72E5F
 movsd	; 72E60
 movsd	; 72E61
 movsd	; 72E62
 movsb	; 72E63
-mov edx, dword [dword_DC238]	; 72E64
+mov edx, dword [pointerspr]	; 72E64
 mov dx, word [byte edx+04h]	; 72E6A
 inc edx	; 72E6E
 mov word [byte eax+04h], dx	; 72E6F
-mov edx, dword [dword_DC238]	; 72E73
+mov edx, dword [pointerspr]	; 72E73
 mov dx, word [byte edx+06h]	; 72E79
 inc edx	; 72E7D
 mov word [byte eax+06h], dx	; 72E7E
@@ -1326,7 +1326,7 @@ push ecx	; 72E9C
 mov eax, dword [byte esp+010h]	; 72E9D
 sub eax, byte 4	; 72EA1
 push eax	; 72EA4
-mov esi, dword [dword_DC238]	; 72EA5
+mov esi, dword [pointerspr]	; 72EA5
 push esi	; 72EAB
 call sub_91370	; 72EAC
 add esp, byte 0Ch	; 72EB1
@@ -1378,7 +1378,7 @@ push eax	; 72F3F
 mov eax, dword [byte esp+010h]	; 72F40
 sub eax, byte 4	; 72F44
 push eax	; 72F47
-mov edx, dword [dword_DC238]	; 72F48
+mov edx, dword [pointerspr]	; 72F48
 push edx	; 72F4E
 loc_72F4F:
 call sub_91370	; 72F4F
@@ -1739,7 +1739,7 @@ push ecx	; 733AF
 mov eax, dword [byte esp+010h]	; 733B0
 sub eax, byte 4	; 733B4
 push eax	; 733B7
-mov edi, dword [dword_DC238]	; 733B8
+mov edi, dword [pointerspr]	; 733B8
 push edi	; 733BE
 jmp near loc_72F4F	; 733BF
 sub_733C4:
@@ -2032,7 +2032,7 @@ call sub_8CCA8	; 73727
 mov ebp, eax	; 7372C
 add esp, byte 0Ch	; 7372E
 mov dword [esp], eax	; 73731
-mov esi, dword [dword_DC238]	; 73734
+mov esi, dword [pointerspr]	; 73734
 mov edi, eax	; 7373A
 movsd	; 7373C
 movsd	; 7373D

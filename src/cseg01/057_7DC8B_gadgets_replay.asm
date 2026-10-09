@@ -7,7 +7,7 @@ extern asc_C3426, str_PPV, musicon, byte_ED7CC, byte_ED7EB, byte_ED862, byte_ED8
 extern byte_ED932, byte_ED9EF, gamemode, ctl1team, ctl2team, dword_C541F, dword_C66D0, dword_C66D4
 extern dword_C7444, dword_C7448, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, dword_D1C8B
 extern dword_D1CE6, dword_D1CEE, dword_D1DC8, dword_D1DCC, dword_D1DD0, dword_D1DD4, dword_D2C6B, dword_D8B74
-extern spritedrawcount, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, dword_DC238, dword_DD6A8, dword_DD6AE
+extern spritedrawcount, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, pointerspr, dword_DD6A8, dword_DD6AE
 extern dword_DD6B0, replayplay, dword_E9F16, dword_E9F38, dword_EA0DC, dword_ED368, dword_ED380, dword_ED384
 extern dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8, dword_ED6DC, dword_ED6E0, dword_ED6E4
 extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED6FC, dword_ED704, dword_ED708
@@ -561,7 +561,7 @@ sub eax, 0A8h	; 7E244
 push eax	; 7E249
 mov ebp, dword [dword_ED6E0]	; 7E24A
 push ebp	; 7E250
-mov eax, dword [dword_DC238]	; 7E251
+mov eax, dword [pointerspr]	; 7E251
 push eax	; 7E256
 call sub_91370	; 7E257
 add esp, byte 0Ch	; 7E25C
@@ -1412,7 +1412,7 @@ loc_7EEED:
 mov eax, dword [byte esp+04h]	; 7EEED
 cmp eax, dword [dword_ED754]	; 7EEF1
 jne near loc_7EF81	; 7EEF7
-mov edx, dword [dword_DC238]	; 7EEFD
+mov edx, dword [pointerspr]	; 7EEFD
 mov eax, dword [byte edx+02h]	; 7EF03
 sar eax, 10h	; 7EF06
 mov ebx, dword [byte esp+08h]	; 7EF09
@@ -1505,7 +1505,7 @@ lea eax, [dword edx-0A8h]	; 7EFEC
 push eax	; 7EFF2
 mov ebx, dword [dword_ED6E0]	; 7EFF3
 push ebx	; 7EFF9
-mov ecx, dword [dword_DC238]	; 7EFFA
+mov ecx, dword [pointerspr]	; 7EFFA
 push ecx	; 7F000
 call sub_91370	; 7F001
 add esp, byte 0Ch	; 7F006
@@ -1540,7 +1540,7 @@ sub eax, 0A8h	; 7F072
 push eax	; 7F077
 mov ebx, dword [dword_ED6E0]	; 7F078
 push ebx	; 7F07E
-mov ecx, dword [dword_DC238]	; 7F07F
+mov ecx, dword [pointerspr]	; 7F07F
 push ecx	; 7F085
 call sub_91370	; 7F086
 add esp, byte 0Ch	; 7F08B
@@ -1692,7 +1692,7 @@ push dword 140h	; 7F261
 push byte 0	; 7F266
 call sub_B4BC4	; 7F268
 add esp, byte 10h	; 7F26D
-mov eax, dword [dword_DC238]	; 7F270
+mov eax, dword [pointerspr]	; 7F270
 mov edx, dword [byte eax+02h]	; 7F275
 sar edx, 10h	; 7F278
 mov eax, dword [byte eax+04h]	; 7F27B
@@ -1705,18 +1705,18 @@ push asc_C3426	; 7F28A
 call sub_8CCA8	; 7F28F
 add esp, byte 0Ch	; 7F294
 mov ebp, eax	; 7F297
-mov esi, dword [dword_DC238]	; 7F299
+mov esi, dword [pointerspr]	; 7F299
 mov edi, eax	; 7F29F
 movsd	; 7F2A1
 movsd	; 7F2A2
 movsd	; 7F2A3
 movsd	; 7F2A4
 movsb	; 7F2A5
-mov eax, dword [dword_DC238]	; 7F2A6
+mov eax, dword [pointerspr]	; 7F2A6
 mov ax, word [byte eax+04h]	; 7F2AB
 mov edx, ebp	; 7F2AF
 mov word [byte edx+04h], ax	; 7F2B1
-mov eax, dword [dword_DC238]	; 7F2B5
+mov eax, dword [pointerspr]	; 7F2B5
 mov ax, word [byte eax+06h]	; 7F2BA
 mov word [byte edx+06h], ax	; 7F2BE
 call sub_7F724	; 7F2C2
@@ -1741,7 +1741,7 @@ call sub_91400	; 7F31A
 add esp, byte 0Ch	; 7F31F
 push dword 8Ah	; 7F322
 push dword 0EEh	; 7F327
-mov ecx, dword [dword_DC238]	; 7F32C
+mov ecx, dword [pointerspr]	; 7F32C
 push ecx	; 7F332
 call sub_91370	; 7F333
 add esp, byte 0Ch	; 7F338
@@ -1824,7 +1824,7 @@ mov esi, dword [dword_ED6DC]	; 7F447
 push esi	; 7F44D
 mov edi, dword [dword_ED6E0]	; 7F44E
 push edi	; 7F454
-mov eax, dword [dword_DC238]	; 7F455
+mov eax, dword [pointerspr]	; 7F455
 push eax	; 7F45A
 call sub_91370	; 7F45B
 add esp, byte 0Ch	; 7F460
@@ -1913,7 +1913,7 @@ mov edi, dword [dword_ED6DC]	; 7F557
 push edi	; 7F55D
 mov eax, dword [dword_ED6E0]	; 7F55E
 push eax	; 7F563
-mov edx, dword [dword_DC238]	; 7F564
+mov edx, dword [pointerspr]	; 7F564
 push edx	; 7F56A
 call sub_91370	; 7F56B
 add esp, byte 0Ch	; 7F570

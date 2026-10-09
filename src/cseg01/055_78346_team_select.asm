@@ -10,9 +10,9 @@ extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, byte_DB3AD, lea
 extern byte_ECDF4, byte_ED0F4, byte_ED0F5, byte_ED0F6, byte_ED83C, byte_ED86D, byte_ED9E7, statscategory
 extern statsredrawcb, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
 extern dword_D0B2A, dword_D1338, dword_D133C, dword_D1478, dword_D2C6B, dword_D8C84, dword_DC734, dword_DC738
-extern dword_DD10C, dword_DD110, dword_DD114, dword_DD11C, exit_, j___close_, jctime, lseek_
+extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, exit_, j___close_, jctime, lseek_
 extern crestnames, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
-extern open_, perror_, read_, sprintf_, MakePath, sub_1D6E8, sub_244E2, MessageBox
+extern open_, perror_, read_, sprintf_, MakePath, RunMenu, sub_244E2, MessageBox
 extern sub_6B5E4, sub_76429, sub_76771, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8FFB0
 extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, FatalError, sub_B30B4, WaitKey
 extern sub_B4B58, sub_B4DD4, sub_B4FAC, sub_B5DB0, unk_7673A, unk_76742, unk_76748, unk_7674F
@@ -1964,25 +1964,25 @@ push dword 2A4h	; 79B1C
 push asc_C32A4	; 79B21
 call sub_8CCA8	; 79B26
 add esp, byte 0Ch	; 79B2B
-mov dword [dword_DD10C], eax	; 79B2E
+mov dword [statsteambuf], eax	; 79B2E
 push byte 20h	; 79B33
 push dword 5B0h	; 79B35
 push asc_C32AA	; 79B3A
 call sub_8CCA8	; 79B3F
 add esp, byte 0Ch	; 79B44
-mov dword [dword_DD11C], eax	; 79B47
+mov dword [statsplayerbuf], eax	; 79B47
 push byte 20h	; 79B4C
 push dword 497h	; 79B4E
 push asc_C32AF	; 79B53
 call sub_8CCA8	; 79B58
 add esp, byte 0Ch	; 79B5D
-mov dword [dword_DD110], eax	; 79B60
+mov dword [statsskaterbuf], eax	; 79B60
 push byte 20h	; 79B65
 push dword 10Eh	; 79B67
 push asc_C32B5	; 79B6C
 call sub_8CCA8	; 79B71
 add esp, byte 0Ch	; 79B76
-mov dword [dword_DD114], eax	; 79B79
+mov dword [statsgoaliebuf], eax	; 79B79
 push byte_ECDF4	; 79B7E
 push dword 100h	; 79B83
 push byte 0	; 79B88
@@ -2030,7 +2030,7 @@ mov ecx, 0C1h	; 79C18
 mov ebx, 0C0h	; 79C1D
 mov edx, 2	; 79C22
 mov eax, unk_CF48F	; 79C27
-call sub_1D6E8	; 79C2C
+call RunMenu	; 79C2C
 mov ebx, 10h	; 79C31
 mov edx, esp	; 79C36
 mov eax, 1	; 79C38
@@ -2045,28 +2045,28 @@ jl short loc_79C44	; 79C53
 xor edi, edi	; 79C55
 mov dword [dword_DC738], edi	; 79C57
 mov dword [statsredrawcb], edi	; 79C5D
-mov edx, dword [dword_DD10C]	; 79C63
+mov edx, dword [statsteambuf]	; 79C63
 push edx	; 79C69
 call jctime	; 79C6A
 add esp, byte 4	; 79C6F
-mov ebx, dword [dword_DD114]	; 79C72
+mov ebx, dword [statsgoaliebuf]	; 79C72
 push ebx	; 79C78
 call jctime	; 79C79
 add esp, byte 4	; 79C7E
-mov ecx, dword [dword_DD110]	; 79C81
+mov ecx, dword [statsskaterbuf]	; 79C81
 push ecx	; 79C87
 call jctime	; 79C88
 add esp, byte 4	; 79C8D
-mov edi, dword [dword_DD11C]	; 79C90
+mov edi, dword [statsplayerbuf]	; 79C90
 push edi	; 79C96
 call jctime	; 79C97
 add esp, byte 4	; 79C9C
 xor eax, eax	; 79C9F
-mov dword [dword_DD11C], eax	; 79CA1
-mov dword [dword_DD10C], eax	; 79CA6
+mov dword [statsplayerbuf], eax	; 79CA1
+mov dword [statsteambuf], eax	; 79CA6
 xor ebx, ebx	; 79CAB
-mov dword [dword_DD114], eax	; 79CAD
-mov dword [dword_DD110], eax	; 79CB2
+mov dword [statsgoaliebuf], eax	; 79CAD
+mov dword [statsskaterbuf], eax	; 79CB2
 mov edi, dword [dword esp+0340h]	; 79CB7
 push edi	; 79CBE
 movzx edi, byte [dword esp+0324h]	; 79CBF

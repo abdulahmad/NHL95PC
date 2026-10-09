@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_17816 progbits alloc exec nowrite align=1
 extern __CHK, str_OUT, str_NeedKbytesFmt2, msg_NeedKbytes2, mi_9394Season, mi_9394Playoffs, postate, lgstate
-extern mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, textgrid, statscategory, dword_C65B4, statsredrawcb, deskexit
+extern mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, textgrid, statscategory, statsteamsel, statsredrawcb, deskexit
 extern statsplayoffs, statsfromleague, dword_C6A60, dword_DC6B4, dword_DC738, dword_DD120, fclose_, fopen_
 extern fputs_, off_C648E, off_C659A, sprintf_, strcat_, strcmp_, strcpy_, strncpy_
 extern FileExists, DiskSpaceShort, MessageBox, sub_76429, sub_8FFB0, str_rt, str_wt, exhstate
@@ -184,7 +184,7 @@ xor ecx, ecx	; 17A45
 mov dword [statsfromleague], ecx	; 17A47
 cmp dword [statsplayoffs], byte 0	; 17A4D
 je short .2	; 17A54
-mov dword [dword_C65B4], ecx	; 17A56
+mov dword [statsteamsel], ecx	; 17A56
 .2:
 xor ebp, ebp	; 17A5C
 mov dword [statsplayoffs], ebp	; 17A5E
@@ -243,7 +243,7 @@ xor ecx, ecx	; 17B39
 mov dword [statsfromleague], ecx	; 17B3B
 cmp dword [statsplayoffs], byte 0	; 17B41
 jne short .2	; 17B48
-mov dword [dword_C65B4], ecx	; 17B4A
+mov dword [statsteamsel], ecx	; 17B4A
 .2:
 mov ebp, 1	; 17B50
 mov dword [statsplayoffs], ebp	; 17B55
@@ -305,7 +305,7 @@ mov dword [statsfromleague], 1	; 17C2D
 cmp dword [statsplayoffs], byte 0	; 17C37
 je short .2	; 17C3E
 xor edi, edi	; 17C40
-mov dword [dword_C65B4], edi	; 17C42
+mov dword [statsteamsel], edi	; 17C42
 .2:
 xor ebp, ebp	; 17C48
 mov dword [statsplayoffs], ebp	; 17C4A
@@ -371,7 +371,7 @@ mov dword [statsfromleague], 1	; 17D3A
 mov esi, dword [statsplayoffs]	; 17D44
 test esi, esi	; 17D4A
 jne short .2	; 17D4C
-mov dword [dword_C65B4], esi	; 17D4E
+mov dword [statsteamsel], esi	; 17D4E
 .2:
 mov ebp, 1	; 17D54
 mov dword [statsplayoffs], ebp	; 17D59
@@ -407,7 +407,7 @@ mov dword [statsfromleague], 1	; 17DC8
 mov esi, dword [statsplayoffs]	; 17DD2
 test esi, esi	; 17DD8
 jne short .2	; 17DDA
-mov dword [dword_C65B4], esi	; 17DDC
+mov dword [statsteamsel], esi	; 17DDC
 .2:
 mov ebp, 1	; 17DE2
 mov dword [statsplayoffs], ebp	; 17DE7

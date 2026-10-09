@@ -6,7 +6,7 @@ extern __CHK, asc_C17F4, asc_C17F9, asc_C17FE, asc_C1803, asc_C180B, asc_C1810, 
 extern asc_C1827, asc_C182C, asc_C1835, asc_C183D, asc_C1842, asc_C184A, monthdays, byte_C845D
 extern byte_C845E, musicon, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, teamstatscb
 extern skaterstatscb, goaliestatscb, dword_C65CC, dword_C65D0, songdata, dword_C895E, dword_C8976, dword_C897A
-extern dword_C898E, dword_C8992, musichandle, dword_D2C6B, fontcolor, dword_D8B74, dword_DC238, musicslot
+extern dword_C898E, dword_C8992, musichandle, dword_D2C6B, fontcolor, dword_D8B74, pointerspr, musicslot
 extern dword_DD780, dword_DD794, dword_DD7A0, dword_DDD28, dword_DDD2C, dword_DDD30, dword_EA0DC, fputchar
 extern jctime, crestnames, off_C85F6, off_C8616, sprintf_, MakePath, FileOpenRead, leaguedbnames
 extern FileClose, FileReadAt, ReadSchedGame, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
@@ -1087,7 +1087,7 @@ call sub_8FB8E	; 34EC6
 loc_34ECB:
 mov eax, dword [dword_C8992]	; 34ECB
 call sub_34789	; 34ED0
-mov eax, dword [dword_DC238]	; 34ED5
+mov eax, dword [pointerspr]	; 34ED5
 mov edx, dword [byte eax+02h]	; 34EDA
 sar edx, 10h	; 34EDD
 shl edx, 2	; 34EE0
@@ -1104,19 +1104,19 @@ call sub_8CCA8	; 34EFB
 mov dword [dword esp+0794h], eax	; 34F00
 add esp, byte 0Ch	; 34F07
 mov dword [dword esp+0794h], eax	; 34F0A
-mov esi, dword [dword_DC238]	; 34F11
+mov esi, dword [pointerspr]	; 34F11
 mov edi, eax	; 34F17
 movsd	; 34F19
 movsd	; 34F1A
 movsd	; 34F1B
 movsd	; 34F1C
 movsb	; 34F1D
-mov eax, dword [dword_DC238]	; 34F1E
+mov eax, dword [pointerspr]	; 34F1E
 mov ax, word [byte eax+04h]	; 34F23
 inc eax	; 34F27
 mov edx, dword [dword esp+0788h]	; 34F28
 mov word [byte edx+04h], ax	; 34F2F
-mov eax, dword [dword_DC238]	; 34F33
+mov eax, dword [pointerspr]	; 34F33
 mov ax, word [byte eax+06h]	; 34F38
 inc eax	; 34F3C
 mov word [byte edx+06h], ax	; 34F3D
@@ -1143,7 +1143,7 @@ mov ebx, dword [dword esp+0774h]	; 34F96
 push ebx	; 34F9D
 mov ecx, dword [dword esp+077Ch]	; 34F9E
 push ecx	; 34FA5
-mov esi, dword [dword_DC238]	; 34FA6
+mov esi, dword [pointerspr]	; 34FA6
 push esi	; 34FAC
 call sub_91370	; 34FAD
 add esp, byte 0Ch	; 34FB2
@@ -1193,7 +1193,7 @@ mov ebx, dword [dword esp+076Ch]	; 35048
 push ebx	; 3504F
 mov ecx, dword [dword esp+0774h]	; 35050
 push ecx	; 35057
-mov esi, dword [dword_DC238]	; 35058
+mov esi, dword [pointerspr]	; 35058
 push esi	; 3505E
 jmp near loc_35EEA	; 3505F
 loc_35064:
@@ -1593,7 +1593,7 @@ call sub_8CCA8	; 3574B
 add esp, byte 0Ch	; 35750
 mov edx, dword [dword esp+0798h]	; 35753
 mov dword [dword esp+edx+073Ch], eax	; 3575A
-mov esi, dword [dword_DC238]	; 35761
+mov esi, dword [pointerspr]	; 35761
 mov edi, eax	; 35767
 movsd	; 35769
 movsd	; 3576A
@@ -2041,7 +2041,7 @@ mov edx, dword [dword esp+076Ch]	; 35ED3
 push edx	; 35EDA
 mov ebx, dword [dword esp+0774h]	; 35EDB
 push ebx	; 35EE2
-mov ecx, dword [dword_DC238]	; 35EE3
+mov ecx, dword [pointerspr]	; 35EE3
 push ecx	; 35EE9
 loc_35EEA:
 call sub_91370	; 35EEA

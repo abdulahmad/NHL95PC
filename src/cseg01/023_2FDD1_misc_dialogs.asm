@@ -5,7 +5,7 @@ section s_2FDD1 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1710, asc_C1718, str_extDB, asc_C811E, byte_C4B6C, byte_D42C3, byte_D42C5
 extern dword_C4B69, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC, dword_C71E4, dword_C71E8
 extern dword_C71EC, dword_C71F0, dword_C71F4, dword_C71FC, dword_C7208, dword_C7210, fontcolor, dword_D42AC
-extern dword_DC238, dword_DD678, dword_DD688, dword_DD68C, dword_DD690, dword_DD694, dword_DD698, dword_DD69C
+extern pointerspr, dword_DD678, dword_DD688, dword_DD68C, dword_DD690, dword_DD694, dword_DD698, dword_DD69C
 extern dword_DD6A0, dword_DD6A4, dword_DD770, dword_DD7A4, dword_EA0DC, fputchar, jctime, off_C74AB
 extern strlen_, SetTextColors, PrintShadowText, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B88E
 extern sub_8CCA8, sub_8E9C0, sub_903F0, sub_90A40, sub_90D20, sub_90EC0, sub_91044, sub_91370
@@ -785,7 +785,7 @@ mov ebx, dword [byte esp+058h]	; 30683
 mov edx, dword [byte esp+060h]	; 30687
 mov eax, dword [byte esp+018h]	; 3068B
 call sub_3039C	; 3068F
-mov eax, dword [dword_DC238]	; 30694
+mov eax, dword [pointerspr]	; 30694
 mov edx, dword [byte eax+02h]	; 30699
 sar edx, 10h	; 3069C
 shl edx, 2	; 3069F
@@ -802,19 +802,19 @@ call sub_8CCA8	; 306BA
 mov dword [byte esp+024h], eax	; 306BF
 add esp, byte 0Ch	; 306C3
 mov dword [byte esp+044h], eax	; 306C6
-mov esi, dword [dword_DC238]	; 306CA
+mov esi, dword [pointerspr]	; 306CA
 mov edi, eax	; 306D0
 movsd	; 306D2
 movsd	; 306D3
 movsd	; 306D4
 movsd	; 306D5
 movsb	; 306D6
-mov eax, dword [dword_DC238]	; 306D7
+mov eax, dword [pointerspr]	; 306D7
 mov ax, word [byte eax+04h]	; 306DC
 inc eax	; 306E0
 mov edx, dword [byte esp+018h]	; 306E1
 mov word [byte edx+04h], ax	; 306E5
-mov eax, dword [dword_DC238]	; 306E9
+mov eax, dword [pointerspr]	; 306E9
 mov ax, word [byte eax+06h]	; 306EE
 inc eax	; 306F2
 mov word [byte edx+06h], ax	; 306F3
@@ -841,7 +841,7 @@ mov edi, dword [byte esp+0Ch]	; 30731
 push edi	; 30735
 mov eax, dword [byte esp+014h]	; 30736
 push eax	; 3073A
-mov edx, dword [dword_DC238]	; 3073B
+mov edx, dword [pointerspr]	; 3073B
 push edx	; 30741
 call sub_91370	; 30742
 add esp, byte 0Ch	; 30747
@@ -894,7 +894,7 @@ mov edi, dword [byte esp+04h]	; 307CC
 push edi	; 307D0
 mov eax, dword [byte esp+0Ch]	; 307D1
 push eax	; 307D5
-mov edx, dword [dword_DC238]	; 307D6
+mov edx, dword [pointerspr]	; 307D6
 push edx	; 307DC
 jmp near loc_30994	; 307DD
 loc_307E2:
@@ -1046,7 +1046,7 @@ mov ebx, dword [byte esp+04h]	; 30983
 push ebx	; 30987
 mov ecx, dword [byte esp+0Ch]	; 30988
 push ecx	; 3098C
-mov edi, dword [dword_DC238]	; 3098D
+mov edi, dword [pointerspr]	; 3098D
 push edi	; 30993
 loc_30994:
 call sub_91370	; 30994
@@ -1512,7 +1512,7 @@ add esp, byte 0Ch	; 30E9C
 mov dword [dword_C71E4], eax	; 30E9F
 test eax, eax	; 30EA4
 je short loc_30F0B	; 30EA6
-mov esi, dword [dword_DC238]	; 30EA8
+mov esi, dword [pointerspr]	; 30EA8
 mov edi, eax	; 30EAE
 movsd	; 30EB0
 movsd	; 30EB1
@@ -1891,7 +1891,7 @@ push eax	; 31260
 push edx	; 31261
 push ebx	; 31262
 push ecx	; 31263
-mov eax, dword [dword_DC238]	; 31264
+mov eax, dword [pointerspr]	; 31264
 mov edx, dword [byte eax+02h]	; 31269
 sar edx, 10h	; 3126C
 shl edx, 2	; 3126F
@@ -1908,18 +1908,18 @@ call sub_8CCA8	; 3128A
 mov ebp, eax	; 3128F
 add esp, byte 0Ch	; 31291
 mov dword [byte esp+01Ch], eax	; 31294
-mov esi, dword [dword_DC238]	; 31298
+mov esi, dword [pointerspr]	; 31298
 mov edi, eax	; 3129E
 movsd	; 312A0
 movsd	; 312A1
 movsd	; 312A2
 movsd	; 312A3
 movsb	; 312A4
-mov eax, dword [dword_DC238]	; 312A5
+mov eax, dword [pointerspr]	; 312A5
 mov ax, word [byte eax+04h]	; 312AA
 inc eax	; 312AE
 mov word [byte ebp+04h], ax	; 312AF
-mov eax, dword [dword_DC238]	; 312B3
+mov eax, dword [pointerspr]	; 312B3
 mov ax, word [byte eax+06h]	; 312B8
 inc eax	; 312BC
 mov word [byte ebp+06h], ax	; 312BD
@@ -1942,7 +1942,7 @@ call sub_91400	; 312E8
 add esp, byte 0Ch	; 312ED
 push edi	; 312F0
 push esi	; 312F1
-mov ebx, dword [dword_DC238]	; 312F2
+mov ebx, dword [pointerspr]	; 312F2
 push ebx	; 312F8
 call sub_91370	; 312F9
 add esp, byte 0Ch	; 312FE
@@ -2016,7 +2016,7 @@ call sub_91400	; 313BE
 add esp, byte 0Ch	; 313C3
 push edi	; 313C6
 push esi	; 313C7
-mov edx, dword [dword_DC238]	; 313C8
+mov edx, dword [pointerspr]	; 313C8
 push edx	; 313CE
 call sub_91370	; 313CF
 add esp, byte 0Ch	; 313D4
@@ -2043,7 +2043,7 @@ mov ebx, dword [byte esp+010h]	; 31405
 push ebx	; 31409
 mov ecx, dword [byte esp+018h]	; 3140A
 push ecx	; 3140E
-mov esi, dword [dword_DC238]	; 3140F
+mov esi, dword [pointerspr]	; 3140F
 push esi	; 31415
 call sub_91370	; 31416
 add esp, byte 0Ch	; 3141B

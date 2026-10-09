@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_DC834 nobits alloc noexec write align=1
-global byte_DC836, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DC9DD, byte_DC9DF, byte_DC9E8
+global byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DC9DD, byte_DC9DF, byte_DC9E8
 global byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA1B, byte_DCA21, byte_DCA28, byte_DCA29
-global byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_DCAD7, byte_DCFD8, byte_DD058
+global byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_DCAD7, menuremap, menuremap2
 global byte_DD2D4, byte_DD2DC, byte_DD668, byte_DD669, leaguedbfmt2, leaguedbfmt, byte_DD774, byte_DD775
 global byte_DD788, byte_DD789, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname
 global byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_DDD8C, byte_DDD8D, byte_DDD8E
 global byte_DE268, byte_DE26C, byte_DEB70, byte_DEB71, dword_DC85C, dword_DC860, dword_DC868, dword_DC888
-global dword_DC88C, dword_DC8A0, dword_DC8C8, dirtyrectptr, dword_DD100, dword_DD104, dword_DD108, dword_DD10C
-global dword_DD110, dword_DD114, dword_DD118, dword_DD11C, dword_DD120, dword_DD124, dword_DD128, dword_DD12C
+global dword_DC88C, dword_DC8A0, dword_DC8C8, dirtyrectptr, dword_DD100, dword_DD104, dword_DD108, statsteambuf
+global statsskaterbuf, statsgoaliebuf, dword_DD118, statsplayerbuf, dword_DD120, dword_DD124, dword_DD128, dword_DD12C
 global dword_DD130, dword_DD134, dword_DD1B4, dword_DD1B8, dword_DD1BC, dword_DD1C0, dword_DD1C4, dword_DD244
 global dword_DD248, dword_DD24C, dword_DD250, dword_DD254, dword_DD634, dword_DD638, dword_DD63C, dword_DD640
 global dword_DD644, dword_DD648, dword_DD64C, dword_DD650, dword_DD654, dword_DD658, dword_DD65C, dword_DD660
@@ -20,17 +20,14 @@ global dword_DD730, dword_DD748, dword_DD74C, dword_DD770, dword_DD780, dword_DD
 global dword_DD79C, dword_DD7A0, dword_DD7A4, leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD28
 global dword_DDD2C, dword_DDD30, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68, dword_DDD6C
 global dword_DDD70, dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C
-global dword_DE260, dword_DE264, dword_DE265, dword_DEB6C, dword_DEB74, unk_DC834, unk_DC837, unk_DC847
-global unk_DC890, unk_DC998, unk_DCA98, unk_DD0D8, leagueteams, unk_DDAC4, unk_DDCE6, unk_DDCFB
+global dword_DE260, dword_DE264, dword_DE265, dword_DEB6C, dword_DEB74, statsplayer
+global unk_DC890, unk_DC998, unk_DCA98, printfbuf, leagueteams, unk_DDAC4, unk_DDCE6, unk_DDCFB
 global masterpw, savleague1, savleague2, unk_DDFF4, scrolly, scrollx, bgscrollx, bgscrolly8
 global word_DD7D0, word_DDD46, word_DDD48, word_DDD4A
-unk_DC834:
+statsplayer:
 resb 2
-byte_DC836:
 resb 1
-unk_DC837:
 resb 16
-unk_DC847:
 resb 21
 dword_DC85C:
 resb 4
@@ -96,11 +93,11 @@ byte_DCAD6:
 resb 1
 byte_DCAD7:
 resb 1281
-byte_DCFD8:
+menuremap:
 resb 128
-byte_DD058:
+menuremap2:
 resb 128
-unk_DD0D8:
+printfbuf:
 resb 40
 dword_DD100:
 resb 4
@@ -108,15 +105,15 @@ dword_DD104:
 resb 4
 dword_DD108:
 resb 4
-dword_DD10C:
+statsteambuf:
 resb 4
-dword_DD110:
+statsskaterbuf:
 resb 4
-dword_DD114:
+statsgoaliebuf:
 resb 4
 dword_DD118:
 resb 4
-dword_DD11C:
+statsplayerbuf:
 resb 4
 dword_DD120:
 resb 4

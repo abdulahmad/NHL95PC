@@ -18,7 +18,7 @@ extern dword_D2150, dword_D223C, dword_D227C, dword_D2280, dword_D2284, dword_D2
 extern dword_D22A4, dword_D22A8, dword_D22AC, dword_D22B0, dword_D22B4, dword_D22BC, dword_D22C0, dword_D22C4
 extern dword_D22C8, dword_D22CC, dword_D22D0, dword_D22D4, dword_D22DC, dword_D22E0, dword_D22EC, dword_D22F0
 extern dword_D23A3, dword_D23A7, dword_D23AB, dword_D23AF, musichandle, dword_D2435, dword_D2C6B, musicslot
-extern dword_D8B68, dword_D8B74, dword_DC230, dword_DC238, dword_DD64C, dword_EA0DC, dword_ED360, dword_ED75C
+extern dword_D8B68, dword_D8B74, dword_DC230, pointerspr, dword_DD64C, dword_EA0DC, dword_ED360, dword_ED75C
 extern dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C
 extern dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794, dword_ED798, dword_ED79C
 extern dword_ED7A0, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
@@ -545,14 +545,14 @@ push asc_C359C	; 80903
 call sub_8CCA8	; 80908
 add esp, byte 0Ch	; 8090D
 mov dword [dword_ED79C], eax	; 80910
-mov esi, dword [dword_DC238]	; 80915
+mov esi, dword [pointerspr]	; 80915
 mov edi, dword [dword_ED794]	; 8091B
 movsd	; 80921
 movsd	; 80922
 movsd	; 80923
 movsd	; 80924
 movsb	; 80925
-mov esi, dword [dword_DC238]	; 80926
+mov esi, dword [pointerspr]	; 80926
 mov edi, dword [dword_ED79C]	; 8092C
 movsd	; 80932
 movsd	; 80933
@@ -579,14 +579,14 @@ push asc_C35AF	; 80983
 call sub_8CCA8	; 80988
 add esp, byte 0Ch	; 8098D
 mov dword [dword_ED7A0], eax	; 80990
-mov esi, dword [dword_DC238]	; 80995
+mov esi, dword [pointerspr]	; 80995
 mov edi, dword [dword_ED798]	; 8099B
 movsd	; 809A1
 movsd	; 809A2
 movsd	; 809A3
 movsd	; 809A4
 movsb	; 809A5
-mov esi, dword [dword_DC238]	; 809A6
+mov esi, dword [pointerspr]	; 809A6
 mov edi, dword [dword_ED7A0]	; 809AC
 movsd	; 809B2
 movsd	; 809B3
@@ -607,7 +607,7 @@ push asc_C35BA	; 809EA
 call sub_8CCA8	; 809EF
 add esp, byte 0Ch	; 809F4
 mov dword [dword_ED790], eax	; 809F7
-mov esi, dword [dword_DC238]	; 809FC
+mov esi, dword [pointerspr]	; 809FC
 mov edi, eax	; 80A02
 movsd	; 80A04
 movsd	; 80A05
@@ -1983,7 +1983,7 @@ mov dword [dword esp+030Ch], eax	; 81CB1
 mov eax, dword [dword esp+0310h]	; 81CB8
 mov dword [dword esp+0308h], eax	; 81CBF
 call sub_B4BA8	; 81CC6
-mov eax, dword [dword_DC238]	; 81CCB
+mov eax, dword [pointerspr]	; 81CCB
 mov edx, dword [byte eax+02h]	; 81CD0
 sar edx, 10h	; 81CD3
 mov eax, dword [byte eax+04h]	; 81CD6
@@ -1998,18 +1998,18 @@ push asc_C362E	; 81CE7
 call sub_8CCA8	; 81CEC
 add esp, byte 0Ch	; 81CF1
 mov dword [dword esp+0318h], eax	; 81CF4
-mov esi, dword [dword_DC238]	; 81CFB
+mov esi, dword [pointerspr]	; 81CFB
 mov edi, eax	; 81D01
 movsd	; 81D03
 movsd	; 81D04
 movsd	; 81D05
 movsd	; 81D06
 movsb	; 81D07
-mov edx, dword [dword_DC238]	; 81D08
+mov edx, dword [pointerspr]	; 81D08
 mov dx, word [byte edx+04h]	; 81D0E
 inc edx	; 81D12
 mov word [byte eax+04h], dx	; 81D13
-mov edx, dword [dword_DC238]	; 81D17
+mov edx, dword [pointerspr]	; 81D17
 mov dx, word [byte edx+06h]	; 81D1D
 inc edx	; 81D21
 mov word [byte eax+06h], dx	; 81D22
@@ -2026,7 +2026,7 @@ push ebx	; 81D49
 mov eax, dword [dword esp+0310h]	; 81D4A
 sub eax, byte 4	; 81D51
 push eax	; 81D54
-mov ecx, dword [dword_DC238]	; 81D55
+mov ecx, dword [pointerspr]	; 81D55
 push ecx	; 81D5B
 call sub_91FE0	; 81D5C
 add esp, byte 0Ch	; 81D61
@@ -2080,7 +2080,7 @@ push ecx	; 81E20
 mov eax, dword [dword esp+0310h]	; 81E21
 sub eax, byte 4	; 81E28
 push eax	; 81E2B
-mov esi, dword [dword_DC238]	; 81E2C
+mov esi, dword [pointerspr]	; 81E2C
 push esi	; 81E32
 loc_81E33:
 call sub_91FE0	; 81E33
@@ -2229,7 +2229,7 @@ push edx	; 82035
 mov eax, dword [dword esp+0310h]	; 82036
 sub eax, byte 4	; 8203D
 push eax	; 82040
-mov ebx, dword [dword_DC238]	; 82041
+mov ebx, dword [pointerspr]	; 82041
 push ebx	; 82047
 jmp near loc_81E33	; 82048
 loc_8204D:
@@ -2656,7 +2656,7 @@ push asc_C363D	; 825BA
 call sub_8CCA8	; 825BF
 mov ebp, eax	; 825C4
 add esp, byte 0Ch	; 825C6
-mov esi, dword [dword_DC238]	; 825C9
+mov esi, dword [pointerspr]	; 825C9
 mov edi, eax	; 825CF
 movsd	; 825D1
 movsd	; 825D2
