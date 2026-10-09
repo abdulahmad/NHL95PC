@@ -2,37 +2,37 @@
 bits 32
 %include "hockey.inc"
 section s_C1AA4 progbits alloc noexec write align=1
-global asc_C1AAF, asc_C1AB4, asc_C1AB8, asc_C1AC4, asc_C1AC9, asc_C1ACD, asc_C1AD4, asc_C1AD9
-global unk_C1AA4, unk_C1AA6, unk_C1AA9, unk_C1AAC, unk_C1ABE, unk_C1AC1, unk_C1AE0, unk_C1AE6
+global tag_pset, tag_aps, tag_apset, tag_gset, tag_ags, tag_agset, str_LoadPic, str_Pal23
+global tag_t, tag_at, tag_pk, tag_ps, tag_gk, tag_gs, unk_C1AE0, unk_C1AE6
 global unk_C1AEB, unk_C1AF0, unk_C1AF6, unk_C1AFC, unk_C1B02, unk_C1B07, unk_C1B0C, unk_C1B12
 global unk_C1B18, str_1st, str_2nd, str_3rd
-unk_C1AA4:
+tag_t:
 db 074h,00h
-unk_C1AA6:
+tag_at:
 db 061h,074h,00h
-unk_C1AA9:
+tag_pk:
 db 070h,06Bh,00h
-unk_C1AAC:
+tag_ps:
 db 070h,073h,00h
-asc_C1AAF:
+tag_pset:
 db 070h,073h,065h,074h,00h
-asc_C1AB4:
+tag_aps:
 db 061h,070h,073h,00h
-asc_C1AB8:
+tag_apset:
 db 061h,070h,073h,065h,074h,00h
-unk_C1ABE:
+tag_gk:
 db 067h,06Bh,00h
-unk_C1AC1:
+tag_gs:
 db 067h,073h,00h
-asc_C1AC4:
+tag_gset:
 db 067h,073h,065h,074h,00h
-asc_C1AC9:
+tag_ags:
 db 061h,067h,073h,00h
-asc_C1ACD:
+tag_agset:
 db 061h,067h,073h,065h,074h,00h,00h
-asc_C1AD4:
+str_LoadPic:
 db 06Ch,06Fh,061h,064h,00h
-asc_C1AD9:
+str_Pal23:
 db 021h,070h,061h,06Ch,00h,00h,00h
 unk_C1AE0:
 db 066h,061h,06Eh,06Fh,06Dh,00h

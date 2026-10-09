@@ -27,7 +27,7 @@ extern CopyFile, DiskSpaceShort, CheckGameDiskSpace, GetLeagueDBSizes, SetTextCo
 extern TextGridOpen, TextGridOff, InitGameSummary, SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen
 extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, CountSeriesWins, PreGameScreen, AskDatabaseChoice, TextInputDialog
 extern SetDialogColors, RestoreDialogBg, MessageBox, SaveModeState, LoadModeState, WriteModeState, PostGameToTeamDb, SimulateGame
-extern sub_479E9, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E
+extern ShowLoadingScreen, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E
 extern sub_6B9EB, sub_6BA4D, sub_76429, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E8B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_910B0, sub_9121C, sub_91370, sub_913B4
@@ -3830,7 +3830,7 @@ xor edi, edi	; 893E3
 mov dword [songdata], edi	; 893E5
 mov dword [byte esp+024h], 1	; 893EB
 .4:
-call sub_479E9	; 893F3
+call ShowLoadingScreen	; 893F3
 call SetSideControls	; 893F8
 call SetupControllers	; 893FD
 mov dword [teamstatscb], GameTeamStatsScreen	; 89402
@@ -4165,7 +4165,7 @@ call sub_6B47C	; 898C9
 jmp short .28	; 898CE
 .27:
 mov dword [byte esp+02Ch], eax	; 898D0
-call sub_479E9	; 898D4
+call ShowLoadingScreen	; 898D4
 .28:
 mov eax, dword [byte esp+020h]	; 898D9
 sub eax, byte 2	; 898DD

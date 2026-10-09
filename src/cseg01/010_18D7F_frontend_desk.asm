@@ -13,7 +13,7 @@ extern dword_D8C84, dword_DC230, schedgameidx, pointerspr, dword_DC868, dword_DC
 extern dword_EA0DC, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
 extern off_CEF23, off_D3078, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
 extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, GameSummaryScreen, PickOtherGames
-extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, MessageBox, LoadRink, WaitClickTimeout, sub_479E9
+extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, MessageBox, LoadRink, WaitClickTimeout, ShowLoadingScreen
 extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB
 extern sub_6BA4D, sub_76429, sub_767D0, sub_7E0FA, sub_805C4, sub_836E4, sub_837A8, sub_846F0
@@ -300,7 +300,7 @@ mov eax, dword [word_CBC44]	; 190CC
 sar eax, 10h	; 190D1
 cmp eax, byte 0FFFFFFFFh	; 190D4
 je near .3	; 190D7
-call sub_479E9	; 190DD
+call ShowLoadingScreen	; 190DD
 call sub_61B85	; 190E2
 call sub_61C22	; 190E7
 call sub_6B410	; 190EC
@@ -395,7 +395,7 @@ mov eax, 280h	; 19249
 call SetScreenSize	; 1924E
 mov eax, 222E0h	; 19253
 call sub_1BAF3	; 19258
-call sub_479E9	; 1925D
+call ShowLoadingScreen	; 1925D
 call sub_61B85	; 19262
 call sub_61C22	; 19267
 call sub_61BBF	; 1926C
@@ -438,7 +438,7 @@ mov edx, eax	; 1930D
 .1:
 test edx, edx	; 1930F
 jne short .2	; 19311
-call sub_479E9	; 19313
+call ShowLoadingScreen	; 19313
 call sub_6B410	; 19318
 mov edx, dword [dword_D8C84]	; 1931D
 xor ecx, ecx	; 19323
@@ -1769,7 +1769,7 @@ add esp, byte 4	; 1A7BF
 xor ebp, ebp	; 1A7C2
 mov dword [songdata], ebp	; 1A7C4
 .3:
-call sub_479E9	; 1A7CA
+call ShowLoadingScreen	; 1A7CA
 call sub_1B982	; 1A7CF
 call ShowCredits	; 1A7D4
 push unk_DF014	; 1A7D9
@@ -1941,7 +1941,7 @@ add esp, byte 4	; 1AA3C
 xor esi, esi	; 1AA3F
 mov dword [songdata], esi	; 1AA41
 .3:
-call sub_479E9	; 1AA47
+call ShowLoadingScreen	; 1AA47
 mov ebx, dword [dword_D8C84]	; 1AA4C
 xor ecx, ecx	; 1AA52
 mov edx, 1	; 1AA54
@@ -1968,7 +1968,7 @@ mov ebx, 10h	; 1AA8E
 mov edx, unk_DF014	; 1AA93
 mov eax, 1	; 1AA98
 call sub_76429	; 1AA9D
-call sub_479E9	; 1AAA2
+call ShowLoadingScreen	; 1AAA2
 mov ebx, dword [dword_D8C84]	; 1AAA7
 xor ecx, ecx	; 1AAAD
 mov edx, 1	; 1AAAF
@@ -1996,7 +1996,7 @@ mov ebx, 10h	; 1AAE5
 mov edx, unk_DF014	; 1AAEA
 mov eax, 1	; 1AAEF
 call sub_76429	; 1AAF4
-call sub_479E9	; 1AAF9
+call ShowLoadingScreen	; 1AAF9
 xor ecx, ecx	; 1AAFE
 xor ebx, ebx	; 1AB00
 xor edx, edx	; 1AB02

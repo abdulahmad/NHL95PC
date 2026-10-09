@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_C900C progbits alloc noexec write align=1
-global dword_C900C, dword_C905C, dword_C9074
-dword_C900C:
+global simfwdorder, simdorder, loadscreenon
+simfwdorder:
 db 00h,00h,00h,00h,01h,00h,00h,00h,02h,00h,00h,00h,03h,00h,00h,00h
 db 00h,00h,00h,00h,01h,00h,00h,00h,02h,00h,00h,00h,00h,00h,00h,00h
 db 01h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,01h,00h,00h,00h
 db 02h,00h,00h,00h,03h,00h,00h,00h,00h,00h,00h,00h,01h,00h,00h,00h
 db 02h,00h,00h,00h,00h,00h,00h,00h,01h,00h,00h,00h,00h,00h,00h,00h
-dword_C905C:
+simdorder:
 db 00h,00h,00h,00h,01h,00h,00h,00h,02h,00h,00h,00h,00h,00h,00h,00h
 db 01h,00h,00h,00h,02h,00h,00h,00h
-dword_C9074:
+loadscreenon:
 db 00h,00h,00h,00h

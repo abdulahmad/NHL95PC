@@ -10,7 +10,7 @@ extern calendarshapes, musichandle, dword_D2C6B, fontcolor, dword_D8B74, pointer
 extern calsel, calexit, calmonth, calselday, dword_DDD2C, calselmonth, dword_EA0DC, fputchar
 extern jctime, crestnames, calnextslot, calprevslot, sprintf_, MakePath, FileOpenRead, leaguedbnames
 extern FileClose, FileReadAt, ReadSchedGame, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
-extern CalTeamStatsScreen, CalSkaterStatsScreen, CalGoalieStatsScreen, CalStandingsScreen, CalStandingsMenu, SetDialogColors, sub_479E9, FadeOutPalCycle
+extern CalTeamStatsScreen, CalSkaterStatsScreen, CalGoalieStatsScreen, CalStandingsScreen, CalStandingsMenu, SetDialogColors, ShowLoadingScreen, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
 extern sub_7DB67, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
 extern sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_91370, sub_913D0
@@ -731,7 +731,7 @@ add esp, byte 4	; 34900
 xor esi, esi	; 34903
 mov dword [songdata], esi	; 34905
 .3:
-call sub_479E9	; 3490B
+call ShowLoadingScreen	; 3490B
 mov dword [teamstatscb], CalTeamStatsScreen	; 34910
 mov dword [skaterstatscb], CalSkaterStatsScreen	; 3491A
 mov dword [goaliestatscb], CalGoalieStatsScreen	; 34924

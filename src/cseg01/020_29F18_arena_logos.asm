@@ -13,7 +13,7 @@ extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgam
 extern fputchar, jctime, memcpy_, teamabbrevs, crestnames, scoutcatnames, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, SetDialogColors, TrackButtons, DrawButtons
-extern WaitClickTimeout, sub_479E9, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, sub_6B391
+extern WaitClickTimeout, ShowLoadingScreen, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, sub_6B391
 extern sub_6B3D7, sub_76429, sub_767D0, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_91370, sub_913D0, sub_91400
@@ -1693,7 +1693,7 @@ mov dword [songdata], ebx	; 2B73C
 .52:
 cmp esi, byte 3	; 2B742
 jge short .53	; 2B745
-call sub_479E9	; 2B747
+call ShowLoadingScreen	; 2B747
 .53:
 lea eax, [byte esp+054h]	; 2B74C
 push eax	; 2B750

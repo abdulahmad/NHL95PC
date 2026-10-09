@@ -19,7 +19,7 @@ extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, SetTextC
 extern GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, PreGameScreen, SetDialogColors, RestoreDialogBg
 extern MessageBox, CalendarScreen, LeagueTeamSelect, WriteSeasonRec, ReadGoalieSeasonRec, WriteGoalieSeasonRec, WriteSchedGame, WriteTeamRec
 extern ReadLeagueTeamEntry, AskTeamPassword, UpdateTeamDbs, MergeLeagueFiles, FindLeagueFloppy, WaitLeagueFloppy, ReadLeagueInfo, ReadTeamNames
-extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSeasonSchedule, UpdatePlayoffSeries, sub_479E9, sub_6B410
+extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSeasonSchedule, UpdatePlayoffSeries, ShowLoadingScreen, sub_6B410
 extern sub_6B47C, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_903F0, sub_91370, sub_91400, sub_92F50, sub_93000, sub_B2DCA, sub_B2E1B, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, leaguediskmsg, playerdbsmsg, btn_MasterDB, unk_C7F07
@@ -1331,7 +1331,7 @@ mov dword [songdata], esi	; 372F0
 .39:
 cmp dword [edi], byte 0	; 372F6
 jl short .40	; 372F9
-call sub_479E9	; 372FB
+call ShowLoadingScreen	; 372FB
 .40:
 xor ecx, ecx	; 37300
 mov cl, byte [byte_DDD42]	; 37302

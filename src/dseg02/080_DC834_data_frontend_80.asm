@@ -8,7 +8,7 @@ global byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_DCAD7, m
 global savefname, fdlgmask, leaguedbfmt2, leaguedbfmt, othergames, othergamesb
 global otherscores, otherscoresb, leagueflags, lgteamflags, lgteam_17, lgteam_18, lgteam_19, savedname
 global byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, traderoster, tradejersey, tradeslot
-global byte_DE268, byte_DE26C, byte_DEB70, byte_DEB71, dword_DC85C, dword_DC860, dword_DC868, dword_DC888
+global byte_DE268, loadpals, palcyclephase, palcycledelay, dword_DC85C, dword_DC860, dword_DC868, dword_DC888
 global dword_DC88C, dword_DC8A0, dword_DC8C8, dirtyrectptr, statspalshape, statsbgshapes, statsteamrecs, statsteambuf
 global statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf, statspal, exhfiles
 global exhfilenames, pofiles, pofilenames, lgfiles
@@ -20,7 +20,7 @@ global otherperiod, floppyok, dbextension, calsel, floppyprobe, calexit, teamsel
 global traderesult, calmonth, criterrflag, leaguemaster, leaguesaved, lgteamver, humancount, calselday
 global dword_DDD2C, calselmonth, dword_DDD34, lgplayteam, dword_DDD3C, dword_DDD44, gridcelly, gridcellx
 global lgplayeridfile, tradeclick, traderemap1, traderemap2, tradecursor, jerseymsg
-global tradeside, dword_DE264, dword_DE265, dword_DEB6C, dword_DEB74, statsplayer
+global tradeside, dword_DE264, dword_DE265, palcyclelock, dword_DEB74, statsplayer
 global unk_DC890, unk_DC998, unk_DCA98, printfbuf, leagueteams, treeteamnames, unk_DDCFB
 global masterpw, savleague1, savleague2, scrolly, scrollx, bgscrollx, bgscrolly8
 global lgteamver_hi, lggameidx, word_DDD48, word_DDD4A
@@ -339,13 +339,13 @@ dword_DE265:
 resb 3
 byte_DE268:
 resb 4
-byte_DE26C:
+loadpals:
 resb 2304
-dword_DEB6C:
+palcyclelock:
 resb 4
-byte_DEB70:
+palcyclephase:
 resb 1
-byte_DEB71:
+palcycledelay:
 resb 3
 dword_DEB74:
 resb 4

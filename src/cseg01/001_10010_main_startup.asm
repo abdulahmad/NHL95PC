@@ -18,7 +18,7 @@ extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84,
 extern pointerspr, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
 extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, MainDeskLoop
-extern LoadModeState, LoadNhlCfg, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
+extern LoadModeState, LoadNhlCfg, ShowLoadingScreen, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
 extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
 extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
 extern sub_8DF54, sub_8E080, sub_8E4C0, sub_8E5AC, sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18
@@ -461,7 +461,7 @@ mov dword [exhstate+61h], 0FFFFFFFEh	; 105D7
 .32:
 mov eax, exhstate	; 105E1
 call LoadModeState	; 105E6
-call sub_479E9	; 105EB
+call ShowLoadingScreen	; 105EB
 lea eax, [byte esp+06Ch]	; 105F0
 call _dos_gettime_	; 105F4
 xor eax, eax	; 105F9
@@ -510,7 +510,7 @@ add esp, byte 4	; 1069A
 xor ebx, ebx	; 1069D
 mov dword [songdata], ebx	; 1069F
 .35:
-call sub_479E9	; 106A5
+call ShowLoadingScreen	; 106A5
 call sub_6B410	; 106AA
 call ShowCredits	; 106AF
 call sub_B4B58	; 106B4

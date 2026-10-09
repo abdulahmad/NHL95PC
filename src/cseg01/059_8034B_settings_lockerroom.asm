@@ -22,7 +22,7 @@ extern dword_D8B68, dword_D8B74, dword_DC230, pointerspr, fdlg_cancel, dword_EA0
 extern dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C
 extern dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794, dword_ED798, dword_ED79C
 extern dword_ED7A0, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
-extern sprintf_, strcpy_, strncpy_, MakePath, SetTextColors, PrintShadowText, PrintOutlinedText, sub_479E9
+extern sprintf_, strcpy_, strncpy_, MakePath, SetTextColors, PrintShadowText, PrintOutlinedText, ShowLoadingScreen
 extern FadeOutPalCycle, sub_6B391, sub_6B3D7, sub_76429, sub_8291E, WriteCurModeState, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_912C8, sub_91400
@@ -528,7 +528,7 @@ add esp, byte 4	; 808C3
 xor esi, esi	; 808C6
 mov dword [songdata], esi	; 808C8
 loc_808CE:
-call sub_479E9	; 808CE
+call ShowLoadingScreen	; 808CE
 lea eax, [dword esp+0300h]	; 808D3
 push eax	; 808DA
 call sub_8E9E8	; 808DB

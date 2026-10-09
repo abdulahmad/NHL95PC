@@ -11,7 +11,7 @@ extern MainDeskLoop_x2, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRe
 extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
 extern EasnStandingsScreen, PreGameScreen, SaveModeState, LoadModeState, PlayLeagueGame, UpdateTeamDbs, MergeLeagueFiles, MergeUpdateDbs
 extern RebuildLeagueDbs, ImportDbs, ExportDbs, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
-extern sub_479E9, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
+extern ShowLoadingScreen, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, EasnTeamStatsScreen, EasnSkaterStatsScreen, EasnGoalieStatsScreen
 extern EasnStandingsMenu, exhstate, leaguemgrmenu
 global MenuAddTeam_common
@@ -107,7 +107,7 @@ add esp, byte 4	; 32EF0
 xor ebx, ebx	; 32EF3
 mov dword [songdata], ebx	; 32EF5
 .5:
-call sub_479E9	; 32EFB
+call ShowLoadingScreen	; 32EFB
 .6:
 mov eax, esi	; 32F00
 call PlayGame	; 32F02

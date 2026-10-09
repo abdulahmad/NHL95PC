@@ -2,14 +2,14 @@
 bits 32
 %include "hockey.inc"
 section s_47C31 progbits alloc exec nowrite align=1
-extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, byte_DE26C
+extern DoGameFrame, SetSPA, StanleyCupTimer, __CHK, assreplace, sflags, byte_CC9B0, loadpals
 extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, joysampling, inputframes, escrequest
-extern rinkscrollx, rinkscrolly, dword_C9074, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
+extern rinkscrollx, rinkscrolly, loadscreenon, cont2team, HomeTeam, dword_CBC3E, dword_CBECA, dword_CC0EC
 extern dword_CC0F0, dword_CC9AD, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
-extern dword_D8C84, rinkwtiles, rinkhtiles, bgscrolly, dword_DEB6C, hmtmstruct, awtmstruct, puckstruct
+extern dword_D8C84, rinkwtiles, rinkhtiles, bgscrolly, palcyclelock, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, randomd0
 extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, UpdateHudPanel, SetRinkScroll
-extern sub_47951, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
+extern LoadScreenPalTick, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
 extern PlayCrowdSample, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8374D, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
 extern unk_DF014, unk_DF314, unk_DFD9C, camx, camy, xc1, yc1, SortCords
@@ -29,14 +29,14 @@ push ecx	; 47C3C
 push edx	; 47C3D
 push esi	; 47C3E
 push ebp	; 47C3F
-cmp dword [dword_C9074], byte 0	; 47C40
+cmp dword [loadscreenon], byte 0	; 47C40
 je near .x	; 47C47
 xor esi, esi	; 47C4D
 .1:
 test esi, esi	; 47C4F
 jne short .5	; 47C51
 mov esi, 1	; 47C53
-mov dword [dword_DEB6C], esi	; 47C58
+mov dword [palcyclelock], esi	; 47C58
 xor ecx, ecx	; 47C5E
 .2:
 xor edx, edx	; 47C60
@@ -46,12 +46,12 @@ shl eax, 2	; 47C64
 sub eax, ecx	; 47C67
 shl eax, 8	; 47C69
 add eax, edx	; 47C6C
-mov bl, byte [dword eax+byte_DE26C]	; 47C6E
+mov bl, byte [dword eax+loadpals]	; 47C6E
 test bl, bl	; 47C74
 jle short .4	; 47C76
 mov bh, bl	; 47C78
 dec bh	; 47C7A
-mov byte [dword eax+byte_DE26C], bh	; 47C7C
+mov byte [dword eax+loadpals], bh	; 47C7C
 cmp esi, byte 1	; 47C82
 jne short .4	; 47C85
 xor esi, esi	; 47C87
@@ -63,19 +63,19 @@ inc ecx	; 47C92
 cmp ecx, byte 3	; 47C93
 jl short FadeOutPalCycle.2	; 47C96
 xor ebp, ebp	; 47C98
-mov dword [dword_DEB6C], ebp	; 47C9A
+mov dword [palcyclelock], ebp	; 47C9A
 push byte 2	; 47CA0
 call sub_B3989	; 47CA2
 add esp, byte 4	; 47CA7
 call sub_B3999	; 47CAA
 jmp short FadeOutPalCycle.1	; 47CAF
 .5:
-mov dword [dword_DEB6C], 1	; 47CB1
-push sub_47951	; 47CBB
+mov dword [palcyclelock], 1	; 47CB1
+push LoadScreenPalTick	; 47CBB
 call sub_8E4F8	; 47CC0
 add esp, byte 4	; 47CC5
 xor ecx, ecx	; 47CC8
-mov dword [dword_C9074], ecx	; 47CCA
+mov dword [loadscreenon], ecx	; 47CCA
 .x:
 pop ebp	; 47CD0
 pop esi	; 47CD1

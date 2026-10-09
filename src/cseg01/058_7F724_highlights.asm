@@ -11,7 +11,7 @@ extern dword_DC230, scrbrdshapes, recbpr, dword_E0400, dword_E0404, dword_E0408,
 extern dword_ED6F8, hilightfont, fputchar, jctime, loc_7E0F3, lseek_, teamabbrevs, teamcitynames
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, SetScreenSize
 extern LoadGameGfx, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
-extern sub_1BAB1, ListDialog, SetDialogColors, MessageBox, FreeRinkGfx, LoadRink, sub_479E9, FadeOutPalCycle
+extern sub_1BAB1, ListDialog, SetDialogColors, MessageBox, FreeRinkGfx, LoadRink, ShowLoadingScreen, FadeOutPalCycle
 extern sub_673C5, sub_6B3D7, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
 extern sub_93000, FatalError, sub_B2DCA, sub_B4FAC, sub_B5DB0, unk_7E05F, unk_C3444, unk_C3447
@@ -911,7 +911,7 @@ add esp, byte 4	; 8024F
 xor edi, edi	; 80252
 mov dword [songdata], edi	; 80254
 loc_8025A:
-call sub_479E9	; 8025A
+call ShowLoadingScreen	; 8025A
 mov edx, dword [HomeTeam]	; 8025F
 sar edx, 10h	; 80265
 mov eax, dword [cont2team]	; 80268

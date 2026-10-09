@@ -22,7 +22,7 @@ extern msglines, dword_EBE9C, dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0
 extern vgapage, fputchar, j___close_, j___delay_, jctime, lseek_, memcpy_, off_CF223
 extern off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443, off_D056C, off_D058C
 extern open_, qsort_, read_, sprintf_, strcmp_, MakePath, SetTextColors, PrintCenteredText
-extern PrintShadowText, PrintFmt1, PrintFmt2, RunMenu, FitPlayerName, MessageBox, sub_479E9, FadeOutPalCycle
+extern PrintShadowText, PrintFmt1, PrintFmt2, RunMenu, FitPlayerName, MessageBox, ShowLoadingScreen, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, KeyDbPtr
 extern sub_6CBE8, sub_6CBFD, sub_78366, sub_78500, sub_78A87, sub_79188, sub_79DE1, sub_79F41
 extern sub_7A099, sub_836E4, sub_8373E, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0
@@ -137,7 +137,7 @@ mov ebx, 32h	; 73858
 mov edx, 3	; 7385D
 call sub_8FCDF	; 73862
 loc_73867:
-call sub_479E9	; 73867
+call ShowLoadingScreen	; 73867
 mov ebx, dword [dword_EA2B4]	; 7386C
 push ebx	; 73872
 call SetDrawBitmap	; 73873
@@ -4293,7 +4293,7 @@ call sub_836E4	; 76898
 test eax, eax	; 7689D
 jne short loc_76898	; 7689F
 loc_768A1:
-call sub_479E9	; 768A1
+call ShowLoadingScreen	; 768A1
 mov eax, dword [dword_D0B16]	; 768A6
 mov dword [byte esp+010h], eax	; 768AB
 mov eax, dword [dword_D0B1A]	; 768AF

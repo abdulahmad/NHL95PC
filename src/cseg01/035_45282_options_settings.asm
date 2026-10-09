@@ -2,40 +2,16 @@
 bits 32
 %include "hockey.inc"
 section s_45282 progbits alloc exec nowrite align=1
-extern __CHK, asc_C1AAF, asc_C1AB4, asc_C1AB8, asc_C1AC4, asc_C1AC9, asc_C1ACD, asc_C1AD4
-extern asc_C1AD9, byte_DE26C, byte_DEB70, byte_DEB71, byte_ED9EE, gameopts, dword_C900C, dword_C905C
-extern dword_C9074, seasondb, dword_D2C6B, dword_DEB6C, jctime, memcpy_, memset_, rand_
+extern __CHK, tag_pset, tag_aps, tag_apset, tag_gset, tag_ags, tag_agset, str_LoadPic
+extern str_Pal23, loadpals, palcyclephase, palcycledelay, byte_ED9EE, gameopts, simfwdorder, simdorder
+extern loadscreenon, seasondb, dword_D2C6B, palcyclelock, jctime, memcpy_, memset_, rand_
 extern MakePath, ReadTeamRec, WriteTeamRec, ReadDbRec4Ch, KeyDbPtr, sub_6CBCC, sub_6CBE1, sub_6CBE8
 extern sub_6CBFD, sub_76429, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E83C, sub_8FFB0, sub_910E0
-extern sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4C61, unk_C1AA4
-extern unk_C1AA6, unk_C1AA9, unk_C1AAC, unk_C1ABE, unk_C1AC1
-global loc_452C3, loc_452E2, loc_452EB, loc_45385, loc_454DA, loc_45557, loc_45572, loc_45591
-global loc_45598, loc_455B2, loc_455C0, loc_455CC, loc_4585F, loc_45873, loc_4589C, loc_458FA
-global loc_4590E, loc_45915, loc_4592F, loc_4593D, loc_459C3, loc_459D7, loc_45A30, loc_45A41
-global loc_45A44, loc_45A4B, loc_45A63, loc_45A6A, loc_45A83, loc_45A91, loc_45AF7, loc_45B04
-global loc_45B43, loc_45B7D, loc_45B7F, loc_45BC6, loc_45BE9, loc_45BEB, loc_45C2D, loc_45C50
-global loc_45C52, loc_45C99, loc_45CBC, loc_45CBE, loc_45D01, loc_45D24, loc_45D5A, loc_45D77
-global loc_45DAB, loc_45DE6, loc_45E00, loc_45E1E, loc_45E32, loc_45E3D, loc_45E52, loc_45E67
-global loc_45E69, loc_45EC0, loc_45EDA, loc_45EF1, loc_45EF3, loc_45F4C, loc_45F66, loc_45F6F
-global loc_45F96, loc_45FBC, loc_45FE4, loc_4602D, loc_46061, loc_46093, loc_46097, loc_460D6
-global loc_46105, loc_4610E, loc_4614D, loc_4622A, loc_46256, loc_46262, loc_463AC, loc_463EB
-global loc_463ED, loc_46456, loc_464B6, loc_464D3, loc_46517, loc_46562, loc_465F0, loc_466E4
-global loc_467DB, loc_46821, loc_4682D, loc_46998, loc_46A67, loc_46A83, loc_46AF5, loc_46B11
-global loc_46B38, loc_46B57, loc_46B73, loc_46BC7, loc_46BCA, loc_46C83, loc_46CAC, loc_46CAE
-global loc_46D5E, loc_46E3B, loc_46E5C, loc_46E64, loc_46E76, loc_46F5F, loc_46FB4, loc_46FC0
-global loc_470A6, loc_470FE, loc_47151, loc_4715F, loc_47189, loc_47190, loc_4719E, loc_471BD
-global loc_4721C, loc_47272, loc_472B2, loc_472B8, loc_4730A, loc_47350, loc_47360, loc_47369
-global loc_4738B, loc_473A1, loc_473A8, loc_473BD, loc_473CF, loc_473D8, loc_47417, loc_47425
-global loc_4742C, loc_47440, loc_47447, loc_47460, loc_47482, loc_47491, loc_4749A, loc_474C6
-global loc_474D4, loc_474DB, loc_474EF, loc_474F6, loc_4750B, loc_4752D, loc_47543, loc_47553
-global loc_47573, loc_47581, loc_47588, loc_47598, loc_4759F, loc_475B4, loc_475D6, loc_475E8
-global loc_47632, loc_47641, loc_47648, loc_47658, loc_47661, loc_476AF, loc_476B3, loc_47709
-global loc_47733, loc_47764, loc_477AC, loc_477B3, loc_477C3, loc_477CE, loc_4781E, loc_47825
-global loc_47839, loc_47840, loc_4785B, loc_47864, loc_47983, loc_479E5, loc_47A7B, loc_47A7D
-global loc_47AE7, loc_47AF1, loc_47AF4, loc_47B30, loc_47B3A, loc_47B3D, loc_47BC8, loc_47BD3
-global loc_47BD5, loc_47BFB, loc_47C1B, loc_47C25, sub_45282, sub_452A6, SimulateGame, sub_47951
-global sub_479E9
-sub_45282:
+extern sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4C61, tag_t
+extern tag_at, tag_pk, tag_ps, tag_gk, tag_gs
+global RandMod, SimAddPair, SimulateGame, LoadScreenPalTick
+global ShowLoadingScreen
+RandMod:
 push dword 0Ch	; 45282
 call __CHK	; 45287
 push ebx	; 4528C
@@ -50,18 +26,18 @@ mov eax, edx	; 452A1
 pop edx	; 452A3
 pop ebx	; 452A4
 ret	; 452A5
-sub_452A6:
+SimAddPair:
 push dword 8	; 452A6
 call __CHK	; 452AB
 push esi	; 452B0
 mov esi, dword [eax]	; 452B1
 cmp esi, byte 4	; 452B3
-jge short loc_452C3	; 452B6
+jge short .x	; 452B6
 mov dword [edx+esi*8], ebx	; 452B8
 mov ebx, dword [eax]	; 452BB
 mov dword [byte edx+ebx*8+04h], ecx	; 452BD
 inc dword [eax]	; 452C1
-loc_452C3:
+.x:
 pop esi	; 452C3
 ret	; 452C4
 SimulateGame:
@@ -74,10 +50,10 @@ sub esp, 204h	; 452D2
 push ebx	; 452D8
 xor edx, edx	; 452D9
 mov dword [dword esp+01D0h], edx	; 452DB
-loc_452E2:
+.1:
 xor ebx, ebx	; 452E2
 mov dword [dword esp+01CCh], ebx	; 452E4
-loc_452EB:
+.2:
 mov edx, dword [dword esp+01D0h]	; 452EB
 mov eax, edx	; 452F2
 shl eax, 2	; 452F4
@@ -90,12 +66,12 @@ mov byte [dword esp+eax+0F8h], dl	; 4530B
 lea eax, [byte ebp+01h]	; 45312
 mov dword [dword esp+01CCh], eax	; 45315
 cmp eax, byte 5	; 4531C
-jl short loc_452EB	; 4531F
+jl short SimulateGame.2	; 4531F
 mov ebx, dword [dword esp+01D0h]	; 45321
 inc ebx	; 45328
 mov dword [dword esp+01D0h], ebx	; 45329
 cmp ebx, byte 2	; 45330
-jl short loc_452E2	; 45333
+jl short SimulateGame.1	; 45333
 mov byte [dword esp+01F4h], dl	; 45335
 mov byte [dword esp+01F0h], dl	; 4533C
 xor eax, eax	; 45343
@@ -113,90 +89,90 @@ mov byte [byte ecx+05h], dl	; 45372
 xor eax, eax	; 45375
 mov dword [dword esp+01ACh], eax	; 45377
 mov dword [dword esp+01D0h], eax	; 4537E
-loc_45385:
+.3:
 push byte 20h	; 45385
 push dword 2E8h	; 45387
-push unk_C1AA4	; 4538C
+push tag_t	; 4538C
 call sub_8CCA8	; 45391
 add esp, byte 0Ch	; 45396
 mov ebp, dword [dword esp+01D0h]	; 45399
 mov dword [dword esp+ebp*4+016Ch], eax	; 453A0
 push byte 20h	; 453A7
 push byte 4Ch	; 453A9
-push unk_C1AA6	; 453AB
+push tag_at	; 453AB
 call sub_8CCA8	; 453B0
 add esp, byte 0Ch	; 453B5
 mov dword [dword esp+ebp*4+0164h], eax	; 453B8
 push byte 20h	; 453BF
 push byte 64h	; 453C1
-push unk_C1AA9	; 453C3
+push tag_pk	; 453C3
 call sub_8CCA8	; 453C8
 add esp, byte 0Ch	; 453CD
 mov dword [dword esp+ebp*4+017Ch], eax	; 453D0
 push byte 20h	; 453D7
 push byte 64h	; 453D9
-push unk_C1AAC	; 453DB
+push tag_ps	; 453DB
 call sub_8CCA8	; 453E0
 add esp, byte 0Ch	; 453E5
 mov dword [dword esp+ebp*4+0154h], eax	; 453E8
 push byte 20h	; 453EF
 push byte 64h	; 453F1
-push asc_C1AAF	; 453F3
+push tag_pset	; 453F3
 call sub_8CCA8	; 453F8
 add esp, byte 0Ch	; 453FD
 mov dword [dword esp+ebp*4+015Ch], eax	; 45400
 push byte 20h	; 45407
 push byte 64h	; 45409
-push asc_C1AB4	; 4540B
+push tag_aps	; 4540B
 call sub_8CCA8	; 45410
 add esp, byte 0Ch	; 45415
 mov dword [dword esp+ebp*4+012Ch], eax	; 45418
 push byte 20h	; 4541F
 push byte 64h	; 45421
-push asc_C1AB8	; 45423
+push tag_apset	; 45423
 call sub_8CCA8	; 45428
 add esp, byte 0Ch	; 4542D
 mov dword [dword esp+ebp*4+0104h], eax	; 45430
 push byte 20h	; 45437
 push byte 0Ch	; 45439
-push unk_C1ABE	; 4543B
+push tag_gk	; 4543B
 call sub_8CCA8	; 45440
 add esp, byte 0Ch	; 45445
 mov dword [dword esp+ebp*4+0134h], eax	; 45448
 push byte 20h	; 4544F
 push byte 0Ch	; 45451
-push unk_C1AC1	; 45453
+push tag_gs	; 45453
 call sub_8CCA8	; 45458
 add esp, byte 0Ch	; 4545D
 mov dword [dword esp+ebp*4+0124h], eax	; 45460
 push byte 20h	; 45467
 push byte 0Ch	; 45469
-push asc_C1AC4	; 4546B
+push tag_gset	; 4546B
 call sub_8CCA8	; 45470
 add esp, byte 0Ch	; 45475
 mov dword [dword esp+ebp*4+010Ch], eax	; 45478
 push byte 20h	; 4547F
 push byte 0Ch	; 45481
-push asc_C1AC9	; 45483
+push tag_ags	; 45483
 call sub_8CCA8	; 45488
 add esp, byte 0Ch	; 4548D
 mov dword [dword esp+ebp*4+014Ch], eax	; 45490
 push byte 20h	; 45497
 push byte 0Ch	; 45499
-push asc_C1ACD	; 4549B
+push tag_agset	; 4549B
 call sub_8CCA8	; 454A0
 add esp, byte 0Ch	; 454A5
 mov dword [dword esp+ebp*4+0114h], eax	; 454A8
 lea ebx, [byte ebp+01h]	; 454AF
 mov dword [dword esp+01D0h], ebx	; 454B2
 cmp ebx, byte 2	; 454B9
-jl near loc_45385	; 454BC
+jl near SimulateGame.3	; 454BC
 xor ebp, ebp	; 454C2
 mov dword [dword esp+01A4h], ebp	; 454C4
 mov dword [dword esp+01D0h], ebp	; 454CB
 mov ebp, dword [esp]	; 454D2
-jmp near loc_45598	; 454D5
-loc_454DA:
+jmp near .8	; 454D5
+.4:
 xor cl, cl	; 454DA
 mov byte [dword esp+edx+01DCh], cl	; 454DC
 mov ecx, edx	; 454E3
@@ -207,48 +183,48 @@ mov eax, dword [dword esp+021Ch]	; 454F6
 call ReadDbRec4Ch	; 454FD
 mov dword [dword esp+01A4h], eax	; 45502
 test eax, eax	; 45509
-jne near loc_45591	; 4550B
+jne near .7	; 4550B
 mov ebx, dword [dword esp+ecx+013Ch]	; 45511
 mov edx, dword [dword esp+ecx+016Ch]	; 45518
 mov eax, dword [dword esp+0218h]	; 4551F
 call ReadTeamRec	; 45526
 mov dword [dword esp+01A4h], eax	; 4552B
 cmp ebp, 444h	; 45532
-jl short loc_45557	; 45538
+jl short .5	; 45538
 mov eax, dword [dword esp+ecx+0164h]	; 4553A
 add eax, byte 3Ah	; 45541
 mov dword [dword esp+ecx+0144h], eax	; 45544
 mov eax, dword [dword esp+ecx+016Ch]	; 4554B
 add eax, byte 3Ah	; 45552
-jmp short loc_45572	; 45555
-loc_45557:
+jmp short .6	; 45555
+.5:
 mov eax, dword [dword esp+ecx+0164h]	; 45557
 add eax, byte 28h	; 4555E
 mov dword [dword esp+ecx+0144h], eax	; 45561
 mov eax, dword [dword esp+ecx+016Ch]	; 45568
 add eax, byte 28h	; 4556F
-loc_45572:
+.6:
 mov dword [dword esp+ecx+0174h], eax	; 45572
 mov eax, dword [dword esp+01D0h]	; 45579
 mov byte [dword esp+eax+01E0h], 0B4h	; 45580
 xor edx, edx	; 45588
 mov dword [dword esp+eax*4+018Ch], edx	; 4558A
-loc_45591:
+.7:
 inc dword [dword esp+01D0h]	; 45591
-loc_45598:
+.8:
 mov edx, dword [dword esp+01D0h]	; 45598
 cmp edx, byte 2	; 4559F
-jge short loc_455B2	; 455A2
+jge short .9	; 455A2
 cmp dword [dword esp+01A4h], byte 0	; 455A4
-je near loc_454DA	; 455AC
-loc_455B2:
+je near SimulateGame.4	; 455AC
+.9:
 xor ecx, ecx	; 455B2
 mov dword [dword esp+01D0h], ecx	; 455B4
-jmp near loc_45A6A	; 455BB
-loc_455C0:
+jmp near .27	; 455BB
+.10:
 mov dword [dword esp+01CCh], ebp	; 455C0
-jmp near loc_45915	; 455C7
-loc_455CC:
+jmp near .17	; 455C7
+.11:
 mov edx, dword [dword esp+01D0h]	; 455CC
 mov eax, edx	; 455D3
 shl eax, 2	; 455D5
@@ -272,12 +248,12 @@ mov ecx, dword [dword esp+01CCh]	; 4560F
 shl ecx, 2	; 45616
 mov eax, dword [byte ecx+eax+04Ch]	; 45619
 cmp eax, byte 0FFFFFFFFh	; 4561D
-je near loc_4590E	; 45620
+je near .16	; 45620
 call KeyDbPtr	; 45626
 mov edx, dword [dword esp+ebx+017Ch]	; 4562B
 mov dword [ecx+edx], eax	; 45632
 cmp dword [dword esp+01A4h], byte 0	; 45635
-jne near loc_4589C	; 4563D
+jne near .14	; 4563D
 mov eax, dword [dword esp+ebx+017Ch]	; 45643
 mov eax, dword [ecx+eax]	; 4564A
 mov eax, dword [byte eax+028h]	; 4564D
@@ -403,19 +379,19 @@ mov eax, dword [dword esp+ebx+012Ch]	; 4582E
 mov eax, dword [ecx+eax]	; 45835
 mov word [eax], 54h	; 45838
 cmp dword [esp], 444h	; 4583D
-jl short loc_4585F	; 45844
+jl short .12	; 45844
 mov eax, dword [dword esp+ebx+012Ch]	; 45846
 mov edx, dword [ecx+eax]	; 4584D
 mov eax, dword [dword esp+ebx+0104h]	; 45850
 add edx, byte 12h	; 45857
 mov dword [ecx+eax], edx	; 4585A
-jmp short loc_45873	; 4585D
-loc_4585F:
+jmp short .13	; 4585D
+.12:
 mov eax, dword [dword esp+ebx+012Ch]	; 4585F
 mov edx, dword [dword esp+ebx+0104h]	; 45866
 mov eax, dword [ecx+eax]	; 4586D
 mov dword [ecx+edx], eax	; 45870
-loc_45873:
+.13:
 mov eax, dword [dword esp+01D0h]	; 45873
 mov edx, dword [dword esp+01CCh]	; 4587A
 mov ebx, dword [dword esp+eax*4+012Ch]	; 45881
@@ -423,9 +399,9 @@ mov edx, dword [ebx+edx*4]	; 45888
 mov dx, word [byte edx+0Ch]	; 4588B
 and edx, 0FFFFh	; 4588F
 add dword [dword esp+eax*4+018Ch], edx	; 45895
-loc_4589C:
+.14:
 cmp dword [dword esp+01A4h], byte 0	; 4589C
-jne short loc_4590E	; 458A4
+jne short .16	; 458A4
 mov edx, dword [dword esp+01D0h]	; 458A6
 shl edx, 2	; 458AD
 mov ebx, dword [dword esp+01CCh]	; 458B0
@@ -438,31 +414,31 @@ mov ecx, eax	; 458CC
 mov eax, dword [dword esp+edx+0154h]	; 458CE
 mov dword [ebx+eax], ecx	; 458D5
 cmp dword [esp], 444h	; 458D8
-jl short loc_458FA	; 458DF
+jl short .15	; 458DF
 mov eax, dword [dword esp+edx+0154h]	; 458E1
 mov ecx, dword [ebx+eax]	; 458E8
 mov eax, dword [dword esp+edx+015Ch]	; 458EB
 add ecx, byte 12h	; 458F2
 mov dword [ebx+eax], ecx	; 458F5
-jmp short loc_4590E	; 458F8
-loc_458FA:
+jmp short .16	; 458F8
+.15:
 mov eax, dword [dword esp+edx+0154h]	; 458FA
 mov edx, dword [dword esp+edx+015Ch]	; 45901
 mov eax, dword [ebx+eax]	; 45908
 mov dword [edx+ebx], eax	; 4590B
-loc_4590E:
+.16:
 inc dword [dword esp+01CCh]	; 4590E
-loc_45915:
+.17:
 mov ebx, dword [dword esp+01CCh]	; 45915
 cmp ebx, byte 19h	; 4591C
-jge short loc_4592F	; 4591F
+jge short .18	; 4591F
 cmp dword [dword esp+01A4h], byte 0	; 45921
-je near loc_455CC	; 45929
-loc_4592F:
+je near SimulateGame.11	; 45929
+.18:
 xor ebp, ebp	; 4592F
 mov dword [dword esp+01CCh], ebp	; 45931
-jmp near loc_45A4B	; 45938
-loc_4593D:
+jmp near .25	; 45938
+.19:
 mov edx, dword [dword esp+01D0h]	; 4593D
 shl edx, 2	; 45944
 mov eax, dword [dword esp+edx+016Ch]	; 45947
@@ -470,13 +446,13 @@ mov ebx, dword [dword esp+01CCh]	; 4594E
 shl ebx, 2	; 45955
 mov eax, dword [dword ebx+eax+0B0h]	; 45958
 cmp eax, byte 0FFFFFFFFh	; 4595F
-je near loc_45A44	; 45962
+je near .24	; 45962
 call KeyDbPtr	; 45968
 mov ecx, eax	; 4596D
 mov eax, dword [dword esp+edx+0134h]	; 4596F
 mov dword [ebx+eax], ecx	; 45976
 cmp dword [dword esp+01A4h], byte 0	; 45979
-jne short loc_459D7	; 45981
+jne short .21	; 45981
 mov eax, dword [dword esp+edx+0134h]	; 45983
 mov eax, dword [ebx+eax]	; 4598A
 mov eax, dword [byte eax+028h]	; 4598D
@@ -485,21 +461,21 @@ mov ecx, eax	; 45995
 mov eax, dword [dword esp+edx+014Ch]	; 45997
 mov dword [ebx+eax], ecx	; 4599E
 cmp dword [esp], 444h	; 459A1
-jl short loc_459C3	; 459A8
+jl short .20	; 459A8
 mov eax, dword [dword esp+edx+014Ch]	; 459AA
 mov ecx, dword [ebx+eax]	; 459B1
 mov eax, dword [dword esp+edx+0114h]	; 459B4
 add ecx, byte 16h	; 459BB
 mov dword [ebx+eax], ecx	; 459BE
-jmp short loc_459D7	; 459C1
-loc_459C3:
+jmp short .21	; 459C1
+.20:
 mov eax, dword [dword esp+edx+014Ch]	; 459C3
 mov edx, dword [dword esp+edx+0114h]	; 459CA
 mov eax, dword [ebx+eax]	; 459D1
 mov dword [edx+ebx], eax	; 459D4
-loc_459D7:
+.21:
 cmp dword [dword esp+01A4h], byte 0	; 459D7
-jne short loc_45A44	; 459DF
+jne short .24	; 459DF
 mov edx, dword [dword esp+01D0h]	; 459E1
 shl edx, 2	; 459E8
 mov ebx, dword [dword esp+01CCh]	; 459EB
@@ -511,38 +487,38 @@ call sub_6CBE1	; 45A02
 mov ecx, dword [dword esp+edx+0124h]	; 45A07
 mov dword [ecx+ebx], eax	; 45A0E
 cmp dword [esp], 444h	; 45A11
-jl short loc_45A30	; 45A18
+jl short .22	; 45A18
 mov eax, dword [dword esp+edx+0124h]	; 45A1A
 mov eax, dword [ebx+eax]	; 45A21
 mov edx, dword [dword esp+edx+010Ch]	; 45A24
 add eax, byte 16h	; 45A2B
-jmp short loc_45A41	; 45A2E
-loc_45A30:
+jmp short .23	; 45A2E
+.22:
 mov eax, dword [dword esp+edx+0124h]	; 45A30
 mov edx, dword [dword esp+edx+010Ch]	; 45A37
 mov eax, dword [ebx+eax]	; 45A3E
-loc_45A41:
+.23:
 mov dword [edx+ebx], eax	; 45A41
-loc_45A44:
+.24:
 inc dword [dword esp+01CCh]	; 45A44
-loc_45A4B:
+.25:
 cmp dword [dword esp+01CCh], byte 3	; 45A4B
-jge short loc_45A63	; 45A53
+jge short .26	; 45A53
 cmp dword [dword esp+01A4h], byte 0	; 45A55
-je near loc_4593D	; 45A5D
-loc_45A63:
+je near SimulateGame.19	; 45A5D
+.26:
 inc dword [dword esp+01D0h]	; 45A63
-loc_45A6A:
+.27:
 cmp dword [dword esp+01D0h], byte 2	; 45A6A
-jge short loc_45A83	; 45A72
+jge short .28	; 45A72
 mov ebp, dword [dword esp+01A4h]	; 45A74
 test ebp, ebp	; 45A7B
-je near loc_455C0	; 45A7D
-loc_45A83:
+je near SimulateGame.10	; 45A7D
+.28:
 xor eax, eax	; 45A83
 mov dword [dword esp+01D0h], eax	; 45A85
-jmp near loc_45DE6	; 45A8C
-loc_45A91:
+jmp near .49	; 45A8C
+.29:
 mov byte [dword esp+eax+01ECh], 5	; 45A91
 mov ebx, eax	; 45A99
 shl ebx, 2	; 45A9B
@@ -566,14 +542,14 @@ mov eax, edx	; 45AD9
 sar edx, 1Fh	; 45ADB
 idiv ecx	; 45ADE
 cmp edx, 136h	; 45AE0
-jle short loc_45AF7	; 45AE6
+jle short .30	; 45AE6
 mov eax, dword [dword esp+ebx+016Ch]	; 45AE8
 mov al, byte [dword eax+0E0h]	; 45AEF
-jmp short loc_45B04	; 45AF5
-loc_45AF7:
+jmp short .31	; 45AF5
+.30:
 mov eax, dword [dword esp+ebx+016Ch]	; 45AF7
 mov al, byte [dword eax+0E1h]	; 45AFE
-loc_45B04:
+.31:
 sub al, 19h	; 45B04
 mov edx, dword [dword esp+01D0h]	; 45B06
 mov byte [dword esp+edx+01D8h], al	; 45B0D
@@ -587,7 +563,7 @@ mov eax, dword [eax+edx*4]	; 45B34
 xor ebx, ebx	; 45B37
 mov dword [dword esp+01CCh], ebx	; 45B39
 inc word [eax]	; 45B40
-loc_45B43:
+.32:
 mov edx, dword [dword esp+01D0h]	; 45B43
 mov eax, edx	; 45B4A
 shl eax, 2	; 45B4C
@@ -601,12 +577,12 @@ mov byte [byte esp+eax+06Ch], dl	; 45B61
 lea ebp, [byte ecx+01h]	; 45B65
 mov dword [dword esp+01CCh], ebp	; 45B68
 cmp ebp, byte 19h	; 45B6F
-jl short loc_45B43	; 45B72
+jl short SimulateGame.32	; 45B72
 xor edx, edx	; 45B74
 mov dword [dword esp+01CCh], edx	; 45B76
-loc_45B7D:
+.33:
 xor ebx, ebx	; 45B7D
-loc_45B7F:
+.34:
 mov eax, dword [dword esp+01D0h]	; 45B7F
 mov ecx, dword [dword esp+eax*4+016Ch]	; 45B86
 mov edx, dword [dword esp+01CCh]	; 45B8D
@@ -616,7 +592,7 @@ sub eax, edx	; 45B99
 add ecx, eax	; 45B9B
 mov cl, byte [dword ecx+ebx+0BCh]	; 45B9D
 cmp cl, 19h	; 45BA4
-jae short loc_45BC6	; 45BA7
+jae short .35	; 45BA7
 mov edx, dword [dword esp+01D0h]	; 45BA9
 mov eax, edx	; 45BB0
 shl eax, 2	; 45BB2
@@ -627,20 +603,20 @@ xor eax, eax	; 45BBC
 mov al, cl	; 45BBE
 add eax, edx	; 45BC0
 inc byte [byte esp+eax+06Ch]	; 45BC2
-loc_45BC6:
+.35:
 inc ebx	; 45BC6
 cmp ebx, byte 3	; 45BC7
-jl short loc_45B7F	; 45BCA
+jl short SimulateGame.34	; 45BCA
 mov ebx, dword [dword esp+01CCh]	; 45BCC
 inc ebx	; 45BD3
 mov dword [dword esp+01CCh], ebx	; 45BD4
 cmp ebx, byte 4	; 45BDB
-jl short loc_45B7D	; 45BDE
+jl short SimulateGame.33	; 45BDE
 xor ebp, ebp	; 45BE0
 mov dword [dword esp+01CCh], ebp	; 45BE2
-loc_45BE9:
+.36:
 xor ebx, ebx	; 45BE9
-loc_45BEB:
+.37:
 mov eax, dword [dword esp+01D0h]	; 45BEB
 mov edx, dword [dword esp+eax*4+016Ch]	; 45BF2
 mov eax, dword [dword esp+01CCh]	; 45BF9
@@ -648,7 +624,7 @@ add eax, eax	; 45C00
 add eax, edx	; 45C02
 mov cl, byte [dword ebx+eax+0C8h]	; 45C04
 cmp cl, 19h	; 45C0B
-jae short loc_45C2D	; 45C0E
+jae short .38	; 45C0E
 mov edx, dword [dword esp+01D0h]	; 45C10
 mov eax, edx	; 45C17
 shl eax, 2	; 45C19
@@ -659,20 +635,20 @@ xor eax, eax	; 45C23
 mov al, cl	; 45C25
 add eax, edx	; 45C27
 inc byte [byte esp+eax+06Ch]	; 45C29
-loc_45C2D:
+.38:
 inc ebx	; 45C2D
 cmp ebx, byte 2	; 45C2E
-jl short loc_45BEB	; 45C31
+jl short SimulateGame.37	; 45C31
 mov eax, dword [dword esp+01CCh]	; 45C33
 inc eax	; 45C3A
 mov dword [dword esp+01CCh], eax	; 45C3B
 cmp eax, byte 3	; 45C42
-jl short loc_45BE9	; 45C45
+jl short SimulateGame.36	; 45C45
 xor ebx, ebx	; 45C47
 mov dword [dword esp+01CCh], ebx	; 45C49
-loc_45C50:
+.39:
 xor ebx, ebx	; 45C50
-loc_45C52:
+.40:
 mov eax, dword [dword esp+01D0h]	; 45C52
 mov ecx, dword [dword esp+eax*4+016Ch]	; 45C59
 mov edx, dword [dword esp+01CCh]	; 45C60
@@ -682,7 +658,7 @@ add eax, edx	; 45C6C
 add ecx, eax	; 45C6E
 mov cl, byte [dword ecx+ebx+0CEh]	; 45C70
 cmp cl, 19h	; 45C77
-jae short loc_45C99	; 45C7A
+jae short .41	; 45C7A
 mov edx, dword [dword esp+01D0h]	; 45C7C
 mov eax, edx	; 45C83
 shl eax, 2	; 45C85
@@ -693,20 +669,20 @@ xor eax, eax	; 45C8F
 mov al, cl	; 45C91
 add eax, edx	; 45C93
 inc byte [byte esp+eax+06Ch]	; 45C95
-loc_45C99:
+.41:
 inc ebx	; 45C99
 cmp ebx, byte 5	; 45C9A
-jl short loc_45C52	; 45C9D
+jl short SimulateGame.40	; 45C9D
 mov ecx, dword [dword esp+01CCh]	; 45C9F
 inc ecx	; 45CA6
 mov dword [dword esp+01CCh], ecx	; 45CA7
 cmp ecx, byte 2	; 45CAE
-jl short loc_45C50	; 45CB1
+jl short SimulateGame.39	; 45CB1
 xor eax, eax	; 45CB3
 mov dword [dword esp+01CCh], eax	; 45CB5
-loc_45CBC:
+.42:
 xor ebx, ebx	; 45CBC
-loc_45CBE:
+.43:
 mov eax, dword [dword esp+01D0h]	; 45CBE
 mov edx, dword [dword esp+eax*4+016Ch]	; 45CC5
 mov eax, dword [dword esp+01CCh]	; 45CCC
@@ -714,7 +690,7 @@ shl eax, 2	; 45CD3
 add eax, edx	; 45CD6
 mov cl, byte [dword ebx+eax+0D8h]	; 45CD8
 cmp cl, 19h	; 45CDF
-jae short loc_45D01	; 45CE2
+jae short .44	; 45CE2
 mov edx, dword [dword esp+01D0h]	; 45CE4
 mov eax, edx	; 45CEB
 shl eax, 2	; 45CED
@@ -725,24 +701,24 @@ xor edx, edx	; 45CF7
 mov dl, cl	; 45CF9
 add eax, edx	; 45CFB
 inc byte [byte esp+eax+06Ch]	; 45CFD
-loc_45D01:
+.44:
 inc ebx	; 45D01
 cmp ebx, byte 4	; 45D02
-jl short loc_45CBE	; 45D05
+jl short SimulateGame.43	; 45D05
 mov edx, dword [dword esp+01CCh]	; 45D07
 inc edx	; 45D0E
 mov dword [dword esp+01CCh], edx	; 45D0F
 cmp edx, byte 2	; 45D16
-jl short loc_45CBC	; 45D19
+jl short SimulateGame.42	; 45D19
 xor ecx, ecx	; 45D1B
 mov dword [dword esp+01CCh], ecx	; 45D1D
-loc_45D24:
+.45:
 mov eax, dword [dword esp+01D0h]	; 45D24
 mov ecx, dword [dword esp+eax*4+016Ch]	; 45D2B
 add ecx, dword [dword esp+01CCh]	; 45D32
 mov cl, byte [dword ecx+0E2h]	; 45D39
 cmp cl, 19h	; 45D3F
-jae short loc_45D5A	; 45D42
+jae short .46	; 45D42
 mov edx, eax	; 45D44
 shl eax, 2	; 45D46
 sub eax, edx	; 45D49
@@ -752,15 +728,15 @@ xor eax, eax	; 45D50
 mov al, cl	; 45D52
 add eax, edx	; 45D54
 inc byte [byte esp+eax+06Ch]	; 45D56
-loc_45D5A:
+.46:
 mov eax, dword [dword esp+01CCh]	; 45D5A
 inc eax	; 45D61
 mov dword [dword esp+01CCh], eax	; 45D62
 cmp eax, byte 2	; 45D69
-jl short loc_45D24	; 45D6C
+jl short SimulateGame.45	; 45D6C
 xor ebx, ebx	; 45D6E
 mov dword [dword esp+01CCh], ebx	; 45D70
-loc_45D77:
+.47:
 mov edx, dword [dword esp+01D0h]	; 45D77
 mov eax, edx	; 45D7E
 shl eax, 2	; 45D80
@@ -770,13 +746,13 @@ add eax, edx	; 45D88
 mov ecx, dword [dword esp+01CCh]	; 45D8A
 add eax, ecx	; 45D91
 cmp byte [byte esp+eax+06Ch], 0	; 45D93
-je short loc_45DAB	; 45D98
+je short .48	; 45D98
 mov eax, edx	; 45D9A
 mov edx, ecx	; 45D9C
 mov eax, dword [dword esp+eax*4+015Ch]	; 45D9E
 mov eax, dword [eax+edx*4]	; 45DA5
 inc word [eax]	; 45DA8
-loc_45DAB:
+.48:
 mov edx, dword [dword esp+01D0h]	; 45DAB
 mov eax, edx	; 45DB2
 shl eax, 2	; 45DB4
@@ -790,46 +766,46 @@ mov byte [byte esp+eax+06Ch], bh	; 45DC9
 lea eax, [byte ebp+01h]	; 45DCD
 mov dword [dword esp+01CCh], eax	; 45DD0
 cmp eax, byte 19h	; 45DD7
-jl short loc_45D77	; 45DDA
+jl short SimulateGame.47	; 45DDA
 lea ebx, [byte edx+01h]	; 45DDC
 mov dword [dword esp+01D0h], ebx	; 45DDF
-loc_45DE6:
+.49:
 mov eax, dword [dword esp+01D0h]	; 45DE6
 cmp eax, byte 2	; 45DED
-jge short loc_45E00	; 45DF0
+jge short .50	; 45DF0
 cmp dword [dword esp+01A4h], byte 0	; 45DF2
-je near loc_45A91	; 45DFA
-loc_45E00:
+je near SimulateGame.29	; 45DFA
+.50:
 mov eax, dword [gameopts]	; 45E00
 and eax, 0C00h	; 45E05
 cmp eax, 800h	; 45E0A
-jne short loc_45E1E	; 45E0F
+jne short .51	; 45E0F
 mov dword [dword esp+01B0h], 3Ch	; 45E11
-jmp short loc_45E3D	; 45E1C
-loc_45E1E:
+jmp short .53	; 45E1C
+.51:
 cmp eax, 400h	; 45E1E
-jne short loc_45E32	; 45E23
+jne short .52	; 45E23
 mov dword [dword esp+01B0h], 1Eh	; 45E25
-jmp short loc_45E3D	; 45E30
-loc_45E32:
+jmp short .53	; 45E30
+.52:
 mov dword [dword esp+01B0h], 0Fh	; 45E32
-loc_45E3D:
+.53:
 xor eax, eax	; 45E3D
 mov dword [dword esp+01CCh], eax	; 45E3F
 mov dword [dword esp+01B4h], eax	; 45E46
-jmp near loc_4719E	; 45E4D
-loc_45E52:
+jmp near .118	; 45E4D
+.54:
 cmp byte [dword esp+01F4h], 0	; 45E52
-jne near loc_45EDA	; 45E5A
+jne near .58	; 45E5A
 mov dword [dword esp+01D0h], ebp	; 45E60
-loc_45E67:
+.55:
 xor ebx, ebx	; 45E67
-loc_45E69:
+.56:
 mov eax, 0Ah	; 45E69
-call sub_45282	; 45E6E
+call RandMod	; 45E6E
 mov edx, eax	; 45E73
 cmp eax, ebx	; 45E75
-je short loc_45EC0	; 45E77
+je short .57	; 45E77
 mov ecx, dword [dword esp+01D0h]	; 45E79
 mov eax, ecx	; 45E80
 shl eax, 2	; 45E82
@@ -840,37 +816,37 @@ shl eax, 2	; 45E8C
 add eax, ecx	; 45E8F
 shl edx, 2	; 45E91
 add edx, ecx	; 45E94
-mov ecx, dword [dword edx+dword_C900C]	; 45E96
-mov ebp, dword [dword eax+dword_C900C]	; 45E9C
+mov ecx, dword [dword edx+simfwdorder]	; 45E96
+mov ebp, dword [dword eax+simfwdorder]	; 45E9C
 xor ebp, ecx	; 45EA2
-mov dword [dword eax+dword_C900C], ebp	; 45EA4
+mov dword [dword eax+simfwdorder], ebp	; 45EA4
 mov ecx, ebp	; 45EAA
-mov ebp, dword [dword edx+dword_C900C]	; 45EAC
+mov ebp, dword [dword edx+simfwdorder]	; 45EAC
 xor ebp, ecx	; 45EB2
-mov dword [dword edx+dword_C900C], ebp	; 45EB4
-xor dword [dword eax+dword_C900C], ebp	; 45EBA
-loc_45EC0:
+mov dword [dword edx+simfwdorder], ebp	; 45EB4
+xor dword [dword eax+simfwdorder], ebp	; 45EBA
+.57:
 inc ebx	; 45EC0
 cmp ebx, byte 0Ah	; 45EC1
-jl short loc_45E69	; 45EC4
+jl short SimulateGame.56	; 45EC4
 mov ebp, dword [dword esp+01D0h]	; 45EC6
 inc ebp	; 45ECD
 mov dword [dword esp+01D0h], ebp	; 45ECE
 cmp ebp, byte 2	; 45ED5
-jl short loc_45E67	; 45ED8
-loc_45EDA:
+jl short SimulateGame.55	; 45ED8
+.58:
 cmp byte [dword esp+01F0h], 0	; 45EDA
-jne near loc_45F66	; 45EE2
+jne near .62	; 45EE2
 xor edx, edx	; 45EE8
 mov dword [dword esp+01D0h], edx	; 45EEA
-loc_45EF1:
+.59:
 xor ebx, ebx	; 45EF1
-loc_45EF3:
+.60:
 mov eax, 3	; 45EF3
-call sub_45282	; 45EF8
+call RandMod	; 45EF8
 mov edx, eax	; 45EFD
 cmp eax, ebx	; 45EFF
-je short loc_45F4C	; 45F01
+je short .61	; 45F01
 mov ecx, dword [dword esp+01D0h]	; 45F03
 mov eax, ecx	; 45F0A
 shl eax, 2	; 45F0C
@@ -882,28 +858,28 @@ shl eax, 2	; 45F18
 add eax, ecx	; 45F1B
 shl edx, 2	; 45F1D
 add edx, ecx	; 45F20
-mov ecx, dword [dword edx+dword_C905C]	; 45F22
-mov ebp, dword [dword eax+dword_C905C]	; 45F28
+mov ecx, dword [dword edx+simdorder]	; 45F22
+mov ebp, dword [dword eax+simdorder]	; 45F28
 xor ebp, ecx	; 45F2E
-mov dword [dword eax+dword_C905C], ebp	; 45F30
+mov dword [dword eax+simdorder], ebp	; 45F30
 mov ecx, ebp	; 45F36
-mov ebp, dword [dword edx+dword_C905C]	; 45F38
+mov ebp, dword [dword edx+simdorder]	; 45F38
 xor ebp, ecx	; 45F3E
-mov dword [dword edx+dword_C905C], ebp	; 45F40
-xor dword [dword eax+dword_C905C], ebp	; 45F46
-loc_45F4C:
+mov dword [dword edx+simdorder], ebp	; 45F40
+xor dword [dword eax+simdorder], ebp	; 45F46
+.61:
 inc ebx	; 45F4C
 cmp ebx, byte 3	; 45F4D
-jl short loc_45EF3	; 45F50
+jl short SimulateGame.60	; 45F50
 mov ebp, dword [dword esp+01D0h]	; 45F52
 inc ebp	; 45F59
 mov dword [dword esp+01D0h], ebp	; 45F5A
 cmp ebp, byte 2	; 45F61
-jl short loc_45EF1	; 45F64
-loc_45F66:
+jl short SimulateGame.59	; 45F64
+.62:
 xor edx, edx	; 45F66
 mov dword [dword esp+01D0h], edx	; 45F68
-loc_45F6F:
+.63:
 mov eax, dword [dword esp+01D0h]	; 45F6F
 mov al, byte [dword esp+eax+01ECh]	; 45F76
 mov edx, dword [dword esp+01D0h]	; 45F7D
@@ -911,7 +887,7 @@ mov byte [dword esp+edx+01E8h], al	; 45F84
 xor cl, cl	; 45F8B
 mov byte [dword esp+edx+01ECh], cl	; 45F8D
 xor ebx, ebx	; 45F94
-loc_45F96:
+.64:
 mov edx, dword [dword esp+01D0h]	; 45F96
 mov eax, edx	; 45F9D
 shl eax, 2	; 45F9F
@@ -919,65 +895,65 @@ add eax, edx	; 45FA2
 add eax, ebx	; 45FA4
 mov ch, byte [dword esp+eax+0ECh]	; 45FA6
 test ch, ch	; 45FAD
-jbe short loc_45FBC	; 45FAF
+jbe short .65	; 45FAF
 mov dl, ch	; 45FB1
 dec dl	; 45FB3
 mov byte [dword esp+eax+0ECh], dl	; 45FB5
-loc_45FBC:
+.65:
 mov edx, dword [dword esp+01D0h]	; 45FBC
 mov eax, edx	; 45FC3
 shl eax, 2	; 45FC5
 add eax, edx	; 45FC8
 add eax, ebx	; 45FCA
 cmp byte [dword esp+eax+0ECh], 0	; 45FCC
-jne short loc_45FE4	; 45FD4
+jne short .66	; 45FD4
 mov eax, dword [dword esp+01D0h]	; 45FD6
 inc byte [dword esp+eax+01ECh]	; 45FDD
-loc_45FE4:
+.66:
 inc ebx	; 45FE4
 cmp ebx, byte 5	; 45FE5
-jl short loc_45F96	; 45FE8
+jl short SimulateGame.64	; 45FE8
 mov eax, dword [dword esp+01D0h]	; 45FEA
 xor ebx, ebx	; 45FF1
 mov dword [dword esp+eax*4+011Ch], ebx	; 45FF3
 lea ecx, [byte eax+01h]	; 45FFA
 mov dword [dword esp+01D0h], ecx	; 45FFD
 cmp ecx, byte 2	; 46004
-jl near loc_45F6F	; 46007
+jl near SimulateGame.63	; 46007
 mov al, byte [dword esp+01E8h]	; 4600D
 cmp al, byte [dword esp+01ECh]	; 46014
-jne short loc_4602D	; 4601B
+jne short .67	; 4601B
 mov al, byte [dword esp+01E9h]	; 4601D
 cmp al, byte [dword esp+01EDh]	; 46024
-je short loc_46097	; 4602B
-loc_4602D:
+je short .70	; 4602B
+.67:
 mov al, byte [dword esp+01ECh]	; 4602D
 cmp al, byte [dword esp+01EDh]	; 46034
-jbe short loc_46061	; 4603B
+jbe short .68	; 4603B
 mov al, byte [dword esp+01E8h]	; 4603D
 cmp al, byte [dword esp+01E9h]	; 46044
-ja short loc_46061	; 4604B
+ja short .68	; 4604B
 mov eax, dword [dword esp+0174h]	; 4604D
 inc word [byte eax+0Ah]	; 46054
 mov eax, dword [dword esp+0178h]	; 46058
-jmp short loc_46093	; 4605F
-loc_46061:
+jmp short .69	; 4605F
+.68:
 mov al, byte [dword esp+01EDh]	; 46061
 cmp al, byte [dword esp+01ECh]	; 46068
-jbe short loc_46097	; 4606F
+jbe short .70	; 4606F
 mov al, byte [dword esp+01E9h]	; 46071
 cmp al, byte [dword esp+01E8h]	; 46078
-ja short loc_46097	; 4607F
+ja short .70	; 4607F
 mov eax, dword [dword esp+0178h]	; 46081
 inc word [byte eax+0Ah]	; 46088
 mov eax, dword [dword esp+0174h]	; 4608C
-loc_46093:
+.69:
 inc word [byte eax+0Eh]	; 46093
-loc_46097:
+.70:
 mov al, byte [dword esp+01ECh]	; 46097
 mov cl, byte [dword esp+01EDh]	; 4609E
 cmp al, cl	; 460A5
-jbe short loc_460D6	; 460A7
+jbe short .71	; 460A7
 xor edx, edx	; 460A9
 mov dl, cl	; 460AB
 xor eax, eax	; 460AD
@@ -991,10 +967,10 @@ sub eax, edx	; 460C2
 mov dword [dword esp+011Ch], eax	; 460C4
 neg eax	; 460CB
 mov dword [dword esp+0120h], eax	; 460CD
-jmp short loc_46105	; 460D4
-loc_460D6:
+jmp short .72	; 460D4
+.71:
 cmp cl, al	; 460D6
-jbe short loc_46105	; 460D8
+jbe short .72	; 460D8
 xor edx, edx	; 460DA
 mov dl, cl	; 460DC
 xor eax, eax	; 460DE
@@ -1008,12 +984,12 @@ sub eax, edx	; 460F3
 mov dword [dword esp+0120h], eax	; 460F5
 neg eax	; 460FC
 mov dword [dword esp+011Ch], eax	; 460FE
-loc_46105:
+.72:
 xor eax, eax	; 46105
 mov dword [dword esp+01D0h], eax	; 46107
-loc_4610E:
+.73:
 mov eax, 3E8h	; 4610E
-call sub_45282	; 46113
+call RandMod	; 46113
 mov ecx, eax	; 46118
 mov ebx, dword [dword esp+01D0h]	; 4611A
 shl ebx, 2	; 46121
@@ -1024,10 +1000,10 @@ mov edx, eax	; 4613A
 sar edx, 1Fh	; 4613C
 idiv ebp	; 4613F
 cmp ecx, eax	; 46141
-jge near loc_46517	; 46143
+jge near .84	; 46143
 mov ch, 0FFh	; 46149
 xor ebx, ebx	; 4614B
-loc_4614D:
+.74:
 mov edx, dword [dword esp+01D0h]	; 4614D
 mov eax, edx	; 46154
 shl eax, 2	; 46156
@@ -1035,7 +1011,7 @@ add edx, eax	; 46159
 shl edx, 3	; 4615B
 xor eax, eax	; 4615E
 mov al, byte [dword esp+01F4h]	; 46160
-mov edx, dword [dword edx+eax*4+dword_C900C]	; 46167
+mov edx, dword [dword edx+eax*4+simfwdorder]	; 46167
 mov eax, edx	; 4616E
 shl eax, 2	; 46170
 sub eax, edx	; 46173
@@ -1084,11 +1060,11 @@ shl eax, 3	; 4620E
 sub ebp, eax	; 46211
 mov dword [dword esp+01C8h], ebp	; 46213
 cmp ch, 0FFh	; 4621A
-je short loc_4622A	; 4621D
+je short .75	; 4621D
 mov eax, ebp	; 4621F
 cmp eax, dword [dword esp+01C0h]	; 46221
-jle short loc_46256	; 46228
-loc_4622A:
+jle short .76	; 46228
+.75:
 mov eax, dword [dword esp+01D0h]	; 4622A
 xor edx, edx	; 46231
 mov dl, cl	; 46233
@@ -1098,12 +1074,12 @@ mov ch, bl	; 4623F
 mov eax, dword [dword esp+01C8h]	; 46241
 mov dword [dword esp+01C0h], eax	; 46248
 mov byte [dword esp+0200h], cl	; 4624F
-loc_46256:
+.76:
 inc ebx	; 46256
 cmp ebx, byte 3	; 46257
-jl near loc_4614D	; 4625A
+jl near SimulateGame.74	; 4625A
 xor ebx, ebx	; 46260
-loc_46262:
+.77:
 mov edx, dword [dword esp+01D0h]	; 46262
 mov eax, edx	; 46269
 shl eax, 2	; 4626B
@@ -1112,7 +1088,7 @@ mov edx, eax	; 46270
 shl edx, 2	; 46272
 xor eax, eax	; 46275
 mov al, byte [dword esp+01F0h]	; 46277
-mov eax, dword [dword edx+eax*4+dword_C905C]	; 4627E
+mov eax, dword [dword edx+eax*4+simdorder]	; 4627E
 add eax, eax	; 46285
 mov ebp, dword [dword esp+01D0h]	; 46287
 shl ebp, 2	; 4628E
@@ -1168,7 +1144,7 @@ sub edx, eax	; 46375
 mov dword [dword esp+01C8h], edx	; 46377
 mov eax, edx	; 4637E
 cmp eax, dword [dword esp+01C0h]	; 46380
-jle short loc_463AC	; 46387
+jle short .78	; 46387
 mov edi, dword [dword esp+ebp+015Ch]	; 46389
 add edi, dword [dword esp+01B8h]	; 46390
 mov edi, dword [edi]	; 46397
@@ -1176,10 +1152,10 @@ mov ch, bl	; 46399
 add ch, 3	; 4639B
 mov dword [dword esp+01C0h], eax	; 4639E
 mov byte [dword esp+0200h], cl	; 463A5
-loc_463AC:
+.78:
 inc ebx	; 463AC
 cmp ebx, byte 2	; 463AD
-jl near loc_46262	; 463B0
+jl near SimulateGame.77	; 463B0
 mov edx, dword [dword esp+01D0h]	; 463B6
 mov eax, edx	; 463BD
 shl eax, 2	; 463BF
@@ -1188,16 +1164,16 @@ xor eax, eax	; 463C4
 mov al, ch	; 463C6
 add eax, edx	; 463C8
 cmp byte [dword esp+eax+0ECh], 0	; 463CA
-jne near loc_46456	; 463D2
+jne near .81	; 463D2
 mov eax, 3E8h	; 463D8
-call sub_45282	; 463DD
+call RandMod	; 463DD
 cmp eax, byte 3Ch	; 463E2
-jge short loc_463EB	; 463E5
+jge short .79	; 463E5
 mov dl, 5	; 463E7
-jmp short loc_463ED	; 463E9
-loc_463EB:
+jmp short .80	; 463E9
+.79:
 mov dl, 2	; 463EB
-loc_463ED:
+.80:
 mov dh, dl	; 463ED
 inc dh	; 463EF
 mov ebx, dword [dword esp+01D0h]	; 463F1
@@ -1225,7 +1201,7 @@ mov ebx, dword [dword esp+eax*4+0174h]	; 46439
 inc byte [dword esp+edx+0A0h]	; 46440
 add word [byte ebx+010h], cx	; 46447
 sub dword [dword esp+eax*4+018Ch], 3E8h	; 4644B
-loc_46456:
+.81:
 xor eax, eax	; 46456
 mov edx, dword [dword esp+01D0h]	; 46458
 mov al, byte [dword esp+edx+01D8h]	; 4645F
@@ -1239,38 +1215,38 @@ mov eax, dword [dword esp+01D0h]	; 46480
 inc eax	; 46487
 mov dword [dword esp+01D0h], eax	; 46488
 cmp eax, byte 2	; 4648F
-jl near loc_4610E	; 46492
+jl near SimulateGame.73	; 46492
 mov bh, byte [dword esp+01F4h]	; 46498
 inc bh	; 4649F
 mov byte [dword esp+01F4h], bh	; 464A1
 cmp bh, 0Ah	; 464A8
-jne short loc_464B6	; 464AB
+jne short .82	; 464AB
 xor ch, ch	; 464AD
 mov byte [dword esp+01F4h], ch	; 464AF
-loc_464B6:
+.82:
 mov al, byte [dword esp+01F0h]	; 464B6
 inc al	; 464BD
 mov byte [dword esp+01F0h], al	; 464BF
 cmp al, 3	; 464C6
-jne short loc_464D3	; 464C8
+jne short .83	; 464C8
 xor dl, dl	; 464CA
 mov byte [dword esp+01F0h], dl	; 464CC
-loc_464D3:
+.83:
 mov eax, dword [dword esp+01B0h]	; 464D3
 dec eax	; 464DA
 mov ebx, dword [dword esp+01CCh]	; 464DB
 cmp eax, ebx	; 464E2
-jne near loc_47190	; 464E4
+jne near .117	; 464E4
 lea edx, [byte ebx-01h]	; 464EA
 cmp dword [esp], 444h	; 464ED
-jl near loc_4715F	; 464F4
+jl near .115	; 464F4
 mov eax, dword [dword esp+0184h]	; 464FA
 mov bl, byte [eax]	; 46501
 mov eax, dword [dword esp+0188h]	; 46503
 cmp bl, byte [eax]	; 4650A
-jne near loc_47190	; 4650C
-jmp near loc_47189	; 46512
-loc_46517:
+jne near .117	; 4650C
+jmp near .116	; 46512
+.84:
 xor eax, eax	; 46517
 mov edx, dword [dword esp+01D0h]	; 46519
 mov al, byte [dword esp+edx+01D8h]	; 46520
@@ -1294,7 +1270,7 @@ sar edx, 1Fh	; 46559
 idiv ebx	; 4655C
 mov ebp, eax	; 4655E
 xor ebx, ebx	; 46560
-loc_46562:
+.85:
 mov edx, dword [dword esp+01D0h]	; 46562
 mov eax, edx	; 46569
 shl eax, 2	; 4656B
@@ -1302,7 +1278,7 @@ add eax, edx	; 4656E
 xor edx, edx	; 46570
 mov dl, byte [dword esp+01F4h]	; 46572
 shl edx, 2	; 46579
-mov edx, dword [dword edx+eax*8+dword_C900C]	; 4657C
+mov edx, dword [dword edx+eax*8+simfwdorder]	; 4657C
 mov eax, edx	; 46583
 shl eax, 2	; 46585
 sub eax, edx	; 46588
@@ -1334,9 +1310,9 @@ idiv ecx	; 465E0
 add ebp, eax	; 465E2
 inc ebx	; 465E4
 cmp ebx, byte 3	; 465E5
-jl near loc_46562	; 465E8
+jl near SimulateGame.85	; 465E8
 xor ebx, ebx	; 465EE
-loc_465F0:
+.86:
 mov edx, dword [dword esp+01D0h]	; 465F0
 mov eax, edx	; 465F7
 shl eax, 2	; 465F9
@@ -1345,7 +1321,7 @@ mov edx, eax	; 465FE
 shl edx, 2	; 46600
 xor eax, eax	; 46603
 mov al, byte [dword esp+01F0h]	; 46605
-mov eax, dword [dword edx+eax*4+dword_C905C]	; 4660C
+mov eax, dword [dword edx+eax*4+simdorder]	; 4660C
 add eax, eax	; 46613
 mov dword [dword esp+01A0h], eax	; 46615
 mov eax, dword [dword esp+01D0h]	; 4661C
@@ -1375,7 +1351,7 @@ idiv ecx	; 46675
 add ebp, eax	; 46677
 inc ebx	; 46679
 cmp ebx, byte 2	; 4667A
-jl near loc_465F0	; 4667D
+jl near SimulateGame.86	; 4667D
 mov edx, dword [dword esp+01D0h]	; 46683
 mov ebx, edx	; 4668A
 shl ebx, 2	; 4668C
@@ -1388,7 +1364,7 @@ add ebx, eax	; 466A0
 mov eax, edx	; 466A2
 shl eax, 2	; 466A4
 add eax, edx	; 466A7
-add eax, dword [dword ebx+dword_C900C]	; 466A9
+add eax, dword [dword ebx+simfwdorder]	; 466A9
 xor edx, edx	; 466AF
 mov dl, byte [dword esp+eax+0F8h]	; 466B1
 mov eax, edx	; 466B8
@@ -1402,10 +1378,10 @@ inc eax	; 466CE
 imul ebp, eax	; 466CF
 sub ebp, edx	; 466D2
 cmp ebp, 3E8h	; 466D4
-jle near loc_46456	; 466DA
+jle near SimulateGame.81	; 466DA
 mov ch, 0FFh	; 466E0
 xor ebx, ebx	; 466E2
-loc_466E4:
+.87:
 mov edx, dword [dword esp+01D0h]	; 466E4
 mov eax, edx	; 466EB
 shl eax, 2	; 466ED
@@ -1413,7 +1389,7 @@ add edx, eax	; 466F0
 shl edx, 3	; 466F2
 xor eax, eax	; 466F5
 mov al, byte [dword esp+01F4h]	; 466F7
-mov edx, dword [dword edx+eax*4+dword_C900C]	; 466FE
+mov edx, dword [dword edx+eax*4+simfwdorder]	; 466FE
 mov eax, edx	; 46705
 shl eax, 2	; 46707
 sub eax, edx	; 4670A
@@ -1465,18 +1441,18 @@ mov edx, dword [dword esp+01A0h]	; 467BB
 sub edx, eax	; 467C2
 mov dword [dword esp+01C4h], edx	; 467C4
 cmp ch, 0FFh	; 467CB
-je short loc_467DB	; 467CE
+je short .88	; 467CE
 mov eax, edx	; 467D0
 cmp eax, dword [dword esp+01BCh]	; 467D2
-jle short loc_46821	; 467D9
-loc_467DB:
+jle short .89	; 467D9
+.88:
 mov edx, dword [dword esp+01D0h]	; 467DB
 mov eax, edx	; 467E2
 shl eax, 2	; 467E4
 add eax, edx	; 467E7
 add eax, ebx	; 467E9
 cmp byte [dword esp+eax+0ECh], 0	; 467EB
-jne short loc_46821	; 467F3
+jne short .89	; 467F3
 mov eax, dword [dword esp+01D0h]	; 467F5
 xor edx, edx	; 467FC
 mov dl, cl	; 467FE
@@ -1486,12 +1462,12 @@ mov ch, bl	; 4680A
 mov eax, dword [dword esp+01C4h]	; 4680C
 mov dword [dword esp+01BCh], eax	; 46813
 mov byte [dword esp+0200h], cl	; 4681A
-loc_46821:
+.89:
 inc ebx	; 46821
 cmp ebx, byte 3	; 46822
-jl near loc_466E4	; 46825
+jl near SimulateGame.87	; 46825
 xor ebx, ebx	; 4682B
-loc_4682D:
+.90:
 mov edx, dword [dword esp+01D0h]	; 4682D
 mov eax, edx	; 46834
 shl eax, 2	; 46836
@@ -1499,7 +1475,7 @@ sub eax, edx	; 46839
 xor edx, edx	; 4683B
 mov dl, byte [dword esp+01F0h]	; 4683D
 shl edx, 2	; 46844
-mov edx, dword [dword edx+eax*4+dword_C905C]	; 46847
+mov edx, dword [dword edx+eax*4+simdorder]	; 46847
 add edx, edx	; 4684E
 mov ebp, dword [dword esp+01D0h]	; 46850
 shl ebp, 2	; 46857
@@ -1555,24 +1531,24 @@ sub edx, eax	; 4693B
 mov dword [dword esp+01C4h], edx	; 4693D
 mov eax, edx	; 46944
 cmp eax, dword [dword esp+01BCh]	; 46946
-jle short loc_46998	; 4694D
+jle short .91	; 4694D
 mov eax, dword [dword esp+01D0h]	; 4694F
 mov dword [dword esp+01D4h], eax	; 46956
 shl eax, 2	; 4695D
 add eax, dword [dword esp+01D4h]	; 46960
 add eax, ebx	; 46967
 cmp byte [dword esp+eax+0EFh], 0	; 46969
-jne short loc_46998	; 46971
+jne short .91	; 46971
 mov edi, dword [dword esp+ebp+015Ch]	; 46973
 add edi, dword [dword esp+01A8h]	; 4697A
 mov edi, dword [edi]	; 46981
 mov eax, dword [dword esp+01C4h]	; 46983
 mov dword [dword esp+01BCh], eax	; 4698A
 mov byte [dword esp+0200h], cl	; 46991
-loc_46998:
+.91:
 inc ebx	; 46998
 cmp ebx, byte 2	; 46999
-jl near loc_4682D	; 4699C
+jl near SimulateGame.90	; 4699C
 mov edx, dword [dword esp+01D0h]	; 469A2
 mov eax, edx	; 469A9
 shl eax, 2	; 469AB
@@ -1585,7 +1561,7 @@ add ebx, eax	; 469BF
 mov eax, edx	; 469C1
 shl eax, 2	; 469C3
 add eax, edx	; 469C6
-mov edx, dword [dword ebx+dword_C900C]	; 469C8
+mov edx, dword [dword ebx+simfwdorder]	; 469C8
 add edx, eax	; 469CE
 mov ebx, dword [dword esp+01D0h]	; 469D0
 mov eax, ebx	; 469D7
@@ -1612,7 +1588,7 @@ mov al, byte [dword esp+edx+01D8h]	; 46A27
 mov edx, dword [dword esp+edx*4+014Ch]	; 46A2E
 mov edx, dword [edx+eax*4]	; 46A35
 cmp word [byte edx+012h], byte 0	; 46A38
-je short loc_46A67	; 46A3D
+je short .92	; 46A3D
 xor ebx, ebx	; 46A3F
 mov bx, word [byte edx+0Eh]	; 46A41
 mov eax, ebx	; 46A45
@@ -1628,8 +1604,8 @@ mov edx, ebx	; 46A5C
 sar edx, 1Fh	; 46A5E
 idiv ecx	; 46A61
 mov ebx, eax	; 46A63
-jmp short loc_46A83	; 46A65
-loc_46A67:
+jmp short .93	; 46A65
+.92:
 call rand_	; 46A67
 mov edx, eax	; 46A6C
 and edx, 7FFFh	; 46A6E
@@ -1638,7 +1614,7 @@ mov eax, edx	; 46A79
 sar edx, 1Fh	; 46A7B
 idiv ebx	; 46A7E
 lea ebx, [byte edx+01h]	; 46A80
-loc_46A83:
+.93:
 xor edx, edx	; 46A83
 mov eax, dword [dword esp+01D0h]	; 46A85
 mov dl, byte [dword esp+eax+01DCh]	; 46A8C
@@ -1659,7 +1635,7 @@ mov dl, byte [dword esp+0200h]	; 46AB9
 mov eax, dword [dword esp+eax*4+012Ch]	; 46AC0
 mov edx, dword [eax+edx*4]	; 46AC7
 cmp word [byte edx+0Eh], byte 0	; 46ACA
-je short loc_46AF5	; 46ACF
+je short .94	; 46ACF
 xor ecx, ecx	; 46AD1
 mov cx, word [byte edx+02h]	; 46AD3
 mov eax, ecx	; 46AD7
@@ -1673,8 +1649,8 @@ mov eax, ecx	; 46AEA
 mov edx, ecx	; 46AEC
 sar edx, 1Fh	; 46AEE
 idiv ebp	; 46AF1
-jmp short loc_46B11	; 46AF3
-loc_46AF5:
+jmp short .95	; 46AF3
+.94:
 call rand_	; 46AF5
 mov edx, eax	; 46AFA
 and edx, 7FFFh	; 46AFC
@@ -1683,16 +1659,16 @@ mov eax, edx	; 46B07
 sar edx, 1Fh	; 46B09
 idiv ecx	; 46B0C
 lea eax, [byte edx+01h]	; 46B0E
-loc_46B11:
+.95:
 mov edx, dword [dword esp+01B4h]	; 46B11
 cmp edx, dword [dword esp+01B0h]	; 46B18
-jl short loc_46B38	; 46B1F
+jl short .96	; 46B1F
 mov edx, dword [dword esp+0220h]	; 46B21
 cmp edx, dword [dword esp+01D0h]	; 46B28
-jne short loc_46B38	; 46B2F
+jne short .96	; 46B2F
 mov ebx, 3E8h	; 46B31
-jmp short loc_46B57	; 46B36
-loc_46B38:
+jmp short .97	; 46B36
+.96:
 lea edx, [eax+ebx]	; 46B38
 mov eax, edx	; 46B3B
 sar edx, 1Fh	; 46B3D
@@ -1702,19 +1678,19 @@ mov edx, eax	; 46B44
 mov eax, dword [dword esp+01D0h]	; 46B46
 add edx, dword [dword esp+eax*4+011Ch]	; 46B4D
 lea ebx, [byte edx+0Dh]	; 46B54
-loc_46B57:
+.97:
 mov eax, 3E8h	; 46B57
-call sub_45282	; 46B5C
+call RandMod	; 46B5C
 mov edx, eax	; 46B61
 mov ecx, dword [dword esp+0220h]	; 46B63
 test ecx, ecx	; 46B6A
-je short loc_46B73	; 46B6C
+je short .98	; 46B6C
 cmp ecx, byte 1	; 46B6E
-jne short loc_46BCA	; 46B71
-loc_46B73:
+jne short .100	; 46B71
+.98:
 mov eax, dword [dword esp+01D0h]	; 46B73
 cmp eax, dword [dword esp+0220h]	; 46B7A
-je short loc_46BCA	; 46B81
+je short .100	; 46B81
 xor al, 1	; 46B83
 xor ecx, ecx	; 46B85
 mov cl, byte [dword esp+eax+01DCh]	; 46B87
@@ -1726,14 +1702,14 @@ mov dword [dword esp+01D4h], ecx	; 46BA5
 mov ecx, dword [dword esp+01A0h]	; 46BAC
 dec ecx	; 46BB3
 cmp ecx, dword [dword esp+01D4h]	; 46BB4
-jle short loc_46BC7	; 46BBB
+jle short .99	; 46BBB
 cmp byte [dword esp+eax+01DCh], 0	; 46BBD
-jne short loc_46BCA	; 46BC5
-loc_46BC7:
+jne short .100	; 46BC5
+.99:
 lea edx, [byte ebx+01h]	; 46BC7
-loc_46BCA:
+.100:
 cmp edx, ebx	; 46BCA
-jg near loc_46456	; 46BCC
+jg near SimulateGame.81	; 46BCC
 mov al, byte [dword esp+0200h]	; 46BD2
 mov byte [dword esp+01F8h], al	; 46BD9
 mov edx, dword [dword esp+01D0h]	; 46BE0
@@ -1767,24 +1743,24 @@ inc byte [edx]	; 46C4F
 mov edx, dword [dword esp+01D0h]	; 46C51
 inc byte [dword esp+edx+01DCh]	; 46C58
 cmp dword [dword esp+eax+011Ch], byte 0	; 46C5F
-jle short loc_46C83	; 46C67
+jle short .101	; 46C67
 mov eax, dword [dword esp+eax+0174h]	; 46C69
 inc word [byte eax+08h]	; 46C70
 inc word [byte edi+08h]	; 46C74
 mov eax, dword [dword esp+ebx+0174h]	; 46C78
 inc word [byte eax+0Ch]	; 46C7F
-loc_46C83:
+.101:
 mov eax, dword [dword esp+01D0h]	; 46C83
 xor al, 1	; 46C8A
 mov eax, dword [dword esp+eax*4+0174h]	; 46C8C
 mov edx, dword [dword esp+01D0h]	; 46C93
 inc word [byte eax+06h]	; 46C9A
 cmp dword [dword esp+edx*4+011Ch], byte 0	; 46C9E
-jge short loc_46CAC	; 46CA6
+jge short .102	; 46CA6
 inc word [byte edi+0Ah]	; 46CA8
-loc_46CAC:
+.102:
 xor ebx, ebx	; 46CAC
-loc_46CAE:
+.103:
 mov eax, dword [dword esp+01D0h]	; 46CAE
 mov edx, eax	; 46CB5
 shl edx, 2	; 46CB7
@@ -1795,7 +1771,7 @@ mov al, byte [dword esp+01F4h]	; 46CC1
 shl eax, 2	; 46CC8
 mov dword [dword esp+01D4h], eax	; 46CCB
 add edx, eax	; 46CD2
-mov edx, dword [dword edx+dword_C900C]	; 46CD4
+mov edx, dword [dword edx+simfwdorder]	; 46CD4
 mov ecx, edx	; 46CDA
 shl ecx, 2	; 46CDC
 sub ecx, edx	; 46CDF
@@ -1814,7 +1790,7 @@ shl eax, 2	; 46D12
 add eax, ebp	; 46D15
 inc word [byte edx+010h]	; 46D17
 mov edx, dword [dword esp+01D4h]	; 46D1B
-mov edx, dword [dword edx+eax*8+dword_C900C]	; 46D22
+mov edx, dword [dword edx+eax*8+simfwdorder]	; 46D22
 mov ecx, edx	; 46D29
 shl ecx, 2	; 46D2B
 sub ecx, edx	; 46D2E
@@ -1828,9 +1804,9 @@ mov eax, dword [eax+edx*4]	; 46D4B
 dec word [byte eax+010h]	; 46D4E
 inc ebx	; 46D52
 cmp ebx, byte 3	; 46D53
-jl near loc_46CAE	; 46D56
+jl near SimulateGame.103	; 46D56
 xor ebx, ebx	; 46D5C
-loc_46D5E:
+.104:
 mov edx, dword [dword esp+01D0h]	; 46D5E
 mov eax, edx	; 46D65
 shl eax, 2	; 46D67
@@ -1841,7 +1817,7 @@ mov dl, byte [dword esp+01F0h]	; 46D71
 shl edx, 2	; 46D78
 mov dword [dword esp+01D4h], edx	; 46D7B
 add eax, edx	; 46D82
-mov edx, dword [dword eax+dword_C905C]	; 46D84
+mov edx, dword [dword eax+simdorder]	; 46D84
 add edx, edx	; 46D8A
 mov eax, dword [dword esp+01D0h]	; 46D8C
 mov ecx, dword [dword esp+eax*4+016Ch]	; 46D93
@@ -1861,7 +1837,7 @@ sub eax, ebp	; 46DC0
 shl eax, 2	; 46DC2
 inc word [byte edx+010h]	; 46DC5
 add eax, dword [dword esp+01D4h]	; 46DC9
-mov edx, dword [dword eax+dword_C905C]	; 46DD0
+mov edx, dword [dword eax+simdorder]	; 46DD0
 add edx, edx	; 46DD6
 mov ecx, dword [dword esp+ebp*4+016Ch]	; 46DD8
 add ecx, edx	; 46DDF
@@ -1873,34 +1849,34 @@ mov eax, dword [eax+edx*4]	; 46DF3
 dec word [byte eax+010h]	; 46DF6
 inc ebx	; 46DFA
 cmp ebx, byte 2	; 46DFB
-jl near loc_46D5E	; 46DFE
+jl near SimulateGame.104	; 46DFE
 xor ch, ch	; 46E04
 mov byte [dword esp+0204h], ch	; 46E06
 mov eax, 3E8h	; 46E0D
-call sub_45282	; 46E12
+call RandMod	; 46E12
 mov edx, eax	; 46E17
 cmp eax, 320h	; 46E19
-jg short loc_46E3B	; 46E1E
+jg short .105	; 46E1E
 mov eax, dword [dword esp+01D0h]	; 46E20
 cmp byte [dword esp+eax+01ECh], 2	; 46E27
-jb short loc_46E3B	; 46E2F
+jb short .105	; 46E2F
 mov byte [dword esp+0204h], 2	; 46E31
-jmp short loc_46E5C	; 46E39
-loc_46E3B:
+jmp short .106	; 46E39
+.105:
 cmp edx, 384h	; 46E3B
-jg short loc_46E5C	; 46E41
+jg short .106	; 46E41
 mov eax, dword [dword esp+01D0h]	; 46E43
 cmp byte [dword esp+eax+01ECh], 1	; 46E4A
-jb short loc_46E5C	; 46E52
+jb short .106	; 46E52
 mov byte [dword esp+0204h], 1	; 46E54
-loc_46E5C:
+.106:
 mov byte [dword esp+01FCh], 0FFh	; 46E5C
-loc_46E64:
+.107:
 cmp byte [dword esp+0204h], 0	; 46E64
-je near loc_46456	; 46E6C
+je near SimulateGame.81	; 46E6C
 mov ch, 0FFh	; 46E72
 xor ebx, ebx	; 46E74
-loc_46E76:
+.108:
 mov edx, dword [dword esp+01D0h]	; 46E76
 mov eax, edx	; 46E7D
 shl eax, 2	; 46E7F
@@ -1908,7 +1884,7 @@ add eax, edx	; 46E82
 xor edx, edx	; 46E84
 mov dl, byte [dword esp+01F4h]	; 46E86
 shl edx, 2	; 46E8D
-mov edx, dword [dword edx+eax*8+dword_C900C]	; 46E90
+mov edx, dword [dword edx+eax*8+simfwdorder]	; 46E90
 mov eax, edx	; 46E97
 shl eax, 2	; 46E99
 sub eax, edx	; 46E9C
@@ -1959,21 +1935,21 @@ shl eax, 3	; 46F4A
 mov edx, dword [dword esp+01D4h]	; 46F4D
 sub edx, eax	; 46F54
 cmp ch, 0FFh	; 46F56
-je short loc_46F5F	; 46F59
+je short .109	; 46F59
 cmp edx, esi	; 46F5B
-jle short loc_46FB4	; 46F5D
-loc_46F5F:
+jle short .110	; 46F5D
+.109:
 mov eax, dword [dword esp+01D0h]	; 46F5F
 mov dword [dword esp+01D4h], eax	; 46F66
 shl eax, 2	; 46F6D
 add eax, dword [dword esp+01D4h]	; 46F70
 add eax, ebx	; 46F77
 cmp byte [dword esp+eax+0ECh], 0	; 46F79
-jne short loc_46FB4	; 46F81
+jne short .110	; 46F81
 cmp cl, byte [dword esp+01F8h]	; 46F83
-je short loc_46FB4	; 46F8A
+je short .110	; 46F8A
 cmp cl, byte [dword esp+01FCh]	; 46F8C
-je short loc_46FB4	; 46F93
+je short .110	; 46F93
 mov eax, dword [dword esp+01D0h]	; 46F95
 movzx esi, cl	; 46F9C
 mov edi, dword [dword esp+eax*4+015Ch]	; 46F9F
@@ -1981,12 +1957,12 @@ mov edi, dword [edi+esi*4]	; 46FA6
 mov ch, bl	; 46FA9
 mov esi, edx	; 46FAB
 mov byte [dword esp+0200h], cl	; 46FAD
-loc_46FB4:
+.110:
 inc ebx	; 46FB4
 cmp ebx, byte 3	; 46FB5
-jl near loc_46E76	; 46FB8
+jl near SimulateGame.108	; 46FB8
 xor ebx, ebx	; 46FBE
-loc_46FC0:
+.111:
 mov edx, dword [dword esp+01D0h]	; 46FC0
 mov eax, edx	; 46FC7
 shl eax, 2	; 46FC9
@@ -1995,7 +1971,7 @@ mov edx, eax	; 46FCE
 shl edx, 2	; 46FD0
 xor eax, eax	; 46FD3
 mov al, byte [dword esp+01F0h]	; 46FD5
-mov eax, dword [dword edx+eax*4+dword_C905C]	; 46FDC
+mov eax, dword [dword edx+eax*4+simdorder]	; 46FDC
 add eax, eax	; 46FE3
 mov dword [dword esp+01D4h], eax	; 46FE5
 mov eax, dword [dword esp+01D0h]	; 46FEC
@@ -2044,21 +2020,21 @@ shl eax, 3	; 47091
 mov edx, dword [dword esp+01D4h]	; 47094
 sub edx, eax	; 4709B
 cmp ch, 0FFh	; 4709D
-je short loc_470A6	; 470A0
+je short .112	; 470A0
 cmp edx, esi	; 470A2
-jle short loc_470FE	; 470A4
-loc_470A6:
+jle short .113	; 470A4
+.112:
 mov eax, dword [dword esp+01D0h]	; 470A6
 mov dword [dword esp+01D4h], eax	; 470AD
 shl eax, 2	; 470B4
 add eax, dword [dword esp+01D4h]	; 470B7
 add eax, ebx	; 470BE
 cmp byte [dword esp+eax+0EFh], 0	; 470C0
-jne short loc_470FE	; 470C8
+jne short .113	; 470C8
 cmp cl, byte [dword esp+01F8h]	; 470CA
-je short loc_470FE	; 470D1
+je short .113	; 470D1
 cmp cl, byte [dword esp+01FCh]	; 470D3
-je short loc_470FE	; 470DA
+je short .113	; 470DA
 mov eax, dword [dword esp+01D0h]	; 470DC
 movzx esi, cl	; 470E3
 mov edi, dword [dword esp+eax*4+015Ch]	; 470E6
@@ -2067,12 +2043,12 @@ mov ch, bl	; 470F0
 add ch, 3	; 470F2
 mov esi, edx	; 470F5
 mov byte [dword esp+0200h], cl	; 470F7
-loc_470FE:
+.113:
 inc ebx	; 470FE
 cmp ebx, byte 2	; 470FF
-jl near loc_46FC0	; 47102
+jl near SimulateGame.111	; 47102
 cmp ch, 0FFh	; 47108
-je short loc_47151	; 4710B
+je short .114	; 4710B
 mov al, byte [dword esp+0200h]	; 4710D
 mov byte [dword esp+01FCh], al	; 47114
 mov edx, dword [dword esp+01D0h]	; 4711B
@@ -2088,40 +2064,40 @@ inc byte [byte esp+eax+04h]	; 47139
 inc word [byte edi+04h]	; 4713D
 inc word [byte edi+06h]	; 47141
 dec byte [dword esp+0204h]	; 47145
-jmp near loc_46E64	; 4714C
-loc_47151:
+jmp near SimulateGame.107	; 4714C
+.114:
 xor dl, dl	; 47151
 mov byte [dword esp+0204h], dl	; 47153
-jmp near loc_46E64	; 4715A
-loc_4715F:
+jmp near SimulateGame.107	; 4715A
+.115:
 mov eax, dword [dword esp+0184h]	; 4715F
 mov bl, byte [eax]	; 47166
 mov eax, dword [dword esp+0188h]	; 47168
 cmp bl, byte [eax]	; 4716F
-jne short loc_47190	; 47171
+jne short .117	; 47171
 mov ebp, dword [dword esp+01ACh]	; 47173
 cmp ebp, byte 5	; 4717A
-jge short loc_47190	; 4717D
+jge short .117	; 4717D
 lea eax, [byte ebp+01h]	; 4717F
 mov dword [dword esp+01ACh], eax	; 47182
-loc_47189:
+.116:
 mov dword [dword esp+01CCh], edx	; 47189
-loc_47190:
+.117:
 inc dword [dword esp+01CCh]	; 47190
 inc dword [dword esp+01B4h]	; 47197
-loc_4719E:
+.118:
 mov eax, dword [dword esp+01CCh]	; 4719E
 cmp eax, dword [dword esp+01B0h]	; 471A5
-jge short loc_471BD	; 471AC
+jge short .119	; 471AC
 mov ebp, dword [dword esp+01A4h]	; 471AE
 test ebp, ebp	; 471B5
-je near loc_45E52	; 471B7
-loc_471BD:
+je near SimulateGame.54	; 471B7
+.119:
 mov eax, dword [dword esp+0184h]	; 471BD
 mov dl, byte [eax]	; 471C4
 mov eax, dword [dword esp+0188h]	; 471C6
 cmp dl, byte [eax]	; 471CD
-jne short loc_4721C	; 471CF
+jne short .120	; 471CF
 mov eax, dword [dword esp+0174h]	; 471D1
 inc byte [byte eax+03h]	; 471D8
 mov eax, dword [dword esp+0178h]	; 471DB
@@ -2138,13 +2114,13 @@ shl eax, 2	; 47207
 add eax, dword [dword esp+0110h]	; 4720A
 mov eax, dword [eax]	; 47211
 inc word [byte eax+06h]	; 47213
-jmp near loc_472B8	; 47217
-loc_4721C:
+jmp near .123	; 47217
+.120:
 mov eax, dword [dword esp+0184h]	; 4721C
 mov dl, byte [eax]	; 47223
 mov eax, dword [dword esp+0188h]	; 47225
 cmp dl, byte [eax]	; 4722C
-jbe short loc_47272	; 4722E
+jbe short .121	; 4722E
 mov eax, dword [dword esp+0174h]	; 47230
 inc byte [byte eax+01h]	; 47237
 mov eax, dword [dword esp+0178h]	; 4723A
@@ -2159,8 +2135,8 @@ xor eax, eax	; 4725D
 mov al, byte [dword esp+01D9h]	; 4725F
 shl eax, 2	; 47266
 add eax, dword [dword esp+0110h]	; 47269
-jmp short loc_472B2	; 47270
-loc_47272:
+jmp short .122	; 47270
+.121:
 mov eax, dword [dword esp+0178h]	; 47272
 inc byte [byte eax+01h]	; 47279
 mov eax, dword [dword esp+0174h]	; 4727C
@@ -2175,15 +2151,15 @@ xor eax, eax	; 4729F
 mov al, byte [dword esp+01D8h]	; 472A1
 shl eax, 2	; 472A8
 add eax, dword [dword esp+010Ch]	; 472AB
-loc_472B2:
+.122:
 mov eax, dword [eax]	; 472B2
 inc word [byte eax+04h]	; 472B4
-loc_472B8:
+.123:
 xor eax, eax	; 472B8
 mov dword [dword esp+0194h], eax	; 472BA
 mov eax, dword [dword esp+0184h]	; 472C1
 cmp byte [eax], 0	; 472C8
-jne short loc_4730A	; 472CB
+jne short .124	; 472CB
 xor eax, eax	; 472CD
 mov al, byte [dword esp+01D9h]	; 472CF
 shl eax, 2	; 472D6
@@ -2196,11 +2172,11 @@ add ecx, byte 19h	; 472EF
 mov ebx, 1	; 472F2
 lea edx, [dword esp+0D4h]	; 472F7
 lea eax, [dword esp+0194h]	; 472FE
-call sub_452A6	; 47305
-loc_4730A:
+call SimAddPair	; 47305
+.124:
 mov eax, dword [dword esp+0188h]	; 4730A
 cmp byte [eax], 0	; 47311
-jne short loc_47350	; 47314
+jne short .125	; 47314
 xor eax, eax	; 47316
 mov al, byte [dword esp+01D8h]	; 47318
 shl eax, 2	; 4731F
@@ -2213,16 +2189,16 @@ add ecx, byte 19h	; 47338
 xor ebx, ebx	; 4733B
 lea edx, [dword esp+0D4h]	; 4733D
 lea eax, [dword esp+0194h]	; 47344
-call sub_452A6	; 4734B
-loc_47350:
+call SimAddPair	; 4734B
+.125:
 xor ecx, ecx	; 47350
 mov dword [dword esp+01D0h], ecx	; 47352
 mov ebx, 0FFh	; 47359
-jmp short loc_473A8	; 4735E
-loc_47360:
+jmp short .130	; 4735E
+.126:
 mov dword [dword esp+01CCh], edx	; 47360
-jmp short loc_4738B	; 47367
-loc_47369:
+jmp short .128	; 47367
+.127:
 mov eax, dword [dword esp+01D0h]	; 47369
 shl eax, 3	; 47370
 mov edx, ebp	; 47373
@@ -2231,30 +2207,30 @@ add eax, edx	; 47378
 mov dword [dword esp+eax+0D4h], ebx	; 4737A
 lea ecx, [byte ebp+01h]	; 47381
 mov dword [dword esp+01CCh], ecx	; 47384
-loc_4738B:
+.128:
 mov ebp, dword [dword esp+01CCh]	; 4738B
 cmp ebp, byte 2	; 47392
-jge short loc_473A1	; 47395
+jge short .129	; 47395
 cmp dword [dword esp+01A4h], byte 0	; 47397
-je short loc_47369	; 4739F
-loc_473A1:
+je short SimulateGame.127	; 4739F
+.129:
 inc dword [dword esp+01D0h]	; 473A1
-loc_473A8:
+.130:
 cmp dword [dword esp+01D0h], byte 3	; 473A8
-jge short loc_473BD	; 473B0
+jge short .131	; 473B0
 mov edx, dword [dword esp+01A4h]	; 473B2
 test edx, edx	; 473B9
-je short loc_47360	; 473BB
-loc_473BD:
+je short SimulateGame.126	; 473BB
+.131:
 mov ch, 0FFh	; 473BD
 mov cl, ch	; 473BF
 xor ebx, ebx	; 473C1
 mov dword [dword esp+01D0h], ebx	; 473C3
-jmp near loc_47447	; 473CA
-loc_473CF:
+jmp near .138	; 473CA
+.132:
 mov dword [dword esp+01CCh], edi	; 473CF
-jmp short loc_4742C	; 473D6
-loc_473D8:
+jmp short .136	; 473D6
+.133:
 mov edx, dword [dword esp+01D0h]	; 473D8
 mov eax, edx	; 473DF
 shl eax, 2	; 473E1
@@ -2272,30 +2248,30 @@ mov al, byte [byte esp+eax+038h]	; 47403
 and eax, 0FFh	; 47407
 add eax, edx	; 4740C
 cmp cl, 0FFh	; 4740E
-je short loc_47417	; 47411
+je short .134	; 47411
 cmp eax, ebx	; 47413
-jle short loc_47425	; 47415
-loc_47417:
+jle short .135	; 47415
+.134:
 mov ch, byte [dword esp+01D0h]	; 47417
 mov cl, byte [dword esp+01CCh]	; 4741E
-loc_47425:
+.135:
 inc dword [dword esp+01CCh]	; 47425
-loc_4742C:
+.136:
 cmp dword [dword esp+01CCh], byte 19h	; 4742C
-jge short loc_47440	; 47434
+jge short .137	; 47434
 cmp dword [dword esp+01A4h], byte 0	; 47436
-je short loc_473D8	; 4743E
-loc_47440:
+je short SimulateGame.133	; 4743E
+.137:
 inc dword [dword esp+01D0h]	; 47440
-loc_47447:
+.138:
 cmp dword [dword esp+01D0h], byte 2	; 47447
-jge short loc_47460	; 4744F
+jge short .139	; 4744F
 mov edi, dword [dword esp+01A4h]	; 47451
 test edi, edi	; 47458
-je near loc_473CF	; 4745A
-loc_47460:
+je near SimulateGame.132	; 4745A
+.139:
 cmp ch, 0FFh	; 47460
-je short loc_47482	; 47463
+je short .140	; 47463
 xor eax, eax	; 47465
 mov al, cl	; 47467
 xor ebx, ebx	; 47469
@@ -2303,17 +2279,17 @@ mov bl, ch	; 4746B
 mov ecx, eax	; 4746D
 lea edx, [dword esp+0D4h]	; 4746F
 lea eax, [dword esp+0194h]	; 47476
-call sub_452A6	; 4747D
-loc_47482:
+call SimAddPair	; 4747D
+.140:
 mov ch, 0FFh	; 47482
 mov cl, ch	; 47484
 xor ebx, ebx	; 47486
 mov dword [dword esp+01D0h], ebx	; 47488
-jmp short loc_474F6	; 4748F
-loc_47491:
+jmp short .147	; 4748F
+.141:
 mov dword [dword esp+01CCh], esi	; 47491
-jmp short loc_474DB	; 47498
-loc_4749A:
+jmp short .145	; 47498
+.142:
 mov edx, dword [dword esp+01D0h]	; 4749A
 mov eax, edx	; 474A1
 shl eax, 2	; 474A3
@@ -2324,30 +2300,30 @@ add eax, dword [dword esp+01CCh]	; 474AD
 mov al, byte [byte esp+eax+06Ch]	; 474B4
 and eax, 0FFh	; 474B8
 cmp cl, 0FFh	; 474BD
-je short loc_474C6	; 474C0
+je short .143	; 474C0
 cmp eax, ebx	; 474C2
-jle short loc_474D4	; 474C4
-loc_474C6:
+jle short .144	; 474C4
+.143:
 mov ch, byte [dword esp+01D0h]	; 474C6
 mov cl, byte [dword esp+01CCh]	; 474CD
-loc_474D4:
+.144:
 inc dword [dword esp+01CCh]	; 474D4
-loc_474DB:
+.145:
 cmp dword [dword esp+01CCh], byte 19h	; 474DB
-jge short loc_474EF	; 474E3
+jge short .146	; 474E3
 cmp dword [dword esp+01A4h], byte 0	; 474E5
-je short loc_4749A	; 474ED
-loc_474EF:
+je short SimulateGame.142	; 474ED
+.146:
 inc dword [dword esp+01D0h]	; 474EF
-loc_474F6:
+.147:
 cmp dword [dword esp+01D0h], byte 2	; 474F6
-jge short loc_4750B	; 474FE
+jge short .148	; 474FE
 mov esi, dword [dword esp+01A4h]	; 47500
 test esi, esi	; 47507
-je short loc_47491	; 47509
-loc_4750B:
+je short SimulateGame.141	; 47509
+.148:
 cmp ch, 0FFh	; 4750B
-je short loc_4752D	; 4750E
+je short .149	; 4750E
 xor eax, eax	; 47510
 mov al, cl	; 47512
 xor ebx, ebx	; 47514
@@ -2355,19 +2331,19 @@ mov bl, ch	; 47516
 mov ecx, eax	; 47518
 lea edx, [dword esp+0D4h]	; 4751A
 lea eax, [dword esp+0194h]	; 47521
-call sub_452A6	; 47528
-loc_4752D:
+call SimAddPair	; 47528
+.149:
 mov ch, 0FFh	; 4752D
 mov cl, ch	; 4752F
 xor ebx, ebx	; 47531
 mov dword [dword esp+01D0h], ebx	; 47533
 mov ebp, dword [dword esp+01A4h]	; 4753A
-jmp short loc_4759F	; 47541
-loc_47543:
+jmp short .156	; 47541
+.150:
 mov dword [dword esp+01CCh], edx	; 47543
 mov edx, dword [dword esp+01D0h]	; 4754A
-jmp short loc_47588	; 47551
-loc_47553:
+jmp short .154	; 47551
+.151:
 mov eax, edx	; 47553
 shl eax, 2	; 47555
 sub eax, edx	; 47558
@@ -2377,31 +2353,31 @@ add eax, edi	; 4755F
 mov al, byte [byte esp+eax+04h]	; 47561
 and eax, 0FFh	; 47565
 cmp cl, 0FFh	; 4756A
-je short loc_47573	; 4756D
+je short .152	; 4756D
 cmp eax, ebx	; 4756F
-jle short loc_47581	; 47571
-loc_47573:
+jle short .153	; 47571
+.152:
 mov ch, byte [dword esp+01D0h]	; 47573
 mov cl, byte [dword esp+01CCh]	; 4757A
-loc_47581:
+.153:
 inc dword [dword esp+01CCh]	; 47581
-loc_47588:
+.154:
 mov edi, dword [dword esp+01CCh]	; 47588
 cmp edi, byte 19h	; 4758F
-jge short loc_47598	; 47592
+jge short .155	; 47592
 test ebp, ebp	; 47594
-je short loc_47553	; 47596
-loc_47598:
+je short SimulateGame.151	; 47596
+.155:
 inc dword [dword esp+01D0h]	; 47598
-loc_4759F:
+.156:
 cmp dword [dword esp+01D0h], byte 2	; 4759F
-jge short loc_475B4	; 475A7
+jge short .157	; 475A7
 mov edx, dword [dword esp+01A4h]	; 475A9
 test edx, edx	; 475B0
-je short loc_47543	; 475B2
-loc_475B4:
+je short SimulateGame.150	; 475B2
+.157:
 cmp ch, 0FFh	; 475B4
-je short loc_475D6	; 475B7
+je short .158	; 475B7
 xor eax, eax	; 475B9
 mov al, cl	; 475BB
 xor ebx, ebx	; 475BD
@@ -2409,19 +2385,19 @@ mov bl, ch	; 475BF
 mov ecx, eax	; 475C1
 lea edx, [dword esp+0D4h]	; 475C3
 lea eax, [dword esp+0194h]	; 475CA
-call sub_452A6	; 475D1
-loc_475D6:
+call SimAddPair	; 475D1
+.158:
 xor ebx, ebx	; 475D6
 mov dword [dword esp+01D0h], ebx	; 475D8
 mov ebp, dword [dword esp+01A4h]	; 475DF
-jmp short loc_47648	; 475E6
-loc_475E8:
+jmp short .162	; 475E6
+.159:
 mov ch, byte [dword esp+edi*8+0D4h]	; 475E8
 mov cl, byte [dword esp+edi*8+0D8h]	; 475EF
 cmp ch, 0FFh	; 475F6
-je short loc_47641	; 475F9
+je short .161	; 475F9
 cmp cl, 0FFh	; 475FB
-je short loc_47641	; 475FE
+je short .161	; 475FE
 xor eax, eax	; 47600
 mov al, ch	; 47602
 shl eax, 2	; 47604
@@ -2432,27 +2408,27 @@ mov ebx, dword [dword esp+eax+017Ch]	; 4760E
 mov ebx, dword [edx+ebx]	; 47615
 lea ecx, [edi+edi]	; 47618
 cmp byte [byte ebx+02h], 47h	; 4761B
-jne short loc_47632	; 4761F
+jne short .160	; 4761F
 mov eax, dword [dword esp+eax+0124h]	; 47621
 mov eax, dword [edx+eax]	; 47628
 inc word [byte ecx+eax+030h]	; 4762B
-jmp short loc_47641	; 47630
-loc_47632:
+jmp short .161	; 47630
+.160:
 mov eax, dword [dword esp+eax+0154h]	; 47632
 mov eax, dword [edx+eax]	; 47639
 inc word [byte ecx+eax+028h]	; 4763C
-loc_47641:
+.161:
 inc dword [dword esp+01D0h]	; 47641
-loc_47648:
+.162:
 mov edi, dword [dword esp+01D0h]	; 47648
 cmp edi, byte 3	; 4764F
-jge short loc_47658	; 47652
+jge short .163	; 47652
 test ebp, ebp	; 47654
-je short loc_475E8	; 47656
-loc_47658:
+je short SimulateGame.159	; 47656
+.163:
 xor eax, eax	; 47658
 mov dword [dword esp+01D0h], eax	; 4765A
-loc_47661:
+.164:
 xor eax, eax	; 47661
 mov edx, dword [dword esp+01D0h]	; 47663
 mov al, byte [dword esp+edx+01D8h]	; 4766A
@@ -2462,7 +2438,7 @@ mov eax, dword [dword esp+edx*4+010Ch]	; 47676
 mov ebx, dword [ebx+eax]	; 4767D
 mov cx, word [ebx]	; 47680
 test cx, cx	; 47683
-je short loc_476AF	; 47686
+je short .165	; 47686
 xor edx, edx	; 47688
 mov dx, word [byte ebx+0Eh]	; 4768A
 mov eax, edx	; 4768E
@@ -2477,10 +2453,10 @@ mov eax, edx	; 476A2
 sar edx, 1Fh	; 476A4
 idiv ecx	; 476A7
 mov word [byte ebx+010h], ax	; 476A9
-jmp short loc_476B3	; 476AD
-loc_476AF:
+jmp short .166	; 476AD
+.165:
 mov word [byte ebx+010h], cx	; 476AF
-loc_476B3:
+.166:
 xor ebx, ebx	; 476B3
 mov eax, dword [dword esp+01D0h]	; 476B5
 mov bl, byte [dword esp+eax+01D8h]	; 476BC
@@ -2488,7 +2464,7 @@ mov eax, dword [dword esp+eax*4+010Ch]	; 476C3
 mov ebx, dword [eax+ebx*4]	; 476CA
 mov ax, word [byte ebx+012h]	; 476CD
 test ax, ax	; 476D1
-je short loc_47709	; 476D4
+je short .167	; 476D4
 xor edx, edx	; 476D6
 mov dx, word [byte ebx+0Eh]	; 476D8
 xor ecx, ecx	; 476DC
@@ -2510,17 +2486,17 @@ lea edx, [esi+eax]	; 476FF
 mov eax, edx	; 47702
 sar edx, 1Fh	; 47704
 idiv ecx	; 47707
-loc_47709:
+.167:
 mov word [byte ebx+014h], ax	; 47709
 mov ebx, dword [dword esp+01D0h]	; 4770D
 inc ebx	; 47714
 mov dword [dword esp+01D0h], ebx	; 47715
 cmp ebx, byte 2	; 4771C
-jl near loc_47661	; 4771F
+jl near SimulateGame.164	; 4771F
 xor esi, esi	; 47725
 mov dword [dword esp+01D0h], esi	; 47727
-jmp near loc_47840	; 4772E
-loc_47733:
+jmp near .177	; 4772E
+.168:
 mov ebx, dword [dword esp+edi*4+013Ch]	; 47733
 mov edx, dword [dword esp+edi*4+016Ch]	; 4773A
 mov eax, dword [dword esp+0218h]	; 47741
@@ -2528,8 +2504,8 @@ call WriteTeamRec	; 47748
 mov dword [dword esp+01A4h], eax	; 4774D
 mov dword [dword esp+01CCh], ebp	; 47754
 mov edi, dword [dword esp+01A4h]	; 4775B
-jmp short loc_477B3	; 47762
-loc_47764:
+jmp short .171	; 47762
+.169:
 mov edx, dword [dword esp+01D0h]	; 47764
 shl edx, 2	; 4776B
 mov eax, dword [dword esp+edx+016Ch]	; 4776E
@@ -2537,7 +2513,7 @@ mov ebx, esi	; 47775
 shl ebx, 2	; 47777
 mov eax, dword [byte ebx+eax+04Ch]	; 4777A
 cmp eax, byte 0FFFFFFFFh	; 4777E
-je short loc_477AC	; 47781
+je short .170	; 47781
 mov eax, dword [dword esp+edx+017Ch]	; 47783
 mov eax, dword [ebx+eax]	; 4778A
 mov eax, dword [byte eax+02Ch]	; 4778D
@@ -2547,19 +2523,19 @@ mov ebx, dword [seasondb]	; 4779A
 add eax, ebx	; 477A0
 mov ebx, 2Fh	; 477A2
 call memcpy_	; 477A7
-loc_477AC:
+.170:
 inc dword [dword esp+01CCh]	; 477AC
-loc_477B3:
+.171:
 mov esi, dword [dword esp+01CCh]	; 477B3
 cmp esi, byte 19h	; 477BA
-jge short loc_477C3	; 477BD
+jge short .172	; 477BD
 test edi, edi	; 477BF
-je short loc_47764	; 477C1
-loc_477C3:
+je short SimulateGame.169	; 477C1
+.172:
 xor ebp, ebp	; 477C3
 mov dword [dword esp+01CCh], ebp	; 477C5
-jmp short loc_47825	; 477CC
-loc_477CE:
+jmp short .175	; 477CC
+.173:
 mov edx, dword [dword esp+01D0h]	; 477CE
 shl edx, 2	; 477D5
 mov eax, dword [dword esp+edx+016Ch]	; 477D8
@@ -2567,7 +2543,7 @@ mov ebx, dword [dword esp+01CCh]	; 477DF
 shl ebx, 2	; 477E6
 mov eax, dword [dword ebx+eax+0B0h]	; 477E9
 cmp eax, byte 0FFFFFFFFh	; 477F0
-je short loc_4781E	; 477F3
+je short .174	; 477F3
 mov eax, dword [dword esp+edx+0134h]	; 477F5
 mov eax, dword [ebx+eax]	; 477FC
 mov eax, dword [byte eax+02Ch]	; 477FF
@@ -2577,26 +2553,26 @@ mov ebx, dword [seasondb]	; 4780C
 add eax, ebx	; 47812
 mov ebx, 2Fh	; 47814
 call memcpy_	; 47819
-loc_4781E:
+.174:
 inc dword [dword esp+01CCh]	; 4781E
-loc_47825:
+.175:
 cmp dword [dword esp+01CCh], byte 3	; 47825
-jge short loc_47839	; 4782D
+jge short .176	; 4782D
 cmp dword [dword esp+01A4h], byte 0	; 4782F
-je short loc_477CE	; 47837
-loc_47839:
+je short SimulateGame.173	; 47837
+.176:
 inc dword [dword esp+01D0h]	; 47839
-loc_47840:
+.177:
 mov edi, dword [dword esp+01D0h]	; 47840
 cmp edi, byte 2	; 47847
-jge short loc_4785B	; 4784A
+jge short .178	; 4784A
 mov ebp, dword [dword esp+01A4h]	; 4784C
 test ebp, ebp	; 47853
-je near loc_47733	; 47855
-loc_4785B:
+je near SimulateGame.168	; 47855
+.178:
 xor eax, eax	; 4785B
 mov dword [dword esp+01D0h], eax	; 4785D
-loc_47864:
+.179:
 mov esi, dword [dword esp+01D0h]	; 47864
 mov ebx, dword [dword esp+esi*4+0114h]	; 4786B
 push ebx	; 47872
@@ -2649,64 +2625,64 @@ add esp, byte 4	; 47928
 lea ebx, [byte esi+01h]	; 4792B
 mov dword [dword esp+01D0h], ebx	; 4792E
 cmp ebx, byte 2	; 47935
-jl near loc_47864	; 47938
+jl near SimulateGame.179	; 47938
 mov eax, dword [dword esp+01A4h]	; 4793E
 add esp, 208h	; 47945
 pop ebp	; 4794B
 pop edi	; 4794C
 pop esi	; 4794D
 ret 0Ch	; 4794E
-sub_47951:
+LoadScreenPalTick:
 push dword 1Ch	; 47951
 call __CHK	; 47956
 push ebx	; 4795B
 push ecx	; 4795C
 push edx	; 4795D
-cmp dword [dword_DEB6C], byte 1	; 4795E
-je near loc_479E5	; 47965
-mov ah, byte [byte_DEB71]	; 4796B
+cmp dword [palcyclelock], byte 1	; 4795E
+je near .x	; 47965
+mov ah, byte [palcycledelay]	; 4796B
 test ah, ah	; 47971
-jbe short loc_47983	; 47973
+jbe short .1	; 47973
 mov dh, ah	; 47975
 dec dh	; 47977
-mov byte [byte_DEB71], dh	; 47979
+mov byte [palcycledelay], dh	; 47979
 pop edx	; 4797F
 pop ecx	; 47980
 pop ebx	; 47981
 ret	; 47982
-loc_47983:
+.1:
 mov ebx, 1	; 47983
-mov dword [dword_DEB6C], ebx	; 47988
-mov byte [byte_DEB71], 3	; 4798E
+mov dword [palcyclelock], ebx	; 47988
+mov byte [palcycledelay], 3	; 4798E
 xor edx, edx	; 47995
-mov dl, byte [byte_DEB70]	; 47997
+mov dl, byte [palcyclephase]	; 47997
 add edx, ebx	; 4799D
 mov ebx, 3	; 4799F
 mov eax, edx	; 479A4
 sar edx, 1Fh	; 479A6
 idiv ebx	; 479A9
-mov byte [byte_DEB70], dl	; 479AB
+mov byte [palcyclephase], dl	; 479AB
 call sub_B4C61	; 479B1
 xor edx, edx	; 479B6
-mov dl, byte [byte_DEB70]	; 479B8
+mov dl, byte [palcyclephase]	; 479B8
 mov eax, edx	; 479BE
 shl eax, 2	; 479C0
 sub eax, edx	; 479C3
 shl eax, 8	; 479C5
-add eax, byte_DE26C	; 479C8
+add eax, loadpals	; 479C8
 push eax	; 479CD
 push dword 100h	; 479CE
 push byte 0	; 479D3
 call sub_B4B88	; 479D5
 add esp, byte 0Ch	; 479DA
 xor ecx, ecx	; 479DD
-mov dword [dword_DEB6C], ecx	; 479DF
-loc_479E5:
+mov dword [palcyclelock], ecx	; 479DF
+.x:
 pop edx	; 479E5
 pop ecx	; 479E6
 pop ebx	; 479E7
 ret	; 479E8
-sub_479E9:
+ShowLoadingScreen:
 push dword 934h	; 479E9
 call __CHK	; 479EE
 push ebx	; 479F3
@@ -2715,16 +2691,16 @@ push edx	; 479F5
 push esi	; 479F6
 push edi	; 479F7
 sub esp, 910h	; 479F8
-mov edx, dword [dword_C9074]	; 479FE
+mov edx, dword [loadscreenon]	; 479FE
 test edx, edx	; 47A04
-jne near loc_47C25	; 47A06
-push byte_DE26C	; 47A0C
+jne near .x	; 47A06
+push loadpals	; 47A0C
 push dword 100h	; 47A11
 push edx	; 47A16
 call sub_8FFB0	; 47A17
 add esp, byte 0Ch	; 47A1C
 mov ebx, 8	; 47A1F
-mov edx, byte_DE26C	; 47A24
+mov edx, loadpals	; 47A24
 mov eax, 1	; 47A29
 call sub_76429	; 47A2E
 call sub_B4BA8	; 47A33
@@ -2733,20 +2709,20 @@ call sub_B392C	; 47A3A
 add esp, byte 4	; 47A3F
 call sub_8DAB8	; 47A42
 cmp eax, 222E0h	; 47A47
-jle near loc_47C25	; 47A4C
+jle near .x	; 47A4C
 mov ebx, 900h	; 47A52
 xor edx, edx	; 47A57
-mov eax, byte_DE26C	; 47A59
+mov eax, loadpals	; 47A59
 call memset_	; 47A5E
 xor ecx, ecx	; 47A63
-mov ebx, asc_C1AD4	; 47A65
+mov ebx, str_LoadPic	; 47A65
 cmp byte [byte_ED9EE], 1	; 47A6A
-jne short loc_47A7B	; 47A71
+jne short .1	; 47A71
 mov edx, dword [dword_D2C6B]	; 47A73
-jmp short loc_47A7D	; 47A79
-loc_47A7B:
+jmp short .2	; 47A79
+.1:
 xor edx, edx	; 47A7B
-loc_47A7D:
+.2:
 lea eax, [dword esp+0900h]	; 47A7D
 call MakePath	; 47A84
 push byte 0	; 47A89
@@ -2755,7 +2731,7 @@ push eax	; 47A92
 call sub_8E83C	; 47A93
 add esp, byte 8	; 47A98
 mov edi, eax	; 47A9B
-push asc_C1AD9	; 47A9D
+push str_Pal23	; 47A9D
 push eax	; 47AA2
 call sub_B30B4	; 47AA3
 add esp, byte 8	; 47AA8
@@ -2773,14 +2749,14 @@ mov edx, ecx	; 47AD4
 lea eax, [dword esp+0600h]	; 47AD6
 call memcpy_	; 47ADD
 mov edx, 1	; 47AE2
-loc_47AE7:
+.3:
 cmp edx, byte 60h	; 47AE7
-jge short loc_47AF1	; 47AEA
+jge short .4	; 47AEA
 lea esi, [byte edx+02Fh]	; 47AEC
-jmp short loc_47AF4	; 47AEF
-loc_47AF1:
+jmp short .5	; 47AEF
+.4:
 lea esi, [byte edx-05Fh]	; 47AF1
-loc_47AF4:
+.5:
 mov eax, esi	; 47AF4
 shl eax, 2	; 47AF6
 sub eax, esi	; 47AF9
@@ -2795,16 +2771,16 @@ mov al, byte [byte esp+eax+02h]	; 47B17
 mov byte [dword esp+ebx+0302h], al	; 47B1B
 inc edx	; 47B22
 cmp edx, 90h	; 47B23
-jl short loc_47AE7	; 47B29
+jl short ShowLoadingScreen.3	; 47B29
 mov edx, 1	; 47B2B
-loc_47B30:
+.6:
 cmp edx, byte 30h	; 47B30
-jge short loc_47B3A	; 47B33
+jge short .7	; 47B33
 lea esi, [byte edx+060h]	; 47B35
-jmp short loc_47B3D	; 47B38
-loc_47B3A:
+jmp short .8	; 47B38
+.7:
 lea esi, [byte edx-02Fh]	; 47B3A
-loc_47B3D:
+.8:
 mov ebx, esi	; 47B3D
 shl ebx, 2	; 47B3F
 sub ebx, esi	; 47B42
@@ -2819,8 +2795,8 @@ mov bl, byte [byte esp+ebx+02h]	; 47B60
 mov byte [dword esp+eax+0602h], bl	; 47B64
 inc edx	; 47B6B
 cmp edx, 90h	; 47B6C
-jl short loc_47B30	; 47B72
-push asc_C1AD4	; 47B74
+jl short ShowLoadingScreen.6	; 47B72
+push str_LoadPic	; 47B74
 push edi	; 47B79
 call sub_B30B4	; 47B7A
 add esp, byte 8	; 47B7F
@@ -2832,52 +2808,52 @@ add esp, byte 0Ch	; 47B8C
 push edi	; 47B8F
 call jctime	; 47B90
 add esp, byte 4	; 47B95
-mov dword [dword_DEB6C], 1	; 47B98
+mov dword [palcyclelock], 1	; 47B98
 xor dl, dl	; 47BA2
-mov byte [byte_DEB70], dl	; 47BA4
-mov byte [byte_DEB71], 3	; 47BAA
-push sub_47951	; 47BB1
+mov byte [palcyclephase], dl	; 47BA4
+mov byte [palcycledelay], 3	; 47BAA
+push LoadScreenPalTick	; 47BB1
 call sub_8E4C0	; 47BB6
 add esp, byte 4	; 47BBB
 xor ecx, ecx	; 47BBE
-mov dword [dword_DEB6C], ecx	; 47BC0
+mov dword [palcyclelock], ecx	; 47BC0
 xor esi, esi	; 47BC6
-loc_47BC8:
+.9:
 test esi, esi	; 47BC8
-jne short loc_47C1B	; 47BCA
+jne short .13	; 47BCA
 mov esi, 1	; 47BCC
 xor ecx, ecx	; 47BD1
-loc_47BD3:
+.10:
 xor edx, edx	; 47BD3
-loc_47BD5:
+.11:
 mov eax, ecx	; 47BD5
 shl eax, 2	; 47BD7
 sub eax, ecx	; 47BDA
 shl eax, 8	; 47BDC
 add eax, edx	; 47BDF
-mov bl, byte [dword eax+byte_DE26C]	; 47BE1
+mov bl, byte [dword eax+loadpals]	; 47BE1
 cmp bl, byte [esp+eax]	; 47BE7
-jge short loc_47BFB	; 47BEA
+jge short .12	; 47BEA
 inc bl	; 47BEC
-mov byte [dword eax+byte_DE26C], bl	; 47BEE
+mov byte [dword eax+loadpals], bl	; 47BEE
 cmp esi, byte 1	; 47BF4
-jne short loc_47BFB	; 47BF7
+jne short .12	; 47BF7
 xor esi, esi	; 47BF9
-loc_47BFB:
+.12:
 inc edx	; 47BFB
 cmp edx, 300h	; 47BFC
-jl short loc_47BD5	; 47C02
+jl short ShowLoadingScreen.11	; 47C02
 inc ecx	; 47C04
 cmp ecx, byte 3	; 47C05
-jl short loc_47BD3	; 47C08
+jl short ShowLoadingScreen.10	; 47C08
 push byte 2	; 47C0A
 call sub_B3989	; 47C0C
 add esp, byte 4	; 47C11
 call sub_B3999	; 47C14
-jmp short loc_47BC8	; 47C19
-loc_47C1B:
-mov dword [dword_C9074], 1	; 47C1B
-loc_47C25:
+jmp short ShowLoadingScreen.9	; 47C19
+.13:
+mov dword [loadscreenon], 1	; 47C1B
+.x:
 add esp, 910h	; 47C25
 pop edi	; 47C2B
 pop esi	; 47C2C
