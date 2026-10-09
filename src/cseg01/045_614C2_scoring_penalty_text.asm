@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_614C2 progbits alloc exec nowrite align=1
-extern PBnum, Setplass, __CHK, asc_C1C6A, asc_C1C78, asc_C1C87, asc_C1C92, asc_C1C9B, cont2team, dword_DF648, word_DB08A
-extern asc_C1CA8, asc_C1CAC, asc_C1CB3, asc_C1CB9, asc_C1CC4, asc_C1CCD, asc_C1CDA, asc_C1CE9
-extern asc_C1CFE, asc_C1D0E, asc_C1D19, asc_C1D2D, asc_C1D3F, asc_C1D54, assinsert, assreplace
+extern PBnum, Setplass, __CHK, str_FmtNumFirstLast, str_FmtNumInitialLast, str_FmtNumNameSuffix, str_FmtNumName, str_FmtClockEvent, cont2team, dword_DF648, word_DB08A
+extern str_PPTag, str_SHTag, str_FmtParenD, str_Unassisted, str_Assists, str_PenaltyShot, str_ToBeTakenBy, str_02d02dSPenalty
+extern str_GameMisconduct, str_DMinutes, str_02d02dSInjury, str_GoneForTheGame, str_GoneFor1Period, str_ServedByD, assinsert, assreplace
 extern hmgoalcnt, awgoalcnt, sflags, gmode2, pendelaytab, byte_C9111
 extern penmintab, byte_C9142, byte_C9146, priolist, byte_CCE00, byte_CCE01, musicon, gsummarypath
 extern hmroster, hmrosterjersey, hmtmflags, byte_DF6E8, awtmflags, byte_DF7E8, byte_DF861, byte_E024C
@@ -13,8 +13,8 @@ extern PenBuf_pl, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, by
 extern byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, joysampling, gamemode, gameopts
 extern dword_C5840, dword_C90B0, sflags3, HomeTeam, dword_C9120, dword_CBEBE, dword_CBECA, dword_CC0AC
 extern lastsfx, dword_CC0F8, penshotplayer, dword_CC100, dword_CC104, dword_CC110, dword_CC114, penshotmode
-extern penshotstart, penshottimer, dword_CC124, penshotlive, dword_CD2F8, dword_CD34C, dword_CD350, dword_D8B70
-extern curperiod, dword_DB086, dword_DB088, dword_DC230, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
+extern penshotstart, penshottimer, dword_CC124, penshotlive, dword_CD2F8, dword_CD34C, dword_CD350, scor2font
+extern curperiod, dword_DB086, dword_DB088, s1font, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
 extern hmtmstruct, dword_DF646, awtmstruct, puckstruct, sortobj15, hmtmlines
 extern photoptrsf, dword_E0220, dword_E0230, PenBuf_m5
 extern dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9BAC, dword_E9BB0
@@ -23,8 +23,8 @@ extern lseek_, ltx, teamabbrevs, puckx, pucky, puckvy, puckz, puckc
 extern penaltynames, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
 extern strcpy_, strlen_, DrawFrameSprite, FileOpenRW, FileClose, FileWriteAt, PanelAddPenalty, PanelRemovePenalty
 extern MenuCallbackTrue, DrawSprite, PlayCrowdSample, PaSpeechBusy, PaPenalty, PaPenaltyShot, restorepl, setplayer
-extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, FatalError, unk_C1B49, unk_C1C58, unk_C1C5B
-extern unk_C1C5E, unk_C1C61, unk_C1C64, unk_C1C67, unk_C1CB0, unk_C5423, unk_C542E, hmteamrec
+extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, FatalError, unk_C1B49, str_B3, str_B4
+extern str_B5, str_B6, str_B7, str_B8, str_S8, unk_C5423, unk_C542E, hmteamrec
 extern SortCords, unk_E9B4C, word_C5428, word_C90B2, word_C90B4, c1playernum, c2playernum
 extern cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, word_C90D8
 extern gsp, gameclock, clockticks, word_CBC44, word_CBEC0, word_CBEC6, word_CBEC8, word_CBECC
@@ -544,7 +544,7 @@ mov eax, gsummarypath	; 61AA6
 call FileOpenRW	; 61AAB
 test eax, eax	; 61AB0
 je short .1	; 61AB2
-push unk_C1C58	; 61AB4
+push str_B3	; 61AB4
 call FatalError	; 61AB9
 add esp, byte 4	; 61ABE
 .1:
@@ -554,7 +554,7 @@ mov eax, dword [esp]	; 61AC5
 call lseek_	; 61AC8
 test eax, eax	; 61ACD
 jge short .2	; 61ACF
-push unk_C1C5B	; 61AD1
+push str_B4	; 61AD1
 call FatalError	; 61AD6
 add esp, byte 4	; 61ADB
 .2:
@@ -565,7 +565,7 @@ mov eax, dword [esp]	; 61AED
 call FileWriteAt	; 61AF0
 test eax, eax	; 61AF5
 je short .3	; 61AF7
-push unk_C1C5E	; 61AF9
+push str_B5	; 61AF9
 call FatalError	; 61AFE
 add esp, byte 4	; 61B03
 .3:
@@ -575,7 +575,7 @@ mov eax, dword [esp]	; 61B10
 call lseek_	; 61B13
 test eax, eax	; 61B18
 jge short .4	; 61B1A
-push unk_C1C61	; 61B1C
+push str_B6	; 61B1C
 call FatalError	; 61B21
 add esp, byte 4	; 61B26
 .4:
@@ -586,7 +586,7 @@ mov eax, dword [esp]	; 61B35
 call FileWriteAt	; 61B38
 test eax, eax	; 61B3D
 je short .5	; 61B3F
-push unk_C1C64	; 61B41
+push str_B7	; 61B41
 call FatalError	; 61B46
 add esp, byte 4	; 61B4B
 .5:
@@ -597,7 +597,7 @@ mov eax, dword [esp]	; 61B5D
 call FileWriteAt	; 61B60
 test eax, eax	; 61B65
 je short .6	; 61B67
-push unk_C1C67	; 61B69
+push str_B8	; 61B69
 call FatalError	; 61B6E
 add esp, byte 4	; 61B73
 .6:
@@ -645,7 +645,7 @@ mov eax, gsummarypath	; 61BD1
 call FileOpenRW	; 61BD6
 test eax, eax	; 61BDB
 je short .1	; 61BDD
-push unk_C1C58	; 61BDF
+push str_B3	; 61BDF
 call FatalError	; 61BE4
 add esp, byte 4	; 61BE9
 .1:
@@ -657,7 +657,7 @@ mov eax, dword [esp]	; 61BFB
 call FileWriteAt	; 61BFE
 test eax, eax	; 61C03
 je short fileio_tail_c	; 61C05
-push unk_C1C5B	; 61C07
+push str_B4	; 61C07
 fileio_tail_b:
 call FatalError	; 61C0C
 add esp, byte 4	; 61C11
@@ -681,7 +681,7 @@ mov eax, gsummarypath	; 61C34
 call FileOpenRW	; 61C39
 test eax, eax	; 61C3E
 je short .1	; 61C40
-push unk_C1C58	; 61C42
+push str_B3	; 61C42
 call FatalError	; 61C47
 add esp, byte 4	; 61C4C
 .1:
@@ -691,7 +691,7 @@ mov eax, dword [esp]	; 61C59
 call lseek_	; 61C5C
 test eax, eax	; 61C61
 jge short .2	; 61C63
-push unk_C1C61	; 61C65
+push str_B6	; 61C65
 call FatalError	; 61C6A
 add esp, byte 4	; 61C6F
 .2:
@@ -712,7 +712,7 @@ mov eax, gsummarypath	; 61C9F
 call FileOpenRW	; 61CA4
 test eax, eax	; 61CA9
 je short .1	; 61CAB
-push unk_C1C58	; 61CAD
+push str_B3	; 61CAD
 call FatalError	; 61CB2
 add esp, byte 4	; 61CB7
 .1:
@@ -722,7 +722,7 @@ mov eax, dword [esp]	; 61CBE
 call lseek_	; 61CC1
 test eax, eax	; 61CC6
 jge short .2	; 61CC8
-push unk_C1C5B	; 61CCA
+push str_B4	; 61CCA
 call FatalError	; 61CCF
 add esp, byte 4	; 61CD4
 .2:
@@ -733,7 +733,7 @@ mov eax, dword [esp]	; 61CE6
 call FileWriteAt	; 61CE9
 test eax, eax	; 61CEE
 je short .3	; 61CF0
-push unk_C1C5E	; 61CF2
+push str_B5	; 61CF2
 call FatalError	; 61CF7
 add esp, byte 4	; 61CFC
 .3:
@@ -743,7 +743,7 @@ mov eax, dword [esp]	; 61D06
 call lseek_	; 61D09
 test eax, eax	; 61D0E
 jge short .4	; 61D10
-push unk_C1C61	; 61D12
+push str_B6	; 61D12
 call FatalError	; 61D17
 add esp, byte 4	; 61D1C
 .4:
@@ -754,7 +754,7 @@ mov eax, dword [esp]	; 61D2E
 call FileWriteAt	; 61D31
 test eax, eax	; 61D36
 je near fileio_tail_c	; 61D38
-push unk_C1C67	; 61D3E
+push str_B8	; 61D3E
 jmp near fileio_tail_b	; 61D43
 FormatPlayerName:
 push dword 48h	; 61D48
@@ -767,7 +767,7 @@ mov edi, eax	; 61D58
 mov dword [byte esp+014h], edx	; 61D5A
 mov word [byte esp+018h], bx	; 61D5E
 mov ebp, ecx	; 61D63
-mov edx, dword [dword_D8B70]	; 61D65
+mov edx, dword [scor2font]	; 61D65
 push edx	; 61D6B
 call sub_8EA18	; 61D6C
 add esp, byte 4	; 61D71
@@ -781,7 +781,7 @@ sar esi, 10h	; 61D83
 push esi	; 61D86
 mov eax, dword [byte esp+024h]	; 61D87
 push eax	; 61D8B
-push asc_C1C6A	; 61D8C
+push str_FmtNumFirstLast	; 61D8C
 push edi	; 61D91
 call sprintf_	; 61D92
 add esp, byte 1Ch	; 61D97
@@ -799,7 +799,7 @@ push eax	; 61DBA
 push esi	; 61DBB
 mov ecx, dword [byte esp+024h]	; 61DBC
 push ecx	; 61DC0
-push asc_C1C78	; 61DC1
+push str_FmtNumInitialLast	; 61DC1
 push edi	; 61DC6
 call sprintf_	; 61DC7
 add esp, byte 1Ch	; 61DCC
@@ -815,7 +815,7 @@ push eax	; 61DEA
 push esi	; 61DEB
 mov edx, dword [byte esp+020h]	; 61DEC
 push edx	; 61DF0
-push asc_C1C87	; 61DF1
+push str_FmtNumNameSuffix	; 61DF1
 push edi	; 61DF6
 call sprintf_	; 61DF7
 add esp, byte 18h	; 61DFC
@@ -828,7 +828,7 @@ push ebp	; 61E0D
 push esi	; 61E0E
 mov ecx, dword [byte esp+01Ch]	; 61E0F
 push ecx	; 61E13
-push asc_C1C92	; 61E14
+push str_FmtNumName	; 61E14
 push edi	; 61E19
 call sprintf_	; 61E1A
 add esp, byte 14h	; 61E1F
@@ -864,12 +864,12 @@ sar eax, 10h	; 61E6B
 push eax	; 61E6E
 mov ebp, dword [byte esp+020h]	; 61E6F
 push ebp	; 61E73
-push asc_C1C87	; 61E74
+push str_FmtNumNameSuffix	; 61E74
 push edi	; 61E79
 call sprintf_	; 61E7A
 add esp, byte 18h	; 61E7F
 .3:
-mov eax, dword [dword_DC230]	; 61E82
+mov eax, dword [s1font]	; 61E82
 push eax	; 61E87
 call sub_8EA18	; 61E88
 add esp, byte 4	; 61E8D
@@ -914,7 +914,7 @@ push eax	; 61F04
 xor eax, eax	; 61F05
 mov al, byte [byte_E9ACF]	; 61F07
 push eax	; 61F0C
-push asc_C1C9B	; 61F0D
+push str_FmtClockEvent	; 61F0D
 push byte_E02C8	; 61F12
 call sprintf_	; 61F17
 add esp, byte 14h	; 61F1C
@@ -924,18 +924,18 @@ xor edx, edx	; 61F26
 mov dl, byte [byte_E9ACA]	; 61F28
 test al, 2	; 61F2E
 je short .1	; 61F30
-mov eax, asc_C1CAC	; 61F32
+mov eax, str_SHTag	; 61F32
 jmp short .3	; 61F37
 .1:
 test al, 4	; 61F39
 je short .2	; 61F3B
-mov eax, asc_C1CA8	; 61F3D
+mov eax, str_PPTag	; 61F3D
 jmp short .3	; 61F42
 .2:
 mov eax, unk_C1B49	; 61F44
 .3:
 push eax	; 61F49
-push unk_C1CB0	; 61F4A
+push str_S8	; 61F4A
 lea eax, [byte esp+08h]	; 61F4F
 push eax	; 61F53
 call sprintf_	; 61F54
@@ -960,7 +960,7 @@ mov ebx, dword [dword eax+dword_DB088-2]	; 61F8C
 sar ebx, 10h	; 61F92
 add ebx, dword [dword eax+dword_DEB7C]	; 61F95
 push ebx	; 61F9B
-push asc_C1CB3	; 61F9C
+push str_FmtParenD	; 61F9C
 lea eax, [byte esp+08h]	; 61FA1
 add eax, ecx	; 61FA5
 push eax	; 61FA7
@@ -996,13 +996,13 @@ xor edx, edx	; 61FF9
 mov dl, byte [byte_E9ACB]	; 61FFB
 cmp edx, 0FFh	; 62001
 jne short .5	; 62007
-push asc_C1CB9	; 62009
+push str_Unassisted	; 62009
 push byte_E028C	; 6200E
 call sprintf_	; 62013
 add esp, byte 8	; 62018
 jmp short .6	; 6201B
 .5:
-push asc_C1CC4	; 6201D
+push str_Assists	; 6201D
 push byte_E028C	; 62022
 call sprintf_	; 62027
 add esp, byte 8	; 6202C
@@ -1076,18 +1076,18 @@ push eax	; 62112
 xor eax, eax	; 62113
 mov al, byte [byte_E9ACE]	; 62115
 push eax	; 6211A
-push asc_C1C9B	; 6211B
+push str_FmtClockEvent	; 6211B
 push byte_E02C8	; 62120
 call sprintf_	; 62125
 add esp, byte 14h	; 6212A
 mov edi, byte_E0250	; 6212D
-mov esi, asc_C1CCD	; 62132
+mov esi, str_PenaltyShot	; 62132
 movsd	; 62137
 movsd	; 62138
 movsd	; 62139
 movsb	; 6213A
 mov edi, byte_E028C	; 6213B
-mov esi, asc_C1CDA	; 62140
+mov esi, str_ToBeTakenBy	; 62140
 movsd	; 62145
 movsd	; 62146
 movsd	; 62147
@@ -1135,7 +1135,7 @@ push eax	; 621BF
 xor eax, eax	; 621C0
 mov al, byte [byte_E9ACE]	; 621C2
 push eax	; 621C7
-push asc_C1CE9	; 621C8
+push str_02d02dSPenalty	; 621C8
 push byte_E02C8	; 621CD
 call sprintf_	; 621D2
 add esp, byte 14h	; 621D7
@@ -1173,7 +1173,7 @@ movzx edi, byte [byte_E9ACC]	; 6223E
 cmp edi, 0FFh	; 62245
 jne short .10	; 6224B
 mov edi, byte_E0308	; 6224D
-mov esi, asc_C1CFE	; 62252
+mov esi, str_GameMisconduct	; 62252
 movsd	; 62257
 movsd	; 62258
 movsd	; 62259
@@ -1181,7 +1181,7 @@ movsd	; 6225A
 jmp near .14	; 6225B
 .10:
 push edi	; 62260
-push asc_C1D0E	; 62261
+push str_DMinutes	; 62261
 push byte_E0308	; 62266
 call sprintf_	; 6226B
 add esp, byte 0Ch	; 62270
@@ -1209,7 +1209,7 @@ push eax	; 622B7
 xor eax, eax	; 622B8
 mov al, byte [byte_E9ACD]	; 622BA
 push eax	; 622BF
-push asc_C1D19	; 622C0
+push str_02d02dSInjury	; 622C0
 push byte_E02C8	; 622C5
 call sprintf_	; 622CA
 add esp, byte 14h	; 622CF
@@ -1238,10 +1238,10 @@ mov eax, byte_E0250	; 62314
 call FormatPlayerName	; 62319
 test edi, edi	; 6231E
 jle short .12	; 62320
-push asc_C1D2D	; 62322
+push str_GoneForTheGame	; 62322
 jmp short .13	; 62327
 .12:
-push asc_C1D3F	; 62329
+push str_GoneFor1Period	; 62329
 .13:
 push byte_E028C	; 6232E
 call sprintf_	; 62333
@@ -2551,7 +2551,7 @@ mov byte [nosplit eax*2+PenBuf_pl], dl	; 633BC
 xor eax, eax	; 633C3
 mov al, byte [byte ebx+05Eh]	; 633C5
 push eax	; 633C8
-push asc_C1D54	; 633C9
+push str_ServedByD	; 633C9
 push byte_E0344	; 633CE
 call sprintf_	; 633D3
 add esp, byte 0Ch	; 633D8

@@ -9,7 +9,7 @@ extern othergamesb, otherscores, otherscoresb, joysampling, escrequest, gameresu
 extern gamemode, gameopts, ctl1team, ctl2team, teamconf, dword_C5840, hlplayedmask, dword_C66A4
 extern dword_C66AC, dword_C66D0, dword_C66D4, boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
 extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, cddriveptr, bailout_vec, musicslot
-extern curperiod, dword_DC230, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, otherperiod
+extern curperiod, s1font, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, otherperiod
 extern ptrupdatefn, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
 extern off_CEF23, mousepollfn, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
 extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, GameSummaryScreen, PickOtherGames
@@ -563,7 +563,7 @@ lea eax, [dword esp+0304h]	; 194C0
 push eax	; 194C7
 call sub_8E9E8	; 194C8
 add esp, byte 4	; 194CD
-mov ecx, dword [dword_DC230]	; 194D0
+mov ecx, dword [s1font]	; 194D0
 push ecx	; 194D6
 call sub_8EA18	; 194D7
 add esp, byte 4	; 194DC
@@ -1822,7 +1822,7 @@ mov eax, 140h	; 1A874
 call SetScreenSize	; 1A879
 xor eax, eax	; 1A87E
 call InstantReplay	; 1A880
-mov edx, dword [dword_DC230]	; 1A885
+mov edx, dword [s1font]	; 1A885
 push edx	; 1A88B
 call sub_8EA18	; 1A88C
 add esp, byte 4	; 1A891

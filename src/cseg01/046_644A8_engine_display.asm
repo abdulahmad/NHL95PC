@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_644A8 progbits alloc exec nowrite align=1
-extern PBnum, __CHK, asc_C1DB6, asc_C1DBC, asc_C1DC5, asc_C1DCE, asc_C1DD6, str_PPV, cont2team
+extern PBnum, __CHK, str_04d2, str_HOMEPALS4, str_AWAYPALS, str_Rinkpal, str_Pal30, str_PPV, cont2team
 extern str_extBIN, sflags, gmode2, byte_CC049, byte_CCE00, byte_CD418, byte_CD421, byte_CD473
 extern hmroster, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byte_DFFA6, byte_E0250
 extern byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E03C1, byte_E9DB4, byte_E9E18
@@ -10,7 +10,7 @@ extern byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, b
 extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, fileoncd
 extern joysampling, dword_C90B0, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, lastsfx
 extern dword_CCEF6, dword_CD41E, dword_CD4B0, cddriveptr, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1
-extern dword_D30BC, dword_D30C0, dword_D8B70, dword_D8B78, spritedrawcount, curperiod, dword_DEF8C, dword_DEFE0
+extern dword_D30BC, dword_D30C0, scor2font, dword_D8B78, spritedrawcount, curperiod, dword_DEF8C, dword_DEFE0
 extern dword_DF004, hmtmstruct, puckstruct, photoptrsf, dword_E0220, dword_E0230, dword_E0244, dword_E0248
 extern recbpr, replayplay, dword_E03AE, dword_E03B9, dword_E03BD
 extern dword_E9A9E, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38
@@ -2781,7 +2781,7 @@ xor esi, esi	; 66516
 jmp short .4	; 66518
 .3:
 push esi	; 6651A
-push asc_C1DB6	; 6651B
+push str_04d2	; 6651B
 lea eax, [byte esp+08h]	; 66520
 push eax	; 66524
 call sprintf_	; 66525
@@ -3318,7 +3318,7 @@ push byte_E0344	; 66C30
 call sub_91964	; 66C35
 add esp, byte 0Ch	; 66C3A
 .28:
-mov edi, dword [dword_D8B70]	; 66C3D
+mov edi, dword [scor2font]	; 66C3D
 push edi	; 66C43
 call sub_8EA18	; 66C44
 add esp, byte 4	; 66C49
@@ -3698,7 +3698,7 @@ mov ecx, dword [dword ebp+off_CD4DC]	; 6716F
 push ecx	; 67175
 call sub_91964	; 67176
 add esp, byte 0Ch	; 6717B
-mov eax, dword [dword_D8B70]	; 6717E
+mov eax, dword [scor2font]	; 6717E
 push eax	; 67183
 call sub_8EA18	; 67184
 add esp, byte 4	; 67189
@@ -3893,7 +3893,7 @@ mov edi, eax	; 673D6
 mov dword [byte esp+010h], edx	; 673D8
 mov esi, ebx	; 673DC
 mov ecx, str_extBIN	; 673DE
-mov ebx, asc_C1DBC	; 673E3
+mov ebx, str_HOMEPALS4	; 673E3
 cmp byte [fileoncd+0A1h], 1	; 673E8
 jne short .1	; 673EF
 mov edx, dword [cddriveptr]	; 673F1
@@ -3934,7 +3934,7 @@ push ebp	; 6744E
 call jctime	; 6744F
 add esp, byte 4	; 67454
 mov ecx, str_extBIN	; 67457
-mov ebx, asc_C1DC5	; 6745C
+mov ebx, str_AWAYPALS	; 6745C
 cmp byte [fileoncd+02Bh], 1	; 67461
 jne short .5	; 67468
 mov edx, dword [cddriveptr]	; 6746A
@@ -3984,7 +3984,7 @@ push ebp	; 674E4
 call jctime	; 674E5
 add esp, byte 4	; 674EA
 xor ecx, ecx	; 674ED
-mov ebx, asc_C1DCE	; 674EF
+mov ebx, str_Rinkpal	; 674EF
 cmp byte [fileoncd+015Fh], 1	; 674F4
 jne short .10	; 674FB
 mov edx, dword [cddriveptr]	; 674FD
@@ -4000,7 +4000,7 @@ push eax	; 67514
 call sub_8E83C	; 67515
 add esp, byte 8	; 6751A
 mov ebp, eax	; 6751D
-push asc_C1DD6	; 6751F
+push str_Pal30	; 6751F
 push eax	; 67524
 call sub_B30B4	; 67525
 add esp, byte 8	; 6752A

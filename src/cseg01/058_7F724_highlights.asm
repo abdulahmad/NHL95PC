@@ -7,7 +7,7 @@ extern str_HLTS, str_HI2, str_SelectATeam, str_SelectAHilight, str_HilightDescFm
 extern hmrosterjersey, byte_DB7F1, byte_DC267, byte_DC268, hilightrec
 extern hudclockmin, hudclocksec, hudclockhund, songdata, rinkscrollx, rinkscrolly
 extern cont2team, HomeTeam, musichandle, fontcolor, rinkendbank, numshpbank, curperiod, musicslot
-extern dword_DC230, scrbrdshapes, recbpr
+extern s1font, scrbrdshapes, recbpr
 extern dword_ED6F8, hilightfont, fputchar, jctime, DrawGadgetButton_ret, lseek_, teamabbrevs, teamcitynames
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, SetScreenSize
 extern LoadGameGfx, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
@@ -940,7 +940,7 @@ mov ebx, 10h	; 802CF
 mov edx, esp	; 802D4
 mov eax, 1	; 802D6
 call FadePalStep	; 802DB
-mov ebp, dword [dword_DC230]	; 802E0
+mov ebp, dword [s1font]	; 802E0
 push ebp	; 802E6
 call sub_8EA18	; 802E7
 add esp, byte 4	; 802EC

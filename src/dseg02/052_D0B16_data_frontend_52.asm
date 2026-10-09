@@ -3,20 +3,20 @@ bits 32
 %include "hockey.inc"
 section s_D0B16 progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450
-global dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A, dword_D0BFC, dword_D0C04
+global dlgfillcol, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgbevelcol1, dlgbevelcol2, dword_D0BFC, dword_D0C04
 global dword_D0C10, dword_D0C18, dword_D0C20, unk_D0B76, unk_D0B79, unk_D0B80, unk_D0BB8, unk_D0BF0
 global savedbbtns
-dword_D0B16:
+dlgfillcol:
 db 041h,00h,00h,00h
-dword_D0B1A:
+dlgedgecol1:
 db 040h,00h,00h,00h
-dword_D0B1E:
+dlgedgecol2:
 db 042h,00h,00h,00h
-dword_D0B22:
+dlgedgecol3:
 db 041h,00h,00h,00h
-dword_D0B26:
+dlgbevelcol1:
 db 040h,00h,00h,00h
-dword_D0B2A:
+dlgbevelcol2:
 db 042h,00h,00h,00h,0A9h,01h,00h,00h,0B0h,00h,00h,00h,0A9h,01h,00h,00h
 db 0BDh,00h,00h,00h,0A9h,01h,00h,00h,0CAh,00h,00h,00h,0A9h,01h,00h,00h
 db 0D7h,00h,00h,00h,0A9h,01h,00h,00h,0E4h,00h,00h,00h,0A9h,01h,00h,00h

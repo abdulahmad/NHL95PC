@@ -21,7 +21,7 @@ extern dword_C2CD8, dword_C2CDC, dword_C2CF0, dword_C4B69, teamdivflags, songdat
 extern roster2divmenus, menu_r1_tofa, menu_r1_toroster2, menu_r2_tofa, menu_r2_toroster1, falist, falistsel, facount
 extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0C10, dword_D0C20, dword_D0CDA
-extern cddriveptr, dword_D8B68, dword_D8B74, pointerspr, ptrupdatefn, dword_EA2B4, rosterteamptr, musicslot
+extern cddriveptr, dword_D8B68, mainfont, pointerspr, ptrupdatefn, fullscrbmp, rosterteamptr, musicslot
 extern dword_EA994, rosterteamrec, dword_EAF7C, dbdirty, msglines, dword_EBCA4
 extern editptrspr, editrosters_exit, fputchar, j_unlink_, jctime, RunEditRosters_ret6, RunEditRosters_ret5, memcpy_
 extern memset_, teamcitynames, leaguedbnames
@@ -36,7 +36,7 @@ extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8EA18, sub_8FC8A, sub_8FFB0, sub_903
 extern sub_90D20, sub_90F38, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_92DE0, sub_B2CBE
 extern FatalError, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, SetDrawBitmap
 extern sub_B4FAC, sub_B5DB0, str_fmtpd, btn_LeagueExists, unk_D0450, unk_D05F4, unk_D0B80, unk_D0BB8
-extern unk_D0BF0, unk_D0C5C, unk_D0CA2, unk_D0EDD, unk_D0F80, unk_D0FA8, unk_D0FBC, unk_D0FD0
+extern unk_D0BF0, str_Two, unk_D0CA2, unk_D0EDD, unk_D0F80, unk_D0FA8, unk_D0FBC, unk_D0FD0
 extern unk_D0FF0, unk_D1000, hmteamrec, unk_DF014, unk_EA968, unk_EAC84, unk_EAFB8, word_C2D0E
 extern word_C2D10, VisTeam
 global LoadRosterList_faloop
@@ -60,7 +60,7 @@ push edx	; 6D304
 push esi	; 6D305
 push edi	; 6D306
 sub esp, byte 54h	; 6D307
-mov edx, dword [dword_EA2B4]	; 6D30A
+mov edx, dword [fullscrbmp]	; 6D30A
 push edx	; 6D310
 call SetDrawBitmap	; 6D311
 add esp, byte 4	; 6D316
@@ -234,7 +234,7 @@ mov eax, unk_D0B80	; 6D593
 call DrawButtons	; 6D598
 .4:
 call sub_B4BA8	; 6D59D
-mov eax, dword [dword_EA2B4]	; 6D5A2
+mov eax, dword [fullscrbmp]	; 6D5A2
 mov ecx, dword [byte eax+02Ch]	; 6D5A7
 push ecx	; 6D5AA
 call sub_9121C	; 6D5AB
@@ -2162,7 +2162,7 @@ push ebp	; 6ECA2
 mov ebp, eax	; 6ECA3
 mov esi, edx	; 6ECA5
 mov edi, ebx	; 6ECA7
-mov edx, dword [dword_EA2B4]	; 6ECA9
+mov edx, dword [fullscrbmp]	; 6ECA9
 push edx	; 6ECAF
 call SetDrawBitmap	; 6ECB0
 add esp, byte 4	; 6ECB5
@@ -2217,7 +2217,7 @@ mov esi, edx	; 6ED4B
 mov dword [esp], ebx	; 6ED4D
 mov ebp, ecx	; 6ED50
 call sub_B4BA8	; 6ED52
-mov eax, dword [dword_EA2B4]	; 6ED57
+mov eax, dword [fullscrbmp]	; 6ED57
 mov edx, dword [byte eax+02Ch]	; 6ED5C
 push edx	; 6ED5F
 call sub_9121C	; 6ED60
@@ -4001,7 +4001,7 @@ push ebp	; 70269
 sub esp, byte 44h	; 7026A
 mov ebp, eax	; 7026D
 mov dword [byte esp+040h], edx	; 7026F
-mov edx, dword [dword_EA2B4]	; 70273
+mov edx, dword [fullscrbmp]	; 70273
 push edx	; 70279
 call SetDrawBitmap	; 7027A
 add esp, byte 4	; 7027F
@@ -4152,7 +4152,7 @@ call strcat_	; 70423
 mov edx, esp	; 70428
 mov eax, 0B2h	; 7042A
 call PrintCenteredText	; 7042F
-mov ecx, dword [dword_D8B74]	; 70434
+mov ecx, dword [mainfont]	; 70434
 push ecx	; 7043A
 call sub_8EA18	; 7043B
 add esp, byte 4	; 70440
@@ -4174,10 +4174,10 @@ mov edx, esp	; 7046C
 mov eax, 110h	; 7046E
 call PrintCenteredText	; 70473
 mov edx, 2	; 70478
-mov eax, unk_D0C5C	; 7047D
+mov eax, str_Two	; 7047D
 call DrawButtons	; 70482
 call sub_B4BA8	; 70487
-mov eax, dword [dword_EA2B4]	; 7048C
+mov eax, dword [fullscrbmp]	; 7048C
 mov edi, dword [byte eax+02Ch]	; 70491
 push edi	; 70494
 call sub_9061C	; 70495
@@ -4349,7 +4349,7 @@ push ecx	; 7066C
 mov ecx, dword [byte esp+04h]	; 7066D
 mov ebx, dword [byte esp+08h]	; 70671
 mov edx, 2	; 70675
-mov eax, unk_D0C5C	; 7067A
+mov eax, str_Two	; 7067A
 call TrackButtons	; 7067F
 mov dword [byte esp+010h], eax	; 70684
 test eax, eax	; 70688

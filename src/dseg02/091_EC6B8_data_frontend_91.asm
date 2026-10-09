@@ -7,7 +7,7 @@ global byte_ED0F8, byte_ED0F9, byte_ED0FA, fileoncd
 global byte_ED909
 global dblistcur, dblisttemp
 global dblisttempnames, dblistorig
-global dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0, leaguesetimg, setbits, dword_ED364, rockteamcues
+global blitclipright, blitclipbottom, blitcliptop, blitclipleft, leaguesetimg, setbits, dword_ED364, rockteamcues
 global dword_ED374, rocktunes, rockrandcues, dword_ED6D0, dword_ED6D4, gadgetfile
 global gadgetptry, gadgetptrx, gadgetshape, dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8
 global dword_ED6FC, hilightfont, dword_ED704, dword_ED708, dword_ED70C, dword_ED74C, dword_ED750, dword_ED754
@@ -42,13 +42,13 @@ fadepal:
 resb 768
 fadepal2:
 resb 768
-dword_ECDE4:
+blitclipright:
 resb 4
-dword_ECDE8:
+blitclipbottom:
 resb 4
-dword_ECDEC:
+blitcliptop:
 resb 4
-dword_ECDF0:
+blitclipleft:
 resb 4
 byte_ECDF4:
 resb 768

@@ -7,7 +7,7 @@ extern str_LLSN, str_extnum, str_saved, str_FromLeague, str_PINFO, str_PLAYER, s
 extern str_extxx, str_extLP, str_extID, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, str_dot, str_floppydrv
 extern curleague, byte_DC8D8, byte_DC9D8, leagueflags, savedname, byte_DDD40, byte_DE268, fileoncd
 extern msg_InsertDisk_arg, msg_WrongDisk_arg, msg_Copying_arg, msg_MasterDB_arg, msg_SavedGame_arg, dword_C87C0, dword_C87C8
-extern dword_C87E0, dword_C87E8, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A
+extern dword_C87E0, dword_C87E8, dlgfillcol, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgbevelcol1, dlgbevelcol2
 extern cddriveptr, leaguemaster, leaguesaved, humancount, dword_DDD34, lgplayteam, dword_DDD3C, dword_DE264
 extern fputchar, jctime, memset_, teamcitynames, msg_OneHuman, leaguedbnames
 extern msg_TradeDeadline, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, strncpy_, MakePath
@@ -42,26 +42,26 @@ push dword 280h	; 401B8
 call sub_B4F8C	; 401BD
 add esp, byte 0Ch	; 401C2
 mov dword [dword_DE264], eax	; 401C5
-mov eax, dword [dword_D0B16]	; 401CA
+mov eax, dword [dlgfillcol]	; 401CA
 mov dword [dword esp+0BCh], eax	; 401CF
-mov eax, dword [dword_D0B1A]	; 401D6
+mov eax, dword [dlgedgecol1]	; 401D6
 mov dword [dword esp+0CCh], eax	; 401DB
-mov eax, dword [dword_D0B1E]	; 401E2
+mov eax, dword [dlgedgecol2]	; 401E2
 mov dword [dword esp+0C8h], eax	; 401E7
-mov eax, dword [dword_D0B22]	; 401EE
+mov eax, dword [dlgedgecol3]	; 401EE
 mov dword [dword esp+0C4h], eax	; 401F3
-mov eax, dword [dword_D0B26]	; 401FA
+mov eax, dword [dlgbevelcol1]	; 401FA
 mov dword [dword esp+0C0h], eax	; 401FF
-mov eax, dword [dword_D0B2A]	; 40206
+mov eax, dword [dlgbevelcol2]	; 40206
 mov dword [dword esp+0D0h], eax	; 4020B
 mov ebx, 41h	; 40212
-mov dword [dword_D0B16], ebx	; 40217
+mov dword [dlgfillcol], ebx	; 40217
 mov ecx, 40h	; 4021D
-mov dword [dword_D0B1A], ecx	; 40222
-mov dword [dword_D0B1E], 42h	; 40228
-mov dword [dword_D0B22], ebx	; 40232
-mov dword [dword_D0B26], ecx	; 40238
-mov dword [dword_D0B2A], ebx	; 4023E
+mov dword [dlgedgecol1], ecx	; 40222
+mov dword [dlgedgecol2], 42h	; 40228
+mov dword [dlgedgecol3], ebx	; 40232
+mov dword [dlgbevelcol1], ecx	; 40238
+mov dword [dlgbevelcol2], ebx	; 4023E
 .1:
 xor esi, esi	; 40244
 test ebp, ebp	; 40246
@@ -380,17 +380,17 @@ mov eax, edx	; 40727
 call MessageBox	; 40729
 .19:
 mov eax, dword [dword esp+0BCh]	; 4072E
-mov dword [dword_D0B16], eax	; 40735
+mov dword [dlgfillcol], eax	; 40735
 mov eax, dword [dword esp+0CCh]	; 4073A
-mov dword [dword_D0B1A], eax	; 40741
+mov dword [dlgedgecol1], eax	; 40741
 mov eax, dword [dword esp+0C8h]	; 40746
-mov dword [dword_D0B1E], eax	; 4074D
+mov dword [dlgedgecol2], eax	; 4074D
 mov eax, dword [dword esp+0C4h]	; 40752
-mov dword [dword_D0B22], eax	; 40759
+mov dword [dlgedgecol3], eax	; 40759
 mov eax, dword [dword esp+0C0h]	; 4075E
-mov dword [dword_D0B26], eax	; 40765
+mov dword [dlgbevelcol1], eax	; 40765
 mov eax, dword [dword esp+0D0h]	; 4076A
-mov dword [dword_D0B2A], eax	; 40771
+mov dword [dlgbevelcol2], eax	; 40771
 mov ebx, dword [dword_DE264]	; 40776
 push ebx	; 4077C
 call jctime	; 4077D

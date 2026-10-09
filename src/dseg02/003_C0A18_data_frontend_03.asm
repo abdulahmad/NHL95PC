@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_C0A18 progbits alloc noexec write align=1
-global str_teams, str_key, str_att, str_season, str_career, str_GsummaryDb2, str_scrbrd1, asc_C0A88
-global asc_C0AB5, asc_C0AE2, asc_C0B0F, asc_C0B1C, asc_C0B29, asc_C0B2E, asc_C0B33, str_PointerMenu
+global str_teams, str_key, str_att, str_season, str_career, str_GsummaryDb2, str_scrbrd1, str_LineCodes0
+global str_LineCodes1, str_LineCodes2, str_VisLineTags, str_HomeLineTags, str_Visp, str_Homp, str_LineNames, str_PointerMenu
 global str_menubuff, str_sfh, str_shape, str_embpal, str_Pal6, str_tstat, str_keys, str_pstat
 global str_gstat, str_embpal2, str_Pal7, str_easndesk2, str_tstat2, str_keys2, str_pstat2, str_gstat2
 global str_calendar, str_embpal3, str_Pal8, str_tstat3, str_keys3, str_pstat3, str_gstat3, str_PORTR
@@ -144,27 +144,27 @@ str_GsummaryDb2:
 db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,02Eh,064h,062h,00h,00h,00h,00h
 str_scrbrd1:
 db 073h,063h,072h,062h,072h,064h,031h,00h
-asc_C0A88:
+str_LineCodes0:
 db 030h,030h,030h,030h,030h,030h,030h,031h,030h,030h,030h,032h,030h,030h,030h,033h
 db 030h,030h,030h,034h,030h,030h,030h,035h,030h,030h,030h,036h,030h,030h,030h,037h
 db 030h,030h,030h,038h,030h,030h,030h,039h,030h,030h,030h,020h,00h
-asc_C0AB5:
+str_LineCodes1:
 db 031h,030h,030h,030h,031h,030h,030h,031h,031h,030h,030h,032h,031h,030h,030h,033h
 db 031h,030h,030h,034h,031h,030h,030h,035h,031h,030h,030h,036h,031h,030h,030h,037h
 db 031h,030h,030h,038h,031h,030h,030h,039h,031h,030h,030h,020h,00h
-asc_C0AE2:
+str_LineCodes2:
 db 032h,030h,030h,030h,032h,030h,030h,031h,032h,030h,030h,032h,032h,030h,030h,033h
 db 032h,030h,030h,034h,032h,030h,030h,035h,032h,030h,030h,036h,032h,030h,030h,037h
 db 032h,030h,030h,038h,032h,030h,030h,039h,032h,030h,030h,020h,00h
-asc_C0B0F:
+str_VisLineTags:
 db 076h,06Ch,069h,06Eh,076h,070h,070h,020h,076h,070h,06Bh,020h,00h
-asc_C0B1C:
+str_HomeLineTags:
 db 068h,06Ch,069h,06Eh,068h,070h,070h,020h,068h,070h,06Bh,020h,00h
-asc_C0B29:
+str_Visp:
 db 076h,069h,073h,070h,00h
-asc_C0B2E:
+str_Homp:
 db 068h,06Fh,06Dh,070h,00h
-asc_C0B33:
+str_LineNames:
 db 06Ch,069h,06Eh,031h,06Ch,069h,06Eh,032h,06Ch,069h,06Eh,033h,06Ch,069h,06Eh,034h
 db 050h,050h,031h,020h,050h,050h,032h,020h,050h,04Bh,031h,020h,050h,04Bh,032h,020h
 db 00h

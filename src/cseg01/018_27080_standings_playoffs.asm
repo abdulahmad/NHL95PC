@@ -10,7 +10,7 @@ extern str_Bkgd2, treecolslots, treecol_Wr2
 extern treecol_Er2
 extern treecol_Er1, teamconf, fileoncd
 extern dword_C65AC, statsplayoffs, statsfromleague, statspalvalid, dword_C6D26, dword_C6DBA, dword_C6E20, treerowy
-extern divx, divy, cddriveptr, dword_D8B68, dword_D8B74, playofftree, statspalshape, statsbgshapes
+extern divx, divy, cddriveptr, dword_D8B68, mainfont, playofftree, statspalshape, statsbgshapes
 extern statspal, fputchar, j___close_, jctime, lseek_, memcpy_, divisionnames, statsbgnames
 extern statsteamdbs, off_CF6A3, open_, qsort_, read_, sprintf_, strcat_, MakePath
 extern SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff
@@ -42,7 +42,7 @@ movsd	; 270B1
 movsd	; 270B2
 movsw	; 270B3
 mov dword [off_CF6A3], DeskSetExit3b	; 270B5
-mov eax, dword [dword_D8B74]	; 270BF
+mov eax, dword [mainfont]	; 270BF
 mov dword [byte ebp-08h], eax	; 270C4
 mov eax, dword [dword_D8B68]	; 270C7
 mov dword [byte ebp-0Ch], eax	; 270CC
@@ -1310,7 +1310,7 @@ push ebp	; 27FAB
 mov ebp, esp	; 27FAC
 sub esp, 1F8h	; 27FAE
 mov dword [byte ebp-038h], 0	; 27FB4
-mov eax, dword [dword_D8B74]	; 27FBB
+mov eax, dword [mainfont]	; 27FBB
 mov dword [byte ebp-02Ch], eax	; 27FC0
 mov eax, dword [dword_D8B68]	; 27FC3
 mov dword [byte ebp-03Ch], eax	; 27FC8

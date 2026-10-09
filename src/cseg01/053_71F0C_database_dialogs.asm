@@ -8,8 +8,8 @@ extern str_CURRENT, str_Org, str_ORIGINAL, str_Dbx, str_Open4, str_Delete2, str_
 extern str_Original2, str_Temporary, str_Dbdialog, str_Pdbx, str_Pointer12, str_DBX2, str_Buf2, str_extDB
 extern str_ORG, byte_C4B6C, byte_D42C3, savefname, fdlgmask, fileoncd
 extern fdlgshapes, seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb
-extern seasondb_size, careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B16, dword_D0B1A
-extern dword_D0B1E, dbdlgrects
+extern seasondb_size, careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dlgfillcol, dlgedgecol1
+extern dlgedgecol2, dbdlgrects
 extern cddriveptr, dword_D42AC, pointerspr, fdlg_tabexh, fdlg_none, fdlg_tabpo
 extern fdlg_open, fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow
 extern fdlg_tablp, fdlg_noarrow, ptrupdatefn, dbdirty, dblistcur
@@ -187,15 +187,15 @@ sar edx, 1Fh	; 720CE
 LD sub, eax, edx	; 720D1
 sar eax, 1	; 720D3
 add dword [byte esp+060h], eax	; 720D5
-mov eax, dword [dword_D0B16]	; 720D9
+mov eax, dword [dlgfillcol]	; 720D9
 mov dword [byte esp+040h], eax	; 720DE
-mov edi, dword [dword_D0B1A]	; 720E2
-mov esi, dword [dword_D0B1E]	; 720E8
+mov edi, dword [dlgedgecol1]	; 720E2
+mov esi, dword [dlgedgecol2]	; 720E8
 xor eax, eax	; 720EE
-mov dword [dword_D0B16], eax	; 720F0
+mov dword [dlgfillcol], eax	; 720F0
 mov dword [dword_D42AC], eax	; 720F5
-mov dword [dword_D0B1A], esi	; 720FA
-mov dword [dword_D0B1E], edi	; 72100
+mov dword [dlgedgecol1], esi	; 720FA
+mov dword [dlgedgecol2], edi	; 72100
 push eax	; 72106
 mov ecx, dword [byte esp+068h]	; 72107
 add ecx, byte 11h	; 7210B
@@ -206,9 +206,9 @@ mov edx, dword [byte esp+068h]	; 72117
 mov eax, dword [byte esp+064h]	; 7211B
 call DrawDlgFrame	; 7211F
 mov eax, dword [byte esp+040h]	; 72124
-mov dword [dword_D0B16], eax	; 72128
-mov dword [dword_D0B1A], edi	; 7212D
-mov dword [dword_D0B1E], esi	; 72133
+mov dword [dlgfillcol], eax	; 72128
+mov dword [dlgedgecol1], edi	; 7212D
+mov dword [dlgedgecol2], esi	; 72133
 xor esi, esi	; 72139
 cmp dword [dword esp+084h], byte 0	; 7213B
 je near .12	; 72143

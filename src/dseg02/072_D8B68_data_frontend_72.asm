@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D8B68 nobits alloc noexec write align=1
-global byte_D8C88, byte_D9299, awardwinners, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
+global byte_D8C88, byte_D9299, awardwinners, dword_D8B68, pntrshapes, scor2font, mainfont, dword_D8B78
 global joyrawbits, numshapes, spritedrawcount, dword_D8C4C, rinkendbank, frameaccum, rinkendart, dword_D8C72
 global dword_D8C74, dword_D8C78, dword_D8C7A, dword_D8C7C, numshpbank, curperiod, joyqueue, cupteam
 global presidentsteam, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C
@@ -10,11 +10,11 @@ global unk_D9690, unk_D96F8, unk_D972C, unk_D9794, unk_D97CA, unk_D9800, unk_D98
 global unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
 dword_D8B68:
 resb 4
-dword_D8B6C:
+pntrshapes:
 resb 4
-dword_D8B70:
+scor2font:
 resb 4
-dword_D8B74:
+mainfont:
 resb 4
 dword_D8B78:
 resb 4

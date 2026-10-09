@@ -17,7 +17,7 @@ extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dword_C6D26, 
 extern boxshadecolor, dlgtextfg, dlgtextbg, songdata, cont2team, HomeTeam, menuact_nextpo, menuact_posettings
 extern menuact_pohilights, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
 extern keydb_size, musichandle, dword_D2884, dword_D288C, seriesgameno, dword_D2B70, dword_D2BEC, musicslot
-extern cddriveptr, dword_D8B68, dword_D8B74, schedgameidx, pointerspr, playofftree, playofftree_p1, pochampion
+extern cddriveptr, dword_D8B68, mainfont, schedgameidx, pointerspr, playofftree, playofftree_p1, pochampion
 extern dbextension, ptrupdatefn, fputchar, j_unlink_, jctime, mkdir_, teamabbrevs, teamcitynames
 extern off_C6D22, leaguedbnames, off_CEF43, off_CEF63
 extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, msg_POHumanOut, msg_POTeamOut, msg_POGenFinal
@@ -5137,7 +5137,7 @@ push ebp	; 8A661
 sub esp, 0F4h	; 8A662
 xor edx, edx	; 8A668
 mov dword [dword esp+0E8h], edx	; 8A66A
-mov ebp, dword [dword_D8B74]	; 8A671
+mov ebp, dword [mainfont]	; 8A671
 mov esi, dword [dword_D8B68]	; 8A677
 push dword 1E0h	; 8A67D
 push byte 13h	; 8A682

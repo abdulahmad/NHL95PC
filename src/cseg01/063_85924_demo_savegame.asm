@@ -5,7 +5,7 @@ section s_85924 progbits alloc exec nowrite align=1
 extern __CHK, str_GsummaryDb4, str_AGameYouRequire, str_DemoNhl, str_Gsummary3, str_AGameYouRequire2, str_GameSav5, str_Db4
 extern str_Sav3, str_Pointer22, str_Savegame, str_Prmt, str_Dialog, str_Nhl3, str_Err1, str_extDB
 extern str_AGameYouRequire3, curleague, othergames, otherscores, gameopts
-extern demomode, postate, lgstate, gamemode, cddriveptr, dword_D8B74, pointerspr, fileoncd
+extern demomode, postate, lgstate, gamemode, cddriveptr, mainfont, pointerspr, fileoncd
 extern dword_DC888, dword_DC88C, otherperiod, ptrupdatefn, jctime, msg_SavingLeagueGame, msg_SavingPlayoffGame, msg_NoSaveSpace
 extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, CopyFile, DiskSpaceShort
 extern SetDialogColors, RestoreDialogBg, MessageBox, EditTextField, SaveModeState, LoadModeState, WriteModeState, SaveLeagueGameRef
@@ -30,7 +30,7 @@ mov eax, esp	; 8593A
 push eax	; 8593C
 call sub_8E9E8	; 8593D
 add esp, byte 4	; 85942
-mov edx, dword [dword_D8B74]	; 85945
+mov edx, dword [mainfont]	; 85945
 push edx	; 8594B
 call sub_8EA18	; 8594C
 add esp, byte 4	; 85951

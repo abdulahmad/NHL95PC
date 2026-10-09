@@ -15,7 +15,7 @@ global str_PensnumCor, str_PenshotCor, str_GoalnumCor, str_AsstnumCor, str_Andnu
 global str_NumberCor, str_NowbackInt, str_BackmomtInt, str_CoachclpInt, str_OfBar, str_AndBar, str_BetweenBar, str_GamenumBar
 global str_EasportsBar, str_TonightBar, str_GamebtwnBar, str_GoodniteInt, str_LineupsInt, str_TakeynowBar, str_HighliteBar, str_OvertimeBar
 global str_HavewonBar, str_Scor1perBar, str_Scor2perBar, str_Scor3perBar, str_Scor1otpBar, str_Scor2otpBar, str_Scor3otpBar, str_ScortotpBar
-global str_ThegameBar, str_VIV, str_AGameYouRequire3, byte_D11BC, fadeend, fadeend2, byte_D1238
+global str_ThegameBar, str_VIV, str_AGameYouRequire3, byte_D11BC, fadeend, fadeend2, jerseyremap
 global byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, musicslot, musicon, byte_D2439
 global byte_D27B6, dbdlgrects
 global dword_D1229, dword_D122B, dword_D122F, dword_D1231, lineslotx
@@ -112,7 +112,7 @@ fadestep2:
 db 01h,0FFh
 fadeend2:
 db 011h,0FFh
-byte_D1238:
+jerseyremap:
 db 00h,01h,02h,03h,04h,05h,06h,07h,08h,09h,0Ah,0Bh,0Ch,0Dh,0Eh,0Fh
 db 010h,011h,012h,013h,014h,015h,016h,017h,018h,019h,01Ah,01Bh,01Ch,01Dh,01Eh,01Fh
 db 020h,021h,022h,023h,024h,025h,026h,027h,028h,029h,02Ah,02Bh,02Ch,02Dh,02Eh,02Fh

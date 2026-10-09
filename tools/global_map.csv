@@ -2062,3 +2062,63 @@ fadestep2,D1234,FadePalStepSlow step per direction
 hmpassatt,DF63A,hmtmstruct+26h word: passing attempts (stats screen 'Passing' %d/%d (%d%%) denominator)
 hmpasscmp,DF63C,hmtmstruct+28h word: passes completed (stats screen 'Passing' numerator)
 keydirtab,C4D1F,byte table indexed by the 4-bit arrow-key mask built in keyboard pad read (1090B/109D3) -> direction code
+jerseyremap,D1238,256-byte palette remap table (identity init) filled per team and passed to MakeJerseyShape / sub_B4DD4 by the line editors and trade screen
+dlgfillcol,D0B16,"DrawDlgFrame interior fill colour (sub_90D20 fill); callers save/set it around InputDialog, GameLineEditor, TradePlayers"
+dlgedgecol1,D0B1A,DrawDlgFrame colour for the outer bottom/right edge lines
+dlgedgecol2,D0B1E,DrawDlgFrame colour for the outer top/left edge lines
+dlgedgecol3,D0B22,DrawDlgFrame colour for the second frame ring
+dlgbevelcol1,D0B26,DrawDlgFrame bevel colour (drawn only when the bevel arg is set)
+dlgbevelcol2,D0B2A,DrawDlgFrame second bevel colour (drawn only when the bevel arg is set)
+fullscrbmp,EA2B4,"640x480 bitmap allocated in database_save init (sub_B4F8C 280h,1E0h); passed to SetDrawBitmap by editors/stat screens"
+blitclipright,ECDE4,"BlitClipRect: x >= this rejects, x+w clamped to it"
+blitclipbottom,ECDE8,"BlitClipRect: y >= this rejects, y+h clamped to it"
+blitcliptop,ECDEC,"BlitClipRect: y+h < this rejects, y clamped up to it"
+blitclipleft,ECDF0,"BlitClipRect: x+w < this rejects, x clamped up to it"
+menuact_gamedress,CF2A3,game line editor menu item action slot (GameDressPlayer); swapped by GameLineEditorLoop / TradeScreenLoop
+menuact_gamescratch,CF2C3,game line editor menu item action slot (GameScratchPlayer)
+menuact_dbdress,D056C,database line editor menu item action slot (DressPlayer); swapped by DbLineEditorLoop
+menuact_dbscratch,D058C,database line editor menu item action slot (ScratchPlayer)
+s1font,DC230,handle from sub_8E8A0 for s1.vfn loaded in main startup
+mainfont,D8B74,"copy of the s1.vfn font handle; passed to sub_8EA18 by locker room, stats, save dialogs"
+scor2font,D8B70,handle from sub_8E8A0 for scor2b.vfn
+pntrshapes,D8B6C,handle from sub_8E83C for the pointer shape file; pointerspr is taken from it ('pntr')
+str_FmtNumFirstLast,C1C6A,"string '%s#%d %s %s%s'"
+str_FmtNumInitialLast,C1C78,"string '%s#%d %c. %s%s'"
+str_FmtNumNameSuffix,C1C87,"string '%s#%d %s%s'"
+str_FmtNumName,C1C92,"string '%s#%d %s'"
+str_FmtClockEvent,C1C9B,"string '%02d:%02d %s'"
+str_PPTag,C1CA8,"string ' PP'"
+str_SHTag,C1CAC,"string ' SH'"
+str_FmtParenD,C1CB3,"string ' (%d)'"
+str_Unassisted,C1CB9,"string 'Unassisted'"
+str_Assists,C1CC4,"string 'Assists:'"
+str_PenaltyShot,C1CCD,"string 'Penalty shot'"
+str_ToBeTakenBy,C1CDA,"string 'to be taken by'"
+str_02d02dSPenalty,C1CE9,"string '%02d:%02d %s Penalty'"
+str_GameMisconduct,C1CFE,"string 'game misconduct'"
+str_DMinutes,C1D0E,"string '%d minutes'"
+str_02d02dSInjury,C1D19,"string '%02d:%02d %s Injury'"
+str_GoneForTheGame,C1D2D,"string 'gone for the game'"
+str_GoneFor1Period,C1D3F,"string 'gone for 1 period'"
+str_ServedByD,C1D54,"string 'served by #%d'"
+str_B3,C1C58,"string 'B3'"
+str_B4,C1C5B,"string 'B4'"
+str_B5,C1C5E,"string 'B5'"
+str_B6,C1C61,"string 'B6'"
+str_B7,C1C64,"string 'B7'"
+str_B8,C1C67,"string 'B8'"
+str_S8,C1CB0,"string '%s'"
+str_LineCodes0,C0A88,"string '0000000100020003000400050006000700080009000 '"
+str_LineCodes1,C0AB5,"string '1000100110021003100410051006100710081009100 '"
+str_LineCodes2,C0AE2,"string '2000200120022003200420052006200720082009200 '"
+str_VisLineTags,C0B0F,"string 'vlinvpp vpk '"
+str_HomeLineTags,C0B1C,"string 'hlinhpp hpk '"
+str_Visp,C0B29,"string 'visp'"
+str_Homp,C0B2E,"string 'homp'"
+str_LineNames,C0B33,"string 'lin1lin2lin3lin4PP1 PP2 PK1 PK2 '"
+str_04d2,C1DB6,"string '%04d'"
+str_HOMEPALS4,C1DBC,"string 'HOMEPALS'"
+str_AWAYPALS,C1DC5,"string 'AWAYPALS'"
+str_Rinkpal,C1DCE,"string 'rinkpal'"
+str_Pal30,C1DD6,"string '!pal'"
+str_Two,D0C5C,"string '2'"

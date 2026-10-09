@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_C1B2C progbits alloc noexec write align=1
-global PenaltyList, str_EASports, str_StarFmt, asc_C1C6A, asc_C1C78, asc_C1C87, asc_C1C92, asc_C1C9B
-global asc_C1CA8, asc_C1CAC, asc_C1CB3, asc_C1CB9, asc_C1CC4, asc_C1CCD, asc_C1CDA, asc_C1CE9
-global asc_C1CFE, asc_C1D0E, asc_C1D19, asc_C1D2D, asc_C1D3F, asc_C1D54, asc_C1DB6, asc_C1DBC
-global asc_C1DC5, asc_C1DCE, asc_C1DD6, str_pen, str_dbgClin, str_dbgPenShot, str_dbgLip, str_dbgHVpos
+global PenaltyList, str_EASports, str_StarFmt, str_FmtNumFirstLast, str_FmtNumInitialLast, str_FmtNumNameSuffix, str_FmtNumName, str_FmtClockEvent
+global str_PPTag, str_SHTag, str_FmtParenD, str_Unassisted, str_Assists, str_PenaltyShot, str_ToBeTakenBy, str_02d02dSPenalty
+global str_GameMisconduct, str_DMinutes, str_02d02dSInjury, str_GoneForTheGame, str_GoneFor1Period, str_ServedByD, str_04d2, str_HOMEPALS4
+global str_AWAYPALS, str_Rinkpal, str_Pal30, str_pen, str_dbgClin, str_dbgPenShot, str_dbgLip, str_dbgHVpos
 global str_dbgRef, str_dbgPb, str_dbgG, str_dbgGO, str_dbgGsp, str_dbgC12, str_dbgPuckc, str_dbgIdx
 global str_dbgD, str_dbgLbD, str_dbgDRb, str_dbgDS, str_dbgPosVel, str_dbgVz, str_dbgAss, str_dbgSpa
 global str_debError, str_dbgBail, str_statslog, str_fmode_at, str_ErrDumpStats, str_dumpPool, str_dumpTmstructs, str_dumpHex
@@ -14,8 +14,8 @@ global str_dumpGlLine, str_dumpTeamHdrA, str_dumpAway, str_dumpPlHdrA, str_dumpP
 global unk_C1B4A, unk_C1B53, unk_C1B5C, unk_C1B6A, unk_C1B72, unk_C1B7B, unk_C1B88, unk_C1B90
 global unk_C1B9D, unk_C1BA6, unk_C1BAF, unk_C1BC1, unk_C1BD6, unk_C1BE3, unk_C1BEC, unk_C1BF5
 global unk_C1BFE, unk_C1C05, unk_C1C0D, unk_C1C16, unk_C1C1F, unk_C1C27, unk_C1C2F, unk_C1C38
-global unk_C1C41, unk_C1C47, unk_C1C50, unk_C1C58, unk_C1C5B, unk_C1C5E, unk_C1C61, unk_C1C64
-global unk_C1C67, unk_C1CB0, unk_C1D64, unk_C1D72, unk_C1D7E, unk_C1D87, unk_C1D93, unk_C1D9B
+global unk_C1C41, unk_C1C47, unk_C1C50, str_B3, str_B4, str_B5, str_B6, str_B7
+global str_B8, str_S8, unk_C1D64, unk_C1D72, unk_C1D7E, unk_C1D87, unk_C1D93, unk_C1D9B
 global unk_C1DA1, unk_C1DA9, unk_C1DDC, unk_C1DE3, unk_C1DEB, unk_C1DF3, unk_C1DFB, unk_C1E04
 global unk_C1E0C, unk_C1E14, unk_C1E1C, unk_C1E24, unk_C1E2A, unk_C1E31, unk_C1E38, unk_C1E3E
 global unk_C1E44, unk_C1E4C, unk_C1E52, unk_C1E58, unk_C1E5E, unk_C1E63, unk_C1E69, unk_C1E6F
@@ -105,61 +105,61 @@ unk_C1C47:
 db 063h,068h,065h,063h,06Bh,062h,06Eh,064h,00h
 unk_C1C50:
 db 070h,065h,06Eh,073h,068h,06Fh,074h,00h
-unk_C1C58:
+str_B3:
 db 042h,033h,00h
-unk_C1C5B:
+str_B4:
 db 042h,034h,00h
-unk_C1C5E:
+str_B5:
 db 042h,035h,00h
-unk_C1C61:
+str_B6:
 db 042h,036h,00h
-unk_C1C64:
+str_B7:
 db 042h,037h,00h
-unk_C1C67:
+str_B8:
 db 042h,038h,00h
-asc_C1C6A:
+str_FmtNumFirstLast:
 db 025h,073h,023h,025h,064h,020h,025h,073h,020h,025h,073h,025h,073h,00h
-asc_C1C78:
+str_FmtNumInitialLast:
 db 025h,073h,023h,025h,064h,020h,025h,063h,02Eh,020h,025h,073h,025h,073h,00h
-asc_C1C87:
+str_FmtNumNameSuffix:
 db 025h,073h,023h,025h,064h,020h,025h,073h,025h,073h,00h
-asc_C1C92:
+str_FmtNumName:
 db 025h,073h,023h,025h,064h,020h,025h,073h,00h
-asc_C1C9B:
+str_FmtClockEvent:
 db 025h,030h,032h,064h,03Ah,025h,030h,032h,064h,020h,025h,073h,00h
-asc_C1CA8:
+str_PPTag:
 db 020h,050h,050h,00h
-asc_C1CAC:
+str_SHTag:
 db 020h,053h,048h,00h
-unk_C1CB0:
+str_S8:
 db 025h,073h,00h
-asc_C1CB3:
+str_FmtParenD:
 db 020h,028h,025h,064h,029h,00h
-asc_C1CB9:
+str_Unassisted:
 db 055h,06Eh,061h,073h,073h,069h,073h,074h,065h,064h,00h
-asc_C1CC4:
+str_Assists:
 db 041h,073h,073h,069h,073h,074h,073h,03Ah,00h
-asc_C1CCD:
+str_PenaltyShot:
 db 050h,065h,06Eh,061h,06Ch,074h,079h,020h,073h,068h,06Fh,074h,00h
-asc_C1CDA:
+str_ToBeTakenBy:
 db 074h,06Fh,020h,062h,065h,020h,074h,061h,06Bh,065h,06Eh,020h,062h,079h,00h
-asc_C1CE9:
+str_02d02dSPenalty:
 db 025h,030h,032h,064h,03Ah,025h,030h,032h,064h,020h,025h,073h,020h,050h,065h,06Eh
 db 061h,06Ch,074h,079h,00h
-asc_C1CFE:
+str_GameMisconduct:
 db 067h,061h,06Dh,065h,020h,06Dh,069h,073h,063h,06Fh,06Eh,064h,075h,063h,074h,00h
-asc_C1D0E:
+str_DMinutes:
 db 025h,064h,020h,06Dh,069h,06Eh,075h,074h,065h,073h,00h
-asc_C1D19:
+str_02d02dSInjury:
 db 025h,030h,032h,064h,03Ah,025h,030h,032h,064h,020h,025h,073h,020h,049h,06Eh,06Ah
 db 075h,072h,079h,00h
-asc_C1D2D:
+str_GoneForTheGame:
 db 067h,06Fh,06Eh,065h,020h,066h,06Fh,072h,020h,074h,068h,065h,020h,067h,061h,06Dh
 db 065h,00h
-asc_C1D3F:
+str_GoneFor1Period:
 db 067h,06Fh,06Eh,065h,020h,066h,06Fh,072h,020h,031h,020h,070h,065h,072h,069h,06Fh
 db 064h,00h,00h,00h,00h
-asc_C1D54:
+str_ServedByD:
 db 073h,065h,072h,076h,065h,064h,020h,062h,079h,020h,023h,025h,064h,00h,00h,00h
 unk_C1D64:
 db 052h,045h,054h,055h,052h,04Eh,020h,047h,04Fh,041h,04Ch,049h,045h,00h
@@ -177,15 +177,15 @@ unk_C1DA1:
 db 050h,045h,04Eh,041h,04Ch,054h,059h,00h
 unk_C1DA9:
 db 050h,045h,04Eh,041h,04Ch,054h,059h,020h,053h,048h,04Fh,054h,00h
-asc_C1DB6:
+str_04d2:
 db 025h,030h,034h,064h,00h,00h
-asc_C1DBC:
+str_HOMEPALS4:
 db 048h,04Fh,04Dh,045h,050h,041h,04Ch,053h,00h
-asc_C1DC5:
+str_AWAYPALS:
 db 041h,057h,041h,059h,050h,041h,04Ch,053h,00h
-asc_C1DCE:
+str_Rinkpal:
 db 072h,069h,06Eh,06Bh,070h,061h,06Ch,00h
-asc_C1DD6:
+str_Pal30:
 db 021h,070h,061h,06Ch,00h,00h
 unk_C1DDC:
 db 067h,072h,065h,061h,064h,079h,00h

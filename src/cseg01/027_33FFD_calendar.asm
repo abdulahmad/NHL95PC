@@ -6,7 +6,7 @@ extern __CHK, str_Boxr, str_Boxb, str_Bkgd7, str_02d9D, str_Home, str_Away, str_
 extern str_Pal17, str_Calendar, str_Callogo, str_Iff9, str_Pointer8, str_Menubuff5, monthdays, monthfirstday_m1
 extern monthfirstday, musicon, lgteam_17, gameopts, teamstatscb, fileoncd
 extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, songdata, calcolx, calrowy
-extern calendarshapes, musichandle, cddriveptr, fontcolor, dword_D8B74, pointerspr, musicslot
+extern calendarshapes, musichandle, cddriveptr, fontcolor, mainfont, pointerspr, musicslot
 extern calsel, calexit, calmonth, calselday, dword_DDD2C, calselmonth, ptrupdatefn, fputchar
 extern jctime, crestnames, calnextslot, calprevslot, sprintf_, MakePath, FileOpenRead, leaguedbnames
 extern FileClose, FileReadAt, ReadSchedGame, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
@@ -749,7 +749,7 @@ mov dword [calsel], 0FFFFFFFFh	; 34967
 xor edx, edx	; 34971
 mov dword [calexit], edx	; 34973
 mov dword [dword_DDD2C], edx	; 34979
-mov eax, dword [dword_D8B74]	; 3497F
+mov eax, dword [mainfont]	; 3497F
 mov dword [dword esp+07ACh], eax	; 34984
 xor ecx, ecx	; 3498B
 mov ebx, str_Calendar	; 3498D

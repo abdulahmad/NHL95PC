@@ -6,7 +6,7 @@ extern __CHK, str_PLST, str_PTLS, str_Pal19, str_TPI, str_Embnhl, str_Bkgd8, str
 extern str_Iff10, str_Leaguetm2, str_Tspal, str_Pal20, str_Menubuff6, str_WhoWillPlayThe, str_MightyDucksOfAnaheim3, str_WhoWillControlThe
 extern str_extDB, str_EnterPasswordFor, str_VerifyPasswordFor, str_EnterMasterPassword, str_EnterMasterControllerPasswor, str_VerifyMasterControllerPasswo, passkey, passkey_m1
 extern divisionteams, musicon, leagueflags, savedname, gameopts, fileoncd
-extern songdata, teamselsetslot, musichandle, cddriveptr, dword_D8B74, musicslot
+extern songdata, teamselsetslot, musichandle, cddriveptr, mainfont, musicslot
 extern pointerspr, teamselresult, leaguemaster, leaguesaved, ptrupdatefn, jctime, memcpy_, memset_
 extern pwmismatchmsg, strcat_, strcmp_, strcpy_, stricmp_, strlen_, MakePath, leaguedbnames
 extern FileOpenRead, FileClose, FileReadAt, FileWriteAt, ReadTeamRec, SetTextColors, TextInputDialog, ListDialog
@@ -765,7 +765,7 @@ lea eax, [dword esp+0154h]	; 38BA3
 push eax	; 38BAA
 call sub_8E9E8	; 38BAB
 add esp, byte 4	; 38BB0
-mov ebp, dword [dword_D8B74]	; 38BB3
+mov ebp, dword [mainfont]	; 38BB3
 push ebp	; 38BB9
 call sub_8EA18	; 38BBA
 add esp, byte 4	; 38BBF

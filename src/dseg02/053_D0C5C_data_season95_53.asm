@@ -4,9 +4,9 @@ bits 32
 section s_D0C5C progbits alloc noexec write align=1
 extern unk_C2AFD, unk_C2B04, unk_C744C, unk_C7450
 global str_ThereIsNoSpace, str_TheSelectedPlayer, str_NotEnoughSpaceTo2, str_AddAllSelectedPlayers, str_ErrorWhileMakingNew, str_NewPlayer, str_NotAddedToDatabases, str_Move
-global str_ToFreeAgentList, str_CreateAPlayerOr, dword_D0CDA, unk_D0C5C, unk_D0C94, unk_D0C9D, unk_D0CA2, unk_D0ECF
+global str_ToFreeAgentList, str_CreateAPlayerOr, dword_D0CDA, str_Two, unk_D0C94, unk_D0C9D, unk_D0CA2, unk_D0ECF
 global unk_D0ED6, unk_D0EDD
-unk_D0C5C:
+str_Two:
 db 032h,00h,00h,00h,0B8h,01h,00h,00h,03Fh,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd unk_C2AFD

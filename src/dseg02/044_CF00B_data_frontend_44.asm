@@ -14,7 +14,7 @@ extern unk_CE34F, unk_CE361, unk_CE371, unk_CE383, unk_CE389, unk_CE96F, unk_CEA
 extern unk_CECAF, unk_CED6F, unk_CEF0F, unk_CEF2F, unk_CEF6F, unk_CEFEF
 global dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB, dword_CF5D7, dword_CF5F7, dword_CF617, dword_CF637
 global dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB, dword_CF84B, dword_CF8CB, menuact_uselines2, menuact_savedeflines2
-global off_CF2A3, off_CF2C3, menuact_uselines, menuact_savedeflines, menuact_savelines, off_CF51F, off_CF5DF, off_CF61F
+global menuact_gamedress, menuact_gamescratch, menuact_uselines, menuact_savedeflines, menuact_savelines, off_CF51F, off_CF5DF, off_CF61F
 global off_CF67F, off_CF6A3, unk_CF1AF, unk_CF20F, unk_CF28F, unk_CF2CF, unk_CF2EF, unk_CF32F
 global unk_CF3CF, unk_CF42F, unk_CF48F, unk_CF4CF, unk_CF50F, unk_CF52F, unk_CF54F, unk_CF5CF
 global unk_CF5EF, unk_CF62F, unk_CF68F, unk_CF6AF, unk_CF72F, unk_CF74F, unk_CF78F, unk_CF80F
@@ -123,12 +123,12 @@ db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CF28F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,068h,00h,00h,00h,011h,00h,00h,00h
 dd unk_CE136
-off_CF2A3:
+menuact_gamedress:
 dd GameDressPlayer
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 068h,00h,00h,00h,024h,00h,00h,00h
 dd unk_CE143
-off_CF2C3:
+menuact_gamescratch:
 dd GameScratchPlayer
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CF2CF:

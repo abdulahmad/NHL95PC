@@ -5,14 +5,14 @@ section s_3DC2C progbits alloc exec nowrite align=1
 extern __CHK, str_Temp6, str_Tstat, str_Keys2, str_Pstat2, str_Gstat2, str_Embpal3, str_Pal21
 extern str_Donepal, str_TheJerseyNumber2d2, str_EnterJerseyNumberFor, str_Pal22, str_C2dS, str_HOMEPALS2, str_Embnhl2, str_Bkgd9
 extern str_Pntr2, str_Pointer10, str_Menubuff7, str_Lineditp, str_Shrt, str_extDB, str_VFN, str_extBIN
-extern str_space, str_dot, curleague, byte_D11BC, byte_D1238, byte_D12DE, byte_D1333, byte_D1334
+extern str_space, str_dot, curleague, byte_D11BC, jerseyremap, byte_D12DE, byte_D1333, byte_D1334
 extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, leaguedbfmt2, leaguedbfmt, traderoster
 extern tradejersey, tradeslot, fileoncd
 extern statscategory, statsredrawcb, tradebtnx, tradebtny, HomeTeam, cddriveptr, curperiod, pointerspr
 extern dword_DC738, statspalshape, statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, traderesult
 extern tradeclick, traderemap1, traderemap2, tradecursor, jerseymsg, tradeside
-extern dword_DE264, ptrupdatefn, jctime, memcpy_, leaguedbnames, unequaltrademsg, off_CF2A3
-extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
+extern dword_DE264, ptrupdatefn, jctime, memcpy_, leaguedbnames, unequaltrademsg, menuact_gamedress
+extern menuact_gamescratch, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
 extern FileOpenRW, FileClose, ReadKeyRec, WriteKeyRec, ReadTeamRec, LoadGameTeams, RunMenu, InitMenuRemap
 extern TeamRosterScreen, TextInputDialog, MessageBox, WriteTeamRec, GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown
 extern DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, FadePalStep, GameLineEditor, DrawDlgFrame, MakeJerseyShape, ClearPlayerFromLines
@@ -1128,7 +1128,7 @@ call memcpy_	; 3EB43
 mov eax, dword [edi+ecx*4]	; 3EB48
 mov al, byte [nosplit eax*4+byte_D11BC]	; 3EB4B
 and eax, 0FFh	; 3EB52
-mov al, byte [dword eax+byte_D1238]	; 3EB57
+mov al, byte [dword eax+jerseyremap]	; 3EB57
 mov ah, byte [byte_D12DE]	; 3EB5D
 xor ecx, ecx	; 3EB63
 mov cl, ah	; 3EB65
@@ -1142,9 +1142,9 @@ sub eax, esi	; 3EB75
 mov edx, dword [byte esp+04Ch]	; 3EB77
 mov dl, byte [byte edx+eax*2+01h]	; 3EB7B
 and edx, 0FFh	; 3EB7F
-mov eax, byte_D1238	; 3EB85
+mov eax, jerseyremap	; 3EB85
 call MakeJerseyShape	; 3EB8A
-push byte_D1238	; 3EB8F
+push jerseyremap	; 3EB8F
 call sub_B4DD4	; 3EB94
 add esp, byte 4	; 3EB99
 mov ecx, dword [nosplit esi*8+tradebtny]	; 3EB9C
@@ -1564,8 +1564,8 @@ mov dword [byte ebp-0Eh], edi	; 3F05D
 mov dword [byte ebp-012h], edi	; 3F060
 mov dword [byte ebp-03Eh], edi	; 3F063
 mov dword [byte ebp-042h], edi	; 3F066
-mov dword [off_CF2C3], edi	; 3F069
-mov dword [off_CF2A3], edi	; 3F06F
+mov dword [menuact_gamescratch], edi	; 3F069
+mov dword [menuact_gamedress], edi	; 3F06F
 mov eax, dword [byte ebp+046h]	; 3F075
 mov eax, dword [byte eax+02h]	; 3F078
 sar eax, 10h	; 3F07B
@@ -1756,7 +1756,7 @@ mov edx, dword [dword ebp-0A6h]	; 3F26C
 mov edx, dword [edx+eax*4]	; 3F272
 mov dl, byte [nosplit edx*4+byte_D11BC]	; 3F275
 and edx, 0FFh	; 3F27C
-mov dl, byte [dword edx+byte_D1238]	; 3F282
+mov dl, byte [dword edx+jerseyremap]	; 3F282
 mov dh, byte [byte_D12DE]	; 3F288
 xor ecx, ecx	; 3F28E
 mov cl, dh	; 3F290
@@ -1773,9 +1773,9 @@ imul edx, dword [tradeside], dword 268h	; 3F2AB
 add eax, edx	; 3F2B5
 xor edx, edx	; 3F2B7
 mov dl, byte [dword eax+tradejersey]	; 3F2B9
-mov eax, byte_D1238	; 3F2BF
+mov eax, jerseyremap	; 3F2BF
 call MakeJerseyShape	; 3F2C4
-push byte_D1238	; 3F2C9
+push jerseyremap	; 3F2C9
 call sub_B4DD4	; 3F2CE
 add esp, byte 4	; 3F2D3
 mov eax, dword [byte ebp+02Eh]	; 3F2D6
@@ -2550,7 +2550,7 @@ add eax, dword [dword ebp-0A6h]	; 3FBE6
 mov eax, dword [eax]	; 3FBEC
 mov al, byte [nosplit eax*4+byte_D11BC]	; 3FBEE
 and eax, 0FFh	; 3FBF5
-mov al, byte [dword eax+byte_D1238]	; 3FBFA
+mov al, byte [dword eax+jerseyremap]	; 3FBFA
 mov ah, byte [byte_D12DE]	; 3FC00
 xor ecx, ecx	; 3FC06
 mov cl, ah	; 3FC08
@@ -2564,9 +2564,9 @@ shl eax, 2	; 3FC18
 sub eax, edx	; 3FC1B
 xor edx, edx	; 3FC1D
 mov dl, byte [dword ebp+eax*2-099h]	; 3FC1F
-mov eax, byte_D1238	; 3FC26
+mov eax, jerseyremap	; 3FC26
 call MakeJerseyShape	; 3FC2B
-push byte_D1238	; 3FC30
+push jerseyremap	; 3FC30
 call sub_B4DD4	; 3FC35
 add esp, byte 4	; 3FC3A
 mov eax, dword [byte ebp+042h]	; 3FC3D
@@ -2701,7 +2701,7 @@ mov eax, dword [dword ebp-0A6h]	; 3FE0C
 mov eax, dword [eax+edx*4]	; 3FE12
 mov al, byte [nosplit eax*4+byte_D11BC]	; 3FE15
 and eax, 0FFh	; 3FE1C
-mov al, byte [dword eax+byte_D1238]	; 3FE21
+mov al, byte [dword eax+jerseyremap]	; 3FE21
 mov ah, byte [byte_D12DE]	; 3FE27
 xor ecx, ecx	; 3FE2D
 mov cl, ah	; 3FE2F
@@ -2718,9 +2718,9 @@ imul edx, dword [tradeside], dword 268h	; 3FE4A
 add eax, edx	; 3FE54
 xor edx, edx	; 3FE56
 mov dl, byte [dword eax+tradejersey]	; 3FE58
-mov eax, byte_D1238	; 3FE5E
+mov eax, jerseyremap	; 3FE5E
 call MakeJerseyShape	; 3FE63
-push byte_D1238	; 3FE68
+push jerseyremap	; 3FE68
 call sub_B4DD4	; 3FE6D
 add esp, byte 4	; 3FE72
 mov eax, dword [byte ebp+02Eh]	; 3FE75

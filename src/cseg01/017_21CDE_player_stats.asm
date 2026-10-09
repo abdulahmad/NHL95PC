@@ -16,7 +16,7 @@ extern str_fmt2d, str_fmt3d, str_fmt4d, str_fmt5d, str_fmtTenths, str_fmtPct, st
 extern str_fmtEmb, str_Bkgd2, treecolslots, treecol_Wr2
 extern treecol_Er2, treecol_Er1
 extern byte_ED909, teamdivflags, teamconf, statsplayoffs, fileoncd
-extern statsfromleague, westconfteams, eastconfteams, treerowy, cddriveptr, dword_D8B68, dword_D8B74, statsnumgoalies
+extern statsfromleague, westconfteams, eastconfteams, treerowy, cddriveptr, dword_D8B68, mainfont, statsnumgoalies
 extern statsskaterorder, statsgoalieorder, dword_DC734, statsgoalieplr, statsnumskaters, statsskaterplr, dword_DC85C, dword_DC860
 extern statspalshape, statsbgshapes, statsteamrecs, statsteambuf, statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf
 extern fputchar, j___close_, jctime, lseek_, memcpy_, statslabels, statsbgnames, statsplayerdbs
@@ -59,7 +59,7 @@ sub esp, 10Ch	; 21CEE
 xor edx, edx	; 21CF4
 mov dword [dword esp+0FCh], edx	; 21CF6
 mov ebp, statsplayer	; 21CFD
-mov eax, dword [dword_D8B74]	; 21D02
+mov eax, dword [mainfont]	; 21D02
 mov dword [dword esp+0F8h], eax	; 21D07
 mov eax, dword [dword_D8B68]	; 21D0E
 mov dword [dword esp+0100h], eax	; 21D13
@@ -665,7 +665,7 @@ push edi	; 2258F
 push ebp	; 22590
 sub esp, 110h	; 22591
 mov ebp, statsplayer	; 22597
-mov eax, dword [dword_D8B74]	; 2259C
+mov eax, dword [mainfont]	; 2259C
 mov dword [dword esp+0104h], eax	; 225A1
 mov eax, dword [dword_D8B68]	; 225A8
 mov dword [dword esp+0108h], eax	; 225AD
@@ -2392,7 +2392,7 @@ mov dword [dword esp+0258h], 8	; 23A9C
 .28:
 mov eax, dword [dword esp+0254h]	; 23AA7
 call j___close_	; 23AAE
-mov esi, dword [dword_D8B74]	; 23AB3
+mov esi, dword [mainfont]	; 23AB3
 mov edi, dword [dword_D8B68]	; 23AB9
 call sub_B4BA8	; 23ABF
 mov eax, dword [statsplayoffs]	; 23AC4
@@ -3124,7 +3124,7 @@ push edi	; 244F0
 push ebp	; 244F1
 sub esp, 40Ch	; 244F2
 push eax	; 244F8
-mov eax, dword [dword_D8B74]	; 244F9
+mov eax, dword [mainfont]	; 244F9
 mov dword [dword esp+03FCh], eax	; 244FE
 mov eax, dword [dword_D8B68]	; 24505
 mov dword [dword esp+03F8h], eax	; 2450A
@@ -5448,7 +5448,7 @@ mov eax, dword [dword esp+025Ch]	; 261E4
 call j___close_	; 261EB
 mov eax, dword [dword esp+0260h]	; 261F0
 call j___close_	; 261F7
-mov edi, dword [dword_D8B74]	; 261FC
+mov edi, dword [mainfont]	; 261FC
 mov esi, dword [dword_D8B68]	; 26202
 call sub_B4BA8	; 26208
 xor ecx, ecx	; 2620D

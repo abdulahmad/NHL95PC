@@ -6,7 +6,7 @@ extern __CHK, str_MTROCKU, str_SBROCKU, str_ADROCKU, str_ROCKDITI, str_Gadget6, 
 extern str_Pointer19, str_PPV, musicon, fileoncd
 extern gamemode, ctl1team, ctl2team, sounddev, dword_C66D0, dword_C66D4
 extern rinkscrollx, rinkscrolly, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, rockcuepool
-extern teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1, cddriveptr, dword_D8B74
+extern teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1, cddriveptr, mainfont
 extern spritedrawcount, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, pointerspr, rinkwtiles, rinkhtiles
 extern bgscrolly, replayplay, dword_E9F16, dword_E9F38, ptrupdatefn, rockteamcues, rocktunes
 extern rockrandcues, dword_ED6D0, dword_ED6D4, gadgetfile, gadgetptry, gadgetptrx, gadgetshape
@@ -1593,7 +1593,7 @@ lea eax, [byte esp+08h]	; 7F13D
 push eax	; 7F141
 call sub_8E9E8	; 7F142
 add esp, byte 4	; 7F147
-mov ecx, dword [dword_D8B74]	; 7F14A
+mov ecx, dword [mainfont]	; 7F14A
 push ecx	; 7F150
 call sub_8EA18	; 7F151
 add esp, byte 4	; 7F156

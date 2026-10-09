@@ -13,8 +13,8 @@ extern dword_C5135, gameopts
 extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, dword_C5840, screenbm
 extern songdata, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
 extern musichandle, cddriveptr, mousex, mousey, mousebtns, dword_D30D4, dword_D4158, dword_D415C
-extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
-extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, curperiod, photoptrs, dword_DC230
+extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, pntrshapes, scor2font, mainfont, dword_D8B78
+extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, curperiod, photoptrs, s1font
 extern pointerspr, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
 extern int386_, mousepollfn, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
 extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, MainDeskLoop
@@ -267,7 +267,7 @@ lea eax, [byte esp+03Ch]	; 10302
 push eax	; 10306
 call sub_8E83C	; 10307
 add esp, byte 8	; 1030C
-mov dword [dword_D8B6C], eax	; 1030F
+mov dword [pntrshapes], eax	; 1030F
 push str_Pntr	; 10314
 push eax	; 10319
 call sub_B30B4	; 1031A
@@ -289,8 +289,8 @@ lea eax, [byte esp+03Ch]	; 1034F
 push eax	; 10353
 call sub_8E8A0	; 10354
 add esp, byte 8	; 10359
-mov dword [dword_DC230], eax	; 1035C
-mov dword [dword_D8B74], eax	; 10361
+mov dword [s1font], eax	; 1035C
+mov dword [mainfont], eax	; 10361
 mov ecx, str_VFN	; 10366
 mov ebx, str_Scor2b	; 1036B
 cmp byte [fileoncd+0169h], 1	; 10370
@@ -307,7 +307,7 @@ lea eax, [byte esp+03Ch]	; 1038E
 push eax	; 10392
 call sub_8E8A0	; 10393
 add esp, byte 8	; 10398
-mov dword [dword_D8B70], eax	; 1039B
+mov dword [scor2font], eax	; 1039B
 mov ecx, str_VFN	; 103A0
 mov ebx, str_Scor3b	; 103A5
 cmp byte [fileoncd+016Ah], 1	; 103AA
@@ -342,7 +342,7 @@ push eax	; 10406
 call sub_8E8A0	; 10407
 add esp, byte 8	; 1040C
 mov dword [dword_D8B68], eax	; 1040F
-mov edx, dword [dword_DC230]	; 10414
+mov edx, dword [s1font]	; 10414
 push edx	; 1041A
 call sub_8EA18	; 1041B
 add esp, byte 4	; 10420
@@ -1386,7 +1386,7 @@ call StopDigiSample	; 10FD8
 mov eax, 222E0h	; 10FDD
 call sub_1BAF3	; 10FE2
 .3:
-mov edx, dword [dword_DC230]	; 10FE7
+mov edx, dword [s1font]	; 10FE7
 push edx	; 10FED
 call sub_8EA18	; 10FEE
 add esp, byte 4	; 10FF3

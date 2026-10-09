@@ -17,7 +17,7 @@ extern ctl2side, sounddev, teamdivflags, songdata, cont2team, HomeTeam, settings
 extern dword_D2150, dword_D223C, lockerrects
 extern dword_D22DC, dword_D22E0, dword_D22EC, dword_D22F0
 extern soundcardrects, musichandle, dword_D2435, cddriveptr, musicslot
-extern dword_D8B68, dword_D8B74, dword_DC230, pointerspr, fdlg_cancel, ptrupdatefn, setbits, pl20spr
+extern dword_D8B68, mainfont, s1font, pointerspr, fdlg_cancel, ptrupdatefn, setbits, pl20spr
 extern pl05spr, pl10spr, pg07spr, na05spr, pg01spr, acptspr, na03spr, pg03spr
 extern chkoffspr, pg05spr, chkonspr, na01spr, titlebckspr, homebckspr, homenamebckspr, visbckspr
 extern visnamebckspr, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
@@ -177,7 +177,7 @@ mov eax, esp	; 80529
 push eax	; 8052B
 call sub_8E9E8	; 8052C
 add esp, byte 4	; 80531
-mov edx, dword [dword_DC230]	; 80534
+mov edx, dword [s1font]	; 80534
 push edx	; 8053A
 call sub_8EA18	; 8053B
 add esp, byte 4	; 80540
@@ -936,7 +936,7 @@ inc eax	; 80E9C
 mov dword [dword esp+0350h], eax	; 80E9D
 cmp eax, byte 6	; 80EA4
 jl short DrawLockerRoom.19	; 80EA7
-mov ebx, dword [dword_D8B74]	; 80EA9
+mov ebx, dword [mainfont]	; 80EA9
 push ebx	; 80EAF
 call sub_8EA18	; 80EB0
 add esp, byte 4	; 80EB5
@@ -1287,7 +1287,7 @@ mov ebx, str_ExhibitionGame	; 813DA
 .33:
 mov edx, 12h	; 813DF
 call PrintOutlinedText	; 813E4
-mov eax, dword [dword_D8B74]	; 813E9
+mov eax, dword [mainfont]	; 813E9
 push eax	; 813EE
 call sub_8EA18	; 813EF
 add esp, byte 4	; 813F4
@@ -1563,7 +1563,7 @@ sar eax, 1	; 8179E
 mov ebx, esi	; 817A0
 mov edx, 12h	; 817A2
 call PrintOutlinedText	; 817A7
-mov eax, dword [dword_D8B74]	; 817AC
+mov eax, dword [mainfont]	; 817AC
 push eax	; 817B1
 call sub_8EA18	; 817B2
 add esp, byte 4	; 817B7

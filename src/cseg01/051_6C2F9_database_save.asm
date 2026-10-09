@@ -8,7 +8,7 @@ extern str_SavingDatabases, rosterisfa, musicon, byte_D42C3, rosterlist, rosterj
 extern boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg, songdata, falist, falistsel, facount
 extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0BFC, dword_D0C04, dword_D0C10
-extern dword_D0C18, dword_D0C20, musichandle, dword_D8B74, pointerspr, dword_EA2B0, dword_EA2B4, musicslot
+extern dword_D0C18, dword_D0C20, musichandle, mainfont, pointerspr, dword_EA2B0, fullscrbmp, musicslot
 extern rosterteamptr, dbdirty, msglines, dword_EBCA4, editptrspr, editrosters_exit, fputchar, jctime
 extern BuildFreeAgentList_ret, mkdir_, leaguedbnames
 extern dbexistsmsg, nodiskspacemsg, rmdir_, sprintf_, strcat_, strcpy_, strlen_, strupr_
@@ -817,7 +817,7 @@ mov esi, str_Current3	; 6CCFC
 movsd	; 6CD01
 movsd	; 6CD02
 call sub_B4BA8	; 6CD03
-mov eax, dword [dword_D8B74]	; 6CD08
+mov eax, dword [mainfont]	; 6CD08
 mov dword [dword_EA2B0], eax	; 6CD0D
 push eax	; 6CD12
 call sub_8EA18	; 6CD13
@@ -849,7 +849,7 @@ push dword 1E0h	; 6CD67
 push dword 280h	; 6CD6C
 call sub_B4F8C	; 6CD71
 add esp, byte 0Ch	; 6CD76
-mov dword [dword_EA2B4], eax	; 6CD79
+mov dword [fullscrbmp], eax	; 6CD79
 mov eax, dword [pointerspr]	; 6CD7E
 mov esi, dword [byte eax+02h]	; 6CD83
 sar esi, 10h	; 6CD86
@@ -920,7 +920,7 @@ mov eax, esp	; 6CE6B
 push eax	; 6CE6D
 call sub_8EA00	; 6CE6E
 add esp, byte 4	; 6CE73
-mov ebx, dword [dword_EA2B4]	; 6CE76
+mov ebx, dword [fullscrbmp]	; 6CE76
 push ebx	; 6CE7C
 call jctime	; 6CE7D
 add esp, byte 4	; 6CE82

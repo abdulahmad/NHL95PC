@@ -5,13 +5,13 @@ section s_78346 progbits alloc exec nowrite align=1
 extern __CHK, str_Lelogo2, str_C2dS3, str_EmbS, str_HOMEPALS3, str_Bkgd10, str_Forward, str_Line1
 extern str_Line2, str_Line3, str_Line4, str_Power, str_Play1, str_Play2, str_Penalty, str_Kill1
 extern str_Kill2, str_Defense3, str_Goaltenders, str_Extra, str_Attackers, str_S2dSS2, str_Teams2, str_ErrB2Perror
-extern str_Tstat2, str_Keys4, str_Pstat4, str_Gstat4, str_extBIN, byte_D11BC, byte_D1238, byte_D12DE
+extern str_Tstat2, str_Keys4, str_Pstat4, str_Gstat4, str_extBIN, byte_D11BC, jerseyremap, byte_D12DE
 extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, hmrosterjersey, leaguedbfmt2, leaguedbfmt
 extern byte_ECDF4, gmroster, gmrosterjersey, gmrosterslot, statscategory, fileoncd
-extern statsredrawcb, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
-extern dword_D0B2A, lineslotx, linesloty, jerseydigits, cddriveptr, curperiod, dword_DC734, dword_DC738
+extern statsredrawcb, cont2team, HomeTeam, dlgfillcol, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgbevelcol1
+extern dlgbevelcol2, lineslotx, linesloty, jerseydigits, cddriveptr, curperiod, dword_DC734, dword_DC738
 extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, exit_, j___close_, jctime, lseek_
-extern crestnames, menuact_uselines2, menuact_savedeflines2, off_CF2A3, off_CF2C3, menuact_uselines, menuact_savedeflines, menuact_savelines
+extern crestnames, menuact_uselines2, menuact_savedeflines2, menuact_gamedress, menuact_gamescratch, menuact_uselines, menuact_savedeflines, menuact_savelines
 extern open_, perror_, read_, sprintf_, MakePath, RunMenu, TeamRosterScreen, MessageBox
 extern DrawMenuBar, FadePalStep, PrintLineEdStatus, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8FFB0
 extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, FatalError, sub_B30B4, WaitKey
@@ -57,7 +57,7 @@ mov al, byte [nosplit eax*4+byte_D11BC]	; 78391
 mov byte [byte esp+02Ch], al	; 78398
 xor eax, eax	; 7839C
 mov al, byte [byte esp+02Ch]	; 7839E
-mov al, byte [dword eax+byte_D1238]	; 783A2
+mov al, byte [dword eax+jerseyremap]	; 783A2
 mov byte [byte esp+02Ch], al	; 783A8
 mov al, byte [byte_D12DE]	; 783AC
 mov byte [byte esp+028h], al	; 783B1
@@ -70,9 +70,9 @@ mov bl, byte [byte esp+02Ch]	; 783BF
 mov eax, dword [esp]	; 783C3
 xor edx, edx	; 783C6
 mov dl, byte [esi+eax]	; 783C8
-mov eax, byte_D1238	; 783CB
+mov eax, jerseyremap	; 783CB
 call MakeJerseyShape	; 783D0
-push byte_D1238	; 783D5
+push jerseyremap	; 783D5
 call sub_B4DD4	; 783DA
 add esp, byte 4	; 783DF
 mov edx, dword [nosplit esi*8+linesloty]	; 783E2
@@ -629,7 +629,7 @@ jmp short .10	; 78B98
 mov dl, cl	; 78B9A
 add dl, 8	; 78B9C
 .10:
-mov byte [dword eax+byte_D1238], dl	; 78B9F
+mov byte [dword eax+jerseyremap], dl	; 78B9F
 inc eax	; 78BA5
 cmp eax, 0FFh	; 78BA6
 jl short LoadJerseyColours.7	; 78BAB
@@ -640,7 +640,7 @@ mov byte [byte_D1336], 0FEh	; 78BC2
 push ebp	; 78BC9
 call jctime	; 78BCA
 add esp, byte 4	; 78BCF
-push byte_D1238	; 78BD2
+push jerseyremap	; 78BD2
 call sub_B4DD4	; 78BD7
 add esp, byte 4	; 78BDC
 add esp, byte 10h	; 78BDF
@@ -660,7 +660,7 @@ mov esi, eax	; 78BF7
 mov edi, edx	; 78BF9
 mov ebp, ebx	; 78BFB
 mov dword [byte esp+010h], ecx	; 78BFD
-mov edx, dword [dword_D0B16]	; 78C01
+mov edx, dword [dlgfillcol]	; 78C01
 push edx	; 78C07
 mov eax, ecx	; 78C08
 sub eax, edi	; 78C0A
@@ -674,7 +674,7 @@ push edi	; 78C14
 push esi	; 78C15
 call sub_90D20	; 78C16
 add esp, byte 14h	; 78C1B
-mov ebx, dword [dword_D0B1A]	; 78C1E
+mov ebx, dword [dlgedgecol1]	; 78C1E
 push ebx	; 78C24
 push edi	; 78C25
 lea eax, [byte ebp-01h]	; 78C26
@@ -683,7 +683,7 @@ push edi	; 78C2A
 push esi	; 78C2B
 call sub_B4FAC	; 78C2C
 add esp, byte 14h	; 78C31
-mov ecx, dword [dword_D0B1A]	; 78C34
+mov ecx, dword [dlgedgecol1]	; 78C34
 push ecx	; 78C3A
 mov eax, dword [byte esp+014h]	; 78C3B
 dec eax	; 78C3F
@@ -693,7 +693,7 @@ push edi	; 78C42
 push esi	; 78C43
 call sub_B4FAC	; 78C44
 add esp, byte 14h	; 78C49
-mov eax, dword [dword_D0B1E]	; 78C4C
+mov eax, dword [dlgedgecol2]	; 78C4C
 push eax	; 78C51
 mov edx, dword [byte esp+014h]	; 78C52
 push edx	; 78C56
@@ -703,7 +703,7 @@ push eax	; 78C5B
 push ebp	; 78C5C
 call sub_B4FAC	; 78C5D
 add esp, byte 14h	; 78C62
-mov ebx, dword [dword_D0B1E]	; 78C65
+mov ebx, dword [dlgedgecol2]	; 78C65
 push ebx	; 78C6B
 mov ecx, dword [byte esp+014h]	; 78C6C
 push ecx	; 78C70
@@ -713,14 +713,14 @@ lea eax, [byte esi+01h]	; 78C73
 push eax	; 78C76
 call sub_B4FAC	; 78C77
 add esp, byte 14h	; 78C7C
-mov edx, dword [dword_D0B22]	; 78C7F
+mov edx, dword [dlgedgecol3]	; 78C7F
 push edx	; 78C85
 mov ebx, dword [byte esp+014h]	; 78C86
 push ebx	; 78C8A
 push esi	; 78C8B
 call sub_B5DB0	; 78C8C
 add esp, byte 0Ch	; 78C91
-mov ecx, dword [dword_D0B22]	; 78C94
+mov ecx, dword [dlgedgecol3]	; 78C94
 push ecx	; 78C9A
 push edi	; 78C9B
 push ebp	; 78C9C
@@ -728,7 +728,7 @@ call sub_B5DB0	; 78C9D
 add esp, byte 0Ch	; 78CA2
 cmp dword [byte esp+024h], byte 0	; 78CA5
 je near .1	; 78CAA
-mov edx, dword [dword_D0B2A]	; 78CB0
+mov edx, dword [dlgbevelcol2]	; 78CB0
 push edx	; 78CB6
 mov eax, edi	; 78CB7
 add eax, byte 2	; 78CB9
@@ -740,7 +740,7 @@ mov dword [byte esp+0Ch], eax	; 78CC6
 push eax	; 78CCA
 call sub_B5DB0	; 78CCB
 add esp, byte 0Ch	; 78CD0
-mov eax, dword [dword_D0B2A]	; 78CD3
+mov eax, dword [dlgbevelcol2]	; 78CD3
 push eax	; 78CD8
 add edi, byte 3	; 78CD9
 mov dword [byte esp+0Ch], edi	; 78CDC
@@ -749,14 +749,14 @@ lea edi, [byte esi+03h]	; 78CE1
 push edi	; 78CE4
 call sub_B5DB0	; 78CE5
 add esp, byte 0Ch	; 78CEA
-mov ebx, dword [dword_D0B26]	; 78CED
+mov ebx, dword [dlgbevelcol1]	; 78CED
 push ebx	; 78CF3
 mov ecx, dword [byte esp+04h]	; 78CF4
 push ecx	; 78CF8
 push edi	; 78CF9
 call sub_B5DB0	; 78CFA
 add esp, byte 0Ch	; 78CFF
-mov esi, dword [dword_D0B26]	; 78D02
+mov esi, dword [dlgbevelcol1]	; 78D02
 push esi	; 78D08
 mov eax, dword [byte esp+0Ch]	; 78D09
 push eax	; 78D0D
@@ -764,7 +764,7 @@ mov edx, dword [byte esp+0Ch]	; 78D0E
 push edx	; 78D12
 call sub_B5DB0	; 78D13
 add esp, byte 0Ch	; 78D18
-mov ebx, dword [dword_D0B26]	; 78D1B
+mov ebx, dword [dlgbevelcol1]	; 78D1B
 push ebx	; 78D21
 mov esi, dword [byte esp+014h]	; 78D22
 sub esi, byte 2	; 78D26
@@ -773,7 +773,7 @@ mov ecx, dword [byte esp+0Ch]	; 78D2A
 push ecx	; 78D2E
 call sub_B5DB0	; 78D2F
 add esp, byte 0Ch	; 78D34
-mov eax, dword [dword_D0B26]	; 78D37
+mov eax, dword [dlgbevelcol1]	; 78D37
 push eax	; 78D3C
 mov eax, dword [byte esp+014h]	; 78D3D
 sub eax, byte 3	; 78D41
@@ -782,13 +782,13 @@ push eax	; 78D48
 push edi	; 78D49
 call sub_B5DB0	; 78D4A
 add esp, byte 0Ch	; 78D4F
-mov ebx, dword [dword_D0B2A]	; 78D52
+mov ebx, dword [dlgbevelcol2]	; 78D52
 push ebx	; 78D58
 push esi	; 78D59
 push edi	; 78D5A
 call sub_B5DB0	; 78D5B
 add esp, byte 0Ch	; 78D60
-mov ecx, dword [dword_D0B2A]	; 78D63
+mov ecx, dword [dlgbevelcol2]	; 78D63
 push ecx	; 78D69
 mov edi, dword [byte esp+010h]	; 78D6A
 push edi	; 78D6E
@@ -796,7 +796,7 @@ mov eax, dword [byte esp+0Ch]	; 78D6F
 push eax	; 78D73
 call sub_B5DB0	; 78D74
 add esp, byte 0Ch	; 78D79
-mov edx, dword [dword_D0B2A]	; 78D7C
+mov edx, dword [dlgbevelcol2]	; 78D7C
 push edx	; 78D82
 mov ebx, dword [byte esp+04h]	; 78D83
 push ebx	; 78D87
@@ -804,7 +804,7 @@ lea edi, [byte ebp-03h]	; 78D88
 push edi	; 78D8B
 call sub_B5DB0	; 78D8C
 add esp, byte 0Ch	; 78D91
-mov ecx, dword [dword_D0B2A]	; 78D94
+mov ecx, dword [dlgbevelcol2]	; 78D94
 push ecx	; 78D9A
 mov eax, dword [byte esp+0Ch]	; 78D9B
 push eax	; 78D9F
@@ -812,40 +812,40 @@ sub ebp, byte 2	; 78DA0
 push ebp	; 78DA3
 call sub_B5DB0	; 78DA4
 add esp, byte 0Ch	; 78DA9
-mov edx, dword [dword_D0B26]	; 78DAC
+mov edx, dword [dlgbevelcol1]	; 78DAC
 push edx	; 78DB2
 mov ebx, dword [byte esp+04h]	; 78DB3
 push ebx	; 78DB7
 push ebp	; 78DB8
 call sub_B5DB0	; 78DB9
 add esp, byte 0Ch	; 78DBE
-mov ecx, dword [dword_D0B26]	; 78DC1
+mov ecx, dword [dlgbevelcol1]	; 78DC1
 push ecx	; 78DC7
 mov eax, dword [byte esp+0Ch]	; 78DC8
 push eax	; 78DCC
 push edi	; 78DCD
 call sub_B5DB0	; 78DCE
 add esp, byte 0Ch	; 78DD3
-mov edx, dword [dword_D0B26]	; 78DD6
+mov edx, dword [dlgbevelcol1]	; 78DD6
 push edx	; 78DDC
 push esi	; 78DDD
 push edi	; 78DDE
 call sub_B5DB0	; 78DDF
 add esp, byte 0Ch	; 78DE4
-mov ebx, dword [dword_D0B26]	; 78DE7
+mov ebx, dword [dlgbevelcol1]	; 78DE7
 push ebx	; 78DED
 mov ecx, dword [byte esp+010h]	; 78DEE
 push ecx	; 78DF2
 push ebp	; 78DF3
 call sub_B5DB0	; 78DF4
 add esp, byte 0Ch	; 78DF9
-mov eax, dword [dword_D0B2A]	; 78DFC
+mov eax, dword [dlgbevelcol2]	; 78DFC
 push eax	; 78E01
 push esi	; 78E02
 push ebp	; 78E03
 call sub_B5DB0	; 78E04
 add esp, byte 0Ch	; 78E09
-mov edx, dword [dword_D0B2A]	; 78E0C
+mov edx, dword [dlgbevelcol2]	; 78E0C
 push edx	; 78E12
 mov ebx, dword [byte esp+010h]	; 78E13
 push ebx	; 78E17
@@ -1354,8 +1354,8 @@ call DrawGameLineJerseys	; 7937E
 mov eax, dword [esp]	; 79383
 mov dword [eax], 0FFFFFFFFh	; 79386
 xor ecx, ecx	; 7938C
-mov dword [off_CF2C3], ecx	; 7938E
-mov dword [off_CF2A3], ecx	; 79394
+mov dword [menuact_gamescratch], ecx	; 7938E
+mov dword [menuact_gamedress], ecx	; 79394
 MenuUseOriginalLines_ret0:
 xor eax, eax	; 7939A
 MenuUseOriginalLines_ret:

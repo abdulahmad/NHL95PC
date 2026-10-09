@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_1CC3D progbits alloc exec nowrite align=1
-extern __CHK, str_scrbrd1, asc_C0A88, asc_C0AB5, asc_C0AE2, asc_C0B0F, asc_C0B1C, asc_C0B29
-extern asc_C0B2E, asc_C0B33, str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle
+extern __CHK, str_scrbrd1, str_LineCodes0, str_LineCodes1, str_LineCodes2, str_VisLineTags, str_HomeLineTags, str_Visp
+extern str_Homp, str_LineNames, str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle
 extern str_PPV, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide, postate
 extern mi_9394Season, mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, byte_DC8D8, lgstate
 extern byte_DC9D8, statsteamsel, dirtyrectcount, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD, fileoncd
@@ -53,48 +53,48 @@ call sub_8E8A0	; 1CC7B
 add esp, byte 8	; 1CC80
 mov dword [scrbrdshapes], eax	; 1CC83
 push scoredigits	; 1CC88
-push asc_C0A88	; 1CC8D
+push str_LineCodes0	; 1CC8D
 push eax	; 1CC92
 call sub_90B80	; 1CC93
 add esp, byte 0Ch	; 1CC98
 push clockdigits	; 1CC9B
-push asc_C0AB5	; 1CCA0
+push str_LineCodes1	; 1CCA0
 mov edx, dword [scrbrdshapes]	; 1CCA5
 push edx	; 1CCAB
 call sub_90B80	; 1CCAC
 add esp, byte 0Ch	; 1CCB1
 push penaltydigits	; 1CCB4
-push asc_C0AE2	; 1CCB9
+push str_LineCodes2	; 1CCB9
 mov ebx, dword [scrbrdshapes]	; 1CCBE
 push ebx	; 1CCC4
 call sub_90B80	; 1CCC5
 add esp, byte 0Ch	; 1CCCA
 push awlineind	; 1CCCD
-push asc_C0B0F	; 1CCD2
+push str_VisLineTags	; 1CCD2
 mov ecx, dword [scrbrdshapes]	; 1CCD7
 push ecx	; 1CCDD
 call sub_90B80	; 1CCDE
 add esp, byte 0Ch	; 1CCE3
 push hmlineind	; 1CCE6
-push asc_C0B1C	; 1CCEB
+push str_HomeLineTags	; 1CCEB
 mov esi, dword [scrbrdshapes]	; 1CCF0
 push esi	; 1CCF6
 call sub_90B80	; 1CCF7
 add esp, byte 0Ch	; 1CCFC
-push asc_C0B29	; 1CCFF
+push str_Visp	; 1CCFF
 mov edi, dword [scrbrdshapes]	; 1CD04
 push edi	; 1CD0A
 call sub_B30B4	; 1CD0B
 add esp, byte 8	; 1CD10
 mov dword [awpanelspr], eax	; 1CD13
-push asc_C0B2E	; 1CD18
+push str_Homp	; 1CD18
 mov ebp, dword [scrbrdshapes]	; 1CD1D
 push ebp	; 1CD23
 call sub_B30B4	; 1CD24
 add esp, byte 8	; 1CD29
 mov dword [hmpanelspr], eax	; 1CD2C
 push linesprites	; 1CD31
-push asc_C0B33	; 1CD36
+push str_LineNames	; 1CD36
 mov eax, dword [scrbrdshapes]	; 1CD3B
 push eax	; 1CD40
 call sub_90B80	; 1CD41
