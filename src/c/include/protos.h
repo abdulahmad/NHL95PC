@@ -679,5 +679,8 @@ void PaPenalty(char *team, int num, int len, char *pen, int a, int b, int idx, i
 void FreeRinkGfx(void);  /* 33727 */
 int FindTradeSlot(int side, unsigned char pl);  /* 3EF3C */
 void DrawFrameSprite(short n, short x, short y, short a, short b);  /* 110E0 */
+void deflect(Player *p);  /* 57A3E */
+void ResetSpeechQueue(void);  /* 833FA */
+void FreeClip(char *name);  /* 8475D */
 
 #endif

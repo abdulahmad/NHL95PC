@@ -461,6 +461,10 @@ FreeCoachClip:
 push dword 4	; 8474E
 call __CHK	; 84753
 mov eax, str_CoachclpInt	; 84758
+; C: src/c/062_842BA_announcer/FreeClip.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/FreeClip.inc"
+%else
 FreeClip:
 push dword 0Ch	; 8475D
 call __CHK	; 84762
@@ -491,6 +495,7 @@ FreeClip_ret:
 pop edx	; 847B7
 pop ebx	; 847B8
 ret	; 847B9
+%endif ; C
 SayElseNhl:
 push dword 4	; 847BA
 call __CHK	; 847BF

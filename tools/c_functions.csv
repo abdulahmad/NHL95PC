@@ -1,6 +1,6 @@
 function,address,size,segment,c_file,status,notes
 DiskFreeBytes,106C8,74,001_10010_main_startup,src/c/001_10010_main_startup/DiskFreeBytes.c,matched,
-DrawFrameSprite,110E0,86,001_10010_main_startup,src/c/001_10010_main_startup/DrawFrameSprite.c,nonmatching,
+DrawFrameSprite,110E0,86,001_10010_main_startup,src/c/001_10010_main_startup/DrawFrameSprite.c,nonmatching,registers: asm builds x+C0h in esi and 140h-y in edx (then ebx); C swaps them
 DrawRinkEndArt,11136,43,001_10010_main_startup,src/c/001_10010_main_startup/DrawRinkEndArt.c,matched,
 GetMemListHead,10010,26,001_10010_main_startup,src/c/001_10010_main_startup/GetMemListHead.c,matched,
 GetMemStats,1002A,106,001_10010_main_startup,src/c/001_10010_main_startup/GetMemStats.c,matched,
@@ -225,6 +225,7 @@ Sweepcheck,532A2,27,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_a
 ToFixed,53294,14,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ToFixed.c,matched,
 TryBlockShot,534BB,124,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/TryBlockShot.c,nonmatching,"registers only: original p in ecx, n in ebx, gmode2 temp in edx; this draft p in ebx, n in edx. 10-min cap"
 checkagr,5369F,238,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkagr.c,nonmatching,
+deflect,57A3E,90,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/deflect.c,matched,
 newcheck,58084,113,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/newcheck.c,matched,
 passmode,5514E,97,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/passmode.c,matched,
 puckIChk,56E52,125,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/puckIChk.c,nonmatching,"draft: asm keeps |x| work in ebx (saves ebx, frame 8); ours saves edx"
@@ -395,6 +396,7 @@ LockerHitTest,81520,79,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lo
 RedrawSoundCardOpts,82805,281,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/RedrawSoundCardOpts.c,matched,
 SoundCardHitTest,827B3,82,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/SoundCardHitTest.c,matched,
 ClearSpeechSlot,833C5,53,060_8291E_sound_config,src/c/060_8291E_sound_config/ClearSpeechSlot.c,matched,
+ResetSpeechQueue,833FA,95,060_8291E_sound_config,src/c/060_8291E_sound_config/ResetSpeechQueue.c,nonmatching,
 FindFreeSpeechSlot,83E6D,63,061_83459_speech,src/c/061_83459_speech/FindFreeSpeechSlot.c,nonmatching,"registers only: speechbank in ebx in the original, ecx here. 10-min cap"
 FindLoadedSpeechSlot,83EAC,63,061_83459_speech,src/c/061_83459_speech/FindLoadedSpeechSlot.c,nonmatching,"registers only: speechbank in ebx in the original, ecx here. 10-min cap"
 FindSpeechSlot,83EEB,74,061_83459_speech,src/c/061_83459_speech/FindSpeechSlot.c,matched,
@@ -418,6 +420,7 @@ SpeechSlotSize,83BC7,44,061_83459_speech,src/c/061_83459_speech/SpeechSlotSize.c
 SpeechStopQueue,8374D,63,061_83459_speech,src/c/061_83459_speech/SpeechStopQueue.c,matched,
 StrEqNoCase,83E32,59,061_83459_speech,src/c/061_83459_speech/StrEqNoCase.c,nonmatching,original widens each char (movsx) before and 0DFh; this draft does the and on bytes. 10-min cap
 Swap16,837D9,34,061_83459_speech,src/c/061_83459_speech/Swap16.c,matched,
+FreeClip,8475D,93,062_842BA_announcer,src/c/062_842BA_announcer/FreeClip.c,matched,
 OpenAnnouncerBank,85507,105,062_842BA_announcer,src/c/062_842BA_announcer/OpenAnnouncerBank.c,matched,
 PenaltyLenClip,842BA,76,062_842BA_announcer,src/c/062_842BA_announcer/PenaltyLenClip.c,nonmatching,"switch tree and blocks match; original keeps len in ebx and out in eax (out moved early), this draft the reverse. 10-min cap"
 PlayoffRoundClipD,84306,137,062_842BA_announcer,src/c/062_842BA_announcer/PlayoffRoundClipD.c,matched,
@@ -442,7 +445,7 @@ POPreSimRound2,87FE0,91,064_86696_season_playoffs,src/c/064_86696_season_playoff
 POReturnZero,89B5C,13,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POReturnZero.c,matched,
 POSeriesScore,877E9,122,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeriesScore.c,nonmatching,"registers/layout: asm returns through one exit (result in ecx), keeps *aw+1 in ebp on one arm and inc edi on the other; C merges the two arms"
 POSetSeriesTeams,87520,131,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSetSeriesTeams.c,nonmatching,original keeps s in eax and ORs the flags into ecx; this draft moves s to ecx. 10-min cap
-SaveScheduleDB,89223,69,064_86696_season_playoffs,src/c/064_86696_season_playoffs/SaveScheduleDB.c,nonmatching,
+SaveScheduleDB,89223,69,064_86696_season_playoffs,src/c/064_86696_season_playoffs/SaveScheduleDB.c,nonmatching,bytes match but its exit is a short jmp into LoadScheduleDB_x; splice tool rejects rel8 leaving the block
 SetSideControls,8B85B,212,064_86696_season_playoffs,src/c/064_86696_season_playoffs/SetSideControls.c,matched,
 InitFileLocations,8BAAF,358,065_8BAAF_allfiles_coach,src/c/065_8BAAF_allfiles_coach/InitFileLocations.c,matched,
 stub_8C1B7,8C1B7,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C1B7.c,matched,

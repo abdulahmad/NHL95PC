@@ -614,7 +614,6 @@ extern void holdcheck(); /* 56B79 */
 extern void puckglue(); /* 56F5A */
 extern void puckgoalie(); /* 57096 */
 extern void puckstick(); /* 57483 */
-extern void deflect(); /* 57A3E */
 extern void checkgoalp_CalcGoalShotDir(); /* 57A98 */
 extern void doshot(); /* 57C0B */
 extern void checkcoll(); /* 580F5 */
@@ -1162,7 +1161,6 @@ extern void SayBackMoment(); /* 84715 */
 extern void FreeBackMoment(); /* 84729 */
 extern void SayCoachClip(); /* 8473A */
 extern void FreeCoachClip(); /* 8474E */
-extern void FreeClip(); /* 8475D */
 extern void FreeClip_ret(); /* 847B7 */
 extern void SayElseNhl(); /* 847BA */
 extern void SayTheGame(); /* 84A6C */

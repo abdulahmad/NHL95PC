@@ -5878,6 +5878,10 @@ xor ah, ah	; 57A3A
 pop ecx	; 57A3C
 ret	; 57A3D
 %endif ; C
+; C: src/c/040_53294_engine_physics_ai/deflect.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/deflect.inc"
+%else
 deflect:
 push dword 8	; 57A3E
 call __CHK	; 57A43
@@ -5901,6 +5905,7 @@ mov eax, edx	; 57A8F
 call puckflip	; 57A91
 pop edx	; 57A96
 ret	; 57A97
+%endif ; C
 checkgoalp_CalcGoalShotDir:
 push dword 34h	; 57A98
 call __CHK	; 57A9D
