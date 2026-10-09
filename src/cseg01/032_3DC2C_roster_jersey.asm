@@ -7,8 +7,8 @@ extern str_Donepal, str_TheJerseyNumber2d2, str_EnterJerseyNumberFor, str_Pal22,
 extern str_Pntr2, str_Pointer10, str_Menubuff7, str_Lineditp, str_Shrt, str_extDB, str_VFN, str_extBIN
 extern str_space, str_dot, curleague, byte_D11BC, byte_D1238, byte_D12DE, byte_D1333, byte_D1334
 extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, leaguedbfmt2, leaguedbfmt, traderoster
-extern tradejersey, tradeslot, byte_ED7F7, byte_ED858, byte_ED85A, byte_ED86D, byte_ED8B3, byte_ED8B4
-extern statscategory, statsredrawcb, tradebtnx, tradebtny, HomeTeam, dword_D2C6B, curperiod, pointerspr
+extern tradejersey, tradeslot, fileoncd
+extern statscategory, statsredrawcb, tradebtnx, tradebtny, HomeTeam, cddriveptr, curperiod, pointerspr
 extern dword_DC738, statspalshape, statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, traderesult
 extern tradeclick, traderemap1, traderemap2, tradecursor, jerseymsg, tradeside
 extern dword_DE264, ptrupdatefn, jctime, memcpy_, leaguedbnames, unequaltrademsg, off_CF2A3
@@ -253,9 +253,9 @@ add esp, byte 0Ch	; 3DEE6
 mov dword [statsgoaliebuf], eax	; 3DEE9
 xor ecx, ecx	; 3DEEE
 mov ebx, str_Embpal3	; 3DEF0
-cmp byte [byte_ED85A], 1	; 3DEF5
+cmp byte [fileoncd+08Eh], 1	; 3DEF5
 jne short .1	; 3DEFC
-mov edx, dword [dword_D2C6B]	; 3DEFE
+mov edx, dword [cddriveptr]	; 3DEFE
 jmp short .2	; 3DF04
 .1:
 xor edx, edx	; 3DF06
@@ -907,9 +907,9 @@ mov ebp, edx	; 3E848
 mov esi, ebx	; 3E84A
 mov ecx, str_extBIN	; 3E84C
 mov ebx, str_HOMEPALS2	; 3E851
-cmp byte [byte_ED86D], 1	; 3E856
+cmp byte [fileoncd+0A1h], 1	; 3E856
 jne short .1	; 3E85D
-mov edx, dword [dword_D2C6B]	; 3E85F
+mov edx, dword [cddriveptr]	; 3E85F
 jmp short .2	; 3E865
 .1:
 xor edx, edx	; 3E867
@@ -948,9 +948,9 @@ call jctime	; 3E8BD
 add esp, byte 4	; 3E8C2
 mov ecx, str_extBIN	; 3E8C5
 mov ebx, str_HOMEPALS2	; 3E8CA
-cmp byte [byte_ED7F7], 1	; 3E8CF
+cmp byte [fileoncd+02Bh], 1	; 3E8CF
 jne short .5	; 3E8D6
-mov edx, dword [dword_D2C6B]	; 3E8D8
+mov edx, dword [cddriveptr]	; 3E8D8
 jmp short .6	; 3E8DE
 .5:
 xor edx, edx	; 3E8E0
@@ -1033,9 +1033,9 @@ call SetDrawBitmap	; 3E9EE
 add esp, byte 4	; 3E9F3
 xor ecx, ecx	; 3E9F6
 mov ebx, str_Embnhl2	; 3E9F8
-cmp byte [byte_ED858], 1	; 3E9FD
+cmp byte [fileoncd+08Ch], 1	; 3E9FD
 jne short .1	; 3EA04
-mov edx, dword [dword_D2C6B]	; 3EA06
+mov edx, dword [cddriveptr]	; 3EA06
 jmp short .2	; 3EA0C
 .1:
 xor edx, edx	; 3EA0E
@@ -2856,9 +2856,9 @@ call sub_8E9E8	; 3FFDD
 add esp, byte 4	; 3FFE2
 mov ecx, str_VFN	; 3FFE5
 mov ebx, str_S12	; 3FFEA
-cmp byte [byte_ED8B3], 1	; 3FFEF
+cmp byte [fileoncd+0E7h], 1	; 3FFEF
 jne short .1	; 3FFF6
-mov edx, dword [dword_D2C6B]	; 3FFF8
+mov edx, dword [cddriveptr]	; 3FFF8
 jmp short .2	; 3FFFE
 .1:
 xor edx, edx	; 40000
@@ -2876,9 +2876,9 @@ call sub_8EA18	; 40028
 add esp, byte 4	; 4002D
 xor ecx, ecx	; 40030
 mov ebx, str_Lineditp	; 40032
-cmp byte [byte_ED8B4], 1	; 40037
+cmp byte [fileoncd+0E8h], 1	; 40037
 jne short .3	; 4003E
-mov edx, dword [dword_D2C6B]	; 40040
+mov edx, dword [cddriveptr]	; 40040
 jmp short .4	; 40046
 .3:
 xor edx, edx	; 40048

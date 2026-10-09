@@ -11,10 +11,9 @@ extern str_SH, str_PP, str_02d02d, str_S2, str_SS4, str_DMinS, str_ShotsOnGoal, 
 extern str_Ctbkgd3, str_Pal14, str_Bkgd6, str_Cttitle32, str_Colm2, str_Gsta, str_Ctlogo3, str_DD
 extern str_D02d2, str_DDD, str_Iff7, str_Leaguetm, str_Mtsum2, str_Adsum2, str_NoScoring, str_NoPenalties
 extern str_extDB, str_VFN, curleague, teamstartlag, musicon, byte_D42C3, hmroster
-extern leaguedbfmt2, leaguedbfmt, othergames, othergamesb, otherscores, otherscoresb, byte_ED7ED, byte_ED824
-extern byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED8CE, byte_ED9AC, byte_ED9B0, byte_ED9E6
+extern leaguedbfmt2, leaguedbfmt, othergames, othergamesb, otherscores, otherscoresb, fileoncd
 extern gameresult, gameopts, sounddev, songdata, cont2team, HomeTeam, dword_CCC94, musicslot
-extern musichandle, dword_D2C6B, dword_D8B68, dword_DBC7C, schedgameidx, hmcrestbmp, vscrestbmp, otherperiod
+extern musichandle, cddriveptr, dword_D8B68, dword_DBC7C, schedgameidx, hmcrestbmp, vscrestbmp, otherperiod
 extern hmtmstruct
 extern fputchar, jctime, memcpy_
 extern crestnames, gamestatlabels, leaguedbnames, penaltynames, rand_, sprintf_
@@ -137,9 +136,9 @@ call sub_8E9E8	; 2D4E6
 add esp, byte 4	; 2D4EB
 mov ecx, str_VFN	; 2D4EE
 mov ebx, str_Indus0302	; 2D4F3
-cmp byte [byte_ED9E6], 1	; 2D4F8
+cmp byte [fileoncd+021Ah], 1	; 2D4F8
 jne short .6	; 2D4FF
-mov edx, dword [dword_D2C6B]	; 2D501
+mov edx, dword [cddriveptr]	; 2D501
 jmp short .7	; 2D507
 .6:
 xor edx, edx	; 2D509
@@ -157,9 +156,9 @@ call sub_8EA18	; 2D531
 add esp, byte 4	; 2D536
 xor ecx, ecx	; 2D539
 mov ebx, str_Ctlogo2	; 2D53B
-cmp byte [byte_ED825], 1	; 2D540
+cmp byte [fileoncd+059h], 1	; 2D540
 jne short .8	; 2D547
-mov edx, dword [dword_D2C6B]	; 2D549
+mov edx, dword [cddriveptr]	; 2D549
 jmp short .9	; 2D54F
 .8:
 xor edx, edx	; 2D551
@@ -246,9 +245,9 @@ call jctime	; 2D655
 add esp, byte 4	; 2D65A
 xor ecx, ecx	; 2D65D
 mov ebx, str_Ctbkgd2	; 2D65F
-cmp byte [byte_ED824], 1	; 2D664
+cmp byte [fileoncd+058h], 1	; 2D664
 jne short .10	; 2D66B
-mov edx, dword [dword_D2C6B]	; 2D66D
+mov edx, dword [cddriveptr]	; 2D66D
 jmp short .11	; 2D673
 .10:
 xor edx, edx	; 2D675
@@ -278,9 +277,9 @@ test dh, 3	; 2D6CE
 je near .15	; 2D6D1
 xor ecx, ecx	; 2D6D7
 mov ebx, str_Cttitle2	; 2D6D9
-cmp byte [byte_ED827], 1	; 2D6DE
+cmp byte [fileoncd+05Bh], 1	; 2D6DE
 jne short .12	; 2D6E5
-mov edx, dword [dword_D2C6B]	; 2D6E7
+mov edx, dword [cddriveptr]	; 2D6E7
 jmp short .13	; 2D6ED
 .12:
 xor edx, edx	; 2D6EF
@@ -331,9 +330,9 @@ test dh, 1Ch	; 2D79B
 je near .18	; 2D79E
 xor ecx, ecx	; 2D7A4
 mov ebx, str_Cttitle12	; 2D7A6
-cmp byte [byte_ED826], 1	; 2D7AB
+cmp byte [fileoncd+05Ah], 1	; 2D7AB
 jne short .16	; 2D7B2
-mov edx, dword [dword_D2C6B]	; 2D7B4
+mov edx, dword [cddriveptr]	; 2D7B4
 jmp short .17	; 2D7BA
 .16:
 xor edx, edx	; 2D7BC
@@ -373,9 +372,9 @@ test dh, 20h	; 2D83E
 je short .21	; 2D841
 xor ecx, ecx	; 2D843
 mov ebx, str_Cttitle3	; 2D845
-cmp byte [byte_ED828], 1	; 2D84A
+cmp byte [fileoncd+05Ch], 1	; 2D84A
 jne short .19	; 2D851
-mov edx, dword [dword_D2C6B]	; 2D853
+mov edx, dword [cddriveptr]	; 2D853
 jmp short .20	; 2D859
 .19:
 xor edx, edx	; 2D85B
@@ -521,9 +520,9 @@ cmp dword [songdata], byte 0	; 2DAF9
 jne short .32	; 2DB00
 mov ecx, str_Iff6	; 2DB02
 mov ebx, str_Gamesum	; 2DB07
-cmp byte [byte_ED9B0], 1	; 2DB0C
+cmp byte [fileoncd+01E4h], 1	; 2DB0C
 jne short .30	; 2DB13
-mov edx, dword [dword_D2C6B]	; 2DB15
+mov edx, dword [cddriveptr]	; 2DB15
 jmp short .31	; 2DB1B
 .30:
 xor edx, edx	; 2DB1D
@@ -547,9 +546,9 @@ cmp dword [sounddev], byte 8	; 2DB6B
 jne short .34	; 2DB72
 xor ecx, ecx	; 2DB74
 mov ebx, str_Mtsum	; 2DB76
-cmp byte [byte_ED8CE], 1	; 2DB7B
+cmp byte [fileoncd+0102h], 1	; 2DB7B
 jne short .33	; 2DB82
-mov edx, dword [dword_D2C6B]	; 2DB84
+mov edx, dword [cddriveptr]	; 2DB84
 jmp short .36	; 2DB8A
 .33:
 xor edx, edx	; 2DB8C
@@ -557,9 +556,9 @@ jmp short .36	; 2DB8E
 .34:
 xor ecx, ecx	; 2DB90
 mov ebx, str_Adsum	; 2DB92
-cmp byte [byte_ED7ED], 1	; 2DB97
+cmp byte [fileoncd+021h], 1	; 2DB97
 jne short .35	; 2DB9E
-mov edx, dword [dword_D2C6B]	; 2DBA0
+mov edx, dword [cddriveptr]	; 2DBA0
 jmp short .36	; 2DBA6
 .35:
 xor edx, edx	; 2DBA8
@@ -2391,9 +2390,9 @@ cmp edi, 100h	; 2F64D
 jl short GameStatsScreen.1	; 2F653
 xor ecx, ecx	; 2F655
 mov ebx, str_Ctbkgd3	; 2F657
-cmp byte [byte_ED824], 1	; 2F65C
+cmp byte [fileoncd+058h], 1	; 2F65C
 jne short .2	; 2F663
-mov edx, dword [dword_D2C6B]	; 2F665
+mov edx, dword [cddriveptr]	; 2F665
 jmp short .3	; 2F66B
 .2:
 xor edx, edx	; 2F66D
@@ -2426,9 +2425,9 @@ call jctime	; 2F6C0
 add esp, byte 4	; 2F6C5
 xor ecx, ecx	; 2F6C8
 mov ebx, str_Cttitle32	; 2F6CA
-cmp byte [byte_ED828], 1	; 2F6CF
+cmp byte [fileoncd+05Ch], 1	; 2F6CF
 jne short .4	; 2F6D6
-mov edx, dword [dword_D2C6B]	; 2F6D8
+mov edx, dword [cddriveptr]	; 2F6D8
 jmp short .5	; 2F6DE
 .4:
 xor edx, edx	; 2F6E0
@@ -2460,9 +2459,9 @@ call jctime	; 2F729
 add esp, byte 4	; 2F72E
 xor ecx, ecx	; 2F731
 mov ebx, str_Ctlogo3	; 2F733
-cmp byte [byte_ED825], 1	; 2F738
+cmp byte [fileoncd+059h], 1	; 2F738
 jne short .6	; 2F73F
-mov edx, dword [dword_D2C6B]	; 2F741
+mov edx, dword [cddriveptr]	; 2F741
 jmp short .7	; 2F747
 .6:
 xor edx, edx	; 2F749
@@ -2872,9 +2871,9 @@ mov dword [songdata], eax	; 2FC39
 call MusicChanCmd3	; 2FC3E
 mov ecx, str_Iff7	; 2FC43
 mov ebx, str_Leaguetm	; 2FC48
-cmp byte [byte_ED9AC], 1	; 2FC4D
+cmp byte [fileoncd+01E0h], 1	; 2FC4D
 jne short .14	; 2FC54
-mov edx, dword [dword_D2C6B]	; 2FC56
+mov edx, dword [cddriveptr]	; 2FC56
 jmp short .15	; 2FC5C
 .14:
 xor edx, edx	; 2FC5E
@@ -2898,9 +2897,9 @@ cmp dword [sounddev], byte 8	; 2FCA4
 jne short .18	; 2FCAB
 xor ecx, ecx	; 2FCAD
 mov ebx, str_Mtsum2	; 2FCAF
-cmp byte [byte_ED8CE], 1	; 2FCB4
+cmp byte [fileoncd+0102h], 1	; 2FCB4
 jne short .17	; 2FCBB
-mov edx, dword [dword_D2C6B]	; 2FCBD
+mov edx, dword [cddriveptr]	; 2FCBD
 jmp short .20	; 2FCC3
 .17:
 xor edx, edx	; 2FCC5
@@ -2908,9 +2907,9 @@ jmp short .20	; 2FCC7
 .18:
 xor ecx, ecx	; 2FCC9
 mov ebx, str_Adsum2	; 2FCCB
-cmp byte [byte_ED7ED], 1	; 2FCD0
+cmp byte [fileoncd+021h], 1	; 2FCD0
 jne short .19	; 2FCD7
-mov edx, dword [dword_D2C6B]	; 2FCD9
+mov edx, dword [cddriveptr]	; 2FCD9
 jmp short .20	; 2FCDF
 .19:
 xor edx, edx	; 2FCE1

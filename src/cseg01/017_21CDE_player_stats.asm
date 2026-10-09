@@ -15,8 +15,8 @@ extern str_KeyDb2, str_Pstatbar7, str_Pst26, str_StatsUnavailable2, str_POS, str
 extern str_fmt2d, str_fmt3d, str_fmt4d, str_fmt5d, str_fmtTenths, str_fmtPct, str_fmtPct0, str_fmtMinSec
 extern str_fmtEmb, str_Bkgd2, treecolslots, treecol_Wr2
 extern treecol_Er2, treecol_Er1
-extern byte_ED83C, byte_ED858, byte_ED859, byte_ED908, byte_ED909, teamdivflags, teamconf, statsplayoffs
-extern statsfromleague, westconfteams, eastconfteams, treerowy, dword_D2C6B, dword_D8B68, dword_D8B74, statsnumgoalies
+extern byte_ED909, teamdivflags, teamconf, statsplayoffs, fileoncd
+extern statsfromleague, westconfteams, eastconfteams, treerowy, cddriveptr, dword_D8B68, dword_D8B74, statsnumgoalies
 extern statsskaterorder, statsgoalieorder, dword_DC734, statsgoalieplr, statsnumskaters, statsskaterplr, dword_DC85C, dword_DC860
 extern statspalshape, statsbgshapes, statsteamrecs, statsteambuf, statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf
 extern fputchar, j___close_, jctime, lseek_, memcpy_, statslabels, statsbgnames, statsplayerdbs
@@ -151,9 +151,9 @@ xor ecx, ecx	; 21E65
 mov ebx, printfbuf	; 21E67
 xor eax, eax	; 21E6C
 mov al, byte [byte ebp+00h]	; 21E6E
-cmp byte [dword eax+byte_ED83C], 1	; 21E71
+cmp byte [dword eax+fileoncd+070h], 1	; 21E71
 jne short .3	; 21E78
-mov edx, dword [dword_D2C6B]	; 21E7A
+mov edx, dword [cddriveptr]	; 21E7A
 jmp short .4	; 21E80
 .3:
 xor edx, edx	; 21E82
@@ -217,7 +217,7 @@ xor ecx, ecx	; 21F49
 mov ebx, esp	; 21F4B
 cmp byte [dword edx+eax+byte_ED909], 1	; 21F4D
 jne short .5	; 21F55
-mov edx, dword [dword_D2C6B]	; 21F57
+mov edx, dword [cddriveptr]	; 21F57
 jmp short .6	; 21F5D
 .5:
 xor edx, edx	; 21F5F
@@ -260,9 +260,9 @@ call jctime	; 21FCD
 add esp, byte 4	; 21FD2
 xor ecx, ecx	; 21FD5
 mov ebx, str_Pstatbar3	; 21FD7
-cmp byte [byte_ED908], 1	; 21FDC
+cmp byte [fileoncd+013Ch], 1	; 21FDC
 jne short .7	; 21FE3
-mov edx, dword [dword_D2C6B]	; 21FE5
+mov edx, dword [cddriveptr]	; 21FE5
 jmp short .8	; 21FEB
 .7:
 xor edx, edx	; 21FED
@@ -283,9 +283,9 @@ call jctime	; 2201A
 add esp, byte 4	; 2201F
 xor ecx, ecx	; 22022
 mov ebx, str_Pstatbar3	; 22024
-cmp byte [byte_ED908], 1	; 22029
+cmp byte [fileoncd+013Ch], 1	; 22029
 jne short .10	; 22030
-mov edx, dword [dword_D2C6B]	; 22032
+mov edx, dword [cddriveptr]	; 22032
 jmp short .11	; 22038
 .10:
 xor edx, edx	; 2203A
@@ -313,9 +313,9 @@ jmp short .16	; 22082
 .13:
 xor ecx, ecx	; 22084
 mov ebx, str_Pstatbar3	; 22086
-cmp byte [byte_ED908], 1	; 2208B
+cmp byte [fileoncd+013Ch], 1	; 2208B
 jne short .14	; 22092
-mov edx, dword [dword_D2C6B]	; 22094
+mov edx, dword [cddriveptr]	; 22094
 jmp short .15	; 2209A
 .14:
 xor edx, edx	; 2209C
@@ -757,9 +757,9 @@ xor ecx, ecx	; 226FF
 mov ebx, printfbuf	; 22701
 xor eax, eax	; 22706
 mov al, byte [byte ebp+00h]	; 22708
-cmp byte [dword eax+byte_ED83C], 1	; 2270B
+cmp byte [dword eax+fileoncd+070h], 1	; 2270B
 jne short .3	; 22712
-mov edx, dword [dword_D2C6B]	; 22714
+mov edx, dword [cddriveptr]	; 22714
 jmp short .4	; 2271A
 .3:
 xor edx, edx	; 2271C
@@ -822,7 +822,7 @@ xor ecx, ecx	; 227E2
 mov ebx, esp	; 227E4
 cmp byte [dword edx+eax*2+byte_ED909], 1	; 227E6
 jne short .5	; 227EE
-mov edx, dword [dword_D2C6B]	; 227F0
+mov edx, dword [cddriveptr]	; 227F0
 jmp short .6	; 227F6
 .5:
 xor edx, edx	; 227F8
@@ -865,9 +865,9 @@ call jctime	; 22866
 add esp, byte 4	; 2286B
 xor ecx, ecx	; 2286E
 mov ebx, str_Pstatbar4	; 22870
-cmp byte [byte_ED908], 1	; 22875
+cmp byte [fileoncd+013Ch], 1	; 22875
 jne short .7	; 2287C
-mov edx, dword [dword_D2C6B]	; 2287E
+mov edx, dword [cddriveptr]	; 2287E
 jmp short .8	; 22884
 .7:
 xor edx, edx	; 22886
@@ -888,9 +888,9 @@ call jctime	; 228B3
 add esp, byte 4	; 228B8
 xor ecx, ecx	; 228BB
 mov ebx, str_Pstatbar4	; 228BD
-cmp byte [byte_ED908], 1	; 228C2
+cmp byte [fileoncd+013Ch], 1	; 228C2
 jne short .10	; 228C9
-mov edx, dword [dword_D2C6B]	; 228CB
+mov edx, dword [cddriveptr]	; 228CB
 jmp short .11	; 228D1
 .10:
 xor edx, edx	; 228D3
@@ -918,9 +918,9 @@ jmp short .16	; 2291B
 .13:
 xor ecx, ecx	; 2291D
 mov ebx, str_Pstatbar4	; 2291F
-cmp byte [byte_ED908], 1	; 22924
+cmp byte [fileoncd+013Ch], 1	; 22924
 jne short .14	; 2292B
-mov edx, dword [dword_D2C6B]	; 2292D
+mov edx, dword [cddriveptr]	; 2292D
 jmp short .15	; 22933
 .14:
 xor edx, edx	; 22935
@@ -2401,9 +2401,9 @@ cmp dword [statsplayoffs], byte 0	; 23ACC
 jne short .30	; 23AD3
 xor ecx, ecx	; 23AD5
 mov ebx, dword [dword eax+statsbgnames]	; 23AD7
-cmp byte [byte_ED858], 1	; 23ADD
+cmp byte [fileoncd+08Ch], 1	; 23ADD
 jne short .29	; 23AE4
-mov edx, dword [dword_D2C6B]	; 23AE6
+mov edx, dword [cddriveptr]	; 23AE6
 jmp short .32	; 23AEC
 .29:
 xor edx, edx	; 23AEE
@@ -2411,9 +2411,9 @@ jmp short .32	; 23AF0
 .30:
 xor ecx, ecx	; 23AF2
 mov ebx, dword [dword eax+statsbgnames]	; 23AF4
-cmp byte [byte_ED859], 1	; 23AFA
+cmp byte [fileoncd+08Dh], 1	; 23AFA
 jne short .31	; 23B01
-mov edx, dword [dword_D2C6B]	; 23B03
+mov edx, dword [cddriveptr]	; 23B03
 jmp short .32	; 23B09
 .31:
 xor edx, edx	; 23B0B
@@ -2453,9 +2453,9 @@ call jctime	; 23B84
 add esp, byte 4	; 23B89
 xor ecx, ecx	; 23B8C
 mov ebx, str_Pstatbar5	; 23B8E
-cmp byte [byte_ED908], 1	; 23B93
+cmp byte [fileoncd+013Ch], 1	; 23B93
 jne short .33	; 23B9A
-mov edx, dword [dword_D2C6B]	; 23B9C
+mov edx, dword [cddriveptr]	; 23B9C
 jmp short .34	; 23BA2
 .33:
 xor edx, edx	; 23BA4
@@ -3337,9 +3337,9 @@ add esp, byte 0Ch	; 2485C
 xor ecx, ecx	; 2485F
 mov ebx, printfbuf	; 24861
 mov eax, dword [esp]	; 24866
-cmp byte [dword eax+byte_ED83C], 1	; 24869
+cmp byte [dword eax+fileoncd+070h], 1	; 24869
 jne short .11	; 24870
-mov edx, dword [dword_D2C6B]	; 24872
+mov edx, dword [cddriveptr]	; 24872
 jmp short .12	; 24878
 .11:
 xor edx, edx	; 2487A
@@ -3379,9 +3379,9 @@ call jctime	; 248F3
 add esp, byte 4	; 248F8
 xor ecx, ecx	; 248FB
 mov ebx, str_Pstatbar6	; 248FD
-cmp byte [byte_ED908], 1	; 24902
+cmp byte [fileoncd+013Ch], 1	; 24902
 jne short .13	; 24909
-mov edx, dword [dword_D2C6B]	; 2490B
+mov edx, dword [cddriveptr]	; 2490B
 jmp short .14	; 24911
 .13:
 xor edx, edx	; 24913
@@ -5454,9 +5454,9 @@ call sub_B4BA8	; 26208
 xor ecx, ecx	; 2620D
 mov ebx, dword [statsplayoffs]	; 2620F
 mov ebx, dword [nosplit ebx*4+statsbgnames]	; 26215
-cmp byte [byte_ED858], 1	; 2621C
+cmp byte [fileoncd+08Ch], 1	; 2621C
 jne short .41	; 26223
-mov edx, dword [dword_D2C6B]	; 26225
+mov edx, dword [cddriveptr]	; 26225
 jmp short .42	; 2622B
 .41:
 xor edx, edx	; 2622D
@@ -5496,9 +5496,9 @@ call jctime	; 262A6
 add esp, byte 4	; 262AB
 xor ecx, ecx	; 262AE
 mov ebx, str_Pstatbar7	; 262B0
-cmp byte [byte_ED908], 1	; 262B5
+cmp byte [fileoncd+013Ch], 1	; 262B5
 jne short .43	; 262BC
-mov edx, dword [dword_D2C6B]	; 262BE
+mov edx, dword [cddriveptr]	; 262BE
 jmp short .44	; 262C4
 .43:
 xor edx, edx	; 262C6

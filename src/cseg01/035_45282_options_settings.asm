@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_45282 progbits alloc exec nowrite align=1
 extern __CHK, tag_pset, tag_aps, tag_apset, tag_gset, tag_ags, tag_agset, str_LoadPic
-extern str_Pal23, loadpals, palcyclephase, palcycledelay, byte_ED9EE, gameopts, simfwdorder, simdorder
-extern loadscreenon, seasondb, dword_D2C6B, palcyclelock, jctime, memcpy_, memset_, rand_
+extern str_Pal23, loadpals, palcyclephase, palcycledelay, gameopts, simfwdorder, simdorder, fileoncd
+extern loadscreenon, seasondb, cddriveptr, palcyclelock, jctime, memcpy_, memset_, rand_
 extern MakePath, ReadTeamRec, WriteTeamRec, ReadDbRec4Ch, KeyDbPtr, SeasonDbPtr, SeasonDbPtr2, CareerDbPtr
 extern CareerDbPtr2, FadePalStep, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E83C, sub_8FFB0, sub_910E0
 extern sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4C61, tag_t
@@ -2716,9 +2716,9 @@ mov eax, loadpals	; 47A59
 call memset_	; 47A5E
 xor ecx, ecx	; 47A63
 mov ebx, str_LoadPic	; 47A65
-cmp byte [byte_ED9EE], 1	; 47A6A
+cmp byte [fileoncd+0222h], 1	; 47A6A
 jne short .1	; 47A71
-mov edx, dword [dword_D2C6B]	; 47A73
+mov edx, dword [cddriveptr]	; 47A73
 jmp short .2	; 47A79
 .1:
 xor edx, edx	; 47A7B

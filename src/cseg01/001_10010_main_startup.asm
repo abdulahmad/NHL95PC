@@ -6,13 +6,13 @@ extern DoGameFrame, __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gett
 extern str_NoDiskSpaceCur, str_NoMemory, str_CheckRefCard, str_NoConvMemory, str_CheckRefCard2, str_Pointer3, str_Pntr, str_Scor2b
 extern str_Scor3b, str_Kaufm020, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_GameSet2, str_Temp3, str_ErrDiskFree3, str_VFN
 extern pad1dev, pad2dev, lasthotkey, byte_C5138, musicon, joyenablemask, byte_D416A, byte_D8C88
-extern ctlavailmask, byte_ED906, byte_ED92E, byte_ED935, byte_ED936, byte_ED990, dword_C4CFC, joypresent
+extern ctlavailmask, dword_C4CFC, joypresent, fileoncd
 extern inputticks, joysampling, joyqhead, joyqcount, joyqtick, samesideflag, inputframes
 extern escrequest, joyrec, palfadedin, screenw, screenh, demomode, dword_C5131, dword_C5133
 extern dword_C5135, gameopts
 extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, dword_C5840, screenbm
 extern songdata, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
-extern musichandle, dword_D2C6B, mousex, mousey, mousebtns, dword_D30D4, dword_D4158, dword_D415C
+extern musichandle, cddriveptr, mousex, mousey, mousebtns, dword_D30D4, dword_D4158, dword_D415C
 extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
 extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, curperiod, photoptrs, dword_DC230
 extern pointerspr, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
@@ -20,7 +20,7 @@ extern int386_, mousepollfn, printf_, srand_, MakePath, FileOpenRead, FileClose,
 extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, MainDeskLoop
 extern LoadModeState, LoadNhlCfg, ShowLoadingScreen, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
 extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, JoystickCalScreen, ClearInputQueue, InputInstall
-extern InputRemove, FadePalStep, InstantReplay, SpeechStopQueue, MusicChanReset, sub_8BAAF, sub_8CCA8, sub_8D2F0
+extern InputRemove, FadePalStep, InstantReplay, SpeechStopQueue, MusicChanReset, InitFileLocations, sub_8CCA8, sub_8D2F0
 extern sub_8DF54, sub_8E080, sub_8E4C0, sub_8E5AC, sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_B29F0, sub_B2CBE, FatalError, MouseSetPos, sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4
@@ -234,7 +234,7 @@ call dword [mousepollfn]	; 1027D
 push CritErrHandler	; 10283
 call sub_B3036	; 10288
 add esp, byte 4	; 1028D
-call sub_8BAAF	; 10290
+call InitFileLocations	; 10290
 mov edx, 0C8h	; 10295
 mov eax, 140h	; 1029A
 call SetScreenSize	; 1029F
@@ -253,9 +253,9 @@ mov eax, 64h	; 102D3
 call sub_6A9CE	; 102D8
 xor ecx, ecx	; 102DD
 mov ebx, str_Pointer3	; 102DF
-cmp byte [byte_ED906], 1	; 102E4
+cmp byte [fileoncd+013Ah], 1	; 102E4
 jne short .9	; 102EB
-mov edx, dword [dword_D2C6B]	; 102ED
+mov edx, dword [cddriveptr]	; 102ED
 jmp short .10	; 102F3
 .9:
 xor edx, edx	; 102F5
@@ -275,9 +275,9 @@ add esp, byte 8	; 1031F
 mov dword [pointerspr], eax	; 10322
 mov ecx, str_VFN	; 10327
 mov ebx, str_S1	; 1032C
-cmp byte [byte_ED92E], 1	; 10331
+cmp byte [fileoncd+0162h], 1	; 10331
 jne short .11	; 10338
-mov edx, dword [dword_D2C6B]	; 1033A
+mov edx, dword [cddriveptr]	; 1033A
 jmp short .12	; 10340
 .11:
 xor edx, edx	; 10342
@@ -293,9 +293,9 @@ mov dword [dword_DC230], eax	; 1035C
 mov dword [dword_D8B74], eax	; 10361
 mov ecx, str_VFN	; 10366
 mov ebx, str_Scor2b	; 1036B
-cmp byte [byte_ED935], 1	; 10370
+cmp byte [fileoncd+0169h], 1	; 10370
 jne short .13	; 10377
-mov edx, dword [dword_D2C6B]	; 10379
+mov edx, dword [cddriveptr]	; 10379
 jmp short .14	; 1037F
 .13:
 xor edx, edx	; 10381
@@ -310,9 +310,9 @@ add esp, byte 8	; 10398
 mov dword [dword_D8B70], eax	; 1039B
 mov ecx, str_VFN	; 103A0
 mov ebx, str_Scor3b	; 103A5
-cmp byte [byte_ED936], 1	; 103AA
+cmp byte [fileoncd+016Ah], 1	; 103AA
 jne short .15	; 103B1
-mov edx, dword [dword_D2C6B]	; 103B3
+mov edx, dword [cddriveptr]	; 103B3
 jmp short .16	; 103B9
 .15:
 xor edx, edx	; 103BB
@@ -327,9 +327,9 @@ add esp, byte 8	; 103D2
 mov dword [dword_D8B78], eax	; 103D5
 mov ecx, str_VFN	; 103DA
 mov ebx, str_Kaufm020	; 103DF
-cmp byte [byte_ED990], 1	; 103E4
+cmp byte [fileoncd+01C4h], 1	; 103E4
 jne short .17	; 103EB
-mov edx, dword [dword_D2C6B]	; 103ED
+mov edx, dword [cddriveptr]	; 103ED
 jmp short .18	; 103F3
 .17:
 xor edx, edx	; 103F5

@@ -7,13 +7,13 @@ extern str_Pointer15, str_BKGD2, str_Setting7, str_Setting4, str_Dbox3, str_Musi
 extern str_Pointer16, str_BKGD3, str_DigitizedSpeech3, str_Music3, str_Sound3, str_Setting6, str_Dbox4, str_Pointer17
 extern str_BKGD4, str_PlayerImg, str_Dbox5, str_OneS, str_TwoS, str_TheMouse, str_JoystickOne, str_JoystickTwo
 extern str_TheKeyboard, str_Pointer18, pad1dev, musicon, hmtmflags, awtmflags, byte_DF861
-extern byte_DFF3A, ctlavailmask, byte_ED904, byte_ED93F, byte_ED940, byte_ED941, byte_ED942
-extern byte_ED943, samesideflag, postate, gamemode, gameopts, ctl1team, ctl2team, ctl1dev
+extern byte_DFF3A, ctlavailmask, fileoncd
+extern samesideflag, postate, gamemode, gameopts, ctl1team, ctl2team, ctl1dev
 extern ctl2dev, ctl1side, ctl2side, sounddev, songdata, sflags3, cont2team, HomeTeam
 extern leaguesetrects, modesetrects
 extern exhsetrects, ctldlgrects
 extern ctldlgalt, settingsfile, musichandle, musicslot
-extern seriesgameno, dword_D2C6B, pointerspr, fdlg_cancel, hmtmstruct, dword_DF648, hmscore
+extern seriesgameno, cddriveptr, pointerspr, fdlg_cancel, hmtmstruct, dword_DF648, hmscore
 extern ptrupdatefn, leaguesetimg, setbits, dword_ED364, pl20spr, pl05spr, pl10spr, puckstruct
 extern pg07spr, na05spr, pg01spr, acptspr, na03spr, pg03spr, chkoffspr, pg05spr
 extern chkonspr, na01spr, puckvx, gmode, jctime, teamcitynames, puckx, pucky
@@ -290,9 +290,9 @@ call LoadSettingsShapes	; 7A417
 call sub_B4BA8	; 7A41C
 xor ecx, ecx	; 7A421
 mov ebx, str_Setting5	; 7A423
-cmp byte [byte_ED941], 1	; 7A428
+cmp byte [fileoncd+0175h], 1	; 7A428
 jne short .1	; 7A42F
-mov edx, dword [dword_D2C6B]	; 7A431
+mov edx, dword [cddriveptr]	; 7A431
 jmp short .2	; 7A437
 .1:
 xor edx, edx	; 7A439
@@ -411,9 +411,9 @@ test edx, edx	; 7A59D
 je short .2	; 7A59F
 xor ecx, ecx	; 7A5A1
 mov ebx, str_Setting5	; 7A5A3
-cmp byte [byte_ED941], 1	; 7A5A8
+cmp byte [fileoncd+0175h], 1	; 7A5A8
 jne short .1	; 7A5AF
-mov edx, dword [dword_D2C6B]	; 7A5B1
+mov edx, dword [cddriveptr]	; 7A5B1
 jmp short .3	; 7A5B7
 .1:
 xor edx, edx	; 7A5B9
@@ -421,9 +421,9 @@ jmp short .3	; 7A5BB
 .2:
 xor ecx, ecx	; 7A5BD
 mov ebx, str_Setting3	; 7A5BF
-cmp byte [byte_ED93F], 1	; 7A5C4
+cmp byte [fileoncd+0173h], 1	; 7A5C4
 jne short .3	; 7A5CB
-mov edx, dword [dword_D2C6B]	; 7A5CD
+mov edx, dword [cddriveptr]	; 7A5CD
 .3:
 lea eax, [byte ebp-020h]	; 7A5D3
 call MakePath	; 7A5D6
@@ -526,9 +526,9 @@ call sub_B4DD4	; 7A70D
 add esp, byte 4	; 7A712
 xor ecx, ecx	; 7A715
 mov ebx, str_Setting3	; 7A717
-cmp byte [byte_ED93F], 1	; 7A71C
+cmp byte [fileoncd+0173h], 1	; 7A71C
 jne short .3	; 7A723
-mov edx, dword [dword_D2C6B]	; 7A725
+mov edx, dword [cddriveptr]	; 7A725
 jmp short .4	; 7A72B
 .3:
 xor edx, edx	; 7A72D
@@ -1712,9 +1712,9 @@ cmp dword [gamemode], byte 2	; 7B4FD
 jne short .2	; 7B504
 xor ecx, ecx	; 7B506
 mov ebx, str_Setting7	; 7B508
-cmp byte [byte_ED943], 1	; 7B50D
+cmp byte [fileoncd+0177h], 1	; 7B50D
 jne short .1	; 7B514
-mov edx, dword [dword_D2C6B]	; 7B516
+mov edx, dword [cddriveptr]	; 7B516
 jmp short .4	; 7B51C
 .1:
 xor edx, edx	; 7B51E
@@ -1722,9 +1722,9 @@ jmp short .4	; 7B520
 .2:
 xor ecx, ecx	; 7B522
 mov ebx, str_Setting4	; 7B524
-cmp byte [byte_ED940], 1	; 7B529
+cmp byte [fileoncd+0174h], 1	; 7B529
 jne short .3	; 7B530
-mov edx, dword [dword_D2C6B]	; 7B532
+mov edx, dword [cddriveptr]	; 7B532
 jmp short .4	; 7B538
 .3:
 xor edx, edx	; 7B53A
@@ -2804,9 +2804,9 @@ sub esp, byte 20h	; 7C1BA
 call sub_B4BA8	; 7C1BD
 xor ecx, ecx	; 7C1C2
 mov ebx, str_Setting6	; 7C1C4
-cmp byte [byte_ED942], 1	; 7C1C9
+cmp byte [fileoncd+0176h], 1	; 7C1C9
 jne short .1	; 7C1D0
-mov edx, dword [dword_D2C6B]	; 7C1D2
+mov edx, dword [cddriveptr]	; 7C1D2
 jmp short .2	; 7C1D8
 .1:
 xor edx, edx	; 7C1DA
@@ -4247,9 +4247,9 @@ call sub_B4DD4	; 7D2AA
 add esp, byte 4	; 7D2AF
 xor ecx, ecx	; 7D2B2
 mov ebx, str_PlayerImg	; 7D2B4
-cmp byte [byte_ED904], 1	; 7D2B9
+cmp byte [fileoncd+0138h], 1	; 7D2B9
 jne short .3	; 7D2C0
-mov edx, dword [dword_D2C6B]	; 7D2C2
+mov edx, dword [cddriveptr]	; 7D2C2
 jmp short .4	; 7D2C8
 .3:
 xor edx, edx	; 7D2CA

@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_7DC8B progbits alloc exec nowrite align=1
 extern __CHK, str_MTROCKU, str_SBROCKU, str_ADROCKU, str_ROCKDITI, str_Gadget6, str_Gadget5, str_Gad1
-extern str_Pointer19, str_PPV, musicon, byte_ED7CC, byte_ED7EB, byte_ED862, byte_ED8CC, byte_ED92D
-extern byte_ED932, byte_ED9EF, gamemode, ctl1team, ctl2team, sounddev, dword_C66D0, dword_C66D4
+extern str_Pointer19, str_PPV, musicon, fileoncd
+extern gamemode, ctl1team, ctl2team, sounddev, dword_C66D0, dword_C66D4
 extern rinkscrollx, rinkscrolly, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, rockcuepool
-extern teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1, dword_D2C6B, dword_D8B74
+extern teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1, cddriveptr, dword_D8B74
 extern spritedrawcount, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, pointerspr, rinkwtiles, rinkhtiles
 extern bgscrolly, replayplay, dword_E9F16, dword_E9F38, ptrupdatefn, rockteamcues, rocktunes
 extern rockrandcues, dword_ED6D0, dword_ED6D4, gadgetfile, gadgetptry, gadgetptrx, gadgetshape
@@ -58,9 +58,9 @@ jl short .5	; 7DCD9
 xor ecx, ecx	; 7DCDB
 mov ebx, dword [nosplit eax*4+rockcuefiles]	; 7DCDD
 mov eax, dword [nosplit eax*4+rockcuepathsel]	; 7DCE4
-cmp byte [dword eax+byte_ED7CC], 1	; 7DCEB
+cmp byte [dword eax+fileoncd], 1	; 7DCEB
 jne short .3	; 7DCF2
-mov edx, dword [dword_D2C6B]	; 7DCF4
+mov edx, dword [cddriveptr]	; 7DCF4
 jmp short .4	; 7DCFA
 .3:
 xor edx, edx	; 7DCFC
@@ -131,9 +131,9 @@ mov dword [byte esp+edi*4+010h], edx	; 7DD9B
 xor ecx, ecx	; 7DD9F
 mov ebx, dword [nosplit edx*4+rockcuefiles]	; 7DDA1
 mov eax, dword [nosplit edx*4+rockcuepathsel]	; 7DDA8
-cmp byte [dword eax+byte_ED7CC], 1	; 7DDAF
+cmp byte [dword eax+fileoncd], 1	; 7DDAF
 jne short .16	; 7DDB6
-mov edx, dword [dword_D2C6B]	; 7DDB8
+mov edx, dword [cddriveptr]	; 7DDB8
 jmp short .17	; 7DDBE
 .16:
 xor edx, edx	; 7DDC0
@@ -150,7 +150,7 @@ cmp dword [sounddev], byte 8	; 7DDE1
 jne short .19	; 7DDE8
 xor ecx, ecx	; 7DDEA
 mov ebx, str_MTROCKU	; 7DDEC
-cmp byte [byte_ED8CC], 1	; 7DDF1
+cmp byte [fileoncd+0100h], 1	; 7DDF1
 .18:
 je short .21	; 7DDF8
 xor edx, edx	; 7DDFA
@@ -160,15 +160,15 @@ cmp byte [musicon], 0	; 7DDFE
 je short .20	; 7DE05
 xor ecx, ecx	; 7DE07
 mov ebx, str_SBROCKU	; 7DE09
-cmp byte [byte_ED932], 1	; 7DE0E
+cmp byte [fileoncd+0166h], 1	; 7DE0E
 jmp short LoadRockMusic.18	; 7DE15
 .20:
 xor ecx, ecx	; 7DE17
 mov ebx, str_ADROCKU	; 7DE19
-cmp byte [byte_ED7EB], 1	; 7DE1E
+cmp byte [fileoncd+01Fh], 1	; 7DE1E
 jne short .22	; 7DE25
 .21:
-mov edx, dword [dword_D2C6B]	; 7DE27
+mov edx, dword [cddriveptr]	; 7DE27
 jmp short .23	; 7DE2D
 .22:
 xor edx, edx	; 7DE2F
@@ -185,9 +185,9 @@ sar eax, 18h	; 7DE52
 xor ecx, ecx	; 7DE55
 mov ebx, dword [nosplit eax*4+teamtunefiles]	; 7DE57
 mov eax, dword [nosplit eax*4+teamtunepathsel]	; 7DE5E
-cmp byte [dword eax+byte_ED7CC], 1	; 7DE65
+cmp byte [dword eax+fileoncd], 1	; 7DE65
 jne short .24	; 7DE6C
-mov edx, dword [dword_D2C6B]	; 7DE6E
+mov edx, dword [cddriveptr]	; 7DE6E
 jmp short .25	; 7DE74
 .24:
 xor edx, edx	; 7DE76
@@ -199,9 +199,9 @@ call sub_8F13B	; 7DE81
 mov dword [rocktunes+4], eax	; 7DE86
 xor ecx, ecx	; 7DE8B
 mov ebx, str_ROCKDITI	; 7DE8D
-cmp byte [byte_ED92D], 1	; 7DE92
+cmp byte [fileoncd+0161h], 1	; 7DE92
 jne short .26	; 7DE99
-mov edx, dword [dword_D2C6B]	; 7DE9B
+mov edx, dword [cddriveptr]	; 7DE9B
 jmp short .27	; 7DEA1
 .26:
 xor edx, edx	; 7DEA3
@@ -500,9 +500,9 @@ cmp dword [dword_ED6F8], byte 0	; 7E1A9
 je short .5	; 7E1B0
 mov ecx, str_PPV	; 7E1B2
 mov ebx, str_Gadget6	; 7E1B7
-cmp byte [byte_ED9EF], 1	; 7E1BC
+cmp byte [fileoncd+0223h], 1	; 7E1BC
 jne short .4	; 7E1C3
-mov edx, dword [dword_D2C6B]	; 7E1C5
+mov edx, dword [cddriveptr]	; 7E1C5
 jmp short .7	; 7E1CB
 .4:
 xor edx, edx	; 7E1CD
@@ -510,9 +510,9 @@ jmp short .7	; 7E1CF
 .5:
 mov ecx, str_PPV	; 7E1D1
 mov ebx, str_Gadget5	; 7E1D6
-cmp byte [byte_ED862], 1	; 7E1DB
+cmp byte [fileoncd+096h], 1	; 7E1DB
 jne short .6	; 7E1E2
-mov edx, dword [dword_D2C6B]	; 7E1E4
+mov edx, dword [cddriveptr]	; 7E1E4
 jmp short .7	; 7E1EA
 .6:
 xor edx, edx	; 7E1EC
@@ -1626,9 +1626,9 @@ call jctime	; 7F1AF
 add esp, byte 4	; 7F1B4
 mov ecx, str_PPV	; 7F1B7
 mov ebx, str_Gadget6	; 7F1BC
-cmp byte [byte_ED9EF], 1	; 7F1C1
+cmp byte [fileoncd+0223h], 1	; 7F1C1
 jne short .6	; 7F1C8
-mov edx, dword [dword_D2C6B]	; 7F1CA
+mov edx, dword [cddriveptr]	; 7F1CA
 jmp short .7	; 7F1D0
 .6:
 xor edx, edx	; 7F1D2
@@ -1950,9 +1950,9 @@ call jctime	; 7F602
 add esp, byte 4	; 7F607
 mov ecx, str_PPV	; 7F60A
 mov ebx, str_Gadget6	; 7F60F
-cmp byte [byte_ED9EF], 1	; 7F614
+cmp byte [fileoncd+0223h], 1	; 7F614
 jne short .2	; 7F61B
-mov edx, dword [dword_D2C6B]	; 7F61D
+mov edx, dword [cddriveptr]	; 7F61D
 jmp short .3	; 7F623
 .2:
 xor edx, edx	; 7F625

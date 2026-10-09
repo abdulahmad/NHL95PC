@@ -7,9 +7,9 @@ extern str_Line2, str_Line3, str_Line4, str_Power, str_Play1, str_Play2, str_Pen
 extern str_Kill2, str_Defense3, str_Goaltenders, str_Extra, str_Attackers, str_S2dSS2, str_Teams2, str_ErrB2Perror
 extern str_Tstat2, str_Keys4, str_Pstat4, str_Gstat4, str_extBIN, byte_D11BC, byte_D1238, byte_D12DE
 extern byte_D1333, byte_D1334, byte_D1335, byte_D1336, hmroster, hmrosterjersey, leaguedbfmt2, leaguedbfmt
-extern byte_ECDF4, gmroster, gmrosterjersey, gmrosterslot, byte_ED83C, byte_ED86D, byte_ED9E7, statscategory
+extern byte_ECDF4, gmroster, gmrosterjersey, gmrosterslot, statscategory, fileoncd
 extern statsredrawcb, cont2team, HomeTeam, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26
-extern dword_D0B2A, lineslotx, linesloty, jerseydigits, dword_D2C6B, curperiod, dword_DC734, dword_DC738
+extern dword_D0B2A, lineslotx, linesloty, jerseydigits, cddriveptr, curperiod, dword_DC734, dword_DC738
 extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, exit_, j___close_, jctime, lseek_
 extern crestnames, menuact_uselines2, menuact_savedeflines2, off_CF2A3, off_CF2C3, menuact_uselines, menuact_savedeflines, menuact_savelines
 extern open_, perror_, read_, sprintf_, MakePath, RunMenu, TeamRosterScreen, MessageBox
@@ -203,9 +203,9 @@ call sprintf_	; 7855A
 add esp, byte 0Ch	; 7855F
 xor ecx, ecx	; 78562
 lea ebx, [dword esp+0140h]	; 78564
-cmp byte [byte_ED83C], 1	; 7856B
+cmp byte [fileoncd+070h], 1	; 7856B
 jne short .1	; 78572
-mov edx, dword [dword_D2C6B]	; 78574
+mov edx, dword [cddriveptr]	; 78574
 jmp short .2	; 7857A
 .1:
 xor edx, edx	; 7857C
@@ -226,9 +226,9 @@ cmp eax, 100h	; 785A4
 jl short DrawLineEditorScreen.3	; 785A9
 mov ecx, str_extBIN	; 785AB
 mov ebx, str_HOMEPALS3	; 785B0
-cmp byte [byte_ED86D], 1	; 785B5
+cmp byte [fileoncd+0A1h], 1	; 785B5
 jne short .4	; 785BC
-mov edx, dword [dword_D2C6B]	; 785BE
+mov edx, dword [cddriveptr]	; 785BE
 jmp short .5	; 785C4
 .4:
 xor edx, edx	; 785C6
@@ -300,9 +300,9 @@ mov eax, 1F4h	; 786A1
 call DrawDlgFrame	; 786A6
 xor ecx, ecx	; 786AB
 mov ebx, str_Lelogo2	; 786AD
-cmp byte [byte_ED9E7], 1	; 786B2
+cmp byte [fileoncd+021Bh], 1	; 786B2
 jne short .9	; 786B9
-mov edx, dword [dword_D2C6B]	; 786BB
+mov edx, dword [cddriveptr]	; 786BB
 jmp short .10	; 786C1
 .9:
 xor edx, edx	; 786C3
@@ -557,9 +557,9 @@ mov edi, eax	; 78A98
 mov esi, ebx	; 78A9A
 mov ecx, str_extBIN	; 78A9C
 mov ebx, str_HOMEPALS3	; 78AA1
-cmp byte [byte_ED86D], 1	; 78AA6
+cmp byte [fileoncd+0A1h], 1	; 78AA6
 jne short .1	; 78AAD
-mov edx, dword [dword_D2C6B]	; 78AAF
+mov edx, dword [cddriveptr]	; 78AAF
 jmp short .2	; 78AB5
 .1:
 xor edx, edx	; 78AB7

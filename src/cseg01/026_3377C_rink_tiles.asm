@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_3377C progbits alloc exec nowrite align=1
 extern __CHK, str_Rink2, str_Til, str_InvalidFileSize, str_TILES, str_ErrorLoadingFile, str_Map, str_CRESTS3
-extern str_Pal16, rinkarenas, str_extBIN, byte_ED7CC, byte_ED7CD, byte_ED821, byte_ED927
+extern str_Pal16, rinkarenas, str_extBIN, fileoncd
 extern rinktilebm, rinkbm, rinkfileidx, currink, rinkscrollx
-extern rinkscrolly, dword_D2C6B, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly, ptrupdatefn, jctime
+extern rinkscrolly, cddriveptr, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly, ptrupdatefn, jctime
 extern MakePath, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52, sub_6AF97
 extern GetInputEvent, FadePalStep, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_913B4
 extern sub_92DE0, sub_92EE4, FatalError, sub_B30B4, sub_B395C, SetDrawBitmap, sub_B4F8C, unk_DC890
@@ -67,9 +67,9 @@ cmp edi, dword [currink]	; 3381F
 je near .13	; 33825
 xor ecx, ecx	; 3382B
 mov ebx, str_Rink2	; 3382D
-cmp byte [byte_ED927], 1	; 33832
+cmp byte [fileoncd+015Bh], 1	; 33832
 jne short .4	; 33839
-mov edx, dword [dword_D2C6B]	; 3383B
+mov edx, dword [cddriveptr]	; 3383B
 jmp short .5	; 33841
 .4:
 xor edx, edx	; 33843
@@ -106,9 +106,9 @@ shl esi, 2	; 338A9
 mov ebx, rinkarenas	; 338AC
 add ebx, esi	; 338B1
 mov eax, dword [nosplit edi*4+rinkfileidx]	; 338B3
-cmp byte [dword eax+byte_ED7CD], 1	; 338BA
+cmp byte [dword eax+fileoncd+01h], 1	; 338BA
 jne short .6	; 338C1
-mov edx, dword [dword_D2C6B]	; 338C3
+mov edx, dword [cddriveptr]	; 338C3
 jmp short .7	; 338C9
 .6:
 xor edx, edx	; 338CB
@@ -164,9 +164,9 @@ shl esi, 2	; 33955
 mov ebx, rinkarenas	; 33958
 add ebx, esi	; 3395D
 mov eax, dword [nosplit edi*4+rinkfileidx]	; 3395F
-cmp byte [dword eax+byte_ED7CC], 1	; 33966
+cmp byte [dword eax+fileoncd], 1	; 33966
 jne short .10	; 3396D
-mov edx, dword [dword_D2C6B]	; 3396F
+mov edx, dword [cddriveptr]	; 3396F
 jmp short .11	; 33975
 .10:
 xor edx, edx	; 33977
@@ -665,9 +665,9 @@ mov eax, 1	; 33F2F
 call FadePalStep	; 33F34
 mov ecx, str_extBIN	; 33F39
 mov ebx, str_CRESTS3	; 33F3E
-cmp byte [byte_ED821], 1	; 33F43
+cmp byte [fileoncd+055h], 1	; 33F43
 jne short .1	; 33F4A
-mov edx, dword [dword_D2C6B]	; 33F4C
+mov edx, dword [cddriveptr]	; 33F4C
 jmp short .2	; 33F52
 .1:
 xor edx, edx	; 33F54

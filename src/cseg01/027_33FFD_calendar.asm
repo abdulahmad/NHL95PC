@@ -4,9 +4,9 @@ bits 32
 section s_33FFD progbits alloc exec nowrite align=1
 extern __CHK, str_Boxr, str_Boxb, str_Bkgd7, str_02d9D, str_Home, str_Away, str_SDD2
 extern str_Pal17, str_Calendar, str_Callogo, str_Iff9, str_Pointer8, str_Menubuff5, monthdays, monthfirstday_m1
-extern monthfirstday, musicon, lgteam_17, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, teamstatscb
+extern monthfirstday, musicon, lgteam_17, gameopts, teamstatscb, fileoncd
 extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, songdata, calcolx, calrowy
-extern calendarshapes, musichandle, dword_D2C6B, fontcolor, dword_D8B74, pointerspr, musicslot
+extern calendarshapes, musichandle, cddriveptr, fontcolor, dword_D8B74, pointerspr, musicslot
 extern calsel, calexit, calmonth, calselday, dword_DDD2C, calselmonth, ptrupdatefn, fputchar
 extern jctime, crestnames, calnextslot, calprevslot, sprintf_, MakePath, FileOpenRead, leaguedbnames
 extern FileClose, FileReadAt, ReadSchedGame, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
@@ -753,9 +753,9 @@ mov eax, dword [dword_D8B74]	; 3497F
 mov dword [dword esp+07ACh], eax	; 34984
 xor ecx, ecx	; 3498B
 mov ebx, str_Calendar	; 3498D
-cmp byte [byte_ED98D], 1	; 34992
+cmp byte [fileoncd+01C1h], 1	; 34992
 jne short .4	; 34999
-mov edx, dword [dword_D2C6B]	; 3499B
+mov edx, dword [cddriveptr]	; 3499B
 jmp short .5	; 349A1
 .4:
 xor edx, edx	; 349A3
@@ -770,9 +770,9 @@ add esp, byte 8	; 349C0
 mov dword [calendarshapes], eax	; 349C3
 xor ecx, ecx	; 349C8
 mov ebx, str_Callogo	; 349CA
-cmp byte [byte_ED98E], 1	; 349CF
+cmp byte [fileoncd+01C2h], 1	; 349CF
 jne short .6	; 349D6
-mov edx, dword [dword_D2C6B]	; 349D8
+mov edx, dword [cddriveptr]	; 349D8
 jmp short .7	; 349DE
 .6:
 xor edx, edx	; 349E0
@@ -1050,9 +1050,9 @@ cmp dword [songdata], byte 0	; 34E66
 jne short .31	; 34E6D
 mov ecx, str_Iff9	; 34E6F
 mov ebx, str_Calendar	; 34E74
-cmp byte [byte_ED9AE], 1	; 34E79
+cmp byte [fileoncd+01E2h], 1	; 34E79
 jne short .29	; 34E80
-mov edx, dword [dword_D2C6B]	; 34E82
+mov edx, dword [cddriveptr]	; 34E82
 jmp short .30	; 34E88
 .29:
 xor edx, edx	; 34E8A

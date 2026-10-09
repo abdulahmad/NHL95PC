@@ -6,11 +6,10 @@ extern __CHK, __STOSB, _dos_gettime_, _nfree_, _nmalloc_, str_Eascrn, str_Pal4, 
 extern str_Msk1, str_MASK, str_Iff2, str_Title30, str_Mttitle, str_Adtitle, str_Cmv, str_Title
 extern str_Pioneer1, str_Pl2, str_Pl1, str_Bkgd3, str_Pioneer2, str_Pioneer4, str_Pioneer3, str_FlaD
 extern str_Pion, str_Pio, str_Eaopen, str_Easports, str_Backwin, str_Credits, str_Rockditi, str_Shp0
-extern str_KMS, musicon, byte_D42C3, byte_ED7F0, byte_ED833, byte_ED834, byte_ED8D0, byte_ED8F3
-extern byte_ED8F4, byte_ED8F6, byte_ED8F7, byte_ED8F8, byte_ED92D, byte_ED9A6, byte_ED9A8, byte_ED9AD
-extern byte_ED9E9, byte_ED9EA, dword_C4CFC, demomode, sounddev, dword_C588A, textgrid, textgridon
+extern str_KMS, musicon, byte_D42C3, fileoncd
+extern dword_C4CFC, demomode, sounddev, dword_C588A, textgrid, textgridon
 extern textcolor, textshadow, textoutlinedx, textoutlinedy, songdata, dword_CC0EC, dword_CCC94, musicslot
-extern musichandle, dword_D2C6B, fontcolor, dword_D8B68, dword_D8B74, pointerspr, dword_DC33C, speechbank
+extern musichandle, cddriveptr, fontcolor, dword_D8B68, dword_D8B74, pointerspr, dword_DC33C, speechbank
 extern fputchar, jctime, RunDemoGame_x, memcpy_, memset_, off_C6399, rand_, sprintf_
 extern srand_, strlen_, MakePath, RunDemoGame, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
@@ -43,9 +42,9 @@ call sub_B392C	; 160CA
 add esp, byte 4	; 160CF
 xor ecx, ecx	; 160D2
 mov ebx, str_Eascrn	; 160D4
-cmp byte [byte_ED834], 1	; 160D9
+cmp byte [fileoncd+068h], 1	; 160D9
 jne short .1	; 160E0
-mov edx, dword [dword_D2C6B]	; 160E2
+mov edx, dword [cddriveptr]	; 160E2
 jmp short .2	; 160E8
 .1:
 xor edx, edx	; 160EA
@@ -125,9 +124,9 @@ cmp dword [songdata], byte 0	; 161DD
 jne short .8	; 161E4
 mov ecx, str_Iff2	; 161E6
 mov ebx, str_Title30	; 161EB
-cmp byte [byte_ED9A6], 1	; 161F0
+cmp byte [fileoncd+01DAh], 1	; 161F0
 jne short .6	; 161F7
-mov edx, dword [dword_D2C6B]	; 161F9
+mov edx, dword [cddriveptr]	; 161F9
 jmp short .7	; 161FF
 .6:
 xor edx, edx	; 16201
@@ -143,9 +142,9 @@ cmp dword [sounddev], byte 8	; 16222
 jne short .10	; 16229
 mov ecx, str_KMS	; 1622B
 mov ebx, str_Mttitle	; 16230
-cmp byte [byte_ED8D0], 1	; 16235
+cmp byte [fileoncd+0104h], 1	; 16235
 jne short .9	; 1623C
-mov edx, dword [dword_D2C6B]	; 1623E
+mov edx, dword [cddriveptr]	; 1623E
 jmp short .12	; 16244
 .9:
 xor edx, edx	; 16246
@@ -153,9 +152,9 @@ jmp short .12	; 16248
 .10:
 mov ecx, str_KMS	; 1624A
 mov ebx, str_Adtitle	; 1624F
-cmp byte [byte_ED8D0], 1	; 16254
+cmp byte [fileoncd+0104h], 1	; 16254
 jne short .11	; 1625B
-mov edx, dword [dword_D2C6B]	; 1625D
+mov edx, dword [cddriveptr]	; 1625D
 jmp short .12	; 16263
 .11:
 xor edx, edx	; 16265
@@ -168,9 +167,9 @@ mov dword [dword_DC33C], eax	; 1627F
 .13:
 mov ecx, str_Cmv	; 16284
 mov ebx, str_Title	; 16289
-cmp byte [byte_ED7F0], 1	; 1628E
+cmp byte [fileoncd+024h], 1	; 1628E
 jne short .14	; 16295
-mov edx, dword [dword_D2C6B]	; 16297
+mov edx, dword [cddriveptr]	; 16297
 jmp short .15	; 1629D
 .14:
 xor edx, edx	; 1629F
@@ -531,9 +530,9 @@ call sub_B4B88	; 16797
 add esp, byte 0Ch	; 1679C
 xor ecx, ecx	; 1679F
 mov ebx, str_Pioneer1	; 167A1
-cmp byte [byte_ED8F3], 1	; 167A6
+cmp byte [fileoncd+0127h], 1	; 167A6
 jne short .2	; 167AD
-mov edx, dword [dword_D2C6B]	; 167AF
+mov edx, dword [cddriveptr]	; 167AF
 jmp short .3	; 167B5
 .2:
 xor edx, edx	; 167B7
@@ -574,9 +573,9 @@ call jctime	; 16830
 add esp, byte 4	; 16835
 xor ecx, ecx	; 16838
 mov ebx, str_Pioneer2	; 1683A
-cmp byte [byte_ED8F4], 1	; 1683F
+cmp byte [fileoncd+0128h], 1	; 1683F
 jne short .4	; 16846
-mov edx, dword [dword_D2C6B]	; 16848
+mov edx, dword [cddriveptr]	; 16848
 jmp short .5	; 1684E
 .4:
 xor edx, edx	; 16850
@@ -595,9 +594,9 @@ cmp dword [songdata], byte 0	; 1687F
 jne near .13	; 16886
 mov ecx, str_Iff2	; 1688C
 mov ebx, str_Pioneer4	; 16891
-cmp byte [byte_ED8F8], 1	; 16896
+cmp byte [fileoncd+012Ch], 1	; 16896
 jne short .6	; 1689D
-mov edx, dword [dword_D2C6B]	; 1689F
+mov edx, dword [cddriveptr]	; 1689F
 jmp short .7	; 168A5
 .6:
 xor edx, edx	; 168A7
@@ -609,9 +608,9 @@ call sub_8F98F	; 168BC
 mov dword [dword esp+0644h], eax	; 168C1
 mov ecx, str_Iff2	; 168C8
 mov ebx, str_Pioneer3	; 168CD
-cmp byte [byte_ED8F7], 1	; 168D2
+cmp byte [fileoncd+012Bh], 1	; 168D2
 jne short .8	; 168D9
-mov edx, dword [dword_D2C6B]	; 168DB
+mov edx, dword [cddriveptr]	; 168DB
 jmp short .9	; 168E1
 .8:
 xor edx, edx	; 168E3
@@ -623,9 +622,9 @@ call sub_8F98F	; 168F8
 mov dword [dword esp+0648h], eax	; 168FD
 mov ecx, str_Iff2	; 16904
 mov ebx, str_Pioneer2	; 16909
-cmp byte [byte_ED8F6], 1	; 1690E
+cmp byte [fileoncd+012Ah], 1	; 1690E
 jne short .10	; 16915
-mov edx, dword [dword_D2C6B]	; 16917
+mov edx, dword [cddriveptr]	; 16917
 jmp short .11	; 1691D
 .10:
 xor edx, edx	; 1691F
@@ -995,9 +994,9 @@ call srand_	; 16DF7
 .45:
 xor ecx, ecx	; 16DFC
 mov ebx, str_Eaopen	; 16DFE
-cmp byte [byte_ED833], 1	; 16E03
+cmp byte [fileoncd+067h], 1	; 16E03
 jne short .46	; 16E0A
-mov edx, dword [dword_D2C6B]	; 16E0C
+mov edx, dword [cddriveptr]	; 16E0C
 jmp short .47	; 16E12
 .46:
 xor edx, edx	; 16E14
@@ -1034,9 +1033,9 @@ cmp dword [songdata], byte 0	; 16E7C
 jne short .50	; 16E83
 mov ecx, str_Iff2	; 16E85
 mov ebx, str_Easports	; 16E8A
-cmp byte [byte_ED9A8], 1	; 16E8F
+cmp byte [fileoncd+01DCh], 1	; 16E8F
 jne short .48	; 16E96
-mov edx, dword [dword_D2C6B]	; 16E98
+mov edx, dword [cddriveptr]	; 16E98
 jmp short .49	; 16E9E
 .48:
 xor edx, edx	; 16EA0
@@ -1135,9 +1134,9 @@ add esp, byte 0Ch	; 16FF6
 mov dword [dword esp+0360h], eax	; 16FF9
 xor ecx, ecx	; 17000
 mov ebx, str_Credits	; 17002
-cmp byte [byte_ED9E9], 1	; 17007
+cmp byte [fileoncd+021Dh], 1	; 17007
 jne short .1	; 1700E
-mov edx, dword [dword_D2C6B]	; 17010
+mov edx, dword [cddriveptr]	; 17010
 jmp short .2	; 17016
 .1:
 xor edx, edx	; 17018
@@ -1197,9 +1196,9 @@ cmp dword [songdata], byte 0	; 170D6
 jne short .5	; 170DD
 mov ecx, str_Iff2	; 170DF
 mov ebx, str_Credits	; 170E4
-cmp byte [byte_ED9AD], 1	; 170E9
+cmp byte [fileoncd+01E1h], 1	; 170E9
 jne short .3	; 170F0
-mov edx, dword [dword_D2C6B]	; 170F2
+mov edx, dword [cddriveptr]	; 170F2
 jmp short .4	; 170F8
 .3:
 xor edx, edx	; 170FA
@@ -1221,9 +1220,9 @@ cmp dword [sounddev], byte 8	; 1713B
 jne short .7	; 17142
 mov ecx, str_KMS	; 17144
 mov ebx, str_Adtitle	; 17149
-cmp byte [byte_ED8D0], 1	; 1714E
+cmp byte [fileoncd+0104h], 1	; 1714E
 jne short .6	; 17155
-mov edx, dword [dword_D2C6B]	; 17157
+mov edx, dword [cddriveptr]	; 17157
 jmp short .9	; 1715D
 .6:
 xor edx, edx	; 1715F
@@ -1231,9 +1230,9 @@ jmp short .9	; 17161
 .7:
 mov ecx, str_KMS	; 17163
 mov ebx, str_Adtitle	; 17168
-cmp byte [byte_ED8D0], 1	; 1716D
+cmp byte [fileoncd+0104h], 1	; 1716D
 jne short .8	; 17174
-mov edx, dword [dword_D2C6B]	; 17176
+mov edx, dword [cddriveptr]	; 17176
 jmp short .9	; 1717C
 .8:
 xor edx, edx	; 1717E
@@ -1245,9 +1244,9 @@ call sub_8F13B	; 17193
 mov dword [dword esp+0354h], eax	; 17198
 mov ecx, str_KMS	; 1719F
 mov ebx, str_Rockditi	; 171A4
-cmp byte [byte_ED92D], 1	; 171A9
+cmp byte [fileoncd+0161h], 1	; 171A9
 jne short .10	; 171B0
-mov edx, dword [dword_D2C6B]	; 171B2
+mov edx, dword [cddriveptr]	; 171B2
 jmp short .11	; 171B8
 .10:
 xor edx, edx	; 171BA
@@ -1295,9 +1294,9 @@ je near .22	; 17274
 mov eax, dword [byte esi+05h]	; 1727A
 cmp byte [eax], 0	; 1727D
 je near .18	; 17280
-cmp byte [byte_ED9EA], 1	; 17286
+cmp byte [fileoncd+021Eh], 1	; 17286
 jne short .16	; 1728D
-mov edx, dword [dword_D2C6B]	; 1728F
+mov edx, dword [cddriveptr]	; 1728F
 jmp short .17	; 17295
 .16:
 xor edx, edx	; 17297

@@ -4,11 +4,11 @@ bits 32
 section s_150C6 progbits alloc exec nowrite align=1
 extern StanleyCupTimer, __CHK, str_Scrbrd2, str_Srb3, str_Crests4, str_Stanley, str_PPV
 extern musicon, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, ctlavailmask
-extern byte_ED823, byte_ED939, demomode
+extern demomode, fileoncd
 extern gameresult, gamemode, gameopts, teamdivflags, hudclockmin
 extern hudclocksec, hudclockhund, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern hudhomeline, hudawayline, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
-extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, mousebtns, linesprites
+extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, cddriveptr, mousebtns, linesprites
 extern penaltydigits, dword_DC2B8, clockdigits, clockcolon, cupseries, hmscore, awscore, hmtmstruct
 extern jctime, DrawPanelLine_x, UpdateHudPanel_x, teamabbrevs, perioddigits, off_C57C8, crestnames, awtmstruct
 extern mousepollfn, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, ReloadGameGfx, SetupDemoGame
@@ -67,9 +67,9 @@ mov dword [dword_C585C], ebx	; 1515A
 call SelectScreenBM	; 15160
 mov ecx, str_PPV	; 15165
 mov ebx, str_Scrbrd2	; 1516A
-cmp byte [byte_ED939], 1	; 1516F
+cmp byte [fileoncd+016Dh], 1	; 1516F
 jne short .2	; 15176
-mov edx, dword [dword_D2C6B]	; 15178
+mov edx, dword [cddriveptr]	; 15178
 jmp short .3	; 1517E
 .2:
 xor edx, edx	; 15180
@@ -150,9 +150,9 @@ call jctime	; 15269
 add esp, byte 4	; 1526E
 mov ecx, str_PPV	; 15271
 mov ebx, str_Crests4	; 15276
-cmp byte [byte_ED823], 1	; 1527B
+cmp byte [fileoncd+057h], 1	; 1527B
 jne short .6	; 15282
-mov edx, dword [dword_D2C6B]	; 15284
+mov edx, dword [cddriveptr]	; 15284
 jmp short .7	; 1528A
 .6:
 xor edx, edx	; 1528C

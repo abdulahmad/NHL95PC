@@ -3,20 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_EC6B8 nobits alloc noexec write align=1
 global lineedpanel, fadepal, fadepal2, byte_ECDF4, gmroster, gmrosterjersey, gmrosterslot, byte_ED0F7
-global byte_ED0F8, byte_ED0F9, byte_ED0FA, byte_ED7CC, byte_ED7CD, byte_ED7E4, byte_ED7E6
-global byte_ED7EB, byte_ED7ED, byte_ED7F0, byte_ED7F3, byte_ED7F7, byte_ED821, byte_ED823, byte_ED824
-global byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED82F, byte_ED830, byte_ED833, byte_ED834
-global byte_ED836, byte_ED83C, byte_ED858, byte_ED859, byte_ED85A, byte_ED85C, byte_ED862, byte_ED86C
-global byte_ED86D, byte_ED8B3, byte_ED8B4, byte_ED8B5, byte_ED8C3, byte_ED8C6, byte_ED8C8, byte_ED8CC
-global byte_ED8CE, byte_ED8D0, byte_ED8D7, byte_ED8F3, byte_ED8F4, byte_ED8F6, byte_ED8F7, byte_ED8F8
-global byte_ED904, byte_ED906, byte_ED908, byte_ED909, byte_ED927, byte_ED92B, byte_ED92D, byte_ED92E
-global byte_ED92F, byte_ED932, byte_ED935, byte_ED936, byte_ED938, byte_ED939, byte_ED93A, byte_ED93F
-global byte_ED940, byte_ED941, byte_ED942, byte_ED943, byte_ED95B, byte_ED95D, byte_ED976, byte_ED979
-global byte_ED98C, byte_ED98D, byte_ED98E, byte_ED98F, byte_ED990, byte_ED991, byte_ED992, byte_ED993
-global byte_ED994, byte_ED9A6, byte_ED9A7, byte_ED9A8, byte_ED9A9, byte_ED9AA, byte_ED9AB, byte_ED9AC
-global byte_ED9AD, byte_ED9AE, byte_ED9AF, byte_ED9B0, byte_ED9B2, byte_ED9B3, byte_ED9E5, byte_ED9E6
-global byte_ED9E7, byte_ED9E8, byte_ED9E9, byte_ED9EA, byte_ED9EB, byte_ED9EC, byte_ED9EE, byte_ED9EF
-global byte_ED9F0, dblistcur, dblisttemp
+global byte_ED0F8, byte_ED0F9, byte_ED0FA, fileoncd
+global byte_ED909
+global dblistcur, dblisttemp
 global dblisttempnames, dblistorig
 global dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0, leaguesetimg, setbits, dword_ED364, rockteamcues
 global dword_ED374, rocktunes, rockrandcues, dword_ED6D0, dword_ED6D4, gadgetfile
@@ -186,207 +175,108 @@ speechcopybuf:
 resb 4
 unk_ED7BC:
 resb 16
-byte_ED7CC:
+fileoncd:
 resb 1
-byte_ED7CD:
 resb 23
-byte_ED7E4:
 resb 2
-byte_ED7E6:
 resb 5
-byte_ED7EB:
 resb 2
-byte_ED7ED:
 resb 3
-byte_ED7F0:
 resb 3
-byte_ED7F3:
 resb 4
-byte_ED7F7:
 resb 42
-byte_ED821:
 resb 2
-byte_ED823:
 resb 1
-byte_ED824:
 resb 1
-byte_ED825:
 resb 1
-byte_ED826:
 resb 1
-byte_ED827:
 resb 1
-byte_ED828:
 resb 7
-byte_ED82F:
 resb 1
-byte_ED830:
 resb 3
-byte_ED833:
 resb 1
-byte_ED834:
 resb 2
-byte_ED836:
 resb 6
-byte_ED83C:
 resb 28
-byte_ED858:
 resb 1
-byte_ED859:
 resb 1
-byte_ED85A:
 resb 2
-byte_ED85C:
 resb 6
-byte_ED862:
 resb 10
-byte_ED86C:
 resb 1
-byte_ED86D:
 resb 70
-byte_ED8B3:
 resb 1
-byte_ED8B4:
 resb 1
-byte_ED8B5:
 resb 14
-byte_ED8C3:
 resb 3
-byte_ED8C6:
 resb 2
-byte_ED8C8:
 resb 4
-byte_ED8CC:
 resb 2
-byte_ED8CE:
 resb 2
-byte_ED8D0:
 resb 7
-byte_ED8D7:
 resb 28
-byte_ED8F3:
 resb 1
-byte_ED8F4:
 resb 2
-byte_ED8F6:
 resb 1
-byte_ED8F7:
 resb 1
-byte_ED8F8:
 resb 12
-byte_ED904:
 resb 2
-byte_ED906:
 resb 2
-byte_ED908:
 resb 1
 byte_ED909:
 resb 30
-byte_ED927:
 resb 4
-byte_ED92B:
 resb 2
-byte_ED92D:
 resb 1
-byte_ED92E:
 resb 1
-byte_ED92F:
 resb 3
-byte_ED932:
 resb 3
-byte_ED935:
 resb 1
-byte_ED936:
 resb 2
-byte_ED938:
 resb 1
-byte_ED939:
 resb 1
-byte_ED93A:
 resb 5
-byte_ED93F:
 resb 1
-byte_ED940:
 resb 1
-byte_ED941:
 resb 1
-byte_ED942:
 resb 1
-byte_ED943:
 resb 24
-byte_ED95B:
 resb 2
-byte_ED95D:
 resb 25
-byte_ED976:
 resb 3
-byte_ED979:
 resb 19
-byte_ED98C:
 resb 1
-byte_ED98D:
 resb 1
-byte_ED98E:
 resb 1
-byte_ED98F:
 resb 1
-byte_ED990:
 resb 1
-byte_ED991:
 resb 1
-byte_ED992:
 resb 1
-byte_ED993:
 resb 1
-byte_ED994:
 resb 18
-byte_ED9A6:
 resb 1
-byte_ED9A7:
 resb 1
-byte_ED9A8:
 resb 1
-byte_ED9A9:
 resb 1
-byte_ED9AA:
 resb 1
-byte_ED9AB:
 resb 1
-byte_ED9AC:
 resb 1
-byte_ED9AD:
 resb 1
-byte_ED9AE:
 resb 1
-byte_ED9AF:
 resb 1
-byte_ED9B0:
 resb 2
-byte_ED9B2:
 resb 1
-byte_ED9B3:
 resb 50
-byte_ED9E5:
 resb 1
-byte_ED9E6:
 resb 1
-byte_ED9E7:
 resb 1
-byte_ED9E8:
 resb 1
-byte_ED9E9:
 resb 1
-byte_ED9EA:
 resb 1
-byte_ED9EB:
 resb 1
-byte_ED9EC:
 resb 2
-byte_ED9EE:
 resb 1
-byte_ED9EF:
 resb 1
-byte_ED9F0:
 resb 20
 vgapage:
 resb 4

@@ -5,10 +5,10 @@ section s_40183 progbits alloc exec nowrite align=1
 extern __CHK, _fstrcspn_, str_Show, str_Statistics, str_HOMEPALS, str_easndesk, str_bangpal, str_LLST
 extern str_LLSN, str_extnum, str_saved, str_FromLeague, str_PINFO, str_PLAYER, str_extDB, str_extBIN
 extern str_extxx, str_extLP, str_extID, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, str_dot, str_floppydrv
-extern curleague, byte_DC8D8, byte_DC9D8, leagueflags, savedname, byte_DDD40, byte_DE268, byte_ED836
-extern byte_ED86D, msg_InsertDisk_arg, msg_WrongDisk_arg, msg_Copying_arg, msg_MasterDB_arg, msg_SavedGame_arg, dword_C87C0, dword_C87C8
+extern curleague, byte_DC8D8, byte_DC9D8, leagueflags, savedname, byte_DDD40, byte_DE268, fileoncd
+extern msg_InsertDisk_arg, msg_WrongDisk_arg, msg_Copying_arg, msg_MasterDB_arg, msg_SavedGame_arg, dword_C87C0, dword_C87C8
 extern dword_C87E0, dword_C87E8, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A
-extern dword_D2C6B, leaguemaster, leaguesaved, humancount, dword_DDD34, lgplayteam, dword_DDD3C, dword_DE264
+extern cddriveptr, leaguemaster, leaguesaved, humancount, dword_DDD34, lgplayteam, dword_DDD3C, dword_DE264
 extern fputchar, jctime, memset_, teamcitynames, msg_OneHuman, leaguedbnames
 extern msg_TradeDeadline, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, strncpy_, MakePath
 extern DeleteFiles, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
@@ -415,9 +415,9 @@ mov esi, eax	; 407A6
 mov edi, edx	; 407A8
 mov ecx, str_extBIN	; 407AA
 mov ebx, str_HOMEPALS	; 407AF
-cmp byte [byte_ED86D], 1	; 407B4
+cmp byte [fileoncd+0A1h], 1	; 407B4
 jne short .1	; 407BB
-mov edx, dword [dword_D2C6B]	; 407BD
+mov edx, dword [cddriveptr]	; 407BD
 jmp short .2	; 407C3
 .1:
 xor edx, edx	; 407C5
@@ -617,9 +617,9 @@ call sub_B392C	; 40A54
 add esp, byte 4	; 40A59
 xor ecx, ecx	; 40A5C
 mov ebx, str_easndesk	; 40A5E
-cmp byte [byte_ED836], 1	; 40A63
+cmp byte [fileoncd+06Ah], 1	; 40A63
 jne short .6	; 40A6A
-mov edx, dword [dword_D2C6B]	; 40A6C
+mov edx, dword [cddriveptr]	; 40A6C
 jmp short .7	; 40A72
 .6:
 xor edx, edx	; 40A74
@@ -863,9 +863,9 @@ call sub_B392C	; 40D88
 add esp, byte 4	; 40D8D
 xor ecx, ecx	; 40D90
 mov ebx, str_easndesk	; 40D92
-cmp byte [byte_ED836], 1	; 40D97
+cmp byte [fileoncd+06Ah], 1	; 40D97
 jne short .6	; 40D9E
-mov edx, dword [dword_D2C6B]	; 40DA0
+mov edx, dword [cddriveptr]	; 40DA0
 jmp short .7	; 40DA6
 .6:
 xor edx, edx	; 40DA8

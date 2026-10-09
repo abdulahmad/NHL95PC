@@ -7,9 +7,9 @@ extern str_extBIN, sflags, gmode2, byte_CC049, byte_CCE00, byte_CD418, byte_CD42
 extern hmroster, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byte_DFFA6, byte_E0250
 extern byte_E028C, byte_E02C8, byte_E0308, byte_E0344, byte_E03C1, byte_E9DB4, byte_E9E18
 extern byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC
-extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, byte_ED7CC, byte_ED7F7, byte_ED86D
-extern byte_ED92B, joysampling, dword_C90B0, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, lastsfx
-extern dword_CCEF6, dword_CD41E, dword_CD4B0, dword_D2C6B, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1
+extern byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD, fileoncd
+extern joysampling, dword_C90B0, dword_CBC3E, dword_CBECA, dword_CC080, dword_CC0B4, lastsfx
+extern dword_CCEF6, dword_CD41E, dword_CD4B0, cddriveptr, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1
 extern dword_D30BC, dword_D30C0, dword_D8B70, dword_D8B78, spritedrawcount, curperiod, dword_DEF8C, dword_DEFE0
 extern dword_DF004, hmtmstruct, puckstruct, photoptrsf, dword_E0220, dword_E0230, dword_E0244, dword_E0248
 extern recbpr, replayplay, dword_E03AE, dword_E03B9, dword_E03BD
@@ -2762,9 +2762,9 @@ mov dword [joysampling], ebx	; 664D1
 mov ecx, str_PPV	; 664D7
 mov ebx, dword [dword esi+off_CBED0]	; 664DC
 mov eax, dword [dword esi+dword_CC080]	; 664E2
-cmp byte [dword eax+byte_ED7CC], 1	; 664E8
+cmp byte [dword eax+fileoncd], 1	; 664E8
 jne short .1	; 664EF
-mov edx, dword [dword_D2C6B]	; 664F1
+mov edx, dword [cddriveptr]	; 664F1
 jmp short .2	; 664F7
 .1:
 xor edx, edx	; 664F9
@@ -3894,9 +3894,9 @@ mov dword [byte esp+010h], edx	; 673D8
 mov esi, ebx	; 673DC
 mov ecx, str_extBIN	; 673DE
 mov ebx, asc_C1DBC	; 673E3
-cmp byte [byte_ED86D], 1	; 673E8
+cmp byte [fileoncd+0A1h], 1	; 673E8
 jne short .1	; 673EF
-mov edx, dword [dword_D2C6B]	; 673F1
+mov edx, dword [cddriveptr]	; 673F1
 jmp short .2	; 673F7
 .1:
 xor edx, edx	; 673F9
@@ -3935,9 +3935,9 @@ call jctime	; 6744F
 add esp, byte 4	; 67454
 mov ecx, str_extBIN	; 67457
 mov ebx, asc_C1DC5	; 6745C
-cmp byte [byte_ED7F7], 1	; 67461
+cmp byte [fileoncd+02Bh], 1	; 67461
 jne short .5	; 67468
-mov edx, dword [dword_D2C6B]	; 6746A
+mov edx, dword [cddriveptr]	; 6746A
 jmp short .6	; 67470
 .5:
 xor edx, edx	; 67472
@@ -3985,9 +3985,9 @@ call jctime	; 674E5
 add esp, byte 4	; 674EA
 xor ecx, ecx	; 674ED
 mov ebx, asc_C1DCE	; 674EF
-cmp byte [byte_ED92B], 1	; 674F4
+cmp byte [fileoncd+015Fh], 1	; 674F4
 jne short .10	; 674FB
-mov edx, dword [dword_D2C6B]	; 674FD
+mov edx, dword [cddriveptr]	; 674FD
 jmp short .11	; 67503
 .10:
 xor edx, edx	; 67505

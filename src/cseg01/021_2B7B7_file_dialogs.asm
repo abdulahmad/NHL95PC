@@ -9,10 +9,10 @@ extern str_Done, str_Exhibition, str_Playoffs, str_League, str_Lp, str_Po, str_N
 extern str_Dbox, str_Pointer5, str_Po2, str_ScheduleDb2, str_Lp2, str_GameSet3, str_fedd2, str_GameSav3
 extern str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_LAAtMTL
 extern musicon, savefname, fdlgmask, othergames, otherscores
-extern byte_ED82F, byte_ED992, postate, lgstate, gameresult, fdlgshapes
+extern postate, lgstate, gameresult, fdlgshapes, fileoncd
 extern fdlgrects
 extern menuact_export, menuact_nextlg, menusub_lgmgr, menuact_nextpo, menuact_posettings, menuact_pohilights
-extern seriesgameno, dword_D2C6B, pointerspr, exhfiles, exhfilenames
+extern seriesgameno, cddriveptr, pointerspr, exhfiles, exhfilenames
 extern pofiles, pofilenames, lgfiles
 extern lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open, fdlg_del, fdlg_up
 extern fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp, fdlg_noarrow, otherperiod
@@ -53,9 +53,9 @@ test edx, edx	; 2B7DC
 jne near .2	; 2B7DE
 xor ecx, ecx	; 2B7E4
 mov ebx, str_OpenBut	; 2B7E6
-cmp byte [byte_ED992], 1	; 2B7EB
+cmp byte [fileoncd+01C6h], 1	; 2B7EB
 jne short .1	; 2B7F2
-mov edx, dword [dword_D2C6B]	; 2B7F4
+mov edx, dword [cddriveptr]	; 2B7F4
 .1:
 mov eax, esp	; 2B7FA
 call MakePath	; 2B7FC
@@ -802,9 +802,9 @@ sub esp, byte 24h	; 2C19F
 call sub_B4BA8	; 2C1A2
 xor ecx, ecx	; 2C1A7
 mov ebx, str_Dialogbx	; 2C1A9
-cmp byte [byte_ED82F], 1	; 2C1AE
+cmp byte [fileoncd+063h], 1	; 2C1AE
 jne short .1	; 2C1B5
-mov edx, dword [dword_D2C6B]	; 2C1B7
+mov edx, dword [cddriveptr]	; 2C1B7
 jmp short .2	; 2C1BD
 .1:
 xor edx, edx	; 2C1BF

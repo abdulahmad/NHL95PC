@@ -5,9 +5,9 @@ section s_8291E progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, str_Pointer21, str_Iff12, str_Maindesk2, str_Slapshot, str_MT32HOCK, str_NHL3
 extern str_CantOpenNhlCfg, asc_C36C3, str_Emmcopybuf, str_CFG, str_PCBEEP, str_SBDAC, str_ADLIB, str_MT322
 extern str_SBDAC2, str_PCBEEP2, str_SoundBlaster2, str_Adlib, str_MT323, str_ULTRASOUND, byte_C541B
-extern musicslot, musicon, byte_D2439, byte_ED8C3, byte_ED95B, byte_ED9A7, dword_C4CFC, gameopts
+extern musicslot, musicon, byte_D2439, dword_C4CFC, gameopts, fileoncd
 extern sounddev, songdata, dword_CCC94, dword_D2350, dword_D2423, dword_D2427, dword_D242B
-extern musichandle, dword_D2435, sounddevids, sndcardname, dword_D27B2, speechinit, dword_D2C6B, pointerspr
+extern musichandle, dword_D2435, sounddevids, sndcardname, dword_D27B2, speechinit, cddriveptr, pointerspr
 extern ptrupdatefn, setbits, dword_ED7A4, dword_ED7A8, speechq, speechbank, fclose_, fopen_
 extern fprintf_, jctime, ShutdownSpeech_ret5, msg_InitMT32, strcpy_, MakePath, SetDialogColors, RestoreDialogBg
 extern MessageBox, PlayDigiSample, WaitDigiSample, GetInputEvent, ClearInputQueue, DrawSelBoxOn, DrawSelBoxOff, SoundCardHitTest
@@ -258,9 +258,9 @@ cmp dword [songdata], byte 0	; 82C08
 jne short .13	; 82C0F
 mov ecx, str_Iff12	; 82C11
 mov ebx, str_Maindesk2	; 82C16
-cmp byte [byte_ED9A7], 1	; 82C1B
+cmp byte [fileoncd+01DBh], 1	; 82C1B
 jne short .11	; 82C22
-mov edx, dword [dword_D2C6B]	; 82C24
+mov edx, dword [cddriveptr]	; 82C24
 jmp short .12	; 82C2A
 .11:
 xor edx, edx	; 82C2C
@@ -297,9 +297,9 @@ cmp dword [songdata], byte 0	; 82CA2
 jne short .18	; 82CA9
 mov ecx, str_Iff12	; 82CAB
 mov ebx, str_Maindesk2	; 82CB0
-cmp byte [byte_ED9A7], 1	; 82CB5
+cmp byte [fileoncd+01DBh], 1	; 82CB5
 jne short .16	; 82CBC
-mov edx, dword [dword_D2C6B]	; 82CBE
+mov edx, dword [cddriveptr]	; 82CBE
 jmp short .17	; 82CC4
 .16:
 xor edx, edx	; 82CC6
@@ -532,9 +532,9 @@ cmp esi, byte 4	; 82FF5
 jne short .18	; 82FF8
 xor ecx, ecx	; 82FFA
 mov ebx, str_Slapshot	; 82FFC
-cmp byte [byte_ED95B], 1	; 83001
+cmp byte [fileoncd+018Fh], 1	; 83001
 jne short .16	; 83008
-mov edx, dword [dword_D2C6B]	; 8300A
+mov edx, dword [cddriveptr]	; 8300A
 jmp short .17	; 83010
 .16:
 xor edx, edx	; 83012
@@ -564,9 +564,9 @@ mov eax, edx	; 8305A
 call MessageBox	; 8305C
 xor ecx, ecx	; 83061
 mov ebx, str_MT32HOCK	; 83063
-cmp byte [byte_ED8C3], 1	; 83068
+cmp byte [fileoncd+0F7h], 1	; 83068
 jne short .19	; 8306F
-mov edx, dword [dword_D2C6B]	; 83071
+mov edx, dword [cddriveptr]	; 83071
 jmp short .20	; 83077
 .19:
 xor edx, edx	; 83079

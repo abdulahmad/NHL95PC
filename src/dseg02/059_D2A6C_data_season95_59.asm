@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_D2A6C progbits alloc noexec write align=1
 extern unk_D29FF, unk_D2A1D, unk_D2A38, unk_D2A56, unk_D2A68
-global msg_POTeamOut_arg, msg_POTeamOut_arg2, byte_D2C5C, byte_D2C68, vtoa_dt, dword_D2B70, dword_D2BEC, dword_D2C6B
+global msg_POTeamOut_arg, msg_POTeamOut_arg2, byte_D2C5C, cddrivestr, vtoa_dt, dword_D2B70, dword_D2BEC, cddriveptr
 global msg_POHumanOut, msg_POTeamOut, msg_POGenFinal, unk_D2A82, unk_D2A9C, unk_D2AAB, unk_D2AC5, unk_D2ADF
 global unk_D2AE7, unk_D2AEB, unk_D2AEE, btn_POHumanOut
 msg_POTeamOut_arg:
@@ -71,10 +71,10 @@ db 031h,01h,00h,00h,031h,01h,00h,00h,031h,01h,00h,00h,031h,01h,00h,00h
 db 0E3h,00h,00h,00h,0E3h,00h,00h,00h,0E3h,00h,00h,00h,0E3h,00h,00h,00h
 byte_D2C5C:
 db 0D1h,00h,00h,00h,0D1h,00h,00h,00h,0D1h,00h,00h,00h
-byte_D2C68:
+cddrivestr:
 db 061h,03Ah,00h
-dword_D2C6B:
-dd byte_D2C68
+cddriveptr:
+dd cddrivestr
 db 00h,01h,00h,00h,00h
 vtoa_dt:
 db 01h,07h,03h,05h,00h,00h,04h,04h,02h,06h,02h,06h,01h,07h,03h,05h

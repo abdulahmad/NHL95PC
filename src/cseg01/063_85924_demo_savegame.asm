@@ -5,7 +5,7 @@ section s_85924 progbits alloc exec nowrite align=1
 extern __CHK, str_GsummaryDb4, str_AGameYouRequire, str_DemoNhl, str_Gsummary3, str_AGameYouRequire2, str_GameSav5, str_Db4
 extern str_Sav3, str_Pointer22, str_Savegame, str_Prmt, str_Dialog, str_Nhl3, str_Err1, str_extDB
 extern str_AGameYouRequire3, curleague, othergames, otherscores, gameopts
-extern byte_ED92F, demomode, postate, lgstate, gamemode, dword_D2C6B, dword_D8B74, pointerspr
+extern demomode, postate, lgstate, gamemode, cddriveptr, dword_D8B74, pointerspr, fileoncd
 extern dword_DC888, dword_DC88C, otherperiod, ptrupdatefn, jctime, msg_SavingLeagueGame, msg_SavingPlayoffGame, msg_NoSaveSpace
 extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, CopyFile, DiskSpaceShort
 extern SetDialogColors, RestoreDialogBg, MessageBox, EditTextField, SaveModeState, LoadModeState, WriteModeState, SaveLeagueGameRef
@@ -380,9 +380,9 @@ call sub_91284	; 85E14
 add esp, byte 0Ch	; 85E19
 xor ecx, ecx	; 85E1C
 mov ebx, str_Savegame	; 85E1E
-cmp byte [byte_ED92F], 1	; 85E23
+cmp byte [fileoncd+0163h], 1	; 85E23
 jne short .1	; 85E2A
-mov edx, dword [dword_D2C6B]	; 85E2C
+mov edx, dword [cddriveptr]	; 85E2C
 jmp short .2	; 85E32
 .1:
 xor edx, edx	; 85E34

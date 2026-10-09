@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_1167B progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, awardtype
-extern curleague, sflags, musicon, byte_D9299, awardwinners, byte_ED7CC, joysampling, gameopts
+extern curleague, sflags, musicon, byte_D9299, awardwinners, fileoncd, joysampling, gameopts
 extern inputframes, escrequest, demomode, gameresult, gamemode, hudclockmin, hudclocksec, hudclockhund
 extern dword_C5840, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
-extern penshotlive, dword_D2C6B, mousex, mousey, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74
+extern penshotlive, cddriveptr, mousex, mousey, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, curperiod, dword_DC230, dword_DC28C, rinkwtiles, rinkhtiles
 extern bgscrolly, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, dword_E9A9E, j_unlink_
 extern HandleHotKey_ret, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
@@ -325,9 +325,9 @@ jne near .22	; 11B10
 mov ecx, str_PPV	; 11B16
 mov ebx, dword [nosplit eax*4+off_CBED0]	; 11B1B
 mov eax, dword [nosplit eax*4+dword_CC080]	; 11B22
-cmp byte [dword eax+byte_ED7CC], 1	; 11B29
+cmp byte [dword eax+fileoncd], 1	; 11B29
 jne short .18	; 11B30
-mov edx, dword [dword_D2C6B]	; 11B32
+mov edx, dword [cddriveptr]	; 11B32
 jmp short .19	; 11B38
 .18:
 xor edx, edx	; 11B3A
@@ -566,9 +566,9 @@ jne short .13	; 11EDF
 mov ecx, str_PPV	; 11EE1
 mov ebx, dword [nosplit eax*4+off_CBED0]	; 11EE6
 mov eax, dword [nosplit eax*4+dword_CC080]	; 11EED
-cmp byte [dword eax+byte_ED7CC], 1	; 11EF4
+cmp byte [dword eax+fileoncd], 1	; 11EF4
 jne short .9	; 11EFB
-mov edx, dword [dword_D2C6B]	; 11EFD
+mov edx, dword [cddriveptr]	; 11EFD
 jmp short .10	; 11F03
 .9:
 xor edx, edx	; 11F05

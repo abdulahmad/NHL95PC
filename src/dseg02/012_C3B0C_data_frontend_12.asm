@@ -2,36 +2,36 @@
 bits 32
 %include "hockey.inc"
 section s_C3B0C progbits alloc noexec write align=1
-global asc_C3B0E, asc_C3B16, asc_C3B2A, asc_C3B38, asc_C3B45, asc_C3B67, asc_C3B6C, asc_C3B75
-global asc_C3B7A, asc_C3B7F, asc_C3B84, asc_C3B8A, asc_C3B93, unk_C3B0C
+global str_NhlCfg, str_CantOpenNhlCfg2, str_ALLFILESTXT, str_ALLFILESTXT2, str_CouldNotOpenALLFILES, asc_C3B67, str_Coachcut, str_Scrn4
+global str_Pal29, str_Iff13, str_Coach, str_Clip04d, str_Cmv2, unk_C3B0C
 unk_C3B0C:
 db 072h,00h
-asc_C3B0E:
+str_NhlCfg:
 db 06Eh,068h,06Ch,02Eh,063h,066h,067h,00h
-asc_C3B16:
+str_CantOpenNhlCfg2:
 db 063h,061h,06Eh,06Eh,06Fh,074h,020h,06Fh,070h,065h,06Eh,020h,06Eh,068h,06Ch,02Eh
 db 063h,066h,067h,00h
-asc_C3B2A:
+str_ALLFILESTXT:
 db 03Ah,041h,04Ch,04Ch,046h,049h,04Ch,045h,053h,02Eh,054h,058h,054h,00h
-asc_C3B38:
+str_ALLFILESTXT2:
 db 041h,04Ch,04Ch,046h,049h,04Ch,045h,053h,02Eh,054h,058h,054h,00h
-asc_C3B45:
+str_CouldNotOpenALLFILES:
 db 043h,06Fh,075h,06Ch,064h,020h,06Eh,06Fh,074h,020h,06Fh,070h,065h,06Eh,020h,041h
 db 04Ch,04Ch,046h,049h,04Ch,045h,053h,02Eh,054h,058h,054h,020h,066h,069h,06Ch,065h
 db 02Eh,00h
 asc_C3B67:
 db 025h,073h,0Ah,00h,00h
-asc_C3B6C:
+str_Coachcut:
 db 063h,06Fh,061h,063h,068h,063h,075h,074h,00h
-asc_C3B75:
+str_Scrn4:
 db 073h,063h,072h,06Eh,00h
-asc_C3B7A:
+str_Pal29:
 db 021h,070h,061h,06Ch,00h
-asc_C3B7F:
+str_Iff13:
 db 02Eh,069h,066h,066h,00h
-asc_C3B84:
+str_Coach:
 db 063h,06Fh,061h,063h,068h,00h
-asc_C3B8A:
+str_Clip04d:
 db 063h,06Ch,069h,070h,025h,030h,034h,064h,00h
-asc_C3B93:
+str_Cmv2:
 db 02Eh,063h,06Dh,076h,00h

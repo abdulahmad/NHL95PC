@@ -6,10 +6,10 @@ extern __CHK, __STOSB, _fstrcspn_, str_Pal17, str_02d, str_GSUMMARY, str_Pal18, 
 extern str_Easndesk2, str_GAME, str_SAV, str_Back, str_Callogo2, str_SelectATeamTo, str_MustBeImportedFrom, str_MustBeExportedTo
 extern str_PINFO, str_extDB, str_extxx, str_Xx, str_dot, str_floppydrv, curleague, gameopts
 extern musicon, byte_D42C3, byte_DC267, byte_DC268, leaguedbfmt2, leaguedbfmt, leagueflags, lgteamflags
-extern lgteam_17, savedname, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_ED836
-extern byte_ED98E, gameresult, teamstatscb, skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dlgtextfg
+extern lgteam_17, savedname, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, fileoncd
+extern gameresult, teamstatscb, skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dlgtextfg
 extern dlgtextbg, songdata, msg_InsertDisk_arg, dword_C7F0B
-extern gridcellbuf, HomeTeam, musichandle, dword_D2C6B, dword_DB088, schedgameidx, dword_DC23E, musicslot
+extern gridcellbuf, HomeTeam, musichandle, cddriveptr, dword_DB088, schedgameidx, dword_DC23E, musicslot
 extern leaguemaster, leaguesaved, humancount, dword_DDD34, lgplayteam, dword_DDD3C, dword_DDD44, gridcelly
 extern gridcellx, awtmlines, startm_m2, hmtmlines, hmtmstruct
 extern fputchar, jctime, memset_, crestnames, firstteammsg, leaguedbnames
@@ -1452,9 +1452,9 @@ call sub_B392C	; 374DF
 add esp, byte 4	; 374E4
 xor ecx, ecx	; 374E7
 mov ebx, str_Easndesk2	; 374E9
-cmp byte [byte_ED836], 1	; 374EE
+cmp byte [fileoncd+06Ah], 1	; 374EE
 jne short .52	; 374F5
-mov edx, dword [dword_D2C6B]	; 374F7
+mov edx, dword [cddriveptr]	; 374F7
 jmp short .53	; 374FD
 .52:
 xor edx, edx	; 374FF
@@ -2365,9 +2365,9 @@ mov eax, 28h	; 37FDD
 call PrintCenteredText	; 37FE2
 xor ecx, ecx	; 37FE7
 mov ebx, str_Callogo2	; 37FE9
-cmp byte [byte_ED98E], 1	; 37FEE
+cmp byte [fileoncd+01C2h], 1	; 37FEE
 jne short .1	; 37FF5
-mov edx, dword [dword_D2C6B]	; 37FF7
+mov edx, dword [cddriveptr]	; 37FF7
 jmp short .2	; 37FFD
 .1:
 xor edx, edx	; 37FFF

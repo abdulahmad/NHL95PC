@@ -5,10 +5,10 @@ section s_18D7F progbits alloc exec nowrite align=1
 extern StartHL2, __CHK, str_PleaseEnterOutputFile, str_Eadesk1d, str_Desk, str_Pal5, str_Pointer2, str_Iff3
 extern str_Pause, str_Menubuff3, str_ReturningToSportsCentral, str_ReturningOutOfThe, str_ReturningToThePlayoff, str_ExitingTheGame, str_DoYouWishToReturn, str_DoYouWishToExit
 extern hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, byte_CCCA0, musicon, othergames
-extern othergamesb, otherscores, otherscoresb, byte_ED830, byte_ED9E8, joysampling, escrequest, gameresult
+extern othergamesb, otherscores, otherscoresb, joysampling, escrequest, gameresult, fileoncd
 extern gamemode, gameopts, ctl1team, ctl2team, teamconf, dword_C5840, hlplayedmask, dword_C66A4
 extern dword_C66AC, dword_C66D0, dword_C66D4, boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
-extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, bailout_vec, musicslot
+extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, cddriveptr, bailout_vec, musicslot
 extern curperiod, dword_DC230, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, otherperiod
 extern ptrupdatefn, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
 extern off_CEF23, mousepollfn, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
@@ -17,7 +17,7 @@ extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, Mes
 extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern GetInputEvent, ClearInputQueue, InputInstall, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm
 extern MenuHitTest, FadePalStep, GameLineEditor, InstantReplay, SetModeMenuLabels, SpeechBusy, MusicChanReset, SayNowBack
-extern FreeNowBack, SayBackMoment, FreeBackMoment, sub_8BC15, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
+extern FreeNowBack, SayBackMoment, FreeBackMoment, CoachCutScene, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0
 extern sub_9061C, sub_91370, sub_91400, MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
 extern sub_B396E, sub_B4B58, sub_B4BA8, sub_B4FAC, unk_CEB8F, unk_CEC4F, unk_CF2EF, btn_POHumanOut
@@ -428,7 +428,7 @@ mov edx, 1E0h	; 192E4
 mov eax, 280h	; 192E9
 call SetScreenSize	; 192EE
 call sub_1B982	; 192F3
-call sub_8BC15	; 192F8
+call CoachCutScene	; 192F8
 mov edx, eax	; 192FD
 test eax, eax	; 192FF
 je short .1	; 19301
@@ -521,9 +521,9 @@ add esp, byte 0Ch	; 1943B
 xor ecx, ecx	; 1943E
 mov ebx, unk_DC890	; 19440
 mov eax, dword [esp]	; 19445
-cmp byte [dword eax+byte_ED830], 1	; 19448
+cmp byte [dword eax+fileoncd+064h], 1	; 19448
 jne short .4	; 1944F
-mov edx, dword [dword_D2C6B]	; 19451
+mov edx, dword [cddriveptr]	; 19451
 jmp short .5	; 19457
 .4:
 xor edx, edx	; 19459
@@ -674,9 +674,9 @@ cmp dword [songdata], byte 0	; 19690
 jne short .12	; 19697
 mov ecx, str_Iff3	; 19699
 mov ebx, str_Pause	; 1969E
-cmp byte [byte_ED9E8], 1	; 196A3
+cmp byte [fileoncd+021Ch], 1	; 196A3
 jne short .10	; 196AA
-mov edx, dword [dword_D2C6B]	; 196AC
+mov edx, dword [cddriveptr]	; 196AC
 jmp short .11	; 196B2
 .10:
 xor edx, edx	; 196B4
@@ -1178,9 +1178,9 @@ call sub_1BAF3	; 19EAF
 xor ecx, ecx	; 19EB4
 mov ebx, unk_DC890	; 19EB6
 mov eax, dword [esp]	; 19EBB
-cmp byte [dword eax+byte_ED830], 1	; 19EBE
+cmp byte [dword eax+fileoncd+064h], 1	; 19EBE
 jne short .49	; 19EC5
-mov edx, dword [dword_D2C6B]	; 19EC7
+mov edx, dword [cddriveptr]	; 19EC7
 jmp short .50	; 19ECD
 .49:
 xor edx, edx	; 19ECF

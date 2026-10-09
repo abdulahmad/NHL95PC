@@ -7,11 +7,11 @@ extern str_Awards, str_Mtafan, str_Adafan, str_Awasong, str_Mtawards, str_Adawar
 extern str_F000149, str_D50D99, str_D00D49, str_D50_D99, str_D00_D49, str_Trinknd, str_0000, str_HILIGHT
 extern str_Numshp, str_GfxIdList, str_PPV, str_VFN, assinsert, pad1dev, pad2dev, byte_CBEA8
 extern musicon, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8, byte_E0308
-extern byte_E0344, byte_E9AC8, byte_E9AD3, byte_ED7CC, byte_ED7E4, byte_ED7E6, byte_ED85C, byte_ED86C
-extern byte_ED8C6, byte_ED8C8, byte_ED8D7, byte_ED976, byte_ED9AA, byte_ED9EC, byte_ED9F0, joysampling
+extern byte_E0344, byte_E9AC8, byte_E9AD3, fileoncd
+extern joysampling
 extern inputframes, gameopts, sounddev, dword_C5840, dword_C66D0, dword_C66D4, songdata, cont2team
 extern HomeTeam, dword_CBECA, dword_CC0AC, photobankf, dword_CC0EC, dword_CC0F0, dword_CC0F8, penshotplayer
-extern penshotmode, penshotstart, dword_CC124, penshotlive, crowdsmooth, musichandle, dword_D2C6B, musicslot
+extern penshotmode, penshotstart, dword_CC124, penshotlive, crowdsmooth, musichandle, cddriveptr, musicslot
 extern dword_D8B68, numshapes, dword_D8C4C, rinkendbank, frameaccum, rinkendart, dword_D8C78, numshpbank
 extern curperiod, photobanks, photoptrs, dword_DF00C, dword_DF010, dword_E009C, photoptrsf
 extern dword_E9A9E, dword_E9AB6, hilightfont, jctime, PickAwardWinners_x, memcpy_, nullsub_2
@@ -98,9 +98,9 @@ call sub_8EA18	; 133E5
 add esp, byte 4	; 133EA
 xor ecx, ecx	; 133ED
 mov ebx, str_Awardsi	; 133EF
-cmp byte [byte_ED9AA], 1	; 133F4
+cmp byte [fileoncd+01DEh], 1	; 133F4
 jne short .4	; 133FB
-mov edx, dword [dword_D2C6B]	; 133FD
+mov edx, dword [cddriveptr]	; 133FD
 jmp short .5	; 13403
 .4:
 xor edx, edx	; 13405
@@ -144,9 +144,9 @@ cmp dword [songdata], byte 0	; 1347E
 jne short .8	; 13485
 mov ecx, str_Iff	; 13487
 mov ebx, str_Awards	; 1348C
-cmp byte [byte_ED9EC], 1	; 13491
+cmp byte [fileoncd+0220h], 1	; 13491
 jne short .6	; 13498
-mov edx, dword [dword_D2C6B]	; 1349A
+mov edx, dword [cddriveptr]	; 1349A
 jmp short .7	; 134A0
 .6:
 xor edx, edx	; 134A2
@@ -173,9 +173,9 @@ cmp ebx, byte 8	; 134F2
 jne short .10	; 134F5
 xor ecx, ecx	; 134F7
 mov ebx, str_Mtafan	; 134F9
-cmp byte [byte_ED8C6], 1	; 134FE
+cmp byte [fileoncd+0FAh], 1	; 134FE
 jne short .9	; 13505
-mov edx, dword [dword_D2C6B]	; 13507
+mov edx, dword [cddriveptr]	; 13507
 jmp short .12	; 1350D
 .9:
 xor edx, edx	; 1350F
@@ -183,9 +183,9 @@ jmp short .12	; 13511
 .10:
 xor ecx, ecx	; 13513
 mov ebx, str_Adafan	; 13515
-cmp byte [byte_ED7E4], 1	; 1351A
+cmp byte [fileoncd+018h], 1	; 1351A
 jne short .11	; 13521
-mov edx, dword [dword_D2C6B]	; 13523
+mov edx, dword [cddriveptr]	; 13523
 jmp short .12	; 13529
 .11:
 xor edx, edx	; 1352B
@@ -275,9 +275,9 @@ cmp dword [songdata], byte 0	; 1364D
 jne short .23	; 13654
 mov ecx, str_Iff	; 13656
 mov ebx, str_Awasong	; 1365B
-cmp byte [byte_ED9F0], 1	; 13660
+cmp byte [fileoncd+0224h], 1	; 13660
 jne short .21	; 13667
-mov edx, dword [dword_D2C6B]	; 13669
+mov edx, dword [cddriveptr]	; 13669
 jmp short .22	; 1366F
 .21:
 xor edx, edx	; 13671
@@ -301,9 +301,9 @@ cmp dword [sounddev], byte 8	; 136B6
 jne short .25	; 136BD
 xor ecx, ecx	; 136BF
 mov ebx, str_Mtawards	; 136C1
-cmp byte [byte_ED8C8], 1	; 136C6
+cmp byte [fileoncd+0FCh], 1	; 136C6
 jne short .24	; 136CD
-mov edx, dword [dword_D2C6B]	; 136CF
+mov edx, dword [cddriveptr]	; 136CF
 jmp short .27	; 136D5
 .24:
 xor edx, edx	; 136D7
@@ -311,9 +311,9 @@ jmp short .27	; 136D9
 .25:
 xor ecx, ecx	; 136DB
 mov ebx, str_Adawards	; 136DD
-cmp byte [byte_ED7E6], 1	; 136E2
+cmp byte [fileoncd+01Ah], 1	; 136E2
 jne short .26	; 136E9
-mov edx, dword [dword_D2C6B]	; 136EB
+mov edx, dword [cddriveptr]	; 136EB
 jmp short .27	; 136F1
 .26:
 xor edx, edx	; 136F3
@@ -332,9 +332,9 @@ cmp eax, byte 3	; 1371B
 jge near .31	; 1371E
 xor ecx, ecx	; 13724
 mov ebx, str_Awardsi	; 13726
-cmp byte [byte_ED9AA], 1	; 1372B
+cmp byte [fileoncd+01DEh], 1	; 1372B
 jne short .29	; 13732
-mov edx, dword [dword_D2C6B]	; 13734
+mov edx, dword [cddriveptr]	; 13734
 jmp short .30	; 1373A
 .29:
 xor edx, edx	; 1373C
@@ -487,9 +487,9 @@ test edx, edx	; 138E9
 jne short LoadPhotoBankF_x	; 138EB
 mov ecx, str_PPV	; 138ED
 mov ebx, str_F000149	; 138F2
-cmp byte [byte_ED85C], 1	; 138F7
+cmp byte [fileoncd+090h], 1	; 138F7
 jne short .1	; 138FE
-mov edx, dword [dword_D2C6B]	; 13900
+mov edx, dword [cddriveptr]	; 13900
 .1:
 mov eax, esp	; 13906
 call MakePath	; 13908
@@ -579,9 +579,9 @@ call sprintf_	; 139D1
 add esp, byte 10h	; 139D6
 mov ecx, str_PPV	; 139D9
 lea ebx, [byte esp+010h]	; 139DE
-cmp byte [dword esi+byte_ED7CC], 1	; 139E2
+cmp byte [dword esi+fileoncd], 1	; 139E2
 jne short .6	; 139E9
-mov edx, dword [dword_D2C6B]	; 139EB
+mov edx, dword [cddriveptr]	; 139EB
 jmp short .7	; 139F1
 .6:
 xor edx, edx	; 139F3
@@ -612,9 +612,9 @@ push edx	; 13A3B
 sub esp, byte 10h	; 13A3C
 mov ecx, str_PPV	; 13A3F
 mov ebx, str_Trinknd	; 13A44
-cmp byte [byte_ED976], 1	; 13A49
+cmp byte [fileoncd+01AAh], 1	; 13A49
 jne short .1	; 13A50
-mov edx, dword [dword_D2C6B]	; 13A52
+mov edx, dword [cddriveptr]	; 13A52
 jmp short .2	; 13A58
 .1:
 xor edx, edx	; 13A5A
@@ -649,9 +649,9 @@ call sub_B4BA8	; 13AA2
 mov word [scrpitch], 52h	; 13AA7
 mov ecx, str_VFN	; 13AB0
 mov ebx, str_HILIGHT	; 13AB5
-cmp byte [byte_ED86C], 1	; 13ABA
+cmp byte [fileoncd+0A0h], 1	; 13ABA
 jne short .1	; 13AC1
-mov edx, dword [dword_D2C6B]	; 13AC3
+mov edx, dword [cddriveptr]	; 13AC3
 jmp short .2	; 13AC9
 .1:
 xor edx, edx	; 13ACB
@@ -666,9 +666,9 @@ add esp, byte 8	; 13AE0
 mov dword [hilightfont], eax	; 13AE3
 mov ecx, str_PPV	; 13AE8
 mov ebx, str_Numshp	; 13AED
-cmp byte [byte_ED8D7], 1	; 13AF2
+cmp byte [fileoncd+010Bh], 1	; 13AF2
 jne short .3	; 13AF9
-mov edx, dword [dword_D2C6B]	; 13AFB
+mov edx, dword [cddriveptr]	; 13AFB
 jmp short .4	; 13B01
 .3:
 xor edx, edx	; 13B03
@@ -735,9 +735,9 @@ sub esp, byte 1Ch	; 13BC2
 mov word [scrpitch], 52h	; 13BC5
 mov ecx, str_VFN	; 13BCE
 mov ebx, str_HILIGHT	; 13BD3
-cmp byte [byte_ED86C], 1	; 13BD8
+cmp byte [fileoncd+0A0h], 1	; 13BD8
 jne short .1	; 13BDF
-mov edx, dword [dword_D2C6B]	; 13BE1
+mov edx, dword [cddriveptr]	; 13BE1
 jmp short .2	; 13BE7
 .1:
 xor edx, edx	; 13BE9
@@ -752,9 +752,9 @@ add esp, byte 8	; 13BFE
 mov dword [hilightfont], eax	; 13C01
 mov ecx, str_PPV	; 13C06
 mov ebx, str_Numshp	; 13C0B
-cmp byte [byte_ED8D7], 1	; 13C10
+cmp byte [fileoncd+010Bh], 1	; 13C10
 jne short .3	; 13C17
-mov edx, dword [dword_D2C6B]	; 13C19
+mov edx, dword [cddriveptr]	; 13C19
 jmp short .4	; 13C1F
 .3:
 xor edx, edx	; 13C21

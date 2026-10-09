@@ -4,10 +4,10 @@ bits 32
 section s_20016 progbits alloc exec nowrite align=1
 extern __CHK, str_embpal, str_Pal6, str_tstat, str_keys, str_pstat, str_gstat, str_embpal2
 extern str_Pal7, str_easndesk2, str_tstat2, str_keys2, str_pstat2, str_gstat2, str_calendar, str_embpal3
-extern str_Pal8, str_tstat3, str_keys3, str_pstat3, str_gstat3, str_EASNvfn, byte_ED836
-extern byte_ED858, byte_ED859, byte_ED85A, byte_ED98D, gamemode, dword_C65A8, dword_C65AC, statscategory
+extern str_Pal8, str_tstat3, str_keys3, str_pstat3, str_gstat3, str_EASNvfn, fileoncd
+extern gamemode, dword_C65A8, dword_C65AC, statscategory
 extern statsteamsel, statsredrawcb, deskexit, standingscb, statsplayoffs, statspalvalid, dword_C6D26, keepdesksong
-extern calendarshapes, dword_D2C6B, statsteamorder, dword_DC6B4, dword_DC734, dword_DC738, playofftree, statspalshape
+extern calendarshapes, cddriveptr, statsteamorder, dword_DC6B4, dword_DC734, dword_DC738, playofftree, statspalshape
 extern statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, statspal, dword_DDD2C, jctime
 extern memcpy_, statsbgnames, MakePath, FreeDeskBuffers, RunMenu, RunTeamPickMenu, RunPlayerPickMenu, InitMenuRemap
 extern SkaterStatsCard, GoalieStatsCard, TeamStatsScreen, TeamRosterScreen, LeadersScreen, StandingsScreen, ShowPlayoffTree, DrawMenuBar
@@ -63,9 +63,9 @@ mov eax, unk_CF78F	; 2008F
 call DrawMenuBar	; 20094
 xor ecx, ecx	; 20099
 mov ebx, str_embpal	; 2009B
-cmp byte [byte_ED85A], 1	; 200A0
+cmp byte [fileoncd+08Eh], 1	; 200A0
 jne short .1	; 200A7
-mov edx, dword [dword_D2C6B]	; 200A9
+mov edx, dword [cddriveptr]	; 200A9
 jmp short .2	; 200AF
 .1:
 xor edx, edx	; 200B1
@@ -161,9 +161,9 @@ mov eax, unk_CF80F	; 201F7
 call DrawMenuBar	; 201FC
 xor ecx, ecx	; 20201
 mov ebx, str_embpal	; 20203
-cmp byte [byte_ED85A], 1	; 20208
+cmp byte [fileoncd+08Eh], 1	; 20208
 jne short .1	; 2020F
-mov edx, dword [dword_D2C6B]	; 20211
+mov edx, dword [cddriveptr]	; 20211
 jmp short .2	; 20217
 .1:
 xor edx, edx	; 20219
@@ -257,9 +257,9 @@ mov eax, unk_CF88F	; 20359
 call DrawMenuBar	; 2035E
 xor ecx, ecx	; 20363
 mov ebx, str_embpal	; 20365
-cmp byte [byte_ED85A], 1	; 2036A
+cmp byte [fileoncd+08Eh], 1	; 2036A
 jne short .1	; 20371
-mov edx, dword [dword_D2C6B]	; 20373
+mov edx, dword [cddriveptr]	; 20373
 jmp short .2	; 20379
 .1:
 xor edx, edx	; 2037B
@@ -321,18 +321,18 @@ shl eax, 2	; 20443
 cmp dword [statsplayoffs], byte 0	; 20446
 jne short .3	; 2044D
 mov ebx, dword [dword eax+statsbgnames]	; 2044F
-cmp byte [byte_ED858], 1	; 20455
+cmp byte [fileoncd+08Ch], 1	; 20455
 jne short .2	; 2045C
-mov edx, dword [dword_D2C6B]	; 2045E
+mov edx, dword [cddriveptr]	; 2045E
 jmp short .5	; 20464
 .2:
 xor edx, edx	; 20466
 jmp short .5	; 20468
 .3:
 mov ebx, dword [dword eax+statsbgnames]	; 2046A
-cmp byte [byte_ED859], 1	; 20470
+cmp byte [fileoncd+08Dh], 1	; 20470
 jne short .4	; 20477
-mov edx, dword [dword_D2C6B]	; 20479
+mov edx, dword [cddriveptr]	; 20479
 jmp short .5	; 2047F
 .4:
 xor edx, edx	; 20481
@@ -453,9 +453,9 @@ mov dword [statscategory], esi	; 20624
 mov dword [statsteamsel], esi	; 2062A
 xor ecx, ecx	; 20630
 mov ebx, str_embpal	; 20632
-cmp byte [byte_ED85A], 1	; 20637
+cmp byte [fileoncd+08Eh], 1	; 20637
 jne short .1	; 2063E
-mov edx, dword [dword_D2C6B]	; 20640
+mov edx, dword [cddriveptr]	; 20640
 jmp short .2	; 20646
 .1:
 xor edx, edx	; 20648
@@ -661,9 +661,9 @@ mov eax, unk_CF78F	; 20971
 call DrawMenuBar	; 20976
 xor ecx, ecx	; 2097B
 mov ebx, str_embpal2	; 2097D
-cmp byte [byte_ED85A], 1	; 20982
+cmp byte [fileoncd+08Eh], 1	; 20982
 jne short .1	; 20989
-mov edx, dword [dword_D2C6B]	; 2098B
+mov edx, dword [cddriveptr]	; 2098B
 jmp short .2	; 20991
 .1:
 xor edx, edx	; 20993
@@ -754,9 +754,9 @@ mov eax, unk_CF80F	; 20ACB
 call DrawMenuBar	; 20AD0
 xor ecx, ecx	; 20AD5
 mov ebx, str_embpal2	; 20AD7
-cmp byte [byte_ED85A], 1	; 20ADC
+cmp byte [fileoncd+08Eh], 1	; 20ADC
 jne short .1	; 20AE3
-mov edx, dword [dword_D2C6B]	; 20AE5
+mov edx, dword [cddriveptr]	; 20AE5
 jmp short .2	; 20AEB
 .1:
 xor edx, edx	; 20AED
@@ -798,9 +798,9 @@ cmp dword [gamemode], byte 1	; 20B70
 je short .4	; 20B77
 xor ecx, ecx	; 20B79
 mov ebx, str_easndesk2	; 20B7B
-cmp byte [byte_ED836], 1	; 20B80
+cmp byte [fileoncd+06Ah], 1	; 20B80
 jne short .3	; 20B87
-mov edx, dword [dword_D2C6B]	; 20B89
+mov edx, dword [cddriveptr]	; 20B89
 jmp near EasnGoalieStatsScreen_common	; 20B8F
 .3:
 xor edx, edx	; 20B94
@@ -808,9 +808,9 @@ jmp near EasnGoalieStatsScreen_common	; 20B96
 .4:
 xor ecx, ecx	; 20B9B
 mov ebx, str_embpal2	; 20B9D
-cmp byte [byte_ED85A], 1	; 20BA2
+cmp byte [fileoncd+08Eh], 1	; 20BA2
 jne short .5	; 20BA9
-mov edx, dword [dword_D2C6B]	; 20BAB
+mov edx, dword [cddriveptr]	; 20BAB
 jmp near EasnGoalieStatsScreen_common	; 20BB1
 .5:
 xor edx, edx	; 20BB6
@@ -853,9 +853,9 @@ mov eax, unk_CF88F	; 20C42
 call DrawMenuBar	; 20C47
 xor ecx, ecx	; 20C4C
 mov ebx, str_embpal2	; 20C4E
-cmp byte [byte_ED85A], 1	; 20C53
+cmp byte [fileoncd+08Eh], 1	; 20C53
 jne short .1	; 20C5A
-mov edx, dword [dword_D2C6B]	; 20C5C
+mov edx, dword [cddriveptr]	; 20C5C
 jmp short .2	; 20C62
 .1:
 xor edx, edx	; 20C64
@@ -897,10 +897,10 @@ cmp dword [gamemode], byte 1	; 20CE7
 je near EasnGoalieStatsScreen_common.2	; 20CEE
 xor ecx, ecx	; 20CF4
 mov ebx, str_easndesk2	; 20CF6
-cmp byte [byte_ED836], 1	; 20CFB
+cmp byte [fileoncd+06Ah], 1	; 20CFB
 .3:
 jne short EasnGoalieStatsScreen_common.1	; 20D02
-mov edx, dword [dword_D2C6B]	; 20D04
+mov edx, dword [cddriveptr]	; 20D04
 EasnGoalieStatsScreen_common:
 lea eax, [dword esp+0300h]	; 20D0A
 call MakePath	; 20D11
@@ -941,7 +941,7 @@ jmp short EasnGoalieStatsScreen_common	; 20D82
 .2:
 xor ecx, ecx	; 20D84
 mov ebx, str_embpal2	; 20D86
-cmp byte [byte_ED85A], 1	; 20D8B
+cmp byte [fileoncd+08Eh], 1	; 20D8B
 jmp near EasnGoalieStatsScreen_m.3	; 20D92
 EasnStandingsScreen:
 push dword 28h	; 20D97
@@ -969,18 +969,18 @@ shl eax, 2	; 20DE0
 cmp dword [statsplayoffs], byte 0	; 20DE3
 jne short .3	; 20DEA
 mov ebx, dword [dword eax+statsbgnames]	; 20DEC
-cmp byte [byte_ED858], 1	; 20DF2
+cmp byte [fileoncd+08Ch], 1	; 20DF2
 jne short .2	; 20DF9
-mov edx, dword [dword_D2C6B]	; 20DFB
+mov edx, dword [cddriveptr]	; 20DFB
 jmp short .5	; 20E01
 .2:
 xor edx, edx	; 20E03
 jmp short .5	; 20E05
 .3:
 mov ebx, dword [dword eax+statsbgnames]	; 20E07
-cmp byte [byte_ED859], 1	; 20E0D
+cmp byte [fileoncd+08Dh], 1	; 20E0D
 jne short .4	; 20E14
-mov edx, dword [dword_D2C6B]	; 20E16
+mov edx, dword [cddriveptr]	; 20E16
 jmp short .5	; 20E1C
 .4:
 xor edx, edx	; 20E1E
@@ -1108,9 +1108,9 @@ mov dword [statscategory], ebp	; 20FCB
 mov dword [statsteamsel], ebp	; 20FD1
 xor ecx, ecx	; 20FD7
 mov ebx, str_embpal2	; 20FD9
-cmp byte [byte_ED85A], 1	; 20FDE
+cmp byte [fileoncd+08Eh], 1	; 20FDE
 jne short .2	; 20FE5
-mov edx, dword [dword_D2C6B]	; 20FE7
+mov edx, dword [cddriveptr]	; 20FE7
 jmp short .3	; 20FED
 .2:
 xor edx, edx	; 20FEF
@@ -1323,9 +1323,9 @@ test edx, edx	; 21314
 jne short .x	; 21316
 xor ecx, ecx	; 21318
 mov ebx, str_calendar	; 2131A
-cmp byte [byte_ED98D], 1	; 2131F
+cmp byte [fileoncd+01C1h], 1	; 2131F
 jne short .1	; 21326
-mov edx, dword [dword_D2C6B]	; 21328
+mov edx, dword [cddriveptr]	; 21328
 .1:
 mov eax, esp	; 2132E
 call MakePath	; 21330
@@ -1378,9 +1378,9 @@ mov eax, unk_CF78F	; 213D0
 call DrawMenuBar	; 213D5
 xor ecx, ecx	; 213DA
 mov ebx, str_embpal3	; 213DC
-cmp byte [byte_ED85A], 1	; 213E1
+cmp byte [fileoncd+08Eh], 1	; 213E1
 jne short .1	; 213E8
-mov edx, dword [dword_D2C6B]	; 213EA
+mov edx, dword [cddriveptr]	; 213EA
 jmp short .2	; 213F0
 .1:
 xor edx, edx	; 213F2
@@ -1474,9 +1474,9 @@ mov eax, unk_CF80F	; 21531
 call DrawMenuBar	; 21536
 xor ecx, ecx	; 2153B
 mov ebx, str_embpal3	; 2153D
-cmp byte [byte_ED85A], 1	; 21542
+cmp byte [fileoncd+08Eh], 1	; 21542
 jne short .1	; 21549
-mov edx, dword [dword_D2C6B]	; 2154B
+mov edx, dword [cddriveptr]	; 2154B
 jmp short .2	; 21551
 .1:
 xor edx, edx	; 21553
@@ -1545,9 +1545,9 @@ mov eax, unk_CF88F	; 21644
 call DrawMenuBar	; 21649
 xor ecx, ecx	; 2164E
 mov ebx, str_embpal3	; 21650
-cmp byte [byte_ED85A], 1	; 21655
+cmp byte [fileoncd+08Eh], 1	; 21655
 jne short .1	; 2165C
-mov edx, dword [dword_D2C6B]	; 2165E
+mov edx, dword [cddriveptr]	; 2165E
 jmp short .2	; 21664
 .1:
 xor edx, edx	; 21666
@@ -1606,18 +1606,18 @@ shl eax, 2	; 21725
 cmp dword [statsplayoffs], byte 0	; 21728
 jne short .3	; 2172F
 mov ebx, dword [dword eax+statsbgnames]	; 21731
-cmp byte [byte_ED858], 1	; 21737
+cmp byte [fileoncd+08Ch], 1	; 21737
 jne short .2	; 2173E
-mov edx, dword [dword_D2C6B]	; 21740
+mov edx, dword [cddriveptr]	; 21740
 jmp short .5	; 21746
 .2:
 xor edx, edx	; 21748
 jmp short .5	; 2174A
 .3:
 mov ebx, dword [dword eax+statsbgnames]	; 2174C
-cmp byte [byte_ED859], 1	; 21752
+cmp byte [fileoncd+08Dh], 1	; 21752
 jne short .4	; 21759
-mov edx, dword [dword_D2C6B]	; 2175B
+mov edx, dword [cddriveptr]	; 2175B
 jmp short .5	; 21761
 .4:
 xor edx, edx	; 21763
@@ -1742,9 +1742,9 @@ mov dword [statscategory], esi	; 21914
 mov dword [statsteamsel], esi	; 2191A
 xor ecx, ecx	; 21920
 mov ebx, str_embpal3	; 21922
-cmp byte [byte_ED85A], 1	; 21927
+cmp byte [fileoncd+08Eh], 1	; 21927
 jne short .2	; 2192E
-mov edx, dword [dword_D2C6B]	; 21930
+mov edx, dword [cddriveptr]	; 21930
 jmp short .3	; 21936
 .2:
 xor edx, edx	; 21938

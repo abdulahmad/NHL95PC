@@ -11,12 +11,12 @@ extern str_Key, str_fmt2d, str_fmt3d, str_fmt4d, str_fmtTenths, str_fmtMinSec, s
 extern rosterteam, byte_D11BC, byte_D122D, byte_D1230, byte_D1236, byte_D1238, byte_D12DE, gameopts
 extern musicon, hmroster, hmrosterjersey, leaguedbfmt, rosterlist, rosterjersey, rosterslot, rosterstat
 extern lineedpanel, fadepal, fadepal2, gmroster, gmrosterjersey, gmrosterslot, byte_ED0F7, byte_ED0F8
-extern byte_ED0F9, byte_ED0FA, byte_ED83C, byte_ED85A, byte_ED8B4, byte_ED9E7, palfadedin, statsplayoffs
+extern byte_ED0F9, byte_ED0FA, palfadedin, statsplayoffs, fileoncd
 extern boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg, songdata, HomeTeam, dword_D0B16
 extern dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A, dword_D1229, dword_D122B, dword_D122F
 extern dword_D1231, dword_D1233, lineslotx, linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC
 extern dword_D1418, dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, musichandle, musicslot
-extern dword_D2C6B, dword_D8B74, curperiod, dword_DBC7C, dword_DBCE0, pointerspr, statsskaterorder, statsgoalieorder
+extern cddriveptr, dword_D8B74, curperiod, dword_DBC7C, dword_DBCE0, pointerspr, statsskaterorder, statsgoalieorder
 extern statsgoalieplr, statsskaterplr, statsplayerbuf, ptrupdatefn, dword_EA2B4, rosterteamrec, rostergstat, rosterpstat
 extern msglines, editptrspr, dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0
 extern vgapage, fputchar, j___close_, j___delay_, jctime, lseek_, memcpy_, menuact_uselines2
@@ -117,9 +117,9 @@ call sub_B4BC4	; 738DA
 add esp, byte 10h	; 738DF
 xor ecx, ecx	; 738E2
 mov ebx, str_Lineditp2	; 738E4
-cmp byte [byte_ED8B4], 1	; 738E9
+cmp byte [fileoncd+0E8h], 1	; 738E9
 jne short .2	; 738F0
-mov edx, dword [dword_D2C6B]	; 738F2
+mov edx, dword [cddriveptr]	; 738F2
 jmp short .3	; 738F8
 .2:
 xor edx, edx	; 738FA
@@ -409,9 +409,9 @@ add esp, byte 0Ch	; 73C31
 mov dword [byte ebp+04Ah], eax	; 73C34
 xor ecx, ecx	; 73C37
 mov ebx, str_Embpal4	; 73C39
-cmp byte [byte_ED85A], 1	; 73C3E
+cmp byte [fileoncd+08Eh], 1	; 73C3E
 jne short .5	; 73C45
-mov edx, dword [dword_D2C6B]	; 73C47
+mov edx, dword [cddriveptr]	; 73C47
 jmp short .6	; 73C4D
 .5:
 xor edx, edx	; 73C4F
@@ -458,9 +458,9 @@ lea eax, [dword ebp-0AEh]	; 73CD9
 call DrawLineJerseys	; 73CDF
 xor ecx, ecx	; 73CE4
 mov ebx, str_Lelogo	; 73CE6
-cmp byte [byte_ED9E7], 1	; 73CEB
+cmp byte [fileoncd+021Bh], 1	; 73CEB
 jne short .7	; 73CF2
-mov edx, dword [dword_D2C6B]	; 73CF4
+mov edx, dword [cddriveptr]	; 73CF4
 jmp short .8	; 73CFA
 .7:
 xor edx, edx	; 73CFC
@@ -3402,9 +3402,9 @@ xor eax, eax	; 75DD1
 mov al, byte [lineedpanel]	; 75DD3
 mov al, byte [dword eax+rosterteam]	; 75DD8
 and eax, 0FFh	; 75DDE
-cmp byte [dword eax+byte_ED83C], 1	; 75DE3
+cmp byte [dword eax+fileoncd+070h], 1	; 75DE3
 jne short .7	; 75DEA
-mov edx, dword [dword_D2C6B]	; 75DEC
+mov edx, dword [cddriveptr]	; 75DEC
 jmp short .8	; 75DF2
 .7:
 xor edx, edx	; 75DF4
@@ -4296,9 +4296,9 @@ call MouseSetPos	; 76983
 add esp, byte 8	; 76988
 xor ecx, ecx	; 7698B
 mov ebx, str_Lineditp3	; 7698D
-cmp byte [byte_ED8B4], 1	; 76992
+cmp byte [fileoncd+0E8h], 1	; 76992
 jne short .5	; 76999
-mov edx, dword [dword_D2C6B]	; 7699B
+mov edx, dword [cddriveptr]	; 7699B
 jmp short .6	; 769A1
 .5:
 xor edx, edx	; 769A3
@@ -4624,9 +4624,9 @@ add esp, byte 0Ch	; 76D51
 mov dword [byte ebp+046h], eax	; 76D54
 xor ecx, ecx	; 76D57
 mov ebx, str_Embpal5	; 76D59
-cmp byte [byte_ED85A], 1	; 76D5E
+cmp byte [fileoncd+08Eh], 1	; 76D5E
 jne short .10	; 76D65
-mov edx, dword [dword_D2C6B]	; 76D67
+mov edx, dword [cddriveptr]	; 76D67
 jmp short .11	; 76D6D
 .10:
 xor edx, edx	; 76D6F
@@ -4679,9 +4679,9 @@ lea eax, [dword ebp-0A2h]	; 76E07
 call DrawGameLineJerseys	; 76E0D
 xor ecx, ecx	; 76E12
 mov ebx, str_Lelogo2	; 76E14
-cmp byte [byte_ED9E7], 1	; 76E19
+cmp byte [fileoncd+021Bh], 1	; 76E19
 jne short .14	; 76E20
-mov edx, dword [dword_D2C6B]	; 76E22
+mov edx, dword [cddriveptr]	; 76E22
 jmp short .15	; 76E28
 .14:
 xor edx, edx	; 76E2A

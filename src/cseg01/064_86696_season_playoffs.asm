@@ -9,7 +9,7 @@ extern str_Rst1, str_Rst2, str_Scuparrw, str_WesternConference, str_EasternConfe
 extern str_Aup3, str_Midl, str_Adn3, str_Adn2, str_Adn1, str_POTitle, str_Bkgd2, str_extDB
 extern msg_PODiskSpace_arg, msg_POTeamOut_arg, msg_POTeamOut_arg2, treecolslots, treecol_Wr2
 extern treecol_Er2, treecol_Er1, str_dot, curleague
-extern musicon, leaguedbfmt2, leaguedbfmt, ctlavailmask, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A
+extern musicon, leaguedbfmt2, leaguedbfmt, ctlavailmask, fileoncd
 extern DeskHomeLines, DeskVisitorLines, postate
 extern lgstate, gameresult, gamemode, gameopts, ctl1team
 extern ctl2team, ctl1side, ctl2side, teamdivflags, teamconf, confteams, dword_C65AC, teamstatscb
@@ -17,7 +17,7 @@ extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dword_C6D26, 
 extern boxshadecolor, dlgtextfg, dlgtextbg, songdata, cont2team, HomeTeam, menuact_nextpo, menuact_posettings
 extern menuact_pohilights, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
 extern keydb_size, musichandle, dword_D2884, dword_D288C, seriesgameno, dword_D2B70, dword_D2BEC, musicslot
-extern dword_D2C6B, dword_D8B68, dword_D8B74, schedgameidx, pointerspr, playofftree, playofftree_p1, pochampion
+extern cddriveptr, dword_D8B68, dword_D8B74, schedgameidx, pointerspr, playofftree, playofftree_p1, pochampion
 extern dbextension, ptrupdatefn, fputchar, j_unlink_, jctime, mkdir_, teamabbrevs, teamcitynames
 extern off_C6D22, leaguedbnames, off_CEF43, off_CEF63
 extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, msg_POHumanOut, msg_POTeamOut, msg_POGenFinal
@@ -100,9 +100,9 @@ test ebp, ebp	; 86775
 jne short .3	; 86777
 xor ecx, ecx	; 86779
 mov ebx, str_Embscup	; 8677B
-cmp byte [byte_ED859], 1	; 86780
+cmp byte [fileoncd+08Dh], 1	; 86780
 jne short .1	; 86787
-mov edx, dword [dword_D2C6B]	; 86789
+mov edx, dword [cddriveptr]	; 86789
 jmp short .2	; 8678F
 .1:
 xor edx, edx	; 86791
@@ -142,9 +142,9 @@ call sub_9121C	; 867F1
 add esp, byte 4	; 867F6
 xor ecx, ecx	; 867F9
 mov ebx, str_Embpal	; 867FB
-cmp byte [byte_ED85A], 1	; 86800
+cmp byte [fileoncd+08Eh], 1	; 86800
 jne short .5	; 86807
-mov edx, dword [dword_D2C6B]	; 86809
+mov edx, dword [cddriveptr]	; 86809
 jmp short .6	; 8680F
 .5:
 xor edx, edx	; 86811
@@ -403,9 +403,9 @@ test ebx, ebx	; 86C00
 jne short .21	; 86C02
 xor ecx, ecx	; 86C04
 mov ebx, str_Embscup	; 86C06
-cmp byte [byte_ED859], 1	; 86C0B
+cmp byte [fileoncd+08Dh], 1	; 86C0B
 jne short .19	; 86C12
-mov edx, dword [dword_D2C6B]	; 86C14
+mov edx, dword [cddriveptr]	; 86C14
 jmp short .20	; 86C1A
 .19:
 xor edx, edx	; 86C1C
@@ -2317,9 +2317,9 @@ xor ecx, ecx	; 880BC
 mov dword [dword_C6D26], ecx	; 880BE
 call DrawPlayoffTree	; 880C4
 mov ebx, str_Embpal	; 880C9
-cmp byte [byte_ED85A], 1	; 880CE
+cmp byte [fileoncd+08Eh], 1	; 880CE
 jne short .1	; 880D5
-mov edx, dword [dword_D2C6B]	; 880D7
+mov edx, dword [cddriveptr]	; 880D7
 jmp short .2	; 880DD
 .1:
 xor edx, edx	; 880DF
@@ -3965,9 +3965,9 @@ mov ecx, dword [dword_C65AC]	; 8960F
 test ecx, ecx	; 89615
 jne short .18	; 89617
 mov ebx, str_Embscup	; 89619
-cmp byte [byte_ED859], 1	; 8961E
+cmp byte [fileoncd+08Dh], 1	; 8961E
 jne short .16	; 89625
-mov edx, dword [dword_D2C6B]	; 89627
+mov edx, dword [cddriveptr]	; 89627
 jmp short .17	; 8962D
 .16:
 xor edx, edx	; 8962F
@@ -4234,9 +4234,9 @@ cmp dword [dword_C65AC], byte 0	; 899EA
 jne short .37	; 899F1
 xor ecx, ecx	; 899F3
 mov ebx, str_Embscup	; 899F5
-cmp byte [byte_ED859], 1	; 899FA
+cmp byte [fileoncd+08Dh], 1	; 899FA
 jne short .35	; 89A01
-mov edx, dword [dword_D2C6B]	; 89A03
+mov edx, dword [cddriveptr]	; 89A03
 jmp short .36	; 89A09
 .35:
 xor edx, edx	; 89A0B
@@ -4725,9 +4725,9 @@ mov ecx, dword [dword_C65AC]	; 8A0B4
 test ecx, ecx	; 8A0BA
 jne short .15	; 8A0BC
 mov ebx, str_Embscup	; 8A0BE
-cmp byte [byte_ED859], 1	; 8A0C3
+cmp byte [fileoncd+08Dh], 1	; 8A0C3
 jne short .14	; 8A0CA
-mov edx, dword [dword_D2C6B]	; 8A0CC
+mov edx, dword [cddriveptr]	; 8A0CC
 .14:
 lea eax, [byte esp+030h]	; 8A0D2
 call MakePath	; 8A0D6
@@ -4740,9 +4740,9 @@ mov dword [dword_C65AC], eax	; 8A0EA
 .15:
 xor ecx, ecx	; 8A0EF
 mov ebx, str_Embpal	; 8A0F1
-cmp byte [byte_ED85A], 1	; 8A0F6
+cmp byte [fileoncd+08Eh], 1	; 8A0F6
 jne short .16	; 8A0FD
-mov edx, dword [dword_D2C6B]	; 8A0FF
+mov edx, dword [cddriveptr]	; 8A0FF
 jmp short .17	; 8A105
 .16:
 xor edx, edx	; 8A107
@@ -5163,9 +5163,9 @@ cmp dword [dword_C6D26], byte 1	; 8A6C5
 jne short .3	; 8A6CC
 xor ecx, ecx	; 8A6CE
 mov ebx, str_Embpal	; 8A6D0
-cmp byte [byte_ED85A], 1	; 8A6D5
+cmp byte [fileoncd+08Eh], 1	; 8A6D5
 jne short .1	; 8A6DC
-mov edx, dword [dword_D2C6B]	; 8A6DE
+mov edx, dword [cddriveptr]	; 8A6DE
 jmp short .2	; 8A6E4
 .1:
 xor edx, edx	; 8A6E6
@@ -5230,9 +5230,9 @@ jmp near .76	; 8A7BB
 .4:
 xor ecx, ecx	; 8A7C0
 mov ebx, str_Pstatbar2	; 8A7C2
-cmp byte [byte_ED908], 1	; 8A7C7
+cmp byte [fileoncd+013Ch], 1	; 8A7C7
 jne short .5	; 8A7CE
-mov edx, dword [dword_D2C6B]	; 8A7D0
+mov edx, dword [cddriveptr]	; 8A7D0
 jmp short .6	; 8A7D6
 .5:
 xor edx, edx	; 8A7D8
@@ -5268,9 +5268,9 @@ call jctime	; 8A834
 add esp, byte 4	; 8A839
 xor ecx, ecx	; 8A83C
 mov ebx, str_Scuparrw	; 8A83E
-cmp byte [byte_ED93A], 1	; 8A843
+cmp byte [fileoncd+016Eh], 1	; 8A843
 jne short .7	; 8A84A
-mov edx, dword [dword_D2C6B]	; 8A84C
+mov edx, dword [cddriveptr]	; 8A84C
 jmp short .8	; 8A852
 .7:
 xor edx, edx	; 8A854

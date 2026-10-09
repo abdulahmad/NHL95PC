@@ -2023,18 +2023,33 @@ str_VIV,D27BF,string '.VIV'
 msg_NoSaveSpace,D2855,"'Insufficient disk space to save' / 'a game, you require XXX Kbytes' / 'of free disk space.'"
 msg_SavingLeagueGame,D27EF,'Saving Current' / 'League Game.'
 msg_SavingPlayoffGame,D27F7,'Saving Current' / 'Play-Off Game.'
-str_GsummaryDb4,C38F8,"string 'gsummary.db'"
+str_GsummaryDb4,C38F8,string 'gsummary.db'
 str_AGameYouRequire,C3904,"string 'a game, you require %3d Kbytes'"
-str_DemoNhl,C3923,"string 'demo.nhl'"
-str_Gsummary3,C3932,"string 'gsummary'"
+str_DemoNhl,C3923,string 'demo.nhl'
+str_Gsummary3,C3932,string 'gsummary'
 str_AGameYouRequire2,C3947,"string 'a game, you require %3d Kbytes'"
-str_GameSav5,C3966,"string 'game.sav'"
-str_Db4,C3972,"string '.db'"
-str_Sav3,C3976,"string '.sav'"
-str_Pointer22,C397E,"string 'pointer'"
-str_Savegame,C3986,"string 'savegame'"
-str_Prmt,C398F,"string 'prmt'"
-str_Dialog,C3994,"string 'dialog'"
-str_Nhl3,C399B,"string '.nhl'"
-str_Err1,C39A0,"string 'err1'"
+str_GameSav5,C3966,string 'game.sav'
+str_Db4,C3972,string '.db'
+str_Sav3,C3976,string '.sav'
+str_Pointer22,C397E,string 'pointer'
+str_Savegame,C3986,string 'savegame'
+str_Prmt,C398F,string 'prmt'
+str_Dialog,C3994,string 'dialog'
+str_Nhl3,C399B,string '.nhl'
+str_Err1,C39A0,string 'err1'
 str_AGameYouRequire3,D281F,"string 'a game, you require XXX Kbytes   '"
+fileoncd,ED7CC,"549 per-file flags: 1 = load from CD (MakePath prefix cddriveptr), 0 = installed locally (from ALLFILES.TXT)"
+cddrivestr,D2C68,"'a:' drive string, letter patched from nhl.cfg"
+cddriveptr,D2C6B,"pointer to cddrivestr, MakePath prefix for CD files"
+str_NhlCfg,C3B0E,"string 'nhl.cfg'"
+str_CantOpenNhlCfg2,C3B16,"string 'cannot open nhl.cfg'"
+str_ALLFILESTXT,C3B2A,"string ':ALLFILES.TXT'"
+str_ALLFILESTXT2,C3B38,"string 'ALLFILES.TXT'"
+str_CouldNotOpenALLFILES,C3B45,"string 'Could not open ALLFILES.TXT file.'"
+str_Coachcut,C3B6C,"string 'coachcut'"
+str_Scrn4,C3B75,"string 'scrn'"
+str_Pal29,C3B7A,"string '!pal'"
+str_Iff13,C3B7F,"string '.iff'"
+str_Coach,C3B84,"string 'coach'"
+str_Clip04d,C3B8A,"string 'clip%04d'"
+str_Cmv2,C3B93,"string '.cmv'"

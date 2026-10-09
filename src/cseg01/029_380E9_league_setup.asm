@@ -5,8 +5,8 @@ section s_380E9 progbits alloc exec nowrite align=1
 extern __CHK, str_PLST, str_PTLS, str_Pal19, str_TPI, str_Embnhl, str_Bkgd8, str_Pointer9
 extern str_Iff10, str_Leaguetm2, str_Tspal, str_Pal20, str_Menubuff6, str_WhoWillPlayThe, str_MightyDucksOfAnaheim3, str_WhoWillControlThe
 extern str_extDB, str_EnterPasswordFor, str_VerifyPasswordFor, str_EnterMasterPassword, str_EnterMasterControllerPasswor, str_VerifyMasterControllerPasswo, passkey, passkey_m1
-extern divisionteams, musicon, leagueflags, savedname, byte_ED858, byte_ED979, byte_ED9AC, gameopts
-extern songdata, teamselsetslot, musichandle, dword_D2C6B, dword_D8B74, musicslot
+extern divisionteams, musicon, leagueflags, savedname, gameopts, fileoncd
+extern songdata, teamselsetslot, musichandle, cddriveptr, dword_D8B74, musicslot
 extern pointerspr, teamselresult, leaguemaster, leaguesaved, ptrupdatefn, jctime, memcpy_, memset_
 extern pwmismatchmsg, strcat_, strcmp_, strcpy_, stricmp_, strlen_, MakePath, leaguedbnames
 extern FileOpenRead, FileClose, FileReadAt, FileWriteAt, ReadTeamRec, SetTextColors, TextInputDialog, ListDialog
@@ -883,9 +883,9 @@ mov edx, dword [dword esp+0258h]	; 38D68
 call memcpy_	; 38D6F
 xor ecx, ecx	; 38D74
 mov ebx, str_Embnhl	; 38D76
-cmp byte [byte_ED858], 1	; 38D7B
+cmp byte [fileoncd+08Ch], 1	; 38D7B
 jne short .10	; 38D82
-mov edx, dword [dword_D2C6B]	; 38D84
+mov edx, dword [cddriveptr]	; 38D84
 jmp short .11	; 38D8A
 .10:
 xor edx, edx	; 38D8C
@@ -1009,9 +1009,9 @@ cmp dword [songdata], byte 0	; 38F6B
 jne short .20	; 38F72
 mov ecx, str_Iff10	; 38F74
 mov ebx, str_Leaguetm2	; 38F79
-cmp byte [byte_ED9AC], 1	; 38F7E
+cmp byte [fileoncd+01E0h], 1	; 38F7E
 jne short .18	; 38F85
-mov edx, dword [dword_D2C6B]	; 38F87
+mov edx, dword [cddriveptr]	; 38F87
 jmp short .19	; 38F8D
 .18:
 xor edx, edx	; 38F8F
@@ -1032,9 +1032,9 @@ call sub_8FB8E	; 38FCB
 .20:
 xor ecx, ecx	; 38FD0
 mov ebx, str_Tspal	; 38FD2
-cmp byte [byte_ED979], 1	; 38FD7
+cmp byte [fileoncd+01ADh], 1	; 38FD7
 jne short .21	; 38FDE
-mov edx, dword [dword_D2C6B]	; 38FE0
+mov edx, dword [cddriveptr]	; 38FE0
 jmp short .22	; 38FE6
 .21:
 xor edx, edx	; 38FE8

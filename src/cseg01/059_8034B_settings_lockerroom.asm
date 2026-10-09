@@ -11,12 +11,12 @@ extern str_SoundBlaster, str_ADLib, str_MT32, str_UltraSound, str_LAAtMTL, modes
 extern str_SportsCentral2, str_PlayoffTree2, str_Return, str_Exhibition2, str_Playoff, str_League2
 extern str_ShowLeague, str_Settings3, byte_C541B, musicon, byte_DC9D8, byte_DC9DD
 extern byte_DC9DF, byte_DC9E8, byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA21, byte_DCA28
-extern byte_DCA29, byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_ED7CC, byte_ED8B5
-extern byte_ED95D, byte_ED991, byte_ED9A9, gamemode, gameopts, ctl1team, ctl2team, ctl1side
+extern byte_DCA29, byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, fileoncd
+extern gamemode, gameopts, ctl1team, ctl2team, ctl1side
 extern ctl2side, sounddev, teamdivflags, songdata, cont2team, HomeTeam, settingsfile, dword_D20E0
 extern dword_D2150, dword_D223C, lockerrects
 extern dword_D22DC, dword_D22E0, dword_D22EC, dword_D22F0
-extern soundcardrects, musichandle, dword_D2435, dword_D2C6B, musicslot
+extern soundcardrects, musichandle, dword_D2435, cddriveptr, musicslot
 extern dword_D8B68, dword_D8B74, dword_DC230, pointerspr, fdlg_cancel, ptrupdatefn, setbits, pl20spr
 extern pl05spr, pl10spr, pg07spr, na05spr, pg01spr, acptspr, na03spr, pg03spr
 extern chkoffspr, pg05spr, chkonspr, na01spr, titlebckspr, homebckspr, homenamebckspr, visbckspr
@@ -52,9 +52,9 @@ test edx, edx	; 80364
 jne near .x	; 80366
 xor ecx, ecx	; 8036C
 mov ebx, str_Settings	; 8036E
-cmp byte [byte_ED991], 1	; 80373
+cmp byte [fileoncd+01C5h], 1	; 80373
 jne short .1	; 8037A
-mov edx, dword [dword_D2C6B]	; 8037C
+mov edx, dword [cddriveptr]	; 8037C
 .1:
 mov eax, esp	; 80382
 call MakePath	; 80384
@@ -661,9 +661,9 @@ sub esp, 354h	; 80AB4
 call sub_B4BA8	; 80ABA
 xor ecx, ecx	; 80ABF
 mov ebx, str_Lockroom	; 80AC1
-cmp byte [byte_ED8B5], 1	; 80AC6
+cmp byte [fileoncd+0E9h], 1	; 80AC6
 jne short .1	; 80ACD
-mov edx, dword [dword_D2C6B]	; 80ACF
+mov edx, dword [cddriveptr]	; 80ACF
 jmp short .2	; 80AD5
 .1:
 xor edx, edx	; 80AD7
@@ -788,9 +788,9 @@ add eax, 0A3h	; 80C7D
 mov dword [dword esp+0350h], eax	; 80C82
 xor ecx, ecx	; 80C89
 lea ebx, [dword esp+0340h]	; 80C8B
-cmp byte [dword eax+byte_ED7CC], 1	; 80C92
+cmp byte [dword eax+fileoncd], 1	; 80C92
 jne short .9	; 80C99
-mov edx, dword [dword_D2C6B]	; 80C9B
+mov edx, dword [cddriveptr]	; 80C9B
 jmp short .10	; 80CA1
 .9:
 xor edx, edx	; 80CA3
@@ -856,9 +856,9 @@ add eax, 0A4h	; 80D79
 mov dword [dword esp+0350h], eax	; 80D7E
 xor ecx, ecx	; 80D85
 lea ebx, [dword esp+0340h]	; 80D87
-cmp byte [dword eax+byte_ED7CC], 1	; 80D8E
+cmp byte [dword eax+fileoncd], 1	; 80D8E
 jne short .14	; 80D95
-mov edx, dword [dword_D2C6B]	; 80D97
+mov edx, dword [cddriveptr]	; 80D97
 jmp short .15	; 80D9D
 .14:
 xor edx, edx	; 80D9F
@@ -1298,9 +1298,9 @@ test edx, edx	; 81406
 jne short .35	; 81408
 mov ecx, str_Iff11	; 8140A
 mov ebx, str_Jersey	; 8140F
-cmp byte [byte_ED9A9], 1	; 81414
+cmp byte [fileoncd+01DDh], 1	; 81414
 jne short .34	; 8141B
-mov edx, dword [dword_D2C6B]	; 8141D
+mov edx, dword [cddriveptr]	; 8141D
 .34:
 lea eax, [dword esp+0300h]	; 81423
 call MakePath	; 8142A
@@ -1419,9 +1419,9 @@ and eax, 0FFh	; 815CE
 add eax, 0A3h	; 815D3
 xor ecx, ecx	; 815D8
 lea ebx, [byte ebp-020h]	; 815DA
-cmp byte [dword eax+esi*2+byte_ED7CC], 1	; 815DD
+cmp byte [dword eax+esi*2+fileoncd], 1	; 815DD
 jne short .3	; 815E5
-mov edx, dword [dword_D2C6B]	; 815E7
+mov edx, dword [cddriveptr]	; 815E7
 jmp short .4	; 815ED
 .3:
 xor edx, edx	; 815EF
@@ -2686,9 +2686,9 @@ sub esp, byte 20h	; 8262A
 call sub_B4BA8	; 8262D
 xor ecx, ecx	; 82632
 mov ebx, str_Sound4	; 82634
-cmp byte [byte_ED95D], 1	; 82639
+cmp byte [fileoncd+0191h], 1	; 82639
 jne short .1	; 82640
-mov edx, dword [dword_D2C6B]	; 82642
+mov edx, dword [cddriveptr]	; 82642
 jmp short .2	; 82648
 .1:
 xor edx, edx	; 8264A

@@ -15,13 +15,13 @@ extern str_fmt2d, str_fmt3d, str_TMP, str_Ratings, str_ThereIsNoSpace, str_TheSe
 extern str_ErrorWhileMakingNew, str_NewPlayer, str_NotAddedToDatabases, str_Move, str_ToFreeAgentList, str_CreateAPlayerOr, str_XXXKbytesOfFree, str_space
 extern divisionteams, rosterteam, rosterisfa, byte_D0AE6, byte_D0F94, byte_D0FE0
 extern musicon, byte_D42C3, rosterlist, rosterjersey, rosterslot, rosterstat, byte_EAC86, rostersel
-extern byte_EAF99, byte_EAFB5, byte_ED908, byte_ED98F, dword_C2CAC, dword_C2CB0, dword_C2CB4
+extern byte_EAF99, byte_EAFB5, dword_C2CAC, dword_C2CB0, dword_C2CB4, fileoncd
 extern dword_C2CB8, dword_C2CBC, dword_C2CC0, dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4
 extern dword_C2CD8, dword_C2CDC, dword_C2CF0, dword_C4B69, teamdivflags, songdata, HomeTeam, roster1divmenus
 extern roster2divmenus, menu_r1_tofa, menu_r1_toroster2, menu_r2_tofa, menu_r2_toroster1, falist, falistsel, facount
 extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0C10, dword_D0C20, dword_D0CDA
-extern dword_D2C6B, dword_D8B68, dword_D8B74, pointerspr, ptrupdatefn, dword_EA2B4, rosterteamptr, musicslot
+extern cddriveptr, dword_D8B68, dword_D8B74, pointerspr, ptrupdatefn, dword_EA2B4, rosterteamptr, musicslot
 extern dword_EA994, rosterteamrec, dword_EAF7C, dbdirty, msglines, dword_EBCA4
 extern editptrspr, editrosters_exit, fputchar, j_unlink_, jctime, RunEditRosters_ret6, RunEditRosters_ret5, memcpy_
 extern memset_, teamcitynames, leaguedbnames
@@ -75,9 +75,9 @@ mov eax, unk_D0450	; 6D339
 call DrawMenuBar	; 6D33E
 xor ecx, ecx	; 6D343
 mov ebx, str_Prez2	; 6D345
-cmp byte [byte_ED98F], 1	; 6D34A
+cmp byte [fileoncd+01C3h], 1	; 6D34A
 jne short .1	; 6D351
-mov edx, dword [dword_D2C6B]	; 6D353
+mov edx, dword [cddriveptr]	; 6D353
 jmp short .2	; 6D359
 .1:
 xor edx, edx	; 6D35B
@@ -4007,9 +4007,9 @@ call SetDrawBitmap	; 7027A
 add esp, byte 4	; 7027F
 xor ecx, ecx	; 70282
 mov ebx, str_Prez22	; 70284
-cmp byte [byte_ED98F], 1	; 70289
+cmp byte [fileoncd+01C3h], 1	; 70289
 jne short .1	; 70290
-mov edx, dword [dword_D2C6B]	; 70292
+mov edx, dword [cddriveptr]	; 70292
 jmp short .2	; 70298
 .1:
 xor edx, edx	; 7029A
@@ -4042,9 +4042,9 @@ call jctime	; 702EC
 add esp, byte 4	; 702F1
 xor ecx, ecx	; 702F4
 mov ebx, str_Pstatbar	; 702F6
-cmp byte [byte_ED908], 1	; 702FB
+cmp byte [fileoncd+013Ch], 1	; 702FB
 jne short .3	; 70302
-mov edx, dword [dword_D2C6B]	; 70304
+mov edx, dword [cddriveptr]	; 70304
 jmp short .4	; 7030A
 .3:
 xor edx, edx	; 7030C

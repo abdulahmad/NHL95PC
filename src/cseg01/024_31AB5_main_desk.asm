@@ -4,11 +4,11 @@ bits 32
 section s_31AB5 progbits alloc exec nowrite align=1
 extern __CHK, str_Pointer7, str_Iff8, str_Maindesk, str_Tonights2, str_Easndesk, str_Desk2, str_Pal15
 extern str_Menubuff4, str_GameSet4, str_Game, str_Set, str_LAAtMTL, desksongalt, curleague
-extern musicon, leaguedbfmt2, leaguedbfmt, ctlavailmask, byte_ED836, byte_ED9A7
-extern byte_ED9AB, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
+extern musicon, leaguedbfmt2, leaguedbfmt, ctlavailmask, fileoncd
+extern gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
 extern ctl2side, teamstatscb, skaterstatscb, goaliestatscb, standingscb, standingsmenucb, keepdesksong, songdata
 extern cont2team, HomeTeam, mainmenubar, musichandle, musicslot
-extern dword_D2C6B, pointerspr, ptrupdatefn, jctime, memcpy_, teamabbrevs, setdiskmsg, mousepollfn
+extern cddriveptr, pointerspr, ptrupdatefn, jctime, memcpy_, teamabbrevs, setdiskmsg, mousepollfn
 extern strcpy_, strncpy_, DiskFreeBytes, FileExists, MakePath, FileOpenRead, FileOpenRW, FileCreate
 extern FileClose, FileReadAt, FileWriteAt, SetupStatsSourceMenu, SetScreenTitle, EasnStandingsScreen, MessageBox, FadeOutPalCycle
 extern GetInputEvent, ClearInputQueue, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest
@@ -127,9 +127,9 @@ cmp byte [desksongalt], 0	; 31C58
 je short .3	; 31C5F
 mov ecx, str_Iff8	; 31C61
 mov ebx, str_Maindesk	; 31C66
-cmp byte [byte_ED9A7], 1	; 31C6B
+cmp byte [fileoncd+01DBh], 1	; 31C6B
 jne short .1	; 31C72
-mov edx, dword [dword_D2C6B]	; 31C74
+mov edx, dword [cddriveptr]	; 31C74
 jmp short .2	; 31C7A
 .1:
 xor edx, edx	; 31C7C
@@ -142,9 +142,9 @@ jmp short .6	; 31C8F
 .3:
 mov ecx, str_Iff8	; 31C91
 mov ebx, str_Tonights2	; 31C96
-cmp byte [byte_ED9AB], 1	; 31C9B
+cmp byte [fileoncd+01DFh], 1	; 31C9B
 jne short .4	; 31CA2
-mov edx, dword [dword_D2C6B]	; 31CA4
+mov edx, dword [cddriveptr]	; 31CA4
 jmp short .5	; 31CAA
 .4:
 xor edx, edx	; 31CAC
@@ -159,9 +159,9 @@ mov dword [songdata], eax	; 31CC7
 .7:
 xor ecx, ecx	; 31CCC
 mov ebx, str_Easndesk	; 31CCE
-cmp byte [byte_ED836], 1	; 31CD3
+cmp byte [fileoncd+06Ah], 1	; 31CD3
 jne short .8	; 31CDA
-mov edx, dword [dword_D2C6B]	; 31CDC
+mov edx, dword [cddriveptr]	; 31CDC
 jmp short .9	; 31CE2
 .8:
 xor edx, edx	; 31CE4
@@ -453,9 +453,9 @@ cmp byte [desksongalt], 0	; 320F9
 je short .25	; 32100
 mov ecx, str_Iff8	; 32102
 mov ebx, str_Maindesk	; 32107
-cmp byte [byte_ED9A7], 1	; 3210C
+cmp byte [fileoncd+01DBh], 1	; 3210C
 jne short .23	; 32113
-mov edx, dword [dword_D2C6B]	; 32115
+mov edx, dword [cddriveptr]	; 32115
 jmp short .24	; 3211B
 .23:
 xor edx, edx	; 3211D
@@ -468,9 +468,9 @@ jmp short .27	; 32130
 .25:
 mov ecx, str_Iff8	; 32132
 mov ebx, str_Tonights2	; 32137
-cmp byte [byte_ED9AB], 1	; 3213C
+cmp byte [fileoncd+01DFh], 1	; 3213C
 jne short .26	; 32143
-mov edx, dword [dword_D2C6B]	; 32145
+mov edx, dword [cddriveptr]	; 32145
 .26:
 lea eax, [byte esp+020h]	; 3214B
 call MakePath	; 3214F
@@ -488,9 +488,9 @@ call sub_B4BC4	; 32177
 add esp, byte 10h	; 3217C
 xor ecx, ecx	; 3217F
 mov ebx, str_Easndesk	; 32181
-cmp byte [byte_ED836], 1	; 32186
+cmp byte [fileoncd+06Ah], 1	; 32186
 jne short .29	; 3218D
-mov edx, dword [dword_D2C6B]	; 3218F
+mov edx, dword [cddriveptr]	; 3218F
 jmp short .30	; 32195
 .29:
 xor edx, edx	; 32197

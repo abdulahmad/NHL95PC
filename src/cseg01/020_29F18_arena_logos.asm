@@ -6,10 +6,10 @@ extern __CHK, str_Apal, str_Pal10, str_Arena, str_Pal11, str_Rink, str_Srlogo, s
 extern str_Pointer4, str_Iff4, str_Scouting, str_Screen, str_Ctlogo, str_Logohome, str_Logoaway, str_Ctbkgd
 extern str_Bkgd4, str_Pal12, str_Cttitle1, str_Def, str_Fowa, str_Scra, str_Tlu, str_Top
 extern str_Indus030, str_GIPK, str_Iff5, str_Tonights, str_Injured, str_extDB, str_VFN
-extern scoutcatidx, curleague, musicon, byte_D42C3, hmroster, byte_ED7F3, byte_ED824, byte_ED825
-extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, ctl1team, ctl2team
+extern scoutcatidx, curleague, musicon, byte_D42C3, hmroster, fileoncd
+extern gameopts, ctl1team, ctl2team
 extern teamconf, boxfillcolor, boxlitecolor, boxshadecolor, songdata, cont2team, HomeTeam, musicslot
-extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, pointerspr, ptrupdatefn
+extern musichandle, cddriveptr, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, pointerspr, ptrupdatefn
 extern fputchar, jctime, memcpy_, teamabbrevs, crestnames, scoutcatnames, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, SetDialogColors, TrackButtons, DrawButtons
@@ -153,9 +153,9 @@ call sub_8EA18	; 2A108
 add esp, byte 4	; 2A10D
 xor ecx, ecx	; 2A110
 mov ebx, str_Arena	; 2A112
-cmp byte [byte_ED7F3], 1	; 2A117
+cmp byte [fileoncd+027h], 1	; 2A117
 jne short .7	; 2A11E
-mov edx, dword [dword_D2C6B]	; 2A120
+mov edx, dword [cddriveptr]	; 2A120
 jmp short .8	; 2A126
 .7:
 xor edx, edx	; 2A128
@@ -195,9 +195,9 @@ call jctime	; 2A19C
 add esp, byte 4	; 2A1A1
 xor ecx, ecx	; 2A1A4
 mov ebx, str_Srlogo	; 2A1A6
-cmp byte [byte_ED9E5], 1	; 2A1AB
+cmp byte [fileoncd+0219h], 1	; 2A1AB
 jne short .9	; 2A1B2
-mov edx, dword [dword_D2C6B]	; 2A1B4
+mov edx, dword [cddriveptr]	; 2A1B4
 jmp short .10	; 2A1BA
 .9:
 xor edx, edx	; 2A1BC
@@ -518,9 +518,9 @@ cmp dword [songdata], byte 0	; 2A637
 jne short .25	; 2A63E
 mov ecx, str_Iff4	; 2A640
 mov ebx, str_Scouting	; 2A645
-cmp byte [byte_ED9AF], 1	; 2A64A
+cmp byte [fileoncd+01E3h], 1	; 2A64A
 jne short .23	; 2A651
-mov edx, dword [dword_D2C6B]	; 2A653
+mov edx, dword [cddriveptr]	; 2A653
 jmp short .24	; 2A659
 .23:
 xor edx, edx	; 2A65B
@@ -909,9 +909,9 @@ call sub_B392C	; 2AC0C
 add esp, byte 4	; 2AC11
 xor ecx, ecx	; 2AC14
 mov ebx, str_Ctlogo	; 2AC16
-cmp byte [byte_ED825], 1	; 2AC1B
+cmp byte [fileoncd+059h], 1	; 2AC1B
 jne short .1	; 2AC22
-mov edx, dword [dword_D2C6B]	; 2AC24
+mov edx, dword [cddriveptr]	; 2AC24
 jmp short .2	; 2AC2A
 .1:
 xor edx, edx	; 2AC2C
@@ -1013,9 +1013,9 @@ call jctime	; 2AD7C
 add esp, byte 4	; 2AD81
 xor ecx, ecx	; 2AD84
 mov ebx, str_Ctbkgd	; 2AD86
-cmp byte [byte_ED824], 1	; 2AD8B
+cmp byte [fileoncd+058h], 1	; 2AD8B
 jne short .3	; 2AD92
-mov edx, dword [dword_D2C6B]	; 2AD94
+mov edx, dword [cddriveptr]	; 2AD94
 jmp short .4	; 2AD9A
 .3:
 xor edx, edx	; 2AD9C
@@ -1042,9 +1042,9 @@ add eax, byte 10h	; 2ADE8
 mov dword [dword esp+0108h], eax	; 2ADEB
 xor ecx, ecx	; 2ADF2
 mov ebx, str_Cttitle1	; 2ADF4
-cmp byte [byte_ED826], 1	; 2ADF9
+cmp byte [fileoncd+05Ah], 1	; 2ADF9
 jne short .5	; 2AE00
-mov edx, dword [dword_D2C6B]	; 2AE02
+mov edx, dword [cddriveptr]	; 2AE02
 jmp short .6	; 2AE08
 .5:
 xor edx, edx	; 2AE0A
@@ -1089,9 +1089,9 @@ call sub_8E9E8	; 2AEA1
 add esp, byte 4	; 2AEA6
 mov ecx, str_VFN	; 2AEA9
 mov ebx, str_Indus030	; 2AEAE
-cmp byte [byte_ED9E6], 1	; 2AEB3
+cmp byte [fileoncd+021Ah], 1	; 2AEB3
 jne short .7	; 2AEBA
-mov edx, dword [dword_D2C6B]	; 2AEBC
+mov edx, dword [cddriveptr]	; 2AEBC
 jmp short .8	; 2AEC2
 .7:
 xor edx, edx	; 2AEC4
@@ -1193,9 +1193,9 @@ cmp dword [songdata], byte 0	; 2B00F
 jne short .19	; 2B016
 mov ecx, str_Iff5	; 2B018
 mov ebx, str_Tonights	; 2B01D
-cmp byte [byte_ED9AB], 1	; 2B022
+cmp byte [fileoncd+01DFh], 1	; 2B022
 jne short .17	; 2B029
-mov edx, dword [dword_D2C6B]	; 2B02B
+mov edx, dword [cddriveptr]	; 2B02B
 jmp short .18	; 2B031
 .17:
 xor edx, edx	; 2B033

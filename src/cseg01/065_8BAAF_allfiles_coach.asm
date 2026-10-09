@@ -2,18 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_8BAAF progbits alloc exec nowrite align=1
-extern __CHK, asc_C3B0E, asc_C3B16, asc_C3B2A, asc_C3B38, asc_C3B45, asc_C3B67, asc_C3B6C
-extern asc_C3B75, asc_C3B7A, asc_C3B7F, asc_C3B84, asc_C3B8A, asc_C3B93, musicon, gameopts
-extern byte_D2C68, byte_ED7CC, byte_ED9B2, byte_ED9B3, byte_ED9EB, songdata, dword_D2C6B, musicslot
+extern __CHK, str_NhlCfg, str_CantOpenNhlCfg2, str_ALLFILESTXT, str_ALLFILESTXT2, str_CouldNotOpenALLFILES, asc_C3B67, str_Coachcut
+extern str_Scrn4, str_Pal29, str_Iff13, str_Coach, str_Clip04d, str_Cmv2, musicon, gameopts
+extern cddrivestr, fileoncd, songdata, cddriveptr, musicslot
 extern fclose_, fgets_, fopen_, fscanf_, jctime, memcpy_, rand_, sprintf_
 extern strcat_, stricmp_, FadePalette, MakePath, WaitClickTimeout, FadeOutPalCycle, InputInstall, InputRemove
 extern SpeechBusy, MusicChanReset2, SayCoachClip, FreeCoachClip, PlayMVI, sub_8D2F0, sub_8E83C, sub_8F98F
 extern sub_8FC8A, sub_8FFB0, sub_9061C, FatalError, sub_B30B4, sub_B4BA8, unk_C3B0C
-global loc_8BAE6, loc_8BB72, loc_8BB76, loc_8BBA7, loc_8BBB0, loc_8BBCF, loc_8BBFF, loc_8BC02
-global loc_8BC4D, loc_8BC4F, loc_8BD01, loc_8BD03, loc_8BD20, loc_8BD3E, loc_8BD40, loc_8BDA9
-global loc_8BDAB, loc_8BDC9, loc_8BDD2, loc_8BE24, loc_8BE2D, loc_8BE47, loc_8BE76, loc_8BEBD
-global loc_8BEC7, sub_8BAAF, sub_8BC15
-sub_8BAAF:
+global InitFileLocations, CoachCutScene
+InitFileLocations:
 push dword 22B0h	; 8BAAF
 call __CHK	; 8BAB4
 push ebx	; 8BAB9
@@ -23,15 +20,15 @@ push esi	; 8BABC
 push edi	; 8BABD
 sub esp, 228Ch	; 8BABE
 mov edx, unk_C3B0C	; 8BAC4
-mov eax, asc_C3B0E	; 8BAC9
+mov eax, str_NhlCfg	; 8BAC9
 call fopen_	; 8BACE
 mov esi, eax	; 8BAD3
 test eax, eax	; 8BAD5
-jne short loc_8BAE6	; 8BAD7
-push asc_C3B16	; 8BAD9
+jne short .1	; 8BAD7
+push str_CantOpenNhlCfg2	; 8BAD9
 call FatalError	; 8BADE
 add esp, byte 4	; 8BAE3
-loc_8BAE6:
+.1:
 mov ebx, esi	; 8BAE6
 mov edx, 10h	; 8BAE8
 lea eax, [dword esp+02250h]	; 8BAED
@@ -41,10 +38,10 @@ mov edx, 10h	; 8BAFB
 lea eax, [dword esp+02250h]	; 8BB00
 call fgets_	; 8BB07
 mov al, byte [dword esp+02250h]	; 8BB0C
-mov byte [byte_D2C68], al	; 8BB13
+mov byte [cddrivestr], al	; 8BB13
 xor ah, ah	; 8BB18
 mov byte [dword esp+02251h], ah	; 8BB1A
-mov edx, asc_C3B2A	; 8BB21
+mov edx, str_ALLFILESTXT	; 8BB21
 lea eax, [dword esp+02250h]	; 8BB26
 call strcat_	; 8BB2D
 mov edx, unk_C3B0C	; 8BB32
@@ -52,27 +49,27 @@ lea eax, [dword esp+02250h]	; 8BB37
 call fopen_	; 8BB3E
 mov edi, eax	; 8BB43
 test eax, eax	; 8BB45
-jne short loc_8BB72	; 8BB47
+jne short .2	; 8BB47
 mov edx, unk_C3B0C	; 8BB49
-mov eax, asc_C3B38	; 8BB4E
+mov eax, str_ALLFILESTXT2	; 8BB4E
 call fopen_	; 8BB53
 mov edi, eax	; 8BB58
 test eax, eax	; 8BB5A
-jne short loc_8BB72	; 8BB5C
+jne short .2	; 8BB5C
 mov eax, esi	; 8BB5E
 call fclose_	; 8BB60
-push asc_C3B45	; 8BB65
+push str_CouldNotOpenALLFILES	; 8BB65
 call FatalError	; 8BB6A
 add esp, byte 4	; 8BB6F
-loc_8BB72:
+.2:
 xor ebx, ebx	; 8BB72
 xor ecx, ecx	; 8BB74
-loc_8BB76:
+.3:
 cmp ebx, 225h	; 8BB76
-jge short loc_8BBA7	; 8BB7C
+jge short .4	; 8BB7C
 cmp ecx, byte 0FFFFFFFFh	; 8BB7E
-je short loc_8BBA7	; 8BB81
-mov byte [dword ebx+byte_ED7CC], 1	; 8BB83
+je short .4	; 8BB81
+mov byte [dword ebx+fileoncd], 1	; 8BB83
 mov edx, ebx	; 8BB8A
 shl edx, 4	; 8BB8C
 mov eax, esp	; 8BB8F
@@ -84,14 +81,14 @@ call fscanf_	; 8BB9A
 add esp, byte 0Ch	; 8BB9F
 mov ecx, eax	; 8BBA2
 inc ebx	; 8BBA4
-jmp short loc_8BB76	; 8BBA5
-loc_8BBA7:
+jmp short InitFileLocations.3	; 8BBA5
+.4:
 mov eax, edi	; 8BBA7
 call fclose_	; 8BBA9
 xor ecx, ecx	; 8BBAE
-loc_8BBB0:
+.5:
 cmp ecx, byte 0FFFFFFFFh	; 8BBB0
-je short loc_8BC02	; 8BBB3
+je short .8	; 8BBB3
 lea eax, [dword esp+02250h]	; 8BBB5
 push eax	; 8BBBC
 push asc_C3B67	; 8BBBD
@@ -100,9 +97,9 @@ call fscanf_	; 8BBC3
 add esp, byte 0Ch	; 8BBC8
 mov ecx, eax	; 8BBCB
 xor ebx, ebx	; 8BBCD
-loc_8BBCF:
+.6:
 cmp ebx, 225h	; 8BBCF
-jge short loc_8BBB0	; 8BBD5
+jge short InitFileLocations.5	; 8BBD5
 mov eax, ebx	; 8BBD7
 shl eax, 4	; 8BBD9
 mov edx, esp	; 8BBDC
@@ -110,15 +107,15 @@ add edx, eax	; 8BBDE
 lea eax, [dword esp+02250h]	; 8BBE0
 call stricmp_	; 8BBE7
 test eax, eax	; 8BBEC
-jne short loc_8BBFF	; 8BBEE
+jne short .7	; 8BBEE
 xor dh, dh	; 8BBF0
-mov byte [dword ebx+byte_ED7CC], dh	; 8BBF2
+mov byte [dword ebx+fileoncd], dh	; 8BBF2
 mov ebx, 226h	; 8BBF8
-jmp short loc_8BBCF	; 8BBFD
-loc_8BBFF:
+jmp short InitFileLocations.6	; 8BBFD
+.7:
 inc ebx	; 8BBFF
-jmp short loc_8BBCF	; 8BC00
-loc_8BC02:
+jmp short InitFileLocations.6	; 8BC00
+.8:
 mov eax, esi	; 8BC02
 call fclose_	; 8BC04
 add esp, 228Ch	; 8BC09
@@ -128,7 +125,7 @@ pop edx	; 8BC11
 pop ecx	; 8BC12
 pop ebx	; 8BC13
 ret	; 8BC14
-sub_8BC15:
+CoachCutScene:
 push dword 358h	; 8BC15
 call __CHK	; 8BC1A
 push ebx	; 8BC1F
@@ -141,14 +138,14 @@ sub esp, 330h	; 8BC25
 call FadeOutPalCycle	; 8BC2B
 call InputInstall	; 8BC30
 xor ecx, ecx	; 8BC35
-mov ebx, asc_C3B6C	; 8BC37
-cmp byte [byte_ED9B2], 1	; 8BC3C
-jne short loc_8BC4D	; 8BC43
-mov edx, dword [dword_D2C6B]	; 8BC45
-jmp short loc_8BC4F	; 8BC4B
-loc_8BC4D:
+mov ebx, str_Coachcut	; 8BC37
+cmp byte [fileoncd+01E6h], 1	; 8BC3C
+jne short .1	; 8BC43
+mov edx, dword [cddriveptr]	; 8BC45
+jmp short .2	; 8BC4B
+.1:
 xor edx, edx	; 8BC4D
-loc_8BC4F:
+.2:
 lea eax, [dword esp+0300h]	; 8BC4F
 call MakePath	; 8BC56
 push byte 0	; 8BC5B
@@ -168,14 +165,14 @@ mov edx, esp	; 8BC86
 mov eax, 1	; 8BC88
 call FadePalette	; 8BC8D
 call sub_B4BA8	; 8BC92
-push asc_C3B75	; 8BC97
+push str_Scrn4	; 8BC97
 push esi	; 8BC9C
 call sub_B30B4	; 8BC9D
 add esp, byte 8	; 8BCA2
 push eax	; 8BCA5
 call sub_9061C	; 8BCA6
 add esp, byte 4	; 8BCAB
-push asc_C3B7A	; 8BCAE
+push str_Pal29	; 8BCAE
 push esi	; 8BCB3
 call sub_B30B4	; 8BCB4
 add esp, byte 8	; 8BCB9
@@ -187,34 +184,34 @@ push esi	; 8BCCB
 call jctime	; 8BCCC
 add esp, byte 4	; 8BCD1
 cmp byte [musicon], 0	; 8BCD4
-je short loc_8BD20	; 8BCDB
+je short .5	; 8BCDB
 cmp dword [songdata], byte 0	; 8BCDD
-jne short loc_8BD20	; 8BCE4
-mov ecx, asc_C3B7F	; 8BCE6
-mov ebx, asc_C3B84	; 8BCEB
-cmp byte [byte_ED9EB], 1	; 8BCF0
-jne short loc_8BD01	; 8BCF7
-mov edx, dword [dword_D2C6B]	; 8BCF9
-jmp short loc_8BD03	; 8BCFF
-loc_8BD01:
+jne short .5	; 8BCE4
+mov ecx, str_Iff13	; 8BCE6
+mov ebx, str_Coach	; 8BCEB
+cmp byte [fileoncd+021Fh], 1	; 8BCF0
+jne short .3	; 8BCF7
+mov edx, dword [cddriveptr]	; 8BCF9
+jmp short .4	; 8BCFF
+.3:
 xor edx, edx	; 8BD01
-loc_8BD03:
+.4:
 lea eax, [dword esp+0300h]	; 8BD03
 call MakePath	; 8BD0A
 lea eax, [dword esp+0300h]	; 8BD0F
 call sub_8F98F	; 8BD16
 mov dword [songdata], eax	; 8BD1B
-loc_8BD20:
+.5:
 cmp byte [musicon], 0	; 8BD20
-je short loc_8BD3E	; 8BD27
+je short .6	; 8BD27
 test byte [gameopts+1], 1	; 8BD29
-je short loc_8BD3E	; 8BD30
+je short .6	; 8BD30
 mov edi, 1	; 8BD32
 call SayCoachClip	; 8BD37
-jmp short loc_8BD40	; 8BD3C
-loc_8BD3E:
+jmp short .7	; 8BD3C
+.6:
 xor edi, edi	; 8BD3E
-loc_8BD40:
+.7:
 mov ebx, 10h	; 8BD40
 mov edx, esp	; 8BD45
 xor eax, eax	; 8BD47
@@ -223,7 +220,7 @@ mov eax, 0Ah	; 8BD4E
 call WaitClickTimeout	; 8BD53
 mov esi, eax	; 8BD58
 test eax, eax	; 8BD5A
-jne near loc_8BE76	; 8BD5C
+jne near .15	; 8BD5C
 call rand_	; 8BD62
 mov edx, eax	; 8BD67
 mov ebx, 32h	; 8BD69
@@ -231,31 +228,31 @@ sar edx, 1Fh	; 8BD6E
 idiv ebx	; 8BD71
 lea eax, [byte edx+01h]	; 8BD73
 push eax	; 8BD76
-push asc_C3B8A	; 8BD77
+push str_Clip04d	; 8BD77
 lea eax, [dword esp+0328h]	; 8BD7C
 push eax	; 8BD83
 call sprintf_	; 8BD84
 add esp, byte 0Ch	; 8BD89
-mov ecx, asc_C3B93	; 8BD8C
+mov ecx, str_Cmv2	; 8BD8C
 lea ebx, [dword esp+0320h]	; 8BD91
-cmp byte [dword edx+byte_ED9B3], 1	; 8BD98
-jne short loc_8BDA9	; 8BD9F
-mov edx, dword [dword_D2C6B]	; 8BDA1
-jmp short loc_8BDAB	; 8BDA7
-loc_8BDA9:
+cmp byte [dword edx+fileoncd+01E7h], 1	; 8BD98
+jne short .8	; 8BD9F
+mov edx, dword [cddriveptr]	; 8BDA1
+jmp short .9	; 8BDA7
+.8:
 xor edx, edx	; 8BDA9
-loc_8BDAB:
+.9:
 lea eax, [dword esp+0300h]	; 8BDAB
 call MakePath	; 8BDB2
 cmp byte [musicon], 0	; 8BDB7
-je short loc_8BDD2	; 8BDBE
+je short .11	; 8BDBE
 test byte [gameopts+1], 1	; 8BDC0
-je short loc_8BDD2	; 8BDC7
-loc_8BDC9:
+je short .11	; 8BDC7
+.10:
 call SpeechBusy	; 8BDC9
 test eax, eax	; 8BDCE
-jne short loc_8BDC9	; 8BDD0
-loc_8BDD2:
+jne short CoachCutScene.10	; 8BDD0
+.11:
 mov ebx, 54h	; 8BDD2
 mov edx, 161h	; 8BDD7
 lea eax, [dword esp+0300h]	; 8BDDC
@@ -272,34 +269,34 @@ mov edx, esp	; 8BE01
 mov eax, 1	; 8BE03
 call FadePalette	; 8BE08
 cmp byte [musicon], 0	; 8BE0D
-je short loc_8BE2D	; 8BE14
+je short .13	; 8BE14
 test byte [gameopts+1], 1	; 8BE16
-je short loc_8BE2D	; 8BE1D
+je short .13	; 8BE1D
 call MusicChanReset2	; 8BE1F
-loc_8BE24:
+.12:
 call SpeechBusy	; 8BE24
 test eax, eax	; 8BE29
-jne short loc_8BE24	; 8BE2B
-loc_8BE2D:
+jne short CoachCutScene.12	; 8BE2B
+.13:
 cmp byte [musicon], 0	; 8BE2D
-je near loc_8BEBD	; 8BE34
+je near .16	; 8BE34
 cmp dword [songdata], byte 0	; 8BE3A
-je near loc_8BEBD	; 8BE41
-loc_8BE47:
+je near .16	; 8BE41
+.14:
 mov eax, dword [musicslot-3]	; 8BE47
 sar eax, 18h	; 8BE4C
 mov edx, 3	; 8BE4F
 call sub_8FC8A	; 8BE54
 test eax, eax	; 8BE59
-je short loc_8BE47	; 8BE5B
+je short CoachCutScene.14	; 8BE5B
 mov edx, dword [songdata]	; 8BE5D
 push edx	; 8BE63
 call sub_8D2F0	; 8BE64
 add esp, byte 4	; 8BE69
 xor ebx, ebx	; 8BE6C
 mov dword [songdata], ebx	; 8BE6E
-jmp short loc_8BEBD	; 8BE74
-loc_8BE76:
+jmp short .16	; 8BE74
+.15:
 mov eax, esp	; 8BE76
 push eax	; 8BE78
 push dword 100h	; 8BE79
@@ -311,20 +308,20 @@ mov edx, esp	; 8BE8D
 mov eax, 1	; 8BE8F
 call FadePalette	; 8BE94
 cmp byte [musicon], 0	; 8BE99
-je short loc_8BEBD	; 8BEA0
+je short .16	; 8BEA0
 mov ebx, dword [songdata]	; 8BEA2
 test ebx, ebx	; 8BEA8
-je short loc_8BEBD	; 8BEAA
+je short .16	; 8BEAA
 push ebx	; 8BEAC
 call sub_8D2F0	; 8BEAD
 add esp, byte 4	; 8BEB2
 xor ebp, ebp	; 8BEB5
 mov dword [songdata], ebp	; 8BEB7
-loc_8BEBD:
+.16:
 cmp edi, byte 1	; 8BEBD
-jne short loc_8BEC7	; 8BEC0
+jne short .17	; 8BEC0
 call FreeCoachClip	; 8BEC2
-loc_8BEC7:
+.17:
 call InputRemove	; 8BEC7
 mov eax, esi	; 8BECC
 add esp, 330h	; 8BECE

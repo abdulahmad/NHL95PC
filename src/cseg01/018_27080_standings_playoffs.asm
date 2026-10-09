@@ -8,9 +8,9 @@ extern str_Rst22, str_Scuparrw2, str_WesternConference2, str_EasternConference2,
 extern str_Midl2, str_Adn32, str_Adn22, str_Adn12, str_fmt2d, str_fmt3d, str_fmtPct, str_fmtPct0
 extern str_Bkgd2, treecolslots, treecol_Wr2
 extern treecol_Er2
-extern treecol_Er1, byte_ED858, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A, teamconf
+extern treecol_Er1, teamconf, fileoncd
 extern dword_C65AC, statsplayoffs, statsfromleague, statspalvalid, dword_C6D26, dword_C6DBA, dword_C6E20, treerowy
-extern divx, divy, dword_D2C6B, dword_D8B68, dword_D8B74, playofftree, statspalshape, statsbgshapes
+extern divx, divy, cddriveptr, dword_D8B68, dword_D8B74, playofftree, statspalshape, statsbgshapes
 extern statspal, fputchar, j___close_, jctime, lseek_, memcpy_, divisionnames, statsbgnames
 extern statsteamdbs, off_CF6A3, open_, qsort_, read_, sprintf_, strcat_, MakePath
 extern SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff
@@ -154,9 +154,9 @@ mov eax, dword [statsplayoffs]	; 27233
 shl eax, 2	; 27238
 mov eax, dword [dword eax+statsbgnames]	; 2723B
 mov dword [dword ebp-0430h], eax	; 27241
-cmp byte [byte_ED858], 1	; 27247
+cmp byte [fileoncd+08Ch], 1	; 27247
 jne short .9	; 2724E
-mov eax, dword [dword_D2C6B]	; 27250
+mov eax, dword [cddriveptr]	; 27250
 mov dword [dword ebp-0434h], eax	; 27255
 jmp short .10	; 2725B
 .9:
@@ -200,9 +200,9 @@ add esp, byte 4	; 272F2
 mov dword [dword ebp-0438h], 0	; 272F5
 mov eax, str_Pstatbar8	; 272FF
 mov dword [dword ebp-043Ch], eax	; 27304
-cmp byte [byte_ED908], 1	; 2730A
+cmp byte [fileoncd+013Ch], 1	; 2730A
 jne short .11	; 27311
-mov eax, dword [dword_D2C6B]	; 27313
+mov eax, dword [cddriveptr]	; 27313
 mov dword [dword ebp-0440h], eax	; 27318
 jmp short .12	; 2731E
 .11:
@@ -1329,9 +1329,9 @@ mov eax, dword [statsplayoffs]	; 28006
 shl eax, 2	; 2800B
 mov eax, dword [dword eax+statsbgnames]	; 2800E
 mov dword [dword ebp-01D0h], eax	; 28014
-cmp byte [byte_ED859], 1	; 2801A
+cmp byte [fileoncd+08Dh], 1	; 2801A
 jne short .3	; 28021
-mov eax, dword [dword_D2C6B]	; 28023
+mov eax, dword [cddriveptr]	; 28023
 mov dword [dword ebp-01D4h], eax	; 28028
 jmp short .4	; 2802E
 .3:
@@ -1401,9 +1401,9 @@ jne near .11	; 28124
 mov dword [dword ebp-01D8h], 0	; 2812A
 mov eax, str_Embpal2	; 28134
 mov dword [dword ebp-01DCh], eax	; 28139
-cmp byte [byte_ED85A], 1	; 2813F
+cmp byte [fileoncd+08Eh], 1	; 2813F
 jne short .7	; 28146
-mov eax, dword [dword_D2C6B]	; 28148
+mov eax, dword [cddriveptr]	; 28148
 mov dword [dword ebp-01E0h], eax	; 2814D
 jmp short .8	; 28153
 .7:
@@ -1489,9 +1489,9 @@ jmp near .x	; 28284
 mov dword [dword ebp-01E4h], 0	; 28289
 mov eax, str_Pstatbar8	; 28293
 mov dword [dword ebp-01E8h], eax	; 28298
-cmp byte [byte_ED908], 1	; 2829E
+cmp byte [fileoncd+013Ch], 1	; 2829E
 jne short .13	; 282A5
-mov eax, dword [dword_D2C6B]	; 282A7
+mov eax, dword [cddriveptr]	; 282A7
 mov dword [dword ebp-01ECh], eax	; 282AC
 jmp short .14	; 282B2
 .13:
@@ -1536,9 +1536,9 @@ add esp, byte 4	; 2834F
 mov dword [dword ebp-01F0h], 0	; 28352
 mov eax, str_Scuparrw2	; 2835C
 mov dword [dword ebp-01F4h], eax	; 28361
-cmp byte [byte_ED93A], 1	; 28367
+cmp byte [fileoncd+016Eh], 1	; 28367
 jne short .15	; 2836E
-mov eax, dword [dword_D2C6B]	; 28370
+mov eax, dword [cddriveptr]	; 28370
 mov dword [dword ebp-01F8h], eax	; 28375
 jmp short .16	; 2837B
 .15:

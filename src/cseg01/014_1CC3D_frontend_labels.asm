@@ -6,10 +6,10 @@ extern __CHK, str_scrbrd1, asc_C0A88, asc_C0AB5, asc_C0AE2, asc_C0B0F, asc_C0B1C
 extern asc_C0B2E, asc_C0B33, str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle
 extern str_PPV, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide, postate
 extern mi_9394Season, mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, byte_DC8D8, lgstate
-extern byte_DC9D8, byte_ED938, statsteamsel, dirtyrectcount, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD
+extern byte_DC9D8, statsteamsel, dirtyrectcount, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD, fileoncd
 extern statsplayoffs, statsfromleague, dword_C891E, dword_CE8EB, dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB
 extern dword_CF5D7, dword_CF5F7, dword_CF617, dword_CF637, dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB
-extern dword_CF84B, dword_CF8CB, dword_CFA4B, dword_D2C6B, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1
+extern dword_CF84B, dword_CF8CB, dword_CFA4B, cddriveptr, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1
 extern spritedrawcount, linesprites, penaltydigits, hmpanelspr, awpanelspr, scoredigits, scrbrdshapes, clockdigits
 extern dirtyrectptr, vgapage, off_C6821, off_C6825, off_C6841, off_C6845, off_C6881, off_C6885
 extern off_CF51F, off_CF5DF, off_CF61F, off_CF67F, strcpy_, strncpy_, MakePath, StatsSelLeague
@@ -37,9 +37,9 @@ push ebp	; 1CC4C
 sub esp, byte 10h	; 1CC4D
 mov ecx, str_PPV	; 1CC50
 mov ebx, str_scrbrd1	; 1CC55
-cmp byte [byte_ED938], 1	; 1CC5A
+cmp byte [fileoncd+016Ch], 1	; 1CC5A
 jne short .1	; 1CC61
-mov edx, dword [dword_D2C6B]	; 1CC63
+mov edx, dword [cddriveptr]	; 1CC63
 jmp short .2	; 1CC69
 .1:
 xor edx, edx	; 1CC6B

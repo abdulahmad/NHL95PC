@@ -6,11 +6,11 @@ extern __CHK, str_DSBOX, str_DbBut, str_None2, str_Del2, str_Open3, str_Can2, st
 extern str_Up2, str_Down2, str_Arro2, str_Dbno, str_Dbcu, str_Dbtm, str_Dbor, str_Db3
 extern str_CURRENT, str_Org, str_ORIGINAL, str_Dbx, str_Open4, str_Delete2, str_Done2, str_Current4
 extern str_Original2, str_Temporary, str_Dbdialog, str_Pdbx, str_Pointer12, str_DBX2, str_Buf2, str_extDB
-extern str_ORG, byte_C4B6C, byte_D42C3, savefname, fdlgmask, byte_ED993
-extern byte_ED994, fdlgshapes, seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb
+extern str_ORG, byte_C4B6C, byte_D42C3, savefname, fdlgmask, fileoncd
+extern fdlgshapes, seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb
 extern seasondb_size, careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B16, dword_D0B1A
 extern dword_D0B1E, dbdlgrects
-extern dword_D2C6B, dword_D42AC, pointerspr, fdlg_tabexh, fdlg_none, fdlg_tabpo
+extern cddriveptr, dword_D42AC, pointerspr, fdlg_tabexh, fdlg_none, fdlg_tabpo
 extern fdlg_open, fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow
 extern fdlg_tablp, fdlg_noarrow, ptrupdatefn, dbdirty, dblistcur
 extern dblisttemp, dblisttempnames, dblistorig
@@ -382,9 +382,9 @@ test edx, edx	; 72324
 jne near .2	; 72326
 xor ecx, ecx	; 7232C
 mov ebx, str_DbBut	; 7232E
-cmp byte [byte_ED993], 1	; 72333
+cmp byte [fileoncd+01C7h], 1	; 72333
 jne short .1	; 7233A
-mov edx, dword [dword_D2C6B]	; 7233C
+mov edx, dword [cddriveptr]	; 7233C
 .1:
 mov eax, esp	; 72342
 call MakePath	; 72344
@@ -744,9 +744,9 @@ sub esp, byte 24h	; 727FE
 call sub_B4BA8	; 72801
 xor ecx, ecx	; 72806
 mov ebx, str_Dbdialog	; 72808
-cmp byte [byte_ED994], 1	; 7280D
+cmp byte [fileoncd+01C8h], 1	; 7280D
 jne short .1	; 72814
-mov edx, dword [dword_D2C6B]	; 72816
+mov edx, dword [cddriveptr]	; 72816
 jmp short .2	; 7281C
 .1:
 xor edx, edx	; 7281E

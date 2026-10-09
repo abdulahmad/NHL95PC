@@ -11,7 +11,7 @@ extern str_PensnumCor, str_PenshotCor, str_GoalnumCor, str_AsstnumCor, str_Andnu
 extern str_NumberCor, str_NowbackInt, str_BackmomtInt, str_CoachclpInt, str_OfBar, str_AndBar, str_BetweenBar, str_GamenumBar
 extern str_EasportsBar, str_TonightBar, str_GamebtwnBar, str_GoodniteInt, str_LineupsInt, str_TakeynowBar, str_HighliteBar, str_OvertimeBar
 extern str_HavewonBar, str_Scor1perBar, str_Scor2perBar, str_Scor3perBar, str_Scor1otpBar, str_Scor2otpBar, str_Scor3otpBar, str_ScortotpBar
-extern str_ThegameBar, str_VIV, byte_ED98C, dword_CCC98, dword_D27A2, speechinit, dword_D2C6B, speechq
+extern str_ThegameBar, str_VIV, dword_CCC98, dword_D27A2, speechinit, cddriveptr, speechq, fileoncd
 extern speechbank, itoa_, ShutdownSpeech_ret6, penaltyclips, scorperclips, sprintf_, strcpy_, strncpy_
 extern MakePath, ResetSpeechQueue, ResetSampleReq, SpeechIdle, OpenSpeechBank, LoadSpeechSlot, PlaceSpeechSlot, FindFreeSpeechSlot
 extern FindSpeechSlot, SpeechSlotLoaded, RequestSample, EnsureSampleRoom
@@ -1464,9 +1464,9 @@ call ResetSampleReq	; 8552D
 call ResetSpeechQueue	; 85532
 mov ecx, str_VIV	; 85537
 mov ebx, str_XBRUCE2	; 8553C
-cmp byte [byte_ED98C], 1	; 85541
+cmp byte [fileoncd+01C0h], 1	; 85541
 jne short .2	; 85548
-mov edx, dword [dword_D2C6B]	; 8554A
+mov edx, dword [cddriveptr]	; 8554A
 jmp short .3	; 85550
 .2:
 xor edx, edx	; 85552
@@ -1679,9 +1679,9 @@ call ResetSampleReq	; 857D0
 call ResetSpeechQueue	; 857D5
 mov ecx, str_VIV	; 857DA
 mov ebx, str_XBRUCE2	; 857DF
-cmp byte [byte_ED98C], 1	; 857E4
+cmp byte [fileoncd+01C0h], 1	; 857E4
 jne short .2	; 857EB
-mov edx, dword [dword_D2C6B]	; 857ED
+mov edx, dword [cddriveptr]	; 857ED
 jmp short .3	; 857F3
 .2:
 xor edx, edx	; 857F5

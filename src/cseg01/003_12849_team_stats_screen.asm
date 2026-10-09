@@ -4,8 +4,8 @@ bits 32
 section s_12849 progbits alloc exec nowrite align=1
 extern __CHK, str_ANA, str_Cal, str_Flo, str_SS, str_Min, str_GAA, str_Shots
 extern str_Pct, str_PIM, str_PlusMinus, str_PPG, str_SHG, str_Pal3, str_Palmem, str_D02d
-extern str_D01d, awardtype, byte_D42C3, awardwinners, byte_ED7CC, dword_C513C, dword_C5168
-extern dword_D2C6B, fputchar, jctime, PickAwardWinners_x, awardart, awardnames, awardtitles, off_C524F
+extern str_D01d, awardtype, byte_D42C3, awardwinners, fileoncd, dword_C513C, dword_C5168
+extern cddriveptr, fputchar, jctime, PickAwardWinners_x, awardart, awardnames, awardtitles, off_C524F
 extern off_C527B, sprintf_, strcat_, strcpy_, strnicmp_, MakePath, SetTextColors, PrintShadowText
 extern PrintFmt1, PrintFmt2, FitPlayerName, WaitClickTimeout, ClearInputQueue, FadePalStep, sub_8CCA8, sub_8E83C
 extern sub_8FFB0, sub_9035C, sub_9061C, sub_B30B4, sub_B395C, str_MightyDucks, unk_C03C4, unk_C03C6
@@ -35,9 +35,9 @@ call sub_B395C	; 1287C
 xor ecx, ecx	; 12881
 mov ebx, dword [nosplit esi*4+awardart]	; 12883
 mov eax, dword [nosplit esi*4+dword_C5168]	; 1288A
-cmp byte [dword eax+byte_ED7CC], 1	; 12891
+cmp byte [dword eax+fileoncd], 1	; 12891
 jne short .2	; 12898
-mov edx, dword [dword_D2C6B]	; 1289A
+mov edx, dword [cddriveptr]	; 1289A
 jmp short .3	; 128A0
 .2:
 xor edx, edx	; 128A2
