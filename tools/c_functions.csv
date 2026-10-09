@@ -20,6 +20,7 @@ AvgCline,5A03B,104,042_59D9A_engine_core,src/c/042_59D9A_engine_core/AvgCline.c,
 ClearSortCords,5BA4E,59,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ClearSortCords.c,matched,
 GameOver,5DD9E,30,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GameOver.c,matched,
 GetPeriodTime,5B9D1,54,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetPeriodTime.c,matched,
+GiveControl,5B1CE,202,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GiveControl.c,nonmatching,"3 bytes short, same branch layout: the original loads regd1 into cx on the pad-1-first path and into si on the pad-2-first path (push esi, __CHK 14h) and keeps c2playernum in bx; this draft uses one register for both. Without the c2 local the layout breaks (no cross-jump into the pad 2 tail)"
 Intermission,5DE42,46,042_59D9A_engine_core,src/c/042_59D9A_engine_core/Intermission.c,matched,
 LockScroll,5CD25,42,042_59D9A_engine_core,src/c/042_59D9A_engine_core/LockScroll.c,matched,
 PenTeamScored,5AAAE,136,042_59D9A_engine_core,src/c/042_59D9A_engine_core/PenTeamScored.c,matched,
@@ -39,6 +40,8 @@ StartPer,5C010,436,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcro
 forceteams forcepldata,5E0B0,189,042_59D9A_engine_core,src/c/042_59D9A_engine_core/forceteams.c,matched,
 restorepl,59FE1,90,042_59D9A_engine_core,src/c/042_59D9A_engine_core/restorepl.c,matched,
 restoreteams,5B97A,87,042_59D9A_engine_core,src/c/042_59D9A_engine_core/restoreteams.c,matched,
+setupice,5D7F7,91,042_59D9A_engine_core,src/c/042_59D9A_engine_core/setupice.c,matched,
+updatecrowdf,5C248,186,042_59D9A_engine_core,src/c/042_59D9A_engine_core/updatecrowdf.c,nonmatching,"2 bytes short, only the randomd0 result register: the original widens it with movsx edx,ax and compares edx, this draft does cwde / eax. Tried int/short r, n reused, if/switch/return, a sound-number local. The (1000-crowdlevel)/4 clamp needs int t then short n = t"
 StopNA,5F82A,136,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/EvadePlayers.c,matched,
 EvadePlayers,5E4C4,819,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/EvadePlayers.c,nonmatching,"body matches to +1A7 (of 333h); the original frame has one more dword (sub esp,14h): a swap spill at [esp] for the vtoa args because ebp is busy there; this draft keeps ebp free (frame 10h)"
 skateto,5E93B,476,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/EvadePlayers.c,nonmatching,1 instruction off: the original loads the pucky pointer into eax and Xvel|Yvel as eax=Xvel/edx=Yvel; wcc picks edx in both (register cache of regd0 in eax?)

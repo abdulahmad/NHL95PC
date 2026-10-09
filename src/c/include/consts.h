@@ -27,6 +27,7 @@
 #define SPAholdchk      0x873   /* hold check (94G Acheck $1122 'normal hold check') */
 #define SPAholdchkair   0x639   /* hold check, stick in the air (94G Acheck $C90) */
 #define sfwrap          0x10    /* sflags bit 4: the replay buffer has wrapped (94G sfwrap) */
+#define sfpz            0x01    /* sflags bit 0: pause mode (93G sfpz) */
 #define REPLAYSIZE      0x9600  /* replay buffer bytes, 80h per frame */
 
 #define SCref           16      /* SCnum of the referee's sort object */

@@ -4781,6 +4781,10 @@ call DrawFrameSprite	; 5D7EB
 .77:
 mov esp, ebp	; 5D7F0
 jmp near changeplayer_ret5	; 5D7F2
+; C: src/c/042_59D9A_engine_core/setupice.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/setupice.inc"
+%else
 setupice:
 push dword 0Ch	; 5D7F7
 call __CHK	; 5D7FC
@@ -4810,6 +4814,7 @@ mov byte [c2playernum+1], bh	; 5D849
 pop edx	; 5D84F
 pop ebx	; 5D850
 ret	; 5D851
+%endif ; C
 ; clockcont_0: 93G hockey93_01 clockcont_0 (end of period). Puck assinsert 18h; periods 1-2 -> PeriodOver path;
 ;   later periods compare hmscore/awscore for overtime / shootout / game over. Also called from puckfaceoff.
 clockcont_0:

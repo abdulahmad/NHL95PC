@@ -40,6 +40,9 @@ int TryAddPlayerToList(struct Team *t, short pl, short slot); /* 5BB9E */
 void setpersonel(struct Team *t);                          /* 5BEF4 */
 void StartPer(void);                                       /* 5C010 */
 void SetupTeamForIntermission(void);                       /* 5DDDA */
+void GiveControl(short pl);                                /* 5B1CE */
+void setupice(void);                                       /* 5D7F7 */
+void updatecrowdf(void);                                    /* 5C248 */
 void reenergizeteam(struct Team *t);                      /* 5B826 */
 void RestBench(void);                                     /* 5C1E2 */
 void restoreteams(void);                                  /* 5B97A */
