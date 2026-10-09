@@ -11,7 +11,7 @@ extern onetimerflag, dword_CC0FA, penshotplayer, dword_CC104, penshotmode, pensh
 extern dword_E0244, dword_E9A9E, forcepldata, puckvx, gmode
 extern jctime, CanBlockShot_ret5, ltx, puckx, pucky, puckvy, puckz, puckc
 extern puckvz, randomd0, resetplstuff, setpersonel, sfx, skateto, skatetopuck, DrawPanelLine
-extern StopIfFree, SkateToSpot, lcfound, CenterMouse, ReturnGoalies, StopDigiSample, sub_59AAD, changeplayer
+extern StopIfFree, SkateToSpot, lcfound, CenterMouse, ReturnGoalies, StopDigiSample, PaSpeechBusy, changeplayer
 extern restorepl, CompLine, setplayer, clockcont_0, SprSortVert, SprSort, SetExitGame, EvadePC
 extern sub_61B85, sub_63F72, threat, SortCords, updateanim
 extern vtoa, regd4, camx, camy, passdir, word_C90A6, passplayer, xc1
@@ -2989,7 +2989,7 @@ pop ecx	; 53234
 pop ebx	; 53235
 ret	; 53236
 .15:
-call sub_59AAD	; 53237
+call PaSpeechBusy	; 53237
 test eax, eax	; 5323C
 jne short .x	; 5323E
 mov eax, dword [word_CBECC-2]	; 53240

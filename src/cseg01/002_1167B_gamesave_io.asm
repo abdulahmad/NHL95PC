@@ -15,7 +15,7 @@ extern off_CBED0, strcat_, strcpy_, SetScreenSize, ResetInputSampling, RunGameFr
 extern SetupGame, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadSeasonRec, ReadTeamRec, UpdateHudPanel
 extern DrawHudPanel, LoadCupFinalSeries, PostGameDesk, SportsDesk, sub_1B982, MakeGSummaryPath, SetupGoalieMenu, ResetGoalieMenu
 extern LoadRink, SetRinkScroll, ReadGoalieSeasonRec, ReadTeamNames, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
-extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71, DrawRinkOverlays, PeriodOver, LoadGameState
+extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, PaPreloadClips, DrawRinkOverlays, PeriodOver, LoadGameState
 extern sub_61A27, sub_61B85, sub_64614, SetupTeamLines, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
 extern sub_6AF97, sub_6B008, LoadRockMusic, SpeechStopQueue, MusicChanReset, SelectScreenBM, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8FFB0, sub_90354, sub_9035C, MouseSetPos, sub_B396E, sub_B4BA8, str_backslash
@@ -302,7 +302,7 @@ mov edx, dword [nosplit eax*4+teamabbrevs]	; 11A99
 mov eax, dword [HomeTeam-2]	; 11AA0
 sar eax, 10h	; 11AA5
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 11AA8
-call sub_59D71	; 11AAF
+call PaPreloadClips	; 11AAF
 mov ebx, dword [curperiod]	; 11AB4
 mov edx, dword [VisTeam-2]	; 11ABA
 sar edx, 10h	; 11AC0
@@ -400,7 +400,7 @@ mov edx, dword [nosplit edx*4+teamabbrevs]	; 11C39
 mov eax, dword [HomeTeam-2]	; 11C40
 sar eax, 10h	; 11C45
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 11C48
-call sub_59D71	; 11C4F
+call PaPreloadClips	; 11C4F
 mov ebx, dword [curperiod]	; 11C54
 mov edx, dword [VisTeam-2]	; 11C5A
 sar edx, 10h	; 11C60
@@ -605,7 +605,7 @@ mov edx, dword [nosplit edx*4+teamabbrevs]	; 11F59
 mov eax, dword [HomeTeam-2]	; 11F60
 sar eax, 10h	; 11F65
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 11F68
-call sub_59D71	; 11F6F
+call PaPreloadClips	; 11F6F
 .14:
 xor ebx, ebx	; 11F74
 mov dword [dword_CC0F0], ebx	; 11F76

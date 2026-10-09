@@ -14,7 +14,7 @@ extern ptrupdatefn, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, m
 extern off_CEF23, mousepollfn, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
 extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, GameSummaryScreen, PickOtherGames
 extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, MessageBox, LoadRink, WaitClickTimeout, ShowLoadingScreen
-extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
+extern FadeOutPalCycle, PaPlayoffResult, PaOpenBank, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
 extern GetInputEvent, ClearInputQueue, InputInstall, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm
 extern MenuHitTest, FadePalStep, GameLineEditor, InstantReplay, SetModeMenuLabels, SpeechBusy, MusicChanReset, SayNowBack
 extern FreeNowBack, SayBackMoment, FreeBackMoment, CoachCutScene, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
@@ -571,7 +571,7 @@ cmp dword [esp], byte 2	; 194DF
 jne short .8	; 194E3
 cmp dword [schedgameidx], 444h	; 194E5
 jl short .7	; 194EF
-call sub_59D54	; 194F1
+call PaOpenBank	; 194F1
 .7:
 mov dword [dword esp+03B4h], unk_CEC4F	; 194F6
 mov dword [dword esp+03A4h], 3	; 19501
@@ -781,7 +781,7 @@ mov edi, 7	; 1982D
 idiv edi	; 19832
 inc edx	; 19834
 mov eax, esi	; 19835
-call sub_59CDD	; 19837
+call PaPlayoffResult	; 19837
 xor dh, dh	; 1983C
 mov byte [byte_CCCA0], dh	; 1983E
 .21:

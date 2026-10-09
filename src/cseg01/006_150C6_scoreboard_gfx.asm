@@ -13,7 +13,7 @@ extern penaltydigits, dword_DC2B8, clockdigits, clockcolon, cupseries, hmscore, 
 extern jctime, DrawPanelLine_x, UpdateHudPanel_x, teamabbrevs, perioddigits, off_C57C8, crestnames, awtmstruct
 extern mousepollfn, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, ReloadGameGfx, SetupDemoGame
 extern MakePath, DrawPanelScore, DrawPanelClock, InitGameSummary, LoadModeState, DemoSetupStub, LoadRink, SeriesLength
-extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, InputInstall, InputRemove
+extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, PaPreloadClips, GetPeriodTime, sub_673C5, InputInstall, InputRemove
 extern LoadRockMusic, LoadScheduleDB, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
 extern PollKey, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, exhstate, unk_DF314, PerTimeTab
 extern word_CBC52, lcblink, word_CBC60, lcboxon
@@ -1229,7 +1229,7 @@ mov edx, dword [nosplit edx*4+teamabbrevs]	; 15EF0
 mov eax, dword [HomeTeam-2]	; 15EF7
 sar eax, 10h	; 15EFC
 mov eax, dword [nosplit eax*4+teamabbrevs]	; 15EFF
-call sub_59D71	; 15F06
+call PaPreloadClips	; 15F06
 call SetupControllers	; 15F0B
 xor edx, edx	; 15F10
 xor eax, eax	; 15F12

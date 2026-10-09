@@ -19,7 +19,7 @@ extern fputchar, jctime, memcpy_
 extern crestnames, gamestatlabels, leaguedbnames, penaltynames, rand_, sprintf_
 extern strcat_, strcpy_, FadePalette, MakePath, FileOpenRead, FileOpenRW, FileClose, ReadKeyRec
 extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, SetTextColors, PrintShadowText, sub_1BAF3, FitPlayerName, WaitClickTimeout
-extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, ClearInputQueue
+extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, PaScoringPeriod, PaElseNhl, PaOpenBank, ClearInputQueue
 extern FadePalStep, sub_7DF4E, MusicChanCmd3, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_913B4, sub_913D0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88
@@ -106,7 +106,7 @@ xor edi, edi	; 2D44E
 mov dword [dword esp+07ACh], edi	; 2D450
 xor ebp, ebp	; 2D457
 mov dword [dword esp+07C0h], ebp	; 2D459
-call sub_59D54	; 2D460
+call PaOpenBank	; 2D460
 xor eax, eax	; 2D465
 mov dword [dword esp+0790h], eax	; 2D467
 xor edx, edx	; 2D46E
@@ -786,7 +786,7 @@ mov eax, 190h	; 2DF6D
 call PrintShadowText	; 2DF72
 cmp dword [dword esp+07A4h], byte 0	; 2DF77
 je short .2	; 2DF7F
-call sub_59C80	; 2DF81
+call PaElseNhl	; 2DF81
 xor edx, edx	; 2DF86
 mov dword [dword esp+07A4h], edx	; 2DF88
 .2:
@@ -1675,7 +1675,7 @@ xor ebx, ebx	; 2ECAB
 mov edx, 0FFFFFFFFh	; 2ECAD
 xor eax, eax	; 2ECB2
 .56:
-call sub_59BFC	; 2ECB4
+call PaScoringPeriod	; 2ECB4
 .57:
 mov dword [dword esp+0790h], 1	; 2ECB9
 .58:
@@ -1910,7 +1910,7 @@ mov al, dh	; 2F04B
 xor ebx, ebx	; 2F04D
 xor edx, edx	; 2F04F
 .77:
-call sub_59BFC	; 2F051
+call PaScoringPeriod	; 2F051
 .78:
 mov ecx, dword [dword esp+0788h]	; 2F056
 test ecx, ecx	; 2F05D

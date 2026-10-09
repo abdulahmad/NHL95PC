@@ -14,7 +14,7 @@ extern fputchar, jctime, RunDemoGame_x, memcpy_, memset_, off_C6399, rand_, spri
 extern srand_, strlen_, MakePath, RunDemoGame, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
 extern sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2, sub_1B2A7, sub_1B8AC, sub_1B92E, WaitClickTimeout
-extern FadeOutPalCycle, StopDigiSample, PlayDigiSample, sub_59C1D, sub_59C3E, sub_59D54, ClearInputQueue, FadePalStep
+extern FadeOutPalCycle, StopDigiSample, PlayDigiSample, PaNhlIntro, PaGoodnight, PaOpenBank, ClearInputQueue, FadePalStep
 extern InitSpeechSlots, SpeechStopQueue, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C
 extern sub_9087C, sub_9121C, sub_91284, sub_912C8, sub_9132C, sub_91370, sub_913B4, sub_91400
@@ -313,7 +313,7 @@ cmp dword [dword_C588A], byte 0	; 164B8
 je short .27	; 164BF
 xor ebx, ebx	; 164C1
 mov dword [dword_C588A], ebx	; 164C3
-call sub_59C1D	; 164C9
+call PaNhlIntro	; 164C9
 .27:
 xor ecx, ecx	; 164CE
 mov dword [dword esp+0338h], ecx	; 164D0
@@ -981,7 +981,7 @@ call InitSpeechSlots	; 16DBA
 xor edx, edx	; 16DBF
 mov dword [dword_CCC94], edx	; 16DC1
 .44:
-call sub_59D54	; 16DC7
+call PaOpenBank	; 16DC7
 mov ebx, 10h	; 16DCC
 lea edx, [dword esp+0300h]	; 16DD1
 mov eax, 1	; 16DD8
@@ -1097,7 +1097,7 @@ call sub_B4BA8	; 16F6D
 push byte 0	; 16F72
 call sub_B392C	; 16F74
 add esp, byte 4	; 16F79
-call sub_59D54	; 16F7C
+call PaOpenBank	; 16F7C
 xor ebp, ebp	; 16F81
 mov dword [dword_CC0EC], ebp	; 16F83
 mov dword [demomode], ebp	; 16F89
@@ -1114,7 +1114,7 @@ push edi	; 16FA8
 push ebp	; 16FA9
 sub esp, 36Ch	; 16FAA
 call TextGridFree	; 16FB0
-call sub_59D54	; 16FB5
+call PaOpenBank	; 16FB5
 lea eax, [dword esp+0300h]	; 16FBA
 push eax	; 16FC1
 call sub_8E9E8	; 16FC2
@@ -1263,7 +1263,7 @@ mov ebx, 10h	; 171E7
 mov edx, esp	; 171EC
 xor eax, eax	; 171EE
 call FadePalStep	; 171F0
-call sub_59C3E	; 171F5
+call PaGoodnight	; 171F5
 xor edi, edi	; 171FA
 mov dword [dword esp+035Ch], edi	; 171FC
 mov dword [dword esp+0364h], edi	; 17203

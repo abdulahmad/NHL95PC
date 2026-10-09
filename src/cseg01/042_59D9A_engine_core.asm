@@ -22,7 +22,7 @@ extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
 extern replaystart, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
 extern passspeed, randomd0, sfx, vecdist, IntermissionPC, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
 extern DrawPanelScore, DrawPanelLine, IsCupClinched, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
-extern PlayCrowdSample, sub_59A7E, sub_61576, sub_615A2, sub_61862, PenaltyManager, sub_63C73, ClearPenaltyBuffer
+extern PlayCrowdSample, PaOneMinuteLeft, sub_61576, sub_615A2, sub_61862, PenaltyManager, sub_63C73, ClearPenaltyBuffer
 extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, awlinetab, unk_DAC40, unk_DAC70, unk_DACA0
 extern unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240, unk_DC252, SortCords
@@ -5067,7 +5067,7 @@ mov dx, word [joysampling]	; 5DCDD
 mov word [joysampling_save], dx	; 5DCE4
 xor ebx, ebx	; 5DCEB
 mov dword [joysampling], ebx	; 5DCED
-call sub_59A7E	; 5DCF3
+call PaOneMinuteLeft	; 5DCF3
 mov edx, dword [joysampling_save-2]	; 5DCF8
 sar edx, 10h	; 5DCFE
 mov dword [joysampling], edx	; 5DD01

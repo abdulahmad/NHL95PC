@@ -12,7 +12,7 @@ extern dword_E0244, dword_E9A9E, forcepldata, gmode, jctime, puckx, pucky, puckc
 extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSize, ResetInputSampling, RunGameFrames
 extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, DrawHudPanel, sub_1BAF3, LoadGameTeams, LoadRink, SetRinkScroll
 extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
-extern sub_59CA9, sub_59D54, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
+extern PaHighlightIntro, PaOpenBank, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
 extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, SpeechBusy
 extern MusicChanReset2, sub_8F633, sub_8FFB0, sub_B396E, awlinetab, hmlinetab, unk_DF014, unk_DF314
 extern SortCords, vtoa, camx, camy, passplayer, xc1, yc1
@@ -587,10 +587,10 @@ xor esi, esi	; 69C3F
 mov dword [joysampling], esi	; 69C41
 cmp bx, byte 2	; 69C47
 jne short .24	; 69C4B
-call sub_59D54	; 69C4D
+call PaOpenBank	; 69C4D
 mov edx, dword [byte esp+04h]	; 69C52
 mov eax, dword [byte esp+08h]	; 69C56
-call sub_59CA9	; 69C5A
+call PaHighlightIntro	; 69C5A
 mov ebx, 10h	; 69C5F
 mov edx, unk_DF314	; 69C64
 xor eax, eax	; 69C69

@@ -13,7 +13,7 @@ extern musichandle, cddriveptr, dword_D8B68, dword_D8B74, dword_DBC7C, schedgame
 extern fputchar, jctime, memcpy_, teamabbrevs, crestnames, scoutcatnames, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, SetDialogColors, TrackButtons, DrawButtons
-extern WaitClickTimeout, ShowLoadingScreen, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, GetInputEvent
+extern WaitClickTimeout, ShowLoadingScreen, PaTonightIntro, PaLineups, PaPlayoffTonight, PaOpenBank, PaPreloadClips, GetInputEvent
 extern ClearInputQueue, FadePalStep, GameLineEditor, sub_7DF4E, SpeechBusy, MusicChanReset2, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_91370, sub_913D0, sub_91400
@@ -39,7 +39,7 @@ sub esp, 674h	; 29F37
 mov byte [dword esp+0670h], al	; 29F3D
 mov byte [dword esp+066Ch], dl	; 29F44
 mov dword [dword esp+0638h], 0FFFFFFFFh	; 29F4B
-call sub_59D54	; 29F56
+call PaOpenBank	; 29F56
 push dword 0F7h	; 29F5B
 mov ecx, 0FAh	; 29F60
 mov ebx, 0F8h	; 29F65
@@ -549,7 +549,7 @@ xor edx, edx	; 2A6BB
 mov dl, byte [dword esp+066Ch]	; 2A6BD
 xor eax, eax	; 2A6C4
 mov al, byte [dword esp+0670h]	; 2A6C6
-call sub_59BB5	; 2A6CD
+call PaTonightIntro	; 2A6CD
 jmp near .31	; 2A6D2
 .26:
 xor edx, edx	; 2A6D7
@@ -594,7 +594,7 @@ xor edx, edx	; 2A760
 mov dl, byte [dword esp+0670h]	; 2A762
 xor eax, eax	; 2A769
 mov al, byte [dword esp+0674h]	; 2A76B
-call sub_59D16	; 2A772
+call PaPlayoffTonight	; 2A772
 .31:
 xor ebx, ebx	; 2A777
 mov dword [dword esp+0664h], ebx	; 2A779
@@ -875,7 +875,7 @@ call TonightsGameScreen	; 2AB8F
 mov dword [dword esp+0640h], eax	; 2AB94
 mov edx, dword [nosplit ecx*4+teamabbrevs]	; 2AB9B
 mov eax, dword [nosplit ebx*4+teamabbrevs]	; 2ABA2
-call sub_59D71	; 2ABA9
+call PaPreloadClips	; 2ABA9
 .13:
 xor esi, esi	; 2ABAE
 mov dword [dword esp+0664h], esi	; 2ABB0
@@ -1381,7 +1381,7 @@ xor eax, eax	; 2B2A9
 call FadePalStep	; 2B2AB
 cmp dword [dword esp+0114h], byte 0	; 2B2B0
 jne short .30	; 2B2B8
-call sub_59C5F	; 2B2BA
+call PaLineups	; 2B2BA
 .30:
 mov dword [dword esp+0104h], 0FFFFFFFFh	; 2B2BF
 .31:

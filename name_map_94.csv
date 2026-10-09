@@ -616,7 +616,24 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000599B9,sub_599B9,PlayDigiSample,PC-new,,,,medium,"StopDigiSample, then unless the sound device (dword_C541F) has bits 11h, plays sample eax via sub_8F270 on dword_D2427 and keeps the handle in digihandle",engine_sound_iface,manual-trace
 000599EE,sub_599EE,WaitDigiSample,PC-new,,,,medium,busy-waits until the sample in digihandle is done (sub_8F80E non-zero),engine_sound_iface,manual-trace
 00059A11,sub_59A11,PlayCrowdSample,PC-new,,,,low,"eax < 6: sample from dword_ED368[eax] (else falls back to a random 6-8); plays dword_ED374 entries 0-8 or dword_ED35C entries 9-11 with PlayDigiSample; callers pass 0, 2, 3, 9, 0Ah, 0Bh (goal / end-of-game sequences)",engine_sound_iface,manual-trace
+00059A7E,sub_59A7E,PaOneMinuteLeft,PC-new,,,,medium,"if musicon and announcer option (gameopts+1 bit 0) and not gmode 10h: MusicChanReset, SayOneMinuteLeft",engine_sound_iface,manual-trace
+00059AAD,sub_59AAD,PaSpeechBusy,PC-new,,,,medium,"SpeechBusy when musicon and announcer option, else 0",engine_sound_iface,manual-trace
+00059AD0,sub_59AD0,PaGoal,PC-new,,,,medium,guarded MusicChanReset + SayGoal,engine_sound_iface,manual-trace
+00059B0F,sub_59B0F,PaPlayerNumber,PC-new,,,,medium,guarded MusicChanReset + SayPlayerNumber,engine_sound_iface,manual-trace
+00059B3C,sub_59B3C,PaPenalty,PC-new,,,,medium,guarded MusicChanReset + SayPenalty,engine_sound_iface,manual-trace
+00059B88,sub_59B88,PaPenaltyShot,PC-new,,,,medium,guarded MusicChanReset + SayPenaltyShot,engine_sound_iface,manual-trace
+00059BB5,sub_59BB5,PaTonightIntro,PC-new,,,,medium,"team indices -> teamabbrevs, SayTonightIntro",engine_sound_iface,manual-trace
 00059BFB,nullsub_5,nullsub_5,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),engine_sound_iface,flirt
+00059BFC,sub_59BFC,PaScoringPeriod,PC-new,,,,medium,guarded SayScoringPeriod,engine_sound_iface,manual-trace
+00059C1D,sub_59C1D,PaNhlIntro,PC-new,,,,medium,guarded SayNhlIntro,engine_sound_iface,manual-trace
+00059C3E,sub_59C3E,PaGoodnight,PC-new,,,,medium,guarded SayGoodnight,engine_sound_iface,manual-trace
+00059C5F,sub_59C5F,PaLineups,PC-new,,,,medium,guarded SayLineups,engine_sound_iface,manual-trace
+00059C80,sub_59C80,PaElseNhl,PC-new,,,,medium,guarded SayElseNhl,engine_sound_iface,manual-trace
+00059CA9,sub_59CA9,PaHighlightIntro,PC-new,,,,medium,team abbrevs + SayHighlightIntro,engine_sound_iface,manual-trace
+00059CDD,sub_59CDD,PaPlayoffResult,PC-new,,,,medium,team abbrev + SayPlayoffResult,engine_sound_iface,manual-trace
+00059D16,sub_59D16,PaPlayoffTonight,PC-new,,,,medium,team abbrevs + SayPlayoffTonight,engine_sound_iface,manual-trace
+00059D54,sub_59D54,PaOpenBank,PC-new,,,,medium,when musicon: retry OpenAnnouncerBank until it succeeds,engine_sound_iface,manual-trace
+00059D71,sub_59D71,PaPreloadClips,PC-new,,,,medium,when musicon: retry PreloadAnnouncerClips until it succeeds,engine_sound_iface,manual-trace
 00059D9A,sub_59D9A,SetSPA,93G,logic93_5.asm,checks94.asm,92G SetSPA,high,identical semantics: SPA/SPAnum/SPAcnt at PC +38h/+3Ah/+3Ch,engine_core,manual+fields
 00059E69,sub_59E69,changeplayer,93G,logic93_1.asm,,,high,"93G changeplayer: hand control to the nearest teammate (Sweepcheck), restorepl the old one; called from input, physics, assignments",engine_core,manual-trace
 00059FE1,sub_59FE1,restorepl,93G,logic93_1.asm,,,medium,"93G restorepl: eax = new controlled player, edx = old one; clears the old player's joystick control flags and gives the new one its assignment back",engine_core,manual-trace
