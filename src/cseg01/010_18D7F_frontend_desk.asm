@@ -1649,6 +1649,10 @@ mov eax, 5	; 1A5CD
 pop edx	; 1A5D2
 ret	; 1A5D3
 %endif ; C
+; C: src/c/010_18D7F_frontend_desk/DeskReturnConfirm.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/DeskReturnConfirm.inc"
+%else
 DeskReturnConfirm:
 push dword 34h	; 1A5D4
 call __CHK	; 1A5D9
@@ -1719,6 +1723,7 @@ pop edx	; 1A6A3
 pop ecx	; 1A6A4
 pop ebx	; 1A6A5
 ret	; 1A6A6
+%endif ; C
 ; C: src/c/010_18D7F_frontend_desk/DeskExitGame.c
 %ifdef CBUILD
 %include "c/010_18D7F_frontend_desk/DeskExitGame.inc"

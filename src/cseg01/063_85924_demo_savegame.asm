@@ -1031,6 +1031,10 @@ call __CHK	; 8663C
 mov eax, 1	; 86641
 ret	; 86646
 %endif ; C
+; C: src/c/063_85924_demo_savegame/ViewPlayoffHilights.c
+%ifdef CBUILD
+%include "c/063_85924_demo_savegame/ViewPlayoffHilights.inc"
+%else
 ViewPlayoffHilights:
 push dword 8	; 86647
 call __CHK	; 8664C
@@ -1055,3 +1059,4 @@ call LoadModeState	; 8668D
 xor eax, eax	; 86692
 pop edx	; 86694
 ret	; 86695
+%endif ; C

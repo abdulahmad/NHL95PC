@@ -73,7 +73,6 @@ extern void FreeDeskBuffers(); /* 18D33 */
 extern void OutputCurrentData(); /* 18D7F */
 extern void MenuCallbackTrue(); /* 18F74 */
 extern void MenuCallbackTrue2(); /* 18F86 */
-extern void DeskReturnConfirm(); /* 1A5D4 */
 extern void DeskGoToReplay(); /* 1A817 */
 extern void DeskHomeLines(); /* 1A8AA */
 extern void DeskLines_common(); /* 1A8F0 */
@@ -398,7 +397,6 @@ extern void EditTextField(); /* 3170D */
 extern void MainDeskLoop(); /* 31AB5 */
 extern void MainDeskLoop_x(); /* 32704 */
 extern void MainDeskLoop_x2(); /* 32705 */
-extern void WriteModeState(); /* 32B1D */
 extern void MenuNewExhibition(); /* 32DA9 */
 extern void MenuNewLeague(); /* 32FF4 */
 extern void MenuAddTeam(); /* 3322A */
@@ -617,7 +615,6 @@ extern void SndLoadFile2(); /* 594B2 */
 extern void CrowdNoiseUpdate(); /* 594CD */
 extern void PlayCrowdSample_ret(); /* 59A7D */
 extern void PaOneMinuteLeft(); /* 59A7E */
-extern void PaTonightIntro(); /* 59BB5 */
 extern void nullsub_5(); /* 59BFB */
 extern void PaScoringPeriod(); /* 59BFC */
 extern void PaNhlIntro(); /* 59C1D */
@@ -1152,7 +1149,6 @@ extern void MenuSaveGame(); /* 85924 */
 extern void SaveGameStub(); /* 85D65 */
 extern void SaveGameNameDlg(); /* 85D6C */
 extern void savenamedefault(); /* 86616 */
-extern void ViewPlayoffHilights(); /* 86647 */
 extern void CreatePlayoffs(); /* 86696 */
 extern void POSeedTeams(); /* 86E8B */
 extern void POPickConfTeams(); /* 870B6 */
@@ -1175,7 +1171,6 @@ extern void PlayoffModeLoop(); /* 89268 */
 extern void POHiliteSlot(); /* 89B69 */
 extern void PlayoffTreeMenu(); /* 89BD2 */
 extern void DrawPlayoffTree(); /* 8A652 */
-extern void WriteCurModeState(); /* 8B92F */
 extern void PlayMVI(); /* 8BEDB */
 extern void SelectScreenBM(); /* 8C1C2 */
 extern void SelectScreenBM_set(); /* 8C1D5 */

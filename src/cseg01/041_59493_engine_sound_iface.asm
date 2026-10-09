@@ -670,6 +670,10 @@ call SayPenaltyShot	; 59BAE
 .x:
 pop esi	; 59BB3
 ret	; 59BB4
+; C: src/c/041_59493_engine_sound_iface/PaTonightIntro.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PaTonightIntro.inc"
+%else
 PaTonightIntro:
 push dword 0Ch	; 59BB5
 call __CHK	; 59BBA
@@ -693,6 +697,7 @@ pop ecx	; 59BF9
 pop ebx	; 59BFA
 nullsub_5:
 ret	; 59BFB
+%endif ; C
 PaScoringPeriod:
 push dword 4	; 59BFC
 call __CHK	; 59C01

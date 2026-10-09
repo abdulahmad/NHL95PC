@@ -6406,6 +6406,10 @@ pop edi	; 8B92C
 pop edx	; 8B92D
 ret	; 8B92E
 %endif ; C
+; C: src/c/064_86696_season_playoffs/WriteCurModeState.c
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/WriteCurModeState.inc"
+%else
 WriteCurModeState:
 push dword 4	; 8B92F
 call __CHK	; 8B934
@@ -6428,6 +6432,7 @@ jmp near WriteModeState	; 8B95E
 .3:
 mov eax, lgstate	; 8B963
 jmp near WriteModeState	; 8B968
+%endif ; C
 ; C: src/c/064_86696_season_playoffs/ClearPlayerFromLines.c
 %ifdef CBUILD
 %include "c/064_86696_season_playoffs/ClearPlayerFromLines.inc"

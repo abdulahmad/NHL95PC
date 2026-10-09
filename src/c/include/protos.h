@@ -717,5 +717,10 @@ int TeamGridHitTest(int x, int y, unsigned char *tab);  /* 37B92 */
 int DeskPenaltySummary(void);  /* 1A9AC */
 int DeskScoringSummary(void);  /* 1AA6D */
 int DeskGameStats(void);  /* 1A96D */
+int ViewPlayoffHilights(void);  /* 86647 */
+void WriteModeState(void *st);  /* 32B1D: the rest of its arguments come through unchanged from WriteCurModeState's caller */
+void WriteCurModeState(void);  /* 8B92F */
+void PaTonightIntro(int home, int away);  /* 59BB5 */
+int DeskReturnConfirm(void);  /* 1A5D4 */
 
 #endif
