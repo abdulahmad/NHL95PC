@@ -14,7 +14,7 @@ extern ptrupdatefn, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, m
 extern off_CEF23, mousepollfn, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
 extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, GameSummaryScreen, PickOtherGames
 extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, MessageBox, LoadRink, WaitClickTimeout, ShowLoadingScreen
-extern FadeOutPalCycle, PaPlayoffResult, PaOpenBank, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
+extern FadeOutPalCycle, PaPlayoffResult, PaOpenBank, FlushGSumQueue, ReadGSumHeader, ReadGSumTail, WriteGSumHeader, SetTeamGoalie
 extern GetInputEvent, ClearInputQueue, InputInstall, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm
 extern MenuHitTest, FadePalStep, GameLineEditor, InstantReplay, SetModeMenuLabels, SpeechBusy, MusicChanReset, SayNowBack
 extern FreeNowBack, SayBackMoment, FreeBackMoment, CoachCutScene, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
@@ -301,8 +301,8 @@ sar eax, 10h	; 190D1
 cmp eax, byte 0FFFFFFFFh	; 190D4
 je near .3	; 190D7
 call ShowLoadingScreen	; 190DD
-call sub_61B85	; 190E2
-call sub_61C22	; 190E7
+call FlushGSumQueue	; 190E2
+call ReadGSumTail	; 190E7
 call InputInstall	; 190EC
 mov edx, dword [curperiod]	; 190F1
 xor ecx, ecx	; 190F7
@@ -366,7 +366,7 @@ mov byte [hmgoalcnt], ah	; 191DE
 mov byte [hmshotcnt], ah	; 191E4
 mov byte [awgoalcnt], ah	; 191EA
 mov byte [awshotcnt], ah	; 191F0
-call sub_61C86	; 191F6
+call WriteGSumHeader	; 191F6
 mov edx, 0C8h	; 191FB
 mov eax, 140h	; 19200
 call SetScreenSize	; 19205
@@ -396,9 +396,9 @@ call SetScreenSize	; 1924E
 mov eax, 222E0h	; 19253
 call sub_1BAF3	; 19258
 call ShowLoadingScreen	; 1925D
-call sub_61B85	; 19262
-call sub_61C22	; 19267
-call sub_61BBF	; 1926C
+call FlushGSumQueue	; 19262
+call ReadGSumTail	; 19267
+call ReadGSumHeader	; 1926C
 call InputInstall	; 19271
 mov ebx, dword [curperiod]	; 19276
 xor ecx, ecx	; 1927C
@@ -2008,7 +2008,7 @@ call __CHK	; 1AB10
 push edx	; 1AB15
 xor edx, edx	; 1AB16
 xor eax, eax	; 1AB18
-call sub_672F9	; 1AB1A
+call SetTeamGoalie	; 1AB1A
 mov eax, dword [mi_HomeGoalie1]	; 1AB1F
 mov byte [eax], 1	; 1AB24
 mov eax, dword [mi_HomeGoalie2]	; 1AB27
@@ -2022,7 +2022,7 @@ call __CHK	; 1AB3E
 push edx	; 1AB43
 mov edx, 1	; 1AB44
 xor eax, eax	; 1AB49
-call sub_672F9	; 1AB4B
+call SetTeamGoalie	; 1AB4B
 mov eax, dword [mi_HomeGoalie1]	; 1AB50
 mov byte [eax], 2	; 1AB55
 mov eax, dword [mi_HomeGoalie2]	; 1AB58
@@ -2034,7 +2034,7 @@ call __CHK	; 1AB67
 push edx	; 1AB6C
 mov edx, 0FFFFFFFFh	; 1AB6D
 xor eax, eax	; 1AB72
-call sub_672F9	; 1AB74
+call SetTeamGoalie	; 1AB74
 mov eax, dword [mi_HomeGoalie1]	; 1AB79
 mov byte [eax], 2	; 1AB7E
 mov eax, dword [mi_HomeGoalie2]	; 1AB81
@@ -2051,7 +2051,7 @@ call __CHK	; 1AB9A
 push edx	; 1AB9F
 xor edx, edx	; 1ABA0
 mov eax, 1	; 1ABA2
-call sub_672F9	; 1ABA7
+call SetTeamGoalie	; 1ABA7
 mov eax, dword [mi_AwayGoalie1]	; 1ABAC
 mov byte [eax], 1	; 1ABB1
 mov eax, dword [mi_AwayGoalie2]	; 1ABB4
@@ -2069,7 +2069,7 @@ call __CHK	; 1ABCD
 push edx	; 1ABD2
 mov edx, 1	; 1ABD3
 mov eax, edx	; 1ABD8
-call sub_672F9	; 1ABDA
+call SetTeamGoalie	; 1ABDA
 mov eax, dword [mi_AwayGoalie1]	; 1ABDF
 mov byte [eax], 2	; 1ABE4
 mov eax, dword [mi_AwayGoalie2]	; 1ABE7
@@ -2081,7 +2081,7 @@ call __CHK	; 1ABF6
 push edx	; 1ABFB
 mov edx, 0FFFFFFFFh	; 1ABFC
 mov eax, 1	; 1AC01
-call sub_672F9	; 1AC06
+call SetTeamGoalie	; 1AC06
 mov eax, dword [mi_AwayGoalie1]	; 1AC0B
 mov byte [eax], 2	; 1AC10
 mov eax, dword [mi_AwayGoalie2]	; 1AC13

@@ -24,7 +24,7 @@ extern sprintf_, vecdist, FadePalette, IsCupClinched, ThreeStarsLoop, joyq_flush
 extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
 extern PaSpeechBusy, PaGoal, PaPlayerNumber, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
 extern EvadePC, sub_61576, FormatPlayerName, PostGoalEvent, sub_62807, sub_62C37, sub_64102, EndPenaltyShot
-extern RemoveFromLines, sub_66497, sub_66DDA, MusicChanReset, sub_8F633, sub_8FFB0, imul32, threat
+extern RemoveFromLines, LoadTeamPPV, CloseTextOverlay, MusicChanReset, sub_8F633, sub_8FFB0, imul32, threat
 extern unk_C1B3E, unk_DACA0, hmteamrec, unk_DC240, savepal, SortCords, updateanim
 extern vtoa, regd4, camx, camy, lastplayer, passdir, word_C90A6, xc1
 extern yc1, word_C90B2, word_C90B4, fodir1, fodir2, c1playernum, c2playernum, VisTeam
@@ -1178,7 +1178,7 @@ mov word [camx], bx	; 491FE
 mov word [xc1], bx	; 49205
 mov word [camy], cx	; 4920C
 mov word [yc1], cx	; 49213
-call sub_66DDA	; 4921A
+call CloseTextOverlay	; 4921A
 call ThreeStarsLoop	; 4921F
 test eax, eax	; 49224
 jge short .3	; 49226
@@ -8098,12 +8098,12 @@ je near .12	; 4E865
 cmp word [crowdlevel], 2BCh	; 4E86B
 jg near .12	; 4E874
 xor eax, eax	; 4E87A
-call sub_66497	; 4E87C
+call LoadTeamPPV	; 4E87C
 mov eax, dword [word_CBECC-2]	; 4E881
 sar eax, 10h	; 4E886
 cmp eax, byte 0FFFFFFFFh	; 4E889
 je short .12	; 4E88C
-call sub_66DDA	; 4E88E
+call CloseTextOverlay	; 4E88E
 mov eax, 1	; 4E893
 pop edx	; 4E898
 pop ecx	; 4E899
@@ -8114,14 +8114,14 @@ jne short .9	; 4E8A2
 cmp edx, byte 1	; 4E8A4
 jne short .9	; 4E8A7
 mov eax, 2	; 4E8A9
-call sub_66497	; 4E8AE
+call LoadTeamPPV	; 4E8AE
 mov eax, dword [word_CBECC-2]	; 4E8B3
 sar eax, 10h	; 4E8B8
 cmp eax, byte 0FFFFFFFFh	; 4E8BB
 je short .12	; 4E8BE
 mov eax, 9	; 4E8C0
 call PlayCrowdSample	; 4E8C5
-call sub_66DDA	; 4E8CA
+call CloseTextOverlay	; 4E8CA
 mov eax, edx	; 4E8CF
 pop edx	; 4E8D1
 pop ecx	; 4E8D2
@@ -8667,13 +8667,13 @@ jne short .19	; 4F061
 xor dh, dh	; 4F063
 mov byte [dword eax+byte_DF87F], dh	; 4F065
 mov eax, 8	; 4F06B
-call sub_66497	; 4F070
+call LoadTeamPPV	; 4F070
 mov eax, dword [word_CBECC-2]	; 4F075
 sar eax, 10h	; 4F07A
 cmp eax, byte 0FFFFFFFFh	; 4F07D
 je short .20	; 4F080
 mov word [dword_E9A9E], 1	; 4F082
-call sub_66DDA	; 4F08B
+call CloseTextOverlay	; 4F08B
 jmp near .64	; 4F090
 .17:
 cmp si, byte 7	; 4F095

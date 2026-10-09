@@ -36,8 +36,8 @@ global lines_popx2
 global checkwindow_popebp, checkwindow_popx
 global ReplayStep_popx
 global CanRemovePlayer, sub_644A8, sub_6455F, sub_64614, sub_64A0B, sub_64CA8
-global sub_64E60, sub_652D6, sub_653BE, sub_6552E, RemoveFromLines, SetupTeamLines, sub_65B48, sub_65CA8
-global sub_66497, sub_665AD, sub_66DDA, sub_66E06, sub_66FE2, sub_671E8, sub_672F9, sub_673C5
+global sub_64E60, sub_652D6, sub_653BE, sub_6552E, RemoveFromLines, SetupTeamLines, NormalizeDressFlags, DitherRect
+global LoadTeamPPV, DrawTextOverlay, CloseTextOverlay, sub_66E06, sub_66FE2, sub_671E8, SetTeamGoalie, LoadTeamPalette
 global ReplayRecordReset, ReplayFirstFrame, ReplayPrevFrame, ReplayStep, sub_67DCC, updatereplay
 sub_644A8:
 push dword 24h	; 644A8
@@ -2035,7 +2035,7 @@ inc ecx	; 65B3C
 cmp cx, byte 19h	; 65B3D
 jl short SetupTeamLines.23	; 65B41
 jmp near lines_popx	; 65B43
-sub_65B48:
+NormalizeDressFlags:
 push dword 0Ch	; 65B48
 call __CHK	; 65B4D
 push ebx	; 65B52
@@ -2052,7 +2052,7 @@ sete dl	; 65B71
 mov byte [dword eax+byte_E9E31], dl	; 65B74
 inc eax	; 65B7A
 cmp eax, byte 19h	; 65B7B
-jl short sub_65B48.1	; 65B7E
+jl short NormalizeDressFlags.1	; 65B7E
 pop edx	; 65B80
 pop ebx	; 65B81
 ret	; 65B82
@@ -2171,7 +2171,7 @@ setg al	; 65C98
 and eax, 0FFh	; 65C9B
 add esp, byte 8	; 65CA0
 jmp near lines_popx	; 65CA3
-sub_65CA8:
+DitherRect:
 push dword 28h	; 65CA8
 call __CHK	; 65CAD
 push esi	; 65CB2
@@ -2199,13 +2199,13 @@ add esi, byte 2	; 65CDD
 mov eax, dword [byte esp+08h]	; 65CE0
 add eax, ebp	; 65CE4
 cmp esi, eax	; 65CE6
-jl short sub_65CA8.2	; 65CE8
+jl short DitherRect.2	; 65CE8
 add edi, byte 2	; 65CEA
 .4:
 mov eax, dword [byte esp+04h]	; 65CED
 add eax, dword [esp]	; 65CF1
 cmp edi, eax	; 65CF4
-jl short sub_65CA8.1	; 65CF6
+jl short DitherRect.1	; 65CF6
 add esp, byte 0Ch	; 65CF8
 pop ebp	; 65CFB
 pop edi	; 65CFC
@@ -2739,7 +2739,7 @@ pop edx	; 66493
 pop ecx	; 66494
 pop ebx	; 66495
 ret	; 66496
-sub_66497:
+LoadTeamPPV:
 push dword 38h	; 66497
 call __CHK	; 6649C
 push ebx	; 664A1
@@ -2800,7 +2800,7 @@ push ecx	; 6654D
 call sub_90354	; 6654E
 add esp, byte 4	; 66553
 cmp esi, eax	; 66556
-jl short sub_66497.3	; 66558
+jl short LoadTeamPPV.3	; 66558
 mov eax, dword [joysampling_save-2]	; 6655A
 sar eax, 10h	; 6655F
 mov dword [joysampling], eax	; 66562
@@ -2817,7 +2817,7 @@ mov word [word_CBECE], ax	; 6659F
 .5:
 add esp, byte 10h	; 665A5
 jmp near checkwindow_popebp	; 665A8
-sub_665AD:
+DrawTextOverlay:
 push dword 60h	; 665AD
 call __CHK	; 665B2
 push ebx	; 665B7
@@ -2981,7 +2981,7 @@ mov ecx, dword [byte esp+08h]	; 667DB
 mov ebx, dword [byte esp+0Ch]	; 667DF
 mov edx, ebp	; 667E3
 mov eax, dword [byte esp+04h]	; 667E5
-call sub_65CA8	; 667E9
+call DitherRect	; 667E9
 .8:
 test di, di	; 667EE
 je short .9	; 667F1
@@ -3143,7 +3143,7 @@ sub ecx, edx	; 669E4
 mov ebx, dword [byte esp+01Ah]	; 669E6
 sar ebx, 10h	; 669EA
 movsx eax, si	; 669ED
-call sub_65CA8	; 669F0
+call DitherRect	; 669F0
 .16:
 cmp word [crowdlevel], 3B6h	; 669F5
 jle short .18	; 669FE
@@ -3169,7 +3169,7 @@ sub ecx, edx	; 66A40
 mov ebx, dword [byte esp+01Ah]	; 66A42
 sar ebx, 10h	; 66A46
 movsx eax, si	; 66A49
-call sub_65CA8	; 66A4C
+call DitherRect	; 66A4C
 .18:
 cmp word [crowdlevel], 47Eh	; 66A51
 jle near .33	; 66A5A
@@ -3195,7 +3195,7 @@ sub ecx, edx	; 66AA0
 mov ebx, dword [byte esp+01Ah]	; 66AA2
 sar ebx, 10h	; 66AA6
 movsx eax, si	; 66AA9
-call sub_65CA8	; 66AAC
+call DitherRect	; 66AAC
 jmp near .33	; 66AB1
 .20:
 cmp byte [textline5], 0	; 66AB6
@@ -3443,7 +3443,7 @@ mov dword [spritedrawcount], edi	; 66DC7
 call sub_6AB7C	; 66DCD
 add esp, byte 30h	; 66DD2
 jmp near checkwindow_popebp	; 66DD5
-sub_66DDA:
+CloseTextOverlay:
 push dword 8	; 66DDA
 call __CHK	; 66DDF
 push ebx	; 66DE4
@@ -3638,7 +3638,7 @@ mov ecx, dword [byte esp+010h]	; 670C3
 mov ebx, dword [byte esp+014h]	; 670C7
 mov edx, edi	; 670CB
 mov eax, dword [byte esp+0Ch]	; 670CD
-call sub_65CA8	; 670D1
+call DitherRect	; 670D1
 push byte 0	; 670D6
 push byte 4	; 670D8
 mov eax, dword [byte esp+01Eh]	; 670DA
@@ -3813,7 +3813,7 @@ pop edx	; 672F5
 pop ecx	; 672F6
 pop ebx	; 672F7
 ret	; 672F8
-sub_672F9:
+SetTeamGoalie:
 push dword 10h	; 672F9
 call __CHK	; 672FE
 push ebx	; 67303
@@ -3881,7 +3881,7 @@ pop esi	; 673C1
 pop ecx	; 673C2
 pop ebx	; 673C3
 ret	; 673C4
-sub_673C5:
+LoadTeamPalette:
 push dword 30h	; 673C5
 call __CHK	; 673CA
 push ecx	; 673CF
@@ -3921,7 +3921,7 @@ mov cl, byte [edx+eax]	; 67423
 mov byte [dword esi+eax+0180h], cl	; 67426
 inc eax	; 6742D
 cmp eax, 0C0h	; 6742E
-jl short sub_673C5.3	; 67433
+jl short LoadTeamPalette.3	; 67433
 xor eax, eax	; 67435
 add edx, 0C0h	; 67437
 .4:
@@ -3929,7 +3929,7 @@ mov bl, byte [edx+eax]	; 6743D
 mov byte [dword eax+byte_DC9D8], bl	; 67440
 inc eax	; 67446
 cmp eax, 100h	; 67447
-jl short sub_673C5.4	; 6744C
+jl short LoadTeamPalette.4	; 6744C
 push ebp	; 6744E
 call jctime	; 6744F
 add esp, byte 4	; 67454
@@ -3963,7 +3963,7 @@ mov cl, byte [edx+eax]	; 674A0
 mov byte [dword esi+eax+0240h], cl	; 674A3
 inc eax	; 674AA
 cmp eax, 0C0h	; 674AB
-jl short sub_673C5.7	; 674B0
+jl short LoadTeamPalette.7	; 674B0
 xor eax, eax	; 674B2
 add edx, 0C0h	; 674B4
 .8:
@@ -3971,7 +3971,7 @@ mov bl, byte [edx+eax]	; 674BA
 mov byte [dword eax+byte_DC8D8], bl	; 674BD
 inc eax	; 674C3
 cmp eax, 90h	; 674C4
-jl short sub_673C5.8	; 674C9
+jl short LoadTeamPalette.8	; 674C9
 mov eax, 90h	; 674CB
 .9:
 mov bl, byte [edx+eax]	; 674D0
@@ -3979,7 +3979,7 @@ add bl, 40h	; 674D3
 mov byte [dword eax+byte_DC8D8], bl	; 674D6
 inc eax	; 674DC
 cmp eax, 100h	; 674DD
-jl short sub_673C5.9	; 674E2
+jl short LoadTeamPalette.9	; 674E2
 push ebp	; 674E4
 call jctime	; 674E5
 add esp, byte 4	; 674EA
@@ -4011,14 +4011,14 @@ mov bl, byte [edx+eax]	; 67532
 mov byte [esi+eax], bl	; 67535
 inc eax	; 67538
 cmp eax, 180h	; 67539
-jl short sub_673C5.12	; 6753E
+jl short LoadTeamPalette.12	; 6753E
 mov eax, 2F1h	; 67540
 .13:
 mov bl, byte [edx+eax]	; 67545
 mov byte [esi+eax], bl	; 67548
 inc eax	; 6754B
 cmp eax, 300h	; 6754C
-jl short sub_673C5.13	; 67551
+jl short LoadTeamPalette.13	; 67551
 push ebp	; 67553
 call jctime	; 67554
 add esp, byte 4	; 67559

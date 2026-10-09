@@ -10,7 +10,7 @@ extern curperiod, rinkwtiles, rinkhtiles, bgscrolly, palcyclelock, hmtmstruct, a
 extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, jctime, puckc, camx_m2, randomd0
 extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, UpdateHudPanel, SetRinkScroll
 extern LoadScreenPalTick, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
-extern PlayCrowdSample, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
+extern PlayCrowdSample, DrawRinkOverlays, SprSort, LoadTeamPPV, CloseTextOverlay, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, SpeechStopQueue, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
 extern savepal, gamepal, unk_DFD9C, camx, camy, xc1, yc1, SortCords
 extern word_C90B2, word_C90B4, c1playernum, c2playernum, RefStep, exitgame, word_CBC52, word_CBC54
@@ -106,7 +106,7 @@ setne al	; 47D1B
 and eax, 0FFh	; 47D1E
 add eax, byte 3	; 47D23
 cwde	; 47D26
-call sub_66497	; 47D27
+call LoadTeamPPV	; 47D27
 xor ah, ah	; 47D2C
 mov byte [textline5], ah	; 47D2E
 mov byte [textline4], ah	; 47D34
@@ -316,7 +316,7 @@ mov eax, dword [word_CBECC-2]	; 4808A
 sar eax, 10h	; 4808F
 cmp eax, byte 0FFFFFFFFh	; 48092
 je short .17	; 48095
-call sub_66DDA	; 48097
+call CloseTextOverlay	; 48097
 .17:
 call SelectScreenBM	; 4809C
 xor ebx, ebx	; 480A1

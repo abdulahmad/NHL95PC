@@ -13,7 +13,7 @@ extern dword_E9AB6, puckvx, gmode, puckx, pucky, puckvy, puckz
 extern puckc, off_CD498, off_CD4A0, passspeed, puckflip, puckvz, randomd0, CanRemovePlayer
 extern setpersonel, sfx, shotsets, vecdist, CanBlockShot, PassCompleted, changeplayer, restorepl
 extern CompLine, GetHotStick, GetHotOrStick, Goal, GiveControl, sub_61576, PostInjuryEvent, sub_64102
-extern sub_6427F, sub_64338, EndPenaltyShot, RemoveFromLines, imul32, sub_93470, threat, SortCords
+extern sub_6427F, CountShotOnGoal, EndPenaltyShot, RemoveFromLines, imul32, sub_93470, threat, SortCords
 extern vtoa, wcradiusx, regd4, camx, camy, lastplayer, passdir
 extern word_C90A6, passplayer, xc1, yc1, word_C90B2, c1playernum, c2playernum, cont1team
 extern gsp, gameclock, clockticks, dirtab_y, word_CBEC2, word_CBEC6, word_CBEC8, word_CC0DA
@@ -3401,7 +3401,7 @@ cmp dx, word [byte edi+06h]	; 55B47
 jg near .15	; 55B4B
 cmp dx, word [byte edi+07Ah]	; 55B51
 jle near checkob_ret5	; 55B55
-call sub_64338	; 55B5B
+call CountShotOnGoal	; 55B5B
 add word [regd0], byte 0Ah	; 55B60
 test byte [gmode], 2	; 55B68
 je short .9	; 55B6F
@@ -3445,7 +3445,7 @@ cmp cx, word [byte edi+06h]	; 55BE4
 jl near checkob_ret5	; 55BE8
 cmp cx, word [byte edi+07Ah]	; 55BEE
 jge near checkob_ret5	; 55BF2
-call sub_64338	; 55BF8
+call CountShotOnGoal	; 55BF8
 sub word [regd0], byte 0Ah	; 55BFD
 test byte [gmode], 2	; 55C05
 jne short .16	; 55C0C

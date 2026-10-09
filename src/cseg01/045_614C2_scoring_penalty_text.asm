@@ -23,7 +23,7 @@ extern lseek_, ltx, teamabbrevs, puckx, pucky, puckvy, puckz, puckc
 extern penaltynames, off_CD354, puckvz, randomd0, CanRemovePlayer, sfx, sprintf_, vecdist
 extern strcpy_, strlen_, DrawFrameSprite, FileOpenRW, FileClose, FileWriteAt, PanelAddPenalty, PanelRemovePenalty
 extern MenuCallbackTrue, DrawSprite, PlayCrowdSample, PaSpeechBusy, PaPenalty, PaPenaltyShot, restorepl, setplayer
-extern sub_66497, sub_66DDA, sub_66E06, sub_8EA18, FatalError, unk_C1B49, str_B3, str_B4
+extern LoadTeamPPV, CloseTextOverlay, sub_66E06, sub_8EA18, FatalError, unk_C1B49, str_B3, str_B4
 extern str_B5, str_B6, str_B7, str_B8, str_S8, unk_C5423, unk_C542E, hmteamrec
 extern SortCords, unk_E9B4C, word_C5428, word_C90B2, word_C90B4, c1playernum, c2playernum
 extern cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, word_C90D8
@@ -37,12 +37,12 @@ global fileio_popebpx
 global fileio_tail_a, fileio_tail_b, fileio_tail_c
 global InProgress_popebp, InProgress_popx
 global chkprogress_x
-global sub_614C2, sub_61576, sub_615A2, sub_61862
-global sub_619C8, sub_61A27, sub_61A8A, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, FormatPlayerName
-global BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, sub_627F8, sub_62807, sub_62C37, GameTimeStamp
+global sub_614C2, sub_61576, DecayCrowdLevel, sub_61862
+global QueueDeferredCall, RunDeferredCalls, AppendGSumRecord, FlushGSumQueue, ReadGSumHeader, ReadGSumTail, WriteGSumHeader, FormatPlayerName
+global BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCallback0C, sub_62807, sub_62C37, GameTimeStamp
 global SetPA, InProgress, chkprogress_go, checkfornewpen, releasepl, chkatop, CheckAndReleasePlayer, ProcessPenaltyList
-global ChkPowerPlayTime, updatepentime, PenaltyManager, chkprogress, sub_63C73, ClearPenaltyBuffer, sub_63D69, SetupPenaltyShot
-global sub_64102, sub_6427F, sub_64338, StartPenaltyShot, EndPenaltyShot
+global ChkPowerPlayTime, updatepentime, PenaltyManager, chkprogress, UpdatePowerPlayFlags, ClearPenaltyBuffer, sub_63D69, SetupPenaltyShot
+global sub_64102, sub_6427F, CountShotOnGoal, StartPenaltyShot, EndPenaltyShot
 sub_614C2:
 push dword 14h	; 614C2
 call __CHK	; 614C7
@@ -117,7 +117,7 @@ mov eax, 12h	; 61596
 call sub_614C2	; 6159B
 pop edx	; 615A0
 ret	; 615A1
-sub_615A2:
+DecayCrowdLevel:
 push dword 1Ch	; 615A2
 call __CHK	; 615A7
 push ebx	; 615AC
@@ -227,9 +227,9 @@ test edi, eax	; 616FE
 je short .9	; 61700
 inc esi	; 61702
 cmp si, 85h	; 61703
-jl short sub_615A2.8	; 61708
+jl short DecayCrowdLevel.8	; 61708
 xor esi, esi	; 6170A
-jmp short sub_615A2.8	; 6170C
+jmp short DecayCrowdLevel.8	; 6170C
 .9:
 movsx edx, si	; 6170E
 mov eax, dword [byte esp-02h]	; 61711
@@ -339,7 +339,7 @@ inc word [esp]	; 61848
 .20:
 mov ecx, dword [esp]	; 6184C
 cmp cx, byte 14h	; 6184F
-jl near sub_615A2.4	; 61853
+jl near DecayCrowdLevel.4	; 61853
 add esp, byte 4	; 61859
 sfxslots_popx:
 pop edi	; 6185C
@@ -468,7 +468,7 @@ jge near sub_61862.4	; 619BA
 mov esp, ebp	; 619C0
 pop ebp	; 619C2
 jmp near sfxslots_popx	; 619C3
-sub_619C8:
+QueueDeferredCall:
 push dword 8	; 619C8
 call __CHK	; 619CD
 push esi	; 619D2
@@ -490,7 +490,7 @@ mov dword [dword eax+dword_E9BBC], edx	; 61A17
 inc dword [dword_CD350]	; 61A1D
 pop esi	; 61A23
 ret 10h	; 61A24
-sub_61A27:
+RunDeferredCalls:
 push dword 28h	; 61A27
 call __CHK	; 61A2C
 push ebx	; 61A31
@@ -518,7 +518,7 @@ call dword [dword esi+dword_E9BC0]	; 61A6D
 inc edi	; 61A73
 .2:
 cmp edi, dword [dword_CD350]	; 61A74
-jl short sub_61A27.1	; 61A7A
+jl short RunDeferredCalls.1	; 61A7A
 xor eax, eax	; 61A7C
 mov dword [dword_CD350], eax	; 61A7E
 fileio_popebpx:
@@ -529,7 +529,7 @@ pop edx	; 61A86
 pop ecx	; 61A87
 pop ebx	; 61A88
 ret	; 61A89
-sub_61A8A:
+AppendGSumRecord:
 push dword 1Ch	; 61A8A
 call __CHK	; 61A8F
 push ebx	; 61A94
@@ -609,7 +609,7 @@ pop edx	; 61B81
 pop ecx	; 61B82
 pop ebx	; 61B83
 ret	; 61B84
-sub_61B85:
+FlushGSumQueue:
 push dword 0Ch	; 61B85
 call __CHK	; 61B8A
 push ecx	; 61B8F
@@ -623,17 +623,17 @@ sub eax, edx	; 61B9A
 shl eax, 2	; 61B9C
 sub eax, edx	; 61B9F
 add eax, unk_E9B4C	; 61BA1
-call sub_61A8A	; 61BA6
+call AppendGSumRecord	; 61BA6
 inc edx	; 61BAB
 .2:
 cmp edx, dword [dword_CD34C]	; 61BAC
-jl short sub_61B85.1	; 61BB2
+jl short FlushGSumQueue.1	; 61BB2
 xor ecx, ecx	; 61BB4
 mov dword [dword_CD34C], ecx	; 61BB6
 pop edx	; 61BBC
 pop ecx	; 61BBD
 ret	; 61BBE
-sub_61BBF:
+ReadGSumHeader:
 push dword 18h	; 61BBF
 call __CHK	; 61BC4
 push ebx	; 61BC9
@@ -669,7 +669,7 @@ pop edx	; 61C1E
 pop ecx	; 61C1F
 pop ebx	; 61C20
 ret	; 61C21
-sub_61C22:
+ReadGSumTail:
 push dword 18h	; 61C22
 call __CHK	; 61C27
 push ebx	; 61C2C
@@ -699,7 +699,7 @@ mov ecx, 0Bh	; 61C72
 mov ebx, 0FFFFFFFFh	; 61C77
 mov edx, unk_C542E	; 61C7C
 jmp near fileio_tail_a	; 61C81
-sub_61C86:
+WriteGSumHeader:
 push dword 18h	; 61C86
 call __CHK	; 61C8B
 push ebx	; 61C90
@@ -1334,10 +1334,10 @@ jmp short .5	; 6246A
 mov eax, 5	; 6246C
 .5:
 cwde	; 62471
-call sub_66497	; 62472
+call LoadTeamPPV	; 62472
 .6:
 call BuildEventLines	; 62477
-call sub_66DDA	; 6247C
+call CloseTextOverlay	; 6247C
 mov ax, word [joysampling]	; 62481
 mov word [joysampling_save], ax	; 62487
 xor edx, edx	; 6248D
@@ -1440,10 +1440,10 @@ test ax, ax	; 625D0
 jne short .6	; 625D3
 mov eax, 9	; 625D5
 .5:
-call sub_66497	; 625DA
+call LoadTeamPPV	; 625DA
 .6:
 call BuildEventLines	; 625DF
-call sub_66DDA	; 625E4
+call CloseTextOverlay	; 625E4
 mov ax, word [joysampling]	; 625E9
 mov word [joysampling_save], ax	; 625EF
 xor eax, eax	; 625F5
@@ -1598,13 +1598,13 @@ lea ecx, [byte edx-01h]	; 627DE
 mov dword [dword_CD34C], ecx	; 627E1
 .1:
 call BuildEventLines	; 627E7
-call sub_66DDA	; 627EC
+call CloseTextOverlay	; 627EC
 .2:
 xor eax, eax	; 627F1
 pop edi	; 627F3
 pop esi	; 627F4
 ret 0Ch	; 627F5
-sub_627F8:
+NullCallback0C:
 push dword 4	; 627F8
 call __CHK	; 627FD
 xor eax, eax	; 62802
@@ -1947,7 +1947,7 @@ mov ecx, esi	; 62C0C
 mov ebx, edi	; 62C0E
 mov edx, ebp	; 62C10
 mov eax, MenuCallbackTrue2	; 62C12
-call sub_619C8	; 62C17
+call QueueDeferredCall	; 62C17
 mov dword [dword_C5840], 1	; 62C1C
 mov word [word_CBEC0], 0FFFFh	; 62C26
 .17:
@@ -2005,7 +2005,7 @@ sar ebx, 18h	; 62CB2
 xor ecx, ecx	; 62CB5
 mov edx, esi	; 62CB7
 mov eax, MenuCallbackTrue	; 62CB9
-call sub_619C8	; 62CBE
+call QueueDeferredCall	; 62CBE
 mov dword [dword_C5840], 1	; 62CC3
 mov eax, 1	; 62CCD
 pop esi	; 62CD2
@@ -3196,7 +3196,7 @@ pop esi	; 63C6F
 pop edx	; 63C70
 pop ebx	; 63C71
 ret	; 63C72
-sub_63C73:
+UpdatePowerPlayFlags:
 push dword 10h	; 63C73
 call __CHK	; 63C78
 push ebx	; 63C7D
@@ -3752,7 +3752,7 @@ pop esi	; 64334
 pop edx	; 64335
 pop ebx	; 64336
 ret	; 64337
-sub_64338:
+CountShotOnGoal:
 push dword 8	; 64338
 call __CHK	; 6433D
 push edx	; 64342

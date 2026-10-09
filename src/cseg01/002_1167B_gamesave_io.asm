@@ -16,7 +16,7 @@ extern SetupGame, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadSeasonRec, 
 extern DrawHudPanel, LoadCupFinalSeries, PostGameDesk, SportsDesk, sub_1B982, MakeGSummaryPath, SetupGoalieMenu, ResetGoalieMenu
 extern LoadRink, SetRinkScroll, ReadGoalieSeasonRec, ReadTeamNames, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, PaPreloadClips, DrawRinkOverlays, PeriodOver, LoadGameState
-extern sub_61A27, sub_61B85, sub_64614, SetupTeamLines, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
+extern RunDeferredCalls, FlushGSumQueue, sub_64614, SetupTeamLines, NormalizeDressFlags, LoadTeamPalette, sub_6ADA7, sub_6AF52
 extern sub_6AF97, sub_6B008, LoadRockMusic, SpeechStopQueue, MusicChanReset, SelectScreenBM, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8FFB0, sub_90354, sub_9035C, MouseSetPos, sub_B396E, sub_B4BA8, str_backslash
 extern cupteam, presidentsteam, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690
@@ -140,7 +140,7 @@ mov ebx, 10h	; 11811
 mov edx, savepal	; 11816
 mov eax, 1	; 1181B
 call FadePalette	; 11820
-call sub_61B85	; 11825
+call FlushGSumQueue	; 11825
 mov eax, dword [joysampling_save-2]	; 1182A
 sar eax, 10h	; 1182F
 mov dword [joysampling], eax	; 11832
@@ -257,7 +257,7 @@ call sub_8F633	; 119DC
 .15:
 call StopDigiSample	; 119E1
 call SpeechStopQueue	; 119E6
-call sub_61B85	; 119EB
+call FlushGSumQueue	; 119EB
 mov ecx, dword [s1font]	; 119F0
 push ecx	; 119F6
 call sub_8EA18	; 119F7
@@ -369,7 +369,7 @@ mov ax, word [joysampling]	; 11BA5
 mov word [joysampling_save], ax	; 11BAB
 xor edx, edx	; 11BB1
 mov dword [joysampling], edx	; 11BB3
-call sub_61A27	; 11BB9
+call RunDeferredCalls	; 11BB9
 mov dword [dword_C5840], edx	; 11BBE
 mov eax, dword [joysampling_save-2]	; 11BC4
 sar eax, 10h	; 11BC9
@@ -438,7 +438,7 @@ jmp near GameLoop.1	; 11CD6
 .29:
 xor ebx, ebx	; 11CDB
 mov dword [joysampling], ebx	; 11CDD
-call sub_61B85	; 11CE3
+call FlushGSumQueue	; 11CE3
 call StartThreeStars	; 11CE8
 call PostGameDesk	; 11CED
 mov dword [gameresult], 1	; 11CF2
@@ -466,7 +466,7 @@ sar edx, 10h	; 11D37
 mov eax, dword [HomeTeam-2]	; 11D3A
 sar eax, 10h	; 11D3F
 mov ebx, gamepal	; 11D42
-call sub_673C5	; 11D47
+call LoadTeamPalette	; 11D47
 call FadeOutPalCycle	; 11D4C
 mov edx, 0C8h	; 11D51
 mov eax, 140h	; 11D56
@@ -504,7 +504,7 @@ mov eax, edx	; 11DCD
 call FileClose	; 11DCF
 mov dword [edx], 0FFFFFFFFh	; 11DD4
 call sub_64614	; 11DDA
-call sub_65B48	; 11DDF
+call NormalizeDressFlags	; 11DDF
 xor eax, eax	; 11DE4
 call SetupTeamLines	; 11DE6
 mov eax, 1	; 11DEB

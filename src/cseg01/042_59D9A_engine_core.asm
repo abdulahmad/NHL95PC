@@ -22,8 +22,8 @@ extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
 extern replaystart, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
 extern passspeed, randomd0, sfx, vecdist, IntermissionPC, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
 extern DrawPanelScore, DrawPanelLine, IsCupClinched, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
-extern PlayCrowdSample, PaOneMinuteLeft, sub_61576, sub_615A2, sub_61862, PenaltyManager, sub_63C73, ClearPenaltyBuffer
-extern sub_63D69, EndPenaltyShot, sub_665AD, sub_66FE2, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
+extern PlayCrowdSample, PaOneMinuteLeft, sub_61576, DecayCrowdLevel, sub_61862, PenaltyManager, UpdatePowerPlayFlags, ClearPenaltyBuffer
+extern sub_63D69, EndPenaltyShot, DrawTextOverlay, sub_66FE2, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, awlinetab, unk_DAC40, unk_DAC70, unk_DACA0
 extern unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240, unk_DC252, SortCords
 extern unk_E9D50, unk_E9EE0, updatereplay, vtoa, regd4, camx
@@ -3079,7 +3079,7 @@ call __CHK	; 5C307
 push ebx	; 5C30C
 push edx	; 5C30D
 call PenaltyManager	; 5C30E
-call sub_615A2	; 5C313
+call DecayCrowdLevel	; 5C313
 test byte [gmode], 1	; 5C318
 jne short .1	; 5C31F
 cmp word [gameclock], byte 0	; 5C321
@@ -3107,7 +3107,7 @@ call updatecrowdf	; 5C384
 call RestBench	; 5C389
 test byte [gmode], 1	; 5C38E
 jne short .2	; 5C395
-call sub_63C73	; 5C397
+call UpdatePowerPlayFlags	; 5C397
 .2:
 test byte [gameopts], 4	; 5C39C
 je near .x	; 5C3A3
@@ -4617,7 +4617,7 @@ call DrawFrameSprite	; 5D67F
 .67:
 cmp word [word_CBEC0], byte 0	; 5D684
 jl short .68	; 5D68C
-call sub_665AD	; 5D68E
+call DrawTextOverlay	; 5D68E
 .68:
 mov eax, dword [word_CBEC8-2]	; 5D693
 sar eax, 10h	; 5D698

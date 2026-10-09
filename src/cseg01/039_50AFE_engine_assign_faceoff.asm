@@ -13,7 +13,7 @@ extern jctime, CanBlockShot_ret5, ltx, puckx, pucky, puckvy, puckz, puckc
 extern puckvz, randomd0, resetplstuff, setpersonel, sfx, skateto, skatetopuck, DrawPanelLine
 extern StopIfFree, SkateToSpot, lcfound, CenterMouse, ReturnGoalies, StopDigiSample, PaSpeechBusy, changeplayer
 extern restorepl, CompLine, setplayer, clockcont_0, SprSortVert, SprSort, SetExitGame, EvadePC
-extern sub_61B85, SetupPenaltyShot, threat, SortCords, updateanim
+extern FlushGSumQueue, SetupPenaltyShot, threat, SortCords, updateanim
 extern vtoa, regd4, camx, camy, passdir, word_C90A6, passplayer, xc1
 extern yc1, word_C90B2, word_C90B4, fodir1, fodir2, c1playernum, c2playernum, cont1team
 extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
@@ -1439,7 +1439,7 @@ mov dword [penshotstart], ebp	; 51C9C
 mov ax, word [joysampling]	; 51CA2
 mov word [joysampling_save], ax	; 51CA8
 mov dword [joysampling], ebp	; 51CAE
-call sub_61B85	; 51CB4
+call FlushGSumQueue	; 51CB4
 mov eax, dword [joysampling_save-2]	; 51CB9
 sar eax, 10h	; 51CBE
 mov dword [joysampling], eax	; 51CC1

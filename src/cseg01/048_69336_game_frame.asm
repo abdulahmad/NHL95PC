@@ -13,7 +13,7 @@ extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSi
 extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, DrawHudPanel, sub_1BAF3, LoadGameTeams, LoadRink, SetRinkScroll
 extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
 extern PaHighlightIntro, PaOpenBank, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
-extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, SpeechBusy
+extern FlushGSumQueue, ClearPenaltyBuffer, LoadTeamPalette, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, SpeechBusy
 extern MusicChanReset2, sub_8F633, sub_8FFB0, sub_B396E, awlinetab, hmlinetab, savepal, gamepal
 extern SortCords, vtoa, camx, camy, passplayer, xc1, yc1
 extern c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, refsignal, RefStep, RefPen
@@ -105,7 +105,7 @@ mov ecx, 0Ch	; 6944D
 lea edi, [dword esp+094h]	; 69452
 mov esi, awlinetab	; 69459
 rep movsd	; 6945E
-call sub_61B85	; 69460
+call FlushGSumQueue	; 69460
 and byte [gameopts], 0E4h	; 69465
 xor edx, edx	; 6946C
 mov word [gameover], dx	; 6946E
@@ -130,7 +130,7 @@ sar edx, 10h	; 694BC
 mov eax, dword [HomeTeam-2]	; 694BF
 sar eax, 10h	; 694C4
 mov ebx, gamepal	; 694C7
-call sub_673C5	; 694CC
+call LoadTeamPalette	; 694CC
 call LoadPlayerPhotos	; 694D1
 xor ecx, ecx	; 694D6
 mov word [awtmgoalie], cx	; 694D8
@@ -793,7 +793,7 @@ sar edx, 10h	; 69F7C
 mov eax, dword [HomeTeam-2]	; 69F7F
 sar eax, 10h	; 69F84
 mov ebx, gamepal	; 69F87
-call sub_673C5	; 69F8C
+call LoadTeamPalette	; 69F8C
 mov word [word_CBC54], di	; 69F91
 mov word [word_CBC52], di	; 69F98
 mov word [word_CBC58], di	; 69F9F
