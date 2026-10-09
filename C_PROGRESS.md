@@ -200,7 +200,7 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `01
 | DlgReturnZero | 2FED2 | 13 | matched | [DlgReturnZero.c](src/c/023_2FDD1_misc_dialogs/DlgReturnZero.c) |  |
 | SetListItemColors | 30209 | 53 | matched | [SetListItemColors.c](src/c/023_2FDD1_misc_dialogs/SetListItemColors.c) |  |
 | ListHitTest | 3023E | 123 | nonmatching | [ListHitTest.c](src/c/023_2FDD1_misc_dialogs/ListHitTest.c) | scheduling: asm loads w (stack arg) before top+2 and keeps x1 at [esp], x2 at [esp+4]; C swaps the slots |
-| DrawListItem | 302B9 | 227 | nonmatching | [DrawListItem.c](src/c/023_2FDD1_misc_dialogs/DrawListItem.c) |  |
+| DrawListItem | 302B9 | 227 | nonmatching | [DrawListItem.c](src/c/023_2FDD1_misc_dialogs/DrawListItem.c) | registers: y / w in ebp / edi (EXE edi / ebp); DrawListItems short-jumps into its exit, mark as one block |
 | DrawListItems | 3039C | 95 | nonmatching | [DrawListItem.c](src/c/023_2FDD1_misc_dialogs/DrawListItem.c) |  |
 | MeasureTextLine | 309E4 | 40 | matched | [MeasureTextLine.c](src/c/023_2FDD1_misc_dialogs/MeasureTextLine.c) |  |
 | TrackButtons | 30A39 | 169 | matched | [TrackButtons.c](src/c/023_2FDD1_misc_dialogs/TrackButtons.c) |  |
@@ -492,7 +492,7 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `01
 | DrawMenuBar | 6B5E4 | 160 | matched | [DrawMenuBar.c](src/c/050_6B093_joystick_calibration/DrawMenuBar.c) |  |
 | DrawMenuDropdown DrawMenuBox | 6B684 | 522 | matched | [DrawMenuDropdown.c](src/c/050_6B093_joystick_calibration/DrawMenuDropdown.c) |  |
 | PrintMenuText PrintMenuTextGrey PrintMenuTextAlt | 6B88E | 192 | matched | [PrintMenuText.c](src/c/050_6B093_joystick_calibration/PrintMenuText.c) |  |
-| DrawMenuItemSel | 6B94E | 157 | nonmatching | [DrawMenuItemSel.c](src/c/050_6B093_joystick_calibration/DrawMenuItemSel.c) |  |
+| DrawMenuItemSel | 6B94E | 157 | nonmatching | [DrawMenuItemSel.c](src/c/050_6B093_joystick_calibration/DrawMenuItemSel.c) | registers: x / y params in ebp / edi (EXE edi / ebp); Norm also needs the cross-jumps into Sel_ret / Sel_common |
 | DrawMenuItemNorm | 6B9EB | 98 | nonmatching | [DrawMenuItemSel.c](src/c/050_6B093_joystick_calibration/DrawMenuItemSel.c) |  |
 | MenuCentralRegistry | 6BE95 | 168 | matched | [MenuCentralRegistry.c](src/c/050_6B093_joystick_calibration/MenuCentralRegistry.c) |  |
 | BuildTeamRosterList | 6C043 | 344 | nonmatching | [BuildTeamRosterList.c](src/c/050_6B093_joystick_calibration/BuildTeamRosterList.c) |  |

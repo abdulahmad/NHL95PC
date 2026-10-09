@@ -129,7 +129,7 @@ DlgReturnZero,2FED2,13,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DlgRe
 DrawBevelRect,2FE49,137,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawBevelRect.c,matched,
 DrawButton,30B16,221,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawButton.c,matched,
 DrawButtons,30AE2,52,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawButtons.c,matched,
-DrawListItem,302B9,227,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,nonmatching,
+DrawListItem,302B9,227,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,nonmatching,"registers: y / w in ebp / edi (EXE edi / ebp); DrawListItems short-jumps into its exit, mark as one block"
 DrawListItems,3039C,95,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,nonmatching,
 GrowToButton,30F5F,85,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButton.c,nonmatching,same blocks; original keeps w in edx and v in ecx (then edx / eax in the second half); this draft moves w to ecx. 10-min cap
 GrowToButtons,30FB4,95,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButtons.c,nonmatching,registers: asm sums in edx and builds each width in esi; C swaps them
@@ -416,7 +416,7 @@ BuildTeamRosterList,6C043,344,050_6B093_joystick_calibration,src/c/050_6B093_joy
 ClearInputQueue,6B3D7,57,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/ClearInputQueue.c,matched,
 DrawMenuBar,6B5E4,160,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/DrawMenuBar.c,matched,
 DrawMenuDropdown DrawMenuBox,6B684,522,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/DrawMenuDropdown.c,matched,
-DrawMenuItemSel,6B94E,157,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/DrawMenuItemSel.c,nonmatching,
+DrawMenuItemSel,6B94E,157,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/DrawMenuItemSel.c,nonmatching,registers: x / y params in ebp / edi (EXE edi / ebp); Norm also needs the cross-jumps into Sel_ret / Sel_common
 DrawMenuItemNorm,6B9EB,98,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/DrawMenuItemSel.c,nonmatching,
 EventToPointer,6B4BB,297,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/EventToPointer.c,matched,
 GetInputEvent,6B391,70,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/GetInputEvent.c,matched,
