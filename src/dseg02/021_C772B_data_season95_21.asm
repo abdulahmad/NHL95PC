@@ -4,7 +4,7 @@ bits 32
 section s_C772B progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450, unk_C76D4, unk_C76FE
 global msg_LeagueExists, btn_LeagueExists, unk_C776B, unk_C7792, unk_C77A3, msg_WhichSchedule, btn_WhichSchedule, unk_C77E6
-global unk_C7805, unk_C7809, msg_CreateError, unk_C782A, msg_TradeError, unk_C784B
+global unk_C7805, unk_C7809, msg_CreateError, unk_C782A, msg_TradeError, str_DoYouReallyWantToRemove
 msg_LeagueExists:
 dd unk_C76D4
 dd unk_C76FE
@@ -48,6 +48,6 @@ db 045h,072h,072h,06Fh,072h,020h,077h,068h,069h,06Ch,065h,020h,074h,072h,061h,06
 db 069h,06Eh,067h,020h,070h,06Ch,061h,079h,065h,072h,073h,021h,00h
 msg_TradeError:
 dd unk_C782A
-unk_C784B:
+str_DoYouReallyWantToRemove:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,072h,065h,061h,06Ch,06Ch,079h,020h,077h,061h
 db 06Eh,074h,020h,074h,06Fh,020h,072h,065h,06Dh,06Fh,076h,065h,00h

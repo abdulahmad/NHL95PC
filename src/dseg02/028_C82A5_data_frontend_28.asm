@@ -2,29 +2,29 @@
 bits 32
 %include "hockey.inc"
 section s_C82A5 progbits alloc noexec write align=1
-global asc_C82A5, asc_C82B9, asc_C82CE, asc_C82E6, asc_C830C, asc_C8333, byte_C8332, unk_C833D
+global str_EnterPasswordFor, str_VerifyPasswordFor, str_EnterMasterPassword, str_EnterMasterControllerPasswor, str_VerifyMasterControllerPasswo, passkey, passkey_m1, unk_C833D
 global unk_C8345, unk_C834E, unk_C8354, unk_C835A, unk_C835E, unk_C8363, unk_C8368, unk_C836F
 global unk_C8379, unk_C8381, unk_C838A
-asc_C82A5:
+str_EnterPasswordFor:
 db 045h,06Eh,074h,065h,072h,020h,070h,061h,073h,073h,077h,06Fh,072h,064h,020h,066h
 db 06Fh,072h,020h,00h
-asc_C82B9:
+str_VerifyPasswordFor:
 db 056h,065h,072h,069h,066h,079h,020h,070h,061h,073h,073h,077h,06Fh,072h,064h,020h
 db 066h,06Fh,072h,020h,00h
-asc_C82CE:
+str_EnterMasterPassword:
 db 020h,065h,06Eh,074h,065h,072h,020h,06Dh,061h,073h,074h,065h,072h,020h,070h,061h
 db 073h,073h,077h,06Fh,072h,064h,02Eh,00h
-asc_C82E6:
+str_EnterMasterControllerPasswor:
 db 045h,06Eh,074h,065h,072h,020h,06Dh,061h,073h,074h,065h,072h,020h,063h,06Fh,06Eh
 db 074h,072h,06Fh,06Ch,06Ch,065h,072h,020h,070h,061h,073h,073h,077h,06Fh,072h,064h
 db 020h,066h,06Fh,072h,020h,00h
-asc_C830C:
+str_VerifyMasterControllerPasswo:
 db 056h,065h,072h,069h,066h,079h,020h,06Dh,061h,073h,074h,065h,072h,020h,063h,06Fh
 db 06Eh,074h,072h,06Fh,06Ch,06Ch,065h,072h,020h,070h,061h,073h,073h,077h,06Fh,072h
 db 064h,020h,066h,06Fh,072h,020h
-byte_C8332:
+passkey_m1:
 db 00h
-asc_C8333:
+passkey:
 db 04Eh,048h,04Ch,048h,06Fh,063h,06Bh,065h,079h,00h
 unk_C833D:
 db 04Ah,061h,06Eh,075h,061h,072h,079h,00h

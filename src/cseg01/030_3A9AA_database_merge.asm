@@ -15,9 +15,9 @@ extern leaguedbnames, off_C89DE, off_C8A85, off_C8AB9, off_C8B37
 extern sprintf_, strcmp_, strcpy_, stricmp_, FileExists, MakePath, DeleteFiles, DeleteDir
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt, ReadKeyRec
 extern CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, SetupStatsSourceMenu, BuildSavedGameLabels, SetDialogColors, RestoreDialogBg
-extern MessageBox, LoadModeState, CopyGameSettings, MenuNextLeagueGame, MenuExportDbs, sub_38B4F, sub_3A24F, sub_3A266
-extern sub_3A27D, WriteSchedGame, WriteTeamRec, sub_3A31E, WriteLeagueTeamEntry, AskTeamPassword, AskMasterPassword, sub_3A5FC
-extern sub_3A71C, sub_3A826, FmtFromLeague, LeagueCheckStub, GetLeagueId, MsgCopyingDatabases, CopyHumanTeamDBs, UpdateSeasonSchedule
+extern MessageBox, LoadModeState, CopyGameSettings, MenuNextLeagueGame, MenuExportDbs, LeagueTeamSelect, WriteSeasonRec, ReadGoalieSeasonRec
+extern WriteGoalieSeasonRec, WriteSchedGame, WriteTeamRec, ReadLeagueTeamEntry, WriteLeagueTeamEntry, AskTeamPassword, AskMasterPassword, MergeTeamRecDelta
+extern MergeSeasonRecDelta, MergeGoalieRecDelta, FmtFromLeague, LeagueCheckStub, GetLeagueId, MsgCopyingDatabases, CopyHumanTeamDBs, UpdateSeasonSchedule
 extern FatalError, sub_B2DCA, sub_B392C, sub_B3CC8, sub_B4B88, unk_C1914, unk_C1916, unk_C192D
 extern unk_C1930, unk_C7569, unk_C7609, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, unk_C792B, unk_C79D0
 extern unk_C7B12, unk_C7C61, unk_C7CF1, unk_C7D9D, unk_C7E3E, btn_MasterDB, unk_C7F77, unk_C7F8E
@@ -189,7 +189,7 @@ mov ecx, edi	; 3ABCB
 lea ebx, [dword esp+05D4h]	; 3ABCD
 lea edx, [byte esp+04h]	; 3ABD4
 lea eax, [dword esp+02ECh]	; 3ABD8
-call sub_3A5FC	; 3ABDF
+call MergeTeamRecDelta	; 3ABDF
 mov ebx, ebp	; 3ABE4
 lea edx, [dword esp+05D0h]	; 3ABE6
 mov eax, dword [dword esp+0A58h]	; 3ABED
@@ -240,11 +240,11 @@ mov ecx, edi	; 3AC93
 lea ebx, [dword esp+09F8h]	; 3AC95
 lea edx, [dword esp+09C8h]	; 3AC9C
 lea eax, [dword esp+0998h]	; 3ACA3
-call sub_3A71C	; 3ACAA
+call MergeSeasonRecDelta	; 3ACAA
 mov ebx, dword [dword esp+098Ch]	; 3ACAF
 lea edx, [dword esp+09F4h]	; 3ACB6
 mov eax, dword [dword esp+0A48h]	; 3ACBD
-call sub_3A24F	; 3ACC4
+call WriteSeasonRec	; 3ACC4
 mov edx, eax	; 3ACC9
 loc_3ACCB:
 inc esi	; 3ACCB
@@ -270,7 +270,7 @@ jne short loc_3AD27	; 3AD09
 mov ebx, dword [dword esp+098Ch]	; 3AD0B
 lea edx, [dword esp+0928h]	; 3AD12
 mov eax, dword [dword esp+0A44h]	; 3AD19
-call sub_3A266	; 3AD20
+call ReadGoalieSeasonRec	; 3AD20
 mov edx, eax	; 3AD25
 loc_3AD27:
 test edx, edx	; 3AD27
@@ -278,7 +278,7 @@ jne short loc_3AD47	; 3AD29
 mov ebx, dword [dword esp+098Ch]	; 3AD2B
 lea edx, [dword esp+08B8h]	; 3AD32
 mov eax, dword [dword esp+0A4Ch]	; 3AD39
-call sub_3A266	; 3AD40
+call ReadGoalieSeasonRec	; 3AD40
 mov edx, eax	; 3AD45
 loc_3AD47:
 test edx, edx	; 3AD47
@@ -286,7 +286,7 @@ jne short loc_3AD67	; 3AD49
 mov ebx, dword [dword esp+098Ch]	; 3AD4B
 lea edx, [dword esp+08F0h]	; 3AD52
 mov eax, dword [dword esp+0A48h]	; 3AD59
-call sub_3A266	; 3AD60
+call ReadGoalieSeasonRec	; 3AD60
 mov edx, eax	; 3AD65
 loc_3AD67:
 test edx, edx	; 3AD67
@@ -296,11 +296,11 @@ mov ecx, edi	; 3AD6C
 lea ebx, [dword esp+08F4h]	; 3AD6E
 lea edx, [dword esp+08BCh]	; 3AD75
 lea eax, [dword esp+092Ch]	; 3AD7C
-call sub_3A826	; 3AD83
+call MergeGoalieRecDelta	; 3AD83
 mov ebx, dword [dword esp+098Ch]	; 3AD88
 lea edx, [dword esp+08F0h]	; 3AD8F
 mov eax, dword [dword esp+0A48h]	; 3AD96
-call sub_3A27D	; 3AD9D
+call WriteGoalieSeasonRec	; 3AD9D
 mov edx, eax	; 3ADA2
 loc_3ADA4:
 inc esi	; 3ADA4
@@ -1452,7 +1452,7 @@ jne near loc_3BD15	; 3BC39
 mov ebx, dword [dword esp+0FCh]	; 3BC3F
 lea edx, [dword esp+080h]	; 3BC46
 mov eax, dword [dword esp+0E8h]	; 3BC4D
-call sub_3A31E	; 3BC54
+call ReadLeagueTeamEntry	; 3BC54
 mov esi, eax	; 3BC59
 test eax, eax	; 3BC5B
 jne short loc_3BC89	; 3BC5D
@@ -2306,7 +2306,7 @@ mov ebx, dword [dword esp+0B1h]	; 3C848
 sar ebx, 18h	; 3C84F
 lea edx, [byte esp+04Ch]	; 3C852
 mov eax, dword [dword esp+0A4h]	; 3C856
-call sub_3A31E	; 3C85D
+call ReadLeagueTeamEntry	; 3C85D
 mov esi, eax	; 3C862
 loc_3C864:
 test esi, esi	; 3C864
@@ -3026,7 +3026,7 @@ mov ecx, leagueteams	; 3D2AA
 mov ebx, treeteamnames	; 3D2AF
 mov edx, humancount	; 3D2B4
 mov eax, curleague	; 3D2B9
-call sub_38B4F	; 3D2BE
+call LeagueTeamSelect	; 3D2BE
 cmp dword [humancount], byte 1	; 3D2C3
 jne short loc_3D2E7	; 3D2CA
 push edi	; 3D2CC

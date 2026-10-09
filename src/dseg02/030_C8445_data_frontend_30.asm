@@ -2,13 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_C8445 progbits alloc noexec write align=1
-extern CalStandingsMenu, CalNextMonth, CalPrevMonth, CalReturn, sub_38B25, sub_38B3A, sub_7A335, sub_7A39F
+extern CalStandingsMenu, CalNextMonth, CalPrevMonth, CalReturn, TeamSelDone, TeamSelCancel, sub_7A335, sub_7A39F
 extern sub_7A404, sub_7CA53, sub_7CA61, unk_C67B1, unk_CDF44, unk_CDF56, unk_CDF64, unk_CDF76
 extern unk_CDF8A, unk_CE96F, unk_CEA2F, unk_CEB2F
-global monthdays, curleague, monthfirstday_m1, monthfirstday, dword_C87B0, calnextslot, calprevslot, unk_C846A
+global monthdays, curleague, monthfirstday_m1, monthfirstday, teamselsetslot, calnextslot, calprevslot, unk_C846A
 global unk_C850A, unk_C8520, unk_C8536, unk_C854F, str_NextMonth, str_PrevMonth, str_ReturnToSportsCentral, calplaymenu
-global unk_C8642, unk_C8647, unk_C864C, calmenubar, unk_C86B7, unk_C86CC, unk_C86EC, unk_C86FC
-global unk_C871C, unk_C8721, unk_C8728, unk_C8768, unk_C876F, unk_C8778, unk_C87B8
+global unk_C8642, unk_C8647, unk_C864C, calmenubar, unk_C86B7, lgsetshowmenu, unk_C86EC, lgsetmenu
+global unk_C871C, unk_C8721, teamselmenu, unk_C8768, unk_C876F, teamselmenubar, unk_C87B8
 monthdays:
 db 01Fh,01Ch,01Fh,01Eh,01Fh,01Eh,01Fh,01Fh,01Eh,01Fh,01Eh,01Fh
 curleague:
@@ -111,14 +111,14 @@ db 05h,00h,00h,00h
 unk_C86B7:
 db 053h,068h,06Fh,077h,020h,04Ch,065h,061h,067h,075h,065h,020h,073h,065h,074h,074h
 db 069h,06Eh,067h,073h,00h
-unk_C86CC:
+lgsetshowmenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,097h,00h,00h,00h,012h,00h,00h,00h
 dd unk_C86B7
 dd sub_7A39F
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_C86EC:
 db 04Ch,065h,061h,067h,075h,065h,020h,073h,065h,074h,074h,069h,06Eh,067h,073h,00h
-unk_C86FC:
+lgsetmenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,070h,00h,00h,00h,012h,00h,00h,00h
 dd unk_C86EC
 dd sub_7A335
@@ -127,30 +127,30 @@ unk_C871C:
 db 044h,06Fh,06Eh,065h,00h
 unk_C8721:
 db 043h,061h,06Eh,063h,065h,06Ch,00h
-unk_C8728:
+teamselmenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,034h,00h,00h,00h,011h,00h,00h,00h
 dd unk_C871C
-dd sub_38B25
+dd TeamSelDone
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 034h,00h,00h,00h,024h,00h,00h,00h
 dd unk_C8721
-dd sub_38B3A
+dd TeamSelCancel
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_C8768:
 db 053h,065h,06Ch,065h,063h,074h,00h
 unk_C876F:
 db 053h,065h,074h,074h,069h,06Eh,067h,073h,00h
-unk_C8778:
+teamselmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,031h,00h,00h,00h,012h,00h,00h,00h
 dd unk_C8768
 db 00h,00h,00h,00h
-dd unk_C8728
+dd teamselmenu
 db 02h,00h,00h,00h,032h,00h,00h,00h,00h,00h,00h,00h,06Fh,00h,00h,00h
 db 012h,00h,00h,00h
 dd unk_C876F
 db 00h,00h,00h,00h
-dword_C87B0:
-dd unk_C86FC
+teamselsetslot:
+dd lgsetmenu
 db 01h,00h,00h,00h
 unk_C87B8:
 db 00h,00h,00h,00h,00h,00h,00h,00h

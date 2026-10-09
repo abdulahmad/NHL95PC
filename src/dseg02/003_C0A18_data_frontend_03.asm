@@ -41,9 +41,9 @@ global str_Pal15, str_Menubuff4, str_GameSet4, str_Game, str_Set, str_Palette2, 
 global str_Rink2, str_Til, str_InvalidFileSize, str_TILES, str_ErrorLoadingFile, str_Map, str_CRESTS3, str_Pal16
 global str_Boxr, str_Boxb, str_Bkgd7, str_02d9D, str_Home, str_Away, str_SDD2, str_Pal17
 global str_Calendar, str_Callogo, str_Iff9, str_Pointer8, str_Menubuff5, str_02d, str_GSUMMARY, str_Pal18
-global str_Temp5, str_Easndesk2, str_GAME, str_SAV, str_Back, str_Callogo2, asc_C188D, asc_C1892
-global asc_C1897, asc_C189B, asc_C189F, asc_C18A6, asc_C18AB, asc_C18B3, asc_C18B8, asc_C18C1
-global asc_C18C7, asc_C18CC, asc_C18D5, asc_C18E8, asc_C1904, asc_C190A, asc_C190E, asc_C1919
+global str_Temp5, str_Easndesk2, str_GAME, str_SAV, str_Back, str_Callogo2, str_PLST, str_PTLS
+global str_Pal19, str_TPI, str_Embnhl, str_Bkgd8, str_Pointer9, str_Iff10, str_Leaguetm2, str_Tspal
+global str_Pal20, str_Menubuff6, str_WhoWillPlayThe, str_MightyDucksOfAnaheim3, asc_C1904, asc_C190A, asc_C190E, asc_C1919
 global asc_C191E, asc_C1923, asc_C1927, asc_C1938, asc_C193D, asc_C1942, asc_C1948, asc_C195C
 global asc_C1964, asc_C1969, asc_C196F, asc_C1974, asc_C197A, asc_C1980, asc_C1987, asc_C198C
 global asc_C1994, asc_C19C1, asc_C19DC, asc_C19E0, asc_C19EA, asc_C19F3, asc_C19FA, asc_C19FF
@@ -1120,34 +1120,34 @@ str_Back:
 db 062h,061h,063h,06Bh,00h
 str_Callogo2:
 db 063h,061h,06Ch,06Ch,06Fh,067h,06Fh,00h
-asc_C188D:
+str_PLST:
 db 050h,04Ch,053h,054h,00h
-asc_C1892:
+str_PTLS:
 db 050h,054h,04Ch,053h,00h
-asc_C1897:
+str_Pal19:
 db 050h,061h,06Ch,00h
-asc_C189B:
+str_TPI:
 db 054h,050h,049h,00h
-asc_C189F:
+str_Embnhl:
 db 065h,06Dh,062h,06Eh,068h,06Ch,00h
-asc_C18A6:
+str_Bkgd8:
 db 062h,06Bh,067h,064h,00h
-asc_C18AB:
+str_Pointer9:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
-asc_C18B3:
+str_Iff10:
 db 02Eh,069h,066h,066h,00h
-asc_C18B8:
+str_Leaguetm2:
 db 06Ch,065h,061h,067h,075h,065h,074h,06Dh,00h
-asc_C18C1:
+str_Tspal:
 db 074h,073h,070h,061h,06Ch,00h
-asc_C18C7:
+str_Pal20:
 db 021h,070h,061h,06Ch,00h
-asc_C18CC:
+str_Menubuff6:
 db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
-asc_C18D5:
+str_WhoWillPlayThe:
 db 057h,068h,06Fh,020h,077h,069h,06Ch,06Ch,020h,070h,06Ch,061h,079h,020h,074h,068h
 db 065h,020h,00h
-asc_C18E8:
+str_MightyDucksOfAnaheim3:
 db 04Dh,069h,067h,068h,074h,079h,020h,044h,075h,063h,06Bh,073h,020h,06Fh,066h,020h
 db 041h,06Eh,061h,068h,065h,069h,06Dh,00h
 unk_C1900:

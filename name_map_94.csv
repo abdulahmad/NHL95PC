@@ -348,26 +348,28 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00037E5B,sub_37E5B,RestoreGridCellBg,PC-new,,,,high,restores and frees the saved grid cell,import_export,manual-trace
 00037EA6,sub_37EA6,HighlightGridCell,PC-new,,,,high,"(on, grid, team): draws or erases the frame around a team's grid cell",import_export,manual-trace
 00037FBA,sub_37FBA,DrawTeamGrid,PC-new,,,,medium,"centred title, callogo crest of each team in the division grid and their names (DrawTeamGridName)",import_export,manual-trace
-000380E9,sub_380E9,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-00038386,sub_38386,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-000384B8,sub_384B8,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-00038B25,sub_38B25,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-00038B3A,sub_38B3A,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-00038B4F,sub_38B4F,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-0003A24F,sub_3A24F,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-0003A266,sub_3A266,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-0003A27D,sub_3A27D,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
+000380E9,sub_380E9,ChooseLeagueController,PC-new,,,,high,"new league: ""Who will control the league?"" ListDialog of the human teams, then master controller password entry + verify (re-asks on ""The password was entered differently the second time!""), stored EncryptPassword'ed",league_setup,manual-trace
+00038386,sub_38386,AskExportToFloppy,PC-new,,,,medium,"for human teams kept on floppy: MessageBox ""Do you want to export <team> to a floppy disk?"" (Yes / No)",league_setup,manual-trace
+000384B8,sub_384B8,BuildStandingsGrid,PC-new,,,,medium,"reads the 26 team records and orders each division (divisionteams) by points (2 x rec+29h + rec+2Bh, then the +2Ch/+2Eh words) into the 4 x 7 grid",league_setup,manual-trace
+00038B25,sub_38B25,TeamSelDone,PC-new,,,,high,"team select menu ""Done"": teamselresult = 1",league_setup,manual-trace
+00038B3A,sub_38B3A,TeamSelCancel,PC-new,,,,high,"team select menu ""Cancel"": teamselresult = -1",league_setup,manual-trace
+00038B4F,sub_38B4F,LeagueTeamSelect,PC-new,,,,high,"league team grid screen (TPI / embnhl / leaguetm): standings-ordered division grid, pick a team (""Select a team to play."", ""Who will play the <team>?""), remove confirmation, Settings menu; used by PlayLeagueGame, schedule and trades",league_setup,manual-trace
+0003A24F,sub_3A24F,WriteSeasonRec,PC-new,,,,medium,FileWriteAt 2Fh: SEASON.DB skater record (pair of ReadSeasonRec),league_setup,manual-trace
+0003A266,sub_3A266,ReadGoalieSeasonRec,PC-new,,,,medium,FileReadAt 36h: SEASON.DB goalie record (KEY position 'G'),league_setup,manual-trace
+0003A27D,sub_3A27D,WriteGoalieSeasonRec,PC-new,,,,medium,FileWriteAt 36h: SEASON.DB goalie record,league_setup,manual-trace
 0003A28F,sub_3A28F,WriteSchedGame,PC-new,,,,high,"FileWriteAt counterpart of ReadSchedGame (2 + index*6, 6 bytes)",league_setup,manual-trace
 0003A2B8,sub_3A2B8,WriteTeamRec,PC-new,,,,high,"FileWriteAt counterpart of ReadTeamRec (index*2E8h, 2E8h bytes)",league_setup,manual-trace
-0003A2EE,sub_3A2EE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-0003A31E,sub_3A31E,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
+0003A2EE,sub_3A2EE,ReadDbRec4Ch,PC-new,,,,low,FileReadAt of a 4Ch-byte record at index * 4Ch (options_settings),league_setup,manual-trace
+0003A31E,sub_3A31E,ReadLeagueTeamEntry,PC-new,,,,high,FileReadAt 1Eh at 20h + team * 1Eh: PINFO league team entry (pair of WriteLeagueTeamEntry),league_setup,manual-trace
 0003A347,sub_3A347,WriteLeagueTeamEntry,PC-new,,,,high,"FileWriteAt of one PINFO.DB team entry (20h + index*1Eh, 1Eh bytes)",league_setup,manual-trace
+0003A36B,sub_3A36B,ReadDbRec28h,PC-new,,,,low,FileReadAt 28h-byte record (unused),league_setup,manual-trace
+0003A380,sub_3A380,ReadDbRec2Ch,PC-new,,,,low,FileReadAt 2Ch-byte record (unused),league_setup,manual-trace
 0003A395,sub_3A395,AskTeamPassword,PC-new,,,,medium,"'Enter password for <team>' input and check (sub_3A597), 'Incorrect password!' on mismatch; TradePlayers asks it for both teams",league_setup,manual-trace
 0003A49E,sub_3A49E,AskMasterPassword,PC-new,,,,high,"up to 3 tries: '<team> enter master password.' input, compare with the master password, 'Incorrect password!'; -1 on Esc",league_setup,manual-trace
-0003A597,sub_3A597,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-0003A5FC,sub_3A5FC,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-0003A71C,sub_3A71C,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
-0003A826,sub_3A826,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
+0003A597,sub_3A597,EncryptPassword,PC-new,,,,high,"XORs the password with the key ""NHLHockey"" forwards and backwards (symmetric)",league_setup,manual-trace
+0003A5FC,sub_3A5FC,MergeTeamRecDelta,PC-new,,,,high,"(old, new, dst, ...): dst team record stats (+28h..+4Bh) += new - old; copies the 30h bytes at +0BCh when the team matches",league_setup,manual-trace
+0003A71C,sub_3A71C,MergeSeasonRecDelta,PC-new,,,,high,skater season record: dst += new - old,league_setup,manual-trace
+0003A826,sub_3A826,MergeGoalieRecDelta,PC-new,,,,high,goalie season record: dst += new - old,league_setup,manual-trace
 0003A9AA,sub_3A9AA,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_merge,unmatched
 0003AE1E,sub_3AE1E,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_merge,unmatched
 0003AF70,sub_3AF70,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),database_merge,unmatched

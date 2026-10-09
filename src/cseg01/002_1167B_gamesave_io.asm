@@ -14,7 +14,7 @@ extern off_C526F, off_C5273, teamabbrevs, leaguedbnames, replaystart, camx_m2
 extern off_CBED0, strcat_, strcpy_, SetScreenSize, ResetInputSampling, RunGameFrames, FadePalette, LoadGameGfx
 extern SetupGame, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadSeasonRec, ReadTeamRec, UpdateHudPanel
 extern DrawHudPanel, LoadCupFinalSeries, PostGameDesk, SportsDesk, sub_1B982, MakeGSummaryPath, SetupGoalieMenu, ResetGoalieMenu
-extern LoadRink, SetRinkScroll, sub_3A266, sub_3DAB9, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
+extern LoadRink, SetRinkScroll, ReadGoalieSeasonRec, sub_3DAB9, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, sub_59D71, DrawRinkOverlays, PeriodOver, LoadGameState
 extern sub_61A27, sub_61B85, sub_64614, SetupTeamLines, sub_65B48, sub_673C5, sub_6ADA7, sub_6AF52
 extern sub_6AF97, sub_6B008, sub_7DC8B, sub_8374D, sub_837A8, SelectScreenBM, sub_8E8A0, sub_8EA18
@@ -1071,7 +1071,7 @@ jne short .34	; 12633
 mov ebx, dword [dword esp+034Ch]	; 12635
 lea edx, [dword esp+02E8h]	; 1263C
 mov eax, dword [dword esp+03F0h]	; 12643
-call sub_3A266	; 1264A
+call ReadGoalieSeasonRec	; 1264A
 mov ebx, eax	; 1264F
 .34:
 test ebx, ebx	; 12651

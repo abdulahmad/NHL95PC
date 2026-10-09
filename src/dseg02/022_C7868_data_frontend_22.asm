@@ -2,18 +2,17 @@
 bits 32
 %include "hockey.inc"
 section s_C7868 progbits alloc noexec write align=1
-extern unk_C744C, unk_C7450, unk_C784B
-global str_SelectATeamTo, asc_C78BF, asc_C7969, str_MustBeImportedFrom, str_MustBeExportedTo, dword_C786C, dword_C79C0, dword_C79C8
-global dword_C7A34, dword_C7B16, dword_C7B1E, dword_C7B47, dword_C7B4F
-global dword_C7BA7, dword_C7BAF, off_C7905, unk_C7868, unk_C7870, unk_C78D8, unk_C78F0, unk_C790D
-global unk_C792B, unk_C792F, unk_C7951, unk_C7965, unk_C7986, unk_C79A0, unk_C79D0, unk_C7A08
-global unk_C7A1E, unk_C7A30, unk_C7A3C, str_TheLeague, str_BeforeAGameCanBePlayed, leaguediskmsg, unk_C7AF4, unk_C7AFF
+extern unk_C744C, unk_C7450, str_DoYouReallyWantToRemove
+global str_SelectATeamTo, asc_C78BF, str_WhoWillControlThe, str_MustBeImportedFrom, str_MustBeExportedTo, dword_C79C0, dword_C79C8
+global dword_C7B16, dword_C7B1E, dword_C7B47, dword_C7B4F
+global dword_C7BA7, dword_C7BAF, off_C7905, removeteammsg, removeteambtns, unk_C78D8, unk_C78F0, unk_C790D
+global unk_C792B, unk_C792F, unk_C7951, unk_C7965, unk_C7986, unk_C79A0, unk_C79D0, str_DoYouWantToExport
+global str_ToAFloppyDisk, exportmsg, yesnobtns, str_TheLeague, str_BeforeAGameCanBePlayed, leaguediskmsg, unk_C7AF4, unk_C7AFF
 global unk_C7B12, unk_C7B22, unk_C7B53, unk_C7B73, unk_C7B91, unk_C7BBB
-unk_C7868:
-dd unk_C784B
-dword_C786C:
+removeteammsg:
+dd str_DoYouReallyWantToRemove
 db 00h,00h,00h,00h
-unk_C7870:
+removeteambtns:
 db 010h,00h,00h,00h,03Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd unk_C744C
@@ -49,7 +48,7 @@ db 049h,06Eh,063h,06Fh,072h,072h,065h,063h,074h,020h,070h,061h,073h,073h,077h,06
 db 072h,064h,021h,00h
 unk_C7965:
 dd unk_C7951
-asc_C7969:
+str_WhoWillControlThe:
 db 057h,068h,06Fh,020h,077h,069h,06Ch,06Ch,020h,063h,06Fh,06Eh,074h,072h,06Fh,06Ch
 db 020h,074h,068h,065h,020h,06Ch,065h,061h,067h,075h,065h,03Fh,00h
 unk_C7986:
@@ -71,18 +70,17 @@ dd unk_C744C
 db 0F0h,0FFh,0FFh,0FFh,078h,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,06h,00h,00h,00h
 dd unk_C7450
-unk_C7A08:
+str_DoYouWantToExport:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,065h
 db 078h,070h,06Fh,072h,074h,00h
-unk_C7A1E:
+str_ToAFloppyDisk:
 db 074h,06Fh,020h,061h,020h,066h,06Ch,06Fh,070h,070h,079h,020h,064h,069h,073h,06Bh
 db 03Fh,00h
-unk_C7A30:
-dd unk_C7A08
-dword_C7A34:
+exportmsg:
+dd str_DoYouWantToExport
 db 00h,00h,00h,00h
-dd unk_C7A1E
-unk_C7A3C:
+dd str_ToAFloppyDisk
+yesnobtns:
 db 010h,00h,00h,00h,044h,00h,00h,00h,060h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd unk_C744C

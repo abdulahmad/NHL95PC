@@ -12,7 +12,7 @@ extern dword_D2C6B, leaguemaster, leaguesaved, humancount, dword_DDD34, lgplayte
 extern fputchar, jctime, memset_, teamcitynames, msg_OneHuman, leaguedbnames
 extern msg_TradeDeadline, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, strncpy_, MakePath
 extern DeleteFiles, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
-extern CopyFile, ReadSchedGame, SetDialogColors, RestoreDialogBg, MessageBox, sub_38B4F, WriteLeagueTeamEntry, AskTeamPassword
+extern CopyFile, ReadSchedGame, SetDialogColors, RestoreDialogBg, MessageBox, LeagueTeamSelect, WriteLeagueTeamEntry, AskTeamPassword
 extern AskMasterPassword, sub_3B25A, sub_3BB87, sub_3D46D, ReadLeagueInfo, sub_3DAB9, sub_3E390, sub_3FF52
 extern sub_6B3D7, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
 extern sub_B4F8C, unk_3DC28, msg_AllHuman, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, msg_TradeError, msg_Copying
@@ -279,7 +279,7 @@ mov ecx, leagueteams	; 40596
 mov ebx, treeteamnames	; 4059B
 mov edx, humancount	; 405A0
 mov eax, curleague	; 405A5
-call sub_38B4F	; 405AA
+call LeagueTeamSelect	; 405AA
 mov esi, dword [dword esp+098h]	; 405AF
 test esi, esi	; 405B6
 jl near .17	; 405B8
@@ -699,7 +699,7 @@ mov ecx, leagueteams	; 40B6B
 mov ebx, treeteamnames	; 40B70
 mov edx, humancount	; 40B75
 mov eax, curleague	; 40B7A
-call sub_38B4F	; 40B7F
+call LeagueTeamSelect	; 40B7F
 cmp dword [byte esp+03Ch], byte 0	; 40B84
 jl near AddHumanTeam_exit	; 40B89
 mov edi, dword [humancount]	; 40B8F
@@ -945,7 +945,7 @@ mov ecx, leagueteams	; 40E9F
 mov ebx, treeteamnames	; 40EA4
 mov edx, humancount	; 40EA9
 mov eax, curleague	; 40EAE
-call sub_38B4F	; 40EB3
+call LeagueTeamSelect	; 40EB3
 cmp dword [byte esp+038h], byte 0	; 40EB8
 jl near AddHumanTeam_exit	; 40EBD
 mov edi, dword [humancount]	; 40EC3

@@ -12,7 +12,7 @@ extern memset_, mkdir_, msg_LeagueExists, leaguedbnames
 extern msg_GenSchedule, msg_NoDiskSpace, rand_, sprintf_, strcat_, strcpy_, DiskFreeBytes
 extern AwardsCeremony, FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenRW, FileClose, FileReadAt
 extern FileWriteAt, CopyFile, ReadSchedGame, ReadTeamRec, DiskSpaceShort, GetLeagueDBSizes, AskDatabaseChoice, TextInputDialog
-extern SetDialogColors, RestoreDialogBg, MessageBox, WriteModeState, sub_38B4F, WriteSchedGame, WriteTeamRec, sub_3DAB9
+extern SetDialogColors, RestoreDialogBg, MessageBox, WriteModeState, LeagueTeamSelect, WriteSchedGame, WriteTeamRec, sub_3DAB9
 extern WriteLeagueInfo, CopyHumanTeamDBs, SimulateGame, SeriesWinner, sub_8CCA8, sub_8E8A0, sub_92DE0, sub_932D0
 extern sub_B2DCA, btn_LeagueExists, msg_WhichSchedule, btn_WhichSchedule, msg_CreateError, msg_CreatingLeague, msg_DiskFull, leagueteams
 extern treeteamnames, masterpw, savleague1, savleague2, unknown_libname_1, lggameidx, word_DDD48, word_DDD4A
@@ -4158,7 +4158,7 @@ mov ecx, leagueteams	; 45028
 mov ebx, treeteamnames	; 4502D
 mov edx, humancount	; 45032
 mov eax, curleague	; 45037
-call sub_38B4F	; 4503C
+call LeagueTeamSelect	; 4503C
 mov ebp, 0B6h	; 45041
 jmp short .10	; 45046
 .8:

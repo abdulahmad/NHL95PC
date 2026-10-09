@@ -16,7 +16,7 @@ global lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open
 global fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp
 global fdlg_noarrow, hmcrestbmp, vscrestbmp, dlgsavex, dlgsavey, editcurw, editpos, editmaxw
 global editbuf, editcuron, edity, editx, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly
-global otherperiod, dword_DD748, dword_DD74C, dbextension, calsel, dword_DD784, calexit, dword_DD798
+global otherperiod, dword_DD748, dword_DD74C, dbextension, calsel, dword_DD784, calexit, teamselresult
 global dword_DD79C, calmonth, criterrflag, leaguemaster, leaguesaved, dword_DD7CE, humancount, calselday
 global dword_DDD2C, calselmonth, dword_DDD34, lgplayteam, dword_DDD3C, dword_DDD44, gridcelly, gridcellx
 global dword_DDD70, dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C
@@ -234,7 +234,7 @@ otherscoresb:
 resb 11
 calexit:
 resb 4
-dword_DD798:
+teamselresult:
 resb 4
 dword_DD79C:
 resb 4

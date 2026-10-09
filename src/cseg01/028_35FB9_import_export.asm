@@ -17,8 +17,8 @@ extern sprintf_, strcat_, strcpy_, SetupControllers, PlayGame, FileExists, MakeP
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, ReadKeyRec, ReadSeasonRec
 extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, SetTextColors, PrintCenteredText, PrintShadowText, InitGameSummary
 extern GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, PreGameScreen, SetDialogColors, RestoreDialogBg
-extern MessageBox, CalendarScreen, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, WriteSchedGame, WriteTeamRec
-extern sub_3A31E, AskTeamPassword, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, ReadLeagueInfo, sub_3DAB9
+extern MessageBox, CalendarScreen, LeagueTeamSelect, WriteSeasonRec, ReadGoalieSeasonRec, WriteGoalieSeasonRec, WriteSchedGame, WriteTeamRec
+extern ReadLeagueTeamEntry, AskTeamPassword, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, ReadLeagueInfo, sub_3DAB9
 extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSeasonSchedule, UpdatePlayoffSeries, sub_479E9, sub_6B410
 extern sub_6B47C, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_903F0, sub_91370, sub_91400, sub_92F50, sub_93000, sub_B2DCA, sub_B2E1B, sub_B30B4
@@ -104,7 +104,7 @@ jne short .5	; 360BF
 mov ebx, dword [dword esp+0B0h]	; 360C1
 lea edx, [byte esp+060h]	; 360C8
 mov eax, dword [dword esp+0ACh]	; 360CC
-call sub_3A31E	; 360D3
+call ReadLeagueTeamEntry	; 360D3
 mov ebp, eax	; 360D8
 .5:
 lea eax, [dword esp+0ACh]	; 360DA
@@ -395,7 +395,7 @@ jne short .13	; 3654B
 mov ebx, dword [dword esp+0358h]	; 3654D
 lea edx, [dword esp+02F4h]	; 36554
 mov eax, dword [dword esp+03E4h]	; 3655B
-call sub_3A266	; 36562
+call ReadGoalieSeasonRec	; 36562
 jmp short .14	; 36567
 .13:
 mov ebx, dword [dword esp+0358h]	; 36569
@@ -415,14 +415,14 @@ inc word [dword esp+eax+0324h]	; 3659C
 mov ebx, dword [dword esp+0358h]	; 365A4
 lea edx, [dword esp+02F4h]	; 365AB
 mov eax, dword [dword esp+03E4h]	; 365B2
-call sub_3A27D	; 365B9
+call WriteGoalieSeasonRec	; 365B9
 jmp short .17	; 365BE
 .16:
 inc word [dword esp+eax+0388h]	; 365C0
 mov ebx, dword [dword esp+0358h]	; 365C8
 lea edx, [dword esp+0360h]	; 365CF
 mov eax, dword [dword esp+03E4h]	; 365D6
-call sub_3A24F	; 365DD
+call WriteSeasonRec	; 365DD
 .17:
 mov ebx, eax	; 365E2
 .18:
@@ -598,7 +598,7 @@ add word [byte edi+0Eh], ax	; 3689D
 mov ebx, dword [dword esp+0358h]	; 368A1
 lea edx, [dword esp+0360h]	; 368A8
 mov eax, dword [dword esp+03E4h]	; 368AF
-call sub_3A24F	; 368B6
+call WriteSeasonRec	; 368B6
 mov ebx, eax	; 368BB
 .35:
 inc dword [dword esp+03F8h]	; 368BD
@@ -654,7 +654,7 @@ jne short .42	; 3697B
 mov ebx, dword [dword esp+0358h]	; 3697D
 lea edx, [dword esp+02F4h]	; 36984
 mov eax, dword [dword esp+03E4h]	; 3698B
-call sub_3A266	; 36992
+call ReadGoalieSeasonRec	; 36992
 mov ebx, eax	; 36997
 .42:
 test ebx, ebx	; 36999
@@ -781,7 +781,7 @@ mov word [byte esi+014h], di	; 36B01
 mov ebx, dword [dword esp+0358h]	; 36B05
 lea edx, [dword esp+02F4h]	; 36B0C
 mov eax, dword [dword esp+03E4h]	; 36B13
-call sub_3A27D	; 36B1A
+call WriteGoalieSeasonRec	; 36B1A
 mov ebx, eax	; 36B1F
 .55:
 inc dword [dword esp+03F8h]	; 36B21
@@ -982,7 +982,7 @@ mov ecx, leagueteams	; 36DDC
 mov ebx, treeteamnames	; 36DE1
 mov edx, humancount	; 36DE6
 mov eax, curleague	; 36DEB
-call sub_38B4F	; 36DF0
+call LeagueTeamSelect	; 36DF0
 mov dword [dword esp+088h], 0FFFFFFFFh	; 36DF5
 .11:
 test esi, esi	; 36E00
