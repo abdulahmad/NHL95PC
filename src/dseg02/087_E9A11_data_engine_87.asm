@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_E9A11 nobits alloc noexec write align=1
-global Ylist_m2, PBnum, byte_E9A15, byte_E9A16, byte_E9A17
+global Ylist_m2, PBnum, byte_E9A15, PenBuf, PenBuf_pl
 global iflags, byte_E9AC1, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB, byte_E9ACC, byte_E9ACD
 global byte_E9ACE, byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3, byte_E9AD4, byte_E9AD5
 global byte_E9AD6, byte_E9AD7, OOlist, byte_E9DB4, byte_E9E18, byte_E9E31, byte_E9E4A
 global byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC, byte_E9FAD, byte_E9FAE
-global byte_E9FAF, byte_E9FDC, byte_E9FDD, dword_E9A11, dword_E9A13, dword_E9A14, dword_E9A9E, dword_E9AB6
+global byte_E9FAF, byte_E9FDC, byte_E9FDD, PenBuf_m5, dword_E9A14, dword_E9A9E, dword_E9AB6
 global dword_E9AB7, gwgteam, gwgplayer, startm_m2, dword_E9B04
 global dword_E9B2A, dword_E9BA4, dword_E9BA8, dword_E9BAC, dword_E9BB0, dword_E9BB4, dword_E9BB8, dword_E9BBC
 global dword_E9BC0, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38
@@ -19,17 +19,16 @@ global periodendtime, word_E9AAE, word_E9AB0, word_E9AB2, word_E9AB4, PerTimeTot
 global lasttouch, word_E9AC4, startm, starpl, word_E9B28, word_E9B2C, word_E9F12, word_E9F14
 global word_E9F18, word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A, word_E9FA7, word_E9FA9
 global word_E9FB0, word_E9FB2, word_E9FB4
-dword_E9A11:
+PenBuf_m5:
 resb 2
-dword_E9A13:
 resb 1
 dword_E9A14:
 resb 1
 byte_E9A15:
 resb 1
-byte_E9A16:
+PenBuf:
 resb 1
-byte_E9A17:
+PenBuf_pl:
 resb 63
 Ylist_m2:
 resb 2

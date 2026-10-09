@@ -13,7 +13,7 @@ extern sub_47951, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut
 extern PlayCrowdSample, DrawRinkOverlays, SprSort, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8374D, SelectScreenBM, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
 extern unk_DF014, unk_DF314, unk_DFD9C, camx, camy, xc1, yc1, SortCords
-extern word_C90B2, word_C90B4, c1playernum, c2playernum, word_C90D4, exitgame, word_CBC52, word_CBC54
+extern word_C90B2, word_C90B4, c1playernum, c2playernum, RefStep, exitgame, word_CBC52, word_CBC54
 extern lcblink, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, scrolly, word_DFF1E
 extern word_DFF28, word_DFF2A, word_DFF44, word_E0022, word_E0028, word_E002A, word_E002E
 extern word_E0042, word_E0046, word_E0048, word_E004A, regd1, joysampling_save
@@ -295,7 +295,7 @@ mov word [word_E002E], 289h	; 48002
 mov edx, 26h	; 4800B
 mov eax, SortCords+800h	; 48010
 call assreplace	; 48015
-mov word [word_C90D4], si	; 4801A
+mov word [RefStep], si	; 4801A
 or byte [sflags], 40h	; 48021
 call DoGameFrame	; 48028
 call DoGameFrame	; 4802D

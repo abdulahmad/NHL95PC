@@ -4,7 +4,7 @@ bits 32
 section s_5FB03 progbits alloc exec nowrite align=1
 extern PBnum, StanleyCupTimer, __CHK, __STOSB, __STOSD, asc_CCDD8, asc_CCDEC, byte_C4D1C
 extern byte_C4D1D, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, byte_DC265
-extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, byte_E9A16, iflags, byte_E9AC8
+extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, PenBuf, iflags, byte_E9AC8
 extern byte_E9AD3, OOlist, collflag, dword_C530D, dword_C5382, dword_C53FB, dword_C5403, dword_C5407
 extern dword_C540B, dword_C540F, dword_C5413, dword_C5704, dword_C5708, dword_C570C, dword_C5840, dword_C66D0
 extern dword_C66D4, dword_C90B0, dword_C90C0, cont2team, dword_C90CA, dword_CBC3E, dword_CBECA, dword_CC0AC
@@ -21,8 +21,8 @@ extern sub_B2CD8, MouseSetPos, threat, unk_C5298, unk_C5423, unk_C542E, unk_DABF
 extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, unk_DC200, unk_DC240
 extern unk_DC252, unk_DF314, SortCords, word_C571C, word_C575C, camx, camy
 extern lastplayer, passdir, word_C90A6, passplayer, xc1, yc1, word_C90B2, word_C90B4
-extern fodir1, fodir2, c1playernum, c2playernum, cont1team, word_C90CC, word_C90CE, word_C90D0
-extern refsignal, word_C90D4, word_C90D6, word_C90D8, gsp, gameclock, clockticks, word_CBC44
+extern fodir1, fodir2, c1playernum, c2playernum, cont1team, word_C90CC, Pencntdwn, Penaltytimer
+extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
 extern exitgame, gameover, word_CBC52, word_CBC54, lcblink, word_CBC58, lcblinktime
 extern lcsel, word_CBC60, lcline, word_CBC64, lctimer, word_CBC68, lcboxon, word_CBC6C
 extern word_CBD64, word_CBD66, word_CBEC0, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC
@@ -223,19 +223,19 @@ add eax, byte 2	; 5FD95
 mov dx, word [cont2team]	; 5FD98
 mov word [eax], dx	; 5FD9F
 add eax, byte 2	; 5FDA2
-mov dx, word [word_C90CE]	; 5FDA5
+mov dx, word [Pencntdwn]	; 5FDA5
 mov word [eax], dx	; 5FDAC
 add eax, byte 2	; 5FDAF
-mov dx, word [word_C90D0]	; 5FDB2
+mov dx, word [Penaltytimer]	; 5FDB2
 mov word [eax], dx	; 5FDB9
 add eax, byte 2	; 5FDBC
 mov dx, word [refsignal]	; 5FDBF
 mov word [eax], dx	; 5FDC6
 add eax, byte 2	; 5FDC9
-mov dx, word [word_C90D4]	; 5FDCC
+mov dx, word [RefStep]	; 5FDCC
 mov word [eax], dx	; 5FDD3
 add eax, byte 2	; 5FDD6
-mov dx, word [word_C90D6]	; 5FDD9
+mov dx, word [RefPen]	; 5FDD9
 mov word [eax], dx	; 5FDE0
 add eax, byte 2	; 5FDE3
 mov dx, word [word_C90D8]	; 5FDE6
@@ -604,7 +604,7 @@ add esp, byte 4	; 603CD
 loc_603D0:
 mov ecx, 42h	; 603D0
 mov ebx, 0FFFFFFFFh	; 603D5
-mov edx, byte_E9A16	; 603DA
+mov edx, PenBuf	; 603DA
 mov eax, dword [esp]	; 603DF
 call sub_145F9	; 603E2
 test eax, eax	; 603E7
@@ -1001,19 +1001,19 @@ mov ax, word [ebx]	; 60909
 mov word [cont2team], ax	; 6090C
 add ebx, byte 2	; 60912
 mov ax, word [ebx]	; 60915
-mov word [word_C90CE], ax	; 60918
+mov word [Pencntdwn], ax	; 60918
 add ebx, byte 2	; 6091E
 mov ax, word [ebx]	; 60921
-mov word [word_C90D0], ax	; 60924
+mov word [Penaltytimer], ax	; 60924
 add ebx, byte 2	; 6092A
 mov ax, word [ebx]	; 6092D
 mov word [refsignal], ax	; 60930
 add ebx, byte 2	; 60936
 mov ax, word [ebx]	; 60939
-mov word [word_C90D4], ax	; 6093C
+mov word [RefStep], ax	; 6093C
 add ebx, byte 2	; 60942
 mov ax, word [ebx]	; 60945
-mov word [word_C90D6], ax	; 60948
+mov word [RefPen], ax	; 60948
 add ebx, byte 2	; 6094E
 mov ax, word [ebx]	; 60951
 mov word [word_C90D8], ax	; 60954
@@ -1434,7 +1434,7 @@ movsx eax, word [ebx]	; 60F7A
 mov dword [dword_CC144], eax	; 60F7D
 mov ecx, 42h	; 60F82
 mov ebx, 0FFFFFFFFh	; 60F87
-mov edx, byte_E9A16	; 60F8C
+mov edx, PenBuf	; 60F8C
 mov eax, ebp	; 60F91
 call sub_145A2	; 60F93
 test eax, eax	; 60F98

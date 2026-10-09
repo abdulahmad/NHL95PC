@@ -22,8 +22,8 @@ extern sub_64614, sub_658F3, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E8
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, MouseSetPos, sub_B30B4, sub_B30BB
 extern sub_B392C, sub_B4BA8, threat, unk_DF014, SortCords, vtoa, regd4, scrpitch
-extern lastplayer, passdir, word_C90A6, passplayer, word_C90B2, word_C90B4, word_C90CE, word_C90D0
-extern refsignal, word_C90D4, word_C90D6, word_C90D8, gsp, word_CBC44, exitgame, gameover
+extern lastplayer, passdir, word_C90A6, passplayer, word_C90B2, word_C90B4, Pencntdwn, Penaltytimer
+extern refsignal, RefStep, RefPen, word_C90D8, gsp, word_CBC44, exitgame, gameover
 extern word_CBC52, word_CBC54, lcblink, word_CBC58, lcblinktime, lcsel, word_CBC60
 extern lcline, word_CBC64, lctimer, word_CBC68, lcboxon, word_CBC6C, word_CBE8C, word_CBE8E
 extern word_CBEC0, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0B0
@@ -1092,8 +1092,8 @@ mov byte [byte_E024C], dh	; 1408F
 mov edx, 0FFFFFFFFh	; 14095
 mov word [word_CBEC0], dx	; 1409A
 mov word [word_C90D8], dx	; 140A1
-mov word [word_C90D4], dx	; 140A8
-mov word [word_C90CE], dx	; 140AF
+mov word [RefStep], dx	; 140A8
+mov word [Pencntdwn], dx	; 140AF
 mov word [word_CC0B0], dx	; 140B6
 xor eax, eax	; 140BD
 mov word [threat], ax	; 140BF
@@ -1103,9 +1103,9 @@ mov word [passdir], ax	; 140D1
 mov word [passspeed], ax	; 140D7
 mov word [lastplayer], ax	; 140DD
 mov word [word_CBC44], ax	; 140E3
-mov word [word_C90D6], ax	; 140E9
+mov word [RefPen], ax	; 140E9
 mov word [refsignal], ax	; 140EF
-mov word [word_C90D0], ax	; 140F5
+mov word [Penaltytimer], ax	; 140F5
 mov word [lcblinktime+2], ax	; 140FB
 mov word [lcblinktime], ax	; 14101
 mov word [word_CBC58], ax	; 14107

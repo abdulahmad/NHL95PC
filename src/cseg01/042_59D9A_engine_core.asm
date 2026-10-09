@@ -7,7 +7,7 @@ extern byte_C4D1C, byte_C4D1D, byte_C5400, sflags, gmode2, byte_CBC37
 extern lldisp, byte_CC148, byte_CC149, byte_CC7A4, byte_CC7A5, byte_CCCA0, musicon, hmroster
 extern awroster, byte_DF6CA, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byte_DF7CA, byte_DF7E6
 extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
-extern byte_E0074, PlList, byte_E038A, byte_E9A16, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
+extern byte_E0074, PlList, byte_E038A, PenBuf, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
 extern checkcoll, sub_65D01, collflag, doinput, joysampling, gameopts, dword_C7444, dword_C7448
 extern dword_C90B0, dword_C90C0, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
 extern dword_CC0F8, penshotplayer, dword_CC104, dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer
@@ -22,13 +22,13 @@ extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
 extern off_C9078, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
 extern passspeed, randomd0, sfx, vecdist, sub_10F6D, sub_11005, sub_110E0, sub_11136
 extern sub_14A20, sub_14AFE, sub_15C30, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
-extern PlayCrowdSample, sub_59A7E, sub_61576, sub_615A2, sub_61862, sub_63BF8, sub_63C73, sub_63D3C
+extern PlayCrowdSample, sub_59A7E, sub_61576, sub_615A2, sub_61862, PenaltyManager, sub_63C73, ClearPenaltyBuffer
 extern sub_63D69, sub_64439, sub_665AD, sub_66FE2, sub_67564, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, unk_DABF0, unk_DAC40, unk_DAC70, unk_DACA0
 extern unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, unk_DC200, unk_DC240, unk_DC252, SortCords
 extern unk_E9D50, unk_E9EE0, sub_675D6, vtoa, regd4, camx
 extern camy, lastplayer, xc1, yc1, word_C90B2, word_C90B4, fodir1, fodir2
-extern c1playernum, c2playernum, cont1team, word_C90CE, word_C90D4, gsp, gameclock, clockticks
+extern c1playernum, c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks
 extern word_CBC44, exitgame, gameover, PerTimeTab, word_CBC52, word_CBC54, lcblink, word_CBC58
 extern lcline, word_CBC64, lcboxon, word_CBC6C, word_CBEC0, word_CBEC4, word_CBEC6, word_CBEC8
 extern word_CBECC, word_CC0B0, lldispodd, word_CC0DA, crowdlevel, word_CCCA8, hmscore, hmtmline
@@ -2478,7 +2478,7 @@ mov byte [byte_E0072], 7	; 5BB78
 mov ah, 0Fh	; 5BB7F
 mov byte [byte_E0073], ah	; 5BB81
 mov byte [byte_E0074], ah	; 5BB87
-mov word [word_C90D4], bx	; 5BB8D
+mov word [RefStep], bx	; 5BB8D
 call SprSort	; 5BB94
 jmp near calcpuckcross_ret5	; 5BB99
 TryAddPlayerToList:
@@ -3078,7 +3078,7 @@ push dword 0Ch	; 5C302
 call __CHK	; 5C307
 push ebx	; 5C30C
 push edx	; 5C30D
-call sub_63BF8	; 5C30E
+call PenaltyManager	; 5C30E
 call sub_615A2	; 5C313
 test byte [gmode], 1	; 5C318
 jne short .1	; 5C31F
@@ -3167,9 +3167,9 @@ test ah, 80h	; 5C445
 jne near .4	; 5C448
 test byte [gmode2], 1	; 5C44E
 jne near .5	; 5C455
-cmp word [word_C90CE], byte 0	; 5C45B
+cmp word [Pencntdwn], byte 0	; 5C45B
 jge short .5	; 5C463
-cmp byte [byte_E9A16], 0	; 5C465
+cmp byte [PenBuf], 0	; 5C465
 jne short .5	; 5C46C
 mov ebx, dword [byte esp+08h]	; 5C46E
 cmp bx, byte 20h	; 5C472
@@ -3890,7 +3890,7 @@ mov word [sflags], ax	; 5CDF4
 xor dh, dh	; 5CDFA
 mov word [gmode2], dx	; 5CDFC
 mov word [dword_C90C0], bx	; 5CE03
-call sub_63D3C	; 5CE0A
+call ClearPenaltyBuffer	; 5CE0A
 pop edx	; 5CE0F
 pop ebx	; 5CE10
 ret	; 5CE11
@@ -4789,7 +4789,7 @@ cmp word [gsp], byte 3	; 5D8D6
 jne near .7	; 5D8DE
 test byte [byte_C5400], 2	; 5D8E4
 je near .7	; 5D8EB
-call sub_63D3C	; 5D8F1
+call ClearPenaltyBuffer	; 5D8F1
 mov di, word [crowdlevel]	; 5D8F6
 cmp di, 4B0h	; 5D8FD
 jg short .3	; 5D902
@@ -4936,7 +4936,7 @@ jmp short clockcont_0.21	; 5DB06
 .23:
 jge short .27	; 5DB08
 mov esi, dword [byte ecx+06Ch]	; 5DB0A
-movsx bx, byte [dword esi+0B6h]	; 5DB0D
+movsx bx, byte [dword esi+tmpbox]	; 5DB0D
 test bx, bx	; 5DB15
 jl short .27	; 5DB18
 cmp word [regd1], byte 0	; 5DB1A
@@ -4969,7 +4969,7 @@ mov ax, word [regd2]	; 5DB74
 dec ax	; 5DB7A
 mov word [regd2], ax	; 5DB7C
 jne near clockcont_0.20	; 5DB82
-call sub_63D3C	; 5DB88
+call ClearPenaltyBuffer	; 5DB88
 mov ax, word [hmscore]	; 5DB8D
 cmp ax, word [awscore]	; 5DB93
 jle short .29	; 5DB9A

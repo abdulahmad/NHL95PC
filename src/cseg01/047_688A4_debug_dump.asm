@@ -13,11 +13,11 @@ extern penshotmode, penshotstart, penshottimer, dword_CC124, penshotlive, dword_
 extern dword_D8C6C, dword_D8C78, dword_DF612, hmtmstruct, dword_DF616, dword_DF61C, dword_DF61E, dword_DF620
 extern dword_DF638, dword_DF63A, dword_DF63C, dword_DF690, dword_DF6FA, dword_DF712, awtmstruct, hmscore
 extern dword_DF716, dword_DF71C, dword_DF71E, dword_DF720, dword_DF738, dword_DF73A, dword_DF73C, awscore
-extern dword_DF7FA, dword_E9A13, dword_E9A14, fclose_, fopen_, fprintf_, gmode, puckc
+extern dword_DF7FA, dword_E9A14, fclose_, fopen_, fprintf_, gmode, puckc, PenBuf
 extern camx_m2, off_CD6E4, off_CD8C4, off_CD984, puckvz, sprintf_, joyq_flush, AllInPlace
 extern sub_935E0, sub_93E38, sub_B39ED, sub_B3A18, threat, unk_C234B, unk_C234D, unk_C2478
 extern unk_C247A, unk_C247C, unk_C2485, unk_C24A0, SortCords, camx, xc1, c1playernum
-extern c2playernum, cont1team, word_C90CC, word_C90D0, refsignal, gsp, gameclock, word_CBC42
+extern c2playernum, cont1team, word_C90CC, Penaltytimer, refsignal, gsp, gameclock, word_CBC42
 extern word_CBC44, exitgame, hmtmap, awtmap
 global loc_688E0, loc_688E5, loc_68B33, loc_68C39, loc_68C3E, loc_68CC1, loc_68D06, loc_68D21
 global loc_68D3A, loc_68D4D, loc_68D53, loc_68D6C, loc_68D7A, loc_68D98, loc_68DCC, loc_68DEB
@@ -115,7 +115,7 @@ push eax	; 689B8
 call sprintf_	; 689B9
 add esp, byte 18h	; 689BE
 add esi, eax	; 689C1
-mov eax, dword [word_C90D0]	; 689C3
+mov eax, dword [Penaltytimer]	; 689C3
 sar eax, 10h	; 689C8
 push eax	; 689CB
 mov eax, dword [refsignal]	; 689CC
@@ -131,7 +131,7 @@ add esi, eax	; 689E8
 mov eax, dword [dword_E9A14]	; 689EA
 sar eax, 18h	; 689EF
 push eax	; 689F2
-mov eax, dword [dword_E9A13]	; 689F3
+mov eax, dword [PenBuf-3]	; 689F3
 sar eax, 18h	; 689F8
 push eax	; 689FB
 push asc_C23C7	; 689FC

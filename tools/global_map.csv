@@ -134,7 +134,7 @@ hmtmflags,DF658,home tmflags (hmtmstruct+44h)
 awtmflags,DF758,visitor tmflags (awtmstruct+44h)
 onetimerflag,CC0F4,"one-timer pending (94G onetimerflags role): set by the input code at 50716, PassRecOneTimer shoots while it is set and clears it on exit"
 gwgteam,E9AF0,"three stars: winning team (0 home / 1 away, -1 if tied); set by PickThreeStars"
-gwgplayer,E9AF4,"three stars: the winning team's player from team field 2Eh (likely the game-winning goal scorer); StarCompare gives him +2"
+gwgplayer,E9AF4,three stars: the winning team's player from team field 2Eh (likely the game-winning goal scorer); StarCompare gives him +2
 startm,E9AF8,"three-stars list, team of star i (word, stride 4, 3 entries; -1 = empty); AddStar / PickThreeStars fill it, assthreestars reads it"
 starpl,E9AFA,"three-stars list, player index of star i (word, stride 4); pairs with startm"
 str_EASports,C1B2C,"""EA Sports"" (three-stars caption, assthreestars)"
@@ -144,7 +144,15 @@ str_1st,C1B20,"""1st"" (starordtab)"
 str_2nd,C1B24,"""2nd"" (starordtab)"
 str_3rd,C1B28,"""3rd"" (starordtab)"
 lastsfx,CC0DC,"sound effect number last requested: sfx stores its argument here; the replay recorder (engine_display 6761E/6779B) saves it per frame and resets it to -1. dword loads of it + sar 10h are crowdlevel short loads, written [crowdlevel-2]"
-crowdsmooth,CCC88,"MIDI crowd noise: crowdlevel eased by CrowdNoiseUpdate (step 30*eax per call); drives the channel 8/7 volumes"
-crowdvol8,CCC8C,"MIDI crowd noise: current volume of channel 8 (0 = note off); CrowdNoiseUpdate / CrowdNoiseOff"
-crowdvol7,CCC90,"MIDI crowd noise: current volume of channel 7 (0 = note off); CrowdNoiseUpdate / CrowdNoiseOff"
-digihandle,CCC84,"handle of the digital sample PlayDigiSample started (-1 = none); StopDigiSample / WaitDigiSample poll it"
+crowdsmooth,CCC88,MIDI crowd noise: crowdlevel eased by CrowdNoiseUpdate (step 30*eax per call); drives the channel 8/7 volumes
+crowdvol8,CCC8C,MIDI crowd noise: current volume of channel 8 (0 = note off); CrowdNoiseUpdate / CrowdNoiseOff
+crowdvol7,CCC90,MIDI crowd noise: current volume of channel 7 (0 = note off); CrowdNoiseUpdate / CrowdNoiseOff
+digihandle,CCC84,handle of the digital sample PlayDigiSample started (-1 = none); StopDigiSample / WaitDigiSample poll it
+Penaltytimer,C90D0,"93G Penaltytimer: updatepentime subtracts 1 per call, at < 0 adds 18h (once a second)"
+Pencntdwn,C90CE,93G Pencntdwn: checkfornewpen raises it to the penalty's delay * 32; chkprogress counts it down (chkprogress_go) or runs InProgress when negative
+PenBuf,E9A16,"93G PenBuf: 32 byte pairs (penalty number, player | 80h called); ClearPenaltyBuffer clears it, checkfornewpen / chkprogress walk it"
+RefPen,C90D6,93G RefPen: penalty / animation number set by SetPA
+RefStep,C90D4,"93G RefStep: SetPA clears it; chkprogress sets it to -1 (93G st RefStep, PC byte RefStep+1)"
+pendelaytab,C9104,per penalty number: delay before stopping play (93G PenaltyList entry byte 0); checkfornewpen shifts it left 5 into Pencntdwn
+penmintab,C9123,"per penalty number: penalty minutes (93G PenaltyList entry byte 1, 0 = no time: called at once); checkfornewpen / chkprogress_go test it"
+priolist,CBC36,"93G priolist: position for the player released from the box, indexed by tmap (+1 when the goalie is pulled); releasepl"

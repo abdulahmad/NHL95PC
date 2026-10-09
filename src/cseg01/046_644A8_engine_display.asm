@@ -23,7 +23,7 @@ extern sub_8E9C0, sub_8EA18, sub_90354, sub_90D20, sub_90EC0, sub_91964, sub_935
 extern sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80, unk_DABF0, unk_DACA0, unk_DC200, SortCords
 extern unk_E9CEC, unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE
 extern unk_E9EE0, camx, camy, xc1, yc1, word_C90B2, word_C90B4, c1playernum
-extern c2playernum, cont1team, word_C90CE, word_C90D4, gsp, gameclock, clockticks, word_CBEC0
+extern c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks, word_CBEC0
 extern word_CBEC8, word_CBECC, word_CBECE, word_CC054, word_CC0B0, crowdlevel, word_CCEF8, word_CD4FC
 extern word_CD4FE, word_CD500, scrolly, scrollx, word_DEE94, word_DF64C, word_E0022
 extern word_E0046, regd2, regd3, regd0, regd1, joysampling_save, word_E9AB2, word_E9AB4
@@ -2431,10 +2431,10 @@ je near loc_66249	; 65F5E
 loc_65F64:
 test byte [gmode], 4	; 65F64
 je short loc_65F77	; 65F6B
-cmp word [word_C90CE], byte 0	; 65F6D
+cmp word [Pencntdwn], byte 0	; 65F6D
 jl short loc_65F85	; 65F75
 loc_65F77:
-cmp word [word_C90D4], byte 0	; 65F77
+cmp word [RefStep], byte 0	; 65F77
 jle near loc_66158	; 65F7F
 loc_65F85:
 mov eax, SortCords+800h	; 65F85
@@ -3524,7 +3524,7 @@ push esi	; 66E13
 push edi	; 66E14
 cmp word [word_CBEC0], byte 0	; 66E15
 jl near loc_66491	; 66E1D
-mov bx, word [word_C90CE]	; 66E23
+mov bx, word [Pencntdwn]	; 66E23
 cmp bx, 100h	; 66E2A
 jl short loc_66E45	; 66E2F
 cmp bx, 140h	; 66E31

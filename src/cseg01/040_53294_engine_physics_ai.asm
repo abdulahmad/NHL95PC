@@ -4,7 +4,7 @@ bits 32
 section s_53294 progbits alloc exec nowrite align=1
 extern Acheck, AddPenalty, AddPenalty2, AvgCline, GetHot, Ylist_m2, PBnum
 extern SetSPA, Stop4Pen, __CHK, a2touchpuck, assexit, assinsert, assreplace
-extern byte_C4D1C, byte_C5400, byte_C5430, byte_C5432, sflags, gmode2, byte_E9A16, iflags
+extern byte_C4D1C, byte_C5400, byte_C5430, byte_C5432, sflags, gmode2, PenBuf, iflags
 extern OOlist, collflag, dirtab, doplayeracc, gameopts, wcradiusy, dword_C90C0
 extern dword_CBECA, onetimerflag, dword_CC0F8, penshotplayer, dword_CC108, penshotmode, penshotstart, dword_CC124
 extern penshotlive, dword_CCC2C, dword_CCC4E, hmtmstruct, awtmstruct, puckcross_m2
@@ -3220,7 +3220,7 @@ add ebx, esi	; 558DD
 cmp ebx, 2710h	; 558DF
 ja near .12	; 558E5
 mov ebx, dword [byte ecx+optmptr]	; 558EB
-cmp word [byte ebx+038h], byte 0	; 558EE
+cmp word [byte ebx+tmgoalie], byte 0	; 558EE
 jge short .6	; 558F3
 .5:
 mov word [regd4], 1	; 558F5
@@ -4513,7 +4513,7 @@ xor edx, edx	; 56A1A
 jmp short .53	; 56A1C
 .51:
 movsx eax, dx	; 56A1E
-cmp byte [nosplit eax*2+byte_E9A16], 0	; 56A21
+cmp byte [nosplit eax*2+PenBuf], 0	; 56A21
 jne short .52	; 56A29
 mov eax, edx	; 56A2B
 dec eax	; 56A2D

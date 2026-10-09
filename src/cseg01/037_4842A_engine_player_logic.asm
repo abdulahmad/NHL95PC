@@ -6,7 +6,7 @@ extern AddPenalty, AddPenalty2, DoGameFrame, Findhittype, GetHot, PBnum, SetSPA,
 extern Setplass, ShotMode, StopNA, __CHK, str_EASports, str_StarFmt, assinsert, assreplace
 extern byte_C5400, sflags, gmode2, byte_CC9E4, byte_CC9E7, byte_CCA95, musicon, byte_DACB3
 extern byte_DAEA7, hmroster, byte_DB3AD, byte_DF87F, byte_DFFE0, byte_DFFE2, byte_E0250, byte_E028C
-extern byte_E02C8, byte_E0308, byte_E0344, byte_E9A16, iflags, byte_E9AC1, byte_E9AC8
+extern byte_E02C8, byte_E0308, byte_E0344, PenBuf, iflags, byte_E9AC1, byte_E9AC8
 extern byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, check4bench, check4check, checkob
 extern chk4lc, chk4shot, dirtab, chk4pass, doplayeracc, doshot, joysampling, dword_C4E10
 extern gameopts, dword_C541F, dword_C5840, dword_C585C, dword_C5860, dword_C90B0, dword_C90C0, dword_C90CA
@@ -28,7 +28,7 @@ extern sub_655CC, sub_66497, sub_66DDA, sub_837A8, sub_8F633, sub_8FFB0, imul32,
 extern unk_C1B3E, unk_DACA0, unk_DBC30, unk_DC240, unk_DF014, SortCords, updateanim
 extern vtoa, regd4, camx, camy, lastplayer, passdir, word_C90A6, xc1
 extern yc1, word_C90B2, word_C90B4, fodir1, fodir2, c1playernum, c2playernum, word_C90CC
-extern word_C90CE, word_C90D0, refsignal, word_C90D4, word_C90D6, gsp, gameclock, clockticks
+extern Pencntdwn, Penaltytimer, refsignal, RefStep, RefPen, gsp, gameclock, clockticks
 extern dirtab_y, word_CBC44, exitgame, gameover, word_CBC52, word_CBC54, lcblink, word_CBC58
 extern lcblinktime, lcsel, lcline, lctimer, lcboxon, word_CBC6C, word_CBEC0, word_CBEC4
 extern word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, word_CC9EA, word_CC9EC, word_CCA18
@@ -212,7 +212,7 @@ mov eax, ebx	; 48602
 call SetSPA	; 48604
 xor edi, edi	; 48609
 mov word [yc1], di	; 4860B
-mov word [word_C90D4], 1	; 48612
+mov word [RefStep], 1	; 48612
 mov word [crowdlevel], 320h	; 4861B
 .8:
 mov edx, dword [ebx]	; 48624
@@ -1047,9 +1047,9 @@ call PickThreeStars	; 48F69
 mov byte [byte_E9AC8], 0FFh	; 48F6E
 xor ebx, ebx	; 48F75
 mov word [word_CBC44], bx	; 48F77
-mov word [word_C90D6], bx	; 48F7E
+mov word [RefPen], bx	; 48F7E
 mov word [refsignal], bx	; 48F85
-mov word [word_C90D0], bx	; 48F8C
+mov word [Penaltytimer], bx	; 48F8C
 mov word [dword_CBECA], bx	; 48F93
 mov word [word_CBEC6], bx	; 48F9A
 mov word [word_CBC6C], bx	; 48FA1
@@ -1163,7 +1163,7 @@ mov word [word_E002E], 0FFFFh	; 491B0
 mov edx, 15h	; 491B9
 mov eax, SortCords+800h	; 491BE
 call assreplace	; 491C3
-mov word [word_C90D4], cx	; 491C8
+mov word [RefStep], cx	; 491C8
 or byte [sflags], 40h	; 491CF
 call DoGameFrame	; 491D6
 call DoGameFrame	; 491DB
@@ -1801,7 +1801,7 @@ push ecx	; 499E3
 push edx	; 499E4
 push esi	; 499E5
 mov ebx, eax	; 499E6
-mov word [word_C90CE], 12Ch	; 499E8
+mov word [Pencntdwn], 12Ch	; 499E8
 test byte [byte eax+pflags], 20h	; 499F1
 jne near .x	; 499F5
 mov dl, byte [byte ebx+pflags]	; 499FB
@@ -2902,7 +2902,7 @@ mov byte [byte ebx+046h], 0	; 4A86D
 mov edx, 0ECBh	; 4A871
 mov eax, ebx	; 4A876
 call SetSPA	; 4A878
-mov word [word_C90CE], 100h	; 4A87D
+mov word [Pencntdwn], 100h	; 4A87D
 .1:
 cmp word [byte ebx+SPA], byte 0	; 4A886
 jne short .2	; 4A88B
@@ -3604,7 +3604,7 @@ je short .3	; 4B183
 cmp word [byte ebx+position], byte 0	; 4B185
 jne short .3	; 4B18A
 mov eax, dword [byte ebx+06Ch]	; 4B18C
-mov eax, dword [byte eax+036h]	; 4B18F
+mov eax, dword [byte eax+tmgoalie-2]	; 4B18F
 sar eax, 10h	; 4B192
 and eax, 0FFF0h	; 4B195
 cmp eax, 0FF00h	; 4B19A
@@ -8010,7 +8010,7 @@ mov eax, dword [dword_CBEBE]	; 4E733
 sar eax, 10h	; 4E738
 cmp eax, byte 0FFFFFFFFh	; 4E73B
 jne near .12	; 4E73E
-mov dx, word [word_C90D6]	; 4E744
+mov dx, word [RefPen]	; 4E744
 cmp dx, byte 1Dh	; 4E74B
 je short .1	; 4E74F
 cmp dx, byte 1Eh	; 4E751
@@ -8167,7 +8167,7 @@ mov ax, word [hmscore]	; 4E93C
 cmp ax, word [awscore]	; 4E942
 je short ass_popx.1	; 4E949
 .2:
-mov word [word_C90D4], 0FFFFh	; 4E94B
+mov word [RefStep], 0FFFFh	; 4E94B
 cmp word [word_CBEC0], 100h	; 4E954
 jne short .3	; 4E95D
 mov word [word_CBEC0], 258h	; 4E95F
@@ -8187,7 +8187,7 @@ pop ecx	; 4E986
 pop ebx	; 4E987
 ret	; 4E988
 .1:
-mov word [word_C90D4], 1	; 4E989
+mov word [RefStep], 1	; 4E989
 and byte [byte ebx+pflags], 0FDh	; 4E992
 call PenShotAssign	; 4E996
 mov word [byte ebx+temp2], 8	; 4E99B
@@ -8304,11 +8304,11 @@ je near .10	; 4EB2B
 mov dh, dl	; 4EB31
 and dh, 0FDh	; 4EB33
 mov byte [byte esi+pflags], dh	; 4EB36
-mov eax, dword [word_C90D4]	; 4EB39
+mov eax, dword [RefStep]	; 4EB39
 sar eax, 10h	; 4EB3E
 cmp word [nosplit eax*2+word_CCA9C], byte 0	; 4EB41
 jge near .9	; 4EB4A
-cmp word [word_C90D6], byte 7	; 4EB50
+cmp word [RefPen], byte 7	; 4EB50
 jne near .8	; 4EB58
 mov ebx, dword [pucky]	; 4EB5E
 cmp word [ebx], byte 0	; 4EB64
@@ -8421,7 +8421,7 @@ mov word [byte esi+temp1], bx	; 4ECBE
 mov edx, 0A5Bh	; 4ECC2
 mov eax, esi	; 4ECC7
 call SetSPA	; 4ECC9
-mov eax, dword [word_C90D4]	; 4ECCE
+mov eax, dword [RefStep]	; 4ECCE
 sar eax, 10h	; 4ECD3
 mov ax, word [nosplit eax*2+word_CCA9C]	; 4ECD6
 mov word [regd2], ax	; 4ECDE
@@ -8452,7 +8452,7 @@ mov ax, word [regd2]	; 4ED2A
 cmp ax, word [byte esi+facedir]	; 4ED30
 jne short .17	; 4ED34
 or byte [byte esi+pflags], 20h	; 4ED36
-mov eax, dword [word_C90D4]	; 4ED3A
+mov eax, dword [RefStep]	; 4ED3A
 sar eax, 10h	; 4ED3F
 mov edx, dword [nosplit eax*2+dword_CCAD8]	; 4ED42
 sar edx, 10h	; 4ED49
@@ -8577,12 +8577,12 @@ jl near .64	; 4EEF8
 mov word [word_CBEC0], 38h	; 4EEFE
 jmp near .64	; 4EF07
 .5:
-cmp byte [byte_E9A16], 0	; 4EF0C
+cmp byte [PenBuf], 0	; 4EF0C
 je short .6	; 4EF13
 mov edx, 0A5Bh	; 4EF15
 mov eax, ebx	; 4EF1A
 call SetSPA	; 4EF1C
-mov word [word_C90D4], 0FFFFh	; 4EF21
+mov word [RefStep], 0FFFFh	; 4EF21
 jmp near .64	; 4EF2A
 .6:
 mov ecx, dword [puckx]	; 4EF2F
@@ -8628,7 +8628,7 @@ mov ax, word [hmscore]	; 4EFA5
 cmp ax, word [awscore]	; 4EFAB
 je short .16	; 4EFB2
 .14:
-mov word [word_C90D4], 0FFFFh	; 4EFB4
+mov word [RefStep], 0FFFFh	; 4EFB4
 cmp word [word_CBEC0], 100h	; 4EFBD
 jne short .15	; 4EFC6
 mov word [word_CBEC0], 258h	; 4EFC8
@@ -8639,7 +8639,7 @@ call assreplace	; 4EFDB
 mov edx, 1Eh	; 4EFE0
 jmp near .24	; 4EFE5
 .16:
-mov word [word_C90D4], 1	; 4EFEA
+mov word [RefStep], 1	; 4EFEA
 and byte [byte ebx+pflags], 0FDh	; 4EFF3
 call PenShotAssign	; 4EFF7
 mov word [byte ebx+temp2], 8	; 4EFFC
@@ -8651,13 +8651,13 @@ mov word [byte ebx+Wallsin], 0	; 4F018
 mov edx, 0A5Bh	; 4F01E
 mov eax, ebx	; 4F023
 call SetSPA	; 4F025
-mov si, word [word_C90D6]	; 4F02A
+mov si, word [RefPen]	; 4F02A
 cmp si, byte 4	; 4F031
 jne short .17	; 4F035
 call sub_62C37	; 4F037
 test ax, ax	; 4F03C
 jne near .20	; 4F03F
-mov eax, dword [word_C90D6]	; 4F045
+mov eax, dword [RefPen]	; 4F045
 sar eax, 10h	; 4F04A
 shl eax, 7	; 4F04D
 cmp byte [dword eax+byte_DF87F], 0	; 4F050
@@ -9235,7 +9235,7 @@ mov eax, dword [dword_CBECA]	; 4F7AA
 sar eax, 10h	; 4F7AF
 cmp eax, byte 0FFFFFFFFh	; 4F7B2
 jne near ass_popx	; 4F7B5
-mov word [word_C90D4], 0FFFFh	; 4F7BB
+mov word [RefStep], 0FFFFh	; 4F7BB
 mov edx, 1Eh	; 4F7C4
 mov eax, ebx	; 4F7C9
 jmp near sub_4F5BF.1	; 4F7CB

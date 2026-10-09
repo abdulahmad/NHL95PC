@@ -13,10 +13,10 @@ extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, sub_10E9F, 
 extern sub_11598, sub_1395F, sub_14CF1, sub_150C6, sub_1BAF3, sub_1BBCC, sub_3377C, sub_33DD3
 extern sub_479E9, sub_47C31, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
 extern sub_59CA9, sub_59D54, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
-extern sub_61B85, sub_63D3C, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_836E4
+extern sub_61B85, ClearPenaltyBuffer, sub_673C5, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_836E4
 extern sub_8373E, sub_8F633, sub_8FFB0, sub_B396E, unk_DABF0, unk_DC200, unk_DF014, unk_DF314
 extern SortCords, vtoa, camx, camy, passplayer, xc1, yc1
-extern c1playernum, c2playernum, cont1team, word_C90CC, word_C90CE, refsignal, word_C90D4, word_C90D6
+extern c1playernum, c2playernum, cont1team, word_C90CC, Pencntdwn, refsignal, RefStep, RefPen
 extern word_C90D8, gsp, gameclock, clockticks, word_CBC44, exitgame, gameover, word_CBC52
 extern word_CBC54, lcblink, word_CBC58, lcline, word_CBC64, lcboxon, word_CBC6C, word_CBEC0
 extern word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, crowdlevel, scrolly, hmscore
@@ -247,10 +247,10 @@ mov word [passplayer], si	; 69697
 xor edi, edi	; 6969E
 mov word [refsignal], dx	; 696A0
 mov eax, esi	; 696A7
-mov word [word_C90D4], si	; 696A9
+mov word [RefStep], si	; 696A9
 mov edx, esi	; 696B0
-mov word [word_C90CE], si	; 696B2
-mov word [word_C90D6], bx	; 696B9
+mov word [Pencntdwn], si	; 696B2
+mov word [RefPen], bx	; 696B9
 mov ecx, esi	; 696C0
 mov word [word_C90D8], si	; 696C2
 mov word [word_CBEC0], si	; 696C9
@@ -811,12 +811,12 @@ mov word [word_CBEC4], 1	; 69FCE
 xor edx, edx	; 69FD7
 mov dword [dword_D8C78], edx	; 69FD9
 mov word [refsignal], di	; 69FDF
-mov word [word_C90D4], cx	; 69FE6
+mov word [RefStep], cx	; 69FE6
 mov edx, 1Eh	; 69FED
 mov eax, SortCords+800h	; 69FF2
 call assreplace	; 69FF7
-call sub_63D3C	; 69FFC
-mov word [word_C90CE], cx	; 6A001
+call ClearPenaltyBuffer	; 69FFC
+mov word [Pencntdwn], cx	; 6A001
 call joyq_flush	; 6A008
 cmp dword [dword_C4E14], byte 0	; 6A00D
 je short loc_6A025	; 6A014

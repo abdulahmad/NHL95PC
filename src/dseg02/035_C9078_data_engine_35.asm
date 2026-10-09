@@ -9,16 +9,16 @@ extern assdefo, assdopen, asseben, assepen, assfaceoff, assfaceoffp1, assgoalie,
 extern assnearest, asspassrec, asspenalty, asspuckc, assscore, assshoot, assstanley, asswingd
 extern asswingo, puckfaceoff, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
 extern unk_DFF5E, unk_E0416, word_DFF1E, word_DFF28, word_DFF2A, puckstruct
-global StanleyCupTimer, asstab, sflags, gmode2, byte_C90D5, byte_C9104
-global byte_C9111, byte_C9123, byte_C9142, byte_C9146, byte_CBC36, byte_CBC37, byte_CBEA8, collflag
+global StanleyCupTimer, asstab, sflags, gmode2, pendelaytab
+global byte_C9111, penmintab, byte_C9142, byte_C9146, priolist, byte_CBC37, byte_CBEA8, collflag
 global dirtab, wcradiusy, dword_C90B0, dword_C90C0, cont2team, dword_C90CA, dword_C9120, dword_CBC3E
 global dword_CBEBE, dword_CBECA, puckvx, gmode, off_C9078, puckx, pucky, puckvy
 global puckz, puckc, camx_m2, off_CBD2E, passspeed, puckvz, threat, SPAtab
 global unk_CBC6E, unk_CBC7E, unk_CBC9E, unk_CBCAE, unk_CBCBE, unk_CBCCE, unk_CBCDE, unk_CBCEE
 global unk_CBCFE, unk_CBD0E, unk_CBD1E, ds2list, wcradiusx, camx, camy, lastplayer
 global passdir, word_C90A6, passplayer, xc1, yc1, word_C90B2, word_C90B4, fodir1
-global fodir2, c1playernum, c2playernum, cont1team, word_C90CC, word_C90CE, word_C90D0, refsignal
-global word_C90D4, word_C90D6, word_C90D8, gsp, gameclock, clockticks, dirtab_y
+global fodir2, c1playernum, c2playernum, cont1team, word_C90CC, Pencntdwn, Penaltytimer, refsignal
+global RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, dirtab_y
 global word_CBC42, word_CBC44, exitgame, gameover, PerTimeTab, word_CBC52, word_CBC54, lcblink
 global word_CBC58, lcblinktime, lcsel, word_CBC60, lcline, word_CBC64, lctimer
 global word_CBC68, lcboxon, word_CBC6C, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, word_CBEC0
@@ -98,17 +98,16 @@ dword_C90CA:
 db 0Ch,00h
 word_C90CC:
 db 015h,00h
-word_C90CE:
+Pencntdwn:
 db 0FFh,0FFh
-word_C90D0:
+Penaltytimer:
 db 00h,00h
 refsignal:
 db 00h,00h
-word_C90D4:
+RefStep:
 db 0FFh
-byte_C90D5:
 db 0FFh
-word_C90D6:
+RefPen:
 db 00h,00h
 word_C90D8:
 db 0FFh,0FFh
@@ -126,13 +125,13 @@ db 038h,0FFh,073h,0FFh,073h,0FFh,038h,0FFh,00h,00h,073h,0FFh,08Dh,00h
 StanleyCupTimer:
 db 021h,043h
 db 0CDh,0ABh
-byte_C9104:
+pendelaytab:
 db 00h,0Ah,0Ah,03h,01h,00h,01h,01h,01h,0Ah,0Ah,04h,04h
 byte_C9111:
 db 04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,01h
 dword_C9120:
 db 00h,01h,01h
-byte_C9123:
+penmintab:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,02h,00h,02h,02h,02h,02h,02h
 db 02h,02h,02h,02h,02h,02h,0FFh,05h,05h,05h,00h,00h,00h,00h,00h
 byte_C9142:
@@ -863,7 +862,7 @@ db 0Ah,00h,069h,04h,0Ah,00h,06Ah,04h,018h,00h,068h,04h,0Ch,00h,0C1h,02h
 db 0F4h,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,0C1h,02h,0Ch,00h,06Bh,04h,0Ah,00h,06Ch,04h,0Ah,00h,06Dh,04h
 db 018h,00h,06Bh,04h,0Ch,00h,0C1h,02h,0F4h
-byte_CBC36:
+priolist:
 db 0FFh
 byte_CBC37:
 db 00h,01h,02h,04h,03h,05h,06h
