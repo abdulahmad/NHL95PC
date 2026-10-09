@@ -37,6 +37,10 @@ global LockerRoomLoop_n7, DrawSelBox_common
 global LoadSettingsShapes, DrawSettingsHeading
 global SetModeMenuLabels, DrawPanel3D, LockerRoomScreen, LockerStub, DrawLockerRoom, LockerHitTest, DrawLockerJersey, LockerRoomLoop
 global DrawSelBoxOn, DrawSelBoxOff, MenuSoundSettings, DrawSoundCardDlg, DrawSoundCardOpts, SoundCardHitTest, RedrawSoundCardOpts
+; C: src/c/059_8034B_settings_lockerroom/LoadSettingsShapes.c
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/LoadSettingsShapes.inc"
+%else
 LoadSettingsShapes:
 push dword 44h	; 8034B
 call __CHK	; 80350
@@ -156,6 +160,7 @@ pop edx	; 804F9
 pop ecx	; 804FA
 pop ebx	; 804FB
 ret	; 804FC
+%endif ; C
 db 08Bh,0C0h
 DrawSettingsHeading_jt:
 dd DrawSettingsHeading_n0

@@ -294,7 +294,6 @@ extern void CalStandingsMenu_player2(); /* 21AE7 */
 extern void DrawPhotoWithPal(); /* 21C04 */
 extern void SkaterStatsCard(); /* 21CDE */
 extern void GoalieStatsCard(); /* 22581 */
-extern void CmpTeamStandings(); /* 22DDE */
 extern void CmpTeamScoring(); /* 22F2E */
 extern void CmpTeamScoring_sub(); /* 22FE3 */
 extern void CmpTeamScoring_ret8(); /* 22FE7 */
@@ -947,7 +946,6 @@ extern void MenuCentralRegistry(); /* 6BE95 */
 extern void unk13_6BF3D(); /* 6BF3D */
 extern void BuildFreeAgentList(); /* 6BF4A */
 extern void BuildFreeAgentList_ret(); /* 6C03C */
-extern void BuildTeamRosterList(); /* 6C043 */
 extern void MenuSaveDbs(); /* 6C2F9 */
 extern void MenuSaveDbsAs(); /* 6C3BB */
 extern void SaveDbsToDir(); /* 6C4BA */
@@ -1906,7 +1904,6 @@ extern void loc_91084(); /* 91084 */
 extern void loc_91093(); /* 91093 */
 extern void loc_910AC(); /* 910AC */
 extern void sub_910B0(); /* 910B0 */
-extern void sub_910E0(); /* 910E0 */
 extern void loc_9110B(); /* 9110B */
 extern void loc_91165(); /* 91165 */
 extern void loc_911CE(); /* 911CE */

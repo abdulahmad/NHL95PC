@@ -367,6 +367,10 @@ pop esi	; 722FA
 ret 14h	; 722FB
 unk13_722FE:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+; C: src/c/053_71F0C_database_dialogs/LoadDbDialogShapes.c
+%ifdef CBUILD
+%include "c/053_71F0C_database_dialogs/LoadDbDialogShapes.inc"
+%else
 LoadDbDialogShapes:
 push dword 44h	; 7230B
 call __CHK	; 72310
@@ -476,6 +480,7 @@ pop edx	; 72488
 pop ecx	; 72489
 pop ebx	; 7248A
 ret	; 7248B
+%endif ; C
 ScanDbFiles:
 push dword 44h	; 7248C
 call __CHK	; 72491

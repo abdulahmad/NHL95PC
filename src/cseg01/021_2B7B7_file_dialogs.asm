@@ -38,6 +38,10 @@ savefileexts:
 dd str_NHL
 dd str_PO2
 dd str_LP
+; C: src/c/021_2B7B7_file_dialogs/LoadFileDlgShapes.c
+%ifdef CBUILD
+%include "c/021_2B7B7_file_dialogs/LoadFileDlgShapes.inc"
+%else
 LoadFileDlgShapes:
 push dword 44h	; 2B7C3
 call __CHK	; 2B7C8
@@ -146,6 +150,7 @@ pop edx	; 2B940
 pop ecx	; 2B941
 pop ebx	; 2B942
 ret	; 2B943
+%endif ; C
 MenuOpenSaved:
 push dword 58h	; 2B944
 call __CHK	; 2B949

@@ -73,5 +73,6 @@ extern unsigned char *statsskaterbuf;  /* DD110: skater stats records, 2Fh bytes
 extern unsigned char *statsgoaliebuf;  /* DD114: goalie stats records, 36h bytes each (season, playoffs at +16h) */
 extern unsigned char *rostergstat;  /* EBC6C: roster goalie stats records, 2Ch bytes each (season, playoffs at +16h) */
 extern unsigned char *falist;  /* D07AA: free-agent list, 1Bh bytes per player (name at +8) */
+extern unsigned char *statsteamrecs;  /* DD108: team stats records, 4Ch bytes each (season standings at +28h, playoffs at +3Ah) */
 extern int *statssortkeys;  /* DD118: per-player sort keys for the stats leaders (CmpShootPct compares them first) */
 #endif

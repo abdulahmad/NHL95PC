@@ -610,4 +610,10 @@ char *strlwr(char *s);
 void DrawGameLineJerseys(unsigned char *nums, int art, unsigned char side);  /* 78366 */
 void __cdecl sub_931FC(int art, int x, int y); /* graphics library: draw art (masked) */
 
+int CmpTeamStandings(int *a, int *b);  /* 22DDE */
+
+void BuildTeamRosterList(int team, unsigned char *list, unsigned char **rec);  /* 6C043 */
+
+void __cdecl sub_910E0(int art, int x, int y);  /* graphics library: draw art (opaque) */
+
 #endif
