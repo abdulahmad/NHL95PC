@@ -211,6 +211,13 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000259C0,sub_259C0,CmpSavePct,PC-new,,,,high,off_C6BE8[10] (Save Percentage Leaders),player_stats,manual-trace
 00025B24,sub_25B24,LeadersScreen,PC-new,,,,high,"player leaders table for statscategory 0-10 (titles off_C6C14, sorts off_C6BE8): POS PLAYER TEAM ...",player_stats,manual-trace
 00026B5A,sub_26B5A,TeamFromMouse,PC-new,,,,medium,"standings hit test: mouse x/y -> team row (two columns, rows of 0Dh px; playoff variant); called by RunTeamPickMenu",player_stats,manual-trace
+00027080,sub_27080,StandingsScreen,PC-new,,,,high,""" Standings"" screen: Western / Eastern Conference by division (divisionnames, divx / divy), qsort CmpConfStandings, Team GP W L T GF GA P Pct; called by the *StandingsScreen callbacks",standings_playoffs,manual-trace
+0002785F,sub_2785F,HighlightTreeSlot,PC-new,,,,medium,finds the team's slot in treecolslots and draws the 80h highlight box (sub_91044) at treecolx / treerowy,standings_playoffs,manual-trace
+00027BC3,sub_27BC3,MoveTreeHighlight,PC-new,,,,medium,"(old*, new*): unhighlight old, highlight new, *old = new; skips slots >= 1Ah; called by RunTeamPickMenu in playoff mode",standings_playoffs,manual-trace
+00027C34,sub_27C34,CountSeriesWins,PC-new,,,,medium,"loads the schedule (LoadScheduleDB or sub_29A97), counts wins per team over the 38h playoff games (6-byte entries, score +4/+5), writes wins for the 16 tree teams",standings_playoffs,manual-trace
+00027F9C,sub_27F9C,PlayoffTreeScreen,PC-new,,,,high,"playoff tree: ""Playoffs have not been seeded yet"", rst1 / rst2, scuparrw, Western / Eastern Conference, aup / midl / adn arrows",standings_playoffs,manual-trace
+00029681,sub_29681,PlayoffTreeHitTest,PC-new,,,,low,"stub, always returns 0 (ret 4); called by RunTeamPickMenu",standings_playoffs,manual-trace
+000296BA,sub_296BA,ShowPlayoffTree,PC-new,,,,medium,statsfromleague ? sub_29B07 : sub_2970A (both end in PlayoffTreeScreen); called by the *StandingsScreen callbacks,standings_playoffs,manual-trace
 00031013,sub_31013,MessageBox,PC-new,,,,medium,"(x, y (-1 = centred), message line table, line count, buttons, button count, ...): the league/front-end message dialog used for every 'Copying databases' / 'Insert disk' / error box",misc_dialogs,manual-trace
 0003271B,sub_3271B,SaveModeState,PC-new,,,,high,"copies the current league name, DB path formats, HomeTeam/VisTeam, gameopts and controller teams/devices/sides into a 75h-byte mode state block",main_desk,manual-trace
 000327A1,sub_327A1,LoadModeState,PC-new,,,,high,"the reverse of SaveModeState: sets gamemode (+0), curleague, paths, HomeTeam/VisTeam, gameopts and controller fields from a mode state block",main_desk,manual-trace

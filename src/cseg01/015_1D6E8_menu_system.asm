@@ -8,8 +8,8 @@ extern menuremap, menuremap2, statscategory, statsteamsel, statsplayoffs, statsp
 extern statsteamorder, statsnumgoalies, statsskaterorder, statsgoalieorder, statsgoalieplr, statsnumskaters, statsskaterplr, playofftree
 extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, statspal, dword_EA0DC, jctime, memcmp_
 extern memcpy_, off_D3078, sprintf_, strcat_, strlen_, strncpy_, FileOpenRead, FileClose
-extern FileReadAt, DeskSetExit3b, ShowPlayerStatsItem, StrPrefixDiffers, PlayerFromMouseY, TeamFromMouse, sub_27BC3, sub_27F9C
-extern sub_29681, sub_6B391, sub_6B3D7, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_8CCA8
+extern FileReadAt, DeskSetExit3b, ShowPlayerStatsItem, StrPrefixDiffers, PlayerFromMouseY, TeamFromMouse, MoveTreeHighlight, PlayoffTreeScreen
+extern PlayoffTreeHitTest, sub_6B391, sub_6B3D7, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_8CCA8
 extern sub_903F0, sub_90F38, sub_91370, sub_91400, sub_91964, MouseSetPos, sub_B2E1B, sub_B4DD4
 extern statsplayer, printfbuf
 global RunMenu_ret4
@@ -799,7 +799,7 @@ cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 1E0F3
 je short .10	; 1E0FB
 xor edx, edx	; 1E0FD
 lea eax, [byte esp+070h]	; 1E0FF
-call sub_27BC3	; 1E103
+call MoveTreeHighlight	; 1E103
 .10:
 mov esi, dword [dword esp+094h]	; 1E108
 push esi	; 1E10F
@@ -860,13 +860,13 @@ jge short RunTeamPickMenu.11	; 1E1B1
 xor edi, edi	; 1E1B3
 mov dword [dword esp+098h], edi	; 1E1B5
 .14:
-call sub_27F9C	; 1E1BC
+call PlayoffTreeScreen	; 1E1BC
 mov eax, dword [byte esp+070h]	; 1E1C1
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 1E1C5
 je short .15	; 1E1CD
 xor edx, edx	; 1E1CF
 lea eax, [byte esp+070h]	; 1E1D1
-call sub_27BC3	; 1E1D5
+call MoveTreeHighlight	; 1E1D5
 .15:
 mov esi, dword [dword esp+094h]	; 1E1DA
 push esi	; 1E1E1
@@ -939,7 +939,7 @@ mov ecx, dword [dword esp+094h]	; 1E2C9
 mov ebx, dword [dword esp+090h]	; 1E2D0
 lea edx, [byte esp+074h]	; 1E2D7
 mov eax, dword [dword esp+080h]	; 1E2DB
-call sub_29681	; 1E2E2
+call PlayoffTreeHitTest	; 1E2E2
 mov dword [dword esp+09Ch], eax	; 1E2E7
 test ax, ax	; 1E2EE
 je near RunTeamPickMenu.16	; 1E2F1
@@ -1099,7 +1099,7 @@ cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 1E4E5
 je short .35	; 1E4ED
 xor edx, edx	; 1E4EF
 lea eax, [byte esp+070h]	; 1E4F1
-call sub_27BC3	; 1E4F5
+call MoveTreeHighlight	; 1E4F5
 .35:
 mov eax, dword [byte esp+06Ch]	; 1E4FA
 mov edx, dword [byte esp+068h]	; 1E4FE
@@ -1213,7 +1213,7 @@ cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 1E645
 je short .47	; 1E64D
 xor edx, edx	; 1E64F
 lea eax, [byte esp+070h]	; 1E651
-call sub_27BC3	; 1E655
+call MoveTreeHighlight	; 1E655
 .47:
 mov esi, dword [dword esp+094h]	; 1E65A
 push esi	; 1E661
@@ -1648,7 +1648,7 @@ cmp dword [dword edx+playofftree], byte 1Ah	; 1EBEE
 je near .85	; 1EBF5
 lea edx, [byte esp+074h]	; 1EBFB
 lea eax, [byte esp+070h]	; 1EBFF
-call sub_27BC3	; 1EC03
+call MoveTreeHighlight	; 1EC03
 jmp near .85	; 1EC08
 .74:
 cmp dword [statsplayoffs], byte 0	; 1EC0D

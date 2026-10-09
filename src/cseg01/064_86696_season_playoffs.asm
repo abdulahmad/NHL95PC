@@ -7,9 +7,8 @@ extern str_PO, str_fmtSlashDb, str_GameSet, str_4dKbytesOfFree, str_Temp2, str_S
 extern str_Db, str_Tied, str_Schedule, str_GameSav, str_Pointer, str_Menubuff2, str_PlayoffsHaveNotBeen, str_Pstatbar2
 extern str_Rst1, str_Rst2, str_Scuparrw, str_WesternConference, str_EasternConference, str_fmtcsp, str_Aup1, str_Aup2
 extern str_Aup3, str_Midl, str_Adn3, str_Adn2, str_Adn1, str_POTitle, str_Bkgd2, str_extDB
-extern msg_PODiskSpace_arg, msg_POTeamOut_arg, msg_POTeamOut_arg2, byte_C6D72, byte_C6D7A, byte_C6D7B
-extern byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, byte_C6D9A, byte_C6DA2
-extern byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, byte_C6DB2, str_dot, curleague
+extern msg_PODiskSpace_arg, msg_POTeamOut_arg, msg_POTeamOut_arg2, treecolslots, treecol_Wr2
+extern treecol_Er2, treecol_Er1, str_dot, curleague
 extern musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A
 extern DeskHomeLines, DeskVisitorLines, postate
 extern lgstate, gameresult, gamemode, gameopts, ctl1team
@@ -26,7 +25,7 @@ extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers
 extern FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
 extern CopyFile, DiskSpaceShort, CheckGameDiskSpace, GetLeagueDBSizes, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText
 extern TextGridOpen, TextGridOff, InitGameSummary, SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen
-extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, sub_27C34, sub_29F28, sub_2FDD1, sub_2FEDF
+extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, CountSeriesWins, sub_29F28, sub_2FDD1, sub_2FEDF
 extern sub_30A0C, sub_30F12, MessageBox, SaveModeState, LoadModeState, WriteModeState, sub_3626D, SimulateGame
 extern sub_479E9, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E
 extern sub_6B9EB, sub_6BA4D, sub_76429, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
@@ -37,7 +36,7 @@ extern sub_B30B4, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4BC4, EasnTea
 extern EasnGoalieStatsScreen, EasnStandingsMenu, unk_86616, str_E1, str_E2, str_F1, str_F2, unk_C3A66
 extern str_D, unk_C3AF8, exhstate, btn_LeagueExists, unk_CEE4F, unk_CEEAF, unk_CF90F, unk_D2864
 extern btn_POHumanOut, hmteamrec, unk_DDAC4, unk_DDCE6, unk_DDCFB, unk_ED7BC, unknown_libname_1
-extern word_C6D24, word_C6E22, scrpitch, VisTeam, hmscore, awscore
+extern word_C6D24, treecolx, scrpitch, VisTeam, hmscore, awscore
 global POSeedRound2_x30, POSeedRound2_x
 global POSeedConfFinals_pair, POSeedConfFinals_x
 global LoadScheduleDB_x
@@ -5198,12 +5197,12 @@ mov dword [dword_C6D26], edi	; 8A734
 mov ebx, 1	; 8A73A
 mov edx, esp	; 8A73F
 mov eax, playofftree	; 8A741
-call sub_27C34	; 8A746
+call CountSeriesWins	; 8A746
 mov edx, 43h	; 8A74B
 mov eax, 40h	; 8A750
 call SetTextColors	; 8A755
 xor eax, eax	; 8A75A
-mov al, byte [byte_C6D72]	; 8A75C
+mov al, byte [treecolslots]	; 8A75C
 cmp dword [nosplit eax*4+playofftree], byte 19h	; 8A761
 jle short .4	; 8A769
 push esi	; 8A76B
@@ -5351,7 +5350,7 @@ jmp near .14	; 8A959
 cmp cx, byte 4	; 8A95E
 jge short .10	; 8A962
 movsx eax, cx	; 8A964
-movzx si, byte [nosplit eax*2+byte_C6D72]	; 8A967
+movzx si, byte [nosplit eax*2+treecolslots]	; 8A967
 jmp short .11	; 8A970
 .10:
 movsx eax, cx	; 8A972
@@ -5359,7 +5358,7 @@ add eax, eax	; 8A975
 sub eax, byte 8	; 8A977
 mov edx, 7	; 8A97A
 sub edx, eax	; 8A97F
-movzx si, byte [dword edx+byte_C6D72]	; 8A981
+movzx si, byte [dword edx+treecolslots]	; 8A981
 .11:
 movsx edx, cx	; 8A989
 movsx eax, si	; 8A98C
@@ -5368,13 +5367,13 @@ mov dword [nosplit eax*4+dword_C6DBA], edx	; 8A996
 lea eax, [edx+edx]	; 8A99D
 cmp cx, byte 4	; 8A9A0
 jge short .12	; 8A9A4
-movzx si, byte [dword eax+byte_C6DB2]	; 8A9A6
+movzx si, byte [dword eax+treecol_Er1]	; 8A9A6
 jmp short .13	; 8A9AE
 .12:
 sub eax, byte 8	; 8A9B0
 mov edx, 7	; 8A9B3
 sub edx, eax	; 8A9B8
-movzx si, byte [dword edx+byte_C6DB2]	; 8A9BA
+movzx si, byte [dword edx+treecol_Er1]	; 8A9BA
 .13:
 movsx edx, cx	; 8A9C2
 movsx eax, si	; 8A9C5
@@ -5392,7 +5391,7 @@ cmp cx, byte 4	; 8A9EE
 jge short .16	; 8A9F2
 mov ebx, ecx	; 8A9F4
 movsx eax, cx	; 8A9F6
-movzx si, byte [nosplit eax*2+byte_C6D72]	; 8A9F9
+movzx si, byte [nosplit eax*2+treecolslots]	; 8A9F9
 jmp short .17	; 8AA02
 .16:
 mov ebx, 7	; 8AA04
@@ -5402,7 +5401,7 @@ add eax, eax	; 8AA0E
 sub eax, byte 8	; 8AA10
 mov edx, 7	; 8AA13
 sub edx, eax	; 8AA18
-movzx si, byte [dword edx+byte_C6D72]	; 8AA1A
+movzx si, byte [dword edx+treecolslots]	; 8AA1A
 .17:
 mov edx, 43h	; 8AA22
 mov eax, 40h	; 8AA27
@@ -5431,27 +5430,27 @@ call strcat_	; 8AA7F
 mov edx, dword [dword esp+0EEh]	; 8AA84
 sar edx, 10h	; 8AA8B
 movsx ebp, bx	; 8AA8E
-mov eax, dword [nosplit ebp*4+word_C6E22]	; 8AA91
+mov eax, dword [nosplit ebp*4+treecolx]	; 8AA91
 lea ebx, [dword esp+0B8h]	; 8AA98
 call PrintShadowText	; 8AA9F
-mov bx, word [nosplit ebp*4+word_C6E22]	; 8AAA4
+mov bx, word [nosplit ebp*4+treecolx]	; 8AAA4
 add ebx, byte 6Ah	; 8AAAC
 xor eax, eax	; 8AAAF
-mov al, byte [byte_C6D7A]	; 8AAB1
+mov al, byte [treecol_Wr2]	; 8AAB1
 mov eax, dword [nosplit eax*4+playofftree]	; 8AAB6
 mov edx, dword [dword edi+playofftree]	; 8AABD
 cmp eax, edx	; 8AAC3
 je short .18	; 8AAC5
 xor eax, eax	; 8AAC7
-mov al, byte [byte_C6D7B]	; 8AAC9
+mov al, byte [treecol_Wr2+1]	; 8AAC9
 cmp edx, dword [nosplit eax*4+playofftree]	; 8AACE
 je short .18	; 8AAD5
 xor eax, eax	; 8AAD7
-mov al, byte [byte_C6D7C]	; 8AAD9
+mov al, byte [treecol_Wr2+2]	; 8AAD9
 cmp edx, dword [nosplit eax*4+playofftree]	; 8AADE
 je short .18	; 8AAE5
 xor eax, eax	; 8AAE7
-mov al, byte [byte_C6D7D]	; 8AAE9
+mov al, byte [treecol_Wr2+3]	; 8AAE9
 cmp edx, dword [nosplit eax*4+playofftree]	; 8AAEE
 jne short .19	; 8AAF5
 .18:
@@ -5485,20 +5484,20 @@ inc ecx	; 8AB56
 cmp cx, byte 8	; 8AB57
 jl near DrawPlayoffTree.15	; 8AB5B
 xor eax, eax	; 8AB61
-mov al, byte [byte_C6D7A]	; 8AB63
+mov al, byte [treecol_Wr2]	; 8AB63
 add word [dword esp+0F0h], byte 3Fh	; 8AB68
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8AB71
 jge near .37	; 8AB79
 xor eax, eax	; 8AB7F
-mov al, byte [byte_C6D7B]	; 8AB81
+mov al, byte [treecol_Wr2+1]	; 8AB81
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8AB86
 jge near .37	; 8AB8E
 xor eax, eax	; 8AB94
-mov al, byte [byte_C6D7C]	; 8AB96
+mov al, byte [treecol_Wr2+2]	; 8AB96
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8AB9B
 jge near .37	; 8ABA3
 xor eax, eax	; 8ABA9
-mov al, byte [byte_C6D7D]	; 8ABAB
+mov al, byte [treecol_Wr2+3]	; 8ABAB
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8ABB0
 jge near .37	; 8ABB8
 push str_Aup1	; 8ABBE
@@ -5517,7 +5516,7 @@ jge short .24	; 8ABE7
 mov ebx, ecx	; 8ABE9
 add ebx, byte 4	; 8ABEB
 movsx eax, cx	; 8ABEE
-movzx si, byte [nosplit eax*2+byte_C6D7A]	; 8ABF1
+movzx si, byte [nosplit eax*2+treecol_Wr2]	; 8ABF1
 jmp short .25	; 8ABFA
 .24:
 mov ebx, 7	; 8ABFC
@@ -5527,7 +5526,7 @@ add eax, eax	; 8AC06
 sub eax, byte 4	; 8AC08
 mov edx, 3	; 8AC0B
 sub edx, eax	; 8AC10
-movzx si, byte [dword edx+byte_C6D7A]	; 8AC12
+movzx si, byte [dword edx+treecol_Wr2]	; 8AC12
 .25:
 mov edx, 43h	; 8AC1A
 mov eax, 40h	; 8AC1F
@@ -5556,19 +5555,19 @@ call strcat_	; 8AC77
 mov edx, dword [dword esp+0EEh]	; 8AC7C
 sar edx, 10h	; 8AC83
 movsx ebp, bx	; 8AC86
-mov eax, dword [nosplit ebp*4+word_C6E22]	; 8AC89
+mov eax, dword [nosplit ebp*4+treecolx]	; 8AC89
 lea ebx, [dword esp+0B8h]	; 8AC90
 call PrintShadowText	; 8AC97
-mov bx, word [nosplit ebp*4+word_C6E22]	; 8AC9C
+mov bx, word [nosplit ebp*4+treecolx]	; 8AC9C
 add ebx, byte 6Ah	; 8ACA4
 xor eax, eax	; 8ACA7
-mov al, byte [byte_C6D82]	; 8ACA9
+mov al, byte [treecolslots+10h]	; 8ACA9
 mov eax, dword [nosplit eax*4+playofftree]	; 8ACAE
 mov ebp, dword [dword edi+playofftree]	; 8ACB5
 cmp eax, ebp	; 8ACBB
 je short .26	; 8ACBD
 xor eax, eax	; 8ACBF
-mov al, byte [byte_C6D83]	; 8ACC1
+mov al, byte [treecolslots+11h]	; 8ACC1
 cmp ebp, dword [nosplit eax*4+playofftree]	; 8ACC6
 jne short .27	; 8ACCD
 .26:
@@ -5602,12 +5601,12 @@ inc ecx	; 8AD2E
 cmp cx, byte 4	; 8AD2F
 jl near DrawPlayoffTree.23	; 8AD33
 xor eax, eax	; 8AD39
-mov al, byte [byte_C6D82]	; 8AD3B
+mov al, byte [treecolslots+10h]	; 8AD3B
 add word [dword esp+0F0h], byte 3Dh	; 8AD40
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8AD49
 jge near .38	; 8AD51
 xor eax, eax	; 8AD57
-mov al, byte [byte_C6D83]	; 8AD59
+mov al, byte [treecolslots+11h]	; 8AD59
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8AD5E
 jge near .38	; 8AD66
 push str_Aup2	; 8AD6C
@@ -5618,7 +5617,7 @@ add esp, byte 8	; 8AD7E
 push eax	; 8AD81
 call sub_913B4	; 8AD82
 add esp, byte 4	; 8AD87
-movzx si, byte [byte_C6D82]	; 8AD8A
+movzx si, byte [treecolslots+10h]	; 8AD8A
 mov edx, 43h	; 8AD92
 mov eax, 40h	; 8AD97
 call SetTextColors	; 8AD9C
@@ -5650,13 +5649,13 @@ lea ebx, [dword esp+0B8h]	; 8ADFF
 mov eax, 48h	; 8AE06
 call PrintShadowText	; 8AE0B
 xor eax, eax	; 8AE10
-mov al, byte [byte_C6D8A]	; 8AE12
+mov al, byte [treecolslots+18h]	; 8AE12
 mov eax, dword [nosplit eax*4+playofftree]	; 8AE17
 mov ebp, dword [dword edi+playofftree]	; 8AE1E
 cmp eax, ebp	; 8AE24
 je short .31	; 8AE26
 xor eax, eax	; 8AE28
-mov al, byte [byte_C6D9A]	; 8AE2A
+mov al, byte [treecolslots+28h]	; 8AE2A
 cmp ebp, dword [nosplit eax*4+playofftree]	; 8AE2F
 jne short .32	; 8AE36
 .31:
@@ -5682,7 +5681,7 @@ dec edx	; 8AE79
 lea ebx, [dword esp+0B8h]	; 8AE7A
 mov eax, 0B2h	; 8AE81
 call PrintShadowText	; 8AE86
-movzx si, byte [byte_C6D83]	; 8AE8B
+movzx si, byte [treecolslots+11h]	; 8AE8B
 add word [dword esp+0F0h], byte 10h	; 8AE93
 mov edx, 43h	; 8AE9C
 mov eax, 40h	; 8AEA1
@@ -5715,13 +5714,13 @@ lea ebx, [dword esp+0B8h]	; 8AF09
 mov eax, 48h	; 8AF10
 call PrintShadowText	; 8AF15
 xor eax, eax	; 8AF1A
-mov al, byte [byte_C6D8A]	; 8AF1C
+mov al, byte [treecolslots+18h]	; 8AF1C
 mov eax, dword [nosplit eax*4+playofftree]	; 8AF21
 mov ecx, dword [dword edi+playofftree]	; 8AF28
 cmp eax, ecx	; 8AF2E
 je short .34	; 8AF30
 xor eax, eax	; 8AF32
-mov al, byte [byte_C6D9A]	; 8AF34
+mov al, byte [treecolslots+28h]	; 8AF34
 cmp ecx, dword [nosplit eax*4+playofftree]	; 8AF39
 jne short .35	; 8AF40
 .34:
@@ -5753,7 +5752,7 @@ jmp short .38	; 8AF9E
 add word [dword esp+0F0h], byte 4Dh	; 8AFA0
 .38:
 xor eax, eax	; 8AFA9
-mov al, byte [byte_C6D8A]	; 8AFAB
+mov al, byte [treecolslots+18h]	; 8AFAB
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8AFB0
 jge near .42	; 8AFB8
 push str_Aup3	; 8AFBE
@@ -5779,9 +5778,9 @@ lea edi, [dword esp+0B8h]	; 8B00D
 mov esi, unk_C3AF8	; 8B014
 movsw	; 8B019
 movsb	; 8B01B
-movzx si, byte [byte_C6D8A]	; 8B01C
+movzx si, byte [treecolslots+18h]	; 8B01C
 xor edx, edx	; 8B024
-mov dl, byte [byte_C6D8A]	; 8B026
+mov dl, byte [treecolslots+18h]	; 8B026
 mov edx, dword [nosplit edx*4+playofftree]	; 8B02C
 mov eax, edx	; 8B033
 shl eax, 2	; 8B035
@@ -5808,7 +5807,7 @@ push eax	; 8B086
 call sprintf_	; 8B087
 add esp, byte 0Ch	; 8B08C
 xor eax, eax	; 8B08F
-mov al, byte [byte_C6D92]	; 8B091
+mov al, byte [treecolslots+20h]	; 8B091
 mov eax, dword [nosplit eax*4+playofftree]	; 8B096
 cmp eax, dword [dword edx+playofftree]	; 8B09D
 jne short .40	; 8B0A3
@@ -5834,7 +5833,7 @@ mov eax, 16Ch	; 8B0E9
 call PrintShadowText	; 8B0EE
 .42:
 xor eax, eax	; 8B0F3
-mov al, byte [byte_C6D9A]	; 8B0F5
+mov al, byte [treecolslots+28h]	; 8B0F5
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B0FA
 jge near .47	; 8B102
 push str_Adn3	; 8B108
@@ -5863,9 +5862,9 @@ lea edi, [dword esp+0B8h]	; 8B15F
 mov esi, unk_C3AF8	; 8B166
 movsw	; 8B16B
 movsb	; 8B16D
-movzx si, byte [byte_C6D9A]	; 8B16E
+movzx si, byte [treecolslots+28h]	; 8B16E
 xor edx, edx	; 8B176
-mov dl, byte [byte_C6D9A]	; 8B178
+mov dl, byte [treecolslots+28h]	; 8B178
 mov edx, dword [nosplit edx*4+playofftree]	; 8B17E
 mov eax, edx	; 8B185
 shl eax, 2	; 8B187
@@ -5892,7 +5891,7 @@ push eax	; 8B1D8
 call sprintf_	; 8B1D9
 add esp, byte 0Ch	; 8B1DE
 xor eax, eax	; 8B1E1
-mov al, byte [byte_C6D92]	; 8B1E3
+mov al, byte [treecolslots+20h]	; 8B1E3
 mov eax, dword [nosplit eax*4+playofftree]	; 8B1E8
 cmp eax, dword [dword edx+playofftree]	; 8B1EF
 jne short .45	; 8B1F5
@@ -5919,14 +5918,14 @@ call PrintShadowText	; 8B240
 sub word [dword esp+0F0h], byte 10h	; 8B245
 .47:
 xor eax, eax	; 8B24E
-mov al, byte [byte_C6DA2]	; 8B250
+mov al, byte [treecolslots+30h]	; 8B250
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B255
 jge near .54	; 8B25D
 xor eax, eax	; 8B263
-mov al, byte [byte_C6DA3]	; 8B265
+mov al, byte [treecolslots+31h]	; 8B265
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B26A
 jge near .54	; 8B272
-movzx si, byte [byte_C6DA2]	; 8B278
+movzx si, byte [treecolslots+30h]	; 8B278
 mov edx, 43h	; 8B280
 mov eax, 40h	; 8B285
 call SetTextColors	; 8B28A
@@ -5958,13 +5957,13 @@ lea ebx, [dword esp+0B8h]	; 8B2ED
 mov eax, 1C6h	; 8B2F4
 call PrintShadowText	; 8B2F9
 xor eax, eax	; 8B2FE
-mov al, byte [byte_C6D8A]	; 8B300
+mov al, byte [treecolslots+18h]	; 8B300
 mov eax, dword [nosplit eax*4+playofftree]	; 8B305
 mov edx, dword [dword edi+playofftree]	; 8B30C
 cmp eax, edx	; 8B312
 je short .48	; 8B314
 xor eax, eax	; 8B316
-mov al, byte [byte_C6D9A]	; 8B318
+mov al, byte [treecolslots+28h]	; 8B318
 cmp edx, dword [nosplit eax*4+playofftree]	; 8B31D
 jne short .49	; 8B324
 .48:
@@ -5990,7 +5989,7 @@ dec edx	; 8B367
 lea ebx, [dword esp+0B8h]	; 8B368
 mov eax, 230h	; 8B36F
 call PrintShadowText	; 8B374
-movzx si, byte [byte_C6DA3]	; 8B379
+movzx si, byte [treecolslots+31h]	; 8B379
 add word [dword esp+0F0h], byte 10h	; 8B381
 mov edx, 43h	; 8B38A
 mov eax, 40h	; 8B38F
@@ -6023,13 +6022,13 @@ lea ebx, [dword esp+0B8h]	; 8B3F7
 mov eax, 1C6h	; 8B3FE
 call PrintShadowText	; 8B403
 xor eax, eax	; 8B408
-mov al, byte [byte_C6D8A]	; 8B40A
+mov al, byte [treecolslots+18h]	; 8B40A
 mov eax, dword [nosplit eax*4+playofftree]	; 8B40F
 mov ebp, dword [dword edi+playofftree]	; 8B416
 cmp eax, ebp	; 8B41C
 je short .51	; 8B41E
 xor eax, eax	; 8B420
-mov al, byte [byte_C6D9A]	; 8B422
+mov al, byte [treecolslots+28h]	; 8B422
 cmp ebp, dword [nosplit eax*4+playofftree]	; 8B427
 jne short .52	; 8B42E
 .51:
@@ -6069,19 +6068,19 @@ jmp short .55	; 8B4AA
 add word [dword esp+0F0h], byte 4Dh	; 8B4AC
 .55:
 xor eax, eax	; 8B4B5
-mov al, byte [byte_C6DAA]	; 8B4B7
+mov al, byte [treecol_Er2]	; 8B4B7
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B4BC
 jge near .66	; 8B4C4
 xor eax, eax	; 8B4CA
-mov al, byte [byte_C6DAB]	; 8B4CC
+mov al, byte [treecol_Er2+1]	; 8B4CC
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B4D1
 jge near .66	; 8B4D9
 xor eax, eax	; 8B4DF
-mov al, byte [byte_C6DAC]	; 8B4E1
+mov al, byte [treecol_Er2+2]	; 8B4E1
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B4E6
 jge near .66	; 8B4EE
 xor eax, eax	; 8B4F4
-mov al, byte [byte_C6DAD]	; 8B4F6
+mov al, byte [treecol_Er2+3]	; 8B4F6
 cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 8B4FB
 jge near .66	; 8B503
 xor ecx, ecx	; 8B509
@@ -6098,7 +6097,7 @@ sub ebx, ecx	; 8B51F
 cmp cx, byte 2	; 8B521
 jge short .59	; 8B525
 movsx eax, cx	; 8B527
-movzx si, byte [nosplit eax*2+byte_C6DAA]	; 8B52A
+movzx si, byte [nosplit eax*2+treecol_Er2]	; 8B52A
 jmp short .60	; 8B533
 .59:
 movsx eax, cx	; 8B535
@@ -6106,7 +6105,7 @@ add eax, eax	; 8B538
 sub eax, byte 4	; 8B53A
 mov edx, 3	; 8B53D
 sub edx, eax	; 8B542
-movzx si, byte [dword edx+byte_C6DAA]	; 8B544
+movzx si, byte [dword edx+treecol_Er2]	; 8B544
 .60:
 mov edx, 43h	; 8B54C
 mov eax, 40h	; 8B551
@@ -6138,7 +6137,7 @@ movsx ebp, bx	; 8B5B8
 mov eax, 5	; 8B5BB
 sub eax, ebp	; 8B5C0
 mov ebp, eax	; 8B5C2
-mov eax, dword [nosplit eax*4+word_C6E22]	; 8B5C4
+mov eax, dword [nosplit eax*4+treecolx]	; 8B5C4
 add eax, byte 64h	; 8B5CB
 mov ebx, 280h	; 8B5CE
 sub ebx, eax	; 8B5D3
@@ -6146,15 +6145,15 @@ mov eax, ebx	; 8B5D5
 lea ebx, [dword esp+0B8h]	; 8B5D7
 call PrintShadowText	; 8B5DE
 mov ebx, 286h	; 8B5E3
-sub bx, word [nosplit ebp*4+word_C6E22]	; 8B5E8
+sub bx, word [nosplit ebp*4+treecolx]	; 8B5E8
 xor eax, eax	; 8B5F0
-mov al, byte [byte_C6DA2]	; 8B5F2
+mov al, byte [treecolslots+30h]	; 8B5F2
 mov eax, dword [nosplit eax*4+playofftree]	; 8B5F7
 mov ebp, dword [dword edi+playofftree]	; 8B5FE
 cmp eax, ebp	; 8B604
 je short .61	; 8B606
 xor eax, eax	; 8B608
-mov al, byte [byte_C6DA3]	; 8B60A
+mov al, byte [treecolslots+31h]	; 8B60A
 cmp ebp, dword [nosplit eax*4+playofftree]	; 8B60F
 jne short .62	; 8B616
 .61:
@@ -6207,7 +6206,7 @@ cmp cx, byte 4	; 8B6BB
 jge short .69	; 8B6BF
 mov ebx, ecx	; 8B6C1
 movsx eax, cx	; 8B6C3
-movzx si, byte [nosplit eax*2+byte_C6DB2]	; 8B6C6
+movzx si, byte [nosplit eax*2+treecol_Er1]	; 8B6C6
 jmp short .70	; 8B6CF
 .69:
 mov ebx, 7	; 8B6D1
@@ -6217,7 +6216,7 @@ add eax, eax	; 8B6DB
 sub eax, byte 8	; 8B6DD
 mov edx, 7	; 8B6E0
 sub edx, eax	; 8B6E5
-movzx si, byte [dword edx+byte_C6DB2]	; 8B6E7
+movzx si, byte [dword edx+treecol_Er1]	; 8B6E7
 .70:
 mov edx, 43h	; 8B6EF
 mov eax, 40h	; 8B6F4
@@ -6246,27 +6245,27 @@ call strcat_	; 8B74C
 mov edx, dword [dword esp+0EEh]	; 8B751
 sar edx, 10h	; 8B758
 movsx ebp, bx	; 8B75B
-mov eax, dword [nosplit ebp*4+word_C6E22]	; 8B75E
+mov eax, dword [nosplit ebp*4+treecolx]	; 8B75E
 lea ebx, [dword esp+0B8h]	; 8B765
 call PrintShadowText	; 8B76C
-mov bx, word [nosplit ebp*4+word_C6E22]	; 8B771
+mov bx, word [nosplit ebp*4+treecolx]	; 8B771
 add ebx, byte 6Ah	; 8B779
 xor eax, eax	; 8B77C
-mov al, byte [byte_C6DAA]	; 8B77E
+mov al, byte [treecol_Er2]	; 8B77E
 mov eax, dword [nosplit eax*4+playofftree]	; 8B783
 mov ebp, dword [dword edi+playofftree]	; 8B78A
 cmp eax, ebp	; 8B790
 je short .71	; 8B792
 xor eax, eax	; 8B794
-mov al, byte [byte_C6DAB]	; 8B796
+mov al, byte [treecol_Er2+1]	; 8B796
 cmp ebp, dword [nosplit eax*4+playofftree]	; 8B79B
 je short .71	; 8B7A2
 xor eax, eax	; 8B7A4
-mov al, byte [byte_C6DAC]	; 8B7A6
+mov al, byte [treecol_Er2+2]	; 8B7A6
 cmp ebp, dword [nosplit eax*4+playofftree]	; 8B7AB
 je short .71	; 8B7B2
 xor eax, eax	; 8B7B4
-mov al, byte [byte_C6DAD]	; 8B7B6
+mov al, byte [treecol_Er2+3]	; 8B7B6
 cmp ebp, dword [nosplit eax*4+playofftree]	; 8B7BB
 jne short .72	; 8B7C2
 .71:

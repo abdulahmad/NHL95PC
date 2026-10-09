@@ -13,10 +13,10 @@ extern str_Name, str_G3, str_A3, str_PT, str_Shots3, str_PIM3, str_PlusMinus3, s
 extern str_GAA3, str_GA, str_SA2, str_PCT, str_Keys, str_Pstat, str_Gstat, str_Addsort2
 extern str_KeyDb2, str_Pstatbar7, str_Pst26, str_StatsUnavailable2, str_POS, str_PLAYER2, str_TEAM, str_AttDb
 extern str_fmt2d, str_fmt3d, str_fmt4d, str_fmt5d, str_fmtTenths, str_fmtPct, str_fmtPct0, str_fmtMinSec
-extern str_fmtEmb, str_Bkgd2, byte_C6D72, byte_C6D73, byte_C6D7A, byte_C6D7B, byte_C6D82, byte_C6D83
-extern byte_C6D8A, byte_C6D9A, byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DB2, byte_C6DB3
+extern str_fmtEmb, str_Bkgd2, treecolslots, treecol_Wr2
+extern treecol_Er2, treecol_Er1
 extern byte_ED83C, byte_ED858, byte_ED859, byte_ED908, byte_ED909, teamdivflags, teamconf, statsplayoffs
-extern statsfromleague, westconfteams, eastconfteams, dword_C6E32, dword_D2C6B, dword_D8B68, dword_D8B74, statsnumgoalies
+extern statsfromleague, westconfteams, eastconfteams, treerowy, dword_D2C6B, dword_D8B68, dword_D8B74, statsnumgoalies
 extern statsskaterorder, statsgoalieorder, dword_DC734, statsgoalieplr, statsnumskaters, statsskaterplr, dword_DC85C, dword_DC860
 extern statspalshape, statsbgshapes, statsteamrecs, statsteambuf, statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf
 extern fputchar, j___close_, jctime, lseek_, memcpy_, statslabels, statsbgnames, statsplayerdbs
@@ -29,7 +29,7 @@ extern sub_29A97, sub_29C75, sub_8CCA8, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA
 extern sub_913B4, sub_B30B4, sub_B30BB, sub_B4BA8, sub_B4BC4, str_GP2, str_GP3, str_W2
 extern str_L4, str_T2, str_SO2, str_EN2, str_GP4, str_S, str_No, str_GP5
 extern str_C, str_W3, str_L5, str_T3, str_NO, str_GP6, str_C2, statsleague
-extern statsplayer, printfbuf, word_C6E22
+extern statsplayer, printfbuf, treecolx
 global TeamStatsScreen_keyjt, TeamStatsScreen_coljt, LeadersScreen_coljt
 global CmpTeamScoring_sub, CmpTeamScoring_ret8
 global CmpTeamScoring_common
@@ -6248,12 +6248,12 @@ mov edx, dword [byte ebp-0Eh]	; 26CE7
 sar edx, 10h	; 26CEA
 shl edx, 2	; 26CED
 mov eax, dword [byte ebp-028h]	; 26CF0
-cmp eax, dword [dword edx+word_C6E22]	; 26CF3
+cmp eax, dword [dword edx+treecolx]	; 26CF3
 jl short .15	; 26CF9
 mov eax, dword [byte ebp-0Eh]	; 26CFB
 sar eax, 10h	; 26CFE
 shl eax, 2	; 26D01
-mov eax, dword [dword eax+word_C6E22]	; 26D04
+mov eax, dword [dword eax+treecolx]	; 26D04
 add eax, byte 64h	; 26D0A
 cmp eax, dword [byte ebp-028h]	; 26D0D
 jge short .16	; 26D10
@@ -6266,7 +6266,7 @@ mov eax, dword [byte ebp-0Eh]	; 26D1A
 sar eax, 10h	; 26D1D
 add eax, eax	; 26D20
 xor edx, edx	; 26D22
-mov dl, byte [dword eax+byte_C6D72]	; 26D24
+mov dl, byte [dword eax+treecolslots]	; 26D24
 mov eax, dword [byte ebp-020h]	; 26D2A
 mov dword [eax], edx	; 26D2D
 jmp short .18	; 26D2F
@@ -6275,7 +6275,7 @@ mov eax, dword [byte ebp-0Eh]	; 26D31
 sar eax, 10h	; 26D34
 add eax, eax	; 26D37
 xor edx, edx	; 26D39
-mov dl, byte [dword eax+byte_C6D73]	; 26D3B
+mov dl, byte [dword eax+treecolslots+1]	; 26D3B
 mov eax, dword [byte ebp-020h]	; 26D41
 mov dword [eax], edx	; 26D44
 .18:
@@ -6307,12 +6307,12 @@ mov edx, dword [byte ebp-0Eh]	; 26D8F
 sar edx, 10h	; 26D92
 shl edx, 2	; 26D95
 mov eax, dword [byte ebp-028h]	; 26D98
-cmp eax, dword [dword edx+dword_C6E32]	; 26D9B
+cmp eax, dword [dword edx+treerowy]	; 26D9B
 jl short .27	; 26DA1
 mov eax, dword [byte ebp-0Eh]	; 26DA3
 sar eax, 10h	; 26DA6
 shl eax, 2	; 26DA9
-mov eax, dword [dword eax+dword_C6E32]	; 26DAC
+mov eax, dword [dword eax+treerowy]	; 26DAC
 add eax, byte 64h	; 26DB2
 cmp eax, dword [byte ebp-028h]	; 26DB5
 jge short .28	; 26DB8
@@ -6325,7 +6325,7 @@ mov eax, dword [byte ebp-0Eh]	; 26DC5
 sar eax, 10h	; 26DC8
 add eax, eax	; 26DCB
 xor edx, edx	; 26DCD
-mov dl, byte [dword eax+byte_C6D7A]	; 26DCF
+mov dl, byte [dword eax+treecol_Wr2]	; 26DCF
 mov eax, dword [byte ebp-020h]	; 26DD5
 mov dword [eax], edx	; 26DD8
 jmp short .30	; 26DDA
@@ -6334,7 +6334,7 @@ mov eax, dword [byte ebp-0Eh]	; 26DDC
 sar eax, 10h	; 26DDF
 add eax, eax	; 26DE2
 xor edx, edx	; 26DE4
-mov dl, byte [dword eax+byte_C6D7B]	; 26DE6
+mov dl, byte [dword eax+treecol_Wr2+1]	; 26DE6
 mov eax, dword [byte ebp-020h]	; 26DEC
 mov dword [eax], edx	; 26DEF
 .30:
@@ -6363,13 +6363,13 @@ jmp short .40	; 26E31
 cmp dword [byte ebp-024h], 0F5h	; 26E33
 jge short .38	; 26E3A
 xor edx, edx	; 26E3C
-mov dl, byte [byte_C6D82]	; 26E3E
+mov dl, byte [treecolslots+10h]	; 26E3E
 mov eax, dword [byte ebp-020h]	; 26E44
 mov dword [eax], edx	; 26E47
 jmp short .39	; 26E49
 .38:
 xor edx, edx	; 26E4B
-mov dl, byte [byte_C6D83]	; 26E4D
+mov dl, byte [treecolslots+11h]	; 26E4D
 mov eax, dword [byte ebp-020h]	; 26E53
 mov dword [eax], edx	; 26E56
 .39:
@@ -6386,13 +6386,13 @@ jmp short .45	; 26E76
 cmp dword [byte ebp-024h], 0F2h	; 26E78
 jge short .43	; 26E7F
 xor edx, edx	; 26E81
-mov dl, byte [byte_C6D8A]	; 26E83
+mov dl, byte [treecolslots+18h]	; 26E83
 mov eax, dword [byte ebp-020h]	; 26E89
 mov dword [eax], edx	; 26E8C
 jmp short .44	; 26E8E
 .43:
 xor edx, edx	; 26E90
-mov dl, byte [byte_C6D9A]	; 26E92
+mov dl, byte [treecolslots+28h]	; 26E92
 mov eax, dword [byte ebp-020h]	; 26E98
 mov dword [eax], edx	; 26E9B
 .44:
@@ -6409,13 +6409,13 @@ jmp short .50	; 26EBB
 cmp dword [byte ebp-024h], 0F5h	; 26EBD
 jge short .48	; 26EC4
 xor edx, edx	; 26EC6
-mov dl, byte [byte_C6DA2]	; 26EC8
+mov dl, byte [treecolslots+30h]	; 26EC8
 mov eax, dword [byte ebp-020h]	; 26ECE
 mov dword [eax], edx	; 26ED1
 jmp short .49	; 26ED3
 .48:
 xor edx, edx	; 26ED5
-mov dl, byte [byte_C6DA3]	; 26ED7
+mov dl, byte [treecolslots+31h]	; 26ED7
 mov eax, dword [byte ebp-020h]	; 26EDD
 mov dword [eax], edx	; 26EE0
 .49:
@@ -6447,7 +6447,7 @@ mov edx, 1	; 26F2F
 sub edx, eax	; 26F34
 mov eax, edx	; 26F36
 shl eax, 2	; 26F38
-mov eax, dword [dword eax+dword_C6E32]	; 26F3B
+mov eax, dword [dword eax+treerowy]	; 26F3B
 add eax, byte 64h	; 26F41
 mov edx, 280h	; 26F44
 sub edx, eax	; 26F49
@@ -6461,7 +6461,7 @@ sub edx, eax	; 26F5D
 mov eax, edx	; 26F5F
 shl eax, 2	; 26F61
 mov edx, 280h	; 26F64
-sub edx, dword [dword eax+dword_C6E32]	; 26F69
+sub edx, dword [dword eax+treerowy]	; 26F69
 mov eax, edx	; 26F6F
 cmp eax, dword [byte ebp-028h]	; 26F71
 jge short .58	; 26F74
@@ -6474,7 +6474,7 @@ mov eax, dword [byte ebp-0Eh]	; 26F81
 sar eax, 10h	; 26F84
 add eax, eax	; 26F87
 xor edx, edx	; 26F89
-mov dl, byte [dword eax+byte_C6DAA]	; 26F8B
+mov dl, byte [dword eax+treecol_Er2]	; 26F8B
 mov eax, dword [byte ebp-020h]	; 26F91
 mov dword [eax], edx	; 26F94
 jmp short .60	; 26F96
@@ -6483,7 +6483,7 @@ mov eax, dword [byte ebp-0Eh]	; 26F98
 sar eax, 10h	; 26F9B
 add eax, eax	; 26F9E
 xor edx, edx	; 26FA0
-mov dl, byte [dword eax+byte_C6DAB]	; 26FA2
+mov dl, byte [dword eax+treecol_Er2+1]	; 26FA2
 mov eax, dword [byte ebp-020h]	; 26FA8
 mov dword [eax], edx	; 26FAB
 .60:
@@ -6515,12 +6515,12 @@ mov edx, dword [byte ebp-0Eh]	; 26FF9
 sar edx, 10h	; 26FFC
 shl edx, 2	; 26FFF
 mov eax, dword [byte ebp-028h]	; 27002
-cmp eax, dword [dword edx+word_C6E22]	; 27005
+cmp eax, dword [dword edx+treecolx]	; 27005
 jl short .69	; 2700B
 mov eax, dword [byte ebp-0Eh]	; 2700D
 sar eax, 10h	; 27010
 shl eax, 2	; 27013
-mov eax, dword [dword eax+word_C6E22]	; 27016
+mov eax, dword [dword eax+treecolx]	; 27016
 add eax, byte 64h	; 2701C
 cmp eax, dword [byte ebp-028h]	; 2701F
 jge short .70	; 27022
@@ -6533,7 +6533,7 @@ mov eax, dword [byte ebp-0Eh]	; 2702F
 sar eax, 10h	; 27032
 add eax, eax	; 27035
 xor edx, edx	; 27037
-mov dl, byte [dword eax+byte_C6DB2]	; 27039
+mov dl, byte [dword eax+treecol_Er1]	; 27039
 mov eax, dword [byte ebp-020h]	; 2703F
 mov dword [eax], edx	; 27042
 jmp short .72	; 27044
@@ -6542,7 +6542,7 @@ mov eax, dword [byte ebp-0Eh]	; 27046
 sar eax, 10h	; 27049
 add eax, eax	; 2704C
 xor edx, edx	; 2704E
-mov dl, byte [dword eax+byte_C6DB3]	; 27050
+mov dl, byte [dword eax+treecol_Er1+1]	; 27050
 mov eax, dword [byte ebp-020h]	; 27056
 mov dword [eax], edx	; 27059
 .72:

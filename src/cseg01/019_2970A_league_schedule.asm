@@ -5,7 +5,7 @@ section s_2970A progbits alloc exec nowrite align=1
 extern __CHK, asc_C8100, str_extDB, str_space, statsfromleague, dword_C71CC, dword_C71D0, lgstate
 extern dword_C71D4, playofftree, playofftree_p1, pochampion, fputchar, jctime, teamcitynames, leaguedbnames
 extern strcat_, strcmp_, strcpy_, strlen_, MakePath, FileOpenRead, FileClose
-extern ReadSchedGame, sub_27F9C, sub_3DAB9, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, unk_C136D
+extern ReadSchedGame, PlayoffTreeScreen, sub_3DAB9, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, unk_C136D
 extern statsleague, unk_DDAC4, unk_DDCE6
 global loc_29781, loc_2978F, loc_2979D, loc_2979F, loc_297A5, loc_297F4, loc_29808, loc_29816
 global loc_2981B, loc_29821, loc_29855, loc_29868, loc_2987B, loc_2987D, loc_29882, loc_29885
@@ -191,7 +191,7 @@ lea eax, [byte ebp-08h]	; 298F6
 call FileClose	; 298F9
 cmp word [byte ebp-020h], byte 0	; 298FE
 jne short loc_2990A	; 29903
-call sub_27F9C	; 29905
+call PlayoffTreeScreen	; 29905
 loc_2990A:
 mov dword [byte ebp-02Ch], 0	; 2990A
 mov eax, dword [byte ebp-02Ch]	; 29911
@@ -500,7 +500,7 @@ sub eax, byte 2	; 29C52
 push eax	; 29C55
 call jctime	; 29C56
 add esp, byte 4	; 29C5B
-call sub_27F9C	; 29C5E
+call PlayoffTreeScreen	; 29C5E
 mov dword [byte ebp-02Ch], 0	; 29C63
 mov eax, dword [byte ebp-02Ch]	; 29C6A
 mov esp, ebp	; 29C6D

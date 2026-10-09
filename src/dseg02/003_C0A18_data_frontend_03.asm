@@ -16,10 +16,10 @@ global str_Pstatbar5, str_Pst24, str_StatsUnavailable, str_ANA2, str_MightyDucks
 global str_Pstatbar6, str_Pst25, str_Trad, str_Regi, str_MightyDucksOfAnaheim2, str_Pos, str_Name, str_G3
 global str_A3, str_PT, str_Shots3, str_PIM3, str_PlusMinus3, str_Min3, str_GAA3, str_GA
 global str_SA2, str_PCT, str_Keys, str_Pstat, str_Gstat, str_Addsort2, str_KeyDb2, str_Pstatbar7
-global str_Pst26, str_StatsUnavailable2, str_POS, str_PLAYER2, str_TEAM, asc_C1282, asc_C128B, asc_C1290
-global asc_C129B, asc_C12A3, asc_C12AE, asc_C12B6, asc_C12C7, asc_C12CB, asc_C12CF, asc_C12D3
-global asc_C12D9, asc_C12E0, asc_C12E5, asc_C1307, asc_C130C, asc_C1311, asc_C131A, asc_C132D
-global asc_C1340, asc_C1347, asc_C134C, asc_C1351, asc_C1356, asc_C135E, asc_C1363, asc_C1368
+global str_Pst26, str_StatsUnavailable2, str_POS, str_PLAYER2, str_TEAM, str_Pstatbar8, str_Pst27, str_Standings
+global str_Western, str_Conference, str_Eastern, str_Team, str_GF, str_GA2, str_P, str_Pct4
+global str_Embpal2, str_Pal9, str_PlayoffsHaveNotBeen2, str_Rst12, str_Rst22, str_Scuparrw2, str_WesternConference2, str_EasternConference2
+global str_C3, str_Aup12, str_Aup22, str_Aup32, str_Midl2, str_Adn32, str_Adn22, str_Adn12
 global asc_C1370, asc_C1375, asc_C1379, asc_C137F, asc_C1384, asc_C1389, asc_C1390, asc_C13A0
 global asc_C13A8, asc_C13AD, asc_C13B6, asc_C13C0, asc_C13C7, asc_C13D0, asc_C13D9, asc_C13E0
 global asc_C13E5, asc_C13EA, asc_C13F3, asc_C13F8, asc_C13FD, asc_C1402, asc_C1407, asc_C140C
@@ -65,7 +65,7 @@ global unk_C10DB, unk_C10E9, unk_C10F9, unk_C1112, unk_C112C, unk_C1140, unk_C11
 global unk_C1194, unk_C11AC, unk_C11C5, unk_C11C9, unk_C11CD, unk_C11D1, unk_C11D2, unk_C11D5
 global unk_C11D9, unk_C11DE, unk_C11E2, unk_C11E8, unk_C11EE, unk_C11F3, unk_C11F7, unk_C11FD
 global unk_C1200, unk_C1203, unk_C1206, unk_C120B, str_NO, str_GP6, str_C2, unk_C126C
-global unk_C1276, unk_C12BB, unk_C12BE, unk_C12C1, unk_C12C4, unk_C1344, unk_C135B, unk_C136D
+global unk_C1276, str_GP7, str_W4, str_L6, str_T4, str_D3, str_TwoSpaces, unk_C136D
 global unk_C139D, unk_C1430, unk_C1435, unk_C1439, unk_C148B, unk_C149A, unk_C149D, unk_C14A0
 global unk_C14A3, unk_C14A6, unk_C14A9, unk_C14AC, unk_C14AF, unk_C14C4, unk_C14D4, unk_C14D7
 global unk_C14E7, unk_C153C, unk_C155C, unk_C1563, unk_C1566, unk_C160E, unk_C161D, unk_C164B
@@ -624,75 +624,75 @@ unk_C126C:
 db 04Ch,053h,053h,043h,045h,044h,02Eh,044h,042h,00h
 unk_C1276:
 db 053h,043h,048h,045h,044h,055h,04Ch,045h,02Eh,044h,042h,00h
-asc_C1282:
+str_Pstatbar8:
 db 070h,073h,074h,061h,074h,062h,061h,072h,00h
-asc_C128B:
+str_Pst27:
 db 070h,073h,074h,032h,00h
-asc_C1290:
+str_Standings:
 db 020h,053h,074h,061h,06Eh,064h,069h,06Eh,067h,073h,00h
-asc_C129B:
+str_Western:
 db 057h,065h,073h,074h,065h,072h,06Eh,00h
-asc_C12A3:
+str_Conference:
 db 043h,06Fh,06Eh,066h,065h,072h,065h,06Eh,063h,065h,00h
-asc_C12AE:
+str_Eastern:
 db 045h,061h,073h,074h,065h,072h,06Eh,00h
-asc_C12B6:
+str_Team:
 db 054h,065h,061h,06Dh,00h
-unk_C12BB:
+str_GP7:
 db 047h,050h,00h
-unk_C12BE:
+str_W4:
 db 020h,057h,00h
-unk_C12C1:
+str_L6:
 db 020h,04Ch,00h
-unk_C12C4:
+str_T4:
 db 020h,054h,00h
-asc_C12C7:
+str_GF:
 db 020h,047h,046h,00h
-asc_C12CB:
+str_GA2:
 db 020h,047h,041h,00h
-asc_C12CF:
+str_P:
 db 020h,020h,050h,00h
-asc_C12D3:
+str_Pct4:
 db 020h,020h,050h,063h,074h,00h
-asc_C12D9:
+str_Embpal2:
 db 065h,06Dh,062h,070h,061h,06Ch,00h
-asc_C12E0:
+str_Pal9:
 db 021h,070h,061h,06Ch,00h
-asc_C12E5:
+str_PlayoffsHaveNotBeen2:
 db 050h,06Ch,061h,079h,06Fh,066h,066h,073h,020h,068h,061h,076h,065h,020h,06Eh,06Fh
 db 074h,020h,062h,065h,065h,06Eh,020h,073h,065h,065h,064h,065h,064h,020h,079h,065h
 db 074h,00h
-asc_C1307:
+str_Rst12:
 db 072h,073h,074h,031h,00h
-asc_C130C:
+str_Rst22:
 db 072h,073h,074h,032h,00h
-asc_C1311:
+str_Scuparrw2:
 db 073h,063h,075h,070h,061h,072h,072h,077h,00h
-asc_C131A:
+str_WesternConference2:
 db 057h,065h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
 db 063h,065h,00h
-asc_C132D:
+str_EasternConference2:
 db 045h,061h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
 db 063h,065h,00h
-asc_C1340:
+str_C3:
 db 025h,063h,020h,00h
-unk_C1344:
+str_D3:
 db 025h,064h,00h
-asc_C1347:
+str_Aup12:
 db 061h,075h,070h,031h,00h
-asc_C134C:
+str_Aup22:
 db 061h,075h,070h,032h,00h
-asc_C1351:
+str_Aup32:
 db 061h,075h,070h,033h,00h
-asc_C1356:
+str_Midl2:
 db 06Dh,069h,064h,06Ch,00h
-unk_C135B:
+str_TwoSpaces:
 db 020h,020h,00h
-asc_C135E:
+str_Adn32:
 db 061h,064h,06Eh,033h,00h
-asc_C1363:
+str_Adn22:
 db 061h,064h,06Eh,032h,00h
-asc_C1368:
+str_Adn12:
 db 061h,064h,06Eh,031h,00h
 unk_C136D:
 db 020h,00h,00h

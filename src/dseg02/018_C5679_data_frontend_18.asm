@@ -31,9 +31,8 @@ global str_DoYouWishToExit, str_9394Season, str_9394PlayOffs, str_LgSeasonTitle,
 global str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, str_AttDb, str_fmt2d, str_fmt3d, str_fmt4d
 global str_fmt5d, str_fmtTenths, str_fmtPct, str_fmtPct0, str_fmtMinSec, str_fmtEmb, str_Bkgd2, str_EASNvfn
 global asc_C70A0, asc_C70B8, asc_C70C7, asc_C70EC, asc_C70F8, asc_C7298, byte_C66B4, mi_9394Season
-global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, byte_C6D72, byte_C6D73, byte_C6D7A
-global byte_C6D7B, byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, byte_C6D9A
-global byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, byte_C6DB2, byte_C6DB3
+global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, treecolslots, treecol_Wr2
+global treecol_Er2, treecol_Er1
 global byte_C6F6C, byte_C7218, dword_C56C4, dword_C56E4, hudclockmin, hudclocksec, hudclockhund, dword_C5710
 global dword_C5714, dword_C5718, dword_C583C, dword_C5840, dword_C5844, dword_C5848, hudhomeline, hudawayline
 global dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862, dword_C5886, dword_C588A
@@ -41,7 +40,7 @@ global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy
 global statscategory, statsteamsel, statsredrawcb, deskexit, teamstatscb, skaterstatscb, goaliestatscb, standingscb
 global standingsmenucb, hlplayedmask, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dirtyrectcount, dword_C66D0
 global dword_C66D4, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD, statsplayoffs, statsfromleague, statspalvalid
-global westconfteams, eastconfteams, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32, dword_C6E3A, dword_C6E4A
+global westconfteams, eastconfteams, dword_C6D26, dword_C6DBA, dword_C6E20, treerowy, divx, divy
 global dword_C6F78, dword_C6F88, dword_C6F8C, dword_C6F90, dword_C6F94, dword_C7008, dword_C700C, dword_C7010
 global dword_C7014, dword_C7018, dword_C701C, dword_C7020, dword_C7024, dword_C7028, dword_C702C, dword_C7030
 global dword_C7034, dword_C70E3, dword_C70E7, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC
@@ -49,7 +48,7 @@ global dword_C71E0, dword_C71E4, dword_C71E8, dword_C71EC, dword_C71F0, dword_C7
 global dword_C7210, dword_C7219, songdata, dword_C729A, dword_C729C, dword_C729E, dword_C72A0, dword_C73D0
 global rinkbm, dword_C73D8, dword_C7440, dword_C7444, dword_C7448, off_C56B5, perioddigits, off_C57C8
 global crestnames, off_C6399, off_C648E, off_C659A, off_C6821, off_C6825, off_C6841, off_C6845
-global off_C6881, off_C6885, off_C68BC, statslabels, statsbgnames, statsplayerdbs, statsteamdbs
+global off_C6881, off_C6885, divisionnames, statslabels, statsbgnames, statsplayerdbs, statsteamdbs
 global skaterratingnames, off_C6A99, goalieratingnames, off_C6AD1, teamsortfns, westconfname, eastconfname, teamstattitles
 global teamcolhdrs, leadersortfns, leadertitles, off_C6C40, off_C6C44
 global off_C6C48, off_C6C4C, off_C6C50, off_C6D22, off_C6F48, off_C6F7C, off_C6F80, off_C6F84
@@ -78,7 +77,7 @@ global unk_C70DF, unk_C7108, unk_C710E, unk_C7114, unk_C711F, unk_C7129, unk_C71
 global unk_C714E, unk_C7156, unk_C7161, unk_C7174, unk_C7185, unk_C7221, unk_C7243, unk_C7265
 global unk_C744C, unk_C7450, unk_C7453, unk_C746B, unk_C7483, unk_C749A, unk_C74A2, unk_C74B7
 global unk_C74EF, hudpenhome, word_C571E, word_C5720, word_C5722, hudpenaway, word_C575E, word_C5760
-global word_C5762, word_C6D24, word_C6E22, scrpitch
+global word_C5762, word_C6D24, treecolx, scrpitch
 msg_NeedKbytes:
 db 070h,06Ch,061h,079h,020h,074h,068h,065h,020h,067h,061h,06Dh,065h,02Ch,020h,079h
 db 06Fh,075h,020h,072h,065h,071h,075h,069h,072h,065h,020h,058h,058h,020h,04Bh,062h
@@ -960,7 +959,7 @@ db 022h,020h,053h,065h,061h,073h,06Fh,06Eh,020h,050h,06Ch,061h,079h,02Dh,04Fh,06
 db 066h,073h,00h
 str_PlayOffsSfx:
 db 022h,020h,050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,073h,00h,00h,00h,00h
-off_C68BC:
+divisionnames:
 dd unk_C0B68
 dd unk_C0B79
 dd unk_C0B8A
@@ -1207,43 +1206,28 @@ db 0FFh,0FFh,0FFh,0FFh,03h,0Bh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,07h,0FFh,0FFh,0FFh
 db 0FFh,0FFh,0FFh,0FFh,07h,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,07h,0FFh,0FFh,0FFh
 db 0FFh,0FFh,0FFh,0FFh,03h,0Bh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,01h,05h,09h,0Dh
 db 0FFh,0FFh,0FFh,0FFh,00h,02h,04h,06h,08h,0Ah,0Ch,0Eh
-byte_C6D72:
+treecolslots:
 db 00h
-byte_C6D73:
 db 01h,02h,03h,04h,05h,06h,07h
-byte_C6D7A:
+treecol_Wr2:
 db 010h
-byte_C6D7B:
 db 011h
-byte_C6D7C:
 db 012h
-byte_C6D7D:
 db 013h,0FFh,0FFh,0FFh,0FFh
-byte_C6D82:
 db 018h
-byte_C6D83:
 db 019h,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-byte_C6D8A:
 db 01Ch,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-byte_C6D92:
 db 01Eh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-byte_C6D9A:
 db 01Dh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-byte_C6DA2:
 db 01Ah
-byte_C6DA3:
 db 01Bh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-byte_C6DAA:
+treecol_Er2:
 db 014h
-byte_C6DAB:
 db 015h
-byte_C6DAC:
 db 016h
-byte_C6DAD:
 db 017h,0FFh,0FFh,0FFh,0FFh
-byte_C6DB2:
+treecol_Er1:
 db 08h
-byte_C6DB3:
 db 09h,0Ah,0Bh,0Ch,0Dh,0Eh,0Fh
 dword_C6DBA:
 db 01h,00h,00h,00h,02h,00h,00h,00h,03h,00h,00h,00h,04h,00h,00h,00h
@@ -1255,13 +1239,13 @@ db 015h,00h,00h,00h,016h,00h,00h,00h,017h,00h,00h,00h,018h,00h,00h,00h
 db 019h,00h,00h,00h,01Ah,00h
 dword_C6E20:
 db 00h,00h
-word_C6E22:
+treecolx:
 db 014h,00h,00h,00h,0B7h,00h,00h,00h,05Ch,01h,00h,00h,0FEh,01h,00h,00h
-dword_C6E32:
+treerowy:
 db 030h,00h,00h,00h,0DCh,00h,00h,00h
-dword_C6E3A:
+divx:
 db 0Ah,00h,00h,00h,0Ah,00h,00h,00h,04Ah,01h,00h,00h,04Ah,01h,00h,00h
-dword_C6E4A:
+divy:
 db 07Dh,00h,00h,00h,022h,01h,00h,00h,07Dh,00h,00h,00h,022h,01h,00h,00h
 db 00h,00h
 unk_C6E5C:

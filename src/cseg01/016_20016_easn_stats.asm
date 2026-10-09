@@ -10,7 +10,7 @@ extern statsteamsel, statsredrawcb, deskexit, standingscb, statsplayoffs, statsp
 extern calendarshapes, dword_D2C6B, statsteamorder, dword_DC6B4, dword_DC734, dword_DC738, playofftree, statspalshape
 extern statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, statspal, dword_DDD2C, jctime
 extern memcpy_, statsbgnames, MakePath, FreeDeskBuffers, RunMenu, RunTeamPickMenu, RunPlayerPickMenu, InitMenuRemap
-extern SkaterStatsCard, GoalieStatsCard, TeamStatsScreen, TeamRosterScreen, LeadersScreen, sub_27080, sub_296BA, sub_6B5E4
+extern SkaterStatsCard, GoalieStatsCard, TeamStatsScreen, TeamRosterScreen, LeadersScreen, StandingsScreen, ShowPlayoffTree, sub_6B5E4
 extern sub_76429, sub_8CCA8, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_91FE0, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, photoremap, unk_CF54F, unk_CF6AF, unk_CF74F
 extern unk_CF78F, unk_CF80F, unk_CF88F, statsplayer
@@ -348,7 +348,7 @@ mov dword [dword_C65AC], eax	; 20499
 .6:
 mov eax, dword [statsteambuf]	; 2049E
 mov edx, statsteamorder	; 204A3
-call sub_296BA	; 204A8
+call ShowPlayoffTree	; 204A8
 push byte 42h	; 204AD
 mov ecx, 41h	; 204AF
 mov ebx, 40h	; 204B4
@@ -367,7 +367,7 @@ mov eax, unk_CF54F	; 204E5
 call sub_6B5E4	; 204EA
 mov eax, dword [statsteambuf]	; 204EF
 mov edx, statsteamorder	; 204F4
-call sub_27080	; 204F9
+call StandingsScreen	; 204F9
 .8:
 xor eax, eax	; 204FE
 add esp, byte 10h	; 20500
@@ -996,7 +996,7 @@ mov dword [dword_C65AC], eax	; 20E36
 .6:
 mov eax, dword [statsteambuf]	; 20E3B
 mov edx, statsteamorder	; 20E40
-call sub_296BA	; 20E45
+call ShowPlayoffTree	; 20E45
 push byte 42h	; 20E4A
 mov ecx, 41h	; 20E4C
 mov ebx, 40h	; 20E51
@@ -1015,7 +1015,7 @@ mov eax, unk_CF54F	; 20E82
 call sub_6B5E4	; 20E87
 mov eax, dword [statsteambuf]	; 20E8C
 mov edx, statsteamorder	; 20E91
-call sub_27080	; 20E96
+call StandingsScreen	; 20E96
 .8:
 xor eax, eax	; 20E9B
 add esp, byte 10h	; 20E9D
@@ -1633,7 +1633,7 @@ mov dword [dword_C65AC], eax	; 2177B
 .6:
 mov eax, dword [statsteambuf]	; 21780
 mov edx, statsteamorder	; 21785
-call sub_296BA	; 2178A
+call ShowPlayoffTree	; 2178A
 push byte 42h	; 2178F
 mov ecx, 41h	; 21791
 mov ebx, 40h	; 21796
@@ -1652,7 +1652,7 @@ mov eax, unk_CF54F	; 217C7
 call sub_6B5E4	; 217CC
 mov eax, dword [statsteambuf]	; 217D1
 mov edx, statsteamorder	; 217D6
-call sub_27080	; 217DB
+call StandingsScreen	; 217DB
 .8:
 call LoadCalendarShapes	; 217E0
 xor eax, eax	; 217E5
