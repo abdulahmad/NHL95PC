@@ -376,19 +376,19 @@ Data counterparts: C1B40 PenaltyList (data94) names (penalty name strings Roughi
 
 ## 7. Name map (`name_map_94.csv`)
 
-Rows: 1041. By source game / confidence:
+Rows: 1047. By source game / confidence:
 
 * 93G / high: 86
-* 93G / low: 5
-* 93G / medium: 72
-* 94G / high: 2
+* 93G / low: 2
+* 93G / medium: 73
+* 94G / high: 3
 * 94G / low: 1
-* 94G / medium: 1
+* 94G / medium: 3
 * 95G / low: 1
-* PC-new / high: 8
-* PC-new / low: 28
-* PC-new / medium: 70
-* PC-new / none: 416
+* PC-new / high: 10
+* PC-new / low: 32
+* PC-new / medium: 75
+* PC-new / none: 410
 * library / high: 240
 * library / none: 111
 
@@ -402,19 +402,19 @@ Methods: (1) player-struct field correspondence learned by aligning 68k field-ac
 | source/conf | before | after |
 |---|---|---|
 | 93G / high | 3 | 86 |
-| 93G / low | 28 | 5 |
-| 93G / medium | 6 | 72 |
-| 94G / high | 1 | 2 |
+| 93G / low | 28 | 2 |
+| 93G / medium | 6 | 73 |
+| 94G / high | 1 | 3 |
 | 94G / low | 7 | 1 |
-| 94G / medium | 1 | 1 |
+| 94G / medium | 1 | 3 |
 | 95G / low | 1 | 1 |
-| total Genesis-named | 47 | 168 |
+| total Genesis-named | 47 | 169 |
 
 Engine region (47C31-6A033, 8BEDB-8C94C): 356 functions (IDA procs + recovered); 109 named from Genesis (31%), 20 labelled PC-new assignments, total labelled 36%.
 
 Field map (tools/struct_fieldmap.csv, 47 fields; 93G offset -> PC offset): Xpos $00=00h;02h, Ypos $14=04h;06h, OldXpos $1C=74h, Xvel $28=0Ch, Yvel $2A=0Eh, position $34=1Ah, assnum $36=1Ch, temp1 $40=26h, temp2 $42=28h, temp3 $44=2Ah, temp4 $46=2Ch, temp5 $48=2Eh, Wallcos $4E=30h, Wallsin $50=32h, SCnum $52=6Ah, facedir $54=36h, SPA $58=38h, SPAnum $5A=3Ah, SPAcnt $5C=3Ch, newpos $60=42h, newpnum $61=43h, pflags $62=44h, pflags2 $63=45h, asslist $38=1Eh, pnum $66=47h, attribute $4=55h, weight $67=56h, legstr $68=57h, legspd $69=58h, endurance $72=61h, impactp $2E=14h, impact $32=18h, tmptr none=6Ch, optmptr none=70h, tmline $16 (team)=2Ah (team), tmlcnt none (team)=2Ch (team), tmap $24 (team)=36h (team), tmflags $30 (team)=44h (team), tmscore $C (team)=10h (team), tmpdst $66 (team)=7Eh (team), tmlines none (team)=DAh (team), tmroster none (team)=EEh (team), tmsort $22 (team)=F6h (team), tmpde $32 (team)=46h (team), tmATOP $A (team)=0Eh (team), tmgoalie $26 (team)=38h (team), tmpbox $9A (team)=0B6h (team).
 
-Global map (tools/global_map.csv, 157 names, current names after the segment sessions): str_1st=C1B20, str_2nd=C1B24, str_3rd=C1B28, str_EASports=C1B2C, str_StarFmt=C1B36, joysampling=C4D0C, joyqhead=C4D10, joyqcount=C4D14, joyqtick=C4D18, joyrec=C4E18, gameopts=C53FF, screenbm=C66C4, songdata=C721D, scrpitch=C7290, rinkbm=C73D4, puckx=C907C, puckvx=C9080, pucky=C9084, puckvy=C9088, puckz=C908C, puckvz=C9090, puckc=C9094, camx_m2=C9096, camx=C9098, camy=C909A, wcradiusx=C909C, wcradiusy=C909E, lastplayer=C90A0, passspeed=C90A2, passdir=C90A4, passplayer=C90A8, threat=C90AA, xc1=C90AC, yc1=C90AE, fodir1=C90B6, fodir2=C90B8, collflag=C90BA, gmode=C90BB, sflags=C90BC, gmode2=C90BE, c1playernum=C90C2, c2playernum=C90C4, cont1team=C90C6, cont2team=C90C8, Pencntdwn=C90CE, Penaltytimer=C90D0, refsignal=C90D2, RefStep=C90D4, RefPen=C90D6, gsp=C90DA, gameclock=C90DC, clockticks=C90DE, dirtab=C90E0, dirtab_y=C90E2, RNGseed=C9100, StanleyCupTimer=C9100, pendelaytab=C9104, penmintab=C9123, SPAtab=C921D, priolist=CBC36, exitgame=CBC46, gameover=CBC48, PerTimeTab=CBC4A, lcblink=CBC56, lcblinktime=CBC5A, lcsel=CBC5E, lcline=CBC62, lctimer=CBC66, lcboxon=CBC6A, ds2list=CBD5A, lldispodd=CC0D8, lldisp=CC0D9, lastsfx=CC0DC, crowdlevel=CC0DE, onetimerflag=CC0F4, penshotplayer=CC0FC, penshotmode=CC118, penshotstart=CC11C, penshottimer=CC120, penshotlive=CC128, starordtab=CCA0A, linenext=CCB4A, lchoicetab=CCB5A, shotsets=CCC60, digihandle=CCC84, crowdsmooth=CCC88, crowdvol8=CCC8C, crowdvol7=CCC90, doplayeracc_ftab=CCD78, MaxSpeed=CCD98, musicslot=D242F, musicon=D2430, musichandle=D2431, vtoa_dt=D2C74, saved_ss=D2F44, joyqueue=D8B80, hmroster=DB3A8, awroster=DB7EC, scrolly=DD6AA, scrollx=DD6AC, bgscrollx=DD6B2, bgscrolly8=DD70C, hmtmstruct=DF614, hmscore=DF624, hmtmline=DF63E, hmtmlcnt=DF640, hmtmap=DF64A, hmtmflags=DF658, hmtmpdst=DF692, hmtmlines=DF6EE, hmtmroster=DF702, hmtmptrF2=DF706, hmtmsort=DF70A, awtmstruct=DF714, awscore=DF724, awtmline=DF73E, awtmlcnt=DF740, awtmap=DF74A, awtmflags=DF758, awtmlines=DF7EE, awtmroster=DF802, awtmptrF2=DF806, awtmsort=DF80A, puckcross_m2=DF812, puckcross=DF814, SortCords=DF81C, puckstruct=DFF1C, puckpflags2=DFF61, sortobj15=DFF9C, lcrequest=E0304, lcreqchoice=E0380, PlList=E0384, regd2=E03AC, regd3=E03B0, regd4=E03B4, regd0=E03BC, regd1=E03C0, PenBuf=E9A16, Ylist_m2=E9A56, Ylist=E9A58, OOlistpos=E9A7A, joysampling_save=E9AA0, CwdExciteLvl=E9AA8, periodendtime=E9AAC, PerTimeTotal=E9AB8, PBnum=E9ABA, lj2=E9ABC, lj1=E9ABE, iflags=E9AC0, lasttouch=E9AC2, ltx=E9AC6, OOlist=E9ADE, gwgteam=E9AF0, gwgplayer=E9AF4, startm=E9AF8, starpl=E9AFA, vgapage=EDA04.
+Global map (tools/global_map.csv, 172 names, current names after the segment sessions): str_1st=C1B20, str_2nd=C1B24, str_3rd=C1B28, str_EASports=C1B2C, str_StarFmt=C1B36, joysampling=C4D0C, joyqhead=C4D10, joyqcount=C4D14, joyqtick=C4D18, joyrec=C4E18, gameopts=C53FF, screenbm=C66C4, songdata=C721D, scrpitch=C7290, rinkbm=C73D4, replaystart=C9078, puckx=C907C, puckvx=C9080, pucky=C9084, puckvy=C9088, puckz=C908C, puckvz=C9090, puckc=C9094, camx_m2=C9096, camx=C9098, camy=C909A, wcradiusx=C909C, wcradiusy=C909E, lastplayer=C90A0, passspeed=C90A2, passdir=C90A4, passplayer=C90A8, threat=C90AA, xc1=C90AC, yc1=C90AE, fodir1=C90B6, fodir2=C90B8, collflag=C90BA, gmode=C90BB, sflags=C90BC, gmode2=C90BE, sflags3=C90C0, c1playernum=C90C2, c2playernum=C90C4, cont1team=C90C6, cont2team=C90C8, HomeTeam=C90CA, VisTeam=C90CC, Pencntdwn=C90CE, Penaltytimer=C90D0, refsignal=C90D2, RefStep=C90D4, RefPen=C90D6, gsp=C90DA, gameclock=C90DC, clockticks=C90DE, dirtab=C90E0, dirtab_y=C90E2, RNGseed=C9100, StanleyCupTimer=C9100, pendelaytab=C9104, penmintab=C9123, SPAtab=C921D, priolist=CBC36, exitgame=CBC46, gameover=CBC48, PerTimeTab=CBC4A, lcblink=CBC56, lcblinktime=CBC5A, lcsel=CBC5E, lcline=CBC62, lctimer=CBC66, lcboxon=CBC6A, ds2list=CBD5A, lldispodd=CC0D8, lldisp=CC0D9, lastsfx=CC0DC, crowdlevel=CC0DE, onetimerflag=CC0F4, penshotplayer=CC0FC, penshotmode=CC118, penshotstart=CC11C, penshottimer=CC120, penshotlive=CC128, starordtab=CCA0A, linenext=CCB4A, lchoicetab=CCB5A, shotsets=CCC60, digihandle=CCC84, crowdsmooth=CCC88, crowdvol8=CCC8C, crowdvol7=CCC90, doplayeracc_ftab=CCD78, MaxSpeed=CCD98, str_ErrLoadGame=CCDD8, str_ErrSaveGame=CCDEC, replaytick=CD4FE, replaysfx=CD500, musicslot=D242F, musicon=D2430, musichandle=D2431, vtoa_dt=D2C74, saved_ss=D2F44, joyqueue=D8B80, awlinetab=DABF0, hmroster=DB3A8, awroster=DB7EC, hmlinetab=DC200, scrolly=DD6AA, scrollx=DD6AC, bgscrollx=DD6B2, bgscrolly8=DD70C, hmtmstruct=DF614, hmscore=DF624, hmtmline=DF63E, hmtmlcnt=DF640, hmtmap=DF64A, hmtmgoalie=DF64C, hmtmflags=DF658, hmtmpdst=DF692, hmtmlines=DF6EE, hmtmroster=DF702, hmtmptrF2=DF706, hmtmsort=DF70A, awtmstruct=DF714, awscore=DF724, awtmline=DF73E, awtmlcnt=DF740, awtmap=DF74A, awtmgoalie=DF74C, awtmflags=DF758, awtmlines=DF7EE, awtmroster=DF802, awtmptrF2=DF806, awtmsort=DF80A, puckcross_m2=DF812, puckcross=DF814, SortCords=DF81C, puckstruct=DFF1C, puckpflags2=DFF61, sortobj15=DFF9C, lcrequest=E0304, lcreqchoice=E0380, PlList=E0384, recbpr=E039C, replayplay=E03A4, regd2=E03AC, regd3=E03B0, regd4=E03B4, regd0=E03BC, regd1=E03C0, PenBuf=E9A16, Ylist_m2=E9A56, Ylist=E9A58, OOlistpos=E9A7A, joysampling_save=E9AA0, CwdExciteLvl=E9AA8, periodendtime=E9AAC, PerTimeTotal=E9AB8, PBnum=E9ABA, lj2=E9ABC, lj1=E9ABE, iflags=E9AC0, lasttouch=E9AC2, ltx=E9AC6, OOlist=E9ADE, gwgteam=E9AF0, gwgplayer=E9AF4, startm=E9AF8, starpl=E9AFA, seqtimer=E9B04, vgapage=EDA04.
 
 Notable identifications:
 

@@ -4,7 +4,7 @@ This file is the queue. Do not rewrite it as a whole file. Edit the current row 
 
 ## Current segment
 
-`debug_dump`, `src/cseg01/047_688A4_debug_dump.asm`, `688A4-69335`. Watcom C. PC-new: debug state dump to stats.log (puckc, gmclock, gmpen, tmstructs, sortcords)
+`debug_dump`, `src/cseg01/047_688A4_debug_dump.asm`, `688A4-69335` (2706 bytes). Watcom C. PC-new: debug state dump to stats.log (puckc, gmclock, gmpen, tmstructs, sortcords)
 
 The data segments are not queue segments. `src/dseg02/*.asm` holds the initialised data and the BSS, the PC's RAM. It has no code to transcribe, and the queue never stops on it. That does not put data off limits. Data and BSS names come from the code segments as they are worked through, not from a separate first pass. Name each data or BSS label the current segment uses in its `src/dseg02` file, which is where it is defined, in the same session. `src/inc/symbols.inc` is the shared index of every label used across files (the PC analogue of the Genesis `ram_addrs.inc`). `tools/update_symbols.py` regenerates it and `tools/rename_symbol.py` keeps it current, so never edit it by hand. You may name any data label, structure field or library routine whenever the evidence is there, inside or outside the current segment.
 
