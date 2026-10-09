@@ -7,7 +7,7 @@ extern str_SelHumanTeams, str_EnterLeagueName, str_KbytesFreeLine, divisionteams
 extern curleague, leagueflags, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, savedname, byte_DDD40
 extern byte_DE268, lgstate, gameopts, teamdivflags, confteams, dword_C5619, dword_C8C61, dword_C8D06
 extern dword_C9002, seasondb, careerdb, keydb, seasondb_size, careerdb_size, keydb_size, dbextension
-extern leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, jctime
+extern leaguemaster, leaguesaved, dword_DD7CE, humancount, dword_DDD34, lgplayteam, dword_DDD3C, jctime
 extern memset_, mkdir_, msg_LeagueExists, leaguedbnames
 extern msg_GenSchedule, msg_NoDiskSpace, rand_, sprintf_, strcat_, strcpy_, DiskFreeBytes
 extern AwardsCeremony, FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenRW, FileClose, FileReadAt
@@ -15,7 +15,7 @@ extern FileWriteAt, CopyFile, ReadSchedGame, ReadTeamRec, DiskSpaceShort, GetLea
 extern SetDialogColors, RestoreDialogBg, MessageBox, WriteModeState, sub_38B4F, WriteSchedGame, WriteTeamRec, sub_3DAB9
 extern WriteLeagueInfo, CopyHumanTeamDBs, SimulateGame, SeriesWinner, sub_8CCA8, sub_8E8A0, sub_92DE0, sub_932D0
 extern sub_B2DCA, btn_LeagueExists, msg_WhichSchedule, btn_WhichSchedule, msg_CreateError, msg_CreatingLeague, msg_DiskFull, leagueteams
-extern treeteamnames, masterpw, savleague1, savleague2, unknown_libname_1, word_DDD46, word_DDD48, word_DDD4A
+extern treeteamnames, masterpw, savleague1, savleague2, unknown_libname_1, lggameidx, word_DDD48, word_DDD4A
 global SeriesLength_jt, FinishPlayoffs_jt
 global UpdateSeasonSchedule_pop3
 global SeriesLength_bo1, SeriesLength_bo3, SeriesLength_n3
@@ -36,7 +36,7 @@ push esi	; 41B8D
 mov esi, eax	; 41B8E
 mov ecx, 4	; 41B90
 mov ebx, 0FFFFFFFFh	; 41B95
-mov edx, dword_DDD38	; 41B9A
+mov edx, lgplayteam	; 41B9A
 call FileReadAt	; 41B9F
 test eax, eax	; 41BA4
 jne short .1	; 41BA6
@@ -74,7 +74,7 @@ test eax, eax	; 41C0C
 jne short .5	; 41C0E
 mov ecx, 4	; 41C10
 mov ebx, 0FFFFFFFFh	; 41C15
-mov edx, word_DDD46	; 41C1A
+mov edx, lggameidx	; 41C1A
 mov eax, esi	; 41C1F
 call FileReadAt	; 41C21
 .5:

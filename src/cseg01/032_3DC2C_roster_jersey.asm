@@ -19,7 +19,7 @@ extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A0
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
 extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, MouseSetPos
 extern sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, SetDrawBitmap, unk_C1A15
-extern str_backslash2, unk_C8117, unk_C88E2, unk_CF3CF, unk_D12C8, awlinetab, hmlinetab, unk_DDFF4
+extern str_backslash2, str_S4, unk_C88E2, unk_CF3CF, unk_D12C8, awlinetab, hmlinetab, unk_DDFF4
 extern VisTeam
 global loc_3DC59, loc_3DCB5, loc_3DCE7, loc_3DCF5, loc_3DD15, loc_3DD5C, loc_3DD60, loc_3DD6D
 global loc_3DD75, loc_3DD9B, loc_3DDE2, loc_3DDE6, loc_3DDF3, loc_3DF06, loc_3DF08, loc_3E07E
@@ -800,7 +800,7 @@ call strcpy_	; 3E6A7
 mov edx, str_backslash2	; 3E6AC
 mov eax, leaguedbfmt	; 3E6B1
 call strcat_	; 3E6B6
-mov edx, unk_C8117	; 3E6BB
+mov edx, str_S4	; 3E6BB
 mov eax, leaguedbfmt	; 3E6C0
 call strcat_	; 3E6C5
 mov edx, str_extDB	; 3E6CA

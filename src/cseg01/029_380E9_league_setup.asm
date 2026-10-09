@@ -10,7 +10,7 @@ extern songdata, dword_C786C, dword_C7A34, dword_C87B0, musichandle, dword_D2C6B
 extern pointerspr, dword_DD798, leaguemaster, leaguesaved, dword_EA0DC, jctime, memcpy_, memset_
 extern off_C8055, strcat_, strcmp_, strcpy_, stricmp_, strlen_, MakePath, leaguedbnames
 extern FileOpenRead, FileClose, FileReadAt, FileWriteAt, ReadTeamRec, SetTextColors, TextInputDialog, ListDialog
-extern SetDialogColors, MessageBox, sub_37B92, sub_37C53, sub_37D6A, sub_37E5B, sub_37EA6, sub_37FBA
+extern SetDialogColors, MessageBox, TeamGridHitTest, DrawTeamGridName, SaveGridCellBg, RestoreGridCellBg, HighlightGridCell, DrawTeamGrid
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
 extern sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_91370, sub_91400, MouseSetPos, sub_B2DCA
@@ -935,7 +935,7 @@ mov ecx, esi	; 38DF5
 lea ebx, [dword esp+01B4h]	; 38DF7
 mov edx, dword [dword esp+02A4h]	; 38DFE
 mov eax, ebp	; 38E05
-call sub_37FBA	; 38E07
+call DrawTeamGrid	; 38E07
 mov ah, byte [dword esp+02A0h]	; 38E0C
 test ah, 1	; 38E13
 je short loc_38E2F	; 38E16
@@ -977,7 +977,7 @@ mov edx, dword [dword esp+02A8h]	; 38EC5
 mov dword [edx], eax	; 38ECC
 mov ebx, 0FFFFFFFFh	; 38ECE
 lea edx, [dword esp+01B4h]	; 38ED3
-call sub_37EA6	; 38EDA
+call HighlightGridCell	; 38EDA
 cmp dword [dword esp+02A0h], byte 1	; 38EDF
 jne short loc_38EF2	; 38EE7
 mov dword [dword esp+0264h], ecx	; 38EE9
@@ -1644,7 +1644,7 @@ loc_399EA:
 lea ebx, [dword esp+01B4h]	; 399EA
 mov edx, dword [dword esp+0230h]	; 399F1
 mov eax, dword [dword esp+0234h]	; 399F8
-call sub_37B92	; 399FF
+call TeamGridHitTest	; 399FF
 mov dword [dword esp+0240h], eax	; 39A04
 cmp dword [dword esp+02A0h], byte 10h	; 39A0B
 jne short loc_39A35	; 39A13
@@ -1675,11 +1675,11 @@ jne short loc_39AEB	; 39A81
 mov eax, esi	; 39A83
 xor ebx, ebx	; 39A85
 lea edx, [dword esp+01B4h]	; 39A87
-call sub_37EA6	; 39A8E
+call HighlightGridCell	; 39A8E
 mov eax, dword [ecx]	; 39A93
 mov ebx, 0FFFFFFFFh	; 39A95
 lea edx, [dword esp+01B4h]	; 39A9A
-call sub_37EA6	; 39AA1
+call HighlightGridCell	; 39AA1
 cmp dword [dword esp+0288h], byte 0	; 39AA6
 jne short loc_39ADB	; 39AAE
 test byte [dword esp+02A0h], 10h	; 39AB0
@@ -1719,15 +1719,15 @@ mov eax, dword [esi]	; 39B41
 mov ecx, dword [dword esp+0240h]	; 39B43
 mov ebx, dword [dword esp+0284h]	; 39B4A
 lea edx, [dword esp+01B8h]	; 39B51
-call sub_37D6A	; 39B58
+call SaveGridCellBg	; 39B58
 mov eax, dword [esi]	; 39B5D
 xor ebx, ebx	; 39B5F
 lea edx, [dword esp+01B4h]	; 39B61
-call sub_37EA6	; 39B68
+call HighlightGridCell	; 39B68
 mov eax, dword [esi]	; 39B6D
 mov ebx, 0FFFFFFFFh	; 39B6F
 lea edx, [dword esp+01B4h]	; 39B74
-call sub_37EA6	; 39B7B
+call HighlightGridCell	; 39B7B
 mov edx, dword [esi]	; 39B80
 mov eax, edx	; 39B82
 shl eax, 4	; 39B84
@@ -1781,17 +1781,17 @@ xor edx, edx	; 39C1B
 call memset_	; 39C1D
 mov eax, dword [esi]	; 39C22
 lea edx, [dword esp+01B4h]	; 39C24
-call sub_37E5B	; 39C2B
+call RestoreGridCellBg	; 39C2B
 mov eax, dword [esi]	; 39C30
 lea ecx, [dword esp+01B4h]	; 39C32
 mov ebx, dword [dword esp+025Ch]	; 39C39
 mov edx, ebp	; 39C40
-call sub_37C53	; 39C42
+call DrawTeamGridName	; 39C42
 jmp near loc_3A06B	; 39C47
 loc_39C4C:
 mov eax, dword [esi]	; 39C4C
 lea edx, [dword esp+01B4h]	; 39C4E
-call sub_37E5B	; 39C55
+call RestoreGridCellBg	; 39C55
 jmp near loc_3A06B	; 39C5A
 loc_39C5F:
 test byte [dword esp+02A0h], 3	; 39C5F
@@ -1814,17 +1814,17 @@ mov eax, dword [eax]	; 39CAA
 mov ecx, dword [dword esp+0240h]	; 39CAC
 mov ebx, dword [dword esp+0284h]	; 39CB3
 lea edx, [dword esp+01B8h]	; 39CBA
-call sub_37D6A	; 39CC1
+call SaveGridCellBg	; 39CC1
 mov eax, dword [dword esp+0274h]	; 39CC6
 mov eax, dword [eax]	; 39CCD
 xor ebx, ebx	; 39CCF
 lea edx, [dword esp+01B4h]	; 39CD1
-call sub_37EA6	; 39CD8
+call HighlightGridCell	; 39CD8
 mov eax, dword [dword esp+0274h]	; 39CDD
 mov eax, dword [eax]	; 39CE4
 mov ebx, 0FFFFFFFFh	; 39CE6
 lea edx, [dword esp+01B4h]	; 39CEB
-call sub_37EA6	; 39CF2
+call HighlightGridCell	; 39CF2
 mov edx, dword [dword esp+0274h]	; 39CF7
 mov edx, dword [edx]	; 39CFE
 mov eax, edx	; 39D00
@@ -2057,17 +2057,17 @@ add eax, byte 0Bh	; 39FEC
 call sub_3A597	; 39FEF
 mov eax, dword [ebx]	; 39FF4
 lea edx, [dword esp+01B4h]	; 39FF6
-call sub_37E5B	; 39FFD
+call RestoreGridCellBg	; 39FFD
 mov eax, dword [ebx]	; 3A002
 lea ecx, [dword esp+01B4h]	; 3A004
 mov ebx, dword [dword esp+025Ch]	; 3A00B
 mov edx, ebp	; 3A012
-call sub_37C53	; 3A014
+call DrawTeamGridName	; 3A014
 jmp short loc_3A029	; 3A019
 loc_3A01B:
 mov eax, dword [ebx]	; 3A01B
 lea edx, [dword esp+01B4h]	; 3A01D
-call sub_37E5B	; 3A024
+call RestoreGridCellBg	; 3A024
 loc_3A029:
 call sub_6B3D7	; 3A029
 jmp short loc_3A06B	; 3A02E
@@ -2077,7 +2077,7 @@ jl short loc_3A047	; 3A032
 mov ebx, 0FFFFFFFFh	; 3A034
 lea edx, [dword esp+01B4h]	; 3A039
 mov eax, esi	; 3A040
-call sub_37EA6	; 3A042
+call HighlightGridCell	; 3A042
 loc_3A047:
 mov eax, dword [dword esp+0288h]	; 3A047
 shl eax, 2	; 3A04E
@@ -2085,7 +2085,7 @@ add eax, dword [dword esp+02A8h]	; 3A051
 mov eax, dword [eax]	; 3A058
 mov ebx, 0FFFFFFFFh	; 3A05A
 lea edx, [dword esp+01B4h]	; 3A05F
-call sub_37EA6	; 3A066
+call HighlightGridCell	; 3A066
 loc_3A06B:
 mov eax, dword [dword esp+0238h]	; 3A06B
 push eax	; 3A072

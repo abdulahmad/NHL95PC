@@ -18,12 +18,12 @@ global fdlg_noarrow, hmcrestbmp, vscrestbmp, dlgsavex, dlgsavey, editcurw, editp
 global editbuf, editcuron, edity, editx, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly
 global otherperiod, dword_DD748, dword_DD74C, dbextension, calsel, dword_DD784, calexit, dword_DD798
 global dword_DD79C, calmonth, criterrflag, leaguemaster, leaguesaved, dword_DD7CE, humancount, calselday
-global dword_DDD2C, calselmonth, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68, dword_DDD6C
+global dword_DDD2C, calselmonth, dword_DDD34, lgplayteam, dword_DDD3C, dword_DDD44, gridcelly, gridcellx
 global dword_DDD70, dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C
 global dword_DE260, dword_DE264, dword_DE265, dword_DEB6C, dword_DEB74, statsplayer
 global unk_DC890, unk_DC998, unk_DCA98, printfbuf, leagueteams, treeteamnames, unk_DDCFB
 global masterpw, savleague1, savleague2, unk_DDFF4, scrolly, scrollx, bgscrollx, bgscrolly8
-global word_DD7D0, word_DDD46, word_DDD48, word_DDD4A
+global word_DD7D0, lggameidx, word_DDD48, word_DDD4A
 statsplayer:
 resb 2
 resb 1
@@ -281,7 +281,7 @@ calselmonth:
 resb 4
 dword_DDD34:
 resb 4
-dword_DDD38:
+lgplayteam:
 resb 4
 dword_DDD3C:
 resb 4
@@ -297,7 +297,7 @@ dword_DDD44:
 resb 1
 byte_DDD45:
 resb 1
-word_DDD46:
+lggameidx:
 resb 2
 word_DDD48:
 resb 2
@@ -307,9 +307,9 @@ savleague1:
 resb 13
 savleague2:
 resb 15
-dword_DDD68:
+gridcelly:
 resb 4
-dword_DDD6C:
+gridcellx:
 resb 4
 dword_DDD70:
 resb 4

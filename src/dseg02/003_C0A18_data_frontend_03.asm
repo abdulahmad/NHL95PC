@@ -40,8 +40,8 @@ global str_Pointer6, str_DBOX, str_Pointer7, str_Iff8, str_Maindesk, str_Tonight
 global str_Pal15, str_Menubuff4, str_GameSet4, str_Game, str_Set, str_Palette2, str_Temp4, str_GameSav4
 global str_Rink2, str_Til, str_InvalidFileSize, str_TILES, str_ErrorLoadingFile, str_Map, str_CRESTS3, str_Pal16
 global str_Boxr, str_Boxb, str_Bkgd7, str_02d9D, str_Home, str_Away, str_SDD2, str_Pal17
-global str_Calendar, str_Callogo, str_Iff9, str_Pointer8, str_Menubuff5, asc_C1853, asc_C1859, asc_C1862
-global asc_C1866, asc_C186B, asc_C1874, asc_C1879, asc_C1880, asc_C1885, asc_C188D, asc_C1892
+global str_Calendar, str_Callogo, str_Iff9, str_Pointer8, str_Menubuff5, str_02d, str_GSUMMARY, str_Pal18
+global str_Temp5, str_Easndesk2, str_GAME, str_SAV, str_Back, str_Callogo2, asc_C188D, asc_C1892
 global asc_C1897, asc_C189B, asc_C189F, asc_C18A6, asc_C18AB, asc_C18B3, asc_C18B8, asc_C18C1
 global asc_C18C7, asc_C18CC, asc_C18D5, asc_C18E8, asc_C1904, asc_C190A, asc_C190E, asc_C1919
 global asc_C191E, asc_C1923, asc_C1927, asc_C1938, asc_C193D, asc_C1942, asc_C1948, asc_C195C
@@ -1102,23 +1102,23 @@ str_Pointer8:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
 str_Menubuff5:
 db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
-asc_C1853:
+str_02d:
 db 02Eh,025h,030h,032h,064h,00h
-asc_C1859:
+str_GSUMMARY:
 db 047h,053h,055h,04Dh,04Dh,041h,052h,059h,00h
-asc_C1862:
+str_Pal18:
 db 050h,061h,06Ch,00h
-asc_C1866:
+str_Temp5:
 db 074h,065h,06Dh,070h,00h
-asc_C186B:
+str_Easndesk2:
 db 065h,061h,073h,06Eh,064h,065h,073h,06Bh,00h
-asc_C1874:
+str_GAME:
 db 047h,041h,04Dh,045h,00h
-asc_C1879:
+str_SAV:
 db 02Eh,053h,041h,056h,00h,00h,00h
-asc_C1880:
+str_Back:
 db 062h,061h,063h,06Bh,00h
-asc_C1885:
+str_Callogo2:
 db 063h,061h,06Ch,06Ch,06Fh,067h,06Fh,00h
 asc_C188D:
 db 050h,04Ch,053h,054h,00h

@@ -4,7 +4,7 @@ bits 32
 section s_C88E2 progbits alloc noexec write align=1
 extern unk_C1934, unk_C1936, unk_C67B1, unk_C88C2, unk_CE0A5, unk_CE1F5
 global teamstartlag, byte_C8B78, dword_C891E, calcolx, calrowy, calendarshapes
-global dword_C8998, dword_C89E6, dword_C8A2B, dword_C8B7C, dword_C8B80, off_C89DE, off_C8A85, off_C8AB9
+global gridcellbuf, dword_C89E6, dword_C8A2B, dword_C8B7C, dword_C8B80, off_C89DE, off_C8A85, off_C8AB9
 global off_C8B37, off_C8BDD, unk_C88E2, unk_C899C, unk_C89BD, unk_C89EA, unk_C8A0F, unk_C8A27
 global unk_C8A33, unk_C8A51, unk_C8A6E, unk_C8A91, unk_C8AA6, unk_C8AC1, unk_C8AE0, unk_C8AE4
 global unk_C8B00, unk_C8B04, unk_C8B22, unk_C8B40, unk_C8B9C, unk_C8BB3, unk_C8BCE, unk_C8BE9
@@ -36,7 +36,7 @@ db 04Bh,01h,00h,00h
 db 08Ch,01h,00h,00h
 calendarshapes:
 db 00h,00h,00h,00h,00h,00h
-dword_C8998:
+gridcellbuf:
 db 00h,00h,00h,00h
 unk_C899C:
 db 054h,068h,065h,020h,064h,061h,074h,061h,062h,061h,073h,065h,073h,020h,063h,061h

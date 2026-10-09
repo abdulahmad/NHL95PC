@@ -26,7 +26,7 @@ extern FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenWrite, FileOpenRW,
 extern CopyFile, DiskSpaceShort, CheckGameDiskSpace, GetLeagueDBSizes, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText
 extern TextGridOpen, TextGridOff, InitGameSummary, SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen
 extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, CountSeriesWins, PreGameScreen, AskDatabaseChoice, TextInputDialog
-extern SetDialogColors, RestoreDialogBg, MessageBox, SaveModeState, LoadModeState, WriteModeState, sub_3626D, SimulateGame
+extern SetDialogColors, RestoreDialogBg, MessageBox, SaveModeState, LoadModeState, WriteModeState, PostGameToTeamDb, SimulateGame
 extern sub_479E9, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E
 extern sub_6B9EB, sub_6BA4D, sub_76429, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E8B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
@@ -2849,7 +2849,7 @@ sar ebx, 10h	; 8876F
 xor ecx, ecx	; 88772
 mov edx, str_Db	; 88774
 mov eax, curleague	; 88779
-call sub_3626D	; 8877E
+call PostGameToTeamDb	; 8877E
 push curleague	; 88783
 push esi	; 88788
 mov ebx, dword [VisTeam-2]	; 88789
@@ -2857,7 +2857,7 @@ sar ebx, 10h	; 8878F
 mov ecx, 1	; 88792
 mov edx, str_Db	; 88797
 mov eax, curleague	; 8879C
-call sub_3626D	; 887A1
+call PostGameToTeamDb	; 887A1
 mov eax, esi	; 887A6
 shl eax, 2	; 887A8
 sub eax, esi	; 887AB

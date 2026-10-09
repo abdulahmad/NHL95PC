@@ -338,16 +338,16 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00034789,sub_34789,ApplyShapePalette,PC-new,,,,medium,sets the palette from the !pal block of the given shape file,calendar,manual-trace
 000347B7,sub_347B7,SetGameSides,PC-new,,,,medium,"(team, sched, game): sets the side controls for the two teams of a schedule game (the other team -1 unless it is a human team)",calendar,manual-trace
 00034821,sub_34821,CalendarScreen,PC-new,,,,high,"league calendar (calendar / callogo): month grid of the human team's games, Play / Game / Statistics menu, picks and plays the next game; called from import_export",calendar,manual-trace
-00035FB9,sub_35FB9,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),import_export,unmatched
-00036207,sub_36207,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),import_export,unmatched
-0003626D,sub_3626D,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),import_export,unmatched
-00036B93,sub_36B93,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),import_export,unmatched
-00037B92,sub_37B92,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),import_export,unmatched
-00037C53,sub_37C53,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),import_export,unmatched
-00037D6A,sub_37D6A,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),import_export,unmatched
-00037E5B,sub_37E5B,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),import_export,unmatched
-00037EA6,sub_37EA6,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),import_export,unmatched
-00037FBA,sub_37FBA,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),import_export,unmatched
+00035FB9,sub_35FB9,CheckLeagueDiskSync,PC-new,,,,medium,"compares the league id in the floppy PINFO.DB with the local league; on a mismatch shows ""The league <name> must be imported from / exported to the disk for ... before a game can be played!""",import_export,manual-trace
+00036207,sub_36207,MakeTeamDbFmt,PC-new,,,,medium,"(out, dir, teams, team): for a human team builds ""dir\%s.NN"" (team number as .%02d)",import_export,manual-trace
+0003626D,sub_3626D,PostGameToTeamDb,PC-new,,,,medium,"(dir, ext, team, side, ...): merges the game's key / season / GSUMMARY records and player stat lines into the team's league database and rewrites the team record; used by PlayLeagueGame and season_playoffs after a league game",import_export,manual-trace
+00036B93,sub_36B93,PlayLeagueGame,PC-new,,,,high,"MenuNextLeagueGame body: loads the next league game, checks the human teams' disks / passwords, ""Select a team to play."", plays it and posts the results to both team databases",import_export,manual-trace
+00037B92,sub_37B92,TeamGridHitTest,PC-new,,,,high,"(mx, my, grid): team in the 4 x 7 division grid cell under the mouse, -1 for none / empty (63h)",import_export,manual-trace
+00037C53,sub_37C53,DrawTeamGridName,PC-new,,,,high,prints a team's name centred in its division grid cell,import_export,manual-trace
+00037D6A,sub_37D6A,SaveGridCellBg,PC-new,,,,high,"allocates ""back"" and saves the screen under a team's grid cell",import_export,manual-trace
+00037E5B,sub_37E5B,RestoreGridCellBg,PC-new,,,,high,restores and frees the saved grid cell,import_export,manual-trace
+00037EA6,sub_37EA6,HighlightGridCell,PC-new,,,,high,"(on, grid, team): draws or erases the frame around a team's grid cell",import_export,manual-trace
+00037FBA,sub_37FBA,DrawTeamGrid,PC-new,,,,medium,"centred title, callogo crest of each team in the division grid and their names (DrawTeamGridName)",import_export,manual-trace
 000380E9,sub_380E9,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
 00038386,sub_38386,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched
 000384B8,sub_384B8,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),league_setup,unmatched

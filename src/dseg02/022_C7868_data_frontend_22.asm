@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_C7868 progbits alloc noexec write align=1
 extern unk_C744C, unk_C7450, unk_C784B
-global asc_C78A8, asc_C78BF, asc_C7969, asc_C7A9C, asc_C7ABF, dword_C786C, dword_C79C0, dword_C79C8
-global dword_C7A34, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7B16, dword_C7B1E, dword_C7B47, dword_C7B4F
+global str_SelectATeamTo, asc_C78BF, asc_C7969, str_MustBeImportedFrom, str_MustBeExportedTo, dword_C786C, dword_C79C0, dword_C79C8
+global dword_C7A34, dword_C7B16, dword_C7B1E, dword_C7B47, dword_C7B4F
 global dword_C7BA7, dword_C7BAF, off_C7905, unk_C7868, unk_C7870, unk_C78D8, unk_C78F0, unk_C790D
 global unk_C792B, unk_C792F, unk_C7951, unk_C7965, unk_C7986, unk_C79A0, unk_C79D0, unk_C7A08
-global unk_C7A1E, unk_C7A30, unk_C7A3C, unk_C7A74, unk_C7A7F, unk_C7AE0, unk_C7AF4, unk_C7AFF
+global unk_C7A1E, unk_C7A30, unk_C7A3C, str_TheLeague, str_BeforeAGameCanBePlayed, leaguediskmsg, unk_C7AF4, unk_C7AFF
 global unk_C7B12, unk_C7B22, unk_C7B53, unk_C7B73, unk_C7B91, unk_C7BBB
 unk_C7868:
 dd unk_C784B
@@ -20,7 +20,7 @@ dd unk_C744C
 db 0F0h,0FFh,0FFh,0FFh,03Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,06h,00h,00h,00h
 dd unk_C7450
-asc_C78A8:
+str_SelectATeamTo:
 db 053h,065h,06Ch,065h,063h,074h,020h,061h,020h,074h,065h,061h,06Dh,020h,074h,06Fh
 db 020h,070h,06Ch,061h,079h,02Eh,00h
 asc_C78BF:
@@ -89,28 +89,25 @@ dd unk_C744C
 db 0F0h,0FFh,0FFh,0FFh,044h,00h,00h,00h,060h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,06h,00h,00h,00h
 dd unk_C7450
-unk_C7A74:
+str_TheLeague:
 db 054h,068h,065h,020h,06Ch,065h,061h,067h,075h,065h,00h
-unk_C7A7F:
+str_BeforeAGameCanBePlayed:
 db 062h,065h,066h,06Fh,072h,065h,020h,061h,020h,067h,061h,06Dh,065h,020h,063h,061h
 db 06Eh,020h,062h,065h,020h,070h,06Ch,061h,079h,065h,064h,021h,00h
-asc_C7A9C:
+str_MustBeImportedFrom:
 db 06Dh,075h,073h,074h,020h,062h,065h,020h,069h,06Dh,070h,06Fh,072h,074h,065h,064h
 db 020h,066h,072h,06Fh,06Dh,020h,074h,068h,065h,020h,064h,069h,073h,06Bh,020h,066h
 db 06Fh,072h,00h
-asc_C7ABF:
+str_MustBeExportedTo:
 db 06Dh,075h,073h,074h,020h,062h,065h,020h,065h,078h,070h,06Fh,072h,074h,065h,064h
 db 020h,074h,06Fh,020h,074h,068h,065h,020h,064h,069h,073h,06Bh,020h,066h,06Fh,072h
 db 00h
-unk_C7AE0:
-dd unk_C7A74
-dword_C7AE4:
+leaguediskmsg:
+dd str_TheLeague
 db 00h,00h,00h,00h
-dword_C7AE8:
 db 00h,00h,00h,00h
-dword_C7AEC:
 db 00h,00h,00h,00h
-dd unk_C7A7F
+dd str_BeforeAGameCanBePlayed
 unk_C7AF4:
 db 054h,068h,065h,020h,06Ch,065h,061h,067h,075h,065h,00h
 unk_C7AFF:

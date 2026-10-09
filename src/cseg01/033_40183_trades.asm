@@ -8,7 +8,7 @@ extern str_extxx, str_extLP, str_extID, str_SelNewHuman, str_SelRemoveHuman, str
 extern curleague, byte_DC8D8, byte_DC9D8, leagueflags, savedname, byte_DDD40, byte_DE268, byte_ED836
 extern byte_ED86D, msg_InsertDisk_arg, msg_WrongDisk_arg, msg_Copying_arg, msg_MasterDB_arg, msg_SavedGame_arg, dword_C87C0, dword_C87C8
 extern dword_C87E0, dword_C87E8, dword_D0B16, dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A
-extern dword_D2C6B, leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DE264
+extern dword_D2C6B, leaguemaster, leaguesaved, humancount, dword_DDD34, lgplayteam, dword_DDD3C, dword_DE264
 extern fputchar, jctime, memset_, teamcitynames, msg_OneHuman, leaguedbnames
 extern msg_TradeDeadline, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, strncpy_, MakePath
 extern DeleteFiles, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
@@ -17,7 +17,7 @@ extern AskMasterPassword, sub_3B25A, sub_3BB87, sub_3D46D, ReadLeagueInfo, sub_3
 extern sub_6B3D7, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
 extern sub_B4F8C, unk_3DC28, msg_AllHuman, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, msg_TradeError, msg_Copying
 extern msg_MasterDB, btn_MasterDB, msg_SavedGame, str_star, btn_TradeStats, leagueteams, treeteamnames, masterpw
-extern savleague1, savleague2, unknown_libname_1, unknown_libname_2, word_DDD46, word_DDD48, word_DDD4A
+extern savleague1, savleague2, unknown_libname_1, unknown_libname_2, lggameidx, word_DDD48, word_DDD4A
 global AddHumanTeam_msgbox, AddHumanTeam_exit
 global TradePlayers
 global LoadHomePals, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, FmtFromLeague, BuildLeagueList, LeagueCheckStub, GetLeagueId
@@ -1801,7 +1801,7 @@ mov edx, 0FFFFFFFFh	; 4198C
 mov dword [byte esp+030h], edx	; 41991
 mov ecx, 4	; 41995
 mov ebx, edx	; 4199A
-mov edx, dword_DDD38	; 4199C
+mov edx, lgplayteam	; 4199C
 call FileWriteAt	; 419A1
 mov edx, eax	; 419A6
 test eax, eax	; 419A8
@@ -1844,7 +1844,7 @@ test edx, edx	; 41A18
 jne short .5	; 41A1A
 mov ecx, 4	; 41A1C
 mov ebx, 0FFFFFFFFh	; 41A21
-mov edx, word_DDD46	; 41A26
+mov edx, lggameidx	; 41A26
 mov eax, esi	; 41A2B
 call FileWriteAt	; 41A2D
 mov edx, eax	; 41A32

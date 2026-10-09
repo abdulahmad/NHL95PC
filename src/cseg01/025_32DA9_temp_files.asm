@@ -9,7 +9,7 @@ extern standingscb, standingsmenucb, songdata, rinktilebm, rinkbm, currink, cont
 extern menuact_export, menuact_nextlg, menusub_lgmgr, musichandle, schedgameidx, jctime, MainDeskLoop_x, musicslot
 extern MainDeskLoop_x2, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRead, CheckGameDiskSpace, InitGameSummary
 extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
-extern EasnStandingsScreen, PreGameScreen, SaveModeState, LoadModeState, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
+extern EasnStandingsScreen, PreGameScreen, SaveModeState, LoadModeState, PlayLeagueGame, sub_3B039, sub_3B25A, sub_3B8B0
 extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
 extern sub_479E9, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, EasnTeamStatsScreen, EasnSkaterStatsScreen, EasnGoalieStatsScreen
@@ -586,7 +586,7 @@ je short .1	; 335C6
 mov dword [ebx], 0FFFFFFFFh	; 335C8
 .1:
 mov eax, ebx	; 335CE
-call sub_36B93	; 335D0
+call PlayLeagueGame	; 335D0
 mov dword [teamstatscb], EasnTeamStatsScreen	; 335D5
 mov dword [skaterstatscb], EasnSkaterStatsScreen	; 335DF
 mov dword [goaliestatscb], EasnGoalieStatsScreen	; 335E9

@@ -4,7 +4,7 @@ bits 32
 section s_3A9AA progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, _fstrcspn_, asc_C1904, asc_C190A, asc_C190E, asc_C1919, asc_C191E
 extern asc_C1923, asc_C1927, asc_C1938, asc_C193D, asc_C78BF, asc_C7D75, asc_C7D88, str_PINFO
-extern str_PLAYER, asc_C810C, str_extDB, asc_C8131, str_extxx, asc_C8158, str_extID
+extern str_PLAYER, asc_C810C, str_extDB, asc_C8131, str_extxx, str_Xx, str_extID
 extern str_dot, str_floppydrv, curleague, leagueflags, byte_DD7CA, byte_DD7CB, savedname, byte_DE268
 extern lgstate, dlgsavebuf, dword_C756D, dword_C760D, msg_InsertDisk_arg, msg_WrongDisk_arg, dword_C79C0, dword_C79C8
 extern dword_C7B16, dword_C7B1E, dword_C7B47, dword_C7B4F, dword_C7BA7, dword_C7BAF, dword_C7C25, dword_C7DA1
@@ -850,7 +850,7 @@ push eax	; 3B45D
 call sprintf_	; 3B45E
 add esp, byte 0Ch	; 3B463
 lea edx, [byte esp+038h]	; 3B466
-mov eax, asc_C8158	; 3B46A
+mov eax, str_Xx	; 3B46A
 call strcpy_	; 3B46F
 lea eax, [byte esp+030h]	; 3B474
 push eax	; 3B478
@@ -940,7 +940,7 @@ mov eax, dword [byte esp+054h]	; 3B57E
 cmp eax, dword [leaguemaster]	; 3B582
 je short loc_3B5D1	; 3B588
 push eax	; 3B58A
-push asc_C8158	; 3B58B
+push str_Xx	; 3B58B
 mov ecx, str_extxx	; 3B590
 mov ebx, dword [byte esp+048h]	; 3B595
 mov edx, dword [byte esp+03Ch]	; 3B599
@@ -953,7 +953,7 @@ lea eax, [byte esp+05Ch]	; 3B5AD
 push eax	; 3B5B1
 mov eax, dword [byte esp+058h]	; 3B5B2
 push eax	; 3B5B6
-mov ecx, asc_C8158	; 3B5B7
+mov ecx, str_Xx	; 3B5B7
 mov ebx, str_extxx	; 3B5BC
 mov edx, curleague	; 3B5C1
 mov eax, dword [byte esp+03Ch]	; 3B5C6
@@ -1027,7 +1027,7 @@ push curleague	; 3B6AA
 mov eax, dword [leaguedbnames+10h]	; 3B6AF
 mov ecx, dword [byte esp+044h]	; 3B6B4
 mov ebx, str_extDB	; 3B6B8
-mov edx, asc_C8158	; 3B6BD
+mov edx, str_Xx	; 3B6BD
 call CopyFile	; 3B6C2
 mov esi, eax	; 3B6C7
 loc_3B6C9:
@@ -1037,7 +1037,7 @@ push curleague	; 3B6CD
 mov eax, dword [leaguedbnames+14h]	; 3B6D2
 mov ecx, dword [byte esp+044h]	; 3B6D7
 mov ebx, str_extDB	; 3B6DB
-mov edx, asc_C8158	; 3B6E0
+mov edx, str_Xx	; 3B6E0
 call CopyFile	; 3B6E5
 mov esi, eax	; 3B6EA
 loc_3B6EC:
@@ -1047,7 +1047,7 @@ push curleague	; 3B6F0
 mov eax, dword [leaguedbnames+18h]	; 3B6F5
 mov ecx, dword [byte esp+044h]	; 3B6FA
 mov ebx, str_extDB	; 3B6FE
-mov edx, asc_C8158	; 3B703
+mov edx, str_Xx	; 3B703
 call CopyFile	; 3B708
 mov esi, eax	; 3B70D
 loc_3B70F:
