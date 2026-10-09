@@ -7,7 +7,7 @@ extern asc_C13A0, asc_C13A8, asc_C13AD, asc_C13B6, asc_C13C0, asc_C13C7, asc_C13
 extern asc_C13E0, asc_C13E5, asc_C13EA, asc_C13F3, asc_C13F8, asc_C13FD, asc_C1402, asc_C1407
 extern asc_C140C, asc_C1415, asc_C141A, asc_C141F, asc_C1428, asc_C811A, asc_C814A, byte_C5400
 extern byte_C6F6C, byte_C8451, byte_D2430, byte_D42C3, byte_DB3A8, byte_ED7F3, byte_ED824, byte_ED825
-extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, dword_C53FF, dword_C5403, dword_C5407
+extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, dword_C5403, dword_C5407
 extern dword_C5581, dword_C71CC, dword_C71D0, dword_C71D4, dword_C721D, dword_C90C8, dword_C90CA, dword_D242C
 extern dword_D2431, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, dword_DC234, dword_DC238, dword_EA0DC
 extern fputchar, jctime, memcpy_, off_C5439, off_C57CC, off_C6F48, off_C80D7, off_C80E7
@@ -544,7 +544,7 @@ call sub_8F98F	; 2A670
 mov dword [dword_C721D], eax	; 2A675
 test eax, eax	; 2A67A
 je short loc_2A69C	; 2A67C
-test byte [dword_C53FF], 40h	; 2A67E
+test byte [gameopts], 40h	; 2A67E
 je short loc_2A69C	; 2A685
 mov edx, dword [dword_D2431]	; 2A687
 mov ecx, 4Ch	; 2A68D
@@ -1219,7 +1219,7 @@ call sub_8F98F	; 2B048
 mov dword [dword_C721D], eax	; 2B04D
 test eax, eax	; 2B052
 je short loc_2B074	; 2B054
-test byte [dword_C53FF], 40h	; 2B056
+test byte [gameopts], 40h	; 2B056
 je short loc_2B074	; 2B05D
 mov edx, dword [dword_D2431]	; 2B05F
 mov ecx, 4Ch	; 2B065

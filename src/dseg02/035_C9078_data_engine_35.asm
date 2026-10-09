@@ -9,35 +9,35 @@ extern assdefo, sub_4AFFB, asseben, assepen, assfaceoff, assfaceoffp1, assgoalie
 extern assnearest, sub_50F3F, asspenalty, sub_4C6F3, assscore, assshoot, assstanley, asswingd
 extern asswingo, dword_DFF2C, sub_516E1, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
 extern unk_DFF5E, unk_E0416, word_DFF1E, word_DFF22, word_DFF26, word_DFF28, word_DFF2A
-global StanleyCupTimer, asstab, byte_C90BC, byte_C90BE, byte_C90C3, byte_C90C5, byte_C90D5, byte_C9104
+global StanleyCupTimer, asstab, byte_C90BC, gmode2, byte_C90C3, byte_C90C5, byte_C90D5, byte_C9104
 global byte_C9111, byte_C9123, byte_C9142, byte_C9146, byte_CBC36, byte_CBC37, byte_CBEA8, collflag
 global dirtab, dword_C909E, dword_C90B0, dword_C90C0, dword_C90C8, dword_C90CA, dword_C9120, dword_CBC3E
-global dword_CBEBE, dword_CBECA, gameclock, gmode, off_C9078, off_C907C, off_C9084, off_C9088
-global off_C908C, off_C9094, off_C9096, off_CBD2E, passspeed, puckvz, threat, unk_C921D
+global dword_CBEBE, dword_CBECA, puckvx, gmode, off_C9078, puckx, pucky, puckvy
+global puckz, puckc, off_C9096, off_CBD2E, passspeed, puckvz, threat, unk_C921D
 global unk_CBC6E, unk_CBC7E, unk_CBC9E, unk_CBCAE, unk_CBCBE, unk_CBCCE, unk_CBCDE, unk_CBCEE
 global unk_CBCFE, unk_CBD0E, unk_CBD1E, unk_CBD5A, wcradiusx, word_C9098, word_C909A, word_C90A0
-global word_C90A4, word_C90A6, word_C90A8, word_C90AC, word_C90AE, word_C90B2, word_C90B4, word_C90B6
-global word_C90B8, word_C90C2, word_C90C4, word_C90C6, word_C90CC, word_C90CE, word_C90D0, word_C90D2
-global word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_C90DC, word_C90DE, word_C90E2, word_C9102
+global word_C90A4, word_C90A6, word_C90A8, xc1, yc1, word_C90B2, word_C90B4, word_C90B6
+global word_C90B8, word_C90C2, word_C90C4, word_C90C6, word_C90CC, word_C90CE, word_C90D0, refsignal
+global word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_C90DC, word_C90DE, dirtab_y, word_C9102
 global word_CBC42, word_CBC44, word_CBC46, word_CBC48, word_CBC4A, word_CBC52, word_CBC54, word_CBC56
 global word_CBC58, word_CBC5A, word_CBC5C, word_CBC5E, word_CBC60, word_CBC62, word_CBC64, word_CBC66
 global word_CBC68, word_CBC6A, word_CBC6C, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, word_CBEC0
 global word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE
 off_C9078:
 dd unk_E0416
-off_C907C:
+puckx:
 dd word_DFF1E
-gameclock:
+puckvx:
 dd word_DFF28
-off_C9084:
+pucky:
 dd word_DFF22
-off_C9088:
+puckvy:
 dd word_DFF2A
-off_C908C:
+puckz:
 dd word_DFF26
 puckvz:
 dd dword_DFF2C
-off_C9094:
+puckc:
 off_C9096 equ $+2
 dd unk_DFF5E
 word_C9098:
@@ -60,9 +60,9 @@ word_C90A8:
 db 00h,00h
 threat:
 db 00h,00h
-word_C90AC:
+xc1:
 db 00h,00h
-word_C90AE:
+yc1:
 db 00h,00h
 dword_C90B0:
 db 00h,00h
@@ -80,7 +80,7 @@ gmode:
 db 00h
 byte_C90BC:
 db 00h,00h
-byte_C90BE:
+gmode2:
 db 00h,00h
 dword_C90C0:
 db 00h,00h
@@ -104,7 +104,7 @@ word_C90CE:
 db 0FFh,0FFh
 word_C90D0:
 db 00h,00h
-word_C90D2:
+refsignal:
 db 00h,00h
 word_C90D4:
 db 0FFh
@@ -122,7 +122,7 @@ word_C90DE:
 db 00h,00h
 dirtab:
 db 00h,00h
-word_C90E2:
+dirtab_y:
 db 0C8h,00h,08Dh,00h,08Dh,00h,0C8h,00h,00h,00h,08Dh,00h,073h,0FFh,00h,00h
 db 038h,0FFh,073h,0FFh,073h,0FFh,038h,0FFh,00h,00h,073h,0FFh,08Dh,00h
 StanleyCupTimer:

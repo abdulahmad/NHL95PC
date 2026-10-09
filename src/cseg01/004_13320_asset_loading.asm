@@ -9,26 +9,26 @@ extern asc_C04A9, asc_C04B0, asc_C8136, asc_C814A, assinsert, byte_C4D1C, byte_C
 extern byte_D2430, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8, byte_E0308
 extern byte_E0344, byte_E9AC8, byte_E9AD3, byte_ED7CC, byte_ED7E4, byte_ED7E6, byte_ED85C, byte_ED86C
 extern byte_ED8C6, byte_ED8C8, byte_ED8D7, byte_ED976, byte_ED9AA, byte_ED9EC, byte_ED9F0, dword_C4D0C
-extern dword_C4E10, dword_C53FF, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, dword_C721D, dword_C90C8
+extern dword_C4E10, gameopts, dword_C541F, dword_C5840, dword_C66D0, dword_C66D4, dword_C721D, dword_C90C8
 extern dword_C90CA, dword_CBECA, dword_CC0AC, dword_CC0E0, dword_CC0EC, dword_CC0F0, dword_CC0F8, dword_CC0FC
 extern dword_CC118, dword_CC11C, dword_CC124, dword_CC128, dword_CCC88, dword_D242C, dword_D2431, dword_D2C6B
 extern dword_D8B68, dword_D8C18, dword_D8C4C, dword_D8C68, dword_D8C6C, dword_D8C70, dword_D8C78, dword_D8C80
-extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E009C, dword_E00A0, dword_E03B2
-extern dword_E03BE, dword_E9A9E, dword_E9AB6, dword_ED700, jctime, loc_12842, memcpy_, nullsub_2
-extern off_C907C, off_C9084, passspeed, randomd0, sprintf_, sub_11598, sub_1205D, sub_12849
+extern dword_D8C84, dword_D9980, dword_D9A38, dword_DF00C, dword_DF010, dword_E009C, dword_E00A0
+extern dword_E9A9E, dword_E9AB6, dword_ED700, jctime, loc_12842, memcpy_, nullsub_2
+extern puckx, pucky, passspeed, randomd0, sprintf_, sub_11598, sub_1205D, sub_12849
 extern sub_13188, sub_1431E, sub_14525, sub_1457C, sub_150C6, sub_174C2, sub_1CBD8, sub_33E6A
 extern sub_4830E, sub_4FD47, sub_59863, sub_59981, sub_599B9, sub_599EE, sub_5E086, sub_5E0B0
 extern sub_64614, sub_658F3, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, sub_B2DB4, sub_B30B4, sub_B30BB
-extern sub_B392C, sub_B4BA8, threat, unk_DF014, unk_DF81C, vtoa, wcradiusy, word_C7290
+extern sub_B392C, sub_B4BA8, threat, unk_DF014, SortCords, vtoa, regd4, word_C7290
 extern word_C90A0, word_C90A4, word_C90A6, word_C90A8, word_C90B2, word_C90B4, word_C90CE, word_C90D0
-extern word_C90D2, word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_CBC44, word_CBC46, word_CBC48
+extern refsignal, word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_CBC44, word_CBC46, word_CBC48
 extern word_CBC52, word_CBC54, word_CBC56, word_CBC58, word_CBC5A, word_CBC5C, word_CBC5E, word_CBC60
 extern word_CBC62, word_CBC64, word_CBC66, word_CBC68, word_CBC6A, word_CBC6C, word_CBE8C, word_CBE8E
 extern word_CBEC0, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC, word_CBECE, word_CC0B0
 extern word_CC0DE, word_DEE94, word_DF64A, word_DF74A, word_E024E, word_E0304, word_E0306, word_E0380
-extern word_E0382, word_E03AC, word_E03BC, word_E03C0, word_E9A9C, word_E9AA0, word_E9AA2, word_E9AA4
+extern word_E0382, regd2, regd0, regd1, word_E9A9C, word_E9AA0, word_E9AA2, word_E9AA4
 extern word_E9AA6, word_E9AA8, word_E9AAA, word_E9AAE, word_E9B2C
 global LoadTransparentRinkEndOverlay, loc_13384, loc_133A7, loc_133D4, loc_13405, loc_13407, loc_134A2, loc_134A4
 global loc_134E7, loc_1350F, loc_13513, loc_1352B, loc_1352D, loc_13546, loc_1358D, loc_1359C
@@ -166,7 +166,7 @@ call sub_8F98F	; 134B1
 mov dword [dword_C721D], eax	; 134B6
 test eax, eax	; 134BB
 je near loc_13546	; 134BD
-test byte [dword_C53FF], 40h	; 134C3
+test byte [gameopts], 40h	; 134C3
 je near loc_13546	; 134CA
 mov edx, dword [dword_D2431]	; 134D0
 mov ecx, 4Ch	; 134D6
@@ -297,7 +297,7 @@ call sub_8F98F	; 13680
 mov dword [dword_C721D], eax	; 13685
 test eax, eax	; 1368A
 je near loc_1370E	; 1368C
-test byte [dword_C53FF], 40h	; 13692
+test byte [gameopts], 40h	; 13692
 je near loc_1370E	; 13699
 mov edx, dword [dword_D2431]	; 1369F
 mov ecx, 7Fh	; 136A5
@@ -806,16 +806,16 @@ call sub_5E0B0	; 13C93
 xor edx, edx	; 13C98
 mov word [word_C90B4], dx	; 13C9A
 mov word [word_C90B2], dx	; 13CA1
-mov eax, dword [off_C9084]	; 13CA8
+mov eax, dword [pucky]	; 13CA8
 mov word [eax], dx	; 13CAD
-mov eax, dword [off_C907C]	; 13CB0
+mov eax, dword [puckx]	; 13CB0
 mov word [eax], dx	; 13CB5
-mov ebx, unk_DF81C	; 13CB8
-mov word [word_E03AC], 0Ch	; 13CBD
+mov ebx, SortCords	; 13CB8
+mov word [regd2], 0Ch	; 13CBD
 loc_13CC6:
 mov word [byte ebx+02Eh], 0FF9Ch	; 13CC6
 mov ax, word [byte ebx+01Ah]	; 13CCC
-mov word [word_E03C0], ax	; 13CD0
+mov word [regd1], ax	; 13CD0
 cmp ax, 4	; 13CD6
 sete al	; 13CDA
 and eax, 0FFh	; 13CDD
@@ -823,7 +823,7 @@ add eax, byte 16h	; 13CE2
 movsx edx, ax	; 13CE5
 mov eax, ebx	; 13CE8
 call assinsert	; 13CEA
-cmp word [word_E03C0], byte 0	; 13CEF
+cmp word [regd1], byte 0	; 13CEF
 jl near loc_13E6F	; 13CF7
 test byte [byte ebx+044h], 40h	; 13CFD
 je short loc_13D0B	; 13D01
@@ -833,44 +833,44 @@ loc_13D0B:
 mov ax, word [word_DF64A]	; 13D0B
 loc_13D11:
 neg eax	; 13D11
-mov word [wcradiusy], ax	; 13D13
-mov ax, word [wcradiusy]	; 13D19
+mov word [regd4], ax	; 13D13
+mov ax, word [regd4]	; 13D19
 add eax, 6	; 13D1F
 shl eax, 3	; 13D24
-mov word [wcradiusy], ax	; 13D27
-mov edx, dword [dword_E03B2]	; 13D2D
+mov word [regd4], ax	; 13D27
+mov edx, dword [regd4-2]	; 13D2D
 sar edx, 10h	; 13D33
-mov eax, dword [dword_E03BE]	; 13D36
+mov eax, dword [regd1-2]	; 13D36
 sar eax, 10h	; 13D3B
 movsx ax, byte [dword edx+eax+byte_CBEA8]	; 13D3E
-mov word [wcradiusy], ax	; 13D47
+mov word [regd4], ax	; 13D47
 add eax, eax	; 13D4D
-mov word [wcradiusy], ax	; 13D4F
-mov eax, dword [dword_E03B2]	; 13D55
+mov word [regd4], ax	; 13D4F
+mov eax, dword [regd4-2]	; 13D55
 sar eax, 10h	; 13D5A
 mov dx, word [nosplit eax*2+word_CBE8C]	; 13D5D
-mov word [word_E03BC], dx	; 13D65
+mov word [regd0], dx	; 13D65
 mov ax, word [nosplit eax*2+word_CBE8E]	; 13D6C
-mov word [word_E03C0], ax	; 13D74
+mov word [regd1], ax	; 13D74
 test byte [byte ebx+044h], 80h	; 13D7A
 jne short loc_13D8E	; 13D7E
-neg word [word_E03BC]	; 13D80
-neg word [word_E03C0]	; 13D87
+neg word [regd0]	; 13D80
+neg word [regd1]	; 13D87
 loc_13D8E:
-mov ax, word [word_E03BC]	; 13D8E
+mov ax, word [regd0]	; 13D8E
 mov word [byte ebx+02h], ax	; 13D94
-mov ax, word [word_E03C0]	; 13D98
+mov ax, word [regd1]	; 13D98
 mov word [byte ebx+06h], ax	; 13D9E
 mov word [byte ebx+0Eh], 0	; 13DA2
 mov ax, word [byte ebx+0Eh]	; 13DA8
 mov word [byte ebx+0Ch], ax	; 13DAC
-mov eax, dword [off_C9084]	; 13DB0
+mov eax, dword [pucky]	; 13DB0
 mov ax, word [eax]	; 13DB5
-sub ax, word [word_E03C0]	; 13DB8
+sub ax, word [regd1]	; 13DB8
 movsx edx, ax	; 13DBF
-mov eax, dword [off_C907C]	; 13DC2
+mov eax, dword [puckx]	; 13DC2
 mov ax, word [eax]	; 13DC7
-sub ax, word [word_E03BC]	; 13DCA
+sub ax, word [regd0]	; 13DCA
 cwde	; 13DD1
 call vtoa	; 13DD2
 mov word [byte ebx+036h], ax	; 13DD7
@@ -894,7 +894,7 @@ shl eax, 2	; 13E04
 sub eax, edx	; 13E07
 add eax, 196h	; 13E09
 mov word [byte ebx+012h], ax	; 13E0E
-mov word [word_E03C0], 1	; 13E12
+mov word [regd1], 1	; 13E12
 jmp short loc_13E51	; 13E1B
 loc_13E1D:
 cmp byte [byte ebx+065h], 0	; 13E1D
@@ -914,19 +914,19 @@ mov edx, eax	; 13E3D
 shl eax, 2	; 13E3F
 add eax, edx	; 13E42
 mov word [byte ebx+012h], ax	; 13E44
-mov word [word_E03C0], 289h	; 13E48
+mov word [regd1], 289h	; 13E48
 loc_13E51:
 and byte [byte ebx+045h], 0FBh	; 13E51
 and byte [byte ebx+044h], 0DFh	; 13E55
 mov word [byte ebx+03Ah], 0	; 13E59
-mov ax, word [word_E03C0]	; 13E5F
+mov ax, word [regd1]	; 13E5F
 mov word [byte ebx+038h], ax	; 13E65
 mov word [byte ebx+03Ch], 0FFFFh	; 13E69
 loc_13E6F:
 add ebx, 80h	; 13E6F
-mov cx, word [word_E03AC]	; 13E75
+mov cx, word [regd2]	; 13E75
 dec cx	; 13E7C
-mov word [word_E03AC], cx	; 13E7E
+mov word [regd2], cx	; 13E7E
 jne near loc_13CC6	; 13E85
 loc_13E8B:
 pop edx	; 13E8B
@@ -996,7 +996,7 @@ mov edx, unk_DF014	; 13F60
 mov eax, 1	; 13F65
 call sub_11598	; 13F6A
 loc_13F6F:
-test byte [dword_C53FF], 4	; 13F6F
+test byte [gameopts], 4	; 13F6F
 jne short loc_13F81	; 13F76
 cmp dword [dword_CC0F0], byte 0	; 13F78
 jne short loc_13F86	; 13F7F
@@ -1104,7 +1104,7 @@ mov word [passspeed], ax	; 140D7
 mov word [word_C90A0], ax	; 140DD
 mov word [word_CBC44], ax	; 140E3
 mov word [word_C90D6], ax	; 140E9
-mov word [word_C90D2], ax	; 140EF
+mov word [refsignal], ax	; 140EF
 mov word [word_C90D0], ax	; 140F5
 mov word [word_CBC5C], ax	; 140FB
 mov word [word_CBC5A], ax	; 14101

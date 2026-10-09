@@ -5,7 +5,7 @@ section s_8291E progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, asc_C3680, asc_C3688, asc_C368D, asc_C3696, asc_C369F, asc_C36A8
 extern asc_C36AF, asc_C36C3, asc_C36C9, asc_C8145, asc_D236F, asc_D2379, asc_D2382, asc_D238B
 extern asc_D2390, asc_D2399, asc_D2479, asc_D2486, asc_D248C, asc_D2491, byte_C5400, byte_C541B
-extern byte_D242F, byte_D2430, byte_D2439, byte_ED8C3, byte_ED95B, byte_ED9A7, dword_C4CFC, dword_C53FF
+extern byte_D242F, byte_D2430, byte_D2439, byte_ED8C3, byte_ED95B, byte_ED9A7, dword_C4CFC, gameopts
 extern dword_C541F, dword_C721D, dword_CCC94, dword_D2350, dword_D2423, dword_D2427, dword_D242B, dword_D242C
 extern dword_D2431, dword_D2435, dword_D243A, dword_D24A0, dword_D27B2, dword_D27BB, dword_D2C6B, dword_DC238
 extern dword_EA0DC, dword_ED360, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, fclose_, fopen_
@@ -279,7 +279,7 @@ call sub_8F98F	; 82C37
 mov dword [dword_C721D], eax	; 82C3C
 test eax, eax	; 82C41
 je short loc_82C63	; 82C43
-test byte [dword_C53FF], 40h	; 82C45
+test byte [gameopts], 40h	; 82C45
 je short loc_82C63	; 82C4C
 mov edx, dword [dword_D2431]	; 82C4E
 mov ecx, 4Ch	; 82C54
@@ -318,7 +318,7 @@ call sub_8F98F	; 82CD1
 mov dword [dword_C721D], eax	; 82CD6
 test eax, eax	; 82CDB
 je short loc_82CFD	; 82CDD
-test byte [dword_C53FF], 40h	; 82CDF
+test byte [gameopts], 40h	; 82CDF
 je short loc_82CFD	; 82CE6
 mov edx, dword [dword_D2431]	; 82CE8
 mov ecx, 4Ch	; 82CEE

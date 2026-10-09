@@ -5,7 +5,7 @@ section s_41B80 progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, asc_C1A70, asc_C1A75, asc_C1A7C, asc_C1A85, asc_C811A, asc_C815C
 extern asc_C816D, asc_C8227, asc_C8CA4, byte_C5386, byte_C83C3, byte_C83DF, byte_C83F9, byte_C8444
 extern byte_C8451, byte_DD7B0, byte_DD7CA, byte_DD7CB, byte_DD7CC, byte_DD7CD, byte_DDD10, byte_DDD40
-extern byte_DE268, dword_C5382, dword_C53FF, dword_C5519, dword_C55E9, dword_C5619, dword_C8C61, dword_C8D06
+extern byte_DE268, dword_C5382, gameopts, dword_C5519, dword_C55E9, dword_C5619, dword_C8C61, dword_C8D06
 extern dword_C9002, dword_D07BB, dword_D07BF, dword_D07C7, dword_D07D3, dword_D07D7, dword_D07DF, dword_DD770
 extern dword_DD7A8, dword_DD7AC, dword_DD7CE, dword_DDAC0, dword_DDD34, dword_DDD38, dword_DDD3C, jctime
 extern memset_, mkdir_, off_C772B, off_C80D7, off_C80DB, off_C80E3, off_C80E7, off_C80EB
@@ -1189,7 +1189,7 @@ inc edx	; 42964
 cmp edx, byte 8	; 42965
 jl short loc_4292E	; 42968
 loc_4296A:
-mov ecx, dword [dword_C53FF]	; 4296A
+mov ecx, dword [gameopts]	; 4296A
 shl ecx, 11h	; 42970
 shr ecx, 1Dh	; 42973
 cmp dword [dword esp+094h], byte 0	; 42976
@@ -1227,7 +1227,7 @@ test eax, eax	; 429F1
 jne near loc_42B9D	; 429F3
 lea eax, [dword esp+094h]	; 429F9
 push eax	; 42A00
-mov edx, dword [dword_C53FF]	; 42A01
+mov edx, dword [gameopts]	; 42A01
 shl edx, 11h	; 42A07
 shr edx, 1Dh	; 42A0A
 mov ecx, edi	; 42A0D
@@ -1249,7 +1249,7 @@ test eax, eax	; 42A4D
 jne near loc_42B9D	; 42A4F
 lea eax, [dword esp+094h]	; 42A55
 push eax	; 42A5C
-mov edx, dword [dword_C53FF]	; 42A5D
+mov edx, dword [gameopts]	; 42A5D
 shl edx, 11h	; 42A63
 shr edx, 1Dh	; 42A66
 mov ecx, edi	; 42A69
@@ -1273,7 +1273,7 @@ lea eax, [dword esp+094h]	; 42AB1
 push eax	; 42AB8
 mov eax, dword [byte esp+04h]	; 42AB9
 push eax	; 42ABD
-mov edx, dword [dword_C53FF]	; 42ABE
+mov edx, dword [gameopts]	; 42ABE
 shl edx, 11h	; 42AC4
 shr edx, 1Dh	; 42AC7
 mov ecx, edi	; 42ACA
@@ -3637,7 +3637,7 @@ test eax, eax	; 448DD
 jne near loc_44A38	; 448DF
 lea eax, [byte esp+024h]	; 448E5
 push eax	; 448E9
-mov edx, dword [dword_C53FF]	; 448EA
+mov edx, dword [gameopts]	; 448EA
 shl edx, 11h	; 448F0
 shr edx, 1Dh	; 448F3
 mov eax, dword [dword_C8C61]	; 448F6
@@ -3658,7 +3658,7 @@ test eax, eax	; 44923
 jne near loc_44A38	; 44925
 lea eax, [byte esp+024h]	; 4492B
 push eax	; 4492F
-mov edx, dword [dword_C53FF]	; 44930
+mov edx, dword [gameopts]	; 44930
 shl edx, 11h	; 44936
 shr edx, 1Dh	; 44939
 mov eax, dword [dword_C8C61]	; 4493C
@@ -3681,7 +3681,7 @@ lea eax, [byte esp+024h]	; 44971
 push eax	; 44975
 mov eax, dword [byte esp+04h]	; 44976
 push eax	; 4497A
-mov edx, dword [dword_C53FF]	; 4497B
+mov edx, dword [gameopts]	; 4497B
 shl edx, 11h	; 44981
 shr edx, 1Dh	; 44984
 mov eax, dword [dword_C8C61]	; 44987
@@ -3843,7 +3843,7 @@ test eax, eax	; 44B97
 jne near loc_44DA9	; 44B99
 lea eax, [byte esp+028h]	; 44B9F
 push eax	; 44BA3
-mov edx, dword [dword_C53FF]	; 44BA4
+mov edx, dword [gameopts]	; 44BA4
 shl edx, 11h	; 44BAA
 shr edx, 1Dh	; 44BAD
 mov eax, dword [dword_C8C61]	; 44BB0
@@ -3883,7 +3883,7 @@ test eax, eax	; 44C23
 jne near loc_44DA9	; 44C25
 lea eax, [byte esp+028h]	; 44C2B
 push eax	; 44C2F
-mov edx, dword [dword_C53FF]	; 44C30
+mov edx, dword [gameopts]	; 44C30
 shl edx, 11h	; 44C36
 shr edx, 1Dh	; 44C39
 mov eax, dword [dword_C8C61]	; 44C3C
@@ -3918,7 +3918,7 @@ jne near loc_44DA9	; 44CA4
 lea eax, [byte esp+028h]	; 44CAA
 push eax	; 44CAE
 push esi	; 44CAF
-mov edx, dword [dword_C53FF]	; 44CB0
+mov edx, dword [gameopts]	; 44CB0
 shl edx, 11h	; 44CB6
 shr edx, 1Dh	; 44CB9
 mov eax, dword [dword_C8C61]	; 44CBC

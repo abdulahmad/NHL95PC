@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_59493 progbits alloc exec nowrite align=1
-extern __CHK, byte_C5400, byte_D2430, byte_D2439, dword_C53FF, dword_C541F, dword_CC0DC, dword_CCC84
+extern __CHK, byte_C5400, byte_D2430, byte_D2439, gameopts, dword_C541F, dword_CC0DC, dword_CCC84
 extern dword_CCC88, dword_CCC8C, dword_CCC90, dword_CCC94, dword_CCC98, dword_D2427, dword_ED35C, dword_ED368
 extern dword_ED374, dword_ED7A4, gmode, off_C5439, rand_, randomd0, sub_836E4, sub_837A8
 extern sub_846B4, sub_846C8, sub_846DC, sub_847BA, sub_847CE, sub_8490D, sub_84A7D, sub_84B0D
@@ -52,7 +52,7 @@ push ebx	; 594D7
 push ecx	; 594D8
 push edx	; 594D9
 push esi	; 594DA
-test byte [dword_C53FF], 80h	; 594DB
+test byte [gameopts], 80h	; 594DB
 je near loc_59743	; 594E2
 test byte [dword_C541F], 2Ah	; 594E8
 je near loc_59743	; 594EF
@@ -256,7 +256,7 @@ call __CHK	; 5974D
 push ebx	; 59752
 push edx	; 59753
 push esi	; 59754
-test byte [dword_C53FF], 80h	; 59755
+test byte [gameopts], 80h	; 59755
 je near loc_597DF	; 5975C
 test byte [dword_C541F], 2Ah	; 59762
 je short loc_597DF	; 59769
@@ -304,7 +304,7 @@ push esi	; 597F0
 push edi	; 597F1
 mov esi, dword [dword_CC0DC]	; 597F2
 sar esi, 10h	; 597F8
-test byte [dword_C53FF], 80h	; 597FB
+test byte [gameopts], 80h	; 597FB
 je short loc_5985D	; 59802
 test byte [dword_C541F], 2Ah	; 59804
 je short loc_5985D	; 5980B

@@ -5,7 +5,7 @@ section s_380E9 progbits alloc exec nowrite align=1
 extern __CHK, asc_C188D, asc_C1892, asc_C1897, asc_C189B, asc_C189F, asc_C18A6, asc_C18AB
 extern asc_C18B3, asc_C18B8, asc_C18C1, asc_C18C7, asc_C18CC, asc_C18D5, asc_C18E8, asc_C7969
 extern asc_C811A, asc_C82A5, asc_C82B9, asc_C82CE, asc_C82E6, asc_C830C, asc_C8333, byte_C8332
-extern byte_C83C3, byte_D2430, byte_DD7B0, byte_DDD10, byte_ED858, byte_ED979, byte_ED9AC, dword_C53FF
+extern byte_C83C3, byte_D2430, byte_DD7B0, byte_DDD10, byte_ED858, byte_ED979, byte_ED9AC, gameopts
 extern dword_C721D, dword_C786C, dword_C7A34, dword_C87B0, dword_D242C, dword_D2431, dword_D2C6B, dword_D8B74
 extern dword_DC238, dword_DD798, dword_DD7A8, dword_DD7AC, dword_EA0DC, jctime, memcpy_, memset_
 extern off_C8055, off_C80E7, strcat_, strcmp_, strcpy_, stricmp_, strlen_, sub_1431E
@@ -1038,7 +1038,7 @@ call sub_8F98F	; 38FA4
 mov dword [dword_C721D], eax	; 38FA9
 test eax, eax	; 38FAE
 je short loc_38FD0	; 38FB0
-test byte [dword_C53FF], 40h	; 38FB2
+test byte [gameopts], 40h	; 38FB2
 je short loc_38FD0	; 38FB9
 mov edx, dword [dword_D2431]	; 38FBB
 mov ecx, 4Ch	; 38FC1

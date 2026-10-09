@@ -4,7 +4,7 @@ This file is the queue. Do not rewrite it as a whole file. Edit the current row 
 
 ## Current segment
 
-`engine_skating`, `src/cseg01/043_5E16D_engine_skating.asm`, `5E16D-5FB02` (6550 bytes). Start label `doplayeracc` (93G `doplayeracc`, logic93_5). It is the 93G movement block. Three of its routines are already traced by hand (`dostop` 5F745, `StopNA` 5F82A, `goalieacc` 5F8B2, in `tools/manual_names.csv`), so it is the place to learn the workflow before the larger engine files.
+`asm_helpers`, `src/cseg01/066_8BEDB_asm_helpers.asm`, `8BEDB-8C94B` (2673 bytes). Start label `sub_8BEDB`. Hand-written asm, not Watcom C: no `__CHK` prologue and arguments in any register (see Conventions). It holds `randomd0` 8C230 (93G middle93_1 / 94G video94) and `vtoa` 8C8E8 (93G logic93_5 / 94G checks94), both already named, plus the MVI movie player and the VGA mode set 8C290.
 
 The data segments are not queue segments. `src/dseg02/*.asm` holds the initialised data and the BSS, the PC's RAM. It has no code to transcribe, and the queue never stops on it. That does not put data off limits. Data and BSS names come from the code segments as they are worked through, not from a separate first pass. Name each data or BSS label the current segment uses in its `src/dseg02` file, which is where it is defined, in the same session. `src/inc/symbols.inc` is the shared index of every label used across files (the PC analogue of the Genesis `ram_addrs.inc`). `tools/update_symbols.py` regenerates it and `tools/rename_symbol.py` keeps it current, so never edit it by hand. You may name any data label, structure field or library routine whenever the evidence is there, inside or outside the current segment.
 
@@ -146,7 +146,7 @@ The first row that is not `done` is the current segment. The order is engine fir
 
 | # | File | Status | Range | Bytes | Funcs | Auto names | Genesis / role |
 |---|---|---|---|---|---|---|---|
-| 1 | `cseg01/043_5E16D_engine_skating.asm` | not done | 5E16D-5FB02 | 6550 | 14 | 260 / 22 | 93G logic93_5 movement block: doplayeracc 5E16D, skateto 5E93B, skatetopuck 5EB17, playeracc 5EDAD, dostop 5F745, StopNA 5F82A, goalieacc 5F8B2, noturn0 5F98A; turn helper 5F151 |
+| 1 | `cseg01/043_5E16D_engine_skating.asm` | done 2026-10-09: 12 functions named (6 new: EvadePlayers, EvadePC, skatetopuck, playeracc, avdgoal_box, avdgoal; 6 confirmed), 2 shared tails, avdgoal_jt, 253 locals, 22 data labels, 7 struct fields; left: 30 [reg+NNh] operands (stack frame, team struct via +6Ch/+70h, byte +52h), avdgoal_box/EvadePlayers are PC-new (medium) | 5E16D-5FB02 | 6550 | 14 | 260 / 22 | 93G logic93_5 movement block: doplayeracc 5E16D, skateto 5E93B, skatetopuck 5EB17, playeracc 5EDAD, dostop 5F745, StopNA 5F82A, goalieacc 5F8B2, noturn0 5F98A; avdgoal 5F151 |
 | 2 | `cseg01/066_8BEDB_asm_helpers.asm` | not done | 8BEDB-8C94B | 2673 | 13 | 62 / 15 | Hand asm: randomd0 8C230 (93G middle93_1 / 94G video94), vtoa 8C8E8 (93G logic93_5 / 94G checks94), MVI player, VGA mode set 8C290 |
 | 3 | `cseg01/038_4FCE8_engine_input.asm` | not done | 4FCE8-50AFD | 3606 | 16 | 112 / 56 | 94G input94 doinput_ispc 504DA, 93G logic93_1 doinput; input ring buffer, pad latch, line change / pass / shot helpers |
 | 4 | `cseg01/042_59D9A_engine_core.asm` | not done | 59D9A-5E16C | 17363 | 57 | 593 / 230 | 93G logic93_5 SetSPA 59D9A / GetHot, hockey93_02 updateplayers 5C40F (asstab dispatch), updateanim, setpersonel, bench/line resets |

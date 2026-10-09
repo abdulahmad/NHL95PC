@@ -12,7 +12,7 @@ extern asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_CDD5E, asc_CDD6B, asc_D20AC, asc_D20
 extern asc_D20C6, asc_D20D2, byte_C541B, byte_CDB77, byte_CDB7E, byte_D2430, byte_DC9D8, byte_DC9DD
 extern byte_DC9DF, byte_DC9E8, byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA21, byte_DCA28
 extern byte_DCA29, byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_ED7CC, byte_ED8B5
-extern byte_ED95D, byte_ED991, byte_ED9A9, dword_C53FB, dword_C53FF, dword_C5403, dword_C5407, dword_C5413
+extern byte_ED95D, byte_ED991, byte_ED9A9, dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C5413
 extern dword_C5417, dword_C541F, dword_C5519, dword_C721D, dword_C90C8, dword_C90CA, dword_D20A8, dword_D20E0
 extern dword_D2150, dword_D223C, dword_D227C, dword_D2280, dword_D2284, dword_D2288, dword_D229C, dword_D22A0
 extern dword_D22A4, dword_D22A8, dword_D22AC, dword_D22B0, dword_D22B4, dword_D22BC, dword_D22C0, dword_D22C4
@@ -1322,7 +1322,7 @@ call sub_8F98F	; 81436
 mov dword [dword_C721D], eax	; 8143B
 test eax, eax	; 81440
 je short loc_81462	; 81442
-test byte [dword_C53FF], 40h	; 81444
+test byte [gameopts], 40h	; 81444
 je short loc_81462	; 8144B
 mov edx, dword [dword_D2431]	; 8144D
 mov ecx, 4Ch	; 81453

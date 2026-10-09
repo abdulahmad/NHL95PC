@@ -23,7 +23,7 @@ global dword_C5131, dword_C5133, dword_C5135, dword_C513C, dword_C5168, dword_C5
 global dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5305, dword_C5309, dword_C530D, dword_C535E
 global dword_C5362, dword_C536A, dword_C536E, dword_C5372, dword_C5376, dword_C537A, dword_C537E, dword_C5382
 global dword_C53D3, dword_C53D7, dword_C53DF, dword_C53E3, dword_C53E7, dword_C53EB, dword_C53EF, dword_C53F3
-global dword_C53F7, dword_C53FB, dword_C53FF, dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413
+global dword_C53F7, dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413
 global dword_C5417, dword_C541F, off_C5194, off_C51C0, off_C51EC, off_C524F, off_C5253, off_C5257
 global off_C525B, off_C525F, off_C5263, off_C5267, off_C526F, off_C5273, off_C527B, off_C5439
 global off_C5441, off_C54A9, unk_C4E30, unk_C5283, unk_C5298, unk_C529C, unk_C5423, unk_C542E
@@ -298,7 +298,7 @@ dword_C53F7:
 db 00h,00h,00h,00h
 dword_C53FB:
 db 00h,00h,00h,00h
-dword_C53FF:
+gameopts:
 db 0FFh
 byte_C5400:
 db 07Bh,00h,00h

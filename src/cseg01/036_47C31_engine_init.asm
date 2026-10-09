@@ -7,16 +7,16 @@ extern byte_E0250, byte_E028C, byte_E02C8, byte_E0308, byte_E0344, dword_C4D0C, 
 extern dword_C7444, dword_C7448, dword_C9074, dword_C90C8, dword_C90CA, dword_CBC3E, dword_CBECA, dword_CC0EC
 extern dword_CC0F0, dword_CC9AD, dword_D8C40, dword_D8C6C, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C
 extern dword_D8C84, dword_DD6A8, dword_DD6AE, dword_DD6B0, dword_DEB6C, dword_DF614, dword_DF714, dword_DFF1C
-extern dword_E0244, dword_E9A9E, dword_E9B04, forcepldata, jctime, off_C9094, off_C9096, randomd0
+extern dword_E0244, dword_E9A9E, dword_E9B04, forcepldata, jctime, puckc, off_C9096, randomd0
 extern sub_5B826, resetplstuff, setpersonel, sub_1145F, sub_1149A, sub_11598, sub_14CF1, sub_33DD3
 extern sub_47951, sub_4FD47, sub_50A05, sub_50A84, sub_594CD, sub_597E3, sub_59863, sub_59981
 extern sub_59A11, sub_5CE12, sub_5DD7C, sub_66497, sub_66DDA, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8374D, sub_8C1C2, sub_8E4F8, sub_8FFB0, sub_B396E, sub_B3989, sub_B3999
-extern unk_DF014, unk_DF314, unk_DFD9C, unk_E001C, word_C9098, word_C909A, word_C90AC, word_C90AE
+extern unk_DF014, unk_DF314, unk_DFD9C, unk_E001C, word_C9098, word_C909A, xc1, yc1
 extern word_C90B2, word_C90B4, word_C90C2, word_C90C4, word_C90D4, word_CBC46, word_CBC52, word_CBC54
 extern word_CBC56, word_CBC58, word_CBEC4, word_CBECC, word_CC9CC, word_DD6AA, word_DFF1E, word_DFF22
 extern word_DFF28, word_DFF2A, word_DFF44, word_E001E, word_E0022, word_E0028, word_E002A, word_E002E
-extern word_E0042, word_E0046, word_E0048, word_E004A, word_E0052, word_E03C0, word_E9AA0
+extern word_E0042, word_E0046, word_E0048, word_E004A, word_E0052, regd1, word_E9AA0
 global loc_47C4F, loc_47C60, loc_47C62, loc_47C89, loc_47CB1, loc_47CD0, loc_47E01, loc_47E05
 global loc_47E0E, loc_47E1B, loc_47E39, loc_47E3E, loc_47E64, loc_47E69, loc_47E7E, loc_47E8A
 global loc_47EA4, loc_47EE0, loc_47EE5, loc_47F35, loc_47F48, loc_47F56, loc_4809C, loc_480CC
@@ -303,15 +303,15 @@ call sub_5DD7C	; 48032
 xor edi, edi	; 48037
 mov dword [dword_D8C6C], edi	; 48039
 mov dword [dword_C4E10], edi	; 4803F
-mov eax, dword [off_C9094]	; 48045
+mov eax, dword [puckc]	; 48045
 mov byte [eax], 0FFh	; 4804A
 mov dword [dword_C4D0C], edi	; 4804D
 call sub_4FD47	; 48053
 xor edi, edi	; 48058
 mov word [word_C9098], di	; 4805A
-mov word [word_C90AC], si	; 48061
+mov word [xc1], si	; 48061
 mov word [word_C909A], si	; 48068
-mov word [word_C90AE], si	; 4806F
+mov word [yc1], si	; 4806F
 mov dword [dword_D8C7C], 20h	; 48076
 mov dword [dword_D8C74], 0ECh	; 48080
 mov eax, dword [dword_CBECA]	; 4808A
@@ -411,7 +411,7 @@ call sub_594CD	; 481F7
 cmp dword [dword_C4E14], byte 0	; 481FC
 jne short loc_4824E	; 48203
 call sub_50A05	; 48205
-mov ah, byte [word_E03C0]	; 4820A
+mov ah, byte [regd1]	; 4820A
 test ah, 10h	; 48210
 jne short loc_4821A	; 48213
 test ah, 20h	; 48215
@@ -422,7 +422,7 @@ mov word [word_CBEC4], 1	; 48224
 jmp short loc_4824E	; 4822D
 loc_4822F:
 call sub_50A84	; 4822F
-mov dh, byte [word_E03C0]	; 48234
+mov dh, byte [regd1]	; 48234
 test dh, 10h	; 4823A
 jne short loc_4821A	; 4823D
 test dh, 20h	; 4823F

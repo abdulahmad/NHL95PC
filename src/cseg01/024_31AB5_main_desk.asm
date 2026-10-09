@@ -5,7 +5,7 @@ section s_31AB5 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1724, asc_C172C, asc_C1731, asc_C173A, asc_C1743, asc_C174C, asc_C1751
 extern asc_C1756, asc_C175F, asc_C1768, asc_C176D, asc_CDB75, asc_CDB7C, byte_C7218, byte_C8451
 extern byte_CDB77, byte_CDB7E, byte_D2430, byte_DD710, byte_DD750, byte_EA0F4, byte_ED836, byte_ED9A7
-extern byte_ED9AB, dword_C53FB, dword_C53FF, dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413
+extern byte_ED9AB, dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413
 extern dword_C5417, dword_C65C0, dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C7219, dword_C721D
 extern dword_C90C8, dword_C90CA, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, dword_D242C, dword_D2431
 extern dword_D2C6B, dword_DC238, dword_EA0DC, jctime, memcpy_, off_C5439, off_C7282, off_D3078
@@ -223,7 +223,7 @@ je short loc_31DB7	; 31D8E
 mov eax, dword [dword_C721D]	; 31D90
 test eax, eax	; 31D95
 je short loc_31DB7	; 31D97
-test byte [dword_C53FF], 40h	; 31D99
+test byte [gameopts], 40h	; 31D99
 je short loc_31DB7	; 31DA0
 mov edx, dword [dword_D2431]	; 31DA2
 mov ecx, 4Ch	; 31DA8
@@ -537,7 +537,7 @@ cmp byte [byte_D2430], 0	; 321F9
 je short loc_32231	; 32200
 cmp edi, byte 1	; 32202
 jne short loc_32231	; 32205
-test byte [dword_C53FF], 40h	; 32207
+test byte [gameopts], 40h	; 32207
 je short loc_32231	; 3220E
 mov ebx, dword [dword_C721D]	; 32210
 test ebx, ebx	; 32216
@@ -946,7 +946,7 @@ mov dword [byte ebx+051h], eax	; 32758
 mov eax, dword [dword_C90CA]	; 3275B
 sar eax, 10h	; 32760
 mov dword [byte ebx+055h], eax	; 32763
-mov eax, dword [dword_C53FF]	; 32766
+mov eax, dword [gameopts]	; 32766
 mov dword [byte ebx+059h], eax	; 3276B
 mov eax, dword [dword_C5403]	; 3276E
 mov dword [byte ebx+05Dh], eax	; 32773
@@ -989,7 +989,7 @@ mov word [dword_C90CA], dx	; 327E6
 mov dx, word [byte ebx+055h]	; 327ED
 mov word [word_C90CC], dx	; 327F1
 mov edx, dword [byte ebx+059h]	; 327F8
-mov dword [dword_C53FF], edx	; 327FB
+mov dword [gameopts], edx	; 327FB
 mov edx, dword [byte ebx+05Dh]	; 32801
 mov dword [dword_C5403], edx	; 32804
 mov edx, dword [byte ebx+061h]	; 3280A
@@ -1151,14 +1151,14 @@ mov al, dl	; 32A53
 sub eax, byte 2	; 32A55
 mov dword [nosplit ebx*4+dword_C5403], eax	; 32A58
 loc_32A5F:
-test byte [dword_C53FF], 40h	; 32A5F
+test byte [gameopts], 40h	; 32A5F
 je short loc_32A6F	; 32A66
 call sub_8F979	; 32A68
 jmp short loc_32A74	; 32A6D
 loc_32A6F:
 call sub_8F984	; 32A6F
 loc_32A74:
-test byte [dword_C53FF], 80h	; 32A74
+test byte [gameopts], 80h	; 32A74
 je short loc_32A84	; 32A7B
 call sub_8F963	; 32A7D
 jmp short loc_32A89	; 32A82
@@ -1249,7 +1249,7 @@ mov dword [byte ebp+051h], eax	; 32BAD
 mov eax, dword [dword_C90CA]	; 32BB0
 sar eax, 10h	; 32BB5
 mov dword [byte ebp+055h], eax	; 32BB8
-mov eax, dword [dword_C53FF]	; 32BBB
+mov eax, dword [gameopts]	; 32BBB
 mov dword [byte ebp+059h], eax	; 32BC0
 mov eax, dword [dword_C5403]	; 32BC3
 mov dword [byte ebp+05Dh], eax	; 32BC8

@@ -8,16 +8,16 @@ extern asc_C2445, asc_C244A, asc_C2451, asc_C246D, asc_C2473, asc_C247E, asc_C24
 extern asc_C24A8, asc_C24B2, asc_C24B6, asc_C24C8, asc_C24E5, asc_C24FB, asc_C24FF, asc_C2515
 extern asc_C2550, asc_C2584, asc_C25CA, asc_C25F5, asc_C2625, asc_C2652, asc_C2670, asc_C2689
 extern asc_C26CF, asc_C26FA, asc_C272A, asc_C2757, byte_C542F, byte_C5430, byte_C5431, byte_C5432
-extern byte_C90BE, dword_C53FB, dword_C90C0, dword_CC0F8, dword_CC0FC, dword_CC100, dword_CC104, dword_CC108
+extern gmode2, dword_C53FB, dword_C90C0, dword_CC0F8, dword_CC0FC, dword_CC100, dword_CC104, dword_CC108
 extern dword_CC118, dword_CC11C, dword_CC120, dword_CC124, dword_CC128, dword_CC12C, dword_CD504, dword_D41F0
 extern dword_D8C6C, dword_D8C78, dword_DF612, dword_DF614, dword_DF616, dword_DF61C, dword_DF61E, dword_DF620
 extern dword_DF622, dword_DF638, dword_DF63A, dword_DF63C, dword_DF690, dword_DF6FA, dword_DF712, dword_DF714
 extern dword_DF716, dword_DF71C, dword_DF71E, dword_DF720, dword_DF722, dword_DF738, dword_DF73A, dword_DF73C
-extern dword_DF7FA, dword_E9A13, dword_E9A14, fclose_, fopen_, fprintf_, gmode, off_C9094
+extern dword_DF7FA, dword_E9A13, dword_E9A14, fclose_, fopen_, fprintf_, gmode, puckc
 extern off_C9096, off_CD6E4, off_CD8C4, off_CD984, puckvz, sprintf_, sub_4FD47, sub_51440
 extern sub_935E0, sub_93E38, sub_B39ED, sub_B3A18, threat, unk_C234B, unk_C234D, unk_C2478
-extern unk_C247A, unk_C247C, unk_C2485, unk_C24A0, unk_DF81C, word_C9098, word_C90AC, word_C90C2
-extern word_C90C4, word_C90C6, word_C90CC, word_C90D0, word_C90D2, word_C90DA, word_C90DC, word_CBC42
+extern unk_C247A, unk_C247C, unk_C2485, unk_C24A0, SortCords, word_C9098, xc1, word_C90C2
+extern word_C90C4, word_C90C6, word_C90CC, word_C90D0, refsignal, word_C90DA, word_C90DC, word_CBC42
 extern word_CBC44, word_CBC46, word_DF64A, word_DF74A
 global loc_688E0, loc_688E5, loc_68B33, loc_68C39, loc_68C3E, loc_68CC1, loc_68D06, loc_68D21
 global loc_68D3A, loc_68D4D, loc_68D53, loc_68D6C, loc_68D7A, loc_68D98, loc_68DCC, loc_68DEB
@@ -39,7 +39,7 @@ sub esp, 200h	; 688B6
 sub ebp, 27Eh	; 688BC
 cmp word [word_CBC42], byte 0	; 688C2
 je near loc_68DF6	; 688CA
-test byte [byte_C90BE], 80h	; 688D0
+test byte [gmode2], 80h	; 688D0
 je short loc_688E0	; 688D7
 push unk_C234B	; 688D9
 jmp short loc_688E5	; 688DE
@@ -96,7 +96,7 @@ push eax	; 6897C
 push asc_C239E	; 6897D
 call sub_935E0	; 68982
 add esp, byte 8	; 68987
-mov eax, dword [word_C90AC]	; 6898A
+mov eax, dword [xc1]	; 6898A
 sar eax, 10h	; 6898F
 push eax	; 68992
 mov eax, dword [threat]	; 68993
@@ -118,7 +118,7 @@ add esi, eax	; 689C1
 mov eax, dword [word_C90D0]	; 689C3
 sar eax, 10h	; 689C8
 push eax	; 689CB
-mov eax, dword [word_C90D2]	; 689CC
+mov eax, dword [refsignal]	; 689CC
 sar eax, 10h	; 689D1
 push eax	; 689D4
 push asc_C23BB	; 689D5
@@ -220,7 +220,7 @@ test bh, 1	; 68AF8
 setne al	; 68AFB
 and eax, 0FFh	; 68AFE
 push eax	; 68B03
-mov eax, dword [off_C9094]	; 68B04
+mov eax, dword [puckc]	; 68B04
 movsx eax, byte [eax]	; 68B09
 push eax	; 68B0C
 push asc_C2410	; 68B0D
@@ -244,7 +244,7 @@ cmp di, byte 0Fh	; 68B47
 je near loc_68DEB	; 68B4B
 movsx edx, di	; 68B51
 shl edx, 7	; 68B54
-add edx, unk_DF81C	; 68B57
+add edx, SortCords	; 68B57
 xor ch, ch	; 68B5D
 mov byte [byte ebp+07Eh], ch	; 68B5F
 mov eax, dword [byte edx+temp5-2]	; 68B62
@@ -607,7 +607,7 @@ jmp short loc_68F7D	; 68F3E
 loc_68F40:
 movsx ebx, si	; 68F40
 shl ebx, 7	; 68F43
-add ebx, unk_DF81C	; 68F46
+add ebx, SortCords	; 68F46
 xor edx, edx	; 68F4C
 jmp short loc_68F68	; 68F4E
 loc_68F50:
@@ -635,7 +635,7 @@ jmp near loc_6901B	; 68F85
 loc_68F8A:
 movsx eax, si	; 68F8A
 shl eax, 7	; 68F8D
-mov ebx, unk_DF81C	; 68F90
+mov ebx, SortCords	; 68F90
 add ebx, eax	; 68F95
 mov eax, dword [byte ebx+052h]	; 68F97
 sar eax, 10h	; 68F9A

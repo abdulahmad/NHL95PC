@@ -3,22 +3,22 @@ bits 32
 %include "hockey.inc"
 section s_DF7CA nobits alloc noexec write align=1
 global byte_DF7CA, byte_DF7E6, byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_DF817, byte_DF81B, byte_DF861
-global byte_DF87F, byte_DFF3A, byte_DFF61, byte_DFFA6, byte_DFFE0, byte_DFFE2, byte_E003A, byte_E0072
+global byte_DF87F, byte_DFF3A, puckpflags2, byte_DFFA6, byte_DFFE0, byte_DFFE2, byte_E003A, byte_E0072
 global byte_E0073, byte_E0074, byte_E024C, byte_E024D, byte_E024F, byte_E0250, byte_E028C, byte_E02C8
 global byte_E0308, byte_E0344, byte_E0384, byte_E038A, byte_E0393, byte_E0397, byte_E03C1, dword_DF7EA
 global dword_DF7EE, dword_DF7F2, dword_DF7F6, dword_DF7FA, dword_DF7FE, dword_DF802, dword_DF806, dword_DF80A
 global dword_DF812, dword_DF820, dword_DF848, dword_DF860, dword_DFF1C, dword_DFF20, dword_DFF24, dword_DFF2C
 global dword_DFF36, dword_DFF9C, dword_DFFA0, dword_DFFAC, dword_E009C, dword_E00A0, dword_E0220, dword_E0230
-global dword_E0244, dword_E0248, dword_E037E, dword_E038E, dword_E039C, dword_E03A4, dword_E03A8, dword_E03AA
-global dword_E03AE, dword_E03B2, dword_E03B6, dword_E03B9, dword_E03BA, dword_E03BD, dword_E03BE, unk_DF81C
-global unk_DFB1C, unk_DFD9C, unk_DFE1C, unk_DFF5E, unk_E001C, wcradiusy, word_DF80E, word_DF814
+global dword_E0244, dword_E0248, dword_E037E, dword_E038E, dword_E039C, dword_E03A4, dword_E03A8
+global dword_E03AE, dword_E03B6, dword_E03B9, dword_E03BD, SortCords
+global unk_DFB1C, unk_DFD9C, unk_DFE1C, unk_DFF5E, unk_E001C, regd4, word_DF80E, word_DF814
 global word_DF816, word_DF81A, word_DF81E, word_DF822, word_DF836, word_DF84A, word_DF85A, word_DFE1E
 global word_DFE22, word_DFE28, word_DFE2A, word_DFF1E, word_DFF22, word_DFF26, word_DFF28, word_DFF2A
 global word_DFF2E, word_DFF42, word_DFF44, word_DFF5A, word_DFF70, word_DFF9E, word_DFFA2, word_DFFAE
 global word_DFFC2, word_DFFD4, word_DFFF0, word_E001E, word_E0022, word_E0028, word_E002A, word_E002E
 global word_E0036, word_E0042, word_E0046, word_E0048, word_E004A, word_E0052, word_E024E, word_E0304
 global word_E0306, word_E0380, word_E0382, word_E0390, word_E0392, word_E0394, word_E0396, word_E0398
-global word_E039A, word_E03A0, word_E03AC, word_E03B0, word_E03B8, word_E03BC, word_E03C0
+global word_E039A, word_E03A0, regd2, regd3, word_E03B8, regd0, regd1
 byte_DF7CA:
 resb 28
 byte_DF7E6:
@@ -61,7 +61,7 @@ word_DF81A:
 resb 1
 byte_DF81B:
 resb 1
-unk_DF81C:
+SortCords:
 resb 2
 word_DF81E:
 resb 2
@@ -129,7 +129,7 @@ word_DFF5A:
 resb 4
 unk_DFF5E:
 resb 3
-byte_DFF61:
+puckpflags2:
 resb 15
 word_DFF70:
 resb 44
@@ -259,17 +259,15 @@ dword_E03A4:
 resb 4
 dword_E03A8:
 resb 2
-dword_E03AA:
 resb 2
-word_E03AC:
+regd2:
 resb 2
 dword_E03AE:
 resb 2
-word_E03B0:
+regd3:
 resb 2
-dword_E03B2:
 resb 2
-wcradiusy:
+regd4:
 resb 2
 dword_E03B6:
 resb 2
@@ -277,15 +275,13 @@ word_E03B8:
 resb 1
 dword_E03B9:
 resb 1
-dword_E03BA:
 resb 2
-word_E03BC:
+regd0:
 resb 1
 dword_E03BD:
 resb 1
-dword_E03BE:
 resb 2
-word_E03C0:
+regd1:
 resb 1
 byte_E03C1:
 resb 3

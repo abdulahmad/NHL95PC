@@ -4,7 +4,7 @@ bits 32
 section s_33FFD progbits alloc exec nowrite align=1
 extern __CHK, asc_C17F4, asc_C17F9, asc_C17FE, asc_C1803, asc_C180B, asc_C1810, asc_C181A
 extern asc_C1827, asc_C182C, asc_C1835, asc_C183D, asc_C1842, asc_C184A, byte_C8445, byte_C845D
-extern byte_C845E, byte_D2430, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, dword_C53FF, dword_C65C0
+extern byte_C845E, byte_D2430, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, dword_C65C0
 extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C721D, dword_C895E, dword_C8976, dword_C897A
 extern dword_C898E, dword_C8992, dword_D242C, dword_D2431, dword_D2C6B, dword_D42A8, dword_D8B74, dword_DC238
 extern dword_DD780, dword_DD794, dword_DD7A0, dword_DDD28, dword_DDD2C, dword_DDD30, dword_EA0DC, fputchar
@@ -1078,7 +1078,7 @@ call sub_8F98F	; 34E9F
 mov dword [dword_C721D], eax	; 34EA4
 test eax, eax	; 34EA9
 je short loc_34ECB	; 34EAB
-test byte [dword_C53FF], 40h	; 34EAD
+test byte [gameopts], 40h	; 34EAD
 je short loc_34ECB	; 34EB4
 mov edx, dword [dword_D2431]	; 34EB6
 mov ecx, 4Ch	; 34EBC

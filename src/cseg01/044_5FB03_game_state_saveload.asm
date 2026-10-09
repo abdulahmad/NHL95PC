@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_5FB03 progbits alloc exec nowrite align=1
 extern PBnum, StanleyCupTimer, __CHK, __STOSB, __STOSD, asc_CCDD8, asc_CCDEC, byte_C4D1C
-extern byte_C4D1D, byte_C90BC, byte_C90BE, byte_CCE00, byte_DB3A8, byte_DB7EC, byte_DC264, byte_DC265
+extern byte_C4D1D, byte_C90BC, gmode2, byte_CCE00, byte_DB3A8, byte_DB7EC, byte_DC264, byte_DC265
 extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, byte_E0384, byte_E9A16, byte_E9AC0, byte_E9AC8
 extern byte_E9AD3, byte_E9ADE, collflag, dword_C530D, dword_C5382, dword_C53FB, dword_C5403, dword_C5407
 extern dword_C540B, dword_C540F, dword_C5413, dword_C5704, dword_C5708, dword_C570C, dword_C5840, dword_C66D0
@@ -19,10 +19,10 @@ extern ltx, off_C9078, off_CC01D, passspeed, sub_13A91, sub_145A2, sub_145F9, su
 extern sub_3271B, sub_327A1, sub_5B9D1, sub_5DD7C, sub_61E99, sub_673C5, sub_67564, sub_7DC8B
 extern sub_B2CD8, sub_B2DB4, threat, unk_C5298, unk_C5423, unk_C542E, unk_DABF0, unk_DAC40
 extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DBC30, unk_DBF18, unk_DC200, unk_DC240
-extern unk_DC252, unk_DF314, unk_DF81C, unk_DFB1C, word_C571C, word_C575C, word_C9098, word_C909A
-extern word_C90A0, word_C90A4, word_C90A6, word_C90A8, word_C90AC, word_C90AE, word_C90B2, word_C90B4
+extern unk_DC252, unk_DF314, SortCords, unk_DFB1C, word_C571C, word_C575C, word_C9098, word_C909A
+extern word_C90A0, word_C90A4, word_C90A6, word_C90A8, xc1, yc1, word_C90B2, word_C90B4
 extern word_C90B6, word_C90B8, word_C90C2, word_C90C4, word_C90C6, word_C90CC, word_C90CE, word_C90D0
-extern word_C90D2, word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_C90DC, word_C90DE, word_CBC44
+extern refsignal, word_C90D4, word_C90D6, word_C90D8, word_C90DA, word_C90DC, word_C90DE, word_CBC44
 extern word_CBC46, word_CBC48, word_CBC52, word_CBC54, word_CBC56, word_CBC58, word_CBC5A, word_CBC5C
 extern word_CBC5E, word_CBC60, word_CBC62, word_CBC64, word_CBC66, word_CBC68, word_CBC6A, word_CBC6C
 extern word_CBD64, word_CBD66, word_CBEC0, word_CBEC2, word_CBEC4, word_CBEC6, word_CBEC8, word_CBECC
@@ -65,7 +65,7 @@ xor ebp, ebp	; 5FB3F
 loc_5FB41:
 mov edx, ebp	; 5FB41
 shl edx, 7	; 5FB43
-add edx, unk_DF81C	; 5FB46
+add edx, SortCords	; 5FB46
 mov ecx, 66h	; 5FB4C
 mov ebx, 0FFFFFFFFh	; 5FB51
 mov eax, dword [esp]	; 5FB56
@@ -181,10 +181,10 @@ add eax, byte 2	; 5FCDF
 mov dx, word [word_E9AC4]	; 5FCE2
 mov word [eax], dx	; 5FCE9
 add eax, byte 2	; 5FCEC
-mov dx, word [word_C90AC]	; 5FCEF
+mov dx, word [xc1]	; 5FCEF
 mov word [eax], dx	; 5FCF6
 add eax, byte 2	; 5FCF9
-mov dx, word [word_C90AE]	; 5FCFC
+mov dx, word [yc1]	; 5FCFC
 mov word [eax], dx	; 5FD03
 add eax, byte 2	; 5FD06
 mov dx, word [dword_C90B0]	; 5FD09
@@ -205,7 +205,7 @@ add eax, byte 2	; 5FD47
 mov dx, word [byte_C90BC]	; 5FD4A
 mov word [eax], dx	; 5FD51
 add eax, byte 2	; 5FD54
-mov dx, word [byte_C90BE]	; 5FD57
+mov dx, word [gmode2]	; 5FD57
 mov word [eax], dx	; 5FD5E
 add eax, byte 2	; 5FD61
 mov dx, word [dword_C90C0]	; 5FD64
@@ -229,7 +229,7 @@ add eax, byte 2	; 5FDAF
 mov dx, word [word_C90D0]	; 5FDB2
 mov word [eax], dx	; 5FDB9
 add eax, byte 2	; 5FDBC
-mov dx, word [word_C90D2]	; 5FDBF
+mov dx, word [refsignal]	; 5FDBF
 mov word [eax], dx	; 5FDC6
 add eax, byte 2	; 5FDC9
 mov dx, word [word_C90D4]	; 5FDCC
@@ -820,7 +820,7 @@ mov dword [dword esp+010Ch], edx	; 60651
 loc_60658:
 mov edx, dword [dword esp+010Ch]	; 60658
 shl edx, 7	; 6065F
-add edx, unk_DF81C	; 60662
+add edx, SortCords	; 60662
 mov ecx, 66h	; 60668
 mov ebx, 0FFFFFFFFh	; 6066D
 mov eax, ebp	; 60672
@@ -959,10 +959,10 @@ mov ax, word [ebx]	; 60861
 mov word [word_E9AC4], ax	; 60864
 add ebx, byte 2	; 6086A
 mov ax, word [ebx]	; 6086D
-mov word [word_C90AC], ax	; 60870
+mov word [xc1], ax	; 60870
 add ebx, byte 2	; 60876
 mov ax, word [ebx]	; 60879
-mov word [word_C90AE], ax	; 6087C
+mov word [yc1], ax	; 6087C
 add ebx, byte 2	; 60882
 mov ax, word [ebx]	; 60885
 mov word [dword_C90B0], ax	; 60888
@@ -983,7 +983,7 @@ mov ax, word [ebx]	; 608C1
 mov word [byte_C90BC], ax	; 608C4
 add ebx, byte 2	; 608CA
 mov ax, word [ebx]	; 608CD
-mov word [byte_C90BE], ax	; 608D0
+mov word [gmode2], ax	; 608D0
 add ebx, byte 2	; 608D6
 mov ax, word [ebx]	; 608D9
 mov word [dword_C90C0], ax	; 608DC
@@ -1007,7 +1007,7 @@ mov ax, word [ebx]	; 60921
 mov word [word_C90D0], ax	; 60924
 add ebx, byte 2	; 6092A
 mov ax, word [ebx]	; 6092D
-mov word [word_C90D2], ax	; 60930
+mov word [refsignal], ax	; 60930
 add ebx, byte 2	; 60936
 mov ax, word [ebx]	; 60939
 mov word [word_C90D4], ax	; 6093C
@@ -1678,7 +1678,7 @@ mov dword [dword_E039C], eax	; 61303
 call sub_67564	; 61308
 and byte [byte_C90BC], 0EFh	; 6130D
 mov word [word_CBEC4], 1	; 61314
-mov dword [dword_DF70A], unk_DF81C	; 6131D
+mov dword [dword_DF70A], SortCords	; 6131D
 mov dword [dword_DF6F2], unk_DACA0	; 61327
 mov dword [dword_DF6F6], unk_DAC40	; 61331
 mov dword [dword_DF6EE], unk_DC200	; 6133B
@@ -1694,7 +1694,7 @@ mov dword [dword_DF7FA], unk_DB218	; 61395
 mov dword [dword_DF7FE], unk_DC252	; 6139F
 mov dword [dword_DF802], byte_DB7EC	; 613A9
 mov dword [dword_DF806], unk_DBF18	; 613B3
-mov ebx, unk_DF81C	; 613BD
+mov ebx, SortCords	; 613BD
 xor ebp, ebp	; 613C2
 mov dword [dword esp+010Ch], ebp	; 613C4
 loc_613CB:

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_45282 progbits alloc exec nowrite align=1
 extern __CHK, asc_C1AAF, asc_C1AB4, asc_C1AB8, asc_C1AC4, asc_C1AC9, asc_C1ACD, asc_C1AD4
-extern asc_C1AD9, byte_DE26C, byte_DEB70, byte_DEB71, byte_ED9EE, dword_C53FF, dword_C900C, dword_C905C
+extern asc_C1AD9, byte_DE26C, byte_DEB70, byte_DEB71, byte_ED9EE, gameopts, dword_C900C, dword_C905C
 extern dword_C9074, dword_D07BB, dword_D2C6B, dword_DEB6C, jctime, memcpy_, memset_, rand_
 extern sub_1431E, sub_147C9, sub_3A2B8, sub_3A2EE, sub_6CBB7, sub_6CBCC, sub_6CBE1, sub_6CBE8
 extern sub_6CBFD, sub_76429, sub_8CCA8, sub_8DAB8, sub_8E4C0, sub_8E83C, sub_8FFB0, sub_910E0
@@ -800,7 +800,7 @@ jge short loc_45E00	; 45DF0
 cmp dword [dword esp+01A4h], byte 0	; 45DF2
 je near loc_45A91	; 45DFA
 loc_45E00:
-mov eax, dword [dword_C53FF]	; 45E00
+mov eax, dword [gameopts]	; 45E00
 and eax, 0C00h	; 45E05
 cmp eax, 800h	; 45E0A
 jne short loc_45E1E	; 45E0F

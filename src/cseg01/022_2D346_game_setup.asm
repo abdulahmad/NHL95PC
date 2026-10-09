@@ -13,7 +13,7 @@ extern asc_C16E0, asc_C16E8, asc_C16F5, asc_C16FA, asc_C1703, asc_C1709, asc_C70
 extern asc_C811A, asc_C814A, byte_C5400, byte_C8451, byte_C8922, byte_D2430, byte_D42C3, byte_DB3A8
 extern byte_DD710, byte_DD750, byte_DD774, byte_DD775, byte_DD788, byte_DD789, byte_ED7ED, byte_ED824
 extern byte_ED825, byte_ED826, byte_ED827, byte_ED828, byte_ED8CE, byte_ED9AC, byte_ED9B0, byte_ED9E6
-extern dword_C53F7, dword_C53FF, dword_C541F, dword_C721D, dword_C90C8, dword_C90CA, dword_CCC94, dword_D242C
+extern dword_C53F7, gameopts, dword_C541F, dword_C721D, dword_C90C8, dword_C90CA, dword_CCC94, dword_D242C
 extern dword_D2431, dword_D2C6B, dword_D8B68, dword_DBC7C, dword_DC234, dword_DD66C, dword_DD670, dword_DD730
 extern dword_DF612, dword_DF614, dword_DF616, dword_DF61A, dword_DF61C, dword_DF61E, dword_DF620, dword_DF622
 extern dword_DF626, dword_DF62A, dword_DF636, dword_DF638, dword_DF63A, fputchar, jctime, memcpy_
@@ -555,7 +555,7 @@ call sub_8F98F	; 2DB32
 mov dword [dword_C721D], eax	; 2DB37
 test eax, eax	; 2DB3C
 je near loc_2DBE0	; 2DB3E
-test byte [dword_C53FF], 40h	; 2DB44
+test byte [gameopts], 40h	; 2DB44
 je near loc_2DBE0	; 2DB4B
 mov edx, dword [dword_D2431]	; 2DB51
 mov ecx, 4Ch	; 2DB57
@@ -2906,7 +2906,7 @@ call sub_8F98F	; 2FC6B
 mov dword [dword_C721D], eax	; 2FC70
 test eax, eax	; 2FC75
 je near loc_2FD0D	; 2FC77
-test byte [dword_C53FF], 40h	; 2FC7D
+test byte [gameopts], 40h	; 2FC7D
 je near loc_2FD0D	; 2FC84
 mov edx, dword [dword_D2431]	; 2FC8A
 mov ecx, 7Fh	; 2FC90

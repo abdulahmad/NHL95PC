@@ -8,7 +8,7 @@ extern asc_C3339, asc_C3344, asc_C3349, asc_C335A, asc_C3360, asc_C3366, asc_C33
 extern asc_C337C, asc_C3381, asc_C3388, asc_C338D, asc_C3393, asc_C3399, asc_C33A3, asc_C33B0
 extern asc_C33BD, asc_C33CA, byte_C4D1C, byte_C5400, byte_D2430, byte_DF658, byte_DF758, byte_DF861
 extern byte_DFF3A, byte_EA0F4, byte_ED361, byte_ED904, byte_ED93F, byte_ED940, byte_ED941, byte_ED942
-extern byte_ED943, dword_C4E0C, dword_C530D, dword_C53FB, dword_C53FF, dword_C5403, dword_C5407, dword_C540B
+extern byte_ED943, dword_C4E0C, dword_C530D, dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C540B
 extern dword_C540F, dword_C5413, dword_C5417, dword_C541F, dword_C721D, dword_C90C0, dword_C90C8, dword_C90CA
 extern dword_D14F0, dword_D14F4, dword_D14F8, dword_D14FC, dword_D16AC, dword_D16B0, dword_D16B4, dword_D16B8
 extern dword_D17EC, dword_D17F0, dword_D17F4, dword_D17F8, dword_D195C, dword_D1960, dword_D1964, dword_D1968
@@ -17,13 +17,13 @@ extern dword_D199C, dword_D19A0, dword_D19AC, dword_D19B0, dword_D19EC, dword_D2
 extern dword_D29FB, dword_D2C6B, dword_DC238, dword_DD64C, dword_DF614, dword_DF622, dword_DF63C, dword_DF648
 extern dword_DFF36, dword_EA0DC, dword_ED35C, dword_ED360, dword_ED364, dword_ED75C, dword_ED760, dword_ED764
 extern dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C, dword_ED780, dword_ED784
-extern dword_ED788, dword_ED78C, gameclock, gmode, jctime, off_C54A9, off_C907C, off_C9084
-extern off_C9088, off_C9094, off_CD498, off_CD4A0, setpersonel, sub_1431E, sub_3271B, sub_327A1
+extern dword_ED788, dword_ED78C, puckvx, gmode, jctime, off_C54A9, puckx, pucky
+extern puckvy, puckc, off_CD498, off_CD4A0, setpersonel, sub_1431E, sub_3271B, sub_327A1
 extern sub_32B1D, sub_59748, sub_59863, sub_59FE1, sub_6B391, sub_6B3D7, sub_8034B, sub_8050F
 extern sub_8B85B, sub_8B92F, sub_8CCA8, sub_8E83C, sub_8E9C0, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_90D20, sub_91284, sub_91370
 extern sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_96440, sub_B2DCA, sub_B30B4, sub_B4B88
-extern sub_B4BA8, sub_B4DD4, sub_B4FAC, unk_C5298, unk_D16A0, unk_D19CC, unk_D19DC, unk_DF81C
+extern sub_B4BA8, sub_B4DD4, sub_B4FAC, unk_C5298, unk_D16A0, unk_D19CC, unk_D19DC, SortCords
 extern unk_DFB1C, word_C90C2, word_C90C4, word_C90C6, word_C90CC, word_C90DA, word_C90DC, word_CBC56
 extern word_CBC58, word_CBC6A, word_CBC6C, word_DF63E, word_DF65A, word_DF75A, word_DFF42
 global jpt_7A872, loc_7A1F2, loc_7A1F5, loc_7A1F6, loc_7A263, loc_7A439, loc_7A43B, loc_7A500
@@ -684,29 +684,29 @@ sub_7A88E:
 push dword 8	; 7A88E
 call __CHK	; 7A893
 push edx	; 7A898
-mov edx, dword [dword_C53FF]	; 7A899
+mov edx, dword [gameopts]	; 7A899
 shl edx, 1Eh	; 7A89F
 shr edx, 1Fh	; 7A8A2
 add edx, edx	; 7A8A5
-mov eax, dword [dword_C53FF]	; 7A8A7
+mov eax, dword [gameopts]	; 7A8A7
 and eax, byte 1	; 7A8AC
 or edx, eax	; 7A8AF
-mov eax, dword [dword_C53FF]	; 7A8B1
+mov eax, dword [gameopts]	; 7A8B1
 shl eax, 1Dh	; 7A8B6
 shr eax, 1Fh	; 7A8B9
 shl eax, 2	; 7A8BC
 or edx, eax	; 7A8BF
-mov eax, dword [dword_C53FF]	; 7A8C1
+mov eax, dword [gameopts]	; 7A8C1
 shl eax, 1Ch	; 7A8C6
 shr eax, 1Fh	; 7A8C9
 shl eax, 3	; 7A8CC
 or edx, eax	; 7A8CF
-mov eax, dword [dword_C53FF]	; 7A8D1
+mov eax, dword [gameopts]	; 7A8D1
 shl eax, 1Bh	; 7A8D6
 shr eax, 1Fh	; 7A8D9
 shl eax, 4	; 7A8DC
 or edx, eax	; 7A8DF
-mov eax, dword [dword_C53FF]	; 7A8E1
+mov eax, dword [gameopts]	; 7A8E1
 shl eax, 1Ah	; 7A8E6
 shr eax, 1Fh	; 7A8E9
 shl eax, 5	; 7A8EC
@@ -716,7 +716,7 @@ je short loc_7A8FE	; 7A8F8
 xor eax, eax	; 7A8FA
 jmp short loc_7A90C	; 7A8FC
 loc_7A8FE:
-mov eax, dword [dword_C53FF]	; 7A8FE
+mov eax, dword [gameopts]	; 7A8FE
 shl eax, 19h	; 7A903
 shr eax, 1Fh	; 7A906
 shl eax, 6	; 7A909
@@ -727,7 +727,7 @@ je short loc_7A91B	; 7A915
 xor eax, eax	; 7A917
 jmp short loc_7A929	; 7A919
 loc_7A91B:
-mov eax, dword [dword_C53FF]	; 7A91B
+mov eax, dword [gameopts]	; 7A91B
 shl eax, 18h	; 7A920
 shr eax, 1Fh	; 7A923
 shl eax, 7	; 7A926
@@ -735,7 +735,7 @@ loc_7A929:
 or edx, eax	; 7A929
 test byte [dword_C541F], 22h	; 7A92B
 je short loc_7A944	; 7A932
-mov eax, dword [dword_C53FF]	; 7A934
+mov eax, dword [gameopts]	; 7A934
 shl eax, 17h	; 7A939
 shr eax, 1Fh	; 7A93C
 shl eax, 8	; 7A93F
@@ -745,7 +745,7 @@ xor eax, eax	; 7A944
 loc_7A946:
 or edx, eax	; 7A946
 mov dword [dword_ED360], edx	; 7A948
-mov eax, dword [dword_C53FF]	; 7A94E
+mov eax, dword [gameopts]	; 7A94E
 shl eax, 14h	; 7A953
 shr eax, 1Eh	; 7A956
 cmp eax, byte 1	; 7A959
@@ -767,7 +767,7 @@ jmp short loc_7A986	; 7A97D
 loc_7A97F:
 or byte [byte_ED361], 8	; 7A97F
 loc_7A986:
-mov eax, dword [dword_C53FF]	; 7A986
+mov eax, dword [gameopts]	; 7A986
 shl eax, 11h	; 7A98B
 shr eax, 1Dh	; 7A98E
 dec eax	; 7A991
@@ -1201,7 +1201,7 @@ mov eax, dword [byte esp+014h]	; 7AE15
 mov dword [byte esp+0Ch], eax	; 7AE19
 mov eax, dword [byte esp+010h]	; 7AE1D
 mov dword [byte esp+08h], eax	; 7AE21
-mov eax, dword [dword_C53FF]	; 7AE25
+mov eax, dword [gameopts]	; 7AE25
 shl eax, 19h	; 7AE2A
 shr eax, 1Fh	; 7AE2D
 mov dword [byte esp+018h], eax	; 7AE30
@@ -1395,55 +1395,55 @@ mov bl, byte [dword_ED360]	; 7B070
 test bl, 1	; 7B076
 setne al	; 7B079
 and eax, byte 1	; 7B07C
-and byte [dword_C53FF], 0FEh	; 7B07F
-or dword [dword_C53FF], eax	; 7B086
+and byte [gameopts], 0FEh	; 7B07F
+or dword [gameopts], eax	; 7B086
 mov cl, bl	; 7B08C
 test bl, 2	; 7B08E
 setne al	; 7B091
 and eax, byte 1	; 7B094
-and byte [dword_C53FF], 0FDh	; 7B097
+and byte [gameopts], 0FDh	; 7B097
 add eax, eax	; 7B09E
-or dword [dword_C53FF], eax	; 7B0A0
+or dword [gameopts], eax	; 7B0A0
 test cl, 4	; 7B0A6
 setne al	; 7B0A9
 and eax, byte 1	; 7B0AC
-and byte [dword_C53FF], 0FBh	; 7B0AF
+and byte [gameopts], 0FBh	; 7B0AF
 shl eax, 2	; 7B0B6
-or dword [dword_C53FF], eax	; 7B0B9
+or dword [gameopts], eax	; 7B0B9
 mov dh, byte [dword_ED360]	; 7B0BF
 test dh, 8	; 7B0C5
 setne al	; 7B0C8
 and eax, byte 1	; 7B0CB
-and byte [dword_C53FF], 0F7h	; 7B0CE
+and byte [gameopts], 0F7h	; 7B0CE
 shl eax, 3	; 7B0D5
-or dword [dword_C53FF], eax	; 7B0D8
+or dword [gameopts], eax	; 7B0D8
 test dh, 10h	; 7B0DE
 setne al	; 7B0E1
 and eax, byte 1	; 7B0E4
-and byte [dword_C53FF], 0EFh	; 7B0E7
+and byte [gameopts], 0EFh	; 7B0E7
 shl eax, 4	; 7B0EE
-or dword [dword_C53FF], eax	; 7B0F1
+or dword [gameopts], eax	; 7B0F1
 test dh, 20h	; 7B0F7
 setne al	; 7B0FA
 and eax, byte 1	; 7B0FD
-and byte [dword_C53FF], 0DFh	; 7B100
+and byte [gameopts], 0DFh	; 7B100
 shl eax, 5	; 7B107
-or dword [dword_C53FF], eax	; 7B10A
+or dword [gameopts], eax	; 7B10A
 cmp dword [dword_C541F], byte 10h	; 7B110
 je short loc_7B151	; 7B117
 mov dh, byte [dword_ED360]	; 7B119
 test dh, 40h	; 7B11F
 setne al	; 7B122
 and eax, byte 1	; 7B125
-and byte [dword_C53FF], 0BFh	; 7B128
+and byte [gameopts], 0BFh	; 7B128
 shl eax, 6	; 7B12F
-or dword [dword_C53FF], eax	; 7B132
+or dword [gameopts], eax	; 7B132
 test dh, 80h	; 7B138
 setne al	; 7B13B
 and eax, byte 1	; 7B13E
-and byte [dword_C53FF], 7Fh	; 7B141
+and byte [gameopts], 7Fh	; 7B141
 shl eax, 7	; 7B148
-or dword [dword_C53FF], eax	; 7B14B
+or dword [gameopts], eax	; 7B14B
 loc_7B151:
 test byte [dword_C541F], 22h	; 7B151
 je short loc_7B177	; 7B158
@@ -1452,11 +1452,11 @@ setne al	; 7B161
 and eax, byte 1	; 7B164
 and byte [byte_C5400], 0FEh	; 7B167
 shl eax, 8	; 7B16E
-or dword [dword_C53FF], eax	; 7B171
+or dword [gameopts], eax	; 7B171
 loc_7B177:
 mov edx, dword [dword_ED360]	; 7B177
 and edx, 0E00h	; 7B17D
-mov eax, dword [dword_C53FF]	; 7B183
+mov eax, dword [gameopts]	; 7B183
 and ah, 0F3h	; 7B188
 cmp edx, 400h	; 7B18B
 jb short loc_7B19F	; 7B191
@@ -1467,18 +1467,18 @@ jmp short loc_7B1BE	; 7B19D
 loc_7B19F:
 cmp edx, 200h	; 7B19F
 jne short loc_7B1BE	; 7B1A5
-mov dword [dword_C53FF], eax	; 7B1A7
+mov dword [gameopts], eax	; 7B1A7
 or ah, 8	; 7B1AC
 jmp short loc_7B1B9	; 7B1AF
 loc_7B1B1:
-mov dword [dword_C53FF], eax	; 7B1B1
+mov dword [gameopts], eax	; 7B1B1
 or ah, 4	; 7B1B6
 loc_7B1B9:
-mov dword [dword_C53FF], eax	; 7B1B9
+mov dword [gameopts], eax	; 7B1B9
 loc_7B1BE:
 mov eax, dword [dword_ED360]	; 7B1BE
 and eax, 0F000h	; 7B1C3
-mov edx, dword [dword_C53FF]	; 7B1C8
+mov edx, dword [gameopts]	; 7B1C8
 and dh, 8Fh	; 7B1CE
 cmp eax, 2000h	; 7B1D1
 jb short loc_7B1EC	; 7B1D6
@@ -1492,23 +1492,23 @@ jmp short loc_7B221	; 7B1EA
 loc_7B1EC:
 cmp eax, 1000h	; 7B1EC
 jne short loc_7B221	; 7B1F1
-mov dword [dword_C53FF], edx	; 7B1F3
+mov dword [gameopts], edx	; 7B1F3
 or dh, 10h	; 7B1F9
 loc_7B1FC:
-mov dword [dword_C53FF], edx	; 7B1FC
+mov dword [gameopts], edx	; 7B1FC
 jmp short loc_7B221	; 7B202
 loc_7B204:
-mov dword [dword_C53FF], edx	; 7B204
+mov dword [gameopts], edx	; 7B204
 or dh, 30h	; 7B20A
 jmp short loc_7B1FC	; 7B20D
 loc_7B20F:
-mov dword [dword_C53FF], edx	; 7B20F
+mov dword [gameopts], edx	; 7B20F
 or dh, 50h	; 7B215
 jmp short loc_7B1FC	; 7B218
 loc_7B21A:
 or byte [byte_C5400], 70h	; 7B21A
 loc_7B221:
-test byte [dword_C53FF], 40h	; 7B221
+test byte [gameopts], 40h	; 7B221
 je short loc_7B27A	; 7B228
 cmp byte [byte_D2430], 0	; 7B22A
 je short loc_7B273	; 7B231
@@ -1548,7 +1548,7 @@ call sub_8FCDF	; 7B2B1
 loc_7B2B6:
 call sub_8F984	; 7B2B6
 loc_7B2BB:
-test byte [dword_C53FF], 80h	; 7B2BB
+test byte [gameopts], 80h	; 7B2BB
 je short loc_7B2CB	; 7B2C2
 call sub_8F963	; 7B2C4
 jmp short loc_7B2D0	; 7B2C9
@@ -1679,7 +1679,7 @@ push byte 0Ah	; 7B41E
 push ebp	; 7B420
 call sub_903F0	; 7B421
 add esp, byte 0Ch	; 7B426
-test byte [dword_C53FF], 4	; 7B429
+test byte [gameopts], 4	; 7B429
 jne short loc_7B499	; 7B430
 xor edx, edx	; 7B432
 mov word [word_CBC58], dx	; 7B434
@@ -1710,14 +1710,14 @@ loc_7B493:
 cmp ax, 1Ch	; 7B493
 jl short loc_7B47F	; 7B497
 loc_7B499:
-test byte [dword_C53FF], 40h	; 7B499
+test byte [gameopts], 40h	; 7B499
 je short loc_7B4A9	; 7B4A0
 call sub_8F979	; 7B4A2
 jmp short loc_7B4AE	; 7B4A7
 loc_7B4A9:
 call sub_8F984	; 7B4A9
 loc_7B4AE:
-test byte [dword_C53FF], 80h	; 7B4AE
+test byte [gameopts], 80h	; 7B4AE
 je short loc_7B4BE	; 7B4B5
 call sub_8F963	; 7B4B7
 jmp short loc_7B4C3	; 7B4BC
@@ -1835,29 +1835,29 @@ call __CHK	; 7B609
 push ebx	; 7B60E
 push ecx	; 7B60F
 push edx	; 7B610
-mov eax, dword [dword_C53FF]	; 7B611
+mov eax, dword [gameopts]	; 7B611
 shl eax, 1Eh	; 7B616
 shr eax, 1Fh	; 7B619
 add eax, eax	; 7B61C
-mov edx, dword [dword_C53FF]	; 7B61E
+mov edx, dword [gameopts]	; 7B61E
 and edx, byte 1	; 7B624
 or edx, eax	; 7B627
-mov eax, dword [dword_C53FF]	; 7B629
+mov eax, dword [gameopts]	; 7B629
 shl eax, 1Dh	; 7B62E
 shr eax, 1Fh	; 7B631
 shl eax, 2	; 7B634
 or edx, eax	; 7B637
-mov eax, dword [dword_C53FF]	; 7B639
+mov eax, dword [gameopts]	; 7B639
 shl eax, 1Ch	; 7B63E
 shr eax, 1Fh	; 7B641
 shl eax, 3	; 7B644
 or edx, eax	; 7B647
-mov eax, dword [dword_C53FF]	; 7B649
+mov eax, dword [gameopts]	; 7B649
 shl eax, 1Bh	; 7B64E
 shr eax, 1Fh	; 7B651
 shl eax, 4	; 7B654
 or edx, eax	; 7B657
-mov eax, dword [dword_C53FF]	; 7B659
+mov eax, dword [gameopts]	; 7B659
 shl eax, 1Ah	; 7B65E
 shr eax, 1Fh	; 7B661
 shl eax, 5	; 7B664
@@ -1867,7 +1867,7 @@ je short loc_7B676	; 7B670
 xor eax, eax	; 7B672
 jmp short loc_7B684	; 7B674
 loc_7B676:
-mov eax, dword [dword_C53FF]	; 7B676
+mov eax, dword [gameopts]	; 7B676
 shl eax, 19h	; 7B67B
 shr eax, 1Fh	; 7B67E
 shl eax, 6	; 7B681
@@ -1878,7 +1878,7 @@ je short loc_7B693	; 7B68D
 xor eax, eax	; 7B68F
 jmp short loc_7B6A1	; 7B691
 loc_7B693:
-mov eax, dword [dword_C53FF]	; 7B693
+mov eax, dword [gameopts]	; 7B693
 shl eax, 18h	; 7B698
 shr eax, 1Fh	; 7B69B
 shl eax, 7	; 7B69E
@@ -1886,7 +1886,7 @@ loc_7B6A1:
 or edx, eax	; 7B6A1
 test byte [dword_C541F], 22h	; 7B6A3
 je short loc_7B6BC	; 7B6AA
-mov eax, dword [dword_C53FF]	; 7B6AC
+mov eax, dword [gameopts]	; 7B6AC
 shl eax, 17h	; 7B6B1
 shr eax, 1Fh	; 7B6B4
 shl eax, 8	; 7B6B7
@@ -2214,7 +2214,7 @@ mov dword [byte esp+0Ch], eax	; 7BA2A
 mov eax, dword [byte esp+010h]	; 7BA2E
 mov dword [byte esp+08h], eax	; 7BA32
 call sub_B4BA8	; 7BA36
-mov eax, dword [dword_C53FF]	; 7BA3B
+mov eax, dword [gameopts]	; 7BA3B
 shl eax, 19h	; 7BA40
 shr eax, 1Fh	; 7BA43
 mov dword [byte esp+018h], eax	; 7BA46
@@ -2397,66 +2397,66 @@ mov bl, byte [dword_ED360]	; 7BC57
 test bl, 1	; 7BC5D
 setne al	; 7BC60
 and eax, byte 1	; 7BC63
-and byte [dword_C53FF], 0FEh	; 7BC66
-or dword [dword_C53FF], eax	; 7BC6D
+and byte [gameopts], 0FEh	; 7BC66
+or dword [gameopts], eax	; 7BC6D
 mov bh, bl	; 7BC73
 test bl, 2	; 7BC75
 setne al	; 7BC78
 and eax, byte 1	; 7BC7B
-and byte [dword_C53FF], 0FDh	; 7BC7E
+and byte [gameopts], 0FDh	; 7BC7E
 add eax, eax	; 7BC85
-or dword [dword_C53FF], eax	; 7BC87
+or dword [gameopts], eax	; 7BC87
 test bl, 4	; 7BC8D
 setne al	; 7BC90
 and eax, byte 1	; 7BC93
-and byte [dword_C53FF], 0FBh	; 7BC96
+and byte [gameopts], 0FBh	; 7BC96
 shl eax, 2	; 7BC9D
-or dword [dword_C53FF], eax	; 7BCA0
+or dword [gameopts], eax	; 7BCA0
 test bl, 8	; 7BCA6
 setne al	; 7BCA9
 and eax, byte 1	; 7BCAC
-and byte [dword_C53FF], 0F7h	; 7BCAF
+and byte [gameopts], 0F7h	; 7BCAF
 shl eax, 3	; 7BCB6
-or dword [dword_C53FF], eax	; 7BCB9
+or dword [gameopts], eax	; 7BCB9
 test bh, 10h	; 7BCBF
 setne al	; 7BCC2
 and eax, byte 1	; 7BCC5
-and byte [dword_C53FF], 0EFh	; 7BCC8
+and byte [gameopts], 0EFh	; 7BCC8
 shl eax, 4	; 7BCCF
-or dword [dword_C53FF], eax	; 7BCD2
+or dword [gameopts], eax	; 7BCD2
 test byte [dword_ED360], 20h	; 7BCD8
 setne al	; 7BCDF
 and eax, byte 1	; 7BCE2
-and byte [dword_C53FF], 0DFh	; 7BCE5
+and byte [gameopts], 0DFh	; 7BCE5
 shl eax, 5	; 7BCEC
-or dword [dword_C53FF], eax	; 7BCEF
+or dword [gameopts], eax	; 7BCEF
 cmp dword [dword_C541F], byte 10h	; 7BCF5
 je short loc_7BD36	; 7BCFC
 mov dh, byte [dword_ED360]	; 7BCFE
 test dh, 40h	; 7BD04
 setne al	; 7BD07
 and eax, byte 1	; 7BD0A
-and byte [dword_C53FF], 0BFh	; 7BD0D
+and byte [gameopts], 0BFh	; 7BD0D
 shl eax, 6	; 7BD14
-or dword [dword_C53FF], eax	; 7BD17
+or dword [gameopts], eax	; 7BD17
 test dh, 80h	; 7BD1D
 setne al	; 7BD20
 and eax, byte 1	; 7BD23
-and byte [dword_C53FF], 7Fh	; 7BD26
+and byte [gameopts], 7Fh	; 7BD26
 shl eax, 7	; 7BD2D
-or dword [dword_C53FF], eax	; 7BD30
+or dword [gameopts], eax	; 7BD30
 loc_7BD36:
 test byte [dword_ED360], 80h	; 7BD36
 setne al	; 7BD3D
 and eax, 0FFh	; 7BD40
 mov edx, eax	; 7BD45
-test byte [dword_C53FF], 80h	; 7BD47
+test byte [gameopts], 80h	; 7BD47
 je short loc_7BD59	; 7BD4E
 test eax, eax	; 7BD50
 jne short loc_7BD59	; 7BD52
 call sub_59748	; 7BD54
 loc_7BD59:
-mov bh, byte [dword_C53FF]	; 7BD59
+mov bh, byte [gameopts]	; 7BD59
 test bh, 80h	; 7BD5F
 jne short loc_7BD86	; 7BD62
 test edx, edx	; 7BD64
@@ -2464,17 +2464,17 @@ je short loc_7BD86	; 7BD66
 and edx, byte 1	; 7BD68
 mov ch, bh	; 7BD6B
 and ch, 7Fh	; 7BD6D
-mov byte [dword_C53FF], ch	; 7BD70
+mov byte [gameopts], ch	; 7BD70
 shl edx, 7	; 7BD76
-or dword [dword_C53FF], edx	; 7BD79
+or dword [gameopts], edx	; 7BD79
 call sub_59863	; 7BD7F
 jmp short loc_7BD9B	; 7BD84
 loc_7BD86:
 mov eax, edx	; 7BD86
 and eax, byte 1	; 7BD88
-and byte [dword_C53FF], 7Fh	; 7BD8B
+and byte [gameopts], 7Fh	; 7BD8B
 shl eax, 7	; 7BD92
-or dword [dword_C53FF], eax	; 7BD95
+or dword [gameopts], eax	; 7BD95
 loc_7BD9B:
 cmp byte [byte_D2430], 0	; 7BD9B
 je short loc_7BDC1	; 7BDA2
@@ -2483,9 +2483,9 @@ setne al	; 7BDAB
 and eax, byte 1	; 7BDAE
 and byte [byte_C5400], 0FEh	; 7BDB1
 shl eax, 8	; 7BDB8
-or dword [dword_C53FF], eax	; 7BDBB
+or dword [gameopts], eax	; 7BDBB
 loc_7BDC1:
-test byte [dword_C53FF], 40h	; 7BDC1
+test byte [gameopts], 40h	; 7BDC1
 je short loc_7BE1A	; 7BDC8
 cmp byte [byte_D2430], 0	; 7BDCA
 je short loc_7BE13	; 7BDD1
@@ -2525,7 +2525,7 @@ call sub_8FCDF	; 7BE51
 loc_7BE56:
 call sub_8F984	; 7BE56
 loc_7BE5B:
-test byte [dword_C53FF], 80h	; 7BE5B
+test byte [gameopts], 80h	; 7BE5B
 je short loc_7BE6B	; 7BE62
 call sub_8F963	; 7BE64
 jmp short loc_7BE70	; 7BE69
@@ -2624,29 +2624,29 @@ call __CHK	; 7BF5B
 push ebx	; 7BF60
 push ecx	; 7BF61
 push edx	; 7BF62
-mov eax, dword [dword_C53FF]	; 7BF63
+mov eax, dword [gameopts]	; 7BF63
 shl eax, 1Eh	; 7BF68
 shr eax, 1Fh	; 7BF6B
 add eax, eax	; 7BF6E
-mov edx, dword [dword_C53FF]	; 7BF70
+mov edx, dword [gameopts]	; 7BF70
 and edx, byte 1	; 7BF76
 or edx, eax	; 7BF79
-mov eax, dword [dword_C53FF]	; 7BF7B
+mov eax, dword [gameopts]	; 7BF7B
 shl eax, 1Dh	; 7BF80
 shr eax, 1Fh	; 7BF83
 shl eax, 2	; 7BF86
 or edx, eax	; 7BF89
-mov eax, dword [dword_C53FF]	; 7BF8B
+mov eax, dword [gameopts]	; 7BF8B
 shl eax, 1Ch	; 7BF90
 shr eax, 1Fh	; 7BF93
 shl eax, 3	; 7BF96
 or edx, eax	; 7BF99
-mov eax, dword [dword_C53FF]	; 7BF9B
+mov eax, dword [gameopts]	; 7BF9B
 shl eax, 1Bh	; 7BFA0
 shr eax, 1Fh	; 7BFA3
 shl eax, 4	; 7BFA6
 or edx, eax	; 7BFA9
-mov eax, dword [dword_C53FF]	; 7BFAB
+mov eax, dword [gameopts]	; 7BFAB
 shl eax, 1Ah	; 7BFB0
 shr eax, 1Fh	; 7BFB3
 shl eax, 5	; 7BFB6
@@ -2656,7 +2656,7 @@ je short loc_7BFC8	; 7BFC2
 xor eax, eax	; 7BFC4
 jmp short loc_7BFD6	; 7BFC6
 loc_7BFC8:
-mov eax, dword [dword_C53FF]	; 7BFC8
+mov eax, dword [gameopts]	; 7BFC8
 shl eax, 19h	; 7BFCD
 shr eax, 1Fh	; 7BFD0
 shl eax, 6	; 7BFD3
@@ -2667,7 +2667,7 @@ je short loc_7BFE5	; 7BFDF
 xor eax, eax	; 7BFE1
 jmp short loc_7BFF3	; 7BFE3
 loc_7BFE5:
-mov eax, dword [dword_C53FF]	; 7BFE5
+mov eax, dword [gameopts]	; 7BFE5
 shl eax, 18h	; 7BFEA
 shr eax, 1Fh	; 7BFED
 shl eax, 7	; 7BFF0
@@ -2675,7 +2675,7 @@ loc_7BFF3:
 or edx, eax	; 7BFF3
 test byte [dword_C541F], 22h	; 7BFF5
 je short loc_7C00E	; 7BFFC
-mov eax, dword [dword_C53FF]	; 7BFFE
+mov eax, dword [gameopts]	; 7BFFE
 shl eax, 17h	; 7C003
 shr eax, 1Fh	; 7C006
 shl eax, 8	; 7C009
@@ -2685,7 +2685,7 @@ xor eax, eax	; 7C00E
 loc_7C010:
 or edx, eax	; 7C010
 mov dword [dword_ED360], edx	; 7C012
-mov eax, dword [dword_C53FF]	; 7C018
+mov eax, dword [gameopts]	; 7C018
 shl eax, 14h	; 7C01D
 shr eax, 1Eh	; 7C020
 cmp eax, byte 1	; 7C023
@@ -3037,7 +3037,7 @@ mov ecx, dword [dword_DC238]	; 7C3E3
 push ecx	; 7C3E9
 call sub_91370	; 7C3EA
 add esp, byte 0Ch	; 7C3EF
-mov esi, dword [dword_C53FF]	; 7C3F2
+mov esi, dword [gameopts]	; 7C3F2
 shl esi, 19h	; 7C3F8
 shr esi, 1Fh	; 7C3FB
 call sub_6B3D7	; 7C3FE
@@ -3171,55 +3171,55 @@ mov bl, byte [dword_ED360]	; 7C58C
 test bl, 1	; 7C592
 setne al	; 7C595
 and eax, byte 1	; 7C598
-and byte [dword_C53FF], 0FEh	; 7C59B
-or dword [dword_C53FF], eax	; 7C5A2
+and byte [gameopts], 0FEh	; 7C59B
+or dword [gameopts], eax	; 7C5A2
 mov cl, bl	; 7C5A8
 test bl, 2	; 7C5AA
 setne al	; 7C5AD
 and eax, byte 1	; 7C5B0
-and byte [dword_C53FF], 0FDh	; 7C5B3
+and byte [gameopts], 0FDh	; 7C5B3
 add eax, eax	; 7C5BA
-or dword [dword_C53FF], eax	; 7C5BC
+or dword [gameopts], eax	; 7C5BC
 test bl, 4	; 7C5C2
 setne al	; 7C5C5
 and eax, byte 1	; 7C5C8
-and byte [dword_C53FF], 0FBh	; 7C5CB
+and byte [gameopts], 0FBh	; 7C5CB
 shl eax, 2	; 7C5D2
-or dword [dword_C53FF], eax	; 7C5D5
+or dword [gameopts], eax	; 7C5D5
 mov dh, bl	; 7C5DB
 test bl, 8	; 7C5DD
 setne al	; 7C5E0
 and eax, byte 1	; 7C5E3
-and byte [dword_C53FF], 0F7h	; 7C5E6
+and byte [gameopts], 0F7h	; 7C5E6
 shl eax, 3	; 7C5ED
-or dword [dword_C53FF], eax	; 7C5F0
+or dword [gameopts], eax	; 7C5F0
 test cl, 10h	; 7C5F6
 setne al	; 7C5F9
 and eax, byte 1	; 7C5FC
-and byte [dword_C53FF], 0EFh	; 7C5FF
+and byte [gameopts], 0EFh	; 7C5FF
 shl eax, 4	; 7C606
-or dword [dword_C53FF], eax	; 7C609
+or dword [gameopts], eax	; 7C609
 mov ch, dh	; 7C60F
 test ch, 20h	; 7C611
 setne al	; 7C614
 and eax, byte 1	; 7C617
-and byte [dword_C53FF], 0DFh	; 7C61A
+and byte [gameopts], 0DFh	; 7C61A
 shl eax, 5	; 7C621
-or dword [dword_C53FF], eax	; 7C624
+or dword [gameopts], eax	; 7C624
 cmp dword [dword_C541F], byte 10h	; 7C62A
 je short loc_7C665	; 7C631
 test ch, 40h	; 7C633
 setne al	; 7C636
 and eax, byte 1	; 7C639
-and byte [dword_C53FF], 0BFh	; 7C63C
+and byte [gameopts], 0BFh	; 7C63C
 shl eax, 6	; 7C643
-or dword [dword_C53FF], eax	; 7C646
+or dword [gameopts], eax	; 7C646
 test ch, 80h	; 7C64C
 setne al	; 7C64F
 and eax, byte 1	; 7C652
-and byte [dword_C53FF], 7Fh	; 7C655
+and byte [gameopts], 7Fh	; 7C655
 shl eax, 7	; 7C65C
-or dword [dword_C53FF], eax	; 7C65F
+or dword [gameopts], eax	; 7C65F
 loc_7C665:
 test byte [dword_C541F], 22h	; 7C665
 je short loc_7C68B	; 7C66C
@@ -3228,11 +3228,11 @@ setne al	; 7C675
 and eax, byte 1	; 7C678
 and byte [byte_C5400], 0FEh	; 7C67B
 shl eax, 8	; 7C682
-or dword [dword_C53FF], eax	; 7C685
+or dword [gameopts], eax	; 7C685
 loc_7C68B:
 mov edx, dword [dword_ED360]	; 7C68B
 and edx, 0E00h	; 7C691
-mov eax, dword [dword_C53FF]	; 7C697
+mov eax, dword [gameopts]	; 7C697
 and ah, 0F3h	; 7C69C
 cmp edx, 400h	; 7C69F
 jb short loc_7C6B3	; 7C6A5
@@ -3243,16 +3243,16 @@ jmp short loc_7C6D2	; 7C6B1
 loc_7C6B3:
 cmp edx, 200h	; 7C6B3
 jne short loc_7C6D2	; 7C6B9
-mov dword [dword_C53FF], eax	; 7C6BB
+mov dword [gameopts], eax	; 7C6BB
 or ah, 8	; 7C6C0
 jmp short loc_7C6CD	; 7C6C3
 loc_7C6C5:
-mov dword [dword_C53FF], eax	; 7C6C5
+mov dword [gameopts], eax	; 7C6C5
 or ah, 4	; 7C6CA
 loc_7C6CD:
-mov dword [dword_C53FF], eax	; 7C6CD
+mov dword [gameopts], eax	; 7C6CD
 loc_7C6D2:
-test byte [dword_C53FF], 40h	; 7C6D2
+test byte [gameopts], 40h	; 7C6D2
 je short loc_7C728	; 7C6D9
 cmp byte [byte_D2430], 0	; 7C6DB
 je short loc_7C721	; 7C6E2
@@ -3292,7 +3292,7 @@ call sub_8FCDF	; 7C75F
 loc_7C764:
 call sub_8F984	; 7C764
 loc_7C769:
-test byte [dword_C53FF], 80h	; 7C769
+test byte [gameopts], 80h	; 7C769
 je short loc_7C779	; 7C770
 call sub_8F963	; 7C772
 jmp short loc_7C77E	; 7C777
@@ -3729,7 +3729,7 @@ loc_7CC27:
 mov cl, byte [gmode]	; 7CC27
 test cl, 1	; 7CC2D
 jne short loc_7CC53	; 7CC30
-mov ebx, dword [off_C9094]	; 7CC32
+mov ebx, dword [puckc]	; 7CC32
 mov ch, byte [ebx]	; 7CC38
 test ch, ch	; 7CC3A
 jl short loc_7CC53	; 7CC3C
@@ -3775,7 +3775,7 @@ test byte [byte eax+038h], 0F0h	; 7CCA8
 jne short loc_7CCE1	; 7CCAC
 test byte [gmode], 1	; 7CCAE
 jne short loc_7CCDC	; 7CCB5
-mov edx, dword [off_C9094]	; 7CCB7
+mov edx, dword [puckc]	; 7CCB7
 mov cl, byte [edx]	; 7CCBD
 test cl, cl	; 7CCBF
 jl short loc_7CCDC	; 7CCC1
@@ -3837,24 +3837,24 @@ jl short loc_7CD63	; 7CD57
 cmp cx, byte 0Bh	; 7CD59
 jle near loc_7CE99	; 7CD5D
 loc_7CD63:
-mov eax, dword [gameclock]	; 7CD63
+mov eax, dword [puckvx]	; 7CD63
 movsx ecx, word [eax]	; 7CD68
 sar ecx, 8	; 7CD6B
-mov eax, dword [off_C907C]	; 7CD6E
+mov eax, dword [puckx]	; 7CD6E
 movsx eax, word [eax]	; 7CD73
 add ecx, eax	; 7CD76
 mov word [byte esp+04h], cx	; 7CD78
-mov eax, dword [off_C9088]	; 7CD7D
+mov eax, dword [puckvy]	; 7CD7D
 movsx ecx, word [eax]	; 7CD82
 sar ecx, 8	; 7CD85
-mov eax, dword [off_C9084]	; 7CD88
+mov eax, dword [pucky]	; 7CD88
 movsx eax, word [eax]	; 7CD8D
 add eax, ecx	; 7CD90
 mov word [byte esp+0Ch], ax	; 7CD92
 mov edi, 10000000h	; 7CD97
 cmp word [edx], byte 1	; 7CD9C
 jne short loc_7CDA9	; 7CDA0
-mov eax, unk_DF81C	; 7CDA2
+mov eax, SortCords	; 7CDA2
 jmp short loc_7CDAE	; 7CDA7
 loc_7CDA9:
 mov eax, unk_DFB1C	; 7CDA9
@@ -3881,7 +3881,7 @@ mov edx, esi	; 7CDEB
 imul ecx, ecx	; 7CDED
 imul edx, esi	; 7CDF0
 add edx, ecx	; 7CDF3
-mov ecx, dword [off_C9094]	; 7CDF5
+mov ecx, dword [puckc]	; 7CDF5
 movsx cx, byte [ecx]	; 7CDFB
 cmp cx, word [byte eax+06Ah]	; 7CDFF
 jne short loc_7CE0A	; 7CE03

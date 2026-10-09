@@ -7,7 +7,7 @@ StanleyCupTimer,C9100,randomd0 seed (manual)
 Ylist,E9ADA,"aligned 2/3 accesses in checkcoll, checkplcoll"
 collflag,C90BA,"aligned 2/3 accesses in Bcheck, holdcheck"
 dirtab,C90E0,"data table byte match (words->le16, logic93_5.asm, 16 elems)"
-gameclock,C9080,"aligned 2/2 accesses in assgoalie, puckfaceoff"
+puckvx,C9080,"pointer to the puck's Xvel (dd word_DFF28 = SortCords+14*80h+Xvel); skatetopuck reads its high byte /2 (93G skatetopuckinit puckvx) and vtoa(puckvx,puckvy); was gameclock in the seed global_map (2/2 weak alignment)"
 gmode,C90BB,"Stop4Pen (63543): 93G bset #gmclock,(gmode).w <-> test/or byte_C90BB,1 (low byte of the 68k word)"
 ltx,E9AC6,"aligned 2/2 accesses in Stop4Pen, a2touchpuck"
 passspeed,C90A2,"aligned 3/5 accesses in dopass, doshot, passtoa0"
@@ -15,6 +15,23 @@ puckvz,C9090,"aligned 3/5 accesses in dopass, doshot, passtoa0"
 shotsets,CCC60,"data table byte match (words->le16, input94.asm, 18 elems)"
 threat,C90AA,"aligned 2/3 accesses in assgoalie, chk4pass"
 wcradiusx,C909C,"aligned 2/3 accesses in checkgoal, checkwallcoll"
-wcradiusy,E03B4,"aligned 2/3 accesses in checkgoal, checkwallcoll"
+regd4,E03B4,"Watcom static for the ported 68k d4: doplayeracc turn rate $300-speed (min $180) times ftab, noturn0 2/6 (93G moveq #2,d4 / addq #4,d4); was wcradiusy in the seed global_map (2/3 weak alignment)"
 doplayeracc_ftab,CCD78,"93G logic93_5 doplayeracc .ftab dc.w 0,$10,$10,$10,0,-$10,-$10,-$10 (turn step per facing delta); PC dword table 0,10h,10h,10h,0,-10h,-10h,-10h read only by doplayeracc"
 MaxSpeed,CCD98,93G logic93_5 MaxSpeed table (16 entries); PC 16 dwords read by playeracc max speed check (.ms)
+SortCords,DF81C,"93G SortCords: the 80h-byte player/puck struct array; EvadePlayers loops it (15 entries, puck = entry 14 at DFF1C as 93G puckscnum=14); avdgoal indexes it by SCnum*80h"
+puckx,C907C,pointer to the puck's Xpos integer word (dd word_DFF1E = SortCords+14*80h+Xpos+2); doplayeracc/skateto/skatetopuck read *puckx where 93G reads (puckx).w
+pucky,C9084,pointer to the puck's Ypos integer word (dd word_DFF22); 93G (pucky).w in doplayeracc/skateto/skatetopuck
+puckvy,C9088,"pointer to the puck's Yvel (dd word_DFF2A); doplayeracc reads its high byte (93G move.b (puckvy).w,d1)"
+puckz,C908C,"pointer to the puck's Zpos integer word (dd word_DFF26, between pucky and puckvx/puckvy/puckvz in the same pointer table)"
+puckc,C9094,"pointer to the puck carrier's SCnum byte (dd unk_DFF5E), -1 = none; compared with SCnum where 93G does cmp (puckc).w / tst.w puckc bmi"
+puckpflags2,DFF61,"the puck struct's pflags2 byte (SortCords+14*80h+45h); skateto tests bit 0 where 93G does btst #pf2fight,(puckx+pflags2).w"
+xc1,C90AC,"93G xc1: skateto faces (xc1,yc1) instead of the puck while the puck is in a fight (93G skateto .nf)"
+yc1,C90AE,93G yc1 (see xc1)
+refsignal,C90D2,"word countdown (decremented by the penalty code at 63475, set in the frame driver); while nonzero struct 10h (the referee) uses its signalling skate animations (0B4Bh...) in doplayeracc/dostop/noturn0"
+gmode2,C90BE,"game-state flag word beside gmode (saved with the game, cleared/restored by the frame driver); bit 7 also selects the referee's signalling animations; meaning of the other bits unknown"
+gameopts,C53FF,"option bit byte (default 0FFh): bit 1 offsides on (EvadePC, 93G gmoffs), bit 2 fatigue on (playeracc energy drain, 93G OptLine test)"
+regd0,E03BC,"Watcom static that holds the ported 68k d0: skateto/avdgoal/EvadePC pass the target direction/x in it (93G d0), playeracc keeps the new Xvel in it"
+regd1,E03C0,"Watcom static for the ported 68k d1 (target y, new Yvel)"
+regd2,E03AC,"Watcom static for the ported 68k d2 (EvadePlayers/EvadePC x distance, playeracc accel factor and max speed)"
+regd3,E03B0,Watcom static for the ported 68k d3 (doplayeracc and playeracc speed squared)
+dirtab_y,C90E2,"93G dirtab y column (2(a0,d2.w) ""y inc"" in playeracc): the second word of each dirtab pair; a separate label because nasm drops nosplit on [nosplit esi*2+dirtab+2]"

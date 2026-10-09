@@ -12,7 +12,7 @@ extern byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, b
 extern byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC, byte_C6DAD, byte_C6DB2, byte_C8164, byte_C8451
 extern byte_D2430, byte_DD710, byte_DD750, byte_EA0F4, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A
 extern code_1A8AA, code_1A922, dword_C530D, dword_C535E, dword_C5362, dword_C536A, dword_C536E, dword_C5372
-extern dword_C5376, dword_C537A, dword_C537E, dword_C5382, dword_C53F7, dword_C53FB, dword_C53FF, dword_C5403
+extern dword_C5376, dword_C537A, dword_C537E, dword_C5382, dword_C53F7, dword_C53FB, gameopts, dword_C5403
 extern dword_C5407, dword_C5413, dword_C5417, dword_C5519, dword_C5581, dword_C55E9, dword_C65AC, dword_C65C0
 extern dword_C65C4, dword_C65C8, dword_C65CC, dword_C65D0, dword_C6D26, dword_C6DBA, dword_C71CC, dword_C71D0
 extern dword_C71D4, dword_C71D8, dword_C71DC, dword_C721D, dword_C90C8, dword_C90CA, dword_CE583, dword_CE5A3
@@ -2513,7 +2513,7 @@ cmp eax, byte 0Dh	; 88290
 jbe near loc_883D3	; 88293
 jmp near loc_88453	; 88299
 loc_8829E:
-mov eax, dword [dword_C53FF]	; 8829E
+mov eax, dword [gameopts]	; 8829E
 shl eax, 11h	; 882A3
 shr eax, 1Dh	; 882A6
 mov dword [byte ebp+07Ch], eax	; 882A9
@@ -2523,7 +2523,7 @@ mov dword [byte ebp+070h], eax	; 882B2
 lea esi, [dword ebp+01AE8h]	; 882B5
 mov edi, 8	; 882BB
 loc_882C0:
-mov edx, dword [dword_C53FF]	; 882C0
+mov edx, dword [gameopts]	; 882C0
 shl edx, 11h	; 882C6
 shr edx, 1Dh	; 882C9
 mov eax, esi	; 882CC
@@ -2541,7 +2541,7 @@ sub eax, edx	; 882E2
 cmp byte [byte esi+eax*2+04h], 0FFh	; 882E4
 jne short loc_882D7	; 882E9
 loc_882EB:
-mov eax, dword [dword_C53FF]	; 882EB
+mov eax, dword [gameopts]	; 882EB
 shl eax, 11h	; 882F0
 shr eax, 1Eh	; 882F3
 lea ebx, [byte eax+01h]	; 882F6
@@ -2570,7 +2570,7 @@ jl short loc_882C0	; 88330
 mov eax, ebp	; 88332
 call sub_87B33	; 88334
 loc_88339:
-mov eax, dword [dword_C53FF]	; 88339
+mov eax, dword [gameopts]	; 88339
 shl eax, 11h	; 8833E
 shr eax, 1Dh	; 88341
 mov dword [dword ebp+084h], eax	; 88344
@@ -2578,7 +2578,7 @@ mov dword [dword ebp+080h], eax	; 8834A
 lea esi, [dword ebp+01B90h]	; 88350
 mov edi, 0Ch	; 88356
 loc_8835B:
-mov edx, dword [dword_C53FF]	; 8835B
+mov edx, dword [gameopts]	; 8835B
 shl edx, 11h	; 88361
 shr edx, 1Dh	; 88364
 mov eax, esi	; 88367
@@ -2596,7 +2596,7 @@ sub eax, edx	; 8837D
 cmp byte [byte esi+eax*2+04h], 0FFh	; 8837F
 jne short loc_88372	; 88384
 loc_88386:
-mov ebx, dword [dword_C53FF]	; 88386
+mov ebx, dword [gameopts]	; 88386
 shl ebx, 11h	; 8838C
 shr ebx, 1Eh	; 8838F
 inc ebx	; 88392
@@ -2625,12 +2625,12 @@ jl short loc_8835B	; 883CA
 mov eax, ebp	; 883CC
 call sub_87C9E	; 883CE
 loc_883D3:
-mov eax, dword [dword_C53FF]	; 883D3
+mov eax, dword [gameopts]	; 883D3
 shl eax, 11h	; 883D8
 shr eax, 1Dh	; 883DB
 mov dword [dword ebp+088h], eax	; 883DE
 lea esi, [dword ebp+01BE4h]	; 883E4
-mov edx, dword [dword_C53FF]	; 883EA
+mov edx, dword [gameopts]	; 883EA
 shl edx, 11h	; 883F0
 shr edx, 1Dh	; 883F3
 mov eax, esi	; 883F6
@@ -2648,7 +2648,7 @@ sub eax, edx	; 8840C
 cmp byte [byte esi+eax*2+04h], 0FFh	; 8840E
 jne short loc_88401	; 88413
 loc_88415:
-mov eax, dword [dword_C53FF]	; 88415
+mov eax, dword [gameopts]	; 88415
 shl eax, 11h	; 8841A
 shr eax, 1Eh	; 8841D
 lea ebx, [byte eax+01h]	; 88420
@@ -2815,7 +2815,7 @@ add eax, eax	; 88648
 add esi, 1998h	; 8864A
 add esi, eax	; 88650
 mov ebp, esi	; 88652
-mov edx, dword [dword_C53FF]	; 88654
+mov edx, dword [gameopts]	; 88654
 shl edx, 11h	; 8865A
 shr edx, 1Dh	; 8865D
 mov eax, esi	; 88660
@@ -2855,7 +2855,7 @@ jmp short loc_8871C	; 886D7
 loc_886D9:
 cmp byte [byte esi+04h], 0FFh	; 886D9
 jne short loc_88718	; 886DD
-mov edx, dword [dword_C53FF]	; 886DF
+mov edx, dword [gameopts]	; 886DF
 shl edx, 11h	; 886E5
 shr edx, 1Dh	; 886E8
 mov eax, ebp	; 886EB
@@ -3050,7 +3050,7 @@ sub eax, edx	; 88924
 add eax, eax	; 88926
 mov ebp, dword [esp]	; 88928
 add ebp, eax	; 8892B
-mov edx, dword [dword_C53FF]	; 8892D
+mov edx, dword [gameopts]	; 8892D
 shl edx, 11h	; 88933
 shr edx, 1Dh	; 88936
 mov eax, ebp	; 88939
@@ -3064,7 +3064,7 @@ cmp eax, edx	; 88953
 sete al	; 88955
 and eax, 0FFh	; 88958
 mov dword [byte esp+044h], eax	; 8895D
-mov ebp, dword [dword_C53FF]	; 88961
+mov ebp, dword [gameopts]	; 88961
 shl ebp, 11h	; 88967
 mov edx, dword [byte esp+05Ch]	; 8896A
 cmp edx, byte 8	; 8896E
@@ -3084,7 +3084,7 @@ xor ebp, ebp	; 8899B
 loc_8899D:
 cmp ebp, dword [byte esp+05Ch]	; 8899D
 je short loc_889B6	; 889A1
-mov edx, dword [dword_C53FF]	; 889A3
+mov edx, dword [gameopts]	; 889A3
 shl edx, 11h	; 889A9
 shr edx, 1Dh	; 889AC
 mov eax, esi	; 889AF
@@ -3103,7 +3103,7 @@ sub eax, edx	; 889C5
 cmp byte [byte esi+eax*2+04h], 0FFh	; 889C7
 jne short loc_889BA	; 889CC
 loc_889CE:
-mov eax, dword [dword_C53FF]	; 889CE
+mov eax, dword [gameopts]	; 889CE
 shl eax, 11h	; 889D3
 shr eax, 1Eh	; 889D6
 lea ebx, [byte eax+01h]	; 889D9
@@ -3146,7 +3146,7 @@ mov ebp, 8	; 88A43
 loc_88A48:
 cmp ebp, dword [byte esp+05Ch]	; 88A48
 je short loc_88A61	; 88A4C
-mov edx, dword [dword_C53FF]	; 88A4E
+mov edx, dword [gameopts]	; 88A4E
 shl edx, 11h	; 88A54
 shr edx, 1Dh	; 88A57
 mov eax, esi	; 88A5A
@@ -3165,7 +3165,7 @@ sub eax, edx	; 88A70
 cmp byte [byte esi+eax*2+04h], 0FFh	; 88A72
 jne short loc_88A65	; 88A77
 loc_88A79:
-mov eax, dword [dword_C53FF]	; 88A79
+mov eax, dword [gameopts]	; 88A79
 shl eax, 11h	; 88A7E
 shr eax, 1Eh	; 88A81
 lea ebx, [byte eax+01h]	; 88A84
@@ -3206,7 +3206,7 @@ mov ebp, 0Ch	; 88AEE
 loc_88AF3:
 cmp ebp, dword [byte esp+05Ch]	; 88AF3
 je short loc_88B0C	; 88AF7
-mov edx, dword [dword_C53FF]	; 88AF9
+mov edx, dword [gameopts]	; 88AF9
 shl edx, 11h	; 88AFF
 shr edx, 1Dh	; 88B02
 mov eax, esi	; 88B05
@@ -3225,7 +3225,7 @@ sub eax, edx	; 88B1B
 cmp byte [byte esi+eax*2+04h], 0FFh	; 88B1D
 jne short loc_88B10	; 88B22
 loc_88B24:
-mov ebx, dword [dword_C53FF]	; 88B24
+mov ebx, dword [gameopts]	; 88B24
 shl ebx, 11h	; 88B2A
 shr ebx, 1Eh	; 88B2D
 inc ebx	; 88B30
@@ -3272,7 +3272,7 @@ sub eax, edx	; 88B95
 cmp byte [byte esi+eax*2+04h], 0FFh	; 88B97
 jne short loc_88B8A	; 88B9C
 loc_88B9E:
-mov eax, dword [dword_C53FF]	; 88B9E
+mov eax, dword [gameopts]	; 88B9E
 shl eax, 11h	; 88BA3
 shr eax, 1Eh	; 88BA6
 lea ebx, [byte eax+01h]	; 88BA9

@@ -6,7 +6,7 @@ extern StartHL2, __CHK, asc_C0952, asc_C0970, asc_C097A, asc_C097F, asc_C0984, a
 extern asc_C0991, asc_C0997, asc_C65F8, asc_C6614, asc_C662E, asc_C664C, asc_C6678, asc_C668F
 extern byte_C5400, byte_C542F, byte_C5430, byte_C5431, byte_C5432, byte_CCCA0, byte_D2430, byte_DD774
 extern byte_DD775, byte_DD788, byte_DD789, byte_ED830, byte_ED9E8, dword_C4D0C, dword_C4E14, dword_C53F7
-extern dword_C53FB, dword_C53FF, dword_C5403, dword_C5407, dword_C5581, dword_C5840, dword_C65F4, dword_C66A4
+extern dword_C53FB, gameopts, dword_C5403, dword_C5407, dword_C5581, dword_C5840, dword_C65F4, dword_C66A4
 extern dword_C66AC, dword_C66D0, dword_C66D4, dword_C71CC, dword_C71D0, dword_C71D4, dword_C71D8, dword_C71DC
 extern dword_C721D, dword_C90C8, dword_C90CA, dword_CCC9D, dword_D242C, dword_D2431, dword_D2C6B, dword_D41F0
 extern dword_D8C84, dword_DC230, dword_DC234, dword_DC238, dword_DC868, dword_DC888, dword_DC88C, dword_DD730
@@ -700,7 +700,7 @@ call sub_8F98F	; 196C9
 mov dword [dword_C721D], eax	; 196CE
 test eax, eax	; 196D3
 je short loc_196F5	; 196D5
-test byte [dword_C53FF], 40h	; 196D7
+test byte [gameopts], 40h	; 196D7
 je short loc_196F5	; 196DE
 mov edx, dword [dword_D2431]	; 196E0
 mov ecx, 4Ch	; 196E6

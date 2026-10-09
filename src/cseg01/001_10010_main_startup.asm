@@ -9,7 +9,7 @@ extern byte_C4D1C, byte_C4D1D, byte_C4D1E, byte_C5138, byte_D2430, byte_D3040, b
 extern byte_EA0F4, byte_ED906, byte_ED92E, byte_ED935, byte_ED936, byte_ED990, dword_C4CFC, dword_C4D00
 extern dword_C4D04, dword_C4D08, dword_C4D0C, dword_C4D10, dword_C4D14, dword_C4D18, dword_C4E0C, dword_C4E10
 extern dword_C4E14, dword_C4E18, dword_C4E24, dword_C4E28, dword_C4E2C, dword_C5130, dword_C5131, dword_C5133
-extern dword_C5135, dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5305, dword_C5309, dword_C53FF
+extern dword_C5135, dword_C52F5, dword_C52F9, dword_C52FD, dword_C5301, dword_C5305, dword_C5309, gameopts
 extern dword_C5403, dword_C5407, dword_C540B, dword_C540F, dword_C5413, dword_C5417, dword_C5840, dword_C66C4
 extern dword_C721D, dword_C7444, dword_C7448, dword_C90C8, dword_C90CA, dword_CBC3E, dword_CC128, dword_D242C
 extern dword_D2431, dword_D2C6B, dword_D302C, dword_D3030, dword_D3034, dword_D30D4, dword_D4158, dword_D415C
@@ -1710,13 +1710,13 @@ add dword [dword_C7444], 3E8h	; 11394
 add dword [dword_C7448], 3E8h	; 1139E
 jmp near loc_113E9	; 113A8
 loc_113AD:
-test byte [dword_C53FF], 40h	; 113AD
+test byte [gameopts], 40h	; 113AD
 sete al	; 113B4
 and eax, byte 1	; 113B7
-and byte [dword_C53FF], 0BFh	; 113BA
+and byte [gameopts], 0BFh	; 113BA
 shl eax, 6	; 113C1
-or dword [dword_C53FF], eax	; 113C4
-test byte [dword_C53FF], 40h	; 113CA
+or dword [gameopts], eax	; 113C4
+test byte [gameopts], 40h	; 113CA
 je short loc_113DD	; 113D1
 call sub_8F979	; 113D3
 jmp near loc_113E7	; 113D8
@@ -1734,7 +1734,7 @@ pop ecx	; 113ED
 pop ebx	; 113EE
 ret	; 113EF
 loc_113F0:
-test byte [dword_C53FF], 80h	; 113F0
+test byte [gameopts], 80h	; 113F0
 je short loc_11418	; 113F7
 call sub_59748	; 113F9
 cmp byte [byte_D2430], 0	; 113FE
@@ -1746,16 +1746,16 @@ call sub_8F633	; 1140E
 loc_11413:
 call sub_8F96E	; 11413
 loc_11418:
-mov cl, byte [dword_C53FF]	; 11418
+mov cl, byte [gameopts]	; 11418
 test cl, 80h	; 1141E
 sete al	; 11421
 and eax, byte 1	; 11424
 mov ch, cl	; 11427
 and ch, 7Fh	; 11429
-mov byte [dword_C53FF], ch	; 1142C
+mov byte [gameopts], ch	; 1142C
 shl eax, 7	; 11432
-or dword [dword_C53FF], eax	; 11435
-test byte [dword_C53FF], 80h	; 1143B
+or dword [gameopts], eax	; 11435
+test byte [gameopts], 80h	; 1143B
 je short loc_113E7	; 11442
 call sub_59863	; 11444
 call sub_8F963	; 11449

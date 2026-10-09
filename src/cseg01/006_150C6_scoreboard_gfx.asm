@@ -5,7 +5,7 @@ section s_150C6 progbits alloc exec nowrite align=1
 extern StanleyCupTimer, __CHK, asc_C0784, asc_C078C, asc_C0791, asc_C079C, asc_C8136, byte_C5400
 extern byte_D2430, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, byte_EA0F4
 extern byte_ED823, byte_ED939, dword_C5130, dword_C52E9, dword_C52ED, dword_C52F5, dword_C52F9, dword_C52FD
-extern dword_C5301, dword_C5305, dword_C5309, dword_C53F7, dword_C53FB, dword_C53FF, dword_C5519, dword_C5704
+extern dword_C5301, dword_C5305, dword_C5309, dword_C53F7, dword_C53FB, gameopts, dword_C5519, dword_C5704
 extern dword_C5708, dword_C570C, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern dword_C584C, dword_C5850, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
 extern dword_C5886, dword_C90C8, dword_C90CA, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, dword_DC26C
@@ -1040,7 +1040,7 @@ mov al, byte [esp]	; 15C78
 mov byte [byte edx+05h], al	; 15C7B
 cmp dword [dword_C53FB], byte 1	; 15C7E
 jne short loc_15C95	; 15C85
-mov edx, dword [dword_C53FF]	; 15C87
+mov edx, dword [gameopts]	; 15C87
 shl edx, 11h	; 15C8D
 shr edx, 1Dh	; 15C90
 jmp short loc_15CA1	; 15C93
@@ -1218,7 +1218,7 @@ mov dword [dword_C52F5], 0FFFFFFFFh	; 15E8F
 mov dword [dword_C52F9], 0FFFFFFFEh	; 15E99
 mov eax, unk_C5298	; 15EA3
 call sub_327A1	; 15EA8
-or byte [dword_C53FF], 0FFh	; 15EAD
+or byte [gameopts], 0FFh	; 15EAD
 cmp byte [byte_D2430], 0	; 15EB4
 je short loc_15EC6	; 15EBB
 or byte [byte_C5400], 1	; 15EBD
