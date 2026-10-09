@@ -129,6 +129,8 @@ DlgReturnZero,2FED2,13,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DlgRe
 DrawBevelRect,2FE49,137,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawBevelRect.c,matched,
 DrawButton,30B16,221,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawButton.c,matched,
 DrawButtons,30AE2,52,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawButtons.c,matched,
+DrawListItem,302B9,227,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,nonmatching,
+DrawListItems,3039C,95,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,nonmatching,
 GrowToButton,30F5F,85,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButton.c,nonmatching,same blocks; original keeps w in edx and v in ecx (then edx / eax in the second half); this draft moves w to ecx. 10-min cap
 GrowToButtons,30FB4,95,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButtons.c,nonmatching,registers: asm sums in edx and builds each width in esi; C swaps them
 InitScrollBar,30BF3,74,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/InitScrollBar.c,matched,
@@ -162,8 +164,9 @@ RestoreGridCellBg,37E5B,75,028_35FB9_import_export,src/c/028_35FB9_import_export
 SaveGridCellBg,37D6A,241,028_35FB9_import_export,src/c/028_35FB9_import_export/SaveGridCellBg.c,matched,
 TeamGridHitTest,37B92,193,028_35FB9_import_export,src/c/028_35FB9_import_export/TeamGridHitTest.c,nonmatching,registers: x/y (ebp/edi) and cx/top (ebx/esi) swapped vs asm; local declaration order moves it (top before cx gets to +36)
 AskExportToFloppy,38386,306,029_380E9_league_setup,src/c/029_380E9_league_setup/AskExportToFloppy.c,nonmatching,
-AskMasterPassword,3A49E,249,029_380E9_league_setup,src/c/029_380E9_league_setup/AskMasterPassword.c,matched,
 AskTeamPassword,3A395,265,029_380E9_league_setup,src/c/029_380E9_league_setup/AskTeamPassword.c,matched,
+AskMasterPassword,3A49E,249,029_380E9_league_setup,src/c/029_380E9_league_setup/AskTeamPassword.c,matched,
+EncryptPassword,3A597,101,029_380E9_league_setup,src/c/029_380E9_league_setup/AskTeamPassword.c,matched,
 MergeGoalieRecDelta,3A826,388,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeGoalieRecDelta.c,matched,
 MergeSeasonRecDelta,3A71C,266,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeSeasonRecDelta.c,matched,
 MergeTeamRecDelta,3A5FC,288,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeTeamRecDelta.c,matched,
@@ -412,12 +415,16 @@ SortPlayersByPos,644A8,183,046_644A8_engine_display,src/c/046_644A8_engine_displ
 BuildTeamRosterList,6C043,344,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/BuildTeamRosterList.c,nonmatching,
 ClearInputQueue,6B3D7,57,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/ClearInputQueue.c,matched,
 DrawMenuBar,6B5E4,160,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/DrawMenuBar.c,matched,
+DrawMenuDropdown DrawMenuBox,6B684,522,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/DrawMenuDropdown.c,matched,
+DrawMenuItemSel,6B94E,157,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/DrawMenuItemSel.c,nonmatching,
+DrawMenuItemNorm,6B9EB,98,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/DrawMenuItemSel.c,nonmatching,
 EventToPointer,6B4BB,297,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/EventToPointer.c,matched,
 GetInputEvent,6B391,70,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/GetInputEvent.c,matched,
 InputInstall,6B410,108,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/InputInstall.c,nonmatching,registers: C loads inputinstalled into edx and reuses the 0 for the ptrstep/dword_CDA24 stores; asm compares memory and zeroes ebx
 InputRemove,6B47C,63,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/InputRemove.c,matched,
 LoadLeagueDbsMem,6C19B,350,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/LoadLeagueDbsMem.c,matched,
 MenuCentralRegistry,6BE95,168,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/MenuCentralRegistry.c,matched,
+PrintMenuText PrintMenuTextGrey PrintMenuTextAlt,6B88E,192,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/PrintMenuText.c,matched,
 CarTeamRecPtr,6CB6B,37,051_6C2F9_database_save,src/c/051_6C2F9_database_save/CarTeamRecPtr.c,matched,
 DrawDatabaseName,6D256,67,051_6C2F9_database_save,src/c/051_6C2F9_database_save/DrawDatabaseName.c,matched,
 DrawRosterPanel,6D299,95,051_6C2F9_database_save,src/c/051_6C2F9_database_save/DrawRosterPanel.c,matched,

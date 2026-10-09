@@ -822,5 +822,8 @@ void updateanim(Player *p);  /* 5CAEF */
 void doshot(Player *p);  /* 57C0B */
 void asspenshooter(Player *p);  /* 4FAE8 */
 void PenShotAssign(void);  /* 512A7 */
+void DrawMenuDropdown(void *m, int n, int x, int y, int col1, int col2, int col3);  /* 6B684 */
+void DrawListItem(char *text, int x, int y, int w, int top, int idx, int sel, unsigned align, int marks, char *flags);  /* 302B9 */
+void DrawListItems(char **items, int x, int y, int w, int top, int sel, int n, unsigned align, int marks, char *flags);  /* 3039C */
 
 #endif

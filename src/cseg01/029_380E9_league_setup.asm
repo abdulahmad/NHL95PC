@@ -2447,9 +2447,9 @@ pop ecx	; 3A49B
 pop ebx	; 3A49C
 ret	; 3A49D
 %endif ; C
-; C: src/c/029_380E9_league_setup/AskMasterPassword.c
+; C: src/c/029_380E9_league_setup/AskTeamPassword.c (AskMasterPassword)
 %ifdef CBUILD
-%include "c/029_380E9_league_setup/AskMasterPassword.inc"
+%include "c/029_380E9_league_setup/AskTeamPassword.AskMasterPassword.inc"
 %else
 AskMasterPassword:
 push dword 9Ch	; 3A49E
@@ -2540,6 +2540,10 @@ pop esi	; 3A594
 pop ecx	; 3A595
 ret	; 3A596
 %endif ; C
+; C: src/c/029_380E9_league_setup/AskTeamPassword.c (EncryptPassword)
+%ifdef CBUILD
+%include "c/029_380E9_league_setup/AskTeamPassword.EncryptPassword.inc"
+%else
 EncryptPassword:
 push dword 1Ch	; 3A597
 call __CHK	; 3A59C
@@ -2584,6 +2588,7 @@ cmp esi, byte 0Ah	; 3A5EF
 jl short EncryptPassword.1	; 3A5F2
 add esp, byte 4	; 3A5F4
 jmp near AskTeamPassword_ret	; 3A5F7
+%endif ; C
 ; C: src/c/029_380E9_league_setup/MergeTeamRecDelta.c
 %ifdef CBUILD
 %include "c/029_380E9_league_setup/MergeTeamRecDelta.inc"

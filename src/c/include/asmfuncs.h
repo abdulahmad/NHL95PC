@@ -368,9 +368,7 @@ extern void GameSummaryScreen_period(); /* 2DF39 */
 extern void UpdateOtherScores_x(); /* 2F579 */
 extern void GameStatsScreen(); /* 2F5EE */
 extern void DlgNullCallback(); /* 30203 */
-extern void DrawListItem(); /* 302B9 */
 extern void DrawListItem_x(); /* 30396 */
-extern void DrawListItems(); /* 3039C */
 extern void ListDialog(); /* 303FB */
 extern void TrackButtons_x(); /* 30ADC */
 extern void DrawButton_x(); /* 30BEC */
@@ -799,7 +797,6 @@ extern void JoystickCalScreen(); /* 6B093 */
 extern void CalLeftJoystick(); /* 6B35C */
 extern void CalLeftJoystick_common(); /* 6B371 */
 extern void CalRightJoystick(); /* 6B37A */
-extern void DrawMenuDropdown(); /* 6B684 */
 extern void DrawMenuDropdown_ret(); /* 6B7F6 */
 extern void PrintMenuTextGrey(); /* 6B8CB */
 extern void PrintMenuTextGrey_common(); /* 6B907 */

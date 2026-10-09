@@ -536,6 +536,10 @@ pop edi	; 6B67F
 pop esi	; 6B680
 ret 4	; 6B681
 %endif ; C
+; C: src/c/050_6B093_joystick_calibration/DrawMenuDropdown.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/DrawMenuDropdown.inc"
+%else
 DrawMenuDropdown:
 push dword 28h	; 6B684
 call __CHK	; 6B689
@@ -728,6 +732,11 @@ call sub_B4FAC	; 6B87E
 add esp, byte 14h	; 6B883
 add esp, byte 4	; 6B886
 jmp near DrawMenuDropdown_ret	; 6B889
+%endif ; C
+; C: src/c/050_6B093_joystick_calibration/PrintMenuText.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/PrintMenuText.inc"
+%else
 PrintMenuText:
 push dword 5Ch	; 6B88E
 call __CHK	; 6B893
@@ -820,6 +829,7 @@ lea eax, [byte esp+08h]	; 6B942
 push eax	; 6B946
 call sub_92CD0	; 6B947
 jmp short PrintMenuTextGrey_common	; 6B94C
+%endif ; C
 DrawMenuItemSel:
 push dword 28h	; 6B94E
 call __CHK	; 6B953
