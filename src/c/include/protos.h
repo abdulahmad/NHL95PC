@@ -777,5 +777,8 @@ void checkgoalp(Player *p, Player *g, short x, short y);  /* 53CE5 */
 int MenuMergeUpdateDbs(void);  /* 333D7 */
 void DrawLineJerseys(unsigned char *nums, int art, unsigned char side);  /* 75046 */
 int FileDlgHitTest(int x, int y, int *item);  /* 2C3FF */
+void a2touchpuck(Player *p);  /* 4DE14 */
+void __cdecl sub_92CD0(char *s, int x, int y);  /* graphics library: print text */
+void DrawDbDialogButtons(void);  /* 72605 */
 
 #endif

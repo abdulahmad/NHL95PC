@@ -520,7 +520,6 @@ extern void assfaceoffp1(); /* 4D528 */
 extern void pucknorm_body(); /* 4D6B4 */
 extern void RequestLineChange(); /* 4D938 */
 extern void Endfaceoff(); /* 4DA7B */
-extern void a2touchpuck(); /* 4DE14 */
 extern void assreffollow(); /* 4E0BD */
 extern void SkateToSpot(); /* 4E292 */
 extern void CrowdOnStoppage(); /* 4E71A */
@@ -897,7 +896,6 @@ extern void LoadDbDialogShapes(); /* 7230B */
 extern void DbDialog_epilogue(); /* 72485 */
 extern void DbDialog_ret(); /* 72486 */
 extern void ScanDbFiles(); /* 7248C */
-extern void DrawDbDialogButtons(); /* 72605 */
 extern void DrawDbDialog_jt(); /* 727D6 */
 extern void DrawDbDialog(); /* 727EE */
 extern void DrawDbDialog_n6(); /* 72A2A */
@@ -2067,7 +2065,6 @@ extern void loc_92CAC(); /* 92CAC */
 extern void loc_92CAF(); /* 92CAF */
 extern void loc_92CB9(); /* 92CB9 */
 extern void loc_92CC6(); /* 92CC6 */
-extern void sub_92CD0(); /* 92CD0 */
 extern void sub_92CF0(); /* 92CF0 */
 extern void loc_92D22(); /* 92D22 */
 extern void loc_92D33(); /* 92D33 */

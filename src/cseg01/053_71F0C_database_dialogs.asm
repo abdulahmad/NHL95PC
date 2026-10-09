@@ -591,6 +591,10 @@ mov dword [dblisttemp+0Ch], eax	; 725F8
 .9:
 add esp, byte 2Ch	; 725FD
 jmp near DbDialog_ret	; 72600
+; C: src/c/053_71F0C_database_dialogs/DrawDbDialogButtons.c
+%ifdef CBUILD
+%include "c/053_71F0C_database_dialogs/DrawDbDialogButtons.inc"
+%else
 DrawDbDialogButtons:
 push dword 24h	; 72605
 call __CHK	; 7260A
@@ -728,6 +732,7 @@ pop edx	; 727D1
 pop ecx	; 727D2
 pop ebx	; 727D3
 ret	; 727D4
+%endif ; C
 db 090h
 DrawDbDialog_jt:
 dd DrawDbDialog_n1
