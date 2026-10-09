@@ -349,7 +349,6 @@ extern void DrawFileDlg_n3(); /* 2C3E2 */
 extern void DrawFileDlg_n2(); /* 2C3E9 */
 extern void DrawFileDlg_n1(); /* 2C3F0 */
 extern void DrawFileDlg_x(); /* 2C3F7 */
-extern void FileDlgHitTest(); /* 2C3FF */
 extern void DrawFileDlgList_jt(); /* 2C453 */
 extern void DrawFileDlgList(); /* 2C46B */
 extern void DrawFileDlgList_n6(); /* 2C693 */
@@ -926,7 +925,6 @@ extern void str_Player(); /* 737D3 */
 extern void str_GoalieW(); /* 737DA */
 extern void DbLineEditor(); /* 737E1 */
 extern void DbLineEditorLoop(); /* 73A18 */
-extern void DrawLineJerseys(); /* 75046 */
 extern void CheckRosterComplete(); /* 751FC */
 extern void LineEdDone(); /* 75456 */
 extern void MenuShowPlayerStats(); /* 7556E */

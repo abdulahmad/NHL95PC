@@ -775,5 +775,7 @@ void checkint(Player *a, Player *b);  /* 53E6A */
 int __cdecl vecdist(int x, int y);  /* B3D94 */
 void checkgoalp(Player *p, Player *g, short x, short y);  /* 53CE5 */
 int MenuMergeUpdateDbs(void);  /* 333D7 */
+void DrawLineJerseys(unsigned char *nums, int art, unsigned char side);  /* 75046 */
+int FileDlgHitTest(int x, int y, int *item);  /* 2C3FF */
 
 #endif

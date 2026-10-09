@@ -113,6 +113,7 @@ CmpTeamStandings,22DDE,336,017_21CDE_player_stats,src/c/017_21CDE_player_stats/C
 PlayerFromMouseY,24453,143,017_21CDE_player_stats,src/c/017_21CDE_player_stats/PlayerFromMouseY.c,matched,
 DrawBevelBox,29D00,533,019_2970A_league_schedule,src/c/019_2970A_league_schedule/DrawBevelBox.c,nonmatching,stack slots of the corner coordinate temporaries differ (x1 + 2 / y1 + 2 ...); logic matches
 FitPlayerName,29C75,139,019_2970A_league_schedule,src/c/019_2970A_league_schedule/FitPlayerName.c,matched,
+FileDlgHitTest,2C3FF,82,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/FileDlgHitTest.c,matched,
 LoadFileDlgShapes,2B7C3,385,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/LoadFileDlgShapes.c,matched,
 PrintTextCopy,2C135,63,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/PrintTextCopy.c,matched,
 ReadGameSettings,2D260,222,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/ReadGameSettings.c,matched,
@@ -263,7 +264,7 @@ Sweepcheck,532A2,27,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_a
 ToFixed,53294,14,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ToFixed.c,matched,
 TryBlockShot,534BB,124,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/TryBlockShot.c,nonmatching,"registers only: original p in ecx, n in ebx, gmode2 temp in edx; this draft p in ebx, n in edx. 10-min cap"
 checkagr,5369F,238,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkagr.c,nonmatching,
-checkgoalp,53CE5,389,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkgoalp.c,nonmatching,
+checkgoalp,53CE5,389,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkgoalp.c,nonmatching,C hoists the wcradiusy load above the SCnum 12 test and swaps esi / edi for p / SCnum; rest of the logic matches
 checkint,53E6A,290,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkint.c,matched,
 checkplcoll,58CE2,229,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkplcoll.c,nonmatching,stack slots: asm spills x (word) at [esp] and y at [esp+4]; C swaps the two slots; rest matches
 deflect,57A3E,90,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/deflect.c,matched,
@@ -421,6 +422,7 @@ DbDialogHitTest,72A5C,82,053_71F0C_database_dialogs,src/c/053_71F0C_database_dia
 LoadDbDialogShapes,7230B,385,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/LoadDbDialogShapes.c,matched,
 LoadDbsFromDir,7345B,360,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/LoadDbsFromDir.c,matched,
 CmpRosterGoalies,75A37,371,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/CmpRosterGoalies.c,matched,
+DrawLineJerseys,75046,438,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/DrawLineJerseys.c,nonmatching,
 FindRosterSlot,739B6,98,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/FindRosterSlot.c,matched,
 GameRosterCmp,76A93,98,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/GameRosterCmp.c,matched,
 LineEdHitTest,77F6F,134,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/LineEdHitTest.c,nonmatching,"registers: asm keeps the slot y in ebp (4 saved regs, 14h frame); C uses eax and saves 3"

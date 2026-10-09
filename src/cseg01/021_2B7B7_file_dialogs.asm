@@ -983,6 +983,10 @@ or byte [fdlgmask+1], 4	; 2C3F0
 DrawFileDlg_x:
 add esp, byte 24h	; 2C3F7
 jmp near LoadFileDlgShapes_x	; 2C3FA
+; C: src/c/021_2B7B7_file_dialogs/FileDlgHitTest.c
+%ifdef CBUILD
+%include "c/021_2B7B7_file_dialogs/FileDlgHitTest.inc"
+%else
 FileDlgHitTest:
 push dword 0Ch	; 2C3FF
 call __CHK	; 2C404
@@ -1017,6 +1021,7 @@ xor eax, eax	; 2C44C
 pop esi	; 2C44E
 pop ecx	; 2C44F
 ret	; 2C450
+%endif ; C
 db 08Bh,0C0h
 DrawFileDlgList_jt:
 dd DrawFileDlgList_n1
