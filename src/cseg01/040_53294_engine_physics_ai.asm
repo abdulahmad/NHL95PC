@@ -1064,6 +1064,10 @@ call wallcoll	; 53E62
 pop edi	; 53E67
 pop esi	; 53E68
 ret	; 53E69
+; C: src/c/040_53294_engine_physics_ai/checkint.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/checkint.inc"
+%else
 checkint:
 push dword 10h	; 53E6A
 call __CHK	; 53E6F
@@ -1154,6 +1158,7 @@ add esp, byte 4	; 53F86
 pop ecx	; 53F89
 pop ebx	; 53F8A
 ret	; 53F8B
+%endif ; C
 checkob:
 push dword 1Ch	; 53F8C
 call __CHK	; 53F91

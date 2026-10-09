@@ -426,6 +426,10 @@ mov eax, exhstate	; 333CA
 call LoadModeState	; 333CF
 xor eax, eax	; 333D4
 ret	; 333D6
+; C: src/c/025_32DA9_temp_files/MenuMergeUpdateDbs.c
+%ifdef CBUILD
+%include "c/025_32DA9_temp_files/MenuMergeUpdateDbs.inc"
+%else
 MenuMergeUpdateDbs:
 push dword 20h	; 333D7
 call __CHK	; 333DC
@@ -477,6 +481,7 @@ pop ecx	; 33466
 pop ebx	; 33467
 nullsub_6:
 ret	; 33468
+%endif ; C
 ; C: src/c/025_32DA9_temp_files/MenuMergeLeagueFiles.c
 %ifdef CBUILD
 %include "c/025_32DA9_temp_files/MenuMergeLeagueFiles.inc"

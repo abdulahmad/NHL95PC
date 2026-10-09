@@ -398,7 +398,6 @@ extern void MenuRemoveTeam(); /* 332C0 */
 extern void MenuLeagueSettings(); /* 332F6 */
 extern void MenuRebuildDbs(); /* 3339D */
 extern void MenuRebuildDbs_x(); /* 333C0 */
-extern void MenuMergeUpdateDbs(); /* 333D7 */
 extern void nullsub_6(); /* 33468 */
 extern void MenuUpdateTeamDbs(); /* 334FB */
 extern void MenuTradePlayers(); /* 33523 */
@@ -554,8 +553,6 @@ extern void assrefpenshot(); /* 52FB0 */
 extern void burst(); /* 532BD */
 extern void check4check(); /* 53537 */
 extern void checkcheck(); /* 5382C */
-extern void checkgoalp(); /* 53CE5 */
-extern void checkint(); /* 53E6A */
 extern void checkob(); /* 53F8C */
 extern void checkob_ret5a(); /* 5412B */
 extern void checkob_ret5(); /* 5412E */
@@ -6475,7 +6472,6 @@ extern void sub_B3D56(); /* B3D56 */
 extern void sub_B3D64(); /* B3D64 */
 extern void sub_B3D74(); /* B3D74 */
 extern void loc_B3D85(); /* B3D85 */
-extern void vecdist(); /* B3D94 */
 extern void loc_B3DAB(); /* B3DAB */
 extern void loc_B3DB9(); /* B3DB9 */
 extern void loc_B3DD4(); /* B3DD4 */
