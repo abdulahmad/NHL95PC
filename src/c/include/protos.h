@@ -384,5 +384,29 @@ int MergeLeagueFiles(void);
 int __cdecl sub_8CCA8(char *name, int size, int flags);  /* file library: load file */
 int CupSeriesWinner(unsigned char *s, unsigned games);  /* 15CE1 */
 void DrawModeSetChecks(void);  /* 7B7BE */                
+void SetRinkScroll(int x, int y);  /* 33DD3 */            
+void sub_6A033(int what);  /* engine display: redraw */   
+void IntermissionPC(void);  /* 10F6D */                   
+void FadePalette(int dir, unsigned char *pal, int steps);
+void SetScreenSize(int w, int h);
+void MusicChanReset(void);
+void sub_8F633(void);  /* sound library: stop */          
+void sub_1BAF3(int ticks);
+void __cdecl sub_8EA18(int font);  /* text library: set font */
+void IntermissionDesk(void);
+void LoadScreenPalTick(void);  /* 47951 */                
+void __cdecl sub_B4C61(void);  /* video library: wait for retrace */
+void MoveInDir(Player *p, short dir);  /* 49260 */        
+void CrowdNoiseOff(void);  /* 59748 */                    
+void sub_8FDB2(int card, int voice, int vol);  /* sound library: set voice volume */
+void sub_8FE4F(int card, int voice, int what);  /* sound library: voice control */
+void RenderTextLine(int x, int y, char *s);  /* 174D8 */  
+int __cdecl sub_B4F8C(int w, int h, int flags);  /* graphics library: create bitmap */
+void __cdecl sub_B3A88(void *save);  /* graphics library: save draw state */
+void __cdecl SetDrawBitmap(int bmp);
+void __cdecl sub_B392C(int col);  /* graphics library: clear */
+void __cdecl sub_B3AA1(void *save);  /* graphics library: restore draw state */
+void __cdecl sub_91370(int art, int x, int y);  /* graphics library: draw art */
+void __cdecl sub_9132C(int bmp);  /* graphics library: free bitmap */
 
 #endif

@@ -2637,6 +2637,10 @@ pop ebp	; 4794B
 pop edi	; 4794C
 pop esi	; 4794D
 ret 0Ch	; 4794E
+; C: src/c/035_45282_options_settings/LoadScreenPalTick.c
+%ifdef CBUILD
+%include "c/035_45282_options_settings/LoadScreenPalTick.inc"
+%else
 LoadScreenPalTick:
 push dword 1Ch	; 47951
 call __CHK	; 47956
@@ -2687,6 +2691,7 @@ pop edx	; 479E5
 pop ecx	; 479E6
 pop ebx	; 479E7
 ret	; 479E8
+%endif ; C
 ShowLoadingScreen:
 push dword 934h	; 479E9
 call __CHK	; 479EE

@@ -1200,6 +1200,10 @@ jmp near PreGameIntro_popx	; 49251
 .4:
 call sub_8F633	; 49256
 jmp near PreGameIntro_popx	; 4925B
+; C: src/c/037_4842A_engine_player_logic/MoveInDir.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/MoveInDir.inc"
+%else
 MoveInDir:
 push dword 8	; 49260
 call __CHK	; 49265
@@ -1261,6 +1265,7 @@ call playeracc	; 492F2
 .x:
 pop ebx	; 492F7
 ret	; 492F8
+%endif ; C
 SteerToTarget:
 push dword 10h	; 492F9
 call __CHK	; 492FE

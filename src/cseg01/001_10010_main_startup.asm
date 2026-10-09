@@ -1362,6 +1362,10 @@ pop esi	; 10F69
 pop ecx	; 10F6A
 pop ebx	; 10F6B
 ret	; 10F6C
+; C: src/c/001_10010_main_startup/IntermissionPC.c
+%ifdef CBUILD
+%include "c/001_10010_main_startup/IntermissionPC.inc"
+%else
 IntermissionPC:
 push dword 1Ch	; 10F6D
 call __CHK	; 10F72
@@ -1406,6 +1410,7 @@ pop edx	; 11001
 pop ecx	; 11002
 pop ebx	; 11003
 ret	; 11004
+%endif ; C
 DrawSpriteNumber:
 push dword 1Ch	; 11005
 call __CHK	; 1100A

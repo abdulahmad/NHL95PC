@@ -1468,6 +1468,10 @@ mov dword [textcolor], eax	; 174CC
 mov dword [textshadow], edx	; 174D1
 ret	; 174D7
 %endif ; C
+; C: src/c/007_1609F_title_intro/RenderTextLine.c
+%ifdef CBUILD
+%include "c/007_1609F_title_intro/RenderTextLine.inc"
+%else
 RenderTextLine:
 push dword 84h	; 174D8
 call __CHK	; 174DD
@@ -1527,6 +1531,7 @@ pop edi	; 1756F
 pop esi	; 17570
 pop ecx	; 17571
 ret	; 17572
+%endif ; C
 ; C: src/c/007_1609F_title_intro/PrintCenteredText.c
 %ifdef CBUILD
 %include "c/007_1609F_title_intro/PrintCenteredText.inc"

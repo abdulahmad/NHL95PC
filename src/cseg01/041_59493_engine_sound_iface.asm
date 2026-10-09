@@ -245,6 +245,10 @@ pop edx	; 59744
 pop ecx	; 59745
 pop ebx	; 59746
 ret	; 59747
+; C: src/c/041_59493_engine_sound_iface/CrowdNoiseOff.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/CrowdNoiseOff.inc"
+%else
 CrowdNoiseOff:
 push dword 10h	; 59748
 call __CHK	; 5974D
@@ -289,6 +293,7 @@ pop esi	; 597DF
 pop edx	; 597E0
 pop ebx	; 597E1
 ret	; 597E2
+%endif ; C
 ; C: src/c/041_59493_engine_sound_iface/CrowdFadeOut.c
 %ifdef CBUILD
 %include "c/041_59493_engine_sound_iface/CrowdFadeOut.inc"

@@ -16,15 +16,12 @@ extern void ReadControllerPad(); /* 10A86 */
 extern void ReadHotKeys(); /* 10AC6 */
 extern void ReadSkipKeys(); /* 10C7F */
 extern void SampleInputTick(); /* 10DCD */
-extern void SetScreenSize(); /* 10E9F */
-extern void IntermissionPC(); /* 10F6D */
 extern void DrawSpriteNumber(); /* 11005 */
 extern void DrawFrameSprite(); /* 110E0 */
 extern void HandleHotKey(); /* 1118F */
 extern void HandleHotKey_ret(); /* 113E9 */
 extern void RunGameFrames(); /* 1149A */
 extern void SetFullPalette(); /* 11550 */
-extern void FadePalette(); /* 11598 */
 extern void GameLoop(); /* 1167B */
 extern void PlayGame(); /* 11D09 */
 extern void PickAwardWinners(); /* 1205D */
@@ -78,7 +75,6 @@ extern void RunDemoGame_x(); /* 16005 */
 extern void TitleScreen(); /* 1609F */
 extern void RunIntro(); /* 1672A */
 extern void ShowCredits(); /* 16F9A */
-extern void RenderTextLine(); /* 174D8 */
 extern void PrintOutlinedText(); /* 17636 */
 extern void PrintFmt1(); /* 176AE */
 extern void PrintFmt2(); /* 176DB */
@@ -119,7 +115,6 @@ extern void DrawDeskFrames(); /* 18E43 */
 extern void MenuCallbackTrue(); /* 18F74 */
 extern void MenuCallbackTrue2(); /* 18F86 */
 extern void PlayRandomHighlight(); /* 18F8D */
-extern void IntermissionDesk(); /* 190BE */
 extern void PostGameDesk(); /* 1920F */
 extern void SportsDesk(); /* 1935D */
 extern void DeskReturnConfirm(); /* 1A5D4 */
@@ -249,7 +244,6 @@ extern void sub_1BAB1(); /* 1BAB1 */
 extern void loc_1BACC(); /* 1BACC */
 extern void loc_1BAEC(); /* 1BAEC */
 extern void loc_1BAED(); /* 1BAED */
-extern void sub_1BAF3(); /* 1BAF3 */
 extern void loc_1BB0E(); /* 1BB0E */
 extern void loc_1BB18(); /* 1BB18 */
 extern void loc_1BB33(); /* 1BB33 */
@@ -503,7 +497,6 @@ extern void MenuImportDbs(); /* 336BE */
 extern void MenuExportDbs(); /* 336E6 */
 extern void FreeRinkGfx(); /* 33727 */
 extern void BlitTileMap(); /* 33C08 */
-extern void SetRinkScroll(); /* 33DD3 */
 extern void WaitClickTimeout(); /* 33E6A */
 extern void LoadCrestsPalette(); /* 33F02 */
 extern void DrawCalendarDay(); /* 33FFD */
@@ -620,7 +613,6 @@ extern void FinishPlayoffs_r4(); /* 4499D */
 extern void AdvancePlayoffs(); /* 44A41 */
 extern void CreateNewLeague(); /* 44DCF */
 extern void SimulateGame(); /* 452C5 */
-extern void LoadScreenPalTick(); /* 47951 */
 extern void ShowLoadingScreen(); /* 479E9 */
 extern void FadeOutPalCycle(); /* 47C31 */
 extern void PreGameIntro(); /* 47CD6 */
@@ -638,7 +630,6 @@ extern void StarEligible(); /* 487D9 */
 extern void StarCompare(); /* 4883B */
 extern void PickThreeStars(); /* 48AC8 */
 extern void StartThreeStars(); /* 48F0B */
-extern void MoveInDir(); /* 49260 */
 extern void SteerToTarget(); /* 492F9 */
 extern void ass_pc_slot20(); /* 49460 */
 extern void assthreestars(); /* 495B8 */
@@ -770,7 +761,6 @@ extern void ChkPullGoalieLate(); /* 593F5 */
 extern void sndcb_addesp8_x(); /* 594AC */
 extern void SndLoadFile2(); /* 594B2 */
 extern void CrowdNoiseUpdate(); /* 594CD */
-extern void CrowdNoiseOff(); /* 59748 */
 extern void PlayCrowdSample(); /* 59A11 */
 extern void PlayCrowdSample_ret(); /* 59A7D */
 extern void PaOneMinuteLeft(); /* 59A7E */
@@ -895,7 +885,6 @@ extern void DebugMonitor(); /* 688A4 */
 extern void DebugMonitor_pop(); /* 68E74 */
 extern void DumpStatsLog(); /* 68E7B */
 extern void StartHL2(); /* 69336 */
-extern void sub_6A033(); /* 6A033 */
 extern void sub_6A044(); /* 6A044 */
 extern void sub_6A057(); /* 6A057 */
 extern void sub_6A068(); /* 6A068 */
@@ -1359,7 +1348,6 @@ extern void ShutdownSpeech(); /* 8363C */
 extern void ShutdownSpeech_ret6(); /* 836C3 */
 extern void ShutdownSpeech_ret5(); /* 836C4 */
 extern void MusicChanReset2(); /* 8373E */
-extern void MusicChanReset(); /* 837A8 */
 extern void ReadBE24(); /* 837FB */
 extern void ReadBE24_ret(); /* 83857 */
 extern void OpenSpeechBank(); /* 83897 */
@@ -1726,7 +1714,6 @@ extern void loc_8E9B4(); /* 8E9B4 */
 extern void sub_8E9D4(); /* 8E9D4 */
 extern void sub_8E9E8(); /* 8E9E8 */
 extern void sub_8EA00(); /* 8EA00 */
-extern void sub_8EA18(); /* 8EA18 */
 extern void loc_8EA81(); /* 8EA81 */
 extern void loc_8EA83(); /* 8EA83 */
 extern void loc_8EA98(); /* 8EA98 */
@@ -1851,7 +1838,6 @@ extern void loc_8F592(); /* 8F592 */
 extern void loc_8F609(); /* 8F609 */
 extern void loc_8F616(); /* 8F616 */
 extern void sub_8F61D(); /* 8F61D */
-extern void sub_8F633(); /* 8F633 */
 extern void loc_8F64F(); /* 8F64F */
 extern void loc_8F66B(); /* 8F66B */
 extern void loc_8F66C(); /* 8F66C */
@@ -1924,13 +1910,11 @@ extern void sub_8FD67(); /* 8FD67 */
 extern void loc_8FD82(); /* 8FD82 */
 extern void sub_8FD84(); /* 8FD84 */
 extern void loc_8FDAE(); /* 8FDAE */
-extern void sub_8FDB2(); /* 8FDB2 */
 extern void loc_8FDE1(); /* 8FDE1 */
 extern void sub_8FDE5(); /* 8FDE5 */
 extern void loc_8FE18(); /* 8FE18 */
 extern void sub_8FE1C(); /* 8FE1C */
 extern void loc_8FE4B(); /* 8FE4B */
-extern void sub_8FE4F(); /* 8FE4F */
 extern void loc_8FE7F(); /* 8FE7F */
 extern void sub_8FE83(); /* 8FE83 */
 extern void sub_8FE89(); /* 8FE89 */
@@ -2120,8 +2104,6 @@ extern void loc_912A5(); /* 912A5 */
 extern void sub_912C8(); /* 912C8 */
 extern void sub_912E4(); /* 912E4 */
 extern void sub_91310(); /* 91310 */
-extern void sub_9132C(); /* 9132C */
-extern void sub_91370(); /* 91370 */
 extern void loc_91391(); /* 91391 */
 extern void sub_913B4(); /* 913B4 */
 extern void sub_913D0(); /* 913D0 */
@@ -6755,7 +6737,6 @@ extern void loc_B38BD(); /* B38BD */
 extern void loc_B38DC(); /* B38DC */
 extern void loc_B38FB(); /* B38FB */
 extern void loc_B391A(); /* B391A */
-extern void sub_B392C(); /* B392C */
 extern void sub_B395C(); /* B395C */
 extern void sub_B3962(); /* B3962 */
 extern void sub_B396E(); /* B396E */
@@ -6774,8 +6755,6 @@ extern void sub_B3A2F(); /* B3A2F */
 extern void loc_B3A47(); /* B3A47 */
 extern void loc_B3A59(); /* B3A59 */
 extern void loc_B3A70(); /* B3A70 */
-extern void sub_B3A88(); /* B3A88 */
-extern void sub_B3AA1(); /* B3AA1 */
 extern void sub_B3ABC(); /* B3ABC */
 extern void loc_B3ADF(); /* B3ADF */
 extern void sub_B3B00(); /* B3B00 */
@@ -7001,7 +6980,6 @@ extern void sub_B4C33(); /* B4C33 */
 extern void loc_B4C48(); /* B4C48 */
 extern void loc_B4C4F(); /* B4C4F */
 extern void loc_B4C56(); /* B4C56 */
-extern void sub_B4C61(); /* B4C61 */
 extern void loc_B4C6B(); /* B4C6B */
 extern void loc_B4C72(); /* B4C72 */
 extern void loc_B4C8E(); /* B4C8E */
@@ -7038,8 +7016,6 @@ extern void loc_B4F26(); /* B4F26 */
 extern void loc_B4F2A(); /* B4F2A */
 extern void loc_B4F3C(); /* B4F3C */
 extern void loc_B4F40(); /* B4F40 */
-extern void SetDrawBitmap(); /* B4F70 */
-extern void sub_B4F8C(); /* B4F8C */
 extern void sub_B4FA6(); /* B4FA6 */
 extern void sub_B4FAC(); /* B4FAC */
 extern void loc_B4FE6(); /* B4FE6 */

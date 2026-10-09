@@ -528,6 +528,10 @@ pop ebp	; 33DCD
 pop edi	; 33DCE
 pop esi	; 33DCF
 ret 8	; 33DD0
+; C: src/c/026_3377C_rink_tiles/SetRinkScroll.c
+%ifdef CBUILD
+%include "c/026_3377C_rink_tiles/SetRinkScroll.inc"
+%else
 SetRinkScroll:
 push dword 10h	; 33DD3
 call __CHK	; 33DD8
@@ -579,6 +583,7 @@ pop esi	; 33E66
 pop ecx	; 33E67
 pop ebx	; 33E68
 ret	; 33E69
+%endif ; C
 WaitClickTimeout:
 push dword 30h	; 33E6A
 call __CHK	; 33E6F
