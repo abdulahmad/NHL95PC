@@ -2,11 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_3DB41 progbits alloc exec nowrite align=1
-extern __CHK, asc_C1942, asc_C1948, asc_C195C, asc_C8145, byte_C8B78, dword_D243A, fclose_
+extern __CHK, str_NHL2, str_CannotOpenNhlCfg, str_fmt4x, str_CFG, greyramp, sounddevids, fclose_
 extern fopen_, fscanf_, MakePath, SetDialogColors, sub_82D7A, sub_8EB93, sub_8FE83, FatalError
-extern MouseSetPos, sub_B3454, sub_B4B88, unk_C1946
-global loc_3DB85, loc_3DBAA, loc_3DBAF, loc_3DBB8, sub_3DB41, unk_3DC28
-sub_3DB41:
+extern MouseSetPos, sub_B3454, sub_B4B88, str_R3
+global LoadNhlCfg, negone_3DC28
+LoadNhlCfg:
 push dword 38h	; 3DB41
 call __CHK	; 3DB46
 push ebx	; 3DB4B
@@ -15,40 +15,40 @@ push edx	; 3DB4D
 push esi	; 3DB4E
 push edi	; 3DB4F
 sub esp, byte 14h	; 3DB50
-mov ecx, asc_C8145	; 3DB53
-mov ebx, asc_C1942	; 3DB58
+mov ecx, str_CFG	; 3DB53
+mov ebx, str_NHL2	; 3DB58
 xor edx, edx	; 3DB5D
 mov eax, esp	; 3DB5F
 call MakePath	; 3DB61
-mov edx, unk_C1946	; 3DB66
+mov edx, str_R3	; 3DB66
 mov eax, esp	; 3DB6B
 call fopen_	; 3DB6D
 mov esi, eax	; 3DB72
 test eax, eax	; 3DB74
-jne short loc_3DB85	; 3DB76
-push asc_C1948	; 3DB78
+jne short .1	; 3DB76
+push str_CannotOpenNhlCfg	; 3DB78
 call FatalError	; 3DB7D
 add esp, byte 4	; 3DB82
-loc_3DB85:
+.1:
 lea eax, [byte esp+010h]	; 3DB85
 push eax	; 3DB89
-push asc_C195C	; 3DB8A
+push str_fmt4x	; 3DB8A
 push esi	; 3DB8F
 call fscanf_	; 3DB90
 add esp, byte 0Ch	; 3DB95
 cmp eax, byte 1	; 3DB98
-jne short loc_3DBAA	; 3DB9B
+jne short .2	; 3DB9B
 mov edi, dword [byte esp+010h]	; 3DB9D
-mov edi, dword [nosplit edi*4+dword_D243A]	; 3DBA1
-jmp short loc_3DBAF	; 3DBA8
-loc_3DBAA:
+mov edi, dword [nosplit edi*4+sounddevids]	; 3DBA1
+jmp short .3	; 3DBA8
+.2:
 mov edi, 10h	; 3DBAA
-loc_3DBAF:
+.3:
 mov eax, esi	; 3DBAF
 call fclose_	; 3DBB1
 xor esi, esi	; 3DBB6
-loc_3DBB8:
-mov al, byte [dword esi+byte_C8B78]	; 3DBB8
+.4:
+mov al, byte [dword esi+greyramp]	; 3DBB8
 mov byte [esp], al	; 3DBBE
 mov byte [byte esp+01h], al	; 3DBC1
 mov byte [byte esp+02h], al	; 3DBC5
@@ -60,7 +60,7 @@ call sub_B4B88	; 3DBCF
 add esp, byte 0Ch	; 3DBD4
 inc esi	; 3DBD7
 cmp esi, byte 4	; 3DBD8
-jl short loc_3DBB8	; 3DBDB
+jl short LoadNhlCfg.4	; 3DBDB
 push sub_8EB93	; 3DBDD
 call sub_B3454	; 3DBE2
 add esp, byte 4	; 3DBE7
@@ -85,5 +85,5 @@ pop edx	; 3DC24
 pop ecx	; 3DC25
 pop ebx	; 3DC26
 ret	; 3DC27
-unk_3DC28:
+negone_3DC28:
 db 0FFh,0FFh,0FFh,0FFh

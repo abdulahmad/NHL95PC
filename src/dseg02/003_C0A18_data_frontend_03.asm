@@ -44,7 +44,7 @@ global str_Calendar, str_Callogo, str_Iff9, str_Pointer8, str_Menubuff5, str_02d
 global str_Temp5, str_Easndesk2, str_GAME, str_SAV, str_Back, str_Callogo2, str_PLST, str_PTLS
 global str_Pal19, str_TPI, str_Embnhl, str_Bkgd8, str_Pointer9, str_Iff10, str_Leaguetm2, str_Tspal
 global str_Pal20, str_Menubuff6, str_WhoWillPlayThe, str_MightyDucksOfAnaheim3, str_02d2, str_SAV2, str_GAME2, str_SET
-global str_GAME3, str_SAV3, str_02d3, str_Game2, str_Sav2, asc_C1942, asc_C1948, asc_C195C
+global str_GAME3, str_SAV3, str_02d3, str_Game2, str_Sav2, str_NHL2, str_CannotOpenNhlCfg, str_fmt4x
 global asc_C1964, asc_C1969, asc_C196F, asc_C1974, asc_C197A, asc_C1980, asc_C1987, asc_C198C
 global asc_C1994, asc_C19C1, asc_C19DC, asc_C19E0, asc_C19EA, asc_C19F3, asc_C19FA, asc_C19FF
 global asc_C1A04, asc_C1A0C, asc_C1A18, asc_C1A21, str_fe1, str_fe2, str_fe3, str_fe4
@@ -71,7 +71,7 @@ global str_fek5, str_fek6, str_fek7, str_fek8, str_feh7, str_feA1, str_fel1, str
 global str_fel2, str_fec6, str_fed2, str_fed3, str_fed4, str_D6, str_OT, str_S3
 global str_CommaSp, str_RParen2, str_D7, str_Dot, str_Space, str_fee2, str_fee3, str_fee4
 global unk_C17F0, str_D8, str_W5, str_L7, str_T5, unk_C1900, str_wildcard, str_ID
-global str_L1, str_L22, unk_C1934, unk_C1936, unk_C1946, unk_C1A15
+global str_L1, str_L22, unk_C1934, unk_C1936, str_R3, unk_C1A15
 str_teams:
 db 074h,065h,061h,06Dh,073h,00h
 str_fe1:
@@ -1182,14 +1182,14 @@ str_Game2:
 db 067h,061h,06Dh,065h,00h
 str_Sav2:
 db 02Eh,073h,061h,076h,00h
-asc_C1942:
+str_NHL2:
 db 04Eh,048h,04Ch,00h
-unk_C1946:
+str_R3:
 db 072h,00h
-asc_C1948:
+str_CannotOpenNhlCfg:
 db 063h,061h,06Eh,06Eh,06Fh,074h,020h,06Fh,070h,065h,06Eh,020h,06Eh,068h,06Ch,02Eh
 db 063h,066h,067h,00h
-asc_C195C:
+str_fmt4x:
 db 025h,034h,078h,0Ah,00h,00h,00h,00h
 asc_C1964:
 db 074h,065h,06Dh,070h,00h

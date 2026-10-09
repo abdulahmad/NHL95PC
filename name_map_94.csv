@@ -388,7 +388,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0003D84F,sub_3D84F,WaitLeagueFloppy,PC-new,,,,medium,"""Insert disk"" prompt for the team's league floppy, repeats FindLeagueFloppy until found or cancelled (4)",database_merge,manual-trace
 0003D8DD,sub_3D8DD,ReadLeagueInfo,PC-new,,,,medium,"opens <league>\PINFO.DB and reads the fields WriteLeagueInfo writes into the caller's pointers (humancount, leaguemaster, leaguesaved, leagueflags, leagueteams, masterpw, savedname)",database_merge,manual-trace
 0003DAB9,sub_3DAB9,ReadTeamNames,PC-new,,,,high,"(path, dst, full): reads the 26 team names from the team DB (2E8h records, +05h 15h-byte full name or +1Ah 0Dh-byte short name) into dst[21 * i]",database_merge,manual-trace
-0003DB41,sub_3DB41,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),config_cfg,unmatched
+0003DB41,sub_3DB41,LoadNhlCfg,PC-new,,,,high,"startup: opens NHL.CFG (""cannot open nhl.cfg"" fatal), fscanf ""%4x"" sound device index -> sounddevids (default 10h), sets palette 0-3 to a grey ramp, installs sub_8EB93 handler, mouse to 0,0, dialog colors, then starts the sound driver (sub_82D7A); the writer is in sound_config",config_cfg,manual-trace
 0003DC2C,sub_3DC2C,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),roster_jersey,unmatched
 0003DE05,sub_3DE05,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),roster_jersey,unmatched
 0003E055,sub_3E055,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),roster_jersey,unmatched

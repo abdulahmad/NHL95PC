@@ -30,7 +30,7 @@ global dword_D20A8, dword_D20E0, dword_D2150, dword_D223C, dword_D227C, dword_D2
 global dword_D229C, dword_D22A0, dword_D22A4, dword_D22A8, dword_D22AC, dword_D22B0, dword_D22B4, dword_D22BC
 global dword_D22C0, dword_D22C4, dword_D22C8, dword_D22CC, dword_D22D0, dword_D22D4, dword_D22DC, dword_D22E0
 global dword_D22EC, dword_D22F0, dword_D2350, dword_D23A3, dword_D23A7, dword_D23AB, dword_D23AF, dword_D2423
-global dword_D2427, dword_D242B, musichandle, dword_D2435, dword_D243A, dword_D24A0, dword_D27A2
+global dword_D2427, dword_D242B, musichandle, dword_D2435, sounddevids, dword_D24A0, dword_D27A2
 global dword_D27B2, dword_D27B7, dword_D27BB, off_D1184, off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25
 global off_D21C0, off_D2230, off_D24D1, off_D273E, off_D2776, off_D27EF, off_D27F7, off_D2855
 global unk_D1190, unk_D11B2, unk_D12C8, unk_D16A0, unk_D19CC, unk_D19DC, unk_D19F0, unk_D19F5
@@ -788,7 +788,7 @@ dword_D2435:
 db 00h,00h,00h,00h
 byte_D2439:
 db 00h
-dword_D243A:
+sounddevids:
 db 010h,00h,00h,00h,01h,00h,00h,00h,04h,00h,00h,00h,02h,00h,00h,00h
 db 08h,00h,00h,00h,020h,00h,00h,00h
 unk_D2452:

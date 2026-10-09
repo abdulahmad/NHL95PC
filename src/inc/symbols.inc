@@ -320,8 +320,8 @@
 ;  3D84F  WaitLeagueFloppy                         cseg01/030_3A9AA_database_merge.asm          1
 ;  3D8DD  ReadLeagueInfo                           cseg01/030_3A9AA_database_merge.asm          2
 ;  3DAB9  ReadTeamNames                            cseg01/030_3A9AA_database_merge.asm          5
-;  3DB41  sub_3DB41                                cseg01/031_3DB41_config_cfg.asm              1
-;  3DC28  unk_3DC28                                cseg01/031_3DB41_config_cfg.asm              1
+;  3DB41  LoadNhlCfg                               cseg01/031_3DB41_config_cfg.asm              1
+;  3DC28  negone_3DC28                             cseg01/031_3DB41_config_cfg.asm              1
 ;  3DE05  sub_3DE05                                cseg01/032_3DC2C_roster_jersey.asm           1
 ;  3E390  sub_3E390                                cseg01/032_3DC2C_roster_jersey.asm           1
 ;  3EDAA  sub_3EDAA                                cseg01/032_3DC2C_roster_jersey.asm           1
@@ -2251,10 +2251,10 @@
 ;  C1936  unk_C1936                                dseg02/003_C0A18_data_frontend_03.asm        1
 ;  C1938  str_Game2                                dseg02/003_C0A18_data_frontend_03.asm        1
 ;  C193D  str_Sav2                                 dseg02/003_C0A18_data_frontend_03.asm        1
-;  C1942  asc_C1942                                dseg02/003_C0A18_data_frontend_03.asm        1
-;  C1946  unk_C1946                                dseg02/003_C0A18_data_frontend_03.asm        1
-;  C1948  asc_C1948                                dseg02/003_C0A18_data_frontend_03.asm        1
-;  C195C  asc_C195C                                dseg02/003_C0A18_data_frontend_03.asm        1
+;  C1942  str_NHL2                                 dseg02/003_C0A18_data_frontend_03.asm        1
+;  C1946  str_R3                                   dseg02/003_C0A18_data_frontend_03.asm        1
+;  C1948  str_CannotOpenNhlCfg                     dseg02/003_C0A18_data_frontend_03.asm        1
+;  C195C  str_fmt4x                                dseg02/003_C0A18_data_frontend_03.asm        1
 ;  C1964  asc_C1964                                dseg02/003_C0A18_data_frontend_03.asm        1
 ;  C1969  asc_C1969                                dseg02/003_C0A18_data_frontend_03.asm        1
 ;  C196F  asc_C196F                                dseg02/003_C0A18_data_frontend_03.asm        1
@@ -3751,7 +3751,7 @@
 ;  C8131  str_SET2                                 dseg02/026_C7F07_data_frontend_26.asm        1
 ;  C8136  str_PPV                                  dseg02/026_C7F07_data_frontend_26.asm        6
 ;  C8140  str_KMS                                  dseg02/026_C7F07_data_frontend_26.asm        1
-;  C8145  asc_C8145                                dseg02/026_C7F07_data_frontend_26.asm        2
+;  C8145  str_CFG                                  dseg02/026_C7F07_data_frontend_26.asm        2
 ;  C814A  str_VFN                                  dseg02/026_C7F07_data_frontend_26.asm        5
 ;  C814F  str_extBIN                               dseg02/026_C7F07_data_frontend_26.asm        5
 ;  C8154  str_extxx                                dseg02/026_C7F07_data_frontend_26.asm        3
@@ -3811,7 +3811,7 @@
 ;  C8B00  importmastermsg                          dseg02/032_C88E2_data_frontend_32.asm        1
 ;  C8B37  exporterrmsg                             dseg02/032_C88E2_data_frontend_32.asm        1
 ;  C8B40  drivebtns                                dseg02/032_C88E2_data_frontend_32.asm        1
-;  C8B78  byte_C8B78                               dseg02/032_C88E2_data_frontend_32.asm        1
+;  C8B78  greyramp                                 dseg02/032_C88E2_data_frontend_32.asm        1
 ;  C8B7C  dword_C8B7C                              dseg02/032_C88E2_data_frontend_32.asm        1
 ;  C8B80  dword_C8B80                              dseg02/032_C88E2_data_frontend_32.asm        1
 ;  C8BDD  off_C8BDD                                dseg02/032_C88E2_data_frontend_32.asm        1
@@ -4501,7 +4501,7 @@
 ;  D2431  musichandle                              dseg02/056_D1084_data_frontend_56.asm        20
 ;  D2435  dword_D2435                              dseg02/056_D1084_data_frontend_56.asm        2
 ;  D2439  byte_D2439                               dseg02/056_D1084_data_frontend_56.asm        2
-;  D243A  dword_D243A                              dseg02/056_D1084_data_frontend_56.asm        2
+;  D243A  sounddevids                              dseg02/056_D1084_data_frontend_56.asm        2
 ;  D2479  asc_D2479                                dseg02/056_D1084_data_frontend_56.asm        1
 ;  D2486  asc_D2486                                dseg02/056_D1084_data_frontend_56.asm        1
 ;  D248C  asc_D248C                                dseg02/056_D1084_data_frontend_56.asm        1

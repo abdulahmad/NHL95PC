@@ -18,7 +18,7 @@ extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84,
 extern pointerspr, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
 extern int386_, off_D3078, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
 extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, MainDeskLoop
-extern LoadModeState, sub_3DB41, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
+extern LoadModeState, LoadNhlCfg, sub_479E9, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
 extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
 extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
 extern sub_8DF54, sub_8E080, sub_8E4C0, sub_8E5AC, sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18
@@ -348,7 +348,7 @@ call sub_8EA18	; 1041B
 add esp, byte 4	; 10420
 mov eax, exhstate	; 10423
 call LoadModeState	; 10428
-call sub_3DB41	; 1042D
+call LoadNhlCfg	; 1042D
 call RunIntro	; 10432
 call sub_B30F4	; 10437
 mov dword [byte esp+054h], eax	; 1043C

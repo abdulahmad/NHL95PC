@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_8291E progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, asc_C3680, asc_C3688, asc_C368D, asc_C3696, asc_C369F, asc_C36A8
-extern asc_C36AF, asc_C36C3, asc_C36C9, asc_C8145, asc_D236F, asc_D2379, asc_D2382, asc_D238B
+extern asc_C36AF, asc_C36C3, asc_C36C9, str_CFG, asc_D236F, asc_D2379, asc_D2382, asc_D238B
 extern asc_D2390, asc_D2399, asc_D2479, asc_D2486, asc_D248C, asc_D2491, byte_C541B
 extern musicslot, musicon, byte_D2439, byte_ED8C3, byte_ED95B, byte_ED9A7, dword_C4CFC, gameopts
 extern dword_C541F, songdata, dword_CCC94, dword_D2350, dword_D2423, dword_D2427, dword_D242B
-extern musichandle, dword_D2435, dword_D243A, dword_D24A0, dword_D27B2, dword_D27BB, dword_D2C6B, pointerspr
+extern musichandle, dword_D2435, sounddevids, dword_D24A0, dword_D27B2, dword_D27BB, dword_D2C6B, pointerspr
 extern dword_EA0DC, dword_ED360, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, fclose_, fopen_
 extern fprintf_, jctime, loc_836C4, off_D24D1, strcpy_, MakePath, SetDialogColors, RestoreDialogBg
 extern MessageBox, PlayDigiSample, WaitDigiSample, sub_6B391, sub_6B3D7, sub_8245A, sub_824F8, sub_827B3
@@ -604,7 +604,7 @@ mov al, byte [byte esp+03Ch]	; 830D1
 mov byte [musicslot], al	; 830D5
 mov eax, dword [dword_C541F]	; 830DA
 mov dword [dword_ED360], eax	; 830DF
-mov ecx, asc_C8145	; 830E4
+mov ecx, str_CFG	; 830E4
 mov ebx, asc_C36A8	; 830E9
 xor edx, edx	; 830EE
 mov eax, esp	; 830F0
@@ -621,7 +621,7 @@ add esp, byte 4	; 83113
 loc_83116:
 xor eax, eax	; 83116
 loc_83118:
-cmp esi, dword [nosplit eax*4+dword_D243A]	; 83118
+cmp esi, dword [nosplit eax*4+sounddevids]	; 83118
 je short loc_83124	; 8311F
 inc eax	; 83121
 jmp short loc_83118	; 83122

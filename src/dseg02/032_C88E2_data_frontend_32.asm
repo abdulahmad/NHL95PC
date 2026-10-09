@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_C88E2 progbits alloc noexec write align=1
 extern unk_C1934, unk_C1936, unk_C67B1, unk_C88C2, unk_CE0A5, unk_CE1F5
-global teamstartlag, byte_C8B78, dword_C891E, calcolx, calrowy, calendarshapes
+global teamstartlag, greyramp, dword_C891E, calcolx, calrowy, calendarshapes
 global gridcellbuf, dword_C8B7C, dword_C8B80, masteronlymsg, mergeincompletemsg, updateerrmsg
 global exporterrmsg, off_C8BDD, unk_C88E2, unk_C899C, unk_C89BD, unk_C89EA, unk_C8A0F, masterctlmsg
 global unk_C8A33, unk_C8A51, unk_C8A6E, unk_C8A91, unk_C8AA6, unk_C8AC1, mergeerrmsg, unk_C8AE4
@@ -110,7 +110,7 @@ dd unk_C1934
 db 0F8h,0FFh,0FFh,0FFh,018h,00h,00h,00h,020h,00h,00h,00h,0Ah,00h,00h,00h
 db 00h,00h,00h,00h,06h,00h,00h,00h
 dd unk_C1936
-byte_C8B78:
+greyramp:
 db 00h,017h,02Ah,03Fh
 dword_C8B7C:
 db 0E6h,00h,00h,00h

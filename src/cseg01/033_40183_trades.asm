@@ -15,7 +15,7 @@ extern DeleteFiles, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClo
 extern CopyFile, ReadSchedGame, SetDialogColors, RestoreDialogBg, MessageBox, LeagueTeamSelect, WriteLeagueTeamEntry, AskTeamPassword
 extern AskMasterPassword, MergeLeagueFiles, ExportTeamToFloppy, SelectFloppyDrive, ReadLeagueInfo, ReadTeamNames, sub_3E390, sub_3FF52
 extern sub_6B3D7, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
-extern sub_B4F8C, unk_3DC28, msg_AllHuman, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, msg_TradeError, msg_Copying
+extern sub_B4F8C, negone_3DC28, msg_AllHuman, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, msg_TradeError, msg_Copying
 extern msg_MasterDB, btn_MasterDB, msg_SavedGame, str_star, btn_TradeStats, leagueteams, treeteamnames, masterpw
 extern savleague1, savleague2, unknown_libname_1, unknown_libname_2, lggameidx, word_DDD48, word_DDD4A
 global AddHumanTeam_msgbox, AddHumanTeam_exit
@@ -34,7 +34,7 @@ push ebp	; 40192
 sub esp, 0D8h	; 40193
 mov dword [dword esp+0B8h], 0FFFFFFFFh	; 40199
 xor ebp, ebp	; 401A4
-mov eax, dword [unk_3DC28]	; 401A6
+mov eax, dword [negone_3DC28]	; 401A6
 mov dword [dword esp+0ACh], eax	; 401AB
 push ebp	; 401B2
 push dword 1E0h	; 401B3
