@@ -48,6 +48,19 @@ impactp    equ 14h   ; size w; 93G $2E; holdplayer: Acheck target SortCords[impa
 impact     equ 18h   ; size w; 93G $32; holdplayer and Acheck: cmp word [x+18h],0 where 93G does tst.w impact(a3)
 tmptr      equ 6Ch   ; size d; 93G none (loadTeamStruct by pfteam); pointer to the player's own team structure: lineinput, lcselect, getlchoice read tmflags/tmline/tmap through it
 optmptr    equ 70h   ; size d; 93G none; pointer to the other team's structure: lcselect and getlchoice compare its tmap with tmptr's (93G tmap(a2) vs the other tmstruct)
+nopuck     equ 3Eh   ; size w; 93G $5E; after SPA/SPAnum/SPAcnt (38h/3Ah/3Ch = 93G $58/$5A/$5C); ScatterPass / dopass set it (28h / 10h) after a pass, as 94G assign94 move.b #$14,nopuck(a3) ('no puck coll until zero')
+passlane   equ 53h   ; size b; 93G none; chk4pass stores the PassLaneChk result here; dopass passes only when it is set; setplayer and ScatterPass clear it
+aioff      equ 59h   ; size b; 93G $6A; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record with the 94G aioff formula (x xor 0Fh + 0Fh) >> 1
+aidef      equ 5Ah   ; size b; 93G $6B; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record with the 94G aidef formula (x xor 0Fh + 0Fh) >> 1
+shotspd    equ 5Bh   ; size b; 93G $6C; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record
+shotacc    equ 5Ch   ; size b; 93G $6D; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record
+passacc    equ 5Dh   ; size b; 93G $6E; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record; ScatterPass scatters a pass by (12h - passacc) * 20
+rostnum    equ 5Eh   ; size b; 93G $6F; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record (jersey number, record byte +5)
+spodds     equ 5Fh   ; size b; 93G $70; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record
+stickhand  equ 60h   ; size b; 93G $71; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record
+aggress    equ 62h   ; size b; 93G $73; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record
+checking   equ 64h   ; size b; 93G $75 (94G 'Chk', no equate); 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record
+handed     equ 65h   ; size b; 93G $76; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record; setplayer clears attribute bit 3 and sets it again from handed, as 94G setplayer
 
 ; ---- team structure (93G hmtmstruct/awtmstruct; PC home DF614, away DF714, 100h apart). No 'size' tag on purpose:
 ; these offsets collide with player fields. They carry a 'tsize' tag instead (b/w/d, 'w array' for per-player word

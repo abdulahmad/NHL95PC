@@ -27,6 +27,9 @@ CKEYWORDS = set('auto break case char const continue default do double else enum
 # C type overrides for struct fields (name -> type); default from the size tag
 CTYPE = {'legstr': 'unsigned char',   # StopNA: xor ebx,ebx / mov bl,[eax+legstr]
          'weight': 'unsigned char', 'legspd': 'unsigned char', 'endurance': 'unsigned char',  # playeracc: xor eax,eax / mov al
+         'aioff': 'unsigned char', 'aidef': 'unsigned char', 'shotspd': 'unsigned char', 'shotacc': 'unsigned char',
+         'passacc': 'unsigned char', 'rostnum': 'unsigned char', 'spodds': 'unsigned char', 'stickhand': 'unsigned char',
+         'aggress': 'unsigned char', 'checking': 'unsigned char', 'handed': 'unsigned char',  # setplayer / SkillForAnim: and eax,0FFh
          'tmptr': 'struct Team *', 'optmptr': 'struct Team *', 'tmsort': 'struct Player *',
          'tmroster': 'unsigned char *', 'tmlines': 'unsigned char *', 'tmplstats': 'short *', 'tmglstats': 'short *'}
 TYPES = {'b': 'signed char', 'w': 'short', 'd': 'int'}

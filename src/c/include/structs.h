@@ -31,7 +31,8 @@ typedef struct Player {
     short SPA;                   /* 038h 93G $58; seed: SetSPA/asseben hand alignment */
     short SPAnum;                /* 03Ah 93G $5A; seed: SetSPA/asseben hand alignment */
     short SPAcnt;                /* 03Ch 93G $5C; seed: SetSPA/asseben hand alignment */
-    unsigned char pad_3E[0x4];
+    short nopuck;                /* 03Eh 93G $5E; after SPA/SPAnum/SPAcnt (38h/3Ah/3Ch = 93G $58/$5A/$5C); ScatterPass / dopass set it (28h / 10h) after a pass, as 94G assign94 move.b #$14,no */
+    unsigned char pad_40[0x2];
     signed char newpos;          /* 042h 93G $60; aligned 3/3 accesses in assbench, assepen */
     signed char newpnum;         /* 043h 93G $61; aligned 3/3 accesses in assbench, assepen */
     signed char pflags;          /* 044h 93G $62; seed: SetSPA/asseben hand alignment */
@@ -42,15 +43,25 @@ typedef struct Player {
     short puckdist;              /* 04Eh 93G none; updateplayers: word vecdist(puck - player) per frame (mov word [esi+4Eh],ax after vecdist of puckx/pucky minus Xpos/Ypos) */
     unsigned char pad_50[0x2];
     signed char puckdir;         /* 052h 93G none; updateplayers: byte vtoa(puck - player), the direction to the puck; goalieacc/skatetopuck/chk4pass read it */
-    unsigned char pad_53[0x1];
+    signed char passlane;        /* 053h 93G none; chk4pass stores the PassLaneChk result here; dopass passes only when it is set; setplayer and ScatterPass clear it */
     signed char attrlo;          /* 054h 93G $4 low byte; low byte of the 94G attribute word: defaultsprites2 writes word [x+54h] from the .list att column; its high byte is attribute (55h),  */
     signed char attribute;       /* 055h 93G $4; doplayeracc .s1 and noturn0 .nostop: test byte [reg+55h],8 where 93G does btst #3,attribute(a3) (PC keeps only the flip bits byte) */
     unsigned char weight;        /* 056h 93G $67; playeracc: byte >>3 subtracted from 32, as 93G move.b weight(a3),d2 / lsr #3 */
     unsigned char legstr;        /* 057h 93G $68; playeracc: added to the accel factor (twice for the goalie) as 93G legstr; StopNA step 200+legstr */
     unsigned char legspd;        /* 058h 93G $69; playeracc: times the energy level for the MaxSpeed index, as 93G move.b legspd(a3),d2 / mulu d0,d2 */
-    unsigned char pad_59[0x8];
+    unsigned char aioff;         /* 059h 93G $6A; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record with the 94G aioff  */
+    unsigned char aidef;         /* 05Ah 93G $6B; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record with the 94G aidef  */
+    unsigned char shotspd;       /* 05Bh 93G $6C; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record */
+    unsigned char shotacc;       /* 05Ch 93G $6D; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record */
+    unsigned char passacc;       /* 05Dh 93G $6E; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record; ScatterPass scatte */
+    unsigned char rostnum;       /* 05Eh 93G $6F; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record (jersey number, rec */
+    unsigned char spodds;        /* 05Fh 93G $70; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record */
+    unsigned char stickhand;     /* 060h 93G $71; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record */
     unsigned char endurance;     /* 061h 93G $72; playeracc .sube: added to the energy level, as 93G move.b endurance(a3),d2 / add d2,d0 */
-    unsigned char pad_62[0x4];
+    unsigned char aggress;       /* 062h 93G $73; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record */
+    unsigned char pad_63[0x1];
+    unsigned char checking;      /* 064h 93G $75 (94G 'Chk', no equate); 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster rec */
+    unsigned char handed;        /* 065h 93G $76; 94G equals.inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record; setplayer clears a */
     short radiusx;               /* 066h 93G $4A; defaultsprites2 writes word [x+66h] from the 94G .list radx column (93G radiusx 'width of this graphic') */
     short radiusy;               /* 068h 93G $4C; defaultsprites2 writes word [x+68h] from the 94G .list rady column (93G radiusy 'height of this graphic') */
     short SCnum;                 /* 06Ah 93G $52; seed: SetSPA/asseben hand alignment */
@@ -82,6 +93,7 @@ typedef struct Player {
 #define OFS_Player_SPA 0x38
 #define OFS_Player_SPAnum 0x3A
 #define OFS_Player_SPAcnt 0x3C
+#define OFS_Player_nopuck 0x3E
 #define OFS_Player_newpos 0x42
 #define OFS_Player_newpnum 0x43
 #define OFS_Player_pflags 0x44
@@ -89,12 +101,24 @@ typedef struct Player {
 #define OFS_Player_pnum 0x47
 #define OFS_Player_puckdist 0x4E
 #define OFS_Player_puckdir 0x52
+#define OFS_Player_passlane 0x53
 #define OFS_Player_attrlo 0x54
 #define OFS_Player_attribute 0x55
 #define OFS_Player_weight 0x56
 #define OFS_Player_legstr 0x57
 #define OFS_Player_legspd 0x58
+#define OFS_Player_aioff 0x59
+#define OFS_Player_aidef 0x5A
+#define OFS_Player_shotspd 0x5B
+#define OFS_Player_shotacc 0x5C
+#define OFS_Player_passacc 0x5D
+#define OFS_Player_rostnum 0x5E
+#define OFS_Player_spodds 0x5F
+#define OFS_Player_stickhand 0x60
 #define OFS_Player_endurance 0x61
+#define OFS_Player_aggress 0x62
+#define OFS_Player_checking 0x64
+#define OFS_Player_handed 0x65
 #define OFS_Player_radiusx 0x66
 #define OFS_Player_radiusy 0x68
 #define OFS_Player_SCnum 0x6A
