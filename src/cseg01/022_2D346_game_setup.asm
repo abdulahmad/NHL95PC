@@ -20,7 +20,7 @@ extern fputchar, jctime, memcpy_
 extern crestnames, gamestatlabels, leaguedbnames, penaltynames, rand_, sprintf_
 extern strcat_, strcpy_, FadePalette, MakePath, FileOpenRead, FileOpenRW, FileClose, ReadKeyRec
 extern ReadSeasonRec, ReadTeamRec, ReadGSummaryRec, SetTextColors, PrintShadowText, sub_1BAF3, FitPlayerName, WaitClickTimeout
-extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, sub_6B3D7
+extern FadeOutPalCycle, joyq_flush, StopDigiSample, PlayDigiSample, sub_59BFC, sub_59C80, sub_59D54, ClearInputQueue
 extern sub_76429, sub_7DF4E, sub_8378C, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_913B4, sub_913D0, sub_B30B4, sub_B392C, sub_B3989, sub_B3999, sub_B4B88
@@ -80,7 +80,7 @@ add esp, byte 4	; 2D3F6
 xor ebp, ebp	; 2D3F9
 mov dword [songdata], ebp	; 2D3FB
 .2:
-call sub_6B3D7	; 2D401
+call ClearInputQueue	; 2D401
 xor eax, eax	; 2D406
 mov dword [dword esp+0778h], eax	; 2D408
 .3:
@@ -574,7 +574,7 @@ xor edx, edx	; 2DBD3
 mov dword [dword_CCC94], edx	; 2DBD5
 call PlayDigiSample	; 2DBDB
 .37:
-call sub_6B3D7	; 2DBE0
+call ClearInputQueue	; 2DBE0
 call joyq_flush	; 2DBE5
 mov dword [dword esp+0750h], hmlinetab	; 2DBEA
 mov dword [dword esp+0754h], awlinetab	; 2DBF5
@@ -2369,7 +2369,7 @@ mov dword [byte ebp-020h], eax	; 2F60E
 mov eax, dword [HomeTeam]	; 2F611
 sar eax, 10h	; 2F616
 mov dword [byte ebp-01Ch], eax	; 2F619
-call sub_6B3D7	; 2F61C
+call ClearInputQueue	; 2F61C
 call sub_B4BA8	; 2F621
 push byte 0	; 2F626
 call sub_B392C	; 2F628

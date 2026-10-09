@@ -15,7 +15,7 @@ extern fputchar, jctime, RunDemoGame_x, memcpy_, memset_, off_C6399, rand_, spri
 extern srand_, strlen_, MakePath, RunDemoGame, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1
 extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
 extern sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2, sub_1B2A7, sub_1B8AC, sub_1B92E, WaitClickTimeout
-extern FadeOutPalCycle, StopDigiSample, PlayDigiSample, sub_59C1D, sub_59C3E, sub_59D54, sub_6B3D7, sub_76429
+extern FadeOutPalCycle, StopDigiSample, PlayDigiSample, sub_59C1D, sub_59C3E, sub_59D54, ClearInputQueue, sub_76429
 extern sub_83459, sub_8374D, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C
 extern sub_9087C, sub_9121C, sub_91284, sub_912C8, sub_9132C, sub_91370, sub_913B4, sub_91400
@@ -36,7 +36,7 @@ push ebp	; 160AE
 sub esp, 350h	; 160AF
 xor edx, edx	; 160B5
 mov dword [dword esp+032Ch], edx	; 160B7
-call sub_6B3D7	; 160BE
+call ClearInputQueue	; 160BE
 call sub_B4BA8	; 160C3
 push byte 0	; 160C8
 call sub_B392C	; 160CA
@@ -515,7 +515,7 @@ push ebx	; 1675D
 call sub_8D2F0	; 1675E
 add esp, byte 4	; 16763
 .1:
-call sub_6B3D7	; 16766
+call ClearInputQueue	; 16766
 call sub_B4BA8	; 1676B
 push byte 0	; 16770
 call sub_B392C	; 16772
@@ -1279,7 +1279,7 @@ add esp, byte 4	; 17220
 mov eax, dword [dword esp+0364h]	; 17223
 mov eax, dword [nosplit eax*4+off_C6399]	; 1722A
 mov dword [dword esp+0368h], eax	; 17231
-call sub_6B3D7	; 17238
+call ClearInputQueue	; 17238
 cmp dword [dword esp+0364h], byte 0	; 1723D
 je short .15	; 17245
 mov eax, 62h	; 17247
@@ -1387,7 +1387,7 @@ mov eax, dword [dword esp+0368h]	; 1739D
 movsx eax, byte [eax]	; 173A4
 cmp esi, eax	; 173A7
 jl short ShowCredits.20	; 173A9
-call sub_6B3D7	; 173AB
+call ClearInputQueue	; 173AB
 mov eax, dword [dword esp+0358h]	; 173B0
 call WaitClickTimeout	; 173B7
 test eax, eax	; 173BC

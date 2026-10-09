@@ -10,12 +10,12 @@ extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, car
 extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0BFC, dword_D0C04, dword_D0C10
 extern dword_D0C18, dword_D0C20, musichandle, dword_D8B74, pointerspr, dword_EA2B0, dword_EA2B4, musicslot
 extern dword_EA988, dword_EBC68, msglines, dword_EBCA4, dword_EBE9C, editrosters_exit, fputchar, jctime
-extern loc_6C03C, mkdir_, leaguedbnames
+extern BuildFreeAgentList_ret, mkdir_, leaguedbnames
 extern off_CFB1C, off_CFB8A, rmdir_, sprintf_, strcat_, strcpy_, strlen_, strupr_
 extern MakePath, DeleteDir, PrintCenteredText, PrintShadowText, FitPlayerName, TextInputDialog, DrawButtons, DrawScrollBar
-extern RestoreDialogBg, MessageBox, sub_6C19B, DrawEditRosters, EditRosters, CheckDatabases, sub_76429, sub_8CCA8
+extern RestoreDialogBg, MessageBox, LoadLeagueDbsMem, DrawEditRosters, EditRosters, CheckDatabases, sub_76429, sub_8CCA8
 extern sub_8D2F0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90F38
-extern sub_91964, sub_932D0, FatalError, MouseSetPos, sub_B4BA8, sub_B4F8C, unk_6BF3D, unk_C28A9
+extern sub_91964, sub_932D0, FatalError, MouseSetPos, sub_B4BA8, sub_B4F8C, unk13_6BF3D, unk_C28A9
 extern btn_LeagueExists, unk_D0450, unk_D07EB, unk_D0BB8, unk_D0BF0, unk_D0C24, unk_EC7C0, unknown_libname_1
 global loc_6C3B3, loc_6C470, loc_6C475, loc_6C486, loc_6C4B2, loc_6C4F7, loc_6C53F, loc_6C54F
 global loc_6C580, loc_6C590, loc_6C5C1, loc_6C5D1, loc_6C602, loc_6C612, loc_6C63F, loc_6C64B
@@ -38,7 +38,7 @@ sub esp, byte 10h	; 6C307
 push edx	; 6C30A
 mov ebp, ebx	; 6C30B
 lea edi, [byte esp+04h]	; 6C30D
-mov esi, unk_6BF3D	; 6C311
+mov esi, unk13_6BF3D	; 6C311
 movsd	; 6C316
 movsd	; 6C317
 movsd	; 6C318
@@ -619,7 +619,7 @@ push eax	; 6CA7E
 call sub_932D0	; 6CA7F
 add esp, byte 0Ch	; 6CA84
 add esp, byte 20h	; 6CA87
-jmp near loc_6C03C	; 6CA8A
+jmp near BuildFreeAgentList_ret	; 6CA8A
 sub_6CA8F:
 push dword 20h	; 6CA8F
 call __CHK	; 6CA94
@@ -681,14 +681,14 @@ mov dword [careerdb_size], edi	; 6CB3C
 loc_6CB42:
 mov eax, dword [seasondb]	; 6CB42
 test eax, eax	; 6CB47
-je near loc_6C03C	; 6CB49
+je near BuildFreeAgentList_ret	; 6CB49
 push eax	; 6CB4F
 call jctime	; 6CB50
 add esp, byte 4	; 6CB55
 xor ebx, ebx	; 6CB58
 mov dword [seasondb], ebx	; 6CB5A
 mov dword [seasondb_size], ebx	; 6CB60
-jmp near loc_6C03C	; 6CB66
+jmp near BuildFreeAgentList_ret	; 6CB66
 CarTeamRecPtr:
 push dword 8	; 6CB6B
 call __CHK	; 6CB70
@@ -888,7 +888,7 @@ inc esi	; 6CDD9
 mov eax, dword [dword_EBE9C]	; 6CDDA
 mov word [byte eax+06h], si	; 6CDDF
 mov eax, str_extDB	; 6CDE3
-call sub_6C19B	; 6CDE8
+call LoadLeagueDbsMem	; 6CDE8
 push byte 42h	; 6CDED
 mov ecx, 41h	; 6CDEF
 mov ebx, 40h	; 6CDF4

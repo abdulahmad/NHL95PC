@@ -6,7 +6,7 @@ extern __CHK, __STOSB, str_GameSav2, str_extDB, str_PPV, pad1dev, pad2dev, award
 extern curleague, sflags, musicon, byte_D9299, awardwinners, byte_ED7CC, joysampling, gameopts
 extern inputframes, escrequest, demomode, gameresult, gamemode, hudclockmin, hudclocksec, hudclockhund
 extern dword_C5840, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBECA, dword_CC080, dword_CC0F0
-extern penshotlive, dword_D2C6B, dword_D302C, dword_D3030, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74
+extern penshotlive, dword_D2C6B, mousex, mousey, spritedrawcount, frameaccum, dword_D8C72, dword_D8C74
 extern dword_D8C78, dword_D8C7A, dword_D8C7C, dword_D8C84, dword_DC230, dword_DC28C, rinkwtiles, rinkhtiles
 extern bgscrolly, dword_DEF8C, dword_DF00C, dword_DF010, dword_E0244, recbpr, dword_E9A9E, j_unlink_
 extern HandleHotKey_ret, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263, off_C5267
@@ -242,9 +242,9 @@ je short .12	; 119A8
 cmp byte [pad2dev], 1	; 119AA
 jne short .13	; 119B1
 .12:
-mov eax, dword [dword_D302C]	; 119B3
+mov eax, dword [mousex]	; 119B3
 mov dword [dword_DF00C], eax	; 119B8
-mov eax, dword [dword_D3030]	; 119BD
+mov eax, dword [mousey]	; 119BD
 mov dword [dword_DF010], eax	; 119C2
 .13:
 call CrowdFadeOut	; 119C7

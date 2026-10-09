@@ -6,7 +6,7 @@ extern byte_D3064, byte_D3068, byte_D4F44, byte_D4F45, byte_D4F48, byte_D4FE8, b
 extern byte_D6074, dword_D3024, dword_D305C, dword_D3060, dword_D30A4, dword_D30A8, cliprect_x0, cliprect_y0
 extern cliprect_x1, cliprect_y1, dword_D30BC, dword_D30C0, dword_D30D4, dword_D429C, dword_D4F2C, dword_D4F30
 extern dword_D4F34, dword_D4F38, dword_D4F3C, dword_D4F40, dword_D4FA0, dword_D4FA4, dword_D4FEB, dword_D5562
-extern dword_D5566, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, loc_B4D0C, off_D3078
+extern dword_D5566, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, loc_B4D0C, mousepollfn
 extern off_D567C, printf_, sub_910B0, sub_B3168, sub_B3454, sub_B395C, sub_B3962, sub_B39D0
 extern word_D4F46, word_D4FE4, word_D4FE6, word_D4FE9
 global jpt_B4253, jpt_B42B2, jpt_B439E, jpt_B4488, jpt_B466E, loc_B3ED7, loc_B3F23, loc_B3F3D
@@ -190,7 +190,7 @@ call sub_B4AA4	; B4016
 add esp, byte 4	; B401B
 ret	; B401E
 loc_B401F:
-call dword [off_D3078]	; B401F
+call dword [mousepollfn]	; B401F
 shl ax, 4	; B4025
 jne short loc_B4030	; B4029
 loc_B402B:

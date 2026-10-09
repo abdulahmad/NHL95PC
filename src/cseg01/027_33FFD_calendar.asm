@@ -7,11 +7,11 @@ extern str_Pal17, str_Calendar, str_Callogo, str_Iff9, str_Pointer8, str_Menubuf
 extern monthfirstday, musicon, lgteam_17, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, teamstatscb
 extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, songdata, calcolx, calrowy
 extern calendarshapes, musichandle, dword_D2C6B, fontcolor, dword_D8B74, pointerspr, musicslot
-extern calsel, calexit, calmonth, calselday, dword_DDD2C, calselmonth, dword_EA0DC, fputchar
+extern calsel, calexit, calmonth, calselday, dword_DDD2C, calselmonth, ptrupdatefn, fputchar
 extern jctime, crestnames, calnextslot, calprevslot, sprintf_, MakePath, FileOpenRead, leaguedbnames
 extern FileClose, FileReadAt, ReadSchedGame, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
 extern CalTeamStatsScreen, CalSkaterStatsScreen, CalGoalieStatsScreen, CalStandingsScreen, CalStandingsMenu, SetDialogColors, ShowLoadingScreen, FadeOutPalCycle
-extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
+extern GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, sub_76429
 extern sub_7DB67, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
 extern sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_91370, sub_913D0
 extern sub_91400, sub_91964, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4
@@ -1030,7 +1030,7 @@ mov ecx, dword [dword esp+07A8h]	; 34E0C
 mov ebx, dword [dword esp+07A0h]	; 34E13
 mov edx, edi	; 34E1A
 mov eax, esi	; 34E1C
-call sub_6B5E4	; 34E1E
+call DrawMenuBar	; 34E1E
 mov ebx, dword [calendarshapes]	; 34E23
 push ebx	; 34E29
 mov ecx, dword [dword esp+07B0h]	; 34E2A
@@ -1133,17 +1133,17 @@ mov esi, dword [pointerspr]	; 34FA6
 push esi	; 34FAC
 call sub_91370	; 34FAD
 add esp, byte 0Ch	; 34FB2
-call sub_6B3D7	; 34FB5
+call ClearInputQueue	; 34FB5
 .32:
 xor ecx, ecx	; 34FBA
 .33:
-call sub_6B391	; 34FBC
+call GetInputEvent	; 34FBC
 mov esi, eax	; 34FC1
 test eax, eax	; 34FC3
 je short .34	; 34FC5
 lea ebx, [dword esp+076Ch]	; 34FC7
 lea edx, [dword esp+0770h]	; 34FCE
-call dword [dword_EA0DC]	; 34FD5
+call dword [ptrupdatefn]	; 34FD5
 mov ecx, eax	; 34FDB
 .34:
 test esi, esi	; 34FDD
@@ -1195,7 +1195,7 @@ mov ecx, dword [dword esp+07C0h]	; 35084
 lea ebx, [dword esp+0740h]	; 3508B
 mov edx, dword [dword esp+077Ch]	; 35092
 mov eax, dword [dword esp+0780h]	; 35099
-call sub_6BA4D	; 350A0
+call MenuHitTest	; 350A0
 test eax, eax	; 350A5
 je near .65	; 350A7
 mov edx, dword [dword esp+0768h]	; 350AD
@@ -1293,7 +1293,7 @@ mov eax, dword [dword esp+0778h]	; 35232
 mov dword [dword esp+0770h], eax	; 35239
 mov eax, dword [dword esp+0774h]	; 35240
 mov dword [dword esp+076Ch], eax	; 35247
-call sub_6B3D7	; 3524E
+call ClearInputQueue	; 3524E
 mov eax, dword [dword esp+07CEh]	; 35253
 sar eax, 10h	; 3525A
 cmp eax, dword [calmonth]	; 3525D
@@ -1305,7 +1305,7 @@ mov ecx, dword [dword esp+07A8h]	; 35272
 mov ebx, dword [dword esp+07A0h]	; 35279
 mov edx, 3	; 35280
 mov eax, calmenubar	; 35285
-call sub_6B5E4	; 3528A
+call DrawMenuBar	; 3528A
 mov ecx, dword [calendarshapes]	; 3528F
 push ecx	; 35295
 mov esi, dword [dword esp+07B0h]	; 35296
@@ -1329,7 +1329,7 @@ mov ecx, dword [dword esp+07A8h]	; 352DF
 mov ebx, dword [dword esp+07A0h]	; 352E6
 mov edx, 3	; 352ED
 mov eax, calmenubar	; 352F2
-call sub_6B5E4	; 352F7
+call DrawMenuBar	; 352F7
 mov edx, dword [calendarshapes]	; 352FC
 push edx	; 35302
 mov ebx, dword [dword esp+07B0h]	; 35303
@@ -1414,7 +1414,7 @@ shl ecx, 5	; 3545D
 mov eax, dword [dword esp+eax*4+0738h]	; 35460
 add eax, ecx	; 35467
 mov ecx, dword [dword esp+07A4h]	; 35469
-call sub_6B94E	; 35470
+call DrawMenuItemSel	; 35470
 mov edx, dword [dword esp+0768h]	; 35475
 mov eax, dword [dword esp+0764h]	; 3547C
 mov dword [dword esp+edx*4+0754h], eax	; 35483
@@ -1497,7 +1497,7 @@ shl eax, 5	; 355D7
 mov ecx, dword [dword esp+edi*4+0738h]	; 355DA
 add eax, ecx	; 355E1
 mov ecx, dword [dword esp+07A4h]	; 355E3
-call sub_6B94E	; 355EA
+call DrawMenuItemSel	; 355EA
 mov eax, dword [dword esp+0764h]	; 355EF
 mov dword [dword esp+edi*4+0754h], eax	; 355F6
 mov eax, dword [dword esp+07A0h]	; 355FD
@@ -1511,7 +1511,7 @@ shl eax, 5	; 35622
 mov ecx, dword [dword esp+edi*4+0738h]	; 35625
 add eax, ecx	; 3562C
 mov ecx, dword [dword esp+07A4h]	; 3562E
-call sub_6B9EB	; 35635
+call DrawMenuItemNorm	; 35635
 mov eax, dword [dword esp+0768h]	; 3563A
 mov ecx, dword [dword esp+0764h]	; 35641
 shl ecx, 5	; 35648
@@ -1617,7 +1617,7 @@ mov edx, dword [dword esp+07A4h]	; 357FB
 mov edx, dword [dword esp+edx+0754h]	; 35802
 mov eax, dword [dword esp+07A4h]	; 35809
 mov eax, dword [dword esp+eax+073Ch]	; 35810
-call sub_6B684	; 35817
+call DrawMenuDropdown	; 35817
 mov eax, dword [dword esp+0798h]	; 3581C
 xor edi, edi	; 35823
 mov dword [dword esp+eax+0754h], edi	; 35825
@@ -1696,7 +1696,7 @@ shl ecx, 5	; 3596F
 mov eax, dword [dword esp+eax*4+0738h]	; 35972
 add eax, ecx	; 35979
 mov ecx, dword [dword esp+07A4h]	; 3597B
-call sub_6B94E	; 35982
+call DrawMenuItemSel	; 35982
 mov edx, dword [dword esp+0768h]	; 35987
 mov eax, dword [dword esp+0764h]	; 3598E
 mov dword [dword esp+edx*4+0754h], eax	; 35995
@@ -1713,7 +1713,7 @@ mov ecx, dword [dword esp+07A4h]	; 359C6
 mov edx, eax	; 359CD
 mov eax, esi	; 359CF
 .64:
-call sub_6B9EB	; 359D1
+call DrawMenuItemNorm	; 359D1
 jmp near .79	; 359D6
 .65:
 mov edi, dword [dword esp+0774h]	; 359DB
@@ -1886,7 +1886,7 @@ mov ecx, dword [dword esp+07A8h]	; 35CB5
 mov ebx, dword [dword esp+07A0h]	; 35CBC
 mov edx, 3	; 35CC3
 mov eax, calmenubar	; 35CC8
-call sub_6B5E4	; 35CCD
+call DrawMenuBar	; 35CCD
 mov ecx, dword [calselmonth]	; 35CD2
 cmp esi, ecx	; 35CD8
 jne near .75	; 35CDA

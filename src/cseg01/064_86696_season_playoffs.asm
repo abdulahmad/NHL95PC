@@ -18,17 +18,17 @@ extern boxshadecolor, dlgtextfg, dlgtextbg, songdata, cont2team, HomeTeam, menua
 extern menuact_pohilights, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
 extern keydb_size, musichandle, dword_D2884, dword_D288C, seriesgameno, dword_D2B70, dword_D2BEC, musicslot
 extern dword_D2C6B, dword_D8B68, dword_D8B74, schedgameidx, pointerspr, playofftree, playofftree_p1, pochampion
-extern dbextension, dword_EA0DC, fputchar, j_unlink_, jctime, mkdir_, teamabbrevs, teamcitynames
+extern dbextension, ptrupdatefn, fputchar, j_unlink_, jctime, mkdir_, teamabbrevs, teamcitynames
 extern off_C6D22, leaguedbnames, off_CEF43, off_CEF63
 extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, msg_POHumanOut, msg_POTeamOut, msg_POGenFinal
-extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers, PlayGame
+extern mousepollfn, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers, PlayGame
 extern FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
 extern CopyFile, DiskSpaceShort, CheckGameDiskSpace, GetLeagueDBSizes, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText
 extern TextGridOpen, TextGridOff, InitGameSummary, SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen
 extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, CountSeriesWins, PreGameScreen, AskDatabaseChoice, TextInputDialog
 extern SetDialogColors, RestoreDialogBg, MessageBox, SaveModeState, LoadModeState, WriteModeState, PostGameToTeamDb, SimulateGame
-extern ShowLoadingScreen, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E
-extern sub_6B9EB, sub_6BA4D, sub_76429, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
+extern ShowLoadingScreen, GetInputEvent, ClearInputQueue, InputInstall, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel
+extern DrawMenuItemNorm, MenuHitTest, sub_76429, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E8B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_910B0, sub_9121C, sub_91370, sub_913B4
 extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, FatalError, MouseSetPos, sub_B2DCA, sub_B2E1B
@@ -2346,7 +2346,7 @@ mov ecx, 41h	; 8811A
 mov ebx, 40h	; 8811F
 mov edx, 3	; 88124
 mov eax, unk_CF90F	; 88129
-call sub_6B5E4	; 8812E
+call DrawMenuBar	; 8812E
 mov ebx, 10h	; 88133
 mov edx, dword [byte esp+06Ch]	; 88138
 xor eax, eax	; 8813C
@@ -2720,7 +2720,7 @@ mov ecx, 41h	; 885E7
 mov ebx, 40h	; 885EC
 mov edx, 3	; 885F1
 mov eax, unk_CF90F	; 885F6
-call sub_6B5E4	; 885FB
+call DrawMenuBar	; 885FB
 mov ebx, 10h	; 88600
 mov edx, dword [byte esp+06Ch]	; 88605
 xor eax, eax	; 88609
@@ -3893,7 +3893,7 @@ call sub_76429	; 89511
 push esi	; 89516
 call jctime	; 89517
 add esp, byte 4	; 8951C
-call sub_6B410	; 8951F
+call InputInstall	; 8951F
 .8:
 cmp dword [byte ebp+00h], byte 0	; 89524
 jl short .9	; 89528
@@ -4068,7 +4068,7 @@ mov ecx, 41h	; 89761
 mov ebx, 40h	; 89766
 mov edx, 3	; 8976B
 mov eax, unk_CF90F	; 89770
-call sub_6B5E4	; 89775
+call DrawMenuBar	; 89775
 mov eax, dword [byte esp+020h]	; 8977A
 mov edx, dword [byte eax+044h]	; 8977E
 push edx	; 89781
@@ -4161,7 +4161,7 @@ mov eax, dword [HomeTeam-2]	; 898B8
 sar eax, 10h	; 898BD
 call PreGameScreen	; 898C0
 mov dword [byte esp+02Ch], eax	; 898C5
-call sub_6B47C	; 898C9
+call InputRemove	; 898C9
 jmp short .28	; 898CE
 .27:
 mov dword [byte esp+02Ch], eax	; 898D0
@@ -4275,8 +4275,8 @@ mov ecx, 41h	; 89A72
 mov ebx, 40h	; 89A77
 mov edx, 3	; 89A7C
 mov eax, unk_CF90F	; 89A81
-call sub_6B5E4	; 89A86
-call sub_6B410	; 89A8B
+call DrawMenuBar	; 89A86
+call InputInstall	; 89A8B
 mov edx, dword [byte esp+020h]	; 89A90
 mov eax, dword [byte esp+028h]	; 89A94
 call POHandleElimination	; 89A98
@@ -4488,8 +4488,8 @@ push esi	; 89D27
 push edi	; 89D28
 call MouseSetPos	; 89D29
 add esp, byte 8	; 89D2E
-call dword [off_D3078]	; 89D31
-call sub_6B3D7	; 89D37
+call dword [mousepollfn]	; 89D31
+call ClearInputQueue	; 89D37
 mov eax, dword [dword esp+0E8h]	; 89D3C
 add eax, eax	; 89D43
 mov dword [dword esp+0C8h], eax	; 89D45
@@ -4506,12 +4506,12 @@ call POHiliteSlot	; 89D69
 .3:
 xor ecx, ecx	; 89D6E
 .4:
-call sub_6B391	; 89D70
+call GetInputEvent	; 89D70
 test eax, eax	; 89D75
 je short .5	; 89D77
 lea ebx, [dword esp+0A4h]	; 89D79
 lea edx, [dword esp+0A8h]	; 89D80
-call dword [dword_EA0DC]	; 89D87
+call dword [ptrupdatefn]	; 89D87
 mov ecx, eax	; 89D8D
 test al, 2	; 89D8F
 je short PlayoffTreeMenu.4	; 89D91
@@ -4575,7 +4575,7 @@ mov ecx, dword [dword esp+0C8h]	; 89E72
 lea ebx, [dword esp+080h]	; 89E79
 mov edx, dword [dword esp+0B4h]	; 89E80
 mov eax, dword [dword esp+0B8h]	; 89E87
-call sub_6BA4D	; 89E8E
+call MenuHitTest	; 89E8E
 test eax, eax	; 89E93
 je near .33	; 89E95
 mov edx, dword [dword esp+0A0h]	; 89E9B
@@ -4770,7 +4770,7 @@ mov ecx, dword [byte esp+04h]	; 8A14E
 mov ebx, dword [byte esp+08h]	; 8A152
 mov edx, dword [byte esp+0Ch]	; 8A156
 mov eax, dword [byte esp+010h]	; 8A15A
-call sub_6B5E4	; 8A15E
+call DrawMenuBar	; 8A15E
 mov ebx, 10h	; 8A163
 mov edx, edi	; 8A168
 xor eax, eax	; 8A16A
@@ -4801,7 +4801,7 @@ mov eax, dword [dword esp+0B4h]	; 8A1CD
 mov dword [dword esp+0A8h], eax	; 8A1D4
 mov eax, dword [dword esp+0D0h]	; 8A1DB
 mov dword [dword esp+0A4h], eax	; 8A1E2
-call sub_6B3D7	; 8A1E9
+call ClearInputQueue	; 8A1E9
 jmp near .37	; 8A1EE
 .20:
 mov edi, dword [dword esp+0D0h]	; 8A1F3
@@ -4823,7 +4823,7 @@ shl ecx, 5	; 8A22C
 mov eax, dword [byte esp+eax*4+078h]	; 8A22F
 add eax, ecx	; 8A233
 mov ecx, dword [byte esp+0Ch]	; 8A235
-call sub_6B94E	; 8A239
+call DrawMenuItemSel	; 8A239
 mov edx, dword [dword esp+0A0h]	; 8A23E
 mov eax, dword [dword esp+09Ch]	; 8A245
 mov dword [byte esp+edx*4+050h], eax	; 8A24C
@@ -4842,7 +4842,7 @@ mov ecx, dword [byte esp+0Ch]	; 8A272
 mov edx, eax	; 8A276
 mov eax, esi	; 8A278
 .22:
-call sub_6B9EB	; 8A27A
+call DrawMenuItemNorm	; 8A27A
 jmp near .37	; 8A27F
 .23:
 cmp dword [byte eax+018h], byte 0	; 8A284
@@ -4908,7 +4908,7 @@ shl ecx, 5	; 8A347
 mov eax, dword [byte esp+esi*4+078h]	; 8A34A
 add eax, ecx	; 8A34E
 mov ecx, dword [byte esp+0Ch]	; 8A350
-call sub_6B94E	; 8A354
+call DrawMenuItemSel	; 8A354
 mov eax, dword [dword esp+09Ch]	; 8A359
 mov dword [byte esp+esi*4+050h], eax	; 8A360
 mov ebx, dword [dword esp+0E4h]	; 8A364
@@ -4922,7 +4922,7 @@ shl ecx, 5	; 8A37B
 mov eax, dword [byte esp+esi*4+078h]	; 8A37E
 add eax, ecx	; 8A382
 mov ecx, dword [byte esp+0Ch]	; 8A384
-call sub_6B9EB	; 8A388
+call DrawMenuItemNorm	; 8A388
 mov eax, dword [dword esp+0A0h]	; 8A38D
 mov ecx, dword [dword esp+09Ch]	; 8A394
 shl ecx, 5	; 8A39B
@@ -5020,7 +5020,7 @@ mov ebx, dword [dword esp+0B8h]	; 8A4DE
 mov ebx, dword [byte esp+ebx+01Ch]	; 8A4E5
 mov edx, dword [dword esp+ebp*4+08Ch]	; 8A4E9
 mov eax, dword [byte esp+ebp*4+07Ch]	; 8A4F0
-call sub_6B684	; 8A4F4
+call DrawMenuDropdown	; 8A4F4
 xor ebx, ebx	; 8A4F9
 mov dword [byte esp+ebp*4+050h], ebx	; 8A4FB
 push edi	; 8A4FF
@@ -5054,7 +5054,7 @@ shl ecx, 5	; 8A568
 mov eax, dword [byte esp+eax*4+078h]	; 8A56B
 add eax, ecx	; 8A56F
 mov ecx, dword [byte esp+0Ch]	; 8A571
-call sub_6B94E	; 8A575
+call DrawMenuItemSel	; 8A575
 mov edx, dword [dword esp+0A0h]	; 8A57A
 mov eax, dword [dword esp+09Ch]	; 8A581
 mov dword [byte esp+edx*4+050h], eax	; 8A588

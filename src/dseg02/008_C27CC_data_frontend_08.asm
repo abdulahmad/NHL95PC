@@ -2,28 +2,28 @@
 bits 32
 %include "hockey.inc"
 section s_C27CC progbits alloc noexec write align=1
-global asc_C27CC, asc_C27D3, asc_C27D8, asc_C27DD, asc_C27E2, asc_C27E7, asc_C27EC, asc_C27F7
-global asc_C2805, asc_C2814, asc_C282C, asc_C2834, asc_C284F, asc_C2854, asc_C2873, asc_C2894
+global str_Joycal, str_Scrn3, str_Rite, str_Left, str_Pal24, str_Puck, str_PuckBack, str_LEFTJOYSTICK
+global str_RIGHTJOYSTICK, asc_C2814, asc_C282C, asc_C2834, asc_C284F, asc_C2854, asc_C2873, asc_C2894
 global asc_C2899, asc_C28A1, asc_C28AC, asc_C28B8, unk_C27F5, unk_C28A9
-asc_C27CC:
+str_Joycal:
 db 06Ah,06Fh,079h,063h,061h,06Ch,00h
-asc_C27D3:
+str_Scrn3:
 db 073h,063h,072h,06Eh,00h
-asc_C27D8:
+str_Rite:
 db 072h,069h,074h,065h,00h
-asc_C27DD:
+str_Left:
 db 06Ch,065h,066h,074h,00h
-asc_C27E2:
+str_Pal24:
 db 021h,070h,061h,06Ch,00h
-asc_C27E7:
+str_Puck:
 db 070h,075h,063h,06Bh,00h
-asc_C27EC:
+str_PuckBack:
 db 050h,075h,063h,06Bh,042h,061h,063h,06Bh,00h
 unk_C27F5:
 db 020h,00h
-asc_C27F7:
+str_LEFTJOYSTICK:
 db 04Ch,045h,046h,054h,020h,04Ah,04Fh,059h,053h,054h,049h,043h,04Bh,00h
-asc_C2805:
+str_RIGHTJOYSTICK:
 db 052h,049h,047h,048h,054h,020h,04Ah,04Fh,059h,053h,054h,049h,043h,04Bh,00h
 asc_C2814:
 db 053h,061h,076h,065h,020h,061h,073h,020h,067h,061h,06Dh,065h,020h,064h,061h,074h

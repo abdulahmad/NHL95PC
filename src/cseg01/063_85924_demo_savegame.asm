@@ -6,10 +6,10 @@ extern __CHK, asc_C38F8, asc_C3904, asc_C3923, asc_C3932, asc_C3947, asc_C3966, 
 extern asc_C3976, asc_C397E, asc_C3986, asc_C398F, asc_C3994, asc_C399B, asc_C39A0, str_extDB
 extern asc_D281F, curleague, othergames, otherscores, gameopts
 extern byte_ED92F, demomode, postate, lgstate, gamemode, dword_D2C6B, dword_D8B74, pointerspr
-extern dword_DC888, dword_DC88C, otherperiod, dword_EA0DC, jctime, off_D27EF, off_D27F7, off_D2855
+extern dword_DC888, dword_DC88C, otherperiod, ptrupdatefn, jctime, off_D27EF, off_D27F7, off_D2855
 extern sprintf_, strcat_, MakePath, FileCreate, FileClose, FileWriteAt, CopyFile, DiskSpaceShort
 extern SetDialogColors, RestoreDialogBg, MessageBox, EditTextField, SaveModeState, LoadModeState, WriteModeState, SaveLeagueGameRef
-extern SaveGameState, sub_6B391, sub_6B3D7, sub_80075, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
+extern SaveGameState, GetInputEvent, ClearInputQueue, sub_80075, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_903F0, sub_910E0, sub_91284, sub_91370, sub_91400
 extern sub_92CD0, sub_92DE0, FatalError, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3989, sub_B3999
 extern sub_B4BA8, unk_C392C, unk_C392F, unk_C393B, unk_C393E, unk_C3941, unk_C3944, unk_C396F
@@ -618,7 +618,7 @@ mov edx, dword [byte esp+08h]	; 86105
 push edx	; 86109
 call sub_92CD0	; 8610A
 add esp, byte 0Ch	; 8610F
-call sub_6B3D7	; 86112
+call ClearInputQueue	; 86112
 push dword 0FEh	; 86117
 push dword 181h	; 8611C
 call MouseSetPos	; 86121
@@ -640,16 +640,16 @@ mov dword [byte esp+078h], ecx	; 8615E
 mov edi, 0FEh	; 86162
 mov dword [dword esp+080h], edi	; 86167
 mov dword [byte esp+074h], edi	; 8616E
-call sub_6B3D7	; 86172
+call ClearInputQueue	; 86172
 loc_86177:
 xor ecx, ecx	; 86177
 loc_86179:
-call sub_6B391	; 86179
+call GetInputEvent	; 86179
 test eax, eax	; 8617E
 je short loc_86199	; 86180
 lea ebx, [dword esp+080h]	; 86182
 lea edx, [byte esp+070h]	; 86189
-call dword [dword_EA0DC]	; 8618D
+call dword [ptrupdatefn]	; 8618D
 mov ecx, eax	; 86193
 test al, 2	; 86195
 je short loc_86179	; 86197

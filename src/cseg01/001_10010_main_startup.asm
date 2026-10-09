@@ -5,22 +5,22 @@ section s_10010 progbits alloc exec nowrite align=1
 extern DoGameFrame, __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gettime_, str_NoDiskSpaceC, str_ErrDiskFree2
 extern str_NoDiskSpaceCur, str_NoMemory, str_CheckRefCard, str_NoConvMemory, str_CheckRefCard2, str_Pointer3, str_Pntr, str_Scor2b
 extern str_Scor3b, str_Kaufm020, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_GameSet2, str_Temp3, str_ErrDiskFree3, str_VFN
-extern pad1dev, pad2dev, lasthotkey, byte_C5138, musicon, byte_D3040, byte_D416A, byte_D8C88
+extern pad1dev, pad2dev, lasthotkey, byte_C5138, musicon, joyenablemask, byte_D416A, byte_D8C88
 extern ctlavailmask, byte_ED906, byte_ED92E, byte_ED935, byte_ED936, byte_ED990, dword_C4CFC, joypresent
 extern inputticks, joysampling, joyqhead, joyqcount, joyqtick, samesideflag, inputframes
 extern escrequest, joyrec, palfadedin, screenw, screenh, demomode, dword_C5131, dword_C5133
 extern dword_C5135, gameopts
 extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, dword_C5840, screenbm
 extern songdata, rinkscrollx, rinkscrolly, cont2team, HomeTeam, dword_CBC3E, penshotlive, musicslot
-extern musichandle, dword_D2C6B, dword_D302C, dword_D3030, dword_D3034, dword_D30D4, dword_D4158, dword_D415C
+extern musichandle, dword_D2C6B, mousex, mousey, mousebtns, dword_D30D4, dword_D4158, dword_D415C
 extern dword_D4160, dword_D4164, bailout_vec, dword_D8B68, dword_D8B6C, dword_D8B70, dword_D8B74, dword_D8B78
 extern joyrawbits, numshapes, dword_D8C4C, rinkendart, dword_D8C78, dword_D8C84, photoptrs, dword_DC230
 extern pointerspr, dword_DF00C, dword_DF010, dword_E9A9E, memlist1, memlist0, exit_, gmode
-extern int386_, off_D3078, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
+extern int386_, mousepollfn, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
 extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, MainDeskLoop
 extern LoadModeState, LoadNhlCfg, ShowLoadingScreen, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
-extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, sub_6B093, sub_6B3D7, sub_6B410
-extern sub_6B47C, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
+extern CrowdNoiseReset, StopDigiSample, ClockTick, sub_671E8, sub_6A9CE, JoystickCalScreen, ClearInputQueue, InputInstall
+extern InputRemove, sub_76429, sub_7E0FA, sub_8374D, sub_837A8, sub_8BAAF, sub_8CCA8, sub_8D2F0
 extern sub_8DF54, sub_8E080, sub_8E4C0, sub_8E5AC, sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18
 extern sub_8F633, sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_B29F0, sub_B2CBE, FatalError, MouseSetPos, sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4
@@ -229,8 +229,8 @@ test eax, eax	; 1026D
 je short .8	; 1026F
 or byte [ctlavailmask], 1	; 10271
 .8:
-call sub_6B410	; 10278
-call dword [off_D3078]	; 1027D
+call InputInstall	; 10278
+call dword [mousepollfn]	; 1027D
 push CritErrHandler	; 10283
 call sub_B3036	; 10288
 add esp, byte 4	; 1028D
@@ -372,9 +372,9 @@ push str_ConfigureLeftJoystick	; 10476
 push byte 0	; 1047B
 push byte 0	; 1047D
 push byte 1	; 1047F
-call sub_6B093	; 10481
+call JoystickCalScreen	; 10481
 add esp, byte 10h	; 10486
-test byte [byte_D3040], 1	; 10489
+test byte [joyenablemask], 1	; 10489
 je short .20	; 10490
 or byte [ctlavailmask], 2	; 10492
 mov dword [joypresent], 1	; 10499
@@ -390,9 +390,9 @@ push str_ConfigureRightJoystick	; 104BE
 push byte 1	; 104C3
 push byte 8	; 104C5
 push byte 2	; 104C7
-call sub_6B093	; 104C9
+call JoystickCalScreen	; 104C9
 add esp, byte 10h	; 104CE
-test byte [byte_D3040], 2	; 104D1
+test byte [joyenablemask], 2	; 104D1
 je short .22	; 104D8
 or byte [ctlavailmask], 4	; 104DA
 mov dword [joypresent+4], 1	; 104E1
@@ -511,7 +511,7 @@ xor ebx, ebx	; 1069D
 mov dword [songdata], ebx	; 1069F
 .35:
 call ShowLoadingScreen	; 106A5
-call sub_6B410	; 106AA
+call InputInstall	; 106AA
 call ShowCredits	; 106AF
 call sub_B4B58	; 106B4
 call dword [bailout_vec]	; 106B9
@@ -839,12 +839,12 @@ ReadMousePad:
 push ebx	; 109FC
 push ecx	; 109FD
 push edx	; 109FE
-call dword [off_D3078]	; 109FF
-mov edx, dword [dword_D302C]	; 10A05
+call dword [mousepollfn]	; 109FF
+mov edx, dword [mousex]	; 10A05
 sub edx, 0A0h	; 10A0B
 imul edx, edx	; 10A11
 mov eax, 64h	; 10A14
-sub eax, dword [dword_D3030]	; 10A19
+sub eax, dword [mousey]	; 10A19
 imul eax, eax	; 10A1F
 add eax, edx	; 10A22
 cmp eax, 9C4h	; 10A24
@@ -853,15 +853,15 @@ mov eax, 8	; 10A2B
 jmp short .2	; 10A30
 .1:
 mov eax, 64h	; 10A32
-sub ax, word [dword_D3030]	; 10A37
+sub ax, word [mousey]	; 10A37
 movsx edx, ax	; 10A3E
-mov ax, word [dword_D302C]	; 10A41
+mov ax, word [mousex]	; 10A41
 db 081h,0E8h,0A0h,00h,00h,00h	; 10A47 sub eax,0A0h
 cwde	; 10A4D
 call vtoa	; 10A4E
 cwde	; 10A53
 .2:
-mov dl, byte [dword_D3034]	; 10A54
+mov dl, byte [mousebtns]	; 10A54
 test dl, 1	; 10A5A
 je short .3	; 10A5D
 test dl, 2	; 10A5F
@@ -872,7 +872,7 @@ pop ecx	; 10A67
 pop ebx	; 10A68
 ret	; 10A69
 .3:
-mov bl, byte [dword_D3034]	; 10A6A
+mov bl, byte [mousebtns]	; 10A6A
 test bl, 1	; 10A70
 je short .4	; 10A73
 or al, 10h	; 10A75
@@ -1152,8 +1152,8 @@ jne short ReadSkipKeys.5	; 10D1B
 .8:
 test byte [ctlavailmask], 1	; 10D1D
 je short .9	; 10D24
-call dword [off_D3078]	; 10D26
-test byte [dword_D3034], 3	; 10D2C
+call dword [mousepollfn]	; 10D26
+test byte [mousebtns], 3	; 10D2C
 jne short ReadSkipKeys.5	; 10D33
 .9:
 push byte 1Dh	; 10D35
@@ -1624,9 +1624,9 @@ je short .11	; 11299
 cmp byte [pad2dev], 1	; 1129B
 jne short .12	; 112A2
 .11:
-mov eax, dword [dword_D302C]	; 112A4
+mov eax, dword [mousex]	; 112A4
 mov dword [dword_DF00C], eax	; 112A9
-mov eax, dword [dword_D3030]	; 112AE
+mov eax, dword [mousey]	; 112AE
 mov dword [dword_DF010], eax	; 112B3
 .12:
 push unk_DF014	; 112B8
@@ -1648,11 +1648,11 @@ call sub_8F633	; 112F5
 .14:
 call sub_8374D	; 112FA
 call StopDigiSample	; 112FF
-call sub_6B410	; 11304
+call InputInstall	; 11304
 mov eax, 1	; 11309
 call sub_7E0FA	; 1130E
-call sub_6B3D7	; 11313
-call sub_6B47C	; 11318
+call ClearInputQueue	; 11313
+call InputRemove	; 11318
 cmp byte [pad1dev], 1	; 1131D
 je short .15	; 11324
 cmp byte [pad2dev], 1	; 11326

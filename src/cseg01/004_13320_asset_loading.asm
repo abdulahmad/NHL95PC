@@ -18,7 +18,7 @@ extern dword_E9A9E, dword_E9AB6, hilightfont, jctime, PickAwardWinners_x, memcpy
 extern puckx, pucky, passspeed, randomd0, sprintf_, FadePalette, PickAwardWinners, ShowAwardScreens
 extern DrawAwardsSummary, MakePath, FileOpenRead, FileClose, DrawHudPanel, SetTextColors, ClearPanelPenalties, WaitClickTimeout
 extern StartPreGame, joyq_flush, CrowdNoiseReset, StopDigiSample, PlayDigiSample, WaitDigiSample, StartGame, forceteams
-extern sub_64614, SetupTeamLines, sub_6B3D7, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
+extern sub_64614, SetupTeamLines, ClearInputQueue, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_9061C, sub_90B80, MouseSetPos, sub_B30B4, sub_B30BB
 extern sub_B392C, sub_B4BA8, threat, unk_DF014, SortCords, vtoa, regd4, scrpitch
@@ -45,7 +45,7 @@ push esi	; 1332D
 push edi	; 1332E
 push ebp	; 1332F
 sub esp, byte 50h	; 13330
-call sub_6B3D7	; 13333
+call ClearInputQueue	; 13333
 push byte 20h	; 13338
 push dword 300h	; 1333A
 push str_Palmem	; 1333F
@@ -347,7 +347,7 @@ push eax	; 1374D
 call sub_8E83C	; 1374E
 mov esi, eax	; 13753
 add esp, byte 8	; 13755
-call sub_6B3D7	; 13758
+call ClearInputQueue	; 13758
 call sub_B4BA8	; 1375D
 xor edx, edx	; 13762
 mov eax, 1	; 13764

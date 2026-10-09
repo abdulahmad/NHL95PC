@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_B2D38 progbits alloc exec nowrite align=1
 extern dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8, dword_D2FFC, dword_D3000, dword_D301C, dword_D3028
-extern dword_D302C, dword_D3030, dword_D3034, dword_D3038, dword_D303C, dword_D3044, dword_D3048, off_D306C
-extern off_D3070, off_D3074, off_D3078, sub_B3454, word_D3004, word_D3006, word_D3008
+extern mousex, mousey, mousebtns, dword_D3038, dword_D303C, dword_D3044, dword_D3048, off_D306C
+extern off_D3070, off_D3074, mousepollfn, sub_B3454, word_D3004, word_D3006, word_D3008
 global loc_B2D57, loc_B2D5E, loc_B2D92, loc_B2DB2, loc_B2E94, loc_B2EA5, loc_B2EB3, loc_B2EC2
 global loc_B2EEA, loc_B2F7C, loc_B3006, sub_B2D38, sub_B2D74, sub_B2D94, MouseSetPos, sub_B2DCA
 global sub_B2DEF, sub_B2E1B, sub_B2E43, sub_B2EF6, sub_B2EFD, sub_B2F04, sub_B2F22
@@ -60,8 +60,8 @@ push ebp	; B2DB4
 LD mov, ebp, esp	; B2DB5
 mov eax, dword [byte ebp+08h]	; B2DB7
 mov edx, dword [byte ebp+0Ch]	; B2DBA
-mov dword [dword_D302C], eax	; B2DBD
-mov dword [dword_D3030], edx	; B2DC2
+mov dword [mousex], eax	; B2DBD
+mov dword [mousey], edx	; B2DC2
 leave	; B2DC8
 ret	; B2DC9
 sub_B2DCA:
@@ -70,10 +70,10 @@ LD mov, ebp, esp	; B2DCB
 call sub_B2E43	; B2DCD
 db 08Bh,05Dh,08h	; B2DD2 mov ebx,[ebp+8]
 db 089h,03h	; B2DD5 mov [ebx],eax
-mov ecx, dword [dword_D302C]	; B2DD7
+mov ecx, dword [mousex]	; B2DD7
 mov ebx, dword [byte ebp+0Ch]	; B2DDD
 mov dword [ebx], ecx	; B2DE0
-mov edx, dword [dword_D3030]	; B2DE2
+mov edx, dword [mousey]	; B2DE2
 mov ebx, dword [byte ebp+010h]	; B2DE8
 mov dword [ebx], edx	; B2DEB
 leave	; B2DED
@@ -118,14 +118,14 @@ mov eax, 0Bh	; B2E5C
 int 33h	; B2E61
 movsx ecx, cx	; B2E63
 movsx edx, dx	; B2E66
-mov eax, dword [dword_D302C]	; B2E69
+mov eax, dword [mousex]	; B2E69
 mov ebx, dword [dword_D2FFC]	; B2E6E
 LD add, ebx, ebx	; B2E74
 LD adc, eax, eax	; B2E76
 LD add, ecx, eax	; B2E78
 sar ecx, 1	; B2E7A
 rcr ebx, 1	; B2E7C
-add edx, dword [dword_D3030]	; B2E7E
+add edx, dword [mousey]	; B2E7E
 cmp ecx, dword [dword_D2FEC]	; B2E84
 jge short loc_B2E94	; B2E8A
 mov ecx, dword [dword_D2FEC]	; B2E8C
@@ -147,14 +147,14 @@ mov edx, dword [dword_D2FF8]	; B2EBB
 dec edx	; B2EC1
 loc_B2EC2:
 mov dword [dword_D2FFC], ebx	; B2EC2
-mov dword [dword_D302C], ecx	; B2EC8
-mov dword [dword_D3030], edx	; B2ECE
+mov dword [mousex], ecx	; B2EC8
+mov dword [mousey], edx	; B2ECE
 inc dword [dword_D3000]	; B2ED4
 call sub_B2D38	; B2EDA
 dec dword [dword_D3000]	; B2EDF
-mov dword [dword_D3034], eax	; B2EE5
+mov dword [mousebtns], eax	; B2EE5
 loc_B2EEA:
-mov eax, dword [dword_D3034]	; B2EEA
+mov eax, dword [mousebtns]	; B2EEA
 inc dword [dword_D3000]	; B2EEF
 ret	; B2EF5
 sub_B2EF6:
@@ -197,10 +197,10 @@ push byte 0	; B2F8A
 call sub_B2E1B	; B2F8C
 mov eax, dword [dword_D3048]	; B2F91
 shr eax, 2	; B2F96
-mov dword [dword_D302C], eax	; B2F99
+mov dword [mousex], eax	; B2F99
 mov eax, dword [dword_D3044]	; B2F9E
 shr eax, 2	; B2FA3
-mov dword [dword_D3030], eax	; B2FA6
+mov dword [mousey], eax	; B2FA6
 mov ax, 1Bh	; B2FAB
 int 33h	; B2FAF
 mov word [word_D3004], bx	; B2FB1
@@ -213,7 +213,7 @@ call sub_B2D74	; B2FCC
 mov dword [off_D306C], sub_B2EFD	; B2FD1
 mov dword [off_D3070], sub_B2EFD	; B2FDB
 mov dword [off_D3074], sub_B2EF6	; B2FE5
-mov dword [off_D3078], sub_B2E43	; B2FEF
+mov dword [mousepollfn], sub_B2E43	; B2FEF
 push sub_B2F04	; B2FF9
 call sub_B3454	; B2FFE
 add esp, byte 20h	; B3003

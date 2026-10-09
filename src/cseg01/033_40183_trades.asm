@@ -14,7 +14,7 @@ extern msg_TradeDeadline, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, strncp
 extern DeleteFiles, FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt
 extern CopyFile, ReadSchedGame, SetDialogColors, RestoreDialogBg, MessageBox, LeagueTeamSelect, WriteLeagueTeamEntry, AskTeamPassword
 extern AskMasterPassword, MergeLeagueFiles, ExportTeamToFloppy, SelectFloppyDrive, ReadLeagueInfo, ReadTeamNames, ExecuteTrade, TradeScreen
-extern sub_6B3D7, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
+extern ClearInputQueue, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
 extern sub_B4F8C, negone_3DC28, msg_AllHuman, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, msg_TradeError, msg_Copying
 extern msg_MasterDB, btn_MasterDB, msg_SavedGame, str_star, btn_TradeStats, leagueteams, treeteamnames, masterpw
 extern savleague1, savleague2, unknown_libname_1, unknown_libname_2, lggameidx, word_DDD48, word_DDD4A
@@ -1661,7 +1661,7 @@ je short .9	; 417AF
 test ebp, ebp	; 417B1
 je near CopyHumanTeamDBs.3	; 417B3
 .9:
-call sub_6B3D7	; 417B9
+call ClearInputQueue	; 417B9
 test ebp, ebp	; 417BE
 jne short .10	; 417C0
 push ebp	; 417C2

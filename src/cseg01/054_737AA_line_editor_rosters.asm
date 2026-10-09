@@ -17,13 +17,13 @@ extern dword_D0B1A, dword_D0B1E, dword_D0B22, dword_D0B26, dword_D0B2A, dword_D1
 extern dword_D1231, dword_D1233, dword_D1338, dword_D133C, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC
 extern dword_D1418, dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, musichandle, musicslot
 extern dword_D2C6B, dword_D8B74, dword_D8C84, dword_DBC7C, dword_DBCE0, pointerspr, statsskaterorder, statsgoalieorder
-extern statsgoalieplr, statsskaterplr, statsplayerbuf, dword_EA0DC, dword_EA2B4, rosterteamrec, dword_EBC6C, dword_EBC70
+extern statsgoalieplr, statsskaterplr, statsplayerbuf, ptrupdatefn, dword_EA2B4, rosterteamrec, dword_EBC6C, dword_EBC70
 extern msglines, dword_EBE9C, dword_ECDE4, dword_ECDE8, dword_ECDEC, dword_ECDF0
 extern vgapage, fputchar, j___close_, j___delay_, jctime, lseek_, memcpy_, off_CF223
 extern off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443, off_D056C, off_D058C
 extern open_, qsort_, read_, sprintf_, strcmp_, MakePath, SetTextColors, PrintCenteredText
 extern PrintShadowText, PrintFmt1, PrintFmt2, RunMenu, FitPlayerName, MessageBox, ShowLoadingScreen, FadeOutPalCycle
-extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, KeyDbPtr
+extern GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, KeyDbPtr
 extern sub_6CBE8, sub_6CBFD, sub_78366, sub_78500, sub_78A87, sub_79188, sub_79DE1, sub_79F41
 extern sub_7A099, sub_836E4, sub_8373E, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C
@@ -600,7 +600,7 @@ push eax	; 73DDE
 push eax	; 73DDF
 call sub_B2DCA	; 73DE0
 add esp, byte 0Ch	; 73DE5
-call sub_6B3D7	; 73DE8
+call ClearInputQueue	; 73DE8
 jmp near loc_73F22	; 73DED
 loc_73DF2:
 sub edi, byte 20h	; 73DF2
@@ -662,7 +662,7 @@ mov ecx, dword [byte ebp+06Ah]	; 73E77
 lea ebx, [byte ebp-0Eh]	; 73E7A
 mov edx, dword [byte ebp+03Ah]	; 73E7D
 mov eax, dword [byte ebp+03Eh]	; 73E80
-call sub_6BA4D	; 73E83
+call MenuHitTest	; 73E83
 test eax, eax	; 73E88
 jne short loc_73F02	; 73E8A
 loc_73E8C:
@@ -721,12 +721,12 @@ mov edi, dword [byte ebp+03Ah]	; 73F1F
 loc_73F22:
 xor ecx, ecx	; 73F22
 loc_73F24:
-call sub_6B391	; 73F24
+call GetInputEvent	; 73F24
 test eax, eax	; 73F29
 je short loc_73F3F	; 73F2B
 lea ebx, [byte ebp+03Ah]	; 73F2D
 lea edx, [byte ebp+03Eh]	; 73F30
-call dword [dword_EA0DC]	; 73F33
+call dword [ptrupdatefn]	; 73F33
 mov ecx, eax	; 73F39
 test al, 2	; 73F3B
 je short loc_73F24	; 73F3D
@@ -755,7 +755,7 @@ mov ecx, dword [byte ebp+06Ah]	; 73F6E
 lea ebx, [byte ebp-0Eh]	; 73F71
 mov edx, dword [byte ebp+03Ah]	; 73F74
 mov eax, dword [byte ebp+03Eh]	; 73F77
-call sub_6BA4D	; 73F7A
+call MenuHitTest	; 73F7A
 lea edx, [byte edi-020h]	; 73F7F
 test eax, eax	; 73F82
 je near loc_743E6	; 73F84
@@ -856,7 +856,7 @@ mov dword [byte ebp+01Ah], ebx	; 7408E
 mov dword [byte ebp+016h], ebx	; 74091
 cmp eax, byte 1	; 74094
 je near loc_7500C	; 74097
-call sub_6B3D7	; 7409D
+call ClearInputQueue	; 7409D
 jmp near loc_74F01	; 740A2
 loc_740A7:
 cmp edi, byte 20h	; 740A7
@@ -888,7 +888,7 @@ shl ecx, 5	; 740DF
 mov eax, dword [byte ebp+eax*4-0Eh]	; 740E2
 add eax, ecx	; 740E6
 mov ecx, dword [byte ebp+056h]	; 740E8
-call sub_6B94E	; 740EB
+call DrawMenuItemSel	; 740EB
 mov edx, dword [byte ebp+036h]	; 740F0
 mov eax, dword [byte ebp+032h]	; 740F3
 mov dword [byte ebp+edx*4-01Eh], eax	; 740F6
@@ -906,7 +906,7 @@ mov ecx, dword [byte ebp+056h]	; 74114
 mov edx, eax	; 74117
 mov eax, esi	; 74119
 loc_7411B:
-call sub_6B9EB	; 7411B
+call DrawMenuItemNorm	; 7411B
 jmp near loc_74F01	; 74120
 loc_74125:
 cmp dword [byte eax+018h], byte 0	; 74125
@@ -981,7 +981,7 @@ mov dword [byte ebp+046h], eax	; 741D5
 mov eax, dword [byte ebp+esi*4-0Eh]	; 741D8
 add eax, dword [byte ebp+046h]	; 741DC
 mov ecx, dword [byte ebp+056h]	; 741DF
-call sub_6B94E	; 741E2
+call DrawMenuItemSel	; 741E2
 mov eax, dword [byte ebp+032h]	; 741E7
 mov dword [byte ebp+esi*4-01Eh], eax	; 741EA
 mov eax, dword [byte ebp+05Ah]	; 741EE
@@ -995,7 +995,7 @@ shl eax, 5	; 74201
 mov ecx, dword [byte ebp+esi*4-0Eh]	; 74204
 add eax, ecx	; 74208
 mov ecx, dword [byte ebp+056h]	; 7420A
-call sub_6B9EB	; 7420D
+call DrawMenuItemNorm	; 7420D
 mov eax, dword [byte ebp+036h]	; 74212
 mov ecx, dword [byte ebp+032h]	; 74215
 shl ecx, 5	; 74218
@@ -1101,7 +1101,7 @@ mov edx, dword [byte ebp+062h]	; 74337
 mov edx, dword [byte edx+ebp+012h]	; 7433A
 mov eax, dword [byte ebp+062h]	; 7433E
 mov eax, dword [byte eax+ebp-0Eh]	; 74341
-call sub_6B684	; 74345
+call DrawMenuDropdown	; 74345
 mov eax, dword [byte ebp+062h]	; 7434A
 xor edi, edi	; 7434D
 mov dword [byte eax+ebp-01Eh], edi	; 7434F
@@ -1147,7 +1147,7 @@ shl ecx, 5	; 743AF
 mov eax, dword [byte ebp+eax*4-0Eh]	; 743B2
 add eax, ecx	; 743B6
 mov ecx, dword [byte ebp+056h]	; 743B8
-call sub_6B94E	; 743BB
+call DrawMenuItemSel	; 743BB
 mov edx, dword [byte ebp+036h]	; 743C0
 mov eax, dword [byte ebp+032h]	; 743C3
 mov dword [byte ebp+edx*4-01Eh], eax	; 743C6
@@ -2156,7 +2156,7 @@ mov ecx, dword [byte ebp+06Ah]	; 74F6B
 lea ebx, [byte ebp-0Eh]	; 74F6E
 mov edx, dword [byte ebp+03Ah]	; 74F71
 mov eax, edi	; 74F74
-call sub_6BA4D	; 74F76
+call MenuHitTest	; 74F76
 test eax, eax	; 74F7B
 jne short loc_74FF5	; 74F7D
 loc_74F7F:
@@ -2209,7 +2209,7 @@ mov esi, dword [pointerspr]	; 75000
 push esi	; 75006
 jmp near loc_73F14	; 75007
 loc_7500C:
-call sub_6B3D7	; 7500C
+call ClearInputQueue	; 7500C
 mov edi, dword [byte ebp+066h]	; 75011
 push edi	; 75014
 call jctime	; 75015
@@ -3501,7 +3501,7 @@ mov ecx, dword [byte esp+0Ch]	; 75E7E
 mov ebx, dword [byte esp+010h]	; 75E82
 mov edx, 2	; 75E86
 mov eax, unk_D075E	; 75E8B
-call sub_6B5E4	; 75E90
+call DrawMenuBar	; 75E90
 mov edx, dword [esp]	; 75E95
 mov eax, dword [byte esp+0Ch]	; 75E98
 call SetTextColors	; 75E9C
@@ -4805,7 +4805,7 @@ push eax	; 76EEF
 push eax	; 76EF0
 call sub_B2DCA	; 76EF1
 add esp, byte 0Ch	; 76EF6
-call sub_6B3D7	; 76EF9
+call ClearInputQueue	; 76EF9
 jmp near loc_7704C	; 76EFE
 loc_76F03:
 sub edi, byte 20h	; 76F03
@@ -4867,7 +4867,7 @@ mov ecx, dword [byte ebp+066h]	; 76F88
 lea ebx, [byte ebp+0Eh]	; 76F8B
 mov edx, dword [byte ebp+02Eh]	; 76F8E
 mov eax, dword [byte ebp+032h]	; 76F91
-call sub_6BA4D	; 76F94
+call MenuHitTest	; 76F94
 test eax, eax	; 76F99
 jne near loc_7702C	; 76F9B
 loc_76FA1:
@@ -4931,12 +4931,12 @@ mov edi, dword [byte ebp+02Eh]	; 77049
 loc_7704C:
 xor ecx, ecx	; 7704C
 loc_7704E:
-call sub_6B391	; 7704E
+call GetInputEvent	; 7704E
 test eax, eax	; 77053
 je short loc_77069	; 77055
 lea ebx, [byte ebp+02Eh]	; 77057
 lea edx, [byte ebp+032h]	; 7705A
-call dword [dword_EA0DC]	; 7705D
+call dword [ptrupdatefn]	; 7705D
 mov ecx, eax	; 77063
 test al, 2	; 77065
 je short loc_7704E	; 77067
@@ -4965,7 +4965,7 @@ mov ecx, dword [byte ebp+066h]	; 77098
 lea ebx, [byte ebp+0Eh]	; 7709B
 mov edx, dword [byte ebp+02Eh]	; 7709E
 mov eax, dword [byte ebp+032h]	; 770A1
-call sub_6BA4D	; 770A4
+call MenuHitTest	; 770A4
 lea edx, [byte edi-020h]	; 770A9
 test eax, eax	; 770AC
 je near loc_7750B	; 770AE
@@ -5066,7 +5066,7 @@ mov dword [byte ebp-0Ah], ebx	; 771B8
 mov dword [byte ebp-0Eh], ebx	; 771BB
 cmp eax, byte 1	; 771BE
 je near loc_77F53	; 771C1
-call sub_6B3D7	; 771C7
+call ClearInputQueue	; 771C7
 jmp near loc_77E2F	; 771CC
 loc_771D1:
 cmp edi, byte 20h	; 771D1
@@ -5098,7 +5098,7 @@ shl ecx, 5	; 77209
 mov eax, dword [byte ebp+eax*4+0Eh]	; 7720C
 add eax, ecx	; 77210
 mov ecx, dword [byte ebp+04Eh]	; 77212
-call sub_6B94E	; 77215
+call DrawMenuItemSel	; 77215
 mov edx, dword [byte ebp+02Ah]	; 7721A
 mov eax, dword [byte ebp+026h]	; 7721D
 mov dword [byte ebp+edx*4-02h], eax	; 77220
@@ -5114,7 +5114,7 @@ add eax, ecx	; 7723A
 mov ecx, dword [byte ebp+04Eh]	; 7723C
 mov edx, esi	; 7723F
 loc_77241:
-call sub_6B9EB	; 77241
+call DrawMenuItemNorm	; 77241
 jmp near loc_77E2F	; 77246
 loc_7724B:
 cmp dword [byte eax+018h], byte 0	; 7724B
@@ -5188,7 +5188,7 @@ shl eax, 5	; 772FB
 mov ecx, dword [byte ebp+edi*4+0Eh]	; 772FE
 add eax, ecx	; 77302
 mov ecx, dword [byte ebp+04Eh]	; 77304
-call sub_6B94E	; 77307
+call DrawMenuItemSel	; 77307
 mov eax, dword [byte ebp+026h]	; 7730C
 mov dword [byte ebp+edi*4-02h], eax	; 7730F
 mov eax, dword [byte ebp+052h]	; 77313
@@ -5202,7 +5202,7 @@ shl ecx, 5	; 77326
 mov eax, dword [byte ebp+edi*4+0Eh]	; 77329
 add eax, ecx	; 7732D
 mov ecx, dword [byte ebp+04Eh]	; 7732F
-call sub_6B9EB	; 77332
+call DrawMenuItemNorm	; 77332
 mov eax, dword [byte ebp+02Ah]	; 77337
 mov ecx, dword [byte ebp+026h]	; 7733A
 shl ecx, 5	; 7733D
@@ -5307,7 +5307,7 @@ mov edx, dword [byte ebp+062h]	; 77455
 mov edx, dword [byte edx+ebp-012h]	; 77458
 mov eax, dword [byte ebp+062h]	; 7745C
 mov eax, dword [byte eax+ebp+0Eh]	; 7745F
-call sub_6B684	; 77463
+call DrawMenuDropdown	; 77463
 mov eax, dword [byte ebp+062h]	; 77468
 xor edi, edi	; 7746B
 mov dword [byte eax+ebp-02h], edi	; 7746D
@@ -5353,7 +5353,7 @@ shl ecx, 5	; 774CD
 mov eax, dword [byte ebp+eax*4+0Eh]	; 774D0
 add eax, ecx	; 774D4
 mov ecx, dword [byte ebp+04Eh]	; 774D6
-call sub_6B94E	; 774D9
+call DrawMenuItemSel	; 774D9
 mov edx, dword [byte ebp+02Ah]	; 774DE
 mov eax, dword [byte ebp+026h]	; 774E1
 mov dword [byte ebp+edx*4-02h], eax	; 774E4
@@ -6168,7 +6168,7 @@ mov ecx, dword [byte ebp+066h]	; 77E99
 lea ebx, [byte ebp+0Eh]	; 77E9C
 mov edx, dword [byte ebp+02Eh]	; 77E9F
 mov eax, edi	; 77EA2
-call sub_6BA4D	; 77EA4
+call MenuHitTest	; 77EA4
 test eax, eax	; 77EA9
 jne near loc_77F3C	; 77EAB
 loc_77EB1:
@@ -6226,7 +6226,7 @@ mov esi, dword [pointerspr]	; 77F47
 push esi	; 77F4D
 jmp near loc_7703E	; 77F4E
 loc_77F53:
-call sub_6B3D7	; 77F53
+call ClearInputQueue	; 77F53
 mov edi, dword [byte ebp+05Ah]	; 77F58
 push edi	; 77F5B
 call jctime	; 77F5C

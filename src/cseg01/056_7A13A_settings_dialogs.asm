@@ -15,11 +15,11 @@ extern dword_D17EC, dword_D17F0, dword_D17F4, dword_D17F8, dword_D195C, dword_D1
 extern dword_D196C, dword_D1970, dword_D1974, dword_D1978, dword_D197C, dword_D1980, dword_D198C, dword_D1990
 extern dword_D199C, dword_D19A0, dword_D19AC, dword_D19B0, dword_D19EC, dword_D20A8, musichandle, musicslot
 extern seriesgameno, dword_D2C6B, pointerspr, fdlg_cancel, hmtmstruct, dword_DF648, hmscore
-extern dword_EA0DC, dword_ED35C, dword_ED360, dword_ED364, dword_ED75C, dword_ED760, dword_ED764, puckstruct
+extern ptrupdatefn, dword_ED35C, dword_ED360, dword_ED364, dword_ED75C, dword_ED760, dword_ED764, puckstruct
 extern dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C, dword_ED780, dword_ED784
 extern dword_ED788, dword_ED78C, puckvx, gmode, jctime, teamcitynames, puckx, pucky
 extern puckvy, puckc, off_CD498, off_CD4A0, setpersonel, MakePath, SaveModeState, LoadModeState
-extern WriteModeState, CrowdNoiseOff, CrowdNoiseReset, restorepl, sub_6B391, sub_6B3D7, sub_8034B, sub_8050F
+extern WriteModeState, CrowdNoiseOff, CrowdNoiseReset, restorepl, GetInputEvent, ClearInputQueue, sub_8034B, sub_8050F
 extern SetSideControls, WriteCurModeState, sub_8CCA8, sub_8E83C, sub_8E9C0, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_90D20, sub_91284, sub_91370
 extern sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_96440, sub_B2DCA, sub_B30B4, sub_B4B88
@@ -1102,17 +1102,17 @@ mov ecx, dword [pointerspr]	; 7ACFD
 push ecx	; 7AD03
 call sub_91370	; 7AD04
 add esp, byte 0Ch	; 7AD09
-call sub_6B3D7	; 7AD0C
+call ClearInputQueue	; 7AD0C
 loc_7AD11:
 xor esi, esi	; 7AD11
 mov dword [esp], esi	; 7AD13
 loc_7AD16:
-call sub_6B391	; 7AD16
+call GetInputEvent	; 7AD16
 test eax, eax	; 7AD1B
 je short loc_7AD34	; 7AD1D
 lea ebx, [byte esp+04h]	; 7AD1F
 lea edx, [byte esp+08h]	; 7AD23
-call dword [dword_EA0DC]	; 7AD27
+call dword [ptrupdatefn]	; 7AD27
 mov dword [esp], eax	; 7AD2D
 test al, 6	; 7AD30
 je short loc_7AD16	; 7AD32
@@ -1253,17 +1253,17 @@ mov ecx, dword [pointerspr]	; 7AEB2
 push ecx	; 7AEB8
 call sub_91370	; 7AEB9
 add esp, byte 0Ch	; 7AEBE
-call sub_6B3D7	; 7AEC1
+call ClearInputQueue	; 7AEC1
 loc_7AEC6:
 xor esi, esi	; 7AEC6
 mov dword [byte esp+04h], esi	; 7AEC8
 loc_7AECC:
-call sub_6B391	; 7AECC
+call GetInputEvent	; 7AECC
 test eax, eax	; 7AED1
 je short loc_7AEEB	; 7AED3
 lea ebx, [byte esp+08h]	; 7AED5
 lea edx, [byte esp+0Ch]	; 7AED9
-call dword [dword_EA0DC]	; 7AEDD
+call dword [ptrupdatefn]	; 7AEDD
 mov dword [byte esp+04h], eax	; 7AEE3
 test al, 6	; 7AEE7
 je short loc_7AECC	; 7AEE9
@@ -2117,17 +2117,17 @@ mov ecx, dword [pointerspr]	; 7B912
 push ecx	; 7B918
 call sub_91370	; 7B919
 add esp, byte 0Ch	; 7B91E
-call sub_6B3D7	; 7B921
+call ClearInputQueue	; 7B921
 loc_7B926:
 xor esi, esi	; 7B926
 mov dword [esp], esi	; 7B928
 loc_7B92B:
-call sub_6B391	; 7B92B
+call GetInputEvent	; 7B92B
 test eax, eax	; 7B930
 je short loc_7B949	; 7B932
 lea ebx, [byte esp+04h]	; 7B934
 lea edx, [byte esp+08h]	; 7B938
-call dword [dword_EA0DC]	; 7B93C
+call dword [ptrupdatefn]	; 7B93C
 mov dword [esp], eax	; 7B942
 test al, 6	; 7B945
 je short loc_7B92B	; 7B947
@@ -2265,17 +2265,17 @@ mov ecx, dword [pointerspr]	; 7BAC3
 push ecx	; 7BAC9
 call sub_91370	; 7BACA
 add esp, byte 0Ch	; 7BACF
-call sub_6B3D7	; 7BAD2
+call ClearInputQueue	; 7BAD2
 loc_7BAD7:
 xor esi, esi	; 7BAD7
 mov dword [byte esp+04h], esi	; 7BAD9
 loc_7BADD:
-call sub_6B391	; 7BADD
+call GetInputEvent	; 7BADD
 test eax, eax	; 7BAE2
 je short loc_7BAFC	; 7BAE4
 lea ebx, [byte esp+08h]	; 7BAE6
 lea edx, [byte esp+0Ch]	; 7BAEA
-call dword [dword_EA0DC]	; 7BAEE
+call dword [ptrupdatefn]	; 7BAEE
 mov dword [byte esp+04h], eax	; 7BAF4
 test al, 6	; 7BAF8
 je short loc_7BADD	; 7BAFA
@@ -3040,17 +3040,17 @@ add esp, byte 0Ch	; 7C3EF
 mov esi, dword [gameopts]	; 7C3F2
 shl esi, 19h	; 7C3F8
 shr esi, 1Fh	; 7C3FB
-call sub_6B3D7	; 7C3FE
+call ClearInputQueue	; 7C3FE
 loc_7C403:
 xor edi, edi	; 7C403
 mov dword [byte esp+04h], edi	; 7C405
 loc_7C409:
-call sub_6B391	; 7C409
+call GetInputEvent	; 7C409
 test eax, eax	; 7C40E
 je short loc_7C428	; 7C410
 lea ebx, [byte esp+08h]	; 7C412
 lea edx, [byte esp+0Ch]	; 7C416
-call dword [dword_EA0DC]	; 7C41A
+call dword [ptrupdatefn]	; 7C41A
 mov dword [byte esp+04h], eax	; 7C420
 test al, 6	; 7C424
 je short loc_7C409	; 7C426
@@ -4690,17 +4690,17 @@ mov ecx, dword [pointerspr]	; 7D765
 push ecx	; 7D76B
 call sub_91370	; 7D76C
 add esp, byte 0Ch	; 7D771
-call sub_6B3D7	; 7D774
+call ClearInputQueue	; 7D774
 loc_7D779:
 xor esi, esi	; 7D779
 mov dword [byte esp+08h], esi	; 7D77B
 loc_7D77F:
-call sub_6B391	; 7D77F
+call GetInputEvent	; 7D77F
 test eax, eax	; 7D784
 je short loc_7D79E	; 7D786
 lea ebx, [byte esp+0Ch]	; 7D788
 lea edx, [byte esp+010h]	; 7D78C
-call dword [dword_EA0DC]	; 7D790
+call dword [ptrupdatefn]	; 7D790
 mov dword [byte esp+08h], eax	; 7D796
 test al, 6	; 7D79A
 je short loc_7D77F	; 7D79C

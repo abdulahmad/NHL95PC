@@ -6,8 +6,8 @@ extern __CHK, str_Pointer6, str_DBOX, str_extDB, str_ORG, byte_C4B6C, byte_D42C3
 extern dword_C4B69, boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg, dlgsavebuf, listscroll
 extern fontcolor, dword_D42AC
 extern pointerspr, dlgsavex, dlgsavey, editcurw, editpos, editmaxw, editbuf, editcuron
-extern edity, editx, dbextension, criterrflag, dword_EA0DC, fputchar, jctime, dbchoicelines
-extern strlen_, SetTextColors, PrintShadowText, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B88E
+extern edity, editx, dbextension, criterrflag, ptrupdatefn, fputchar, jctime, dbchoicelines
+extern strlen_, SetTextColors, PrintShadowText, GetInputEvent, ClearInputQueue, InputInstall, InputRemove, PrintMenuText
 extern sub_8CCA8, sub_8E9C0, sub_903F0, sub_90A40, sub_90D20, sub_90EC0, sub_91044, sub_91370
 extern sub_91400, sub_92CD0, sub_B2CBE, MouseSetPos, sub_B2DCA, sub_B3989, sub_B39A7, PollKey
 extern sub_B3D46, sub_B3D64, sub_B4BA8, sub_B4FAC, str_Dot, str_Space, dbchoicebtns, unknown_libname_4
@@ -135,7 +135,7 @@ push eax	; 2FEF2
 mov esi, edx	; 2FEF3
 mov edi, ebx	; 2FEF5
 mov ebp, ecx	; 2FEF7
-call sub_6B47C	; 2FEF9
+call InputRemove	; 2FEF9
 call sub_B4BA8	; 2FEFE
 xor edx, edx	; 2FF03
 mov bl, 4Dh	; 2FF05
@@ -269,7 +269,7 @@ call sub_B2CBE	; 300CD
 add esp, byte 4	; 300D2
 test eax, eax	; 300D5
 jne short TextInputDialog.5	; 300D7
-call sub_6B3D7	; 300D9
+call ClearInputQueue	; 300D9
 cmp dword [dword esp+0128h], byte 0	; 300DE
 je near .11	; 300E6
 .6:
@@ -357,9 +357,9 @@ call sub_B2CBE	; 301E0
 add esp, byte 4	; 301E5
 test eax, eax	; 301E8
 jne short TextInputDialog.13	; 301EA
-call sub_6B3D7	; 301EC
+call ClearInputQueue	; 301EC
 call RestoreDialogBg	; 301F1
-call sub_6B410	; 301F6
+call InputInstall	; 301F6
 mov eax, ebp	; 301FB
 add esp, 118h	; 301FD
 DlgNullCallback:
@@ -520,7 +520,7 @@ add esi, eax	; 30384
 lea edx, [byte edi+01h]	; 30386
 mov ebx, dword [esp]	; 30389
 mov eax, esi	; 3038C
-call sub_6B88E	; 3038E
+call PrintMenuText	; 3038E
 add esp, byte 4	; 30393
 DrawListItem_x:
 pop ebp	; 30396
@@ -826,19 +826,19 @@ mov edx, dword [pointerspr]	; 3073B
 push edx	; 30741
 call sub_91370	; 30742
 add esp, byte 0Ch	; 30747
-call sub_6B3D7	; 3074A
+call ClearInputQueue	; 3074A
 xor esi, esi	; 3074F
 .10:
 xor edi, edi	; 30751
 mov dword [byte esp+058h], edi	; 30753
 .11:
-call sub_6B391	; 30757
+call GetInputEvent	; 30757
 mov ecx, eax	; 3075C
 test eax, eax	; 3075E
 je short .12	; 30760
 lea ebx, [byte esp+04h]	; 30762
 lea edx, [byte esp+08h]	; 30766
-call dword [dword_EA0DC]	; 3076A
+call dword [ptrupdatefn]	; 3076A
 mov dword [byte esp+058h], eax	; 30770
 .12:
 test ecx, ecx	; 30774
@@ -1810,7 +1810,7 @@ jl short MessageBox.8	; 311BA
 mov edx, ebx	; 311BC
 mov eax, dword [byte esp+030h]	; 311BE
 call DrawButtons	; 311C2
-call sub_6B3D7	; 311C7
+call ClearInputQueue	; 311C7
 cmp dword [byte esp+040h], byte 0	; 311CC
 je short .14	; 311D1
 mov ecx, ebx	; 311D3
@@ -1938,15 +1938,15 @@ call sub_B2CBE	; 31311
 add esp, byte 4	; 31316
 test eax, eax	; 31319
 jne short RunMessageBox.1	; 3131B
-call sub_6B3D7	; 3131D
+call ClearInputQueue	; 3131D
 xor ebp, ebp	; 31322
 .2:
-call sub_6B391	; 31324
+call GetInputEvent	; 31324
 test eax, eax	; 31329
 je near .10	; 3132B
 lea ebx, [byte esp+010h]	; 31331
 lea edx, [byte esp+014h]	; 31335
-call dword [dword_EA0DC]	; 31339
+call dword [ptrupdatefn]	; 31339
 mov dword [byte esp+020h], eax	; 3133F
 test byte [byte esp+020h], 2Fh	; 31343
 je near .8	; 31348
@@ -2044,14 +2044,14 @@ call sub_B2CBE	; 3143E
 add esp, byte 4	; 31443
 test eax, eax	; 31446
 jne short RunMessageBox.11	; 31448
-call sub_6B3D7	; 3144A
+call ClearInputQueue	; 3144A
 push edi	; 3144F
 push esi	; 31450
 mov edi, dword [byte esp+024h]	; 31451
 push edi	; 31455
 call sub_903F0	; 31456
 add esp, byte 0Ch	; 3145B
-call sub_6B3D7	; 3145E
+call ClearInputQueue	; 3145E
 mov ebp, dword [byte esp+010h]	; 31463
 push ebp	; 31467
 mov eax, dword [byte esp+018h]	; 31468

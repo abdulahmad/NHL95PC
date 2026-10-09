@@ -6,10 +6,10 @@ extern __CHK, __STOSB, str_PointerMenu, str_menubuff, str_sfh, str_shape, str_93
 extern str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle, mi_9394Season, mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode
 extern menuremap, menuremap2, statscategory, statsteamsel, statsplayoffs, statspalvalid, pointerspr
 extern statsteamorder, statsnumgoalies, statsskaterorder, statsgoalieorder, statsgoalieplr, statsnumskaters, statsskaterplr, playofftree
-extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, statspal, dword_EA0DC, jctime, memcmp_
-extern memcpy_, off_D3078, sprintf_, strcat_, strlen_, strncpy_, FileOpenRead, FileClose
+extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, statspal, ptrupdatefn, jctime, memcmp_
+extern memcpy_, mousepollfn, sprintf_, strcat_, strlen_, strncpy_, FileOpenRead, FileClose
 extern FileReadAt, DeskSetExit3b, ShowPlayerStatsItem, StrPrefixDiffers, PlayerFromMouseY, TeamFromMouse, MoveTreeHighlight, PlayoffTreeScreen
-extern PlayoffTreeHitTest, sub_6B391, sub_6B3D7, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_8CCA8
+extern PlayoffTreeHitTest, GetInputEvent, ClearInputQueue, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, sub_8CCA8
 extern sub_903F0, sub_90F38, sub_91370, sub_91400, sub_91964, MouseSetPos, sub_B2E1B, sub_B4DD4
 extern statsplayer, printfbuf
 global RunMenu_ret4
@@ -120,17 +120,17 @@ push ecx	; 1D825
 push ebp	; 1D826
 call MouseSetPos	; 1D827
 add esp, byte 8	; 1D82C
-call dword [off_D3078]	; 1D82F
-call sub_6B3D7	; 1D835
+call dword [mousepollfn]	; 1D82F
+call ClearInputQueue	; 1D835
 .1:
 xor ecx, ecx	; 1D83A
 .2:
-call sub_6B391	; 1D83C
+call GetInputEvent	; 1D83C
 test eax, eax	; 1D841
 je short .3	; 1D843
 lea ebx, [byte esp+070h]	; 1D845
 lea edx, [byte esp+074h]	; 1D849
-call dword [dword_EA0DC]	; 1D84D
+call dword [ptrupdatefn]	; 1D84D
 mov ecx, eax	; 1D853
 test al, 2	; 1D855
 je short RunMenu.2	; 1D857
@@ -186,7 +186,7 @@ mov ecx, dword [dword esp+0A0h]	; 1D8F7
 lea ebx, [byte esp+048h]	; 1D8FE
 mov edx, dword [dword esp+080h]	; 1D902
 mov eax, dword [dword esp+084h]	; 1D909
-call sub_6BA4D	; 1D910
+call MenuHitTest	; 1D910
 test eax, eax	; 1D915
 je near .23	; 1D917
 mov edx, dword [byte esp+06Ch]	; 1D91D
@@ -267,7 +267,7 @@ mov eax, dword [dword esp+088h]	; 1DA1D
 mov dword [byte esp+074h], eax	; 1DA24
 mov eax, dword [dword esp+08Ch]	; 1DA28
 mov dword [byte esp+070h], eax	; 1DA2F
-call sub_6B3D7	; 1DA33
+call ClearInputQueue	; 1DA33
 jmp near .22	; 1DA38
 .10:
 mov ecx, dword [dword esp+08Ch]	; 1DA3D
@@ -290,7 +290,7 @@ shl ecx, 5	; 1DA7A
 mov eax, dword [byte esp+eax*4+040h]	; 1DA7D
 add eax, ecx	; 1DA81
 mov ecx, dword [byte esp+0Ch]	; 1DA83
-call sub_6B94E	; 1DA87
+call DrawMenuItemSel	; 1DA87
 mov edx, dword [byte esp+06Ch]	; 1DA8C
 mov eax, dword [byte esp+068h]	; 1DA90
 mov dword [byte esp+edx*4+028h], eax	; 1DA94
@@ -371,7 +371,7 @@ shl ecx, 5	; 1DB7A
 mov eax, dword [byte esp+esi*4+040h]	; 1DB7D
 add eax, ecx	; 1DB81
 mov ecx, dword [byte esp+0Ch]	; 1DB83
-call sub_6B94E	; 1DB87
+call DrawMenuItemSel	; 1DB87
 mov eax, dword [byte esp+068h]	; 1DB8C
 mov dword [byte esp+esi*4+028h], eax	; 1DB90
 mov ebx, dword [dword esp+0A4h]	; 1DB94
@@ -384,7 +384,7 @@ shl eax, 5	; 1DBA9
 mov ecx, dword [byte esp+esi*4+040h]	; 1DBAC
 add eax, ecx	; 1DBB0
 mov ecx, dword [byte esp+0Ch]	; 1DBB2
-call sub_6B9EB	; 1DBB6
+call DrawMenuItemNorm	; 1DBB6
 mov eax, dword [byte esp+06Ch]	; 1DBBB
 mov ebx, dword [byte esp+068h]	; 1DBBF
 shl ebx, 5	; 1DBC3
@@ -482,7 +482,7 @@ mov ebx, dword [dword esp+08Ch]	; 1DCED
 mov ebx, dword [byte esp+ebx+014h]	; 1DCF4
 mov edx, dword [byte esp+ebp*4+064h]	; 1DCF8
 mov eax, dword [byte esp+ebp*4+044h]	; 1DCFC
-call sub_6B684	; 1DD00
+call DrawMenuDropdown	; 1DD00
 xor ebx, ebx	; 1DD05
 mov dword [byte esp+ebp*4+028h], ebx	; 1DD07
 push edi	; 1DD0B
@@ -516,7 +516,7 @@ shl ecx, 5	; 1DD71
 mov eax, dword [byte esp+eax*4+040h]	; 1DD74
 add eax, ecx	; 1DD78
 mov ecx, dword [byte esp+0Ch]	; 1DD7A
-call sub_6B94E	; 1DD7E
+call DrawMenuItemSel	; 1DD7E
 mov edx, dword [byte esp+06Ch]	; 1DD83
 mov eax, dword [byte esp+068h]	; 1DD87
 mov dword [byte esp+edx*4+028h], eax	; 1DD8B
@@ -532,7 +532,7 @@ add eax, edx	; 1DDAB
 mov ecx, dword [byte esp+0Ch]	; 1DDAD
 mov edx, esi	; 1DDB1
 .21:
-call sub_6B9EB	; 1DDB3
+call DrawMenuItemNorm	; 1DDB3
 .22:
 mov esi, dword [dword esp+08Ch]	; 1DDB8
 push esi	; 1DDBF
@@ -825,8 +825,8 @@ push esi	; 1E14F
 push edi	; 1E150
 call MouseSetPos	; 1E151
 add esp, byte 8	; 1E156
-call dword [off_D3078]	; 1E159
-call sub_6B3D7	; 1E15F
+call dword [mousepollfn]	; 1E159
+call ClearInputQueue	; 1E15F
 jmp near .19	; 1E164
 .11:
 mov edi, esi	; 1E169
@@ -917,12 +917,12 @@ mov dword [dword esp+094h], eax	; 1E280
 .19:
 xor ecx, ecx	; 1E287
 .20:
-call sub_6B391	; 1E289
+call GetInputEvent	; 1E289
 test eax, eax	; 1E28E
 je short .21	; 1E290
 lea ebx, [byte esp+078h]	; 1E292
 lea edx, [byte esp+07Ch]	; 1E296
-call dword [dword_EA0DC]	; 1E29A
+call dword [ptrupdatefn]	; 1E29A
 mov ecx, eax	; 1E2A0
 test al, 2	; 1E2A2
 je short RunTeamPickMenu.20	; 1E2A4
@@ -961,7 +961,7 @@ mov ecx, dword [dword esp+0A8h]	; 1E321
 lea ebx, [byte esp+068h]	; 1E328
 mov edx, dword [dword esp+088h]	; 1E32C
 mov eax, dword [dword esp+08Ch]	; 1E333
-call sub_6BA4D	; 1E33A
+call MenuHitTest	; 1E33A
 test eax, eax	; 1E33F
 je near .60	; 1E341
 mov edx, dword [byte esp+06Ch]	; 1E347
@@ -1223,7 +1223,7 @@ call MouseSetPos	; 1E66A
 add esp, byte 8	; 1E66F
 mov dword [byte esp+07Ch], edi	; 1E672
 mov dword [byte esp+078h], esi	; 1E676
-call sub_6B3D7	; 1E67A
+call ClearInputQueue	; 1E67A
 jmp near .85	; 1E67F
 .48:
 mov ecx, dword [dword esp+094h]	; 1E684
@@ -1246,7 +1246,7 @@ shl ecx, 5	; 1E6C1
 mov eax, dword [byte esp+eax*4+060h]	; 1E6C4
 add eax, ecx	; 1E6C8
 mov ecx, dword [byte esp+0Ch]	; 1E6CA
-call sub_6B94E	; 1E6CE
+call DrawMenuItemSel	; 1E6CE
 mov edx, dword [byte esp+06Ch]	; 1E6D3
 mov eax, dword [byte esp+068h]	; 1E6D7
 mov dword [byte esp+edx*4+038h], eax	; 1E6DB
@@ -1263,7 +1263,7 @@ mov ecx, dword [byte esp+0Ch]	; 1E6FA
 mov edx, eax	; 1E6FE
 mov eax, esi	; 1E700
 .49:
-call sub_6B9EB	; 1E702
+call DrawMenuItemNorm	; 1E702
 jmp near .85	; 1E707
 .50:
 cmp dword [byte eax+018h], byte 0	; 1E70C
@@ -1329,7 +1329,7 @@ shl eax, 5	; 1E7C6
 mov ecx, dword [byte esp+edi*4+060h]	; 1E7C9
 add eax, ecx	; 1E7CD
 mov ecx, dword [byte esp+0Ch]	; 1E7CF
-call sub_6B94E	; 1E7D3
+call DrawMenuItemSel	; 1E7D3
 mov eax, dword [byte esp+068h]	; 1E7D8
 mov dword [byte esp+edi*4+038h], eax	; 1E7DC
 mov ecx, dword [dword esp+0B0h]	; 1E7E0
@@ -1342,7 +1342,7 @@ shl eax, 5	; 1E7F5
 mov ecx, dword [byte esp+edi*4+060h]	; 1E7F8
 add eax, ecx	; 1E7FC
 mov ecx, dword [byte esp+0Ch]	; 1E7FE
-call sub_6B9EB	; 1E802
+call DrawMenuItemNorm	; 1E802
 mov eax, dword [byte esp+06Ch]	; 1E807
 mov ecx, dword [byte esp+068h]	; 1E80B
 shl ecx, 5	; 1E80F
@@ -1440,7 +1440,7 @@ mov ebx, dword [dword esp+094h]	; 1E947
 mov ebx, dword [byte esp+ebx+014h]	; 1E94E
 mov edx, dword [byte esp+ebp*4+034h]	; 1E952
 mov eax, dword [byte esp+ebp*4+064h]	; 1E956
-call sub_6B684	; 1E95A
+call DrawMenuDropdown	; 1E95A
 xor edx, edx	; 1E95F
 mov dword [byte esp+ebp*4+038h], edx	; 1E961
 push esi	; 1E965
@@ -1473,7 +1473,7 @@ shl ecx, 5	; 1E9C7
 mov eax, dword [byte esp+eax*4+060h]	; 1E9CA
 add eax, ecx	; 1E9CE
 mov ecx, dword [byte esp+0Ch]	; 1E9D0
-call sub_6B94E	; 1E9D4
+call DrawMenuItemSel	; 1E9D4
 mov edx, dword [byte esp+06Ch]	; 1E9D9
 mov eax, dword [byte esp+068h]	; 1E9DD
 mov dword [byte esp+edx*4+038h], eax	; 1E9E1
@@ -1983,17 +1983,17 @@ push ebp	; 1F028
 push esi	; 1F029
 call MouseSetPos	; 1F02A
 add esp, byte 8	; 1F02F
-call dword [off_D3078]	; 1F032
-call sub_6B3D7	; 1F038
+call dword [mousepollfn]	; 1F032
+call ClearInputQueue	; 1F038
 .12:
 xor ecx, ecx	; 1F03D
 .13:
-call sub_6B391	; 1F03F
+call GetInputEvent	; 1F03F
 test eax, eax	; 1F044
 je short .14	; 1F046
 lea ebx, [byte esp+074h]	; 1F048
 lea edx, [byte esp+078h]	; 1F04C
-call dword [dword_EA0DC]	; 1F050
+call dword [ptrupdatefn]	; 1F050
 mov ecx, eax	; 1F056
 test al, 2	; 1F058
 je short RunPlayerPickMenu.13	; 1F05A
@@ -2049,7 +2049,7 @@ mov ecx, dword [dword esp+0A8h]	; 1F0FA
 lea ebx, [byte esp+038h]	; 1F101
 mov edx, dword [dword esp+084h]	; 1F105
 mov eax, dword [dword esp+088h]	; 1F10C
-call sub_6BA4D	; 1F113
+call MenuHitTest	; 1F113
 test eax, eax	; 1F118
 je near .50	; 1F11A
 mov edx, dword [byte esp+06Ch]	; 1F120
@@ -2289,7 +2289,7 @@ add esp, byte 8	; 1F405
 mov dword [byte esp+078h], esi	; 1F408
 mov eax, dword [dword esp+090h]	; 1F40C
 mov dword [byte esp+074h], eax	; 1F413
-call sub_6B3D7	; 1F417
+call ClearInputQueue	; 1F417
 jmp near .68	; 1F41C
 .37:
 mov ecx, dword [dword esp+090h]	; 1F421
@@ -2312,7 +2312,7 @@ shl ecx, 5	; 1F45E
 mov eax, dword [byte esp+eax*4+030h]	; 1F461
 add eax, ecx	; 1F465
 mov ecx, dword [byte esp+0Ch]	; 1F467
-call sub_6B94E	; 1F46B
+call DrawMenuItemSel	; 1F46B
 mov edx, dword [byte esp+06Ch]	; 1F470
 mov eax, dword [byte esp+068h]	; 1F474
 mov dword [byte esp+edx*4+058h], eax	; 1F478
@@ -2330,7 +2330,7 @@ mov ecx, dword [byte esp+0Ch]	; 1F497
 mov edx, eax	; 1F49B
 mov eax, esi	; 1F49D
 .39:
-call sub_6B9EB	; 1F49F
+call DrawMenuItemNorm	; 1F49F
 jmp near .68	; 1F4A4
 .40:
 cmp dword [byte eax+018h], byte 0	; 1F4A9
@@ -2396,7 +2396,7 @@ shl eax, 5	; 1F563
 mov ecx, dword [byte esp+esi*4+030h]	; 1F566
 add eax, ecx	; 1F56A
 mov ecx, dword [byte esp+0Ch]	; 1F56C
-call sub_6B94E	; 1F570
+call DrawMenuItemSel	; 1F570
 mov eax, dword [byte esp+068h]	; 1F575
 mov dword [byte esp+esi*4+058h], eax	; 1F579
 mov ecx, dword [dword esp+0ACh]	; 1F57D
@@ -2410,7 +2410,7 @@ shl ecx, 5	; 1F594
 mov eax, dword [byte esp+esi*4+030h]	; 1F597
 add eax, ecx	; 1F59B
 mov ecx, dword [byte esp+0Ch]	; 1F59D
-call sub_6B9EB	; 1F5A1
+call DrawMenuItemNorm	; 1F5A1
 mov eax, dword [byte esp+06Ch]	; 1F5A6
 mov ebx, dword [byte esp+068h]	; 1F5AA
 shl ebx, 5	; 1F5AE
@@ -2508,7 +2508,7 @@ mov ebx, dword [dword esp+090h]	; 1F6E0
 mov ebx, dword [byte esp+ebx+014h]	; 1F6E7
 mov edx, dword [byte esp+ebp*4+044h]	; 1F6EB
 mov eax, dword [byte esp+ebp*4+034h]	; 1F6EF
-call sub_6B684	; 1F6F3
+call DrawMenuDropdown	; 1F6F3
 xor edx, edx	; 1F6F8
 mov dword [byte esp+ebp*4+058h], edx	; 1F6FA
 push esi	; 1F6FE
@@ -2541,7 +2541,7 @@ shl ecx, 5	; 1F760
 mov eax, dword [byte esp+eax*4+030h]	; 1F763
 add eax, ecx	; 1F767
 mov ecx, dword [byte esp+0Ch]	; 1F769
-call sub_6B94E	; 1F76D
+call DrawMenuItemSel	; 1F76D
 mov edx, dword [byte esp+06Ch]	; 1F772
 mov eax, dword [byte esp+068h]	; 1F776
 mov dword [byte esp+edx*4+058h], eax	; 1F77A

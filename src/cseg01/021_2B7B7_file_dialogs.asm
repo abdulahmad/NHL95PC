@@ -16,10 +16,10 @@ extern seriesgameno, dword_D2C6B, pointerspr, exhfiles, exhfilenames
 extern pofiles, pofilenames, lgfiles
 extern lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open, fdlg_del, fdlg_up
 extern fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp, fdlg_noarrow, otherperiod
-extern dword_EA0DC, j_unlink_, jctime, teamabbrevs, off_C5441, off_C6F7C, off_C6F80, off_C6F84
+extern ptrupdatefn, j_unlink_, jctime, teamabbrevs, off_C5441, off_C6F7C, off_C6F80, off_C6F84
 extern qsort_, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, MakePath, DeleteDir
 extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, CopyFile, SetupStatsSourceMenu, BuildSavedGameLabels
-extern SetDialogColors, MessageBox, LoadModeState, MenuNewExhibition, MenuNextLeagueGame, MenuExportDbs, sub_6B391, sub_6B3D7
+extern SetDialogColors, MessageBox, LoadModeState, MenuNewExhibition, MenuNextLeagueGame, MenuExportDbs, GetInputEvent, ClearInputQueue
 extern sub_7A29C, sub_86647, PlayoffModeLoop, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0
 extern sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400, sub_91964, sub_92CD0, FatalError
 extern MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3CC8, sub_B4BA8, sub_B4FAC, str_NHL, str_PO2
@@ -1404,17 +1404,17 @@ call sub_91370	; 2C8CA
 add esp, byte 0Ch	; 2C8CF
 mov esi, dword [fdlgtab]	; 2C8D2
 mov esi, dword [nosplit esi*4+off_C6F7C]	; 2C8D8
-call sub_6B3D7	; 2C8DF
+call ClearInputQueue	; 2C8DF
 .1:
 xor edi, edi	; 2C8E4
 mov dword [byte esp+04h], edi	; 2C8E6
 .2:
-call sub_6B391	; 2C8EA
+call GetInputEvent	; 2C8EA
 test eax, eax	; 2C8EF
 je short .3	; 2C8F1
 lea ebx, [byte esp+08h]	; 2C8F3
 lea edx, [byte esp+0Ch]	; 2C8F7
-call dword [dword_EA0DC]	; 2C8FB
+call dword [ptrupdatefn]	; 2C8FB
 mov dword [byte esp+04h], eax	; 2C901
 test eax, eax	; 2C905
 je short RunFileDlg.2	; 2C907

@@ -2,56 +2,47 @@
 bits 32
 %include "hockey.inc"
 section s_6B093 progbits alloc exec nowrite align=1
-extern __CHK, asc_C27CC, asc_C27D3, asc_C27D8, asc_C27DD, asc_C27E2, asc_C27E7, asc_C27EC
-extern asc_C27F7, asc_C2805, str_space, str_dot, musicon, byte_D3040, byte_D416A, ctlavailmask
-extern byte_EA0FC, byte_EA0FD, byte_EA2A4, byte_EA2A5, dword_C4CFC, dword_C71E0, dword_CCC94, dword_CD9D0
-extern dword_CD9F4, dword_CDA1C, dword_CDA20, dword_CDA24, dword_CDA28, dword_CDA2C, dword_CDA30, dword_CDA34
-extern dword_CDA38, dword_CDA3C, dword_CDA40, dword_CDA44, dword_CDA48, dword_CDA4C, falist, falistsel
+extern __CHK, str_Joycal, str_Scrn3, str_Rite, str_Left, str_Pal24, str_Puck, str_PuckBack
+extern str_LEFTJOYSTICK, str_RIGHTJOYSTICK, str_space, str_dot, musicon, joyenablemask, byte_D416A, ctlavailmask
+extern dword_C4CFC, dword_C71E0, dword_CCC94, joycalx
+extern joycaly, inputinstalled, ptrstep, dword_CDA24, inputqcount, inputqtail, inputqhead, inputpolldiv
+extern dword_CDA38, joybtnheld, enterheld, lastmousebtns, lastmousex, lastmousey, falist, falistsel
 extern facount, seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size
-extern careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D2FD8, dword_D302C, dword_D3030
-extern dword_D3034, dword_EA0DC, dword_EA0F8, dword_EA101, dword_EA298, dword_EA29C, dword_EA2A0, dword_EA2A9
+extern careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, joycalactive, mousex, mousey
+extern mousebtns, ptrupdatefn, inputqueue, lastinputdir, inputrepeat, inputev
 extern dword_ED7B0, jctime, memcpy_, memset_, leaguedbnames
-extern off_D3078, off_D45B4, off_D45B8, strcat_, MakePath, SetTextColors
+extern mousepollfn, joycalprehook, joycalposthook, strcat_, MakePath, SetTextColors
 extern PrintShadowText, sub_6CA8F, TeamRecPtr, KeyDbPtr, sub_6CC20, sub_76429, sub_83459, sub_8CCA8
 extern sub_8D2F0, sub_8E4C0, sub_8E4F8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_90D20, sub_910E0, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_91964
 extern sub_92CD0, sub_92DE0, sub_B29F0, sub_B2CBE, MouseSetPos, sub_B2F22, sub_B30B4, sub_B30F4
 extern sub_B340B, sub_B3464, sub_B384E, sub_B387E, sub_B392C, sub_B39D0, PollKey, sub_B4B88
 extern sub_B4BA8, sub_B4C61, sub_B4FAC, unk_C27F5, unk_D45D8, scrpitch
-global loc_6B0C7, loc_6B0CC, loc_6B17A, loc_6B17F, loc_6B21F, loc_6B23C, loc_6B29D, loc_6B2FA
-global loc_6B336, loc_6B345, loc_6B371, loc_6B3AC, loc_6B42F, loc_6B436, loc_6B478, loc_6B4B6
-global loc_6B4EC, loc_6B4F9, loc_6B50A, loc_6B521, loc_6B534, loc_6B560, loc_6B56D, loc_6B57A
-global loc_6B587, loc_6B595, loc_6B5A3, loc_6B5B1, loc_6B5BE, loc_6B5DA, loc_6B617, loc_6B64D
-global loc_6B71D, loc_6B756, loc_6B760, loc_6B7AB, loc_6B7E9, loc_6B7EA, loc_6B7F6, loc_6B8A5
-global loc_6B8AB, loc_6B8B8, loc_6B8E2, loc_6B8E8, loc_6B8F5, loc_6B907, loc_6B90A, loc_6B927
-global loc_6B92D, loc_6B93A, loc_6B973, loc_6B9AB, loc_6B9E2, loc_6BA10, loc_6BA6E, loc_6BA7F
-global loc_6BACC, loc_6BACD, loc_6BADB, loc_6BADC, loc_6BAE2, loc_6BB20, loc_6BB34, loc_6BB3E
-global loc_6BB55, loc_6BB67, loc_6BB80, loc_6BB97, loc_6BBA4, loc_6BBFA, loc_6BC18, loc_6BC2C
-global loc_6BC6C, loc_6BC9F, loc_6BCA1, loc_6BD04, loc_6BD14, loc_6BD47, loc_6BD55, loc_6BD61
-global loc_6BD63, loc_6BD99, loc_6BDAB, loc_6BDBD, loc_6BDCF, loc_6BDE1, loc_6BDF3, loc_6BE05
-global loc_6BE17, loc_6BE29, loc_6BE3B, loc_6BE59, loc_6BE6B, loc_6BE78, loc_6BE84, loc_6BE8E
-global loc_6BEC1, loc_6BEF3, loc_6BF0D, loc_6BF32, loc_6BF77, loc_6C027, loc_6C028, loc_6C039
-global loc_6C03C, loc_6C059, loc_6C07A, loc_6C0A6, loc_6C0E8, loc_6C0F0, loc_6C122, loc_6C164
-global loc_6C16C, loc_6C190, sub_6B093, sub_6B35C, sub_6B37A, sub_6B391, sub_6B3D7, sub_6B410
-global sub_6B47C, sub_6B4BB, sub_6B5E4, sub_6B684, sub_6B7FC, sub_6B88E, sub_6B8CB, sub_6B910
-global sub_6B94E, sub_6B9EB, sub_6BA4D, sub_6BAEB, sub_6BC30, sub_6BCDA, sub_6BD69, sub_6BE95
-global sub_6BF4A, sub_6C043, sub_6C19B, unk_6BF3D
-sub_6B093:
+global CalLeftJoystick_common
+global DrawMenuDropdown_ret
+global PrintMenuTextGrey_common, PrintMenuTextGrey_ret
+global DrawMenuItemSel_common, DrawMenuItemSel_ret
+global BuildFreeAgentList_ret
+global JoystickCalScreen, CalLeftJoystick, CalRightJoystick, GetInputEvent, ClearInputQueue, InputInstall
+global InputRemove, EventToPointer, DrawMenuBar, DrawMenuDropdown, DrawMenuBox, PrintMenuText, PrintMenuTextGrey, PrintMenuTextAlt
+global DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, InputPollTick, PollMouseEvent, PollJoystickEvent, PollKeyboardEvent, MenuCentralRegistry
+global BuildFreeAgentList, BuildTeamRosterList, LoadLeagueDbsMem, unk13_6BF3D
+JoystickCalScreen:
 push dword 368h	; 6B093
 call __CHK	; 6B098
 push esi	; 6B09D
 push edi	; 6B09E
 push ebp	; 6B09F
 sub esp, 34Ch	; 6B0A0
-mov dword [dword_D2FD8], 1	; 6B0A6
-call dword [off_D45B4]	; 6B0B0
+mov dword [joycalactive], 1	; 6B0A6
+call dword [joycalprehook]	; 6B0B0
 cmp dword [dword esp+0364h], byte 0	; 6B0B6
-je short loc_6B0C7	; 6B0BE
+je short .1	; 6B0BE
 call sub_B387E	; 6B0C0
-jmp short loc_6B0CC	; 6B0C5
-loc_6B0C7:
+jmp short .2	; 6B0C5
+.1:
 call sub_B384E	; 6B0C7
-loc_6B0CC:
+.2:
 push byte 0	; 6B0CC
 push byte 0	; 6B0CE
 call sub_8E9C0	; 6B0D0
@@ -60,7 +51,7 @@ call sub_B3464	; 6B0D8
 mov cl, byte [dword esp+0360h]	; 6B0DD
 sar eax, cl	; 6B0E4
 test al, 30h	; 6B0E6
-jne near loc_6B336	; 6B0E8
+jne near .9	; 6B0E8
 lea eax, [dword esp+0300h]	; 6B0EE
 push eax	; 6B0F5
 call sub_8E9E8	; 6B0F6
@@ -83,12 +74,12 @@ push byte 0	; 6B130
 call sub_B4B88	; 6B132
 add esp, byte 0Ch	; 6B137
 push byte 0	; 6B13A
-push asc_C27CC	; 6B13C
+push str_Joycal	; 6B13C
 call sub_8E83C	; 6B141
 mov esi, eax	; 6B146
 add esp, byte 8	; 6B148
 mov dword [dword esp+0340h], eax	; 6B14B
-push asc_C27D3	; 6B152
+push str_Scrn3	; 6B152
 push eax	; 6B157
 call sub_B30B4	; 6B158
 add esp, byte 8	; 6B15D
@@ -96,12 +87,12 @@ push eax	; 6B160
 call sub_9121C	; 6B161
 add esp, byte 4	; 6B166
 cmp dword [dword esp+0364h], byte 0	; 6B169
-je short loc_6B17A	; 6B171
-push asc_C27D8	; 6B173
-jmp short loc_6B17F	; 6B178
-loc_6B17A:
-push asc_C27DD	; 6B17A
-loc_6B17F:
+je short .3	; 6B171
+push str_Rite	; 6B173
+jmp short .4	; 6B178
+.3:
+push str_Left	; 6B17A
+.4:
 push esi	; 6B17F
 call sub_B30B4	; 6B180
 add esp, byte 8	; 6B185
@@ -110,7 +101,7 @@ mov ebp, dword [dword esp+0344h]	; 6B18F
 push ebp	; 6B196
 call sub_913B4	; 6B197
 add esp, byte 4	; 6B19C
-push asc_C27E2	; 6B19F
+push str_Pal24	; 6B19F
 mov eax, dword [dword esp+0344h]	; 6B1A4
 push eax	; 6B1AB
 call sub_B30B4	; 6B1AC
@@ -119,7 +110,7 @@ lea edx, [byte eax+010h]	; 6B1B4
 mov ebx, 300h	; 6B1B7
 mov eax, esp	; 6B1BC
 call memcpy_	; 6B1BE
-push asc_C27E7	; 6B1C3
+push str_Puck	; 6B1C3
 mov edx, dword [dword esp+0344h]	; 6B1C8
 push edx	; 6B1CF
 call sub_B30B4	; 6B1D0
@@ -134,7 +125,7 @@ sar eax, 10h	; 6B1EC
 imul eax, edx	; 6B1EF
 add eax, byte 11h	; 6B1F2
 push eax	; 6B1F5
-push asc_C27EC	; 6B1F6
+push str_PuckBack	; 6B1F6
 call sub_8CCA8	; 6B1FB
 add esp, byte 0Ch	; 6B200
 mov ebp, eax	; 6B203
@@ -149,50 +140,50 @@ mov edx, esp	; 6B211
 xor eax, eax	; 6B213
 call sub_76429	; 6B215
 mov esi, 0FFFFFFFFh	; 6B21A
-loc_6B21F:
+.5:
 call sub_B39D0	; 6B21F
 test eax, eax	; 6B224
-je short loc_6B23C	; 6B226
+je short .6	; 6B226
 mov eax, dword [dword esp+035Ch]	; 6B228
 not eax	; 6B22F
-and dword [byte_D3040], eax	; 6B231
-jmp near loc_6B2FA	; 6B237
-loc_6B23C:
+and dword [joyenablemask], eax	; 6B231
+jmp near .8	; 6B237
+.6:
 call sub_B3464	; 6B23C
 mov cl, byte [dword esp+0360h]	; 6B241
 sar eax, cl	; 6B248
 mov dword [dword esp+0348h], eax	; 6B24A
 test byte [dword esp+0348h], 30h	; 6B251
-jne near loc_6B2FA	; 6B259
+jne near .8	; 6B259
 mov ebx, dword [dword esp+0348h]	; 6B25F
 push ebx	; 6B266
 call sub_B340B	; 6B267
 add esp, byte 4	; 6B26C
 mov dword [dword esp+0348h], eax	; 6B26F
 cmp eax, esi	; 6B276
-je short loc_6B21F	; 6B278
+je short JoystickCalScreen.5	; 6B278
 call sub_B4C61	; 6B27A
 cmp esi, byte 0FFFFFFFFh	; 6B27F
-je short loc_6B29D	; 6B282
-mov ecx, dword [nosplit esi*4+dword_CD9F4]	; 6B284
+je short .7	; 6B282
+mov ecx, dword [nosplit esi*4+joycaly]	; 6B284
 push ecx	; 6B28B
-mov edi, dword [nosplit esi*4+dword_CD9D0]	; 6B28C
+mov edi, dword [nosplit esi*4+joycalx]	; 6B28C
 push edi	; 6B293
 push ebp	; 6B294
 call sub_910E0	; 6B295
 add esp, byte 0Ch	; 6B29A
-loc_6B29D:
+.7:
 mov esi, dword [dword esp+0348h]	; 6B29D
-mov eax, dword [nosplit esi*4+dword_CD9F4]	; 6B2A4
+mov eax, dword [nosplit esi*4+joycaly]	; 6B2A4
 push eax	; 6B2AB
-mov edx, dword [nosplit esi*4+dword_CD9D0]	; 6B2AC
+mov edx, dword [nosplit esi*4+joycalx]	; 6B2AC
 push edx	; 6B2B3
 push ebp	; 6B2B4
 call sub_91400	; 6B2B5
 add esp, byte 0Ch	; 6B2BA
-mov ebx, dword [nosplit esi*4+dword_CD9F4]	; 6B2BD
+mov ebx, dword [nosplit esi*4+joycaly]	; 6B2BD
 push ebx	; 6B2C4
-mov ecx, dword [nosplit esi*4+dword_CD9D0]	; 6B2C5
+mov ecx, dword [nosplit esi*4+joycalx]	; 6B2C5
 push ecx	; 6B2CC
 mov esi, dword [dword esp+034Ch]	; 6B2CD
 push esi	; 6B2D4
@@ -204,8 +195,8 @@ push byte 0	; 6B2E6
 push unk_C27F5	; 6B2E8
 call sub_91964	; 6B2ED
 add esp, byte 0Ch	; 6B2F2
-jmp near loc_6B21F	; 6B2F5
-loc_6B2FA:
+jmp near JoystickCalScreen.5	; 6B2F5
+.8:
 push ebp	; 6B2FA
 call jctime	; 6B2FB
 add esp, byte 4	; 6B300
@@ -221,82 +212,82 @@ lea eax, [dword esp+0300h]	; 6B324
 push eax	; 6B32B
 call sub_8EA00	; 6B32C
 add esp, byte 4	; 6B331
-jmp short loc_6B345	; 6B334
-loc_6B336:
+jmp short .10	; 6B334
+.9:
 mov eax, dword [dword esp+035Ch]	; 6B336
 not eax	; 6B33D
-and dword [byte_D3040], eax	; 6B33F
-loc_6B345:
-call dword [off_D45B8]	; 6B345
+and dword [joyenablemask], eax	; 6B33F
+.10:
+call dword [joycalposthook]	; 6B345
 xor eax, eax	; 6B34B
-mov dword [dword_D2FD8], eax	; 6B34D
+mov dword [joycalactive], eax	; 6B34D
 add esp, 34Ch	; 6B352
 pop ebp	; 6B358
 pop edi	; 6B359
 pop esi	; 6B35A
 ret	; 6B35B
-sub_6B35C:
+CalLeftJoystick:
 push dword 14h	; 6B35C
 call __CHK	; 6B361
-push asc_C27F7	; 6B366
+push str_LEFTJOYSTICK	; 6B366
 push byte 0	; 6B36B
 push byte 0	; 6B36D
 push byte 1	; 6B36F
-loc_6B371:
-call sub_6B093	; 6B371
+CalLeftJoystick_common:
+call JoystickCalScreen	; 6B371
 add esp, byte 10h	; 6B376
 ret	; 6B379
-sub_6B37A:
+CalRightJoystick:
 push dword 14h	; 6B37A
 call __CHK	; 6B37F
-push asc_C2805	; 6B384
+push str_RIGHTJOYSTICK	; 6B384
 push byte 1	; 6B389
 push byte 8	; 6B38B
 push byte 2	; 6B38D
-jmp short loc_6B371	; 6B38F
-sub_6B391:
+jmp short CalLeftJoystick_common	; 6B38F
+GetInputEvent:
 push dword 0Ch	; 6B391
 call __CHK	; 6B396
 push ebx	; 6B39B
 push edx	; 6B39C
-mov edx, dword [dword_CDA28]	; 6B39D
+mov edx, dword [inputqcount]	; 6B39D
 test edx, edx	; 6B3A3
-jne short loc_6B3AC	; 6B3A5
+jne short .1	; 6B3A5
 xor eax, eax	; 6B3A7
 pop edx	; 6B3A9
 pop ebx	; 6B3AA
 ret	; 6B3AB
-loc_6B3AC:
+.1:
 lea ebx, [byte edx-01h]	; 6B3AC
-mov dword [dword_CDA28], ebx	; 6B3AF
-mov eax, dword [dword_CDA2C]	; 6B3B5
+mov dword [inputqcount], ebx	; 6B3AF
+mov eax, dword [inputqtail]	; 6B3B5
 inc eax	; 6B3BA
 and eax, byte 1Fh	; 6B3BB
-mov dword [dword_CDA2C], eax	; 6B3BE
+mov dword [inputqtail], eax	; 6B3BE
 mov edx, eax	; 6B3C3
 shl eax, 2	; 6B3C5
 sub eax, edx	; 6B3C8
 shl eax, 2	; 6B3CA
 add eax, edx	; 6B3CD
-add eax, dword_EA0F8	; 6B3CF
+add eax, inputqueue	; 6B3CF
 pop edx	; 6B3D4
 pop ebx	; 6B3D5
 ret	; 6B3D6
-sub_6B3D7:
+ClearInputQueue:
 push dword 8	; 6B3D7
 call __CHK	; 6B3DC
 push edx	; 6B3E1
 xor edx, edx	; 6B3E2
-mov dword [dword_CDA28], edx	; 6B3E4
-mov dword [dword_CDA2C], 1Fh	; 6B3EA
-mov dword [dword_CDA30], edx	; 6B3F4
+mov dword [inputqcount], edx	; 6B3E4
+mov dword [inputqtail], 1Fh	; 6B3EA
+mov dword [inputqhead], edx	; 6B3F4
 mov dword [dword_CDA38], edx	; 6B3FA
-mov dword [dword_CDA3C], edx	; 6B400
-mov dword [dword_CDA40], edx	; 6B406
+mov dword [joybtnheld], edx	; 6B400
+mov dword [enterheld], edx	; 6B406
 xor eax, eax	; 6B40C
 pop edx	; 6B40E
 ret	; 6B40F
-sub_6B410:
+InputInstall:
 push dword 14h	; 6B410
 call __CHK	; 6B415
 push ebx	; 6B41A
@@ -304,53 +295,53 @@ push ecx	; 6B41B
 push edx	; 6B41C
 call sub_B2F22	; 6B41D
 test eax, eax	; 6B422
-je short loc_6B42F	; 6B424
+je short .1	; 6B424
 or byte [ctlavailmask], 1	; 6B426
-jmp short loc_6B436	; 6B42D
-loc_6B42F:
+jmp short .2	; 6B42D
+.1:
 and byte [ctlavailmask], 0FEh	; 6B42F
-loc_6B436:
-cmp dword [dword_CDA1C], byte 0	; 6B436
-jne short loc_6B478	; 6B43D
+.2:
+cmp dword [inputinstalled], byte 0	; 6B436
+jne short .x	; 6B43D
 call sub_B29F0	; 6B43F
 xor ebx, ebx	; 6B444
 mov dword [dword_CDA24], ebx	; 6B446
-mov dword [dword_CDA20], ebx	; 6B44C
-mov dword [dword_CDA1C], 1	; 6B452
-push sub_6BAEB	; 6B45C
+mov dword [ptrstep], ebx	; 6B44C
+mov dword [inputinstalled], 1	; 6B452
+push InputPollTick	; 6B45C
 call sub_8E4C0	; 6B461
 add esp, byte 4	; 6B466
-call sub_6B3D7	; 6B469
-mov dword [dword_EA0DC], sub_6B4BB	; 6B46E
-loc_6B478:
+call ClearInputQueue	; 6B469
+mov dword [ptrupdatefn], EventToPointer	; 6B46E
+.x:
 pop edx	; 6B478
 pop ecx	; 6B479
 pop ebx	; 6B47A
 ret	; 6B47B
-sub_6B47C:
+InputRemove:
 push dword 18h	; 6B47C
 call __CHK	; 6B481
 push ebx	; 6B486
 push ecx	; 6B487
 push edx	; 6B488
 push esi	; 6B489
-cmp dword [dword_CDA1C], byte 0	; 6B48A
-je short loc_6B4B6	; 6B491
+cmp dword [inputinstalled], byte 0	; 6B48A
+je short .x	; 6B491
 xor ebx, ebx	; 6B493
 mov dword [dword_CDA24], ebx	; 6B495
-mov dword [dword_CDA20], ebx	; 6B49B
-push sub_6BAEB	; 6B4A1
+mov dword [ptrstep], ebx	; 6B49B
+push InputPollTick	; 6B4A1
 call sub_8E4F8	; 6B4A6
 add esp, byte 4	; 6B4AB
 xor esi, esi	; 6B4AE
-mov dword [dword_CDA1C], esi	; 6B4B0
-loc_6B4B6:
+mov dword [inputinstalled], esi	; 6B4B0
+.x:
 pop esi	; 6B4B6
 pop edx	; 6B4B7
 pop ecx	; 6B4B8
 pop ebx	; 6B4B9
 ret	; 6B4BA
-sub_6B4BB:
+EventToPointer:
 push dword 1Ch	; 6B4BB
 call __CHK	; 6B4C0
 push ecx	; 6B4C5
@@ -361,85 +352,85 @@ mov ebp, eax	; 6B4C9
 mov edi, edx	; 6B4CB
 mov esi, ebx	; 6B4CD
 cmp dword [eax], byte 1	; 6B4CF
-jne short loc_6B521	; 6B4D2
+jne short .4	; 6B4D2
 mov eax, dword [byte eax+05h]	; 6B4D4
 mov dword [edi], eax	; 6B4D7
 mov eax, dword [byte ebp+09h]	; 6B4D9
 mov dword [ebx], eax	; 6B4DC
 mov eax, dword [edi]	; 6B4DE
 test eax, eax	; 6B4E0
-jge short loc_6B4EC	; 6B4E2
+jge short .1	; 6B4E2
 mov dword [edi], 0	; 6B4E4
-jmp short loc_6B4F9	; 6B4EA
-loc_6B4EC:
+jmp short .2	; 6B4EA
+.1:
 cmp eax, 275h	; 6B4EC
-jle short loc_6B4F9	; 6B4F1
+jle short .2	; 6B4F1
 mov dword [edi], 275h	; 6B4F3
-loc_6B4F9:
+.2:
 mov ebx, dword [esi]	; 6B4F9
 test ebx, ebx	; 6B4FB
-jge short loc_6B50A	; 6B4FD
+jge short .3	; 6B4FD
 mov dword [esi], 0	; 6B4FF
-jmp near loc_6B5DA	; 6B505
-loc_6B50A:
+jmp near .14	; 6B505
+.3:
 cmp ebx, 1D5h	; 6B50A
-jle near loc_6B5DA	; 6B510
+jle near .14	; 6B510
 mov dword [esi], 1D5h	; 6B516
-jmp near loc_6B5DA	; 6B51C
-loc_6B521:
-cmp dword [dword_EA29C], byte 1Eh	; 6B521
-jl short loc_6B534	; 6B528
-mov dword [dword_EA29C], 1Dh	; 6B52A
-loc_6B534:
+jmp near .14	; 6B51C
+.4:
+cmp dword [inputrepeat], byte 1Eh	; 6B521
+jl short .5	; 6B528
+mov dword [inputrepeat], 1Dh	; 6B52A
+.5:
 mov ebx, 5	; 6B534
-mov eax, dword [dword_EA29C]	; 6B539
+mov eax, dword [inputrepeat]	; 6B539
 mov edx, eax	; 6B53E
 sar edx, 1Fh	; 6B540
 idiv ebx	; 6B543
 mov cl, al	; 6B545
 mov eax, 8	; 6B547
 shl eax, cl	; 6B54C
-mov dword [dword_CDA20], eax	; 6B54E
+mov dword [ptrstep], eax	; 6B54E
 test byte [byte ebp+05h], 8	; 6B553
-je short loc_6B560	; 6B557
-mov eax, dword [dword_CDA20]	; 6B559
+je short .6	; 6B557
+mov eax, dword [ptrstep]	; 6B559
 sub dword [edi], eax	; 6B55E
-loc_6B560:
+.6:
 test byte [byte ebp+05h], 4	; 6B560
-je short loc_6B56D	; 6B564
-mov eax, dword [dword_CDA20]	; 6B566
+je short .7	; 6B564
+mov eax, dword [ptrstep]	; 6B566
 add dword [edi], eax	; 6B56B
-loc_6B56D:
+.7:
 test byte [byte ebp+05h], 1	; 6B56D
-je short loc_6B57A	; 6B571
-mov eax, dword [dword_CDA20]	; 6B573
+je short .8	; 6B571
+mov eax, dword [ptrstep]	; 6B573
 sub dword [esi], eax	; 6B578
-loc_6B57A:
+.8:
 test byte [byte ebp+05h], 2	; 6B57A
-je short loc_6B587	; 6B57E
-mov eax, dword [dword_CDA20]	; 6B580
+je short .9	; 6B57E
+mov eax, dword [ptrstep]	; 6B580
 add dword [esi], eax	; 6B585
-loc_6B587:
+.9:
 mov ebx, dword [edi]	; 6B587
 test ebx, ebx	; 6B589
-jge short loc_6B595	; 6B58B
+jge short .10	; 6B58B
 mov dword [edi], 0	; 6B58D
-jmp short loc_6B5A3	; 6B593
-loc_6B595:
+jmp short .11	; 6B593
+.10:
 cmp ebx, 275h	; 6B595
-jle short loc_6B5A3	; 6B59B
+jle short .11	; 6B59B
 mov dword [edi], 275h	; 6B59D
-loc_6B5A3:
+.11:
 mov eax, dword [esi]	; 6B5A3
 test eax, eax	; 6B5A5
-jge short loc_6B5B1	; 6B5A7
+jge short .12	; 6B5A7
 mov dword [esi], 0	; 6B5A9
-jmp short loc_6B5BE	; 6B5AF
-loc_6B5B1:
+jmp short .13	; 6B5AF
+.12:
 cmp eax, 1D5h	; 6B5B1
-jle short loc_6B5BE	; 6B5B6
+jle short .13	; 6B5B6
 mov dword [esi], 1D5h	; 6B5B8
-loc_6B5BE:
+.13:
 mov ebx, dword [esi]	; 6B5BE
 push ebx	; 6B5C0
 mov ecx, dword [edi]	; 6B5C1
@@ -447,10 +438,10 @@ push ecx	; 6B5C3
 call MouseSetPos	; 6B5C4
 add esp, byte 8	; 6B5C9
 mov eax, dword [edi]	; 6B5CC
-mov dword [dword_D302C], eax	; 6B5CE
+mov dword [mousex], eax	; 6B5CE
 mov eax, dword [esi]	; 6B5D3
-mov dword [dword_D3030], eax	; 6B5D5
-loc_6B5DA:
+mov dword [mousey], eax	; 6B5D5
+.14:
 xor eax, eax	; 6B5DA
 mov al, byte [byte ebp+04h]	; 6B5DC
 pop ebp	; 6B5DF
@@ -458,7 +449,7 @@ pop edi	; 6B5E0
 pop esi	; 6B5E1
 pop ecx	; 6B5E2
 ret	; 6B5E3
-sub_6B5E4:
+DrawMenuBar:
 push dword 28h	; 6B5E4
 call __CHK	; 6B5E9
 push esi	; 6B5EE
@@ -477,8 +468,8 @@ xor edx, edx	; 6B60A
 mov eax, ebp	; 6B60C
 call SetTextColors	; 6B60E
 xor edi, edi	; 6B613
-jmp short loc_6B64D	; 6B615
-loc_6B617:
+jmp short .2	; 6B615
+.1:
 mov ebx, dword [byte esp+01Ch]	; 6B617
 push ebx	; 6B61B
 mov ecx, dword [byte esp+0Ch]	; 6B61C
@@ -491,16 +482,16 @@ mov ecx, dword [byte esi+0Ch]	; 6B62B
 mov ebx, dword [byte esi+08h]	; 6B62E
 mov eax, dword [esi]	; 6B631
 xor edx, edx	; 6B633
-call sub_6B7FC	; 6B635
+call DrawMenuBox	; 6B635
 mov ebx, dword [byte esi+010h]	; 6B63A
 mov eax, dword [esi]	; 6B63D
 add eax, byte 3	; 6B63F
 mov edx, 2	; 6B642
-call sub_6B88E	; 6B647
+call PrintMenuText	; 6B647
 inc edi	; 6B64C
-loc_6B64D:
+.2:
 cmp edi, dword [esp]	; 6B64D
-jl short loc_6B617	; 6B650
+jl short DrawMenuBar.1	; 6B650
 mov edx, dword [byte esp+01Ch]	; 6B652
 push edx	; 6B656
 mov ebx, dword [byte esp+0Ch]	; 6B657
@@ -514,13 +505,13 @@ mov eax, dword [byte eax-018h]	; 6B66B
 inc eax	; 6B66E
 mov ebx, 27Fh	; 6B66F
 xor edx, edx	; 6B674
-call sub_6B7FC	; 6B676
+call DrawMenuBox	; 6B676
 add esp, byte 0Ch	; 6B67B
 pop ebp	; 6B67E
 pop edi	; 6B67F
 pop esi	; 6B680
 ret 4	; 6B681
-sub_6B684:
+DrawMenuDropdown:
 push dword 28h	; 6B684
 call __CHK	; 6B689
 push esi	; 6B68E
@@ -549,11 +540,11 @@ mov edx, dword [byte ebp+04h]	; 6B6CB
 add edx, esi	; 6B6CE
 mov eax, dword [byte ebp+00h]	; 6B6D0
 add eax, edi	; 6B6D3
-call sub_6B7FC	; 6B6D5
+call DrawMenuBox	; 6B6D5
 cmp dword [byte ebp+014h], byte 0	; 6B6DA
-jne short loc_6B71D	; 6B6DE
+jne short .1	; 6B6DE
 cmp dword [byte ebp+018h], byte 0	; 6B6E0
-jne short loc_6B71D	; 6B6E4
+jne short .1	; 6B6E4
 push dword 0FFh	; 6B6E6
 mov edi, dword [byte esp+028h]	; 6B6EB
 push edi	; 6B6EF
@@ -569,9 +560,9 @@ add edx, esi	; 6B70A
 mov eax, dword [byte ebp+00h]	; 6B70C
 add eax, byte 3	; 6B70F
 add eax, dword [byte esp+04h]	; 6B712
-call sub_6B8CB	; 6B716
-jmp short loc_6B756	; 6B71B
-loc_6B71D:
+call PrintMenuTextGrey	; 6B716
+jmp short .2	; 6B71B
+.1:
 push dword 0FFh	; 6B71D
 mov edx, dword [byte esp+020h]	; 6B722
 push edx	; 6B726
@@ -587,18 +578,18 @@ add edx, dword [byte esp+08h]	; 6B743
 mov eax, dword [byte ebp+00h]	; 6B747
 add eax, byte 3	; 6B74A
 add eax, dword [byte esp+04h]	; 6B74D
-call sub_6B88E	; 6B751
-loc_6B756:
+call PrintMenuText	; 6B751
+.2:
 mov edi, 1	; 6B756
-jmp near loc_6B7EA	; 6B75B
-loc_6B760:
+jmp near .6	; 6B75B
+.3:
 mov esi, edi	; 6B760
 shl esi, 5	; 6B762
 add esi, ebp	; 6B765
 cmp dword [byte esi+014h], byte 0	; 6B767
-jne short loc_6B7AB	; 6B76B
+jne short .4	; 6B76B
 cmp dword [byte esi+018h], byte 0	; 6B76D
-jne short loc_6B7AB	; 6B771
+jne short .4	; 6B771
 push dword 0FFh	; 6B773
 mov eax, dword [byte esp+028h]	; 6B778
 push eax	; 6B77C
@@ -614,9 +605,9 @@ add edx, dword [byte esp+08h]	; 6B797
 mov eax, dword [esi]	; 6B79B
 add eax, byte 3	; 6B79D
 add eax, dword [byte esp+04h]	; 6B7A0
-call sub_6B8CB	; 6B7A4
-jmp short loc_6B7E9	; 6B7A9
-loc_6B7AB:
+call PrintMenuTextGrey	; 6B7A4
+jmp short .5	; 6B7A9
+.4:
 push dword 0FFh	; 6B7AB
 mov ebx, dword [byte esp+020h]	; 6B7B0
 push ebx	; 6B7B4
@@ -634,19 +625,19 @@ add edx, dword [byte esp+08h]	; 6B7D6
 mov eax, dword [esi+ebp]	; 6B7DA
 add eax, byte 3	; 6B7DD
 add eax, dword [byte esp+04h]	; 6B7E0
-call sub_6B88E	; 6B7E4
-loc_6B7E9:
+call PrintMenuText	; 6B7E4
+.5:
 inc edi	; 6B7E9
-loc_6B7EA:
+.6:
 cmp edi, dword [esp]	; 6B7EA
-jl near loc_6B760	; 6B7ED
+jl near DrawMenuDropdown.3	; 6B7ED
 add esp, byte 0Ch	; 6B7F3
-loc_6B7F6:
+DrawMenuDropdown_ret:
 pop ebp	; 6B7F6
 pop edi	; 6B7F7
 pop esi	; 6B7F8
 ret 0Ch	; 6B7F9
-sub_6B7FC:
+DrawMenuBox:
 push dword 28h	; 6B7FC
 call __CHK	; 6B801
 push esi	; 6B806
@@ -711,8 +702,8 @@ push edi	; 6B87D
 call sub_B4FAC	; 6B87E
 add esp, byte 14h	; 6B883
 add esp, byte 4	; 6B886
-jmp near loc_6B7F6	; 6B889
-sub_6B88E:
+jmp near DrawMenuDropdown_ret	; 6B889
+PrintMenuText:
 push dword 5Ch	; 6B88E
 call __CHK	; 6B893
 push ecx	; 6B898
@@ -721,26 +712,26 @@ sub esp, byte 50h	; 6B89A
 mov ecx, eax	; 6B89D
 mov esi, edx	; 6B89F
 xor eax, eax	; 6B8A1
-jmp short loc_6B8AB	; 6B8A3
-loc_6B8A5:
+jmp short .2	; 6B8A3
+.1:
 mov dl, byte [edx]	; 6B8A5
 mov byte [esp+eax], dl	; 6B8A7
 inc eax	; 6B8AA
-loc_6B8AB:
+.2:
 lea edx, [ebx+eax]	; 6B8AB
 cmp byte [edx], 0	; 6B8AE
-je short loc_6B8B8	; 6B8B1
+je short .3	; 6B8B1
 cmp eax, byte 4Fh	; 6B8B3
-jl short loc_6B8A5	; 6B8B6
-loc_6B8B8:
+jl short PrintMenuText.1	; 6B8B6
+.3:
 mov dl, byte [ebx+eax]	; 6B8B8
 mov byte [esp+eax], dl	; 6B8BB
 mov ebx, esp	; 6B8BE
 mov edx, esi	; 6B8C0
 mov eax, ecx	; 6B8C2
 call PrintShadowText	; 6B8C4
-jmp short loc_6B90A	; 6B8C9
-sub_6B8CB:
+jmp short PrintMenuTextGrey_ret	; 6B8C9
+PrintMenuTextGrey:
 push dword 68h	; 6B8CB
 call __CHK	; 6B8D0
 push ecx	; 6B8D5
@@ -749,18 +740,18 @@ sub esp, byte 50h	; 6B8D7
 mov ecx, eax	; 6B8DA
 mov esi, edx	; 6B8DC
 xor eax, eax	; 6B8DE
-jmp short loc_6B8E8	; 6B8E0
-loc_6B8E2:
+jmp short .2	; 6B8E0
+.1:
 mov dl, byte [edx]	; 6B8E2
 mov byte [esp+eax], dl	; 6B8E4
 inc eax	; 6B8E7
-loc_6B8E8:
+.2:
 lea edx, [ebx+eax]	; 6B8E8
 cmp byte [edx], 0	; 6B8EB
-je short loc_6B8F5	; 6B8EE
+je short .3	; 6B8EE
 cmp eax, byte 4Fh	; 6B8F0
-jl short loc_6B8E2	; 6B8F3
-loc_6B8F5:
+jl short PrintMenuTextGrey.1	; 6B8F3
+.3:
 mov dl, byte [ebx+eax]	; 6B8F5
 mov byte [esp+eax], dl	; 6B8F8
 push esi	; 6B8FB
@@ -768,14 +759,14 @@ push ecx	; 6B8FC
 lea eax, [byte esp+08h]	; 6B8FD
 push eax	; 6B901
 call sub_91964	; 6B902
-loc_6B907:
+PrintMenuTextGrey_common:
 add esp, byte 0Ch	; 6B907
-loc_6B90A:
+PrintMenuTextGrey_ret:
 add esp, byte 50h	; 6B90A
 pop esi	; 6B90D
 pop ecx	; 6B90E
 ret	; 6B90F
-sub_6B910:
+PrintMenuTextAlt:
 push dword 68h	; 6B910
 call __CHK	; 6B915
 push ecx	; 6B91A
@@ -784,18 +775,18 @@ sub esp, byte 50h	; 6B91C
 mov ecx, eax	; 6B91F
 mov esi, edx	; 6B921
 xor eax, eax	; 6B923
-jmp short loc_6B92D	; 6B925
-loc_6B927:
+jmp short .2	; 6B925
+.1:
 mov dl, byte [edx]	; 6B927
 mov byte [esp+eax], dl	; 6B929
 inc eax	; 6B92C
-loc_6B92D:
+.2:
 lea edx, [ebx+eax]	; 6B92D
 cmp byte [edx], 0	; 6B930
-je short loc_6B93A	; 6B933
+je short .3	; 6B933
 cmp eax, byte 4Fh	; 6B935
-jl short loc_6B927	; 6B938
-loc_6B93A:
+jl short PrintMenuTextAlt.1	; 6B938
+.3:
 mov dl, byte [ebx+eax]	; 6B93A
 mov byte [esp+eax], dl	; 6B93D
 push esi	; 6B940
@@ -803,8 +794,8 @@ push ecx	; 6B941
 lea eax, [byte esp+08h]	; 6B942
 push eax	; 6B946
 call sub_92CD0	; 6B947
-jmp short loc_6B907	; 6B94C
-sub_6B94E:
+jmp short PrintMenuTextGrey_common	; 6B94C
+DrawMenuItemSel:
 push dword 28h	; 6B94E
 call __CHK	; 6B953
 push esi	; 6B958
@@ -816,10 +807,10 @@ mov edi, edx	; 6B960
 mov ebp, ebx	; 6B962
 mov dword [esp], ecx	; 6B964
 cmp dword [byte eax+014h], byte 0	; 6B967
-jne short loc_6B973	; 6B96B
+jne short .1	; 6B96B
 cmp dword [byte eax+018h], byte 0	; 6B96D
-je short loc_6B9E2	; 6B971
-loc_6B973:
+je short DrawMenuItemSel_ret	; 6B971
+.1:
 mov eax, dword [byte esi+08h]	; 6B973
 sub eax, dword [esi]	; 6B976
 lea ebx, [byte eax-02h]	; 6B978
@@ -841,7 +832,7 @@ sete al	; 6B99D
 and eax, 0FFh	; 6B9A0
 add ebp, eax	; 6B9A5
 mov eax, dword [byte esp+014h]	; 6B9A7
-loc_6B9AB:
+DrawMenuItemSel_common:
 push eax	; 6B9AB
 push edx	; 6B9AC
 push ebx	; 6B9AD
@@ -860,14 +851,14 @@ call SetTextColors	; 6B9CF
 mov ebx, dword [byte esi+010h]	; 6B9D4
 lea edx, [byte ebp+01h]	; 6B9D7
 lea eax, [byte edi+02h]	; 6B9DA
-call sub_6B88E	; 6B9DD
-loc_6B9E2:
+call PrintMenuText	; 6B9DD
+DrawMenuItemSel_ret:
 add esp, byte 4	; 6B9E2
 pop ebp	; 6B9E5
 pop edi	; 6B9E6
 pop esi	; 6B9E7
 ret 8	; 6B9E8
-sub_6B9EB:
+DrawMenuItemNorm:
 push dword 28h	; 6B9EB
 call __CHK	; 6B9F0
 push esi	; 6B9F5
@@ -879,10 +870,10 @@ mov edi, edx	; 6B9FD
 mov ebp, ebx	; 6B9FF
 mov dword [esp], ecx	; 6BA01
 cmp dword [byte eax+014h], byte 0	; 6BA04
-jne short loc_6BA10	; 6BA08
+jne short .1	; 6BA08
 cmp dword [byte eax+018h], byte 0	; 6BA0A
-je short loc_6B9E2	; 6BA0E
-loc_6BA10:
+je short DrawMenuItemSel_ret	; 6BA0E
+.1:
 mov eax, dword [byte esi+08h]	; 6BA10
 sub eax, dword [esi]	; 6BA13
 lea ebx, [byte eax-02h]	; 6BA15
@@ -904,8 +895,8 @@ sete al	; 6BA3A
 and eax, 0FFh	; 6BA3D
 add ebp, eax	; 6BA42
 mov eax, dword [byte esp+018h]	; 6BA44
-jmp near loc_6B9AB	; 6BA48
-sub_6BA4D:
+jmp near DrawMenuItemSel_common	; 6BA48
+MenuHitTest:
 push dword 14h	; 6BA4D
 call __CHK	; 6BA52
 push esi	; 6BA57
@@ -917,16 +908,16 @@ mov ebp, edx	; 6BA5F
 mov dword [esp], ebx	; 6BA61
 mov esi, ecx	; 6BA64
 lea edi, [byte eax+04h]	; 6BA66
-jmp near loc_6BADC	; 6BA69
-loc_6BA6E:
+jmp near .6	; 6BA69
+.1:
 mov eax, esi	; 6BA6E
 shl eax, 2	; 6BA70
 add eax, dword [esp]	; 6BA73
 cmp dword [eax], byte 0	; 6BA76
-je short loc_6BADB	; 6BA79
+je short .5	; 6BA79
 xor ebx, ebx	; 6BA7B
-jmp short loc_6BACD	; 6BA7D
-loc_6BA7F:
+jmp short .4	; 6BA7D
+.2:
 add eax, dword [esp]	; 6BA7F
 mov edx, ebx	; 6BA82
 shl edx, 5	; 6BA84
@@ -938,197 +929,197 @@ add edx, dword [byte esp+018h]	; 6BA90
 mov ecx, dword [edx]	; 6BA94
 add ecx, dword [eax]	; 6BA96
 cmp edi, ecx	; 6BA98
-jl short loc_6BACC	; 6BA9A
+jl short .3	; 6BA9A
 mov ecx, dword [edx]	; 6BA9C
 add ecx, dword [byte eax+08h]	; 6BA9E
 cmp edi, ecx	; 6BAA1
-jg short loc_6BACC	; 6BAA3
+jg short .3	; 6BAA3
 mov ecx, dword [byte edx+04h]	; 6BAA5
 add ecx, dword [byte eax+04h]	; 6BAA8
 cmp ebp, ecx	; 6BAAB
-jl short loc_6BACC	; 6BAAD
+jl short .3	; 6BAAD
 mov edx, dword [byte edx+04h]	; 6BAAF
 add edx, dword [byte eax+0Ch]	; 6BAB2
 cmp ebp, edx	; 6BAB5
-jg short loc_6BACC	; 6BAB7
+jg short .3	; 6BAB7
 mov eax, dword [byte esp+01Ch]	; 6BAB9
 mov dword [eax], esi	; 6BABD
 mov eax, dword [byte esp+020h]	; 6BABF
 mov dword [eax], ebx	; 6BAC3
 mov eax, 1	; 6BAC5
-jmp short loc_6BAE2	; 6BACA
-loc_6BACC:
+jmp short .x	; 6BACA
+.3:
 inc ebx	; 6BACC
-loc_6BACD:
+.4:
 mov eax, esi	; 6BACD
 shl eax, 2	; 6BACF
 mov edx, dword [byte esp+014h]	; 6BAD2
 cmp ebx, dword [edx+eax]	; 6BAD6
-jl short loc_6BA7F	; 6BAD9
-loc_6BADB:
+jl short MenuHitTest.2	; 6BAD9
+.5:
 dec esi	; 6BADB
-loc_6BADC:
+.6:
 test esi, esi	; 6BADC
-jge short loc_6BA6E	; 6BADE
+jge short MenuHitTest.1	; 6BADE
 xor eax, eax	; 6BAE0
-loc_6BAE2:
+.x:
 add esp, byte 4	; 6BAE2
 pop ebp	; 6BAE5
 pop edi	; 6BAE6
 pop esi	; 6BAE7
 ret 10h	; 6BAE8
-sub_6BAEB:
+InputPollTick:
 push edx	; 6BAEB
 push esi	; 6BAEC
 push ebp	; 6BAED
 xor eax, eax	; 6BAEE
-mov edx, dword [dword_CDA34]	; 6BAF0
+mov edx, dword [inputpolldiv]	; 6BAF0
 dec edx	; 6BAF6
-mov dword [dword_CDA34], edx	; 6BAF7
-jne near loc_6BC2C	; 6BAFD
-mov dword [dword_CDA34], 5	; 6BB03
+mov dword [inputpolldiv], edx	; 6BAF7
+jne near .x	; 6BAFD
+mov dword [inputpolldiv], 5	; 6BB03
 test byte [ctlavailmask], 1	; 6BB0D
-je short loc_6BB20	; 6BB14
-mov eax, dword_EA2A0	; 6BB16
-call sub_6BC30	; 6BB1B
-loc_6BB20:
+je short .1	; 6BB14
+mov eax, inputev	; 6BB16
+call PollMouseEvent	; 6BB1B
+.1:
 test eax, eax	; 6BB20
-jne short loc_6BB3E	; 6BB22
+jne short .3	; 6BB22
 mov dh, byte [ctlavailmask]	; 6BB24
 test dh, 2	; 6BB2A
-jne short loc_6BB34	; 6BB2D
+jne short .2	; 6BB2D
 test dh, 4	; 6BB2F
-je short loc_6BB3E	; 6BB32
-loc_6BB34:
-mov eax, dword_EA2A0	; 6BB34
-call sub_6BCDA	; 6BB39
-loc_6BB3E:
+je short .3	; 6BB32
+.2:
+mov eax, inputev	; 6BB34
+call PollJoystickEvent	; 6BB39
+.3:
 test eax, eax	; 6BB3E
-jne short loc_6BB55	; 6BB40
+jne short .4	; 6BB40
 test byte [ctlavailmask], 8	; 6BB42
-je short loc_6BB55	; 6BB49
-mov eax, dword_EA2A0	; 6BB4B
-call sub_6BD69	; 6BB50
-loc_6BB55:
+je short .4	; 6BB49
+mov eax, inputev	; 6BB4B
+call PollKeyboardEvent	; 6BB50
+.4:
 test eax, eax	; 6BB55
-jne short loc_6BB67	; 6BB57
-mov dword [dword_EA298], eax	; 6BB59
-mov dword [dword_EA29C], eax	; 6BB5E
+jne short .5	; 6BB57
+mov dword [lastinputdir], eax	; 6BB59
+mov dword [inputrepeat], eax	; 6BB5E
 pop ebp	; 6BB63
 pop esi	; 6BB64
 pop edx	; 6BB65
 ret	; 6BB66
-loc_6BB67:
-cmp dword [dword_EA2A0], byte 1	; 6BB67
-jne short loc_6BB80	; 6BB6E
+.5:
+cmp dword [inputev], byte 1	; 6BB67
+jne short .6	; 6BB6E
 xor edx, edx	; 6BB70
-mov dword [dword_EA298], edx	; 6BB72
-mov dword [dword_EA29C], edx	; 6BB78
-jmp short loc_6BBA4	; 6BB7E
-loc_6BB80:
+mov dword [lastinputdir], edx	; 6BB72
+mov dword [inputrepeat], edx	; 6BB78
+jmp short .8	; 6BB7E
+.6:
 xor eax, eax	; 6BB80
-mov al, byte [byte_EA2A5]	; 6BB82
-cmp eax, dword [dword_EA298]	; 6BB87
-jne short loc_6BB97	; 6BB8D
-inc dword [dword_EA29C]	; 6BB8F
-jmp short loc_6BBA4	; 6BB95
-loc_6BB97:
+mov al, byte [inputev+5]	; 6BB82
+cmp eax, dword [lastinputdir]	; 6BB87
+jne short .7	; 6BB8D
+inc dword [inputrepeat]	; 6BB8F
+jmp short .8	; 6BB95
+.7:
 xor ebp, ebp	; 6BB97
-mov dword [dword_EA29C], ebp	; 6BB99
-mov dword [dword_EA298], eax	; 6BB9F
-loc_6BBA4:
-cmp dword [dword_CDA28], byte 20h	; 6BBA4
-je near loc_6BC2C	; 6BBAB
-mov edx, dword [dword_CDA30]	; 6BBB1
+mov dword [inputrepeat], ebp	; 6BB99
+mov dword [lastinputdir], eax	; 6BB9F
+.8:
+cmp dword [inputqcount], byte 20h	; 6BBA4
+je near .x	; 6BBAB
+mov edx, dword [inputqhead]	; 6BBB1
 mov eax, edx	; 6BBB7
 shl eax, 2	; 6BBB9
 sub eax, edx	; 6BBBC
 shl eax, 2	; 6BBBE
 add eax, edx	; 6BBC1
-mov esi, dword [dword_EA2A0]	; 6BBC3
+mov esi, dword [inputev]	; 6BBC3
 cmp esi, byte 1	; 6BBC9
-jne short loc_6BBFA	; 6BBCC
-mov dword [dword eax+dword_EA0F8], esi	; 6BBCE
-mov dl, byte [byte_EA2A4]	; 6BBD4
-mov byte [dword eax+byte_EA0FC], dl	; 6BBDA
-mov edx, dword [byte_EA2A5]	; 6BBE0
-mov dword [dword eax+byte_EA0FD], edx	; 6BBE6
-mov edx, dword [dword_EA2A9]	; 6BBEC
-mov dword [dword eax+dword_EA101], edx	; 6BBF2
-jmp short loc_6BC18	; 6BBF8
-loc_6BBFA:
-mov dword [dword eax+dword_EA0F8], esi	; 6BBFA
-mov dl, byte [byte_EA2A4]	; 6BC00
-mov byte [dword eax+byte_EA0FC], dl	; 6BC06
-mov dl, byte [byte_EA2A5]	; 6BC0C
-mov byte [dword eax+byte_EA0FD], dl	; 6BC12
-loc_6BC18:
-mov eax, dword [dword_CDA30]	; 6BC18
+jne short .9	; 6BBCC
+mov dword [dword eax+inputqueue], esi	; 6BBCE
+mov dl, byte [inputev+4]	; 6BBD4
+mov byte [dword eax+inputqueue+4], dl	; 6BBDA
+mov edx, dword [inputev+5]	; 6BBE0
+mov dword [dword eax+inputqueue+5], edx	; 6BBE6
+mov edx, dword [inputev+9]	; 6BBEC
+mov dword [dword eax+inputqueue+9], edx	; 6BBF2
+jmp short .10	; 6BBF8
+.9:
+mov dword [dword eax+inputqueue], esi	; 6BBFA
+mov dl, byte [inputev+4]	; 6BC00
+mov byte [dword eax+inputqueue+4], dl	; 6BC06
+mov dl, byte [inputev+5]	; 6BC0C
+mov byte [dword eax+inputqueue+5], dl	; 6BC12
+.10:
+mov eax, dword [inputqhead]	; 6BC18
 inc eax	; 6BC1D
 and eax, byte 1Fh	; 6BC1E
-mov dword [dword_CDA30], eax	; 6BC21
-inc dword [dword_CDA28]	; 6BC26
-loc_6BC2C:
+mov dword [inputqhead], eax	; 6BC21
+inc dword [inputqcount]	; 6BC26
+.x:
 pop ebp	; 6BC2C
 pop esi	; 6BC2D
 pop edx	; 6BC2E
 ret	; 6BC2F
-sub_6BC30:
+PollMouseEvent:
 push ebx	; 6BC30
 push ecx	; 6BC31
 push edx	; 6BC32
 push esi	; 6BC33
 mov esi, eax	; 6BC34
-call dword [off_D3078]	; 6BC36
-mov eax, dword [dword_CDA44]	; 6BC3C
-cmp eax, dword [dword_D3034]	; 6BC41
-jne short loc_6BC6C	; 6BC47
-mov eax, dword [dword_CDA48]	; 6BC49
-cmp eax, dword [dword_D302C]	; 6BC4E
-jne short loc_6BC6C	; 6BC54
-mov eax, dword [dword_CDA4C]	; 6BC56
-mov ecx, dword [dword_D3030]	; 6BC5B
+call dword [mousepollfn]	; 6BC36
+mov eax, dword [lastmousebtns]	; 6BC3C
+cmp eax, dword [mousebtns]	; 6BC41
+jne short .1	; 6BC47
+mov eax, dword [lastmousex]	; 6BC49
+cmp eax, dword [mousex]	; 6BC4E
+jne short .1	; 6BC54
+mov eax, dword [lastmousey]	; 6BC56
+mov ecx, dword [mousey]	; 6BC5B
 cmp eax, ecx	; 6BC61
-jne short loc_6BC6C	; 6BC63
+jne short .1	; 6BC63
 xor eax, ecx	; 6BC65
 pop esi	; 6BC67
 pop edx	; 6BC68
 pop ecx	; 6BC69
 pop ebx	; 6BC6A
 ret	; 6BC6B
-loc_6BC6C:
-mov eax, dword [dword_D302C]	; 6BC6C
-mov dword [dword_CDA48], eax	; 6BC71
-mov eax, dword [dword_D3030]	; 6BC76
-mov dword [dword_CDA4C], eax	; 6BC7B
+.1:
+mov eax, dword [mousex]	; 6BC6C
+mov dword [lastmousex], eax	; 6BC71
+mov eax, dword [mousey]	; 6BC76
+mov dword [lastmousey], eax	; 6BC7B
 mov dword [esi], 1	; 6BC80
-cmp dword [dword_CDA44], byte 0	; 6BC86
-je short loc_6BC9F	; 6BC8D
-cmp dword [dword_D3034], byte 0	; 6BC8F
-jne short loc_6BC9F	; 6BC96
+cmp dword [lastmousebtns], byte 0	; 6BC86
+je short .2	; 6BC8D
+cmp dword [mousebtns], byte 0	; 6BC8F
+jne short .2	; 6BC96
 mov eax, 2	; 6BC98
-jmp short loc_6BCA1	; 6BC9D
-loc_6BC9F:
+jmp short .3	; 6BC9D
+.2:
 xor eax, eax	; 6BC9F
-loc_6BCA1:
-cmp dword [dword_D3034], byte 0	; 6BCA1
+.3:
+cmp dword [mousebtns], byte 0	; 6BCA1
 setne dl	; 6BCA8
 and edx, 0FFh	; 6BCAB
 add eax, edx	; 6BCB1
 mov byte [byte esi+04h], al	; 6BCB3
-mov eax, dword [dword_D302C]	; 6BCB6
+mov eax, dword [mousex]	; 6BCB6
 mov dword [byte esi+05h], eax	; 6BCBB
-mov eax, dword [dword_D3030]	; 6BCBE
+mov eax, dword [mousey]	; 6BCBE
 mov dword [byte esi+09h], eax	; 6BCC3
-mov eax, dword [dword_D3034]	; 6BCC6
-mov dword [dword_CDA44], eax	; 6BCCB
+mov eax, dword [mousebtns]	; 6BCC6
+mov dword [lastmousebtns], eax	; 6BCCB
 mov eax, 1	; 6BCD0
 pop esi	; 6BCD5
 pop edx	; 6BCD6
 pop ecx	; 6BCD7
 pop ebx	; 6BCD8
 ret	; 6BCD9
-sub_6BCDA:
+PollJoystickEvent:
 push ebx	; 6BCDA
 push ecx	; 6BCDB
 push edx	; 6BCDC
@@ -1136,52 +1127,52 @@ push esi	; 6BCDD
 push edi	; 6BCDE
 mov esi, eax	; 6BCDF
 cmp byte [byte_D416A], 0	; 6BCE1
-je near loc_6BD61	; 6BCE8
+je near .5	; 6BCE8
 call sub_B30F4	; 6BCEE
 call sub_B3464	; 6BCF3
 test byte [ctlavailmask], 2	; 6BCF8
-jne short loc_6BD04	; 6BCFF
+jne short .1	; 6BCFF
 sar eax, 8	; 6BD01
-loc_6BD04:
+.1:
 and eax, 0FFh	; 6BD04
-jne short loc_6BD14	; 6BD09
-cmp dword [dword_CDA3C], byte 0	; 6BD0B
-je short loc_6BD63	; 6BD12
-loc_6BD14:
+jne short .2	; 6BD09
+cmp dword [joybtnheld], byte 0	; 6BD0B
+je short .x	; 6BD12
+.2:
 mov dword [esi], 2	; 6BD14
 test al, 30h	; 6BD1A
 setne dl	; 6BD1C
 and edx, 0FFh	; 6BD1F
 mov byte [byte esi+04h], dl	; 6BD25
-cmp dword [dword_CDA3C], byte 0	; 6BD28
-je short loc_6BD47	; 6BD2F
+cmp dword [joybtnheld], byte 0	; 6BD28
+je short .3	; 6BD2F
 test al, 30h	; 6BD31
-jne short loc_6BD47	; 6BD33
+jne short .3	; 6BD33
 mov dh, dl	; 6BD35
 add dh, 2	; 6BD37
 mov byte [byte esi+04h], dh	; 6BD3A
 xor edi, edi	; 6BD3D
-mov dword [dword_CDA3C], edi	; 6BD3F
-jmp short loc_6BD55	; 6BD45
-loc_6BD47:
+mov dword [joybtnheld], edi	; 6BD3F
+jmp short .4	; 6BD45
+.3:
 test al, 30h	; 6BD47
-je short loc_6BD55	; 6BD49
-mov dword [dword_CDA3C], 1	; 6BD4B
-loc_6BD55:
+je short .4	; 6BD49
+mov dword [joybtnheld], 1	; 6BD4B
+.4:
 and al, 0Fh	; 6BD55
 mov byte [byte esi+05h], al	; 6BD57
 mov eax, 1	; 6BD5A
-jmp short loc_6BD63	; 6BD5F
-loc_6BD61:
+jmp short .x	; 6BD5F
+.5:
 xor eax, eax	; 6BD61
-loc_6BD63:
+.x:
 pop edi	; 6BD63
 pop esi	; 6BD64
 pop edx	; 6BD65
 pop ecx	; 6BD66
 pop ebx	; 6BD67
 ret	; 6BD68
-sub_6BD69:
+PollKeyboardEvent:
 push ebx	; 6BD69
 push ecx	; 6BD6A
 push edx	; 6BD6B
@@ -1197,110 +1188,110 @@ push byte 47h	; 6BD87
 call sub_B2CBE	; 6BD89
 add esp, byte 4	; 6BD8E
 test eax, eax	; 6BD91
-je short loc_6BD99	; 6BD93
+je short .1	; 6BD93
 or byte [byte esi+05h], 9	; 6BD95
-loc_6BD99:
+.1:
 push byte 49h	; 6BD99
 call sub_B2CBE	; 6BD9B
 add esp, byte 4	; 6BDA0
 test eax, eax	; 6BDA3
-je short loc_6BDAB	; 6BDA5
+je short .2	; 6BDA5
 or byte [byte esi+05h], 5	; 6BDA7
-loc_6BDAB:
+.2:
 push byte 4Fh	; 6BDAB
 call sub_B2CBE	; 6BDAD
 add esp, byte 4	; 6BDB2
 test eax, eax	; 6BDB5
-je short loc_6BDBD	; 6BDB7
+je short .3	; 6BDB7
 or byte [byte esi+05h], 0Ah	; 6BDB9
-loc_6BDBD:
+.3:
 push byte 51h	; 6BDBD
 call sub_B2CBE	; 6BDBF
 add esp, byte 4	; 6BDC4
 test eax, eax	; 6BDC7
-je short loc_6BDCF	; 6BDC9
+je short .4	; 6BDC9
 or byte [byte esi+05h], 6	; 6BDCB
-loc_6BDCF:
+.4:
 push byte 48h	; 6BDCF
 call sub_B2CBE	; 6BDD1
 add esp, byte 4	; 6BDD6
 test eax, eax	; 6BDD9
-je short loc_6BDE1	; 6BDDB
+je short .5	; 6BDDB
 or byte [byte esi+05h], 1	; 6BDDD
-loc_6BDE1:
+.5:
 push byte 4Dh	; 6BDE1
 call sub_B2CBE	; 6BDE3
 add esp, byte 4	; 6BDE8
 test eax, eax	; 6BDEB
-je short loc_6BDF3	; 6BDED
+je short .6	; 6BDED
 or byte [byte esi+05h], 4	; 6BDEF
-loc_6BDF3:
+.6:
 push byte 50h	; 6BDF3
 call sub_B2CBE	; 6BDF5
 add esp, byte 4	; 6BDFA
 test eax, eax	; 6BDFD
-je short loc_6BE05	; 6BDFF
+je short .7	; 6BDFF
 or byte [byte esi+05h], 2	; 6BE01
-loc_6BE05:
+.7:
 push byte 4Bh	; 6BE05
 call sub_B2CBE	; 6BE07
 add esp, byte 4	; 6BE0C
 test eax, eax	; 6BE0F
-je short loc_6BE17	; 6BE11
+je short .8	; 6BE11
 or byte [byte esi+05h], 8	; 6BE13
-loc_6BE17:
+.8:
 push byte 39h	; 6BE17
 call sub_B2CBE	; 6BE19
 add esp, byte 4	; 6BE1E
 test eax, eax	; 6BE21
-je short loc_6BE29	; 6BE23
+je short .9	; 6BE23
 or byte [byte esi+04h], 8	; 6BE25
-loc_6BE29:
+.9:
 push byte 1	; 6BE29
 call sub_B2CBE	; 6BE2B
 add esp, byte 4	; 6BE30
 test eax, eax	; 6BE33
-je short loc_6BE3B	; 6BE35
+je short .10	; 6BE35
 or byte [byte esi+04h], 4	; 6BE37
-loc_6BE3B:
+.10:
 push byte 1Ch	; 6BE3B
 call sub_B2CBE	; 6BE3D
 add esp, byte 4	; 6BE42
 test eax, eax	; 6BE45
-je short loc_6BE59	; 6BE47
+je short .11	; 6BE47
 or byte [byte esi+04h], 1	; 6BE49
-mov dword [dword_CDA40], 1	; 6BE4D
-jmp short loc_6BE6B	; 6BE57
-loc_6BE59:
-cmp dword [dword_CDA40], byte 0	; 6BE59
-je short loc_6BE6B	; 6BE60
+mov dword [enterheld], 1	; 6BE4D
+jmp short .12	; 6BE57
+.11:
+cmp dword [enterheld], byte 0	; 6BE59
+je short .12	; 6BE60
 or byte [byte esi+04h], 2	; 6BE62
-mov dword [dword_CDA40], eax	; 6BE66
-loc_6BE6B:
+mov dword [enterheld], eax	; 6BE66
+.12:
 call PollKey	; 6BE6B
 test eax, eax	; 6BE70
-je short loc_6BE78	; 6BE72
+je short .13	; 6BE72
 or byte [byte esi+04h], 20h	; 6BE74
-loc_6BE78:
+.13:
 cmp byte [byte esi+04h], 0	; 6BE78
-jne short loc_6BE84	; 6BE7C
+jne short .14	; 6BE7C
 cmp byte [byte esi+05h], 0	; 6BE7E
-je short loc_6BE8E	; 6BE82
-loc_6BE84:
+je short .15	; 6BE82
+.14:
 mov eax, 1	; 6BE84
 pop esi	; 6BE89
 pop edx	; 6BE8A
 pop ecx	; 6BE8B
 pop ebx	; 6BE8C
 ret	; 6BE8D
-loc_6BE8E:
+.15:
 xor eax, eax	; 6BE8E
 pop esi	; 6BE90
 pop edx	; 6BE91
 pop ecx	; 6BE92
 pop ebx	; 6BE93
 ret	; 6BE94
-sub_6BE95:
+MenuCentralRegistry:
 push dword 1Ch	; 6BE95
 call __CHK	; 6BE9A
 push ebx	; 6BE9F
@@ -1309,43 +1300,43 @@ push edx	; 6BEA1
 push esi	; 6BEA2
 push ebp	; 6BEA3
 cmp byte [musicon], 0	; 6BEA4
-je short loc_6BEC1	; 6BEAB
+je short .1	; 6BEAB
 mov eax, dword [dword_ED7B0]	; 6BEAD
 mov edx, dword [dword eax+03B60h]	; 6BEB2
 push edx	; 6BEB8
 call sub_8D2F0	; 6BEB9
 add esp, byte 4	; 6BEBE
-loc_6BEC1:
+.1:
 mov dword [scrpitch], 0A0h	; 6BEC1
 xor ecx, ecx	; 6BECB
 mov dword [dword_C71E0], ecx	; 6BECD
 call sub_6CC20	; 6BED3
 mov esi, dword [falistsel]	; 6BED8
 test esi, esi	; 6BEDE
-je short loc_6BEF3	; 6BEE0
+je short .2	; 6BEE0
 push esi	; 6BEE2
 call jctime	; 6BEE3
 add esp, byte 4	; 6BEE8
 xor ebp, ebp	; 6BEEB
 mov dword [falistsel], ebp	; 6BEED
-loc_6BEF3:
+.2:
 mov eax, dword [falist]	; 6BEF3
 test eax, eax	; 6BEF8
-je short loc_6BF0D	; 6BEFA
+je short .3	; 6BEFA
 push eax	; 6BEFC
 call jctime	; 6BEFD
 add esp, byte 4	; 6BF02
 xor ebx, ebx	; 6BF05
 mov dword [falist], ebx	; 6BF07
-loc_6BF0D:
+.3:
 cmp byte [musicon], 0	; 6BF0D
-je short loc_6BF32	; 6BF14
+je short .4	; 6BF14
 mov dword [dword_CCC94], 20h	; 6BF16
 mov eax, dword [dword_C4CFC]	; 6BF20
 call sub_83459	; 6BF25
 xor esi, esi	; 6BF2A
 mov dword [dword_CCC94], esi	; 6BF2C
-loc_6BF32:
+.4:
 mov eax, 2	; 6BF32
 pop ebp	; 6BF37
 pop esi	; 6BF38
@@ -1353,9 +1344,9 @@ pop edx	; 6BF39
 pop ecx	; 6BF3A
 pop ebx	; 6BF3B
 ret	; 6BF3C
-unk_6BF3D:
+unk13_6BF3D:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_6BF4A:
+BuildFreeAgentList:
 push dword 20h	; 6BF4A
 call __CHK	; 6BF4F
 push ebx	; 6BF54
@@ -1372,8 +1363,8 @@ div ebx	; 6BF69
 mov dword [esp], eax	; 6BF6B
 xor ebx, ebx	; 6BF6E
 xor esi, esi	; 6BF70
-jmp near loc_6C028	; 6BF72
-loc_6BF77:
+jmp near .3	; 6BF72
+.1:
 mov edi, esi	; 6BF77
 shl edi, 2	; 6BF79
 sub edi, esi	; 6BF7C
@@ -1383,7 +1374,7 @@ shl edi, 2	; 6BF83
 mov edx, dword [keydb]	; 6BF86
 add edx, edi	; 6BF8C
 cmp byte [edx], 0FFh	; 6BF8E
-jne near loc_6C027	; 6BF91
+jne near .2	; 6BF91
 mov eax, ebx	; 6BF97
 shl eax, 3	; 6BF99
 sub eax, ebx	; 6BF9C
@@ -1418,16 +1409,16 @@ add eax, ecx	; 6C01C
 add eax, byte 8	; 6C01E
 call strcat_	; 6C021
 inc ebx	; 6C026
-loc_6C027:
+.2:
 inc esi	; 6C027
-loc_6C028:
+.3:
 cmp esi, dword [esp]	; 6C028
-jge short loc_6C039	; 6C02B
+jge short .4	; 6C02B
 cmp ebx, dword [facount]	; 6C02D
-jl near loc_6BF77	; 6C033
-loc_6C039:
+jl near BuildFreeAgentList.1	; 6C033
+.4:
 add esp, byte 4	; 6C039
-loc_6C03C:
+BuildFreeAgentList_ret:
 pop ebp	; 6C03C
 pop edi	; 6C03D
 pop esi	; 6C03E
@@ -1435,7 +1426,7 @@ pop edx	; 6C03F
 pop ecx	; 6C040
 pop ebx	; 6C041
 ret	; 6C042
-sub_6C043:
+BuildTeamRosterList:
 push dword 14h	; 6C043
 call __CHK	; 6C048
 push ecx	; 6C04D
@@ -1446,7 +1437,7 @@ mov esi, eax	; 6C051
 mov ebp, edx	; 6C053
 mov edi, ebx	; 6C055
 xor ebx, ebx	; 6C057
-loc_6C059:
+.1:
 mov edx, ebx	; 6C059
 shl edx, 3	; 6C05B
 sub edx, ebx	; 6C05E
@@ -1455,12 +1446,12 @@ sub edx, ebx	; 6C063
 mov byte [byte edx+ebp+02h], bl	; 6C065
 inc ebx	; 6C069
 cmp ebx, byte 1Ch	; 6C06A
-jl short loc_6C059	; 6C06D
+jl short BuildTeamRosterList.1	; 6C06D
 mov eax, esi	; 6C06F
 call TeamRecPtr	; 6C071
 mov dword [edi], eax	; 6C076
 xor ebx, ebx	; 6C078
-loc_6C07A:
+.2:
 mov eax, dword [edi]	; 6C07A
 mov ecx, ebx	; 6C07C
 mov ecx, dword [byte eax+ecx*4+04Ch]	; 6C07E
@@ -1471,13 +1462,13 @@ shl edx, 2	; 6C089
 sub edx, ebx	; 6C08C
 add edx, ebp	; 6C08E
 cmp ecx, byte 0FFFFFFFFh	; 6C090
-jne short loc_6C0A6	; 6C093
+jne short .3	; 6C093
 mov byte [edx], 0	; 6C095
 mov byte [byte edx+01h], 64h	; 6C098
 mov byte [byte edx+02h], 0	; 6C09C
 mov byte [byte edx+03h], 0	; 6C0A0
-jmp short loc_6C0E8	; 6C0A4
-loc_6C0A6:
+jmp short .4	; 6C0A4
+.3:
 mov eax, ecx	; 6C0A6
 call KeyDbPtr	; 6C0A8
 mov esi, eax	; 6C0AD
@@ -1498,12 +1489,12 @@ add esi, byte 13h	; 6C0DB
 lea eax, [byte edx+08h]	; 6C0DE
 mov edx, esi	; 6C0E1
 call strcat_	; 6C0E3
-loc_6C0E8:
+.4:
 inc ebx	; 6C0E8
 cmp ebx, byte 19h	; 6C0E9
-jl short loc_6C07A	; 6C0EC
+jl short BuildTeamRosterList.2	; 6C0EC
 xor ebx, ebx	; 6C0EE
-loc_6C0F0:
+.5:
 mov ecx, dword [edi]	; 6C0F0
 mov eax, ebx	; 6C0F2
 mov ecx, dword [dword ecx+eax*4+0B0h]	; 6C0F4
@@ -1515,13 +1506,13 @@ shl edx, 2	; 6C105
 sub edx, esi	; 6C108
 add edx, ebp	; 6C10A
 cmp ecx, byte 0FFFFFFFFh	; 6C10C
-jne short loc_6C122	; 6C10F
+jne short .6	; 6C10F
 mov byte [edx], 0	; 6C111
 mov byte [byte edx+01h], 64h	; 6C114
 mov byte [byte edx+02h], 0	; 6C118
 mov byte [byte edx+03h], 0	; 6C11C
-jmp short loc_6C164	; 6C120
-loc_6C122:
+jmp short .7	; 6C120
+.6:
 mov eax, ecx	; 6C122
 call KeyDbPtr	; 6C124
 mov esi, eax	; 6C129
@@ -1542,17 +1533,17 @@ add esi, byte 13h	; 6C157
 lea eax, [byte edx+08h]	; 6C15A
 mov edx, esi	; 6C15D
 call strcat_	; 6C15F
-loc_6C164:
+.7:
 inc ebx	; 6C164
 cmp ebx, byte 3	; 6C165
-jl short loc_6C0F0	; 6C168
+jl short BuildTeamRosterList.5	; 6C168
 xor ebx, ebx	; 6C16A
-loc_6C16C:
+.8:
 mov edx, dword [edi]	; 6C16C
 add edx, ebx	; 6C16E
 mov ah, byte [dword edx+0E4h]	; 6C170
 cmp ah, 64h	; 6C176
-je short loc_6C190	; 6C179
+je short .9	; 6C179
 xor ecx, ecx	; 6C17B
 mov cl, ah	; 6C17D
 mov edx, ecx	; 6C17F
@@ -1561,16 +1552,16 @@ sub edx, ecx	; 6C184
 shl edx, 2	; 6C186
 sub edx, ecx	; 6C189
 mov byte [byte edx+ebp+03h], 2	; 6C18B
-loc_6C190:
+.9:
 inc ebx	; 6C190
 cmp ebx, byte 8	; 6C191
-jl short loc_6C16C	; 6C194
+jl short BuildTeamRosterList.8	; 6C194
 pop ebp	; 6C196
 pop edi	; 6C197
 pop esi	; 6C198
 pop ecx	; 6C199
 ret	; 6C19A
-sub_6C19B:
+LoadLeagueDbsMem:
 push dword 3Ch	; 6C19B
 call __CHK	; 6C1A0
 push ebx	; 6C1A5

@@ -11,7 +11,7 @@ extern MainDeskLoop_x2, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRe
 extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
 extern EasnStandingsScreen, PreGameScreen, SaveModeState, LoadModeState, PlayLeagueGame, UpdateTeamDbs, MergeLeagueFiles, MergeUpdateDbs
 extern RebuildLeagueDbs, ImportDbs, ExportDbs, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
-extern ShowLoadingScreen, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
+extern ShowLoadingScreen, InputInstall, InputRemove, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
 extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, EasnTeamStatsScreen, EasnSkaterStatsScreen, EasnGoalieStatsScreen
 extern EasnStandingsMenu, exhstate, leaguemgrmenu
 global MenuAddTeam_common
@@ -54,7 +54,7 @@ mov eax, dword [cont2team]	; 32E26
 sar eax, 10h	; 32E2B
 call PreGameScreen	; 32E2E
 mov edx, eax	; 32E33
-call sub_6B47C	; 32E35
+call InputRemove	; 32E35
 .2:
 test dl, 4	; 32E3A
 jne near .7	; 32E3D
@@ -159,7 +159,7 @@ add esp, byte 4	; 32FA8
 xor ebp, ebp	; 32FAB
 mov dword [songdata], ebp	; 32FAD
 .10:
-call sub_6B410	; 32FB3
+call InputInstall	; 32FB3
 mov dword [teamstatscb], EasnTeamStatsScreen	; 32FB8
 mov dword [skaterstatscb], EasnSkaterStatsScreen	; 32FC2
 mov dword [goaliestatscb], EasnGoalieStatsScreen	; 32FCC

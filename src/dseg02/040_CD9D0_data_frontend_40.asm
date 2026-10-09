@@ -6,13 +6,13 @@ extern StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense, StatsMenu
 extern StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus, StatsMenuPIM, StatsMenuShootPct, StatsMenuGAA, StatsMenuGoalieWins
 extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, MenuOpenSaved, MenuExit, MenuNewExhibition
 extern MenuNewLeague, MenuAddTeam, MenuRemoveTeam, MenuLeagueSettings, MenuRebuildDbs, MenuMergeUpdateDbs, MenuMergeLeagueFiles, MenuUpdateTeamDbs
-extern MenuTradePlayers, MenuLeagueHilights, MenuImportDbs, sub_6BE95, sub_7BEBB, sub_7C993, sub_7C9A1, sub_7CAF7
+extern MenuTradePlayers, MenuLeagueHilights, MenuImportDbs, MenuCentralRegistry, sub_7BEBB, sub_7C993, sub_7C9A1, sub_7CAF7
 extern sub_7CB9F, sub_80830, sub_82579, sub_85924, CreatePlayoffs, EasnStandingsMenu, unk_C67B1, unk_CEF0F
 extern unk_CEF2F, unk_CEF6F, unk_CEFEF
 global str_LAAtMTL, asc_CDBDC, asc_CDBE3, asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_CDD5E
 global asc_CDD6B, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide
-global dword_CD9D0, dword_CD9F4, dword_CDA1C, dword_CDA20, dword_CDA24, dword_CDA28, dword_CDA2C
-global dword_CDA30, dword_CDA34, dword_CDA38, dword_CDA3C, dword_CDA40, dword_CDA44, dword_CDA48, dword_CDA4C
+global joycalx, joycaly, inputinstalled, ptrstep, dword_CDA24, inputqcount, inputqtail
+global inputqhead, inputpolldiv, dword_CDA38, joybtnheld, enterheld, lastmousebtns, lastmousex, lastmousey
 global mainmenubar, menuact_export, menuact_nextlg, menusub_lgmgr, menuact_nextpo
 global menuact_posettings, menuact_pohilights, dword_CE8EB, off_CECFF, off_CED3F, unk_CDA50, unk_CDA55, unk_CDA5A
 global unk_CDA65, unk_CDA6E, unk_CDA83, unk_CDA9B, unk_CDAB3, unk_CDACA, unk_CDAE0, unk_CDAF6
@@ -33,39 +33,39 @@ global unk_CE2A2, unk_CE2B3, unk_CE2BD, unk_CE2CF, unk_CE2DF, unk_CE305, unk_CE3
 global unk_CE33F, unk_CE34F, unk_CE361, unk_CE371, unk_CE383, unk_CE389, filemenu, leaguemgrmenu
 global gamemenu, statsmenu, unk_CE96F, unk_CEA2F, unk_CEB2F, unk_CEB8F, unk_CEC4F, unk_CECAF
 global unk_CED2F, unk_CED6F
-dword_CD9D0:
+joycalx:
 db 01Dh,01h,00h,00h,01Dh,01h,00h,00h,09Dh,01h,00h,00h,09Dh,01h,00h,00h
 db 09Dh,01h,00h,00h,01Dh,01h,00h,00h,09Bh,00h,00h,00h,09Bh,00h,00h,00h
 db 09Bh,00h,00h,00h
-dword_CD9F4:
+joycaly:
 db 0E6h,00h,00h,00h,096h,00h,00h,00h,096h,00h,00h,00h,0E6h,00h,00h,00h
 db 036h,01h,00h,00h,036h,01h,00h,00h,036h,01h,00h,00h,0E6h,00h,00h,00h
 db 096h,00h,00h,00h,00h,00h,00h,00h
-dword_CDA1C:
+inputinstalled:
 db 00h,00h,00h,00h
-dword_CDA20:
+ptrstep:
 db 00h,00h,00h,00h
 dword_CDA24:
 db 00h,00h,00h,00h
-dword_CDA28:
+inputqcount:
 db 00h,00h,00h,00h
-dword_CDA2C:
+inputqtail:
 db 01Fh,00h,00h,00h
-dword_CDA30:
+inputqhead:
 db 00h,00h,00h,00h
-dword_CDA34:
+inputpolldiv:
 db 0Ah,00h,00h,00h
 dword_CDA38:
 db 00h,00h,00h,00h
-dword_CDA3C:
+joybtnheld:
 db 00h,00h,00h,00h
-dword_CDA40:
+enterheld:
 db 00h,00h,00h,00h
-dword_CDA44:
+lastmousebtns:
 db 00h,00h,00h,00h
-dword_CDA48:
+lastmousex:
 db 00h,00h,00h,00h
-dword_CDA4C:
+lastmousey:
 db 00h,00h,00h,00h
 unk_CDA50:
 db 046h,069h,06Ch,065h,00h
@@ -512,7 +512,7 @@ dd unk_CDA6E
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 0Eh,01h,00h,00h,0A5h,00h,00h,00h,01Fh,01h,00h,00h
 dd unk_CDB55
-dd sub_6BE95
+dd MenuCentralRegistry
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,020h,01h,00h,00h
 db 0A5h,00h,00h,00h,031h,01h,00h,00h
 dd unk_CDA6E

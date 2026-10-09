@@ -10,7 +10,7 @@ extern statsteamsel, statsredrawcb, deskexit, standingscb, statsplayoffs, statsp
 extern calendarshapes, dword_D2C6B, statsteamorder, dword_DC6B4, dword_DC734, dword_DC738, playofftree, statspalshape
 extern statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, statspal, dword_DDD2C, jctime
 extern memcpy_, statsbgnames, MakePath, FreeDeskBuffers, RunMenu, RunTeamPickMenu, RunPlayerPickMenu, InitMenuRemap
-extern SkaterStatsCard, GoalieStatsCard, TeamStatsScreen, TeamRosterScreen, LeadersScreen, StandingsScreen, ShowPlayoffTree, sub_6B5E4
+extern SkaterStatsCard, GoalieStatsCard, TeamStatsScreen, TeamRosterScreen, LeadersScreen, StandingsScreen, ShowPlayoffTree, DrawMenuBar
 extern sub_76429, sub_8CCA8, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_91FE0, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, photoremap, unk_CF54F, unk_CF6AF, unk_CF74F
 extern unk_CF78F, unk_CF80F, unk_CF88F, statsplayer
@@ -60,7 +60,7 @@ mov ecx, 41h	; 20080
 mov ebx, 40h	; 20085
 mov edx, 4	; 2008A
 mov eax, unk_CF78F	; 2008F
-call sub_6B5E4	; 20094
+call DrawMenuBar	; 20094
 xor ecx, ecx	; 20099
 mov ebx, str_embpal	; 2009B
 cmp byte [byte_ED85A], 1	; 200A0
@@ -158,7 +158,7 @@ mov ecx, 41h	; 201E8
 mov ebx, 40h	; 201ED
 mov edx, 4	; 201F2
 mov eax, unk_CF80F	; 201F7
-call sub_6B5E4	; 201FC
+call DrawMenuBar	; 201FC
 xor ecx, ecx	; 20201
 mov ebx, str_embpal	; 20203
 cmp byte [byte_ED85A], 1	; 20208
@@ -254,7 +254,7 @@ mov ecx, 41h	; 2034A
 mov ebx, 40h	; 2034F
 mov edx, 4	; 20354
 mov eax, unk_CF88F	; 20359
-call sub_6B5E4	; 2035E
+call DrawMenuBar	; 2035E
 xor ecx, ecx	; 20363
 mov ebx, str_embpal	; 20365
 cmp byte [byte_ED85A], 1	; 2036A
@@ -354,7 +354,7 @@ mov ecx, 41h	; 204AF
 mov ebx, 40h	; 204B4
 mov edx, 4	; 204B9
 mov eax, unk_CF54F	; 204BE
-call sub_6B5E4	; 204C3
+call DrawMenuBar	; 204C3
 jmp short .8	; 204C8
 .7:
 call FreeDeskBuffers	; 204CA
@@ -364,7 +364,7 @@ mov ecx, 41h	; 204D6
 mov ebx, 40h	; 204DB
 mov edx, 4	; 204E0
 mov eax, unk_CF54F	; 204E5
-call sub_6B5E4	; 204EA
+call DrawMenuBar	; 204EA
 mov eax, dword [statsteambuf]	; 204EF
 mov edx, statsteamorder	; 204F4
 call StandingsScreen	; 204F9
@@ -448,7 +448,7 @@ mov ecx, 41h	; 2060B
 mov ebx, 40h	; 20610
 mov edx, 4	; 20615
 mov eax, unk_CF54F	; 2061A
-call sub_6B5E4	; 2061F
+call DrawMenuBar	; 2061F
 mov dword [statscategory], esi	; 20624
 mov dword [statsteamsel], esi	; 2062A
 xor ecx, ecx	; 20630
@@ -510,7 +510,7 @@ mov ecx, 41h	; 206FE
 mov ebx, 40h	; 20703
 mov edx, 4	; 20708
 mov eax, unk_CF54F	; 2070D
-call sub_6B5E4	; 20712
+call DrawMenuBar	; 20712
 push byte 42h	; 20717
 mov ecx, 41h	; 20719
 mov ebx, 40h	; 2071E
@@ -535,7 +535,7 @@ mov ecx, 41h	; 20767
 mov ebx, 40h	; 2076C
 mov edx, 4	; 20771
 mov eax, unk_CF6AF	; 20776
-call sub_6B5E4	; 2077B
+call DrawMenuBar	; 2077B
 push byte 42h	; 20780
 mov ecx, 41h	; 20782
 mov ebx, 40h	; 20787
@@ -554,7 +554,7 @@ mov ecx, 41h	; 207BA
 mov ebx, 40h	; 207BF
 mov edx, 2	; 207C4
 mov eax, unk_CF74F	; 207C9
-call sub_6B5E4	; 207CE
+call DrawMenuBar	; 207CE
 push byte 42h	; 207D3
 mov ecx, 41h	; 207D5
 mov ebx, 40h	; 207DA
@@ -573,7 +573,7 @@ mov ecx, 41h	; 20811
 mov ebx, 40h	; 20816
 mov edx, 2	; 2081B
 mov eax, unk_CF74F	; 20820
-call sub_6B5E4	; 20825
+call DrawMenuBar	; 20825
 push byte 42h	; 2082A
 mov ecx, 41h	; 2082C
 mov ebx, 40h	; 20831
@@ -658,7 +658,7 @@ mov ecx, 41h	; 20962
 mov ebx, 40h	; 20967
 mov edx, 4	; 2096C
 mov eax, unk_CF78F	; 20971
-call sub_6B5E4	; 20976
+call DrawMenuBar	; 20976
 xor ecx, ecx	; 2097B
 mov ebx, str_embpal2	; 2097D
 cmp byte [byte_ED85A], 1	; 20982
@@ -751,7 +751,7 @@ mov ecx, 41h	; 20ABC
 mov ebx, 40h	; 20AC1
 mov edx, 4	; 20AC6
 mov eax, unk_CF80F	; 20ACB
-call sub_6B5E4	; 20AD0
+call DrawMenuBar	; 20AD0
 xor ecx, ecx	; 20AD5
 mov ebx, str_embpal2	; 20AD7
 cmp byte [byte_ED85A], 1	; 20ADC
@@ -850,7 +850,7 @@ mov ecx, 41h	; 20C33
 mov ebx, 40h	; 20C38
 mov edx, 4	; 20C3D
 mov eax, unk_CF88F	; 20C42
-call sub_6B5E4	; 20C47
+call DrawMenuBar	; 20C47
 xor ecx, ecx	; 20C4C
 mov ebx, str_embpal2	; 20C4E
 cmp byte [byte_ED85A], 1	; 20C53
@@ -1002,7 +1002,7 @@ mov ecx, 41h	; 20E4C
 mov ebx, 40h	; 20E51
 mov edx, 4	; 20E56
 mov eax, unk_CF54F	; 20E5B
-call sub_6B5E4	; 20E60
+call DrawMenuBar	; 20E60
 jmp short .8	; 20E65
 .7:
 call FreeDeskBuffers	; 20E67
@@ -1012,7 +1012,7 @@ mov ecx, 41h	; 20E73
 mov ebx, 40h	; 20E78
 mov edx, 4	; 20E7D
 mov eax, unk_CF54F	; 20E82
-call sub_6B5E4	; 20E87
+call DrawMenuBar	; 20E87
 mov eax, dword [statsteambuf]	; 20E8C
 mov edx, statsteamorder	; 20E91
 call StandingsScreen	; 20E96
@@ -1102,7 +1102,7 @@ mov ecx, 41h	; 20FB0
 mov ebx, 40h	; 20FB5
 mov edx, 4	; 20FBA
 mov eax, unk_CF54F	; 20FBF
-call sub_6B5E4	; 20FC4
+call DrawMenuBar	; 20FC4
 xor ebp, ebp	; 20FC9
 mov dword [statscategory], ebp	; 20FCB
 mov dword [statsteamsel], ebp	; 20FD1
@@ -1164,7 +1164,7 @@ mov ecx, 41h	; 210A7
 mov ebx, 40h	; 210AC
 mov edx, 4	; 210B1
 mov eax, unk_CF54F	; 210B6
-call sub_6B5E4	; 210BB
+call DrawMenuBar	; 210BB
 push byte 42h	; 210C0
 mov ecx, 41h	; 210C2
 mov ebx, 40h	; 210C7
@@ -1190,7 +1190,7 @@ mov ecx, 41h	; 21118
 mov ebx, 40h	; 2111D
 mov edx, 4	; 21122
 mov eax, unk_CF6AF	; 21127
-call sub_6B5E4	; 2112C
+call DrawMenuBar	; 2112C
 push byte 42h	; 21131
 mov ecx, 41h	; 21133
 mov ebx, 40h	; 21138
@@ -1209,7 +1209,7 @@ mov ecx, 41h	; 2116B
 mov ebx, 40h	; 21170
 mov edx, 2	; 21175
 mov eax, unk_CF74F	; 2117A
-call sub_6B5E4	; 2117F
+call DrawMenuBar	; 2117F
 push byte 42h	; 21184
 mov ecx, 41h	; 21186
 mov ebx, 40h	; 2118B
@@ -1230,7 +1230,7 @@ mov ecx, 41h	; 211CE
 mov ebx, 40h	; 211D3
 mov edx, 2	; 211D8
 mov eax, unk_CF74F	; 211DD
-call sub_6B5E4	; 211E2
+call DrawMenuBar	; 211E2
 push byte 42h	; 211E7
 mov ecx, 41h	; 211E9
 mov ebx, 40h	; 211EE
@@ -1375,7 +1375,7 @@ mov ecx, 41h	; 213C1
 mov ebx, 40h	; 213C6
 mov edx, 4	; 213CB
 mov eax, unk_CF78F	; 213D0
-call sub_6B5E4	; 213D5
+call DrawMenuBar	; 213D5
 xor ecx, ecx	; 213DA
 mov ebx, str_embpal3	; 213DC
 cmp byte [byte_ED85A], 1	; 213E1
@@ -1471,7 +1471,7 @@ mov ecx, 41h	; 21522
 mov ebx, 40h	; 21527
 mov edx, 4	; 2152C
 mov eax, unk_CF80F	; 21531
-call sub_6B5E4	; 21536
+call DrawMenuBar	; 21536
 xor ecx, ecx	; 2153B
 mov ebx, str_embpal3	; 2153D
 cmp byte [byte_ED85A], 1	; 21542
@@ -1542,7 +1542,7 @@ mov ecx, 41h	; 21635
 mov ebx, 40h	; 2163A
 mov edx, 4	; 2163F
 mov eax, unk_CF88F	; 21644
-call sub_6B5E4	; 21649
+call DrawMenuBar	; 21649
 xor ecx, ecx	; 2164E
 mov ebx, str_embpal3	; 21650
 cmp byte [byte_ED85A], 1	; 21655
@@ -1639,7 +1639,7 @@ mov ecx, 41h	; 21791
 mov ebx, 40h	; 21796
 mov edx, 4	; 2179B
 mov eax, unk_CF54F	; 217A0
-call sub_6B5E4	; 217A5
+call DrawMenuBar	; 217A5
 jmp short .8	; 217AA
 .7:
 call FreeDeskBuffers	; 217AC
@@ -1649,7 +1649,7 @@ mov ecx, 41h	; 217B8
 mov ebx, 40h	; 217BD
 mov edx, 4	; 217C2
 mov eax, unk_CF54F	; 217C7
-call sub_6B5E4	; 217CC
+call DrawMenuBar	; 217CC
 mov eax, dword [statsteambuf]	; 217D1
 mov edx, statsteamorder	; 217D6
 call StandingsScreen	; 217DB
@@ -1737,7 +1737,7 @@ mov ecx, 41h	; 218FB
 mov ebx, 40h	; 21900
 mov edx, 4	; 21905
 mov eax, unk_CF54F	; 2190A
-call sub_6B5E4	; 2190F
+call DrawMenuBar	; 2190F
 mov dword [statscategory], esi	; 21914
 mov dword [statsteamsel], esi	; 2191A
 xor ecx, ecx	; 21920
@@ -1797,7 +1797,7 @@ mov ecx, 41h	; 219EA
 mov ebx, 40h	; 219EF
 mov edx, 4	; 219F4
 mov eax, unk_CF54F	; 219F9
-call sub_6B5E4	; 219FE
+call DrawMenuBar	; 219FE
 push byte 42h	; 21A03
 mov ecx, 41h	; 21A05
 mov ebx, 40h	; 21A0A
@@ -1823,7 +1823,7 @@ mov ecx, 41h	; 21A57
 mov ebx, 40h	; 21A5C
 mov edx, 4	; 21A61
 mov eax, unk_CF6AF	; 21A66
-call sub_6B5E4	; 21A6B
+call DrawMenuBar	; 21A6B
 push byte 42h	; 21A70
 mov ecx, 41h	; 21A72
 mov ebx, 40h	; 21A77
@@ -1842,7 +1842,7 @@ mov ecx, 41h	; 21AAE
 mov ebx, 40h	; 21AB3
 mov edx, 2	; 21AB8
 mov eax, unk_CF74F	; 21ABD
-call sub_6B5E4	; 21AC2
+call DrawMenuBar	; 21AC2
 push byte 42h	; 21AC7
 mov ecx, 41h	; 21AC9
 mov ebx, 40h	; 21ACE
@@ -1861,7 +1861,7 @@ mov ecx, 41h	; 21B04
 mov ebx, 40h	; 21B09
 mov edx, 2	; 21B0E
 mov eax, unk_CF74F	; 21B13
-call sub_6B5E4	; 21B18
+call DrawMenuBar	; 21B18
 push byte 42h	; 21B1D
 mov ecx, 41h	; 21B1F
 mov ebx, 40h	; 21B24

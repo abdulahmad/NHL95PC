@@ -13,7 +13,7 @@ extern dword_D0B2A, dword_D1338, dword_D133C, dword_D1478, dword_D2C6B, dword_D8
 extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, exit_, j___close_, jctime, lseek_
 extern crestnames, off_CF223, off_CF283, off_CF2A3, off_CF2C3, off_CF363, off_CF3C3, off_CF443
 extern open_, perror_, read_, sprintf_, MakePath, RunMenu, TeamRosterScreen, MessageBox
-extern sub_6B5E4, sub_76429, sub_76771, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8FFB0
+extern DrawMenuBar, sub_76429, sub_76771, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8FFB0
 extern sub_90D20, sub_91370, sub_91964, sub_91FE0, sub_931FC, FatalError, sub_B30B4, WaitKey
 extern sub_B4B58, sub_B4DD4, sub_B4FAC, sub_B5DB0, unk_7673A, unk_76742, unk_76748, unk_7674F
 extern unk_76756, unk_C3283, unk_C3285, unk_C3292, unk_C3295, unk_C3298, unk_C329B, unk_C329E
@@ -302,7 +302,7 @@ mov ecx, dword [dword esp+0154h]	; 78662
 mov ebx, dword [dword esp+0158h]	; 78669
 mov edx, dword [dword esp+0170h]	; 78670
 mov eax, ebp	; 78677
-call sub_6B5E4	; 78679
+call DrawMenuBar	; 78679
 push dword 0C1h	; 7867E
 push dword 0C0h	; 78683
 call sub_8E9C0	; 78688
@@ -2013,7 +2013,7 @@ mov ecx, 0C1h	; 79BD9
 mov ebx, 0C0h	; 79BDE
 mov edx, 2	; 79BE3
 mov eax, unk_CF48F	; 79BE8
-call sub_6B5E4	; 79BED
+call DrawMenuBar	; 79BED
 xor eax, eax	; 79BF2
 loc_79BF4:
 mov dl, byte [dword eax+byte_ECDF4]	; 79BF4

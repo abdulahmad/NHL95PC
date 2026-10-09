@@ -11,8 +11,8 @@ extern byte_E0074, PlList, byte_E038A, PenBuf, byte_E9AD3, OOlist, byte_E9DB4, b
 extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, rinkscrollx, rinkscrolly
 extern dword_C90B0, sflags3, cont2team, dword_CBC3E, dword_CBECA, dword_CC0B4, lastsfx, onetimerflag
 extern dword_CC0F8, penshotplayer, dword_CC104, dword_CC110, dword_CC114, penshotmode, penshotstart, penshottimer
-extern dword_CC124, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D302C
-extern dword_D3030, cliprect_y0, cliprect_y1, dword_D30BC, dword_D30C0, dword_D8C84, dword_DB088, hmtmstruct
+extern dword_CC124, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, mousex
+extern mousey, cliprect_y0, cliprect_y1, dword_D30BC, dword_D30C0, dword_D8C84, dword_DB088, hmtmstruct
 extern dword_DF642, dword_DF652, dword_DF6EA, dword_DF6F2, dword_DF6F6, hmtmplstats
 extern dword_DF6FE, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort, awtmstruct, dword_DF752, dword_DF7EA
 extern awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, dword_DF7FE, awtmroster, awtmptrF2, awtmsort
@@ -4656,10 +4656,10 @@ mov edi, eax	; 5D712
 cwde	; 5D714
 cmp eax, byte 0FFFFFFFFh	; 5D715
 je near .77	; 5D718
-mov edx, dword [dword_D302C]	; 5D71E
+mov edx, dword [mousex]	; 5D71E
 sub edx, 0A0h	; 5D724
 imul edx, edx	; 5D72A
-mov eax, dword [dword_D3030]	; 5D72D
+mov eax, dword [mousey]	; 5D72D
 sub eax, byte 64h	; 5D732
 imul eax, eax	; 5D735
 add eax, edx	; 5D738
@@ -4671,14 +4671,14 @@ mov ebx, 8	; 5D745
 jmp short .74	; 5D74A
 .73:
 mov eax, 64h	; 5D74C
-sub ax, word [dword_D3030]	; 5D751
+sub ax, word [mousey]	; 5D751
 movsx edx, ax	; 5D758
-mov ax, word [dword_D302C]	; 5D75B
+mov ax, word [mousex]	; 5D75B
 db 081h,0E8h,0A0h,00h,00h,00h	; 5D761 sub eax,0A0h
 cwde	; 5D767
 call vtoa	; 5D768
 mov ebx, eax	; 5D76D
-mov ax, word [dword_D302C]	; 5D76F
+mov ax, word [mousex]	; 5D76F
 db 081h,0E8h,0A0h,00h,00h,00h	; 5D775 sub eax,0A0h
 cwd	; 5D77B
 shl dx, 2	; 5D77D
@@ -4686,7 +4686,7 @@ LD sbb, ax, dx	; 5D781
 sar ax, 2	; 5D784
 mov ecx, eax	; 5D788
 mov edx, 64h	; 5D78A
-mov esi, dword [dword_D3030]	; 5D78F
+mov esi, dword [mousey]	; 5D78F
 sub edx, esi	; 5D795
 mov eax, edx	; 5D797
 sar edx, 1Fh	; 5D799

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B300C progbits alloc exec nowrite align=1
-extern atexit_, byte_D3040, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, byte_D41B7
+extern atexit_, joyenablemask, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, byte_D41B7
 extern byte_D4244, byte_D4245, byte_D4246, byte_D4280, dword_D2C84, dword_D2FDC, dword_D3090, dword_D3096
 extern dword_D30A4, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1, dword_D4158, dword_D415C, dword_D4160
 extern dword_D4164, dword_D416C, dword_D4170, dword_D4177, dword_D417B, dword_D417F, dword_D4183, dword_D4187
@@ -176,7 +176,7 @@ jmp short loc_B3132	; B3163
 db 00h,00h,00h
 sub_B3168:
 mov byte [byte_D4176], 0	; B3168
-test byte [byte_D3040], 1	; B316F
+test byte [joyenablemask], 1	; B316F
 je near loc_B33C7	; B3176
 mov dx, 201h	; B317C
 in al, dx	; B3180
@@ -355,7 +355,7 @@ loc_B33D2:
 or byte [byte_D4176], 1	; B33D2
 jmp short loc_B33A8	; B33D9
 sub_B33DB:
-mov byte [byte_D3040], 1	; B33DB
+mov byte [joyenablemask], 1	; B33DB
 mov dword [dword_D4177], 50h	; B33E2
 mov dword [dword_D417F], 0	; B33EC
 mov dword [dword_D4193], 50h	; B33F6
@@ -396,7 +396,7 @@ sub_B345D:
 LD xor, eax, eax	; B345D
 call exit_	; B345F
 sub_B3464:
-mov bl, byte [byte_D3040]	; B3464
+mov bl, byte [joyenablemask]	; B3464
 LD or, bl, bl	; B346A
 jne short loc_B3471	; B346C
 LD xor, eax, eax	; B346E
@@ -462,7 +462,7 @@ and bl, 0Bh	; B3504
 jne short loc_B34D3	; B3507
 loc_B3509:
 sti	; B3509
-test byte [byte_D3040], 1	; B350A
+test byte [joyenablemask], 1	; B350A
 jne short loc_B3518	; B3511
 jmp near loc_B36A5	; B3513
 loc_B3518:
@@ -577,7 +577,7 @@ loc_B369C:
 or byte [byte_D4245], 1	; B369C
 jmp short loc_B3689	; B36A3
 loc_B36A5:
-test byte [byte_D3040], 2	; B36A5
+test byte [joyenablemask], 2	; B36A5
 jne short loc_B36B3	; B36AC
 jmp near loc_B3838	; B36AE
 loc_B36B3:
@@ -697,14 +697,14 @@ loc_B3845:
 or byte [byte_D4246], 1	; B3845
 jmp short loc_B3824	; B384C
 sub_B384E:
-or byte [byte_D3040], 1	; B384E
+or byte [joyenablemask], 1	; B384E
 mov dword [dword_D4248], 50h	; B3855
 mov dword [dword_D424C], 0	; B385F
 mov dword [dword_D4260], 50h	; B3869
 mov dword [dword_D4264], 0	; B3873
 ret	; B387D
 sub_B387E:
-or byte [byte_D3040], 2	; B387E
+or byte [joyenablemask], 2	; B387E
 mov dword [dword_D4204], 50h	; B3885
 mov dword [dword_D4208], 0	; B388F
 mov dword [dword_D421C], 50h	; B3899

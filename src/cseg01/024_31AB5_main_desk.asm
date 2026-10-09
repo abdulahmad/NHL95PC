@@ -8,10 +8,10 @@ extern musicon, leaguedbfmt2, leaguedbfmt, ctlavailmask, byte_ED836, byte_ED9A7
 extern byte_ED9AB, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
 extern ctl2side, teamstatscb, skaterstatscb, goaliestatscb, standingscb, standingsmenucb, keepdesksong, songdata
 extern cont2team, HomeTeam, mainmenubar, musichandle, musicslot
-extern dword_D2C6B, pointerspr, dword_EA0DC, jctime, memcpy_, teamabbrevs, setdiskmsg, off_D3078
+extern dword_D2C6B, pointerspr, ptrupdatefn, jctime, memcpy_, teamabbrevs, setdiskmsg, mousepollfn
 extern strcpy_, strncpy_, DiskFreeBytes, FileExists, MakePath, FileOpenRead, FileOpenRW, FileCreate
 extern FileClose, FileReadAt, FileWriteAt, SetupStatsSourceMenu, SetScreenTitle, EasnStandingsScreen, MessageBox, FadeOutPalCycle
-extern sub_6B391, sub_6B3D7, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D
+extern GetInputEvent, ClearInputQueue, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest
 extern sub_76429, SetSideControls, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C, sub_91370
 extern sub_91400, FatalError, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_B4BC4, EasnTeamStatsScreen
@@ -80,7 +80,7 @@ mov eax, dword [dword esp+098h]	; 31B8F
 push eax	; 31B96
 call MouseSetPos	; 31B97
 add esp, byte 8	; 31B9C
-call dword [off_D3078]	; 31B9F
+call dword [mousepollfn]	; 31B9F
 call SetSideControls	; 31BA5
 xor eax, eax	; 31BAA
 call SetupStatsSourceMenu	; 31BAC
@@ -189,7 +189,7 @@ mov ecx, 0F9h	; 31D28
 mov ebx, 0FAh	; 31D2D
 mov edx, dword [byte esp+064h]	; 31D32
 mov eax, dword [byte esp+034h]	; 31D36
-call sub_6B5E4	; 31D3A
+call DrawMenuBar	; 31D3A
 mov eax, dword [dword esp+098h]	; 31D3F
 push eax	; 31D46
 mov edx, dword [dword esp+098h]	; 31D47
@@ -230,16 +230,16 @@ call sub_76429	; 31DCF
 push ebp	; 31DD4
 call jctime	; 31DD5
 add esp, byte 4	; 31DDA
-call sub_6B3D7	; 31DDD
+call ClearInputQueue	; 31DDD
 .11:
 xor ecx, ecx	; 31DE2
 .12:
-call sub_6B391	; 31DE4
+call GetInputEvent	; 31DE4
 test eax, eax	; 31DE9
 je short .13	; 31DEB
 lea ebx, [dword esp+084h]	; 31DED
 lea edx, [dword esp+088h]	; 31DF4
-call dword [dword_EA0DC]	; 31DFB
+call dword [ptrupdatefn]	; 31DFB
 mov ecx, eax	; 31E01
 test al, 2	; 31E03
 je short MainDeskLoop.12	; 31E05
@@ -296,7 +296,7 @@ mov ecx, dword [dword esp+0ACh]	; 31EC5
 lea ebx, [byte esp+040h]	; 31ECC
 mov edx, dword [dword esp+094h]	; 31ED0
 mov eax, dword [dword esp+098h]	; 31ED7
-call sub_6BA4D	; 31EDE
+call MenuHitTest	; 31EDE
 test eax, eax	; 31EE3
 je near .49	; 31EE5
 mov esi, dword [byte esp+07Ch]	; 31EEB
@@ -516,7 +516,7 @@ mov ecx, 0F9h	; 321D1
 mov ebx, 0FAh	; 321D6
 mov edx, dword [byte esp+064h]	; 321DB
 mov eax, dword [byte esp+034h]	; 321DF
-call sub_6B5E4	; 321E3
+call DrawMenuBar	; 321E3
 push str_Pal15	; 321E8
 push esi	; 321ED
 call sub_B30B4	; 321EE
@@ -553,7 +553,7 @@ mov esi, dword [dword esp+098h]	; 32257
 push esi	; 3225E
 call MouseSetPos	; 3225F
 add esp, byte 8	; 32264
-call sub_6B3D7	; 32267
+call ClearInputQueue	; 32267
 jmp near .53	; 3226C
 .33:
 mov ebx, dword [dword esp+098h]	; 32271
@@ -615,7 +615,7 @@ shl ecx, 5	; 3231D
 mov eax, dword [byte esp+eax*4+038h]	; 32320
 add eax, ecx	; 32324
 mov ecx, 0FAh	; 32326
-call sub_6B94E	; 3232B
+call DrawMenuItemSel	; 3232B
 mov edx, dword [byte esp+07Ch]	; 32330
 mov eax, dword [byte esp+078h]	; 32334
 mov dword [byte esp+edx*4+040h], eax	; 32338
@@ -631,7 +631,7 @@ mov ecx, 0FAh	; 3235B
 mov edx, eax	; 32360
 mov eax, esi	; 32362
 .38:
-call sub_6B9EB	; 32364
+call DrawMenuItemNorm	; 32364
 jmp near .53	; 32369
 .39:
 cmp dword [byte eax+018h], byte 0	; 3236E
@@ -695,7 +695,7 @@ shl ecx, 5	; 32424
 mov eax, dword [byte esp+edi*4+038h]	; 32427
 add eax, ecx	; 3242B
 mov ecx, 0FAh	; 3242D
-call sub_6B94E	; 32432
+call DrawMenuItemSel	; 32432
 mov eax, dword [byte esp+078h]	; 32437
 mov dword [byte esp+edi*4+040h], eax	; 3243B
 push dword 0F8h	; 3243F
@@ -706,7 +706,7 @@ shl eax, 5	; 32451
 mov ecx, dword [byte esp+edi*4+038h]	; 32454
 add eax, ecx	; 32458
 mov ecx, 0FAh	; 3245A
-call sub_6B9EB	; 3245F
+call DrawMenuItemNorm	; 3245F
 mov eax, dword [byte esp+07Ch]	; 32464
 mov ecx, dword [byte esp+078h]	; 32468
 shl ecx, 5	; 3246C
@@ -801,7 +801,7 @@ mov ebx, dword [dword esp+098h]	; 32595
 mov ebx, dword [byte esp+ebx+0Ch]	; 3259C
 mov edx, dword [byte esp+ebp*4+06Ch]	; 325A0
 mov eax, dword [byte esp+ebp*4+03Ch]	; 325A4
-call sub_6B684	; 325A8
+call DrawMenuDropdown	; 325A8
 xor esi, esi	; 325AD
 mov dword [byte esp+ebp*4+040h], esi	; 325AF
 push dword 0F8h	; 325B3
@@ -893,8 +893,8 @@ mov ecx, dword [pointerspr]	; 326DD
 push ecx	; 326E3
 jmp near MainDeskLoop.15	; 326E4
 .54:
-call sub_6B3D7	; 326E9
-call sub_6B47C	; 326EE
+call ClearInputQueue	; 326E9
+call InputRemove	; 326EE
 push edx	; 326F3
 call jctime	; 326F4
 add esp, byte 4	; 326F9

@@ -10,13 +10,13 @@ extern gamemode, gameopts, ctl1team, ctl2team, teamconf, dword_C5840, hlplayedma
 extern dword_C66AC, dword_C66D0, dword_C66D4, boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
 extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, dword_D2C6B, bailout_vec, musicslot
 extern dword_D8C84, dword_DC230, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, otherperiod
-extern dword_EA0DC, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
-extern off_CEF23, off_D3078, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
+extern ptrupdatefn, jctime, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
+extern off_CEF23, mousepollfn, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
 extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, GameSummaryScreen, PickOtherGames
 extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, MessageBox, LoadRink, WaitClickTimeout, ShowLoadingScreen
 extern FadeOutPalCycle, sub_59CDD, sub_59D54, sub_61B85, sub_61BBF, sub_61C22, sub_61C86, sub_672F9
-extern sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB
-extern sub_6BA4D, sub_76429, sub_767D0, sub_7E0FA, sub_805C4, sub_836E4, sub_837A8, sub_846F0
+extern GetInputEvent, ClearInputQueue, InputInstall, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm
+extern MenuHitTest, sub_76429, sub_767D0, sub_7E0FA, sub_805C4, sub_836E4, sub_837A8, sub_846F0
 extern sub_84704, sub_84715, sub_84729, sub_8BC15, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0
 extern sub_9061C, sub_91370, sub_91400, MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
@@ -303,14 +303,14 @@ je near .3	; 190D7
 call ShowLoadingScreen	; 190DD
 call sub_61B85	; 190E2
 call sub_61C22	; 190E7
-call sub_6B410	; 190EC
+call InputInstall	; 190EC
 mov edx, dword [dword_D8C84]	; 190F1
 xor ecx, ecx	; 190F7
 mov ebx, edx	; 190F9
 mov eax, 1	; 190FB
 call GameSummaryScreen	; 19100
 mov ecx, eax	; 19105
-call sub_6B47C	; 19107
+call InputRemove	; 19107
 cmp dword [gamemode], byte 0	; 1910C
 jne near .4	; 19113
 mov dx, word [HomeTeam]	; 19119
@@ -347,13 +347,13 @@ call UpdateOtherScores	; 19196
 call PlayRandomHighlight	; 1919B
 test eax, eax	; 191A0
 jl short .4	; 191A2
-call sub_6B410	; 191A4
+call InputInstall	; 191A4
 mov edx, dword [dword_D8C84]	; 191A9
 xor ecx, ecx	; 191AF
 xor ebx, ebx	; 191B1
 mov eax, 20h	; 191B3
 call GameSummaryScreen	; 191B8
-call sub_6B47C	; 191BD
+call InputRemove	; 191BD
 jmp short .4	; 191C2
 .3:
 call FadeOutPalCycle	; 191C4
@@ -399,14 +399,14 @@ call ShowLoadingScreen	; 1925D
 call sub_61B85	; 19262
 call sub_61C22	; 19267
 call sub_61BBF	; 1926C
-call sub_6B410	; 19271
+call InputInstall	; 19271
 mov ebx, dword [dword_D8C84]	; 19276
 xor ecx, ecx	; 1927C
 mov edx, 1	; 1927E
 mov eax, edx	; 19283
 call GameSummaryScreen	; 19285
 mov edx, eax	; 1928A
-call sub_6B47C	; 1928C
+call InputRemove	; 1928C
 cmp dword [gamemode], byte 0	; 19291
 jne near .2	; 19298
 test dl, 4	; 1929E
@@ -439,13 +439,13 @@ mov edx, eax	; 1930D
 test edx, edx	; 1930F
 jne short .2	; 19311
 call ShowLoadingScreen	; 19313
-call sub_6B410	; 19318
+call InputInstall	; 19318
 mov edx, dword [dword_D8C84]	; 1931D
 xor ecx, ecx	; 19323
 xor ebx, ebx	; 19325
 mov eax, 20h	; 19327
 call GameSummaryScreen	; 1932C
-call sub_6B47C	; 19331
+call InputRemove	; 19331
 .2:
 mov eax, 2	; 19336
 call SportsDesk	; 1933B
@@ -630,8 +630,8 @@ mov ecx, 0F9h	; 195E5
 mov ebx, 0FAh	; 195EA
 mov edx, dword [dword esp+03A8h]	; 195EF
 mov eax, dword [dword esp+03B8h]	; 195F6
-call sub_6B5E4	; 195FD
-call sub_6B410	; 19602
+call DrawMenuBar	; 195FD
+call InputInstall	; 19602
 mov edx, dword [dword esp+03B4h]	; 19607
 mov edx, dword [edx]	; 1960E
 mov eax, dword [dword esp+03B4h]	; 19610
@@ -711,8 +711,8 @@ mov esi, dword [dword esp+0404h]	; 19723
 push esi	; 1972A
 call MouseSetPos	; 1972B
 add esp, byte 8	; 19730
-call dword [off_D3078]	; 19733
-call sub_6B3D7	; 19739
+call dword [mousepollfn]	; 19733
+call ClearInputQueue	; 19739
 mov edi, dword [esp]	; 1973E
 cmp edi, byte 1	; 19741
 jne short .13	; 19744
@@ -825,8 +825,8 @@ call sub_8FCDF	; 198E4
 mov edx, 1	; 198E9
 mov dword [dword_C66D4], edx	; 198EE
 mov dword [dword_C66D0], edx	; 198F4
-call sub_6B3D7	; 198FA
-call sub_6B47C	; 198FF
+call ClearInputQueue	; 198FA
+call InputRemove	; 198FF
 lea eax, [dword esp+0304h]	; 19904
 push eax	; 1990B
 call sub_8EA00	; 1990C
@@ -904,12 +904,12 @@ ret	; 19A0E
 xor ebp, ebp	; 19A0F
 mov dword [dword esp+03DCh], ebp	; 19A11
 .30:
-call sub_6B391	; 19A18
+call GetInputEvent	; 19A18
 test eax, eax	; 19A1D
 je short .31	; 19A1F
 lea ebx, [dword esp+03E0h]	; 19A21
 lea edx, [dword esp+03E4h]	; 19A28
-call dword [dword_EA0DC]	; 19A2F
+call dword [ptrupdatefn]	; 19A2F
 mov dword [dword esp+03DCh], eax	; 19A35
 test al, 2	; 19A3C
 je short SportsDesk.30	; 19A3E
@@ -978,7 +978,7 @@ mov ecx, dword [dword esp+0414h]	; 19B50
 lea ebx, [dword esp+03C4h]	; 19B57
 mov edx, dword [dword esp+03F0h]	; 19B5E
 mov eax, dword [dword esp+03F4h]	; 19B65
-call sub_6BA4D	; 19B6C
+call MenuHitTest	; 19B6C
 test eax, eax	; 19B71
 je near .69	; 19B73
 mov esi, dword [dword esp+03D0h]	; 19B79
@@ -1065,8 +1065,8 @@ je short .39	; 19CF2
 cmp edx, byte 5	; 19CF4
 jne near .48	; 19CF7
 .39:
-call sub_6B3D7	; 19CFD
-call sub_6B47C	; 19D02
+call ClearInputQueue	; 19CFD
+call InputRemove	; 19D02
 lea eax, [dword esp+0304h]	; 19D07
 push eax	; 19D0E
 call sub_8EA00	; 19D0F
@@ -1221,7 +1221,7 @@ mov ecx, 0F9h	; 19F3B
 mov ebx, 0FAh	; 19F40
 mov edx, dword [dword esp+03A8h]	; 19F45
 mov eax, dword [dword esp+03B8h]	; 19F4C
-call sub_6B5E4	; 19F53
+call DrawMenuBar	; 19F53
 mov ebx, 10h	; 19F58
 lea edx, [byte esp+04h]	; 19F5D
 xor eax, eax	; 19F61
@@ -1233,7 +1233,7 @@ mov esi, dword [dword esp+0404h]	; 19F70
 push esi	; 19F77
 call MouseSetPos	; 19F78
 add esp, byte 8	; 19F7D
-call sub_6B3D7	; 19F80
+call ClearInputQueue	; 19F80
 jmp near .73	; 19F85
 .53:
 mov ebx, dword [dword esp+03ECh]	; 19F8A
@@ -1295,7 +1295,7 @@ shl ecx, 5	; 1A068
 mov eax, dword [dword esp+eax*4+03BCh]	; 1A06B
 add eax, ecx	; 1A072
 mov ecx, 0FAh	; 1A074
-call sub_6B94E	; 1A079
+call DrawMenuItemSel	; 1A079
 mov edx, dword [dword esp+03D0h]	; 1A07E
 mov eax, dword [dword esp+03CCh]	; 1A085
 mov dword [dword esp+edx*4+0394h], eax	; 1A08C
@@ -1311,7 +1311,7 @@ mov ecx, 0FAh	; 1A0BE
 mov edx, eax	; 1A0C3
 mov eax, esi	; 1A0C5
 .58:
-call sub_6B9EB	; 1A0C7
+call DrawMenuItemNorm	; 1A0C7
 jmp near .73	; 1A0CC
 .59:
 cmp dword [byte eax+018h], byte 0	; 1A0D1
@@ -1375,7 +1375,7 @@ shl eax, 5	; 1A1B9
 mov ecx, dword [dword esp+edi*4+03BCh]	; 1A1BC
 add eax, ecx	; 1A1C3
 mov ecx, 0FAh	; 1A1C5
-call sub_6B94E	; 1A1CA
+call DrawMenuItemSel	; 1A1CA
 mov eax, dword [dword esp+03CCh]	; 1A1CF
 mov dword [dword esp+edi*4+0394h], eax	; 1A1D6
 push dword 0F8h	; 1A1DD
@@ -1386,7 +1386,7 @@ shl eax, 5	; 1A1F5
 mov ecx, dword [dword esp+edi*4+03BCh]	; 1A1F8
 add eax, ecx	; 1A1FF
 mov ecx, 0FAh	; 1A201
-call sub_6B9EB	; 1A206
+call DrawMenuItemNorm	; 1A206
 mov eax, dword [dword esp+03D0h]	; 1A20B
 mov ecx, dword [dword esp+03CCh]	; 1A212
 shl ecx, 5	; 1A219
@@ -1481,7 +1481,7 @@ mov ebx, dword [dword esp+0408h]	; 1A38E
 mov ebx, dword [dword esp+ebx+0370h]	; 1A395
 mov edx, dword [dword esp+ebp*4+03B0h]	; 1A39C
 mov eax, dword [dword esp+ebp*4+03C0h]	; 1A3A3
-call sub_6B684	; 1A3AA
+call DrawMenuDropdown	; 1A3AA
 xor esi, esi	; 1A3AF
 mov dword [dword esp+ebp*4+0394h], esi	; 1A3B1
 push dword 0F8h	; 1A3B8

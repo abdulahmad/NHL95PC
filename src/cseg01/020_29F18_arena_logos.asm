@@ -9,12 +9,12 @@ extern str_Indus030, str_GIPK, str_Iff5, str_Tonights, str_Injured, str_extDB, s
 extern scoutcatidx, curleague, musicon, byte_D42C3, hmroster, byte_ED7F3, byte_ED824, byte_ED825
 extern byte_ED826, byte_ED9AB, byte_ED9AF, byte_ED9E5, byte_ED9E6, gameopts, ctl1team, ctl2team
 extern teamconf, boxfillcolor, boxlitecolor, boxshadecolor, songdata, cont2team, HomeTeam, musicslot
-extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, pointerspr, dword_EA0DC
+extern musichandle, dword_D2C6B, dword_D8B68, dword_D8B74, dword_DBC7C, schedgameidx, pointerspr, ptrupdatefn
 extern fputchar, jctime, memcpy_, teamabbrevs, crestnames, scoutcatnames, leaguedbnames
 extern off_CEF43, off_CEF63, sprintf_, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadTeamRec
 extern SetTextColors, PrintShadowText, PrintOutlinedText, FitPlayerName, DrawBevelBox, SetDialogColors, TrackButtons, DrawButtons
-extern WaitClickTimeout, ShowLoadingScreen, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, sub_6B391
-extern sub_6B3D7, sub_76429, sub_767D0, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
+extern WaitClickTimeout, ShowLoadingScreen, sub_59BB5, sub_59C5F, sub_59D16, sub_59D54, sub_59D71, GetInputEvent
+extern ClearInputQueue, sub_76429, sub_767D0, sub_7DF4E, sub_836E4, sub_8373E, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_91370, sub_913D0, sub_91400
 extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4FAC, str_D4
@@ -511,7 +511,7 @@ mov edx, dword [pointerspr]	; 2A61A
 push edx	; 2A620
 call sub_91370	; 2A621
 add esp, byte 0Ch	; 2A626
-call sub_6B3D7	; 2A629
+call ClearInputQueue	; 2A629
 cmp byte [musicon], 0	; 2A62E
 je short .25	; 2A635
 cmp dword [songdata], byte 0	; 2A637
@@ -603,13 +603,13 @@ mov dword [dword esp+0640h], ebx	; 2A780
 xor edi, edi	; 2A787
 mov dword [dword esp+064Ch], edi	; 2A789
 .33:
-call sub_6B391	; 2A790
+call GetInputEvent	; 2A790
 mov ecx, eax	; 2A795
 test eax, eax	; 2A797
 je short .34	; 2A799
 lea ebx, [dword esp+0634h]	; 2A79B
 lea edx, [dword esp+0630h]	; 2A7A2
-call dword [dword_EA0DC]	; 2A7A9
+call dword [ptrupdatefn]	; 2A7A9
 mov dword [dword esp+064Ch], eax	; 2A7AF
 .34:
 test ecx, ecx	; 2A7B6
@@ -901,7 +901,7 @@ push edi	; 2ABEC
 push ebp	; 2ABED
 sub esp, 120h	; 2ABEE
 mov dword [dword esp+0E8h], 0FFFFFFFFh	; 2ABF4
-call sub_6B3D7	; 2ABFF
+call ClearInputQueue	; 2ABFF
 xor ebp, ebp	; 2AC04
 call sub_B4BA8	; 2AC06
 push ebp	; 2AC0B

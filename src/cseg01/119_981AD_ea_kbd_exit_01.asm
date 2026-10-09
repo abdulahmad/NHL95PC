@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_981AD progbits alloc exec nowrite align=1
-extern asc_C47E8, asc_C47FC, dword_D2FD8, dword_D30D4, bailout_vec, off_D306C, off_D3070, off_D3074
-extern off_D3078, off_D45B4, off_D45B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_90267
+extern asc_C47E8, asc_C47FC, joycalactive, dword_D30D4, bailout_vec, off_D306C, off_D3070, off_D3074
+extern mousepollfn, joycalprehook, joycalposthook, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_90267
 extern sub_90D20, sub_910E0, sub_9132C, sub_91400, sub_93000, sub_9C5A8, sub_9C5B0, sub_A1800
 extern sub_A1840, sub_B39D0, sub_B3A88, sub_B3AA1, sub_B3D74, sub_B4BA8, SetDrawBitmap, sub_B4F8C
 extern sub_B6F84, unk_D45D8
@@ -65,8 +65,8 @@ mov dword [dword esp+0B4h], edx	; 98208
 mov dword [dword esp+0B8h], ebx	; 9820F
 mov dword [dword esp+0B0h], ecx	; 98216
 mov ebp, dword [dword esp+0D4h]	; 9821D
-mov dword [dword_D2FD8], 1	; 98224
-call dword [off_D45B4]	; 9822E
+mov dword [joycalactive], 1	; 98224
+call dword [joycalprehook]	; 9822E
 push byte 0FFFFFFFFh	; 98234
 call sub_9C5A8	; 98236
 add esp, byte 4	; 9823B
@@ -167,14 +167,14 @@ push dword_D30D4	; 983A4
 call sub_A1840	; 983A9
 add esp, byte 4	; 983AE
 loc_983B1:
-call dword [off_D3078]	; 983B1
+call dword [mousepollfn]	; 983B1
 test eax, ebp	; 983B7
 jne short loc_983B1	; 983B9
 loc_983BB:
 call sub_B39D0	; 983BB
 mov esi, eax	; 983C0
 mov dword [dword esp+0BCh], eax	; 983C2
-call dword [off_D3078]	; 983C9
+call dword [mousepollfn]	; 983C9
 mov edi, eax	; 983CF
 and edi, ebp	; 983D1
 test esi, esi	; 983D3
@@ -224,9 +224,9 @@ mov esi, dword [dword esp+0A8h]	; 9847A
 push esi	; 98481
 call sub_9C5A8	; 98482
 add esp, byte 4	; 98487
-call dword [off_D45B8]	; 9848A
+call dword [joycalposthook]	; 9848A
 xor ebp, ebp	; 98490
-mov dword [dword_D2FD8], ebp	; 98492
+mov dword [joycalactive], ebp	; 98492
 mov eax, edi	; 98498
 add esp, 0C0h	; 9849A
 pop ebp	; 984A0
@@ -251,7 +251,7 @@ sub_984D0:
 push esi	; 984D0
 push edi	; 984D1
 sub esp, 0A0h	; 984D2
-mov dword [dword_D2FD8], 1	; 984D8
+mov dword [joycalactive], 1	; 984D8
 push byte 0FFFFFFFFh	; 984E2
 call sub_9C5A8	; 984E4
 mov edi, eax	; 984E9
@@ -340,7 +340,7 @@ push edi	; 9860F
 call sub_9C5A8	; 98610
 add esp, byte 4	; 98615
 xor esi, esi	; 98618
-mov dword [dword_D2FD8], esi	; 9861A
+mov dword [joycalactive], esi	; 9861A
 add esp, 0A0h	; 98620
 pop edi	; 98626
 pop esi	; 98627

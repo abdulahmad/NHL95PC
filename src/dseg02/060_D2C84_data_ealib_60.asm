@@ -6,15 +6,15 @@ extern __null_int23_exit_, memlist1, sub_B2CCD, sub_B300C, sub_B345D, sub_B3ABC,
 extern unk_C4008, unk_C400C, unk_C4010, unk_C4014, unk_C4018, unk_C401C, unk_C4020, unk_C4024
 extern unk_C4028, unk_C402C, unk_C4030
 global asc_D2F46, asc_D43F4, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14
-global byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, byte_D3040, byte_D3064
+global byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, joyenablemask, byte_D3064
 global byte_D3068, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, byte_D41B7, byte_D41CC
 global byte_D41CD, byte_D4244, byte_D4245, byte_D4246, byte_D4280, byte_D42C0, byte_D42C1, byte_D42C2
 global byte_D42C3, byte_D42C4, byte_D42C5, byte_D42C6, byte_D42E4, byte_D4410, byte_D4544, byte_D4545
 global byte_D4546, byte_D4B9C, byte_D4B9D, dword_D2C84, dword_D2C8C, dword_D2CCC, dword_D2CD0, dword_D2CD8
 global dword_D2D5C, dword_D2D62, dword_D2D68, dword_D2F58, dword_D2F5C, dword_D2F60, dword_D2F64, dword_D2F74
 global dword_D2F78, dword_D2F7A, dword_D2F7C, dword_D2F80, dword_D2F84, dword_D2F88, dword_D2F8C, dword_D2F90
-global dword_D2FD8, dword_D2FDC, dword_D2FE0, dword_D2FE4, dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8
-global dword_D2FFC, dword_D3000, dword_D301C, dword_D3024, dword_D3028, dword_D302C, dword_D3030, dword_D3034
+global joycalactive, dword_D2FDC, dword_D2FE0, dword_D2FE4, dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8
+global dword_D2FFC, dword_D3000, dword_D301C, dword_D3024, dword_D3028, mousex, mousey, mousebtns
 global dword_D3038, dword_D303C, dword_D3044, dword_D3048, dword_D304C, dword_D3050, dword_D3054, dword_D3058
 global dword_D305C, dword_D3060, dword_D3090, dword_D3096, dword_D30A4, dword_D30A8, cliprect_x0, cliprect_y0
 global cliprect_x1, cliprect_y1, dword_D30BC, dword_D30C0, dword_D30C4, dword_D30C8, dword_D30CC, dword_D30D0
@@ -32,8 +32,8 @@ global dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D4
 global dword_D43EC, dword_D43F0, dword_D4438, dword_D443C, dword_D4440, dword_D4444, dword_D44AC, dword_D4530
 global dword_D4534, dword_D453C, dword_D4540, dword_D4548, dword_D457C, dword_D4580, dword_D4584, dword_D4588
 global dword_D458C, dword_D4590, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0
-global off_D2F68, off_D2F6C, off_D2F70, off_D306C, off_D3070, off_D3074, off_D3078, off_D3088
-global off_D308C, off_D42A0, off_D42A4, off_D45B4, off_D45B8, unk_D41C8, unk_D41D2, unk_D4448
+global off_D2F68, off_D2F6C, off_D2F70, off_D306C, off_D3070, off_D3074, mousepollfn, off_D3088
+global off_D308C, off_D42A0, off_D42A4, joycalprehook, joycalposthook, unk_D41C8, unk_D41D2, unk_D4448
 global unk_D44B0, unk_D44CE, unk_D45D8, unk_D45F8, unk_D47B4, word_D2D60, word_D2D66, word_D2D6C
 global word_D2D6E, saved_ss, word_D2FE8, word_D3004, word_D3006, word_D3008, word_D3094, word_D309A
 global word_D41F8, word_D41FA
@@ -159,7 +159,7 @@ db 00h,00h,00h,00h,020h,03h,00h,00h,058h,02h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,04h,00h,00h,00h,03h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,05h,00h,00h,00h,04h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h
-dword_D2FD8:
+joycalactive:
 db 00h,00h,00h,00h
 dword_D2FDC:
 db 00h,00h,00h,00h
@@ -194,17 +194,17 @@ dword_D3024:
 db 00h,00h,00h,00h
 dword_D3028:
 db 00h,00h,00h,00h
-dword_D302C:
+mousex:
 db 00h,00h,00h,00h
-dword_D3030:
+mousey:
 db 00h,00h,00h,00h
-dword_D3034:
+mousebtns:
 db 00h,00h,00h,00h
 dword_D3038:
 db 00h,00h,00h,00h
 dword_D303C:
 db 00h,00h,00h,00h
-byte_D3040:
+joyenablemask:
 db 00h,00h,00h,00h
 dword_D3044:
 db 00h,00h,00h,00h
@@ -232,7 +232,7 @@ off_D3070:
 dd sub_B300C
 off_D3074:
 dd sub_B300C
-off_D3078:
+mousepollfn:
 dd sub_B300C
 dd sub_B300C
 dd sub_B300C
@@ -873,9 +873,9 @@ dword_D45A4:
 db 0FFh,0FFh,00h,00h,0AAh,0AAh,00h,00h,055h,055h,00h,00h
 dword_D45B0:
 db 00h,00h,00h,00h
-off_D45B4:
+joycalprehook:
 dd sub_B300C
-off_D45B8:
+joycalposthook:
 dd sub_B300C
 dd sub_B300C
 dd sub_B300C

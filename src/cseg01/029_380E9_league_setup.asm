@@ -7,11 +7,11 @@ extern str_Iff10, str_Leaguetm2, str_Tspal, str_Pal20, str_Menubuff6, str_WhoWil
 extern str_extDB, str_EnterPasswordFor, str_VerifyPasswordFor, str_EnterMasterPassword, str_EnterMasterControllerPasswor, str_VerifyMasterControllerPasswo, passkey, passkey_m1
 extern divisionteams, musicon, leagueflags, savedname, byte_ED858, byte_ED979, byte_ED9AC, gameopts
 extern songdata, teamselsetslot, musichandle, dword_D2C6B, dword_D8B74, musicslot
-extern pointerspr, teamselresult, leaguemaster, leaguesaved, dword_EA0DC, jctime, memcpy_, memset_
+extern pointerspr, teamselresult, leaguemaster, leaguesaved, ptrupdatefn, jctime, memcpy_, memset_
 extern pwmismatchmsg, strcat_, strcmp_, strcpy_, stricmp_, strlen_, MakePath, leaguedbnames
 extern FileOpenRead, FileClose, FileReadAt, FileWriteAt, ReadTeamRec, SetTextColors, TextInputDialog, ListDialog
 extern SetDialogColors, MessageBox, TeamGridHitTest, DrawTeamGridName, SaveGridCellBg, RestoreGridCellBg, HighlightGridCell, DrawTeamGrid
-extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
+extern GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, sub_76429
 extern sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_91370, sub_91400, MouseSetPos, sub_B2DCA
 extern sub_B30B4, sub_B392C, sub_B4BA8, sub_B4DD4, unk_C1900, unk_C7592, removeteammsg, removeteambtns
@@ -953,7 +953,7 @@ push ebx	; 38E98
 mov ecx, dword [dword esp+0274h]	; 38E99
 mov ebx, dword [dword esp+026Ch]	; 38EA0
 mov edx, dword [dword esp+021Ch]	; 38EA7
-call sub_6B5E4	; 38EAE
+call DrawMenuBar	; 38EAE
 xor ecx, ecx	; 38EB3
 mov dword [dword esp+0288h], ecx	; 38EB5
 xor eax, eax	; 38EBC
@@ -1087,20 +1087,20 @@ mov esi, dword [pointerspr]	; 3909B
 push esi	; 390A1
 call sub_91370	; 390A2
 add esp, byte 0Ch	; 390A7
-call sub_6B3D7	; 390AA
+call ClearInputQueue	; 390AA
 xor edi, edi	; 390AF
 mov dword [dword esp+0260h], edi	; 390B1
 mov dword [teamselresult], edi	; 390B8
 .23:
 xor ecx, ecx	; 390BE
 .24:
-call sub_6B391	; 390C0
+call GetInputEvent	; 390C0
 mov esi, eax	; 390C5
 test eax, eax	; 390C7
 je short .25	; 390C9
 lea ebx, [dword esp+0230h]	; 390CB
 lea edx, [dword esp+0234h]	; 390D2
-call dword [dword_EA0DC]	; 390D9
+call dword [ptrupdatefn]	; 390D9
 mov ecx, eax	; 390DF
 .25:
 test esi, esi	; 390E1
@@ -1148,7 +1148,7 @@ mov ecx, dword [dword esp+0294h]	; 39177
 lea ebx, [dword esp+0218h]	; 3917E
 mov edx, dword [dword esp+0240h]	; 39185
 mov eax, dword [dword esp+0244h]	; 3918C
-call sub_6BA4D	; 39193
+call MenuHitTest	; 39193
 mov edx, dword [dword esp+023Ch]	; 39198
 sub edx, byte 4	; 3919F
 test eax, eax	; 391A2
@@ -1300,7 +1300,7 @@ mov eax, dword [dword esp+023Ch]	; 393FA
 mov dword [dword esp+0234h], eax	; 39401
 mov eax, dword [dword esp+0238h]	; 39408
 mov dword [dword esp+0230h], eax	; 3940F
-call sub_6B3D7	; 39416
+call ClearInputQueue	; 39416
 jmp near .75	; 3941B
 .38:
 mov esi, dword [dword esp+0238h]	; 39420
@@ -1322,7 +1322,7 @@ shl ecx, 5	; 39465
 mov eax, dword [dword esp+eax*4+0210h]	; 39468
 add eax, ecx	; 3946F
 mov ecx, dword [dword esp+0270h]	; 39471
-call sub_6B94E	; 39478
+call DrawMenuItemSel	; 39478
 mov edx, dword [dword esp+0228h]	; 3947D
 mov eax, dword [dword esp+0224h]	; 39484
 mov dword [dword esp+edx*4+01E0h], eax	; 3948B
@@ -1402,7 +1402,7 @@ mov dword [dword esp+0250h], eax	; 395CD
 mov eax, dword [dword esp+esi*4+0210h]	; 395D4
 add eax, dword [dword esp+0250h]	; 395DB
 mov ecx, dword [dword esp+0270h]	; 395E2
-call sub_6B94E	; 395E9
+call DrawMenuItemSel	; 395E9
 mov eax, dword [dword esp+0224h]	; 395EE
 mov dword [dword esp+esi*4+01E0h], eax	; 395F5
 mov eax, dword [dword esp+026Ch]	; 395FC
@@ -1416,7 +1416,7 @@ shl ecx, 5	; 39621
 mov eax, dword [dword esp+esi*4+0210h]	; 39624
 add eax, ecx	; 3962B
 mov ecx, dword [dword esp+0270h]	; 3962D
-call sub_6B9EB	; 39634
+call DrawMenuItemNorm	; 39634
 mov eax, dword [dword esp+0228h]	; 39639
 mov ebx, dword [dword esp+0224h]	; 39640
 shl ebx, 5	; 39647
@@ -1522,7 +1522,7 @@ mov edx, dword [dword esp+0288h]	; 397F8
 mov edx, dword [dword esp+edx+0224h]	; 397FF
 mov eax, dword [dword esp+0288h]	; 39806
 mov eax, dword [dword esp+eax+0214h]	; 3980D
-call sub_6B684	; 39814
+call DrawMenuDropdown	; 39814
 mov eax, dword [dword esp+027Ch]	; 39819
 xor edi, edi	; 39820
 mov dword [dword esp+eax+01E0h], edi	; 39822
@@ -1558,7 +1558,7 @@ shl ecx, 5	; 398AF
 mov eax, dword [dword esp+eax*4+0210h]	; 398B2
 add eax, ecx	; 398B9
 mov ecx, dword [dword esp+0270h]	; 398BB
-call sub_6B94E	; 398C2
+call DrawMenuItemSel	; 398C2
 mov edx, dword [dword esp+0228h]	; 398C7
 mov eax, dword [dword esp+0224h]	; 398CE
 mov dword [dword esp+edx*4+01E0h], eax	; 398D5
@@ -1576,7 +1576,7 @@ mov ecx, dword [dword esp+0270h]	; 3990D
 mov edx, eax	; 39914
 mov eax, esi	; 39916
 .49:
-call sub_6B9EB	; 39918
+call DrawMenuItemNorm	; 39918
 jmp near .75	; 3991D
 .50:
 mov ebx, dword [dword esp+0238h]	; 39922
@@ -2054,7 +2054,7 @@ mov eax, dword [ebx]	; 3A01B
 lea edx, [dword esp+01B4h]	; 3A01D
 call RestoreGridCellBg	; 3A024
 .72:
-call sub_6B3D7	; 3A029
+call ClearInputQueue	; 3A029
 jmp short .75	; 3A02E
 .73:
 test esi, esi	; 3A030

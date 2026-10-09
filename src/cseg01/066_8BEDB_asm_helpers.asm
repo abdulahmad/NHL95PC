@@ -5,7 +5,7 @@ section s_8BEDB progbits alloc exec nowrite align=1
 extern StanleyCupTimer, __CHK, musicon, vtoa_dt, screenbm, songdata, rinkbm, musicslot
 extern musichandle, vgapage, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002
 extern sub_1B092, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
-extern sub_1B2A7, sub_1B8AC, sub_1B92E, WaitClickTimeout, sub_6B3D7, sub_8FB8E, sub_8FC8A, sub_8FCDF
+extern sub_1B2A7, sub_1B8AC, sub_1B92E, WaitClickTimeout, ClearInputQueue, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_90D20, sub_910E0, sub_B395C, sub_B3989, sub_B39A7, sub_B4B88, sub_B4BA8, SetDrawBitmap
 extern scrpitch, saved_ss, scrolly, scrollx, bgscrollx, bgscrolly8
 global SelectScreenBM_set
@@ -28,7 +28,7 @@ sub esp, byte 30h	; 8BEE9
 mov esi, eax	; 8BEEC
 mov dword [byte esp+018h], edx	; 8BEEE
 mov dword [byte esp+014h], ebx	; 8BEF2
-call sub_6B3D7	; 8BEF6
+call ClearInputQueue	; 8BEF6
 call sub_B4BA8	; 8BEFB
 push byte 20h	; 8BF00
 push dword 2000h	; 8BF02

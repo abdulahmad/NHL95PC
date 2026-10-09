@@ -12,7 +12,7 @@ extern dword_ED6F8, hilightfont, fputchar, jctime, loc_7E0F3, lseek_, teamabbrev
 extern replaystart, qsort_, sprintf_, strcat_, strcpy_, strcspn_, stricmp_, SetScreenSize
 extern LoadGameGfx, MakePath, FileOpenRead, FileOpenWrite, FileCreate, FileClose, FileReadAt, FileWriteAt
 extern sub_1BAB1, ListDialog, SetDialogColors, MessageBox, FreeRinkGfx, LoadRink, ShowLoadingScreen, FadeOutPalCycle
-extern sub_673C5, sub_6B3D7, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
+extern sub_673C5, ClearInputQueue, sub_76429, sub_7DC8B, sub_7DEC8, sub_7E0FA, sub_8CCA8, sub_8D2F0
 extern sub_8E9E8, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_91964, sub_92DE0
 extern sub_93000, FatalError, sub_B2DCA, sub_B4FAC, sub_B5DB0, unk_7E05F, unk_C3444, unk_C3447
 extern unk_C344D, unk_C3468, unk_C346B, unk_C3470, str_star, unk_D1F4B, hmteamrec
@@ -968,7 +968,7 @@ call jctime	; 80327
 add esp, byte 4	; 8032C
 call sub_7DEC8	; 8032F
 call FreeRinkGfx	; 80334
-call sub_6B3D7	; 80339
+call ClearInputQueue	; 80339
 add esp, 300h	; 8033E
 pop ebp	; 80344
 pop edi	; 80345

@@ -572,6 +572,31 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00067900,sub_67900,ReplayStep,94G,replay94.asm,,,medium,"94G adda4/suba4 role: moves the play pointer replayplay eax frames (80h each, wrapping at replaystart + 9600h when sflags bit 4, stopping at recbpr) and restores the frame (positions, sfx, CrowdNoiseUpdate / CrowdNoiseOff); called from the replay gadgets",engine_display,manual-trace
 000688A4,sub_688A4,DebugMonitor,PC-new,,,,medium,"Unreferenced PC debug monitor: when debugstep is set prints a state line per frame through DebugPrintf (clin=, ps<>, HVpos<>, ref<>, pb[], puckc/gmclock) and one line per SortCords object (17 entries, skipping 0Ch/0Dh/0Fh); flags 'debError' on a bad SPA/SCnum; then reads a key: '0' bail, 'm' sub_93E38, 'd' DumpStatsLog(""stats.log""), '\' toggles debugstep",debug_dump,manual-trace
 00068E7B,sub_68E7B,DumpStatsLog,PC-new,,,,high,"fopen(name,""a+t"") ('error dump stats' on failure), then fprintf of pool/gm header, both team structs (E8h bytes), SortCords (11h x 48h bytes and a field line), team stat lines (shts score ppg pp pen penmin atop pass passcomp), skater and goalie stat tables; called by DebugMonitor with ""stats.log""",debug_dump,manual-trace
+0006B093,sub_6B093,JoystickCalScreen,PC-new,,,,high,"(stick, shift, mask, title): ""joycal"" screen with the left / right stick picture; moves the puck to the position of the stick direction (joycalx / joycaly) until a button; Esc / failure clears the stick from joyenablemask",joystick_calibration,manual-trace
+0006B35C,sub_6B35C,CalLeftJoystick,PC-new,,,,high,"JoystickCalScreen(1, 0, 0, ""LEFT JOYSTICK"") (no refs; startup calls JoystickCalScreen directly)",joystick_calibration,manual-trace
+0006B37A,sub_6B37A,CalRightJoystick,PC-new,,,,high,"JoystickCalScreen(2, 8, 1, ""RIGHT JOYSTICK"") (no refs)",joystick_calibration,manual-trace
+0006B391,sub_6B391,GetInputEvent,PC-new,,,,high,"pops the next 13-byte event from the 32-entry input queue (inputqueue), 0 if empty",joystick_calibration,manual-trace
+0006B3D7,sub_6B3D7,ClearInputQueue,PC-new,,,,high,resets the input queue and held-button flags,joystick_calibration,manual-trace
+0006B410,sub_6B410,InputInstall,PC-new,,,,high,"detects the mouse (ctlavailmask bit 0), installs InputPollTick as timer callback, clears the queue, ptrupdatefn = EventToPointer",joystick_calibration,manual-trace
+0006B47C,sub_6B47C,InputRemove,PC-new,,,,high,removes the InputPollTick timer callback,joystick_calibration,manual-trace
+0006B4BB,sub_6B4BB,EventToPointer,PC-new,,,,high,"(event, x*, y*): mouse events set the pointer position, joystick / key events step it with acceleration (8 << repeat/5), clamped to 0..275h / 0..1D5h, MouseSetPos; returns the buttons",joystick_calibration,manual-trace
+0006B5E4,sub_6B5E4,DrawMenuBar,PC-new,,,,medium,"draws the boxes and labels of a menu bar (32-byte items, label +10h) and the rest of the bar to x 27Fh",joystick_calibration,manual-trace
+0006B684,sub_6B684,DrawMenuDropdown,PC-new,,,,medium,"draws a drop-down box and its items, items without action / submenu (+14h / +18h) greyed",joystick_calibration,manual-trace
+0006B7FC,sub_6B7FC,DrawMenuBox,PC-new,,,,medium,"(x1, y1, x2, y2, fill, light, dark): fill rect plus four edge lines",joystick_calibration,manual-trace
+0006B88E,sub_6B88E,PrintMenuText,PC-new,,,,medium,copies up to 79 chars and PrintShadowText,joystick_calibration,manual-trace
+0006B8CB,sub_6B8CB,PrintMenuTextGrey,PC-new,,,,medium,copies up to 79 chars and prints with sub_91964 (disabled item),joystick_calibration,manual-trace
+0006B910,sub_6B910,PrintMenuTextAlt,PC-new,,,,low,copies up to 79 chars and prints with sub_92CD0 (no refs),joystick_calibration,manual-trace
+0006B94E,sub_6B94E,DrawMenuItemSel,PC-new,,,,medium,fills an enabled menu item with the selected colour and redraws its label,joystick_calibration,manual-trace
+0006B9EB,sub_6B9EB,DrawMenuItemNorm,PC-new,,,,medium,same with the normal colour,joystick_calibration,manual-trace
+0006BA4D,sub_6BA4D,MenuHitTest,PC-new,,,,medium,"(levels, x, y, ...): finds the open menu level and item under the point, top level first",joystick_calibration,manual-trace
+0006BAEB,sub_6BAEB,InputPollTick,PC-new,,,,high,"timer callback, every 5 ticks: PollMouseEvent / PollJoystickEvent / PollKeyboardEvent by ctlavailmask, tracks direction repeat, queues the event",joystick_calibration,manual-trace
+0006BC30,sub_6BC30,PollMouseEvent,PC-new,,,,high,event type 1 when mouse x / y / buttons changed (button release flagged 2),joystick_calibration,manual-trace
+0006BCDA,sub_6BCDA,PollJoystickEvent,PC-new,,,,high,"event type 2 from the joystick bits (directions 0Fh, buttons 30h, release flagged)",joystick_calibration,manual-trace
+0006BD69,sub_6BD69,PollKeyboardEvent,PC-new,,,,high,"event type 3 from arrows / numpad (direction bits), Space, Esc, Enter (with release) and any key",joystick_calibration,manual-trace
+0006BE95,sub_6BE95,MenuCentralRegistry,PC-new,,,,medium,"""Central Registry ..."" menu action: music cue, restores pitch, frees the free-agent lists (falist / falistsel), returns 2",joystick_calibration,manual-trace
+0006BF4A,sub_6BF4A,BuildFreeAgentList,PC-new,,,,high,"falist entries (1Bh bytes: position, jersey, index, ""F. Lastname"") for KEY records with team 0FFh, up to facount",joystick_calibration,manual-trace
+0006C043,sub_6C043,BuildTeamRosterList,PC-new,,,,high,"(team, entries, teamrec*): 28 roster entries from the in-memory TEAMS / KEY DBs, entries in teamrec+0E4h flagged 2",joystick_calibration,manual-trace
+0006C19B,sub_6C19B,LoadLeagueDbsMem,PC-new,,,,high,"(dir): loads SEASON, CAREER, CARTEAMS, KEY, TEAMS and ATT .DB files into memory (seasondb, careerdb, ...) with sizes",joystick_calibration,manual-trace
 0006CB6B,sub_6CB6B,CarTeamRecPtr,PC-new,,,,high,returns carteamsdb + team * 4Ch,database_save,manual-trace
 0006CB90,sub_6CB90,TeamRecPtr,PC-new,,,,high,returns teamsdb + team * 2E8h,database_save,manual-trace
 0006CBB7,sub_6CBB7,KeyDbPtr,PC-new,,,,high,returns keydb + offset (player entry pointer into KEY.DB),database_save,manual-trace

@@ -21,16 +21,16 @@ extern dword_C2CD8, dword_C2CDC, dword_C2CF0, dword_C4B69, teamdivflags, songdat
 extern roster2divmenus, menu_r1_tofa, menu_r1_toroster2, menu_r2_tofa, menu_r2_toroster1, falist, falistsel, facount
 extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0C10, dword_D0C20, dword_D0CDA
-extern dword_D2C6B, dword_D8B68, dword_D8B74, pointerspr, dword_EA0DC, dword_EA2B4, dword_EA988, musicslot
+extern dword_D2C6B, dword_D8B68, dword_D8B74, pointerspr, ptrupdatefn, dword_EA2B4, dword_EA988, musicslot
 extern dword_EA994, rosterteamrec, dword_EAF7C, dword_EBC68, msglines, dword_EBCA4
 extern dword_EBE9C, editrosters_exit, fputchar, j_unlink_, jctime, loc_6CEF4, loc_6CEF5, memcpy_
 extern memset_, teamcitynames, leaguedbnames
 extern menu_r1_freeagents, menu_r2_freeagents, menu_r1_editlines, menu_r2_editlines, off_D0880, off_D08B9, off_D09DB, off_D0A04
-extern off_D0AC2, off_D1077, off_D3078, qword_C2CE0, qword_C2CE8, randomd0, sprintf_, strcat_
+extern off_D0AC2, off_D1077, mousepollfn, qword_C2CE0, qword_C2CE8, randomd0, sprintf_, strcat_
 extern strcmp_, strcpy_, strlen_, strlwr_, strupr_, MakePath, FileOpenWrite, FileClose
 extern FileWriteAt, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, ListDialog, TrackButtons
-extern DrawButtons, InitScrollBar, TrackScrollBars, MessageBox, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
-extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_6BF4A, sub_6C043, sub_6C96C, sub_6CA8F, CarTeamRecPtr
+extern DrawButtons, InitScrollBar, TrackScrollBars, MessageBox, GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown
+extern DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, BuildFreeAgentList, BuildTeamRosterList, sub_6C96C, sub_6CA8F, CarTeamRecPtr
 extern TeamRecPtr, KeyDbPtr, sub_6D299, InputDialog, sub_737E1, sub_76429, sub_78BE7, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8EA18, sub_8FC8A, sub_8FFB0, sub_903F0, sub_9061C
 extern sub_90D20, sub_90F38, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_92DE0, sub_B2CBE
@@ -72,7 +72,7 @@ mov ecx, 41h	; 6D32A
 mov ebx, 40h	; 6D32F
 mov edx, 5	; 6D334
 mov eax, unk_D0450	; 6D339
-call sub_6B5E4	; 6D33E
+call DrawMenuBar	; 6D33E
 xor ecx, ecx	; 6D343
 mov ebx, str_Prez2	; 6D345
 cmp byte [byte_ED98F], 1	; 6D34A
@@ -534,7 +534,7 @@ push str_Uarm	; 6D8ED
 call sub_8CCA8	; 6D8F2
 add esp, byte 0Ch	; 6D8F7
 mov dword [falistsel], eax	; 6D8FA
-call sub_6BF4A	; 6D8FF
+call BuildFreeAgentList	; 6D8FF
 mov edx, dword [facount]	; 6D904
 mov eax, dword [falist]	; 6D90A
 mov ecx, ComparePlayerEntry	; 6D90F
@@ -598,7 +598,7 @@ add edi, eax	; 6D9C7
 xor eax, eax	; 6D9C9
 mov al, byte [dword esi+rosterteam]	; 6D9CB
 mov edx, edi	; 6D9D1
-call sub_6C043	; 6D9D3
+call BuildTeamRosterList	; 6D9D3
 mov ecx, ComparePlayerEntry	; 6D9D8
 mov ebx, 1Bh	; 6D9DD
 mov edx, 1Ch	; 6D9E2
@@ -1229,8 +1229,8 @@ mov ebp, dword [byte esp+068h]	; 6E186
 push ebp	; 6E18A
 call MouseSetPos	; 6E18B
 add esp, byte 8	; 6E190
-call dword [off_D3078]	; 6E193
-call sub_6B3D7	; 6E199
+call dword [mousepollfn]	; 6E193
+call ClearInputQueue	; 6E199
 .3:
 cmp byte [musicon], 0	; 6E19E
 je short .4	; 6E1A5
@@ -1252,13 +1252,13 @@ mov dword [songdata], ebx	; 6E1D7
 xor ecx, ecx	; 6E1DD
 mov dword [byte esp+078h], ecx	; 6E1DF
 .5:
-call sub_6B391	; 6E1E3
+call GetInputEvent	; 6E1E3
 mov esi, eax	; 6E1E8
 test eax, eax	; 6E1EA
 je short .6	; 6E1EC
 lea ebx, [byte esp+058h]	; 6E1EE
 lea edx, [byte esp+05Ch]	; 6E1F2
-call dword [dword_EA0DC]	; 6E1F6
+call dword [ptrupdatefn]	; 6E1F6
 mov dword [byte esp+078h], eax	; 6E1FC
 .6:
 test esi, esi	; 6E200
@@ -1450,7 +1450,7 @@ mov ecx, dword [dword esp+084h]	; 6E45A
 lea ebx, [byte esp+028h]	; 6E461
 mov edx, dword [byte esp+068h]	; 6E465
 mov eax, dword [byte esp+06Ch]	; 6E469
-call sub_6BA4D	; 6E46D
+call MenuHitTest	; 6E46D
 test eax, eax	; 6E472
 je near .40	; 6E474
 mov edx, dword [byte esp+054h]	; 6E47A
@@ -1534,7 +1534,7 @@ mov eax, dword [byte esp+064h]	; 6E55A
 mov dword [byte esp+05Ch], eax	; 6E55E
 mov eax, dword [byte esp+060h]	; 6E562
 mov dword [byte esp+058h], eax	; 6E566
-call sub_6B3D7	; 6E56A
+call ClearInputQueue	; 6E56A
 jmp near EditRosters.17	; 6E56F
 .24:
 mov ecx, dword [byte esp+060h]	; 6E574
@@ -1598,7 +1598,7 @@ shl ecx, 5	; 6E613
 mov eax, dword [byte esp+eax*4+020h]	; 6E616
 add eax, ecx	; 6E61A
 mov ecx, dword [byte esp+074h]	; 6E61C
-call sub_6B94E	; 6E620
+call DrawMenuItemSel	; 6E620
 mov edx, dword [byte esp+054h]	; 6E625
 mov eax, dword [byte esp+050h]	; 6E629
 mov dword [byte esp+edx*4+030h], eax	; 6E62D
@@ -1681,7 +1681,7 @@ shl eax, 5	; 6E70B
 mov ecx, dword [byte esp+esi*4+020h]	; 6E70E
 add eax, ecx	; 6E712
 mov ecx, dword [byte esp+074h]	; 6E714
-call sub_6B94E	; 6E718
+call DrawMenuItemSel	; 6E718
 mov eax, dword [byte esp+050h]	; 6E71D
 mov dword [byte esp+esi*4+030h], eax	; 6E721
 mov ebp, dword [dword esp+08Ch]	; 6E725
@@ -1695,7 +1695,7 @@ shl eax, 5	; 6E73E
 mov ecx, dword [byte esp+esi*4+020h]	; 6E741
 add eax, ecx	; 6E745
 mov ecx, dword [byte esp+074h]	; 6E747
-call sub_6B9EB	; 6E74B
+call DrawMenuItemNorm	; 6E74B
 mov eax, dword [byte esp+054h]	; 6E750
 mov ebx, dword [byte esp+050h]	; 6E754
 shl ebx, 5	; 6E758
@@ -1795,7 +1795,7 @@ mov ebx, dword [byte esp+07Ch]	; 6E86F
 mov ebx, dword [byte esp+ebx+0Ch]	; 6E873
 mov edx, dword [byte esp+ebp*4+048h]	; 6E877
 mov eax, dword [byte esp+ebp*4+024h]	; 6E87B
-call sub_6B684	; 6E87F
+call DrawMenuDropdown	; 6E87F
 xor edx, edx	; 6E884
 mov dword [byte esp+ebp*4+030h], edx	; 6E886
 push esi	; 6E88A
@@ -1828,7 +1828,7 @@ shl ecx, 5	; 6E8DC
 mov eax, dword [byte esp+eax*4+020h]	; 6E8DF
 add eax, ecx	; 6E8E3
 mov ecx, dword [byte esp+074h]	; 6E8E5
-call sub_6B94E	; 6E8E9
+call DrawMenuItemSel	; 6E8E9
 mov edx, dword [byte esp+054h]	; 6E8EE
 mov eax, dword [byte esp+050h]	; 6E8F2
 mov dword [byte esp+edx*4+030h], eax	; 6E8F6
@@ -1844,7 +1844,7 @@ add eax, edx	; 6E916
 mov ecx, dword [byte esp+074h]	; 6E918
 mov edx, esi	; 6E91C
 .39:
-call sub_6B9EB	; 6E91E
+call DrawMenuItemNorm	; 6E91E
 jmp near EditRosters.17	; 6E923
 .40:
 mov esi, dword [byte esp+060h]	; 6E928
@@ -2025,15 +2025,15 @@ call sub_B2CBE	; 6EB1D
 add esp, byte 4	; 6EB22
 test eax, eax	; 6EB25
 jne short ErrorScreenWait.1	; 6EB27
-call sub_6B3D7	; 6EB29
+call ClearInputQueue	; 6EB29
 xor ebp, ebp	; 6EB2E
 .2:
-call sub_6B391	; 6EB30
+call GetInputEvent	; 6EB30
 test eax, eax	; 6EB35
 je near .9	; 6EB37
 lea ebx, [byte esp+010h]	; 6EB3D
 lea edx, [byte esp+014h]	; 6EB41
-call dword [dword_EA0DC]	; 6EB45
+call dword [ptrupdatefn]	; 6EB45
 mov dword [byte esp+01Ch], eax	; 6EB4B
 mov ah, byte [byte esp+01Ch]	; 6EB4F
 test ah, 4	; 6EB53
@@ -2126,14 +2126,14 @@ call sub_B2CBE	; 6EC3D
 add esp, byte 4	; 6EC42
 test eax, eax	; 6EC45
 jne short ErrorScreenWait.10	; 6EC47
-call sub_6B3D7	; 6EC49
+call ClearInputQueue	; 6EC49
 push edi	; 6EC4E
 push esi	; 6EC4F
 mov edi, dword [dword_EBE9C]	; 6EC50
 push edi	; 6EC56
 call sub_903F0	; 6EC57
 add esp, byte 0Ch	; 6EC5C
-call sub_6B3D7	; 6EC5F
+call ClearInputQueue	; 6EC5F
 mov ebp, dword [byte esp+010h]	; 6EC64
 push ebp	; 6EC68
 mov eax, dword [byte esp+018h]	; 6EC69
@@ -2174,7 +2174,7 @@ mov ecx, 41h	; 6ECC4
 mov ebx, 40h	; 6ECC9
 mov edx, 5	; 6ECCE
 mov eax, unk_D0450	; 6ECD3
-call sub_6B5E4	; 6ECD8
+call DrawMenuBar	; 6ECD8
 push byte 41h	; 6ECDD
 push dword 1CDh	; 6ECDF
 push dword 280h	; 6ECE4
@@ -4269,19 +4269,19 @@ mov dword [byte esp+08h], edi	; 70588
 push edi	; 7058C
 call MouseSetPos	; 7058D
 add esp, byte 8	; 70592
-call dword [off_D3078]	; 70595
-call sub_6B3D7	; 7059B
+call dword [mousepollfn]	; 70595
+call ClearInputQueue	; 7059B
 .3:
 xor edx, edx	; 705A0
 mov dword [byte esp+018h], edx	; 705A2
 .4:
-call sub_6B391	; 705A6
+call GetInputEvent	; 705A6
 mov ecx, eax	; 705AB
 test eax, eax	; 705AD
 je short .5	; 705AF
 mov ebx, esp	; 705B1
 lea edx, [byte esp+04h]	; 705B3
-call dword [dword_EA0DC]	; 705B7
+call dword [ptrupdatefn]	; 705B7
 mov dword [byte esp+018h], eax	; 705BD
 .5:
 test ecx, ecx	; 705C1

@@ -11,11 +11,11 @@ extern tradejersey, tradeslot, byte_ED7F7, byte_ED858, byte_ED85A, byte_ED86D, b
 extern statscategory, statsredrawcb, tradebtnx, tradebtny, HomeTeam, dword_D2C6B, dword_D8C84, pointerspr
 extern dword_DC738, statspalshape, statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, traderesult
 extern tradeclick, traderemap1, traderemap2, tradecursor, jerseymsg, tradeside
-extern dword_DE264, dword_EA0DC, jctime, memcpy_, leaguedbnames, unequaltrademsg, off_CF2A3
+extern dword_DE264, ptrupdatefn, jctime, memcpy_, leaguedbnames, unequaltrademsg, off_CF2A3
 extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
 extern FileOpenRW, FileClose, ReadKeyRec, WriteKeyRec, ReadTeamRec, LoadGameTeams, RunMenu, InitMenuRemap
-extern TeamRosterScreen, TextInputDialog, MessageBox, WriteTeamRec, sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684
-extern sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429, sub_767D0, sub_78BE7, sub_7A099, ClearPlayerFromLines
+extern TeamRosterScreen, TextInputDialog, MessageBox, WriteTeamRec, GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown
+extern DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, sub_76429, sub_767D0, sub_78BE7, sub_7A099, ClearPlayerFromLines
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0
 extern sub_903F0, sub_9121C, sub_91370, sub_91400, sub_91FE0, sub_93170, sub_931FC, MouseSetPos
 extern sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, SetDrawBitmap, str_S12
@@ -289,7 +289,7 @@ mov ecx, 41h	; 3DF5D
 mov ebx, 40h	; 3DF62
 mov edx, 2	; 3DF67
 mov eax, unk_C88E2	; 3DF6C
-call sub_6B5E4	; 3DF71
+call DrawMenuBar	; 3DF71
 mov ebx, 10h	; 3DF76
 mov edx, esi	; 3DF7B
 xor eax, eax	; 3DF7D
@@ -1066,7 +1066,7 @@ mov ecx, 41h	; 3EA56
 mov ebx, 40h	; 3EA5B
 mov edx, dword [byte esp+04Ch]	; 3EA60
 mov eax, esi	; 3EA64
-call sub_6B5E4	; 3EA66
+call DrawMenuBar	; 3EA66
 push byte 1	; 3EA6B
 mov ecx, 1DFh	; 3EA6D
 mov ebx, 27Fh	; 3EA72
@@ -1640,19 +1640,19 @@ mov eax, dword [pointerspr]	; 3F11D
 push eax	; 3F122
 call sub_91FE0	; 3F123
 add esp, byte 0Ch	; 3F128
-call sub_6B3D7	; 3F12B
+call ClearInputQueue	; 3F12B
 xor edx, edx	; 3F130
 mov dword [traderesult], edx	; 3F132
 .6:
 xor edx, edx	; 3F138
 .7:
-call sub_6B391	; 3F13A
+call GetInputEvent	; 3F13A
 mov ecx, eax	; 3F13F
 test eax, eax	; 3F141
 je short .8	; 3F143
 lea ebx, [byte ebp+02Eh]	; 3F145
 lea edx, [byte ebp+032h]	; 3F148
-call dword [dword_EA0DC]	; 3F14B
+call dword [ptrupdatefn]	; 3F14B
 mov edx, eax	; 3F151
 .8:
 test ecx, ecx	; 3F153
@@ -1741,7 +1741,7 @@ mov ecx, dword [byte ebp+06Eh]	; 3F22E
 lea ebx, [byte ebp+0Eh]	; 3F231
 mov edx, dword [byte ebp+02Eh]	; 3F234
 mov eax, edi	; 3F237
-call sub_6BA4D	; 3F239
+call MenuHitTest	; 3F239
 test eax, eax	; 3F23E
 jne near .78	; 3F240
 .19:
@@ -1802,7 +1802,7 @@ mov ecx, dword [byte ebp+06Eh]	; 3F308
 lea ebx, [byte ebp+0Eh]	; 3F30B
 mov edx, dword [byte ebp+02Eh]	; 3F30E
 mov eax, dword [byte ebp+032h]	; 3F311
-call sub_6BA4D	; 3F314
+call MenuHitTest	; 3F314
 mov edx, dword [byte ebp+036h]	; 3F319
 sub edx, byte 20h	; 3F31C
 test eax, eax	; 3F31F
@@ -1908,7 +1908,7 @@ mov dword [byte ebp+06h], edx	; 3F441
 mov dword [byte ebp+02h], edx	; 3F444
 cmp eax, byte 1	; 3F447
 jne short .27	; 3F44A
-call sub_6B3D7	; 3F44C
+call ClearInputQueue	; 3F44C
 mov edi, dword [byte ebp+05Eh]	; 3F451
 push edi	; 3F454
 call jctime	; 3F455
@@ -1926,7 +1926,7 @@ mov eax, dword [byte ebp+03Ah]	; 3F474
 mov dword [byte ebp+032h], eax	; 3F477
 mov eax, dword [byte ebp+036h]	; 3F47A
 mov dword [byte ebp+02Eh], eax	; 3F47D
-call sub_6B3D7	; 3F480
+call ClearInputQueue	; 3F480
 jmp near .72	; 3F485
 .28:
 cmp dword [byte ebp+036h], byte 20h	; 3F48A
@@ -1959,7 +1959,7 @@ shl ecx, 5	; 3F4C6
 mov eax, dword [byte ebp+eax*4+0Eh]	; 3F4C9
 add eax, ecx	; 3F4CD
 mov ecx, dword [byte ebp+05Ah]	; 3F4CF
-call sub_6B94E	; 3F4D2
+call DrawMenuItemSel	; 3F4D2
 mov edx, dword [byte ebp+02Ah]	; 3F4D7
 mov eax, dword [byte ebp+026h]	; 3F4DA
 mov dword [byte ebp+edx*4-012h], eax	; 3F4DD
@@ -1978,7 +1978,7 @@ mov ecx, dword [byte ebp+05Ah]	; 3F4FE
 mov edx, eax	; 3F501
 mov eax, esi	; 3F503
 .33:
-call sub_6B9EB	; 3F505
+call DrawMenuItemNorm	; 3F505
 jmp near .72	; 3F50A
 .34:
 cmp dword [byte eax+018h], byte 0	; 3F50F
@@ -2055,7 +2055,7 @@ shl eax, 5	; 3F5C4
 mov ecx, dword [byte ebp+edi*4+0Eh]	; 3F5C7
 add eax, ecx	; 3F5CB
 mov ecx, dword [byte ebp+05Ah]	; 3F5CD
-call sub_6B94E	; 3F5D0
+call DrawMenuItemSel	; 3F5D0
 mov eax, dword [byte ebp+026h]	; 3F5D5
 mov dword [byte ebp+edi*4-012h], eax	; 3F5D8
 mov eax, dword [byte ebp+052h]	; 3F5DC
@@ -2068,7 +2068,7 @@ shl ecx, 5	; 3F5EC
 mov eax, dword [byte ebp+edi*4+0Eh]	; 3F5EF
 add eax, ecx	; 3F5F3
 mov ecx, dword [byte ebp+05Ah]	; 3F5F5
-call sub_6B9EB	; 3F5F8
+call DrawMenuItemNorm	; 3F5F8
 mov eax, dword [byte ebp+02Ah]	; 3F5FD
 mov ecx, dword [byte ebp+026h]	; 3F600
 shl ecx, 5	; 3F603
@@ -2174,7 +2174,7 @@ mov edx, dword [byte ebp+066h]	; 3F71E
 mov edx, dword [byte edx+ebp-02h]	; 3F721
 mov eax, dword [byte ebp+066h]	; 3F725
 mov eax, dword [byte eax+ebp+0Eh]	; 3F728
-call sub_6B684	; 3F72C
+call DrawMenuDropdown	; 3F72C
 mov eax, dword [byte ebp+066h]	; 3F731
 xor edi, edi	; 3F734
 mov dword [byte eax+ebp-012h], edi	; 3F736
@@ -2221,7 +2221,7 @@ shl ecx, 5	; 3F79A
 mov eax, dword [byte ebp+eax*4+0Eh]	; 3F79D
 add eax, ecx	; 3F7A1
 mov ecx, dword [byte ebp+05Ah]	; 3F7A3
-call sub_6B94E	; 3F7A6
+call DrawMenuItemSel	; 3F7A6
 mov edx, dword [byte ebp+02Ah]	; 3F7AB
 mov eax, dword [byte ebp+026h]	; 3F7AE
 mov dword [byte ebp+edx*4-012h], eax	; 3F7B1
@@ -2686,7 +2686,7 @@ mov ecx, dword [byte ebp+06Eh]	; 3FDCC
 lea ebx, [byte ebp+0Eh]	; 3FDCF
 mov edx, dword [byte ebp+02Eh]	; 3FDD2
 mov eax, dword [byte ebp+032h]	; 3FDD5
-call sub_6BA4D	; 3FDD8
+call MenuHitTest	; 3FDD8
 test eax, eax	; 3FDDD
 jne near .78	; 3FDDF
 .77:

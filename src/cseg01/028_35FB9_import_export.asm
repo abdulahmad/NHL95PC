@@ -19,8 +19,8 @@ extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, SetTextC
 extern GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, PreGameScreen, SetDialogColors, RestoreDialogBg
 extern MessageBox, CalendarScreen, LeagueTeamSelect, WriteSeasonRec, ReadGoalieSeasonRec, WriteGoalieSeasonRec, WriteSchedGame, WriteTeamRec
 extern ReadLeagueTeamEntry, AskTeamPassword, UpdateTeamDbs, MergeLeagueFiles, FindLeagueFloppy, WaitLeagueFloppy, ReadLeagueInfo, ReadTeamNames
-extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSeasonSchedule, UpdatePlayoffSeries, ShowLoadingScreen, sub_6B410
-extern sub_6B47C, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FCDF, sub_8FFB0
+extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSeasonSchedule, UpdatePlayoffSeries, ShowLoadingScreen, InputInstall
+extern InputRemove, sub_76429, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_903F0, sub_91370, sub_91400, sub_92F50, sub_93000, sub_B2DCA, sub_B2E1B, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BC4, unk_C7805, leaguediskmsg, playerdbsmsg, btn_MasterDB, unk_C7F07
 extern unk_C7F1B, updschedmsg, str_backslash2, str_S4, awlinetab, hmlinetab, unk_DC240, leagueteams
@@ -1426,10 +1426,10 @@ mov dword [skaterstatscb], GameSkaterStatsScreen	; 3745B
 mov dword [goaliestatscb], GameGoalieStatsScreen	; 37465
 mov dword [standingscb], GameStandingsScreen	; 3746F
 mov dword [standingsmenucb], GameStandingsMenu	; 37479
-call sub_6B47C	; 37483
+call InputRemove	; 37483
 mov eax, edi	; 37488
 call PlayGame	; 3748A
-call sub_6B410	; 3748F
+call InputInstall	; 3748F
 cmp dword [gameresult], byte 1	; 37494
 jne short .51	; 3749B
 mov al, byte [hmscore]	; 3749D
@@ -1907,7 +1907,7 @@ add esp, byte 4	; 37B1D
 xor ecx, ecx	; 37B20
 mov dword [songdata], ecx	; 37B22
 .83:
-call sub_6B410	; 37B28
+call InputInstall	; 37B28
 mov dword [byte esp+070h], 0FFFFFFFFh	; 37B2D
 cmp esi, byte 4	; 37B35
 jne short .84	; 37B38

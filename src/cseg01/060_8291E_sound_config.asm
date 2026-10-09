@@ -8,9 +8,9 @@ extern asc_D2390, asc_D2399, asc_D2479, asc_D2486, asc_D248C, asc_D2491, byte_C5
 extern musicslot, musicon, byte_D2439, byte_ED8C3, byte_ED95B, byte_ED9A7, dword_C4CFC, gameopts
 extern dword_C541F, songdata, dword_CCC94, dword_D2350, dword_D2423, dword_D2427, dword_D242B
 extern musichandle, dword_D2435, sounddevids, dword_D24A0, dword_D27B2, dword_D27BB, dword_D2C6B, pointerspr
-extern dword_EA0DC, dword_ED360, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, fclose_, fopen_
+extern ptrupdatefn, dword_ED360, dword_ED7A4, dword_ED7A8, dword_ED7AC, dword_ED7B0, fclose_, fopen_
 extern fprintf_, jctime, loc_836C4, off_D24D1, strcpy_, MakePath, SetDialogColors, RestoreDialogBg
-extern MessageBox, PlayDigiSample, WaitDigiSample, sub_6B391, sub_6B3D7, sub_8245A, sub_824F8, sub_827B3
+extern MessageBox, PlayDigiSample, WaitDigiSample, GetInputEvent, ClearInputQueue, sub_8245A, sub_824F8, sub_827B3
 extern sub_82805, sub_8357A, sub_8363C, sub_8CCA8, sub_8D2F0, sub_8EB5B, sub_8EB93, sub_8ECC0
 extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A, sub_8FCDF
 extern sub_903F0, sub_91370, sub_91400, sub_97079, FatalError, sub_B2DCA, sub_B3989, sub_B3999
@@ -105,17 +105,17 @@ mov eax, dword [pointerspr]	; 829F1
 push eax	; 829F6
 call sub_91370	; 829F7
 add esp, byte 0Ch	; 829FC
-call sub_6B3D7	; 829FF
+call ClearInputQueue	; 829FF
 loc_82A04:
 xor edx, edx	; 82A04
 mov dword [byte esp+024h], edx	; 82A06
 loc_82A0A:
-call sub_6B391	; 82A0A
+call GetInputEvent	; 82A0A
 test eax, eax	; 82A0F
 je short loc_82A29	; 82A11
 lea ebx, [byte esp+028h]	; 82A13
 lea edx, [byte esp+02Ch]	; 82A17
-call dword [dword_EA0DC]	; 82A1B
+call dword [ptrupdatefn]	; 82A1B
 mov dword [byte esp+024h], eax	; 82A21
 test al, 6	; 82A25
 je short loc_82A0A	; 82A27
@@ -698,12 +698,12 @@ mov edx, 0FFFFFFFFh	; 831FE
 mov eax, edx	; 83203
 call MessageBox	; 83205
 loc_8320A:
-call sub_6B391	; 8320A
+call GetInputEvent	; 8320A
 test eax, eax	; 8320F
 je short loc_83225	; 83211
 lea ebx, [byte esp+030h]	; 83213
 lea edx, [byte esp+034h]	; 83217
-call dword [dword_EA0DC]	; 8321B
+call dword [ptrupdatefn]	; 8321B
 mov dword [byte esp+040h], eax	; 83221
 loc_83225:
 test byte [byte esp+040h], 2	; 83225

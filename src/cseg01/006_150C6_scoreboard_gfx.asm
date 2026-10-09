@@ -8,12 +8,12 @@ extern byte_ED823, byte_ED939, demomode
 extern gameresult, gamemode, gameopts, teamdivflags, hudclockmin
 extern hudclocksec, hudclockhund, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
 extern hudhomeline, hudawayline, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
-extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, dword_D3034, linesprites
+extern dword_C5886, cont2team, HomeTeam, dword_CC0EC, dword_CC0F0, dword_D2C6B, mousebtns, linesprites
 extern penaltydigits, dword_DC2B8, clockdigits, clockcolon, cupseries, hmscore, awscore, hmtmstruct
 extern jctime, DrawPanelLine_x, UpdateHudPanel_x, teamabbrevs, perioddigits, off_C57C8, crestnames, awtmstruct
-extern off_D3078, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, ReloadGameGfx, SetupDemoGame
+extern mousepollfn, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, ReloadGameGfx, SetupDemoGame
 extern MakePath, DrawPanelScore, DrawPanelClock, InitGameSummary, LoadModeState, DemoSetupStub, LoadRink, SeriesLength
-extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, sub_6B410, sub_6B47C
+extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, sub_59D71, GetPeriodTime, sub_673C5, InputInstall, InputRemove
 extern sub_7DC8B, LoadScheduleDB, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
 extern PollKey, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, exhstate, unk_DF314, PerTimeTab
 extern word_CBC52, lcblink, word_CBC60, lcboxon
@@ -1139,7 +1139,7 @@ push edi	; 15D79
 push ebp	; 15D7A
 sub esp, byte 78h	; 15D7B
 call ShowLoadingScreen	; 15D7E
-call sub_6B47C	; 15D83
+call InputRemove	; 15D83
 mov word [PerTimeTab], 3Ch	; 15D88
 call DemoSetupStub	; 15D91
 mov dword [demomode], 1	; 15D96
@@ -1284,7 +1284,7 @@ rep movsd	; 15FE1
 movsb	; 15FE3
 mov eax, exhstate	; 15FE4
 call LoadModeState	; 15FE9
-call sub_6B410	; 15FEE
+call InputInstall	; 15FEE
 cmp dword [gameresult], byte 2	; 15FF3
 sete al	; 15FFA
 and eax, 0FFh	; 15FFD
@@ -1327,8 +1327,8 @@ test esi, esi	; 1604A
 jne short .4	; 1604C
 test byte [ctlavailmask], 1	; 1604E
 je short .4	; 16055
-call dword [off_D3078]	; 16057
-test byte [dword_D3034], 3	; 1605D
+call dword [mousepollfn]	; 16057
+test byte [mousebtns], 3	; 1605D
 je short .4	; 16064
 mov esi, 1	; 16066
 .4:

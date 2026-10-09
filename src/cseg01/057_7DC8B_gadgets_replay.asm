@@ -8,13 +8,13 @@ extern byte_ED932, byte_ED9EF, gamemode, ctl1team, ctl2team, dword_C541F, dword_
 extern rinkscrollx, rinkscrolly, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, dword_D1C8B
 extern dword_D1CE6, dword_D1CEE, dword_D1DC8, dword_D1DCC, dword_D1DD0, dword_D1DD4, dword_D2C6B, dword_D8B74
 extern spritedrawcount, dword_D8C72, dword_D8C74, dword_D8C7A, dword_D8C7C, pointerspr, rinkwtiles, rinkhtiles
-extern bgscrolly, replayplay, dword_E9F16, dword_E9F38, dword_EA0DC, dword_ED368, dword_ED380, dword_ED384
+extern bgscrolly, replayplay, dword_E9F16, dword_E9F38, ptrupdatefn, dword_ED368, dword_ED380, dword_ED384
 extern dword_ED388, dword_ED38C, dword_ED6D0, dword_ED6D4, dword_ED6D8, dword_ED6DC, dword_ED6E0, dword_ED6E4
 extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED6FC, dword_ED704, dword_ED708
 extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, jctime, camx_m2, off_CD4FA
 extern off_D1B0B, off_D1BE0, off_D1CDE, off_D1F25, rand_, SetScreenSize, DrawFrameSprite, FadePalette
 extern MakePath, SetDialogColors, RestoreDialogBg, MessageBox, SetRinkScroll, CrowdNoiseOff, ReplayFirstFrame, ReplayStep
-extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_6B391, sub_6B3D7, sub_7F724
+extern sub_67DCC, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, GetInputEvent, ClearInputQueue, sub_7F724
 extern sub_7FA10, sub_7FC12, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
 extern MouseSetPos, sub_B2E1B, sub_B30B4, sub_B396E, sub_B3989, sub_B3999, sub_B4BA8, sub_B4BC4
@@ -676,7 +676,7 @@ mov edx, unk_DF314	; 7E42E
 xor eax, eax	; 7E433
 call FadePalette	; 7E435
 call sub_B396E	; 7E43A
-call sub_6B3D7	; 7E43F
+call ClearInputQueue	; 7E43F
 xor ebp, ebp	; 7E444
 mov dword [byte esp+014h], ebp	; 7E446
 loc_7E44A:
@@ -1074,12 +1074,12 @@ mov ebp, dword [dword_ED6DC]	; 7E9D5
 mov dword [byte esp+0Ch], edi	; 7E9DB
 mov ecx, 13Fh	; 7E9DF
 loc_7E9E4:
-call sub_6B391	; 7E9E4
+call GetInputEvent	; 7E9E4
 test eax, eax	; 7E9E9
 je short loc_7EA30	; 7E9EB
 mov ebx, dword_ED6DC	; 7E9ED
 mov edx, dword_ED6E0	; 7E9F2
-call dword [dword_EA0DC]	; 7E9F7
+call dword [ptrupdatefn]	; 7E9F7
 mov dword [byte esp+0Ch], eax	; 7E9FD
 cmp dword [dword_ED6E0], 140h	; 7EA01
 jl short loc_7EA13	; 7EA0B
@@ -1518,7 +1518,7 @@ mov ebx, dword [dword_ED6DC]	; 7F01A
 mov edx, dword [dword_ED6E0]	; 7F020
 xor eax, eax	; 7F026
 call sub_7F0AF	; 7F028
-call sub_6B3D7	; 7F02D
+call ClearInputQueue	; 7F02D
 mov dword [dword_ED754], 4	; 7F032
 call SelectScreenBM	; 7F03C
 push byte 20h	; 7F041
@@ -1745,21 +1745,21 @@ mov ecx, dword [pointerspr]	; 7F32C
 push ecx	; 7F332
 call sub_91370	; 7F333
 add esp, byte 0Ch	; 7F338
-call sub_6B3D7	; 7F33B
+call ClearInputQueue	; 7F33B
 xor esi, esi	; 7F340
 mov dword [byte esp+068h], esi	; 7F342
 loc_7F346:
 test byte [byte esp+068h], 2	; 7F346
 jne near loc_7F468	; 7F34B
 loc_7F351:
-call sub_6B391	; 7F351
+call GetInputEvent	; 7F351
 test eax, eax	; 7F356
 je short loc_7F351	; 7F358
 mov ecx, dword [dword_ED6E0]	; 7F35A
 mov esi, dword [dword_ED6DC]	; 7F360
 mov ebx, dword_ED6DC	; 7F366
 mov edx, dword_ED6E0	; 7F36B
-call dword [dword_EA0DC]	; 7F370
+call dword [ptrupdatefn]	; 7F370
 mov dword [byte esp+068h], eax	; 7F376
 test al, 2	; 7F37A
 je near loc_7F425	; 7F37C

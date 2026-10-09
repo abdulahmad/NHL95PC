@@ -18,12 +18,12 @@ extern dword_D2150, dword_D223C, dword_D227C, dword_D2280, dword_D2284, dword_D2
 extern dword_D22A4, dword_D22A8, dword_D22AC, dword_D22B0, dword_D22B4, dword_D22BC, dword_D22C0, dword_D22C4
 extern dword_D22C8, dword_D22CC, dword_D22D0, dword_D22D4, dword_D22DC, dword_D22E0, dword_D22EC, dword_D22F0
 extern dword_D23A3, dword_D23A7, dword_D23AB, dword_D23AF, musichandle, dword_D2435, dword_D2C6B, musicslot
-extern dword_D8B68, dword_D8B74, dword_DC230, pointerspr, fdlg_cancel, dword_EA0DC, dword_ED360, dword_ED75C
+extern dword_D8B68, dword_D8B74, dword_DC230, pointerspr, fdlg_cancel, ptrupdatefn, dword_ED360, dword_ED75C
 extern dword_ED760, dword_ED764, dword_ED768, dword_ED76C, dword_ED770, dword_ED774, dword_ED778, dword_ED77C
 extern dword_ED780, dword_ED784, dword_ED788, dword_ED78C, dword_ED790, dword_ED794, dword_ED798, dword_ED79C
 extern dword_ED7A0, fputchar, jctime, teamcitynames, off_CECFF, off_CED3F, off_D21C0, off_D2230
 extern sprintf_, strcpy_, strncpy_, MakePath, SetTextColors, PrintShadowText, PrintOutlinedText, ShowLoadingScreen
-extern FadeOutPalCycle, sub_6B391, sub_6B3D7, sub_76429, sub_8291E, WriteCurModeState, sub_8CCA8, sub_8D2F0
+extern FadeOutPalCycle, GetInputEvent, ClearInputQueue, sub_76429, sub_8291E, WriteCurModeState, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_912C8, sub_91400
 extern sub_91964, sub_91FE0, MouseSetPos, sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8, sub_B4DD4
@@ -2030,17 +2030,17 @@ mov ecx, dword [pointerspr]	; 81D55
 push ecx	; 81D5B
 call sub_91FE0	; 81D5C
 add esp, byte 0Ch	; 81D61
-call sub_6B3D7	; 81D64
+call ClearInputQueue	; 81D64
 loc_81D69:
 xor esi, esi	; 81D69
 mov dword [dword esp+0304h], esi	; 81D6B
 loc_81D72:
-call sub_6B391	; 81D72
+call GetInputEvent	; 81D72
 test eax, eax	; 81D77
 je short loc_81D9A	; 81D79
 lea ebx, [dword esp+0308h]	; 81D7B
 lea edx, [dword esp+030Ch]	; 81D82
-call dword [dword_EA0DC]	; 81D89
+call dword [ptrupdatefn]	; 81D89
 mov dword [dword esp+0304h], eax	; 81D8F
 test al, 6	; 81D96
 je short loc_81D72	; 81D98
@@ -2156,7 +2156,7 @@ mov ecx, ebp	; 81F44
 mov edx, ebp	; 81F46
 xor eax, eax	; 81F48
 call sub_8156F	; 81F4A
-call sub_6B3D7	; 81F4F
+call ClearInputQueue	; 81F4F
 mov esi, dword [dword esp+0308h]	; 81F54
 push esi	; 81F5B
 mov edi, dword [dword esp+0310h]	; 81F5C
@@ -2206,7 +2206,7 @@ mov edx, ebp	; 81FE5
 xor eax, eax	; 81FE7
 loc_81FE9:
 call sub_8156F	; 81FE9
-call sub_6B3D7	; 81FEE
+call ClearInputQueue	; 81FEE
 mov ecx, dword [dword esp+0308h]	; 81FF3
 push ecx	; 81FFA
 mov esi, dword [dword esp+0310h]	; 81FFB
@@ -2316,7 +2316,7 @@ mov ecx, ebp	; 82160
 mov edx, esi	; 82162
 mov eax, 1	; 82164
 call sub_8156F	; 82169
-call sub_6B3D7	; 8216E
+call ClearInputQueue	; 8216E
 mov eax, dword [dword esp+0308h]	; 82173
 push eax	; 8217A
 mov edx, dword [dword esp+0310h]	; 8217B

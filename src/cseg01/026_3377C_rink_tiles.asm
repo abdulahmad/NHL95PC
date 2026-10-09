@@ -5,9 +5,9 @@ section s_3377C progbits alloc exec nowrite align=1
 extern __CHK, str_Rink2, str_Til, str_InvalidFileSize, str_TILES, str_ErrorLoadingFile, str_Map, str_CRESTS3
 extern str_Pal16, rinkarenas, str_extBIN, byte_ED7CC, byte_ED7CD, byte_ED821, byte_ED927
 extern rinktilebm, rinkbm, rinkfileidx, currink, rinkscrollx
-extern rinkscrolly, dword_D2C6B, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly, dword_EA0DC, jctime
+extern rinkscrolly, dword_D2C6B, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly, ptrupdatefn, jctime
 extern MakePath, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52, sub_6AF97
-extern sub_6B391, sub_76429, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_913B4
+extern GetInputEvent, sub_76429, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_913B4
 extern sub_92DE0, sub_92EE4, FatalError, sub_B30B4, sub_B395C, SetDrawBitmap, sub_B4F8C, unk_DC890
 extern scrolly, scrollx, bgscrollx
 global LoadRink, BlitTileMap, SetRinkScroll, WaitClickTimeout, LoadCrestsPalette
@@ -595,12 +595,12 @@ mov dword [byte esp+0Ch], eax	; 33E83
 xor edi, edi	; 33E87
 xor esi, esi	; 33E89
 .1:
-call sub_6B391	; 33E8B
+call GetInputEvent	; 33E8B
 test eax, eax	; 33E90
 je short .5	; 33E92
 lea ebx, [byte esp+04h]	; 33E94
 lea edx, [byte esp+08h]	; 33E98
-call dword [dword_EA0DC]	; 33E9C
+call dword [ptrupdatefn]	; 33E9C
 mov dword [byte esp+010h], eax	; 33EA2
 test al, 2	; 33EA6
 je short .4	; 33EA8

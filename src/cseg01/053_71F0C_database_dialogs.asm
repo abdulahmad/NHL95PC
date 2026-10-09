@@ -13,12 +13,12 @@ extern dword_D0B1E, dword_D1084, dword_D1088, dword_D108C, dword_D1090, dword_D1
 extern dword_D1110, dword_D1114, dword_D1118, dword_D111C, dword_D1120, dword_D1124, dword_D1128, dword_D112C
 extern dword_D1130, dword_D11B6, dword_D2C6B, dword_D42AC, pointerspr, fdlg_tabexh, fdlg_none, fdlg_tabpo
 extern fdlg_open, fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow
-extern fdlg_tablp, fdlg_noarrow, dword_EA0DC, dword_EBC68, dword_EC6B8, dword_EC6BC, dword_EC6C0, dword_EC6C4
+extern fdlg_tablp, fdlg_noarrow, ptrupdatefn, dword_EBC68, dword_EC6B8, dword_EC6BC, dword_EC6C0, dword_EC6C4
 extern dword_EC6C8, dword_EC710, dword_EC714, dword_EC718, dword_EC71C, dword_EC720, dword_EC768, dword_EC76C
 extern dword_EC770, dword_EC774, dword_EC778, fputchar, jctime, leaguedbnames
 extern off_D1184, qsort_, strcat_, strcpy_, strlen_
 extern MakePath, DeleteDir, PrintShadowText, CmpFileNames, PrintTextCopy, FileDlgHitTest, DlgReturnZero, MeasureTextLine
-extern MessageBox, EditTextField, sub_6B391, sub_6B3D7, sub_6CA8F, DrawEditRosters, LoadBothRosterLists, sub_78BE7
+extern MessageBox, EditTextField, GetInputEvent, ClearInputQueue, sub_6CA8F, DrawEditRosters, LoadBothRosterLists, sub_78BE7
 extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284
 extern sub_91370, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_B2CBE, sub_B2DCA, sub_B30B4
 extern sub_B4BA8, sub_B4FAC, unk_D11B2, btn_POHumanOut, unk_EC7C0, unknown_libname_1, unknown_libname_2, unknown_libname_4
@@ -330,7 +330,7 @@ call sub_B2CBE	; 7227E
 add esp, byte 4	; 72283
 test eax, eax	; 72286
 jne short loc_7226E	; 72288
-call sub_6B3D7	; 7228A
+call ClearInputQueue	; 7228A
 mov eax, dword [byte esp+04Ch]	; 7228F
 push eax	; 72293
 mov edx, dword [byte esp+058h]	; 72294
@@ -1332,17 +1332,17 @@ call sub_91370	; 72EAC
 add esp, byte 0Ch	; 72EB1
 mov esi, dword [fdlgtab]	; 72EB4
 mov esi, dword [nosplit esi*4+off_D1184]	; 72EBA
-call sub_6B3D7	; 72EC1
+call ClearInputQueue	; 72EC1
 loc_72EC6:
 xor edi, edi	; 72EC6
 mov dword [byte esp+04h], edi	; 72EC8
 loc_72ECC:
-call sub_6B391	; 72ECC
+call GetInputEvent	; 72ECC
 test eax, eax	; 72ED1
 je short loc_72EEB	; 72ED3
 lea ebx, [byte esp+08h]	; 72ED5
 lea edx, [byte esp+0Ch]	; 72ED9
-call dword [dword_EA0DC]	; 72EDD
+call dword [ptrupdatefn]	; 72EDD
 mov dword [byte esp+04h], eax	; 72EE3
 test eax, eax	; 72EE7
 je short loc_72ECC	; 72EE9
