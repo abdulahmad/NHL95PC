@@ -549,6 +549,10 @@ pop ecx	; 61A87
 pop ebx	; 61A88
 ret	; 61A89
 %endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/AppendGSumRecord.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/AppendGSumRecord.inc"
+%else
 AppendGSumRecord:
 push dword 1Ch	; 61A8A
 call __CHK	; 61A8F
@@ -629,6 +633,7 @@ pop edx	; 61B81
 pop ecx	; 61B82
 pop ebx	; 61B83
 ret	; 61B84
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/FlushGSumQueue.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/FlushGSumQueue.inc"

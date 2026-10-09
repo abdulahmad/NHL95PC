@@ -1215,6 +1215,10 @@ pop ebp	; 85118
 pop edi	; 85119
 pop esi	; 8511A
 ret 14h	; 8511B
+; C: src/c/062_842BA_announcer/SayPenaltyShot.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/SayPenaltyShot.inc"
+%else
 SayPenaltyShot:
 push dword 38h	; 8511E
 call __CHK	; 85123
@@ -1281,6 +1285,11 @@ mov eax, 1	; 85209
 add esp, byte 20h	; 8520E
 pop esi	; 85211
 ret	; 85212
+%endif ; C
+; C: src/c/062_842BA_announcer/SayPlayerNumber.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/SayPlayerNumber.inc"
+%else
 SayPlayerNumber:
 push dword 4Ch	; 85213
 call __CHK	; 85218
@@ -1350,6 +1359,7 @@ add esp, byte 30h	; 85319
 pop esi	; 8531C
 pop ecx	; 8531D
 ret	; 8531E
+%endif ; C
 SayGoal:
 push dword 5Ch	; 8531F
 call __CHK	; 85324

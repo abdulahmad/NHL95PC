@@ -242,7 +242,7 @@ Sweepcheck,532A2,27,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_a
 ToFixed,53294,14,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ToFixed.c,matched,
 TryBlockShot,534BB,124,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/TryBlockShot.c,nonmatching,"registers only: original p in ecx, n in ebx, gmode2 temp in edx; this draft p in ebx, n in edx. 10-min cap"
 checkagr,5369F,238,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkagr.c,nonmatching,
-checkplcoll,58CE2,229,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkplcoll.c,nonmatching,
+checkplcoll,58CE2,229,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkplcoll.c,nonmatching,stack slots: asm spills x (word) at [esp] and y at [esp+4]; C swaps the two slots; rest matches
 deflect,57A3E,90,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/deflect.c,matched,
 newcheck,58084,113,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/newcheck.c,matched,
 passmode,5514E,97,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/passmode.c,matched,
@@ -321,6 +321,7 @@ noturn0,5F98A,377,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/noturn
 playeracc,5EDAD,673,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/playeracc.c,matched,
 AddPenalty,62CF9,135,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/AddPenalty.c,matched,
 AddPenalty2,62D80,290,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/AddPenalty2.c,matched,
+AppendGSumRecord,61A8A,251,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/AppendGSumRecord.c,matched,
 CheckAndReleasePlayer,639F9,62,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/CheckAndReleasePlayer.c,matched,original keeps i in edx and the masked time in cx (push ecx); this draft reuses dx. 10-min cap
 ClearPenaltyBuffer,63D3C,45,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/ClearPenaltyBuffer.c,matched,
 CountShotOnGoal,64338,96,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/CountShotOnGoal.c,matched,
@@ -467,6 +468,8 @@ RequestTimeClips,84DDD,207,062_842BA_announcer,src/c/062_842BA_announcer/Request
 SayHighlightIntro,847CE,319,062_842BA_announcer,src/c/062_842BA_announcer/SayHighlightIntro.c,matched,
 SayOneMinuteLeft,854AC,91,062_842BA_announcer,src/c/062_842BA_announcer/SayOneMinuteLeft.c,matched,
 SayPenalty,84F7B,419,062_842BA_announcer,src/c/062_842BA_announcer/SayPenalty.c,nonmatching,
+SayPenaltyShot,8511E,245,062_842BA_announcer,src/c/062_842BA_announcer/SayPenaltyShot.c,matched,
+SayPlayerNumber,85213,268,062_842BA_announcer,src/c/062_842BA_announcer/SayPlayerNumber.c,matched,
 SayPlayoffResult,8490D,351,062_842BA_announcer,src/c/062_842BA_announcer/SayPlayoffResult.c,nonmatching,
 SayPlayoffTonight,84C38,421,062_842BA_announcer,src/c/062_842BA_announcer/SayPlayoffTonight.c,nonmatching,
 SayScorePeriod,84657,93,062_842BA_announcer,src/c/062_842BA_announcer/SayScorePeriod.c,matched,

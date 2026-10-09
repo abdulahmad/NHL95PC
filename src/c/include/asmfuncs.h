@@ -1136,7 +1136,6 @@ extern void SayScoringPeriod_ot2(); /* 84ACC */
 extern void SayScoringPeriod_ot3(); /* 84AD3 */
 extern void SayScoringPeriod_ott(); /* 84ADA */
 extern void SayScoringPeriod_reg(); /* 84AE1 */
-extern void SayPlayerNumber(); /* 85213 */
 extern void MenuSaveGame(); /* 85924 */
 extern void SaveGameStub(); /* 85D65 */
 extern void SaveGameNameDlg(); /* 85D6C */

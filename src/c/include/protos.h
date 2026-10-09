@@ -181,8 +181,8 @@ void SetRinkObject(int obj, int frame);  /* 614C2 */
 int SpeechSlotLoaded(int i);  /* 83F35 */                 
 int SpeechSlotSize(int i);  /* 83BC7 */                   
 int ReadBE32(signed char *p);  /* 16072 */                
-void PaPenaltyShot(int a);
-void SayPenaltyShot(int a);  /* 8511E */                  
+void PaPenaltyShot(char *team, int num, int min, int sec);
+int SayPenaltyShot(char *team, int num, int min, int sec);  /* 8511E */                  
 int SpeechIdle(void);  /* 83711 */                        
 void WaitKeyRelease(int key);
 int __cdecl sub_B2CBE(int key);  /* keyboard library: key down? */
@@ -730,5 +730,7 @@ void checkcx(Player *p, short x, short d, short pl);  /* 58DC7 */
 void checkplcoll(Player *p, short x, int y);  /* 58CE2 */
 void checkpuckcoll(Player *p, int pl);  /* 5428A */
 void PuckCheckColl(Player *p);  /* 548AC */
+void AppendGSumRecord(void *rec);  /* 61A8A */
+int SayPlayerNumber(char *team, int phrase, int number);  /* 85213 */
 
 #endif
