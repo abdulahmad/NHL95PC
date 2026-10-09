@@ -2292,6 +2292,10 @@ jl short reenergizeteam.1	; 5B87A
 jmp near calcpuckcross_ret5	; 5B87C
 %endif ; C
 ; clearteams: PC-new. Zero both team structs (200h bytes) and store their data pointers (tmsort, tmlines, tmroster, ...).
+; C: src/c/042_59D9A_engine_core/clearteams.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/clearteams.inc"
+%else
 clearteams:
 push dword 0Ch	; 5B881
 call __CHK	; 5B886
@@ -2336,6 +2340,7 @@ mov dword [awtmptrF2], awteamrec	; 5B96D
 pop edx	; 5B977
 pop ebx	; 5B978
 ret	; 5B979
+%endif ; C
 ; restoreteams: 93G hockey93_01 restoreteams. Both teams: tmap = 6, every tmpdst entry = -2 (bench).
 ; C: src/c/042_59D9A_engine_core/restoreteams.c
 %ifdef CBUILD

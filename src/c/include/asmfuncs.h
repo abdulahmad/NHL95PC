@@ -631,7 +631,6 @@ extern void calcpuckcross_ret6(); /* 5A41E */
 extern void calcpuckcross_ret5(); /* 5A41F */
 extern void UpdateCoachModes(); /* 5A77C */
 extern void Goal(); /* 5AB36 */
-extern void clearteams(); /* 5B881 */
 extern void ResetClock(); /* 5BA07 */
 extern void SetPlList(); /* 5BBFA */
 extern void updateplayers(); /* 5C40F */
@@ -675,7 +674,6 @@ extern void CanFillLineSlot(); /* 64A0B */
 extern void lines_addesp10_x(); /* 64CA0 */
 extern void FillDressedSlots(); /* 64CA8 */
 extern void lines_popx2(); /* 652D0 */
-extern void PickGoalie(); /* 652D6 */
 extern void PickExtraSkater(); /* 653BE */
 extern void RemoveFromLines(); /* 655CC */
 extern void checkwindow(); /* 65D01 */

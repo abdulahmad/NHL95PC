@@ -724,5 +724,7 @@ void PaTonightIntro(int home, int away);  /* 59BB5 */
 int DeskReturnConfirm(void);  /* 1A5D4 */
 int TextInputDialog(char *prompt, char *buf, int len, int a, int b, int c, int d, int e, int f);  /* 2FEDF */
 int OutputCurrentData(void);  /* 18D7F */
+void clearteams(void);  /* 5B881 */
+void PickGoalie(short side, short slot, short force);  /* 652D6 */
 
 #endif

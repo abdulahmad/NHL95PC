@@ -1266,6 +1266,10 @@ pop esi	; 652D2
 pop ecx	; 652D3
 pop ebx	; 652D4
 ret	; 652D5
+; C: src/c/046_644A8_engine_display/PickGoalie.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/PickGoalie.inc"
+%else
 PickGoalie:
 push dword 14h	; 652D6
 call __CHK	; 652DB
@@ -1353,6 +1357,7 @@ pop edi	; 653BA
 pop esi	; 653BB
 pop ecx	; 653BC
 ret	; 653BD
+%endif ; C
 PickExtraSkater:
 push dword 20h	; 653BE
 call __CHK	; 653C3

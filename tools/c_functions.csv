@@ -284,7 +284,7 @@ PenTeamScored,5AAAE,136,042_59D9A_engine_core,src/c/042_59D9A_engine_core/PenTea
 PeriodOver,5DEA6,224,042_59D9A_engine_core,src/c/042_59D9A_engine_core/PeriodOver.c,matched,
 ResetClock,5BA07,71,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ResetClock.c,nonmatching,"2 bytes long: the original keeps the clockticks zero in edx (only push edx, __CHK 8); every variant tried (temp, chained stores, PerTimeTotal/2, int temp) zeroes ebx and saves it too (__CHK 0Ch). Maybe randomd0/GetPeriodTime were declared with other types in the original file"
 RestBench,5C1E2,102,042_59D9A_engine_core,src/c/042_59D9A_engine_core/RestBench.c,matched,
-SetCoachMode,5A581,232,042_59D9A_engine_core,src/c/042_59D9A_engine_core/SetCoachMode.c,nonmatching,
+SetCoachMode,5A581,232,042_59D9A_engine_core,src/c/042_59D9A_engine_core/SetCoachMode.c,nonmatching,1 spot: away side compares d with cwde/eax (asm) where C copies it to ebx (movsx); rest matches. Returns d (short)
 SetExitGame,5DDBC,30,042_59D9A_engine_core,src/c/042_59D9A_engine_core/SetExitGame.c,matched,
 SetSPA,59D9A,33,042_59D9A_engine_core,src/c/042_59D9A_engine_core/SetSPA.c,matched,
 Setplass,5B298,45,042_59D9A_engine_core,src/c/042_59D9A_engine_core/Setplass.c,matched,
@@ -300,6 +300,7 @@ GetHot,5A425,52,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.
 StartPer,5C010,436,042_59D9A_engine_core,src/c/042_59D9A_engine_core/calcpuckcross.c,nonmatching,"3 bytes short: the original keeps cont1team in si and cont2team in bx (push ebx), then reuses ebx for -1, ecx for 0 (bannertimer, crowdlevel) and builds fox with xor edi,edi / xor edi,edx; this draft reloads the globals into ax. Locals for the two teams did not change it"
 changeplayer,59E69,376,042_59D9A_engine_core,src/c/042_59D9A_engine_core/changeplayer.c,nonmatching,"Same instructions and branch layout (370 bytes), only allocation differs: the original spills cont at [esp+4] (px [esp], py [esp+8]) and uses edx for the 6-player counter, ebx/ecx for dx/dy, si for SCnum, cx for c1/c2playernum; this draft puts cont at [esp+8] and the counter in ecx. Declaration order (120 permutations) does not change it. File also hosts setplayer / DrawRinkOverlays (share changeplayer_ret5)"
 cleargamevars,5CD4F,195,042_59D9A_engine_core,src/c/042_59D9A_engine_core/cleargamevars.c,matched,
+clearteams,5B881,249,042_59D9A_engine_core,src/c/042_59D9A_engine_core/clearteams.c,matched,
 forcepldata,5E0DD,144,042_59D9A_engine_core,src/c/042_59D9A_engine_core/forcepldata.c,matched,
 forceteams forcepldata,5E0B0,189,042_59D9A_engine_core,src/c/042_59D9A_engine_core/forceteams.c,matched,
 periodicevents,5C302,269,042_59D9A_engine_core,src/c/042_59D9A_engine_core/periodicevents.c,nonmatching,
@@ -346,6 +347,7 @@ CloseTextOverlay,66DDA,44,046_644A8_engine_display,src/c/046_644A8_engine_displa
 DitherRect,65CA8,89,046_644A8_engine_display,src/c/046_644A8_engine_display/DitherRect.c,matched,
 LoadTeamPalette,673C5,415,046_644A8_engine_display,src/c/046_644A8_engine_display/LoadTeamPalette.c,matched,
 NormalizeDressFlags,65B48,59,046_644A8_engine_display,src/c/046_644A8_engine_display/NormalizeDressFlags.c,matched,
+PickGoalie,652D6,232,046_644A8_engine_display,src/c/046_644A8_engine_display/PickGoalie.c,matched,
 RefillLineSlots,6552E,158,046_644A8_engine_display,src/c/046_644A8_engine_display/RefillLineSlots.c,nonmatching,registers: asm keeps from in edi and the side*25 base in ebx; C spills from to the stack (8-byte frame)
 ReplayFirstFrame,67581,31,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayFirstFrame.c,matched,
 ReplayPrevFrame,675A0,54,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayPrevFrame.c,matched,
