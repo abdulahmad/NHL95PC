@@ -205,8 +205,11 @@ checkagr,5369F,238,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai
 newcheck,58084,113,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/newcheck.c,matched,
 passmode,5514E,97,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/passmode.c,matched,
 puckIChk,56E52,125,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/puckIChk.c,nonmatching,"draft: asm keeps |x| work in ebx (saves ebx, frame 8); ours saves edx"
+puckbody,56D06,332,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/puckbody.c,matched,
+puckglue,56F5A,316,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/puckglue.c,nonmatching,2 regs: asm reads regd0 byte before loading puckc (C loads puckc first); second pucky read in ecx (C eax); crowdlevel clamp needs old level in ax and new in bx (C merges them; same pattern as wallcollb)
 puckshadow,56ECF,139,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/puckshadow.c,matched,
 setpassmode,551AF,32,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/setpassmode.c,matched,
+wallcollb,58B7F,355,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/wallcollb.c,nonmatching,"register pressure: asm saves ecx/edx/edi (Zpos/Yvel kept in cx, half Yvel in di, crowdlevel in dx/cx); C keeps everything in eax and saves only ebx/edx; tried local orders"
 CrowdFadeOut,597E3,128,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/CrowdFadeOut.c,matched,
 CrowdNoiseOff,59748,155,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/CrowdNoiseOff.c,matched,
 CrowdNoiseReset,59863,33,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/CrowdNoiseReset.c,matched,

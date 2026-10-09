@@ -52,6 +52,7 @@ void StartFaceoffLineChange(struct Player *r, struct Player *p); /* 4DA37 */
 void PassCompleted(struct Player *p);                     /* 50AFE */
 short Findhittype(struct Player *p, short dir);            /* 579FF */
 void puckflip(struct Player *p);                          /* 4DFA4 */
+void puckbody(Player *pk, Player *p);                    /* 56D06 */
 void assbenchwait(struct Player *p);                       /* 526ED */
 void NextPathPoint(void);                                   /* 4F99B */
 short check4bench(struct Player *p);                       /* 52BB6: nonzero when the player is at the bench (assbenchwait test ax,ax) */

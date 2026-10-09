@@ -13,6 +13,7 @@ OldXpos    equ 74h   ; size d; 93G $1C; aligned 2/3 accesses in puckfaceoff2, up
 Zpos       equ 08h   ; size d; 93G $18; defaultsprites2 writes the integer word at +0Ah from the 94G .list zcord column, as it writes Xpos+2 / Ypos+2 from xcord / ycord
 Xvel       equ 0Ch   ; size w; 93G $28; seed: SetSPA/asseben hand alignment
 Yvel       equ 0Eh   ; size w; 93G $2A; seed: SetSPA/asseben hand alignment
+Zvel       equ 10h   ; size w; 93G $2C; puckbody clears the puck's word at +10h where 93G puckbody does clr.w Zvel(a3)
 position   equ 1Ah   ; size w; 93G $34; aligned 9/13 accesses in assbench, assdefd, assdefo, assnearest, asswingd, asswingo
 assnum     equ 1Ch   ; size w; 93G $36; seed: SetSPA/asseben hand alignment
 temp1      equ 26h   ; size w; 93G $40; seed: SetSPA/asseben hand alignment
@@ -89,3 +90,8 @@ tmpass     equ 26h   ; tsize w; passes: DumpStatsLog 'pass' column
 tmpasscomp equ 28h   ; tsize w; completed passes: DumpStatsLog 'passcomp' column
 tmplstats  equ 0E6h  ; tsize d; pointer to skater stats, 10h bytes per roster player 0-18h (words g, a, pen, +/-, ppg, shg, eng, sht): DumpStatsLog
 tmglstats  equ 0EAh  ; tsize d; pointer to goalie stats, 6 bytes per goalie (roster 19h-1Bh; words min, sht, sav): DumpStatsLog
+tmfowon    equ 12h   ; tsize w; 93G/94G $E (faceoffs won): puckglue adds 1 when the player takes the puck off a faceoff (sflags3 bit 4)
+tmfowonoz  equ 14h   ; tsize w; PC only: puckglue adds 1 too when that faceoff was in the attacking end (puck y beyond 4Eh toward the team's net side by pflags bit 7)
+tmpsplayer equ 30h   ; tsize w; PC only: puckglue ends a live penalty shot when the player with this roster index (pnum) takes the puck
+tmast1     equ 33h   ; tsize b; 93G/94G $1A (assist 1, st): puckglue sets it to -1 in the other team's structure
+tmast2     equ 35h   ; tsize b; 93G/94G $1C (assist 2, st): puckglue sets it to -1 in the other team's structure

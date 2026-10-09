@@ -4797,6 +4797,10 @@ pop esi	; 56D02
 pop ecx	; 56D03
 pop ebx	; 56D04
 ret	; 56D05
+; C: src/c/040_53294_engine_physics_ai/puckbody.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/puckbody.inc"
+%else
 puckbody:
 push dword 14h	; 56D06
 call __CHK	; 56D0B
@@ -4905,6 +4909,7 @@ pop esi	; 56E4E
 pop ecx	; 56E4F
 pop ebx	; 56E50
 ret	; 56E51
+%endif ; C
 ; puckIChk: 93G logic93_5 puckIChk (icing). iflags bit 2 ifok, bit 0 ifcgl, bit 1 ifdir; loose puck past the goal
 ;   line: |puckx| > 2Ch sets ifcgl (icing), else clears ifok.
 puckIChk:

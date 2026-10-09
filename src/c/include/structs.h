@@ -11,7 +11,7 @@ typedef struct Player {
     int Zpos;                    /* 008h 93G $18; defaultsprites2 writes the integer word at +0Ah from the 94G .list zcord column, as it writes Xpos+2 / Ypos+2 from xcord / ycord */
     short Xvel;                  /* 00Ch 93G $28; seed: SetSPA/asseben hand alignment */
     short Yvel;                  /* 00Eh 93G $2A; seed: SetSPA/asseben hand alignment */
-    unsigned char pad_10[0x2];
+    short Zvel;                  /* 010h 93G $2C; puckbody clears the puck's word at +10h where 93G puckbody does clr.w Zvel(a3) */
     short frame;                 /* 012h 93G $6 (alice frame number); GetHot reads word [x+12h] as the hot spot frame (94G GetHot frame(a0)); assdopen sets it to -1 (94G clr.w frame(a3)) */
     short impactp;               /* 014h 93G $2E; holdplayer: Acheck target SortCords[impactp] when impact != 0 (dword [x+12h] / sar 10h), as 93G move.w impactp(a3),d0 / asl #7 */
     unsigned char pad_16[0x2];
@@ -76,6 +76,7 @@ typedef struct Player {
 #define OFS_Player_Zpos 0x08
 #define OFS_Player_Xvel 0x0C
 #define OFS_Player_Yvel 0x0E
+#define OFS_Player_Zvel 0x10
 #define OFS_Player_frame 0x12
 #define OFS_Player_impactp 0x14
 #define OFS_Player_impact 0x18
@@ -137,12 +138,19 @@ typedef struct Team {
     short tmpenmin;              /* 00Ch penalty minutes: DumpStatsLog 'penmin' column */
     short tmATOP;                /* 00Eh 93G $A (attack time of possession stat): chkatop adds 1 once a second for the team with the puck past the blue line */
     short tmscore;               /* 010h 93G $C; Goal adds 1 (inc word [esi+10h]); PeriodOver/clockcont_0 compare hmscore (DF624) with awscore (DF724) */
-    unsigned char pad_12[0x14];
+    short tmfowon;               /* 012h 93G/94G $E (faceoffs won): puckglue adds 1 when the player takes the puck off a faceoff (sflags3 bit 4) */
+    short tmfowonoz;             /* 014h PC only: puckglue adds 1 too when that faceoff was in the attacking end (puck y beyond 4Eh toward the team's net side by pflags bit 7) */
+    unsigned char pad_16[0x10];
     short tmpass;                /* 026h passes: DumpStatsLog 'pass' column */
     short tmpasscomp;            /* 028h completed passes: DumpStatsLog 'passcomp' column */
     short tmline;                /* 02Ah 93G $16; getlchoice adds tmline*4 to the choice index (93G adds tmline*3); lcfound/lcselect store the new line, then setpersonel */
     short tmlcnt;                /* 02Ch 93G none; lcfound/lcselect: when the new line is < 4 it is incremented and wrapped at 3 (even-strength line rotation count) */
-    unsigned char pad_2E[0x8];
+    unsigned char pad_2E[0x2];
+    short tmpsplayer;            /* 030h PC only: puckglue ends a live penalty shot when the player with this roster index (pnum) takes the puck */
+    unsigned char pad_32[0x1];
+    signed char tmast1;          /* 033h 93G/94G $1A (assist 1, st): puckglue sets it to -1 in the other team's structure */
+    unsigned char pad_34[0x1];
+    signed char tmast2;          /* 035h 93G/94G $1C (assist 2, st): puckglue sets it to -1 in the other team's structure */
     short tmap;                  /* 036h 93G $24; getlchoice/lcselect: other tmap - own tmap selects the even / short-handed / power-play choices (93G 'number I'm short') */
     short tmgoalie;              /* 038h 93G $26 (goalie 1/2/none): releasepl picks the priolist row by its sign (93G tst.w tmgoalie(a2) / bpl) */
     unsigned char pad_3A[0xA];
@@ -169,10 +177,15 @@ typedef struct Team {
 #define OFS_Team_tmpenmin 0x0C
 #define OFS_Team_tmATOP 0x0E
 #define OFS_Team_tmscore 0x10
+#define OFS_Team_tmfowon 0x12
+#define OFS_Team_tmfowonoz 0x14
 #define OFS_Team_tmpass 0x26
 #define OFS_Team_tmpasscomp 0x28
 #define OFS_Team_tmline 0x2A
 #define OFS_Team_tmlcnt 0x2C
+#define OFS_Team_tmpsplayer 0x30
+#define OFS_Team_tmast1 0x33
+#define OFS_Team_tmast2 0x35
 #define OFS_Team_tmap 0x36
 #define OFS_Team_tmgoalie 0x38
 #define OFS_Team_tmflags 0x44
