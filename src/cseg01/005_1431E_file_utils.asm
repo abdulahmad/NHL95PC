@@ -896,6 +896,10 @@ pop ecx	; 14C1F
 pop ebx	; 14C20
 ret	; 14C21
 %endif ; C
+; C: src/c/005_1431E_file_utils/PanelAddPenalty.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/PanelAddPenalty.inc"
+%else
 PanelAddPenalty:
 push dword 10h	; 14C22
 call __CHK	; 14C27
@@ -951,6 +955,7 @@ pop edi	; 14C9C
 pop esi	; 14C9D
 pop ecx	; 14C9E
 ret	; 14C9F
+%endif ; C
 ; C: src/c/005_1431E_file_utils/PanelRemovePenalty.c
 %ifdef CBUILD
 %include "c/005_1431E_file_utils/PanelRemovePenalty.inc"

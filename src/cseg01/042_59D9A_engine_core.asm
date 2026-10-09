@@ -5440,6 +5440,10 @@ cmp di, byte 2	; 5E00F
 jl short ResetBench.1	; 5E013
 jmp near calcpuckcross_ret5	; 5E015
 %endif ; C
+; C: src/c/042_59D9A_engine_core/resetplstuff.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/resetplstuff.inc"
+%else
 resetplstuff:
 push dword 14h	; 5E01A
 call __CHK	; 5E01F
@@ -5482,6 +5486,7 @@ pop edx	; 5E082
 pop ecx	; 5E083
 pop ebx	; 5E084
 ret	; 5E085
+%endif ; C
 ; StartGame: 93G hockey93_01 StartGame role. cleargamevars, clearteams, gsp = 0, restoreteams, IntermissionStart.
 ; C: src/c/042_59D9A_engine_core/StartGame.c
 %ifdef CBUILD

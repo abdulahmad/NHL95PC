@@ -502,6 +502,10 @@ je short WaitDigiSample.1	; 59A0E
 .x:
 ret	; 59A10
 %endif ; C
+; C: src/c/041_59493_engine_sound_iface/PlayCrowdSample.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PlayCrowdSample.inc"
+%else
 PlayCrowdSample:
 push dword 0Ch	; 59A11
 call __CHK	; 59A16
@@ -544,6 +548,7 @@ pop edx	; 59A7B
 pop ebx	; 59A7C
 PlayCrowdSample_ret:
 ret	; 59A7D
+%endif ; C
 PaOneMinuteLeft:
 push dword 4	; 59A7E
 call __CHK	; 59A83

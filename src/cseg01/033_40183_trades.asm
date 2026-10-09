@@ -1345,6 +1345,10 @@ call __CHK	; 4133C
 xor eax, eax	; 41341
 ret	; 41343
 %endif ; C
+; C: src/c/033_40183_trades/GetLeagueId.c
+%ifdef CBUILD
+%include "c/033_40183_trades/GetLeagueId.inc"
+%else
 GetLeagueId:
 push dword 38h	; 41344
 call __CHK	; 41349
@@ -1391,6 +1395,7 @@ pop esi	; 413C9
 pop ecx	; 413CA
 pop ebx	; 413CB
 ret	; 413CC
+%endif ; C
 WriteLeagueInfo:
 push dword 34h	; 413CD
 call __CHK	; 413D2

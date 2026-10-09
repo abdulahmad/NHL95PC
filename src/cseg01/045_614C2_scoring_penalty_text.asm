@@ -2041,6 +2041,10 @@ add ax, word [PerTimeTotal]	; 62CEA
 sub ax, word [gameclock]	; 62CF1
 ret	; 62CF8
 %endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/AddPenalty.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/AddPenalty.inc"
+%else
 AddPenalty:
 push dword 8	; 62CF9
 call __CHK	; 62CFE
@@ -2083,6 +2087,7 @@ call AddPenalty2	; 62D79
 .x:
 pop ebx	; 62D7E
 ret	; 62D7F
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/AddPenalty2.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/AddPenalty2.inc"

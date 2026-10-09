@@ -345,7 +345,7 @@ void newcheck(short kind);  /* 58084 */
 int FreeUnrequestedSamples(void);  /* 84036 */            
 int IsSampleRequested(char *name);
 int a2offsides(Player *p);  /* 4DCDD */                   
-void AddPenalty(Player *p, int kind);
+void AddPenalty(Player *p, short pen);
 void DrawSoundCardDlg(void);  /* 8261C */                 
 int __cdecl sub_8E83C(char *path, int flags);  /* graphics library: load bank */
 void __cdecl sub_91284(int art, int x, int y);  /* graphics library: draw art */
@@ -648,5 +648,15 @@ void MusicChanReset(void);  /* 837A8 */
 int SpeechBusy(void);  /* 836E4 */
 int IsSampleRequested(char *name);  /* 83F61 */
 int OpenAnnouncerBank(void);  /* 85507 */
+void ShutdownSpeech(void);  /* 8363C */
+int ReadBE24(int fh);  /* 837FB */
+void PlayCrowdSample(int n);  /* 59A11 */
+int StarEligible(int side, int pl);  /* 487D9 */
+void resetplstuff(void);  /* 5E01A */
+int CanRemovePlayer(Player *p);  /* 65B83 */
+void lcfound(Player *p);  /* 50975 */
+int POSeriesScore(unsigned char *s, int *hw, int *aw, int *home, int *away);  /* 877E9 */
+int GetLeagueId(char *dir, void *out);  /* 41344 */
+void PanelAddPenalty(short away, short pl, short t);  /* 14C22 */
 
 #endif

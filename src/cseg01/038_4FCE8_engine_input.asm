@@ -1139,6 +1139,10 @@ pop esi	; 50971
 pop edx	; 50972
 pop ecx	; 50973
 ret	; 50974
+; C: src/c/038_4FCE8_engine_input/lcfound.c
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/lcfound.inc"
+%else
 lcfound:
 push dword 14h	; 50975
 call __CHK	; 5097A
@@ -1188,6 +1192,7 @@ pop edx	; 50A01
 pop ecx	; 50A02
 pop ebx	; 50A03
 ret	; 50A04
+%endif ; C
 ; Readjoy1 / Readjoy2 = 93G middle93_1 Readjoy1/2, reading byte 0 / 1 of joyrec instead of the pad.
 Readjoy1:
 push dword 10h	; 50A05

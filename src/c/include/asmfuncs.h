@@ -47,7 +47,6 @@ extern void ReadGSummaryRec(); /* 147FF */
 extern void CheckGameDiskSpace(); /* 148A5 */
 extern void DrawPanelScore(); /* 14A20 */
 extern void DrawPanelLine_x(); /* 14BE9 */
-extern void PanelAddPenalty(); /* 14C22 */
 extern void UpdateHudPanel(); /* 14CF1 */
 extern void UpdateHudPanel_x(); /* 14F2A */
 extern void DrawPanelClock(); /* 14F31 */
@@ -492,7 +491,6 @@ extern void AddHumanTeam_exit(); /* 40C1F */
 extern void RemoveHumanTeam(); /* 40C29 */
 extern void CheckMasterPassword(); /* 40F4E */
 extern void BuildLeagueList(); /* 411C8 */
-extern void GetLeagueId(); /* 41344 */
 extern void WriteLeagueInfo(); /* 413CD */
 extern void CopyHumanTeamDBs(); /* 41516 */
 extern void SaveLeagueGameRef(); /* 41978 */
@@ -530,7 +528,6 @@ extern void PreGameIntro_popx(); /* 48308 */
 extern void ThreeStarsLoop(); /* 48333 */
 extern void ThreeStarsLoop_tick(); /* 4836E */
 extern void assintroline(); /* 484DA */
-extern void StarEligible(); /* 487D9 */
 extern void StarCompare(); /* 4883B */
 extern void PickThreeStars(); /* 48AC8 */
 extern void StartThreeStars(); /* 48F0B */
@@ -583,7 +580,6 @@ extern void lineinput(); /* 4FD8E */
 extern void CanBlockShot_ret6(); /* 50336 */
 extern void CanBlockShot_ret5(); /* 50337 */
 extern void doinput(); /* 504DA */
-extern void lcfound(); /* 50975 */
 extern void Readjoy1(); /* 50A05 */
 extern void Readjoy_tail(); /* 50A59 */
 extern void Readjoy2(); /* 50A84 */
@@ -641,7 +637,6 @@ extern void ReturnGoalies(); /* 59352 */
 extern void sndcb_addesp8_x(); /* 594AC */
 extern void SndLoadFile2(); /* 594B2 */
 extern void CrowdNoiseUpdate(); /* 594CD */
-extern void PlayCrowdSample(); /* 59A11 */
 extern void PlayCrowdSample_ret(); /* 59A7D */
 extern void PaOneMinuteLeft(); /* 59A7E */
 extern void PaGoal(); /* 59AD0 */
@@ -674,7 +669,6 @@ extern void updateanim(); /* 5CAEF */
 extern void DrawRinkOverlays(); /* 5CE12 */
 extern void SprSortVert(); /* 5DD6B */
 extern void SprSort(); /* 5DD7C */
-extern void resetplstuff(); /* 5E01A */
 extern void EvadePlayers_popebp(); /* 5E7F7 */
 extern void EvadePlayers_popedi(); /* 5E7F8 */
 extern void EvadePC(); /* 5E7FE */
@@ -720,7 +714,6 @@ extern void PickGoalie(); /* 652D6 */
 extern void PickExtraSkater(); /* 653BE */
 extern void RefillLineSlots(); /* 6552E */
 extern void RemoveFromLines(); /* 655CC */
-extern void CanRemovePlayer(); /* 65B83 */
 extern void DitherRect(); /* 65CA8 */
 extern void checkwindow(); /* 65D01 */
 extern void checkwindow_popebp(); /* 66490 */
@@ -1161,11 +1154,9 @@ extern void SoundCardDlg_epilogue(); /* 82D53 */
 extern void SoundCardDlgLoop_x(); /* 82D5A */
 extern void SetSoundDevice(); /* 82D7A */
 extern void SpeechTimerTick(); /* 832BC */
-extern void ShutdownSpeech(); /* 8363C */
 extern void ShutdownSpeech_ret6(); /* 836C3 */
 extern void ShutdownSpeech_ret5(); /* 836C4 */
 extern void MusicChanReset2(); /* 8373E */
-extern void ReadBE24(); /* 837FB */
 extern void ReadBE24_ret(); /* 83857 */
 extern void OpenSpeechBank_ret(); /* 83BC1 */
 extern void ReadSpeechSample(); /* 83BF3 */
@@ -1209,7 +1200,6 @@ extern void POCreateSchedule(); /* 8721F */
 extern void POCreateSchedule_x(); /* 8751A */
 extern void POInitSchedule(); /* 875A3 */
 extern void SeriesWinner(); /* 87760 */
-extern void POSeriesScore(); /* 877E9 */
 extern void POSeedRound2(); /* 87863 */
 extern void POSeedRound2_x30(); /* 87B29 */
 extern void POSeedRound2_x(); /* 87B2C */

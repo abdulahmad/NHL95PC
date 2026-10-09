@@ -158,6 +158,10 @@ pop edi	; 83639
 pop esi	; 8363A
 ret	; 8363B
 %endif ; C
+; C: src/c/061_83459_speech/ShutdownSpeech.c
+%ifdef CBUILD
+%include "c/061_83459_speech/ShutdownSpeech.inc"
+%else
 ShutdownSpeech:
 push dword 20h	; 8363C
 call __CHK	; 83641
@@ -206,6 +210,7 @@ pop edx	; 836C6
 pop ecx	; 836C7
 pop ebx	; 836C8
 ret	; 836C9
+%endif ; C
 ; C: src/c/061_83459_speech/SpeechIsInit.c
 %ifdef CBUILD
 %include "c/061_83459_speech/SpeechIsInit.inc"
@@ -342,6 +347,10 @@ or eax, edx	; 837F7
 pop edx	; 837F9
 ret	; 837FA
 %endif ; C
+; C: src/c/061_83459_speech/ReadBE24.c
+%ifdef CBUILD
+%include "c/061_83459_speech/ReadBE24.inc"
+%else
 ReadBE24:
 push dword 20h	; 837FB
 call __CHK	; 83800
@@ -382,6 +391,7 @@ pop edx	; 8385B
 pop ecx	; 8385C
 pop ebx	; 8385D
 ret	; 8385E
+%endif ; C
 ; C: src/c/061_83459_speech/ReadCString.c
 %ifdef CBUILD
 %include "c/061_83459_speech/ReadCString.inc"
