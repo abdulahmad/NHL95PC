@@ -61,7 +61,10 @@ def main():
         if ad is None:
             ad = next((x for x, n in names().items() if n == key), None)
             if ad is None: sys.exit('unknown name %s' % key)
-        if ad not in fn: sys.exit('%05X: not a Hex-Rays function start' % ad)
+        if ad not in fn:
+            prev = max((x for x in fn if x < ad), default=None)
+            sys.exit('%05X: not a Hex-Rays function start (IDA has no function there; the previous one starts at %05X %s)'
+                     % (ad, prev or 0, names().get(prev, '?')))
         t = '\n'.join(fn[ad])
         print(t if a.raw else rename(t))
     else: sys.exit(__doc__)
