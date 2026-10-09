@@ -2866,6 +2866,10 @@ mov edi, eax	; 4A7FE
 neg edi	; 4A800
 mov word [regd1], di	; 4A802
 jmp near asswingo_evade	; 4A809
+; C: src/c/037_4842A_engine_player_logic/StopIfFree.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/StopIfFree.inc"
+%else
 StopIfFree:
 push dword 8	; 4A80E
 call __CHK	; 4A813
@@ -2880,6 +2884,7 @@ call doplayeracc	; 4A82B
 .x:
 pop edx	; 4A830
 ret	; 4A831
+%endif ; C
 assstanley:
 push dword 10h	; 4A832
 call __CHK	; 4A837
@@ -6532,6 +6537,10 @@ test byte [byte eax+pflags], 20h	; 4D4FA
 jne short assshoot_ret	; 4D4FE
 test byte [gmode2], 1	; 4D500
 jne short assshoot_ret	; 4D507
+; C: src/c/037_4842A_engine_player_logic/assexit.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assexit.inc"
+%else
 assexit:
 push dword 8	; 4D509
 call __CHK	; 4D50E
@@ -6544,6 +6553,7 @@ mov word [byte eax+01Ch], dx	; 4D51E
 or byte [byte eax+044h], 2	; 4D522
 pop edx	; 4D526
 ret	; 4D527
+%endif ; C
 assfaceoffp1:
 push dword 10h	; 4D528
 call __CHK	; 4D52D
@@ -6845,6 +6855,10 @@ call puckunflip	; 4D8B6
 mov eax, ebx	; 4D8BB
 call PuckCheckColl	; 4D8BD
 jmp near ass_popx	; 4D8C2
+; C: src/c/037_4842A_engine_player_logic/pucknorm.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/pucknorm.inc"
+%else
 pucknorm:
 push dword 8	; 4D8C7
 call __CHK	; 4D8CC
@@ -6863,6 +6877,11 @@ mov dword [psendcount], edx	; 4D8F0
 call pucknorm_body	; 4D8F6
 pop edx	; 4D8FB
 ret	; 4D8FC
+%endif ; C
+; C: src/c/037_4842A_engine_player_logic/pucknothing.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/pucknothing.inc"
+%else
 pucknothing:
 push dword 4	; 4D8FD
 call __CHK	; 4D902
@@ -6882,6 +6901,7 @@ mov word [byte eax+03Ah], 0	; 4D92A
 mov word [byte eax+03Ch], 0FFFFh	; 4D930
 pop edx	; 4D936
 ret	; 4D937
+%endif ; C
 RequestLineChange:
 push dword 18h	; 4D938
 call __CHK	; 4D93D

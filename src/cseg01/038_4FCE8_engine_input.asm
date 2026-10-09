@@ -52,6 +52,10 @@ pop edx	; 4FD43
 pop ecx	; 4FD44
 pop ebx	; 4FD45
 ret	; 4FD46
+; C: src/c/038_4FCE8_engine_input/joyq_flush.c
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/joyq_flush.inc"
+%else
 joyq_flush:
 push dword 8	; 4FD47
 call __CHK	; 4FD4C
@@ -61,6 +65,11 @@ mov dword [joyqcount], edx	; 4FD54
 mov dword [joyqtick], edx	; 4FD5A
 pop edx	; 4FD60
 ret	; 4FD61
+%endif ; C
+; C: src/c/038_4FCE8_engine_input/joyq_peek.c
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/joyq_peek.inc"
+%else
 joyq_peek:
 push dword 8	; 4FD62
 call __CHK	; 4FD67
@@ -78,6 +87,7 @@ sub eax, edx	; 4FD85
 add eax, joyqueue	; 4FD87
 pop edx	; 4FD8C
 ret	; 4FD8D
+%endif ; C
 ; lineinput: 93G lineinput role.  The PC line change box is one-button: the highlighted choice
 ; (lcsel / lcline) cycles every 60 frames (lctimer) and blinks every 12 (lcblink); a press takes it
 ; through lcfound.  Otherwise the player skates (doplayeracc) as in 93G.

@@ -3443,6 +3443,10 @@ mov dword [spritedrawcount], edi	; 66DC7
 call sub_6AB7C	; 66DCD
 add esp, byte 30h	; 66DD2
 jmp near checkwindow_popebp	; 66DD5
+; C: src/c/046_644A8_engine_display/CloseTextOverlay.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/CloseTextOverlay.inc"
+%else
 CloseTextOverlay:
 push dword 8	; 66DDA
 call __CHK	; 66DDF
@@ -3457,6 +3461,7 @@ xor ebx, ebx	; 66DFB
 mov word [ovltimer], bx	; 66DFD
 pop ebx	; 66E04
 ret	; 66E05
+%endif ; C
 UpdateTextOverlay:
 push dword 1Ch	; 66E06
 call __CHK	; 66E0B
@@ -4028,12 +4033,21 @@ pop edi	; 67560
 pop esi	; 67561
 pop ecx	; 67562
 ret	; 67563
+; C: src/c/046_644A8_engine_display/ReplayRecordReset.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/ReplayRecordReset.inc"
+%else
 ReplayRecordReset:
 push dword 4	; 67564
 call __CHK	; 67569
 mov word [replaytick], 1	; 6756E
 mov word [replaysfx], 0FFFFh	; 67577
 ret	; 67580
+%endif ; C
+; C: src/c/046_644A8_engine_display/ReplayFirstFrame.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/ReplayFirstFrame.inc"
+%else
 ReplayFirstFrame:
 push dword 4	; 67581
 call __CHK	; 67586
@@ -4044,6 +4058,11 @@ ret	; 67599
 .1:
 mov eax, dword [recbpr]	; 6759A
 ret	; 6759F
+%endif ; C
+; C: src/c/046_644A8_engine_display/ReplayPrevFrame.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/ReplayPrevFrame.inc"
+%else
 ReplayPrevFrame:
 push dword 8	; 675A0
 call __CHK	; 675A5
@@ -4065,6 +4084,7 @@ ret	; 675CE
 sub eax, 80h	; 675CF
 pop edx	; 675D4
 ret	; 675D5
+%endif ; C
 updatereplay:
 push dword 1Ch	; 675D6
 call __CHK	; 675DB

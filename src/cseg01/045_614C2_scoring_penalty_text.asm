@@ -3116,6 +3116,10 @@ call CheckAndReleasePlayer	; 63B4A
 .10:
 add esp, byte 4	; 63B4F
 jmp near InProgress_popx	; 63B52
+; C: src/c/045_614C2_scoring_penalty_text/updatePPTeamTime.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/updatePPTeamTime.inc"
+%else
 updatePPTeamTime:
 push dword 4	; 63B57
 call __CHK	; 63B5C
@@ -3132,6 +3136,7 @@ mov eax, awtmstruct	; 63B7B
 inc word [byte eax+08h]	; 63B80
 .x:
 ret	; 63B84
+%endif ; C
 updatepentime:
 push dword 8	; 63B85
 call __CHK	; 63B8A
@@ -3264,6 +3269,10 @@ pop edx	; 63D38
 pop ecx	; 63D39
 pop ebx	; 63D3A
 ret	; 63D3B
+; C: src/c/045_614C2_scoring_penalty_text/ClearPenaltyBuffer.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/ClearPenaltyBuffer.inc"
+%else
 ClearPenaltyBuffer:
 push dword 0Ch	; 63D3C
 call __CHK	; 63D41
@@ -3283,6 +3292,7 @@ jl short ClearPenaltyBuffer.1	; 63D64
 pop edx	; 63D66
 pop ebx	; 63D67
 ret	; 63D68
+%endif ; C
 PenGoalStuff:
 push dword 20h	; 63D69
 call __CHK	; 63D6E

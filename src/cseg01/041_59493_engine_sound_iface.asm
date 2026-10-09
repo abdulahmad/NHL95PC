@@ -331,6 +331,10 @@ pop edx	; 5985F
 pop ecx	; 59860
 pop ebx	; 59861
 ret	; 59862
+; C: src/c/041_59493_engine_sound_iface/CrowdNoiseReset.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/CrowdNoiseReset.inc"
+%else
 CrowdNoiseReset:
 push dword 8	; 59863
 call __CHK	; 59868
@@ -341,6 +345,7 @@ mov dword [crowdvol8], edx	; 59876
 mov dword [crowdvol7], edx	; 5987C
 pop edx	; 59882
 ret	; 59883
+%endif ; C
 sfx:
 push dword 0Ch	; 59884
 call __CHK	; 59889
@@ -460,6 +465,10 @@ mov dword [digihandle], eax	; 599E6
 pop edx	; 599EB
 pop ebx	; 599EC
 ret	; 599ED
+; C: src/c/041_59493_engine_sound_iface/WaitDigiSample.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/WaitDigiSample.inc"
+%else
 WaitDigiSample:
 push dword 4	; 599EE
 call __CHK	; 599F3
@@ -472,6 +481,7 @@ test ax, ax	; 59A0B
 je short WaitDigiSample.1	; 59A0E
 .x:
 ret	; 59A10
+%endif ; C
 PlayCrowdSample:
 push dword 0Ch	; 59A11
 call __CHK	; 59A16
@@ -525,6 +535,10 @@ test byte [gmode], 10h	; 59A9A
 jne short PlayCrowdSample_ret	; 59AA1
 call MusicChanReset	; 59AA3
 jmp near SayOneMinuteLeft	; 59AA8
+; C: src/c/041_59493_engine_sound_iface/PaSpeechBusy.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PaSpeechBusy.inc"
+%else
 PaSpeechBusy:
 push dword 4	; 59AAD
 call __CHK	; 59AB2
@@ -535,6 +549,7 @@ jne near SpeechBusy	; 59AC7
 .1:
 xor eax, eax	; 59ACD
 ret	; 59ACF
+%endif ; C
 PaGoal:
 push dword 10h	; 59AD0
 call __CHK	; 59AD5
@@ -556,6 +571,10 @@ call SayGoal	; 59B05
 pop edi	; 59B0A
 pop esi	; 59B0B
 ret 4	; 59B0C
+; C: src/c/041_59493_engine_sound_iface/PaPlayerNumber.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PaPlayerNumber.inc"
+%else
 PaPlayerNumber:
 push dword 8	; 59B0F
 call __CHK	; 59B14
@@ -571,6 +590,7 @@ call SayPlayerNumber	; 59B35
 .x:
 pop ecx	; 59B3A
 ret	; 59B3B
+%endif ; C
 PaPenalty:
 push dword 24h	; 59B3C
 call __CHK	; 59B41
@@ -731,6 +751,10 @@ call SayPlayoffTonight	; 59D4B
 .x:
 pop esi	; 59D50
 ret 4	; 59D51
+; C: src/c/041_59493_engine_sound_iface/PaOpenBank.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PaOpenBank.inc"
+%else
 PaOpenBank:
 push dword 4	; 59D54
 call __CHK	; 59D59
@@ -742,6 +766,7 @@ test eax, eax	; 59D6C
 je short PaOpenBank.1	; 59D6E
 .x:
 ret	; 59D70
+%endif ; C
 PaPreloadClips:
 push dword 0Ch	; 59D71
 call __CHK	; 59D76

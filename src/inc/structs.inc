@@ -56,6 +56,7 @@ tmlines    equ 0DAh  ; tsize d; 93G none; pointer to the team's line table (clea
 tmroster   equ 0EEh  ; tsize d; 93G none; pointer to the team roster, 27h bytes per player (byte 0 = status: 3 bench, 4 on ice); clearteams: hmroster / awroster
 tmsort     equ 0F6h  ; tsize d; 93G $22; pointer to the team's first SortCords entry (home SortCords, away SortCords+300h); forcepldata/resetplstuff walk 6 entries from it
 tmflags    equ 44h   ; tsize b; 93G $30; lineinput: bit 0 'start lc mode' cleared before opening the box; lcfound/lcselect clear bit 1 (93G bclr #1,tmflags(a2))
+tmpptime   equ 08h   ; tsize w; 94G $352 (power-play seconds): updatePPTeamTime adds 1 for the team on the power play (gmode2 bits 5/6)
 tmATOP     equ 0Eh   ; tsize w; 93G $A (attack time of possession stat): chkatop adds 1 once a second for the team with the puck past the blue line
 tmgoalie   equ 38h   ; tsize w; 93G $26 (goalie 1/2/none): releasepl picks the priolist row by its sign (93G tst.w tmgoalie(a2) / bpl)
 tmpbox     equ 0B6h  ; tsize b array; 93G $9A (penalty box list: roster indexes, ends with a negative byte): ProcessPenaltyList walks it and shifts it down

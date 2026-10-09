@@ -50,6 +50,10 @@ global clearteams, restoreteams, GetPeriodTime, ResetClock, ClearSortCords, defa
 global StartPer, RestBench, updatecrowdf, periodicevents, LockScroll, cleargamevars, DrawRinkOverlays, setupice
 global clockcont_0, ClockTick, SprSortVert, SprSort, GameOver, SetExitGame, SetupTeamForIntermission, Intermission
 global IntermissionStart, PeriodOver, StartGame, forceteams, updateanim, updateplayers
+; C: src/c/042_59D9A_engine_core/SetSPA.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/SetSPA.inc"
+%else
 SetSPA:
 push dword 4	; 59D9A
 call __CHK	; 59D9F
@@ -60,6 +64,7 @@ mov word [byte eax+SPA], dx	; 59DB0
 mov word [byte eax+SPAcnt], 0FFFFh	; 59DB4
 .x:
 ret	; 59DBA
+%endif ; C
 SprSort_loop:
 lea esi, [byte eax+02h]	; 59DBB
 test byte [sflags], 80h	; 59DBE
@@ -2334,6 +2339,10 @@ pop edx	; 5B9CD
 pop ecx	; 5B9CE
 pop ebx	; 5B9CF
 ret	; 5B9D0
+; C: src/c/042_59D9A_engine_core/GetPeriodTime.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/GetPeriodTime.inc"
+%else
 GetPeriodTime:
 push dword 4	; 5B9D1
 call __CHK	; 5B9D6
@@ -2348,6 +2357,7 @@ jle short .x	; 5B9FE
 mov ax, word [PerTimeTab]	; 5BA00
 .x:
 ret	; 5BA06
+%endif ; C
 ; ResetClock: 93G hockey93_01 ResetClock. gameclock = PerTimeTotal = GetPeriodTime, clockticks = 0,
 ;   periodendtime = gameclock - random(length/2), clock stopped (gmode bit 0).
 ResetClock:
@@ -2369,6 +2379,10 @@ mov word [periodendtime], dx	; 5BA3E
 or byte [gmode], 1	; 5BA45
 pop edx	; 5BA4C
 ret	; 5BA4D
+; C: src/c/042_59D9A_engine_core/ClearSortCords.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/ClearSortCords.inc"
+%else
 ClearSortCords:
 push dword 10h	; 5BA4E
 call __CHK	; 5BA53
@@ -2399,6 +2413,7 @@ pop edx	; 5BA85
 pop ecx	; 5BA86
 pop ebx	; 5BA87
 ret	; 5BA88
+%endif ; C
 defaultsprites2:
 push dword 18h	; 5BA89
 call __CHK	; 5BA8E
@@ -3844,6 +3859,10 @@ call sfx	; 5CD17
 .17:
 mov byte [byte ebx+046h], 4	; 5CD1C
 jmp near calcpuckcross_ret5	; 5CD20
+; C: src/c/042_59D9A_engine_core/LockScroll.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/LockScroll.inc"
+%else
 LockScroll:
 push dword 4	; 5CD25
 call __CHK	; 5CD2A
@@ -3853,6 +3872,7 @@ mov ax, word [camy]	; 5CD3B
 mov word [yc1], ax	; 5CD41
 or byte [sflags], 40h	; 5CD47
 ret	; 5CD4E
+%endif ; C
 cleargamevars:
 push dword 0Ch	; 5CD4F
 call __CHK	; 5CD54
@@ -5124,6 +5144,10 @@ mov eax, Ylist	; 5DD8D
 mov ecx, SortCords	; 5DD92
 xor ebx, ebx	; 5DD97
 jmp near SprSort_test	; 5DD99
+; C: src/c/042_59D9A_engine_core/GameOver.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/GameOver.inc"
+%else
 GameOver:
 push dword 4	; 5DD9E
 call __CHK	; 5DDA3
@@ -5132,6 +5156,11 @@ jne short .x	; 5DDB0
 mov word [gameover], 1	; 5DDB2
 .x:
 ret	; 5DDBB
+%endif ; C
+; C: src/c/042_59D9A_engine_core/SetExitGame.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/SetExitGame.inc"
+%else
 SetExitGame:
 push dword 4	; 5DDBC
 call __CHK	; 5DDC1
@@ -5140,6 +5169,7 @@ jne short .x	; 5DDCE
 mov word [exitgame], 1	; 5DDD0
 .x:
 ret	; 5DDD9
+%endif ; C
 SetupTeamForIntermission:
 push dword 10h	; 5DDDA
 call __CHK	; 5DDDF
@@ -5177,6 +5207,10 @@ pop edx	; 5DE3E
 pop ecx	; 5DE3F
 pop ebx	; 5DE40
 ret	; 5DE41
+; C: src/c/042_59D9A_engine_core/Intermission.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/Intermission.inc"
+%else
 Intermission:
 push dword 0Ch	; 5DE42
 call __CHK	; 5DE47
@@ -5197,6 +5231,7 @@ jl short Intermission.1	; 5DE6B
 pop edx	; 5DE6D
 pop ebx	; 5DE6E
 ret	; 5DE6F
+%endif ; C
 ; IntermissionStart: 93G hockey93_06 IntermissionStart. gsp 4 -> GameOver; else Intermission, StartPer, SetPenaltyStrength.
 IntermissionStart:
 push dword 4	; 5DE70
@@ -5368,6 +5403,10 @@ pop ecx	; 5E083
 pop ebx	; 5E084
 ret	; 5E085
 ; StartGame: 93G hockey93_01 StartGame role. cleargamevars, clearteams, gsp = 0, restoreteams, IntermissionStart.
+; C: src/c/042_59D9A_engine_core/StartGame.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/StartGame.inc"
+%else
 StartGame:
 push dword 8	; 5E086
 call __CHK	; 5E08B
@@ -5380,6 +5419,11 @@ call restoreteams	; 5E0A4
 call IntermissionStart	; 5E0A9
 pop edx	; 5E0AE
 ret	; 5E0AF
+%endif ; C
+; C: src/c/042_59D9A_engine_core/forceteams.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/forceteams.inc"
+%else
 forceteams:
 push dword 4	; 5E0B0
 call __CHK	; 5E0B5
@@ -5442,3 +5486,4 @@ pop edx	; 5E169
 pop ecx	; 5E16A
 pop ebx	; 5E16B
 ret	; 5E16C
+%endif ; C

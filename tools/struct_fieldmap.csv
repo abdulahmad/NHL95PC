@@ -43,6 +43,7 @@ tmlines,none (team),DAh (team),"clearteams stores the line table pointers unk_DC
 tmroster,none (team),EEh (team),"clearteams stores byte_DB3A8 / byte_DB7EC; setplayer/ResetBench/forcepldata index it with player*27h"
 tmsort,$22 (team),F6h (team),"clearteams stores SortCords / unk_DFB1C (+300h); forcepldata walks 6 entries from it, as 93G movea.w tmsort(a2),a3"
 tmpde,$32 (team),46h (team),"burst: [tmptr + pnum*2 + 46h] -= 0CCh (93G getpde/setpde energy words); reenergizeteam writes 1000h to each"
+tmpptime,$352 (94G team),08h (team),"updatePPTeamTime: inc word [team+08h] for the team on the power play, as 94G addq.w #1,$352(a2)"
 tmATOP,$A (team),0Eh (team),"chkatop: inc word [team+0Eh] for the attacking team once a second (93G addq.w #1,tmATOP(a2,d1.w))"
 tmgoalie,$26 (team),38h (team),"releasepl: cmp word [team+38h],0 / setl picks the priolist row (93G tst.w tmgoalie(a2))"
 tmpbox,$9A (team),0B6h (team),"ProcessPenaltyList: byte list at team+B6h (93G lea $9A(a2),a0), shifted down by one when a player's time is up"

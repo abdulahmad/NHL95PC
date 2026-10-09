@@ -1866,6 +1866,10 @@ mov esp, ebp	; 5F73E
 jmp near EvadePlayers_popebp	; 5F740
 ; dostop: player stops (93G logic93_5 dostop). eax = player. |Xvel| or |Yvel| > 1000h: stop animation (SPAstop, sets pf2aip)
 ;   or SPAglide when skating backwards; then StopNA.
+; C: src/c/043_5E16D_engine_skating/dostop.c
+%ifdef CBUILD
+%include "c/043_5E16D_engine_skating/dostop.inc"
+%else
 dostop:
 push dword 0Ch	; 5F745
 call __CHK	; 5F74A
@@ -1950,6 +1954,7 @@ call StopNA	; 5F822	; stop with no anim
 pop edx	; 5F827
 pop ebx	; 5F828
 ret	; 5F829
+%endif ; C
 ; StopNA: slow player by a step on each axis, no animation change (93G logic93_5 StopNA). eax = player.
 ;   PC step 200+legstr (goalie 200+3*legstr); 93G $96 (150).
 StopNA:

@@ -33,11 +33,20 @@ global passtoa0, puckbody, puckglue, puckgoalie, puckshadow, puckstick, setpassm
 global ToFixed, BlockShotDive, TryBlockShot, FacingBoards, SkillForAnim, ChkDelayedOffside, PuckCheckColl, GetLowestPen
 global PassLaneChk, ScatterPass, passmode, CompShoot, ChkOffsides, MarkTwoLinePlayers, ChkShotStat, setInjuryType
 global NetCollide, puckIChk, newcheck, ChkGoalies, ReturnGoalies, ChkPullGoalieLate, wallcoll, wallcollb
+; C: src/c/040_53294_engine_physics_ai/ToFixed.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/ToFixed.inc"
+%else
 ToFixed:
 push dword 4	; 53294
 call __CHK	; 53299
 shl eax, 10h	; 5329E
 ret	; 532A1
+%endif ; C
+; C: src/c/040_53294_engine_physics_ai/Sweepcheck.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/Sweepcheck.inc"
+%else
 Sweepcheck:
 push dword 8	; 532A2
 call __CHK	; 532A7
@@ -47,6 +56,7 @@ mov edx, 589h	; 532B1
 call SetSPA	; 532B6
 pop edx	; 532BB
 ret	; 532BC
+%endif ; C
 burst:
 push dword 18h	; 532BD
 call __CHK	; 532C2
@@ -2641,6 +2651,10 @@ call dopass	; 551A8
 .x:
 pop edx	; 551AD
 ret	; 551AE
+; C: src/c/040_53294_engine_physics_ai/setpassmode.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/setpassmode.inc"
+%else
 setpassmode:
 push dword 4	; 551AF
 call __CHK	; 551B4
@@ -2650,6 +2664,7 @@ and al, 7	; 551BF
 mov word [passdir], ax	; 551C1
 or byte [sflags], 4	; 551C7
 ret	; 551CE
+%endif ; C
 passtoa0:
 push dword 38h	; 551CF
 call __CHK	; 551D4
