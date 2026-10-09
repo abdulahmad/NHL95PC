@@ -206,20 +206,20 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0001FC8F,sub_1FC8F,CompareGoalieStats,PC-new,,,,high,qsort comparator on statsgoalieorder over 54-byte goalie stat records (season / playoff +16h),menu_system,manual-trace
 0001FDFE,sub_1FDFE,LoadShapeByTag,PC-new,,,,low,"opens file, reads tag directory (""sfh""), finds 4-char tag, allocs ""shape"" and reads it; no refs",menu_system,manual-trace
 0001FF86,sub_1FF86,MakeStatsTitle,PC-new,,,,high,dest = selected stats source label ('93-'94 Season / league / playoffs) + suffix,menu_system,manual-trace
-00020016,sub_20016,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-00020171,sub_20171,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-000202E5,sub_202E5,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-000203FA,sub_203FA,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-0002051A,sub_2051A,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-00020D97,sub_20D97,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-000212C6,sub_212C6,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-000212FE,sub_212FE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-00021350,sub_21350,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-000214B1,sub_214B1,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-000215C4,sub_215C4,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-000216D7,sub_216D7,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-000217FE,sub_217FE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
-00021C04,sub_21C04,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),easn_stats,unmatched
+00020016,sub_20016,GameTeamStatsScreen,PC-new,,,,medium,teamstatscb set around PlayGame: team stats screen (sub_235BE) with embpal / !pal palette fade and RunMenu on the 4-item menu,easn_stats,manual-trace
+00020171,sub_20171,GameSkaterStatsScreen,PC-new,,,,medium,skaterstatscb in game: skater stats (sub_25B24) + RunMenu,easn_stats,manual-trace
+000202E5,sub_202E5,GameGoalieStatsScreen,PC-new,,,,medium,goaliestatscb in game: goalie stats (sub_25B24) + menu,easn_stats,manual-trace
+000203FA,sub_203FA,GameStandingsScreen,PC-new,,,,medium,"standingscb in game: loads EASN.vfn, draws standings via sub_27080",easn_stats,manual-trace
+0002051A,sub_2051A,GameStandingsMenu,PC-new,,,,medium,"standingsmenucb in game: allocs tstat / keys / pstat / gstat, Overall Standings + team picker, Team Roster player picker, player screens; loops on deskexit",easn_stats,manual-trace
+00020D97,sub_20D97,EasnStandingsScreen,PC-new,,,,medium,"standingscb front-end variant (EASN.vfn, sub_27080)",easn_stats,manual-trace
+000212C6,sub_212C6,FreeCalendarIfLowMem,PC-new,,,,medium,frees calendarshapes when free memory <= 4B708h,easn_stats,manual-trace
+000212FE,sub_212FE,LoadCalendarShapes,PC-new,,,,high,"loads ""calendar"" shape file into calendarshapes if not loaded",easn_stats,manual-trace
+00021350,sub_21350,CalTeamStatsScreen,PC-new,,,,medium,"teamstatscb set by calendar (sub_34821): frees calendar, team stats screen, reloads calendar",easn_stats,manual-trace
+000214B1,sub_214B1,CalSkaterStatsScreen,PC-new,,,,medium,calendar skater stats,easn_stats,manual-trace
+000215C4,sub_215C4,CalGoalieStatsScreen,PC-new,,,,medium,calendar goalie stats,easn_stats,manual-trace
+000216D7,sub_216D7,CalStandingsScreen,PC-new,,,,medium,calendar standings,easn_stats,manual-trace
+000217FE,sub_217FE,CalStandingsMenu,PC-new,,,,medium,standingsmenucb set by calendar; also in a menu table,easn_stats,manual-trace
+00021C04,sub_21C04,DrawPhotoWithPal,PC-new,,,,medium,"copies 0B4h + 0A5h palette bytes into the stats palette, installs photoremap, draws photo shape (player photo by tag at 21FC7 / 22860)",easn_stats,manual-trace
 00021CDE,sub_21CDE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
 00022581,sub_22581,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched
 00022DDE,sub_22DDE,,PC-new,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),player_stats,unmatched

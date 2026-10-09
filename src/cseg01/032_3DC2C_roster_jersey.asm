@@ -9,7 +9,7 @@ extern str_space, str_dot, curleague, byte_D11BC, byte_D1238, byte_D12DE, byte_D
 extern byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8, byte_DC9D8, leaguedbfmt2, leaguedbfmt, byte_DDD8C
 extern byte_DDD8D, byte_DDD8E, byte_ED7F7, byte_ED858, byte_ED85A, byte_ED86D, byte_ED8B3, byte_ED8B4
 extern statscategory, statsredrawcb, dword_C8B7C, dword_C8B80, HomeTeam, dword_D2C6B, dword_D8C84, pointerspr
-extern dword_DC738, dword_DD100, dword_DD104, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, dword_DD79C
+extern dword_DC738, statspalshape, statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, dword_DD79C
 extern dword_DDD74, dword_DDD78, dword_DDD7C, dword_DDD80, dword_DDD84, dword_DDD88, dword_DE25C, dword_DE260
 extern dword_DE264, dword_EA0DC, jctime, memcpy_, leaguedbnames, off_C8BDD, off_CF2A3
 extern off_CF2C3, qsort_, sprintf_, strcat_, strcmp_, strcpy_, MakePath, FileOpenRead
@@ -1115,17 +1115,17 @@ lea eax, [byte esp+04h]	; 3EAC4
 push eax	; 3EAC8
 call sub_8E83C	; 3EAC9
 add esp, byte 8	; 3EACE
-mov dword [dword_DD104], eax	; 3EAD1
+mov dword [statsbgshapes], eax	; 3EAD1
 push asc_C1987	; 3EAD6
 push eax	; 3EADB
 call sub_B30B4	; 3EADC
 add esp, byte 8	; 3EAE1
-mov dword [dword_DD100], eax	; 3EAE4
+mov dword [statspalshape], eax	; 3EAE4
 lea edx, [byte eax+010h]	; 3EAE9
 mov ebx, 300h	; 3EAEC
 mov eax, esi	; 3EAF1
 call memcpy_	; 3EAF3
-mov eax, dword [dword_DD104]	; 3EAF8
+mov eax, dword [statsbgshapes]	; 3EAF8
 push eax	; 3EAFD
 call jctime	; 3EAFE
 add esp, byte 4	; 3EB03

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_C8445 progbits alloc noexec write align=1
-extern sub_217FE, sub_34691, sub_346FE, sub_3476B, sub_38B25, sub_38B3A, sub_7A335, sub_7A39F
+extern CalStandingsMenu, sub_34691, sub_346FE, sub_3476B, sub_38B25, sub_38B3A, sub_7A335, sub_7A39F
 extern sub_7A404, sub_7CA53, sub_7CA61, unk_C67B1, unk_CDF44, unk_CDF56, unk_CDF64, unk_CDF76
 extern unk_CDF8A, unk_CE96F, unk_CEA2F, unk_CEB2F
 global monthdays, curleague, byte_C845D, byte_C845E, dword_C87B0, off_C85F6, off_C8616, unk_C846A
@@ -25,7 +25,7 @@ dd unk_C67B1
 db 05h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,08Ch,00h,00h,00h
 db 023h,00h,00h,00h
 dd unk_CDF56
-dd sub_217FE
+dd CalStandingsMenu
 db 00h,00h,00h,00h,01h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 08Ch,00h,00h,00h,035h,00h,00h,00h
 dd unk_CDF64

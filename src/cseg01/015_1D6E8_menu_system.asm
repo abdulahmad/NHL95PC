@@ -4,9 +4,9 @@ bits 32
 section s_1D6E8 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, str_PointerMenu, str_menubuff, str_sfh, str_shape, str_9394Season, str_9394PlayOffs
 extern str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle, mi_9394Season, mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode
-extern menuremap, menuremap2, statscategory, statsteamsel, statsplayoffs, dword_C6A60, pointerspr
+extern menuremap, menuremap2, statscategory, statsteamsel, statsplayoffs, statspalvalid, pointerspr
 extern statsteamorder, statsnumgoalies, statsskaterorder, statsgoalieorder, statsgoalieplr, statsnumskaters, statsskaterplr, playofftree
-extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, dword_DD120, dword_EA0DC, jctime, memcmp_
+extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, statspal, dword_EA0DC, jctime, memcmp_
 extern memcpy_, off_D3078, sprintf_, strcat_, strlen_, strncpy_, FileOpenRead, FileClose
 extern FileReadAt, DeskSetExit3b, ShowPlayerStatsItem, StrPrefixDiffers, sub_24453, sub_26B5A, sub_27BC3, sub_27F9C
 extern sub_29681, sub_6B391, sub_6B3D7, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_8CCA8
@@ -2718,8 +2718,8 @@ mov ecx, 0Dh	; 1F981
 mov edi, statsplayer	; 1F986
 rep movsd	; 1F98B
 xor edx, edx	; 1F98D
-mov dword [dword_C6A60], edx	; 1F98F
-mov dword [dword_DD120], edx	; 1F995
+mov dword [statspalvalid], edx	; 1F98F
+mov dword [statspal], edx	; 1F995
 call ShowPlayerStatsItem	; 1F99B
 mov dword [byte esp+034h], edx	; 1F9A0
 mov dword [byte esp+030h], edx	; 1F9A4

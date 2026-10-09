@@ -18,13 +18,13 @@ extern byte_C6D8A, byte_C6D9A, byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, b
 extern byte_ED83C, byte_ED858, byte_ED859, byte_ED908, byte_ED909, teamdivflags, teamconf, statsplayoffs
 extern statsfromleague, dword_C6AF8, dword_C6B30, dword_C6E32, dword_D2C6B, dword_D8B68, dword_D8B74, statsnumgoalies
 extern statsskaterorder, statsgoalieorder, dword_DC734, statsgoalieplr, statsnumskaters, statsskaterplr, dword_DC85C, dword_DC860
-extern dword_DD100, dword_DD104, dword_DD108, statsteambuf, statsskaterbuf, statsgoaliebuf, dword_DD118, statsplayerbuf
+extern statspalshape, statsbgshapes, dword_DD108, statsteambuf, statsskaterbuf, statsgoaliebuf, dword_DD118, statsplayerbuf
 extern fputchar, j___close_, jctime, lseek_, memcpy_, off_C68CC, off_C68E4, off_C68EC
 extern off_C68F4, off_C68F8, off_C6A64, off_C6A99, off_C6AAC, off_C6AD1, off_C6AE0, off_C6B68
 extern off_C6B6C, off_C6B70, off_C6B88, off_C6B8C, off_C6B90, off_C6B94, off_C6BE8, off_C6C14
 extern off_C6C40, off_C6C44, off_C6C48, off_C6C4C, off_C6C50, open_, qsort_, read_
 extern sprintf_, strcat_, strnicmp_, MakePath, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText
-extern PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff, CompareSkaterStats, CompareGoalieStats, MakeStatsTitle, sub_21C04
+extern PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff, CompareSkaterStats, CompareGoalieStats, MakeStatsTitle, DrawPhotoWithPal
 extern sub_29A97, sub_29C75, sub_8CCA8, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_91370
 extern sub_913B4, sub_B30B4, sub_B30BB, sub_B4BA8, sub_B4BC4, unk_C0DA6, unk_C0E9A, unk_C0EA8
 extern unk_C0EAB, unk_C0EAE, unk_C0EB1, unk_C0EB4, unk_C0FD4, unk_C1055, unk_C107F, unk_C1087
@@ -215,19 +215,19 @@ lea eax, [dword esp+0BCh]	; 21E92
 push eax	; 21E99
 call sub_8E83C	; 21E9A
 add esp, byte 8	; 21E9F
-mov dword [dword_DD104], eax	; 21EA2
+mov dword [statsbgshapes], eax	; 21EA2
 push str_Bkgd2	; 21EA7
 push eax	; 21EAC
 call sub_B30B4	; 21EAD
 add esp, byte 8	; 21EB2
-mov dword [dword_DD100], eax	; 21EB5
+mov dword [statspalshape], eax	; 21EB5
 push dword 1E0h	; 21EBA
 push byte 13h	; 21EBF
 push dword 280h	; 21EC1
 push byte 0	; 21EC6
 call sub_B4BC4	; 21EC8
 add esp, byte 10h	; 21ECD
-mov edi, dword [dword_DD100]	; 21ED0
+mov edi, dword [statspalshape]	; 21ED0
 push edi	; 21ED6
 call sub_913B4	; 21ED7
 add esp, byte 4	; 21EDC
@@ -237,7 +237,7 @@ push dword 280h	; 21EE6
 push byte 0	; 21EEB
 call sub_B4BC4	; 21EED
 add esp, byte 10h	; 21EF2
-mov eax, dword [dword_DD104]	; 21EF5
+mov eax, dword [statsbgshapes]	; 21EF5
 push eax	; 21EFA
 call jctime	; 21EFB
 add esp, byte 4	; 21F00
@@ -304,7 +304,7 @@ add eax, byte 10h	; 21FB8
 mov ecx, 26h	; 21FBB
 mov ebx, 21h	; 21FC0
 mov edx, edi	; 21FC5
-call sub_21C04	; 21FC7
+call DrawPhotoWithPal	; 21FC7
 push esi	; 21FCC
 call jctime	; 21FCD
 add esp, byte 4	; 21FD2
@@ -324,7 +324,7 @@ lea eax, [dword esp+0BCh]	; 21FFD
 push eax	; 22004
 call sub_8E83C	; 22005
 add esp, byte 8	; 2200A
-mov dword [dword_DD104], eax	; 2200D
+mov dword [statsbgshapes], eax	; 2200D
 push asc_C0D61	; 22012
 jmp short loc_22064	; 22017
 loc_22019:
@@ -347,17 +347,17 @@ lea eax, [dword esp+0BCh]	; 2204A
 push eax	; 22051
 call sub_8E83C	; 22052
 add esp, byte 8	; 22057
-mov dword [dword_DD104], eax	; 2205A
+mov dword [statsbgshapes], eax	; 2205A
 push asc_C0D66	; 2205F
 loc_22064:
 push eax	; 22064
 call sub_B30B4	; 22065
 add esp, byte 8	; 2206A
-mov dword [dword_DD100], eax	; 2206D
+mov dword [statspalshape], eax	; 2206D
 push eax	; 22072
 call sub_913B4	; 22073
 add esp, byte 4	; 22078
-mov ebx, dword [dword_DD104]	; 2207B
+mov ebx, dword [statsbgshapes]	; 2207B
 push ebx	; 22081
 jmp short loc_220E4	; 22082
 loc_22084:
@@ -377,16 +377,16 @@ lea eax, [dword esp+0BCh]	; 220AC
 push eax	; 220B3
 call sub_8E83C	; 220B4
 add esp, byte 8	; 220B9
-mov dword [dword_DD104], eax	; 220BC
+mov dword [statsbgshapes], eax	; 220BC
 push asc_C0D66	; 220C1
 push eax	; 220C6
 call sub_B30B4	; 220C7
 add esp, byte 8	; 220CC
-mov dword [dword_DD100], eax	; 220CF
+mov dword [statspalshape], eax	; 220CF
 push eax	; 220D4
 call sub_913B4	; 220D5
 add esp, byte 4	; 220DA
-mov edx, dword [dword_DD104]	; 220DD
+mov edx, dword [statsbgshapes]	; 220DD
 push edx	; 220E3
 loc_220E4:
 call jctime	; 220E4
@@ -821,19 +821,19 @@ lea eax, [dword esp+0CCh]	; 2272C
 push eax	; 22733
 call sub_8E83C	; 22734
 add esp, byte 8	; 22739
-mov dword [dword_DD104], eax	; 2273C
+mov dword [statsbgshapes], eax	; 2273C
 push str_Bkgd2	; 22741
 push eax	; 22746
 call sub_B30B4	; 22747
 add esp, byte 8	; 2274C
-mov dword [dword_DD100], eax	; 2274F
+mov dword [statspalshape], eax	; 2274F
 push dword 1E0h	; 22754
 push byte 13h	; 22759
 push dword 280h	; 2275B
 push byte 0	; 22760
 call sub_B4BC4	; 22762
 add esp, byte 10h	; 22767
-mov ebx, dword [dword_DD100]	; 2276A
+mov ebx, dword [statspalshape]	; 2276A
 push ebx	; 22770
 call sub_913B4	; 22771
 add esp, byte 4	; 22776
@@ -843,7 +843,7 @@ push dword 280h	; 22780
 push byte 0	; 22785
 call sub_B4BC4	; 22787
 add esp, byte 10h	; 2278C
-mov ecx, dword [dword_DD104]	; 2278F
+mov ecx, dword [statsbgshapes]	; 2278F
 push ecx	; 22795
 call jctime	; 22796
 add esp, byte 4	; 2279B
@@ -909,7 +909,7 @@ add eax, byte 10h	; 22851
 mov ecx, 26h	; 22854
 mov ebx, 21h	; 22859
 mov edx, edi	; 2285E
-call sub_21C04	; 22860
+call DrawPhotoWithPal	; 22860
 push esi	; 22865
 call jctime	; 22866
 add esp, byte 4	; 2286B
@@ -929,7 +929,7 @@ lea eax, [dword esp+0CCh]	; 22896
 push eax	; 2289D
 call sub_8E83C	; 2289E
 add esp, byte 8	; 228A3
-mov dword [dword_DD104], eax	; 228A6
+mov dword [statsbgshapes], eax	; 228A6
 push asc_C0E73	; 228AB
 jmp short loc_228FD	; 228B0
 loc_228B2:
@@ -952,17 +952,17 @@ lea eax, [dword esp+0CCh]	; 228E3
 push eax	; 228EA
 call sub_8E83C	; 228EB
 add esp, byte 8	; 228F0
-mov dword [dword_DD104], eax	; 228F3
+mov dword [statsbgshapes], eax	; 228F3
 push asc_C0E78	; 228F8
 loc_228FD:
 push eax	; 228FD
 call sub_B30B4	; 228FE
 add esp, byte 8	; 22903
-mov dword [dword_DD100], eax	; 22906
+mov dword [statspalshape], eax	; 22906
 push eax	; 2290B
 call sub_913B4	; 2290C
 add esp, byte 4	; 22911
-mov edi, dword [dword_DD104]	; 22914
+mov edi, dword [statsbgshapes]	; 22914
 push edi	; 2291A
 jmp short loc_2297D	; 2291B
 loc_2291D:
@@ -982,16 +982,16 @@ lea eax, [dword esp+0CCh]	; 22945
 push eax	; 2294C
 call sub_8E83C	; 2294D
 add esp, byte 8	; 22952
-mov dword [dword_DD104], eax	; 22955
+mov dword [statsbgshapes], eax	; 22955
 push asc_C0E78	; 2295A
 push eax	; 2295F
 call sub_B30B4	; 22960
 add esp, byte 8	; 22965
-mov dword [dword_DD100], eax	; 22968
+mov dword [statspalshape], eax	; 22968
 push eax	; 2296D
 call sub_913B4	; 2296E
 add esp, byte 4	; 22973
-mov esi, dword [dword_DD104]	; 22976
+mov esi, dword [statsbgshapes]	; 22976
 push esi	; 2297C
 loc_2297D:
 call jctime	; 2297D
@@ -2475,19 +2475,19 @@ lea eax, [dword esp+0228h]	; 23B1B
 push eax	; 23B22
 call sub_8E83C	; 23B23
 add esp, byte 8	; 23B28
-mov dword [dword_DD104], eax	; 23B2B
+mov dword [statsbgshapes], eax	; 23B2B
 push str_Bkgd2	; 23B30
 push eax	; 23B35
 call sub_B30B4	; 23B36
 add esp, byte 8	; 23B3B
-mov dword [dword_DD100], eax	; 23B3E
+mov dword [statspalshape], eax	; 23B3E
 push dword 1E0h	; 23B43
 push byte 13h	; 23B48
 push dword 280h	; 23B4A
 push byte 0	; 23B4F
 call sub_B4BC4	; 23B51
 add esp, byte 10h	; 23B56
-mov eax, dword [dword_DD100]	; 23B59
+mov eax, dword [statspalshape]	; 23B59
 push eax	; 23B5E
 call sub_913B4	; 23B5F
 add esp, byte 4	; 23B64
@@ -2497,7 +2497,7 @@ push dword 280h	; 23B6E
 push byte 0	; 23B73
 call sub_B4BC4	; 23B75
 add esp, byte 10h	; 23B7A
-mov edx, dword [dword_DD104]	; 23B7D
+mov edx, dword [statsbgshapes]	; 23B7D
 push edx	; 23B83
 call jctime	; 23B84
 add esp, byte 4	; 23B89
@@ -2517,18 +2517,18 @@ lea eax, [dword esp+0228h]	; 23BB4
 push eax	; 23BBB
 call sub_8E83C	; 23BBC
 add esp, byte 8	; 23BC1
-mov dword [dword_DD104], eax	; 23BC4
+mov dword [statsbgshapes], eax	; 23BC4
 push asc_C0FBD	; 23BC9
 push eax	; 23BCE
 call sub_B30B4	; 23BCF
 add esp, byte 8	; 23BD4
-mov dword [dword_DD100], eax	; 23BD7
+mov dword [statspalshape], eax	; 23BD7
 push byte 1Ch	; 23BDC
 push byte 0	; 23BDE
 push eax	; 23BE0
 call sub_91370	; 23BE1
 add esp, byte 0Ch	; 23BE6
-mov ebx, dword [dword_DD104]	; 23BE9
+mov ebx, dword [statsbgshapes]	; 23BE9
 push ebx	; 23BEF
 call jctime	; 23BF0
 add esp, byte 4	; 23BF5
@@ -3401,19 +3401,19 @@ lea eax, [dword esp+03CCh]	; 2488A
 push eax	; 24891
 call sub_8E83C	; 24892
 add esp, byte 8	; 24897
-mov dword [dword_DD104], eax	; 2489A
+mov dword [statsbgshapes], eax	; 2489A
 push str_Bkgd2	; 2489F
 push eax	; 248A4
 call sub_B30B4	; 248A5
 add esp, byte 8	; 248AA
-mov dword [dword_DD100], eax	; 248AD
+mov dword [statspalshape], eax	; 248AD
 push dword 1E0h	; 248B2
 push byte 13h	; 248B7
 push dword 280h	; 248B9
 push byte 0	; 248BE
 call sub_B4BC4	; 248C0
 add esp, byte 10h	; 248C5
-mov ebp, dword [dword_DD100]	; 248C8
+mov ebp, dword [statspalshape]	; 248C8
 push ebp	; 248CE
 call sub_913B4	; 248CF
 add esp, byte 4	; 248D4
@@ -3423,7 +3423,7 @@ push dword 280h	; 248DE
 push byte 0	; 248E3
 call sub_B4BC4	; 248E5
 add esp, byte 10h	; 248EA
-mov eax, dword [dword_DD104]	; 248ED
+mov eax, dword [statsbgshapes]	; 248ED
 push eax	; 248F2
 call jctime	; 248F3
 add esp, byte 4	; 248F8
@@ -3443,12 +3443,12 @@ lea eax, [dword esp+03CCh]	; 24923
 push eax	; 2492A
 call sub_8E83C	; 2492B
 add esp, byte 8	; 24930
-mov dword [dword_DD104], eax	; 24933
+mov dword [statsbgshapes], eax	; 24933
 push asc_C1050	; 24938
 push eax	; 2493D
 call sub_B30B4	; 2493E
 add esp, byte 8	; 24943
-mov dword [dword_DD100], eax	; 24946
+mov dword [statspalshape], eax	; 24946
 push byte 6	; 2494B
 push byte 0	; 2494D
 push eax	; 2494F
@@ -3509,17 +3509,17 @@ cmp edi, byte 19h	; 24A1D
 jne short loc_24A30	; 24A20
 loc_24A22:
 push asc_C1058	; 24A22
-mov esi, dword [dword_DD104]	; 24A27
+mov esi, dword [statsbgshapes]	; 24A27
 push esi	; 24A2D
 jmp short loc_24A3C	; 24A2E
 loc_24A30:
 push asc_C105D	; 24A30
-mov ecx, dword [dword_DD104]	; 24A35
+mov ecx, dword [statsbgshapes]	; 24A35
 push ecx	; 24A3B
 loc_24A3C:
 call sub_B30B4	; 24A3C
 add esp, byte 8	; 24A41
-mov dword [dword_DD100], eax	; 24A44
+mov dword [statspalshape], eax	; 24A44
 mov eax, dword [dword esp+040Ch]	; 24A49
 add eax, byte 6	; 24A50
 push eax	; 24A53
@@ -3529,7 +3529,7 @@ add esp, byte 4	; 24A5E
 sar eax, 1	; 24A61
 add eax, 12Ch	; 24A63
 push eax	; 24A68
-mov edi, dword [dword_DD100]	; 24A69
+mov edi, dword [statspalshape]	; 24A69
 push edi	; 24A6F
 jmp short loc_24AC8	; 24A70
 loc_24A72:
@@ -3548,18 +3548,18 @@ mov ebx, printfbuf	; 24A9C
 mov edx, esi	; 24AA1
 call PrintOutlinedText	; 24AA3
 push asc_C1058	; 24AA8
-mov ebp, dword [dword_DD104]	; 24AAD
+mov ebp, dword [statsbgshapes]	; 24AAD
 push ebp	; 24AB3
 call sub_B30B4	; 24AB4
 add esp, byte 8	; 24AB9
-mov dword [dword_DD100], eax	; 24ABC
+mov dword [statspalshape], eax	; 24ABC
 push esi	; 24AC1
 push dword 12Ah	; 24AC2
 push eax	; 24AC7
 loc_24AC8:
 call sub_91370	; 24AC8
 add esp, byte 0Ch	; 24ACD
-mov ebp, dword [dword_DD104]	; 24AD0
+mov ebp, dword [statsbgshapes]	; 24AD0
 push ebp	; 24AD6
 call jctime	; 24AD7
 add esp, byte 4	; 24ADC
@@ -5518,19 +5518,19 @@ lea eax, [dword esp+023Ch]	; 2623D
 push eax	; 26244
 call sub_8E83C	; 26245
 add esp, byte 8	; 2624A
-mov dword [dword_DD104], eax	; 2624D
+mov dword [statsbgshapes], eax	; 2624D
 push str_Bkgd2	; 26252
 push eax	; 26257
 call sub_B30B4	; 26258
 add esp, byte 8	; 2625D
-mov dword [dword_DD100], eax	; 26260
+mov dword [statspalshape], eax	; 26260
 push dword 1E0h	; 26265
 push byte 13h	; 2626A
 push dword 280h	; 2626C
 push byte 0	; 26271
 call sub_B4BC4	; 26273
 add esp, byte 10h	; 26278
-mov eax, dword [dword_DD100]	; 2627B
+mov eax, dword [statspalshape]	; 2627B
 push eax	; 26280
 call sub_913B4	; 26281
 add esp, byte 4	; 26286
@@ -5540,7 +5540,7 @@ push dword 280h	; 26290
 push byte 0	; 26295
 call sub_B4BC4	; 26297
 add esp, byte 10h	; 2629C
-mov edx, dword [dword_DD104]	; 2629F
+mov edx, dword [statsbgshapes]	; 2629F
 push edx	; 262A5
 call jctime	; 262A6
 add esp, byte 4	; 262AB
@@ -5560,18 +5560,18 @@ lea eax, [dword esp+023Ch]	; 262D6
 push eax	; 262DD
 call sub_8E83C	; 262DE
 add esp, byte 8	; 262E3
-mov dword [dword_DD104], eax	; 262E6
+mov dword [statsbgshapes], eax	; 262E6
 push asc_C123A	; 262EB
 push eax	; 262F0
 call sub_B30B4	; 262F1
 add esp, byte 8	; 262F6
-mov dword [dword_DD100], eax	; 262F9
+mov dword [statspalshape], eax	; 262F9
 push byte 1Ch	; 262FE
 push byte 0	; 26300
 push eax	; 26302
 call sub_91370	; 26303
 add esp, byte 0Ch	; 26308
-mov ebx, dword [dword_DD104]	; 2630B
+mov ebx, dword [statsbgshapes]	; 2630B
 push ebx	; 26311
 call jctime	; 26312
 add esp, byte 4	; 26317

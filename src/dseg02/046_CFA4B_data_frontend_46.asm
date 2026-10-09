@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_CFA4B progbits alloc noexec write align=1
-extern sub_6C2F9, sub_6C3BB, EditRostersReturn, SelectRosterTeam, sub_73703, unk_20EB7, unk_CDF56, unk_CDF64
+extern sub_6C2F9, sub_6C3BB, EditRostersReturn, SelectRosterTeam, sub_73703, EasnStandingsMenu, unk_CDF56, unk_CDF64
 extern unk_CDF76, unk_CDF8A, unk_CE96F, unk_CEA2F, unk_CEB2F
 global asc_CFB69, dword_CFA4B, off_CFB1C, off_CFB8A, unk_CFAD5, unk_CFB01, unk_CFB24, unk_CFB46
 global unk_CFB98, unk_CFBA4, unk_CFBB0, unk_CFBBD, unk_CFBCD, unk_CFBDA, unk_CFBE8, unk_CFCA8
@@ -15,7 +15,7 @@ dword_CFA4B:
 db 02h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,08Ch,00h,00h,00h
 db 023h,00h,00h,00h
 dd unk_CDF56
-dd unk_20EB7
+dd EasnStandingsMenu
 db 00h,00h,00h,00h,01h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 08Ch,00h,00h,00h,035h,00h,00h,00h
 dd unk_CDF64

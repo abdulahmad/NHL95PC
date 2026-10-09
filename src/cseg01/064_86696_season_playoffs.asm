@@ -14,7 +14,7 @@ extern musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED859, byte_ED85A, b
 extern DeskHomeLines, DeskVisitorLines, postate
 extern lgstate, gameresult, gamemode, gameopts, ctl1team
 extern ctl2team, ctl1side, ctl2side, teamdivflags, teamconf, confteams, dword_C65AC, teamstatscb
-extern skaterstatscb, goaliestatscb, dword_C65CC, dword_C65D0, dword_C6D26, dword_C6DBA, dword_C71CC, dword_C71D0
+extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dword_C6D26, dword_C6DBA, dword_C71CC, dword_C71D0
 extern dword_C71D4, dword_C71D8, dword_C71DC, songdata, cont2team, HomeTeam, dword_CE583, dword_CE5A3
 extern dword_CE5C3, dword_CEDE7, dword_CEE07, seasondb, careerdb, keydb, seasondb_size, careerdb_size
 extern keydb_size, musichandle, dword_D2884, dword_D288C, seriesgameno, dword_D2B70, dword_D2BEC, musicslot
@@ -25,16 +25,16 @@ extern off_CF983, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpa
 extern off_D3078, randomd0, rmdir_, sprintf_, strcat_, strcpy_, SetupControllers, PlayGame
 extern FileExists, MakePath, DeleteDir, FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileWriteAt
 extern CopyFile, DiskSpaceShort, CheckGameDiskSpace, GetLeagueDBSizes, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText
-extern TextGridOpen, TextGridOff, InitGameSummary, SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, sub_20016, sub_20171
-extern sub_202E5, sub_203FA, sub_2051A, sub_20D97, sub_27C34, sub_29F28, sub_2FDD1, sub_2FEDF
+extern TextGridOpen, TextGridOff, InitGameSummary, SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen
+extern GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, EasnStandingsScreen, sub_27C34, sub_29F28, sub_2FDD1, sub_2FEDF
 extern sub_30A0C, sub_30F12, MessageBox, SaveModeState, LoadModeState, WriteModeState, sub_3626D, SimulateGame
 extern sub_479E9, sub_6B391, sub_6B3D7, sub_6B410, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E
 extern sub_6B9EB, sub_6BA4D, sub_76429, sub_7A29C, sub_80830, sub_86627, sub_86647, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E8B8, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_910B0, sub_9121C, sub_91370, sub_913B4
 extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, FatalError, MouseSetPos, sub_B2DCA, sub_B2E1B
-extern sub_B30B4, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4BC4, unk_208EF, unk_20A46
-extern unk_20BBD, unk_20EB7, unk_86616, str_E1, str_E2, str_F1, str_F2, unk_C3A66
+extern sub_B30B4, sub_B3989, sub_B3999, sub_B4B88, sub_B4BA8, sub_B4BC4, EasnTeamStatsScreen, EasnSkaterStatsScreen
+extern EasnGoalieStatsScreen, EasnStandingsMenu, unk_86616, str_E1, str_E2, str_F1, str_F2, unk_C3A66
 extern str_D, unk_C3AF8, exhstate, btn_LeagueExists, unk_CEE4F, unk_CEEAF, unk_CF90F, unk_D2864
 extern btn_POHumanOut, hmteamrec, unk_DDAC4, unk_DDCE6, unk_DDCFB, unk_ED7BC, unknown_libname_1
 extern word_C6D24, word_C6E22, scrpitch, VisTeam, hmscore, awscore
@@ -3834,18 +3834,18 @@ mov dword [byte esp+024h], 1	; 893EB
 call sub_479E9	; 893F3
 call SetSideControls	; 893F8
 call SetupControllers	; 893FD
-mov dword [teamstatscb], sub_20016	; 89402
-mov dword [skaterstatscb], sub_20171	; 8940C
-mov dword [goaliestatscb], sub_202E5	; 89416
-mov dword [dword_C65CC], sub_203FA	; 89420
-mov dword [dword_C65D0], sub_2051A	; 8942A
+mov dword [teamstatscb], GameTeamStatsScreen	; 89402
+mov dword [skaterstatscb], GameSkaterStatsScreen	; 8940C
+mov dword [goaliestatscb], GameGoalieStatsScreen	; 89416
+mov dword [standingscb], GameStandingsScreen	; 89420
+mov dword [standingsmenucb], GameStandingsMenu	; 8942A
 mov eax, ebp	; 89434
 call PlayGame	; 89436
-mov dword [teamstatscb], unk_208EF	; 8943B
-mov dword [skaterstatscb], unk_20A46	; 89445
-mov dword [goaliestatscb], unk_20BBD	; 8944F
-mov dword [dword_C65CC], sub_20D97	; 89459
-mov dword [dword_C65D0], unk_20EB7	; 89463
+mov dword [teamstatscb], EasnTeamStatsScreen	; 8943B
+mov dword [skaterstatscb], EasnSkaterStatsScreen	; 89445
+mov dword [goaliestatscb], EasnGoalieStatsScreen	; 8944F
+mov dword [standingscb], EasnStandingsScreen	; 89459
+mov dword [standingsmenucb], EasnStandingsMenu	; 89463
 mov word [scrpitch], 50h	; 8946D
 cmp dword [byte esp+020h], byte 0	; 89476
 jne short .5	; 8947B
@@ -4177,18 +4177,18 @@ xor edi, edi	; 898E9
 mov dword [byte esp+020h], edi	; 898EB
 test byte [byte esp+02Ch], 4	; 898EF
 jne short .29	; 898F4
-mov dword [teamstatscb], sub_20016	; 898F6
-mov dword [skaterstatscb], sub_20171	; 89900
-mov dword [goaliestatscb], sub_202E5	; 8990A
-mov dword [dword_C65CC], sub_203FA	; 89914
-mov dword [dword_C65D0], sub_2051A	; 8991E
+mov dword [teamstatscb], GameTeamStatsScreen	; 898F6
+mov dword [skaterstatscb], GameSkaterStatsScreen	; 89900
+mov dword [goaliestatscb], GameGoalieStatsScreen	; 8990A
+mov dword [standingscb], GameStandingsScreen	; 89914
+mov dword [standingsmenucb], GameStandingsMenu	; 8991E
 mov eax, ebp	; 89928
 call PlayGame	; 8992A
-mov dword [teamstatscb], unk_208EF	; 8992F
-mov dword [skaterstatscb], unk_20A46	; 89939
-mov dword [goaliestatscb], unk_20BBD	; 89943
-mov dword [dword_C65CC], sub_20D97	; 8994D
-mov dword [dword_C65D0], unk_20EB7	; 89957
+mov dword [teamstatscb], EasnTeamStatsScreen	; 8992F
+mov dword [skaterstatscb], EasnSkaterStatsScreen	; 89939
+mov dword [goaliestatscb], EasnGoalieStatsScreen	; 89943
+mov dword [standingscb], EasnStandingsScreen	; 8994D
+mov dword [standingsmenucb], EasnStandingsMenu	; 89957
 .29:
 mov word [scrpitch], 50h	; 89961
 jmp short .31	; 8996A

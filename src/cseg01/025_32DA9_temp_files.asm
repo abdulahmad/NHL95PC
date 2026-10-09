@@ -5,15 +5,15 @@ section s_32DA9 progbits alloc exec nowrite align=1
 extern __CHK, asc_C177B, asc_C1783, asc_C1788, curleague, gameopts
 extern musicon, byte_DE268, byte_EA0F4, lgstate
 extern gamemode, teamstatscb, skaterstatscb, goaliestatscb
-extern dword_C65CC, dword_C65D0, songdata, dword_C73D0, rinkbm, dword_C7440, cont2team, HomeTeam
+extern standingscb, standingsmenucb, songdata, dword_C73D0, rinkbm, dword_C7440, cont2team, HomeTeam
 extern dword_CE4E3, dword_CE503, dword_CE527, musichandle, schedgameidx, jctime, loc_32704, musicslot
 extern loc_32705, strcat_, strcpy_, SetupControllers, PlayGame, FileOpenRead, CheckGameDiskSpace, InitGameSummary
-extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
-extern sub_20D97, sub_29F28, SaveModeState, LoadModeState, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
+extern SetupStatsSourceMenu, BuildSavedGameLabels, SetScreenTitle, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
+extern EasnStandingsScreen, sub_29F28, SaveModeState, LoadModeState, sub_36B93, sub_3B039, sub_3B25A, sub_3B8B0
 extern sub_3B9CA, sub_3CF5B, sub_3D108, TradePlayers, AddHumanTeam, RemoveHumanTeam, CheckMasterPassword, CreateNewLeague
 extern sub_479E9, sub_6B410, sub_6B47C, sub_76429, sub_7A13A, sub_7A6AD, sub_7B39C, sub_80075
-extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, unk_208EF, unk_20A46, unk_20BBD
-extern unk_20EB7, exhstate, unk_CE64F
+extern sub_8CCA8, sub_8D2F0, sub_8FC8A, sub_8FCDF, sub_8FFB0, EasnTeamStatsScreen, EasnSkaterStatsScreen, EasnGoalieStatsScreen
+extern EasnStandingsMenu, exhstate, unk_CE64F
 global loc_32DCD, loc_32E3A, loc_32EA2, loc_32ECE, loc_32EFB, loc_32F00, loc_32F0E, loc_32F4A
 global loc_32F86, loc_32FB3, loc_33045, loc_3304C, loc_3307D, loc_3308E, loc_3309F, loc_330B0
 global loc_330BA, loc_330CF, loc_330D9, loc_3314E, loc_3316E, loc_331C4, loc_331F8, loc_3325B
@@ -39,11 +39,11 @@ xor eax, eax	; 32DC6
 jmp near loc_32704	; 32DC8
 loc_32DCD:
 mov dword [schedgameidx], edx	; 32DCD
-mov dword [teamstatscb], sub_20016	; 32DD3
-mov dword [skaterstatscb], sub_20171	; 32DDD
-mov dword [goaliestatscb], sub_202E5	; 32DE7
-mov dword [dword_C65CC], sub_203FA	; 32DF1
-mov dword [dword_C65D0], sub_2051A	; 32DFB
+mov dword [teamstatscb], GameTeamStatsScreen	; 32DD3
+mov dword [skaterstatscb], GameSkaterStatsScreen	; 32DDD
+mov dword [goaliestatscb], GameGoalieStatsScreen	; 32DE7
+mov dword [standingscb], GameStandingsScreen	; 32DF1
+mov dword [standingsmenucb], GameStandingsMenu	; 32DFB
 call SetupControllers	; 32E05
 or byte [gameopts+1], 2	; 32E0A
 cmp dword [esi], byte 0	; 32E11
@@ -162,11 +162,11 @@ xor ebp, ebp	; 32FAB
 mov dword [songdata], ebp	; 32FAD
 loc_32FB3:
 call sub_6B410	; 32FB3
-mov dword [teamstatscb], unk_208EF	; 32FB8
-mov dword [skaterstatscb], unk_20A46	; 32FC2
-mov dword [goaliestatscb], unk_20BBD	; 32FCC
-mov dword [dword_C65CC], sub_20D97	; 32FD6
-mov dword [dword_C65D0], unk_20EB7	; 32FE0
+mov dword [teamstatscb], EasnTeamStatsScreen	; 32FB8
+mov dword [skaterstatscb], EasnSkaterStatsScreen	; 32FC2
+mov dword [goaliestatscb], EasnGoalieStatsScreen	; 32FCC
+mov dword [standingscb], EasnStandingsScreen	; 32FD6
+mov dword [standingsmenucb], EasnStandingsMenu	; 32FE0
 mov eax, 2	; 32FEA
 jmp near loc_32704	; 32FEF
 sub_32FF4:
@@ -589,11 +589,11 @@ mov dword [ebx], 0FFFFFFFFh	; 335C8
 loc_335CE:
 mov eax, ebx	; 335CE
 call sub_36B93	; 335D0
-mov dword [teamstatscb], unk_208EF	; 335D5
-mov dword [skaterstatscb], unk_20A46	; 335DF
-mov dword [goaliestatscb], unk_20BBD	; 335E9
-mov dword [dword_C65CC], sub_20D97	; 335F3
-mov dword [dword_C65D0], unk_20EB7	; 335FD
+mov dword [teamstatscb], EasnTeamStatsScreen	; 335D5
+mov dword [skaterstatscb], EasnSkaterStatsScreen	; 335DF
+mov dword [goaliestatscb], EasnGoalieStatsScreen	; 335E9
+mov dword [standingscb], EasnStandingsScreen	; 335F3
+mov dword [standingsmenucb], EasnStandingsMenu	; 335FD
 xor eax, eax	; 33607
 call SetupStatsSourceMenu	; 33609
 mov eax, lgstate	; 3360E

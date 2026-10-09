@@ -2,35 +2,33 @@
 bits 32
 %include "hockey.inc"
 section s_20016 progbits alloc exec nowrite align=1
-extern __CHK, asc_C0C34, asc_C0C3B, asc_C0C40, asc_C0C46, asc_C0C4B, asc_C0C51, asc_C0C58
-extern asc_C0C5F, asc_C0C64, asc_C0C6D, asc_C0C73, asc_C0C78, asc_C0C7E, asc_C0C84, asc_C0C8D
-extern asc_C0C94, asc_C0C99, asc_C0C9F, asc_C0CA4, asc_C0CAA, asc_C6940, byte_ED836
+extern __CHK, str_embpal, str_Pal6, str_tstat, str_keys, str_pstat, str_gstat, str_embpal2
+extern str_Pal7, str_easndesk2, str_tstat2, str_keys2, str_pstat2, str_gstat2, str_calendar, str_embpal3
+extern str_Pal8, str_tstat3, str_keys3, str_pstat3, str_gstat3, str_EASNvfn, byte_ED836
 extern byte_ED858, byte_ED859, byte_ED85A, byte_ED98D, gamemode, dword_C65A8, dword_C65AC, statscategory
-extern statsteamsel, statsredrawcb, deskexit, dword_C65CC, statsplayoffs, dword_C6A60, dword_C6D26, dword_C7219
-extern dword_C8992, dword_D2C6B, statsteamorder, dword_DC6B4, dword_DC734, dword_DC738, playofftree, dword_DD100
-extern dword_DD104, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, dword_DD120, dword_DDD2C, jctime
+extern statsteamsel, statsredrawcb, deskexit, standingscb, statsplayoffs, statspalvalid, dword_C6D26, dword_C7219
+extern calendarshapes, dword_D2C6B, statsteamorder, dword_DC6B4, dword_DC734, dword_DC738, playofftree, statspalshape
+extern statsbgshapes, statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, statspal, dword_DDD2C, jctime
 extern memcpy_, off_C68E4, MakePath, FreeDeskBuffers, RunMenu, RunTeamPickMenu, RunPlayerPickMenu, InitMenuRemap
 extern sub_21CDE, sub_22581, sub_235BE, sub_244E2, sub_25B24, sub_27080, sub_296BA, sub_6B5E4
 extern sub_76429, sub_8CCA8, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_91FE0, sub_B30B4
-extern sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, unk_C6960, unk_CF54F, unk_CF6AF, unk_CF74F
+extern sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, photoremap, unk_CF54F, unk_CF6AF, unk_CF74F
 extern unk_CF78F, unk_CF80F, unk_CF88F, statsplayer
-global jpt_2050A, jpt_20EA7, jpt_217EE, loc_200B1, loc_200B3, loc_2012B, loc_20219, loc_2021B
-global loc_202DF, loc_2037B, loc_2037D, loc_20434, loc_20466, loc_2046A, loc_20481, loc_20483
-global loc_2049E, loc_204CA, loc_204FE, loc_20648, loc_2064A, loc_206CB, loc_206EA, loc_20740
-global loc_2074A, loc_207A0, loc_207F3, loc_20850, loc_20993, loc_20995, loc_20A40, loc_20AED
-global loc_20AEF, loc_20B94, loc_20B9B, loc_20BB6, loc_20C64, loc_20C66, loc_20D02, loc_20D0A
-global loc_20D80, loc_20D84, loc_20DD1, loc_20E03, loc_20E07, loc_20E1E, loc_20E20, loc_20E3B
-global loc_20E67, loc_20E9B, loc_20ECF, loc_20FEF, loc_20FF1, loc_21074, loc_21093, loc_210EE
-global loc_210FB, loc_21151, loc_211A4, loc_2120D, loc_212A1, loc_212F2, loc_212FA, loc_2132E
-global loc_21349, loc_213F2, loc_213F4, loc_2145E, loc_214AB, loc_21553, loc_21555, loc_21666
-global loc_21668, loc_21716, loc_21748, loc_2174C, loc_21763, loc_21765, loc_21780, loc_217AC
-global loc_217E0, loc_21816, loc_21938, loc_2193A, loc_219B7, loc_219D6, loc_21A31, loc_21A3D
-global loc_21A90, loc_21AE7, loc_21B47, loc_21BB0, loc_21C42, loc_21C53, loc_21C5E, loc_21C65
-global loc_21C78, loc_21C7F, loc_21CB1, loc_21CC2, sub_20016, sub_20171, sub_202E5, sub_203FA
-global sub_2051A, sub_208F4, sub_20A4C, sub_20BC2, sub_20D97, sub_20EBC, sub_212C6, sub_212FE
-global sub_21350, sub_214B1, sub_215C4, sub_216D7, sub_217FE, sub_21C04, unk_208EF, unk_20A46
-global unk_20BBD, unk_20EB7
-sub_20016:
+global GameStandingsMenu_jt, EasnStandingsMenu_jt, CalStandingsMenu_jt, GameTeamStatsScreen_common
+global GameSkaterStatsScreen_x
+global GameStandingsMenu_standings
+global GameStandingsMenu_roster, GameStandingsMenu_player, GameStandingsMenu_player2, EasnTeamStatsScreen_x
+global EasnGoalieStatsScreen_common
+global EasnStandingsMenu_standings
+global EasnStandingsMenu_roster, EasnStandingsMenu_player, EasnStandingsMenu_player2
+global CalTeamStatsScreen_common, CalTeamStatsScreen_x
+global CalStandingsMenu_standings, CalStandingsMenu_roster
+global CalStandingsMenu_player, CalStandingsMenu_player2
+global GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen
+global GameStandingsMenu, EasnTeamStatsScreen_m, EasnSkaterStatsScreen_m, EasnGoalieStatsScreen_m, EasnStandingsScreen, EasnStandingsMenu_m, FreeCalendarIfLowMem, LoadCalendarShapes
+global CalTeamStatsScreen, CalSkaterStatsScreen, CalGoalieStatsScreen, CalStandingsScreen, CalStandingsMenu, DrawPhotoWithPal, EasnTeamStatsScreen, EasnSkaterStatsScreen
+global EasnGoalieStatsScreen, EasnStandingsMenu
+GameTeamStatsScreen:
 push dword 330h	; 20016
 call __CHK	; 2001B
 push ebx	; 20020
@@ -64,14 +62,14 @@ mov edx, 4	; 2008A
 mov eax, unk_CF78F	; 2008F
 call sub_6B5E4	; 20094
 xor ecx, ecx	; 20099
-mov ebx, asc_C0C34	; 2009B
+mov ebx, str_embpal	; 2009B
 cmp byte [byte_ED85A], 1	; 200A0
-jne short loc_200B1	; 200A7
+jne short .1	; 200A7
 mov edx, dword [dword_D2C6B]	; 200A9
-jmp short loc_200B3	; 200AF
-loc_200B1:
+jmp short .2	; 200AF
+.1:
 xor edx, edx	; 200B1
-loc_200B3:
+.2:
 lea eax, [dword esp+0300h]	; 200B3
 call MakePath	; 200BA
 push byte 0	; 200BF
@@ -79,17 +77,17 @@ lea eax, [dword esp+0304h]	; 200C1
 push eax	; 200C8
 call sub_8E83C	; 200C9
 add esp, byte 8	; 200CE
-mov dword [dword_DD104], eax	; 200D1
-push asc_C0C3B	; 200D6
+mov dword [statsbgshapes], eax	; 200D1
+push str_Pal6	; 200D6
 push eax	; 200DB
 call sub_B30B4	; 200DC
 add esp, byte 8	; 200E1
-mov dword [dword_DD100], eax	; 200E4
+mov dword [statspalshape], eax	; 200E4
 lea edx, [byte eax+010h]	; 200E9
 mov ebx, 300h	; 200EC
 mov eax, esp	; 200F1
 call memcpy_	; 200F3
-mov ecx, dword [dword_DD104]	; 200F8
+mov ecx, dword [statsbgshapes]	; 200F8
 push ecx	; 200FE
 call jctime	; 200FF
 add esp, byte 4	; 20104
@@ -102,7 +100,7 @@ mov ecx, 41h	; 20117
 mov ebx, 40h	; 2011C
 mov edx, 4	; 20121
 mov eax, unk_CF78F	; 20126
-loc_2012B:
+GameTeamStatsScreen_common:
 call RunMenu	; 2012B
 mov eax, esp	; 20130
 push eax	; 20132
@@ -124,7 +122,7 @@ pop edx	; 2016D
 pop ecx	; 2016E
 pop ebx	; 2016F
 ret	; 20170
-sub_20171:
+GameSkaterStatsScreen:
 push dword 334h	; 20171
 call __CHK	; 20176
 push ebx	; 2017B
@@ -138,9 +136,9 @@ mov edx, 1	; 20188
 mov dword [dword_DC738], edx	; 2018D
 mov dword [statscategory], eax	; 20193
 mov dword [statsredrawcb], sub_25B24	; 20198
-mov dword [dword_C6A60], edx	; 201A2
+mov dword [statspalvalid], edx	; 201A2
 mov eax, esp	; 201A8
-mov dword [dword_DD120], eax	; 201AA
+mov dword [statspal], eax	; 201AA
 push eax	; 201AF
 push dword 100h	; 201B0
 push byte 0	; 201B5
@@ -162,14 +160,14 @@ mov edx, 4	; 201F2
 mov eax, unk_CF80F	; 201F7
 call sub_6B5E4	; 201FC
 xor ecx, ecx	; 20201
-mov ebx, asc_C0C34	; 20203
+mov ebx, str_embpal	; 20203
 cmp byte [byte_ED85A], 1	; 20208
-jne short loc_20219	; 2020F
+jne short .1	; 2020F
 mov edx, dword [dword_D2C6B]	; 20211
-jmp short loc_2021B	; 20217
-loc_20219:
+jmp short .2	; 20217
+.1:
 xor edx, edx	; 20219
-loc_2021B:
+.2:
 lea eax, [dword esp+0300h]	; 2021B
 call MakePath	; 20222
 push byte 0	; 20227
@@ -177,17 +175,17 @@ lea eax, [dword esp+0304h]	; 20229
 push eax	; 20230
 call sub_8E83C	; 20231
 add esp, byte 8	; 20236
-mov dword [dword_DD104], eax	; 20239
-push asc_C0C3B	; 2023E
+mov dword [statsbgshapes], eax	; 20239
+push str_Pal6	; 2023E
 push eax	; 20243
 call sub_B30B4	; 20244
 add esp, byte 8	; 20249
-mov dword [dword_DD100], eax	; 2024C
+mov dword [statspalshape], eax	; 2024C
 lea edx, [byte eax+010h]	; 20251
 mov ebx, 300h	; 20254
 mov eax, esp	; 20259
 call memcpy_	; 2025B
-mov esi, dword [dword_DD104]	; 20260
+mov esi, dword [statsbgshapes]	; 20260
 push esi	; 20266
 call jctime	; 20267
 add esp, byte 4	; 2026C
@@ -196,8 +194,8 @@ mov edx, esp	; 20274
 xor eax, eax	; 20276
 call sub_76429	; 20278
 xor edi, edi	; 2027D
-mov dword [dword_C6A60], edi	; 2027F
-mov dword [dword_DD120], edi	; 20285
+mov dword [statspalvalid], edi	; 2027F
+mov dword [statspal], edi	; 20285
 push byte 42h	; 2028B
 mov ecx, 41h	; 2028D
 mov ebx, 40h	; 20292
@@ -218,14 +216,14 @@ mov dword [dword_DC738], edi	; 202C8
 mov dword [statsredrawcb], edi	; 202CE
 mov eax, 2	; 202D4
 add esp, 310h	; 202D9
-loc_202DF:
+GameSkaterStatsScreen_x:
 pop edi	; 202DF
 pop esi	; 202E0
 pop edx	; 202E1
 pop ecx	; 202E2
 pop ebx	; 202E3
 ret	; 202E4
-sub_202E5:
+GameGoalieStatsScreen:
 push dword 330h	; 202E5
 call __CHK	; 202EA
 push ebx	; 202EF
@@ -258,14 +256,14 @@ mov edx, 4	; 20354
 mov eax, unk_CF88F	; 20359
 call sub_6B5E4	; 2035E
 xor ecx, ecx	; 20363
-mov ebx, asc_C0C34	; 20365
+mov ebx, str_embpal	; 20365
 cmp byte [byte_ED85A], 1	; 2036A
-jne short loc_2037B	; 20371
+jne short .1	; 20371
 mov edx, dword [dword_D2C6B]	; 20373
-jmp short loc_2037D	; 20379
-loc_2037B:
+jmp short .2	; 20379
+.1:
 xor edx, edx	; 2037B
-loc_2037D:
+.2:
 lea eax, [dword esp+0300h]	; 2037D
 call MakePath	; 20384
 push byte 0	; 20389
@@ -273,17 +271,17 @@ lea eax, [dword esp+0304h]	; 2038B
 push eax	; 20392
 call sub_8E83C	; 20393
 add esp, byte 8	; 20398
-mov dword [dword_DD104], eax	; 2039B
-push asc_C0C3B	; 203A0
+mov dword [statsbgshapes], eax	; 2039B
+push str_Pal6	; 203A0
 push eax	; 203A5
 call sub_B30B4	; 203A6
 add esp, byte 8	; 203AB
-mov dword [dword_DD100], eax	; 203AE
+mov dword [statspalshape], eax	; 203AE
 lea edx, [byte eax+010h]	; 203B3
 mov ebx, 300h	; 203B6
 mov eax, esp	; 203BB
 call memcpy_	; 203BD
-mov ecx, dword [dword_DD104]	; 203C2
+mov ecx, dword [statsbgshapes]	; 203C2
 push ecx	; 203C8
 call jctime	; 203C9
 add esp, byte 4	; 203CE
@@ -296,8 +294,8 @@ mov ecx, 41h	; 203E1
 mov ebx, 40h	; 203E6
 mov edx, 4	; 203EB
 mov eax, unk_CF88F	; 203F0
-jmp near loc_2012B	; 203F5
-sub_203FA:
+jmp near GameTeamStatsScreen_common	; 203F5
+GameStandingsScreen:
 push dword 28h	; 203FA
 call __CHK	; 203FF
 push ebx	; 20404
@@ -305,40 +303,40 @@ push ecx	; 20405
 push edx	; 20406
 sub esp, byte 10h	; 20407
 cmp dword [statsplayoffs], byte 0	; 2040A
-je near loc_204CA	; 20411
+je near .7	; 20411
 mov ebx, dword [dword_C65A8]	; 20417
 test ebx, ebx	; 2041D
-jne short loc_20434	; 2041F
+jne short .1	; 2041F
 push ebx	; 20421
-push asc_C6940	; 20422
+push str_EASNvfn	; 20422
 call sub_8E8A0	; 20427
 add esp, byte 8	; 2042C
 mov dword [dword_C65A8], eax	; 2042F
-loc_20434:
+.1:
 mov ecx, dword [dword_C65AC]	; 20434
 test ecx, ecx	; 2043A
-jne short loc_2049E	; 2043C
+jne short .6	; 2043C
 mov eax, dword [statsplayoffs]	; 2043E
 shl eax, 2	; 20443
 cmp dword [statsplayoffs], byte 0	; 20446
-jne short loc_2046A	; 2044D
+jne short .3	; 2044D
 mov ebx, dword [dword eax+off_C68E4]	; 2044F
 cmp byte [byte_ED858], 1	; 20455
-jne short loc_20466	; 2045C
+jne short .2	; 2045C
 mov edx, dword [dword_D2C6B]	; 2045E
-jmp short loc_20483	; 20464
-loc_20466:
+jmp short .5	; 20464
+.2:
 xor edx, edx	; 20466
-jmp short loc_20483	; 20468
-loc_2046A:
+jmp short .5	; 20468
+.3:
 mov ebx, dword [dword eax+off_C68E4]	; 2046A
 cmp byte [byte_ED859], 1	; 20470
-jne short loc_20481	; 20477
+jne short .4	; 20477
 mov edx, dword [dword_D2C6B]	; 20479
-jmp short loc_20483	; 2047F
-loc_20481:
+jmp short .5	; 2047F
+.4:
 xor edx, edx	; 20481
-loc_20483:
+.5:
 mov eax, esp	; 20483
 call MakePath	; 20485
 push byte 0	; 2048A
@@ -347,7 +345,7 @@ push eax	; 20490
 call sub_8E83C	; 20491
 add esp, byte 8	; 20496
 mov dword [dword_C65AC], eax	; 20499
-loc_2049E:
+.6:
 mov eax, dword [statsteambuf]	; 2049E
 mov edx, statsteamorder	; 204A3
 call sub_296BA	; 204A8
@@ -357,8 +355,8 @@ mov ebx, 40h	; 204B4
 mov edx, 4	; 204B9
 mov eax, unk_CF54F	; 204BE
 call sub_6B5E4	; 204C3
-jmp short loc_204FE	; 204C8
-loc_204CA:
+jmp short .8	; 204C8
+.7:
 call FreeDeskBuffers	; 204CA
 call sub_B4BA8	; 204CF
 push byte 42h	; 204D4
@@ -370,7 +368,7 @@ call sub_6B5E4	; 204EA
 mov eax, dword [statsteambuf]	; 204EF
 mov edx, statsteamorder	; 204F4
 call sub_27080	; 204F9
-loc_204FE:
+.8:
 xor eax, eax	; 204FE
 add esp, byte 10h	; 20500
 pop edx	; 20503
@@ -378,12 +376,12 @@ pop ecx	; 20504
 pop ebx	; 20505
 ret	; 20506
 db 08Dh,040h,00h
-jpt_2050A:
-dd loc_206EA
-dd loc_2074A
-dd loc_207A0
-dd loc_207F3
-sub_2051A:
+GameStandingsMenu_jt:
+dd GameStandingsMenu_standings
+dd GameStandingsMenu_roster
+dd GameStandingsMenu_player
+dd GameStandingsMenu_player2
+GameStandingsMenu:
 push dword 338h	; 2051A
 call __CHK	; 2051F
 push ebx	; 20524
@@ -394,7 +392,7 @@ push edi	; 20528
 push ebp	; 20529
 sub esp, 310h	; 2052A
 mov dword [dword_DC738], 1	; 20530
-mov eax, dword [dword_C65CC]	; 2053A
+mov eax, dword [standingscb]	; 2053A
 mov dword [statsredrawcb], eax	; 2053F
 xor ebx, ebx	; 20544
 mov dword [statsteamsel], ebx	; 20546
@@ -421,30 +419,30 @@ mov eax, 1	; 20593
 call InitMenuRemap	; 20598
 push byte 20h	; 2059D
 push dword 2A4h	; 2059F
-push asc_C0C40	; 205A4
+push str_tstat	; 205A4
 call sub_8CCA8	; 205A9
 add esp, byte 0Ch	; 205AE
 mov dword [statsteambuf], eax	; 205B1
 push byte 20h	; 205B6
 push dword 5B0h	; 205B8
-push asc_C0C46	; 205BD
+push str_keys	; 205BD
 call sub_8CCA8	; 205C2
 add esp, byte 0Ch	; 205C7
 mov dword [statsplayerbuf], eax	; 205CA
 push byte 20h	; 205CF
 push dword 497h	; 205D1
-push asc_C0C4B	; 205D6
+push str_pstat	; 205D6
 call sub_8CCA8	; 205DB
 add esp, byte 0Ch	; 205E0
 mov dword [statsskaterbuf], eax	; 205E3
 push byte 20h	; 205E8
 push dword 10Eh	; 205EA
-push asc_C0C51	; 205EF
+push str_gstat	; 205EF
 call sub_8CCA8	; 205F4
 add esp, byte 0Ch	; 205F9
 mov dword [statsgoaliebuf], eax	; 205FC
 xor eax, eax	; 20601
-call dword [dword_C65CC]	; 20603
+call dword [standingscb]	; 20603
 push byte 42h	; 20609
 mov ecx, 41h	; 2060B
 mov ebx, 40h	; 20610
@@ -454,14 +452,14 @@ call sub_6B5E4	; 2061F
 mov dword [statscategory], esi	; 20624
 mov dword [statsteamsel], esi	; 2062A
 xor ecx, ecx	; 20630
-mov ebx, asc_C0C34	; 20632
+mov ebx, str_embpal	; 20632
 cmp byte [byte_ED85A], 1	; 20637
-jne short loc_20648	; 2063E
+jne short .1	; 2063E
 mov edx, dword [dword_D2C6B]	; 20640
-jmp short loc_2064A	; 20646
-loc_20648:
+jmp short .2	; 20646
+.1:
 xor edx, edx	; 20648
-loc_2064A:
+.2:
 lea eax, [dword esp+0300h]	; 2064A
 call MakePath	; 20651
 push byte 0	; 20656
@@ -469,19 +467,19 @@ lea eax, [dword esp+0304h]	; 20658
 push eax	; 2065F
 call sub_8E83C	; 20660
 add esp, byte 8	; 20665
-mov dword [dword_DD104], eax	; 20668
-push asc_C0C3B	; 2066D
+mov dword [statsbgshapes], eax	; 20668
+push str_Pal6	; 2066D
 push eax	; 20672
 call sub_B30B4	; 20673
 add esp, byte 8	; 20678
-mov dword [dword_DD100], eax	; 2067B
+mov dword [statspalshape], eax	; 2067B
 add eax, byte 10h	; 20680
 push eax	; 20683
 push dword 100h	; 20684
 push byte 0	; 20689
 call sub_B4B88	; 2068B
 add esp, byte 0Ch	; 20690
-mov eax, dword [dword_DD104]	; 20693
+mov eax, dword [statsbgshapes]	; 20693
 push eax	; 20698
 call jctime	; 20699
 add esp, byte 4	; 2069E
@@ -494,19 +492,19 @@ call RunTeamPickMenu	; 206B7
 call FreeDeskBuffers	; 206BC
 mov edi, sub_22581	; 206C1
 mov esi, 1	; 206C6
-loc_206CB:
+.3:
 mov edx, dword [deskexit]	; 206CB
 cmp edx, byte 1	; 206D1
-je near loc_20850	; 206D4
+je near GameStandingsMenu_player2.1	; 206D4
 lea eax, [byte edx-02h]	; 206DA
 cmp eax, byte 3	; 206DD
-ja short loc_206CB	; 206E0
-jmp dword [nosplit cs:eax*4+jpt_2050A]	; 206E2
-loc_206EA:
-mov eax, dword [dword_C65CC]	; 206EA
+ja short GameStandingsMenu.3	; 206E0
+jmp dword [nosplit cs:eax*4+GameStandingsMenu_jt]	; 206E2
+GameStandingsMenu_standings:
+mov eax, dword [standingscb]	; 206EA
 mov dword [statsredrawcb], eax	; 206EF
 xor eax, eax	; 206F4
-call dword [dword_C65CC]	; 206F6
+call dword [standingscb]	; 206F6
 push byte 42h	; 206FC
 mov ecx, 41h	; 206FE
 mov ebx, 40h	; 20703
@@ -520,13 +518,13 @@ mov edx, 4	; 20723
 mov eax, unk_CF54F	; 20728
 call RunTeamPickMenu	; 2072D
 cmp dword [statsplayoffs], byte 0	; 20732
-je short loc_20740	; 20739
+je short .1	; 20739
 call FreeDeskBuffers	; 2073B
-loc_20740:
+.1:
 xor ecx, ecx	; 20740
 mov dword [dword_C6D26], ecx	; 20742
-jmp short loc_206CB	; 20748
-loc_2074A:
+jmp short GameStandingsMenu.3	; 20748
+GameStandingsMenu_roster:
 xor eax, eax	; 2074A
 mov dword [dword_DC734], eax	; 2074C
 mov dword [statsredrawcb], sub_244E2	; 20751
@@ -544,8 +542,8 @@ mov ebx, 40h	; 20787
 mov edx, 4	; 2078C
 mov eax, unk_CF6AF	; 20791
 call RunPlayerPickMenu	; 20796
-jmp near loc_206CB	; 2079B
-loc_207A0:
+jmp near GameStandingsMenu.3	; 2079B
+GameStandingsMenu_player:
 mov dword [statsredrawcb], edi	; 207A0
 xor ebp, ebp	; 207A6
 mov dword [dword_DC6B4], ebp	; 207A8
@@ -563,8 +561,8 @@ mov ebx, 40h	; 207DA
 mov edx, 2	; 207DF
 mov eax, unk_CF74F	; 207E4
 call RunMenu	; 207E9
-jmp near loc_206CB	; 207EE
-loc_207F3:
+jmp near GameStandingsMenu.3	; 207EE
+GameStandingsMenu_player2:
 mov dword [statsredrawcb], sub_21CDE	; 207F3
 xor ecx, ecx	; 207FD
 mov dword [dword_DC6B4], ecx	; 207FF
@@ -583,8 +581,8 @@ mov edx, 2	; 20836
 mov eax, unk_CF74F	; 2083B
 call RunMenu	; 20840
 mov dword [dword_C6D26], esi	; 20845
-jmp near loc_206CB	; 2084B
-loc_20850:
+jmp near GameStandingsMenu.3	; 2084B
+.1:
 xor esi, esi	; 20850
 mov dword [dword_C6D26], esi	; 20852
 mov eax, esp	; 20858
@@ -623,10 +621,10 @@ mov dword [statsredrawcb], esi	; 208D8
 mov eax, 2	; 208DE
 add esp, 310h	; 208E3
 pop ebp	; 208E9
-jmp near loc_202DF	; 208EA
-unk_208EF:
+jmp near GameSkaterStatsScreen_x	; 208EA
+EasnTeamStatsScreen:
 db 068h,034h,03h,00h,00h
-sub_208F4:
+EasnTeamStatsScreen_m:
 call __CHK	; 208F4
 push ebx	; 208F9
 push ecx	; 208FA
@@ -662,14 +660,14 @@ mov edx, 4	; 2096C
 mov eax, unk_CF78F	; 20971
 call sub_6B5E4	; 20976
 xor ecx, ecx	; 2097B
-mov ebx, asc_C0C58	; 2097D
+mov ebx, str_embpal2	; 2097D
 cmp byte [byte_ED85A], 1	; 20982
-jne short loc_20993	; 20989
+jne short .1	; 20989
 mov edx, dword [dword_D2C6B]	; 2098B
-jmp short loc_20995	; 20991
-loc_20993:
+jmp short .2	; 20991
+.1:
 xor edx, edx	; 20993
-loc_20995:
+.2:
 lea eax, [dword esp+0300h]	; 20995
 call MakePath	; 2099C
 push byte 0	; 209A1
@@ -677,17 +675,17 @@ lea eax, [dword esp+0304h]	; 209A3
 push eax	; 209AA
 call sub_8E83C	; 209AB
 add esp, byte 8	; 209B0
-mov dword [dword_DD104], eax	; 209B3
-push asc_C0C5F	; 209B8
+mov dword [statsbgshapes], eax	; 209B3
+push str_Pal7	; 209B8
 push eax	; 209BD
 call sub_B30B4	; 209BE
 add esp, byte 8	; 209C3
-mov dword [dword_DD100], eax	; 209C6
+mov dword [statspalshape], eax	; 209C6
 lea edx, [byte eax+010h]	; 209CB
 mov ebx, 10h	; 209CE
 xor eax, eax	; 209D3
 call sub_76429	; 209D5
-mov esi, dword [dword_DD104]	; 209DA
+mov esi, dword [statsbgshapes]	; 209DA
 push esi	; 209E0
 call jctime	; 209E1
 add esp, byte 4	; 209E6
@@ -712,16 +710,16 @@ mov dword [dword_DC738], edi	; 20A29
 mov dword [statsredrawcb], edi	; 20A2F
 mov eax, 2	; 20A35
 add esp, 310h	; 20A3A
-loc_20A40:
+EasnTeamStatsScreen_x:
 pop edi	; 20A40
 pop esi	; 20A41
 pop edx	; 20A42
 pop ecx	; 20A43
 pop ebx	; 20A44
 ret	; 20A45
-unk_20A46:
+EasnSkaterStatsScreen:
 db 068h,034h,03h,00h,00h,0E8h
-sub_20A4C:
+EasnSkaterStatsScreen_m:
 cld	; 20A4C
 mov esi, 51530006h	; 20A4D
 push edx	; 20A52
@@ -755,14 +753,14 @@ mov edx, 4	; 20AC6
 mov eax, unk_CF80F	; 20ACB
 call sub_6B5E4	; 20AD0
 xor ecx, ecx	; 20AD5
-mov ebx, asc_C0C58	; 20AD7
+mov ebx, str_embpal2	; 20AD7
 cmp byte [byte_ED85A], 1	; 20ADC
-jne short loc_20AED	; 20AE3
+jne short .1	; 20AE3
 mov edx, dword [dword_D2C6B]	; 20AE5
-jmp short loc_20AEF	; 20AEB
-loc_20AED:
+jmp short .2	; 20AEB
+.1:
 xor edx, edx	; 20AED
-loc_20AEF:
+.2:
 lea eax, [dword esp+0300h]	; 20AEF
 call MakePath	; 20AF6
 push byte 0	; 20AFB
@@ -770,17 +768,17 @@ lea eax, [dword esp+0304h]	; 20AFD
 push eax	; 20B04
 call sub_8E83C	; 20B05
 add esp, byte 8	; 20B0A
-mov dword [dword_DD104], eax	; 20B0D
-push asc_C0C5F	; 20B12
+mov dword [statsbgshapes], eax	; 20B0D
+push str_Pal7	; 20B12
 push eax	; 20B17
 call sub_B30B4	; 20B18
 add esp, byte 8	; 20B1D
-mov dword [dword_DD100], eax	; 20B20
+mov dword [statspalshape], eax	; 20B20
 lea edx, [byte eax+010h]	; 20B25
 mov ebx, 10h	; 20B28
 xor eax, eax	; 20B2D
 call sub_76429	; 20B2F
-mov esi, dword [dword_DD104]	; 20B34
+mov esi, dword [statsbgshapes]	; 20B34
 push esi	; 20B3A
 call jctime	; 20B3B
 add esp, byte 4	; 20B40
@@ -797,29 +795,29 @@ push byte 0	; 20B66
 call sub_8FFB0	; 20B68
 add esp, byte 0Ch	; 20B6D
 cmp dword [gamemode], byte 1	; 20B70
-je short loc_20B9B	; 20B77
+je short .4	; 20B77
 xor ecx, ecx	; 20B79
-mov ebx, asc_C0C64	; 20B7B
+mov ebx, str_easndesk2	; 20B7B
 cmp byte [byte_ED836], 1	; 20B80
-jne short loc_20B94	; 20B87
+jne short .3	; 20B87
 mov edx, dword [dword_D2C6B]	; 20B89
-jmp near loc_20D0A	; 20B8F
-loc_20B94:
+jmp near EasnGoalieStatsScreen_common	; 20B8F
+.3:
 xor edx, edx	; 20B94
-jmp near loc_20D0A	; 20B96
-loc_20B9B:
+jmp near EasnGoalieStatsScreen_common	; 20B96
+.4:
 xor ecx, ecx	; 20B9B
-mov ebx, asc_C0C58	; 20B9D
+mov ebx, str_embpal2	; 20B9D
 cmp byte [byte_ED85A], 1	; 20BA2
-jne short loc_20BB6	; 20BA9
+jne short .5	; 20BA9
 mov edx, dword [dword_D2C6B]	; 20BAB
-jmp near loc_20D0A	; 20BB1
-loc_20BB6:
+jmp near EasnGoalieStatsScreen_common	; 20BB1
+.5:
 xor edx, edx	; 20BB6
-jmp near loc_20D0A	; 20BB8
-unk_20BBD:
+jmp near EasnGoalieStatsScreen_common	; 20BB8
+EasnGoalieStatsScreen:
 db 068h,034h,03h,00h,00h
-sub_20BC2:
+EasnGoalieStatsScreen_m:
 call __CHK	; 20BC2
 push ebx	; 20BC7
 push ecx	; 20BC8
@@ -854,14 +852,14 @@ mov edx, 4	; 20C3D
 mov eax, unk_CF88F	; 20C42
 call sub_6B5E4	; 20C47
 xor ecx, ecx	; 20C4C
-mov ebx, asc_C0C58	; 20C4E
+mov ebx, str_embpal2	; 20C4E
 cmp byte [byte_ED85A], 1	; 20C53
-jne short loc_20C64	; 20C5A
+jne short .1	; 20C5A
 mov edx, dword [dword_D2C6B]	; 20C5C
-jmp short loc_20C66	; 20C62
-loc_20C64:
+jmp short .2	; 20C62
+.1:
 xor edx, edx	; 20C64
-loc_20C66:
+.2:
 lea eax, [dword esp+0300h]	; 20C66
 call MakePath	; 20C6D
 push byte 0	; 20C72
@@ -869,17 +867,17 @@ lea eax, [dword esp+0304h]	; 20C74
 push eax	; 20C7B
 call sub_8E83C	; 20C7C
 add esp, byte 8	; 20C81
-mov dword [dword_DD104], eax	; 20C84
-push asc_C0C5F	; 20C89
+mov dword [statsbgshapes], eax	; 20C84
+push str_Pal7	; 20C89
 push eax	; 20C8E
 call sub_B30B4	; 20C8F
 add esp, byte 8	; 20C94
-mov dword [dword_DD100], eax	; 20C97
+mov dword [statspalshape], eax	; 20C97
 lea edx, [byte eax+010h]	; 20C9C
 mov ebx, 10h	; 20C9F
 xor eax, eax	; 20CA4
 call sub_76429	; 20CA6
-mov esi, dword [dword_DD104]	; 20CAB
+mov esi, dword [statsbgshapes]	; 20CAB
 push esi	; 20CB1
 call jctime	; 20CB2
 add esp, byte 4	; 20CB7
@@ -896,14 +894,14 @@ push byte 0	; 20CDD
 call sub_8FFB0	; 20CDF
 add esp, byte 0Ch	; 20CE4
 cmp dword [gamemode], byte 1	; 20CE7
-je near loc_20D84	; 20CEE
+je near EasnGoalieStatsScreen_common.2	; 20CEE
 xor ecx, ecx	; 20CF4
-mov ebx, asc_C0C64	; 20CF6
+mov ebx, str_easndesk2	; 20CF6
 cmp byte [byte_ED836], 1	; 20CFB
-loc_20D02:
-jne short loc_20D80	; 20D02
+.3:
+jne short EasnGoalieStatsScreen_common.1	; 20D02
 mov edx, dword [dword_D2C6B]	; 20D04
-loc_20D0A:
+EasnGoalieStatsScreen_common:
 lea eax, [dword esp+0300h]	; 20D0A
 call MakePath	; 20D11
 push byte 0	; 20D16
@@ -911,18 +909,18 @@ lea eax, [dword esp+0304h]	; 20D18
 push eax	; 20D1F
 call sub_8E83C	; 20D20
 add esp, byte 8	; 20D25
-mov dword [dword_DD104], eax	; 20D28
-push asc_C0C5F	; 20D2D
+mov dword [statsbgshapes], eax	; 20D28
+push str_Pal7	; 20D2D
 push eax	; 20D32
 call sub_B30B4	; 20D33
 add esp, byte 8	; 20D38
 add eax, byte 10h	; 20D3B
-mov dword [dword_DD100], eax	; 20D3E
+mov dword [statspalshape], eax	; 20D3E
 mov ebx, 10h	; 20D43
 mov edx, esp	; 20D48
 mov eax, 1	; 20D4A
 call sub_76429	; 20D4F
-mov ebp, dword [dword_DD104]	; 20D54
+mov ebp, dword [statsbgshapes]	; 20D54
 push ebp	; 20D5A
 call jctime	; 20D5B
 add esp, byte 4	; 20D60
@@ -937,15 +935,15 @@ pop edx	; 20D7C
 pop ecx	; 20D7D
 pop ebx	; 20D7E
 ret	; 20D7F
-loc_20D80:
+.1:
 xor edx, edx	; 20D80
-jmp short loc_20D0A	; 20D82
-loc_20D84:
+jmp short EasnGoalieStatsScreen_common	; 20D82
+.2:
 xor ecx, ecx	; 20D84
-mov ebx, asc_C0C58	; 20D86
+mov ebx, str_embpal2	; 20D86
 cmp byte [byte_ED85A], 1	; 20D8B
-jmp near loc_20D02	; 20D92
-sub_20D97:
+jmp near EasnGoalieStatsScreen_m.3	; 20D92
+EasnStandingsScreen:
 push dword 28h	; 20D97
 call __CHK	; 20D9C
 push ebx	; 20DA1
@@ -953,40 +951,40 @@ push ecx	; 20DA2
 push edx	; 20DA3
 sub esp, byte 10h	; 20DA4
 cmp dword [statsplayoffs], byte 0	; 20DA7
-je near loc_20E67	; 20DAE
+je near .7	; 20DAE
 mov ebx, dword [dword_C65A8]	; 20DB4
 test ebx, ebx	; 20DBA
-jne short loc_20DD1	; 20DBC
+jne short .1	; 20DBC
 push ebx	; 20DBE
-push asc_C6940	; 20DBF
+push str_EASNvfn	; 20DBF
 call sub_8E8A0	; 20DC4
 add esp, byte 8	; 20DC9
 mov dword [dword_C65A8], eax	; 20DCC
-loc_20DD1:
+.1:
 mov ecx, dword [dword_C65AC]	; 20DD1
 test ecx, ecx	; 20DD7
-jne short loc_20E3B	; 20DD9
+jne short .6	; 20DD9
 mov eax, dword [statsplayoffs]	; 20DDB
 shl eax, 2	; 20DE0
 cmp dword [statsplayoffs], byte 0	; 20DE3
-jne short loc_20E07	; 20DEA
+jne short .3	; 20DEA
 mov ebx, dword [dword eax+off_C68E4]	; 20DEC
 cmp byte [byte_ED858], 1	; 20DF2
-jne short loc_20E03	; 20DF9
+jne short .2	; 20DF9
 mov edx, dword [dword_D2C6B]	; 20DFB
-jmp short loc_20E20	; 20E01
-loc_20E03:
+jmp short .5	; 20E01
+.2:
 xor edx, edx	; 20E03
-jmp short loc_20E20	; 20E05
-loc_20E07:
+jmp short .5	; 20E05
+.3:
 mov ebx, dword [dword eax+off_C68E4]	; 20E07
 cmp byte [byte_ED859], 1	; 20E0D
-jne short loc_20E1E	; 20E14
+jne short .4	; 20E14
 mov edx, dword [dword_D2C6B]	; 20E16
-jmp short loc_20E20	; 20E1C
-loc_20E1E:
+jmp short .5	; 20E1C
+.4:
 xor edx, edx	; 20E1E
-loc_20E20:
+.5:
 mov eax, esp	; 20E20
 call MakePath	; 20E22
 push byte 0	; 20E27
@@ -995,7 +993,7 @@ push eax	; 20E2D
 call sub_8E83C	; 20E2E
 add esp, byte 8	; 20E33
 mov dword [dword_C65AC], eax	; 20E36
-loc_20E3B:
+.6:
 mov eax, dword [statsteambuf]	; 20E3B
 mov edx, statsteamorder	; 20E40
 call sub_296BA	; 20E45
@@ -1005,8 +1003,8 @@ mov ebx, 40h	; 20E51
 mov edx, 4	; 20E56
 mov eax, unk_CF54F	; 20E5B
 call sub_6B5E4	; 20E60
-jmp short loc_20E9B	; 20E65
-loc_20E67:
+jmp short .8	; 20E65
+.7:
 call FreeDeskBuffers	; 20E67
 call sub_B4BA8	; 20E6C
 push byte 42h	; 20E71
@@ -1018,7 +1016,7 @@ call sub_6B5E4	; 20E87
 mov eax, dword [statsteambuf]	; 20E8C
 mov edx, statsteamorder	; 20E91
 call sub_27080	; 20E96
-loc_20E9B:
+.8:
 xor eax, eax	; 20E9B
 add esp, byte 10h	; 20E9D
 pop edx	; 20EA0
@@ -1026,14 +1024,14 @@ pop ecx	; 20EA1
 pop ebx	; 20EA2
 ret	; 20EA3
 db 08Dh,040h,00h
-jpt_20EA7:
-dd loc_21093
-dd loc_210FB
-dd loc_21151
-dd loc_211A4
-unk_20EB7:
+EasnStandingsMenu_jt:
+dd EasnStandingsMenu_standings
+dd EasnStandingsMenu_roster
+dd EasnStandingsMenu_player
+dd EasnStandingsMenu_player2
+EasnStandingsMenu:
 db 068h,0B4h,03h,00h,00h
-sub_20EBC:
+EasnStandingsMenu_m:
 call __CHK	; 20EBC
 push ebx	; 20EC1
 push ecx	; 20EC2
@@ -1043,15 +1041,15 @@ push edi	; 20EC5
 push ebp	; 20EC6
 sub esp, 38Ch	; 20EC7
 xor eax, eax	; 20ECD
-loc_20ECF:
+.1:
 mov ebx, dword [nosplit eax*4+playofftree]	; 20ECF
 mov dword [dword esp+eax*4+0300h], ebx	; 20ED6
 inc eax	; 20EDD
 cmp eax, byte 1Fh	; 20EDE
-jl short loc_20ECF	; 20EE1
+jl short EasnStandingsMenu_m.1	; 20EE1
 mov edx, 1	; 20EE3
 mov dword [dword_DC738], edx	; 20EE8
-mov eax, dword [dword_C65CC]	; 20EEE
+mov eax, dword [standingscb]	; 20EEE
 mov dword [statsredrawcb], eax	; 20EF3
 xor ebx, ebx	; 20EF8
 mov dword [statsteamsel], ebx	; 20EFA
@@ -1075,30 +1073,30 @@ mov eax, edi	; 20F3B
 call InitMenuRemap	; 20F3D
 push byte 20h	; 20F42
 push dword 2A4h	; 20F44
-push asc_C0C6D	; 20F49
+push str_tstat2	; 20F49
 call sub_8CCA8	; 20F4E
 add esp, byte 0Ch	; 20F53
 mov dword [statsteambuf], eax	; 20F56
 push byte 20h	; 20F5B
 push dword 5B0h	; 20F5D
-push asc_C0C73	; 20F62
+push str_keys2	; 20F62
 call sub_8CCA8	; 20F67
 add esp, byte 0Ch	; 20F6C
 mov dword [statsplayerbuf], eax	; 20F6F
 push byte 20h	; 20F74
 push dword 497h	; 20F76
-push asc_C0C78	; 20F7B
+push str_pstat2	; 20F7B
 call sub_8CCA8	; 20F80
 add esp, byte 0Ch	; 20F85
 mov dword [statsskaterbuf], eax	; 20F88
 push byte 20h	; 20F8D
 push dword 10Eh	; 20F8F
-push asc_C0C7E	; 20F94
+push str_gstat2	; 20F94
 call sub_8CCA8	; 20F99
 add esp, byte 0Ch	; 20F9E
 mov dword [statsgoaliebuf], eax	; 20FA1
 xor eax, eax	; 20FA6
-call dword [dword_C65CC]	; 20FA8
+call dword [standingscb]	; 20FA8
 push byte 42h	; 20FAE
 mov ecx, 41h	; 20FB0
 mov ebx, 40h	; 20FB5
@@ -1109,14 +1107,14 @@ xor ebp, ebp	; 20FC9
 mov dword [statscategory], ebp	; 20FCB
 mov dword [statsteamsel], ebp	; 20FD1
 xor ecx, ecx	; 20FD7
-mov ebx, asc_C0C58	; 20FD9
+mov ebx, str_embpal2	; 20FD9
 cmp byte [byte_ED85A], 1	; 20FDE
-jne short loc_20FEF	; 20FE5
+jne short .2	; 20FE5
 mov edx, dword [dword_D2C6B]	; 20FE7
-jmp short loc_20FF1	; 20FED
-loc_20FEF:
+jmp short .3	; 20FED
+.2:
 xor edx, edx	; 20FEF
-loc_20FF1:
+.3:
 lea eax, [dword esp+037Ch]	; 20FF1
 call MakePath	; 20FF8
 push byte 0	; 20FFD
@@ -1124,17 +1122,17 @@ lea eax, [dword esp+0380h]	; 20FFF
 push eax	; 21006
 call sub_8E83C	; 21007
 add esp, byte 8	; 2100C
-mov dword [dword_DD104], eax	; 2100F
-push asc_C0C5F	; 21014
+mov dword [statsbgshapes], eax	; 2100F
+push str_Pal7	; 21014
 push eax	; 21019
 call sub_B30B4	; 2101A
 add esp, byte 8	; 2101F
-mov dword [dword_DD100], eax	; 21022
+mov dword [statspalshape], eax	; 21022
 lea edx, [byte eax+010h]	; 21027
 mov ebx, 10h	; 2102A
 xor eax, eax	; 2102F
 call sub_76429	; 21031
-mov edx, dword [dword_DD104]	; 21036
+mov edx, dword [statsbgshapes]	; 21036
 push edx	; 2103C
 call jctime	; 2103D
 add esp, byte 4	; 21042
@@ -1148,19 +1146,19 @@ call FreeDeskBuffers	; 21060
 call sub_B4BA8	; 21065
 mov edi, sub_22581	; 2106A
 mov esi, 1	; 2106F
-loc_21074:
+.4:
 mov ebx, dword [deskexit]	; 21074
 cmp ebx, byte 1	; 2107A
-je near loc_2120D	; 2107D
+je near EasnStandingsMenu_player2.1	; 2107D
 lea eax, [byte ebx-02h]	; 21083
 cmp eax, byte 3	; 21086
-ja short loc_21074	; 21089
-jmp dword [nosplit cs:eax*4+jpt_20EA7]	; 2108B
-loc_21093:
-mov eax, dword [dword_C65CC]	; 21093
+ja short EasnStandingsMenu_m.4	; 21089
+jmp dword [nosplit cs:eax*4+EasnStandingsMenu_jt]	; 2108B
+EasnStandingsMenu_standings:
+mov eax, dword [standingscb]	; 21093
 mov dword [statsredrawcb], eax	; 21098
 xor eax, eax	; 2109D
-call dword [dword_C65CC]	; 2109F
+call dword [standingscb]	; 2109F
 push byte 42h	; 210A5
 mov ecx, 41h	; 210A7
 mov ebx, 40h	; 210AC
@@ -1174,14 +1172,14 @@ mov edx, 4	; 210CC
 mov eax, unk_CF54F	; 210D1
 call RunTeamPickMenu	; 210D6
 cmp dword [statsplayoffs], byte 0	; 210DB
-je short loc_210EE	; 210E2
+je short .1	; 210E2
 call FreeDeskBuffers	; 210E4
 call sub_B4BA8	; 210E9
-loc_210EE:
+.1:
 xor ecx, ecx	; 210EE
 mov dword [dword_C6D26], ecx	; 210F0
-jmp near loc_21074	; 210F6
-loc_210FB:
+jmp near EasnStandingsMenu_m.4	; 210F6
+EasnStandingsMenu_roster:
 xor eax, eax	; 210FB
 mov dword [dword_DC734], eax	; 210FD
 mov dword [statsredrawcb], sub_244E2	; 21102
@@ -1199,8 +1197,8 @@ mov ebx, 40h	; 21138
 mov edx, 4	; 2113D
 mov eax, unk_CF6AF	; 21142
 call RunPlayerPickMenu	; 21147
-jmp near loc_21074	; 2114C
-loc_21151:
+jmp near EasnStandingsMenu_m.4	; 2114C
+EasnStandingsMenu_player:
 mov dword [statsredrawcb], edi	; 21151
 xor ebp, ebp	; 21157
 mov dword [dword_DC6B4], ebp	; 21159
@@ -1218,13 +1216,13 @@ mov ebx, 40h	; 2118B
 mov edx, 2	; 21190
 mov eax, unk_CF74F	; 21195
 call RunMenu	; 2119A
-jmp near loc_21074	; 2119F
-loc_211A4:
+jmp near EasnStandingsMenu_m.4	; 2119F
+EasnStandingsMenu_player2:
 mov dword [statsredrawcb], sub_21CDE	; 211A4
 xor edx, edx	; 211AE
 mov dword [dword_DC6B4], edx	; 211B0
-mov dword [dword_C6A60], edx	; 211B6
-mov dword [dword_DD120], edx	; 211BC
+mov dword [statspalvalid], edx	; 211B6
+mov dword [statspal], edx	; 211BC
 mov eax, statsplayer	; 211C2
 call sub_21CDE	; 211C7
 push byte 42h	; 211CC
@@ -1240,8 +1238,8 @@ mov edx, 2	; 211F3
 mov eax, unk_CF74F	; 211F8
 call RunMenu	; 211FD
 mov dword [dword_C6D26], esi	; 21202
-jmp near loc_21074	; 21208
-loc_2120D:
+jmp near EasnStandingsMenu_m.4	; 21208
+.1:
 xor ecx, ecx	; 2120D
 mov dword [dword_C6D26], ecx	; 2120F
 call FreeDeskBuffers	; 21215
@@ -1280,17 +1278,17 @@ xor edi, edi	; 21291
 mov dword [dword_DC738], edi	; 21293
 mov dword [statsredrawcb], edi	; 21299
 xor eax, eax	; 2129F
-loc_212A1:
+.2:
 mov ebx, dword [dword esp+eax*4+0300h]	; 212A1
 mov dword [nosplit eax*4+playofftree], ebx	; 212A8
 inc eax	; 212AF
 cmp eax, byte 1Fh	; 212B0
-jl short loc_212A1	; 212B3
+jl short EasnStandingsMenu_player2.2	; 212B3
 mov eax, 2	; 212B5
 add esp, 38Ch	; 212BA
 pop ebp	; 212C0
-jmp near loc_20A40	; 212C1
-sub_212C6:
+jmp near EasnTeamStatsScreen_x	; 212C1
+FreeCalendarIfLowMem:
 push dword 14h	; 212C6
 call __CHK	; 212CB
 push ebx	; 212D0
@@ -1298,37 +1296,37 @@ push ecx	; 212D1
 push edx	; 212D2
 call sub_8DAB8	; 212D3
 cmp eax, 4B708h	; 212D8
-jg short loc_212FA	; 212DD
-mov edx, dword [dword_C8992]	; 212DF
+jg short .x	; 212DD
+mov edx, dword [calendarshapes]	; 212DF
 test edx, edx	; 212E5
-je short loc_212F2	; 212E7
+je short .1	; 212E7
 push edx	; 212E9
 call jctime	; 212EA
 add esp, byte 4	; 212EF
-loc_212F2:
+.1:
 xor ecx, ecx	; 212F2
-mov dword [dword_C8992], ecx	; 212F4
-loc_212FA:
+mov dword [calendarshapes], ecx	; 212F4
+.x:
 pop edx	; 212FA
 pop ecx	; 212FB
 pop ebx	; 212FC
 ret	; 212FD
-sub_212FE:
+LoadCalendarShapes:
 push dword 38h	; 212FE
 call __CHK	; 21303
 push ebx	; 21308
 push ecx	; 21309
 push edx	; 2130A
 sub esp, byte 20h	; 2130B
-mov edx, dword [dword_C8992]	; 2130E
+mov edx, dword [calendarshapes]	; 2130E
 test edx, edx	; 21314
-jne short loc_21349	; 21316
+jne short .x	; 21316
 xor ecx, ecx	; 21318
-mov ebx, asc_C0C84	; 2131A
+mov ebx, str_calendar	; 2131A
 cmp byte [byte_ED98D], 1	; 2131F
-jne short loc_2132E	; 21326
+jne short .1	; 21326
 mov edx, dword [dword_D2C6B]	; 21328
-loc_2132E:
+.1:
 mov eax, esp	; 2132E
 call MakePath	; 21330
 push byte 20h	; 21335
@@ -1336,14 +1334,14 @@ lea eax, [byte esp+04h]	; 21337
 push eax	; 2133B
 call sub_8E83C	; 2133C
 add esp, byte 8	; 21341
-mov dword [dword_C8992], eax	; 21344
-loc_21349:
+mov dword [calendarshapes], eax	; 21344
+.x:
 add esp, byte 20h	; 21349
 pop edx	; 2134C
 pop ecx	; 2134D
 pop ebx	; 2134E
 ret	; 2134F
-sub_21350:
+CalTeamStatsScreen:
 push dword 334h	; 21350
 call __CHK	; 21355
 push ebx	; 2135A
@@ -1369,7 +1367,7 @@ mov ebx, 10h	; 213A2
 mov edx, esp	; 213A7
 mov eax, 1	; 213A9
 call sub_76429	; 213AE
-call sub_212C6	; 213B3
+call FreeCalendarIfLowMem	; 213B3
 mov eax, esi	; 213B8
 call sub_235BE	; 213BA
 push byte 42h	; 213BF
@@ -1379,14 +1377,14 @@ mov edx, 4	; 213CB
 mov eax, unk_CF78F	; 213D0
 call sub_6B5E4	; 213D5
 xor ecx, ecx	; 213DA
-mov ebx, asc_C0C8D	; 213DC
+mov ebx, str_embpal3	; 213DC
 cmp byte [byte_ED85A], 1	; 213E1
-jne short loc_213F2	; 213E8
+jne short .1	; 213E8
 mov edx, dword [dword_D2C6B]	; 213EA
-jmp short loc_213F4	; 213F0
-loc_213F2:
+jmp short .2	; 213F0
+.1:
 xor edx, edx	; 213F2
-loc_213F4:
+.2:
 lea eax, [dword esp+0300h]	; 213F4
 call MakePath	; 213FB
 push byte 0	; 21400
@@ -1394,17 +1392,17 @@ lea eax, [dword esp+0304h]	; 21402
 push eax	; 21409
 call sub_8E83C	; 2140A
 add esp, byte 8	; 2140F
-mov dword [dword_DD104], eax	; 21412
-push asc_C0C94	; 21417
+mov dword [statsbgshapes], eax	; 21412
+push str_Pal8	; 21417
 push eax	; 2141C
 call sub_B30B4	; 2141D
 add esp, byte 8	; 21422
-mov dword [dword_DD100], eax	; 21425
+mov dword [statspalshape], eax	; 21425
 lea edx, [byte eax+010h]	; 2142A
 mov ebx, 10h	; 2142D
 xor eax, eax	; 21432
 call sub_76429	; 21434
-mov ecx, dword [dword_DD104]	; 21439
+mov ecx, dword [statsbgshapes]	; 21439
 push ecx	; 2143F
 call jctime	; 21440
 add esp, byte 4	; 21445
@@ -1413,7 +1411,7 @@ mov ecx, 41h	; 2144A
 mov ebx, 40h	; 2144F
 mov edx, 4	; 21454
 mov eax, unk_CF78F	; 21459
-loc_2145E:
+CalTeamStatsScreen_common:
 call RunMenu	; 2145E
 mov eax, esp	; 21463
 push eax	; 21465
@@ -1426,20 +1424,20 @@ mov edx, esp	; 2147A
 mov eax, 1	; 2147C
 call sub_76429	; 21481
 mov dword [dword_DDD2C], 0FFFFFFFFh	; 21486
-call sub_212FE	; 21490
+call LoadCalendarShapes	; 21490
 xor edi, edi	; 21495
 mov dword [dword_DC738], edi	; 21497
 mov dword [statsredrawcb], edi	; 2149D
 xor eax, eax	; 214A3
 add esp, 310h	; 214A5
-loc_214AB:
+CalTeamStatsScreen_x:
 pop edi	; 214AB
 pop esi	; 214AC
 pop edx	; 214AD
 pop ecx	; 214AE
 pop ebx	; 214AF
 ret	; 214B0
-sub_214B1:
+CalSkaterStatsScreen:
 push dword 334h	; 214B1
 call __CHK	; 214B6
 push ebx	; 214BB
@@ -1465,7 +1463,7 @@ mov ebx, 10h	; 21503
 mov edx, esp	; 21508
 mov eax, 1	; 2150A
 call sub_76429	; 2150F
-call sub_212C6	; 21514
+call FreeCalendarIfLowMem	; 21514
 mov eax, esi	; 21519
 call sub_25B24	; 2151B
 push byte 42h	; 21520
@@ -1475,14 +1473,14 @@ mov edx, 4	; 2152C
 mov eax, unk_CF80F	; 21531
 call sub_6B5E4	; 21536
 xor ecx, ecx	; 2153B
-mov ebx, asc_C0C8D	; 2153D
+mov ebx, str_embpal3	; 2153D
 cmp byte [byte_ED85A], 1	; 21542
-jne short loc_21553	; 21549
+jne short .1	; 21549
 mov edx, dword [dword_D2C6B]	; 2154B
-jmp short loc_21555	; 21551
-loc_21553:
+jmp short .2	; 21551
+.1:
 xor edx, edx	; 21553
-loc_21555:
+.2:
 lea eax, [dword esp+0300h]	; 21555
 call MakePath	; 2155C
 push byte 0	; 21561
@@ -1490,17 +1488,17 @@ lea eax, [dword esp+0304h]	; 21563
 push eax	; 2156A
 call sub_8E83C	; 2156B
 add esp, byte 8	; 21570
-mov dword [dword_DD104], eax	; 21573
-push asc_C0C94	; 21578
+mov dword [statsbgshapes], eax	; 21573
+push str_Pal8	; 21578
 push eax	; 2157D
 call sub_B30B4	; 2157E
 add esp, byte 8	; 21583
-mov dword [dword_DD100], eax	; 21586
+mov dword [statspalshape], eax	; 21586
 lea edx, [byte eax+010h]	; 2158B
 mov ebx, 10h	; 2158E
 xor eax, eax	; 21593
 call sub_76429	; 21595
-mov ecx, dword [dword_DD104]	; 2159A
+mov ecx, dword [statsbgshapes]	; 2159A
 push ecx	; 215A0
 call jctime	; 215A1
 add esp, byte 4	; 215A6
@@ -1509,8 +1507,8 @@ mov ecx, 41h	; 215AB
 mov ebx, 40h	; 215B0
 mov edx, 4	; 215B5
 mov eax, unk_CF80F	; 215BA
-jmp near loc_2145E	; 215BF
-sub_215C4:
+jmp near CalTeamStatsScreen_common	; 215BF
+CalGoalieStatsScreen:
 push dword 334h	; 215C4
 call __CHK	; 215C9
 push ebx	; 215CE
@@ -1536,7 +1534,7 @@ mov ebx, 10h	; 21616
 mov edx, esp	; 2161B
 mov eax, 1	; 2161D
 call sub_76429	; 21622
-call sub_212C6	; 21627
+call FreeCalendarIfLowMem	; 21627
 mov eax, esi	; 2162C
 call sub_25B24	; 2162E
 push byte 42h	; 21633
@@ -1546,14 +1544,14 @@ mov edx, 4	; 2163F
 mov eax, unk_CF88F	; 21644
 call sub_6B5E4	; 21649
 xor ecx, ecx	; 2164E
-mov ebx, asc_C0C8D	; 21650
+mov ebx, str_embpal3	; 21650
 cmp byte [byte_ED85A], 1	; 21655
-jne short loc_21666	; 2165C
+jne short .1	; 2165C
 mov edx, dword [dword_D2C6B]	; 2165E
-jmp short loc_21668	; 21664
-loc_21666:
+jmp short .2	; 21664
+.1:
 xor edx, edx	; 21666
-loc_21668:
+.2:
 lea eax, [dword esp+0300h]	; 21668
 call MakePath	; 2166F
 push byte 0	; 21674
@@ -1561,17 +1559,17 @@ lea eax, [dword esp+0304h]	; 21676
 push eax	; 2167D
 call sub_8E83C	; 2167E
 add esp, byte 8	; 21683
-mov dword [dword_DD104], eax	; 21686
-push asc_C0C94	; 2168B
+mov dword [statsbgshapes], eax	; 21686
+push str_Pal8	; 2168B
 push eax	; 21690
 call sub_B30B4	; 21691
 add esp, byte 8	; 21696
-mov dword [dword_DD100], eax	; 21699
+mov dword [statspalshape], eax	; 21699
 lea edx, [byte eax+010h]	; 2169E
 mov ebx, 10h	; 216A1
 xor eax, eax	; 216A6
 call sub_76429	; 216A8
-mov ecx, dword [dword_DD104]	; 216AD
+mov ecx, dword [statsbgshapes]	; 216AD
 push ecx	; 216B3
 call jctime	; 216B4
 add esp, byte 4	; 216B9
@@ -1580,50 +1578,50 @@ mov ecx, 41h	; 216BE
 mov ebx, 40h	; 216C3
 mov edx, 4	; 216C8
 mov eax, unk_CF88F	; 216CD
-jmp near loc_2145E	; 216D2
-sub_216D7:
+jmp near CalTeamStatsScreen_common	; 216D2
+CalStandingsScreen:
 push dword 28h	; 216D7
 call __CHK	; 216DC
 push ebx	; 216E1
 push ecx	; 216E2
 push edx	; 216E3
 sub esp, byte 10h	; 216E4
-call sub_212C6	; 216E7
+call FreeCalendarIfLowMem	; 216E7
 cmp dword [statsplayoffs], byte 0	; 216EC
-je near loc_217AC	; 216F3
+je near .7	; 216F3
 mov ebx, dword [dword_C65A8]	; 216F9
 test ebx, ebx	; 216FF
-jne short loc_21716	; 21701
+jne short .1	; 21701
 push ebx	; 21703
-push asc_C6940	; 21704
+push str_EASNvfn	; 21704
 call sub_8E8A0	; 21709
 add esp, byte 8	; 2170E
 mov dword [dword_C65A8], eax	; 21711
-loc_21716:
+.1:
 mov ecx, dword [dword_C65AC]	; 21716
 test ecx, ecx	; 2171C
-jne short loc_21780	; 2171E
+jne short .6	; 2171E
 mov eax, dword [statsplayoffs]	; 21720
 shl eax, 2	; 21725
 cmp dword [statsplayoffs], byte 0	; 21728
-jne short loc_2174C	; 2172F
+jne short .3	; 2172F
 mov ebx, dword [dword eax+off_C68E4]	; 21731
 cmp byte [byte_ED858], 1	; 21737
-jne short loc_21748	; 2173E
+jne short .2	; 2173E
 mov edx, dword [dword_D2C6B]	; 21740
-jmp short loc_21765	; 21746
-loc_21748:
+jmp short .5	; 21746
+.2:
 xor edx, edx	; 21748
-jmp short loc_21765	; 2174A
-loc_2174C:
+jmp short .5	; 2174A
+.3:
 mov ebx, dword [dword eax+off_C68E4]	; 2174C
 cmp byte [byte_ED859], 1	; 21752
-jne short loc_21763	; 21759
+jne short .4	; 21759
 mov edx, dword [dword_D2C6B]	; 2175B
-jmp short loc_21765	; 21761
-loc_21763:
+jmp short .5	; 21761
+.4:
 xor edx, edx	; 21763
-loc_21765:
+.5:
 mov eax, esp	; 21765
 call MakePath	; 21767
 push byte 0	; 2176C
@@ -1632,7 +1630,7 @@ push eax	; 21772
 call sub_8E83C	; 21773
 add esp, byte 8	; 21778
 mov dword [dword_C65AC], eax	; 2177B
-loc_21780:
+.6:
 mov eax, dword [statsteambuf]	; 21780
 mov edx, statsteamorder	; 21785
 call sub_296BA	; 2178A
@@ -1642,8 +1640,8 @@ mov ebx, 40h	; 21796
 mov edx, 4	; 2179B
 mov eax, unk_CF54F	; 217A0
 call sub_6B5E4	; 217A5
-jmp short loc_217E0	; 217AA
-loc_217AC:
+jmp short .8	; 217AA
+.7:
 call FreeDeskBuffers	; 217AC
 call sub_B4BA8	; 217B1
 push byte 42h	; 217B6
@@ -1655,20 +1653,20 @@ call sub_6B5E4	; 217CC
 mov eax, dword [statsteambuf]	; 217D1
 mov edx, statsteamorder	; 217D6
 call sub_27080	; 217DB
-loc_217E0:
-call sub_212FE	; 217E0
+.8:
+call LoadCalendarShapes	; 217E0
 xor eax, eax	; 217E5
 add esp, byte 10h	; 217E7
 pop edx	; 217EA
 pop ecx	; 217EB
 pop ebx	; 217EC
 ret	; 217ED
-jpt_217EE:
-dd loc_219D6
-dd loc_21A3D
-dd loc_21A90
-dd loc_21AE7
-sub_217FE:
+CalStandingsMenu_jt:
+dd CalStandingsMenu_standings
+dd CalStandingsMenu_roster
+dd CalStandingsMenu_player
+dd CalStandingsMenu_player2
+CalStandingsMenu:
 push dword 3B4h	; 217FE
 call __CHK	; 21803
 push ebx	; 21808
@@ -1679,14 +1677,14 @@ push edi	; 2180C
 push ebp	; 2180D
 sub esp, 38Ch	; 2180E
 xor eax, eax	; 21814
-loc_21816:
+.1:
 mov ebx, dword [nosplit eax*4+playofftree]	; 21816
 mov dword [dword esp+eax*4+0300h], ebx	; 2181D
 inc eax	; 21824
 cmp eax, byte 1Fh	; 21825
-jl short loc_21816	; 21828
+jl short CalStandingsMenu.1	; 21828
 mov dword [dword_DC738], 1	; 2182A
-mov eax, dword [dword_C65CC]	; 21834
+mov eax, dword [standingscb]	; 21834
 mov dword [statsredrawcb], eax	; 21839
 xor ebx, ebx	; 2183E
 mov dword [statsteamsel], ebx	; 21840
@@ -1703,37 +1701,37 @@ mov ebx, 10h	; 21865
 mov edx, esp	; 2186A
 mov eax, 1	; 2186C
 call sub_76429	; 21871
-call sub_212C6	; 21876
+call FreeCalendarIfLowMem	; 21876
 xor esi, esi	; 2187B
 mov dword [dword_C6D26], esi	; 2187D
 mov eax, 1	; 21883
 call InitMenuRemap	; 21888
 push byte 20h	; 2188D
 push dword 2A4h	; 2188F
-push asc_C0C99	; 21894
+push str_tstat3	; 21894
 call sub_8CCA8	; 21899
 add esp, byte 0Ch	; 2189E
 mov dword [statsteambuf], eax	; 218A1
 push byte 20h	; 218A6
 push dword 5B0h	; 218A8
-push asc_C0C9F	; 218AD
+push str_keys3	; 218AD
 call sub_8CCA8	; 218B2
 add esp, byte 0Ch	; 218B7
 mov dword [statsplayerbuf], eax	; 218BA
 push byte 20h	; 218BF
 push dword 497h	; 218C1
-push asc_C0CA4	; 218C6
+push str_pstat3	; 218C6
 call sub_8CCA8	; 218CB
 add esp, byte 0Ch	; 218D0
 mov dword [statsskaterbuf], eax	; 218D3
 push byte 20h	; 218D8
 push dword 10Eh	; 218DA
-push asc_C0CAA	; 218DF
+push str_gstat3	; 218DF
 call sub_8CCA8	; 218E4
 add esp, byte 0Ch	; 218E9
 mov dword [statsgoaliebuf], eax	; 218EC
 xor eax, eax	; 218F1
-call dword [dword_C65CC]	; 218F3
+call dword [standingscb]	; 218F3
 push byte 42h	; 218F9
 mov ecx, 41h	; 218FB
 mov ebx, 40h	; 21900
@@ -1743,14 +1741,14 @@ call sub_6B5E4	; 2190F
 mov dword [statscategory], esi	; 21914
 mov dword [statsteamsel], esi	; 2191A
 xor ecx, ecx	; 21920
-mov ebx, asc_C0C8D	; 21922
+mov ebx, str_embpal3	; 21922
 cmp byte [byte_ED85A], 1	; 21927
-jne short loc_21938	; 2192E
+jne short .2	; 2192E
 mov edx, dword [dword_D2C6B]	; 21930
-jmp short loc_2193A	; 21936
-loc_21938:
+jmp short .3	; 21936
+.2:
 xor edx, edx	; 21938
-loc_2193A:
+.3:
 lea eax, [dword esp+037Ch]	; 2193A
 call MakePath	; 21941
 push byte 0	; 21946
@@ -1758,17 +1756,17 @@ lea eax, [dword esp+0380h]	; 21948
 push eax	; 2194F
 call sub_8E83C	; 21950
 add esp, byte 8	; 21955
-mov dword [dword_DD104], eax	; 21958
-push asc_C0C94	; 2195D
+mov dword [statsbgshapes], eax	; 21958
+push str_Pal8	; 2195D
 push eax	; 21962
 call sub_B30B4	; 21963
 add esp, byte 8	; 21968
-mov dword [dword_DD100], eax	; 2196B
+mov dword [statspalshape], eax	; 2196B
 lea edx, [byte eax+010h]	; 21970
 mov ebx, 10h	; 21973
 xor eax, eax	; 21978
 call sub_76429	; 2197A
-mov eax, dword [dword_DD104]	; 2197F
+mov eax, dword [statsbgshapes]	; 2197F
 push eax	; 21984
 call jctime	; 21985
 add esp, byte 4	; 2198A
@@ -1781,19 +1779,19 @@ call RunTeamPickMenu	; 219A3
 call FreeDeskBuffers	; 219A8
 call sub_B4BA8	; 219AD
 mov edi, sub_244E2	; 219B2
-loc_219B7:
+.4:
 mov edx, dword [deskexit]	; 219B7
 cmp edx, byte 1	; 219BD
-je near loc_21B47	; 219C0
+je near CalStandingsMenu_player2.1	; 219C0
 lea eax, [byte edx-02h]	; 219C6
 cmp eax, byte 3	; 219C9
-ja short loc_219B7	; 219CC
-jmp dword [nosplit cs:eax*4+jpt_217EE]	; 219CE
-loc_219D6:
-mov eax, dword [dword_C65CC]	; 219D6
+ja short CalStandingsMenu.4	; 219CC
+jmp dword [nosplit cs:eax*4+CalStandingsMenu_jt]	; 219CE
+CalStandingsMenu_standings:
+mov eax, dword [standingscb]	; 219D6
 mov dword [statsredrawcb], eax	; 219DB
 xor eax, eax	; 219E0
-call dword [dword_C65CC]	; 219E2
+call dword [standingscb]	; 219E2
 push byte 42h	; 219E8
 mov ecx, 41h	; 219EA
 mov ebx, 40h	; 219EF
@@ -1807,14 +1805,14 @@ mov edx, 4	; 21A0F
 mov eax, unk_CF54F	; 21A14
 call RunTeamPickMenu	; 21A19
 cmp dword [statsplayoffs], byte 0	; 21A1E
-je short loc_21A31	; 21A25
+je short .1	; 21A25
 call FreeDeskBuffers	; 21A27
 call sub_B4BA8	; 21A2C
-loc_21A31:
+.1:
 xor eax, eax	; 21A31
 mov dword [dword_C6D26], eax	; 21A33
-jmp near loc_219B7	; 21A38
-loc_21A3D:
+jmp near CalStandingsMenu.4	; 21A38
+CalStandingsMenu_roster:
 xor esi, esi	; 21A3D
 mov dword [dword_DC734], esi	; 21A3F
 mov dword [statsredrawcb], edi	; 21A45
@@ -1832,8 +1830,8 @@ mov ebx, 40h	; 21A77
 mov edx, 4	; 21A7C
 mov eax, unk_CF6AF	; 21A81
 call RunPlayerPickMenu	; 21A86
-jmp near loc_219B7	; 21A8B
-loc_21A90:
+jmp near CalStandingsMenu.4	; 21A8B
+CalStandingsMenu_player:
 mov dword [statsredrawcb], sub_22581	; 21A90
 xor ecx, ecx	; 21A9A
 mov dword [dword_DC6B4], ecx	; 21A9C
@@ -1851,8 +1849,8 @@ mov ebx, 40h	; 21ACE
 mov edx, 2	; 21AD3
 mov eax, unk_CF74F	; 21AD8
 call RunMenu	; 21ADD
-jmp near loc_219B7	; 21AE2
-loc_21AE7:
+jmp near CalStandingsMenu.4	; 21AE2
+CalStandingsMenu_player2:
 mov dword [statsredrawcb], sub_21CDE	; 21AE7
 xor eax, eax	; 21AF1
 mov dword [dword_DC6B4], eax	; 21AF3
@@ -1871,8 +1869,8 @@ mov edx, 2	; 21B29
 mov eax, unk_CF74F	; 21B2E
 call RunMenu	; 21B33
 mov dword [dword_C6D26], 1	; 21B38
-jmp near loc_219B7	; 21B42
-loc_21B47:
+jmp near CalStandingsMenu.4	; 21B42
+.1:
 xor ebx, ebx	; 21B47
 mov dword [dword_C6D26], ebx	; 21B49
 call FreeDeskBuffers	; 21B4F
@@ -1899,12 +1897,12 @@ mov dword [statsgoaliebuf], eax	; 21B9C
 mov dword [statsskaterbuf], eax	; 21BA1
 mov dword [dword_DC738], eax	; 21BA6
 mov dword [statsredrawcb], eax	; 21BAB
-loc_21BB0:
+.2:
 mov ebx, dword [dword esp+eax*4+0300h]	; 21BB0
 mov dword [nosplit eax*4+playofftree], ebx	; 21BB7
 inc eax	; 21BBE
 cmp eax, byte 1Fh	; 21BBF
-jl short loc_21BB0	; 21BC2
+jl short CalStandingsMenu_player2.2	; 21BC2
 mov eax, esp	; 21BC4
 push eax	; 21BC6
 push dword 100h	; 21BC7
@@ -1916,12 +1914,12 @@ mov edx, esp	; 21BDB
 mov eax, 1	; 21BDD
 call sub_76429	; 21BE2
 mov dword [dword_DDD2C], 0FFFFFFFFh	; 21BE7
-call sub_212FE	; 21BF1
+call LoadCalendarShapes	; 21BF1
 xor eax, eax	; 21BF6
 add esp, 38Ch	; 21BF8
 pop ebp	; 21BFE
-jmp near loc_214AB	; 21BFF
-sub_21C04:
+jmp near CalTeamStatsScreen_x	; 21BFF
+DrawPhotoWithPal:
 push dword 320h	; 21C04
 call __CHK	; 21C09
 push esi	; 21C0E
@@ -1932,65 +1930,65 @@ mov esi, eax	; 21C17
 mov dword [dword esp+0300h], edx	; 21C19
 mov edi, ebx	; 21C20
 mov ebp, ecx	; 21C22
-mov edx, dword [dword_C6A60]	; 21C24
+mov edx, dword [statspalvalid]	; 21C24
 test edx, edx	; 21C2A
-je short loc_21C42	; 21C2C
-mov edx, dword [dword_DD120]	; 21C2E
+je short .1	; 21C2C
+mov edx, dword [statspal]	; 21C2E
 mov ebx, 300h	; 21C34
 mov eax, esp	; 21C39
 call memcpy_	; 21C3B
-jmp short loc_21C53	; 21C40
-loc_21C42:
+jmp short .2	; 21C40
+.1:
 mov eax, esp	; 21C42
 push eax	; 21C44
 push dword 100h	; 21C45
 push edx	; 21C4A
 call sub_8FFB0	; 21C4B
 add esp, byte 0Ch	; 21C50
-loc_21C53:
+.2:
 lea eax, [dword esp+0CCh]	; 21C53
 xor edx, edx	; 21C5A
-jmp short loc_21C65	; 21C5C
-loc_21C5E:
+jmp short .4	; 21C5C
+.3:
 mov bl, byte [esi]	; 21C5E
 mov byte [eax], bl	; 21C60
 inc edx	; 21C62
 inc esi	; 21C63
 inc eax	; 21C64
-loc_21C65:
+.4:
 cmp edx, 0B4h	; 21C65
-jl short loc_21C5E	; 21C6B
+jl short DrawPhotoWithPal.3	; 21C6B
 lea eax, [dword esp+024Ch]	; 21C6D
 xor edx, edx	; 21C74
-jmp short loc_21C7F	; 21C76
-loc_21C78:
+jmp short .6	; 21C76
+.5:
 mov bl, byte [esi]	; 21C78
 mov byte [eax], bl	; 21C7A
 inc edx	; 21C7C
 inc esi	; 21C7D
 inc eax	; 21C7E
-loc_21C7F:
+.6:
 cmp edx, 0A5h	; 21C7F
-jl short loc_21C78	; 21C85
-push unk_C6960	; 21C87
+jl short DrawPhotoWithPal.5	; 21C85
+push photoremap	; 21C87
 call sub_B4DD4	; 21C8C
 add esp, byte 4	; 21C91
-mov ebx, dword [dword_C6A60]	; 21C94
+mov ebx, dword [statspalvalid]	; 21C94
 test ebx, ebx	; 21C9A
-je short loc_21CB1	; 21C9C
-mov eax, dword [dword_DD120]	; 21C9E
+je short .7	; 21C9C
+mov eax, dword [statspal]	; 21C9E
 mov ebx, 300h	; 21CA3
 mov edx, esp	; 21CA8
 call memcpy_	; 21CAA
-jmp short loc_21CC2	; 21CAF
-loc_21CB1:
+jmp short .8	; 21CAF
+.7:
 mov eax, esp	; 21CB1
 push eax	; 21CB3
 push dword 100h	; 21CB4
 push ebx	; 21CB9
 call sub_B4B88	; 21CBA
 add esp, byte 0Ch	; 21CBF
-loc_21CC2:
+.8:
 push ebp	; 21CC2
 push edi	; 21CC3
 mov ecx, dword [dword esp+0308h]	; 21CC4

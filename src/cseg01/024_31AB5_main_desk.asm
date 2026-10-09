@@ -6,16 +6,16 @@ extern __CHK, asc_C1724, asc_C172C, asc_C1731, asc_C173A, asc_C1743, asc_C174C, 
 extern asc_C1756, asc_C175F, asc_C1768, asc_C176D, asc_CDB75, asc_CDB7C, byte_C7218, curleague
 extern byte_CDB77, byte_CDB7E, musicon, leaguedbfmt2, leaguedbfmt, byte_EA0F4, byte_ED836, byte_ED9A7
 extern byte_ED9AB, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
-extern ctl2side, teamstatscb, skaterstatscb, goaliestatscb, dword_C65CC, dword_C65D0, dword_C7219, songdata
+extern ctl2side, teamstatscb, skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dword_C7219, songdata
 extern cont2team, HomeTeam, dword_CE3AF, dword_CE3B3, dword_CE3B7, dword_CE3BB, musichandle, musicslot
 extern dword_D2C6B, pointerspr, dword_EA0DC, jctime, memcpy_, off_C5439, off_C7282, off_D3078
 extern strcpy_, strncpy_, DiskFreeBytes, FileExists, MakePath, FileOpenRead, FileOpenRW, FileCreate
-extern FileClose, FileReadAt, FileWriteAt, SetupStatsSourceMenu, SetScreenTitle, sub_20D97, MessageBox, FadeOutPalCycle
+extern FileClose, FileReadAt, FileWriteAt, SetupStatsSourceMenu, SetScreenTitle, EasnStandingsScreen, MessageBox, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B47C, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D
 extern sub_76429, SetSideControls, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C, sub_91370
-extern sub_91400, FatalError, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_B4BC4, unk_208EF
-extern unk_20A46, unk_20BBD, unk_20EB7, unk_C1772, unk_C1775, unk_C1778, scrpitch, VisTeam
+extern sub_91400, FatalError, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_B4BC4, EasnTeamStatsScreen
+extern EasnSkaterStatsScreen, EasnGoalieStatsScreen, EasnStandingsMenu, unk_C1772, unk_C1775, unk_C1778, scrpitch, VisTeam
 global loc_31C7C, loc_31C7E, loc_31C91, loc_31CAC, loc_31CAE, loc_31CBE, loc_31CCC, loc_31CE4
 global loc_31CE6, loc_31DB7, loc_31DE2, loc_31DE4, loc_31E07, loc_31E30, loc_31E85, loc_31EAE
 global loc_31F40, loc_31F7C, loc_31F7D, loc_320A1, loc_320CF, loc_320D7, loc_3211D, loc_3211F
@@ -95,11 +95,11 @@ call dword [off_D3078]	; 31B9F
 call SetSideControls	; 31BA5
 xor eax, eax	; 31BAA
 call SetupStatsSourceMenu	; 31BAC
-mov dword [teamstatscb], unk_208EF	; 31BB1
-mov dword [skaterstatscb], unk_20A46	; 31BBB
-mov dword [goaliestatscb], unk_20BBD	; 31BC5
-mov dword [dword_C65CC], sub_20D97	; 31BCF
-mov dword [dword_C65D0], unk_20EB7	; 31BD9
+mov dword [teamstatscb], EasnTeamStatsScreen	; 31BB1
+mov dword [skaterstatscb], EasnSkaterStatsScreen	; 31BBB
+mov dword [goaliestatscb], EasnGoalieStatsScreen	; 31BC5
+mov dword [standingscb], EasnStandingsScreen	; 31BCF
+mov dword [standingsmenucb], EasnStandingsMenu	; 31BD9
 mov eax, dword [pointerspr]	; 31BE3
 mov edx, dword [byte eax+02h]	; 31BE8
 sar edx, 10h	; 31BEB

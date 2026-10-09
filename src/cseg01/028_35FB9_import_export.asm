@@ -7,7 +7,7 @@ extern asc_C186B, asc_C1874, asc_C1879, asc_C1880, asc_C1885, asc_C78A8, asc_C7A
 extern str_PINFO, str_extDB, str_extxx, asc_C8158, str_dot, str_floppydrv, curleague, gameopts
 extern musicon, byte_D42C3, byte_DC267, byte_DC268, leaguedbfmt2, leaguedbfmt, leagueflags, byte_DD7CA
 extern byte_DD7CB, savedname, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, byte_ED836
-extern byte_ED98E, gameresult, teamstatscb, skaterstatscb, goaliestatscb, dword_C65CC, dword_C65D0, dword_C71D8
+extern byte_ED98E, gameresult, teamstatscb, skaterstatscb, goaliestatscb, standingscb, standingsmenucb, dword_C71D8
 extern dword_C71DC, songdata, msg_InsertDisk_arg, dword_C7AE4, dword_C7AE8, dword_C7AEC, dword_C7E42, dword_C7F0B
 extern dword_C8998, HomeTeam, musichandle, dword_D2C6B, dword_DB088, schedgameidx, dword_DC23E, musicslot
 extern leaguemaster, leaguesaved, humancount, dword_DDD34, dword_DDD38, dword_DDD3C, dword_DDD44, dword_DDD68
@@ -16,7 +16,7 @@ extern fputchar, jctime, memset_, crestnames, off_C800C, leaguedbnames
 extern sprintf_, strcat_, strcpy_, SetupControllers, PlayGame, FileExists, MakePath
 extern FileOpenRead, FileOpenWrite, FileOpenRW, FileClose, FileReadAt, FileWriteAt, ReadKeyRec, ReadSeasonRec
 extern ReadSchedGame, ReadTeamRec, ReadGSummaryRec, CheckGameDiskSpace, SetTextColors, PrintCenteredText, PrintShadowText, InitGameSummary
-extern sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A, sub_29F28, sub_30A0C, sub_30F12
+extern GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu, sub_29F28, sub_30A0C, sub_30F12
 extern MessageBox, sub_34821, sub_38B4F, sub_3A24F, sub_3A266, sub_3A27D, WriteSchedGame, WriteTeamRec
 extern sub_3A31E, AskTeamPassword, sub_3B039, sub_3B25A, sub_3D694, sub_3D84F, ReadLeagueInfo, sub_3DAB9
 extern FmtFromLeague, LeagueCheckStub, GetLeagueId, LoadLeagueGameRef, UpdateSeasonSchedule, UpdatePlayoffSeries, sub_479E9, sub_6B410
@@ -1444,11 +1444,11 @@ mov esi, 4	; 37447
 loc_3744C:
 cmp esi, byte 4	; 3744C
 je short loc_374B3	; 3744F
-mov dword [teamstatscb], sub_20016	; 37451
-mov dword [skaterstatscb], sub_20171	; 3745B
-mov dword [goaliestatscb], sub_202E5	; 37465
-mov dword [dword_C65CC], sub_203FA	; 3746F
-mov dword [dword_C65D0], sub_2051A	; 37479
+mov dword [teamstatscb], GameTeamStatsScreen	; 37451
+mov dword [skaterstatscb], GameSkaterStatsScreen	; 3745B
+mov dword [goaliestatscb], GameGoalieStatsScreen	; 37465
+mov dword [standingscb], GameStandingsScreen	; 3746F
+mov dword [standingsmenucb], GameStandingsMenu	; 37479
 call sub_6B47C	; 37483
 mov eax, edi	; 37488
 call PlayGame	; 3748A

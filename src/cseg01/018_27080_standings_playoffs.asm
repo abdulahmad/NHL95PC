@@ -9,9 +9,9 @@ extern asc_C1356, asc_C135E, asc_C1363, asc_C1368, str_fmt2d, str_fmt3d, asc_C69
 extern str_Bkgd2, byte_C6D72, byte_C6D7A, byte_C6D7B, byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83
 extern byte_C6D8A, byte_C6D92, byte_C6D9A, byte_C6DA2, byte_C6DA3, byte_C6DAA, byte_C6DAB, byte_C6DAC
 extern byte_C6DAD, byte_C6DB2, byte_ED858, byte_ED859, byte_ED85A, byte_ED908, byte_ED93A, teamconf
-extern dword_C65AC, statsplayoffs, statsfromleague, dword_C6A60, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32
-extern dword_C6E3A, dword_C6E4A, dword_D2C6B, dword_D8B68, dword_D8B74, playofftree, dword_DD100, dword_DD104
-extern dword_DD120, fputchar, j___close_, jctime, lseek_, memcpy_, off_C68BC, off_C68E4
+extern dword_C65AC, statsplayoffs, statsfromleague, statspalvalid, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32
+extern dword_C6E3A, dword_C6E4A, dword_D2C6B, dword_D8B68, dword_D8B74, playofftree, statspalshape, statsbgshapes
+extern statspal, fputchar, j___close_, jctime, lseek_, memcpy_, off_C68BC, off_C68E4
 extern off_C68F4, off_CF6A3, open_, qsort_, read_, sprintf_, strcat_, MakePath
 extern SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff
 extern DeskSetExit3b, MakeStatsTitle, sub_269F4, sub_2970A, sub_29A97, sub_29B07, LoadScheduleDB, sub_8E83C
@@ -204,20 +204,20 @@ lea eax, [byte ebp-074h]	; 27283
 push eax	; 27286
 call sub_8E83C	; 27287
 add esp, byte 8	; 2728C
-mov dword [dword_DD104], eax	; 2728F
+mov dword [statsbgshapes], eax	; 2728F
 mov eax, str_Bkgd2	; 27294
 push eax	; 27299
-push dword [dword_DD104]	; 2729A
+push dword [statsbgshapes]	; 2729A
 call sub_B30B4	; 272A0
 add esp, byte 8	; 272A5
-mov dword [dword_DD100], eax	; 272A8
+mov dword [statspalshape], eax	; 272A8
 push dword 1E0h	; 272AD
 push byte 13h	; 272B2
 push dword 280h	; 272B4
 push byte 0	; 272B9
 call sub_B4BC4	; 272BB
 add esp, byte 10h	; 272C0
-push dword [dword_DD100]	; 272C3
+push dword [statspalshape]	; 272C3
 call sub_913B4	; 272C9
 add esp, byte 4	; 272CE
 push dword 1E0h	; 272D1
@@ -226,7 +226,7 @@ push dword 280h	; 272D8
 push byte 0	; 272DD
 call sub_B4BC4	; 272DF
 add esp, byte 10h	; 272E4
-push dword [dword_DD104]	; 272E7
+push dword [statsbgshapes]	; 272E7
 call jctime	; 272ED
 add esp, byte 4	; 272F2
 mov dword [dword ebp-0438h], 0	; 272F5
@@ -250,19 +250,19 @@ lea eax, [byte ebp-074h]	; 27346
 push eax	; 27349
 call sub_8E83C	; 2734A
 add esp, byte 8	; 2734F
-mov dword [dword_DD104], eax	; 27352
+mov dword [statsbgshapes], eax	; 27352
 mov eax, asc_C128B	; 27357
 push eax	; 2735C
-push dword [dword_DD104]	; 2735D
+push dword [statsbgshapes]	; 2735D
 call sub_B30B4	; 27363
 add esp, byte 8	; 27368
-mov dword [dword_DD100], eax	; 2736B
+mov dword [statspalshape], eax	; 2736B
 push byte 1Ch	; 27370
 push byte 0	; 27372
-push dword [dword_DD100]	; 27374
+push dword [statspalshape]	; 27374
 call sub_91370	; 2737A
 add esp, byte 0Ch	; 2737F
-push dword [dword_DD104]	; 27382
+push dword [statsbgshapes]	; 27382
 call jctime	; 27388
 add esp, byte 4	; 2738D
 call TextGridOpen	; 27390
@@ -1379,20 +1379,20 @@ lea eax, [byte ebp-05Ch]	; 28056
 push eax	; 28059
 call sub_8E83C	; 2805A
 add esp, byte 8	; 2805F
-mov dword [dword_DD104], eax	; 28062
+mov dword [statsbgshapes], eax	; 28062
 mov eax, str_Bkgd2	; 28067
 push eax	; 2806C
-push dword [dword_DD104]	; 2806D
+push dword [statsbgshapes]	; 2806D
 call sub_B30B4	; 28073
 add esp, byte 8	; 28078
-mov dword [dword_DD100], eax	; 2807B
+mov dword [statspalshape], eax	; 2807B
 push dword 1E0h	; 28080
 push byte 13h	; 28085
 push dword 280h	; 28087
 push byte 0	; 2808C
 call sub_B4BC4	; 2808E
 add esp, byte 10h	; 28093
-push dword [dword_DD100]	; 28096
+push dword [statspalshape]	; 28096
 call sub_913B4	; 2809C
 add esp, byte 4	; 280A1
 push dword 1E0h	; 280A4
@@ -1401,7 +1401,7 @@ push dword 280h	; 280AB
 push byte 0	; 280B0
 call sub_B4BC4	; 280B2
 add esp, byte 10h	; 280B7
-push dword [dword_DD104]	; 280BA
+push dword [statsbgshapes]	; 280BA
 call jctime	; 280C0
 add esp, byte 4	; 280C5
 jmp short loc_2811D	; 280C8
@@ -1411,14 +1411,14 @@ push eax	; 280CF
 push dword [dword_C65AC]	; 280D0
 call sub_B30B4	; 280D6
 add esp, byte 8	; 280DB
-mov dword [dword_DD100], eax	; 280DE
+mov dword [statspalshape], eax	; 280DE
 push dword 1E0h	; 280E3
 push byte 13h	; 280E8
 push dword 280h	; 280EA
 push byte 0	; 280EF
 call sub_B4BC4	; 280F1
 add esp, byte 10h	; 280F6
-push dword [dword_DD100]	; 280F9
+push dword [statspalshape]	; 280F9
 call sub_913B4	; 280FF
 add esp, byte 4	; 28104
 push dword 1E0h	; 28107
@@ -1451,23 +1451,23 @@ lea eax, [byte ebp-05Ch]	; 2817B
 push eax	; 2817E
 call sub_8E83C	; 2817F
 add esp, byte 8	; 28184
-mov dword [dword_DD104], eax	; 28187
+mov dword [statsbgshapes], eax	; 28187
 mov eax, asc_C12E0	; 2818C
 push eax	; 28191
-push dword [dword_DD104]	; 28192
+push dword [statsbgshapes]	; 28192
 call sub_B30B4	; 28198
 add esp, byte 8	; 2819D
-mov dword [dword_DD100], eax	; 281A0
-cmp dword [dword_C6A60], byte 1	; 281A5
+mov dword [statspalshape], eax	; 281A0
+cmp dword [statspalvalid], byte 1	; 281A5
 jne short loc_281C8	; 281AC
 mov ebx, 300h	; 281AE
-mov edx, dword [dword_DD100]	; 281B3
+mov edx, dword [statspalshape]	; 281B3
 add edx, byte 10h	; 281B9
-mov eax, dword [dword_DD120]	; 281BC
+mov eax, dword [statspal]	; 281BC
 call memcpy_	; 281C1
 jmp short loc_281E0	; 281C6
 loc_281C8:
-mov eax, dword [dword_DD100]	; 281C8
+mov eax, dword [statspalshape]	; 281C8
 add eax, byte 10h	; 281CD
 push eax	; 281D0
 push dword 100h	; 281D1
@@ -1475,7 +1475,7 @@ push byte 0	; 281D6
 call sub_B4B88	; 281D8
 add esp, byte 0Ch	; 281DD
 loc_281E0:
-push dword [dword_DD104]	; 281E0
+push dword [statsbgshapes]	; 281E0
 call jctime	; 281E6
 add esp, byte 4	; 281EB
 mov dword [dword_C6D26], 0	; 281EE
@@ -1539,30 +1539,30 @@ lea eax, [byte ebp-05Ch]	; 282DA
 push eax	; 282DD
 call sub_8E83C	; 282DE
 add esp, byte 8	; 282E3
-mov dword [dword_DD104], eax	; 282E6
+mov dword [statsbgshapes], eax	; 282E6
 mov eax, asc_C1307	; 282EB
 push eax	; 282F0
-push dword [dword_DD104]	; 282F1
+push dword [statsbgshapes]	; 282F1
 call sub_B30B4	; 282F7
 add esp, byte 8	; 282FC
-mov dword [dword_DD100], eax	; 282FF
+mov dword [statspalshape], eax	; 282FF
 push byte 1Ah	; 28304
 push byte 0	; 28306
-push dword [dword_DD100]	; 28308
+push dword [statspalshape]	; 28308
 call sub_91370	; 2830E
 add esp, byte 0Ch	; 28313
 mov eax, asc_C130C	; 28316
 push eax	; 2831B
-push dword [dword_DD104]	; 2831C
+push dword [statsbgshapes]	; 2831C
 call sub_B30B4	; 28322
 add esp, byte 8	; 28327
-mov dword [dword_DD100], eax	; 2832A
+mov dword [statspalshape], eax	; 2832A
 push dword 192h	; 2832F
 push byte 0Fh	; 28334
-push dword [dword_DD100]	; 28336
+push dword [statspalshape]	; 28336
 call sub_91370	; 2833C
 add esp, byte 0Ch	; 28341
-push dword [dword_DD104]	; 28344
+push dword [statsbgshapes]	; 28344
 call jctime	; 2834A
 add esp, byte 4	; 2834F
 mov dword [dword ebp-01F0h], 0	; 28352
@@ -1586,7 +1586,7 @@ lea eax, [byte ebp-05Ch]	; 283A3
 push eax	; 283A6
 call sub_8E83C	; 283A7
 add esp, byte 8	; 283AC
-mov dword [dword_DD104], eax	; 283AF
+mov dword [statsbgshapes], eax	; 283AF
 call TextGridOpen	; 283B4
 lea eax, [dword ebp-09Ch]	; 283B9
 push eax	; 283BF
@@ -1910,11 +1910,11 @@ jmp near loc_28C61	; 287D1
 loc_287D6:
 mov eax, asc_C1347	; 287D6
 push eax	; 287DB
-push dword [dword_DD104]	; 287DC
+push dword [statsbgshapes]	; 287DC
 call sub_B30B4	; 287E2
 add esp, byte 8	; 287E7
-mov dword [dword_DD100], eax	; 287EA
-push dword [dword_DD100]	; 287EF
+mov dword [statspalshape], eax	; 287EA
+push dword [statspalshape]	; 287EF
 call sub_913B4	; 287F5
 add esp, byte 4	; 287FA
 mov word [byte ebp-014h], 0	; 287FD
@@ -2059,11 +2059,11 @@ jmp near loc_28C5F	; 289E3
 loc_289E8:
 mov eax, asc_C134C	; 289E8
 push eax	; 289ED
-push dword [dword_DD104]	; 289EE
+push dword [statsbgshapes]	; 289EE
 call sub_B30B4	; 289F4
 add esp, byte 8	; 289F9
-mov dword [dword_DD100], eax	; 289FC
-push dword [dword_DD100]	; 28A01
+mov dword [statspalshape], eax	; 289FC
+push dword [statspalshape]	; 28A01
 call sub_913B4	; 28A07
 add esp, byte 4	; 28A0C
 xor eax, eax	; 28A0F
@@ -2236,21 +2236,21 @@ cmp dword [dword eax+playofftree], byte 1Ah	; 28C6F
 jge near loc_28DD6	; 28C76
 mov eax, asc_C1351	; 28C7C
 push eax	; 28C81
-push dword [dword_DD104]	; 28C82
+push dword [statsbgshapes]	; 28C82
 call sub_B30B4	; 28C88
 add esp, byte 8	; 28C8D
-mov dword [dword_DD100], eax	; 28C90
-push dword [dword_DD100]	; 28C95
+mov dword [statspalshape], eax	; 28C90
+push dword [statspalshape]	; 28C95
 call sub_913B4	; 28C9B
 add esp, byte 4	; 28CA0
 mov dword [byte ebp-038h], 1	; 28CA3
 mov eax, asc_C1356	; 28CAA
 push eax	; 28CAF
-push dword [dword_DD104]	; 28CB0
+push dword [statsbgshapes]	; 28CB0
 call sub_B30B4	; 28CB6
 add esp, byte 8	; 28CBB
-mov dword [dword_DD100], eax	; 28CBE
-push dword [dword_DD100]	; 28CC3
+mov dword [statspalshape], eax	; 28CBE
+push dword [statspalshape]	; 28CC3
 call sub_913B4	; 28CC9
 add esp, byte 4	; 28CCE
 mov edx, 43h	; 28CD1
@@ -2330,22 +2330,22 @@ cmp dword [dword eax+playofftree], byte 1Ah	; 28DE0
 jge near loc_28F4E	; 28DE7
 mov eax, asc_C135E	; 28DED
 push eax	; 28DF2
-push dword [dword_DD104]	; 28DF3
+push dword [statsbgshapes]	; 28DF3
 call sub_B30B4	; 28DF9
 add esp, byte 8	; 28DFE
-mov dword [dword_DD100], eax	; 28E01
-push dword [dword_DD100]	; 28E06
+mov dword [statspalshape], eax	; 28E01
+push dword [statspalshape]	; 28E06
 call sub_913B4	; 28E0C
 add esp, byte 4	; 28E11
 cmp dword [byte ebp-038h], byte 0	; 28E14
 jne short loc_28E41	; 28E18
 mov eax, asc_C1356	; 28E1A
 push eax	; 28E1F
-push dword [dword_DD104]	; 28E20
+push dword [statsbgshapes]	; 28E20
 call sub_B30B4	; 28E26
 add esp, byte 8	; 28E2B
-mov dword [dword_DD100], eax	; 28E2E
-push dword [dword_DD100]	; 28E33
+mov dword [statspalshape], eax	; 28E2E
+push dword [statspalshape]	; 28E33
 call sub_913B4	; 28E39
 add esp, byte 4	; 28E3E
 loc_28E41:
@@ -2594,11 +2594,11 @@ call PrintShadowText	; 291C0
 add dword [byte ebp-034h], byte 3Dh	; 291C5
 mov eax, asc_C1363	; 291C9
 push eax	; 291CE
-push dword [dword_DD104]	; 291CF
+push dword [statsbgshapes]	; 291CF
 call sub_B30B4	; 291D5
 add esp, byte 8	; 291DA
-mov dword [dword_DD100], eax	; 291DD
-push dword [dword_DD100]	; 291E2
+mov dword [statspalshape], eax	; 291DD
+push dword [statspalshape]	; 291E2
 call sub_913B4	; 291E8
 add esp, byte 4	; 291ED
 jmp short loc_291F6	; 291F0
@@ -2776,11 +2776,11 @@ loc_29428:
 add dword [byte ebp-034h], byte 3Dh	; 29428
 mov eax, asc_C1368	; 2942C
 push eax	; 29431
-push dword [dword_DD104]	; 29432
+push dword [statsbgshapes]	; 29432
 call sub_B30B4	; 29438
 add esp, byte 8	; 2943D
-mov dword [dword_DD100], eax	; 29440
-push dword [dword_DD100]	; 29445
+mov dword [statspalshape], eax	; 29440
+push dword [statspalshape]	; 29445
 call sub_913B4	; 2944B
 add esp, byte 4	; 29450
 jmp short loc_29459	; 29453
@@ -2937,7 +2937,7 @@ loc_29651:
 jmp near loc_2946B	; 29651
 loc_29656:
 call TextGridOff	; 29656
-push dword [dword_DD104]	; 2965B
+push dword [statsbgshapes]	; 2965B
 call jctime	; 29661
 add esp, byte 4	; 29666
 lea eax, [dword ebp-09Ch]	; 29669

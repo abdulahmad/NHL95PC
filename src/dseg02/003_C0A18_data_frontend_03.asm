@@ -4,9 +4,9 @@ bits 32
 section s_C0A18 progbits alloc noexec write align=1
 global str_teams, str_key, str_att, str_season, str_career, str_GsummaryDb2, str_scrbrd1, asc_C0A88
 global asc_C0AB5, asc_C0AE2, asc_C0B0F, asc_C0B1C, asc_C0B29, asc_C0B2E, asc_C0B33, str_PointerMenu
-global str_menubuff, str_sfh, str_shape, asc_C0C34, asc_C0C3B, asc_C0C40, asc_C0C46, asc_C0C4B
-global asc_C0C51, asc_C0C58, asc_C0C5F, asc_C0C64, asc_C0C6D, asc_C0C73, asc_C0C78, asc_C0C7E
-global asc_C0C84, asc_C0C8D, asc_C0C94, asc_C0C99, asc_C0C9F, asc_C0CA4, asc_C0CAA, asc_C0D52
+global str_menubuff, str_sfh, str_shape, str_embpal, str_Pal6, str_tstat, str_keys, str_pstat
+global str_gstat, str_embpal2, str_Pal7, str_easndesk2, str_tstat2, str_keys2, str_pstat2, str_gstat2
+global str_calendar, str_embpal3, str_Pal8, str_tstat3, str_keys3, str_pstat3, str_gstat3, asc_C0D52
 global asc_C0D58, asc_C0D61, asc_C0D66, asc_C0D6B, asc_C0D78, asc_C0D7E, asc_C0D82, asc_C0D89
 global asc_C0D91, asc_C0D9B, asc_C0DA9, asc_C0DAD, asc_C0DB1, asc_C0DB5, asc_C0DB9, asc_C0DBE
 global asc_C0DC2, asc_C0DC6, asc_C0DCC, asc_C0DD2, asc_C0DDB, asc_C0DE2, asc_C0DE6, asc_C0E64
@@ -212,45 +212,45 @@ str_sfh:
 db 073h,066h,068h,00h
 str_shape:
 db 073h,068h,061h,070h,065h,00h,00h,00h
-asc_C0C34:
+str_embpal:
 db 065h,06Dh,062h,070h,061h,06Ch,00h
-asc_C0C3B:
+str_Pal6:
 db 021h,070h,061h,06Ch,00h
-asc_C0C40:
+str_tstat:
 db 074h,073h,074h,061h,074h,00h
-asc_C0C46:
+str_keys:
 db 06Bh,065h,079h,073h,00h
-asc_C0C4B:
+str_pstat:
 db 070h,073h,074h,061h,074h,00h
-asc_C0C51:
+str_gstat:
 db 067h,073h,074h,061h,074h,00h,00h
-asc_C0C58:
+str_embpal2:
 db 065h,06Dh,062h,070h,061h,06Ch,00h
-asc_C0C5F:
+str_Pal7:
 db 021h,070h,061h,06Ch,00h
-asc_C0C64:
+str_easndesk2:
 db 065h,061h,073h,06Eh,064h,065h,073h,06Bh,00h
-asc_C0C6D:
+str_tstat2:
 db 074h,073h,074h,061h,074h,00h
-asc_C0C73:
+str_keys2:
 db 06Bh,065h,079h,073h,00h
-asc_C0C78:
+str_pstat2:
 db 070h,073h,074h,061h,074h,00h
-asc_C0C7E:
+str_gstat2:
 db 067h,073h,074h,061h,074h,00h
-asc_C0C84:
+str_calendar:
 db 063h,061h,06Ch,065h,06Eh,064h,061h,072h,00h
-asc_C0C8D:
+str_embpal3:
 db 065h,06Dh,062h,070h,061h,06Ch,00h
-asc_C0C94:
+str_Pal8:
 db 021h,070h,061h,06Ch,00h
-asc_C0C99:
+str_tstat3:
 db 074h,073h,074h,061h,074h,00h
-asc_C0C9F:
+str_keys3:
 db 06Bh,065h,079h,073h,00h
-asc_C0CA4:
+str_pstat3:
 db 070h,073h,074h,061h,074h,00h
-asc_C0CAA:
+str_gstat3:
 db 067h,073h,074h,061h,074h,00h
 unk_C0CB0:
 db 053h,070h,065h,065h,064h,00h

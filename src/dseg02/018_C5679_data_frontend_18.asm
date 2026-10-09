@@ -29,7 +29,7 @@ extern unk_C1203, unk_C1206, unk_C120B, unk_C126C, unk_C1276, unk_C5654
 global CreditsList, msg_NeedKbytes, msg_NeedKbytes2, str_ReturningToSportsCentral, str_ReturningOutOfThe, str_ReturningToThePlayoff, str_ExitingTheGame, str_DoYouWishToReturn
 global str_DoYouWishToExit, str_9394Season, str_9394PlayOffs, str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle
 global str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, asc_C68FC, str_fmt2d, str_fmt3d, asc_C690B
-global asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B, asc_C6935, str_Bkgd2, asc_C6940
+global asc_C690F, asc_C6913, asc_C691B, asc_C6924, asc_C692B, asc_C6935, str_Bkgd2, str_EASNvfn
 global asc_C70A0, asc_C70B8, asc_C70C7, asc_C70EC, asc_C70F8, asc_C7298, byte_C66B4, mi_9394Season
 global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, byte_C6D72, byte_C6D73, byte_C6D7A
 global byte_C6D7B, byte_C6D7C, byte_C6D7D, byte_C6D82, byte_C6D83, byte_C6D8A, byte_C6D92, byte_C6D9A
@@ -38,9 +38,9 @@ global byte_C6F6C, byte_C7218, dword_C56C4, dword_C56E4, hudclockmin, hudclockse
 global dword_C5714, dword_C5718, dword_C583C, dword_C5840, dword_C5844, dword_C5848, hudhomeline, hudawayline
 global dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862, dword_C5886, dword_C588A
 global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, dword_C65A8, dword_C65AC
-global statscategory, statsteamsel, statsredrawcb, deskexit, teamstatscb, skaterstatscb, goaliestatscb, dword_C65CC
-global dword_C65D0, hlplayedmask, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dirtyrectcount, dword_C66D0
-global dword_C66D4, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD, statsplayoffs, statsfromleague, dword_C6A60
+global statscategory, statsteamsel, statsredrawcb, deskexit, teamstatscb, skaterstatscb, goaliestatscb, standingscb
+global standingsmenucb, hlplayedmask, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dirtyrectcount, dword_C66D0
+global dword_C66D4, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD, statsplayoffs, statsfromleague, statspalvalid
 global dword_C6AF8, dword_C6B30, dword_C6D26, dword_C6DBA, dword_C6E20, dword_C6E32, dword_C6E3A, dword_C6E4A
 global dword_C6F78, dword_C6F88, dword_C6F8C, dword_C6F90, dword_C6F94, dword_C7008, dword_C700C, dword_C7010
 global dword_C7014, dword_C7018, dword_C701C, dword_C7020, dword_C7024, dword_C7028, dword_C702C, dword_C7030
@@ -71,7 +71,7 @@ global unk_C6189, unk_C619A, unk_C61CB, unk_C61DD, unk_C61E9, unk_C61FC, unk_C62
 global unk_C6232, unk_C6263, unk_C6279, unk_C6289, unk_C6299, unk_C62A8, unk_C62C4, unk_C62D3
 global unk_C62FC, unk_C630F, unk_C631F, unk_C632F, unk_C633D, unk_C634F, unk_C6359, unk_C6363
 global unk_C638C, unk_C6440, unk_C6467, unk_C6496, unk_C6499, unk_C64D1, unk_C64F5, unk_C64F9
-global unk_C652A, unk_C652E, unk_C654F, statsleague, unk_C665D, unk_C678E, unk_C67B1, unk_C6960
+global unk_C652A, unk_C652E, unk_C654F, statsleague, unk_C665D, unk_C678E, unk_C67B1, photoremap
 global unk_C6E5C, unk_C6E67, unk_C6E6C, unk_C6E73, unk_C6E7E, unk_C6E9A, unk_C6EEE, unk_C6EFE
 global unk_C6F09, unk_C6F12, unk_C6F1A, unk_C6F22, unk_C6F2A, unk_C6F33, unk_C6F3F, unk_C7088
 global unk_C70DF, unk_C7108, unk_C710E, unk_C7114, unk_C711F, unk_C7129, unk_C7136, unk_C7142
@@ -817,9 +817,9 @@ skaterstatscb:
 db 00h,00h,00h,00h
 goaliestatscb:
 db 00h,00h,00h,00h
-dword_C65CC:
+standingscb:
 db 00h,00h,00h,00h
-dword_C65D0:
+standingsmenucb:
 db 00h,00h,00h,00h
 statsleague:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -1004,14 +1004,14 @@ asc_C6935:
 db 065h,06Dh,062h,025h,073h,00h
 str_Bkgd2:
 db 062h,06Bh,067h,064h,00h
-asc_C6940:
+str_EASNvfn:
 db 045h,041h,053h,04Eh,02Eh,076h,066h,06Eh,00h,077h,069h,074h,074h,06Ch,065h,030h
 db 036h,02Eh,076h,066h,06Eh,00h
 statsplayoffs:
 db 00h,00h,00h,00h
 statsfromleague:
 db 00h,00h,00h,00h,00h,00h
-unk_C6960:
+photoremap:
 db 044h,045h,046h,047h,048h,049h,04Ah,04Bh,04Ch,04Dh,04Eh,04Fh,050h,051h,052h,053h
 db 054h,055h,056h,057h,058h,059h,05Ah,05Bh,05Ch,05Dh,05Eh,05Fh,060h,061h,062h,063h
 db 064h,065h,066h,067h,068h,069h,06Ah,06Bh,06Ch,06Dh,06Eh,06Fh,070h,071h,072h,073h
@@ -1028,7 +1028,7 @@ db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_C6A60:
+statspalvalid:
 db 00h,00h,00h,00h
 off_C6A64:
 dd unk_C0CB0

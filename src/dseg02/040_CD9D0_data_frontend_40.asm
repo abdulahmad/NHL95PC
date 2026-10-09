@@ -7,7 +7,7 @@ extern StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus,
 extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, sub_2B944, sub_3270B, sub_32DA9
 extern sub_32FF4, sub_3322A, sub_332C0, sub_332F6, sub_3339D, sub_333D7, sub_33469, sub_334FB
 extern sub_33523, sub_3366F, sub_336BE, sub_6BE95, sub_7BEBB, sub_7C993, sub_7C9A1, sub_7CAF7
-extern sub_7CB9F, sub_80830, sub_82579, sub_85924, CreatePlayoffs, unk_20EB7, unk_C67B1, unk_CEF0F
+extern sub_7CB9F, sub_80830, sub_82579, sub_85924, CreatePlayoffs, EasnStandingsMenu, unk_C67B1, unk_CEF0F
 extern unk_CEF2F, unk_CEF6F, unk_CEFEF
 global asc_CDB75, asc_CDB7C, asc_CDBDC, asc_CDBE3, asc_CDBE6, asc_CDBE7, asc_CDD4F, asc_CDD5E
 global asc_CDD6B, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide, byte_CDB77
@@ -612,7 +612,7 @@ dword_CE8EB:
 db 04h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,08Ch,00h,00h,00h
 db 023h,00h,00h,00h
 dd unk_CDF56
-dd unk_20EB7
+dd EasnStandingsMenu
 db 00h,00h,00h,00h,01h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 08Ch,00h,00h,00h,035h,00h,00h,00h
 dd unk_CDF64

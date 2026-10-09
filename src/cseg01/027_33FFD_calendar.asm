@@ -5,12 +5,12 @@ section s_33FFD progbits alloc exec nowrite align=1
 extern __CHK, asc_C17F4, asc_C17F9, asc_C17FE, asc_C1803, asc_C180B, asc_C1810, asc_C181A
 extern asc_C1827, asc_C182C, asc_C1835, asc_C183D, asc_C1842, asc_C184A, monthdays, byte_C845D
 extern byte_C845E, musicon, byte_DD7CB, byte_ED98D, byte_ED98E, byte_ED9AE, gameopts, teamstatscb
-extern skaterstatscb, goaliestatscb, dword_C65CC, dword_C65D0, songdata, dword_C895E, dword_C8976, dword_C897A
-extern dword_C898E, dword_C8992, musichandle, dword_D2C6B, fontcolor, dword_D8B74, pointerspr, musicslot
+extern skaterstatscb, goaliestatscb, standingscb, standingsmenucb, songdata, dword_C895E, dword_C8976, dword_C897A
+extern dword_C898E, calendarshapes, musichandle, dword_D2C6B, fontcolor, dword_D8B74, pointerspr, musicslot
 extern dword_DD780, dword_DD794, dword_DD7A0, dword_DDD28, dword_DDD2C, dword_DDD30, dword_EA0DC, fputchar
 extern jctime, crestnames, off_C85F6, off_C8616, sprintf_, MakePath, FileOpenRead, leaguedbnames
-extern FileClose, FileReadAt, ReadSchedGame, sub_20016, sub_20171, sub_202E5, sub_203FA, sub_2051A
-extern sub_21350, sub_214B1, sub_215C4, sub_216D7, sub_217FE, sub_30A0C, sub_479E9, FadeOutPalCycle
+extern FileClose, FileReadAt, ReadSchedGame, GameTeamStatsScreen, GameSkaterStatsScreen, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu
+extern CalTeamStatsScreen, CalSkaterStatsScreen, CalGoalieStatsScreen, CalStandingsScreen, CalStandingsMenu, sub_30A0C, sub_479E9, FadeOutPalCycle
 extern sub_6B391, sub_6B3D7, sub_6B5E4, sub_6B684, sub_6B94E, sub_6B9EB, sub_6BA4D, sub_76429
 extern sub_7DB67, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F
 extern sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_91370, sub_913D0
@@ -746,11 +746,11 @@ xor esi, esi	; 34903
 mov dword [songdata], esi	; 34905
 loc_3490B:
 call sub_479E9	; 3490B
-mov dword [teamstatscb], sub_21350	; 34910
-mov dword [skaterstatscb], sub_214B1	; 3491A
-mov dword [goaliestatscb], sub_215C4	; 34924
-mov dword [dword_C65CC], sub_216D7	; 3492E
-mov dword [dword_C65D0], sub_217FE	; 34938
+mov dword [teamstatscb], CalTeamStatsScreen	; 34910
+mov dword [skaterstatscb], CalSkaterStatsScreen	; 3491A
+mov dword [goaliestatscb], CalGoalieStatsScreen	; 34924
+mov dword [standingscb], CalStandingsScreen	; 3492E
+mov dword [standingsmenucb], CalStandingsMenu	; 34938
 push dword 0FFh	; 34942
 mov ecx, 0C0h	; 34947
 mov ebx, 67h	; 3494C
@@ -781,7 +781,7 @@ lea eax, [dword esp+06FCh]	; 349B3
 push eax	; 349BA
 call sub_8E83C	; 349BB
 add esp, byte 8	; 349C0
-mov dword [dword_C8992], eax	; 349C3
+mov dword [calendarshapes], eax	; 349C3
 xor ecx, ecx	; 349C8
 mov ebx, asc_C1835	; 349CA
 cmp byte [byte_ED98E], 1	; 349CF
@@ -1045,7 +1045,7 @@ mov ebx, dword [dword esp+07A0h]	; 34E13
 mov edx, edi	; 34E1A
 mov eax, esi	; 34E1C
 call sub_6B5E4	; 34E1E
-mov ebx, dword [dword_C8992]	; 34E23
+mov ebx, dword [calendarshapes]	; 34E23
 push ebx	; 34E29
 mov ecx, dword [dword esp+07B0h]	; 34E2A
 push ecx	; 34E31
@@ -1085,7 +1085,7 @@ mov ecx, 4Ch	; 34EBC
 mov ebx, 3	; 34EC1
 call sub_8FB8E	; 34EC6
 loc_34ECB:
-mov eax, dword [dword_C8992]	; 34ECB
+mov eax, dword [calendarshapes]	; 34ECB
 call sub_34789	; 34ED0
 mov eax, dword [pointerspr]	; 34ED5
 mov edx, dword [byte eax+02h]	; 34EDA
@@ -1320,7 +1320,7 @@ mov ebx, dword [dword esp+07A0h]	; 35279
 mov edx, 3	; 35280
 mov eax, unk_C8657	; 35285
 call sub_6B5E4	; 3528A
-mov ecx, dword [dword_C8992]	; 3528F
+mov ecx, dword [calendarshapes]	; 3528F
 push ecx	; 35295
 mov esi, dword [dword esp+07B0h]	; 35296
 push esi	; 3529D
@@ -1344,7 +1344,7 @@ mov ebx, dword [dword esp+07A0h]	; 352E6
 mov edx, 3	; 352ED
 mov eax, unk_C8657	; 352F2
 call sub_6B5E4	; 352F7
-mov edx, dword [dword_C8992]	; 352FC
+mov edx, dword [calendarshapes]	; 352FC
 push edx	; 35302
 mov ebx, dword [dword esp+07B0h]	; 35303
 push ebx	; 3530A
@@ -1357,7 +1357,7 @@ lea ecx, [dword esp+0314h]	; 3531C
 mov ebx, dword [dword esp+07B8h]	; 35323
 lea edx, [dword esp+06A0h]	; 3532A
 call sub_33FFD	; 35331
-mov eax, dword [dword_C8992]	; 35336
+mov eax, dword [calendarshapes]	; 35336
 call sub_34789	; 3533B
 xor ecx, ecx	; 35340
 mov dword [dword_DDD2C], ecx	; 35342
@@ -1936,7 +1936,7 @@ push edx	; 35D41
 push ecx	; 35D42
 call sub_B4BC4	; 35D43
 add esp, byte 10h	; 35D48
-mov edx, dword [dword_C8992]	; 35D4B
+mov edx, dword [calendarshapes]	; 35D4B
 push edx	; 35D51
 mov ebx, dword [dword esp+07B0h]	; 35D52
 push ebx	; 35D59
@@ -1981,7 +1981,7 @@ push eax	; 35DE4
 push ebx	; 35DE5
 call sub_B4BC4	; 35DE6
 add esp, byte 10h	; 35DEB
-mov esi, dword [dword_C8992]	; 35DEE
+mov esi, dword [calendarshapes]	; 35DEE
 push esi	; 35DF4
 mov edi, dword [dword esp+07B0h]	; 35DF5
 push edi	; 35DFC
@@ -2063,17 +2063,17 @@ mov ebp, dword [dword esp+078Ch]	; 35F2B
 push ebp	; 35F32
 call jctime	; 35F33
 add esp, byte 4	; 35F38
-mov eax, dword [dword_C8992]	; 35F3B
+mov eax, dword [calendarshapes]	; 35F3B
 push eax	; 35F40
 call jctime	; 35F41
 add esp, byte 4	; 35F46
 xor edx, edx	; 35F49
-mov dword [dword_C8992], edx	; 35F4B
-mov dword [teamstatscb], sub_20016	; 35F51
-mov dword [skaterstatscb], sub_20171	; 35F5B
-mov dword [goaliestatscb], sub_202E5	; 35F65
-mov dword [dword_C65CC], sub_203FA	; 35F6F
-mov dword [dword_C65D0], sub_2051A	; 35F79
+mov dword [calendarshapes], edx	; 35F4B
+mov dword [teamstatscb], GameTeamStatsScreen	; 35F51
+mov dword [skaterstatscb], GameSkaterStatsScreen	; 35F5B
+mov dword [goaliestatscb], GameGoalieStatsScreen	; 35F65
+mov dword [standingscb], GameStandingsScreen	; 35F6F
+mov dword [standingsmenucb], GameStandingsMenu	; 35F79
 cmp byte [musicon], 0	; 35F83
 je short loc_35FA9	; 35F8A
 cmp dword [songdata], byte 0	; 35F8C

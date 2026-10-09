@@ -4,7 +4,7 @@ bits 32
 section s_17816 progbits alloc exec nowrite align=1
 extern __CHK, str_OUT, str_NeedKbytesFmt2, msg_NeedKbytes2, mi_9394Season, mi_9394Playoffs, postate, lgstate
 extern mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, textgrid, statscategory, statsteamsel, statsredrawcb, deskexit
-extern statsplayoffs, statsfromleague, dword_C6A60, dword_DC6B4, dword_DC738, dword_DD120, fclose_, fopen_
+extern statsplayoffs, statsfromleague, statspalvalid, dword_DC6B4, dword_DC738, statspal, fclose_, fopen_
 extern fputs_, off_C648E, off_C659A, sprintf_, strcat_, strcmp_, strcpy_, strncpy_
 extern FileExists, DiskSpaceShort, MessageBox, sub_76429, sub_8FFB0, str_rt, str_wt, exhstate
 extern unk_C6499, unk_C64F5, unk_C652A, statsleague, unk_DC340
@@ -203,13 +203,13 @@ mov ebx, 10h	; 17A94
 mov edx, unk_DC340	; 17A99
 mov eax, 1	; 17A9E
 call sub_76429	; 17AA3
-mov dword [dword_C6A60], 1	; 17AA8
-mov dword [dword_DD120], unk_DC340	; 17AB2
+mov dword [statspalvalid], 1	; 17AA8
+mov dword [statspal], unk_DC340	; 17AB2
 mov dword [dword_DC6B4], 0FFFFFFFFh	; 17ABC
 mov eax, dword [statscategory]	; 17AC6
 call dword [statsredrawcb]	; 17ACB
-mov dword [dword_C6A60], ebp	; 17AD1
-mov dword [dword_DD120], ebp	; 17AD7
+mov dword [statspalvalid], ebp	; 17AD1
+mov dword [statspal], ebp	; 17AD7
 mov ebx, 10h	; 17ADD
 mov edx, unk_DC340	; 17AE2
 xor eax, eax	; 17AE7
@@ -263,14 +263,14 @@ mov ebx, 10h	; 17B8C
 mov edx, unk_DC340	; 17B91
 mov eax, ebp	; 17B96
 call sub_76429	; 17B98
-mov dword [dword_C6A60], ebp	; 17B9D
-mov dword [dword_DD120], unk_DC340	; 17BA3
+mov dword [statspalvalid], ebp	; 17B9D
+mov dword [statspal], unk_DC340	; 17BA3
 mov dword [dword_DC6B4], 0FFFFFFFFh	; 17BAD
 mov eax, dword [statscategory]	; 17BB7
 call dword [statsredrawcb]	; 17BBC
 xor esi, esi	; 17BC2
-mov dword [dword_C6A60], esi	; 17BC4
-mov dword [dword_DD120], esi	; 17BCA
+mov dword [statspalvalid], esi	; 17BC4
+mov dword [statspal], esi	; 17BCA
 mov ebx, 10h	; 17BD0
 mov edx, unk_DC340	; 17BD5
 xor eax, eax	; 17BDA
@@ -324,13 +324,13 @@ mov ebx, 10h	; 17C80
 mov edx, unk_DC340	; 17C85
 mov eax, 1	; 17C8A
 call sub_76429	; 17C8F
-mov dword [dword_C6A60], 1	; 17C94
-mov dword [dword_DD120], unk_DC340	; 17C9E
+mov dword [statspalvalid], 1	; 17C94
+mov dword [statspal], unk_DC340	; 17C9E
 mov dword [dword_DC6B4], 0FFFFFFFFh	; 17CA8
 mov eax, dword [statscategory]	; 17CB2
 call dword [statsredrawcb]	; 17CB7
-mov dword [dword_C6A60], ebp	; 17CBD
-mov dword [dword_DD120], ebp	; 17CC3
+mov dword [statspalvalid], ebp	; 17CBD
+mov dword [statspal], ebp	; 17CC3
 mov ebx, 10h	; 17CC9
 mov edx, unk_DC340	; 17CCE
 xor eax, eax	; 17CD3
