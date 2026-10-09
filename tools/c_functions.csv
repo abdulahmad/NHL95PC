@@ -94,6 +94,7 @@ LoadFileDlgShapes,2B7C3,385,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/
 SelectSavedFile,2D099,455,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/SelectSavedFile.c,nonmatching,
 PickOtherGames,2F2B1,294,022_2D346_game_setup,src/c/022_2D346_game_setup/PickOtherGames.c,nonmatching,
 PrintClampedText,2F580,110,022_2D346_game_setup,src/c/022_2D346_game_setup/PrintClampedText.c,matched,
+UpdateOtherScores,2F3D7,425,022_2D346_game_setup,src/c/022_2D346_game_setup/UpdateOtherScores.c,nonmatching,
 AskDatabaseChoice,2FDD1,120,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/AskDatabaseChoice.c,nonmatching,"draft: addresses built in edx, asm uses eax"
 CritErrHandler,3149D,23,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/CritErrHandler.c,matched,
 DlgReturnZero,2FED2,13,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DlgReturnZero.c,matched,
@@ -137,6 +138,7 @@ LeagueCheckStub,41337,13,033_40183_trades,src/c/033_40183_trades/LeagueCheckStub
 LoadHomePals,40792,355,033_40183_trades,src/c/033_40183_trades/LoadHomePals.c,matched,
 MsgCopyingDatabases,414E0,54,033_40183_trades,src/c/033_40183_trades/MsgCopyingDatabases.c,matched,
 DateKey,41C79,34,034_41B80_schedule,src/c/034_41B80_schedule/DateKey.c,nonmatching,"original keeps day in edx and builds the month in ebx (lea ebx,[eax+0Ch] / mov ebx,eax); this draft moves day to ebx. 10-min cap"
+FinishPlayoffs,44899,424,034_41B80_schedule,src/c/034_41B80_schedule/FinishPlayoffs.c,matched,
 LoadLeagueGameRef,41B80,249,034_41B80_schedule,src/c/034_41B80_schedule/LoadLeagueGameRef.c,matched,
 NormalizeDate,41C9B,41,034_41B80_schedule,src/c/034_41B80_schedule/NormalizeDate.c,matched,
 SwapInt,42F19,41,034_41B80_schedule,src/c/034_41B80_schedule/SwapInt.c,matched,
@@ -307,6 +309,7 @@ DeleteTempDatabases,7125C,215,052_6D2F8_create_player,src/c/052_6D2F8_create_pla
 DrawDBErrorsScreen,6EC95,164,052_6D2F8_create_player,src/c/052_6D2F8_create_player/DrawDBErrorsScreen.c,matched,
 EditRostersReturn,6D5BB,21,052_6D2F8_create_player,src/c/052_6D2F8_create_player/EditRostersReturn.c,matched,
 LoadTempDatabases,710D8,388,052_6D2F8_create_player,src/c/052_6D2F8_create_player/LoadTempDatabases.c,matched,
+MoveToFreeAgents,70E8D,438,052_6D2F8_create_player,src/c/052_6D2F8_create_player/MoveToFreeAgents.c,nonmatching,"Hex-Rays draft (slot order fixed: ntried, moved, nsel, other); left: the asm computes side/other from one cmp in al (setne al; and eax,0FFh; mov esi,eax; sete al), C uses setne dl / movzx and a second cmp, 437 vs 438 bytes; msglines stores are address-immediate only"
 RatingToFloat,6F6AD,39,052_6D2F8_create_player,src/c/052_6D2F8_create_player/RatingToFloat.c,matched,
 RemovePlayerFromTeam,71043,149,052_6D2F8_create_player,src/c/052_6D2F8_create_player/RemovePlayerFromTeam.c,matched,
 SelectMatchingPlayers,71690,429,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SelectMatchingPlayers.c,nonmatching,

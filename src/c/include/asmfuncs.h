@@ -26,7 +26,6 @@ extern void PickAwardWinners(); /* 1205D */
 extern void PickAwardWinners_x(); /* 12842 */
 extern void ShowAwardScreens(); /* 12849 */
 extern void DrawAwardsSummary(); /* 13188 */
-extern void AwardsCeremony(); /* 13320 */
 extern void IndexPhotoBank(); /* 13867 */
 extern void IndexPhotoBank_x(); /* 138CC */
 extern void LoadPhotoBankF(); /* 138D2 */
@@ -515,17 +514,9 @@ extern void GetPlayoffSeeds(); /* 42BBA */
 extern void SortStandings(); /* 42DAA */
 extern void SetSeriesTeams(); /* 42F42 */
 extern void SeedPlayoffRound1(); /* 42FED */
-extern void SimPlayoffRound1(); /* 43644 */
 extern void SimPlayoffRound1_ok(); /* 4374C */
 extern void SimPlayoffRound1_pop3(); /* 43751 */
-extern void SeedPlayoffRound2(); /* 43757 */
-extern void SimPlayoffRound2(); /* 43E40 */
-extern void SeedPlayoffRound3(); /* 43F4B */
-extern void SimPlayoffRound3(); /* 443B6 */
-extern void SeedPlayoffFinal(); /* 444C9 */
-extern void SimPlayoffFinal(); /* 447A6 */
 extern void FinishPlayoffs_jt(); /* 44889 */
-extern void FinishPlayoffs(); /* 44899 */
 extern void FinishPlayoffs_r1(); /* 448C8 */
 extern void FinishPlayoffs_r2(); /* 4490C */
 extern void FinishPlayoffs_r3(); /* 44952 */
@@ -960,7 +951,6 @@ extern void AttDbPtr(); /* 6CC04 */
 extern void RunEditRosters(); /* 6CC20 */
 extern void RunEditRosters_ret6(); /* 6CEF4 */
 extern void RunEditRosters_ret5(); /* 6CEF5 */
-extern void DrawEditRosters(); /* 6D2F8 */
 extern void SelectRosterTeam(); /* 6D5D0 */
 extern void ShowFreeAgents(); /* 6D6DB */
 extern void ShellSortBytes(); /* 6D7ED */
@@ -971,7 +961,6 @@ extern void RosterPanelClick(); /* 6DAC3 */
 extern void RosterPanelClick_ret(); /* 6DCB8 */
 extern void FixJerseyNumber(); /* 6DCBE */
 extern void LoadBothRosterLists(); /* 6DE7E */
-extern void LoadRosterList(); /* 6DE94 */
 extern void EditTeamLines(); /* 6DF06 */
 extern void EditRosters(); /* 6E089 */
 extern void CheckTeamLines(); /* 6ED8F */
@@ -988,7 +977,6 @@ extern void EditGoalieRating(); /* 6FF69 */
 extern void DrawCreatePlayer(); /* 7025B */
 extern void CreatePlayerLoop(); /* 704A6 */
 extern void CreateFreeAgent(); /* 706E2 */
-extern void MoveToFreeAgents(); /* 70E8D */
 extern void SwapSelectedPlayers(); /* 71333 */
 extern void FindPlayer(); /* 71961 */
 extern void unk13_722FE(); /* 722FE */
@@ -2234,7 +2222,6 @@ extern void sub_93240(); /* 93240 */
 extern void loc_93296(); /* 93296 */
 extern void loc_932B8(); /* 932B8 */
 extern void loc_932C0(); /* 932C0 */
-extern void sub_932D0(); /* 932D0 */
 extern void sub_932EC(); /* 932EC */
 extern void sub_93308(); /* 93308 */
 extern void sub_9333C(); /* 9333C */

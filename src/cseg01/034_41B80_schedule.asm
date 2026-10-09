@@ -3591,6 +3591,10 @@ dd FinishPlayoffs_r1
 dd FinishPlayoffs_r2
 dd FinishPlayoffs_r3
 dd FinishPlayoffs_r4
+; C: src/c/034_41B80_schedule/FinishPlayoffs.c
+%ifdef CBUILD
+%include "c/034_41B80_schedule/FinishPlayoffs.inc"
+%else
 FinishPlayoffs:
 push dword 48h	; 44899
 call __CHK	; 4489E
@@ -3718,6 +3722,7 @@ pop ebp	; 44A3B
 pop edi	; 44A3C
 pop esi	; 44A3D
 ret 0Ch	; 44A3E
+%endif ; C
 AdvancePlayoffs:
 push dword 54h	; 44A41
 call __CHK	; 44A46

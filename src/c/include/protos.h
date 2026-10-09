@@ -616,4 +616,19 @@ void BuildTeamRosterList(int team, unsigned char *list, unsigned char **rec);  /
 
 void __cdecl sub_910E0(int art, int x, int y);  /* graphics library: draw art (opaque) */
 
+int SimPlayoffRound1(int buf, int a, int b, char *dir, char *ext);  /* 43644 */
+int SimPlayoffRound2(int buf, int a, int b, char *dir, char *ext);  /* 43E40 */
+int SimPlayoffRound3(int buf, int a, int b, char *dir, char *ext);  /* 443B6 */
+int SimPlayoffFinal(int buf, int a, int b, char *dir, char *ext);  /* 447A6 */
+int SeedPlayoffRound2(int buf, int series, int a, int c, int *out);  /* 43757 */
+int SeedPlayoffRound3(int buf, int series, int a, int c, int *out);  /* 43F4B */
+int SeedPlayoffFinal(int buf, int series, int a, int c, int fh, int *out);  /* 444C9 */
+void AwardsCeremony(void);  /* 13320 */
+void __cdecl sub_932D0(char *path, void *buf, int size);  /* file library: write file */
+int FinishPlayoffs(int fh, int a, int b, int c, char *dir, char *ext, int round);  /* 44899 */
+
+void MoveToFreeAgents(int *mode, int *x, int *y);  /* 70E8D */
+void LoadRosterList(int side);  /* 6DE94 */
+void DrawEditRosters(void);  /* 6D2F8 */
+
 #endif
