@@ -108,3 +108,23 @@ types: `size b` is `signed char`, `size w` `short`, `size d` `int`; overrides in
 * `if ((p->position = p->newpos) >= 0)` gives `movsx ax,byte [newpos] / mov [position],ax / test ax,ax` (forcepldata).
 * Unprototyped calls still pass register arguments, but declare the prototype when the result or argument
   widths matter (`short sub_8F80E(int)` gives `test ax,ax`).
+* **Declaration order picks registers**: locals get registers in declaration order. restoreteams matched only
+  with `unsigned char *r;` declared before `short *dst;` (r took eax, dst edx); playeracc needed `short yacc, xacc;`.
+* **Operand order of commutative ops matters**: `xacc ^ p->Wallsin` loads Wallsin into eax and xacc into edx;
+  `p->Wallsin ^ xacc` swaps them. Likewise `HIBYTE(p->Xvel) + HIWORD(p->Xpos)` vs the reverse (skateto).
+* **Common subexpressions are reused, named temps are not always**: playeracc's `(legstr + 30h)` written twice
+  (no variable) gave `movzx edi,[legstr] / ... / add edi,30h` once, as the original; a `str` variable reordered it.
+* **Two read-modify-writes on one byte merge**: `p->pflags &= ~pfjoy; p->pflags |= pfna;` (the 93G bclr/bset)
+  gives `mov ch,[x] / and ch,0F5h / mov dl,ch / or dl,2 / mov [x],dl` (restorepl); one combined expression does not.
+* **Known-zero registers are reused**: after `mov ax,[position] / test ax,ax / jne` the compiler skips the
+  `xor ah,ah` it needs later. A `(unsigned short)` cast on the byte (`regd2.w += (unsigned short)p->legstr + 0x14`)
+  gave the original `cmp word [position],0` + `xor ah,ah`.
+* **`(short)(x >> 3)` then `0x20 - ...`**: write the subtraction first and the byte add last to get
+  `movsx edx,ax / mov eax,20h / sub eax,edx / mov edx,eax / mov al,[legstr] / add eax,edx` (playeracc).
+* **Counted 68k loops** (`dbf`): `i = 6; do { ... } while (--i != 0);` gives `dec dx / jne` (AvgCline);
+  a `for` loop adds a `jmp` to the test. A `for` whose start value already passes the test (`k = 27; k >= 0`)
+  still gets the `jmp`; use `do { } while (--k >= 0)` for the bottom-only test (RestBench).
+* **The 68k registers** regd0-regd4 are 4-byte statics read both as words and longs: vars.h declares them as
+  `Reg68` unions (`.w`, `.l`, `.ul`); `.ul` gives the unsigned `ja` of playeracc's max speed check.
+* **Still open**: EvadePlayers needs one more stack dword (a swap spill for the vtoa args while ebp is busy);
+  skateto picks edx where the original picks eax for two short-lived loads (Xvel|Yvel, the pucky pointer).
