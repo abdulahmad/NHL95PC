@@ -327,7 +327,6 @@ extern void LoadPlayoffModeTree(); /* 2970A */
 extern void TreeSeriesWinner(); /* 2991C */
 extern void OpenStatsSchedule(); /* 29A97 */
 extern void LoadLeagueTree(); /* 29B07 */
-extern void DrawBevelBox(); /* 29D00 */
 extern void PreGameScreen_jt(); /* 29F18 */
 extern void PreGameScreen(); /* 29F28 */
 extern void PreGameScreen_awaylines(); /* 2A8B9 */
@@ -598,7 +597,6 @@ extern void PaNhlIntro(); /* 59C1D */
 extern void PaGoodnight(); /* 59C3E */
 extern void PaLineups(); /* 59C5F */
 extern void PaElseNhl(); /* 59C80 */
-extern void PaPlayoffResult(); /* 59CDD */
 extern void SprSort_loop(); /* 59DBB */
 extern void SprSort_test(); /* 59DDD */
 extern void changeplayer_ret5(); /* 59FDB */
@@ -1039,12 +1037,10 @@ extern void ControlsDlgLoop(); /* 7D6B1 */
 extern void LoadRockMusic(); /* 7DC8B */
 extern void LoadRockMusic_ret(); /* 7DEC2 */
 extern void FreeRockMusic(); /* 7DEC8 */
-extern void DrawGadgetByType(); /* 7DF4E */
 extern void sub_7E03F(); /* 7E03F */
 extern void bothneitherstrs(); /* 7E05F */
 extern void DrawGadgetButton_ret(); /* 7E0F3 */
 extern void InstantReplay(); /* 7E0FA */
-extern void PickNearestPlayer(); /* 7E93E */
 extern void ReplayControlLoop(); /* 7E9AC */
 extern void ReplaySaveHilight_jt(); /* 7F09F */
 extern void ReplaySaveHilight(); /* 7F0AF */
@@ -1810,7 +1806,6 @@ extern void sub_912C8(); /* 912C8 */
 extern void sub_912E4(); /* 912E4 */
 extern void sub_91310(); /* 91310 */
 extern void loc_91391(); /* 91391 */
-extern void sub_913B4(); /* 913B4 */
 extern void sub_913D0(); /* 913D0 */
 extern void loc_9142B(); /* 9142B */
 extern void loc_9148A(); /* 9148A */
@@ -6900,7 +6895,6 @@ extern void loc_B5D5B(); /* B5D5B */
 extern void loc_B5D72(); /* B5D72 */
 extern void loc_B5D77(); /* B5D77 */
 extern void loc_B5DAC(); /* B5DAC */
-extern void sub_B5DB0(); /* B5DB0 */
 extern void loc_B5DBC(); /* B5DBC */
 extern void loc_B5DD8(); /* B5DD8 */
 extern void loc_B5DE0(); /* B5DE0 */

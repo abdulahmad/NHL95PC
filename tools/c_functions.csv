@@ -110,6 +110,7 @@ CmpSavePct,259C0,310,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpSave
 CmpShootPct,25755,277,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpShootPct.c,nonmatching,
 CmpTeamStandings,22DDE,336,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpTeamStandings.c,nonmatching,
 PlayerFromMouseY,24453,143,017_21CDE_player_stats,src/c/017_21CDE_player_stats/PlayerFromMouseY.c,matched,
+DrawBevelBox,29D00,533,019_2970A_league_schedule,src/c/019_2970A_league_schedule/DrawBevelBox.c,nonmatching,
 FitPlayerName,29C75,139,019_2970A_league_schedule,src/c/019_2970A_league_schedule/FitPlayerName.c,matched,
 LoadFileDlgShapes,2B7C3,385,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/LoadFileDlgShapes.c,matched,
 PrintTextCopy,2C135,63,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/PrintTextCopy.c,matched,
@@ -167,16 +168,16 @@ TeamSelDone,38B25,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSel
 WriteTeamRec,3A2B8,54,029_380E9_league_setup,src/c/029_380E9_league_setup/WriteTeamRec.c,matched,
 CopyLeagueFiles,3C310,159,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/CopyLeagueFiles.c,matched,
 ImportDbs,3CF5B,429,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ImportDbs.c,matched,
-LocateTeamDbCopy,3AF70,201,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/LocateTeamDbCopy.c,nonmatching,
+LocateTeamDbCopy,3AF70,201,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/LocateTeamDbCopy.c,nonmatching,register allocation only: dir / id pointers swap between edi and ebp (partial declaration-order search found nothing)
 MergeUpdateDbs,3B8B0,282,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/MergeUpdateDbs.c,matched,
-ReadLeagueInfo,3D8DD,476,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ReadLeagueInfo.c,nonmatching,
+ReadLeagueInfo,3D8DD,476,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ReadLeagueInfo.c,nonmatching,register allocation only: teams (edx) and b (ecx) swap between ebp and the stack slot at +44h
 ReadTeamNames,3DAB9,136,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ReadTeamNames.c,matched,
 WaitLeagueFloppy,3D84F,142,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/WaitLeagueFloppy.c,nonmatching,"draft: file/name params in edi/esi swapped, local order and MessageBox result kept in eax not edx"
 DrawTradeRow,3E7B3,130,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/DrawTradeRow.c,nonmatching,"draft: row offset in ecx vs eax, add order; 1 byte longer"
 FindTradeSlot,3EF3C,77,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/FindTradeSlot.c,matched,
 LoadTradeTeamPals,3E835,410,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/LoadTradeTeamPals.c,matched,
 TradeCancel,3EF27,21,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeCancel.c,matched,
-TradeDone,3EDAA,381,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeDone.c,nonmatching,
+TradeDone,3EDAA,381,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeDone.c,nonmatching,"register allocation only: sel / bad / the byte live in edx / ebx / cl in asm, ebx / ecx / dl in C"
 TradeRosterCmp,3FEF0,98,032_3DC2C_roster_jersey,src/c/032_3DC2C_roster_jersey/TradeRosterCmp.c,matched,
 FmtFromLeague,41171,87,033_40183_trades,src/c/033_40183_trades/FmtFromLeague.c,matched,
 GetLeagueId,41344,137,033_40183_trades,src/c/033_40183_trades/GetLeagueId.c,matched,
@@ -280,6 +281,7 @@ PaOpenBank,59D54,29,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_if
 PaPenalty,59B3C,76,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPenalty.c,matched,
 PaPenaltyShot,59B88,45,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPenaltyShot.c,nonmatching,"registers only: original saves the argument in esi, this draft in edx. 10-min cap"
 PaPlayerNumber,59B0F,45,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPlayerNumber.c,matched,
+PaPlayoffResult,59CDD,57,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPlayoffResult.c,matched,
 PaPlayoffTonight,59D16,62,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPlayoffTonight.c,matched,
 PaPreloadClips,59D71,41,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPreloadClips.c,matched,
 PaSpeechBusy,59AAD,35,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaSpeechBusy.c,matched,
@@ -292,7 +294,7 @@ WaitDigiSample,599EE,35,041_59493_engine_sound_iface,src/c/041_59493_engine_soun
 sfx,59884,193,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/sfx.c,nonmatching,
 AvgCline,5A03B,104,042_59D9A_engine_core,src/c/042_59D9A_engine_core/AvgCline.c,matched,
 ClearSortCords,5BA4E,59,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ClearSortCords.c,matched,
-ClockTick,5DC10,347,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ClockTick.c,nonmatching,
+ClockTick,5DC10,347,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ClockTick.c,nonmatching,register allocation: C needs esi as well (asm gets by with ebx/ecx/edx/edi); the gameclock check order also differs
 GameOver,5DD9E,30,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GameOver.c,matched,
 GetHotOrStick,5A534,77,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetHotOrStick.c,matched,
 GetHotStick,5A4AD,70,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetHotStick.c,nonmatching,"1 register: the X-flip negate goes through a fresh esi (mov esi,ebx / neg esi), same open issue as GetHot; rest matches"
@@ -441,8 +443,10 @@ SetCtlTeams,7DB67,292,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialog
 SetLeagueSetImage,7A6AD,16,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SetLeagueSetImage.c,matched,
 SettingsStub,7B39C,11,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SettingsStub.c,matched,
 DrawGadgetButton,7E067,147,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/DrawGadgetButton.c,matched,
+DrawGadgetByType,7DF4E,228,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/DrawGadgetByType.c,matched,
 GadgetHitTest,7E8E5,89,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/GadgetHitTest.c,matched,
 GadgetStub0,7E032,13,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/GadgetStub0.c,matched,
+PickNearestPlayer,7E93E,110,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/PickNearestPlayer.c,nonmatching,
 FormatHilightDesc,7FCA2,86,058_7F724_highlights,src/c/058_7F724_highlights/FormatHilightDesc.c,matched,
 NudgeRinkScroll,7FC12,31,058_7F724_highlights,src/c/058_7F724_highlights/NudgeRinkScroll.c,matched,
 TeamFromHiName,7FC5C,70,058_7F724_highlights,src/c/058_7F724_highlights/TeamFromHiName.c,matched,

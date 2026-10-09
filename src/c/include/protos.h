@@ -763,5 +763,11 @@ void TradeDone(int a, int b, int c, int d, int e, int f, int g, int h, unsigned 
 void ClockTick(void);  /* 5DC10 */
 int CopyLeagueFiles(char *src, char *dst);  /* 3C310 */
 int ReadLeagueInfo(char *dir, void *teams, char *pw, short *b, void *a, void *d, int *saved, char *name);  /* 3D8DD */
+void __cdecl sub_B5DB0(int x, int y, int c);  /* graphics library: plot a pixel */
+void DrawBevelBox(int x1, int y1, int x2, int y2, int studs);  /* 29D00 */
+void PaPlayoffResult(int team, int game, unsigned conf, unsigned round, int ot, int final);  /* 59CDD */
+int PickNearestPlayer(int x, int y);  /* 7E93E */
+void DrawGadgetByType(unsigned type, unsigned char state, int b, int *shp, int c, int d);  /* 7DF4E */
+void __cdecl sub_913B4(int shape);  /* graphics library: draw a shape */
 
 #endif

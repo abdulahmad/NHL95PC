@@ -758,6 +758,10 @@ call SayHighlightIntro	; 59CD6
 pop ebx	; 59CDB
 ret	; 59CDC
 %endif ; C
+; C: src/c/041_59493_engine_sound_iface/PaPlayoffResult.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PaPlayoffResult.inc"
+%else
 PaPlayoffResult:
 push dword 14h	; 59CDD
 call __CHK	; 59CE2
@@ -777,6 +781,7 @@ call SayPlayoffResult	; 59D0C
 pop edi	; 59D11
 pop esi	; 59D12
 ret 8	; 59D13
+%endif ; C
 ; C: src/c/041_59493_engine_sound_iface/PaPlayoffTonight.c
 %ifdef CBUILD
 %include "c/041_59493_engine_sound_iface/PaPlayoffTonight.inc"

@@ -276,6 +276,10 @@ cmp edx, byte 3	; 7DF43
 jl short FreeRockMusic.5	; 7DF46
 pop ebp	; 7DF48
 jmp near LoadRockMusic_ret	; 7DF49
+; C: src/c/057_7DC8B_gadgets_replay/DrawGadgetByType.c
+%ifdef CBUILD
+%include "c/057_7DC8B_gadgets_replay/DrawGadgetByType.inc"
+%else
 DrawGadgetByType:
 push dword 18h	; 7DF4E
 call __CHK	; 7DF53
@@ -367,6 +371,7 @@ pop ebp	; 7E02C
 pop edi	; 7E02D
 pop esi	; 7E02E
 ret 8	; 7E02F
+%endif ; C
 ; C: src/c/057_7DC8B_gadgets_replay/GadgetStub0.c
 %ifdef CBUILD
 %include "c/057_7DC8B_gadgets_replay/GadgetStub0.inc"
