@@ -836,4 +836,12 @@ int MenuExportDbs(void);  /* 336E6 */
 int MenuLeagueSettings(void);  /* 332F6 */
 int CheckGameDiskSpace(void);  /* 148A5 */
 
+/* int-returning functions moved from asmfuncs.h */
+int CmpRosterSkaters(int *a, int *b);  /* 75931 */
+int LeagueSettingsDlg(void);  /* 7A13A */
+int MenuPlayoffSettings(void);  /* 7A1FC */
+int EditPlayoffSettings(void);  /* 7A29C */
+int MenuLeagueSettingsEdit(void);  /* 7A335 */
+int MenuShowLeagueSettings(void);  /* 7A39F */
+
 #endif

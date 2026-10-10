@@ -176,8 +176,14 @@ reassembles everything. Run `make fullcheck` once per commit batch; every pushed
     passes; check the `!` lines before treating it as a real diff.
   - Header edits do not cost anything until the next build: edit asmfuncs.h / protos.h freely with cdiff, but only
     run fullcheck once per push (it rebuilds everything, ~15-20 min after a header change).
-* `make fullcheck` takes ~2 min here and wipes build/obj and build/c: do not compile, cdiff or edit headers while it
-  runs. Plain `make` after a header edit recompiles every C file serially (~13 min): use fullcheck instead.
+* `make fullcheck` (2026-10-09 evening): C objects are cached in ~/.cache/nhl95pc-cc (NHL95_CC_CACHE), keyed by sha1
+  of the compiler, flags, the .c and every header it includes (tools/cc.py compile_c; NHL95_NOCACHE=1 bypasses).
+  Measured: cold (after a header edit, all ~430 objects recompiled, make -j8 already parallel) 2m05; warm (only the
+  changed .c files recompile) 9 s. Every C file includes nhl95.h, so a header edit is still a full cold rebuild:
+  batch them. Do not compile, cdiff or edit headers while fullcheck runs (it wipes build/obj and build/c). The
+  earlier "15-20 min" waits were plain serial `make` or cdiffs racing a running fullcheck, not fullcheck itself.
+* asmfuncs.h cleanup: `extern void F();` entries for functions a C file defines with an int return are removed and
+  replaced by real prototypes in protos.h (6 left after this session: the LeagueSettingsDlg family, CmpRosterSkaters).
 
 ## 4. Next
 

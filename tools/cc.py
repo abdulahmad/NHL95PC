@@ -50,9 +50,39 @@ FLAGS = ''
 def check():
     return all(os.path.exists(x) for x in (CC, D4G, W32)) and shutil.which('dosbox') is not None
 
+CACHE = os.environ.get('NHL95_CC_CACHE', os.path.expanduser('~/.cache/nhl95pc-cc'))
+
+def included(src):
+    """the headers src actually includes (transitively, from src/c/include), sorted"""
+    seen, todo = set(), [src]
+    while todo:
+        for h in re.findall(r'^\s*#\s*include\s*"([^"]+)"', open(todo.pop(), errors='replace').read(), re.M):
+            p = os.path.join(INC, h)
+            if p not in seen and os.path.exists(p): seen.add(p); todo.append(p)
+    return sorted(seen)
+
+def cache_key(src, flags):
+    """sha1 of the compiler, flags, the .c and every header it includes: same key -> same object"""
+    import hashlib
+    h = hashlib.sha1(('%s|%s|' % (os.path.getsize(CC), flags)).encode())
+    for p in [src] + included(src):
+        h.update(os.path.basename(p).encode()); h.update(open(p, 'rb').read())
+    return h.hexdigest()
+
 def compile_c(src, obj, extra=''):
     m = re.search(r'/\*\s*cflags:([^*]*)\*/', open(src).read())
     flags = ' '.join(x for x in (FLAGS, m.group(1).strip() if m else '', extra) if x)
+    key = cache_key(src, flags); cobj_ = os.path.join(CACHE, key + '.obj')
+    if os.environ.get('NHL95_NOCACHE') != '1' and os.path.exists(cobj_):
+        os.makedirs(os.path.dirname(os.path.abspath(obj)), exist_ok=True); shutil.copy(cobj_, obj)
+        return True
+    ok = compile_c_raw(src, obj, flags)
+    if ok:
+        os.makedirs(CACHE, exist_ok=True); tmp = cobj_ + '.%d' % os.getpid()
+        shutil.copy(obj, tmp); os.replace(tmp, cobj_)
+    return ok
+
+def compile_c_raw(src, obj, flags):
     work = tempfile.mkdtemp(prefix='cc_')
     try:
         shutil.copy(CC, os.path.join(work, 'WCC386.EXE')); shutil.copy(D4G, os.path.join(work, 'DOS4GW.EXE'))

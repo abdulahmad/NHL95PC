@@ -883,7 +883,6 @@ extern void MenuShowPlayerStats_status(); /* 75756 */
 extern void MenuShowPlayerStats_ret(); /* 7576A */
 extern void ScratchPlayer(); /* 75770 */
 extern void DressPlayer(); /* 75868 */
-extern void CmpRosterSkaters(); /* 75931 */
 extern void MenuRegSeasonStats(); /* 75BAA */
 extern void MenuRegSeasonStats_common(); /* 75BBF */
 extern void MenuPlayoffStats(); /* 75BDE */
@@ -923,16 +922,11 @@ extern void MenuSaveTheseLines(); /* 797B4 */
 extern void MenuSaveTheseLines_x(); /* 797FE */
 extern void MenuGameShowPlayerStats(); /* 79AC9 */
 extern void GameScratchPlayer(); /* 79DE1 */
-extern void LeagueSettingsDlg(); /* 7A13A */
 extern void LeagueSettingsDlg_ret4(); /* 7A1F2 */
 extern void LeagueSettingsDlg_ret(); /* 7A1F5 */
 extern void LeagueSettingsDlg_ret0(); /* 7A1F6 */
-extern void MenuPlayoffSettings(); /* 7A1FC */
 extern void MenuPlayoffSettings_edit(); /* 7A263 */
 extern void SettingsDlgClose(); /* 7A268 */
-extern void EditPlayoffSettings(); /* 7A29C */
-extern void MenuLeagueSettingsEdit(); /* 7A335 */
-extern void MenuShowLeagueSettings(); /* 7A39F */
 extern void MenuShowLeagueSettings2(); /* 7A404 */
 extern void DrawLeagueSetDlgSel(); /* 7A57E */
 extern void DrawLeagueSetDlg(); /* 7A6BD */
