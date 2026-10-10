@@ -834,5 +834,6 @@ int MenuTradePlayers(void);  /* 33523 */
 int MenuImportDbs(void);  /* 336BE */
 int MenuExportDbs(void);  /* 336E6 */
 int MenuLeagueSettings(void);  /* 332F6 */
+int CheckGameDiskSpace(void);  /* 148A5 */
 
 #endif

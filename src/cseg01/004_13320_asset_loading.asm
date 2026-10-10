@@ -657,6 +657,10 @@ pop ecx	; 13A8E
 pop ebx	; 13A8F
 ret	; 13A90
 %endif ; C
+; C: src/c/004_13320_asset_loading/LoadGameGfx.c
+%ifdef CBUILD
+%include "c/004_13320_asset_loading/LoadGameGfx.inc"
+%else
 LoadGameGfx:
 push dword 3Ch	; 13A91
 call __CHK	; 13A96
@@ -744,6 +748,7 @@ pop edx	; 13BB0
 pop ecx	; 13BB1
 pop ebx	; 13BB2
 ret	; 13BB3
+%endif ; C
 ReloadGameGfx:
 push dword 3Ch	; 13BB4
 call __CHK	; 13BB9

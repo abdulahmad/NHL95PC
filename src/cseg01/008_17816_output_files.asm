@@ -235,6 +235,10 @@ pop ecx	; 17AF0
 pop ebx	; 17AF1
 ret	; 17AF2
 %endif ; C
+; C: src/c/008_17816_output_files/StatsSel9394Playoffs.c
+%ifdef CBUILD
+%include "c/008_17816_output_files/StatsSel9394Playoffs.inc"
+%else
 StatsSel9394Playoffs:
 push dword 24h	; 17AF3
 call __CHK	; 17AF8
@@ -297,9 +301,10 @@ pop edx	; 17BE3
 pop ecx	; 17BE4
 pop ebx	; 17BE5
 ret	; 17BE6
-; C: src/c/008_17816_output_files/StatsSelLeague.c
+%endif ; C
+; C: src/c/008_17816_output_files/StatsSel9394Playoffs.c (StatsSelLeague)
 %ifdef CBUILD
-%include "c/008_17816_output_files/StatsSelLeague.inc"
+%include "c/008_17816_output_files/StatsSel9394Playoffs.StatsSelLeague.inc"
 %else
 StatsSelLeague:
 push dword 24h	; 17BE7
@@ -362,6 +367,10 @@ pop ecx	; 17CDD
 pop ebx	; 17CDE
 ret	; 17CDF
 %endif ; C
+; C: src/c/008_17816_output_files/StatsSel9394Playoffs.c (StatsSelLeaguePlayoffs)
+%ifdef CBUILD
+%include "c/008_17816_output_files/StatsSel9394Playoffs.StatsSelLeaguePlayoffs.inc"
+%else
 StatsSelLeaguePlayoffs:
 push dword 24h	; 17CE0
 call __CHK	; 17CE5
@@ -398,6 +407,11 @@ mov dword [statsplayoffs], ebp	; 17D59
 mov ebx, 1Fh	; 17D5F
 mov edx, lgstate+4	; 17D64
 jmp near StatsSel_common	; 17D69
+%endif ; C
+; C: src/c/008_17816_output_files/StatsSel9394Playoffs.c (StatsSelPlayoffMode)
+%ifdef CBUILD
+%include "c/008_17816_output_files/StatsSel9394Playoffs.StatsSelPlayoffMode.inc"
+%else
 StatsSelPlayoffMode:
 push dword 24h	; 17D6E
 call __CHK	; 17D73
@@ -434,3 +448,4 @@ mov dword [statsplayoffs], ebp	; 17DE7
 mov ebx, 1Fh	; 17DED
 mov edx, postate+4	; 17DF2
 jmp near StatsSel_common	; 17DF7
+%endif ; C

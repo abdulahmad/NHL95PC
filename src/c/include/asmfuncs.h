@@ -37,7 +37,6 @@ extern void ReadKeyRec_x(); /* 1464D */
 extern void ReadSeasonRec(); /* 1478B */
 extern void ReadTeamRec_x(); /* 147F6 */
 extern void ReadGSummaryRec(); /* 147FF */
-extern void CheckGameDiskSpace(); /* 148A5 */
 extern void DrawPanelLine_x(); /* 14BE9 */
 extern void UpdateHudPanel(); /* 14CF1 */
 extern void UpdateHudPanel_x(); /* 14F2A */

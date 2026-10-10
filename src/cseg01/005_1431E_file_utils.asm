@@ -574,6 +574,10 @@ pop ecx	; 148A2
 pop ebx	; 148A3
 ret	; 148A4
 %endif ; C
+; C: src/c/005_1431E_file_utils/CheckGameDiskSpace.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/CheckGameDiskSpace.inc"
+%else
 CheckGameDiskSpace:
 push dword 88h	; 148A5
 call __CHK	; 148AA
@@ -670,6 +674,7 @@ pop edx	; 149BB
 pop ecx	; 149BC
 pop ebx	; 149BD
 ret	; 149BE
+%endif ; C
 ; C: src/c/005_1431E_file_utils/GetLeagueDBSizes.c
 %ifdef CBUILD
 %include "c/005_1431E_file_utils/GetLeagueDBSizes.inc"
@@ -795,6 +800,10 @@ pop esi	; 14AFA
 pop ecx	; 14AFB
 pop ebx	; 14AFC
 ret	; 14AFD
+; C: src/c/005_1431E_file_utils/DrawPanelLine.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/DrawPanelLine.inc"
+%else
 DrawPanelLine:
 push dword 24h	; 14AFE
 call __CHK	; 14B03
@@ -877,6 +886,7 @@ pop esi	; 14BEB
 pop ecx	; 14BEC
 pop ebx	; 14BED
 ret	; 14BEE
+%endif ; C
 ; C: src/c/005_1431E_file_utils/GetLineEnergies.c
 %ifdef CBUILD
 %include "c/005_1431E_file_utils/GetLineEnergies.inc"

@@ -6,6 +6,10 @@ extern __CHK, str_NHL2, str_CannotOpenNhlCfg, str_fmt4x, str_CFG, greyramp, soun
 extern fopen_, fscanf_, MakePath, SetDialogColors, SetSoundDevice, sub_8EB93, sub_8FE83, FatalError
 extern MouseSetPos, sub_B3454, sub_B4B88, str_R3
 global LoadNhlCfg, negone_3DC28
+; C: src/c/031_3DB41_config_cfg/LoadNhlCfg.c
+%ifdef CBUILD
+%include "c/031_3DB41_config_cfg/LoadNhlCfg.inc"
+%else
 LoadNhlCfg:
 push dword 38h	; 3DB41
 call __CHK	; 3DB46
@@ -85,5 +89,6 @@ pop edx	; 3DC24
 pop ecx	; 3DC25
 pop ebx	; 3DC26
 ret	; 3DC27
+%endif ; C
 negone_3DC28:
 db 0FFh,0FFh,0FFh,0FFh
