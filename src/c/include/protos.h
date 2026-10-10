@@ -108,6 +108,12 @@ int StrLenToDot(char *s);  /* 1D5D5 */
 unsigned char *TeamRecPtr(int team);  /* 6CB90 */         
 unsigned char *CarTeamRecPtr(int team);  /* 6CB6B */      
 unsigned char *KeyDbPtr(int ofs);  /* 6CBB7 */            
+unsigned char *SeasonDbPtr(int ofs);
+unsigned char *SeasonDbPtr2(int ofs);
+unsigned char *CareerDbPtr(int ofs);
+unsigned char *CareerDbPtr2(int ofs);
+unsigned char *AttDbPtr(int ofs);
+unsigned char *AttDbPtr2(int ofs);
 double RatingToFloat(unsigned char r);  /* 6F6AD */       
 int GetMemListHead(int which);  /* 10010 */               
 int SpeechIsInit(void);  /* 836CA */                      

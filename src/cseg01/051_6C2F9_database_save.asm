@@ -737,7 +737,6 @@ mov edx, dword [keydb]	; 6CBC2
 add eax, edx	; 6CBC8
 pop edx	; 6CBCA
 ret	; 6CBCB
-%endif ; C
 SeasonDbPtr:
 push dword 8	; 6CBCC
 SeasonDbPtr_common:
@@ -771,8 +770,10 @@ mov edx, dword [attdb]	; 6CC0F
 add eax, edx	; 6CC15
 pop edx	; 6CC17
 ret	; 6CC18
+AttDbPtr2:
 push dword 8	; 6CC19
 jmp short AttDbPtr.1	; 6CC1E
+%endif ; C
 RunEditRosters:
 push dword 7Ch	; 6CC20
 call __CHK	; 6CC25

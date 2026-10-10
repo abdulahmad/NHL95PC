@@ -757,13 +757,8 @@ extern void MenuSaveDbs(); /* 6C2F9 */
 extern void MenuSaveDbsAs(); /* 6C3BB */
 extern void SaveDbsToDir(); /* 6C4BA */
 extern void WriteLeagueDbsMem(); /* 6C96C */
-extern void SeasonDbPtr(); /* 6CBCC */
 extern void SeasonDbPtr_common(); /* 6CBD1 */
-extern void SeasonDbPtr2(); /* 6CBE1 */
-extern void CareerDbPtr(); /* 6CBE8 */
 extern void CareerDbPtr_common(); /* 6CBED */
-extern void CareerDbPtr2(); /* 6CBFD */
-extern void AttDbPtr(); /* 6CC04 */
 extern void RunEditRosters(); /* 6CC20 */
 extern void RunEditRosters_ret6(); /* 6CEF4 */
 extern void RunEditRosters_ret5(); /* 6CEF5 */
