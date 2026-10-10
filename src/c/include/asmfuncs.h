@@ -256,7 +256,6 @@ extern void CalTeamStatsScreen_common(); /* 2145E */
 extern void CalTeamStatsScreen_x(); /* 214AB */
 extern void CalSkaterStatsScreen(); /* 214B1 */
 extern void CalGoalieStatsScreen(); /* 215C4 */
-extern void CalStandingsScreen(); /* 216D7 */
 extern void CalStandingsMenu_jt(); /* 217EE */
 extern void CalStandingsMenu(); /* 217FE */
 extern void CalStandingsMenu_standings(); /* 219D6 */
@@ -931,7 +930,6 @@ extern void LeagueOptsToBits_n4(); /* 7A9BA */
 extern void LeagueOptsToBits_n0(); /* 7A9C1 */
 extern void LeagueSetViewLoop(); /* 7AC31 */
 extern void LeagueSetEditLoop(); /* 7ADD3 */
-extern void MenuModeSettings(); /* 7B3A7 */
 extern void ModeSettings_epilogue(); /* 7B4E5 */
 extern void ModeSetViewLoop(); /* 7B846 */
 extern void ModeSetEditLoop(); /* 7B9E8 */

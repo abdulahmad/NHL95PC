@@ -16,6 +16,7 @@ assreplace,11FF4,29,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/assreplace
 FileExists,142E7,55,004_13320_asset_loading,src/c/004_13320_asset_loading/FileExists.c,matched,
 IndexPhotoBank,13867,107,004_13320_asset_loading,src/c/004_13320_asset_loading/IndexPhotoBank.c,matched,
 LoadGameGfx,13A91,291,004_13320_asset_loading,src/c/004_13320_asset_loading/LoadGameGfx.c,matched,
+ReloadGameGfx,13BB4,197,004_13320_asset_loading,src/c/004_13320_asset_loading/LoadGameGfx.c,matched,
 LoadPhotoBankF,138D2,141,004_13320_asset_loading,src/c/004_13320_asset_loading/LoadPhotoBankF.c,matched,
 LoadPlayerPhotos,1395F,208,004_13320_asset_loading,src/c/004_13320_asset_loading/LoadPhotoBankF.c,matched,
 LoadTransparentRinkEndOverlay,13A2F,98,004_13320_asset_loading,src/c/004_13320_asset_loading/LoadTransparentRinkEndOverlay.c,matched,
@@ -84,6 +85,13 @@ DeskPenaltySummary,1A9AC,193,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_de
 DeskReloadGame,1A534,109,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskReloadGame.c,matched,
 DeskReturnConfirm,1A5D4,211,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskReturnConfirm.c,matched,
 DeskScoringSummary,1AA6D,87,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskScoringSummary.c,matched,
+DeskTeamScratches,1AAC4,71,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskScoringSummary.c,matched,
+DeskHomeGoalie1,1AB0B,46,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskScoringSummary.c,matched,
+DeskHomeGoalie2,1AB39,41,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskScoringSummary.c,matched,
+DeskHomeGoalieNone,1AB62,51,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskScoringSummary.c,matched,
+DeskAwayGoalie1,1AB95,51,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskScoringSummary.c,matched,
+DeskAwayGoalie2,1ABC8,41,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskScoringSummary.c,matched,
+DeskAwayGoalieNone,1ABF1,52,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskScoringSummary.c,matched,
 DeskToSportsDesk,1A5B1,35,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskToSportsDesk.c,matched,
 DrawDeskFrames,18E43,305,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DrawDeskFrames.c,matched,
 IntermissionDesk,190BE,337,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/IntermissionDesk.c,matched,
@@ -105,9 +113,11 @@ StrPrefixDiffers,1D6BE,42,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_lab
 CmpGAA,1FC8F,367,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/CmpGAA.c,matched,
 CmpPoints,1FB7F,272,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/CmpPoints.c,nonmatching,
 InitMenuRemap,1FAA7,117,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/InitMenuRemap.c,nonmatching,draft: asm calls __STOSB for the 15h-byte clear (inline memset helper); default-flag memset calls memset_
+CalStandingsScreen,216D7,279,016_20016_easn_stats,src/c/016_20016_easn_stats/CalStandingsScreen.c,nonmatching,
 DrawPhotoWithPal,21C04,218,016_20016_easn_stats,src/c/016_20016_easn_stats/DrawPhotoWithPal.c,nonmatching,"register allocation only: the second statspalvalid read lands in eax/ecx/edx, the EXE uses ebx"
 FreeCalendarIfLowMem,212C6,56,016_20016_easn_stats,src/c/016_20016_easn_stats/FreeCalendarIfLowMem.c,matched,
 GameStandingsScreen,203FA,269,016_20016_easn_stats,src/c/016_20016_easn_stats/GameStandingsScreen.c,nonmatching,register allocation only: the saved dword_C65AC (MakePath extension 0) sits in edx instead of ecx; structure matches with one MakePath per branch
+LoadCalendarShapes,212FE,82,016_20016_easn_stats,src/c/016_20016_easn_stats/LoadCalendarShapes.c,matched,
 CmpAssists,25237,238,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpAssists.c,matched,
 CmpGoalieWins,2586A,342,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpGoalieWins.c,matched,
 CmpGoals,25144,243,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpGoals.c,matched,
@@ -138,6 +148,7 @@ DrawButtons,30AE2,52,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawBut
 DrawEditCursor,314B4,229,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawEditCursor.c,nonmatching,
 DrawListItem,302B9,227,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,nonmatching,"registers: y / w in ebp / edi (EXE edi / ebp); DrawListItems short-jumps into its exit, mark as one block"
 DrawListItems,3039C,95,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,nonmatching,
+DrawScrollBar,30C3D,209,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawScrollBar.c,nonmatching,
 GrowToButton,30F5F,85,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButton.c,nonmatching,same blocks; original keeps w in edx and v in ecx (then edx / eax in the second half); this draft moves w to ecx. 10-min cap
 GrowToButtons,30FB4,95,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButtons.c,nonmatching,registers: asm sums in edx and builds each width in esi; C swaps them
 InitScrollBar,30BF3,74,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/InitScrollBar.c,matched,
@@ -500,7 +511,6 @@ DrawCtlBoxes,7D671,64,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialog
 DrawExhSetDlg,7C1AC,225,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/DrawExhSetDlg.c,matched,
 DrawModeSetChecks,7B7BE,136,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/DrawModeSetChecks.c,matched,
 DrawModeSetDlg,7B4EC,280,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/DrawModeSetDlg.c,matched,
-ExhOptsToBits,7BF56,355,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ExhOptsToBits.c,matched,
 ExhSetHitTest,7C28D,138,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ExhSetHitTest.c,matched,
 LeagueOptsToBits,7A88E,314,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/LeagueOptsToBits.c,matched,
 LeagueSetHitTest,7A9C8,226,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/LeagueSetHitTest.c,matched,
@@ -510,6 +520,9 @@ EditPlayoffSettings,7A29C,153,056_7A13A_settings_dialogs,src/c/056_7A13A_setting
 MenuLeagueSettingsEdit,7A335,106,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/LeagueSettingsDlg.c,nonmatching,
 MenuShowLeagueSettings,7A39F,101,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/LeagueSettingsDlg.c,nonmatching,
 MenuExhibitionSettings,7BEBB,155,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/MenuExhibitionSettings.c,matched,
+ExhOptsToBits,7BF56,355,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/MenuExhibitionSettings.c,matched,
+DrawExhSetChecks,7C0B9,243,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/MenuExhibitionSettings.c,matched,
+MenuModeSettings,7B3A7,325,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/MenuModeSettings.c,matched,
 ModeOptsToBits,7B604,304,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ModeOptsToBits.c,matched,
 ModeSetHitTest,7B734,138,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ModeSetHitTest.c,matched,
 SetCtlTeams,7DB67,292,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SetCtlTeams.c,matched,

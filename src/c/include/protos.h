@@ -851,4 +851,6 @@ int DeskHomeGoalieNone(void);  /* 1AB62 */
 int DeskAwayGoalie1(void);  /* 1AB95 */
 int DeskAwayGoalie2(void);  /* 1ABC8 */
 int DeskAwayGoalieNone(void);  /* 1ABF1 */
+int MenuModeSettings(void);  /* 7B3A7 */
+int CalStandingsScreen(void);  /* 216D7 */
 #endif

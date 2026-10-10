@@ -1612,6 +1612,10 @@ push dword 4	; 7B39C
 call __CHK	; 7B3A1
 ret	; 7B3A6
 %endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuModeSettings.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuModeSettings.inc"
+%else
 MenuModeSettings:
 push dword 28h	; 7B3A7
 call __CHK	; 7B3AC
@@ -1720,6 +1724,7 @@ pop edx	; 7B4E8
 pop ecx	; 7B4E9
 pop ebx	; 7B4EA
 ret	; 7B4EB
+%endif ; C
 ; C: src/c/056_7A13A_settings_dialogs/DrawModeSetDlg.c
 %ifdef CBUILD
 %include "c/056_7A13A_settings_dialogs/DrawModeSetDlg.inc"
