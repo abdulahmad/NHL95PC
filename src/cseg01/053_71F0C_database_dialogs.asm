@@ -979,6 +979,10 @@ dd DrawDbList_n3
 dd DrawDbList_n4
 dd DrawDbList_n5
 dd DrawDbList_n6
+; C: src/c/053_71F0C_database_dialogs/LoadDbDialogShapes.c (DrawDbList)
+%ifdef CBUILD
+%include "c/053_71F0C_database_dialogs/LoadDbDialogShapes.DrawDbList.inc"
+%else
 DrawDbList:
 push dword 38h	; 72AC6
 call __CHK	; 72ACB
@@ -1259,6 +1263,7 @@ add esp, byte 0Ch	; 72DD8
 mov eax, dword [byte esp+04h]	; 72DDB
 add esp, byte 8	; 72DDF
 jmp near DbDialog_epilogue	; 72DE2
+%endif ; C
 DbDialogLoop:
 push dword 44h	; 72DE7
 call __CHK	; 72DEC

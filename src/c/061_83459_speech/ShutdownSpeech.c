@@ -39,7 +39,6 @@ int ReadBE24(int fh)
 #define SLOTFREQ (*(double *)&qword_C37C8)
 #define SLOTRATE (*(double *)&qword_C37D0)
 
-/* DRAFT (LoadSpeechSlot): n lands in edx, EXE ebx; declaration orders tried. */
 /* LoadSpeechSlot (83CAE) - PC only: load sample n into the speech memory right after slot n - 1 (slot 0 at the
    memory start +3B64h): its address (+0Eh), size (ReadSpeechSample, +16h), its play time size * C37C8 / C37D0 less
    the bank's +3B70h (+1Eh), loaded (+22h); count the bytes (+3B6Ch) and loaded slots (+3B74h). */
@@ -58,7 +57,7 @@ void LoadSpeechSlot(int n)
     }
     off = n * 0x26;
     *(int *)(off + (char *)speechbank + 0xE) = addr;
-    size = ReadSpeechSample(n);
+    size = ReadSpeechSample(n, addr);
     *(int *)(off + (char *)speechbank + 0x16) = size;
     t = BANKD(0x3B70);
     *(int *)(off + (char *)speechbank + 0x1E) = (unsigned)((unsigned)size * SLOTFREQ / SLOTRATE) - t;

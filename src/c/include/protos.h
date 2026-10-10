@@ -572,7 +572,7 @@ void LoadTempDatabases(void);  /* 710D8 */
 void FreeLeagueDbsMem(void);
 int __cdecl sub_92DE0(char *path);
 int PreloadAnnouncerClips(char *home, char *vis);  /* 8579E */
-void OpenSpeechBank(char *path, int n);
+void OpenSpeechBank(char *path, int n);  /* 83897 */
 void QueuePenaltyType(void);
 int DeskExitGame(void);  /* 1A6A7 */                      
 void sub_8FCDF(int handle, int a, int b);
@@ -853,9 +853,17 @@ int DeskAwayGoalie2(void);  /* 1ABC8 */
 int DeskAwayGoalieNone(void);  /* 1ABF1 */
 int MenuModeSettings(void);  /* 7B3A7 */
 int CalStandingsScreen(void);  /* 216D7 */
-int ReadSpeechSample(int n);  /* 83BF3 */
+int ReadSpeechSample(int n, int addr);  /* 83BF3 */
+void *__cdecl _os_handle_3(int h);  /* 972F0: DOS extender, linear address of a memory handle */
+#pragma aux (__cdecl) _os_handle_3 "_os_handle_3";
+int __cdecl sub_98028(char *src, char *dst, int len);  /* 98028: unpack library, returns the unpacked size */
+void __far *_fmemmove(void __far *dst, const void __far *src, unsigned n);  /* Watcom CRT _fmemmove_ */
+void MoveSampleMem(int dst, int src, unsigned n);  /* 840A9 */
+void CompactSpeechSlot(int dst, int n);  /* 84125 */
 void LoadSpeechSlot(int n);  /* 83CAE */
 void PlaceSpeechSlot(int n);  /* 83D78 */
+void DrawDbDialog(void);  /* 727EE */
+int DrawDbList(int *list);  /* 72AC6 */
 int DbDialogLoop(void);  /* 72DE7 */
 int DeleteSelectedDb(int *list);  /* 735C3 */
 void ScanDbFiles(void);  /* 7248C */

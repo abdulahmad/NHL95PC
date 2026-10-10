@@ -841,7 +841,6 @@ extern void LoadDbDialogShapes(); /* 7230B */
 extern void DbDialog_epilogue(); /* 72485 */
 extern void DbDialog_ret(); /* 72486 */
 extern void DrawDbDialog_jt(); /* 727D6 */
-extern void DrawDbDialog(); /* 727EE */
 extern void DrawDbDialog_n6(); /* 72A2A */
 extern void DrawDbDialog_n5(); /* 72A31 */
 extern void DrawDbDialog_n4(); /* 72A38 */
@@ -849,7 +848,6 @@ extern void DrawDbDialog_n3(); /* 72A3F */
 extern void DrawDbDialog_n2(); /* 72A46 */
 extern void DrawDbDialog_n1(); /* 72A4D */
 extern void DrawDbList_jt(); /* 72AAE */
-extern void DrawDbList(); /* 72AC6 */
 extern void DrawDbList_n6(); /* 72CB5 */
 extern void DrawDbList_n5(); /* 72CBC */
 extern void DrawDbList_n4(); /* 72CC3 */
@@ -1004,8 +1002,6 @@ extern void ShutdownSpeech_ret5(); /* 836C4 */
 extern void MusicChanReset2(); /* 8373E */
 extern void ReadBE24_ret(); /* 83857 */
 extern void OpenSpeechBank_ret(); /* 83BC1 */
-extern void MoveSampleMem(); /* 840A9 */
-extern void CompactSpeechSlot(); /* 84125 */
 extern void CompactSpeechMem(); /* 8427E */
 extern void LoadClipSlot(); /* 84539 */
 extern void SayClip_body(); /* 8460F */
@@ -2667,7 +2663,6 @@ extern void loc_97FE1(); /* 97FE1 */
 extern void loc_97FEF(); /* 97FEF */
 extern void loc_98009(); /* 98009 */
 extern void loc_9801E(); /* 9801E */
-extern void sub_98028(); /* 98028 */
 extern void sub_98044(); /* 98044 */
 extern void loc_98078(); /* 98078 */
 extern void loc_9808C(); /* 9808C */

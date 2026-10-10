@@ -79,6 +79,152 @@ void ScanDbFiles(void)
     dblisttemp[3] = dblisttemp[0] < 6 ? dblisttemp[0] - 1 : 5;
 }
 
+#define FDLGMASKD (*(int *)fdlgmask)
+#define FDLGMASKW (*(unsigned short *)fdlgmask)
+typedef struct { int x1, y1, x2, y2; } DbRect;
+#define DBRECT ((DbRect *)dbdlgrects)
+
+/* DRAFT (DrawDbDialog): only the scroll-bar end differs: the EXE adds 12h to rect 8's y1 before the quotient, this adds it to the quotient. */
+/* DrawDbDialog (727EE) - PC only: draw the database dialog: art PDBX of bank DBDIALOG at 10,19 (from the CD when
+   the files are there), then work out the button mask fdlgmask and the shown tab fdlgtab from the lists that have
+   entries (temporary: tab 2, original: tab 1, current: tab 0, the last one wins). With a tab: its title (rect 9),
+   the list area cleared to F8h (rect 10) and the visible names from list[2] to list[3] in rects 10 onwards; more than
+   6 entries enable the scroll buttons and draw the scroll bar (rect 8, thumb 354h / count high), up to 6 enable one
+   row button each (fdlgmask byte 1, bits 2 up). Lists are ints: count, selection, top, last visible, names. */
+void DrawDbDialog(void)
+{
+    char path[32];
+    int xright;
+    int bank;
+    int *list;
+    int i;
+    int row;
+    int x;
+    int y;
+    int ybar;
+
+    sub_B4BA8();
+    MakePath(path, fileoncd[0x1C8] == 1 ? (char *)cddriveptr : 0, (char *)str_Dbdialog, 0);
+    bank = sub_8E83C(path, 0);
+    sub_91284(sub_B30B4(bank, (char *)str_Pdbx), 10, 0x13);
+    jctime(bank);
+    FDLGMASKD = 0x10;
+    fdlgtab = -1;
+    if (dblisttemp[0] != 0) {
+        FDLGMASKD = 0x90;
+        fdlgtab = 2;
+    }
+    if (dblistorig[0] != 0) {
+        fdlgmask[0] |= 0x40;
+        fdlgtab = 1;
+    }
+    if (dblistcur[0] != 0) {
+        fdlgmask[0] |= 0x20;
+        fdlgtab = 0;
+    }
+    if (fdlgtab < 0) return;
+    FDLGMASKW |= 0x204;
+    sub_8E9C0(0xFA, 0xFF);
+    list = (int *)dbtablists[fdlgtab];
+    sub_91964((char *)list[list[1] + 4], DBRECT[9].x1 + 0xD, DBRECT[9].y1 + 0x13);
+    sub_90D20(DBRECT[10].x1 + 0xA, DBRECT[10].y1 + 0x13, DBRECT[10].x2 - DBRECT[10].x1 + 1,
+              DBRECT[10].y2 - DBRECT[10].y1 + 1, 0xF8);
+    for (i = list[2], row = 10; i <= list[3]; i++, row++)
+        sub_91964((char *)list[i + 4], DBRECT[row].x1 + 0xA, DBRECT[row].y1 + 0x10);
+    if (list[0] > 6) {
+        FDLGMASKW |= 0xFF03;
+        x = DBRECT[8].x1 + 0xA;
+        y = DBRECT[8].y1 + 0x13;
+        xright = DBRECT[8].x2 + 0xA;
+        ybar = DBRECT[8].y1 + (0x354 / list[0] + 0x12);
+        sub_B4FAC(x, y, DBRECT[8].x2 + 9, y, 0x7D);
+        sub_B4FAC(x, y, x, ybar - 1, 0x7D);
+        sub_B4FAC(xright, y - 1, xright, ybar, 0x7B);
+        sub_B4FAC(x - 1, ybar, xright, ybar, 0x7B);
+        return;
+    }
+    switch (list[0]) {
+    case 6: fdlgmask[1] |= 0x80;
+    case 5: fdlgmask[1] |= 0x40;
+    case 4: fdlgmask[1] |= 0x20;
+    case 3: fdlgmask[1] |= 0x10;
+    case 2: fdlgmask[1] |= 8;
+    case 1: fdlgmask[1] |= 4;
+    }
+}
+
+/* DrawDbList (72AC6) - PC only: redraw the database dialog's list: clear the six rows (rects 10-15, F9h), print the
+   names (the first count when up to 6, else the six from the top entry list[2]), the selected name as the title
+   (rect 9, cleared to F8h) and again highlighted in its row when it is visible (F8h), clear the scroll bar
+   (rect 8). More than 6 entries: enable the scroll buttons and draw the thumb from list[2] to list[3] + 1 of 8Eh
+   pixels; otherwise mask them off and enable one row button per entry (fdlgmask byte 1, bits 2 up). Then the tab
+   art of tab 0-2. A NULL list only clears the rows and returns 0. */
+int DrawDbList(int *list)
+{
+    int xright;
+    int i;                      /* row; later the thumb's top y */
+    int x;
+    int y2;
+
+    sub_8E9C0(0xFA, 0xFF);
+    for (i = 0; i < 6; i++)
+        sub_90D20(DBRECT[10 + i].x1 + 0xA, DBRECT[10 + i].y1 + 0x13, DBRECT[10 + i].x2 - DBRECT[10 + i].x1 + 1,
+                  DBRECT[10 + i].y2 - DBRECT[10 + i].y1 + 1, 0xF9);
+    if (list == NULL) return 0;
+    if (list[0] <= 6) {
+        for (i = 0; i < list[0]; i++)
+            PrintTextCopy((char *)list[i + 4], DBRECT[10 + i].x1 + 0xA, DBRECT[10 + i].y1 + 0x10);
+    } else {
+        for (i = 0; i < 6; i++)
+            PrintTextCopy((char *)list[list[2] + i + 4], DBRECT[10 + i].x1 + 0xA, DBRECT[10 + i].y1 + 0x10);
+    }
+    if (list[0] > 0) {
+        sub_90D20(DBRECT[9].x1 + 0xD, DBRECT[9].y1 + 0x16, DBRECT[9].x2 - DBRECT[9].x1 - 5,
+                  DBRECT[9].y2 - DBRECT[9].y1 - 5, 0xF8);
+        PrintTextCopy((char *)list[list[1] + 4], DBRECT[9].x1 + 0xD, DBRECT[9].y1 + 0x13);
+    }
+    if (list[1] >= list[2] && list[1] <= list[3]) {
+        i = list[1] - list[2];
+        sub_90D20(DBRECT[10 + i].x1 + 0xA, DBRECT[10 + i].y1 + 0x13, DBRECT[10 + i].x2 - DBRECT[10 + i].x1,
+                  DBRECT[10 + i].y2 - DBRECT[10 + i].y1, 0xF8);
+        PrintTextCopy((char *)list[list[2] + i + 4], DBRECT[10 + i].x1 + 0xA, DBRECT[10 + i].y1 + 0x10);
+    }
+    sub_90D20(DBRECT[8].x1 + 0xA, DBRECT[8].y1 + 0x13, DBRECT[8].x2 - DBRECT[8].x1 + 1,
+              DBRECT[8].y2 - DBRECT[8].y1 + 1, 0xF9);
+    if (list[0] <= 6) {
+        FDLGMASKW &= 0x6FC;
+        switch (list[0]) {
+        case 6: fdlgmask[1] |= 0x80;
+        case 5: fdlgmask[1] |= 0x40;
+        case 4: fdlgmask[1] |= 0x20;
+        case 3: fdlgmask[1] |= 0x10;
+        case 2: fdlgmask[1] |= 8;
+        case 1: fdlgmask[1] |= 4;
+        }
+    } else {
+        FDLGMASKW |= 0xF903;
+        x = DBRECT[8].x1 + 0xA;
+        i = DBRECT[8].y1 + 0x13 + list[2] * 0x8E / list[0];
+        xright = DBRECT[8].x2 + 0xA;
+        y2 = DBRECT[8].y1 + 0x13 + (list[3] + 1) * 0x8E / list[0];
+        sub_B4FAC(x, i, DBRECT[8].x2 + 9, i, 0x7D);
+        sub_B4FAC(x, i, x, y2 - 1, 0x7D);
+        sub_B4FAC(xright, i + 1, xright, y2, 0x7B);
+        sub_B4FAC(x + 1, y2, xright, y2, 0x7B);
+    }
+    switch ((unsigned)fdlgtab) {
+    case 0:
+        sub_91370(fdlg_tabexh, 0xA3, 0x4B);
+        break;
+    case 1:
+        sub_91370(fdlg_tabpo, 0xA3, 0x4B);
+        break;
+    case 2:
+        sub_91370(fdlg_tablp, 0xA3, 0x4B);
+        break;
+    }
+}
+
 /* DeleteSelectedDb (735C3) - delete the selected database of list (ints: count, selection, top, last visible,
    then the names): ask first (deldbmsg with the name, at 140h / F0h); when its DBX directory exists remove it and
    drop the name from the list, fixing the scroll range and selection; when the list is now empty switch the dialog

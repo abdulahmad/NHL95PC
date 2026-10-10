@@ -258,6 +258,12 @@ def frag(src, obj, out):
             hit = [x for x, v in lead.items() if v == a]
             if not hit: raise SystemExit('%s: reference to _TEXT+%X (before %s): no data label at %05X' % (src, t, func, a))
             return hit[0]
+        if multi and t < s0:
+            # a block of a multi-function file whose switch jump table sits in front of it (after the previous,
+            # possibly draft, function): the asm has the same table as data labels before the block
+            a = start - (s0 - t)
+            hit = [x for x, v in leading_labels(src, func).items() if v == a]
+            if hit: return hit[0]
         return tt.resolve(t, func)[0]
     for nm, off in pubs.items():
         la = dict((x, a) for x, a in labels).get(nm)
