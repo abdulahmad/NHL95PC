@@ -17,3 +17,13 @@ void PlayCrowdSample(int n)
     if (n < 9) PlayDigiSample((void *)dword_ED374[n]);
     else if (n < 12) PlayDigiSample((void *)leaguesetimg[n]);
 }
+
+/* PaOneMinuteLeft (59A7E) - with music and announcer speech on and not replaying (gmode bit 4): MusicChanReset,
+   then SayOneMinuteLeft. */
+void PaOneMinuteLeft(void)
+{
+    if (musicon && gameopts.speech && !(gmode & 0x10)) {
+        MusicChanReset();
+        SayOneMinuteLeft();
+    }
+}

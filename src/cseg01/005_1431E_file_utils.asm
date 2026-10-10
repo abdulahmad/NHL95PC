@@ -202,6 +202,10 @@ pop ecx	; 14522
 pop ebx	; 14523
 ret	; 14524
 %endif ; C
+; C: src/c/005_1431E_file_utils/FileOpenRead.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/FileOpenRead.inc"
+%else
 FileOpenRead:
 push dword 8	; 14525
 call __CHK	; 1452A
@@ -226,6 +230,7 @@ push ebx	; 1455C
 mov ebx, edx	; 1455D
 mov edx, 42h	; 1455F
 jmp short FileOpenRead_x	; 14564
+%endif ; C
 ; C: src/c/005_1431E_file_utils/FileCreate.c
 %ifdef CBUILD
 %include "c/005_1431E_file_utils/FileCreate.inc"

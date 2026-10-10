@@ -548,7 +548,6 @@ pop edx	; 59A7B
 pop ebx	; 59A7C
 PlayCrowdSample_ret:
 ret	; 59A7D
-%endif ; C
 PaOneMinuteLeft:
 push dword 4	; 59A7E
 call __CHK	; 59A83
@@ -560,6 +559,7 @@ test byte [gmode], 10h	; 59A9A
 jne short PlayCrowdSample_ret	; 59AA1
 call MusicChanReset	; 59AA3
 jmp near SayOneMinuteLeft	; 59AA8
+%endif ; C
 ; C: src/c/041_59493_engine_sound_iface/PaSpeechBusy.c
 %ifdef CBUILD
 %include "c/041_59493_engine_sound_iface/PaSpeechBusy.inc"

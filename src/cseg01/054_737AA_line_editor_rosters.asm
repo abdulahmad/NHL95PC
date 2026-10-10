@@ -3241,7 +3241,6 @@ pop esi	; 75BA6
 pop ecx	; 75BA7
 pop ebx	; 75BA8
 ret	; 75BA9
-%endif ; C
 MenuRegSeasonStats:
 push dword 10h	; 75BAA
 call __CHK	; 75BAF
@@ -3269,6 +3268,7 @@ push ecx	; 75BE9
 push edx	; 75BEA
 mov dword [statsplayoffs], 1	; 75BEB
 jmp short MenuRegSeasonStats_common	; 75BF5
+%endif ; C
 ShowRosterStats:
 push dword 0C8h	; 75BF7
 call __CHK	; 75BFC

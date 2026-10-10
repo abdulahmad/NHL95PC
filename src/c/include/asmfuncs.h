@@ -533,7 +533,6 @@ extern void sndcb_addesp8_x(); /* 594AC */
 extern void SndLoadFile2(); /* 594B2 */
 extern void CrowdNoiseUpdate(); /* 594CD */
 extern void PlayCrowdSample_ret(); /* 59A7D */
-extern void PaOneMinuteLeft(); /* 59A7E */
 extern void nullsub_5(); /* 59BFB */
 extern void SprSort_loop(); /* 59DBB */
 extern void SprSort_test(); /* 59DDD */
@@ -858,10 +857,7 @@ extern void MenuShowPlayerStats_status(); /* 75756 */
 extern void MenuShowPlayerStats_ret(); /* 7576A */
 extern void ScratchPlayer(); /* 75770 */
 extern void DressPlayer(); /* 75868 */
-extern void MenuRegSeasonStats(); /* 75BAA */
 extern void MenuRegSeasonStats_common(); /* 75BBF */
-extern void MenuPlayoffStats(); /* 75BDE */
-extern void ShowRosterStats(); /* 75BF7 */
 extern void FadePalStep_ret(); /* 76513 */
 extern void FadePalStepSlow(); /* 7651B */
 extern void BlitClipRect(); /* 7668D */

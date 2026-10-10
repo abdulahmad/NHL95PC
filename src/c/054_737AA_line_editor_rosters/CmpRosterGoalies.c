@@ -21,3 +21,21 @@ int CmpRosterGoalies(int *a, int *b)
     if (q[2] != p[2]) return p[2] - q[2];
     return q[10] - p[10];
 }
+
+/* MenuRegSeasonStats (75BAA) - PC only: menu handler: roster stats screen (ShowRosterStats with shapes / strings
+   C0h-C3h) for the regular season (statsplayoffs = 0). Returns 0. */
+int MenuRegSeasonStats(void)
+{
+    statsplayoffs = 0;
+    ShowRosterStats(0xC0, 0xC1, 0xC2, 0xC3);
+    return 0;
+}
+
+/* MenuPlayoffStats (75BDE) - PC only: as MenuRegSeasonStats for the playoffs (statsplayoffs = 1; shares its
+   tail). Returns 0. */
+int MenuPlayoffStats(void)
+{
+    statsplayoffs = 1;
+    ShowRosterStats(0xC0, 0xC1, 0xC2, 0xC3);
+    return 0;
+}

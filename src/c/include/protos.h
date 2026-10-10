@@ -717,6 +717,10 @@ void PaNhlIntro(void);  /* 59C1D */
 void PaGoodnight(void);  /* 59C3E */
 void PaLineups(void);  /* 59C5F */
 void PaElseNhl(void);  /* 59C80 */
+void ShowRosterStats(int a, int b, int c, int d);  /* 75BF7 */
+int MenuRegSeasonStats(void);  /* 75BAA */
+int MenuPlayoffStats(void);  /* 75BDE */
+void PaOneMinuteLeft(void);  /* 59A7E */
 unsigned _dos_write(int fh, void __far *buf, unsigned n, unsigned *got);  /* Watcom CRT _dos_write_ */
 void ReadGSumHeader(void);  /* 61BBF */
 void ReadGSumTail(void);  /* 61C22 */

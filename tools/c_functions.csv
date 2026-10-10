@@ -31,6 +31,7 @@ DrawPanelLine,14AFE,241,005_1431E_file_utils,src/c/005_1431E_file_utils/DrawPane
 DrawPanelScore,14A20,222,005_1431E_file_utils,src/c/005_1431E_file_utils/DrawPanelScore.c,nonmatching,register allocation: asm keeps score in esi / side in ebx and divides with 16-bit idiv cx; C uses ecx/esi/edi
 FileClose,1457C,38,005_1431E_file_utils,src/c/005_1431E_file_utils/FileClose.c,matched,
 FileCreate,14566,22,005_1431E_file_utils,src/c/005_1431E_file_utils/FileCreate.c,matched,
+FileOpenRead FileOpenWrite FileOpenRW,14525,65,005_1431E_file_utils,src/c/005_1431E_file_utils/FileOpenRead.c,matched,
 FileReadAt,145A2,87,005_1431E_file_utils,src/c/005_1431E_file_utils/FileReadAt.c,matched,
 FileWriteAt,145F9,68,005_1431E_file_utils,src/c/005_1431E_file_utils/FileReadAt.c,matched,
 GetLeagueDBSizes,149BF,97,005_1431E_file_utils,src/c/005_1431E_file_utils/GetLeagueDBSizes.c,matched,
@@ -351,7 +352,7 @@ PaPlayoffTonight,59D16,62,041_59493_engine_sound_iface,src/c/041_59493_engine_so
 PaPreloadClips,59D71,41,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPreloadClips.c,matched,
 PaSpeechBusy,59AAD,35,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaSpeechBusy.c,matched,
 PaTonightIntro PaScoringPeriod PaNhlIntro PaGoodnight PaLineups PaElseNhl,59BB5,244,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaTonightIntro.c,matched,
-PlayCrowdSample,59A11,109,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PlayCrowdSample.c,matched,
+PlayCrowdSample PaOneMinuteLeft,59A11,156,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PlayCrowdSample.c,matched,
 PlayDigiSample,599B9,53,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PlayDigiSample.c,matched,
 SndLoadFile,59493,31,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/SndLoadFile.c,matched,
 StopDigiSample,59981,56,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/StopDigiSample.c,nonmatching,"original copies digihandle to edx (push edx) and passes it with mov eax,edx; this draft loads eax directly. Maybe sub_8F80E's real prototype differs. 10-min cap"
@@ -497,7 +498,7 @@ MenuOpenDatabase,73703,167,053_71F0C_database_dialogs,src/c/053_71F0C_database_d
 ScanDbFiles,7248C,377,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/LoadDbDialogShapes.c,nonmatching,
 DrawDbDialog,727EE,622,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/LoadDbDialogShapes.c,nonmatching,scroll-bar end: EXE adds 12h to rect 8 y1 before adding the quotient
 LoadDbsFromDir,7345B,360,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/LoadDbsFromDir.c,matched,
-CmpRosterGoalies,75A37,371,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/CmpRosterGoalies.c,matched,
+CmpRosterGoalies MenuRegSeasonStats MenuPlayoffStats,75A37,448,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/CmpRosterGoalies.c,matched,
 CmpRosterSkaters,75931,262,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/CmpRosterSkaters.c,nonmatching,
 DrawLineJerseys,75046,438,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/DrawLineJerseys.c,nonmatching,stack slots of the spilled side / c1 / c2 bytes rotate (+24h/+28h/+2Ch); independent of declaration order
 FadePalStep,76429,242,054_737AA_line_editor_rosters,src/c/054_737AA_line_editor_rosters/FadePalStep.c,nonmatching,
