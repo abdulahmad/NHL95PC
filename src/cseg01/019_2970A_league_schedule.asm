@@ -348,6 +348,10 @@ pop edi	; 29A93
 pop esi	; 29A94
 pop ecx	; 29A95
 ret	; 29A96
+; C: src/c/019_2970A_league_schedule/OpenStatsSchedule.c
+%ifdef CBUILD
+%include "c/019_2970A_league_schedule/OpenStatsSchedule.inc"
+%else
 OpenStatsSchedule:
 push dword 48h	; 29A97
 call __CHK	; 29A9C
@@ -391,6 +395,7 @@ pop edx	; 29B03
 pop ecx	; 29B04
 pop ebx	; 29B05
 ret	; 29B06
+%endif ; C
 LoadLeagueTree:
 push dword 5Ch	; 29B07
 call __CHK	; 29B0C

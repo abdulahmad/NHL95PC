@@ -288,15 +288,7 @@ extern void CmpConfStandings_m(); /* 26A0C */
 extern void TeamFromMouse(); /* 26B5A */
 extern void StandingsScreen(); /* 27080 */
 extern void HighlightTreeSlot(); /* 2785F */
-extern void MoveTreeHighlight(); /* 27BC3 */
 extern void CountSeriesWins(); /* 27C34 */
-extern void PlayoffTreeScreen(); /* 27F9C */
-extern void PlayoffTreeHitTest(); /* 29681 */
-extern void ShowPlayoffTree(); /* 296BA */
-extern void LoadPlayoffModeTree(); /* 2970A */
-extern void TreeSeriesWinner(); /* 2991C */
-extern void OpenStatsSchedule(); /* 29A97 */
-extern void LoadLeagueTree(); /* 29B07 */
 extern void PreGameScreen_jt(); /* 29F18 */
 extern void PreGameScreen(); /* 29F28 */
 extern void PreGameScreen_awaylines(); /* 2A8B9 */

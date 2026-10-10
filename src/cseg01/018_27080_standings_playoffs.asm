@@ -894,6 +894,10 @@ pop edx	; 27BBF
 pop ecx	; 27BC0
 pop ebx	; 27BC1
 ret	; 27BC2
+; C: src/c/018_27080_standings_playoffs/MoveTreeHighlight.c
+%ifdef CBUILD
+%include "c/018_27080_standings_playoffs/MoveTreeHighlight.inc"
+%else
 MoveTreeHighlight:
 push dword 20h	; 27BC3
 call __CHK	; 27BC8
@@ -942,6 +946,7 @@ pop esi	; 27C30
 pop ecx	; 27C31
 pop ebx	; 27C32
 ret	; 27C33
+%endif ; C
 CountSeriesWins:
 push dword 54h	; 27C34
 call __CHK	; 27C39
@@ -2921,6 +2926,10 @@ pop edx	; 2967D
 pop ecx	; 2967E
 pop ebx	; 2967F
 ret	; 29680
+; C: src/c/018_27080_standings_playoffs/PlayoffTreeHitTest.c
+%ifdef CBUILD
+%include "c/018_27080_standings_playoffs/PlayoffTreeHitTest.inc"
+%else
 PlayoffTreeHitTest:
 push dword 28h	; 29681
 call __CHK	; 29686
@@ -2974,3 +2983,4 @@ pop esi	; 29706
 pop ecx	; 29707
 pop ebx	; 29708
 ret	; 29709
+%endif ; C

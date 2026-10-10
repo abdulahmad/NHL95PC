@@ -114,6 +114,14 @@ unsigned char *CareerDbPtr(int ofs);
 unsigned char *CareerDbPtr2(int ofs);
 unsigned char *AttDbPtr(int ofs);
 unsigned char *AttDbPtr2(int ofs);
+void MoveTreeHighlight(int *from, int *to);  /* 27BC3 */
+int PlayoffTreeHitTest(int a, int b, int c, int d, int e);  /* 29681 */
+int ShowPlayoffTree(int a, int b);  /* 296BA */
+int LoadPlayoffModeTree(int a, int b);  /* 2970A */
+int LoadLeagueTree(int a, int b);  /* 29B07 */
+int TreeSeriesWinner(unsigned char *series, int round, int same);  /* 2991C */
+void PlayoffTreeScreen(void);  /* 27F9C */
+void OpenStatsSchedule(void **out);  /* 29A97 */
 double RatingToFloat(unsigned char r);  /* 6F6AD */       
 int GetMemListHead(int which);  /* 10010 */               
 int SpeechIsInit(void);  /* 836CA */                      
