@@ -16,5 +16,3 @@ int DeskSetExit2(void)
     deskexit = 2;
     return 1;
 }
-
-

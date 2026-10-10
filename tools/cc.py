@@ -3,7 +3,8 @@
 
   python3 tools/cc.py compile src/c/<seg>/<Func>.c [-o OBJ]   wcc386 10.0 LA under headless DOSBox -> OMF object
   python3 tools/cc.py frag    src/c/<seg>/<Func>.c OBJ OUT.inc  object -> NASM fragment for the marked asm block
-  python3 tools/cc.py mark    src/c/<seg>/<Func>.c [--func F] [--end LABEL] wrap the asm function in the CBUILD markers
+  python3 tools/cc.py mark    src/c/<seg>/<Func>.c [--func F [--seg STEM]] [--end LABEL] wrap the asm function in the CBUILD
+                              markers (--seg: F sits in another asm segment, e.g. the next one)
   python3 tools/cc.py unmark  src/c/<seg>/<Func>.c [--func F]   remove the markers again (asm block stays)
   python3 tools/cc.py check                                    toolchain present? (exit 0/1; used by the Makefile)
 
@@ -37,6 +38,7 @@ branch out of a slice into unmarked code, or a short (rel8) one, is an error.
 Compiler: Watcom C/C++32 10.0 LA wcc386 (WATCOM_ROOT, default ~/watcom: dosla/WCC386.EXE + w10a DOS4GW), default
 flags. A source may add flags with a comment line `/* cflags: -xx */` (none needed so far). Headers come from
 src/c/include (8.3 names)."""
+import glob
 import os, re, sys, shutil, subprocess, tempfile, argparse
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
@@ -113,15 +115,27 @@ def c_paths(src, func=None):
     fil = os.path.splitext(fn)[0]
     func = func or fil
     inc = 'c/%s/%s.inc' % (stem, fil) if func == fil else 'c/%s/%s.%s.inc' % (stem, fil, func)
-    return stem, func, os.path.join(ROOT, 'src/cseg01', stem + '.asm'), inc
+    asm = os.path.join(ROOT, 'src/cseg01', stem + '.asm')
+    if func != fil:
+        # a further function of the file may sit in the next asm segment (one original source file across a
+        # segment split): its block is marked there (cc.py mark --func F --seg STEM)
+        seg = os.environ.get('CC_SEG')
+        if seg: asm = os.path.join(ROOT, 'src/cseg01', seg + '.asm')
+        elif '%%include "%s"' % inc not in open(asm).read():
+            for g in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/*.asm'))):
+                if '%%include "%s"' % inc in open(g).read(): asm = g; break
+    return stem, func, asm, inc
 
 def file_blocks(src):
     """every marked block of this C file: {function: include name}"""
     stem, fil, asm, inc0 = c_paths(src)
     out = {}
-    for l in open(asm):
-        m = re.match(r'%%include "c/%s/%s(\.(\w+))?\.inc"' % (re.escape(stem), re.escape(fil)), l.strip())
-        if m: out[m.group(2) or fil] = m.group(0)
+    for g in [asm] + sorted(x for x in glob.glob(os.path.join(ROOT, 'src/cseg01/*.asm')) if x != asm):
+        t = open(g).read()
+        if 'c/%s/%s' % (stem, fil) not in t: continue
+        for l in t.split('\n'):
+            m = re.match(r'%%include "c/%s/%s(\.(\w+))?\.inc"' % (re.escape(stem), re.escape(fil)), l.strip())
+            if m: out[m.group(2) or fil] = m.group(0)
     return out
 
 LABEL = re.compile(r'^([A-Za-z_.][\w.$?@]*):')
@@ -190,7 +204,7 @@ def block(src, func=None):
     for l in L[j + 1:]:
         a = ADDR.search(l)
         if a: end = int(a.group(1), 16); break
-    if end is None: end = seg_end(stem)
+    if end is None: end = seg_end(os.path.basename(asm)[:-4])
     end -= trailing_data(L, j + 1)
     if pend: labels += [(n, end) for n in pend]
     return first, end, labels, body
@@ -228,7 +242,7 @@ def asm_range(src, func=None):
     for l in L[k:]:
         a = ADDR.search(l)
         if a: return start, int(a.group(1), 16) - trailing_data(L, k)
-    return start, seg_end(stem) - trailing_data(L, k)
+    return start, seg_end(os.path.basename(asm)[:-4]) - trailing_data(L, k)
 
 def frag(src, obj, out):
     stem, fil, asm, inc = c_paths(src)
@@ -411,8 +425,9 @@ def unmark(src, func=None):
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('cmd'); ap.add_argument('src', nargs='?'); ap.add_argument('rest', nargs='*')
-    ap.add_argument('-o'); ap.add_argument('--end'); ap.add_argument('--func'); ap.add_argument('--flags', default='')
+    ap.add_argument('-o'); ap.add_argument('--end'); ap.add_argument('--func'); ap.add_argument('--flags', default=''); ap.add_argument('--seg')
     a = ap.parse_args()
+    if a.seg: os.environ['CC_SEG'] = a.seg
     if a.cmd == 'check': sys.exit(0 if check() else 1)
     if a.cmd == 'compile':
         obj = a.o or os.path.join(ROOT, 'build', os.path.relpath(os.path.splitext(os.path.abspath(a.src))[0], os.path.join(ROOT, 'src')) + '.obj')

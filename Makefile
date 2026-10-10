@@ -61,7 +61,7 @@ extract: build/parts/manifest.json
 build/cbuild.$(CBUILD):
 	@mkdir -p build; rm -f build/cbuild.*; touch $@
 
-$(OBJDIR)/%.o: src/%.asm $(INCS) $$(foreach i,$(CINCS),$$(if $$(findstring /$$(notdir $$*)/,$$i),$$i))
+$(OBJDIR)/%.o: src/%.asm $(INCS) $$(if $(CINCS),$$(addprefix build/,$$(shell grep -ho '^.include "c/[^"]*\.inc"' src/$$*.asm | cut -d'"' -f2)))
 	@mkdir -p $(dir $@)
 	@$(NASM) $(NASMFLAGS) -o $@ $<
 

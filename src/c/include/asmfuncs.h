@@ -53,8 +53,6 @@ extern void StatsSel_common(); /* 17B65 */
 extern void StatsSel_x(); /* 17BE1 */
 extern void StatsSelLeaguePlayoffs(); /* 17CE0 */
 extern void StatsSelPlayoffMode(); /* 17D6E */
-extern void DeskSetExit3b(); /* 18D03 */
-extern void ShowPlayerStatsItem(); /* 18D0D */
 extern void FreeDeskBuffers(); /* 18D33 */
 extern void MenuCallbackTrue(); /* 18F74 */
 extern void MenuCallbackTrue2(); /* 18F86 */
