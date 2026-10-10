@@ -2847,6 +2847,10 @@ pop edx	; 1FB18
 pop ecx	; 1FB19
 pop ebx	; 1FB1A
 ret	; 1FB1B
+; C: src/c/015_1D6E8_menu_system/TextPrintf.c
+%ifdef CBUILD
+%include "c/015_1D6E8_menu_system/TextPrintf.inc"
+%else
 TextPrintf:
 push dword 14h	; 1FB1C
 call __CHK	; 1FB21
@@ -2885,6 +2889,7 @@ add esp, byte 0Ch	; 1FB77
 pop edi	; 1FB7A
 pop esi	; 1FB7B
 ret 4	; 1FB7C
+%endif ; C
 CmpPoints:
 push dword 14h	; 1FB7F
 call __CHK	; 1FB84

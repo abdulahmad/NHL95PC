@@ -480,6 +480,10 @@ pop esi	; 147C6
 pop ecx	; 147C7
 ret	; 147C8
 %endif ; C
+; C: src/c/005_1431E_file_utils/ReadTeamRec.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/ReadTeamRec.inc"
+%else
 ReadTeamRec:
 push dword 10h	; 147C9
 call __CHK	; 147CE
@@ -521,6 +525,7 @@ sub ebx, edx	; 1481A
 mov ecx, 0Bh	; 1481C
 mov edx, esi	; 14821
 jmp short ReadTeamRec_x	; 14823
+%endif ; C
 ; C: src/c/005_1431E_file_utils/DiskSpaceShort.c
 %ifdef CBUILD
 %include "c/005_1431E_file_utils/DiskSpaceShort.inc"

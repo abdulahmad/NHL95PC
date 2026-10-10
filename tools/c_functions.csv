@@ -43,6 +43,7 @@ ReadKeyRec WriteKeyRec,1463D,46,005_1431E_file_utils,src/c/005_1431E_file_utils/
 ReadSeasonRec,1478B,21,005_1431E_file_utils,src/c/005_1431E_file_utils/ReadKeyRec.c,matched,
 CopyFile,1466B,288,005_1431E_file_utils,src/c/005_1431E_file_utils/ReadKeyRec.c,nonmatching,
 ReadSchedGame,147A0,41,005_1431E_file_utils,src/c/005_1431E_file_utils/ReadSchedGame.c,matched,
+ReadTeamRec ReadGSummaryRec,147C9,92,005_1431E_file_utils,src/c/005_1431E_file_utils/ReadTeamRec.c,matched,
 AnyInputPressed,1600C,102,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/AnyInputPressed.c,nonmatching,draft: asm keeps result in esi and saves 4 regs; ours uses edx
 CupSeriesWinner,15CE1,138,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/CupSeriesWinner.c,nonmatching,"draft: need computed in ebp (mov ebp,edx / shr / inc) vs lea; same logic"
 IsCupClinched,15C30,177,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/IsCupClinched.c,nonmatching,"stack: asm spills both score args to the stack (push eax/edx, 14h frame) and returns through one exit; C keeps them in cl/ch"
@@ -118,6 +119,7 @@ StrPrefixDiffers,1D6BE,42,014_1CC3D_frontend_labels,src/c/014_1CC3D_frontend_lab
 CmpGAA,1FC8F,367,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/CmpGAA.c,matched,
 CmpPoints,1FB7F,272,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/CmpPoints.c,nonmatching,
 InitMenuRemap,1FAA7,117,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/InitMenuRemap.c,nonmatching,draft: asm calls __STOSB for the 15h-byte clear (inline memset helper); default-flag memset calls memset_
+TextPrintf TextPrintf2,1FB1C,99,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/TextPrintf.c,matched,
 CalStandingsScreen,216D7,279,016_20016_easn_stats,src/c/016_20016_easn_stats/CalStandingsScreen.c,nonmatching,
 DrawPhotoWithPal,21C04,218,016_20016_easn_stats,src/c/016_20016_easn_stats/DrawPhotoWithPal.c,nonmatching,"register allocation only: the second statspalvalid read lands in eax/ecx/edx, the EXE uses ebx"
 FreeCalendarIfLowMem,212C6,56,016_20016_easn_stats,src/c/016_20016_easn_stats/FreeCalendarIfLowMem.c,matched,
@@ -347,7 +349,7 @@ PaGoal,59AD0,63,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/
 PaHighlightIntro,59CA9,52,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaHighlightIntro.c,matched,
 PaOpenBank,59D54,29,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaOpenBank.c,matched,
 PaPenalty,59B3C,76,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPenalty.c,matched,
-PaPenaltyShot,59B88,45,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPenaltyShot.c,nonmatching,"registers only: original saves the argument in esi, this draft in edx. 10-min cap"
+PaPenaltyShot,59B88,45,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPenaltyShot.c,matched,"registers only: original saves the argument in esi, this draft in edx. 10-min cap"
 PaPlayerNumber,59B0F,45,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPlayerNumber.c,matched,
 PaPlayoffResult,59CDD,57,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPlayoffResult.c,matched,
 PaPlayoffTonight,59D16,62,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPlayoffTonight.c,matched,

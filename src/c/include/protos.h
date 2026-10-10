@@ -743,6 +743,9 @@ void __cdecl sub_96A78(int a);  /* 96A78: EA sound library */
 void sub_7E03F(void);  /* 7E03F */
 void *__cdecl sub_8E908(char *name, int bank);  /* sound library loader 2, stack args */
 void SndLoadFile2(int unused, char *name);  /* 594B2 */
+void ReadGSummaryRec(int fh, void *rec, int n);  /* 147FF */
+void TextPrintf(int x, int y, char *fmt, int a);  /* 1FB1C */
+void TextPrintf2(int x, int y, char *fmt, int a, int b);  /* 1FB49 */
 unsigned _dos_write(int fh, void __far *buf, unsigned n, unsigned *got);  /* Watcom CRT _dos_write_ */
 void ReadGSumHeader(void);  /* 61BBF */
 void ReadGSumTail(void);  /* 61C22 */

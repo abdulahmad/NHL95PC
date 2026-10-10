@@ -655,6 +655,10 @@ pop edi	; 59B83
 pop esi	; 59B84
 ret 14h	; 59B85
 %endif ; C
+; C: src/c/041_59493_engine_sound_iface/PaPenaltyShot.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/PaPenaltyShot.inc"
+%else
 PaPenaltyShot:
 push dword 8	; 59B88
 call __CHK	; 59B8D
@@ -670,6 +674,7 @@ call SayPenaltyShot	; 59BAE
 .x:
 pop esi	; 59BB3
 ret	; 59BB4
+%endif ; C
 ; C: src/c/041_59493_engine_sound_iface/PaTonightIntro.c
 %ifdef CBUILD
 %include "c/041_59493_engine_sound_iface/PaTonightIntro.inc"

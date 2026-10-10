@@ -33,7 +33,6 @@ extern void FileReadAt_x(); /* 145E4 */
 extern void FileReadAt_x2(); /* 145E6 */
 extern void ReadKeyRec_x(); /* 1464D */
 extern void ReadTeamRec_x(); /* 147F6 */
-extern void ReadGSummaryRec(); /* 147FF */
 extern void DrawPanelLine_x(); /* 14BE9 */
 extern void UpdateHudPanel(); /* 14CF1 */
 extern void UpdateHudPanel_x(); /* 14F2A */
@@ -213,8 +212,6 @@ extern void RunMenu(); /* 1D6E8 */
 extern void RunMenu_ret4(); /* 1DEFD */
 extern void RunTeamPickMenu(); /* 1DF03 */
 extern void RunPlayerPickMenu(); /* 1ED96 */
-extern void TextPrintf(); /* 1FB1C */
-extern void TextPrintf2(); /* 1FB49 */
 extern void LoadShapeByTag(); /* 1FDFE */
 extern void LoadShapeByTag_x(); /* 1FF80 */
 extern void MakeStatsTitle(); /* 1FF86 */
