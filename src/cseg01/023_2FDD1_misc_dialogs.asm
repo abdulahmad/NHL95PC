@@ -1299,9 +1299,9 @@ pop ecx	; 30BF0
 pop ebx	; 30BF1
 ret	; 30BF2
 %endif ; C
-; C: src/c/023_2FDD1_misc_dialogs/InitScrollBar.c
+; C: src/c/023_2FDD1_misc_dialogs/DrawButton.c (InitScrollBar)
 %ifdef CBUILD
-%include "c/023_2FDD1_misc_dialogs/InitScrollBar.inc"
+%include "c/023_2FDD1_misc_dialogs/DrawButton.InitScrollBar.inc"
 %else
 InitScrollBar:
 push dword 8	; 30BF3

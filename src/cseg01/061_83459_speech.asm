@@ -347,9 +347,9 @@ or eax, edx	; 837F7
 pop edx	; 837F9
 ret	; 837FA
 %endif ; C
-; C: src/c/061_83459_speech/ReadBE24.c
+; C: src/c/061_83459_speech/ShutdownSpeech.c (ReadBE24)
 %ifdef CBUILD
-%include "c/061_83459_speech/ReadBE24.inc"
+%include "c/061_83459_speech/ShutdownSpeech.ReadBE24.inc"
 %else
 ReadBE24:
 push dword 20h	; 837FB
@@ -803,6 +803,10 @@ add dword [dword eax+03B6Ch], edx	; 83D62
 mov eax, dword [speechbank]	; 83D68
 inc dword [dword eax+03B74h]	; 83D6D
 jmp near ReadBE24_ret	; 83D73
+; C: src/c/061_83459_speech/ShutdownSpeech.c (PlaceSpeechSlot)
+%ifdef CBUILD
+%include "c/061_83459_speech/ShutdownSpeech.PlaceSpeechSlot.inc"
+%else
 PlaceSpeechSlot:
 push dword 28h	; 83D78
 call __CHK	; 83D7D
@@ -861,6 +865,7 @@ mov eax, dword [speechbank]	; 83E1F
 inc dword [dword eax+03B74h]	; 83E24
 add esp, byte 8	; 83E2A
 jmp near ShutdownSpeech_ret6	; 83E2D
+%endif ; C
 StrEqNoCase:
 push dword 0Ch	; 83E32
 call __CHK	; 83E37

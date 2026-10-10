@@ -1921,6 +1921,10 @@ pop ecx	; 735C0
 pop ebx	; 735C1
 ret	; 735C2
 %endif ; C
+; C: src/c/053_71F0C_database_dialogs/LoadDbDialogShapes.c (DeleteSelectedDb)
+%ifdef CBUILD
+%include "c/053_71F0C_database_dialogs/LoadDbDialogShapes.DeleteSelectedDb.inc"
+%else
 DeleteSelectedDb:
 push dword 70h	; 735C3
 call __CHK	; 735C8
@@ -2020,6 +2024,11 @@ call DrawDbDialogButtons	; 736F4
 xor eax, eax	; 736F9
 add esp, byte 44h	; 736FB
 jmp near DbDialog_ret	; 736FE
+%endif ; C
+; C: src/c/053_71F0C_database_dialogs/LoadDbDialogShapes.c (MenuOpenDatabase)
+%ifdef CBUILD
+%include "c/053_71F0C_database_dialogs/LoadDbDialogShapes.MenuOpenDatabase.inc"
+%else
 MenuOpenDatabase:
 push dword 2Ch	; 73703
 call __CHK	; 73708
@@ -2076,3 +2085,4 @@ call jctime	; 7379A
 add esp, byte 4	; 7379F
 add esp, byte 4	; 737A2
 jmp near DbDialog_epilogue	; 737A5
+%endif ; C

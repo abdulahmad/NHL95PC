@@ -853,4 +853,11 @@ int DeskAwayGoalie2(void);  /* 1ABC8 */
 int DeskAwayGoalieNone(void);  /* 1ABF1 */
 int MenuModeSettings(void);  /* 7B3A7 */
 int CalStandingsScreen(void);  /* 216D7 */
+int ReadSpeechSample(int n);  /* 83BF3 */
+void LoadSpeechSlot(int n);  /* 83CAE */
+void PlaceSpeechSlot(int n);  /* 83D78 */
+int DbDialogLoop(void);  /* 72DE7 */
+int DeleteSelectedDb(int *list);  /* 735C3 */
+void ScanDbFiles(void);  /* 7248C */
+void qsort(void *base, unsigned n, unsigned width, int (*cmp)(const void *, const void *));  /* Watcom CRT qsort_ */
 #endif

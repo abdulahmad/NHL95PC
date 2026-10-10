@@ -840,7 +840,6 @@ extern void unk13_722FE(); /* 722FE */
 extern void LoadDbDialogShapes(); /* 7230B */
 extern void DbDialog_epilogue(); /* 72485 */
 extern void DbDialog_ret(); /* 72486 */
-extern void ScanDbFiles(); /* 7248C */
 extern void DrawDbDialog_jt(); /* 727D6 */
 extern void DrawDbDialog(); /* 727EE */
 extern void DrawDbDialog_n6(); /* 72A2A */
@@ -857,9 +856,7 @@ extern void DrawDbList_n4(); /* 72CC3 */
 extern void DrawDbList_n3(); /* 72CCA */
 extern void DrawDbList_n2(); /* 72CD1 */
 extern void DrawDbList_n1(); /* 72CD8 */
-extern void DbDialogLoop(); /* 72DE7 */
 extern void OpenSelectedDb(); /* 733C4 */
-extern void DeleteSelectedDb(); /* 735C3 */
 extern void MenuOpenDatabase(); /* 73703 */
 extern void str_RosterIncomplete(); /* 737AA */
 extern void str_Scratch(); /* 737C5 */
@@ -1007,9 +1004,6 @@ extern void ShutdownSpeech_ret5(); /* 836C4 */
 extern void MusicChanReset2(); /* 8373E */
 extern void ReadBE24_ret(); /* 83857 */
 extern void OpenSpeechBank_ret(); /* 83BC1 */
-extern void ReadSpeechSample(); /* 83BF3 */
-extern void LoadSpeechSlot(); /* 83CAE */
-extern void PlaceSpeechSlot(); /* 83D78 */
 extern void MoveSampleMem(); /* 840A9 */
 extern void CompactSpeechSlot(); /* 84125 */
 extern void CompactSpeechMem(); /* 8427E */
