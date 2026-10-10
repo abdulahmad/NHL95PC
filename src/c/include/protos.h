@@ -268,6 +268,11 @@ void chkatop(void);  /* 639A4 */
 void ResetGoalieMenu(void);  /* 1CB7F */                  
 void ResetSampleReq(void);  /* 83520 */                   
 void CtlSwapTeamFlag(int team);  /* 7CC8A */              
+void MenuP1ControlsInGame(void);  /* 7CAF7 */
+int ControlsDlgInGame(int side);  /* 7CB03 */
+void MenuP2ControlsInGame(void);  /* 7CB9F */
+void ReassignCtlPlayer(int side);  /* 7CCE5 */
+void ClearCtlBlink(void);  /* 7CEA1 */
 int SayOneMinuteLeft(void);  /* 854AC */                  
 void ResetSpeechQueue(void);  /* 833FA */                 
 void RequestSample(char *name);  /* 83FAF */              
@@ -299,7 +304,9 @@ char *strupr(char *s);  /* Watcom CRT strupr_ */
 void PrintCenteredText(int y, char *s);  /* 17573 */      
 unsigned DiskFreeBytes(int drive);  /* 106C8 */           
 unsigned _dos_getdiskfree(unsigned drive, void *d);  /* Watcom CRT _dos_getdiskfree_ */
-void __cdecl FatalError(char *msg);  /* B2CD8 */          
+void __cdecl FatalError(char *msg, ...);  /* B2CD8: printf-style message, then exit */
+int FileOpenWrite(char *name, int *h);  /* 1453E */
+int SaveHilight(int team);  /* 7FA10 */
 void SetPalette768(unsigned char *pal);  /* 76614 */      
 void __cdecl sub_B4C84(void);  /* video library: wait for retrace */
 void __cdecl sub_B4B88(int first, int count, unsigned char *rgb);  /* video library: set palette entries */
@@ -392,6 +399,9 @@ void MusicChanReset(void);
 void sub_8F633(void);  /* sound library: stop */          
 void sub_1BAF3(int ticks);
 void __cdecl sub_8EA18(int font);  /* text library: set font */
+void __cdecl sub_8E9E8(void *state);  /* text library: save the text state (40h bytes) */
+void __cdecl sub_8EA00(void *state);  /* text library: restore the text state */
+void DrawSettingsHeading(int x, int y, int n, int mode, int colour);  /* 8050F */
 void IntermissionDesk(void);
 void LoadScreenPalTick(void);  /* 47951 */                
 void __cdecl sub_B4C61(void);  /* video library: wait for retrace */
@@ -651,6 +661,8 @@ int OpenAnnouncerBank(void);  /* 85507 */
 void ShutdownSpeech(void);  /* 8363C */
 int ReadBE24(int fh);  /* 837FB */
 void PlayCrowdSample(int n);  /* 59A11 */
+int CrowdOnStoppage(void);  /* 4E71A */
+void LoadTeamPPV(int n);  /* 66497 */
 int StarEligible(int side, int pl);  /* 487D9 */
 void resetplstuff(void);  /* 5E01A */
 int CanRemovePlayer(Player *p);  /* 65B83 */

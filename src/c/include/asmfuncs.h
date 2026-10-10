@@ -29,7 +29,6 @@ extern void LoadGameGfx(); /* 13A91 */
 extern void LoadGameGfx_common(); /* 13B56 */
 extern void ReloadGameGfx(); /* 13BB4 */
 extern void FileOpenRead_x(); /* 14537 */
-extern void FileOpenWrite(); /* 1453E */
 extern void FileReadAt_x(); /* 145E4 */
 extern void FileReadAt_x2(); /* 145E6 */
 extern void ReadKeyRec(); /* 1463D */
@@ -486,7 +485,6 @@ extern void pucknorm_body(); /* 4D6B4 */
 extern void RequestLineChange(); /* 4D938 */
 extern void Endfaceoff(); /* 4DA7B */
 extern void assreffollow(); /* 4E0BD */
-extern void CrowdOnStoppage(); /* 4E71A */
 extern void assrefwhistle(); /* 4E8EF */
 extern void ass_replace_popx(); /* 4E97C */
 extern void ass_popx(); /* 4E983 */
@@ -597,7 +595,6 @@ extern void PickExtraSkater(); /* 653BE */
 extern void checkwindow(); /* 65D01 */
 extern void checkwindow_popebp(); /* 66490 */
 extern void checkwindow_popx(); /* 66491 */
-extern void LoadTeamPPV(); /* 66497 */
 extern void DrawTextOverlay(); /* 665AD */
 extern void UpdateTextOverlay(); /* 66E06 */
 extern void DrawCallBanner(); /* 66FE2 */
@@ -938,11 +935,6 @@ extern void ControlsDlg_done(); /* 7CA49 */
 extern void MenuP1ControlsLeague(); /* 7CA53 */
 extern void MenuP2ControlsLeague(); /* 7CA61 */
 extern void ControlsDlgLeague(); /* 7CA70 */
-extern void MenuP1ControlsInGame(); /* 7CAF7 */
-extern void ControlsDlgInGame(); /* 7CB03 */
-extern void MenuP2ControlsInGame(); /* 7CB9F */
-extern void ReassignCtlPlayer(); /* 7CCE5 */
-extern void ClearCtlBlink(); /* 7CEA1 */
 extern void ControlsDlgInGame_side(); /* 7CFB9 */
 extern void ControlsDlgInGame_setside(); /* 7CFCE */
 extern void ControlsDlg_ret0C(); /* 7D12D */
@@ -969,7 +961,6 @@ extern void ReplaySaveHilight_n2(); /* 7F589 */
 extern void ReplaySaveHilight_n1(); /* 7F598 */
 extern void ReplaySaveHilight_n3(); /* 7F5A8 */
 extern void HilightSaveToDlg(); /* 7F724 */
-extern void SaveHilight(); /* 7FA10 */
 extern void CmpInt(); /* 7FC31 */
 extern void LoadSettingsShapes(); /* 8034B */
 extern void DrawSettingsHeading_jt(); /* 804FF */
@@ -1331,8 +1322,6 @@ extern void loc_8E963(); /* 8E963 */
 extern void loc_8E991(); /* 8E991 */
 extern void loc_8E9B4(); /* 8E9B4 */
 extern void sub_8E9D4(); /* 8E9D4 */
-extern void sub_8E9E8(); /* 8E9E8 */
-extern void sub_8EA00(); /* 8EA00 */
 extern void loc_8EA81(); /* 8EA81 */
 extern void loc_8EA83(); /* 8EA83 */
 extern void loc_8EA98(); /* 8EA98 */

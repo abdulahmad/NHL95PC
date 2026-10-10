@@ -167,6 +167,10 @@ dd DrawSettingsHeading_n0
 dd DrawSettingsHeading_n1
 dd DrawSettingsHeading_n0
 dd DrawSettingsHeading_n1
+; C: src/c/059_8034B_settings_lockerroom/DrawSettingsHeading.c
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/DrawSettingsHeading.inc"
+%else
 DrawSettingsHeading:
 push dword 60h	; 8050F
 call __CHK	; 80514
@@ -241,6 +245,7 @@ pop ebp	; 805BE
 pop edi	; 805BF
 pop esi	; 805C0
 ret 4	; 805C1
+%endif ; C
 ; C: src/c/059_8034B_settings_lockerroom/SetModeMenuLabels.c
 %ifdef CBUILD
 %include "c/059_8034B_settings_lockerroom/SetModeMenuLabels.inc"

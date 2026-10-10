@@ -268,6 +268,10 @@ call sub_91964	; 7FA00
 add esp, byte 0Ch	; 7FA05
 add esp, byte 50h	; 7FA08
 jmp near DrawGadgetButton_ret	; 7FA0B
+; C: src/c/058_7F724_highlights/SaveHilight.c
+%ifdef CBUILD
+%include "c/058_7F724_highlights/SaveHilight.inc"
+%else
 SaveHilight:
 push dword 74h	; 7FA10
 call __CHK	; 7FA15
@@ -420,6 +424,7 @@ pop edx	; 7FC0E
 pop ecx	; 7FC0F
 pop ebx	; 7FC10
 ret	; 7FC11
+%endif ; C
 ; C: src/c/058_7F724_highlights/NudgeRinkScroll.c
 %ifdef CBUILD
 %include "c/058_7F724_highlights/NudgeRinkScroll.inc"

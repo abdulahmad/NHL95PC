@@ -8129,6 +8129,10 @@ pop esi	; 4E716
 pop ecx	; 4E717
 pop ebx	; 4E718
 ret	; 4E719
+; C: src/c/037_4842A_engine_player_logic/CrowdOnStoppage.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/CrowdOnStoppage.inc"
+%else
 CrowdOnStoppage:
 push dword 0Ch	; 4E71A
 call __CHK	; 4E71F
@@ -8271,6 +8275,7 @@ xor eax, eax	; 4E8EA
 pop edx	; 4E8EC
 pop ecx	; 4E8ED
 ret	; 4E8EE
+%endif ; C
 assrefwhistle:
 push dword 18h	; 4E8EF
 call __CHK	; 4E8F4
