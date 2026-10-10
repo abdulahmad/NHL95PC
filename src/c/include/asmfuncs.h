@@ -54,8 +54,6 @@ extern void StatsSel_x(); /* 17BE1 */
 extern void StatsSelLeaguePlayoffs(); /* 17CE0 */
 extern void StatsSelPlayoffMode(); /* 17D6E */
 extern void FreeDeskBuffers(); /* 18D33 */
-extern void MenuCallbackTrue(); /* 18F74 */
-extern void MenuCallbackTrue2(); /* 18F86 */
 extern void DeskLines_common(); /* 1A8F0 */
 extern void DeskSummary_common(); /* 1AAB6 */
 extern void DeskItem_ret2(); /* 1AABB */

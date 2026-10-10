@@ -190,6 +190,10 @@ pop ecx	; 18F71
 pop ebx	; 18F72
 ret	; 18F73
 %endif ; C
+; C: src/c/010_18D7F_frontend_desk/MenuCallbackTrue.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/MenuCallbackTrue.inc"
+%else
 MenuCallbackTrue:
 push dword 4	; 18F74
 .1:
@@ -199,6 +203,7 @@ ret 0Ch	; 18F83
 MenuCallbackTrue2:
 push dword 4	; 18F86
 jmp short MenuCallbackTrue.1	; 18F8B
+%endif ; C
 ; C: src/c/010_18D7F_frontend_desk/PlayRandomHighlight.c
 %ifdef CBUILD
 %include "c/010_18D7F_frontend_desk/PlayRandomHighlight.inc"

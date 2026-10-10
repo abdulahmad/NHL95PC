@@ -94,6 +94,7 @@ DeskReturnConfirm,1A5D4,211,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_des
 DeskToSportsDesk,1A5B1,35,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DeskToSportsDesk.c,matched,
 DrawDeskFrames,18E43,305,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/DrawDeskFrames.c,matched,
 IntermissionDesk,190BE,337,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/IntermissionDesk.c,matched,
+MenuCallbackTrue MenuCallbackTrue2,18F74,25,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/MenuCallbackTrue.c,matched,
 OutputCurrentData,18D7F,196,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/OutputCurrentData.c,matched,
 PlayRandomHighlight,18F8D,305,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/PlayRandomHighlight.c,matched,
 PostGameDesk,1920F,334,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/PostGameDesk.c,nonmatching,

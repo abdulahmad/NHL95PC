@@ -751,6 +751,8 @@ void PrintFmt1(int x, int y, char *fmt, int a);  /* 176AE */
 void PrintFmt2(int x, int y, char *fmt, int a, int b);  /* 176DB */
 int DeskSetExit3b(void);  /* 18D03 */
 int ShowPlayerStatsItem(void);  /* 18D0D */
+int MenuCallbackTrue(int a, int b, int c, int d, int e, int f, int g);  /* 18F74 */
+int MenuCallbackTrue2(int a, int b, int c, int d, int e, int f, int g);  /* 18F86 */
 void GameLineEditor(int team, unsigned char *lines, unsigned char *names, int mode);  /* line editor in game */
 void GameStatsScreen(void);
 void InstantReplay(int mode);
