@@ -749,6 +749,10 @@ pop ecx	; 13BB1
 pop ebx	; 13BB2
 ret	; 13BB3
 %endif ; C
+; C: src/c/004_13320_asset_loading/LoadGameGfx.c (ReloadGameGfx)
+%ifdef CBUILD
+%include "c/004_13320_asset_loading/LoadGameGfx.ReloadGameGfx.inc"
+%else
 ReloadGameGfx:
 push dword 3Ch	; 13BB4
 call __CHK	; 13BB9
@@ -811,6 +815,7 @@ inc esi	; 13C6E
 cmp esi, byte 0Ah	; 13C6F
 jl short ReloadGameGfx.5	; 13C72
 jmp near LoadGameGfx_common	; 13C74
+%endif ; C
 PlacePlayersAtStart:
 push dword 10h	; 13C79
 call __CHK	; 13C7E

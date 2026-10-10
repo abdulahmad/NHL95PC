@@ -2621,9 +2621,9 @@ pop ecx	; 7BF53
 pop ebx	; 7BF54
 ret	; 7BF55
 %endif ; C
-; C: src/c/056_7A13A_settings_dialogs/ExhOptsToBits.c
+; C: src/c/056_7A13A_settings_dialogs/MenuExhibitionSettings.c (ExhOptsToBits)
 %ifdef CBUILD
-%include "c/056_7A13A_settings_dialogs/ExhOptsToBits.inc"
+%include "c/056_7A13A_settings_dialogs/MenuExhibitionSettings.ExhOptsToBits.inc"
 %else
 ExhOptsToBits:
 push dword 1Ch	; 7BF56
@@ -2745,6 +2745,10 @@ pop ecx	; 7C0B6
 pop ebx	; 7C0B7
 ret	; 7C0B8
 %endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuExhibitionSettings.c (DrawExhSetChecks)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuExhibitionSettings.DrawExhSetChecks.inc"
+%else
 DrawExhSetChecks:
 push dword 2Ch	; 7C0B9
 call __CHK	; 7C0BE
@@ -2843,6 +2847,7 @@ add esp, byte 0Ch	; 7C1A1
 .9:
 add esp, byte 4	; 7C1A4
 jmp near ExhSettings_ret	; 7C1A7
+%endif ; C
 ; C: src/c/056_7A13A_settings_dialogs/DrawExhSetDlg.c
 %ifdef CBUILD
 %include "c/056_7A13A_settings_dialogs/DrawExhSetDlg.inc"

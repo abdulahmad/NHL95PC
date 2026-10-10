@@ -844,4 +844,11 @@ int EditPlayoffSettings(void);  /* 7A29C */
 int MenuLeagueSettingsEdit(void);  /* 7A335 */
 int MenuShowLeagueSettings(void);  /* 7A39F */
 
+int DeskTeamScratches(void);  /* 1AAC4 */
+int DeskHomeGoalie1(void);  /* 1AB0B */
+int DeskHomeGoalie2(void);  /* 1AB39 */
+int DeskHomeGoalieNone(void);  /* 1AB62 */
+int DeskAwayGoalie1(void);  /* 1AB95 */
+int DeskAwayGoalie2(void);  /* 1ABC8 */
+int DeskAwayGoalieNone(void);  /* 1ABF1 */
 #endif

@@ -1316,6 +1316,10 @@ pop ecx	; 212FB
 pop ebx	; 212FC
 ret	; 212FD
 %endif ; C
+; C: src/c/016_20016_easn_stats/LoadCalendarShapes.c
+%ifdef CBUILD
+%include "c/016_20016_easn_stats/LoadCalendarShapes.inc"
+%else
 LoadCalendarShapes:
 push dword 38h	; 212FE
 call __CHK	; 21303
@@ -1346,6 +1350,7 @@ pop edx	; 2134C
 pop ecx	; 2134D
 pop ebx	; 2134E
 ret	; 2134F
+%endif ; C
 CalTeamStatsScreen:
 push dword 334h	; 21350
 call __CHK	; 21355

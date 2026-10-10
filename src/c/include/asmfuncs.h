@@ -72,17 +72,10 @@ extern void DeskLines_common(); /* 1A8F0 */
 extern void DeskVisitorLines(); /* 1A922 */
 extern void DeskSummary_common(); /* 1AAB6 */
 extern void DeskItem_ret2(); /* 1AABB */
-extern void DeskTeamScratches(); /* 1AAC4 */
-extern void DeskHomeGoalie1(); /* 1AB0B */
 extern void DeskGoalie_x1(); /* 1AB2F */
-extern void DeskHomeGoalie2(); /* 1AB39 */
-extern void DeskHomeGoalieNone(); /* 1AB62 */
 extern void DeskGoalie_x2(); /* 1AB8E */
-extern void DeskAwayGoalie1(); /* 1AB95 */
 extern void DeskGoalie_x3(); /* 1ABBC */
 extern void DeskGoalie_x4(); /* 1ABC1 */
-extern void DeskAwayGoalie2(); /* 1ABC8 */
-extern void DeskAwayGoalieNone(); /* 1ABF1 */
 extern void sub_1AC25(); /* 1AC25 */
 extern void loc_1AC96(); /* 1AC96 */
 extern void sub_1AC9A(); /* 1AC9A */
