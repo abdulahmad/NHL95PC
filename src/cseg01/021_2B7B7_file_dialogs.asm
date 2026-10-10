@@ -568,12 +568,17 @@ push edi	; 2BEDC
 call sub_91370	; 2BEDD
 add esp, byte 0Ch	; 2BEE2
 jmp near LoadFileDlgShapes_x	; 2BEE5
+; C: src/c/021_2B7B7_file_dialogs/CmpFileNames.c
+%ifdef CBUILD
+%include "c/021_2B7B7_file_dialogs/CmpFileNames.inc"
+%else
 CmpFileNames:
 push dword 4	; 2BEEA
 call __CHK	; 2BEEF
 mov edx, dword [edx]	; 2BEF4
 mov eax, dword [eax]	; 2BEF6
 jmp near strcmp_	; 2BEF8
+%endif ; C
 ScanSavedGames:
 push dword 48h	; 2BEFD
 call __CHK	; 2BF02

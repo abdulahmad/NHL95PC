@@ -1272,11 +1272,16 @@ jl short MenuUseTheseLines.6	; 7927E
 .9:
 mov eax, 1	; 79280
 jmp near MenuUseOriginalLines_ret	; 79285
+; C: src/c/055_78346_team_select/MenuLineEdCancel.c
+%ifdef CBUILD
+%include "c/055_78346_team_select/MenuLineEdCancel.inc"
+%else
 MenuLineEdCancel:
 push dword 4	; 7928A
 call __CHK	; 7928F
 mov eax, 1	; 79294
 ret 18h	; 79299
+%endif ; C
 MenuUseOriginalLines:
 push dword 18h	; 7929C
 call __CHK	; 792A1

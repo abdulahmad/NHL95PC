@@ -1659,11 +1659,16 @@ pop edi	; 627F3
 pop esi	; 627F4
 ret 0Ch	; 627F5
 %endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/PostInjuryEvent.c (NullCallback0C)
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/PostInjuryEvent.NullCallback0C.inc"
+%else
 NullCallback0C:
 push dword 4	; 627F8
 call __CHK	; 627FD
 xor eax, eax	; 62802
 ret 0Ch	; 62804
+%endif ; C
 ChkScorerMilestone:
 push dword 30h	; 62807
 call __CHK	; 6280C

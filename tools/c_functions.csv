@@ -56,6 +56,8 @@ TextGridOff,1777E,21,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGridO
 TextGridOpen,17711,69,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGridOpen.c,matched,
 TextGridPut,17793,131,007_1609F_title_intro,src/c/007_1609F_title_intro/TextGridPut.c,nonmatching,original keeps y in esi from entry and builds y*36 as ((y<<3)+y)<<2 in edx; this draft uses eax as the temp. 10-min cap
 DeskSetExit1,179B6,26,008_17816_output_files,src/c/008_17816_output_files/DeskSetExit1.c,matched,
+DeskSetExit2,179D0,22,008_17816_output_files,src/c/008_17816_output_files/DeskSetExit2.c,nonmatching,
+DeskSetExit3,179E6,26,008_17816_output_files,src/c/008_17816_output_files/DeskSetExit2.c,nonmatching,
 StatsSel9394Playoffs,17AF3,244,008_17816_output_files,src/c/008_17816_output_files/StatsSel9394Playoffs.c,matched,
 StatsSelLeague,17BE7,249,008_17816_output_files,src/c/008_17816_output_files/StatsSel9394Playoffs.c,matched,
 StatsSelLeaguePlayoffs,17CE0,142,008_17816_output_files,src/c/008_17816_output_files/StatsSel9394Playoffs.c,matched,
@@ -131,6 +133,7 @@ CmpTeamStandings,22DDE,336,017_21CDE_player_stats,src/c/017_21CDE_player_stats/C
 PlayerFromMouseY,24453,143,017_21CDE_player_stats,src/c/017_21CDE_player_stats/PlayerFromMouseY.c,matched,
 DrawBevelBox,29D00,533,019_2970A_league_schedule,src/c/019_2970A_league_schedule/DrawBevelBox.c,nonmatching,stack slots of the corner coordinate temporaries differ (x1 + 2 / y1 + 2 ...); logic matches
 FitPlayerName,29C75,139,019_2970A_league_schedule,src/c/019_2970A_league_schedule/FitPlayerName.c,matched,
+CmpFileNames,2BEEA,19,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/CmpFileNames.c,matched,
 FileDlgHitTest,2C3FF,82,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/FileDlgHitTest.c,matched,
 LoadFileDlgShapes,2B7C3,385,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/LoadFileDlgShapes.c,matched,
 PrintTextCopy,2C135,63,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/PrintTextCopy.c,matched,
@@ -243,6 +246,7 @@ AddStar,48789,80,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_log
 AdjustFacingDirection,4B4E9,217,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/AdjustFacingDirection.c,matched,
 ChkTwoLinePass,4DD51,195,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/ChkTwoLinePass.c,nonmatching,
 ClampYPosition,4B6F4,128,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/ClampYPosition.c,matched,
+CrowdOnStoppage,4E71A,469,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/CrowdOnStoppage.c,matched,
 GoalieToPuckVec,4B467,130,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/GoalieToPuckVec.c,matched,
 MoveInDir,49260,153,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/MoveInDir.c,matched,
 NextPathPoint,4F99B,84,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/NextPathPoint.c,matched,
@@ -346,7 +350,7 @@ PaPlayoffResult,59CDD,57,041_59493_engine_sound_iface,src/c/041_59493_engine_sou
 PaPlayoffTonight,59D16,62,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPlayoffTonight.c,matched,
 PaPreloadClips,59D71,41,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaPreloadClips.c,matched,
 PaSpeechBusy,59AAD,35,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaSpeechBusy.c,matched,
-PaTonightIntro,59BB5,71,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaTonightIntro.c,matched,
+PaTonightIntro PaScoringPeriod PaNhlIntro PaGoodnight PaLineups PaElseNhl,59BB5,244,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaTonightIntro.c,matched,
 PlayCrowdSample,59A11,109,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PlayCrowdSample.c,matched,
 PlayDigiSample,599B9,53,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PlayDigiSample.c,matched,
 SndLoadFile,59493,31,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/SndLoadFile.c,matched,
@@ -413,6 +417,7 @@ FormatPlayerName,61D48,337,045_614C2_scoring_penalty_text,src/c/045_614C2_scorin
 GameTimeStamp,62CD7,34,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/GameTimeStamp.c,matched,
 PostGoalEvent,62343,374,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/PostGoalEvent.c,matched,
 PostInjuryEvent,62764,148,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/PostInjuryEvent.c,matched,
+NullCallback0C,627F8,15,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/PostInjuryEvent.c,matched,
 QueueDeferredCall,619C8,95,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QueueDeferredCall.c,matched,
 QueueGoalieNote,62C37,160,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QueueGoalieNote.c,nonmatching,"draft: only the tail differs: ours keeps 1 in esi for deferpending and the result, asm stores immediates"
 QuickShotChk,6427F,185,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/QuickShotChk.c,nonmatching,"asm keeps facedir in bx and si (2 saved regs, frame 10h); C saves only edx"
@@ -463,6 +468,7 @@ DrawDatabaseName,6D256,67,051_6C2F9_database_save,src/c/051_6C2F9_database_save/
 DrawRosterPanel,6D299,95,051_6C2F9_database_save,src/c/051_6C2F9_database_save/DrawRosterPanel.c,matched,
 DrawRosterTitle,6CEFB,116,051_6C2F9_database_save,src/c/051_6C2F9_database_save/DrawRosterTitle.c,nonmatching,draft: x/y params in esi/edi swapped vs asm
 KeyDbPtr,6CBB7,21,051_6C2F9_database_save,src/c/051_6C2F9_database_save/KeyDbPtr.c,matched,
+MenuSaveDbsAs,6C3BB,255,051_6C2F9_database_save,src/c/051_6C2F9_database_save/MenuSaveDbsAs.c,nonmatching,
 TeamRecPtr,6CB90,39,051_6C2F9_database_save,src/c/051_6C2F9_database_save/TeamRecPtr.c,matched,
 AskLeftRight,6FBE8,120,052_6D2F8_create_player,src/c/052_6D2F8_create_player/AskLeftRight.c,matched,
 ComparePlayerEntry,6D78B,98,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ComparePlayerEntry.c,matched,
@@ -507,8 +513,10 @@ DrawGameLineJerseys,78366,410,055_78346_team_select,src/c/055_78346_team_select/
 GameDressPlayer,79F41,214,055_78346_team_select,src/c/055_78346_team_select/GameDressPlayer.c,matched,
 LoadJerseyColours,78A87,352,055_78346_team_select,src/c/055_78346_team_select/LoadJerseyColours.c,nonmatching,
 MakeJerseyShape,7A099,161,055_78346_team_select,src/c/055_78346_team_select/MakeJerseyShape.c,matched,
+MenuLineEdCancel,7928A,18,055_78346_team_select,src/c/055_78346_team_select/MenuLineEdCancel.c,matched,
 MenuReturnToLineEditor,79DD1,16,055_78346_team_select,src/c/055_78346_team_select/MenuReturnToLineEditor.c,matched,
 PruneGameLines,79090,248,055_78346_team_select,src/c/055_78346_team_select/PruneGameLines.c,nonmatching,C folds the side * 444h * 4 step into the hmroster address ([edi+edx*4]); the EXE adds it first and reads the status into ch
+StubRet4b,78E29,13,055_78346_team_select,src/c/055_78346_team_select/StubRet4b.c,nonmatching,
 CtlDlgHitTest,7D61F,82,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlDlgHitTest.c,matched,
 CtlSwapScoreFix,7CBB3,215,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlSwapScoreFix.c,nonmatching,
 CtlSwapTeamFlag,7CC8A,91,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/CtlSwapTeamFlag.c,matched,
@@ -528,6 +536,11 @@ MenuExhibitionSettings,7BEBB,155,056_7A13A_settings_dialogs,src/c/056_7A13A_sett
 ExhOptsToBits,7BF56,355,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/MenuExhibitionSettings.c,matched,
 DrawExhSetChecks,7C0B9,243,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/MenuExhibitionSettings.c,matched,
 MenuModeSettings,7B3A7,325,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/MenuModeSettings.c,matched,
+MenuP1ControlsInGame,7CAF7,168,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,nonmatching,
+ControlsDlgInGame,7CB03,156,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,nonmatching,
+MenuP2ControlsInGame,7CB9F,20,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,nonmatching,
+ReassignCtlPlayer,7CCE5,444,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,nonmatching,
+ClearCtlBlink,7CEA1,280,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,nonmatching,
 ModeOptsToBits,7B604,304,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ModeOptsToBits.c,matched,
 ModeSetHitTest,7B734,138,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/ModeSetHitTest.c,matched,
 SetCtlTeams,7DB67,292,056_7A13A_settings_dialogs,src/c/056_7A13A_settings_dialogs/SetCtlTeams.c,matched,
@@ -540,10 +553,12 @@ GadgetStub0,7E032,13,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/Gad
 PickNearestPlayer,7E93E,110,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/PickNearestPlayer.c,nonmatching,"register allocation only: asm spills y to the stack and reloads it into ebp (x in edi, best in esi)"
 FormatHilightDesc,7FCA2,86,058_7F724_highlights,src/c/058_7F724_highlights/FormatHilightDesc.c,matched,
 NudgeRinkScroll,7FC12,31,058_7F724_highlights,src/c/058_7F724_highlights/NudgeRinkScroll.c,matched,
+SaveHilight,7FA10,514,058_7F724_highlights,src/c/058_7F724_highlights/SaveHilight.c,matched,
 TeamFromHiName,7FC5C,70,058_7F724_highlights,src/c/058_7F724_highlights/TeamFromHiName.c,matched,
 ViewHilights,80075,167,058_7F724_highlights,src/c/058_7F724_highlights/ViewHilights.c,matched,
 DrawSelBoxOn,8245A,158,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/DrawSelBoxOn.c,matched,
 DrawSelBoxOff,824F8,129,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/DrawSelBoxOn.c,matched,
+DrawSettingsHeading,8050F,181,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/DrawSettingsHeading.c,matched,
 DrawSoundCardDlg,8261C,116,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/DrawSoundCardDlg.c,matched,
 DrawSoundCardOpts,82690,291,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/DrawSoundCardOpts.c,matched,
 LoadSettingsShapes,8034B,434,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LoadSettingsShapes.c,matched,
@@ -583,7 +598,6 @@ SpeechSlotSize,83BC7,44,061_83459_speech,src/c/061_83459_speech/SpeechSlotSize.c
 SpeechStopQueue,8374D,63,061_83459_speech,src/c/061_83459_speech/SpeechStopQueue.c,matched,
 StrEqNoCase,83E32,59,061_83459_speech,src/c/061_83459_speech/StrEqNoCase.c,nonmatching,original widens each char (movsx) before and 0DFh; this draft does the and on bytes. 10-min cap
 Swap16,837D9,34,061_83459_speech,src/c/061_83459_speech/Swap16.c,matched,
-FreeClip,8475D,93,062_842BA_announcer,src/c/062_842BA_announcer/FreeClip.c,matched,
 OpenAnnouncerBank,85507,105,062_842BA_announcer,src/c/062_842BA_announcer/OpenAnnouncerBank.c,matched,
 PenaltyLenClip,842BA,76,062_842BA_announcer,src/c/062_842BA_announcer/PenaltyLenClip.c,nonmatching,"switch tree and blocks match; original keeps len in ebx and out in eax (out moved early), this draft the reverse. 10-min cap"
 PlayoffRoundClipD,84306,137,062_842BA_announcer,src/c/062_842BA_announcer/PlayoffRoundClipD.c,matched,
@@ -593,6 +607,7 @@ QueueTimeClips,84EAC,207,062_842BA_announcer,src/c/062_842BA_announcer/QueueTime
 RequestTimeClips,84DDD,207,062_842BA_announcer,src/c/062_842BA_announcer/RequestTimeClips.c,matched,
 SayGoal,8531F,397,062_842BA_announcer,src/c/062_842BA_announcer/SayGoal.c,matched,
 SayHighlightIntro,847CE,319,062_842BA_announcer,src/c/062_842BA_announcer/SayHighlightIntro.c,matched,
+SayNhlIntro SayGoodnight SayLineups SayNowBack FreeNowBack SayBackMoment FreeBackMoment SayCoachClip FreeCoachClip FreeClip SayElseNhl,846B4,282,062_842BA_announcer,src/c/062_842BA_announcer/SayNhlIntro.c,matched,
 SayOneMinuteLeft,854AC,91,062_842BA_announcer,src/c/062_842BA_announcer/SayOneMinuteLeft.c,matched,
 SayPenalty,84F7B,419,062_842BA_announcer,src/c/062_842BA_announcer/SayPenalty.c,nonmatching,
 SayPenaltyShot,8511E,245,062_842BA_announcer,src/c/062_842BA_announcer/SayPenaltyShot.c,matched,

@@ -697,7 +697,6 @@ pop ecx	; 59BF9
 pop ebx	; 59BFA
 nullsub_5:
 ret	; 59BFB
-%endif ; C
 PaScoringPeriod:
 push dword 4	; 59BFC
 call __CHK	; 59C01
@@ -738,6 +737,7 @@ je near nullsub_5	; 59C91
 test byte [gameopts+1], 1	; 59C97
 je near nullsub_5	; 59C9E
 jmp near SayElseNhl	; 59CA4
+%endif ; C
 ; C: src/c/041_59493_engine_sound_iface/PaHighlightIntro.c
 %ifdef CBUILD
 %include "c/041_59493_engine_sound_iface/PaHighlightIntro.inc"

@@ -694,6 +694,29 @@ void DrawFrameSprite(short n, short x, short y, short a, short b);  /* 110E0 */
 void deflect(Player *p);  /* 57A3E */
 void ResetSpeechQueue(void);  /* 833FA */
 void FreeClip(char *name);  /* 8475D */
+int SayClip(char *name);  /* 84AAE */
+int SayNhlIntro(void);  /* 846B4 */
+int SayGoodnight(void);  /* 846C8 */
+int SayLineups(void);  /* 846DC */
+int SayNowBack(void);  /* 846F0 */
+void FreeNowBack(void);  /* 84704 */
+int SayBackMoment(void);  /* 84715 */
+void FreeBackMoment(void);  /* 84729 */
+int SayCoachClip(void);  /* 8473A */
+void FreeCoachClip(void);  /* 8474E */
+int SayElseNhl(void);  /* 847BA */
+int CmpFileNames(const void *a, const void *b);  /* 2BEEA */
+int NullCallback0C(int a, int b, int c, int d, int e, int f, int g);  /* 627F8 */
+void StubRet4b(int a, int b, int c, int d, int e);  /* 78E29 */
+int MenuLineEdCancel(int a, int b, int c, int d, int e, int f, int g, int h, int i, int j);  /* 7928A */
+int DeskSetExit2(void);  /* 179D0 */
+int DeskSetExit3(void);  /* 179E6 */
+int SayScoringPeriod(int period, int b, int c);  /* 84A7D */
+void PaScoringPeriod(int period, int b, int c);  /* 59BFC */
+void PaNhlIntro(void);  /* 59C1D */
+void PaGoodnight(void);  /* 59C3E */
+void PaLineups(void);  /* 59C5F */
+void PaElseNhl(void);  /* 59C80 */
 unsigned _dos_write(int fh, void __far *buf, unsigned n, unsigned *got);  /* Watcom CRT _dos_write_ */
 void ReadGSumHeader(void);  /* 61BBF */
 void ReadGSumTail(void);  /* 61C22 */

@@ -26,3 +26,10 @@ int PostInjuryEvent(unsigned char a, unsigned char b, unsigned char c, unsigned 
     }
     return 0;
 }
+
+/* NullCallback0C (627F8) - PC only: do-nothing event callback with PostInjuryEvent's seven arguments (three on
+   the stack). Returns 0. */
+int NullCallback0C(int a, int b, int c, int d, int e, int f, int g)
+{
+    return 0;
+}
