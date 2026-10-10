@@ -385,18 +385,10 @@ extern void MainDeskLoop_x(); /* 32704 */
 extern void MainDeskLoop_x2(); /* 32705 */
 extern void MenuNewExhibition(); /* 32DA9 */
 extern void MenuNewLeague(); /* 32FF4 */
-extern void MenuAddTeam(); /* 3322A */
 extern void MenuAddTeam_common(); /* 3325B */
 extern void MenuAddTeam_ret2(); /* 332B6 */
-extern void MenuRemoveTeam(); /* 332C0 */
-extern void MenuLeagueSettings(); /* 332F6 */
-extern void MenuRebuildDbs(); /* 3339D */
 extern void MenuRebuildDbs_x(); /* 333C0 */
 extern void nullsub_6(); /* 33468 */
-extern void MenuUpdateTeamDbs(); /* 334FB */
-extern void MenuTradePlayers(); /* 33523 */
-extern void MenuImportDbs(); /* 336BE */
-extern void MenuExportDbs(); /* 336E6 */
 extern void BlitTileMap(); /* 33C08 */
 extern void DrawCalendarDay(); /* 33FFD */
 extern void ApplyShapePalette(); /* 34789 */
@@ -957,7 +949,6 @@ extern void MenuModeSettings(); /* 7B3A7 */
 extern void ModeSettings_epilogue(); /* 7B4E5 */
 extern void ModeSetViewLoop(); /* 7B846 */
 extern void ModeSetEditLoop(); /* 7B9E8 */
-extern void MenuExhibitionSettings(); /* 7BEBB */
 extern void ExhSettings_ret(); /* 7BF4F */
 extern void ExhSetEditLoop(); /* 7C317 */
 extern void DrawCtlBox_common(); /* 7C8DF */

@@ -2559,6 +2559,10 @@ jmp short ModeSetEditLoop.25	; 7BEAF
 mov edi, dword [byte esp+010h]	; 7BEB1
 push edi	; 7BEB5
 jmp near ModeSetEditLoop.5	; 7BEB6
+; C: src/c/056_7A13A_settings_dialogs/MenuExhibitionSettings.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuExhibitionSettings.inc"
+%else
 MenuExhibitionSettings:
 push dword 28h	; 7BEBB
 call __CHK	; 7BEC0
@@ -2616,6 +2620,7 @@ pop edx	; 7BF52
 pop ecx	; 7BF53
 pop ebx	; 7BF54
 ret	; 7BF55
+%endif ; C
 ; C: src/c/056_7A13A_settings_dialogs/ExhOptsToBits.c
 %ifdef CBUILD
 %include "c/056_7A13A_settings_dialogs/ExhOptsToBits.inc"

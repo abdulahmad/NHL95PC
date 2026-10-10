@@ -825,5 +825,14 @@ void PenShotAssign(void);  /* 512A7 */
 void DrawMenuDropdown(void *m, int n, int x, int y, int col1, int col2, int col3);  /* 6B684 */
 void DrawListItem(char *text, int x, int y, int w, int top, int idx, int sel, unsigned align, int marks, char *flags);  /* 302B9 */
 void DrawListItems(char **items, int x, int y, int w, int top, int sel, int n, unsigned align, int marks, char *flags);  /* 3039C */
+int MenuExhibitionSettings(void);  /* 7BEBB */
+int MenuAddTeam(void);  /* 3322A */
+int MenuRemoveTeam(void);  /* 332C0 */
+int MenuRebuildDbs(void);  /* 3339D */
+int MenuUpdateTeamDbs(void);  /* 334FB */
+int MenuTradePlayers(void);  /* 33523 */
+int MenuImportDbs(void);  /* 336BE */
+int MenuExportDbs(void);  /* 336E6 */
+int MenuLeagueSettings(void);  /* 332F6 */
 
 #endif

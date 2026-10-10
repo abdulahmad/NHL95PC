@@ -299,6 +299,10 @@ add esp, byte 4	; 3321A
 xor esi, esi	; 3321D
 mov dword [songdata], esi	; 3321F
 jmp near MenuAddTeam_ret2	; 33225
+; C: src/c/025_32DA9_temp_files/MenuAddTeam.c
+%ifdef CBUILD
+%include "c/025_32DA9_temp_files/MenuAddTeam.inc"
+%else
 MenuAddTeam:
 push dword 20h	; 3322A
 call __CHK	; 3322F
@@ -360,6 +364,7 @@ mov eax, 3	; 332E2
 call SetupStatsSourceMenu	; 332E7
 call RemoveHumanTeam	; 332EC
 jmp near MenuAddTeam_common	; 332F1
+%endif ; C
 MenuLeagueSettings:
 push dword 24h	; 332F6
 call __CHK	; 332FB
@@ -411,6 +416,10 @@ mov eax, exhstate	; 3338C
 call LoadModeState	; 33391
 mov eax, esi	; 33396
 jmp near MainDeskLoop_x2	; 33398
+; C: src/c/025_32DA9_temp_files/MenuAddTeam.c (MenuRebuildDbs)
+%ifdef CBUILD
+%include "c/025_32DA9_temp_files/MenuAddTeam.MenuRebuildDbs.inc"
+%else
 MenuRebuildDbs:
 push dword 4	; 3339D
 call __CHK	; 333A2
@@ -426,9 +435,10 @@ mov eax, exhstate	; 333CA
 call LoadModeState	; 333CF
 xor eax, eax	; 333D4
 ret	; 333D6
-; C: src/c/025_32DA9_temp_files/MenuMergeUpdateDbs.c
+%endif ; C
+; C: src/c/025_32DA9_temp_files/MenuAddTeam.c (MenuMergeUpdateDbs)
 %ifdef CBUILD
-%include "c/025_32DA9_temp_files/MenuMergeUpdateDbs.inc"
+%include "c/025_32DA9_temp_files/MenuAddTeam.MenuMergeUpdateDbs.inc"
 %else
 MenuMergeUpdateDbs:
 push dword 20h	; 333D7
@@ -482,9 +492,9 @@ pop ebx	; 33467
 nullsub_6:
 ret	; 33468
 %endif ; C
-; C: src/c/025_32DA9_temp_files/MenuMergeLeagueFiles.c
+; C: src/c/025_32DA9_temp_files/MenuAddTeam.c (MenuMergeLeagueFiles)
 %ifdef CBUILD
-%include "c/025_32DA9_temp_files/MenuMergeLeagueFiles.inc"
+%include "c/025_32DA9_temp_files/MenuAddTeam.MenuMergeLeagueFiles.inc"
 %else
 MenuMergeLeagueFiles:
 push dword 20h	; 33469
@@ -537,6 +547,10 @@ pop ecx	; 334F8
 pop ebx	; 334F9
 ret	; 334FA
 %endif ; C
+; C: src/c/025_32DA9_temp_files/MenuAddTeam.c (MenuUpdateTeamDbs)
+%ifdef CBUILD
+%include "c/025_32DA9_temp_files/MenuAddTeam.MenuUpdateTeamDbs.inc"
+%else
 MenuUpdateTeamDbs:
 push dword 4	; 334FB
 call __CHK	; 33500
@@ -546,6 +560,11 @@ mov eax, lgstate	; 3350F
 call LoadModeState	; 33514
 call UpdateTeamDbs	; 33519
 jmp near MenuRebuildDbs_x	; 3351E
+%endif ; C
+; C: src/c/025_32DA9_temp_files/MenuAddTeam.c (MenuTradePlayers)
+%ifdef CBUILD
+%include "c/025_32DA9_temp_files/MenuAddTeam.MenuTradePlayers.inc"
+%else
 MenuTradePlayers:
 push dword 20h	; 33523
 call __CHK	; 33528
@@ -561,9 +580,10 @@ mov eax, 3	; 33545
 call SetupStatsSourceMenu	; 3354A
 call TradePlayers	; 3354F
 jmp near MenuAddTeam_common	; 33554
-; C: src/c/025_32DA9_temp_files/MenuNextLeagueGame.c
+%endif ; C
+; C: src/c/025_32DA9_temp_files/MenuAddTeam.c (MenuNextLeagueGame)
 %ifdef CBUILD
-%include "c/025_32DA9_temp_files/MenuNextLeagueGame.inc"
+%include "c/025_32DA9_temp_files/MenuAddTeam.MenuNextLeagueGame.inc"
 %else
 MenuNextLeagueGame:
 push dword 40h	; 33559
@@ -638,9 +658,9 @@ pop ecx	; 3366C
 pop ebx	; 3366D
 ret	; 3366E
 %endif ; C
-; C: src/c/025_32DA9_temp_files/MenuLeagueHilights.c
+; C: src/c/025_32DA9_temp_files/MenuAddTeam.c (MenuLeagueHilights)
 %ifdef CBUILD
-%include "c/025_32DA9_temp_files/MenuLeagueHilights.inc"
+%include "c/025_32DA9_temp_files/MenuAddTeam.MenuLeagueHilights.inc"
 %else
 MenuLeagueHilights:
 push dword 8	; 3366F
@@ -667,6 +687,10 @@ xor eax, eax	; 336BA
 pop edx	; 336BC
 ret	; 336BD
 %endif ; C
+; C: src/c/025_32DA9_temp_files/MenuAddTeam.c (MenuImportDbs)
+%ifdef CBUILD
+%include "c/025_32DA9_temp_files/MenuAddTeam.MenuImportDbs.inc"
+%else
 MenuImportDbs:
 push dword 4	; 336BE
 call __CHK	; 336C3
@@ -676,6 +700,11 @@ mov eax, lgstate	; 336D2
 call LoadModeState	; 336D7
 call ImportDbs	; 336DC
 jmp near MenuRebuildDbs_x	; 336E1
+%endif ; C
+; C: src/c/025_32DA9_temp_files/MenuAddTeam.c (MenuExportDbs)
+%ifdef CBUILD
+%include "c/025_32DA9_temp_files/MenuAddTeam.MenuExportDbs.inc"
+%else
 MenuExportDbs:
 push dword 20h	; 336E6
 call __CHK	; 336EB
@@ -691,6 +720,7 @@ mov eax, 3	; 33708
 call SetupStatsSourceMenu	; 3370D
 call ExportDbs	; 33712
 jmp near MenuAddTeam_common	; 33717
+%endif ; C
 ; C: src/c/025_32DA9_temp_files/DemoSetupStub.c
 %ifdef CBUILD
 %include "c/025_32DA9_temp_files/DemoSetupStub.inc"
