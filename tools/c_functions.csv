@@ -160,6 +160,7 @@ ListHitTest,3023E,123,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/ListHi
 MeasureTextLine,309E4,40,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/MeasureTextLine.c,matched,
 RestoreDialogBg,30F12,77,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/RestoreDialogBg.c,matched,
 SaveDialogBg,30E66,172,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/SaveDialogBg.c,matched,
+SetDialogColors,30A0C,45,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/SetDialogColors.c,matched,
 SetListItemColors,30209,53,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/SetListItemColors.c,matched,
 TrackButtons,30A39,169,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/TrackButtons.c,matched,
 CopyGameSettings,32C9E,267,024_31AB5_main_desk,src/c/024_31AB5_main_desk/CopyGameSettings.c,matched,
@@ -580,6 +581,7 @@ IsSampleRequested,83F61,78,061_83459_speech,src/c/061_83459_speech/IsSampleReque
 MakeSampleRoom,84205,106,061_83459_speech,src/c/061_83459_speech/MakeSampleRoom.c,matched,
 MusicChanCmd3,8378C,28,061_83459_speech,src/c/061_83459_speech/MusicChanCmd3.c,matched,
 MusicChanReset,837A8,49,061_83459_speech,src/c/061_83459_speech/MusicChanReset.c,matched,
+MusicChanReset2 SpeechStopQueue,8373E,78,061_83459_speech,src/c/061_83459_speech/MusicChanReset2.c,matched,
 ReadSpeechSample,83BF3,187,061_83459_speech,src/c/061_83459_speech/OpenSpeechBank.c,matched,
 MoveSampleMem,840A9,124,061_83459_speech,src/c/061_83459_speech/OpenSpeechBank.c,matched,
 CompactSpeechSlot,84125,224,061_83459_speech,src/c/061_83459_speech/OpenSpeechBank.c,matched,
@@ -596,7 +598,6 @@ SpeechIdle,83711,45,061_83459_speech,src/c/061_83459_speech/SpeechIdle.c,matched
 SpeechIsInit,836CA,26,061_83459_speech,src/c/061_83459_speech/SpeechIsInit.c,matched,
 SpeechSlotLoaded,83F35,44,061_83459_speech,src/c/061_83459_speech/SpeechSlotLoaded.c,matched,
 SpeechSlotSize,83BC7,44,061_83459_speech,src/c/061_83459_speech/SpeechSlotSize.c,matched,
-SpeechStopQueue,8374D,63,061_83459_speech,src/c/061_83459_speech/SpeechStopQueue.c,matched,
 StrEqNoCase,83E32,59,061_83459_speech,src/c/061_83459_speech/StrEqNoCase.c,nonmatching,original widens each char (movsx) before and 0DFh; this draft does the and on bytes. 10-min cap
 Swap16,837D9,34,061_83459_speech,src/c/061_83459_speech/Swap16.c,matched,
 OpenAnnouncerBank,85507,105,062_842BA_announcer,src/c/062_842BA_announcer/OpenAnnouncerBank.c,matched,

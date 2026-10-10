@@ -1098,6 +1098,10 @@ pop edi	; 30A09
 pop esi	; 30A0A
 ret	; 30A0B
 %endif ; C
+; C: src/c/023_2FDD1_misc_dialogs/SetDialogColors.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/SetDialogColors.inc"
+%else
 SetDialogColors:
 push dword 4	; 30A0C
 call __CHK	; 30A11
@@ -1108,6 +1112,7 @@ mov dword [dlgtextfg], ecx	; 30A27
 mov eax, dword [byte esp+04h]	; 30A2D
 mov dword [dlgtextbg], eax	; 30A31
 ret 4	; 30A36
+%endif ; C
 ; C: src/c/023_2FDD1_misc_dialogs/TrackButtons.c
 %ifdef CBUILD
 %include "c/023_2FDD1_misc_dialogs/TrackButtons.inc"

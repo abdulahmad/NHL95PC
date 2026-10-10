@@ -266,14 +266,14 @@ jne short SpeechIdle.1	; 83736
 mov eax, 1	; 83738
 ret	; 8373D
 %endif ; C
+; C: src/c/061_83459_speech/MusicChanReset2.c
+%ifdef CBUILD
+%include "c/061_83459_speech/MusicChanReset2.inc"
+%else
 MusicChanReset2:
 push dword 4	; 8373E
 call __CHK	; 83743
 call MusicChanReset	; 83748
-; C: src/c/061_83459_speech/SpeechStopQueue.c
-%ifdef CBUILD
-%include "c/061_83459_speech/SpeechStopQueue.inc"
-%else
 SpeechStopQueue:
 push dword 10h	; 8374D
 call __CHK	; 83752
