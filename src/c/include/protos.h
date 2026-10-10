@@ -749,6 +749,12 @@ void TextPrintf2(int x, int y, char *fmt, int a, int b);  /* 1FB49 */
 int CmpInt(const void *a, const void *b);  /* 7FC31 */
 void PrintFmt1(int x, int y, char *fmt, int a);  /* 176AE */
 void PrintFmt2(int x, int y, char *fmt, int a, int b);  /* 176DB */
+void GameLineEditor(int team, unsigned char *lines, unsigned char *names, int mode);  /* line editor in game */
+void GameStatsScreen(void);
+void InstantReplay(int mode);
+int DeskGoToReplay(void);  /* 1A817 */
+int DeskHomeLines(void);  /* 1A8AA */
+int DeskVisitorLines(void);  /* 1A922 */
 unsigned _dos_write(int fh, void __far *buf, unsigned n, unsigned *got);  /* Watcom CRT _dos_write_ */
 void ReadGSumHeader(void);  /* 61BBF */
 void ReadGSumTail(void);  /* 61C22 */

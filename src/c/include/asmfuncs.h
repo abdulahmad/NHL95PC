@@ -58,10 +58,7 @@ extern void ShowPlayerStatsItem(); /* 18D0D */
 extern void FreeDeskBuffers(); /* 18D33 */
 extern void MenuCallbackTrue(); /* 18F74 */
 extern void MenuCallbackTrue2(); /* 18F86 */
-extern void DeskGoToReplay(); /* 1A817 */
-extern void DeskHomeLines(); /* 1A8AA */
 extern void DeskLines_common(); /* 1A8F0 */
-extern void DeskVisitorLines(); /* 1A922 */
 extern void DeskSummary_common(); /* 1AAB6 */
 extern void DeskItem_ret2(); /* 1AABB */
 extern void DeskGoalie_x1(); /* 1AB2F */
@@ -346,7 +343,6 @@ extern void GameSummaryScreen_finalot(); /* 2DF2D */
 extern void GameSummaryScreen_final(); /* 2DF34 */
 extern void GameSummaryScreen_period(); /* 2DF39 */
 extern void UpdateOtherScores_x(); /* 2F579 */
-extern void GameStatsScreen(); /* 2F5EE */
 extern void DlgNullCallback(); /* 30203 */
 extern void DrawListItem_x(); /* 30396 */
 extern void ListDialog(); /* 303FB */
@@ -844,7 +840,6 @@ extern void str_Dress2(); /* 76742 */
 extern void str_Player2(); /* 76748 */
 extern void str_GoalieW2(); /* 7674F */
 extern void str_RosterIncomplete2(); /* 76756 */
-extern void GameLineEditor(); /* 767D0 */
 extern void GameLineEditorLoop(); /* 76AF5 */
 extern void LoadGameRoster(); /* 77FF5 */
 extern void DrawGameLineJerseys_jt(); /* 78346 */
@@ -914,7 +909,6 @@ extern void LoadRockMusic_ret(); /* 7DEC2 */
 extern void FreeRockMusic(); /* 7DEC8 */
 extern void bothneitherstrs(); /* 7E05F */
 extern void DrawGadgetButton_ret(); /* 7E0F3 */
-extern void InstantReplay(); /* 7E0FA */
 extern void ReplayControlLoop(); /* 7E9AC */
 extern void ReplaySaveHilight_jt(); /* 7F09F */
 extern void ReplaySaveHilight(); /* 7F0AF */

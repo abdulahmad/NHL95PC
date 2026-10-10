@@ -159,11 +159,20 @@ mov eax, edx	; 179CC
 pop edx	; 179CE
 ret	; 179CF
 %endif ; C
+; C: src/c/008_17816_output_files/DeskSetExit2.c
+%ifdef CBUILD
+%include "c/008_17816_output_files/DeskSetExit2.inc"
+%else
 DeskSetExit2:
 push dword 4	; 179D0
 call __CHK	; 179D5
 mov dword [deskexit], 2	; 179DA
 jmp short DeskSetExit_ret1	; 179E4
+%endif ; C
+; C: src/c/008_17816_output_files/DeskSetExit2.c (DeskSetExit3)
+%ifdef CBUILD
+%include "c/008_17816_output_files/DeskSetExit2.DeskSetExit3.inc"
+%else
 DeskSetExit3:
 push dword 4	; 179E6
 DeskSetExit3_body:
@@ -172,6 +181,7 @@ mov dword [deskexit], 3	; 179F0
 DeskSetExit_ret1:
 mov eax, 1	; 179FA
 ret	; 179FF
+%endif ; C
 ; C: src/c/008_17816_output_files/StatsSel9394Season.c
 %ifdef CBUILD
 %include "c/008_17816_output_files/StatsSel9394Season.inc"
