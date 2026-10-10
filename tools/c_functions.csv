@@ -356,13 +356,14 @@ PaSpeechBusy,59AAD,35,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_
 PaTonightIntro PaScoringPeriod PaNhlIntro PaGoodnight PaLineups PaElseNhl,59BB5,244,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PaTonightIntro.c,matched,
 PlayCrowdSample PaOneMinuteLeft,59A11,156,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PlayCrowdSample.c,matched,
 PlayDigiSample,599B9,53,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/PlayDigiSample.c,matched,
-SndLoadFile,59493,31,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/SndLoadFile.c,matched,
+SndLoadFile SndLoadFile2,59493,58,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/SndLoadFile.c,matched,
 StopDigiSample,59981,56,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/StopDigiSample.c,nonmatching,"original copies digihandle to edx (push edx) and passes it with mov eax,edx; this draft loads eax directly. Maybe sub_8F80E's real prototype differs. 10-min cap"
 WaitDigiSample,599EE,35,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/WaitDigiSample.c,matched,
 sfx,59884,193,041_59493_engine_sound_iface,src/c/041_59493_engine_sound_iface/sfx.c,nonmatching,
 AvgCline,5A03B,104,042_59D9A_engine_core,src/c/042_59D9A_engine_core/AvgCline.c,matched,
 ClearSortCords,5BA4E,59,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ClearSortCords.c,matched,
 ClockTick,5DC10,347,042_59D9A_engine_core,src/c/042_59D9A_engine_core/ClockTick.c,nonmatching,register allocation: C needs esi as well (asm gets by with ebx/ecx/edx/edi); the gameclock check order also differs
+DoGameFrame,5C1C4,30,042_59D9A_engine_core,src/c/042_59D9A_engine_core/DoGameFrame.c,matched,
 GameOver,5DD9E,30,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GameOver.c,matched,
 GetHotOrStick,5A534,77,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetHotOrStick.c,matched,
 GetHotStick,5A4AD,70,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetHotStick.c,nonmatching,"1 register: the X-flip negate goes through a fresh esi (mov esi,ebx / neg esi), same open issue as GetHot; rest matches"
@@ -454,6 +455,7 @@ ShowGoalieBanner,671E8,273,046_644A8_engine_display,src/c/046_644A8_engine_displ
 SortNonDefPlayers,6455F,181,046_644A8_engine_display,src/c/046_644A8_engine_display/SortNonDefPlayers.c,matched,
 SortPlayersByPos,644A8,183,046_644A8_engine_display,src/c/046_644A8_engine_display/SortPlayersByPos.c,matched,
 BuildTeamRosterList,6C043,344,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/BuildTeamRosterList.c,nonmatching,
+CalLeftJoystick CalRightJoystick,6B35C,53,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/CalLeftJoystick.c,matched,
 ClearInputQueue,6B3D7,57,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/ClearInputQueue.c,matched,
 DrawMenuBar,6B5E4,160,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/DrawMenuBar.c,matched,
 DrawMenuDropdown DrawMenuBox,6B684,522,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/DrawMenuDropdown.c,matched,
@@ -554,6 +556,7 @@ DrawGadgetByType,7DF4E,228,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_repl
 GadgetHitTest,7E8E5,89,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/GadgetHitTest.c,matched,
 GadgetStub0,7E032,13,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/GadgetStub0.c,matched,
 PickNearestPlayer,7E93E,110,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/PickNearestPlayer.c,nonmatching,"register allocation only: asm spills y to the stack and reloads it into ebp (x in edi, best in esi)"
+sub_7E03F,7E03F,32,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/sub_7E03F.c,matched,
 FormatHilightDesc,7FCA2,86,058_7F724_highlights,src/c/058_7F724_highlights/FormatHilightDesc.c,matched,
 NudgeRinkScroll,7FC12,31,058_7F724_highlights,src/c/058_7F724_highlights/NudgeRinkScroll.c,matched,
 SaveHilight,7FA10,514,058_7F724_highlights,src/c/058_7F724_highlights/SaveHilight.c,matched,

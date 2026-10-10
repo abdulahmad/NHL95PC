@@ -733,6 +733,16 @@ int ReadKeyRec(int fh, void *rec, long pos);  /* 1463D */
 int ReadSeasonRec(int fh, void *rec, long pos);  /* 1478B */
 void SelectScreenBM(void);  /* 8C1C2 */
 void SelectRinkBM(void);  /* 8C1E2 */
+int JoystickCalScreen(int a, ...);  /* 6B093 */
+int CalLeftJoystick(void);  /* 6B35C */
+int CalRightJoystick(void);  /* 6B37A */
+void updateplayers(void);  /* engine_core */
+void checkwindow(void);  /* engine_display */
+void updatereplay(void);  /* engine_display */
+void __cdecl sub_96A78(int a);  /* 96A78: EA sound library */
+void sub_7E03F(void);  /* 7E03F */
+void *__cdecl sub_8E908(char *name, int bank);  /* sound library loader 2, stack args */
+void SndLoadFile2(int unused, char *name);  /* 594B2 */
 unsigned _dos_write(int fh, void __far *buf, unsigned n, unsigned *got);  /* Watcom CRT _dos_write_ */
 void ReadGSumHeader(void);  /* 61BBF */
 void ReadGSumTail(void);  /* 61C22 */

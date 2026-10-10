@@ -520,7 +520,6 @@ extern void wallcoll(); /* 587D3 */
 extern void wallcollb(); /* 58B7F */
 extern void ReturnGoalies(); /* 59352 */
 extern void sndcb_addesp8_x(); /* 594AC */
-extern void SndLoadFile2(); /* 594B2 */
 extern void CrowdNoiseUpdate(); /* 594CD */
 extern void PlayCrowdSample_ret(); /* 59A7D */
 extern void nullsub_5(); /* 59BFB */
@@ -537,7 +536,6 @@ extern void UpdateCoachModes(); /* 5A77C */
 extern void Goal(); /* 5AB36 */
 extern void ResetClock(); /* 5BA07 */
 extern void SetPlList(); /* 5BBFA */
-extern void updateplayers(); /* 5C40F */
 extern void DrawRinkOverlays(); /* 5CE12 */
 extern void SprSortVert(); /* 5DD6B */
 extern void SprSort(); /* 5DD7C */
@@ -572,13 +570,11 @@ extern void lines_addesp10_x(); /* 64CA0 */
 extern void FillDressedSlots(); /* 64CA8 */
 extern void lines_popx2(); /* 652D0 */
 extern void PickExtraSkater(); /* 653BE */
-extern void checkwindow(); /* 65D01 */
 extern void checkwindow_popebp(); /* 66490 */
 extern void checkwindow_popx(); /* 66491 */
 extern void DrawTextOverlay(); /* 665AD */
 extern void UpdateTextOverlay(); /* 66E06 */
 extern void DrawCallBanner(); /* 66FE2 */
-extern void updatereplay(); /* 675D6 */
 extern void ReplayStep(); /* 67900 */
 extern void ReplayStep_popx(); /* 67DC6 */
 extern void DrawRinkSideObjects(); /* 67DCC */
@@ -753,10 +749,7 @@ extern void loc_6B001(); /* 6B001 */
 extern void sub_6B008(); /* 6B008 */
 extern void loc_6B03F(); /* 6B03F */
 extern void loc_6B05F(); /* 6B05F */
-extern void JoystickCalScreen(); /* 6B093 */
-extern void CalLeftJoystick(); /* 6B35C */
 extern void CalLeftJoystick_common(); /* 6B371 */
-extern void CalRightJoystick(); /* 6B37A */
 extern void DrawMenuDropdown_ret(); /* 6B7F6 */
 extern void PrintMenuTextGrey(); /* 6B8CB */
 extern void PrintMenuTextGrey_common(); /* 6B907 */
@@ -924,7 +917,6 @@ extern void ControlsDlgLoop(); /* 7D6B1 */
 extern void LoadRockMusic(); /* 7DC8B */
 extern void LoadRockMusic_ret(); /* 7DEC2 */
 extern void FreeRockMusic(); /* 7DEC8 */
-extern void sub_7E03F(); /* 7E03F */
 extern void bothneitherstrs(); /* 7E05F */
 extern void DrawGadgetButton_ret(); /* 7E0F3 */
 extern void InstantReplay(); /* 7E0FA */
@@ -1277,7 +1269,6 @@ extern void unk_8E870(); /* 8E870 */
 extern void sub_8E8D0(); /* 8E8D0 */
 extern void loc_8E8ED(); /* 8E8ED */
 extern void sub_8E8F0(); /* 8E8F0 */
-extern void sub_8E908(); /* 8E908 */
 extern void sub_8E920(); /* 8E920 */
 extern void loc_8E963(); /* 8E963 */
 extern void loc_8E991(); /* 8E991 */
@@ -2396,7 +2387,6 @@ extern void loc_96A29(); /* 96A29 */
 extern void sub_96A38(); /* 96A38 */
 extern void ios__failure__cause(); /* 96A58 */
 extern void sub_96A60(); /* 96A60 */
-extern void sub_96A78(); /* 96A78 */
 extern void sub_96A80(); /* 96A80 */
 extern void sub_96A94(); /* 96A94 */
 extern void loc_96AA4(); /* 96AA4 */

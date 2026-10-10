@@ -382,6 +382,10 @@ call __CHK	; 7E037
 xor eax, eax	; 7E03C
 ret	; 7E03E
 %endif ; C
+; C: src/c/057_7DC8B_gadgets_replay/sub_7E03F.c
+%ifdef CBUILD
+%include "c/057_7DC8B_gadgets_replay/sub_7E03F.inc"
+%else
 sub_7E03F:
 push dword 14h	; 7E03F
 call __CHK	; 7E044
@@ -396,6 +400,7 @@ pop edx	; 7E05B
 pop ecx	; 7E05C
 pop ebx	; 7E05D
 ret	; 7E05E
+%endif ; C
 bothneitherstrs:
 dd str_BothTeams
 dd str_NeitherTeams

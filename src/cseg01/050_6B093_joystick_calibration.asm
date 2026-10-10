@@ -226,6 +226,10 @@ pop ebp	; 6B358
 pop edi	; 6B359
 pop esi	; 6B35A
 ret	; 6B35B
+; C: src/c/050_6B093_joystick_calibration/CalLeftJoystick.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/CalLeftJoystick.inc"
+%else
 CalLeftJoystick:
 push dword 14h	; 6B35C
 call __CHK	; 6B361
@@ -245,6 +249,7 @@ push byte 1	; 6B389
 push byte 8	; 6B38B
 push byte 2	; 6B38D
 jmp short CalLeftJoystick_common	; 6B38F
+%endif ; C
 ; C: src/c/050_6B093_joystick_calibration/GetInputEvent.c
 %ifdef CBUILD
 %include "c/050_6B093_joystick_calibration/GetInputEvent.inc"

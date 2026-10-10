@@ -7,3 +7,9 @@ void SndLoadFile(int unused, char *name)
 {
     sub_8E8B8(name, dword_CCC94);
 }
+
+/* SndLoadFile2 (594B2) - as SndLoadFile through the other library loader (sub_8E908); shares its tail. */
+void SndLoadFile2(int unused, char *name)
+{
+    sub_8E908(name, dword_CCC94);
+}

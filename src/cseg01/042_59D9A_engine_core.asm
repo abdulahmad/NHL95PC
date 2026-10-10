@@ -3032,6 +3032,10 @@ mov word [fadeinpending], 1	; 5C1A2
 add dword [rinkscrollx], 3E8h	; 5C1AB
 add dword [rinkscrolly], 3E8h	; 5C1B5
 jmp near calcpuckcross_ret5	; 5C1BF
+; C: src/c/042_59D9A_engine_core/DoGameFrame.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/DoGameFrame.inc"
+%else
 DoGameFrame:
 push dword 4	; 5C1C4
 call __CHK	; 5C1C9
@@ -3039,6 +3043,7 @@ call periodicevents	; 5C1CE
 call updateplayers	; 5C1D3
 call checkwindow	; 5C1D8
 jmp near updatereplay	; 5C1DD
+%endif ; C
 ; C: src/c/042_59D9A_engine_core/RestBench.c
 %ifdef CBUILD
 %include "c/042_59D9A_engine_core/RestBench.inc"

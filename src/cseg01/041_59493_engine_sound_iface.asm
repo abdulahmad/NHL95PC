@@ -34,7 +34,6 @@ add esp, byte 8	; 594AC
 pop ecx	; 594AF
 pop ebx	; 594B0
 ret	; 594B1
-%endif ; C
 SndLoadFile2:
 push dword 14h	; 594B2
 call __CHK	; 594B7
@@ -45,6 +44,7 @@ push ebx	; 594C4
 push edx	; 594C5
 call sub_8E908	; 594C6
 jmp short sndcb_addesp8_x	; 594CB
+%endif ; C
 CrowdNoiseUpdate:
 push dword 14h	; 594CD
 call __CHK	; 594D2
