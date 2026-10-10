@@ -627,6 +627,10 @@ mov dword [calsel], edx	; 34781
 pop edx	; 34787
 ret	; 34788
 %endif ; C
+; C: src/c/027_33FFD_calendar/ApplyShapePalette.c
+%ifdef CBUILD
+%include "c/027_33FFD_calendar/ApplyShapePalette.inc"
+%else
 ApplyShapePalette:
 push dword 18h	; 34789
 call __CHK	; 3478E
@@ -645,6 +649,7 @@ pop edx	; 347B3
 pop ecx	; 347B4
 pop ebx	; 347B5
 ret	; 347B6
+%endif ; C
 SetGameSides:
 push dword 0Ch	; 347B7
 call __CHK	; 347BC

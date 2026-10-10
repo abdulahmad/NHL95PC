@@ -5313,6 +5313,10 @@ pop ebx	; 5DE6E
 ret	; 5DE6F
 %endif ; C
 ; IntermissionStart: 93G hockey93_06 IntermissionStart. gsp 4 -> GameOver; else Intermission, StartPer, SetPenaltyStrength.
+; C: src/c/042_59D9A_engine_core/IntermissionStart.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/IntermissionStart.inc"
+%else
 IntermissionStart:
 push dword 4	; 5DE70
 call __CHK	; 5DE75
@@ -5325,6 +5329,7 @@ call IntermissionPC	; 5DE97
 .1:
 call StartPer	; 5DE9C
 jmp near SetPenaltyStrength	; 5DEA1
+%endif ; C
 ; PeriodOver: 93G hockey93_06 PeriodOver. Line change box reset, gsp+1, gmdir flips; after the 3rd period:
 ;   overtime (gameopts+1 bit 1 = playoffs) or game over (gsp 4) unless tied; then IntermissionStart.
 ; C: src/c/042_59D9A_engine_core/PeriodOver.c

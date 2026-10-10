@@ -46,8 +46,6 @@ extern void RunDemoGame(); /* 15D6B */
 extern void RunDemoGame_x(); /* 16005 */
 extern void TitleScreen(); /* 1609F */
 extern void RunIntro(); /* 1672A */
-extern void PrintFmt1(); /* 176AE */
-extern void PrintFmt2(); /* 176DB */
 extern void DeskSetExit3_body(); /* 179EB */
 extern void DeskSetExit_ret1(); /* 179FA */
 extern void StatsSel9394Playoffs(); /* 17AF3 */
@@ -925,7 +923,6 @@ extern void ReplaySaveHilight_n2(); /* 7F589 */
 extern void ReplaySaveHilight_n1(); /* 7F598 */
 extern void ReplaySaveHilight_n3(); /* 7F5A8 */
 extern void HilightSaveToDlg(); /* 7F724 */
-extern void CmpInt(); /* 7FC31 */
 extern void LoadSettingsShapes(); /* 8034B */
 extern void DrawSettingsHeading_jt(); /* 804FF */
 extern void DrawSettingsHeading_n0(); /* 8056C */

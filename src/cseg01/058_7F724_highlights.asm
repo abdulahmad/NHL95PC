@@ -436,6 +436,10 @@ add dword [rinkscrollx], 3E8h	; 7FC1C
 add dword [rinkscrolly], 3E8h	; 7FC26
 ret	; 7FC30
 %endif ; C
+; C: src/c/058_7F724_highlights/CmpInt.c
+%ifdef CBUILD
+%include "c/058_7F724_highlights/CmpInt.inc"
+%else
 CmpInt:
 push dword 10h	; 7FC31
 call __CHK	; 7FC36
@@ -458,6 +462,7 @@ pop esi	; 7FC58
 pop ecx	; 7FC59
 pop ebx	; 7FC5A
 ret	; 7FC5B
+%endif ; C
 ; C: src/c/058_7F724_highlights/TeamFromHiName.c
 %ifdef CBUILD
 %include "c/058_7F724_highlights/TeamFromHiName.inc"

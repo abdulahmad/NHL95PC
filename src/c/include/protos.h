@@ -746,6 +746,9 @@ void SndLoadFile2(int unused, char *name);  /* 594B2 */
 void ReadGSummaryRec(int fh, void *rec, int n);  /* 147FF */
 void TextPrintf(int x, int y, char *fmt, int a);  /* 1FB1C */
 void TextPrintf2(int x, int y, char *fmt, int a, int b);  /* 1FB49 */
+int CmpInt(const void *a, const void *b);  /* 7FC31 */
+void PrintFmt1(int x, int y, char *fmt, int a);  /* 176AE */
+void PrintFmt2(int x, int y, char *fmt, int a, int b);  /* 176DB */
 unsigned _dos_write(int fh, void __far *buf, unsigned n, unsigned *got);  /* Watcom CRT _dos_write_ */
 void ReadGSumHeader(void);  /* 61BBF */
 void ReadGSumTail(void);  /* 61C22 */

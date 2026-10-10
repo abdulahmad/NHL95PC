@@ -51,6 +51,7 @@ LoadCupFinalSeries,15B76,186,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard
 ReadBE32,16072,45,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/ReadBE32.c,matched,
 TickPanelClock,15374,150,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/TickPanelClock.c,matched,
 PrintCenteredText,17573,111,007_1609F_title_intro,src/c/007_1609F_title_intro/PrintCenteredText.c,matched,
+PrintFmt1 PrintFmt2,176AE,99,007_1609F_title_intro,src/c/007_1609F_title_intro/PrintFmt1.c,matched,
 PrintOutlinedText,17636,120,007_1609F_title_intro,src/c/007_1609F_title_intro/PrintOutlinedText.c,matched,
 PrintShadowText,175E2,84,007_1609F_title_intro,src/c/007_1609F_title_intro/PrintShadowText.c,matched,
 RenderTextLine,174D8,155,007_1609F_title_intro,src/c/007_1609F_title_intro/RenderTextLine.c,matched,
@@ -186,6 +187,7 @@ MenuLeagueSettings,332F6,167,025_32DA9_temp_files,src/c/025_32DA9_temp_files/Men
 LoadCrestsPalette,33F02,251,026_3377C_rink_tiles,src/c/026_3377C_rink_tiles/LoadCrestsPalette.c,matched,
 SetRinkScroll,33DD3,151,026_3377C_rink_tiles,src/c/026_3377C_rink_tiles/SetRinkScroll.c,matched,
 WaitClickTimeout,33E6A,152,026_3377C_rink_tiles,src/c/026_3377C_rink_tiles/WaitClickTimeout.c,nonmatching,"registers/stack: asm keeps start and the ptrupdatefn result on the stack (10h locals), t1 in ebp; C keeps them in registers"
+ApplyShapePalette,34789,46,027_33FFD_calendar,src/c/027_33FFD_calendar/ApplyShapePalette.c,matched,
 CalNextMonth,34691,109,027_33FFD_calendar,src/c/027_33FFD_calendar/CalNextMonth.c,matched,
 CalPrevMonth,346FE,109,027_33FFD_calendar,src/c/027_33FFD_calendar/CalPrevMonth.c,matched,
 CalReturn,3476B,30,027_33FFD_calendar,src/c/027_33FFD_calendar/CalReturn.c,matched,
@@ -373,6 +375,7 @@ GetPeriodTime,5B9D1,54,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GetPeri
 GiveControl,5B1CE,202,042_59D9A_engine_core,src/c/042_59D9A_engine_core/GiveControl.c,nonmatching,"3 bytes short, same branch layout: the original loads regd1 into cx on the pad-1-first path and into si on the pad-2-first path (push esi, __CHK 14h) and keeps c2playernum in bx; this draft uses one register for both. Without the c2 local the layout breaks (no cross-jump into the pad 2 tail)"
 InitCoachModes,5A669,275,042_59D9A_engine_core,src/c/042_59D9A_engine_core/InitCoachModes.c,matched,
 Intermission,5DE42,46,042_59D9A_engine_core,src/c/042_59D9A_engine_core/Intermission.c,matched,
+IntermissionStart,5DE70,54,042_59D9A_engine_core,src/c/042_59D9A_engine_core/IntermissionStart.c,matched,
 LockScroll,5CD25,42,042_59D9A_engine_core,src/c/042_59D9A_engine_core/LockScroll.c,matched,
 PenTeamScored,5AAAE,136,042_59D9A_engine_core,src/c/042_59D9A_engine_core/PenTeamScored.c,matched,
 PeriodOver,5DEA6,224,042_59D9A_engine_core,src/c/042_59D9A_engine_core/PeriodOver.c,matched,
@@ -559,6 +562,7 @@ GadgetHitTest,7E8E5,89,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/G
 GadgetStub0,7E032,13,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/GadgetStub0.c,matched,
 PickNearestPlayer,7E93E,110,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/PickNearestPlayer.c,nonmatching,"register allocation only: asm spills y to the stack and reloads it into ebp (x in edi, best in esi)"
 sub_7E03F,7E03F,32,057_7DC8B_gadgets_replay,src/c/057_7DC8B_gadgets_replay/sub_7E03F.c,matched,
+CmpInt,7FC31,43,058_7F724_highlights,src/c/058_7F724_highlights/CmpInt.c,matched,
 FormatHilightDesc,7FCA2,86,058_7F724_highlights,src/c/058_7F724_highlights/FormatHilightDesc.c,matched,
 NudgeRinkScroll,7FC12,31,058_7F724_highlights,src/c/058_7F724_highlights/NudgeRinkScroll.c,matched,
 SaveHilight,7FA10,514,058_7F724_highlights,src/c/058_7F724_highlights/SaveHilight.c,matched,

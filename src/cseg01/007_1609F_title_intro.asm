@@ -1674,6 +1674,10 @@ pop esi	; 176AB
 pop ecx	; 176AC
 ret	; 176AD
 %endif ; C
+; C: src/c/007_1609F_title_intro/PrintFmt1.c
+%ifdef CBUILD
+%include "c/007_1609F_title_intro/PrintFmt1.inc"
+%else
 PrintFmt1:
 push dword 68h	; 176AE
 call __CHK	; 176B3
@@ -1714,6 +1718,7 @@ add esp, byte 54h	; 17709
 pop edi	; 1770C
 pop esi	; 1770D
 ret 4	; 1770E
+%endif ; C
 ; C: src/c/007_1609F_title_intro/TextGridOpen.c
 %ifdef CBUILD
 %include "c/007_1609F_title_intro/TextGridOpen.inc"
