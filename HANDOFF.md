@@ -176,7 +176,7 @@ reassembles everything. Run `make fullcheck` once per commit batch; every pushed
     passes; check the `!` lines before treating it as a real diff.
   - Header edits do not cost anything until the next build: edit asmfuncs.h / protos.h freely with cdiff, but only
     run fullcheck once per push (it rebuilds everything, ~15-20 min after a header change).
-* Session 2026-10-09 ~20:27-21:10: tooling (object cache, below) then 11 matched, 2 new drafts. Matched:
+* Session 2026-10-09 (box clock 20:27-20:39, which lags: 5 fullchecks alone took ~11 min; ~30-35 min real): tooling (object cache, below) then 11 matched, 2 new drafts. Matched:
   LoadCalendarShapes, ReloadGameGfx (in LoadGameGfx.c), DrawExhSetChecks (MenuExhibitionSettings.c, ExhOptsToBits
   moved in), DeskTeamScratches + Desk{Home,Away}Goalie{1,2,None} (all in DeskScoringSummary.c, first try),
   MenuModeSettings. Drafts: DrawScrollBar (must go into DrawButton.c; x / y register swap), CalStandingsScreen
