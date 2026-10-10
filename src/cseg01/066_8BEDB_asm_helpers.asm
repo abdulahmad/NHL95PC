@@ -264,6 +264,10 @@ ret	; 8C1C1
 %endif ; C
 ; SelectScreenBM / SelectRinkBM: SetDrawBitmap(*screenbm / *rinkbm),
 ; i.e. make that 48-byte bitmap descriptor the current draw target.
+; C: src/c/066_8BEDB_asm_helpers/SelectScreenBM.c
+%ifdef CBUILD
+%include "c/066_8BEDB_asm_helpers/SelectScreenBM.inc"
+%else
 SelectScreenBM:
 push dword 14h	; 8C1C2
 call __CHK	; 8C1C7
@@ -287,6 +291,7 @@ push ecx	; 8C1ED
 push edx	; 8C1EE
 mov edx, dword [rinkbm]	; 8C1EF
 jmp short SelectScreenBM_set	; 8C1F5
+%endif ; C
 ; C: src/c/066_8BEDB_asm_helpers/stub_8C1F7.c
 %ifdef CBUILD
 %include "c/066_8BEDB_asm_helpers/stub_8C1F7.inc"

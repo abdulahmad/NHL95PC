@@ -39,8 +39,10 @@ GetLineEnergies,14BEF,51,005_1431E_file_utils,src/c/005_1431E_file_utils/GetLine
 MakePath,1431E,74,005_1431E_file_utils,src/c/005_1431E_file_utils/MakePath.c,matched,
 PanelAddPenalty,14C22,126,005_1431E_file_utils,src/c/005_1431E_file_utils/PanelAddPenalty.c,matched,
 PanelRemovePenalty,14CA0,81,005_1431E_file_utils,src/c/005_1431E_file_utils/PanelRemovePenalty.c,matched,
+ReadKeyRec WriteKeyRec,1463D,46,005_1431E_file_utils,src/c/005_1431E_file_utils/ReadKeyRec.c,matched,
+ReadSeasonRec,1478B,21,005_1431E_file_utils,src/c/005_1431E_file_utils/ReadKeyRec.c,matched,
+CopyFile,1466B,288,005_1431E_file_utils,src/c/005_1431E_file_utils/ReadKeyRec.c,nonmatching,
 ReadSchedGame,147A0,41,005_1431E_file_utils,src/c/005_1431E_file_utils/ReadSchedGame.c,matched,
-WriteKeyRec,14654,23,005_1431E_file_utils,src/c/005_1431E_file_utils/WriteKeyRec.c,matched,
 AnyInputPressed,1600C,102,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/AnyInputPressed.c,nonmatching,draft: asm keeps result in esi and saves 4 regs; ours uses edx
 CupSeriesWinner,15CE1,138,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/CupSeriesWinner.c,nonmatching,"draft: need computed in ebp (mov ebp,edx / shr / inc) vs lea; same logic"
 IsCupClinched,15C30,177,006_150C6_scoreboard_gfx,src/c/006_150C6_scoreboard_gfx/IsCupClinched.c,nonmatching,"stack: asm spills both score args to the stack (push eax/edx, 14h frame) and returns through one exit; C keeps them in cl/ch"
@@ -200,10 +202,9 @@ EncryptPassword,3A597,101,029_380E9_league_setup,src/c/029_380E9_league_setup/As
 MergeGoalieRecDelta,3A826,388,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeGoalieRecDelta.c,matched,
 MergeSeasonRecDelta,3A71C,266,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeSeasonRecDelta.c,matched,
 MergeTeamRecDelta,3A5FC,288,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeTeamRecDelta.c,matched,
-ReadLeagueTeamEntry,3A31E,41,029_380E9_league_setup,src/c/029_380E9_league_setup/ReadLeagueTeamEntry.c,matched,
 TeamSelCancel,38B3A,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelCancel.c,matched,
 TeamSelDone,38B25,21,029_380E9_league_setup,src/c/029_380E9_league_setup/TeamSelDone.c,matched,
-WriteTeamRec,3A2B8,54,029_380E9_league_setup,src/c/029_380E9_league_setup/WriteTeamRec.c,matched,
+WriteSeasonRec ReadGoalieSeasonRec WriteGoalieSeasonRec WriteSchedGame WriteTeamRec ReadDbRec4Ch ReadLeagueTeamEntry WriteLeagueTeamEntry ReadDbRec28h ReadDbRec2Ch,3A24F,326,029_380E9_league_setup,src/c/029_380E9_league_setup/WriteSeasonRec.c,matched,
 CopyLeagueFiles,3C310,159,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/CopyLeagueFiles.c,matched,
 ImportDbs,3CF5B,429,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/ImportDbs.c,matched,
 LocateTeamDbCopy,3AF70,201,030_3A9AA_database_merge,src/c/030_3A9AA_database_merge/LocateTeamDbCopy.c,nonmatching,register allocation only: dir / id pointers swap between edi and ebp (partial declaration-order search found nothing)
@@ -634,6 +635,7 @@ POSimSeriesTo,88625,279,064_86696_season_playoffs,src/c/064_86696_season_playoff
 SetSideControls,8B85B,212,064_86696_season_playoffs,src/c/064_86696_season_playoffs/SetSideControls.c,matched,
 WriteCurModeState,8B92F,62,064_86696_season_playoffs,src/c/064_86696_season_playoffs/WriteCurModeState.c,matched,
 InitFileLocations,8BAAF,358,065_8BAAF_allfiles_coach,src/c/065_8BAAF_allfiles_coach/InitFileLocations.c,matched,
+SelectScreenBM SelectRinkBM,8C1C2,53,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/SelectScreenBM.c,matched,
 stub_8C1B7,8C1B7,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C1B7.c,matched,
 stub_8C1F7,8C1F7,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C1F7.c,matched,
 stub_8C202,8C202,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C202.c,matched,

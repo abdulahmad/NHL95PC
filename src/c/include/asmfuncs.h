@@ -31,9 +31,7 @@ extern void ReloadGameGfx(); /* 13BB4 */
 extern void FileOpenRead_x(); /* 14537 */
 extern void FileReadAt_x(); /* 145E4 */
 extern void FileReadAt_x2(); /* 145E6 */
-extern void ReadKeyRec(); /* 1463D */
 extern void ReadKeyRec_x(); /* 1464D */
-extern void ReadSeasonRec(); /* 1478B */
 extern void ReadTeamRec_x(); /* 147F6 */
 extern void ReadGSummaryRec(); /* 147FF */
 extern void DrawPanelLine_x(); /* 14BE9 */
@@ -385,17 +383,9 @@ extern void PostGameToTeamDb(); /* 3626D */
 extern void ChooseLeagueController(); /* 380E9 */
 extern void BuildStandingsGrid(); /* 384B8 */
 extern void LeagueTeamSelect(); /* 38B4F */
-extern void WriteSeasonRec(); /* 3A24F */
 extern void WriteSeasonRec_common(); /* 3A25F */
-extern void ReadGoalieSeasonRec(); /* 3A266 */
 extern void ReadGoalieSeasonRec_common(); /* 3A276 */
-extern void WriteGoalieSeasonRec(); /* 3A27D */
-extern void WriteSchedGame(); /* 3A28F */
 extern void WriteSchedGame_common(); /* 3A2AE */
-extern void ReadDbRec4Ch(); /* 3A2EE */
-extern void WriteLeagueTeamEntry(); /* 3A347 */
-extern void ReadDbRec28h(); /* 3A36B */
-extern void ReadDbRec2Ch(); /* 3A380 */
 extern void AskTeamPassword_ret(); /* 3A498 */
 extern void MergeTeamDbs(); /* 3A9AA */
 extern void MergeTeamDbs_ret(); /* 3AE18 */
@@ -1012,9 +1002,7 @@ extern void POHiliteSlot(); /* 89B69 */
 extern void PlayoffTreeMenu(); /* 89BD2 */
 extern void DrawPlayoffTree(); /* 8A652 */
 extern void PlayMVI(); /* 8BEDB */
-extern void SelectScreenBM(); /* 8C1C2 */
 extern void SelectScreenBM_set(); /* 8C1D5 */
-extern void SelectRinkBM(); /* 8C1E2 */
 extern void stub_8C223(); /* 8C223 */
 extern void vgacopy_bg(); /* 8C290 */
 extern void vgacopy_rect(); /* 8C36F */

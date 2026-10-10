@@ -349,6 +349,10 @@ mov eax, esi	; 14634
 call _dos_write_	; 14636
 jmp short FileReadAt_x	; 1463B
 %endif ; C
+; C: src/c/005_1431E_file_utils/ReadKeyRec.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/ReadKeyRec.inc"
+%else
 ReadKeyRec:
 push dword 8	; 1463D
 call __CHK	; 14642
@@ -358,10 +362,6 @@ ReadKeyRec_x:
 call FileReadAt	; 1464D
 pop ecx	; 14652
 ret	; 14653
-; C: src/c/005_1431E_file_utils/WriteKeyRec.c
-%ifdef CBUILD
-%include "c/005_1431E_file_utils/WriteKeyRec.inc"
-%else
 WriteKeyRec:
 push dword 8	; 14654
 call __CHK	; 14659
@@ -447,12 +447,17 @@ add esp, 450h	; 14780
 pop edi	; 14786
 pop esi	; 14787
 ret 4	; 14788
+; C: src/c/005_1431E_file_utils/ReadKeyRec.c (ReadSeasonRec)
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/ReadKeyRec.ReadSeasonRec.inc"
+%else
 ReadSeasonRec:
 push dword 8	; 1478B
 call __CHK	; 14790
 push ecx	; 14795
 mov ecx, 2Fh	; 14796
 jmp near ReadKeyRec_x	; 1479B
+%endif ; C
 ; C: src/c/005_1431E_file_utils/ReadSchedGame.c
 %ifdef CBUILD
 %include "c/005_1431E_file_utils/ReadSchedGame.inc"

@@ -2206,6 +2206,10 @@ pop ebp	; 3A249
 pop edi	; 3A24A
 pop esi	; 3A24B
 ret 0Ch	; 3A24C
+; C: src/c/029_380E9_league_setup/WriteSeasonRec.c
+%ifdef CBUILD
+%include "c/029_380E9_league_setup/WriteSeasonRec.inc"
+%else
 WriteSeasonRec:
 push dword 8	; 3A24F
 call __CHK	; 3A254
@@ -2248,10 +2252,6 @@ call FileWriteAt	; 3A2B0
 pop esi	; 3A2B5
 pop ecx	; 3A2B6
 ret	; 3A2B7
-; C: src/c/029_380E9_league_setup/WriteTeamRec.c
-%ifdef CBUILD
-%include "c/029_380E9_league_setup/WriteTeamRec.inc"
-%else
 WriteTeamRec:
 push dword 10h	; 3A2B8
 call __CHK	; 3A2BD
@@ -2276,7 +2276,6 @@ pop edi	; 3A2EA
 pop esi	; 3A2EB
 pop ecx	; 3A2EC
 ret	; 3A2ED
-%endif ; C
 ReadDbRec4Ch:
 push dword 10h	; 3A2EE
 call __CHK	; 3A2F3
@@ -2298,10 +2297,6 @@ pop edi	; 3A31A
 pop esi	; 3A31B
 pop ecx	; 3A31C
 ret	; 3A31D
-; C: src/c/029_380E9_league_setup/ReadLeagueTeamEntry.c
-%ifdef CBUILD
-%include "c/029_380E9_league_setup/ReadLeagueTeamEntry.inc"
-%else
 ReadLeagueTeamEntry:
 push dword 0Ch	; 3A31E
 call __CHK	; 3A323
@@ -2319,7 +2314,6 @@ call FileReadAt	; 3A33F
 pop esi	; 3A344
 pop ecx	; 3A345
 ret	; 3A346
-%endif ; C
 WriteLeagueTeamEntry:
 push dword 0Ch	; 3A347
 call __CHK	; 3A34C
@@ -2345,6 +2339,7 @@ call __CHK	; 3A385
 push ecx	; 3A38A
 mov ecx, 2Ch	; 3A38B
 jmp near ReadGoalieSeasonRec_common	; 3A390
+%endif ; C
 ; C: src/c/029_380E9_league_setup/AskTeamPassword.c
 %ifdef CBUILD
 %include "c/029_380E9_league_setup/AskTeamPassword.inc"

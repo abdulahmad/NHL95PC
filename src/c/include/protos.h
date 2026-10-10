@@ -721,6 +721,18 @@ void ShowRosterStats(int a, int b, int c, int d);  /* 75BF7 */
 int MenuRegSeasonStats(void);  /* 75BAA */
 int MenuPlayoffStats(void);  /* 75BDE */
 void PaOneMinuteLeft(void);  /* 59A7E */
+int WriteSeasonRec(int fh, void *rec, long pos);  /* 3A24F */
+int ReadGoalieSeasonRec(int fh, void *rec, long pos);  /* 3A266 */
+int WriteGoalieSeasonRec(int fh, void *rec, long pos);  /* 3A27D */
+int WriteSchedGame(int fh, void *game, int n);  /* 3A28F */
+void ReadDbRec4Ch(int fh, void *rec, int n);  /* 3A2EE */
+int WriteLeagueTeamEntry(int fh, void *entry, int n);  /* 3A347 */
+int ReadDbRec28h(int fh, void *rec, long pos);  /* 3A36B */
+int ReadDbRec2Ch(int fh, void *rec, long pos);  /* 3A380 */
+int ReadKeyRec(int fh, void *rec, long pos);  /* 1463D */
+int ReadSeasonRec(int fh, void *rec, long pos);  /* 1478B */
+void SelectScreenBM(void);  /* 8C1C2 */
+void SelectRinkBM(void);  /* 8C1E2 */
 unsigned _dos_write(int fh, void __far *buf, unsigned n, unsigned *got);  /* Watcom CRT _dos_write_ */
 void ReadGSumHeader(void);  /* 61BBF */
 void ReadGSumTail(void);  /* 61C22 */
