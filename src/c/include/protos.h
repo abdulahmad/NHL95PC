@@ -136,7 +136,7 @@ void __cdecl MouseSetPos(int x, int y);  /* input library, stack args */
 void WriteKeyRec(int fh, void *rec, long pos);  /* 14654 */
 int FileWriteAt(int fh, void *buf, long pos, unsigned len);  /* 145F9 */
 int FileReadAt(int fh, void *buf, long pos, unsigned len);  /* 145A2: seek to pos (pos < 0: no seek), read len bytes */
-void ReadSchedGame(int fh, void *game, int n);  /* 147A0 */
+int ReadSchedGame(int fh, void *game, int n);  /* 147A0 */
 void TextGridOff(void);  /* 1777E */                      
 void SetTextColors(int color, int shadow);  /* 174C2 */   
 void SaveModeState(unsigned char *st);

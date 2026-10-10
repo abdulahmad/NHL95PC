@@ -396,6 +396,10 @@ pop ecx	; 29B04
 pop ebx	; 29B05
 ret	; 29B06
 %endif ; C
+; C: src/c/019_2970A_league_schedule/LoadLeagueTree.c
+%ifdef CBUILD
+%include "c/019_2970A_league_schedule/LoadLeagueTree.inc"
+%else
 LoadLeagueTree:
 push dword 5Ch	; 29B07
 call __CHK	; 29B0C
@@ -507,6 +511,7 @@ pop esi	; 29C71
 pop ecx	; 29C72
 pop ebx	; 29C73
 ret	; 29C74
+%endif ; C
 ; C: src/c/019_2970A_league_schedule/FitPlayerName.c
 %ifdef CBUILD
 %include "c/019_2970A_league_schedule/FitPlayerName.inc"

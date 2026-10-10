@@ -5,15 +5,16 @@
 /* LoadLeagueTree (29B07) - PC only: fill the playoff tree from the stats league's schedule file: team names
    (26 city names, then a blank entry), the 15 series (two teams each, FFh -> 26 = empty) from the series table at
    +1998h of the file, the champion from TreeSeriesWinner on the final at +1BE4h (FFFFFFFF -> 26; same league as the
-   open one decides how), then free the file and run PlayoffTreeScreen. Returns 0.
-   Draft: code matches up to the frame: the asm has 40h of locals (i -4, same -18, sched -1C, p -20, b -28, a -30)
-   and 16 unused bytes at -14..-8; Watcom -od here packs them in another order. */
+   open one decides how), then free the file and run PlayoffTreeScreen. Returns 0. */
 int LoadLeagueTree(int a, int b)
 {
     int i;
+    int u0, u1, u2, u3;         /* unused: the unoptimised build keeps their slots (frame layout) */
     int same;
     unsigned char *sched;
     unsigned char *p;
+    int v0;                     /* unused */
+    char s[16];                 /* unused */
 
     same = strcmp((char *)statsleague, (char *)lgstate + 4);
     for (i = 0; i < 26; i++) strcpy((char *)treeteamnames + i * 21, (char *)teamcitynames[i]);

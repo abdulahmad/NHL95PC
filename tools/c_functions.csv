@@ -134,7 +134,8 @@ MoveTreeHighlight,27BC3,113,018_27080_standings_playoffs,src/c/018_27080_standin
 PlayoffTreeHitTest ShowPlayoffTree,29681,137,018_27080_standings_playoffs,src/c/018_27080_standings_playoffs/PlayoffTreeHitTest.c,matched,
 DrawBevelBox,29D00,533,019_2970A_league_schedule,src/c/019_2970A_league_schedule/DrawBevelBox.c,nonmatching,stack slots of the corner coordinate temporaries differ (x1 + 2 / y1 + 2 ...); logic matches
 FitPlayerName,29C75,139,019_2970A_league_schedule,src/c/019_2970A_league_schedule/FitPlayerName.c,matched,
-LoadLeagueTree,29B07,366,019_2970A_league_schedule,src/c/019_2970A_league_schedule/LoadLeagueTree.c,nonmatching,
+LoadLeagueTree,29B07,366,019_2970A_league_schedule,src/c/019_2970A_league_schedule/LoadLeagueTree.c,matched,
+LoadPlayoffModeTree,2970A,530,019_2970A_league_schedule,src/c/019_2970A_league_schedule/LoadPlayoffModeTree.c,nonmatching,
 OpenStatsSchedule,29A97,112,019_2970A_league_schedule,src/c/019_2970A_league_schedule/OpenStatsSchedule.c,matched,
 CmpFileNames,2BEEA,19,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/CmpFileNames.c,matched,
 FileDlgHitTest,2C3FF,82,021_2B7B7_file_dialogs,src/c/021_2B7B7_file_dialogs/FileDlgHitTest.c,matched,
@@ -647,6 +648,7 @@ stub_8C1F7,8C1F7,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C1F7
 stub_8C202,8C202,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C202.c,matched,
 stub_8C20D,8C20D,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C20D.c,matched,
 stub_8C218,8C218,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C218.c,matched,
+stub_8C223,8C223,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C223.c,matched,
 randomd0,8C230,96,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:16bit-pop insn:16bit-push
 vgacopy_bg,8C290,223,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push
 vgacopy_rect,8C36F,122,066_8BEDB_asm_helpers,,asm,find_handasm high: nochk insn:cld insn:in insn:out insn:16bit-pop insn:16bit-push

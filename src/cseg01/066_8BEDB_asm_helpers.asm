@@ -328,10 +328,15 @@ push dword 4	; 8C218
 call __CHK	; 8C21D
 ret	; 8C222
 %endif ; C
+; C: src/c/066_8BEDB_asm_helpers/stub_8C223.c
+%ifdef CBUILD
+%include "c/066_8BEDB_asm_helpers/stub_8C223.inc"
+%else
 stub_8C223:
 push dword 4	; 8C223
 call __CHK	; 8C228
 ret	; 8C22D
+%endif ; C
 db 00h,00h
 ; randomd0 = 93G middle93_1 randomd0: 32-bit LCG seed = seed*BB40E62Dh + 1,
 ; returns ((seed>>8)&FFFFh * ax) >> 16, i.e. a value in 0..ax-1.  The seed high word is StanleyCupTimer+2.
