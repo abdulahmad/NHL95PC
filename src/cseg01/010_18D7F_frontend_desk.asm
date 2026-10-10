@@ -1837,6 +1837,10 @@ pop ecx	; 1A814
 pop ebx	; 1A815
 ret	; 1A816
 %endif ; C
+; C: src/c/010_18D7F_frontend_desk/DeskGoToReplay.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/DeskGoToReplay.inc"
+%else
 DeskGoToReplay:	;IDA: code_1A817
 push dword 1Ch	; 1A817
 call __CHK	; 1A81C
@@ -1943,10 +1947,6 @@ mov eax, 1	; 1A998
 call FadePalStep	; 1A99D
 call GameStatsScreen	; 1A9A2
 jmp near DeskItem_ret2	; 1A9A7
-; C: src/c/010_18D7F_frontend_desk/DeskPenaltySummary.c
-%ifdef CBUILD
-%include "c/010_18D7F_frontend_desk/DeskPenaltySummary.inc"
-%else
 DeskPenaltySummary:	;IDA: code_1A9AC
 push dword 20h	; 1A9AC
 call __CHK	; 1A9B1
@@ -2002,11 +2002,6 @@ pop edx	; 1AA69
 pop ecx	; 1AA6A
 pop ebx	; 1AA6B
 ret	; 1AA6C
-%endif ; C
-; C: src/c/010_18D7F_frontend_desk/DeskScoringSummary.c
-%ifdef CBUILD
-%include "c/010_18D7F_frontend_desk/DeskScoringSummary.inc"
-%else
 DeskScoringSummary:
 push dword 1Ch	; 1AA6D
 call __CHK	; 1AA72
@@ -2035,11 +2030,6 @@ pop edx	; 1AAC0
 pop ecx	; 1AAC1
 pop ebx	; 1AAC2
 ret	; 1AAC3
-%endif ; C
-; C: src/c/010_18D7F_frontend_desk/DeskScoringSummary.c (DeskTeamScratches)
-%ifdef CBUILD
-%include "c/010_18D7F_frontend_desk/DeskScoringSummary.DeskTeamScratches.inc"
-%else
 DeskTeamScratches:
 push dword 1Ch	; 1AAC4
 call __CHK	; 1AAC9
@@ -2061,11 +2051,6 @@ xor ebx, ebx	; 1AB00
 xor edx, edx	; 1AB02
 mov eax, 4	; 1AB04
 jmp short DeskSummary_common	; 1AB09
-%endif ; C
-; C: src/c/010_18D7F_frontend_desk/DeskScoringSummary.c (DeskHomeGoalie1)
-%ifdef CBUILD
-%include "c/010_18D7F_frontend_desk/DeskScoringSummary.DeskHomeGoalie1.inc"
-%else
 DeskHomeGoalie1:
 push dword 8	; 1AB0B
 call __CHK	; 1AB10
@@ -2080,11 +2065,6 @@ mov byte [eax], 2	; 1AB2C
 DeskGoalie_x1:
 mov eax, dword [mi_HomeGoalieNone]	; 1AB2F
 jmp near DeskGoalie_x4	; 1AB34
-%endif ; C
-; C: src/c/010_18D7F_frontend_desk/DeskScoringSummary.c (DeskHomeGoalie2)
-%ifdef CBUILD
-%include "c/010_18D7F_frontend_desk/DeskScoringSummary.DeskHomeGoalie2.inc"
-%else
 DeskHomeGoalie2:
 push dword 8	; 1AB39
 call __CHK	; 1AB3E
@@ -2097,11 +2077,6 @@ mov byte [eax], 2	; 1AB55
 mov eax, dword [mi_HomeGoalie2]	; 1AB58
 mov byte [eax], 1	; 1AB5D
 jmp short DeskGoalie_x1	; 1AB60
-%endif ; C
-; C: src/c/010_18D7F_frontend_desk/DeskScoringSummary.c (DeskHomeGoalieNone)
-%ifdef CBUILD
-%include "c/010_18D7F_frontend_desk/DeskScoringSummary.DeskHomeGoalieNone.inc"
-%else
 DeskHomeGoalieNone:
 push dword 8	; 1AB62
 call __CHK	; 1AB67
@@ -2119,11 +2094,6 @@ mov byte [eax], 1	; 1AB8E
 xor eax, eax	; 1AB91
 pop edx	; 1AB93
 ret	; 1AB94
-%endif ; C
-; C: src/c/010_18D7F_frontend_desk/DeskScoringSummary.c (DeskAwayGoalie1)
-%ifdef CBUILD
-%include "c/010_18D7F_frontend_desk/DeskScoringSummary.DeskAwayGoalie1.inc"
-%else
 DeskAwayGoalie1:
 push dword 8	; 1AB95
 call __CHK	; 1AB9A
@@ -2142,11 +2112,6 @@ mov byte [eax], 2	; 1ABC1
 xor eax, eax	; 1ABC4
 pop edx	; 1ABC6
 ret	; 1ABC7
-%endif ; C
-; C: src/c/010_18D7F_frontend_desk/DeskScoringSummary.c (DeskAwayGoalie2)
-%ifdef CBUILD
-%include "c/010_18D7F_frontend_desk/DeskScoringSummary.DeskAwayGoalie2.inc"
-%else
 DeskAwayGoalie2:
 push dword 8	; 1ABC8
 call __CHK	; 1ABCD
@@ -2159,11 +2124,6 @@ mov byte [eax], 2	; 1ABE4
 mov eax, dword [mi_AwayGoalie2]	; 1ABE7
 mov byte [eax], 1	; 1ABEC
 jmp short DeskGoalie_x3	; 1ABEF
-%endif ; C
-; C: src/c/010_18D7F_frontend_desk/DeskScoringSummary.c (DeskAwayGoalieNone)
-%ifdef CBUILD
-%include "c/010_18D7F_frontend_desk/DeskScoringSummary.DeskAwayGoalieNone.inc"
-%else
 DeskAwayGoalieNone:
 push dword 8	; 1ABF1
 call __CHK	; 1ABF6
