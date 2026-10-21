@@ -5,7 +5,7 @@
 
 short lcselect(Player *p, int n);
 
-/* doinput (504DA, Genesis doinput): handle the pad for controlled player p (ctl: the controller, for
+/* doinput (504DA, 93G logic93 doinput): handle the pad for controlled player p (ctl: the controller, for
  changeplayer). The pads were read by Readjoy1 / Readjoy2: regd0 is the d-pad direction, regd1 the new presses
  (bit 4 B, 5 C, 6 A). Nothing while a penalty shot is set up or live and the clock is stopped. A line change
  request of p's team (lcrequest) goes to lcselect (unless a penalty shot is live; with both pads on one team only
@@ -63,7 +63,7 @@ void doinput(Player *p, short ctl)
         pp = &SortCords[passplayer];
         if (*puckc < 0 && (regd1.w & 0x20) && passplayer >= 0 && pp->position > 0
             && (passplayer < 6) == (p->SCnum < 6) && !(pp->pflags & 8) && !(pp->pflags2 & 4)) {
-            if (p->SCnum == c1playernum[0]) {
+            if (c1playernum[0] == p->SCnum) {
                 if (pp->SCnum != c1playernum[0]) c1playernum[0] = restorepl(pp->SCnum, c1playernum[0]);
             } else {
                 if (pp->SCnum != c2playernum[0]) c2playernum[0] = restorepl(pp->SCnum, c2playernum[0]);
@@ -109,7 +109,7 @@ void doinput(Player *p, short ctl)
     }
     if (p->position == 0) return;
     pp = &SortCords[passplayer];
-    if (p->SCnum == passplayer) {
+    if (passplayer == p->SCnum) {
         if (regd1.w & 0x20) burst(p);
         if (onetimerflag) {
             passdir = regd0.w & 0xF;
@@ -124,7 +124,7 @@ void doinput(Player *p, short ctl)
     }
     if (*puckc < 0 && (regd1.w & 0x20) && passplayer >= 0 && (passplayer < 6) == (p->SCnum < 6)
         && !(pp->pflags & 8) && !(pp->pflags2 & 4)) {
-        if (p->SCnum == c1playernum[0]) {
+        if (c1playernum[0] == p->SCnum) {
             if (pp->SCnum != c1playernum[0]) c1playernum[0] = restorepl(pp->SCnum, c1playernum[0]);
         } else {
             if (pp->SCnum != c2playernum[0]) c2playernum[0] = restorepl(pp->SCnum, c2playernum[0]);

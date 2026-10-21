@@ -884,7 +884,6 @@ extern void POSeedFinal(); /* 87C9E */
 extern void POHandleElimination(); /* 88096 */
 extern void POAfterGame(); /* 8873C */
 extern void LoadScheduleDB_x(); /* 8921B */
-extern void PlayoffModeLoop(); /* 89268 */
 extern void POHiliteSlot(); /* 89B69 */
 extern void PlayoffTreeMenu(); /* 89BD2 */
 extern void DrawPlayoffTree(); /* 8A652 */

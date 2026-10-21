@@ -86,6 +86,14 @@ types: `size b` is `signed char`, `size w` `short`, `size d` `int`; overrides in
 
 `tools/cc.py unmark` removes a marker (for example to merge a function into a multi-function file).
 
+**Compile speed.** Objects are cached by a sha1 of the compiler, the flags, the .c file (with its name) and the
+headers it includes (`~/.cache/nhl95pc-cc`; `NHL95_NOCACHE=1` recompiles). DOSBox runs the compiler on the
+dynamic core at a fixed 2,000,000 cycles (`NHL95_CC_CPU` overrides the `[cpu]` lines; `cycles=max` ramps up over
+the first seconds of each run and takes twice as long). A tool that compiles many candidates should call
+`cc.compile_many(items)` (one DOSBox run per 16 sources, `NHL95_CC_BATCH`) or `cc.compile_parallel(items, jobs)`
+(that, on several DOSBox processes at once) instead of `compile_c` per candidate: tools/permute_decls.py and
+tools/scope_decls.py do. `cc.py compile A.c B.c ...` does the same from the shell.
+
 ## Multi-block files (shared exits)
 
 Watcom merges identical function tails (`pop edi / pop esi / ... / ret`) across one source file: a later function
@@ -194,6 +202,7 @@ or callback pieces of a C function reached through a pointer table, and a few ar
 * **Which copy of a shared exit survives**: the copy that shares the longest run with another function keeps it. When the owner's pops land in the wrong function, add the later functions that end in the owner's longer exit (`add esp, n` plus the pops): LeagueSettingsDlg kept its pops once DrawLeagueSetChecks (ending in LeagueSettingsDlg_ret4) followed it, and MenuSaveDefaultLines once MenuSaveTheseLines (ending in its `add esp, 310h`) did.
 * **A product in an int local**: `v = (r + 5) * 5` compiles to `mov esi, eax; shl esi, 2; add esi, eax` (the EXE's shape); passed straight to a call as `(short)((r + 5) * 5)` it is `imul eax, eax, 5`. A pushed `(r + 5) * 5` is shl / add too, but with the sum in the load register (SkaterStatsCard).
 * **Frame order and cross-call reuse**: Watcom lays the frame out by size, the larger aggregates first and plain spilled scalars after them. A scalar that must sit below other scalars can go in a struct with them; a struct whose address is never taken still lets Watcom keep `(short)s.y` in a register across calls, where a member of an address-taken struct is reloaded after every call (SkaterStatsCard).
+* **Arrays of equal size, and the spilled scalars' slots**: plain arrays are sorted by size, equal sizes in reverse declaration order (TeamStatsScreen: the EXE's west, east, teams, order, title, record, state, path order needs a frame struct). The spilled scalars come in groups that the declaration order does not change: over 24 random orders of TeamRosterScreen's ten scalars the slots were always {kfh, pfh}, gs, {kf, fh}, mf, {m, n}, y, only the order inside a pair moving. In a synthetic function of equal locals (`v = g(k)` each, read later) the slots follow the order of first assignment and ignore the declaration order. So when the EXE's slot order crosses those groups, look for a difference in scope or use, not in declaration order (declaring `gs` in the goalie loop regroups everything). tools/permute.py's movedecl / swapdecl find the best order inside the groups (TeamRosterScreen: 43 -> 19 differing).
 * **`(short)(cond ? 0x99 : 0x98)`** is `setge al; and eax, 0FFh; add eax, 98h; cwde` (dopass's pass sound); `(short)(cond + 0x98)` narrows to `xor ah, ah`.
 * **A materialized `setne` before a branch** (`test eax, eax; setne al; and eax, 0FFh; jne`) comes from a doubled comparison: `while (((c != 'C' && c != 'L') != 0) != 0)` keeps the EXE's `je`-to-zero layout and the setne; `(... ? 0 : 1) != 0` is optimized to a plain test (CreateFreeAgent).
 * **Declaration order moves frame slots, not register picks**: tools/permute_decls.py found slot orders (MessageBox) but no register change across this round's drafts; register picks follow register pressure and statement shape instead (CreateFreeAgent: two pointer locals in a loop push the arguments into memory).

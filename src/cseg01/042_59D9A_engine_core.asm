@@ -674,6 +674,10 @@ pop edx	; 5A421
 pop ecx	; 5A422
 pop ebx	; 5A423
 ret	; 5A424
+; C: src/c/042_59D9A_engine_core/calcpuckcross.c (GetHot)
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/calcpuckcross.GetHot.inc"
+%else
 GetHot:
 push dword 10h	; 5A425
 call __CHK	; 5A42A
@@ -721,6 +725,7 @@ pop esi	; 5A4A9
 pop edx	; 5A4AA
 pop ebx	; 5A4AB
 ret	; 5A4AC
+%endif ; C
 GetHotStick:
 push dword 10h	; 5A4AD
 call __CHK	; 5A4B2

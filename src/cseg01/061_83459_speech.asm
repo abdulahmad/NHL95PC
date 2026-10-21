@@ -425,6 +425,10 @@ pop ecx	; 83894
 pop ebx	; 83895
 ret	; 83896
 %endif ; C
+; C: src/c/061_83459_speech/OpenSpeechBank.c
+%ifdef CBUILD
+%include "c/061_83459_speech/OpenSpeechBank.inc"
+%else
 OpenSpeechBank:
 push dword 40h	; 83897
 call __CHK	; 8389C
@@ -651,6 +655,7 @@ pop esi	; 83BC3
 pop ecx	; 83BC4
 pop ebx	; 83BC5
 ret	; 83BC6
+%endif ; C
 ; C: src/c/061_83459_speech/SpeechSlotSize.c
 %ifdef CBUILD
 %include "c/061_83459_speech/SpeechSlotSize.inc"

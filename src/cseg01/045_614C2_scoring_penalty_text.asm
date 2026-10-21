@@ -802,6 +802,10 @@ je near fileio_tail_c	; 61D38
 push str_B8	; 61D3E
 jmp near fileio_tail_b	; 61D43
 %endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/FormatPlayerName.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/FormatPlayerName.inc"
+%else
 FormatPlayerName:
 push dword 48h	; 61D48
 call __CHK	; 61D4D
@@ -924,6 +928,7 @@ pop ebp	; 61E93
 pop edi	; 61E94
 pop esi	; 61E95
 ret 8	; 61E96
+%endif ; C
 BuildEventLines:
 push dword 3Ch	; 61E99
 call __CHK	; 61E9E

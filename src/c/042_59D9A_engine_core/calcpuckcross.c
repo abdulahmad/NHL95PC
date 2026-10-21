@@ -49,14 +49,14 @@ void calcpuckcross(void)
     }
 }
 
-/* GetHot: sprite hot spot (stick blade) of player p. regd0/regd1 = the x/y bytes
+/* GetHot (5A425; 93G logic93 GetHot): sprite hot spot (stick blade) of player p. regd0/regd1 = the x/y bytes
  of the hot spot table (HotList/HotList_y, 2 bytes per frame) for the player's frame (word 12h, frames outside 0-283h/293h give 0, 0); x is negated when the
- sprite is X-flipped (attribute bit 3). Draft: also gives the distance that makes reenergizeteam's exit a near
+ sprite is X-flipped (attribute bit 3). No result. Storing HotList[f] straight into regd0.w (no temporary) gives
+ the EXE's esi negate (found by tools/permute.py). Also gives the distance that makes reenergizeteam's exit a near
  jump into calcpuckcross's tail, as in the EXE. */
 void GetHot(Player *p)
 {
     short f;
-    short x;
 
     regd0.w = regd1.w = 0;
     f = p->frame;
@@ -66,8 +66,7 @@ void GetHot(Player *p)
     if (f >= 0x2DA) f -= 0x46;
     else if (f > 0x293) return;
     f += f;
-    x = HotList[f];
-    regd0.w = x;
+    regd0.w = HotList[f];
     regd1.w = HotList_y[f];
     if (p->attribute & 8)                       /* X flip */
         regd0.w = -regd0.w;

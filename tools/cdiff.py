@@ -62,23 +62,27 @@ def name_of(rev, a):
     best = max((x for x in rev if x <= a and a - x < 0x10000), default=None)
     return '%s+%X' % (rev[best], a - best) if best is not None else '%X' % a
 
-def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('src'); ap.add_argument('--obj'); ap.add_argument('--func')
-    ap.add_argument('--context', type=int, default=6); ap.add_argument('--all', action='store_true')
-    a = ap.parse_args()
-    obj = a.obj or os.path.join(ROOT, 'build', os.path.relpath(os.path.splitext(os.path.abspath(a.src))[0], os.path.join(ROOT, 'src')) + '.obj')
-    if not a.obj and not cc.compile_c(a.src, obj): sys.exit(2)
-    labaddr, rev = load_labels()
-    func, addr = func_addr(a.src, a.func)
+_LABELS = None
+
+def compare(src, obj, func=None, asm_src=None):
+    """compare the compiled function FUNC of OBJ (built from src) with the original: a dict with func, addr, n (the
+    compiled bytes compared), olen (the asm block's length), rows [(mark, off, compiled text, original text)], first
+    (the index of the first differing row or None) and ok (a match). asm_src: the C file whose segment / block
+    decides the asm side (default src; a candidate copy elsewhere passes the real file)."""
+    global _LABELS
+    if _LABELS is None: _LABELS = load_labels()
+    labaddr, rev = _LABELS
+    asrc = asm_src or src
+    func, addr = func_addr(asrc, func)
     r = cobj.parse(obj, set(labaddr))
     pubs = sorted(r['pubs'].items(), key=lambda x: x[1])
     off0 = r['pubs'].get(func, 0); nxt = [o for n, o in pubs if o > off0]
     # the whole object from the first public (shared tails / several functions per file)
     text = r['text']; c0 = off0
     n = len(text) - c0
-    stem, fil, asm, inc = cc.c_paths(a.src)
+    stem, fil, asm, inc = cc.c_paths(asrc)
     if len(r['pubs']) > 1:     # one function of a multi-function file (the file's own one too): just its asm block
-        n = min(n, cc.asm_range(a.src, None if func == fil else func)[1] - addr)
+        n = min(n, cc.asm_range(asrc, None if func == fil else func)[1] - addr)
     tt = None
     orig = original(addr, max(n, 1) + 64)
     ofx = orig_fixups(addr, addr + len(orig))
@@ -129,7 +133,7 @@ def main():
             elif ob != cb and ci.mnemonic.startswith('j') and ci.size == oinst.size and ci.mnemonic == oinst.mnemonic \
                     and ci.op_str.startswith('0x') and not (0 <= sx(int(ci.op_str, 16)) < n):
                 # leaves the function: to another block / shared tail of the file (cc.py TextTargets)
-                if tt is None: tt = cc.TextTargets(a.src, r)
+                if tt is None: tt = cc.TextTargets(asrc, r)
                 try: cd = tt.resolve(c0 + sx(int(ci.op_str, 16)), func)[1]
                 except SystemExit: cd = None
                 od = addr + oinst.address + oinst.size + int.from_bytes(ob[-4:] if ci.size > 2 else ob[-1:], 'little', signed=True)
@@ -141,7 +145,27 @@ def main():
             ctxt += '  ; ' + (ct[0] if isinstance(ct[0], str) else name_of(rev, ct[0]))
         rows.append((mark, ci.address, ctxt, otxt))
         if mark != '  ' and first is None: first = len(rows) - 1
-    olen = cc.asm_range(a.src, func)[1] - addr
+    olen = cc.asm_range(asrc, func)[1] - addr
+    otexts = []   # the whole original block, annotated like the rows (for an aligned comparison)
+    for oinst in O:
+        if olen is not None and oinst.address >= olen: break
+        ob = bytes(oinst.bytes); ot = otgt(oinst); t = '%s %s' % (oinst.mnemonic, oinst.op_str)
+        if ot: t += '  ; ' + name_of(rev, ot[0])
+        elif (oinst.mnemonic.startswith('j') or oinst.mnemonic == 'call') and oinst.size >= 2 and oinst.op_str.startswith('0x'):
+            dest = addr + oinst.address + oinst.size + int.from_bytes(ob[-4:] if oinst.size > 2 else ob[-1:], 'little', signed=True)
+            if olen is None or not addr <= dest < addr + olen: t += '  ; ' + name_of(rev, dest)
+        otexts.append(t)
+    return dict(func=func, addr=addr, n=n, olen=olen, rows=rows, first=first, ok=first is None and olen == n,
+                ctexts=[r_[2] for r_ in rows], otexts=otexts)
+
+def main():
+    ap = argparse.ArgumentParser(); ap.add_argument('src'); ap.add_argument('--obj'); ap.add_argument('--func')
+    ap.add_argument('--context', type=int, default=6); ap.add_argument('--all', action='store_true')
+    a = ap.parse_args()
+    obj = a.obj or os.path.join(ROOT, 'build', os.path.relpath(os.path.splitext(os.path.abspath(a.src))[0], os.path.join(ROOT, 'src')) + '.obj')
+    if not a.obj and not cc.compile_c(a.src, obj): sys.exit(2)
+    c = compare(a.src, obj, a.func)
+    func, addr, n, olen, rows, first = c['func'], c['addr'], c['n'], c['olen'], c['rows'], c['first']
     print('%s %05X: compiled %d bytes, original %s bytes' % (func, addr, n, olen if olen is not None else '?'))
     show = range(len(rows)) if a.all or first is None else range(max(0, first - a.context), min(len(rows), first + 4 * a.context))
     print('     off  %-44s %s' % ('compiled (wcc386)', 'original'))

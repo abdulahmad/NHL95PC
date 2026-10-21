@@ -91,20 +91,21 @@ int SkillForAnim(Player *p)
     }
 }
 
-/* DRAFT: 166 vs 166. The trail step is sub eax,ecx / cwde / add ebx,eax; the original
- has no cwde. The power-play return is lea eax,[ebx+ecx]; the original is
- mov eax,ebx / add eax,ecx. Do not retry: a named int for the step pushes ebp,
- an unsigned short store is and eax,0FFFFh, and pen-prev as an expression moves
- the box pointer from edx to eax. */
-int GetLowestPen(void)
+/* GetLowestPen (54A53; 93G penalty93 GetLowestPen, "power play time left from the penalty box times"): when the
+   score sides differ (hmtmap[0] - awtmap), sum trail's penalty times (tmpdst, low 14 bits, by the tmpbox list
+   up to a negative index), each less the one before. No arguments. Result: 0 when the sides are level; the sum
+   when lead's tmap is 6; else the sum less the last time, or the full sum when the first penalty on lead's list
+   is not longer than that. The unsigned short result and short sum and prev were found by
+   tools/permute.py. */
+unsigned short GetLowestPen(void)
 {
     Team *lead;
     Team *trail;
     short diff;
     short idx;
+    short sum;
     short pen;
-    int sum;
-    int prev;
+    short prev;
     signed char *box;
 
     diff = hmtmap[0] - awtmap;

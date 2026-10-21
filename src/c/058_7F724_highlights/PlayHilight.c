@@ -3,8 +3,10 @@
 #include "nhl95.h"
 #undef PlayHilight
 
-/* PlayHilight: copy the highlight record into the game (teams, clock, jerseys), fade the music out,
- load the rink and play the replay, then free the shapes. A home team of 26 or higher uses rink 12. */
+/* PlayHilight (8011C, PC only): copy the highlight record into the game (teams, clock, jerseys), fade the music out,
+ load the rink and play the replay, then free the shapes. A home team of 26 or higher uses rink 12. No arguments
+ and no result. Adding the replay offset straight to p (no temporary) gives the EXE's registers (found by
+ tools/permute.py). */
 void PlayHilight(void)
 {
     unsigned char pal[0x300];
@@ -21,11 +23,9 @@ void PlayHilight(void)
     *(unsigned short *)&sflags = *(unsigned short *)(hilightrec + 0x4C);
     {
         unsigned char *p;
-        int off;
 
         p = replaystart;
-        off = *(int *)(hilightrec + 0x4E);
-        p += off;
+        p += *(int *)(hilightrec + 0x4E);
         recbpr = p;
     }
     i = 0;

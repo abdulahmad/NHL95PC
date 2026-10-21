@@ -13,37 +13,40 @@ void WriteKeyRec(int fh, void *rec, long pos)
     FileWriteAt(fh, rec, pos, 0x34);
 }
 
-/* CopyFile: copy srcdir\name.srcext to dstdir\name.dstext in 1 KB blocks (_dos_read _dos_write; a
- short write is an error). Both handles are closed. Returns 0 or the first DOS error (1 for a short write).
- Draft: stack slots match; the argument shuffle before the first MakePath differs (asm parks srcdir in eax,
- this parks srcext). */
+/* CopyFile (1466B, PC only): copy srcdir\name.srcext to dstdir\name.dstext in 1 KB blocks (_dos_read,
+   _dos_write; a short write is error 1). Both handles are closed. name: the file name; srcext, dstext: the
+   extensions; srcdir, dstdir: the directories. Result: 0 or the first DOS error. The declaration order of in,
+   got, dst, put, src, buf, err, out gives the EXE's argument shuffle (found by tools/permute.py). */
 int CopyFile(char *name, char *srcext, char *dstext, char *srcdir, char *dstdir)
 {
-    char buf[0x400];
-    char dst[32];
-    char src[32];
-    unsigned wrote;
-    int fin;
-    int fout;
+    int in;
     unsigned got;
+    char dst[32];
+    unsigned put;
+    char src[32];
+    char buf[0x400];
     int err;
+    int out;
 
-    fout = fin = -1;
+    in = -1;
+    out = -1;
     MakePath(src, srcdir, name, srcext);
-    if (!(err = FileOpenRead(src, &fin))) {
+    err = FileOpenRead(src, &in);
+    if (err == 0) {
         MakePath(dst, dstdir, name, dstext);
-        err = FileCreate(dst, &fout);
+        err = FileCreate(dst, &out);
     }
-    if (!err) {
+    if (err == 0) {
         do {
-            if (!(err = _dos_read(fin, buf, 0x400, &got)) && got > 0) {
-                err = _dos_write(fout, buf, got, &wrote);
-                if (wrote != got) err = 1;
+            err = _dos_read(in, buf, 0x400, &got);
+            if (err == 0 && got > 0) {
+                err = _dos_write(out, buf, got, &put);
+                if (put != got) err = 1;
             }
-        } while (got > 0 && !err);
+        } while (got > 0 && err == 0);
     }
-    FileClose(&fout);
-    FileClose(&fin);
+    FileClose(&out);
+    FileClose(&in);
     return err;
 }
 

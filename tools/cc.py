@@ -2,6 +2,7 @@
 """cc.py - compile a C source of the matching decompilation and splice it into the asm build.
 
   python3 tools/cc.py compile src/c/<seg>/<Func>.c [-o OBJ]   wcc386 10.0 LA under headless DOSBox -> OMF object
+  python3 tools/cc.py compile A.c B.c ...                      several sources, one DOSBox run per 16 (objects in build/)
   python3 tools/cc.py frag    src/c/<seg>/<Func>.c OBJ OUT.inc  object -> NASM fragment for the marked asm block
   python3 tools/cc.py mark    src/c/<seg>/<Func>.c [--func F [--seg STEM]] [--end LABEL] wrap the asm function in the CBUILD
                               markers (--seg: F sits in another asm segment, e.g. the next one)
@@ -39,7 +40,7 @@ Compiler: Watcom C/C++32 10.0 LA wcc386 (WATCOM_ROOT, default tools/watcom: dosl
 flags. A source may add flags with a comment line `/* cflags: -xx */` (none needed so far). Headers come from
 src/c/include (8.3 names)."""
 import glob
-import os, re, sys, shutil, subprocess, tempfile, argparse
+import os, re, sys, shutil, subprocess, tempfile, argparse, threading
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import cobj
@@ -71,20 +72,60 @@ def cache_key(src, flags):
         h.update(os.path.basename(p).encode()); h.update(open(p, 'rb').read())
     return h.hexdigest()
 
-def compile_c(src, obj, extra=''):
+def src_flags(src, extra=''):
     m = re.search(r'/\*\s*cflags:([^*]*)\*/', open(src).read())
-    flags = ' '.join(x for x in (FLAGS, m.group(1).strip() if m else '', extra) if x)
-    key = cache_key(src, flags); cobj_ = os.path.join(CACHE, key + '.obj')
-    if os.environ.get('NHL95_NOCACHE') != '1' and os.path.exists(cobj_):
-        os.makedirs(os.path.dirname(os.path.abspath(obj)), exist_ok=True); shutil.copy(cobj_, obj)
-        return True
-    ok = compile_c_raw(src, obj, flags)
-    if ok:
-        os.makedirs(CACHE, exist_ok=True); tmp = cobj_ + '.%d' % os.getpid()
-        shutil.copy(obj, tmp); os.replace(tmp, cobj_)
-    return ok
+    return ' '.join(x for x in (FLAGS, m.group(1).strip() if m else '', extra) if x)
+
+def compile_c(src, obj, extra=''):
+    return compile_many([(src, obj, extra)])[0]
+
+def compile_many(items, batch=None):
+    """compile [(src, obj, extra_flags)]; returns a list of bools. Cache hits are copied; the misses are compiled in
+    one DOSBox run per `batch` sources (NHL95_CC_BATCH, default 16): one DOSBox boot serves the whole batch."""
+    batch = batch or int(os.environ.get('NHL95_CC_BATCH', '16'))
+    nocache = os.environ.get('NHL95_NOCACHE') == '1'
+    res = [False] * len(items); todo = {}   # cache key -> [(index, src, obj, flags)]
+    for k, (src, obj, extra) in enumerate(items):
+        flags = src_flags(src, extra); key = cache_key(src, flags); cobj_ = os.path.join(CACHE, key + '.obj')
+        if not nocache and os.path.exists(cobj_):
+            os.makedirs(os.path.dirname(os.path.abspath(obj)), exist_ok=True); shutil.copy(cobj_, obj); res[k] = True
+        else: todo.setdefault(key, []).append((k, src, obj, flags))
+    keys = list(todo)
+    for c in range(0, len(keys), batch):
+        chunk = keys[c:c + batch]
+        oks = compile_batch_raw([todo[key][0][1:] for key in chunk])
+        for key, ok in zip(chunk, oks):
+            k0, src0, obj0, _ = todo[key][0]
+            if not ok: continue
+            os.makedirs(CACHE, exist_ok=True); cobj_ = os.path.join(CACHE, key + '.obj')
+            tmp = cobj_ + '.%d.%d' % (os.getpid(), threading.get_ident())
+            shutil.copy(obj0, tmp); os.replace(tmp, cobj_)
+            for k, src, obj, _ in todo[key]:
+                if obj != obj0:
+                    os.makedirs(os.path.dirname(os.path.abspath(obj)), exist_ok=True); shutil.copy(obj0, obj)
+                res[k] = True
+    return res
+
+def compile_parallel(items, jobs=8, batch=None):
+    """compile_many over `jobs` DOSBox processes at once (each takes every jobs-th item); returns a list of bools"""
+    from concurrent.futures import ThreadPoolExecutor
+    parts = [list(range(k, len(items), jobs)) for k in range(jobs)]
+    res = [False] * len(items)
+    with ThreadPoolExecutor(jobs) as ex:
+        for idx, oks in zip(parts, ex.map(lambda p: compile_many([items[i] for i in p], batch) if p else [], parts)):
+            for i, ok in zip(idx, oks): res[i] = ok
+    return res
 
 def compile_c_raw(src, obj, flags):
+    return compile_batch_raw([(src, obj, flags)])[0]
+
+# DOSBox [cpu] settings: the dynamic core at a fixed cycle count runs a compile about twice as fast as cycles=max
+# (which ramps up over the first seconds of each run); the objects are the same.
+DOSBOX_CPU = os.environ.get('NHL95_CC_CPU', 'core=dynamic\ncycles=fixed 2000000')
+
+def compile_batch_raw(items):
+    """compile [(src, obj, flags)] in one headless DOSBox run, without the cache; returns a list of bools and writes
+    each source's errors / warnings to stderr"""
     work = tempfile.mkdtemp(prefix='cc_')
     try:
         shutil.copy(CC, os.path.join(work, 'WCC386.EXE')); shutil.copy(D4G, os.path.join(work, 'DOS4GW.EXE'))
@@ -92,20 +133,30 @@ def compile_c_raw(src, obj, flags):
         os.mkdir(os.path.join(work, 'INC'))
         for h in os.listdir(INC):
             if h.endswith('.h'): shutil.copy(os.path.join(INC, h), os.path.join(work, 'INC', h.upper()))
-        shutil.copy(src, os.path.join(work, 'SRC.C'))
+        cmds = []
+        for k, (src, obj, flags) in enumerate(items):
+            shutil.copy(src, os.path.join(work, 'S%03d.C' % k))
+            cmds.append('WCC386 %s S%03d.C > E%03d.TXT' % (flags, k, k))
         conf = os.path.join(work, 'db.conf')
-        open(conf, 'w').write('[sdl]\noutput=surface\n[dosbox]\nmemsize=64\n[cpu]\ncycles=max\n[autoexec]\n'
-                              'mount c %s\nc:\nset DOS4G=QUIET\nset PATH=C:\\\nset INCLUDE=C:\\INC\nWCC386 %s SRC.C > ERR.TXT\nexit\n' % (work, flags))
+        open(conf, 'w').write('[sdl]\noutput=surface\n[dosbox]\nmemsize=64\n[cpu]\n%s\n[autoexec]\n'
+                              'mount c %s\nc:\nset DOS4G=QUIET\nset PATH=C:\\\nset INCLUDE=C:\\INC\n%s\nexit\n'
+                              % (DOSBOX_CPU, work, '\n'.join(cmds)))
         env = dict(os.environ, SDL_VIDEODRIVER='dummy', SDL_AUDIODRIVER='dummy')
-        subprocess.run(['timeout', '180', 'dosbox', '-conf', conf, '-exit'], env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        err = open(os.path.join(work, 'ERR.TXT'), 'rb').read().decode('latin1').replace('\r', '') if os.path.exists(os.path.join(work, 'ERR.TXT')) else ''
-        msgs = [l.replace('SRC.C', os.path.relpath(src, ROOT)) for l in err.split('\n') if re.search(r'\b(Error|Warning)\b|: (E|W)\d', l)]
-        o = os.path.join(work, 'SRC.OBJ')
-        if not os.path.exists(o) or ' 0 errors' not in err:
-            sys.stderr.write(err.replace('SRC.C', os.path.relpath(src, ROOT))); return False
-        for l in msgs: sys.stderr.write(l + '\n')
-        os.makedirs(os.path.dirname(os.path.abspath(obj)), exist_ok=True); shutil.copy(o, obj)
-        return True
+        subprocess.run(['timeout', str(120 + 60 * len(items)), 'dosbox', '-conf', conf, '-exit'], env=env,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        res = []
+        for k, (src, obj, flags) in enumerate(items):
+            e, name = os.path.join(work, 'E%03d.TXT' % k), 'S%03d.C' % k
+            err = open(e, 'rb').read().decode('latin1').replace('\r', '') if os.path.exists(e) else ''
+            rel = os.path.relpath(src, ROOT)
+            msgs = [l.replace(name, rel) for l in err.split('\n') if re.search(r'\b(Error|Warning)\b|: (E|W)\d', l)]
+            o = os.path.join(work, 'S%03d.OBJ' % k)
+            if not os.path.exists(o) or ' 0 errors' not in err:
+                sys.stderr.write(err.replace(name, rel) or '%s: no compiler output\n' % rel); res.append(False); continue
+            for l in msgs: sys.stderr.write(l + '\n')
+            os.makedirs(os.path.dirname(os.path.abspath(obj)), exist_ok=True); shutil.copy(o, obj)
+            res.append(True)
+        return res
     finally: shutil.rmtree(work, ignore_errors=True)
 
 def c_paths(src, func=None):
@@ -144,6 +195,17 @@ def file_blocks(src):
 
 LABEL = re.compile(r'^([A-Za-z_.][\w.$?@]*):')
 ADDR = re.compile(r';\s*([0-9A-F]{5})\s*$')
+# an instruction kept as db because NASM would encode it differently ('db 081h,0E8h,...  ; 6827D sub eax,0B4h'):
+# code inside the function, not data after it
+INSN_DB = re.compile(r'^\s*db\s[^;]*;\s*[0-9A-F]{5}\s+\S')
+
+def insn_data(L, k):
+    """L[k] is part of an instruction kept as data: an INSN_DB line, or a db / dd line (its relocated operand,
+    'db 068h ; push imm32' then 'dd Label') right after one"""
+    if INSN_DB.match(L[k]): return True
+    j = k - 1
+    while j >= 0 and data_size(L[j]) and not ADDR.search(L[j]) and not INSN_DB.match(L[j]): j -= 1
+    return j >= 0 and j < k and INSN_DB.match(L[j]) is not None and data_size(L[k]) is not None
 
 DATA = re.compile(r'^\s*(db|dw|dd)\s+(.*)$')
 
@@ -159,6 +221,7 @@ def falls_through(L, k):
     (e.g. sndcb_addesp8_x in SndLoadFile, a tail other functions jump into), not the start of the next one"""
     for l in reversed(L[:k]):
         if LABEL.match(l) or not l.strip() or l.startswith(';'): continue
+        if INSN_DB.match(l): return l.split(';', 1)[1].split()[1] not in ('ret', 'retn', 'jmp', 'iret')
         if data_size(l) and not ADDR.search(l): return False
         op = l.split()[0] if l.split() else ''
         return ADDR.search(l) is not None and op not in ('ret', 'retn', 'jmp', 'iret')
@@ -242,7 +305,7 @@ def asm_range(src, func=None):
         a = ADDR.search(l)
         if start == -1 and a: start = int(a.group(1), 16); continue
         if m and not m.group(1).startswith('.') and not own_label(func, m.group(1)) and not falls_through(L, k) and start != -1: break
-        if start != -1 and data_size(l) and not a: break
+        if start != -1 and data_size(l) and not a and not insn_data(L, k): break
     for l in L[k:]:
         a = ADDR.search(l)
         if a: return start, int(a.group(1), 16) - trailing_data(L, k)
@@ -467,7 +530,7 @@ def mark(src, endlabel=None, func=None):
             if m and m.group(1) == endlabel: break
         elif m and not m.group(1).startswith('.') and not own_label(func, m.group(1)) and not falls_through(L, j): break
         if L[j].startswith('%'): break
-        if data_size(L[j]) and not ADDR.search(L[j]) and not endlabel: break
+        if data_size(L[j]) and not ADDR.search(L[j]) and not insn_data(L, j) and not endlabel: break
         j += 1
     while j > i + 1 and (not L[j - 1].strip() or L[j - 1].startswith(';')): j -= 1   # the next function's comment block
     rel = os.path.relpath(os.path.abspath(src), ROOT) + ('' if inc.endswith('/%s.inc' % func) else ' (%s)' % func)
@@ -492,8 +555,11 @@ if __name__ == '__main__':
     if a.seg: os.environ['CC_SEG'] = a.seg
     if a.cmd == 'check': sys.exit(0 if check() else 1)
     if a.cmd == 'compile':
-        obj = a.o or os.path.join(ROOT, 'build', os.path.relpath(os.path.splitext(os.path.abspath(a.src))[0], os.path.join(ROOT, 'src')) + '.obj')
-        sys.exit(0 if compile_c(a.src, obj, a.flags) else 1)
+        objof = lambda s: os.path.join(ROOT, 'build', os.path.relpath(os.path.splitext(os.path.abspath(s))[0], os.path.join(ROOT, 'src')) + '.obj')
+        if a.rest:   # several sources: batched DOSBox runs on every core, objects at their build/ paths
+            srcs = [a.src] + a.rest
+            sys.exit(0 if all(compile_parallel([(s, objof(s), a.flags) for s in srcs], os.cpu_count() or 4)) else 1)
+        sys.exit(0 if compile_c(a.src, a.o or objof(a.src), a.flags) else 1)
     if a.cmd == 'frag': frag(a.src, a.rest[0], a.rest[1])
     elif a.cmd == 'mark': mark(a.src, a.end, a.func)
     elif a.cmd == 'unmark': unmark(a.src, a.func)

@@ -136,10 +136,10 @@ void POInitSchedule(unsigned char *po, int *teams)
    games: its length. Result: the winning team (s[2] or s[3] of the first game), or -1. */
 int SeriesWinner(unsigned char *s, unsigned games)
 {
-    int home;
     int away;
     int t;
     unsigned w1;
+    int home;
     unsigned w2;
 
     games = games / 2 + 1;
@@ -202,9 +202,9 @@ void POSimSeries(unsigned char *s, unsigned games)
     char path[0x40];
     int rwfh;
     int rdfh;
-    int home;
     unsigned wh;
     unsigned wo;
+    int home;
 
     games = games / 2 + 1;
     home = s[2];
@@ -240,8 +240,7 @@ void POHiliteSlot(int n, int unused)
     x = dword_D2B70[n];
     y = dword_D2BEC[n];
     x2 = x + 0x74;
-    if (n < 0x1C) y2 = y + 0x1F;
-    else y2 = y + 0x3C;
+    y2 = n < 0x1C ? y + 0x1F : y + 0x3C;
     sub_92F50(x, y, x2, y2, 0x80);
     sub_92F50(x - 1, --y, ++x2, ++y2, 0x80);
 }
