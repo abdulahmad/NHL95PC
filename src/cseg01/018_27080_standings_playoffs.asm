@@ -19,6 +19,10 @@ extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_91044, sub_91370, sub_913B4, sub_B30
 extern sub_B4BA8, sub_B4BC4, stand_tmpl1, CmpConfStandings, str_GP7, str_W4, str_L6, str_T4
 extern str_D3, str_TwoSpaces, statsleague, treeteamnames, treecolx
 global StandingsScreen, HighlightTreeSlot, MoveTreeHighlight, CountSeriesWins, PlayoffTreeScreen, PlayoffTreeHitTest, ShowPlayoffTree
+; C: src/c/018_27080_standings_playoffs/StandingsScreen.c
+%ifdef CBUILD
+%include "c/018_27080_standings_playoffs/StandingsScreen.inc"
+%else
 StandingsScreen:
 push dword 468h	; 27080
 call __CHK	; 27085
@@ -599,6 +603,7 @@ pop esi	; 2785B
 pop ecx	; 2785C
 pop ebx	; 2785D
 ret	; 2785E
+%endif ; C
 ; C: src/c/018_27080_standings_playoffs/HighlightTreeSlot.c
 %ifdef CBUILD
 %include "c/018_27080_standings_playoffs/HighlightTreeSlot.inc"
@@ -1308,6 +1313,10 @@ pop edi	; 27F98
 pop esi	; 27F99
 pop ecx	; 27F9A
 ret	; 27F9B
+; C: src/c/018_27080_standings_playoffs/PlayoffTreeScreen.c
+%ifdef CBUILD
+%include "c/018_27080_standings_playoffs/PlayoffTreeScreen.inc"
+%else
 PlayoffTreeScreen:
 push dword 224h	; 27F9C
 call __CHK	; 27FA1
@@ -2931,6 +2940,7 @@ pop edx	; 2967D
 pop ecx	; 2967E
 pop ebx	; 2967F
 ret	; 29680
+%endif ; C
 ; C: src/c/018_27080_standings_playoffs/PlayoffTreeHitTest.c
 %ifdef CBUILD
 %include "c/018_27080_standings_playoffs/PlayoffTreeHitTest.inc"

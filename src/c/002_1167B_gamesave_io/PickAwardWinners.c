@@ -3,9 +3,16 @@
    registers are the EXE's, only the two loads swap). See docs/UNSURE.md. DrawAwardsSummary, AwardsCeremony and
    ShowAwardScreens end in its PickAwardWinners_x. */
 #define PickAwardWinners PickAwardWinners_decl
+#define ShowAwardScreens ShowAwardScreens_decl
+#define sub_9035C sub_9035C_decl
 #include "nhl95.h"
 #undef PickAwardWinners
+#undef ShowAwardScreens
+#undef sub_9035C
 int PickAwardWinners(void);
+int ShowAwardScreens(void);
+int __cdecl sub_9035C(int bank, int n);  /* graphics library: frame n of a bank */
+int strnicmp(const char *a, const char *b, unsigned n);  /* Watcom CRT strnicmp_ */
 void __STOSB(void *p, int v, int n);  /* Watcom memset helper: the EXE clears the award flags with it */
 #pragma aux __STOSB "__STOSB" parm [eax] [edx] [ecx];
 
@@ -220,4 +227,145 @@ int PickAwardWinners(void)
     FileClose(&f.kfh);
     FileClose(&f.tfh);
     return err;
+}
+
+typedef struct { char c[25]; } Str25;
+
+/* ShowAwardScreens (12849, PC only; ends in PickAwardWinners_x): show the award screens, one for each of the 11
+   awards until a key 3 (WaitClickTimeout) ends them: the award art (awardart, from the CD when listed) in the
+   award's text colours, then for a team award (awardtype 2) the Cup or Presidents trophy team, else the winner's
+   name and team (Mighty Ducks for ANA; suffix C03C4 for teams 2, 18h, 19h) and two rows (season, playoffs) of the
+   winner's goalie (type 0: GP, Min, GAA m:ss, W, L, T, SO in the season row, EN, shots, save percentage) or
+   skater stats (type 1: GP, G, A, Pt, PIM, +/-, PPG, SHG, shots, shooting percentage); the award's two title
+   lines at the bottom, a palette fade in and out (PALMEM). Result: the last WaitClickTimeout answer. */
+int ShowAwardScreens(void)
+{
+    char buf[0x2C];
+    int bank;
+    unsigned short *ss;
+    unsigned short *gs;
+    int k;
+    int j;
+    int key;
+    int x;
+    int y;
+    unsigned char *w;
+    unsigned short *s;
+    int pct;
+    int pal;
+
+    key = 0;
+    ClearInputQueue();
+    for (k = key; k < 0xB && key != 3; k++) {
+        SetTextColors(dword_C513C[k], 0);
+        GetTicks();
+        MakePath(buf, fileoncd[dword_C5168[k]] == 1 ? (char *)cddriveptr : 0, (char *)awardart[k], 0);
+        bank = sub_8E83C(buf, 0);
+        sub_9061C(sub_9035C(bank, 1));
+        y = 0x76;
+        if (awardtype[k] == 2) {
+            strcpy(buf, k == 0xA ? (char *)cupteam : (char *)presidentsteam);
+            if (!strnicmp(buf, (char *)str_ANA, 3)) {
+                x = 0x1FE - (fputchar((char *)str_MightyDucks) >> 1);
+                PrintShadowText(x, y, (char *)str_MightyDucks);
+            } else {
+                strcpy(buf, k == 0xA ? (char *)cupteam + 5 : (char *)presidentsteam + 5);
+                if (!strnicmp(buf, (char *)str_Cal, 3) || !strnicmp(buf, (char *)str_Flo, 3))
+                    strcat(buf, (char *)unk_C03C4);
+                else
+                    strcat(buf, (char *)unk_C03C6);
+                x = 0x1FE - (fputchar(buf) >> 1);
+                PrintShadowText(x, y, buf);
+            }
+        } else {
+            w = awardwinners + k * 0x34;
+            sprintf(buf, (char *)str_SS, w + 3, w + 0x13);
+            x = 0x1FE - (fputchar(buf) >> 1);
+            PrintShadowText(x, y, buf);
+            strcpy(buf, (char *)treeteamnames + awardwinners[k * 0x34] * 21);
+            if (!strnicmp(buf, (char *)str_ANA, 3)) {
+                *(Str25 *)buf = *(Str25 *)str_MightyDucks;
+            } else if (awardwinners[k * 0x34] == 2 || awardwinners[k * 0x34] == 0x18 || awardwinners[k * 0x34] == 0x19) {
+                strcat(buf, (char *)unk_C03C4);
+            } else {
+                strcat(buf, (char *)unk_C03C6);
+            }
+            x = 0x1FE - (fputchar(buf) >> 1);
+            y += byte_D42C3;
+            PrintShadowText(x, y, buf);
+            x = 0x1A4;
+            y += 0x2C;
+            if (awardtype[k] == 0) {
+                PrintShadowText(x, y, (char *)str_GP);
+                PrintShadowText(x, y + byte_D42C3, (char *)str_Min);
+                PrintShadowText(x, y + byte_D42C3 * 2, (char *)str_GAA);
+                PrintShadowText(x, y + byte_D42C3 * 3, (char *)str_W);
+                PrintShadowText(x, y + byte_D42C3 * 4, (char *)str_L);
+                PrintShadowText(x, y + byte_D42C3 * 5, (char *)str_T);
+                PrintShadowText(x, y + byte_D42C3 * 6, (char *)str_SO);
+                PrintShadowText(x, y + byte_D42C3 * 7, (char *)str_EN);
+                PrintShadowText(x, y + byte_D42C3 * 8, (char *)str_Shots);
+                PrintShadowText(x, y + byte_D42C3 * 9, (char *)str_Pct);
+                s = ss = (unsigned short *)off_C524F[k];
+                for (j = 0; j < 2; j++) {
+                    PrintShadowText((x += 0x50) - 0x1C, y - byte_D42C3, (char *)off_C527B[j]);
+                    PrintFmt1(x, y, (char *)str_fmtpd, s[0]);
+                    PrintFmt1(x, y + byte_D42C3, (char *)str_fmtpd, s[6]);
+                    PrintFmt2(x, y + byte_D42C3 * 2, (char *)str_D02d, s[8] / 100, s[8] % 100);
+                    PrintFmt1(x, y + byte_D42C3 * 3, (char *)str_fmtpd, s[1]);
+                    PrintFmt1(x, y + byte_D42C3 * 4, (char *)str_fmtpd, s[2]);
+                    if (j == 0) PrintFmt1(x, y + byte_D42C3 * 5, (char *)str_fmtpd, s[3]);
+                    PrintFmt1(x, y + byte_D42C3 * 6, (char *)str_fmtpd, s[4]);
+                    PrintFmt1(x, y + byte_D42C3 * 7, (char *)str_fmtpd, s[5]);
+                    PrintFmt1(x, y + byte_D42C3 * 8, (char *)str_fmtpd, s[9]);
+                    PrintFmt2(x, y + byte_D42C3 * 9, (char *)str_D01d, s[10] / 10, s[10] % 10);
+                    s = (unsigned short *)((char *)ss + 0x16);
+                }
+            } else if (awardtype[k] == 1) {
+                PrintShadowText(x, y, (char *)str_GP);
+                PrintShadowText(x, y + byte_D42C3, (char *)str_G);
+                PrintShadowText(x, y + byte_D42C3 * 2, (char *)str_A);
+                PrintShadowText(x, y + byte_D42C3 * 3, (char *)str_Pt);
+                PrintShadowText(x, y + byte_D42C3 * 4, (char *)str_PIM);
+                PrintShadowText(x, y + byte_D42C3 * 5, (char *)str_PlusMinus);
+                PrintShadowText(x, y + byte_D42C3 * 6, (char *)str_PPG);
+                PrintShadowText(x, y + byte_D42C3 * 7, (char *)str_SHG);
+                PrintShadowText(x, y + byte_D42C3 * 8, (char *)str_Shots);
+                PrintShadowText(x, y + byte_D42C3 * 9, (char *)str_Pct);
+                s = gs = (unsigned short *)off_C524F[k];
+                for (j = 0; j < 2; j++) {
+                    PrintShadowText((x += 0x50) - 0x1C, y - byte_D42C3, (char *)off_C527B[j]);
+                    PrintFmt1(x, y, (char *)str_fmtpd, s[0]);
+                    PrintFmt1(x, y + byte_D42C3, (char *)str_fmtpd, s[1]);
+                    PrintFmt1(x, y + byte_D42C3 * 2, (char *)str_fmtpd, s[2]);
+                    PrintFmt1(x, y + byte_D42C3 * 3, (char *)str_fmtpd, s[3]);
+                    PrintFmt1(x, y + byte_D42C3 * 4, (char *)str_fmtpd, s[6]);
+                    PrintFmt1(x, y + byte_D42C3 * 5, (char *)str_fmtpd, ((short *)s)[8]);
+                    PrintFmt1(x, y + byte_D42C3 * 6, (char *)str_fmtpd, s[4]);
+                    PrintFmt1(x, y + byte_D42C3 * 7, (char *)str_fmtpd, s[5]);
+                    PrintFmt1(x, y + byte_D42C3 * 8, (char *)str_fmtpd, s[7]);
+                    if (s[7]) pct = (s[1] * 1000 + s[7] / 2) / s[7];
+                    else pct = 0;
+                    PrintFmt2(x, y + byte_D42C3 * 9, (char *)str_D01d, pct / 10, pct % 10);
+                    s = (unsigned short *)((char *)gs + 0x12);
+                }
+            }
+        }
+        y = 0x1BA;
+        if (awardtitles[k * 2 + 1]) {
+            x = 0x1FE - (fputchar((char *)awardtitles[k * 2 + 1]) >> 1);
+            PrintShadowText(x, y, (char *)awardtitles[k * 2 + 1]);
+            y = 0x1BA - byte_D42C3;
+        }
+        x = 0x1FE - (fputchar((char *)awardtitles[k * 2]) >> 1);
+        PrintShadowText(x, y, (char *)awardtitles[k * 2]);
+        FadePalStep(0, (unsigned char *)sub_B30B4(bank, (char *)str_Pal3) + 0x10, 0x10);
+        FreeMemBlock(bank);
+        key = WaitClickTimeout(0x2710);
+        pal = sub_8CCA8((char *)str_Palmem, 0x300, 0);
+        sub_8FFB0(0, 0x100, (unsigned char *)pal);
+        FadePalStep(1, (unsigned char *)pal, 0x10);
+        FreeMemBlock(pal);
+    }
+    return key;
 }

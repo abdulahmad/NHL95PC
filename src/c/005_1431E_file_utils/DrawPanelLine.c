@@ -71,12 +71,12 @@ void TickPanelPenalties(PenSlot *pens, int hund)
 /* DrawEnergyBar (15707, PC only; segment 006, ends in DrawPanelLine_x): draw a side's energy bar at x, two columns
    of 3-pixel rows 1Ah down: level pixels in colour 67h (or 0 while that side's energywarn is set, side = x > A0h),
    the remaining 8 - level in 0 (or 7 when warned). level: energy / 500 (0..8); x: the bar's left edge. No result.
-   DRAFT: x2 and w2 swap stack slots (original x2 at [esp], w2 at [esp+4]); see docs/UNSURE.md. */
+   The declaration order w2, c2, x2, c1 gives the EXE's stack slots (found by tools/permute.py). */
 void DrawEnergyBar(int level, int x)
 {
-    int x2;
     int w2;
     int c2;
+    int x2;
     int c1;
 
     if (energywarn[x > 0xA0]) {

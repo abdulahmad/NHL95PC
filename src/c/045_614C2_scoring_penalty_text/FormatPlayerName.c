@@ -1,15 +1,16 @@
 /* Scoring penalties: player name for the score text. */
 #include "nhl95.h"
 
-/* FormatPlayerName: write "<prefix>#<num> <first> <last><suffix>" into out in the scor2font
+/* FormatPlayerName (61D48; PC version of 93G hockey93 FormatPlayerName, with its own arguments): write "<prefix>#<num> <first> <last><suffix>" into out in the scor2font
  font, shortening it while it is wider than 124 pixels: first initial only, then no first name, then the last
- name cut letter by letter to fit beside "<prefix>#<num> <suffix>". The font goes back to s1font. */
+ name cut letter by letter to fit beside "<prefix>#<num> <suffix>". The font goes back to s1font. No result.
+ len declared before room gives the EXE's registers (found by tools/permute.py). */
 void FormatPlayerName(char *out, char *prefix, short num, char *first, char *last, char *suffix)
 {
     char buf[20];
     int n;
-    int room;
     int len;
+    int room;
 
     sub_8EA18(scor2font);
     sprintf(out, (char *)str_FmtNumFirstLast, prefix, n = num, first, last, suffix);

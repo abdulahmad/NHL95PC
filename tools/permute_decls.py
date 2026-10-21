@@ -12,7 +12,6 @@ instructions: a normalized diff of the compiled function against the original by
 absolute addresses are ignored, so check a 0 with tools/cdiff.py). FUNC's address comes from its asm label
 unless --addr is given. Nothing in src/ is written."""
 import os, re, sys, random, difflib, argparse, itertools, tempfile, shutil
-from concurrent.futures import ThreadPoolExecutor
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import cc, cobj, cdiff
@@ -74,7 +73,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('src'); ap.add_argument('func')
     ap.add_argument('--addr'); ap.add_argument('--names')
-    ap.add_argument('--max', type=int, default=720); ap.add_argument('--jobs', type=int, default=4)
+    ap.add_argument('--max', type=int, default=720); ap.add_argument('--jobs', type=int, default=8)
     ap.add_argument('--seed', type=int, default=1); ap.add_argument('--top', type=int, default=8)
     a = ap.parse_args()
     text = open(a.src).read()
@@ -111,20 +110,15 @@ def main():
             out += texts[id(next(placed))] if u in movable else texts[id(u)]
         return '\n'.join(lines[:first] + out + lines[last + 1:])
 
-    def run(k_order):
-        k, order = k_order
-        f = os.path.join(work, 'p%d.c' % k); o = f[:-2] + '.obj'
+    items = []
+    for k, order in enumerate(orders):
+        f = os.path.join(work, 'p%d.c' % k)
         open(f, 'w').write(build(order))
-        r = None
-        if cc.compile_c(f, o): r = score(o, a.func, orig_ins)
-        for x in (f, o):
-            if os.path.exists(x): os.remove(x)
-        return (r, order)
-
+        items.append((f, f[:-2] + '.obj', ''))
     res = []
-    with ThreadPoolExecutor(a.jobs) as ex:
-        for r, order in ex.map(run, enumerate(orders)):
-            if r is not None: res.append((r[0], r[1], order))
+    for (f, o, _), ok, order in zip(items, cc.compile_parallel(items, a.jobs), orders):   # batched DOSBox runs
+        r = score(o, a.func, orig_ins) if ok else None
+        if r is not None: res.append((r[0], r[1], order))
     shutil.rmtree(work, ignore_errors=True)
     res.sort(key=lambda x: (x[0], x[2]))
     print('%d orders of %d declarations (%s) tried; fewest differing instructions first:'

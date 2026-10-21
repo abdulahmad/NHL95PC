@@ -851,6 +851,10 @@ pop ecx	; 80119
 pop ebx	; 8011A
 ret	; 8011B
 %endif ; C
+; C: src/c/058_7F724_highlights/PlayHilight.c
+%ifdef CBUILD
+%include "c/058_7F724_highlights/PlayHilight.inc"
+%else
 PlayHilight:
 push dword 328h	; 8011C
 call __CHK	; 80121
@@ -1002,3 +1006,4 @@ pop edx	; 80347
 pop ecx	; 80348
 pop ebx	; 80349
 ret	; 8034A
+%endif ; C

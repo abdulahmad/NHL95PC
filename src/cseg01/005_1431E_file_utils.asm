@@ -372,6 +372,10 @@ call FileWriteAt	; 14664
 pop ecx	; 14669
 ret	; 1466A
 %endif ; C
+; C: src/c/005_1431E_file_utils/ReadKeyRec.c (CopyFile)
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/ReadKeyRec.CopyFile.inc"
+%else
 CopyFile:
 push dword 460h	; 1466B
 call __CHK	; 14670
@@ -448,6 +452,7 @@ add esp, 450h	; 14780
 pop edi	; 14786
 pop esi	; 14787
 ret 4	; 14788
+%endif ; C
 ; C: src/c/005_1431E_file_utils/ReadKeyRec.c (ReadSeasonRec)
 %ifdef CBUILD
 %include "c/005_1431E_file_utils/ReadKeyRec.ReadSeasonRec.inc"

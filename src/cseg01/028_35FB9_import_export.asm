@@ -1946,6 +1946,10 @@ pop edx	; 37B8E
 pop ecx	; 37B8F
 pop ebx	; 37B90
 ret	; 37B91
+; C: src/c/028_35FB9_import_export/TeamGridHitTest.c
+%ifdef CBUILD
+%include "c/028_35FB9_import_export/TeamGridHitTest.inc"
+%else
 TeamGridHitTest:
 push dword 24h	; 37B92
 call __CHK	; 37B97
@@ -2025,6 +2029,7 @@ pop edi	; 37C4F
 pop esi	; 37C50
 pop ecx	; 37C51
 ret	; 37C52
+%endif ; C
 DrawTeamGridName:
 push dword 38h	; 37C53
 call __CHK	; 37C58

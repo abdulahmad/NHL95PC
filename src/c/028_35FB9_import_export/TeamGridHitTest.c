@@ -1,12 +1,12 @@
 /* Import export: team grid hit test. */
 #include "nhl95.h"
 
-/* TeamGridHitTest: the team of the 4 x 7 team grid tab (team bytes, row by row) under point
+/* TeamGridHitTest (37B92, PC only): the team of the 4 x 7 team grid tab (team bytes, row by row) under point
  x, y: cells 70 x 57 pixels every 85 92, rows 0-1 from x 40h, rows 2-3 from x 16h, from y 58h. Returns the team,
- or -1 outside the grid or on an empty cell (99). */
+ or -1 outside the grid or on an empty cell (99). team declared last gives the EXE's registers (found by
+ tools/permute.py). */
 int TeamGridHitTest(int x, int y, unsigned char *tab)
 {
-    int team;
     int cell;
     int r;
     int c;
@@ -14,6 +14,7 @@ int TeamGridHitTest(int x, int y, unsigned char *tab)
     int cx;
     int bottom;
     int right;
+    int team;
 
     team = -1;
     for (r = 0; r < 4; r++) {

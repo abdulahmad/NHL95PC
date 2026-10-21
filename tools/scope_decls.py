@@ -11,8 +11,10 @@ block assigns the variable (so the C keeps its meaning; check loops by hand all 
 and then every combination of the moves that helped (up to --max), compiling in parallel. Scores are the
 differing lines of tools/cdiff.py (0 is a match). With --write the best variant is written back to the file."""
 import os, re, sys, itertools, argparse, subprocess, tempfile
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
+sys.path.insert(0, HERE)
+import cc
 
 DECL = re.compile(r'^    ((?:unsigned |signed |const |register )*[A-Za-z_]\w*[\s\*]+)(\w+);\s*(/\*.*\*/)?\s*$')
 
@@ -100,27 +102,40 @@ def apply(text, func, plan):
         text = '\n'.join(new)
     return text
 
-def score(src, func, text):
-    d = os.path.dirname(os.path.abspath(src))
-    fd, tmp = tempfile.mkstemp(prefix='zz_scope_', suffix='.c', dir=d)
-    os.close(fd)
+def score_many(src, func, texts, jobs):
+    """[(n, info)] per text: every text is written next to src, all of them are compiled together (batched DOSBox
+    runs, cc.compile_parallel), then each is scored by tools/cdiff.py on its object"""
+    d = os.path.dirname(os.path.abspath(src)); tmps = []
     try:
-        open(tmp, 'w').write(text)
-        r = subprocess.run([sys.executable, os.path.join(HERE, 'cdiff.py'), tmp, '--func', func, '--all'],
-                           capture_output=True, text=True, cwd=ROOT)
-    finally:
-        os.remove(tmp)
-    lines = r.stdout.split('\n')
-    head = [l for l in lines if l.startswith(func + ' ')]
-    if not head: return None, (r.stdout + r.stderr).strip().split('\n')[-1][:100]
-    return sum(1 for l in lines if l[:1] in '!~'), head[0].split(':', 1)[1].strip()
+        for t in texts:
+            fd, tmp = tempfile.mkstemp(prefix='zz_scope_', suffix='.c', dir=d); os.close(fd)
+            open(tmp, 'w').write(t); tmps.append(tmp)
+        items = [(t, t[:-2] + '.obj', '') for t in tmps]
+        oks = cc.compile_parallel(items, jobs)
 
-def job(arg):
-    src, func, text, plan = arg
-    t = apply(text, func, plan) if plan else text
-    if t is None: return plan, None, 'not applicable'
-    n, info = score(src, func, t)
-    return plan, n, info
+        def one(k):
+            if not oks[k]: return None, 'compile failed'
+            r = subprocess.run([sys.executable, os.path.join(HERE, 'cdiff.py'), tmps[k], '--func', func, '--all',
+                                '--obj', items[k][1]], capture_output=True, text=True, cwd=ROOT)
+            lines = r.stdout.split('\n')
+            head = [l for l in lines if l.startswith(func + ' ')]
+            if not head: return None, (r.stdout + r.stderr).strip().split('\n')[-1][:100]
+            return sum(1 for l in lines if l[:1] in '!~'), head[0].split(':', 1)[1].strip()
+        with ThreadPoolExecutor(jobs) as ex: return list(ex.map(one, range(len(tmps))))
+    finally:
+        for t in tmps:
+            for x in (t, t[:-2] + '.obj'):
+                if os.path.exists(x): os.remove(x)
+
+def run_plans(src, func, text, plans, jobs):
+    """[(plan, n, info)]: each plan applied to text and scored (plans that do not apply score None)"""
+    out, todo = [], []
+    for p in plans:
+        t = apply(text, func, p) if p else text
+        if t is None: out.append((p, None, 'not applicable'))
+        else: todo.append((p, t))
+    for (p, t), (n, info) in zip(todo, score_many(src, func, [t for p, t in todo], jobs)): out.append((p, n, info))
+    return out
 
 def main():
     ap = argparse.ArgumentParser()
@@ -133,10 +148,10 @@ def main():
     mv = moves(text, a.func, names)
     if not mv: raise SystemExit('no local can move into an inner block')
     singles = [[(n, lv)] for n in mv for lv in range(len(mv[n]))]
-    with ProcessPoolExecutor(a.jobs) as ex:
-        base = job((a.src, a.func, text, []))
+    if True:
+        base = run_plans(a.src, a.func, text, [[]], a.jobs)[0]
         print('as written: %s (%s)' % (base[1], base[2]))
-        res = list(ex.map(job, [(a.src, a.func, text, p) for p in singles]))
+        res = run_plans(a.src, a.func, text, singles, a.jobs)
         for plan, n, info in res:
             print('  %-30s %s (%s)' % (' '.join('%s@%d' % p for p in plan), n, info))
         good = {}
@@ -149,7 +164,7 @@ def main():
             for c in itertools.combinations(sorted(good), k):
                 combos.append([(n, good[n][0]) for n in c])
         combos = combos[:a.max]
-        res2 = list(ex.map(job, [(a.src, a.func, text, p) for p in combos]))
+        res2 = run_plans(a.src, a.func, text, combos, a.jobs) if combos else []
         for plan, n, info in res2:
             print('  %-30s %s (%s)' % (' '.join('%s@%d' % p for p in plan), n, info))
     allres = [r for r in res + res2 if r[1] is not None]

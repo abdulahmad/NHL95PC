@@ -1344,6 +1344,10 @@ cmp ebx, byte 31h	; 87753
 jl short POInitSchedule.12	; 87756
 add esp, byte 24h	; 87758
 jmp near POCreateSchedule_x	; 8775B
+; C: src/c/064_86696_season_playoffs/POCreateSchedule.c (SeriesWinner)
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POCreateSchedule.SeriesWinner.inc"
+%else
 SeriesWinner:
 push dword 24h	; 87760
 call __CHK	; 87765
@@ -1407,6 +1411,7 @@ mov eax, dword [byte esp+04h]	; 877DD
 .10:
 add esp, byte 0Ch	; 877E1
 jmp near POCreateSchedule_x	; 877E4
+%endif ; C
 POSeriesScore:
 push dword 10h	; 877E9
 call __CHK	; 877EE
@@ -2076,6 +2081,10 @@ call FileClose	; 87E6A
 add esp, byte 4Ch	; 87E6F
 jmp near POCreateSchedule_x	; 87E72
 %endif ; C
+; C: src/c/064_86696_season_playoffs/POCreateSchedule.c (POSimSeries)
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POCreateSchedule.POSimSeries.inc"
+%else
 POSimSeries:
 push dword 74h	; 87E77
 call __CHK	; 87E7C
@@ -2172,6 +2181,7 @@ lea eax, [byte esp+040h]	; 87F74
 call FileClose	; 87F78
 add esp, byte 50h	; 87F7D
 jmp near POCreateSchedule_x	; 87F80
+%endif ; C
 ; C: src/c/064_86696_season_playoffs/POPreSimRound1.c
 %ifdef CBUILD
 %include "c/064_86696_season_playoffs/POPreSimRound1.inc"
@@ -3761,6 +3771,10 @@ call sub_932D0	; 8925E
 add esp, byte 0Ch	; 89263
 jmp short LoadScheduleDB_x	; 89266
 %endif ; C
+; C: src/c/064_86696_season_playoffs/POSeedRound2.c (PlayoffModeLoop)
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POSeedRound2.PlayoffModeLoop.inc"
+%else
 PlayoffModeLoop:
 push dword 58h	; 89268
 call __CHK	; 8926D
@@ -4374,6 +4388,7 @@ mov eax, exhstate	; 89B48
 call LoadModeState	; 89B4D
 mov eax, 2	; 89B52
 jmp near POSeedRound2_x30	; 89B57
+%endif ; C
 ; C: src/c/064_86696_season_playoffs/POReturnZero.c
 %ifdef CBUILD
 %include "c/064_86696_season_playoffs/POReturnZero.inc"
@@ -4384,6 +4399,10 @@ call __CHK	; 89B61
 xor eax, eax	; 89B66
 ret	; 89B68
 %endif ; C
+; C: src/c/064_86696_season_playoffs/POCreateSchedule.c (POHiliteSlot)
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POCreateSchedule.POHiliteSlot.inc"
+%else
 POHiliteSlot:
 push dword 30h	; 89B69
 call __CHK	; 89B6E
@@ -4426,6 +4445,7 @@ call sub_92F50	; 89BC2
 add esp, byte 14h	; 89BC7
 add esp, byte 4	; 89BCA
 jmp near POCreateSchedule_x	; 89BCD
+%endif ; C
 PlayoffTreeMenu:
 push dword 0F4h	; 89BD2
 call __CHK	; 89BD7

@@ -776,6 +776,10 @@ ret	; 504D9
 ; pfalock: B -> changeplayer, else the PC one-timer switch of control to passplayer
 ; puck carrier (.pc1): passmode ShotMode B setpassmode A SetLCmode C SetShotMode skate
 ; other (.notpc): A holdplayer, B changeplayer, C burst, else skate.
+; C: src/c/038_4FCE8_engine_input/doinput.c
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/doinput.inc"
+%else
 doinput:
 push dword 14h	; 504DA
 call __CHK	; 504DF
@@ -1113,6 +1117,7 @@ pop esi	; 50904
 pop ecx	; 50905
 pop ebx	; 50906
 ret	; 50907
+%endif ; C
 getlchoice:
 push dword 10h	; 50908
 call __CHK	; 5090D

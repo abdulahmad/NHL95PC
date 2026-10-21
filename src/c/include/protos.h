@@ -766,6 +766,7 @@ void PaGoal(char *team, int nast, int scorer, int a1, int a2);  /* 59AD0 */
 void PaPlayoffTonight(int home, int away, int game, unsigned conf, unsigned round);  /* 59D16 */
 void PrintTextCopy(char *s, int x, int y);  /* 2C135 */
 void SaveScheduleDB(char *buf);  /* 89223 */
+int PlayoffModeLoop(int *fh);  /* 89268 */
 void PaPenalty(char *team, int num, int len, char *pen, int a, int b, int idx, int cnt, int withtime);  /* 59B3C */
 void FreeRinkGfx(void);  /* 33727 */
 int FindTradeSlot(int side, unsigned char pl);  /* 3EF3C */

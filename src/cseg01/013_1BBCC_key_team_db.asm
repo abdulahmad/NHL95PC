@@ -1360,6 +1360,10 @@ mov byte [eax], 2	; 1CBD3
 pop edx	; 1CBD6
 ret	; 1CBD7
 %endif ; C
+; C: src/c/013_1BBCC_key_team_db/ClearPanelPenalties.c
+%ifdef CBUILD
+%include "c/013_1BBCC_key_team_db/ClearPanelPenalties.inc"
+%else
 ClearPanelPenalties:
 push dword 10h	; 1CBD8
 call __CHK	; 1CBDD
@@ -1386,3 +1390,4 @@ pop edx	; 1CC39
 pop ecx	; 1CC3A
 pop ebx	; 1CC3B
 ret	; 1CC3C
+%endif ; C

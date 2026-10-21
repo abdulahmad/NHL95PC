@@ -12,24 +12,24 @@
 
 unsigned _dos_open(const char *path, unsigned mode, int *fh);  /* Watcom CRT _dos_open_ */
 
-/* DRAFT (OpenSpeechBank): same size; left: two header words' stack slots (declaration orders tried, 400 of 5040),
- the first ReadBE24 store goes [edx+edi] where the EXE moves the value to edx, and the type byte is in dx, EXE ax. */
-/* OpenSpeechBank: open the speech bank file path (unless it is the one already open, name at
+/* OpenSpeechBank (83897, PC only): open the speech bank file path (unless it is the one already open, name at
  +3B80h, open flag +3B78h, handle +3B7Ch) and read its big-endian header: three words (+3B8Dh, the sample count
  +3B8Fh, +3B91h), then per sample its file offset (+12h), length (+1Ah) and name. For each sample it reads the
  2-byte type at the offset: 'G' samples have their size at offset+6 (less 5 header bytes) and play time
  size * C37B0 C37C0; others use the length and size * C37B0 C37B8 - 1Ah. Slots after the last sample are
- cleared (ClearSpeechSlot, 400 slots). n goes to +3B70h; the byte (+3B6Ch) and loaded (+3B74h) counts are reset. */
+ cleared (ClearSpeechSlot, 400 slots). n goes to +3B70h; the byte (+3B6Ch) and loaded (+3B74h) counts are reset.
+ path: the bank file; n: stored at +3B70h. No result. An unsigned fh, a short type and size declared after got
+ give the EXE's registers and slots (found by tools/permute.py). */
 void OpenSpeechBank(char *path, int n)
 {
     int i;
-    int size;
     short w3;
     short nsamples;
     unsigned got;
-    int fh;
+    int size;
+    unsigned fh;
     short w1;
-    int type;
+    short type;
     int off;
     int pos;
     unsigned short c;
@@ -40,7 +40,7 @@ void OpenSpeechBank(char *path, int n)
         if (StrEqNoCase(path, (char *)speechbank + 0x3B80)) return;
         _dos_close(BANKD(0x3B7C));
     }
-    _dos_open(path, 0, &fh);
+    _dos_open(path, 0, (int *)&fh);
     strncpy((char *)speechbank + 0x3B80, path, 13);
     BANKD(0x3B7C) = fh;
     BANKD(0x3B70) = n;

@@ -544,6 +544,10 @@ cmp ebp, byte 7	; 156FD
 jl short TickPanelPenalties.3	; 15700
 jmp near DrawPanelLine_x	; 15702
 %endif ; C
+; C: src/c/005_1431E_file_utils/DrawPanelLine.c (DrawEnergyBar)
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/DrawPanelLine.DrawEnergyBar.inc"
+%else
 DrawEnergyBar:
 push dword 38h	; 15707
 call __CHK	; 1570C
@@ -612,6 +616,7 @@ call sub_90D20	; 157AD
 add esp, byte 14h	; 157B2
 add esp, byte 0Ch	; 157B5
 jmp near DrawPanelLine_x	; 157B8
+%endif ; C
 ; C: src/c/006_150C6_scoreboard_gfx/DrawLineGroupBars.c
 %ifdef CBUILD
 %include "c/006_150C6_scoreboard_gfx/DrawLineGroupBars.inc"

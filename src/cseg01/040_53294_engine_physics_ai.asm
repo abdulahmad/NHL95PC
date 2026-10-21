@@ -2075,6 +2075,10 @@ pop ecx	; 54A50
 pop ebx	; 54A51
 ret	; 54A52
 %endif ; C
+; C: src/c/040_53294_engine_physics_ai/checkob.c (GetLowestPen)
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/checkob.GetLowestPen.inc"
+%else
 GetLowestPen:
 push dword 18h	; 54A53
 call __CHK	; 54A58
@@ -2139,6 +2143,7 @@ jl short GetLowestPen.6	; 54AEE
 mov eax, ebx	; 54AF0
 add eax, ecx	; 54AF2
 jmp near checkob_ret5	; 54AF4
+%endif ; C
 ; chk4lc: (see if computer should call line change). Puck in own half below the blue line,
 ; 1 in 4, not pflags2 bit 3; PC adds clock penalty checks (GetLowestPen). Then CompLine, setpersonel and
 ; chk4lc_shoot: CompShoot dumps the puck. Returns 1 when it did.
