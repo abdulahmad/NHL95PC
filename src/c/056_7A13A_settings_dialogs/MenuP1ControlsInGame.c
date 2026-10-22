@@ -209,11 +209,11 @@ void CtlSwapTeamFlag(int team)
     }
 }
 
-/* DRAFT (tools/permute.py, 18 -> 6): the (short) cast and n as signed char give the EXE's stack slots (px 4,
-   best 8) and registers, but cost an extra movsx and a byte counter (the EXE: mov ebx, 6 / dec bx, as a short n).
-   Without them px and best swap slots: Watcom hands out the spilled locals' slots in the order of an unstable
-   Shell sort by size over all of the function's temporaries, so other temporaries decide it. Unused locals do
-   not change it (dropped before the code generator). */
+/* DRAFT (10.0 GA, 9 first_pick differences): px without a cast and the player compare written
+   `(side ? c1playernum[0] : c2playernum[0]) != pl` give the EXE's px sum and slots. Left: n as signed char
+   (`mov bl, 6` / `dec bl`; the EXE's `mov ebx, 6` / `dec bx` is a short n, which moves other registers: the
+   spilled locals' slots and the temporaries' registers follow an unstable sort over all of the function's
+   temporaries), the puckvy pointer in ecx (EXE eax) and pl in si (EXE cx). See docs/UNSURE.md. */
 /* ReassignCtlPlayer: after the controls changed, give controller
  side the player of its team nearest the puck's next position (puck + velocity 256): skaters on the ice
  (position >= 0, not pflags2 bit 2 or pflags bit 20h), the puck carrier counting as nearest, not the player the
@@ -246,7 +246,7 @@ void ReassignCtlPlayer(int side)
     } else {
         if (*team == 1 && *pnum >= 0 && *pnum <= 5) return;
         if (*team == 2 && *pnum >= 6 && *pnum <= 11) return;
-        px = (short)(*puckvx >> 8) + *puckx;
+        px = (*puckvx >> 8) + *puckx;
         py = *pucky + (*puckvy >> 8);
         bestd = 0x10000000;
         if (*team == 1) p = SortCords;
@@ -260,7 +260,7 @@ void ReassignCtlPlayer(int side)
                 if ((short)*puckc == p->SCnum) d = -1;
                 if (d <= bestd) {
                     pl = p->SCnum;
-                    if (pl != (side ? c1playernum[0] : c2playernum[0])) {
+                    if ((side ? c1playernum[0] : c2playernum[0]) != pl) {
                         bestd = d;
                         best = pl;
                     }

@@ -184,14 +184,14 @@ int ThreeStarsLoop(void)
     rinkscrolly += 0x3E8;
     while (seqtimer != 0) {
         SetTickDeadline(4);
-        a = frameaccum + ResetInputSampling() * 6;
-        frameaccum = a % 10;
-        n = a / 10;
+        frameaccum += (short)ResetInputSampling() * 6;
+        n = frameaccum / 10;
+        frameaccum %= 10;
         RunGameFrames(n);
         seqtimer -= n;
         if (seqtimer < 0) seqtimer = 0;
         viewscrollx = camx + 0x20;
-        viewscrolly = 0xEC - camy;
+        viewscrolly = 0x140 - camy - 0x54;
         if (viewscrollx > 0x40) viewscrollx = 0x40;
         else if (viewscrollx < 0) viewscrollx = 0;
         if (viewscrolly > 0x1A8) viewscrolly = 0x1A8;

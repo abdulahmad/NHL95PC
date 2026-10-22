@@ -1212,6 +1212,10 @@ pop esi	; 411C5
 pop ecx	; 411C6
 ret	; 411C7
 %endif ; C
+; C: src/c/033_40183_trades/BuildLeagueList.c
+%ifdef CBUILD
+%include "c/033_40183_trades/BuildLeagueList.inc"
+%else
 BuildLeagueList:
 push dword 70h	; 411C8
 call __CHK	; 411CD
@@ -1350,6 +1354,7 @@ pop edi	; 41333
 pop esi	; 41334
 pop ecx	; 41335
 ret	; 41336
+%endif ; C
 ; C: src/c/033_40183_trades/LeagueCheckStub.c
 %ifdef CBUILD
 %include "c/033_40183_trades/LeagueCheckStub.inc"
@@ -1832,6 +1837,10 @@ pop edi	; 41974
 pop esi	; 41975
 pop ecx	; 41976
 ret	; 41977
+; C: src/c/033_40183_trades/SaveLeagueGameRef.c
+%ifdef CBUILD
+%include "c/033_40183_trades/SaveLeagueGameRef.inc"
+%else
 SaveLeagueGameRef:
 push dword 50h	; 41978
 call __CHK	; 4197D
@@ -1999,3 +2008,4 @@ pop edx	; 41B7C
 pop ecx	; 41B7D
 pop ebx	; 41B7E
 ret	; 41B7F
+%endif ; C

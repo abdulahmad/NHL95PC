@@ -10,30 +10,30 @@ void HighlightGridCell(int team, unsigned char *tab, int on)
     int c;
     int x;
     int y;
-    int x2;
+    short x0;
     int y2;
-    int x0;
-    int y0;
     int x3;
+    int y0;
     int y3;
 
     for (r = 0; r < 4; r++) {
         for (c = 0; c < 7; c++) {
             if ((tab + r * 7)[c] == team) {
+                struct { int x2; } f;
                 if (r < 2) x = c * 85 + 0x3E;
                 else x = c * 85 + 0x14;
                 y = r * 92 + 0x56;
-                x2 = x + 0x4A;
+                f.x2 = x + 0x4A;
                 y2 = r * 92 + 0x93;
                 x0 = x - 1;
                 y0 = r * 92 + 0x55;
                 x3 = x + 0x4B;
                 y3 = r * 92 + 0x94;
                 if (on) {
-                    sub_92F50(x, y, x2, y2, 0x80);
+                    sub_92F50(x, y, f.x2, y2, 0x80);
                     sub_92F50(x0, y0, x3, y3, 0x80);
                 } else {
-                    sub_93000(x, y, x2, y2, on);
+                    sub_93000(x, y, f.x2, y2, 0);
                     sub_93000(x0, y0, x3, y3, 0);
                 }
             }

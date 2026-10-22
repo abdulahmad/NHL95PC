@@ -139,6 +139,10 @@ call __CHK	; 2FED7
 xor eax, eax	; 2FEDC
 ret	; 2FEDE
 %endif ; C
+; C: src/c/023_2FDD1_misc_dialogs/TextInputDialog.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/TextInputDialog.inc"
+%else
 TextInputDialog:
 push dword 138h	; 2FEDF
 call __CHK	; 2FEE4
@@ -382,6 +386,7 @@ pop ebp	; 30203
 pop edi	; 30204
 pop esi	; 30205
 ret 14h	; 30206
+%endif ; C
 ; C: src/c/023_2FDD1_misc_dialogs/SetListItemColors.c
 %ifdef CBUILD
 %include "c/023_2FDD1_misc_dialogs/SetListItemColors.inc"
@@ -408,6 +413,10 @@ pop ecx	; 3023B
 pop ebx	; 3023C
 ret	; 3023D
 %endif ; C
+; C: src/c/023_2FDD1_misc_dialogs/ListHitTest.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/ListHitTest.inc"
+%else
 ListHitTest:
 push dword 18h	; 3023E
 call __CHK	; 30243
@@ -458,6 +467,7 @@ add esp, byte 0Ch	; 302B1
 pop edi	; 302B4
 pop esi	; 302B5
 ret 8	; 302B6
+%endif ; C
 DrawListItem:
 push dword 28h	; 302B9
 call __CHK	; 302BE

@@ -72,10 +72,11 @@ void RosterPanelClick(int x, int y)
    already used by another of the 28 entries is asked for a new one ("The jersey number %2d is already used!" /
    "Please enter a new jersey number for" / his name, InputDialog), until it is free; the number goes into his KEY
    record (+1) and the roster entry. side: the roster side; slot: the entry. No result.
-   DRAFT: 399 vs 398. In the duplicate loop side * 2F4h is in ecx and the slot entry in esi (original esi, ecx),
-   and the compare loads through al (original bl). See docs/UNSURE.md. */
+   Matched under 10.0 GA with the counter i declared first: the duplicate loop then keeps side * 2F4h in esi and
+   the slot entry in ecx, and compares through bl, as in the EXE. */
 void FixJerseyNumber(int side, int slot)
 {
+    int i;
     int k;
     int *tr;
     char msg[0x54];
@@ -83,7 +84,6 @@ void FixJerseyNumber(int side, int slot)
     char answer[4];
     unsigned char *rec;
     int dup;
-    int i;
 
     k = rosterslot[side * 0x2F4 + slot * 0x1B];
     tr = (int *)rosterteamrec[side];

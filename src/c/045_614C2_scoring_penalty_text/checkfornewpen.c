@@ -16,8 +16,8 @@ void checkfornewpen(void)
     signed char c;
     short t;
 
-    if (sflags & 0x80 || (i = word_CBC44) != 0) return;
-    for (; (pen = PenBuf[i * 2]) != 0; i++) {
+    if (sflags & 0x80 || word_CBC44) return;
+    for (i = word_CBC44; (pen = PenBuf[i * 2]) != 0; i++) {
         pl = PenBuf_pl[i * 2];
         if (!(gmode & 4)) {
             if (penmintab[pen]) {

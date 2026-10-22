@@ -10,17 +10,15 @@
  3, 5 and 10 minutes left, in the second at 10. */
 void ClockTick(void)
 {
-    short t;
-
     if (penshotlive) {
         if (--penshottimer <= 0) EndPenaltyShot();
         return;
     }
     if (gameclock == 0 && clockticks[0] == 0) return;
-    if ((t = --clockticks[0]) >= 0) return;
+    if (--clockticks[0] >= 0) return;
     if (gameclock > 0) {
         gameclock = gameclock - 1;
-        clockticks[0] = t + 0x18;
+        clockticks[0] = clockticks[0] + 0x18;
     } else {
         clockticks[0] = 0;
     }

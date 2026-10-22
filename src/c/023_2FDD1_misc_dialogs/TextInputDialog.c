@@ -37,44 +37,43 @@ void DrawButtons(DlgBtn *b, int n);
 int TextInputDialog(char *prompt, char *buf, int maxlen, int minw, int numeric, int lo, int hi, int required,
     int arg)
 {
-    struct {
-        char probe[0x100];
-        int h;
-        int ty;
-        int y;
-        int x;
-        int w;
-    } s;
+    char probe[0x100];
+    int ty;
+    int h;
+    int x;
+    int y;
+    int w;
     int i;
     int r;
+    int ok;
 
     InputRemove();
     sub_B4BA8();
-    for (i = 0; i < maxlen; i++) s.probe[i] = 'M';
-    s.probe[maxlen] = 0;
-    s.w = fputchar(s.probe);
-    if (s.w < minw) s.w = minw;
-    s.w += 0xC;
+    for (i = 0; i < maxlen; i++) probe[i] = 'M';
+    probe[maxlen] = 0;
+    w = fputchar(probe);
+    if (w < minw) w = minw;
+    w += 0xC;
     minw = fputchar(prompt) + 0x10;
-    if (minw < s.w) minw = s.w + 0x10;
-    s.h = byte_D42C3 * 2 + 0x20;
-    s.x = (0x280 - minw) / 2;
-    s.y = (0x1E0 - s.h) / 2;
-    SaveDialogBg(s.x, s.y, minw, s.h);
+    if (minw < w) minw = w + 0x10;
+    h = byte_D42C3 * 2 + 0x20;
+    x = (0x280 - minw) / 2;
+    y = (0x1E0 - h) / 2;
+    SaveDialogBg(x, y, minw, h);
     SetTextColors(dlgtextfg, dlgtextbg);
-    DrawBevelRect(s.x, s.y, minw, s.h, boxfillcolor, boxlitecolor, boxshadecolor);
+    DrawBevelRect(x, y, minw, h, boxfillcolor, boxlitecolor, boxshadecolor);
     sub_8E9C0(dlgtextfg, dlgtextbg);
-    s.ty = s.y + 7;
-    PrintShadowText((minw - fputchar(prompt)) / 2 + s.x, s.ty, prompt);
-    s.x += (minw - s.w) / 2;
-    DrawBevelRect(s.x, s.y + 0x1F, s.w, 0x12, dlgtextbg, boxshadecolor, boxlitecolor);
+    ty = y + 7;
+    PrintShadowText((minw - fputchar(prompt)) / 2 + x, ty, prompt);
+    x += (minw - w) / 2;
+    DrawBevelRect(x, y + 0x1F, w, 0x12, dlgtextbg, boxshadecolor, boxlitecolor);
     sub_8E9C0(dlgtextfg, dlgtextbg);
     while (sub_B2CBE(1) || sub_B2CBE(0x1C));
     ClearInputQueue();
     if (numeric) {
         do {
             *buf = 0;
-            EditTextField(buf, maxlen, s.w - 8, s.x + 6, s.y + 0x20, DlgReturnZero, 0, arg);
+            EditTextField(buf, maxlen, w - 8, x + 6, y + 0x20, DlgReturnZero, 0, arg);
             r = 0;
             for (i = 0; i < maxlen; i++) {
                 if (!(byte_C4B6C[(unsigned char)(buf[i] + 1)] & 0x20) && buf[0] != ' ' && buf[0] && buf[0] != '-') break;
@@ -84,8 +83,10 @@ int TextInputDialog(char *prompt, char *buf, int maxlen, int minw, int numeric, 
     } else {
         do {
             *buf = 0;
-            r = EditTextField(buf, maxlen, s.w - 8, s.x + 6, s.y + 0x20, DlgReturnZero, 0, arg);
-        } while (!(required ? *buf || r == 0x1B : 1));
+            r = EditTextField(buf, maxlen, w - 8, x + 6, y + 0x20, DlgReturnZero, 0, arg);
+        ok = 1;
+        if (required && !*buf && r != 0x1B) ok = 0;
+        } while (!ok);
     }
     while (sub_B2CBE(1) || sub_B2CBE(0x1C));
     ClearInputQueue();

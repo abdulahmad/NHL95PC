@@ -323,8 +323,8 @@ slow:
         regd3.w -= v;
         v >>= 1;
         regd3.w -= v;
-        p->Xvel = (regd0.w * regd3.w - regd1.w * regd2.w) >> 8;
-        p->Yvel = (regd3.w * regd1.w + regd0.w * regd2.w) >> 8;
+        p->Xvel = (regd0.w * regd3.w - regd2.w * regd1.w) >> 8;
+        p->Yvel = (regd1.w * regd3.w + regd0.w * regd2.w) >> 8;
         if (*puckc < 0 || ABS(*pucky) > 0xE8) EndPenaltyShot();
         shotongoal = onetimerflag = 0;
     } else {

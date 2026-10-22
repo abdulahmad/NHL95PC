@@ -231,7 +231,8 @@ int ShotLaneOpen(void)
 
     shotontarget = 0;
     if (*puckc < 0) return 0;
-    p = &SortCords[*puckc];
+    x = *puckc;
+    p = SortCords + x;
     y = HIWORD(p->Ypos);
     ty = y;
     x = HIWORD(p->Xpos);
@@ -241,10 +242,12 @@ int ShotLaneOpen(void)
         d = vecdist(ty - 0xE8, x);
         m = 0;
         for (i = 0, p = &SortCords[p->SCnum < 6 ? 6 : 0]; i < 6; i++, p++) {
+            int px;
             if (p->position <= 0) continue;
+            px = HIWORD(p->Xpos);
             if (HIWORD(p->Ypos) > y) return 0;
             if (p->Yvel < 0) continue;
-            if (vecdist(HIWORD(p->Ypos) - 0xE8, HIWORD(p->Xpos)) <= d - m) return 0;
+            if (vecdist(HIWORD(p->Ypos) - 0xE8, px) <= d - m) return 0;
         }
     } else {
         if (y > 0) return 0;
@@ -252,10 +255,12 @@ int ShotLaneOpen(void)
         d = vecdist(ty + 0xE8, x);
         m = 0;
         for (i = 0, p = &SortCords[p->SCnum < 6 ? 6 : 0]; i < 6; i++, p++) {
+            int px;
             if (p->position <= 0) continue;
+            px = HIWORD(p->Xpos);
             if (HIWORD(p->Ypos) < y) return 0;
             if (p->Yvel > 0) continue;
-            if (vecdist(HIWORD(p->Ypos) + 0xE8, HIWORD(p->Xpos)) <= d - m) return 0;
+            if (vecdist(HIWORD(p->Ypos) + 0xE8, px) <= d - m) return 0;
         }
     }
     shotontarget = 1;

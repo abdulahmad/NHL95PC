@@ -21,6 +21,10 @@ extern c2playernum, cont1team, VisTeam, Penaltytimer, refsignal, gsp, gameclock,
 extern word_CBC44, exitgame, hmtmap, awtmap
 global DebugMonitor_pop
 global DebugMonitor, DumpStatsLog
+; C: src/c/047_688A4_debug_dump/DebugMonitor.c
+%ifdef CBUILD
+%include "c/047_688A4_debug_dump/DebugMonitor.inc"
+%else
 DebugMonitor:
 push dword 250h	; 688A4
 call __CHK	; 688A9
@@ -529,6 +533,7 @@ pop edx	; 68E77
 pop ecx	; 68E78
 pop ebx	; 68E79
 ret	; 68E7A
+%endif ; C
 DumpStatsLog:
 push dword 74h	; 68E7B
 call __CHK	; 68E80

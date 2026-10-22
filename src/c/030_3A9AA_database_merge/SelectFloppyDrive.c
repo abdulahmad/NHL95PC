@@ -39,11 +39,11 @@ int SelectFloppyDrive(char *file, char *name)
         s.result = 0;
         found = 0;
         for (s.drive = 0; s.drive < 2 && !found; s.drive++) {
-            criterrflag = found;
+            criterrflag = 0;
             floppyok[s.drive] = -1;
             _dos_getdiskfree(s.drive + 1, &s.df);
             if (criterrflag)
-                floppyok[s.drive] = found;
+                floppyok[s.drive] = 0;
             else if (pfile && pname) {
                 str_floppydrv = s.drive + 0x41;
                 MakePath(s.path, (char *)&str_floppydrv, (char *)str_PLAYER, (char *)str_extID);

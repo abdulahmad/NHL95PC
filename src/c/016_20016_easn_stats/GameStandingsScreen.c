@@ -4,21 +4,19 @@
 /* GameStandingsScreen: stats menu "standings" in a game: in the playoffs load the EASN font (EASN.VFN,
  dword_C65A8) and the background bank for the stats source (statsbgnames, from the CD when fileoncd 8Ch 8Dh
  says so; dword_C65AC) once, show the playoff tree and redraw the menu bar; otherwise free the desk buffers, reset
- the clip, redraw the menu bar and show the standings. Returns 0. */
+ the clip, redraw the menu bar and show the standings. Returns 0. The font and bank loads pass a literal 0
+ (Watcom reuses the tested global's zero register: the bank test in ecx is the extension). */
 int GameStandingsScreen(void)
 {
-    char *bank;
     char path[16];
 
     if (statsplayoffs) {
-        if (!dword_C65A8) dword_C65A8 = sub_8E8A0((char *)str_EASNvfn, dword_C65A8);
-        if ((bank = (char *)dword_C65AC) == 0) {
+        if (!dword_C65A8) dword_C65A8 = sub_8E8A0((char *)str_EASNvfn, 0);
+        if (!dword_C65AC) {
             if (!statsplayoffs)
-                MakePath(path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs],
-                         bank);
+                MakePath(path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
             else
-                MakePath(path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs],
-                         bank);
+                MakePath(path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
             dword_C65AC = sub_8E83C(path, 0);
         }
         ShowPlayoffTree(statsteambuf, (int)statsteamorder);

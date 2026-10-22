@@ -25,7 +25,9 @@ void PostGameDesk(void)
         PlayRandomHighlight();
         SetScreenSize(0x280, 0x1E0);
         sub_1B982();
-        if (!(r = CoachCutScene()) || !(r = WaitClickTimeout(10))) {
+        r = CoachCutScene();
+        if (r) r = WaitClickTimeout(10);
+        if (!r) {
             ShowLoadingScreen();
             InputInstall();
             GameSummaryScreen(0x20, curperiod, 0, 0);

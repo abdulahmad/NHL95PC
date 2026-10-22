@@ -1,5 +1,6 @@
 /* Player stats: the skater stats card. */
-/* DRAFT: first pass, register picks left (the byte zeros, two pushes, one shared tail); see docs/UNSURE.md. */
+/* DRAFT: 9 differing instructions, 2,214 vs 2,211 bytes under Watcom 10.0 GA;
+   the ratings lookup still computes its address in eax instead of edx. */
 #define SkaterStatsCard SkaterStatsCard_decl
 #include "nhl95.h"
 #undef SkaterStatsCard
@@ -78,8 +79,10 @@ int SkaterStatsCard(void)
     if (pl[0x30]) {
         *(T6 *)s.name = *(T6 *)str_PORTR;
         memcpy(s.name + 5, pl + 0x30, 4);
+        bank = (((signed char *)pl)[0x31] - 0x30) * 10;
+        v = ((signed char *)pl)[0x32] - 0x30;
         s.name[8] = 0;
-        MakePath(s.path, byte_ED909[(((signed char *)pl)[0x31] - 0x30) * 10 + ((signed char *)pl)[0x32] - 0x30] == 1
+        MakePath(s.path, byte_ED909[bank + v] == 1
             ? (char *)cddriveptr : 0, s.name, 0);
         bank = sub_8E83C(s.path, 0);
         memcpy(s.name, pl + 0x30, 4);
@@ -91,17 +94,14 @@ int SkaterStatsCard(void)
             FreeMemBlock(bank);
             MakePath(s.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar3, 0);
             statsbgshapes = sub_8E83C(s.path, 0);
-            statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst1);
-            sub_913B4(statspalshape);
-            FreeMemBlock(statsbgshapes);
+            sub_913B4(statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst1));
         } else {
             FreeMemBlock(bank);
             MakePath(s.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar3, 0);
             statsbgshapes = sub_8E83C(s.path, 0);
-            statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst22);
-            sub_913B4(statspalshape);
-            FreeMemBlock(statsbgshapes);
+            sub_913B4(statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst22));
         }
+        FreeMemBlock(statsbgshapes);
     } else {
         MakePath(s.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar3, 0);
         statsbgshapes = sub_8E83C(s.path, 0);

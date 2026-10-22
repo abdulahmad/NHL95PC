@@ -3,16 +3,15 @@
 
 /* BlitClipRect: clip x, y, w, h to the blit clip box. When the rectangle misses the box, return.
  Otherwise set the draw target (sub_B4BA8) and copy the clipped rectangle between VGA pages.
- Draft: the adds match; x is saved in esi and y in edi (the original saves x in edi and y in esi). */
+ Under 10.0 GA the plain sums `x2 = x + w` stay in the incoming registers (eax, edx) with x saved in edi and
+ y in esi, as in the EXE. */
 void BlitClipRect(int x, int y, int w, int h)
 {
     int x2;
     int y2;
 
-    y2 = y;
-    x2 = x;
-    x2 += w;
-    y2 += h;
+    x2 = x + w;
+    y2 = y + h;
     if (x >= blitclipright) return;
     if (y >= blitclipbottom) return;
     if (x2 < blitclipleft) return;

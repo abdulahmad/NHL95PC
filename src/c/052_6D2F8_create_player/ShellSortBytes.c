@@ -30,8 +30,12 @@ void ShellSortBytes(unsigned char *base, int n, int width, int (*cmp)(void *, vo
     }
 }
 
-/* DRAFT (first pass from Ghidra): the EXE splits it. Its body (LoadRosterList_fa, LoadRosterList_team) follows
-   ShellSortBytes and its entry (6DE94) follows LoadBothRosterLists, which falls into it. */
+/* The EXE splits it: its body (LoadRosterList_fa, LoadRosterList_team) follows ShellSortBytes and its entry
+   (6DE94) follows LoadBothRosterLists, which falls into it. The entry piece matches (10.0 GA) and is built with
+   LoadBothRosterLists: the count bound n computed first (unsigned divide), the key byte compared with 0FFh.
+   DRAFT (the body pieces, 21 differing with them): both end in a jump to RunEditRosters_ret5 (segment 051: the
+   module is RunEditRosters.c), the free-agent piece clears the two move actions through ecx (EXE esi), and the
+   team piece's selection loop has no jump to its test (the EXE has one) and its later registers follow. */
 /* LoadRosterList (6DE94, PC only): rebuild the roster list of side (0 left, 1 right) of the edit rosters screen.
    For the free agents (rosterisfa[side] 1): free the old lists, count the key database's free agents (team byte
    FFh), allocate the list (1Bh bytes each) and its selection bytes, fill (BuildFreeAgentList) and sort it by
@@ -42,6 +46,7 @@ void ShellSortBytes(unsigned char *base, int n, int width, int (*cmp)(void *, vo
 void LoadRosterList(int side)
 {
     int i;
+    int n;
 
     if (rosterisfa[side] == 1) {
         if (falistsel) {
@@ -52,22 +57,23 @@ void LoadRosterList(int side)
             FreeMemBlock((int)falist);
             falist = 0;
         }
+        n = (unsigned)keydb_size / 0x34;
         facount = 0;
-        for (i = 0; i < keydb_size / 0x34; i++)
-            if ((signed char)keydb[i * 0x34] == -1) facount++;
+        for (i = 0; i < n; i++)
+            if (keydb[i * 0x34] == 0xFF) facount++;
         falist = (unsigned char *)sub_8CCA8((char *)str_Uar, facount * 0x1B, 0);
         falistsel = sub_8CCA8((char *)str_Uarm, facount, 0);
         BuildFreeAgentList();
         ShellSortBytes(falist, facount, 0x1B, (int (*)(void *, void *))ComparePlayerEntry);
         for (i = 0; i < facount; i++) ((char *)falistsel)[i] = 0;
         dword_EBCA4 = 0;
-        if (facount < 0x1D) dword_D0C20 = 0;
+        if (facount <= 0x1C) dword_D0C20 = 0;
         else {
             dword_D0C20 = -1;
             InitScrollBar((int *)unk_D0BF0, 0x1C, facount);
         }
-        if (side) menu_r2_tofa = 0;
-        else menu_r1_tofa = 0;
+        if (side == 0) menu_r1_tofa = side;
+        else menu_r2_tofa = 0;
         menu_r1_toroster2 = 0;
         menu_r2_toroster1 = 0;
     } else {

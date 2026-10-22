@@ -8,7 +8,7 @@ Standing rules for work on this repo. Details: [HANDOFF.md](HANDOFF.md), [SEGMEN
 * **One agent at a time.** Do not run agents or workers in parallel.
 * **Timebox** each stubborn function (~8–10 minutes; see HANDOFF). Leave a draft and record what was tried.
 * **Batch renames** with `tools/rename_symbol.py --batch`.
-* **Keep the Unsure list** ([docs/UNSURE.md](docs/UNSURE.md)) with what was tried; follow the Unsure plan in HANDOFF. Never retry a listed shape.
+* **Keep the Unsure list** ([docs/UNSURE.md](docs/UNSURE.md)) with what was tried; follow the Unsure plan in HANDOFF. Never retry a listed shape. Exception: entries that do not name 10.0 GA were tried under 10.0 LA; `tools/permute.py` retries those under GA by itself (its log and skip rows are per compiler), and a hand retry needs a new reason.
 * **No numbered prefixes on new file names** (existing segment `NNN_*` names stay).
 * **Names:** 93G when the body matches, else 94G, else a name from behaviour. NHL95Genesis is a loose reference only, not a naming source. Team abbreviations follow 95PC's own spellings (e.g. TB, OTT).
 * At the end of each batch: `python3 tools/c_progress.py`, update HANDOFF Current state / Next if needed, commit, push.

@@ -7,15 +7,12 @@
  end), raise crowdlevel by 200 (max 1000) and the home crowd's CwdExciteLvl by 10; otherwise play sfx 9Bh
 . Then the pass completion, clear the pass/shot dir modes (sflags bits 2-3); a goalie
  checks the shot stat and gets temp5 hold time (5 after SPA 181h, else 8Ch). Falls into setd0player:
- GiveControl(regd0). */
-/* DRAFT: 316 vs 316. crowdlevel is loaded straight into bx; the EXE loads it into ax and copies it to ebx
-   for the + 200 (reading crowdlevel in the test and `raised = crowdlevel + 200` gives that copy, but moves
-   the registers from the puckc store on). See the agent notes / docs/UNSURE.md. */
+ GiveControl(regd0). The attacking-end count is two increments (if / else if): one `||` test moved the
+ registers of the crowdlevel clamp after it. */
 void puckglue(Player *p)
 {
     Team *tm;
     Team *op;
-    short level;
 
     regd0.w = p->SCnum;             /* move.w SCnum(a2),d0 */
     {
@@ -38,12 +35,12 @@ void puckglue(Player *p)
         sflags3 &= ~0x10;
         if ((gmode & 0x10) == 0) {
             tm->tmfowon++;          /* addq.w #1,(a1): faceoff won */
-            if ((*pucky > 0x4E && (p->pflags & 0x80)) || (*pucky < -0x4E && (p->pflags & 0x80) == 0))
-                tm->tmfowonoz++;
+            if (*pucky > 0x4E && (p->pflags & 0x80)) tm->tmfowonoz++; /* in the attacking end */
+            else if (*pucky < -0x4E && (p->pflags & 0x80) == 0) tm->tmfowonoz++;
         }
-        level = crowdlevel;
-        if (level <= 1000) {        /* addi.w #,(crowdlevel).w */
-            if ((crowdlevel = level + 200) > 1000) crowdlevel = 1000;
+        if (crowdlevel <= 1000) {   /* addi.w #,(crowdlevel).w */
+            crowdlevel += 200;
+            if (crowdlevel > 1000) crowdlevel = 1000;
         }
         if ((p->pflags & 0x40) == 0) CwdExciteLvl += 10; /* home team: addi.w #,(CwdExciteLvl).w */
     } else {

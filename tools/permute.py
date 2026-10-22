@@ -41,11 +41,12 @@ crowd out the others.
 Candidates are compiled in batched DOSBox runs (cc.compile_parallel), compared with tools/cdiff.py's compare(),
 and scored by the aligned count of differing instructions (relocations compared by target, jumps by mnemonic;
 ties broken by the size difference). Every attempt is appended to the log CSV (date, function, file, transform,
-sha1 of the function's text, score, size difference, match); a candidate already in the log for that function is
-not compiled again (its logged score is used). A match is compiled again alone, in a fresh DOSBox run without the
-cache, and only counts when it still matches there (a batched run can leave wcc386 in another state; HANDOFF
-step 3); a logged match is confirmed the same way. docs/unsure_tried.csv rows (function, transform, result) name
-transforms not to try for a function (step 4 of the HANDOFF plan). The search stops at a match, after --max
+sha1 of the function's text, score, size difference, match, first difference, compiler); a candidate already in
+the log for that function and compiler (WATCOM_VER; rows without one are 10.0 LA) is not compiled again (its
+logged score is used). A match is compiled again alone, in a fresh DOSBox run without the cache, and only counts
+when it still matches there (a batched run can leave wcc386 in another state; HANDOFF step 3); a logged match is
+confirmed the same way. docs/unsure_tried.csv rows (function, transform, result, compiler) name transforms not to
+try for a function under that compiler (step 4 of the HANDOFF plan). The search stops at a match, after --max
 compiled candidates, --minutes, or --stall compiled candidates in a row without an improvement. --write writes
 the best text back to the C file when it improves on the original, --write-match only when it matches; the best
 variant is always saved under build/permute/ (same path as the C file). One search runs at a time
@@ -58,7 +59,7 @@ import cc, cdiff, scope_decls, cexpr
 
 LOG = os.path.join(HERE, 'permute_log.csv')
 SKIP = os.path.join(ROOT, 'docs', 'unsure_tried.csv')
-LOGF = ['date', 'func', 'file', 'transform', 'sha1', 'score', 'sizediff', 'match', 'first']
+LOGF = ['date', 'func', 'file', 'transform', 'sha1', 'score', 'sizediff', 'match', 'first', 'cc']
 INT_TYPES = ['int', 'short', 'unsigned', 'unsigned short', 'char', 'unsigned char', 'signed char']
 TYPE_RE = r'(?:(?:unsigned|signed)\s+)?(?:char|short|int|long)|unsigned|signed'
 DECL1 = re.compile(r'^(\s+)(%s)(\s+)(\w+)\s*;(\s*/\*.*?\*/)?\s*$' % TYPE_RE)
@@ -936,11 +937,16 @@ def confirm(cand_src, obj, func, src):
 
 # ---- log ---------------------------------------------------------------------------------------------------------
 
+def row_cc(r):
+    """the compiler of a log or skip row: rows from before the cc column were all measured under 10.0 LA"""
+    return r.get('cc') or 'la'
+
+
 def load_log(path, func):
     seen = {}
     if os.path.exists(path):
         for r in csv.DictReader(open(path, newline='')):
-            if r['func'] == func:
+            if r['func'] == func and row_cc(r) == cc.VER:
                 seen[r['sha1']] = None if r['score'] == '' else \
                     (int(r['score']), int(r['sizediff']), r['match'] == '1', int(r.get('first') or 0))
     return seen
@@ -950,12 +956,17 @@ def load_skips(func):
     out = []
     if os.path.exists(SKIP):
         for r in csv.DictReader(open(SKIP, newline='')):
-            if r.get('func') == func and r.get('transform'): out.append(r['transform'])
+            if r.get('func') == func and r.get('transform') and row_cc(r) == cc.VER: out.append(r['transform'])
     return out
 
 
 def append_log(path, rows):
     new = not os.path.exists(path)
+    if not new:
+        with open(path, newline='') as f: head = f.readline().rstrip('\n')
+        if head != ','.join(LOGF):   # a log from before the cc column: new header, rows kept
+            with open(path, newline='') as f: text = f.read()
+            with open(path, 'w', newline='') as f: f.write(','.join(LOGF) + '\n' + text.split('\n', 1)[1])
     with open(path, 'a', newline='') as f:
         w = csv.writer(f, lineterminator='\n')
         if new: w.writerow(LOGF)
@@ -1012,7 +1023,7 @@ def main():
                 except (SystemExit, Exception) as e: r = None
             logged[h] = r
             rows.append([datetime.date.today().isoformat(), func, src, desc, h, '' if r is None else r[0],
-                         '' if r is None else r[1], '' if r is None else int(r[2]), '' if r is None else r[3]])
+                         '' if r is None else r[1], '' if r is None else int(r[2]), '' if r is None else r[3], cc.VER])
             out.append((desc, text, r, True))
             for x in (f, o):
                 if os.path.exists(x): os.remove(x)

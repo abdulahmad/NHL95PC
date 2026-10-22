@@ -1,5 +1,9 @@
 /* Create player: making a new free agent. */
-/* DRAFT: first pass, register picks left; see docs/UNSURE.md. */
+/* DRAFT (10.0 GA): 1965 vs 1963, register picks left; see docs/UNSURE.md. The cluster size written sectors * bytes
+   loads sectors first as the EXE; sp declared in the block that copies the ratings. Left: the palette copy in ebp
+   (EXE edi), the two rating loops' base registers, the csize factors in eax / esi (EXE esi / eax), and a dead
+   mov edx, eax after the jersey number (reusing k for it drops that copy and gives the size, but swaps more
+   registers: 19 against 14). */
 #define CreateFreeAgent CreateFreeAgent_decl
 #define RandomizeNewRatings RandomizeNewRatings_decl
 #define MessageBox MessageBox_decl
@@ -55,11 +59,10 @@ void CreateFreeAgent(int a, int *mx, int *my)
     int j;
     int k;
     unsigned char *dp;
-    unsigned char *sp;
 
     s.fhatt = s.fhcar = s.fhsea = s.fhkey = -1;
     if (_dos_getdiskfree(0, &s.df)) FatalError((char *)str_ErrDiskFree);
-    csize = s.df.bytes * s.df.sectors;
+    csize = s.df.sectors * s.df.bytes;
     s.sizes[0] = seasondb_size + 0x36;
     s.sizes[1] = careerdb_size + 0x2C;
     s.sizes[5] = attdb_size + 0x14;
@@ -123,6 +126,8 @@ void CreateFreeAgent(int a, int *mx, int *my)
     pal = pal2 = (unsigned char *)sub_8CCA8((char *)str_Temp, 0x300, 0x20);
     sub_8FFB0(0, 0x100, pal2);
     if (CreatePlayerLoop(s.key) >= 1) {
+        unsigned char *sp;
+
         FadePalStep(1, pal, 0x10);
         sub_B392C(0);
         WriteLeagueDbsMem((char *)str_TMP);

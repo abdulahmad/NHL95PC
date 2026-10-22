@@ -5,7 +5,6 @@
 
 void FixJerseyNumber(int side, int i);
 
-/* DRAFT: 1041 vs 1041, 289 of 303 instructions; see docs/UNSURE.md. */
 /* MoveToOtherRoster (6F29C, PC only): the roster editor's "move" button. For every selected player of the
    current list (side 0, or 1 when *mode is not 3; the team's rostersel flags, or falistsel when that side shows
    the free agents) find a free slot in the other side's team record: one of the three goalie slots (19h-1Bh)
@@ -29,6 +28,7 @@ void MoveToOtherRoster(int *mode, int *x, int *y)
     int j;
     int k;
     unsigned char *p;
+    int entry;
 
     src = *mode != 3;
     dst = !src;
@@ -60,7 +60,8 @@ void MoveToOtherRoster(int *mode, int *x, int *y)
             for (j = 0; j < 0x1C; j++) {
                 if (p[1] == KeyDbPtr(((int *)(rosterteamrec[dst] + 0x4C))[j])[1]) {
                     off = dst * 0x2F4;
-                    k = 0x1C - nmoved;
+                    entry = 0x1C - nmoved;
+                    k = entry;
                     rosterjersey[off + k * 27] = p[1];
                     rosterslot[off + k * 27] = slot;
                     FixJerseyNumber(dst, k);

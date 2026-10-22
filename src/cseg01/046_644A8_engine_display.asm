@@ -3784,6 +3784,10 @@ mov dword [spritedrawcount], edi	; 671D5
 call sub_6AB7C	; 671DB
 add esp, byte 24h	; 671E0
 jmp near checkwindow_popebp	; 671E3
+; C: src/c/046_644A8_engine_display/ShowGoalieBanner.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/ShowGoalieBanner.inc"
+%else
 ShowGoalieBanner:
 push dword 14h	; 671E8
 call __CHK	; 671ED
@@ -3869,6 +3873,11 @@ pop edx	; 672F5
 pop ecx	; 672F6
 pop ebx	; 672F7
 ret	; 672F8
+%endif ; C
+; C: src/c/046_644A8_engine_display/SetTeamGoalie.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/SetTeamGoalie.inc"
+%else
 SetTeamGoalie:
 push dword 10h	; 672F9
 call __CHK	; 672FE
@@ -3937,6 +3946,7 @@ pop esi	; 673C1
 pop ecx	; 673C2
 pop ebx	; 673C3
 ret	; 673C4
+%endif ; C
 ; C: src/c/046_644A8_engine_display/LoadTeamPalette.c
 %ifdef CBUILD
 %include "c/046_644A8_engine_display/LoadTeamPalette.inc"

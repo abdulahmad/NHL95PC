@@ -1,8 +1,6 @@
 /* Player stats: a team's roster stats screen. */
-/* DRAFT: 3,169 vs 3,170 bytes, 37 differing lines of 781: the stack slots of the spilled scalars (the EXE: kfh,
-   pfh, n, fh, kf, mf, gs, idx, m, y upward from 3E8h; this order gives kfh, pfh, idx, gs, kf, fh, mf, m, n, y) and
-   one register pick (the skater record copy builds the source in esi from the base, C from the product). See
-   docs/UNSURE.md. */
+/* DRAFT: 3,170 bytes, size exact; 23 differing instructions under Watcom 10.0 GA.
+   Remaining differences are spilled scalar slots and the skater record source register. */
 #define TeamRosterScreen TeamRosterScreen_decl
 #define PrintShadowText PrintShadowText_decl
 #define PrintFmt1 PrintFmt1_decl
@@ -40,6 +38,7 @@ int TeamRosterScreen(int team)
     char state[0x40];
     unsigned char gstat[0x36];
     unsigned char prec[0x34];
+    int y;
     unsigned char sstat[0x2F];
     char path[0x20];
     int fh;
@@ -51,7 +50,6 @@ int TeamRosterScreen(int team)
     unsigned short *gs;
     int idx;
     int m;
-    int y;
     int i;
     unsigned short *s;
 

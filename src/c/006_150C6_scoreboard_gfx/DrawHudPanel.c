@@ -1,8 +1,10 @@
 /* Scoreboard: draw the in-game panel, clock, period and crests. */
-/* DRAFT: 691 vs 686. home is kept in ebp and away is stored (original pushes eax and
- keeps away in ebp). The /60 setup writes edx before the 3Ch divisor. DrawPanelScore's
- short parameters sign-extend the score. Do not retry volatile home, a local copy of
- away, or taking home's address: each one moves the frame. */
+/* DRAFT: 686 vs 686 under 10.0 GA, two instructions apart. The period digits are drawn by
+ one call per digit (Watcom cross-jumps the shared call tail). Left: the /60 setup writes
+ edx (`mov edx, eax`) before the 3Ch divisor (`mov ebx, 3Ch`), the original the other way
+ round. `hudclockmin /= 60` after `hudclockmin = hudclocksec = GetPeriodTime()` gives the
+ original order but then keeps home in ebp and stores away (the original pushes home and
+ keeps away in ebp). See docs/UNSURE.md for the shapes tried. */
 #define DrawHudPanel DrawHudPanel_decl
 #define DrawPanelClock DrawPanelClock_decl
 #define DrawPanelScore DrawPanelScore_decl
@@ -28,8 +30,6 @@ void DrawHudPanel(int home, int away, int period, int reset)
     char path[16];
     int bank;
     int z;
-    int sprite;
-    int x;
 
     if (reset) {
         hudclocksec = GetPeriodTime();
@@ -57,17 +57,15 @@ void DrawHudPanel(int home, int away, int period, int reset)
     SelectScreenBM();
     DrawPanelClock();
     if (period == 0) {
-        sprite = off_C57C8;
-        x = 0x98;
+        sub_B4CD8(sub_B30B4(bank, (char *)off_C57C8), 0x98, 0x16);
     } else {
         int p;
 
         p = period % 100;
         sub_B4CD8(sub_B30B4(bank, (char *)perioddigits[p / 10]), 0x98, 0x16);
-        sprite = perioddigits[p % 10];
-        x = 0xA0;
+        sub_B4CD8(sub_B30B4(bank, (char *)perioddigits[p % 10]), 0xA0, 0x16);
     }
-    sub_B4CD8(sub_B30B4(bank, (char *)sprite), x, 0x16);
+
     FreeMemBlock(bank);
     MakePath(path, fileoncd[0x57] == 1 ? (char *)cddriveptr : 0, (char *)str_Crests4, (char *)str_PPV);
     bank = sub_8E8A0(path, 0);

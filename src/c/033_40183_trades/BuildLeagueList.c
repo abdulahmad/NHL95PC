@@ -13,18 +13,21 @@ typedef struct FindT {
 /* BuildLeagueList: list the league directories (*.LP, _dos_findfirst _dos_findnext with the
  directory attribute 10h): count them, allocate the pointer list *list (LLST, 4 bytes each) and the name buffer
  *names (LLSN, 9 bytes each), then go over them again keeping the ones GetLeagueId accepts by flags (bit 0: valid
- leagues, bit 1: the others), each name up to its dot. Returns the number kept (lists cleared when none). */
+ leagues, bit 1: the others), each name up to its dot. Returns the number kept (lists cleared when none).
+ The two sizes are computed into locals before the calls (the product before `push 20h`); the name size reuses
+ the loop counter i, and the declaration order (ft and i last) gives flags / cnt their stack slots. */
 int BuildLeagueList(char ***list, char **names, int flags)
 {
-    FindT ft;
     char pat[16];
     int id;
     int len;
     int n;
     int cnt;
-    int i;
     int r;
+    int size;
     int done;
+    FindT ft;
+    int i;
 
     strcpy(pat, (char *)str_star);
     strcat(pat, (char *)str_extLP);
@@ -37,10 +40,12 @@ int BuildLeagueList(char ***list, char **names, int flags)
         } while (!done);
     }
     if (n) {
-        *list = (char **)sub_8CCA8((char *)str_LLST, n * 4, 0x20);
-        memset(*list, 0, n * 4);
-        *names = (char *)sub_8CCA8((char *)str_LLSN, n * 9, 0x20);
-        memset(*names, 0, n * 9);
+        size = n * 4;
+        *list = (char **)sub_8CCA8((char *)str_LLST, size, 0x20);
+        memset(*list, 0, size);
+        i = n * 9;
+        *names = (char *)sub_8CCA8((char *)str_LLSN, i, 0x20);
+        memset(*names, 0, i);
         cnt = n;
         for (i = 0; i < cnt; i++) {
             if (i == 0) unknown_libname_1(pat, 0x10, &ft);

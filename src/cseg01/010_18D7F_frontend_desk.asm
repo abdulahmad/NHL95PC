@@ -400,6 +400,10 @@ pop ecx	; 1920C
 pop ebx	; 1920D
 ret	; 1920E
 %endif ; C
+; C: src/c/010_18D7F_frontend_desk/PostGameDesk.c
+%ifdef CBUILD
+%include "c/010_18D7F_frontend_desk/PostGameDesk.inc"
+%else
 PostGameDesk:
 push dword 1Ch	; 1920F
 call __CHK	; 19214
@@ -482,6 +486,7 @@ pop edx	; 19359
 pop ecx	; 1935A
 pop ebx	; 1935B
 ret	; 1935C
+%endif ; C
 SportsDesk:
 push dword 434h	; 1935D
 call __CHK	; 19362

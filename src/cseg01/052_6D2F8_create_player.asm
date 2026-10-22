@@ -876,6 +876,10 @@ pop esi	; 6DCBA
 pop ecx	; 6DCBB
 pop ebx	; 6DCBC
 ret	; 6DCBD
+; C: src/c/052_6D2F8_create_player/RosterPanelClick.c (FixJerseyNumber)
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/RosterPanelClick.FixJerseyNumber.inc"
+%else
 FixJerseyNumber:
 push dword 0ACh	; 6DCBE
 call __CHK	; 6DCC3
@@ -1008,6 +1012,7 @@ test edi, edi	; 6DE39
 jne near FixJerseyNumber.1	; 6DE3B
 add esp, 80h	; 6DE41
 jmp near RosterPanelClick_ret	; 6DE47
+%endif ; C
 ; C: src/c/052_6D2F8_create_player/CopyRoster1Rec.c
 %ifdef CBUILD
 %include "c/052_6D2F8_create_player/CopyRoster1Rec.inc"
@@ -1029,6 +1034,10 @@ pop esi	; 6DE7B
 pop ecx	; 6DE7C
 ret	; 6DE7D
 %endif ; C
+; C: src/c/052_6D2F8_create_player/ShellSortBytes.c (LoadBothRosterLists)
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/ShellSortBytes.LoadBothRosterLists.inc"
+%else
 LoadBothRosterLists:
 push dword 4	; 6DE7E
 call __CHK	; 6DE83
@@ -1073,6 +1082,7 @@ xor edx, edx	; 6DEF7
 mov dword [facount], edx	; 6DEF9
 xor eax, eax	; 6DEFF
 jmp near LoadRosterList_faloop	; 6DF01
+%endif ; C
 ; C: src/c/051_6C2F9_database_save/RunEditRosters.c (EditTeamLines)
 %ifdef CBUILD
 %include "c/051_6C2F9_database_save/RunEditRosters.EditTeamLines.inc"
@@ -2455,6 +2465,10 @@ pop edi	; 6EF7F
 pop esi	; 6EF80
 ret 0Ch	; 6EF81
 %endif ; C
+; C: src/c/052_6D2F8_create_player/CheckDatabases.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/CheckDatabases.inc"
+%else
 CheckDatabases:
 push dword 48h	; 6EF84
 call __CHK	; 6EF89
@@ -2646,6 +2660,7 @@ pop esi	; 6F155
 pop ecx	; 6F156
 pop ebx	; 6F157
 ret	; 6F158
+%endif ; C
 SplitPlayerName:
 push dword 20h	; 6F159
 call __CHK	; 6F15E

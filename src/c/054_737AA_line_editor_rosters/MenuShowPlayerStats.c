@@ -112,11 +112,10 @@ int DressPlayer(unsigned char *nums, int ignored, unsigned char side, int *sel, 
 }
 
 /* LineEdDone: copy the dressed line into the team record.
-   DRAFT: 280 vs 280 (best of 5). The jersey pointer is lea ebx / [ebx] where the original is
-   lea ecx / [ecx], the inner counter is ebx and the side stride is ecx (original ecx and ebx),
-   and the scratch status byte is dl where the original is bl. Do not retry a named row for the
-   jersey index (it becomes lea ecx, [ebx+eax]) or n++ inside the subscript (it copies n to edx
-   before the inc).
+   DRAFT: 280 vs 280 (10.0 GA). The jersey pointer is lea ebx / [ebx] where the original is
+   lea ecx / [ecx], and the inner counter is ebx and the side stride is ecx (original ecx and
+   ebx); the scratch loop matches. Do not retry a named row for the jersey index (it becomes
+   lea ecx, [ebx+eax]) or n++ inside the subscript (it copies n to edx before the inc).
    nums is the 28h edited jerseys, lines is
    the 30h-byte line (28 jersey slots, then 8 scratch slots). A 64h jersey is copied straight across;
    any other jersey is replaced by the roster slot of the dressed player who wears it. Scratch slots
@@ -160,23 +159,17 @@ int LineEdDone(unsigned char *nums, unsigned char *lines, unsigned char side, in
         int n;
         int stride;
         int row;
-        unsigned char st;
 
         i = 0;
         n = 0;
-        goto scratch_test;
-scratch_body:
-        stride = side * 0x2F4;
-        row = stride + i * 27;
-        st = rosterstat[row];
-        if (st != 0 && st != 3) {
-            lines[0x28 + n] = rosterslot[row];
-            n++;
+        for (; i < 0x1C; i++) {
+            stride = side * 0x2F4;
+            row = stride + i * 27;
+            if (rosterstat[row] != 0 && rosterstat[row] != 3) {
+                lines[0x28 + n] = rosterslot[row];
+                n++;
+            }
         }
-        i++;
-scratch_test:
-        if (i < 0x1C)
-            goto scratch_body;
     }
     rec = (unsigned char *)rosterteamrec[side];
     {

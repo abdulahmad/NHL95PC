@@ -1,6 +1,4 @@
-/* Debug dump: the in-game debug monitor. */
-/* DRAFT: same size, every instruction but one register pair (the debug error line computes buf + n in eax, the EXE
-   in esi); see docs/UNSURE.md. Owner of DebugMonitor_pop (DumpStatsLog ends there). */
+/* Debug dump: the in-game debug monitor. Owner of DebugMonitor_pop (DumpStatsLog ends there). */
 #define DebugPrintf DebugPrintf_decl
 #define WaitKey WaitKey_decl
 #define sub_93E38 sub_93E38_decl
@@ -24,7 +22,8 @@ void DumpStatsLog(char *name);
    object 0-10h except 0Ch, 0Dh and 0Fh (index, jersey, numbers, box time, position name, position and
    velocity, the puck height for 0Eh, assignment name, flags, SPA name), stopping on a bad frame number. Then
    read a key (WaitKey in step mode, else PollKey): 0 bails out, m calls sub_93E38, d dumps the stats log and
-   a backslash toggles step mode. No arguments, no result. */
+   a backslash toggles step mode. No arguments, no result. The last sprintf of an object line builds its
+   destination in n itself (n is dead after it: add esi, eax / push esi in the EXE). */
 void DebugMonitor(void)
 {
     char buf[0x200];
@@ -78,11 +77,11 @@ void DebugMonitor(void)
             if (k >= 0x78) n += sprintf(buf + n, (char *)str_dbgSpa, p->SPA);
             else n += sprintf(buf + n, (char *)str_dbgS, (char *)dbg_spanames[k]);
             if (p->frame < -1 || p->frame >= 0x46E) {
-                sprintf(buf + n, (char *)str_debError, p->SCnum, p->frame);
+                sprintf((char *)(n += (int)buf), (char *)str_debError, p->SCnum, p->frame);
                 DebugPrintf(buf);
                 WaitKey();
             } else {
-                sprintf(buf + n, (char *)str_newline);
+                sprintf((char *)(n += (int)buf), (char *)str_newline);
                 DebugPrintf(buf);
             }
         }

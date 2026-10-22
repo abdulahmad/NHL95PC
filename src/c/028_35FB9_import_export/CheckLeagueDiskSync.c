@@ -34,33 +34,32 @@ int CheckLeagueDiskSync(char *dir, char *teams, int team, int sync, int probe)
         int fh;
         volatile int team;
     } s;
-    char *file;
     int err;
     char *rec;
     int id;
     unsigned char kind;
 
-    file = dir;
     s.team = team;
     s.fh = -1;
     err = 0;
-    rec = teams + ((s.team << 4) - s.team) * 2;
+    rec = (char *)((s.team << 4) - s.team);
+    rec = (char *)((int)rec * 2 + (int)teams);
     *(char **)(leaguediskmsg + 8) = (char *)err;
-    id = GetLeagueId(file, &s.id);
+    id = GetLeagueId(dir, &s.id);
     kind = rec[0x17];
     if (kind == 1) {
-        if (id == s.team || (id < 0 && (kind == rec[0x18] || (rec[0x16] & kind)))) {
+        if (id == s.team || (id < 0 && (kind == rec[0x18] || ((short)(rec[0x16] & kind))))) {
             if (rec[0x16] & 2) {
                 *(char **)(leaguediskmsg + 8) = (char *)str_MustBeImportedFrom;
                 err = 4;
             }
         } else if (sync) {
             if (probe) {
-                FmtFromLeague(s.fmt, rec, file);
+                FmtFromLeague(s.fmt, rec, dir);
                 msg_InsertDisk_arg = (int)s.fmt;
-                err = FindLeagueFloppy(file, rec, (char *)-1);
+                err = FindLeagueFloppy(dir, rec, (char *)-1);
             } else
-                err = WaitLeagueFloppy(file, rec, (char *)-1);
+                err = WaitLeagueFloppy(dir, rec, (char *)-1);
             if (!err) {
                 MakePath(s.path, (char *)&str_floppydrv, (char *)str_PINFO, (char *)str_extDB);
                 err = FileOpenRead(s.path, &s.fh);
@@ -79,7 +78,7 @@ int CheckLeagueDiskSync(char *dir, char *teams, int team, int sync, int probe)
         }
     }
     if (*(int *)(leaguediskmsg + 8)) {
-        strcpy(s.league, file);
+        strcpy(s.league, dir);
         s.league[_fstrcspn(s.league, (char *)&str_dot)] = 0;
         *(char **)(leaguediskmsg + 4) = s.league;
         strcpy(s.teamname, rec);

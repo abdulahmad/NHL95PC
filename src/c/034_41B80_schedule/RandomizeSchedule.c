@@ -86,16 +86,16 @@ int RandomizeSchedule(char *dir, int shuffle)
                 err = ReadTeamRec(s.tfh, s.rec, h);
             }
             if (!err) {
-                j = s.count[h];
-                ((int *)(s.rec + 0x11C))[j] = i * 6 + 2;
-                s.count[h] = j + 1;
+                j = i * 6 + 2;
+                ((int *)(s.rec + 0x11C))[s.count[h]] = j;
+                s.count[h]++;
                 err = WriteTeamRec(s.tfh, s.rec, h);
             }
             if (!err) err = ReadTeamRec(s.tfh, s.rec, v);
             if (!err) {
-                j = s.count[v];
-                ((int *)(s.rec + 0x11C))[j] = i * 6 + 2;
-                s.count[v] = j + 1;
+                j = i * 6 + 2;
+                ((int *)(s.rec + 0x11C))[s.count[v]] = j;
+                s.count[v]++;
                 err = WriteTeamRec(s.tfh, s.rec, v);
             }
         }

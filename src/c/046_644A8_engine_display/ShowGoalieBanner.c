@@ -11,7 +11,7 @@
 void ShowGoalieBanner(short side)
 {
     short g;
-    short in;
+    int in;
     short m;
     unsigned char *f;
 
@@ -21,16 +21,15 @@ void ShowGoalieBanner(short side)
     if ((g & 0xFFF0) == 0xFF00) return;
     in = (unsigned)(g >= 0);
     m = bannermsg;
-    if (in > m || m < 2) {
+    if ((short)in > m || m < 2) {
         bannermsg = in;
         bannertimer = 0x50;
     }
     if (g < 0) {
         *(unsigned char *)*(int *)((char *)off_CD4A0 + side * 12) = 2;
-        (&hmtmstruct)[side].tmgoalie &= 0xF;
-        f = (unsigned char *)off_CD498[side * 3 + (&hmtmstruct)[side].tmgoalie];
+        f = *(unsigned char **)((char *)off_CD498 + side * 12 + ((&hmtmstruct)[side].tmgoalie = (&hmtmstruct)[side].tmgoalie & 0xF) * 4);
     } else {
-        *(unsigned char *)off_CD498[side * 3 + (g & 0xF)] = 2;
+        **(unsigned char **)((char *)off_CD498 + side * 12 + (g & 0xF) * 4) = 2;
         (&hmtmstruct)[side].tmgoalie |= 0xFFF0;
         f = (unsigned char *)*(int *)((char *)off_CD4A0 + side * 12);
     }

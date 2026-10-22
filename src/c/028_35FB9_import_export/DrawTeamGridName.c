@@ -12,15 +12,18 @@ void DrawTeamGridName(int team, char *names, int bm, unsigned char *tab)
     int x;
     int y;
     char *s;
+    int x2;
 
     SetTextColors(dlgtextfg, dlgtextbg);
     for (r = 0; r < 4; r++) {
         for (c = 0; c < 7; c++) {
             if ((tab + r * 7)[c] == team) {
-                if (r < 2) x = c * 85 + 0x39;
-                else x = c * 85 + 0xF;
-                y = r * 92 + 0x97;
-                sub_B4BC4(x, x + 0x4D, y, y + byte_D42C3 + 1);
+                x = c * 85;
+                if (r < 2) x += 0x39;
+                else x += 0xF;
+                y = (unsigned char)r * 92 + 0x97;
+                x2 = x + 0x4D;
+                sub_B4BC4(x, x2, y, y + byte_D42C3 + 1);
                 sub_91370(bm, 0, 0);
                 sub_B4BC4(0, 0x280, 0, 0x1E0);
                 s = names + team * 30;

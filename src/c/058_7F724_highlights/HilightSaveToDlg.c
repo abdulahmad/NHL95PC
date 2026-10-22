@@ -16,8 +16,8 @@ typedef struct { char *s[2]; } StrPair;
    apart from 4Eh, 50h), then "Save To", "Hilights Reel" and the choices (home and away team names from the team
    records, then "Both Teams" / "Neither Team" from bothneitherstrs) centred in the buttons, first in colour 10h
    one pixel down and right as the shadow, then in 59h. No arguments, no result.
-   DRAFT: 749 vs 748. The original keeps the button loop counter and x2 on the stack (so the loop starts with a
-   jmp to its test) and y + 0Eh in ebp; here the counter gets a register. See docs/UNSURE.md. */
+   DRAFT: the body matches under Watcom 10.0 GA; its shared jump to DrawGadgetButton_ret still needs
+   the tail owner migrated into this multi-block file. The standalone epilogue is 2 bytes longer. */
 void HilightSaveToDlg(void)
 {
     char state[0x40];
@@ -26,7 +26,7 @@ void HilightSaveToDlg(void)
     int x2;
     int x;
     int y;
-    int i;
+    struct { int i; } count;
 
     both = *(StrPair *)bothneitherstrs;
     sub_8E9E8(state);
@@ -36,9 +36,8 @@ void HilightSaveToDlg(void)
     sub_93000(2, 0x4D, 0x13D, 0x96, 0x10);
     x = 0x4E;
     y = 0x50;
-    for (i = 0; i < 4; i++, y += 0x11) {
-        y2 = y + 0xE;
-        sub_B4FAC(x, y, x, y2, 0x59);
+    for (count.i = 0; count.i < 4; count.i++, y += 0x11) {
+        sub_B4FAC(x, y, x, y2 = y + 0xE, 0x59);
         sub_B4FAC(x, y, x2 = x + 0x8A, y, 0x59);
         sub_B4FAC(x + 1, y2, x2, y2, 0x10);
         sub_B4FAC(x2, y + 1, x2, y2, 0x10);

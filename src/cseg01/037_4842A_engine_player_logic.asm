@@ -1277,6 +1277,10 @@ call playeracc	; 492F2
 pop ebx	; 492F7
 ret	; 492F8
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/SteerToTarget.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/SteerToTarget.inc"
+%else
 SteerToTarget:
 push dword 10h	; 492F9
 call __CHK	; 492FE
@@ -1392,6 +1396,7 @@ pop edx	; 4945C
 pop ecx	; 4945D
 pop ebx	; 4945E
 ret	; 4945F
+%endif ; C
 ass_pc_slot20:
 push dword 14h	; 49460
 call __CHK	; 49465
@@ -5761,6 +5766,10 @@ pop ecx	; 4C9FA
 pop ebx	; 4C9FB
 ret	; 4C9FC
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/asspuckc_chkdir.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/asspuckc_chkdir.inc"
+%else
 asspuckc_chkdir:
 push dword 14h	; 4C9FD
 call __CHK	; 4CA02
@@ -6018,6 +6027,11 @@ pop edx	; 4CD47
 pop ecx	; 4CD48
 pop ebx	; 4CD49
 ret	; 4CD4A
+%endif ; C
+; C: src/c/037_4842A_engine_player_logic/assgoalie.c (assnearest)
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assgoalie.assnearest.inc"
+%else
 assnearest:
 push dword 28h	; 4CD4B
 call __CHK	; 4CD50
@@ -6553,6 +6567,7 @@ call check4check	; 4D3EB
 .60:
 add esp, byte 0Ch	; 4D3F0
 jmp near assgoalie_popebp	; 4D3F3
+%endif ; C
 assshoot:
 push dword 14h	; 4D3F8
 call __CHK	; 4D3FD

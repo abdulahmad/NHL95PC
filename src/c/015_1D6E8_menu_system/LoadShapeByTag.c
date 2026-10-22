@@ -1,11 +1,9 @@
 /* Menu system: load one shape out of a tagged shape file. */
-/* DRAFT: 392 vs 392. The index, the directory byte count, and the shape pointer stay in edi.
- The file position stays in esi. The original uses esi for the index and the shape pointer, and edi
- for the file position. The width*height size is `mov eax, [esp+6]` / `sar eax, 10h` / `mov ebp, [esp+8]`
- / `sar ebp, 10h` / `imul ebp, eax` / `add ebp, 11h`. The original is `mov edx, [esp+6]` / `sar edx, 10h`
- / `mov eax, [esp+8]` / `sar eax, 10h` / `imul eax, edx` / `lea ebp, [eax+11h]`. Do not retry: declaring
- pos before bytes, declaring i first, naming the product, and adding 11h through a char pointer did not
- change either difference. A memcpy/memcmp pragma that clobbers edi spilled dir and grew the frame to 407. */
+/* DRAFT: 392 vs 392, 4 differing (10.0 GA). The index doubles as the directory byte count (esi, as the
+ original) and the file position is `offset + (count*8 + 6)` (edi). Left: the width*height size goes
+ through i (`mov esi, [esp+6]` / `sar esi, 10h` / ... / `imul esi, eax` / `lea ebp, [esi+11h]`); the
+ original multiplies in a temporary (`mov edx, [esp+6]` / `sar edx, 10h` / `mov eax, [esp+8]` /
+ `sar eax, 10h` / `imul eax, edx` / `lea ebp, [eax+11h]`). See docs/UNSURE.md for the shapes tried. */
 #include "nhl95.h"
 
 /* LoadShapeByTag: open path and return the shape whose 4-byte tag matches, or 0.
@@ -17,7 +15,6 @@
 int LoadShapeByTag(char *path, char *tag)
 {
     int dir;
-    int bytes;
     int pos;
     int i;
     int off;
@@ -42,9 +39,9 @@ int LoadShapeByTag(char *path, char *tag)
         *(short *)((char *)&s.count + 2) = 0;
     }
     if (s.err == 0) {
-        bytes = s.count << 3;
-        dir = sub_8CCA8((char *)str_sfh, bytes, 0x20);
-        s.err = FileReadAt(s.handle, (void *)dir, 6, bytes);
+        i = s.count << 3;
+        dir = sub_8CCA8((char *)str_sfh, i, 0x20);
+        s.err = FileReadAt(s.handle, (void *)dir, 6, i);
     }
     if (s.err == 0) {
         s.found = 0;
@@ -55,16 +52,15 @@ int LoadShapeByTag(char *path, char *tag)
                 s.found = -1;
                 base = s.count << 2;
                 base += dir;
-                pos = s.count << 3;
-                pos += 6;
-                pos += *(int *)(base + off);
+                pos = *(int *)(base + off) + ((s.count << 3) + 6);
                 s.err = FileReadAt(s.handle, &s, pos, 0x11);
             }
         }
     }
     if (dir) FreeMemBlock(dir);
     if (s.err == 0 && s.found != 0) {
-        n = ((short *)s.hdr)[2] * ((short *)s.hdr)[3] + 0x11;
+        i = ((short *)s.hdr)[2] * ((short *)s.hdr)[3];
+        n = i + 0x11;
         p = sub_8CCA8((char *)str_shape, n, 0x20);
         s.shape = p;
         if (FileReadAt(s.handle, (void *)p, pos, n) < 0) {

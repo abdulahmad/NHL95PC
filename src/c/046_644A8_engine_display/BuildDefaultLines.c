@@ -109,11 +109,11 @@ void SetupTeamLines(short side)
     dword_E9C24[((signed char *)lt)[0x26]] = 1;
     for (i = 0; i < 25; i++) {
         st = hmroster[side * 0x444 + i * 0x27];
-        if (dword_E9C24[i] && (st == 0 || st == 1)) RemoveFromLines(side, i);
+        if (dword_E9C24[i] && (unsigned short)(st == 0 || st == 1)) RemoveFromLines(side, i);
     }
     for (i = 0x24; i < 0x25; i++) {
         st = hmroster[((signed char *)lt)[i] * 0x27 + side * 0x444];
         if (st == 0 || st == 1) PickGoalie(side, i, 1);
     }
-    for (i = 0; i < 25; i++) byte_E9E18[side * 25 + i] = byte_E9E18[side * 25 + i] == 1;
+    for (i = 0; i < 25; i++) byte_E9E18[i + side * 25] = byte_E9E18[side * 25 + i] == 1;
 }

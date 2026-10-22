@@ -951,6 +951,10 @@ add ebp, eax	; 6BA42
 mov eax, dword [byte esp+018h]	; 6BA44
 jmp near DrawMenuItemSel_common	; 6BA48
 %endif ; C
+; C: src/c/050_6B093_joystick_calibration/MenuHitTest.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/MenuHitTest.inc"
+%else
 MenuHitTest:
 push dword 14h	; 6BA4D
 call __CHK	; 6BA52
@@ -1023,6 +1027,7 @@ pop ebp	; 6BAE5
 pop edi	; 6BAE6
 pop esi	; 6BAE7
 ret 10h	; 6BAE8
+%endif ; C
 InputPollTick:
 push edx	; 6BAEB
 push esi	; 6BAEC

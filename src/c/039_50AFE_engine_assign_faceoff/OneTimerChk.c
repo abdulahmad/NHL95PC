@@ -10,22 +10,19 @@ int OneTimerChk(Player *p)
     int i;
     int y;
     int x;
-    short n;
 
     if (HIWORD(p->Ypos) < 0) y = -HIWORD(p->Ypos);
     else y = HIWORD(p->Ypos);
-    if (y <= 0x4E || y >= 0xDE) return 0;
-    if (!((HIWORD(p->Ypos) < 0) ^ ((p->pflags & pfgoal) != 0))) return 0;
+    if (y <= 0x4E || y >= 0xDE || !((HIWORD(p->Ypos) < 0) ^ ((p->pflags & pfgoal) != 0))) return 0;
     if (p->optmptr->tmgoalie < 0) return 0;
     g = &SortCords[p->SCnum < 6 ? 6 : 0];
     for (i = 0; i < 6; i++, g++) if (!g->position) break;
-    n = 3;
+    i = 3;                      /* the goalie search counter is reused as the random range */
     if (HIWORD(p->Xpos) ^ HIWORD(g->Xpos)) {
-        if (HIWORD(g->Xpos) < 0) x = -HIWORD(g->Xpos);
-        else x = HIWORD(g->Xpos);
+        x = HIWORD(g->Xpos) < 0 ? -HIWORD(g->Xpos) : HIWORD(g->Xpos);
         if (x > 12) return 1;
-        if (x > 6) n = 2;
+        if (x > 6) i = 2;
     }
-    if (!randomd0(n)) return 1;
+    if (!randomd0(i)) return 1;
     return 0;
 }

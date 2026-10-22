@@ -493,7 +493,7 @@ class TextTargets:
         # in the original and with the pops in the draft) or to a jmp rel32 inside the module right after a relocated
         # field (asscentero into the draft asswingo's `mov edx, EvadePC; jmp asswingd_skateto`). Relocated fields and
         # that jmp's displacement are wildcards.
-        text = self.r['text']; k = text.find(b'\xc3', t); tail = b''
+        text = self.r['text']; k = text.find(b'\xc3', t); tail = b''; masked = set()
         # a `ret n` (C2 n16) ends the tail too (MessageBox into the draft TextInputDialog's `ret 14h`): decode for it
         from capstone import Cs, CS_ARCH_X86, CS_MODE_32
         for i in Cs(CS_ARCH_X86, CS_MODE_32).disasm(text[t:t + 19], t):
@@ -517,6 +517,18 @@ class TextTargets:
         span = (later[0] - go if later else len(text) - go) + 0x100
         orig = original_bytes(ga, span)
         hits = [m.start() for m in re.finditer(tail, orig, re.S)]
+        if not hits and not any(t <= i < e for i in masked):
+            # the original reaches part of the tail through a jmp (assnearest into the draft assgoalie: the EXE's
+            # assgoalie_popebp is `pop ebp; jmp ass_popx`, the draft has all the pops): a prefix of the tail, then a
+            # jmp whose target holds the rest
+            raw = text[t:e]; hits = set()
+            for j in range(1, len(raw)):
+                for m in re.finditer(re.escape(raw[:j]) + b'(?:\xe9(.{4})|\xeb(.))', orig, re.S):
+                    d = int.from_bytes(m.group(1) or m.group(2), 'little', signed=True)
+                    try: rest = original_bytes(ga + m.end() + d, len(raw) - j)
+                    except SystemExit: continue
+                    if rest == raw[j:]: hits.add(m.start())
+            hits = sorted(hits)
         if len(hits) > 1:
             # a short tail (a bare ret: assfaceoff's `jne short assshoot_ret`) occurs more than once: keep the hits
             # that carry a label in the asm (code elsewhere jumps there too)

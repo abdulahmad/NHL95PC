@@ -1,11 +1,8 @@
 /* Create player: database check. */
-/* DRAFT: 469 vs 469, one pair of instructions: the EXE increments skaters (inc ebp) before the KeyDbPtr
- argument copy (mov eax, ecx), C after. The skater id read twice through slot (as the EXE: shl eax, 2 /
- add eax, esi / mov ecx, [eax+4Ch]) also gives the counter registers. Tried for that order: skaters += 1,
- ++skaters, ((int *)slot)[0x13], a key pointer local, skaters declared first, -1 != ..., an early
- continue, *(KeyDbPtr(..) + 2), id assigned in or before the test (worse). Earlier: a line pointer
- (function scope or block scope) is what swaps ebp and edi; without it the counters match but each scan
- is cmp [edx+esi+disp] and the function is 451 bytes. */
+/* Matched (10.0 GA): the skater id is tested through slot (shl eax, 2 / add eax, esi / mov ecx, [eax+4Ch])
+ and read again from the record's key array for KeyDbPtr, which puts skaters++ (inc ebp) before the argument
+ copy (mov eax, ecx); reading it twice through slot copied the argument first. The line pointer is what gives
+ the counters ebp and edi. */
 #include "nhl95.h"
 
 /* TeamRecPtr and KeyDbPtr save and restore edx. ecx is listed so the record pointer is not left there. */
@@ -56,7 +53,7 @@ int CheckDatabases(int x, int y)
             slot += i << 2;
             if (*(int *)(slot + 0x4C) != -1) {
                 skaters++;
-                if (KeyDbPtr(*(int *)(slot + 0x4C))[2] == 0x44) defense++;
+                if (KeyDbPtr(((int *)(rec + 0x4C))[i])[2] == 0x44) defense++;
                 else s.forwards++;
             }
             i++;

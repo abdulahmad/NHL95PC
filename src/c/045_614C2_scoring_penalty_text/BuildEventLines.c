@@ -1,6 +1,28 @@
 /* Scoring penalty text: the event text lines. */
-/* DRAFT: same size; two register picks (team name pointer, second assist); see docs/UNSURE.md. */
 #include "nhl95.h"
+
+/* The existing exit owner is compilation context for BuildEventLines shared tail.
+   Its original C file continues to supply RunDeferredCalls to the build. */
+/* one queued call: 7 arguments and the function (20h bytes, table at E9BA4) */
+typedef struct DeferCall {
+    int a, b, c, d, e, f, g;
+    void (*fn)(int, int, int, int, int, int, int);
+} DeferCall;
+
+#define Q(i) ((DeferCall *)dword_E9BA4)[i]
+
+/* RunDeferredCalls: make the defercount queued calls (dword_E9BA4 table: arguments in eax, edx,
+ ebx, ecx, then 3 on the stack) in order and empty the queue. */
+void RunDeferredCalls(void)
+{
+    int i;
+
+    for (i = 0; i < defercount; i++) {
+        Q(i).fn(Q(i).a, Q(i).b, Q(i).c, Q(i).d, Q(i).e, Q(i).f, Q(i).g);
+    }
+    defercount = 0;
+}
+
 
 typedef struct { char c[13]; } T13;
 typedef struct { char c[15]; } T15;
@@ -19,8 +41,7 @@ void BuildEventLines(void)
     char buf[0xC];
     int side;
     int pl;
-    int t;
-    unsigned char f;
+    int f;
     int n;
 
     textline3 = textline1 = textline2 = textline4 = textline5 = 0;
@@ -68,20 +89,21 @@ void BuildEventLines(void)
                              (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17,
                              (char *)unk_C1B49);
             strcpy((char *)&textline2, (char *)penaltynames[(unsigned char)byte_E9ACB]);
-            t = byte_E9ACC;
-            if (t == 0xFF)
+            n = byte_E9ACC;
+            if (n == 0xFF)
                 *(T16 *)&textline4 = *(T16 *)str_GameMisconduct;
             else
-                sprintf((char *)&textline4, (char *)str_DMinutes, t);
+                sprintf((char *)&textline4, (char *)str_DMinutes, n);
         }
     } else if (byte_E9AC8 == 3) {
         side = byte_E9AC9;
         pl = byte_E9ACA;
-        t = byte_E9ACB;
+        n = byte_E9ACB;
         sprintf((char *)&textline3, (char *)str_02d02dSInjury, byte_E9ACD, byte_E9ACE, (char *)hmteamrec + side * 0x2E8);
         FormatPlayerName((char *)&textline1, (char *)unk_C1B49, hmrosterjersey[side * 0x444 + pl * 0x27],
                          (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17,
                          (char *)unk_C1B49);
-        sprintf((char *)&textline2, t > 0 ? (char *)str_GoneForTheGame : (char *)str_GoneFor1Period);
+        if (n > 0) sprintf((char *)&textline2, (char *)str_GoneForTheGame);
+        else sprintf((char *)&textline2, (char *)str_GoneFor1Period);
     }
 }

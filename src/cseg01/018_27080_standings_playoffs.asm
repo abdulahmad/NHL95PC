@@ -957,6 +957,10 @@ pop ecx	; 27C31
 pop ebx	; 27C32
 ret	; 27C33
 %endif ; C
+; C: src/c/018_27080_standings_playoffs/CountSeriesWins.c
+%ifdef CBUILD
+%include "c/018_27080_standings_playoffs/CountSeriesWins.inc"
+%else
 CountSeriesWins:
 push dword 54h	; 27C34
 call __CHK	; 27C39
@@ -1313,6 +1317,7 @@ pop edi	; 27F98
 pop esi	; 27F99
 pop ecx	; 27F9A
 ret	; 27F9B
+%endif ; C
 ; C: src/c/018_27080_standings_playoffs/PlayoffTreeScreen.c
 %ifdef CBUILD
 %include "c/018_27080_standings_playoffs/PlayoffTreeScreen.inc"

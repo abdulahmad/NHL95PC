@@ -2843,6 +2843,10 @@ mov eax, 1	; 3FF4B
 pop ebx	; 3FF50
 ret	; 3FF51
 %endif ; C
+; C: src/c/032_3DC2C_roster_jersey/TradeHitTest.c (TradeScreen)
+%ifdef CBUILD
+%include "c/032_3DC2C_roster_jersey/TradeHitTest.TradeScreen.inc"
+%else
 TradeScreen:
 push dword 654h	; 3FF52
 call __CHK	; 3FF57
@@ -2989,3 +2993,4 @@ add esp, byte 4	; 40173
 mov eax, edi	; 40176
 add esp, 634h	; 40178
 jmp near TradeHitTest_ret	; 4017E
+%endif ; C

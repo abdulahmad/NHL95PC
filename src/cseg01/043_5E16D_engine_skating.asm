@@ -294,6 +294,10 @@ ret	; 5E4C3
 ; eax = player struct. Behind the net (|Ypos|>F2h, |Xpos|<32h): regd0 = a direction round the net from the Xpos/Yvel signs.
 ; Else for every other SortCords entry (0-14, not the goalies 12/13): if the predicted x and y gaps (pos + Xvel/Yvel high
 ; byte) are both within 28h and the closest so far, regd0 = a sidestep direction from vtoa of the gap. No result.
+; C: src/c/043_5E16D_engine_skating/EvadePlayers.c
+%ifdef CBUILD
+%include "c/043_5E16D_engine_skating/EvadePlayers.inc"
+%else
 EvadePlayers:
 push dword 30h	; 5E4C4
 call __CHK	; 5E4C9
@@ -550,6 +554,7 @@ pop edx	; 5E7FA
 pop ecx	; 5E7FB
 pop ebx	; 5E7FC
 ret	; 5E7FD
+%endif ; C
 ; EvadePC: player should avoid the puck carrier (player a3 should avoid the puck carrier if he's on my team).
 ; eax = player struct; skateto's a0 routine (passed in edx). Result in regd0 (a direction).
 ; C: src/c/043_5E16D_engine_skating/EvadePlayers.c (EvadePC)

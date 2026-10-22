@@ -6,7 +6,7 @@
 typedef struct { char c[6]; } T6;
 
 /* SaveLeagueGameRef: append the league-game fields to fh, then if that succeeded write "saved"
- and a -1 marker into savleague1's PINFO file. When dword_DDD3C is set, do the same for savleague2.
+ and a -1 marker into savleague1's PINFO file and close it. When dword_DDD3C is set, do the same for savleague2.
  Returns whatever FileClose returned. */
 int SaveLeagueGameRef(int fh)
 {
@@ -34,7 +34,8 @@ int SaveLeagueGameRef(int fh)
     }
     if (!err) err = FileWriteAt(handle, &mark, 4, 2);
     if (!err) err = FileWriteAt(handle, saved, 6, 0xD);
-    if (!dword_DDD3C) return FileClose(&handle);
+    fh = FileClose(&handle);
+    if (!dword_DDD3C) return fh;
     if (!err) {
         MakePath(path, (char *)savleague2, (char *)str_PINFO, (char *)str_extDB);
         err = FileOpenWrite(path, &handle);

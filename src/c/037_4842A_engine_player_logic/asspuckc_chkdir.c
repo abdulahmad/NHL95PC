@@ -9,7 +9,8 @@
  deep in his own end (|regd3| AAh..E8h on his side, |regd2| <= 50h): steer towards the team's player at +FAh of
  the team structure when that one's predicted spot is within 14h (the second test re-checks regd1, as the EXE
  does); and within 1Eh of the centre line in x and 14h of the goal line (y DCh) head round the net (vtoa of the
- gap to the goal line). No result; the direction is left in regd0. */
+ gap to the goal line). No result; the direction is left in regd0. The team-mate's predicted spot adds the
+ velocity first (the EXE's register order). */
 void asspuckc_chkdir(Player *p)
 {
     Player *o;
@@ -39,9 +40,9 @@ void asspuckc_chkdir(Player *p)
     regd4.w = *(short *)((char *)p->tmptr + 0xFA);
     if (regd4.w >= 0) {
         o = &SortCords[regd4.w];
-        regd1.w = (o->Xpos >> 16) + (o->Xvel >> 8) - regd2.w;
+        regd1.w = (o->Xvel >> 8) + (o->Xpos >> 16) - regd2.w;
         if (ABS(regd1.w) <= 0x14) {
-            regd4.w = (o->Ypos >> 16) + (o->Yvel >> 8) - regd3.w;
+            regd4.w = (o->Yvel >> 8) + (o->Ypos >> 16) - regd3.w;
             if (ABS(regd1.w) <= 0x14) regd0.w = vtoa((short)-regd1.w, (short)-regd4.w);
         }
     }

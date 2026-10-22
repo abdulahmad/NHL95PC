@@ -5,7 +5,6 @@
 
 int ListDialog(char **items, int n, char *title, int a, int b, char *buf);
 
-/* DRAFT: 1450 vs 1451, 301 of 328 instructions; see docs/UNSURE.md. */
 /* FindPlayer (71961, PC only): the roster editor's "find" button. Ask for a player's name, split it into first
    and last name (lower case) and collect the teams whose roster has a match (last name and first name, or the
    last name alone when no first name was given), then the free-agent list (team 64h). None: say so. Several:
@@ -89,7 +88,7 @@ void FindPlayer(int *mode, int *x, int *y)
             if (rosterisfa[s.other] == 1) {
                 msglines[0] = (int)s.name;
                 msglines[1] = (int)str_IsAlreadyDisplayedOn;
-                msglines[2] = s.side ? (int)str_Roster1 : (int)str_Roster2;
+                msglines[2] = !s.side ? (int)str_Roster2 : (int)str_Roster1;
                 MessageBox(-1, -1, (char *)msglines, 3, 0, 0, (int)x, (int)y, -1);
             } else if (rosterisfa[s.side] != 1) {
                 SetRosterTeamMenus(s.side, s.team);
@@ -100,7 +99,7 @@ void FindPlayer(int *mode, int *x, int *y)
         } else if (rosterteam[s.other] == s.team) {
             msglines[0] = (int)s.name;
             msglines[1] = (int)str_IsAlreadyDisplayedOn;
-            msglines[2] = s.side ? (int)str_Roster1 : (int)str_Roster2;
+            msglines[2] = !s.side ? (int)str_Roster2 : (int)str_Roster1;
             MessageBox(-1, -1, (char *)msglines, 3, 0, 0, (int)x, (int)y, -1);
             s.side = s.other;
         } else if (rosterteam[s.side] != s.team) {

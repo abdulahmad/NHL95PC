@@ -283,8 +283,6 @@ skate:
     playeracc(p, regd2.w);
 }
 
-/* DRAFT: same size, 7 lines (the |regd1 - pucky| test negates a copy, the EXE negates in place); see
-   docs/UNSURE.md. */
 /* assnearest (4CD4B; 93G assnearest, PC version; ends in assgoalie_popebp): the player nearest the puck. A new
    assignment (bit 1) clears temp1 and temp3 and sets temp2 8. Holding the puck: the goalie plays it (assgoalie),
    a skater not joystick controlled takes assignment 10h. Every aioff ticks (the byte at +27h): when his own team

@@ -1,7 +1,7 @@
 /* Skating (043_5E16D_engine_skating): EvadePlayers... StopNA in address order, as one source file because
  later functions end in an earlier one's pop/ret tail (multi-block file, see tools/cc.py): skatetopuck ends in
  EvadePC_x, avdgoal in EvadePlayers_popebp, StopNA in EvadePlayers_popedi (which copy of the pops survives needs
- every function between them here). The ones that do not match yet (EvadePlayers, avdgoal) are
+ every function between them here). The one that does not match yet (avdgoal) is
  compiled for the layout but not spliced. vtoa is declared with an int result in this file: as short,
  skatetopuck's registers and most of EvadePlayers' differ. */
 #define skatetopuck skatetopuck_decl
@@ -26,7 +26,6 @@ void EvadePlayers(Player *p)
 {
     Player *o;
     short i, best, dx, dy, pv, ov;
-    int sum;
 
     if (p->pflags2 & 0x20) return;
     dy = ABS(HIWORD(p->Ypos));
@@ -56,8 +55,7 @@ void EvadePlayers(Player *p)
         regd1.w = (pv - ov) + dy;                         /* predicted y gap */
         regd1.w = ABS(regd1.w);
         if (regd1.w > 0x28) continue;
-        sum = regd2.w + regd1.w;
-        if (best <= sum) continue;            /* closest so far? */
+        if (regd2.w + regd1.w >= best) continue;            /* closest so far? */
         best = regd2.w + regd1.w;
         regd0.w = vtoa(dx, dy);
         if (HIWORD(p->Xpos) < -0x82) {                  /* near the left end */
@@ -69,14 +67,14 @@ void EvadePlayers(Player *p)
         } else if (HIWORD(p->Xpos) > -0x64 && HIWORD(p->Xpos) < 0) {
             if (regd0.w <= 0 || regd0.w >= 4) continue;
             regd0.w = 8 - regd0.w;
-            if (regd0.w == 6 && o->Yvel != 0) regd0.w = (dy < 0) + 4;
-            else regd0.w = dy > 0 ? 7 : 0;
+            if (regd0.w == 6 && o->Yvel != 0) regd0.w = dy < 0 ? 5 : 4;
+            else regd0.w = dy <= 0 ? 0 : 7;
         } else {
             if (HIWORD(p->Xpos) >= 0x64 || HIWORD(p->Xpos) < 0) continue;
             if (regd0.w <= 4 || regd0.w >= 8) continue;
             regd0.w = 8 - regd0.w;
-            if (regd0.w == 2 && o->Yvel != 0) regd0.w = (dy >= 0) + 3;
-            else regd0.w = dy > 0;
+            if (regd0.w == 2 && o->Yvel != 0) regd0.w = dy >= 0 ? 4 : 3;
+            else regd0.w = dy > 0 ? 1 : 0;
         }
     }
 }

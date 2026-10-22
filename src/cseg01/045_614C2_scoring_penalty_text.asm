@@ -359,6 +359,10 @@ pop edx	; 6185E
 pop ecx	; 6185F
 pop ebx	; 61860
 ret	; 61861
+; C: src/c/045_614C2_scoring_penalty_text/DecayCrowdLevel.c (DrawRinkObjects)
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/DecayCrowdLevel.DrawRinkObjects.inc"
+%else
 DrawRinkObjects:
 push dword 34h	; 61862
 call __CHK	; 61867
@@ -479,6 +483,7 @@ jge near DrawRinkObjects.4	; 619BA
 mov esp, ebp	; 619C0
 pop ebp	; 619C2
 jmp near sfxslots_popx	; 619C3
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/QueueDeferredCall.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/QueueDeferredCall.inc"
@@ -929,6 +934,10 @@ pop edi	; 61E94
 pop esi	; 61E95
 ret 8	; 61E96
 %endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/BuildEventLines.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/BuildEventLines.inc"
+%else
 BuildEventLines:
 push dword 3Ch	; 61E99
 call __CHK	; 61E9E
@@ -1300,6 +1309,7 @@ add esp, byte 8	; 62338
 .14:
 add esp, byte 0Ch	; 6233B
 jmp near fileio_popebpx	; 6233E
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/PostGoalEvent.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/PostGoalEvent.inc"
@@ -3824,6 +3834,10 @@ mov eax, esi	; 64275
 .15:
 add esp, byte 8	; 64277
 jmp near InProgress_popebp	; 6427A
+; C: src/c/045_614C2_scoring_penalty_text/QuickShotChk.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/QuickShotChk.inc"
+%else
 QuickShotChk:
 push dword 10h	; 6427F
 call __CHK	; 64284
@@ -3893,6 +3907,7 @@ pop esi	; 64334
 pop edx	; 64335
 pop ebx	; 64336
 ret	; 64337
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/CountShotOnGoal.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/CountShotOnGoal.inc"

@@ -9,7 +9,6 @@ void ChkGoalies(void)
     Team *t;
     Team *o;
     short i;
-    signed char c;
 
     if (gmode & 1) return;
     i = 0;
@@ -17,8 +16,7 @@ void ChkGoalies(void)
     o = &awtmstruct;
     for (; i < 2; i++) {
         if (t->tmgoalie >= 0) {
-            c = *puckc;
-            if (c >= 0 && !((c < 6) ^ (i == 0))) {
+            if (*puckc >= 0 && !((*puckc < 6) ^ (i == 0))) {
                 if (gmode & 8) {
                     ((unsigned char *)&t->tmgoalie)[1] = 0xFF;
                     *(unsigned char *)((int (*)[3])off_CD498)[i][(short)(t->tmgoalie & 0xF)] = 2;

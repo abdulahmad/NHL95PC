@@ -3,27 +3,31 @@
 
   python3 tools/unsure_rows.py [--check]
 
-Two kinds of rows (func, transform, shape, result):
+Two kinds of rows (func, transform, shape, result, cc):
 * one per shape of a bullet's "Tried:" list, with an empty transform: `shape` is the UNSURE wording, `result` the
   outcome given with it (a line count, "no change", "worse", ...). A record only.
 * one per shape anywhere in the bullet that tools/permute.py would generate, with `transform` its transform prefix:
   declaration orders of named locals (movedecl / swapdecl), a named local's integer type, the result type, a local
   moved into its block, a temporary inlined. Only prefixes that name one of the draft's current permute.py
   candidates are kept. permute.py skips every candidate whose transform starts with one of its function's prefixes.
-Rows filled in by hand (or kept from an earlier run) survive a rerun: the CSV is merged, never overwritten. --check
-only prints what would be added."""
+`cc` is the compiler the shapes were tried under: `ga` for a bullet that names 10.0 GA (or sits under a heading that
+does), else `la` (every entry from before the switch to 10.0 GA on 2026-10-22). permute.py only skips the rows of
+the compiler it runs. Rows filled in by hand (or kept from an earlier run) survive a rerun: the CSV is merged, never
+overwritten. --check only prints what would be added."""
 import os, re, csv, sys, argparse
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 SRC = os.path.join(ROOT, 'docs', 'UNSURE.md'); OUT = os.path.join(ROOT, 'docs', 'unsure_tried.csv')
-FIELDS = ['func', 'transform', 'shape', 'result']
+FIELDS = ['func', 'transform', 'shape', 'result', 'cc']
 
 
 def bullets(text):
-    """(function name, bullet text) for every bullet that starts with a function name"""
+    """(function name, bullet text, compiler) for every bullet that starts with a function name"""
+    head = ''
     for l in text.split('\n'):
+        if l.startswith('#'): head = l
         m = re.match(r'^\s*\*\s+`?([A-Za-z_]\w*)`?(?:\s*/\s*`?[A-Za-z_]\w*`?)*\s*(\([^)]*\))?\s*:\s*(.*)$', l)
         if m and not m.group(1)[0].islower() or (m and re.match(r'^[a-z]\w*[A-Z0-9]|^[a-z]+\d|^ass|^chk|^check|^get|^set|^do|^puck|^skate|^wall|^upd|^per|^face|^opp', m.group(1))):
-            yield m.group(1), m.group(3)
+            yield m.group(1), m.group(3), 'ga' if '10.0 GA' in head or '10.0 GA' in l else 'la'
 
 
 def split_shapes(t):
@@ -102,22 +106,23 @@ def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--check', action='store_true'); a = ap.parse_args()
     old = []
     if os.path.exists(OUT): old = list(csv.DictReader(open(OUT, newline='')))
-    have = {(r['func'], r['transform'], r['shape']) for r in old}
+    for r in old: r['cc'] = r.get('cc') or 'la'
+    have = {(r['func'], r['transform'], r['shape'], r['cc']) for r in old}
     new = []
-    for func, body in bullets(open(SRC).read()):
+    for func, body, ver in bullets(open(SRC).read()):
         for shape, result in shapes(body):
-            if (func, '', shape) in have: continue
-            have.add((func, '', shape))
-            new.append(dict(func=func, transform='', shape=shape, result=result))
+            if (func, '', shape, ver) in have: continue
+            have.add((func, '', shape, ver))
+            new.append(dict(func=func, transform='', shape=shape, result=result, cc=ver))
         cands = skip_prefixes(body)
         if not cands: continue
         names = draft_transforms(func)
         for phrase, pre in cands:
-            if (func, pre, phrase) in have or not any(n.startswith(pre) for n in names): continue
-            have.add((func, pre, phrase))
-            new.append(dict(func=func, transform=pre, shape=phrase, result='tried (docs/UNSURE.md)'))
+            if (func, pre, phrase, ver) in have or not any(n.startswith(pre) for n in names): continue
+            have.add((func, pre, phrase, ver))
+            new.append(dict(func=func, transform=pre, shape=phrase, result='tried (docs/UNSURE.md)', cc=ver))
     if a.check:
-        for r in new: print('%s | %s | %s | %s' % (r['func'], r['transform'], r['shape'][:90], r['result']))
+        for r in new: print('%s | %s | %s | %s | %s' % (r['func'], r['transform'], r['shape'][:90], r['result'], r['cc']))
         print('%d new rows (%d kept)' % (len(new), len(old)))
         return
     with open(OUT, 'w', newline='') as f:

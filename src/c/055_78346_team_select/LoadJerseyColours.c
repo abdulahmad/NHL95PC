@@ -1,10 +1,6 @@
-/* Team select: jersey colours.
- DRAFT: 348 vs 352. Copying the destination aside and writing the palette pointer back into dst puts that
- pointer in ebx, so both copy loops and the twelve fixed colours match. The remap load is still
- mov dl,[ebx+eax] / cmp dl; the original is lea edx,[ebx+eax] / mov cl,[edx], and the else arm is
- add dl,8 rather than mov dl,cl / add dl,8. Do not retry: a named team index, volatile p, or
- pragma aux byte loads (they either spill or hoist mov dl,cl ahead of the compare and steal cl
- from the second copy loop). */
+/* Team select: jersey colours. Copying the destination aside and writing the palette pointer back into dst puts
+ that pointer in ebx (both copy loops). The remap entry is read through a signed char pointer, twice in the compare
+ and once in the else arm: lea edx / mov cl,[edx] and mov dl,cl as in the EXE. */
 #include "nhl95.h"
 
 /* LoadJerseyColours: from HOMEPALS.BIN (1C0h bytes per team) take the palette part of the away (VisTeam) or home
@@ -17,8 +13,7 @@ void LoadJerseyColours(int away, int unused, unsigned char *dst)
     unsigned char *out;
     unsigned char *buf;
     int i;
-    signed char c;
-    unsigned char *p;
+    signed char *p;
     unsigned char d;
 
     out = dst;
@@ -41,10 +36,9 @@ void LoadJerseyColours(int away, int unused, unsigned char *dst)
     out[0x26F] = 0x3B;
     dst += 0xC0;
     for (i = 0x80; i < 0xFF; i++) {
-        p = &dst[i];
-        c = *p;
-        if (c >= (signed char)0x80 || c <= 0xBB) d = dst[i] - 0x3C;
-        else d = c + 8;
+        p = (signed char *)&dst[i];
+        if (*p >= (signed char)0x80 || *p <= 0xBB) d = dst[i] - 0x3C;
+        else d = *p + 8;
         jerseyremap[i] = d;
     }
     byte_D1333 = 0xFB;

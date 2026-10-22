@@ -154,14 +154,15 @@ typedef struct DivMenu { MenuItem20 *items; int pad[7]; } DivMenu;  /* roster1di
    (SelectRosterTeam in both division menus), or the "Free Agents" items come back (ShowFreeAgents) when it showed
    the free agents; the new teams items are disabled, the sides "Edit Team Lines" item enabled (EditTeamLines)
    and rosterisfa cleared. Then LoadRosterList and DrawEditRosters. No result.
-   DRAFT: 267 vs 267. In the new team's item clear, slot * 20h is in ebx and the menu pointer in edx; the original
-   has them the other way round (and zeroes rosterisfa through bh). See docs/UNSURE.md. */
+   DRAFT: 267 vs 267. Under 10.0 GA old declared before div gives the EXE's div / slot registers and the first
+   clear of the new team's items. Left: the second clear adds the menu pointer into edx (the EXE keeps it in eax:
+   `mov dword [edx+eax+14h], 0`), and rosterisfa is zeroed through cl (EXE bh). See docs/UNSURE.md. */
 void SelectRosterTeam(int *item)
 {
     int side;
     int slot;
-    int div;
     unsigned char old;
+    int div;
     int d;
     int i;
 

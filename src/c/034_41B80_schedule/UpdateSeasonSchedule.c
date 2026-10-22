@@ -2,22 +2,28 @@
 #define UpdateSeasonSchedule UpdateSeasonSchedule_decl
 #define SimScheduleDay SimScheduleDay_decl
 #define AdvancePlayoffs AdvancePlayoffs_decl
+#define BuildPlayoffs BuildPlayoffs_decl
+#define SeedPlayoffRound1 SeedPlayoffRound1_decl
 #include "nhl95.h"
 #undef UpdateSeasonSchedule
 #undef SimScheduleDay
 #undef AdvancePlayoffs
+#undef BuildPlayoffs
+#undef SeedPlayoffRound1
 
 int SimScheduleDay(int fh, int rwfh, int rdfh, int day, unsigned char *teams, char *dir, char *ext,
                    int team, int flags);
 int AdvancePlayoffs(int fh, int rwfh, int rdfh, unsigned char *teams, char *dir, char *ext,
                     int team, int flags);
+int SeedPlayoffRound1(int *seeds, unsigned char *buf, int rwfh, int series, unsigned char *teams);  /* 42FED */
 
 /* UpdateSeasonSchedule: open SCHEDULE and TEAMS read/write and CARTEAMS read-only under dir/ext.
  When the schedule is not yet at the end marker 4ADh, read that game. Load the season, career and
  key databases. A day still inside the regular schedule (below 444h), or the first playoff slot
  while either team byte is empty, is simulated; a later day, or that slot with both teams filled,
  advances the playoffs. The season database is written back, the three buffers are freed, and the
- handles are closed. SortStandings and SimPlayoffRound3 jump to the pops (UpdateSeasonSchedule_pop3).
+ handles are closed. BuildPlayoffs, SortStandings and SimPlayoffRound3 jump to the pops
+ (UpdateSeasonSchedule_pop3).
  Returns the last file error. */
 int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, int team, int flags)
 {
@@ -80,6 +86,68 @@ int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, in
     FileClose(&s.rdfh);
     FileClose(&s.rwfh);
     FileClose(&s.fh);
+    return err;
+}
+
+/* BuildPlayoffs (428AB, PC only; ends in UpdateSeasonSchedule_pop3): after the last regular season day, seed the
+   playoffs (GetPlayoffSeeds from the teams file rwfh) and make the 69h six-byte playoff game slots (all FFh). When
+   a seeded team of either conference is human (team byte +17h is 1), only the first round is seeded
+   (SeedPlayoffRound1) and the slots are written to the schedule file fh at 199Ah (game 444h). Otherwise every
+   round is seeded and simulated (SeedPlayoffRound1..SimPlayoffFinal; the seeding gets the league option bits
+   12-14), the slots are written, the season database is saved under dir / ext, the awards ceremony is shown,
+   byte_DE268 is set to FFh and the schedule's game count becomes 4ADh (the end). rdfh: the read-only career
+   teams file the simulations use; teams: the league team bytes. Returns 0 or the first error.
+   Plain locals: rdfh stays a parameter (its home is stored in the prologue) and the short count has its own
+   4-byte slot (a dword store). */
+int BuildPlayoffs(int fh, int rwfh, int rdfh, unsigned char *teams, char *dir, char *ext)
+{
+    int seeds[28];
+    char path[0x20];
+    int human;
+    int err;
+    short n;
+    unsigned char *buf;
+    unsigned char *q;
+    int i;
+    int r;
+
+    human = 0;
+    if ((r = GetPlayoffSeeds(seeds, fh, rwfh)) != 0) return r;
+    buf = (unsigned char *)sub_8CCA8((char *)str_sche, 0x276, 0x20);
+    for (i = 0; i < 0x69; i++) {
+        q = buf + i * 6;
+        q[0] = q[1] = q[2] = q[3] = q[4] = q[5] = 0xFF;
+    }
+    for (i = 0; i < 8; i++) {
+        if (teams[seeds[i] * 30 + 0x17] == 1) {
+            human = 1;
+            break;
+        }
+        if (teams[seeds[i + 14] * 30 + 0x17] == 1) {
+            human = 1;
+            break;
+        }
+    }
+    if (human) {
+        if (!(err = SeedPlayoffRound1(seeds, buf, rwfh, gameopts.optbits12, teams)))
+            err = FileWriteAt(fh, buf, 0x199A, 0x276);
+    } else if (!(err = SeedPlayoffRound1(seeds, buf, rwfh, gameopts.optbits12, teams))
+        && !(err = SimPlayoffRound1((int)buf, rwfh, rdfh, dir, ext))
+        && !(err = SeedPlayoffRound2((int)buf, gameopts.optbits12, rwfh, (int)teams, &human))
+        && !(err = SimPlayoffRound2((int)buf, rwfh, rdfh, dir, ext))
+        && !(err = SeedPlayoffRound3((int)buf, gameopts.optbits12, rwfh, (int)teams, &human))
+        && !(err = SimPlayoffRound3((int)buf, rwfh, rdfh, dir, ext))
+        && !(err = SeedPlayoffFinal((int)buf, gameopts.optbits12, rwfh, (int)teams, fh, &human))
+        && !(err = SimPlayoffFinal((int)buf, rwfh, rdfh, dir, ext))
+        && !(err = FileWriteAt(fh, buf, 0x199A, 0x276))) {
+        MakePath(path, dir, (char *)leaguedbnames[5], ext);
+        sub_932D0(path, seasondb, seasondb_size);
+        AwardsCeremony();
+        byte_DE268 = -1;
+        n = 0x4AD;
+        err = FileWriteAt(fh, &n, 0, 2);
+    }
+    FreeMemBlock((int)buf);
     return err;
 }
 

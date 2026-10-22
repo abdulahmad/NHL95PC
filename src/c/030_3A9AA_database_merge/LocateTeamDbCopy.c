@@ -8,10 +8,10 @@
  id. Returns the WaitLeagueFloppy result (0 for the hard disk) or -1. */
 int LocateTeamDbCopy(unsigned char *tab, int i, char *file, char *hddir, char *flopdir, char **dir, unsigned *id)
 {
-    int mx;
     unsigned char *e;
     int r;
     int btn;
+    int mx;
     int my;
 
     r = 0;

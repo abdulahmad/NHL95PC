@@ -310,6 +310,10 @@ mov edx, 4	; 203EB
 mov eax, unk_CF88F	; 203F0
 jmp near GameTeamStatsScreen_common	; 203F5
 %endif ; C
+; C: src/c/016_20016_easn_stats/GameStandingsScreen.c
+%ifdef CBUILD
+%include "c/016_20016_easn_stats/GameStandingsScreen.inc"
+%else
 GameStandingsScreen:
 push dword 28h	; 203FA
 call __CHK	; 203FF
@@ -390,6 +394,7 @@ pop edx	; 20503
 pop ecx	; 20504
 pop ebx	; 20505
 ret	; 20506
+%endif ; C
 db 08Dh,040h,00h
 GameStandingsMenu_jt:
 dd GameStandingsMenu_standings
@@ -968,6 +973,10 @@ xor ecx, ecx	; 20D84
 mov ebx, str_embpal2	; 20D86
 cmp byte [fileoncd+08Eh], 1	; 20D8B
 jmp near EasnGoalieStatsScreen_m.3	; 20D92
+; C: src/c/016_20016_easn_stats/EasnStandingsScreen.c
+%ifdef CBUILD
+%include "c/016_20016_easn_stats/EasnStandingsScreen.inc"
+%else
 EasnStandingsScreen:
 push dword 28h	; 20D97
 call __CHK	; 20D9C
@@ -1048,6 +1057,7 @@ pop edx	; 20EA0
 pop ecx	; 20EA1
 pop ebx	; 20EA2
 ret	; 20EA3
+%endif ; C
 db 08Dh,040h,00h
 EasnStandingsMenu_jt:
 dd EasnStandingsMenu_standings
@@ -1629,6 +1639,10 @@ mov edx, 4	; 216C8
 mov eax, unk_CF88F	; 216CD
 jmp near CalTeamStatsScreen_common	; 216D2
 %endif ; C
+; C: src/c/016_20016_easn_stats/CalStandingsScreen.c
+%ifdef CBUILD
+%include "c/016_20016_easn_stats/CalStandingsScreen.inc"
+%else
 CalStandingsScreen:
 push dword 28h	; 216D7
 call __CHK	; 216DC
@@ -1711,6 +1725,7 @@ pop edx	; 217EA
 pop ecx	; 217EB
 pop ebx	; 217EC
 ret	; 217ED
+%endif ; C
 CalStandingsMenu_jt:
 dd CalStandingsMenu_standings
 dd CalStandingsMenu_roster

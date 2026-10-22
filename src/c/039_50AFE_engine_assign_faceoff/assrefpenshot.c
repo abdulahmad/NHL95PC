@@ -13,9 +13,8 @@
  speech is idle, the overlay is down and everyone is in place, he sounds the whistle. */
 void assrefpenshot(Player *p)
 {
-    signed char tick;
-    short face;
     short r;
+    int px;
 
     if (p->pflags & pfalock) goto done;
     if (p->pflags & pfna) {
@@ -43,18 +42,9 @@ void assrefpenshot(Player *p)
     }
     if (p->temp5 == 0x64) goto done;
     if (p->temp5 == 1) {
-        short *z;
-        short z0;
-
         *puckc = -1;
-        z = (short *)puckvz;
-        *z = 0;
-        z0 = *z;
-        *puckvy = z0;
-        *puckvx = z0;
-        *(short *)puckz = z0;
-        *pucky = z0;
-        *puckx = z0;
+        *(short *)puckvz = 0;
+        *puckx = *pucky = *(short *)puckz = *puckvx = *puckvy = *(short *)puckvz;
         p->temp5++;
     }
     {
@@ -62,10 +52,9 @@ void assrefpenshot(Player *p)
         int dy;
         int v;
 
-        dx = p->Xpos >> 16;
-        dx -= *(int *)((char *)&p->temp3 - 2) >> 16;
-        dy = p->Ypos >> 16;
-        dy -= *(int *)((char *)&p->temp4 - 2) >> 16;
+        px = p->Xpos >> 16;
+        dx = px - (*(int *)((char *)&p->temp3 - 2) >> 16);
+        dy = (p->Ypos >> 16) - (*(int *)((char *)&p->temp4 - 2) >> 16);
         dx *= dx;
         dy *= dy;
         if (dx + dy >= 0x40) goto skate;
@@ -86,18 +75,14 @@ void assrefpenshot(Player *p)
         regd2.l = 6;
     } else
         regd2.l = ((signed char *)p)[OFS_Player_temp1 + 1];
-    tick = ((signed char *)p)[OFS_Player_temp1];
-    tick--;
-    ((signed char *)p)[OFS_Player_temp1] = tick;
-    if (tick >= 0) goto done;
-    ((signed char *)p)[OFS_Player_temp1] = tick + 8;
+    if (--((signed char *)p)[OFS_Player_temp1] >= 0) goto done;
+    ((signed char *)p)[OFS_Player_temp1] += 8;
     SetSPA(p, SPArefglide);
     r = regd2.w;
-    face = p->facedir;
-    if (r != face) {
+    if (r != p->facedir) {
         int step;
 
-        regd2.w = (unsigned char)(r - face) & 7;
+        regd2.w = (unsigned char)(r - p->facedir) & 7;
         if (regd2.w < 5)
             step = 1;
         else

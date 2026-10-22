@@ -1,6 +1,5 @@
 /* EASN stats: calendar standings. */
-/* DRAFT: same register blocker as GameStandingsScreen (dword_C65AC lands in edx, EXE ecx, and the bank arg follows it).
- statsteamorder is cast to int so the call matches ShowPlayoffTree(int, int). Do not retry one MakePath per branch. */
+/* statsteamorder is cast to int so the call matches ShowPlayoffTree(int, int). */
 #include "nhl95.h"
 
 /* CalStandingsScreen: the standings stats screen from the calendar: GameStandingsScreen (playoff tree with its
@@ -8,19 +7,16 @@
  reloaded after. Returns 0. */
 int CalStandingsScreen(void)
 {
-    char *bank;
     char path[16];
 
     FreeCalendarIfLowMem();
     if (statsplayoffs) {
-        if (!dword_C65A8) dword_C65A8 = sub_8E8A0((char *)str_EASNvfn, dword_C65A8);
-        if ((bank = (char *)dword_C65AC) == 0) {
+        if (!dword_C65A8) dword_C65A8 = sub_8E8A0((char *)str_EASNvfn, 0);
+        if (!dword_C65AC) {
             if (!statsplayoffs)
-                MakePath(path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs],
-                         bank);
+                MakePath(path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
             else
-                MakePath(path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs],
-                         bank);
+                MakePath(path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
             dword_C65AC = sub_8E83C(path, 0);
         }
         ShowPlayoffTree(statsteambuf, (int)statsteamorder);

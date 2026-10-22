@@ -584,6 +584,10 @@ pop ecx	; 33E67
 pop ebx	; 33E68
 ret	; 33E69
 %endif ; C
+; C: src/c/026_3377C_rink_tiles/WaitClickTimeout.c
+%ifdef CBUILD
+%include "c/026_3377C_rink_tiles/WaitClickTimeout.inc"
+%else
 WaitClickTimeout:
 push dword 30h	; 33E6A
 call __CHK	; 33E6F
@@ -650,6 +654,7 @@ pop edx	; 33EFE
 pop ecx	; 33EFF
 pop ebx	; 33F00
 ret	; 33F01
+%endif ; C
 ; C: src/c/026_3377C_rink_tiles/LoadCrestsPalette.c
 %ifdef CBUILD
 %include "c/026_3377C_rink_tiles/LoadCrestsPalette.inc"

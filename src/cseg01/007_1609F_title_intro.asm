@@ -1777,6 +1777,10 @@ mov dword [textgridon], edx	; 1778B
 pop edx	; 17791
 ret	; 17792
 %endif ; C
+; C: src/c/007_1609F_title_intro/TextGridPut.c
+%ifdef CBUILD
+%include "c/007_1609F_title_intro/TextGridPut.inc"
+%else
 TextGridPut:
 push dword 0Ch	; 17793
 call __CHK	; 17798
@@ -1826,3 +1830,4 @@ call memcpy_	; 1780E
 pop esi	; 17813
 pop ecx	; 17814
 ret	; 17815
+%endif ; C

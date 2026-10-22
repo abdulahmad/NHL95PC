@@ -1,5 +1,6 @@
 /* Misc dialogs: list box items (one source block: DrawListItems ends in DrawListItem's exit). */
-/* DRAFT: y w land in ebp edi (EXE edi ebp); DrawListItems short-jumps into this exit, so mark both as one block. */
+/* DRAFT: y w land in ebp edi (EXE edi ebp); DrawListItems short-jumps into this exit, so mark both as one block.
+   Under 10.0 GA `(idx - top) * (byte_D42C3 + 2)` gives the EXE's product registers (19 differing). */
 #include "nhl95.h"
 
 /* DrawListItem: draw list item idx (text) of a list box at x y, w wide, scrolled to top: its row
@@ -10,7 +11,7 @@ void DrawListItem(char *text, int x, int y, int w, int top, int idx, int sel, un
 {
     int c;
 
-    y += (byte_D42C3 + 2) * (idx - top) + 2;
+    y += (idx - top) * (byte_D42C3 + 2) + 2;
     x += 2;
     w -= 4;
     if (marks && flags[idx]) c = boxfillcolor;

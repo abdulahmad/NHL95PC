@@ -25,7 +25,7 @@ void LoadGameRoster(int team)
     int k;
 
     s.i = 0;
-    do gmrosterslot[s.i * 22] = s.i;
+    do { n = s.i * 11; gmrosterslot[n * 2] = s.i; }
     while (++s.i < 0x1C);
     sprintf(s.path, (char *)&leaguedbfmt, (char *)str_Key);
     if (unknown_libname_1(s.path, 0, s.find)) FatalError((char *)str_ErrA1);
@@ -37,7 +37,7 @@ void LoadGameRoster(int team)
             continue;
         }
         if (lseek(fh, 0, 0)) FatalError((char *)str_ErrA3);
-        if (lseek(fh, *(int *)((char *)dword_DBC7C + s.i * 4 + team * 0x2E8), 0) < 0) FatalError((char *)str_ErrA4);
+        if (lseek(fh, ((int *)((char *)dword_DBC7C + team * 0x2E8))[s.i], 0) < 0) FatalError((char *)str_ErrA4);
         n = read(fh, s.rec, 0x34);
         if (n < 0 || n != 0x34) FatalError((char *)str_ErrA5);
         gmroster[s.i * 22] = s.rec[2];
@@ -54,7 +54,7 @@ void LoadGameRoster(int team)
             continue;
         }
         if (lseek(fh, 0, 0)) FatalError((char *)str_ErrA6);
-        if (lseek(fh, *(int *)((char *)dword_DBCE0 + s.i * 4 + team * 0x2E8), 0) < 0) FatalError((char *)str_ErrA7);
+        if (lseek(fh, ((int *)((char *)dword_DBCE0 + team * 0x2E8))[s.i], 0) < 0) FatalError((char *)str_ErrA7);
         n = read(fh, s.rec, 0x34);
         if (n < 0 || n != 0x34) FatalError((char *)str_ErrA8);
         gmroster[(s.i + 0x19) * 22] = s.rec[2];

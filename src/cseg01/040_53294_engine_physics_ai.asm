@@ -3242,6 +3242,10 @@ mov eax, edx	; 557FD
 jmp near checkob_ret5	; 557FF
 ; chk4shot: (computer looks for a shot). regd4 = 20h - spodds; shot lane test; jumps to
 ; chk4lc_shoot (CompShoot) to shoot.
+; C: src/c/040_53294_engine_physics_ai/checkob.c (chk4shot)
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/checkob.chk4shot.inc"
+%else
 chk4shot:
 push dword 18h	; 55804
 call __CHK	; 55809
@@ -3403,6 +3407,7 @@ jl short chk4shot.14	; 55A25
 test byte [gmode2], 80h	; 55A27
 jne short chk4shot.14	; 55A2E
 jmp near chk4lc_shoot	; 55A30
+%endif ; C
 ; CompShoot: temp2 = swing time (E8h - pucky by pfgoal) 8, max 14h; assreplace ashoot (12h).
 ; C: src/c/040_53294_engine_physics_ai/CompShoot.c
 %ifdef CBUILD
@@ -5088,6 +5093,10 @@ dec word [byte eax+0Ah]	; 56F54
 pop edx	; 56F58
 ret	; 56F59
 %endif ; C
+; C: src/c/040_53294_engine_physics_ai/puckglue.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/puckglue.inc"
+%else
 puckglue:
 push dword 14h	; 56F5A
 call __CHK	; 56F5F
@@ -5180,6 +5189,7 @@ pop edx	; 57092
 pop ecx	; 57093
 pop ebx	; 57094
 ret	; 57095
+%endif ; C
 ; C: src/c/040_53294_engine_physics_ai/puckgoalie.c
 %ifdef CBUILD
 %include "c/040_53294_engine_physics_ai/puckgoalie.inc"
@@ -7851,6 +7861,10 @@ pop ecx	; 59263
 ret	; 59264
 %endif ; C
 ; ChkGoalies: (computer pulls goalie on delayed penalty), once a second from periodicevents.
+; C: src/c/040_53294_engine_physics_ai/ChkGoalies.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/ChkGoalies.inc"
+%else
 ChkGoalies:
 push dword 14h	; 59265
 call __CHK	; 5926A
@@ -7926,6 +7940,7 @@ pop edx	; 5934E
 pop ecx	; 5934F
 pop ebx	; 59350
 ret	; 59351
+%endif ; C
 ; ReturnGoalies: (computer returns a pulled goalie), from puckfaceoff.
 ; C: src/c/040_53294_engine_physics_ai/checkob.c (ReturnGoalies)
 %ifdef CBUILD

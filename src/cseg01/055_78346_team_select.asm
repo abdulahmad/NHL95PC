@@ -545,6 +545,10 @@ pop ebp	; 78A81
 pop edi	; 78A82
 pop esi	; 78A83
 ret 4	; 78A84
+; C: src/c/055_78346_team_select/LoadJerseyColours.c
+%ifdef CBUILD
+%include "c/055_78346_team_select/LoadJerseyColours.inc"
+%else
 LoadJerseyColours:
 push dword 2Ch	; 78A87
 call __CHK	; 78A8C
@@ -649,6 +653,7 @@ pop edi	; 78BE3
 pop esi	; 78BE4
 pop ecx	; 78BE5
 ret	; 78BE6
+%endif ; C
 ; C: src/c/055_78346_team_select/DrawLineEditorScreen.c (DrawDlgFrame)
 %ifdef CBUILD
 %include "c/055_78346_team_select/DrawLineEditorScreen.DrawDlgFrame.inc"

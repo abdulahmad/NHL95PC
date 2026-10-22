@@ -4125,6 +4125,10 @@ pop edx	; 7668A
 pop ebx	; 7668B
 ret	; 7668C
 %endif ; C
+; C: src/c/054_737AA_line_editor_rosters/BlitClipRect.c
+%ifdef CBUILD
+%include "c/054_737AA_line_editor_rosters/BlitClipRect.inc"
+%else
 BlitClipRect:
 push dword 30h	; 7668D
 call __CHK	; 76692
@@ -4191,6 +4195,7 @@ pop ebp	; 76736
 pop edi	; 76737
 pop esi	; 76738
 ret	; 76739
+%endif ; C
 str_Scratch2:
 db 053h,063h,072h,061h,074h,063h,068h,00h
 str_Dress2:

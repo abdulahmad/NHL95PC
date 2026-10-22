@@ -276,7 +276,8 @@ int TitleScreen(void)
         FadePalStep(0, (unsigned char *)pal, 0x10);
     }
     key = 0;
-    t0 = GetTicks();
+    /* Timer-library entry uses the cdecl calling convention. */
+    t0 = ((int (__cdecl *)(void))GetTicks)();
     due = key;
     first = 1;
     n = 0;
@@ -292,7 +293,7 @@ int TitleScreen(void)
                 due += delay;
                 n++;
                 frame = sub_1B002(dec);
-                if (GetTicks() - t0 < due) {
+                if (((int (__cdecl *)(void))GetTicks)() - t0 < due) {
                     SetDrawBitmap(bmp);
                     sub_9121C((int)mask);
                     sub_9087C(frame, 0, 0);
@@ -305,7 +306,7 @@ int TitleScreen(void)
                         PaNhlIntro();
                     }
                     first = 0;
-                    t0 = GetTicks();
+                    t0 = ((int (__cdecl *)(void))GetTicks)();
                 }
                 break;
             case 0x4D564968:
@@ -329,7 +330,7 @@ int TitleScreen(void)
             }
             sub_1B92E(stream, chunk);
             sub_1B2A7();
-            if (id == 0x4D564966 && (i = GetTicks() - t0) < due) {
+            if (id == 0x4D564966 && (i = ((int (__cdecl *)(void))GetTicks)() - t0) < due) {
                 SetTickDeadline(due - i);
                 while (!TickDeadlinePassed() && !key) {
                     if (n > 0x23) key = AnyInputPressed();
@@ -357,10 +358,11 @@ int TitleScreen(void)
     return key;
 }
 
-/* DRAFT (RunIntro): 2160 vs 2160, 4 differing. The two song loads go through reused locals (wait, then i), the
-   last fade reads the byte into a signed char local c (dec al in place), and the dword locals are declared song2,
-   song4, song3, wait, skip (found over all 120 orders). Left: the white sweep holds 3Fh in bh (EXE ch). Tried for
-   it: 3Fh through c, the black zero through c, `i != 0xE0`, `i * 3 - 1` indexes. */
+/* DRAFT (RunIntro): 2160 vs 2160, 4 differing under 10.0 GA. The PIONEER2 song is `songdata = song2 = ...`
+   (under LA it needed wait in between), the later song goes through i, the last fade reads the byte into a
+   signed char local c (dec al in place), and the dword locals are declared song2, song4, song3, wait, skip. Left:
+   the white sweep holds 3Fh in bh (EXE ch). Tried for it: 3Fh through c, the black zero through c,
+   `i != 0xE0`, `i * 3 - 1` indexes, casts on either constant, a pointer form, a braced zero store. */
 /* RunIntro (1672A, PC only; ends in RunDemoGame_x): the intro. Free the speech bank's song (music on), clear the
    screen and the palette, show the Pioneer logos (PIONEER1: BKGD3 on PL1, fading to PL2 one step per 2 ticks with
    the PIONEER2 / 3 / 4 songs when music is on and none plays; then the FLA1-4 frames and PION from PIONEER2, a
@@ -407,8 +409,7 @@ void RunIntro(void)
         MakePath(path, fileoncd[0x12B] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer3, (char *)str_Iff2);
         song3 = sub_8F98F(path);
         MakePath(path, fileoncd[0x12A] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer2, (char *)str_Iff2);
-        wait = sub_8F98F(path);                 /* wait reused for the song */
-        songdata = song2 = wait;
+        songdata = song2 = sub_8F98F(path);
         if (songdata) sub_8FB8E(songdata, musichandle, 1, 0x7F);
         SetTickDeadline(0x104);
         WaitTickDeadline();

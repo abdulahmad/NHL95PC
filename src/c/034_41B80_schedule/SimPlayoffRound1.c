@@ -274,8 +274,8 @@ int SimPlayoffRound2(int sched, int rwfh, int rdfh, char *dir, char *ext)
     for (s = 0; s < 4; s++, g += 0x2A) {
         for (i = 0; i < len; i++) {
             if (wins[g[2]] == len / 2 + 1 || wins[g[3]] == len / 2 + 1) {
-                g[i * 6 + 3] = 0xFF;
-                g[i * 6] = g[i * 6 + 1] = g[i * 6 + 2] = g[i * 6 + 3];
+                g[i * 6 + 2] = 0xFF;
+                g[i * 6] = g[i * 6 + 1] = g[i * 6 + 3] = g[i * 6 + 2];
             } else {
                 if (g[i * 6 + 4] == 0xFF) SimulateGame(dir, ext, s * 7 + 0x47C + i, g + i * 6, rwfh, rdfh, 2);
                 wins[g[i * 6 + 4] > g[i * 6 + 5] ? g[i * 6 + 2] : g[i * 6 + 3]]++;
@@ -398,8 +398,8 @@ int SimPlayoffRound3(int sched, int rwfh, int rdfh, char *dir, char *ext)
     for (s = 0; s < 2; s++, g += 0x2A) {
         for (i = 0; i < len; i++) {
             if (wins[g[2]] == len / 2 + 1 || wins[g[3]] == len / 2 + 1) {
-                g[i * 6 + 3] = 0xFF;
-                g[i * 6] = g[i * 6 + 1] = g[i * 6 + 2] = g[i * 6 + 3];
+                g[i * 6 + 5] = 0xFF;
+                g[i * 6] = g[i * 6 + 1] = g[i * 6 + 2] = g[i * 6 + 3] = g[i * 6 + 4] = g[i * 6 + 5];
             } else {
                 if (g[i * 6 + 4] == 0xFF) SimulateGame(dir, ext, s * 7 + 0x498 + i, g + i * 6, rwfh, rdfh, 2);
                 wins[g[i * 6 + 4] > g[i * 6 + 5] ? g[i * 6 + 2] : g[i * 6 + 3]]++;

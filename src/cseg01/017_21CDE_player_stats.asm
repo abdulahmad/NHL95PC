@@ -1587,6 +1587,10 @@ xor eax, eax	; 23124
 mov al, ch	; 23126
 jmp near CmpTeamScoring_sub	; 23128
 %endif ; C
+; C: src/c/017_21CDE_player_stats/CmpTeamStandings.c (CmpTeamPP)
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/CmpTeamStandings.CmpTeamPP.inc"
+%else
 CmpTeamPP:
 push dword 28h	; 2312D
 call __CHK	; 23132
@@ -1736,6 +1740,11 @@ CmpTeamPP_tie:
 mov eax, dword [ebx]	; 232AE
 sub eax, dword [esi]	; 232B0
 jmp near CmpTeamPK_ret10	; 232B2
+%endif ; C
+; C: src/c/017_21CDE_player_stats/CmpTeamStandings.c (CmpTeamPK)
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/CmpTeamStandings.CmpTeamPK.inc"
+%else
 CmpTeamPK:
 push dword 28h	; 232B7
 call __CHK	; 232BC
@@ -1890,6 +1899,11 @@ cmp al, byte [byte edx+01h]	; 23427
 je near CmpTeamPP_tie	; 2342A
 mov eax, ebp	; 23430
 jmp near CmpTeamPK.1	; 23432
+%endif ; C
+; C: src/c/017_21CDE_player_stats/CmpTeamStandings.c (CmpTeamPenalties)
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/CmpTeamStandings.CmpTeamPenalties.inc"
+%else
 CmpTeamPenalties:
 push dword 28h	; 23437
 call __CHK	; 2343C
@@ -2021,6 +2035,7 @@ mov al, byte [byte eax+01h]	; 23586
 cmp al, byte [byte edx+01h]	; 23589
 je near CmpTeamPP_tie	; 2358C
 jmp near CmpTeamPK_sub	; 23592
+%endif ; C
 db 08Dh,040h,00h
 TeamStatsScreen_keyjt:
 dd TeamStatsScreen_keyPK

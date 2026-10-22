@@ -719,7 +719,7 @@ void SelectRosterTeam(int *item);  /* 6D5D0 */
 void ShowFreeAgents(int *which);  /* 6D6DB */
 void EditTeamLines(int *which);  /* 6DF06 */
 void cleargamevars(void);  /* 5CD4F */
-int IsCupClinched(unsigned char home, unsigned char away);  /* 15C30 */
+int IsCupClinched(int home, int away);  /* 15C30 */
 int SeriesLength(unsigned char *s);  /* 42221 */
 void SetSeriesTeams(unsigned char *s, int a, int b, int games);  /* 42F42 */
 int SeedPlayoffRound1(int *seeds, unsigned char *sched, int fh, int games, unsigned char *teams);  /* 42FED */

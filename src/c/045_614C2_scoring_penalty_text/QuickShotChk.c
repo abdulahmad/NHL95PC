@@ -6,22 +6,15 @@
  within |y| <= E4h with the goalie in net. Returns 1 when it does. */
 int QuickShotChk(Player *p)
 {
-    short f;
-    short g;
     int y;
 
-    if (gmode & 0x10) return 0;
-    if (!gameopts.optbit0) return 0;
-    if (*puckc != p->SCnum) return 0;
-    if (!shotongoal) return 0;
+    if ((gmode & 0x10) || !gameopts.optbit0 || *puckc != p->SCnum || !shotongoal) return 0;
     if (p->pflags & pfgoal) {
         if (p->Yvel < 0) return 0;
-        f = p->facedir;
-        if (f >= 2 && f <= 6) return 0;
+        if (p->facedir >= 2 && p->facedir <= 6) return 0;
     } else {
         if (p->Yvel > 0) return 0;
-        g = p->facedir;
-        if (g <= 2 || g >= 6) return 0;
+        if (p->facedir <= 2 || p->facedir >= 6) return 0;
     }
     ShotLaneOpen();
     shotongoal = shotontarget;

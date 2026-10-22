@@ -304,13 +304,12 @@ short chk4shot(Player *p)
         if ((gmode2 & 0x20) && ((unsigned char)(p->pflags & 0x40) ^ (*(short *)&gmode2 & 0x40)) && threat && !randomd0(4)) goto shoot;
         if (gameclock < 4 && p->tmptr->tmscore < p->optmptr->tmscore) goto shoot;
     }
-    regd4.w = 0x20 - (short)p->spodds;
-    regd1.w = (p->pflags & 0x80) ? 0xE8 : -0xE8;
+    regd4.w = 0x20 - (unsigned short)p->spodds;
+    regd1.w = !(p->pflags & 0x80) ? -0xE8 : 0xE8;
     regd1.w -= *pucky;
     regd0.w = -*puckx;
     if ((unsigned)(regd0.w * regd0.w + regd1.w * regd1.w) > 10000) goto distant;
     if (p->optmptr->tmgoalie < 0) {
-one:
         regd4.w = 1;
         goto roll;
     }
@@ -319,7 +318,7 @@ one:
     regd3.w = 6;
     do {
         if (q->position == 0) {
-            if (q->pflags2 & 2) goto one;
+            if (q->pflags2 & 2) { regd4.w = 1; goto roll; }
         } else {
             regd0.w = HIWORD(q->Xpos) - *puckx;
             regd1.w = HIWORD(q->Ypos) - *pucky;
@@ -337,7 +336,8 @@ roll:
     if (regd0.w < 0) return 0;
     regd1.w = 0xE8 - regd0.w;
     if (regd1.w < 0) return 0;
-    if (penshotlive && regd0.w < 0x74) return 0;
+    /* Read the current signed shot position from the high-word view. */
+    if (penshotlive && (*(int *)((char *)&regd0 - 2) >> 16) < 0x74) return 0;
     if (gmode2 & 0x80) return 0;
 shoot:
     CompShoot(p);

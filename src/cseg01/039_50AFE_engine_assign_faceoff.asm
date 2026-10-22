@@ -286,6 +286,10 @@ mov edx, 0DD3h	; 50E4B
 mov eax, ebx	; 50E50
 call SetSPA	; 50E52
 jmp near CanBlockShot_ret5	; 50E57
+; C: src/c/039_50AFE_engine_assign_faceoff/OneTimerChk.c
+%ifdef CBUILD
+%include "c/039_50AFE_engine_assign_faceoff/OneTimerChk.inc"
+%else
 OneTimerChk:
 push dword 10h	; 50E5C
 call __CHK	; 50E61
@@ -374,6 +378,7 @@ pop edx	; 50F3B
 pop ecx	; 50F3C
 pop ebx	; 50F3D
 ret	; 50F3E
+%endif ; C
 ; asspassrec: (asstab 13h, catching a pass). skatetopuck toward the pass; PC adds the
 ; one-timer (PassRecOneTimer, OneTimerChk) and the pass statistics (PassCompleted).
 ; C: src/c/038_4FCE8_engine_input/CanBlockShot.c (asspassrec)
