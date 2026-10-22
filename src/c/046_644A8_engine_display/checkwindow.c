@@ -194,15 +194,15 @@ void LoadTeamPPV(short seq)
    then scor2font in 27h). Then the box is marked for redraw (sub_6AB7C). No arguments, no result. */
 void DrawTextOverlay(void)
 {
-    short x1s;
-    short y1s;
-    short y2;
     short w;
-    short y;
-    short y0s;
+    short x1s;
     short x2;
-    short x0s;
+    short y0s;
+    short y;
+    short y1s;
     int h;
+    short x0s;
+    short y2;
     short x;
     short d;
     int k;

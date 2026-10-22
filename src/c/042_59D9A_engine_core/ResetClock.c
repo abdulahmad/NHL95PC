@@ -11,6 +11,7 @@ void ResetClock(void)
     gameclock = t = GetPeriodTime();
     clockticks[0] = 0;
     PerTimeTotal = t;
-    periodendtime = gameclock - randomd0(t >> 1);
+    t = t >> 1;                                 /* not >>= (that drops a cwde) */
+    periodendtime = gameclock - randomd0(t);
     gmode |= gmclock;                           /* game clock stopped */
 }

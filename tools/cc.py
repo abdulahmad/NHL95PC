@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """cc.py - compile a C source of the matching decompilation and splice it into the asm build.
 
-  python3 tools/cc.py compile src/c/<seg>/<Func>.c [-o OBJ]   wcc386 10.0 LA under headless DOSBox -> OMF object
+  python3 tools/cc.py compile src/c/<seg>/<Func>.c [-o OBJ]   wcc386 10.0 GA (or LA) under headless DOSBox -> OMF object
   python3 tools/cc.py compile A.c B.c ...                      several sources, one DOSBox run per 16 (objects in build/)
   python3 tools/cc.py frag    src/c/<seg>/<Func>.c OBJ OUT.inc  object -> NASM fragment for the marked asm block
   python3 tools/cc.py mark    src/c/<seg>/<Func>.c [--func F [--seg STEM]] [--end LABEL] wrap the asm function in the CBUILD
@@ -36,8 +36,11 @@ leaves the slice as `dd (Label+k)-($+4)` to the asm label of the block it lands 
 in a marked block (drafts, functions kept in the file for the original layout) is compiled but not spliced. A
 branch out of a slice into unmarked code, or a short (rel8) one, is an error.
 
-Compiler: Watcom C/C++32 10.0 LA wcc386 (WATCOM_ROOT, default tools/watcom: dosla/WCC386.EXE + w10a DOS4GW), default
-flags. A source may add flags with a comment line `/* cflags: -xx */` (none needed so far). Headers come from
+Compiler: Watcom C/C++32 10.0 wcc386 under DOSBox, default flags, chosen by WATCOM_VER (make WATCOM_VER=...):
+  ga (default)  10.0 GA (May 1994; the compiler HOCKEY.EXE was built with): tools/watcom/dosga/ WCC386, DOS4GW, W32RUN
+  la            10.0 LA (Limited Availability, Mar 1994; the reference until 2026-10-22, kept as a fallback):
+                tools/watcom/dosla/WCC386.EXE with the 10.0a DOS4GW / W32RUN from tools/watcom/w10a/
+WATCOM_ROOT moves the tools/watcom tree. The cache key includes the compiler, so the two never share objects. A source may add flags with a comment line `/* cflags: -xx */` (none needed so far). Headers come from
 src/c/include (8.3 names)."""
 import glob
 import os, re, sys, shutil, subprocess, tempfile, argparse, threading
@@ -45,8 +48,14 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import cobj
 W = os.environ.get('WATCOM_ROOT', os.path.join(ROOT, 'tools/watcom'))
-CC = os.path.join(W, 'dosla/WCC386.EXE'); D4G = os.path.join(W, 'w10a/WATCOM/BIN/DOS4GW.EXE')
-W32 = os.path.join(W, 'w10a/WATCOM/BIN/W32RUN.EXE')
+COMPILERS = {   # WATCOM_VER -> (wcc386, DOS/4GW, W32RUN, description)
+    'ga': ('dosga/WCC386.EXE', 'dosga/DOS4GW.EXE', 'dosga/W32RUN.EXE', 'wcc386 10.0 GA'),
+    'la': ('dosla/WCC386.EXE', 'w10a/WATCOM/BIN/DOS4GW.EXE', 'w10a/WATCOM/BIN/W32RUN.EXE', 'wcc386 10.0 LA'),
+}
+VER = os.environ.get('WATCOM_VER', '') or 'ga'
+if VER not in COMPILERS: raise SystemExit('cc.py: WATCOM_VER=%s: use one of %s' % (VER, ', '.join(sorted(COMPILERS))))
+CC, D4G, W32 = (os.path.join(W, x) for x in COMPILERS[VER][:3])
+CCNAME = COMPILERS[VER][3]
 INC = os.path.join(ROOT, 'src/c/include')
 FLAGS = ''
 
@@ -65,9 +74,10 @@ def included(src):
     return sorted(seen)
 
 def cache_key(src, flags):
-    """sha1 of the compiler, flags, the .c and every header it includes: same key -> same object"""
+    """sha1 of the compiler, flags, the .c and every header it includes: same key -> same object. 'fresh': only
+    objects compiled first in their DOSBox run are cached (compile_many); older caches may hold others."""
     import hashlib
-    h = hashlib.sha1(('%s|%s|' % (os.path.getsize(CC), flags)).encode())
+    h = hashlib.sha1(('fresh|%s|%s|%s|' % (VER, os.path.getsize(CC), flags)).encode())
     for p in [src] + included(src):
         h.update(os.path.basename(p).encode()); h.update(open(p, 'rb').read())
     return h.hexdigest()
@@ -81,7 +91,9 @@ def compile_c(src, obj, extra=''):
 
 def compile_many(items, batch=None):
     """compile [(src, obj, extra_flags)]; returns a list of bools. Cache hits are copied; the misses are compiled in
-    one DOSBox run per `batch` sources (NHL95_CC_BATCH, default 16): one DOSBox boot serves the whole batch."""
+    one DOSBox run per `batch` sources (NHL95_CC_BATCH, default 16): one DOSBox boot serves the whole batch. Only
+    the first object of each run goes into the cache: wcc386 can compile a source differently after other files in
+    the same run (HANDOFF step 3, the compiler state), and make compiles each file in a fresh run."""
     batch = batch or int(os.environ.get('NHL95_CC_BATCH', '16'))
     nocache = os.environ.get('NHL95_NOCACHE') == '1'
     res = [False] * len(items); todo = {}   # cache key -> [(index, src, obj, flags)]
@@ -94,12 +106,13 @@ def compile_many(items, batch=None):
     for c in range(0, len(keys), batch):
         chunk = keys[c:c + batch]
         oks = compile_batch_raw([todo[key][0][1:] for key in chunk])
-        for key, ok in zip(chunk, oks):
+        for pos, (key, ok) in enumerate(zip(chunk, oks)):
             k0, src0, obj0, _ = todo[key][0]
             if not ok: continue
-            os.makedirs(CACHE, exist_ok=True); cobj_ = os.path.join(CACHE, key + '.obj')
-            tmp = cobj_ + '.%d.%d' % (os.getpid(), threading.get_ident())
-            shutil.copy(obj0, tmp); os.replace(tmp, cobj_)
+            if pos == 0:   # the fresh compiler state
+                os.makedirs(CACHE, exist_ok=True); cobj_ = os.path.join(CACHE, key + '.obj')
+                tmp = cobj_ + '.%d.%d' % (os.getpid(), threading.get_ident())
+                shutil.copy(obj0, tmp); os.replace(tmp, cobj_)
             for k, src, obj, _ in todo[key]:
                 if obj != obj0:
                     os.makedirs(os.path.dirname(os.path.abspath(obj)), exist_ok=True); shutil.copy(obj0, obj)
@@ -320,9 +333,11 @@ def frag(src, obj, out):
     r = cobj.parse(obj, known)
     text = r['text']; pubs = r['pubs']
     blocks = file_blocks(src)
-    multi = len(blocks) > 1 or func != fil
-    s0 = pubs.get(func, 0) if multi else 0
-    if func not in pubs and multi: raise SystemExit('%s: no public %s in the object' % (src, func))
+    # several functions in the object (a single marked block with drafts beside it, as for a block among others):
+    # cut the block at its public
+    multi = len(blocks) > 1 or func != fil or len(pubs) > 1
+    s0 = anchor(src, r, func, start, end) if multi else 0
+    if s0 < 0: raise SystemExit('%s: block %s would start before the object' % (src, func))
     n = end - start
     lead = {}
     if not multi and pubs.get(func, 0) > 0 and len(text) - pubs[func] == n:
@@ -371,7 +386,7 @@ def frag(src, obj, out):
             xb[a + i.size - 4] = textlabel(t)
     cuts = {}
     for nm, a in labels: cuts.setdefault(a - start, []).append(nm)
-    lines = ['; GENERATED by tools/cc.py from %s%s (wcc386 10.0 LA); do not edit' % (os.path.relpath(src, ROOT), ', function %s' % func if multi else '')]
+    lines = ['; GENERATED by tools/cc.py from %s%s (%s); do not edit' % (os.path.relpath(src, ROOT), ', function %s' % func if multi else '', CCNAME)]
     pos = 0; row = []
     def flush():
         if row: lines.append('db ' + ','.join('0%02Xh' % b for b in row)); row.clear()
@@ -396,6 +411,24 @@ def frag(src, obj, out):
     for nm in cuts.get(pos, []): lines.append('%s:' % nm)
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     open(out, 'w').write('\n'.join(lines) + '\n')
+
+def anchor(src, r, func, start, end):
+    """the object offset of the asm block [start, end) of func (a C function, or a label inside one: a piece of a
+    split function, e.g. getlinee_pp before TeamLineEnergy): func's public, else from a public of the file by the
+    address difference - a public inside the block first, else the nearest one before or after it (the code in
+    between must then match too). The object must have the EXE's layout between the two (frag checks the publics
+    inside the block; make's sha1 the bytes)."""
+    if func in r['pubs']: return r['pubs'][func]
+    asm = c_paths(src, func)[2]
+    at = [(n, label_addr(asm, n)) for n in r['pubs']]
+    at = [(n, a) for n, a in at if a is not None]
+    inside = [(a - start, n, a) for n, a in at if start <= a < end]
+    before = [(start - a, n, a) for n, a in at if a < start]
+    after = [(a - end, n, a) for n, a in at if a >= end]
+    pick = min(inside) if inside else min(before + after) if before or after else None
+    if pick is None: raise SystemExit('%s: no public of the object to place %s by (asm %s)' % (src, func, os.path.relpath(asm, ROOT)))
+    _, n, a = pick
+    return r['pubs'][n] - (a - start)
 
 def label_addr(asm, name):
     L = open(asm).read().split('\n')
@@ -432,8 +465,8 @@ class TextTargets:
         self.where = []
         for g in file_blocks(src):
             gs, ge, gl, _ = block(src, g)
-            if g not in r['pubs']: raise SystemExit('%s: no public %s in the object' % (src, g))
-            self.where.append((r['pubs'][g], r['pubs'][g] + ge - gs, gl[0][0], gs, gl, c_paths(src, g)[2]))
+            a = anchor(src, r, g, gs, ge)
+            self.where.append((a, a + ge - gs, gl[0][0], gs, gl, c_paths(src, g)[2]))
     def resolve(self, t, func='?'):
         for a, e, lab, gs, gl, gasm in self.where:
             if a <= t < e or (t == e and a < e):
@@ -451,6 +484,10 @@ class TextTargets:
         own = [(n, o) for n, o in pubs if o <= t]
         if not own: raise SystemExit('%s: %s refers to _TEXT+%X before any function' % (self.src, func, t))
         g, go = own[-1]
+        if t == go and label_addr(self.asm, g) is not None:
+            # the entry of another function of the file (a tail call into a draft: MenuP1ControlsExh's
+            # `jmp short ControlsDlgExh`): its own label
+            return g, label_addr(self.asm, g)
         # the tail: up to the next ret; with no ret close by, up to its first call / jmp out of the module (a rel32
         # fixup: assrefdrop's jumps into the draft assrefwhistle's SkateToSpot tail, which goes on with `jmp ass_popx`
         # in the original and with the pops in the draft) or to a jmp rel32 inside the module right after a relocated
@@ -480,6 +517,12 @@ class TextTargets:
         span = (later[0] - go if later else len(text) - go) + 0x100
         orig = original_bytes(ga, span)
         hits = [m.start() for m in re.finditer(tail, orig, re.S)]
+        if len(hits) > 1:
+            # a short tail (a bare ret: assfaceoff's `jne short assshoot_ret`) occurs more than once: keep the hits
+            # that carry a label in the asm (code elsewhere jumps there too)
+            at = set(global_labels(self.asm).values())
+            lab = [h for h in hits if ga + h in at]
+            if len(lab) == 1: hits = lab
         if len(hits) != 1:
             raise SystemExit('%s: %s branches to the tail %s of %s; found %d times in the original %s' % (self.src, func, text[t:t + 16].hex(), g, len(hits), g))
         ta = ga + hits[0]
@@ -554,6 +597,7 @@ if __name__ == '__main__':
     a = ap.parse_args()
     if a.seg: os.environ['CC_SEG'] = a.seg
     if a.cmd == 'check': sys.exit(0 if check() else 1)
+    if a.cmd == 'version': print('%s %s (%s)' % (VER, CCNAME, os.path.relpath(CC, ROOT))); sys.exit(0)
     if a.cmd == 'compile':
         objof = lambda s: os.path.join(ROOT, 'build', os.path.relpath(os.path.splitext(os.path.abspath(s))[0], os.path.join(ROOT, 'src')) + '.obj')
         if a.rest:   # several sources: batched DOSBox runs on every core, objects at their build/ paths

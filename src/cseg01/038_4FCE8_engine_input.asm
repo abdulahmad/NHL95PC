@@ -21,6 +21,10 @@ global Readjoy2, CenterMouse
 ; Input queue. The timer ISR (main_startup SampleInputTick) samples both pads every 5 ticks
 ; into joyqueue (50 records of 3 bytes) while joysampling is set. The main loop takes the
 ; frame's record with joyq_peek (-> joyrec, read by Readjoy1/Readjoy2) and drops it with joyq_pop.
+; C: src/c/038_4FCE8_engine_input/joyq_pop.c
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/joyq_pop.inc"
+%else
 joyq_pop:
 push dword 14h	; 4FCE8
 call __CHK	; 4FCED
@@ -53,6 +57,7 @@ pop edx	; 4FD43
 pop ecx	; 4FD44
 pop ebx	; 4FD45
 ret	; 4FD46
+%endif ; C
 ; C: src/c/038_4FCE8_engine_input/joyq_flush.c
 %ifdef CBUILD
 %include "c/038_4FCE8_engine_input/joyq_flush.inc"
@@ -201,6 +206,10 @@ jmp near CanBlockShot_ret5	; 4FF08
 %endif ; C
 ; faceoffinput: (afaceoffpl 17h, fodir1/fodir2, pf2aip). PC adds an automatic
 ; pull when temp5 runs out (SPA 7F1h) and picks the pull anim by pucktemp1.
+; C: src/c/038_4FCE8_engine_input/faceoffinput.c
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/faceoffinput.inc"
+%else
 faceoffinput:
 push dword 10h	; 4FF0D
 call __CHK	; 4FF12
@@ -258,6 +267,7 @@ pop edx	; 4FFAA
 pop ecx	; 4FFAB
 pop ebx	; 4FFAC
 ret	; 4FFAD
+%endif ; C
 ; C: src/c/038_4FCE8_engine_input/Acheck.c
 %ifdef CBUILD
 %include "c/038_4FCE8_engine_input/Acheck.inc"
@@ -582,6 +592,10 @@ pop edx	; 50339
 pop ecx	; 5033A
 pop ebx	; 5033B
 ret	; 5033C
+; C: src/c/038_4FCE8_engine_input/CanBlockShot.c (OppInReach)
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/CanBlockShot.OppInReach.inc"
+%else
 OppInReach:
 push dword 1Ch	; 5033D
 call __CHK	; 50342
@@ -643,6 +657,7 @@ cmp ebp, byte 6	; 503C1
 jl short OppInReach.loop	; 503C4
 xor eax, eax	; 503C6
 jmp near CanBlockShot_ret6	; 503C8
+%endif ; C
 ; holdplayer: (A button, not the puck carrier) with two PC checks first:
 ; OppInReach -> hold anim 873h; CanBlockShot -> dive (BlockShotDive); else Acheck on SortCords[impactp].
 ; C: src/c/038_4FCE8_engine_input/holdplayer.c
@@ -1118,6 +1133,10 @@ pop ecx	; 50905
 pop ebx	; 50906
 ret	; 50907
 %endif ; C
+; C: src/c/038_4FCE8_engine_input/getlchoice.c
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/getlchoice.inc"
+%else
 getlchoice:
 push dword 10h	; 50908
 call __CHK	; 5090D
@@ -1150,6 +1169,7 @@ pop esi	; 50971
 pop edx	; 50972
 pop ecx	; 50973
 ret	; 50974
+%endif ; C
 ; C: src/c/038_4FCE8_engine_input/lcfound.c
 %ifdef CBUILD
 %include "c/038_4FCE8_engine_input/lcfound.inc"
@@ -1205,6 +1225,10 @@ pop ebx	; 50A03
 ret	; 50A04
 %endif ; C
 ; Readjoy1 Readjoy2 = Readjoy1/2, reading byte 0 1 of joyrec instead of the pad.
+; C: src/c/038_4FCE8_engine_input/Readjoy1.c
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/Readjoy1.inc"
+%else
 Readjoy1:
 push dword 10h	; 50A05
 call __CHK	; 50A0A
@@ -1242,6 +1266,11 @@ pop edx	; 50A80
 pop ecx	; 50A81
 pop ebx	; 50A82
 ret	; 50A83
+%endif ; C
+; C: src/c/038_4FCE8_engine_input/Readjoy1.c (Readjoy2)
+%ifdef CBUILD
+%include "c/038_4FCE8_engine_input/Readjoy1.Readjoy2.inc"
+%else
 Readjoy2:
 push dword 10h	; 50A84
 call __CHK	; 50A89
@@ -1267,6 +1296,7 @@ mov word [regd2], ax	; 50AC7
 mov ax, word [regd1]	; 50ACD
 mov word [lj2], ax	; 50AD3
 jmp near Readjoy_tail	; 50AD9
+%endif ; C
 ; C: src/c/038_4FCE8_engine_input/CenterMouse.c
 %ifdef CBUILD
 %include "c/038_4FCE8_engine_input/CenterMouse.inc"

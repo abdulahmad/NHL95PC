@@ -7,7 +7,12 @@ void DrawFrameSprite(short n, short x, short y, short a, short b)
 {
     if (n < 0 || n >= 0x46E) return;
     if (photoptrs[n] == 0) return;
-    x += 0xC0;
-    y = 0x140 - y;
-    DrawSprite(photoptrs[n], x, y, a, b, 1);
+    {
+        short sx;
+
+        sx = x;
+        sx += 0xC0;
+        y = 0x140 - y;
+        DrawSprite(photoptrs[n], sx, y, a, b, 1);
+    }
 }

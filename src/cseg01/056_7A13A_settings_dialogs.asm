@@ -3474,6 +3474,10 @@ mov edi, dword [pointerspr]	; 7C846
 push edi	; 7C84C
 jmp near ExhSetEditLoop.5	; 7C84D
 %endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (DrawCtlBoxOn)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.DrawCtlBoxOn.inc"
+%else
 DrawCtlBoxOn:
 push dword 30h	; 7C852
 call __CHK	; 7C857
@@ -3547,6 +3551,11 @@ push eax	; 7C8F3
 call sub_B4FAC	; 7C8F4
 add esp, byte 14h	; 7C8F9
 jmp near ControlsDlg_ret	; 7C8FC
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (DrawCtlBoxOff)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.DrawCtlBoxOff.inc"
+%else
 DrawCtlBoxOff:
 push dword 30h	; 7C901
 call __CHK	; 7C906
@@ -3607,11 +3616,21 @@ call sub_B4FAC	; 7C985
 add esp, byte 14h	; 7C98A
 push ebp	; 7C98D
 jmp near DrawCtlBox_common	; 7C98E
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (MenuP1ControlsExh)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.MenuP1ControlsExh.inc"
+%else
 MenuP1ControlsExh:
 push dword 4	; 7C993
 call __CHK	; 7C998
 xor eax, eax	; 7C99D
 jmp short ControlsDlgExh	; 7C99F
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (MenuP2ControlsExh)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.MenuP2ControlsExh.inc"
+%else
 MenuP2ControlsExh:
 push dword 4	; 7C9A1
 call __CHK	; 7C9A6
@@ -3671,11 +3690,21 @@ ControlsDlg_done:
 xor eax, eax	; 7CA49
 add esp, byte 4	; 7CA4B
 jmp near ControlsDlg_ret	; 7CA4E
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (MenuP1ControlsLeague)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.MenuP1ControlsLeague.inc"
+%else
 MenuP1ControlsLeague:
 push dword 4	; 7CA53
 call __CHK	; 7CA58
 xor eax, eax	; 7CA5D
 jmp short ControlsDlgLeague	; 7CA5F
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (MenuP2ControlsLeague)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.MenuP2ControlsLeague.inc"
+%else
 MenuP2ControlsLeague:
 push dword 4	; 7CA61
 call __CHK	; 7CA66
@@ -3727,6 +3756,11 @@ add esp, byte 4	; 7CAE7
 xor edx, edx	; 7CAEA
 mov dword [ctldlgalt], edx	; 7CAEC
 jmp near ControlsDlg_done	; 7CAF2
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.inc"
+%else
 MenuP1ControlsInGame:
 push dword 4	; 7CAF7
 call __CHK	; 7CAFC
@@ -3783,6 +3817,7 @@ cmp dword [dword eax+ctl1team], byte 0	; 7CB8B
 jge near ControlsDlgInGame_side	; 7CB92
 xor edx, edx	; 7CB98
 jmp near ControlsDlgInGame_setside	; 7CB9A
+%endif ; C
 ; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (MenuP2ControlsInGame)
 %ifdef CBUILD
 %include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.MenuP2ControlsInGame.inc"
@@ -3793,6 +3828,10 @@ call __CHK	; 7CBA4
 mov eax, 1	; 7CBA9
 jmp near ControlsDlgInGame	; 7CBAE
 %endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (CtlSwapScoreFix)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.CtlSwapScoreFix.inc"
+%else
 CtlSwapScoreFix:
 push dword 10h	; 7CBB3
 call __CHK	; 7CBB8
@@ -3863,9 +3902,10 @@ pop edx	; 7CC86
 pop ecx	; 7CC87
 pop ebx	; 7CC88
 ret	; 7CC89
-; C: src/c/056_7A13A_settings_dialogs/CtlSwapTeamFlag.c
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (CtlSwapTeamFlag)
 %ifdef CBUILD
-%include "c/056_7A13A_settings_dialogs/CtlSwapTeamFlag.inc"
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.CtlSwapTeamFlag.inc"
 %else
 CtlSwapTeamFlag:
 push dword 10h	; 7CC8A
@@ -4039,6 +4079,10 @@ mov word [c2playernum], ax	; 7CE93
 .15:
 add esp, byte 10h	; 7CE99
 jmp near ControlsDlg_ret0	; 7CE9C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (ClearCtlBlink)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.ClearCtlBlink.inc"
+%else
 ClearCtlBlink:
 push dword 18h	; 7CEA1
 call __CHK	; 7CEA6
@@ -4134,6 +4178,11 @@ inc ebx	; 7CFAA
 cmp ebx, byte 2	; 7CFAB
 jl near ClearCtlBlink.1	; 7CFAE
 jmp near ControlsDlg_ret0	; 7CFB4
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (ControlsDlgInGame_side)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.ControlsDlgInGame_side.inc"
+%else
 ControlsDlgInGame_side:
 cmp dword [dword eax+ctl1side], byte 0	; 7CFB9
 jne short .1	; 7CFC0
@@ -4273,11 +4322,21 @@ pop edx	; 7D133
 pop ecx	; 7D134
 pop ebx	; 7D135
 ret	; 7D136
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (MenuP1ControlsPlayoff)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.MenuP1ControlsPlayoff.inc"
+%else
 MenuP1ControlsPlayoff:
 push dword 4	; 7D137
 call __CHK	; 7D13C
 xor eax, eax	; 7D141
 jmp short ControlsDlgPlayoff	; 7D143
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (MenuP2ControlsPlayoff)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.MenuP2ControlsPlayoff.inc"
+%else
 MenuP2ControlsPlayoff:
 push dword 4	; 7D145
 call __CHK	; 7D14A
@@ -4366,6 +4425,11 @@ add esp, byte 4	; 7D247
 xor eax, eax	; 7D24A
 add esp, byte 8	; 7D24C
 jmp near ControlsDlg_ret	; 7D24F
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (DrawControlsDlg)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.DrawControlsDlg.inc"
+%else
 DrawControlsDlg:
 push dword 14Ch	; 7D254
 call __CHK	; 7D259
@@ -4493,6 +4557,11 @@ call sub_91964	; 7D3DD
 add esp, byte 0Ch	; 7D3E2
 add esp, 120h	; 7D3E5
 jmp near ControlsDlg_ret0	; 7D3EB
+%endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (DrawControlsOpts)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.DrawControlsOpts.inc"
+%else
 DrawControlsOpts:
 push dword 28h	; 7D3F0
 call __CHK	; 7D3F5
@@ -4666,6 +4735,7 @@ push eax	; 7D60F
 push str_TheKeyboard	; 7D610
 call sub_91964	; 7D615
 jmp near ControlsDlg_ret0C	; 7D61A
+%endif ; C
 ; C: src/c/056_7A13A_settings_dialogs/CtlDlgHitTest.c
 %ifdef CBUILD
 %include "c/056_7A13A_settings_dialogs/CtlDlgHitTest.inc"

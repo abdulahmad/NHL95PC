@@ -6,23 +6,18 @@
  *away get the teams, *hw *aw the wins. Returns 0, or -1 at a game not yet played (FFh). */
 int POSeriesScore(unsigned char *s, int *hw, int *aw, int *home, int *away)
 {
-    int a;
-
     *home = s[2];
     *away = s[3];
     *hw = *aw = 0;
-    for (; *hw < 4 && (a = *aw) < 4; s += 6) {
+    for (; *hw < 4 && *aw < 4; s += 6) {
         if (s[4] == 0xFF) return -1;
         if (s[2] == *home) {
-            if (s[4] > s[5]) goto homewin;
-            *aw = a + 1;
+            if (s[4] > s[5]) (*hw)++;
+            else (*aw)++;
         } else {
-            if (s[4] <= s[5]) goto homewin;
-            *aw = ++a;
+            if (s[4] > s[5]) (*aw)++;
+            else (*hw)++;
         }
-        continue;
-homewin:
-        (*hw)++;
     }
     return 0;
 }

@@ -1886,6 +1886,10 @@ je near RunFileDlg.26	; 2CE19
 mov ecx, dword [byte esp+01Ch]	; 2CE1F
 push ecx	; 2CE23
 jmp near RunFileDlg.33	; 2CE24
+; C: src/c/021_2B7B7_file_dialogs/LoadFileDlgShapes.c (DeleteSavedGame)
+%ifdef CBUILD
+%include "c/021_2B7B7_file_dialogs/LoadFileDlgShapes.DeleteSavedGame.inc"
+%else
 DeleteSavedGame:
 push dword 84h	; 2CE29
 call __CHK	; 2CE2E
@@ -2076,6 +2080,7 @@ call DrawFileDlgTabs	; 2D088
 mov eax, dword [byte esp+050h]	; 2D08D
 add esp, byte 54h	; 2D091
 jmp near LoadFileDlgShapes_x	; 2D094
+%endif ; C
 SelectSavedFile:
 push dword 4Ch	; 2D099
 call __CHK	; 2D09E

@@ -42,10 +42,10 @@ int TeamRosterScreen(int team)
     unsigned char prec[0x34];
     unsigned char sstat[0x2F];
     char path[0x20];
+    int fh;
     int kfh;
     int pfh;
     int n;
-    int fh;
     int kf;
     int mf;
     unsigned short *gs;

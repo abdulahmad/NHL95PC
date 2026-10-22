@@ -17,6 +17,6 @@ void getlchoice(Player *p)
         if (d > 0) regd0.w += 0x20;
     }
     regd1.w = tm->tmline;
-    regd0.w += tm->tmline * 4;
+    regd0.w += regd1.w * 4;
     regd0.w = lchoicetab[regd0.w];
 }

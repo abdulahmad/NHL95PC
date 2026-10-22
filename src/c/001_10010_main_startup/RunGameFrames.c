@@ -11,7 +11,7 @@ void RunGameFrames(int n)
 
     for (i = 0; i < n; i++) {
         if (!inputframes) {
-            if (!(joyrec = (int)joyq_peek())) return;
+            if (!(*(unsigned char **)&joyrec = joyq_peek())) return;
             if ((c = ((unsigned char *)joyrec)[2]) & 0x80) {
                 if (HandleHotKey(c) == 1) {
                     joyq_flush();

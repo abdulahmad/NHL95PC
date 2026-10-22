@@ -452,8 +452,8 @@ void RequestLineChange(Player *p)
    1Fh and word_E0028 is set to 500h toward his side. p: the puck. No result. */
 void Endfaceoff(Player *p)
 {
-    short i;
     short j;
+    short i;
     short w;
 
     StopDigiSample();

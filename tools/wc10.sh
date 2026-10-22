@@ -1,13 +1,15 @@
 #!/bin/bash
 # wc10.sh VERSION SRC.c "FLAGS..."   -> build/cc/<ver>/<name>.obj + .lst (wdis) ; runs historic wcc386 under headless dosbox
 # Needs dosbox + the Watcom trees under $WATCOM_ROOT (default ~/watcom): w10a/WATCOM, dosla, w105, ow19/binl/wdis.
-# VERSION: 10a (Watcom 10.0a, Sep 1994 CD) | la (10.0 Limited Edition prerelease, Mar 1994) | 105 (Watcom 10.5, Jul 1995)
+# VERSION: ga (Watcom 10.0 GA, May 1994: the compiler HOCKEY.EXE was built with; from tools/watcom/dosga in the repo)
+#          | 10a (Watcom 10.0a, Sep 1994 CD) | la (10.0 Limited Availability prerelease, Mar 1994) | 105 (Watcom 10.5, Jul 1995)
 set -e
 VER=$1; SRC=$2; FLAGS=$3
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 W=${WATCOM_ROOT:-$HOME/watcom}   # historic Watcom installs (not in the repo)
 case $VER in
   10a) ROOT=$W/w10a/WATCOM; CC=BINB/WCC386.EXE; D4=BIN/DOS4GW.EXE ;;
+  ga)  ROOT=$REPO/tools/watcom/dosga; CC=WCC386.EXE; D4=DOS4GW.EXE ;;
   la)  ROOT=$W/dosla; CC=WCC386.EXE; D4=../w10a/WATCOM/BIN/DOS4GW.EXE ;;
   105) ROOT=$W/w105; CC=BINW/WCC386.EXE; D4=BINW/DOS4GW.EXE ;;
 esac

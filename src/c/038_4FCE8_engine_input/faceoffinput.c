@@ -6,18 +6,16 @@
  from pucktemp1 11h on), otherwise temp5 counts down to the idle animation 7F1h. */
 void faceoffinput(Player *p)
 {
-    signed char f;
 
     if (p->asslist[p->assnum] != 0x17) return;
     if (p->pflags & pfgoal) fodir2 = regd0.w;
     else fodir1 = regd0.w;
-    f = p->pflags2;
-    if (f & 2) return;
+    if (p->pflags2 & 2) return;
     if (!(regd1.w & 0x10)) {
         if (--p->temp5 < 0) SetSPA(p, 0x7F1);
         return;
     }
-    p->pflags2 = f | 2;
+    p->pflags2 = p->pflags2 | 2;
     if (pucktemp1 < 0x11) {
         p->pflags |= 0x20;
         SetSPA(p, 0x7DD);

@@ -31,6 +31,10 @@ pop edx	; 452A3
 pop ebx	; 452A4
 ret	; 452A5
 %endif ; C
+; C: src/c/035_45282_options_settings/SimAddPair.c
+%ifdef CBUILD
+%include "c/035_45282_options_settings/SimAddPair.inc"
+%else
 SimAddPair:
 push dword 8	; 452A6
 call __CHK	; 452AB
@@ -45,6 +49,7 @@ inc dword [eax]	; 452C1
 .x:
 pop esi	; 452C3
 ret	; 452C4
+%endif ; C
 SimulateGame:
 push dword 224h	; 452C5
 call __CHK	; 452CA

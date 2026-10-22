@@ -80,9 +80,7 @@ int CanBlockShot(Player *p)
 /* OppInReach (5033D, PC only; ends in CanBlockShot_ret6): is one of the six opponents within reach of p for a
    hold: in the front half of p's facing (vtoa of the offset against facedir) and under 1Eh away in x and "y". The
    original computes both offsets from Xpos (the y offset is the x one again), which this keeps. p: the player.
-   Result: 1 or 0.
-   DRAFT: 139 vs 144. The original computes the offset in edx and copies it to ebx and ecx (and its exits are near
-   jumps); here it is computed in ebx. See docs/UNSURE.md. */
+   Result: 1 or 0. */
 int OppInReach(Player *p)
 {
     Player *q;
@@ -98,11 +96,7 @@ int OppInReach(Player *p)
         dy = HIWORD(q->Xpos) - HIWORD(p->Xpos);
         t = vtoa((short)dx, (short)dy);
         if (((t - p->facedir + 2) & 7) <= 4) {
-            if (dx < 0) dx = -dx;
-            if (dx < 0x1E) {
-                if (dy < 0) dy = -dy;
-                if (dy < 0x1E) return 1;
-            }
+            if (ABS(dx) < 0x1E && ABS(dy) < 0x1E) return 1;
         }
         i++;
         q++;

@@ -6,14 +6,11 @@
 void chkatop(void)
 {
     short t;
-    short y;
 
     if (gmode & 0x10) return;
-    y = *pucky;
-    if (y > 0x4E) t = 0;
-    else if (y < -0x4E) t = 1;
+    if (*pucky > 0x4E) t = 0;
+    else if (*pucky < -0x4E) t = 1;
     else return;
     if (gmode & 2) t ^= 1;
-    if (t > 0) awtmstruct.tmATOP++;
-    else hmtmstruct.tmATOP++;
+    (t > 0 ? &awtmstruct : &hmtmstruct)->tmATOP++;
 }

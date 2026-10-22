@@ -1,5 +1,9 @@
 /* Computer line change. */
+#define getlinee getlinee_decl
 #include "nhl95.h"
+#undef getlinee
+
+short getlinee(Team *t, short line);
 
 int LineEnergy(Team *t, int line);
 #pragma aux LineEnergy "getlinee" parm [eax] [edx] value [eax] modify [eax edx];
@@ -95,4 +99,42 @@ void CompLine(Team *other, Team *team)
     }
     DrawPanelLine(team == &awtmstruct, line);
     ((unsigned char *)team)[0xD4] &= ~0x40;
+}
+
+/* getlinee (5A30C; 93G penalty93 getlinee, "energy level of this line"): the average energy of line `line` of
+   team t. t->tmlines lists the lines' roster slots: lines 0-3 three each from +0, lines 4 and 5 five each from
+   +12h, lines 6 and up four each from +1Ch. Result: the sum of those players' t->tmpde energies divided by their
+   count. Watcom places its entry after TeamLineEnergy (which ends by falling into it) and the rest of its code
+   before TeamLineEnergy (getlinee_pp, getlinee_sum), as in the EXE, only with CompLine before it in this file. */
+short getlinee(Team *t, short line)
+{
+    unsigned char *p;
+    short n;
+    short i;
+
+    if (line < 4) {
+        p = t->tmlines + line * 3;
+        n = 3;
+    } else if (line < 6) {
+        p = t->tmlines + 0x12 + (line - 4) * 5;
+        n = 5;
+    } else {
+        p = t->tmlines + 0x1C + (line - 6) * 4;
+        n = 4;
+    }
+    line = 0;                                   /* line reused as the sum */
+    for (i = 0; i < n; i++) line += t->tmpde[*p++];
+    return line / n;
+}
+
+/* TeamLineEnergy (5A2EE, PC only): the average energy of line `line` (getlinee) of the away team when team is
+   positive, else of the home team. Result: that energy. The call is a tail call into the next function, so the
+   code falls through into getlinee's entry. */
+short TeamLineEnergy(short team, short line)
+{
+    Team *t;
+
+    if (team > 0) t = &awtmstruct;
+    else t = &hmtmstruct;
+    return getlinee(t, line);
 }

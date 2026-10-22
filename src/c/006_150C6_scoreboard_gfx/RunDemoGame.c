@@ -1,10 +1,8 @@
 /* Scoreboard: play one demo game and restore the exhibition state. */
-/* DRAFT: 673 vs 673. The setup, the matchup switch, the option bytes and the
- restore copy match. 0x10 and the later 1 stay in esi (original ebp, so the
- prologue does not push ebp) and the zeros stay in edi (original xor eax, eax,
- and demomode is xor ecx, ecx). The fixed pair index is cwde with eax*2
- (original movsx edx, ax and edx*2). Do not retry declaring that constant
- first, holding 0x10 across the copy, or using the team local as the pair index. */
+/* DRAFT: 673 vs 673, 8 differing. With demoteammode updated in place (no local copy) the registers and the
+ ebp push are the EXE's. Left: the fixed pair index is cwde with eax*2 (original movsx edx, ax and edx*2).
+ Do not retry for it: the team local, a short or int pair local declared in the branch, a signed char
+ element read, a short pointer step (all 8). */
 #define RunDemoGame RunDemoGame_decl
 #define LoadRockMusic LoadRockMusic_decl
 #define ReloadGameGfx ReloadGameGfx_decl
@@ -116,7 +114,6 @@ int RunDemoGame(void)
 {
     ExhRec saved;
     int one;
-    int which;
     int team;
     int home;
     int vis;
@@ -127,13 +124,12 @@ int RunDemoGame(void)
     DemoSetupStub();
     demomode = 1;
     seed[0] = (rand() << 16) + rand();
-    which = (demoteammode + 1) % 3;
-    demoteammode = which;
+    demoteammode = (demoteammode + 1) % 3;
     saved = *(ExhRec *)exhstate;
-    if (which == 2) {
+    if (demoteammode == 2) {
         *(int *)(exhstate + 0x51) = 0x1B;
         *(int *)(exhstate + 0x55) = 0x1A;
-    } else if (which == 1) {
+    } else if (demoteammode == 1) {
         team = randomd0(0x11);
         *(int *)(exhstate + 0x51) = *(int *)((char *)dword_C5861 + team * 2) >> 24;
         *(int *)(exhstate + 0x55) = *(int *)((char *)dword_C5862 + team * 2) >> 24;
@@ -214,22 +210,22 @@ int TitleScreen(void)
     signed char pal[0x300];
     char path[0x20];
     int key;
-    int n;
+    int chunk;
     int due;
     unsigned char *mask;
     int first;
     unsigned char *m;
-    int bank;
+    int bmp;
     int delay;
     signed char c;
     int i;
-    int chunk;
+    int bank;
     int frame;
     int ends;
     int dec;
     int stream;
     int t0;
-    int bmp;
+    int n;
     unsigned id;
 
     bmp = 0;
@@ -361,6 +357,10 @@ int TitleScreen(void)
     return key;
 }
 
+/* DRAFT (RunIntro): 2160 vs 2160, 4 differing. The two song loads go through reused locals (wait, then i), the
+   last fade reads the byte into a signed char local c (dec al in place), and the dword locals are declared song2,
+   song4, song3, wait, skip (found over all 120 orders). Left: the white sweep holds 3Fh in bh (EXE ch). Tried for
+   it: 3Fh through c, the black zero through c, `i != 0xE0`, `i * 3 - 1` indexes. */
 /* RunIntro (1672A, PC only; ends in RunDemoGame_x): the intro. Free the speech bank's song (music on), clear the
    screen and the palette, show the Pioneer logos (PIONEER1: BKGD3 on PL1, fading to PL2 one step per 2 ticks with
    the PIONEER2 / 3 / 4 songs when music is on and none plays; then the FLA1-4 frames and PION from PIONEER2, a
@@ -370,6 +370,7 @@ int TitleScreen(void)
    No result. */
 void RunIntro(void)
 {
+    signed char c;
     signed char tgt[0x300];
     signed char pal[0x300];
     char path[0x20];
@@ -377,9 +378,9 @@ void RunIntro(void)
     DosTime t;
     int song2;
     int song4;
+    int song3;
     int wait;
     int skip;
-    int song3;
     int bank;
     int changed;
     int i;
@@ -406,7 +407,8 @@ void RunIntro(void)
         MakePath(path, fileoncd[0x12B] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer3, (char *)str_Iff2);
         song3 = sub_8F98F(path);
         MakePath(path, fileoncd[0x12A] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer2, (char *)str_Iff2);
-        songdata = song2 = sub_8F98F(path);
+        wait = sub_8F98F(path);                 /* wait reused for the song */
+        songdata = song2 = wait;
         if (songdata) sub_8FB8E(songdata, musichandle, 1, 0x7F);
         SetTickDeadline(0x104);
         WaitTickDeadline();
@@ -465,9 +467,10 @@ void RunIntro(void)
     while (changed) {
         changed = 0;
         for (i = 0; i < 0x300; i++) {
-            if (pal[i] > tgt[i]) {
+            c = pal[i];
+            if (c > tgt[i]) {
                 changed = 1;
-                pal[i] = pal[i] - 1;
+                pal[i] = c - 1;
             }
         }
         SetTickDeadline(5);
@@ -521,7 +524,8 @@ void RunIntro(void)
         FreeMemBlock(bank);
         if (musicon && !songdata) {
             MakePath(path, fileoncd[0x1DC] == 1 ? (char *)cddriveptr : 0, (char *)str_Easports, (char *)str_Iff2);
-            songdata = sub_8F98F(path);
+            i = sub_8F98F(path);                 /* i reused for the song */
+            songdata = i;
             if (songdata) sub_8FB8E(songdata, musichandle, 3, 0x4C);
         }
         FadePalStep(0, (unsigned char *)pal, 0x10);

@@ -9,7 +9,6 @@
 void asscenterd(Player *p)
 {
     short r;
-    signed char f;
 
     if (p->pflags & 0x20) return;
     r = check4bench(p);
@@ -18,16 +17,15 @@ void asscenterd(Player *p)
         StopIfFree(p);
         return;
     }
-    f = p->pflags;
-    if (f & 8) return;
-    if (f & 2) {
-        p->pflags = f & 0xFD;
+    if (p->pflags & 8) return;
+    if (p->pflags & 2) {
+        p->pflags = p->pflags & 0xFD;
         p->temp1 = r;
         p->temp2 = 8;
     }
     if (--((signed char *)p)[0x27] < 0) {
         ((signed char *)p)[0x27] = p->aioff;
-        if (*puckc >= 0 && (p->SCnum < 6) == (*puckc < 6)) {
+        if (*puckc >= 0 && (*puckc < 6) == (p->SCnum < 6)) {
             assreplace(p, 6);
             return;
         }

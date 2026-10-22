@@ -24,9 +24,9 @@
    then Stop4Pen for the free penalty slots. Last sfx 7Dh (away player) or A0h. No result. */
 void FallDown(Player *h, Player *p)
 {
+    short i;
     short s;
     short d;
-    short i;
     short d2;
     Team *t;
 
@@ -180,10 +180,7 @@ fall:
             d2 = vtoa((short)(HIWORD(p->Xpos) - HIWORD(h->Xpos)), (short)(HIWORD(p->Ypos) - HIWORD(h->Ypos)));
             if (((d2 - h->facedir + 1) & 7) <= 2 && ((p->facedir - h->facedir + 1) & 7) <= 2) AddPenalty2(h, 0x17);
             else AddPenalty2(h, 9);
-            {
-                short k;                    /* in its own block: the index goes to eax as in the EXE */
-                for (k = 0; k < 0x20; k++) if (!PenBuf[k * 2]) Stop4Pen(k - 1);
-            }
+            for (i = 0; i < 0x20; i++) if (!PenBuf[i * 2]) Stop4Pen(i - 1);
         }
     }
     if (p->pflags & 0x40) sfx(0x7D);

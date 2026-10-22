@@ -9,16 +9,13 @@ void PruneGameLines(unsigned char side, unsigned char *lines)
 {
     int i;
     unsigned char *s;
-    unsigned char st;
-    int r;
 
     if (curperiod >= 0) {
         for (i = 0; i < 0x28; i++) {
             s = lines + i;
             if (*s == 100) continue;
-            r = side * 0x444 + *s * 39;
-            st = hmroster[r];
-            if (st != 4 && st != 3) *s = 100;
+            if (hmroster[*s * 39 + side * 0x444] != 4 && hmroster[*s * 39 + side * 0x444] != 3)
+                *s = 100;
         }
         return;
     }

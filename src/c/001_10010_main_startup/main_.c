@@ -53,7 +53,7 @@ typedef struct {
     unsigned short bytes_per_sector;
 } DiskFree;
 
-/* DRAFT: 1586 vs 1588, one move short (see docs/UNSURE.md); main_x is its epilogue. */
+/* main_x is its epilogue. */
 /* main_ (10094, PC only; Watcom's main, named main_ here because this build does not decorate names): check
    there is room on drive C (2 KB, when not running from C) and on the current drive (two clusters' worth), and
    that there is enough memory (1E5D70h bytes, or 200B20h with 7F800h of DOS memory from DPMI 100h); size the
@@ -80,6 +80,7 @@ void main_(void)
     int need;
     int dosmem;
     int pal;
+    int r;
 
     _dos_getdrive(&s.drive);
     if (s.drive != 2 && (int)DiskFreeBytes(3) < 0x800) {
@@ -97,8 +98,9 @@ void main_(void)
     }
     *(unsigned short *)&s.in.eax = 0x100;
     *(unsigned short *)&s.in.ebx = 0xA000;
-    int386(0x31, &s.in, &s.out);
-    dosmem = (unsigned short)s.out.ebx << 4;
+    r = int386(0x31, &s.in, &s.out);   /* the result held in r, then the paragraph count (r in eax, as in the EXE) */
+    r = (unsigned short)s.out.ebx;
+    dosmem = r << 4;
     sub_8DF54(0xC8, 0x19000);
     GetMemStats(&s.mem[3], &s.mem[2], &s.mem[1], &s.mem[0]);
     if (s.mem[3] < 0x1E5D70) {

@@ -8,15 +8,22 @@
 . Then the pass completion, clear the pass/shot dir modes (sflags bits 2-3); a goalie
  checks the shot stat and gets temp5 hold time (5 after SPA 181h, else 8Ch). Falls into setd0player:
  GiveControl(regd0). */
+/* DRAFT: 316 vs 316. crowdlevel is loaded straight into bx; the EXE loads it into ax and copies it to ebx
+   for the + 200 (reading crowdlevel in the test and `raised = crowdlevel + 200` gives that copy, but moves
+   the registers from the puckc store on). See the agent notes / docs/UNSURE.md. */
 void puckglue(Player *p)
 {
     Team *tm;
     Team *op;
     short level;
-    short raised;
 
     regd0.w = p->SCnum;             /* move.w SCnum(a2),d0 */
-    *puckc = *(signed char *)&regd0; /* move.w d0,(puckc).w */
+    {
+        signed char c;
+
+        c = *(signed char *)&regd0;
+        *puckc = c;                 /* move.w d0,(puckc).w */
+    }
     tm = p->tmptr;
     op = p->optmptr;
     if (penshotlive && p->pnum == tm->tmpsplayer) {
@@ -36,9 +43,7 @@ void puckglue(Player *p)
         }
         level = crowdlevel;
         if (level <= 1000) {        /* addi.w #,(crowdlevel).w */
-            raised = level + 200;
-            crowdlevel = raised;
-            if (raised > 1000) crowdlevel = 1000;
+            if ((crowdlevel = level + 200) > 1000) crowdlevel = 1000;
         }
         if ((p->pflags & 0x40) == 0) CwdExciteLvl += 10; /* home team: addi.w #,(CwdExciteLvl).w */
     } else {

@@ -42,6 +42,7 @@ void RandomizeNewRatings(unsigned char *rec, unsigned char *r, unsigned short *o
     } s;
     unsigned short a;
     unsigned short b;
+    float f13;  /* RatingToFloat(r[13h]), never read */
 
     s.f1 = RatingToFloat(r[1]);
     s.f2 = RatingToFloat(r[2]);
@@ -55,7 +56,7 @@ void RandomizeNewRatings(unsigned char *rec, unsigned char *r, unsigned short *o
     s.fc = RatingToFloat(r[0xC]);
     s.fd = RatingToFloat(r[0xD]);
     s.fe = RatingToFloat(r[0xE]);
-    RatingToFloat(r[0x13]);
+    f13 = RatingToFloat(r[0x13]);
     s.luck = 1.0 - randomd0(0x14D) / F(dword_C2CAC);
     s.scale = randomd0(0x15) + 0x40;
     out[0] = s.scale;

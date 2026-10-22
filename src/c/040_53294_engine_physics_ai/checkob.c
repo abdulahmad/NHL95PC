@@ -166,8 +166,8 @@ box2:
    into regd0) must be under the limit (F33h when the teams' tmap differ, else the coach-mode limit at +0D6h; at
    15..1Dh on the clock also under 800h); when the tmap differ, the shortest penalty (GetLowestPen) must have 15 or
    more left. Then CompLine picks the line, setpersonel sends it and CompShoot dumps the puck (chk4lc_shoot, which
-   chk4shot also jumps to). Result: 1 when the change was called, else 0.
-   DRAFT: 273 vs 272. gameclock is loaded into di in the energy arm; the original uses ax. See docs/UNSURE.md. */
+   chk4shot also jumps to). Result: 1 when the change was called, else 0. The energy arm reads gameclock once
+   through a block short (in ax, as in the EXE). */
 short chk4lc(Player *p)
 {
     Team *t;
@@ -191,8 +191,13 @@ no:
     return 0;
 energy:
     AvgCline(t);
-    if (gameclock < 0xF) goto no;
-    if (gameclock < 0x1E && (unsigned short)regd0.w > 0x800) goto no;
+    {
+        short g;
+
+        g = gameclock;
+        if (g < 0xF) goto no;
+        if (g < 0x1E && (unsigned short)regd0.w > 0x800) goto no;
+    }
     if ((unsigned short)regd0.w > (d ? 0xF33 : TMLCENERGY(t))) goto no;
     goto pen;
 change:

@@ -10,8 +10,7 @@ int StarEligible(int side, int pl)
     int i;
 
     if ((&hmtmstruct)[side].tmpdst[pl] < -1) return 0;
-    if (side != 0) side = 6;
-    p = &SortCords[side];
+    p = &SortCords[side ? 6 : 0];
     for (i = 0; i < 6; i++, p++) {
         if (p->pnum == pl) {
             if (p->position == 6) return 0;

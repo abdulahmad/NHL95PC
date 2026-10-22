@@ -1,8 +1,9 @@
-/* BuildTeamRosterList - DRAFT 338 vs 344. Team stays in eax through the index loop; the original saves it
- with mov esi,eax and reloads mov eax,esi just before TeamRecPtr. The dressed byte is mov al,[ebx+eax+0E4h];
- the original adds the index into edx and loads ah, so eax is not the base. A named team was eliminated.
- An aux returning esi reloaded eax at once and saved esi last. Naming the fill byte lengthened the copies.
- Do not retry those.
+/* BuildTeamRosterList - DRAFT 342 vs 344 (8 differing). The parameter team is reused as the scratch variable
+ (the goalie entry index team = i + 19h and the key pointer team = KeyDbPtr(k)), which keeps it in esi from the
+ entry as in the EXE. Left: the goalie key load swaps eax / ecx, and the dressed byte is mov al,[ebx+eax+0E4h]
+ where the original adds the index into edx and loads ah. Tried for those: (*rec + i)[0xE4], the sum through
+ team / k / e, a do-while, the index assignment inside the e expression. Earlier: a named team was eliminated,
+ an aux returning esi reloaded eax at once, naming the fill byte lengthened the copies. Do not retry those.
  Fill list (28 entries of 1Bh bytes) with team's roster: entry i gets index i at +2; the 25
    skater slots (key offsets at team record +4Ch) and the 3 goalie slots (+B0h) become entries 0-24 and 25-27: an
    empty slot (-1) is position 0, number 64h, status 0; else position (key +2), number (+1), status 3, the key offset
@@ -15,7 +16,6 @@ void BuildTeamRosterList(int team, unsigned char *list, unsigned char **rec)
     int i;
     int k;
     unsigned char *e;
-    unsigned char *p;
     unsigned char t;
 
     for (i = 0; i < 0x1C; i++) list[i * 27 + 2] = i;
@@ -29,37 +29,38 @@ void BuildTeamRosterList(int team, unsigned char *list, unsigned char **rec)
             e[2] = 0;
             e[3] = 0;
         } else {
-            p = KeyDbPtr(k);
-            e[0] = p[2];
-            e[1] = p[1];
+            team = (int)KeyDbPtr(k);
+            e[0] = ((unsigned char *)team)[2];
+            e[1] = ((unsigned char *)team)[1];
             e[3] = 3;
             *(int *)(e + 4) = k;
-            e[8] = p[3];
+            e[8] = ((unsigned char *)team)[3];
             e[9] = str_dot;
             e[10] = str_space;
             e[11] = 0;
-            strcat((char *)e + 8, (char *)p + 0x13);
+            strcat((char *)e + 8, (char *)team + 0x13);
         }
     }
     for (i = 0; i < 3; i++) {
         k = ((int *)(*rec + 0xB0))[i];
-        e = list + (i + 0x19) * 27;
+        team = i + 0x19;
+        e = list + team * 27;
         if (k == -1) {
             e[0] = 0;
             e[1] = 0x64;
             e[2] = 0;
             e[3] = 0;
         } else {
-            p = KeyDbPtr(k);
-            e[0] = p[2];
-            e[1] = p[1];
+            team = (int)KeyDbPtr(k);
+            e[0] = ((unsigned char *)team)[2];
+            e[1] = ((unsigned char *)team)[1];
             e[3] = 3;
             *(int *)(e + 4) = k;
-            e[8] = p[3];
+            e[8] = ((unsigned char *)team)[3];
             e[9] = str_dot;
             e[10] = str_space;
             e[11] = 0;
-            strcat((char *)e + 8, (char *)p + 0x13);
+            strcat((char *)e + 8, (char *)team + 0x13);
         }
     }
     for (i = 0; i < 8; i++) {

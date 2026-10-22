@@ -1498,6 +1498,10 @@ jl short PickExtraSkater.8	; 65524
 add esp, byte 8	; 65526
 jmp near lines_popx2	; 65529
 %endif ; C
+; C: src/c/046_644A8_engine_display/RefillLineSlots.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/RefillLineSlots.inc"
+%else
 RefillLineSlots:
 push dword 18h	; 6552E
 call __CHK	; 65533
@@ -1560,6 +1564,7 @@ pop ebp	; 655C6
 pop edi	; 655C7
 pop esi	; 655C8
 ret 4	; 655C9
+%endif ; C
 RemoveFromLines:
 push dword 28h	; 655CC
 call __CHK	; 655D1

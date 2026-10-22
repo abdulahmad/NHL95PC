@@ -390,6 +390,10 @@ pop esi	; 487D6
 pop ecx	; 487D7
 ret	; 487D8
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/StarEligible.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/StarEligible.inc"
+%else
 StarEligible:
 push dword 0Ch	; 487D9
 call __CHK	; 487DE
@@ -434,6 +438,7 @@ mov eax, 1	; 48833
 pop ecx	; 48838
 pop ebx	; 48839
 ret	; 4883A
+%endif ; C
 ; StarCompare: qsort comparator for PickThreeStars; player stat points from dword_DB088, +2 for gwgteam/gwgplayer.
 StarCompare:
 push dword 28h	; 4883B
@@ -1955,6 +1960,10 @@ pop ecx	; 49BBF
 pop ebx	; 49BC0
 ret	; 49BC1
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/assbenchside.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assbenchside.inc"
+%else
 assbenchside:
 push dword 10h	; 49BC2
 call __CHK	; 49BC7
@@ -2041,6 +2050,7 @@ pop edi	; 49CD9
 pop edx	; 49CDA
 pop ebx	; 49CDB
 ret	; 49CDC
+%endif ; C
 ; C: src/c/037_4842A_engine_player_logic/assdefo.c
 %ifdef CBUILD
 %include "c/037_4842A_engine_player_logic/assdefo.inc"
@@ -2544,6 +2554,10 @@ mov eax, ebx	; 4A337
 call skateto	; 4A339
 jmp near ass_popx	; 4A33E
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/assrefwhistle.c (asswingo)
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assrefwhistle.asswingo.inc"
+%else
 asswingo:
 push dword 18h	; 4A343
 call __CHK	; 4A348
@@ -2684,6 +2698,11 @@ mov word [regd1], si	; 4A529
 asswingo_evade:
 mov edx, EvadePC	; 4A530
 jmp near asswingd_skateto	; 4A535
+%endif ; C
+; C: src/c/037_4842A_engine_player_logic/asscenterd.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/asscenterd.inc"
+%else
 asscenterd:
 push dword 10h	; 4A53A
 call __CHK	; 4A53F
@@ -2781,6 +2800,7 @@ pop edx	; 4A658
 pop ecx	; 4A659
 pop ebx	; 4A65A
 ret	; 4A65B
+%endif ; C
 ; C: src/c/037_4842A_engine_player_logic/assrefwhistle.c (asscentero)
 %ifdef CBUILD
 %include "c/037_4842A_engine_player_logic/assrefwhistle.asscentero.inc"
@@ -6631,6 +6651,10 @@ pop ecx	; 4D4ED
 pop ebx	; 4D4EE
 assshoot_ret:
 ret	; 4D4EF
+; C: src/c/037_4842A_engine_player_logic/assshoot.c (assfaceoff)
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assshoot.assfaceoff.inc"
+%else
 assfaceoff:
 push dword 4	; 4D4F0
 call __CHK	; 4D4F5
@@ -6638,9 +6662,10 @@ test byte [byte eax+pflags], 20h	; 4D4FA
 jne short assshoot_ret	; 4D4FE
 test byte [gmode2], 1	; 4D500
 jne short assshoot_ret	; 4D507
-; C: src/c/037_4842A_engine_player_logic/assexit.c
+%endif ; C
+; C: src/c/037_4842A_engine_player_logic/assshoot.c (assexit)
 %ifdef CBUILD
-%include "c/037_4842A_engine_player_logic/assexit.inc"
+%include "c/037_4842A_engine_player_logic/assshoot.assexit.inc"
 %else
 assexit:
 push dword 8	; 4D509
@@ -7334,6 +7359,10 @@ mov eax, 1	; 4DD4A
 pop edx	; 4DD4F
 ret	; 4DD50
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/ChkTwoLinePass.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/ChkTwoLinePass.inc"
+%else
 ChkTwoLinePass:
 push dword 10h	; 4DD51
 call __CHK	; 4DD56
@@ -7397,6 +7426,7 @@ pop esi	; 4DE10
 pop edx	; 4DE11
 pop ebx	; 4DE12
 ret	; 4DE13
+%endif ; C
 ; C: src/c/037_4842A_engine_player_logic/a2touchpuck.c
 %ifdef CBUILD
 %include "c/037_4842A_engine_player_logic/a2touchpuck.inc"
@@ -9700,6 +9730,10 @@ pop ecx	; 4FAE5
 pop ebx	; 4FAE6
 ret	; 4FAE7
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/asspenshooter.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/asspenshooter.inc"
+%else
 asspenshooter:
 push dword 14h	; 4FAE8
 call __CHK	; 4FAED
@@ -9868,3 +9902,4 @@ pop edx	; 4FCE4
 pop ecx	; 4FCE5
 pop ebx	; 4FCE6
 ret	; 4FCE7
+%endif ; C

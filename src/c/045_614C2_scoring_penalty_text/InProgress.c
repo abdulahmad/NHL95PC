@@ -122,6 +122,51 @@ signal:
     SetPA(pen);
 }
 
+/* DRAFT (first pass from Ghidra): the EXE splits it. Its entry (63C0C) follows PenaltyManager, which falls into it,
+   and the rest (chkprogress_go, chkprogress_x) follows InProgress. */
+/* chkprogress (63C0C; 93G penalty93 chkprogress): the penalty call in progress, each frame while the game runs
+   (gmode bit 0): update the text overlay, count word_CC0B0 down (at the end set gmode2 bit 2), and with a call
+   pending (gmode bit 2) either run it (InProgress, while Pencntdwn is negative) or count refsignal and Pencntdwn
+   down; when Pencntdwn runs out, end the call (gmode bit 3 cleared) and, at the first penalty in PenBuf whose
+   type has a penmintab entry, stop play for it: gmode2 bit 2, the puck to no one with the faceoff assignment
+   (1Ah), pucktemp1 1C20h, RefStep byte 1 FFh, and the banner cleared when no banner is up. No arguments and no
+   result. */
+void chkprogress(void)
+{
+    short i;
+
+    if (!(gmode & 1)) return;
+    UpdateTextOverlay();
+    if (word_CC0B0[0] >= 0) {
+        if (--word_CC0B0[0] < 0) gmode2 |= 4;
+    }
+    if (!(gmode & 4)) return;
+    if (Pencntdwn < 0) {
+        InProgress();
+        return;
+    }
+    if (--refsignal < 0) refsignal = 0;
+    if (--Pencntdwn >= 0) return;
+    gmode &= 0xF7;
+    refsignal = 0;
+    i = 0;
+    for (;;) {
+        if (PenBuf[i * 2] == 0) return;
+        i++;
+        if (penmintab[PenBuf[i * 2 - 2]]) break;
+    }
+    gmode2 |= 4;
+    word_CC0B0[0] = -1;
+    word_CBC44 = 1;
+    *(unsigned char *)puckc = 0xFF;
+    assinsert((Player *)puckstruct, 0x1A);
+    pucktemp1 = 0x1C20;
+    ((unsigned char *)RefStep)[1] = 0xFF;
+    refsignal = 0;
+    if (bannertimer == 0) bannermsg = -1;
+}
+
+
 /* ProcessPenaltyList (63A37, PC only; ends in InProgress_popx): once a second, count down the penalties of team
    tm's players in the box (tmpbox, ended by a negative byte): only the first two (regd1 from 2) serve time; a
    player whose minutes (tmpdst, low 14 bits) run out is back on the bench (roster status 7, tmpdst bit 14
@@ -157,6 +202,17 @@ void ProcessPenaltyList(Team *tm)
         CheckAndReleasePlayer(tm, out[1]);
     } else if (regd1.w == -1) CheckAndReleasePlayer(tm, out[1]);
 }
+
+/* PenaltyManager (63BF8; 93G penalty93 PenaltyManager): the penalty work of a frame: the penalty times
+   (updatepentime), new penalties (checkfornewpen) and the call in progress (chkprogress, which it falls into). No
+   arguments and no result. */
+void PenaltyManager(void)
+{
+    updatepentime();
+    checkfornewpen();
+    chkprogress();
+}
+
 
 /* ShotLaneOpen (64102, PC only; ends in InProgress_popebp): is the puck carrier's shooting lane open? Not when
    nobody has the puck or he is in his own half. Else his distance to the net he attacks (y E8h, vecdist) must be

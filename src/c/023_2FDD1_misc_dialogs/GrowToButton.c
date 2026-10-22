@@ -6,6 +6,7 @@
 void GrowToButton(int *b, int *w, int *h)
 {
     int v;
+    int u;
 
     if (b[5] & 1) {
         v = b[0] + b[2] + 8;
@@ -15,10 +16,10 @@ void GrowToButton(int *b, int *w, int *h)
         if (v > *w) *w = v;
     }
     if (b[5] & 4) {
-        v = b[1] + b[3] + 8;
-        if (v > *h) *h = v;
+        u = b[1] + b[3] + 8;
+        if (u > *h) *h = u;
     } else {
-        v = b[3] - b[1] + 8;
-        if (v > *h) *h = v;
+        u = b[3] - b[1] + 8;
+        if (u > *h) *h = u;
     }
 }

@@ -6,8 +6,8 @@
  table teams at 20h, stopping at the first error. Returns the error (0 ok). */
 int WriteLeagueInfo(char *dir, void *teams, char *pw, int b, short a, short d, short c, char *name)
 {
-    char path[32];
     int fh;
+    char path[32];
     int err;
 
     fh = -1;

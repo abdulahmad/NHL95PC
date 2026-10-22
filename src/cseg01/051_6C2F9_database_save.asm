@@ -92,6 +92,10 @@ pop esi	; 6C3B8
 pop ecx	; 6C3B9
 ret	; 6C3BA
 %endif ; C
+; C: src/c/051_6C2F9_database_save/MenuSaveDbsAs.c
+%ifdef CBUILD
+%include "c/051_6C2F9_database_save/MenuSaveDbsAs.inc"
+%else
 MenuSaveDbsAs:
 push dword 78h	; 6C3BB
 call __CHK	; 6C3C0
@@ -174,6 +178,7 @@ pop edi	; 6C4B6
 pop esi	; 6C4B7
 pop ecx	; 6C4B8
 ret	; 6C4B9
+%endif ; C
 ; C: src/c/051_6C2F9_database_save/SaveDbsToDir.c
 %ifdef CBUILD
 %include "c/051_6C2F9_database_save/SaveDbsToDir.inc"
@@ -1003,6 +1008,10 @@ pop ecx	; 6CEF8
 pop ebx	; 6CEF9
 ret	; 6CEFA
 %endif ; C
+; C: src/c/051_6C2F9_database_save/DrawRosterTitle.c
+%ifdef CBUILD
+%include "c/051_6C2F9_database_save/DrawRosterTitle.inc"
+%else
 DrawRosterTitle:
 push dword 70h	; 6CEFB
 call __CHK	; 6CF00
@@ -1048,6 +1057,7 @@ pop edi	; 6CF6B
 pop esi	; 6CF6C
 pop ecx	; 6CF6D
 ret	; 6CF6E
+%endif ; C
 ; C: src/c/051_6C2F9_database_save/DrawRosterList.c
 %ifdef CBUILD
 %include "c/051_6C2F9_database_save/DrawRosterList.inc"

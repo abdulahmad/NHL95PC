@@ -1,9 +1,10 @@
-/* Team select: drawing the line editor screen. */
+/* Team select: drawing the line editor screen and its dialog frames, in address order. DrawDlgFrame ends in
+   DrawLineEditorScreen's exit (StubRet4a) and matches only in one file with it (found by tools/module_try.py). */
 #define DrawDlgFrame DrawDlgFrame_decl
 #include "nhl95.h"
 #undef DrawDlgFrame
 
-void DrawDlgFrame(int x, int y, int x2, int y2, int edge);
+void DrawDlgFrame(int x1, int y1, int x2, int y2, int bevel);
 
 /* DRAFT: 1367 vs 1413 (the original ends in the StubRet4a pops), 332 of 356 instructions; see docs/UNSURE.md. */
 /* DrawLineEditorScreen (78500, PC only): draw the line editor for team (0 home, else away): its colour remap
@@ -86,4 +87,37 @@ void DrawLineEditorScreen(int team, int shape, int zero, int buttons, int n)
     DrawDlgFrame(0x173, 0x166, 0x1C7, 0x18E, 1);
     sub_91964((char *)str_Extra, 0x189, 0x16D);
     sub_91964((char *)str_Attackers, 0x17D, 0x17A);
+}
+
+/* DrawDlgFrame (78BE7, PC only; ends in StubRet4a, DrawLineEditorScreen's exit): draw a dialog frame from x1 y1
+   to x2 y2: the fill (dlgfillcol), the top and left edges in dlgedgecol1, the right and bottom edges in
+   dlgedgecol2, the two other corners in dlgedgecol3; with bevel a 2 x 2 pixel bevel inside each corner
+   (dlgbevelcol1 / 2). No result. */
+void DrawDlgFrame(int x1, int y1, int x2, int y2, int bevel)
+{
+    sub_90D20(x1, y1, x2 - x1 + 1, y2 - y1 + 1, dlgfillcol);
+    sub_B4FAC(x1, y1, x2 - 1, y1, dlgedgecol1);
+    sub_B4FAC(x1, y1, x1, y2 - 1, dlgedgecol1);
+    sub_B4FAC(x2, y1 + 1, x2, y2, dlgedgecol2);
+    sub_B4FAC(x1 + 1, y2, x2, y2, dlgedgecol2);
+    sub_B5DB0(x1, y2, dlgedgecol3);
+    sub_B5DB0(x2, y1, dlgedgecol3);
+    if (bevel) {
+        sub_B5DB0(x1 + 2, y1 + 2, dlgbevelcol2);
+        sub_B5DB0(x1 + 3, y1 + 3, dlgbevelcol2);
+        sub_B5DB0(x1 + 3, y1 + 2, dlgbevelcol1);
+        sub_B5DB0(x1 + 2, y1 + 3, dlgbevelcol1);
+        sub_B5DB0(x1 + 2, y2 - 2, dlgbevelcol1);
+        sub_B5DB0(x1 + 3, y2 - 3, dlgbevelcol1);
+        sub_B5DB0(x1 + 3, y2 - 2, dlgbevelcol2);
+        sub_B5DB0(x1 + 2, y2 - 3, dlgbevelcol2);
+        sub_B5DB0(x2 - 3, y1 + 2, dlgbevelcol2);
+        sub_B5DB0(x2 - 2, y1 + 3, dlgbevelcol2);
+        sub_B5DB0(x2 - 2, y1 + 2, dlgbevelcol1);
+        sub_B5DB0(x2 - 3, y1 + 3, dlgbevelcol1);
+        sub_B5DB0(x2 - 3, y2 - 2, dlgbevelcol1);
+        sub_B5DB0(x2 - 2, y2 - 3, dlgbevelcol1);
+        sub_B5DB0(x2 - 2, y2 - 2, dlgbevelcol2);
+        sub_B5DB0(x2 - 3, y2 - 3, dlgbevelcol2);
+    }
 }

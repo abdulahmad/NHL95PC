@@ -958,6 +958,10 @@ jl near DrawPanelPenalties.1	; 15B68
 add esp, byte 8	; 15B6E
 jmp near DrawPanelLine_x	; 15B71
 %endif ; C
+; C: src/c/006_150C6_scoreboard_gfx/LoadCupFinalSeries.c
+%ifdef CBUILD
+%include "c/006_150C6_scoreboard_gfx/LoadCupFinalSeries.inc"
+%else
 LoadCupFinalSeries:
 push dword 28h	; 15B76
 call __CHK	; 15B7B
@@ -1027,6 +1031,7 @@ pop edx	; 15C2C
 pop ecx	; 15C2D
 pop ebx	; 15C2E
 ret	; 15C2F
+%endif ; C
 IsCupClinched:
 push dword 14h	; 15C30
 call __CHK	; 15C35
@@ -1327,6 +1332,10 @@ pop edx	; 16008
 pop ecx	; 16009
 pop ebx	; 1600A
 ret	; 1600B
+; C: src/c/006_150C6_scoreboard_gfx/AnyInputPressed.c
+%ifdef CBUILD
+%include "c/006_150C6_scoreboard_gfx/AnyInputPressed.inc"
+%else
 AnyInputPressed:
 push dword 14h	; 1600C
 call __CHK	; 16011
@@ -1368,6 +1377,7 @@ pop edx	; 1606E
 pop ecx	; 1606F
 pop ebx	; 16070
 ret	; 16071
+%endif ; C
 ; C: src/c/006_150C6_scoreboard_gfx/ReadBE32.c
 %ifdef CBUILD
 %include "c/006_150C6_scoreboard_gfx/ReadBE32.inc"

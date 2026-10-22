@@ -2652,6 +2652,10 @@ add esp, byte 14h	; 8256C
 push dword 0F8h	; 8256F
 jmp near DrawSelBox_common	; 82574
 %endif ; C
+; C: src/c/059_8034B_settings_lockerroom/MenuSoundSettings.c
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/MenuSoundSettings.inc"
+%else
 MenuSoundSettings:
 push dword 24h	; 82579
 call __CHK	; 8257E
@@ -2710,6 +2714,7 @@ pop esi	; 82618
 pop ecx	; 82619
 pop ebx	; 8261A
 ret	; 8261B
+%endif ; C
 ; C: src/c/059_8034B_settings_lockerroom/DrawSoundCardDlg.c
 %ifdef CBUILD
 %include "c/059_8034B_settings_lockerroom/DrawSoundCardDlg.inc"

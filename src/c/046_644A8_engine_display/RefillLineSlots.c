@@ -7,14 +7,13 @@
 void RefillLineSlots(short side, short slot, short from, short to, short step)
 {
     signed char *tab;
-    signed char pl;
 
     tab = (signed char *)(side ? awlinetab : hmlinetab);
     byte_E9E18[side * 25 + tab[slot]] = 0;
-    for (; from < to; from++) {
-        pl = PickForLineSlot(side, slot);
-        tab[slot] = pl;
-        if (slot < 18) byte_E9E18[side * 25 + pl] = 0;
+    while (from < to) {
+        tab[slot] = PickForLineSlot(side, slot);
+        if (slot < 18) byte_E9E18[side * 25 + tab[slot]] = 0;
+        from++;
         slot += step;
     }
 }

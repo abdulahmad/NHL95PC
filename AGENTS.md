@@ -2,7 +2,7 @@
 
 Standing rules for work on this repo. Details: [HANDOFF.md](HANDOFF.md), [SEGMENT_AGENT.md](SEGMENT_AGENT.md), [docs/C_MATCHING.md](docs/C_MATCHING.md).
 
-* **`main` only takes byte-identical changes.** Every commit must build `MATCH` with `make` and with `make CBUILD=0`.
+* **`main` only takes byte-identical changes.** Every commit must build `MATCH` with `make` and with `make CBUILD=0`. The reference compiler is Watcom 10.0 GA (the `make` default); 10.0 LA is only a fallback (`make WATCOM_VER=la`).
 * **Small, verified commits** per function or per batch. Tool and doc changes go in their own commits.
 * **Never force-push.**
 * **One agent at a time.** Do not run agents or workers in parallel.
@@ -12,6 +12,6 @@ Standing rules for work on this repo. Details: [HANDOFF.md](HANDOFF.md), [SEGMEN
 * **No numbered prefixes on new file names** (existing segment `NNN_*` names stay).
 * **Names:** 93G when the body matches, else 94G, else a name from behaviour. NHL95Genesis is a loose reference only, not a naming source. Team abbreviations follow 95PC's own spellings (e.g. TB, OTT).
 * At the end of each batch: `python3 tools/c_progress.py`, update HANDOFF Current state / Next if needed, commit, push.
-* Never commit listings, `ref/`, `build/`, objects or generated `.inc` fragments. The retail `HOCKEY.EXE` and the three Watcom files under `tools/watcom/` are committed on purpose.
+* Never commit listings, `ref/`, `build/`, objects or generated `.inc` fragments. The retail `HOCKEY.EXE` and the Watcom files under `tools/watcom/` (10.0 GA in `dosga/`, the 10.0 LA fallback in `dosla/` with `w10a/`) are committed on purpose.
 
 Credits: see [README.md](README.md).

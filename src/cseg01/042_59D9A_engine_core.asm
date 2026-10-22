@@ -66,6 +66,10 @@ mov word [byte eax+SPAcnt], 0FFFFh	; 59DB4
 .x:
 ret	; 59DBA
 %endif ; C
+; C: src/c/042_59D9A_engine_core/SetSPA.c (SprSort_loop)
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/SetSPA.SprSort_loop.inc"
+%else
 SprSort_loop:
 lea esi, [byte eax+02h]	; 59DBB
 test byte [sflags], 80h	; 59DBE
@@ -128,6 +132,7 @@ pop edx	; 59E65
 pop ecx	; 59E66
 pop ebx	; 59E67
 ret	; 59E68
+%endif ; C
 ; changeplayer: Human control moves to the best teammate (Sweepcheck); restorepl gives
 ; the old player his assignment back. Callers: input, physics, player logic, assignments.
 changeplayer:
@@ -513,6 +518,10 @@ pop esi	; 5A284
 pop ecx	; 5A285
 pop ebx	; 5A286
 ret	; 5A287
+; C: src/c/042_59D9A_engine_core/CompLine.c (getlinee_pp)
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/CompLine.getlinee_pp.inc"
+%else
 getlinee_pp:
 cmp dx, byte 6	; 5A288
 jge short .1	; 5A28C
@@ -557,6 +566,11 @@ pop esi	; 5A2EA
 pop ecx	; 5A2EB
 pop ebx	; 5A2EC
 ret	; 5A2ED
+%endif ; C
+; C: src/c/042_59D9A_engine_core/CompLine.c (TeamLineEnergy)
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/CompLine.TeamLineEnergy.inc"
+%else
 TeamLineEnergy:
 push dword 4	; 5A2EE
 call __CHK	; 5A2F3
@@ -568,6 +582,11 @@ jmp short .2	; 5A302
 mov eax, hmtmstruct	; 5A304
 .2:
 movsx edx, dx	; 5A309
+%endif ; C
+; C: src/c/042_59D9A_engine_core/CompLine.c (getlinee)
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/CompLine.getlinee.inc"
+%else
 getlinee:
 push dword 14h	; 5A30C
 call __CHK	; 5A311
@@ -587,6 +606,7 @@ mov edx, dword [dword esi+tmlines]	; 5A332
 add eax, edx	; 5A338
 mov edi, 3	; 5A33A
 jmp short getlinee_sum	; 5A33F
+%endif ; C
 calcpuckcross:
 push dword 20h	; 5A341
 call __CHK	; 5A346
@@ -726,6 +746,10 @@ pop edx	; 5A4AA
 pop ebx	; 5A4AB
 ret	; 5A4AC
 %endif ; C
+; C: src/c/042_59D9A_engine_core/GetHotStick.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/GetHotStick.inc"
+%else
 GetHotStick:
 push dword 10h	; 5A4AD
 call __CHK	; 5A4B2
@@ -770,6 +794,7 @@ pop esi	; 5A530
 pop edx	; 5A531
 pop ebx	; 5A532
 ret	; 5A533
+%endif ; C
 ; C: src/c/042_59D9A_engine_core/GetHotOrStick.c
 %ifdef CBUILD
 %include "c/042_59D9A_engine_core/GetHotOrStick.inc"
@@ -797,6 +822,10 @@ pop ecx	; 5A57E
 pop ebx	; 5A57F
 ret	; 5A580
 %endif ; C
+; C: src/c/042_59D9A_engine_core/SetCoachMode.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/SetCoachMode.inc"
+%else
 SetCoachMode:
 push dword 10h	; 5A581
 call __CHK	; 5A586
@@ -868,6 +897,7 @@ pop edx	; 5A665
 pop ecx	; 5A666
 pop ebx	; 5A667
 ret	; 5A668
+%endif ; C
 ; C: src/c/042_59D9A_engine_core/InitCoachModes.c
 %ifdef CBUILD
 %include "c/042_59D9A_engine_core/InitCoachModes.inc"
@@ -941,6 +971,10 @@ ret	; 5A77B
 %endif ; C
 ; UpdateCoachModes: coach AI, once a second from ClockTick. Picks each team's mode (team D2h..D6h) from the
 ; score difference, time left and penalties (details not traced).
+; C: src/c/042_59D9A_engine_core/UpdateCoachModes.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/UpdateCoachModes.inc"
+%else
 UpdateCoachModes:
 push dword 10h	; 5A77C
 call __CHK	; 5A781
@@ -1148,6 +1182,7 @@ pop edx	; 5AAAA
 pop ecx	; 5AAAB
 pop ebx	; 5AAAC
 ret	; 5AAAD
+%endif ; C
 ; PenTeamScored: During a delayed penalty (gmode bit 3): 1 if the scoring team has a skater
 ; with pflags2 bit 4 (caused a penalty), else 0. Goal then disallows the goal.
 ; C: src/c/042_59D9A_engine_core/PenTeamScored.c
@@ -1683,6 +1718,10 @@ call UpdateCoachModes	; 5B1C1
 .60:
 add esp, byte 8	; 5B1C6
 jmp near calcpuckcross_ret6	; 5B1C9
+; C: src/c/042_59D9A_engine_core/GiveControl.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/GiveControl.inc"
+%else
 GiveControl:
 push dword 14h	; 5B1CE
 call __CHK	; 5B1D3
@@ -1746,6 +1785,7 @@ pop edx	; 5B294
 pop ecx	; 5B295
 pop ebx	; 5B296
 ret	; 5B297
+%endif ; C
 ; C: src/c/042_59D9A_engine_core/Setplass.c
 %ifdef CBUILD
 %include "c/042_59D9A_engine_core/Setplass.inc"
@@ -2411,6 +2451,10 @@ ret	; 5BA06
 %endif ; C
 ; ResetClock: gameclock = PerTimeTotal = GetPeriodTime, clockticks = 0,
 ; periodendtime = gameclock - random(length/2), clock stopped (gmode bit 0).
+; C: src/c/042_59D9A_engine_core/ResetClock.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/ResetClock.inc"
+%else
 ResetClock:
 push dword 8	; 5BA07
 call __CHK	; 5BA0C
@@ -2430,6 +2474,7 @@ mov word [periodendtime], dx	; 5BA3E
 or byte [gmode], 1	; 5BA45
 pop edx	; 5BA4C
 ret	; 5BA4D
+%endif ; C
 ; C: src/c/042_59D9A_engine_core/ClearSortCords.c
 %ifdef CBUILD
 %include "c/042_59D9A_engine_core/ClearSortCords.inc"
@@ -3108,6 +3153,10 @@ pop ecx	; 5C245
 pop ebx	; 5C246
 ret	; 5C247
 %endif ; C
+; C: src/c/042_59D9A_engine_core/updatecrowdf.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/updatecrowdf.inc"
+%else
 updatecrowdf:
 push dword 10h	; 5C248
 call __CHK	; 5C24D
@@ -3167,8 +3216,13 @@ pop edi	; 5C2FE
 pop edx	; 5C2FF
 pop ecx	; 5C300
 ret	; 5C301
+%endif ; C
 ; periodicevents: Clock at 0 -> horn (sfx 90h), LockScroll, clockcont_0. Once a
 ; second (lldisp, 18h frames): updatecrowdf, RestBench, the stats/energy checks.
+; C: src/c/042_59D9A_engine_core/periodicevents.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/periodicevents.inc"
+%else
 periodicevents:
 push dword 0Ch	; 5C302
 call __CHK	; 5C307
@@ -3242,6 +3296,7 @@ jl short periodicevents.3	; 5C40A
 pop edx	; 5C40C
 pop ebx	; 5C40D
 ret	; 5C40E
+%endif ; C
 ; C: src/c/042_59D9A_engine_core/calcpuckcross.c (updateplayers)
 %ifdef CBUILD
 %include "c/042_59D9A_engine_core/calcpuckcross.updateplayers.inc"
@@ -5232,6 +5287,10 @@ pop edx	; 5DD67
 pop ecx	; 5DD68
 pop ebx	; 5DD69
 ret	; 5DD6A
+; C: src/c/042_59D9A_engine_core/SetSPA.c (SprSortVert)
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/SetSPA.SprSortVert.inc"
+%else
 SprSortVert:
 push dword 4	; 5DD6B
 call __CHK	; 5DD70
@@ -5250,6 +5309,7 @@ mov eax, Ylist	; 5DD8D
 mov ecx, SortCords	; 5DD92
 xor ebx, ebx	; 5DD97
 jmp near SprSort_test	; 5DD99
+%endif ; C
 ; C: src/c/042_59D9A_engine_core/GameOver.c
 %ifdef CBUILD
 %include "c/042_59D9A_engine_core/GameOver.inc"

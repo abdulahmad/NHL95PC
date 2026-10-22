@@ -9,7 +9,10 @@ void DrawRosterTitle(int x, int y, int side)
 
     if (rosterisfa[side] != 1) {
         sprintf(buf, (char *)str_S5, (char *)rosterteamptr[side] + 0x1A);
-        while (fputchar(buf) > 0x91) buf[strlen(buf) - 1] = 0;
+        for (;;) {
+            if (fputchar(buf) <= 0x91) break;
+            buf[strlen(buf) - 1] = 0;
+        }
         PrintShadowText(x, y, buf);
     } else {
         PrintShadowText(x, y, (char *)str_FreeAgents);

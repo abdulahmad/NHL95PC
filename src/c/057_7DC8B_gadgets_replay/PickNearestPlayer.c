@@ -13,17 +13,14 @@ int PickNearestPlayer(int x, int y)
     int i;
     int dx;
     int dy;
-    int yy;
 
     best = -1;
     bestd = 10000;
-    i = 0;
-    yy = y;
-    for (; i < 17; i++) {
+    for (i = 0; i < 17; i++) {
         if (i >= 12 && i <= 15) continue;
         dx = PX(i) - x;
-        dy = PY(i) - yy;
-        dy = dy * dy + dx * dx;
+        dy = PY(i) - y;
+        dy = dx * dx + dy * dy;
         if (dy <= 100 && dy < bestd) {
             bestd = dy;
             best = i;

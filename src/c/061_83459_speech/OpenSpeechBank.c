@@ -18,8 +18,13 @@ unsigned _dos_open(const char *path, unsigned mode, int *fh);  /* Watcom CRT _do
  2-byte type at the offset: 'G' samples have their size at offset+6 (less 5 header bytes) and play time
  size * C37B0 C37C0; others use the length and size * C37B0 C37B8 - 1Ah. Slots after the last sample are
  cleared (ClearSpeechSlot, 400 slots). n goes to +3B70h; the byte (+3B6Ch) and loaded (+3B74h) counts are reset.
- path: the bank file; n: stored at +3B70h. No result. An unsigned fh, a short type and size declared after got
- give the EXE's registers and slots (found by tools/permute.py). */
+ path: the bank file; n: stored at +3B70h. No result. */
+/* DRAFT (10.0 GA): 816 bytes, 11 differing. w1 declared before fh, an unsigned short type and an int c give the
+ EXE's frame slots and the ReadBE24 stores. Left: the first header word is stored through a copy (mov edx, eax /
+ mov eax, [speechbank]; the EXE keeps the value in ax and loads the pointer into edx), and the type byte: the EXE
+ keeps c in ax and shifts (unsigned short)type in edx (sar edx, 8 / dword store); here c is in edx and the
+ (short) shift is sar eax, 18h with a word store (the LA shape, (unsigned short)type >> 8 with an unsigned short c,
+ puts c in dx). */
 void OpenSpeechBank(char *path, int n)
 {
     int i;
@@ -27,12 +32,12 @@ void OpenSpeechBank(char *path, int n)
     short nsamples;
     unsigned got;
     int size;
-    unsigned fh;
     short w1;
-    short type;
+    unsigned fh;
+    unsigned short type;
     int off;
     int pos;
-    unsigned short c;
+    int c;
     int cnt;
 
     if (speechinit == 0) return;
@@ -68,7 +73,7 @@ void OpenSpeechBank(char *path, int n)
         lseek(fh, pos, 0);
         _dos_read(fh, &type, 2, &got);
         c = type & 0xFF;
-        type = (unsigned short)type >> 8;
+        type = (short)type >> 8;
         if (c == 'G') {
             lseek(fh, pos + 6, 0);
             _dos_read(fh, &size, 2, &got);

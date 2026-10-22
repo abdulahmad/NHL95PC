@@ -21,7 +21,7 @@ void MoveToFreeAgents(int *mode, int *x, int *y)
     nsel = 0;
     ntried = 0;
     side = *mode != 3;
-    other = *mode == 3;
+    other = !side;
     for (i = 0; i < 0x1C; i++) {
         if (!rostersel[side * 28 + i]) continue;
         nsel++;

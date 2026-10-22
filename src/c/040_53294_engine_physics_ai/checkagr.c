@@ -10,7 +10,6 @@ short checkagr(Player *p)
     short n;
     int d;
     short m;
-    int t;
 
     n = (0x14 - p->aggress) << 4;
     if (p->pflags & 8) n += n;
@@ -27,6 +26,6 @@ short checkagr(Player *p)
     if (m >= 1) n <<= 2;
     if (m >= 2) n <<= 2;
     if ((gmode & 8) && *puckc >= 0 && ((p->SCnum < 6) ^ (*puckc < 6))) n <<= 2;
-    t = n;
-    return randomd0((t >> 1) + t);
+    n += n >> 1;
+    return randomd0(n);
 }

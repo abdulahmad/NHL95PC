@@ -6,7 +6,6 @@
  net (|x| > 2Ch), else the watch ends. */
 void puckIChk(void)
 {
-    short x;
     int a;
 
     if (!(iflags & 4)) return;
@@ -17,9 +16,8 @@ void puckIChk(void)
     } else {
         if (*pucky < 0xE8) return;
     }
-    x = *puckx;
-    if (x < 0) a = -(int)x;
-    else a = x;
+    if ((*puckx) < 0) a = -(int)(*puckx);
+    else a = (*puckx);
     if (a <= 0x2C) {
         iflags &= ~4;
         return;

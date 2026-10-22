@@ -72,8 +72,10 @@ void GetHot(Player *p)
         regd0.w = -regd0.w;
 }
 
-/* DRAFT (Goal): every statement in place; two register orders differ: the power-play goal stat computes the
-   index in edx (EXE eax), and the goalie lookup loads tmgoalie before tmlines (EXE after). See docs/UNSURE.md. */
+/* DRAFT (Goal): 1688 vs 1688, 3 differing. The goalie lookup goes through q (reused) so tmlines is loaded before
+   tmgoalie, and r is declared in the plus-minus block; that also fixes the power-play stat registers. Left: q is
+   ebx at the lookup (EXE edx). Tried for it: pk, net and r (scoped in the gmode block) as the pointer, a new
+   block-scoped pointer (propagated away). Earlier tries: see docs/UNSURE.md. */
 /* Goal (5AB36, 93G Goal; ends in calcpuckcross_ret6): the puck went into the goal of net. side = the scoring side
    (puck y below 0, flipped by gmode bit 1): t the scoring team, o the other. With the clock stopped (gmode bit 0),
    a delayed penalty on the scoring team (PenTeamScored) or the team offside (tmflags bit 4) there is no goal: the
@@ -98,7 +100,6 @@ void Goal(Player *net)
     Team *t;
     Team *o;
     Player *q;
-    Player *r;
     short side;
     short i;
 
@@ -166,11 +167,14 @@ void Goal(Player *net)
             if (i >= 0 && i < 0x19) t->tmplstats[i * 8 + 1]++;
         }
         if (o->tmgoalie >= 0) {
-            i = o->tmlines[o->tmgoalie + 0x24] - 0x19;
+            q = (Player *)o->tmlines;           /* q reused: loads tmlines before tmgoalie */
+            i = ((unsigned char *)q)[o->tmgoalie + 0x24] - 0x19;
             if (i >= 0 && i < 3) o->tmglstats[i * 3 + 2]++;
         }
         if (!penshotlive) {
             if (o->tmap >= t->tmap) {
+                Player *r;
+
                 q = t->tmsort;
                 r = o->tmsort;
                 for (i = 0; i < 6; i++, q++, r++) {

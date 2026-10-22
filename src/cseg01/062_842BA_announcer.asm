@@ -24,6 +24,10 @@ global SayLineups, SayNowBack, FreeNowBack, SayBackMoment, FreeBackMoment, SayCo
 global SayElseNhl, SayHighlightIntro, SayPlayoffResult, SayTheGame, SayScoringPeriod, SayClip, SayTonightIntro, SayPlayoffTonight
 global RequestTimeClips, QueueTimeClips, SayPenalty, SayPenaltyShot, SayPlayerNumber, SayGoal, SayOneMinuteLeft, OpenAnnouncerBank
 global QueuePenaltyType, PreloadAnnouncerClips
+; C: src/c/062_842BA_announcer/PenaltyLenClip.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/PenaltyLenClip.inc"
+%else
 PenaltyLenClip:
 push dword 14h	; 842BA
 call __CHK	; 842BF
@@ -57,6 +61,7 @@ mov edx, str_2minCor	; 842FA
 call strcpy_	; 842FF
 pop ebx	; 84304
 ret	; 84305
+%endif ; C
 ; C: src/c/062_842BA_announcer/PlayoffRoundClipD.c
 %ifdef CBUILD
 %include "c/062_842BA_announcer/PlayoffRoundClipD.inc"
@@ -371,6 +376,10 @@ mov eax, 1	; 84602
 add esp, byte 2Ch	; 84607
 jmp near ShutdownSpeech_ret6	; 8460A
 %endif ; C
+; C: src/c/061_83459_speech/ShutdownSpeech.c (SayClip_body)
+%ifdef CBUILD
+%include "c/061_83459_speech/ShutdownSpeech.SayClip_body.inc"
+%else
 SayClip_body:
 call SpeechIdle	; 8460F
 test eax, eax	; 84614
@@ -390,9 +399,10 @@ mov eax, 1	; 84650
 .x:
 pop edx	; 84655
 ret	; 84656
-; C: src/c/062_842BA_announcer/SayScorePeriod.c
+%endif ; C
+; C: src/c/061_83459_speech/ShutdownSpeech.c (SayScorePeriod)
 %ifdef CBUILD
-%include "c/062_842BA_announcer/SayScorePeriod.inc"
+%include "c/061_83459_speech/ShutdownSpeech.SayScorePeriod.inc"
 %else
 SayScorePeriod:
 push dword 8	; 84657
@@ -422,9 +432,9 @@ mov eax, 1	; 846AD
 pop edx	; 846B2
 ret	; 846B3
 %endif ; C
-; C: src/c/062_842BA_announcer/SayNhlIntro.c
+; C: src/c/061_83459_speech/ShutdownSpeech.c (SayNhlIntro)
 %ifdef CBUILD
-%include "c/062_842BA_announcer/SayNhlIntro.inc"
+%include "c/061_83459_speech/ShutdownSpeech.SayNhlIntro.inc"
 %else
 SayNhlIntro:
 push dword 4	; 846B4
@@ -506,9 +516,9 @@ call __CHK	; 847BF
 mov eax, str_ElsenhlInt	; 847C4
 jmp near SayClip	; 847C9
 %endif ; C
-; C: src/c/062_842BA_announcer/SayHighlightIntro.c
+; C: src/c/061_83459_speech/ShutdownSpeech.c (SayHighlightIntro)
 %ifdef CBUILD
-%include "c/062_842BA_announcer/SayHighlightIntro.inc"
+%include "c/061_83459_speech/ShutdownSpeech.SayHighlightIntro.inc"
 %else
 SayHighlightIntro:
 push dword 48h	; 847CE
@@ -592,9 +602,9 @@ add esp, byte 30h	; 84908
 pop ecx	; 8490B
 ret	; 8490C
 %endif ; C
-; C: src/c/062_842BA_announcer/SayPlayoffResult.c
+; C: src/c/061_83459_speech/ShutdownSpeech.c (SayPlayoffResult)
 %ifdef CBUILD
-%include "c/062_842BA_announcer/SayPlayoffResult.inc"
+%include "c/061_83459_speech/ShutdownSpeech.SayPlayoffResult.inc"
 %else
 SayPlayoffResult:
 push dword 64h	; 8490D
@@ -693,11 +703,20 @@ pop edi	; 84A67
 pop esi	; 84A68
 ret 8	; 84A69
 %endif ; C
+; C: src/c/061_83459_speech/ShutdownSpeech.c (SayTheGame)
+%ifdef CBUILD
+%include "c/061_83459_speech/ShutdownSpeech.SayTheGame.inc"
+%else
 SayTheGame:
 push dword 4	; 84A6C
 call __CHK	; 84A71
 mov eax, str_ThegameBar	; 84A76
 jmp short SayClip	; 84A7B
+%endif ; C
+; C: src/c/061_83459_speech/ShutdownSpeech.c (SayScoringPeriod)
+%ifdef CBUILD
+%include "c/061_83459_speech/ShutdownSpeech.SayScoringPeriod.inc"
+%else
 SayScoringPeriod:
 push dword 4	; 84A7D
 call __CHK	; 84A82
@@ -718,6 +737,11 @@ jmp short SayScoringPeriod_ott	; 84AA2
 cmp eax, byte 1	; 84AA4
 jne short SayScoringPeriod_ott	; 84AA7
 mov eax, str_Scor1otpBar	; 84AA9
+%endif ; C
+; C: src/c/061_83459_speech/ShutdownSpeech.c (SayClip)
+%ifdef CBUILD
+%include "c/061_83459_speech/ShutdownSpeech.SayClip.inc"
+%else
 SayClip:
 push dword 8	; 84AAE
 call __CHK	; 84AB3
@@ -728,6 +752,11 @@ jne near SayClip_body	; 84AC2
 xor eax, eax	; 84AC8
 pop edx	; 84ACA
 ret	; 84ACB
+%endif ; C
+; C: src/c/061_83459_speech/ShutdownSpeech.c (SayScoringPeriod_ot2)
+%ifdef CBUILD
+%include "c/061_83459_speech/ShutdownSpeech.SayScoringPeriod_ot2.inc"
+%else
 SayScoringPeriod_ot2:
 mov eax, str_Scor2otpBar	; 84ACC
 jmp short SayClip	; 84AD1
@@ -759,6 +788,7 @@ jmp short SayClip	; 84B08
 .4:
 xor eax, eax	; 84B0A
 ret	; 84B0C
+%endif ; C
 ; C: src/c/062_842BA_announcer/SayTonightIntro.c
 %ifdef CBUILD
 %include "c/062_842BA_announcer/SayTonightIntro.inc"

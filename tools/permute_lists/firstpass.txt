@@ -1,0 +1,16 @@
+DrawCtlBoxOn
+MenuP2ControlsLeague
+ControlsDlgLeague
+MenuP2ControlsExh
+ControlsDlgExh
+MenuP2ControlsPlayoff
+ControlsDlgPlayoff
+getlinee
+SayClip
+SprSort
+chkprogress
+LoadRosterList
+Readjoy2
+StartPreGame
+ThreeStarsLoop
+DrawControlsOpts

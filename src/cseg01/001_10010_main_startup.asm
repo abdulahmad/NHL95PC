@@ -103,6 +103,10 @@ pop edi	; 10091
 pop esi	; 10092
 ret	; 10093
 %endif ; C
+; C: src/c/001_10010_main_startup/main_.c
+%ifdef CBUILD
+%include "c/001_10010_main_startup/main_.inc"
+%else
 main_:
 push dword 9Ch	; 10094
 call __CHK	; 10099
@@ -534,6 +538,7 @@ pop edx	; 106C4
 pop ecx	; 106C5
 pop ebx	; 106C6
 ret	; 106C7
+%endif ; C
 ; C: src/c/001_10010_main_startup/DiskFreeBytes.c
 %ifdef CBUILD
 %include "c/001_10010_main_startup/DiskFreeBytes.inc"
@@ -1503,6 +1508,10 @@ add esp, byte 8	; 110DA
 pop edi	; 110DD
 pop esi	; 110DE
 ret	; 110DF
+; C: src/c/001_10010_main_startup/DrawFrameSprite.c
+%ifdef CBUILD
+%include "c/001_10010_main_startup/DrawFrameSprite.inc"
+%else
 DrawFrameSprite:
 push dword 10h	; 110E0
 call __CHK	; 110E5
@@ -1532,6 +1541,7 @@ call DrawSprite	; 1112D
 .x:
 pop esi	; 11132
 ret 4	; 11133
+%endif ; C
 ; C: src/c/001_10010_main_startup/DrawRinkEndArt.c
 %ifdef CBUILD
 %include "c/001_10010_main_startup/DrawRinkEndArt.inc"
@@ -1808,6 +1818,10 @@ mov dword [joysampling], edx	; 11492
 pop edx	; 11498
 ret	; 11499
 %endif ; C
+; C: src/c/001_10010_main_startup/RunGameFrames.c
+%ifdef CBUILD
+%include "c/001_10010_main_startup/RunGameFrames.inc"
+%else
 RunGameFrames:
 push dword 0Ch	; 1149A
 call __CHK	; 1149F
@@ -1866,6 +1880,7 @@ jl near RunGameFrames.1	; 11547
 pop edx	; 1154D
 pop ebx	; 1154E
 ret	; 1154F
+%endif ; C
 ; C: src/c/001_10010_main_startup/HandleHotKey.c (SetFullPalette)
 %ifdef CBUILD
 %include "c/001_10010_main_startup/HandleHotKey.SetFullPalette.inc"

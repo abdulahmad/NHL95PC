@@ -1,7 +1,10 @@
 /* Game save I/O: pick the season's award winners. */
-/* DRAFT: same size (2,028 bytes); three of the six award-9 sums load their first two words in the other order (the
-   registers are the EXE's, only the two loads swap). See docs/UNSURE.md. DrawAwardsSummary, AwardsCeremony and
-   ShowAwardScreens end in its PickAwardWinners_x. */
+/* DrawAwardsSummary, AwardsCeremony and ShowAwardScreens end in its PickAwardWinners_x. Three of the award-9 sums
+   read one word into a block int first: that is the EXE's load order. */
+/* DRAFT (PickAwardWinners, 10.0 GA): 2 bytes longer, every other instruction the EXE's (the locals declared err, v,
+   mine, g, pct, st, pts and the two `mine` sums reordered). Left: the win percentage divisor loads the losses byte
+   into eax and adds with `lea esi, [edx+eax]`; the EXE loads it straight into esi (`movzx esi, byte [esp+2Ah]` /
+   `add esi, edx`). See docs/UNSURE.md. */
 #define PickAwardWinners PickAwardWinners_decl
 #define ShowAwardScreens ShowAwardScreens_decl
 #define sub_9035C sub_9035C_decl
@@ -81,12 +84,12 @@ int PickAwardWinners(void)
         int i;
     } f;
     int err;
-    int pts;
-    int pct;
     int v;
     int mine;
     unsigned short g;
+    int pct;
     unsigned char *st;
+    int pts;
 
     f.sfh = f.kfh = f.tfh = -1;
     MakePath(f.path, (char *)&curleague, (char *)leaguedbnames[4], (char *)str_extDB);
@@ -177,7 +180,12 @@ int PickAwardWinners(void)
                 v = ((GSeasonRec *)st)->g34 + (((GSeasonRec *)st)->g30 + ((GSeasonRec *)st)->g32);
             }
             g = ((SeasonRec *)st)->gp;
-            mine = f.season.s2A + f.season.s28 + f.season.s2C;
+            {
+                int a;
+
+                a = f.season.s28;
+                mine = f.season.s2C + (f.season.s2A + a);
+            }
             if (!f.found[9] || mine > v || mine == v && g > f.season.gp) {
                 AWKEY(9) = f.key;
                 *(SeasonRec *)unk_D98C3 = f.season;
@@ -207,13 +215,23 @@ int PickAwardWinners(void)
             }
             if (awardtype[9] == 1) {
                 st = AWST(9);
-                v = ((SeasonRec *)st)->s2C + (((SeasonRec *)st)->s2A + ((SeasonRec *)st)->s28);
+                {
+                    int a;
+
+                    a = ((SeasonRec *)st)->s28;
+                    v = ((SeasonRec *)st)->s2C + (((SeasonRec *)st)->s2A + a);
+                }
             } else {
                 st = AWST(9);
                 v = ((GSeasonRec *)st)->g30 + ((GSeasonRec *)st)->g32 + ((GSeasonRec *)st)->g34;
             }
             g = ((GSeasonRec *)st)->gp;
-            mine = f.gseason.g32 + f.gseason.g30 + f.gseason.g34;
+            {
+                int a;
+
+                a = f.gseason.g30;
+                mine = a + f.gseason.g32 + f.gseason.g34;
+            }
             if (!f.found[9] || mine > v || mine == v && g > f.gseason.gp) {
                 AWKEY(9) = f.key;
                 *(GSeasonRec *)unk_D9794 = f.gseason;

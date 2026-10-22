@@ -425,10 +425,6 @@ pop ecx	; 83894
 pop ebx	; 83895
 ret	; 83896
 %endif ; C
-; C: src/c/061_83459_speech/OpenSpeechBank.c
-%ifdef CBUILD
-%include "c/061_83459_speech/OpenSpeechBank.inc"
-%else
 OpenSpeechBank:
 push dword 40h	; 83897
 call __CHK	; 8389C
@@ -655,7 +651,6 @@ pop esi	; 83BC3
 pop ecx	; 83BC4
 pop ebx	; 83BC5
 ret	; 83BC6
-%endif ; C
 ; C: src/c/061_83459_speech/SpeechSlotSize.c
 %ifdef CBUILD
 %include "c/061_83459_speech/SpeechSlotSize.inc"
@@ -881,6 +876,10 @@ inc dword [dword eax+03B74h]	; 83E24
 add esp, byte 8	; 83E2A
 jmp near ShutdownSpeech_ret6	; 83E2D
 %endif ; C
+; C: src/c/061_83459_speech/StrEqNoCase.c
+%ifdef CBUILD
+%include "c/061_83459_speech/StrEqNoCase.inc"
+%else
 StrEqNoCase:
 push dword 0Ch	; 83E32
 call __CHK	; 83E37
@@ -909,6 +908,7 @@ mov eax, 1	; 83E65
 pop ecx	; 83E6A
 pop ebx	; 83E6B
 ret	; 83E6C
+%endif ; C
 FindFreeSpeechSlot:
 push dword 0Ch	; 83E6D
 call __CHK	; 83E72
@@ -1122,6 +1122,10 @@ pop ecx	; 84033
 pop ebx	; 84034
 ret	; 84035
 %endif ; C
+; C: src/c/061_83459_speech/FreeUnrequestedSamples.c
+%ifdef CBUILD
+%include "c/061_83459_speech/FreeUnrequestedSamples.inc"
+%else
 FreeUnrequestedSamples:
 push dword 10h	; 84036
 call __CHK	; 8403B
@@ -1166,6 +1170,7 @@ pop edx	; 840A5
 pop ecx	; 840A6
 pop ebx	; 840A7
 ret	; 840A8
+%endif ; C
 ; C: src/c/061_83459_speech/OpenSpeechBank.c (MoveSampleMem)
 %ifdef CBUILD
 %include "c/061_83459_speech/OpenSpeechBank.MoveSampleMem.inc"
@@ -1349,18 +1354,18 @@ pop ecx	; 8426C
 pop ebx	; 8426D
 ret	; 8426E
 %endif ; C
-; C: src/c/062_842BA_announcer/SayNhlIntro.c (EnsureSampleRoom)
+; C: src/c/061_83459_speech/ShutdownSpeech.c (EnsureSampleRoom)
 %ifdef CBUILD
-%include "c/062_842BA_announcer/SayNhlIntro.EnsureSampleRoom.inc"
+%include "c/061_83459_speech/ShutdownSpeech.EnsureSampleRoom.inc"
 %else
 EnsureSampleRoom:
 push dword 4	; 8426F
 call __CHK	; 84274
 call MakeSampleRoom	; 84279
 %endif ; C
-; C: src/c/062_842BA_announcer/SayNhlIntro.c (CompactSpeechMem)
+; C: src/c/061_83459_speech/ShutdownSpeech.c (CompactSpeechMem)
 %ifdef CBUILD
-%include "c/062_842BA_announcer/SayNhlIntro.CompactSpeechMem.inc"
+%include "c/061_83459_speech/ShutdownSpeech.CompactSpeechMem.inc"
 %else
 CompactSpeechMem:
 push dword 0Ch	; 8427E

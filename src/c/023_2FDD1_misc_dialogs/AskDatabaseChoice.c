@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* AskDatabaseChoice: ask which database to use (original or edited) at the mouse position; sets dbextension
- to.ORG for answer 1, else.DB. Returns the answer. */
+ to .ORG for answer 1, else .DB. Returns the answer. */
 int AskDatabaseChoice(void)
 {
     int r;

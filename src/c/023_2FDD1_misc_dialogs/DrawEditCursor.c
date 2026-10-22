@@ -1,5 +1,4 @@
 /* Misc dialogs: text edit cursor. */
-/* DRAFT: both functions are the original size; register picks left (see docs/UNSURE.md). */
 #include "nhl95.h"
 
 #define TEXTWIDTHN ((int (__cdecl *)(char *s, int n))sub_90A40)
@@ -24,9 +23,8 @@ void DrawEditCursor(int mode)
         if (mode & 2) w = cw;
         else w = TEXTWIDTHN(s, 1);
     } else w = fputchar((char *)str_Space);
-    if (mode & 2) x = editpos * cw;
-    else x = TEXTWIDTHN(editbuf, editpos);
-    x += editx;
+    if (mode & 2) x = editpos * cw + editx;
+    else x = TEXTWIDTHN(editbuf, editpos) + editx;
     y = byte_D42C5 + edity - editcurw - 2;
     FILLRECT(x, y, w, editcurw, fontcolor);
 }
@@ -38,7 +36,8 @@ void DrawEditCursor(int mode)
    "." per character, else by fputchar); clamp editpos to the text; print it at editx, edity (fixed-pitch: a "."
    per character); then clear the rest of the field (sub_90EC0, byte_D42C5 - 2 high, colour dword_D42AC).
    mode: the edit mode bits. No result.
-   DRAFT: same size (372). The width of "." stays in edi (original ebp, with the text length in edi); see UNSURE. */
+   The fixed-pitch width test keeps its product in len, and the clamp goes through w, as the EXE's registers
+   show. */
 void DrawEditText(int mode)
 {
     int cw;
@@ -49,15 +48,16 @@ void DrawEditText(int mode)
     cw = fputchar((char *)str_Dot);
     if (editmaxw) {
         if (mode & 2) {
-            while ((int)strlen(editbuf) * cw > editmaxw && strlen(editbuf))
+            while ((len = strlen(editbuf) * cw) > editmaxw && strlen(editbuf))
                 editbuf[strlen(editbuf) - 1] = 0;
         } else {
             while (fputchar(editbuf) > editmaxw && strlen(editbuf))
                 editbuf[strlen(editbuf) - 1] = 0;
         }
     }
-    len = strlen(editbuf);
-    if (len < editpos) editpos = len;
+    w = strlen(editbuf);
+    len = w;
+    if (w < editpos) editpos = w;
     if (mode & 2) {
         for (i = 0; i < len; i++) sub_92CD0((char *)str_Dot, editx + cw * i, edity);
     } else {

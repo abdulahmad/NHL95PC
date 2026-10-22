@@ -4627,6 +4627,10 @@ pop ecx	; 25752
 pop ebx	; 25753
 ret	; 25754
 %endif ; C
+; C: src/c/017_21CDE_player_stats/CmpShootPct.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/CmpShootPct.inc"
+%else
 CmpShootPct:
 push dword 14h	; 25755
 call __CHK	; 2575A
@@ -4747,6 +4751,7 @@ pop esi	; 25866
 pop ecx	; 25867
 pop ebx	; 25868
 ret	; 25869
+%endif ; C
 ; C: src/c/017_21CDE_player_stats/CmpGoalieWins.c
 %ifdef CBUILD
 %include "c/017_21CDE_player_stats/CmpGoalieWins.inc"

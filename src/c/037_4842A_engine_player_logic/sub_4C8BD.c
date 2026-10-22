@@ -20,9 +20,9 @@ void sub_4C8BD(Player *p)
     n = *(short *)((char *)p->tmptr + 0xFA);
     if (n < 0) return;
     o = &SortCords[n];
-    x -= (o->Xpos >> 16) + (o->Xvel >> 9);
+    x -= (o->Xvel >> 9) + (o->Xpos >> 16);
     if (ABS(regd1.w) > 20) return;
-    y -= (o->Ypos >> 16) + (o->Yvel >> 9);
+    y -= (o->Yvel >> 9) + (o->Ypos >> 16);
     if (ABS(regd1.w) > 20) return;
     regd0.w = vtoa((short)x, (short)y);
 }

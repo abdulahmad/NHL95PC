@@ -1,5 +1,4 @@
 /* Engine player logic: penalty shot shooter. */
-/* DRAFT: register allocation only - EXE loads the puckc pointer into edx for the first test (C: eax). */
 #include "nhl95.h"
 
 /* asspenshooter: the penalty shot skater. Leave (assexit) without the puck or with

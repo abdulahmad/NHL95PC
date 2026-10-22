@@ -100,11 +100,12 @@ int TextInputDialog(char *prompt, char *buf, int maxlen, int minw, int numeric, 
    button is placed from the box's left edge (flags bit 0) or right edge and from its top (bit 2) or bottom.
    With wait set, run the buttons (RunMessageBox from the mouse position *mx / *my) and restore the screen; the
    button positions are put back before returning. Result: the chosen button (RunMessageBox), undefined without
-   wait. */
+   wait. Plain locals in the order lineh, r, ty, w, h, top give the EXE frame under 10.0 GA (n at +0Ch, lines
+   at +10h, lineh at +14h). */
 int MessageBox(int x, int y, char **lines, int n, DlgBtn *b, int nb, int *mx, int *my, int wait)
 {
-    int r;
     int lineh;
+    int r;
     int ty;
     int w;
     int h;

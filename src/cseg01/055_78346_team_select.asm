@@ -649,6 +649,10 @@ pop edi	; 78BE3
 pop esi	; 78BE4
 pop ecx	; 78BE5
 ret	; 78BE6
+; C: src/c/055_78346_team_select/DrawLineEditorScreen.c (DrawDlgFrame)
+%ifdef CBUILD
+%include "c/055_78346_team_select/DrawLineEditorScreen.DrawDlgFrame.inc"
+%else
 DrawDlgFrame:
 push dword 38h	; 78BE7
 call __CHK	; 78BEC
@@ -855,10 +859,16 @@ add esp, byte 0Ch	; 78E1E
 .1:
 add esp, byte 14h	; 78E21
 jmp near StubRet4a	; 78E24
+%endif ; C
+; C: src/c/055_78346_team_select/StubRet4b.c
+%ifdef CBUILD
+%include "c/055_78346_team_select/StubRet4b.inc"
+%else
 StubRet4b:
 push dword 10h	; 78E29
 call __CHK	; 78E2E
 ret 4	; 78E33
+%endif ; C
 ; C: src/c/055_78346_team_select/CheckGameRosterComplete.c
 %ifdef CBUILD
 %include "c/055_78346_team_select/CheckGameRosterComplete.inc"
@@ -1072,6 +1082,10 @@ pop esi	; 7908D
 pop ecx	; 7908E
 ret	; 7908F
 %endif ; C
+; C: src/c/055_78346_team_select/PruneGameLines.c
+%ifdef CBUILD
+%include "c/055_78346_team_select/PruneGameLines.inc"
+%else
 PruneGameLines:
 push dword 18h	; 79090
 call __CHK	; 79095
@@ -1176,6 +1190,7 @@ pop esi	; 79184
 pop ecx	; 79185
 pop ebx	; 79186
 ret	; 79187
+%endif ; C
 ; C: src/c/055_78346_team_select/MenuSaveDefaultLines.c (MenuUseTheseLines)
 %ifdef CBUILD
 %include "c/055_78346_team_select/MenuSaveDefaultLines.MenuUseTheseLines.inc"
@@ -2367,6 +2382,10 @@ pop edi	; 7A012
 pop esi	; 7A013
 ret 18h	; 7A014
 %endif ; C
+; C: src/c/055_78346_team_select/BlitJerseyDigit.c
+%ifdef CBUILD
+%include "c/055_78346_team_select/BlitJerseyDigit.inc"
+%else
 BlitJerseyDigit:
 push dword 18h	; 7A017
 call __CHK	; 7A01C
@@ -2423,6 +2442,7 @@ pop ebp	; 7A093
 pop edi	; 7A094
 pop esi	; 7A095
 ret 4	; 7A096
+%endif ; C
 ; C: src/c/055_78346_team_select/MakeJerseyShape.c
 %ifdef CBUILD
 %include "c/055_78346_team_select/MakeJerseyShape.inc"

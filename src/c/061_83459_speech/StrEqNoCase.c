@@ -8,8 +8,8 @@ int StrEqNoCase(char *a, char *b)
     int cb;
 
     while (*a || *b) {
-        ca = *a & 0xDF;
-        cb = *b & 0xDF;
+        ca = (signed char)*a & 0xDF;
+        cb = (signed char)*b & 0xDF;
         a++;
         b++;
         if (ca != cb) return 0;

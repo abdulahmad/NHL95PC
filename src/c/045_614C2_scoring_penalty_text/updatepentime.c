@@ -6,14 +6,11 @@
  once-a-second work: chkatop, updatePPTeamTime and both teams' ProcessPenaltyList. */
 void updatepentime(void)
 {
-    unsigned char f;
-
-    f = sflags3 & 0xBF;
-    sflags3 = f;
+    sflags3 &= 0xBF;
     if (gmode & 1) return;
     if (penshotlive != 0) return;
     if (--Penaltytimer < 0) {
-        sflags3 = f | 0x40;
+        sflags3 |= 0x40;
         Penaltytimer += 24;
         chkatop();
         updatePPTeamTime();

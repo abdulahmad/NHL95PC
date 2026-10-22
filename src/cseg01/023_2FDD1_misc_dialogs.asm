@@ -18,6 +18,10 @@ global AskDatabaseChoice, DrawBevelRect, DlgReturnZero, TextInputDialog, DlgNull
 global ListHitTest, DrawListItem, DrawListItems, ListDialog, MeasureTextLine, SetDialogColors, TrackButtons, DrawButtons
 global DrawButton, InitScrollBar, DrawScrollBar, TrackScrollBars, SaveDialogBg, RestoreDialogBg, GrowToButton, GrowToButtons
 global MessageBox, RunMessageBox, CritErrHandler, DrawEditCursor, DrawEditText, EditTextField
+; C: src/c/023_2FDD1_misc_dialogs/AskDatabaseChoice.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/AskDatabaseChoice.inc"
+%else
 AskDatabaseChoice:
 push dword 30h	; 2FDD1
 call __CHK	; 2FDD6
@@ -59,6 +63,7 @@ pop edx	; 2FE45
 pop ecx	; 2FE46
 pop ebx	; 2FE47
 ret	; 2FE48
+%endif ; C
 ; C: src/c/023_2FDD1_misc_dialogs/DrawBevelRect.c
 %ifdef CBUILD
 %include "c/023_2FDD1_misc_dialogs/DrawBevelRect.inc"
@@ -1188,9 +1193,9 @@ pop edi	; 30ADD
 pop esi	; 30ADE
 ret 4	; 30ADF
 %endif ; C
-; C: src/c/023_2FDD1_misc_dialogs/DrawButtons.c
+; C: src/c/023_2FDD1_misc_dialogs/TrackButtons.c (DrawButtons)
 %ifdef CBUILD
-%include "c/023_2FDD1_misc_dialogs/DrawButtons.inc"
+%include "c/023_2FDD1_misc_dialogs/TrackButtons.DrawButtons.inc"
 %else
 DrawButtons:
 push dword 0Ch	; 30AE2
@@ -1217,9 +1222,9 @@ pop esi	; 30B13
 pop ecx	; 30B14
 ret	; 30B15
 %endif ; C
-; C: src/c/023_2FDD1_misc_dialogs/DrawButton.c
+; C: src/c/023_2FDD1_misc_dialogs/TrackButtons.c (DrawButton)
 %ifdef CBUILD
-%include "c/023_2FDD1_misc_dialogs/DrawButton.inc"
+%include "c/023_2FDD1_misc_dialogs/TrackButtons.DrawButton.inc"
 %else
 DrawButton:
 push dword 28h	; 30B16
@@ -1304,9 +1309,9 @@ pop ecx	; 30BF0
 pop ebx	; 30BF1
 ret	; 30BF2
 %endif ; C
-; C: src/c/023_2FDD1_misc_dialogs/DrawButton.c (InitScrollBar)
+; C: src/c/023_2FDD1_misc_dialogs/TrackButtons.c (InitScrollBar)
 %ifdef CBUILD
-%include "c/023_2FDD1_misc_dialogs/DrawButton.InitScrollBar.inc"
+%include "c/023_2FDD1_misc_dialogs/TrackButtons.InitScrollBar.inc"
 %else
 InitScrollBar:
 push dword 8	; 30BF3
@@ -1332,6 +1337,10 @@ mov dword [byte ecx+01Ch], eax	; 30C38
 pop ecx	; 30C3B
 ret	; 30C3C
 %endif ; C
+; C: src/c/023_2FDD1_misc_dialogs/TrackButtons.c (DrawScrollBar)
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/TrackButtons.DrawScrollBar.inc"
+%else
 DrawScrollBar:
 push dword 28h	; 30C3D
 call __CHK	; 30C42
@@ -1397,6 +1406,11 @@ mov edx, ebp	; 30CFF
 xor edx, eax	; 30D01
 mov dword [boxlitecolor], edx	; 30D03
 jmp near DrawButton_x	; 30D09
+%endif ; C
+; C: src/c/023_2FDD1_misc_dialogs/TrackButtons.c (TrackScrollBars)
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/TrackButtons.TrackScrollBars.inc"
+%else
 TrackScrollBars:
 push dword 20h	; 30D0E
 call __CHK	; 30D13
@@ -1515,6 +1529,7 @@ jl near TrackScrollBars.1	; 30E54
 mov eax, dword [byte esp+08h]	; 30E5A
 add esp, byte 10h	; 30E5E
 jmp near TrackButtons_x	; 30E61
+%endif ; C
 ; C: src/c/023_2FDD1_misc_dialogs/SaveDialogBg.c
 %ifdef CBUILD
 %include "c/023_2FDD1_misc_dialogs/SaveDialogBg.inc"
@@ -1617,6 +1632,10 @@ pop ecx	; 30F5C
 pop ebx	; 30F5D
 ret	; 30F5E
 %endif ; C
+; C: src/c/023_2FDD1_misc_dialogs/GrowToButton.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/GrowToButton.inc"
+%else
 GrowToButton:
 push dword 8	; 30F5F
 call __CHK	; 30F64
@@ -1658,6 +1677,11 @@ mov dword [ebx], eax	; 30FB0
 .x:
 pop ecx	; 30FB2
 ret	; 30FB3
+%endif ; C
+; C: src/c/023_2FDD1_misc_dialogs/GrowToButtons.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/GrowToButtons.inc"
+%else
 GrowToButtons:
 push dword 10h	; 30FB4
 call __CHK	; 30FB9
@@ -1709,6 +1733,7 @@ pop ebp	; 3100F
 pop edi	; 31010
 pop esi	; 31011
 ret	; 31012
+%endif ; C
 ; C: src/c/023_2FDD1_misc_dialogs/TextInputDialog.c (MessageBox)
 %ifdef CBUILD
 %include "c/023_2FDD1_misc_dialogs/TextInputDialog.MessageBox.inc"
@@ -2149,6 +2174,10 @@ mov dword [criterrflag], 0FFFFFFFFh	; 314A7
 xor eax, eax	; 314B1
 ret	; 314B3
 %endif ; C
+; C: src/c/023_2FDD1_misc_dialogs/DrawEditCursor.c
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/DrawEditCursor.inc"
+%else
 DrawEditCursor:
 push dword 34h	; 314B4
 call __CHK	; 314B9
@@ -2231,6 +2260,11 @@ pop edx	; 31595
 pop ecx	; 31596
 pop ebx	; 31597
 ret	; 31598
+%endif ; C
+; C: src/c/023_2FDD1_misc_dialogs/DrawEditCursor.c (DrawEditText)
+%ifdef CBUILD
+%include "c/023_2FDD1_misc_dialogs/DrawEditCursor.DrawEditText.inc"
+%else
 DrawEditText:
 push dword 34h	; 31599
 call __CHK	; 3159E
@@ -2347,6 +2381,7 @@ add edi, dword [editx]	; 316FC
 push edi	; 31702
 call sub_90EC0	; 31703
 jmp near DrawEditCursor_x	; 31708
+%endif ; C
 EditTextField:
 push dword 1Ch	; 3170D
 call __CHK	; 31712

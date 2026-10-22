@@ -5,10 +5,7 @@
  mark no sample (-1). */
 void StopDigiSample(void)
 {
-    int h;
-
-    h = digihandle;
-    if (h != -1 && !sub_8F80E(h)) {
+    if (digihandle != -1 && !sub_8F80E(digihandle)) {
         sub_8F67D(digihandle);
         digihandle = -1;
     }

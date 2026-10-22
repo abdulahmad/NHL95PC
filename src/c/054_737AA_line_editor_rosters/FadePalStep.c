@@ -1,10 +1,11 @@
 /* Line editor rosters: palette fades (one source block: FadePalStepSlow ends in FadePalStep's exit). */
-/* DRAFT: the EXE spills steps to its stack slot at entry and reloads it for the clamp (C still has it in ebx there); the rest and the shared exit look right. */
 #include "nhl95.h"
 
 /* Watcom runtime: store n bytes of v at p (the code generator's block fill) */
 void __STOSB(void *p, int v, int n);
 #pragma aux __STOSB "__STOSB" parm [eax] [edx] [ecx];
+
+void j___delay(unsigned ms);  /* CRT delay thunk (j___delay_ -> __delay_) */
 
 /* a signed byte of a table, read as the top byte of a dword */
 #define SBYTE(t, i) (*(int *)((t) + (i) - 3) >> 24)
@@ -21,7 +22,7 @@ void FadePalStep(int dir, unsigned char *pal, int steps)
     if (dir) {
         if (palfadedin) steps = steps > 2 ? 2 : steps;
         palfadedin = 1;
-    } else palfadedin = dir;
+    } else palfadedin = 0;
     if (steps < 2) {
         if (!dir) {
             SetPalette768(pal);
@@ -50,7 +51,7 @@ void FadePalStepSlow(int dir, unsigned char *pal, int steps)
     if (dir) {
         if (palfadedin) steps = steps > 2 ? 2 : steps;
         palfadedin = 1;
-    } else palfadedin = dir;
+    } else palfadedin = 0;
     if (steps < 2) {
         if (!dir) {
             SetPalette768(pal);
@@ -65,7 +66,7 @@ void FadePalStepSlow(int dir, unsigned char *pal, int steps)
     fadeend2[0] = steps + 1;
     for (c = SBYTE(fadestart2, dir); c != SBYTE(fadeend2, dir); c += SBYTE(fadestep2, dir)) {
         for (i = 0; i < 0x300; i++) fadepal2[i] = ((signed char *)pal)[i] * c / steps;
-        delay(0x2D);
+        j___delay(0x2D);
         SetPalette768(fadepal2);
     }
 }

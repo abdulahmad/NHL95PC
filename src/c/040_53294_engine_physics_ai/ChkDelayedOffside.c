@@ -22,7 +22,7 @@ int ChkDelayedOffside(Player *p)
     if (x < 0) x = -x;
     if (x > 0x2C) return 0;
     if ((p->optmptr->tmflags & 0x10) == 0) return 0;
-    if ((p->SCnum < 6) == (lasttouch < 6)) return 0;
+    if ((lasttouch < 6) == (p->SCnum < 6)) return 0;
     AddPenalty2(&SortCords[lasttouch], 8);
     return 1;
 }

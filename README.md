@@ -5,7 +5,7 @@
 ## 🚧 Current Status
 
 - McMarkis is working on the C decompilation.
-- 709 of 1084 functions matched.
+- 828 of 1084 functions matched.
 - Names come from 93G first, then 94G.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
@@ -65,14 +65,13 @@ The analysis scripts in `tools/` (`le_parse.py`, `lst_parse.py`, `build_funcs.py
 ## Compiler findings
 
 * **Watcom C/C++32 10.0 GA (mid-1994)**. The runtime is newer than 10.0 LA (Mar 1994) and older than 10.0a (Sep 1994). Library modules match 10.0a CLIB3R except the ones fixed by the 10.0a A-level patch. The copyright string says 1988-1994.
-* **10.0 LA `wcc386` with default flags reproduces game code.** 8 of 8 hand-written test functions are byte-exact with fixups masked. 10.0a gets 6 of 8, because it widens the 16-bit short compares the EXE has.
+* **The 10.0 GA `wcc386` is in the repo and is the reference compiler** (`tools/watcom/dosga`, from the archive.org Watcom collection; found 2026-10-22). Its clib3r matches the EXE best (GA 124 modules, 10.0a 121, LA 110). Before that, 10.0 LA reproduced game code (8 of 8 test functions byte-exact; 10.0a 6 of 8, because it widens the 16-bit short compares the EXE has). LA is kept: `make WATCOM_VER=la`.
 * Flags inferred: `-5r -fpi -zp1` (`-mf`, stack checks on, no `-o` options). Evidence: 2,527 `mov r32,[x-2]; sar r32,10h` short loads (-5r), EMU387 linked (-fpi), unaligned dwords in packed structs (-zp1, medium confidence).
-* No public 10.0 GA binaries are known. Use 10.0 LA as the reference compiler.
 
 Test harness (needs `dosbox`; `$WATCOM_ROOT` defaults to `tools/watcom`; optional full historic installs elsewhere):
 
 ```
-tools/wc10.sh la tools/cc_tests/t1.c ""   # compile with 10.0 LA wcc386 under headless DOSBox -> build/cc/la/
+tools/wc10.sh ga tools/cc_tests/t1.c ""   # compile with 10.0 GA wcc386 under headless DOSBox -> build/cc/ga/ (la, 10a, 105 need ~/watcom)
 tools/sweep.sh la ""                      # compile every cc_tests file, compare with HOCKEY.EXE (tools/cmpobj.py)
 python3 tools/libmatch.py $WATCOM_ROOT/w10a/WATCOM/LIB386/DOS/CLIB3R.LIB   # library module matching
 ```
@@ -86,7 +85,7 @@ python3 tools/libmatch.py $WATCOM_ROOT/w10a/WATCOM/LIB386/DOS/CLIB3R.LIB   # lib
 * [BUILD_NOTES.md](BUILD_NOTES.md): rebuild format, fixup ordering (wlink algorithm), compiler fingerprint, next steps
 * [EXE_SEGMAP95PC.md](EXE_SEGMAP95PC.md): segment map
 * [docs/SKATING_AND_RINK.md](docs/SKATING_AND_RINK.md): skating physics and rink geometry vs. 93 Genesis
-* [docs/C_MATCHING.md](docs/C_MATCHING.md): C matching decompilation (wcc386 10.0 LA → OMF → spliced into the asm build), headers, workflow, compiler learnings; progress in [C_PROGRESS.md](C_PROGRESS.md)
+* [docs/C_MATCHING.md](docs/C_MATCHING.md): C matching decompilation (wcc386 10.0 GA → OMF → spliced into the asm build), headers, workflow, compiler learnings; progress in [C_PROGRESS.md](C_PROGRESS.md)
 * [docs/ASM_BUILD.md](docs/ASM_BUILD.md): the `src/` tree and `make` build, LE fixups as symbolic labels (`tools/fixup_labels.py`), the NASM toolchain, and the asm emitter (`tools/asm_proto.py`, `tools/gen_src.py`)
 * [docs/UNSURE.md](docs/UNSURE.md): capped drafts and what was tried
 * [docs/SESSION_LOG.md](docs/SESSION_LOG.md): archived session diary from earlier HANDOFF updates

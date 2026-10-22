@@ -7,7 +7,6 @@
 int ChkTwoLinePass(Player *p)
 {
     short sc;
-    short lt;
 
     if (gmode & 0x10) return 0;
     if (!gameopts.twolinepass) return 0;
@@ -15,9 +14,8 @@ int ChkTwoLinePass(Player *p)
         if (!(p->pflags & pfgoal) ^ (*pucky > 0)) return 0;
     }
     sc = p->SCnum;
-    lt = lasttouch;
-    if (sc == lt) return 0;
-    if ((sc < 6) != (lt < 6)) return 0;
+    if (sc == lasttouch) return 0;
+    if ((sc < 6) ^ (lasttouch < 6)) return 0;
     if (!(p->pflags & pfgoal)) {
         if (lty < 0x4E) return 0;
         if (HIWORD(p->Ypos) > 0) return 0;

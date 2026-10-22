@@ -1,12 +1,11 @@
 /* Create player: database check. */
-/* DRAFT: 463 vs 469. Prologue, the seven stack slots, goalie scan, the six lea line scans, the flag
- tests, CheckTeamLines, and ShowDBError match. skaters is zeroed in edi and defense in ebp, back to back,
- before the goalie and forward stores. The original zeros skaters in ebp, stores goalies, zeros the index,
- stores forwards, then zeros defense in edi. The skater id is mov eax,[esi+eax*4+4Ch] / cmp eax,-1 / call.
- The original is shl eax,2 / add eax,esi / mov ecx,[eax+4Ch] / cmp ecx,-1 / mov eax,ecx / call.
- Do not retry: a line pointer (function scope or block scope) is what swaps ebp and edi; without it the
- counters match but each scan is cmp [edx+esi+disp] and the function is 451 bytes. rec+i*4+4Ch,
- line = rec+i*4, off = i<<2, and slot = rec; slot += i<<2 all fold into the scaled load. */
+/* DRAFT: 469 vs 469, one pair of instructions: the EXE increments skaters (inc ebp) before the KeyDbPtr
+ argument copy (mov eax, ecx), C after. The skater id read twice through slot (as the EXE: shl eax, 2 /
+ add eax, esi / mov ecx, [eax+4Ch]) also gives the counter registers. Tried for that order: skaters += 1,
+ ++skaters, ((int *)slot)[0x13], a key pointer local, skaters declared first, -1 != ..., an early
+ continue, *(KeyDbPtr(..) + 2), id assigned in or before the test (worse). Earlier: a line pointer
+ (function scope or block scope) is what swaps ebp and edi; without it the counters match but each scan
+ is cmp [edx+esi+disp] and the function is 451 bytes. */
 #include "nhl95.h"
 
 /* TeamRecPtr and KeyDbPtr save and restore edx. ecx is listed so the record pointer is not left there. */
@@ -36,7 +35,6 @@ int CheckDatabases(int x, int y)
     int skaters;
     int defense;
     int i;
-    int id;
     int r;
 
     s.line = 0;
@@ -56,10 +54,9 @@ int CheckDatabases(int x, int y)
             unsigned char *slot;
             slot = rec;
             slot += i << 2;
-            id = *(int *)(slot + 0x4C);
-            if (id != -1) {
+            if (*(int *)(slot + 0x4C) != -1) {
                 skaters++;
-                if (KeyDbPtr(id)[2] == 0x44) defense++;
+                if (KeyDbPtr(*(int *)(slot + 0x4C))[2] == 0x44) defense++;
                 else s.forwards++;
             }
             i++;

@@ -3876,6 +3876,10 @@ pop ebp	; 76425
 pop edi	; 76426
 pop esi	; 76427
 ret	; 76428
+; C: src/c/054_737AA_line_editor_rosters/FadePalStep.c
+%ifdef CBUILD
+%include "c/054_737AA_line_editor_rosters/FadePalStep.inc"
+%else
 FadePalStep:
 push dword 1Ch	; 76429
 call __CHK	; 7642E
@@ -3964,6 +3968,11 @@ pop edi	; 76517
 pop esi	; 76518
 pop ecx	; 76519
 ret	; 7651A
+%endif ; C
+; C: src/c/054_737AA_line_editor_rosters/FadePalStep.c (FadePalStepSlow)
+%ifdef CBUILD
+%include "c/054_737AA_line_editor_rosters/FadePalStep.FadePalStepSlow.inc"
+%else
 FadePalStepSlow:
 push dword 1Ch	; 7651B
 call __CHK	; 76520
@@ -4048,6 +4057,7 @@ sar eax, 18h	; 76608
 cmp ecx, eax	; 7660B
 jne short FadePalStepSlow.8	; 7660D
 jmp near FadePalStep_ret	; 7660F
+%endif ; C
 ; C: src/c/054_737AA_line_editor_rosters/SetPalette768.c
 %ifdef CBUILD
 %include "c/054_737AA_line_editor_rosters/SetPalette768.inc"
@@ -4086,6 +4096,10 @@ pop ecx	; 7665B
 pop ebx	; 7665C
 ret	; 7665D
 %endif ; C
+; C: src/c/054_737AA_line_editor_rosters/RandLfsrByte.c
+%ifdef CBUILD
+%include "c/054_737AA_line_editor_rosters/RandLfsrByte.inc"
+%else
 RandLfsrByte:
 push dword 0Ch	; 7665E
 call __CHK	; 76663
@@ -4110,6 +4124,7 @@ mov al, byte [eax]	; 76688
 pop edx	; 7668A
 pop ebx	; 7668B
 ret	; 7668C
+%endif ; C
 BlitClipRect:
 push dword 30h	; 7668D
 call __CHK	; 76692
@@ -6250,6 +6265,10 @@ pop ebp	; 77F69
 pop edi	; 77F6A
 pop esi	; 77F6B
 ret 0Ch	; 77F6C
+; C: src/c/054_737AA_line_editor_rosters/LineEdHitTest.c
+%ifdef CBUILD
+%include "c/054_737AA_line_editor_rosters/LineEdHitTest.inc"
+%else
 LineEdHitTest:
 push dword 14h	; 77F6F
 call __CHK	; 77F74
@@ -6312,6 +6331,7 @@ pop edi	; 77FF1
 pop esi	; 77FF2
 pop ecx	; 77FF3
 ret	; 77FF4
+%endif ; C
 LoadGameRoster:
 push dword 0ACh	; 77FF5
 call __CHK	; 77FFA

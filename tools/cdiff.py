@@ -76,7 +76,10 @@ def compare(src, obj, func=None, asm_src=None):
     func, addr = func_addr(asrc, func)
     r = cobj.parse(obj, set(labaddr))
     pubs = sorted(r['pubs'].items(), key=lambda x: x[1])
-    off0 = r['pubs'].get(func, 0); nxt = [o for n, o in pubs if o > off0]
+    if func in r['pubs'] or len(r['pubs']) <= 1: off0 = r['pubs'].get(func, 0)
+    else:   # a label of a split function's piece (getlinee_pp): placed by another public of the file (cc.anchor)
+        s_, e_ = cc.asm_range(asrc, func); off0 = cc.anchor(asrc, r, func, s_, e_)
+    nxt = [o for n, o in pubs if o > off0]
     # the whole object from the first public (shared tails / several functions per file)
     text = r['text']; c0 = off0
     n = len(text) - c0

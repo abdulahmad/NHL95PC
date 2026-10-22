@@ -44,7 +44,7 @@ Only three things stay opaque: the third-party DOS/16M loader body, the BW DOS/4
 ## 2. Compiler fingerprint
 
 ### Verdict
-**Watcom C/C++32 10.0 GA (mid-1994)**, the release between 10.0 "Limited Availability" (March 1994) and 10.0a (CD dated 22 Sep 1994). Game C code was built with **plain `wcc386` defaults**:
+**Watcom C/C++32 10.0 GA (31 May 1994)**, the release between 10.0 "Limited Availability" (March 1994) and 10.0a (CD dated 22 Sep 1994). The GA `wcc386` itself was found in 2026 and is the repo's reference compiler (`tools/watcom/dosga`, evidence 5). Game C code was built with **plain `wcc386` defaults**:
 `-5r` (Pentium register calling convention), `-fpi` (inline x87 with emulator), `-zp1`, `-mf`, stack checking ON (no `-s`), and **no `-o` options** (no -ox/-oneatx/-otexan/-or/-ol/-os/-ot/-oi). Linked with wlink as a DOS/4GW LE, without debug info. Hand-written asm modules (e.g. randomd0 at 8C230: 16-bit mul code, `align 10h`) are separate.
 Confidence: version family 10.0 = very high. GA rather than 10.0a/LA = high. Flags = high for the stack-check, opt-level, -5r, -oi and calling-convention parts; medium for -zp1 (inferred); -oa/-ob/-oc/-oe/-om/-on/-op could not be told apart from the defaults by these tests.
 
@@ -53,7 +53,8 @@ Confidence: version family 10.0 = very high. GA rather than 10.0a/LA = high. Fla
 2. **Library byte matching** (`tools/omf.py` + `tools/libmatch.py`, fixup bytes masked, against cseg01):
    | library | exact modules (bytes) |
    |---|---|
-   | 10.0a CLIB3R.LIB (Sep 1994) | **121 (19,238 B)** + 4 near misses |
+   | 10.0 GA CLIB3R.LIB (May 1994; found 2026) | **124**, the only one with `scnf` and `grownear` exact |
+   | 10.0a CLIB3R.LIB (Sep 1994) | 121 (19,238 B) + 4 near misses |
    | 10.0 LA CLIB3R.LIB (Mar 1994) | 110 (16,074 B) |
    | 10.5 CLIB3R.LIB | 53 |
    | OW 1.9 clib3r | 7 |
@@ -69,18 +70,39 @@ Confidence: version family 10.0 = very high. GA rather than 10.0a/LA = high. Fla
    * -4r and -5r generate the same code for the 8 tests. In general, though, -5r loads shorts as `mov r32,[x-2]; sar r32,10h` and -4r uses `movsx`. The EXE has **2,527** of the `mov/sar 10h` idiom, so the setting is -5r.
    * Other idioms seen: `push N; call __CHK` prologue; callee saves every register it uses; ebp used as a general register (no frame); functions not aligned; cross-function tail merging.
 4. **-zp**: the 10.0 default is -zp1 (test struct {char;int;short} has sizeof 7). In the EXE, 296 of 1,350 `dword_` labels sit at addresses that are not a multiple of 4, which fits packed structs.
+5. **The 10.0 GA compiler itself (found 2026-10-22).** archive.org `watcom-c-cpp-compilers-collection`, file
+   `watcom-10.0/discmaster/Sybase - Watcom C++ 10.0.zip` (57 MB, sha1 8d4028ea...; an extracted install tree, all files
+   dated 1994-05-31, no `A_LEVEL` folder). Checked before use: `BINB/wcc386.exe` 536,624 bytes, sha1 18969cc5..., banner
+   "WATCOM C32 Optimizing Compiler Version 10.0" (the LA build says "... Version 10.0 Limited Availability");
+   `BIN/dos4gw.exe` 254,556 bytes; `LIB386/DOS/clib3r.lib` 187,904 bytes, sha1 d6b6b0e1.... It is the compiler the EXE
+   was built with:
+   * **Library**: clib3r modules matching the EXE: **GA 124**, 10.0a 121, LA 110. GA is the only version whose `scnf` and
+     `grownear` match exactly (the modules the 10.0a A-level patch changed).
+   * **Game C**: compiling all 773 C files, 518 of the 539 files with matched functions gave identical objects under GA
+     and LA. GA matched 10 drafts LA did not (RunGameFrames, CmpShootPct, ReadLeagueInfo, SimPlayoffFinal,
+     UpdateSeasonSchedule, asspenshooter, asswingo, SetShotMode, ResetClock, EvadePC) and missed 10 functions
+     that had been tuned to LA (MessageBox, WriteLeagueInfo, Endfaceoff, sub_4C8BD, FallDown, FormatPlayerName,
+     OpenSpeechBank, ReadSpeechSample, CompactSpeechSlot, checkagr 236 vs 238 bytes), mostly register choices
+     (`mov ebp,eax` vs `mov edi,eax`).
+   * At the switch (766 marked blocks), 749 compiled identically under GA; 17 were LA-tuned (the 10 above plus main_,
+     PickAwardWinners, MergeTeamDbs, MenuSaveDbsAs, DrawControlsOpts, POSeedConfFinals, AskDatabaseChoice, matched
+     under LA in the meantime). 15 were re-tuned for GA (PR #2; declaration orders, an int temp dropped, byte
+     locals); PickAwardWinners and OpenSpeechBank are GA drafts (docs/UNSURE.md).
 
 ### Toolchains
-* **In repo (`tools/watcom/`, default `$WATCOM_ROOT`):** `dosla/WCC386.EXE`, `w10a/WATCOM/BIN/DOS4GW.EXE`, `w10a/WATCOM/BIN/W32RUN.EXE` — enough for `make` C matching with DOSBox.
+* **In repo (`tools/watcom/`, default `$WATCOM_ROOT`):** enough for `make` C matching with DOSBox.
+  * **10.0 GA (default, `WATCOM_VER=ga`)**: `dosga/WCC386.EXE` (sha1 18969cc5...), `dosga/DOS4GW.EXE`, `dosga/W32RUN.EXE` from the GA install tree (evidence 5). The GA `clib3r.lib` is not needed by the build and is not committed.
+  * **10.0 LA (fallback, `WATCOM_VER=la`)**: `dosla/WCC386.EXE` with the 10.0a `w10a/WATCOM/BIN/DOS4GW.EXE` and `W32RUN.EXE`; the reference compiler until 2026-10-22, kept unchanged.
+  * Select with `make WATCOM_VER=la` (or `WATCOM_VER=la python3 tools/cc.py ...`; `python3 tools/cc.py version` prints the active one). The C objects are rebuilt when it changes, and the compile cache keys include it.
 * **Optional full trees** (outside the repo, e.g. `~/watcom`, ~2.2 GB): Open Watcom 1.9 (`ow19/`), OW 2.0 (`ow2/`), Watcom 10.0a CD (`w10a/`), 10.0 LA CD (`wla/` → unpacked into `dosla/`), 10.5 (`w105/`), 9.5b (`w95b/`). Used by `tools/wc10.sh` / library matching, not required for `make`.
-* Source of the historic media: archive.org item `watcom-c-cpp-compilers-collection` (and Watcom_C_10.0, the same 10.0a disc). **No 10.0 GA binaries are known to exist publicly.** The a-level patch format (bpatch DIFFS) only stores new bytes, so it cannot be run backwards to get GA.
+* Source of the historic media: archive.org item `watcom-c-cpp-compilers-collection` (and Watcom_C_10.0, the same 10.0a disc). Its `watcom-10.0/discmaster/Sybase - Watcom C++ 10.0.zip` is the **10.0 GA** install tree (found 2026-10-22; before that no GA binaries were known, and the a-level patch format, bpatch DIFFS, only stores new bytes, so it cannot be run backwards to get GA).
 
 ## 2b. C matching (Oct 2026)
 
-The 10.0 LA `wcc386` with default flags is the reference compiler for the C phase: game functions match byte for byte and are built from C by `make` (count in C_PROGRESS.md) (see [docs/C_MATCHING.md](docs/C_MATCHING.md) for the pipeline and the codegen learnings, [C_PROGRESS.md](C_PROGRESS.md) for the list).
+The **10.0 GA** `wcc386` with default flags is the reference compiler for the C phase (since 2026-10-22; 10.0 LA until then, kept as a fallback): game functions match byte for byte and are built from C by `make` (count in C_PROGRESS.md) (see [docs/C_MATCHING.md](docs/C_MATCHING.md) for the pipeline and the codegen learnings, [C_PROGRESS.md](C_PROGRESS.md) for the list). On the tree of the switch, 828 of 1,084 functions match under GA; the same C gives 810 under LA (`make WATCOM_VER=la` is not byte-identical: 18 marked blocks are tuned for GA).
 
 ## 3. Next steps
-1. Use **10.0 LA `wcc386` (defaults)** as the reference compiler for matching game C code. Re-test against 10.0a if a function fails, and keep a list of LA-vs-GA discrepancies. Keep looking for a 10.0 GA disc (June 1994) to close the gap.
+1. Use **10.0 GA `wcc386` (defaults)** as the reference compiler for matching game C code (done 2026-10-22: `tools/watcom/dosga`, the `make` default). LA stays selectable (`WATCOM_VER=la`) to compare a draft that LA matched.
 2. Link the libc side from the matched objects: take the 10.0a CLIB3R modules that match exactly, and treat cstrt386/scnf/grownear/sscanf/strspn/fstrspn (GA versions) as binary blobs from the EXE.
 3. Assembler-based build: emit per-segment asm → assemble → harvest absolute relocations → `order_fixups()` → `rebuild_exe.build()`. Remember that stored values are **object-relative** offsets. **Done:** the NASM sources are committed in `src/` and `make` / `./build.sh` (`tools/link_src.py`) builds a sha1-identical EXE from them plus the stubs, LE header and fixup order extracted from your EXE. See [docs/ASM_BUILD.md](docs/ASM_BUILD.md).
 4. Optionally run real wlink 10.0a/LA on synthetic OBJs to confirm the chunk/FIXUPP-order theory, so a fully native wcc386+wlink path can reproduce the order without the table.

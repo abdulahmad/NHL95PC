@@ -846,6 +846,10 @@ mov dword [byte eax+01Eh], 0	; 833EB
 mov dword [byte eax+022h], 0	; 833F2
 ret	; 833F9
 %endif ; C
+; C: src/c/060_8291E_sound_config/ResetSpeechQueue.c
+%ifdef CBUILD
+%include "c/060_8291E_sound_config/ResetSpeechQueue.inc"
+%else
 ResetSpeechQueue:
 push dword 0Ch	; 833FA
 call __CHK	; 833FF
@@ -868,3 +872,4 @@ mov dword [byte eax+05Ch], 0	; 8344F
 pop edx	; 83456
 pop ecx	; 83457
 ret	; 83458
+%endif ; C

@@ -5,9 +5,6 @@
  the next calendar year (+12), then month * 31 + day. */
 int DateKey(int month, int day)
 {
-    int m;
-
-    if (month < 9) m = month + 12;
-    else m = month;
-    return m * 31 + day;
+    if (month >= 9) return month * 31 + day;
+    return (month + 12) * 31 + day;
 }

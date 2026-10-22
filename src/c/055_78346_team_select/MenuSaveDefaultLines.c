@@ -124,7 +124,8 @@ int MenuUseDefaultLines(unsigned char *nums, int a, unsigned char side, int *sel
 
 /* DRAFT: first pass, kept for its pop / ret tail (MenuSaveDefaultLines_pop, which MenuUseOriginalLines,
    MenuGameShowPlayerStats and GameScratchPlayer use; the EXE starts it with a `db` push, so it is not in the C
-   queue). */
+   queue). The team as an if / else local gives the EXE `sar` loads; left: the EXE keeps the first lseek result
+   in ebx and copies the second one to ecx for the HomeTeam compare (C: ebx, the other way round). */
 /* MenuSaveDefaultLines (7947F, PC only; owner of MenuSaveDefaultLines_ret / _pop): game line editor menu "save
    default lines". When side's game roster is complete, read the team's record from its league file (leaguedbfmt,
    leaguedbfmt2 for side 1; any error is fatal, a missing file ends the program), store the lines as roster
@@ -139,6 +140,7 @@ int MenuSaveDefaultLines(unsigned char *nums, unsigned char *dst, unsigned char 
     int j;
     int fh;
     int r;
+    int t;
 
     if (CheckGameRosterComplete(side, mx, my)) return 0;
     if (side) sprintf(path, (char *)&leaguedbfmt2, str_Teams2);
@@ -151,7 +153,10 @@ int MenuSaveDefaultLines(unsigned char *nums, unsigned char *dst, unsigned char 
         exit(1);
     }
     if (lseek(fh, 0, 0)) FatalError((char *)str_ErrB3);
-    if (lseek(fh, (side ? VisTeam : HomeTeam) * 0x2E8, 0) < 0) FatalError((char *)str_ErrB4);
+    if (side) t = VisTeam;
+    else t = HomeTeam;
+    r = lseek(fh, t * 0x2E8, 0);
+    if (r < 0) FatalError((char *)str_ErrB4);
     r = read(fh, rec, 0x2E8);
     if (r < 0 || r != 0x2E8) FatalError((char *)str_ErrB5);
     r = lseek(fh, -0x2E8, 1);
@@ -195,6 +200,7 @@ int MenuSaveTheseLines(unsigned char *nums, unsigned char *dst, unsigned char si
     int j;
     int fh;
     int r;
+    int t;
 
     if (CheckGameRosterComplete(side, mx, my)) return 0;
     if (side) sprintf(path, (char *)&leaguedbfmt2, str_Teams2);
@@ -202,7 +208,10 @@ int MenuSaveTheseLines(unsigned char *nums, unsigned char *dst, unsigned char si
     fh = open(path, 0x202);
     if (fh < 0) FatalError((char *)str_ErrB2);
     if (lseek(fh, 0, 0)) FatalError((char *)str_ErrB3);
-    if (lseek(fh, (side ? VisTeam : HomeTeam) * 0x2E8, 0) < 0) FatalError((char *)str_ErrB4);
+    if (side) t = VisTeam;
+    else t = HomeTeam;
+    r = lseek(fh, t * 0x2E8, 0);
+    if (r < 0) FatalError((char *)str_ErrB4);
     r = read(fh, rec, 0x2E8);
     if (r < 0 || r != 0x2E8) FatalError((char *)str_ErrB5);
     r = lseek(fh, -0x2E8, 1);

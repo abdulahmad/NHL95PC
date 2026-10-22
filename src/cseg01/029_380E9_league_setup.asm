@@ -22,6 +22,10 @@ global ChooseLeagueController
 global AskExportToFloppy, BuildStandingsGrid, TeamSelDone, TeamSelCancel, LeagueTeamSelect, WriteSeasonRec, ReadGoalieSeasonRec, WriteGoalieSeasonRec
 global WriteSchedGame, WriteTeamRec, ReadDbRec4Ch, ReadLeagueTeamEntry, WriteLeagueTeamEntry, ReadDbRec28h, ReadDbRec2Ch, AskTeamPassword
 global AskMasterPassword, EncryptPassword, MergeTeamRecDelta, MergeSeasonRecDelta, MergeGoalieRecDelta
+; C: src/c/029_380E9_league_setup/ChooseLeagueController.c
+%ifdef CBUILD
+%include "c/029_380E9_league_setup/ChooseLeagueController.inc"
+%else
 ChooseLeagueController:
 push dword 110h	; 380E9
 call __CHK	; 380EE
@@ -220,6 +224,7 @@ pop ebp	; 38382
 pop edi	; 38383
 pop esi	; 38384
 ret	; 38385
+%endif ; C
 ; C: src/c/029_380E9_league_setup/AskExportToFloppy.c
 %ifdef CBUILD
 %include "c/029_380E9_league_setup/AskExportToFloppy.inc"

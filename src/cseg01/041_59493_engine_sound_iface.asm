@@ -435,6 +435,10 @@ pop edx	; 59942
 pop ecx	; 59943
 ret	; 59944
 %endif ; C
+; C: src/c/041_59493_engine_sound_iface/FreeDigiSample.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/FreeDigiSample.inc"
+%else
 FreeDigiSample:
 push dword 0Ch	; 59945
 call __CHK	; 5994A
@@ -455,6 +459,11 @@ mov dword [digihandle], 0FFFFFFFFh	; 59974
 pop edx	; 5997E
 pop ebx	; 5997F
 ret	; 59980
+%endif ; C
+; C: src/c/041_59493_engine_sound_iface/StopDigiSample.c
+%ifdef CBUILD
+%include "c/041_59493_engine_sound_iface/StopDigiSample.inc"
+%else
 StopDigiSample:
 push dword 8	; 59981
 call __CHK	; 59986
@@ -472,6 +481,7 @@ mov dword [digihandle], 0FFFFFFFFh	; 599AD
 .x:
 pop edx	; 599B7
 ret	; 599B8
+%endif ; C
 ; C: src/c/041_59493_engine_sound_iface/PlayDigiSample.c
 %ifdef CBUILD
 %include "c/041_59493_engine_sound_iface/PlayDigiSample.inc"

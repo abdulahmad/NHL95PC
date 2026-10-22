@@ -5,19 +5,16 @@
  -1 the misconduct clip (str_GamemiscS format with str_Cor). */
 void PenaltyLenClip(int len, char *out)
 {
-    char *s;
-
     switch (len) {
     case 5:
-        s = (char *)str_5minCor;
+        strcpy(out, (char *)str_5minCor);
         break;
     case -1:
         sprintf(out, (char *)str_GamemiscS, str_Cor);
-        return;
+        break;
     case 2:
     default:
-        s = (char *)str_2minCor;
+        strcpy(out, (char *)str_2minCor);
         break;
     }
-    strcpy(out, s);
 }

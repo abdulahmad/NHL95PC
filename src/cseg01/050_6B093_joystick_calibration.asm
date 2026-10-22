@@ -302,6 +302,10 @@ xor eax, eax	; 6B40C
 pop edx	; 6B40E
 ret	; 6B40F
 %endif ; C
+; C: src/c/050_6B093_joystick_calibration/InputInstall.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/InputInstall.inc"
+%else
 InputInstall:
 push dword 14h	; 6B410
 call __CHK	; 6B415
@@ -333,6 +337,7 @@ pop edx	; 6B478
 pop ecx	; 6B479
 pop ebx	; 6B47A
 ret	; 6B47B
+%endif ; C
 ; C: src/c/050_6B093_joystick_calibration/InputRemove.c
 %ifdef CBUILD
 %include "c/050_6B093_joystick_calibration/InputRemove.inc"

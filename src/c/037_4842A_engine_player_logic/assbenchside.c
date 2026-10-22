@@ -7,7 +7,6 @@
  4+ (count <= 11) step him to x -AFh; at temp1 200 standing (frame 365h, no SPA) a 1 in 40 chance of SPA EB5h. */
 void assbenchside(Player *p)
 {
-    short t;
     int y;
 
     if (p->pflags & 2) {
@@ -27,8 +26,7 @@ void assbenchside(Player *p)
         p->frame = 0x362;
         SetSPA(p, 0xE97);
     }
-    t = p->temp1;
-    if (t < 100) {
+    if (p->temp1 < 100) {
         if (!p->SPA) {
             p->temp1 = 100;
             return;
@@ -36,5 +34,5 @@ void assbenchside(Player *p)
         if (p->SPAnum >= 4 && p->SPAcnt <= 0xB) HIWORD(p->Xpos) = -0xAF;
         return;
     }
-    if (t == 200 && p->frame == 0x365 && !p->SPA && !randomd0(0x28)) SetSPA(p, 0xEB5);
+    if (p->temp1 == 200 && p->frame == 0x365 && !p->SPA && !randomd0(0x28)) SetSPA(p, 0xEB5);
 }

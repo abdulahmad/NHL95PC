@@ -1,7 +1,8 @@
 /* Engine player logic: shoot assignment. */
-/* DRAFT: 242 vs 248. The pfna clear is `and bl, 0FDh` (original copies bl to ah first) and the
- word at +4Ch is counted in ax (original di), so edi is never saved. Do not retry a separate
- byte local for the flag: that moved the and into al. */
+/* DRAFT: 246 vs 248. The pfna clear is `and bl, 0FDh` (the original copies bl to ah first). The word at
+ +4Ch decremented in place (as temp2) gives the EXE's di and its saved edi. Do not retry a separate byte
+ local for the flag (that moved the and into al), nor `p->pflags = p->pflags & ...`, an unsigned char cast
+ on either side, `^= pfna`, `!= 0` on the test, or `else if` after the pfalock test. */
 #define assshoot assshootDecl
 #include "nhl95.h"
 #undef assshoot
@@ -13,7 +14,6 @@
  bit 4; any miss clears regd1 bits 4 and 6 (mask AFh). Then ShotMode. */
 void assshoot(Player *p)
 {
-    short w;
     int y;
 
     if (p->pflags & pfalock) return;
@@ -28,9 +28,7 @@ void assshoot(Player *p)
     }
     regd2.w = 0;
     if (--p->temp2 < 0) *(unsigned char *)&regd2 |= 0x20;
-    w = *(short *)((char *)p + 0x4C);
-    *(short *)((char *)p + 0x4C) = --w;
-    if (w < 0) *(short *)((char *)p + 0x4C) = 0;
+    if (--*(short *)((char *)p + 0x4C) < 0) *(short *)((char *)p + 0x4C) = 0;
     if (HIWORD(p->Ypos) < 0) y = -(p->Ypos >> 16);
     else y = p->Ypos >> 16;
     if (y < 0x9E) {
@@ -43,4 +41,20 @@ void assshoot(Player *p)
         } else *(unsigned char *)&regd1 &= 0xAF;
     } else *(unsigned char *)&regd1 &= 0xAF;
     ShotMode(p);
+}
+
+/* assfaceoff (4D4F0; 93G logic93 assfaceoff): the faceoff assignment of player p: unless p is out of the play
+   (pflags bit 20h) or the game is in its faceoff wait (gmode2 bit 0), finish it (assexit). No result. */
+void assfaceoff(Player *p)
+{
+    if (!(p->pflags & 0x20) && !(gmode2 & 1)) assexit(p);
+}
+
+/* assexit (4D509; 93G logic93 assexit): finish the current assignment of player p. Steps to the next entry of the
+ player's 8-deep assignment stack (assnum + 1, wrapped to 0-7) and sets pflags bit 1 ('new
+ assignment') so the assignment dispatcher starts it on the next pass. p: the player. No result. */
+void assexit(Player *p)
+{
+    p->assnum = (p->assnum + 1) & 7;    /* add 1 to the assignment index, keep the first 3 bits */
+    p->pflags |= 2;                     /* pfna: signal next assignment */
 }

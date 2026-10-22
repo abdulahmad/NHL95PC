@@ -4,7 +4,9 @@
 /* SayPenalty: when speech is up and idle: announce a penalty: "<team> [penalty penalties on] number <num>,
  <length clip>, <pen>" (team clip <team>Tea, number clip <num>Num, length from PenaltyLenClip, penalty clip
  <pen>Pen; idx 1 gives the team clip and penalty penalties (idx < cnt) wording, else "and number"), with the
- time clips (RequestTimeClips QueueTimeClips a, b) when withtime; starts the queue and returns 1, else 0. */
+ time clips (RequestTimeClips QueueTimeClips a, b) when withtime; starts the queue and returns 1, else 0.
+ DRAFT: same size, a and b swapped (C: a in ebp, b in edi; EXE a in edi, b in ebp). `1 < cnt` (Watcom compares
+ the register holding idx == 1) leaves idx in memory as in the EXE. */
 int SayPenalty(char *team, int num, int len, char *pen, int a, int b, int idx, int cnt, int withtime)
 {
     char n[16];
@@ -24,7 +26,7 @@ int SayPenalty(char *team, int num, int len, char *pen, int a, int b, int idx, i
     RequestSample((char *)str_OneleftCor);
     if (idx == 1) {
         RequestSample(t);
-        RequestSample(idx < cnt ? (char *)str_PensnumCor : (char *)str_PennumCor);
+        RequestSample(1 < cnt ? (char *)str_PensnumCor : (char *)str_PennumCor);
     } else {
         RequestSample((char *)str_AndnumCor);
     }
@@ -37,7 +39,7 @@ int SayPenalty(char *team, int num, int len, char *pen, int a, int b, int idx, i
     EnsureSampleRoom();
     if (idx == 1) {
         QueueSpeechClip(t);
-        QueueSpeechClip(idx < cnt ? (char *)str_PensnumCor : (char *)str_PennumCor);
+        QueueSpeechClip(1 < cnt ? (char *)str_PensnumCor : (char *)str_PennumCor);
     } else {
         QueueSpeechClip((char *)str_AndnumCor);
     }

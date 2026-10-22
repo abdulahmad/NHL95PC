@@ -1014,6 +1014,10 @@ pop esi	; 7E93B
 pop ecx	; 7E93C
 ret	; 7E93D
 %endif ; C
+; C: src/c/057_7DC8B_gadgets_replay/PickNearestPlayer.c
+%ifdef CBUILD
+%include "c/057_7DC8B_gadgets_replay/PickNearestPlayer.inc"
+%else
 PickNearestPlayer:
 push dword 1Ch	; 7E93E
 call __CHK	; 7E943
@@ -1062,6 +1066,7 @@ pop esi	; 7E9A8
 pop ecx	; 7E9A9
 pop ebx	; 7E9AA
 ret	; 7E9AB
+%endif ; C
 ReplayControlLoop:
 push dword 3Ch	; 7E9AC
 call __CHK	; 7E9B1

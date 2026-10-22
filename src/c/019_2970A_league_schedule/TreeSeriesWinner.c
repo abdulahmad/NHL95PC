@@ -13,9 +13,9 @@
  Returns the series' home team when it has more wins, otherwise the away team. */
 int TreeSeriesWinner(unsigned char *s, unsigned round, int same)
 {
+    int away;
     int i;
     int home;
-    int away;
 
     home = s[2];
     away = s[3];

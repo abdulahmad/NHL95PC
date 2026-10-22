@@ -21,6 +21,10 @@ global PreGameIntro_scroll
 global PreGameIntro_frameloop, PreGameIntro_end
 global PreGameIntro_popebp, PreGameIntro_popx, ThreeStarsLoop_tick
 global FadeOutPalCycle, PreGameIntro, StartPreGame, ThreeStarsLoop
+; C: src/c/036_47C31_engine_init/FadeOutPalCycle.c
+%ifdef CBUILD
+%include "c/036_47C31_engine_init/FadeOutPalCycle.inc"
+%else
 FadeOutPalCycle:
 push dword 1Ch	; 47C31
 call __CHK	; 47C36
@@ -83,6 +87,7 @@ pop edx	; 47CD2
 pop ecx	; 47CD3
 pop ebx	; 47CD4
 ret	; 47CD5
+%endif ; C
 PreGameIntro:
 push dword 28h	; 47CD6
 call __CHK	; 47CDB

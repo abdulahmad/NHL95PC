@@ -2804,6 +2804,10 @@ jmp near RunPlayerPickMenu.16	; 1FA97
 .69:
 add esp, 9Ch	; 1FA9C
 jmp near RunMenu_ret4	; 1FAA2
+; C: src/c/015_1D6E8_menu_system/InitMenuRemap.c
+%ifdef CBUILD
+%include "c/015_1D6E8_menu_system/InitMenuRemap.inc"
+%else
 InitMenuRemap:
 push dword 14h	; 1FAA7
 call __CHK	; 1FAAC
@@ -2847,6 +2851,7 @@ pop edx	; 1FB18
 pop ecx	; 1FB19
 pop ebx	; 1FB1A
 ret	; 1FB1B
+%endif ; C
 ; C: src/c/015_1D6E8_menu_system/TextPrintf.c
 %ifdef CBUILD
 %include "c/015_1D6E8_menu_system/TextPrintf.inc"

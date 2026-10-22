@@ -1,8 +1,10 @@
 /* Asset loading: opening spots. */
-/* DRAFT: 535 vs 534. The line-change assignment is lea edx,[eax+16h] where the
- original adds 16h in eax. The map negate is cwde / neg eax, and the original
- negates eax and reloads the word. The far-spot mirror negates regd1 in ecx.
- The loop count is in si, so esi is saved and the cookie is 14h. */
+/* DRAFT: 534 vs 534 (18 differing). The assignment number is passed straight to assinsert
+ (add eax, 16h / movsx edx, ax), but the setcc is widened with xor ah, ah (original and eax, 0FFh).
+ The map negate is cwde / neg eax, and the original negates eax and reloads the word. The far-spot
+ mirror negates regd1 in ecx (original neg word [regd1]). The loop count is in si, so esi is saved
+ and the cookie is 14h. Tried for the mirror: 0 - x, x *= -1, the two loads swapped, !(...) test;
+ for the number: (int) / (short) casts, a short n, n += 16h, 16h + (...), a ternary. */
 #include "nhl95.h"
 
 /* PlacePlayersAtStart: with dword_CC0EC clear, forceteams and drop the puck and the
@@ -25,12 +27,9 @@ void PlacePlayersAtStart(void)
     p = SortCords;
     regd2.w = 12;
     do {
-        int n;
-
         p->temp5 = -100;
         regd1.w = p->position;
-        n = (regd1.w == 4) + 0x16;
-        assinsert(p, n);
+        assinsert(p, (regd1.w == 4) + 0x16);
         if (regd1.w >= 0) {
             regd4.w = -((p->pflags & pfteam) ? awtmap : hmtmap[0]);
             regd4.w = (regd4.w + 6) << 3;

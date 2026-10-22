@@ -9,8 +9,7 @@
 void updatecrowdf(void)
 {
     int t;
-    short n;
-    int r;
+    int n;
 
     if (CwdExciteLvl > word_E9AA4) word_E9AA4 = CwdExciteLvl;  /* peak */
     dword_E009C += CwdExciteLvl;                /* sum */
@@ -20,8 +19,8 @@ void updatecrowdf(void)
         t = (1000 - crowdlevel) / 4;
         n = t;
         if (t < 25) n = 25;
-        r = randomd0(n);
-        if (r == 0) sfx(0xA6);
-        else if (r == 1) sfx(0x96);
+        n = randomd0(n);                        /* n reused for the draw (keeps it in edx) */
+        if (n == 0) sfx(0xA6);
+        else if (n == 1) sfx(0x96);
     }
 }

@@ -5,13 +5,10 @@
 unsigned char RandLfsrByte(unsigned char *s)
 {
     unsigned char bit;
-    unsigned char v;
 
     if (!*s) *s = 0x2B;
     bit = *s & 1;
-    v = *s;
-    v >>= 1;
-    *s = v;
-    if (bit) *s = v ^ 0xB8;
+    *s >>= 1;
+    if (bit) *s ^= 0xB8;
     return *s;
 }

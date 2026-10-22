@@ -17,11 +17,9 @@ void GrowToButtons(int *b, int n, int *w, int *h)
         sum += v + 8;
         if (sum > *w) *w = sum;
         if (b[5] & 4) {
-            v = b[1] + b[3] + 8;
-            if (v > *h) *h = v;
+            if (b[1] + b[3] + 8 > *h) *h = b[1] + b[3] + 8;
         } else {
-            v = b[3] - b[1] + 8;
-            if (v > *h) *h = v;
+            if (b[3] - b[1] + 8 > *h) *h = b[3] - b[1] + 8;
         }
     }
 }

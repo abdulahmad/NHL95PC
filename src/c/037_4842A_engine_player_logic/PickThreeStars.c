@@ -99,8 +99,9 @@ void PickThreeStars(void)
     }
 }
 
-/* DRAFT: 852 vs 853 bytes; apart from relocation-only rows only the parking loop differs (C jumps to its test
-   first, the EXE tests at the bottom); see docs/UNSURE.md. */
+/* DRAFT: 853 bytes, every instruction matches; only its three exits differ: the EXE jumps to PreGameIntro_popx
+   (segment 036), C to the pops of a function of this file. The parking loop tests at the bottom once q is set
+   before the for (with `for (q = SortCords, i = 0; ...)` C jumps to the test first). See docs/UNSURE.md. */
 /* StartThreeStars (48F0B, PC only; ends in PreGameIntro_popx): the three stars ceremony after the game (not in the
    demo, dword_CC0EC). Input sampling off, fade the saved palette out (the fade-in pending), pick the stars
    (PickThreeStars). Clear the line change and penalty signals, the banner and the text overlay (freeing its art),
@@ -151,7 +152,8 @@ void StartThreeStars(void)
     c1playernum[0] = c2playernum[0] = -1;
     PBnum[1] = 0;
     PBnum[0] = 0;
-    for (q = SortCords, i = 0; i < 0xC; i++, q++) {
+    q = SortCords;
+    for (i = 0; i < 0xC; i++, q++) {
         q->temp3 = HIWORD(q->Xpos) = -0xC8;
         q->temp4 = HIWORD(q->Ypos) = 0;
         q->temp5 = -100;

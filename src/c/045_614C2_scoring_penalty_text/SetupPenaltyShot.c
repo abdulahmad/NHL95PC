@@ -1,5 +1,8 @@
 /* Scoring penalties: penalty shot. */
+#define restorepl restorepl_decl
 #include "nhl95.h"
+#undef restorepl
+short restorepl(int newpl, int oldpl);  /* 59FE1: declared with int parameters here (the EXE passes the words as loaded) */
 
 /* SetupPenaltyShot: start a penalty shot: stop the puck at centre (position, velocity, height 0) and give it its
  assignment 18h; the shooter (penshotplayer) loses pflags2 bits 2/5 and pflags bit 2 and gets assignment 2Eh
@@ -27,14 +30,14 @@ void SetupPenaltyShot(void)
     if ((*(int *)((char *)&cont1team - 2) >> 16) == (penshotteam == 0) + 1
         && (*(int *)((char *)c1playernum - 2) >> 16) != -1)
         c1playernum[0] = restorepl(-1, *(int *)((char *)c1playernum - 2) >> 16);
-    if ((*(int *)((char *)&cont2team - 2) >> 16) == (penshotteam == 0) + 1
+    if ((*(int *)((char *)&cont2team - 2) >> 16) == (unsigned char)(penshotteam == 0) + 1
         && (*(int *)((char *)c2playernum - 2) >> 16) != -1)
         c2playernum[0] = restorepl(-1, *(int *)((char *)c2playernum - 2) >> 16);
     t = (short *)p->tmptr;
     t[0x18] = t[0x19] = t[0x1A] = -1;
     crowdlevel += 0x64;
     *puckc = penshotplayer;
-    penshotlive = penshotstart = 1;
+    penshotstart = penshotlive = 1;
     penshottimer = 0x3E8;
     ClearPenaltyBuffer();
 }

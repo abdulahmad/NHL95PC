@@ -3066,6 +3066,10 @@ pop ecx	; 639A1
 pop ebx	; 639A2
 ret	; 639A3
 %endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/chkatop.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/chkatop.inc"
+%else
 chkatop:
 push dword 8	; 639A4
 call __CHK	; 639A9
@@ -3099,6 +3103,7 @@ inc word [byte eax+tmATOP]	; 639F3
 .x:
 pop edx	; 639F7
 ret	; 639F8
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/CheckAndReleasePlayer.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/CheckAndReleasePlayer.inc"
@@ -3248,6 +3253,10 @@ inc word [byte eax+08h]	; 63B80
 .x:
 ret	; 63B84
 %endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/updatepentime.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/updatepentime.inc"
+%else
 updatepentime:
 push dword 8	; 63B85
 call __CHK	; 63B8A
@@ -3277,6 +3286,7 @@ call ProcessPenaltyList	; 63BF1
 .x:
 pop edx	; 63BF6
 ret	; 63BF7
+%endif ; C
 PenaltyManager:
 push dword 4	; 63BF8
 call __CHK	; 63BFD
@@ -3569,6 +3579,10 @@ or byte [awtmflags], 1	; 63F63
 .20:
 add esp, byte 4	; 63F6A
 jmp near InProgress_popebp	; 63F6D
+; C: src/c/045_614C2_scoring_penalty_text/SetupPenaltyShot.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/SetupPenaltyShot.inc"
+%else
 SetupPenaltyShot:
 push dword 10h	; 63F72
 call __CHK	; 63F77
@@ -3671,6 +3685,7 @@ pop esi	; 640FE
 pop edx	; 640FF
 pop ebx	; 64100
 ret	; 64101
+%endif ; C
 ShotLaneOpen:
 push dword 2Ch	; 64102
 call __CHK	; 64107

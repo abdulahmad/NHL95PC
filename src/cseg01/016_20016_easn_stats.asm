@@ -1974,6 +1974,10 @@ add esp, 38Ch	; 21BF8
 pop ebp	; 21BFE
 jmp near CalTeamStatsScreen_x	; 21BFF
 %endif ; C
+; C: src/c/016_20016_easn_stats/DrawPhotoWithPal.c
+%ifdef CBUILD
+%include "c/016_20016_easn_stats/DrawPhotoWithPal.inc"
+%else
 DrawPhotoWithPal:
 push dword 320h	; 21C04
 call __CHK	; 21C09
@@ -2055,3 +2059,4 @@ pop ebp	; 21CDA
 pop edi	; 21CDB
 pop esi	; 21CDC
 ret	; 21CDD
+%endif ; C

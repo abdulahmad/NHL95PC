@@ -1,4 +1,8 @@
-/* Speech: shut down, 24-bit reads, slot loading (one source block: the slot loaders end in ShutdownSpeech's and ReadBE24's exits). */
+/* Speech and announcer: shut down, 24-bit reads, slot loading, saying clips. One source module across segments
+   060-062, in address order: the slot loaders end in ShutdownSpeech's and ReadBE24's exits; Watcom moves SayClip's
+   entry after SayScoringPeriod (its tail caller) and leaves its body (SayClip_body) after LoadClipSlot, so SayClip,
+   SayTheGame and SayScoringPeriod match only with this whole group in one file (found by tools/module_try.py).
+   EnsureSampleRoom and CompactSpeechMem (segment 061) stay last: CompactSpeechMem ends in FreeClip_ret. */
 #include "nhl95.h"
 
 #define BANKD(off) (*(int *)((char *)speechbank + (off)))
@@ -222,4 +226,257 @@ int LoadClipSlot(char *name)
     else
         PlaceSpeechSlot(free);
     return 1;
+}
+
+/* SayClip (84AAE, PC only): say the speech clip name now: when the speech system is up (speechinit) and idle
+   (SpeechIdle), clear the queue and the sample requests, reset the bank's loaded count (+3B70h), request and
+   make room for the clip and queue it, then mark the queue busy (speechq +60h). Result: 1 when it was queued,
+   else 0. Watcom splits it: the entry (84AAE, up to the speechinit test) sits after SayScoringPeriod, which
+   tail-calls it, and the rest (SayClip_body, 8460F) here after LoadClipSlot; both are marked blocks. */
+int SayClip(char *name)
+{
+    if (!speechinit) return 0;
+    if (!SpeechIdle()) return 0;
+    ResetSpeechQueue();
+    ResetSampleReq();
+    BANKD(0x3B70) = 0;
+    RequestSample(name);
+    EnsureSampleRoom();
+    QueueSpeechClip(name);
+    *(int *)((char *)speechq + 0x60) = 1;
+    return 1;
+}
+
+/* SayScorePeriod: when speech is up and idle: queue the "scoring by period" clip for period per (scorperclips)
+ and start the queue; returns 1, else 0. */
+int SayScorePeriod(int per)
+{
+    if (!speechinit) return 0;
+    if (!SpeechIdle()) return 0;
+    ResetSpeechQueue();
+    ResetSampleReq();
+    RequestSample((char *)scorperclips[per]);
+    EnsureSampleRoom();
+    QueueSpeechClip((char *)scorperclips[per]);
+    ((int *)speechq)[0x60 / 4] = 1;
+    return 1;
+}
+
+/* SayNhlIntro: say the NHL intro clip (SayClip). */
+int SayNhlIntro(void)
+{
+    return SayClip((char *)str_NhlInt);
+}
+
+/* SayGoodnight: say the goodnight clip. */
+int SayGoodnight(void)
+{
+    return SayClip((char *)str_GoodniteInt);
+}
+
+/* SayLineups: say the lineups clip. */
+int SayLineups(void)
+{
+    return SayClip((char *)str_LineupsInt);
+}
+
+/* SayNowBack: say the "now back" clip. */
+int SayNowBack(void)
+{
+    return SayClip((char *)str_NowbackInt);
+}
+
+/* FreeNowBack: release the "now back" clip. */
+void FreeNowBack(void)
+{
+    FreeClip((char *)str_NowbackInt);
+}
+
+/* SayBackMoment: say the "back in a moment" clip. */
+int SayBackMoment(void)
+{
+    return SayClip((char *)str_BackmomtInt);
+}
+
+/* FreeBackMoment: release the "back in a moment" clip. */
+void FreeBackMoment(void)
+{
+    FreeClip((char *)str_BackmomtInt);
+}
+
+/* SayCoachClip: say the coach clip. */
+int SayCoachClip(void)
+{
+    return SayClip((char *)str_CoachclpInt);
+}
+
+/* FreeCoachClip: release the coach clip (falls into FreeClip). */
+void FreeCoachClip(void)
+{
+    FreeClip((char *)str_CoachclpInt);
+}
+
+/* FreeClip: when clip name is loaded in the speech bank (FindSpeechSlot; 38-byte slots) with
+ its in-use flag (+22h) 1: clear the flag, take its size (+16h) off the used sample bytes (+3B6Ch of
+ speechbank) and one off the clip count (+3B74h), then EnsureSampleRoom. */
+void FreeClip(char *name)
+{
+    int slot;
+    unsigned char *e;
+    int used;
+    int off;
+
+    if ((slot = FindSpeechSlot(name)) == -1) return;
+    off = slot * 38;
+    e = (unsigned char *)speechbank + off;
+    if ((used = *(int *)(e + 0x22)) != 1) return;
+    *(int *)(e + 0x22) = 0;
+    *(int *)((char *)speechbank + 0x3B6C) -= *(int *)((char *)speechbank + off + 0x16);
+    *(int *)((char *)speechbank + 0x3B74) -= used;
+    EnsureSampleRoom();
+}
+
+/* SayElseNhl: say the "elsewhere in the NHL" clip. */
+int SayElseNhl(void)
+{
+    return SayClip((char *)str_ElsenhlInt);
+}
+
+/* SayHighlightIntro: like SayTonightIntro: "Take you now to <rnk> highlight of game between <away> and <home>". */
+int SayHighlightIntro(char *rnk, char *away, char *home)
+{
+    char r[16];
+    char a[16];
+    char h[16];
+
+    if (!speechinit) return 0;
+    if (!SpeechIdle()) return 0;
+    *(int *)((char *)speechbank + 0x3B70) = 0;
+    sprintf(r, (char *)str_SS5, rnk, str_Rnk);
+    sprintf(a, (char *)str_SS5, away, str_Awa);
+    sprintf(h, (char *)str_SS5, home, str_Hom);
+    ResetSpeechQueue();
+    ResetSampleReq();
+    RequestSample((char *)str_TakeynowBar);
+    RequestSample(r);
+    RequestSample((char *)str_HighliteBar);
+    RequestSample((char *)str_OfBar);
+    RequestSample((char *)str_GamebtwnBar);
+    RequestSample(a);
+    RequestSample((char *)str_AndBar);
+    RequestSample(h);
+    EnsureSampleRoom();
+    QueueSpeechClip((char *)str_TakeynowBar);
+    QueueSpeechClip(r);
+    QueueSpeechClip((char *)str_HighliteBar);
+    QueueSpeechClip((char *)str_OfBar);
+    QueueSpeechClip((char *)str_GamebtwnBar);
+    QueueSpeechClip(a);
+    QueueSpeechClip((char *)str_AndBar);
+    QueueSpeechClip(h);
+    ((int *)speechq)[0x60 / 4] = 1;
+    return 1;
+}
+
+/* SayPlayoffResult: when speech is up and idle: "[In overtime] <team> have won [game <game> of] <round clip>"
+ (team clip <team>Awa, round clip from PlayoffRoundClipD; the game number part only when final is 0); starts
+ the queue and returns 1, else 0. */
+int SayPlayoffResult(char *team, int game, unsigned conf, unsigned round, int ot, int final)
+{
+    char t[16];
+    char rc[16];
+    char g[16];
+    char num[16];
+
+    if (!speechinit) return 0;
+    if (!SpeechIdle()) return 0;
+    *(int *)((char *)speechbank + 0x3B70) = 0;
+    sprintf(t, (char *)str_SS5, team, str_Awa);
+    itoa(game, num, 10);
+    sprintf(g, (char *)str_SSS, str_Gamenum, num, str_Bar);
+    PlayoffRoundClipD(rc, conf, round);
+    ResetSampleReq();
+    ResetSpeechQueue();
+    if (ot) RequestSample((char *)str_OvertimeBar);
+    RequestSample(t);
+    RequestSample((char *)str_HavewonBar);
+    if (!final) {
+        RequestSample((char *)str_GamenumBar);
+        RequestSample(g);
+        RequestSample((char *)str_OfBar);
+    }
+    RequestSample(rc);
+    EnsureSampleRoom();
+    if (ot) QueueSpeechClip((char *)str_OvertimeBar);
+    QueueSpeechClip(t);
+    QueueSpeechClip((char *)str_HavewonBar);
+    if (!final) {
+        QueueSpeechClip((char *)str_GamenumBar);
+        QueueSpeechClip(g);
+        QueueSpeechClip((char *)str_OfBar);
+    }
+    QueueSpeechClip(rc);
+    ((int *)speechq)[0x60 / 4] = 1;
+    return 1;
+}
+
+/* SayTheGame (84A6C, PC only): say "the game" (thegame.bar). Result: as SayClip (its `jmp short SayClip` reaches
+   SayClip's entry, which Watcom moves right after SayScoringPeriod). */
+int SayTheGame(void)
+{
+    return SayClip((char *)str_ThegameBar);
+}
+
+/* SayScoringPeriod (84A7D, PC only): say the scoring summary clip for a period: "the game" when over is set; in
+   overtime (ot) the 1st, 2nd, 3rd or later overtime clip; else the 1st-3rd period clip (other periods: nothing).
+   period: 1-based; ot, over: flags. Result: as SayClip, 0 when nothing is said. Its code is interleaved with
+   SayClip's entry: the pieces SayScoringPeriod_ot2 .. _reg follow SayClip's ret (a block of their own). */
+int SayScoringPeriod(int period, int ot, int over)
+{
+    if (over) return SayClip((char *)str_ThegameBar);
+    if (ot) {
+        switch (period) {
+        case 1: return SayClip((char *)str_Scor1otpBar);
+        case 2: return SayClip((char *)str_Scor2otpBar);
+        case 3: return SayClip((char *)str_Scor3otpBar);
+        default: return SayClip((char *)str_ScortotpBar);
+        }
+    }
+    switch (period) {
+    case 1: return SayClip((char *)str_Scor1perBar);
+    case 2: return SayClip((char *)str_Scor2perBar);
+    case 3: return SayClip((char *)str_Scor3perBar);
+    }
+    return 0;
+}
+
+/* EnsureSampleRoom (8426F, PC only; speech segment 061, the same source file): make room in the sample memory
+   (MakeSampleRoom) and pack it (CompactSpeechMem, which follows: the tail call falls through). No arguments,
+   no result. */
+void EnsureSampleRoom(void)
+{
+    MakeSampleRoom();
+    CompactSpeechMem();
+}
+
+/* CompactSpeechMem (8427E, PC only; segment 061, ends in FreeClip_ret): pack the loaded samples down: while a free
+   slot (FindFreeSpeechSlot, from slot 0) has a loaded slot after it (FindLoadedSpeechSlot), move that one into it
+   (CompactSpeechSlot) and continue from the next free slot. When no slot is free at all, the loaded-slot test uses
+   whatever free was left in edx (as in the original). FindLoadedSpeechSlot is called without an argument: the
+   original loads no eax there and relies on f still being in eax from the FindFreeSpeechSlot call. No arguments,
+   no result. */
+void CompactSpeechMem(void)
+{
+    int f;
+    int l;
+
+    f = FindFreeSpeechSlot(0);
+    if (f == -1) goto test;
+again:
+    l = ((int (*)(void))FindLoadedSpeechSlot)();
+test:
+    if (l == -1) return;
+    CompactSpeechSlot(f, l);
+    f = FindFreeSpeechSlot(f);
+    goto again;
 }

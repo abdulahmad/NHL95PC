@@ -12,13 +12,7 @@ int SimScheduleDay(int fh, int rwfh, int rdfh, int day, unsigned char *teams, ch
 int AdvancePlayoffs(int fh, int rwfh, int rdfh, unsigned char *teams, char *dir, char *ext,
                     int team, int flags);
 
-/* DRAFT: 672 vs 672 (best of 5). The frame, the three opens, the database loads, the
- 0/1 playoff test and both calls match. ext is homed in ebp and err in esi; the original
- homes ext in esi and err in ebp, so careerdb is reloaded through that freed register
- instead of edi. An int or char* copy of ext swaps the day and teams homes and still
- leaves ext in ebp. Making err a pointer puts dir in ebp and ext in edi and drops the
- mov eax, 1 / test eax (655 bytes). Do not retry those, or folding play into the if.
- UpdateSeasonSchedule: open SCHEDULE and TEAMS read/write and CARTEAMS read-only under dir/ext.
+/* UpdateSeasonSchedule: open SCHEDULE and TEAMS read/write and CARTEAMS read-only under dir/ext.
  When the schedule is not yet at the end marker 4ADh, read that game. Load the season, career and
  key databases. A day still inside the regular schedule (below 444h), or the first playoff slot
  while either team byte is empty, is simulated; a later day, or that slot with both teams filled,

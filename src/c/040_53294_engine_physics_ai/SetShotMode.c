@@ -1,5 +1,9 @@
 /* Engine physics AI: shooting. */
+#define vtoa vtoa_decl
 #include "nhl95.h"
+#undef vtoa
+int vtoa(int dx, int dy);  /* 8C8E8: declared with an int result here (the direction is in ax); as short the
+                              result is copied to edx before the regd0 store */
 
 /* SetShotMode: p winds up a shot: pass direction 8 (shot), sflags bit 3; regd0 = direction from p to the
  attacked goal (x 0, y +/-F0h by pflags bit 7), passspeed = 15, then the slap (SPA 491h, when Findhittype finds

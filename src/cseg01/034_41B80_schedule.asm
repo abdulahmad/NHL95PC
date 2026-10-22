@@ -112,6 +112,10 @@ pop ecx	; 41C76
 pop ebx	; 41C77
 ret	; 41C78
 %endif ; C
+; C: src/c/034_41B80_schedule/DateKey.c
+%ifdef CBUILD
+%include "c/034_41B80_schedule/DateKey.inc"
+%else
 DateKey:
 push dword 8	; 41C79
 call __CHK	; 41C7E
@@ -129,6 +133,7 @@ sub eax, ebx	; 41C95
 add eax, edx	; 41C97
 pop ebx	; 41C99
 ret	; 41C9A
+%endif ; C
 ; C: src/c/034_41B80_schedule/NormalizeDate.c
 %ifdef CBUILD
 %include "c/034_41B80_schedule/NormalizeDate.inc"
@@ -155,6 +160,10 @@ pop ecx	; 41CC1
 pop ebx	; 41CC2
 ret	; 41CC3
 %endif ; C
+; C: src/c/034_41B80_schedule/UpdateSeasonSchedule.c
+%ifdef CBUILD
+%include "c/034_41B80_schedule/UpdateSeasonSchedule.inc"
+%else
 UpdateSeasonSchedule:
 push dword 60h	; 41CC4
 call __CHK	; 41CC9
@@ -375,6 +384,7 @@ pop ebp	; 41F5E
 pop edi	; 41F5F
 pop esi	; 41F60
 ret 8	; 41F61
+%endif ; C
 ; C: src/c/034_41B80_schedule/UpdatePlayoffSeries.c
 %ifdef CBUILD
 %include "c/034_41B80_schedule/UpdatePlayoffSeries.inc"
@@ -3525,6 +3535,10 @@ xor eax, eax	; 44799
 .15:
 add esp, 620h	; 4479B
 jmp near UpdateSeasonSchedule_pop3	; 447A1
+; C: src/c/034_41B80_schedule/SimPlayoffRound1.c (SimPlayoffFinal)
+%ifdef CBUILD
+%include "c/034_41B80_schedule/SimPlayoffRound1.SimPlayoffFinal.inc"
+%else
 SimPlayoffFinal:
 push dword 90h	; 447A6
 call __CHK	; 447AB
@@ -3611,6 +3625,7 @@ jl near SimPlayoffFinal.1	; 44879
 xor eax, eax	; 4487F
 add esp, byte 74h	; 44881
 jmp near SimPlayoffRound1_pop3	; 44884
+%endif ; C
 FinishPlayoffs_jt:
 dd FinishPlayoffs_r1
 dd FinishPlayoffs_r2

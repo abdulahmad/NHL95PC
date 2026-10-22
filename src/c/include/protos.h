@@ -104,7 +104,7 @@ int DateKey(int month, int day);  /* 41C79 */
 unsigned Swap16(unsigned x);  /* 837D9 */
 int RandMod(int n);
 int rand(void);  /* Watcom CRT rand_ */
-void SimAddPair(int *count, int *pairs, int a, int b);  /* 452A6 */
+void SimAddPair(int *count, int (*pairs)[2], int a, int b);  /* 452A6 */
 int StrLenToDot(char *s);  /* 1D5D5 */
 unsigned char *TeamRecPtr(int team);  /* 6CB90 */
 unsigned char *CarTeamRecPtr(int team);  /* 6CB6B */
@@ -124,7 +124,7 @@ int LoadLeagueTree(int a, int b);  /* 29B07 */
 int TreeSeriesWinner(unsigned char *series, int round, int same);  /* 2991C */
 void PlayoffTreeScreen(void);  /* 27F9C */
 void OpenStatsSchedule(void **out);  /* 29A97 */
-double RatingToFloat(unsigned char r);  /* 6F6AD */
+float RatingToFloat(unsigned char r);  /* 6F6AD */
 int GetMemListHead(int which);  /* 10010 */
 int SpeechIsInit(void);  /* 836CA */
 void MusicChanCmd3(void);
@@ -231,8 +231,8 @@ int __cdecl sub_8DAB8(void);  /* memory library: free memory */
 void __cdecl FreeMemBlock(int p);  /* library: free a block */
 void StopDigiSample(void);  /* 59981 */
 void sub_8F67D(int h);  /* sound library: stop sample */
-void FreeDigiSample(int unused);  /* 59945 */
-void sub_8F7AE(int h);  /* sound library: free sample */
+void FreeDigiSample(int fade);  /* 59945 */
+void sub_8F7AE(int h, int fade);  /* sound library: free sample (fade: release count) */
 int ClearInputQueue(void);  /* 6B3D7 */
 int ResetInputSampling(void);  /* 1145F */
 void NormalizeDressFlags(void);  /* 65B48 */
@@ -483,7 +483,7 @@ void QueueDeferredCall(void *fn, int a, int b, int c, int d, int e, int f, int g
 void faceoffinput(Player *p);  /* 4FF0D */
 void StartPenaltyShot(void);  /* 64398 */
 void MakeJerseyShape(unsigned char *buf, unsigned num, unsigned char c1, unsigned char c2);  /* 7A099 */
-void BlitJerseyDigit(unsigned char *dst, unsigned d, int c1, int c2, int right);
+void BlitJerseyDigit(unsigned char *dst, unsigned d, unsigned char c1, unsigned char c2, int right);
 void DrawDBErrorsScreen(int *sel, int *line, int *first);  /* 6EC95 */
 void DrawMenuBar(void *bar, int n, int col1, int col2, int col3);
 void FadeOutPalCycle(void);  /* 47C31 */
@@ -860,7 +860,7 @@ void DrawBevelRect(int x, int y, int w, int h, int fill, int light, int dark);  
 void DrawGadgetButton(int n);  /* 7E067 */
 int ReadTeamNames(char *path, char *out, int full);  /* 3DAB9 */
 void TakePlayerFromBox(Player *p);  /* 51115 */
-signed char PickForLineSlot(int side, int slot);  /* 64E60 */
+short PickForLineSlot(short side, short slot);  /* 64E60 */
 void RefillLineSlots(short side, short slot, short from, short to, short step);  /* 6552E */
 void __cdecl sub_B4BC4(int x1, int x2, int y1, int y2);  /* video library: clip window */
 void __cdecl sub_B4C33(void);  /* video library */
@@ -954,7 +954,7 @@ void DrawExhSetDlg(void);  /* 7C1AC */
 void DrawModeSetDlg(void);  /* 7B4EC */
 void DrawPhotoWithPal(unsigned char *src, int art, int x, int y);  /* 21C04 */
 void __cdecl sub_91FE0(int art, int x, int y);  /* graphics library: draw art */
-int MenuSoundSettings(void);  /* 82579 */
+int MenuSoundSettings(int a, int b);  /* 82579 */
 int MenuCentralRegistry(void);  /* 6BE95 */
 void SetModeMenuLabels(unsigned mode);  /* 805C4 */
 void DrawMenuBox(int x1, int y1, int x2, int y2, int c1, int c2, int c3);  /* 6B7FC */

@@ -9,10 +9,13 @@
 #                             adding functions; header edits do not recompile every C file)
 #   make fullcheck            from scratch: both builds (CBUILD=1 and CBUILD=0) with every C file recompiled;
 #                             run this before every push
+#   make WATCOM_VER=la        compile the C with the 10.0 LA wcc386 instead of 10.0 GA (the default and the
+#                             compiler HOCKEY.EXE was built with); the matched C is tuned for GA, so an LA build
+#                             of CBUILD=1 is not expected to be byte-identical (BUILD_NOTES.md)
 #
 # C matching decompilation (docs/C_MATCHING.md): a function written in src/c/<segment>/<Func>.c replaces its asm
-# block (wrapped in %ifdef CBUILD in src/cseg01/<segment>.asm) when CBUILD=1. wcc386 10.0 LA runs under DOSBox
-# (tools/cc.py); the object becomes build/c/<segment>/<Func>.inc (db + dd label fixups) and is assembled in place.
+# block (wrapped in %ifdef CBUILD in src/cseg01/<segment>.asm) when CBUILD=1. wcc386 10.0 GA (WATCOM_VER=ga,
+# default; la for 10.0 LA) runs under DOSBox (tools/cc.py); the object becomes build/c/<segment>/<Func>.inc (db + dd label fixups) and is assembled in place.
 # Both builds must give the same sha1.
 #
 # Needs: nasm (2.15+), python3. The third-party DOS/16M loader, DOS/4GW kernel and Watcom wstub, the LE header
@@ -24,6 +27,8 @@ PYTHON     ?= python3
 NASM       ?= nasm
 NASMFLAGS  := -O0 -f elf32 -I src/inc/
 
+WATCOM_VER ?= ga
+export WATCOM_VER
 CBUILD     ?= $(shell $(PYTHON) tools/cc.py check && echo 1 || echo 0)
 
 # each mode has its own object tree, so switching CBUILD only reassembles what changed
@@ -42,11 +47,15 @@ CINCS := $(addprefix build/,$(sort $(shell grep -ho '^%include "c/[^"]*\.inc"' s
 endif
 CHDRS := $(if $(FAST),,$(wildcard src/c/include/*.h))
 cinfo:
-	@echo "CBUILD=$(CBUILD), $(words $(CINCS)) C files spliced"
+	@echo "CBUILD=$(CBUILD), WATCOM_VER=$(WATCOM_VER), $(words $(CINCS)) C files spliced"
+
+# recompile the C (and relink) when the compiler changes
+build/watcom.$(WATCOM_VER):
+	@mkdir -p build; rm -f build/watcom.*; touch $@
 
 .SECONDEXPANSION:
 .PRECIOUS: build/c/%.obj build/c/%.inc
-build/c/%.obj: src/c/%.c $(CHDRS) tools/cc.py
+build/c/%.obj: src/c/%.c $(CHDRS) tools/cc.py build/watcom.$(WATCOM_VER)
 	@$(PYTHON) tools/cc.py compile $< -o $@
 # build/c/<seg>/<File>.inc, or build/c/<seg>/<File>.<Func>.inc for a further function of a multi-block file
 build/c/%.inc: build/c/$$(basename $$*).obj src/cseg01/$$(firstword $$(subst /, ,$$*)).asm tools/cc.py tools/cobj.py | build/parts/manifest.json
@@ -72,9 +81,9 @@ build/HOCKEY.EXE: $(OBJS) build/parts/manifest.json src/segments.txt tools/link_
 check: build/HOCKEY.EXE
 
 fullcheck:
-	rm -rf build/obj build/obj0 build/c build/HOCKEY.EXE build/cbuild.*
+	rm -rf build/obj build/obj0 build/c build/HOCKEY.EXE build/cbuild.* build/watcom.*
 	$(MAKE) -j$$(nproc) CBUILD=1
 	$(MAKE) -j$$(nproc) CBUILD=0
 
 clean:
-	rm -rf build/obj build/obj0 build/link build/c build/HOCKEY.EXE build/cbuild.*
+	rm -rf build/obj build/obj0 build/link build/c build/HOCKEY.EXE build/cbuild.* build/watcom.*

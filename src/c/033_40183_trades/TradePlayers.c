@@ -11,8 +11,8 @@ unsigned strcspn(const char *s, const char *set);  /* Watcom CRT strcspn_ */
 
 typedef struct { char c[6]; } Str6;
 
-/* DRAFT: 1551 vs 1551, 357 of 361 instructions (two index loads use edx / eax the other way round); see
-   docs/UNSURE.md. */
+/* DRAFT: 1551 vs 1551, 359 of 361 instructions: the second city-name index load uses edx where the EXE uses
+   eax (the city name through the nm local put the first one in edx, as in the EXE); see docs/UNSURE.md. */
 /* TradePlayers (40183, PC only): trade players between two teams of the current league. Make the 640 x 480
    trade bitmap (dword_DE264) and use the trade screen's dialog colours. Read the league (as AddHumanTeam: a
    saved game in progress stops it, an unmerged league is merged first after asking); then read the schedule's
@@ -46,6 +46,7 @@ void TradePlayers(void)
     int err;
     int again;
     int r;
+    char *nm;
 
     s.fh = -1;
     err = 0;
@@ -118,11 +119,13 @@ void TradePlayers(void)
                     if (!r) r = AskTeamPassword(s.sel[1], (char *)leagueteams);
                     if (!r) {
                         *(Str6 *)s.msg1 = *(Str6 *)str_Show;
-                        strcat(s.msg1, (char *)teamcitynames[s.sel[0]]);
+                        nm = (char *)teamcitynames[s.sel[0]];
+                        strcat(s.msg1, nm);
                         strcat(s.msg1, (char *)str_Statistics);
                         dword_C87C8 = (int)s.msg1;
                         *(Str6 *)s.msg2 = *(Str6 *)str_Show;
-                        strcat(s.msg2, (char *)teamcitynames[s.sel[1]]);
+                        nm = (char *)teamcitynames[s.sel[1]];
+                        strcat(s.msg2, nm);
                         strcat(s.msg2, (char *)str_Statistics);
                         dword_C87E8 = (int)s.msg2;
                         s.x = fputchar(s.msg1);

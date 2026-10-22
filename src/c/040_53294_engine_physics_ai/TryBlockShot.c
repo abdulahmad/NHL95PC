@@ -10,9 +10,10 @@ void TryBlockShot(Player *p)
     int n;
 
     n = 8;
-    if ((gmode2 & 0x20) && ((unsigned char)(p->pflags & 0x40) ^ (*(short *)&gmode2 & 0x40))) n = 4;
+    if ((gmode2 & 0x20) && ((*(short *)&gmode2 & 0x40) ^ (unsigned char)(p->pflags & 0x40))) n = 4;
     n += 15 - ((unsigned char *)p)[0x5A];
-    if (randomd0(n / 2) <= 1) {
+    n /= 2;
+    if (randomd0(n) <= 1) {
         r = CanBlockShot(p);
         if (r) BlockShotDive(p, r);
     }

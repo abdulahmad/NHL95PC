@@ -1,8 +1,19 @@
 /* Skating (043_5E16D_engine_skating): EvadePlayers... StopNA in address order, as one source file because
- later functions end in an earlier one's pop/ret tail (multi-block file, see tools/cc.py). Functions of the
- segment that are still asm are missing; the ones here that do not match yet (EvadePlayers, skateto) are
- compiled for the layout but not spliced. */
+ later functions end in an earlier one's pop/ret tail (multi-block file, see tools/cc.py): skatetopuck ends in
+ EvadePC_x, avdgoal in EvadePlayers_popebp, StopNA in EvadePlayers_popedi (which copy of the pops survives needs
+ every function between them here). The ones that do not match yet (EvadePlayers, avdgoal) are
+ compiled for the layout but not spliced. vtoa is declared with an int result in this file: as short,
+ skatetopuck's registers and most of EvadePlayers' differ. */
+#define skatetopuck skatetopuck_decl
+#define imul32 imul32_decl
+#define vtoa vtoa_decl
 #include "nhl95.h"
+#undef skatetopuck
+#undef imul32
+#undef vtoa
+
+int __cdecl imul32(int a, int b);
+int vtoa(int dx, int dy);  /* hand-written (8C8E8): the direction in ax, declared with an int result here */
 
 /* EvadePlayers: skateto collision routine.
  p = player (eax). Nothing when pflags2 bit 5 is set. Behind the net (|Ypos| > F2h, |Xpos| < 32h): regd0.w = a
@@ -117,14 +128,19 @@ void skateto(Player *p, void (*evade)(Player *))
         dy = regd1.w;
         TEMP2_TICKS(p) += 0x0C;
         avdgoal(p);
-        px = HIBYTE(p->Xvel) + HIWORD(p->Xpos);
+        {
+            int v;
+
+            v = HIBYTE(p->Xvel);
+            px = HIWORD(p->Xpos) + v;
+        }
         py = HIBYTE(p->Yvel) + HIWORD(p->Ypos);
         regd0.w -= px;
         regd1.w -= py;
         dx -= px;
         dy -= py;
-        if (dx < 0) dx = -dx;
-        if (dy < 0) dy = -dy;
+        dx = ABS(dx);
+        dy = ABS(dy);
         if (ABS(regd0.w) <= 0x0C && ABS(regd1.w) <= 0x0C && (dx <= 0x0C || p->Xvel != 0)
             && (dy <= 0x0C || p->Yvel != 0))
             regd0.w = 9;                            /* close enough: no direction */
@@ -132,13 +148,16 @@ void skateto(Player *p, void (*evade)(Player *))
             regd0.w = vtoa(regd0.w, regd1.w);
         if (evade != NULL) evade(p);                /* jsr (a0) */
         TEMP2_DIR(p) = regd0.w;
-        if (regd0.w > 7 && !(p->Xvel | p->Yvel)) {
+        if (regd0.w > 7 && !(px = p->Xvel, (p->Yvel | px))) {   /* the comma loads Xvel first, as the EXE */
             if (puckpflags2 & 1) {                  /* puck in a fight: face xc1/yc1 */
                 regd0.w = xc1;
                 regd1.w = yc1;
             } else {
+                short sy;
+
                 regd0.w = *puckx;
-                regd1.w = *pucky;
+                sy = *pucky;
+                regd1.w = sy;
             }
             regd0.w -= HIWORD(p->Xpos);
             regd1.w -= HIWORD(p->Ypos);
@@ -148,6 +167,359 @@ void skateto(Player *p, void (*evade)(Player *))
         }
     }
     doplayeracc(p, TEMP2_DIR(p));
+}
+
+/* skatetopuck (5EB17, 93G skatetopuck; ends in EvadePC_x): player p skates to the puck. The target is the puck
+   plus half the high byte of its velocity (regd0 / regd1, 93G skatetopuckinit). Every 10 ticks (5 for a
+   goalie; the temp2 high byte): avoid the goal (avdgoal), then with a loose puck, a puck faster than 12Ch or a
+   target farther than 18h, aim with GetHot (the target less p's position and velocity lead) through vtoa, else
+   take p's direction to the puck (puckdir); keep it in the temp2 low byte. A skater then checks for a sweep:
+   with the puck coming straight at it (fast pucks only one time in four), facing the puck and between 30 and 38
+   away, Sweepcheck. Otherwise doplayeracc in the kept direction. p: the player. No result. */
+void skatetopuck(Player *p)
+{
+    short sx;
+    short sy;
+
+    regd0.w = (short)(HIBYTE(*puckvx) >> 1) + *puckx;
+    regd1.w = (short)(HIBYTE(*puckvy) >> 1) + *pucky;
+    if (--TEMP2_TICKS(p) >= 0) goto ex;
+    TEMP2_TICKS(p) += p->position == 0 ? 5 : 10;
+    avdgoal(p);
+    sx = regd0.w;
+    sy = regd1.w;
+    if (*puckc < 0 || ABS(*puckvx) > 0x12C || ABS(*puckvy) > 0x12C
+        || (unsigned)vecdist(sx - HIWORD(p->Xpos), sy - HIWORD(p->Ypos)) > 0x18) {
+        GetHot(p);
+        regd0.w = sx - ((signed char)regd0.w + HIBYTE(p->Xvel)) - HIWORD(p->Xpos);
+        regd1.w = sy - ((signed char)regd1.w + HIBYTE(p->Yvel)) - HIWORD(p->Ypos);
+        regd0.w = vtoa(regd0.w, regd1.w);
+    } else {
+        regd0.w = p->puckdir;
+    }
+    TEMP2_DIR(p) = regd0.w;
+    if (p->position == 0) goto ex;
+    regd0.w = vtoa(*puckvx, *puckvy) ^ 4;
+    if (regd0.w == p->facedir) {
+        if (ABS(*puckvx) >= 0xFA0 || ABS(*puckvy) >= 0xFA0) {
+            if (randomd0(4)) goto ex;
+        }
+    }
+    regd0.w = *puckx - HIWORD(p->Xpos);
+    regd1.w = *pucky - HIWORD(p->Ypos);
+    if ((short)vtoa(regd0.w, regd1.w) != p->facedir) goto ex;
+    regd0.l = imul32(regd0.w, regd0.w) + imul32(regd1.w, regd1.w);
+    if (regd0.ul <= 30 * 30 || regd0.ul > 38 * 38) goto ex;
+    Sweepcheck(p);
+    return;
+ex:
+    doplayeracc(p, TEMP2_DIR(p));
+}
+
+/* playeracc: accelerate player p in direction dir (d2 = direction of acc).
+ The dirtab x/y step times (legstr+30h)/64 (PC); no push into a wall (Wallsin Wallcos); accel factor
+ 32 - weight/8 + legstr (goalie: + legstr + 14h) into regd2; new velocity (regd0, regd1) =
+ step * factor 32 + old. Max speed check: speed squared (regd3) against MaxSpeed[legspd * energy >> 12]
+ (referee: fixed index 0Fh, or 0Ch when the clock is stopped and he is 74h+ from centre; pflags2 bit 6 cuts it to
+ 1/8); the velocity is kept only under it. Then the energy drain when fatigue (line changes) is on and the
+ clock runs (getpde setpde inline): 1 in 128 calls the energy drops by 28h
+ at C00h+ the endurance is added back, at most 1000h. */
+void playeracc(Player *p, short dir)
+{
+    short yacc, xacc;
+
+    dir += dir;
+    xacc = dirtab[dir];                             /* x inc */
+    yacc = dirtab_y[dir];                           /* y inc */
+    xacc = xacc * (p->legstr + 0x30) / 64;
+    yacc = yacc * (p->legstr + 0x30) / 64;
+    if (p->Wallsin != 0 && (xacc ^ p->Wallsin) < 0) xacc = 0;     /* wallsin: don't push the wall */
+    if (p->Wallcos != 0 && (yacc ^ p->Wallcos) >= 0) yacc = 0;
+    regd2.w = 0x20 - (short)(p->weight >> 3) + p->legstr;
+    if (p->position == 0) regd2.w += (unsigned short)p->legstr + 0x14;  /* goalie adds legstr again plus 14h (16-bit add) */
+    regd0.l = xacc * regd2.w >> 5;
+    regd1.l = regd2.w * yacc >> 5;
+    regd0.w += p->Xvel;
+    regd1.w += p->Yvel;
+    regd3.l = regd0.w * regd0.w + regd1.w * regd1.w;
+    if (p->SCnum == SCref) {                                    /* referee: fixed max speed index */
+        if (!(gmode & gmclock) || ABS(HIWORD(p->Ypos)) < 0x74) regd2.l = 0x0F;
+        else regd2.l = 0x0C;
+    } else {
+        regd2.l = (unsigned long)(p->tmptr->tmpde[p->pnum] * p->legspd) >> 12;   /* energy level */
+    }
+    regd2.l = MaxSpeed[regd2.w];
+    if (p->pflags2 & 0x40) regd2.l >>= 3;                       /* pflags2 bit 6 cuts max speed to 1/8 */
+    if (regd3.ul <= regd2.ul) {                                 /* max speed check */
+        p->Xvel = regd0.w;
+        p->Yvel = regd1.w;
+    }
+    /* .sube */
+    if (p->SCnum == SCref || !gameopts.linechanges || (gmode & gmclock) || p->position == 0) return;
+    regd0.w = randomd0(0x80);                                   /* 1 in 128 ticks */
+    if (regd0.w != 0) return;
+    regd0.w = p->tmptr->tmpde[p->pnum] - 0x28;                  /* subi.w # (PC 28h) */
+    if (regd0.w < 0xC00) {
+        p->tmptr->tmpde[p->pnum] = regd0.w < 0 ? 0 : regd0.w;
+        return;
+    }
+    regd0.w += p->endurance;
+    if (regd0.w > 0x1000) regd0.w = 0x1000;                     /* max 1000h */
+    p->tmptr->tmpde[p->pnum] = regd0.w < 0 ? 0 : regd0.w;
+}
+
+/* avdgoal_box: helper of avdgoal: does the line from player p to the target (regd0 x regd1 y,
+ low words) cross this goal's box (x from x1 to x2, y within +-y)? *ps *pt get the side bits of the player
+ and the target (4 below x1, 1 from x2 on, 2 8 past y -y). Returns 1 when it crosses, else 0 (both on one
+ side). */
+int avdgoal_box(Player *p, int x1, int x2, int y, int *ps, int *pt)
+{
+    int px;
+    int py;
+    int tx;
+    int ty;
+
+    px = HIWORD(p->Xpos);
+    py = HIWORD(p->Ypos);
+    tx = *(int *)((char *)&regd0 - 2) >> 16;
+    ty = *(int *)((char *)&regd1 - 2) >> 16;
+    *ps = *pt = 0;
+    if (x1 > py) {
+        *ps = 4;
+        if (ty < x1) return 0;
+    } else if (ty < x1) {
+        *pt = 4;
+    }
+    if (x2 > py) {
+        if (ty >= x2) *pt = 1;
+    } else {
+        *ps = 1;
+        if (ty >= x2) return 0;
+    }
+    if (y > px) {
+        if (y <= tx) *(unsigned char *)pt |= 2;
+    } else {
+        *(unsigned char *)ps |= 2;
+        if (y <= tx) return 0;
+    }
+    if (-y <= px) {
+        if (-y > tx) *(unsigned char *)pt |= 8;
+    } else {
+        *(unsigned char *)ps |= 8;
+        if (-y > tx) return 0;
+    }
+    return 1;
+}
+
+/* DRAFT (avdgoal): first pass; see docs/UNSURE.md. */
+/* the goalie's SortCords number in a team block (the word at +FAh) */
+#define TMGOALIE(t) (*(short *)((char *)(t) + 0xFA))
+
+/* avdgoal (5F151, 93G avdgoal, rewritten on the PC; ends in EvadePlayers_popebp): don't skate through a goal. p
+   skates to the target in regd0 / regd1 (x / y, changed in place). A goalie or a player on assignment 27h uses a
+   tighter box (margin -6, else 0Ah). The referee with the clock stopped keeps a target in front of the goal on his
+   own side. avdgoal_box tests the line to the target against the goal at +E8h (then the y values are mirrored
+   and the side bits 1 / 4 swapped) and else the one at -E8h; nothing is changed when it crosses neither. ps / pt
+   are the side bits of p and the target (1 behind the goal line, 4 in front, 2 / 8 right / left of the posts):
+   with the target in the box, it moves beside the posts (x +-(2Ch + margin)) and to the goal mouth (yl) or
+   behind the net (yb), round the goalie (gp) when the team has one; else, by p's side, a corner case of a
+   13-way switch moves the target to a post side, the goal mouth or behind the net. No result. */
+void avdgoal(Player *p)
+{
+    int pt;
+    int ps;
+    int c3;
+    int c1;
+    int s1;
+    int gl;
+    int py;
+    int ty;
+    int tight;
+    Player *gp;
+    int g;
+    int tx;
+    int c2;
+    int m;
+    int px;
+    int yl;
+    int yb;
+
+    tight = p->position == 0 || p->asslist[p->assnum] == 0x27 ? 1 : 0;
+    m = tight ? -6 : 0xA;
+    if ((gmode & 1) && p->SCnum == 0x10 && ABS(regd1.w) < 0xE8 && (HIWORD(p->Ypos) ^ regd1.w) >= 0) return;
+    px = HIWORD(p->Xpos);
+    py = HIWORD(p->Ypos);
+    tx = regd0.w;
+    ty = regd1.w;
+    if (avdgoal_box(p, 0xE8 - (tight ? 6 : 0x23), 0xFC, (tight ? -8 : 0) + 0x2C, &ps, &pt)) {
+        yb = 0xFD;
+        yl = 0xE8 - (tight ? 7 : 0x24);
+        py = -py;
+        ty = -ty;
+        gl = 0xE8;
+        g = TMGOALIE(p->pflags & 0x80 ? p->optmptr : p->tmptr);
+        if (g >= 0) gp = &SortCords[g];
+        if (*(unsigned char *)&ps & 5) *(unsigned char *)&ps ^= 5;
+        if (*(unsigned char *)&pt & 5) *(unsigned char *)&pt ^= 5;
+    } else {
+        if (!avdgoal_box(p, -0xFC, (tight ? 6 : 0x23) - 0xE8, (tight ? -8 : 0) + 0x2C, &ps, &pt)) return;
+        yb = -0xFD;
+        yl = (tight ? 7 : 0x24) - 0xE8;
+        gl = -0xE8;
+        g = TMGOALIE(p->pflags & 0x80 ? p->tmptr : p->optmptr);
+        if (g >= 0) gp = &SortCords[g];
+    }
+    if (pt == 0) {
+        if (py >= -0xE8) {
+            if (tight) {
+                if (ty < -0xE8) return;
+                regd1.w = yl;
+                if (tx >= 0) {
+                    if (m + 0x2C > tx) regd0.w = m + 0x2C;
+                } else if (-0x2C - m + 1 <= tx) regd0.w = -0x2C - m;
+                if (ABS(px) > 0x26) regd1.w = yb;
+                return;
+            }
+            if (ty < -0xE8) {
+                regd1.w = yl;
+                if (g >= 0 && ((tx - HIWORD(gp->Xpos)) ^ (px - tx)) < 0) {
+                    if (px < HIWORD(gp->Xpos)) regd0.w = -0x2C - m;
+                    else regd0.w = m + 0x2C;
+                } else {
+                    if (ABS(px) >= m + 0x2C) return;
+                    if (px < 0) regd0.w = -0x2C - m;
+                    else regd0.w = m + 0x2C;
+                }
+                if (ABS(px) > 0x26) regd1.w = yb;
+                return;
+            }
+            if (g < 0) return;
+            if (px < tx) {
+                if (px >= HIWORD(gp->Xpos)) return;
+            } else if (px < HIWORD(gp->Ypos)) return;
+            regd1.w = yl;
+            return;
+        }
+        if (ty < -0xE8) return;
+        if (px < -0x2C - m + 1) regd0.w = -0x2C - m;
+        else if (px >= m + 0x2C) regd0.w = m + 0x2C;
+        else {
+            regd1.w = yb;
+            if (tx >= 0) {
+                if (m + 0x2C > tx) regd0.w = m + 0x2C;
+            } else if (-0x2C - m + 1 <= tx) regd0.w = -0x2C - m;
+        }
+        if (ABS(px) > 0x26) regd1.w = yl;
+        return;
+    }
+    s1 = m + 0x2C;
+    c1 = m + 0x2C;
+    c2 = -0x2C - m;
+    c3 = -0x2C - m + 1;
+    switch (ps) {
+    case 0:
+        if (py < -0xE8) {
+            if (px < -0x2C - m + 1) regd0.w = -0x2C - m;
+            else if (px >= m + 0x2C) regd0.w = m + 0x2C;
+            else {
+                regd1.w = yb;
+                if (tx >= 0) {
+                    if (m + 0x2C > tx) regd0.w = m + 0x2C;
+                } else if (-0x2C - m + 1 <= tx) regd0.w = -0x2C - m;
+            }
+            return;
+        }
+        if (tight) {
+            if (pt & 1) return;
+            regd1.w = yl;
+            if (tx >= 0) {
+                if (m + 0x2C > tx) regd0.w = m + 0x2C;
+            } else if (-0x2C - m + 1 <= tx) regd0.w = -0x2C - m;
+            return;
+        }
+        if (ty >= -0xE8) {
+            if (g >= 0 && ((tx - HIWORD(gp->Xpos)) ^ (px - tx)) < 0) {
+                if (px < HIWORD(gp->Xpos)) regd0.w = -0x2C - m;
+                else regd0.w = m + 0x2C;
+            } else if (ABS(px) < m + 0x2C) {
+                if (px < 0) regd0.w = -0x2C - m;
+                else regd0.w = m + 0x2C;
+            }
+            if (ABS(px) > 0x26) regd1.w = yb;
+            return;
+        }
+        regd1.w = gl;
+        if (g >= 0) {
+            if (px < HIWORD(gp->Ypos)) regd0.w = -0x2C - m;
+            else regd0.w = m + 0x2C;
+        } else if (tx >= 0) {
+            if (m + 0x2C > tx) regd0.w = m + 0x2C;
+        } else if (-0x2C - m + 1 <= tx) regd0.w = -0x2C - m;
+        return;
+    case 1:
+        regd1.w = yl;
+        if (pt & 4) return;
+        if (tx >= 0) {
+            if (tx < c1) regd0.w = s1;
+        } else if (tx >= c3) regd0.w = c2;
+        return;
+    case 2:
+        regd0.w = s1;
+        if (pt & 5) return;
+        regd1.w = yl;
+        return;
+    case 3:
+        if (pt == 8) regd1.w = yl;
+        else regd0.w = s1;
+        return;
+    case 4:
+        regd1.w = yb;
+        if (!(pt & 1)) return;
+        if (tx >= 0) {
+            if (tx < c1) regd0.w = s1;
+        } else if (tx >= c3) regd0.w = c2;
+        return;
+    case 6:
+        if (pt != 8) regd0.w = s1;
+        else regd1.w = yb;
+        return;
+    case 8:
+        regd0.w = c2;
+        if (!(pt & 5)) return;
+        regd1.w = yl;
+        return;
+    case 9:
+        if (pt == 2) regd1.w = yl;
+        else regd0.w = c2;
+        return;
+    case 12:
+        if (pt == 2) regd1.w = yb;
+        return;
+    }
+}
+
+void dostop(Player *p)
+{
+    short spa;
+
+    if (ABS(p->Xvel) > 0x1000 || ABS(p->Yvel) > 0x1000) {     /* .slim */
+        if ((p->pflags & pfrev) == 0) {
+            p->pflags2 |= pf2aip;
+            if (p->SCnum == SCref) {
+                if (refsignal != 0 || ((gmode & gmclock) == 0 && ((gmode2 & 0x80) || (gmode & 8))))
+                    spa = SPArefstopsig;
+                else spa = SPArefstop;
+            } else spa = SPAstop;
+        } else {
+            if (p->SCnum == SCref) {
+                if (refsignal != 0 || ((gmode & gmclock) == 0 && ((gmode2 & 0x80) || (gmode & 8))))
+                    spa = SPArefglidesig;
+                else spa = SPArefglide;
+            } else spa = SPAglide;
+        }
+        SetSPA(p, spa);
+    }
+    StopNA(p);                  /* stop with no anim */
 }
 
 /* StopNA: (stopna): slow player p by one step on each axis, with no animation

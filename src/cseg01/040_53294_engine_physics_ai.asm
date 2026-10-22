@@ -8,7 +8,7 @@ extern SetSPA, Stop4Pen, __CHK, a2touchpuck, assexit, assinsert, assreplace
 extern pad1dev, hmshotcnt, awshotcnt, sflags, gmode2, PenBuf, iflags
 extern OOlist, collflag, dirtab, doplayeracc, gameopts, wcradiusy, sflags3
 extern bannertimer, onetimerflag, shotongoal, penshotplayer, penshotctl, penshotmode, penshotstart, shotontarget
-extern penshotlive, dword_CCC2C, dword_CCC4E, hmtmstruct, awtmstruct, puckcross_m2
+extern penshotlive, dword_CCC2C, dword_CCC4E, hmtmstruct, awtmstruct, puckcross_m2, puckcross
 extern dword_E03AE, dword_E03B6, dword_E03B9, dword_E03BD, dword_E9A9E
 extern dword_E9AB6, puckvx, gmode, puckx, pucky, puckvy, puckz
 extern puckc, off_CD498, off_CD4A0, lastplayer, puckflip, puckvz, randomd0, CanRemovePlayer
@@ -244,6 +244,10 @@ pop ecx	; 534B8
 pop ebx	; 534B9
 ret	; 534BA
 %endif ; C
+; C: src/c/040_53294_engine_physics_ai/TryBlockShot.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/TryBlockShot.inc"
+%else
 TryBlockShot:
 push dword 10h	; 534BB
 call __CHK	; 534C0
@@ -291,6 +295,7 @@ pop edx	; 53533
 pop ecx	; 53534
 pop ebx	; 53535
 ret	; 53536
+%endif ; C
 ; C: src/c/040_53294_engine_physics_ai/checkob.c (check4check)
 %ifdef CBUILD
 %include "c/040_53294_engine_physics_ai/checkob.check4check.inc"
@@ -1387,6 +1392,10 @@ ret	; 541C9
 %endif ; C
 ; ChkDelayedOffside: Offsides option: the flagged team touches the puck in the zone -> AddPenalty2 8 on
 ; SortCords[lasttouch], returns 1. Called from checkpuckcoll before puckstick puckgoalie.
+; C: src/c/040_53294_engine_physics_ai/ChkDelayedOffside.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/ChkDelayedOffside.inc"
+%else
 ChkDelayedOffside:
 push dword 8	; 541CA
 call __CHK	; 541CF
@@ -1452,6 +1461,7 @@ call AddPenalty2	; 5427E
 mov eax, 1	; 54283
 pop edx	; 54288
 ret	; 54289
+%endif ; C
 checkpuckcoll:
 push dword 18h	; 5428A
 call __CHK	; 5428F
@@ -2147,6 +2157,10 @@ jmp near checkob_ret5	; 54AF4
 ; chk4lc: (see if computer should call line change). Puck in own half below the blue line,
 ; 1 in 4, not pflags2 bit 3; PC adds clock penalty checks (GetLowestPen). Then CompLine, setpersonel and
 ; chk4lc_shoot: CompShoot dumps the puck. Returns 1 when it did.
+; C: src/c/040_53294_engine_physics_ai/checkob.c (chk4lc)
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/checkob.chk4lc.inc"
+%else
 chk4lc:
 push dword 18h	; 54AF9
 call __CHK	; 54AFE
@@ -2231,6 +2245,7 @@ mov eax, ecx	; 54BF8
 call CompShoot	; 54BFA
 mov eax, 1	; 54BFF
 jmp near checkob_ret5	; 54C04
+%endif ; C
 PassLaneChk:
 push dword 1Ch	; 54C09
 call __CHK	; 54C0E
@@ -4978,6 +4993,10 @@ ret	; 56E51
 %endif ; C
 ; puckIChk: (icing). iflags bit 2 ifok, bit 0 ifcgl, bit 1 ifdir; loose puck past the goal
 ; line: |puckx| > 2Ch sets ifcgl (icing), else clears ifok.
+; C: src/c/040_53294_engine_physics_ai/puckIChk.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/puckIChk.inc"
+%else
 puckIChk:
 push dword 8	; 56E52
 call __CHK	; 56E57
@@ -5022,6 +5041,7 @@ or byte [iflags], 1	; 56EC6
 .x:
 pop ebx	; 56ECD
 ret	; 56ECE
+%endif ; C
 ; C: src/c/040_53294_engine_physics_ai/puckshadow.c
 %ifdef CBUILD
 %include "c/040_53294_engine_physics_ai/puckshadow.inc"
@@ -5764,6 +5784,10 @@ mov eax, ebp	; 57862
 call deflect	; 57864
 jmp near PassLaneChk_ret5a	; 57869
 %endif ; C
+; C: src/c/040_53294_engine_physics_ai/SetShotMode.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/SetShotMode.inc"
+%else
 SetShotMode:
 push dword 10h	; 5786E
 call __CHK	; 57873
@@ -5807,6 +5831,7 @@ pop edx	; 578F6
 pop ecx	; 578F7
 pop ebx	; 578F8
 ret	; 578F9
+%endif ; C
 ; C: src/c/040_53294_engine_physics_ai/ShotMode.c
 %ifdef CBUILD
 %include "c/040_53294_engine_physics_ai/ShotMode.inc"

@@ -7,7 +7,6 @@
 void GetHotStick(Player *p)
 {
     short f;
-    short x;
 
     regd0.w = regd1.w = 0;
     f = p->frame;
@@ -16,9 +15,8 @@ void GetHotStick(Player *p)
     if (f >= 0x3CE) f -= 0x1B4;
     f -= 0x196;
     f += f;
-    x = byte_CC7A4[f];
-    regd0.w = x;
+    regd0.w = byte_CC7A4[f];
     regd1.w = byte_CC7A5[f];
     if (p->attribute & 8)                       /* X flip */
-        regd0.w = -x;
+        regd0.w = -regd0.w;
 }

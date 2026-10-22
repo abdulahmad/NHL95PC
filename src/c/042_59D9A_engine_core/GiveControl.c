@@ -7,21 +7,18 @@
  lastplayer (the last puck carrier) pad 2 is checked first, else pad 1. */
 void GiveControl(short pl)
 {
-    short c2;
-
     if (pl == c1playernum[0]) return;
-    c2 = c2playernum[0];
-    if (pl == c2) return;
+    if (pl == c2playernum[0]) return;
     regd1.w = (pl >= 6) + 1;                    /* team of the player: 1 home, 2 away */
-    if (c2 != lastplayer) {
+    if (lastplayer != c2playernum[0]) {
         if (cont1team == regd1.w) {
             if (pl != c1playernum[0]) c1playernum[0] = restorepl(pl, c1playernum[0]);
         } else if (regd1.w == cont2team) {
-            if (pl != c2) c2playernum[0] = restorepl(pl, c2playernum[0]);
+            if (pl != c2playernum[0]) c2playernum[0] = restorepl(pl, c2playernum[0]);
         }
     } else {
         if (cont2team == regd1.w) {
-            if (pl != c2) c2playernum[0] = restorepl(pl, c2playernum[0]);
+            if (pl != c2playernum[0]) c2playernum[0] = restorepl(pl, c2playernum[0]);
         } else if (regd1.w == cont1team) {
             if (pl != c1playernum[0]) c1playernum[0] = restorepl(pl, c1playernum[0]);
         }

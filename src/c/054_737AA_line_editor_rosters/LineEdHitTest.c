@@ -7,14 +7,12 @@
 int LineEdHitTest(int x, int y, int *item)
 {
     int i;
-    int top;
 
     x += 4;
     if (x < 500) {
         for (i = 0; i < 40; i++) {
             if (x >= lineslotx[i * 2] && x < lineslotx[i * 2] + 0x3A) {
-                top = linesloty[i * 2];
-                if (y >= top && y < top + 0x28) {
+                if (y >= linesloty[i * 2] && y < linesloty[i * 2] + 0x28) {
                     *item = i;
                     return 1;
                 }
