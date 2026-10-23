@@ -1,8 +1,8 @@
 /* Engine player logic: the three stars after the game. */
-/* DRAFTS; see docs/UNSURE.md. PickThreeStars, StartThreeStars and assthreestars end in PreGameIntro's
-   exits (PreGameIntro_popebp / PreGameIntro_popx, segment 036), but PreGameIntro is split: ThreeStarsLoop's frame
-   loop and exit sit inside PreGameIntro's range, before StartPreGame and ThreeStarsLoop's own entry. So these drafts
-   sit in their own file. */
+/* StartThreeStars is matched; PickThreeStars and assthreestars remain drafts (docs/UNSURE.md).
+   Source order keeps StartThreeStars' early exit as a near jump. Watcom merges its pops into PickThreeStars;
+   cc.py follows that draft's original outgoing jump to PreGameIntro_popx in segment 036. PreGameIntro's own
+   range is split around ThreeStarsLoop, so it is not needed as a C context draft here. */
 #define StarCompare StarCompare_decl
 #define IsCupClinched IsCupClinched_decl
 #define ThreeStarsLoop ThreeStarsLoop_decl
@@ -27,81 +27,8 @@ void assthreestars(Player *p);
 #define GSTAT(t, g) ((short *)((char *)word_DC242 + (t) * 18 + (g) * 6))
 #define PSTAT(t, j) ((short *)((char *)dword_DB088 + (t) * 0x190 + (j) * 16))
 
-/* DRAFT: 1,107 vs 1,091 bytes, 105 lines (the roster index split and the stack slots); see docs/UNSURE.md. */
-/* PickThreeStars (48AC8, PC only; ends in PreGameIntro_popebp): pick the three stars. Clear the three star slots
-   (startm / starpl) and the game winner (gwgteam / gwgplayer). In overtime (curperiod beyond 3) with a winner whose
-   team touched the puck last, the winning team's scorer (tmpsplayer) is the game-winning scorer, and when the goal
-   clinched the cup he is the first star (AddStar). A goalie with a shutout (his opponents' score 0; the goalie of
-   the three with the most of the first stats word) gets a star when he faced more shots than the period length's
-   minimum (byte_CC9E4). Then the skaters with stats (not position 0 or 2; a position 1 player only with one of the
-   stats words set), sorted by StarCompare: a player with more than one point gets a star; at the first one without,
-   the goalies with enough shots (byte_CC9E7) and a goals-against rate (per thousand) of at most 4Bh get stars, then
-   the rest of the list in order until there are three. No arguments, no result. */
-void PickThreeStars(void)
-{
-    int list[50];
-    short n;
-    short stars;
-    short i;
-    short k;
-    short d;
-    short *s;
-
-    stars = 0;
-    for (i = 0; i < 3; i++) startm[i * 2] = starpl[i * 2] = -1;
-    gwgteam = gwgplayer = -1;
-    if (curperiod > 3 && (d = awscore - hmscore[0]) != 0) {
-        d = d > 0;
-        if (d ^ (lasttouch < 6)) {
-            gwgteam = d;
-            gwgplayer = word_DF644[d * 0x80];
-            if (IsCupClinched(hmscore[0], awscore)) stars += AddStar(stars, d, gwgplayer);
-        }
-    }
-    for (i = 0; i < 2; i++) {
-        if (hmscore[(i == 0) * 0x80] == 0) {
-            k = 0;
-            if (GSTAT(i, 1)[0] > GSTAT(i, 0)[0]) k = 1;
-            if (GSTAT(i, 2)[0] > GSTAT(i, 0)[0] && GSTAT(i, 2)[0] > GSTAT(i, 1)[0]) k = 2;
-            if (byte_CC9E4[gameopts.pertime] < GSTAT(i, k)[0]) stars += AddStar(stars, i, k += 0x19);
-        }
-    }
-    n = 0;
-    for (i = 0; i < 0x32; i++) {
-        k = hmroster[i / 25 * 0x444 + i % 25 * 39];
-        if (k != 0 && k != 2) {
-            s = PSTAT(i / 25, i % 25);
-            if (k != 1 || s[0] || s[1] || s[2] || s[3] || s[7]) list[n++] = i;
-        }
-    }
-    qsort(list, n, 4, StarCompare);
-    for (i = 0; i < n; i++) {
-        k = list[i];
-        s = PSTAT(k / 25, k % 25);
-        if (s[0] + s[1] > 1) {
-            stars += AddStar(stars, k / 25, k % 25);
-            if (stars >= 3) return;
-        } else {
-            for (k = 0; k < 6; k++) {
-                s = GSTAT(k / 3, k % 3);
-                if (byte_CC9E7[gameopts.pertime] <= s[0] && (s[1] * 0x3E8 + s[0] / 2) / s[0] <= 0x4B) {
-                    stars += AddStar(stars, k / 3, k % 3 + 0x19);
-                    if (stars >= 3) return;
-                }
-            }
-            break;
-        }
-    }
-    for (; i < n; i++) {
-        k = list[i];
-        stars += AddStar(stars, k / 25, k % 25);
-        if (stars >= 3) return;
-    }
-}
-
-/* DRAFT: 853 bytes, every instruction matches; only its three exits differ: the EXE jumps to PreGameIntro_popx
-   (segment 036), C to the pops of a function of this file. The parking loop tests at the bottom once q is set
-   before the for (with `for (q = SortCords, i = 0; ...)` C jumps to the test first). See docs/UNSURE.md. */
+/* Matched under 10.0 GA: the parking loop tests at the bottom once q is set before the for.
+   Keep this function before PickThreeStars so its early exit is a near jump to the shared epilogue. */
 /* StartThreeStars (48F0B, PC only; ends in PreGameIntro_popx): the three stars ceremony after the game (not in the
    demo, dword_CC0EC). Input sampling off, fade the saved palette out (the fade-in pending), pick the stars
    (PickThreeStars). Clear the line change and penalty signals, the banner and the text overlay (freeing its art),
@@ -204,6 +131,78 @@ void StartThreeStars(void)
     crowdlevel = 0;
     if (musicon) MusicChanReset();
     else sub_8F633();
+}
+
+/* DRAFT: 1,107 vs 1,091 bytes, 105 lines (the roster index split and the stack slots); see docs/UNSURE.md. */
+/* PickThreeStars (48AC8, PC only; ends in PreGameIntro_popebp): pick the three stars. Clear the three star slots
+   (startm / starpl) and the game winner (gwgteam / gwgplayer). In overtime (curperiod beyond 3) with a winner whose
+   team touched the puck last, the winning team's scorer (tmpsplayer) is the game-winning scorer, and when the goal
+   clinched the cup he is the first star (AddStar). A goalie with a shutout (his opponents' score 0; the goalie of
+   the three with the most of the first stats word) gets a star when he faced more shots than the period length's
+   minimum (byte_CC9E4). Then the skaters with stats (not position 0 or 2; a position 1 player only with one of the
+   stats words set), sorted by StarCompare: a player with more than one point gets a star; at the first one without,
+   the goalies with enough shots (byte_CC9E7) and a goals-against rate (per thousand) of at most 4Bh get stars, then
+   the rest of the list in order until there are three. No arguments, no result. */
+void PickThreeStars(void)
+{
+    int list[50];
+    short n;
+    short stars;
+    short i;
+    short k;
+    short d;
+    short *s;
+
+    stars = 0;
+    for (i = 0; i < 3; i++) startm[i * 2] = starpl[i * 2] = -1;
+    gwgteam = gwgplayer = -1;
+    if (curperiod > 3 && (d = awscore - hmscore[0]) != 0) {
+        d = d > 0;
+        if (d ^ (lasttouch < 6)) {
+            gwgteam = d;
+            gwgplayer = word_DF644[d * 0x80];
+            if (IsCupClinched(hmscore[0], awscore)) stars += AddStar(stars, d, gwgplayer);
+        }
+    }
+    for (i = 0; i < 2; i++) {
+        if (hmscore[(i == 0) * 0x80] == 0) {
+            k = 0;
+            if (GSTAT(i, 1)[0] > GSTAT(i, 0)[0]) k = 1;
+            if (GSTAT(i, 2)[0] > GSTAT(i, 0)[0] && GSTAT(i, 2)[0] > GSTAT(i, 1)[0]) k = 2;
+            if (byte_CC9E4[gameopts.pertime] < GSTAT(i, k)[0]) stars += AddStar(stars, i, k += 0x19);
+        }
+    }
+    n = 0;
+    for (i = 0; i < 0x32; i++) {
+        k = hmroster[i / 25 * 0x444 + i % 25 * 39];
+        if (k != 0 && k != 2) {
+            s = PSTAT(i / 25, i % 25);
+            if (k != 1 || s[0] || s[1] || s[2] || s[3] || s[7]) list[n++] = i;
+        }
+    }
+    qsort(list, n, 4, StarCompare);
+    for (i = 0; i < n; i++) {
+        k = list[i];
+        s = PSTAT(k / 25, k % 25);
+        if (s[0] + s[1] > 1) {
+            stars += AddStar(stars, k / 25, k % 25);
+            if (stars >= 3) return;
+        } else {
+            for (k = 0; k < 6; k++) {
+                s = GSTAT(k / 3, k % 3);
+                if (byte_CC9E7[gameopts.pertime] <= s[0] && (s[1] * 0x3E8 + s[0] / 2) / s[0] <= 0x4B) {
+                    stars += AddStar(stars, k / 3, k % 3 + 0x19);
+                    if (stars >= 3) return;
+                }
+            }
+            break;
+        }
+    }
+    for (; i < n; i++) {
+        k = list[i];
+        stars += AddStar(stars, k / 25, k % 25);
+        if (stars >= 3) return;
+    }
 }
 
 typedef struct { char c[10]; } StarStr10;

@@ -35,6 +35,10 @@ global IndexPhotoBank_x
 global LoadPhotoBankF_x
 global AwardsCeremony, IndexPhotoBank, LoadPhotoBankF, LoadPlayerPhotos, LoadGameGfx, LoadGameGfx_common, ReloadGameGfx, PlacePlayersAtStart
 global SetupGame, SetupDemoGame, ResetGameVars, FileExists
+; C: src/c/002_1167B_gamesave_io/PickAwardWinners.c (AwardsCeremony)
+%ifdef CBUILD
+%include "c/002_1167B_gamesave_io/PickAwardWinners.AwardsCeremony.inc"
+%else
 AwardsCeremony:
 push dword 78h	; 13320
 call __CHK	; 13325
@@ -426,6 +430,7 @@ call sub_8EA00	; 13857
 add esp, byte 4	; 1385C
 add esp, byte 50h	; 1385F
 jmp near PickAwardWinners_x	; 13862
+%endif ; C
 ; C: src/c/004_13320_asset_loading/IndexPhotoBank.c
 %ifdef CBUILD
 %include "c/004_13320_asset_loading/IndexPhotoBank.inc"

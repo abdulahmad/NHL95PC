@@ -1,11 +1,4 @@
-/* BuildTeamRosterList - DRAFT 344 vs 344 (3 differing, 10.0 GA). The parameter team is reused as the scratch
- variable (the goalie entry index team = i + 19h and the key pointer team = KeyDbPtr(k)), which keeps it in esi
- from the entry as in the EXE. The dressed byte read twice, with no byte local, gives the EXE's add edx, ebx /
- mov ah, [edx+0E4h]. Left: the goalie key load swaps eax / ecx (EXE mov ecx, [edi] / mov eax, ebx). Tried for
- that: *(int *)(*rec + i * 4 + 0xB0), ((int *)*rec)[i + 0x2C], (*(int **)rec)[i + 0x2C], 0xB0 + *rec, team
- assigned before k or inside the e expression, k / i / e declaration orders, the skater load spelled the same
- ways (worse), permute (321 candidates). Earlier: a named team was eliminated, an aux returning esi reloaded eax
- at once, naming the fill byte lengthened the copies. Do not retry those.
+/* BuildTeamRosterList (PC only).
  Fill list (28 entries of 1Bh bytes) with team's roster: entry i gets index i at +2; the 25
    skater slots (key offsets at team record +4Ch) and the 3 goalie slots (+B0h) become entries 0-24 and 25-27: an
    empty slot (-1) is position 0, number 64h, status 0; else position (key +2), number (+1), status 3, the key offset
@@ -43,7 +36,8 @@ void BuildTeamRosterList(int team, unsigned char *list, unsigned char **rec)
         }
     }
     for (i = 0; i < 3; i++) {
-        k = ((int *)(*rec + 0xB0))[i];
+        k = (int)*rec;
+        k = ((int *)(k + 0xB0))[i];
         team = i + 0x19;
         e = list + team * 27;
         if (k == -1) {

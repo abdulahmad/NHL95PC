@@ -9,7 +9,7 @@
 
 int sub_8F13B(char *path);
 
-/* LoadRockMusic: team 26 and above uses cue row 13. Six team cues, then three random cues that are
+/* LoadRockMusic (7DC8B, PC only): team 26 and above uses cue row 13. Six team cues, then three random cues that are
  not already on that row and not repeated, then the device bank, the team tune, and ROCKDITI.
  dword_CCC94 is 20h while the banks load and 0 afterwards. */
 void LoadRockMusic(void)
@@ -23,8 +23,7 @@ void LoadRockMusic(void)
     int slot;
 
     dword_CCC94 = 0x20;
-    s.team = *(int *)((char *)&HomeTeam - 2) >> 16;
-    if (s.team >= 0x1A) s.team = 0x0D;
+    if ((s.team = *(int *)((char *)&HomeTeam - 2) >> 16) >= 0x1A) s.team = 0x0D;
     i = 0;
     do {
         int team;
@@ -32,8 +31,7 @@ void LoadRockMusic(void)
         int cue;
 
         team = s.team;
-        t3 = team << 2;
-        t3 -= team;
+        t3 = team * 3;
         cue = ((signed char *)teamrockcuetbl)[i + t3 * 2 + 3];
         if (cue >= 0) {
             MakePath(s.path, fileoncd[rockcuepathsel[cue]] == 1 ? (char *)cddriveptr : 0,
@@ -47,6 +45,7 @@ void LoadRockMusic(void)
     } while (i < 6);
     i = 0;
     do {
+        int pickedcue;
         int ok;
         int j;
 
@@ -59,13 +58,13 @@ void LoadRockMusic(void)
                 int cue;
 
                 team = s.team;
-                t3 = team << 2;
-                t3 -= team;
+                t3 = team * 3;
                 cue = ((signed char *)teamrockcuetbl)[j + t3 * 2 + 3];
                 if (cue == rockcuepool[slot]) ok = 0;
             }
             for (j = 0; j < i && ok; j++) {
-                if (rockcuepool[slot] == s.picked[j]) ok = 0;
+                pickedcue = rockcuepool[slot];
+                if (pickedcue == s.picked[j]) ok = 0;
             }
         } while (ok == 0);
         s.picked[i] = rockcuepool[slot];
@@ -94,11 +93,8 @@ void LoadRockMusic(void)
     dword_CCC94 = 0;
 }
 
-/* FreeRockMusic: release the six team cues, the three random cues and the three tune banks.
-   DRAFT: 133 vs 134. The three loops match. The exit is jmp to LoadRockMusic's pop ebp,
-   where the original pops ebp itself and then jumps to LoadRockMusic_ret. That happens
-   because the LoadRockMusic draft saves ebp. Do not retry this until that draft stops
-   pushing ebp. */
+/* FreeRockMusic (7DEC8, PC only): release the six team cues, the three random cues and
+   the three tune banks. Its final pops share LoadRockMusic's exit. */
 void FreeRockMusic(void)
 {
     int i;

@@ -7,7 +7,11 @@
 
 short FacingBoards(Player *p);
 
-/* DRAFT: 1213 vs 1209, 336 of 352 instructions; see docs/UNSURE.md. */
+/* DRAFT (10.0 GA, 1211 vs 1209): the facing difference reads p->facedir in place (the EXE's dx load) and the
+   SPA table entry is read as the top half of a dword at dword_CCC4E + 2 * rel (the EXE's `[eax*2+CCC4E]` /
+   `sar 10h`). Left: the two position gaps under 14h compute the difference in edx and copy it to eax before
+   the sign test (C computes it in eax), the chosen SPA is built in eax (EXE edx), and the later items listed
+   in docs/UNSURE.md. */
 /* checkcheck (5382C, Genesis checkcheck): players p and q are in contact (force: the impact); run it for p
    against q, then for q against p. A holding q (SPA 639h / 873h) goes to holdcheck, a B-check (589h) to Bcheck.
    A checking p (SPA 621h) marks the hit (impact 100h each in gmode bit 0), flags p (pflags 20h) and picks its
@@ -39,8 +43,7 @@ void checkcheck(Player *p, Player *q, short force)
                 q->impact = 0x100;
             }
             dir = vtoa(rel = HIWORD(q->Xpos) - HIWORD(p->Xpos), (short)(HIWORD(q->Ypos) - HIWORD(p->Ypos)));
-            v = p->facedir;
-            rel = (dir - v) & 7;
+            rel = (dir - p->facedir) & 7;
             if (p->attribute & 8) rel = (8 - rel) & 7;
             p->pflags |= 0x20;
             odds = ABS(HIWORD(q->Xpos)) > 0x90
@@ -51,7 +54,7 @@ void checkcheck(Player *p, Player *q, short force)
                 && (ABS(q->Xvel) < 0x1F4 && ABS(q->Yvel) < 0x1F4 || (vtoa(q->Xvel, q->Yvel) - p->facedir + 2) & 3))
                 v = 0xED7;
             else
-                v = ((short *)((char *)dword_CCC4E + 2))[rel];
+                v = *(int *)((char *)dword_CCC4E + rel * 2) >> 16;
             SetSPA(p, v);
             if (q->position != 0 && force >= 0x14) {
                 rel = (p->pflags & 8) ? 0xA0 : 0x64;

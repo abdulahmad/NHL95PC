@@ -1,6 +1,7 @@
 /* Player stats: the skater stats card. */
-/* DRAFT: 9 differing instructions, 2,214 vs 2,211 bytes under Watcom 10.0 GA;
-   the ratings lookup still computes its address in eax instead of edx. */
+/* DRAFT: 7 differing instructions, 2,214 vs 2,211 bytes under Watcom 10.0 GA.
+   A byte rating temporary keeps the lookup address in edx. The promotion still uses
+   and eax,0FFh after the byte load; the EXE zeroes eax before loading al. */
 #define SkaterStatsCard SkaterStatsCard_decl
 #include "nhl95.h"
 #undef SkaterStatsCard
@@ -47,6 +48,7 @@ int SkaterStatsCard(void)
     int i;
     int pct;
     int v;
+    unsigned char rating;
 
     t.result = 0;
     pl = statsplayer;
@@ -181,7 +183,8 @@ int SkaterStatsCard(void)
             t.y -= 0x68;
         }
         PrintShadowText((short)(t.x + 0x1E), (short)t.y, (char *)skaterratingnames[i]);
-        v = (t.attrp[((signed char *)off_C6A99)[i + 3]] + 5) * 5;
+        rating = t.attrp[((signed char *)off_C6A99)[i + 3]];
+        v = (rating + 5) * 5;
         PrintFmt1((short)(t.x + 0x10E), (short)t.y, (char *)str_fmt3d, (short)v);
         t.y += 0xD;
     }

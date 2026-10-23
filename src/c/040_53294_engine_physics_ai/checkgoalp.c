@@ -1,5 +1,8 @@
 /* Engine physics AI: goal post collision. */
+#define CheckBump CheckBump_decl
 #include "nhl95.h"
+#undef CheckBump
+short CheckBump(Player *p, Player *c);
 
 #define W(v) (*(int *)((char *)&(v) - 2) >> 16)  /* a word, read as the top half of a dword */
 
@@ -7,7 +10,11 @@
  from the goal (dy = y - g y, dx = x - g x) must be on the near side of the net (net 12: dy + wcradiusy >= -34,
  else dy - wcradiusy < 34) and |dx| - wcradiusx < 64; regd0 = -dy, regd1 = dx. Inside the post ellipse (dx^2 4
  and dx^2 4 + 2 dy^2 up to 256) and not bumping it (CheckBump, skipped for 16): regd0 regd1 become the unit
- vector * 256 (vecdist + 1, clamped to -255..255) and the player bounces off it (wallcoll, dword_CCC2C = 1). */
+ vector * 256 (vecdist + 1, clamped to -255..255) and the player bounces off it (wallcoll, dword_CCC2C = 1).
+ CheckBump is declared short in this file (the EXE tests ax), and the radii are plain short reads (each arm
+ reloads its own; the W() form was hoisted above the SCnum 12 test).
+ DRAFT (10.0 GA, 388 vs 389): every instruction lines up except that p sits in esi and the temporaries in edi
+ (the EXE: p in edi, temporaries in esi), and d = x*x >> 2 is in eax (EXE esi, so its cmp is one byte longer). */
 void checkgoalp(Player *p, Player *g, short x, short y)
 {
     int d;
@@ -17,11 +24,11 @@ void checkgoalp(Player *p, Player *g, short x, short y)
     y -= HIWORD(g->Ypos);
     x -= HIWORD(g->Xpos);
     if (g->SCnum == 12) {
-        if (y + W(wcradiusy) < -34) return;
+        if (y + wcradiusy < -34) return;
     } else {
-        if (y - W(wcradiusy) >= 34) return;
+        if (y - wcradiusy >= 34) return;
     }
-    if ((x < 0 ? -x : x) - W(wcradiusx) >= 64) return;
+    if ((x < 0 ? -x : x) - wcradiusx >= 64) return;
     regd0.w = -y;
     regd1.w = x;
     d = (x * x) >> 2;

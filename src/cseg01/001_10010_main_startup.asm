@@ -1432,6 +1432,10 @@ pop ecx	; 11002
 pop ebx	; 11003
 ret	; 11004
 %endif ; C
+; C: src/c/001_10010_main_startup/DrawSpriteNumber.c
+%ifdef CBUILD
+%include "c/001_10010_main_startup/DrawSpriteNumber.inc"
+%else
 DrawSpriteNumber:
 push dword 1Ch	; 11005
 call __CHK	; 1100A
@@ -1508,6 +1512,7 @@ add esp, byte 8	; 110DA
 pop edi	; 110DD
 pop esi	; 110DE
 ret	; 110DF
+%endif ; C
 ; C: src/c/001_10010_main_startup/DrawFrameSprite.c
 %ifdef CBUILD
 %include "c/001_10010_main_startup/DrawFrameSprite.inc"

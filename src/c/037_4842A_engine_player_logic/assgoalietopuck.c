@@ -13,7 +13,6 @@ void assgoalietopuck(Player *p)
     int y;
     int ay;
     short r;
-    short vy;
 
     if (*(short *)((char *)p + 0x4A) > 0) (*(short *)((char *)p + 0x4A))--;
     ((unsigned char *)p)[0x48] |= 6;
@@ -35,15 +34,20 @@ void assgoalietopuck(Player *p)
     }
     if (--((signed char *)p)[0x27] < 0) {
         ((signed char *)p)[0x27] = p->aidef >> 2;
-        if (*puckc >= 0) goto leave;
-        if (((p->pflags & 0x80) != 0) ^ (*puckvy < 0)) {
-            vy = *puckvy;
-            if ((vy < 0 ? -vy : vy) > 0x800) goto leave;
+        if (*puckc >= 0) {
+            assexit(p);
+            return;
         }
-        if (*(int *)((char *)p->optmptr + 0x3E) < 0x96) goto leave;
+        if (((p->pflags & 0x80) != 0) ^ (*puckvy < 0)) {
+            if ((*puckvy < 0 ? -*puckvy : *puckvy) > 0x800) {
+                assexit(p);
+                return;
+            }
+        }
+        if (*(int *)((char *)p->optmptr + 0x3E) < 0x96) {
+            assexit(p);
+            return;
+        }
     }
     skatetopuck(p);
-    return;
-leave:
-    assexit(p);
 }

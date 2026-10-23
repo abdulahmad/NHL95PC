@@ -547,9 +547,9 @@ void RunIntro(void)
     demomode = dword_CC0EC = 0;
 }
 
-/* DRAFT (ShowCredits): 1320 vs 1320. The first rand() % 8 loads the 8 into ecx before the sar (EXE after), the
-   line count is loaded before byte_D42C3 for the y multiply (EXE after), and the exit keeps its own pop ebp because
-   RunDemoGame does not push ebp yet (EXE jumps to RunDemoGame_x, which pops it). See docs/UNSURE.md. */
+/* DRAFT (ShowCredits): 1320 vs 1320, 4 differing under 10.0 GA (two reordered instructions).
+   A block-local int height gives the EXE's byte_D42C3 / line-count load order. Left: the first rand() % 8
+   loads the divisor into ecx before sar edx, 1Fh; the EXE loads it after. See docs/UNSURE.md. */
 /* ShowCredits (16F9A, PC only; ends in RunDemoGame_x): the credits. Keep the text state, load the BACKWIN block
    and the CREDITS bank (from the CD when listed there): its palette (kept for the fade and copied to unk_C4E30)
    and BKGD art, drawn after the palette cycle fades out. Start the credits song when there is music, else the
@@ -633,7 +633,10 @@ void ShowCredits(void)
             sub_903F0(bg, 0x14A, 0x3F);
         }
         wait = cur->time;
-        y = 0xDA - (cur->n * byte_D42C3 >> 1);
+        {
+            int height = byte_D42C3;
+            y = 0xDA - (cur->n * height >> 1);
+        }
         for (i = 0; i < cur->n; i++) {
             s = cur->lines[i];
             RenderTextLine(0x1EA - (fputchar(s) >> 1), y, s);

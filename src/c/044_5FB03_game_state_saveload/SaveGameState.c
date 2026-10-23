@@ -1,6 +1,5 @@
 /* Game state save / load: write the game state (SaveGameState) and read it back (LoadGameState). */
-/* DRAFT: same size, every instruction but one register (the rink-object loop computes i * 3 in ebx, the EXE in
-   ecx); see docs/UNSURE.md. Owner of SaveGameState_popx (LoadGameState ends there). */
+/* SaveGameState owns SaveGameState_popx (the LoadGameState draft ends there). */
 #define SaveGameState SaveGameState_decl
 #define LoadGameState LoadGameState_decl
 #include "nhl95.h"
@@ -160,8 +159,9 @@ int SaveGameState(int fh)
     if (FileWriteAt(fh, buf, -1, 0x80)) FatalError((char *)str_ErrSaveGame);
     p = (short *)buf;
     for (i = 0; i < 0x14; i++) {
-        *p++ = word_DEE94[i * 6];
-        *p++ = word_DEE96[i * 6];
+        n = i * 3;
+        *p++ = word_DEE94[n * 2];
+        *p++ = word_DEE96[n * 2];
     }
     *p++ = *(short *)(&ovlseq);
     *p++ = *(short *)(&ovlstep);

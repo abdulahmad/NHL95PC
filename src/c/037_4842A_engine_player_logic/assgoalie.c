@@ -409,7 +409,6 @@ play:
     check4check(p);
 }
 
-/* DRAFT: 631 vs 632 bytes, 33 lines (the team pointer and the time left swap ebx / ecx); see docs/UNSURE.md. */
 /* assrefsignal (4EB04; 93G assrefsignal, PC version; ends in assgoalie_popebp): the referee's call. Not while
    locked (pflags bit 5). A new assignment (bit 1): for a call without a signal direction (word_CCA9C by RefPen
    negative) post a goal event for a goal call (RefPen 7: the scoring team from the puck's end and the period, its
@@ -421,8 +420,8 @@ play:
 void assrefsignal(Player *p)
 {
     Team *t;
-    int side;
     int tm;
+    int side;
 
     if (p->pflags & 0x20) return;
     if (p->pflags & 2) {

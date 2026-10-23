@@ -351,6 +351,10 @@ ret	; 5A0A2
 ; CompLine: (find good line for comp to switch to). eax = other team, edx = team.
 ; tmap difference picks the power-play penalty-kill lines, getlinee compares line energies, tmline/tmlcnt take
 ; the result (DrawPanelLine is called on a change). Callers: chk4lc and puckfaceoff.
+; C: src/c/042_59D9A_engine_core/CompLine.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/CompLine.inc"
+%else
 CompLine:
 push dword 1Ch	; 5A0A3
 call __CHK	; 5A0A8
@@ -518,6 +522,7 @@ pop esi	; 5A284
 pop ecx	; 5A285
 pop ebx	; 5A286
 ret	; 5A287
+%endif ; C
 ; C: src/c/042_59D9A_engine_core/CompLine.c (getlinee_pp)
 %ifdef CBUILD
 %include "c/042_59D9A_engine_core/CompLine.getlinee_pp.inc"

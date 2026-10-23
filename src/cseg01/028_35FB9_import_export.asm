@@ -2030,6 +2030,10 @@ pop esi	; 37C50
 pop ecx	; 37C51
 ret	; 37C52
 %endif ; C
+; C: src/c/028_35FB9_import_export/DrawTeamGridName.c
+%ifdef CBUILD
+%include "c/028_35FB9_import_export/DrawTeamGridName.inc"
+%else
 DrawTeamGridName:
 push dword 38h	; 37C53
 call __CHK	; 37C58
@@ -2134,6 +2138,7 @@ pop ebp	; 37D66
 pop edi	; 37D67
 pop esi	; 37D68
 ret	; 37D69
+%endif ; C
 ; C: src/c/028_35FB9_import_export/SaveGridCellBg.c
 %ifdef CBUILD
 %include "c/028_35FB9_import_export/SaveGridCellBg.inc"

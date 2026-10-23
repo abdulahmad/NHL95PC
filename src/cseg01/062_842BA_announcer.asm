@@ -1140,6 +1140,10 @@ add esp, byte 20h	; 84F76
 pop ebx	; 84F79
 ret	; 84F7A
 %endif ; C
+; C: src/c/062_842BA_announcer/SayPenalty.c
+%ifdef CBUILD
+%include "c/062_842BA_announcer/SayPenalty.inc"
+%else
 SayPenalty:
 push dword 60h	; 84F7B
 call __CHK	; 84F80
@@ -1260,6 +1264,7 @@ pop ebp	; 85118
 pop edi	; 85119
 pop esi	; 8511A
 ret 14h	; 8511B
+%endif ; C
 ; C: src/c/062_842BA_announcer/SayPenaltyShot.c
 %ifdef CBUILD
 %include "c/062_842BA_announcer/SayPenaltyShot.inc"

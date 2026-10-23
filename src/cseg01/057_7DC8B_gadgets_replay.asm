@@ -28,6 +28,10 @@ global ReplaySaveHilight_n0, ReplaySaveHilight_n2, ReplaySaveHilight_n1, ReplayS
 global LoadRockMusic, FreeRockMusic, DrawGadgetByType
 global GadgetStub0, sub_7E03F, DrawGadgetButton, InstantReplay, GadgetHitTest, PickNearestPlayer, ReplayControlLoop, ReplaySaveHilight
 global bothneitherstrs
+; C: src/c/057_7DC8B_gadgets_replay/LoadRockMusic.c
+%ifdef CBUILD
+%include "c/057_7DC8B_gadgets_replay/LoadRockMusic.inc"
+%else
 LoadRockMusic:
 push dword 38h	; 7DC8B
 call __CHK	; 7DC90
@@ -221,6 +225,11 @@ pop edx	; 7DEC4
 pop ecx	; 7DEC5
 pop ebx	; 7DEC6
 ret	; 7DEC7
+%endif ; C
+; C: src/c/057_7DC8B_gadgets_replay/LoadRockMusic.c (FreeRockMusic)
+%ifdef CBUILD
+%include "c/057_7DC8B_gadgets_replay/LoadRockMusic.FreeRockMusic.inc"
+%else
 FreeRockMusic:
 push dword 1Ch	; 7DEC8
 call __CHK	; 7DECD
@@ -276,6 +285,7 @@ cmp edx, byte 3	; 7DF43
 jl short FreeRockMusic.5	; 7DF46
 pop ebp	; 7DF48
 jmp near LoadRockMusic_ret	; 7DF49
+%endif ; C
 ; C: src/c/057_7DC8B_gadgets_replay/DrawGadgetByType.c
 %ifdef CBUILD
 %include "c/057_7DC8B_gadgets_replay/DrawGadgetByType.inc"

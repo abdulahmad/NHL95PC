@@ -1,5 +1,4 @@
 /* Player stats: the goalie stats card. */
-/* DRAFT: first pass, register picks left (the byte zeros, two pushes, one shared tail); see docs/UNSURE.md. */
 #define GoalieStatsCard GoalieStatsCard_decl
 #include "nhl95.h"
 #undef GoalieStatsCard
@@ -70,9 +69,9 @@ void GoalieStatsCard(void)
     if (pl[0x30]) {
         *(T6 *)s.name = *(T6 *)str_PORTR2;
         memcpy(s.name + 5, pl + 0x30, 4);
+        v = (((signed char *)pl)[0x31] - 0x30) * 10 + (((signed char *)pl)[0x32] - 0x30);
         s.name[8] = 0;
-        MakePath(s.path, byte_ED909[(((signed char *)pl)[0x31] - 0x30) * 10 + (((signed char *)pl)[0x32] - 0x30)] == 1
-            ? (char *)cddriveptr : 0, s.name, 0);
+        MakePath(s.path, byte_ED909[v] == 1 ? (char *)cddriveptr : 0, s.name, 0);
         bank = sub_8E83C(s.path, 0);
         memcpy(s.name, pl + 0x30, 4);
         s.name[4] = 0;
@@ -85,15 +84,14 @@ void GoalieStatsCard(void)
             statsbgshapes = sub_8E83C(s.path, 0);
             statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst12);
             sub_913B4(statspalshape);
-            FreeMemBlock(statsbgshapes);
         } else {
             FreeMemBlock(bank);
             MakePath(s.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar4, 0);
             statsbgshapes = sub_8E83C(s.path, 0);
             statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst23);
             sub_913B4(statspalshape);
-            FreeMemBlock(statsbgshapes);
         }
+        FreeMemBlock(statsbgshapes);
     } else {
         MakePath(s.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar4, 0);
         statsbgshapes = sub_8E83C(s.path, 0);

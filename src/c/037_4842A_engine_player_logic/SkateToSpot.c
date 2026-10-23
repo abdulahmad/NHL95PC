@@ -1,7 +1,10 @@
 /* Engine player logic: skating to a spot. */
 #include "nhl95.h"
 
-/* DRAFT: 1168 vs 1160, 293 of 328 instructions; see docs/UNSURE.md. */
+/* DRAFT (10.0 GA, 1161 vs 1160): with t declared after ady and the stop written as two zero stores, every
+   temporary after the stop lands in the EXE register. Left: the stop itself, which the EXE compiles from the
+   chained p->Xvel = p->Yvel = 0 (store, reload into ax, copy); the chained form takes one more cycle slot and
+   moves every later pick (47 differing). */
 /* SkateToSpot (4E292, PC only): skate p to the spot regd0.w / regd1.w with skateto (evade: its evade routine,
    passed straight through). Within 8 of the spot both ways, stop there. Near the goal line ends (|x| up to 1Eh,
    |y| from F2h, a target inside F2h) aim behind the net instead (y FCh, x 28h toward the target's side) and drop
@@ -16,10 +19,10 @@ void SkateToSpot(Player *p, int evade)
     short axp;
     short dx;
     short dy;
-    short t;
     short spa2;
     short adx;
     short ady;
+    short t;
     short ayp;
     short ary;
     short d;
@@ -29,7 +32,8 @@ void SkateToSpot(Player *p, int evade)
     dy = regd1.w - HIWORD(p->Ypos);
     ady = ABS(dy);
     if (adx < 8 && ady < 8) {
-        p->Xvel = p->Yvel = 0;
+        p->Yvel = 0;
+        p->Xvel = 0;
         HIWORD(p->Xpos) = regd0.w;
         HIWORD(p->Ypos) = regd1.w;
         return;

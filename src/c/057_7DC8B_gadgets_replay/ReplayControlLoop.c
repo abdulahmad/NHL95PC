@@ -32,8 +32,8 @@ int ReplayControlLoop(int *step)
     int d;
     int oldy;
     unsigned char *e;
-    int a;
     int b;
+    int a;
     int y1;
     int x1;
 

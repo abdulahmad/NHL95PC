@@ -654,6 +654,10 @@ pop edx	; 2257D
 pop ecx	; 2257E
 pop ebx	; 2257F
 ret	; 22580
+; C: src/c/017_21CDE_player_stats/GoalieStatsCard.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/GoalieStatsCard.inc"
+%else
 GoalieStatsCard:
 push dword 13Ch	; 22581
 call __CHK	; 22586
@@ -1240,6 +1244,7 @@ pop edx	; 22DDA
 pop ecx	; 22DDB
 pop ebx	; 22DDC
 ret	; 22DDD
+%endif ; C
 ; C: src/c/017_21CDE_player_stats/CmpTeamStandings.c
 %ifdef CBUILD
 %include "c/017_21CDE_player_stats/CmpTeamStandings.inc"

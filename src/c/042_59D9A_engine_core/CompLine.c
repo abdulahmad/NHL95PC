@@ -22,30 +22,27 @@ void CompLine(Team *other, Team *team)
     o = other;
     diff = team->tmap - o->tmap;
     if (diff != 0) {
-        int e1;
+        short e1;
 
         line = 4;
         if (diff < 0) line = 6;
         e1 = LineEnergy(team, line);
-        if ((short)e1 < 0xF33) {
-            int e2;
-
-            e2 = LineEnergy(team, line + 1);
-            if ((short)e1 < (short)e2) line++;
+        if (e1 < 0xF33) {
+            diff = line;                        /* diff reused for the next line */
+            diff++;
+            if (e1 < (short)LineEnergy(team, diff)) line = diff;
         }
         team->tmline = line;
     } else {
-        unsigned char flags;
         signed char *p;
-        int best;
         short saved;
+        short best;
         short b;
         short i;
 
-        flags = ((unsigned char *)team)[0xD4];
-        if (flags & 1) {
+        if (((unsigned char *)team)[0xD4] & 1) {
             line = team->tmline;
-            if ((gmode & gmclock) && line < 4 && (flags & 0x40) == 0) {
+            if ((gmode & gmclock) && line < 4 && (((unsigned char *)team)[0xD4] & 0x40) == 0) {
                 unsigned lim;
 
                 AvgCline(team);
@@ -64,7 +61,7 @@ void CompLine(Team *other, Team *team)
         }
         if (((unsigned char *)team)[0xD5] == 1 && (((unsigned char *)team)[0xD4] & 0x80))
             line += 4;
-        p = (signed char *)off_CBD2E[((signed char *)team)[0xD5]] + line * 4;
+        p = ((signed char **)off_CBD2E)[((signed char *)team)[0xD5]] + line * 4;
         b = -1;
         saved = team->tmline;
         best = LineEnergy(team, saved);
@@ -75,7 +72,7 @@ void CompLine(Team *other, Team *team)
             if (b < 0) break;
             e = LineEnergy(team, b);
             if ((unsigned)e > *(unsigned *)((char *)team + 0xD6)) break;
-            if (e > (short)best) {
+            if (e > best) {
                 best = e;
                 saved = b;
             }
@@ -84,20 +81,15 @@ void CompLine(Team *other, Team *team)
         if (b < 0) line = saved;
         else line = b;
         if (line != team->tmline) {
-            short n;
-
             team->tmline = line;
             if (((unsigned char *)team)[0xD5] == 1 && line == 2)
                 ((unsigned char *)team)[0xD4] ^= 0x80;
             if (line < 4) {
-                n = team->tmlcnt;
-                n++;
-                team->tmlcnt = n;
-                if (n >= 3) team->tmlcnt = n - 3;
+                if (++team->tmlcnt >= 3) team->tmlcnt -= 3;
             }
         }
     }
-    DrawPanelLine(team == &awtmstruct, line);
+    DrawPanelLine((short)(team == &awtmstruct), line);
     ((unsigned char *)team)[0xD4] &= ~0x40;
 }
 

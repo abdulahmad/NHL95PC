@@ -1035,6 +1035,10 @@ inc ecx	; 48F08
 jmp short PickThreeStars.19	; 48F09
 ; StartThreeStars: PC end-of-game set-up for the three-stars ceremony (assthreestars, asstab 15h): PickThreeStars,
 ; clears the clock line-change signal state, stops the clock, empties the penalty boxes and places the players.
+; C: src/c/037_4842A_engine_player_logic/PickThreeStars.c (StartThreeStars)
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/PickThreeStars.StartThreeStars.inc"
+%else
 StartThreeStars:
 push dword 24h	; 48F0B
 call __CHK	; 48F10
@@ -1211,6 +1215,7 @@ jmp near PreGameIntro_popx	; 49251
 .4:
 call sub_8F633	; 49256
 jmp near PreGameIntro_popx	; 4925B
+%endif ; C
 ; C: src/c/037_4842A_engine_player_logic/MoveInDir.c
 %ifdef CBUILD
 %include "c/037_4842A_engine_player_logic/MoveInDir.inc"
@@ -4081,6 +4086,10 @@ pop ecx	; 4B5BF
 pop ebx	; 4B5C0
 ret	; 4B5C1
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/assgoalietopuck.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assgoalietopuck.inc"
+%else
 assgoalietopuck:
 push dword 14h	; 4B5C2
 call __CHK	; 4B5C7
@@ -4200,6 +4209,7 @@ pop edx	; 4B6F0
 pop ecx	; 4B6F1
 pop ebx	; 4B6F2
 ret	; 4B6F3
+%endif ; C
 ; C: src/c/037_4842A_engine_player_logic/ClampYPosition.c
 %ifdef CBUILD
 %include "c/037_4842A_engine_player_logic/ClampYPosition.inc"
@@ -8515,6 +8525,10 @@ xor edx, edx	; 4EAF6
 mov eax, ebx	; 4EAF8
 call SkateToSpot	; 4EAFA
 jmp near ass_popx	; 4EAFF
+; C: src/c/037_4842A_engine_player_logic/assgoalie.c (assrefsignal)
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assgoalie.assrefsignal.inc"
+%else
 assrefsignal:
 push dword 2Ch	; 4EB04
 call __CHK	; 4EB09
@@ -8701,6 +8715,7 @@ call SkateToSpot	; 4ED70
 .17:
 mov esp, ebp	; 4ED75
 jmp near assgoalie_popebp	; 4ED77
+%endif ; C
 assrefgoalpa:
 push dword 28h	; 4ED7C
 call __CHK	; 4ED81

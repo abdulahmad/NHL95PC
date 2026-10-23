@@ -8,23 +8,25 @@ void DrawSpriteNumber(short x, short y, short n, short suffix)
 {
     short sy;
     short sfx;
-    int yy;
+    short tens;
+    short ones;
 
     sfx = suffix;
+    ones = n;
     x += 0xC0;
     sy = 0x140 - y + 0xD;
     if (suffix > 0) x -= 4;
     if (sfx >= 0) sy += 2;
     if (n >= 10) {
+        tens = n / 10;
         x -= 3;
-        DrawSprite(numshapes[(short)(n / 10)], x, sy, 0, 0, 0);
-        n = n % 10;
+        DrawSprite(numshapes[tens], x, sy, 0, 0, 0);
+        ones = n % 10;
         x += 7;
     }
-    yy = sy;
-    DrawSprite(numshapes[n], x, yy, 0, 0, 0);
+    DrawSprite(numshapes[ones], x, sy, 0, 0, 0);
     if (sfx > 0) {
         x += 8;
-        DrawSprite(dword_D8C4C[sfx], x, yy, 0, 0, 0);
+        DrawSprite(dword_D8C4C[sfx], x, sy, 0, 0, 0);
     }
 }

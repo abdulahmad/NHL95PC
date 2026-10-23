@@ -5,8 +5,7 @@
  <length clip>, <pen>" (team clip <team>Tea, number clip <num>Num, length from PenaltyLenClip, penalty clip
  <pen>Pen; idx 1 gives the team clip and penalty penalties (idx < cnt) wording, else "and number"), with the
  time clips (RequestTimeClips QueueTimeClips a, b) when withtime; starts the queue and returns 1, else 0.
- DRAFT: same size, a and b swapped (C: a in ebp, b in edi; EXE a in edi, b in ebp). `1 < cnt` (Watcom compares
- the register holding idx == 1) leaves idx in memory as in the EXE. */
+ The completed withtime flag is reused for the success result (the documented dead-parameter reuse pattern). */
 int SayPenalty(char *team, int num, int len, char *pen, int a, int b, int idx, int cnt, int withtime)
 {
     char n[16];
@@ -50,5 +49,6 @@ int SayPenalty(char *team, int num, int len, char *pen, int a, int b, int idx, i
     QueueSpeechClip((char *)str_PauseCor);
     if (withtime) QueueTimeClips(a, b);
     ((int *)speechq)[0x60 / 4] = 1;
-    return 1;
+    withtime = 1;
+    return withtime;
 }

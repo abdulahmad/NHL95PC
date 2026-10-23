@@ -23,8 +23,9 @@ typedef struct GSumEvent {
 int PostPenaltyEvent(int team, int player, int pen, int len, int min, int sec, int who)
 {
     int side;
-    int idx;
     int cnt;
+    int idx;
+    int last;
 
     if ((gmode & 0x10) == 0) {
         byte_E9AC8 = 2;
@@ -59,19 +60,21 @@ int PostPenaltyEvent(int team, int player, int pen, int len, int min, int sec, i
             PaPenaltyShot((char *)teamabbrevs[side],
                           hmrosterjersey[penshotteam * 0x444 + penshotpnum * 39], min, sec);
         } else {
+            last = who == 0;
             if ((*(int *)((char *)&word_E9AAE - 2) >> 16) == team)
                 idx = 2;
             else {
                 idx = 1;
                 word_E9AAE = team;
             }
-            cnt = idx;
-            if (who && ((((byte_E9A15[who * 2] & 0x1F) < 6) ^ team) != 0))
+            if (who && (((((signed char *)byte_E9A15)[who * 2] & 0x1F) < 6) ^ team) != 0)
                 cnt = idx + 1;
+            else
+                cnt = idx;
             PaPenalty((char *)teamabbrevs[side],
                       hmrosterjersey[team * 0x444 + player * 39], len, (char *)off_CD354[pen],
-                      min, sec, idx, cnt, who == 0);
-            if (who == 0) word_E9AAE = -1;
+                      min, sec, idx, cnt, last);
+            if (last) word_E9AAE = -1;
         }
         joysampling = *(int *)((char *)&joysampling_save - 2) >> 16;
     }

@@ -1,7 +1,4 @@
 /* Joystick calibration file: free-agent list. */
-/* DRAFT: same 249 bytes. The key offset s*34h is computed in ebp; the original uses edi, so the two
- falist reloads that also need cl use edi instead of ebp. Declaring the offset first, casting it to a
- pointer, and a falist pointer local did not swap them. Do not retry those. */
 #include "nhl95.h"
 
 /* BuildFreeAgentList: falist entries (27 bytes: position, jersey, index, "F. Lastname") for keydb records
@@ -18,7 +15,7 @@ void BuildFreeAgentList(void)
     n = (unsigned)keydb_size / 0x34;
     i = 0;
     for (s = 0; s < (int)n && i < facount; s++) {
-        rec = s * 0x34;
+        rec = (s * 12 + s) * 4;
         p = keydb + rec;
         if (p[0] != 0xFF) continue;
         off = i * 27;

@@ -1,6 +1,8 @@
 /* Misc dialogs: list box items (one source block: DrawListItems ends in DrawListItem's exit). */
-/* DRAFT: y w land in ebp edi (EXE edi ebp); DrawListItems short-jumps into this exit, so mark both as one block.
-   Under 10.0 GA `(idx - top) * (byte_D42C3 + 2)` gives the EXE's product registers (19 differing). */
+/* DRAFT: 11 differing under 10.0 GA. Loading the font height before the row calculation and
+   reusing c for the centred text width fixes the row's instruction order and the flag lookup.
+   y / w still use ebp / edi (EXE edi / ebp), and case 1 updates w in place instead of
+   forming eax and sharing case 2's add. DrawListItems needs this tail to match first. */
 #include "nhl95.h"
 
 /* DrawListItem: draw list item idx (text) of a list box at x y, w wide, scrolled to top: its row
@@ -10,8 +12,10 @@
 void DrawListItem(char *text, int x, int y, int w, int top, int idx, int sel, unsigned align, int marks, char *flags)
 {
     int c;
+    int fontheight;
 
-    y += (idx - top) * (byte_D42C3 + 2) + 2;
+    fontheight = byte_D42C3;
+    y += (idx - top) * (fontheight + 2) + 2;
     x += 2;
     w -= 4;
     if (marks && flags[idx]) c = boxfillcolor;
@@ -25,7 +29,8 @@ void DrawListItem(char *text, int x, int y, int w, int top, int idx, int sel, un
         x += w - 4;
         break;
     case 2:
-        x += (w - fputchar(text)) / 2;
+        c = w - fputchar(text);
+        x += c / 2;
         break;
     }
     PrintMenuText(x, y + 1, text);

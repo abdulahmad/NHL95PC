@@ -33,6 +33,10 @@ extern fofdata2, OOlistpos, word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, CwdE
 extern word_E9AAA, periodendtime, word_E9AAE, word_E9AB0, ovlsteptimer, ovlstepidx, PerTimeTotal, lj2
 extern lj1, lasttouch, lty, word_E9B2C
 global SaveGameState, SaveGameState_popx, LoadGameState
+; C: src/c/044_5FB03_game_state_saveload/SaveGameState.c
+%ifdef CBUILD
+%include "c/044_5FB03_game_state_saveload/SaveGameState.inc"
+%else
 SaveGameState:
 push dword 0B0h	; 5FB03
 call __CHK	; 5FB08
@@ -787,6 +791,7 @@ pop edx	; 6060E
 pop ecx	; 6060F
 pop ebx	; 60610
 ret	; 60611
+%endif ; C
 LoadGameState:
 push dword 134h	; 60612
 call __CHK	; 60617

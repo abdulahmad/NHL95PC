@@ -1421,6 +1421,10 @@ pop edi	; 624B4
 pop esi	; 624B5
 ret 0Ch	; 624B6
 %endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/PostPenaltyEvent.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/PostPenaltyEvent.inc"
+%else
 PostPenaltyEvent:
 push dword 2Ch	; 624B9
 call __CHK	; 624BE
@@ -1627,6 +1631,7 @@ pop ebp	; 6275E
 pop edi	; 6275F
 pop esi	; 62760
 ret 0Ch	; 62761
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/PostInjuryEvent.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/PostInjuryEvent.inc"
@@ -3297,6 +3302,10 @@ call ProcessPenaltyList	; 63BF1
 pop edx	; 63BF6
 ret	; 63BF7
 %endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/InProgress.c (PenaltyManager)
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/InProgress.PenaltyManager.inc"
+%else
 PenaltyManager:
 push dword 4	; 63BF8
 call __CHK	; 63BFD
@@ -3332,6 +3341,7 @@ pop esi	; 63C6F
 pop edx	; 63C70
 pop ebx	; 63C71
 ret	; 63C72
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/UpdatePowerPlayFlags.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/UpdatePowerPlayFlags.inc"

@@ -30,9 +30,10 @@ int UpdatePlayoffSeries(int sched, int teams, int game);
 int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, int team, int flags);
 int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *gdir);
 
-/* DRAFT (first pass from Ghidra): 4,095 of 4,095 bytes, 28 instructions differ: both FileOpenRW calls on the
-   first schedule copy the result into edx too (mov edx, eax); the opponent pick keeps dword_DDD34 in eax where
-   the EXE compares with lgplayteam in edx (xor eax, edx) and reloads it; a few pushed registers differ. The frame
+/* DRAFT (10.0 GA, 4,096 vs 4,095 bytes): the opponent pick is an if / else (the EXE's lgplayteam in edx,
+   `xor eax, edx` and the dword_DDD34 reload after the join). Left: s.bank = sub_8E83C(...) is stored after the
+   `add esp, 8` (the EXE stores it first, at [esp+70h]), and a few short-lived loads take other registers
+   (dword_DDD34 for the second sprintf in ecx, EXE eax: the extra byte; lgplayteam, songdata). The frame
    struct follows the EXE's esp offsets (0 to 90h). */
 /* PlayLeagueGame (36B93, PC only): play one league game and post its result. fh points to the handle of a
    saved game (GAME.SAV; -1 for a new game); a saved game's reference is loaded first. Read the league (a
@@ -185,7 +186,8 @@ void PlayLeagueGame(int *fh)
                 if (!err) err = FileReadAt(s.fhsched1, &word_DDD48, 0, 2);
                 if (!err) err = ReadSchedGame(s.fhsched1, &byte_DDD40, lggameidx);
                 if (!err) {
-                    dword_DDD34 = byte_DDD42 == lgplayteam ? byte_DDD43 : byte_DDD42;
+                    if (byte_DDD42 == lgplayteam) dword_DDD34 = byte_DDD43;
+                    else dword_DDD34 = byte_DDD42;
                     dword_DDD3C = -1;
                     if (lgteam_17[dword_DDD34 * 30] == 0) dword_DDD3C = 0;
                 }
