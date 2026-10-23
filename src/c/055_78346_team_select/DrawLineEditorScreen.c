@@ -6,7 +6,6 @@
 
 void DrawDlgFrame(int x1, int y1, int x2, int y2, int bevel);
 
-/* DRAFT: 1367 vs 1413 (the original ends in the StubRet4a pops), 332 of 356 instructions; see docs/UNSURE.md. */
 /* DrawLineEditorScreen (78500, PC only): draw the line editor for team (0 home, else away): its colour remap
    (identity, entries 80h-FFh from HOMEPALS.BIN's set for the team) and the BKGD art from the team's bank, the menu
    bar (buttons, n entries, colours C0h-C2h), the panel frame with the team crest (LELOGO bank, crestnames), and
@@ -26,6 +25,7 @@ void DrawLineEditorScreen(int team, int shape, int zero, int buttons, int n)
     int pals;
     int i;
     unsigned char *src;
+    int art;
 
     s.col1 = 0xC0;
     s.col2 = 0xC1;
@@ -47,7 +47,8 @@ void DrawLineEditorScreen(int team, int shape, int zero, int buttons, int n)
     DrawDlgFrame(0x1F4, 0x13, 0x27F, 0x1DF, 1);
     MakePath(s.path, fileoncd[0x21B] == 1 ? (char *)cddriveptr : 0, (char *)str_Lelogo2, 0);
     bank = sub_8E83C(s.path, 0);
-    sub_91370(sub_B30B4(bank, (char *)crestnames[team ? VisTeam : HomeTeam]), 0x218, 0x191);
+    art = sub_B30B4(bank, (char *)crestnames[team ? VisTeam : HomeTeam]);
+    sub_91370(art, 0x218, 0x191);
     FreeMemBlock(bank);
     DrawDlgFrame(5, 0x2C, 0x45, 0x54, 1);
     sub_91964((char *)str_Forward, 0xC, 0x33);

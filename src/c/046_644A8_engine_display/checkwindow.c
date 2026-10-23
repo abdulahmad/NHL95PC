@@ -1,6 +1,7 @@
 /* Engine display: the camera window and the overlay text that ends in its pops. */
 #define LoadTeamPPV LoadTeamPPV_decl
 #define UpdateTextOverlay UpdateTextOverlay_decl
+#define DrawCallBanner DrawCallBanner_decl
 #define sub_90354 sub_90354_decl
 #define sub_90EC0 sub_90EC0_decl
 #define sub_B500C sub_B500C_decl
@@ -8,6 +9,7 @@
 #include "nhl95.h"
 #undef LoadTeamPPV
 #undef UpdateTextOverlay
+#undef DrawCallBanner
 #undef sub_90354
 #undef sub_90EC0
 #undef sub_B500C
@@ -20,8 +22,11 @@ void sub_6AB7C(int n, int x0, int y0, int x1, int y1);      /* mark a dirty rect
 
 #define ABSW(v) ((v) < 0 ? -(v) : (v))
 
-/* DRAFT: 1950 vs 1942, a first pass kept for its pop / ret tail (checkwindow_popebp / checkwindow_popx, which
-   LoadTeamPPV, UpdateTextOverlay, DrawCallBanner and DrawTextOverlay use); see docs/UNSURE.md. */
+/* checkwindow owns the pop / ret tail (checkwindow_popebp / checkwindow_popx, which LoadTeamPPV,
+   UpdateTextOverlay, DrawCallBanner and DrawTextOverlay use). The chained stores follow the EXE's store order
+   (regd3 / regd2 after xc1 / yc1 in the highlight branch and at the faceoff dot, before them elsewhere); the
+   catch-up is an if / else of two stores (the EXE then compares regd1 in memory), and the y shift is
+   `fast ? 3 : 4` (an int count). */
 /* checkwindow (65D01, 93G checkwindow): move the camera (camx / camy) toward the point it follows (xc1 / yc1,
    kept in regd3 / regd2). In highlight mode (gmode bit 7) that is a fixed point (-100, 15) with a slow pan. While
    the clock runs: during a penalty count-down or a referee step, follow the referee (object 10h) toward its
@@ -46,8 +51,8 @@ void checkwindow(void)
     regd2.w = yc1;
     regd3.w = xc1;
     if (gmode & 0x80) {
-        xc1 = regd3.w = -100;
-        yc1 = regd2.w = 0xF;
+        regd3.w = xc1 = -100;
+        regd2.w = yc1 = 0xF;
         ym = 5;
         regd0.w = 0xF - camy;
         if (regd0.w < -5) regd1.w = 0x14;
@@ -96,9 +101,9 @@ void checkwindow(void)
             dy = HIWORD(p->Ypos) - foy;
             if (p->asslist[p->assnum] == 0x22 || p->asslist[p->assnum] == 0x2C) {
                 if (dx * dx + dy * dy < 0x640) {
-                    yc1 = regd2.w = foy;
-                    xc1 = regd3.w = fox;
-                    ym = xm = 0;
+                    regd2.w = yc1 = foy;
+                    regd3.w = xc1 = fox;
+                    xm = ym = 0;
                 }
             }
         } else if (!(sflags & 0x40)) {
@@ -119,7 +124,7 @@ void checkwindow(void)
             } else {
                 p = (Player *)puckstruct;
             }
-            yc1 = regd2.w = (p->Yvel >> 8) + HIWORD(p->Ypos) + yleader;
+            yc1 = regd2.w = HIWORD(p->Ypos) + (p->Yvel >> 8) + yleader;
             xc1 = regd3.w = HIWORD(p->Xpos);
         }
     }
@@ -128,14 +133,15 @@ void checkwindow(void)
         regd1.w = regd2.w + ym;
         if (regd1.w < -0xBC) regd1.w = -0xBC;
     } else if (ym < regd0.w) {
-        regd1.w = fast ? regd2.w : regd2.w - ym;
+        if (fast) regd1.w = regd2.w;
+        else regd1.w = regd2.w - ym;
         if (regd1.w > 0xEC) regd1.w = 0xEC;
     }
     if (ABSW(regd0.w) > ym) {
         regd1.w -= camy;
         if ((gmode & 1) && ABSW(regd1.w) > 0x20) regd1.w = regd1.w < 0 ? -0x20 : 0x20;
         if (regd1.w) {
-            regd1.w >>= (fast == 0) + 3;
+            regd1.w >>= fast ? 3 : 4;
             if (!regd1.w) regd1.w = 1;
             camy += regd1.w;
         }
@@ -195,17 +201,16 @@ void LoadTeamPPV(short seq)
 void DrawTextOverlay(void)
 {
     short w;
-    short x1s;
-    short x2;
     short y0s;
+    short x2;
+    short x0s;
     short y;
     short y1s;
-    int h;
-    short x0s;
+    short h;
+    short x1s;
     short y2;
     short x;
     short d;
-    int k;
 
     if (ovltimer < 0x10) d = ovltimer - 0x10;
     else if (ovltimer <= 0x100) d = 0;
@@ -213,6 +218,8 @@ void DrawTextOverlay(void)
     bannermsg = -1;
     bannertimer = 0;
     if (d < 0) {
+        int k;
+
         k = d + 0x10;
         w = k * 0x42 / 16;
         h = k * 0x2A / 16;
@@ -224,7 +231,7 @@ void DrawTextOverlay(void)
         if (gsp == 4) x += 0xAC;
         x2 = w + (w + x);
         y = scrolly + 0x32 - h;
-        y2 = h + (y + h);
+        y2 = (y + h) + h;
         x += (short)((short)cliprect_x0 - scrollx);
         x2 += (short)((short)cliprect_x0 - scrollx);
         y += (short)((short)cliprect_y0 - scrolly);
@@ -293,8 +300,8 @@ void DrawTextOverlay(void)
             h = 0x12;
             y += 0xF;
         }
-        sub_8EA18(scor3font);
         x += 0x3E;
+        sub_8EA18(scor3font);
         sub_8E9C0(0x25, 0xFF);
         d = y;
         if (textline3) sub_91964((char *)&textline3, x - fputchar((char *)&textline3) / 2, y);
@@ -378,4 +385,49 @@ void UpdateTextOverlay(void)
         ovltimer = -1;
         textline3 = textline1 = textline2 = textline4 = textline5 = 0;
     }
+}
+
+/* DrawCallBanner (66FE2, PC only; ends in checkwindow_popebp): draw call banner n (bannerstrs[n], in the SCOR3
+   font) near the bottom left of the view (scrollx + 0Ch, scrolly + 95h, moved into the clip window): a dark box
+   (colour 10h, dithered with 9) as wide as the text plus 4 and 9 high with a black border of 4, the text in
+   colour 25h, then again in the SCOR2 font in colour 27h, and record the box as a drawn sprite (sub_6AB7C,
+   spritedrawcount). n: the banner. No result. */
+void DrawCallBanner(short n)
+{
+    short y2;
+    short x2;
+    short y;
+    short d;
+    short x;
+    short w;
+
+    x = scrollx + 0xC;
+    y = scrolly + 0x95;
+    y2 = scrolly + 0x9E;
+    sub_8EA18(scor3font);
+    w = fputchar((char *)bannerstrs[n]) + 4;
+    x2 = w + x;
+    d = cliprect_x0 - scrollx;
+    x += d;
+    x2 += d;
+    d = cliprect_y0 - scrolly;
+    y += d;
+    y2 += d;
+    w += 8;
+    sub_90D20(x, y, x2 - x, y2 - y, 0x10);
+    DitherRect(x, y, x2 - x, y2 - y, 9);
+    sub_90D20(x - 4, y - 4, w, 4, 0);
+    sub_90D20(x - 4, y, 4, 9, 0);
+    sub_90D20(x2, y, 4, 9, 0);
+    sub_90D20(x - 4, y2, w, 4, 0);
+    sub_8E9C0(0x25, 0xFF);
+    x2 = x + 2;                     /* x2 is free now: the text x of both passes */
+    y2 = y + 1;
+    sub_91964((char *)bannerstrs[n], x2, y2);
+    sub_8EA18(scor2font);
+    sub_8E9C0(0x27, 0xFF);
+    sub_91964((char *)bannerstrs[n], x2, y2);
+    x -= 4;
+    y -= 4;
+    sub_6AB7C(spritedrawcount++, x, y, x + w, y + 0x11);
 }

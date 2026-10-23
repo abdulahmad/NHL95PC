@@ -95,16 +95,12 @@ typedef struct FindT {
  into the three file tables. Each name is copied up to its dot, at most 8 characters, into savefname.
  The tables are sorted, the cursor and top are cleared, and the shown count is count - 1, or 5 when
  there are 6 or more. The league search uses attribute 0. Ends in LoadFileDlgShapes_x (a near jump),
- so it lives in this file.
- DRAFT: 568 vs 568 (10.0 GA). The zero byte stored after each name is ah / dl / dh where the original
- has bl / ch / bl, and the PO loop's character is dl (original bh). */
+ so it lives in this file. */
 void ScanSavedGames(void)
 {
     FindT ft;
     int n;
     int j;
-    unsigned char c;
-    unsigned char b;
 
     n = 0;
     exhfiles[0] = n;
@@ -113,9 +109,8 @@ void ScanSavedGames(void)
             exhfilenames[exhfiles[0]] = (int)(savefname + n);
             j = 0;
             do {
-                c = ft.name[j];
-                if (c == 0 || c == '.') break;
-                savefname[n] = c;
+                if (ft.name[j] == 0 || ft.name[j] == '.') break;
+                savefname[n] = ft.name[j];
                 j++;
                 n++;
             } while (j < 8);
@@ -135,9 +130,8 @@ void ScanSavedGames(void)
             pofilenames[pofiles[0]] = (int)(savefname + n);
             j = 0;
             do {
-                b = ft.name[j];
-                if (b == 0 || b == '.') break;
-                savefname[n] = b;
+                if (ft.name[j] == 0 || ft.name[j] == '.') break;
+                savefname[n] = ft.name[j];
                 j++;
                 n++;
             } while (j < 8);
@@ -157,9 +151,8 @@ void ScanSavedGames(void)
             lgfilenames[lgfiles[0]] = (int)(savefname + n);
             j = 0;
             do {
-                c = ft.name[j];
-                if (c == 0 || c == '.') break;
-                savefname[n] = c;
+                if (ft.name[j] == 0 || ft.name[j] == '.') break;
+                savefname[n] = ft.name[j];
                 j++;
                 n++;
             } while (j < 8);
@@ -358,14 +351,15 @@ done:
 
 typedef struct { char c[17]; } Hdr17;
 
-/* DRAFT (RunFileDlg): same size; the scroll step and later registers differ (see docs/UNSURE.md). */
 /* RunFileDlg (2C801, PC only; ends in DrawFileDlg_x): run the saved-games dialog with the mouse pointer (a
    POINTER block holds the screen under it) on the list of the shown tab (off_C6F7C[fdlgtab]). Button 1 held on the
    scroll bar (box 8, when fdlgmask enables it) drags the shown rows with the pointer (the first event only starts
    the drag); a move too small to scroll a row is kept (from dragy) until it adds up. A click (event bit 2) on an
    enabled box: the arrows scroll one row, the bar brings the clicked position into view, the three tabs switch the
    list, Delete deletes the selected saved game (DeleteSavedGame) and puts the mouse back, a row selects it
-   (FileDlgHitTest); Open frees the block and returns SelectSavedFile's result; Cancel or event bit 4 return 0. */
+   (FileDlgHitTest); Open frees the block and returns SelectSavedFile's result; Cancel or event bit 4 return 0.
+   The drag compares from the reference y in its own local (oy, or dragy while slow) and keeps each scroll step
+   in pos, dead by then; the bar click draws the list in each arm. */
 int RunFileDlg(void)
 {
     int dragy;
@@ -381,7 +375,7 @@ int RunFileDlg(void)
     int slow;
     int pos;
     int last;
-    int d;
+    int from;
     FileList *l;
     unsigned char *ev;
 
@@ -427,32 +421,34 @@ int RunFileDlg(void)
                         pos = l->count * (oy - 0x13 - ((FRect *)fdlgrects)[8].y1) / 0x50;
                         last = l->bottom;
                         if (oy != y && pos >= l->top && pos <= last) {
-                            if ((slow ? dragy : oy) < y) {
-                                d = (y - (slow ? dragy : oy)) * l->count / 0x50;
-                                if (d == 0) {
+                            from = oy;
+                            if (slow) from = dragy;
+                            if (from < y) {
+                                pos = (y - (slow ? dragy : oy)) * l->count / 0x50;
+                                if (pos == 0) {
                                     if (!slow) dragy = oy;
                                     slow = 1;
                                 } else {
                                     slow = 0;
                                 }
-                                if (l->bottom + d < l->count) {
-                                    l->top += d;
-                                    l->bottom += d;
+                                if (l->bottom + pos < l->count) {
+                                    l->top += pos;
+                                    l->bottom += pos;
                                 } else {
                                     l->bottom = l->count - 1;
                                     l->top = l->count - 6;
                                 }
                             } else if ((slow ? dragy : oy) > y) {
-                                d = ((slow ? dragy : oy) - y) * l->count / 0x50;
-                                if (d == 0) {
+                                pos = ((slow ? dragy : oy) - y) * l->count / 0x50;
+                                if (pos == 0) {
                                     if (!slow) dragy = oy;
                                     slow = 1;
                                 } else {
                                     slow = 0;
                                 }
-                                if (l->top - d >= 0) {
-                                    l->top -= d;
-                                    l->bottom -= d;
+                                if (l->top - pos >= 0) {
+                                    l->top -= pos;
+                                    l->bottom -= pos;
                                 } else {
                                     l->top = 0;
                                     l->bottom = 5;
@@ -503,6 +499,7 @@ int RunFileDlg(void)
                                 l->top = pos - 3;
                                 l->bottom = pos + 2;
                             }
+                            DrawFileDlgList(l);
                         } else {
                             if (pos <= l->bottom) break;
                             if (pos + 3 > l->count) {
@@ -512,8 +509,8 @@ int RunFileDlg(void)
                                 l->top = pos - 3;
                                 l->bottom = pos + 2;
                             }
+                            DrawFileDlgList(l);
                         }
-                        DrawFileDlgList(l);
                         break;
                     case 0x20:
                         fdlgtab = 0;
@@ -538,7 +535,8 @@ int RunFileDlg(void)
                         sub_91370(fdlg_del, 0x20, 0xBF);
                         DeleteSavedGame((FileList *)off_C6F7C[fdlgtab]);
                         MouseSetPos(x, y);
-                        l = fdlgtab < 0 ? 0 : (FileList *)off_C6F7C[fdlgtab];
+                        if (fdlgtab < 0) l = 0;
+                        else l = (FileList *)off_C6F7C[fdlgtab];
                         DrawFileDlgList(l);
                         sub_91370(fdlg_none, 0x20, 0xBF);
                         break;

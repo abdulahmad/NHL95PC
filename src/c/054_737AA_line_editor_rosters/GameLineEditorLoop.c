@@ -40,12 +40,9 @@ int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin,
 int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero, MenuItem *buttons, int n,
                        int bank);
 
-/* DRAFT (first pass from Ghidra): 5,243 of 5,242 bytes, 384 differing lines (permute.py count; 49 with the
-   frame offsets masked). The code follows the EXE block for block; the frame is 4 bytes short (the EXE spills
-   item * 20h for the on1 test to ebp+4Ah, C keeps it in ecx), so the arrays sit 4 bytes higher, path and nitems
-   swap places and the lower scalars take other slots. Left: register picks in the menu branches, and the goalie
-   and extra attacker stores (the EXE computes hit - 24h / 26h into esi; `k = hit - 0x24; gl[k]` matches them but
-   moves registers elsewhere: 412). */
+/* DRAFT under 10.0 GA: 5,242 bytes as the EXE, 110 differing instructions. An explicit menu-item
+   offset gives the EXE's frame size; declaration order improves array placement. Several scalar and nitems
+   slots and later register choices still differ. */
 /* GameLineEditorLoop (76AF5, PC only): the in-game line editor (GameLineEditor's loop; DbLineEditorLoop on the
    game roster). Copy the jersey numbers of the 28h line slots of lines (100 for an empty slot) and, before the
    game (curperiod < 0), put the dressed players of the 8 extra slots back to scratched (status 3 -> 2). The menu
@@ -67,26 +64,26 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
                        int bank)
 {
     LineSet nums;
-    int pos[4][2];
     char buf[0x20];
+    int pos[4][2];
     char path[0x10];
-    int bg[4];
-    int nitems[4];
-    int sel[4];
     MenuItem *menus[4];
+    int bg[4];
+    int sel[4];
+    int nitems[4];
     int hit;
-    int pick;
-    int item;
     int level;
+    int item;
+    int pick;
     int my;
-    int mx;
+    int h;
     int i;
     int blk;
-    int h;
+    int mx;
     int w;
     unsigned char *pal;
-    int col1;
     int col3;
+    int col1;
     int col2;
     int ptr;
     int depth;
@@ -99,6 +96,7 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
     int k;
     unsigned char *e;
     MenuItem *m;
+    int itemoffset;
 
     depth = 0;
     hit = pick = -1;
@@ -195,8 +193,9 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
             continue;
         }
         if (MenuHitTest(mx, my, menus, depth, nitems, &pos[0][0], &level, &item)) {
-            m = &menus[level][item];
-            if (m->on1) {
+            itemoffset = item * sizeof(MenuItem);
+            m = (MenuItem *)((char *)menus[level] + itemoffset);
+            if ((*(int *)((char *)menus[level] + itemoffset + 0x14))) {
                 if (item == sel[level]) {
                     /* the second click on the selected item: close the dropdowns and run the action */
                     sub_903F0(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
@@ -229,7 +228,7 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
                     DrawMenuItemNorm((struct MenuItem *)&menus[level][item], pos[level][0], pos[level][1], col1,
                         col2, col3);
                 }
-            } else if (m->on2) {
+            } else if ((*(int *)((char *)menus[level] + itemoffset + 0x18))) {
                 /* an item with a submenu: close the deeper dropdowns, select it and open its dropdown */
                 sub_903F0(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
                 if (depth != level) {
@@ -350,7 +349,8 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
                         if (gmroster[pick * 22] == 'G') {
                             for (k = 0; k < 2; k++)
                                 if (nums.g.gl[k] == gmrosterjersey[pick * 22]) nums.g.gl[k] = 100;
-                            nums.g.gl[hit - 0x24] = gmrosterjersey[pick * 22];
+                            k = hit - 0x24;
+                            nums.g.gl[k] = gmrosterjersey[pick * 22];
                             for (k = 0; k < 2; k++) {
                                 MakeJerseyShape(jerseyremap, nums.g.gl[k], c1, c2);
                                 sub_B4DD4(jerseyremap);
@@ -361,7 +361,8 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
                         if (gmroster[pick * 22] != 'G') {
                             for (k = 0; k < 2; k++)
                                 if (nums.g.ex[k] == gmrosterjersey[pick * 22]) nums.g.ex[k] = 100;
-                            nums.g.ex[hit - 0x26] = gmrosterjersey[pick * 22];
+                            k = hit - 0x26;
+                            nums.g.ex[k] = gmrosterjersey[pick * 22];
                             for (k = 0; k < 2; k++) {
                                 MakeJerseyShape(jerseyremap, nums.g.ex[k], c1, c2);
                                 sub_B4DD4(jerseyremap);

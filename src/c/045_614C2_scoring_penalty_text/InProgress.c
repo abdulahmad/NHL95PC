@@ -1,14 +1,25 @@
 /* Scoring / penalty text: calling the penalties at a stoppage. */
+#define word_CBC44 word_CBC44_decl
 #include "nhl95.h"
+#undef word_CBC44
+/* InProgress compares word_CBC44 in memory on every pass of its goto loop; as a plain short Watcom loads it
+   into cx once before the loop. Declared volatile in this module, it is read in place. */
+extern volatile short word_CBC44;
 
 void PostPenaltyEvent(int away, int pl, int type, int tag, int min, int sec, int n);
 
+/* DRAFT: same size under 10.0 GA, 88 differing. Everything up to +102 matches (the mins sign tests nested as
+   `if (mins <= 0) { if (mins < 0) ... else ... }` give the EXE's jg / jge layout; the puck assignment through
+   the int d gives `add eax, puckstruct`). Left: from the PenBuf_pl test on, the register picks (the i * 2
+   index in edx, EXE eax; the PenBuf_pl byte in bl, EXE dh) and pl reloaded from [ebp-14h] for pl->pnum (EXE
+   keeps it in edx); see docs/UNSURE.md. */
 /* InProgress (62EE9, PC only; owner of InProgress_popebp / InProgress_popx): call the next queued penalty when
    play is stopped (RefStep set, no play-by-play talking). With no penalty left (PenBuf empty) and no overlay
    running, update both teams' strength (tmap 6, less one per player in the box down to 4, the box flag bit 13
    cleared) and send the puck to its stoppage assignment (1Bh). Else take the last queued penalty: one already
    called waits for its player to reach the box; a penalty shot (1Ah) starts it; a non-penalty (no minutes)
-   only sets the referee's signal; a minus-minute entry (a coincidental minor) and a real penalty put the player
+   only sets the referee's signal (with sflags bit 7 or word_CBC44 set, one other than 7 goes straight on to the
+   next queued penalty); a minus-minute entry (a coincidental minor) and a real penalty put the player
    in the box (tmpdst minutes * 60, bits 13 / 14), count it in the team and player stats, add it to the panel
    and the play-by-play (PostPenaltyEvent, the time left in the period), and send him off (assignment 0Ch); a
    player already in the box has one of his teammates on the ice serve it ("served by"). Then the referee's
@@ -22,15 +33,14 @@ void InProgress(void)
     short pnum;
     short i;
     short t;
+    int d;
     short n;
-    short side;
-    signed char a;
 
     if (!RefStep[0] || PaSpeechBusy()) return;
 again:
     if (!PenBuf[0]) {
         if (ovlseq != 0 && ovlseq != 2 && ovltimer >= 0) return;
-        for (side = 0, tm = &hmtmstruct; side < 2; side++, tm = &awtmstruct) {
+        for (i = 0, tm = &hmtmstruct; i < 2; i++, tm = &awtmstruct) {
             n = 6;
             for (t = 0x1B; t >= 0; t--) {
                 if (tm->tmpdst[t] > 0) {
@@ -41,8 +51,9 @@ again:
             tm->tmap = n;
         }
         gmode &= 0xFB;
-        a = ((Player *)puckstruct)->asslist[((Player *)puckstruct)->assnum];
-        if (a == 0x1B || a == 0x1C) return;
+        d = (int)puckstruct + ((Player *)puckstruct)->assnum;
+        i = ((signed char *)d)[0x1E];
+        if (i == 0x1B || i == 0x1C) return;
         assreplace((Player *)puckstruct, 0x1B);
         return;
     }
@@ -51,7 +62,7 @@ again:
     if (!(PenBuf_pl[i * 2] & 0x80)) {
         pl = &SortCords[PenBuf_pl[i * 2]];
         if (pl->position >= 0) return;
-        PenBuf_pl[i * 2] = PenBuf[i * 2] = 0;
+        PenBuf[i * 2] = PenBuf_pl[i * 2] = 0;
         return;
     }
     PenBuf_pl[i * 2] &= 0x7F;
@@ -61,29 +72,29 @@ again:
         t = PerTimeTotal - gameclock;
         if (gameclock < 0x3C && clockticks[0]) t--;
         pl = &SortCords[PenBuf_pl[i * 2]];
-        PenBuf_pl[i * 2] = PenBuf[i * 2] = 0;
+        PenBuf[i * 2] = PenBuf_pl[i * 2] = 0;
         PostPenaltyEvent((pl->pflags & 0x40) != 0, pl->pnum, pen - 9, 0, t / 60, t % 60, 0);
         goto signal;
     }
     mins = penmintab[pen];
-    if (mins < 0) {
-        pl = &SortCords[PenBuf_pl[i * 2]];
-        tm = pl->tmptr;
-        tm->tmroster[pl->pnum * 0x27] = 8;
-        if (tm->tmpdst[pl->pnum] > -3) assreplace(pl, 0x1D);
-        tm->tmpdst[pl->pnum] = -5;
-        t = PerTimeTotal - gameclock;
-        if (gameclock < 0x3C && clockticks[0]) t--;
-        PostPenaltyEvent((pl->pflags & 0x40) != 0, pl->pnum, pen - 9, mins, t / 60, t % 60, i);
-        word_C90D8 = PenBuf_pl[i * 2];
-        PenBuf_pl[i * 2] = PenBuf[i * 2] = 0;
-        goto signal;
-    }
-    if (mins == 0) {
-        word_C90D8 = PenBuf_pl[i * 2];
-        PenBuf_pl[i * 2] = PenBuf[i * 2] = 0;
-        if ((sflags & 0x80) || word_CBC44) {
-            if (pen == 7) goto again;
+    if (mins <= 0) {
+        if (mins < 0) {
+            pl = &SortCords[PenBuf_pl[i * 2]];
+            tm = pl->tmptr;
+            tm->tmroster[pl->pnum * 0x27] = 8;
+            if (tm->tmpdst[pl->pnum] > -3) assreplace(pl, 0x1D);
+            tm->tmpdst[pl->pnum] = -5;
+            t = PerTimeTotal - gameclock;
+            if (gameclock < 0x3C && clockticks[0]) t--;
+            PostPenaltyEvent((pl->pflags & 0x40) != 0, pl->pnum, pen - 9, mins, t / 60, t % 60, i);
+            word_C90D8 = PenBuf_pl[i * 2];
+            PenBuf[i * 2] = PenBuf_pl[i * 2] = 0;
+        } else {
+            word_C90D8 = PenBuf_pl[i * 2];
+            PenBuf[i * 2] = PenBuf_pl[i * 2] = 0;
+            if ((sflags & 0x80) || word_CBC44) {
+                if (pen != 7) goto again;
+            }
         }
         goto signal;
     }
@@ -218,14 +229,16 @@ void PenaltyManager(void)
    nobody has the puck or he is in his own half. Else his distance to the net he attacks (y E8h, vecdist) must be
    shorter than every opposing skater's (position above 0) who is nearer to that net than he is (4 behind him)
    and not skating away from it, and no such skater may be beyond him. Sets shotontarget. No arguments.
-   Result: 1 when the lane is open, else 0. */
+   Result: 1 when the lane is open, else 0. The EXE keeps a second stack word m that is always 0 and computes
+   `d - m` again on every pass of the opponent loops: m is volatile here (a plain m is folded away). Each
+   opponent's distance goes through ty, dead by then (the dead-local pattern), which keeps `d - m` in the loop. */
 int ShotLaneOpen(void)
 {
     Player *p;
     int y;
     int ty;
     int x;
-    volatile int d;
+    int d;
     volatile int m;
     int i;
 
@@ -247,7 +260,8 @@ int ShotLaneOpen(void)
             px = HIWORD(p->Xpos);
             if (HIWORD(p->Ypos) > y) return 0;
             if (p->Yvel < 0) continue;
-            if (vecdist(HIWORD(p->Ypos) - 0xE8, px) <= d - m) return 0;
+            ty = vecdist(HIWORD(p->Ypos) - 0xE8, px);
+            if (ty <= d - m) return 0;
         }
     } else {
         if (y > 0) return 0;
@@ -260,7 +274,8 @@ int ShotLaneOpen(void)
             px = HIWORD(p->Xpos);
             if (HIWORD(p->Ypos) < y) return 0;
             if (p->Yvel > 0) continue;
-            if (vecdist(HIWORD(p->Ypos) + 0xE8, px) <= d - m) return 0;
+            ty = vecdist(HIWORD(p->Ypos) + 0xE8, px);
+            if (ty <= d - m) return 0;
         }
     }
     shotontarget = 1;
@@ -282,12 +297,12 @@ void PenGoalStuff(short side)
     Team *ot;
     short n;
     short i;
-    short k;
-    short j;
-    signed char m;
+    int m;
+    int other_side;
 
     st = side > 0 ? &awtmstruct : &hmtmstruct;
-    ot = side == 0 ? &awtmstruct : &hmtmstruct;
+    other_side = side == 0;
+    ot = other_side ? &awtmstruct : &hmtmstruct;
     for (n = 0, i = 0; PenBuf[i * 2]; i++) {
         if (gsp != 3 || hmscore[0] == awscore ? 1 : 0) {
             m = penmintab[PenBuf[i * 2]];
@@ -302,21 +317,21 @@ void PenGoalStuff(short side)
             }
         }
         if (PenBuf_pl[i * 2] >= 0 && PenBuf_pl[i * 2] < 0xC) scpflags2[PenBuf_pl[i * 2] * 0x80] &= 0xEF;
-        PenBuf_pl[i * 2] = PenBuf[i * 2] = 0;
+        PenBuf[i * 2] = PenBuf_pl[i * 2] = 0;
     }
     if (!PenBuf[0] && bannermsg == 6) bannermsg = -1;
     if (st->tmap <= ot->tmap) return;
     for (i = 0; i < 0x1C; i++) {
-        k = ot->tmpbox[i];
-        if (k < 0) return;
-        if (!(((unsigned char *)&ot->tmpdst[k])[1] & 0x40)) break;
+        n = ot->tmpbox[i];
+        if (n < 0) return;
+        if (!(((unsigned char *)&ot->tmpdst[n])[1] & 0x40)) break;
     }
-    ot->tmpdst[k] = 0;
-    ot->tmroster[k * 0x27] = 7;
-    releasepl(ot, k);
-    PanelRemovePenalty(side == 0, ot->tmroster[k * 0x27 + 5]);
-    for (j = 1;; j++) {
-        if ((((signed char *)ot)[0xB5 + j + i] = ot->tmpbox[j + i]) < 0) break;
+    ot->tmpdst[n] = 0;
+    ot->tmroster[n * 0x27] = 7;
+    releasepl(ot, n);
+    PanelRemovePenalty(side == 0, ot->tmroster[n * 0x27 + 5]);
+    for (n = 1;; n++) {
+        if ((((signed char *)ot)[0xB5 + n + i] = ot->tmpbox[n + i]) < 0) break;
     }
     st->tmppg++;
     hmtmflags[0] |= 1;

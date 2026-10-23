@@ -91,7 +91,7 @@ void GameLoop(void)
             } else {
                 hudhundstep = hudhundaccum / 0x18;
                 hudhundaccum %= 0x18;
-                if (exitgame && !(clockticks[0] | gameclock))
+                if (exitgame && !(gameclock | clockticks[0]))
                     hudhundstep = hudclockhund + (hudclockmin * 60 + hudclocksec) * 100;
             }
             UpdateHudPanel();
@@ -169,7 +169,8 @@ void GameLoop(void)
             PlayCrowdSample(0);
         }
         if (pad1dev[0] == 1 || pad2dev == 1) MouseSetPos(0xA0, 0x64);
-        lcrequest[1] = lcrequest[0] = 0;
+        lcrequest[1] = 0;
+        lcrequest[0] = 0;
         deferpending = 0;
         inputframes = 0;
         exitgame = 0;

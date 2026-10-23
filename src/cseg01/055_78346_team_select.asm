@@ -176,6 +176,10 @@ pop edi	; 784FC
 pop esi	; 784FD
 pop ecx	; 784FE
 ret	; 784FF
+; C: src/c/055_78346_team_select/DrawLineEditorScreen.c
+%ifdef CBUILD
+%include "c/055_78346_team_select/DrawLineEditorScreen.inc"
+%else
 DrawLineEditorScreen:
 push dword 178h	; 78500
 call __CHK	; 78505
@@ -545,6 +549,7 @@ pop ebp	; 78A81
 pop edi	; 78A82
 pop esi	; 78A83
 ret 4	; 78A84
+%endif ; C
 ; C: src/c/055_78346_team_select/LoadJerseyColours.c
 %ifdef CBUILD
 %include "c/055_78346_team_select/LoadJerseyColours.inc"

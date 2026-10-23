@@ -157,9 +157,6 @@ int SoundCardDlgLoop(void)
     }
 }
 
-/* DRAFT (SetSoundDevice): 1346 vs 1346 here (it ends in SoundCardDlg_epilogue, so it belongs in this file; alone
-   it was 2 bytes long). Left: dword_D2350 is loaded into edx for the MT-32 test and the message box zeros (EXE
-   ebx), and the event word is cleared through eax before the mouse read (EXE edx). See docs/UNSURE.md. */
 /* SetSoundDevice (82D7A, PC only): switch the sound to device dev (setbits bits: 1 PC speaker, 2 Sound Blaster,
    4 AdLib, 8 MT-32, 20h Ultrasound, 10h none). Shut the current one down first (speech and its copy buffer for
    2 / 20h, the AdLib sample for 4). Then open dev's music and digital drivers (sub_97079 of dword_D2427 /
@@ -245,9 +242,10 @@ int SetSoundDevice(int dev)
             break;
         }
         sub_8EB5B();
-        if (dword_D2427 >= 0 && (h1 = sub_97079(dword_D2427)) != -1
-            && (dword_D242B < 0 || (s.h2 = sub_97079(dword_D242B)) != -1))
-            dword_D2423 = -1;
+        if (dword_D2427 >= 0 && (h1 = sub_97079(dword_D2427)) != -1) {
+            if (dword_D242B < 0) dword_D2423 = -1;
+            else if ((s.h2 = sub_97079(dword_D242B)) != -1) dword_D2423 = -1;
+        }
         if (dword_D2423) {
             sub_8ECC0(s.drv, s.port);
             if (dev == 4) {

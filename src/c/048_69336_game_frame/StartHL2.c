@@ -1,5 +1,7 @@
 /* Game frame: a highlight run of the game engine. */
-/* DRAFT: 3,322 vs 3,325 bytes, 145 differing lines of 760, first pass; see docs/UNSURE.md. */
+/* DRAFT under 10.0 GA: 51 differing instructions, 3,334 vs 3,325 bytes. Saved score-pointer allocation is
+   correct and r now has the EXE's spill slot (k doubled before the call); left: pl in esi (EXE ebx) with the
+   for loop's jump to its test, the r / sgameover slot order, zero registers and CrowdNoiseUpdate's movsx. */
 #define StartHL2 StartHL2_decl
 #define SprSortVert SprSortVert_decl
 #define SprSort SprSort_decl
@@ -39,8 +41,8 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     short *p;
     short *q;
     int i;
-    int j;
     int k;
+    int j;
     int t;
     Player *pl;
 
@@ -150,10 +152,11 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     resetplstuff();
     for (pl = SortCords, i = 0; i < 0xC; i++, pl++) {
         k = (pl->pflags & 0x80 ? 0 : 6) + pl->position;
+        k *= 2;
         r = randomd0(0x14) - 10;
-        HIWORD(pl->Xpos) = dword_CD9A0[k * 2] + r;
+        HIWORD(pl->Xpos) = dword_CD9A0[k] + r;
         t = pl->position == 0;
-        HIWORD(pl->Ypos) = (randomd0(pl->position ? 0x14 : 4) - t ? 4 : 0xA) + dword_CD9A0[k * 2 + 1];
+        HIWORD(pl->Ypos) = (randomd0(pl->position == 0 ? 4 : 0x14) - t ? 4 : 0xA) + dword_CD9A0[k + 1];
         pl->Xvel = pl->Yvel = 0;
         pl->facedir = vtoa((short)(*puckx - HIWORD(pl->Xpos)), (short)(*pucky - HIWORD(pl->Ypos)));
     }
@@ -210,7 +213,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
         sub_6AF52(scrollx + bgscrollx * 8, scrolly + bgscrolly * 8, scrollx + bgscrollx * 8 + 0x140,
             scrolly + bgscrolly * 8 + 0xA8);
         spritedrawcount = 0;
-        DrawRinkOverlays(viewscrollx, viewscrolly);
+        DrawRinkOverlays((short)viewscrollx, (short)viewscrolly);
         sub_6AF97(-(scrollx + bgscrollx * 8), -(bgscrolly * 8 + scrolly));
         sub_6ADA7();
         if (fadeinpending) {
@@ -285,10 +288,14 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     *asc = awscore;
     hmscore[0] = *p++;
     awscore = *p++;
-    for (i = 0; i < 2; i++) {
-        q = (&hmtmstruct)[i].tmpdst;
-        for (j = 0; j < 0x1C; j++) *q++ = *p++;
-    }
+    i = 0;
+    goto restore_teams_test;
+restore_team:
+    q = (&hmtmstruct)[i].tmpdst;
+    for (j = 0; j < 0x1C; j++) *q++ = *p++;
+    i++;
+restore_teams_test:
+    if (i < 2) goto restore_team;
     *(int *)&gameopts = opts;
     *(LineTab *)hmlinetab = hml;
     *(LineTab *)awlinetab = awl;

@@ -1,8 +1,8 @@
 /* Misc dialogs: list box items (one source block: DrawListItems ends in DrawListItem's exit). */
-/* DRAFT: 11 differing under 10.0 GA. Loading the font height before the row calculation and
-   reusing c for the centred text width fixes the row's instruction order and the flag lookup.
-   y / w still use ebp / edi (EXE edi / ebp), and case 1 updates w in place instead of
-   forming eax and sharing case 2's add. DrawListItems needs this tail to match first. */
+/* DRAFT: 6 differing under 10.0 GA, original size. A separate right-alignment
+   delta and the text-line increment put y (savings 9) ahead of w (7), matching
+   EDI / EBP. The right-alignment delta still computes in EDX instead of
+   updating EBP and forming EAX for the shared add. DrawListItems needs this tail. */
 #include "nhl95.h"
 
 /* DrawListItem: draw list item idx (text) of a list box at x y, w wide, scrolled to top: its row
@@ -25,15 +25,17 @@ void DrawListItem(char *text, int x, int y, int w, int top, int idx, int sel, un
     SetListItemColors(idx, sel);
     switch (align) {
     case 1:
-        w -= fputchar(text);
-        x += w - 4;
+        c = w - fputchar(text);
+        c -= 4;
+        x += c;
         break;
     case 2:
         c = w - fputchar(text);
         x += c / 2;
         break;
     }
-    PrintMenuText(x, y + 1, text);
+    y++;
+    PrintMenuText(x, y, text);
 }
 
 /* DrawListItems: draw n items of a list box from top on (DrawListItem for items[top + i]). */

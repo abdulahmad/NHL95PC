@@ -1,6 +1,6 @@
 /* Gadgets / replay: save the replay as a highlight. */
-/* DRAFT: 1,649 vs 1,653 bytes, every statement in place; register picks differ (the old pointer x / y in esi / ecx,
-   the EXE ecx / esi, and the temporaries that follow). See docs/UNSURE.md. */
+/* DRAFT: same size (1,653 bytes), every statement in place; register picks of the pushed globals' temporaries
+   differ (the zero for r outside the rows takes ebx where the EXE has eax). See docs/UNSURE.md. */
 #define ReplaySaveHilight ReplaySaveHilight_decl
 #define sub_B500C sub_B500C_decl
 #include "nhl95.h"
@@ -26,8 +26,8 @@ void ReplaySaveHilight(int unused, int x, int y)
     char path[0x20];
     int r;
     unsigned char *p;
-    int oy;
     int ox;
+    int oy;
     unsigned char *ev;
     int n;
 
@@ -81,7 +81,7 @@ void ReplaySaveHilight(int unused, int x, int y)
         oy = gadgetptry;
         r = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(ev, &gadgetptrx, &gadgetptry);
         if (r & 2) {
-            if (gadgetptrx >= 0x4E && gadgetptrx <= 0xD8) {
+            if (!(gadgetptrx < 0x4E || gadgetptrx > 0xD8)) {
                 if (gadgetptry >= 0x50 && gadgetptry <= 0x5E) dword_ED6D4 = 0;
                 else if (gadgetptry >= 0x61 && gadgetptry <= 0x6F) dword_ED6D4 = 1;
                 else if (gadgetptry >= 0x72 && gadgetptry <= 0x80) dword_ED6D4 = 2;

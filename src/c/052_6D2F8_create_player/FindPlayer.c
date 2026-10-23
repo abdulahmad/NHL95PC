@@ -23,20 +23,19 @@ void FindPlayer(int *mode, int *x, int *y)
         char rfirst[0x10];
         char rlast[0x10];
         char last[0x10];
-        int other;
-        int team;
-        int side;
     } s;
+    int other;
+    int team;
+    int side;
     int n;
     int t;
     unsigned char *rec;
     int i;
     unsigned char *k;
     int j;
-    unsigned char *p;
 
-    s.side = *mode != 1;
-    s.other = !s.side;
+    side = *mode != 1;
+    other = !side;
     s.name[0] = 0;
     msglines[0] = (int)str_EnterNameOfPlayer;
     InputDialog(msglines, 1, s.name, 0x1F, 0xBA, 0, 0, 0, 0);
@@ -62,6 +61,8 @@ void FindPlayer(int *mode, int *x, int *y)
     t = (unsigned)keydb_size / 0x34;
     s.found[n] = -1;
     for (j = 0; j < t && s.found[n] < 0; j++) {
+        unsigned char *p;
+
         p = keydb + j * 0x34;
         if (*p == 0xFF) {
             strcpy(s.rfirst, (char *)p + 3);
@@ -80,47 +81,47 @@ void FindPlayer(int *mode, int *x, int *y)
                 if (s.found[t] == 0x64) s.names[i] = (char *)str_FreeAgentList;
                 else if (s.found[t] < 0x1A) s.names[i] = (char *)teamcitynames[s.found[t]];
             }
-            s.team = s.found[ListDialog(s.names, n, (char *)str_ChooseWhichTeamTo, 0, 0, s.buf)];
+            team = s.found[ListDialog(s.names, n, (char *)str_ChooseWhichTeamTo, 0, 0, s.buf)];
         } else {
-            s.team = s.found[0];
+            team = s.found[0];
         }
-        if (s.team == 0x64) {
-            if (rosterisfa[s.other] == 1) {
+        if (team == 0x64) {
+            if (rosterisfa[other] == 1) {
                 msglines[0] = (int)s.name;
                 msglines[1] = (int)str_IsAlreadyDisplayedOn;
-                msglines[2] = !s.side ? (int)str_Roster2 : (int)str_Roster1;
+                msglines[2] = !side ? (int)str_Roster2 : (int)str_Roster1;
                 MessageBox(-1, -1, (char *)msglines, 3, 0, 0, (int)x, (int)y, -1);
-            } else if (rosterisfa[s.side] != 1) {
-                SetRosterTeamMenus(s.side, s.team);
-                rosterisfa[s.side] = 1;
-                LoadRosterList(s.side);
-                rosterteam[s.side] = 0xFF;
+            } else if (rosterisfa[side] != 1) {
+                SetRosterTeamMenus(side, team);
+                rosterisfa[side] = 1;
+                LoadRosterList(side);
+                rosterteam[side] = 0xFF;
             }
-        } else if (rosterteam[s.other] == s.team) {
+        } else if (rosterteam[other] == team) {
             msglines[0] = (int)s.name;
             msglines[1] = (int)str_IsAlreadyDisplayedOn;
-            msglines[2] = !s.side ? (int)str_Roster2 : (int)str_Roster1;
+            msglines[2] = !side ? (int)str_Roster2 : (int)str_Roster1;
             MessageBox(-1, -1, (char *)msglines, 3, 0, 0, (int)x, (int)y, -1);
-            s.side = s.other;
-        } else if (rosterteam[s.side] != s.team) {
-            SetRosterTeamMenus(s.side, s.team);
-            rosterisfa[s.side] = 0;
-            rosterteam[s.side] = s.team;
-            LoadRosterList(s.side);
+            side = other;
+        } else if (rosterteam[side] != team) {
+            SetRosterTeamMenus(side, team);
+            rosterisfa[side] = 0;
+            rosterteam[side] = team;
+            LoadRosterList(side);
         }
-        SelectMatchingPlayers(s.last, s.first, s.side);
+        SelectMatchingPlayers(s.last, s.first, side);
         DrawEditRosters();
-        if (CountSelected(rosterisfa[s.side] == 1 ? (char *)falistsel : (char *)rostersel + s.side * 28) > 0) {
-            if (s.side == 0) {
+        if (CountSelected(rosterisfa[side] == 1 ? (char *)falistsel : (char *)rostersel + side * 28) > 0) {
+            if (side == 0) {
                 if (rosterisfa[0] != 1 && facount < 0x1E) menu_r1_tofa = (int)MoveToFreeAgents;
                 if (rosterisfa[1] != 1) menu_r1_toroster2 = (int)MoveToOtherRoster;
             } else {
                 if (rosterisfa[1] != 1 && facount < 0x1E) menu_r2_tofa = (int)MoveToFreeAgents;
                 if (rosterisfa[0] != 1) menu_r2_toroster1 = (int)MoveToOtherRoster;
             }
-        } else if (s.side == 0) {
-            menu_r1_tofa = s.side;
-            menu_r1_toroster2 = s.side;
+        } else if (side == 0) {
+            menu_r1_tofa = side;
+            menu_r1_toroster2 = side;
         } else {
             menu_r2_tofa = 0;
             menu_r2_toroster1 = 0;

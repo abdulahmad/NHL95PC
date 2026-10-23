@@ -308,13 +308,6 @@ void POSetSeriesTeams(unsigned char *s, int a, int b);
 void __STOSD(void *p, int v, int n);
 #pragma aux __STOSD "__STOSD" parm [eax] [edx] [ecx] modify [eax edx ecx];
 
-/* DRAFT: 736 vs 720 (best of 5). The frame, the eight-score scan, both date fills and
- __STOSD match. Each SeriesWinner result is copied with mov edx, eax before the home byte
- is loaded, so the byte lands in eax and the compare is swapped (16 bytes, eight calls).
- Do not retry: named unsigned chars for the scan (al/ah/dh/dl instead of ah/dl/dh/al),
- one int for both the day remainder and the home byte (spills, sub esp, 34h), or
- assigning the home byte to k, the filter counter that lives in edx.
- */
 /* POSeedRound2: walk back from the last first-round game while all eight series
  still have an empty score, then date the two second-round series (14 games each,
  every other day, rolling the month at 30). The four winners on each side fill
@@ -380,23 +373,19 @@ void POSeedRound2(unsigned char *p)
     __STOSD(s.slot, -1, 8);
     ser = p + 0x1998;
     s.out[0] = SeriesWinner(ser, *(int *)(p + 0x50));
-    k = ser[2];
-    if (s.out[0] == k) s.slot[0] = k;
+    if (s.out[0] == ser[2]) s.slot[0] = ser[2];
     else s.slot[7] = s.out[0];
     ser += 0x2A;
     s.out[1] = SeriesWinner(ser, *(int *)(p + 0x54));
-    k = ser[2];
-    if (s.out[1] == k) s.slot[1] = k;
+    if (s.out[1] == ser[2]) s.slot[1] = ser[2];
     else s.slot[6] = s.out[1];
     ser += 0x2A;
     s.out[2] = SeriesWinner(ser, *(int *)(p + 0x58));
-    k = ser[2];
-    if (s.out[2] == k) s.slot[2] = k;
+    if (s.out[2] == ser[2]) s.slot[2] = ser[2];
     else s.slot[5] = s.out[2];
     ser += 0x2A;
     s.out[3] = SeriesWinner(ser, *(int *)(p + 0x5C));
-    k = ser[2];
-    if (s.out[3] == k) s.slot[3] = k;
+    if (s.out[3] == ser[2]) s.slot[3] = ser[2];
     else s.slot[4] = s.out[3];
     i = 0;
     k = 0;
@@ -410,23 +399,19 @@ void POSeedRound2(unsigned char *p)
     __STOSD(s.slot, -1, 8);
     ser = p + 0x1A40;
     s.out[0] = SeriesWinner(ser, *(int *)(p + 0x60));
-    k = ser[2];
-    if (s.out[0] == k) s.slot[0] = k;
+    if (s.out[0] == ser[2]) s.slot[0] = ser[2];
     else s.slot[7] = s.out[0];
     ser += 0x2A;
     s.out[1] = SeriesWinner(ser, *(int *)(p + 0x64));
-    k = ser[2];
-    if (s.out[1] == k) s.slot[1] = k;
+    if (s.out[1] == ser[2]) s.slot[1] = ser[2];
     else s.slot[6] = s.out[1];
     ser += 0x2A;
     s.out[2] = SeriesWinner(ser, *(int *)(p + 0x68));
-    k = ser[2];
-    if (s.out[2] == k) s.slot[2] = k;
+    if (s.out[2] == ser[2]) s.slot[2] = ser[2];
     else s.slot[5] = s.out[2];
     ser += 0x2A;
     s.out[3] = SeriesWinner(ser, *(int *)(p + 0x6C));
-    k = ser[2];
-    if (s.out[3] == k) s.slot[3] = k;
+    if (s.out[3] == ser[2]) s.slot[3] = ser[2];
     else s.slot[4] = s.out[3];
     i = 0;
     k = 0;
@@ -547,8 +532,9 @@ void POSeedFinal(unsigned char *p)
     else POSetSeriesTeams(g, day, a);
 }
 
-/* DRAFT: 2,668 vs 2,678 bytes, 100 differing lines (register picks after SeriesWinner and in the controller
-   side code); see docs/UNSURE.md. */
+/* DRAFT: same size (2,678 bytes) under 10.0 GA, 100 differing: the first clearing loop takes ebx for
+   optbits12 / 2 (EXE eax, then lea), ctl2team is kept in a register in the human count (the EXE compares it in
+   memory both times) and the controller side code picks other registers; see docs/UNSURE.md. */
 /* POAfterGame (8873C, PC only; ends in POSeedRound2_x): after a playoff game. Post both teams' game to their team
    databases (game 444h + the game index), store the score in the game record, load the season, career and key
    databases and simulate the other series of the round up to this game (POSimSeriesTo). When the series is decided
@@ -730,7 +716,8 @@ int POAfterGame(unsigned char *p)
     keydb_size = careerdb_size = seasondb_size = (int)(keydb = careerdb = seasondb = 0);
     if (idx < 0xF) {
         if (w >= 0) {
-            if (ctl1side[0] == ctl2side || (ctl2team < 0) ^ (ctl1team[0] < 0)) n = 1;
+            if (ctl1side[0] == ctl2side) n = 1;
+            else if ((ctl2team < 0) ^ (ctl1team[0] < 0)) n = 1;
             else if (ctl1team[0] >= 0 || ctl2team >= 0) n = 2;
             else n = 0;
             if (n == 1) {
@@ -1015,8 +1002,6 @@ int PlayoffModeLoop(int *fh)
 
 #define TX(i) (((int *)treecolx)[i])
 
-/* DRAFT: 4,616 vs 4,617 bytes; only the first seed loop differs (i and the playofftree read swap eax / edx);
-   see docs/UNSURE.md. */
 /* DrawPlayoffTree (8A652, PC only; ends in POSeedRound2_x): draw the playoff tree. The BKGD2 background (rows 13h
    down), the BangPal palette when dword_C6D26 asks for it, the series wins (CountSeriesWins). Before the first
    round is seeded say so ("Playoffs have not been...", Kaufman font, centred). Otherwise the PSTATBAR2 bars, the
@@ -1024,7 +1009,9 @@ int PlayoffModeLoop(int *fh)
    dword_C6DBA) and draw each round from the top: the West first round (8 lines in two columns), the West second
    round, the West final, the cup final, the East final, the East second round (mirrored) and the East first round,
    each team as seed letter, city and wins, its wins lit (44h West, C4h East) when it reached the next round, with
-   the arrows between rounds once every team of the next round is known. No arguments, no result. */
+   the arrows between rounds once every team of the next round is known. No arguments, no result. The seed loop
+   sets the column x as the drawing loop does (stores the optimiser drops, as in PlayoffTreeScreen); they give
+   the EXE's registers for i and the playofftree read. */
 void DrawPlayoffTree(void)
 {
     struct {
@@ -1088,11 +1075,21 @@ void DrawPlayoffTree(void)
     PrintOutlinedText(0x140 - (fputchar(f.buf) >> 1), 0x1A7, f.buf);
     sub_8EA18(mf);
     for (i = 0; i < 8; i++) {
-        if (i < 4) slot = treecolslots[i * 2];
-        else slot = treecolslots[7 - (i * 2 - 8)];
+        if (i < 4) {
+            x = i;
+            slot = treecolslots[i * 2];
+        } else {
+            x = 7 - i;
+            slot = treecolslots[7 - (i * 2 - 8)];
+        }
         dword_C6DBA[playofftree[slot]] = i;
-        if (i < 4) slot = treecol_Er1[i * 2];
-        else slot = treecol_Er1[7 - (i * 2 - 8)];
+        if (i < 4) {
+            x = i;
+            slot = treecol_Er1[i * 2];
+        } else {
+            x = 7 - i;
+            slot = treecol_Er1[7 - (i * 2 - 8)];
+        }
         dword_C6DBA[playofftree[slot]] = i;
     }
     y = 0x48;

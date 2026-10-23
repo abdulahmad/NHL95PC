@@ -7,23 +7,24 @@
  pending change, flags cleared, Xvel -1000h, assexit. Nothing while flag 20h. */
 void assepen(Player *p)
 {
-    signed char f;
     int k;
+    int n;
 
-    f = p->pflags;
-    if (f & 0x20) return;
-    if (f & 2) {
+    if (p->pflags & 0x20) return;
+    if (p->pflags & 2) {
         p->pflags |= 4;
         p->pflags &= 0xED;
         p->pflags2 |= 4;
         if (!(p->pflags & 0x40)) {
             if (--PBnum[0] > 2) k = 2;
-            else k = *(int *)((char *)&PBnum[0] - 3) >> 24;
-            HIWORD(p->Ypos) = -0x21 - (k * 12 - k);
+            else k = PBnum[0];
+            k = -0x21 - k * 11;
+            HIWORD(p->Ypos) = k;
         } else {
             if (--PBnum[1] > 2) k = 2;
-            else k = *(int *)((char *)&PBnum[1] - 3) >> 24;
-            HIWORD(p->Ypos) = k * 12 - k + 0x21;
+            else k = PBnum[1];
+            n = k * 11;
+            HIWORD(p->Ypos) = n + 0x21;
         }
         p->Xvel = 0;
         p->Yvel = 0;

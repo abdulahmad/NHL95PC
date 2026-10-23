@@ -10,36 +10,30 @@
  last player to touch the puck (lasttouch); the penalty shot ends. */
 void wallcollb(Player *pk)
 {
-    short v;
-    short half;
-    short level;
-    short raised;
-
     if (pk->SCnum != 0xE) {
-wall:
         wallcoll(pk);               /* not puck so wall coll */
         return;
     }
-    v = HIWORD(pk->Zpos);
-    if (v <= 0x1D) {
-        if ((unsigned short)v <= 0x12) goto wall;
+    if (HIWORD(pk->Zpos) <= 0x1D) {
+        if ((unsigned short)HIWORD(pk->Zpos) <= 0x12) {
+            wallcoll(pk);
+            return;
+        }
         if (HIWORD(pk->Ypos) >= 0xF8) {
             if ((HIWORD(pk->Xpos) < 0 ? -(pk->Xpos >> 16) : pk->Xpos >> 16) < 0x28
              || (HIWORD(pk->Xpos) < 0 ? -(pk->Xpos >> 16) : pk->Xpos >> 16) > 0x38
-             || (v = pk->Yvel) < 0xFA0 || lty < 0x26) {
-                goto wall;
+             || pk->Yvel < 0xFA0 || lty < 0x26) {
+                wallcoll(pk);
+                return;
             }
-            half = v >> 1;          /* asr.w Yvel */
-            pk->Yvel = half;
+            pk->Yvel >>= 1;         /* asr.w Yvel */
             SetSPA(pk + 1, 0x821);  /* next struct (SCstruct) */
             HIWORD(pk[1].Xpos) = HIWORD(pk->Xpos) < 0 ? -0x40 : 0x3F;
             HIWORD(pk[1].Ypos) = 0x10B;
             sfx(0xAE);
-            level = crowdlevel;
-            if (level <= 1500) {
-                raised = level + 1200;
-                crowdlevel = raised;
-                if (raised > 1500) crowdlevel = 1500;
+            if (crowdlevel <= 1500) {
+                crowdlevel += 1200;
+                if (crowdlevel > 1500) crowdlevel = 1500;
             }
             CwdExciteLvl += 15;
         }

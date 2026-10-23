@@ -1279,6 +1279,10 @@ mov eax, dword [byte esp+04h]	; 72DDB
 add esp, byte 8	; 72DDF
 jmp near DbDialog_epilogue	; 72DE2
 %endif ; C
+; C: src/c/053_71F0C_database_dialogs/LoadDbDialogShapes.c (DbDialogLoop)
+%ifdef CBUILD
+%include "c/053_71F0C_database_dialogs/LoadDbDialogShapes.DbDialogLoop.inc"
+%else
 DbDialogLoop:
 push dword 44h	; 72DE7
 call __CHK	; 72DEC
@@ -1763,6 +1767,7 @@ push eax	; 733B7
 mov edi, dword [pointerspr]	; 733B8
 push edi	; 733BE
 jmp near DbDialogLoop.5	; 733BF
+%endif ; C
 ; C: src/c/053_71F0C_database_dialogs/OpenSelectedDb.c
 %ifdef CBUILD
 %include "c/053_71F0C_database_dialogs/OpenSelectedDb.inc"

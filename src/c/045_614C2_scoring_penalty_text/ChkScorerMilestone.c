@@ -1,6 +1,28 @@
 /* Scoring penalty text: scorer milestones. */
 #include "nhl95.h"
 
+/* The exit owner is compilation context for ChkScorerMilestone's shared tail (fileio_popebpx).
+   Its original C file continues to supply RunDeferredCalls to the build. */
+/* one queued call: 7 arguments and the function (20h bytes, table at E9BA4) */
+typedef struct DeferCall {
+    int a, b, c, d, e, f, g;
+    void (*fn)(int, int, int, int, int, int, int);
+} DeferCall;
+
+#define Q(i) ((DeferCall *)dword_E9BA4)[i]
+
+/* RunDeferredCalls: make the defercount queued calls (dword_E9BA4 table: arguments in eax, edx,
+ ebx, ecx, then 3 on the stack) in order and empty the queue. */
+void RunDeferredCalls(void)
+{
+    int i;
+
+    for (i = 0; i < defercount; i++) {
+        Q(i).fn(Q(i).a, Q(i).b, Q(i).c, Q(i).d, Q(i).e, Q(i).f, Q(i).g);
+    }
+    defercount = 0;
+}
+
 /* per player stat rows, 16 bytes, 25 to a team: game goals / assists (shorts at DB088 / DB08A) and the season
    (DEB74 career goals, DEB78 career points, DEB7C season goals, DEB80 season points; ints) */
 #define REC(a, t, p) (((int (*)[25][4])(a))[t][p][0])
@@ -61,7 +83,7 @@ void ChkScorerMilestone(void)
         }
     }
     if (gamemode && !what && (p = *(short *)((char *)dword_DF646 + (t << 8))) >= 0 && p < 0x19) {
-        pts = GOALS(t, p) + ASSISTS(t, p);
+        pts = ASSISTS(t, p) + GOALS(t, p);
         if (gameopts.fullot) {
             if ((pts += REC(dword_DEB80, t, p)) >= 100 && pts % 100 == 0) what = 4;
             else if ((pts += REC(dword_DEB78, t, p)) >= 100 && pts % 100 == 0) what = 5;

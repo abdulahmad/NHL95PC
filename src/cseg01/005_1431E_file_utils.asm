@@ -740,6 +740,10 @@ pop esi	; 14A1D
 pop ecx	; 14A1E
 ret	; 14A1F
 %endif ; C
+; C: src/c/005_1431E_file_utils/DrawPanelScore.c
+%ifdef CBUILD
+%include "c/005_1431E_file_utils/DrawPanelScore.inc"
+%else
 DrawPanelScore:
 push dword 1Ch	; 14A20
 call __CHK	; 14A25
@@ -821,6 +825,7 @@ pop esi	; 14AFA
 pop ecx	; 14AFB
 pop ebx	; 14AFC
 ret	; 14AFD
+%endif ; C
 ; C: src/c/005_1431E_file_utils/DrawPanelLine.c
 %ifdef CBUILD
 %include "c/005_1431E_file_utils/DrawPanelLine.inc"

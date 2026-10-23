@@ -25,6 +25,10 @@ global TradeHitTest_ret
 global BuildTradeRoster, TradeShowStats, FixJerseyConflict, ExecuteTrade, DrawTradeRow
 global LoadTradeTeamPals, DrawTradeScreen, TradeHitTest, TradeDone, TradeCancel, FindTradeSlot, TradeScreenLoop, TradeRosterCmp
 global TradeScreen
+; C: src/c/032_3DC2C_roster_jersey/BuildTradeRoster.c
+%ifdef CBUILD
+%include "c/032_3DC2C_roster_jersey/BuildTradeRoster.inc"
+%else
 BuildTradeRoster:
 push dword 74h	; 3DC2C
 call __CHK	; 3DC31
@@ -191,6 +195,7 @@ pop ebp	; 3DE01
 pop edi	; 3DE02
 pop esi	; 3DE03
 ret	; 3DE04
+%endif ; C
 ; C: src/c/032_3DC2C_roster_jersey/TradeShowStats.c
 %ifdef CBUILD
 %include "c/032_3DC2C_roster_jersey/TradeShowStats.inc"

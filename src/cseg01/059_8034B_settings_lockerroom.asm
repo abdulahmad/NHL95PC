@@ -311,6 +311,10 @@ pop edx	; 8067F
 pop ecx	; 80680
 ret	; 80681
 %endif ; C
+; C: src/c/059_8034B_settings_lockerroom/DrawPanel3D.c
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/DrawPanel3D.inc"
+%else
 DrawPanel3D:
 push dword 38h	; 80682
 call __CHK	; 80687
@@ -483,6 +487,7 @@ pop ebp	; 8082A
 pop edi	; 8082B
 pop esi	; 8082C
 ret 4	; 8082D
+%endif ; C
 ; C: src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c
 %ifdef CBUILD
 %include "c/059_8034B_settings_lockerroom/LockerRoomScreen.inc"
@@ -668,6 +673,10 @@ pop ecx	; 80AA1
 pop ebx	; 80AA2
 ret	; 80AA3
 %endif ; C
+; C: src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c (DrawLockerRoom)
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/LockerRoomScreen.DrawLockerRoom.inc"
+%else
 DrawLockerRoom:
 push dword 384h	; 80AA4
 call __CHK	; 80AA9
@@ -1371,6 +1380,7 @@ call sub_B4DD4	; 8150D
 add esp, byte 4	; 81512
 add esp, 354h	; 81515
 jmp near LockerStub	; 8151B
+%endif ; C
 ; C: src/c/059_8034B_settings_lockerroom/LockerHitTest.c
 %ifdef CBUILD
 %include "c/059_8034B_settings_lockerroom/LockerHitTest.inc"

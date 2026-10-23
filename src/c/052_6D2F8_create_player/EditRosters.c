@@ -1,5 +1,5 @@
 /* Create player / edit rosters: the roster editing screen's loop. */
-/* DRAFT: 2,581 vs 2,604 bytes, 382 lines (register picks); see docs/UNSURE.md. */
+/* DRAFT under 10.0 GA: 2,537 vs 2,604 bytes, 175 differing instructions; menu-branch register picks remain. */
 #define EditRosters EditRosters_decl
 #define MenuHitTest MenuHitTest_decl
 #define LoadBothRosterLists LoadBothRosterLists_decl
@@ -51,10 +51,10 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
         int oldmx;
         int col2;
         int col1;
-        int at;
-        int depth;
-        int bits;
     } s;
+    int bits;
+    int depth;
+    int at;
     int i;
     int k;
     unsigned char *e;
@@ -62,7 +62,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
 
     s.col1 = col1;
     s.col2 = col2;
-    s.depth = 0;
+    depth = 0;
     dbdirty = 0;
     LoadBothRosterLists();
     DrawEditRosters();
@@ -91,14 +91,14 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
             sub_8D2F0(songdata);
             songdata = 0;
         }
-        s.bits = 0;
+        bits = 0;
         do {
             e = GetInputEvent();
-            if (e) s.bits = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(e, &s.mx, &s.my);
-        } while (e && !(s.bits & 2));
-        if (dword_D0C20 && (rosterisfa[0] == 1 || rosterisfa[1] == 1) && dword_D0B12 != 2 && s.bits) {
+            if (e) bits = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(e, &s.mx, &s.my);
+        } while (e && !(bits & 2));
+        if (dword_D0C20 && (rosterisfa[0] == 1 || rosterisfa[1] == 1) && dword_D0B12 != 2 && bits) {
             sub_903F0(editptrspr, s.oldmx, s.oldmy);
-            k = TrackButtons((int *)unk_D0BB8, 2, s.mx, s.my, s.bits);
+            k = TrackButtons((int *)unk_D0BB8, 2, s.mx, s.my, bits);
             if (k == 0 && dword_EBCA4 > 0) {
                 dword_EBCA4--;
                 DrawEditRosters();
@@ -106,7 +106,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                 dword_EBCA4 += k;
                 DrawEditRosters();
             }
-            if (TrackScrollBars(unk_D0BF0, 1, s.mx, s.my, s.bits) >= 0 && dword_EBCA4 != dword_D0C10) {
+            if (TrackScrollBars(unk_D0BF0, 1, s.mx, s.my, bits) >= 0 && dword_EBCA4 != dword_D0C10) {
                 dword_EBCA4 = dword_D0C10;
                 DrawEditRosters();
             }
@@ -115,14 +115,14 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
             s.oldmx = s.mx;
             s.oldmy = s.my;
         }
-        if (dword_D0B12 == 2 && s.bits & 1) {
+        if (dword_D0B12 == 2 && bits & 1) {
             sub_903F0(editptrspr, s.oldmx, s.oldmy);
-            TrackButtons((int *)unk_D0B80, 2, s.mx, s.my, s.bits);
+            TrackButtons((int *)unk_D0B80, 2, s.mx, s.my, bits);
             sub_91400(editptrspr, s.mx, s.my);
             sub_91370(pointerspr, s.mx, s.my);
             s.oldmx = s.mx;
             s.oldmy = s.my;
-        } else if (!(s.bits & 2)) {
+        } else if (!(bits & 2)) {
             if (s.mx != s.oldmx || s.my != s.oldmy) {
                 sub_903F0(editptrspr, s.oldmx, s.oldmy);
                 sub_91400(editptrspr, s.mx, s.my);
@@ -133,7 +133,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
         } else {
             if (dword_D0B12 == 2) {
                 sub_903F0(editptrspr, s.oldmx, s.oldmy);
-            } else if (MenuHitTest(s.mx, s.my, s.menus, s.depth, s.nitems, &s.pos[0][0], &s.level, &s.item)) {
+            } else if (MenuHitTest(s.mx, s.my, s.menus, depth, s.nitems, &s.pos[0][0], &s.level, &s.item)) {
                 m = &s.menus[s.level][s.item];
                 if (m->on1) {
                     if (s.item == s.sel[s.level]) {
@@ -145,7 +145,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                                 FreeMemBlock(s.bg[i]);
                             }
                         }
-                        s.depth = 0;
+                        depth = 0;
                         ((void (*)(int *, int *, int *))s.menus[s.level][s.item].on1)(s.sel, &s.oldmx, &s.oldmy);
                         for (i = 0; i < 3; i++) {
                             s.bg[i] = 0;
@@ -161,19 +161,20 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                         ClearInputQueue();
                     } else {
                         sub_903F0(editptrspr, s.oldmx, s.oldmy);
-                        if (s.depth != s.level) {
-                            for (i = s.depth; i > s.level; i--) {
+                        if (depth != s.level) {
+                            for (i = depth; i > s.level; i--) {
                                 s.sel[i] = 0;
                                 if (s.bg[i]) {
                                     sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                                    s.pos[i][1] = s.pos[i][0] = 0;
+                                    s.pos[i][0] = 0;
+                                    s.pos[i][1] = s.pos[i][0];
                                     FreeMemBlock(s.bg[i]);
                                     s.bg[i] = 0;
                                     s.menus[i] = 0;
                                     s.nitems[i] = 0;
                                 }
                             }
-                            s.depth = s.level;
+                            depth = s.level;
                         }
                         DrawMenuItemSel((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
                             s.pos[s.level][1], s.col1, s.col2, col3);
@@ -183,43 +184,43 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                     }
                 } else if (m->on2) {
                     sub_903F0(editptrspr, s.oldmx, s.oldmy);
-                    if (s.depth != s.level) {
-                        for (i = s.depth; i > s.level; i--) {
+                    if (depth != s.level) {
+                        for (i = depth; i > s.level; i--) {
                             s.sel[i] = 0;
                             if (s.bg[i]) {
                                 sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                                s.pos[i][1] = s.pos[i][0] = 0;
+                                s.pos[i][0] = 0;
+                                s.pos[i][1] = s.pos[i][0];
                                 FreeMemBlock(s.bg[i]);
                                 s.bg[i] = 0;
                                 s.menus[i] = 0;
                                 s.nitems[i] = 0;
                             }
                         }
-                        s.depth = s.level;
+                        depth = s.level;
                     }
-                    i = s.depth;
+                    i = depth;
                     DrawMenuItemSel((struct MenuItem *)&s.menus[i][s.sel[i]], s.pos[i][0], s.pos[i][1], s.col1, s.col2,
                         col3);
                     s.sel[i] = s.item;
                     DrawMenuItemNorm((struct MenuItem *)&s.menus[i][s.item], s.pos[i][0], s.pos[i][1], s.col1, s.col2,
                         col3);
-                    m = &s.menus[s.level][s.item];
-                    s.depth = i + 1;
-                    s.menus[s.depth] = (MenuItem *)m->on2;
-                    s.nitems[s.depth] = m->pad;
-                    s.pos[s.depth][0] = (s.depth == 1 ? m->x1 : m->x2) + s.pos[s.depth - 1][0];
-                    s.pos[s.depth][1] = (s.depth == 1 ? m->y2 : m->y1) + s.pos[s.depth - 1][1];
-                    s.w = s.menus[s.depth][s.nitems[s.depth] - 1].x2 - s.menus[s.depth][0].x1 + 1;
-                    s.h = s.menus[s.depth][s.nitems[s.depth] - 1].y2 - s.menus[s.depth][0].y1 + 1;
-                    s.bg[s.depth] = sub_8CCA8((char *)str_Menubuff, s.w * 4 * s.h + 0x11, 0);
-                    *(EdHdr17 *)s.bg[s.depth] = *(EdHdr17 *)pointerspr;
-                    ((short *)s.bg[s.depth])[2] = s.w;
-                    ((short *)s.bg[s.depth])[3] = s.h;
-                    sub_91400(s.bg[s.depth], s.pos[s.depth][0], s.pos[s.depth][1]);
-                    DrawMenuDropdown(s.menus[s.depth], s.nitems[s.depth], s.pos[s.depth][0], s.pos[s.depth][1], s.col1,
+                    depth++;
+                    s.menus[depth] = (MenuItem *)s.menus[s.level][s.item].on2;
+                    s.nitems[depth] = s.menus[s.level][s.item].pad;
+                    s.pos[depth][0] = (depth != 1 ? s.menus[s.level][s.item].x2 : s.menus[s.level][s.item].x1) + s.pos[depth - 1][0];
+                    s.pos[depth][1] = (depth != 1 ? s.menus[s.level][s.item].y1 : s.menus[s.level][s.item].y2) + s.pos[depth - 1][1];
+                    s.w = s.menus[depth][s.nitems[depth] - 1].x2 - s.menus[depth][0].x1 + 1;
+                    s.h = s.menus[depth][s.nitems[depth] - 1].y2 - s.menus[depth][0].y1 + 1;
+                    s.bg[depth] = sub_8CCA8((char *)str_Menubuff, 0x11 + (s.w << 2) * s.h, 0);
+                    *(EdHdr17 *)s.bg[depth] = *(EdHdr17 *)pointerspr;
+                    ((short *)s.bg[depth])[2] = s.w;
+                    ((short *)s.bg[depth])[3] = s.h;
+                    sub_91400(s.bg[depth], s.pos[depth][0], s.pos[depth][1]);
+                    DrawMenuDropdown(s.menus[depth], s.nitems[depth], s.pos[depth][0], s.pos[depth][1], s.col1,
                         s.col2, col3);
-                    s.sel[s.depth] = 0;
-                    DrawMenuItemNorm((struct MenuItem *)s.menus[s.depth], s.pos[s.depth][0], s.pos[s.depth][1], s.col1,
+                    s.sel[depth] = 0;
+                    DrawMenuItemNorm((struct MenuItem *)s.menus[depth], s.pos[depth][0], s.pos[depth][1], s.col1,
                         s.col2, col3);
                 } else {
                     sub_903F0(editptrspr, s.oldmx, s.oldmy);
@@ -231,20 +232,21 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                 }
             } else {
                 sub_903F0(editptrspr, s.oldmx, s.oldmy);
-                for (i = 2; i >= 0; i--) {
+                i = 2;
+                do {
                     if (s.bg[i]) {
                         sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
                         s.pos[i][1] = s.pos[i][0] = 0;
                         FreeMemBlock(s.bg[i]);
                     }
-                }
-                s.depth = 0;
+                    i--;
+                } while (i >= 0);
+                depth = 0;
                 for (i = 0; i < 3; i++) {
                     s.bg[i] = 0;
                     if (i > 0) {
                         s.menus[i] = 0;
-                        s.sel[i] = 0;
-                        s.nitems[i] = 0;
+                        s.sel[i] = s.nitems[i] = 0;
                     }
                 }
                 RosterPanelClick(s.mx, s.my);
@@ -261,7 +263,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
             if (dbdirty) {
                 msglines[0] = (int)str_TheDatabaseHasNot;
                 msglines[1] = (int)str_AreYouSureYou;
-                if (MessageBox(-1, -1, (char *)msglines, 2, (int)btn_LeagueExists, 2, (int)&s.oldmx, (int)&s.oldmy,
+                if (MessageBox(-1, -1, (char *)msglines, 2, (int)btn_LeagueExists, 2, (int)&s.mx, (int)&s.my,
                         -1) <= 0)
                     editrosters_exit = 0;
             }

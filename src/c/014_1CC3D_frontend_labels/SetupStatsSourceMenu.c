@@ -1,4 +1,6 @@
 /* Frontend labels: the stats source menu. */
+/* DRAFT: 1048 vs 1048. Left: the byte registers of the constant 2 in the seven menu-byte blocks (EXE ch / dl /
+   ch / dh / al / dh / cl), the 0 for byte_C67A9 (EXE bh). See docs/UNSURE.md. */
 #include "nhl95.h"
 
 /* SetupStatsSourceMenu (1D100, PC only): build the stats screen's source menu for src (0 all, 1 exhibition /
@@ -105,7 +107,15 @@ void SetupStatsSourceMenu(int src)
         dword_C67BD[i * 8] = y;
         dword_C67B9[i * 8] = dword_C67B9[0];
     }
-    dword_CE8EB = dword_CF00B = dword_CF4CB = dword_CF5AB = dword_CF70B = n;
-    dword_CF7CB = dword_CF84B = dword_CF8CB = dword_CFA4B = dword_C891E = n;
     dword_C679D[n * 8]++;
+    dword_CE8EB = n;
+    dword_CF00B = n;
+    dword_CF4CB = n;
+    dword_CF5AB = n;
+    dword_CF70B = n;
+    dword_CF7CB = n;
+    dword_CF84B = n;
+    dword_CF8CB = n;
+    dword_CFA4B = n;
+    dword_C891E = n;
 }

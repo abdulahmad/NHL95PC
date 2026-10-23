@@ -7,6 +7,10 @@
  agents) disables edit lines and the free agents items. Division index teamdivflags >> 1 (4 counts as 3). */
 typedef struct MenuItem20 { int f[5]; int handler; int g[2]; } MenuItem20;  /* 20h-byte menu item, handler at +14h */
 
+/* DRAFT (10.0 GA, 290 vs 292 bytes): the old team's search index is declared in its block (i in edx, as in the
+   EXE). Left: the new team's stores shift i in place (`shl edx, 5`); the EXE copies it first
+   (`mov eax, edx / shl eax, 5`) and loads the menu pointers into edx. */
+
 void SetRosterTeamMenus(int side, int team)
 {
     int t;
@@ -17,6 +21,8 @@ void SetRosterTeamMenus(int side, int team)
     if (t == 0xFF) {
         menu_r2_freeagents = menu_r1_freeagents = (int)ShowFreeAgents;
     } else {
+        int i;
+
         d = teamdivflags[t] >> 1;
         if (d == 4) d--;
         for (i = 0; i < 7; i++) if (((unsigned char (*)[7])divisionteams)[d][i] == t) break;

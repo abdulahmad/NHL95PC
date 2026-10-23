@@ -26,12 +26,15 @@ int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin,
 int sub_8F98F(char *path);  /* music library: load a song */
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song */
 
-/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 6,036 of 6,040 bytes, 505
-   differing (permute.py count). Every call is in place. Left: the EXE homes dir with a push below the frame
-   and keeps ext in edi (this keeps dir in edi and homes ext among the scalars, so every array sits 4 bytes
-   lower); the scalar slots; the event pointer copied into two registers; the DrawMenuItemNorm tail shared
-   from another branch. Found: the arrays declared sel, nitems, menus, bg land in the EXE's order; the (int)
-   compare of day with monthdays reloads day as the EXE does (537 -> 505). */
+/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 6,018 of 6,040 bytes, 319
+   differing under 10.0 GA. Every call is in place and the prologue matches (dir pushed, ext in edi, team in
+   ebp). Found under GA: DrawMenuBar(calmenubar, 3, ...) written with the constants (the EXE keeps them in esi
+   / edi from the menus[0] / nitems[0] stores), the dropdown origin as `depth != 1 ? x2 : x1`, the arrays
+   declared bg, nitems, menus, pos, sel (EXE order pos, menus, bg, nitems, sel). Left: the scalar slots; the
+   day box clips (the EXE computes k % 7 and k / 7 first, then the four sub_B4BC4 arguments in the order x1,
+   y1, x2, y2 into registers before the pushes); the event pointer copied into two registers; the
+   DrawMenuItemNorm tail shared from another branch. The (int) compare of day with monthdays reloads day as
+   the EXE does. */
 /* CalendarScreen (34821, PC only): the season calendar of a league team. Fade out (stopping the music), show the
    loading screen, point the stats callbacks at the calendar screens and load the CALENDAR art and the CALLOGO
    crests (one per team, crestnames). Read today's schedule index from the league's SCHEDULE file, then the
@@ -54,16 +57,16 @@ int CalendarScreen(char *dir, char *ext, int team)
     short gameidx[113];
     int crests[0x1A];
     char path[0x20];
-    int pos[3][2];
-    int sel[3];
+    int bg[3];
     int nitems[3];
     MenuItem *menus[3];
-    int bg[3];
+    int pos[3][2];
+    int sel[3];
     int w;
     int item;
     int level;
-    int my;
     int mx;
+    int my;
     int oldmy;
     int oldmx;
     int btn;
@@ -72,13 +75,13 @@ int CalendarScreen(char *dir, char *ext, int team)
     int hdr;
     int logos;
     int ptr;
-    int c1;
     int c3;
+    int c1;
     int c2;
     int unused;  /* DrawCalendarDay's third argument: never set (the EXE passes the slot at 7A8h) */
     int font;
-    int depth;
     short newsel;
+    int depth;
     short ngames;
     short firstgame;
     short today;
@@ -184,7 +187,7 @@ int CalendarScreen(char *dir, char *ext, int team)
         pos[0][1] = pos[0][0] = sel[1] = sel[0] = bg[1] = bg[0] = 0;
         FadeOutPalCycle();
         sub_B4BA8();
-        DrawMenuBar(menus[0], nitems[0], c1, c2, c3);
+        DrawMenuBar((MenuItem *)calmenubar, 3, c1, c2, c3);
         DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font, calendarshapes);
         if (musicon && !songdata) {
             MakePath(path, fileoncd[0x1E2] == 1 ? (char *)cddriveptr : 0, (char *)str_Calendar, (char *)str_Iff9);
@@ -287,8 +290,8 @@ int CalendarScreen(char *dir, char *ext, int team)
                             sel[i] = 0;
                             if (bg[i]) {
                                 sub_903F0(bg[i], pos[i][0], pos[i][1]);
-                                pos[i][1] = pos[i][0] = 0;
                                 FreeMemBlock(bg[i]);
+                                pos[i][1] = pos[i][0] = 0;
                                 bg[i] = 0;
                                 menus[i] = 0;
                                 nitems[i] = 0;
@@ -304,8 +307,8 @@ int CalendarScreen(char *dir, char *ext, int team)
                     depth++;
                     menus[depth] = (MenuItem *)menus[level][item].on2;
                     nitems[depth] = menus[level][item].pad;
-                    pos[depth][0] = (depth == 1 ? menus[level][item].x1 : menus[level][item].x2) + pos[depth - 1][0];
-                    pos[depth][1] = (depth == 1 ? menus[level][item].y2 : menus[level][item].y1) + pos[depth - 1][1];
+                    pos[depth][0] = (depth != 1 ? menus[level][item].x2 : menus[level][item].x1) + pos[depth - 1][0];
+                    pos[depth][1] = (depth != 1 ? menus[level][item].y1 : menus[level][item].y2) + pos[depth - 1][1];
                     w = menus[depth][nitems[depth] - 1].x2 - menus[depth][0].x1 + 1;
                     h = menus[depth][nitems[depth] - 1].y2 - menus[depth][0].y1 + 1;
                     bg[depth] = sub_8CCA8((char *)str_Menubuff5, w * 4 * h + 0x11, 0x20);
@@ -403,9 +406,9 @@ int CalendarScreen(char *dir, char *ext, int team)
     }
     FreeMemBlock(ptr);
     FreeMemBlock(logos);
+    teamstatscb = (int)GameTeamStatsScreen;
     FreeMemBlock(calendarshapes);
     calendarshapes = 0;
-    teamstatscb = (int)GameTeamStatsScreen;
     skaterstatscb = (int)GameSkaterStatsScreen;
     goaliestatscb = (int)GameGoalieStatsScreen;
     standingscb = (int)GameStandingsScreen;

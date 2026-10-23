@@ -3164,6 +3164,10 @@ pop ecx	; 1FDFB
 pop ebx	; 1FDFC
 ret	; 1FDFD
 %endif ; C
+; C: src/c/015_1D6E8_menu_system/LoadShapeByTag.c
+%ifdef CBUILD
+%include "c/015_1D6E8_menu_system/LoadShapeByTag.inc"
+%else
 LoadShapeByTag:
 push dword 54h	; 1FDFE
 call __CHK	; 1FE03
@@ -3295,6 +3299,7 @@ pop esi	; 1FF82
 pop ecx	; 1FF83
 pop ebx	; 1FF84
 ret	; 1FF85
+%endif ; C
 ; C: src/c/015_1D6E8_menu_system/LoadShapeByTag.c (MakeStatsTitle)
 %ifdef CBUILD
 %include "c/015_1D6E8_menu_system/LoadShapeByTag.MakeStatsTitle.inc"

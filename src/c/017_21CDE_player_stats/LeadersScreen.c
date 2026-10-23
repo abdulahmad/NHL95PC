@@ -24,8 +24,11 @@ int j___close(int fh);  /* CRT close thunk */
 #define W(p, o) (*(unsigned short *)((char *)(p) + (o)))
 #define CMP(i, j) ((int (*)(int *, int *))leadersortfns[cat])(i, j)
 
-/* DRAFT (first pass from Ghidra, tools/ghidra_decomp.py): the column switch (LeadersScreen_coljt) and the
-   insertion are not shaped yet; 3,561 of 3,782 bytes. */
+/* DRAFT under 10.0 GA: 123 differing, 12 bytes long. The goalie records are read in an inner loop that breaks
+   out for a skater (Watcom then lays the read loop out as the EXE: the goalie tail and qsort before the read).
+   Left: the EXE places the loop increment and the code after the loop between case 7 and case 8 of the column
+   switch, and its table starts at 0 (explicit cases 0-2 here move the frame slots); kfh / pfh slots swapped;
+   teamgp[team] held in a register; the header column CSE. */
 /* LeadersScreen (25B24, PC only): the league leaders of category cat (0-7 skaters: points, goals, assists, power
    play goals, short-handed goals, penalty minutes, plus / minus, shooting percentage; 8-10 goalies: goals against
    average, wins, save percentage) for the stats screens' league (statsleague; season or league stats,
@@ -39,27 +42,26 @@ int j___close(int fh);  /* CRT close thunk */
 int LeadersScreen(int cat)
 {
     int teamgp[0x1A];
-    char title[0x50];
-    int order[0x15];
+    char title[0x54];
+    int order[0x14];
     unsigned char trec[0x4C];
     unsigned char txt[0x40];
+    unsigned short *sp;
     GStat gs;
-    PRec key;
+    int i;
     SStat ss;
     char path[0x20];
-    int n;
-    int kfh;
-    int pfh;
     int fh;
-    int i;
-    int j;
+    int n;
     int y;
+    int pfh;
+    int j;
+    PRec key;
     int recsz;
     int gp;
-    int g;
+    int kfh;
     int kf;
     int mf;
-    unsigned short *sp;
     unsigned short *gsp;
 
     n = 0;
@@ -70,11 +72,13 @@ int LeadersScreen(int cat)
     if (cat == 8 || cat == 10 || cat == 5 || cat == 7) {
         MakePath(path, (char *)&statsleague, (char *)statsteamdbs[statsfromleague], 0);
         fh = open(path, 0x200);
-        recsz = statsfromleague ? 0x2E8 : 0x4C;
+        recsz = !statsfromleague ? 0x4C : 0x2E8;
         for (i = 0; i < 0x1A; i++) {
             lseek(fh, i * recsz, 0);
             read(fh, trec, 0x4C);
-            teamgp[i] = statsplayoffs ? trec[0x3A] : trec[0x28];
+            teamgp[i] = !statsplayoffs ? trec[0x28] : trec[0x3A];
+            /* The retail code repeats this zero store for standalone, regular-season data. */
+            if (!statsfromleague && !statsplayoffs && !teamgp[i]) teamgp[i] = 0;
         }
         j___close(fh);
     }
@@ -82,57 +86,63 @@ int LeadersScreen(int cat)
     kfh = open(path, 0x200);
     MakePath(path, (char *)&statsleague, (char *)statsplayerdbs[statsfromleague], 0);
     pfh = open(path, 0x200);
-    while (read(kfh, &key, 0x34) == 0x34) {
-        if (key.c[0] >= 0x1A) continue;
-        if (key.c[2] == 'G') {
+    for (;;) {
+        for (;;) {
+            if (read(kfh, &key, 0x34) != 0x34) goto done;
+            if (key.c[0] >= 0x1A) continue;
+            if (key.c[2] != 'G') break;
             if (cat < 8) continue;
-            lseek(pfh, statsfromleague ? *(int *)(key.c + 0x2C) : *(int *)(key.c + 0x28), 0);
+            lseek(pfh, !statsfromleague ? *(int *)(key.c + 0x28) : *(int *)(key.c + 0x2C), 0);
             read(pfh, &gs, 0x36);
-            gp = statsplayoffs ? W(&gs, 0x16) : W(&gs, 0);
+            gp = !statsplayoffs ? W(&gs, 0) : W(&gs, 0x16);
             if (!gp) continue;
             if (cat == 8 || cat == 10) {
                 if (!teamgp[(unsigned char)key.c[0]] || gp * 100 / teamgp[(unsigned char)key.c[0]] < 0x1E) continue;
             } else if (cat == 9) {
-                if (!(statsplayoffs ? W(&gs, 0x18) : W(&gs, 2))) continue;
+                if ((!statsplayoffs ? W(&gs, 2) : W(&gs, 0x18)) <= 0) continue;
             }
             ((GStat *)statsgoaliebuf)[n] = gs;
-            if (n > 0x13 && CMP(&n, &order[n]) >= 0) continue;
+            if (n >= 0x14 && CMP(&n, &order[n - 1]) >= 0) continue;
             if (n < 0x14) {
                 ((PRec *)statsplayerbuf)[n] = key;
-                order[n + 1] = n;
+                order[n] = n;
                 n++;
             } else {
-                j = order[n];
+                j = order[n - 1];
                 ((PRec *)statsplayerbuf)[j] = key;
                 ((GStat *)statsgoaliebuf)[j] = gs;
             }
-        } else {
-            if (cat > 7) continue;
-            lseek(pfh, statsfromleague ? *(int *)(key.c + 0x2C) : *(int *)(key.c + 0x28), 0);
-            read(pfh, &ss, 0x2F);
-            gp = statsplayoffs ? W(&ss, 0x12) : W(&ss, 0);
-            if (!gp) continue;
-            if ((cat == 5 || cat == 7) &&
-                (!teamgp[(unsigned char)key.c[0]] || gp * 100 / teamgp[(unsigned char)key.c[0]] < 0x50)) continue;
-            ((SStat *)statsskaterbuf)[n] = ss;
-            if (cat == 7) {
-                g = statsplayoffs ? W(&ss, 0x20) : W(&ss, 0xE);
-                statssortkeys[n] = g ? ((statsplayoffs ? W(&ss, 0x14) : W(&ss, 2)) * 1000 + g / 2) / g : 0;
-            }
-            if (n > 0x13 && CMP(&n, &order[n]) >= 0) continue;
-            if (n < 0x14) {
-                ((PRec *)statsplayerbuf)[n] = key;
-                order[n + 1] = n;
-                n++;
-            } else {
-                j = order[n];
-                ((PRec *)statsplayerbuf)[j] = key;
-                ((SStat *)statsskaterbuf)[j] = ss;
-                if (cat == 7) statssortkeys[j] = statssortkeys[n];
-            }
+            qsort(order, n, 4, (int (*)(const void *, const void *))leadersortfns[cat]);
         }
-        qsort(&order[1], n, 4, (int (*)(const void *, const void *))leadersortfns[cat]);
+        if (cat >= 8) continue;
+        lseek(pfh, !statsfromleague ? *(int *)(key.c + 0x28) : *(int *)(key.c + 0x2C), 0);
+        read(pfh, &ss, 0x2F);
+        gp = !statsplayoffs ? W(&ss, 0) : W(&ss, 0x12);
+        if (!gp) continue;
+        if ((cat == 5 || cat == 7) &&
+            (!teamgp[(unsigned char)key.c[0]] || gp * 100 / teamgp[(unsigned char)key.c[0]] < 0x50)) continue;
+        ((SStat *)statsskaterbuf)[n] = ss;
+        if (cat == 7) {
+            j = !statsplayoffs ? W(&ss, 0xE) : W(&ss, 0x20);
+            if (j) {
+                i = !statsplayoffs ? W(&ss, 2) : W(&ss, 0x14);
+                statssortkeys[n] = (i * 1000 + j / 2) / j;
+            } else statssortkeys[n] = 0;
+        }
+        if (n >= 0x14 && CMP(&n, &order[n - 1]) >= 0) continue;
+        if (n < 0x14) {
+            ((PRec *)statsplayerbuf)[n] = key;
+            order[n] = n;
+            n++;
+        } else {
+            j = order[n - 1];
+            ((PRec *)statsplayerbuf)[j] = key;
+            ((SStat *)statsskaterbuf)[j] = ss;
+            if (cat == 7) statssortkeys[j] = statssortkeys[n];
+        }
+        qsort(order, n, 4, (int (*)(const void *, const void *))leadersortfns[cat]);
     }
+done:
     j___close(kfh);
     j___close(pfh);
     mf = mainfont;
@@ -175,9 +185,9 @@ int LeadersScreen(int cat)
         PrintShadowText(0x24E, y, (char *)off_C6C40[cat * 5 + 4]);
         y += 0x10;
         for (i = 0; i < n; i++) {
-            j = order[i + 1];
+            j = order[i];
             key = ((PRec *)statsplayerbuf)[j];
-            sprintf((char *)printfbuf, (char *)str_C2, key.c[2]);
+            sprintf((char *)printfbuf, (char *)str_C2, (signed char)key.c[2]);
             PrintShadowText(0xA, y, (char *)printfbuf);
             if ((unsigned char)key.c[1] < 100) PrintFmt1(0x32, y, (char *)str_fmt2d, (unsigned char)key.c[1]);
             FitPlayerName((char *)printfbuf, key.c + 3, key.c + 0x13, 0xA0);
@@ -185,46 +195,44 @@ int LeadersScreen(int cat)
             MakePath(path, (char *)&statsleague, (char *)statsteamdbs[0], 0);
             fh = open(path, 0x200);
             lseek(fh, (unsigned char)key.c[0] * 0x4C, 0);
-            read(fh, trec, 0x4C);
+            read(fh, trec, 0x27);
             j___close(fh);
             PrintShadowText(0xFA, y, (char *)trec + 0x1A);
             if (cat < 8) {
-                sp = (unsigned short *)(statsskaterbuf + j * 0x2F + (statsplayoffs ? 0x12 : 0));
+                sp = (unsigned short *)(!statsplayoffs ? statsskaterbuf + j * 0x2F : statsskaterbuf + j * 0x2F + 0x12);
                 PrintFmt1(0x172, y, (char *)str_fmt2d, sp[0]);
                 PrintFmt1(0x19A, y, (char *)str_fmt3d, sp[1]);
                 PrintFmt1(0x1CC, y, (char *)str_fmt3d, sp[2]);
                 PrintFmt1(0x1F4, y, (char *)str_fmt3d, sp[3]);
-                switch (cat) {
-                case 3: PrintFmt1(0x21C, y, (char *)str_fmt2d, sp[4]); break;
-                case 4: PrintFmt1(0x21C, y, (char *)str_fmt3d, sp[5]); break;
-                case 5: PrintFmt1(0x21C, y, (char *)str_fmt4d, sp[8]); break;
-                case 6: PrintFmt1(0x21C, y, (char *)str_fmt3d, sp[6]); break;
-                case 7:
-                    PrintFmt1(0x21C, y, (char *)str_fmt5d, sp[7]);
-                    PrintFmt2(0x24E, y, (char *)str_fmtTenths, statssortkeys[j] / 10, statssortkeys[j] % 10);
-                    break;
-                }
             } else {
-                gsp = (unsigned short *)(statsgoaliebuf + j * 0x36 + (statsplayoffs ? 0x16 : 0));
+                gsp = (unsigned short *)(!statsplayoffs ? statsgoaliebuf + j * 0x36 : statsgoaliebuf + j * 0x36 + 0x16);
                 PrintFmt1(0x172, y, (char *)str_fmt2d, gsp[0]);
                 PrintFmt1(0x19A, y, (char *)str_fmt4d, *(unsigned short *)((char *)gsp + 0xC));
-                switch (cat) {
-                case 8:
-                    PrintFmt1(0x1CC, y, (char *)str_fmt3d, gsp[7]);
-                    PrintFmt2(0x1F4, y, (char *)str_fmtMinSec, gsp[8] / 100, gsp[8] % 100);
-                    break;
-                case 9:
-                    PrintFmt1(0x1CC, y, (char *)str_fmt2d, gsp[1]);
-                    PrintFmt1(0x1F4, y, (char *)str_fmt2d, gsp[2]);
-                    if (!statsplayoffs) PrintFmt1(0x21C, y, (char *)str_fmt2d, gsp[3]);
-                    break;
-                case 10:
-                    PrintFmt1(0x1CC, y, (char *)str_fmt3d, gsp[7]);
-                    PrintFmt1(0x1F4, y, (char *)str_fmt4d, gsp[9]);
-                    if (gsp[10] > 999) PrintFmt2(0x21C, y, (char *)str_fmtPct, gsp[10] / 1000, gsp[10] % 1000);
-                    else PrintFmt1(0x21C, y, (char *)str_fmtPct0, gsp[10] % 1000);
-                    break;
-                }
+            }
+            switch (cat) {
+            case 3: PrintFmt1(0x21C, y, (char *)str_fmt2d, sp[4]); break;
+            case 4: PrintFmt1(0x21C, y, (char *)str_fmt3d, sp[5]); break;
+            case 6: PrintFmt1(0x21C, y, (char *)str_fmt3d, sp[6]); break;
+            case 5: PrintFmt1(0x21C, y, (char *)str_fmt4d, sp[8]); break;
+            case 7:
+                PrintFmt1(0x21C, y, (char *)str_fmt5d, sp[7]);
+                PrintFmt2(0x24E, y, (char *)str_fmtTenths, statssortkeys[j] / 10, statssortkeys[j] % 10);
+                break;
+            case 8:
+                PrintFmt1(0x1CC, y, (char *)str_fmt3d, gsp[7]);
+                PrintFmt2(0x1F4, y, (char *)str_fmtMinSec, gsp[8] / 100, gsp[8] % 100);
+                break;
+            case 9:
+                PrintFmt1(0x1CC, y, (char *)str_fmt2d, gsp[1]);
+                PrintFmt1(0x1F4, y, (char *)str_fmt2d, gsp[2]);
+                if (!statsplayoffs) PrintFmt1(0x21C, y, (char *)str_fmt2d, gsp[3]);
+                break;
+            case 10:
+                PrintFmt1(0x1CC, y, (char *)str_fmt3d, gsp[7]);
+                PrintFmt1(0x1F4, y, (char *)str_fmt4d, gsp[9]);
+                if (gsp[10] < 1000) PrintFmt1(0x21C, y, (char *)str_fmtPct0, gsp[10] % 1000);
+                else PrintFmt2(0x21C, y, (char *)str_fmtPct, gsp[10] / 1000, gsp[10] % 1000);
+                break;
             }
             y += 0xD;
         }

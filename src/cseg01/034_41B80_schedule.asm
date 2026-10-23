@@ -1493,6 +1493,10 @@ pop esi	; 42DA7
 pop ecx	; 42DA8
 ret	; 42DA9
 %endif ; C
+; C: src/c/034_41B80_schedule/UpdateSeasonSchedule.c (SortStandings)
+%ifdef CBUILD
+%include "c/034_41B80_schedule/UpdateSeasonSchedule.SortStandings.inc"
+%else
 SortStandings:
 push dword 38h	; 42DAA
 call __CHK	; 42DAF
@@ -1630,6 +1634,7 @@ cmp esi, eax	; 42F09
 jl near SortStandings.1	; 42F0B
 add esp, byte 28h	; 42F11
 jmp near UpdateSeasonSchedule_pop3	; 42F14
+%endif ; C
 ; C: src/c/034_41B80_schedule/SwapInt.c
 %ifdef CBUILD
 %include "c/034_41B80_schedule/SwapInt.inc"
@@ -2297,6 +2302,10 @@ pop ebp	; 43751
 pop edi	; 43752
 pop esi	; 43753
 ret 4	; 43754
+; C: src/c/034_41B80_schedule/SimPlayoffRound1.c (SeedPlayoffRound2)
+%ifdef CBUILD
+%include "c/034_41B80_schedule/SimPlayoffRound1.SeedPlayoffRound2.inc"
+%else
 SeedPlayoffRound2:
 push dword 618h	; 43757
 call __CHK	; 4375C
@@ -2823,6 +2832,7 @@ xor eax, eax	; 43E33
 .47:
 add esp, 608h	; 43E35
 jmp near SimPlayoffRound1_pop3	; 43E3B
+%endif ; C
 SimPlayoffRound2:
 push dword 94h	; 43E40
 call __CHK	; 43E45

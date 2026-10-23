@@ -13,8 +13,10 @@ short CheckBump(Player *p, Player *c);
  vector * 256 (vecdist + 1, clamped to -255..255) and the player bounces off it (wallcoll, dword_CCC2C = 1).
  CheckBump is declared short in this file (the EXE tests ax), and the radii are plain short reads (each arm
  reloads its own; the W() form was hoisted above the SCnum 12 test).
- DRAFT (10.0 GA, 388 vs 389): every instruction lines up except that p sits in esi and the temporaries in edi
- (the EXE: p in edi, temporaries in esi), and d = x*x >> 2 is in eax (EXE esi, so its cmp is one byte longer). */
+ DRAFT (10.0 GA, 389 vs 389): `y * y + y * y` keeps d = x*x >> 2 in a saved register (the EXE's 4-byte
+ `cmp esi, 100h`) and `wcradiusy + y` adds into the radius register. Left: p sits in esi and the temporaries in
+ edi (the EXE: p in edi, temporaries in esi), and the net-12 test loads the radius before extending y (the EXE
+ extends y first). */
 void checkgoalp(Player *p, Player *g, short x, short y)
 {
     int d;
@@ -24,7 +26,7 @@ void checkgoalp(Player *p, Player *g, short x, short y)
     y -= HIWORD(g->Ypos);
     x -= HIWORD(g->Xpos);
     if (g->SCnum == 12) {
-        if (y + wcradiusy < -34) return;
+        if (wcradiusy + y < -34) return;
     } else {
         if (y - wcradiusy >= 34) return;
     }
@@ -33,7 +35,7 @@ void checkgoalp(Player *p, Player *g, short x, short y)
     regd1.w = x;
     d = (x * x) >> 2;
     if (d > 256) return;
-    if (y * y * 2 + d > 256) return;
+    if (y * y + y * y + d > 256) return;
     if (p->SCnum != 16 && CheckBump(p, g)) return;
     len = vecdist(x, y) + 1;
     regd0.w = (W(regd0) << 8) / len;

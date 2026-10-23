@@ -2970,6 +2970,10 @@ add esp, byte 1Ch	; 5548B
 jmp near checkob_ret5	; 5548E
 ; chk4pass: (computer looks for a good pass): threat spodds roll, target by vtoa
 ; (PassLaneChk), dopass, assexit.
+; C: src/c/040_53294_engine_physics_ai/checkob.c (chk4pass)
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/checkob.chk4pass.inc"
+%else
 chk4pass:
 push dword 18h	; 55493
 call __CHK	; 55498
@@ -3240,6 +3244,7 @@ mov edx, 1	; 557F8
 .29:
 mov eax, edx	; 557FD
 jmp near checkob_ret5	; 557FF
+%endif ; C
 ; chk4shot: (computer looks for a shot). regd4 = 20h - spodds; shot lane test; jumps to
 ; chk4lc_shoot (CompShoot) to shoot.
 ; C: src/c/040_53294_engine_physics_ai/checkob.c (chk4shot)
@@ -6570,6 +6575,10 @@ ret	; 580F4
 %endif ; C
 ; checkcoll: eax = object: wall collision (checkwallcoll) at the hot spot and the stick end,
 ; then player collisions (checkplcoll). Called from updateplayers.
+; C: src/c/040_53294_engine_physics_ai/checkcoll.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/checkcoll.inc"
+%else
 checkcoll:
 push dword 14h	; 580F5
 call __CHK	; 580FA
@@ -6699,6 +6708,7 @@ pop edi	; 582C5
 pop esi	; 582C6
 pop ecx	; 582C7
 ret	; 582C8
+%endif ; C
 checkwallcoll:
 push dword 24h	; 582C9
 call __CHK	; 582CE
@@ -7325,6 +7335,10 @@ cmp word [byte ebx+010h], byte 0	; 58B69
 jle near dopass_ret6	; 58B6E
 mov word [byte ebx+010h], 0	; 58B74
 jmp near dopass_ret6	; 58B7A
+; C: src/c/040_53294_engine_physics_ai/wallcollb.c
+%ifdef CBUILD
+%include "c/040_53294_engine_physics_ai/wallcollb.inc"
+%else
 wallcollb:
 push dword 14h	; 58B7F
 call __CHK	; 58B84
@@ -7437,6 +7451,7 @@ pop edx	; 58CDE
 pop ecx	; 58CDF
 pop ebx	; 58CE0
 ret	; 58CE1
+%endif ; C
 checkplcoll:
 push dword 18h	; 58CE2
 call __CHK	; 58CE7

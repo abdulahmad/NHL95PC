@@ -1,9 +1,10 @@
 /* Create player: making a new free agent. */
-/* DRAFT (10.0 GA): 1965 vs 1963, register picks left; see docs/UNSURE.md. The cluster size written sectors * bytes
-   loads sectors first as the EXE; sp declared in the block that copies the ratings. Left: the palette copy in ebp
-   (EXE edi), the two rating loops' base registers, the csize factors in eax / esi (EXE esi / eax), and a dead
-   mov edx, eax after the jersey number (reusing k for it drops that copy and gives the size, but swaps more
-   registers: 19 against 14). */
+/* DRAFT (10.0 GA): 1963 vs 1963; see docs/UNSURE.md. The cluster size written sectors * bytes loads sectors
+   first as the EXE; sp declared in the block that copies the ratings; the jersey number in k (the later loop
+   counter: no dead copy); the goalie ratings copied through sp (the attribute record) and pal (dead by then: the
+   source table), which gives the EXE's esi / ecx and leaves pal2 in edi. Left: the goalie loop's index and byte
+   temporaries in ebx / dl (EXE edx / bl): one register-cycle slot short before it (an extra int temporary in the
+   database sizes or at the jersey store gives the match; no natural form found). */
 #define CreateFreeAgent CreateFreeAgent_decl
 #define RandomizeNewRatings RandomizeNewRatings_decl
 #define MessageBox MessageBox_decl
@@ -56,7 +57,6 @@ void CreateFreeAgent(int a, int *mx, int *my)
     unsigned char *pal;
     unsigned char *pal2;
     char c;
-    int j;
     int k;
     unsigned char *dp;
 
@@ -119,9 +119,9 @@ void CreateFreeAgent(int a, int *mx, int *my)
     msglines[0] = (int)str_EnterAJerseyNumber;
     msglines[1] = (int)s.name;
     s.input[0] = 0;
-    j = InputDialog(msglines, 2, s.input, 2, 0x16, -1, 0, 0x63, 0);
-    if (j < 0) return;
-    s.key[1] = j;
+    k = InputDialog(msglines, 2, s.input, 2, 0x16, -1, 0, 0x63, 0);
+    if (k < 0) return;
+    s.key[1] = k;
     s.key[0] = 0xFF;
     pal = pal2 = (unsigned char *)sub_8CCA8((char *)str_Temp, 0x300, 0x20);
     sub_8FFB0(0, 0x100, pal2);
@@ -163,9 +163,9 @@ void CreateFreeAgent(int a, int *mx, int *my)
                 memset(s.gcareer, 0, 0x2C);
                 err = FileWriteAt(s.fhsea, s.gseason, *(int *)(s.key + 0x2C), 0x36);
                 if (!err) {
-                    dp = s.gatt;
-                    sp = &byte_D0FE0;
-                    for (k = 0; k < 0xB; k++) dp[((signed char *)off_D0A04)[k + 3]] = sp[k];
+                    sp = s.gatt;
+                    pal = &byte_D0FE0;
+                    for (k = 0; k < 0xB; k++) sp[((signed char *)off_D0A04)[k + 3]] = pal[k];
                     err = FileWriteAt(s.fhcar, s.gcareer, *(int *)(s.key + 0x28), 0x2C);
                 }
                 if (!err) err = FileWriteAt(s.fhatt, s.gatt, *(int *)(s.key + 0x24), 0x10);

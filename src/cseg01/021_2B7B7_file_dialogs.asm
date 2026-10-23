@@ -589,6 +589,10 @@ mov edx, dword [edx]	; 2BEF4
 mov eax, dword [eax]	; 2BEF6
 jmp near strcmp_	; 2BEF8
 %endif ; C
+; C: src/c/021_2B7B7_file_dialogs/LoadFileDlgShapes.c (ScanSavedGames)
+%ifdef CBUILD
+%include "c/021_2B7B7_file_dialogs/LoadFileDlgShapes.ScanSavedGames.inc"
+%else
 ScanSavedGames:
 push dword 48h	; 2BEFD
 call __CHK	; 2BF02
@@ -771,6 +775,7 @@ mov dword [lgfiles+0Ch], eax	; 2C128
 .21:
 add esp, byte 2Ch	; 2C12D
 jmp near LoadFileDlgShapes_x	; 2C130
+%endif ; C
 ; C: src/c/021_2B7B7_file_dialogs/PrintTextCopy.c
 %ifdef CBUILD
 %include "c/021_2B7B7_file_dialogs/PrintTextCopy.inc"
@@ -1369,6 +1374,10 @@ mov eax, dword [byte esp+04h]	; 2C7F5
 add esp, byte 8	; 2C7F9
 jmp near LoadFileDlgShapes_x	; 2C7FC
 %endif ; C
+; C: src/c/021_2B7B7_file_dialogs/LoadFileDlgShapes.c (RunFileDlg)
+%ifdef CBUILD
+%include "c/021_2B7B7_file_dialogs/LoadFileDlgShapes.RunFileDlg.inc"
+%else
 RunFileDlg:
 push dword 4Ch	; 2C801
 call __CHK	; 2C806
@@ -1886,6 +1895,7 @@ je near RunFileDlg.26	; 2CE19
 mov ecx, dword [byte esp+01Ch]	; 2CE1F
 push ecx	; 2CE23
 jmp near RunFileDlg.33	; 2CE24
+%endif ; C
 ; C: src/c/021_2B7B7_file_dialogs/LoadFileDlgShapes.c (DeleteSavedGame)
 %ifdef CBUILD
 %include "c/021_2B7B7_file_dialogs/LoadFileDlgShapes.DeleteSavedGame.inc"

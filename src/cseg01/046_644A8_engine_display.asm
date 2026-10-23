@@ -187,6 +187,10 @@ pop esi	; 64611
 pop ecx	; 64612
 ret	; 64613
 %endif ; C
+; C: src/c/046_644A8_engine_display/BuildDefaultLines.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/BuildDefaultLines.inc"
+%else
 BuildDefaultLines:
 push dword 0F4h	; 64614
 call __CHK	; 64619
@@ -474,6 +478,7 @@ pop edx	; 64A07
 pop ecx	; 64A08
 pop ebx	; 64A09
 ret	; 64A0A
+%endif ; C
 CanFillLineSlot:
 push dword 24h	; 64A0B
 call __CHK	; 64A10
@@ -1847,6 +1852,10 @@ pop esi	; 658EF
 pop ecx	; 658F0
 pop ebx	; 658F1
 ret	; 658F2
+; C: src/c/046_644A8_engine_display/BuildDefaultLines.c (SetupTeamLines)
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/BuildDefaultLines.SetupTeamLines.inc"
+%else
 SetupTeamLines:
 push dword 1Ch	; 658F3
 call __CHK	; 658F8
@@ -2061,6 +2070,7 @@ inc ecx	; 65B3C
 cmp cx, byte 19h	; 65B3D
 jl short SetupTeamLines.23	; 65B41
 jmp near lines_popx	; 65B43
+%endif ; C
 ; C: src/c/046_644A8_engine_display/NormalizeDressFlags.c
 %ifdef CBUILD
 %include "c/046_644A8_engine_display/NormalizeDressFlags.inc"
@@ -2252,6 +2262,10 @@ pop edi	; 65CFC
 pop esi	; 65CFD
 ret 4	; 65CFE
 %endif ; C
+; C: src/c/046_644A8_engine_display/checkwindow.c
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/checkwindow.inc"
+%else
 checkwindow:
 push dword 20h	; 65D01
 call __CHK	; 65D06
@@ -2780,6 +2794,7 @@ pop edx	; 66493
 pop ecx	; 66494
 pop ebx	; 66495
 ret	; 66496
+%endif ; C
 ; C: src/c/046_644A8_engine_display/checkwindow.c (LoadTeamPPV)
 %ifdef CBUILD
 %include "c/046_644A8_engine_display/checkwindow.LoadTeamPPV.inc"
@@ -3626,6 +3641,10 @@ mov byte [textline1], dl	; 66FD1
 mov byte [textline3], dl	; 66FD7
 jmp near checkwindow_popx	; 66FDD
 %endif ; C
+; C: src/c/046_644A8_engine_display/checkwindow.c (DrawCallBanner)
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/checkwindow.DrawCallBanner.inc"
+%else
 DrawCallBanner:
 push dword 54h	; 66FE2
 call __CHK	; 66FE7
@@ -3784,6 +3803,7 @@ mov dword [spritedrawcount], edi	; 671D5
 call sub_6AB7C	; 671DB
 add esp, byte 24h	; 671E0
 jmp near checkwindow_popebp	; 671E3
+%endif ; C
 ; C: src/c/046_644A8_engine_display/ShowGoalieBanner.c
 %ifdef CBUILD
 %include "c/046_644A8_engine_display/ShowGoalieBanner.inc"

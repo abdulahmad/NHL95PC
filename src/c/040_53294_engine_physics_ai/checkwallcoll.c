@@ -1,18 +1,12 @@
 /* Engine physics AI: wall collision. */
-/* DRAFT: 470 vs 481. The prologue, both radius loads, and the y test match. xlim is reloaded in edx
- (original ecx). The x test negates that limit in ecx and compares dx with cx; the original negates it
- in edx, reloads x, and compares with regd4 in memory.
- Do not retry: non-volatile limits sign-extend the radii and spill y. Declaring ylim before xlim swaps
- the two stack slots. */
+/* DRAFT (10.0 GA, 15 differing, 485 vs 481): the limits are short locals, so `0xA0 - wcradiusx` is the
+   EXE's narrowed `mov dx, [wcradiusx] / sub eax, edx` (no inline asm); declared ylim, ry0, xlim for the EXE
+   registers. Left: x's home and ylim swap stack slots ([esp] / [esp+8]), and the goal-mouth net index:
+   Watcom folds `&SortCords[0x0C + (ry0 == word_E03B8)]` into `shl edx, 7 / add edx, 600h / add edx, SortCords`
+   where the EXE adds 0Ch before the shift and adds SortCords from a register. See docs/UNSURE.md. */
 #include "nhl95.h"
 
 #define W(v) (*(int *)((char *)&(v) - 2) >> 16)
-
-/* 0xA0 - wcradiusx and 0x108 - wcradiusy. The word load stays in dx/bx, the argument registers. */
-int RinkLimitX(void);
-#pragma aux RinkLimitX = "mov eax,0A0h" "mov dx,[wcradiusx]" "sub eax,edx" value [eax] modify exact [eax edx ebx];
-int RinkLimitY(void);
-#pragma aux RinkLimitY = "mov eax,108h" "mov bx,[wcradiusy]" "sub eax,ebx" value [eax] modify exact [eax ebx];
 
 /* checkwallcoll: keep a player inside the rink. x and y are tested against the wall inset
  (160 and 264 minus the wall radii, then 64 minus those). A point past a corner is pushed
@@ -21,13 +15,13 @@ int RinkLimitY(void);
  is built from the nearest boards and wallcollb runs. */
 void checkwallcoll(Player *p, short x, short y)
 {
-    volatile int xlim;
-    volatile int ylim;
+    short ylim;
     short ry0;
+    short xlim;
     int dist;
 
-    xlim = RinkLimitX();
-    ylim = RinkLimitY();
+    xlim = 0xA0 - wcradiusx;
+    ylim = 0x108 - wcradiusy;
     regd4.w = 0x40 - xlim;
     ry0 = word_E03B8 = 0x40 - ylim;
     if (y > word_E03B8) {

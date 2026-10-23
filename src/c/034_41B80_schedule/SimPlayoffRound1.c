@@ -183,11 +183,13 @@ int SeedPlayoffRound2(int buf, int games, int fh, int tm, int *human)
     for (i = 0; i < games; i++) {
         NormalizeDate(&month, &day);
         s[(i + 0x46) * 6] = s[(i + 0x4D) * 6] = month;
-        s[(i + 0x46) * 6 + 1] = s[(i + 0x4D) * 6 + 1] = day;
+        s[(i + 0x4D) * 6 + 1] = day;
+        s[(i + 0x46) * 6 + 1] = day;
         day++;
         NormalizeDate(&month, &day);
         s[(i + 0x38) * 6] = s[(i + 0x3F) * 6] = month;
-        s[(i + 0x38) * 6 + 1] = s[(i + 0x3F) * 6 + 1] = day;
+        s[(i + 0x3F) * 6 + 1] = day;
+        s[(i + 0x38) * 6 + 1] = day;
         day++;
     }
     __STOSD(w, -1, 8);
@@ -293,20 +295,20 @@ int SimPlayoffRound2(int sched, int rwfh, int rdfh, char *dir, char *ext)
    error of a record read / write. */
 int SeedPlayoffRound3(int buf, int games, int fh, int tm, int *human)
 {
+    int k;
     POTeamRec r0;
     POTeamRec r1;
-    int len;
     int c1;
     int c2;
-    int a;
     int b;
-    unsigned char day;
     unsigned char month;
+    int a;
+    unsigned char day;
     unsigned char *s;
     unsigned char *g;
     int i;
-    int k;
     int err;
+    int len;
 
     s = (unsigned char *)buf + 0x150;
     len = SeriesLength(s);
@@ -351,32 +353,32 @@ int SeedPlayoffRound3(int buf, int games, int fh, int tm, int *human)
     if (s[2] == c1) SetSeriesTeams((unsigned char *)buf + 0x1F8, c1, b, games);
     else SetSeriesTeams((unsigned char *)buf + 0x1F8, b, c1, games);
     *human = 0;
-    if (TEAMS[a * 30 + 0x17] == 1) {
+    if (TEAMS[(a * 16 - a) * 2 + 0x17] == 1) {
         *human = 1;
-        if ((err = ReadTeamRec(fh, &r1, a)) != 0) return err;
+        if ((err = ReadTeamRec(fh, &r0, a)) != 0) return err;
     }
-    if (TEAMS[b * 30 + 0x17] == 1) {
+    if (TEAMS[(b * 16 - b) * 2 + 0x17] == 1) {
         *human = 1;
-        if ((err = ReadTeamRec(fh, &r0, b)) != 0) return err;
+        if ((err = ReadTeamRec(fh, &r1, b)) != 0) return err;
     }
-    for (k = 0; k < games; k++) r1.games[k + 14] = r0.games[k + 14] = (k + 0x498) * 6 + 2;
-    if (TEAMS[a * 30 + 0x17] == 1 && (err = WriteTeamRec(fh, &r1, a)) != 0) return err;
-    if (TEAMS[b * 30 + 0x17] == 1 && (err = WriteTeamRec(fh, &r0, b)) != 0) return err;
+    for (k = 0; k < games; k++) r0.games[k + 14] = r1.games[k + 14] = (k + 0x498) * 6 + 2;
+    if (TEAMS[(a * 16 - a) * 2 + 0x17] == 1 && (err = WriteTeamRec(fh, &r0, a)) != 0) return err;
+    if (TEAMS[(b * 16 - b) * 2 + 0x17] == 1 && (err = WriteTeamRec(fh, &r1, b)) != 0) return err;
     a = c2 = SeriesWinner(s + 0x54, len);
     b = SeriesWinner(s + 0x7E, len);
     if (s[0x56] == c2) SetSeriesTeams((unsigned char *)buf + 0x222, c2, b, games);
     else SetSeriesTeams((unsigned char *)buf + 0x222, b, c2, games);
-    if (TEAMS[a * 30 + 0x17] == 1) {
+    if (TEAMS[(a * 16 - a) * 2 + 0x17] == 1) {
         *human = 1;
-        if ((err = ReadTeamRec(fh, &r1, a)) != 0) return err;
+        if ((err = ReadTeamRec(fh, &r0, a)) != 0) return err;
     }
-    if (TEAMS[b * 30 + 0x17] == 1) {
+    if (TEAMS[(b * 16 - b) * 2 + 0x17] == 1) {
         *human = 1;
-        if ((err = ReadTeamRec(fh, &r0, b)) != 0) return err;
+        if ((err = ReadTeamRec(fh, &r1, b)) != 0) return err;
     }
-    for (k = 0; k < games; k++) r1.games[k + 14] = r0.games[k + 14] = (k + 0x49F) * 6 + 2;
-    if (TEAMS[a * 30 + 0x17] == 1 && (err = WriteTeamRec(fh, &r1, a)) != 0) return err;
-    if (TEAMS[b * 30 + 0x17] == 1 && (err = WriteTeamRec(fh, &r0, b)) != 0) return err;
+    for (k = 0; k < games; k++) r0.games[k + 14] = r1.games[k + 14] = (k + 0x49F) * 6 + 2;
+    if (TEAMS[(a * 16 - a) * 2 + 0x17] == 1 && (err = WriteTeamRec(fh, &r0, a)) != 0) return err;
+    if (TEAMS[(b * 16 - b) * 2 + 0x17] == 1 && (err = WriteTeamRec(fh, &r1, b)) != 0) return err;
     return 0;
 }
 
@@ -471,7 +473,8 @@ int SeedPlayoffFinal(int buf, int games, int fh, int tm, int unused, int *human)
     for (k = 0; k < games; k++) r[0].games[k + 21] = r[1].games[k + 21] = (k + 0x4A6) * 6 + 2;
     if (TEAMS[w[0] * 30 + 0x17] == 1 && (err = WriteTeamRec(fh, &r[0], w[0])) != 0) return err;
     if (TEAMS[w[1] * 30 + 0x17] == 1 && (err = WriteTeamRec(fh, &r[1], w[1])) != 0) return err;
-    st.pts[0] = r[0].pad[0x29] * 2 + r[0].pad[0x2B];
+    err = r[0].pad[0x29] * 2;
+    st.pts[0] = err + r[0].pad[0x2B];
     st.wins[0] = r[0].pad[0x29];
     st.gf[0] = *(unsigned short *)&r[0].pad[0x2C];
     st.ga[0] = *(unsigned short *)&r[0].pad[0x2E];

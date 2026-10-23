@@ -1,6 +1,9 @@
 /* Engine player logic: the goalie's assignment and the assignments that end in its exit (assnearest,
    assrefsignal, assrefgoalpa). */
-/* DRAFT: 3,718 vs 3,774 bytes, 230 differing lines; see docs/UNSURE.md. assgoalie ends in ass_popx
+/* DRAFT: assgoalie same size, 25 differing under 10.0 GA (x and y are reused for the post distance and the
+   far-side y, as in the EXE; the vecdist result is declared in its own block). Left: the vecdist result
+   (`mov edx, eax` in the EXE), the SortCords loop's puckdist load (di in the EXE), the setl copy of the carrier
+   side test and the epilogue (`pop ebp; jmp ass_popx`); see docs/UNSURE.md. assgoalie ends in ass_popx
    (assrefwhistle.c), so its match belongs in assrefwhistle.c between asspenalty and CountPuckThreat; the draft
    sits in its own file so the matched blocks there stay as they are. */
 #define imul32 imul32_decl
@@ -36,11 +39,10 @@ void assgoalie(Player *p)
 {
     Player *q;
     short *pc;
-    int px;
-    int ay;
+    int x;
+    int y;
     int ok;
-    int d;
-    int y2;
+    int ay;
     int a;
     short k;
 
@@ -48,11 +50,11 @@ void assgoalie(Player *p)
     if (*(short *)((char *)p + 0x4A) > 0) (*(short *)((char *)p + 0x4A))--;
     if (*puckc != p->SCnum) ((unsigned char *)p)[0x63] = 0;
     ((unsigned char *)p)[0x48] |= 6;
-    px = HIWORD(p->Xpos);
-    ay = HIWORD(p->Ypos);
-    ay = ABS(ay);
-    if (px >= -0x28 && px < 0x29 && ay >= 0xC5 && ay < 0xE4) ((unsigned char *)p)[0x48] &= 0xFB;
-    if (px >= -0x30 && px < 0x31 && ay >= 0xC5) ((unsigned char *)p)[0x48] &= 0xFD;
+    x = HIWORD(p->Xpos);
+    y = HIWORD(p->Ypos);
+    y = ABS(y);
+    if (x >= -0x28 && x < 0x29 && y >= 0xC5 && y < 0xE4) ((unsigned char *)p)[0x48] &= 0xFB;
+    if (x >= -0x30 && x < 0x31 && y >= 0xC5) ((unsigned char *)p)[0x48] &= 0xFD;
     if (check4bench(p)) return;
     if (p->pflags & 2) {
         p->pflags &= 0xFD;
@@ -60,18 +62,18 @@ void assgoalie(Player *p)
         p->temp2 = 8;
         ((unsigned char *)p)[0x2D] = 0xFF;
     }
-    if (ay > 0xE4) {
+    if (y > 0xE4) {
         regd2.w = 0;
-        if (ABS(px) <= 0x30) {
+        if (ABS(x) <= 0x30) {
 post:
             regd0.w = HIWORD(p->Xpos) < 0 ? -0xA0 : 0xA0;
         } else {
-            regd0.w = px;
+            regd0.w = x;
         }
         goto move;
     }
-    if (ABS(px) > 0x34 || ay >= 0xEF || ay < 0xB3) {
-        regd0.w = px >= 0 ? 4 : -4;
+    if (ABS(x) > 0x34 || y >= 0xEF || y < 0xB3) {
+        regd0.w = x >= 0 ? 4 : -4;
         regd1.w = p->pflags & 0x80 ? -0xC4 : 0xC4;
         skateto(p, 0);
         return;
@@ -80,7 +82,7 @@ post:
     if (gmode & 1) return;
     if (p->temp5 >= 0) {
         if (*puckc == p->SCnum) {
-            if (ay < 0x9B) p->temp5 = 0;
+            if (y < 0x9B) p->temp5 = 0;
             if (--p->temp5 < 0) AddPenalty2(p, 4);
         } else {
             p->temp5 = -1;
@@ -157,7 +159,7 @@ angle:
         pc += 2;
     }
     if (ABS(HIWORD(p->Ypos)) > 0xE4) {
-        regd2.w = regd0.w = 0;
+        regd0.w = regd2.w = 0;
         if (ABS(HIWORD(p->Xpos)) > 0x30) goto move;
         goto post;
     }
@@ -168,14 +170,14 @@ angle:
     regd1.w = p->facedir;
     if ((regd0.w -= regd1.w) != 0) {
         regd0.w = ((-regd0.w & 4) >> 1) - 1;
-        if (1 << regd1.w & 0x42) {
+        if (!(1 << regd1.w & 0x42)) {
             regd1.w += regd0.w;
-            if (1 << regd1.w & (p->pflags & 0x80 ? 0x38 : 0x83)) {
-                regd0.w = -regd0.w;
-                regd1.w += regd0.w + regd0.w;
-            }
         } else {
             regd1.w += regd0.w;
+            if ((!(p->pflags & 0x80) ? 0x83 : 0x38) & 1 << regd1.w) {
+                regd0.w = -regd0.w;
+                regd1.w += regd0.w * 2;
+            }
         }
         regd1.w &= 7;
         p->facedir = regd1.w;
@@ -186,28 +188,33 @@ angle:
     regd0.w = *puckx + (imul32(*puckvx, regd0.w) >> 16);
     regd1.w = *pucky + (imul32(*puckvy, regd1.w) >> 16);
     ClampYPosition(p);
-    d = vecdist(regd0.w, regd1.w);
-    if (d >= 0x1E) {
-        regd2.w = d + 1;
-        if (ABS(*pucky) < 0x74 && ShotLaneOpen()) {
-            regd4.w = 0x14;
-            if (sflags & 8) regd4.w = 0x1C;
-        } else {
-            regd4.w = 0x12;
-            if (sflags & 8) regd4.w = 0x1A;
+    {
+        int dist;
+
+        dist = vecdist(regd0.w, regd1.w);
+        if (dist >= 0x1E) {
+            dist++;
+            regd2.w = dist;
+            if (ABS(*pucky) < 0x74 && ShotLaneOpen()) {
+                regd4.w = 0x14;
+                if (sflags & 8) regd4.w = 0x1C;
+            } else {
+                regd4.w = 0x12;
+                if (sflags & 8) regd4.w = 0x1A;
+            }
+            regd1.w = regd1.w * regd4.w / regd2.w;
+            regd4.w += 8;
+            regd0.w = regd0.w * regd4.w / regd2.w;
         }
-        regd1.w = regd1.w * regd4.w / regd2.w;
-        regd4.w += 8;
-        regd0.w = regd0.w * regd4.w / regd2.w;
     }
     regd2.w = regd1.w += regd3.w;
-    y2 = (*puckvy >> 9) + *pucky;
+    y = (*puckvy >> 9) + *pucky;
     if (*puckc < 0 && ABS(*pucky) < 0xE8 && ABS(HIWORD(p->Ypos)) > 0x74 && p->puckdist < 0x1E
-        && ABS(y2) > ABS(HIWORD(p->Ypos)))
+        && ABS(y) > ABS(HIWORD(p->Ypos)))
         ok = 0;
     if (ok && (unsigned short)pc[1] >= 0x23) goto move;
-    d = pc[0];
-    if (ok && ABS(d) >= 0x19) {
+    x = pc[0];
+    if (ok && ABS(x) >= 0x19) {
         if (*puckc >= 0 || iflags & 4 || ABS(*puckx) < 0x44 || ABS(*puckvy) < 0x3800 || ABS(*pucky) < 0x98
             || (p->pflags & 0x80 ? -*puckvy : *puckvy) < -0x190 || *(int *)((char *)p->tmptr + 0x3E) < 0x132
             || *(int *)((char *)p->optmptr + 0x3E) < 0x132)
@@ -215,20 +222,20 @@ angle:
         assinsert(p, 0xF);
         return;
     }
-    d -= HIWORD(p->Xpos);
-    if (d < 0) d = -d;
-    d -= 8;
-    if (d > 0x10) d = 0x10;
-    if (d < 0) d = 0;
-    d >>= 2;
+    x -= HIWORD(p->Xpos);
+    if (x < 0) x = -x;
+    x -= 8;
+    if (x > 0x10) x = 0x10;
+    if (x < 0) x = 0;
+    x >>= 2;
     ay = ABS(HIWORD(p->Ypos));
-    if (y2 < 0) y2 = -y2;
-    if (y2 > ay) d += 4;
+    if (y < 0) y = -y;
+    if (y > ay) x += 4;
     if (ok && (p->puckdist > 0x19 || ABS(*pucky) > 0xE8)
-        && ((unsigned short)pc[1] >= d + 0xC || ABS(*pucky) > 0xE9)) {
+        && ((unsigned short)pc[1] >= x + 0xC || ABS(*pucky) > 0xE9)) {
         regd0.w = pc[0];
-        if (ABS(*pucky) <= 0xDC) goto move;
-        goto side;
+        if (ABS(*pucky) > 0xDC) regd0.w = *puckx > 0 ? 0x18 : -0x18;
+        goto move;
     }
     if (*puckc == p->SCnum || ABS(*puckx) >= 0x64 || *(short *)puckz >= 0x14) goto move;
     p->Xvel >>= 1;
@@ -247,10 +254,10 @@ angle:
     } else {
         if (regd3.w == 0 || regd3.w == 4) {
             a = p->facedir;
-            if (a == 0) regd3.w = regd0.w < 0 ? 7 : 1;
-            else if (a == 4) regd3.w = regd0.w < 0 ? 1 : 7;
-            else if (a == 1 || a == 5) regd3.w = ABS(regd0.w) < ABS(regd1.w) ? 7 : 1;
-            else if (a == 3 || a == 7) regd3.w = ABS(regd0.w) < ABS(regd1.w) ? 1 : 7;
+            if (a == 0) regd3.w = regd0.w >= 0 ? 1 : 7;
+            else if (a == 4) regd3.w = regd0.w >= 0 ? 7 : 1;
+            else if (a == 1 || a == 5) regd3.w = ABS(regd0.w) >= ABS(regd1.w) ? 1 : 7;
+            else if (a == 3 || a == 7) regd3.w = ABS(regd0.w) >= ABS(regd1.w) ? 7 : 1;
             else regd3.w = randomd0(2);
         }
         regd0.w = dword_E03AE >> 0x12;
@@ -268,15 +275,15 @@ angle:
     SetSPA(p, ((short *)dword_CCA5A)[regd0.w + 1]);
     CROWDUP();
     regd0.w = pc[0];
-    if (ABS(*pucky) <= 0xDC) goto move;
-side:
-    regd0.w = *puckx > 0 ? 0x18 : -0x18;
+    if (ABS(*pucky) > 0xDC) regd0.w = *puckx > 0 ? 0x18 : -0x18;
 move:
     regd1.w = regd2.w;
-    regd0.w -= HIWORD(p->Xpos) + ((signed char *)p)[0x0D];
-    regd1.w -= HIWORD(p->Ypos) + ((signed char *)p)[0x0F];
-    k = 5;
-    if (ok && ABS(regd0.w) < k && ABS(regd1.w) < k) regd0.w = regd1.w = 0;
+    regd0.w -= ((signed char *)p)[0x0D] + (p->Xpos >> 16);
+    regd1.w -= ((signed char *)p)[0x0F] + (p->Ypos >> 16);
+    if (ok) {
+        k = 5;
+        if (ABS(regd0.w) < k && ABS(regd1.w) < k) regd0.w = regd1.w = 0;
+    }
     regd2.w = ((signed char *)p)[0x28] = vtoa(regd0.w, regd1.w);
     if (regd2.w > 7) goto stop;
 skate:
@@ -475,7 +482,9 @@ void assrefsignal(Player *p)
     SkateToSpot(p, 0);
 }
 
-/* DRAFT: same size, 143 lines (the goal-call shorts spill differently, the shared assreplace exit); see
+/* DRAFT: 2,114 vs 2,115 bytes under 10.0 GA, 67 differing: each branch stores regd1 itself (the EXE's 16-bit
+   y difference, the shared store cross-jumped). The EXE saves ebp too (it holds temp3 - puckx in the goal-line
+   crossings, computed after the constant - pucky factor) and keeps the goal-call bytes in other registers; see
    docs/UNSURE.md. */
 /* assrefgoalpa (4ED7C; 93G assrefgoalpa, PC version; ends in assgoalie_popebp): the referee after a goal or a
    penalty call goes to the puck. Not while locked (pflags bit 5). While the goal overlay runs (ovlseq neither 0 nor
@@ -493,14 +502,13 @@ void assrefsignal(Player *p)
    held at -100, SPA C03h, assignment 22h). p: the referee. No result. */
 void assrefgoalpa(Player *p)
 {
+    short a1;
     short sc;
     short team;
     short side;
-    short a1;
     short a2;
     short n;
     int c;
-    int d;
     int ok;
 
     if (p->pflags & 0x20) return;
@@ -588,7 +596,6 @@ void assrefgoalpa(Player *p)
         *puckvy = 0;
         *(short *)puckvz = 0;
         *(short *)puckz = 0x64;
-done:
         assreplace(p, 0x22);
         return;
     }
@@ -596,7 +603,7 @@ done:
         p->temp3 = *puckx;
         p->temp4 = *pucky < 0 ? -0xE3 : 0xE3;
         regd0.w = HIWORD(p->Xpos) - p->temp3;
-        d = HIWORD(p->Ypos) - (*pucky < 0 ? -0xEE : 0xEE);
+        regd1.w = HIWORD(p->Ypos) - (*pucky < 0 ? -0xEE : 0xEE);
     } else {
         p->temp3 = *puckx + (*puckvx >> 7);
         p->temp4 = *pucky + (*puckvy >> 7);
@@ -607,9 +614,9 @@ done:
             p->temp4 = *pucky;
         }
         if ((*pucky - 0xE8 ^ p->temp4 - 0xE8) < 0) {
-            c = (0xE8 - *pucky) * (p->temp3 - *puckx);
+            c = (p->temp3 - *puckx) * (0xE8 - *pucky);
             if (p->temp4 - *pucky) c /= p->temp4 - *pucky;
-            regd0.w = *puckx + c;
+            regd0.w = c + *puckx;
             if (ABS(regd0.w) < 0x19) {
                 p->temp3 = *puckx;
                 p->temp4 = *pucky;
@@ -625,9 +632,8 @@ done:
             }
         }
         regd0.w = HIWORD(p->Xpos) - *puckx;
-        d = HIWORD(p->Ypos) - *pucky;
+        regd1.w = HIWORD(p->Ypos) - *pucky;
     }
-    regd1.w = d;
     if (ABS(regd0.w) <= 0xC && ABS(regd1.w) <= 0xC) {
         ok = ABS(*puckx) != 6 || ABS(*pucky) != 0xF0 || ABS(HIWORD(p->Ypos)) <= 0xE8;
         if (ok) {
@@ -648,7 +654,8 @@ done:
                 if (regd2.w < 8) p->facedir = regd2.w;
                 p->pflags |= 0x20;
                 SetSPA(p, 0xC03);
-                goto done;
+                assreplace(p, 0x22);
+                return;
             }
         }
     }

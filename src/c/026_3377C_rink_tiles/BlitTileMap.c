@@ -1,8 +1,8 @@
 /* Rink tiles: expand a tile map into the rink bitmap. */
-/* DRAFT: 423 vs 459. The prologue homes shape, tiles and y and the tile word matches. Height is stored
- at esp+14h and width at esp+18h; the original stores height at esp+18h and width at esp+14h. The tile
- index is masked in edx; the original masks it in eax, then adds the tile base. The destination address
- and the 8x8 copy are scheduled differently. Do not retry: declaring height before width. */
+/* DRAFT (GA): 459 bytes, 5 differing. The flips are separate if / else arms (Watcom cross-jumps their shared
+ tails as in the EXE) and the tile address adds the bitmap base last. Left: height is stored at esp+14h and
+ width at esp+18h (the original the other way round), and the mirrored row is `add eax, edi / sub eax, edi /
+ sub eax, edi` where the original doubles row in place (`add edi, edi / sub eax, edi`); see docs/UNSURE.md. */
 #include "nhl95.h"
 
 /* BlitTileMap: paint shape (width, height, then words) with 8x8 tiles from tiles. Tile bits 4000h and
@@ -34,16 +34,16 @@ void BlitTileMap(unsigned char *shape, unsigned char *tiles, int x0, short y, sh
             hflip = flags ^ (tile & 0x2000);
             src = tiles + ((tile & 0x3FF) << 6);
             if (flags) {
-                dst = (unsigned char *)(*(int *)((char *)rinktilebm + 0x2C) + 0x10
-                    + ((((y + row) - (row << 1)) * rinkwtiles) << 6)
-                    + ((((x + col) - (col << 1)) << 3)));
+                dst = (unsigned char *)(((rinkwtiles * (y + row - row - row)) << 6)
+                    + ((((x + col) - (col << 1)) << 3)) + (*(int *)((char *)rinktilebm + 0x2C) + 0x10));
             } else {
-                dst = (unsigned char *)(*(int *)((char *)rinktilebm + 0x2C) + 0x10
-                    + (((y + row) * rinkwtiles) << 6)
-                    + ((x + col) << 3));
+                dst = (unsigned char *)((((y + row) * rinkwtiles) << 6) + ((x + col) << 3)
+                    + (*(int *)((char *)rinktilebm + 0x2C) + 0x10));
             }
-            if (vflip) dst += ((rinkwtiles << 3) - rinkwtiles) << 3;
-            if (hflip) dst += 7;
+            if (vflip) {
+                dst += rinkwtiles * 56;
+                if (hflip) dst += 7;
+            } else if (hflip) dst += 7;
             r = 0;
             do {
                 c = 0;
@@ -56,13 +56,21 @@ void BlitTileMap(unsigned char *shape, unsigned char *tiles, int x0, short y, sh
                     c++;
                 } while (c < 8);
                 if (vflip) {
-                    dst -= rinkwtiles << 3;
-                    if (hflip) dst += 8;
-                    else dst -= 8;
+                    if (hflip) {
+                        dst -= rinkwtiles << 3;
+                        dst += 8;
+                    } else {
+                        dst -= rinkwtiles << 3;
+                        dst -= 8;
+                    }
                 } else {
-                    dst += rinkwtiles << 3;
-                    if (hflip) dst += 8;
-                    else dst -= 8;
+                    if (hflip) {
+                        dst += rinkwtiles << 3;
+                        dst += 8;
+                    } else {
+                        dst += rinkwtiles << 3;
+                        dst -= 8;
+                    }
                 }
                 r++;
             } while (r < 8);

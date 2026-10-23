@@ -17,7 +17,10 @@ void FixJerseyNumber(int side, int i);
    the team records' key numbers (+4Ch, by roster slot), the slot bytes and the 1Bh-byte list entries; fix both
    jersey numbers (FixJerseyNumber) and clear (64h) every line slot (+BCh, 30h bytes) of either team that held
    the moved player. Then mark the database dirty and reload and redraw both lists. mode: the menu argument, not
-   used; x, y: where the message box goes. */
+   used; x, y: where the message box goes.
+   DRAFT (GA): 857 vs 861, 50 differing. nb, ga, gb declared in that order give the EXE's count registers (edx,
+   ebp, eax); the first `nb != s.na` then loads s.na into esi (EXE compares memory), a / b take ecx / edx (EXE
+   eax / ecx) and the key-number swaps index EAF7C scaled (EXE `ecx = slot * 4`). See docs/UNSURE.md. */
 void SwapSelectedPlayers(int *mode, int *x, int *y)
 {
     struct {
@@ -30,9 +33,9 @@ void SwapSelectedPlayers(int *mode, int *x, int *y)
         unsigned char slotb[0x1C];
         int na;
     } s;
-    int gb;
-    int ga;
     int nb;
+    int ga;
+    int gb;
     int i;
     int ia;
     int j;

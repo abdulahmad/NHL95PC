@@ -6,19 +6,16 @@
 
 void DrawDlgFrame(int x, int y, int w, int h, int edge);
 
-/* DRAFT: 736 vs 735 (best of 5). Cookie 0x60, sub esp,38h, ret 0Ch, art in ebp.
- The al/ah colour move into MakeJerseyShape matches. teams stays on the stack
- (t takes edi), the cols index is doubled with add eax,eax, and the roster base
- stays in ebp instead of being recomputed in ebx. Do not retry. */
+/* DRAFT: 734 vs 735, art in ebp. The EXE keeps teams in edi from the entry (t in ecx) and leaves bank on
+ the stack (sub esp, 38h, cookie 0x60); here t takes edi, teams is read from the stack and bank takes a
+ register (sub esp, 34h). See docs/UNSURE.md. */
 void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
                      unsigned char *cols, int *teams)
 {
-    struct {
-        char path2[0x20];
-        char path1[0x10];
-        int bank;
-        unsigned char *pal;
-    } s;
+    char path2[0x20];
+    char path1[0x10];
+    int bank;
+    unsigned char *spal;
     unsigned char *pal;
     int shape;
     int i;
@@ -32,17 +29,17 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
     (void)unused;
     (void)unused2;
     SetDrawBitmap(dword_DE264);
-    MakePath(s.path1, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)str_Embnhl2, 0);
-    s.bank = sub_8E83C(s.path1, 0);
-    sub_91370(sub_B30B4(s.bank, (char *)str_Bkgd9), 0, 0);
-    FreeMemBlock(s.bank);
+    MakePath(path1, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)str_Embnhl2, 0);
+    bank = sub_8E83C(path1, 0);
+    sub_91370(sub_B30B4(bank, (char *)str_Bkgd9), 0, 0);
+    FreeMemBlock(bank);
     DrawMenuBar(menu, count, 0x40, 0x41, 0x42);
     DrawDlgFrame(0x1C0, 0, 0x27F, 0x1DF, 1);
     DrawDlgFrame(0, 0, 0xBE, 0x1DF, 1);
     pal = (unsigned char *)sub_8CCA8((char *)str_Pal22, 0x300, 0x20);
-    s.pal = pal;
-    MakePath(s.path2, 0, (char *)str_Embpal3, 0);
-    shape = sub_8E83C(s.path2, 0);
+    spal = pal;
+    MakePath(path2, 0, (char *)str_Embpal3, 0);
+    shape = sub_8E83C(path2, 0);
     statsbgshapes = shape;
     shape = sub_B30B4(shape, (char *)str_Pal21);
     statspalshape = shape;
@@ -56,7 +53,7 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
         memcpy(unk_D12C8, (unsigned char *)traderemap1[t] + 0x90, 0x30);
         c1 = jerseyremap[byte_D11BC[teams[t] * 4]];
         c2 = byte_D12DE;
-        MakeJerseyShape(jerseyremap, cols[((((i << 2) - i) << 2) - i) * 2 + 1], c1, c2);
+        MakeJerseyShape(jerseyremap, cols[i * 22 + 1], c1, c2);
         sub_B4DD4(jerseyremap);
         sub_931FC(art, tradebtnx[i * 2], tradebtny[i * 2]);
     }
@@ -79,6 +76,6 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
     }
     sub_B4BA8();
     sub_9121C(*(int *)(dword_DE264 + 0x2C));
-    FadePalStep(0, s.pal, 0x10);
-    FreeMemBlock((int)s.pal);
+    FadePalStep(0, spal, 0x10);
+    FreeMemBlock((int)spal);
 }

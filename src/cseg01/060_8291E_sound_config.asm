@@ -376,6 +376,10 @@ mov ebx, dword [byte esp+030h]	; 82D70
 push ebx	; 82D74
 jmp near SoundCardDlgLoop_poll	; 82D75
 %endif ; C
+; C: src/c/060_8291E_sound_config/SoundCardDlgLoop.c (SetSoundDevice)
+%ifdef CBUILD
+%include "c/060_8291E_sound_config/SoundCardDlgLoop.SetSoundDevice.inc"
+%else
 SetSoundDevice:
 push dword 74h	; 82D7A
 call __CHK	; 82D7F
@@ -744,6 +748,7 @@ mov dword [dword_CCC94], ecx	; 832A9
 mov eax, 1	; 832AF
 add esp, byte 44h	; 832B4
 jmp near SoundCardDlg_epilogue	; 832B7
+%endif ; C
 ; C: src/c/061_83459_speech/ShutdownSpeech.c (SpeechTimerTick)
 %ifdef CBUILD
 %include "c/061_83459_speech/ShutdownSpeech.SpeechTimerTick.inc"

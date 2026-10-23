@@ -2574,6 +2574,10 @@ pop esi	; 75453
 pop ecx	; 75454
 ret	; 75455
 %endif ; C
+; C: src/c/054_737AA_line_editor_rosters/MenuShowPlayerStats.c (LineEdDone)
+%ifdef CBUILD
+%include "c/054_737AA_line_editor_rosters/MenuShowPlayerStats.LineEdDone.inc"
+%else
 LineEdDone:
 push dword 14h	; 75456
 call __CHK	; 7545B
@@ -2684,6 +2688,7 @@ mov eax, 1	; 75561
 .11:
 add esp, byte 4	; 75566
 jmp near MenuShowPlayerStats_ret	; 75569
+%endif ; C
 ; C: src/c/054_737AA_line_editor_rosters/MenuShowPlayerStats.c
 %ifdef CBUILD
 %include "c/054_737AA_line_editor_rosters/MenuShowPlayerStats.inc"

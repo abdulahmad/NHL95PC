@@ -43,10 +43,8 @@ typedef struct {
 #define FWDPL(s, k) f.t[s]->fwd[FWD(s, fline)][k]
 #define DEFPL(s, k) f.t[s]->def[DEF(s, dline)][k]
 
-/* DRAFT (first pass from Ghidra): 9,902 of 9,868 bytes, 721 differing lines. The aggregates are a frame struct in
-   the EXE's order (04h-197h) and i / j / the temporaries at 1D4h, 198h, 19Ch sit where the EXE has them; the other
-   scalar slots (err, ot, periodlen, tick, the byte arrays and bytes) do not follow the declaration order, and
-   register picks differ (the EXE's bpl / bside in cl / ch, err hoisted into a register for some loop tests). */
+/* DRAFT under Watcom 10.0 GA: 592 differing instructions, 9,872 vs 9,868 bytes.
+   Allocation-loop indexing, scalar slots and later register choices remain. */
 /* SimulateGame (452C5, PC only): play one schedule game without graphics, a minute at a time, and post it to the
    in-memory league databases. Both teams are read (rdfh: the 4Ch-byte record, its season or playoff block is not
    used afterwards; rwfh: the team record), and every dressed player's key, career and season records are found
@@ -112,15 +110,16 @@ int SimulateGame(char *dir, char *ext, int n, unsigned char *game, int rwfh, int
     int tick;
     int bestpen;
     int bestshot;
-    int penv;
     int shotv;
+    int penv;
     int i;
     int j;
-    unsigned char skaters[2];       /* skaters on the ice (5 minus those in the box) */
+    unsigned char score[2];         /* goals this game */
     unsigned char prevsk[2];        /* skaters on the ice the minute before */
     unsigned char rate[2];          /* penalty rate divisor (180) */
-    unsigned char score[2];         /* goals this game */
+    unsigned char skaters[2];       /* skaters on the ice (5 minus those in the box) */
     unsigned char goalie[2];        /* the goalie in net (0-2) */
+    int k;
     unsigned char dline;            /* index into simdorder */
     unsigned char fline;            /* index into simfwdorder */
     unsigned char scorer;
@@ -137,11 +136,11 @@ int SimulateGame(char *dir, char *ext, int n, unsigned char *game, int rwfh, int
     int best;
     int top;                        /* the stars' best value: never raised, as in the EXE */
     int v;
-    int k;
     int r;
     int sv;
     int sh;
     int chance;
+    unsigned char *homeScore;
 
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 5; j++) {
@@ -153,24 +152,25 @@ int SimulateGame(char *dir, char *ext, int n, unsigned char *game, int rwfh, int
     dline = 0;
     f.team[0] = game[2];
     f.team[1] = game[3];
-    f.sc[0] = game + 4;
+    homeScore = game + 4;
+    f.sc[0] = homeScore;
     f.sc[1] = game + 5;
-    game[4] = 0;
-    game[5] = 0;
+    game[5] = game[4] = 0;
     ot = 0;
-    for (i = 0; i < 2; i++) {
+    for (i = 0; i < 2; i = sv + 1) {
         f.t[i] = (TeamRec *)sub_8CCA8((char *)tag_t, 0x2E8, 0x20);
-        f.at[i] = (unsigned char *)sub_8CCA8((char *)tag_at, 0x4C, 0x20);
-        f.pk[i] = (unsigned char **)sub_8CCA8((char *)tag_pk, 100, 0x20);
-        f.ps[i] = (unsigned short **)sub_8CCA8((char *)tag_ps, 100, 0x20);
-        f.pset[i] = (unsigned short **)sub_8CCA8((char *)tag_pset, 100, 0x20);
-        f.aps[i] = (unsigned short **)sub_8CCA8((char *)tag_aps, 100, 0x20);
-        f.apset[i] = (unsigned short **)sub_8CCA8((char *)tag_apset, 100, 0x20);
-        f.gk[i] = (unsigned char **)sub_8CCA8((char *)tag_gk, 0xC, 0x20);
-        f.gs[i] = (unsigned short **)sub_8CCA8((char *)tag_gs, 0xC, 0x20);
-        f.gset[i] = (unsigned short **)sub_8CCA8((char *)tag_gset, 0xC, 0x20);
-        f.ags[i] = (unsigned short **)sub_8CCA8((char *)tag_ags, 0xC, 0x20);
-        f.agset[i] = (unsigned short **)sub_8CCA8((char *)tag_agset, 0xC, 0x20);
+        sv = i;
+        f.at[sv] = (unsigned char *)sub_8CCA8((char *)tag_at, 0x4C, 0x20);
+        f.pk[sv] = (unsigned char **)sub_8CCA8((char *)tag_pk, 100, 0x20);
+        f.ps[sv] = (unsigned short **)sub_8CCA8((char *)tag_ps, 100, 0x20);
+        f.pset[sv] = (unsigned short **)sub_8CCA8((char *)tag_pset, 100, 0x20);
+        f.aps[sv] = (unsigned short **)sub_8CCA8((char *)tag_aps, 100, 0x20);
+        f.apset[sv] = (unsigned short **)sub_8CCA8((char *)tag_apset, 100, 0x20);
+        f.gk[sv] = (unsigned char **)sub_8CCA8((char *)tag_gk, 0xC, 0x20);
+        f.gs[sv] = (unsigned short **)sub_8CCA8((char *)tag_gs, 0xC, 0x20);
+        f.gset[sv] = (unsigned short **)sub_8CCA8((char *)tag_gset, 0xC, 0x20);
+        f.ags[sv] = (unsigned short **)sub_8CCA8((char *)tag_ags, 0xC, 0x20);
+        f.agset[sv] = (unsigned short **)sub_8CCA8((char *)tag_agset, 0xC, 0x20);
     }
     err = 0;
     for (i = 0; i < 2 && !err; i++) {

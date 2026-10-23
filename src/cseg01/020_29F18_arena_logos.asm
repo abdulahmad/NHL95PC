@@ -891,6 +891,10 @@ pop esi	; 2ABDB
 pop ecx	; 2ABDC
 pop ebx	; 2ABDD
 ret	; 2ABDE
+; C: src/c/020_29F18_arena_logos/TonightsGameScreen.c
+%ifdef CBUILD
+%include "c/020_29F18_arena_logos/TonightsGameScreen.inc"
+%else
 TonightsGameScreen:
 push dword 148h	; 2ABDF
 call __CHK	; 2ABE4
@@ -1727,3 +1731,4 @@ pop esi	; 2B7B3
 pop ecx	; 2B7B4
 pop ebx	; 2B7B5
 ret	; 2B7B6
+%endif ; C

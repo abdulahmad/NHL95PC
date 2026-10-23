@@ -1055,6 +1055,10 @@ call strcat_	; 1C84B
 pop edx	; 1C850
 ret	; 1C851
 %endif ; C
+; C: src/c/013_1BBCC_key_team_db/SetupGoalieMenu.c
+%ifdef CBUILD
+%include "c/013_1BBCC_key_team_db/SetupGoalieMenu.inc"
+%else
 SetupGoalieMenu:
 push dword 38h	; 1C852
 call __CHK	; 1C857
@@ -1333,6 +1337,7 @@ pop edx	; 1CB7B
 pop ecx	; 1CB7C
 pop ebx	; 1CB7D
 ret	; 1CB7E
+%endif ; C
 ; C: src/c/013_1BBCC_key_team_db/ResetGoalieMenu.c
 %ifdef CBUILD
 %include "c/013_1BBCC_key_team_db/ResetGoalieMenu.inc"

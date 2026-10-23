@@ -1,5 +1,10 @@
 /* Gadgets / replay: the instant replay screen. */
-/* DRAFT: first pass; see docs/UNSURE.md. It ends in DrawGadgetButton_ret, so its match belongs in
+/* DRAFT (10.0 GA, 88 -> 27 differing, same size): the saved crowd level, camera y, view y, camera x and view x
+   declared in that order (ocl and ox take si / di, mode is homed with push eax); TicksSinceLastCall is a cdecl
+   library call here (it clobbers the scratch registers, so the step zero before the loop is a fresh xor ebp).
+   Left: the first rink redraw's y sum loads (ebx / eax swapped), the DrawFrameSprite zero pushed from the
+   known-zero ebp (EXE push 0), the closing 1 kept in esi for FadePalette (EXE eax, reloaded), gadgetfile in ebp
+   (EXE ebx) and the exit. See docs/UNSURE.md. It ends in DrawGadgetButton_ret, so its match belongs in
    DrawGadgetButton.c (a file whose only marked block is its own function, so the draft stays here). */
 #define ReplayStep ReplayStep_decl
 #define sub_6AF97 sub_6AF97_decl
@@ -32,7 +37,7 @@ void DrawRinkSideObjects(short vx, short vy);
 int ReplayControlLoop(int *step);
 void __cdecl sub_B4CD8(int art, int x, int y);  /* graphics library: draw art (opaque) */
 extern unsigned char *replayplay;  /* E03A4: the replay frame being played */
-int TicksSinceLastCall(void);
+int __cdecl TicksSinceLastCall(void);
 
 /* InstantReplay (7E0FA, PC only; ends in DrawGadgetButton_ret): the instant replay. The save button stays off
    (dword_ED6F8) in exhibition or without a human team. Show the control panel (GADGET6 / GADGET5 PPV, from the CD
@@ -47,11 +52,11 @@ void InstantReplay(int mode)
 {
     char path[0x10];
     int step;
-    short ox;
     short ocl;
+    short ocy;
     short oy;
     short ocx;
-    short ocy;
+    short ox;
 
     if (gamemode == 0 || ctl1team[0] < 0 && ctl2team < 0) dword_ED6F8 = 1;
     else dword_ED6F8 = 0;

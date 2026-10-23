@@ -154,9 +154,8 @@ int BuildPlayoffs(int fh, int rwfh, int rdfh, unsigned char *teams, char *dir, c
 /* SortStandings (42DAA, PC only; ends in UpdateSeasonSchedule_pop3): sort n teams into standings order. Each later
    entry j is compared with entry i: more points first, then more wins, more goals for, fewer goals against, else
    the higher team index; when j wins, entries i and j swap in all five arrays (SwapInt). idx: the team indexes;
-   pts, wins, gf, ga: the keys, one per entry; n: the entry count. No result.
-   DRAFT: 365 vs 367. The original computes j * 4 into ebx and &pts[j] first and keeps i * 4 and the i-side key
-   pointers in stack temps; this computes i * 4 first. See docs/UNSURE.md. */
+   pts, wins, gf, ga: the keys, one per entry; n: the entry count. No result. Every test reads entry j first,
+   and the last tie-break is one more else-if (not a ternary): that keeps j * 4 in ebx and i * 4 on the stack. */
 void SortStandings(int *idx, int *pts, int *wins, int *gf, int *ga, int n)
 {
     int i;
@@ -165,15 +164,16 @@ void SortStandings(int *idx, int *pts, int *wins, int *gf, int *ga, int n)
 
     for (i = 0; i < n - 1; i++) {
         for (j = i + 1; j < n; j++) {
-            if (pts[i] < pts[j]) w = idx[j];
-            else if (pts[i] > pts[j]) w = idx[i];
-            else if (wins[i] < wins[j]) w = idx[j];
-            else if (wins[i] > wins[j]) w = idx[i];
-            else if (gf[i] < gf[j]) w = idx[j];
-            else if (gf[i] > gf[j]) w = idx[i];
-            else if (ga[i] < ga[j]) w = idx[i];
-            else if (ga[i] > ga[j]) w = idx[j];
-            else w = idx[i] < idx[j] ? idx[j] : idx[i];
+            if (pts[j] > pts[i]) w = idx[j];
+            else if (pts[j] < pts[i]) w = idx[i];
+            else if (wins[j] > wins[i]) w = idx[j];
+            else if (wins[j] < wins[i]) w = idx[i];
+            else if (gf[j] > gf[i]) w = idx[j];
+            else if (gf[j] < gf[i]) w = idx[i];
+            else if (ga[j] > ga[i]) w = idx[i];
+            else if (ga[j] < ga[i]) w = idx[j];
+            else if (idx[j] > idx[i]) w = idx[j];
+            else w = idx[i];
             if (w == idx[j]) {
                 SwapInt(i, j, idx);
                 SwapInt(i, j, pts);

@@ -715,6 +715,10 @@ ret	; 512A6
 %endif ; C
 ; PenShotAssign: penalty shot set-up: shooter (penshotplayer) -> assignment 27h, other skaters -> 2Dh
 ; (asspsclear: wait by the side boards).
+; C: src/c/039_50AFE_engine_assign_faceoff/PenShotAssign.c
+%ifdef CBUILD
+%include "c/039_50AFE_engine_assign_faceoff/PenShotAssign.inc"
+%else
 PenShotAssign:
 push dword 14h	; 512A7
 call __CHK	; 512AC
@@ -851,6 +855,7 @@ pop edx	; 5143C
 pop ecx	; 5143D
 pop ebx	; 5143E
 ret	; 5143F
+%endif ; C
 ; C: src/c/039_50AFE_engine_assign_faceoff/AllInPlace.c
 %ifdef CBUILD
 %include "c/039_50AFE_engine_assign_faceoff/AllInPlace.inc"

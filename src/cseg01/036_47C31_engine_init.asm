@@ -88,6 +88,10 @@ pop ecx	; 47CD3
 pop ebx	; 47CD4
 ret	; 47CD5
 %endif ; C
+; C: src/c/036_47C31_engine_init/FadeOutPalCycle.c (PreGameIntro)
+%ifdef CBUILD
+%include "c/036_47C31_engine_init/FadeOutPalCycle.PreGameIntro.inc"
+%else
 PreGameIntro:
 push dword 28h	; 47CD6
 call __CHK	; 47CDB
@@ -332,6 +336,11 @@ mov word [energywarn], bx	; 480B8
 call UpdateHudPanel	; 480BF
 add esp, byte 10h	; 480C4
 jmp near PreGameIntro_popx	; 480C7
+%endif ; C
+; C: src/c/036_47C31_engine_init/FadeOutPalCycle.c (PreGameIntro_scroll)
+%ifdef CBUILD
+%include "c/036_47C31_engine_init/FadeOutPalCycle.PreGameIntro_scroll.inc"
+%else
 PreGameIntro_scroll:
 test ecx, ecx	; 480CC
 jge short PreGameIntro_frameloop	; 480CE
@@ -432,6 +441,11 @@ test dh, 20h	; 4823F
 jne short PreGameIntro_frameloop.4	; 48242
 call WaitTickDeadline	; 48244
 jmp near ThreeStarsLoop_tick	; 48249
+%endif ; C
+; C: src/c/036_47C31_engine_init/FadeOutPalCycle.c (PreGameIntro_end)
+%ifdef CBUILD
+%include "c/036_47C31_engine_init/FadeOutPalCycle.PreGameIntro_end.inc"
+%else
 PreGameIntro_end:
 xor esi, esi	; 4824E
 mov dword [joysampling], esi	; 48250
@@ -489,6 +503,11 @@ pop edx	; 4830A
 pop ecx	; 4830B
 pop ebx	; 4830C
 ret	; 4830D
+%endif ; C
+; C: src/c/036_47C31_engine_init/FadeOutPalCycle.c (StartPreGame)
+%ifdef CBUILD
+%include "c/036_47C31_engine_init/FadeOutPalCycle.StartPreGame.inc"
+%else
 StartPreGame:
 push dword 4	; 4830E
 call __CHK	; 48313
@@ -569,3 +588,4 @@ cmp ecx, byte 40h	; 48412
 jle near PreGameIntro_scroll	; 48415
 mov dword [viewscrollx], 40h	; 4841B
 jmp near PreGameIntro_frameloop	; 48425
+%endif ; C

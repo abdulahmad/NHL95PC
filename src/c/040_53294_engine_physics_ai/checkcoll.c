@@ -1,17 +1,14 @@
 /* Engine physics AI: one object's collision pass. */
-/* DRAFT: 479 vs 468. x is saved in edi and y in esi. The original saves x in esi and y in edi, so the
- swap is two movs and this draft needs a third. The first checkwallcoll sar sequence matches apart from
- that shift. Do not retry: short parameters, or copying x then y into locals (that saves ebp and the
- cookie grows to 18h). */
+#define checkcoll checkcoll_decl
 #include "nhl95.h"
-
-#define OOB(i) (*(int *)(OOlist + (i) - 2) >> 24)
+#undef checkcoll
+void checkcoll(Player *p, short x, short y);  /* x and y are compared and stored as words */
 
 /* checkcoll: clear the collision flag. Unless pflags bit 2 is set, test the walls at the player's
  position (and, for a skater with no wall normal, again at the hot-spot step), then the other players.
  On a collision, keep the old position unless the animation is in the block range. Otherwise reinsert
  p in the y-sorted object list and store its y. When sflags bit 7 is set, the two coordinates are swapped. */
-void checkcoll(Player *p, int x, int y)
+void checkcoll(Player *p, short x, short y)
 {
     short sc;
     short i;
@@ -20,9 +17,9 @@ void checkcoll(Player *p, int x, int y)
     dword_CCC2C = 0;
     collflag = 0;
     if (sflags & 0x80) {
-        pl = x;
-        x = y;
-        y = pl;
+        pl = y;
+        y = x;
+        x = pl;
     }
     if (!(p->pflags & 4)) {
         wcradiusx = p->radiusx;
@@ -30,8 +27,8 @@ void checkcoll(Player *p, int x, int y)
         checkwallcoll(p, p->Xpos >> 16, p->Ypos >> 16);
         if ((p->Wallcos | p->Wallsin) == 0 && p->SCnum <= 11) {
             GetHot(p);
-            wcradiusx = wcradiusy = 1;
-            checkwallcoll(p, (short)((p->Xpos >> 16) + regd0.w), (short)((p->Ypos >> 16) + regd1.w));
+            wcradiusy = wcradiusx = 1;
+            checkwallcoll(p, (short)(HIWORD(p->Xpos) + regd0.w), (short)(HIWORD(p->Ypos) + regd1.w));
         }
         checkplcoll(p, x, y);
     }
@@ -46,22 +43,22 @@ void checkcoll(Player *p, int x, int y)
     i = OOlistpos[sc];
     while (i != 16) {
         pl = (signed char)OOlist[i + 1];
-        if (y <= Ylist[OOB(i)]) break;
-        OOlist[i] = pl;
-        OOlist[i + 1] = sc;
+        if (y <= Ylist[(signed char)OOlist[i + 1]]) break;
         OOlistpos[sc]++;
         OOlistpos[pl]--;
+        OOlist[i] = pl;
+        OOlist[i + 1] = sc;
         i++;
     }
     i = OOlistpos[sc];
     if (i) {
         do {
             pl = (signed char)OOlist[i - 1];
-            if (y >= Ylist[*(int *)(OOlist + i - 4) >> 24]) break;
-            OOlist[i] = pl;
-            OOlist[i - 1] = sc;
+            if (y >= Ylist[(signed char)OOlist[i - 1]]) break;
             OOlistpos[sc]--;
             OOlistpos[pl]++;
+            OOlist[i] = pl;
+            OOlist[i - 1] = sc;
         } while (--i);
     }
     Ylist[sc] = y;

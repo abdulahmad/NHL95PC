@@ -8,7 +8,12 @@ int FindLoadedSpeechSlot(int i)
 
     b = speechbank;
     for (; i < 400; i++) {
-        if (b[i].loaded == 1) return i;
+        int offset = i;
+        offset <<= 2;
+        offset += i;
+        offset <<= 2;
+        offset -= i;
+        if (*(int *)((char *)b + offset * 2 + 0x22) == 1) return i;
     }
     return -1;
 }

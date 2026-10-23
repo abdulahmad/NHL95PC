@@ -650,6 +650,10 @@ pop ecx	; 347B4
 pop ebx	; 347B5
 ret	; 347B6
 %endif ; C
+; C: src/c/027_33FFD_calendar/SetGameSides.c
+%ifdef CBUILD
+%include "c/027_33FFD_calendar/SetGameSides.inc"
+%else
 SetGameSides:
 push dword 0Ch	; 347B7
 call __CHK	; 347BC
@@ -694,6 +698,7 @@ call SetCtlTeams	; 34819
 pop esi	; 3481E
 pop ecx	; 3481F
 ret	; 34820
+%endif ; C
 CalendarScreen:
 push dword 7F8h	; 34821
 call __CHK	; 34826

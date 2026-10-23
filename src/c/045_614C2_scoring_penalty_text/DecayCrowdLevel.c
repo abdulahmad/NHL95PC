@@ -1,10 +1,5 @@
 /* Scoring penalty text: crowd level and rink-object slots (DecayCrowdLevel, DrawRinkObjects). DrawRinkObjects
    ends in sfxslots_popx, DecayCrowdLevel's exit, so the two share this file. */
-/* DRAFT (DecayCrowdLevel): 705 vs 704. The prologue and the crowdlevel decay match, and the slot
- index is the word at esp. The slot pointer is esi and each spawned id is
- movsx into ebx (original pointer in ebx, id copied with mov esi, eax). Do not
- retry an int copy of crowdlevel, an unsigned slot byte, or dropping the
- address-of on the index. */
 #include "nhl95.h"
 
 /* one rink-object slot, 12 bytes at word_DEE94 (DecayCrowdLevel animates them) */
@@ -20,15 +15,22 @@ typedef struct RinkObj {
 
 typedef struct { short x, y; } Pt;
 
-/* DecayCrowdLevel: ease crowdlevel down (by 2 above 2BCh, by 3 above 15Eh, then always by 1) and, if it
- goes negative, sometimes kick it with a small random. Then walk the 20 rink-object slots (12 bytes at
- word_DEE94). A negative id counts its timer down and spawns a free object; a live id animates or
- releases its bit in word_E9B2C and arms the timer again. */
+/* DecayCrowdLevel (615A2, PC only; owner of sfxslots_popx): ease crowdlevel down (by 2 above 2BCh, by 3 above
+   15Eh, then always by 1) and, if it goes negative, sometimes kick it with a small random. Then walk the 20
+   rink-object slots (12 bytes at word_DEE94). A free slot (negative id) counts its timer down and then spawns an
+   object (SetRinkObject): slots 12h / 13h a random one of 11h from 89h / 9Ah, slot 11h in the game (gmode bit 0)
+   85h or 86h half the time, else a random id below 85h whose bit in word_E9B2C is clear. A live slot counts its
+   timer down, steps its frame (byte_CCE00) until the step reaches |byte 0Bh|, or with a negative byte 0Bh
+   restarts half the time (byte_CCE01); else it releases its id bit and is freed, its timer armed from the crowd
+   level ((3E8h - crowdlevel) / 8, at least 14h, 64h for slots 12h / 13h, 78h for slot 11h in the game,
+   randomised). The spawn id and the release timer are separate shorts (one shared short spills it). No
+   arguments, no result. */
 void DecayCrowdLevel(void)
 {
     short i;
+    short n;
     signed char *o;
-    int n;
+    short delay;
 
     if (crowdlevel > 0x2BC)
         crowdlevel = crowdlevel - 2;
@@ -41,7 +43,7 @@ void DecayCrowdLevel(void)
             crowdlevel = randomd0(0x20);
     }
     for (i = 0; i < 0x14; i++) {
-        o = (signed char *)word_DEE94 + (*(int *)((char *)&i - 2) >> 16) * 12;
+        o = (signed char *)word_DEE94 + i * 12;
         if (*(short *)o < 0) {
             if (--o[2] >= 0)
                 continue;
@@ -63,35 +65,30 @@ void DecayCrowdLevel(void)
         } else {
             if (--o[2] >= 0)
                 continue;
-            if (o[0xB] < 0)
-                n = -(*(int *)(o + 8) >> 24);
-            else
-                n = *(int *)(o + 8) >> 24;
-            if ((*(int *)o >> 24) < n) {
+            if (o[3] < (o[0xB] < 0 ? -o[0xB] : o[0xB])) {
                 o[2] = 0xC;
                 o[3]++;
-                o[4] = byte_CCE00[(*(int *)(o + 7) >> 16) + (*(int *)o >> 24)];
+                o[4] = byte_CCE00[*(short *)(o + 9) + o[3]];
                 continue;
             }
             if (o[0xB] < 0 && randomd0(2) != 0) {
-                o[4] = byte_CCE01[*(int *)(o + 7) >> 16];
+                o[4] = byte_CCE01[*(short *)(o + 9)];
                 o[2] = 0xC;
                 o[3] = 1;
                 continue;
             }
-            n = *(short *)o;
-            word_E9B2C[n / 16] &= ~(1 << (n % 16));
+            word_E9B2C[*(short *)o / 16] &= ~(1 << (*(short *)o % 16));
             *(short *)o = -1;
-            n = (0x3E8 - (*(int *)((char *)&crowdlevel - 2) >> 16)) / 8;
-            if (n < 0x14)
-                n = 0x14;
-            if (i >= 0x12 && n < 0x64)
-                n = 0x64;
+            delay = (0x3E8 - crowdlevel) / 8;
+            if (delay < 0x14)
+                delay = 0x14;
+            if (i >= 0x12 && delay < 0x64)
+                delay = 0x64;
             if (i == 0x11 && (gmode & 1))
-                n = 0x78;
+                delay = 0x78;
             else
-                n = randomd0(n);
-            o[2] = n;
+                delay = randomd0(delay);
+            o[2] = delay;
         }
     }
 }

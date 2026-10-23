@@ -8,7 +8,12 @@ int FindFreeSpeechSlot(int i)
 
     b = speechbank;
     for (; i < 400; i++) {
-        if (b[i].loaded == 0) return i;
+        int offset = i;
+        offset <<= 2;
+        offset += i;
+        offset <<= 2;
+        offset -= i;
+        if (*(int *)((char *)b + offset * 2 + 0x22) == 0) return i;
     }
     return -1;
 }

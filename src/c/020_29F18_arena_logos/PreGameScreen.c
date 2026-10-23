@@ -1,5 +1,7 @@
 /* Arena logos: the pre-game scouting report. */
-/* DRAFT: 3,240 vs 3,255 bytes, 165 differing lines of 805, first pass; see docs/UNSURE.md. */
+/* DRAFT under 10.0 GA: 52 differing instructions, same size (3,255 bytes). The I/O frame matches, and the
+   last category's lines step y first (the EXE spills y + 9, the old y - 5); key and apal take the top frame
+   slots where the EXE has them at the bottom, and the pointer buffer size pushes 0x20 first. */
 #define PreGameScreen PreGameScreen_decl
 #define TonightsGameScreen TonightsGameScreen_decl
 #define sub_8F98F sub_8F98F_decl
@@ -34,13 +36,10 @@ int PreGameScreen(unsigned char home, unsigned char away)
     unsigned char recs[2][0x2E8];
     char state[0x40];
     char path[0x20];
-    int mx;
-    int my;
-    int fh;
+    struct { int mx; int my; int fh; } io;
     int key;
     unsigned char *apal;
     int mf;
-    int btn;
     int nb;
     Button *buttons;
     unsigned char *p0;
@@ -55,6 +54,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
     int bank;
     int art;
     int k;
+    int btn;
     int y;
     int lc;
     int rc;
@@ -66,7 +66,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
     int oldmx;
     int oldmy;
 
-    fh = -1;
+    io.fh = -1;
     PaOpenBank();
     SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0xF7);
     SetTextColors(0xFA, 0xF7);
@@ -74,9 +74,9 @@ int PreGameScreen(unsigned char home, unsigned char away)
     tm[0] = home;
     tm[1] = away;
     MakePath(path, (char *)&curleague, (char *)leaguedbnames[4], (char *)str_extDB);
-    err = FileOpenRead(path, &fh);
-    for (i = 0; i < 2 && !err; i++) err = ReadTeamRec(fh, recs[i], tm[i]);
-    FileClose(&fh);
+    err = FileOpenRead(path, &io.fh);
+    for (i = 0; i < 2 && !err; i++) err = ReadTeamRec(io.fh, recs[i], tm[i]);
+    FileClose(&io.fh);
     sub_B4BA8();
     pal = (unsigned char *)sub_8CCA8((char *)str_Pal10, 0x300, 0x20);
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
@@ -116,16 +116,17 @@ int PreGameScreen(unsigned char home, unsigned char away)
         y = (byte_D42C3 + 3) * k + 0xDA;
         if (k == 8) {
             sub_90D20(0x6E, y + 5, 0x1AE, 5, boxfillcolor);
-            sub_B4FAC(0x6E, y + 5, 0x21C, y + 5, boxlitecolor);
-            sub_B4FAC(0x6E, y + 9, 0x21C, y + 9, boxshadecolor);
             y += 0xE;
+            sub_B4FAC(0x6E, y - 9, 0x21C, y - 9, boxlitecolor);
+            sub_B4FAC(0x6E, y - 5, 0x21C, y - 5, boxshadecolor);
         }
         PrintOutlinedText((0x280 - fputchar((char *)scoutcatnames[k])) / 2, y, (char *)scoutcatnames[k]);
     }
     p1 = recs[1] + 0x2DC;
     p0 = recs[0] + 0x2DC;
     for (k = 0; k < 9; k++) {
-        lc = rc = 0xFA;
+        lc = 0xFA;
+        rc = 0xFA;
         if (p1[scoutcatidx[k]] > p0[scoutcatidx[k]]) lc = 0xFD;
         else if (p1[scoutcatidx[k]] < p0[scoutcatidx[k]]) rc = 0xFD;
         y = (byte_D42C3 + 3) * k + 0xDA;
@@ -159,11 +160,12 @@ int PreGameScreen(unsigned char home, unsigned char away)
     *(ArtHdr17 *)ptrbg = *(ArtHdr17 *)pointerspr;
     *(short *)(ptrbg + 4) = *(short *)(pointerspr + 4) + 1;
     *(short *)(ptrbg + 6) = *(short *)(pointerspr + 6) + 1;
-    oldmx = mx = 0;
+    oldmx = 0;
+    io.mx = 0;
     oldmy = 0;
-    my = 0;
+    io.my = 0;
     sub_B2E1B(0, 0, 0x280, 0x1E0);
-    MouseSetPos(mx, my);
+    MouseSetPos(io.mx, io.my);
     sub_91400(ptrbg, 0, 0);
     sub_91370(pointerspr, 0, 0);
     ClearInputQueue();
@@ -183,27 +185,28 @@ int PreGameScreen(unsigned char home, unsigned char away)
         if (schedgameidx >= 0x498) r = 3;
         PaPlayoffTonight(home, away, (schedgameidx - 0x444) % 7 + 1, ct, r);
     }
-    done = key = 0;
+    done = 0;
+    key = 0;
     do {
         btn = 0;
         do {
             ev = GetInputEvent();
-            if (ev) btn = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(ev, &mx, &my);
+            if (ev) btn = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(ev, &io.mx, &io.my);
         } while (ev && !(btn & 6));
         if (!btn) {
-            if (oldmx != mx || oldmy != my) {
+            if (oldmx != io.mx || oldmy != io.my) {
                 sub_903F0(ptrbg, oldmx, oldmy);
-                sub_91400(ptrbg, mx, my);
-                sub_91370(pointerspr, mx, my);
-                oldmx = mx;
-                oldmy = my;
+                sub_91400(ptrbg, io.mx, io.my);
+                sub_91370(pointerspr, io.mx, io.my);
+                oldmx = io.mx;
+                oldmy = io.my;
             }
         } else if (btn & 4) {
             done = -1;
             key = 3;
         } else {
             sub_903F0(ptrbg, oldmx, oldmy);
-            sel = TrackButtons((int *)buttons, nb, mx, my, btn);
+            sel = TrackButtons((int *)buttons, nb, io.mx, io.my, btn);
             if (sel >= 0) {
                 if (!off_CEF63) sel++;
                 switch (sel) {
@@ -253,12 +256,12 @@ int PreGameScreen(unsigned char home, unsigned char away)
                 }
                 sub_B4BA8();
             }
-            sub_91400(ptrbg, mx, my);
-            if (!done) sub_91370(pointerspr, mx, my);
-            oldmx = mx;
-            oldmy = my;
+            sub_91400(ptrbg, io.mx, io.my);
+            if (!done) sub_91370(pointerspr, io.mx, io.my);
+            oldmx = io.mx;
+            oldmy = io.my;
         }
-    } while (!done);
+    } while (done == 0);
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
     FadePalStep(1, apal, 0x10);
     if (musicon && songdata) {

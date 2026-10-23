@@ -1,9 +1,4 @@
 /* Menu system: load one shape out of a tagged shape file. */
-/* DRAFT: 392 vs 392, 4 differing (10.0 GA). The index doubles as the directory byte count (esi, as the
- original) and the file position is `offset + (count*8 + 6)` (edi). Left: the width*height size goes
- through i (`mov esi, [esp+6]` / `sar esi, 10h` / ... / `imul esi, eax` / `lea ebp, [esi+11h]`); the
- original multiplies in a temporary (`mov edx, [esp+6]` / `sar edx, 10h` / `mov eax, [esp+8]` /
- `sar eax, 10h` / `imul eax, edx` / `lea ebp, [eax+11h]`). See docs/UNSURE.md for the shapes tried. */
 #include "nhl95.h"
 
 /* LoadShapeByTag: open path and return the shape whose 4-byte tag matches, or 0.
@@ -59,8 +54,10 @@ int LoadShapeByTag(char *path, char *tag)
     }
     if (dir) FreeMemBlock(dir);
     if (s.err == 0 && s.found != 0) {
-        i = ((short *)s.hdr)[2] * ((short *)s.hdr)[3];
-        n = i + 0x11;
+        base = ((short *)s.hdr)[2];
+        p = ((short *)s.hdr)[3];
+        p *= base;
+        n = p + 0x11;
         p = sub_8CCA8((char *)str_shape, n, 0x20);
         s.shape = p;
         if (FileReadAt(s.handle, (void *)p, pos, n) < 0) {

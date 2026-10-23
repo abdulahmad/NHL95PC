@@ -1,4 +1,9 @@
 /* Engine player logic: going to the bench. */
+/* DRAFT (10.0 GA, 22 differing, 828 vs 827): the swap test masks its first flag, `(newpnum < 19h) & 0xFF`
+   (the EXE's `mov edx, eax / and edx, 0FFh`; an (unsigned char) cast gives `xor edx, edx / mov dl, al`), and
+   the count is `d = p->temp1 - 1; p->temp1 = d;` (the +8 after the test). Left: the count in ax and its +8 in
+   edi (EXE dx / esi), so edi is saved where the EXE saves esi, and the pflags byte in al / ah (EXE cl / ch).
+   See docs/UNSURE.md. */
 #include "nhl95.h"
 
 /* assbench (4B12C; 93G logic93 / 94G assign94 assbench "player a3 should go to bench", PC version): not while
@@ -37,20 +42,22 @@ void assbench(Player *p)
     if (p->pflags & 2) {
         p->pflags &= 0xFD;
         p->temp2 = 8;
-        p->temp4 = (p->pflags & 0x40) ? 0x41 : -0x32;
+        p->temp4 = !(p->pflags & 0x40) ? -0x32 : 0x41;
         p->temp3 = -0xA8;
         p->temp1 = 0;
     }
     if (p->newpnum == p->pnum) {
         p->pflags2 &= 0xFB;
-        if ((unsigned char)(p->newpnum < 0x19) ^ (p->newpos == 0)) p->position = p->newpos;
+        if (((p->newpnum < 0x19) & 0xFF) ^ (p->newpos == 0)) p->position = p->newpos;
         Setplass(p);
         p->newpnum = -1;
         p->newpos = -1;
         return;
     }
     if (p->position == 0) ((unsigned char *)p)[0x48] |= 3;
-    if (--p->temp1 < 0) {
+    d = p->temp1 - 1;
+    p->temp1 = d;
+    if (d < 0) {
         p->temp1 += 8;
         d = HIWORD(p->Ypos) - p->temp4;
         regd0.w = HIWORD(p->Xpos) - p->temp3;
@@ -84,7 +91,7 @@ seated:
         tm->tmpdst[p->pnum] = -2;
         tm->tmroster[p->pnum * 0x27] = 3;
     }
-    if ((unsigned char)(p->newpnum < 0x19) ^ (p->newpos == 0)) p->position = p->newpos;
+    if (((p->newpnum < 0x19) & 0xFF) ^ (p->newpos == 0)) p->position = p->newpos;
     Setplass(p);
     if (gmode & 1) {
         p->temp5 = 0;

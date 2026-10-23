@@ -25,12 +25,11 @@ int EditSkaterRating(int *x, int *y, int *field)
         int old;
         int rowy;
     } s;
-    int i;
     unsigned char *maxp;
     unsigned char *p;
     int v;
     int nv;
-    int d;
+    int i;
 
     s.done = 0;
     s.colx = 0;
@@ -46,7 +45,7 @@ int EditSkaterRating(int *x, int *y, int *field)
             *(Msg20 *)s.msg = *(Msg20 *)str_EnterANewRating;
             msglines[0] = (int)s.msg;
             maxp = unk_D0FBC + i;
-            sprintf(s.range, (char *)str_RatingRange, (*(s.minp = unk_D0FA8 + i) + 5) * 5, off_D0880[i], (*maxp + 5) * 5);
+            sprintf(s.range, (char *)str_RatingRange, (*(s.minp = unk_D0FA8 + i) + 5) * 5, off_D0880[i], (short)((*maxp + 5) * 5));
             msglines[1] = (int)s.range;
             p = &byte_D0F94 + i;
             if (i == 0) {
@@ -59,8 +58,10 @@ int EditSkaterRating(int *x, int *y, int *field)
                     nv = v / 5 - 5;
                     if (v < s.old) {
                         *p = nv;
-                        if (i != 0 && i != 3 && i != 0xD) *field += s.old - (*p + 5) * 5;
+                        if (i != 0 && i != 3 && i != 0xD) *field += (short)(s.old - (((*p + 5) << 2) + (*p + 5)));
                     } else {
+                        int d;
+
                         d = v - s.old;
                         if (i != 0 && i != 3 && i != 0xD) {
                             if (d <= *field) {
@@ -119,7 +120,7 @@ int EditGoalieRating(int *x, int *y, int *field)
             *(Msg20 *)s.msg = *(Msg20 *)str_EnterANewRating;
             msglines[0] = (int)s.msg;
             maxp = unk_D1000 + i;
-            sprintf(s.range, (char *)str_RatingRange, (*(s.minp = unk_D0FF0 + i) + 5) * 5, off_D09DB[i], (*maxp + 5) * 5);
+            sprintf(s.range, (char *)str_RatingRange, (*(s.minp = unk_D0FF0 + i) + 5) * 5, off_D09DB[i], (short)((*maxp + 5) * 5));
             msglines[1] = (int)s.range;
             p = &byte_D0FE0 + i;
             if (i == 0) {
@@ -132,7 +133,7 @@ int EditGoalieRating(int *x, int *y, int *field)
                     nv = v / 5 - 5;
                     if (v < s.old) {
                         *p = nv;
-                        if (i != 0 && i != 8) *field += s.old - (*p + 5) * 5;
+                        if (i != 0 && i != 8) *field += s.old - (((*p + 5) << 2) + (*p + 5));
                     } else {
                         d = v - s.old;
                         if (i != 0 && i != 8) {

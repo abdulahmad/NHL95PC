@@ -10,6 +10,8 @@ int StarElig(int side, int pl);
  16-byte row at dword_DB088; the game-winner row gets two extra. Ties go to the low word, then the word
  at +0Eh, then the word at +6 when either is positive, then which player is eligible, then the byte total
  at unk_DACA0 (20 bytes per player, 500 per team). A higher total sorts first. */
+/* DRAFT: 627 vs 653 bytes under 10.0 GA. The EXE keeps pa in ebp and spills pb and sb ([esp+4], [esp+8], with
+   [esp] a temporary for the first word of each sum); this keeps sb in ebp and spills pa and pb. See docs/UNSURE.md. */
 int StarCompare(int *a, int *b)
 {
     int ta;
@@ -18,8 +20,8 @@ int StarCompare(int *a, int *b)
     int pb;
     int sa;
     int sb;
-    char *ra;
-    char *rb;
+    short *ra;
+    short *rb;
     unsigned char *ua;
     unsigned char *ub;
 
@@ -27,38 +29,22 @@ int StarCompare(int *a, int *b)
     tb = *b / 25;
     pa = *a % 25;
     pb = *b % 25;
-    ra = (char *)dword_DB088 + ta * 25 * 16;
-    ra += pa * 16;
-    rb = (char *)dword_DB088 + tb * 25 * 16;
-    rb += pb * 16;
-    sa = ((short *)ra)[1] + ((short *)ra)[0];
+    ra = (short *)((char *)dword_DB088 + ta * 400 + pa * 16);
+    rb = (short *)((char *)dword_DB088 + tb * 400 + pb * 16);
+    sa = ra[1] + ra[0];
     if (ta == gwgteam && pa == gwgplayer) sa += 2;
-    sb = ((short *)rb)[1] + ((short *)rb)[0];
+    sb = rb[1] + rb[0];
     if (tb == gwgteam && pb == gwgplayer) sb += 2;
     if (sa != sb) return sb - sa;
-    if (*(short *)rb != *(short *)ra) return *(short *)rb - *(short *)ra;
+    if (rb[0] != ra[0]) return rb[0] - ra[0];
     if (sa > 0 && ta != tb) {
         int ds;
 
         ds = hmscore[tb * 128] - hmscore[ta * 128];
         if (ds != 0 && ((ds > 0) ^ tb)) return ds;
     }
-    if (*(short *)(rb + 0xE) != *(short *)(ra + 0xE)) {
-        int hb;
-        int ha;
-
-        hb = *(int *)(rb + 0xC);
-        ha = *(int *)(ra + 0xC);
-        return HIWORD(hb) - HIWORD(ha);
-    }
-    if (*(short *)(rb + 6) > 0 || *(short *)(ra + 6) > 0) {
-        int hb;
-        int ha;
-
-        hb = *(int *)(rb + 4);
-        ha = *(int *)(ra + 4);
-        return HIWORD(hb) - HIWORD(ha);
-    }
+    if (rb[7] != ra[7]) return rb[7] - ra[7];
+    if (rb[3] > 0 || ra[3] > 0) return rb[3] - ra[3];
     sa = StarElig(ta, pa);
     sb = StarElig(tb, pb);
     if (sa != sb) {

@@ -2661,6 +2661,10 @@ pop ecx	; 6F156
 pop ebx	; 6F157
 ret	; 6F158
 %endif ; C
+; C: src/c/052_6D2F8_create_player/SplitPlayerName.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/SplitPlayerName.inc"
+%else
 SplitPlayerName:
 push dword 20h	; 6F159
 call __CHK	; 6F15E
@@ -2790,6 +2794,7 @@ pop edi	; 6F298
 pop esi	; 6F299
 pop ecx	; 6F29A
 ret	; 6F29B
+%endif ; C
 MoveToOtherRoster:
 push dword 4Ch	; 6F29C
 call __CHK	; 6F2A1
@@ -4299,6 +4304,10 @@ pop ecx	; 704A3
 pop ebx	; 704A4
 ret	; 704A5
 %endif ; C
+; C: src/c/052_6D2F8_create_player/DrawShootsField.c (CreatePlayerLoop)
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/DrawShootsField.CreatePlayerLoop.inc"
+%else
 CreatePlayerLoop:
 push dword 44h	; 704A6
 call __CHK	; 704AB
@@ -4491,6 +4500,7 @@ je near CreatePlayerLoop.3	; 706D0
 mov eax, dword [byte esp+010h]	; 706D6
 add esp, byte 1Ch	; 706DA
 jmp near DrawShootsField_pop	; 706DD
+%endif ; C
 CreateFreeAgent:
 push dword 20Ch	; 706E2
 call __CHK	; 706E7
@@ -5858,6 +5868,10 @@ pop edi	; 7195D
 pop esi	; 7195E
 pop ecx	; 7195F
 ret	; 71960
+; C: src/c/052_6D2F8_create_player/FindPlayer.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/FindPlayer.inc"
+%else
 FindPlayer:
 push dword 1E8h	; 71961
 call __CHK	; 71966
@@ -6225,3 +6239,4 @@ pop edi	; 71F08
 pop esi	; 71F09
 pop ecx	; 71F0A
 ret	; 71F0B
+%endif ; C

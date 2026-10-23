@@ -1,7 +1,6 @@
 /* Engine physics AI: is the pass lane to a team-mate open; NetCollide and puckstick (matched) end in its pops. */
-/* DRAFT: 344 vs 346. The side copy is mov esi,edi (original mov edx,edi), so the team-mate's
- y stays in edx. The other gap is inc esi where the original does lea eax,[esi+1].
- Do not retry: declaring limit first produced movzx edi; declaring oy before side did not move the copy to edx. */
+/* DRAFT (PassLaneChk): 344 vs 346. The direction is kept in oy (dead by then) and the x gap in dy, as the
+ original; left is inc esi where the original does lea eax,[esi+1] for the wrap (see docs/UNSURE.md). */
 #define PassLaneChk PassLaneChk_decl
 #define checkpuckcoll checkpuckcoll_decl
 #define imul32 imul32_decl
@@ -19,9 +18,9 @@ int __cdecl imul32(int a, int b);  /* 933F0: the library multiply, arguments on 
 int LaneOpen(void);
 #pragma aux LaneOpen "ShotLaneOpen" value [eax] modify [eax];
 
-/* DRAFT (checkpuckcoll): same size (1,570 bytes; its exits jump to PassLaneChk_ret5 as in the EXE). Every
-   statement lines up; the EXE keeps the reach / half size / box size in edi and the speed / |dy| / box limit in
-   esi, this draft the other way round. See docs/UNSURE.md. */
+/* DRAFT (checkpuckcoll, 10.0 GA): 73 score differing, same 1,570-byte size. Reusing the dead height
+   local for the body frame fixes the height temporaries. The EXE keeps reach / half size / box size in edi
+   and speed / |dy| / box limit in esi; this draft still reverses those registers. */
 /* checkpuckcoll (5428A, 93G checkpuckcoll .ccx; ends in PassLaneChk_ret5): check the puck pk against sort object
    n (from the OOlist walk). Not the carrier, players 0-0Bh and object 10h only, not with pflags bit 2 (no
    collisions) or nopuck. A goalie's stick (available, position 0): reach s from SkillForAnim (s * 800h - FA0h over
@@ -40,7 +39,6 @@ void checkpuckcoll(Player *pk, short n)
     short s;
     short v;
     short h;
-    short fr;
 
     if (n == *puckc) return;
     if (n > 0xB && n != 0x10) return;
@@ -105,8 +103,8 @@ body:
         puckgoalie(pk, p);
         return;
     }
-    fr = p->frame;
-    if (fr >= 0x431 && fr <= 0x44F && (fr & 1) && *(short *)puckz < 8) {
+    h = p->frame;
+    if (h >= 0x431 && h <= 0x44F && (h & 1) && *(short *)puckz < 8) {
         GetHotStick(p);
         regd0.w >>= 1;
         regd1.w >>= 1;
@@ -122,7 +120,7 @@ body:
     }
     s = 8;
     v = 0x40;
-    if (fr > 0x44F) {
+    if (h > 0x44F) {
         s = 0x10;
         v = 0x100;
     }
@@ -147,7 +145,6 @@ int PassLaneChk(Player *p, Player *o)
     int y;
     int oy;
     int dy;
-    int ang;
     int wrapped;
 
     side = (p->pflags & pfgoal) != 0;
@@ -172,11 +169,13 @@ int PassLaneChk(Player *p, Player *o)
     dy = oy - y;
     if (dy < 0) dy = -dy;
     if (dy > 0x3C) return 0;
-    if (ABS((p->Xpos >> 16) - (o->Xpos >> 16)) > 0x28) return 0;
-    ang = vtoa(W(o->Xvel), W(o->Yvel));
-    if (ang == 8) ang = W(o->facedir);
-    ang -= vtoa((short)(HIWORD(p->Xpos) - HIWORD(o->Xpos)), (short)(HIWORD(p->Ypos) - HIWORD(o->Ypos)));
-    wrapped = ang + 1;
+    dy = (p->Xpos >> 16) - (o->Xpos >> 16);
+    if (dy < 0) dy = -dy;
+    if (dy > 0x28) return 0;
+    oy = vtoa(W(o->Xvel), W(o->Yvel));
+    if (oy == 8) oy = W(o->facedir);
+    oy -= vtoa((short)(HIWORD(p->Xpos) - HIWORD(o->Xpos)), (short)(HIWORD(p->Ypos) - HIWORD(o->Ypos)));
+    wrapped = oy + 1;
     if ((wrapped & 7) >= 3) return 0;
     return 1;
 }
@@ -187,17 +186,21 @@ int PassLaneChk(Player *p, Player *o)
    he is snapped to the net edge for his facing (offset tables word_CCBEC, word_CCBFC, word_CCBCC, word_CCBDC;
    mirrored by the x-flip attribute bit 3), stopped, and the bump SPA for that side is returned (F0Fh, F55h,
    F9Bh / FE1h). p: the player; dir: his direction. Result: the new SPA, or his SPA when nothing changes.
-   DRAFT: 714 vs 700 (147 of 200 instructions). The original keeps dir in ebp, the net y in edi and dx / dy / net x
-   on the stack; the first x-flip test materializes a bool (sete). See docs/UNSURE.md. */
-int NetCollide(Player *p, int dir)
+   DRAFT (10.0 GA): 41 score differing. The result is a short (FallDown compares ax), which returns the
+   constants in eax. The first x-flip comparison is materialized by a doubled comparison, as in the EXE (the
+   C_MATCHING materialized-bool pattern). A separate scaled y numerator improves allocation; dir and the net
+   centre still use different registers and slots (dir edi, dx ebp, gy spilled; EXE dir ebp, gy edi, dx
+   spilled). */
+short NetCollide(Player *p, int dir)
 {
     int gx;
-    int dx;
     int dy;
+    int dx;
     int gy;
     int dist;
     int ux;
     int uy;
+    int scaled_y;
 
     gx = HIWORD(p->Xpos) >= 0 ? 0x60 : -0x60;
     dx = (p->Xpos >> 16) - gx;
@@ -206,13 +209,14 @@ int NetCollide(Player *p, int dir)
     dist = vecdist(dx, dy);
     if (dist < 0x18) goto keep;
     ux = (dx << 8) / dist >> 2;
-    uy = (dy << 8) / dist >> 2;
+    scaled_y = dy << 8;
+    uy = scaled_y / dist >> 2;
     if ((uy < 0 ? -uy : uy) >= (ux < 0 ? -ux : ux)) {
         if (gy >= 0) {
             dir = dir + 2 & 7;
             if (dir < 5) goto keep;
             HIWORD(p->Xpos) = gx + ux;
-            if (gx < 0 && (p->attribute & 8) == 0) HIWORD(p->Xpos) += 6;
+            if (gx < 0 && ((p->attribute & 8) == 0) != 0) HIWORD(p->Xpos) += 6;
             if (gx > 0 && (p->attribute & 8)) HIWORD(p->Xpos) -= 6;
             HIWORD(p->Ypos) = uy + gy - 8;
             p->Xvel = 0;

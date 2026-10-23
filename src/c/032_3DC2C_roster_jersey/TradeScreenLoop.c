@@ -38,12 +38,17 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
         memcpy(unk_D12C8, (unsigned char *)traderemap1[tradeside] + 0x90, 0x30);                                  \
         c1 = jerseyremap[byte_D11BC[teams[tradeside] * 4]];                                                       \
         c2 = byte_D12DE;                                                                                          \
-        MakeJerseyShape(jerseyremap, tradejersey[tradecursor[tradeside] * 0x16 + tradeside * 0x268], c1, c2);     \
+        MakeJerseyShape(jerseyremap, tradejersey[tradeside * 0x268 + tradecursor[tradeside] * 0x16], c1, c2);     \
         sub_B4DD4(jerseyremap);                                                                                   \
         sub_91FE0(art, mx - 0x1C, my - 0x20);                                                                     \
     }
 
-/* DRAFT (first pass from Ghidra): 3,940 of 3,943 bytes, 265 instructions differ, most of them stack slots. The
+/* DRAFT (first pass from Ghidra): same size (3,943 bytes), 183 differing under 10.0 GA, most of them stack slots
+   (the submenu path's position reset as two stores moved most slots into place; the submenu path written with
+   depth and `depth++` instead of a k copy, as PlayoffTreeMenu, and the new item drawn as menus[depth][sel[depth]]
+   brought the size back). Under GA a struct of the six arrays plus w, h, item, level, my, mx, oldmy, oldmx and flag (i, as the loop
+   counter, plain) gives the EXE's slots (235 differing), but 3,983 bytes: stores into the struct's arrays make
+   Watcom reload level and item, and w / h from it; the EXE caches them. The
    EXE's frame (ebp biased by -72h): picked -9Ah, pos -42h, bg -22h, sel -12h, nitems -2, menus +0Eh, then w, h,
    item, level, my, mx, oldmy, oldmx, flag, i, ptrart, cursor, a cursor * 16h temp, col3, col2, col1, ptr, depth *
    8 and depth * 4 temps, click, depth (+6Eh). As plain locals the arrays and scalars land in other slots (the
@@ -80,13 +85,13 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
     int my;
     int mx;
     int oldmy;
-    int oldmx;
     int flag;
+    int oldmx;
     int i;
     int ptrart;
     int cursor;
-    int col2;
     int col3;
+    int col2;
     int col1;
     int ptr;
     int click;
@@ -187,7 +192,8 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                             sel[i] = 0;
                             if (bg[i]) {
                                 sub_903F0(bg[i], pos[i][0], pos[i][1]);
-                                pos[i][0] = pos[i][1] = 0;
+                                pos[i][1] = 0;
+                                pos[i][0] = 0;
                                 FreeMemBlock(bg[i]);
                                 bg[i] = 0;
                                 menus[i] = 0;
@@ -196,13 +202,12 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                         }
                         depth = level;
                     }
-                    k = depth;
-                    DrawMenuItemSel((struct MenuItem *)&menus[k][sel[k]], pos[k][0], pos[k][1], col1,
+                    DrawMenuItemSel((struct MenuItem *)&menus[depth][sel[depth]], pos[depth][0], pos[depth][1], col1,
                         col2, col3);
-                    sel[k] = item;
-                    DrawMenuItemNorm((struct MenuItem *)&menus[k][item], pos[k][0], pos[k][1], col1,
+                    sel[depth] = item;
+                    DrawMenuItemNorm((struct MenuItem *)&menus[depth][sel[depth]], pos[depth][0], pos[depth][1], col1,
                         col2, col3);
-                    depth = k + 1;
+                    depth++;
                     menus[depth] = (MenuItem *)menus[level][item].on2;
                     nitems[depth] = menus[level][item].pad;
                     pos[depth][0] = (depth != 1 ? menus[level][item].x2 : menus[level][item].x1)
@@ -308,7 +313,7 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                         }
                     } else if (tradeclick[tradeside] >= 0x64) {
                         tradeclick[tradeside] -= 0x64;
-                        if (traderoster[tradeclick[tradeside] * 0x16 + tradeside * 0x268]) {
+                        if (traderoster[tradeside * 0x268 + tradeclick[tradeside] * 0x16]) {
                             if (tradecursor[tradeside] == tradeclick[tradeside]) {
                                 sub_8E9C0(0x40, 0x41);
                                 DrawTradeRow(tradeside);

@@ -6,7 +6,9 @@
 /* TradeHitTest: x is tested 4 pixels to the right. A point over the four trade buttons (tradebtnx/y,
  3Ah by 28h, stride 8) writes the button into out[slot], or when slot is negative writes slot/2 and
  sets flag to -1. A point in the roster columns (y at least 1Dh, under byte_D42C3 * 28 rows) writes
- the side (x past BEh) into slot and the row + 64h into out[slot]. Returns 1 for a hit. */
+ the side (x past BEh) into slot and the row + 64h into out[slot]. Returns 1 for a hit.
+ DRAFT (10.0 GA, 21 differing, same size): the roster test reads byte_D42C3 in place as the EXE does; x, y and
+ the button edge sit in edi / ebp / esi where the EXE has esi / edi / ebp. See docs/UNSURE.md. */
 int TradeHitTest(int x, int y, int *out, int *slot, int *flag)
 {
     int hit;
@@ -34,9 +36,9 @@ int TradeHitTest(int x, int y, int *out, int *slot, int *flag)
             hit = 1;
         }
     } else if (y >= 0x1D) {
-        e = byte_D42C3;
-        if (y < e * 28 + 0x1D) {
+        if (y < byte_D42C3 * 28 + 0x1D) {
             *slot = x >= 0xBE;
+            e = byte_D42C3;
             row = (y - 0x1D) / e;
             out[*slot] = row + 0x64;
             hit = 1;

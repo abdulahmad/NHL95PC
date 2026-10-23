@@ -322,6 +322,10 @@ pop ecx	; 85D69
 pop ebx	; 85D6A
 ret	; 85D6B
 %endif ; C
+; C: src/c/063_85924_demo_savegame/MenuSaveGame.c (SaveGameNameDlg)
+%ifdef CBUILD
+%include "c/063_85924_demo_savegame/MenuSaveGame.SaveGameNameDlg.inc"
+%else
 SaveGameNameDlg:
 push dword 0C0h	; 85D6C
 call __CHK	; 85D71
@@ -1013,6 +1017,7 @@ xor eax, eax	; 86609
 .23:
 add esp, 94h	; 8660B
 jmp near SaveGameStub	; 86611
+%endif ; C
 savenamedefault:
 db 02Eh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h

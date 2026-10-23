@@ -7,7 +7,6 @@
 void POSetSeriesTeams(unsigned char *s, int a, int b)
 {
     int f;
-    int i;
 
     f = teamdivflags[a] | teamdivflags[b];
     if (f == 3) {
@@ -37,8 +36,9 @@ void POSetSeriesTeams(unsigned char *s, int a, int b)
     s[0x0E] = b;
     s[0x09] = b;
     s[0x03] = b;
-    for (i = 0; i < 7; i++) {
-        s[i * 6 + 4] = 0xFF;
-        s[i * 6 + 5] = 0xFF;
+    for (b = 0; b < 7; b++) {     /* b and a are free now: game counter and game offset / 2 */
+        a = b * 4 - b;
+        s[a * 2 + 4] = 0xFF;
+        s[a * 2 + 5] = 0xFF;
     }
 }

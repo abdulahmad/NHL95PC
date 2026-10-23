@@ -24,6 +24,10 @@ void passtoa0(Player *to);
 void sfx(int n);
 extern int puckvz;
 
+/* DRAFT (dopass, 10.0 GA): 12 score differing. Fetch the early scatter target into o, name the candidate
+   distance score, and reuse dx for the pass speed and dy for each direction product. Left: the distance sum
+   lands in edi (EXE esi, the 10000h term in eax), the passdir index loads into eax (EXE esi), and the shared
+   exit. */
 /* dopass (54DF4, 93G dopass; ends in checkob_ret5): pass the puck in passdir. Clear the one-timer flag and the
    spin flag, drop the puck (nopuck 10h, lastplayer). A computer player with a pass lane result (passlane) scatters
    the pass to its target. Otherwise the pass speed is A0h + 4 * passacc (8 for a goalie), and the best teammate
@@ -46,7 +50,7 @@ void dopass(Player *p)
     int dx;
     int dy;
     short d;
-    int sp;
+    int distance_score;
 
     onetimerflag = 0;
     sflags &= 0xFB;
@@ -54,7 +58,8 @@ void dopass(Player *p)
     p->nopuck = 0x10;
     lastplayer = p->SCnum;
     if (!(p->pflags & 8) && p->passlane) {
-        ScatterPass(p, &SortCords[((short *)p)[0x24]]);
+        o = &SortCords[((short *)p)[0x24]];
+        ScatterPass(p, o);
         return;
     }
     if (p->position == 0) s.w = 8;
@@ -70,7 +75,8 @@ void dopass(Player *p)
             dy = (short)(HIWORD(o->Ypos) - *pucky);
             d = (vtoa(dx, dy) - passdir) & 7;
             if (d <= 1 || d == 7) {
-                s.t = dx * dx + dy * dy + (!d ? 0 : 0x10000);
+                distance_score = dx * dx + dy * dy + (!d ? 0 : 0x10000);
+                s.t = distance_score;
                 if (s.t <= s.best) {
                     s.best = s.t;
                     target = o;
@@ -86,11 +92,13 @@ void dopass(Player *p)
         }
         passtoa0(target);
     } else {
-        sp = passspeed;
-        s.t = dirtab_y[passdir * 2] * sp << 10;
+        dx = passspeed;
+        dy = dirtab_y[passdir * 2] * dx << 10;
+        s.t = dy;
         s.t = s.t / 0xBB8;
         *puckvy = s.t + p->Yvel;
-        s.t = dirtab[passdir * 2] * sp << 10;
+        dy = dirtab[passdir * 2] * dx << 10;
+        s.t = dy;
         s.t = s.t / 0xBB8;
         *puckvx = s.t + p->Xvel;
         *(short *)puckvz = randomd0(0x1000);
@@ -119,9 +127,10 @@ void dopass(Player *p)
     sfx((short)(((signed char *)puckvz)[1] >= 6 ? 0x99 : 0x98));
 }
 
-/* DRAFT (10.0 GA, 27 differing): gy declared before gdy gives the EXE's postx in edx / gy in eax. Left: the
-   EXE stores dist = 1 through eax, loads *puckx into ecx and subtracts it from x0 before the cross product,
-   and ends in a jump to dopass_ret6 (here its own pops); see docs/UNSURE.md. */
+/* DRAFT (10.0 GA, 23 differing): gy declared before gdy gives the EXE's postx in edx / gy in eax; *puckx read
+   once into the dead q before x0 is set gives the EXE's early ecx load. Left: the EXE stores dist = 1 through
+   eax, subtracts *puckx from x0 before the cross product (edx; the cross in ebx), adds the second quotient to a
+   without a movsx and clears passdir through edi; see docs/UNSURE.md. */
 /* shotdiradj (57A98, 93G shotdiradj; ends in dopass_ret6): a human shooter aims at the side of the net the
    goalie leaves open: from the opposing goalie's position plus half its velocity (relative to the puck), the
    offsets of the two posts (x +-12h at the goal line, E8h / -E8h by side) from the puck-to-goalie line, divided
@@ -159,10 +168,11 @@ void shotdiradj(Player *p)
     postx = 0x12;
     gy = 0xE8;
     if (!(p->pflags & 0x80)) gy = -0xE8;
+    q = *puckx;
     s.x0 = postx;
     s.cross = s.gdx * (gy - *pucky);
-    a = (s.cross - (s.x0 - *puckx) * gdy) / s.dist;
-    a += (s.cross - (-s.x0 - *puckx) * gdy) / s.dist;
+    a = (s.cross - (s.x0 - q) * gdy) / s.dist;
+    a += (s.cross - (-s.x0 - q) * gdy) / s.dist;
     if (ABS(a) > 0x2C) {
         passdir = 0;
         return;
@@ -174,6 +184,10 @@ void shotdiradj(Player *p)
 
 int __cdecl imul32(int a, int b);  /* library: 32-bit product */
 
+/* DRAFT (10.0 GA, 47 differing, same size): the scatter divisor and the speed divisor share one int (f, the
+   EXE's ebp, so the 3 of f / 3 spills to [esp]); the x scatter range is an int t (r + r) declared last, and dy
+   declared before snd, which puts snd at [esp+0Ch] and dy at [esp+10h] as in the EXE. Left: register picks
+   (the |y| of the shot-power test in edi, EXE ebx; the puck x pointer, the radius sum). */
 /* doshot (57C0B, 93G doshot; ends in dopass_ret6): p shoots. The aim is set (shotdiradj), p becomes the shooter
    (shotplayer, sflags bit 3 off, pflags bit 5). Without the puck, and not in a deflection animation (SPA DD3h /
    E2Bh), it only plays the miss sound 99h. Else (gmode2 bit 4) the shot speed: a slapshot (SPA 491h / E2Bh) loses
@@ -193,11 +207,12 @@ void doshot(Player *p)
     short z;
     short q;
     int e;
-    short w;
+    int f;
     short dx;
-    short snd;
     short dy;
+    short snd;
     short gy;
+    int t;
 
     shotdiradj(p);
     shotplayer = p->SCnum;
@@ -241,23 +256,24 @@ void doshot(Player *p)
         if (sp > 0xE) sp++;
         if (sp > 0xD) sp++;
         if (dist > 0xC8 || randomd0(p->shotacc + 0x10) <= 0xE) {
-            r = (unsigned short)(dist * ((passspeed >> 4) - sp + 0x10)) >> 6;
+            r = (dist * ((passspeed >> 4) - sp + 0x10) & 0xFFFF) >> 6;
             if (dist < 0xFA) r >>= 1;
             if (r > 0xA0) r = 0xA0;
-            dx += randomd0(r + r) - r;
+            t = r + r;
+            dx += randomd0(t) - r;
             if (r > 0x3C) r = 0x3C;
             e = dy < 0 ? r >> 1 : r;
-            w = e + e;
-            dy += randomd0(w) - e;
-            e = r;
-            q = e >> 1;
-            if (dist < 0xA0) q = e / 3;
+            dy += randomd0(e + e) - e;
+            f = r;
+            q = f >> 1;
+            if (dist < 0xA0) q = f / 3;
             if (dist < 0x50) q = r >> 2;
             z += randomd0(q);
         }
     }
-    *puckvx = dx * (passspeed * 59) / dist;
-    *puckvy = dy * (passspeed * 59) / dist;
+    f = dist;
+    *puckvx = dx * (passspeed * 59) / f;
+    *puckvy = dy * (passspeed * 59) / f;
     if (penshotlive) {
         if ((*puckvx ^ p->Xvel) >= 0 && ABS(*puckvx) < ABS(p->Xvel)) *puckvx = p->Xvel + 0x1F4;
         if ((*puckvy ^ p->Yvel) >= 0 && ABS(*puckvy) < ABS(p->Yvel)) *puckvy = p->Yvel + 0x1F4;

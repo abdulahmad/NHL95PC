@@ -68,16 +68,13 @@ typedef struct { char c[20]; } Hdr20;
    pointer at 140h, F0h. Then the mouse loop: moves redraw the pointer; a click (bits & 2) goes to the rating
    editor (EditGoalieRating / EditSkaterRating with the pointer and the field), redraws the screen when a rating
    changed, else tests the two buttons (TrackButtons, str_Two) and ends on a hit. p: the new player's record (byte
-   +2 is the position, 'G' for a goalie). Result: the button hit.
-   DRAFT: 590 vs 572. The original keeps p in ebp, the old pointer x / y in edi / esi and the event in ecx across
-   ptrupdatefn; here oy takes ebp, the event is copied to ecx and esi and p is spilled (one more stack slot). The
-   original also tests the move path first (`if (!(bits & 2))`). See docs/UNSURE.md. */
+   +2 is the position, 'G' for a goalie). Result: the button hit. */
 int CreatePlayerLoop(unsigned char *p)
 {
     int r;
-    int y;
-    int x;
     int field;
+    int x;
+    int y;
     int pal;
     int result;
     int done;
@@ -99,8 +96,7 @@ int CreatePlayerLoop(unsigned char *p)
     }
     DrawCreatePlayer(p, field);
     oy = 0xF0;
-    ox = 0x140;
-    sub_91400(editptrspr, ox, oy);
+    sub_91400(editptrspr, ox = 0x140, oy);
     sub_91370(pointerspr, ox, oy);
     FadePalStep(0, (unsigned char *)pal, 0x10);
     FreeMemBlock(pal);
@@ -113,7 +109,15 @@ int CreatePlayerLoop(unsigned char *p)
             ev = GetInputEvent();
             if (ev) bits = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(ev, &x, &y);
         } while (ev && !(bits & 2));
-        if (bits & 2) {
+        if (!(bits & 2)) {
+            if (ox != x || oy != y) {
+                sub_903F0(editptrspr, ox, oy);
+                sub_91400(editptrspr, x, y);
+                sub_91370(pointerspr, x, y);
+                ox = x;
+                oy = y;
+            }
+        } else {
             sub_903F0(editptrspr, ox, oy);
             if (p[2] == 'G') r = EditGoalieRating(&x, &y, &field);
             else r = EditSkaterRating(&x, &y, &field);
@@ -121,12 +125,6 @@ int CreatePlayerLoop(unsigned char *p)
                 DrawCreatePlayer(p, field);
             else if ((result = TrackButtons((int *)str_Two, 2, x, y, bits)) >= 0)
                 done = 1;
-            sub_91400(editptrspr, x, y);
-            sub_91370(pointerspr, x, y);
-            ox = x;
-            oy = y;
-        } else if (ox != x || oy != y) {
-            sub_903F0(editptrspr, ox, oy);
             sub_91400(editptrspr, x, y);
             sub_91370(pointerspr, x, y);
             ox = x;

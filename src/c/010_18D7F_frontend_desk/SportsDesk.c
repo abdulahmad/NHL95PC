@@ -23,8 +23,8 @@ int sub_8F98F(char *path);  /* music library: load a song (register arguments) *
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song (register arguments) */
 int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last call */
 
-/* DRAFT (first pass from Ghidra, tools/ghidra_decomp.py; the menu loop follows MainDeskLoop's draft): 3,461 of
-   4,567 bytes (3,422 now), so code is still missing. */
+/* DRAFT under 10.0 GA: 632 differing instructions (3,523 vs 4,567 bytes). The frame-pointer choice, stack accesses
+   and shared menu-branch layout still differ. The retail speech timer compares the routine address. */
 /* SportsDesk (1935D, PC only): the sports desk of a game (mode 0: paused in the game, 1: intermission, 2: after
    the game): the menu labels and title of the mode, the replay item only when a replay is recorded; fade in the
    EADESK<mode> art and palette, the pause music (when music is on and none plays), and the desk menu bar (six
@@ -38,15 +38,16 @@ int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last ca
    reloads the game (DeskReloadGame). mode: 0, 1 or 2. No result. */
 void SportsDesk(int mode)
 {
+    unsigned char pal[0x300];
+    unsigned char txt[0x40];
+    char path[0x20];
+    int pos[4][2];
+    int ptrsize;
+    int bg[4];
+    int sel[4];
+    int nitems[4];
+    MenuItem *menus[4];
     struct {
-        unsigned char pal[0x300];
-        unsigned char txt[0x40];
-        char path[0x18];
-        int pos[4][2];
-        int bg[4];
-        int sel[4];
-        int nitems[4];
-        MenuItem *menus[4];
         int w;
         int h;
         int item;
@@ -61,13 +62,14 @@ void SportsDesk(int mode)
         int timeout;
         int autoret;
         int ptr;
+        int at;
         int oldmx;
         int depth;
     } s;
-    int i;
     int r;
     int bank;
     unsigned char *src;
+    int i;
     unsigned char *e;
     MenuItem *m;
 
@@ -82,47 +84,48 @@ void SportsDesk(int mode)
     joysampling = 0;
     if (mode == 0) {
         sub_1BAF3(700000);
-        sub_8FFB0(0, 0x100, s.pal);
-        FadePalStep(1, s.pal, 0x10);
+        sub_8FFB0(0, 0x100, pal);
+        FadePalStep(1, pal, 0x10);
     }
     sub_B4BA8();
     sprintf((char *)unk_DC890, (char *)str_Eadesk1d, mode);
-    MakePath(s.path, fileoncd[0x64 + mode] == 1 ? (char *)cddriveptr : 0, (char *)unk_DC890, 0);
-    bank = sub_8E83C(s.path, 0);
+    MakePath(path, fileoncd[0x64 + mode] == 1 ? (char *)cddriveptr : 0, (char *)unk_DC890, 0);
+    bank = sub_8E83C(path, 0);
     sub_9061C(sub_B30B4(bank, (char *)str_Desk));
-    src = (unsigned char *)sub_B30B4(bank, (char *)str_Pal5);
-    for (i = 0; i < 0x300; i++) s.pal[i] = src[0x10 + i];
+    src = (unsigned char *)sub_B30B4(bank, (char *)str_Pal5) + 0x10;
+    for (i = 0; i < 0x300; i++) pal[i] = src[i];
     FreeMemBlock(bank);
-    sub_8E9E8(s.txt);
+    sub_8E9E8(txt);
     sub_8EA18(s1font);
     if (mode == 2) {
         if (schedgameidx > 0x443) PaOpenBank();
-        s.menus[0] = (MenuItem *)unk_CEC4F;
-        s.nitems[0] = 3;
+        menus[0] = (MenuItem *)unk_CEC4F;
+        nitems[0] = 3;
     } else {
-        s.menus[0] = (MenuItem *)unk_CEB8F;
-        s.nitems[0] = 6;
+        menus[0] = (MenuItem *)unk_CEB8F;
+        nitems[0] = 6;
     }
-    s.menus[3] = s.menus[2] = s.menus[1] = 0;
-    s.bg[3] = s.bg[2] = s.bg[1] = s.bg[0] = 0;
-    s.sel[3] = s.sel[2] = s.sel[1] = s.sel[0] = 0;
-    s.pos[0][1] = s.pos[0][0] = 0;
-    s.ptr = sub_8CCA8((char *)str_Pointer2, (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11, 0x20);
+    menus[3] = menus[2] = menus[1] = 0;
+    bg[3] = bg[2] = bg[1] = bg[0] = 0;
+    sel[3] = sel[2] = sel[1] = sel[0] = 0;
+    pos[0][1] = pos[0][0] = 0;
+    ptrsize = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
+    s.ptr = sub_8CCA8((char *)str_Pointer2, ptrsize, 0x20);
     *(Hdr17 *)s.ptr = *(Hdr17 *)pointerspr;
     ((short *)s.ptr)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)s.ptr)[3] = ((short *)pointerspr)[3] + 1;
-    DrawMenuBar(s.menus[0], s.nitems[0], 0xFA, 0xF9, 0xF8);
+    DrawMenuBar(menus[0], nitems[0], 0xFA, 0xF9, 0xF8);
     InputInstall();
-    s.mx = s.oldmx = (s.menus[0]->x1 + s.menus[0]->x2) / 2;
-    s.my = s.oldmy = (s.menus[0]->y1 + s.menus[0]->y2) / 2;
+    s.mx = s.oldmx = (menus[0]->x1 + menus[0]->x2) / 2;
+    s.my = s.oldmy = (menus[0]->y1 + menus[0]->y2) / 2;
     sub_91400(s.ptr, s.oldmx, s.oldmy);
     sub_91370(pointerspr, s.oldmx, s.oldmy);
     if (musicon && !songdata) {
-        MakePath(s.path, fileoncd[0x21C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pause, (char *)str_Iff3);
-        songdata = sub_8F98F(s.path);
+        MakePath(path, fileoncd[0x21C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pause, (char *)str_Iff3);
+        songdata = sub_8F98F(path);
         if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
     }
-    FadePalStep(0, s.pal, 0x10);
+    FadePalStep(0, pal, 0x10);
     sub_B2E1B(0, 0, 0x280, 0x1E0);
     MouseSetPos(s.oldmx, s.oldmy);
     ((void (*)(void))mousepollfn)();
@@ -138,10 +141,9 @@ void SportsDesk(int mode)
     s.speech = 0xB4;
     for (;;) {
         if (musicon) {
-            if (s.speech > 0) {
-                s.speech -= TicksSinceLastCall();
-                if (s.speech < 0) s.speech = 0;
-            }
+            /* Retail 19B0A compares the timer with the routine address. */
+            if ((unsigned)s.speech > (unsigned)TicksSinceLastCall) s.speech -= TicksSinceLastCall();
+            else if (s.speech > 0) s.speech = 0;
             if (s.speech == 0 && mode == 0 && !gameresult && gameopts.speech) {
                 s.speech = -1;
                 MusicChanReset();
@@ -156,13 +158,14 @@ void SportsDesk(int mode)
                 dword_C66D0 = 1;
                 ClearInputQueue();
                 InputRemove();
-                sub_8EA00(s.txt);
+                sub_8EA00(txt);
                 sub_B2E1B(0, 0, 0x280, 0x1E0);
                 deferpending = 0;
-                scrolly = scrollx = 0;
+                scrolly = 0;
+                scrollx = 0;
                 MouseSetPos(s.savex, s.savey);
-                sub_8FFB0(0, 0x100, s.pal);
-                FadePalStep(1, s.pal, 0x10);
+                sub_8FFB0(0, 0x100, pal);
+                FadePalStep(1, pal, 0x10);
                 SetScreenTitle(gamemode);
                 FreeMemBlock(s.ptr);
                 if (musicon && songdata) {
@@ -185,7 +188,7 @@ void SportsDesk(int mode)
         }
         if (!(s.btn & 2)) {
             if (s.mx == s.oldmx && s.my == s.oldmy) continue;
-            sub_B4BA8();
+            s.autoret = 0;
             sub_903F0(s.ptr, s.oldmx, s.oldmy);
             sub_91400(s.ptr, s.mx, s.my);
             sub_91370(pointerspr, s.mx, s.my);
@@ -194,57 +197,58 @@ void SportsDesk(int mode)
             continue;
         }
         s.autoret = 0;
-        if (!MenuHitTest(s.mx, s.my, s.menus, s.depth, s.nitems, &s.pos[0][0], &s.level, &s.item)) {
+        if (!MenuHitTest(s.mx, s.my, menus, s.depth, nitems, &pos[0][0], &s.level, &s.item)) {
             sub_903F0(s.ptr, s.oldmx, s.oldmy);
             for (i = s.depth; i > 0; i--) {
-                s.sel[i] = 0;
-                if (s.bg[i]) {
-                    sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                    s.pos[i][1] = s.pos[i][0] = 0;
-                    FreeMemBlock(s.bg[i]);
+                sel[i] = 0;
+                if (bg[i]) {
+                    sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                    pos[i][1] = pos[i][0] = 0;
+                    FreeMemBlock(bg[i]);
                 }
             }
             s.depth = 0;
-            s.menus[3] = s.menus[2] = s.menus[1] = 0;
-            s.bg[3] = s.bg[2] = s.bg[1] = s.bg[0] = 0;
-            s.sel[3] = s.sel[2] = s.sel[1] = 0;
-            s.nitems[3] = s.nitems[2] = s.nitems[1] = 0;
+            menus[3] = menus[2] = menus[1] = 0;
+            bg[3] = bg[2] = bg[1] = bg[0] = 0;
+            sel[3] = sel[2] = sel[1] = 0;
+            nitems[3] = nitems[2] = nitems[1] = 0;
         } else {
-            m = &s.menus[s.level][s.item];
-            if (m->on1 && s.item == s.sel[s.level]) {
+            s.at = s.item * sizeof(MenuItem);
+            m = (MenuItem *)((char *)menus[s.level] + s.at);
+            if ((*(int *)((char *)menus[s.level] + s.at + 0x14)) && s.item == sel[s.level]) {
                 sub_903F0(s.ptr, s.oldmx, s.oldmy);
                 for (i = s.depth; i > 0; i--) {
-                    s.sel[i] = 0;
-                    if (s.bg[i]) {
-                        sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                        s.pos[i][1] = s.pos[i][0] = 0;
-                        FreeMemBlock(s.bg[i]);
+                    sel[i] = 0;
+                    if (bg[i]) {
+                        sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                        pos[i][1] = pos[i][0] = 0;
+                        FreeMemBlock(bg[i]);
                     }
                 }
                 s.depth = 0;
                 dword_DC88C = s.mx;
                 dword_DC888 = s.my;
-                r = ((int (*)(void))m->on1)();
+                r = ((int (*)(void))(*(int *)((char *)menus[s.level] + s.at + 0x14)))();
                 s.mx = dword_DC88C;
                 s.my = dword_DC888;
-                s.menus[3] = s.menus[2] = s.menus[1] = 0;
-                s.bg[3] = s.bg[2] = s.bg[1] = s.bg[0] = 0;
-                s.sel[3] = s.sel[2] = s.sel[1] = 0;
-                s.nitems[3] = s.nitems[2] = s.nitems[1] = 0;
+                menus[3] = menus[2] = menus[1] = 0;
+                bg[3] = bg[2] = bg[1] = bg[0] = 0;
+                sel[3] = sel[2] = sel[1] = 0;
+                nitems[3] = nitems[2] = nitems[1] = 0;
                 if (r == 1 || r == 5) {
                     ClearInputQueue();
                     InputRemove();
-                    sub_8EA00(s.txt);
+                    sub_8EA00(txt);
                     sub_B2E1B(0, 0, 0x280, 0x1E0);
                     deferpending = 0;
                     MouseSetPos(s.savex, s.savey);
-                    sub_8FFB0(0, 0x100, s.pal);
+                    sub_8FFB0(0, 0x100, pal);
                     if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
                     if (r == 1 && musicon && gameopts.speech) {
                         MusicChanReset();
                         SayNowBack();
                     }
-                    FadePalStep(1, s.pal, 0x14);
+                    FadePalStep(1, pal, 0x14);
                     if (r != 1) gameresult = 2;
                     SetScreenTitle(gamemode);
                     if (s.ptr) FreeMemBlock(s.ptr);
@@ -261,57 +265,57 @@ void SportsDesk(int mode)
                     return;
                 }
                 if (r == 2) {
-                    sub_8FFB0(0, 0x100, s.pal);
-                    FadePalStep(1, s.pal, 0x10);
+                    sub_8FFB0(0, 0x100, pal);
+                    FadePalStep(1, pal, 0x10);
                     sub_1BAF3(700000);
-                    MakePath(s.path, fileoncd[0x64 + mode] == 1 ? (char *)cddriveptr : 0, (char *)unk_DC890, 0);
-                    bank = sub_8E83C(s.path, 0);
+                    MakePath(path, fileoncd[0x64 + mode] == 1 ? (char *)cddriveptr : 0, (char *)unk_DC890, 0);
+                    bank = sub_8E83C(path, 0);
                     sub_9061C(sub_B30B4(bank, (char *)str_Desk));
-                    src = (unsigned char *)sub_B30B4(bank, (char *)str_Pal5);
-                    for (i = 0; i < 0x300; i++) s.pal[i] = src[0x10 + i];
+                    src = (unsigned char *)sub_B30B4(bank, (char *)str_Pal5) + 0x10;
+                    for (i = 0; i < 0x300; i++) pal[i] = src[i];
                     FreeMemBlock(bank);
-                    DrawMenuBar(s.menus[0], s.nitems[0], 0xFA, 0xF9, 0xF8);
-                    FadePalStep(0, s.pal, 0x10);
+                    DrawMenuBar(menus[0], nitems[0], 0xFA, 0xF9, 0xF8);
+                    FadePalStep(0, pal, 0x10);
                 }
                 MouseSetPos(s.oldmx, s.oldmy);
                 ClearInputQueue();
-            } else if (m->on1 || m->on2) {
+            } else if ((*(int *)((char *)menus[s.level] + s.at + 0x14)) || (*(int *)((char *)menus[s.level] + s.at + 0x18))) {
                 sub_903F0(s.ptr, s.oldmx, s.oldmy);
                 if (s.depth != s.level) {
                     for (i = s.depth; i > s.level; i--) {
-                        s.sel[i] = 0;
-                        if (s.bg[i]) {
-                            sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                            s.pos[i][1] = s.pos[i][0] = 0;
-                            FreeMemBlock(s.bg[i]);
-                            s.bg[i] = 0;
-                            s.menus[i] = 0;
-                            s.nitems[i] = 0;
+                        sel[i] = 0;
+                        if (bg[i]) {
+                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            pos[i][1] = pos[i][0] = 0;
+                            FreeMemBlock(bg[i]);
+                            bg[i] = 0;
+                            menus[i] = 0;
+                            nitems[i] = 0;
                         }
                     }
                     s.depth = s.level;
                 }
                 i = s.depth;
-                DrawMenuItemSel((struct MenuItem *)&s.menus[i][s.sel[i]], s.pos[i][0], s.pos[i][1], 0xFA, 0xF9, 0xF8);
-                s.sel[i] = s.item;
-                DrawMenuItemNorm((struct MenuItem *)&s.menus[i][s.item], s.pos[i][0], s.pos[i][1], 0xFA, 0xF9, 0xF8);
-                if (!m->on1) {
+                DrawMenuItemSel((struct MenuItem *)&menus[i][sel[i]], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
+                sel[i] = s.item;
+                DrawMenuItemNorm((struct MenuItem *)&menus[i][s.item], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
+                if (!(*(int *)((char *)menus[s.level] + s.at + 0x14))) {
                     s.depth = i + 1;
-                    s.menus[s.depth] = (MenuItem *)m->on2;
-                    s.nitems[s.depth] = m->pad;
-                    s.pos[s.depth][0] = (s.depth == 1 ? m->x1 : m->x2) + s.pos[s.depth - 1][0];
-                    s.pos[s.depth][1] = (s.depth == 1 ? m->y2 : m->y1) + s.pos[s.depth - 1][1];
+                    menus[s.depth] = (MenuItem *)(*(int *)((char *)menus[s.level] + s.at + 0x18));
+                    pos[s.depth][0] = (s.depth == 1 ? m->x1 : m->x2) + pos[s.depth - 1][0];
+                    nitems[s.depth] = m->pad;
+                    pos[s.depth][1] = (s.depth == 1 ? m->y2 : m->y1) + pos[s.depth - 1][1];
                     i = s.depth;
-                    s.w = s.menus[i][s.nitems[i] - 1].x2 - s.menus[i][0].x1 + 1;
-                    s.h = s.menus[i][s.nitems[i] - 1].y2 - s.menus[i][0].y1 + 1;
-                    s.bg[i] = sub_8CCA8((char *)str_Menubuff3, s.w * s.h + 0x11, 0x20);
-                    *(Hdr17 *)s.bg[i] = *(Hdr17 *)pointerspr;
-                    ((short *)s.bg[i])[2] = s.w;
-                    ((short *)s.bg[i])[3] = s.h;
-                    sub_91400(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                    DrawMenuDropdown(s.menus[i], s.nitems[i], s.pos[i][0], s.pos[i][1], 0xFA, 0xF9, 0xF8);
-                    s.sel[i] = 0;
-                    DrawMenuItemNorm((struct MenuItem *)s.menus[i], s.pos[i][0], s.pos[i][1], 0xFA, 0xF9, 0xF8);
+                    s.w = menus[i][nitems[i] - 1].x2 - menus[i][0].x1 + 1;
+                    s.h = menus[i][nitems[i] - 1].y2 - menus[i][0].y1 + 1;
+                    bg[i] = sub_8CCA8((char *)str_Menubuff3, s.w * s.h + 0x11, 0x20);
+                    *(Hdr17 *)bg[i] = *(Hdr17 *)pointerspr;
+                    ((short *)bg[i])[2] = s.w;
+                    ((short *)bg[i])[3] = s.h;
+                    sub_91400(bg[i], pos[i][0], pos[i][1]);
+                    DrawMenuDropdown(menus[i], nitems[i], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
+                    sel[i] = 0;
+                    DrawMenuItemNorm((struct MenuItem *)menus[i], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
                 }
             } else {
                 sub_903F0(s.ptr, s.oldmx, s.oldmy);

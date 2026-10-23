@@ -1,10 +1,4 @@
 /* Scoreboard: draw the in-game panel, clock, period and crests. */
-/* DRAFT: 686 vs 686 under 10.0 GA, two instructions apart. The period digits are drawn by
- one call per digit (Watcom cross-jumps the shared call tail). Left: the /60 setup writes
- edx (`mov edx, eax`) before the 3Ch divisor (`mov ebx, 3Ch`), the original the other way
- round. `hudclockmin /= 60` after `hudclockmin = hudclocksec = GetPeriodTime()` gives the
- original order but then keeps home in ebp and stores away (the original pushes home and
- keeps away in ebp). See docs/UNSURE.md for the shapes tried. */
 #define DrawHudPanel DrawHudPanel_decl
 #define DrawPanelClock DrawPanelClock_decl
 #define DrawPanelScore DrawPanelScore_decl
@@ -32,9 +26,8 @@ void DrawHudPanel(int home, int away, int period, int reset)
     int z;
 
     if (reset) {
-        hudclocksec = GetPeriodTime();
-        hudclockmin = hudclocksec;
-        hudclockmin = hudclocksec / 60;
+        hudclockmin = hudclocksec = GetPeriodTime();
+        hudclockmin /= 60;
         hudclocksec %= 60;
         hudclockhund = 0;
     }
@@ -74,7 +67,8 @@ void DrawHudPanel(int home, int away, int period, int reset)
     byte_DC9D7 = 0xFF;
     byte_DCAD7 = 0xFF;
     sub_B4DD4(byte_DC9D8);
-    sub_B4E50(sub_B30B4(bank, (char *)crestnames[home]), 4, 4);
+    reset = home;
+    sub_B4E50(sub_B30B4(bank, (char *)crestnames[reset]), 4, 4);
     sub_B4DD4(byte_DC8D8);
     sub_B4E50(sub_B30B4(bank, (char *)crestnames[away]), 0x11C, 4);
     byte_DCA1B = 0x43;

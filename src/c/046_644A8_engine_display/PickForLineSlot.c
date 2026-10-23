@@ -9,8 +9,8 @@
 
 short CanFillLineSlot(int side, int slot, int player);
 
-/* DRAFT: 1073 vs 1142, 305 of 341 instructions; see docs/UNSURE.md. Owner of the lines_popx2 tail
-   (PickExtraSkater). */
+/* DRAFT under 10.0 GA: 20 differing instructions, original size. The start/position slots and
+   two call argument register choices remain. Owner of the lines_popx2 tail (PickExtraSkater). */
 /* PickForLineSlot (64E60, PC only): choose a player for line slot slot of team side (home hmlinetab, away
    awlinetab). First the players of the slots after slot in its byte_CD421 group (from byte_CD473[slot], up to the
    -1 end) that CanFillLineSlot allows. Else by the position letter of the slot's current player (byte_DB3AE)
@@ -39,8 +39,8 @@ short PickForLineSlot(short side, short slot)
     }
     pos = byte_DB3AE[side * 0x444 + tab[slot] * 39];
     if (pos == 'D') {
-        p = FillDressedSlots(slot < 0x1C && slot >= 0x12 ? (signed char *)unk_E9D50 + side * 25 : byte_E9DB4 + side * 25, side, slot);
-        if (p >= 0) return p;
+        r = FillDressedSlots(slot < 0x1C && slot >= 0x12 ? (signed char *)unk_E9D50 + side * 25 : byte_E9DB4 + side * 25, side, slot);
+        if (r >= 0) return r;
     } else if (pos == 'C') {
         p = FillDressedSlots(slot < 0x1C ? (signed char *)unk_E9CEC + side * 25 : (signed char *)unk_E9D82 + side * 25, side, slot);
         if (p >= 0) return p;

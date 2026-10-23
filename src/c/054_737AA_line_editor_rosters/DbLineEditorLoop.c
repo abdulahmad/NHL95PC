@@ -40,12 +40,9 @@ int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin,
 int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero, MenuItem *buttons, int n,
                      int bank);
 
-/* DRAFT (first pass from Ghidra): 5,673 of 5,678 bytes, 376 differing lines (permute.py count; 64 with the
-   frame offsets masked). The code follows the EXE block for block and the arrays sit at the EXE's offsets
-   (declared buf, path, pos: the reverse of their slot order); the frame is 4 bytes short (the EXE spills item * 20h
-   for the on1 test to ebp+4Eh, C keeps it in ecx), so the ebp bias is 76h (EXE 7Ah) and the scalars take other
-   slots. Left: the pointer buffer size (the EXE computes it before `push 20h`, w + 1 and h + 1 by lea), the first
-   loop's counter (the EXE reloads i after the store), register picks in the menu branches. */
+/* DRAFT under 10.0 GA: 5,671 vs 5,678 bytes, 92 differing instructions. The explicit menu-item
+   offset restores the EXE's frame size and bias; the declaration order (tools/slot_solver.py) puts all but h in
+   the EXE's slots. The pointer size product, h and later menu-branch registers still differ. */
 /* DbLineEditorLoop (73A18, PC only): the database line editor (DbLineEditor's loop; GameLineEditorLoop is its
    copy for the game roster). Copy the jersey numbers of the 28h line slots of lines (the players found in team's
    roster list by FindRosterSlot; 100 for an empty slot) and put the dressed players of the 8 extra slots back to
@@ -68,27 +65,27 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                      int bank)
 {
     LineSet nums;
-    char buf[0x20];
     char path[0x20];
+    char buf[0x20];
     int pos[4][2];
-    int sel[4];
     MenuItem *menus[4];
+    int sel[4];
     int bg[4];
     int nitems[4];
     int w;
-    int pick;
-    int h;
-    int hit;
-    int item;
-    int level;
-    int my;
-    int mx;
     int i;
+    int pick;
+    int level;
+    int mx;
+    int h;
+    int my;
+    int item;
+    int hit;
     int blk;
     unsigned char *pal;
     int col2;
-    int col1;
     int col3;
+    int col1;
     int ptr;
     int depth;
     unsigned char c1;
@@ -102,6 +99,7 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
     unsigned char slot;
     unsigned char *e;
     MenuItem *m;
+    int itemoffset;
 
     depth = 0;
     hit = pick = -1;
@@ -116,7 +114,8 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
     sel[0] = sel[1] = sel[2] = sel[3] = 0;
     pos[0][0] = pos[0][1] = 0;
     menuact_dbscratch = menuact_dbdress = 0;
-    ptr = sub_8CCA8((char *)str_Pointer13, (((short *)blk)[2] + 1) * (((short *)blk)[3] + 1) + 0x11, 0x20);
+    r = (((short *)blk)[2] + 1) * (((short *)blk)[3] + 1) + 0x11;
+    ptr = sub_8CCA8((char *)str_Pointer13, r, 0x20);
     *(LeHdr17 *)ptr = *(LeHdr17 *)blk;
     ((short *)ptr)[2] = ((short *)blk)[2] + 1;
     ((short *)ptr)[3] = ((short *)blk)[3] + 1;
@@ -180,8 +179,9 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
             continue;
         }
         if (MenuHitTest(mx, my, menus, depth, nitems, &pos[0][0], &level, &item)) {
-            m = &menus[level][item];
-            if (m->on1) {
+            itemoffset = item * sizeof(MenuItem);
+            m = (MenuItem *)((char *)menus[level] + itemoffset);
+            if ((*(int *)((char *)menus[level] + itemoffset + 0x14))) {
                 if (item == sel[level]) {
                     /* the second click on the selected item: close the dropdowns and run the action */
                     sub_903F0(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
@@ -216,7 +216,7 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                     DrawMenuItemNorm((struct MenuItem *)&menus[level][sel[level]], pos[level][0], pos[level][1],
                         col1, col2, col3);
                 }
-            } else if (m->on2) {
+            } else if ((*(int *)((char *)menus[level] + itemoffset + 0x18))) {
                 /* an item with a submenu: close the deeper dropdowns, select it and open its dropdown */
                 sub_903F0(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
                 if (depth != level) {

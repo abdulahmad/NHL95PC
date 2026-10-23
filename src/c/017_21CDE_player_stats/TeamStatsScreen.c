@@ -1,5 +1,5 @@
 /* Player stats: the team stats pages. */
-/* DRAFT: 3,742 vs 3,733 bytes, 172 differing lines of 940, first pass; see docs/UNSURE.md. */
+/* DRAFT: 3,714 vs 3,733 bytes, 132 differing; see docs/UNSURE.md. */
 #define TeamStatsScreen TeamStatsScreen_decl
 #define PrintShadowText PrintShadowText_decl
 #define PrintFmt1 PrintFmt1_decl
@@ -68,8 +68,8 @@ int TeamStatsScreen(int page)
         n = 0x1A;
     } else {
         OpenStatsSchedule((void **)&sched);
-        p = sched + 0x199A;
         sched += 2;
+        p = sched + 0x1998;
         for (i = 0; i < 8; i++, p += 0x2A) {
             f.teams[i * 2] = p[2];
             f.teams[i * 2 + 1] = p[3];
@@ -123,16 +123,16 @@ int TeamStatsScreen(int page)
                 if ((teamdivflags[f.west[0]] | teamdivflags[f.west[1]]) != 3) {
                     for (i = 2; i < 0xC; i++)
                         if ((teamdivflags[f.west[0]] | teamdivflags[f.west[i]]) == 3) break;
-                    t = f.west[i];
+                    w = f.west[i];
                     for (; i >= 2; i--) f.west[i] = f.west[i - 1];
-                    f.west[1] = t;
+                    f.west[1] = w;
                 }
                 if ((teamdivflags[f.east[0]] | teamdivflags[f.east[1]]) != 0xC) {
                     for (i = 2; i < 0xC; i++)
                         if ((teamdivflags[f.east[0]] | teamdivflags[f.east[i]]) == 0xC) break;
-                    t = f.east[i];
+                    e = f.east[i];
                     for (; i >= 2; i--) f.east[i] = f.east[i - 1];
-                    f.east[1] = t;
+                    f.east[1] = e;
                 }
                 n = 0xE;
             }
@@ -234,6 +234,7 @@ int TeamStatsScreen(int page)
                 PrintFmt1(0x50, y, (char *)str_fmt2d, rank++);
                 PrintShadowText(0x6E, y, !strnicmp((char *)f.rec, (char *)str_ANA2, 3) ? (char *)str_MightyDucksOfAnaheim : (char *)f.rec + 5);
                 PrintFmt1(0x154, y, (char *)str_fmt2d, s[0]);
+                koff = t * 4;
                 switch (page) {
                 case 0:
                     PrintFmt1(0x186, y, (char *)str_fmt2d, s[1]);
@@ -250,16 +251,16 @@ int TeamStatsScreen(int page)
                 case 2:
                     PrintFmt1(0x186, y, (char *)str_fmt3d, ((short *)s)[7]);
                     PrintFmt1(0x1B8, y, (char *)str_fmt4d, ((short *)s)[6]);
-                    PrintFmt2(0x1EA, y, (char *)str_fmtTenths, statssortkeys[t] / 10, statssortkeys[t] % 10);
+                    PrintFmt2(0x1EA, y, (char *)str_fmtTenths, *(int *)(koff + (int)statssortkeys) / 10, *(int *)(koff + (int)statssortkeys) % 10);
                     break;
                 case 3:
                     PrintFmt1(0x186, y, (char *)str_fmt3d, ((short *)s)[5]);
                     PrintFmt1(0x1B8, y, (char *)str_fmt3d, ((short *)s)[4]);
-                    PrintFmt2(0x1EA, y, (char *)str_fmtTenths, statssortkeys[t] / 10, statssortkeys[t] % 10);
+                    PrintFmt2(0x1EA, y, (char *)str_fmtTenths, *(int *)(koff + (int)statssortkeys) / 10, *(int *)(koff + (int)statssortkeys) % 10);
                     break;
                 case 4:
                     PrintFmt1(0x186, y, (char *)str_fmt3d, ((short *)s)[8]);
-                    PrintFmt2(0x1B8, y, (char *)str_fmtTenths, statssortkeys[t] / 10, statssortkeys[t] % 10);
+                    PrintFmt2(0x1B8, y, (char *)str_fmtTenths, *(int *)(koff + (int)statssortkeys) / 10, *(int *)(koff + (int)statssortkeys) % 10);
                     break;
                 }
                 y += 0xD;

@@ -112,11 +112,8 @@ int DressPlayer(unsigned char *nums, int ignored, unsigned char side, int *sel, 
 }
 
 /* LineEdDone: copy the dressed line into the team record.
-   DRAFT: 280 vs 280 (10.0 GA). The jersey pointer is lea ebx / [ebx] where the original is
-   lea ecx / [ecx], and the inner counter is ebx and the side stride is ecx (original ecx and
-   ebx); the scratch loop matches. Do not retry a named row for the jersey index (it becomes
-   lea ecx, [ebx+eax]) or n++ inside the subscript (it copies n to edx before the inc).
-   nums is the 28h edited jerseys, lines is
+   One function-level j is both the jersey search's roster counter and the scratch slot count
+   (the EXE keeps both in ecx, the side stride in ebx). nums is the 28h edited jerseys, lines is
    the 30h-byte line (28 jersey slots, then 8 scratch slots). A 64h jersey is copied straight across;
    any other jersey is replaced by the roster slot of the dressed player who wears it. Scratch slots
    are filled with players whose status is neither 0 nor 3. Then 48 bytes at rosterteamrec+0BCh are
@@ -128,6 +125,7 @@ int LineEdDone(unsigned char *nums, unsigned char *lines, unsigned char side, in
     unsigned char *rec;
     unsigned char *p;
     int i;
+    int j;
 
     (void)ignored;
     (void)a;
@@ -138,7 +136,6 @@ int LineEdDone(unsigned char *nums, unsigned char *lines, unsigned char side, in
         return 0;
     for (i = 0; i < 0x28; i++) {
         int stride;
-        int j;
 
         p = nums + i;
         if (*p == 0x64) {
@@ -156,18 +153,17 @@ int LineEdDone(unsigned char *nums, unsigned char *lines, unsigned char side, in
     for (i = 0; i < 8; i++)
         lines[i + 0x28] = 0x64;
     {
-        int n;
         int stride;
         int row;
 
         i = 0;
-        n = 0;
+        j = 0;
         for (; i < 0x1C; i++) {
             stride = side * 0x2F4;
             row = stride + i * 27;
             if (rosterstat[row] != 0 && rosterstat[row] != 3) {
-                lines[0x28 + n] = rosterslot[row];
-                n++;
+                lines[0x28 + j] = rosterslot[row];
+                j++;
             }
         }
     }

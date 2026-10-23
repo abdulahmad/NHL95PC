@@ -779,6 +779,10 @@ mov edx, ebx	; 870A8
 mov eax, esi	; 870AA
 call POPickConfTeams	; 870AC
 jmp near POSeedConfFinals_x	; 870B1
+; C: src/c/064_86696_season_playoffs/POPickConfTeams.c
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POPickConfTeams.inc"
+%else
 POPickConfTeams:
 push dword 38h	; 870B6
 call __CHK	; 870BB
@@ -912,6 +916,7 @@ pop ebp	; 8721B
 pop edi	; 8721C
 pop esi	; 8721D
 ret	; 8721E
+%endif ; C
 ; C: src/c/064_86696_season_playoffs/POCreateSchedule.c
 %ifdef CBUILD
 %include "c/064_86696_season_playoffs/POCreateSchedule.inc"
@@ -1144,6 +1149,10 @@ pop ecx	; 8751D
 pop ebx	; 8751E
 ret	; 8751F
 %endif ; C
+; C: src/c/064_86696_season_playoffs/POSetSeriesTeams.c
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POSetSeriesTeams.inc"
+%else
 POSetSeriesTeams:
 push dword 8	; 87520
 call __CHK	; 87525
@@ -1191,6 +1200,7 @@ cmp ebx, byte 7	; 8759C
 jl short POSetSeriesTeams.3	; 8759F
 pop ecx	; 875A1
 ret	; 875A2
+%endif ; C
 POInitSchedule:
 push dword 3Ch	; 875A3
 call __CHK	; 875A8
@@ -1476,6 +1486,10 @@ pop edi	; 8785E
 pop esi	; 8785F
 ret 4	; 87860
 %endif ; C
+; C: src/c/064_86696_season_playoffs/POSeedRound2.c
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POSeedRound2.inc"
+%else
 POSeedRound2:
 push dword 4Ch	; 87863
 call __CHK	; 87868
@@ -1752,6 +1766,7 @@ pop edx	; 87B2F
 pop ecx	; 87B30
 pop ebx	; 87B31
 ret	; 87B32
+%endif ; C
 ; C: src/c/064_86696_season_playoffs/POSeedRound2.c (POSeedConfFinals)
 %ifdef CBUILD
 %include "c/064_86696_season_playoffs/POSeedRound2.POSeedConfFinals.inc"
@@ -5205,6 +5220,10 @@ pop ebp	; 8A64C
 pop edi	; 8A64D
 pop esi	; 8A64E
 ret 8	; 8A64F
+; C: src/c/064_86696_season_playoffs/POSeedRound2.c (DrawPlayoffTree)
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POSeedRound2.DrawPlayoffTree.inc"
+%else
 DrawPlayoffTree:
 push dword 120h	; 8A652
 call __CHK	; 8A657
@@ -6390,6 +6409,7 @@ call sub_8EA00	; 8B848
 add esp, byte 4	; 8B84D
 add esp, 0F4h	; 8B850
 jmp near POSeedRound2_x	; 8B856
+%endif ; C
 ; C: src/c/064_86696_season_playoffs/SetSideControls.c
 %ifdef CBUILD
 %include "c/064_86696_season_playoffs/SetSideControls.inc"

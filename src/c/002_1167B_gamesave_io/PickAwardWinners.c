@@ -14,6 +14,7 @@
 #define sub_8F13B sub_8F13B_decl
 #define sub_8F98F sub_8F98F_decl
 #define sub_8FB8E sub_8FB8E_decl
+#define GetTicks GetTicks_decl
 #include "nhl95.h"
 #undef sub_8F1FE
 #undef sub_8F13B
@@ -22,6 +23,7 @@
 #undef PickAwardWinners
 #undef ShowAwardScreens
 #undef sub_9035C
+#undef GetTicks
 void sub_8F1FE(void *smp);
 void *sub_8F13B(char *path);
 int sub_8F98F(char *path);
@@ -30,6 +32,7 @@ void sub_8FB8E(int song, int handle, int a, int b);
 int PickAwardWinners(void);
 int ShowAwardScreens(void);
 int __cdecl sub_9035C(int bank, int n);  /* graphics library: frame n of a bank */
+int __cdecl GetTicks(void);  /* timer library, cdecl in this module (as in WaitClickTimeout.c) */
 int strnicmp(const char *a, const char *b, unsigned n);  /* Watcom CRT strnicmp_ */
 void __STOSB(void *p, int v, int n);  /* Watcom memset helper: the EXE clears the award flags with it */
 #pragma aux __STOSB "__STOSB" parm [eax] [edx] [ecx];
@@ -277,14 +280,14 @@ int ShowAwardScreens(void)
     int bank;
     unsigned short *ss;
     unsigned short *gs;
-    int k;
-    int j;
     int key;
     int x;
     int y;
+    int j;
     unsigned char *w;
     unsigned short *s;
     int pct;
+    int k;
     int pal;
 
     key = 0;

@@ -28,7 +28,7 @@ int sub_B3D64(void);
 int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void), int timeout, int flags)
 {
     int key;
-    int ins;
+    unsigned short ins;
     int i;
     int was;
 
@@ -45,13 +45,8 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
     SetTickDeadline(timeout);
     sub_B3D46(4);
     for (;;) {
-        key = PollKey();
-        if (!key) {
-            if (!sub_B3D64()) {
-                if (idle) idle();
-                continue;
-            }
-            key = 0;
+        while (!(key = PollKey()) && !sub_B3D64()) {
+            if (idle) idle();
         }
         if (!key) {
             sub_B3D46(4);
@@ -108,7 +103,10 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
             } else {
                 if (key < 0x20 || key > 0x7A) continue;
                 if (maxlen <= editpos) continue;
-                if ((flags & 1) && !(((signed char *)byte_C4B6C)[(unsigned char)(key + 1)] & 0xE0)) continue;
+                if (!(flags & 1) || ((flags & 1) &&
+                    (((signed char *)byte_C4B6C)[(unsigned char)(key + 1)] & 0xE0))) {
+                    /* This key passes the character-class filter. */
+                } else continue;
             }
             DrawEditCursor(flags);
             if (!ins) {

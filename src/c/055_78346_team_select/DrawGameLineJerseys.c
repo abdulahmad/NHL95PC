@@ -1,4 +1,7 @@
-/* DrawGameLineJerseys - game line editor: draw the 28h line slot jerseys (MakeJerseyShape with nums[i] in the team's colours, byte_D11BC byte_D12DE through jerseyremap) at lineslotx/y, then for the 1Ch dressed players (gmroster, 16h bytes each) print "<num> <name>" in the colour of their roster status (side's roster, 27h bytes per player, 444h per team): 1 C2h, 2 FCh before the game C2h, 3-4 C3h, 5-6 and 8 C2h, 7 unchanged; stops at the first empty status. */
+/* DrawGameLineJerseys - game line editor: draw the 28h line slot jerseys (MakeJerseyShape with nums[i] in the team's colours, byte_D11BC byte_D12DE through jerseyremap) at lineslotx/y, then for the 1Ch dressed players (gmroster, 16h bytes each) print "<num> <name>" in the colour of their roster status (side's roster, 27h bytes per player, 444h per team): 1 C2h, 2 FCh before the game C2h, 3-4 C3h, 5-6 and 8 C2h, 7 unchanged; stops at the first empty status.
+   DRAFT (10.0 GA, 11 differing, +4): the status is read in place in the test and the switch (Watcom keeps it in
+   dl), and case 2 is a ternary. Left: the jersey loop loads nums into edx and widens nums[i] with `and edx, 0FFh`,
+   the EXE loads nums into eax and clears edx first (`xor edx, edx / mov dl, [esi+eax]`). */
 #include "nhl95.h"
 
 void DrawGameLineJerseys(unsigned char *nums, int art, unsigned char side)
@@ -18,12 +21,10 @@ void DrawGameLineJerseys(unsigned char *nums, int art, unsigned char side)
         sub_931FC(art, lineslotx[i * 2], linesloty[i * 2]);
     }
     for (i = 0; i < 0x1C; i++) {
-        c1 = hmroster[side * 0x444 + gmrosterslot[i * 22] * 39];
-        if (!c1) return;
-        switch (c1) {
+        if (!hmroster[side * 0x444 + gmrosterslot[i * 22] * 39]) return;
+        switch (hmroster[side * 0x444 + gmrosterslot[i * 22] * 39]) {
         case 2:
-            if (curperiod < 0) col = 0xFC;
-            else col = 0xC2;
+            col = curperiod < 0 ? 0xFC : 0xC2;
             break;
         case 3: case 4: col = 0xC3; break;
         case 1: case 5: case 6: case 8: col = 0xC2; break;

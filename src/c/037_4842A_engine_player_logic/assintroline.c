@@ -1,10 +1,7 @@
 /* Engine player logic: intro line skate. */
-/* DRAFT: 682 vs 687. The wait loop, the temp5 countdown and the flag setup match.
- The distance sum stays in edx (imul edx,edx / imul eax,ecx / add edx,eax); the
- original copies dx into ecx and dy into eax so the sum stays in eax. The abs
- loads eax; the original loads edx because eax still holds that sum. Do not
- retry a folded abs, dy*dy first, nesting dist outside dx/dy, or a separate
- step local. */
+/* DRAFT (10.0 GA): 685 vs 687, 15 score differing. The squared distance uses the wait loop's i;
+   z = --p->temp1 keeps the countdown in edi as in the EXE. Left: copies before the distance squares,
+   a redundant countdown-result copy and later turn temporaries; see the agent notes. */
 #define assintroline assintroline_decl
 #include "nhl95.h"
 #undef assintroline
@@ -22,7 +19,6 @@ void assintroline(Player *p)
     int i;
     int dx;
     int dy;
-    int dist;
     int v;
     short z;
 
@@ -68,8 +64,8 @@ void assintroline(Player *p)
     }
     dx = HIWORD(p->Xpos) - p->temp3;
     dy = HIWORD(p->Ypos) - p->temp4;
-    dist = dx * dx + dy * dy;
-    if (dist < 0x40) {
+    i = dy * dy + dx * dx;
+    if (i < 0x40) {
         if (p->Xvel < 0)
             v = -(*(int *)((char *)&p->Xvel - 2) >> 16);
         else
@@ -82,9 +78,7 @@ void assintroline(Player *p)
             if (v < 0x10) {
                 HIWORD(p->Xpos) = p->temp3;
                 HIWORD(p->Ypos) = p->temp4;
-                z = p->temp1;
-                z--;
-                p->temp1 = z;
+                z = --p->temp1;
                 if (z >= 0) return;
                 p->temp1 = z + 8;
                 SetSPA(p, 0xA5B);
@@ -107,6 +101,6 @@ void assintroline(Player *p)
     }
     regd0.w = p->temp3;
     regd1.w = p->temp4;
-    if (dist > 0x90) skateto(p, 0);
+    if (i > 0x90) skateto(p, 0);
     else SkateToSpot(p, 0);
 }

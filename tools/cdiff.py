@@ -46,13 +46,11 @@ def orig_fixups(a0, a1):
 def func_addr(src, func):
     stem, f, asm, inc = cc.c_paths(src, func)
     func = func or f
-    L = open(asm).read().split('\n')
-    for k, l in enumerate(L):
-        if l.startswith(func + ':'):
-            for l2 in L[k + 1:]:
-                a = cc.ADDR.search(l2)
-                if a: return func, int(a.group(1), 16)
-    raise SystemExit('label %s not found in %s' % (func, asm))
+    # cc.label_addr counts the bytes of db / dd lines before the first address comment (MenuSaveTheseLines and
+    # MenuSaveDefaultLines start with db lines: taking the first commented line compared them 4Ah bytes too late)
+    a = cc.label_addr(asm, func)
+    if a is None: raise SystemExit('label %s not found in %s' % (func, asm))
+    return func, a
 
 def sx(v):
     return v - (1 << 32) if v >= 1 << 31 else v

@@ -309,7 +309,8 @@ int avdgoal_box(Player *p, int x1, int x2, int y, int *ps, int *pt)
     return 1;
 }
 
-/* DRAFT (avdgoal): first pass; see docs/UNSURE.md. */
+/* DRAFT (avdgoal), 10.0 GA: 155 differing; the switch cases use the margin sums inline (Watcom hoists them after
+   the jump-table range check, as in the EXE); the stack slots still differ (the EXE has g as an int at ebp-0Ch). */
 /* the goalie's SortCords number in a team block (the word at +FAh) */
 #define TMGOALIE(t) (*(short *)((char *)(t) + 0xFA))
 
@@ -324,27 +325,23 @@ int avdgoal_box(Player *p, int x1, int x2, int y, int *ps, int *pt)
    13-way switch moves the target to a post side, the goal mouth or behind the net. No result. */
 void avdgoal(Player *p)
 {
-    int pt;
     int ps;
-    int c3;
-    int c1;
-    int s1;
+    int pt;
     int gl;
-    int py;
-    int ty;
     int tight;
     Player *gp;
-    int g;
+    short g;
+    int py;
     int tx;
-    int c2;
     int m;
+    int ty;
     int px;
     int yl;
     int yb;
 
     tight = p->position == 0 || p->asslist[p->assnum] == 0x27 ? 1 : 0;
     m = tight ? -6 : 0xA;
-    if ((gmode & 1) && p->SCnum == 0x10 && ABS(regd1.w) < 0xE8 && (HIWORD(p->Ypos) ^ regd1.w) >= 0) return;
+    if ((gmode & 1) && p->SCnum == 0x10 && ABS(regd1.w) < 0xE8 && (regd1.w ^ HIWORD(p->Ypos)) >= 0) return;
     px = HIWORD(p->Xpos);
     py = HIWORD(p->Ypos);
     tx = regd0.w;
@@ -400,20 +397,16 @@ void avdgoal(Player *p)
         }
         if (ty < -0xE8) return;
         if (px < -0x2C - m + 1) regd0.w = -0x2C - m;
-        else if (px >= m + 0x2C) regd0.w = m + 0x2C;
+        else if (px >= m + 0x2C) regd0.w = 0x2C + m;
         else {
             regd1.w = yb;
             if (tx >= 0) {
-                if (m + 0x2C > tx) regd0.w = m + 0x2C;
+                if (m + 0x2C > tx) regd0.w = 0x2C + m;
             } else if (-0x2C - m + 1 <= tx) regd0.w = -0x2C - m;
         }
         if (ABS(px) > 0x26) regd1.w = yl;
         return;
     }
-    s1 = m + 0x2C;
-    c1 = m + 0x2C;
-    c2 = -0x2C - m;
-    c3 = -0x2C - m + 1;
     switch (ps) {
     case 0:
         if (py < -0xE8) {
@@ -458,37 +451,37 @@ void avdgoal(Player *p)
         regd1.w = yl;
         if (pt & 4) return;
         if (tx >= 0) {
-            if (tx < c1) regd0.w = s1;
-        } else if (tx >= c3) regd0.w = c2;
+            if (tx < m + 0x2C) regd0.w = m + 0x2C;
+        } else if (tx >= -0x2C - m + 1) regd0.w = -0x2C - m;
         return;
     case 2:
-        regd0.w = s1;
+        regd0.w = m + 0x2C;
         if (pt & 5) return;
         regd1.w = yl;
         return;
     case 3:
         if (pt == 8) regd1.w = yl;
-        else regd0.w = s1;
+        else regd0.w = m + 0x2C;
         return;
     case 4:
         regd1.w = yb;
         if (!(pt & 1)) return;
         if (tx >= 0) {
-            if (tx < c1) regd0.w = s1;
-        } else if (tx >= c3) regd0.w = c2;
+            if (tx < m + 0x2C) regd0.w = m + 0x2C;
+        } else if (tx >= -0x2C - m + 1) regd0.w = -0x2C - m;
         return;
     case 6:
-        if (pt != 8) regd0.w = s1;
+        if (pt != 8) regd0.w = m + 0x2C;
         else regd1.w = yb;
         return;
     case 8:
-        regd0.w = c2;
+        regd0.w = -0x2C - m;
         if (!(pt & 5)) return;
         regd1.w = yl;
         return;
     case 9:
         if (pt == 2) regd1.w = yl;
-        else regd0.w = c2;
+        else regd0.w = -0x2C - m;
         return;
     case 12:
         if (pt == 2) regd1.w = yb;

@@ -9,6 +9,10 @@ int WriteTeamRec(int fh, void *rec, int n);
 void __STOSD(void *p, int v, int n);
 #pragma aux __STOSD "__STOSD" parm [eax] [edx] [ecx];
 
+/* DRAFT (10.0 GA, 15 differing, 2 bytes short): the division / slot bytes are unsigned char (slot declared in the
+   team loop) and h is declared after v. Left: the list count k takes ebp / esi where the EXE uses edx, and the
+   second append is `lea ebx, [edx+1]` where C increments in place. See docs/UNSURE.md. */
+
 /* RandomizeSchedule (42295, PC only): with shuffle set, say so (msg_GenSchedule) and shuffle each division's teams
    (divisionteams, 7 per division, 6 in the first two; twelve random swaps), then rewrite the league's first 444h
    schedule games (the schedule database, game bytes +2 / +3) with each team replaced by the team in its place in
@@ -30,11 +34,11 @@ int RandomizeSchedule(char *dir, int shuffle)
     int i;
     int j;
     int n;
-    int h;
     int v;
+    int h;
     unsigned char t;
-    int dv;
-    int sl;
+    int k;
+    unsigned char dv;
 
     s.tfh = s.sfh = -1;
     if (shuffle) {
@@ -65,6 +69,8 @@ int RandomizeSchedule(char *dir, int shuffle)
             h = s.g[2];
             v = s.g[3];
             for (j = 0; j < 0x1A; j++) {
+                unsigned char sl;
+
                 dv = teamdivision[h];
                 sl = teamdivslot[h];
                 if (h >= 0 && h == divisionteams[dv * 7 + sl]) {
@@ -87,15 +93,17 @@ int RandomizeSchedule(char *dir, int shuffle)
             }
             if (!err) {
                 j = i * 6 + 2;
-                ((int *)(s.rec + 0x11C))[s.count[h]] = j;
-                s.count[h]++;
+                k = s.count[h];
+                ((int *)(s.rec + 0x11C))[k] = j;
+                s.count[h] = k + 1;
                 err = WriteTeamRec(s.tfh, s.rec, h);
             }
             if (!err) err = ReadTeamRec(s.tfh, s.rec, v);
             if (!err) {
                 j = i * 6 + 2;
-                ((int *)(s.rec + 0x11C))[s.count[v]] = j;
-                s.count[v]++;
+                k = s.count[v];
+                ((int *)(s.rec + 0x11C))[k] = j;
+                s.count[v] = k + 1;
                 err = WriteTeamRec(s.tfh, s.rec, v);
             }
         }

@@ -16,7 +16,8 @@ int __cdecl sub_B340B(int fl);  /* the edge arrow for the side bits */
 #define RB(r) (*(unsigned char *)&(r))
 #define RSB(r) (*(signed char *)&(r))
 
-/* DRAFT: 1217 vs 1230, 274 of 308 instructions; see docs/UNSURE.md. Owner of the ReplayStep_popx tail
+/* DRAFT: same size (1,228 bytes); the frame advance and the backward loop take other registers, see
+   docs/UNSURE.md (the short fx gives the EXE's sound loads). Owner of the ReplayStep_popx tail
    (DrawRinkSideObjects). */
 /* ReplayStep (67900, PC only): move the replay n frames (80h bytes each) forward or back, wrapping in the
    9600h-byte buffer when it has wrapped (sflags sfwrap) and stopping at its ends (n becomes -1); going forward
@@ -28,6 +29,7 @@ int __cdecl sub_B340B(int fl);  /* the edge arrow for the side bits */
 short ReplayStep(short n, short sound)
 {
     int keys[0x11];
+    short fx;
     short n0;
     unsigned char *last;
     unsigned char *start;
@@ -53,8 +55,10 @@ short ReplayStep(short n, short sound)
                 break;
             }
             if (sound && last != replayplay) {
-                if (replayplay[0x58] != 0xFF) sfx(replayplay[0x58]);
-                if (replayplay[0x59] != 0xFF) sfx(replayplay[0x59]);
+                fx = replayplay[0x58];
+                if (fx != 0xFF) sfx(fx);
+                fx = replayplay[0x59];
+                if (fx != 0xFF) sfx(fx);
             }
         }
     } else {
@@ -90,7 +94,7 @@ short ReplayStep(short n, short sound)
         regd1.w = regd0.w & 0x7FF;
         if (regd1.w == 0x7FF) regd1.w = -1;
         word_E9F5C[i] = regd1.w;
-        byte_E9F7E[i] = (HIBYTE(regd0.w) & 8) != 0;
+        byte_E9F7E[i] = (HIBYTE(regd0.w) & 8) ? 1 : 0;
     }
     for (i = 0; i < 0xC; i++) byte_E9F8F[i] = *replayplay++;
     for (i = 0; i < 6; i++) {
@@ -139,9 +143,10 @@ short ReplayStep(short n, short sound)
 }
 
 /* the overlay frames (shorts read the -5r way): the markers from CC0B2 (controller 1, 2, the puck carrier) and the
-   edge arrows from CC0B8 (one row of eight per controller) */
+   edge arrows from CC0B8 (one row of eight per controller; d is the direction 1-8, the byte offset summed after
+   the call as in the EXE) */
 #define MARKFRAME(j) (((short *)((char *)word_CC0B0 + 2))[j])
-#define ARROWFRAME(j, d) (((short (*)[8])((char *)word_CC0B0 + 8))[j][d])
+#define ARROWFRAME(j, d) (*(short *)((char *)word_CC0B0 + 6 + (d) * 2 + ((j) << 4)))
 
 /* DrawRinkSideObjects (67DCC, PC only; ends in ReplayStep_popx): DrawRinkOverlays for the replay, from the unpacked
    replay frame (x word_E9F18, y word_E9F3A, frame word_E9F5C, flip byte_E9F7E, jersey byte_E9F8F and position
@@ -156,8 +161,8 @@ void DrawRinkSideObjects(short vx, short vy)
     int ord[3];
     short f;
     short x;
-    short y1;
     short y;
+    short y1;
     short i;
     short k;
 
@@ -248,7 +253,7 @@ void DrawRinkSideObjects(short vx, short vy)
                 f = 4;
             }
         }
-        if (f) DrawFrameSprite(ARROWFRAME(i, sub_B340B(f) - 1), x, y, f & 8, 0);
+        if (f) DrawFrameSprite(ARROWFRAME(i, sub_B340B(f)), x, y, f & 8, 0);
         else DrawFrameSprite(MARKFRAME(i), x, y, 0, 0);
     }
     i = 0xF;

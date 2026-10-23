@@ -1,6 +1,10 @@
 /* Gadgets / replay: one pass of the replay control panel. */
-/* DRAFT: first pass; see docs/UNSURE.md. It ends in DrawGadgetButton_ret, so its match belongs in
-   DrawGadgetButton.c (a file whose only marked block is its own function, so the draft stays here). */
+/* DRAFT (10.0 GA, 16 differing): the free-spot branch writes dword_ED6EC = -1 as a constant (the EXE still
+   stores the eax it knows holds -1, and the constant takes the register slot that puts the pointer clamps in
+   edi / ecx). Left: the step-forward else clears dword_ED6E8 through eax (EXE edi, d's register), the camera
+   button -1 chain goes through edx (EXE eax), and the own-file pop / ret tail; see docs/UNSURE.md. It ends in
+   DrawGadgetButton_ret, so its match belongs in DrawGadgetButton.c (a file whose only marked block is its own
+   function, so the draft stays here). */
 #define ReplayControlLoop ReplayControlLoop_decl
 #define sub_B500C sub_B500C_decl
 #define sub_B4CD8 sub_B4CD8_decl
@@ -129,7 +133,7 @@ int ReplayControlLoop(int *step)
             if (ev & 2) {
                 if (dword_ED74C == -1) {
                     dword_ED70C = 1;
-                    dword_ED6EC = dword_ED74C;
+                    dword_ED6EC = -1;
                     word_CD4FC = -1;
                     dword_ED6F0 = dword_ED704;
                     dword_ED6F4 = dword_ED708;

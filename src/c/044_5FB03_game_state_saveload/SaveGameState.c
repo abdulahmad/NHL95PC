@@ -6,6 +6,11 @@
 #undef SaveGameState
 #undef LoadGameState
 
+extern void __STOSD(void *, int, int);
+#pragma aux __STOSD "__STOSD" parm [eax] [edx] [ecx]
+extern void __STOSB(void *, int, int);
+#pragma aux __STOSB "__STOSB" parm [eax] [edx] [ecx]
+
 typedef struct { int d[4]; } Rec16;
 typedef struct { short w[3]; } Rec6;
 
@@ -250,6 +255,8 @@ int LoadGameState(int fh)
     int n;
     int i;
     short *p;
+    short *q;
+
     LRinkObj *o;
     short id;
     Player *pl;
@@ -395,7 +402,8 @@ int LoadGameState(int fh)
     i = 0x10;
     for (i = 0; i < 0x14; i++) {
         o = (LRinkObj *)((char *)word_DEE94 + i * 12);
-        id = o->id = *p;
+        o->id = *p;
+        id = o->id;
         word_E9B2C[id / 16] |= 1 << id % 16;
         p++;
         o->ts = *p++;
@@ -445,17 +453,17 @@ int LoadGameState(int fh)
             n = 0x80;
             if (i >= 0x30) n = 0x44;
             if (FileReadAt(fh, buf, -1, n)) FatalError((char *)str_ErrLoadGame);
-            p = (short *)buf;
+            q = (short *)buf;
         }
-        *(Rec16 *)((char *)dword_DB088 + i / 25 * 25 * 16 + i % 25 * 16) = *(Rec16 *)p;
-        p += 8;
+        *(Rec16 *)((char *)dword_DB088 + i / 25 * 25 * 16 + i % 25 * 16) = *(Rec16 *)q;
+        q += 8;
         n -= 0x10;
     } while (++i < 0x32);
     for (i = 0; i < 6; i++) {
-        *(Rec6 *)((char *)unk_DC240 + i / 3 * 9 * 2 + i % 3 * 3 * 2) = *(Rec6 *)p;
-        p += 3;
+        *(Rec6 *)((char *)unk_DC240 + i / 3 * 9 * 2 + i % 3 * 3 * 2) = *(Rec6 *)q;
+        q += 3;
     }
-    if (pad1dev == 1 || pad2dev == 1) MouseSetPos(0xA0, 0x64);
+    if (pad1dev[0] == 1 || pad2dev == 1) MouseSetPos(0xA0, 0x64);
     switch (gamemode) {
     case 0:
         SaveModeState(exhstate);

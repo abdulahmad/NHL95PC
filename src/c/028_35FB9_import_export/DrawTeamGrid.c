@@ -9,6 +9,7 @@ void DrawTeamGrid(unsigned char *teams, char *title, unsigned char *grid, int ar
     int r;
     int j;
     int t;
+    int x;
     int crests[26];
     char buf[84];
     int bank;
@@ -20,9 +21,11 @@ void DrawTeamGrid(unsigned char *teams, char *title, unsigned char *grid, int ar
     for (r = 0; r < 0x1A; r++) crests[r] = sub_B30B4(bank, (char *)crestnames[r]);
     for (r = 0; r < 4; r++) {
         for (j = 0; j < 7; j++) {
-            t = grid[r * 7 + j];
+            t = (grid + r * 7)[j];
             if (t == 0x63) break;
-            sub_91370(crests[t], j * 85 + (r < 2 ? 0x40 : 0x16), r * 92 + 0x58);
+            if (r < 2) x = j * 85 + 0x40;
+            else x = j * 85 + 0x16;
+            sub_91370(crests[t], x, r * 92 + 0x58);
             if (teams[t * 30 + 0x17] == 1) DrawTeamGridName(t, teams, arg4, grid);
         }
     }

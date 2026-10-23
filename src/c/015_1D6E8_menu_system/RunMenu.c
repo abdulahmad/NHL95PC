@@ -5,6 +5,7 @@
 #define RunPlayerPickMenu RunPlayerPickMenu_decl
 #define TeamFromMouse TeamFromMouse_decl
 #define sub_90F38 sub_90F38_decl
+#define statsteambuf statsteambuf_decl
 #include "nhl95.h"
 #undef RunMenu
 #undef MenuHitTest
@@ -12,6 +13,9 @@
 #undef RunPlayerPickMenu
 #undef TeamFromMouse
 #undef sub_90F38
+#undef statsteambuf
+
+extern unsigned char *statsteambuf;
 
 typedef struct MenuItem {
     int x1, y1, x2, y2;
@@ -29,8 +33,9 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3);
 int TeamFromMouse(int x, int y, int *idx);  /* 26B5A */
 void __cdecl sub_90F38(int x, int y, int w, int h, int col);  /* graphics library: xor a box */
 
-/* DRAFT: 2,024 vs 2,075 bytes, 305 lines (the EXE keeps the pointer block and position in registers early on;
-   see docs/UNSURE.md). */
+/* DRAFT under 10.0 GA: 2,075 bytes as the EXE, 146 differing instructions. The submenu branch reads the
+   clicked item in place (the EXE keeps &menus[level][item] for on2, pad and x, and reloads it for y after the
+   pos store); the pointer-size product, the first close loop's stores and later registers still differ. */
 /* RunMenu (1D6E8, PC only; owner of RunMenu_ret4): run a menu bar of n items in the colours col1-col3 until an
    action returns 1. Save the screen under the pointer (POINTERM block, the pointer bitmap's size plus one) and
    centre the pointer on the bar. Then follow the mouse: a click on an item with an action runs it on the second
@@ -50,38 +55,38 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
         int level;
         int my;
         int mx;
-        int h;
-        int w;
-        int at;
-        int ptr;
-        int oldmx;
-        int oldmy;
-        int depth;
     } s;
+    int w;
+    int h;
+    int ptr;
+    int oldmx;
+    int oldmy;
+    int depth;
+    int size;
     int i;
     int bits;
     int r;
     unsigned char *e;
     MenuItem *m;
 
-    s.depth = 0;
+    depth = 0;
     s.menus[0] = bar;
     s.nitems[0] = n;
     s.menus[1] = s.menus[2] = s.menus[3] = 0;
     s.bg[0] = s.bg[1] = s.bg[2] = s.bg[3] = 0;
     s.sel[0] = s.sel[1] = s.sel[2] = s.sel[3] = 0;
     s.pos[0][0] = s.pos[0][1] = 0;
-    s.ptr = sub_8CCA8((char *)str_PointerMenu, (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11,
-        0x20);
-    *(MenuHdr17 *)s.ptr = *(MenuHdr17 *)pointerspr;
-    ((short *)s.ptr)[2] = ((short *)pointerspr)[2] + 1;
-    ((short *)s.ptr)[3] = ((short *)pointerspr)[3] + 1;
-    s.mx = s.oldmx = (s.menus[0]->x1 + s.menus[0]->x2) / 2;
-    s.my = s.oldmy = (s.menus[0]->y1 + s.menus[0]->y2) / 2;
-    sub_91400(s.ptr, s.oldmx, s.oldmy);
-    sub_91370(pointerspr, s.oldmx, s.oldmy);
+    size = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
+    ptr = sub_8CCA8((char *)str_PointerMenu, size, 0x20);
+    *(MenuHdr17 *)ptr = *(MenuHdr17 *)pointerspr;
+    ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
+    ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
+    s.mx = oldmx = (s.menus[0]->x1 + s.menus[0]->x2) / 2;
+    s.my = oldmy = (s.menus[0]->y1 + s.menus[0]->y2) / 2;
+    sub_91400(ptr, oldmx, oldmy);
+    sub_91370(pointerspr, oldmx, oldmy);
     sub_B2E1B(0, 0, 0x280, 0x1E0);
-    MouseSetPos(s.oldmx, s.oldmy);
+    MouseSetPos(oldmx, oldmy);
     ((void (*)(void))mousepollfn)();
     ClearInputQueue();
     for (;;) {
@@ -91,19 +96,19 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
             if (bits & 2) break;
         }
         if (!(bits & 2)) {
-            if (s.mx == s.oldmx && s.my == s.oldmy) continue;
-            sub_903F0(s.ptr, s.oldmx, s.oldmy);
-            sub_91400(s.ptr, s.mx, s.my);
+            if (s.mx == oldmx && s.my == oldmy) continue;
+            sub_903F0(ptr, oldmx, oldmy);
+            sub_91400(ptr, s.mx, s.my);
             sub_91370(pointerspr, s.mx, s.my);
-            s.oldmx = s.mx;
-            s.oldmy = s.my;
+            oldmy = s.my;
+            oldmx = s.mx;
             continue;
         }
-        if (MenuHitTest(s.mx, s.my, s.menus, s.depth, s.nitems, &s.pos[0][0], &s.level, &s.item)) {
+        if (MenuHitTest(s.mx, s.my, s.menus, depth, s.nitems, &s.pos[0][0], &s.level, &s.item)) {
             m = &s.menus[s.level][s.item];
             if (m->on1) {
                 if (s.item == s.sel[s.level]) {
-                    sub_903F0(s.ptr, s.oldmx, s.oldmy);
+                    sub_903F0(ptr, oldmx, oldmy);
                     for (i = 3; i >= 0; i--) {
                         if (s.bg[i]) {
                             sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
@@ -111,32 +116,33 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                             FreeMemBlock(s.bg[i]);
                         }
                     }
-                    s.depth = 0;
+                    depth = 0;
                     r = ((int (*)(void))s.menus[s.level][s.item].on1)();
                     s.menus[1] = s.menus[2] = s.menus[3] = 0;
                     s.bg[0] = s.bg[1] = s.bg[2] = s.bg[3] = 0;
                     s.sel[1] = s.sel[2] = s.sel[3] = 0;
                     s.nitems[1] = s.nitems[2] = s.nitems[3] = 0;
                     if (r == 1) {
-                        FreeMemBlock(s.ptr);
+                        FreeMemBlock(ptr);
                         return 0;
                     }
-                    MouseSetPos(s.oldmx, s.oldmy);
-                    s.mx = s.oldmx;
-                    s.my = s.oldmy;
+                    MouseSetPos(oldmx, oldmy);
+                    s.mx = oldmx;
+                    s.my = oldmy;
                     ClearInputQueue();
                 } else {
-                    sub_903F0(s.ptr, s.oldmx, s.oldmy);
+                    sub_903F0(ptr, oldmx, oldmy);
                     DrawMenuItemSel((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
                         s.pos[s.level][1], col1, col2, col3);
                     s.sel[s.level] = s.item;
-                    DrawMenuItemNorm((struct MenuItem *)&s.menus[s.level][s.item], s.pos[s.level][0],
+                    DrawMenuItemNorm((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
                         s.pos[s.level][1], col1, col2, col3);
                 }
             } else if (m->on2) {
-                sub_903F0(s.ptr, s.oldmx, s.oldmy);
-                if (s.depth != s.level) {
-                    for (i = s.depth; i > s.level; i--) {
+                sub_903F0(ptr, oldmx, oldmy);
+                if (depth != s.level) {
+                    i = depth;
+                    do {
                         s.sel[i] = 0;
                         if (s.bg[i]) {
                             sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
@@ -146,33 +152,33 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                             s.menus[i] = 0;
                             s.nitems[i] = 0;
                         }
-                    }
-                    s.depth = s.level;
+                        i--;
+                    } while (i > s.level);
+                    depth = s.level;
                 }
-                i = s.depth;
+                i = depth;
                 DrawMenuItemSel((struct MenuItem *)&s.menus[i][s.sel[i]], s.pos[i][0], s.pos[i][1], col1, col2, col3);
                 s.sel[i] = s.item;
+                depth++;
                 DrawMenuItemNorm((struct MenuItem *)&s.menus[i][s.item], s.pos[i][0], s.pos[i][1], col1, col2, col3);
-                m = &s.menus[s.level][s.item];
-                s.depth = i + 1;
-                s.menus[s.depth] = (MenuItem *)m->on2;
-                s.nitems[s.depth] = m->pad;
-                s.pos[s.depth][0] = (s.depth == 1 ? m->x1 : m->x2) + s.pos[s.depth - 1][0];
-                s.pos[s.depth][1] = (s.depth == 1 ? m->y2 : m->y1) + s.pos[s.depth - 1][1];
-                s.w = s.menus[s.depth][s.nitems[s.depth] - 1].x2 - s.menus[s.depth][0].x1 + 1;
-                s.h = s.menus[s.depth][s.nitems[s.depth] - 1].y2 - s.menus[s.depth][0].y1 + 1;
-                s.bg[s.depth] = sub_8CCA8((char *)str_menubuff, s.w * s.h + 0x11, 0x20);
-                *(MenuHdr17 *)s.bg[s.depth] = *(MenuHdr17 *)pointerspr;
-                ((short *)s.bg[s.depth])[2] = s.w;
-                ((short *)s.bg[s.depth])[3] = s.h;
-                sub_91400(s.bg[s.depth], s.pos[s.depth][0], s.pos[s.depth][1]);
-                DrawMenuDropdown(s.menus[s.depth], s.nitems[s.depth], s.pos[s.depth][0], s.pos[s.depth][1], col1, col2,
+                s.menus[depth] = (MenuItem *)s.menus[s.level][s.item].on2;
+                s.nitems[depth] = s.menus[s.level][s.item].pad;
+                s.pos[depth][0] = (depth != 1 ? s.menus[s.level][s.item].x2 : s.menus[s.level][s.item].x1) + s.pos[depth - 1][0];
+                s.pos[depth][1] = (depth != 1 ? s.menus[s.level][s.item].y1 : s.menus[s.level][s.item].y2) + s.pos[depth - 1][1];
+                w = s.menus[depth][s.nitems[depth] - 1].x2 - s.menus[depth][0].x1 + 1;
+                h = s.menus[depth][s.nitems[depth] - 1].y2 - s.menus[depth][0].y1 + 1;
+                s.bg[depth] = sub_8CCA8((char *)str_menubuff, w * h + 0x11, 0x20);
+                *(MenuHdr17 *)s.bg[depth] = *(MenuHdr17 *)pointerspr;
+                ((short *)s.bg[depth])[2] = w;
+                ((short *)s.bg[depth])[3] = h;
+                sub_91400(s.bg[depth], s.pos[depth][0], s.pos[depth][1]);
+                DrawMenuDropdown(s.menus[depth], s.nitems[depth], s.pos[depth][0], s.pos[depth][1], col1, col2,
                     col3);
-                s.sel[s.depth] = 0;
-                DrawMenuItemNorm((struct MenuItem *)s.menus[s.depth], s.pos[s.depth][0], s.pos[s.depth][1], col1, col2,
+                s.sel[depth] = 0;
+                DrawMenuItemNorm((struct MenuItem *)s.menus[depth], s.pos[depth][0], s.pos[depth][1], col1, col2,
                     col3);
             } else {
-                sub_903F0(s.ptr, s.oldmx, s.oldmy);
+                sub_903F0(ptr, oldmx, oldmy);
                 DrawMenuItemSel((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
                     s.pos[s.level][1], col1, col2, col3);
                 s.sel[s.level] = s.item;
@@ -180,7 +186,7 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                     col1, col2, col3);
             }
         } else {
-            sub_903F0(s.ptr, s.oldmx, s.oldmy);
+            sub_903F0(ptr, oldmx, oldmy);
             for (i = 3; i >= 0; i--) {
                 if (s.bg[i]) {
                     sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
@@ -188,30 +194,33 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                     FreeMemBlock(s.bg[i]);
                 }
             }
-            s.depth = 0;
+            depth = 0;
             s.menus[1] = s.menus[2] = s.menus[3] = 0;
             s.bg[0] = s.bg[1] = s.bg[2] = s.bg[3] = 0;
             s.sel[1] = s.sel[2] = s.sel[3] = 0;
             s.nitems[1] = s.nitems[2] = s.nitems[3] = 0;
         }
-        sub_91400(s.ptr, s.oldmx, s.oldmy);
-        sub_903F0(s.ptr, s.oldmx, s.oldmy);
-        sub_91400(s.ptr, s.mx, s.my);
+        sub_91400(ptr, oldmx, oldmy);
+        sub_903F0(ptr, oldmx, oldmy);
+        sub_91400(ptr, s.mx, s.my);
         sub_91370(pointerspr, s.mx, s.my);
-        s.oldmx = s.mx;
-        s.oldmy = s.my;
+        oldmx = s.mx;
+        oldmy = s.my;
     }
 }
 
 #define TEAMBYTE(c) (((unsigned char *)statsteambuf)[statsteamorder[c] * 26 + 0xD])
 #define HILITE(c) \
     y = TEAMBYTE(c) % 2 ? 0x14A : 0xA5; \
-    x = TEAMBYTE(c) >= 2 ? 0x140 : 0; \
+    if (TEAMBYTE(c) < 2) x = 0; else x = 0x140; \
     y += ((c) < 12 ? (c) % 6 : ((c) - 12) % 7) * 13; \
     sub_90F38(x, y, 0x140, 0xD, 0x80)
 
-/* DRAFT: first pass, 459 lines (the EXE rotates the loop: input first, the tree and pointer redraw before it);
-   see docs/UNSURE.md. */
+/* DRAFT under 10.0 GA: same size, 212 differing. The pointer moves are handled in an inner loop that breaks
+   out on a click (Watcom then rotates it as the EXE does: input first, the tree and pointer redraw before it,
+   the click's redraw cross-jumping into the inner loop's). Left: register picks from the first HILITE on (the
+   EXE indexes statsteambuf as [edx + eax*2 + 0Dh] in its first two highlights and adds the index twice in the
+   later ones, the draft the other way round), the tree-close loop and the HILITE row sums; see docs/UNSURE.md. */
 /* RunTeamPickMenu (1DF03, PC only; ends in RunMenu_ret4): RunMenu with a team picker under it, for the team stats
    screens. The selected team (statsteamsel) is shown by an xor bar on the standings grid (sub_90F38: the left or
    right half by its division, the row by its place) or, for the playoffs (statsplayoffs), by the tree highlight
@@ -233,38 +242,37 @@ int RunTeamPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
         int pick;
         int my;
         int mx;
-        int h;
-        int w;
-        int at;
-        int ptr;
-        int oldmx;
-        int oldmy;
-        int depth;
-        short hit;
     } s;
+    int oldmx;
+    int w;
+    int ptr;
+    int h;
+    int oldmy;
+    int depth;
+    short hit;
+    int size;
     int i;
     int x;
     int y;
-    int bits;
     int r;
     unsigned char *e;
     MenuItem *m;
 
     s.cur = s.pick = 0;
-    s.depth = 0;
+    depth = 0;
     s.menus[0] = bar;
     s.nitems[0] = n;
     s.menus[1] = s.menus[2] = s.menus[3] = 0;
     s.bg[0] = s.bg[1] = s.bg[2] = s.bg[3] = 0;
     s.sel[0] = s.sel[1] = s.sel[2] = s.sel[3] = 0;
     s.pos[0][0] = s.pos[0][1] = 0;
-    s.ptr = sub_8CCA8((char *)str_PointerMenu, (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11,
-        0x20);
-    *(MenuHdr17 *)s.ptr = *(MenuHdr17 *)pointerspr;
-    ((short *)s.ptr)[2] = ((short *)pointerspr)[2] + 1;
-    ((short *)s.ptr)[3] = ((short *)pointerspr)[3] + 1;
-    s.mx = s.oldmx = (s.menus[0]->x1 + s.menus[0]->x2) / 2;
-    s.my = s.oldmy = (s.menus[0]->y1 + s.menus[0]->y2) / 2;
+    size = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
+    ptr = sub_8CCA8((char *)str_PointerMenu, size, 0x20);
+    *(MenuHdr17 *)ptr = *(MenuHdr17 *)pointerspr;
+    ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
+    ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
+    s.mx = oldmx = (s.menus[0]->x1 + s.menus[0]->x2) / 2;
+    s.my = oldmy = (s.menus[0]->y1 + s.menus[0]->y2) / 2;
     if (!statsplayoffs) {
         for (i = 0; i < 0x1A; i++)
             if (statsteamsel == statsteamorder[i]) s.cur = i;
@@ -273,43 +281,52 @@ int RunTeamPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
         s.cur = statsteamsel;
         if (playofftree[s.cur] != 0x1A) MoveTreeHighlight(&s.cur, 0);
     }
-    sub_91400(s.ptr, s.oldmx, s.oldmy);
-    sub_91370(pointerspr, s.oldmx, s.oldmy);
+    sub_91400(ptr, oldmx, oldmy);
+    sub_91370(pointerspr, oldmx, oldmy);
     sub_B2E1B(0, 0, 0x280, 0x1E0);
-    MouseSetPos(s.oldmx, s.oldmy);
+    MouseSetPos(oldmx, oldmy);
     ((void (*)(void))mousepollfn)();
     ClearInputQueue();
     for (;;) {
-        bits = 0;
-        while ((e = GetInputEvent()) != 0) {
-            bits = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(e, &s.mx, &s.my);
+        for (;;) {
+            int bits;
+
+            bits = 0;
+            while ((e = GetInputEvent()) != 0) {
+                bits = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(e, &s.mx, &s.my);
+                if (bits & 2) break;
+            }
             if (bits & 2) break;
-        }
-        if (!(bits & 2)) {
-            s.hit = 0;
-            if (statsplayoffs == 1 && (s.hit = PlayoffTreeHitTest(s.mx, (int)&s.cur, s.ptr, s.oldmx, s.oldmy)) != 0) {
-                if (s.depth) {
-                    for (i = s.depth; i >= 0; i--) {
+            hit = 0;
+            if (statsplayoffs == 1 && (hit = PlayoffTreeHitTest(s.mx, (int)&s.cur, ptr, oldmx, oldmy)) != 0) {
+                if (depth) {
+                    for (i = depth; i >= 0; i--) {
                         if (s.bg[i]) {
                             sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                            s.pos[i][0] = s.pos[i][1] = 0;
+                            s.pos[i][1] = 0;
+                            s.pos[i][0] = 0;
                             FreeMemBlock(s.bg[i]);
                             s.nitems[i] = (int)(s.menus[i] = (MenuItem *)(s.bg[i] = 0));
                         }
                     }
-                    s.depth = 0;
+                    depth = 0;
                 }
                 PlayoffTreeScreen();
                 if (playofftree[s.cur] != 0x1A) MoveTreeHighlight(&s.cur, 0);
-                sub_91400(s.ptr, s.oldmx, s.oldmy);
+                sub_91400(ptr, oldmx, oldmy);
             }
-            if (s.mx == s.oldmx && s.my == s.oldmy && !s.hit) continue;
-            sub_903F0(s.ptr, s.oldmx, s.oldmy);
-        } else if (MenuHitTest(s.mx, s.my, s.menus, s.depth, s.nitems, &s.pos[0][0], &s.level, &s.item)) {
+            if (s.mx == oldmx && s.my == oldmy && !hit) continue;
+            sub_903F0(ptr, oldmx, oldmy);
+            sub_91400(ptr, s.mx, s.my);
+            sub_91370(pointerspr, s.mx, s.my);
+            oldmx = s.mx;
+            oldmy = s.my;
+        }
+        if (MenuHitTest(s.mx, s.my, s.menus, depth, s.nitems, &s.pos[0][0], &s.level, &s.item)) {
             m = &s.menus[s.level][s.item];
             if (m->on1) {
                 if (s.item == s.sel[s.level]) {
-                    sub_903F0(s.ptr, s.oldmx, s.oldmy);
+                    sub_903F0(ptr, oldmx, oldmy);
                     for (i = 3; i >= 0; i--) {
                         if (s.bg[i]) {
                             sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
@@ -317,7 +334,7 @@ int RunTeamPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                             FreeMemBlock(s.bg[i]);
                         }
                     }
-                    s.depth = 0;
+                    depth = 0;
                     if (!statsplayoffs) {
                         statsteamsel = statscategory = s.pick = statsteamorder[s.cur];
                     } else {
@@ -336,7 +353,7 @@ int RunTeamPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                     s.sel[1] = s.sel[2] = s.sel[3] = 0;
                     s.nitems[1] = s.nitems[2] = s.nitems[3] = 0;
                     if (r == 1) {
-                        FreeMemBlock(s.ptr);
+                        FreeMemBlock(ptr);
                         return 0;
                     }
                     if (!statsplayoffs) {
@@ -347,12 +364,12 @@ int RunTeamPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                         s.cur = statsteamsel;
                         if (playofftree[s.cur] != 0x1A) MoveTreeHighlight(&s.cur, 0);
                     }
-                    MouseSetPos(s.oldmx, s.oldmy);
-                    s.mx = s.oldmx;
-                    s.my = s.oldmy;
+                    MouseSetPos(oldmx, oldmy);
+                    s.mx = oldmx;
+                    s.my = oldmy;
                     ClearInputQueue();
                 } else {
-                    sub_903F0(s.ptr, s.oldmx, s.oldmy);
+                    sub_903F0(ptr, oldmx, oldmy);
                     DrawMenuItemSel((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
                         s.pos[s.level][1], col1, col2, col3);
                     s.sel[s.level] = s.item;
@@ -360,9 +377,9 @@ int RunTeamPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                         s.pos[s.level][1], col1, col2, col3);
                 }
             } else if (m->on2) {
-                sub_903F0(s.ptr, s.oldmx, s.oldmy);
-                if (s.depth != s.level) {
-                    for (i = s.depth; i > s.level; i--) {
+                sub_903F0(ptr, oldmx, oldmy);
+                if (depth != s.level) {
+                    for (i = depth; i > s.level; i--) {
                         s.sel[i] = 0;
                         if (s.bg[i]) {
                             sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
@@ -373,32 +390,32 @@ int RunTeamPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                             s.nitems[i] = 0;
                         }
                     }
-                    s.depth = s.level;
+                    depth = s.level;
                 }
-                i = s.depth;
+                i = depth;
                 DrawMenuItemSel((struct MenuItem *)&s.menus[i][s.sel[i]], s.pos[i][0], s.pos[i][1], col1, col2, col3);
                 s.sel[i] = s.item;
                 DrawMenuItemNorm((struct MenuItem *)&s.menus[i][s.item], s.pos[i][0], s.pos[i][1], col1, col2, col3);
                 m = &s.menus[s.level][s.item];
-                s.depth = i + 1;
-                s.menus[s.depth] = (MenuItem *)m->on2;
-                s.nitems[s.depth] = m->pad;
-                s.pos[s.depth][0] = (s.depth == 1 ? m->x1 : m->x2) + s.pos[s.depth - 1][0];
-                s.pos[s.depth][1] = (s.depth == 1 ? m->y2 : m->y1) + s.pos[s.depth - 1][1];
-                s.w = s.menus[s.depth][s.nitems[s.depth] - 1].x2 - s.menus[s.depth][0].x1 + 1;
-                s.h = s.menus[s.depth][s.nitems[s.depth] - 1].y2 - s.menus[s.depth][0].y1 + 1;
-                s.bg[s.depth] = sub_8CCA8((char *)str_menubuff, s.w * s.h + 0x11, 0x20);
-                *(MenuHdr17 *)s.bg[s.depth] = *(MenuHdr17 *)pointerspr;
-                ((short *)s.bg[s.depth])[2] = s.w;
-                ((short *)s.bg[s.depth])[3] = s.h;
-                sub_91400(s.bg[s.depth], s.pos[s.depth][0], s.pos[s.depth][1]);
-                DrawMenuDropdown(s.menus[s.depth], s.nitems[s.depth], s.pos[s.depth][0], s.pos[s.depth][1], col1, col2,
+                depth = i + 1;
+                s.menus[depth] = (MenuItem *)m->on2;
+                s.nitems[depth] = m->pad;
+                s.pos[depth][0] = (depth != 1 ? m->x2 : m->x1) + s.pos[depth - 1][0];
+                s.pos[depth][1] = (depth != 1 ? s.menus[s.level][s.item].y1 : s.menus[s.level][s.item].y2) + s.pos[depth - 1][1];
+                w = s.menus[depth][s.nitems[depth] - 1].x2 - s.menus[depth][0].x1 + 1;
+                h = s.menus[depth][s.nitems[depth] - 1].y2 - s.menus[depth][0].y1 + 1;
+                s.bg[depth] = sub_8CCA8((char *)str_menubuff, w * h + 0x11, 0x20);
+                *(MenuHdr17 *)s.bg[depth] = *(MenuHdr17 *)pointerspr;
+                ((short *)s.bg[depth])[2] = w;
+                ((short *)s.bg[depth])[3] = h;
+                sub_91400(s.bg[depth], s.pos[depth][0], s.pos[depth][1]);
+                DrawMenuDropdown(s.menus[depth], s.nitems[depth], s.pos[depth][0], s.pos[depth][1], col1, col2,
                     col3);
-                s.sel[s.depth] = 0;
-                DrawMenuItemNorm((struct MenuItem *)s.menus[s.depth], s.pos[s.depth][0], s.pos[s.depth][1], col1, col2,
+                s.sel[depth] = 0;
+                DrawMenuItemNorm((struct MenuItem *)s.menus[depth], s.pos[depth][0], s.pos[depth][1], col1, col2,
                     col3);
             } else {
-                sub_903F0(s.ptr, s.oldmx, s.oldmy);
+                sub_903F0(ptr, oldmx, oldmy);
                 DrawMenuItemSel((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
                     s.pos[s.level][1], col1, col2, col3);
                 s.sel[s.level] = s.item;
@@ -406,7 +423,7 @@ int RunTeamPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                     col1, col2, col3);
             }
         } else {
-            sub_903F0(s.ptr, s.oldmx, s.oldmy);
+            sub_903F0(ptr, oldmx, oldmy);
             if (TeamFromMouse(s.mx, s.my, &s.pick)) {
                 if (s.cur != s.pick) {
                     if (!statsplayoffs) {
@@ -435,36 +452,38 @@ int RunTeamPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                     s.bg[0] = s.bg[1] = s.bg[2] = s.bg[3] = 0;
                     s.sel[1] = s.sel[2] = s.sel[3] = 0;
                     s.nitems[1] = s.nitems[2] = s.nitems[3] = 0;
-                    FreeMemBlock(s.ptr);
+                    FreeMemBlock(ptr);
                     return 0;
                 }
             } else {
-                sub_903F0(s.ptr, s.oldmx, s.oldmy);
+                sub_903F0(ptr, oldmx, oldmy);
                 for (i = 3; i >= 0; i--) {
                     if (s.bg[i]) {
                         sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                        s.pos[i][0] = s.pos[i][1] = 0;
+                        s.pos[i][1] = 0;
+                        s.pos[i][0] = 0;
                         FreeMemBlock(s.bg[i]);
                     }
                 }
-                s.depth = 0;
+                depth = 0;
                 s.menus[1] = s.menus[2] = s.menus[3] = 0;
                 s.bg[0] = s.bg[1] = s.bg[2] = 0;
                 s.sel[1] = s.sel[2] = s.sel[3] = 0;
                 s.nitems[1] = s.nitems[2] = s.nitems[3] = 0;
             }
         }
-        sub_91400(s.ptr, s.mx, s.my);
+        sub_91400(ptr, s.mx, s.my);
         sub_91370(pointerspr, s.mx, s.my);
-        s.oldmx = s.mx;
-        s.oldmy = s.my;
+        oldmx = s.mx;
+        oldmy = s.my;
     }
 }
 
 typedef struct { char c[0x34]; } PlayerRec52;
 
 #define PHILITE(c) \
-    sub_90F38(0, (c) < statsnumskaters ? (c) * 13 + 0x43 : ((c) - statsnumskaters) * 13 + 0x1A8, 0x280, 0xD, 0x80)
+    k = (c) < statsnumskaters ? (c) * 13 + 0x43 : ((c) - statsnumskaters) * 13 + 0x1A8; \
+    sub_90F38(0, k, 0x280, 0xD, 0x80)
 #define PREC(c) \
     ((c) < statsnumskaters ? statsskaterplr[statsskaterorder[c]] : statsgoalieplr[statsgoalieorder[(c) - statsnumskaters]])
 #define PCLOSE() \
@@ -481,7 +500,12 @@ typedef struct { char c[0x34]; } PlayerRec52;
     s.sel[1] = s.sel[2] = s.sel[3] = 0; \
     s.nitems[1] = s.nitems[2] = s.nitems[3] = 0
 
-/* DRAFT: first pass, 2,945 vs 3,345 bytes (C gets a biased ebp frame the EXE does not have); see docs/UNSURE.md. */
+/* DRAFT under 10.0 GA: 11 bytes short, 158 differing. The highlight row is computed into k before the sub_90F38
+   call: with the ternary inside the pushed arguments Watcom gave the function a biased ebp frame (and 20 bytes of
+   spills). Only the address-taken scalars stay in the frame struct; the others are plain locals in the order
+   that gives the EXE's slots. Left: register picks from the size product on, the StrPrefixDiffers address sums,
+   the submenu branch (the EXE reads on2 as [menus[level] + item*32 + 18h] and then forms m from the same item
+   offset); see docs/UNSURE.md. */
 /* RunPlayerPickMenu (1ED96, PC only; ends in RunMenu_ret4): RunMenu with a player picker under it, for the player
    stats screens. The selected player (statsplayer, found in the shown list by his first and last name with
    StrPrefixDiffers, goalies when the position letter is G) is shown by an xor bar (sub_90F38: skaters from row 43h,
@@ -502,42 +526,42 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
         int pick;
         int my;
         int mx;
-        int h;
-        int w;
-        int at;
-        int ptr;
-        int oldmx;
-        int oldmy;
-        int cur;
-        int depth;
     } s;
+    int w;
+    int ptr;
+    int oldmx;
+    int oldmy;
+    int cur;
+    int h;
+    int depth;
     int i;
     int k;
     int bits;
     int r;
     unsigned char *e;
     MenuItem *m;
+    int size;
 
-    s.depth = s.cur = s.pick = 0;
+    depth = cur = s.pick = 0;
     s.menus[0] = bar;
     s.nitems[0] = n;
     s.menus[1] = s.menus[2] = s.menus[3] = 0;
     s.bg[0] = s.bg[1] = s.bg[2] = s.bg[3] = 0;
     s.sel[0] = s.sel[1] = s.sel[2] = s.sel[3] = 0;
     s.pos[0][0] = s.pos[0][1] = 0;
-    s.ptr = sub_8CCA8((char *)str_PointerMenu, (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11,
-        0x20);
-    *(MenuHdr17 *)s.ptr = *(MenuHdr17 *)pointerspr;
-    ((short *)s.ptr)[2] = ((short *)pointerspr)[2] + 1;
-    ((short *)s.ptr)[3] = ((short *)pointerspr)[3] + 1;
-    s.mx = s.oldmx = (s.menus[0]->x1 + s.menus[0]->x2) / 2;
-    s.my = s.oldmy = (s.menus[0]->y1 + s.menus[0]->y2) / 2;
+    size = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
+    ptr = sub_8CCA8((char *)str_PointerMenu, size, 0x20);
+    *(MenuHdr17 *)ptr = *(MenuHdr17 *)pointerspr;
+    ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
+    ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
+    s.mx = oldmx = (s.menus[0]->x1 + s.menus[0]->x2) / 2;
+    s.my = oldmy = (s.menus[0]->y1 + s.menus[0]->y2) / 2;
     if (statsplayer[2] == 'G' || statsplayer[2] == 'g') {
         for (i = 0; i < statsnumgoalies; i++) {
             k = statsgoalieplr[statsgoalieorder[i]] * 0x34;
             if (!StrPrefixDiffers((char *)statsplayer + 3, (char *)statsplayerbuf + k + 3)
                 && !StrPrefixDiffers((char *)statsplayer + 0x13, (char *)statsplayerbuf + k + 0x13)) {
-                s.cur = statsnumskaters + i;
+                cur = statsnumskaters + i;
                 break;
             }
         }
@@ -546,16 +570,16 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
             k = statsskaterplr[statsskaterorder[i]] * 0x34;
             if (!StrPrefixDiffers((char *)statsplayer + 3, (char *)statsplayerbuf + k + 3)
                 && !StrPrefixDiffers((char *)statsplayer + 0x13, (char *)statsplayerbuf + k + 0x13)) {
-                s.cur = i;
+                cur = i;
                 break;
             }
         }
     }
-    PHILITE(s.cur);
-    sub_91400(s.ptr, s.oldmx, s.oldmy);
-    sub_91370(pointerspr, s.oldmx, s.oldmy);
+    PHILITE(cur);
+    sub_91400(ptr, oldmx, oldmy);
+    sub_91370(pointerspr, oldmx, oldmy);
     sub_B2E1B(0, 0, 0x280, 0x1E0);
-    MouseSetPos(s.oldmx, s.oldmy);
+    MouseSetPos(oldmx, oldmy);
     ((void (*)(void))mousepollfn)();
     ClearInputQueue();
     for (;;) {
@@ -565,27 +589,27 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
             if (bits & 2) break;
         }
         if (!(bits & 2)) {
-            if (s.mx == s.oldmx && s.my == s.oldmy) continue;
-            sub_903F0(s.ptr, s.oldmx, s.oldmy);
-            sub_91400(s.ptr, s.mx, s.my);
+            if (s.mx == oldmx && s.my == oldmy) continue;
+            sub_903F0(ptr, oldmx, oldmy);
+            sub_91400(ptr, s.mx, s.my);
             sub_91370(pointerspr, s.mx, s.my);
-            s.oldmx = s.mx;
-            s.oldmy = s.my;
+            oldmx = s.mx;
+            oldmy = s.my;
             continue;
         }
-        if (MenuHitTest(s.mx, s.my, s.menus, s.depth, s.nitems, &s.pos[0][0], &s.level, &s.item)) {
+        if (MenuHitTest(s.mx, s.my, s.menus, depth, s.nitems, &s.pos[0][0], &s.level, &s.item)) {
             m = &s.menus[s.level][s.item];
             if (m->on1) {
                 if (s.item == s.sel[s.level]) {
-                    sub_903F0(s.ptr, s.oldmx, s.oldmy);
+                    sub_903F0(ptr, oldmx, oldmy);
                     PCLOSE();
-                    s.depth = 0;
+                    depth = 0;
                     *(PlayerRec52 *)statsplayer = *(PlayerRec52 *)(statsplayerbuf + PREC(s.pick) * 0x34);
-                    PHILITE(s.cur);
+                    PHILITE(cur);
                     r = ((int (*)(void))s.menus[s.level][s.item].on1)();
                     PZERO();
                     if (r == 1) {
-                        FreeMemBlock(s.ptr);
+                        FreeMemBlock(ptr);
                         return 0;
                     }
                     if (statsplayer[2] == 'G') {
@@ -593,7 +617,7 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                             k = statsgoalieplr[statsgoalieorder[i]] * 0x34;
                             if (!StrPrefixDiffers((char *)statsplayer + 3, (char *)statsplayerbuf + k + 3)
                                 && !StrPrefixDiffers((char *)statsplayer + 0x13, (char *)statsplayerbuf + k + 0x13)) {
-                                s.cur = statsnumskaters + i;
+                                cur = statsnumskaters + i;
                                 break;
                             }
                         }
@@ -602,18 +626,18 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                             k = statsskaterplr[statsskaterorder[i]] * 0x34;
                             if (!StrPrefixDiffers((char *)statsplayer + 3, (char *)statsplayerbuf + k + 3)
                                 && !StrPrefixDiffers((char *)statsplayer + 0x13, (char *)statsplayerbuf + k + 0x13)) {
-                                s.cur = i;
+                                cur = i;
                                 break;
                             }
                         }
                     }
-                    PHILITE(s.cur);
-                    MouseSetPos(s.oldmx, s.oldmy);
-                    s.mx = s.oldmx;
-                    s.my = s.oldmy;
+                    PHILITE(cur);
+                    MouseSetPos(oldmx, oldmy);
+                    s.mx = oldmx;
+                    s.my = oldmy;
                     ClearInputQueue();
                 } else {
-                    sub_903F0(s.ptr, s.oldmx, s.oldmy);
+                    sub_903F0(ptr, oldmx, oldmy);
                     DrawMenuItemSel((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
                         s.pos[s.level][1], col1, col2, col3);
                     s.sel[s.level] = s.item;
@@ -621,45 +645,46 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                         s.pos[s.level][1], col1, col2, col3);
                 }
             } else if (m->on2) {
-                sub_903F0(s.ptr, s.oldmx, s.oldmy);
-                if (s.depth != s.level) {
-                    for (i = s.depth; i > s.level; i--) {
+                sub_903F0(ptr, oldmx, oldmy);
+                if (depth != s.level) {
+                    for (i = depth; i > s.level; i--) {
                         s.sel[i] = 0;
                         if (s.bg[i]) {
                             sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                            s.pos[i][0] = s.pos[i][1] = 0;
+                            s.pos[i][1] = 0;
+                            s.pos[i][0] = 0;
                             FreeMemBlock(s.bg[i]);
                             s.bg[i] = 0;
                             s.menus[i] = 0;
                             s.nitems[i] = 0;
                         }
                     }
-                    s.depth = s.level;
+                    depth = s.level;
                 }
-                i = s.depth;
+                i = depth;
                 DrawMenuItemSel((struct MenuItem *)&s.menus[i][s.sel[i]], s.pos[i][0], s.pos[i][1], col1, col2, col3);
                 s.sel[i] = s.item;
                 DrawMenuItemNorm((struct MenuItem *)&s.menus[i][s.item], s.pos[i][0], s.pos[i][1], col1, col2, col3);
+                depth = i + 1;
+                s.menus[depth] = (MenuItem *)s.menus[s.level][s.item].on2;
                 m = &s.menus[s.level][s.item];
-                s.depth = i + 1;
-                s.menus[s.depth] = (MenuItem *)m->on2;
-                s.nitems[s.depth] = m->pad;
-                s.pos[s.depth][0] = (s.depth == 1 ? m->x1 : m->x2) + s.pos[s.depth - 1][0];
-                s.pos[s.depth][1] = (s.depth == 1 ? m->y2 : m->y1) + s.pos[s.depth - 1][1];
-                s.w = s.menus[s.depth][s.nitems[s.depth] - 1].x2 - s.menus[s.depth][0].x1 + 1;
-                s.h = s.menus[s.depth][s.nitems[s.depth] - 1].y2 - s.menus[s.depth][0].y1 + 1;
-                s.bg[s.depth] = sub_8CCA8((char *)str_menubuff, s.w * s.h + 0x11, 0x20);
-                *(MenuHdr17 *)s.bg[s.depth] = *(MenuHdr17 *)pointerspr;
-                ((short *)s.bg[s.depth])[2] = s.w;
-                ((short *)s.bg[s.depth])[3] = s.h;
-                sub_91400(s.bg[s.depth], s.pos[s.depth][0], s.pos[s.depth][1]);
-                DrawMenuDropdown(s.menus[s.depth], s.nitems[s.depth], s.pos[s.depth][0], s.pos[s.depth][1], col1, col2,
+                s.nitems[depth] = m->pad;
+                s.pos[depth][0] = (depth != 1 ? m->x2 : m->x1) + s.pos[depth - 1][0];
+                s.pos[depth][1] = (depth != 1 ? s.menus[s.level][s.item].y1 : s.menus[s.level][s.item].y2) + s.pos[depth - 1][1];
+                w = s.menus[depth][s.nitems[depth] - 1].x2 - s.menus[depth][0].x1 + 1;
+                h = s.menus[depth][s.nitems[depth] - 1].y2 - s.menus[depth][0].y1 + 1;
+                s.bg[depth] = sub_8CCA8((char *)str_menubuff, w * h + 0x11, 0x20);
+                *(MenuHdr17 *)s.bg[depth] = *(MenuHdr17 *)pointerspr;
+                ((short *)s.bg[depth])[2] = w;
+                ((short *)s.bg[depth])[3] = h;
+                sub_91400(s.bg[depth], s.pos[depth][0], s.pos[depth][1]);
+                DrawMenuDropdown(s.menus[depth], s.nitems[depth], s.pos[depth][0], s.pos[depth][1], col1, col2,
                     col3);
-                s.sel[s.depth] = 0;
-                DrawMenuItemNorm((struct MenuItem *)s.menus[s.depth], s.pos[s.depth][0], s.pos[s.depth][1], col1, col2,
+                s.sel[depth] = 0;
+                DrawMenuItemNorm((struct MenuItem *)s.menus[depth], s.pos[depth][0], s.pos[depth][1], col1, col2,
                     col3);
             } else {
-                sub_903F0(s.ptr, s.oldmx, s.oldmy);
+                sub_903F0(ptr, oldmx, oldmy);
                 DrawMenuItemSel((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
                     s.pos[s.level][1], col1, col2, col3);
                 s.sel[s.level] = s.item;
@@ -667,14 +692,14 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                     col1, col2, col3);
             }
         } else {
-            sub_903F0(s.ptr, s.oldmx, s.oldmy);
+            sub_903F0(ptr, oldmx, oldmy);
             if (PlayerFromMouseY(s.mx, s.my, &s.pick)) {
                 PCLOSE();
-                s.depth = 0;
+                depth = 0;
                 PZERO();
-                if (s.cur != s.pick) {
-                    PHILITE(s.cur);
-                    s.cur = s.pick;
+                if (cur != s.pick) {
+                    PHILITE(cur);
+                    cur = s.pick;
                     PHILITE(s.pick);
                 } else {
                     PCLOSE();
@@ -682,19 +707,19 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                     statspal = statspalvalid = 0;
                     ShowPlayerStatsItem();
                     PZERO();
-                    FreeMemBlock(s.ptr);
+                    FreeMemBlock(ptr);
                     return 0;
                 }
             } else {
-                sub_903F0(s.ptr, s.oldmx, s.oldmy);
+                sub_903F0(ptr, oldmx, oldmy);
                 PCLOSE();
-                s.depth = 0;
+                depth = 0;
                 PZERO();
             }
         }
-        sub_91400(s.ptr, s.mx, s.my);
+        sub_91400(ptr, s.mx, s.my);
         sub_91370(pointerspr, s.mx, s.my);
-        s.oldmx = s.mx;
-        s.oldmy = s.my;
+        oldmx = s.mx;
+        oldmy = s.my;
     }
 }

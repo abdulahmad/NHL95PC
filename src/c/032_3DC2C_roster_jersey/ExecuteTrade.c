@@ -13,8 +13,11 @@ int FixJerseyConflict(int fh, int k, unsigned char *tr);
 int WriteKeyRec(int fh, void *rec, long pos);
 int WriteTeamRec(int fh, void *rec, int n);
 
-#define KEY(r, k) (*((k) < 0x19 ? &((int *)((r) + 0x4C))[k] : &((int *)((r) + 0xB0))[(k) - 0x19]))
-#define KEYR(r, k) ((k) < 0x19 ? ((int *)((r) + 0x4C))[k] : ((int *)((r) + 0xB0))[(k) - 0x19])
+/* DRAFT (10.0 GA, 81 -> 15 differing, same size): every instruction matches; only the three spilled dwords sit
+   in another order (C: traded +660h, kb +664h, sel's home +668h; EXE: kb, sel, traded). The key numbers are read
+   and written with an if / else per skater / goalie slot (both arms address the same word, so Watcom keeps only
+   the dead `cmp`, as the EXE does) and kb is a plain local; kb as the frame struct's last member gives the EXE's
+   slots but compares the first written slot in memory (7 differing, 5 bytes short). See docs/UNSURE.md. */
 
 /* ExecuteTrade (3E390, PC only): carry out the trade set up on the trade screen. Read both teams' records from
    the league's team database, then for each of the two trade rows with a player chosen on both sides (sel[i] and
@@ -34,10 +37,10 @@ int ExecuteTrade(char *dir, int *teams, unsigned char *sel)
         char path[0x20];
         int kfh;
         int tfh;
-        int kb;
     } s;
     int traded;
     int err;
+    int kb;
     int ka;
     int i;
     int pal;
@@ -56,23 +59,27 @@ int ExecuteTrade(char *dir, int *teams, unsigned char *sel)
         for (i = 0; i < 2 && !err; i++) {
             if (sel[i] == 0xFF || sel[i + 2] == 0xFF) continue;
             traded = -1;
-            ka = KEYR(s.reca, sel[i]);
+            if (sel[i] < 0x19) ka = ((int *)(s.reca + 0x4C))[sel[i]];
+            else ka = ((int *)(s.reca + 0xB0))[sel[i] - 0x19];
             err = ReadKeyRec(s.kfh, s.keya, ka);
             if (!err) {
-                s.kb = KEYR(s.recb, sel[i + 2]);
-                err = ReadKeyRec(s.kfh, s.keyb, s.kb);
+                if (sel[i + 2] < 0x19) kb = ((int *)(s.recb + 0x4C))[sel[i + 2]];
+                else kb = ((int *)(s.recb + 0xB0))[sel[i + 2] - 0x19];
+                err = ReadKeyRec(s.kfh, s.keyb, kb);
             }
             if (err) continue;
             s.keya[0] = teams[1];
             s.keyb[0] = teams[0];
-            KEY(s.reca, sel[i]) = s.kb;
-            KEY(s.recb, sel[i + 2]) = ka;
+            if (sel[i] < 0x19) ((int *)(s.reca + 0x4C))[sel[i]] = kb;
+            else ((int *)(s.reca + 0xB0))[sel[i] - 0x19] = kb;
+            if (sel[i + 2] < 0x19) ((int *)(s.recb + 0x4C))[sel[i + 2]] = ka;
+            else ((int *)(s.recb + 0xB0))[sel[i + 2] - 0x19] = ka;
             ClearPlayerFromLines(sel[i], s.reca + 0xBC);
             ClearPlayerFromLines(sel[i], s.reca + 0xEC);
             ClearPlayerFromLines(sel[i + 2], s.recb + 0xBC);
             ClearPlayerFromLines(sel[i + 2], s.recb + 0xEC);
             err = WriteKeyRec(s.kfh, s.keya, ka);
-            if (!err) err = WriteKeyRec(s.kfh, s.keyb, s.kb);
+            if (!err) err = WriteKeyRec(s.kfh, s.keyb, kb);
             if (!err) err = WriteTeamRec(s.tfh, s.reca, teams[0]);
             if (!err) err = WriteTeamRec(s.tfh, s.recb, teams[1]);
             if (!err) err = FixJerseyConflict(s.kfh, sel[i], s.reca);

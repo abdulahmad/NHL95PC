@@ -16,8 +16,8 @@ int CanFillLineSlot(short side, short slot, short player)
     signed char *tab;
     int sidev;
     short st;
-    int pos;
-    int result;
+    short pos;
+    short result;
 
     tab = (signed char *)(side ? awlinetab : hmlinetab);
     sidev = (short)side;
@@ -27,8 +27,11 @@ int CanFillLineSlot(short side, short slot, short player)
         row = hmroster + sidev * 0x444;
         st = byte_CD418[row[(short)player * 39]];
     }
-    if (st == 0)
-        goto zero;
+    if (st == 0) {
+zero:
+        result = 0;
+        goto out;
+    }
     if (st == 2 && byte_E9E18[sidev * 25 + (short)player] != 2)
         goto zero;
     pos = byte_DB3AE[(short)side * 0x444 + (short)player * 39];
@@ -97,8 +100,6 @@ int CanFillLineSlot(short side, short slot, short player)
     result = 1;
     goto out;
     }
-zero:
-    result = 0;
 out:
     return result;
 }

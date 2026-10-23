@@ -29,26 +29,27 @@ void changeplayer(Player *p, short cont)
     Player *q;
     short n;
     long dx;
-    long dy;
-    short s;
+    unsigned long d;
 
     px = (*puckvx >> 8) + *puckx;
-    py = (*puckvy >> 8) + *pucky;
+    py = *pucky + (*puckvy >> 8);
     best = 0xFFFFFFFF;
     q = ((cont ? cont2team : cont1team) != 1) ? &SortCords[6] : SortCords;
     pick = p->SCnum;
     n = 6;
     do {
         if (q->position > 0 && !(q->pflags2 & 4) && !(q->pflags & pfalock)) {
+            long dy;
+
             dx = px - HIWORD(q->Xpos);
             dy = py - HIWORD(q->Ypos);
-            dx *= dx;
-            dy *= dy;
-            dx += dy;
-            if ((unsigned long)dx <= best) {
+            d = dx * dx + dy * dy;
+            if (d <= best) {
+                short s;
+
                 s = q->SCnum;
                 if (s != (cont ? c1playernum[0] : c2playernum[0])) {
-                    best = dx;
+                    best = d;
                     pick = s;
                 }
             }
@@ -81,7 +82,6 @@ void setplayer(Player *p, short n)
     unsigned char *q;
     short v;
     int d;
-    short df;
     int as;
 
     rg.n = n;
@@ -90,13 +90,11 @@ void setplayer(Player *p, short n)
     p->pnum = rg.n;
     regd1.w = t->tmpdst[rg.n];
     if (regd1.w >= 0) {
-        as = 0xA;
-        goto enter;
-    }
-    if (regd1.w == -2) {
-        as = 9;
-enter:
-        assinsert(p, as);
+        assinsert(p, 0xA);
+        p->pflags &= 0xDF;
+        p->SPA = 0;
+    } else if (regd1.w == -2) {
+        assinsert(p, 9);
         p->pflags &= 0xDF;
         p->SPA = 0;
     }
@@ -110,12 +108,15 @@ enter:
                 rg.u0.l = (td[0x2DC] > 6 ? 2 : td[0x2DC] >= 4) - 2;
                 rg.pk.b = rg.u0.b;
             } else {
-                rg.u1.l = td[0x2DD] > 6 ? 2 : td[0x2DD] >= 4;
+                if (td[0x2DD] > 6) rg.u1.l = 2;
+                else rg.u1.l = td[0x2DD] >= 4;
                 rg.pp.b = rg.u1.b;
             }
         }
         rg.hm.b = !(p->pflags & 0x40) ? (td[0x2DE] > 6 ? 2 : td[0x2DE] >= 4) : (td[0x2DF] > 6 ? 2 : td[0x2DF] >= 4) - 2;
-        if (gsp > 2 || gsp == 2 && gameclock < PerTimeTotal >> 1) {
+        if (gsp > 2 || gsp == 2 && PerTimeTotal >> 1 > gameclock) {
+            short df;
+
             df = hmscore[0] - awscore;
             if (!df || ((p->pflags & 0x40) == 0) ^ (df > 0)) rg.tp.b = 2;
         }
@@ -178,7 +179,7 @@ enter:
         p->spodds = v;
     } else {
         p->rostnum = t->tmroster[rg.n * 0x27 + 5];
-        r = TMGLRAT(t) + (rg.n << 4) - 0x190;
+        r = &TMGLRAT(t)[(rg.n - 0x19) * 16];
         p->handed = *r;
         p->attribute &= 0xF7;
         r++;
@@ -191,7 +192,8 @@ enter:
         p->legspd = *r++;
         p->legstr = *r++;
         q = &p->legspd;
-        d = p->legspd < 3 ? p->legspd : 3;
+        if (p->legspd < 3) d = p->legspd;
+        else d = 3;
         rg.u0.l = *q;
         rg.u0.l -= d;
         *q = rg.u0.b;
@@ -214,12 +216,16 @@ enter:
 }
 
 /* the overlay frames (shorts read the -5r way): one marker per tracked object from CC0B2 (controller 1, 2, the
-   puck carrier) and the edge arrows from CC0B8 (one row of eight per controller, by direction) */
+   puck carrier) and the edge arrows from CC0B8 (one row of eight per controller; d is the direction 1-8, the
+   byte offset summed after the call as in the EXE) */
 #define MARKFRAME(j) (((short *)((char *)word_CC0B0 + 2))[j])
-#define ARROWFRAME(j, d) (((short (*)[8])((char *)word_CC0B0 + 8))[j][d])
+#define ARROWFRAME(j, d) (*(short *)((char *)word_CC0B0 + 6 + (d) * 2 + ((j) << 4)))
 #define OOBYTE(i) (*(int *)(OOlist + (i) - 3) >> 24)
 int __cdecl sub_B340B(int fl);
 
+/* DRAFT (10.0 GA, 73 differing, same size): the second penalty box clamp as an if / else gives the EXE's slots
+   (c1 -14h, c2 -10h, k -0Ch, the clip temporary -8) but not its clamp code (the EXE's ternary result in eax);
+   the ternary keeps the clamp and swaps the slots. See docs/UNSURE.md. */
 /* DrawRinkOverlays (5CE12, PC only; ends in changeplayer_ret5): draw the rink layer above the objects for the
    view at vx, vy (viewscrollx / viewscrolly). With the penalty boxes in view, a marker per player in each box
    (up to three a side); then DrawRinkObjects. The markers of the two controlled players and the puck carrier,
@@ -255,7 +261,8 @@ void DrawRinkOverlays(short vx, short vy)
             for (i = 0; i < PBnum[0] && i < 3; i++) DrawFrameSprite(0x17E, 0xB3, (i + 3) * -0xB, 0, 0);
         }
         if (camy > -0x4B && camy < 0xB1) {
-            i = PBnum[1] - 1 < 2 ? PBnum[1] - 1 : 2;
+            if (PBnum[1] - 1 >= 2) i = 2;
+            else i = PBnum[1] - 1;
             for (; i >= 0; i--) DrawFrameSprite(0x17E, 0xB3, (i + 3) * 0xB, 0, 1);
         }
     }
@@ -312,7 +319,7 @@ void DrawRinkOverlays(short vx, short vy)
                 fl = 8;
             }
         }
-        if (fl) DrawFrameSprite(ARROWFRAME(i, sub_B340B(fl) - 1), x, y, fl & 8, 0);
+        if (fl) DrawFrameSprite(ARROWFRAME(i, sub_B340B(fl)), x, y, fl & 8, 0);
         else DrawFrameSprite(MARKFRAME(i), x, y, 0, 0);
     }
     q = (Player *)sortobj15;
@@ -384,7 +391,8 @@ void DrawRinkOverlays(short vx, short vy)
                 fl = 8;
             } else {
                 fl = vtoa((short)(mousex - 0xA0), (short)(0x64 - mousey));
-                x = (short)(mousex - 0xA0) / 4;
+                x = mousex - 0xA0;
+                x /= 4;
                 y = (0x64 - mousey) / 4;
             }
             x += HIWORD(SortCords[i].Xpos);

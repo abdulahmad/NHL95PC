@@ -32,23 +32,18 @@ int CheckLeagueDiskSync(char *dir, char *teams, int team, int sync, int probe)
         int my;
         int mx;
         int fh;
-        volatile int team;
     } s;
     int err;
     char *rec;
     int id;
-    unsigned char kind;
 
-    s.team = team;
     s.fh = -1;
     err = 0;
-    rec = (char *)((s.team << 4) - s.team);
-    rec = (char *)((int)rec * 2 + (int)teams);
-    *(char **)(leaguediskmsg + 8) = (char *)err;
+    rec = teams + team * 30;
+    *(char **)(leaguediskmsg + 8) = 0;
     id = GetLeagueId(dir, &s.id);
-    kind = rec[0x17];
-    if (kind == 1) {
-        if (id == s.team || (id < 0 && (kind == rec[0x18] || ((short)(rec[0x16] & kind))))) {
+    if (rec[0x17] == 1) {
+        if (id == team || (id < 0 && (rec[0x18] == 1 || (rec[0x16] & 1)))) {
             if (rec[0x16] & 2) {
                 *(char **)(leaguediskmsg + 8) = (char *)str_MustBeImportedFrom;
                 err = 4;
@@ -64,7 +59,7 @@ int CheckLeagueDiskSync(char *dir, char *teams, int team, int sync, int probe)
                 MakePath(s.path, (char *)&str_floppydrv, (char *)str_PINFO, (char *)str_extDB);
                 err = FileOpenRead(s.path, &s.fh);
                 if (!err)
-                    err = ReadLeagueTeamEntry(s.fh, s.entry, s.team);
+                    err = ReadLeagueTeamEntry(s.fh, s.entry, team);
                 FileClose(&s.fh);
                 if (!err && (s.entry[0x16] & 1)) {
                     *(char **)(leaguediskmsg + 8) = (char *)str_MustBeExportedTo;

@@ -32,8 +32,12 @@ int sub_8F98F(char *path);
 void sub_8FB8E(int song, int handle, int a, int b);
 int PreGameScreen(int home, int vis);
 
-/* DRAFT: 3208 vs 3158, a first pass kept for its pop / ret tail (MainDeskLoop_x, which LoadModeState,
-   WriteModeState and MenuNewExhibition use); see docs/UNSURE.md. */
+/* DRAFT (10.0 GA): 72 differing, same 3,158 bytes; kept for its pop / ret tail (MainDeskLoop_x, which
+   LoadModeState, WriteModeState and MenuNewExhibition use). The first pointer-sprite size goes through the
+   (still unused) r so the multiply is finished before `push 20h`, which also gives oldmx / oldmy the EXE's
+   slots; the dropdown reset chains store pos[i][1] first. Left: the second size (after the item action, r
+   live) still pushes 20h first, and the selected item's redraw reloads s.level where the EXE keeps it in edx
+   (a store into s.sel may alias s.level in one frame struct); see docs/UNSURE.md. */
 /* MainDeskLoop (31AB5, PC only; owner of MainDeskLoop_x / MainDeskLoop_x2): the main desk screen. Reset the
    menu state (the menu bar, mainmenubar, with three items; no dropdowns open), centre the mouse on the bar, set
    the side controls, the EASN stats callbacks and the menu pointer bitmap, pick and load the desk song
@@ -58,12 +62,11 @@ int MainDeskLoop(void)
         int fh;
         int my;
         int mx;
-        int at;
-        int ptr;
-        int oldmx;
-        int oldmy;
-        int depth;
     } s;
+    int ptr;
+    int oldmx;
+    int oldmy;
+    int depth;
     int i;
     int bits;
     int r;
@@ -75,18 +78,18 @@ int MainDeskLoop(void)
     MenuItem *m;
 
     s.fh = -1;
-    s.depth = 0;
+    depth = 0;
     SetScreenTitle(0);
     s.menus[0] = (MenuItem *)mainmenubar;
     s.nitems[0] = 3;
-    s.menus[3] = s.menus[2] = s.menus[1] = 0;
-    s.bg[3] = s.bg[2] = s.bg[1] = s.bg[0] = 0;
-    s.sel[3] = s.sel[2] = s.sel[1] = s.sel[0] = 0;
-    s.pos[0][1] = s.pos[0][0] = 0;
-    s.mx = s.oldmx = (mainmenubar[0] + mainmenubar[2]) / 2;
-    s.my = s.oldmy = (mainmenubar[1] + mainmenubar[3]) / 2;
+    s.menus[1] = s.menus[2] = s.menus[3] = 0;
+    s.bg[0] = s.bg[1] = s.bg[2] = s.bg[3] = 0;
+    s.sel[0] = s.sel[1] = s.sel[2] = s.sel[3] = 0;
+    s.pos[0][0] = s.pos[0][1] = 0;
+    s.mx = oldmx = (mainmenubar[0] + mainmenubar[2]) / 2;
+    s.my = oldmy = (mainmenubar[1] + mainmenubar[3]) / 2;
     sub_B2E1B(0, 0, 0x27C, 0x1E0);
-    MouseSetPos(s.oldmx, s.oldmy);
+    MouseSetPos(oldmx, oldmy);
     ((void (*)(void))mousepollfn)();
     SetSideControls();
     SetupStatsSourceMenu(0);
@@ -95,10 +98,11 @@ int MainDeskLoop(void)
     goaliestatscb = (int)EasnGoalieStatsScreen;
     standingscb = (int)EasnStandingsScreen;
     standingsmenucb = (int)EasnStandingsMenu;
-    s.ptr = sub_8CCA8((char *)str_Pointer7, (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11, 0x20);
-    *(Hdr17 *)s.ptr = *(Hdr17 *)pointerspr;
-    ((short *)s.ptr)[2] = ((short *)pointerspr)[2] + 1;
-    ((short *)s.ptr)[3] = ((short *)pointerspr)[3] + 1;
+    r = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
+    ptr = sub_8CCA8((char *)str_Pointer7, r, 0x20);
+    *(Hdr17 *)ptr = *(Hdr17 *)pointerspr;
+    ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
+    ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
     if (musicon && !songdata) {
         if (desksongalt) {
             MakePath(s.path, fileoncd[0x1DB] == 1 ? (char *)cddriveptr : 0, (char *)str_Maindesk, (char *)str_Iff8);
@@ -115,8 +119,8 @@ int MainDeskLoop(void)
     sub_B4BA8();
     sub_9061C(sub_B30B4(bank, (char *)str_Desk2));
     DrawMenuBar(s.menus[0], s.nitems[0], 0xFA, 0xF9, 0xF8);
-    sub_91400(s.ptr, s.oldmx, s.oldmy);
-    sub_91370(pointerspr, s.oldmx, s.oldmy);
+    sub_91400(ptr, oldmx, oldmy);
+    sub_91370(pointerspr, oldmx, oldmy);
     scrpitch = 0x50;
     if (musicon && songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
     FadePalStep(0, (unsigned char *)sub_B30B4(bank, (char *)str_Pal15) + 0x10, 0x10);
@@ -129,46 +133,46 @@ int MainDeskLoop(void)
             if (bits & 2) break;
         }
         if (!(bits & 2)) {
-            if (s.mx == s.oldmx && s.my == s.oldmy) continue;
+            if (s.mx == oldmx && s.my == oldmy) continue;
             sub_B4BA8();
-            sub_903F0(s.ptr, s.oldmx, s.oldmy);
-            sub_91400(s.ptr, s.mx, s.my);
+            sub_903F0(ptr, oldmx, oldmy);
+            sub_91400(ptr, s.mx, s.my);
             sub_91370(pointerspr, s.mx, s.my);
-            s.oldmx = s.mx;
-            s.oldmy = s.my;
+            oldmx = s.mx;
+            oldmy = s.my;
             continue;
         }
-        if (MenuHitTest(s.mx, s.my, s.menus, s.depth, s.nitems, &s.pos[0][0], &s.level, &s.item)) {
+        if (MenuHitTest(s.mx, s.my, s.menus, depth, s.nitems, &s.pos[0][0], &s.level, &s.item)) {
             m = &s.menus[s.level][s.item];
             if (m->on1) {
                 if (s.item == s.sel[s.level]) {
-                    sub_903F0(s.ptr, s.oldmx, s.oldmy);
-                    for (i = s.depth; i > 0; i--) {
+                    sub_903F0(ptr, oldmx, oldmy);
+                    for (i = depth; i > 0; i--) {
                         s.sel[i] = 0;
                         if (s.bg[i]) {
                             sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                            s.pos[i][1] = s.pos[i][0] = 0;
+                            s.pos[i][0] = s.pos[i][1] = 0;
                             FreeMemBlock(s.bg[i]);
                         }
                     }
-                    s.depth = 0;
-                    FreeMemBlock(s.ptr);
+                    depth = 0;
+                    FreeMemBlock(ptr);
                     keepdesksong = 0;
                     r = ((int (*)(int *))s.menus[s.level][s.item].on1)(&s.fh);
                     FileClose(&s.fh);
-                    s.ptr = sub_8CCA8((char *)str_Pointer7,
+                    ptr = sub_8CCA8((char *)str_Pointer7,
                         (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11, 0x20);
-                    *(Hdr17 *)s.ptr = *(Hdr17 *)pointerspr;
-                    ((short *)s.ptr)[2] = ((short *)pointerspr)[2] + 1;
-                    ((short *)s.ptr)[3] = ((short *)pointerspr)[3] + 1;
-                    s.menus[3] = s.menus[2] = s.menus[1] = 0;
-                    s.bg[3] = s.bg[2] = s.bg[1] = s.bg[0] = 0;
-                    s.sel[3] = s.sel[2] = s.sel[1] = 0;
-                    s.nitems[3] = s.nitems[2] = s.nitems[1] = 0;
+                    *(Hdr17 *)ptr = *(Hdr17 *)pointerspr;
+                    ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
+                    ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
+                    s.menus[1] = s.menus[2] = s.menus[3] = 0;
+                    s.bg[0] = s.bg[1] = s.bg[2] = s.bg[3] = 0;
+                    s.sel[1] = s.sel[2] = s.sel[3] = 0;
+                    s.nitems[1] = s.nitems[2] = s.nitems[3] = 0;
                     if (r == 1) {
                         ClearInputQueue();
                         InputRemove();
-                        FreeMemBlock(s.ptr);
+                        FreeMemBlock(ptr);
                         return 0;
                     }
                     if (r == 2) {
@@ -209,57 +213,57 @@ int MainDeskLoop(void)
                         FreeMemBlock(bank);
                     }
                     SetScreenTitle(0);
-                    MouseSetPos(s.oldmx, s.oldmy);
+                    MouseSetPos(oldmx, oldmy);
                     ClearInputQueue();
                 } else {
-                    sub_903F0(s.ptr, s.oldmx, s.oldmy);
-                    if (s.depth != s.level) {
-                        for (i = s.depth; i > s.level; i--) {
+                    sub_903F0(ptr, oldmx, oldmy);
+                    if (depth != s.level) {
+                        for (i = depth; i > s.level; i--) {
                             s.sel[i] = 0;
                             if (s.bg[i]) {
                                 sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                                s.pos[i][1] = s.pos[i][0] = 0;
+                                s.pos[i][0] = s.pos[i][1] = 0;
                                 FreeMemBlock(s.bg[i]);
                                 s.bg[i] = 0;
                                 s.menus[i] = 0;
                                 s.nitems[i] = 0;
                             }
                         }
-                        s.depth = s.level;
+                        depth = s.level;
                     }
                     DrawMenuItemSel((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
                         s.pos[s.level][1], 0xFA, 0xF9, 0xF8);
                     s.sel[s.level] = s.item;
-                    DrawMenuItemNorm((struct MenuItem *)&s.menus[s.level][s.item], s.pos[s.level][0],
+                    DrawMenuItemNorm((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
                         s.pos[s.level][1], 0xFA, 0xF9, 0xF8);
                 }
             } else if (m->on2) {
-                sub_903F0(s.ptr, s.oldmx, s.oldmy);
-                if (s.depth != s.level) {
-                    for (i = s.depth; i > s.level; i--) {
+                sub_903F0(ptr, oldmx, oldmy);
+                if (depth != s.level) {
+                    for (i = depth; i > s.level; i--) {
                         s.sel[i] = 0;
                         if (s.bg[i]) {
                             sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                            s.pos[i][1] = s.pos[i][0] = 0;
+                            s.pos[i][0] = s.pos[i][1] = 0;
                             FreeMemBlock(s.bg[i]);
                             s.bg[i] = 0;
                             s.menus[i] = 0;
                             s.nitems[i] = 0;
                         }
                     }
-                    s.depth = s.level;
+                    depth = s.level;
                 }
-                i = s.depth;
+                i = depth;
                 DrawMenuItemSel((struct MenuItem *)&s.menus[i][s.sel[i]], s.pos[i][0], s.pos[i][1], 0xFA, 0xF9, 0xF8);
                 s.sel[i] = s.item;
                 DrawMenuItemNorm((struct MenuItem *)&s.menus[i][s.item], s.pos[i][0], s.pos[i][1], 0xFA, 0xF9, 0xF8);
+                depth = i + 1;
                 m = &s.menus[s.level][s.item];
-                s.depth = i + 1;
-                s.menus[s.depth] = (MenuItem *)m->on2;
-                s.nitems[s.depth] = m->pad;
-                s.pos[s.depth][0] = (s.depth == 1 ? m->x1 : m->x2) + s.pos[s.depth - 1][0];
-                s.pos[s.depth][1] = (s.depth == 1 ? m->y2 : m->y1) + s.pos[s.depth - 1][1];
-                i = s.depth;
+                s.menus[depth] = (MenuItem *)m->on2;
+                s.nitems[depth] = m->pad;
+                s.pos[depth][0] = (depth == 1 ? m->x1 : m->x2) + s.pos[depth - 1][0];
+                s.pos[depth][1] = (depth == 1 ? m->y2 : m->y1) + s.pos[depth - 1][1];
+                i = depth;
                 s.w = s.menus[i][s.nitems[i] - 1].x2 - s.menus[i][0].x1 + 1;
                 s.h = s.menus[i][s.nitems[i] - 1].y2 - s.menus[i][0].y1 + 1;
                 s.bg[i] = sub_8CCA8((char *)str_Menubuff4, s.w * s.h + 0x11, 0x20);
@@ -271,28 +275,29 @@ int MainDeskLoop(void)
                 s.sel[i] = 0;
                 DrawMenuItemNorm((struct MenuItem *)s.menus[i], s.pos[i][0], s.pos[i][1], 0xFA, 0xF9, 0xF8);
             } else {
-                sub_903F0(s.ptr, s.oldmx, s.oldmy);
+                sub_903F0(ptr, oldmx, oldmy);
             }
         } else {
-            sub_903F0(s.ptr, s.oldmx, s.oldmy);
-            for (i = s.depth; i > 0; i--) {
+            sub_903F0(ptr, oldmx, oldmy);
+            for (i = depth; i > 0; i--) {
                 s.sel[i] = 0;
                 if (s.bg[i]) {
                     sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                    s.pos[i][1] = s.pos[i][0] = 0;
+                    s.pos[i][0] = 0;
+                    s.pos[i][1] = s.pos[i][0];
                     FreeMemBlock(s.bg[i]);
                 }
             }
-            s.depth = 0;
-            s.menus[3] = s.menus[2] = s.menus[1] = 0;
-            s.bg[3] = s.bg[2] = s.bg[1] = s.bg[0] = 0;
-            s.sel[3] = s.sel[2] = s.sel[1] = 0;
-            s.nitems[3] = s.nitems[2] = s.nitems[1] = 0;
+            depth = 0;
+            s.menus[1] = s.menus[2] = s.menus[3] = 0;
+            s.bg[0] = s.bg[1] = s.bg[2] = s.bg[3] = 0;
+            s.sel[1] = s.sel[2] = s.sel[3] = 0;
+            s.nitems[1] = s.nitems[2] = s.nitems[3] = 0;
         }
-        sub_91400(s.ptr, s.mx, s.my);
+        sub_91400(ptr, s.mx, s.my);
         sub_91370(pointerspr, s.mx, s.my);
-        s.oldmx = s.mx;
-        s.oldmy = s.my;
+        oldmx = s.mx;
+        oldmy = s.my;
     }
 }
 

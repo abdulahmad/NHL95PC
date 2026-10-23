@@ -1,4 +1,6 @@
 /* Engine player logic: PC assignment slot 20h (skate a path). */
+/* DRAFT: 344 vs 344 bytes. Left: the two squares in the distance test are `imul eax, eax / imul edx, edx`,
+   the EXE `imul edx, edx / imul eax, eax` (dx in edx, dy in eax; `add eax, edx` as here). See docs/UNSURE.md. */
 #include "nhl95.h"
 
 /* path points: 2 sides x 4 points of x, y words */
@@ -18,6 +20,8 @@ void ass_pc_slot20(Player *p)
 {
     short side;
     short n;
+    int dx;
+    int dy;
 
     if (p->pflags & 0x20) return;
     if (p->pflags & 2) {
@@ -30,8 +34,11 @@ void ass_pc_slot20(Player *p)
         p->temp3 = PATHX(side, p->temp5);
         p->temp4 = PATHY(side, p->temp5);
     }
-    if (((p->Xpos >> 16) - p->temp3) * ((p->Xpos >> 16) - p->temp3)
-        + ((p->Ypos >> 16) - p->temp4) * ((p->Ypos >> 16) - p->temp4) < 0x384) {
+    dx = p->Xpos >> 16;
+    dx -= p->temp3;
+    dy = p->Ypos >> 16;
+    dy -= p->temp4;
+    if (dy * dy + dx * dx < 0x384) {
         n = ++p->temp5;
         if (n > 3) {
             assexit(p);

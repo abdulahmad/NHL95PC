@@ -224,7 +224,6 @@ int DrawDbList(int *list)
 
 typedef struct Hdr17 { char c[17]; } Hdr17;
 
-/* DRAFT (DbDialogLoop): same size; register picks differ from the move branch on (see docs/UNSURE.md). */
 /* DbDialogLoop (72DE7, PC only; ends in DbDialog_epilogue): run the database dialog with the mouse pointer (a
    POINTER block holds the screen under it) on the list of the shown tab (dbtablists[fdlgtab]). Button 1 held on
    the scroll bar (box 8, when fdlgmask enables it) drags the visible rows with the pointer (the first event only
@@ -247,7 +246,6 @@ int DbDialogLoop(void)
     int *list;
     int pos;
     int last;
-    int d;
     unsigned char *ev;
 
     drag = 0;
@@ -292,19 +290,19 @@ int DbDialogLoop(void)
                         last = list[3];
                         if (oy != y && pos >= list[2] && pos <= last) {
                             if (oy < y) {
-                                d = (y - oy) * list[0] / 0x20;
-                                if (d + last < list[0]) {
-                                    list[2] += d;
-                                    list[3] += d;
+                                pos = (y - oy) * list[0] / 0x20;
+                                if (pos + last < list[0]) {
+                                    list[2] += pos;
+                                    list[3] += pos;
                                 } else {
                                     list[3] = list[0] - 1;
                                     list[2] = list[0] - 6;
                                 }
                             } else if (oy > y) {
-                                d = (oy - y) * list[0] / 0x20;
-                                if (list[2] - d >= 0) {
-                                    list[2] -= d;
-                                    list[3] -= d;
+                                pos = (oy - y) * list[0] / 0x20;
+                                if (list[2] - pos >= 0) {
+                                    list[2] -= pos;
+                                    list[3] -= pos;
                                 } else {
                                     list[2] = 0;
                                     list[3] = 5;
@@ -357,8 +355,8 @@ int DbDialogLoop(void)
                                 list[2] = pos - 3;
                                 list[3] = pos + 2;
                             }
-                        } else {
-                            if (pos <= list[3]) break;
+                            DrawDbList(list);
+                        } else if (pos > list[3]) {
                             if (pos + 3 > list[0]) {
                                 list[2] = list[0] - 6;
                                 list[3] = list[0] - 1;
@@ -366,8 +364,8 @@ int DbDialogLoop(void)
                                 list[2] = pos - 3;
                                 list[3] = pos + 2;
                             }
+                            DrawDbList(list);
                         }
-                        DrawDbList(list);
                         break;
                     case 0x20:
                         fdlgtab = 0;
@@ -400,7 +398,8 @@ int DbDialogLoop(void)
                     case 8:
                         sub_91370(fdlg_del, 0x23, 0xBF);
                         DeleteSelectedDb((int *)dbtablists[fdlgtab]);
-                        list = fdlgtab < 0 ? 0 : (int *)dbtablists[fdlgtab];
+                        if (fdlgtab < 0) list = 0;
+                        else list = (int *)dbtablists[fdlgtab];
                         DrawDbList(list);
                         sub_91370(fdlg_none, 0x23, 0xBF);
                         break;

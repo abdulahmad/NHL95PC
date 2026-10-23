@@ -1,6 +1,10 @@
 /* Game setup: the end-of-game team stats screen. */
-/* DRAFT: same size, 523 of 607 instructions; see docs/UNSURE.md. Its match belongs in UpdateOtherScores.c,
-   whose UpdateOtherScores_x tail it uses. */
+/* DRAFT (10.0 GA, 46 -> 16 differing): the arrays stay one frame struct, the spilled scalars (logos, cx, y,
+   col, smp) are plain locals; x holds the label x and the m:ss seconds, m the minutes (computed first, so the
+   60 divisor spills to [ebp-4] as in the EXE), the name's half width and the completion percentage. Left: the
+   name address multiply temporary (ebx, EXE edx) and the half width copied into m (EXE keeps it in eax and
+   computes cx in edx); see docs/UNSURE.md. Its match belongs in UpdateOtherScores.c (with PrintClampedText
+   between them), whose UpdateOtherScores_x tail it uses. */
 #define sub_913D0 sub_913D0_decl
 #define sub_8F13B sub_8F13B_decl
 #define sub_8F1FE sub_8F1FE_decl
@@ -33,21 +37,20 @@ void GameStatsScreen(void)
         char text[0x40];
         char buf[0x14];
         int teams[2];
-        int col;
-        void *smp;
-        int logos;
-        int y;
-        int cx;
     } s;
+    int logos;
+    int cx;
+    int y;
+    int col;
+    void *smp;
     int i;
-    int bank;
     int t;
-    int v;
-    int pct;
+    int bank;
     char *name;
     int slot;
     int x;
     int shape;
+    int m;
 
     s.teams[0] = HomeTeam;
     s.teams[1] = VisTeam;
@@ -67,53 +70,59 @@ void GameStatsScreen(void)
     sub_913B4(sub_B30B4(bank, (char *)str_Gsta));
     FreeMemBlock(bank);
     MakePath(s.buf, fileoncd[0x59] == 1 ? (char *)cddriveptr : 0, (char *)str_Ctlogo3, 0);
-    s.logos = sub_8E83C(s.buf, 0);
+    logos = sub_8E83C(s.buf, 0);
     sub_8E9E8(s.text);
     sub_8EA18(kaufmfont);
     SetTextColors(0x40, 0);
-    s.y = 0xB0;
+    y = 0xB0;
     for (i = 0; i < 0xC; i++) {
         x = (0x26C - fputchar((char *)gamestatlabels[i])) / 2;
-        PrintShadowText(x, s.y, (char *)gamestatlabels[i]);
-        s.y += 0x18;
+        PrintShadowText(x, y, (char *)gamestatlabels[i]);
+        y += 0x18;
     }
     for (i = 0; i < 2; i++) {
-        shape = sub_B30B4(s.logos, (char *)crestnames[s.teams[i]]);
+        shape = sub_B30B4(logos, (char *)crestnames[s.teams[i]]);
         sub_913D0(shape, i ? 0x212 : 0x40, 0x4E);
-        s.col = i * 455;
+        col = i * 455;
         name = (char *)hmteamrec + i * 0x2E8 + 0x1A;
-        PrintShadowText((s.cx = s.col + 0x49) - (fputchar(name) >> 1), 0x8A, name);
+        m = fputchar(name) >> 1;
+        cx = col + 0x49;
+        PrintShadowText(cx - m, 0x8A, name);
         t = i << 8;
         sprintf(s.buf, (char *)str_D7, TS(0x10));
-        PrintClampedText(s.cx - (fputchar(s.buf) >> 1), 0xB0, s.buf);
+        PrintClampedText(cx - (fputchar(s.buf) >> 1), 0xB0, s.buf);
         sprintf(s.buf, (char *)str_D7, TS(0));
-        PrintClampedText(s.cx - (fputchar(s.buf) >> 1), 0xC8, s.buf);
+        PrintClampedText(cx - (fputchar(s.buf) >> 1), 0xC8, s.buf);
         sprintf(s.buf, (char *)str_D7, TS(0x18));
-        PrintClampedText(s.cx - (fputchar(s.buf) >> 1), 0xE0, s.buf);
+        PrintClampedText(cx - (fputchar(s.buf) >> 1), 0xE0, s.buf);
         sprintf(s.buf, (char *)str_DD, TS(2), TS(4));
-        PrintClampedText(s.cx - (fputchar(s.buf) >> 1), 0xF8, s.buf);
-        v = TS(8);
-        sprintf(s.buf, (char *)str_D02d2, v / 60, v % 60);
-        PrintClampedText(s.cx - (fputchar(s.buf) >> 1), 0x110, s.buf);
+        PrintClampedText(cx - (fputchar(s.buf) >> 1), 0xF8, s.buf);
+        x = TS(8);
+        m = x / 60;
+        x %= 60;
+        sprintf(s.buf, (char *)str_D02d2, m, x);
+        PrintClampedText(cx - (fputchar(s.buf) >> 1), 0x110, s.buf);
         sprintf(s.buf, (char *)str_D7, TS(6));
-        PrintClampedText(s.cx - (fputchar(s.buf) >> 1), 0x128, s.buf);
+        PrintClampedText(cx - (fputchar(s.buf) >> 1), 0x128, s.buf);
         sprintf(s.buf, (char *)str_DD, TS(0xA), TS(0xC));
-        PrintClampedText(s.cx - (fputchar(s.buf) >> 1), 0x140, s.buf);
+        PrintClampedText(cx - (fputchar(s.buf) >> 1), 0x140, s.buf);
         sprintf(s.buf, (char *)str_D7, TS(0x12));
-        PrintClampedText(s.cx - (fputchar(s.buf) >> 1), 0x158, s.buf);
+        PrintClampedText(cx - (fputchar(s.buf) >> 1), 0x158, s.buf);
         sprintf(s.buf, (char *)str_D7, TS(0x14));
-        PrintClampedText(s.cx - (fputchar(s.buf) >> 1), 0x170, s.buf);
+        PrintClampedText(cx - (fputchar(s.buf) >> 1), 0x170, s.buf);
         sprintf(s.buf, (char *)str_D7, TS(0x24));
-        PrintClampedText(s.cx - (fputchar(s.buf) >> 1), 0x188, s.buf);
-        v = TS(0xE);
-        sprintf(s.buf, (char *)str_D02d2, v / 60, v % 60);
-        PrintClampedText(s.cx - (fputchar(s.buf) >> 1), 0x1A0, s.buf);
-        pct = 0;
-        s.y = 0x1B8;
-        if (TS(0x26)) pct = TS(0x28) * 100 / TS(0x26);
+        PrintClampedText(cx - (fputchar(s.buf) >> 1), 0x188, s.buf);
+        x = TS(0xE);
+        m = x / 60;
+        x %= 60;
+        sprintf(s.buf, (char *)str_D02d2, m, x);
+        PrintClampedText(cx - (fputchar(s.buf) >> 1), 0x1A0, s.buf);
+        m = 0;
+        y = 0x1B8;
+        if (TS(0x26)) m = TS(0x28) * 100 / TS(0x26);
         sprintf(s.buf, (char *)str_DDD, *(short *)((char *)&hmtmstruct + (i << 8) + 0x28),
-            *(short *)((char *)&hmtmstruct + (i << 8) + 0x26), pct);
-        PrintClampedText(i * 455 + 0x49 - (fputchar(s.buf) >> 1), s.y, s.buf);
+            *(short *)((char *)&hmtmstruct + (i << 8) + 0x26), m);
+        PrintClampedText(i * 455 + 0x49 - (fputchar(s.buf) >> 1), y, s.buf);
     }
     if (musicon) {
         if (songdata) {
@@ -133,9 +142,9 @@ void GameStatsScreen(void)
         else
             MakePath(s.buf, fileoncd[0x21] == 1 ? (char *)cddriveptr : 0, (char *)str_Adsum2, 0);
         dword_CCC94 = 0x20;
-        s.smp = sub_8F13B(s.buf);
+        smp = sub_8F13B(s.buf);
         dword_CCC94 = 0;
-        PlayDigiSample(s.smp);
+        PlayDigiSample(smp);
     }
     FadePalStep(0, s.pal, 0x10);
     WaitClickTimeout(2000);
@@ -151,8 +160,8 @@ void GameStatsScreen(void)
         }
     } else {
         StopDigiSample();
-        sub_8F1FE(s.smp);
+        sub_8F1FE(smp);
     }
     sub_8EA00(s.text);
-    FreeMemBlock(s.logos);
+    FreeMemBlock(logos);
 }

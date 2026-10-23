@@ -65,7 +65,7 @@ void checkcx(Player *p, short x, short d, short pl)
     regd1.w = o->weight + 0x8C;
     word_E03A0 = 0;
     regd1.w += regd0.w;
-    regd0.l = regd0.w * regd4.w / regd1.w;
+    regd0.l = regd4.w * regd0.w / regd1.w;
     regd1.l = regd0.l;
     t = (word_E03B8 * d + regd0.l * dx) >> 4;
     p->Xvel = o->Xvel + t;
