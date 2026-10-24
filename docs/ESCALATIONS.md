@@ -19,6 +19,10 @@ matched block.
 same commit. Do not hand-asm either function. This is a dependency, not a bad shape, so lane 1 keeps
 `DrawListItem`.
 
+Measured 2026-10-24 under 10.0 GA and LA: `DrawListItems` is 0 either way, `DrawListItem` is 6
+either way. `/* cflags: -od */` scores 47 and 72. No new shape. The in-place case 1 that produces
+the EXE bytes raises `w` into a tie with `y` and was already tried under GA.
+
 ## CreatePlayoffs and POAfterGame, shared exit
 
 Both live in `src/c/064_86696_season_playoffs/POSeedRound2.c` (lane 2, StaticEck2026) and end in
@@ -29,6 +33,12 @@ the file. Moving either draft to its own file, or marking it while the exit stil
 **Recommended ruling:** keep both drafts in `POSeedRound2.c`. Do not split the file across
 contributors and do not hand-asm them. Further register and slot edits stay with lane 2. Mark a
 draft only when its body matches and the shared exit still lands on `POSeedRound2` as in the EXE.
+
+Measured 2026-10-24 under 10.0 GA, same file, fresh compile: `CreatePlayoffs` 11 (same size),
+`POAfterGame` 67 (same size), `POSeedRound2` still 0. The 11 are the known register sites
+(`xor ebx` / `xor edx` for `dword_D2884`, `ecx` / `ebx` for the second `dword_C65AC` test, `push
+ecx` / `push ebx`) and `jmp` to the local exit versus `jmp POSeedRound2_x`. `-od` was not applied:
+it would recompile the matched function.
 
 ## LoadRosterList and chkprogress, splits
 
@@ -41,6 +51,15 @@ draft even though the entry is marked.
 **Recommended ruling:** do not mark the remaining pieces, and do not convert either function to
 hand-asm to make the count move. A split waits for a splice that keeps the EXE's layout. Until that
 exists, both stay drafts and stay in their own files (one file, one owner).
+
+Measured 2026-10-24 under 10.0 GA. `LoadRosterList` entry is 0; `LoadRosterList_fa` is 4 (the two
+move-action clears use `ecx`, the EXE uses `esi`, and the exit is a local jump rather than
+`RunEditRosters_ret5`); `LoadRosterList_team` is 17 (the selection clear is bottom-tested; the EXE
+jumps to the `cmp` first). Together, 21, same size. Writing that clear as `n = 0x1C; for (i = 0;
+i < n; i++)` scores 30 and the entry stops matching. Not kept. `chkprogress` entry is 0.
+`chkprogress_go` does not sit at the EXE offset relative to the file's publics: cdiff's anchor
+reads another function (nominal 206 bytes, score 62). No body edit to try until a splice places
+that piece.
 
 ## EditTextField and LeadersScreen, goto
 
@@ -96,3 +115,23 @@ store (C copies through `eax` / `edx`; the EXE keeps the value in `ax`) and the 
 **Recommended ruling:** not an escalation. Lane 2 keeps it. The declaration order that reproduces
 the frame may stay. Do not hand-asm it, and do not accept a no-op cast or a wrong-width `type` just
 to clear the last 11 instructions.
+
+Measured 2026-10-24: still 11 under 10.0 GA, same size. LA scores 44. `/* cflags: -od */` scores
+218. `(short)Swap16(w1)` and a block-scoped `unsigned short` for that store both stay 11. The frame
+order is already the EXE's. The `int type` / `short c` shape that emits the EXE type-byte code is
+already in UNSURE and moves the frame (best 20). Not retried.
+
+## Compiler version and per-file flags
+
+Not an escalation. The four largest drafts, scored with no source edit:
+
+| function | GA | LA | `-od` (GA) |
+| --- | --- | --- | --- |
+| SportsDesk | 303, size +0 | 310, size +4 | 1033, size +615 |
+| SimulateGame | 627, size +3 | 702, size +9 | not compiled |
+| CalendarScreen | 319, size +24 | 539, size +14 | not compiled |
+| GameSummaryScreen | 287, size +38 | 372, size +40 | not compiled |
+
+10.0 GA remains the better compiler for these. `-od` on `SportsDesk` (and on `DrawListItem`,
+`DrawListItems`, and `OpenSpeechBank`) is much worse. None of these files has a `/* cflags: */`
+line, and none should gain one from this pass.

@@ -294,3 +294,15 @@ EasnGoalieStatsScreen,Mhopkinsinc,2026-10-24,GA,12,12,unchanged
 PlacePlayersAtStart,Mhopkinsinc,2026-10-24,GA,15,15,unchanged
 ShowAwardScreens,Mhopkinsinc,2026-10-24,GA,19,19,. Each has an UNSURE note saying what is left and what was tried.
 EditTextField,Mhopkinsinc,2026-10-24,GA,62,36,(21 gotos -> 4)
+DrawListItems,abdulahmad,2026-10-24,GA,0,0,matches under GA and under LA; unmarked because it short-jumps into DrawListItem. -od scores 47. Not marked.
+DrawListItem,abdulahmad,2026-10-24,GA,6,6,LA also 6; -od 72. In-place case 1 already tried under GA (raises w into a tie with y). No new shape.
+OpenSpeechBank,abdulahmad,2026-10-24,GA,11,11,(short)Swap16(w1) and a block unsigned short s both 11. LA 44. -od 218. Frame order left as it is. int type / short c already in UNSURE (best 20).
+CreatePlayoffs,abdulahmad,2026-10-24,GA,11,11,known ebx/edx and ecx/ebx sites plus jmp vs POSeedRound2_x. POSeedRound2 still 0. No source edit. -od not applied to the file.
+POAfterGame,abdulahmad,2026-10-24,GA,67,67,"scored only, same size. No source edit."
+LoadRosterList,abdulahmad,2026-10-24,GA,21,21,"entry 0; fa 4 (ecx vs esi, local jmp vs RunEditRosters_ret5); team 17 (no jump to the test). n=0x1C on the team clear scores 30 and the entry stops matching. Not kept."
+chkprogress,abdulahmad,2026-10-24,GA,62,62,entry matches (0). chkprogress_go anchor reads another function. No source edit. Not hand-asm.
+checkcheck,abdulahmad,2026-10-24,GA,32,32,"LA do-not-retry shape int dir scores 46, size +3. Not kept."
+SportsDesk,abdulahmad,2026-10-24,LA,303,310,"no source change. GA -od scores 1033, size +615."
+SimulateGame,abdulahmad,2026-10-24,LA,627,702,"no source change. GA is 627, size +3."
+CalendarScreen,abdulahmad,2026-10-24,LA,319,539,"no source change. GA is 319, size +24."
+GameSummaryScreen,abdulahmad,2026-10-24,LA,287,372,"no source change. GA is 287, size +38."

@@ -3330,3 +3330,4 @@ FadePalette,,"no unlisted natural clamp shape justified by this diagnosis, so di
 SkaterStatsCard,,"(2026-10-24, lane 1a batch 10): fresh block lookup index int/signed char/short with direct product (9,+3 each)","9,+3 each",ga
 SkaterStatsCard,,"fresh block lookup address as unsigned-char pointer or int with direct product (9,+3 each). No source retained",,ga
 DrawListItem,,"(2026-10-24, lane 1a batch 10), on A: rectangle y postincrement (31), width -=4 inside rectangle arguments (29), y increment in each switch arm/default (33), final PrintMenuText duplicated in arms/default (48), case-1 fputchar result through dead c/fontheight/top/idx before w-=result (34 each). No source retained",,ga
+checkcheck,type:dir:int,dir as int,46 +3 under GA; not kept,ga
