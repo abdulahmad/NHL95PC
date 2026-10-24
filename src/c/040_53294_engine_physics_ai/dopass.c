@@ -302,7 +302,6 @@ void wallcoll(Player *p)
     short t;
     short s;
     short v;
-    short lim;
 
     p->Wallcos = regd0.w;
     p->Wallsin = regd1.w;
@@ -361,8 +360,8 @@ slow:
                 p->Xvel = 0;
                 HIWORD(p->Xpos) = HIWORD(p->OldXpos);
             }
-            lim = HIWORD(p->OldYpos) < 0 ? -0xEC : 0xEC;
-            if (HIWORD(p->OldYpos) > lim + 0xA && p->Yvel < 0 || HIWORD(p->OldYpos) < lim - 6 && p->Yvel > 0) {
+            s = HIWORD(p->OldYpos) < 0 ? -0xEC : 0xEC;
+            if (HIWORD(p->OldYpos) > s + 0xA && p->Yvel < 0 || HIWORD(p->OldYpos) < s - 6 && p->Yvel > 0) {
                 p->Yvel = 0;
                 HIWORD(p->Ypos) = HIWORD(p->OldYpos);
             }
