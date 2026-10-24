@@ -525,6 +525,10 @@ pop edi	; 6D897
 pop esi	; 6D898
 ret	; 6D899
 %endif ; C
+; C: src/c/052_6D2F8_create_player/ShellSortBytes.c (LoadRosterList_fa)
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/ShellSortBytes.LoadRosterList_fa.inc"
+%else
 LoadRosterList_fa:
 mov edx, eax	; 6D89A
 shl edx, 2	; 6D89C
@@ -600,6 +604,11 @@ xor esi, esi	; 6D97B
 mov dword [menu_r1_toroster2], esi	; 6D97D
 mov dword [menu_r2_toroster1], esi	; 6D983
 jmp near RunEditRosters_ret5	; 6D989
+%endif ; C
+; C: src/c/052_6D2F8_create_player/ShellSortBytes.c (LoadRosterList_team)
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/ShellSortBytes.LoadRosterList_team.inc"
+%else
 LoadRosterList_team:
 xor eax, eax	; 6D98E
 mov al, byte [dword esi+rosterteam]	; 6D990
@@ -673,6 +682,7 @@ test eax, eax	; 6DA71
 je near RunEditRosters_ret5	; 6DA73
 mov dword [menu_r1_toroster2], MoveToOtherRoster	; 6DA79
 jmp near RunEditRosters_ret5	; 6DA83
+%endif ; C
 ; C: src/c/052_6D2F8_create_player/CountSelected.c
 %ifdef CBUILD
 %include "c/052_6D2F8_create_player/CountSelected.inc"
