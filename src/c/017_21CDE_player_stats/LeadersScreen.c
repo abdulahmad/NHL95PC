@@ -24,11 +24,12 @@ int j___close(int fh);  /* CRT close thunk */
 #define W(p, o) (*(unsigned short *)((char *)(p) + (o)))
 #define CMP(i, j) ((int (*)(int *, int *))leadersortfns[cat])(i, j)
 
-/* DRAFT under 10.0 GA: 123 differing, 12 bytes long. The goalie records are read in an inner loop that breaks
+/* DRAFT under 10.0 GA: 84 differing, 19 bytes long. The goalie records are read in an inner loop that breaks
    out for a skater (Watcom then lays the read loop out as the EXE: the goalie tail and qsort before the read).
-   Left: the EXE places the loop increment and the code after the loop between case 7 and case 8 of the column
-   switch, and its table starts at 0 (explicit cases 0-2 here move the frame slots); kfh / pfh slots swapped;
-   teamgp[team] held in a register; the header column CSE. */
+   The column switch ends in an empty default: case 10 then jumps to the end too, its PrintFmt2 tail merges into
+   case 7's, and Watcom moves the loop increment and the code after the loop up behind case 7, as in the EXE.
+   Left: the EXE's table starts at 0 (`cmp edi, 0Ah`, no `sub eax, 3`; explicit cases 0-2 move the frame slots);
+   kfh / pfh slots swapped; teamgp[team] held in a register; the header column CSE. */
 /* LeadersScreen (25B24, PC only): the league leaders of category cat (0-7 skaters: points, goals, assists, power
    play goals, short-handed goals, penalty minutes, plus / minus, shooting percentage; 8-10 goalies: goals against
    average, wins, save percentage) for the stats screens' league (statsleague; season or league stats,
@@ -232,6 +233,8 @@ done:
                 PrintFmt1(0x1F4, y, (char *)str_fmt4d, gsp[9]);
                 if (gsp[10] < 1000) PrintFmt1(0x21C, y, (char *)str_fmtPct0, gsp[10] % 1000);
                 else PrintFmt2(0x21C, y, (char *)str_fmtPct, gsp[10] / 1000, gsp[10] % 1000);
+                break;
+            default:
                 break;
             }
             y += 0xD;
