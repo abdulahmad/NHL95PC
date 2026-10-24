@@ -1,8 +1,4 @@
 /* Game frame: a highlight run of the game engine. */
-/* DRAFT under 10.0 GA: 14 differing instructions, same size (3,325 bytes). The faceoff-spot loop takes pl before
-   the for (no jump to the test) and doubles k into the dead j (the EXE's lea esi, [edx+edx], so pl gets ebx);
-   left: the scroll sum of the second sub_6AF97 argument and the hudhundstep sum load in the other registers, and
-   CrowdNoiseUpdate(j) passes j with mov eax, esi (EXE movsx eax, si). See docs/UNSURE.md. */
 #define StartHL2 StartHL2_decl
 #define SprSortVert SprSortVert_decl
 #define SprSort SprSort_decl
@@ -32,12 +28,12 @@ void MusicChanReset2(void);
    period: the period. Result: -1 when it ended on Esc, else 0. */
 int StartHL2(int home, int vis, int *hsc, int *asc, int period)
 {
-    short save[0x44];
     LineTab hml;
+    short save[0x44];
     LineTab awl;
+    int opts;
     short sgameover;
     short sgmode2;
-    int opts;
     short r;
     short *p;
     short *q;
@@ -212,11 +208,11 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
         sub_6AF97(0, 0);
         sub_6B008();
         SetRinkScroll(viewscrollx, viewscrolly);
-        sub_6AF52(scrollx + bgscrollx * 8, scrolly + bgscrolly * 8, scrollx + bgscrollx * 8 + 0x140,
+        sub_6AF52(scrollx + bgscrollx * 8, scrolly + bgscrolly * 8, bgscrollx * 8 + scrollx + 0x140,
             scrolly + bgscrolly * 8 + 0xA8);
         spritedrawcount = 0;
         DrawRinkOverlays((short)viewscrollx, (short)viewscrolly);
-        sub_6AF97(-(scrollx + bgscrollx * 8), -(bgscrolly * 8 + scrolly));
+        sub_6AF97(-(bgscrollx * 8 + scrollx), -(bgscrolly * 8 + scrolly));
         sub_6ADA7();
         if (fadeinpending) {
             joysampling_save = joysampling;
@@ -225,11 +221,11 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
             FadePalette(1, savepal, 0x10);
             joysampling = joysampling_save;
         }
-        CrowdNoiseUpdate(j);
+        CrowdNoiseUpdate((short)j);
         hudhundstep = hudhundaccum / 0x18;
         hudhundaccum %= 0x18;
         if (exitgame && !(gameclock | clockticks[0]))
-            hudhundstep = hudclockhund + (hudclockmin * 60 + hudclocksec) * 100;
+            hudhundstep = (hudclockmin * 60 + hudclocksec) * 100 + hudclockhund;
         UpdateHudPanel();
         if (fadeinpending) {
             joysampling_save = joysampling;
@@ -290,14 +286,10 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     *asc = awscore;
     hmscore[0] = *p++;
     awscore = *p++;
-    i = 0;
-    goto restore_teams_test;
-restore_team:
-    q = (&hmtmstruct)[i].tmpdst;
-    for (j = 0; j < 0x1C; j++) *q++ = *p++;
-    i++;
-restore_teams_test:
-    if (i < 2) goto restore_team;
+    for (i = 0; i < 2; i++) {
+        q = (&hmtmstruct)[i].tmpdst;
+        for (j = 0; j < 0x1C; j++) *q++ = *p++;
+    }
     *(int *)&gameopts = opts;
     *(LineTab *)hmlinetab = hml;
     *(LineTab *)awlinetab = awl;
