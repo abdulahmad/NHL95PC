@@ -1,9 +1,9 @@
 /* Engine physics AI: is the pass lane to a team-mate open; NetCollide and puckstick (matched) end in its pops. */
-/* DRAFT (PassLaneChk, 10.0 GA, 2 differing, same size): the direction is kept in oy (dead by then) and the x gap
- in dy, as the original; the wrap goes through y (`y = oy + 1`, the EXE's lea eax,[esi+1]). Tie-breaker (ruled 2026-10-24, docs/ESCALATIONS.md):
- p's y through an int py first (`py = p->Ypos >> 16; y = py;`) breaks the savings tie of the two ABS
- temporaries of ABS(y) <= ABS(oy) (edi / ebp as in the EXE; any one extra copy does it, 17 -> 2); not kept. Also
- left: the y - 4Eh lea comes after the sum's sub 4Eh (EXE before it); see docs/UNSURE.md. */
+/* DRAFT (PassLaneChk, 10.0 GA, 12 differing, same size): the direction is kept in oy (dead by then), the x gap in
+ its own dx; the wrap goes through y (`y = oy + 1`, the EXE's lea eax,[esi+1]). With dx the two ABS temporaries of
+ ABS(y) <= ABS(oy) get the EXE's edi / ebp; left: dx in eax (EXE esi, where the y gap dy was: the x gap through dy
+ gives esi but swaps the ABS pair, 17), and the y - 4Eh lea comes after the sum's sub 4Eh (EXE before it). The
+ tie-breaker p's y through an int py (ruled 2026-10-24, docs/ESCALATIONS.md) is not kept; see docs/UNSURE.md. */
 #define PassLaneChk PassLaneChk_decl
 #define checkpuckcoll checkpuckcoll_decl
 #define imul32 imul32_decl
@@ -21,9 +21,10 @@ int __cdecl imul32(int a, int b);  /* 933F0: the library multiply, arguments on 
 int LaneOpen(void);
 #pragma aux LaneOpen "ShotLaneOpen" value [eax] modify [eax];
 
-/* DRAFT (checkpuckcoll, 10.0 GA): 73 score differing, same 1,570-byte size. Reusing the dead height
-   local for the body frame fixes the height temporaries. The EXE keeps reach / half size / box size in edi
-   and speed / |dy| / box limit in esi; this draft still reverses those registers. */
+/* DRAFT (checkpuckcoll, 10.0 GA): compiles to the EXE bytes (0 differing, 1,570 bytes), no goto. Not marked:
+   ESCALATE, dead-variable reuse. The match needs the dead height h reused for the body frame (a local of its
+   own for either role: 99 differing); v also carries the speed, |dy| and the box limit. The half size and the
+   box size are their own local w (declared last), so v (13) outranks s (12) and takes esi as in the EXE. */
 /* checkpuckcoll (5428A, 93G checkpuckcoll .ccx; ends in PassLaneChk_ret5): check the puck pk against sort object
    n (from the OOlist walk). Not the carrier, players 0-0Bh and object 10h only, not with pflags bit 2 (no
    collisions) or nopuck. A goalie's stick (available, position 0): reach s from SkillForAnim (s * 800h - FA0h over
@@ -42,6 +43,7 @@ void checkpuckcoll(Player *pk, short n)
     short s;
     short v;
     short h;
+    short w;
 
     if (n == *puckc) return;
     if (n > 0xB && n != 0x10) return;
@@ -64,38 +66,46 @@ void checkpuckcoll(Player *pk, short n)
         GetHot(p);
         regd0.w += HIWORD(p->Xpos) - *puckx;
         regd0.w = ABS(regd0.w);
-        if (regd0.w >= regd2.w) goto body;
-        regd1.w += HIWORD(p->Ypos) - *pucky;
-        regd1.w = ABS(regd1.w);
-        if (regd1.w >= regd2.w) goto body;
-        h = regd4.w + v;
-        h = (h > 5 ? h : 5);
-        h += s;
-        if (h < *(short *)puckz) goto body;
-        v -= regd4.w;
-        h = v - s;
-        if (h >= 0 && h >= *(short *)puckz) goto body;
-        regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
-        regd1.l = regd2.w * regd2.w;
-        if (pk->nopuck > 0) regd1.l >>= 2;
-        if (regd1.w < regd0.w) goto body;
-        ChkDelayedOffside(p);
-        puckstick(pk, p);
+        if (regd0.w < regd2.w) {
+            regd1.w += HIWORD(p->Ypos) - *pucky;
+            regd1.w = ABS(regd1.w);
+            if (regd1.w < regd2.w) {
+                h = regd4.w + v;
+                h = (h > 5 ? h : 5);
+                h += s;
+                if (h >= *(short *)puckz) {
+                    v -= regd4.w;
+                    h = v - s;
+                    if (h < 0 || h < *(short *)puckz) {
+                        regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
+                        regd1.l = regd2.w * regd2.w;
+                        if (pk->nopuck > 0) regd1.l >>= 2;
+                        if (regd1.w >= regd0.w) {
+                            ChkDelayedOffside(p);
+                            puckstick(pk, p);
+                        }
+                    }
+                }
+            }
+        }
     } else if (!(p->pflags2 & 4) && p->position >= 0 && n != 0x10 && HIWORD(pk->Zpos) <= 5 && pk->Zvel <= 0x200) {
         GetHot(p);
         regd0.w += HIWORD(p->Xpos) - HIWORD(pk->Xpos);
-        if (ABS(regd0.w) > 0xE) goto body;
-        regd1.w += HIWORD(p->Ypos) - HIWORD(pk->Ypos);
-        if (ABS(regd1.w) > 0xE) goto body;
-        regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
-        regd1.l = 0xC4;
-        if (pk->nopuck > 0) regd1.w >>= 2;
-        if (regd0.ul > regd1.ul) goto body;
-        if (p->frame >= 0x430 && p->frame <= 0x44F && regd0.ul > 0x24) goto body;
-        puckstick(pk, p);
-        return;
+        if (ABS(regd0.w) <= 0xE) {
+            regd1.w += HIWORD(p->Ypos) - HIWORD(pk->Ypos);
+            if (ABS(regd1.w) <= 0xE) {
+                regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
+                regd1.l = 0xC4;
+                if (pk->nopuck > 0) regd1.w >>= 2;
+                if (regd0.ul <= regd1.ul) {
+                    if (p->frame < 0x430 || p->frame > 0x44F || regd0.ul <= 0x24) {
+                        puckstick(pk, p);
+                        return;
+                    }
+                }
+            }
+        }
     }
-body:
     if (p->position == 0) {
         regd0.w = HIWORD(p->Xpos) - HIWORD(pk->Xpos);
         if (ABS(regd0.w) > 0xA) return;
@@ -111,29 +121,31 @@ body:
         GetHotStick(p);
         regd0.w >>= 1;
         regd1.w >>= 1;
-        s = ABS(regd0.w);
+        w = ABS(regd0.w);
         regd0.w += HIWORD(p->Xpos) - HIWORD(pk->Xpos);
-        if (ABS(regd0.w) <= s) {
+        if (ABS(regd0.w) <= w) {
             regd1.w += HIWORD(p->Ypos) - HIWORD(pk->Ypos);
-            if (ABS(regd1.w) <= s) {
+            if (ABS(regd1.w) <= w) {
                 regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
-                if ((unsigned)(s * s) >= regd0.ul) goto hit;
+                if ((unsigned)(w * w) >= regd0.ul) {
+                    puckbody(pk, p);
+                    return;
+                }
             }
         }
     }
-    s = 8;
+    w = 8;
     v = 0x40;
     if (h > 0x44F) {
-        s = 0x10;
+        w = 0x10;
         v = 0x100;
     }
     regd0.w = HIWORD(p->Xpos) - HIWORD(pk->Xpos);
-    if (ABS(regd0.w) > s) return;
+    if (ABS(regd0.w) > w) return;
     regd1.w = HIWORD(p->Ypos) - HIWORD(pk->Ypos);
-    if (ABS(regd1.w) > s) return;
+    if (ABS(regd1.w) > w) return;
     regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
     if ((unsigned)v < regd0.ul) return;
-hit:
     puckbody(pk, p);
 }
 
@@ -148,6 +160,7 @@ int PassLaneChk(Player *p, Player *o)
     int y;
     int oy;
     int dy;
+    int dx;
 
     side = (p->pflags & pfgoal) != 0;
     if (p->position == 0) return 0;
@@ -171,9 +184,9 @@ int PassLaneChk(Player *p, Player *o)
     dy = oy - y;
     if (dy < 0) dy = -dy;
     if (dy > 0x3C) return 0;
-    dy = (p->Xpos >> 16) - (o->Xpos >> 16);
-    if (dy < 0) dy = -dy;
-    if (dy > 0x28) return 0;
+    dx = (p->Xpos >> 16) - (o->Xpos >> 16);
+    if (dx < 0) dx = -dx;
+    if (dx > 0x28) return 0;
     oy = vtoa(W(o->Xvel), W(o->Yvel));
     if (oy == 8) oy = W(o->facedir);
     oy -= vtoa((short)(HIWORD(p->Xpos) - HIWORD(o->Xpos)), (short)(HIWORD(p->Ypos) - HIWORD(o->Ypos)));
@@ -188,76 +201,77 @@ int PassLaneChk(Player *p, Player *o)
    he is snapped to the net edge for his facing (offset tables word_CCBEC, word_CCBFC, word_CCBCC, word_CCBDC;
    mirrored by the x-flip attribute bit 3), stopped, and the bump SPA for that side is returned (F0Fh, F55h,
    F9Bh / FE1h). p: the player; dir: his direction. Result: the new SPA, or his SPA when nothing changes.
-   DRAFT (10.0 GA): 27 score differing, same size. The result is a short (FallDown compares ax), which returns the
-   constants in eax. The first x-flip comparison is materialized by a doubled comparison, as in the EXE (the
-   C_MATCHING materialized-bool pattern). The direction tests read dir + 2 & 7 / dir + 1 & 7 / dir - 1 without
-   storing them back (dir then ranks below gy: dir ebp, gy edi as in the EXE), and the first post block tests
-   the unflipped case first. Left: the two ABS temporaries of the side test (ecx / edx swapped), which of the
-   two `mov eax, 0FE1h` tails Watcom keeps, and the kept SPA read (EXE `mov eax, [esi+36h] / sar eax, 10h`). */
-short NetCollide(Player *p, int dir)
+   DRAFT (10.0 GA): 22 score differing, same size: only the two ABS temporaries of the side test (ecx / edx
+   swapped); ux declared before gy gives the EXE's gx / dy slots (permute.py movedecl). The result is an int (FallDown keeps it in a short): the EXE's widened
+   SPA read. No goto: the cases nest under dist >= 18h and fall through to the kept SPA, and the two post
+   blocks share one `return 0xFE1` (the EXE keeps the second block's FE1 and the first block's F9B). The first
+   x-flip comparison is materialized by a doubled comparison, as in the EXE (the C_MATCHING materialized-bool
+   pattern). The direction tests read dir + 2 & 7 / dir + 1 & 7 / dir - 1 without storing them back (dir ebp, gy
+   edi as in the EXE). The single-use copy `scaled_y = dy << 8; uy = scaled_y / dist >> 2;` of the old draft is
+   out (a tie-breaker; it gave the same slots). */
+int NetCollide(Player *p, int dir)
 {
     int gx;
     int dy;
     int dx;
+    int ux;
     int gy;
     int dist;
-    int ux;
     int uy;
-    int scaled_y;
 
     gx = HIWORD(p->Xpos) >= 0 ? 0x60 : -0x60;
     dx = (p->Xpos >> 16) - gx;
     gy = HIWORD(p->Ypos) >= 0 ? 0xCA : -0xCA;
     dy = (p->Ypos >> 16) - gy;
     dist = vecdist(dx, dy);
-    if (dist < 0x18) goto keep;
-    ux = (dx << 8) / dist >> 2;
-    scaled_y = dy << 8;
-    uy = scaled_y / dist >> 2;
-    if ((uy < 0 ? -uy : uy) >= (ux < 0 ? -ux : ux)) {
-        if (gy >= 0) {
-            if ((dir + 2 & 7) < 5) goto keep;
-            HIWORD(p->Xpos) = gx + ux;
-            if (gx < 0 && ((p->attribute & 8) == 0) != 0) HIWORD(p->Xpos) += 6;
-            if (gx > 0 && (p->attribute & 8)) HIWORD(p->Xpos) -= 6;
-            HIWORD(p->Ypos) = uy + gy - 8;
-            p->Xvel = 0;
-            p->Yvel = 0;
-            HIWORD(p->Ypos) += word_CCBEC[p->facedir] - 0x108;
-            return 0xF0F;
+    if (dist >= 0x18) {
+        ux = (dx << 8) / dist >> 2;
+        uy = (dy << 8) / dist >> 2;
+        if ((uy < 0 ? -uy : uy) >= (ux < 0 ? -ux : ux)) {
+            if (gy >= 0) {
+                if ((dir + 2 & 7) >= 5) {
+                    HIWORD(p->Xpos) = gx + ux;
+                    if (gx < 0 && ((p->attribute & 8) == 0) != 0) HIWORD(p->Xpos) += 6;
+                    if (gx > 0 && (p->attribute & 8)) HIWORD(p->Xpos) -= 6;
+                    HIWORD(p->Ypos) = uy + gy - 8;
+                    p->Xvel = 0;
+                    p->Yvel = 0;
+                    HIWORD(p->Ypos) += word_CCBEC[p->facedir] - 0x108;
+                    return 0xF0F;
+                }
+            } else if ((dir + 1 & 7) < 3) {
+                HIWORD(p->Xpos) = gx + ux;
+                HIWORD(p->Ypos) = uy + gy;
+                p->Xvel = 0;
+                p->Yvel = 0;
+                HIWORD(p->Ypos) += word_CCBFC[p->facedir] + 0x108;
+                return 0xF55;
+            }
+        } else {
+            if (gx >= 0) {
+                if (dir < 5) return p->SPA;
+                ux -= 6;
+                HIWORD(p->Xpos) = gx + ux;
+                HIWORD(p->Ypos) = uy + gy + (gy > 0 ? -10 : 0);
+                p->Xvel = 0;
+                p->Yvel = 0;
+                if (p->attribute & 8) HIWORD(p->Xpos) -= word_CCBDC[8 - p->facedir & 7] + 0x9A;
+                else HIWORD(p->Xpos) += word_CCBCC[p->facedir] - 0x9A;
+                if (!(p->attribute & 8)) return 0xF9B;
+            } else {
+                if (dir == 0 || dir - 1 >= 3) return p->SPA;
+                ux += 6;
+                HIWORD(p->Xpos) = gx + ux;
+                HIWORD(p->Ypos) = uy + gy + (gy > 0 ? -10 : 0);
+                p->Xvel = 0;
+                p->Yvel = 0;
+                if (p->attribute & 8) HIWORD(p->Xpos) -= word_CCBCC[8 - p->facedir & 7] - 0x9A;
+                else HIWORD(p->Xpos) += word_CCBDC[p->facedir] + 0x9A;
+                if (p->attribute & 8) return 0xF9B;
+            }
+            return 0xFE1;
         }
-        if ((dir + 1 & 7) >= 3) goto keep;
-        HIWORD(p->Xpos) = gx + ux;
-        HIWORD(p->Ypos) = uy + gy;
-        p->Xvel = 0;
-        p->Yvel = 0;
-        HIWORD(p->Ypos) += word_CCBFC[p->facedir] + 0x108;
-        return 0xF55;
     }
-    if (gx >= 0) {
-        if (dir < 5) goto keep;
-        ux -= 6;
-        HIWORD(p->Xpos) = gx + ux;
-        HIWORD(p->Ypos) = uy + gy + (gy > 0 ? -10 : 0);
-        p->Xvel = 0;
-        p->Yvel = 0;
-        if (p->attribute & 8) HIWORD(p->Xpos) -= word_CCBDC[8 - p->facedir & 7] + 0x9A;
-        else HIWORD(p->Xpos) += word_CCBCC[p->facedir] - 0x9A;
-        if (!(p->attribute & 8)) return 0xF9B;
-        return 0xFE1;
-    }
-    if (dir == 0) goto keep;
-    if (dir - 1 >= 3) goto keep;
-    ux += 6;
-    HIWORD(p->Xpos) = gx + ux;
-    HIWORD(p->Ypos) = uy + gy + (gy > 0 ? -10 : 0);
-    p->Xvel = 0;
-    p->Yvel = 0;
-    if (p->attribute & 8) HIWORD(p->Xpos) -= word_CCBCC[8 - p->facedir & 7] - 0x9A;
-    else HIWORD(p->Xpos) += word_CCBDC[p->facedir] + 0x9A;
-    if (p->attribute & 8) return 0xF9B;
-    return 0xFE1;
-keep:
     return p->SPA;
 }
 

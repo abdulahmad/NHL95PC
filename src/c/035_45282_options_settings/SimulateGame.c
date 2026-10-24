@@ -46,7 +46,8 @@ typedef struct {
 /* DRAFT under Watcom 10.0 GA: 566 differing instructions, 9,872 vs 9,868 bytes. score[2] is declared before
    rate[2] (their slots then match the EXE; declsearch cannot read them). Allocation-loop indexing (i * 4 kept
    in ebp where the EXE keeps i), the err / periodlen and tick / shotv slots (not a tie: their declaration
-   swap changes nothing or is worse) and later register choices remain. */
+   swap changes nothing or is worse) and later register choices remain. The allocation loop is a plain
+   for (i...): routing it through sv (i = sv + 1) compiles the same. */
 /* SimulateGame (452C5, PC only): play one schedule game without graphics, a minute at a time, and post it to the
    in-memory league databases. Both teams are read (rdfh: the 4Ch-byte record, its season or playoff block is not
    used afterwards; rwfh: the team record), and every dressed player's key, career and season records are found
@@ -159,20 +160,19 @@ int SimulateGame(char *dir, char *ext, int n, unsigned char *game, int rwfh, int
     f.sc[1] = game + 5;
     game[5] = game[4] = 0;
     ot = 0;
-    for (i = 0; i < 2; i = sv + 1) {
+    for (i = 0; i < 2; i++) {
         f.t[i] = (TeamRec *)sub_8CCA8((char *)tag_t, 0x2E8, 0x20);
-        sv = i;
-        f.at[sv] = (unsigned char *)sub_8CCA8((char *)tag_at, 0x4C, 0x20);
-        f.pk[sv] = (unsigned char **)sub_8CCA8((char *)tag_pk, 100, 0x20);
-        f.ps[sv] = (unsigned short **)sub_8CCA8((char *)tag_ps, 100, 0x20);
-        f.pset[sv] = (unsigned short **)sub_8CCA8((char *)tag_pset, 100, 0x20);
-        f.aps[sv] = (unsigned short **)sub_8CCA8((char *)tag_aps, 100, 0x20);
-        f.apset[sv] = (unsigned short **)sub_8CCA8((char *)tag_apset, 100, 0x20);
-        f.gk[sv] = (unsigned char **)sub_8CCA8((char *)tag_gk, 0xC, 0x20);
-        f.gs[sv] = (unsigned short **)sub_8CCA8((char *)tag_gs, 0xC, 0x20);
-        f.gset[sv] = (unsigned short **)sub_8CCA8((char *)tag_gset, 0xC, 0x20);
-        f.ags[sv] = (unsigned short **)sub_8CCA8((char *)tag_ags, 0xC, 0x20);
-        f.agset[sv] = (unsigned short **)sub_8CCA8((char *)tag_agset, 0xC, 0x20);
+        f.at[i] = (unsigned char *)sub_8CCA8((char *)tag_at, 0x4C, 0x20);
+        f.pk[i] = (unsigned char **)sub_8CCA8((char *)tag_pk, 100, 0x20);
+        f.ps[i] = (unsigned short **)sub_8CCA8((char *)tag_ps, 100, 0x20);
+        f.pset[i] = (unsigned short **)sub_8CCA8((char *)tag_pset, 100, 0x20);
+        f.aps[i] = (unsigned short **)sub_8CCA8((char *)tag_aps, 100, 0x20);
+        f.apset[i] = (unsigned short **)sub_8CCA8((char *)tag_apset, 100, 0x20);
+        f.gk[i] = (unsigned char **)sub_8CCA8((char *)tag_gk, 0xC, 0x20);
+        f.gs[i] = (unsigned short **)sub_8CCA8((char *)tag_gs, 0xC, 0x20);
+        f.gset[i] = (unsigned short **)sub_8CCA8((char *)tag_gset, 0xC, 0x20);
+        f.ags[i] = (unsigned short **)sub_8CCA8((char *)tag_ags, 0xC, 0x20);
+        f.agset[i] = (unsigned short **)sub_8CCA8((char *)tag_agset, 0xC, 0x20);
     }
     err = 0;
     for (i = 0; i < 2 && !err; i++) {

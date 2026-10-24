@@ -58,9 +58,6 @@ void __cdecl sub_1B18B(int stream);
 void sub_8FB8E(int song, int handle, int a, int b);
 int __cdecl GetTicks(void);                              /* timer library (stack arguments, as SetTickDeadline) */
 
-/* DRAFT: 732 vs 732 under 10.0 GA (6 differing; sub_1B002 / sub_1AD16 take the chunk in edx, GetTicks is the
-   cdecl timer library): the locals are plain ints and x / y the parameters' own slots; five of them tie at use
-   count 21 (bad, x, y, nframes, delay) and x / nframes / y land in each other's slots; see docs/UNSURE.md. */
 /* PlayMVI (8BEDB, PC only): play the movie file path at x / y through the cdstream reader (493E0h-byte buffer,
    2000h chunks) and the cmv_player decoder, after letting the reader prime for 96h ticks. Per chunk: 'MVIh'
    sets up the decoder, clears the 228 x 176 picture, loads its palette and the frame delay (100 / rate);
@@ -72,12 +69,12 @@ int __cdecl GetTicks(void);                              /* timer library (stack
 int PlayMVI(char *path, int x, int y)
 {
     int frame;
-    int delay;
-    unsigned id;
-    int bad;
     int nframes;
-    int chunk;
     int stream;
+    int chunk;
+    unsigned id;
+    int delay;
+    int bad;
     int t0;
     int ends;
     int due;
