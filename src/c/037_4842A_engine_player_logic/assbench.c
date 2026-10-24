@@ -1,9 +1,9 @@
 /* Engine player logic: going to the bench. */
-/* DRAFT (10.0 GA, 22 differing, 828 vs 827): the swap test masks its first flag, `(newpnum < 19h) & 0xFF`
-   (the EXE's `mov edx, eax / and edx, 0FFh`; an (unsigned char) cast gives `xor edx, edx / mov dl, al`), and
-   the count is `d = p->temp1 - 1; p->temp1 = d;` (the +8 after the test). Left: the count in ax and its +8 in
-   edi (EXE dx / esi), so edi is saved where the EXE saves esi, and the pflags byte in al / ah (EXE cl / ch).
-   See docs/UNSURE.md. */
+/* DRAFT (10.0 GA, 13 differing, 825 vs 827): no goto (the body before the seated part is one `if (temp1 != 64h)`
+   block) and no masks: the y distance in its own short dy gives both swap tests the EXE widening `mov edx, eax /
+   and edx, 0FFh`. Left: the count d in ax and its +8 in edx (EXE dx / `mov esi, edx / add esi, 8`), so temp3 is
+   loaded into si (EXE cx) and facedir into cx (EXE dx); the seated roster store loads tmroster into edx (EXE moves
+   the index to edx and loads the pointer into eax). See docs/UNSURE.md. */
 #include "nhl95.h"
 
 /* assbench (4B12C; 93G logic93 / 94G assign94 assbench "player a3 should go to bench", PC version): not while
@@ -20,78 +20,79 @@
 void assbench(Player *p)
 {
     Team *tm;
+    short dy;
     short d;
 
     if (p->pflags & 0x20) return;
-    if (p->temp1 == 0x64) goto seated;
-    if (check4bench(p)) return;
-    if (p->pflags2 & 0x10) {
-        StopIfFree(p);
-        return;
-    }
-    if (gmode2 & 1) {
-        StopIfFree(p);
-        return;
-    }
-    if ((gmode & 1) && p->position == 0 && (p->tmptr->tmgoalie & 0xFFF0) == 0xFF00
-        && !ChkPullGoalieLate((p->pflags & 0x40) != 0)) {
-        p->newpnum = p->newpos = -1;
-        assreplace(p, 0x27);
-        return;
-    }
-    if (p->pflags & 2) {
-        p->pflags &= 0xFD;
-        p->temp2 = 8;
-        p->temp4 = !(p->pflags & 0x40) ? -0x32 : 0x41;
-        p->temp3 = -0xA8;
-        p->temp1 = 0;
-    }
-    if (p->newpnum == p->pnum) {
-        p->pflags2 &= 0xFB;
-        if (((p->newpnum < 0x19) & 0xFF) ^ (p->newpos == 0)) p->position = p->newpos;
-        Setplass(p);
-        p->newpnum = -1;
-        p->newpos = -1;
-        return;
-    }
-    if (p->position == 0) ((unsigned char *)p)[0x48] |= 3;
-    d = p->temp1 - 1;
-    p->temp1 = d;
-    if (d < 0) {
-        p->temp1 += 8;
-        d = HIWORD(p->Ypos) - p->temp4;
-        regd0.w = HIWORD(p->Xpos) - p->temp3;
-        if ((d < 0 ? -d : d) <= 0x28 && regd0.w <= 0x20) {
-            regd1.w = p->position == 0 ? 1 : 0x289;
-            SetSPA(p, regd1.w);
-            p->pflags |= 4;
-            if (p->facedir != 4) p->facedir = (p->facedir < 4 ? 1 : -1) + (*(int *)((char *)&p->facedir - 2) >> 16) & 7;
-            p->Yvel = 0;
-            p->Xvel = -0x800;
-            if (regd0.w > 0x10) return;
-            p->Xvel = 0;
-            if (p->facedir != 4) return;
-            p->Xvel = -0x800;
-            p->facedir = 2;
-            SetSPA(p, p->position == 0 ? 0xD2D : 0x7BF);
-            p->pflags |= 0x20;
-            p->temp1 = 0x64;
+    if (p->temp1 != 0x64) {
+        if (check4bench(p)) return;
+        if (p->pflags2 & 0x10) {
+            StopIfFree(p);
             return;
         }
+        if (gmode2 & 1) {
+            StopIfFree(p);
+            return;
+        }
+        if ((gmode & 1) && p->position == 0 && (p->tmptr->tmgoalie & 0xFFF0) == 0xFF00
+            && !ChkPullGoalieLate((p->pflags & 0x40) != 0)) {
+            p->newpnum = p->newpos = -1;
+            assreplace(p, 0x27);
+            return;
+        }
+        if (p->pflags & 2) {
+            p->pflags &= 0xFD;
+            p->temp2 = 8;
+            p->temp4 = !(p->pflags & 0x40) ? -0x32 : 0x41;
+            p->temp3 = -0xA8;
+            p->temp1 = 0;
+        }
+        if (p->newpnum == p->pnum) {
+            p->pflags2 &= 0xFB;
+            if ((p->newpnum < 0x19) ^ (p->newpos == 0)) p->position = p->newpos;
+            Setplass(p);
+            p->newpnum = -1;
+            p->newpos = -1;
+            return;
+        }
+        if (p->position == 0) ((unsigned char *)p)[0x48] |= 3;
+        d = p->temp1 - 1;
+        p->temp1 = d;
+        if (d < 0) {
+            p->temp1 += 8;
+            dy = HIWORD(p->Ypos) - p->temp4;
+            regd0.w = HIWORD(p->Xpos) - p->temp3;
+            if ((dy < 0 ? -dy : dy) <= 0x28 && regd0.w <= 0x20) {
+                regd1.w = p->position == 0 ? 1 : 0x289;
+                SetSPA(p, regd1.w);
+                p->pflags |= 4;
+                if (p->facedir != 4) p->facedir = (p->facedir < 4 ? 1 : -1) + (*(int *)((char *)&p->facedir - 2) >> 16) & 7;
+                p->Yvel = 0;
+                p->Xvel = -0x800;
+                if (regd0.w > 0x10) return;
+                p->Xvel = 0;
+                if (p->facedir != 4) return;
+                p->Xvel = -0x800;
+                p->facedir = 2;
+                SetSPA(p, p->position == 0 ? 0xD2D : 0x7BF);
+                p->pflags |= 0x20;
+                p->temp1 = 0x64;
+                return;
+            }
+        }
+        if (p->pflags & 4) return;
+        regd0.w = p->temp3;
+        regd1.w = p->temp4;
+        skateto(p, (gmode & 1) || p->position == 0 ? 0 : (void (*)(Player *))EvadePC);
+        return;
     }
-    if (p->pflags & 4) return;
-    regd0.w = p->temp3;
-    regd1.w = p->temp4;
-    skateto(p, (gmode & 1) || p->position == 0 ? 0 : (void (*)(Player *))EvadePC);
-    return;
-seated:
     p->frame = -1;
     tm = p->tmptr;
     if (tm->tmpdst[p->pnum] <= 0 && tm->tmpdst[p->pnum] >= -2) {
         tm->tmpdst[p->pnum] = -2;
         tm->tmroster[p->pnum * 0x27] = 3;
     }
-    if (((p->newpnum < 0x19) & 0xFF) ^ (p->newpos == 0)) p->position = p->newpos;
+    if ((p->newpnum < 0x19) ^ (p->newpos == 0)) p->position = p->newpos;
     Setplass(p);
     if (gmode & 1) {
         p->temp5 = 0;
