@@ -1,4 +1,8 @@
 /* Front end: drawing a sprite. */
+/* DRAFT (10.0 GA): 78 -> 66 differing, 675 vs 678 bytes. Integer coordinate/flip
+   inputs, a short intermediate for mirrored x, and short edges updated in steps give
+   the EXE's 16-bit edge arithmetic. Declaring i before r also leaves pal in memory.
+   Left: mode/clip/remap register choices and the first flip test's cached value. */
 #define DrawSprite DrawSprite_decl
 #define sub_6AB7C sub_6AB7C_decl
 #define sub_B4CD8 sub_B4CD8_decl
@@ -46,7 +50,7 @@ void __cdecl sub_B5AC8(SprHdr *s, int x, int y);
    (lastsprremap = pal + flip * 2); mirrored, the remap's 16-byte groups are flipped (bytes 0/4 and 1/3) around
    the load. The rectangle is recorded (sub_6AB7C, spritedrawcount), and if the sprite's flag byte is set one of
    eight blitters draws it (clipped / remapped / mirrored). spr: the sprite header; unused: not read. */
-void DrawSprite(SprHdr *spr, short x, short y, short flip, short pal, int unused)
+void DrawSprite(SprHdr *spr, int x, int y, int flip, short pal, int unused)
 {
     struct {
         unsigned char t2[8];
@@ -58,19 +62,26 @@ void DrawSprite(SprHdr *spr, short x, short y, short flip, short pal, int unused
         short pad2;
         short sy;
     } s;
-    int x1;
-    int y1;
-    int r;
+    short x1;
+    short y1;
     int i;
+    int r;
     unsigned char *p;
 
     s.flip = flip;
     s.mode = 0;
-    if (s.flip) s.sx = x - spr->w + spr->xoff + 1;
+    if (s.flip) {
+        x1 = x;
+        x1 -= spr->w;
+        s.sx = x1 + spr->xoff + 1;
+    }
     else s.sx = x - spr->xoff;
     s.sy = y - spr->yoff;
-    x1 = s.sx + spr->w - 1;
-    y1 = s.sy + spr->h;
+    x1 = s.sx;
+    x1 += spr->w;
+    x1--;
+    y1 = s.sy;
+    y1 += spr->h;
     if (s.sx >= cliprect_x1 || x1 < cliprect_x0 || s.sy >= cliprect_y1 || y1 <= cliprect_y0) return;
     if (s.sx < cliprect_x0 || x1 >= cliprect_x1 || s.sy < cliprect_y0 || y1 >= cliprect_y1) s.mode = 1;
     if (s.flip) s.mode += 4;

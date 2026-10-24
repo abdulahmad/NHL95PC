@@ -2419,3 +2419,47 @@ BlitTileMap,,row product through dead r,,ga
 BlitTileMap,,typed three-short tilemap header and shape advanced through header+1,,ga
 BlitTileMap,,each with baseline and doubled-row expression,,ga
 BlitTileMap,,"row copied into x0/tile/r/c before the flag branch then sum using the copy minus original row<<1 (12 fresh shapes, best 8 differing). No source retained",,ga
+PickOtherGames,,"(2026-10-24, lane 1a batch 2): dead j reused for pair offset as i*2, i+i, i<<1 (20 differing)",20 differing,ga
+PickOtherGames,,"dedicated int off with those three forms (15, unchanged)","15, unchanged",ga
+PickOtherGames,,"unsigned char pair pointer to othergames+i*2, pair[1] store and pair[0] compare (23)",23,ga
+SelectSavedFile,,"(2026-10-24, lane 1a batch 2): per-file char*/unsigned-char* abbreviation table declarations (15)",15,ga
+SelectSavedFile,,dead t reused for abbreviation pointer (18),18,ga
+SelectSavedFile,,dead buf reused for abbreviation pointer (15),15,ga
+SelectSavedFile,,branch-scoped int abbreviation locals (15),15,ga
+ResetGameVars,,"(2026-10-24, lane 1a batch 2): lexical blocks around banner/text, penalty-shot, mouse-through-crowd, and leading resets",,ga
+ResetGameVars,,"loop i and/or p moved to function scope (all 25, identical)","all 25, identical",ga
+TeamRosterScreen,,"(2026-10-24, lane 1a batch 2): skater source through dead s pointer or integer product in dead team/fh/kfh/pfh (30-62)",30-62,ga
+TeamRosterScreen,,distinct block index for skater/goalie/both display loops (78-100),78-100,ga
+TeamRosterScreen,,long n or idx (23),23,ga
+TreeSeriesWinner,,"(2026-10-24, lane 1a batch 2): K&R definition with all six orders of typed parameter declarations (35)",35,ga
+TreeSeriesWinner,,away/i/home individually nested around the body (83-121),83-121,ga
+SetupStatsSourceMenu,,"(2026-10-24, lane 1a batch 2): unprototyped per-file strncpy returning int/char*/void (42)",42,ga
+SetupStatsSourceMenu,,i/y/both scoped around layout loop (42),42,ga
+SetupStatsSourceMenu,,named unsigned-char selection for case-1 or first case-3 test (42 +2 bytes / 44),42 +2 bytes / 44,ga
+PreGameScreen,,"(2026-10-24, lane 1a batch 2): pointer size via dead err/art/bank/kf/ct/key/done/ptrbg/btn, both factor orders (92-114)",92-114,ga
+PreGameScreen,,"inline width*height rather than height*width (50, retained). Both builds MATCH",,ga
+GameLoop,,"(2026-10-24, lane 1a batch 2): n reused as i (69)",69,ga
+GameLoop,,"frameaccum sum copied into n before modulo and in-place n/=10 (70-74), separate n=frameaccum",,ga
+GameLoop,,"n/=10 (62, unchanged)","62, unchanged",ga
+GameLoop,,merged n/i plus demo condition through i or fresh local (68-75). Shared exit still requires HandleHotKey owner outside assignment,,ga
+DrawSprite,,"(2026-10-24, lane 1a batch 2): mirrored-x through x1 with subtract/copy-subtract/final-inc steps, or s.sx in two updates, each with int/short edges (75-99)",75-99,ga
+DrawSprite,,"dead r/i for mirrored x with int/short/stepped edges (80-136), edge steps alone (76)",76,ga
+DrawSprite,,x/y/xy int parameter subsets with signed/unsigned width/height and int/short/stepped edges (84-127),84-127,ga
+DrawSprite,,xy/xyflip/flip parameter subsets plus x1-copy or r-sub shapes and short/stepped edges (67-122),67-122,ga
+DrawSprite,,"all 120 orders of x1/y1/i/r/p on the new 67-diff shape (best 66, retained). Declaration retry justified by new arithmetic and tied pal/r savings, not the old short-edges-only shape. Both builds MATCH",,ga
+GameStatsScreen,,"(2026-10-24, lane 1a batch 2): fresh int/short/unsigned width scoped to a block or team loop (36-46)",36-46,ga
+GameStatsScreen,,crest shape via dead m/x/t (25-26),25-26,ga
+GameStatsScreen,,"name product via dead x/bank/slot/shape and integer address sum (20-43, shape exact size but 25). Shared exit requires owner file outside this assignment",,ga
+TeamStatsScreen,,"(2026-10-24, lane 1a batch 2): key result reused through t with if/ternary (180-188), separate result local (132)",132,ga
+TeamStatsScreen,,"koff=t*4 at front of all five column cases or only 2/3/4, alone and with those key shapes (175-184)",175-184,ga
+TeamStatsScreen,,"first header through w/e/t/koff integer index sum (126-136, koff retained)","126-136, koff retained",ga
+TeamStatsScreen,,header koff as byte offset with four sum orders (160),160,ga
+TeamStatsScreen,,case-5 key through w/e/t/koff/new key (152-192),152-192,ga
+TeamStatsScreen,,"key result through new key/dead x/koff for every nonempty subset of cases2/3/4 (123-134, x in case3 retained)","123-134, x in case3 retained",ga
+TeamStatsScreen,,"guarded numerator product through e/w/new product for case3, case4, both, all three (115-226",,ga
+TeamStatsScreen,,115/119 rejected because size gap grows to 32),,ga
+TeamStatsScreen,,"slot_solver on both retained intermediate/final shapes (zero mismatches, no changes). Callers store EAX, so result remains int. Both builds MATCH",,ga
+LoadTeamRoster,,"(2026-10-24, lane 1a batch 2): chained stored-word reuse via line/gline/new value (91/68/79)",91/68/79,ga
+LoadTeamRoster,,each combined with byte-offset shape (73/87/88,,ga
+LoadTeamRoster,,new reason: combine correct index structure with copy/load/add),,ga
+LoadTeamRoster,,six proper subsets of the three pairs via each line/gline (84-114). Both builds MATCH,,ga
