@@ -2647,3 +2647,48 @@ MainDeskLoop,rettype:short,a short result,tried (docs/UNSURE.md),ga
 StarCompare,,"(2026-10-24, lane 1b batch 5): permute.py 5 min on the current draft (769 candidates, best 56 at the same 26-byte gap: commute / pa-pb swapdecl / operand swaps, as in batches 2 and 3",,ga
 assrefgoalpa,,"(2026-10-24, lane 1b batch 5): the product as `(0xE8 - (int)*pucky) * (p->temp3 - *puckx)` and `(0xE8 - *(short *)pucky) * ...` (70)",70,ga
 assrefgoalpa,,"the sign test with `(int)*pucky` (67, no change), both (70), `-(*pucky - 0xE8) * ...` (120)",120,ga
+PickAwardWinners,,"(2026-10-24, lane 1a batch 5): else-local losses as unsigned char/unsigned short/int (5/5/6)",5/5/6,ga
+PickAwardWinners,,dead v/mine/g holding losses (35/58/11),35/58/11,ga
+PickAwardWinners,,else-local wins as unsigned short/int (6/5),6/5,ga
+PickAwardWinners,,"both win/loss locals as uchar/ushort/int (5 each). Re-ran regdump on uchar losses: t82/t81 remain savings 20 and EAX/ESI, no tie change. Sharing wins across pts/test/division as uchar/int/ushort (8/42/11) and sharing both wins and losses (39/33/51). No source change retained",,ga
+DrawAwardsSummary,,"(2026-10-24, lane 1a batch 5): named awardtype uchar/int (17/18)",17/18,ga
+DrawAwardsSummary,,local winner pointer or integer record offset for FitPlayerName (12 each),12 each,ga
+DrawAwardsSummary,,local team-name source pointer (12),12,ga
+DrawAwardsSummary,,row multiply as y=k,,ga
+DrawAwardsSummary,,y*=19,,ga
+DrawAwardsSummary,,y+=8Ch (18),18,ga
+DrawAwardsSummary,,25-byte memcpy instead of struct copy (36). Prior suffix/byte/declaration shapes not repeated. Baseline retained,,ga
+EasnGoalieStatsScreen,,"(2026-10-24, lane 1a batch 5): full post-selection suffix (MakePath through return2) duplicated in both arms, both branch orders (44/45 differing, size gap117). Prior GA duplicated-MakePath-only and explicit goto/module shapes not repeated. Baseline retained",,ga
+PlacePlayersAtStart,,"(2026-10-24, lane 1a batch 5): per-module plain short declarations instead of Reg68 members for regd1, regd4, regd0+1, regd0+1+2+4 (15 each)",15 each,ga
+PlacePlayersAtStart,,named goalie boolean uchar/char/ushort before assinsert (15 each),15 each,ga
+PlacePlayersAtStart,,"named map short/ushort/int, negate local then store (19/19/15)",19/19/15,ga
+PlacePlayersAtStart,,"mirror pflags copied to uchar/int (17,+3 /18,+0), team-map pflags copied likewise (17,+3 /18,+0). Earlier GA negate/volatile/mask shapes not repeated. Baseline retained",,ga
+TitleScreen,,"(2026-10-24, lane 1a batch 5): chunk assignment directly in if condition",,ga
+TitleScreen,,reader result through dead i or bank before saving chunk and using result for tests,,ga
+TitleScreen,,"scoped int next result before storing chunk (all 13). Prior GA pointer/unsigned chunk, declaration sweeps and short result not repeated. Baseline retained",,ga
+TitleScreen,rettype:short,short result,tried (docs/UNSURE.md),ga
+ShowAwardScreens,,"(2026-10-24, lane 1a batch 5): title font height int/uchar/ushort locals (37/50/31)",37/50/31,ga
+ShowAwardScreens,,"title y local (45), title x local (32)",32,ga
+ShowAwardScreens,,goalie shots row fresh int byte->*=8->+=y (48),48,ga
+ShowAwardScreens,,"preincrement x as standalone += or assignment (19, retained +=). Shots s[9] through int/ushort local (31/41 on original base)",31/41 on original base,ga
+ShowAwardScreens,,"on preincrement base row/pal/pct as byte*8 then +=y (23/27/80), byte then *=8 then +=y (36/44/76)",36/44/76,ga
+ShowAwardScreens,,font height uchar/ushort/int for shots row (28/19/21). Both builds MATCH,,ga
+ShowAwardScreens,,draft remains unmarked,,ga
+ShowCredits,,"(2026-10-24, lane 1a batch 5): signed-short narrowing of both rand dividends (8 differing) and only rightmost dividend (6)",6,ga
+ShowCredits,,neither fixes scheduling. Prior GA divisor/local shapes not repeated,,ga
+FadePalette,,"(2026-10-24, lane 1a batch 5): switch(dir) with zero case first/default first and switch(palfadedin) inside direction arm. Prior GA clamp/volatile/local-copy shapes not repeated. Baseline retained",,ga
+SkaterStatsCard,,"(2026-10-24, lane 1a batch 5): dead fh/bank/art/pct as the lookup VALUE followed by (value+5)*5 (14/17/14/52), each with separate value+=5 then product (16/26/14/53)",16/26/14/53,ga
+SkaterStatsCard,,"dead fh as integer lookup ADDRESS then direct byte product (15). These are value reuse, distinct from prior index/address shapes",,ga
+SkaterStatsCard,,none retained,,ga
+ListDialog,,"(2026-10-24, lane 1a batch 5), all fresh emulated compiles: split mouse groups {y,x,my,mx,i}/{y,x,my,mx}/{i,mx,my}/{y,x} out of original frame (181/163/134/244)",181/163/134/244,ga
+ListDialog,,"on prior plain best11 draft, meaningful two-entry arrays bw/bh,lh/bh,bx/by,mx/my,x/y (24/31/50/59/35). First x/y array generation altered a prototype, compile failed",,ga
+ListDialog,,corrected to replace body only. Width cached in dead sz across InitScrollBar (143),143,ga
+ListDialog,,tw copy discarded for clobbering title width (150),150,ga
+ListDialog,,scalar sprite pointer during construction (27). Baseline retained,,ga
+DrawListItem,,"(2026-10-24, lane 1a batch 5), on A: colour in dead fontheight/top/marks (39/21/24)",39/21/24,ga
+DrawListItem,,row difference/product through dead top (27/26) or c (19),19,ga
+DrawListItem,,alignment if/else (24),24,ga
+DrawListItem,,rectangle call in each colour branch (52),52,ga
+DrawListItem,,"c for fontheight and fontheight for colour (29). A regdump confirmed three-way savings9 tie. One permute run on A (385 compiled, 89 s, best10 from narrowed sel and operand swap",,ga
+DrawListItem,,"worse than retained draft), full chains/hashes in permlog_1a_b5.csv. Baseline restored",,ga
+DrawListItem,,no source commit,,ga

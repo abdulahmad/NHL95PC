@@ -274,6 +274,9 @@ typedef struct { char c[25]; } Str25;
    winner's goalie (type 0: GP, Min, GAA m:ss, W, L, T, SO in the season row, EN, shots, save percentage) or
    skater stats (type 1: GP, G, A, Pt, PIM, +/-, PPG, SHG, shots, shooting percentage); the award's two title
    lines at the bottom, a palette fade in and out (PALMEM). Result: the last WaitClickTimeout answer. */
+/* DRAFT (10.0 GA): 19 scored differing, 2367 vs 2367 bytes. Increment x before the column-title call:
+   Watcom sinks the increment after argument setup, giving the EXE title evaluation order in both loops.
+   Left: the goalie shots row computes y + byte_D42C3 * 8 in eax / lea instead of edx / add. */
 int ShowAwardScreens(void)
 {
     char buf[0x2C];
@@ -344,7 +347,8 @@ int ShowAwardScreens(void)
                 PrintShadowText(x, y + byte_D42C3 * 9, (char *)str_Pct);
                 s = ss = (unsigned short *)off_C524F[k];
                 for (j = 0; j < 2; j++) {
-                    PrintShadowText((x += 0x50) - 0x1C, y - byte_D42C3, (char *)off_C527B[j]);
+                    x += 0x50;
+                    PrintShadowText(x - 0x1C, y - byte_D42C3, (char *)off_C527B[j]);
                     PrintFmt1(x, y, (char *)str_fmtpd, s[0]);
                     PrintFmt1(x, y + byte_D42C3, (char *)str_fmtpd, s[6]);
                     PrintFmt2(x, y + byte_D42C3 * 2, (char *)str_D02d, s[8] / 100, s[8] % 100);
@@ -370,7 +374,8 @@ int ShowAwardScreens(void)
                 PrintShadowText(x, y + byte_D42C3 * 9, (char *)str_Pct);
                 s = gs = (unsigned short *)off_C524F[k];
                 for (j = 0; j < 2; j++) {
-                    PrintShadowText((x += 0x50) - 0x1C, y - byte_D42C3, (char *)off_C527B[j]);
+                    x += 0x50;
+                    PrintShadowText(x - 0x1C, y - byte_D42C3, (char *)off_C527B[j]);
                     PrintFmt1(x, y, (char *)str_fmtpd, s[0]);
                     PrintFmt1(x, y + byte_D42C3, (char *)str_fmtpd, s[1]);
                     PrintFmt1(x, y + byte_D42C3 * 2, (char *)str_fmtpd, s[2]);
