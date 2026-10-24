@@ -423,12 +423,46 @@ def anchor(src, r, func, start, end):
     at = [(n, label_addr(asm, n)) for n in r['pubs']]
     at = [(n, a) for n, a in at if a is not None]
     inside = [(a - start, n, a) for n, a in at if start <= a < end]
+    if not inside:
+        # a piece the object does not hold at the EXE's distance from a public (chkprogress_go after the draft
+        # InProgress, which is 2 bytes long): placed by the branches that reach it
+        f = flow_anchor(src, r, start, end)
+        if f is not None: return f
     before = [(start - a, n, a) for n, a in at if a < start]
     after = [(a - end, n, a) for n, a in at if a >= end]
     pick = min(inside) if inside else min(before + after) if before or after else None
     if pick is None: raise SystemExit('%s: no public of the object to place %s by (asm %s)' % (src, func, os.path.relpath(asm, ROOT)))
     _, n, a = pick
     return r['pubs'][n] - (a - start)
+
+def flow_anchor(src, r, start, end):
+    """the object offset of a piece [start, end) of a split function, from control flow: each public of the object is
+    aligned with its asm range by mnemonics (difflib), and every aligned branch whose original target lies in the
+    piece votes for its compiled target less the target's offset in the piece (chkprogress's `jge chkprogress_go`,
+    LoadRosterList's `jmp LoadRosterList_faloop`). The answer when all votes agree, else None. Needs capstone."""
+    try:
+        from capstone import Cs, CS_ARCH_X86, CS_MODE_32
+    except ImportError:
+        return None
+    import difflib
+    md = Cs(CS_ARCH_X86, CS_MODE_32)
+    def dest(i):
+        if (i.mnemonic.startswith('j') or i.mnemonic == 'call') and i.op_str.startswith('0x'): return int(i.op_str, 16)
+    text = r['text']; pubs = sorted(r['pubs'].items(), key=lambda x: x[1]); votes = set()
+    for k, (n, o) in enumerate(pubs):
+        try: s, e = asm_range(src, n)
+        except (SystemExit, StopIteration): continue
+        if s is None or s < 0 or e <= s: continue
+        C = list(md.disasm(text[o:pubs[k + 1][1] if k + 1 < len(pubs) else len(text)], o))
+        try: O = list(md.disasm(original_bytes(s, e - s), s))
+        except (SystemExit, OSError): continue
+        sm = difflib.SequenceMatcher(None, [i.mnemonic for i in C], [i.mnemonic for i in O], autojunk=False)
+        for tag, i1, i2, j1, j2 in sm.get_opcodes():
+            if tag != 'equal': continue
+            for ci, oi in zip(C[i1:i2], O[j1:j2]):
+                ct, ot = dest(ci), dest(oi)
+                if ct is not None and ot is not None and start <= ot < end: votes.add(ct - (ot - start))
+    return votes.pop() if len(votes) == 1 else None
 
 def label_addr(asm, name):
     L = open(asm).read().split('\n')
@@ -519,7 +553,11 @@ class TextTargets:
             masked = set(range(jmps[0] + 1, jmps[0] + 5)) if jmps and e == jmps[0] + 5 else set()
             for f in fx: masked.update(range(f['off'], f['off'] + 4))
             tail = b''.join(b'.' if i in masked else re.escape(text[i:i + 1]) for i in range(t, e))
-        ga = label_addr(self.asm, g)
+        ga = label_addr(self.asm, g); gasm = self.asm
+        if ga is None and g != c_paths(self.src)[1]:
+            # a compile-context copy of a function of another segment (RunEditRosters in ShellSortBytes.c, so that
+            # LoadRosterList's pieces jump to its epilogue as in the EXE): its own segment's label
+            gasm = c_paths(self.src, g)[2]; ga = label_addr(gasm, g)
         if not tail or ga is None:
             raise SystemExit('%s: %s branches to %s+%X (_TEXT+%X), not a marked block nor a shared ret tail' % (self.src, func, g, t - go, t))
         later = [o for n, o in pubs if o > go]
@@ -574,10 +612,10 @@ class TextTargets:
         if len(hits) != 1:
             raise SystemExit('%s: %s branches to the tail %s of %s; found %d times in the original %s' % (self.src, func, text[t:t + 16].hex(), g, len(hits), g))
         ta = ga + hits[0]
-        if func != '?' and c_paths(self.src, func)[2] != self.asm:
+        if func != '?' and c_paths(self.src, func)[2] != gasm:
             # the branch is in a block marked in another asm file (FreeLeagueDbsMem in 051 ending in the draft
             # BuildFreeAgentList's tail in 050): name the tail by the nearest global label of the draft's segment
-            gl = [(n, x) for n, x in global_labels(self.asm).items() if x <= ta]
+            gl = [(n, x) for n, x in global_labels(gasm).items() if x <= ta]
             if gl:
                 n, x = max(gl, key=lambda v: v[1])
                 return ('%s+0%Xh' % (n, ta - x) if ta != x else n), ta
