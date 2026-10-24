@@ -195,7 +195,7 @@ int PassLaneChk(Player *p, Player *o)
    storing them back (dir then ranks below gy: dir ebp, gy edi as in the EXE), and the first post block tests
    the unflipped case first. Left: the two ABS temporaries of the side test (ecx / edx swapped), which of the
    two `mov eax, 0FE1h` tails Watcom keeps, and the kept SPA read (EXE `mov eax, [esi+36h] / sar eax, 10h`). */
-short NetCollide(Player *p, int dir)
+int NetCollide(Player *p, int dir)
 {
     int gx;
     int dy;
