@@ -1,10 +1,12 @@
 /* Season playoffs: the playoff tree screen's menu loop. */
-/* DRAFT: 2,723 vs 2,688 bytes, 156 differing under 10.0 GA; see docs/UNSURE.md. Plain locals instead of the
+/* DRAFT: 2,723 vs 2,688 bytes, 126 differing under 10.0 GA; see docs/UNSURE.md. Plain locals instead of the
    frame struct (a store into one of the struct's arrays made Watcom reload the others and every member after
    each call; the EXE keeps the pointer block in ebp and &menus[level][item] in eax). The submenu path uses
    depth itself and `depth++` (the EXE caches it in esi and increments it in place), and the two select-item
-   paths draw &menus[level][sel[level]] after the store (the EXE reloads sel[level]). Left: the scalar slots
-   (the EXE upward from A0h: level, item, mx, my, ptr, oldmx, depth, h, w, slot2, slot, tree, oldmy), the last
+   paths draw &menus[level][sel[level]] after the store (the EXE reloads sel[level]). The declaration order is
+   tools/wccre/declsearch.py --conflicts' (12 of 20 locals in their EXE slot). Left: the scalar slots of tree,
+   slot, slot2, w, h, depth, oldmx and ptr (the EXE upward from A0h: level, item, mx, my, ptr, oldmx, depth, h,
+   w, slot2, slot, tree, oldmy), the close-all loop's counter copy and pos reset order, the last
    select-item copy (the EXE jumps into the first one's call) and the loop end (the EXE jumps into the move
    path's sub_91400 call). */
 #define PlayoffTreeMenu PlayoffTreeMenu_decl
@@ -39,27 +41,27 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
    the highlight put back. bar / n / col1-col3: as RunMenu; series: the highlighted series. Result: 1 or 0. */
 int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int series)
 {
-    int pos[4][2];
-    int bg[4];
-    char path[0x20];
-    int nitems[4];
-    unsigned char pal[12];
     MenuItem *menus[4];
-    int sel[4];
-    int my;
-    int mx;
-    int size;
+    unsigned char pal[12];
+    int nitems[4];
     int ptr;
+    int pos[4][2];
+    char path[0x20];
+    int bg[4];
     int oldmx;
-    int depth;
+    int oldmy;
+    int size;
+    int mx;
+    int my;
     int h;
-    int w;
+    int level;
+    int tree;
+    int item;
+    int sel[4];
     int slot2;
     int slot;
-    int tree;
-    int oldmy;
-    int item;
-    int level;
+    int depth;
+    int w;
     int i;
     int bits;
     int r;
