@@ -24,12 +24,14 @@ int j___close(int fh);  /* CRT close thunk */
 #define W(p, o) (*(unsigned short *)((char *)(p) + (o)))
 #define CMP(i, j) ((int (*)(int *, int *))leadersortfns[cat])(i, j)
 
-/* DRAFT under 10.0 GA: 84 differing, 19 bytes long. The goalie records are read in an inner loop that breaks
-   out for a skater (Watcom then lays the read loop out as the EXE: the goalie tail and qsort before the read).
-   The column switch ends in an empty default: case 10 then jumps to the end too, its PrintFmt2 tail merges into
-   case 7's, and Watcom moves the loop increment and the code after the loop up behind case 7, as in the EXE.
-   Left: the EXE's table starts at 0 (`cmp edi, 0Ah`, no `sub eax, 3`; explicit cases 0-2 move the frame slots);
-   kfh / pfh slots swapped; teamgp[team] held in a register; the header column CSE. */
+/* DRAFT under 10.0 GA: 45 differing, 16 bytes long; no goto. The key file is read by one top-tested
+   `while (read(...) == 0x34)` loop with the goalie part as an if block that ends in continue (Watcom lays it
+   out as the EXE: a jump to the read, the goalie tail and qsort before it), gs declared after gp (kfh / pfh
+   and the goalie teamgp register as in the EXE). The column switch ends in an empty default: case 10 then
+   jumps to the end too, its PrintFmt2 tail merges into case 7's, and Watcom moves the loop increment and the
+   code after the loop up behind case 7, as in the EXE. Left: the statsfromleague index temporaries of the two
+   MakePath calls in ebx (EXE eax), the shooting-percentage key (the EXE divides by j in memory), the jump
+   table starting at 3 (EXE 0) and the header column CSE. */
 /* LeadersScreen (25B24, PC only): the league leaders of category cat (0-7 skaters: points, goals, assists, power
    play goals, short-handed goals, penalty minutes, plus / minus, shooting percentage; 8-10 goalies: goals against
    average, wins, save percentage) for the stats screens' league (statsleague; season or league stats,
@@ -48,7 +50,6 @@ int LeadersScreen(int cat)
     unsigned char trec[0x4C];
     unsigned char txt[0x40];
     unsigned short *sp;
-    GStat gs;
     int i;
     SStat ss;
     char path[0x20];
@@ -60,6 +61,7 @@ int LeadersScreen(int cat)
     PRec key;
     int recsz;
     int gp;
+    GStat gs;
     int kfh;
     int kf;
     int mf;
@@ -87,11 +89,9 @@ int LeadersScreen(int cat)
     kfh = open(path, 0x200);
     MakePath(path, (char *)&statsleague, (char *)statsplayerdbs[statsfromleague], 0);
     pfh = open(path, 0x200);
-    for (;;) {
-        for (;;) {
-            if (read(kfh, &key, 0x34) != 0x34) goto done;
-            if (key.c[0] >= 0x1A) continue;
-            if (key.c[2] != 'G') break;
+    while (read(kfh, &key, 0x34) == 0x34) {
+        if (key.c[0] >= 0x1A) continue;
+        if (key.c[2] == 'G') {
             if (cat < 8) continue;
             lseek(pfh, !statsfromleague ? *(int *)(key.c + 0x28) : *(int *)(key.c + 0x2C), 0);
             read(pfh, &gs, 0x36);
@@ -114,6 +114,7 @@ int LeadersScreen(int cat)
                 ((GStat *)statsgoaliebuf)[j] = gs;
             }
             qsort(order, n, 4, (int (*)(const void *, const void *))leadersortfns[cat]);
+            continue;
         }
         if (cat >= 8) continue;
         lseek(pfh, !statsfromleague ? *(int *)(key.c + 0x28) : *(int *)(key.c + 0x2C), 0);
@@ -143,7 +144,6 @@ int LeadersScreen(int cat)
         }
         qsort(order, n, 4, (int (*)(const void *, const void *))leadersortfns[cat]);
     }
-done:
     j___close(kfh);
     j___close(pfh);
     mf = mainfont;
