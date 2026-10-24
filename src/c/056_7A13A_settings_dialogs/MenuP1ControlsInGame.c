@@ -209,11 +209,11 @@ void CtlSwapTeamFlag(int team)
     }
 }
 
-/* DRAFT (10.0 GA, 9 first_pick differences): px without a cast and the player compare written
-   `(side ? c1playernum[0] : c2playernum[0]) != pl` give the EXE's px sum and slots. Left: n as signed char
-   (`mov bl, 6` / `dec bl`; the EXE's `mov ebx, 6` / `dec bx` is a short n, which moves other registers: the
-   spilled locals' slots and the temporaries' registers follow an unstable sort over all of the function's
-   temporaries), the puckvy pointer in ecx (EXE eax) and pl in si (EXE cx). See docs/UNSURE.md. */
+/* DRAFT (10.0 GA, 9 differing, same size): n is a short (`mov ebx, 6` / `dec bx`), py is summed as px is
+   (`(*puckvy >> 8) + *pucky`), the player compare reads `pl != (side ? ... : ...)`, pl is declared before n
+   and *puckc is compared without a cast: every register is the EXE's. Left: best and px swap stack slots (EXE
+   best [esp+8], px [esp+4]); slotdump --count gives the EXE's slots with px at a count of 14, 15 or 21 (11
+   here: one more use in the loop). See docs/UNSURE.md. */
 /* ReassignCtlPlayer: after the controls changed, give controller
  side the player of its team nearest the puck's next position (puck + velocity 256): skaters on the ice
  (position >= 0, not pflags2 bit 2 or pflags bit 20h), the puck carrier counting as nearest, not the player the
@@ -227,11 +227,11 @@ void ReassignCtlPlayer(int side)
     short best;
     short px;
     struct Player *p;
-    signed char n;
+    short pl;
+    short n;
     int dx;
     int d;
     int bestd;
-    short pl;
 
     if (side) {
         team = &cont2team;
@@ -247,7 +247,7 @@ void ReassignCtlPlayer(int side)
         if (*team == 1 && *pnum >= 0 && *pnum <= 5) return;
         if (*team == 2 && *pnum >= 6 && *pnum <= 11) return;
         px = (*puckvx >> 8) + *puckx;
-        py = *pucky + (*puckvy >> 8);
+        py = (*puckvy >> 8) + *pucky;
         bestd = 0x10000000;
         if (*team == 1) p = SortCords;
         else p = SortCords + 6;
@@ -257,10 +257,10 @@ void ReassignCtlPlayer(int side)
                 dx = px - HIWORD(p->Xpos);
                 d = py - HIWORD(p->Ypos);
                 d = dx * dx + d * d;
-                if ((short)*puckc == p->SCnum) d = -1;
+                if (*puckc == p->SCnum) d = -1;
                 if (d <= bestd) {
                     pl = p->SCnum;
-                    if ((side ? c1playernum[0] : c2playernum[0]) != pl) {
+                    if (pl != (side ? c1playernum[0] : c2playernum[0])) {
                         bestd = d;
                         best = pl;
                     }
