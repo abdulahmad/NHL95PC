@@ -1402,6 +1402,10 @@ pop ecx	; 4945D
 pop ebx	; 4945E
 ret	; 4945F
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/ass_pc_slot20.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/ass_pc_slot20.inc"
+%else
 ass_pc_slot20:
 push dword 14h	; 49460
 call __CHK	; 49465
@@ -1516,6 +1520,7 @@ pop edx	; 495B4
 pop ecx	; 495B5
 pop ebx	; 495B6
 ret	; 495B7
+%endif ; C
 ; assthreestars: asstab 15h. Announces star temp1: "%s Star" with 1st/2nd/3rd, the player's name, "EA Sports".
 assthreestars:
 push dword 2Ch	; 495B8
