@@ -2801,3 +2801,24 @@ RunPlayerPickMenu,,"(2026-10-24, lane 1a batch 6): allocation size through dead 
 RunPlayerPickMenu,,scoped short *sprite for size only (158),158,ga
 RunPlayerPickMenu,,"named width/height fields in packed 17-byte MenuHdr17 for sprite reads (158). Every change in this file rechecked RunMenu, RunPlayerPickMenu, RunTeamPickMenu",,ga
 RunPlayerPickMenu,,other functions unchanged. No changes retained,,ga
+TeamRosterScreen,,"(2026-10-24, lane 1a batch 7, counts by slotdump): the skater copy as `memcpy((SStat *)statsskaterbuf + n, sstat, sizeof(SStat))` or `memcpy(statsskaterbuf + n * 0x2F, ...)` (63, m / n slots swap), `*((SStat *)statsskaterbuf + n) = ...` (63), `if (... == -1) continue;` (63), `*(statsskaterorder + n) = n` (63), `statsskaterorder[n] = n; statsskaterplr[n++] = i;` (23 differing, same code, 63)","23 differing, same code, 63",ga
+TeamRosterScreen,,"the copy last with `[n++]` (84, +2)","84, +2",ga
+TeamRosterScreen,,"the dead y as the copy index (`y = n;` before the copy, or `statsskaterorder[n] = y = n`: n 73 / 63, two use-count sorts), `(unsigned)` on the order value",,ga
+TeamRosterScreen,,"the increment or the order / plr arrays (63), `unsigned n` (63)",63,ga
+TeamRosterScreen,,"the display loop header as `for (y = 0x40, i = 0; ...; i++, y += 0xD)` (63)",63,ga
+TeamRosterScreen,,"the count stores swapped (63). Only shapes that change the code reach 53 (`n = statsskaterorder[n] + 1`, tried before)","`n = statsskaterorder[n] + 1`, tried before",ga
+TeamRosterScreen,type:n:unsigned,`unsigned n`,tried (docs/UNSURE.md),ga
+TitleScreen,,"makes it 21-38. Slot view of that two-argument version: no single count change (search over all names), no declaration order (3,000 random orders simulated), no added or removed single name (size 1 / 2 / 4) gives the EXE except a new name with count 22+ at use-count input positions 54 / 65 / 79 (between t106 / t103, t75 / t71, t28 / t25), or a new local declared first with count 21 plus stream / bank swapped (simulated only). Tried (2026-10-24, lane 1a batch 7) on the two-argument version: left / old or new declarations (21 / 38 / 11), `i = GetTicks() - t0` in the MVIf test as a statement or inside the condition (38), `key = -1` (11), frame in the case block (11)",11,ga
+TitleScreen,,"the nested `if (id == ...) { i = ...; if (i < due) ... }` (11), `chunk != 0` (11), permute.py once (321 candidates, nothing below 11). On the old one-argument version: the first or second wait loop as `== 0` (13)",13,ga
+TitleScreen,,a `for` wait loop (18),18,ga
+TitleScreen,,"the palette zero chained forward (17) or as memset (45), delay after the palette zero (15)",15,ga
+TitleScreen,,"the call result through i / bank / frame or in the if condition, `key = -1` (all unchanged: copy-propagated), probes of the call result as char * / unsigned / long / short / register / volatile / K&R (none gives the move). Next: the two-argument version plus a slot fix",,ga
+TreeSeriesWinner,,"(2026-10-24, lane 1a batch 7, slots by slotdump): locals declared i, home, away (i, home, away from -4h, t4 -10h), awins / hwins at function scope (they go first), i in the else block (it goes below the parameters), every local in the outer block (t4, same, round, s, then the locals), K&R definitions with the type lines in the orders round / same / s, s / round / same and same / s / round",,ga
+TreeSeriesWinner,,with and without the locals reversed (parameters unchanged: K&R does not move them),,ga
+PreGameScreen,,"(2026-10-24, lane 1a batch 7): only these simulations (scripts ~/tmp/u/np/1a_slotsearch.py, 1a_tempins.py)","scripts ~/tmp/u/np/1a_slotsearch.py, 1a_tempins.py",ga
+GameStatsScreen,,"(2026-10-24, lane 1a batch 7): the plain name row `PrintShadowText((cx = col + 0x49) - (fputchar(name) >> 1), 0x8A, name)` alone (112, +1)","112, +1",ga
+GameStatsScreen,,"with the label loop through m (109, +1)","109, +1",ga
+GameStatsScreen,,"with the completion percentage through x (93, +1)","93, +1",ga
+GameStatsScreen,,the label loop through m on the draft (45),45,ga
+ListDialog,,"(2026-10-24, lane 1a batch 7, on the best11 copy): the sprite header copy",,ga
+ListDialog,,"the [3] store or the first sub_91400 through bg2 instead of bg (11 each, counts unchanged)","11 each, counts unchanged",ga
