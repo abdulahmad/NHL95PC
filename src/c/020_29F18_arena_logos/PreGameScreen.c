@@ -1,8 +1,4 @@
 /* Arena logos: the pre-game scouting report. */
-/* DRAFT under 10.0 GA: 50 differing instructions, same size (3,255 bytes). The I/O frame matches, and the
-   last category's lines step y first (the EXE spills y + 9, the old y - 5); key and apal take the top frame
-   slots where the EXE has them at the bottom. The pointer product now loads width before height,
-   as in the EXE; its size argument still pushes 0x20 first. */
 #define PreGameScreen PreGameScreen_decl
 #define TonightsGameScreen TonightsGameScreen_decl
 #define sub_8F98F sub_8F98F_decl
@@ -34,20 +30,20 @@ void MusicChanReset2(void);
    4 when cancelled (or TonightsGameScreen returned 3), else 0. */
 int PreGameScreen(unsigned char home, unsigned char away)
 {
+    Button *buttons;
+    int btn;
     unsigned char recs[2][0x2E8];
     char state[0x40];
-    char path[0x20];
-    struct { int mx; int my; int fh; } io;
-    int key;
-    unsigned char *apal;
-    int mf;
-    int nb;
-    Button *buttons;
-    unsigned char *p0;
-    unsigned char *p1;
-    int ptrbg;
-    int done;
     unsigned char tm[2];
+    unsigned char *p1;
+    int mf;
+    int done;
+    int ptrbg;
+    unsigned char *apal;
+    int key;
+    unsigned char *p0;
+    int nb;
+    char path[0x20];
     unsigned char i;
     int err;
     unsigned char *pal;
@@ -55,7 +51,11 @@ int PreGameScreen(unsigned char home, unsigned char away)
     int bank;
     int art;
     int k;
-    int btn;
+    struct {
+        int mx;
+        int my;
+        int fh;
+    } io;
     int y;
     int lc;
     int rc;
@@ -64,8 +64,9 @@ int PreGameScreen(unsigned char home, unsigned char away)
     unsigned char *ev;
     int sel;
     int scr;
-    int oldmx;
     int oldmy;
+    int oldmx;
+    int pointer_size;
 
     io.fh = -1;
     PaOpenBank();
@@ -156,8 +157,8 @@ int PreGameScreen(unsigned char home, unsigned char away)
     }
     DrawBevelBox(0, 0x1AE, 0x26B, 0x1DF, 1);
     DrawButtons(buttons, nb);
-    ptrbg = sub_8CCA8((char *)str_Pointer4,
-                      (*(short *)(pointerspr + 4) + 1) * (*(short *)(pointerspr + 6) + 1) + 0x11, 0x20);
+    pointer_size = (*(short *)(pointerspr + 4) + 1) * (*(short *)(pointerspr + 6) + 1) + 0x11;
+    ptrbg = sub_8CCA8((char *)str_Pointer4, pointer_size, 0x20);
     *(ArtHdr17 *)ptrbg = *(ArtHdr17 *)pointerspr;
     *(short *)(ptrbg + 4) = *(short *)(pointerspr + 4) + 1;
     *(short *)(ptrbg + 6) = *(short *)(pointerspr + 6) + 1;

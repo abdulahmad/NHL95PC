@@ -3180,6 +3180,59 @@ doshot,,"on the r + r variant: `dx = randomd0(r + r) - r + dx`, `dx = dx + (rand
 doshot,,the f-in-division change (65). On the base: dividing by dist with no f (109),109,ga
 doshot,,"the lift, where the EXE converts passspeed (ebp) and dist (ecx) once for both terms: (unsigned) on both uses of dist and passspeed (59), on dist only (88), `(int)` casts (59-88), commuted constants (45), passspeed through f or e, dist through t or f, or both (64-114)",64-114,ga
 puckfaceoff2,,"the countdown as the else arm of the pflags test instead of after the early return (92, size +3)","92, size +3",ga
+SelectSavedFile,,"(2026-10-24, lane 1a batch 9): exceptional table as one-pointer struct records, integer byte-address sum, byte-array lvalue address, and in-place t *= sizeof(char*) only in exceptional arms (all 15,+4, fresh emulator). All still hoist the shared scale. No source change",,ga
+ResetGameVars,,"(2026-10-24, lane 1a batch 9): zero groups via just-stored penshotmode/shotontarget globals and CwdExciteLvl from shotontarget (26,+1), overlay/text zeros via just-stored bannermsg/textline5 (25), short zero for initial penalty/shot stores plus CwdExciteLvl from shotontarget (26,+1). Fresh emulator. Baseline unchanged",,ga
+TitleScreen,,"(2026-10-24, lane 1a batch 9): two-argument decoders plus declsearch --conflicts --write (37 -> 11, all slot differences)","37 -> 11, all slot differences",ga
+TitleScreen,,"remove left and declsearch --all (best model 12/13, confirmed 72",,ga
+TitleScreen,,no better),,ga
+TitleScreen,,"new natural mask-pixels pointer, fps intermediate, scoped bitmap copy and delay step on two-argument base (11 each)",11 each,ga
+TitleScreen,,int/long elapsed intermediate before MVIf timing test (34 each,,ga
+TitleScreen,,initial misplaced C89 declarations failed and were moved to function scope). Baseline restored. declsearch correctly reports some model mispredictions after conflicts change,,ga
+TitleScreen,,bmp's coalesced frame temporary remains outside its declared-local target set,,ga
+TreeSeriesWinner,,"(2026-10-24, lane 1a batch 9): declsearch --conflicts (all 6 orders, no improvement",,ga
+TreeSeriesWinner,,"47 per-block size sorts, model warns only first is chained)",,ga
+TreeSeriesWinner,,"register qualifier individually on away/i/home, all locals, all parameters, or both (35 each)",35 each,ga
+TreeSeriesWinner,,declarations initializing home then away (46),46,ga
+TreeSeriesWinner,,"with i first (42), and initializing home with away declared first (35)",35,ga
+TreeSeriesWinner,,"i/home/away in a natural state struct (48). All fresh -od emulator compiles, no changes retained",,ga
+SetupStatsSourceMenu,,"(2026-10-24, lane 1a batch 9): meaningful unchecked local assigned in each branch, unsigned/signed char (42), int (37 but 1047 bytes and mov eax,2 in every branch, less faithful to the byte loads)","37 but 1047 bytes and mov eax,2 in every branch, less faithful to the byte loads",ga
+SetupStatsSourceMenu,,"function-initialized unsigned/signed char (60,+33), int (63,+31). Fresh emulator plus real compile on int branch form",,ga
+SetupStatsSourceMenu,,baseline restored because score reduction hides worse constant-load structure,,ga
+GameLoop,,"(2026-10-24, lane 1a batch 9): raw ResetInputSampling result through dead n, dead i, or fresh ticks before frameaccum += value*6 (all 62)",all 62,ga
+GameLoop,,commuted product-plus-frameaccum (62),62,ga
+GameLoop,,n loaded then *=6 before sum (73). Fresh emulator. No improvement retained,,ga
+GameLoop,,shared HandleHotKey_ret still needs owner module,,ga
+DrawSprite,,"(2026-10-24, lane 1a batch 9): flip homing via dead x1/y1 (77,+1 each), r (70,+1), i (72,+6), unused parameter (69,+1)","69,+1",ga
+DrawSprite,,"mirror calculation using dead x directly (110,+14)","110,+14",ga
+DrawSprite,,"s.mode initialized before flip copy (68,+3). Fresh emulator. No change retained",,ga
+GameStatsScreen,,"(2026-10-24, lane 1a batch 9): plain name row plus col through m/x/bank, alone or also name product (86/115,112/109,113/110)","86/115,112/109,113/110",ga
+GameStatsScreen,,"dead col for width (106,+4)","106,+4",ga
+GameStatsScreen,,"module-only move (14,+0)","14,+0",ga
+GameStatsScreen,,"fresh width plus m for col (125, both single/staged half-width), or name product (11 retained / 34 staged)",11 retained / 34 staged,ga
+GameStatsScreen,,fresh width alone (40),40,ga
+GameStatsScreen,,"with percentage multiply/divide stages (28), minutes copy then divide (38), or both time loads through m before x (35). Slotdump confirms EXE slots on retained form. Both builds MATCH",,ga
+TeamStatsScreen,,"(2026-10-24, lane 1a batch 9): guarded product/numerator/quotient through dead x in both cases3/4 (218,+23 /220,+18 /231,+52)","218,+23 /220,+18 /231,+52",ga
+TeamStatsScreen,,"guarded fresh product scoped to each if (216,+1), switch (207,+1), loop (209,+1)","209,+1",ga
+TeamStatsScreen,,"ternary with product assignment scoped to switch (130,+3) or loop (126,+4)","126,+4",ga
+TeamStatsScreen,,"declsearch --conflicts on switch form (5 confirmed orders, best129,+9, all slots correct, division tail still duplicated)","5 confirmed orders, best129,+9, all slots correct, division tail still duplicated",ga
+TeamStatsScreen,,"explicit shared-divide label following EXE statement order using switch product/dead x/w/e (138,+16 /188,+29 /181,+19 /185,+19)","138,+16 /188,+29 /181,+19 /185,+19",ga
+TeamStatsScreen,,"column key pointers via dead p or new keyptr, pointer-add / integer-address forms (193,+10 /162,+3 /168,+33 /179,+4). All fresh emulator",,ga
+TeamStatsScreen,,no improvement retained,,ga
+LoadTeamRoster,,"(2026-10-24, lane 1a batch 9): stats byte pointer via dead p/fresh stats (107,+15 /127,+22)","107,+15 /127,+22",ga
+LoadTeamRoster,,"jersey stores via p (106,+9)","106,+9",ga
+LoadTeamRoster,,initial rating/all substitutions also altered invalid-ID path and were rejected for uninitialized p (187/188,,ga
+LoadTeamRoster,,"corrected valid-ID-only variant123,+56)",,ga
+LoadTeamRoster,,"flat stats struct51,-4 retained, 2-D records62,+1",,ga
+LoadTeamRoster,,"struct with explicit byte base87,+13, staged base114,+10, direct byte-address row62,+1, row byte base67,+1. Removing unused base stays51",,ga
+LoadTeamRoster,,retained source removes it. Both builds MATCH,,ga
+ListDialog,,"(2026-10-24, lane 1a batch 9), fresh emulator: best11 plain copy + declsearch --conflicts (no better, confirmed 15)","no better, confirmed 15",ga
+ListDialog,,bg/bg2/both as byte pointers (11),11,ga
+ListDialog,,bg2 copied after header/first draw/input clear (210/205/206),210/205/206,ga
+ListDialog,,"lh in three arithmetic stages (222,+11), multiplication then addition (27,+2)","27,+2",ga
+ListDialog,,bh copy then increment (15),15,ga
+ListDialog,,header manipulation through dead sz (18),18,ga
+ListDialog,,"bh computed before by and reused in by (20,+8). No improvement retained",,ga
+ListDialog,,original struct restored,,ga
 ExportTeamToFloppy,,"(2026-10-24, lane 1b batch 9): filename dot-position result through new unsigned end or dead team/full/check, first strcmp result through new diff or dead check. All six retain baseline code/diff",,ga
 CreateNewLeague,,"(2026-10-24, lane 1b batch 9): block-local deletion-name pointer, block-local state pointer, named unsigned DiskFreeBytes result, input-name/cancel test expressed with negated conjunction. All remain baseline",,ga
 SkateToSpot,,"(2026-10-24, lane 1b batch 9): chained stop combined with first adx through t, first ady through t, ary through t, final vtoa result through t before assigning d, block-local short turn for final facedir addition, and goal-line Y target through t. No retained change",,ga
