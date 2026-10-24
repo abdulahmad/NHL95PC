@@ -297,6 +297,7 @@ TitleScreen is in this file (score 3, size 2/2) and comes with it.
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) (divisor scheduling)
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ShowCredits 4->4 (2026-10-24, StaticEck2026, GA) the y argument as its own block-local statement (int ry, full or raw remainder), the + operands swapped, per-module sub_91370 prototypes (short / ushort / uchar / schar / unsigned / unprototyped), a cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r and more): best 4
 
 ### `src/c/033_40183_trades/TradePlayers.c`
 
@@ -332,10 +333,12 @@ SimPlayoffRound1 is in this file (score 9, slot 6/9) and comes with it.
 - DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) dl / ebx where the EXE has dh / ecx
 - DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) (register cycle)
 - DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawAwardsSummary 12->12 (2026-10-24, StaticEck2026, GA) the three-team test as a switch on the team byte (21-24, range test); cflags sweep (12 or worse)
 ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - ShowAwardScreens 31->31 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
 - ShowAwardScreens 31->19 (2026-10-24, Mhopkinsinc, GA) (`PickAwardWinners.c`): the title x step as a separate `x += 0x50;` statement fixes both title calls' argument evaluation order. Left: the goalie shots row
 - ShowAwardScreens 19->19 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
+- ShowAwardScreens 19->19 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r): best 19
 
 ### `src/c/026_3377C_rink_tiles/BlitTileMap.c`
 
@@ -349,12 +352,14 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
 - FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) (clamp reload)
 - FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- FadePalette 7->7 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -ol+ -or -oa -oi -oe -oc -om -3r -4r -on -ou -ei -zc): best 7, the clamp still compares ebx
 
 ### `src/c/017_21CDE_player_stats/SkaterStatsCard.c`
 
 - SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) (byte promotion)
 - SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SkaterStatsCard 7->7 (2026-10-24, StaticEck2026, GA) lookup inlined into the call gives the EXE's xor eax / mov al load but an imul product (17); v = (lookup + 5) * 5 without the byte rating (9: the address temporary loses a savings-30 tie and takes eax); new w at each declaration position, in-place v forms, index spellings; permute.py from the v form (321, best 9); cflags sweep
 
 ### `src/c/023_2FDD1_misc_dialogs/ListDialog.c`
 
@@ -383,12 +388,14 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) (block layout of the shared return)
+- SeriesLength 10->10 (2026-10-24, StaticEck2026, GA) structured draft (no goto): switch with ternary lengths, case 6/7 before 4/5 so Watcom cross-jumps the 3/5/7 tails as in the EXE; 162 case-order / return-placement variants (return after case 1, returns in every case: epilogue lands after case 1 but the constants fold); goto form with the return after case 1 (10); cflags sweep; permute.py (321, best 10)
 
 ### `src/c/030_3A9AA_database_merge/ExportTeamToFloppy.c`
 
 - ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ExportTeamToFloppy 11->11 (2026-10-24, StaticEck2026, GA) structured draft (no goto): one if (!err) block with the export and its error message as the then arm and the force-export message as the else arm, same code as the goto draft (the force arm first: 74)
 
 ### `src/c/016_20016_easn_stats/EasnGoalieStatsScreen.c`
 
@@ -402,6 +409,7 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) (the `xor bl, bl` byte zero is picked after register allocation, so no declaration order moves it)
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- CreateNewLeague 12->12 (2026-10-24, StaticEck2026, GA) structured draft (no goto): the name test guards the body as one if block, same code; cflags sweep (12 or worse); the same lgstate+4 zero is xor dh, dh in the matched DeleteSavedGame and xor ah, ah at 3D0C1 (a post-allocation cycle pick)
 
 ### `src/c/034_41B80_schedule/RandomizeSchedule.c`
 
@@ -415,6 +423,7 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
 - PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) (global-value reuse). These have now had a Claude and a Codex lane pass back to back; the shapes tried are in `docs/UNSURE.md`
 - PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- PlacePlayersAtStart 15->15 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r -on -ou -ei -zc and combinations): best 15, the regd4 / regd1 reloads stay folded
 
 ### `src/c/021_2B7B7_file_dialogs/SelectSavedFile.c`
 

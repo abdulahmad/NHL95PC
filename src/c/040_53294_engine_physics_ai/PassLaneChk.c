@@ -188,11 +188,12 @@ int PassLaneChk(Player *p, Player *o)
    he is snapped to the net edge for his facing (offset tables word_CCBEC, word_CCBFC, word_CCBCC, word_CCBDC;
    mirrored by the x-flip attribute bit 3), stopped, and the bump SPA for that side is returned (F0Fh, F55h,
    F9Bh / FE1h). p: the player; dir: his direction. Result: the new SPA, or his SPA when nothing changes.
-   DRAFT (10.0 GA): 41 score differing. The result is a short (FallDown compares ax), which returns the
+   DRAFT (10.0 GA): 27 score differing, same size. The result is a short (FallDown compares ax), which returns the
    constants in eax. The first x-flip comparison is materialized by a doubled comparison, as in the EXE (the
-   C_MATCHING materialized-bool pattern). A separate scaled y numerator improves allocation; dir and the net
-   centre still use different registers and slots (dir edi, dx ebp, gy spilled; EXE dir ebp, gy edi, dx
-   spilled). */
+   C_MATCHING materialized-bool pattern). The direction tests read dir + 2 & 7 / dir + 1 & 7 / dir - 1 without
+   storing them back (dir then ranks below gy: dir ebp, gy edi as in the EXE), and the first post block tests
+   the unflipped case first. Left: the two ABS temporaries of the side test (ecx / edx swapped), which of the
+   two `mov eax, 0FE1h` tails Watcom keeps, and the kept SPA read (EXE `mov eax, [esi+36h] / sar eax, 10h`). */
 short NetCollide(Player *p, int dir)
 {
     int gx;
@@ -215,8 +216,7 @@ short NetCollide(Player *p, int dir)
     uy = scaled_y / dist >> 2;
     if ((uy < 0 ? -uy : uy) >= (ux < 0 ? -ux : ux)) {
         if (gy >= 0) {
-            dir = dir + 2 & 7;
-            if (dir < 5) goto keep;
+            if ((dir + 2 & 7) < 5) goto keep;
             HIWORD(p->Xpos) = gx + ux;
             if (gx < 0 && ((p->attribute & 8) == 0) != 0) HIWORD(p->Xpos) += 6;
             if (gx > 0 && (p->attribute & 8)) HIWORD(p->Xpos) -= 6;
@@ -226,8 +226,7 @@ short NetCollide(Player *p, int dir)
             HIWORD(p->Ypos) += word_CCBEC[p->facedir] - 0x108;
             return 0xF0F;
         }
-        dir = dir + 1 & 7;
-        if (dir >= 3) goto keep;
+        if ((dir + 1 & 7) >= 3) goto keep;
         HIWORD(p->Xpos) = gx + ux;
         HIWORD(p->Ypos) = uy + gy;
         p->Xvel = 0;
@@ -244,11 +243,11 @@ short NetCollide(Player *p, int dir)
         p->Yvel = 0;
         if (p->attribute & 8) HIWORD(p->Xpos) -= word_CCBDC[8 - p->facedir & 7] + 0x9A;
         else HIWORD(p->Xpos) += word_CCBCC[p->facedir] - 0x9A;
-        if (p->attribute & 8) return 0xFE1;
-        return 0xF9B;
+        if (!(p->attribute & 8)) return 0xF9B;
+        return 0xFE1;
     }
     if (dir == 0) goto keep;
-    if (--dir >= 3) goto keep;
+    if (dir - 1 >= 3) goto keep;
     ux += 6;
     HIWORD(p->Xpos) = gx + ux;
     HIWORD(p->Ypos) = uy + gy + (gy > 0 ? -10 : 0);

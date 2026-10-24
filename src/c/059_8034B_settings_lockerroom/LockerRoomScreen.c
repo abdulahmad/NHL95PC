@@ -252,7 +252,9 @@ void DrawLockerRoom(void)
    Tie-breaker (ruled 2026-10-24, docs/ESCALATIONS.md): case 0 / 3's first step in league mode through the dead n gives the EXE bytes (a new
    int scores 23); not kept, dead-variable reuse that only reorders the tie.
    The home steps' second try is written with hm (hm == vis there, and Watcom uses vis's register for it); with vis, Watcom hoists (vis + 1Bh) % 1Ch and (vis + 19h) % 1Ah, which the visitor
-   steps share, above the jump table. See docs/UNSURE.md. */
+   steps share, above the jump table. Lane 2 2_b7: `hm++; hm %= 0x1A;` for that step also gives the EXE bytes, but only
+   with `(int)HomeTeam` / `(int)VisTeam` casts on the two controller ternaries (no-op casts, ESCALATE; 29 without
+   them, 25 as if / else). See docs/UNSURE.md. */
 int LockerRoomLoop(void)
 {
     char *p;
