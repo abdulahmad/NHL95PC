@@ -199,8 +199,11 @@ typedef struct CreditPage { signed char n; int time; char *bank; char *lines[1];
 /* DRAFT (TitleScreen): 1675 vs 1675, 2 differing under 10.0 GA. The palette brightening reads pal[i] in place
    (the EXE's 3Fh in dh and the sum in bl; a char copy c adds in place and stores 3Fh as an immediate), which
    also gives the EXE's frame size. The remaining wait goes through a local (left) and ends is declared first:
-   with that temporary in the list GA's stack-slot sort gives frame and bmp the EXE's slots. Left: the EXE copies
-   the chunk into edx right after sub_1B8AC (`mov edx, eax`, as PlayMVI). */
+   with that temporary in the list GA's stack-slot sort gives frame and bmp the EXE's slots. Left: the EXE's
+   `mov edx, eax` right after sub_1B8AC (as PlayMVI). It is the chunk argument: sub_1B002 and sub_1AD16 take the
+   chunk as a second parameter in edx (`mov esi, edx` / `lea esi, [edx+0Ah]` at their entries; edx survives
+   ReadBE32). `sub_1B002(dec, chunk)` / `sub_1AD16(dec, chunk)` reproduce the move exactly, but then frame and bmp
+   swap slots again (10 differing) and left no longer helps: that version still needs its slot fix. */
 /* TitleScreen (1609F, PC only; ends in RunDemoGame_x): the title screen. Load EASCRN (from the CD when listed):
    its palette brightened (+5, at most 3Fh), the SCRN2 screen and the MSK1 mask (copied into a MASK block of 200 x
    200). Start the title song (music on and none playing) or load the title sample (MT-32 or AdLib), then play
