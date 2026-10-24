@@ -6,9 +6,11 @@
 
 void DrawDlgFrame(int x, int y, int w, int h, int edge);
 
-/* DRAFT: 734 vs 735, art in ebp. The EXE keeps teams in edi from the entry (t in ecx) and leaves bank on
- the stack (sub esp, 38h, cookie 0x60); here t takes edi, teams is read from the stack and bank takes a
- register (sub esp, 34h). See docs/UNSURE.md. */
+/* DRAFT: 734 vs 735, 12 differing (2 of them two-fixup false positives). teams goes through the local tm, so
+ tm[t] and traderemap1[t] fold into scaled addresses (tm in edi, t in ecx, bank on the stack, as in the EXE),
+ and the roster rows are written inline (side * 0x268 + i * 22), so the EXE's per-pass imul is recomputed after
+ the highlight call. Left: c1 / c2 tie (savings 20 each): c2 takes al and c1 ah, the EXE the other way round
+ (`mov ah, [byte_D12DE]` is one byte longer than our `mov al, [moffs]`). See docs/UNSURE.md. */
 void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
                      unsigned char *cols, int *teams)
 {
@@ -21,13 +23,13 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
     int i;
     int side;
     int t;
-    int k;
-    int base;
     unsigned char c1;
     unsigned char c2;
+    int *tm;
 
     (void)unused;
     (void)unused2;
+    tm = teams;
     SetDrawBitmap(dword_DE264);
     MakePath(path1, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)str_Embnhl2, 0);
     bank = sub_8E83C(path1, 0);
@@ -45,13 +47,13 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
     statspalshape = shape;
     memcpy(pal, (unsigned char *)shape + 0x10, 0x300);
     FreeMemBlock(statsbgshapes);
-    LoadTradeTeamPals(teams[0], teams[1], pal);
+    LoadTradeTeamPals(tm[0], tm[1], pal);
     traderemap1[0] = (int)byte_DC9D8;
     traderemap2 = (int)byte_DC8D8;
     for (i = 0; i < 4; i++) {
         t = i >> 1;
         memcpy(unk_D12C8, (unsigned char *)traderemap1[t] + 0x90, 0x30);
-        c1 = jerseyremap[byte_D11BC[teams[t] * 4]];
+        c1 = jerseyremap[byte_D11BC[tm[t] * 4]];
         c2 = byte_D12DE;
         MakeJerseyShape(jerseyremap, cols[i * 22 + 1], c1, c2);
         sub_B4DD4(jerseyremap);
@@ -59,19 +61,15 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
     }
     for (side = 0; side < 2; side++) {
         for (i = 0; i < 0x1C; i++) {
-            base = side * 0x268;
-            k = (((i << 2) - i) << 2) - i;
-            if (traderoster[base + k * 2] == 0)
+            if (traderoster[side * 0x268 + i * 22] == 0)
                 break;
             if (i == tradecursor[side])
                 sub_8E9C0(0x42, 0x41);
             else
                 sub_8E9C0(0x40, 0x41);
-            k = (((i << 2) - i) << 2) - i;
-            k += k;
             sub_93170((((side << 3) - side) << 6) + 5, byte_D42C3 * i + 0x1D, (char *)str_C2dS,
-                      traderoster[base + k], tradejersey[base + k],
-                      (char *)traderoster + base + k + 3);
+                      traderoster[side * 0x268 + i * 22], tradejersey[side * 0x268 + i * 22],
+                      (char *)traderoster + side * 0x268 + i * 22 + 3);
         }
     }
     sub_B4BA8();
