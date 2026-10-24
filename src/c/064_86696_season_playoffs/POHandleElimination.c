@@ -1,6 +1,7 @@
 /* Season playoffs: simulating the playoffs after an elimination. */
 /* DRAFT: same size, all but one call (the round branch's RestoreDialogBg is cross-jumped into the other branch's);
-   see docs/UNSURE.md. Its match belongs in POCreateSchedule.c, whose POCreateSchedule_x tail it uses (tested there:
+   see docs/UNSURE.md. No goto: the simulate path is nested under the first MessageBox (the same code as the old
+   `goto save`). Its match belongs in POCreateSchedule.c, whose POCreateSchedule_x tail it uses (tested there:
    the same single difference). */
 #define POSeedConfFinals POSeedConfFinals_decl
 #define POSeedFinal POSeedFinal_decl
@@ -69,64 +70,64 @@ void POHandleElimination(int mode, unsigned char *po)
     keydb_size = sub_92DE0(s.path);
     if (mode == 1) {
         FadePalStep(0, s.pal, 0x10);
-        if (MessageBox(-1, -1, (char *)msg_POHumanOut, 4, (int)btn_POHumanOut, 2, (int)&s.x, (int)&s.y, -1) == 0)
-            goto save;
-        MessageBox(-1, -1, (char *)msg_POGenFinal, mode, 0, 0, (int)&s.x, (int)&s.y, 0);
-        switch (*(unsigned *)(po + 0x44)) {
-        case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
-            *(int *)(po + 0x70) = *(int *)(po + 0x74) = *(int *)(po + 0x78) = *(int *)(po + 0x7C) = gameopts.optbits12;
+        if (MessageBox(-1, -1, (char *)msg_POHumanOut, 4, (int)btn_POHumanOut, 2, (int)&s.x, (int)&s.y, -1) != 0) {
+            MessageBox(-1, -1, (char *)msg_POGenFinal, mode, 0, 0, (int)&s.x, (int)&s.y, 0);
+            switch (*(unsigned *)(po + 0x44)) {
+            case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+                *(int *)(po + 0x70) = *(int *)(po + 0x74) = *(int *)(po + 0x78) = *(int *)(po + 0x7C) = gameopts.optbits12;
+                ser = po + 0x1AE8;
+                for (i = 8; i < 0xC; i++, ser += 0x2A) {
+                    POSimSeries(ser, gameopts.optbits12);
+                    g = 0;
+                    for (; g < 7 && ser[g * 6 + 4] != 0xFF; g++);
+                    k = (gameopts.optbits12 >> 1) + 1;
+                    g -= k;
+                    for (; k < 4; k++) {
+                        p = ser + (g + k) * 6;
+                        p[0] = p[1] = p[2] = p[3] = p[4] = p[5] = 0xFF;
+                    }
+                }
+                POSeedConfFinals(po);
+            case 8: case 9: case 10: case 11:
+                *(int *)(po + 0x80) = *(int *)(po + 0x84) = gameopts.optbits12;
+                ser = po + 0x1B90;
+                for (i = 0xC; i < 0xE; i++, ser += 0x2A) {
+                    POSimSeries(ser, gameopts.optbits12);
+                    g = 0;
+                    for (; g < 7 && ser[g * 6 + 4] != 0xFF; g++);
+                    k = (gameopts.optbits12 >> 1) + 1;
+                    g -= k;
+                    for (; k < 4; k++) {
+                        p = ser + (g + k) * 6;
+                        p[0] = p[1] = p[2] = p[3] = p[4] = p[5] = 0xFF;
+                    }
+                }
+                POSeedFinal(po);
+            case 12: case 13:
+                *(int *)(po + 0x88) = gameopts.optbits12;
+                ser = po + 0x1BE4;
+                POSimSeries(ser, gameopts.optbits12);
+                g = 0;
+                for (; g < 7 && ser[g * 6 + 4] != 0xFF; g++);
+                k = (gameopts.optbits12 >> 1) + 1;
+                g -= k;
+                for (; k < 4; k++) {
+                    p = ser + (g + k) * 6;
+                    p[0] = p[1] = p[2] = p[3] = p[4] = p[5] = 0xFF;
+                }
+            }
             ser = po + 0x1AE8;
-            for (i = 8; i < 0xC; i++, ser += 0x2A) {
-                POSimSeries(ser, gameopts.optbits12);
-                g = 0;
-                for (; g < 7 && ser[g * 6 + 4] != 0xFF; g++);
-                k = (gameopts.optbits12 >> 1) + 1;
-                g -= k;
-                for (; k < 4; k++) {
-                    p = ser + (g + k) * 6;
-                    p[0] = p[1] = p[2] = p[3] = p[4] = p[5] = 0xFF;
-                }
+            for (i = 0x10; i < 0x1E; i += 2, ser += 0x2A) {
+                playofftree[i] = ser[2];
+                playofftree_p1[i] = ser[3];
+                if (playofftree[i] == 0xFF) playofftree[i] = 0x1A;
+                if (playofftree_p1[i] == 0xFF) playofftree_p1[i] = 0x1A;
             }
-            POSeedConfFinals(po);
-        case 8: case 9: case 10: case 11:
-            *(int *)(po + 0x80) = *(int *)(po + 0x84) = gameopts.optbits12;
-            ser = po + 0x1B90;
-            for (i = 0xC; i < 0xE; i++, ser += 0x2A) {
-                POSimSeries(ser, gameopts.optbits12);
-                g = 0;
-                for (; g < 7 && ser[g * 6 + 4] != 0xFF; g++);
-                k = (gameopts.optbits12 >> 1) + 1;
-                g -= k;
-                for (; k < 4; k++) {
-                    p = ser + (g + k) * 6;
-                    p[0] = p[1] = p[2] = p[3] = p[4] = p[5] = 0xFF;
-                }
-            }
-            POSeedFinal(po);
-        case 12: case 13:
-            *(int *)(po + 0x88) = gameopts.optbits12;
             ser = po + 0x1BE4;
-            POSimSeries(ser, gameopts.optbits12);
-            g = 0;
-            for (; g < 7 && ser[g * 6 + 4] != 0xFF; g++);
-            k = (gameopts.optbits12 >> 1) + 1;
-            g -= k;
-            for (; k < 4; k++) {
-                p = ser + (g + k) * 6;
-                p[0] = p[1] = p[2] = p[3] = p[4] = p[5] = 0xFF;
-            }
+            pochampion = SeriesWinner(ser, *(int *)(po + 0x88));
+            if (pochampion == -1) pochampion = 0x1A;
+            RestoreDialogBg();
         }
-        ser = po + 0x1AE8;
-        for (i = 0x10; i < 0x1E; i += 2, ser += 0x2A) {
-            playofftree[i] = ser[2];
-            playofftree_p1[i] = ser[3];
-            if (playofftree[i] == 0xFF) playofftree[i] = 0x1A;
-            if (playofftree_p1[i] == 0xFF) playofftree_p1[i] = 0x1A;
-        }
-        ser = po + 0x1BE4;
-        pochampion = SeriesWinner(ser, *(int *)(po + 0x88));
-        if (pochampion == -1) pochampion = 0x1A;
-        RestoreDialogBg();
     } else {
         SetTickDeadline(1000);
         FadePalStep(0, s.pal, 0x10);
@@ -134,7 +135,6 @@ void POHandleElimination(int mode, unsigned char *po)
         WaitTickDeadline();
         RestoreDialogBg();
     }
-save:
     FadePalStep(1, s.pal, 0x10);
     MakePath(s.path, (char *)&curleague, (char *)leaguedbnames[5], (char *)str_extDB);
     sub_932D0(s.path, seasondb, seasondb_size);
