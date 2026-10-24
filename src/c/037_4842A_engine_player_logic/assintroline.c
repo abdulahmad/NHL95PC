@@ -1,7 +1,4 @@
 /* Engine player logic: intro line skate. */
-/* DRAFT (10.0 GA): 683 vs 687, 5 score differing. The countdown updates temp1 directly and the turn
-   is stored straight to facedir. Left: the EXE copies dx to ecx and dy to eax before squaring, then
-   adds eax,ecx; this draft squares in edx/eax and adds eax,edx. */
 #define assintroline assintroline_decl
 #include "nhl95.h"
 #undef assintroline
@@ -13,13 +10,12 @@ void assintroline(Player *p);
  Otherwise temp5 counts down; while it is still positive the player sometimes shifts and
  plays SPA 0DABh or 0DC3h. At zero, flag bit 1 sets the spot (temp3 -15), SPA 0A5Bh and
  the crowd. Close and slow: step temp1, turn toward the spot, then SPA 0C57h. Far: skateto
- above 90h, else SkateToSpot. */
+ above 90h, else SkateToSpot. dy, dead after the squared distance, holds the X and Y speeds. */
 void assintroline(Player *p)
 {
     int i;
     int dx;
     int dy;
-    int v;
     short z;
 
     if (p->pflags & 0x20) return;
@@ -64,18 +60,18 @@ void assintroline(Player *p)
     }
     dx = HIWORD(p->Xpos) - p->temp3;
     dy = HIWORD(p->Ypos) - p->temp4;
-    i = dy * dy + dx * dx;
+    i = dx * dx + dy * dy;
     if (i < 0x40) {
         if (p->Xvel < 0)
-            v = -(*(int *)((char *)&p->Xvel - 2) >> 16);
+            dy = -(*(int *)((char *)&p->Xvel - 2) >> 16);
         else
-            v = *(int *)((char *)&p->Xvel - 2) >> 16;
-        if (v < 0x10) {
+            dy = *(int *)((char *)&p->Xvel - 2) >> 16;
+        if (dy < 0x10) {
             if (p->Yvel < 0)
-                v = -(*(int *)((char *)&p->Yvel - 2) >> 16);
+                dy = -(*(int *)((char *)&p->Yvel - 2) >> 16);
             else
-                v = *(int *)((char *)&p->Yvel - 2) >> 16;
-            if (v < 0x10) {
+                dy = *(int *)((char *)&p->Yvel - 2) >> 16;
+            if (dy < 0x10) {
                 HIWORD(p->Xpos) = p->temp3;
                 HIWORD(p->Ypos) = p->temp4;
                 --p->temp1;
