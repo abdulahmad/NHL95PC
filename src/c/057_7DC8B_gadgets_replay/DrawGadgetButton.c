@@ -231,10 +231,11 @@ void ReplaySaveHilight(int unused, int x, int y);
    A click on the rink picks the nearest player (PickNearestPlayer) or a free spot for the camera, moving the
    pointer to it (MouseSetPos). Then, when the pointer or the buttons changed, redraw the panel (gadgetshape, the
    lit buttons, the pointer). *step: the replay speed, set to the frames to move. Result: 1, 0 to quit. */
-/* DRAFT (10.0 GA, 10 differing here, same size): the free-spot branch writes dword_ED6EC = -1 as a constant
-   (the EXE still stores the eax it knows holds -1, and the constant takes the register slot that puts the pointer
-   clamps in edi / ecx). Left: the step-forward else clears dword_ED6E8 through eax (EXE edi, d's register) and
-   the camera button -1 chain goes through edx (EXE eax); see docs/UNSURE.md. */
+/* Matched under 10.0 GA here (after DrawGadgetButton, whose exit it ends in): the free-spot branch writes
+   dword_ED6EC = -1 as a constant (the EXE still stores the eax it knows holds -1, and the constant takes the
+   register slot that puts the pointer clamps in edi / ecx), and the camera button clears dword_ED70C and d in two
+   statements (found by tools/permute.py; the chained `dword_ED70C = d = 0` put the step-forward zero in eax and
+   the -1 chain in edx). */
 int ReplayControlLoop(int *step)
 {
     int hit;
@@ -326,7 +327,8 @@ int ReplayControlLoop(int *step)
         break;
     case 0x40:
         dword_ED754 |= 0x40;
-        dword_ED70C = d = 0;
+        dword_ED70C = 0;
+        d = 0;
         dword_ED6EC = dword_ED74C = -1;
         word_CD4FC = -1;
         break;
