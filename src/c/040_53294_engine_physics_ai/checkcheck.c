@@ -64,14 +64,15 @@ void checkcheck(Player *p, Player *q, short force)
                     if (q->SCnum != 0x10 && checkagr(p) <= 4 && !(gmode & 0x10)) AddPenalty(p, (randomd0(2) != 0) + 0xB);
                 } else {
                     if (q->SCnum == 0x10) {
-                        if (!(p->pflags & 8)) goto next;
-                        if (++word_CBEC2 >= 3) {
-                            word_CBEC2 = 0;
-                            AddPenalty(p, 0x16);
+                        if (p->pflags & 8) {
+                            if (++word_CBEC2 >= 3) {
+                                word_CBEC2 = 0;
+                                AddPenalty(p, 0x16);
+                            }
+                            FallDown(p, q);
                         }
-                        FallDown(p, q);
-                        goto next;
-                    } else if (!(gmode & 0x10)) {
+                    } else {
+                        if (!(gmode & 0x10)) {
                         if (QuickShotChk(q)) {
                             if (penshotplayer < 0) {
                                 penshotplayer = q->SCnum;
@@ -88,12 +89,12 @@ void checkcheck(Player *p, Player *q, short force)
                             else if (q->impact > 0x23 && randomd0(4) == 0) AddPenalty(p, 0x19);
                             else AddPenalty(p, randomd0(10) > 6 ? 0x15 : 0xD);
                         }
+                        }
+                        FallDown(p, q);
                     }
-                    FallDown(p, q);
                 }
             }
         }
-next:
         t = q;
         q = p;
         p = t;
