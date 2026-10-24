@@ -387806,6 +387806,1161 @@ date,func,file,transform,sha1,score,sizediff,match,first,cc
 2026-10-24,DrawListItem,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,paramtype:6:unsigned_char > swap:5:3 > opassign:5:0:split > swap:5:5 > opassign:16:0:split > cast:10:2:short,2c8d1290eed92926,13,0,0,79,ga
 2026-10-24,DrawListItem,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,paramtype:6:unsigned_char > swap:5:3 > opassign:5:0:split > swap:5:5 > opassign:16:0:split > paramtype:8:unsigned_short,844afb5d6a110244,11,0,0,53,ga
 2026-10-24,DrawListItem,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,paramtype:6:unsigned_char > swap:5:3 > opassign:5:0:split > swap:5:5 > opassign:16:0:split > cast:8:4:unsigned_short,f1f8baa63914ca5a,26,0,0,20,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,base,12ecb18a9868ac05,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:fh:char,ebcf17c6e9b2ec3a,84,8,0,95,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cmpflip:115,1ece4a193c2b5f41,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swap:31:0,24910c136032612c,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:i:s,b84804bea388a60c,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,zero:137:not,9c646a82c67f2172,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,reuse:y:kf,af4954c04e85a8f1,81,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,tempadd:51:+,707e92f19d95822f,42,2,0,201,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,opassign:110:1:split,1c7add5e4c022dce,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,incdec:30:forpre,128d1ee2554dad64,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:141:while,07eafa1eec2a22bc,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,rettype:unsigned_char,c5a97bb52fc7b3ee,24,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:gs:1,dd23173599c8d72a,71,1,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,split:y:2:after,1534b0cb79f1bb0a,100,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,ifswap:77,b1c8ae2d47e8f702,30,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,paramtype:0:unsigned_short,9a68b3da8c48c40c,94,10,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,forchain:43:split,243ac8083b0451af,60,2,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:45:+,815006c6729ec43c,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,lvinline:mf,ac848014f07a607b,89,15,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:111:4:char,7e1639c5574185cb,140,20,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:38,12acc2bbd314af95,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:mf:unsigned,653d5cacfc6c67d7,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cmpflip:159,94d3edd213e44466,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swap:116:4,72a9e98d450095b9,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:gs:idx,9ac2bea9d5aea706,34,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,zero:156:not,5d947078b0a1e6cc,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,reuse:y:kfh,5996253a4955add6,76,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,tempadd:51:rhs,707e92f19d95822f,42,2,0,201,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,opassign:141:1:split,b4a727bc536c7e27,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,incdec:40:pre,ccd504723b9b1fbf,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:30:gotobot,f59f0ac482b1a9a6,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,rettype:unsigned_short,7d32ee7f1a192f4b,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:s:5,3e53609f33a7d897,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,split:idx:1:last,a1c2695ff8722a50,93,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,paramtype:0:short,1c5b3a7285026348,94,12,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,forchain:30:split,dccc9531c13a6368,62,9,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:63:==,175da6119d5cdb89,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,lvinline:kf,f29e2ee07e909223,89,13,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:32:7:unsigned_char,a023c1969ac93602,75,6,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:46,3ea7a1e681ce4bcf,53,1,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:i:unsigned,137b41dd4d923b09,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cmpflip:146,aa27aa5784a407b2,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swap:44:0,e8889ce346d81a7a,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:kfh:pfh,db5f4268f0a89282,37,0,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,zero:77:ne0,f9e2c1902bb781a9,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,reuse:idx:pfh,a1f2170ccbf69eb8,69,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,tempadd:24:*,39329b6c901f0a68,27,0,0,40,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,opassign:141:4:split,753b5ec6f53c39f5,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,incdec:53:pre,bdf89d89511d4a92,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:110:ifdo,cb0b8c98972f500c,51,9,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,rettype:char,aae89a879884a266,24,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:kfh:17,8cc92f60cea1e8ee,63,1,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,split:y:1:last,84f3d8b2b2e17903,102,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,paramtype:0:signed_char,6059e2a6dd36dda4,165,23,0,16,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:35:+,fbbff0bc7db52b82,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:58:2:unsigned_char,026648e27479f676,53,3,0,40,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:21,7fe1a8aaf4ab3050,27,0,0,35,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:m:unsigned_char,9285a3995f3461ed,105,4,0,40,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swap:147:8,09682fe179ba2a7d,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:m:i,49cfe374e7ad8f7a,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,reuse:idx:mf,9119f607526bb66d,59,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,tempadd:89:+,7036c00ad58c7ad5,23,0,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,incdec:53:op1,cb93f225cbeb7ea6,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:43:while,b2647dea7fa75020,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,rettype:short,04819428af95d5c7,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:85:==,904f2e5a164f8ed6,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,reuse:idx:fh,46695c750ac2dbde,58,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:rec:state,67321a86050bf2d5,34,0,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:121:3:char,71c88e2d3dea2b12,58,5,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swap:116:8,56774fab962411e6,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,paramtype:0:unsigned_char,c85b135bcb7d444d,165,21,0,16,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,split:y:2:last,f3fecaa0343859db,110,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:141:gototop,f217ea1dbfb5bc73,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:50,2557c6c7adf30fee,31,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,incdec:43:forpre,88d2e638f431b61d,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:kfh:2,77bd09a75b2e3d45,52,0,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:fh:unsigned,c1b0a89c2aa9df7f,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:82:!=,30b68b397f940ba9,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,reuse:y:fh,9b8d56f6dafc5b5f,76,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:pfh:n,18eb3049c38db1ed,45,0,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:89:12:unsigned_short,aa37d387d6f33dcc,65,7,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swap:147:4,6efb20c2869ceb60,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,paramtype:0:char,28e3e71d9103ad1d,165,21,0,16,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,split:y:1:after,ac9270dd2c643db7,100,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:110:while,27f2b019708dd80e,26,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:20,d27ee38b3f2a9fe2,27,0,0,23,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,incdec:40:op1,d29565006107e2bc,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:kfh:5,0cceb2959310e3dd,35,0,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:y:unsigned,a86854ac1be3121d,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:83:+,8052c3a375276f2e,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,reuse:idx:kf,c90934faabc96bfc,60,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:sstat:path,a18d20f8083edf2f,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:89:3:int,8f8f3f1fdf0c9d09,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swap:70:4,f429abb74ab5e98e,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,paramtype:0:unsigned,e2d104a6f83d9c09,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,split:idx:1:after,c97df95753b8bca5,95,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:43:ifdo,1585fff2183214c0,60,2,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:98,31eec54fa46604f6,25,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:n:6,b084c89060bb9214,38,0,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:m:char,14e120885e9b5b4c,105,4,0,40,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:48:+,64c80e854bd1b772,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,reuse:y:pfh,dfef1132cb4959b6,64,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:mf:gs,83adc108007640b8,45,1,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:85:3:unsigned_short,e502fc34ced26b1d,80,2,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swap:89:3,0893fdf026b18e79,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:30:ifdo,7e7049a7d0178445,62,9,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:165,fae2a9505184aee9,26,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:pfh:16,f445b87ab09d4b3b,49,1,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:m:unsigned,0b52e4c254ee379f,24,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:51:+,6bb12cbe7c2f13d5,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,reuse:idx:kfh,31577ecb3d93940c,81,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:gstat:prec,0f97040327a0975e,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:84:4:char,f3f1a3add6e150be,77,4,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:43:gototop,55f1dfd2155465e8,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:80,9932c8c7feaf8fc2,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:fh:10,2e827c860b1c3aee,38,1,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:idx:char,0d2b93275ec51054,122,53,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:35:+,bd4d6c7f3f9a3a8c,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:prec:y,7902fcd49d8cfbde,46,0,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:65:4:unsigned_short,d85bb9d000980a6e,65,9,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:30:do,abb1c28cdfbd6f1f,62,9,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:33,2beb4059bc24c0c5,38,1,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:i:14,19ef1ae716a29038,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:n:short,a36b6ca5f5eff70a,178,27,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:85:==,f4f2316025005df3,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:n:kf,64f6599e5c6502d8,44,1,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short,a4849bf9e797dfc6,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:141:gotobot,a7c9a669591f792d,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:37,e6250f6dc4dfe116,28,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > forchain:30:split,6800650c3665b0dc,62,9,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > swapdecl:state:gstat,21e1b7af874f8b57,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > loop:43:do,9bf186dcc76d7085,60,2,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > swap:63:4,8c37bfeb43c3102c,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > split:idx:1:after,1c0e3a01397705ab,95,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > tempadd:51:rhs,40259cab9b368186,42,2,0,201,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > cast:116:4:unsigned_char,ce4cf4b57ff92511,,,,,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split,d960e9eabbbb2049,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > paramtype:0:unsigned_short,2c710648ddbd90cd,94,10,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > rettype:short,883a8da3e4099c17,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > incdec:30:forpre,1f89b370e84c1e34,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > zero:137:not,7b46c8ef72bb9100,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > ifswap:77,6f7008bdde33d7af,30,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > swapstmt:21,0cf542b9d9770a05,27,0,0,35,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > commute:48:+,8f4109e9f819fd58,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > cmpflip:159,34f8578386460370,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > reuse:idx:kf,3214e906a7abfba8,60,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > lvinline:kf,72c29d3338b972bb,89,13,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > type:pfh:unsigned,43571504ff65b3b2,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > movedecl:y:14,9d2dd025b0af0cca,36,0,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > forchain:43:split,26b606eb4a420cd9,60,2,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > swapdecl:kf:mf,32847832287b7f2f,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > loop:43:gototop,e00ae171bcc9c294,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > swap:146:0,f4c133973460a7ec,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > split:idx:1:last,03b96904866af0b7,93,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > tempadd:24:*,d0675a75be98013c,27,0,0,40,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > cast:39:3:short,fa2ffb9790c5ef32,67,17,0,254,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:1:split,d88d8d13f02e9f1e,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > paramtype:0:unsigned,9f4273a159fe1e7e,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > rettype:unsigned_char,b7d16c0f57651865,24,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > incdec:43:forpre,cc4181f0f86d4b56,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > zero:77:ne0,2d258241e48d514a,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > swapstmt:80,bfdc634de618aaee,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > commute:63:==,8c37bfeb43c3102c,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > cmpflip:146,f4c133973460a7ec,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > reuse:idx:kfh,1dcc57487376d00a,81,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > lvinline:mf,a6c5eb70e15f4481,89,15,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > type:y:unsigned_char,6785c777164f4345,153,14,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > movedecl:mf:3,a610dda72c12a47f,52,0,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > swapdecl:gs:idx,43a66e4a5e10402d,34,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > loop:43:while,83f60db1c4861636,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > swap:159:0,34f8578386460370,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > split:y:2:after,2874121796e9a6fd,100,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > tempadd:89:+,580c6bbd38788932,23,0,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > cast:24:3:int,fa24f7c443997fe3,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:110:1:split,da7fd94314a4a7de,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > paramtype:0:char,4de67fb472996208,165,21,0,16,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > rettype:char,d8be56799de68241,24,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > incdec:53:op1,96af24e5e3433853,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > zero:156:not,7d92c550a563e9d7,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > swapstmt:37,03dcacb7711f2205,28,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > commute:82:!=,d8b5f3a0490ee359,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > cmpflip:115,135302fbc245e4fb,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > reuse:y:fh,ffcbd612d2741cef,76,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > type:fh:unsigned_short,9d40c376e59a92c1,84,9,0,95,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > movedecl:m:10,a7e5f504e3b12835,67,1,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > swapdecl:sstat:path,74f4e1865daadc5a,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > loop:30:gototop,1615f81230891fdd,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > swap:147:4,450a94e8a172ff1f,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > split:y:1:last,091b30232a7497cb,102,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > tempadd:51:+,40259cab9b368186,42,2,0,201,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > cast:84:4:unsigned_short,366c9d5f1ac1df9c,77,4,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > paramtype:0:unsigned_char,66da55c7505157ee,165,21,0,16,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > rettype:unsigned_short,afa8c90f0ae444e2,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > reuse:idx:fh,e2ac371fe021bfd6,58,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > cast:70:5:unsigned_char,527c3b7462184303,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > commute:83:+,0410e5a2156f918b,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > forchain:30:split,cf90169967b7eb88,62,9,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > swapstmt:20,6aba47f4ece14562,27,0,0,23,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > zero:137:not,01b5ae13cfb360fc,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > opassign:110:1:split,bddc6cffb861e21c,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > incdec:30:forpre,cc9c471b1f397004,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > split:y:2:last,4423f1238b0190af,110,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > movedecl:idx:5,9ff8f2d752663548,63,1,0,40,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > type:idx:signed_char,aeb734b49607f3a5,110,70,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > ifswap:77,a7cc8f719c1c5dbe,30,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > swapdecl:y:sstat,2a902af027e209e3,52,0,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > swap:89:3,4a6d8dd50a1e170e,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > lvinline:mf,b15ad940de205765,89,15,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > tempadd:24:*,daf790df85d804d6,27,0,0,40,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > loop:43:ifdo,5a1098c2e2bc7fa3,60,2,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > paramtype:0:signed_char,377d77d09d718d8f,165,23,0,16,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > cmpflip:146,912bf81f7be94d8b,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > rettype:char,67d7ec6f448fccba,24,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > reuse:y:fh,ac2c74e117baaa24,76,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > cast:100:3:char,aa6d8fdfda1fb886,66,7,0,40,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > commute:48:+,cbfd77143a0fa767,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > forchain:43:split,b3ccd771fd2242dd,60,2,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > swapstmt:165,d1cf5b8955c1f5e0,26,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > zero:156:not,c08716637b5430ec,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > opassign:141:1:split,52a366e68ef77e09,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > incdec:43:forpre,e745e5ee436e0e8b,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > split:y:1:after,5fe745b51ec9e325,100,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > movedecl:y:11,173a0b3abab9e9fc,36,0,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > type:i:signed_char,5ffbc8bd2e261447,185,39,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > swapdecl:n:kf,2f2dc9b6a290a845,44,1,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > swap:147:8,09a49888973b3452,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > lvinline:kf,4797c4da27ecf8d1,89,13,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > tempadd:51:+,b2d4dbbfc4cc8f02,42,2,0,201,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > loop:43:gototop,2d8684b17c236553,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > paramtype:0:unsigned,2f0f907516978aa6,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > cmpflip:115,2aebfa4d2fd0bf4d,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > rettype:short,c00a878e9d7616b2,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > reuse:y:pfh,f77ef285f695e80d,64,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > cast:160:7:int,ac7425b42471847a,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > commute:85:==,382cd0db73618c78,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > swapstmt:38,a0d68635f9573252,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > zero:77:ne0,b120c518b6e702ba,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > incdec:40:pre,5f8f2d1f6901df83,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > split:idx:1:after,246a46cdaf7f0225,95,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > movedecl:i:10,736519a6f7fc2a83,67,1,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > type:pfh:char,3f616eb276ca38a3,84,1,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > swapdecl:gstat:prec,f91e602bf68a63e4,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > swap:146:0,912bf81f7be94d8b,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > tempadd:51:rhs,b2d4dbbfc4cc8f02,42,2,0,201,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > loop:110:ifdo,26a715c2fef7fb87,51,9,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > paramtype:0:char,363fa87435608c3d,165,21,0,16,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > cmpflip:159,981dcb8093843955,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > rettype:unsigned_short,0f8bdb6d3b182b9d,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > reuse:y:kf,7a9274e4791612a1,81,0,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > cast:155:3:unsigned_short,22ab409c5780fdc9,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > commute:70:==,3231a774a2047de2,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > swapstmt:37,862cf131fc0cf904,28,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > incdec:40:op1,1d2def82872e6798,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > split:y:1:last,e9f1845452d6741e,102,1,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > movedecl:n:17,77271c503fdcc20f,49,1,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > type:fh:char,2bf4799e76e50321,84,8,0,95,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:144:6:short > opassign:141:4:split > swapdecl:fh:kfh,104c91bb86e8648d,37,0,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:67:2:unsigned_short,6860330571019c08,95,10,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:y:sstat,d32ad49ccdcf286d,52,0,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:pfh:unsigned_short,4c8c076ce99ed8b5,86,4,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:47,6ec45beff654b8c2,98,10,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:i:8,cb19408f9e7ff3f3,53,1,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:44:+,36bcc0e08bb154d1,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:110:gototop,774e3c24593b90e0,26,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:153:12:int,7c5b23bb75dbd02f,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:state:gstat,cdfefa084526ef62,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:y:char,6008ed170070e775,153,14,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:34,9dc01bc23e01f86e,74,1,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:i:12,0ffa99191d3d7f6e,45,1,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:32:+,e67458e4a3004d75,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:110:do,428d3c4855c5479e,38,5,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:167:2:unsigned_short,595a2115dbc4b1ee,100,12,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:fh:kfh,a35f3273e3fff200,37,0,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:mf:unsigned_char,021c63069469d705,122,8,0,23,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:51,1b836696d2e95e5e,24,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:mf:0,f1ec1c9a9ba1b74f,52,0,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:48:+,5d5a4078bf2063a0,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:30:while,5b03f718bae76697,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:108:3:unsigned_char,690cb053d1717b45,64,7,0,40,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:idx:m,135b9a6b75557789,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:idx:signed_char,60821a7208dc5847,110,70,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:36,954511e96c9fcc00,50,7,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:fh:14,2a83a233f71da88b,60,0,0,40,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:31:+,63a9cda7c909a5d5,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:43:gotobot,e33263d957fae2d9,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:36:2:char,56cdc86293b519a0,57,2,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:kf:mf,e436d27b323c999a,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:idx:unsigned_char,887f82338b156411,122,53,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:49,ef8ced6dd299dc5b,45,7,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:pfh:14,216e3870e65f9dfb,63,1,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:89:+,3ad06bc4e668df36,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:110:gotobot,585a6bd7c46c54c0,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:67:2:char,5b537edc82830575,95,9,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapdecl:path:fh,8b135fe2535014ed,42,0,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:idx:short,6761f7f387dee2de,110,74,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,swapstmt:166,972cbda5abd38918,26,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:i:11,8bbfb35c8a3ea23d,44,1,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:24:*,f03e59333968f9b3,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:30:gototop,66fbd6aaf45ab89c,27,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:106:3:unsigned_short,ebb235128233a719,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:i:unsigned_char,e1a1eb040c23b575,186,26,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:kf:15,71f1775aaeeb7a21,45,1,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,commute:85:==,fb10346b439c463a,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:141:do,d6c8dbf4de23f40b,29,7,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:35:2:unsigned_char,208a1dc6bc806d97,71,2,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:kf:unsigned,b9a5e0bbcaf92b69,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:kfh:16,05ebd4879227fb89,63,1,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:141:ifdo,a9e5aa5f85d858b6,25,9,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:147:4:short,6b7726faa766130b,,,,,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:i:char,79d24f85970ec68e,186,26,0,0,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:pfh:0,5a46d1bf6ec2f7d5,52,0,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,loop:43:do,434b0050e5a14b0b,60,2,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:146:3:unsigned_short,cf2648682f49957a,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:kf:unsigned_char,7b8cbbd7ddb50b34,111,9,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:s:13,60bf2c9f136f2402,23,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:48:5:char,ce072820798e5dbd,37,0,0,263,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:m:unsigned_short,2131fd6ff872442b,103,3,0,40,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:fh:5,40be3fdbaa880cc0,35,0,0,194,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,cast:92:2:unsigned_short,b0d331821307b4ec,77,4,0,28,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,type:mf:unsigned_short,2bace3b7a7f90390,122,11,0,23,ga
+2026-10-24,TeamRosterScreen,src/c/017_21CDE_player_stats/TeamRosterScreen.c,movedecl:pfh:15,215df24130e06f78,49,1,0,263,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,base,c49391afffae4108,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:dec:18,09df7ad3b541f2b6,31,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:124:not,673a353936ecda90,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:21,87b5a4b76fbe03d6,16,0,0,22,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cmpflip:125,57e5ae70930b3f76,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:27:3,25be93af38f3435f,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:first:char,dbb397b50211a241,59,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:delay:1:last,c97f1ceb7263c6a5,34,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,rettype:char,76649e9215ea900d,95,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:38:2:int,68ee374b25d5dc91,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:29:+,43eecefb04cbda3f,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:id:bmp,8eb34729c261ee37,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:90:+,d46651a48651b493,25,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:124:gotobot,f2d4bb37484be8da,22,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,ternary:29:q,58acbd69bc6015ea,78,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:frame:bank,c35272f9658aaf68,29,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,incdec:83:op1,b449d9e800256a94,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,opassign:29:0:fold,24f6fc874e52a360,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,ifswap:29,c60e07dd5a13081a,18,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bank:7,203d5fd2c0a6e1c2,23,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:92:eq0,8878f9f4be780dc9,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:69,e5dcfb802f3bf2ec,15,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cmpflip:132,589a7078743b9fe3,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:77:0,e0d55419d258a5be,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:t0:unsigned_char,300591f5fef0cfb2,61,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:key:2:after,f18a2195e83b9a9a,88,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,rettype:unsigned_char,e84f8fb22dfcdaaf,95,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:28:1:unsigned_short,c87fbf9ecda6ad27,95,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:41:==,aa94ce25c3fd2c1e,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:stream:t0,eadb646ccd643986,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:108:+,47dd8d51de4207bc,25,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:28:ifdo,2e77b5e3fa7d6dca,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:first:bank,c8369e31ae10ba0c,30,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,incdec:28:forpre,97d741c59534dae1,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,opassign:82:0:split,681d30a77fcbd3fc,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:ends:0,ab23a9f689eb87d8,40,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:132:not,2cf53fffe80d4930,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:82,309f3680ac67bdc6,15,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cmpflip:29,66a9014fa4c17d34,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:109:2,dc3232e35c5be84b,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:due:short,3e7b8233849be892,90,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:first:1:after,2e261597322f8b85,43,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,rettype:unsigned_short,91240ee0c24b9afc,31,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:27:3:short,4f3593552cd69901,28,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:38:+,dd129479a429c0a7,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:pal:path,47da58cd93094ef7,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:-,edb4b5957bbc9be4,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:28:while,32f38ccff8262bf2,42,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:t0:bank,90494b576b37c5fe,46,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,incdec:83:pre,a1d49ef9baf06c60,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:ends:4,6a294f8ac2fc9059,23,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:59:ne0,30952229b7b8c217,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:70,14d7b60cc24ce162,15,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cmpflip:131,76f4a509ef08ccd1,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:109:13,3a2477b607c0de7a,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:i:short,271a6f929f7cf5f8,70,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:first:1:last,8e3584dbfbf82c3e,43,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:104:7:unsigned_short,4c511cca007bc217,54,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:90:+,5782bc5ead7233ff,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:m:frame,7bca0936cd7cd6ac,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:124:gototop,a1828a380e5d3815,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:key:bank,7da0ec8a6b965b45,77,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,incdec:114:pre,f1bf8c349ad5b414,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:t0:11,bd4808735efd7984,29,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:40:not,e58a0051caa62009,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > loop:29:do,9526fce9f74011eb,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > split:key:1:last,b9a97800d3cb57e5,16,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > temp:_t0:inline,2e1c3c34f10d24a4,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:bmp:18,e8d3c2920d7010f2,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > swapdecl:i:id,369d02cbfd2dcea0,65,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > zero:60:ne0,5021b64ac02ca76e,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > opassign:83:0:split,48a4cc185fef766a,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > type:key:signed_char,b1aa6ae21b649cd2,103,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > cast:27:2:unsigned_char,b116f72cb5dd8667,66,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > commute:46:==,37d0488f3f612df0,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > tempadd:124:-,8b1cec539d2bdc47,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > cmpflip:30,fcb855271d42cc24,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > incdec:84:op1,d9ac9a0ca5dae983,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > ternary:30:q,5ba636345bb84161,68,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > swap:46:4,37d0488f3f612df0,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > rettype:unsigned_short,0e4f31bbcb7c3fc4,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > ifswap:30,f11a9c94cb8c091a,18,0,0,153,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > swapstmt:57,3607db6da54fed05,14,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > reuse:_t0:t0,755291ada445f178,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > loop:76:while1,5f9beaa951a85e26,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > split:first:1:last,b91b9712e144aa59,36,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2,aafa152d600a7f54,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > swapdecl:key:chunk,98a9a88738b16d52,15,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > zero:41:not,8c7abd0805cb1bf6,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > opassign:30:0:fold,abb453d2d3f49426,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > type:chunk:short,d645b9779094fe0c,54,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > cast:110:2:char,4abfa3bb17ab5bb6,75,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > commute:45:==,a81c3b9247880201,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > tempadd:91:+,20ebcd1b90cdc8fe,16,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > cmpflip:134,c44da74f29fb41aa,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > incdec:84:pre,d3280d5f8966d9af,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > swap:26:4,d98b22f7ebbe3934,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > rettype:unsigned_char,7ea942a96ced6bf2,89,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > swapstmt:37,ac7999c1767a0ee7,15,0,0,265,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > reuse:due:bank,36b40c58c59eccb8,29,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > loop:126:do,2d99e614f548f95c,23,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > split:t0:1:after,0468a3c975ef969a,36,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:dec:2,f0b1ffa1057ae2e4,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > swapdecl:dec:stream,14054a538ce61560,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > zero:135:ne0,df7bd2e1db4158bb,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > type:bank:unsigned,18e4ded33869b182,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > cast:45:1:char,0cc9a17a6c4861c9,27,0,0,387,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > commute:26:==,d98b22f7ebbe3934,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > tempadd:109:+,0d50160e237744f5,16,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > cmpflip:127,91eda4103f38c27c,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > incdec:29:forpre,b3f0aa62dca0202c,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > swap:28:3,e33e9bae7ef49736,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > rettype:char,86f8c837af186615,89,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > swapstmt:84,ad1f91b68a2dbf9e,15,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > reuse:_t0:frame,797cd26b21ad9625,15,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > loop:29:gotobot,334791e9cd55a5fa,36,0,0,145,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > split:key:2:after,d52e4786bcfd9c73,90,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:id:4,48d542c61ca4d88c,23,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > swapdecl:frame:delay,d62170045c7a8936,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > zero:134:not,b924810846f205ff,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > type:due:char,be5282cc3bfc063c,120,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > cast:110:16:short,4f5e381079060c6e,63,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > commute:93:==,f232fc877a5dbc3f,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > cmpflip:133,8b8aba3d4893c959,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > incdec:115:pre,00be98a0199c471a,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > swap:30:0,fcb855271d42cc24,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > swapstmt:74,fae0f60e0376de79,15,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > reuse:stream:bank,c3373f3c72edff41,46,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > loop:29:gototop,dd908c225fe0ecea,42,0,0,145,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > movedecl:_t0:10,fc87081821b4b76a,7,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > rettype:unsigned_char,de96752b18129165,100,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > loop:29:while,8d0a91f42137addf,40,0,0,145,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > cmpflip:127,511d888228db233b,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapstmt:38,867216a0cbb25c69,13,0,0,246,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > commute:26:==,68ba378d67a7dc72,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > ternary:30:q,964633c9a02df1b7,49,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > tempadd:91:+,4c9cb1bdef6f4bc4,72,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > zero:105:not,c4fa0b72e30481b4,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > opassign:83:0:split,954d8c313e8ffd32,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > incdec:84:op1,08ede3996a9006cd,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > temp:_t0:inline,9296f18571ce7063,15,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swap:30:0,f51adcab2fefb939,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > ifswap:30,3f35bfd899117782,16,0,0,153,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:delay:i,5975adee18cab664,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > split:t0:1:last,6eb45a134067829a,36,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > reuse:_t0:chunk,1c966622d443e187,63,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > cast:140:1:int,b4fccf6da77d7d07,33,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > type:t0:signed_char,08e21c10ca6fe38f,56,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > movedecl:id:6,987622d69ada5f22,69,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > rettype:unsigned_short,cfb74178e68e6afb,45,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > loop:126:do,ceda1da8a5ea1747,21,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > cmpflip:134,da18d28270437cd2,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapstmt:74,ae72c5ccc7012c30,13,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > commute:93:==,0fb068409eb571de,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > tempadd:124:-,b11d76ab6243cb48,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > zero:126:not,ee716e56268a3eb1,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > opassign:30:0:fold,50cb893fb66cd11c,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > incdec:84:pre,6179bf6a1d37bf9f,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swap:30:4,82fe34723e7b4b8b,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:id:bmp,10af359d423dbc94,21,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > split:key:1:after,8cbee0b762f75c84,14,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > reuse:due:bank,ab7bfb8ed37afc80,19,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > cast:77:4:unsigned_short,fe856668366ca0f2,71,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > type:n:signed_char,ad8d1d022012706b,82,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > movedecl:id:4,e542c702fc8efc98,66,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > rettype:char,5114a6bc89913831,100,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > loop:29:gototop,998042382d31d885,40,0,0,145,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > cmpflip:30,f51adcab2fefb939,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapstmt:71,cdee0df5dd7671df,13,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > commute:39:+,cda15dca4b5e2d3b,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > tempadd:109:+,e293cea3cfd1b98b,73,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > zero:135:ne0,dabec2186cb1ef75,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > incdec:29:forpre,fb5aec93708db4ad,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swap:46:4,9d847a6089bd23b1,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:ends:key,95e4685dfec3cf65,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > split:delay:1:last,3b97209f5c3031af,82,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > reuse:_t0:frame,224b0fc7f92c44f8,7,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > cast:110:16:char,72d4d85541da07b9,93,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > type:key:unsigned_char,9a53cda0504f5aab,113,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > movedecl:chunk:7,2284f9731a047567,17,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > loop:29:gotobot,d818db68de7272b2,34,0,0,145,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > cmpflip:133,83b5e5e0c5f526f6,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapstmt:73,766fd491bf3aeb1c,13,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > commute:93:==,d8b10cc12313adf1,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > zero:93:eq0,32f8e0b3f4a967fc,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > incdec:115:op1,42d0f9a191e15a80,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swap:78:0,72408a8aa59d8ee4,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first,9825714206abc96e,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > split:key:1:last,860219f414f23c55,14,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > reuse:_t0:delay,e2337a8737f0b14b,66,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > cast:81:2:short,c016291eb484e26b,48,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > type:key:char,9428dc6d78636304,113,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > movedecl:dec:12,b12e89c05b41defc,21,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > rettype:unsigned_char,015590d39b97f1c1,100,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > loop:126:gotobot,c6a522799078dd86,12,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > incdec:84:op1,4e7df2e1b9240327,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > zero:133:not,98ec61e3d6b786b1,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:stream:t0,8718af2c968439b6,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:dec:signed_char,0ff9ffc6484972c9,93,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > commute:26:==,bb5ef1ccec778170,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > opassign:83:0:split,73613eb6a028ac34,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:105:1:unsigned_char,79a4d434f483839f,75,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:n:19,4c8fee7e7a9f5386,7,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > temp:_t0:inline,6c12f4db2a05d001,23,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cmpflip:134,9b931c61277742b2,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > split:key:1:last,f1984530d33d543b,6,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swap:48:4,0372a812367b4911,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > ifswap:30,905846f9cfbc3843,8,0,0,153,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:stream:bank,235d883aaf63f21d,40,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > tempadd:91:+,70e9670cd899eae0,71,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:73,4ee23ae0cf8a06d3,5,0,0,770,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > ternary:30:q,b93f44a4c70bd946,41,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > rettype:unsigned_short,4a13fe52e4b0bda2,45,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > loop:29:ifdo,9bf81b7c8a31a225,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > incdec:29:forpre,1dd102a82368c88f,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > zero:60:ne0,c4331fca45ab3b60,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i,89529a1288b442ea,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:i:unsigned_short,1cf657b2b13d1569,104,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > commute:39:+,5444adc8e808135f,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > opassign:30:0:fold,9e2836576810105a,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:30:5:short,0b5b3293513c36c9,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:id:5,f7edc1655c78587d,66,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cmpflip:127,a17bf9b7dd3ae5d4,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > split:delay:1:last,f343eec931bfdb19,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swap:26:4,bb5ef1ccec778170,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:_t0:delay,0b5570c22b4dc6c2,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > tempadd:109:+,85528e24d7809808,72,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:95,b7cccc13fa477d02,5,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > rettype:char,0e3f37e33cc8dfde,100,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > loop:76:while1,39f9fe138bf25921,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > incdec:115:pre,cff2253bd49e65de,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > zero:105:not,c13b8d3116a35191,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:pal:path,360310993c3b43aa,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:dec:short,3f939152c9fc0b12,93,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > commute:45:==,1a72232efc078e28,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:87:2:unsigned_short,83c1da1503393c62,44,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:_t0:12,4fbaf7883d6567cd,15,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cmpflip:133,66c49e5f21d4523f,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > split:t0:1:last,e777e5e7bbdb56be,36,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swap:110:13,53d9f873f3826486,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:delay:bank,d9181faacb115637,27,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > tempadd:124:-,a4eda09ea41455a5,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:22,6a68300b64b971dd,5,0,0,22,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > loop:29:gototop,c16d390aa082601d,32,0,0,145,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > incdec:84:pre,fa73d7ad5a8dee21,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > zero:59:ne0,a20f7ead685c01cf,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:i:id,57f2b84dfe3e72ca,15,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:due:short,8efa6d3255261298,93,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > commute:91:+,a3b677e5bf5e6c5e,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:79:2:unsigned_char,d46b3968a2adf8b9,53,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:key:8,2511048b1efbd79e,21,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cmpflip:30,532af0b4d768aa6e,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > split:key:1:after,188e80cd431792ed,6,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swap:51:4,a973958e19cb85b1,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:key:bank,bc6e894a15208eb0,82,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:74,db0cf790411b7b2c,5,0,0,772,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > loop:29:while,3a0ec9ddee8b7514,32,0,0,145,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > ifswap:30,a143433ac54cf9a8,8,0,0,153,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > commute:39:+,1fccd798a5569a31,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > movedecl:ends:5,1ce6382a633119b3,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > reuse:dec:bank,2565a3e4851193b1,53,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > incdec:84:pre,edc73136a0e1b33e,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > rettype:char,3df83a93ca9b7ef9,100,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > loop:29:do,e621977d3b710e17,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > opassign:30:0:fold,c28a17caf07c778e,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > swapstmt:22,8f95f320a9f0ea30,5,0,0,22,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > tempadd:91:+,509cb6a6b674d5cd,71,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > split:delay:1:last,e5224124b6ae89c4,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > swapdecl:bmp:dec,c06d56b9c047e22d,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > cmpflip:30,1e4efa509c3ead9d,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > swap:110:13,5089175f90a5e401,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > zero:135:ne0,371a7d443713a711,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > cast:124:4:unsigned_short,19fca03672354d8c,91,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > ternary:30:q,a6375679ef87d641,41,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > temp:_t0:inline,d2da96fa0baa3a3c,23,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > type:bmp:unsigned_char,3f1cc589e4a48d81,94,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > commute:91:+,6cd2cbf808b47580,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > movedecl:chunk:0,1384e2061be479d8,7,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > reuse:_t0:first,8c6b414d3fdbcd33,72,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > incdec:115:op1,86d3b968113e312e,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > rettype:unsigned_short,f65cd37aba772304,45,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > loop:29:gotobot,cc70265e5d3e8ed4,26,0,0,145,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > opassign:83:0:split,12b8b699c9bf8580,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > swapstmt:72,76dda631ceaba532,5,0,0,759,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > tempadd:124:-,4f30946f37877466,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > split:delay:1:after,d2ceb851977640dc,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > swapdecl:delay:id,460893f6442c6a94,15,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > cmpflip:133,128c9a360d602020,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > swap:30:0,1e4efa509c3ead9d,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > zero:41:not,d753fd91614fb716,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > cast:141:3:int,8dafabd8038a70bf,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > type:n:signed_char,29e2d0e104fd974c,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > commute:30:+,dfb71226e8333999,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > movedecl:dec:0,a5cf96cc354a22dc,64,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > reuse:first:bank,e34cb3f9c9f8d69d,24,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > incdec:29:forpre,981a295782ac6a0a,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > rettype:unsigned_char,03497b5ce18975bc,100,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > loop:76:while1,024cd8b4e0c3e068,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > swapstmt:83,e548825ce144a1bf,5,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > tempadd:109:+,b9fb5fc5570c81dc,72,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > split:key:1:last,6279e106af5ce021,6,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > swapdecl:bank:_t0,ed8ea5cfe72a6774,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > cmpflip:134,2128ad5a733eb9f1,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > swap:110:2,3e9d85477b6d65db,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > zero:134:not,61c3c95571291126,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > cast:75:2:unsigned_short,3b9cc527026b1b2a,51,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > type:dec:short,a0b0466055e052e1,91,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > commute:45:==,55b67468352333e2,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > movedecl:first:13,3aa3796fa976139d,17,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > reuse:_t0:bank,db27e846a0f5ef56,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > incdec:115:pre,d0a39e109bc386d3,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > loop:126:gototop,02cab15b38f1fa94,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > swapstmt:57,92e0917e7d2a7737,5,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > split:first:1:last,e38d7d98af8dec35,38,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > swapdecl:pal:path,c240b90985bf1c1b,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > cmpflip:127,3483a11e735dd33e,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > swap:48:4,d5d65da139b76180,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > zero:60:ne0,b454f40758c8c0ee,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > cast:33:4:short,ab452387f6da6ef7,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > type:due:short,243abd27e33e0808,93,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:delay:i > commute:93:==,77ec784d335eeb63,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:stream:13,179558b225e3e66a,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:_t0:first,aa1178c1d2490270,72,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:ends:key,d74154d076172273,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:37,56339c9ff676f6bc,5,0,0,265,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > incdec:115:op1,6eb548a9cb781da9,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:_t0:signed_char,39e23e7c85f8e497,103,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > commute:46:==,0f74f6bd1651d287,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > zero:135:ne0,d9ae7a68780d5727,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > loop:126:gototop,09c1e3887571acf4,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swap:30:4,aaa97cba523ae5ce,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:127:2:char,36b17dba475e970d,37,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > split:first:1:last,815afb2c7664f0ce,38,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:ends:19,17afc16b74a318b4,21,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:_t0:chunk,ba307e2bde907a9a,67,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:n:bank,6b1ffb09d35a2b04,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:70,863a106996f1ed0c,5,0,0,740,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:bmp:unsigned,3146a69b14a09ed2,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > commute:123:==,09d40ba080860bcb,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > zero:134:not,8cbda64b95ac2364,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > loop:126:do,dd8a1a2d1a4cfb7c,13,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swap:110:2,1faf7cf1d3efaf6c,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int,1f638732f827f124,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > split:first:1:after,e567d934036319a7,38,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:id:9,b19b62039b399721,69,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:dec:bank,f65e5754ff98ed5a,53,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:key:chunk,3b72338e46a2a2c7,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:83,38348c0685dc7730,5,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:dec:unsigned,ce7b8c84ff98ff78,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > commute:42:==,2e654c6efa6da36b,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > zero:93:eq0,3ffc8ac0896e7e87,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > loop:29:do,48640b23ffe2a9e5,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swap:42:4,2e654c6efa6da36b,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:110:5:char,c510f773be3d8097,63,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > split:key:2:last,a5350e918ae5b1a3,86,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:delay:14,e65b7a3fd71b8447,23,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:frame:bank,75a66b29601fcc63,21,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:id:bmp,c0a9ab05634ba8bd,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:98,c9db8170d3e50b08,7,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:id:signed_char,992b970c35099a51,58,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > commute:109:+,57cbd0ab24150507,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > zero:41:not,fe639a15549627e5,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > loop:126:ifdo,1b6ccdd1ae08517e,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swap:110:4,0c7f3a5eb6c7a503,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:43:2:int,b7085206634d04c5,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > split:delay:1:after,ad65122c58fe1775,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:_t0:1,4cf8eba5be555032,15,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:chunk:bank,db44b73ddaa0173c,20,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:frame:delay,624d43e4ba505e98,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:57,8f8f910b6e086a7b,5,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:t0:char,755f1c2549d3b817,71,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > commute:93:==,d06ce2338b1a984e,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > zero:126:not,601596a6aca2ad1c,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > loop:29:gotobot,2cce7c7c64f004f6,26,0,0,145,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swap:78:0,b268bd41dc513992,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:27:2:short,4593fdebc79195c9,58,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > split:t0:1:after,e25def4393f977b0,38,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:m:10,e1d463663e49bc99,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:_t0:t0,09ba47fc152bd0b3,69,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:m:frame,49681fa6ea2c0541,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:72,d242dcbcf2c5ff2a,5,0,0,759,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:due:signed_char,837dfeb6b17c87f3,125,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > commute:39:+,1af2c30a81551855,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swap:28:3,9d1a2ef5475a57dd,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:134:2:char,12a2c72d6a2125da,95,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > reuse:ends:bank,35d4f3732271687e,29,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > opassign:30:0:fold,3c819f000ccf7867,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > ifswap:30,be514ba9ac6281a0,8,0,0,153,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > swap:110:4,e50f83d95bb27e50,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > swapdecl:t0:n,8a031110b949a278,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > cast:52:2:short,bec79d823af5a64b,32,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > ternary:30:q,933ff13b27c05c70,41,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > commute:123:==,ce5d879dfd4cfecd,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > cmpflip:127,fb8d5a2394217267,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > zero:60:ne0,b7fd66f4a562fb9c,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > swapstmt:70,1d041f71baefff44,5,0,0,740,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > incdec:29:forpre,f814a7fca5a30666,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > movedecl:first:12,d47da71285b2d50b,17,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > type:key:char,bbd9fac0b307ba80,110,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > temp:_t0:inline,e1b4a0da03c7914e,23,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > tempadd:124:-,fdd6e99c461f12c7,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > loop:126:gototop,3bcf6c0bb97dc957,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > rettype:char,af6cff1e7352a7b2,100,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > split:key:1:last,8927d73e772ee144,6,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > reuse:_t0:t0,7b97b890d5247194,69,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > opassign:83:0:split,1238da25b9664940,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > swap:78:0,651e9419318a18da,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > swapdecl:i:id,ab53d3f3c9a56333,15,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > cast:110:7:unsigned_short,642ed06624e5ebd8,61,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > commute:91:+,1ea10f2d332064b9,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > cmpflip:30,861f9c6b6b1abfb5,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > zero:134:not,ec2639f4f3ccf827,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > swapstmt:83,2564e1c1644fe742,5,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > incdec:115:op1,87cd31f2d00f0095,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > movedecl:delay:0,ea335447bb7293aa,67,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > type:first:unsigned_short,3d9bd2366945a9de,50,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > tempadd:91:+,4ed68e86ea2f1f68,71,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > loop:29:gotobot,0dd616f15e88b32d,26,0,0,145,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > rettype:unsigned_short,ab6875da336ecc95,45,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > split:delay:1:last,e175063b2d9c0bc7,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > reuse:t0:bank,50b6c03df6031e67,13,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > swap:110:13,95682838f55b0cf2,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > swapdecl:frame:delay,44a172afc60abb71,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > cast:124:2:unsigned_char,c5c49b48f93ddfd3,97,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > commute:51:==,6f4439a96b56c8b1,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > cmpflip:134,f142fd2e12fb5403,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > zero:93:eq0,e80aef70e0b8090a,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > swapstmt:73,1a35bf50ba588a9c,5,0,0,770,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > incdec:115:pre,24cea7e784d09c4e,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > movedecl:dec:10,b75144893cab8d15,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > type:_t0:unsigned_short,9abe1caa5e608388,104,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > tempadd:109:+,db9eab75a4b81aae,72,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > loop:126:ifdo,53c2e2e105b8263b,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > rettype:unsigned_char,302728fe2b413260,100,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > split:key:2:after,f3b2547b8514c421,95,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > reuse:_t0:delay,bdb5f9df03f8b0bd,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > swap:46:4,9f74598613b9a68d,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > swapdecl:chunk:due,9ad93d588fa347f3,17,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > cast:34:5:char,fa6d78273688a058,78,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > commute:30:+,9d2bdfed46289997,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > cmpflip:133,57ae5e6003a0e7c9,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > zero:133:not,5735c0a36bacec4a,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > swapstmt:37,be74e2265b699385,5,0,0,265,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > incdec:84:pre,fb96f5523f36e0ff,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > movedecl:frame:19,0402939ea89fb13c,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > type:dec:unsigned_char,2eb907ed7af872c9,91,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > loop:29:do,8d777a74f3f5ce29,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > split:first:1:after,48746416097b8aac,38,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:83:2:int > reuse:stream:bank,ad732be8b75800e5,40,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > commute:93:==,d4396900084dc28e,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:84,7a975637607d5a27,5,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:30:7:short,6628652063edf614,122,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:id:4,0631cc304a69c797,66,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:path:ends,0960278b5aa2cf71,15,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:t0:bank,441572a436474bfe,13,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:n:short,bdb51c01b237f67c,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > split:key:2:after,a84a720dbf0fa88c,95,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:38,3e0979a1e3655a0d,5,0,0,246,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:94:2:int,9becc3d036ce93ed,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:mask:17,9875acaaca2d2e02,15,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:mask:m,943b66b99c98f0cd,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:first:bank,5f824738e472ed61,24,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:ends:unsigned_char,88e40e4b1d856f5a,112,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapstmt:71,11ac0cba1fbaaa9c,5,0,0,752,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:33:2:unsigned_char,5f6407d64c9b41a2,41,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:first:9,6efccfaf8062b9a9,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:bmp:dec,02b0b57411a36beb,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:n:bank,6d70d7e937badd41,35,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:i:unsigned,dd6a9a73166eac0f,28,0,0,145,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:91:5:int,a0d88bd87a8c0893,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:n:4,a9b17e190ca2c110,64,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:t0:n,922182a453748081,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:_t0:frame,09275723d45fc67a,7,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:t0:unsigned,d06c76d730223432,4,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:94:2:char,1decef67a4b66a5b,27,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:dec:17,068ab73a1a99d773,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:chunk:due,2ac69a13029e78cb,17,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:ends:bank,f91e57df20b7fae0,29,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:_t0:unsigned,604eca29713bf920,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:105:4:int,a6d98c8d4180617e,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:i:15,d7a28dbdbc9bfe14,15,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:due:first,ae86a8ef80e0e72e,11,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:_t0:bank,305eb86297e4b60f,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:first:unsigned_short,c9e3961d0483f8d1,50,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:40:2:unsigned_short,c4a8eb11e734b7e8,77,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:ends:6,f430212892b6346a,21,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:bank:_t0,498f5f96e620f485,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > reuse:due:bank,5be9ee181aae2225,19,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:key:signed_char,f0a56369eb5ceb89,103,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:31:3:char,eb2834e0d3ce1bba,75,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:bmp:7,67c3aaf61c6f2467,67,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > swapdecl:dec:stream,f9e9ce1868f4b452,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:n:unsigned_short,2e21991428349bd8,81,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:110:16:char,9db4c3b613e30a01,96,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:bmp:10,1331de0b293eeec8,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:n:signed_char,6f92264a22992028,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:142:2:int,80a62c576d7af031,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:bmp:5,6693cd5b95e6b773,64,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:frame:unsigned,5a30dd1795690db3,3,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:110:5:unsigned_short,e7422a7a3cad4524,63,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:chunk:12,966c4f2ba3afcb40,9,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:key:short,7c8416c07ef61d1e,56,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:63:1:char,c9b6f0b75a350187,26,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:bmp:19,8f1b19ad6d84270d,7,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:n:unsigned,3e0aa25c34399d01,5,0,0,797,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:104:2:unsigned_char,43c05598756abc0a,102,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:first:1,4838ea3c1267821c,17,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:id:unsigned_short,11d9592ba9ac2da6,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:112:4:unsigned_char,314921e234ed815e,27,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:key:5,71263f2d6dd1f0ae,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > type:i:short,87aa4175524540ce,100,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > cast:125:2:unsigned_char,25a6769908736fe7,77,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:- > movedecl:ends:2 > swapdecl:mask:first > movedecl:_t0:15,f42f906f42b707a2,13,0,0,606,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,base,dd32cf03e701f895,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,rettype:char,28cc26a31b4902e9,94,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,opassign:29:0:fold,486df03b4fcebc31,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:27:3,64fcd0276d26cd2f,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cmpflip:125,75b850b8ffd0b8f9,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:90:+,0e651f6bff0cfedf,24,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:dec:18,ddb46b3a86da15dd,29,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:t0:1:last,94cd958586b524b7,42,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:124:not,2ee237db0254f73a,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,ternary:29:q,587338a897023414,74,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:124:ifdo,3da1fcaf61a247c8,28,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,ifswap:29,3067b713bd334386,16,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:first:char,de55a6c75262726b,57,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,incdec:83:op1,d9880c3a19b01dac,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:stream:bank,042dcbc0df88aa88,58,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:38:2:int,e38f5a360d943fca,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:id:bmp,9874602f569b2f86,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:29:+,27d3a4f53ff64f84,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:21,cc5279ec8746ac62,14,0,0,22,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,rettype:unsigned_char,834b7b8b09a44f74,94,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,opassign:82:0:split,f3aa589ad163bfd7,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:77:0,23bcf33dc59af003,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cmpflip:132,56194b32724116c9,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:108:+,70cf36b71ba80ab2,24,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bank:7,752419cff900a8e7,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:key:2:after,e70294cdade17aa1,87,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:92:eq0,cb89624d93b16bd1,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:124:do,44e07201b77b0ab9,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:t0:unsigned_char,e3821271a463dae5,68,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,incdec:28:forpre,8e3c5eb50a0bb588,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:first:bank,b27c3abc2e81fe63,30,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:28:1:unsigned_short,44017a5bca4552c2,94,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:stream:t0,1972374fc1e9ecdf,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:41:==,4d74362c4659315f,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:69,d29f15be5013516d,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,rettype:unsigned_short,ccdef8d320841b38,29,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:109:2,3f28d0946189c7fc,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cmpflip:29,b24be8a1393cdbca,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,tempadd:123:-,b32a4b5f95719a97,38,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:ends:0,3a938c8bd9c25b78,33,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:first:1:last,b3dcfd8b323b7c34,40,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:132:not,17e89d3a55ae7cd3,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:75:while1,5b1f7c58b3eebef5,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:due:short,9e1e775585b68408,89,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,incdec:83:pre,358de0aec99090dc,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:n:bank,75b2cc6369fd51d7,74,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:27:3:short,07381328717397b5,35,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:pal:path,0b1e0cac9457f9cf,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:38:+,0403db08a899bb1e,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:82,bde256d6eb656249,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:109:13,ef134322fa6bb651,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cmpflip:131,c4c49aeee4ac4461,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:ends:4,9c5f31f399548a72,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:key:2:last,25ae4f2f0556599c,113,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:59:ne0,d7be475312d3695b,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:124:gototop,ee065cc20128e931,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:i:short,6f0ace722e91f7b4,68,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,incdec:114:pre,b88e00c821214eb7,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:ends:bank,db0720311a6a7e5a,29,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:104:4:unsigned_short,b3ec09957b7578e2,46,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:m:frame,e19f2dd771779078,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:90:+,daa0cab0de9085e7,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:70,3cf7f559809f892d,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:29:4,27d3a4f53ff64f84,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:t0:11,13eaf50c395a3613,27,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:28:gotobot,9bb166d32bc3bf33,34,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:72,c91cb4bcaabc4c82,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:i:0,7d5ca0abde226119,31,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,incdec:114:op1,f1a03eb9beda43e7,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:92:==,9887298fdccec98f,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:134:2:short,54bb5b89cdef16ed,50,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:t0:bank,c85765210e9c4419,58,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:45:4,36314d94109b321a,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:131:not,1003f987a7d0c98a,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:dec:char,99ff23d9cc8478a3,62,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:delay:1:after,434ede9fa374ae2d,32,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:delay:i,9633c28c931a7596,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:28:while,e784b4d0e94fb3e2,40,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:71,6758e5fd17ae291b,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:delay:16,1836fa8de142b4c2,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:47:==,1aa4b58519901faa,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:59:2:int,94e885f084350d99,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:dec:bank,98a3e2788b2bd978,62,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:47:4,1aa4b58519901faa,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:104:not,f8cb7c216e3774c4,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:first:unsigned_char,fda0aa45c0f8f6e2,57,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:key:1:after,7efb23f43c8f5d14,15,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:mask:first,a5d73e72f094f3bf,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:28:do,df90e222633a3086,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:94,77b7c71a310c9f08,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bmp:16,f4911066c0725ac7,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:108:+,ae5ca07e4b49dd2c,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:32:2:int,f4262e482d83ed4e,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:delay:bank,22ac1bb7b0126b13,33,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:25:4,3a5a259d1a727647,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:133:ne0,12751b32f6fbaf96,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:ends:char,741440cfc606f9a4,103,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:t0:1:after,cfd87957e8cd48a9,44,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:n:bank,25170752929ee6c8,29,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:28:gototop,c0e742b01407a9d9,40,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:97,f2aa7d6db8c7f396,15,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:ends:11,f1eea438d6c5219e,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:45:==,36314d94109b321a,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:146:2:none,27f20cd2261c9190,,,,,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:due:bank,b7d6c718080d9e39,29,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:50:4,3efd2329c9b00cb5,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:58:ne0,fd13788b521a3e54,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:dec:unsigned_char,6af192bfe01a1214,62,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:delay:1:last,2b2d718d6a702ba1,32,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:dec:stream,7aec2eab405bdca1,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:28:ifdo,5b243cae693e8ae1,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:73,70fc31b11e2b3673,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:ends:18,4fcd03d4825175f5,29,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:50:==,3efd2329c9b00cb5,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:109:2:unsigned_short,c72b10332f5cabe6,81,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:key:bank,aa8ae6a735dfd4e0,75,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:109:4,d63182cc6c329728,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:40:not,939d8bd1c71abbdc,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:key:char,5e6213e055ac77c2,113,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:key:1:last,c944de6d450b85b7,15,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:first:m,f6eab9bc45877cfc,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:124:gotobot,70efbfd0e0b09b3d,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:36,ce3abccc30b77b82,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:stream:1,7c9e5262fd37a53b,23,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:44:==,1472a86954edf078,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:52:2:int,da591fe7ee5f9120,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:frame:bank,df395415e3d2cd90,27,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:t0:unsigned_short,75c1400e6beae021,68,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:first:1:after,6a76b673e077d6c7,40,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:delay:char,39c81469428d9df8,76,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:chunk:bank,499d391061988a0d,37,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:108:6:unsigned_short,eca301bfe62d7a2b,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bank:15,0f51b680d206bdb3,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:56,c11553a297ff6a74,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:i:id,57fddcb1642363d2,68,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:122:==,1b1baae30dff2248,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:i:unsigned_short,caa418600a3047fb,72,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:45:5:unsigned_char,dff444cfd0e21f38,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:t0:0,45c351c1e4f91382,25,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:83,211f4e8c2734c997,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:due:mask,49110958267f64c3,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:92:==,0bd04d4641f11958,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:ends:unsigned,c1eae9c8747bd21c,12,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:104:7:int,61b1d8eb6dc12a9d,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:ends:17,f94776eae1e61d58,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:37,92f4df2d3cddf298,14,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:key:chunk,4012597d5f68ee49,23,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:38:+,b345e4d6fd35bc4f,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:due:unsigned_short,0d31cd20a2fe780c,88,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:104:1:unsigned_char,6c91ca40df5da12a,53,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:ends:2,dc70f639bf391339,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:frame:delay,fef08ac1203f254c,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bmp:unsigned_char,6905589b0c31df41,80,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:86:2:short,01ba990da62e0314,67,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:i:7,60d75c5efacd4c02,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:bmp:ends,6bd474d21828356b,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:chunk:char,c9de3bebf276f79c,84,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:26:2:short,063bb7302caaaef1,65,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:dec:3,7e910f62ae709549,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:path:key,1107d8ac6dc83ecd,27,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:stream:unsigned_char,bee491d8945e5d0f,51,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:131:2:char,859a4edadcbc2e09,84,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:chunk:6,ead358526b0843aa,15,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:t0:n,c0224526a9e1e884,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:chunk:short,2b440cec2ca4b5ec,83,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:62:1:short,d093ae04d4bae298,18,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:ends:15,4702f30958676fc4,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:chunk:due,95d01af9b1eb493b,15,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:delay:short,7fe060de0a0b9d10,71,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:120:2:unsigned_char,9af148201b199a59,75,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:chunk:0,37d50679abbbdf7c,25,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:ends:dec,df8bc82b482a84f2,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:frame:unsigned_short,b6214ef47858ef7b,38,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:29:5:int,0b0002b5b1ef1bcb,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:dec:11,444d732502c507a4,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:id:char,bcf7313d10c420f6,48,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:108:6:char,87720397d1b0712b,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bmp:3,84f2efeeadd2b09c,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:t0:short,fcba4d0d29afc08a,68,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:92:5:unsigned_short,2ff99b23e29f11f0,56,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:mask:18,63e5e40efffaa5ee,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:n:unsigned_char,a4a17c52810f553f,80,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:32:2:short,9c022dcb59a75c3a,32,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:stream:10,5dd4985bd486c5b5,66,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:id:unsigned_char,e58e1465e9de70dc,48,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:93:1:unsigned_short,f120578f2e3d53a0,24,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:stream:3,663a9a0870a81943,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:i:signed_char,fb35bb0754d81079,71,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:45:5:int,f7ff4d810fb00e60,30,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:first:3,0b254f94a2f20e92,23,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:key:signed_char,bdc2e32f75080c12,110,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:132:2:unsigned_char,74692e87d3202ab9,89,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:dec:8,401fda063e63cd46,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:due:unsigned_char,73f134193ee44637,113,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:delay:12,eac38e048591829f,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:92:5:unsigned_char,ba27bb93b88a98b0,56,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:id:int,dbe1ac674b58a2e7,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:chunk:16,8244c1157a7ba1f0,69,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:131:2:char,ed0be4e9fc1f2807,27,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:key:unsigned_char,72338dff9c7d6419,113,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:id:0,47a51061f065b488,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:120:3:unsigned_short,178779caa8789b67,59,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:t0:char,ee1350de1148f4a1,68,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:due:1,1eac2c715ddc0f63,23,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:70:2:char,00e574d5e78b20c3,93,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bmp:unsigned,c5f2f1417117ed35,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bank:13,205f4b99f0dc5a38,27,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:88:2:unsigned_short,90d9c9cb15eab821,40,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:delay:unsigned,b36cfc1f8a91b052,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:m:5,a4a48ca3c684d18a,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:32:4:short,10856ef48be9d476,38,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:id:unsigned_short,b299a81735731653,47,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:m:4,4da73e02e3f7760e,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:29:3:unsigned_short,8043fb56357ec992,91,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bank:unsigned,f6e642175399627c,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:t0:10,5a52530c6a14894a,27,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:44:1:char,b6025f5f763e2344,23,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:i:unsigned,257f2302c4ce08dd,36,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:i:4,82f1108b2614aea5,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:106:2:short,c75b490d662a86dc,32,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bmp:signed_char,c60d8b31bc2a195a,81,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:ends:9,b10a2e74f44eb3ff,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:108:6:short,68165ba90cb8ef47,66,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bank:signed_char,85603489665209e9,63,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:id:6,b7ea2c034f713327,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:134:2:unsigned_char,841059663d0c5f49,92,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:first:unsigned_short,4c4d1fe2bc7b9fe3,56,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bmp:10,107421f4c0c441be,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:111:2:unsigned_char,b2674ca265b71822,72,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:id:short,a1aec53cef8b541e,46,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:m:14,0a79ecad5ebcbf48,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:80:2:int,51d3b2ae793f8b11,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:ends:unsigned_short,4a5e162a2b07f7ea,48,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:dec:12,1a20b543ac3f9d43,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:30:3:unsigned_short,22eaf1785d39f70b,87,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:id:signed_char,0aa8429b8902d18c,48,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:id:14,faf4cc5f9780b8f2,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:29:7:unsigned_char,da08f26a49a8205b,104,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:dec:unsigned_short,a0a06d94ae389a66,63,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bank:10,14eb32c1a0c3b2c3,68,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:77:1:unsigned_char,8c0c8c1fe1ac8e7a,52,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bmp:unsigned_short,4db4c65d62c0e931,73,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bank:4,bf32978cf3c6c0a0,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:30:3:unsigned_char,34d35ab675447c93,87,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:n:unsigned,b3a563385f800206,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:id:17,fef710aa9ba0474d,23,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:136:1:unsigned_short,caa70ccf34b89678,29,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:first:unsigned,4132e5a8c97fb535,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:t0:4,207eace1668bf446,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:136:2:char,79b78bfa308525c2,13,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:delay:signed_char,97de6bcd8871ae91,88,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:delay:13,4037054106cfe72b,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:42:2:unsigned_short,4df458b29a360bf6,16,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:stream:short,742cb34bc88a8236,65,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:m:9,bd5e9e6ec21aace2,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:32:2:unsigned_short,906b5b277152c100,32,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:i:char,2a0724efa1d14bf1,76,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:due:char,dbd27819c32d3eb3,113,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:n:12,2be11968fc172356,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:50:5:char,0caf9b287915028f,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:key:unsigned_short,e45954175441aa18,61,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:mask:14,9ad917d7afa7a94b,66,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:133:2:short,7f5858ff96ad93c0,49,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:frame:short,4e9760461f1592d9,38,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bmp:5,b81c9ff558047c3a,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:123:4:short,95fcceee882d7409,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:stream:char,5882b62536ceab7f,51,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:i:6,7ebf07d9e4bc5196,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:92:2:short,cffbf1a2b0a762a0,44,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:stream:unsigned,312f77f6032b26bc,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:n:10,ba943f635a46f9cb,27,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:105:2:unsigned_char,2ee48c30aa9e8dce,68,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bmp:char,826aa767e197fc87,80,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:dec:10,5cbe76180fddc08f,19,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:80:2:short,cb451306ea4a4842,57,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bank:char,c7fa62f5486d160f,64,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:chunk:17,6d7a24077509b20f,68,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:90:5:unsigned_char,9e47d3bc4c8caed6,80,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:first:short,2afb7d7d69f39a9e,56,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bank:8,c684cd376da6b510,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:90:6:short,aa55cbe00699cba7,67,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:n:short,b464070a04e306eb,76,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:delay:1,d8ea0ab55e0e7391,29,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:123:2:unsigned_short,435a59f9965d1a05,89,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:frame:unsigned,3863d4e5336aaf77,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:mask:16,884728e8b54e45fe,66,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:139:3:char,fdf30fd93176df02,14,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:dec:unsigned,34fca1d523c0dcf9,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:chunk:1,5ddca2cc613d8cff,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:123:4:int,eb866a35433a70bf,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:frame:signed_char,09c4ec7df939a09a,38,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:due:7,71c5fb4987259af4,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:124:5:short,44cc629cc35b3229,22,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:t0:unsigned,33bf598681d539d3,12,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:frame:0,0bf6b68db889a1cf,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:90:6:unsigned_char,0df779cd23fe64df,79,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bmp:short,877ebd5b3c034f41,73,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:id:2,63ae29b1939779c4,15,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:109:2:short,3e1f00fd27148dc9,80,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:key:short,a8468555c8360d2c,60,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:i:12,7582f095a597da61,68,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:55:1:char,4ca925ebff3f0f11,31,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:ends:short,985f96932ab72dd5,47,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:i:17,d1ba3bd2a449dd64,66,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:42:2:char,5cc31b8200852c8f,16,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bank:unsigned_short,2549dae249f4c70a,62,0,0,107,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:id:4,c7ea4174f7549f71,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:40:1:short,810ce863339b14fb,33,0,0,249,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:t0:signed_char,37ff20fe0f65db0c,68,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bank:5,17f99f19e189c2aa,21,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:136:2:unsigned_char,71464e5ec2100e00,18,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:n:char,261594c2fc83612a,80,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:frame:11,540aa6a9bc65b3a6,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:29:3:short,3be7b6f8dfa9a3e2,96,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:n:signed_char,4adece51d47ce644,78,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:delay:11,5c5f3f609cc4197b,70,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:77:1:short,98d14fe210ccf284,44,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:ends:unsigned_char,67c3a1c8a1386960,103,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bmp:14,2e14635ab528f0b1,11,0,0,24,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:80:2:unsigned_char,e6222973f0b6aeae,58,0,0,0,ga
+2026-10-24,TitleScreen,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:due:signed_char,8e2ed9e7dc8187d5,116,0,0,0,ga
 2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,base,e476cde355721353,16,0,0,22,ga
 2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,movedecl:g:1,8042780d4b7a770a,25,0,0,22,ga
 2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,commute:18:==,3df27b1ed1c8f028,16,0,0,22,ga
