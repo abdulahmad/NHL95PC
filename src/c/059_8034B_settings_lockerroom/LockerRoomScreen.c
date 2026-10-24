@@ -248,9 +248,10 @@ void DrawLockerRoom(void)
    abbreviations into the matchup string, points the controllers at their sides' teams and writes the mode state;
    7 (Cancel) and event bit 4 leave without that. Leaving fades the music and the palette, frees the block and
    waits for the song to stop. Result: 0 after OK, else 3.
-   DRAFT (10.0 GA): same size, one register left: case 4's dword_D2150[vis] goes into eax where the EXE uses ebx
-   (case 0 / 3 gets ebx as in the EXE). The home steps' second try is written with hm (hm == vis there, and Watcom
-   uses vis's register for it); with vis, Watcom hoists (vis + 1Bh) % 1Ch and (vis + 19h) % 1Ah, which the visitor
+   DRAFT (10.0 GA, ESCALATE): compiles to the EXE bytes, not marked: case 0 / 3's first step in league mode goes
+   through n (dead since the pointer block size; permute.py tempadd + reuse), which only breaks the register tie
+   that put case 4's dword_D2150[vis] in eax (EXE ebx). A new int for it scores 23. Dead-variable reuse.
+   The home steps' second try is written with hm (hm == vis there, and Watcom uses vis's register for it); with vis, Watcom hoists (vis + 1Bh) % 1Ch and (vis + 19h) % 1Ah, which the visitor
    steps share, above the jump table. See docs/UNSURE.md. */
 int LockerRoomLoop(void)
 {
@@ -320,7 +321,8 @@ int LockerRoomLoop(void)
                         hm = (hm + 1) % 0x1C;
                         if (hm >= 0x1A && hm == vis) hm = (hm + 1) % 0x1C;
                     } else {
-                        hm = (hm + 1) % 0x1A;
+                        n = hm + 1;
+                        hm = n % 0x1A;
                         if (hm == vis) hm = (hm + 1) % 0x1A;
                     }
                     DrawLockerJersey(0, hm, teamdivflags[dword_D2150[vis]] | teamdivflags[dword_D2150[hm]], hm, vis);
