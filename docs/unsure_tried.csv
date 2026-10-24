@@ -2868,3 +2868,42 @@ TradeScreenLoop,swapdecl:flag:,"declaration order `i, menus, nitems, oldmx, pos,
 PostGameToTeamDb,,"(2026-10-24, lane 1b batch 7): `(i << 2)` in one or both key reads, `i * 4 + f.team + 0x4C` (130 by the permute metric, unchanged)","130 by the permute metric, unchanged",ga
 PostGameToTeamDb,,"the stat offset as `k = i * 16; k += side * 0x190` (142), `k = side * 0x190; k += i * 16` (146, also with the shifted key read), `(i << 4)` (130), `i * 16 + side * 0x190` (131)",131,ga
 PostGameToTeamDb,,the count sweeps above,,ga
+CopyHumanTeamDBs,,"(2026-10-24, lane 1b batch 8): the final pointer through the dead teams / which parameters (23, +2), inline `s.teams[s.t * 30 + 0x16] = 1` / `(s.teams + s.t * 30)[0x16] = 1` with the sum again in the call (19, +19), p declared at function level last or first (9)",9,ga
+CopyHumanTeamDBs,,with p: `if (err == 0)` before the zero store (9),9,ga
+CopyHumanTeamDBs,,"the zero block nested in the FileOpenRW block (10), `s.t != s.which` (9), `!(s.which < 0 || s.which == s.t)` (9)",9,ga
+CopyHumanTeamDBs,,the which test as two nested ifs (9),9,ga
+CopyHumanTeamDBs,,"permute 5 min from the p shape (833 candidates, best 7 only with a signed char / short zero member, size +1)","833 candidates, best 7 only with a signed char / short zero member, size +1",ga
+SimPlayoffRound2,,"(2026-10-24, lane 1b batch 8), all with the loop: loop over s (3)",3,ga
+SimPlayoffRound2,,away / home declared first or after g (3),3,ga
+SimPlayoffRound2,,home and away in the else block (13),13,ga
+SimPlayoffRound2,,len before i (13),13,ga
+SimPlayoffRound2,,away read before home (3),3,ga
+SimPlayoffRound2,,`away < home` (5),5,ga
+SimPlayoffRound2,,home only with `home > g[i * 6 + 5]` (7),7,ga
+SimPlayoffRound2,,away only (10),10,ga
+SimPlayoffRound2,,the if / else increment (19),19,ga
+SimPlayoffRound2,,"the blank chain as one `g[i * 6] = g[i * 6 + 1] = g[i * 6 + 3] = g[i * 6 + 2] = 0xFF;` (3 with the named bytes, 16 inline)","3 with the named bytes, 16 inline",ga
+SimPlayoffRound2,,"the inline compare of SimPlayoffRound3 (20) in all 24 orders of s, i, len, g x loop over i / s x both chain forms (96 variants, best 16)","96 variants, best 16",ga
+SimPlayoffRound2,,"permute 5 min from the inline loop shape (385 candidates, best 8 with a short cast)","385 candidates, best 8 with a short cast",ga
+assbench,,"(2026-10-24, lane 1b batch 8): the y distance through its own `short dy` declared first, between, or after d (24, +3 each",,ga
+assbench,,d stays in ax),,ga
+assgoalie,,"(2026-10-24, lane 1b batch 8): L283 as `(p->Ypos >> 16) + ((signed char *)p)[0x0F]` (24: still Ypos first, Watcom orders by cost)","24: still Ypos first, Watcom orders by cost",ga
+assgoalie,,"with a `(short)` cast (28), as `regd1.w = regd2.w - (...)` without the copy (40), as `regd1.w = regd1.w - ((signed char *)p)[0x0F] - (p->Ypos >> 16)` (24)",24,ga
+assgoalie,,"L276 as `((short *)dword_CCA5A + 1)[regd0.w]`, `*((short *)dword_CCA5A + regd0.w + 1)`, `[1 + regd0.w]` (21 each)",21 each,ga
+assgoalie,,"L246 as `*pucky + (*puckvy >> 10) - ...` (21). Lead, not kept: `regd1.w = regd1.w - (((signed char *)p)[0x0F] + (p->Ypos >> 16));` scores 20 (19 first_pick): it reshuffles the ties so that L129 (the widening) and L276 match, but L245 moves to the other registers and L283 stays",,ga
+assgoalie,,with the X line in the same form 42,,ga
+assgoalie,,with the Y operands swapped 20,,ga
+SeriesLength,,"(2026-10-24, lane 1b batch 8): `switch (n)` with `case 1: len = 1; return len;` and breaks elsewhere",,ga
+SeriesLength,,"the SeriesWinner tests as if / else in either sense (9 each, but case 1 becomes `mov eax, 1` with its own epilogue and the switch `dec edx`: not the EXE)","9 each, but case 1 becomes `mov eax, 1` with its own epilogue and the switch `dec edx`: not the EXE",ga
+SeriesLength,,"the plain switch inside `do { } while (0)` (10), case 1 written last with the others first (12)",12,ga
+SeriesLength,,"the goto draft with `case 0: len = 1; goto done;` in the switch (10), case bodies with labels inside the switch and a return per arm (15, +6)","15, +6",ga
+FixJerseyConflict,,"(2026-10-24, lane 1b batch 8): `sub_8FFB0(0xFB, 4, (unsigned char *)(s.pal = sub_8CCA8(...)))` (20, still stored after the pop)","20, still stored after the pop",ga
+FixJerseyConflict,,plain pal in four declaration positions (22),22,ga
+FixJerseyConflict,,plain pal and e (22),22,ga
+FixJerseyConflict,,"with those, e and pal assigned inside their first call argument and `strcpy(s.name, (char *)s.key[k] + 3)` (22, counts unchanged 40 / 40)","22, counts unchanged 40 / 40",ga
+FixJerseyConflict,,the whole frame as plain locals (e / pal above tr),,ga
+FixJerseyConflict,,pal and e in a small struct whose address is never taken (68: Watcom makes it a register candidate),68: Watcom makes it a register candidate,ga
+TradePlayers,,"(2026-10-24, lane 1b batch 8): the first label as `strcat(s.msg1, nm = ...)` with the second inlined (4), first through nm and the second inlined (4)",4,ga
+TradePlayers,,"the second lookup before the second ""Show "" copy (5), both lookups before their copies (8)",8,ga
+assreffollow,,"(2026-10-24, lane 1b batch 8), all with the d index and `^` unless noted: `int d` declared before `Player *c` (6",,ga
+assreffollow,,"with the plain index and `^` 10), `c = SortCords + d` with `(c->pflags & 0x80 ? 1 : 0)` (6), `((*pucky < 0) != 0)` (15), `(*pucky < 0 ? 1 : 0)` on the second only (12), `d < 0` for the carrier test (44), `p->pflags &= ~2` (6), `gameclock == 0 && clockticks[0] == 0` (6), `(... ^ ...) != 0` (6), `== 0x80` for the first boolean (10), `SortCords[d].pflags` without c in the test (21), `^ ... != 0` with the plain index (19)",19,ga

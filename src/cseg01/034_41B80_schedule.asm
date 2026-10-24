@@ -3252,6 +3252,10 @@ xor eax, eax	; 443A9
 .27:
 add esp, 5F8h	; 443AB
 jmp near SimPlayoffRound1_pop3	; 443B1
+; C: src/c/034_41B80_schedule/SimPlayoffRound1.c (SimPlayoffRound3)
+%ifdef CBUILD
+%include "c/034_41B80_schedule/SimPlayoffRound1.SimPlayoffRound3.inc"
+%else
 SimPlayoffRound3:
 push dword 94h	; 443B6
 call __CHK	; 443BB
@@ -3352,6 +3356,7 @@ add esi, byte 2Ah	; 444B8
 cmp ebx, byte 2	; 444BB
 jl near SimPlayoffRound3.1	; 444BE
 jmp near SimPlayoffRound1_ok	; 444C4
+%endif ; C
 ; C: src/c/034_41B80_schedule/SimPlayoffRound1.c (SeedPlayoffFinal)
 %ifdef CBUILD
 %include "c/034_41B80_schedule/SimPlayoffRound1.SeedPlayoffFinal.inc"
