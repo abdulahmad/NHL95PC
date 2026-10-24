@@ -31,33 +31,19 @@ These files are in lane 2 by segment. StaticEck2026 made two consecutive no-gain
 
 - checkob 2->2 (2026-10-24, StaticEck2026, GA) Watcom hoists the far-side limit's `lea` out of the loop.
 - checkob 2->2 (2026-10-24, StaticEck2026, GA) regsolve.py: an operand flip, nothing predicted. Block-scoped lim, register extra, a second counter, a comma copy (5-20); permute.py tempadd/temps/inplace/lvinline 251 candidates.
-
-### `src/c/042_59D9A_engine_core/calcpuckcross.c`
-
-- calcpuckcross 3->3 (2026-10-24, StaticEck2026, GA) the EXE's 16-bit `mov bx
-- calcpuckcross 3->3 (2026-10-24, StaticEck2026, GA) regsolve.py: nothing predicted. Ternary bounces (20-57), shift for side * 2 (3); permute.py tempadd/temps 287 candidates.
-StartPer is in this file (score 34, register 18/37) and comes with it.
-- StartPer 34->34 (2026-10-24, StaticEck2026, GA) no C found for the EXE's fox zero.
-
-### `src/c/043_5E16D_engine_skating/doplayeracc.c`
-
-- doplayeracc 5->5 (2026-10-24, StaticEck2026, GA) `*pucky` is folded into `add di
-- doplayeracc 5->5 (2026-10-24, StaticEck2026, GA) regsolve.py: nothing predicted (a fold, not a register pick); permute.py tempadd/temps 122 candidates.
-
-### `src/c/061_83459_speech/ShutdownSpeech.c`
-
-- QueueSpeechClip 6->6 (2026-10-24, StaticEck2026, GA) .
-- QueueSpeechClip 6->6 (2026-10-24, StaticEck2026, GA) No kind local (7), SPEECHQ macro stores (7-23), inverted calls (14); permute.py tempadd/temps 27 candidates.
+- checkob 2->2 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (operand flip only); probe.py hoist study (limit on the left is hoisted when Y is a sar / sub temporary in the same block, not when Y is memory, a memory add, a named y from an earlier block or the limit is negated); Reg68 union extra.l (limit right 2, left 5 hoisted); diagnostic: no far-side pucky test leaves the lea in the loop (15), pucky test without extra hoists (12); extra + 0x4E < (short)Y (12), both loops (short)Y (12), (short)Y > lim (14)
 
 ### `src/c/052_6D2F8_create_player/SelectMatchingPlayers.c`
 
 - SelectMatchingPlayers 7->7 (2026-10-24, StaticEck2026, GA) the add order of the address.
 - SelectMatchingPlayers 7->7 (2026-10-24, StaticEck2026, GA) Base-first address spellings (11-30), SplitPlayerName with an unsigned char * name (7-11).
+- SelectMatchingPlayers 7->7 (2026-10-24, Mhopkinsinc, GA) regsolve (nothing); EXE association with falist left: (char *)(falist + i * 27) + 8, FARec record [i].name / (i + p)->name / i[p].name, FARow 2-D, &(i * 27)[falist] + 8, (char *)(i * 27 + falist) + 8 (all 11: product / falist registers swapped); int sums with (int)falist in three orders and (char *)(i * 27) + (int)falist + 8 (17, falist folded), &((char *)(i * 27))[(int)falist + 8] (23); permute.py 4 min on the falist + i * 27 base (385, best 10 with a cast, rejected); probe: the loop alone gives the EXE adds with (char *)(falist + i * 27) + 8; on that base 23 orders of f / l / i / k and k scoped (11)
 
 ### `src/c/058_7F724_highlights/SelectHilight.c`
 
 - SelectHilight 7->7 (2026-10-24, StaticEck2026, GA) two new shapes
 - SelectHilight 7->7 (2026-10-24, StaticEck2026, GA) FreeMemBlock with a pointer prototype (7); permute.py tempadd/temps 247 candidates.
+- SelectHilight 7->7 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (n bump only); diagnostics: the free pushes rotate with the statement count (no multi *idx store: ecx / esi, no marks loop: ebp / esi, no read loop: edx / ebx; EXE eax / edx = two steps past ours); &strs[i * 0x51] in either or both statements, marks[0][i], 0x9652 * i, marks[0] argument, n * sizeof(char *), i * 0x51 + strs (all 7); permute.py 5 min (321, exhausted, base)
 
 ### `src/c/052_6D2F8_create_player/RosterPanelClick.c`
 
@@ -65,22 +51,22 @@ StartPer is in this file (score 34, register 18/37) and comes with it.
 - RosterPanelClick 9->9 (2026-10-24, StaticEck2026, GA) unchanged
 - RosterPanelClick 9->9 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder predicted); permute.py 5 min, 321 candidates, best base 9
 
-### `src/c/042_59D9A_engine_core/changeplayer.c`
-
-- changeplayer 10->10 (2026-10-24, StaticEck2026, GA) five temporaries tie at savings 30.
-- changeplayer 10->10 (2026-10-24, StaticEck2026, GA) regsolve.py: predicted swaps already tried. Skip / && / store order forms (10-12); permute.py tempadd/temps 68 candidates.
-DrawRinkOverlays is in this file (score 73, register 50/72) and comes with it.
-- DrawRinkOverlays 73->73 (2026-10-24, StaticEck2026, GA) no declaration order or count change reaches the EXE's slots.
-setplayer is in this file (score 93, register 86/92) and comes with it.
-- (no GA history rows)
-
 ### `src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c`
 
 - ReassignCtlPlayer 10->10 (2026-10-24, StaticEck2026, GA) the EXE's counter is a `short`. With it the draft scores 14
 - ReassignCtlPlayer 10->10 (2026-10-24, StaticEck2026, GA) permute.py tempadd/temps/inplace/lvinline 78 candidates, best the base.
-ControlsDlgLoop is in this file (score 143, register 60/61) and comes with it.
-- ControlsDlgLoop 143->143 (2026-10-24, StaticEck2026, GA) not reached.
-- ControlsDlgLoop 143->143 (2026-10-24, StaticEck2026, GA) an inner `for (;;)` click wait reaches the EXE size but scores 145.
+- ReassignCtlPlayer 10->9 (2026-10-24, Mhopkinsinc, GA) short n + py = (*puckvy >> 8) + *pucky + pl != (side ? ...) + pl declared before n + no (short) cast on *puckc: 9 (all registers right; best / px slots swapped, slotdump needs px count 14 / 15 / 21); combinations on the old base 11-18; 65 py / best / px orders x pl positions (9), 66 other moves (9), scoped decls (9-19), (px - X) squared without dx (21), px split in 2 / 3 statements (20 / 33), px and py split (36)
+
+### `src/c/042_59D9A_engine_core/changeplayer.c`
+
+- changeplayer 10->10 (2026-10-24, StaticEck2026, GA) five temporaries tie at savings 30.
+- changeplayer 10->10 (2026-10-24, StaticEck2026, GA) regsolve.py: predicted swaps already tried. Skip / && / store order forms (10-12); permute.py tempadd/temps 68 candidates.
+- changeplayer 10->10 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (tie at 30: t33, d, s, dy, dx; d needs ebx ahead of t33); q->Xpos >> 16 for dx or dy (10), both (14), best = -1 (10), == 0 bit tests (10), !(d > best) (10), q = SortCords; q += 6 (44), (s = q->SCnum) != (12), pick == ternary (10), cont arms swapped (27), == 1 ? SortCords : &SortCords[6] (15), &SortCords[c ? 6 : 0] (25); no d, sum into dx: dx = dx * dx + dy * dy (41 / 42 unsigned), dx *= dx; dx += dy * dy (32), dy *= dy; dx *= dx; dx += dy (37); ReassignCtlPlayer shapes: py = (*puckvy >> 8) + *pucky (22), (ternary) != s (10), pick == (ternary) (10), combinations 10-22; 67 declaration moves (s / dy to the top, single moves) none below 10
+DrawRinkOverlays is in this file (score 73, register 50/72) and comes with it.
+- DrawRinkOverlays 73->73 (2026-10-24, StaticEck2026, GA) no declaration order or count change reaches the EXE's slots.
+- DrawRinkOverlays 73->73 (2026-10-24, Mhopkinsinc, GA) *puckc read in place instead of the c byte local: ys[2] test (81), carrier marker (87), both (86 +2); the same with the ternary clamp (103, 86 +1, 87 +11); number block: s < 0xC (74), s in the compares (91), both (88), q->SCnum == *puckc (73), s < 6 (124); 97 single declaration moves (none below 73)
+setplayer is in this file (score 93, register 86/92) and comes with it.
+- setplayer 93->93 (2026-10-24, Mhopkinsinc, GA) regdump (t 14 takes esi with ecx and esi both free when it chooses: a GiveBestReg pick, not a savings miss); first_pick review; 49 single declaration moves (all 93)
 
 ### `src/c/040_53294_engine_physics_ai/dopass.c`
 
@@ -285,11 +271,10 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 | C file | Function | Score | Cause |
 |---|---|---:|---|
 | src/c/040_53294_engine_physics_ai/PassLaneChk.c | checkpuckcoll | 0 | tail 0/0 |
-|  | PassLaneChk | 17 | register 7/9 |
-|  | NetCollide | 27 | register 7/12 |
+|  | PassLaneChk | 12 | register 9/11 |
+|  | NetCollide | 22 | register 7/7 |
 | src/c/052_6D2F8_create_player/CreateFreeAgent.c | CreateFreeAgent | 5 | size 9/13 |
 | src/c/064_86696_season_playoffs/POCreateSchedule.c | POInitSchedule | 6 | register 3/3 |
-| src/c/066_8BEDB_asm_helpers/PlayMVI.c | PlayMVI | 6 | slot 6/6 |
 | src/c/050_6B093_joystick_calibration/JoystickCalScreen.c | JoystickCalScreen | 11 | register 4/4 |
 | src/c/046_644A8_engine_display/updatereplay.c | updatereplay | 22 | register 12/21 |
 | src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c | LockerRoomLoop | 23 | register 2/2 |
