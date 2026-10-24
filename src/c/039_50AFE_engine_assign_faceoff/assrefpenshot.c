@@ -10,7 +10,10 @@
  the spot in temp3/temp4, or still moving, he skates there. Otherwise the byte at temp1 counts
  down and the glide replays every 8 steps, turning one facing step toward that spot. Once he
  is facing it, the first time sets the drop spot and clears the referee step; after that, when
- speech is idle, the overlay is down and everyone is in place, he sounds the whistle. */
+ speech is idle, the overlay is down and everyone is in place, he sounds the whistle.
+ DRAFT (10.0 GA): the puck stop at temp5 == 1 is one chain ending in the puckvz store, so the stored 0 is read
+ back through the pointer as in the EXE. Left: the facing step loads facedir into cx once in the EXE (cmp /
+ sub eax, ecx, then the byte zero-extend before & 7); see docs/UNSURE.md. */
 void assrefpenshot(Player *p)
 {
     short r;
@@ -43,8 +46,7 @@ void assrefpenshot(Player *p)
     if (p->temp5 == 0x64) goto done;
     if (p->temp5 == 1) {
         *puckc = -1;
-        *(short *)puckvz = 0;
-        *puckx = *pucky = *(short *)puckz = *puckvx = *puckvy = *(short *)puckvz;
+        *puckx = *pucky = *(short *)puckz = *puckvx = *puckvy = *(short *)puckvz = 0;
         p->temp5++;
     }
     {
