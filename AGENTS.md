@@ -5,7 +5,7 @@ Standing rules for work on this repo. Details: [HANDOFF.md](HANDOFF.md), [SEGMEN
 * **`main` only takes byte-identical changes.** Every commit must build `MATCH` with `make` and with `make CBUILD=0`. The reference compiler is Watcom 10.0 GA (the `make` default); 10.0 LA is only a fallback (`make WATCOM_VER=la`).
 * **Small, verified commits** per function or per batch. Tool and doc changes go in their own commits.
 * **Never force-push.**
-* **One agent at a time.** Do not run agents or workers in parallel.
+* **Lanes.** Work only on your lane's segments ([docs/LANES.md](docs/LANES.md)), one agent per worktree. Lane PRs do not touch C_PROGRESS.md, tools/c_functions.csv, HANDOFF.md or README.md; the bookkeeping PR after each round does.
 * **Timebox** each stubborn function (~8–10 minutes; see HANDOFF). Leave a draft and record what was tried.
 * **Register picks: look before you sweep.** On a draft whose registers differ, run `tools/wccre/regdump.py FILE.c` first: registers go by savings order, not declaration order ([docs/WCC_INTERNALS.md](docs/WCC_INTERNALS.md)). Write the savings of the swapped variables into the UNSURE entry.
 * **Batch renames** with `tools/rename_symbol.py --batch`.

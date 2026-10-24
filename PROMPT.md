@@ -1,9 +1,9 @@
 # Prompt
 
-Paste this into a new session for the C phase. Single agent only.
+Paste this into a new session for the C phase. One agent per lane worktree (docs/LANES.md).
 
 ```text
-You're working on the NHL 95 PC (DOS) decompilation in this repo: matching C compiled with Watcom 10.0 wcc386. Work as a single agent, one task at a time. Do not start parallel agents or workers.
+You're working on the NHL 95 PC (DOS) decompilation in this repo: matching C compiled with Watcom 10.0 wcc386. Work as one agent in your own lane worktree, one task at a time, and stay in your lane's segments (docs/LANES.md). Do not start extra agents or workers in this worktree.
 
 Setup: install nasm, make, capstone and DOSBox if they're missing, then confirm `python3 tools/rebuild_exe.py verify` prints MATCH and `python3 tools/cc.py check` passes. Read AGENTS.md, HANDOFF.md (the speed-up plan is at the top of section 4), docs/C_MATCHING.md and docs/UNSURE.md before doing anything else.
 
