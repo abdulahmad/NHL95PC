@@ -16,7 +16,7 @@ void TradeDone(int a, int b, int c, int d, int e, int f, int g, int h, unsigned 
 
     bad = 0;
     for (i = 0; i < 2; i++) {
-        if ((sel[i] == 0xFF && sel[i] != sel[i + 2]) || (sel[i] != 0xFF && sel[i + 2] == 0xFF)) bad = -1;
+        if ((sel[i] == 0xFF && sel[i + 2] != 0xFF) || (sel[i] != 0xFF && sel[i + 2] == 0xFF)) bad = -1;
     }
     if (bad) {
         buf = (unsigned char *)sub_8CCA8((char *)str_Donepal, 0xC, 0x20);
