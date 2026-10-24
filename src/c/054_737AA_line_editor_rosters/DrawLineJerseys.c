@@ -1,10 +1,6 @@
 /* Line editor rosters: line slot jerseys. */
 #include "nhl95.h"
 
-/* DRAFT: same size (438). The status read in place for the test and again for the switch gives the EXE's dh
-   load and switch copy (and side's home above c1 / c2); left: the sprintf's side * 2F4h product in ebx and the
-   name pointer in ecx (EXE ecx / ebx); see docs/UNSURE.md. */
-
 /* DrawLineJerseys: line editor: draw the 28h line slot jerseys at lineslotx y (art; numbers nums[i] up to
  99 by MakeJerseyShape in the colours of team side's rosterteam (byte_D11BC through jerseyremap, byte_D12DE); an
  empty slot gets a plain jersey: remap entries 0-8Fh and C0h-EFh to the second colour), then for the 1Ch roster
@@ -15,9 +11,9 @@ void DrawLineJerseys(unsigned char *nums, int art, unsigned char side)
     char buf[32];
     unsigned char c2;
     unsigned char c1;
+    int col;
     int i;
     int j;
-    int col;
 
     c1 = byte_D11BC[rosterteam[side] * 4];
     c1 = jerseyremap[c1];
