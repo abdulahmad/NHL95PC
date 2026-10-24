@@ -153,36 +153,37 @@ void PlaceSpeechSlot(int n)
    (bank +3B6Ch used + its size, up to +3B68h), loaded (kind 'G': LoadSpeechSlot) or placed (PlaceSpeechSlot)
    there and that slot queued. name: the clip name. Result: 1 when queued; 0 (and the queue entry dropped) when
    the clip is unknown, no slot is free or the sample does not fit.
-   DRAFT (GA): 289 bytes, 6 scored differences (5 first_pick instructions). The queue stores read speechq as a pointer, the free search starts at the
-   known 0, free, slot, pos are declared in that order (stack slots) and the swapped slot is checked through its
-   own pointer s (with one dst for both, slot / free / dst rotate to ebp / ebx / edx). A byte kind local makes
-   the first queue store match. Left: kind loads into al before the test (EXE compares memory), and the final
-   queue store loads speechq into edx and the index into eax (the EXE: speechq in eax, index in edx). */
+   As LoadClipSlot: the loaded flag is a local passed on to FindFreeSpeechSlot, and each failure drops the queue
+   entry and returns 0 on its own (Watcom merges the three into one). The queue stores read speechq as a
+   pointer; pos is declared first (stack slots) and the swapped slot is checked through its own pointer s. */
 int QueueSpeechClip(char *name)
 {
+    int pos;
     int free;
     int slot;
-    int pos;
+    int loaded;
     SpeechSlot tmp;
     SpeechSlot *bank;
     int off;
     SpeechSlot *dst;
     SpeechSlot *s;
-    unsigned char kind;
 
     pos = SPEECHQ->count++;
     slot = FindSpeechSlot(name);
     if (slot == -1) {
-fail:
         SPEECHQ->count--;
         return 0;
     }
-    if (SpeechSlotLoaded(slot)) {
+    loaded = SpeechSlotLoaded(slot);
+    if (loaded) {
         (*(SpeechQ **)&speechq)->clip[pos] = slot;
         return 1;
     }
-    free = FindFreeSpeechSlot(0);
-    if (free == -1) goto fail;
+    free = FindFreeSpeechSlot(loaded);
+    if (free == -1) {
+        SPEECHQ->count--;
+        return 0;
+    }
     off = free * 0x26;
     bank = speechbank;
     dst = (SpeechSlot *)((char *)bank + off);
@@ -190,9 +191,11 @@ fail:
     *dst = bank[slot];
     speechbank[slot] = tmp;
     s = (SpeechSlot *)((char *)speechbank + off);
-    if ((unsigned)(BANKD(0x3B6C) + s->size) > (unsigned)BANKD(0x3B68)) goto fail;
-    kind = s->kind;
-    if (kind == 'G') LoadSpeechSlot(free);
+    if ((unsigned)(BANKD(0x3B6C) + s->size) > (unsigned)BANKD(0x3B68)) {
+        SPEECHQ->count--;
+        return 0;
+    }
+    if (s->kind == 'G') LoadSpeechSlot(free);
     else PlaceSpeechSlot(free);
     (*(SpeechQ **)&speechq)->clip[pos] = free;
     return 1;
