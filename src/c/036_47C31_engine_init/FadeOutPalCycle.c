@@ -283,10 +283,6 @@ int StartPreGame(int skip)
     return ThreeStarsLoop();
 }
 
-/* DRAFT: same size (1,091 bytes), 32 differing under 10.0 GA. The winner side reuses i (EXE: cx), the sorted
-   list's points and the goalie rows are indexed reads (base in the displacement), the shutout test reads the
-   goalie stat first. Left: loop 2 keeps the row product in ebp and spills the 25 (EXE the other way round), and the
-   goalie loop's k / 3 and its 18x product take swapped slots; see docs/UNSURE.md. */
 /* PickThreeStars (48AC8, PC only; ends in PreGameIntro_popebp): pick the three stars. Clear the three star slots
    (startm / starpl) and the game winner (gwgteam / gwgplayer). In overtime (curperiod beyond 3) with a winner whose
    team touched the puck last, the winning team's scorer (tmpsplayer) is the game-winning scorer, and when the goal
@@ -335,7 +331,7 @@ void PickThreeStars(void)
     qsort(list, n, 4, StarCompare);
     for (i = 0; i < n; i++) {
         k = list[i];
-        if (*(short *)((char *)dword_DB088 + (k / 25 * 400 + k % 25 * 16)) + *(short *)((char *)dword_DB088 + (k / 25 * 400 + k % 25 * 16) + 2) > 1) {
+        if (*(short *)((char *)dword_DB088 + (((k / 25 * 25) << 4) + k % 25 * 16)) + *(short *)((char *)dword_DB088 + (((k / 25 * 25) << 4) + k % 25 * 16) + 2) > 1) {
             stars += AddStar(stars, k / 25, k % 25);
             if (stars >= 3) return;
         } else {

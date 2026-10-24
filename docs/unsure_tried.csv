@@ -2502,3 +2502,31 @@ assshoot,,"the first abs as a ternary, 300 for 0x12C, `&= ~pfna` without the sig
 ShowLoadingScreen,,"(2026-10-24, lane 1b batch 2): no new shape compiled (the listed GA shapes cover the store order",,ga
 ShowLoadingScreen,,the done flag,,ga
 ShowLoadingScreen,,the constants and the types),,ga
+PlayLeagueGame,,"(2026-10-24, lane 1b batch 3): whole frame as plain locals (first palette renamed firstpal to distinguish the later palette), arrays-only frame struct, arrays plus address-taken scalars retained in struct: 129/+6,111/+9,52/+15. Slot solver on whole plain frame: 474 declaration moves/swaps/scopes/adjacent assignment orders in first round, 129->97, still worse",,ga
+PlayLeagueGame,,stopped next round. No source retained,,ga
+BuildStandingsGrid,,"(2026-10-24, lane 1b batch 3): last goals-against load through dead n or k, points through n with reread team indices, p plain outside struct, n as byte offset, i*7 through dead k or n with corresponding team-index local and final-value reuse, independent reread for goals-for",,ga
+BuildStandingsGrid,,no improvement. One two-minute permute run,,ga
+BuildStandingsGrid,,"only invalid array-shortening candidates scored lower (frame layout changes), none retained",,ga
+DrawCalendarDay,,"(2026-10-24, lane 1b batch 3): divisor through dx/dy/dead unused parameter",,ga
+DrawCalendarDay,,remainder dividend through dx,,ga
+DrawCalendarDay,,"legend second y as hy+12 and in d, offsets added after conditional or initialized before it, x offset after conditional, dead font/bank parameter for legend coordinates, dead bank for dx, x copy then %= in games/selection. LA-only +12 and offset shapes retried because GA first diff is hx/hy allocation",,ga
+DrawCalendarDay,,no gain,,ga
+DrawTradeScreen,,"(2026-10-24, lane 1b batch 3): t through dead unused/unused2/shape/bank/k",,ga
+DrawTradeScreen,,t as byte offset,,ga
+DrawTradeScreen,,base through dead shape,,ga
+DrawTradeScreen,,"explicit second base=side*268h after color call (42 differing but 739 vs735, too little gain to keep)","42 differing but 739 vs735, too little gain to keep",ga
+DrawTradeScreen,,"that recompute combined with dead t locals, base through bank/shape/unused/unused2 and t reused as team number (43/+6). No source retained",,ga
+assthreestars,,"(2026-10-24, lane 1b batch 3): dead w as roster/first-name address and dead slot as roster offset, explicit first-name pointer (first announcement and both)",,ga
+assthreestars,,jersey through dead w/side or fresh int/unsigned-char local (first/both),,ga
+assthreestars,,"roster stride as (tm*111h)<<2, player stride as (pl*5)<<3 minus pl, both. No improvement",,ga
+assthreestars,,matched module blocks remained byte-identical in PickThreeStars builds,,ga
+MainDeskLoop,,"(2026-10-24, lane1b batch3): second size through bits, new function-scope size, action-block size (kept)",,ga
+MainDeskLoop,,trailing level/fh/my/mx and item/level/fh/my/mx plain,,ga
+MainDeskLoop,,"slot solver 2 rounds124->74 with all slots right, combined block size72",,ga
+MainDeskLoop,,selected-level copies i/bits/bank,,ga
+MainDeskLoop,,"submenu lookup before depth, assignment inside menu index, depth++, inline submenu pointer (lookup first kept)",,ga
+MainDeskLoop,,"one2-minute permute321 candidates,64-score candidate rejected because it moved oldmx store before sprite draw against EXE order. Both builds MATCH",,ga
+StarCompare,,shapes listed in docs/UNSURE.md (not itemized),,ga
+assrefgoalpa,,"(2026-10-24, lane 1b batch 3): explicit x delta or puckx through fresh int dx/dead ok after c=constant-pucky, y factor through dx/ok then multiply (first crossing/both)",,ga
+assrefgoalpa,,named endy/pucky/both for crossing test and divide,,ga
+assrefgoalpa,,"with/without split c product (first/both). Best fresh y-factor first 63 differing but2112 bytes and no EBP, not a clear improvement, reverted",,ga
