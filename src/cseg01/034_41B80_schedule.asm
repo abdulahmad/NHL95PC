@@ -3352,6 +3352,10 @@ add esi, byte 2Ah	; 444B8
 cmp ebx, byte 2	; 444BB
 jl near SimPlayoffRound3.1	; 444BE
 jmp near SimPlayoffRound1_ok	; 444C4
+; C: src/c/034_41B80_schedule/SimPlayoffRound1.c (SeedPlayoffFinal)
+%ifdef CBUILD
+%include "c/034_41B80_schedule/SimPlayoffRound1.SeedPlayoffFinal.inc"
+%else
 SeedPlayoffFinal:
 push dword 638h	; 444C9
 call __CHK	; 444CE
@@ -3550,6 +3554,7 @@ xor eax, eax	; 44799
 .15:
 add esp, 620h	; 4479B
 jmp near UpdateSeasonSchedule_pop3	; 447A1
+%endif ; C
 ; C: src/c/034_41B80_schedule/SimPlayoffRound1.c (SimPlayoffFinal)
 %ifdef CBUILD
 %include "c/034_41B80_schedule/SimPlayoffRound1.SimPlayoffFinal.inc"
