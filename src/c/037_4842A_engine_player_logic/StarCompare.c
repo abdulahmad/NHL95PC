@@ -10,14 +10,14 @@ int StarElig(int side, int pl);
  16-byte row at dword_DB088; the game-winner row gets two extra. Ties go to the low word, then the word
  at +0Eh, then the word at +6 when either is positive, then which player is eligible, then the byte total
  at unk_DACA0 (20 bytes per player, 500 per team). A higher total sorts first. */
-/* DRAFT: 627 vs 653 bytes under 10.0 GA. The EXE keeps pa in ebp and spills pb and sb ([esp+4], [esp+8], with
+/* DRAFT: 67 differing instructions, 627 vs 653 bytes under 10.0 GA. The EXE keeps pa in ebp and spills pb and sb ([esp+4], [esp+8], with
    [esp] a temporary for the first word of each sum); this keeps sb in ebp and spills pa and pb. See docs/UNSURE.md. */
 int StarCompare(int *a, int *b)
 {
     int ta;
     int tb;
-    int pa;
     int pb;
+    int pa;
     int sa;
     int sb;
     short *ra;
