@@ -202,7 +202,7 @@ def explain(p, order, runs, show=12):
     import slotdump
     before = p.get('before')
     if not before:
-        print('  (no pre-sort list captured)'); return
+        print('  (no pre-sort list captured)'); return set()
     sorted0 = [c['conf'] for c in p['confs']]
     need = [sorted0[i] for i in order]
     pos0 = {c: i for i, c in enumerate(sorted0)}; pos1 = {c: i for i, c in enumerate(need)}
@@ -218,6 +218,12 @@ def explain(p, order, runs, show=12):
         return moved
 
     lab = {c['conf']: label(c) for c in before}
+    hits = flip_hits(before, check)
+    explain_print(hits, before, lab, show)
+    return set(lab[before[h[3][0]]['conf']] for h in hits if h[1] == 'move')
+
+
+def flip_hits(before, check):
     hits = []
     for s in sorted(set(c['savings'] for c in before)):
         for q in range(len(before) + 1):
@@ -233,6 +239,10 @@ def explain(p, order, runs, show=12):
         rest = before[:q] + before[q + 1:]
         ok = [q2 for q2 in range(len(rest) + 1) if q2 != q and check(rest[:q2] + [c] + rest[q2:]) is not None]
         if ok: hits.append((0, 'move', c['savings'], (q, ok)))
+    return hits
+
+
+def explain_print(hits, before, lab, show):
     if not hits:
         print('  no single added or dropped conflict gives this order (needs two or more changes)'); return
     print('  single changes that give the needed order (other tie runs left in order first):')
@@ -283,15 +293,16 @@ def main():
 
     plan = {k: list(range(len(passes0[k]['confs']))) for k in runs}
     best = base; best_plan = {k: v[:] for k, v in plan.items()}
-    t0 = time.time(); n = 0
+    t0 = time.time(); n = 0; budget = a.minutes * 60
     import json, hashlib
-    cached = False
+    cached = False; complete = True; edit_names = set()
     cache = os.path.join(ROOT, 'build', 'tieorder', '%s.%s.json' % (os.path.basename(src), func))
     h = hashlib.sha1(open(src, 'rb').read()).hexdigest()
     if os.path.exists(cache):
         c = json.load(open(cache))
-        if c.get('sha1') == h:
+        if c.get('sha1') == h and c.get('complete'):
             best = tuple(c['best']); best_plan = {int(k): v for k, v in c['plan'].items()}
+            edit_names = set(c.get('names', []))
             print('  (search result cached in %s)' % os.path.relpath(cache, ROOT))
             cached = True
     seen = set()
@@ -306,46 +317,15 @@ def main():
         try: return permute.score(src, obj, func, src)
         except (SystemExit, Exception): return None
 
-    edits = {}
-    if not cached:
-        # stage 1: the orders single natural edits give (replayed), each forced and scored
-        for k, rr in runs.items():
-            for o, what in edit_orders(passes0[k], rr).items():
-                edits[(k, o)] = what
-        print('  %d distinct orders from single edits' % len(edits), flush=True)
-        scored = []
-        for (k, o), what in edits.items():
-            if time.time() - t0 > a.minutes * 60: break
-            pl = {kk: v[:] for kk, v in plan.items()}; pl[k] = list(o)
-            r = score_plan(pl); n += 1
-            if r is None: continue
-            scored.append((permute.key(r), r, k, o, what))
-            if permute.key(r) < permute.key(best): best, best_plan = r, pl
-            if r[0] == 0: break
-        scored.sort(key=lambda x: x[0])
-        for key_, r, k, o, what in scored[:8]:
-            if r[0] >= base[0]: break
-            print('  %3d differing: %s%s' % (r[0], what[0], ' (and %d more edits)' % (len(what) - 1) if len(what) > 1 else ''))
-        print('  stage 1: %d -> %d differing (%d orders, %.0f s)' % (base[0], best[0], n, time.time() - t0), flush=True)
-        # the declaration moves among the best edits, compiled for real
-        top = [w for key_, r, k, o, what in scored if r[0] <= best[0] for w in what]
-        names = set(w.split()[1] for w in top if w.startswith('move '))
-        if names:
-            real = real_moves(src, func, names, work, base)
-            for r, what in real[:6]:
-                print('  real compile %3d differing (size %+d): %s%s' % (r[0], r[1], what, '  <- MATCH' if r[2] else ''))
-            if real and real[0][0][2]:
-                print('result: %s gives the EXE bytes (a natural edit: check it, then mark)' % real[0][1])
-    # stage 2: swaps within the runs from the best order (no single edit known for the result)
+    # stage 1: swaps within the runs, best improvement per round (finds the target order fast)
     improved = True
-    while improved and not cached and time.time() - t0 < a.minutes * 60 and best[0] > 0:
-        improved = False
-        round_best = None
+    while improved and not cached and best[0] > 0:
+        improved = False; round_best = None
         for k, rr in runs.items():
             for s, e in rr:
                 for i in range(s, e):
                     for j in range(i + 1, e):
-                        if time.time() - t0 > a.minutes * 60: break
+                        if time.time() - t0 > 0.6 * budget: complete = False; break
                         pl = {kk: v[:] for kk, v in best_plan.items()}
                         pl[k][i], pl[k][j] = pl[k][j], pl[k][i]
                         r = score_plan(pl); n += 1
@@ -356,12 +336,40 @@ def main():
         if round_best:
             best, best_plan = round_best; improved = True
             print('  %4d candidates, %4.0f s: best %d differing (size %+d)' % (n, time.time() - t0, best[0], best[1]), flush=True)
-    os.makedirs(os.path.dirname(cache), exist_ok=True)
-    json.dump(dict(sha1=h, best=list(best), plan={str(k): v for k, v in best_plan.items()}), open(cache, 'w'))
+    if not cached: print('  stage 1 (swaps): %d -> %d differing (%d orders, %.0f s)' % (base[0], best[0], n, time.time() - t0), flush=True)
+    # stage 2, when the swaps stall: the orders single natural edits give (replayed), each forced
+    if not cached and best[0] > 0:
+        edits = {}
+        for k, rr in runs.items():
+            for o, what in edit_orders(passes0[k], rr).items():
+                edits[(k, o)] = what
+        scored = []
+        for (k, o), what in edits.items():
+            if time.time() - t0 > budget: complete = False; break
+            pl = {kk: v[:] for kk, v in plan.items()}; pl[k] = list(o)
+            r = score_plan(pl); n += 1
+            if r is None: continue
+            scored.append((permute.key(r), r, k, o, what))
+            if permute.key(r) < permute.key(best): best, best_plan = r, pl
+            if r[0] == 0: break
+        scored.sort(key=lambda x: x[0])
+        for key_, r, k, o, what in scored[:6]:
+            if r[0] >= base[0]: break
+            print('  %3d differing: %s%s' % (r[0], what[0], ' (and %d more edits)' % (len(what) - 1) if len(what) > 1 else ''))
+        print('  stage 2 (single edits, %d orders): best %d differing' % (len(scored), best[0]), flush=True)
+        edit_names = set(w.split()[1] for key_, r, k, o, what in scored if r[0] <= best[0] < base[0] for w in what
+                         if w.startswith('move '))
+    if complete:
+        os.makedirs(os.path.dirname(cache), exist_ok=True)
+        json.dump(dict(sha1=h, best=list(best), plan={str(k): v for k, v in best_plan.items()}, complete=True,
+                       names=sorted(edit_names)), open(cache, 'w'))
     print('result: %d -> %d differing after %d forced orders in %.0f s%s' % (
         base[0], best[0], n, time.time() - t0, ' (a tie order gives the EXE bytes)' if best[0] == 0 and best[2] else ''))
     if best_plan == {k: list(range(len(passes0[k]['confs']))) for k in runs}:
-        print('no tie order improves on the baseline: the remaining differences are not in a tie')
+        if not complete:
+            print('no tie order found within --minutes %g (%d orders tried): inconclusive, run longer' % (a.minutes, n))
+        else:
+            print('no tie order improves on the baseline: the remaining differences are not in a tie')
         return
 
     obj1 = os.path.join(work, 'best.obj')
@@ -381,7 +389,27 @@ def main():
                 c1 = next((c for c in p1['confs'] if c['conf'] == c0['conf']), None)
                 g0, g1 = given(p0, c0), (given(p1, c1) if c1 else '?')
                 if g0 != g1: print('    %-12s %s -> %s' % (label(c0), g0, g1))
-        explain(p0, order, runs[k])
+        try:
+            import irdump
+            info = irdump.conflict_info(src, func, k)
+        except Exception:
+            info = {}
+        moved = set()
+        for s, e in runs[k]:
+            if order[s:e] != list(range(s, e)):
+                moved |= set(label(p0['confs'][i]) for i in range(s, e) if order[i] != i)
+        if info and moved:
+            print('  where the moved conflicts come from (irdump.py):')
+            for lab in sorted(moved):
+                d_, u_ = info.get(lab, ([], []))
+                print('    %-8s def %s' % (lab, ' | '.join(d_[:2]) or '-'))
+                print('    %-8s use %s' % ('', ' | '.join(u_[:3]) or '-'))
+        edit_names |= explain(p0, order, runs[k])
+    if edit_names:
+        real = real_moves(src, func, edit_names, work, base)
+        print('declaration moves of %s, compiled for real:' % ', '.join(sorted(edit_names)))
+        for r, what in real[:6]:
+            print('  %3d differing (size %+d): %s%s' % (r[0], r[1], what, '  <- MATCH (a natural edit: check it, then mark)' if r[2] else ''))
     # the instructions that change
     import cobj
     def text(o):
