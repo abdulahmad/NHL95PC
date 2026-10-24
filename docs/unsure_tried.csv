@@ -2463,3 +2463,42 @@ LoadTeamRoster,,"(2026-10-24, lane 1a batch 2): chained stored-word reuse via li
 LoadTeamRoster,,each combined with byte-offset shape (73/87/88,,ga
 LoadTeamRoster,,new reason: combine correct index structure with copy/load/add),,ga
 LoadTeamRoster,,six proper subsets of the three pairs via each line/gline (84-114). Both builds MATCH,,ga
+SimPlayoffRound3,,"(2026-10-24, lane 1b batch 2): k as unsigned short / short / unsigned / int and `wins[k = g[2]]` with an int k (all 20), unsigned char k declared first or last and `wins[k = g[2]]` (3 each)",3 each,ga
+SimPlayoffRound3,,named w = len / 2 + 1 forms (20-22),20-22,ga
+SimPlayoffRound3,,"a named winner index (20), k = g[3] as unsigned char (19)",19,ga
+SimPlayoffRound3,,"permute 5 min from the k shape (321 candidates, best 3)","321 candidates, best 3",ga
+SimPlayoffRound3,type:k:unsigned_short,k as unsigned short / short / unsigned / int and `,tried (docs/UNSURE.md),ga
+SimPlayoffRound3,type:k:short,k as unsigned short / short / unsigned / int and `,tried (docs/UNSURE.md),ga
+SimPlayoffRound3,type:k:unsigned,k as unsigned short / short / unsigned / int and `,tried (docs/UNSURE.md),ga
+SimPlayoffRound3,type:k:int,k as unsigned short / short / unsigned / int and `,tried (docs/UNSURE.md),ga
+CopyHumanTeamDBs,,"(2026-10-24, lane 1b batch 2): retry left last in s with t and zero as plain ints, in the four orders tz / zt declared after tp or before err (40 each, frame +5 bytes)","40 each, frame +5 bytes",ga
+SimPlayoffRound2,,"(2026-10-24, lane 1b batch 2): a named w = len / 2 + 1 before the if (19",,ga
+SimPlayoffRound2,,computes w before the g[2] load),,ga
+SimPlayoffRound2,,the same declared first (20),20,ga
+SimPlayoffRound2,,"a named winner index w or k (22 / 22), both (19), `wins[g[2]] == (w = len / 2 + 1) || wins[g[3]] == w` (20), `... == (w = len / 2 + 1) || ... == len / 2 + 1` (16, frame start changes), `k = g[2]` int (22) / unsigned char (18), `k = wins[g[2]]` (23), `(w = len / 2) + 1` (16, frame start changes). Also tried after the Round3 find (unsigned char k = g[2]): k = g[2] (18), k = g[3] (16), k = g[2] and m = g[3] (27), k = g[2] with `wins[m = g[3]]` (23), k = g[2] plus the winner index through k (23) or m (18), k = g[3] plus the winner through k (24)",24,ga
+SimPlayoffRound2,,k as unsigned short / short / unsigned / int (22),22,ga
+TradeDone,,"(2026-10-24, lane 1b batch 2): sel[i] as `*(sel + i)`, `(sel + i)[0]` / `[2]`, `i[sel]`, `*(i + sel)`",,ga
+TradeDone,,the first clause only as `(sel + i)[..]` (all 22: the same IR),all 22: the same IR,ga
+TradeHitTest,,"(2026-10-24, lane 1b batch 2): the in-place divisor (regdump above",,ga
+TradeHitTest,,"in the GA list, 27)",,ga
+TradeHitTest,,the y edge through e (`e = tradebtny[i * 2]; if (y < e) continue; if (y >= e + 0x28) continue;`) alone (23),23,ga
+TradeHitTest,,"with the in-place divisor (29), and also without row (29)",29,ga
+assbench,,"(2026-10-24, lane 1b batch 2): the mask dropped in the first",,ga
+assbench,,"the second, or both tests (24 / 22 / 36)",24 / 22 / 36,ga
+SimPlayoffRound1,,"(2026-10-24, lane 1b batch 2): the Round2 / Round3 byte-local and named-temp variants (k = g[2] unsigned char 23-25, k = g[3] 21, k and m 35, named w forms 24-27, winner index locals 23-29)","k = g[2] unsigned char 23-25, k = g[3] 21, k and m 35, named w forms 24-27, winner index locals 23-29",ga
+assgoalie,,"(2026-10-24, lane 1b batch 2): nothing new compiled",,ga
+SeriesLength,,"(2026-10-24, lane 1b batch 2): no new shape",,ga
+SeriesLength,,the listed GA sweeps cover the switch / goto orders,,ga
+SeriesLength,,the returns and the ternaries,,ga
+FixJerseyConflict,,"(2026-10-24, lane 1b batch 2): the swapped compare (22)",22,ga
+TradePlayers,,"(2026-10-24, lane 1b batch 2, GA): nm for the first label and nm2 for the second, and the reverse, each with nm2 declared in six positions (first, after err, after again, after r, last, before nm with nm first) (all 4: declaration order does not move the tie)",all 4: declaration order does not move the tie,ga
+TradePlayers,,"the second label inlined (first EAX, second EDX)",,ga
+assreffollow,,"(2026-10-24, lane 1b batch 2), all with d index and `^` (6 each unless noted): `? 1 : 0` on the first or both booleans, `!!`, no parentheses, `(...) != 0` round the xor, `d = d - camy`, long d, short d (15), `c = SortCords + d`, `c = &SortCords[d = *puckc]`, `d = 0 - d`",,ga
+assreffollow,,the abs as a ternary in the compare,,ga
+assreffollow,,"`^` without the d index plus a new y local for the camera distance, at the top or in the else block (10)",10,ga
+assreffollow,,"the d declaration in the else block (`!=` 4, `^` 10)","`!=` 4, `^` 10",ga
+assshoot,,"(2026-10-24, lane 1b batch 2, GA): `!randomd0(0x14)`, `!*(short *)(p + 0x4C)`, `<= 0x23`, `y >= 0x54`, `y <= 0x9D` (6 each), `p->Ypos < 0` for the first abs (8)",8,ga
+assshoot,,"the first abs as a ternary, 300 for 0x12C, `&= ~pfna` without the signed char cast (4 each)",4 each,ga
+ShowLoadingScreen,,"(2026-10-24, lane 1b batch 2): no new shape compiled (the listed GA shapes cover the store order",,ga
+ShowLoadingScreen,,the done flag,,ga
+ShowLoadingScreen,,the constants and the types),,ga
