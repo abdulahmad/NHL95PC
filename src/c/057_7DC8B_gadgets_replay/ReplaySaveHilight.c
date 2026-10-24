@@ -30,6 +30,7 @@ void ReplaySaveHilight(int unused, int x, int y)
     int oy;
     unsigned char *ev;
     int n;
+    int w;
 
     sub_B4BA8();
     if (ctl1team[0] < 0 || ctl2team < 0 || ctl1team[0] == ctl2team) {
@@ -60,7 +61,9 @@ void ReplaySaveHilight(int unused, int x, int y)
     DrawGadgetButton(7);
     sub_B4BA8();
     sub_B4BC4(0, 0x140, 0, 0xC8);
-    n = ((short *)pointerspr)[2] * ((short *)pointerspr)[3] + 0x11;
+    w = ((short *)pointerspr)[2];
+    w *= ((short *)pointerspr)[3];
+    n = w + 0x11;
     p = (unsigned char *)sub_8CCA8((char *)str_Pointer19, n, 0x20);
     *(Hdr17 *)p = *(Hdr17 *)pointerspr;
     ((short *)p)[2] = ((short *)pointerspr)[2];
