@@ -16,6 +16,10 @@ global EvadePC_x, avdgoal_box, avdgoal, avdgoal_jt
 ; eax = player struct, edx = direction (low nibble: 0-7 skate, 8 none, 9 stop). No result.
 ; Goalie -> goalieacc. Picks the glide animation, turns facedir by doplayeracc_ftab at a rate of $300-speed (min $180),
 ; sets/clears pfrev (skating backwards in own zone), then playeracc. PC: struct 10h (the referee) has its own animations.
+; C: src/c/043_5E16D_engine_skating/doplayeracc.c
+%ifdef CBUILD
+%include "c/043_5E16D_engine_skating/doplayeracc.inc"
+%else
 doplayeracc:
 push dword 20h	; 5E16D
 call __CHK	; 5E172
@@ -290,6 +294,7 @@ pop esi	; 5E4C0
 pop ecx	; 5E4C1
 pop ebx	; 5E4C2
 ret	; 5E4C3
+%endif ; C
 ; EvadePlayers: skateto collision routine.
 ; eax = player struct. Behind the net (|Ypos|>F2h, |Xpos|<32h): regd0 = a direction round the net from the Xpos/Yvel signs.
 ; Else for every other SortCords entry (0-14, not the goalies 12/13): if the predicted x and y gaps (pos + Xvel/Yvel high

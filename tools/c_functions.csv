@@ -411,7 +411,7 @@ StopIfFree,4A80E,36,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_
 a2offsides,4DCDD,116,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/a2offsides.c,matched,,
 a2touchpuck,4DE14,400,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/a2touchpuck.c,matched,,
 ass_pc_slot20,49460,344,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/ass_pc_slot20.c,matched,"register allocation: side flag kept in ecx (EXE edx), so the first path lookup indexes differently; logic complete",
-assbench,4B12C,827,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assbench.c,nonmatching,,register 21/22
+assbench,4B12C,827,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assbench.c,nonmatching,,register 6/8
 assbenchside,49BC2,283,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assbenchside.c,matched,,
 assboxenter,499D8,490,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assboxenter.c,matched,,
 asscenterd,4A53A,290,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/asscenterd.c,matched,,
@@ -504,8 +504,8 @@ Findhittype,579FF,63,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_
 MarkTwoLinePlayers,55C6F,185,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/MarkTwoLinePlayers.c,matched,,
 puckstick,57483,1003,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,matched,,
 checkpuckcoll,5428A,1570,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft: 1570 vs 1570 in PassLaneChk.c, every statement in place. The EXE keeps reach / half size / box size in edi and speed / |dy| / box limit in esi; the draft swaps them (the variable with more uses gets esi). See docs/UNSURE.md.",tail 0/0
-PassLaneChk,54C09,346,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft: 344 vs 346. The side copy is mov esi,edi (original mov edx,edi), so the team-mate y stays in edx. The other gap is inc esi versus lea eax,[esi+1]. Do not retry: declaring limit first produced movzx edi; declaring oy before side did not move the copy to edx.",register 7/9
-NetCollide,5601D,702,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft (PassLaneChk.c): 714 vs 700, first pass. See UNSURE.",register 7/12
+PassLaneChk,54C09,346,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft: 344 vs 346. The side copy is mov esi,edi (original mov edx,edi), so the team-mate y stays in edx. The other gap is inc esi versus lea eax,[esi+1]. Do not retry: declaring limit first produced movzx edi; declaring oy before side did not move the copy to edx.",register 9/11
+NetCollide,5601D,702,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft (PassLaneChk.c): 714 vs 700, first pass. See UNSURE.",register 7/7
 PuckCheckColl,548AC,228,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PuckCheckColl.c,matched,,
 ScatterPass,54D63,145,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ScatterPass.c,matched,,
 SetShotMode,5786E,140,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/SetShotMode.c,matched,"draft: vtoa result copied to edx before the regd0 store; asm stores ax then movsx edx,ax after word_C90A6",
@@ -1028,7 +1028,7 @@ SetSideControls,8B85B,212,064_86696_season_playoffs,src/c/064_86696_season_playo
 WriteCurModeState,8B92F,62,064_86696_season_playoffs,src/c/064_86696_season_playoffs/WriteCurModeState.c,matched,,
 CoachCutScene,8BC15,710,065_8BAAF_allfiles_coach,src/c/065_8BAAF_allfiles_coach/CoachCutScene.c,matched,,
 InitFileLocations,8BAAF,358,065_8BAAF_allfiles_coach,src/c/065_8BAAF_allfiles_coach/InitFileLocations.c,matched,,
-PlayMVI,8BEDB,732,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/PlayMVI.c,nonmatching,,slot 6/6
+PlayMVI,8BEDB,732,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/PlayMVI.c,matched,,
 SelectScreenBM SelectRinkBM,8C1C2,53,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/SelectScreenBM.c,matched,,
 stub_8C1B7,8C1B7,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C1B7.c,matched,,
 stub_8C1F7,8C1F7,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C1F7.c,matched,,
