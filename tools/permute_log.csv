@@ -408983,6 +408983,711 @@ date,func,file,transform,sha1,score,sizediff,match,first,cc
 2026-10-24,OpenSpeechBank,src/c/061_83459_speech/OpenSpeechBank.c,movedecl:off:6 > type:c:unsigned_short > incdec:41:forpre > type:fh:unsigned_short,30db93009ddee81c,67,0,0,86,ga
 2026-10-24,OpenSpeechBank,src/c/061_83459_speech/OpenSpeechBank.c,movedecl:off:6 > type:c:unsigned_short > incdec:41:forpre > loop:33:while,d212f7d62f943942,27,0,0,29,ga
 2026-10-24,OpenSpeechBank,src/c/061_83459_speech/OpenSpeechBank.c,movedecl:off:6 > type:c:unsigned_short > incdec:41:forpre > cast:58:17:short,225af7992f516e9c,17,0,0,29,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,base,1fb8d1f8ddc42f6b,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,split:depth:4:last,6fade81101bd1cf8,141,23,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,rettype:short,e107de5cf7452f1b,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:25,413b9f1b0844e077,110,15,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swap:170:6,7fbbbbcde1c0dacf,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,loop:194:gotobot,8c3dd0277a65e083,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,zero:99:ne0,c6ea9c99bd6bfee6,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,commute:60:!=,aca116117c0e1638,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,paramtype:1:signed_char,4b66ec2c764f866d,110,12,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,lvinline:c1,9935b90761a37aad,268,19,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,cmpflip:36,974131b58a2dc947,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,chain:105:split,8c0d2f54feb1cd48,130,17,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,tempadd:170:rhs,4a122793382bf5d2,152,17,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,cast:149:3:unsigned_char,ff1e95b6364f90da,414,69,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,opassign:67:0:split,9ad17dc70911bb76,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,mulshift:174:12:mul,24c13e17a5da6e2f,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,shiftstmt:174:12:out,d1b375f5653b1df8,135,7,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,forchain:202:merge,58a785c3daf91b94,109,13,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,reuse:w:bits,9baedb29d5fe58bb,340,15,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,type:bits:signed_char,9963df40590fdb67,462,8,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,incdec:64:op1,835def51201af6fe,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,movedecl:k:14,b9dbfbe1088bcb48,113,17,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapdecl:k:e,d13163c5daeb6fc8,113,17,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,ternary:170:if,18cf9628d7f6e1a7,,,,,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,split:depth:1:after,2273166da73a370b,252,0,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,rettype:unsigned_char,2fc6e59c708fe245,109,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83,79480917c0e3ce6f,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swap:60:11,46341c31df322a84,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,loop:202:ifdo,0dab47a2a22a6392,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,zero:228:not,5cc1f890e4454f9a,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,commute:79:==,5b5c45013a7f759f,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,paramtype:1:unsigned_char,8b6f3f2fbce5c4e2,111,11,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,lvinline:c2,eba87a9589e4c63a,253,17,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,cmpflip:63,c4464e7904545f14,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,chain:34:mergeab,eaba295b1a76cec8,274,28,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,tempadd:171:rhs,367aa4f33388b0e8,135,17,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,cast:174:3:short,f5537bd9324b44ff,172,4,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,reuse:h:k,c399d5c66dd28eaa,354,11,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,type:at:short,117996e1d8de590d,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,incdec:111:forpre,d31b9e57fd1eed6f,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,movedecl:m:7,6e4193e77e7494cd,147,17,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapdecl:i:k,a66e5789287efb9b,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,ternary:171:if,cc72dca61f88b263,,,,,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,split:depth:4:after,6d18b99800d12879,141,23,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,rettype:unsigned_short,15ef1b14e5206061,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:121,336f65670db0d3b6,110,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swap:100:0,b0fbe3529d71462e,110,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,loop:126:gototop,e4d44756d2107924,114,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,zero:63:eq0,8bb9a9b86f8dd069,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,commute:87:!=,8aad6082fb064464,137,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,paramtype:2:unsigned_short,21937377c15d8c4f,111,10,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,cmpflip:113,04c125fe3e1ae93e,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,chain:114:mergeab,f2b368cba67b330a,251,25,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,tempadd:168:rhs,900e0e3bef2a8adb,188,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,cast:171:10:unsigned_char,50fe85bcd15ea707,273,6,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,reuse:h:bits,0f8f0d5655a12ab7,380,15,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,type:mx:unsigned_short,816350445fb6a1f0,594,26,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,incdec:167:pre,6b74abcf5f8a42cc,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,movedecl:oldmy:5,445ac5aed17fdc3e,243,17,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapdecl:e:m,3ab21e57c5771774,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,split:depth:3:last,1bcc0443b6d24adc,211,0,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,rettype:char,611680914625844a,109,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:29,3aa5e3920912a94f,110,15,0,43,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swap:174:8,16c729cb8af4a106,108,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,loop:126:while,6944d21cddfb2586,114,15,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:95:==,f33296ce6d82efa1,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > zero:228:not,94ea6c2c6848d989,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:level:unsigned_char,1e6150b1a572f020,424,59,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > rettype:unsigned_short,a0b87e672c85b273,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > lvinline:c1,4f0e79875b6304bb,273,9,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:148:while,d51a65b8e9f5c959,113,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:60:6,ad0ce7d95f82c377,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:depth:c2,ea395cac4392f429,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:oldmx:1:after,12efa764a5ed6fd6,233,28,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:67,2a5be7376bc17834,113,13,0,499,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > forchain:202:merge,8efec77bfb4aed4e,108,15,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > ternary:171:if,6d663ae68f13b8fa,,,,,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > mulshift:174:12:mul,3dfed7e9733cd421,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > tempadd:170:rhs,cfbefac3307c594b,151,11,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > incdec:64:op1,bdcb6ec907180c57,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > opassign:67:0:split,9a9a9929c004ceba,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cmpflip:204,9913f763cb564ea8,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:206:split,70559c5af9a52234,166,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:38:3:unsigned_short,0c96766dc18b145f,174,16,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > reuse:w:k,ee7c7f7ecbe4ce92,342,17,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:m:17,fdc4ccd8fa80304f,112,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:4:unsigned,a068649bae338e48,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > shiftstmt:174:12:out,8a4ec65f67269200,134,21,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:60:==,0715658d546aeba3,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > zero:150:ne0,c4e94d9ae625d5dd,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:w:unsigned,ebfe670a58643d61,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > rettype:short,bed876d24d674436,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > lvinline:c2,816a19e97ea9d65d,258,11,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:102:ifdo,f0b6196c57986db8,165,15,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:171:6,bc0cb5afb3a0f37c,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:c2:oldmx,45d6e71c59ef1d2f,238,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:depth:2:last,a68d10f36b1462eb,233,28,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:205,ddd60e813c36790d,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > ternary:170:if,e6ed506ad2f10866,,,,,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > tempadd:168:rhs,d7ac69dbbd8335e0,187,17,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > incdec:64:pre,5e721bc84b5e012e,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cmpflip:63,9b30fe9192508aff,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:154:mergeba,b6eeba631546989c,177,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:125:2:char,77e82d923cfd0b30,285,19,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > reuse:h:bits,e0f0bd03fc84296d,385,13,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:c1:1,c066a4904be4f302,166,13,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:2:unsigned_char,71a136a3e91257ec,110,17,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:60:==,ad0ce7d95f82c377,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > zero:99:ne0,2f85e49eae99b884,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:at:unsigned_short,335dca84dee40fd2,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > rettype:unsigned_char,219b4f7e1000deb5,108,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:56:goto,c95cc7a287cca7e2,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:218:0,6bfc63da79c6831f,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:nitems:item,a6c35d450a26c81c,140,13,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:my:1:after,834287b8cad9633d,338,31,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:90,de4e2bc95214cba7,108,2,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > tempadd:171:rhs,2775561f9c8097ed,134,11,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > incdec:167:pre,59bfd6ed2257b3a8,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cmpflip:113,e1bfbc8d22dcc176,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:130:split3,587f43ca2767b943,209,17,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:79:4:int,1756dbf8e41dbcca,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > reuse:h:k,b99dfc039a3fb021,359,17,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:my:15,631842728ef479a1,303,13,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:3:short,b69ef6b9f463381f,109,16,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:147:!=,3c6b0c18b7f8e095,111,15,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > zero:103:ne0,7f58e794bd00a1a4,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:h:unsigned_char,0349872264b0d910,435,29,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > rettype:char,3990642065323c8e,108,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:111:while,bde6950bf1bd6698,120,15,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:148:gotobot,547d1e848036cfcc,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:59:&,6f1683b0700bd299,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:mx:bits,44242fcbafb12835,112,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:depth:unsigned_char,6a80ddd6068a2c2f,480,3,0,26,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:3:char,09229daac1390ad4,110,17,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:42:6,82beb38947cb8be3,109,13,0,134,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > incdec:126:forpre,f5d9343a9bcd3577,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > zero:195:ne0,f7976465e1fd1703,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:105:split3,38696e5d4e191636,190,4,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:90:4:short,b6f5fd58b509b7b5,246,14,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cmpflip:36,41b1b36ccae7f102,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > reuse:w:bits,ddac68b24dcebe38,345,13,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:level:11,c65469ac7393bef4,199,13,0,126,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:oldmy:3:after,509e211dfdfc209c,220,25,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > tempadd:174:<<,d4ce1ff31e332f19,136,11,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:114,773ec57a8f5d7133,109,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:50:goto,cbd5443469a6a385,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:63:==,b54011b05f0034d1,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:level:bg,c4a9725de3752574,130,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:item:unsigned_short,5d1a63ed985b7359,670,24,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:4:char,a06ae032c2f24d7d,1015,6,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:174:10,04fd1694896606b6,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > incdec:102:forpre,8269a93f756baa83,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > zero:128:ne0,98ba3c51936e94b5,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:155:mergeab,bded45f935b978c5,176,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:74:3:unsigned_char,d25225806a1fd4d7,1032,5,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:c1:15,91674c7bcf0805ea,286,11,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:depth:1:last,270972cf36d1fe90,233,28,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:215,a71bc40942d9e401,113,22,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:148:gototop,e15aa781656d7e21,113,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:87:!=,87badc3679b531ce,142,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:oldmx:h,870dedca561d1d5b,232,13,0,122,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:at:unsigned_char,8cb12312e4c0f580,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:3:unsigned,7ec9b351d1cc14f4,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:170:6,d1f5c7860d0ea496,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > incdec:202:forpre,e0c07bd6322a57d2,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > zero:58:ne0,d84295f15a69c6e3,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:152:split,028cf1476331cd21,118,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:74:4:unsigned_short,aaf91228c79cb846,1033,6,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:w:12,36f7972a8dd112f4,142,13,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:oldmx:2:after,5b72326d22780945,297,45,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:130,a3acc1a06d56d77d,117,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:126:ifdo,c9cadbafac4c9fac,250,15,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:86:&,2fd282c40e064a5a,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:item:depth,87fcf9aebd0d7a52,258,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:my:signed_char,924d132ba8cc2d7b,525,63,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:4:signed_char,49fffef5e87ea30d,1019,2,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:70:1,3354384661f261f1,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > incdec:33:forpre,2e01f8b3ff5aef68,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > zero:220:ne0,b45fb8a2a0c92a10,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:206:split3,f1ee48777249e344,182,3,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:92:2:unsigned_short,7dcc466fa3e2e6c4,1022,26,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:level:10,42d3f2933748edf9,132,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:depth:1:after,2765141e3be82fe2,257,28,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:214,85ac5f8d1fec21de,113,9,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:126:while,18071e2370e3a832,113,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:79:==,788a97cf1884b94d,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:pos:oldmy,c4ea85bef25946de,166,13,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:mx:short,a431933612b410c3,405,74,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:4:unsigned_char,0cc5f6db4a44bec8,1015,6,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:173:2,0bb6848ecaea198b,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > incdec:111:forpre,cb5cbba171963433,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > zero:63:eq0,cdff654a4a9501f5,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:197:split2,4e37b481df33496d,196,3,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > incdec:194:forpre,21d8c83162c75e79,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:level:0,afea5eff4e42e3c3,270,13,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:while,3d3ab71978f675ad,111,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:1:short,df3992c4186c5b85,109,16,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:197,bb714924ebebe4ab,110,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:172:2,d39adfcb445f66d4,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:125:!=,dfc3de1699b8b9ba,111,15,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:item:char,70afcbf0f8c4f98a,670,16,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:c1:level,66a8857cf6b98ffa,145,13,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:152:split3,bc105d62a4c81db4,133,3,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:depth:3:after,a750210f3b23a053,257,25,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:79:5:unsigned_short,f59ffa7420732eeb,159,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > incdec:167:op1,b0840d87ee8b3bc0,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:mx:1,83af99a2817b78cf,233,13,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:33:do,603368b8049f1732,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:4:unsigned_short,bd8623cd765908c9,1018,0,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:177,fdb25fa2a1abefd3,113,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:41:6,49ebe7b67ee84972,109,13,0,102,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:66:==,a4e8d8c0c5325b91,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:mx:char,dd24a52f966cf3a7,404,51,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:e:m,cf46740294539813,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:26:mergeba,bf609eb957c51c05,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:oldmx:1:last,daab5bdd11a22201,233,28,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:80:2:int,07f5d775b7d4a85a,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > incdec:148:forpre,1a60b4ca3afd5197,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:i:5,179ecf66fa139403,155,13,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:102:gototop,c37c4882f33afa48,111,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:1:unsigned,edc5b148fbf882da,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:155,5489cd5bfb1331b8,109,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:66:4,1b74351b6491f977,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:60:!=,0f8d5cd535ad56a8,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:c1:unsigned_char,cf7db97add728c64,1021,27,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:i:k,aaddd08cba5cb148,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:37:mergeab,830b0d91b2df8d03,273,0,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:oldmy:1:last,d53565b7b3d62e23,211,38,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:221:4:unsigned_short,3e30cd156bc91a26,1022,16,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:at:14,f6f761b426381ad7,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:111:gototop,39567f2f7ebfd980,120,15,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:3:unsigned_char,21105cbeb8370859,110,17,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:132,72c63e9e4b4f66fe,109,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:174:8,c278dfa9f12bc17d,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:70:!=,74d2aec2e5b41929,111,10,0,393,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:c2:unsigned,e2b3f0f87b09357c,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:bg:w,161eb9160236b023,119,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:132:mergeab,0da4a25f7911eed1,1009,1,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:mx:1:after,85234d3dcfd47098,311,26,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:172:18:int,96147342406b005e,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:c2:20,2f12cc3ed08e5df3,238,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:gototop,6c5cc04fae14f90a,111,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:2:unsigned_short,81f3bc983ceb4b2e,110,18,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:37,f93cce4017a9cd9d,109,13,0,84,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swap:100:0,b160d08cd2ea1846,109,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:100:==,b160d08cd2ea1846,109,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:k:char,4c302c5e2f654242,164,23,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:sel:pos,171ac25ca3e305e0,1019,13,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:41:split,8b04b39b472988a5,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:oldmx:3:after,78e25af2f43192b2,221,17,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:25:2:unsigned_char,c88b38190239cc8b,162,15,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:c2:11,5bbfb832cc6a4bc3,146,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:202:while,8b1ba266b79db1cd,111,15,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:1:signed_char,99eb78d02ad1d400,109,16,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:121,3129f3ea51fe5de8,109,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:170:!=,d46737d7173cedb3,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:c2:char,8f29cf30d4582183,1028,10,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:76,8c0a9f594ba7437d,146,13,0,666,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:38:3:short,65955e5d9b77191c,173,14,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:oldmy:3:last,3a1e7a33cefede52,220,25,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:32:split2,84ad15c26be18fc1,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:level:unsigned_short,04f72a1a116cfcc1,424,72,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:at:i,f264625e0a138556,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:171:!=,eda6c9195e962ed0,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:56:while1,e085eebb95e1cdd6,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:3:unsigned_short,094f44f6b455094c,110,18,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:e:12,ef88aabc6e5bf997,183,13,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:71,741d82650add39d6,112,15,0,393,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:105:10:int,bd76ed657309d498,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:depth:4:last,ec965ac74c05fc7e,140,5,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:132:mergeba,be5dd57c28f99817,1009,1,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:oldmy:short,36e8470e431cc4c9,730,39,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:bits:my,f22fc8cf14fe28d1,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:87:!=,68afddfd612e0656,142,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:148:do,5b3901f35011879a,131,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:1:unsigned_char,2c2d2ee03a157d5b,110,17,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:e:17,e03186f662621bdd,112,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:171,3b526d731288d040,429,39,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:42:5:char,a32af8569373e163,265,2,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:mx:1:last,c1942d213f9ffb4a,1033,28,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:152:split2,15008f66ae40dd24,131,3,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:i:unsigned_char,484ac68101a50718,668,24,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:k:e,f8def8ca75b76c41,112,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > commute:79:&,9e7305ac12e12c5a,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:111:do,1365b842794bb954,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:2:char,c6a6ecaa27b53a78,110,17,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:at:7,1b20c23cc76eb570,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:120,3c68a73a7b97252d,111,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:193:4:char,423410abcc6e0b44,244,4,0,72,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:depth:4:after,d880c4f3a5a4a6dd,140,5,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:37:mergeba,ae7186a02d395c24,272,0,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:oldmy:unsigned_char,f6118259f180bf2e,733,20,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:w:nitems,c7093e3b9accf02f,137,13,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do,aecc25f833425b05,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:4:short,b635943d61c34061,1019,2,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:k:4,d50ebfd70f8abc33,155,13,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:152,71ce60d713578385,118,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:171:24:unsigned_char,89929423367ac1d4,1020,30,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:depth:2:after,b72f86fcc143b205,257,28,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:115:mergeba,916298bcfcc3e2e5,1009,3,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:i:unsigned,a792c199eef5f0a8,374,42,0,65,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:oldmy:menus,f971b76ccb5aadf3,216,13,0,126,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:33:gotobot,8bc30ff719c3c470,330,12,0,65,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:2:signed_char,58173fb0cd9c78fa,109,16,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:h:14,ae3cff4258a8f404,238,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:24,46e7105cce383441,109,13,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:60:19:int,9764efc04c9b8932,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:oldmy:2:after,71059967c23cd111,592,29,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:114:mergeab,5f1c6bb9afa3e520,1009,3,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:level:signed_char,63c9e3cc1cf4baef,424,66,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:h:at,ff512b1e4a6e9867,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:102:while,d676860cf12d37b9,111,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > paramtype:2:unsigned,8aafeb4b8f986911,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > movedecl:w:8,4a4c2bdde85e8e49,132,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapstmt:26,9b7299ad07c38a53,109,13,0,28,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > cast:98:6:short,1ff774589159e6f8,316,6,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > split:my:1:last,d92baf5648b0ed03,1035,33,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > chain:130:split2,ef8606f352751167,207,17,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > type:h:short,85b9d32149d156e0,421,36,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > swapdecl:my:c1,72dfc8d44801b575,124,13,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:33:gototop,94a2b804be07d8dd,333,12,0,65,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:42:6,17e1399d5bacbdb5,108,11,0,134,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:169,942c783d7df59d70,276,15,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > ternary:170:if,ede46afb32f11480,,,,,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:my:19,628fa49ca723de38,272,11,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:k:short,f12b889b3e9796d8,158,18,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > shiftstmt:174:12:out,52f44d3ec9a4c7b5,133,19,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:87:5:int,28dfbcd1f6b96bd3,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cmpflip:36,e690515eb9d35c13,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:102:gotobot,b1dd82dce51a4b56,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > lvinline:c2,5560c0845fe08168,257,9,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:79:&,30edf6bf13412794,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > zero:103:ne0,5a056c865808dd65,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:depth:2:after,ca51b45cd93922e8,257,26,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > opassign:67:0:split,d12eda869b282011,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:c2:oldmx,bf6cc32f144a6469,237,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:3:char,5eb31f3dd9bf7fea,109,15,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > forchain:204:merge,215104450ec034c7,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > incdec:204:forpre,5cd8c9e7243a5b56,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > reuse:h:bits,505e8fb3f57218c7,385,11,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > mulshift:174:12:mul,b4ff1bf413d068f9,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:152:split,392b462a790c2dd0,117,9,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > tempadd:170:rhs,6e67c89ddddff662,150,9,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > rettype:unsigned_short,7449a4a91ec92efb,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:220:0,541b26fea7ea6b35,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:105,26bd622a1184e76d,164,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > ternary:171:if,eb3d522b9f2fb238,,,,,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:h:12,7349d57ad046b205,151,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:my:char,9daddfab8f7ba366,528,51,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:216:2:int,62fecfd81611036f,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cmpflip:206,68c687d1b59d06d6,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:102:do,e8ff9b75d264bc00,164,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > lvinline:c1,3230adfa541540e5,272,7,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:100:==,8c817dbdd58d1361,108,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > zero:196:ne0,7d41c38804e02af8,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:oldmy:3:last,8500e3b802a6f948,219,23,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:k:e,e35c786b4751880d,111,9,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:1:signed_char,f1cf94319e5a8242,108,14,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > incdec:201:op1,a5c8ecb32efb5efb,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > reuse:w:bits,a7a2d00c222037ec,345,11,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:154:mergeab,30f546f0f3879a1d,175,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > tempadd:171:rhs,3614a63004c3d059,133,9,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > rettype:short,fff8bbf83f7e6b5f,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:66:4,55cc61de6e40b271,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:26,a64d2aa8bb7bfc23,108,11,0,28,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:level:2,efdc05be1a29611f,264,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:oldmx:unsigned,ea325486ee0105bd,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:59:5:short,41ddc7d9aba97e60,158,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cmpflip:63,977eb324fef55d1f,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:111:gotobot,2975998b6cd0a5e1,116,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:171:!=,d1be92fc3ea3f47a,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > zero:63:eq0,251c2a4adfbdb9a9,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:oldmy:3:after,f440c6fef7159bb3,219,23,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:c1:level,1390f0e974c03b88,144,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:4:signed_char,a01d384fd0bec023,1018,0,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > incdec:167:pre,0761fb9511c99a69,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > reuse:w:k,e8e9cd7f400aa6a7,341,15,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:154:mergeba,81ccdc9310515496,176,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > tempadd:168:rhs,3ec06cc8f319cd51,186,15,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > rettype:unsigned_char,d9fcfc4a8df42cb2,107,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:100:0,8c817dbdd58d1361,108,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:64,05725ceea22484c1,110,13,0,393,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:m:5,b34702d259c26e81,158,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:c1:signed_char,58aefc66530bd0d4,1024,21,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:164:4:short,956191dda34162d0,1018,14,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:114:mergeba,e2d0cfb607e14a10,1008,1,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:154:3:char,d77cfedc7893bb40,426,101,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:oldmy:2:after,23ca3fc37b3975de,748,22,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cmpflip:113,740512592d29314e,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > reuse:h:k,563233b87d390473,358,15,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:2:signed_char,4ae0060e492f2360,108,14,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:216,0d076816df9a5ccb,112,7,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > rettype:char,1135b8dcdbd68c48,107,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:172:2,22ed8691445c5217,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:125:!=,3c9f28ad4e2c6023,110,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > tempadd:174:<<,ffca840839c5cd38,135,9,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > incdec:111:forpre,e4d1a056fa6bb5d9,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:33:while,a7e7f8c93a7f1dae,343,10,0,65,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2,57cec962a1d7eefc,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:level:unsigned_short,dabfb04521b67b97,424,70,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > zero:222:ne0,e1e54c3652d5f82b,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:i:4,1e1b3071bb4ff060,158,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:152:split2,9fa8e23a3c690acb,130,5,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:208:3:unsigned_char,5816e075d0d805a6,510,123,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:depth:4:last,24a2e9b6b2fb08d6,141,3,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cmpflip:202,9e2f7fbde889358e,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:2:char,da47cc6e51b50daf,109,15,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:132,b8c05b4d2140d781,108,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:174:8,1d41b1df319380c2,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:66:==,28ba45d3eb6d138d,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > incdec:64:pre,5f0e46fb31895bab,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:195:goto,b0c841fe0159b4e3,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:e:m,adca25c6379452ca,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:level:char,db8c2e31bf4dbd04,424,57,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > zero:150:ne0,07c44e74798e2bc4,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:my:1,eb0b870625705caa,251,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:34:mergeba,04e1d8d296871c9b,271,2,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:218:2:char,a2fc4007c45b2160,285,18,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:depth:3:last,e27c9ddaa9967519,216,26,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:1:short,e561d86394ba4974,108,14,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:171,d86faa1ae6c05e30,428,37,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:171:6,2ad66b94eab33b62,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:==,90e0345971ac572c,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > incdec:33:forpre,3c8bedc9ee997c2b,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:126:do,354cedcdcd76d309,201,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:menus:mx,32e66830ca731294,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:h:char,4112f5c07c5692e2,435,27,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > zero:230:not,af595b76ce948955,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:depth:20,f22b80c04440527c,237,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:130:split,41d3ff580f15f807,123,9,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:177:8:short,61170b8f0cf64536,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:oldmx:2:after,e51fe6f2b3e08de1,296,47,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:4:unsigned_char,41eade78b9d2a201,1014,8,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:83,560f0200cf00917c,107,17,0,698,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:70:1,6a237b416a563337,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:87:!=,5f8d49ce7fab8a9a,141,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > incdec:102:forpre,31dd39d9e7de5f45,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:204:do,564091e2e31e8cf3,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:at:i,9afeca82e477a089,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:i:short,a010cadc190746f0,1146,49,0,28,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > zero:99:ne0,8188c255e81af344,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:c1:21,84ecc4fcca007f48,268,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:114:mergeab,db7675b1c4f0309a,1008,1,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:171:7:short,c738fa47ce53003f,163,14,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:depth:3:after,08125ea07ac79731,257,23,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:2:unsigned_char,e352f4a4b09f2ad6,109,15,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:29,eb0d6d92f6321ddd,108,11,0,43,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:41:6,cbcb813f7ac679a8,108,11,0,102,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:79:==,5e738d136b4c3888,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > cmpflip:206,d4f57aef02dc640e,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > zero:230:not,610eb24c915af4c7,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > swap:66:4,d18f26d69b2dffc7,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > commute:79:&,8574b51d53b57b6d,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > paramtype:2:short,94bdb35be205beab,108,14,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > cast:119:2:unsigned_short,749bce47b9880cf8,329,4,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > ternary:171:if,0714af05a47f2b73,,,,,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > opassign:67:0:split,506dfa88d2983a34,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > loop:102:ifdo,40df42099c919a21,164,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > incdec:167:pre,a7722a0cfe1cf323,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > swapdecl:sel:pos,dde33ba3e8207240,1018,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > forchain:204:merge,930e6d8da312f3c8,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > split:oldmx:1:after,36bc7abb22b6d488,233,26,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > lvinline:c1,ed6c78a3aff5574f,272,7,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > mulshift:174:12:mul,d17c81e41095bbfd,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > shiftstmt:174:12:out,02afba8763e34cf9,133,19,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > reuse:w:bits,d756c5a1c21fdd2d,372,11,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > type:oldmx:unsigned_short,cc9672b0d9e3bba7,428,42,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > rettype:char,1559e49eaf75036c,107,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > tempadd:171:rhs,125d62d9979ca953,133,9,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > swapstmt:82,7609e8d3addb597a,108,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > movedecl:mx:2,d36ceec259f69f2d,173,11,0,126,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > chain:37:mergeba,e721da48506da828,264,2,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > cmpflip:36,54649f7a12b6709a,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > zero:99:ne0,f9eaddaf30a2ad11,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > swap:174:8,56a746aa69c43ded,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > commute:87:!=,6a337e89d57d4188,141,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > paramtype:2:unsigned_short,9ad3e209d6435b4f,109,16,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > cast:208:3:unsigned_short,e0f2b3f8595a827d,166,14,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > ternary:170:if,0fb03106ceb318f3,,,,,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > loop:148:ifdo,f8e04942e7e17640,162,9,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > incdec:201:op1,1923620fe2d3bb92,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > swapdecl:at:i,9a11b67b2a6aea6e,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > split:oldmy:3:after,4051efa3d37628b0,219,23,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > reuse:h:k,86c815abcdbd0730,358,15,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > type:level:short,80b7cd22d1e4fa1a,424,64,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > rettype:short,5caad84fe4c5fbeb,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > tempadd:170:rhs,d663bc73ffa4263b,150,9,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > swapstmt:119,50c2b6816b4f1ffb,117,7,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > movedecl:w:2,8e36edebdf43a52a,255,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > chain:32:split2,33f658a5ac9ad387,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > cmpflip:202,369a02a997712a48,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > zero:103:ne0,a1e24e1e189b4a19,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > swap:174:10,3111d265a9337214,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > commute:59:&,f0de399bd5e44ebb,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > paramtype:2:signed_char,e33410b4cc6e414f,108,14,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > cast:170:4:unsigned_short,8219a05827d59cde,183,12,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > loop:204:gototop,1d5c9cdf2604a46c,110,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > incdec:64:pre,d17245ee4ca3a80f,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > swapdecl:bg:w,e0673c70dac79f24,118,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > split:depth:4:last,20171fcd8d2444eb,141,3,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > reuse:w:k,3d301131b429ca0d,341,15,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > type:i:unsigned_short,acee7b78d8f91fe7,681,3,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > rettype:unsigned_short,74972f52849a0984,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > tempadd:174:<<,ae01b230722cd7fb,135,9,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > swapstmt:24,87442f53be12813b,108,11,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > movedecl:i:3,8282b6aafa1b159c,268,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > chain:32:split3,2a6722338bd46187,108,11,0,58,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > cmpflip:63,ffcc6bc5093f4a41,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > zero:150:ne0,65339770375626fd,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > swap:220:0,0ca3d2185452a085,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > commute:86:&,a34baf9e3e6bacfe,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > paramtype:2:unsigned,dabbeeb17accfcd1,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:depth:c2 > cast:170:16:short,3d42ee2da948d158,314,23,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:i:1:after,6053dde2895bb3bc,155,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:42:6:unsigned_char,5731a0f3168a539d,264,0,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > incdec:64:op1,d6adac332d553c4d,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > zero:128:ne0,f6abec25a65f00ee,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:173:2,980ead01475d705e,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:119,6d355c353cf5994a,117,7,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:87:!=,239d380f95b98c07,141,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:105:split3,880795e95228e0e4,189,2,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:bg:w,8b2bb2cd55227776,118,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:mx:signed_char,c0acdf1030232da9,544,74,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:mx:6,1f936ccf07aad6b4,180,9,0,126,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:204:ifdo,c8f421a865e9b5d5,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:1:unsigned_short,bfbbcc5a0815fece,109,16,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:my:1:after,5ca34f9c2bc0263f,338,29,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:215:3:unsigned_short,02e65a5e5128403e,302,5,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > incdec:148:forpre,b905915db31daab0,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > zero:58:ne0,b3f2810739f87544,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:60:11,12c62a9631e4aca8,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:82,2dfdefc127d67dcd,108,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:59:&,f7f63ddcb3a40f85,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:26:mergeba,14437f26bfcfb2f9,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:sel:pos,dcb71bbacfeebdfb,1018,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:c1:unsigned_char,e789c51f29abbe0e,1020,25,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:i:12,28d51ac94e8cab12,169,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:204:while,0ec837c2750a4dd2,110,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:1:unsigned_char,01431b22ec105aa0,109,15,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:i:1:last,c905f001cc313204,155,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:161:2:int,351e3132cc7aed0f,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > incdec:167:op1,50907584afb6f0a3,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:170:6,f8dfc7f138f76adb,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:76,5b627308178c8862,145,11,0,666,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:70:!=,159c3406ecde1721,110,8,0,393,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:133:mergeab,99520bd8b8831958,1008,3,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:h:at,7c34aa3171b1f3c3,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:at:char,368dc4e3d47e4f20,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:oldmy:16,4c9d3df2fa2ee1c6,286,11,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:111:gototop,ea411fa8acaac0a3,119,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:2:unsigned_short,0547fdaf9f81dda7,109,16,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:oldmx:1:after,a23d7a6885fa066f,233,26,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:171:28:char,6948681f16743f67,188,15,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > incdec:201:pre,8979ee81f3db1175,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swap:174:10,ca648f36ea57c5b8,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:91,f53bd558ac5332a8,108,19,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:==,12c62a9631e4aca8,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:132:mergeab,87f698fc335c99b8,1008,3,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:oldmy:menus,35189f7e0beadb3e,215,11,0,126,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:i:unsigned,09c69e890292dccc,374,42,0,65,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:my:12,509d7319a7674754,202,11,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:50:while1,c0ecc9878f9b923a,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:4:char,18e03a6c801e2cb5,1014,8,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:oldmx:3:last,60876af9d91d6487,220,15,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:41:11:short,8b3c8cd004e47c99,160,10,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > incdec:126:forpre,cc104d0fa261dbc6,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:176,30e412bb29b989c9,147,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:!=,3f972b997892192d,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:115:mergeba,c67331e0ce66f6fd,1008,1,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:oldmx:h,19d3d3f301aea60b,231,11,0,122,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:depth:signed_char,ee833e61835b2c28,589,11,0,26,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:w:17,d5fd8a49d4069f3e,1024,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:102:gototop,883b6080dad72d47,110,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:3:unsigned,158874818c96accc,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:oldmx:2:last,ec589f251fda098c,292,47,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:101:2:unsigned_short,6a024dc00bf8bf75,247,12,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:198,3ace5d4e96985291,109,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > cmpflip:113,571eb2e2905db9df,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > reuse:h:bits,84e1db48dc99b2d5,385,11,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > incdec:126:forpre,911eafe3ed900347,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > paramtype:4:signed_char,05fd795340d9aa58,1018,0,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > split:oldmy:2:after,6275af0552c32232,748,22,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > zero:196:ne0,289551f0ccb260c8,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > shiftstmt:174:12:out,1e31750556960908,133,19,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > opassign:67:0:split,9afe780fe7783c72,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > forchain:204:merge,5bc689f93ec6a2ba,107,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > ternary:170:if,3005541758214775,,,,,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > tempadd:171:rhs,633cd8c89cb29100,133,9,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > rettype:char,d2dbe7d66ee8dcc5,107,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > swap:66:4,4658046a6dc76622,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > swapdecl:bits:my,e1cf8238f0f88a6e,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > loop:148:ifdo,57322f9cd62f6a37,162,9,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > movedecl:bits:7,fdd1d94925e65777,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > lvinline:c1,a4ebf57272f39d3e,272,7,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > chain:105:split2,4fe5bbab508fdfcf,187,2,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > type:c2:short,514570269a1f049b,1031,17,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > cast:164:3:unsigned_short,8ee232630955cb21,159,5,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > commute:60:!=,835ca04eac735697,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > swapstmt:71,ac6e4535cf36a057,111,13,0,393,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > mulshift:174:12:mul,b8a3fb88260693e6,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > cmpflip:36,1f14402eb1266410,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > reuse:h:k,0ba188132da853ac,358,15,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > incdec:111:forpre,f0ea3a06366e62f8,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > paramtype:1:unsigned,d74326232c8f6b07,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > split:oldmy:1:last,afbc901aeb995893,211,40,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > zero:63:eq0,6d0e197ae9308921,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > ternary:171:if,610f6878443f33c5,,,,,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > tempadd:168:rhs,ba83f6f53c6d065b,186,15,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > rettype:unsigned_char,ed1c272c8b83c353,107,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > swap:171:6,1529ef28b4dca22c,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > swapdecl:oldmy:menus,223ca40c449d5835,215,11,0,126,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > loop:204:while,6da29600b82f406d,110,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > movedecl:c1:0,5267ebf4db19c733,165,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > lvinline:c2,7f8bca06d70cd380,257,9,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > chain:152:split,98d502d6c30dad86,117,9,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > type:h:unsigned_short,19909850c7c2569a,421,33,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > cast:174:15:short,39148952336210c9,269,23,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > commute:59:&,c14bcaeb34803dc5,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > swapstmt:216,f80dfeac52ffb2cc,112,7,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > cmpflip:202,a3fd0f8f2066608f,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > reuse:w:k,81492b45b7c210a0,341,15,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > incdec:64:op1,46ed96b2d5acebdb,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > paramtype:3:short,996ed5c9f0fac086,108,14,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > split:i:1:after,86f335b8157ebd5d,155,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > zero:58:ne0,cf8b5c6d6559f4ff,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > tempadd:170:rhs,c22ebffc5a977a4b,150,9,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > rettype:unsigned_short,d49a39aa31c0bdbd,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > swap:170:6,eb12ce46cebb3fbe,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > swapdecl:c2:oldmx,83dec087ccdc58a3,237,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > loop:126:while,be8cf501daaac573,112,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > movedecl:w:8,a1e09f3a438ef9c8,131,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > chain:130:split,f5dfed9afbe9cedc,123,9,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > type:bits:unsigned_short,9937718f3cb7ba35,477,21,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > cast:172:12:short,1652b4b2a52e71be,335,34,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > commute:170:!=,82c7c1715af6362f,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > swapstmt:34,f81b0a180d479419,108,11,0,72,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > cmpflip:63,85971f4326c5e5d7,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > reuse:w:bits,2e9c16b4a2fba40f,345,11,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > incdec:148:forpre,5acf771b18a5b169,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > paramtype:4:char,2651472dad378126,1014,8,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:60:== > split:mx:1:after,1714afeca4a9832a,311,24,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:w:unsigned_short,336c1dc88accdec1,454,29,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:207,5cd0554d7b7a741f,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:1:char,51cb67e11252a56e,109,15,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:depth:1:last,b0c754bccb599e72,233,26,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:item:depth,c8ab0cab7ba3b01c,257,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:147:!=,93c4ce73a3d4a3de,110,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:102:ifdo,4e7de8cefc7c76d0,164,13,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:47:2:unsigned_short,c9275e544b529783,291,4,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:i:14,6e21e5ebf06b4a16,111,9,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:130:split3,047e278a1da98955,208,15,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:item:unsigned_char,f5ebe99b49af23bd,382,14,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:109,ce8889c6ba33228b,110,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:3:short,bd7b16bfc051c907,108,14,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:oldmy:1:last,d7626415b7f1f3c5,211,40,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:my:c1,41440f44ddea1354,123,11,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:95:==,1e230b31564c6f7c,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:111:do,08351fad0f0319b5,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:70:11:int,a194ec195a0f2a89,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:oldmx:3,1e4490670556d072,290,11,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:105:split,39fa0c599d49fb92,128,9,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:depth:unsigned_short,676749f9eca67224,587,10,0,28,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:75,e8147f7122a93523,146,7,0,393,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:2:unsigned,c7e9a4013da1e430,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:depth:4:after,7b983ecc63646196,141,3,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:bits:my,c81aafabd56f2a3c,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:86:&,c9638c12ff171225,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:148:ifdo,03d602c7472f4f42,162,9,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:202:1:char,6fb35697179a624a,419,61,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:mx:14,d6ab991b4ee88c89,283,11,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:41:split,c7cad80e7a8990d3,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:c2:char,c29c7fffeff60f08,1027,8,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:172,68ad960fb8133437,114,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:1:unsigned,8ed5321dc6b804eb,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:oldmx:3:after,9ab00aa56730beb5,220,15,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:mx:bits,5ed76b10841efb23,111,9,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:63:==,9760e1ba0175d805,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:111:ifdo,ed0dcfd36a97d0bd,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:146:3:short,dc2082c8f195be7e,189,16,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:item:10,3bc5f680a7a20880,129,11,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:130:split2,df686f0738076c26,206,15,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:at:unsigned_short,a0286edb2e48375a,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:24,45e875f87b317aa6,108,11,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:4:short,ca7a7c0d18602283,1018,0,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:mx:1:last,17d80b1f275f683c,1032,26,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:level:bg,af502a211d53768b,129,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > commute:170:!=,ac324a84f0ddb8df,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:126:while,956690a0337f29ea,112,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:164:4:unsigned_char,e4efc30f0d7a3ca6,1018,13,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:w:19,056469d4df8aeb72,257,9,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:198:split,7c74d826dfb378d6,182,9,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:i:signed_char,c204dc183c9f3fcf,714,114,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:154,bac798f1481cca0c,108,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:4:unsigned,adbd6cfb0c11e6b9,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:oldmx:1:last,245a7141b75b98da,233,26,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:nitems:item,2d1b1d936d50bfba,139,11,0,52,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > loop:33:ifdo,f2be363398911054,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > cast:172:2:int,54f49cf28b3cf0b6,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > movedecl:mx:9,ca68b4074adceeed,153,11,0,48,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > chain:42:split,1c3c5fb09a58eb2d,106,11,0,689,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > type:my:signed_char,7c28641926edc89f,526,63,0,18,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapstmt:41,f098b4892b433a4a,132,11,0,102,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > paramtype:3:unsigned_char,bc254122f29e6595,109,15,0,22,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > split:depth:2:last,589e75526ff44f4b,233,26,0,0,ga
+2026-10-24,EditRosters,src/c/052_6D2F8_create_player/EditRosters.c,swapstmt:83 > loop:194:do > swapdecl:w:nitems,274304c4e9380d42,136,11,0,52,ga
 2026-10-24,SkateToSpot,src/c/037_4842A_engine_player_logic/SkateToSpot.c,cast:38:6:char,99a07dce794b130b,80,5,0,19,ga
 2026-10-24,SkateToSpot,src/c/037_4842A_engine_player_logic/SkateToSpot.c,swapstmt:56,1ce94854b6518090,44,6,0,35,ga
 2026-10-24,SkateToSpot,src/c/037_4842A_engine_player_logic/SkateToSpot.c,type:spa2:unsigned_char,5719b70e90bdb656,44,2,0,35,ga
