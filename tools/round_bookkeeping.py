@@ -7,7 +7,7 @@ Runs tools/c_progress.py, tools/draft_causes.py and tools/rank_drafts.py (the ra
 docs/ranked_drafts.txt). Updates the counts between the nhl95-* marker comments in README.md and
 HANDOFF.md. Applies docs/pending_renames.txt with tools/rename_symbol.py --batch when it has any
 rename lines, then leaves only the header, and regenerates the progress files again. Writes
-docs/LANES_CURRENT.md with tools/deal_lanes.py. Does not commit. The progress workflow runs
+docs/LANES_CURRENT.md with tools/deal_lanes.py. Runs `make` before scoring the drafts. Does not commit. The progress workflow runs
 `make fullcheck` after this.
 """
 import argparse, os, re, subprocess, sys
@@ -68,6 +68,9 @@ def update_numbers():
 
 
 def progress(jobs):
+    # draft_causes.py and rank_drafts.py compare with the EXE through cdiff, which reads build/parts and the label
+    # addresses in build/obj: build the current tree first (after any renames), or every draft scores as an error
+    run(['make', '-j%d' % jobs])
     run([sys.executable, 'tools/c_progress.py'])
     run([sys.executable, 'tools/draft_causes.py', '--jobs', str(jobs)])
     run([sys.executable, 'tools/rank_drafts.py', '--jobs', str(jobs), '--out', 'docs/ranked_drafts.txt'])

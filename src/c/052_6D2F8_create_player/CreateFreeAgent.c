@@ -3,8 +3,9 @@
    first as the EXE; sp declared in the block that copies the ratings; the jersey number in k (the later loop
    counter: no dead copy); the goalie ratings copied through sp (the attribute record) and pal (dead by then: the
    source table), which gives the EXE's esi / ecx and leaves pal2 in edi. Left: the goalie loop's index and byte
-   temporaries in ebx / dl (EXE edx / bl): one register-cycle slot short before it (an extra int temporary in the
-   database sizes or at the jersey store gives the match; no natural form found). */
+   temporaries in ebx / dl (EXE edx / bl): one register-cycle slot short before it. ESCALATE: the career size
+   through carsize, an extra copy (permute.py tempadd) that only breaks that tie, gives the EXE bytes (a trial
+   mark built MATCH); without it 5 differing. Not marked: the copy is a tie-breaker, not evidence. */
 #define CreateFreeAgent CreateFreeAgent_decl
 #define RandomizeNewRatings RandomizeNewRatings_decl
 #define MessageBox MessageBox_decl
@@ -59,12 +60,14 @@ void CreateFreeAgent(int a, int *mx, int *my)
     char c;
     int k;
     unsigned char *dp;
+    int carsize;
 
     s.fhatt = s.fhcar = s.fhsea = s.fhkey = -1;
     if (_dos_getdiskfree(0, &s.df)) FatalError((char *)str_ErrDiskFree);
     csize = s.df.sectors * s.df.bytes;
     s.sizes[0] = seasondb_size + 0x36;
-    s.sizes[1] = careerdb_size + 0x2C;
+    carsize = careerdb_size + 0x2C;
+    s.sizes[1] = carsize;
     s.sizes[5] = attdb_size + 0x14;
     s.sizes[3] = keydb_size + 0x34;
     s.sizes[2] = carteamsdb_size;

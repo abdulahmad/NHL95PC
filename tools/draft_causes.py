@@ -65,6 +65,7 @@ def main():
     if 'cause' not in fields: fields.append('cause')
     drafts = [r for r in rows if r['status'] == 'nonmatching']
     files = sorted(set(r['c_file'] for r in drafts))
+    cdiff.need_build('draft_causes.py')
     work = tempfile.mkdtemp(prefix='causes_')
     try:
         items = [(f, os.path.join(work, f.replace('/', '_') + '.obj'), '') for f in files]
