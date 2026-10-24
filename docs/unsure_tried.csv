@@ -2336,3 +2336,34 @@ SetRosterTeamMenus,,"(2026-10-23, X4): reuse dead t/team for item byte offset (2
 SetRosterTeamMenus,,final edit-lines selection as switch (11),11,ga
 SetRosterTeamMenus,,reuse dead team/t for EditTeamLines handler constant (11). No gain from changing those uses,,ga
 SetRosterTeamMenus,,baseline retained,,ga
+PickAwardWinners,,"(2026-10-23, lane 1a batch 1): `pct = b29 * 100; pct /= b29 + b2A` (35)",35,ga
+PickAwardWinners,,the test as `if (b29 || b2A) pct = ...; else pct = 0` (10),10,ga
+PickAwardWinners,,the same as a ternary (13),13,ga
+PickAwardWinners,,a block `unsigned char w = b29` for both uses (6,,ga
+PickAwardWinners,,edx / eax swap),,ga
+PickAwardWinners,,the pts statement after the pct statement (10),10,ga
+PickAwardWinners,,"the sum through pct first (54), pct declared first (27)",27,ga
+DrawAwardsSummary,,"(2026-10-23, lane 1a batch 1): the team copy as if / else with a strcpy per arm (12)",12,ga
+DrawAwardsSummary,,the player branch's suffix as one strcat with a ternary (12),12,ga
+DrawAwardsSummary,,"the team branch's suffix the same way (12), both (12), `21 * byte` in the strcpy (12), `y = 0x8C + k * 19` (12)",12,ga
+EasnGoalieStatsScreen,,"(2026-10-23, lane 1a batch 1): the layout shapes (gotos to blocks after the return, switch, ternaries, arm order, module with the skater page) are all in UNSURE",,ga
+PlacePlayersAtStart,,"(2026-10-23, lane 1a batch 1): the mirror, map and setcc spellings I had are all in UNSURE",,ga
+TitleScreen,,"(2026-10-23, lane 1a batch 1): the chunk as `signed char *` with sub_1B8AC / sub_1B92E declared with a pointer (13)",13,ga
+TitleScreen,,"a pointer local with int prototypes and casts (13), `key = -1` in the end-of-movie arm (13), `unsigned chunk` (13)",13,ga
+TitleScreen,,"the palette zero as three separate stores in order (13) or reversed (17), `pal[i] += 5` (13)",13,ga
+TitleScreen,,a short result (31),31,ga
+TitleScreen,type:chunk:signed_char,chunk as `signed char,tried (docs/UNSURE.md),ga
+TitleScreen,type:chunk:unsigned,`unsigned chunk`,tried (docs/UNSURE.md),ga
+TitleScreen,rettype:short,a short result,tried (docs/UNSURE.md),ga
+ShowAwardScreens,,"(2026-10-23, lane 1a batch 1), both loops each time: `-(byte_D42C3 - y)` (41), `y + -byte_D42C3` (31), `PrintShadowText(0x34 + x, ...); x += 0x50;` (35), extra parentheses on both arguments (31)",31,ga
+ShowCredits,,"(2026-10-23, lane 1a batch 1): permute.py 5 minutes (321 candidates, best 4 = base)","321 candidates, best 4 = base",ga
+FadePalette,,"(2026-10-23, lane 1a batch 1): every clamp spelling I could think of is already in UNSURE",,ga
+SkaterStatsCard,,"(2026-10-23, lane 1a batch 1): int rating with `rating += 5; v = rating * 5` (19, +3), int rating `= lookup + 5` then `v = rating * 5` (9, +3), `rating += 5; v = (rating << 2) + rating` (20, +5), v in place (`v = lookup; v += 5; v *= 5`, 25, +17)","`v = lookup; v += 5; v *= 5`, 25, +17",ga
+ListDialog,,"(2026-10-23, lane 1a batch 1), fresh, on the plain-locals copy: that temporary as a new local (25), as the dead tw (`tw = bw - tw`, 20), `tw = (bw - tw) / 2 + bx` (145, +4), `tw = bw - tw; tw /= 2` (180, +2)","180, +2",ga
+ListDialog,,"one permute run (385 candidates, batched scores)","385 candidates, batched scores",ga
+DrawListItem,,"(2026-10-23, lane 1a batch 1), all on A unless noted: `x += (w -= fputchar(text)) - 4` (29), `w -= 4` again in case 1 then `x += w` (15), `x += -4 + w` (29), c / d split for case 2 (29",,ga
+DrawListItem,,"c 4, d 5, w and y still 9 / 9), c and fontheight declared the other way (29)",29,ga
+DrawListItem,,"the colour as a ternary (39), case 2 as `x += (w - fputchar(text)) / 2` (29), `c = fputchar(text); c = w - c` (34), `c = w; c -= fputchar(text)` (34), case 2 in place `w -= fputchar(text); x += w / 2` (40), case 2's width through fontheight / top / idx (29 / 31 / 36), `PrintMenuText(x, ++y, text)` / `y += 1` (29), `PrintMenuText(x, y + 1, text)` (11",,ga
+DrawListItem,,"y drops to 6), y sum spelled `y = y + ...` (30), `2 + ...` (29), `... + y` (29), through c (13, still tied 9 / 9), through fontheight (31), `idx -= top` / `idx += top` (26)",26,ga
+DrawListItem,,w kept but case 1 as `w -= fputchar(text); c = w - 4; x += c` (11: c 11 EDX,,ga
+DrawListItem,,"the lea goes to edx). An inner-width local `iw = w - 4` used everywhere after (5 by first_pick) puts y 9 in EDI above iw 6 in EBP, but drops the EXE's prologue `mov ebp, ecx` (w lives in ebp from entry, then `lea ebp, [ecx-4]`) and case 1 becomes `sub ebp, 4 / add esi, ebp`: not kept",,ga
