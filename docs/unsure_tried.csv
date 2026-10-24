@@ -2950,3 +2950,18 @@ LeadersScreen,,none of the shapes above made that header distinct,,ga
 RunPlayerPickMenu,,"(2026-10-24, lane 1a batch 8): only the RunMenu shapes above (no effect on it: 158 in all eight",,ga
 RunPlayerPickMenu,,"unchanged by RunMenu's flattening). Not tried: flattening its remaining struct (item, level, pick, my, mx",,ga
 RunPlayerPickMenu,,"the PHILITE macro reads s. members, so it needs editing too)",,ga
+dopass,,"`(d ? 0x10000 : 0)` (18), `(d == 0 ? 0 : 0x10000)` (17), `(d != 0 ? 0x10000 : 0)` (18)",18,ga
+dopass,,"the square sum in parentheses (17), `dy * dy + dx * dx + (d ? 0x10000 : 0)` (20)",20,ga
+updatereplay,,"`(replaytick += 1) < 2`, `(replaytick = replaytick + 1) < 2`, `replaytick++;` and `replaytick += 1;` as statements before the test, `(gmode & 0x10) != 0`, `(gmode2 & 4) != 0` (all 26)",all 26,ga
+puckfaceoff,,"`(cont2team | cont1team)` (29: the load order changes but not the registers), `(cont1team || cont2team)` (77)",77,ga
+PassLaneChk,,"on that base: `y = (oy + 1) & 7`, `((y = oy + 1) & 7)`, `y = oy; ++y`, `> 2` (15-17), `y &= 7` as a statement (19)",19,ga
+PassLaneChk,,"vtoa argument spellings `(unsigned)`, `(int)`, `(short)` on either or both, plain `o->Xvel` / `o->Yvel` / `o->facedir` (15), `*(int *)&o->Zpos >> 16` (16), `(short)` on the second vtoa result or facedir (6-15), `ABS(oy) >= ABS(y)` (14)",14,ga
+PassLaneChk,,"permute.py 6 min from it (385 candidates: best 2 only with `(short)W(o->Xvel)`, which adds a cwde: rejected). On the base: `wrapped = 1; return wrapped;` (19), `wrapped = (oy + 1) & 7` with an if / else result (18)",18,ga
+PassLaneChk,,a `? 0 : 1` return (14),14,ga
+assrefpenshot,,for the reload of puckvz after `*(short *)puckvz = 0` (EXE reads back through the pointer still in eax): puckvz declared `short *` in this file only,,ga
+assrefpenshot,,"with the casts kept or dropped (7, still reloaded), `volatile short` on the store",,ga
+assrefpenshot,,"the read or both (7), `((short *)puckvz)[0]` for both (7)",7,ga
+checkob,,"the far-side test as `goto` into the first loop's found block with the limit on the left (5) or right (2, same)","2, same",ga
+checkob,,"the loop as a goto loop (9) or a while loop (9) with the limit on the left, `!((o->Ypos >> 16) <= extra + 0x4E)` (23), `!(o->position < 0 || extra + 0x4E >= Y)` (5). With the limit on the left Watcom hoists `lea ecx, [ebx+4Eh]` into the loop preheader",,ga
+checkob,,the first loop's negated limit is not hoisted,,ga
+doplayeracc,,"`(unsigned short)vy + (unsigned short)*pucky` (5), `vy + *(unsigned short *)pucky` (5), `dy = *pucky; dy = vy + dy;` (17), `dy = *pucky; dy -= y; dy += vy;` (19)",19,ga
