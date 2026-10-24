@@ -1,9 +1,9 @@
 /* Engine physics AI: is the pass lane to a team-mate open; NetCollide and puckstick (matched) end in its pops. */
-/* DRAFT (PassLaneChk, 10.0 GA, 2 differing, same size): the direction is kept in oy (dead by then) and the x gap
- in dy, as the original; the wrap goes through y (`y = oy + 1`, the EXE's lea eax,[esi+1]). Tie-breaker (ruled 2026-10-24, docs/ESCALATIONS.md):
- p's y through an int py first (`py = p->Ypos >> 16; y = py;`) breaks the savings tie of the two ABS
- temporaries of ABS(y) <= ABS(oy) (edi / ebp as in the EXE; any one extra copy does it, 17 -> 2); not kept. Also
- left: the y - 4Eh lea comes after the sum's sub 4Eh (EXE before it); see docs/UNSURE.md. */
+/* DRAFT (PassLaneChk, 10.0 GA, 12 differing, same size): the direction is kept in oy (dead by then), the x gap in
+ its own dx; the wrap goes through y (`y = oy + 1`, the EXE's lea eax,[esi+1]). With dx the two ABS temporaries of
+ ABS(y) <= ABS(oy) get the EXE's edi / ebp; left: dx in eax (EXE esi, where the y gap dy was: the x gap through dy
+ gives esi but swaps the ABS pair, 17), and the y - 4Eh lea comes after the sum's sub 4Eh (EXE before it). The
+ tie-breaker p's y through an int py (ruled 2026-10-24, docs/ESCALATIONS.md) is not kept; see docs/UNSURE.md. */
 #define PassLaneChk PassLaneChk_decl
 #define checkpuckcoll checkpuckcoll_decl
 #define imul32 imul32_decl
@@ -148,6 +148,7 @@ int PassLaneChk(Player *p, Player *o)
     int y;
     int oy;
     int dy;
+    int dx;
 
     side = (p->pflags & pfgoal) != 0;
     if (p->position == 0) return 0;
@@ -171,9 +172,9 @@ int PassLaneChk(Player *p, Player *o)
     dy = oy - y;
     if (dy < 0) dy = -dy;
     if (dy > 0x3C) return 0;
-    dy = (p->Xpos >> 16) - (o->Xpos >> 16);
-    if (dy < 0) dy = -dy;
-    if (dy > 0x28) return 0;
+    dx = (p->Xpos >> 16) - (o->Xpos >> 16);
+    if (dx < 0) dx = -dx;
+    if (dx > 0x28) return 0;
     oy = vtoa(W(o->Xvel), W(o->Yvel));
     if (oy == 8) oy = W(o->facedir);
     oy -= vtoa((short)(HIWORD(p->Xpos) - HIWORD(o->Xpos)), (short)(HIWORD(p->Ypos) - HIWORD(o->Ypos)));
