@@ -3153,6 +3153,10 @@ xor eax, eax	; 244DE
 pop ecx	; 244E0
 ret	; 244E1
 %endif ; C
+; C: src/c/017_21CDE_player_stats/TeamRosterScreen.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/TeamRosterScreen.inc"
+%else
 TeamRosterScreen:
 push dword 43Ch	; 244E2
 call __CHK	; 244E7
@@ -3970,6 +3974,7 @@ pop edx	; 25140
 pop ecx	; 25141
 pop ebx	; 25142
 ret	; 25143
+%endif ; C
 ; C: src/c/017_21CDE_player_stats/CmpGoals.c
 %ifdef CBUILD
 %include "c/017_21CDE_player_stats/CmpGoals.inc"
