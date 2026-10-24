@@ -24,6 +24,12 @@ def load_labels():
         if a not in rev or (g and not lab[rev[a]][2]) or ('.' in rev[a] and '.' not in n): rev[a] = n
     return {n: v[0] for n, v in lab.items()}, rev
 
+def need_build(tool):
+    """stop a tool that scores many drafts when make has not run: without build/parts and build/obj every compare
+    fails, and the tool would record each draft as an error"""
+    if not os.path.exists(os.path.join(ROOT, 'build/parts/manifest.json')) or not os.path.isdir(os.path.join(ROOT, 'build/obj')):
+        raise SystemExit('%s: run make first (build/parts and build/obj are missing)' % tool)
+
 def original(addr, n):
     man = json.load(open(os.path.join(ROOT, 'build/parts/manifest.json')))
     for m in man['segments']:

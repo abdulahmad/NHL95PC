@@ -19,6 +19,7 @@ def main():
     ap.add_argument('--jobs', type=int, default=8)
     a = ap.parse_args()
     os.chdir(ROOT)
+    permute.cdiff.need_build('rank_drafts.py')
     rows = [r for r in csv.DictReader(open('tools/c_functions.csv', newline='')) if r['status'] == 'nonmatching']
     files = sorted(set(r['c_file'] for r in rows))
     work = tempfile.mkdtemp(prefix='rank_')
