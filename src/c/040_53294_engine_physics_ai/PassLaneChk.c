@@ -21,9 +21,10 @@ int __cdecl imul32(int a, int b);  /* 933F0: the library multiply, arguments on 
 int LaneOpen(void);
 #pragma aux LaneOpen "ShotLaneOpen" value [eax] modify [eax];
 
-/* DRAFT (checkpuckcoll, 10.0 GA): 73 score differing, same 1,570-byte size. Reusing the dead height
-   local for the body frame fixes the height temporaries. The EXE keeps reach / half size / box size in edi
-   and speed / |dy| / box limit in esi; this draft still reverses those registers. */
+/* DRAFT (checkpuckcoll, 10.0 GA): compiles to the EXE bytes (0 differing, 1,570 bytes), no goto. Not marked:
+   ESCALATE, dead-variable reuse. The match needs the dead height h reused for the body frame (a local of its
+   own for either role: 99 differing); v also carries the speed, |dy| and the box limit. The half size and the
+   box size are their own local w (declared last), so v (13) outranks s (12) and takes esi as in the EXE. */
 /* checkpuckcoll (5428A, 93G checkpuckcoll .ccx; ends in PassLaneChk_ret5): check the puck pk against sort object
    n (from the OOlist walk). Not the carrier, players 0-0Bh and object 10h only, not with pflags bit 2 (no
    collisions) or nopuck. A goalie's stick (available, position 0): reach s from SkillForAnim (s * 800h - FA0h over
@@ -42,6 +43,7 @@ void checkpuckcoll(Player *pk, short n)
     short s;
     short v;
     short h;
+    short w;
 
     if (n == *puckc) return;
     if (n > 0xB && n != 0x10) return;
@@ -64,38 +66,46 @@ void checkpuckcoll(Player *pk, short n)
         GetHot(p);
         regd0.w += HIWORD(p->Xpos) - *puckx;
         regd0.w = ABS(regd0.w);
-        if (regd0.w >= regd2.w) goto body;
-        regd1.w += HIWORD(p->Ypos) - *pucky;
-        regd1.w = ABS(regd1.w);
-        if (regd1.w >= regd2.w) goto body;
-        h = regd4.w + v;
-        h = (h > 5 ? h : 5);
-        h += s;
-        if (h < *(short *)puckz) goto body;
-        v -= regd4.w;
-        h = v - s;
-        if (h >= 0 && h >= *(short *)puckz) goto body;
-        regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
-        regd1.l = regd2.w * regd2.w;
-        if (pk->nopuck > 0) regd1.l >>= 2;
-        if (regd1.w < regd0.w) goto body;
-        ChkDelayedOffside(p);
-        puckstick(pk, p);
+        if (regd0.w < regd2.w) {
+            regd1.w += HIWORD(p->Ypos) - *pucky;
+            regd1.w = ABS(regd1.w);
+            if (regd1.w < regd2.w) {
+                h = regd4.w + v;
+                h = (h > 5 ? h : 5);
+                h += s;
+                if (h >= *(short *)puckz) {
+                    v -= regd4.w;
+                    h = v - s;
+                    if (h < 0 || h < *(short *)puckz) {
+                        regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
+                        regd1.l = regd2.w * regd2.w;
+                        if (pk->nopuck > 0) regd1.l >>= 2;
+                        if (regd1.w >= regd0.w) {
+                            ChkDelayedOffside(p);
+                            puckstick(pk, p);
+                        }
+                    }
+                }
+            }
+        }
     } else if (!(p->pflags2 & 4) && p->position >= 0 && n != 0x10 && HIWORD(pk->Zpos) <= 5 && pk->Zvel <= 0x200) {
         GetHot(p);
         regd0.w += HIWORD(p->Xpos) - HIWORD(pk->Xpos);
-        if (ABS(regd0.w) > 0xE) goto body;
-        regd1.w += HIWORD(p->Ypos) - HIWORD(pk->Ypos);
-        if (ABS(regd1.w) > 0xE) goto body;
-        regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
-        regd1.l = 0xC4;
-        if (pk->nopuck > 0) regd1.w >>= 2;
-        if (regd0.ul > regd1.ul) goto body;
-        if (p->frame >= 0x430 && p->frame <= 0x44F && regd0.ul > 0x24) goto body;
-        puckstick(pk, p);
-        return;
+        if (ABS(regd0.w) <= 0xE) {
+            regd1.w += HIWORD(p->Ypos) - HIWORD(pk->Ypos);
+            if (ABS(regd1.w) <= 0xE) {
+                regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
+                regd1.l = 0xC4;
+                if (pk->nopuck > 0) regd1.w >>= 2;
+                if (regd0.ul <= regd1.ul) {
+                    if (p->frame < 0x430 || p->frame > 0x44F || regd0.ul <= 0x24) {
+                        puckstick(pk, p);
+                        return;
+                    }
+                }
+            }
+        }
     }
-body:
     if (p->position == 0) {
         regd0.w = HIWORD(p->Xpos) - HIWORD(pk->Xpos);
         if (ABS(regd0.w) > 0xA) return;
@@ -111,29 +121,31 @@ body:
         GetHotStick(p);
         regd0.w >>= 1;
         regd1.w >>= 1;
-        s = ABS(regd0.w);
+        w = ABS(regd0.w);
         regd0.w += HIWORD(p->Xpos) - HIWORD(pk->Xpos);
-        if (ABS(regd0.w) <= s) {
+        if (ABS(regd0.w) <= w) {
             regd1.w += HIWORD(p->Ypos) - HIWORD(pk->Ypos);
-            if (ABS(regd1.w) <= s) {
+            if (ABS(regd1.w) <= w) {
                 regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
-                if ((unsigned)(s * s) >= regd0.ul) goto hit;
+                if ((unsigned)(w * w) >= regd0.ul) {
+                    puckbody(pk, p);
+                    return;
+                }
             }
         }
     }
-    s = 8;
+    w = 8;
     v = 0x40;
     if (h > 0x44F) {
-        s = 0x10;
+        w = 0x10;
         v = 0x100;
     }
     regd0.w = HIWORD(p->Xpos) - HIWORD(pk->Xpos);
-    if (ABS(regd0.w) > s) return;
+    if (ABS(regd0.w) > w) return;
     regd1.w = HIWORD(p->Ypos) - HIWORD(pk->Ypos);
-    if (ABS(regd1.w) > s) return;
+    if (ABS(regd1.w) > w) return;
     regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
     if ((unsigned)v < regd0.ul) return;
-hit:
     puckbody(pk, p);
 }
 
@@ -188,11 +200,12 @@ int PassLaneChk(Player *p, Player *o)
    he is snapped to the net edge for his facing (offset tables word_CCBEC, word_CCBFC, word_CCBCC, word_CCBDC;
    mirrored by the x-flip attribute bit 3), stopped, and the bump SPA for that side is returned (F0Fh, F55h,
    F9Bh / FE1h). p: the player; dir: his direction. Result: the new SPA, or his SPA when nothing changes.
-   DRAFT (10.0 GA): 41 score differing. The result is a short (FallDown compares ax), which returns the
+   DRAFT (10.0 GA): 27 score differing, same size. The result is a short (FallDown compares ax), which returns the
    constants in eax. The first x-flip comparison is materialized by a doubled comparison, as in the EXE (the
-   C_MATCHING materialized-bool pattern). A separate scaled y numerator improves allocation; dir and the net
-   centre still use different registers and slots (dir edi, dx ebp, gy spilled; EXE dir ebp, gy edi, dx
-   spilled). */
+   C_MATCHING materialized-bool pattern). The direction tests read dir + 2 & 7 / dir + 1 & 7 / dir - 1 without
+   storing them back (dir then ranks below gy: dir ebp, gy edi as in the EXE), and the first post block tests
+   the unflipped case first. Left: the two ABS temporaries of the side test (ecx / edx swapped), which of the
+   two `mov eax, 0FE1h` tails Watcom keeps, and the kept SPA read (EXE `mov eax, [esi+36h] / sar eax, 10h`). */
 short NetCollide(Player *p, int dir)
 {
     int gx;
@@ -215,8 +228,7 @@ short NetCollide(Player *p, int dir)
     uy = scaled_y / dist >> 2;
     if ((uy < 0 ? -uy : uy) >= (ux < 0 ? -ux : ux)) {
         if (gy >= 0) {
-            dir = dir + 2 & 7;
-            if (dir < 5) goto keep;
+            if ((dir + 2 & 7) < 5) goto keep;
             HIWORD(p->Xpos) = gx + ux;
             if (gx < 0 && ((p->attribute & 8) == 0) != 0) HIWORD(p->Xpos) += 6;
             if (gx > 0 && (p->attribute & 8)) HIWORD(p->Xpos) -= 6;
@@ -226,8 +238,7 @@ short NetCollide(Player *p, int dir)
             HIWORD(p->Ypos) += word_CCBEC[p->facedir] - 0x108;
             return 0xF0F;
         }
-        dir = dir + 1 & 7;
-        if (dir >= 3) goto keep;
+        if ((dir + 1 & 7) >= 3) goto keep;
         HIWORD(p->Xpos) = gx + ux;
         HIWORD(p->Ypos) = uy + gy;
         p->Xvel = 0;
@@ -244,11 +255,11 @@ short NetCollide(Player *p, int dir)
         p->Yvel = 0;
         if (p->attribute & 8) HIWORD(p->Xpos) -= word_CCBDC[8 - p->facedir & 7] + 0x9A;
         else HIWORD(p->Xpos) += word_CCBCC[p->facedir] - 0x9A;
-        if (p->attribute & 8) return 0xFE1;
-        return 0xF9B;
+        if (!(p->attribute & 8)) return 0xF9B;
+        return 0xFE1;
     }
     if (dir == 0) goto keep;
-    if (--dir >= 3) goto keep;
+    if (dir - 1 >= 3) goto keep;
     ux += 6;
     HIWORD(p->Xpos) = gx + ux;
     HIWORD(p->Ypos) = uy + gy + (gy > 0 ? -10 : 0);

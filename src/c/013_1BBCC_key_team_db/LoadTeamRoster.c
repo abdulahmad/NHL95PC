@@ -1,8 +1,10 @@
 /* Key and team database: load one team's skaters and goalies. */
-/* DRAFT (10.0 GA): 51 differing instructions, 1037 vs 1041 bytes. A four-int stats-record view
-   gives the skater roster pointer and stored-word copies the EXE's ebx register. Left: team-index
-   temporary registers, the totals offset (sum then shift rather than separately scaled terms),
-   goalie roster/lineup registers, and the shared OpenPlayerDBs_x exit. */
+/* DRAFT (10.0 GA): 49 differing instructions, 1042 vs 1041 bytes. A four-int stats-record view
+   gives the skater roster pointer and stored-word copies the EXE's ebx register; indexed as
+   `((RosterStats *)dword_DEB74 + team * 25)[i]` the totals offset is team * 400 plus i * 16 as in
+   the EXE and the team-index scratch takes edx; the jersey bytes are indexed i * 39 + team * 1092.
+   Left: the i * 39 / team * 1092 temporaries (the EXE computes i * 39 first and spills it to
+   [esp+0FCh]), goalie roster/lineup registers, and the shared OpenPlayerDBs_x exit. */
 #define LoadTeamRoster LoadTeamRoster_decl
 #include "nhl95.h"
 #undef LoadTeamRoster
@@ -26,8 +28,8 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
         if (*(int *)((char *)dword_DBC7C + team * 744 + i * 4) >= 0) {
             ReadPlayerRecs(f1, f2, f3, f4, *(int *)((char *)dword_DBC7C + team * 744 + i * 4), buf + 0x38, buf + 0xC4, 0x14,
                 buf + 0x6C, 0x2F, buf + 0x9C, n4);
-            hmrosterjersey[team * 1092 + i * 39] = buf[0x39];
-            byte_DB3AE[team * 1092 + i * 39] = buf[0x3A];
+            hmrosterjersey[i * 39 + team * 1092] = buf[0x39];
+            byte_DB3AE[i * 39 + team * 1092] = buf[0x3A];
             p = hmroster + team * 1092 + i * 39;
             strcpy((char *)p + 7, (char *)buf + 0x3B);
             strcpy((char *)p + 0x17, (char *)buf + 0x4B);
@@ -51,14 +53,14 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
                 *(struct { unsigned char b[20]; } *)(buf + 0xC4);
             if ((mode & 6) == 0) {
                 if (((unsigned char *)&gameopts)[1] & 2) {
-                    gline = ((RosterStats *)dword_DEB74)[team * 25 + i].first = *(unsigned short *)(buf + 0xC0);
-                    ((RosterStats *)dword_DEB74)[team * 25 + i].first_total = gline + *(unsigned short *)(buf + 0xC2);
-                    gline = ((RosterStats *)dword_DEB74)[team * 25 + i].second = *(unsigned short *)(buf + 0x6E);
-                    ((RosterStats *)dword_DEB74)[team * 25 + i].second_total = gline + *(unsigned short *)(buf + 0x70);
+                    gline = ((RosterStats *)dword_DEB74 + team * 25)[i].first = *(unsigned short *)(buf + 0xC0);
+                    ((RosterStats *)dword_DEB74 + team * 25)[i].first_total = gline + *(unsigned short *)(buf + 0xC2);
+                    gline = ((RosterStats *)dword_DEB74 + team * 25)[i].second = *(unsigned short *)(buf + 0x6E);
+                    ((RosterStats *)dword_DEB74 + team * 25)[i].second_total = gline + *(unsigned short *)(buf + 0x70);
                 } else {
-                    ((RosterStats *)dword_DEB74)[team * 25 + i].first_total = ((RosterStats *)dword_DEB74)[team * 25 + i].first = 0;
-                    gline = ((RosterStats *)dword_DEB74)[team * 25 + i].second = *(unsigned short *)(buf + 0x80);
-                    ((RosterStats *)dword_DEB74)[team * 25 + i].second_total = gline + *(unsigned short *)(buf + 0x82);
+                    ((RosterStats *)dword_DEB74 + team * 25)[i].first_total = ((RosterStats *)dword_DEB74 + team * 25)[i].first = 0;
+                    gline = ((RosterStats *)dword_DEB74 + team * 25)[i].second = *(unsigned short *)(buf + 0x80);
+                    ((RosterStats *)dword_DEB74 + team * 25)[i].second_total = gline + *(unsigned short *)(buf + 0x82);
                 }
             }
         } else {
