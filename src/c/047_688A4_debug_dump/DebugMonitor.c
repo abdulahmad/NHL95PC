@@ -102,20 +102,18 @@ void DebugMonitor(void)
     }
 }
 
-/* DRAFT (10.0 GA, 7 differing, 1203 vs 1211): the goalie lines print three stat words (str_dumpGlLine has six
-   fields), which brings the EXE's stack word for j * 39 (sub esp, 4) and its spill in the home skater loop; left:
-   the EXE spills the product in the home goalie and away skater loops too (C loads the roster pointer into edi
-   there). See docs/UNSURE.md. */
 /* DumpStatsLog (68E7B, PC only; ends in DebugMonitor_pop): append the game state to the text file name (mode "at";
    failing: say so with DebugPrintf). Write the frame counters, both team structures (E8h bytes as dwords), the 17
    sort objects (48h bytes as words) and one line of ratings per object, then for each team its totals (shots,
    score, shot / goal counts, power plays, penalties, attack time, passes), one line per skater (jersey and eight
-   stat words) and per goalie (jersey, three stat words). name: the file. No result. */
+   stat words) and per goalie (jersey, three stat words; the goalie loops count with their own k). name: the file.
+   No result. */
 void DumpStatsLog(char *name)
 {
     void *f;
     short i;
     short j;
+    short k;
     int *w;
     short *s;
     Player *p;
@@ -167,10 +165,10 @@ void DumpStatsLog(char *name)
     }
     st = tm->tmglstats;
     fprintf(f, (char *)str_dumpGlHdrH);
-    j = 0;
-    for (; j < 3; st += 3, j++) {
-        r = tm->tmroster + (j + 0x19) * 39;
-        fprintf(f, (char *)str_dumpGlLine, j, r[5], st[0], st[1], st[2], r[0]);
+    k = 0;
+    for (; k < 3; st += 3, k++) {
+        r = tm->tmroster + (k + 0x19) * 39;
+        fprintf(f, (char *)str_dumpGlLine, k, r[5], st[0], st[1], st[2], r[0]);
     }
     tm = &awtmstruct;
     fprintf(f, (char *)str_dumpTeamHdrA);
@@ -186,10 +184,10 @@ void DumpStatsLog(char *name)
     }
     st = tm->tmglstats;
     fprintf(f, (char *)str_dumpGlHdrA);
-    j = 0;
-    for (; j < 3; st += 3, j++) {
-        r = tm->tmroster + (j + 0x19) * 39;
-        fprintf(f, (char *)str_dumpGlLine, j, r[5], st[0], st[1], st[2], r[0]);
+    k = 0;
+    for (; k < 3; st += 3, k++) {
+        r = tm->tmroster + (k + 0x19) * 39;
+        fprintf(f, (char *)str_dumpGlLine, k, r[5], st[0], st[1], st[2], r[0]);
     }
     fclose(f);
 }
