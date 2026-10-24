@@ -14,7 +14,8 @@ Open Watcom code generator's (bld/cg/c/regalloc.c), found in the GA image:
   name             +4 class (2 = N_TEMP)  +5 type class
 
 For every pass it prints the conflicts in the order they get registers, with their savings, and what each got
-(a register, or memory). Variables show their C name (front-end symbol, read the way FEName +E210 does)."""
+(a register, or memory). Variables show their C name (front-end symbol, read the way FEName +E210 does).
+The file is compiled with its own `/* cflags: ... */` flags, as make does (-od in segments 017-019)."""
 import argparse, os, struct, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
@@ -129,7 +130,8 @@ def main():
         holder['d'] = RegDump(emu, a.raw)
     import tempfile
     tmp = tempfile.mktemp(suffix='.obj')
-    ok, out, emu = emucc.compile_c(a.src, tmp, setup=setup)
+    import cc  # tools/ is on sys.path once emucc is imported
+    ok, out, emu = emucc.compile_c(a.src, tmp, cc.src_flags(a.src), setup=setup)
     if os.path.exists(tmp): os.remove(tmp)
     if not ok:
         sys.stdout.write(out)
