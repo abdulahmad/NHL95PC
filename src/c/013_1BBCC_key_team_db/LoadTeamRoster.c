@@ -1,4 +1,8 @@
 /* Key and team database: load one team's skaters and goalies. */
+/* DRAFT (10.0 GA): 68 differing instructions, 1044 vs 1041 bytes. Reuse the dead goalie
+   lineup local for each stored stats word before adding its partner; this gives the EXE's
+   copy/load/add order and fixes both spill slots. Left: roster pointer registers, the
+   DEB74 byte-offset shape, and the shared OpenPlayerDBs_x exit. */
 #define LoadTeamRoster LoadTeamRoster_decl
 #include "nhl95.h"
 #undef LoadTeamRoster
@@ -44,14 +48,14 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
             if ((mode & 6) == 0) {
                 base = team * 100 + i * 4;
                 if (((unsigned char *)&gameopts)[1] & 2) {
-                    dword_DEB74[base] = *(unsigned short *)(buf + 0xC0);
-                    dword_DEB78[base] = *(unsigned short *)(buf + 0xC0) + *(unsigned short *)(buf + 0xC2);
-                    dword_DEB7C[base] = *(unsigned short *)(buf + 0x6E);
-                    dword_DEB80[base] = *(unsigned short *)(buf + 0x6E) + *(unsigned short *)(buf + 0x70);
+                    gline = dword_DEB74[base] = *(unsigned short *)(buf + 0xC0);
+                    dword_DEB78[base] = gline + *(unsigned short *)(buf + 0xC2);
+                    gline = dword_DEB7C[base] = *(unsigned short *)(buf + 0x6E);
+                    dword_DEB80[base] = gline + *(unsigned short *)(buf + 0x70);
                 } else {
                     dword_DEB78[base] = dword_DEB74[base] = 0;
-                    dword_DEB7C[base] = *(unsigned short *)(buf + 0x80);
-                    dword_DEB80[base] = *(unsigned short *)(buf + 0x80) + *(unsigned short *)(buf + 0x82);
+                    gline = dword_DEB7C[base] = *(unsigned short *)(buf + 0x80);
+                    dword_DEB80[base] = gline + *(unsigned short *)(buf + 0x82);
                 }
             }
         } else {
