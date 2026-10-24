@@ -34,9 +34,8 @@ void checkfornewpen(void)
             }
             Stop4Pen(i);
         }
-        pl = PenBuf_pl[i * 2];
-        if (pl & 0x80) continue;
-        PenBuf_pl[i * 2] = pl | 0x80;
+        if (PenBuf_pl[i * 2] & 0x80) continue;
+        PenBuf_pl[i * 2] |= 0x80;
         t = pendelaytab[pen] << 5;
         if (t > Pencntdwn) Pencntdwn = t;
         if (word_CBEC6) Pencntdwn = 0x140;
