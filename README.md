@@ -5,7 +5,7 @@
 ## 🚧 Current Status
 
 - McMarkis is working on the C decompilation.
-- <!-- nhl95-readme-count:start -->956 of 1084 functions matched.<!-- nhl95-readme-count:end -->
+- <!-- nhl95-readme-count:start -->957 of 1084 functions matched.<!-- nhl95-readme-count:end -->
 - Names come from 93G first, then 94G.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
@@ -96,6 +96,10 @@ The segment naming queue in [SEGMENT_AGENT.md](SEGMENT_AGENT.md) is **complete**
 * `tools/rename_symbol.py` renames a symbol across `src/`, rebuilds (must MATCH) and records the name in the maps.
 * `tools/auto_names.py` lists what is still unnamed in a segment.
 * `tools/update_symbols.py` regenerates `src/inc/symbols.inc`.
+
+## AI assistance
+
+This project is AI-assisted. The work is directed by a strict ruleset and curated by hand, with the aim of producing correctly labelled and commented code that matches the spirit of what the original source code would have been. We can't guarantee it's perfect, and ultimately this will always be a work in progress. If you see something that needs fixing, raise an issue, or even better, raise a PR.
 
 ## Credits
 

@@ -3346,6 +3346,27 @@ RosterPanelClick,,"(2026-10-24, lane 1 batch 12): regsolve",,ga
 RosterPanelClick,,"permute.py 5 min (321 candidates, best base 9",,ga
 RosterPanelClick,,permlog_b12off.csv),,ga
 SetRosterTeamMenus,,"(2026-10-24, lane 1 batch 12): one function-level i for both halves (28), `d <<= 3` before the stores (11), `(int)0` handler stores (11), i declared first (11)",11,ga
+SkateToSpot,,"(2026-10-24, lane 1 batch 12), each with the chained stop: alone (42), ayp without t (68), `!=` for the Yvel sign test (35), `HIBYTE(p->temp2) == 0` (42), `(p->facedir + (d < 5 ? 1 : -1)) & 7` (42), `p->Xvel = p->Xvel - p->Xvel / 4` (42), vtoa arguments without casts (39)",39,ga
+SkateToSpot,,"the stop test as `!(adx >= 8 || ady >= 8)` (30), `0xF2 > ary` (42), `p->SPA == axp` (42), inverted test + `!=` (24, size +4: the stop and the first B2h bytes match, then `cmp` vs EXE `xor` for the `!=` and slot swaps of t / ayp), inverted test + no-cast vtoa (38), `!=` + no-cast vtoa (32)",32,ga
+SkateToSpot,,split stop with `!=` (71),71,ga
+SkateToSpot,,with the inverted test (11),11,ga
+SkateToSpot,,with both (74),74,ga
+CopyHumanTeamDBs,,"(2026-10-24, lane 1 batch 12): the two skip tests as one `||` condition (9)",9,ga
+CopyHumanTeamDBs,,"the which test inverted with the rest of the body nested in it (9), zero as a plain int declared first / last / block-local in the final block (13 each), `while (!r && s.retry)` (14), `s.which != -1` (10)",10,ga
+RandomizeSchedule,,"(2026-10-24, lane 1 batch 12): regdump / regsolve / cdiff only",,ga
+RandomizeSchedule,,"every append form near this one is already in the history (k in the block, count through err / n / j, post-increment index, `+= 1`, pointer to the list, nesting)","k in the block, count through err / n / j, post-increment index, `+= 1`, pointer to the list, nesting",ga
+GameStatsScreen,,"(2026-10-24, lane 1 batch 12)","2026-10-24, lane 1 batch 12",ga
+GameStatsScreen,,"the name pointer without m (m back to minutes / percentage only): `(char *)(i * 0x2E8 + (int)hmteamrec) + 0x1A` (40), `(char *)((int)hmteamrec + i * 0x2E8 + 0x1A)` (40), `(char *)(i * 0x2E8 + (int)hmteamrec + 0x1A)` (40), `(char *)hmteamrec + 0x1A + i * 0x2E8` (33), `(char *)&hmteamrec[i * 0x2E8 + 0x1A]` (39)",39,ga
+GameStatsScreen,,the int sum then `name += 0x1A` (34). The EXE needs m (minutes) at savings 120+ without holding the name product,,ga
+GameStatsScreen,,no natural extra use of m found,,ga
+LeagueTeamSelect,,"(2026-10-24, lane 1 batch 12): the size expression as `[2] * 4 + 4`, `4 + ([2] << 2)`, `1 + [3]`, `0x11 + ...`, `([2] + 1) * 4 * ...`: all compile to the same code as the draft (53 each",,ga
+LeagueTeamSelect,,"the front end canonicalizes them), so the size line's spelling cannot move those picks",,ga
+TradeScreenLoop,,"(2026-10-24, lane 1 batch 12): the jersey byte as `((TrEntry (*)[28])traderoster)[tradeside][tradecursor[tradeside]].c[1]` (87, same index code, only the displacement differs) and `((TrEntry *)(traderoster + tradeside * 0x268))[...].c[1]` (87), `((TrEntry *)tradejersey)[tradeside * 28 + cursor].c[0]` (274, +38), `((TrEntry (*)[28])tradejersey)[side][cursor].c[0]` (88), `((unsigned char (*)[0x268])tradejersey)[side][cursor * 0x16]` (88), `tradejersey[cursor * 11 * 2 + side * 0x268]` (90, +1), `(tradejersey + cursor * 0x16)[side * 0x268]` (90, +1), `*(cursor * 0x16 + side * 0x268 + tradejersey)` (90, +1)","90, +1",ga
+TradeScreenLoop,,"the index through a block-local int in the macro: cursor term first (141, +49), side first (139, +48), two steps (320)",320,ga
+TradeScreenLoop,,the cursor alone (232),232,ga
+MainDeskLoop,,"(2026-10-24, lane 1 batch 12): level alone as a plain address-taken int (the other members stay in s), declared right after s / after ptr / after depth (132 first_pick each), after oldmy (106), last (103): the plain level moves the frame slots",,ga
+LoadTeamRoster,,"(2026-10-24, lane 1 batch 12): re-measured the listed 2-D stats view `((RosterStats (*)[25])dword_DEB74)[team][i]` with regdump / regsolve (62 scored, 27 first_pick, +1",,ga
+LoadTeamRoster,,not a new shape),,ga
 LoadRosterList,,"(2026-10-24, lane T): `n = 0x1C; for (i = 0; i < n; i++)` on that clear (30",,ga
 LoadRosterList,,the entry stops matching),,ga
 checkcheck,,"(2026-10-24, lane T) and not kept",,ga
