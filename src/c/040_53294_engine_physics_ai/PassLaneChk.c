@@ -21,9 +21,10 @@ int __cdecl imul32(int a, int b);  /* 933F0: the library multiply, arguments on 
 int LaneOpen(void);
 #pragma aux LaneOpen "ShotLaneOpen" value [eax] modify [eax];
 
-/* DRAFT (checkpuckcoll, 10.0 GA): 73 score differing, same 1,570-byte size. Reusing the dead height
-   local for the body frame fixes the height temporaries. The EXE keeps reach / half size / box size in edi
-   and speed / |dy| / box limit in esi; this draft still reverses those registers. */
+/* DRAFT (checkpuckcoll, 10.0 GA): compiles to the EXE bytes (0 differing, 1,570 bytes), no goto. Not marked:
+   ESCALATE, dead-variable reuse. The match needs the dead height h reused for the body frame (a local of its
+   own for either role: 99 differing); v also carries the speed, |dy| and the box limit. The half size and the
+   box size are their own local w (declared last), so v (13) outranks s (12) and takes esi as in the EXE. */
 /* checkpuckcoll (5428A, 93G checkpuckcoll .ccx; ends in PassLaneChk_ret5): check the puck pk against sort object
    n (from the OOlist walk). Not the carrier, players 0-0Bh and object 10h only, not with pflags bit 2 (no
    collisions) or nopuck. A goalie's stick (available, position 0): reach s from SkillForAnim (s * 800h - FA0h over
@@ -42,6 +43,7 @@ void checkpuckcoll(Player *pk, short n)
     short s;
     short v;
     short h;
+    short w;
 
     if (n == *puckc) return;
     if (n > 0xB && n != 0x10) return;
@@ -64,38 +66,46 @@ void checkpuckcoll(Player *pk, short n)
         GetHot(p);
         regd0.w += HIWORD(p->Xpos) - *puckx;
         regd0.w = ABS(regd0.w);
-        if (regd0.w >= regd2.w) goto body;
-        regd1.w += HIWORD(p->Ypos) - *pucky;
-        regd1.w = ABS(regd1.w);
-        if (regd1.w >= regd2.w) goto body;
-        h = regd4.w + v;
-        h = (h > 5 ? h : 5);
-        h += s;
-        if (h < *(short *)puckz) goto body;
-        v -= regd4.w;
-        h = v - s;
-        if (h >= 0 && h >= *(short *)puckz) goto body;
-        regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
-        regd1.l = regd2.w * regd2.w;
-        if (pk->nopuck > 0) regd1.l >>= 2;
-        if (regd1.w < regd0.w) goto body;
-        ChkDelayedOffside(p);
-        puckstick(pk, p);
+        if (regd0.w < regd2.w) {
+            regd1.w += HIWORD(p->Ypos) - *pucky;
+            regd1.w = ABS(regd1.w);
+            if (regd1.w < regd2.w) {
+                h = regd4.w + v;
+                h = (h > 5 ? h : 5);
+                h += s;
+                if (h >= *(short *)puckz) {
+                    v -= regd4.w;
+                    h = v - s;
+                    if (h < 0 || h < *(short *)puckz) {
+                        regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
+                        regd1.l = regd2.w * regd2.w;
+                        if (pk->nopuck > 0) regd1.l >>= 2;
+                        if (regd1.w >= regd0.w) {
+                            ChkDelayedOffside(p);
+                            puckstick(pk, p);
+                        }
+                    }
+                }
+            }
+        }
     } else if (!(p->pflags2 & 4) && p->position >= 0 && n != 0x10 && HIWORD(pk->Zpos) <= 5 && pk->Zvel <= 0x200) {
         GetHot(p);
         regd0.w += HIWORD(p->Xpos) - HIWORD(pk->Xpos);
-        if (ABS(regd0.w) > 0xE) goto body;
-        regd1.w += HIWORD(p->Ypos) - HIWORD(pk->Ypos);
-        if (ABS(regd1.w) > 0xE) goto body;
-        regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
-        regd1.l = 0xC4;
-        if (pk->nopuck > 0) regd1.w >>= 2;
-        if (regd0.ul > regd1.ul) goto body;
-        if (p->frame >= 0x430 && p->frame <= 0x44F && regd0.ul > 0x24) goto body;
-        puckstick(pk, p);
-        return;
+        if (ABS(regd0.w) <= 0xE) {
+            regd1.w += HIWORD(p->Ypos) - HIWORD(pk->Ypos);
+            if (ABS(regd1.w) <= 0xE) {
+                regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
+                regd1.l = 0xC4;
+                if (pk->nopuck > 0) regd1.w >>= 2;
+                if (regd0.ul <= regd1.ul) {
+                    if (p->frame < 0x430 || p->frame > 0x44F || regd0.ul <= 0x24) {
+                        puckstick(pk, p);
+                        return;
+                    }
+                }
+            }
+        }
     }
-body:
     if (p->position == 0) {
         regd0.w = HIWORD(p->Xpos) - HIWORD(pk->Xpos);
         if (ABS(regd0.w) > 0xA) return;
@@ -111,29 +121,31 @@ body:
         GetHotStick(p);
         regd0.w >>= 1;
         regd1.w >>= 1;
-        s = ABS(regd0.w);
+        w = ABS(regd0.w);
         regd0.w += HIWORD(p->Xpos) - HIWORD(pk->Xpos);
-        if (ABS(regd0.w) <= s) {
+        if (ABS(regd0.w) <= w) {
             regd1.w += HIWORD(p->Ypos) - HIWORD(pk->Ypos);
-            if (ABS(regd1.w) <= s) {
+            if (ABS(regd1.w) <= w) {
                 regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
-                if ((unsigned)(s * s) >= regd0.ul) goto hit;
+                if ((unsigned)(w * w) >= regd0.ul) {
+                    puckbody(pk, p);
+                    return;
+                }
             }
         }
     }
-    s = 8;
+    w = 8;
     v = 0x40;
     if (h > 0x44F) {
-        s = 0x10;
+        w = 0x10;
         v = 0x100;
     }
     regd0.w = HIWORD(p->Xpos) - HIWORD(pk->Xpos);
-    if (ABS(regd0.w) > s) return;
+    if (ABS(regd0.w) > w) return;
     regd1.w = HIWORD(p->Ypos) - HIWORD(pk->Ypos);
-    if (ABS(regd1.w) > s) return;
+    if (ABS(regd1.w) > w) return;
     regd0.l = regd0.w * regd0.w + regd1.w * regd1.w;
     if ((unsigned)v < regd0.ul) return;
-hit:
     puckbody(pk, p);
 }
 
