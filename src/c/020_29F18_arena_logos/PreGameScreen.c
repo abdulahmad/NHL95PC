@@ -1,7 +1,8 @@
 /* Arena logos: the pre-game scouting report. */
-/* DRAFT under 10.0 GA: 52 differing instructions, same size (3,255 bytes). The I/O frame matches, and the
+/* DRAFT under 10.0 GA: 50 differing instructions, same size (3,255 bytes). The I/O frame matches, and the
    last category's lines step y first (the EXE spills y + 9, the old y - 5); key and apal take the top frame
-   slots where the EXE has them at the bottom, and the pointer buffer size pushes 0x20 first. */
+   slots where the EXE has them at the bottom. The pointer product now loads width before height,
+   as in the EXE; its size argument still pushes 0x20 first. */
 #define PreGameScreen PreGameScreen_decl
 #define TonightsGameScreen TonightsGameScreen_decl
 #define sub_8F98F sub_8F98F_decl
@@ -156,7 +157,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
     DrawBevelBox(0, 0x1AE, 0x26B, 0x1DF, 1);
     DrawButtons(buttons, nb);
     ptrbg = sub_8CCA8((char *)str_Pointer4,
-                      (*(short *)(pointerspr + 6) + 1) * (*(short *)(pointerspr + 4) + 1) + 0x11, 0x20);
+                      (*(short *)(pointerspr + 4) + 1) * (*(short *)(pointerspr + 6) + 1) + 0x11, 0x20);
     *(ArtHdr17 *)ptrbg = *(ArtHdr17 *)pointerspr;
     *(short *)(ptrbg + 4) = *(short *)(pointerspr + 4) + 1;
     *(short *)(ptrbg + 6) = *(short *)(pointerspr + 6) + 1;
