@@ -5,7 +5,7 @@
 ## 🚧 Current Status
 
 - McMarkis is working on the C decompilation.
-- 932 of 1084 functions matched.
+- 955 of 1084 functions matched.
 - Names come from 93G first, then 94G.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
