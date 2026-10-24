@@ -1,0 +1,296 @@
+function,contributor,date,compiler,score_before,score_after,shapes_tried
+RunIntro,Mhopkinsinc,2026-10-24,GA,5,0,"(`RunDemoGame.c`, marked in `007_1609F_title_intro`): the white sweep clears the previous entry with three separate stores instead of one chained store (C_MATCHING: separate stores for a reset chain), which puts the white 3Fh in ch as in th"
+ShowCredits,Mhopkinsinc,2026-10-24,GA,4,4,unchanged
+PickAwardWinners,Mhopkinsinc,2026-10-24,GA,5,5,two temporaries tie at savings 20 and the wrong one picks first (losses byte into eax plus an lea).
+DrawListItem,Mhopkinsinc,2026-10-24,GA,11,11,w in place gives the EXE's case 1
+ListDialog,Mhopkinsinc,2026-10-24,GA,7,7,the remaining stack-slot differences only improve in the warm compiler state; nothing reproduces it fresh.
+FadePalette,Mhopkinsinc,2026-10-24,GA,7,7,unchanged
+SkaterStatsCard,Mhopkinsinc,2026-10-24,GA,7,7,unchanged
+DrawAwardsSummary,Mhopkinsinc,2026-10-24,GA,12,12,dl / ebx where the EXE has dh / ecx
+EasnGoalieStatsScreen,Mhopkinsinc,2026-10-24,GA,12,12,unchanged
+TitleScreen,Mhopkinsinc,2026-10-24,GA,13,13,unchanged
+PlacePlayersAtStart,Mhopkinsinc,2026-10-24,GA,15,15,unchanged
+ShowAwardScreens,Mhopkinsinc,2026-10-24,GA,31,31,. What is left and what was tried is in `docs/UNSURE.md`
+SeedPlayoffFinal,Mhopkinsinc,2026-10-24,GA,4,0,"(`SimPlayoffRound1.c`): its body was already exact; only its exit was wrong. `SimPlayoffRound1.c` now carries an unchanged, unmarked copy of `UpdateSeasonSchedule` (the owner of `UpdateSeasonSchedule_pop3`), so Watcom gives SeedPlayoffFinal"
+ass_pc_slot20,Mhopkinsinc,2026-10-24,GA,6,0,"the dead local `dx` holds the path index for both initial path lookups, and the two squares of the distance test are separate statements (`dx"
+LoadRink,Mhopkinsinc,2026-10-24,GA,14,0,"the dead tile count `n` carries the bitmap header zeros (`n = 0; SHAPE(t)->type = n; SHAPE(t)->rest = n;`, dead-local reuse), with the locals declared smap, t, size, n, tiles for the original stack slots."
+assintroline,Mhopkinsinc,2026-10-24,GA,15,5,differing (the countdown and turn fields updated in place)
+BlitTileMap,Mhopkinsinc,2026-10-24,GA,5,5,unchanged
+SkateToSpot,Mhopkinsinc,2026-10-24,GA,5,5,unchanged
+ExportTeamToFloppy,Mhopkinsinc,2026-10-24,GA,11,11,unchanged
+CreateNewLeague,Mhopkinsinc,2026-10-24,GA,12,12,unchanged
+HighlightGridCell,Mhopkinsinc,2026-10-24,GA,12,12,unchanged
+SeedPlayoffRound3,Mhopkinsinc,2026-10-24,GA,14,14,unchanged
+ExecuteTrade,Mhopkinsinc,2026-10-24,GA,15,15,unchanged
+RandomizeSchedule,Mhopkinsinc,2026-10-24,GA,15,15,. What is left and what was tried is in `docs/UNSURE.md`
+PreGameScreen,Mhopkinsinc,2026-10-24,GA,52,50,(width / height evaluation order)
+LoadTeamRoster,Mhopkinsinc,2026-10-24,GA,72,68,(a stored word reused; spill slots fixed)
+DrawSprite,Mhopkinsinc,2026-10-24,GA,78,66,"(integer inputs, short edge arithmetic, the palette read uncached)"
+TeamStatsScreen,Mhopkinsinc,2026-10-24,GA,132,123,(dead-local reuse; every scalar stack slot now as in the EXE)
+PickOtherGames,Mhopkinsinc,2026-10-24,GA,15,15,unchanged
+SelectSavedFile,Mhopkinsinc,2026-10-24,GA,15,15,unchanged
+GameStatsScreen,Mhopkinsinc,2026-10-24,GA,20,20,unchanged
+TeamRosterScreen,Mhopkinsinc,2026-10-24,GA,23,23,unchanged
+ResetGameVars,Mhopkinsinc,2026-10-24,GA,25,25,unchanged
+TreeSeriesWinner,Mhopkinsinc,2026-10-24,GA,35,35,unchanged
+SetupStatsSourceMenu,Mhopkinsinc,2026-10-24,GA,42,42,unchanged
+GameLoop,Mhopkinsinc,2026-10-24,GA,62,62,. What is left and what was tried is in `docs/UNSURE.md`
+SimPlayoffRound3,Mhopkinsinc,2026-10-24,GA,19,3,differing (`SimPlayoffRound1.c`): the first team byte goes through an `unsigned char k` local (`k = g[2]; wins[k] ...`)
+TradePlayers,Mhopkinsinc,2026-10-24,GA,3,3,unchanged
+assreffollow,Mhopkinsinc,2026-10-24,GA,4,4,unchanged
+assshoot,Mhopkinsinc,2026-10-24,GA,4,4,unchanged
+ShowLoadingScreen,Mhopkinsinc,2026-10-24,GA,5,5,unchanged
+SeriesLength,Mhopkinsinc,2026-10-24,GA,10,10,unchanged
+FixJerseyConflict,Mhopkinsinc,2026-10-24,GA,20,20,unchanged
+SimPlayoffRound2,Mhopkinsinc,2026-10-24,GA,20,20,unchanged
+CopyHumanTeamDBs,Mhopkinsinc,2026-10-24,GA,21,21,unchanged
+TradeHitTest,Mhopkinsinc,2026-10-24,GA,21,21,unchanged
+TradeDone,Mhopkinsinc,2026-10-24,GA,22,22,unchanged
+assbench,Mhopkinsinc,2026-10-24,GA,22,22,unchanged
+assgoalie,Mhopkinsinc,2026-10-24,GA,25,25,unchanged
+SimPlayoffRound1,Mhopkinsinc,2026-10-24,GA,27,27,.
+PickThreeStars,Mhopkinsinc,2026-10-24,GA,32,0,"(`FadeOutPalCycle.c`, marked in `037_4842A_engine_player_logic`): the sorted-player row offset is spelled `(k / 25"
+MainDeskLoop,Mhopkinsinc,2026-10-24,GA,72,67,(a scoped int size in the action block)
+PlayLeagueGame,Mhopkinsinc,2026-10-24,GA,28,28,unchanged
+BuildStandingsGrid,Mhopkinsinc,2026-10-24,GA,41,41,unchanged
+DrawCalendarDay,Mhopkinsinc,2026-10-24,GA,44,44,unchanged
+assthreestars,Mhopkinsinc,2026-10-24,GA,44,44,unchanged
+DrawTradeScreen,Mhopkinsinc,2026-10-24,GA,46,46,unchanged
+assrefgoalpa,Mhopkinsinc,2026-10-24,GA,67,67,unchanged
+StarCompare,Mhopkinsinc,2026-10-24,GA,81,81,. What is left and what was tried is in `docs/UNSURE.md`
+SportsDesk,Mhopkinsinc,2026-10-24,GA,632,402,** (two commits). The biased ebp frame came from the ternaries inside the `PaPlayoffResult(...)` call's arguments (as HANDOFF item 29 suspected): the winner
+LeadersScreen,Mhopkinsinc,2026-10-24,GA,123,84,**: an empty `default: break;` closes the column switch
+EditTextField,Mhopkinsinc,2026-10-24,GA,110,106,**: the End-key scan as a top-tested `editpos = 0; while (buf[editpos]) editpos++;` (the EXE's loop shape)
+RunMenu,Mhopkinsinc,2026-10-24,GA,146,146,unchanged
+RunPlayerPickMenu,Mhopkinsinc,2026-10-24,GA,158,158,unchanged
+RunTeamPickMenu,Mhopkinsinc,2026-10-24,GA,212,212,unchanged
+GameSummaryScreen,Mhopkinsinc,2026-10-24,GA,320,320,". For GameSummaryScreen two real source differences were found but not committed (each alone or together scores worse, 389 / 393): the other-games reads as `othergames[f.i * 2]` (exact in that region) and `k` living in the frame slot the dr"
+assintroline,Mhopkinsinc,2026-10-24,GA,5,0,"(`assintroline.c`): the squared distance in source order, `dx"
+HighlightGridCell,Mhopkinsinc,2026-10-24,GA,12,0,"(`HighlightGridCell.c`): every local a plain `int` (x0 was a `short`, x2 a one-member frame struct), which gives the EXE size; seven coordinates then tie at savings 300, so the declaration order decides (tools/permute_decls.py found three m"
+SkateToSpot,Mhopkinsinc,2026-10-24,GA,5,2,: the `vtoa` result into d first
+RandomizeSchedule,Mhopkinsinc,2026-10-24,GA,15,14,
+ExecuteTrade,Mhopkinsinc,2026-10-24,GA,15,14,": traded and err declared before the frame struct give sel its home slot; only traded / kb stay swapped (all 5,040 orders tried). The result stays `int` (the result-type rule)"
+BlitTileMap,Mhopkinsinc,2026-10-24,GA,5,5,unchanged
+ExportTeamToFloppy,Mhopkinsinc,2026-10-24,GA,11,11,unchanged
+CreateNewLeague,Mhopkinsinc,2026-10-24,GA,12,12,"(the `xor bl, bl` byte zero is picked after register allocation, so no declaration order moves it)"
+SeedPlayoffRound3,Mhopkinsinc,2026-10-24,GA,14,14,unchanged
+SimulateGame,Mhopkinsinc,2026-10-24,GA,592,592,(338 of its differences cascade from `i * 4` in ebp where the EXE keeps `i`). Details in `docs/UNSURE.md`
+PickOtherGames,Mhopkinsinc,2026-10-24,GA,15,0,(`PickOtherGames.c`): the second team is stored into `othergamesb[i
+SelectSavedFile,Mhopkinsinc,2026-10-24,GA,15,15,unchanged
+GameStatsScreen,Mhopkinsinc,2026-10-24,GA,20,20,(its match also needs the move into `UpdateOtherScores.c`)
+TeamRosterScreen,Mhopkinsinc,2026-10-24,GA,23,23,unchanged
+ResetGameVars,Mhopkinsinc,2026-10-24,GA,25,25,unchanged
+TreeSeriesWinner,Mhopkinsinc,2026-10-24,GA,35,35,unchanged
+SetupStatsSourceMenu,Mhopkinsinc,2026-10-24,GA,42,42,unchanged
+PreGameScreen,Mhopkinsinc,2026-10-24,GA,50,50,unchanged
+GameLoop,Mhopkinsinc,2026-10-24,GA,62,62,unchanged
+DrawSprite,Mhopkinsinc,2026-10-24,GA,66,66,unchanged
+LoadTeamRoster,Mhopkinsinc,2026-10-24,GA,68,68,unchanged
+TeamStatsScreen,Mhopkinsinc,2026-10-24,GA,123,123,. Details in `docs/UNSURE.md`
+DrawTradeScreen,Mhopkinsinc,2026-10-24,GA,46,12,(two of the 12 are false positives of the traderemap two-fixup operands): `teams` is read through a local copy (`tm = teams;`)
+PlayLeagueGame,Mhopkinsinc,2026-10-24,GA,28,28,unchanged
+BuildStandingsGrid,Mhopkinsinc,2026-10-24,GA,41,41,unchanged
+DrawCalendarDay,Mhopkinsinc,2026-10-24,GA,44,44,unchanged
+assthreestars,Mhopkinsinc,2026-10-24,GA,44,44,unchanged
+MainDeskLoop,Mhopkinsinc,2026-10-24,GA,67,67,unchanged
+assrefgoalpa,Mhopkinsinc,2026-10-24,GA,67,67,unchanged
+StarCompare,Mhopkinsinc,2026-10-24,GA,81,81,. Each newest UNSURE bullet (inside the function's entry; `docs/unsure_tried.csv` rerun) gives the first difference and the savings that block it.
+ShowAwardScreens,Mhopkinsinc,2026-10-24,GA,31,19,(`PickAwardWinners.c`): the title x step as a separate `x += 0x50;` statement fixes both title calls' argument evaluation order. Left: the goalie shots row
+ShowCredits,Mhopkinsinc,2026-10-24,GA,4,4,(divisor scheduling)
+PickAwardWinners,Mhopkinsinc,2026-10-24,GA,5,5,(denominator registers)
+DrawListItem,Mhopkinsinc,2026-10-24,GA,6,6,(right alignment; DrawListItems still waits for it)
+FadePalette,Mhopkinsinc,2026-10-24,GA,7,7,(clamp reload)
+ListDialog,Mhopkinsinc,2026-10-24,GA,7,7,(stack reloads)
+SkaterStatsCard,Mhopkinsinc,2026-10-24,GA,7,7,(byte promotion)
+DrawAwardsSummary,Mhopkinsinc,2026-10-24,GA,12,12,(register cycle)
+EasnGoalieStatsScreen,Mhopkinsinc,2026-10-24,GA,12,12,(tail layout)
+TitleScreen,Mhopkinsinc,2026-10-24,GA,13,13,(slots and the dead copy)
+PlacePlayersAtStart,Mhopkinsinc,2026-10-24,GA,15,15,(global-value reuse). These have now had a Claude and a Codex lane pass back to back; the shapes tried are in `docs/UNSURE.md`
+assshoot,Mhopkinsinc,2026-10-24,GA,4,0,"(`assshoot.c`): the nested success tests (with an empty then-branch) as one `&&` chain, the absolute y kept in the existing `y` local inside the chain; Watcom then keeps the pflags source byte and clears pfna through ah as in the EXE."
+ShowLoadingScreen,Mhopkinsinc,2026-10-24,GA,5,0,"(`ShowLoadingScreen.c`): the first palette read after the `loadscreenon` guard passes a literal `0` (the known-zero argument pattern, C_MATCHING); the later `palcyclelock` clear then takes ecx and the fade flag its own esi zero, as in the E"
+TradeDone,Mhopkinsinc,2026-10-24,GA,22,0,"(`TradeDone.c`): the unequal-pair test compares `sel[i + 2]` with `0xFF` directly in the first clause (sel[i] is known to be FF there) instead of reading `sel[i]` again; that removes a savings-20 byte conflict, so sel (18) and bad (12) take"
+SimPlayoffRound1,Mhopkinsinc,2026-10-24,GA,28,16,"and SimPlayoffRound2 22 -> 11 (named score bytes, scalar order)"
+SimPlayoffRound2,Mhopkinsinc,2026-10-24,GA,22,11,"(named score bytes, scalar order)"
+assgoalie,Mhopkinsinc,2026-10-24,GA,25,21,(a separate int distance and short depth)
+CopyHumanTeamDBs,Mhopkinsinc,2026-10-24,GA,21,20,(the team number cached across calls)
+SimPlayoffRound3,Mhopkinsinc,2026-10-24,GA,3,3,unchanged
+TradePlayers,Mhopkinsinc,2026-10-24,GA,3,3,unchanged
+assreffollow,Mhopkinsinc,2026-10-24,GA,4,4,unchanged
+SeriesLength,Mhopkinsinc,2026-10-24,GA,10,10,unchanged
+FixJerseyConflict,Mhopkinsinc,2026-10-24,GA,20,20,unchanged
+TradeHitTest,Mhopkinsinc,2026-10-24,GA,21,21,unchanged
+assbench,Mhopkinsinc,2026-10-24,GA,22,22,. Details in `docs/UNSURE.md`
+EditTextField,Mhopkinsinc,2026-10-24,GA,106,71,**: the poll placed after the cursor handlers and the Backspace / typing blocks after the blink path
+GameSummaryScreen,Mhopkinsinc,2026-10-24,GA,320,287,**: the frame index
+SportsDesk,Mhopkinsinc,2026-10-24,GA,402,353,**: the 404h frame restored
+LeadersScreen,Mhopkinsinc,2026-10-24,GA,84,84,unchanged
+RunMenu,Mhopkinsinc,2026-10-24,GA,146,146,unchanged
+RunPlayerPickMenu,Mhopkinsinc,2026-10-24,GA,158,158,unchanged
+RunTeamPickMenu,Mhopkinsinc,2026-10-24,GA,212,212,. Details in `docs/UNSURE.md`
+LeagueTeamSelect,Mhopkinsinc,2026-10-24,GA,102,55,** (two commits; size still 16 bytes short): all ten scalar stack slots now as in the EXE
+TradeScreenLoop,Mhopkinsinc,2026-10-24,GA,183,51,** (the EXE size): every stack slot as in the EXE
+BlitTileMap,Mhopkinsinc,2026-10-24,GA,5,5,"(its slots need x's loop-weighted count 101 or less, i.e. one inner-loop reference where the code has two)"
+ExecuteTrade,Mhopkinsinc,2026-10-24,GA,7,7,(no single count change; probably one temporary more or fewer in the original)
+SimPlayoffRound1,Mhopkinsinc,2026-10-24,GA,16,16,(a permute find with an `(unsigned short)` cast reached 14 and was rejected as a no-op cast)
+PlayLeagueGame,Mhopkinsinc,2026-10-24,GA,28,28,unchanged
+PostGameToTeamDb,Mhopkinsinc,2026-10-24,GA,130,130,. Details in `docs/UNSURE.md`
+TitleScreen,Mhopkinsinc,2026-10-24,GA,12,2,** (`RunDemoGame.c`): the remaining wait goes through a new local (`left = due - i; SetTickDeadline(left);`)
+ListDialog,Mhopkinsinc,2026-10-24,GA,7,7,(needs two count changes at once)
+GameStatsScreen,Mhopkinsinc,2026-10-24,GA,20,20,"(its slots already match; register picks, and its match belongs in `UpdateOtherScores.c` for the shared exit)"
+TeamRosterScreen,Mhopkinsinc,2026-10-24,GA,23,23,"(slotdump: n's use count must be 43-60, it is 63; no shape with identical code lowers it yet)"
+TreeSeriesWinner,Mhopkinsinc,2026-10-24,GA,35,35,"(every -od compile lays out locals, then the return temporary, then the parameters; the EXE has the return temporary first)"
+PreGameScreen,Mhopkinsinc,2026-10-24,GA,50,50,(more than one name differs). Details in `docs/UNSURE.md`
+SimPlayoffRound3,Mhopkinsinc,2026-10-24,GA,3,0,"(`SimPlayoffRound1.c`): the win counts are cleared with `for (i = 0; i < 26; i++) wins[i] = 0;` instead of the explicit `__STOSD` call (Watcom turns the loop into the same fill, but the tied registers come out in the EXE's order), with `len"
+TradeHitTest,Mhopkinsinc,2026-10-24,GA,21,0,(`TradeHitTest.c`): the button edges are read in place (`x < tradebtnx[i
+SimPlayoffRound2,Mhopkinsinc,2026-10-24,GA,11,3,(the same zeroing loop; only the away score byte loaded into dh is left)
+CopyHumanTeamDBs,Mhopkinsinc,2026-10-24,GA,20,7,(the exported team entry through its own block-local pointer; now 2 bytes short)
+TradePlayers,Mhopkinsinc,2026-10-24,GA,3,3,unchanged
+assreffollow,Mhopkinsinc,2026-10-24,GA,4,4,unchanged
+SeriesLength,Mhopkinsinc,2026-10-24,GA,10,10,(block layout of the shared return)
+FixJerseyConflict,Mhopkinsinc,2026-10-24,GA,20,20,"(slotdump: the EXE's slots need one fewer loop-weighted reference to e and pal, or one more to tr)"
+assgoalie,Mhopkinsinc,2026-10-24,GA,21,21,unchanged
+assbench,Mhopkinsinc,2026-10-24,GA,22,22,. Details in `docs/UNSURE.md`
+TeamRosterScreen,Mhopkinsinc,2026-10-24,GA,23,0,**TeamRosterScreen matched** with a declaration order. Its draft was the EXE size with only the stack slots of n / idx / gs different (23 differing by permute.py; every shape tried in five passes is in its old UNSURE entries). `tools/wccre
+SportsDesk,Mhopkinsinc,2026-10-24,GA,353,303,
+RunMenu,Mhopkinsinc,2026-10-24,GA,146,82,** (the EXE size): its frame struct as plain locals; inside one struct the store `sel[level] = item` could alias `level`
+EditTextField,Mhopkinsinc,2026-10-24,GA,71,62,"** (two commits; now 4 bytes long, was +29): each key arm ends in its own `DrawEditCursor(flags); goto poll;` (Watcom merges the tails into the EXE's shared ones, and the direct jumps raise the insert flag's savings 41 -"
+LeadersScreen,Mhopkinsinc,2026-10-24,GA,84,84,(the kfh / pfh slots)
+RunPlayerPickMenu,Mhopkinsinc,2026-10-24,GA,158,158,unchanged
+RunTeamPickMenu,Mhopkinsinc,2026-10-24,GA,212,212,unchanged
+GameSummaryScreen,Mhopkinsinc,2026-10-24,GA,287,287,. Details in `docs/UNSURE.md`
+HilightSaveToDlg,StaticEck2026,2026-10-24,GA,7,0,"(058): the body already matched. Only the exit was wrong: the EXE ends in a near `jmp DrawGadgetButton_ret`, and the draft had its own pops and `ret`. It now sits in `DrawGadgetButton.c` (057) after DrawGadgetButton, so Watcom emits the EXE"
+ReplayControlLoop,StaticEck2026,2026-10-24,GA,16,0,"(057): it also ends in DrawGadgetButton_ret. Moving it into `DrawGadgetButton.c` took it from 16 to 10 differing, at the EXE size. A permute.py run in that file then matched it with one change: the camera button's `dword_ED70C = d = 0;` wri"
+InstantReplay,StaticEck2026,2026-10-24,GA,27,22,**. It ends in DrawGadgetButton_ret too
+CreateFreeAgent,StaticEck2026,2026-10-24,GA,5,5,tied temporaries in the goalie loop (savings 30 / 20).
+POInitSchedule,StaticEck2026,2026-10-24,GA,6,6,t7 / t8 tie at savings 30 with eleven others.
+QueueSpeechClip,StaticEck2026,2026-10-24,GA,6,6,.
+SelectMatchingPlayers,StaticEck2026,2026-10-24,GA,7,7,the add order of the address.
+ReassignCtlPlayer,StaticEck2026,2026-10-24,GA,10,10,the EXE's counter is a `short`. With it the draft scores 14
+OpenSpeechBank,StaticEck2026,2026-10-24,GA,11,11,.
+SelectRosterTeam,StaticEck2026,2026-10-24,GA,14,14,.
+JoystickCalScreen,StaticEck2026,2026-10-24,GA,17,17,.
+RosterPanelClick,StaticEck2026,2026-10-24,GA,9,9,unchanged
+CreatePlayoffs,StaticEck2026,2026-10-24,GA,11,11,unchanged
+DrawGameLineJerseys,StaticEck2026,2026-10-24,GA,11,11,unchanged
+SetRosterTeamMenus,StaticEck2026,2026-10-24,GA,11,11,unchanged
+POHandleElimination,StaticEck2026,2026-10-24,GA,13,13,unchanged
+DrawTextOverlay,StaticEck2026,2026-10-24,GA,13,0,"(046, `checkwindow.c`, 13 -> 0). Only the y0s / x2 stack slots were swapped. `tools/wccre/declsearch.py --conflicts` found the declaration order `w, x2, y0s, x0s, x1s, y, h, y2, y1s`, which compiles to the EXE bytes. It is marked with `cc.p"
+checkob,StaticEck2026,2026-10-24,GA,2,2,Watcom hoists the far-side limit's `lea` out of the loop.
+PassLaneChk,StaticEck2026,2026-10-24,GA,4,4,a lead for next time. The wrap through y gives the EXE's `lea eax
+doplayeracc,StaticEck2026,2026-10-24,GA,5,5,`*pucky` is folded into `add di
+assrefpenshot,StaticEck2026,2026-10-24,GA,7,7,the puckvz pointer is reloaded after the store through it.
+checkgoal,StaticEck2026,2026-10-24,GA,8,8,unchanged
+wallcoll,StaticEck2026,2026-10-24,GA,16,16,unchanged
+PenGoalStuff,StaticEck2026,2026-10-24,GA,19,19,looked at
+changeplayer,StaticEck2026,2026-10-24,GA,10,10,five temporaries tie at savings 30.
+checkplcoll,StaticEck2026,2026-10-24,GA,13,13,the size sort puts the short parameter in the top slot.
+checkwallcoll,StaticEck2026,2026-10-24,GA,15,15,no count change or declaration order gives x the top slot.
+dopass,StaticEck2026,2026-10-24,GA,17,17,the 10000h ternary takes distance_score's register.
+FillDressedSlots,StaticEck2026,2026-10-24,GA,20,20,slots only. No count change or declaration order reaches the EXE's.
+PickForLineSlot,StaticEck2026,2026-10-24,GA,20,20,declsearch fixes the slots
+updatereplay,StaticEck2026,2026-10-24,GA,26,26,about 25 tied temporaries.
+shotdiradj,StaticEck2026,2026-10-24,GA,23,23,cross as a plain local moves the frame.
+puckfaceoff,StaticEck2026,2026-10-24,GA,29,29,the operand swap changes the load order
+DrawLineJerseys,StaticEck2026,2026-10-24,GA,30,0,"(054, own file; was 30)."
+DumpStatsLog,StaticEck2026,2026-10-24,GA,21,0,"(047, `DebugMonitor.c`, `--func`; was 21)."
+MenuGameShowPlayerStats,StaticEck2026,2026-10-24,GA,16,16,s gets edx (savings 3)
+MenuSaveDefaultLines,StaticEck2026,2026-10-24,GA,17,17,/ MenuSaveTheseLines 19: the lseek result copies are one register-cycle slot off.
+ShowRosterStats,StaticEck2026,2026-10-24,GA,20,20,three temporary-register picks.
+InstantReplay,StaticEck2026,2026-10-24,GA,22,22,the EXE does not keep 0 / 1 in registers across calls.
+LockerRoomLoop,StaticEck2026,2026-10-24,GA,2,2,one inner-index register in case 4.
+MoveToOtherRoster,StaticEck2026,2026-10-24,GA,27,27,register cycle in the free-agent arm.
+DrawLockerJersey,StaticEck2026,2026-10-24,GA,29,29,a nested-table index register.
+CreatePlayoffs,StaticEck2026,2026-10-24,GA,11,11,permute's 10 swaps two stores against the EXE's order
+POHandleElimination,StaticEck2026,2026-10-24,GA,13,13,the cross-jumped RestoreDialogBg call.
+LoadGameRoster,StaticEck2026,2026-10-24,GA,21,21,unchanged
+POSeedTeams,StaticEck2026,2026-10-24,GA,22,22,unchanged
+ReplaySaveHilight,StaticEck2026,2026-10-24,GA,35,35,looked at only.
+checkfornewpen,StaticEck2026,2026-10-24,GA,32,0,"(045, own file; 32 -> 26 -> 0). Three changes"
+calcpuckcross,StaticEck2026,2026-10-24,GA,3,3,the EXE's 16-bit `mov bx
+PassLaneChk,StaticEck2026,2026-10-24,GA,4,4,not retried; UNSURE already lists the lead's shapes.
+checkcx,StaticEck2026,2026-10-24,GA,20,20,two sign-extension temporaries tie at savings 5.
+checkgoalp,StaticEck2026,2026-10-24,GA,27,27,p picks first (12) and takes esi.
+CanFillLineSlot,StaticEck2026,2026-10-24,GA,31,31,pl / st / sidev tie at savings 3
+checkcheck,StaticEck2026,2026-10-24,GA,32,32,v (30) is one of about 40 tied conflicts. Permute's 29 needs no-op casts
+PassRecOneTimer,StaticEck2026,2026-10-24,GA,34,34,the mirrored-x temporary (savings 3) loses a tie.
+StartPer,StaticEck2026,2026-10-24,GA,34,34,no C found for the EXE's fox zero.
+RemoveFromLines,StaticEck2026,2026-10-24,GA,40,40,r (60) outranks the side * 444h temporaries (40).
+NetCollide,StaticEck2026,2026-10-24,GA,41,41,dir (13) outranks gy (8); the EXE has gy in edi.
+ChkScorerMilestone,StaticEck2026,2026-10-24,GA,36,36,unchanged
+CanBlockShot,StaticEck2026,2026-10-24,GA,42,42,unchanged
+ReplayStep,StaticEck2026,2026-10-24,GA,46,46,read
+doshot,StaticEck2026,2026-10-24,GA,47,47,and passtoa0: not reached.
+doshot,StaticEck2026,2026-10-24,GA,47,47,`randomd0(r + r)` gives the EXE's radius code but swaps the dx / snd slots
+passtoa0,StaticEck2026,2026-10-24,GA,48,48,the EXE sign-extends vx / vy for k; Watcom narrows those products because `s.k` is a short.
+ChkScorerMilestone,StaticEck2026,2026-10-24,GA,36,36,a register-cycle `lea`.
+ReplayStep,StaticEck2026,2026-10-24,GA,46,46,the frame advance goes through ebp in the EXE; every remaining shape is already listed in UNSURE.
+checkpuckcoll,StaticEck2026,2026-10-24,GA,73,73,s (19) outranks v (13).
+DrawRinkOverlays,StaticEck2026,2026-10-24,GA,73,73,no declaration order or count change reaches the EXE's slots.
+InProgress,StaticEck2026,2026-10-24,GA,88,88,register picks after +102.
+puckfaceoff2,StaticEck2026,2026-10-24,GA,92,92,read only.
+DrawRinkSideObjects,StaticEck2026,2026-10-24,GA,118,118,register cycle from the edge clamps on.
+avdgoal,StaticEck2026,2026-10-24,GA,155,155,declsearch reaches at most 5 of its 9 EXE slots
+StartHL2,StaticEck2026,2026-10-24,GA,51,0,"(048, own file; 51 -> 0), in two steps."
+DbLineEditorLoop,StaticEck2026,2026-10-24,GA,92,64,** The jersey numbers are an if / else of two stores (`else nums.slot[i] = 100;`)
+GameLineEditorLoop,StaticEck2026,2026-10-24,GA,110,74,** (26 aligned)
+SwapSelectedPlayers,StaticEck2026,2026-10-24,GA,50,48,** The swap loop's second index reuses a
+ReplaySaveHilight,StaticEck2026,2026-10-24,GA,35,34,** `w = [2]; w *= [3]; n = w + 0x11;` gives the EXE's `imul edx
+LoadGameRoster,StaticEck2026,2026-10-24,GA,21,21,a tie in the unstable sort. `& 0xFF` fixes loop 1
+POSeedTeams,StaticEck2026,2026-10-24,GA,22,22,the else arm needs one more temporary in the register cycle.
+EditSkaterRating,StaticEck2026,2026-10-24,GA,57,57,/ EditGoalieRating 58: looked at; the pushed products differ.
+POAfterGame,StaticEck2026,2026-10-24,GA,100,100,looked at; the differences are register-cycle picks.
+ControlsDlgLoop,StaticEck2026,2026-10-24,GA,143,143,not reached.
+PassLaneChk,StaticEck2026,2026-10-24,GA,4,2,**
+wallcoll,StaticEck2026,2026-10-24,GA,16,11,** (`dopass.c`). The player branch's y limit goes through the dead sound short `s` instead of its own `lim` (a permute.py find)
+updatereplay,StaticEck2026,2026-10-24,GA,26,22,"** Writing the x term first in the packing (`x | y << 10 | ...`) gives the EXE's packing loop exactly. Left: the EXE keeps the tick - 2 temporary in edi (so it saves edi, `push 1Ch`)"
+doshot,StaticEck2026,2026-10-24,GA,47,45,** (`dopass.c`). `*puckvx = dx * (passspeed * 59) / (f = dist);` puts the EXE's `movsx ebp
+checkgoal,StaticEck2026,2026-10-24,GA,8,8,the three zero stores get eax where the EXE uses ecx / edx / edi.
+PenGoalStuff,StaticEck2026,2026-10-24,GA,19,19,the roster pointer ties the jersey value at savings 2.
+CanBlockShot,StaticEck2026,2026-10-24,GA,42,42,`s` gets ax
+puckfaceoff2,StaticEck2026,2026-10-24,GA,92,92,the EXE's `-1` chain makes register copies that no probe of the chain reproduces.
+shotdiradj,StaticEck2026,2026-10-24,GA,23,23,five spellings of the `dist = 1` store.
+DrawTradeScreen,Mhopkinsinc,2026-10-24,GA,12,0,(`dba76654`): the primary colour goes through `c1` twice: `c1 = byte_D11BC[tm[t] * 4]; c1 = jerseyremap[c1];`. The second assignment raises c1's savings from 20 to 40
+SkateToSpot,Mhopkinsinc,2026-10-24,GA,2,2,unchanged
+SimPlayoffRound2,Mhopkinsinc,2026-10-24,GA,3,3,unchanged
+BlitTileMap,Mhopkinsinc,2026-10-24,GA,5,5,unchanged
+ExecuteTrade,Mhopkinsinc,2026-10-24,GA,7,7,unchanged
+CopyHumanTeamDBs,Mhopkinsinc,2026-10-24,GA,9,9,unchanged
+ExportTeamToFloppy,Mhopkinsinc,2026-10-24,GA,11,11,unchanged
+CreateNewLeague,Mhopkinsinc,2026-10-24,GA,12,12,unchanged
+RandomizeSchedule,Mhopkinsinc,2026-10-24,GA,14,14,unchanged
+SeedPlayoffRound3,Mhopkinsinc,2026-10-24,GA,14,14,. Each has an UNSURE note saying what is left and what was tried.
+SimPlayoffRound1,Mhopkinsinc,2026-10-24,GA,16,9,
+PreGameScreen,Mhopkinsinc,2026-10-24,GA,50,0,(`d4f61ef5`): computes the pointer-buffer size into a local before the `sub_8CCA8` call (the RunMessageBox argument-temporary pattern)
+TitleScreen,Mhopkinsinc,2026-10-24,GA,3,3,unchanged
+ListDialog,Mhopkinsinc,2026-10-24,GA,7,7,unchanged
+SelectSavedFile,Mhopkinsinc,2026-10-24,GA,15,15,unchanged
+ResetGameVars,Mhopkinsinc,2026-10-24,GA,25,25,unchanged
+TreeSeriesWinner,Mhopkinsinc,2026-10-24,GA,35,35,unchanged
+SetupStatsSourceMenu,Mhopkinsinc,2026-10-24,GA,42,42,unchanged
+GameLoop,Mhopkinsinc,2026-10-24,GA,62,62,unchanged
+DrawSprite,Mhopkinsinc,2026-10-24,GA,66,66,unchanged
+TeamStatsScreen,Mhopkinsinc,2026-10-24,GA,123,123,. Each has an UNSURE note saying what is left and what was tried.
+GameStatsScreen,Mhopkinsinc,2026-10-24,GA,20,11,
+LoadTeamRoster,Mhopkinsinc,2026-10-24,GA,68,51,
+EditRosters,StaticEck2026,2026-10-24,GA,175,108,"** (now 2,589 bytes; EXE 2,604; was 2,537)"
+EditSkaterRating,StaticEck2026,2026-10-24,GA,57,30,
+EditGoalieRating,StaticEck2026,2026-10-24,GA,58,28,** (both still the EXE size)
+POAfterGame,StaticEck2026,2026-10-24,GA,100,67,** (same size). The `w == ctl2team` branch tests `s[2] == w`
+PlayoffTreeMenu,StaticEck2026,2026-10-24,GA,156,126,** Only the declaration order changed (`declsearch.py --conflicts`). It is still 35 bytes long: cross-jumps lost to register picks
+DbLineEditorLoop,StaticEck2026,2026-10-24,GA,64,64,without itemoffset the EXE's `level * 4` / `item * 32` order comes out
+GameLineEditorLoop,StaticEck2026,2026-10-24,GA,74,74,blk's split temporaries take w's slot.
+ControlsDlgLoop,StaticEck2026,2026-10-24,GA,143,143,an inner `for (;;)` click wait reaches the EXE size but scores 145.
+OpenSpeechBank,StaticEck2026,2026-10-24,GA,11,11,the EXE has the int `type` above the short `nsamples`
+SelectHilight,StaticEck2026,2026-10-24,GA,7,7,two new shapes
+RosterPanelClick,StaticEck2026,2026-10-24,GA,9,9,unchanged
+SetRosterTeamMenus,StaticEck2026,2026-10-24,GA,11,11,no new shape beyond UNSURE.
+ShowCredits,Mhopkinsinc,2026-10-24,GA,4,4,unchanged
+PickAwardWinners,Mhopkinsinc,2026-10-24,GA,5,5,unchanged
+DrawListItem,Mhopkinsinc,2026-10-24,GA,6,6,unchanged
+FadePalette,Mhopkinsinc,2026-10-24,GA,7,7,unchanged
+SkaterStatsCard,Mhopkinsinc,2026-10-24,GA,7,7,unchanged
+DrawAwardsSummary,Mhopkinsinc,2026-10-24,GA,12,12,unchanged
+EasnGoalieStatsScreen,Mhopkinsinc,2026-10-24,GA,12,12,unchanged
+PlacePlayersAtStart,Mhopkinsinc,2026-10-24,GA,15,15,unchanged
+ShowAwardScreens,Mhopkinsinc,2026-10-24,GA,19,19,. Each has an UNSURE note saying what is left and what was tried.
+EditTextField,Mhopkinsinc,2026-10-24,GA,62,36,(21 gotos -> 4)

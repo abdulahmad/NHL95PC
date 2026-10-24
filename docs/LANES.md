@@ -9,11 +9,15 @@ agents in their own worktrees. The rule in [AGENTS.md](../AGENTS.md) points here
 
 1. **One integration repo:** upstream `abdulahmad/NHL95PC` `main`. Both contributors open PRs into it, and nobody
    works off a fork's `main` any more.
-2. **Two lanes by segment:**
-   * Lane 1: segments 001-037, 56 drafts.
-   * Lane 2: segments 038-066, 73 drafts.
-
-   The two lanes are balanced on weighted difficulty. The lanes swap after each round.
+2. **Two segment lanes, plus lane T.** File ownership stays with the segment. The live assignment is
+   [docs/LANES_CURRENT.md](LANES_CURRENT.md), regenerated at the end of each round (about a day). A draft with
+   two consecutive no-gain attempts by its owner is offered, with its whole C file and its history, to the
+   other contributor. A draft with two no-gain attempts by each contributor, and no newer tool that applies,
+   goes on the Escalations list for Abdul. A C file is never split across contributors.
+   * Lane 1: segments 001-037, Mhopkinsinc. This snapshot: 56 drafts.
+   * Lane 2: segments 038-066, StaticEck2026. This snapshot: 73 drafts.
+   * Lane T: Abdul. Owns `tools/`, `tools/wccre` and escalation decisions. Does not take a segment C file
+     unless an escalation ruling says so.
 3. **CI:** it runs `make fullcheck` on every PR and on every push to `main`. A PR is merged only when it is green.
 4. **Lane PRs carry only code and per-function notes.** A small bookkeeping PR after each round updates the
    generated progress files.
@@ -27,9 +31,10 @@ agents in their own worktrees. The rule in [AGENTS.md](../AGENTS.md) points here
 
 * Merge green PRs, or let the lane owners do it (if the ruleset allows 0 approvals).
 * Look closer at PRs that change headers (`src/c/include/`) or `tools/`, because they can affect the other lane.
-* If GitHub reports a conflict in `tools/permute_log.csv` or `docs/unsure_tried.csv`, the PR author merges upstream
-  `main` into the branch locally and pushes. The union merge in `.gitattributes` resolves these files locally;
-  GitHub's merge button may not apply it.
+* If GitHub reports a conflict in `tools/permute_log.csv`, `docs/unsure_tried.csv` or `docs/draft_history.csv`, the
+  PR author merges upstream `main` into the branch locally and pushes. The union merge in `.gitattributes` resolves
+  these files locally; GitHub's merge button may not apply it. Do not change a union file's header row, or the
+  merge duplicates it.
 * If CI on `main` goes red, fix that before merging anything else.
 
 ## For contributors: setup
@@ -63,8 +68,9 @@ agents in their own worktrees. The rule in [AGENTS.md](../AGENTS.md) points here
 |---|---|---|---:|---:|---:|---:|
 | 1 | MHopkins | 001-037 (frontend, menus, stats, desk, calendar, rosters, trades, schedule, engine init / player logic) | 56 | 26 | 22 | 8 |
 | 2 | StaticECK | 038-066 (engine input, physics, skating, penalties, display; create player, line editor, replay, speech, playoffs) | 73 | 24 | 44 | 5 |
+| T | Abdul | `tools/`, `tools/wccre`, and the Escalations list | — | — | — | — |
 
-Swap the owners if you prefer; the lanes swap after each round anyway.
+The segment owners stay. A stuck file is offered in [docs/LANES_CURRENT.md](LANES_CURRENT.md); the tables below are the 2026-10-24 snapshot and are not the live assignment.
 
 * **Why by segment:** a match commit touches only `src/c/<seg>/X.c` and its marker in `src/cseg01/<seg>.asm`.
   Shared exits, cross-jumps and module files only interact inside a segment or between neighbouring segments.
@@ -83,50 +89,59 @@ The notes in UNSURE.md sometimes count a little differently. Rerun `rank_drafts.
 
 ## Rules for lane PRs
 
-* **Stay in your lane's segments.** If a fix needs the other lane's files, say so in the PR and agree on it first.
+* **Work the files `docs/LANES_CURRENT.md` assigns you,** including a file it offers from the other segment. Do not take a file it does not list. If a fix needs some other file, say so in the PR and agree on it first.
 * **A lane PR contains:**
   * C files.
   * Segment asm markers (`cc.py mark`).
   * UNSURE notes for its own functions, in their own commit, written inside each function's entry rather than as a
     new section at the end of the file.
   * Its `permute.py` log rows.
-* **A lane PR does not contain** `C_PROGRESS.md`, `tools/c_functions.csv`, `HANDOFF.md` or `README.md`. They go in
-  the bookkeeping PR.
+* **A lane PR does not contain** generated files: `C_PROGRESS.md`, `tools/c_functions.csv`, `docs/ranked_drafts.txt`,
+  `docs/LANES_CURRENT.md`, or the counts between the nhl95 marker comments in `HANDOFF.md` and `README.md`. The
+  progress workflow updates them.
 * **Headers** (`src/c/include/`): their own commit, called out in the PR description. A header change, such as a
   function's result type, can change code in the other lane.
-* **Renames:** list them in the PR description and leave them out of the code. The bookkeeping PR runs them in one
-  `tools/rename_symbol.py --batch`.
-* **Tool changes** (`cc.py`, `permute.py`, `tools/wccre`): their own PR.
+* **Renames** go in `docs/pending_renames.txt`, one line per rename in the `tools/rename_symbol.py --batch` format.
+  Do not rename in the tree. The progress workflow applies the file and then leaves only the header.
+* **Tool changes** (`cc.py`, `permute.py`, `tools/wccre`): lane T, their own PR.
 * **Every commit** builds MATCH with `make` and `make CBUILD=0`. Use small commits per function or per batch.
+* **PR body.** One machine-readable line per function: `score: Func before->after` (a match is `->0`).
+* **History.** Append one row to `docs/draft_history.csv` (function, contributor, date, compiler `GA`, score before,
+  score after, shapes tried). A row whose shapes say `not reached` is not an attempt.
 * **The usual matching rules** (AGENTS.md, HANDOFF):
-  * Timebox each function to about 8-10 minutes.
-  * Run `tools/wccre/regdump.py` first on a register-pick draft.
-  * Never retry a shape that UNSURE lists under GA.
+  * Timebox each function to 8-10 minutes.
+  * Before a manual try on a register or slot draft, run `tools/wccre/regdump.py` and `tools/wccre/declsearch.py`.
+  * Never retry a shape already tried under GA (UNSURE, or a `docs/draft_history.csv` row).
   * Reject `permute.py` finds that go against the EXE's statement order.
-* **Read each draft's DRAFT comment and its UNSURE entry before starting.** Known flags:
-  * assbench (lane 1): a no-op `& 0xFF` mask to remove before marking.
-  * LeadersScreen (lane 1): a `goto done` for the EXE's loop rotation; judge it before marking.
-  * ExecuteTrade (lane 1): matched only with an `unsigned short` result, which its caller rules out.
+  * **ESCALATE** instead of marking: `goto`, a no-op cast, a file-local `volatile`, dead-variable reuse, a wrong
+    return type. Say so in the history row and the PR.
+  * Do not convert a draft to hand-asm without Abdul's approval.
+* **Read `docs/LANES_CURRENT.md`, the draft's history and its UNSURE entry before starting.** These are ESCALATE, not silent matches:
+  * assbench (lane 1): a no-op `& 0xFF` mask.
+  * LeadersScreen (lane 1): a `goto done` for the EXE's loop rotation.
+  * ExecuteTrade (lane 1): an `unsigned short` result, which its caller rules out.
   * InProgress (lane 2): word_CBC44 declared `extern volatile short` in that file only.
 * **Known dependencies:**
   * DrawListItems (lane 1) already compiles to the EXE bytes but waits for DrawListItem.
   * CreatePlayoffs and POAfterGame (lane 2) end in the matched POSeedRound2's exit.
 
-## Rounds, bookkeeping and rotation
+## Rounds, offers and bookkeeping
 
-* **A round** is one pass of each lane over its drafts, or a fixed time box (a few days), whichever comes first.
-* **Bookkeeping PR,** at the end of a round, by MHopkins (who has done it so far) unless agreed otherwise:
-  * `python3 tools/c_progress.py` and `tools/draft_causes.py`.
-  * The HANDOFF Current state / Next.
-  * The README numbers.
-  * The batched renames.
-* **Then** rerun `rank_drafts.py` and swap the lanes. A different person, prompt or model on the same draft has
-  found matches before (FindFreeSpeechSlot and FindLoadedSpeechSlot after two Claude passes, SetSoundDevice).
-* **Optional tooling track:** 50 drafts are within 15 differing instructions, mostly register picks. A tool that
-  reads the register each variable needs from the EXE, and ranks source edits by how they move the savings, could
-  unlock several at once. Tools go in their own PR.
-* **"Done":** HANDOFF step 5 says unmatchable functions (split or overlapping) become hand-asm, so the build stays
-  byte-exact. Agree on a cutoff (for example, N passes with no gain) so the last few drafts do not drag on.
+* **A round** is about a day: one pass over the files [docs/LANES_CURRENT.md](LANES_CURRENT.md) assigns.
+* **Before each draft,** read that file, the function's `docs/draft_history.csv` rows and its UNSURE entry.
+* **An offer** is a whole C file whose segment owner has two consecutive no-gain attempts under GA on one of its
+  drafts. The other contributor takes the file. The history is attached in `docs/LANES_CURRENT.md`. Do not repeat
+  a shape listed there.
+* **An escalation** is a draft with two no-gain attempts by each contributor and no newer tool for its cause.
+  It is listed for Abdul (lane T). Stop trying it until he rules in `docs/ESCALATIONS.md`. A tool counts as new
+  only when the commit that added it is a later calendar day than the last attempt, and the attempts do not
+  already name it. Naming the tool in the shapes column marks it used.
+* **Bookkeeping** is `.github/workflows/progress.yml`. After `fullcheck` passes on a push to `main`, it regenerates
+  the progress files, applies `docs/pending_renames.txt`, reruns `fullcheck`, and opens a PR that auto-merges when
+  it is green. A run with nothing to change does not open a PR. Lane PRs do not do this work.
+* **Tooling:** 50 drafts in this snapshot are within 15 differing instructions, mostly register picks.
+  `tools/wccre/regdump.py` and `tools/wccre/declsearch.py` come before a manual try. Tools are lane T.
+* **Hand-asm** (HANDOFF step 5) only with Abdul's approval, after an escalation. Do not convert a draft yourself.
 
 ## Lane lists
 

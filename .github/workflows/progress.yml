@@ -1,0 +1,52 @@
+# Regenerates the progress files after fullcheck passes on a push to main, and opens a PR.
+# A run with nothing to change does not open a PR, so a merged progress PR does not loop.
+# pull_request runs of fullcheck do not trigger this (only a push to main).
+# GITHUB_TOKEN does not start other workflows, so the required fullcheck check never
+# appears on a PR this token opens. The PROGRESS_TOKEN secret is what makes the opened
+# PR run fullcheck and eligible to auto-merge. See the PR that added this file.
+name: progress
+on:
+  workflow_run:
+    workflows: ["fullcheck"]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: progress-bookkeeping
+  cancel-in-progress: false
+jobs:
+  bookkeeping:
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push' &&
+       github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.sha || github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nasm dosbox
+          pip install capstone==5.0.7
+      - name: Compiler setup
+        run: python3 tools/cc.py check
+      - name: Regenerate progress files
+        run: python3 tools/round_bookkeeping.py --jobs "$(nproc)"
+      - name: fullcheck
+        run: make fullcheck
+      - name: Open the progress PR
+        env:
+          PROGRESS_TOKEN: ${{ secrets.PROGRESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash tools/open_progress_pr.sh
