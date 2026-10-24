@@ -40,9 +40,11 @@ int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin,
 int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero, MenuItem *buttons, int n,
                      int bank);
 
-/* DRAFT under 10.0 GA: 5,671 vs 5,678 bytes, 92 differing instructions. The explicit menu-item
-   offset restores the EXE's frame size and bias; the declaration order (tools/slot_solver.py) puts all but h in
-   the EXE's slots. The pointer size product, h and later menu-branch registers still differ. */
+/* DRAFT under 10.0 GA: 5,678 bytes as the EXE, 64 differing instructions (7 aligned, two of them the false
+   two-fixup stores of the menu actions). The explicit menu-item offset restores the EXE's frame size and bias,
+   the jersey numbers are an if / else of two stores as in GameLineEditorLoop, and the declaration order
+   (tools/wccre/declsearch.py) puts every local in the EXE's slot. Left: the EXE computes level * 4 before the
+   itemoffset store (C after it). */
 /* DbLineEditorLoop (73A18, PC only): the database line editor (DbLineEditor's loop; GameLineEditorLoop is its
    copy for the game roster). Copy the jersey numbers of the 28h line slots of lines (the players found in team's
    roster list by FindRosterSlot; 100 for an empty slot) and put the dressed players of the 8 extra slots back to
@@ -64,32 +66,32 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
 int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero, MenuItem *buttons, int n,
                      int bank)
 {
+    int i;
+    unsigned char c2;
+    int sel[4];
+    int col1;
+    unsigned char *pal;
     LineSet nums;
+    int itemoffset;
+    int my;
+    int bg[4];
+    unsigned char c1;
+    int level;
     char path[0x20];
-    char buf[0x20];
+    int hit;
+    int col2;
+    int h;
+    int pick;
+    int nitems[4];
+    int blk;
+    int col3;
+    int ptr;
+    int mx;
     int pos[4][2];
     MenuItem *menus[4];
-    int sel[4];
-    int bg[4];
-    int nitems[4];
-    int w;
-    int i;
-    int pick;
-    int level;
-    int mx;
-    int h;
-    int my;
-    int item;
-    int hit;
-    int blk;
-    unsigned char *pal;
-    int col2;
-    int col3;
-    int col1;
-    int ptr;
+    char buf[0x20];
     int depth;
-    unsigned char c1;
-    unsigned char c2;
+    int w;
     int oldmx;
     int oldmy;
     int bits;
@@ -99,7 +101,7 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
     unsigned char slot;
     unsigned char *e;
     MenuItem *m;
-    int itemoffset;
+    int item;
 
     depth = 0;
     hit = pick = -1;
@@ -123,8 +125,10 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
     my = oldmy = (menus[0]->y1 + menus[0]->y2) / 2;
     /* the slots' jersey numbers */
     for (i = 0; i < 0x28; i++) {
-        nums.slot[i] = lines[i] != 100
-            ? (slot = FindRosterSlot(lines[i], team), rosterjersey[RREC(slot)]) : lines[i];
+        if (lines[i] != 100) {
+            slot = FindRosterSlot(lines[i], team);
+            nums.slot[i] = rosterjersey[RREC(slot)];
+        } else nums.slot[i] = 100;
     }
     /* the extra slots' dressed players are scratched again */
     for (i = 0; i < 8; i++) {
