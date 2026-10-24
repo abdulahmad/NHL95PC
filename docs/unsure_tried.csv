@@ -3662,3 +3662,31 @@ NetCollide,rettype:int,an int result,tried (docs/UNSURE.md),ga
 checkcheck,,`p->checking < randomd0(rel)` (34),34,ga
 checkcheck,,"the penalty as `randomd0(2) != 0 ? 0xC : 0xB` (31, +3, other code)","31, +3, other code",ga
 checkcheck,,"an `(int)` on the bool (32, no-op cast)","32, no-op cast",ga
+PlayLeagueGame,,(the bank store and the slot order as in the entries above),,ga
+TitleScreen,,"the PlayMVI form of the wait (its own elapsed local el instead of reusing the palette index i, `SetTickDeadline(due - el)`, no left): el in left's place 34, two-argument decoders 27",,ga
+TitleScreen,,"el declared first, after i or after due 54-70 (frame changes)",,ga
+TitleScreen,,two-argument decoders with left 37,,ga
+TitleScreen,,declsearch --conflicts on the two-argument el version (284 orders,,ga
+TitleScreen,,the model predicts 13 of 13 slots,,ga
+TitleScreen,,the compile gets 11 and scores 78),,ga
+BuildStandingsGrid,,"a compile-context copy of AskExportToFloppy (the EXE's previous function) before it (41, no change: the block split state does not matter here)","41, no change: the block split state does not matter here",ga
+DrawCalendarDay,,"a compile-context copy of LoadCrestsPalette (the EXE's previous function) before it (38, no change). No natural legend form found that replaces the dx reuse (the earlier entries list the coordinate groupings already tried)",,ga
+SeedPlayoffRound3,,"c2 dropped for c1 in the second conference (14), `c1 = a = ...` / `c2 = a = ...` chain order (14 each, both 14), `c2 == s[0x56]` compare (no change), i as the counter of either game-slot loop (64 / 67), k as the date loop's counter (67)",67,ga
+SeedPlayoffRound3,,"a new j for the second (or first) game-slot loop, declared before or after k (87",,ga
+SeedPlayoffRound3,,declared last 102),,ga
+SeedPlayoffRound3,,a compile-context copy is not possible here (the file already holds the EXE's neighbours),,ga
+assbench,,a compile-context copy of assepen (the EXE's previous function) before it (no change,,ga
+assbench,,with or without masks),,ga
+assbench,,with the masks: dy first / last,,ga
+assbench,,a block count n (all 11),all 11,ga
+assbench,,without: `p->temp1 = d + 8` (28),28,ga
+assbench,,"the y distance inline (27), d int (14), dy int (27), `p->temp1 = d = p->temp1 - 1` (13), d / dy declaration swap (13), no d (`--p->temp1 < 0` or `p->temp1--`: push edi, 52)","`--p->temp1 < 0` or `p->temp1--`: push edi, 52",ga
+assbench,,"on `d = --p->temp1`: `= d + 8`, `= 8 + d`, `d += 8; p->temp1 = d;`, `if ((d = --p->temp1) < 0)` with either, `d = p->temp1 -= 1`, d declared first (all 8), d int (40)",40,ga
+assbench,,the x distance through d or a new short dx (13 on the d = temp1 - 1 form,,ga
+assbench,,through d with --temp1 48),,ga
+assbench,,"permute.py twice (897 + 641 candidates: best 11 / 7 only with no-op casts, `(unsigned char)-1` on the newpos chain and `(char)0xFD` on the pflags mask",,ga
+assbench,,rejected),,ga
+assthreestars,,"a compile-context copy of ass_pc_slot20 (the EXE's previous function) right before it (44, no change)","44, no change",ga
+DrawSprite,,"a compile-context copy of LoadScoreboardGfx (the EXE's previous function) before it (66, no change). Reading: the EXE re-reads s.flip from its slot (`cmp word [esp+18h], 0`) and reuses ecx for the mode zero, as for an address-taken short (no copy propagation of the homed flip)",,ga
+DrawSprite,,nothing compiled on that,,ga
+StarCompare,,"a compile-context copy of StarEligible (the EXE's previous function) before it (67, no change)","67, no change",ga
