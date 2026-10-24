@@ -2066,6 +2066,10 @@ pop ebp	; 2F2AD
 pop edi	; 2F2AE
 pop esi	; 2F2AF
 ret	; 2F2B0
+; C: src/c/022_2D346_game_setup/PickOtherGames.c
+%ifdef CBUILD
+%include "c/022_2D346_game_setup/PickOtherGames.inc"
+%else
 PickOtherGames:
 push dword 1Ch	; 2F2B1
 call __CHK	; 2F2B6
@@ -2180,6 +2184,7 @@ pop esi	; 2F3D3
 pop ecx	; 2F3D4
 pop ebx	; 2F3D5
 ret	; 2F3D6
+%endif ; C
 ; C: src/c/022_2D346_game_setup/UpdateOtherScores.c
 %ifdef CBUILD
 %include "c/022_2D346_game_setup/UpdateOtherScores.inc"

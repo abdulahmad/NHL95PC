@@ -2593,3 +2593,36 @@ BlitTileMap,,"permute.py 5 min from `(y + row) - (row << 1)` (transforms used up
 SimulateGame,,"(2026-10-24, lane 1b batch 4): the plain allocation loop (`for (i = 0; i < 2; i++)` with every store indexed by i, no sv",,ga
 SimulateGame,,"592, same code)",,ga
 SimulateGame,,"permute.py 5 min (513 candidates, batched): best 581 at size +6 (an `== 0` test and a do-loop) and 521 at size +32 (adds a short cast), neither verified fresh nor kept (the draft is compiler-state sensitive)",,ga
+SelectSavedFile,,"(2026-10-24, lane 1a batch 4",,ga
+SelectSavedFile,,in the file) the test in place with the arms through t,,ga
+SelectSavedFile,,the arms in place with the test through t,,ga
+SelectSavedFile,,"a `char *a` set in an if / else then one strncpy, `a = t < 0x18 ? ... : ...` (all 15)",all 15,ga
+SelectSavedFile,,"(in tools/probe.py standalone functions, all still hoist `t << 2`) a ternary argument, `char *` tables",,ga
+SelectSavedFile,,"the arms swapped (`t >= 0x18`), `*(tab2 + t)`, mixed int / `char *` tables, `else if (t >= 0x18)`",,ga
+SelectSavedFile,,"an early return in the first arm, `t += 2` in the else arm with one table (folds to one load, not two), `tab[t + 2]` / `tab[2 + t]`, t a global, `(unsigned)t` in one arm, t a parameter, t address-taken, `unsigned t`",,ga
+SelectSavedFile,,the test and both arms in place,,ga
+SelectSavedFile,,a copy n for the test and one arm,,ga
+SelectSavedFile,,"a goto layout, `p = tab2[t]; if (t < 0x18) p = tab[t];` (load before the test), `switch (t < 0x18)`, mixed in-place / local reads per arm, `if ((t = x) < 0x18)`",,ga
+SelectSavedFile,type:t:unsigned,`unsigned t`,tried (docs/UNSURE.md),ga
+ResetGameVars,,"(2026-10-24, lane 1a batch 4): chained stores for each lc* pair (`x[0] = x[1] = 0`, one at a time",,ga
+ResetGameVars,,the first 2-7 and all eight),,ga
+ResetGameVars,,the two 0xFF bytes,,ga
+ResetGameVars,,the five -1 stores,,ga
+ResetGameVars,,"the six pass / shot zeros, savedmousey / x (all 25, identical)","all 25, identical",ga
+TeamRosterScreen,,"(2026-10-24, lane 1a batch 4): the goalie loop through s and the skater loop through gs (34 each), `n = 0;` before the loop (62, +9), `for (n = 0, i = 0; ...)` (23), `for (n = i = 0; ...)` (25)",25,ga
+TeamRosterScreen,,"the same for m (23), y short (122), gs or idx in block scope (66 / 78), `short *gs` (32), `++n` / `n += 1` / `n = n + 1` (23, same code, count unchanged), `statsskaterorder[n] = n++` (81)",81,ga
+TeamRosterScreen,,the display test `n > i` (23),23,ga
+TeamRosterScreen,,the skater copy through `*(SStat *)(statsskaterbuf + n * 0x2F)` or `&statsskaterbuf[n * 0x2F]` (23),23,ga
+TeamRosterScreen,,the plr / order stores swapped (23),23,ga
+TeamRosterScreen,,"the copy after the plr store (28), `n = (statsskaterorder[n] = n) + 1;` (118, +5), `n = statsskaterorder[n] + 1;` after the store (66, +7)","66, +7",ga
+TeamRosterScreen,type:y:short,y as a short,tried (docs/UNSURE.md),ga
+TreeSeriesWinner,,"(2026-10-24, lane 1a batch 4): only the probes and the simulation above",,ga
+SetupStatsSourceMenu,,"(2026-10-24, lane 1a batch 4): AddDirtyRect (the function before it in the EXE) in the same file before it (no change in SetupStatsSourceMenu",,ga
+SetupStatsSourceMenu,,AddDirtyRect still matches),,ga
+PreGameScreen,,"(2026-10-24, lane 1a batch 4): only these simulations",,ga
+GameLoop,,"(2026-10-24, lane 1a batch 4): only the probes",,ga
+DrawSprite,,"(2026-10-24, lane 1a batch 4): nothing new compiled (analysis only)",,ga
+GameStatsScreen,,"(2026-10-24, lane 1a batch 4): only the plain form again with regdump (179 conflicts, 110 differing: frame 4 smaller, ebx / ecx swapped) to get those savings",,ga
+TeamStatsScreen,,"(2026-10-24, lane 1a batch 4): case 3 stored directly as `statssortkeys[i] = t ? (... * 1000 + t / 2) / t : 0;` (126, size +2: case 3 then merges with case 2's store, not case 4's)","126, size +2: case 3 then merges with case 2's store, not case 4's",ga
+TeamStatsScreen,,"the same with `: t` (126), cases 2 and 3 with `: t` (126), case 4 through x (123, same)","123, same",ga
+LoadTeamRoster,,"(2026-10-24, lane 1a batch 4): `hmroster + i * 39 + team * 1092` (70, +4), `hmroster + (team * 1092 + i * 39)` / `hmroster + (i * 39 + team * 1092)` / `&hmroster[team * 1092 + i * 39]` / `&hmroster[i * 39 + team * 1092]` / `p = hmroster; p += team * 1092 + i * 39;` (all 142, +17), `p = hmroster + i * 39; p += team * 1092;` (72), `p = hmroster + team * 1092; p += i * 39;` and `p = hmroster; p += team * 1092; p += i * 39;` (70, +4)","70, +4",ga
