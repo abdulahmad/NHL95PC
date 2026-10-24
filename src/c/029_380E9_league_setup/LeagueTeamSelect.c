@@ -28,14 +28,15 @@ int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin,
 int sub_8F98F(char *path);  /* music library: load a song */
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song */
 
-/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 5,872 of 5,888 bytes, 102
+/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 5,872 of 5,888 bytes, 55
    differing under 10.0 GA. Every call is in place and the frame size matches. Found under GA: the dropdown
    close loops' position reset as two stores (`pos[i][0] = 0; pos[i][1] = 0;`; the chained form shifts every
-   slot), the arrays declared menus, bg, nitems, the origin ternaries as `depth != 1 ? x2 : x1`. Left: the
-   scalar slots (the EXE: h, item, level, w, my, mx, oldmy, oldmx, hit, fh, a temporary, bank, the three homed
-   parameters, art, done, n, c40, c42, c41, three temporaries, ptr, depth, cur, i upward from 220h); the event
-   pointer copied into two registers; the two ClearInputQueue tails merged and the DrawMenuItemNorm tail
-   shared from another branch (the EXE keeps the last branch's copy). */
+   slot), the arrays declared menus, bg, nitems, the origin ternaries as `depth != 1 ? x2 : x1`, and the
+   address-taken scalars declared among the arrays as below: they have no register conflict, so their slots
+   follow their declaration order through Watcom's size sort (docs/WCC_INTERNALS.md "Stack slots"); this order
+   gives the EXE's h, item, level, w, my, mx, oldmy, oldmx, hit, fh upward from 220h. Left: the sprite-size
+   product's registers (L165), the bg[i] register in the FreeMemBlock loop, the two ClearInputQueue tails
+   merged and the DrawMenuItemNorm tail shared from another branch (the EXE keeps the last branch's copy). */
 /* LeagueTeamSelect (38B4F, PC only): the league setup team grid. Set the text state and the identity colour
    remap, then build the 4 x 7 grid of team numbers by division: the default order (divisionteams) for a new
    league (mode bit 0), else the standings read from the league's teams database (BuildStandingsGrid). Unless
@@ -64,23 +65,23 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
     unsigned char textstate[0x40];
     char path[0x20];
     unsigned char grid[4][7];
+    int hit;
     int sel[4];
-    int fh;
     int pos[2][2];
     char pw2[12];  /* the password again */
     char pw1[12];  /* the player's name, then the password */
+    int oldmy;
     MenuItem *menus[2];
+    int my;
+    int w;
+    int fh;
     int bg[2];
     int nitems[2];
-    int h;
-    int item;
     int level;
-    int w;
-    int my;
-    int oldmy;
-    int mx;
+    int item;
     int oldmx;
-    int hit;
+    int h;
+    int mx;
     int bank;
     int art;
     int done;

@@ -2822,3 +2822,49 @@ GameStatsScreen,,"with the completion percentage through x (93, +1)","93, +1",ga
 GameStatsScreen,,the label loop through m on the draft (45),45,ga
 ListDialog,,"(2026-10-24, lane 1a batch 7, on the best11 copy): the sprite header copy",,ga
 ListDialog,,"the [3] store or the first sub_91400 through bg2 instead of bg (11 each, counts unchanged)","11 each, counts unchanged",ga
+ExecuteTrade,,"(2026-10-24, lane 1b batch 7): the `if (err) continue;` and the FFh `continue` as wrapping if blocks, `i = 0; for (; ...)` (7 each, unchanged)","7 each, unchanged",ga
+ExecuteTrade,,"no outer `if (!err)` (14, +8)","14, +8",ga
+ExecuteTrade,,`!err && i < 2` (12),12,ga
+ExecuteTrade,,`traded != 0` (7),7,ga
+ExecuteTrade,,`traded && !err` (10),10,ga
+PlayLeagueGame,,"(2026-10-24, lane 1b batch 7): only that count sweep",,ga
+SimPlayoffRound1,,"(2026-10-24, lane 1b batch 7): those two slot checks",,ga
+SimPlayoffRound1,,"permute.py 5 min (385 candidates, best 14 with an `(unsigned short)` cast",,ga
+SimPlayoffRound1,,"a cast for the score, rejected)",,ga
+BlitTileMap,,"(2026-10-24, lane 1b batch 7): x, y or flags as an int parameter read through `(short)` (25 / 22 / 36 differing)",25 / 22 / 36 differing,ga
+LeagueTeamSelect,,"(2026-10-24, lane 1b batch 7): the two declaration orders above (76, 55 kept)","76, 55 kept",ga
+TradeScreenLoop,,"(2026-10-24, lane 1b batch 7): the jersey index with the cursor term first, `(tradejersey + tradeside * 0x268)[...]` and as a pointer plus an int sum (88 / 90 by the permute metric, base 88)","88 / 90 by the permute metric, base 88",ga
+TradeScreenLoop,,"c2 declared before c1, also with c1 / c2 declared first (88 / 237)",88 / 237,ga
+TradeScreenLoop,,"byte_D12DE passed straight to MakeJerseyShape without c2 (304, +20), and c1 too (297, +11)","297, +11",ga
+TradeScreenLoop,,`r = tradeside = tradecursor[tradeside] = -1;` (same code),same code,ga
+TradeScreenLoop,,"permute.py 5 min on the new base (449 candidates, best 83 by its metric at +4 bytes",,ga
+TradeScreenLoop,,a commute),,ga
+TradeScreenLoop,movedecl:i:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:i:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:menus:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:nitems:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,movedecl:oldmx:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:oldmx:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:pos:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:picked:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,movedecl:oldmy:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:oldmy:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,movedecl:mx:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:mx:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,movedecl:my:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:my:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,movedecl:level:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:level:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,movedecl:item:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:item:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,movedecl:h:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:h:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,movedecl:w:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:w:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:sel:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:bg:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,movedecl:flag:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+TradeScreenLoop,swapdecl:flag:,"declaration order `i, menus, nitems, oldmx, pos, picked, oldmy, mx, my, level, item, h, w, sel, bg, flag`, confirmed",tried (docs/UNSURE.md),ga
+PostGameToTeamDb,,"(2026-10-24, lane 1b batch 7): `(i << 2)` in one or both key reads, `i * 4 + f.team + 0x4C` (130 by the permute metric, unchanged)","130 by the permute metric, unchanged",ga
+PostGameToTeamDb,,"the stat offset as `k = i * 16; k += side * 0x190` (142), `k = side * 0x190; k += i * 16` (146, also with the shifted key read), `(i << 4)` (130), `i * 16 + side * 0x190` (131)",131,ga
+PostGameToTeamDb,,the count sweeps above,,ga
