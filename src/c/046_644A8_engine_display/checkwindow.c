@@ -201,14 +201,14 @@ void LoadTeamPPV(short seq)
 void DrawTextOverlay(void)
 {
     short w;
-    short y0s;
     short x2;
+    short y0s;
     short x0s;
-    short y;
-    short y1s;
-    short h;
     short x1s;
+    short y;
+    short h;
     short y2;
+    short y1s;
     short x;
     short d;
 

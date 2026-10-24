@@ -10,10 +10,11 @@
    (PBnum), camx (byte), camy and crowdlevel (words), the ten rink objects' frames as nibbles and the twenty
    object bytes of word_DEE94. When the buffer (9600h bytes from replaystart) is full it wraps (sflags bit 4). On
    the other tick only the sound effect is carried over (replaysfx). No arguments, no result.
-   DRAFT: 810 vs 812 (198 of 216 instructions). A volatile lo gives the original stack byte and frame. Left: the
-   tick - 2 goes through edi (here ecx, so edi is not saved), the y / x packing swaps ebx and ecx, and the nibble
-   loop shares 2i between the two indexes where the original computes 2i + 1 in one lea and 24i fresh. See
-   docs/UNSURE.md. */
+   DRAFT (10.0 GA, 22 differing, same size): a volatile lo gives the original stack byte and frame; the x term
+   written first in the packing (`x | y << 10 | ...`) gives the EXE's loads (y copied into ecx and shifted, each
+   later term in ebx and or-ed into ecx). Left: the tick - 2 goes through edi in the EXE (here ecx, so edi is not
+   saved and the frame is push 18h, not 1Ch), and the nibble loop builds 2i + 1 in two leas through eax (EXE one
+   `lea ebx, [ecx+ecx+1]` from i in ecx). See docs/UNSURE.md. */
 void updatereplay(void)
 {
     Player *p;
@@ -30,7 +31,7 @@ void updatereplay(void)
     replaytick -= 2;
     if (gmode2 & 4) recbpr = ReplayPrevFrame();
     for (p = SortCords, i = 0; i < 0x11; i++, p++) {
-        *(int *)recbpr = (short)(HIWORD(p->Ypos) & 0x3FF) << 10 | (short)(HIWORD(p->Xpos) & 0x3FF)
+        *(int *)recbpr = (short)(HIWORD(p->Xpos) & 0x3FF) | (short)(HIWORD(p->Ypos) & 0x3FF) << 10
                        | (short)(((short *)p)[9] & 0x7FF) << 20 | (short)(((short *)p)[0x2A] & 0x800) << 20;
         recbpr += 4;
     }

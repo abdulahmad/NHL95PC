@@ -1,7 +1,4 @@
 /* Game frame: a highlight run of the game engine. */
-/* DRAFT under 10.0 GA: 51 differing instructions, 3,334 vs 3,325 bytes. Saved score-pointer allocation is
-   correct and r now has the EXE's spill slot (k doubled before the call); left: pl in esi (EXE ebx) with the
-   for loop's jump to its test, the r / sgameover slot order, zero registers and CrowdNoiseUpdate's movsx. */
 #define StartHL2 StartHL2_decl
 #define SprSortVert SprSortVert_decl
 #define SprSort SprSort_decl
@@ -31,9 +28,9 @@ void MusicChanReset2(void);
    period: the period. Result: -1 when it ended on Esc, else 0. */
 int StartHL2(int home, int vis, int *hsc, int *asc, int period)
 {
+    LineTab hml;
     short save[0x44];
     LineTab awl;
-    LineTab hml;
     int opts;
     short sgameover;
     short sgmode2;
@@ -150,13 +147,14 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     word_DF746 = -1;
     word_DF744 = -1;
     resetplstuff();
-    for (pl = SortCords, i = 0; i < 0xC; i++, pl++) {
+    pl = SortCords;
+    for (i = 0; i < 0xC; i++, pl++) {
         k = (pl->pflags & 0x80 ? 0 : 6) + pl->position;
-        k *= 2;
+        j = k + k;
         r = randomd0(0x14) - 10;
-        HIWORD(pl->Xpos) = dword_CD9A0[k] + r;
+        HIWORD(pl->Xpos) = dword_CD9A0[k * 2] + r;
         t = pl->position == 0;
-        HIWORD(pl->Ypos) = (randomd0(pl->position == 0 ? 4 : 0x14) - t ? 4 : 0xA) + dword_CD9A0[k + 1];
+        HIWORD(pl->Ypos) = (randomd0(pl->position == 0 ? 4 : 0x14) - t ? 4 : 0xA) + dword_CD9A0[j + 1];
         pl->Xvel = pl->Yvel = 0;
         pl->facedir = vtoa((short)(*puckx - HIWORD(pl->Xpos)), (short)(*pucky - HIWORD(pl->Ypos)));
     }
@@ -210,11 +208,11 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
         sub_6AF97(0, 0);
         sub_6B008();
         SetRinkScroll(viewscrollx, viewscrolly);
-        sub_6AF52(scrollx + bgscrollx * 8, scrolly + bgscrolly * 8, scrollx + bgscrollx * 8 + 0x140,
+        sub_6AF52(scrollx + bgscrollx * 8, scrolly + bgscrolly * 8, bgscrollx * 8 + scrollx + 0x140,
             scrolly + bgscrolly * 8 + 0xA8);
         spritedrawcount = 0;
         DrawRinkOverlays((short)viewscrollx, (short)viewscrolly);
-        sub_6AF97(-(scrollx + bgscrollx * 8), -(bgscrolly * 8 + scrolly));
+        sub_6AF97(-(bgscrollx * 8 + scrollx), -(bgscrolly * 8 + scrolly));
         sub_6ADA7();
         if (fadeinpending) {
             joysampling_save = joysampling;
@@ -223,11 +221,11 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
             FadePalette(1, savepal, 0x10);
             joysampling = joysampling_save;
         }
-        CrowdNoiseUpdate(j);
+        CrowdNoiseUpdate((short)j);
         hudhundstep = hudhundaccum / 0x18;
         hudhundaccum %= 0x18;
         if (exitgame && !(gameclock | clockticks[0]))
-            hudhundstep = hudclockhund + (hudclockmin * 60 + hudclocksec) * 100;
+            hudhundstep = (hudclockmin * 60 + hudclocksec) * 100 + hudclockhund;
         UpdateHudPanel();
         if (fadeinpending) {
             joysampling_save = joysampling;
@@ -288,14 +286,10 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     *asc = awscore;
     hmscore[0] = *p++;
     awscore = *p++;
-    i = 0;
-    goto restore_teams_test;
-restore_team:
-    q = (&hmtmstruct)[i].tmpdst;
-    for (j = 0; j < 0x1C; j++) *q++ = *p++;
-    i++;
-restore_teams_test:
-    if (i < 2) goto restore_team;
+    for (i = 0; i < 2; i++) {
+        q = (&hmtmstruct)[i].tmpdst;
+        for (j = 0; j < 0x1C; j++) *q++ = *p++;
+    }
     *(int *)&gameopts = opts;
     *(LineTab *)hmlinetab = hml;
     *(LineTab *)awlinetab = awl;

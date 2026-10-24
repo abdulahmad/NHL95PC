@@ -26,6 +26,10 @@ extern awtmap, awtmgoalie, word_DF816, word_DF81A
 extern word_E0022, word_E0028, word_E002A
 extern regd1, joysampling_save, CwdExciteLvl
 global StartHL2
+; C: src/c/048_69336_game_frame/StartHL2.c
+%ifdef CBUILD
+%include "c/048_69336_game_frame/StartHL2.inc"
+%else
 StartHL2:
 push dword 120h	; 69336
 call __CHK	; 6933B
@@ -829,3 +833,4 @@ pop ebp	; 6A02D
 pop edi	; 6A02E
 pop esi	; 6A02F
 ret 4	; 6A030
+%endif ; C

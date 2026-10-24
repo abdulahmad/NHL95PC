@@ -184,10 +184,13 @@ void shotdiradj(Player *p)
 
 int __cdecl imul32(int a, int b);  /* library: 32-bit product */
 
-/* DRAFT (10.0 GA, 47 differing, same size): the scatter divisor and the speed divisor share one int (f, the
-   EXE's ebp, so the 3 of f / 3 spills to [esp]); the x scatter range is an int t (r + r) declared last, and dy
-   declared before snd, which puts snd at [esp+0Ch] and dy at [esp+10h] as in the EXE. Left: register picks
-   (the |y| of the shot-power test in edi, EXE ebx; the puck x pointer, the radius sum). */
+/* DRAFT (10.0 GA, 45 differing, same size): the scatter divisor and the speed divisor share one int (f, the
+   EXE's ebp, so the 3 of f / 3 spills to [esp]); f takes the distance inside the first speed division
+   (`/ (f = dist)`: the EXE's movsx ebp, cx right before the idiv); the x scatter range is an int t (r + r)
+   declared last, and dy declared before snd, which puts snd at [esp+0Ch] and dy at [esp+10h] as in the EXE.
+   Left: register picks (the |y| of the shot-power test in edi, EXE ebx; the puck x pointer, the radius sum, the
+   speed quotients in edx, EXE ebx) and the lift, where the EXE converts passspeed (ebp) and dist (ecx) once
+   for both terms. */
 /* doshot (57C0B, 93G doshot; ends in dopass_ret6): p shoots. The aim is set (shotdiradj), p becomes the shooter
    (shotplayer, sflags bit 3 off, pflags bit 5). Without the puck, and not in a deflection animation (SPA DD3h /
    E2Bh), it only plays the miss sound 99h. Else (gmode2 bit 4) the shot speed: a slapshot (SPA 491h / E2Bh) loses
@@ -271,8 +274,7 @@ void doshot(Player *p)
             z += randomd0(q);
         }
     }
-    f = dist;
-    *puckvx = dx * (passspeed * 59) / f;
+    *puckvx = dx * (passspeed * 59) / (f = dist);
     *puckvy = dy * (passspeed * 59) / f;
     if (penshotlive) {
         if ((*puckvx ^ p->Xvel) >= 0 && ABS(*puckvx) < ABS(p->Xvel)) *puckvx = p->Xvel + 0x1F4;
@@ -302,7 +304,6 @@ void wallcoll(Player *p)
     short t;
     short s;
     short v;
-    short lim;
 
     p->Wallcos = regd0.w;
     p->Wallsin = regd1.w;
@@ -361,8 +362,8 @@ slow:
                 p->Xvel = 0;
                 HIWORD(p->Xpos) = HIWORD(p->OldXpos);
             }
-            lim = HIWORD(p->OldYpos) < 0 ? -0xEC : 0xEC;
-            if (HIWORD(p->OldYpos) > lim + 0xA && p->Yvel < 0 || HIWORD(p->OldYpos) < lim - 6 && p->Yvel > 0) {
+            s = HIWORD(p->OldYpos) < 0 ? -0xEC : 0xEC;
+            if (HIWORD(p->OldYpos) > s + 0xA && p->Yvel < 0 || HIWORD(p->OldYpos) < s - 6 && p->Yvel > 0) {
                 p->Yvel = 0;
                 HIWORD(p->Ypos) = HIWORD(p->OldYpos);
             }

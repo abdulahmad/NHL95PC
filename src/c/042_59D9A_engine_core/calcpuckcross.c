@@ -13,7 +13,10 @@ void doinput(Player *p, int pad);  /* 504DA: pad 0 for controller 1, 2 for contr
 /* calcpuckcross: find puck crossing lines: when (if at all) the puck will cross each goal line
 . For the goal lines y = +E8h and -E8h: puckcross[0] = x where the puck crosses (bounced
  off the side boards at +-A0h), puckcross[1] = frames until it crosses (dy * 1000h puckvy); [1] = -1 when it
- will not cross (no y velocity, moving away, or out of range). */
+ will not cross (no y velocity, moving away, or out of range).
+ DRAFT (10.0 GA, 3 differing, same size): x declared in the crossing block and the first bounce as
+ `side + side - x` (side's savings 71 -> 81, tied with pc, so side takes ecx and pc esi as in the EXE).
+ Left: both bounce results are copied with `mov ebx, edx` where the EXE has the 16-bit `mov bx, dx`. */
 void calcpuckcross(void)
 {
     short *pc;
@@ -22,7 +25,6 @@ void calcpuckcross(void)
     int t;
     int dy;
     short i;
-    short x;
 
     pc = puckcross;
     goaly = 0xE8;                               /* goal line */
@@ -35,8 +37,10 @@ void calcpuckcross(void)
                 pc[1] = t;                      /* time until crossing in frames */
                 t = *puckvx * dy / *puckvy;
                 if (t < 0x10000) {
+                    short x;
+
                     x = t + *puckx;
-                    if (x >= 0xA0) x = side * 2 - x;     /* bounce off the side boards */
+                    if (x >= 0xA0) x = side + side - x;     /* bounce off the side boards */
                     side = -side;
                     if (x <= side) x = side * 2 - x;
                     side = -side;
