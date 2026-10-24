@@ -109,6 +109,11 @@ doshot is in this file (score 45, register 33/43) and comes with it.
 - SetRosterTeamMenus 11->11 (2026-10-24, StaticEck2026, GA) no new shape beyond UNSURE.
 - SetRosterTeamMenus 11->11 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (only a savings bump of i, dead-variable reuse); one i for both halves (28); d <<= 3 before the stores (11); (int)0 stores (11); i declared first (11)
 
+### `src/c/055_78346_team_select/DrawGameLineJerseys.c`
+
+- DrawGameLineJerseys 11->11 (2026-10-24, StaticEck2026, GA) unchanged
+- DrawGameLineJerseys 11->11 (2026-10-24, StaticEck2026, GA) regsolve (0/1 votes, nothing compiled); permute.py tempadd/temps/inplace/chain/scope/commute/opassign/shiftstmt/forchain/ifswap/temp: no unlogged candidate
+
 ### `src/c/061_83459_speech/OpenSpeechBank.c`
 
 - OpenSpeechBank 11->11 (2026-10-24, StaticEck2026, GA) .
@@ -128,11 +133,35 @@ POAfterGame is in this file (score 67, register 30/43) and comes with it.
 - POAfterGame 100->67 (2026-10-24, StaticEck2026, GA) (same size). The `w == ctl2team` branch tests `s[2] == w`
 - POAfterGame 67->67 (2026-10-24, abdulahmad, GA) scored only, same size. No source edit.
 
+### `src/c/040_53294_engine_physics_ai/checkplcoll.c`
+
+- checkplcoll 13->13 (2026-10-24, StaticEck2026, GA) the size sort puts the short parameter in the top slot.
+- checkplcoll 13->13 (2026-10-24, StaticEck2026, GA) int x probe 8 (only the home store dword vs the EXE word; wrong type, not kept)
+
 ### `src/c/064_86696_season_playoffs/POHandleElimination.c`
 
 - POHandleElimination 13->13 (2026-10-24, StaticEck2026, GA) unchanged
 - POHandleElimination 13->13 (2026-10-24, StaticEck2026, GA) the cross-jumped RestoreDialogBg call.
 - POHandleElimination 13->13 (2026-10-24, Mhopkinsinc, GA) goto save removed: simulate path nested under if (MessageBox(...) != 0) (13, same code, committed); switch (mode) case 1 / default (13), with case 0 (19); champion fix as empty if / else (13)
+
+### `src/c/051_6C2F9_database_save/RunEditRosters.c`
+
+- SelectRosterTeam 14->14 (2026-10-24, StaticEck2026, GA) .
+- SelectRosterTeam 14->14 (2026-10-24, StaticEck2026, GA) regsolve (0/0); MenuItem20 *m local for the second clear 17, both clears 15
+
+### `src/c/040_53294_engine_physics_ai/checkwallcoll.c`
+
+- checkwallcoll 15->15 (2026-10-24, StaticEck2026, GA) no count change or declaration order gives x the top slot.
+- checkwallcoll 15->15 (2026-10-24, StaticEck2026, GA) committed goto-free (assignment in the second compare, same bytes); comma conditions 8 (+20), other goto-free forms 17-69; slotdump count grid (EXE slots need x 7 / ylim 8 / xlim 7-8 or similar); 12 net index spellings 15-42; ry0 dropped 28-68
+
+### `src/c/055_78346_team_select/MenuSaveDefaultLines.c`
+
+- MenuGameShowPlayerStats 16->16 (2026-10-24, StaticEck2026, GA) s gets edx (savings 3)
+- MenuGameShowPlayerStats 16->16 (2026-10-24, StaticEck2026, GA) regsolve (0/1 votes, only a savings bump)
+- MenuSaveDefaultLines 17->17 (2026-10-24, StaticEck2026, GA) / MenuSaveTheseLines 19: the lseek result copies are one register-cycle slot off.
+- MenuSaveDefaultLines 17->17 (2026-10-24, StaticEck2026, GA) regsolve (0/1 votes, nothing predicted); permute.py non-cast families: no candidates in this file
+MenuSaveTheseLines is in this file (score 19, register 11/13) and comes with it.
+- MenuSaveTheseLines 19->19 (2026-10-24, StaticEck2026, GA) regsolve (0/1 votes, nothing predicted)
 
 ### `src/c/045_614C2_scoring_penalty_text/InProgress.c`
 
@@ -141,11 +170,44 @@ POAfterGame is in this file (score 67, register 30/43) and comes with it.
 InProgress is in this file (score 88, register 70/83) and comes with it.
 - InProgress 88->88 (2026-10-24, StaticEck2026, GA) register picks after +102.
 
+### `src/c/040_53294_engine_physics_ai/checkcx.c`
+
+- checkcx 20->20 (2026-10-24, StaticEck2026, GA) two sign-extension temporaries tie at savings 5.
+- checkcx 20->20 (2026-10-24, StaticEck2026, GA) regsolve (0/1, only a savings bump); pflags casts dropped 24-28, one cast on the xor 59, puckc[0] 20
+
+### `src/c/046_644A8_engine_display/CanFillLineSlot.c`
+
+FillDressedSlots is in this file (score 20, slot 12/12) and comes with it.
+- FillDressedSlots 20->20 (2026-10-24, StaticEck2026, GA) slots only. No count change or declaration order reaches the EXE's.
+- CanFillLineSlot 31->31 (2026-10-24, StaticEck2026, GA) pl / st / sidev tie at savings 3
+- CanFillLineSlot 31->31 (2026-10-24, StaticEck2026, GA) goto-free returns 37 / 42 / 53; regsolve (0/1, only a savings bump)
+
+### `src/c/046_644A8_engine_display/PickForLineSlot.c`
+
+- PickForLineSlot 20->20 (2026-10-24, StaticEck2026, GA) declsearch fixes the slots
+- PickForLineSlot 20->20 (2026-10-24, StaticEck2026, GA) regsolve (0/0, nothing predicted)
+
+### `src/c/054_737AA_line_editor_rosters/ShowRosterStats.c`
+
+- ShowRosterStats 20->20 (2026-10-24, StaticEck2026, GA) three temporary-register picks.
+- ShowRosterStats 20->20 (2026-10-24, StaticEck2026, GA) goalie slot read forms 20-36, test spellings 20-33, playoff record term orders under GA 20-22, goalie row forms 20-30
+
 ### `src/c/054_737AA_line_editor_rosters/LoadGameRoster.c`
 
 - LoadGameRoster 21->21 (2026-10-24, StaticEck2026, GA) unchanged
 - LoadGameRoster 21->21 (2026-10-24, StaticEck2026, GA) a tie in the unstable sort. `& 0xFF` fixes loop 1
 - LoadGameRoster 21->21 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder predicted); n assigned in the index (21); unsigned n (25); 11 * s.i / 2 * n (21); s.i++ in the loop body (21)
+
+### `src/c/057_7DC8B_gadgets_replay/DrawGadgetButton.c`
+
+- InstantReplay 27->22 (2026-10-24, StaticEck2026, GA) . It ends in DrawGadgetButton_ret too
+- InstantReplay 22->22 (2026-10-24, StaticEck2026, GA) the EXE does not keep 0 / 1 in registers across calls.
+- InstantReplay 22->22 (2026-10-24, StaticEck2026, GA) closing stores split / chained crowd stores / crowdsmooth = crowdlevel: all 22
+
+### `src/c/052_6D2F8_create_player/MoveToOtherRoster.c`
+
+- MoveToOtherRoster 27->27 (2026-10-24, StaticEck2026, GA) register cycle in the free-agent arm.
+- MoveToOtherRoster 27->27 (2026-10-24, StaticEck2026, GA) regsolve (0/2, the mode / x swap already tried); regdump: the record / index temporaries are in the savings 300 / 200 ties
 
 ### `src/c/039_50AFE_engine_assign_faceoff/puckfaceoff.c`
 
@@ -179,30 +241,16 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 | C file | Function | Score | Cause |
 |---|---|---:|---|
-| src/c/052_6D2F8_create_player/CreateFreeAgent.c | CreateFreeAgent | 0 | size 9/9 |
-| src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c | LockerRoomLoop | 0 | tail 0/0 |
-| src/c/064_86696_season_playoffs/POCreateSchedule.c | POInitSchedule | 0 | tail 0/0 |
-| src/c/040_53294_engine_physics_ai/PassLaneChk.c | PassLaneChk | 2 | size 2/2 |
+| src/c/052_6D2F8_create_player/CreateFreeAgent.c | CreateFreeAgent | 5 | size 9/13 |
+| src/c/064_86696_season_playoffs/POCreateSchedule.c | POInitSchedule | 6 | register 3/3 |
+| src/c/050_6B093_joystick_calibration/JoystickCalScreen.c | JoystickCalScreen | 11 | register 4/4 |
+| src/c/066_8BEDB_asm_helpers/PlayMVI.c | PlayMVI | 13 | register 6/13 |
+| src/c/040_53294_engine_physics_ai/PassLaneChk.c | PassLaneChk | 17 | register 7/9 |
 |  | NetCollide | 41 | register 17/35 |
 |  | checkpuckcoll | 73 | register 60/60 |
-| src/c/055_78346_team_select/DrawGameLineJerseys.c | DrawGameLineJerseys | 11 | register 2/4 |
-| src/c/040_53294_engine_physics_ai/checkplcoll.c | checkplcoll | 13 | slot 6/6 |
-| src/c/066_8BEDB_asm_helpers/PlayMVI.c | PlayMVI | 13 | register 6/13 |
-| src/c/051_6C2F9_database_save/RunEditRosters.c | SelectRosterTeam | 14 | size 7/9 |
-| src/c/040_53294_engine_physics_ai/checkwallcoll.c | checkwallcoll | 15 | slot 10/16 |
-| src/c/055_78346_team_select/MenuSaveDefaultLines.c | MenuGameShowPlayerStats | 16 | register 6/9 |
-|  | MenuSaveDefaultLines | 17 | register 11/13 |
-|  | MenuSaveTheseLines | 19 | register 11/13 |
-| src/c/050_6B093_joystick_calibration/JoystickCalScreen.c | JoystickCalScreen | 18 | register 14/17 |
-| src/c/040_53294_engine_physics_ai/checkcx.c | checkcx | 20 | register 19/19 |
-| src/c/046_644A8_engine_display/CanFillLineSlot.c | FillDressedSlots | 20 | slot 12/12 |
-|  | CanFillLineSlot | 31 | register 13/30 |
-| src/c/046_644A8_engine_display/PickForLineSlot.c | PickForLineSlot | 20 | register 7/13 |
-| src/c/054_737AA_line_editor_rosters/ShowRosterStats.c | ShowRosterStats | 20 | register 8/8 |
 | src/c/046_644A8_engine_display/updatereplay.c | updatereplay | 22 | register 12/21 |
-| src/c/057_7DC8B_gadgets_replay/DrawGadgetButton.c | InstantReplay | 22 | register 10/13 |
+| src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c | LockerRoomLoop | 23 | register 2/2 |
 | src/c/040_53294_engine_physics_ai/checkgoalp.c | checkgoalp | 27 | register 25/27 |
-| src/c/052_6D2F8_create_player/MoveToOtherRoster.c | MoveToOtherRoster | 27 | register 9/13 |
 | src/c/052_6D2F8_create_player/EditSkaterRating.c | EditGoalieRating | 28 | size 16/28 |
 |  | EditSkaterRating | 30 | size 19/32 |
 | src/c/059_8034B_settings_lockerroom/DrawPanel3D.c | DrawLockerJersey | 29 | register 10/10 |
@@ -249,6 +297,7 @@ TitleScreen is in this file (score 3, size 2/2) and comes with it.
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) (divisor scheduling)
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ShowCredits 4->4 (2026-10-24, StaticEck2026, GA) the y argument as its own block-local statement (int ry, full or raw remainder), the + operands swapped, per-module sub_91370 prototypes (short / ushort / uchar / schar / unsigned / unprototyped), a cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r and more): best 4
 
 ### `src/c/033_40183_trades/TradePlayers.c`
 
@@ -284,10 +333,12 @@ SimPlayoffRound1 is in this file (score 9, slot 6/9) and comes with it.
 - DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) dl / ebx where the EXE has dh / ecx
 - DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) (register cycle)
 - DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawAwardsSummary 12->12 (2026-10-24, StaticEck2026, GA) the three-team test as a switch on the team byte (21-24, range test); cflags sweep (12 or worse)
 ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - ShowAwardScreens 31->31 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
 - ShowAwardScreens 31->19 (2026-10-24, Mhopkinsinc, GA) (`PickAwardWinners.c`): the title x step as a separate `x += 0x50;` statement fixes both title calls' argument evaluation order. Left: the goalie shots row
 - ShowAwardScreens 19->19 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
+- ShowAwardScreens 19->19 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r): best 19
 
 ### `src/c/026_3377C_rink_tiles/BlitTileMap.c`
 
@@ -301,12 +352,14 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
 - FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) (clamp reload)
 - FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- FadePalette 7->7 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -ol+ -or -oa -oi -oe -oc -om -3r -4r -on -ou -ei -zc): best 7, the clamp still compares ebx
 
 ### `src/c/017_21CDE_player_stats/SkaterStatsCard.c`
 
 - SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) (byte promotion)
 - SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SkaterStatsCard 7->7 (2026-10-24, StaticEck2026, GA) lookup inlined into the call gives the EXE's xor eax / mov al load but an imul product (17); v = (lookup + 5) * 5 without the byte rating (9: the address temporary loses a savings-30 tie and takes eax); new w at each declaration position, in-place v forms, index spellings; permute.py from the v form (321, best 9); cflags sweep
 
 ### `src/c/023_2FDD1_misc_dialogs/ListDialog.c`
 
@@ -335,12 +388,14 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) (block layout of the shared return)
+- SeriesLength 10->10 (2026-10-24, StaticEck2026, GA) structured draft (no goto): switch with ternary lengths, case 6/7 before 4/5 so Watcom cross-jumps the 3/5/7 tails as in the EXE; 162 case-order / return-placement variants (return after case 1, returns in every case: epilogue lands after case 1 but the constants fold); goto form with the return after case 1 (10); cflags sweep; permute.py (321, best 10)
 
 ### `src/c/030_3A9AA_database_merge/ExportTeamToFloppy.c`
 
 - ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ExportTeamToFloppy 11->11 (2026-10-24, StaticEck2026, GA) structured draft (no goto): one if (!err) block with the export and its error message as the then arm and the force-export message as the else arm, same code as the goto draft (the force arm first: 74)
 
 ### `src/c/016_20016_easn_stats/EasnGoalieStatsScreen.c`
 
@@ -354,6 +409,7 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) (the `xor bl, bl` byte zero is picked after register allocation, so no declaration order moves it)
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- CreateNewLeague 12->12 (2026-10-24, StaticEck2026, GA) structured draft (no goto): the name test guards the body as one if block, same code; cflags sweep (12 or worse); the same lgstate+4 zero is xor dh, dh in the matched DeleteSavedGame and xor ah, ah at 3D0C1 (a post-allocation cycle pick)
 
 ### `src/c/034_41B80_schedule/RandomizeSchedule.c`
 
@@ -367,6 +423,7 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
 - PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) (global-value reuse). These have now had a Claude and a Codex lane pass back to back; the shapes tried are in `docs/UNSURE.md`
 - PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- PlacePlayersAtStart 15->15 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r -on -ou -ei -zc and combinations): best 15, the regd4 / regd1 reloads stay folded
 
 ### `src/c/021_2B7B7_file_dialogs/SelectSavedFile.c`
 
