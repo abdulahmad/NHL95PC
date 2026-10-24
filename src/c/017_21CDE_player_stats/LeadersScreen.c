@@ -24,15 +24,6 @@ int j___close(int fh);  /* CRT close thunk */
 #define W(p, o) (*(unsigned short *)((char *)(p) + (o)))
 #define CMP(i, j) ((int (*)(int *, int *))leadersortfns[cat])(i, j)
 
-/* DRAFT under 10.0 GA: 11 differing, same size; no goto. The key file is read by one top-tested
-   `while (read(...) == 0x34)` loop with the goalie part as an if block that ends in continue (Watcom lays it
-   out as the EXE: a jump to the read, the goalie tail and qsort before it). The column switch has empty cases
-   0-2 with the default (the EXE's jump table from 0) and ends in a break: case 10 then jumps to the end too, its
-   PrintFmt2 tail merges into case 7's, and Watcom moves the loop increment and the code after the loop up behind
-   case 7, as in the EXE. The headers as a [cat][5] table (the EXE's cat * 20 CSE), the handles closed pfh first,
-   the last FreeMemBlock as if / else (a push in each arm) and the declaration order from declsearch --conflicts
-   give every stack slot. Left: the two comparator calls' registers: the goalie part's &order[n - 1] offset in
-   eax (EXE edx) and the skater part's cat in esi (EXE ecx). */
 /* LeadersScreen (25B24, PC only): the league leaders of category cat (0-7 skaters: points, goals, assists, power
    play goals, short-handed goals, penalty minutes, plus / minus, shooting percentage; 8-10 goalies: goals against
    average, wins, save percentage) for the stats screens' league (statsleague; season or league stats,
@@ -47,10 +38,10 @@ int LeadersScreen(int cat)
 {
     char title[0x54];
     int n;
-    int y;
     int order[0x14];
     unsigned char txt[0x40];
     int teamgp[0x1A];
+    int y;
     GStat gs;
     PRec key;
     SStat ss;
@@ -58,6 +49,7 @@ int LeadersScreen(int cat)
     char path[0x20];
     int j;
     unsigned char trec[0x4C];
+    unsigned short *gsp;
     int pfh;
     unsigned short *sp;
     int recsz;
@@ -66,7 +58,6 @@ int LeadersScreen(int cat)
     int kfh;
     int mf;
     int kf;
-    unsigned short *gsp;
 
     n = 0;
     statsplayerbuf = (unsigned char *)sub_8CCA8((char *)str_Keys, 0x444, 0x20);

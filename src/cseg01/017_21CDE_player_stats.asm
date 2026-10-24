@@ -5069,6 +5069,10 @@ dd LeadersScreen_colShootPct
 dd LeadersScreen_colGAA
 dd LeadersScreen_colWins
 dd LeadersScreen_colSavePct
+; C: src/c/017_21CDE_player_stats/LeadersScreen.c
+%ifdef CBUILD
+%include "c/017_21CDE_player_stats/LeadersScreen.inc"
+%else
 LeadersScreen:
 push dword 2A0h	; 25B24
 call __CHK	; 25B29
@@ -6091,6 +6095,7 @@ pop edx	; 269E6
 pop ecx	; 269E7
 pop ebx	; 269E8
 ret	; 269E9
+%endif ; C
 stand_tmpl1:
 db 014h,00h,015h,00h,016h,00h,017h,00h,018h,00h
 stand_tmpl2:
