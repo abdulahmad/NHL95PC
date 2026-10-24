@@ -126,10 +126,16 @@ def compare(src, obj, func=None, asm_src=None):
                     if dest != ct[0]: mark = '~ '
                     otxt += '  ; ' + name_of(rev, dest)
             elif ct or ot:
-                k = (ct or ot)[2]
-                mb = lambda b: b[:k - ci.address] + b[k - ci.address + 4:]
+                # every relocated field of the instruction (`mov [menu_r1_toroster2], MoveToOtherRoster` has two)
+                ck = [k for k in range(ci.address, ci.address + ci.size) if k in cfx]
+                ok_ = [k for k in range(oinst.address, oinst.address + oinst.size) if k in ofx]
+                ks = sorted(set(k - ci.address for k in ck) | set(k - oinst.address for k in ok_))
+                mb = lambda b: bytes(x for j, x in enumerate(b) if not any(q <= j < q + 4 for q in ks))
+                def cval(k):
+                    f = cfx[k]; t = addr - c0 if f['target'] == 'TEXT' else labaddr.get(f['target'])
+                    return None if t is None else t + f['addend']
                 if len(ob) != len(cb) or mb(ob) != mb(cb): mark = '! '
-                elif not ct or not ot or ct[0] != ot[0]: mark = '~ '
+                elif not ct or not ot or ct[0] != ot[0] or [cval(k) for k in ck] != [ofx[k] for k in ok_]: mark = '~ '
                 if ot: otxt += '  ; ' + name_of(rev, ot[0])
             elif ob != cb and ci.mnemonic.startswith('j') and ci.size == oinst.size and ci.mnemonic == oinst.mnemonic \
                     and ci.op_str.startswith('0x') and not (0 <= sx(int(ci.op_str, 16)) < n):
