@@ -454,25 +454,22 @@ void setpersonel(Team *t)
  centre ice (fox = foy = 0, puck assignment puckfaceoff); crowd quiet unless in the regular season (gsp 0)
  gmode2 bit 2, sflags bits 4 (sfwrap) and 6 cleared, replay recording restarts; two DoGameFrame before the
  loop; CwdExciteLvl 10h; sflags3 bit 7 before the playoffs (gsp < 2); puck uncontrolled, camera at 0, fade
- in, rink scroll positions + 3E8h. */
+ in, rink scroll positions + 3E8h. cont1team / cont2team are read in place (Watcom keeps each in a register
+ for its if / else chain); the two zero chains store lcrequest+2 and camy first. Ends in calcpuckcross's pops
+ (calcpuckcross_ret5). */
 void StartPer(void)
 {
-    short t1;
-    short t2;
-
-    lcrequest[1] = lcrequest[0] = 0;            /* no line change request */
+    lcrequest[0] = lcrequest[1] = 0;            /* no line change request */
     InitCoachModes();
     dword_E9A9E = 0;
     setupice();
     ResetClock();
-    t1 = cont1team;
-    if (t1 == 1) c1playernum[0] = 2;            /* home: player 2 */
-    else if (t1 == 2) c1playernum[0] = 8;       /* away: player 8 */
-    t2 = cont2team;
-    if (t2 != 0) {
-        if (t2 == cont1team) c2playernum[0] = c1playernum[0] - 1;
-        else if (t2 == 1) c2playernum[0] = 2;
-        else if (t2 == 2) c2playernum[0] = 8;
+    if (cont1team == 1) c1playernum[0] = 2;     /* home: player 2 */
+    else if (cont1team == 2) c1playernum[0] = 8;    /* away: player 8 */
+    if (cont2team != 0) {
+        if (cont2team == cont1team) c2playernum[0] = c1playernum[0] - 1;
+        else if (cont2team == 1) c2playernum[0] = 2;
+        else if (cont2team == 2) c2playernum[0] = 8;
     }
     byte_E9AD3 = 0xFF;
     bannermsg = -1;
@@ -498,7 +495,7 @@ void StartPer(void)
     CwdExciteLvl = 0x10;
     if (gsp < 2) sflags3 |= 0x80;
     *puckc = -1;
-    camy = camx = yleader = yc1 = xc1 = 0;
+    xc1 = yc1 = yleader = camx = camy = 0;
     fadeinpending = 1;
     rinkscrollx += 1000;
     rinkscrolly += 1000;
