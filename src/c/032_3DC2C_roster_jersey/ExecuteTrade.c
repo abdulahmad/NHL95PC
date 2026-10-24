@@ -13,11 +13,12 @@ int FixJerseyConflict(int fh, int k, unsigned char *tr);
 int WriteKeyRec(int fh, void *rec, long pos);
 int WriteTeamRec(int fh, void *rec, int n);
 
-/* DRAFT (10.0 GA, 81 -> 15 differing, same size): every instruction matches; only the three spilled dwords sit
-   in another order (C: traded +660h, kb +664h, sel's home +668h; EXE: kb, sel, traded). The key numbers are read
-   and written with an if / else per skater / goalie slot (both arms address the same word, so Watcom keeps only
-   the dead `cmp`, as the EXE does) and kb is a plain local; kb as the frame struct's last member gives the EXE's
-   slots but compares the first written slot in memory (7 differing, 5 bytes short). See docs/UNSURE.md. */
+/* DRAFT (10.0 GA, 14 differing, same size): every instruction matches; only two spilled dwords sit in another
+   order (C: traded +660h, kb +668h; EXE: kb +660h, traded +668h; sel's home +664h is right with traded and err
+   declared first). The key numbers are read and written with an if / else per skater / goalie slot (both arms
+   address the same word, so Watcom keeps only the dead `cmp`, as the EXE does) and kb is a plain local; kb as
+   the frame struct's last member gives the EXE's slots but compares the first written slot in memory (7
+   differing, 5 bytes short). No order of the seven declarations matches. See docs/UNSURE.md. */
 
 /* ExecuteTrade (3E390, PC only): carry out the trade set up on the trade screen. Read both teams' records from
    the league's team database, then for each of the two trade rows with a player chosen on both sides (sel[i] and
@@ -29,6 +30,8 @@ int WriteTeamRec(int fh, void *rec, int n);
    two team numbers; sel: the trade rows' roster slots. Result: 0 or the I/O error. */
 int ExecuteTrade(char *dir, int *teams, unsigned char *sel)
 {
+    int traded;
+    int err;
     struct {
         unsigned char reca[0x2E8];
         unsigned char recb[0x2E8];
@@ -38,11 +41,9 @@ int ExecuteTrade(char *dir, int *teams, unsigned char *sel)
         int kfh;
         int tfh;
     } s;
-    int traded;
-    int err;
+    int i;
     int kb;
     int ka;
-    int i;
     int pal;
 
     s.kfh = s.tfh = -1;

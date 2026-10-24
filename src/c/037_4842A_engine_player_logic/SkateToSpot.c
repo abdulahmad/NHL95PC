@@ -1,10 +1,10 @@
 /* Engine player logic: skating to a spot. */
 #include "nhl95.h"
 
-/* DRAFT (10.0 GA, 1161 vs 1160): with t declared after ady and the stop written as two zero stores, every
-   temporary after the stop lands in the EXE register. Left: the stop itself, which the EXE compiles from the
-   chained p->Xvel = p->Yvel = 0 (store, reload into ax, copy); the chained form takes one more cycle slot and
-   moves every later pick (47 differing). */
+/* DRAFT (10.0 GA, 1158 vs 1160, 2 differing): with t declared after ady, the stop written as two zero stores
+   and the vtoa result stored in d before the facedir step, every temporary lands in the EXE register. Left:
+   the stop itself, which the EXE compiles from the chained p->Xvel = p->Yvel = 0 (store, reload into ax,
+   copy); the chained form adds a conflict, reorders the tied temporaries and moves picks (42 differing). */
 /* SkateToSpot (4E292, PC only): skate p to the spot regd0.w / regd1.w with skateto (evade: its evade routine,
    passed straight through). Within 8 of the spot both ways, stop there. Near the goal line ends (|x| up to 1Eh,
    |y| from F2h, a target inside F2h) aim behind the net instead (y FCh, x 28h toward the target's side) and drop
@@ -85,6 +85,7 @@ void SkateToSpot(Player *p, int evade)
         else if (p->SPA == 0) SetSPA(p, axp);
         p->Yvel = dy > 0 ? 0x640 : -0x640;
     }
-    d = (vtoa((short)(regd0.w - HIWORD(p->Xpos)), (short)(regd1.w - HIWORD(p->Ypos))) - p->facedir) & 7;
+    d = vtoa((short)(regd0.w - HIWORD(p->Xpos)), (short)(regd1.w - HIWORD(p->Ypos)));
+    d = (d - p->facedir) & 7;
     if (((d + 1) & 7) > 2 && !HIBYTE(p->temp2)) p->facedir = ((d < 5 ? 1 : -1) + p->facedir) & 7;
 }
