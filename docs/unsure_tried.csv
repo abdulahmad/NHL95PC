@@ -3662,6 +3662,37 @@ NetCollide,rettype:int,an int result,tried (docs/UNSURE.md),ga
 checkcheck,,`p->checking < randomd0(rel)` (34),34,ga
 checkcheck,,"the penalty as `randomd0(2) != 0 ? 0xC : 0xB` (31, +3, other code)","31, +3, other code",ga
 checkcheck,,"an `(int)` on the bool (32, no-op cast)","32, no-op cast",ga
+POHandleElimination,,the exit is not all that is left,,ga
+POHandleElimination,,"the cross-jumped call is (UNSURE: in POCreateSchedule.c the same single difference). Not a register draft (no regdump lead). Tried (2026-10-24, lane 1 batch 15): reviewed the earlier shapes only (goto save, plain else block, pochampion test spellings, fade-in in both branches, switch forms, empty if / else)",,ga
+POHandleElimination,,"no new natural shape that keeps the two calls apart in the timebox. Lead for later: the EXE keeps both identical `call RestoreDialogBg` tails, so at common-tail time the two blocks must have differed (a different callee declaration or call form in one branch, or a jump that did not yet target +499)","a different callee declaration or call form in one branch, or a jump that did not yet target +499",ga
+wallcoll,,"(2026-10-24, lane 1 batch 15): `int lim` at the top or in the dword_CCC2C block (44, size +2",,ga
+wallcoll,,"with the ESCALATE patch's product orders 28), no lim with the ternary written inline twice (42",,ga
+wallcoll,,"with the patch's product orders 27), short lim with the patch's product orders (35)",35,ga
+wallcoll,type:lim:int,`int lim`,tried (docs/UNSURE.md),ga
+dopass,,"(2026-10-24, lane 1 batch 15) without distance_score: `dx * dx + dy * dy + T` (17, same as with the copy), `dy * dy + dx * dx + T` (19), `T + dx * dx + dy * dy` (25), `dx * dx + (dy * dy + T)` (24), `dx * dx + T + dy * dy` (25), `T + dy * dy + dx * dx` (25), `dx * dx + dy * dy + (d ? 0x10000 : 0)` (18)",18,ga
+dopass,,"on `T + (dx * dx + dy * dy)`: `(d ? 0x10000 : 0)` (16), `(d == 0 ? 0 : 0x10000)` (15), `(d != 0 ? 0x10000 : 0)` (16), `T + (dy * dy + dx * dx)` (17)",17,ga
+dopass,,"no-target branch without the dx / dy reuse: products straight into s.t with passspeed (68), `s.t /= 0xBB8` (68)",68,ga
+dopass,,"a speed local sp (85), dx kept for the speed only (51)",51,ga
+dopass,,with the copy,,ga
+dopass,,the products straight into s.t (34),34,ga
+dopass,,puckvz declared `short *` or `unsigned char *` in the file (15),15,ga
+dopass,,"dy before dx (15), d first (39), target last (18)",18,ga
+LoadGameRoster,,"(2026-10-24, lane 1 batch 15): `gmrosterslot[n + n]` (21), `gmrosterslot[2 * n]` (21), `gmroster[n * 2 + 2]` (21), `k = s.i; n = k * 11; ... = k` (40)",40,ga
+LoadGameRoster,,"the product in k (26), in a block-local j (24, size 0, loop 1 unchanged), no product local `[s.i * 11 * 2]` (26) or `[(s.i * 11) << 1]` (24, size 0, loop 1 unchanged)","24, size 0, loop 1 unchanged",ga
+doshot,,"(2026-10-24, lane 1 batch 15): r read directly for q (`q = r >> 1; ... q = r / 3;`, 109: the frame changes), `randomd0(r + r)` without t (65)",65,ga
+doshot,,"a separate int k for the r copy with f only for dist, k at the end / after f / before e / before f (84-90",,ga
+doshot,,also without t 61-99: the frame size changes),,ga
+checkgoal,,"(2026-10-24, lane 1 batch 15): `x = y; x = -x; x >>= 1` (3, size -2), `x = -y; x >>= 1` (3, size -2), short z `z = -y; x = z; x >>= 1` (3, -2), short z `x = z >> 1` (movsx + 32-bit sar, worse), `y = -y; x = y; x >>= 1` (3, -2), `x = y; x = -x; p->Zvel = x >> 1` (5, size 0: ebx / edx swapped and a 32-bit sar), int z `z = -p->Zvel` with y still the test (1, same), test as `p->Zvel < 0` with `z = -p->Zvel` (cmp word [mem] + int reload, worse), `x = -p->Zvel; x >>= 1` (14), int z with `p->Zvel = x >> 1` (20), int z `z = y; z = -z` (12), block-scoped int for -y (1, same), `z = -y; x = z; p->Zvel = x >>= 1` (1, same), `x = -y; p->Zvel = x >>= 1` (14), y load split from the test (1, same), `z = -(unsigned short)y` (2, +3)","2, +3",ga
+checkgoal,,"permute.py 4 min on the goto-free draft (321 compiled, best base)","321 compiled, best base",ga
+RosterPanelClick,,"(2026-10-24, lane 1 batch 15): falistsel declared `unsigned char *` / `char *` in the file only (#define trick) with `falistsel[row] = ~falistsel[row]` or through fa (9)",9,ga
+RosterPanelClick,,"with `falistsel[row] ^= 0xFF` (9, xor byte [edi+eax])","9, xor byte [edi+eax]",ga
+RosterPanelClick,,with `falistsel[dword_EBCA4 + row]` twice (16),16,ga
+RosterPanelClick,,"`fa[dword_EBCA4 + row]` twice without `row +=` (16), `row = dword_EBCA4 + row` (9), mixed-type load or store `((char *)fa)[row]` / `((signed char *)fa)[row]` (9), `fa[row] = fa[row] ^ 0xFF` (9)",9,ga
+SetRosterTeamMenus,,"(2026-10-24, lane 1 batch 15): function-level i in the first half and a block i around the second search and stores (11), `d *= 8` before the two zero stores (11), `team == 100` spelling (11)",11,ga
+OpenSpeechBank,,"(2026-10-24, lane 1 batch 15): no cnt (51",,ga
+OpenSpeechBank,,34 after declsearch),,ga
+OpenSpeechBank,,"the three loop bounds as `BANKW(0x3B91)` (the short the EXE reads, 17",,ga
+OpenSpeechBank,,"without cnt 44), `lseek(fh, SLOTD(off, 0x12) + 6, 0)` (32), `!speechinit` / `if (BANKD(0x3B78))` (11), `size = Swap16(size); size -= 5;` (19)",19,ga
 SkateToSpot,,"spa1 block-local with axp at function scope (14), spa1 and spa2 both in that block (146), spa2 in the spa1 block after / before spa1 (85 / 81), spa1 at function scope with axp block-local (after ary 77, first 65)","after ary 77, first 65",ga
 SkateToSpot,,"the axp block also holding t / ayp / ary (all 48 orders and subsets with axp, 22-40 and worse)","all 48 orders and subsets with axp, 22-40 and worse",ga
 SkateToSpot,,"the spa1 block running to the end (8), d block-local (92)",92,ga

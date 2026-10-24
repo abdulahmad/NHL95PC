@@ -24,10 +24,12 @@ void passtoa0(Player *to);
 void sfx(int n);
 extern int puckvz;
 
-/* DRAFT (dopass, 10.0 GA): 12 score differing. Fetch the early scatter target into o, name the candidate
-   distance score, and reuse dx for the pass speed and dy for each direction product. Left: the distance sum
-   lands in edi (EXE esi, the 10000h term in eax), the passdir index loads into eax (EXE esi), and the shared
-   exit. */
+/* DRAFT (dopass, 10.0 GA): 15 score differing. Fetch the early scatter target into o and reuse dx for the pass
+   speed and dy for each direction product (dead-variable reuse: fresh locals there score 51-85, so it stays until
+   a natural shape is found). The candidate score is the off-line penalty plus the squared distance, straight into
+   s.t (no distance_score copy); that also puts the passdir index loads in esi as in the EXE. Left: the square sum
+   lands in edi with the 10000h term in esi (EXE: the sum in esi, the term in eax), the randomd0 result for puckvz
+   stays in eax (EXE copies it to edx and loads the pointer into eax), and the shared exit (checkob_ret5). */
 /* dopass (54DF4, 93G dopass; ends in checkob_ret5): pass the puck in passdir. Clear the one-timer flag and the
    spin flag, drop the puck (nopuck 10h, lastplayer). A computer player with a pass lane result (passlane) scatters
    the pass to its target. Otherwise the pass speed is A0h + 4 * passacc (8 for a goalie), and the best teammate
@@ -50,7 +52,6 @@ void dopass(Player *p)
     int dx;
     int dy;
     short d;
-    int distance_score;
 
     onetimerflag = 0;
     sflags &= 0xFB;
@@ -75,8 +76,7 @@ void dopass(Player *p)
             dy = (short)(HIWORD(o->Ypos) - *pucky);
             d = (vtoa(dx, dy) - passdir) & 7;
             if (d <= 1 || d == 7) {
-                distance_score = dx * dx + dy * dy + (!d ? 0 : 0x10000);
-                s.t = distance_score;
+                s.t = (!d ? 0 : 0x10000) + (dx * dx + dy * dy);
                 if (s.t <= s.best) {
                     s.best = s.t;
                     target = o;
