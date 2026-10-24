@@ -17,7 +17,9 @@
 #define sub_1ACF1 sub_1ACF1_decl
 #define sub_1B18B sub_1B18B_decl
 #define sub_8FB8E sub_8FB8E_decl
+#define GetTicks GetTicks_decl
 #include "nhl95.h"
+#undef GetTicks
 #undef PlayMVI
 #undef sub_1B0F3
 #undef sub_1B1C2
@@ -43,8 +45,8 @@ int sub_1AC25(void);                                    /* cmv_player: create a 
 int TickDeadlinePassed(void);
 void sub_1B2A7(void);                                   /* cdstream: service the reader */
 int __cdecl sub_1B8AC(int stream);                      /* cdstream: next chunk, 0 none yet, -1 at the end */
-int sub_1B002(int dec);                                 /* cmv_player: decode a frame */
-void sub_1AD16(int dec);
+int sub_1B002(int dec, int chunk);                      /* cmv_player: decode a frame */
+void sub_1AD16(int dec, int chunk);
 int sub_1B092(int dec);
 int sub_1B0E5(int dec);
 int sub_1B0D7(int dec);
@@ -54,8 +56,11 @@ void __cdecl sub_1B92E(int stream, int chunk);          /* cdstream: release a c
 void sub_1ACF1(int dec);
 void __cdecl sub_1B18B(int stream);
 void sub_8FB8E(int song, int handle, int a, int b);
+int __cdecl GetTicks(void);                              /* timer library (stack arguments, as SetTickDeadline) */
 
-/* DRAFT: 725 vs 732 under 10.0 GA (23 differing); see docs/UNSURE.md. */
+/* DRAFT: 733 vs 732 under 10.0 GA (13 differing; sub_1B002 / sub_1AD16 take the chunk in edx, GetTicks is the
+   cdecl timer library): the decoded frame is spilled to a slot of its own (frame 34h, EXE 30h re-reads s.frame);
+   see docs/UNSURE.md. */
 /* PlayMVI (8BEDB, PC only): play the movie file path at x / y through the cdstream reader (493E0h-byte buffer,
    2000h chunks) and the cmv_player decoder, after letting the reader prime for 96h ticks. Per chunk: 'MVIh'
    sets up the decoder, clears the 228 x 176 picture, loads its palette and the frame delay (100 / rate);
@@ -112,7 +117,7 @@ int PlayMVI(char *path, int x, int y)
             case 0x4D564966:
                 if (n > 1) {
                     s.due += s.delay;
-                    s.frame = sub_1B002(dec);
+                    s.frame = sub_1B002(dec, s.chunk);
                     if (GetTicks() - s.t0 < s.due) sub_910E0(s.frame, s.x, s.y);
                     if (!s.ends && n == s.nframes) {
                         if (musicon && (el = songdata) != 0) sub_8FB8E(el, musichandle, 3, 0x7F);
@@ -122,7 +127,7 @@ int PlayMVI(char *path, int x, int y)
                 }
                 break;
             case 0x4D564968:
-                sub_1AD16(dec);
+                sub_1AD16(dec, s.chunk);
                 s.nframes = n = sub_1B092(dec);
                 sub_90D20(s.x, s.y, 0xE4, 0xB0, 0);
                 sub_B4B88(sub_1B0C9(dec), sub_1B0D7(dec), (unsigned char *)sub_1B0E5(dec));

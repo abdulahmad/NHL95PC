@@ -3016,3 +3016,32 @@ checkgoalp,,"permute.py 6 min (321 candidates, nothing)","321 candidates, nothin
 RemoveFromLines,,"no r (the byte read again in the index: 76), `signed char r` (43), `hmroster[r * 0x27 + side * 0x444]` in both loops (58)",58,ga
 RemoveFromLines,type:r:signed_char,`signed char r`,tried (docs/UNSURE.md),ga
 NetCollide,,"gy by if / else (72), dir assigned inside both direction tests (41, same code), dy against the gy ternary written again (74), scaled_y dropped (49)",49,ga
+CreatePlayoffs,,"the plain-local splits listed above moved other slots. Lane 2b batch 2 (10.0 GA): permute.py once (385 candidates): its best (10) swaps the postate+69h / +61h stores, against the EXE's store order (rejected). Nothing else tried",,ga
+POHandleElimination,,the simulate path as a nested `if (MessageBox(...)) { ... }` without the goto / save label (7,,ga
+POHandleElimination,,the same cross-jump),,ga
+POHandleElimination,,"permute.py once (321 candidates, nothing better than the base)","321 candidates, nothing better than the base",ga
+MenuSaveDefaultLines,,"time). Lane 2b batch 2 (10.0 GA): unchanged (17). Savings (regdump): r 2 -> ECX, t 3 -> EDX, fh 13 -> BP. Tried: the second lseek result in i, j or t (17 each)",17 each,ga
+MenuSaveDefaultLines,,the third in i (42) or j (25),25,ga
+MenuSaveDefaultLines,,the second in i and the third in j (23) or the other way round (60),60,ga
+MenuSaveDefaultLines,,the second tested directly as `if (lseek(...) < 0)` (17),17,ga
+MenuSaveDefaultLines,,"the scratch loops with their own counter: k for the 64h fill (34), k for the status scan (89), n for the slot count (17)",17,ga
+MenuGameShowPlayerStats,,"the selection through the dead parameters b, mx or my (21 each), d (24), art (41)",41,ga
+MenuGameShowPlayerStats,,"`s * 22u` and `(unsigned)s * 22`, also in the sprintf indexes (16, no change)","16, no change",ga
+MenuGameShowPlayerStats,,`*sel` read in place in the test and the index with i / s and pal / buf declared in either order (16-21),16-21,ga
+MenuSaveTheseLines,,separately (the batch 2 MenuSaveDefaultLines shapes apply to both),the batch 2 MenuSaveDefaultLines shapes apply to both,ga
+ShowRosterStats,,"the goalie row pointer as `p = statsplayerbuf; p += ...` (96, +9), `&statsplayerbuf[statsgoalieplr[idx] * 0x34]` (20, +1), through k (35, +7)","35, +7",ga
+ShowRosterStats,,permute.py again: it resumes from the logged best (19 at size +2) and has no new candidates,,ga
+POSeedTeams,,(time),,ga
+InstantReplay,,"per-module FadePalette declarations with a short or char first parameter, and unprototyped (22, no change)","22, no change",ga
+InstantReplay,,"permute.py a second time (200 candidates, none better)","200 candidates, none better",ga
+MoveToOtherRoster,,"a separate counter m for the free-agent goalie search, skater search or both (29, 29, 40), for the jersey loop (41), for all three (29)",29,ga
+LoadGameRoster,,(time),,ga
+PlayMVI,,"on the old base as 27) stops s.due being cached in ebx (the EXE's `add [esp+2Ch], eax` and compare with the slot) and puts the y / x pushes in ebx / ecx. Left: the decoded frame is spilled to a slot of its own ([esp+30h], frame 34h) where the EXE re-reads s.frame at [esp] (frame 30h), and `(el = songdata)` in eax (EXE ecx). Tried on the new base: `#pragma aux` modify lists on sub_1B002 / GetTicks (13-14)",13-14,ga
+PlayMVI,,"a cdecl TickDeadlinePassed (18, 13 with GetTicks), `s.due = s.delay + s.due` / `s.due + s.delay` (18)",18,ga
+PlayMVI,,the GetTicks compare through el or flipped (13),13,ga
+PlayMVI,,the frame stored after the s.due update (30),30,ga
+PlayMVI,,"the push read as `*(volatile int *)&s.frame`, `*&s.frame` or `((int *)&s)[0]` (13: no change), sub_1B002 returning a pointer with a pointer or unsigned member (13), volatile members (31-39, +39)","31-39, +39",ga
+PlayMVI,,the frame as a plain local in each position (46),46,ga
+PlayMVI,,"permute.py once on the 18 base (321 candidates, nothing better)","321 candidates, nothing better",ga
+ReplaySaveHilight,,(time),,ga
+DrawLockerJersey,,(time),,ga
