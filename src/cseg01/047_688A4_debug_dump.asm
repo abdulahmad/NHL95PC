@@ -534,6 +534,10 @@ pop ecx	; 68E78
 pop ebx	; 68E79
 ret	; 68E7A
 %endif ; C
+; C: src/c/047_688A4_debug_dump/DebugMonitor.c (DumpStatsLog)
+%ifdef CBUILD
+%include "c/047_688A4_debug_dump/DebugMonitor.DumpStatsLog.inc"
+%else
 DumpStatsLog:
 push dword 74h	; 68E7B
 call __CHK	; 68E80
@@ -987,3 +991,4 @@ call fclose_	; 69329
 .exit:
 add esp, byte 4	; 6932E
 jmp near DebugMonitor_pop	; 69331
+%endif ; C

@@ -1077,6 +1077,10 @@ pop ecx	; 7E9A9
 pop ebx	; 7E9AA
 ret	; 7E9AB
 %endif ; C
+; C: src/c/057_7DC8B_gadgets_replay/DrawGadgetButton.c (ReplayControlLoop)
+%ifdef CBUILD
+%include "c/057_7DC8B_gadgets_replay/DrawGadgetButton.ReplayControlLoop.inc"
+%else
 ReplayControlLoop:
 push dword 3Ch	; 7E9AC
 call __CHK	; 7E9B1
@@ -1573,6 +1577,7 @@ mov eax, 1	; 7F090
 .63:
 add esp, byte 10h	; 7F095
 jmp near DrawGadgetButton_ret	; 7F098
+%endif ; C
 db 08Bh,0C0h
 ReplaySaveHilight_jt:
 dd ReplaySaveHilight_n0

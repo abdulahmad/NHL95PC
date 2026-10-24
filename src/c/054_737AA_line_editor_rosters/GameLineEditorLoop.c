@@ -40,9 +40,9 @@ int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin,
 int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero, MenuItem *buttons, int n,
                        int bank);
 
-/* DRAFT under 10.0 GA: 5,242 bytes as the EXE, 110 differing instructions. An explicit menu-item
-   offset gives the EXE's frame size; declaration order improves array placement. Several scalar and nitems
-   slots and later register choices still differ. */
+/* DRAFT under 10.0 GA: 5,242 bytes as the EXE, 74 differing instructions. An explicit menu-item
+   offset gives the EXE's frame size; the declaration order (tools/wccre/declsearch.py) puts every array and all
+   scalars but blk in the EXE's slots (blk at ebp+42h, EXE +3Ah). Later register choices still differ. */
 /* GameLineEditorLoop (76AF5, PC only): the in-game line editor (GameLineEditor's loop; DbLineEditorLoop on the
    game roster). Copy the jersey numbers of the 28h line slots of lines (100 for an empty slot) and, before the
    game (curperiod < 0), put the dressed players of the 8 extra slots back to scratched (status 3 -> 2). The menu
@@ -63,31 +63,31 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
 int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero, MenuItem *buttons, int n,
                        int bank)
 {
-    LineSet nums;
-    char buf[0x20];
-    int pos[4][2];
     char path[0x10];
-    MenuItem *menus[4];
-    int bg[4];
     int sel[4];
-    int nitems[4];
-    int hit;
-    int level;
-    int item;
-    int pick;
-    int my;
     int h;
-    int i;
-    int blk;
-    int mx;
     int w;
     unsigned char *pal;
+    MenuItem *menus[4];
+    int i;
     int col3;
-    int col1;
-    int col2;
-    int ptr;
+    int itemoffset;
+    int mx;
+    LineSet nums;
     int depth;
+    int my;
+    int bg[4];
+    int item;
+    int blk;
+    int col1;
     unsigned char c2;
+    int pos[4][2];
+    int ptr;
+    char buf[0x20];
+    int col2;
+    int nitems[4];
+    int pick;
+    int hit;
     unsigned char c1;
     int oldmx;
     int oldmy;
@@ -96,7 +96,7 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
     int k;
     unsigned char *e;
     MenuItem *m;
-    int itemoffset;
+    int level;
 
     depth = 0;
     hit = pick = -1;
