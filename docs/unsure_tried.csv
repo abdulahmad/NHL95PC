@@ -2561,3 +2561,35 @@ LeadersScreen,,"teamgp tests as `!(tg && gp * 100 / tg >= 0x1E)` (85, both parts
 LeadersScreen,,the index through `((unsigned char *)key.c)[0]` (84),84,ga
 LeadersScreen,,"one permute run (321 candidates, no gain, permlog_1a_b3.csv)","321 candidates, no gain, permlog_1a_b3.csv",ga
 RunPlayerPickMenu,,"(2026-10-24, lane 1a batch 3): only read and diagnosed (the RunMenu.c changes tried for RunMenu and RunTeamPickMenu left it at 158)",the RunMenu.c changes tried for RunMenu and RunTeamPickMenu left it at 158,ga
+ExportTeamToFloppy,,"(2026-10-24, lane 1b batch 4) `s.fh3 = -1; s.fhid = s.fhp = s.fh2 = s.fh3;`, `s.fh2 = s.fh3 = -1; s.fhid = s.fhp = s.fh2;`, `s.fhp = s.fh2 = s.fh3 = -1; s.fhid = s.fhp;`, `s.fh3 = -1; s.fhp = s.fh2 = s.fh3; s.fhid = s.fhp;` (all 11, identical code), so the copies come from the tie order of the whole function, not from the chain. Also all 6 orders of s / t / err with tools/permute_decls.py: every one the same",,ga
+CreateNewLeague,,"(2026-10-24, lane 1b batch 4): the error tail as `if (!err && s.sel >= 0) goto done;` then the body, `err != 0 ||`, `s.sel < 0 || err` (17)",17,ga
+CreateNewLeague,,the inner test as `if (!err) ; else`,,ga
+CreateNewLeague,,"the store through `(signed char *)` and `(char *)` (all 12 at +480). Also all 120 orders of the five top-level declarations (s, err, quit, sz, j) with tools/permute_decls.py: every one the same (4 by its count)",4 by its count,ga
+SkateToSpot,,"(2026-10-24, lane 1b batch 4): on the old end statement `ayp = t = ABS(...)` (same code as t",,ga
+SkateToSpot,,"ayp = t), t replaced by d / spa2 / ary (26-85)",26-85,ga
+SkateToSpot,,"the end as `d = vtoa(...) - p->facedir; d &= 7;` (87), `d = vtoa(...); d -= p->facedir; d &= 7;` (147), `(short)(vtoa(...) - p->facedir) & 7` (5), `(-p->facedir + vtoa(...)) & 7` (5), `(short)regd1.w - HIWORD(p->Ypos)` (108), each with the chain too (42-102)",42-102,ga
+SkateToSpot,,"on the new end: the chain (42), `p->Yvel = 0; p->Xvel = p->Yvel;` (80), chain + int d (51), chain + int t (75)",75,ga
+SkateToSpot,,"permute.py 5 min from the chain (transforms used up after 321, best 2 only by splitting the chain again). Also tools/permute_decls.py over 2,500 random orders of the ten locals with the chained stop (best 56 by its count, no match)","best 56 by its count, no match",ga
+ExecuteTrade,,"(2026-10-24, lane 1b batch 4): per-module prototypes ClearPlayerFromLines(int p, ...) and (short p, ...), FixJerseyConflict(int, unsigned char k, ...) and (int, short k, ...)",,ga
+ExecuteTrade,,"the first with the third, `(unsigned char)` casts on the two key team-byte stores (all 15)",all 15,ga
+ExecuteTrade,rettype:unsigned_short,unsigned short result,tried (docs/UNSURE.md),ga
+RandomizeSchedule,,"(2026-10-24, lane 1b batch 4): every pair of the append forms base / `[k++] = j; count = k` / `[k] = j; k++; count = k` / `count = ++k` / (v only) `j = k + 1; count = j` (12-14, all +3 or +5 except the kept one)","12-14, all +3 or +5 except the kept one",ga
+RandomizeSchedule,,with the kept v form,,ga
+RandomizeSchedule,,"the h append as `j = k + 1; count = j` (14, +2), `list[s.count[h]] = j; s.count[h]++` or `+= 1` (43), `s.count[h] = s.count[h] + 1` (11, +7), `list[k = s.count[h]] = j` (14, same as base), `count = ++k` (13, +5)","13, +5",ga
+RandomizeSchedule,,"`count[v] = 1 + k` (15). Also tools/permute_decls.py over 2,000 random orders of the ten top-level declarations on the kept draft (best 14 = the draft)",best 14 = the draft,ga
+SeedPlayoffRound3,,"(2026-10-24, lane 1b batch 4): the index as `14 + k` (14)",14,ga
+SeedPlayoffRound3,,the loop body in braces (14),14,ga
+SeedPlayoffRound3,,"the loop as `k = 0; while (k < games) { ...; k++; }` (18). Also tools/permute_decls.py over 1,500 random orders of the fourteen locals (best = the draft order)",,ga
+BlitTileMap,,"(2026-10-24, lane 1b batch 4): `(y + row - row - row) * rinkwtiles` (8, +1)","8, +1",ga
+BlitTileMap,,"`((y + row) - (row << 1)) * rinkwtiles` (11, +5)","11, +5",ga
+BlitTileMap,,col term first in the flip sum,,ga
+BlitTileMap,,with the baseline (5) or the shifted row (8),8,ga
+BlitTileMap,,`y + row + -row - row` (5),5,ga
+BlitTileMap,,`(y + row) - row - row` (5),5,ga
+BlitTileMap,,"`row + y - (row + row)`, `row + y - (row << 1)`, `row + y - row - row` (5), `row + y - row * 2`, `(int)y + row - (row + row)`, `-(row + row) + (y + row)`, `-(row + row) + (row + y)` (8 each, +2)","8 each, +2",ga
+BlitTileMap,,`(short)(y + row - (row << 1))` (25),25,ga
+BlitTileMap,,"`y + (row - row - row)`, `y + (row - (row << 1))`, `y + row + (-row - row)` (11), `-(row << 1) + row + y` (13), `y + row + row * -2`, `row * 2` / `col * 2` in both mirrored terms (8)",8,ga
+BlitTileMap,,"permute.py 5 min from `(y + row) - (row << 1)` (transforms used up after 321 candidates, best 8). Also tools/permute_decls.py over 2,500 random orders of the twelve locals (best = the draft order, 10 by its count)","best = the draft order, 10 by its count",ga
+SimulateGame,,"(2026-10-24, lane 1b batch 4): the plain allocation loop (`for (i = 0; i < 2; i++)` with every store indexed by i, no sv",,ga
+SimulateGame,,"592, same code)",,ga
+SimulateGame,,"permute.py 5 min (513 candidates, batched): best 581 at size +6 (an `== 0` test and a do-loop) and 521 at size +32 (adds a short cast), neither verified fresh nor kept (the draft is compiler-state sensitive)",,ga
