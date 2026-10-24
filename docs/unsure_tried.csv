@@ -3662,6 +3662,54 @@ NetCollide,rettype:int,an int result,tried (docs/UNSURE.md),ga
 checkcheck,,`p->checking < randomd0(rel)` (34),34,ga
 checkcheck,,"the penalty as `randomd0(2) != 0 ? 0xC : 0xB` (31, +3, other code)","31, +3, other code",ga
 checkcheck,,"an `(int)` on the bool (32, no-op cast)","32, no-op cast",ga
+POInitSchedule,,"a 6-byte game struct for g in the three loops (`g[i].m` / `g[i].d`, `g++` in the clear loop: 6)","`g[i].m` / `g[i].d`, `g++` in the clear loop: 6",ga
+POInitSchedule,,the seed copy through a struct cast with an int seeds[16] member (6),6,ga
+POInitSchedule,,the seed copy as a do-while (6),6,ga
+POInitSchedule,,a counter j for the second date loop (24),24,ga
+POInitSchedule,,an element pointer `POGame *e = &g[i]` in the second date loop (10),10,ga
+POInitSchedule,,a pointer h for the clear loop (88),88,ga
+POInitSchedule,,the struct casts in place without g (77),77,ga
+JoystickCalScreen,,"the loop's compare as `if (s.cur != prev) { ... }` (11), `if ((s.cur = sub_B340B(s.cur)) == prev)` (11), `if ((s.cur = sub_B3464() >> shift) & 0x30)` (11), `(s.cur & 0x30) != 0` (11)",11,ga
+JoystickCalScreen,,the first test as `!(...)` (11),11,ga
+JoystickCalScreen,,"the side shape as one ternary call (36, +19), `prev >= 0` (13, +1)","13, +1",ga
+RemoveFromLines,,"the goalie / extra-skater compares as `pnum == *lt++` (36, +4), k++ in their loop bodies (36, +4)","36, +4",ga
+RemoveFromLines,,"a one-slot inner j loop (128, +43). Left as before: r / r2 (savings 30) pick di after the savings-30 index temporaries take eax",,ga
+RemoveFromLines,,the last two loops cache pnum in ecx / ebx (the EXE compares [esp]: the 4 bytes),the EXE compares [esp]: the 4 bytes,ga
+PassLaneChk,,the early tests merged with `||` (the two ABS tests,,ga
+PassLaneChk,,"the side and ABS tests, all three",,ga
+PassLaneChk,,the Yvel pairs,,ga
+PassLaneChk,,the Yvel tests with `side &&`: 17,,ga
+PassLaneChk,,"position || LaneOpen: 24), `ABS(oy) >= ABS(y)` (16), `!(ABS(y) > ABS(oy))` (17)",17,ga
+PassLaneChk,,the direction in a dir local instead of oy (36,,ga
+PassLaneChk,,with dx 12-33),,ga
+PassLaneChk,,the wrap as `dir++` (18),18,ga
+PassLaneChk,,"on the dx base: dx declared at each position (int 12, short 29, unsigned 16), block-scoped dx (27), `ABS(dx) > 0x28` (12), `dx = p->Xpos >> 16; dx -= o->Xpos >> 16;` (9 by score, but it drops the EXE's `mov esi, eax` copy: not kept)","9 by score, but it drops the EXE's `mov esi, eax` copy: not kept",ga
+PassLaneChk,,"the store in the test (12), HIWORD (12)",12,ga
+PassLaneChk,,"a dx ternary (27), `ABS(dy) > 0x3C` (12), `dy = y - oy` in the negative arm (22)",22,ga
+PassLaneChk,,permute.py 449 candidates (best 10 only with a tempadd copy of `>>`,,ga
+PassLaneChk,,a tie-breaker,,ga
+PassLaneChk,,the y / oy declaration swap alone 12),,ga
+CreateFreeAgent,,"a fresh int jersey for the InputDialog result (3, size +2: the jersey lands in edx and adds the dead `mov edx, eax`",,ga
+CreateFreeAgent,,"short 4 / +3, signed char 6, char / unsigned char 7 / +8, unsigned 4 / +6, at any declaration position, also `if ((jersey = ...) < 0)`), jersey plus j for the goalie loop (14, +2), j in both copy loops (3, +2), i in both (12, +2) or the goalie loop (6)",6,ga
+CreateFreeAgent,,"the skater copy through sp / gp (18), dest / src as dp / sp in the goalie loop (19)",19,ga
+NetCollide,,"on the final base: ABS() (22), `v >= 0 ? v : -v` (20",,ga
+NetCollide,,"the arms swapped), `v > 0 ? v : -v` (20)",20,ga
+NetCollide,,the compare flipped (21),21,ga
+NetCollide,,"the two spellings mixed (16 / 22: asymmetric, not kept), uy declared before gy (22)",22,ga
+NetCollide,,"permute.py 449 candidates (best 17 only with an unsigned uy, which changes the ABS test",,ga
+NetCollide,,"the gy ternary as if / else 20 drops the EXE copy). Tried: the 36 combinations of the two post blocks' return forms on the goto base (26-33), `return W(p->SPA)` with the short result (39, slots)","39, slots",ga
+NetCollide,,"the shared FE1 on the goto base (52: gx / gy swap, no declaration order fixes it: 47)","52: gx / gy swap, no declaration order fixes it: 47",ga
+NetCollide,,"on the nested base: ABS() (22), `v >= 0 ? v : -v` (20, arms swapped)","20, arms swapped",ga
+NetCollide,,"the compare flipped (21), `!(a < b)` (27), scaled_y before ux (34)",34,ga
+NetCollide,,"without scaled_y: `uy = dy << 8; uy = uy / dist >> 2;` (108), `/=` and `>>=` steps (78), ux and uy both in two steps (73), `dy <<= 8` (60), dx and dy both shifted in place (94), declsearch --conflicts (32)",32,ga
+NetCollide,rettype:short,short result,tried (docs/UNSURE.md),ga
+EditGoalieRating,,"natural: `5 * (x + 5)` (66), `(5 + x) * 5` (66), `x * 5 + 25` (78, +2)","78, +2",ga
+LoadGameState,,`dword_C66D4 = 1; dword_C66D0 = 1;` (37),37,ga
+LoadGameState,,"the other order (39), `dword_C66D4 = dword_C66D0 = 1` (39)",39,ga
+LoadGameState,,"the ovl test as nested ifs (37), photobankf = 0 before its __STOSD (41)",41,ga
+LoadGameState,,"the dead `i = 0x10` dropped (80, +12)","80, +12",ga
+LoadGameState,,the photo bit as `x = x | ...` (114),114,ga
+LoadGameState,,"the hud copies as Rec8 array elements (37), radiusy as `word_CBD64[i * 9 + 1]` (82), optmptr as `pflags & 0x40 ? &hmtmstruct : &awtmstruct` (42), `== 0` (37), tmptr `!= 0` (37)",37,ga
 PlayLeagueGame,,(the bank store and the slot order as in the entries above),,ga
 TitleScreen,,"the PlayMVI form of the wait (its own elapsed local el instead of reusing the palette index i, `SetTickDeadline(due - el)`, no left): el in left's place 34, two-argument decoders 27",,ga
 TitleScreen,,"el declared first, after i or after due 54-70 (frame changes)",,ga
