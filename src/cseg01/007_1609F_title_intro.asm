@@ -494,6 +494,10 @@ add esp, byte 4	; 1671A
 mov eax, esi	; 1671D
 add esp, 350h	; 1671F
 jmp near RunDemoGame_x	; 16725
+; C: src/c/006_150C6_scoreboard_gfx/RunDemoGame.c (RunIntro)
+%ifdef CBUILD
+%include "c/006_150C6_scoreboard_gfx/RunDemoGame.RunIntro.inc"
+%else
 RunIntro:
 push dword 674h	; 1672A
 call __CHK	; 1672F
@@ -1103,6 +1107,7 @@ mov dword [dword_CC0EC], ebp	; 16F83
 mov dword [demomode], ebp	; 16F89
 add esp, 64Ch	; 16F8F
 jmp near RunDemoGame_x	; 16F95
+%endif ; C
 ShowCredits:
 push dword 394h	; 16F9A
 call __CHK	; 16F9F

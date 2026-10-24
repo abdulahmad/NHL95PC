@@ -360,11 +360,9 @@ int TitleScreen(void)
     return key;
 }
 
-/* DRAFT (RunIntro): 2160 vs 2160, 4 differing under 10.0 GA. The PIONEER2 song is `songdata = song2 = ...`
-   (under LA it needed wait in between), the later song goes through i, the last fade reads the byte into a
-   signed char local c (dec al in place), and the dword locals are declared song2, song4, song3, wait, skip. Left:
-   the white sweep holds 3Fh in bh (EXE ch). Tried for it: 3Fh through c, the black zero through c,
-   `i != 0xE0`, `i * 3 - 1` indexes, casts on either constant, a pointer form, a braced zero store. */
+/* The PIONEER2 song is `songdata = song2 = ...`, the later song goes through i, the last fade reads the byte
+   into a signed char local c (dec al in place), and the sweep clears the previous white entry with three
+   separate stores (a chained zero store holds the white 3Fh in bh, the EXE uses ch). */
 /* RunIntro (1672A, PC only; ends in RunDemoGame_x): the intro. Free the speech bank's song (music on), clear the
    screen and the palette, show the Pioneer logos (PIONEER1: BKGD3 on PL1, fading to PL2 one step per 2 ticks with
    the PIONEER2 / 3 / 4 songs when music is on and none plays; then the FLA1-4 frames and PION from PIONEER2, a
@@ -381,8 +379,8 @@ void RunIntro(void)
     int shapes[5];
     DosTime t;
     int song2;
-    int song4;
     int song3;
+    int song4;
     int wait;
     int skip;
     int bank;
@@ -484,7 +482,11 @@ void RunIntro(void)
     WaitTickDeadline();
     if (musicon && song4) sub_8FB8E(song4, musichandle, 3, 0x7F);
     for (i = 0xE0; i < 0xF0; i++) {
-        if (i > 0xE0) pal[(i - 1) * 3 + 2] = pal[(i - 1) * 3 + 1] = pal[(i - 1) * 3] = 0;
+        if (i > 0xE0) {
+            pal[(i - 1) * 3] = 0;
+            pal[(i - 1) * 3 + 1] = 0;
+            pal[(i - 1) * 3 + 2] = 0;
+        }
         pal[i * 3 + 2] = pal[i * 3 + 1] = pal[i * 3] = 0x3F;
         SetTickDeadline(2);
         WaitTickDeadline();

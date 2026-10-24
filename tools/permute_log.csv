@@ -380351,3 +380351,709 @@ date,func,file,transform,sha1,score,sizediff,match,first,cc
 2026-10-23,assrefgoalpa,src/c/037_4842A_engine_player_logic/assgoalie.c,zero:61:not > swap:122:2 > type:team:int > type:sc:char,00d41dedde418c7c,65,15,0,0,ga
 2026-10-23,assrefgoalpa,src/c/037_4842A_engine_player_logic/assgoalie.c,zero:61:not > swap:122:2 > type:team:int > commute:10:&,d5c9c7387b418ce0,61,11,0,0,ga
 2026-10-23,assrefgoalpa,src/c/037_4842A_engine_player_logic/assgoalie.c,zero:61:not > swap:122:2 > type:team:int > swapstmt:146,e33bccdca822de0d,65,11,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,base,cfe7ae2622940efa,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bg:unsigned_short,4576d9d35dbc27f1,57,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:46:4,029247d9ba0d5e5e,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,incdec:55:forpre,9634e129db382cf9,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:59:bool,9f4142089b843746,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,scope:cur@0,a513ac0781742ed4,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:wait:1:last,548490f48c0f3d9f,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:32,1b7e880888bd497f,7,0,0,255,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:44:==,f24f09d65e39e8f7,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,forchain:55:merge,27217eb8d5bc6155,22,0,0,624,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:i:s,c406c5bb0fd13b98,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:p:4,fc15d7d77a74fb7d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:y:page,07320eb617d9d1f7,48,35,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:67:4:char,ea3915f687719ecd,8,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:77:while,88848c0ba5a835d9,12,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,opassign:80:0:split,85559fa46464f6d8,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bank:short,4a80806d543acc7a,37,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:24:4,bfa572cef5dced3f,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,incdec:77:forpre,6c5418e23a40c55f,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:60:ne0,2b00af1b12f9c1ab,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:bank:1:after,d5dd24a1f5dbdd24,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:29,0d9436994a07ace8,14,0,0,208,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:59:!=,dd129bcb5ab4a1b4,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:art:p,9b0730d02ab82c7b,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:wait:12,a666351f7ec57647,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:y:bank,1aeb9e8f0a42c102,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:79:4:short,8c79976fff4d3837,35,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:77:do,d4b977fb7618509d,7,2,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:i:short,3f50ae3e7d3e6bb7,34,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:38:4,cb1877f6b5462d9c,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:41:ne0,d87ca328be77e2d1,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:wait:1:after,a81afb08925479a9,12,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:53,b59f2979e2dc8e9e,6,0,0,603,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:24:==,bfa572cef5dced3f,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:y:i,c875d5df9d9dbee3,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bank:14,70f01b0f51da1e0f,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:y:stop,6d2e4bbcc5af7850,46,18,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:66:2:int,5e64e903703d4410,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:77:ifdo,e44073b90a197511,18,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:y:char,476a25d4b3ecf62b,56,11,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:44:4,f24f09d65e39e8f7,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,zero:37:not,7a53072228f02e68,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:bank:1:last,02284a420928f353,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:31,8bbe0b3c1cc493ed,6,0,0,249,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:48:==,31e8d982f470b309,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:st:path,28922d8e5b616873,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1,d3c7b680bed72246,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,reuse:y:art,8db9e23f3fbf9590,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:91:2:int,9a79178a6603971d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:77:gotobot,5ec96ae348305f1a,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:y:short,bc65df44acf029da,55,6,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:48:4,31e8d982f470b309,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:art:1:after,e023b74584a5d5af,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapstmt:57,baf61c35afdf55c0,9,0,0,649,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:63:==,73d7d2d3c87396ad,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:sample2:pal,178d1098184210ba,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:stop:7,d961ad055c031ee3,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:78:5:unsigned_char,acdd6d20a9bf7307,50,14,0,649,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,loop:77:gototop,6631051e5c7fc2e7,12,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:page:unsigned_char,3bb09d63a2241bbb,41,0,0,617,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:67:9,10df5a4ae0e4ee4f,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,split:art:1:last,cae4d64efe4243ae,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:43:==,a3054d28c963ba29,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:p:y,88b9713e5f1799c9,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bank:1,569e2f691ea9b792,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > cast:89:2:char,47f331ad92b48a29,11,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swapdecl:wait:sample1,946905149dbaffd6,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swapstmt:29,1cfe61727da44bf2,14,0,0,208,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > incdec:77:forpre,6058aabf12bc77e3,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > commute:43:==,3d11116dfbab8e87,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > zero:41:ne0,970c0d3457c634d5,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > scope:cur@0,09e2a9d5067bb323,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > movedecl:wait:8,0b37771a97ae8d86,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:wait:1:after,16c78b01824144ba,12,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > loop:77:ifdo,51dbd87c7e552bc6,18,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > reuse:y:stop,c74091c6841990c6,46,18,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > type:bank:char,f1d52b9cdfa10fc2,37,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swap:67:3,d91246e0aff4f72e,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > opassign:80:0:split,b76b7b52b1d2e821,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > forchain:55:merge,13379c8116adc4be,22,0,0,624,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > cast:34:2:short,38e57a86d47dc710,38,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swapdecl:stop:wait,9ee573465ef94c98,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swapstmt:31,f3d963fdf7e2dcdf,6,0,0,249,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > incdec:55:forpre,289f5d2745a230a6,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > commute:46:==,9ee462f84b3f8d1f,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > zero:37:not,9ae7c9f714760bb5,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > movedecl:y:1,f1147242c744c440,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last,0e2e70ee0068e3cc,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > loop:77:while,87cf51a5dfd35ed9,12,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > reuse:y:art,f7205ba019d0fb13,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > type:wait:unsigned_char,04e7aacaf0f34d5f,42,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swap:77:0,52d4cfe42d87c409,6,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > cast:99:2:short,512021dcd2c27c5f,7,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swapdecl:p:y,0733765a675ca22f,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swapstmt:57,0722946022c400c6,9,0,0,649,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > commute:48:==,e552155fdc3cbb2d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > zero:59:bool,a27078361e61cf76,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > movedecl:page:0,f93c67a70858d826,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:wait:1:last,bdfa6ad069067501,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > loop:77:gotobot,304998a29aa13106,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > reuse:y:page,c3bdcc9a94e7ee02,48,35,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > type:stop:unsigned_char,cbbf0d57eb89c8ad,36,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swap:38:4,fd53b5d84014ded1,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > cast:59:1:int,b9fa68f54e1db0c6,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swapdecl:bank:p,2ea709fe63e436aa,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swapstmt:53,0c84ebca3df892f5,6,0,0,603,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > commute:38:==,fd53b5d84014ded1,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > zero:60:ne0,c24f721caf2ba18a,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > movedecl:i:9,b1f3172d0c0dcc33,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:after,4a1435ec0d7f10e4,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > loop:77:do,3ba4229e99f9cfbf,7,2,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > reuse:y:bank,55a9641f7079a85f,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > type:stop:unsigned,e24111850a4c7c78,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swap:48:4,e552155fdc3cbb2d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > cast:85:2:unsigned_short,8c2238bb69e77a8e,22,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swapdecl:sample1:sample2,6c13c5b475b5ac06,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swapstmt:32,659f132585080bee,7,0,0,255,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > commute:44:==,03753031361cc3ff,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > movedecl:bank:5,9b0f6d12844b9332,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:bank:1:last,9dd775d057802882,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > loop:77:gototop,d6b5778f97534531,12,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > type:sample1:unsigned_char,3ee382db53b606e8,40,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swap:61:0,c949d54a1a29f277,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > cast:34:2:unsigned_short,f6d3ace0c3d9d28b,39,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > swapdecl:pal:st,aa7512386f787865,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > commute:59:!=,e79095dd0f76d4e9,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > movedecl:art:6,d7043da226034ef8,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:bank:1:after,e4d37ea5ff2ba89e,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > type:wait:unsigned,0cfa48cd2307dcbe,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > scope:cur@0,e8e7eff6e1909d5c,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swapstmt:54,a2bdb40957eb0ce0,6,0,0,603,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > zero:38:not,e7119f07861e62ee,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > commute:57:==,7fd51b3cfab0236b,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > type:art_1:char,0e16ac2ffbdf3a1a,42,0,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > split:bank:1:after,c8bccc5ed5427e7d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swapdecl:path:bank,326dfa91010d83a2,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > movedecl:stop:15,12d8cb5b6fd35ebf,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > incdec:56:forpre,720c35d0a957e94f,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > forchain:56:merge,29d5dc0ee42d92c7,22,0,0,624,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > loop:78:do,b9ec0cd72fe812f3,7,2,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > opassign:81:0:split,02d2b647ecf01082,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > reuse:stop:art,3bb3b976e6baa311,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swap:27:2,156a19145120eec7,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > cast:78:2:unsigned_char,97e96ebdbd36802e,8,4,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swapstmt:33,2649c31de90e62cc,7,0,0,255,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > zero:42:ne0,9aa766b73c1c26c0,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > commute:60:!=,75dc5b3a6650f061,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > type:bank:signed_char,f3714654aa69ed97,37,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > split:wait:1:last,a18c8fac4389e227,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swapdecl:wait:sample1,36a3cd05ee487600,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > movedecl:p:9,e97df6a4ceaad149,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > incdec:78:forpre,2a9cf01868ff8fca,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > loop:78:while,17bc722e6351c3e9,12,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > reuse:y:bank,11b04441e3db3312,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swap:25:4,d1f267ed45880f33,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > cast:38:1:char,c9708b64545b3de5,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swapstmt:32,af9bb9dca14c9f80,6,0,0,249,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > zero:60:bool,5188f40aba66a484,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > commute:45:==,2024bcdd5fb3c2ba,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > type:art_1:short,4fc3a35eadbe46a1,6,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > split:wait:1:after,e7c8aff98859422c,12,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swapdecl:page:bg,e4b472f13ce86fe8,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > movedecl:cur:14,bbe726afb8d0fd4b,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > loop:78:ifdo,a17d2499f3fd5b95,18,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > reuse:y:page,e98afbf9d2c2f226,48,35,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swap:68:9,897d3b203c560958,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > cast:58:5:short,fc18afe95c233b3c,6,0,0,649,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swapstmt:30,2da57f0732b0f7f5,14,0,0,208,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > zero:61:ne0,30fc57a0bbcf5351,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > commute:47:==,9f0f89bcf73916a6,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > type:bg:char,eece45999a652e7a,56,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > split:bank:1:last,4eba8d55e299ad6d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swapdecl:art:page,77ebf12c1031e7c8,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > movedecl:sample1:11,25606cbcf95825d5,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > loop:78:gototop,7d8754b5e85fad2e,12,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > reuse:art_1:stop,297419ccd381c7b9,20,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swap:78:0,6f0938c9e86510fc,6,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > cast:24:2:char,32591ee78097cf7e,29,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swapstmt:58,0c9a4b729eb43952,9,0,0,649,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > commute:25:==,d1f267ed45880f33,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > type:stop:char,84eee06a105e8426,36,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swapdecl:stop:wait,c324620b33ac00f3,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > movedecl:cur:9,b0d056f6ffe835c6,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > loop:78:gotobot,d5c5efe80188e1bb,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > reuse:art_1:page,2ff9f36dced0a975,9,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swap:39:4,e1e300d03097e128,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > cast:76:4:unsigned_short,1256a47f701d37a3,23,0,0,510,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > commute:64:==,7919039ff96aeb4c,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > type:page:signed_char,0431271c2f5fed75,40,0,0,617,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swapdecl:y:i,37e23b709601ba04,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > movedecl:art:8,a46ae3ec8e95ab8c,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > reuse:sample1:art,cf3bb1a9aeecf55c,5,0,0,224,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:1 > split:art:1:last > swap:63:0,e509a0b349b6d6bc,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:sample1:sample2,dcec1292986432e0,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:86:1:unsigned_short,939349c6fdc34266,16,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:s:5,f7782c5241f4e533,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,commute:56:==,9b87a7546ba40b02,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:sample2:unsigned,4bcc014513e275a3,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:26:2,3b32a34931bcffec,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:bank:art,e7f76c0a5006b13d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:21:2:char,167c807012d33eaa,22,0,0,48,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:i:7,7a6dfccbb126df2d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:stop:unsigned_short,23fcf4022944b4b9,36,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:75:6,420b4548dafc9e54,8,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:cur:page,4bded07e129afe3c,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:79:6:short,d56257c7aced09ff,14,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:i:3,078f61cbe65759bf,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:i:unsigned_short,9dceedf327836afb,34,21,0,649,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:62:0,db82d20f4172e08f,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:path:bank,88ad3f35a8e64967,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:48:5:unsigned_char,af37160bcab62c8e,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:y:4,a6a1b1e2409df930,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:page:char,7df571c99ee97760,41,0,0,617,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:61:0,537a1554f7601069,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:stop:wait,bdc12704dba84bc7,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:75:5:unsigned_short,937821d5f252b233,23,0,0,510,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:p:14,d53750e0c039a6be,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:sample1:unsigned,6a0175d00185b4bd,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:77:0,91cec2b3108f0beb,6,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:page:bg,3e7b2533bf044f4b,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:47:2:unsigned_short,4a574d9c1b8e9c4e,5,0,0,385,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:s:3,9f0abd443b3a9505,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:i:signed_char,e853fcf61fccbfbb,33,17,0,649,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swap:67:3,7c3f5911164e0c4d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:bg:stop,d48438fa125d6b86,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:59:1:int,40c99262cad96c61,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:i:10,fb7de9c19f49e74d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:wait:signed_char,c0718af358a5794b,41,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:wait:sample1,16c234a1c79e46b0,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:63:5:int,ac9fd52aeea8d599,7,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:p:3,78de3064b29a3ed8,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:art:short,c65bfd29caadaa32,38,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,swapdecl:pal:st,153e37d4643b1c4b,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:80:2:int,b728ee4195e3db0d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:s:4,d6a7b6689a144881,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:sample1:short,1181617aa50545a4,41,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:79:5:short,7904a6defffc2a52,35,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:p:9,a47218b18768450a,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:stop:unsigned_char,67ee8a06685e0866,36,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:77:2:char,fdbaa79fb20057fe,8,4,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:stop:5,709ea5997827894c,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:art:unsigned,42dfdcdb891dd310,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:56:2:unsigned_char,2f650a09e950c6f5,15,0,0,632,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:sample1:7,fe51037cf26824dd,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:page:short,64438d27be1d69fa,41,0,0,617,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:55:1:char,f8b32934f3d587d7,18,0,0,624,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:y:10,aab2edf325331b8a,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:art:char,79ddfe5b38e86f63,45,0,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:44:5:unsigned_char,55a47c551c08ce95,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:sample2:0,9d5b50acacd2ca0f,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:sample2:char,94b45876f0659c99,45,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:48:5:unsigned_short,26685005776b49c8,7,0,0,385,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:s:12,eabb5a2d61e31769,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:page:unsigned_short,7290053c2f7f53a1,41,0,0,617,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:67:9:unsigned_short,fcde0848e7cf8ac7,11,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:0,8817d88af28014fc,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:stop:short,9b1557293dc3ff81,36,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:86:2:unsigned_short,a3dfbf86318f76b5,6,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:i:4,e87d92d467377049,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bank:char,e36e233745ba0f68,37,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:86:2:char,94d4cacb11c0928a,11,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:stop:10,3b3202d0228a1959,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:art:unsigned_char,1b9faec924c84c75,45,0,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:95:2:char,16864976123bec08,15,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:p:6,80004d8d8de6c21e,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:stop:unsigned,5af333ae1c895ab4,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:70:2:int,d377401c5500634a,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:p:10,5667b4ff99322384,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:sample2:unsigned_short,e404bbab252a6779,45,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:49:2:unsigned_short,ceb286b9c3ceac2e,5,0,0,385,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:i:11,9529dc20d05da775,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:sample1:char,a58591f214b68ed2,40,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:63:12:int,b5be365206c5f0fa,,,,,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:p:7,7cbdbd46bbed03d8,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:stop:char,0e755eb29ca18ab3,36,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:56:1:short,9da4f7ac0fbd815f,15,0,0,624,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bank:7,7e96e481fbd64bf9,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:wait:short,cb6f97fb97defde7,41,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:65:2:char,070325a7133f11bf,13,0,0,510,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:wait:1,08afc5880f6690dd,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:y:unsigned,452c3903d15d9d63,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:68:2:short,2329585104f0e6a6,26,0,0,510,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:cur:15,33ee7b3d6605f184,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bg:char,4b56386e8eebc629,56,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:67:10:unsigned_char,a70da106e0d7884a,12,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:page:10,2190d08c31a200d2,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bg:unsigned_char,e1261664202a7170,56,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:44:5:short,35f516ae724ee038,7,0,0,385,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bg:0,85b2eb3bf16c4cb7,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:i:unsigned_char,3c17da449588dc5d,34,22,0,649,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:23:2:short,347253072af7b207,29,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:page:13,b5c09927f6d9671d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bank:unsigned,3603b9e41db2a809,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:67:11:int,cbbcd1e0a8106df3,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:3,e86ae45388ee10cf,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:sample2:short,3f583587b3c7efc4,45,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:91:2:char,c839dc1820981aec,11,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:bg:11,00234ae9b63576d4,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:y:unsigned_char,9182e6e4a3c7edcc,56,11,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:67:3:char,47c40d129af27994,7,0,0,711,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:s:7,60edc7635b44d7a8,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:stop:signed_char,8055b60707b44ad0,36,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:86:2:char,cac7f367a1d55f54,6,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:art:5,1aea46abc04e1169,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:i:unsigned,5f901739a15797a5,5,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:89:2:short,00f51202ab18e3d7,11,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:stop:11,e8a673809d7992fc,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:sample1:unsigned_char,035c5cdc7c0739ee,40,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:55:1:unsigned_char,8b8cba98218333c4,18,0,0,624,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:y:5,ee8d3c25890f0c99,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:wait:char,27e77a353066d4b4,42,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:56:2:short,995bc0c5a0dfdc72,15,0,0,632,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:p:8,b3e8f5b86ff65c6d,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:wait:unsigned_char,c5fb00b6f90b2bba,42,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:29:4:char,2ec86c194f1a3ef9,49,0,0,0,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:cur:11,3636611226655645,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bank:signed_char,c4437e43bd075c1a,37,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:89:1:unsigned_char,40e4dc4832bb988e,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,movedecl:stop:14,5fc584375e774248,4,0,0,847,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,type:bank:unsigned_short,af76478e420358ff,38,0,0,95,ga
+2026-10-23,ShowCredits,src/c/006_150C6_scoreboard_gfx/RunDemoGame.c,cast:65:4:unsigned_short,d6bcc04e37906b5f,19,0,0,510,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,base,7681524ae114eb14,11,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,swap:102:8,e447cbc3eead749c,11,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,scope:old@1,e728033b2b396065,11,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,paramtype:3:char,3631f472a4fdfc60,182,9,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,movedecl:bits:18,d70b8c19d351eec3,28,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,loop:32:gototop,22e5e12e52e1ce5b,13,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,mulshift:68:7:mul,81f1a0bc72991cf2,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,incdec:32:forpre,54aebec709be5c36,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,temp:sz:inline,5f654004d2a42e48,9,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,rettype:short,93ebbee9f509e7c2,170,17,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,cmpflip:47,ecec5e05eec2f39d,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:43:+,97418cf4ede24606,127,4,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,reuse:y:bw,c83a796031cd26fa,169,4,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,zero:33:ne0,07caa72b4d1a7328,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,cast:42:2:unsigned_char,b2df875997fdca70,4,5,0,265,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,type:bg2:unsigned_char,b287288fdc18bc4c,131,6,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,opassign:49:0:split,4ec90525e08a018d,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,chain:26:split3,a3fde12c2224df8a,9,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,swapstmt:92,b97613ce71ddba2e,16,12,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,commute:87:&,e5f442d39471319d,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,split:tw:1:after,53f03ff12c9a0c36,160,9,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,swapdecl:mx:my,8020762886679712,28,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,swap:108:12,7c583dfda25a4fbd,12,1,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,scope:old@0,d31c06a2b2bbcab1,11,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,paramtype:4:unsigned,d93d0883e745ae7b,11,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,movedecl:tw:9,d583c7cbc2f105cc,15,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,loop:84:goto,3380c730091d1fa8,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,rettype:unsigned_char,3a3b74a959865d2d,170,17,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,cmpflip:102,a8f5647943f1be65,12,3,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:-,fbaed457fc3346d1,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,reuse:bits:tw,c903ec17d3faab73,283,10,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,zero:86:ne0,423b8add5c224eb7,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,cast:108:2:unsigned_short,90d65608828aaf02,58,0,0,905,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,type:old:unsigned_char,a98077a810c46773,404,11,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,opassign:50:0:split,278bf37e0ab19bfa,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,chain:69:split,c9141507726e86d2,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,swapstmt:73,855874421cc1b88f,11,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,commute:58:+,f5129f8977e4fa90,11,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,split:tw:1:last,2cc06b50da917b9c,160,9,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,swapdecl:lh:bg,07c26b634758eba3,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,swap:68:2,7cc0312403cb5098,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,scope:bits@0,3c0edb4a3040e84a,24,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,paramtype:3:signed_char,e8f7b3e6250b28e3,182,11,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,movedecl:my:3,4b87002aa8c12929,49,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,loop:32:do,e0117c2c79faa260,93,5,0,73,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,rettype:unsigned_short,0d2bf5972e15e6e2,170,17,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,cmpflip:30,8d7865e89b0ff70a,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:51:rhs,a39b90db0bee9fd0,18,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,reuse:old:bx,64b5c341b1adcc1b,97,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,zero:28:ne0,46311384f2241a9c,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,cast:68:4:short,7342480e48e1a085,12,1,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,type:by:signed_char,a1fb0944ff06f7c3,38,8,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,opassign:37:0:split,a72bc6d556a6382c,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,chain:26:split,e96732db7c72f75a,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,swapstmt:43,b9de1ff551dda12b,11,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,commute:44:+,3c14c4dc9d2c987c,11,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,split:mx:1:last,1ca0af90b42d41ba,95,16,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,swapdecl:i:mx,2f023954468ac9e2,22,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,swap:57:7,ad9a496587fa0d74,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,scope:old@2,cfcaf622fb8df9b2,20,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,paramtype:4:short,7f6e4b66b15b30e4,210,21,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,movedecl:top:18,bcc5a975f31e7074,20,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,loop:32:ifdo,4835263449e3abb1,92,11,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,rettype:char,c36d61d86feefb98,170,17,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,cmpflip:102,7e1ef47394eeee6e,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > chain:71:split,5f23c44487e29375,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > opassign:38:0:split,fb269efb73260985,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:_t0:5,6352319370d9ae0d,34,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:i:short,42df62542cae625f,299,10,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:43,0968ee1cce783fb2,10,0,0,242,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > temp:_t0:inline,1f8e0eda6f289d8a,11,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:86:goto,cc24994deacb3043,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:99:&,264bfae00dc79022,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:70:16,b415c7aca29a95aa,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > scope:old@2,d59b7fa91389cd28,24,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > incdec:33:forpre,491e31c43075f392,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cmpflip:31,8a6b9ab42a767d39,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > rettype:unsigned_short,76d1bb5c35da3ca7,178,17,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:old:maxw,a0612807159aef95,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > tempadd:41:+,5adba56df690378b,21,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:bg2:lh,2583453bcb5c8a4d,127,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > split:tw:1:last,75ad6a6797a4c3d7,163,11,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > zero:103:not,063e65041ce96284,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:112:9:unsigned_char,3e0a2ae534b76234,62,1,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > mulshift:70:7:mul,8935af003e644821,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:1:unsigned,ffd7a3a64fa4b8af,7,0,0,63,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > chain:27:split,d7cc67e98bfbb64c,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > opassign:51:0:split,62980b6572cbf8ce,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:sz:14,dba20cb5542e6ba3,11,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:cur:short,9ea8bc3a751617c6,219,45,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:94,241a60bd01cf7be2,9,12,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > temp:sz:inline,6ceecfb945fc1ea8,17,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:while,1ea086ef1111e097,10,0,0,96,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:91:==,8d525ec10011e193,6,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:100:0,fdfad0bae037927b,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > scope:bits@0,4918624d70ac64e2,24,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cmpflip:104,649c85561f918062,9,3,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > rettype:unsigned_char,2d293e147899ea96,178,17,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:mx:my,0a8c7d00ac3ca88b,25,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > tempadd:52:+,17b8789ecb6cd8c9,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:y:sz,1fde6bfd394a1ba8,126,3,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > split:my:1:last,7f3848de348403ff,101,24,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > zero:90:eq0,a6d6bd2a916e430e,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:89:4:char,82b00ae684afdbad,11,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:3:signed_char,c1170b2b0ff5f715,172,11,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > chain:27:split2,c85f1841a0bb7211,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > opassign:50:0:split,d2cb0b6f0f157036,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:bg:2,ffd083fdf5c839d7,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:old:short,8855f956a57893a5,401,23,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:49,bf2308640bdff63c,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:ifdo,e84b9e03a6f6e465,91,11,0,96,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:89:&,92948a1d96396cc5,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:58:7,666c2ef729863f02,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > scope:old@0,084df961e1581728,32,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cmpflip:104,462628ada848d35a,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > rettype:char,fc679e4937bbbb5e,178,17,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:bg2:ly,d673840507f388ea,17,0,0,305,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > tempadd:59:+,38eb4fee484563b3,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:y:bx,e540a9bd2145571b,167,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > split:mx:1:after,5cbad38b0b9389b2,106,16,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > zero:88:ne0,08541ec902864763,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:69:6:unsigned_short,67fc1a5a0ef1878b,162,1,0,124,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:4:unsigned_char,d7e48109128a8f38,216,15,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > chain:27:split3,3d383efda28e077e,6,0,0,34,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:by:7,283034cb2113de2f,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:cur:unsigned_short,135e8d76a32b63ec,219,44,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:27,c68043841198cb13,9,2,0,32,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gototop,0e48e0a371d84fca,10,0,0,96,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:108:==,0ba73266975b17fd,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:67:2,07ce23c82043729b,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:my:x,b295eb733f10a39f,43,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:sz:by,6f29853e6080ec34,134,3,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:bh:char,fca7844f2d6361b6,122,10,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:3:int,4f9d5da91e8e9cf3,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > rettype:short,7617615889e2b2bb,178,17,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:ly:16,d0ca5c8ef1d16cfa,11,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > zero:119:not,1d9b9812225f2752,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:45:+,a5cbc15f9d17b85a,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > split:top:1:last,7a9d321a9d68aae8,38,2,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:do,b489757c3215da3e,91,7,0,73,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > scope:old@1,c16dd4294616a2d0,32,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:77,dd86a2516f4b7d4d,11,4,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:79:3:char,7b5fd71882b4a52f,115,2,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cmpflip:39,5183779999e16e59,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > tempadd:67:+,8669941d8ef04f01,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:110:3,cb2fa9af5b7de25c,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:bg:i,f7fff3bc7f39f20c,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:bits:bx,6de5860a675ee9b7,112,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:bg:signed_char,4d5bf80fdd0f8e47,144,2,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:4:short,9b96c576d91965ea,216,21,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:old:18,e7f7498786da1fd9,17,0,0,305,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > zero:108:not,817f39a44ca30868,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:102:+,1fa437d621c5c14c,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > split:my:1:after,ebd5b9a616f1b077,108,24,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot,643fdc936bac8a0a,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:50,b3ca243bd0bf3729,11,0,0,325,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:108:12:unsigned_char,c633cfbaae87e910,181,21,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cmpflip:36,efcddd7767fb4c25,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > tempadd:47:+,c53569cd2735972d,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:70:2,b7fb56d3e6f5182a,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:lx:bg2,530fe34ddc73f7a3,17,0,0,305,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:sz:bh,77aedf4324f14544,124,3,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:bits:unsigned_char,bae30f460a590873,121,6,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:3:unsigned_char,8474dc84a1b5ab6d,172,9,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:bx:1,ffa017e02fb7f85d,17,0,0,305,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > zero:34:ne0,20a481680b87413b,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:91:==,c84a6b740377aca1,6,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > split:cur:1:last,3f24517d389f1632,276,12,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:86:while1,2c36e3ba8f91a7f8,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:46,e0c81cbeef6fe236,10,0,0,287,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:42:5:int,8bb947703312e7d8,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cmpflip:48,50f32d8a6e549e68,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > tempadd:58:-,54068763a8580d95,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:70:3,cdd185661ada7c9b,6,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:bx:by,57eeb987d3f78f31,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:x:sz,8eb09aac9f7341d0,146,3,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:y:short,fc7a4ea1fe778f58,124,31,0,23,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:1:char,2b4e141b73b1f87c,226,10,0,17,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:ly:2,b43fe1503667a930,17,0,0,305,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > zero:29:ne0,07976373dc7282db,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:67:+,570d7a29af9d7afe,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > split:mx:1:last,3ae7aa1c76867055,110,16,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:41,0a4e4d8dd78c59e9,26,2,0,193,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:100:10:char,fa14c568c30346cd,124,1,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > tempadd:102:+,52fa0643b4c42f5e,82,5,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:41:2,5dce6d42cf5df62e,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:bw:bh,7fb2a0e2e5205943,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:bg2:tw,d80e3218ddcd56ba,227,9,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:lh:unsigned_char,7dd2d3b78d99dc42,244,2,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:1:short,16798be6d01a6e6c,165,7,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:x:11,81384bdaca340b72,40,0,0,92,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:59:+,0e73ad671a20a90a,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > split:tw:1:after,51f6a7dbdefe140b,153,11,0,96,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > commute:48:+,02c71915df366e96,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > tempadd:48:+,c0a52d01fc8a7ec8,123,4,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > rettype:short,00306f18b8af7d69,183,17,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swapstmt:98,4a4435aafb570eaf,30,12,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > split:mx:1:after,30e0760c829f4508,106,16,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > paramtype:3:char,7b669b6534ac33e2,172,9,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > type:scroll:unsigned_char,33848c41f1ddff36,264,7,0,23,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > chain:27:split,10c86b8ddd87b2f2,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > opassign:42:0:split,7bcbd25a6f9144c3,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > zero:29:ne0,8d36ffff3c408245,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > incdec:39:op1,b670dca871e32f34,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > temp:_t0:inline,a7091a4e4f7ddd2e,11,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > mulshift:74:7:mul,bc0fe247425a8551,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > reuse:old:by,6665e7ee8aaac294,120,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > movedecl:lh:20,27db2c0ff2e791fb,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > scope:bits@0,b640f29fa1a10b03,24,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swapdecl:top:old,82f42bbc6c53f189,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:62:7,385ab636af521551,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > cmpflip:31,dcd67c47d80789d5,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > cast:95:3:short,17397b1ff9eca4cb,14,3,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > loop:90:goto,e6a6230f180127e2,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > commute:107:!=,c14d2101bab49d8c,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > tempadd:70:-,1548d997954ec648,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > rettype:unsigned_char,1999b891026780b0,178,17,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swapstmt:78,fb3cc61ad8c85492,35,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > split:my:1:last,d3a7af6e073604f1,101,24,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > paramtype:3:unsigned_char,a8f1416f294511ea,172,9,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > type:lx:char,c9dac639f5892923,99,15,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > chain:75:split,be3d0a8c711e432d,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > opassign:55:0:split,2a58bae74a775c41,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > zero:36:ne0,e6d8ecf53800d601,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > incdec:39:pre,5f15b82f21fe841d,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > temp:sz:inline,ae7b44c685188fc7,17,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > reuse:old:bw,71b84f99eab2c525,128,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > movedecl:lh:18,f78b2ac138e6434b,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > scope:old@0,1bcce2922ccd83ae,32,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swapdecl:bg2:ly,293830e5f460a215,17,0,0,305,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:74:16,39094aaf4c13f131,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > cmpflip:52,81678ae853555664,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > cast:107:8:unsigned_short,22b5cb3e5eb2b967,14,4,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > loop:90:while1,085b7172c3aed09b,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > commute:49:+,885935d762b9e94e,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > tempadd:63:+,fddfca16982cf206,21,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > rettype:unsigned_short,04dc4f2b04485d6b,178,17,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swapstmt:50,21dc1249b0256386,29,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > split:tw:1:last,4633d893af70ab71,163,11,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > paramtype:3:int,3306f3060c9ae410,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > type:bw:short,793e9c8fa08f5bd2,115,14,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > chain:27:split2,fecc1204a53217fc,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > opassign:54:0:split,af6f0639c6f409e1,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > zero:107:not,acb0b918360de95a,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > reuse:old:bg,aa8da4a8a564c1a8,18,4,0,305,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > movedecl:cur:16,280fb206c795bfe9,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > scope:old@1,13b4dc07c1fbbba5,32,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swapdecl:lh:bg,7e62744672e2788b,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3,4393e66bd30d4ecb,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > cmpflip:41,5afa6e32963054d5,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > cast:109:8:unsigned_short,260c809e248b6cb3,78,2,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > commute:114:!=,847e26e35bd4168c,9,1,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > tempadd:106:+,3844b70e0de3f216,82,5,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > rettype:char,4e97565d2ef579af,178,17,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swapstmt:99,300a7aa6c9c2ab59,10,24,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > split:top:1:after,73e7f4562045104a,38,2,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > paramtype:4:char,62a6573c0f075b51,216,15,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > scope:old@1,6249899820df121b,32,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > split:tw:1:last,2550ddc367bd4b0d,153,11,0,96,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > swap:108:8,1bad5dfa62d6b26f,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > temp:sz:inline,9f97090013ba0e3c,17,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > tempadd:49:+,3a5a0b8d4544fae7,160,11,0,124,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > opassign:55:0:split,8728e42c1595d667,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > paramtype:1:unsigned_short,6fe54d12ce3e774f,169,13,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > swapstmt:62,a874a73a3d1926d9,158,3,0,124,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > mulshift:74:7:mul,117a2118bd71d5c8,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > cmpflip:108,0080e3d9d8e2913b,9,3,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > loop:90:while1,27e342160f1f5dd5,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > cast:116:8:int,1e6af88d22717ce5,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > chain:27:split2,39499041e62c1fde,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > movedecl:my:9,61d3217106e115fa,33,0,0,92,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > swapdecl:bg2:ly,6ace35bf20ab9fe5,38,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > incdec:39:op1,febe657b0a41ef24,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > rettype:char,c65e95dce6d31c5e,178,17,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > zero:107:not,0794c7245c210174,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > commute:45:+,9a7f37f88972a955,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > type:sz:signed_char,11a16e27ccf6a0f8,101,2,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > reuse:x:sz,014918dede0295d7,146,3,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > scope:old@2,49fd7e4dcc50f896,28,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > split:tw:1:after,335442cb891faae5,163,11,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > swap:114:12,1911d5743a3a1143,9,1,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > temp:_t0:inline,36d2aa17e2bd0d0c,7,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > tempadd:56:+,55244001382d27c6,19,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > opassign:54:0:split,2e22df16a3e99df5,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > paramtype:3:char,2244b87751778525,172,9,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > swapstmt:78,333675bf03ac4961,15,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > cmpflip:108,22402f5a35fbd6b6,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > loop:90:goto,60a50dc98b52ac2b,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > cast:60:4:unsigned_char,f03ee700ff4afe36,267,0,0,13,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > chain:75:split,11affb2033a573f4,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > movedecl:cur:4,0385b0bf921bd8ce,17,0,0,305,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > swapdecl:sz:_t0,ae2230f9aa02c829,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > incdec:39:pre,17d15d815d53a93f,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > rettype:short,3b32c42e0e5ec9f9,178,17,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > zero:36:ne0,79f6c071a553937b,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > commute:50:+,33e072cf52210c16,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > type:scroll:char,46d0954cd1421344,264,7,0,23,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > reuse:bg2:bw,d64990b2f99986bb,123,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > scope:old@0,9062f1e38a1732b0,32,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > split:top:1:last,86d6b4536c3cebe0,38,2,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > swap:74:16,2fc92116f2c5dcd6,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > tempadd:70:-,70fbb49d869d20dc,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > opassign:42:0:split,9daf5659306b1e92,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > paramtype:1:short,6532b6453c6b1d43,165,7,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > swapstmt:79,61d7741e6b0d807f,8,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > cmpflip:31,d660a462ac4dcf90,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > cast:93:3:unsigned_short,d08829bd7f93c375,11,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > chain:27:split3,551326483f88c174,6,0,0,34,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > movedecl:bg:17,10067b3ef3703395,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > swapdecl:bx:by,0438634e5899b4bd,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > rettype:unsigned_char,f3282ae1c75725bd,178,17,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > zero:92:ne0,da01318971f0ff23,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > commute:51:+,abe785e845217bd2,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > type:bh:char,ee6e6d62f0868b66,122,10,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > reuse:x:bx,804d91b49a962cc6,158,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > scope:bits@0,fa2fe5229755ea84,28,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > split:top:1:after,f98cf7a21dd5d4f8,38,2,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > swap:62:7,b252fefd93db430d,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > tempadd:45:+,08cf611e533c1078,21,0,0,213,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > paramtype:3:unsigned_char,b22fac51a53fb759,172,9,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > loop:33:gotobot > swap:114:3 > swapstmt:53,995046a5d74cd1c1,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:by:bw,e51b2acf396c9e97,19,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:47:+,cd7ec99cfebfbccd,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > split:cur:1:after,0f6343fd5bddc395,286,12,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:1:signed_char,d614d5d4c90f16f9,229,16,0,17,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:bits:lh,0bd9a540c94498fd,133,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:41:3:unsigned_short,2cac37ff02561dae,273,9,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:mx:4,97be076e6e31d0b2,19,0,0,92,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:x:unsigned_char,da25060f3e0ea7d0,122,15,0,23,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > tempadd:45:+,147bbe01b4282d37,165,11,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:26,39e46dac4d77af02,6,0,0,27,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:41:3,83eddfc212d34408,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:scroll:bx,7a888ce7a07fe7c2,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:41:+,14cfbf450d5c1f3a,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > split:top:1:after,2581bb04e73649d5,38,2,0,38,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:4:char,af256982b4a8527e,216,15,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:x:by,e0cda7598dec6225,157,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:110:10:int,34e1cd2bb47fba58,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:cur:18,4b96a4f11af2cf50,11,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:bx:char,3ccaf3bb888234b2,261,5,0,23,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > tempadd:66:-,9515ae855d189dbc,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:74,34c8d40077afd5dc,15,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:110:12,8cbb72a002a8b1f4,9,1,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:tw:sz,5da70364361909f1,19,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:52:+,a345690c618e326e,9,1,0,311,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:4:unsigned_short,e02ec8c71225eb57,216,23,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:y:by,6f7381fb2885e274,166,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:106:7:unsigned_short,1a3f7a788e54bfe8,50,2,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:sz:11,2718a81b354d88e2,11,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:lx:unsigned_char,8289d52567ce89a0,95,15,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > tempadd:58:rhs,c2c8340d8e2844bc,159,3,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:95,e00361475eabf050,10,24,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:104:8,18fc251bb92a76cd,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:bits:top,963ceb7a7c32fcdc,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:46:+,e0474284fb5ef9f6,25,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:3:unsigned_short,94010297055a7381,172,13,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:y:bh,66a41b4c50d6e675,174,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:106:5:int,c3d8c573844e5fa5,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:x:7,f68defdc065d411f,40,0,0,92,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:maxw:unsigned_char,131778e827757948,237,7,0,34,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > tempadd:46:+,8ddfed76bce298ff,9,2,0,298,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:76,1f35a8082b51971e,12,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:70:5,6bc5ecd27294f46a,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:maxw:lx,31832eaada833bb6,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:110:!=,8cbb72a002a8b1f4,9,1,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:1:unsigned_char,1591e094d3f27e75,226,10,0,17,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:sz:_t0,52c8d97c2c6bced2,22,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:110:13:int,6f23a48a2ea19058,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:bits:10,1e0fd622de12c13a,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:shown:char,b828ad2c96339e9b,336,7,0,13,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > tempadd:44:+,c24f7390a9d1f001,125,4,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:42,69b1264165b3c624,26,2,0,217,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:73:6,34b7705b40e64ad4,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:x:y,36da086e08a1f8b9,28,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:44:+,24a72e6e670ba5ae,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:4:signed_char,fc2de797268d9f51,216,17,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > reuse:bits:bw,9060285cb5682eb1,129,0,0,0,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > cast:79:2:int,0bdafdc642ae394d,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > movedecl:by:16,8891184d9a082edf,11,0,0,19,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > type:bits:char,76ec437b5869d000,121,6,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapstmt:69,51c81349e30dffe8,139,1,0,96,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swap:74:6,2f690de746607a67,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > swapdecl:cur:tw,098007475502934e,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > commute:90:==,91a0b22c3ca7e2ce,4,0,0,540,ga
+2026-10-23,ListDialog,src/c/023_2FDD1_misc_dialogs/ListDialog.c,tempadd:65:- > paramtype:3:char,58993ed8ac8cdd82,172,9,0,19,ga
