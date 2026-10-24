@@ -1,5 +1,8 @@
 /* Player stats: the team stats pages. */
-/* DRAFT: 3,714 vs 3,733 bytes, 132 differing; see docs/UNSURE.md. */
+/* DRAFT (10.0 GA): 132 -> 123 differing, 3737 vs 3733 bytes. Reuse koff for the
+   first conference-header index and dead x for the power-play key. All scalar
+   spill slots now agree (slot_solver: zero mismatches). Left: key-switch shared
+   divide/store tails, column-switch offset hoisting and row register picks. */
 #define TeamStatsScreen TeamStatsScreen_decl
 #define PrintShadowText PrintShadowText_decl
 #define PrintFmt1 PrintFmt1_decl
@@ -97,7 +100,8 @@ int TeamStatsScreen(int page)
             case 3:
                 if (((unsigned short *)s)[4] > ((unsigned short *)s)[5]) ((unsigned short *)s)[5] = ((unsigned short *)s)[4];
                 t = ((unsigned short *)s)[5];
-                statssortkeys[i] = t ? (((unsigned short *)s)[4] * 1000 + t / 2) / t : 0;
+                x = t ? (((unsigned short *)s)[4] * 1000 + t / 2) / t : 0;
+                statssortkeys[i] = x;
                 break;
             case 4:
                 t = s[0];
@@ -183,7 +187,8 @@ int TeamStatsScreen(int page)
             y = 0x73;
             PrintShadowText(0xEC, y, (char *)str_GP4);
             PrintShadowText(0x21C, y, (char *)str_GP4);
-            PrintShadowText(0x114, y, (char *)((int (*)[4])teamcolhdrs)[page][statsplayoffs != 0]);
+            koff = statsplayoffs != 0;
+            PrintShadowText(0x114, y, (char *)*(int *)(koff * 4 + page * 16 + (int)teamcolhdrs));
             PrintShadowText(0x244, y, (char *)((int (*)[4])teamcolhdrs)[page][statsplayoffs != 0]);
         } else {
             PrintShadowText(0x154, y, (char *)str_GP4);
