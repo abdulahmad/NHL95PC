@@ -3690,3 +3690,15 @@ assthreestars,,"a compile-context copy of ass_pc_slot20 (the EXE's previous func
 DrawSprite,,"a compile-context copy of LoadScoreboardGfx (the EXE's previous function) before it (66, no change). Reading: the EXE re-reads s.flip from its slot (`cmp word [esp+18h], 0`) and reuses ecx for the mode zero, as for an address-taken short (no copy propagation of the homed flip)",,ga
 DrawSprite,,nothing compiled on that,,ga
 StarCompare,,"a compile-context copy of StarEligible (the EXE's previous function) before it (67, no change)","67, no change",ga
+updatereplay,,"`p = SortCords; for (i = 0; ...)` on the packing or the position loop (22), `for (i = 0, p = SortCords; ...)` (24), `recbpr = recbpr + 4` (35, +10), `*((short *)recbpr)++` for camy / crowdlevel (29, +1), `lastsfx = -1; replaysfx = -1;` (22)",22,ga
+RemoveFromLines,,"on the short-j base: unsigned short j (63), j declared first (59)",59,ga
+RemoveFromLines,,"the counting loops on j (109, +5)","109, +5",ga
+RemoveFromLines,,"the goalie / extra-skater loops on j (101, +3), r2 declared before j with an int r (64, +3), declsearch --conflicts (both orders 59), permute.py 577 candidates (best 25 only with `*lt++ == (char)pnum` in the extra-skater loop",,ga
+RemoveFromLines,,a no-op cast: rejected),,ga
+EditSkaterRating,,"permute.py 577 candidates on the natural form (best 59 only with non-equivalent casts, `(char)((*maxp + 5) * 5)`, `(short)v / 5`, `(unsigned char)((*p + 5) * 5)`",,ga
+EditSkaterRating,,plus an if / do loop: rejected),,ga
+EditGoalieRating,,separately,,ga
+EditRosters,,"`(bits & 2) == 0` (108), `sel[i] = 0; nitems[i] = 0;` in the RosterPanelClick reset (183, +31)","183, +31",ga
+EditRosters,,"the on2 draws through depth instead of `i = depth` (108), `-1 == editrosters_exit` (108)",108,ga
+LoadGameState,,"(natural statement shapes, 37 unless noted): `p = (short *)buf + 1` (34, size +6: other code), `n = 0; i = 0;` (37), `i = 0; n = 0;` (39), `n = n - 0x10`, `&SortCords[i]` for the sort-object reads, `(char *)&hmtmstruct + (i << 8)`, `crowdlevel = *p++; crowdsmooth = crowdlevel;`, `o->ts = *++p; p++;`, `n = i >= 0x30 ? 0x44 : 0x80` (86)",86,ga
+LoadGameState,,"the mouse test as if / else-if, o->frame before o->first (40), `p = p + 2` after the seed, `(Rec6 *)(char *)q`, `&SortCords[6]` for awtmsort",,ga
