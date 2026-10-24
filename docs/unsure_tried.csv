@@ -3258,3 +3258,48 @@ SimPlayoffRound1,,UpdateSeasonSchedule context untouched,,ga
 BlitTileMap,,"(2026-10-24, lane 1b batch 9): declsearch --conflicts (no declaration order reaches dimension slots)",,ga
 BlitTileMap,,"shared x+col through c or dead x0 before the flip branch, each alone and with shared y+row through r plus doubled-row subtraction (61/70/45/40 differing). Sharing changes structural/register layout",,ga
 BlitTileMap,,retained baseline,,ga
+PlayLeagueGame,,"(2026-10-24, lane 1b batch 10): checked lane 1b batch 5's split (34) with slotdump",,ga
+PlayLeagueGame,,"declsearch --conflicts --iters 600 --restarts 3 (2062 orders, 34 / +6",,ga
+PlayLeagueGame,,"7 of 10 inferred slots exact, nothing better)",,ga
+PlayLeagueGame,,bank as a real unsigned char pointer (34 / +6),34 / +6,ga
+PlayLeagueGame,,firstpal reused through pal (50 / +15),50 / +15,ga
+PlayLeagueGame,,"firstpal scoped to the first team block, bank scoped to the result block, both (56 / +15, 34 / +6, 56 / +15). The bank temporary still shares firstpal's slot",,ga
+PlayLeagueGame,,no source kept,,ga
+BuildStandingsGrid,,"(2026-10-24, lane 1b batch 10): the first or final divisionteams read through integer address sums (four natural index / base associations, all 41 / +5)","four natural index / base associations, all 41 / +5",ga
+BuildStandingsGrid,,"a named row pointer for the first / final / both lookups (42 / +2, 45 / +16, 63 / +11). No source change",,ga
+DrawCalendarDay,,"(2026-10-24, lane 1b batch 10): hx or hy alone reused through dx / dy / x / y / d / i / x2 / y2 (partial coordinate reuse, not the earlier paired grouping)",,ga
+DrawCalendarDay,,"best hx -> dx (48 before slots). declsearch --conflicts --iters 600 --restarts 3 (555 orders): best 38 with the order state, name, score, boxb, boxr, x2, box, opp, g, sel. One confirmation mispredicted x2's slot for a rejected order",,ga
+DrawCalendarDay,,the kept order predicts every named slot. A fresh DOSBox compile gives 38,,ga
+DrawCalendarDay,,both makes MATCH,,ga
+assbench,,"(2026-10-24, lane 1b batch 10), always with both masks removed: a separate short / int count at function or timer-block scope (24-25, +4 / +5), tm declared in the seated block (26, +7)","26, +7",ga
+assbench,,"a short / int target reused for the door / standing / seating SPA choices (26, +11)","26, +11",ga
+assbench,,"a separate short count with count + 8 at function / block scope (25 / +12, 27 / +14)","25 / +12, 27 / +14",ga
+assbench,,"the int decrement result narrowed through d at function / block scope (30 / +1, 25 / +3). No improvement",,ga
+assbench,,no source change,,ga
+assgoalie,,"(2026-10-24, lane 1b batch 10): a reused short / int target for the simple ternary regd0 / regd1 / regd2 / all destination stores (23-60)",23-60,ga
+assgoalie,,the X / Y hotspot through a fresh signed char / short / int (21-82),21-82,ga
+assgoalie,,"the Y or both offsets with HIBYTE + HIWORD, separate word subtractions",,ga
+assgoalie,,an int offset assembled in steps (45-78),45-78,ga
+assgoalie,,"the Y hotspot through the dead a / ay / x / y / k, or the sum through a / ay (21-84). No improvement and no move kept",,ga
+assgoalie,,a future match must move to assrefwhistle.c for ass_popx,,ga
+SeriesLength,,"(2026-10-24, lane 1b batch 10): regdump, cdiff",,ga
+SeriesLength,,"dead n reused for first/second/both SeriesWinner results, p local removed and parameter s used in place (all fresh 10,+0). No source change",,ga
+SeriesLength,,prior switch/return/block-order sweeps not repeated,,ga
+SimulateGame,,"(2026-10-24, lane 1b batch 10): regdump",,ga
+SimulateGame,,"declsearch --conflicts started, stopped at three minutes",,ga
+SimulateGame,,"applied the owner-provided confirmed order f,bestshot,ot,shotv,prevsk,err,rate,dline,tick,penv,i,score,fline,goalie,skaters,j,nassists,bestpen,periodlen,scorer,assist1,pl. Fresh DOSBox score 572",,ga
+SimulateGame,,both makes MATCH. One step only,,ga
+SimulateGame,,no other shapes attempted,,ga
+StarCompare,,"(2026-10-24, lane 1b batch 10): declsearch --conflicts --write, pb declared before pa",,ga
+StarCompare,,both makes MATCH. Further diagnosis pending,,ga
+FixJerseyConflict,,"(2026-10-24, lane 1b batch 10): outer for (;;) / break, for (bad = -1",,ga
+FixJerseyConflict,,"bad && !err;), while (bad && !err)",,ga
+FixJerseyConflict,,with struct / pal-int / pal-pointer / pal + e variants (best 20 before slots),best 20 before slots,ga
+FixJerseyConflict,,"slotdump and declsearch --conflicts (6 orders, confirmed 19)","6 orders, confirmed 19",ga
+FixJerseyConflict,,the do-while restored after the slot search (same 19),same 19,ga
+FixJerseyConflict,,"saving the team pointer and reusing tr for the key pointer with do / for (20, +5). Both builds MATCH",,ga
+TradePlayers,,"(2026-10-24, lane 1b batch 10), fresh-emulator variants: strcpy for ""Show "" on the first / second label (7, +2)","7, +2",ga
+TradePlayers,,a separate msg pointer through the first / second / both label constructions (3),3,ga
+TradePlayers,,a named teams pointer for the first / second / both city indices (3),3,ga
+TradePlayers,,"the width max through r initialized from x / y (9 / +2, 8 / +0). None improved",,ga
+TradePlayers,,no source change,,ga
