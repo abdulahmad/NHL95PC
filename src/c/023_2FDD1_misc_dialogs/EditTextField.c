@@ -72,7 +72,8 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
             editpos = 0;
         } else if (key == 0x4F00) {
             DrawEditCursor(flags);
-            for (editpos = 0; buf[editpos]; editpos++);
+            editpos = 0;
+            while (buf[editpos]) editpos++;
         } else if (key == 0x5200) {
             DrawEditCursor(flags);
             if (!ins) {
