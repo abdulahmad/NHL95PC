@@ -306,6 +306,19 @@ SportsDesk,abdulahmad,2026-10-24,LA,303,310,"no source change. GA -od scores 103
 SimulateGame,abdulahmad,2026-10-24,LA,627,702,"no source change. GA is 627, size +3."
 CalendarScreen,abdulahmad,2026-10-24,LA,319,539,"no source change. GA is 319, size +24."
 GameSummaryScreen,abdulahmad,2026-10-24,LA,287,372,"no source change. GA is 287, size +38."
+checkob,StaticEck2026,2026-10-24,GA,2,2,"regsolve.py: an operand flip, nothing predicted. Block-scoped lim, register extra, a second counter, a comma copy (5-20); permute.py tempadd/temps/inplace/lvinline 251 candidates."
+LockerRoomLoop,StaticEck2026,2026-10-24,GA,2,0,"permute score 23 before. permute.py tempadd + reuse: case 0/3 first step through the dead n gives the EXE bytes (trial mark MATCH); a new int scores 23. regsolve.py: unnamed temporary, nothing predicted. ESCALATE: dead-variable reuse, not marked."
+PassLaneChk,StaticEck2026,2026-10-24,GA,2,2,regsolve.py: nothing predicted. Without py 17; a named byte for the materialized y > limit (17-31). ESCALATE: the committed py copy is a tie-breaker.
+calcpuckcross,StaticEck2026,2026-10-24,GA,3,3,"regsolve.py: nothing predicted. Ternary bounces (20-57), shift for side * 2 (3); permute.py tempadd/temps 287 candidates."
+doplayeracc,StaticEck2026,2026-10-24,GA,5,5,"regsolve.py: nothing predicted (a fold, not a register pick); permute.py tempadd/temps 122 candidates."
+CreateFreeAgent,StaticEck2026,2026-10-24,GA,5,2,"regsolve.py: no named-variable vote. permute.py tempadd: the career size through an extra int copy, EXE bytes (the 2 are msglines false positives; trial mark MATCH). Natural KB / cluster / pointer forms 5-12. ESCALATE: tie-breaker copy, not marked."
+QueueSpeechClip,StaticEck2026,2026-10-24,GA,6,6,"No kind local (7), SPEECHQ macro stores (7-23), inverted calls (14); permute.py tempadd/temps 27 candidates."
+POInitSchedule,StaticEck2026,2026-10-24,GA,6,0,"permute.py tempadd: sched and day copies give the EXE bytes (trial mark MATCH); natural day / pointer forms 10-49. ESCALATE: tie-breaker copies, not marked."
+assrefpenshot,StaticEck2026,2026-10-24,GA,7,0,"match: the puck stop as one chain ending in the puckvz store (7 -> 5), then (r - facedir) & 7 without the unsigned char cast; the ten gotos of the old draft replaced by returns and one guarded block with the skate tail last (still the EXE bytes, no goto)."
+SelectMatchingPlayers,StaticEck2026,2026-10-24,GA,7,7,"Base-first address spellings (11-30), SplitPlayerName with an unsigned char * name (7-11)."
+SelectHilight,StaticEck2026,2026-10-24,GA,7,7,FreeMemBlock with a pointer prototype (7); permute.py tempadd/temps 247 candidates.
+changeplayer,StaticEck2026,2026-10-24,GA,10,10,regsolve.py: predicted swaps already tried. Skip / && / store order forms (10-12); permute.py tempadd/temps 68 candidates.
+ReassignCtlPlayer,StaticEck2026,2026-10-24,GA,10,10,"permute.py tempadd/temps/inplace/lvinline 78 candidates, best the base."
 TradePlayers,StaticEck2026,2026-10-24,GA,3,3,"regsolve (only a nm savings bump: ESCALATE, not made); pass-2 index order analysed (inline / nm-first re-measured 4); permute seed 2505 (260 new candidates)"
 SimPlayoffRound2,StaticEck2026,2026-10-24,GA,3,3,regsolve (nothing); unsigned wins on draft / inline / home-only (3 / 22 / 7); regdump vs SimPlayoffRound3 tie order; permute seed 2506 (321 candidates, no gain)
 SimPlayoffRound1,StaticEck2026,2026-10-24,GA,9,9,regsolve (nothing); slotdump of the s / rdfh homes; Round2 and five other declaration orders (9-19); permute seed 2506 (321 candidates, no gain)
