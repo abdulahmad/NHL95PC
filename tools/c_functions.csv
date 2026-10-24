@@ -129,7 +129,7 @@ SportsDesk,1935D,4567,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/Spor
 ClearPanelPenalties,1CBD8,101,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/ClearPanelPenalties.c,matched,matched: found by tools/permute.py (the two -1 stores as one chained assignment).,
 InitGameSummary,1BEFD,434,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/InitGameSummary.c,matched,,
 LoadGameTeams,1BBCC,817,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/LoadGameTeams.c,matched,,
-LoadTeamRoster,1C3F6,1041,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,nonmatching,"926 vs 1041. Frame is sub esp,0F4h (cookie 134h); the team index is eax at esp+11Ch. team*186 is add esi,esi where the original shifts the *744 byte offset with shl eax,3. Do not retry explicit shift statements for that index.",register 20/28
+LoadTeamRoster,1C3F6,1041,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,nonmatching,"926 vs 1041. Frame is sub esp,0F4h (cookie 134h); the team index is eax at esp+11Ch. team*186 is add esi,esi where the original shifts the *744 byte offset with shl eax,3. Do not retry explicit shift statements for that index.",size 15/24
 MakeGSummaryPath,1C807,75,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/MakeGSummaryPath.c,matched,,
 OpenPlayerDBs,1C26C,394,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/OpenPlayerDBs.c,matched,,
 ReadPlayerRecs,1C0AF,445,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/ReadPlayerRecs.c,matched,,
@@ -281,7 +281,7 @@ ApplyShapePalette,34789,46,027_33FFD_calendar,src/c/027_33FFD_calendar/ApplyShap
 CalNextMonth,34691,109,027_33FFD_calendar,src/c/027_33FFD_calendar/CalNextMonth.c,matched,,
 CalPrevMonth,346FE,109,027_33FFD_calendar,src/c/027_33FFD_calendar/CalPrevMonth.c,matched,,
 CalReturn,3476B,30,027_33FFD_calendar,src/c/027_33FFD_calendar/CalReturn.c,matched,,
-CalendarScreen,34821,6040,027_33FFD_calendar,src/c/027_33FFD_calendar/CalendarScreen.c,nonmatching,"first pass (Ghidra): 6,036 of 6,040 bytes, 505 differing (parameter homing: the EXE pushes dir, keeps ext in edi)",register 134/257
+CalendarScreen,34821,6040,027_33FFD_calendar,src/c/027_33FFD_calendar/CalendarScreen.c,nonmatching,"first pass (Ghidra): 6,036 of 6,040 bytes, 505 differing (parameter homing: the EXE pushes dir, keeps ext in edi)",register 114/233
 DrawCalendarDay,33FFD,1684,027_33FFD_calendar,src/c/027_33FFD_calendar/DrawCalendarDay.c,nonmatching,"draft: 1675 vs 1684, every statement in place; register picks (Home / Away position, the day divisor, the game day index) and one add order. See docs/UNSURE.md.",register 9/18
 SetGameSides,347B7,106,027_33FFD_calendar,src/c/027_33FFD_calendar/SetGameSides.c,matched,"draft: g*6 shifted in eax (mov eax,ebx) vs edx. Declaration order unchanged. games += g*6 kept the pointer in edx but widened the byte with movzx edi and push edi (103). Do not retry those.",
 CheckLeagueDiskSync,35FB9,590,028_35FB9_import_export,src/c/028_35FB9_import_export/CheckLeagueDiskSync.c,matched,"draft: 598 vs 590. team*30 reloads the stack slot. dir is in ebp and the error in edi (original edi and ebp), so the league id is copied to edx and the team byte is read into al. Do not retry declaration order, a separate file pointer, or dropping volatile on the team index.",
@@ -290,7 +290,7 @@ DrawTeamGridName,37C53,279,028_35FB9_import_export,src/c/028_35FB9_import_export
 HighlightGridCell,37EA6,276,028_35FB9_import_export,src/c/028_35FB9_import_export/HighlightGridCell.c,matched,register / stack slots of the 8 frame corner temporaries differ; logic matches,
 MakeTeamDbFmt,36207,102,028_35FB9_import_export,src/c/028_35FB9_import_export/MakeTeamDbFmt.c,matched,,
 PlayLeagueGame,36B93,4095,028_35FB9_import_export,src/c/028_35FB9_import_export/PlayLeagueGame.c,nonmatching,"first pass (Ghidra): 4,095 of 4,095 bytes, 28 differing (an extra mov edx, eax after FileOpenRW; the opponent pick register)",register 22/29
-PostGameToTeamDb,3626D,2342,028_35FB9_import_export,src/c/028_35FB9_import_export/PostGameToTeamDb.c,nonmatching,"draft (own file): 2421 vs 2342, 291 lines (one more spill slot, the result in edx). See docs/UNSURE.md.",register 57/127
+PostGameToTeamDb,3626D,2342,028_35FB9_import_export,src/c/028_35FB9_import_export/PostGameToTeamDb.c,nonmatching,"draft (own file): 2421 vs 2342, 291 lines (one more spill slot, the result in edx). See docs/UNSURE.md.",register 55/119
 RestoreGridCellBg,37E5B,75,028_35FB9_import_export,src/c/028_35FB9_import_export/RestoreGridCellBg.c,matched,,
 SaveGridCellBg,37D6A,241,028_35FB9_import_export,src/c/028_35FB9_import_export/SaveGridCellBg.c,matched,,
 TeamGridHitTest,37B92,193,028_35FB9_import_export,src/c/028_35FB9_import_export/TeamGridHitTest.c,matched,team declared last (found by tools/permute.py),
@@ -300,7 +300,7 @@ AskMasterPassword,3A49E,249,029_380E9_league_setup,src/c/029_380E9_league_setup/
 EncryptPassword,3A597,101,029_380E9_league_setup,src/c/029_380E9_league_setup/AskTeamPassword.c,matched,,
 BuildStandingsGrid,384B8,1645,029_380E9_league_setup,src/c/029_380E9_league_setup/BuildStandingsGrid.c,nonmatching,,register 39/41
 ChooseLeagueController,380E9,669,029_380E9_league_setup,src/c/029_380E9_league_setup/ChooseLeagueController.c,matched,"draft: 669 vs 669. The body matches. jctime loads list into ecx and names into esi; the original uses edi and ebp. Parm [eax][edx][ecx][ebx] and copying x before y places those homes. The verify buffer is declared first so the password slots stay put. Do not retry an inner block for y, a local team pointer, or an aux body for the frees.",
-LeagueTeamSelect,38B4F,5888,029_380E9_league_setup,src/c/029_380E9_league_setup/LeagueTeamSelect.c,nonmatching,"first pass (Ghidra): 5,882 of 5,888 bytes, 339 differing",size 34/55
+LeagueTeamSelect,38B4F,5888,029_380E9_league_setup,src/c/029_380E9_league_setup/LeagueTeamSelect.c,nonmatching,"first pass (Ghidra): 5,882 of 5,888 bytes, 339 differing",size 31/52
 MergeGoalieRecDelta,3A826,388,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeGoalieRecDelta.c,matched,,
 MergeSeasonRecDelta,3A71C,266,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeSeasonRecDelta.c,matched,,
 MergeTeamRecDelta,3A5FC,288,029_380E9_league_setup,src/c/029_380E9_league_setup/MergeTeamRecDelta.c,matched,,

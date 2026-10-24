@@ -10,14 +10,11 @@ Segments 001-037. Work every draft in these files; do not take a file from the o
 
 | C file | Function | Score | Cause |
 |---|---|---:|---|
-| src/c/022_2D346_game_setup/UpdateOtherScores.c | GameStatsScreen | 11 | register 4/5 |
-| src/c/023_2FDD1_misc_dialogs/EditTextField.c | EditTextField | 36 | register 31/35 |
-| src/c/013_1BBCC_key_team_db/LoadTeamRoster.c | LoadTeamRoster | 51 | register 20/28 |
-| src/c/029_380E9_league_setup/LeagueTeamSelect.c | LeagueTeamSelect | 53 | size 34/55 |
-| src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c | TradeScreenLoop | 88 | register 38/51 |
-| src/c/028_35FB9_import_export/PostGameToTeamDb.c | PostGameToTeamDb | 129 | register 57/127 |
+| src/c/013_1BBCC_key_team_db/LoadTeamRoster.c | LoadTeamRoster | 49 | size 15/24 |
+| src/c/029_380E9_league_setup/LeagueTeamSelect.c | LeagueTeamSelect | 50 | size 31/52 |
+| src/c/028_35FB9_import_export/PostGameToTeamDb.c | PostGameToTeamDb | 122 | register 55/119 |
 | src/c/010_18D7F_frontend_desk/SportsDesk.c | SportsDesk | 192 | register 107/194 |
-| src/c/027_33FFD_calendar/CalendarScreen.c | CalendarScreen | 258 | register 134/257 |
+| src/c/027_33FFD_calendar/CalendarScreen.c | CalendarScreen | 232 | register 114/233 |
 | src/c/035_45282_options_settings/SimulateGame.c | SimulateGame | 624 | register 358/621 |
 
 ## Offered to Mhopkinsinc
@@ -434,6 +431,15 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) (block layout of the shared return)
 - SeriesLength 10->10 (2026-10-24, StaticEck2026, GA) structured draft (no goto): switch with ternary lengths, case 6/7 before 4/5 so Watcom cross-jumps the 3/5/7 tails as in the EXE; 162 case-order / return-placement variants (return after case 1, returns in every case: epilogue lands after case 1 but the constants fold); goto form with the return after case 1 (10); cflags sweep; permute.py (321, best 10)
 
+### `src/c/022_2D346_game_setup/UpdateOtherScores.c`
+
+- GameStatsScreen 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
+- GameStatsScreen 20->20 (2026-10-24, Mhopkinsinc, GA) (its match also needs the move into `UpdateOtherScores.c`)
+- GameStatsScreen 20->20 (2026-10-24, Mhopkinsinc, GA) (its slots already match; register picks, and its match belongs in `UpdateOtherScores.c` for the shared exit)
+- GameStatsScreen 20->11 (2026-10-24, Mhopkinsinc, GA) 
+- GameStatsScreen 11->11 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (m holds the name offset); regsolve (m->EDX wanted, only a savings bump); name pointer without m: int sum product first 40, int sum whole 40, product first + 1A 40, hmteamrec + 1A + product 33, &hmteamrec[...] 39, int sum then name += 1A 34; nothing kept
+- GameStatsScreen 11->11 (2026-10-24, Mhopkinsinc, GA) clean name (no m reuse) 40; + percentage ternary 42 (name block exact, m splits into savings-30 conflicts, minutes ebx/ecx swapped); + m = TS28; m = m*100/TS26 52; + m = TS28*100; m /= TS26 28; + m = TS28; m *= 100; m /= TS26 21; else m = 0 54; y first 53; label loop without x 42 (17 with m name); seven name pointer spellings 33-40
+
 ### `src/c/030_3A9AA_database_merge/ExportTeamToFloppy.c`
 
 - ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -521,6 +527,15 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
 - TreeSeriesWinner 35->35 (2026-10-24, StaticEck2026, GA) cflags -d2 (44, +36, same slots), -od -d1 (35), -od -d2 (44), -d1 (98); LoadPlayoffModeTree as compile context (35); nothing kept
 
+### `src/c/023_2FDD1_misc_dialogs/EditTextField.c`
+
+- EditTextField 110->106 (2026-10-24, Mhopkinsinc, GA) : the End-key scan as a top-tested `editpos = 0; while (buf[editpos]) editpos++;` (the EXE's loop shape)
+- EditTextField 106->71 (2026-10-24, Mhopkinsinc, GA) : the poll placed after the cursor handlers and the Backspace / typing blocks after the blink path
+- EditTextField 71->62 (2026-10-24, Mhopkinsinc, GA) (two commits; now 4 bytes long, was +29): each key arm ends in its own `DrawEditCursor(flags); goto poll;` (Watcom merges the tails into the EXE's shared ones, and the direct jumps raise the insert flag's savings 41 -
+- EditTextField 62->36 (2026-10-24, Mhopkinsinc, GA) (21 gotos -> 4)
+- EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) ESCALATE: (unsigned short)timeout in the blink-path timeout test 25 (size +2; cmp word vs EXE cmp dword, an extra temporary fixes the SetTickDeadline / key-chain registers); End loop increment as += 1 / = +1 / ++x / braces / != 0 (36), for loop (39); timeout test spellings nested if / != 0 (36), == 1 (40), > 0 (37); editcuron = c == 0 / ternary (36); casts on TickDeadlinePassed / !c / c / End loop / editpos = 0 / DrawEditCursor flags / 4F00 and 4700 compares (36-43); regsolve no prediction; one permute run (577 candidates)
+- EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) unsigned char c 38; short c 38; editcuron = c ^ 1 40; 1 - c 41; (key = PollKey()) == 0 36; no key = 0 store 24 (9 bytes short, key chain then exact, shift moves to the cursor arms); sub_B3D64() == 0 36; separate editcurw / editcuron stores 36 / 38; x = 0 first 38; editpos = x = 0 39; Enter / Esc breaks as one || 36
+
 ### `src/c/027_33FFD_calendar/DrawCalendarDay.c`
 
 - DrawCalendarDay 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -584,6 +599,12 @@ RunMenu is in this file (score 82, register 38/82) and comes with it.
 - LeadersScreen 84->84 (2026-10-24, Mhopkinsinc, GA) unchanged
 - LeadersScreen 84->84 (2026-10-24, Mhopkinsinc, GA) (the kfh / pfh slots)
 
+### `src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c`
+
+- TradeScreenLoop 183->51 (2026-10-24, Mhopkinsinc, GA) (the EXE size): every stack slot as in the EXE
+- TradeScreenLoop 88->88 (2026-10-24, Mhopkinsinc, GA) jersey byte as traderoster 2-D TrEntry .c[1] 87 (same code, displacement only), row pointer TrEntry 87, flat TrEntry on tradejersey 274, 2-D TrEntry on tradejersey 88, 2-D bytes 88, cursor * 11 * 2 first 90, (tradejersey + cursor term)[side term] 90, pointer sum cursor first 90, block-local int index cursor first 141 / side first 139 / two steps 320 / cursor only 232; nothing kept
+- TradeScreenLoop 88->88 (2026-10-24, Mhopkinsinc, GA) slots[click] for *p in the click<2 arm / click<4 arm / both, in the flag 0xFF test and the cursor compare: 88 each (same code); jersey index (tradeside * 28 + cursor) * 0x16 274 (+38); regsolve: c1/c2 tie (200/200), r +100 ahead of p only by a savings bump
+
 ### `src/c/017_21CDE_player_stats/TeamStatsScreen.c`
 
 - TeamStatsScreen 132->123 (2026-10-24, Mhopkinsinc, GA) (dead-local reuse; every scalar stack slot now as in the EXE)
@@ -597,6 +618,7 @@ RunMenu is in this file (score 82, register 38/82) and comes with it.
 - GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
 - GameSummaryScreen 287->372 (2026-10-24, abdulahmad, LA) no source change. GA is 287, size +38.
 - GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) roster index side * 0x444 + f.k * 0x27 (287, same code); linetab[side][0x28 + f.i] / (linetab[side] + f.i)[0x28], each also with the roster order (287, same code); f.i as plain local 327 (+4 frame, extras loop unchanged); page init chained goals / chained ints / both / five-way chain (287, same code); period as plain local (pad kept) 298 (+9, frame +4); all 8 byte members as plain locals 311 (+9); declsearch --conflicts nothing to move on the base, 3 of 7 byte slots on the all-bytes version; one permute run 449 candidates best 253 (+40) via cast:334 unsigned_char + chain + two loop rewrites (rejected); regsolve: only the tried d10 / d100 swap, savings bumps and temporary drops
+- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) whole frame struct as plain locals in struct order (first/last as parameters, pads dropped) 561 (size -32, frame 7ECh vs 7F0h); declsearch --conflicts on that best 23 of 44 slots 544 (permute.py 637), frame gap stays; the EXE frame is GA's size-ascending order, so plain locals look original but one scalar the EXE spills is registered in C
 
 ## Escalations — Abdul (lane T)
 
