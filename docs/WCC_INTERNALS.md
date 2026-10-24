@@ -96,6 +96,32 @@ So to move a variable to another register: change the savings order (how often a
 used), not the declaration order, unless regdump shows the two tied. Example: in the DrawListItem draft, x (11) and
 w (9) choose before y (6) and take ESI / EDI; the EXE has y in EDI and w in EBP, so in the original y outranked w.
 
+### The tie order a draft needs (tools/wccre/tieorder.py)
+
+`python3 tools/wccre/tieorder.py src/c/<seg>/<File>.c FUNC [--minutes 15]` answers, for a register draft, whether
+the remaining differences are a tie order and which one. At +569B4 AssignConflicts has the sorted list in eax (it
+stores it to +7E794 and walks each node's next pointer at +0); the tool relinks FUNC's nodes there, changing only
+the order inside runs of equal savings, so every forced order is one the unstable sort can produce.
+
+1. **Single edits, replayed.** For every named variable at another place in the pre-sort list (a declaration
+   moved), every conflict dropped and one conflict added at every place, it replays the Shell sort
+   (slotdump.shell_sort, checked against the compiler by regsolve.py), forces each distinct resulting order and
+   scores it like permute.py.
+2. **Real declaration moves.** The variables whose modelled moves score best are moved for real
+   (declsearch.parse / rewrite) to every place in their block and compiled in one parallel batch: a move also
+   changes the stack slots of the names in memory, which forcing the register order cannot show.
+3. **Swaps.** From the best order, a hill climb over swaps inside the runs.
+
+It prints the baseline and forced scores (0: a tie order gives the EXE bytes, the rest of the source is right), the
+runs it changed (sorted and needed order, with each conflict's register before and after), the single edits that
+give the needed order, and the instructions that change. A forced order is a target: reach it with a natural edit,
+never with a tie-breaker copy (AGENTS.md). Results are cached in build/tieorder/ by the source's sha1.
+
+Validation (2026-10-24): CreateFreeAgent (5): swapping t237 / t239 in its savings-30 run gives the EXE bytes (the
+goalie copy loop's index and byte); TeamGridHitTest before its match (12): forced orders reach 4 (the rest are two
+stack slots), and the real-compile stage finds `team` declared last (the committed fix) and five equivalent moves,
+each 0; GetHot before its match: no tie runs (its fix, dropping a temporary, changes savings), reported as such.
+
 ## Stack slots (tools/wccre/slotdump.py)
 
 After register allocation the names that need memory (locals left in memory, spilled temporaries, arrays and
