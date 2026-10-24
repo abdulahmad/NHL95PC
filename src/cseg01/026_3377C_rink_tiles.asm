@@ -11,6 +11,10 @@ extern GetInputEvent, FadePalStep, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, s
 extern sub_92DE0, sub_92EE4, FatalError, sub_B30B4, GetTicks, SetDrawBitmap, sub_B4F8C, unk_DC890
 extern scrolly, scrollx, bgscrollx
 global LoadRink, BlitTileMap, SetRinkScroll, WaitClickTimeout, LoadCrestsPalette
+; C: src/c/026_3377C_rink_tiles/LoadRink.c
+%ifdef CBUILD
+%include "c/026_3377C_rink_tiles/LoadRink.inc"
+%else
 LoadRink:
 push dword 48h	; 3377C
 call __CHK	; 33781
@@ -352,6 +356,7 @@ pop edx	; 33C04
 pop ecx	; 33C05
 pop ebx	; 33C06
 ret	; 33C07
+%endif ; C
 BlitTileMap:
 push dword 2Ch	; 33C08
 call __CHK	; 33C0D

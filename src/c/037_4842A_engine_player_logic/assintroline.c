@@ -1,7 +1,7 @@
 /* Engine player logic: intro line skate. */
-/* DRAFT (10.0 GA): 685 vs 687, 15 score differing. The squared distance uses the wait loop's i;
-   z = --p->temp1 keeps the countdown in edi as in the EXE. Left: copies before the distance squares,
-   a redundant countdown-result copy and later turn temporaries; see the agent notes. */
+/* DRAFT (10.0 GA): 683 vs 687, 5 score differing. The countdown updates temp1 directly and the turn
+   is stored straight to facedir. Left: the EXE copies dx to ecx and dy to eax before squaring, then
+   adds eax,ecx; this draft squares in edx/eax and adds eax,edx. */
 #define assintroline assintroline_decl
 #include "nhl95.h"
 #undef assintroline
@@ -78,17 +78,14 @@ void assintroline(Player *p)
             if (v < 0x10) {
                 HIWORD(p->Xpos) = p->temp3;
                 HIWORD(p->Ypos) = p->temp4;
-                z = --p->temp1;
-                if (z >= 0) return;
-                p->temp1 = z + 8;
+                --p->temp1;
+                if (p->temp1 >= 0) return;
+                p->temp1 += 8;
                 SetSPA(p, 0xA5B);
                 regd2.l = (short)vtoa((short)-HIWORD(p->Xpos), (short)-HIWORD(p->Ypos));
                 if (regd2.w != p->facedir) {
                     regd2.w = (regd2.w - p->facedir) & 7;
-                    v = regd2.w < 5 ? 1 : -1;
-                    v += *(int *)((char *)&p->facedir - 2) >> 16;
-                    v &= 7;
-                    p->facedir = v;
+                    p->facedir = ((regd2.w < 5 ? 1 : -1) + (*(int *)((char *)&p->facedir - 2) >> 16)) & 7;
                     return;
                 }
                 p->Yvel = 0;

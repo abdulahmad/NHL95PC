@@ -2367,3 +2367,55 @@ DrawListItem,,"the colour as a ternary (39), case 2 as `x += (w - fputchar(text)
 DrawListItem,,"y drops to 6), y sum spelled `y = y + ...` (30), `2 + ...` (29), `... + y` (29), through c (13, still tied 9 / 9), through fontheight (31), `idx -= top` / `idx += top` (26)",26,ga
 DrawListItem,,w kept but case 1 as `w -= fputchar(text); c = w - 4; x += c` (11: c 11 EDX,,ga
 DrawListItem,,"the lea goes to edx). An inner-width local `iw = w - 4` used everywhere after (5 by first_pick) puts y 9 in EDI above iw 6 in EBP, but drops the EXE's prologue `mov ebp, ecx` (w lives in ebp from entry, then `lea ebp, [ecx-4]`) and case 1 becomes `sub ebp, 4 / add esi, ebp`: not kept",,ga
+ExportTeamToFloppy,,"(2026-10-23, lane 1b batch 1): fhid/fh2/fh3/fhp each as a plain local",,ga
+ExportTeamToFloppy,,all four plain,,ga
+ExportTeamToFloppy,,all frame integer scalars except saved args plain,,ga
+ExportTeamToFloppy,,done alone plain,,ga
+ExportTeamToFloppy,,"zero alone plain (8 fresh variants, best remained baseline 11",,ga
+ExportTeamToFloppy,,plain zero 14). No source retained,,ga
+CreateNewLeague,,"(2026-10-23, lane 1b batch 1): final unsigned-byte local at outer/block scope (LA retry justified by the isolated byte-zero constant pick under GA)",LA retry justified by the isolated byte-zero constant pick under GA,ga
+CreateNewLeague,,"human flag read through a byte local outer/loop scoped, including reuse for final clear",,ga
+CreateNewLeague,,initial reset-loop zero through a byte local before/after j,,ga
+CreateNewLeague,,with/without reuse for final clear (9 shapes,,ga
+CreateNewLeague,,"zero forms remain 12, cached flag 13). No source retained",,ga
+HighlightGridCell,,"(2026-10-23, lane 1b batch 1): y3 from y0+3Fh, x3 from x0+4Ch, both, and y0 from y3-3Fh (int/short x0)",int/short x0,ga
+HighlightGridCell,,second call x0 through dead x/y or team,,ga
+HighlightGridCell,,"int x0 with row product or column product through each of x0/y0/x3/y3/y2 and four combined product-reuse pairs (25 shapes, no gain). Deriving y3 from y0 is optimized back to the original savings rather than raising y0 over f. No source retained",,ga
+SkateToSpot,,"(2026-10-23, lane 1b batch 1): zero assigned before the stop chain through each of d/axp/dx/dy/spa2/adx/ady/t/ayp/ary/evade",,ga
+SkateToSpot,,real function-pointer evade parameter with local header hiding (chain and split),,ga
+SkateToSpot,,final vtoa x/y or result through dead evade (chain and split),,ga
+SkateToSpot,,spa2 derived from each chosen axp plus its animation offset (chain and split). Best remained 5,,ga
+SkateToSpot,,no source retained,,ga
+assintroline,,"(2026-10-23, lane 1b batch 1): X/Y speed scratch through all 8 non-v/v dx/dy/v pairs",,ga
+assintroline,,countdown sum through v/i/dx/dy,,ga
+assintroline,,turn through i/dx/dy,,ga
+assintroline,,"field decrement/test/add (separate or in condition), z with field +=8, z assigned in condition, z+=8",,ga
+assintroline,,"direct turn expression in both operand orders or through dead i, alone and paired with three countdown forms",,ga
+assintroline,,"on the improved body fresh square locals x2/y2 (outer/block, products/copy-self/copy-original, x/y and y/x orders), repeated final squared-distance expression with/without named first sum and both term orders (52 shapes). Retained only natural field updates in EXE statement order. Fresh first_pick and both make modes verified",,ga
+ExecuteTrade,,"(2026-10-23, lane 1b batch 1): key team bytes through dead pal",,ga
+ExecuteTrade,,return via pal,,ga
+ExecuteTrade,,key byte copies through new unsigned-char/short/int team outer/block locals,,ga
+ExecuteTrade,,each key-read/store slot through a block byte,,ga
+ExecuteTrade,,"literal zero in either/both palette calls plus known-zero err for LoadGameTeams/first GameLineEditor (all 7 combinations, pal outer/inner scoped)","all 7 combinations, pal outer/inner scoped",ga
+ExecuteTrade,,"pal as unsigned-char*/void* (outer/inner), err/ka/kb long",,ga
+ExecuteTrade,,home/visitor bytes through pal or scoped byte/short,,ga
+ExecuteTrade,,"with kb in the frame, first store slot through unsigned-char/short/int, condition/index/all uses, outer/block scopes, or pal (57 shapes). Best candidate 10 differing size +4, or 14 size +0 with new opcode/register errors, so no clear improvement retained. No return narrowing tried",,ga
+ExecuteTrade,type:pal:unsigned,pal as unsigned,tried (docs/UNSURE.md),ga
+RandomizeSchedule,,"(2026-10-23, lane 1b batch 1): nesting both appends or only the reads inside prior success branches, each with/without second count+1 through j",,ga
+RandomizeSchedule,,early continues after each failing call,,ga
+RandomizeSchedule,,with/without second j,,ga
+RandomizeSchedule,,"count increment as j=k then j++ for h or v (8 shapes, no gain). Source order of list store then count increment preserved throughout. No source retained",,ga
+SeedPlayoffRound3,,"(2026-10-23, lane 1b batch 1): game value through dead err (full",,ga
+SeedPlayoffRound3,,multiply then add,,ga
+SeedPlayoffRound3,,triple then double/add,,ga
+SeedPlayoffRound3,,base then *=6/add,,ga
+SeedPlayoffRound3,,explicit shift-sub product steps),,ga
+SeedPlayoffRound3,,"inline shift-sub doubled/shifted product, three sums doubled, times8-minus2, doubled then tripled",,ga
+SeedPlayoffRound3,,"date increment split from the byte load (two forms), winner chains split (13 shapes",,ga
+SeedPlayoffRound3,,no improvement). No source retained,,ga
+BlitTileMap,,"(2026-10-23, lane 1b batch 1): tile offset through dead x0",,ga
+BlitTileMap,,source tile index through dead x0,,ga
+BlitTileMap,,row product through dead r,,ga
+BlitTileMap,,typed three-short tilemap header and shape advanced through header+1,,ga
+BlitTileMap,,each with baseline and doubled-row expression,,ga
+BlitTileMap,,"row copied into x0/tile/r/c before the flag branch then sum using the copy minus original row<<1 (12 fresh shapes, best 8 differing). No source retained",,ga

@@ -40,9 +40,6 @@ typedef struct {
 #define SHAPE(bm) (*(Shape **)((bm) + 0x2C))
 #define ARENA(o, f) (*(short *)(rinkarenas + (o) + (f)))
 
-/* DRAFT: 1164 vs 1164 under 10.0 GA. Declared smap, size, t, tiles, n, the tiles and map pointers take the EXE's
-   slots (+10h / +14h). Left: the shape clears after `t = rinktilebm` / `t = rinkbm` reuse esi for the shape
-   pointer and the chained shorts (EXE edx); see docs/UNSURE.md. */
 /* LoadRink (3377C, PC only): set up the rink bitmaps for arena rink. Free rinkbm / rinktilebm unless they are
    37840h-byte blocks, and create rinktilebm (180h x 250h) if needed (currink -1). For a new rink draw the RINK
    art into rinktilebm (74 x 48 tiles), load the arena's .TIL tiles (a multiple of 64 bytes; fatal otherwise or
@@ -54,10 +51,10 @@ void LoadRink(int rink)
 {
     char path[0x10];
     int smap;
-    short size;
     int t;  /* one scratch variable: the RINK bank, rink * 12, the .TIL size, the bitmaps, the scroll (esi) */
-    int tiles;
+    short size;
     short n;
+    int tiles;
 
     if (rinkbm && sub_8DBC0(rinkbm) != 0x37840) {
         FreeMemBlock(rinkbm);
@@ -97,15 +94,17 @@ void LoadRink(int rink)
     SHAPE(rinktilebm)->w = rinkwtiles << 3;
     SHAPE(rinktilebm)->h = rinkhtiles << 3;
     t = rinktilebm;
-    SHAPE(t)->type = 0;
-    SHAPE(t)->rest = 0;
+    n = 0;
+    SHAPE(t)->type = n;
+    SHAPE(t)->rest = n;
     SHAPE(rinktilebm)->x0 = SHAPE(rinktilebm)->y0 = SHAPE(rinktilebm)->x1 = SHAPE(rinktilebm)->y1 = 0;
     if (!(t = rinkbm)) rinkbm = sub_B4F8C(0x180, 0x250, t);
     SHAPE(rinkbm)->w = rinkwtiles << 3;
     SHAPE(rinkbm)->h = rinkhtiles << 3;
     t = rinkbm;
-    SHAPE(t)->type = 0;
-    SHAPE(t)->rest = 0;
+    n = 0;
+    SHAPE(t)->type = n;
+    SHAPE(t)->rest = n;
     SHAPE(rinkbm)->x0 = SHAPE(rinkbm)->y0 = SHAPE(rinkbm)->x1 = SHAPE(rinkbm)->y1 = 0;
     t = rinkhtiles * 4 - 0x3C;
     bgscrolly = t / 8;
