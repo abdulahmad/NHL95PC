@@ -3331,6 +3331,42 @@ SkaterStatsCard,,"(2026-10-24, lane 1a batch 10): fresh block lookup index int/s
 SkaterStatsCard,,"fresh block lookup address as unsigned-char pointer or int with direct product (9,+3 each). No source retained",,ga
 DrawListItem,,"(2026-10-24, lane 1a batch 10), on A: rectangle y postincrement (31), width -=4 inside rectangle arguments (29), y increment in each switch arm/default (33), final PrintMenuText duplicated in arms/default (48), case-1 fputchar result through dead c/fontheight/top/idx before w-=result (34 each). No source retained",,ga
 checkcheck,type:dir:int,dir as int,46 +3 under GA; not kept,ga
+POInitSchedule,swapdecl:t:,"declaration orders of i, n, g, e, t",tried (docs/UNSURE.md),la
+POInitSchedule,,"day in both loops (10), n for the day (46 / 49)",46 / 49,ga
+POInitSchedule,,a second pointer h for the second conference (37),37,ga
+POInitSchedule,,"the seed copy as pointer arithmetic, `*(int *)(po + i * 4)`, `i[(int *)po]`, unsigned index (all 6)",all 6,ga
+CreateFreeAgent,,"the goalie copy index spelled `*(idx + sp)`, `idx[sp]`, `k[pal]` (all canonicalized: 5)",all canonicalized: 5,ga
+CreateFreeAgent,,"a new source pointer instead of reusing the dead pal (5, same code: a cleaner shape), sp at function scope (5), byte_D0FE0 indexed in place (9, +2)","9, +2",ga
+QueueSpeechClip,,"no kind local, `s->kind` tested in place (7: the kind test matches",,ga
+QueueSpeechClip,,the first queue store gets an index copy in eax),,ga
+QueueSpeechClip,,the last store through the SPEECHQ macro (with kind 7,,ga
+QueueSpeechClip,,"without 20, both stores 23)",,ga
+QueueSpeechClip,,the load / place calls inverted (14),14,ga
+QueueSpeechClip,,"permute.py tempadd / temps / inplace / lvinline (27 new candidates, best the base)","27 new candidates, best the base",ga
+checkob,,"a block-scoped `int lim` assigned in the loop and tested on the left (5: hoisted, so a loop-local copy is hoisted too), `register int extra` with the limit on the left (5)",5,ga
+checkob,,a separate signed char counter for the far-side loop (5),5,ga
+checkob,,"the comma `(y = Y, lim = extra + 0x4E, lim < y)` (20)",20,ga
+checkob,,"permute.py tempadd / temps / inplace / lvinline 4 min (251 candidates, best the base)","251 candidates, best the base",ga
+SelectHilight,,"FreeMemBlock prototyped with a void * or char * argument in this file and called without the int casts (7, same)","7, same",ga
+SelectHilight,,"permute.py tempadd / temps / inplace / lvinline 4 min (247 candidates, best the base)","247 candidates, best the base",ga
+SelectMatchingPlayers,,"`(char *)falist + i * 27 + 8`, `(char *)(falist + i * 27 + 8)`, `i * 27 + (char *)falist + 8` (all 11, +1), k = falist + i * 27 then `k + 8` / `&k[8]` (30, +3), SplitPlayerName prototyped with an unsigned char * name and `&falist[i * 27 + 8]` (7) or `falist + i * 27 + 8` (11)",11,ga
+PickAwardWinners,,the award flags cleared by a loop instead of `__STOSB` (the SimPlayoffRound3 fix): `for (pts = 0; pts < 0xB; pts++) f.found[pts] = 0;`,,ga
+PickAwardWinners,,"the same through v, mine, pct (Watcom emits the same __STOSB call",,ga
+PickAwardWinners,,the t80 / t81 tie unchanged,,ga
+PickAwardWinners,,scored 11 with the shared tail) and through f.i (59),59,ga
+EasnGoalieStatsScreen,,"goalie first (goalie 12, skater 8 +16)","goalie 12, skater 8 +16",ga
+EasnGoalieStatsScreen,,"the selection as ternaries in either or both functions (skater 10-12, goalie 22-23)","skater 10-12, goalie 22-23",ga
+EasnGoalieStatsScreen,,"the goalie's if / else swapped (31), EasnTeamStatsScreen before them (same) and EasnStandingsScreen after them (goalie 66 at +0: still jumps back). Nothing kept",,ga
+EasnGoalieStatsScreen,,a match needs the skater page in this file and the EXE's forward merge,,ga
+SimPlayoffRound2,,`unsigned wins[26]` on the draft (3),3,ga
+SimPlayoffRound2,,"with the inline compare (22) and with home only (`home > g[i * 6 + 5]`, 7)","`home > g[i * 6 + 5]`, 7",ga
+SimPlayoffRound2,,"regdump of the inline compare against SimPlayoffRound3 (matched): in Round3 an EDX temporary (t76) sorts ahead of the len / 2 + 1 temporary t23, in Round2 the slot sum t49 and ECX temporaries come first, so the inline shape needs another 300-savings tie order. permute.py seed 2506 (7 min)",7 min,ga
+SimPlayoffRound1,,"Round2's declaration order (wins, home, away, s, i, len, g: 11), home / away before s (11), wins last (19), s / i / len / g orders with the bytes last (9, 9), i / len / s (16). permute.py seed 2506 (7 min)",7 min,ga
+DrawListItem,,on A: the y line split `y += (idx - top) * (fontheight + 2); y += 2;` (12,,ga
+DrawListItem,,"y rises to 11, ties x 11 and takes ESI, w drops to EBP",,ga
+DrawListItem,,but the EXE adds the 2 to the product first),,ga
+DrawListItem,,"the split with `y = y + ...` or `y = y + 2` (12), `y += 2` first (13)",13,ga
+DrawListItem,,the five other orders of the y / x / w statements (30-32),30-32,ga
 POHandleElimination,,"(2026-10-24, lane 1 batch 12): the branches as `switch (mode) { case 1: ... break; default: ... }` (13) and with an added `case 0:` (19)",19,ga
 POHandleElimination,,the champion fix as `if (pochampion != -1) ; else` (13),13,ga
 wallcoll,,"(2026-10-24, lane 1 batch 12) with lim: lim declared first / middle / last / in the dword_CCC2C block (35 each before re-tuning), all 32 operand orders of the regd2 / regd3 pair (best 12), of the puck pair (best 11) and of the player pair (14 at best), all 24 orders of t, s, v, lim (11)",11,ga
@@ -3418,3 +3454,5 @@ SportsDesk,,"the dropdown's `depth = i + 1` store placed before the menus[depth]
 SportsDesk,,the miss arm's tail (EXE keeps its own sub_91400 call and pushes and joins the no-click path at the sub_91370 call,,ga
 SportsDesk,,"C cross-jumps the whole tail: the 55 missing bytes). Savings (regdump, before): i 2201 ESI, depth 201, m 130, oldmx / oldmy 96, ptr 74, speech 71 memory, src 121 EDX, r 14 ESI. Tried (2026-10-24, lane 1 batch 13): the flip (kept), declsearch orders (kept), inverted ternaries (kept",,ga
 SportsDesk,,"x only 214, y only 212)",,ga
+SimPlayoffRound2,,"regdump of the inline compare against SimPlayoffRound3 (matched): in Round3 an EDX temporary (t76) sorts ahead of the len / 2 + 1 temporary t23, in Round2 the slot sum t49 and ECX temporaries come first, so the inline shape needs another 300-savings tie order. permute.py seed 2506 (321 new candidates, best = the draft)","321 new candidates, best = the draft",ga
+SimPlayoffRound1,,"Round2's declaration order (wins, home, away, s, i, len, g: 11), home / away before s (11), wins last (19), s / i / len / g orders with the bytes last (9, 9), i / len / s (16). permute.py seed 2506 (321 new candidates, best = the draft)","321 new candidates, best = the draft",ga
