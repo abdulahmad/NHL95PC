@@ -9,9 +9,9 @@ int WriteTeamRec(int fh, void *rec, int n);
 void __STOSD(void *p, int v, int n);
 #pragma aux __STOSD "__STOSD" parm [eax] [edx] [ecx];
 
-/* DRAFT (10.0 GA, 15 differing, 2 bytes short): the division / slot bytes are unsigned char (slot declared in the
-   team loop) and h is declared after v. Left: the list count k takes ebp / esi where the EXE uses edx, and the
-   second append is `lea ebx, [edx+1]` where C increments in place. See docs/UNSURE.md. */
+/* DRAFT (10.0 GA, 14 differing, same size): the division / slot bytes are unsigned char (slot declared in the
+   team loop), h is declared after v, and the second append's count + 1 goes through the dead j (`lea ebx,
+   [edx+1]` as in the EXE). Left: the list count k takes ebp / esi where the EXE uses edx. See docs/UNSURE.md. */
 
 /* RandomizeSchedule (42295, PC only): with shuffle set, say so (msg_GenSchedule) and shuffle each division's teams
    (divisionteams, 7 per division, 6 in the first two; twelve random swaps), then rewrite the league's first 444h
@@ -103,7 +103,8 @@ int RandomizeSchedule(char *dir, int shuffle)
                 j = i * 6 + 2;
                 k = s.count[v];
                 ((int *)(s.rec + 0x11C))[k] = j;
-                s.count[v] = k + 1;
+                j = k + 1;
+                s.count[v] = j;
                 err = WriteTeamRec(s.tfh, s.rec, v);
             }
         }
