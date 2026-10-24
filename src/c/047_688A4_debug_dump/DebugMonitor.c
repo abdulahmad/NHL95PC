@@ -102,14 +102,15 @@ void DebugMonitor(void)
     }
 }
 
-/* DRAFT (10.0 GA, 21 differing): the EXE spills j * 39 to a stack word (sub esp, 4) in the home skater, home
-   goalie and away skater loops and adds it to the roster pointer loaded into eax; C loads the roster pointer into
-   edi instead. See docs/UNSURE.md. */
+/* DRAFT (10.0 GA, 7 differing, 1203 vs 1211): the goalie lines print three stat words (str_dumpGlLine has six
+   fields), which brings the EXE's stack word for j * 39 (sub esp, 4) and its spill in the home skater loop; left:
+   the EXE spills the product in the home goalie and away skater loops too (C loads the roster pointer into edi
+   there). See docs/UNSURE.md. */
 /* DumpStatsLog (68E7B, PC only; ends in DebugMonitor_pop): append the game state to the text file name (mode "at";
    failing: say so with DebugPrintf). Write the frame counters, both team structures (E8h bytes as dwords), the 17
    sort objects (48h bytes as words) and one line of ratings per object, then for each team its totals (shots,
    score, shot / goal counts, power plays, penalties, attack time, passes), one line per skater (jersey and eight
-   stat words) and per goalie (jersey, two stat words). name: the file. No result. */
+   stat words) and per goalie (jersey, three stat words). name: the file. No result. */
 void DumpStatsLog(char *name)
 {
     void *f;
@@ -169,7 +170,7 @@ void DumpStatsLog(char *name)
     j = 0;
     for (; j < 3; st += 3, j++) {
         r = tm->tmroster + (j + 0x19) * 39;
-        fprintf(f, (char *)str_dumpGlLine, j, r[5], st[0], st[1], r[0]);
+        fprintf(f, (char *)str_dumpGlLine, j, r[5], st[0], st[1], st[2], r[0]);
     }
     tm = &awtmstruct;
     fprintf(f, (char *)str_dumpTeamHdrA);
@@ -188,7 +189,7 @@ void DumpStatsLog(char *name)
     j = 0;
     for (; j < 3; st += 3, j++) {
         r = tm->tmroster + (j + 0x19) * 39;
-        fprintf(f, (char *)str_dumpGlLine, j, r[5], st[0], st[1], r[0]);
+        fprintf(f, (char *)str_dumpGlLine, j, r[5], st[0], st[1], st[2], r[0]);
     }
     fclose(f);
 }
