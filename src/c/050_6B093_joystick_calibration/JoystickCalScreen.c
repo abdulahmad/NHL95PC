@@ -13,12 +13,12 @@ int sub_B39D0(void);
 #pragma aux copy17 = "movsd" "movsd" "movsd" "movsd" "movsb" parm [esi] [edi] modify [edi esi];
 void copy17(void *src, void *dst);
 
-/* DRAFT: 706 vs 713, 17 differing (GA). pal and state are plain arrays and bank / shape / cur
+/* DRAFT: 713 vs 713, 11 differing (GA). pal and state are plain arrays and bank / shape / cur
  a struct whose address is never taken, so the bank stays in esi for the two side calls
  (merged by Watcom) and the puck shape in esi for copy17. The puck shape reuses the shape
- slot; the button exit does not clear the mask. Left: the puck size factors load into eax
- then [esi+4] (EXE edx then [eax+4]), and the loop caches the shape in esi with prev in edi
- (EXE prev in esi, the shape reloaded for each sub_91370); see docs/UNSURE.md.
+ slot; the button exit does not clear the mask. The two draws index with s.cur and prev is
+ set after them (the EXE reloads s.cur into esi after sub_91370). Left: the puck size factors
+ load into eax then [esi+4] (EXE edx then [eax+4]); see docs/UNSURE.md.
  JoystickCalScreen: calibrate one stick. mask is the joyenablemask bit, shift selects that
  stick in the pad word, and side picks the right-hand art when it is not 0. The title is the
  caller's string; this screen does not print it. A button already held aborts and clears the
@@ -71,9 +71,9 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
             if (s.cur == prev) continue;
             sub_B4C61();
             if (prev != -1) sub_910E0((int)back, joycalx[prev], joycaly[prev]);
+            sub_91400((int)back, joycalx[s.cur], joycaly[s.cur]);
+            sub_91370(s.shape, joycalx[s.cur], joycaly[s.cur]);
             prev = s.cur;
-            sub_91400((int)back, joycalx[prev], joycaly[prev]);
-            sub_91370(s.shape, joycalx[prev], joycaly[prev]);
             sub_91964((char *)unk_C27F5, 0, 0x14);
         }
         FreeMemBlock((int)back);

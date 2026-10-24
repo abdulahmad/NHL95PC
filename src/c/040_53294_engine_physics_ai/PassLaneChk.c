@@ -1,9 +1,9 @@
 /* Engine physics AI: is the pass lane to a team-mate open; NetCollide and puckstick (matched) end in its pops. */
 /* DRAFT (PassLaneChk, 10.0 GA, 2 differing, same size): the direction is kept in oy (dead by then) and the x gap
- in dy, as the original; the wrap goes through y (`y = oy + 1`, the EXE's lea eax,[esi+1]). p's y passes through
- an int py first: that copy only breaks the savings tie of the two ABS temporaries of ABS(y) <= ABS(oy) (edi /
- ebp as in the EXE; any one extra copy does it), so it is a lead, not evidence. Left: the y - 4Eh lea comes after
- the sum's sub 4Eh (EXE before it); see docs/UNSURE.md. */
+ in dy, as the original; the wrap goes through y (`y = oy + 1`, the EXE's lea eax,[esi+1]). Tie-breaker (ruled 2026-10-24, docs/ESCALATIONS.md):
+ p's y through an int py first (`py = p->Ypos >> 16; y = py;`) breaks the savings tie of the two ABS
+ temporaries of ABS(y) <= ABS(oy) (edi / ebp as in the EXE; any one extra copy does it, 17 -> 2); not kept. Also
+ left: the y - 4Eh lea comes after the sum's sub 4Eh (EXE before it); see docs/UNSURE.md. */
 #define PassLaneChk PassLaneChk_decl
 #define checkpuckcoll checkpuckcoll_decl
 #define imul32 imul32_decl
@@ -148,14 +148,12 @@ int PassLaneChk(Player *p, Player *o)
     int y;
     int oy;
     int dy;
-    int py;
 
     side = (p->pflags & pfgoal) != 0;
     if (p->position == 0) return 0;
     if (LaneOpen()) return 0;
     oy = o->Ypos >> 16;
-    py = p->Ypos >> 16;
-    y = py;
+    y = p->Ypos >> 16;
     if (side) limit = 0x4E;
     else limit = -0x4E;
     if ((y > limit) ^ side) return 0;

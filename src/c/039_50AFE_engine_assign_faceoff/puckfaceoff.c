@@ -1,6 +1,9 @@
 /* Engine assignment faceoff: the faceoff setup (puckfaceoff) and the drop (puckfaceoff2). */
 /* DRAFT under 10.0 GA: 29 differing instructions. The timer/offset frame and cached side match
-   the EXE's frame; register choices and TakePlayerFromBox_ret6 exit remain.
+   the EXE's frame; register choices and TakePlayerFromBox_ret6 exit remain. The line-change setup is an
+   if (gameopts.linechanges) block and the timer loop skips a team with continue (the same code as the
+   earlier jumps); the penalty-shot branch still jumps to the end with one goto (written out, the
+   assreplace tail is not cross-jumped back: 73 differing).
    DRAFT (puckfaceoff2, 10.0 GA): 92 differing, 2,831 of 2,834 bytes. The second controller test as a ternary
    keeps the bool in eax (`sete al / and eax, 0FFh`), but its `inc eax` comes before the cont2team load
    (EXE after it); the -1 chain copies and the zero registers still differ (docs/UNSURE.md). */
@@ -99,25 +102,25 @@ void puckfaceoff(Player *p)
         }
         ((unsigned char *)p)[0x27] = 0xFF;
         ((unsigned char *)p)[0x29] = 0xFF;
-        if (!gameopts.linechanges) goto lines;
-        hmtmflags[0] &= 0xFD;
-        awtmflags &= 0xFD;
-        for (o = SortCords, k = 0; k < 0xC; k++, o++) o->pflags2 &= 0xF7;
-        if ((cont1team | cont2team) && word_CBC44) {
-            sflags |= 0x40;
-            SprSortVert();
-            word_CBC44 = 0;
-        }
-        if ((regd0.w = c1playernum[0]) >= 0) StartFaceoffLineChange(p, &SortCords[regd0.w]);
-        if ((regd0.w = c2playernum[0]) >= 0 && cont2team != cont1team) StartFaceoffLineChange(p, &SortCords[regd0.w]);
-        regd0.l = 2;
-        if (gameopts.linechanges && regd0.w != cont1team && regd0.w != cont2team) {
-            CompLine(&hmtmstruct, &awtmstruct);
-            setpersonel(&awtmstruct);
-            PenShotStart(1);
+        if (gameopts.linechanges) {
+            hmtmflags[0] &= 0xFD;
+            awtmflags &= 0xFD;
+            for (o = SortCords, k = 0; k < 0xC; k++, o++) o->pflags2 &= 0xF7;
+            if ((cont1team | cont2team) && word_CBC44) {
+                sflags |= 0x40;
+                SprSortVert();
+                word_CBC44 = 0;
+            }
+            if ((regd0.w = c1playernum[0]) >= 0) StartFaceoffLineChange(p, &SortCords[regd0.w]);
+            if ((regd0.w = c2playernum[0]) >= 0 && cont2team != cont1team) StartFaceoffLineChange(p, &SortCords[regd0.w]);
+            regd0.l = 2;
+            if (gameopts.linechanges && regd0.w != cont1team && regd0.w != cont2team) {
+                CompLine(&hmtmstruct, &awtmstruct);
+                setpersonel(&awtmstruct);
+                PenShotStart(1);
+            }
         }
     }
-lines:
     k = 0;
     do {
         int side;
@@ -132,9 +135,9 @@ lines:
                 lcboxon[side] = lcblink[side] = 0;
             } else {
                 --*state.tp[side];
-                if (*state.tp[side] >= 0) goto next;
+                if (*state.tp[side] >= 0) continue;
                 o = &SortCords[regd1.w];
-                if (!(o->pflags2 & 8)) goto next;
+                if (!(o->pflags2 & 8)) continue;
                 regd2.w = 0;
                 lcfound(o);
                 lcboxon[side] = lcblink[side] = 0;
@@ -143,8 +146,6 @@ lines:
             PenShotStart(side);
             ForceStartLineup(side);
         }
-next:
-        ;
     } while (++k != 2);
     if (p->temp1 >= 0 || p->temp2 >= 0) return;
     regd0.w = 1;
