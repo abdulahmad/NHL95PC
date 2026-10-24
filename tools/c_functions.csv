@@ -502,7 +502,7 @@ Findhittype,579FF,63,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_
 MarkTwoLinePlayers,55C6F,185,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/MarkTwoLinePlayers.c,matched,,
 puckstick,57483,1003,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,matched,,
 checkpuckcoll,5428A,1570,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft: 1570 vs 1570 in PassLaneChk.c, every statement in place. The EXE keeps reach / half size / box size in edi and speed / |dy| / box limit in esi; the draft swaps them (the variable with more uses gets esi). See docs/UNSURE.md.",register 60/60
-PassLaneChk,54C09,346,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft: 344 vs 346. The side copy is mov esi,edi (original mov edx,edi), so the team-mate y stays in edx. The other gap is inc esi versus lea eax,[esi+1]. Do not retry: declaring limit first produced movzx edi; declaring oy before side did not move the copy to edx.",size 2/2
+PassLaneChk,54C09,346,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft: 344 vs 346. The side copy is mov esi,edi (original mov edx,edi), so the team-mate y stays in edx. The other gap is inc esi versus lea eax,[esi+1]. Do not retry: declaring limit first produced movzx edi; declaring oy before side did not move the copy to edx.",register 7/9
 NetCollide,5601D,702,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft (PassLaneChk.c): 714 vs 700, first pass. See UNSURE.",register 17/35
 PuckCheckColl,548AC,228,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PuckCheckColl.c,matched,,
 ScatterPass,54D63,145,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ScatterPass.c,matched,,
@@ -731,7 +731,7 @@ EventToPointer,6B4BB,297,050_6B093_joystick_calibration,src/c/050_6B093_joystick
 GetInputEvent,6B391,70,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/GetInputEvent.c,matched,,
 InputInstall,6B410,108,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/InputInstall.c,matched,registers: C loads inputinstalled into edx and reuses the 0 for the ptrstep/dword_CDA24 stores; asm compares memory and zeroes ebx,
 InputRemove,6B47C,63,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/InputRemove.c,matched,,
-JoystickCalScreen,6B093,713,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/JoystickCalScreen.c,nonmatching,"draft: 711 vs 713 (best of 5). The abort test falls through and the frame matches. The side-art call is still two calls (bank reloaded into ebp and edi), so it does not merge, and sub_8E83C is stored without mov esi, eax before add esp, 8. A bank register plus duplicated side calls merged that call but skipped the puck store at [esp+344h] and pushed 0 after the width and height reads (698). Do not retry an abort-first if, a ternary that puts the side string in eax, or a bank register used for every sub_B30B4.",register 14/17
+JoystickCalScreen,6B093,713,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/JoystickCalScreen.c,nonmatching,"draft: 711 vs 713 (best of 5). The abort test falls through and the frame matches. The side-art call is still two calls (bank reloaded into ebp and edi), so it does not merge, and sub_8E83C is stored without mov esi, eax before add esp, 8. A bank register plus duplicated side calls merged that call but skipped the puck store at [esp+344h] and pushed 0 after the width and height reads (698). Do not retry an abort-first if, a ternary that puts the side string in eax, or a bank register used for every sub_B30B4.",register 4/4
 LoadLeagueDbsMem,6C19B,350,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/LoadLeagueDbsMem.c,matched,,
 MenuCentralRegistry,6BE95,168,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/MenuCentralRegistry.c,matched,,
 MenuHitTest,6BA4D,158,050_6B093_joystick_calibration,src/c/050_6B093_joystick_calibration/MenuHitTest.c,matched,"draft: same size. The item pointer is in edx and the origin pointer in eax (original item in eax, origin in edx). Adding the item on the left loaded x2 before x1. Do not retry that add order.",
@@ -757,7 +757,7 @@ CheckTeamLines,6ED8F,501,052_6D2F8_create_player,src/c/052_6D2F8_create_player/C
 ComparePlayerEntry,6D78B,98,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ComparePlayerEntry.c,matched,,
 CopyRoster1Rec,6DE4C,50,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CopyRoster1Rec.c,matched,,
 CountSelected,6DA88,59,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CountSelected.c,matched,original keeps the list pointer in edx and the count in eax; this draft swaps them. 10-min cap,
-CreateFreeAgent,706E2,1963,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CreateFreeAgent.c,nonmatching,,size 9/9
+CreateFreeAgent,706E2,1963,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CreateFreeAgent.c,nonmatching,,size 9/13
 CreatePlayerNop,6FA72,11,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CreatePlayerNop.c,matched,,
 DeleteTempDatabases,7125C,215,052_6D2F8_create_player,src/c/052_6D2F8_create_player/DeleteTempDatabases.c,matched,,
 DrawCreatePlayer,7025B,587,052_6D2F8_create_player,src/c/052_6D2F8_create_player/DrawCreatePlayer.c,matched,,
@@ -923,7 +923,7 @@ LoadSettingsShapes,8034B,434,059_8034B_settings_lockerroom,src/c/059_8034B_setti
 LockerHitTest,81520,79,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerHitTest.c,matched,,
 LockerRoomScreen,80830,628,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c,matched,,
 DrawLockerRoom,80AA4,2684,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c,matched,,
-LockerRoomLoop,81C4E,2060,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c,nonmatching,,tail 0/0
+LockerRoomLoop,81C4E,2060,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c,nonmatching,,register 2/2
 MenuSoundSettings,82579,163,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/MenuSoundSettings.c,matched,the EXE does not save edx (only ebx/ecx/esi/edi/ebp) though cdecl calls clobber it; C pushes edx too - some callee pragma differs,
 RedrawSoundCardOpts,82805,281,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/RedrawSoundCardOpts.c,matched,,
 SetModeMenuLabels,805C4,190,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/SetModeMenuLabels.c,matched,,
@@ -1003,7 +1003,7 @@ SeriesWinner,87760,137,064_86696_season_playoffs,src/c/064_86696_season_playoffs
 POSimSeriesTeamWins,87D5A,285,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POCreateSchedule.c,matched,,
 POSimSeries,87E77,270,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POCreateSchedule.c,matched,home declared last (found by tools/permute.py),
 POHiliteSlot,89B69,105,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POCreateSchedule.c,matched,y2 as a ?: (found by tools/permute.py),
-POInitSchedule,875A3,445,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POCreateSchedule.c,nonmatching,,tail 0/0
+POInitSchedule,875A3,445,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POCreateSchedule.c,nonmatching,,register 3/3
 POHandleElimination,88096,1423,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POHandleElimination.c,nonmatching,,size 6/7
 POPickConfTeams,870B6,361,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POPickConfTeams.c,matched,"361 vs 361. count stays in esi and the bitmask in edi (mov esi, ecx / xor edi, edi). The original is mov edi, ecx / xor esi, esi. The division compare then loads pick[1] into edx and pick[0] into eax. The pick swap uses ebx. The final loop hoists slots into ecx and uses edx as the write index. Declaring i before used, a cnt local before or after used, and used=0 before cnt=count did not swap esi and edi. Do not retry those.",
 POPreSimConfFinals,8803B,91,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POPreSimConfFinals.c,matched,,
