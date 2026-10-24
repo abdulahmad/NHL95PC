@@ -6,11 +6,9 @@
 
 void DrawDlgFrame(int x, int y, int w, int h, int edge);
 
-/* DRAFT: 734 vs 735, 12 differing (2 of them two-fixup false positives). teams goes through the local tm, so
- tm[t] and traderemap1[t] fold into scaled addresses (tm in edi, t in ecx, bank on the stack, as in the EXE),
- and the roster rows are written inline (side * 0x268 + i * 22), so the EXE's per-pass imul is recomputed after
- the highlight call. Left: c1 / c2 tie (savings 20 each): c2 takes al and c1 ah, the EXE the other way round
- (`mov ah, [byte_D12DE]` is one byte longer than our `mov al, [moffs]`). See docs/UNSURE.md. */
+/* DrawTradeScreen: draw the trade menu background, team palettes, four jersey buttons and
+   both roster columns, then display the bitmap with a palette fade. The jersey's primary
+   colour is first the team's palette index, then that entry of jerseyremap. */
 void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
                      unsigned char *cols, int *teams)
 {
@@ -53,7 +51,8 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
     for (i = 0; i < 4; i++) {
         t = i >> 1;
         memcpy(unk_D12C8, (unsigned char *)traderemap1[t] + 0x90, 0x30);
-        c1 = jerseyremap[byte_D11BC[tm[t] * 4]];
+        c1 = byte_D11BC[tm[t] * 4];
+        c1 = jerseyremap[c1];
         c2 = byte_D12DE;
         MakeJerseyShape(jerseyremap, cols[i * 22 + 1], c1, c2);
         sub_B4DD4(jerseyremap);

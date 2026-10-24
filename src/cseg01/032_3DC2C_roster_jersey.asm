@@ -1037,6 +1037,10 @@ pop esi	; 3E9CC
 pop ecx	; 3E9CD
 ret	; 3E9CE
 %endif ; C
+; C: src/c/032_3DC2C_roster_jersey/DrawTradeScreen.c
+%ifdef CBUILD
+%include "c/032_3DC2C_roster_jersey/DrawTradeScreen.inc"
+%else
 DrawTradeScreen:
 push dword 60h	; 3E9CF
 call __CHK	; 3E9D4
@@ -1257,6 +1261,7 @@ pop ebp	; 3ECA8
 pop edi	; 3ECA9
 pop esi	; 3ECAA
 ret 0Ch	; 3ECAB
+%endif ; C
 ; C: src/c/032_3DC2C_roster_jersey/TradeHitTest.c
 %ifdef CBUILD
 %include "c/032_3DC2C_roster_jersey/TradeHitTest.inc"
