@@ -656,6 +656,7 @@ EndPenaltyShot,64439,111,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_
 FlushGSumQueue,61B85,58,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/FlushGSumQueue.c,matched,,
 FormatPlayerName,61D48,337,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/FormatPlayerName.c,matched,len declared before room (found by tools/permute.py),
 GameTimeStamp,62CD7,34,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/GameTimeStamp.c,matched,,
+chkprogress_go,63475,206,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/InProgress.c,matched,,
 ProcessPenaltyList,63A37,288,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/InProgress.c,matched,,
 chkprogress PenaltyManager,63BF8,123,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/InProgress.c,matched,,
 ShotLaneOpen,64102,381,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/InProgress.c,matched,,
@@ -781,7 +782,10 @@ RosterPanelClick,6DAC3,507,052_6D2F8_create_player,src/c/052_6D2F8_create_player
 SelectMatchingPlayers,71690,429,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SelectMatchingPlayers.c,nonmatching,,error
 SetRosterTeamMenus,7183D,292,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SetRosterTeamMenus.c,nonmatching,,error
 ShellSortBytes,6D7ED,173,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShellSortBytes.c,matched,,
+LoadRosterList_fa,6D89A,244,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShellSortBytes.c,matched,,
+LoadRosterList_team,6D98E,250,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShellSortBytes.c,matched,,
 LoadRosterList LoadBothRosterLists,6DE7E,136,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShellSortBytes.c,matched,,
+RunEditRosters,6CC20,731,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShellSortBytes.c,context,compile context; matched in src/c/051_6C2F9_database_save/RunEditRosters.c,
 ShowDBError,6ED39,86,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShowDBError.c,matched,,
 SplitPlayerName,6F159,323,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SplitPlayerName.c,matched,"same 323. stop/first/last match at esp+0/+4/+8 as one struct. Name is in edi (original ecx), so the copy count stays in ebx (original edx). Do not retry an aux that forces ecx.",
 SwapSelectedPlayers,71333,861,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,nonmatching,,error
