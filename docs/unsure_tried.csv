@@ -3416,3 +3416,40 @@ OpenSpeechBank,type:nsamples:int,`int nsamples`,tried (docs/UNSURE.md),ga
 DrawListItems,,shapes listed in docs/UNSURE.md (not itemized),,ga
 SimPlayoffRound2,,"regdump of the inline compare against SimPlayoffRound3 (matched): in Round3 an EDX temporary (t76) sorts ahead of the len / 2 + 1 temporary t23, in Round2 the slot sum t49 and ECX temporaries come first, so the inline shape needs another 300-savings tie order. permute.py seed 2506 (321 new candidates, best = the draft)","321 new candidates, best = the draft",ga
 SimPlayoffRound1,,"Round2's declaration order (wins, home, away, s, i, len, g: 11), home / away before s (11), wins last (19), s / i / len / g orders with the bytes last (9, 9), i / len / s (16). permute.py seed 2506 (321 new candidates, best = the draft)","321 new candidates, best = the draft",ga
+FillDressedSlots,,`(short)CanFillLineSlot(...) == 0` (20),20,ga
+FillDressedSlots,,"the lt ternary with a cast per arm (20), lt by default plus an if (23), `++*(short *)dword_E9F16` (20)",20,ga
+FillDressedSlots,,the dressed count before the flag store (22),22,ga
+FillDressedSlots,,the D / forward count test inverted (25),25,ga
+updatereplay,,`replaytick += -2` (22),22,ga
+updatereplay,,a short / int local for ++replaytick (`t = ++replaytick; if (t < 2) ...; replaytick = t - 2;`: 31 / 32,,ga
+updatereplay,,"declared first 29, +3)",,ga
+updatereplay,,"the nibble index `i * 24 + 12` (24, +10), `(2 * i + 1) * 12`, `(i + 1 + i) * 12`, `*(byte_DEE97 + ...)` (22 each)",22 each,ga
+updatereplay,,the high nibble as `i * 24` or `(i + i) * 12` (22),22,ga
+updatereplay,,the high nibble or-ed first (22),22,ga
+PlayMVI,,a one-member struct for the frame (46),46,ga
+PlayMVI,,the frame alone as a plain local (it takes the top slot),,ga
+PlayMVI,,a separate song local first / last / nested (20),20,ga
+PlayMVI,,the GetTicks difference through frame (53),53,ga
+PlayMVI,,"the nframes / n zero as `n = 0; nframes = 0;` (6), `nframes = 0; n = 0;` (11), `n = nframes = 0` (11), `n = 0; nframes = n;` (6)",6,ga
+PlayMVI,,"the header count as `n = ...; nframes = n;` (6) or `nframes = ...; n = nframes;` (7), `delay = 10` after the zeros (8)",8,ga
+PlayMVI,,permute_decls.py 300 orders of the 10 locals (none better),none better,ga
+PlayMVI,,permute.py 321 candidates (best 6),best 6,ga
+ReplaySaveHilight,,"the one-team case as `if (c) { A } else { REST }` instead of the early return (34, same object)","34, same object",ga
+checkgoalp,,"`!(p->SCnum < 12 || p->SCnum == 16)` (28), `(short)(wcradiusy + y)` (28, +4), regd1 stored before regd0 (29)",29,ga
+RemoveFromLines,,"r2 declared first (54), r2 before r (46), block-scoped r / r2 (44), int r / r2 (50), signed char r / r2 (42), both indexes swapped (39, +3)","39, +3",ga
+RemoveFromLines,,regsolve.py (no vote),,ga
+RemoveFromLines,,permute.py 513 candidates (best 34 only with a char cast),best 34 only with a char cast,ga
+RemoveFromLines,scope:r@,r declared in the loop,tried (docs/UNSURE.md),ga
+DrawLockerJersey,,"(time). Lane 2 2_b7 (10.0 GA): unchanged (29). The four nested-table sites are mirror images (EXE: both vis sites and branch 0's last hm site load the inner index into eax, branch 1's last hm site into ebx",,ga
+DrawLockerJersey,,"C the reverse), so it is the tie order of the unnamed inner / outer temporaries. Tried: file-local `extern char *teamcitynames[]` (29), `extern char *off_D2230[]` (29), both (29)",29,ga
+passtoa0,,"against the narrowed k products (the EXE sign-extends vx / vy): `(...) >> 0` (48), `(int)` operand casts (48), `-(sp * sp)` first (53)",53,ga
+NetCollide,,"the second block inverted too (28) or alone (29), if / else returns (27-28), ternary returns (32-42), every `goto keep` as `return p->SPA` (35), gx by if / else (43)",43,ga
+NetCollide,,"gy by if / else scores 20 but drops the EXE's ternary copy `mov edi, eax` (+3E), not kept",,ga
+NetCollide,,"an int result (file-local prototype) 25 here and 24 with gy by if / else: it gives the EXE's widened SPA read, but the result type is an ESCALATE question (FallDown compares ax), not kept",,ga
+NetCollide,,"the ABS terms as `v >= 0 ? v : -v` (25, arms in the other order), ABS() (27)",27,ga
+NetCollide,,"the compare flipped (26), `!(a < b)` (32), scaled_y before ux (39)",39,ga
+NetCollide,,permute.py 321 candidates (best 20 = gy by if / else),best 20 = gy by if / else,ga
+NetCollide,rettype:int,an int result,tried (docs/UNSURE.md),ga
+checkcheck,,`p->checking < randomd0(rel)` (34),34,ga
+checkcheck,,"the penalty as `randomd0(2) != 0 ? 0xC : 0xB` (31, +3, other code)","31, +3, other code",ga
+checkcheck,,"an `(int)` on the bool (32, no-op cast)","32, no-op cast",ga
