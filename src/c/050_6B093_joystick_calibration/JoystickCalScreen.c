@@ -10,12 +10,12 @@
 int __cdecl sub_B340B(int buttons);
 int sub_B39D0(void);
 
-#pragma aux copy17 = "movsd" "movsd" "movsd" "movsd" "movsb" parm [esi] [edi] modify [edi esi];
-void copy17(void *src, void *dst);
+typedef struct { char b[17]; } Hdr17;                  /* the shape header the puck background copies */
 
 /* DRAFT: 713 vs 713, 11 differing (GA). pal and state are plain arrays and bank / shape / cur
  a struct whose address is never taken, so the bank stays in esi for the two side calls
- (merged by Watcom) and the puck shape in esi for copy17. The puck shape reuses the shape
+ (merged by Watcom) and the puck shape in esi for the 17-byte header copy (a struct copy: movsd x4,
+ movsb). The puck shape reuses the shape
  slot; the button exit does not clear the mask. The two draws index with s.cur and prev is
  set after them (the EXE reloads s.cur into esi after sub_91370). Left: the puck size factors
  load into eax then [esi+4] (EXE edx then [eax+4]); see docs/UNSURE.md.
@@ -57,7 +57,7 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
         memcpy(pal, (unsigned char *)sub_B30B4(s.bank, (char *)str_Pal24) + 0x10, 0x300);
         s.shape = sub_B30B4(s.bank, (char *)str_Puck);
         back = (unsigned char *)sub_8CCA8((char *)str_PuckBack, ((short *)s.shape)[2] * ((short *)s.shape)[3] + 0x11, 0);
-        copy17((void *)s.shape, back);
+        *(Hdr17 *)back = *(Hdr17 *)s.shape;
         FadePalStep(0, pal, 0x10);
         prev = -1;
         for (;;) {

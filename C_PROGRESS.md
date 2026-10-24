@@ -106,6 +106,7 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `01
 | DrawAwardsSummary | 13188 | 408 | nonmatching | [PickAwardWinners.c](src/c/002_1167B_gamesave_io/PickAwardWinners.c) |  |
 | AwardsCeremony | 13320 | 1351 | matched | [PickAwardWinners.c](src/c/002_1167B_gamesave_io/PickAwardWinners.c) |  |
 | IndexPhotoBank | 13867 | 107 | matched | [IndexPhotoBank.c](src/c/004_13320_asset_loading/IndexPhotoBank.c) |  |
+| IndexPhotoBank | 13867 | 107 | context | [ResetGameVars.c](src/c/004_13320_asset_loading/ResetGameVars.c) | compile context; matched in src/c/004_13320_asset_loading/IndexPhotoBank.c |
 | LoadPhotoBankF | 138D2 | 141 | matched | [LoadPhotoBankF.c](src/c/004_13320_asset_loading/LoadPhotoBankF.c) |  |
 | LoadPlayerPhotos | 1395F | 208 | matched | [LoadPhotoBankF.c](src/c/004_13320_asset_loading/LoadPhotoBankF.c) |  |
 | LoadTransparentRinkEndOverlay | 13A2F | 98 | matched | [LoadTransparentRinkEndOverlay.c](src/c/004_13320_asset_loading/LoadTransparentRinkEndOverlay.c) |  |
@@ -407,6 +408,7 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `01
 | ReadTeamNames | 3DAB9 | 136 | matched | [ReadTeamNames.c](src/c/030_3A9AA_database_merge/ReadTeamNames.c) |  |
 | LoadNhlCfg | 3DB41 | 231 | matched | [LoadNhlCfg.c](src/c/031_3DB41_config_cfg/LoadNhlCfg.c) |  |
 | BuildTradeRoster | 3DC2C | 473 | matched | [BuildTradeRoster.c](src/c/032_3DC2C_roster_jersey/BuildTradeRoster.c) | draft: 473 vs 473. The fill loop keeps the index in ebx and stores it through al; the original keeps the index in eax and reloads the byte into dl. Do not retry: a separate unsigned char is the same ebx/al pair. Storing the index directly reloads eax (477 bytes). An aux that reloads dl parks list in edi; passing list in esi pushes the incoming args and shifts the frame. |
+| TradeShowStats | 3DE05 | 592 | context | [FixJerseyConflict.c](src/c/032_3DC2C_roster_jersey/FixJerseyConflict.c) | compile context; matched in src/c/032_3DC2C_roster_jersey/TradeShowStats.c |
 | TradeShowStats | 3DE05 | 592 | matched | [TradeShowStats.c](src/c/032_3DC2C_roster_jersey/TradeShowStats.c) |  |
 | FixJerseyConflict | 3E055 | 827 | nonmatching | [FixJerseyConflict.c](src/c/032_3DC2C_roster_jersey/FixJerseyConflict.c) |  |
 | ExecuteTrade | 3E390 | 1059 | nonmatching | [ExecuteTrade.c](src/c/032_3DC2C_roster_jersey/ExecuteTrade.c) |  |
