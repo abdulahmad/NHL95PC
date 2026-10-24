@@ -2191,6 +2191,10 @@ pop ebp	; 75040
 pop edi	; 75041
 pop esi	; 75042
 ret 0Ch	; 75043
+; C: src/c/054_737AA_line_editor_rosters/DrawLineJerseys.c
+%ifdef CBUILD
+%include "c/054_737AA_line_editor_rosters/DrawLineJerseys.inc"
+%else
 DrawLineJerseys:
 push dword 58h	; 75046
 call __CHK	; 7504B
@@ -2345,6 +2349,7 @@ pop edi	; 751F8
 pop esi	; 751F9
 pop ecx	; 751FA
 ret	; 751FB
+%endif ; C
 ; C: src/c/054_737AA_line_editor_rosters/CheckRosterComplete.c
 %ifdef CBUILD
 %include "c/054_737AA_line_editor_rosters/CheckRosterComplete.inc"
