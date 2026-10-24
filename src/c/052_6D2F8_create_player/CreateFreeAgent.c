@@ -1,12 +1,11 @@
 /* Create player: making a new free agent. */
-/* DRAFT (10.0 GA): 1963 vs 1963; see docs/UNSURE.md. The cluster size written sectors * bytes loads sectors
-   first as the EXE; sp declared in the block that copies the ratings; the jersey number in k (the later loop
-   counter: no dead copy); the goalie ratings copied through sp (the attribute record) and pal (dead by then: the
-   source table), which gives the EXE's esi / ecx and leaves pal2 in edi. Left: the goalie loop's index and byte
-   temporaries in ebx / dl (EXE edx / bl): one register-cycle slot short before it. Tie-breaker (ruled 2026-10-24, docs/ESCALATIONS.md):
-   the career size through an extra copy (`carsize = careerdb_size + 0x2C; s.sizes[1] = carsize;`) gives the EXE
-   bytes, as does any extra int in the sizes block; not kept, it only reorders the tie. Look for a real shape
-   difference that changes the temporary count. */
+/* DRAFT (10.0 GA): 1963 vs 1963 (5 differing); see docs/UNSURE.md. The cluster size written sectors * bytes
+   loads sectors first as the EXE; sp declared in the block that copies the ratings; the jersey number in k (the
+   later loop counter: no dead copy); the goalie ratings copied through sp (the attribute record) and gp (the
+   source table). Left: the goalie loop's index and byte temporaries in ebx / dl (EXE edx / bl), a tie in the
+   unstable sort that one more early conflict reorders. Tie-breakers (ESCALATE, not kept): the career size through
+   an extra copy (`carsize = careerdb_size + 0x2C; s.sizes[1] = carsize;`); the goalie source through the dead pal
+   with a counter j of its own for one of the two copy loops (EXE bytes; with gp instead of pal it is 5 again). */
 #define CreateFreeAgent CreateFreeAgent_decl
 #define RandomizeNewRatings RandomizeNewRatings_decl
 #define MessageBox MessageBox_decl
@@ -129,6 +128,7 @@ void CreateFreeAgent(int a, int *mx, int *my)
     sub_8FFB0(0, 0x100, pal2);
     if (CreatePlayerLoop(s.key) >= 1) {
         unsigned char *sp;
+        unsigned char *gp;
 
         FadePalStep(1, pal, 0x10);
         sub_B392C(0);
@@ -166,8 +166,8 @@ void CreateFreeAgent(int a, int *mx, int *my)
                 err = FileWriteAt(s.fhsea, s.gseason, *(int *)(s.key + 0x2C), 0x36);
                 if (!err) {
                     sp = s.gatt;
-                    pal = &byte_D0FE0;
-                    for (k = 0; k < 0xB; k++) sp[((signed char *)off_D0A04)[k + 3]] = pal[k];
+                    gp = &byte_D0FE0;
+                    for (k = 0; k < 0xB; k++) sp[((signed char *)off_D0A04)[k + 3]] = gp[k];
                     err = FileWriteAt(s.fhcar, s.gcareer, *(int *)(s.key + 0x28), 0x2C);
                 }
                 if (!err) err = FileWriteAt(s.fhatt, s.gatt, *(int *)(s.key + 0x24), 0x10);
