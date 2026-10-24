@@ -2692,3 +2692,64 @@ DrawListItem,,rectangle call in each colour branch (52),52,ga
 DrawListItem,,"c for fontheight and fontheight for colour (29). A regdump confirmed three-way savings9 tie. One permute run on A (385 compiled, 89 s, best10 from narrowed sel and operand swap",,ga
 DrawListItem,,"worse than retained draft), full chains/hashes in permlog_1a_b5.csv. Baseline restored",,ga
 DrawListItem,,no source commit,,ga
+SimPlayoffRound3,,"(2026-10-24, lane 1b batch 6): without k, first win count through int local or pointer, second win count through local, winner team's first/second byte through unsigned-char/int local, first/second score byte through unsigned-char/int local, blank constant through byte local, current-game pointer through unsigned-char*/void* local",,ga
+SimPlayoffRound3,,"with k, inner-loop scope, slot sum through int/unsigned local in simulator branch, k reused as winner index or first/second score, k reused as blank constant, wins increment as +=1. Best retained baseline",,ga
+SimPlayoffRound3,,no improvement,,ga
+CopyHumanTeamDBs,,"(2026-10-24, lane 1b batch 6): t cache through first team test20 (kept), whole floppy branch29, through pre-FileClose32, those three with t scoped at loop top20/29/32, plain loop t scoped around outer loop30. Initial scoped-cache scratch variants accidentally removed the struct t member and failed compilation",,ga
+CopyHumanTeamDBs,,corrected versions scored as above. Fresh DOSBox confirms20/exact size,,ga
+CopyHumanTeamDBs,,both builds MATCH,,ga
+SimPlayoffRound2,,"(2026-10-24, lane 1b batch 6): length result through dead sched (separate/chained22)",separate/chained22,ga
+SimPlayoffRound2,,slot through sched20,,ga
+SimPlayoffRound2,,"first/second score byte through unsigned-char18/19 or int14/14 (second int reverses reads, rejected)",,ga
+SimPlayoffRound2,,named winner int/byte22,,ga
+SimPlayoffRound2,,first wins pointer23,,ga
+SimPlayoffRound2,,game pointer22,,ga
+SimPlayoffRound2,,both scores byte11 (kept)/int14,,ga
+SimPlayoffRound2,,"first/second team byte int24/27. On two-score-byte base, first/second initial team through byte23/21 or int11/12",,ga
+SimPlayoffRound2,,"threshold through fresh need23/dead sched16. Fresh DOSBox confirms11,267 bytes",,ga
+SimPlayoffRound2,,both builds MATCH,,ga
+TradeHitTest,,"(2026-10-24, lane 1b batch 6): e reused for i/2, flag initialization through e, upper bound inline e+3A or through free row, both x table reads in place",,ga
+TradeHitTest,,"each with baseline divisor or in-place divisor (21/26/21/21/27 vs37/27/31/31/27). No improvement, no source change",,ga
+assbench,,"(2026-10-24, lane 1b batch 6), always with BOTH no-op FF masks removed: first swap through known-equal pnum37,+7",,ga
+assbench,,"predicate assigned to dead short d28,+9",,ga
+assbench,,"block-local int goalie24,+5 / byte goalie49,+6",,ga
+assbench,,"held/clock stop conditions combined40,+7 (new reason: mask-free temporary graph)",,ga
+assbench,,"seating tail as positive nested bounds/facing tests36,+7. All worse, retain original unmarked draft (including preexisting masks",,ga
+assbench,,replace before marking). Emulator lost its /tmp directory once,,ga
+assbench,,reran only unfinished shapes with TMPDIR=~/tmp/u/np/1b_tmp successfully,,ga
+assbench,,tools unchanged,,ga
+SimPlayoffRound1,,"(2026-10-24, lane 1b batch 6): both scores unsigned-char19/int21",,ga
+SimPlayoffRound1,,"first/second score unsigned-char24/25 or int21/21 (second-only reads away first, rejected)",,ga
+SimPlayoffRound1,,"length through dead sched28, slot through sched37, blank byte local28",,ga
+SimPlayoffRound1,,dead sched reused as series counter on original23/two-byte36,,ga
+SimPlayoffRound1,,"byte pair first19, last17, after i20 (either home/away order)",,ga
+SimPlayoffRound1,,all24 orders of s/i/len/g on byte-pair-last base (best16 with i before s),best16 with i before s,ga
+SimPlayoffRound1,,pointer-typed sched with file-local declaration on original28/improved16 (not kept). Fresh DOSBox confirms16,,ga
+SimPlayoffRound1,,both builds MATCH,,ga
+assgoalie,,"(2026-10-24, lane 1b batch 6): q distance assigned to fresh short/int at function top49/75 or loop scope25/51",,ga
+assgoalie,,dead x/a/ay35/59/63,,ga
+assgoalie,,nested eligible-player arm with short pd25,,ga
+assgoalie,,carrier if split after XOR25 or repeated carrier test25,,ga
+assgoalie,,new int depth42/short depth21 (kept),,ga
+assgoalie,,far-side abs Y split through a107/ay117. Fresh DOSBox confirms21,,ga
+assgoalie,,both builds MATCH,,ga
+SeriesLength,,"(2026-10-24, lane 1b batch 6): count loop as for with byte-test break (10), while(n<7 && byte!=FF) (14,+2 bytes), infinite loop with byte break then ++n>=7 break (10), do loop byte exit as goto counted (10). Prior switch/block/return sweeps not repeated",,ga
+SeriesLength,,no source change,,ga
+FixJerseyConflict,,"(2026-10-24, lane 1b batch 6): scan i cached in int/unsigned block local",,ga
+FixJerseyConflict,,self/other row pointers assigned in either order inside k!=i guard,,ga
+FixJerseyConflict,,either single row pointer,,ga
+FixJerseyConflict,,read-loop record or index in fresh int/long local,,ga
+FixJerseyConflict,,scan row pointer sums with explicit *34h or *13*4 on either side. All >=20 scored,,ga
+FixJerseyConflict,,two row pointers make first copy match but grow total diff/size. No source change,,ga
+TradePlayers,,"(2026-10-24, lane 1b batch 6): separate nm/nm2 with either reused for dynamic leaguedbnames[4]/[6] MakePath argument, bitmap allocation result, or league-name buffer/strcspn",,ga
+TradePlayers,,second nm2 block scope,,ga
+TradePlayers,,"first/second/both strcat results assigned to their city local and used by suffix strcat. All >=3, no improvement",,ga
+TradePlayers,,"constant bitmap reuse disappears, dynamic DB-name reuse gives4",,ga
+assreffollow,,"(2026-10-24, lane 1b batch 6)","2026-10-24, lane 1b batch 6",ga
+assreffollow,,"with d=*puckc/c=&SortCords[d] and XOR: fresh int/short camera coordinate, camera copy, camera difference, absolute difference",,ga
+assreffollow,,second boolean assigned to fresh int/unsigned-char/short within the short-circuit expression,,ga
+assreffollow,,new-assignment pflags cached in a function local or block local,,ga
+assreffollow,,final temp3/temp4 read through dead d or fresh int/short target,,ga
+assreffollow,,d += -camy,,ga
+assreffollow,,Xpos high word through dead d in each target branch or all three. All >=6 scored,,ga
+assreffollow,,retain baseline,,ga
