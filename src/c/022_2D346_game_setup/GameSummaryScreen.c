@@ -1,6 +1,9 @@
 /* Game setup: the game summary pages (scoring, penalties, extras, other games). */
-/* DRAFT under Watcom 10.0 GA: 320 differing instructions, 7,967 vs 8,023 bytes.
-   Later loop and menu-page register choices remain. */
+/* DRAFT under Watcom 10.0 GA: 287 differing instructions, 8,061 vs 8,023 bytes.
+   Other-game byte reads use their doubled index directly. The player index lives in the frame at 7C4h;
+   a saved goal-record pointer survives the season read, and the dead crest local holds the displayed goal
+   count (C_MATCHING: dead-local reuse). Left: early crest argument picks, extras / period-pointer loop
+   temporaries, and event/page register choices. */
 #define GameSummaryScreen GameSummaryScreen_decl
 #define ReadGSummaryRec ReadGSummaryRec_decl
 #define sub_913D0 sub_913D0_decl
@@ -92,7 +95,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         int pageend;
         int nshown;
         unsigned char *evbuf;
-        unsigned char pad_ev[4];
+        int k;
         unsigned char shots[2];
         unsigned char pad_shots[2];
         unsigned char goals[2];
@@ -117,7 +120,6 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         unsigned char pad_pcount[3];
     } f;
     int homeScore;
-    int k;
     int bank;
     int crest;
     int side;
@@ -127,6 +129,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     int d10;
     int d100;
     unsigned char *ev;
+    unsigned char *goal;
 
     f.first = first;
     f.last = last;
@@ -284,12 +287,11 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     } else if (mode & 0x20) {
         /* The other games: one page each. */
         for (f.i = 0; f.i < 6 && f.key < 2 && !f.err; f.i++) {
-            f.home = othergames[(f.i + f.i)];
+            f.home = othergames[f.i * 2];
             f.vis = othergamesb[f.i * 2];
             f.period = otherperiod[f.i];
-            homeScore = otherscores[f.i * 2];
-            f.score[0] = homeScore;
-            f.score[1] = otherscoresb[(f.i + f.i)];
+            f.score[0] = otherscores[f.i * 2];
+            f.score[1] = otherscoresb[f.i * 2];
             if (!f.err) {
                 MakePath(f.name, (char *)&curleague, (char *)leaguedbnames[4], (char *)str_extDB);
                 f.err = FileOpenRead(f.name, &f.teamfh);
@@ -342,13 +344,13 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
             sub_913D0(*(int *)(hmcrestbmp[side] + 0x2C), 0x3D, 0x50);
             y = byte_D42C3 + 0x78;
             for (f.i = 0; f.i < 8 && !f.err; f.i++) {
-                k = f.linetab[side][f.i + 0x28];
-                if (k < 0x64) {
-                    f.err = ReadKeyRec(f.dbfh, f.keyrec, ((int (*)[0xBA])dword_DBC7C)[side][k]);
+                f.k = f.linetab[side][f.i + 0x28];
+                if (f.k < 0x64) {
+                    f.err = ReadKeyRec(f.dbfh, f.keyrec, ((int (*)[0xBA])dword_DBC7C)[side][f.k]);
                     if (!f.err) {
                         FitPlayerName(f.name, 0, f.keyrec + 0x13, 200);
                         PrintShadowText(0xB4, y, f.name);
-                        if (hmroster[k * 0x27 + side * 0x444] == 1) PrintShadowText(0x226, y, (char *)str_Injured2);
+                        if (hmroster[f.k * 0x27 + side * 0x444] == 1) PrintShadowText(0x226, y, (char *)str_Injured2);
                     }
                     y += byte_D42C3 + 0xE;
                 }
@@ -408,10 +410,11 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
             switch (*ev++) {
             case 1:
                 /* A goal: side, scorer, assists (FFh none), flags (2 SH, 4 PP), f.period, minutes, seconds. */
+                goal = ev;
                 f.pgoals[ev[0]][ev[1]]++;
                 if (ev[5] >= f.first && ev[5] <= f.last && (mode & 1)) {
-                    k = ev[1];
-                    f.err = ReadKeyRec(f.dbfh, f.keyrec, RECKEY(ev[0], k));
+                    f.k = ev[1];
+                    f.err = ReadKeyRec(f.dbfh, f.keyrec, RECKEY(ev[0], f.k));
                     if (!f.err) {
                         sprintf(f.name, (char *)str_S3, f.recs[ev[0]]);
                         PrintShadowText(0x96, y, f.name);
@@ -419,33 +422,33 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
                         f.err = ReadSeasonRec(f.seasonfh[ev[0]], f.srec, *(int *)(f.keyrec + 0x2C));
                     }
                     if (!f.err) {
-                        n = f.pgoals[ev[0]][k]
-                            + (gameopts.fullot ? *(unsigned short *)(f.srec + 2) : *(unsigned short *)(f.srec + 0x14));
-                        sprintf(f.path, (char *)str_D5, n);
+                        crest = f.pgoals[goal[0]][f.k];
+                        crest += gameopts.fullot ? *(unsigned short *)(f.srec + 2) : *(unsigned short *)(f.srec + 0x14);
+                        sprintf(f.path, (char *)str_D5, crest);
                         strcat(f.name, f.path);
-                        d10 = n % 10;
-                        d100 = n % 100;
+                        d10 = crest % 10;
+                        d100 = crest % 100;
                         if (d10 == 1 && d100 != 11) strcat(f.name, (char *)str_St);
                         else if (d10 == 2 && d100 != 12) strcat(f.name, (char *)str_Nd);
                         else if (d10 == 3 && d100 != 13) strcat(f.name, (char *)str_Rd);
                         else strcat(f.name, (char *)str_Th);
-                        if (ev[4] & 2) strcat(f.name, (char *)str_SH);
-                        else if (ev[4] & 4) strcat(f.name, (char *)str_PP);
+                        if (goal[4] & 2) strcat(f.name, (char *)str_SH);
+                        else if (goal[4] & 4) strcat(f.name, (char *)str_PP);
                         PrintShadowText(0xE6, y, f.name);
                         f.scored = 0xFF;
-                        sprintf(f.name, (char *)str_02d02d, ev[6], ev[7]);
+                        sprintf(f.name, (char *)str_02d02d, goal[6], goal[7]);
                         PrintShadowText(0x20D, y, f.name);
                         y += byte_D42C3;
-                        if (ev[2] != 0xFF) {
-                            k = ev[2];
-                            f.err = ReadKeyRec(f.dbfh, f.keyrec, RECKEY(ev[0], k));
+                        if (goal[2] != 0xFF) {
+                            f.k = goal[2];
+                            f.err = ReadKeyRec(f.dbfh, f.keyrec, RECKEY(goal[0], f.k));
                             if (!f.err) {
                                 FitPlayerName(f.path, 0, f.keyrec + 0x13, 200);
                                 sprintf(f.name, (char *)str_S2, f.path);
                             }
-                            if (ev[3] != 0xFF) {
-                                k = ev[3];
-                                f.err = ReadKeyRec(f.dbfh, f.keyrec, RECKEY(ev[0], k));
+                            if (goal[3] != 0xFF) {
+                                f.k = goal[3];
+                                f.err = ReadKeyRec(f.dbfh, f.keyrec, RECKEY(goal[0], f.k));
                                 if (!f.err) {
                                     FitPlayerName(f.path, 0, f.keyrec + 0x13, 200);
                                     strcat(f.name, (char *)str_CommaSp);
@@ -466,8 +469,8 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
                 if ((mode & 2) && ev[4] >= f.first && ev[4] <= f.last) {
                     sprintf(f.name, (char *)str_S3, f.recs[ev[0]]);
                     PrintShadowText(0x91, y, f.name);
-                    k = ev[1];
-                    f.err = ReadKeyRec(f.dbfh, f.keyrec, RECKEY(ev[0], k));
+                    f.k = ev[1];
+                    f.err = ReadKeyRec(f.dbfh, f.keyrec, RECKEY(ev[0], f.k));
                     if (!f.err) {
                         PrintShadowText(0xDC, y, f.keyrec + 0x13);
                         sprintf(f.name, (char *)str_02d02d, ev[5], ev[6]);
