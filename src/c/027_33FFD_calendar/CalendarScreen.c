@@ -26,11 +26,12 @@ int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin,
 int sub_8F98F(char *path);  /* music library: load a song */
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song */
 
-/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 6,018 of 6,040 bytes, 319
+/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 6,016 of 6,040 bytes, 258
    differing under 10.0 GA. Every call is in place and the prologue matches (dir pushed, ext in edi, team in
    ebp). Found under GA: DrawMenuBar(calmenubar, 3, ...) written with the constants (the EXE keeps them in esi
-   / edi from the menus[0] / nitems[0] stores), the dropdown origin as `depth != 1 ? x2 : x1`, the arrays
-   declared bg, nitems, menus, pos, sel (EXE order pos, menus, bg, nitems, sel). Left: the scalar slots; the
+   / edi from the menus[0] / nitems[0] stores), the dropdown origin as `depth != 1 ? x2 : x1`. The arrays and
+   scalars are declared in tools/wccre/declsearch.py's order (with --conflicts: 30 of 34 slots). Left: the
+   slots of day, i, ngames and shown; oldm / oldd in edi / esi (EXE esi / edi; savings 200 / 300); the
    day box clips (the EXE computes k % 7 and k / 7 first, then the four sub_B4BC4 arguments in the order x1,
    y1, x2, y2 into registers before the pushes); the event pointer copied into two registers; the
    DrawMenuItemNorm tail shared from another branch. The (int) compare of day with monthdays reloads day as
@@ -52,42 +53,42 @@ void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play
    the calendar. */
 int CalendarScreen(char *dir, char *ext, int team)
 {
-    unsigned char remap[0x300];  /* 300h bytes in the frame; only the first 100h are the identity remap */
     unsigned char games[113][6];
     short gameidx[113];
-    int crests[0x1A];
-    char path[0x20];
-    int bg[3];
-    int nitems[3];
     MenuItem *menus[3];
-    int pos[3][2];
-    int sel[3];
+    int crests[0x1A];
+    int fh;
+    int bg[3];
+    int btn;
+    int oldmx;
+    unsigned char remap[0x300];  /* 300h bytes in the frame; only the first 100h are the identity remap */
+    int h;
+    int mx;
+    int nitems[3];
+    int my;
+    char path[0x20];
+    short today;
     int w;
     int item;
-    int level;
-    int mx;
-    int my;
+    int pos[3][2];
     int oldmy;
-    int oldmx;
-    int btn;
-    int fh;
-    int h;
+    int level;
     int hdr;
     int logos;
-    int ptr;
+    short ngames;
     int c3;
     int c1;
     int c2;
     int unused;  /* DrawCalendarDay's third argument: never set (the EXE passes the slot at 7A8h) */
-    int font;
+    int ptr;
     short newsel;
+    int font;
     int depth;
-    short ngames;
     short firstgame;
-    short today;
-    short selgame;
-    short day;
+    int sel[3];
     short i;
+    short day;
+    short selgame;
     short shown;
     short r;
     short tmonth;
