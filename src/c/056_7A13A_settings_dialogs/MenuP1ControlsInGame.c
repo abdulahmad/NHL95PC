@@ -46,8 +46,8 @@ typedef struct { unsigned mouse:1, joy1:1, joy2:1, keys:1; } CtlAvail;
  splits it the same way, and once DrawControlsOpts pushes ebp (its add esp, 0Ch / pop ebp tail matches
  ControlsDlgInGame's) Watcom keeps the shared exit there, as in the EXE. CtlSwapScoreFix and CtlSwapTeamFlag sit
  between ControlsDlgInGame's two pieces in the EXE, so they are here too (marked: MenuP1ControlsInGame with
- ControlsDlgInGame's entry, ControlsDlgInGame_side with its body and the shared exit). Still drafts:
- ReassignCtlPlayer and ControlsDlgLoop (register picks). */
+ ControlsDlgInGame's entry, ControlsDlgInGame_side with its body and the shared exit). Still a draft:
+ ReassignCtlPlayer (stack slots). */
 
 typedef struct Hdr17 { char c[17]; } Hdr17;
 #define TEAM(t) ((&hmtmstruct)[t])
@@ -490,18 +490,14 @@ void DrawControlsOpts(int side)
     if (!(setbits[1] & 0x20)) sub_91964((char *)str_TheKeyboard, ctldlgrects[0x14] + 0xF, ctldlgrects[0x15] + 0x14);
 }
 
-/* DRAFT: the EXE's block order (the redraw at draw: right after the no-button restore, the clicks after it, the
-   case order with Cancel before OK, their FreeMemBlock / return merged). Left: register choices only (the restore
-   pushes, setbits in edi for the switch, the OK case's constants and side copies; the EXE reloads side after
-   HomeTeam in the 42h branch, 3 bytes). Not changed by: a local for ox - 4, !side for side == 0, while / for
-   loop forms, functions compiled before it in the file. */
 /* ControlsDlgLoop (7D6B1, PC only): run the controls dialog for controller side with the mouse pointer (its
    background saved in a POINTER18 block). A click on an available box not already chosen (CtlDlgHitTest)
    moves the choice: the side bits 1 / 2 and none 40h replace each other, as do the device bits 4-20h, and the
    boxes are redrawn (DrawCtlBoxes). OK (box 7) stores the choice (ctl1dev, ctl1team / ctl1side from the home or
    away team, -1 / -2 for none, moving the other controller off a side it can no longer share), applies it
    (SetSideControls) and writes the mode state (WriteCurModeState); Cancel (box 8) or the right button leaves it
-   unchanged. Result 0. */
+   unchanged. Result 0. Written as SoundCardDlgLoop: an if / else-if chain on the buttons, each arm ending in its
+   own restore / redraw (Watcom merges the copies into the EXE's shared redraw), no gotos. */
 int ControlsDlgLoop(int side)
 {
     int ox;
@@ -532,84 +528,90 @@ int ControlsDlgLoop(int side)
             if (btn & 6) break;
         }
         if (!(btn & 2) && !(btn & 4)) {
-            if (mx == ox && my == oy) continue;
+            if (mx != ox || my != oy) {
+                sub_903F0(save, ox - 4, oy);
+                sub_91400(save, mx - 4, my);
+                sub_91370(pointerspr, mx - 4, my);
+                ox = mx;
+                oy = my;
+            }
+        } else if (btn & 2) {
             sub_903F0(save, ox - 4, oy);
-draw:
+            if (CtlDlgHitTest(mx, my, &hit)) {
+                hit = 1 << hit;
+                if (!(hit & setbits[0]) && (hit & setbits[1])) {
+                    switch (hit) {
+                    case 1: setbits[0] = setbits[0] & ~3 | 1; break;
+                    case 2: setbits[0] = setbits[0] & ~3 | 2; break;
+                    case 4: setbits[0] = setbits[0] & ~0x7C | 4; break;
+                    case 8: setbits[0] = setbits[0] & ~0x7C | 8; break;
+                    case 0x10: setbits[0] = setbits[0] & ~0x7C | 0x10; break;
+                    case 0x20: setbits[0] = setbits[0] & ~0x7C | 0x20; break;
+                    case 0x40: setbits[0] = setbits[0] & ~0x7C | 0x40; break;
+                    case 0x100:
+                        DrawCtlBoxOn((int *)unk_D19DC);
+                        FreeMemBlock(save);
+                        return 0;
+                    case 0x80:
+                        DrawCtlBoxOn((int *)unk_D19CC);
+                        ctl1dev[side] = setbits[0] >> 2;
+                        if (setbits[0] == 0x41) {
+                            ctl1team[side] = -1;
+                            ctl1side[side] = 0;
+                            if (ctl1team[side == 0] == -1) {
+                                ctl1team[side == 0] = -2;
+                                ctl1side[side == 0] = 1;
+                            } else if (ctl1side[side == 0] == 0) {
+                                ctl1team[side == 0] = VisTeam;
+                                ctl1side[side == 0] = 1;
+                            }
+                        } else if (setbits[0] == 0x42) {
+                            ctl1team[side] = -2;
+                            ctl1side[side] = 1;
+                            if (ctl1team[side == 0] == -2) {
+                                ctl1team[side == 0] = -1;
+                                ctl1side[side == 0] = 0;
+                            } else if (ctl1side[side == 0] == 1) {
+                                ctl1team[side == 0] = HomeTeam;
+                                ctl1side[side == 0] = 0;
+                            }
+                        } else if (setbits[0] & 1) {
+                            ctl1team[side] = HomeTeam;
+                            ctl1side[side] = 0;
+                            if (ctl1team[side == 0] == -1) {
+                                ctl1team[side == 0] = -2;
+                                ctl1side[side == 0] = 1;
+                            }
+                        } else {
+                            ctl1team[side] = VisTeam;
+                            ctl1side[side] = 1;
+                            if (ctl1team[side == 0] == -2) {
+                                ctl1team[side == 0] = -1;
+                                ctl1side[side == 0] = 0;
+                            }
+                        }
+                        SetSideControls();
+                        WriteCurModeState();
+                        FreeMemBlock(save);
+                        return 0;
+                    }
+                    DrawCtlBoxes();
+                }
+            }
             sub_91400(save, mx - 4, my);
             sub_91370(pointerspr, mx - 4, my);
             ox = mx;
             oy = my;
-            continue;
-        }
-        if (btn & 2) {
-            sub_903F0(save, ox - 4, oy);
-            if (!CtlDlgHitTest(mx, my, &hit)) goto draw;
-            hit = 1 << hit;
-            if (hit & setbits[0] || !(hit & setbits[1])) goto draw;
-            switch (hit) {
-            case 1: setbits[0] = setbits[0] & ~3 | 1; break;
-            case 2: setbits[0] = setbits[0] & ~3 | 2; break;
-            case 4: setbits[0] = setbits[0] & ~0x7C | 4; break;
-            case 8: setbits[0] = setbits[0] & ~0x7C | 8; break;
-            case 0x10: setbits[0] = setbits[0] & ~0x7C | 0x10; break;
-            case 0x20: setbits[0] = setbits[0] & ~0x7C | 0x20; break;
-            case 0x40: setbits[0] = setbits[0] & ~0x7C | 0x40; break;
-            case 0x100:
-                DrawCtlBoxOn((int *)unk_D19DC);
-                FreeMemBlock(save);
-                return 0;
-            case 0x80:
-                DrawCtlBoxOn((int *)unk_D19CC);
-                ctl1dev[side] = setbits[0] >> 2;
-                if (setbits[0] == 0x41) {
-                    ctl1team[side] = -1;
-                    ctl1side[side] = 0;
-                    if (ctl1team[side == 0] == -1) {
-                        ctl1team[side == 0] = -2;
-                        ctl1side[side == 0] = 1;
-                    } else if (ctl1side[side == 0] == 0) {
-                        ctl1team[side == 0] = VisTeam;
-                        ctl1side[side == 0] = 1;
-                    }
-                } else if (setbits[0] == 0x42) {
-                    ctl1team[side] = -2;
-                    ctl1side[side] = 1;
-                    if (ctl1team[side == 0] == -2) {
-                        ctl1team[side == 0] = -1;
-                        ctl1side[side == 0] = 0;
-                    } else if (ctl1side[side == 0] == 1) {
-                        ctl1team[side == 0] = HomeTeam;
-                        ctl1side[side == 0] = 0;
-                    }
-                } else if (setbits[0] & 1) {
-                    ctl1team[side] = HomeTeam;
-                    ctl1side[side] = 0;
-                    if (ctl1team[side == 0] == -1) {
-                        ctl1team[side == 0] = -2;
-                        ctl1side[side == 0] = 1;
-                    }
-                } else {
-                    ctl1team[side] = VisTeam;
-                    ctl1side[side] = 1;
-                    if (ctl1team[side == 0] == -2) {
-                        ctl1team[side == 0] = -1;
-                        ctl1side[side == 0] = 0;
-                    }
-                }
-                SetSideControls();
-                WriteCurModeState();
-                FreeMemBlock(save);
-                return 0;
-            }
-            DrawCtlBoxes();
-            goto draw;
         } else if (btn & 4) {
             sub_903F0(save, ox - 4, oy);
             FreeMemBlock(save);
             return 0;
         } else {
             sub_903F0(save, ox - 4, oy);
-            goto draw;
+            sub_91400(save, mx - 4, my);
+            sub_91370(pointerspr, mx - 4, my);
+            ox = mx;
+            oy = my;
         }
     }
 }
