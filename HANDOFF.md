@@ -83,7 +83,7 @@ reassembles everything. Run `make fullcheck` once per commit batch; every pushed
 
 ## 4. Next
 
-**Speed-up plan (2026-10-19).** The 305 drafts (171 KB) are bigger than the matched code (156 KB), and most are register-pick near-misses, so hand iteration is the bottleneck. One agent at a time (see AGENTS.md). Do the steps in order; start a step only when the one before it is finished or its limit is hit.
+**Speed-up plan (2026-10-19).** The 305 drafts (171 KB) are bigger than the matched code (156 KB), and most are register-pick near-misses, so hand iteration is the bottleneck. One agent per lane worktree (see AGENTS.md and docs/LANES.md). Do the steps in order; start a step only when the one before it is finished or its limit is hit.
 
 1. **Untouched functions** (list below). 10 minutes and at most 2 attempts per function; otherwise leave a draft and record what was tried in `docs/UNSURE.md`.
 2. **Faster compiles.** Batch several functions per DOSBox run and cache by source hash; measure seconds per candidate before and after. Limit 2 hours; keep what works if there is no 2x speedup by then.
