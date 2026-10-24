@@ -3414,6 +3414,22 @@ OpenSpeechBank,,permlog_b12off.csv),,ga
 OpenSpeechBank,,"only one of the two changes: int type alone 43, int nsamples alone 42",,ga
 OpenSpeechBank,type:nsamples:int,`int nsamples`,tried (docs/UNSURE.md),ga
 DrawListItems,,shapes listed in docs/UNSURE.md (not itemized),,ga
+MenuSaveTheseLines,,"separately (the batch 2 MenuSaveDefaultLines shapes apply to both). Lane 2 2_b6 (10.0 GA): unchanged (19). regsolve: named votes 0/1 (t -> ECX wanted, has EDX), nothing predicted, no declaration swap improved",,ga
+checkplcoll,,"gives. slotdump: x size 2 count 21, y size 4 count 21",,ga
+SelectRosterTeam,,"a `MenuItem20 *m` local (declared last) for the second clear only (`m = (MenuItem20 *)roster2divmenus[div * 8]; m[slot].handler = 0;`, 17) or for both clears (15)",15,ga
+JoystickCalScreen,,"on the new loop: the factors as [3] * [2], `0x11 +` first (either order), `(int)` on either factor, `*(short *)(s.shape + 4)` reads either order, `17u` (10-11: [3] * [2] scores 10 only by alignment",,ga
+JoystickCalScreen,,the same four loads),,ga
+JoystickCalScreen,,"the puck as an int local with `s.shape = puck` for the product, copy17 or both, `s.shape = puck = ...`, `puck = s.shape = ...` (all 11)",all 11,ga
+ShowRosterStats,,"on the goalie copy test (the test and the KeyDbPtr argument): `*(int *)(rec + i * 4 + 0xB0)`, `*(int *)(i * 4 + rec + 0xB0)`, `*(int *)(rec + (i * 4 + 0xB0))`, `((i + 0x2C) << 2)` (36, +3: the skater loop moves too), `*(int *)(rec + 0xB0 + i * 4)`, `(i + (int *)(...))[0]`, `[0x19 + i]` on the +4Ch array (20)",20,ga
+ShowRosterStats,,"the test as `-1 != ...` (20), `... + 1 != 0` (32), `~...` (33), `>= 0` (22). The playoff skater record in the six other term orders under GA (20-22",,ga
+ShowRosterStats,,`0x12 + rosterpstat + idx * 0x28` and `idx * 0x28 + (rosterpstat + 0x12)` give the EXE size at 20),,ga
+ShowRosterStats,,"the goalie row as `0x34 * statsgoalieplr[idx]` (20), `(unsigned char *)(statsgoalieplr[idx] * 0x34 + (int)statsplayerbuf)` (30), `* 52` (20)",20,ga
+checkcx,,"the `(unsigned char)` pflags casts dropped in the team test (24), in the team-mate test (24), in both (28), one cast on the xor `(unsigned char)(p->pflags ^ o->pflags)` (59), `puckc[0]` for `*puckc` (20)",20,ga
+InstantReplay,,"for the closing 1 kept in esi: `dword_C66D4 = 1; dword_C66D0 = 1;` (22), `crowdsmooth = crowdlevel = ocl` with the chained or the split stores (22, 22), `crowdsmooth = crowdlevel` (22)",22,ga
+MoveToOtherRoster,,"under GA, skipped). regdump: the free-agent searches' record and index temporaries sit in the large savings 300 / 200 ties (j 2860 EBX, dst 1281 ECX, p 860 ESI), so which of the pair takes eax is the unstable sort's order, not a named variable's savings. No source shape tried",,ga
+DrawGameLineJerseys,,"no new shape). Lane 2 2_b6 (10.0 GA): unchanged (11). regsolve: named votes 0/1 (only i -> EAX, from a misaligned row",,ga
+DrawGameLineJerseys,,nothing compiled),,ga
+DrawGameLineJerseys,,"the miss is the nums pointer temporary, not a named variable (savings i 112 ESI, col 40 EDI, nums 12 memory). permute.py with the tempadd / temps / inplace / chain / scope / commute / opassign / shiftstmt / forchain / ifswap / temp families: no candidate that is not already logged (0 compiled)",0 compiled,ga
 CalendarScreen,,"(2026-10-24, lane 1 batch 13): k as `oldd + monthfirstday_m1[...] - 1` (319), `... - 1 + oldd` (320), `oldd - 1 + ...` (319), `... + (oldd - 1)` (319), `oldd + (... - 1)` (320)",320,ga
 CalendarScreen,,the compare as `calselmonth == oldm && calselday != oldd` (319),319,ga
 CalendarScreen,,`oldd = calselday;` before `oldm = calselmonth;` (319) (all on the 319 base),all on the 319 base,ga
