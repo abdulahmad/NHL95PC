@@ -3106,3 +3106,26 @@ LoadGameState,,"`id = o->id = *p` (43), `id = *p` (37), `o->first = byte_CCE00[i
 LoadGameState,,"the hud copies indexed, `for (i = 0, pl = SortCords; ...)` (111), `OOlistpos[i] = OOlist[i] = i` (47), `pl = &SortCords[i]` (44)",44,ga
 LoadGameState,,the ovl test operands swapped (45),45,ga
 DrawRinkSideObjects,,"the vy test as `0x140 - vy - 0xA8` (175), `0x140 - (0xA8 + vy)` (118, no change), `0x140 - (vy + 0xA8) > y` (165), y read before x (120), `f = k - k` for the zero (156)",156,ga
+wallcoll,,"the friction v through t or s (30, size +3)","30, size +3",ga
+wallcoll,,"the limit through t (11, no gain) or v (21)",21,ga
+wallcoll,,the board-sound t through s (25),25,ga
+wallcoll,,two permute.py runs (321 and 261 candidates,,ga
+wallcoll,,the second no gain),,ga
+updatereplay,,"the packing grouped as two halves (44) or right-associated (43, +2), `(int)` casts on the y / x terms (26)",26,ga
+updatereplay,,"the y term stored first and the rest or-ed in (37, +9)","37, +9",ga
+updatereplay,,"the nibble index as `(i * 2 + 1) * 12`, `(1 + i + i)`, `((i << 1) + 1)`, `(i + (i + 1))`, `* 3 * 4` (22), `(byte_DEE97 + 12)[(i + i) * 12]` (24, +5), `(short)(i + i + 1)` (16 but size +2: another index shape)",16 but size +2: another index shape,ga
+updatereplay,,"on the new base the rest as the else of the short-tick test (22), `if (++replaytick >= 2) { rest } else { short arm }` (33, +3)","33, +3",ga
+updatereplay,,"one permute.py run (577 candidates, best 16 = the `(short)` cast plus a do-while that drops the EXE's jump to the loop test, rejected)",,ga
+PenGoalStuff,,"`i + n` in the box shift (21), `ot->tmpbox[n + i - 1]` for the shifted store, `st->tmppg += 1`, `*hmtmflags |= 1`, `releasepl(ot, (int)n)`, `*(ot->tmroster + n * 0x27) = 7`, `*(short *)&ot->tmpdst[n] = 0`, `(unsigned char)` on the jersey, `PenBuf[0] == 0` (all 19), `ot->tmap >= st->tmap` (22)",22,ga
+PenGoalStuff,,a 27h-byte roster record struct read as `((RosterRec *)ot->tmroster)[n].jersey`,,ga
+PenGoalStuff,,"with `.status = 7` too, or through `(&...[n])->jersey` (19)",19,ga
+PenGoalStuff,,"the jersey through the dead n (20, size +2), through other_side (28), st as the roster pointer (36)",36,ga
+CanBlockShot,,"a separate short t for the shooter (42), declared first (50), t for |pucky| instead (48)",48,ga
+PassLaneChk,,on the y-wrap base: `if (((y & 7) >= 3) != 0)`,,ga
+PassLaneChk,,"a ternary or `== 0` inside the if (9), `if ((y & 7) < 3) return 1; return 0;` (25), if / else returns, `!((y & 7) < 3)` (15), `!((y & 7) >= 3)` (13), `y &= 7` (19), limit as a ternary, side as `? 1 : 0`, `side ^ (y > limit)`, `!p->position`, `LaneOpen() != 0`, `oy + HIBYTE(o->Yvel)`, `0 - dy` (all 15), `limit < y` (17), `dy = ABS(oy - y)` (25), y read before oy (19), ABS(y) or ABS(oy) named in limit or dy (29-87). Tried on the committed base: the sum as `oy + HIBYTE(o->Yvel)`, `HIBYTE(o->Yvel) - 0x4E + oy`, `(-0x4E + y)`, `(y + -0x4E)`, `-0x4E + (...)`, either operand order (2-4), `HIBYTE(o->Yvel) + (oy - 0x4E)` (5)",5,ga
+PassLaneChk,,"the sum in wrapped as one statement (15-17) or `wrapped = HIBYTE(o->Yvel); wrapped += oy;` (2), in limit (42) or side (17), copies of side or limit instead (15), py declared first (2 with the committed operand order, 4 with the EXE's), two copies (19), `(short)HIBYTE(o->Yvel)` (4)",4,ga
+PassLaneChk,,"two permute.py runs (513 and 212 candidates, best 2)","513 and 212 candidates, best 2",ga
+doshot,,"on the r + r variant: `dx = randomd0(r + r) - r + dx`, `dx = dx + (randomd0(r + r) - r)`, `passspeed * 59 * dx`, `(passspeed * 59) * dx`, `-*puckx + shotsets[passdir * 2]` (67, same slots), `dx = dx + randomd0(r + r) - r` (69)",69,ga
+doshot,,the f-in-division change (65). On the base: dividing by dist with no f (109),109,ga
+doshot,,"the lift, where the EXE converts passspeed (ebp) and dist (ecx) once for both terms: (unsigned) on both uses of dist and passspeed (59), on dist only (88), `(int)` casts (59-88), commuted constants (45), passspeed through f or e, dist through t or f, or both (64-114)",64-114,ga
+puckfaceoff2,,"the countdown as the else arm of the pflags test instead of after the early return (92, size +3)","92, size +3",ga
