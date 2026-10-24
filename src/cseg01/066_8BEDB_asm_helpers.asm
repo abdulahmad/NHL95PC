@@ -18,6 +18,10 @@ global stub_8C1F7, stub_8C202, stub_8C20D, stub_8C218, stub_8C223, vgacopy_bg, S
 ; 'MVIf' frame: decodes and waits for the frame time (GetTicks ticks)
 ; 'MVIe' end: stops. A key press (AnyInputPressed) aborts.
 ; Afterwards waits for the music fade and restarts the song if music is on.
+; C: src/c/066_8BEDB_asm_helpers/PlayMVI.c
+%ifdef CBUILD
+%include "c/066_8BEDB_asm_helpers/PlayMVI.inc"
+%else
 PlayMVI:
 push dword 58h	; 8BEDB
 call __CHK	; 8BEE0
@@ -252,6 +256,7 @@ pop edi	; 8C1B3
 pop esi	; 8C1B4
 pop ecx	; 8C1B5
 ret	; 8C1B6
+%endif ; C
 ; stub_8C1B7..stub_8C223: empty functions (__CHK; ret). Only stub_8C218
 ; has a caller (line_editor_rosters, 6 stack args): removed routines.
 ; C: src/c/066_8BEDB_asm_helpers/stub_8C1B7.c
