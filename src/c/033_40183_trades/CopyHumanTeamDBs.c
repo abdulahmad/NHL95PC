@@ -7,8 +7,10 @@
 
 void ExportTeamToFloppy(char *dir, char *ext, char *ext2, int t, unsigned char *teams, int full, int a);
 
-/* DRAFT (10.0 GA): 20 differing, exact size. A plain current-team local keeps the number across
-   sprintf / strcpy; the remaining register picks and zero stores differ. */
+/* DRAFT (10.0 GA): 7 differing, 2 bytes short. A plain current-team local keeps the number across
+   sprintf / strcpy, and the exported team's entry goes through its own block-local pointer (in edx, so the
+   copy loop index gets edi). Left: s.which loaded into ecx (EXE eax), retry = 0 through edi (EXE eax), and
+   zero = 0 stored from the known-zero err (EXE `xor edx, edx`). */
 /* CopyHumanTeamDBs (41516, PC only): give each human team of the league in dir (teams +17h == 1; only team which
    when which is not negative) its own copy of the league databases, named by the team number (".%02d" into
    str_extxx). A team played on another computer (+18h == 2) that has not exported yet (+16h bit 0 clear) gets
@@ -99,9 +101,11 @@ int CopyHumanTeamDBs(char *dir, unsigned char *teams, int which)
             err = FileOpenRW(s.path, &s.wfh);
         }
         if (!err) {
-            tp = s.teams + s.t * 30;
-            tp[0x16] = 1;
-            err = WriteLeagueTeamEntry(s.wfh, tp, s.t);
+            unsigned char *p;
+
+            p = s.teams + s.t * 30;
+            p[0x16] = 1;
+            err = WriteLeagueTeamEntry(s.wfh, p, s.t);
         }
         FileClose(&s.wfh);
         RestoreDialogBg();
