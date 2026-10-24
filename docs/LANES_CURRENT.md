@@ -10,34 +10,20 @@ Segments 001-037. Work every draft in these files; do not take a file from the o
 
 | C file | Function | Score | Cause |
 |---|---|---:|---|
-| src/c/010_18D7F_frontend_desk/SportsDesk.c | SportsDesk | 9998 | error |
-| src/c/013_1BBCC_key_team_db/LoadTeamRoster.c | LoadTeamRoster | 9998 | error |
-| src/c/022_2D346_game_setup/GameSummaryScreen.c | GameSummaryScreen | 9998 | error |
-| src/c/022_2D346_game_setup/UpdateOtherScores.c | GameStatsScreen | 9998 | error |
-| src/c/023_2FDD1_misc_dialogs/EditTextField.c | EditTextField | 9998 | error |
-| src/c/027_33FFD_calendar/CalendarScreen.c | CalendarScreen | 9998 | error |
-| src/c/028_35FB9_import_export/PostGameToTeamDb.c | PostGameToTeamDb | 9998 | error |
-| src/c/029_380E9_league_setup/LeagueTeamSelect.c | LeagueTeamSelect | 9998 | error |
-| src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c | TradeScreenLoop | 9998 | error |
-| src/c/035_45282_options_settings/SimulateGame.c | SimulateGame | 9998 | error |
+| src/c/022_2D346_game_setup/UpdateOtherScores.c | GameStatsScreen | 11 | register 4/5 |
+| src/c/023_2FDD1_misc_dialogs/EditTextField.c | EditTextField | 36 | register 31/35 |
+| src/c/013_1BBCC_key_team_db/LoadTeamRoster.c | LoadTeamRoster | 51 | register 20/28 |
+| src/c/029_380E9_league_setup/LeagueTeamSelect.c | LeagueTeamSelect | 53 | size 34/55 |
+| src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c | TradeScreenLoop | 88 | register 38/51 |
+| src/c/028_35FB9_import_export/PostGameToTeamDb.c | PostGameToTeamDb | 130 | register 57/128 |
+| src/c/022_2D346_game_setup/GameSummaryScreen.c | GameSummaryScreen | 287 | register 182/268 |
+| src/c/010_18D7F_frontend_desk/SportsDesk.c | SportsDesk | 303 | size 130/294 |
+| src/c/027_33FFD_calendar/CalendarScreen.c | CalendarScreen | 319 | register 134/318 |
+| src/c/035_45282_options_settings/SimulateGame.c | SimulateGame | 624 | register 358/621 |
 
 ## Offered to Mhopkinsinc
 
 These files are in lane 2 by segment. StaticEck2026 made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
-
-### `src/c/038_4FCE8_engine_input/CanBlockShot.c`
-
-- CanBlockShot 42->42 (2026-10-24, StaticEck2026, GA) unchanged
-- CanBlockShot 42->42 (2026-10-24, StaticEck2026, GA) `s` gets ax
-PassRecOneTimer is in this file (score 9998, error) and comes with it.
-- PassRecOneTimer 34->34 (2026-10-24, StaticEck2026, GA) the mirrored-x temporary (savings 3) loses a tie.
-
-### `src/c/039_50AFE_engine_assign_faceoff/puckfaceoff.c`
-
-puckfaceoff is in this file (score 9998, error) and comes with it.
-- puckfaceoff 29->29 (2026-10-24, StaticEck2026, GA) the operand swap changes the load order
-- puckfaceoff2 92->92 (2026-10-24, StaticEck2026, GA) read only.
-- puckfaceoff2 92->92 (2026-10-24, StaticEck2026, GA) the EXE's `-1` chain makes register copies that no probe of the chain reproduces.
 
 ### `src/c/040_53294_engine_physics_ai/checkgoal.c`
 
@@ -45,42 +31,37 @@ puckfaceoff is in this file (score 9998, error) and comes with it.
 - checkgoal 8->8 (2026-10-24, StaticEck2026, GA) the three zero stores get eax where the EXE uses ecx / edx / edi.
 - checkgoal 8->1 (2026-10-24, Mhopkinsinc, GA) gotos removed: nested tests with side as fall-through and a duplicated wall exit (4); wall tests as two early-return ifs (1, committed); bounce on that structure: short / unsigned short z (14-17), x = -y (17), y = -y; x = y (6), x = y = -y (6), p->Zvel = -y >> 1 (18), x = z >> 1 short/int z (18-19), z = y; x = -z (14), z = y; z = -z (14), x = z = -y (1 int, 14 short); flag zero split / reload / Zpos else (4); regsolve: no reorder
 
-### `src/c/040_53294_engine_physics_ai/dopass.c`
+### `src/c/040_53294_engine_physics_ai/checkob.c`
 
-dopass is in this file (score 9998, error) and comes with it.
-- dopass 17->17 (2026-10-24, StaticEck2026, GA) the 10000h ternary takes distance_score's register.
-- dopass 17->17 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (only a dx savings bump); sum orders with the ternary: dx*dx + (dy*dy + T) (27), T + dy*dy + dx*dx (26), dy*dy + T + dx*dx (26), dx*dx + T + dy*dy (27), T + (dx*dx + dy*dy) (17); exit needs checkob.c (not moved)
-- shotdiradj 23->23 (2026-10-24, StaticEck2026, GA) cross as a plain local moves the frame.
-- shotdiradj 23->23 (2026-10-24, StaticEck2026, GA) five spellings of the `dist = 1` store.
-- shotdiradj 23->23 (2026-10-24, Mhopkinsinc, GA) regsolve (only a g savings bump); |a| test as if / else (23), with passdir ternary (40), ternary alone (40), inverted test passdir 0 last (28), braced dist = 1 (23)
-doshot is in this file (score 9998, error) and comes with it.
-- doshot 47->47 (2026-10-24, StaticEck2026, GA) and passtoa0: not reached.
-- doshot 47->47 (2026-10-24, StaticEck2026, GA) `randomd0(r + r)` gives the EXE's radius code but swaps the dx / snd slots
-- doshot 47->45 (2026-10-24, StaticEck2026, GA) (`dopass.c`). `*puckvx = dx * (passspeed * 59) / (f = dist);` puts the EXE's `movsx ebp
-- doshot 45->45 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (dist / e / t only through savings bumps); sp / r / dist / z / q / e / f / gy each moved to every declaration position (82 orders, best 45)
-wallcoll is in this file (score 9998, error) and comes with it.
-- wallcoll 16->16 (2026-10-24, StaticEck2026, GA) unchanged
-- wallcoll 16->11 (2026-10-24, StaticEck2026, GA) (`dopass.c`). The player branch's y limit goes through the dead sound short `s` instead of its own `lim` (a permute.py find)
-- wallcoll 11->11 (2026-10-24, Mhopkinsinc, GA) ESCALATE: dead-variable reuse (limit through the sound short s or t), scores 0 with goto slow removed (sfx in each arm, 6) and the puck Xvel product as regd1.w * regd2.w (0), patch b12_wallcoll_escalate.diff; committed the clean shape: no goto, own short lim (35), regd3 sum p->Xvel * regd0.w + p->Yvel * regd1.w (12), puck Yvel regd2.w * regd0.w (11); 32 operand orders per product pair (best 11-14); 24 decl orders of t / s / v / lim (11); limit via v (22); sound arms reordered (31); regsolve: no reorder
+- checkob 2->2 (2026-10-24, StaticEck2026, GA) Watcom hoists the far-side limit's `lea` out of the loop.
+- checkob 2->2 (2026-10-24, StaticEck2026, GA) regsolve.py: an operand flip, nothing predicted. Block-scoped lim, register extra, a second counter, a comma copy (5-20); permute.py tempadd/temps/inplace/lvinline 251 candidates.
 
-### `src/c/045_614C2_scoring_penalty_text/ChkScorerMilestone.c`
+### `src/c/042_59D9A_engine_core/calcpuckcross.c`
 
-- ChkScorerMilestone 36->36 (2026-10-24, StaticEck2026, GA) unchanged
-- ChkScorerMilestone 36->36 (2026-10-24, StaticEck2026, GA) a register-cycle `lea`.
+- calcpuckcross 3->3 (2026-10-24, StaticEck2026, GA) the EXE's 16-bit `mov bx
+- calcpuckcross 3->3 (2026-10-24, StaticEck2026, GA) regsolve.py: nothing predicted. Ternary bounces (20-57), shift for side * 2 (3); permute.py tempadd/temps 287 candidates.
+StartPer is in this file (score 34, register 18/37) and comes with it.
+- StartPer 34->34 (2026-10-24, StaticEck2026, GA) no C found for the EXE's fox zero.
 
-### `src/c/045_614C2_scoring_penalty_text/InProgress.c`
+### `src/c/043_5E16D_engine_skating/doplayeracc.c`
 
-InProgress is in this file (score 9998, error) and comes with it.
-- InProgress 88->88 (2026-10-24, StaticEck2026, GA) register picks after +102.
-- PenGoalStuff 19->19 (2026-10-24, StaticEck2026, GA) looked at
-- PenGoalStuff 19->19 (2026-10-24, StaticEck2026, GA) the roster pointer ties the jersey value at savings 2.
+- doplayeracc 5->5 (2026-10-24, StaticEck2026, GA) `*pucky` is folded into `add di
+- doplayeracc 5->5 (2026-10-24, StaticEck2026, GA) regsolve.py: nothing predicted (a fold, not a register pick); permute.py tempadd/temps 122 candidates.
 
-### `src/c/046_644A8_engine_display/ReplayStep.c`
+### `src/c/061_83459_speech/ShutdownSpeech.c`
 
-- ReplayStep 46->46 (2026-10-24, StaticEck2026, GA) read
-- ReplayStep 46->46 (2026-10-24, StaticEck2026, GA) the frame advance goes through ebp in the EXE; every remaining shape is already listed in UNSURE.
-DrawRinkSideObjects is in this file (score 9998, error) and comes with it.
-- DrawRinkSideObjects 118->118 (2026-10-24, StaticEck2026, GA) register cycle from the edge clamps on.
+- QueueSpeechClip 6->6 (2026-10-24, StaticEck2026, GA) .
+- QueueSpeechClip 6->6 (2026-10-24, StaticEck2026, GA) No kind local (7), SPEECHQ macro stores (7-23), inverted calls (14); permute.py tempadd/temps 27 candidates.
+
+### `src/c/052_6D2F8_create_player/SelectMatchingPlayers.c`
+
+- SelectMatchingPlayers 7->7 (2026-10-24, StaticEck2026, GA) the add order of the address.
+- SelectMatchingPlayers 7->7 (2026-10-24, StaticEck2026, GA) Base-first address spellings (11-30), SplitPlayerName with an unsigned char * name (7-11).
+
+### `src/c/058_7F724_highlights/SelectHilight.c`
+
+- SelectHilight 7->7 (2026-10-24, StaticEck2026, GA) two new shapes
+- SelectHilight 7->7 (2026-10-24, StaticEck2026, GA) FreeMemBlock with a pointer prototype (7); permute.py tempadd/temps 247 candidates.
 
 ### `src/c/052_6D2F8_create_player/RosterPanelClick.c`
 
@@ -88,17 +69,46 @@ DrawRinkSideObjects is in this file (score 9998, error) and comes with it.
 - RosterPanelClick 9->9 (2026-10-24, StaticEck2026, GA) unchanged
 - RosterPanelClick 9->9 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder predicted); permute.py 5 min, 321 candidates, best base 9
 
+### `src/c/042_59D9A_engine_core/changeplayer.c`
+
+- changeplayer 10->10 (2026-10-24, StaticEck2026, GA) five temporaries tie at savings 30.
+- changeplayer 10->10 (2026-10-24, StaticEck2026, GA) regsolve.py: predicted swaps already tried. Skip / && / store order forms (10-12); permute.py tempadd/temps 68 candidates.
+DrawRinkOverlays is in this file (score 73, register 50/72) and comes with it.
+- DrawRinkOverlays 73->73 (2026-10-24, StaticEck2026, GA) no declaration order or count change reaches the EXE's slots.
+setplayer is in this file (score 93, register 86/92) and comes with it.
+- (no GA history rows)
+
+### `src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c`
+
+- ReassignCtlPlayer 10->10 (2026-10-24, StaticEck2026, GA) the EXE's counter is a `short`. With it the draft scores 14
+- ReassignCtlPlayer 10->10 (2026-10-24, StaticEck2026, GA) permute.py tempadd/temps/inplace/lvinline 78 candidates, best the base.
+ControlsDlgLoop is in this file (score 143, register 60/61) and comes with it.
+- ControlsDlgLoop 143->143 (2026-10-24, StaticEck2026, GA) not reached.
+- ControlsDlgLoop 143->143 (2026-10-24, StaticEck2026, GA) an inner `for (;;)` click wait reaches the EXE size but scores 145.
+
+### `src/c/040_53294_engine_physics_ai/dopass.c`
+
+wallcoll is in this file (score 11, register 4/8) and comes with it.
+- wallcoll 16->16 (2026-10-24, StaticEck2026, GA) unchanged
+- wallcoll 16->11 (2026-10-24, StaticEck2026, GA) (`dopass.c`). The player branch's y limit goes through the dead sound short `s` instead of its own `lim` (a permute.py find)
+- wallcoll 11->11 (2026-10-24, Mhopkinsinc, GA) ESCALATE: dead-variable reuse (limit through the sound short s or t), scores 0 with goto slow removed (sfx in each arm, 6) and the puck Xvel product as regd1.w * regd2.w (0), patch b12_wallcoll_escalate.diff; committed the clean shape: no goto, own short lim (35), regd3 sum p->Xvel * regd0.w + p->Yvel * regd1.w (12), puck Yvel regd2.w * regd0.w (11); 32 operand orders per product pair (best 11-14); 24 decl orders of t / s / v / lim (11); limit via v (22); sound arms reordered (31); regsolve: no reorder
+dopass is in this file (score 17, register 10/17) and comes with it.
+- dopass 17->17 (2026-10-24, StaticEck2026, GA) the 10000h ternary takes distance_score's register.
+- dopass 17->17 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (only a dx savings bump); sum orders with the ternary: dx*dx + (dy*dy + T) (27), T + dy*dy + dx*dx (26), dy*dy + T + dx*dx (26), dx*dx + T + dy*dy (27), T + (dx*dx + dy*dy) (17); exit needs checkob.c (not moved)
+- shotdiradj 23->23 (2026-10-24, StaticEck2026, GA) cross as a plain local moves the frame.
+- shotdiradj 23->23 (2026-10-24, StaticEck2026, GA) five spellings of the `dist = 1` store.
+- shotdiradj 23->23 (2026-10-24, Mhopkinsinc, GA) regsolve (only a g savings bump); |a| test as if / else (23), with passdir ternary (40), ternary alone (40), inverted test passdir 0 last (28), braced dist = 1 (23)
+doshot is in this file (score 45, register 33/43) and comes with it.
+- doshot 47->47 (2026-10-24, StaticEck2026, GA) and passtoa0: not reached.
+- doshot 47->47 (2026-10-24, StaticEck2026, GA) `randomd0(r + r)` gives the EXE's radius code but swaps the dx / snd slots
+- doshot 47->45 (2026-10-24, StaticEck2026, GA) (`dopass.c`). `*puckvx = dx * (passspeed * 59) / (f = dist);` puts the EXE's `movsx ebp
+- doshot 45->45 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (dist / e / t only through savings bumps); sp / r / dist / z / q / e / f / gy each moved to every declaration position (82 orders, best 45)
+
 ### `src/c/052_6D2F8_create_player/SetRosterTeamMenus.c`
 
 - SetRosterTeamMenus 11->11 (2026-10-24, StaticEck2026, GA) unchanged
 - SetRosterTeamMenus 11->11 (2026-10-24, StaticEck2026, GA) no new shape beyond UNSURE.
 - SetRosterTeamMenus 11->11 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (only a savings bump of i, dead-variable reuse); one i for both halves (28); d <<= 3 before the stores (11); (int)0 stores (11); i declared first (11)
-
-### `src/c/054_737AA_line_editor_rosters/LoadGameRoster.c`
-
-- LoadGameRoster 21->21 (2026-10-24, StaticEck2026, GA) unchanged
-- LoadGameRoster 21->21 (2026-10-24, StaticEck2026, GA) a tie in the unstable sort. `& 0xFF` fixes loop 1
-- LoadGameRoster 21->21 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder predicted); n assigned in the index (21); unsigned n (25); 11 * s.i / 2 * n (21); s.i++ in the loop body (21)
 
 ### `src/c/061_83459_speech/OpenSpeechBank.c`
 
@@ -107,12 +117,6 @@ DrawRinkSideObjects is in this file (score 9998, error) and comes with it.
 - OpenSpeechBank 11->11 (2026-10-24, abdulahmad, GA) (short)Swap16(w1) and a block unsigned short s both 11. LA 44. -od 218. Frame order left as it is. int type / short c already in UNSURE (best 20).
 - OpenSpeechBank 11->11 (2026-10-24, Mhopkinsinc, GA) int nsamples with Swap16((short)nsamples) + int type / short c / (unsigned short)type >> 8 (41), declsearch --conflicts order (17: every slot and the type byte match, the w1 / w3 / ReadBE24 call-result stores differ); int type alone (43), int nsamples alone (42); i / off / pos / c / cnt moved to every position (17); OFFD / SLOTD spellings (17); cnt for w3 (23); permute.py 5 min on the 17 base (best 17); regsolve: only a cnt savings bump
 
-### `src/c/064_86696_season_playoffs/POHandleElimination.c`
-
-- POHandleElimination 13->13 (2026-10-24, StaticEck2026, GA) unchanged
-- POHandleElimination 13->13 (2026-10-24, StaticEck2026, GA) the cross-jumped RestoreDialogBg call.
-- POHandleElimination 13->13 (2026-10-24, Mhopkinsinc, GA) goto save removed: simulate path nested under if (MessageBox(...) != 0) (13, same code, committed); switch (mode) case 1 / default (13), with case 0 (19); champion fix as empty if / else (13)
-
 ### `src/c/064_86696_season_playoffs/POSeedRound2.c`
 
 - CreatePlayoffs 11->11 (2026-10-24, StaticEck2026, GA) unchanged
@@ -120,10 +124,55 @@ DrawRinkSideObjects is in this file (score 9998, error) and comes with it.
 - CreatePlayoffs 11->11 (2026-10-24, abdulahmad, GA) known ebx/edx and ecx/ebx sites plus jmp vs POSeedRound2_x. POSeedRound2 still 0. No source edit. -od not applied to the file.
 - POSeedTeams 22->22 (2026-10-24, StaticEck2026, GA) unchanged
 - POSeedTeams 22->22 (2026-10-24, StaticEck2026, GA) the else arm needs one more temporary in the register cycle.
-POAfterGame is in this file (score 9998, error) and comes with it.
+POAfterGame is in this file (score 67, register 30/43) and comes with it.
 - POAfterGame 100->100 (2026-10-24, StaticEck2026, GA) looked at; the differences are register-cycle picks.
 - POAfterGame 100->67 (2026-10-24, StaticEck2026, GA) (same size). The `w == ctl2team` branch tests `s[2] == w`
 - POAfterGame 67->67 (2026-10-24, abdulahmad, GA) scored only, same size. No source edit.
+
+### `src/c/064_86696_season_playoffs/POHandleElimination.c`
+
+- POHandleElimination 13->13 (2026-10-24, StaticEck2026, GA) unchanged
+- POHandleElimination 13->13 (2026-10-24, StaticEck2026, GA) the cross-jumped RestoreDialogBg call.
+- POHandleElimination 13->13 (2026-10-24, Mhopkinsinc, GA) goto save removed: simulate path nested under if (MessageBox(...) != 0) (13, same code, committed); switch (mode) case 1 / default (13), with case 0 (19); champion fix as empty if / else (13)
+
+### `src/c/045_614C2_scoring_penalty_text/InProgress.c`
+
+- PenGoalStuff 19->19 (2026-10-24, StaticEck2026, GA) looked at
+- PenGoalStuff 19->19 (2026-10-24, StaticEck2026, GA) the roster pointer ties the jersey value at savings 2.
+InProgress is in this file (score 88, register 70/83) and comes with it.
+- InProgress 88->88 (2026-10-24, StaticEck2026, GA) register picks after +102.
+
+### `src/c/054_737AA_line_editor_rosters/LoadGameRoster.c`
+
+- LoadGameRoster 21->21 (2026-10-24, StaticEck2026, GA) unchanged
+- LoadGameRoster 21->21 (2026-10-24, StaticEck2026, GA) a tie in the unstable sort. `& 0xFF` fixes loop 1
+- LoadGameRoster 21->21 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder predicted); n assigned in the index (21); unsigned n (25); 11 * s.i / 2 * n (21); s.i++ in the loop body (21)
+
+### `src/c/039_50AFE_engine_assign_faceoff/puckfaceoff.c`
+
+puckfaceoff is in this file (score 29, size 15/28) and comes with it.
+- puckfaceoff 29->29 (2026-10-24, StaticEck2026, GA) the operand swap changes the load order
+- puckfaceoff2 92->92 (2026-10-24, StaticEck2026, GA) read only.
+- puckfaceoff2 92->92 (2026-10-24, StaticEck2026, GA) the EXE's `-1` chain makes register copies that no probe of the chain reproduces.
+
+### `src/c/038_4FCE8_engine_input/CanBlockShot.c`
+
+PassRecOneTimer is in this file (score 34, size 11/21) and comes with it.
+- PassRecOneTimer 34->34 (2026-10-24, StaticEck2026, GA) the mirrored-x temporary (savings 3) loses a tie.
+- CanBlockShot 42->42 (2026-10-24, StaticEck2026, GA) unchanged
+- CanBlockShot 42->42 (2026-10-24, StaticEck2026, GA) `s` gets ax
+
+### `src/c/045_614C2_scoring_penalty_text/ChkScorerMilestone.c`
+
+- ChkScorerMilestone 36->36 (2026-10-24, StaticEck2026, GA) unchanged
+- ChkScorerMilestone 36->36 (2026-10-24, StaticEck2026, GA) a register-cycle `lea`.
+
+### `src/c/046_644A8_engine_display/ReplayStep.c`
+
+- ReplayStep 46->46 (2026-10-24, StaticEck2026, GA) read
+- ReplayStep 46->46 (2026-10-24, StaticEck2026, GA) the frame advance goes through ebp in the EXE; every remaining shape is already listed in UNSURE.
+DrawRinkSideObjects is in this file (score 118, register 54/64) and comes with it.
+- DrawRinkSideObjects 118->118 (2026-10-24, StaticEck2026, GA) register cycle from the edge clamps on.
 
 ## Lane 2 — StaticEck2026 (StaticEck)
 
@@ -131,102 +180,69 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 | C file | Function | Score | Cause |
 |---|---|---:|---|
-| src/c/039_50AFE_engine_assign_faceoff/assrefpenshot.c | assrefpenshot | 9998 | error |
-| src/c/040_53294_engine_physics_ai/PassLaneChk.c | checkpuckcoll | 9998 | error |
-|  | PassLaneChk | 9998 | error |
-|  | NetCollide | 9998 | error |
-| src/c/040_53294_engine_physics_ai/checkcheck.c | checkcheck | 9998 | error |
-| src/c/040_53294_engine_physics_ai/checkcx.c | checkcx | 9998 | error |
-| src/c/040_53294_engine_physics_ai/checkgoalp.c | checkgoalp | 9998 | error |
-| src/c/040_53294_engine_physics_ai/checkob.c | checkob | 9998 | error |
-| src/c/040_53294_engine_physics_ai/checkplcoll.c | checkplcoll | 9998 | error |
-| src/c/040_53294_engine_physics_ai/checkwallcoll.c | checkwallcoll | 9998 | error |
-| src/c/040_53294_engine_physics_ai/passtoa0.c | passtoa0 | 9998 | error |
-| src/c/042_59D9A_engine_core/calcpuckcross.c | calcpuckcross | 9998 | error |
-|  | StartPer | 9998 | error |
-| src/c/042_59D9A_engine_core/changeplayer.c | changeplayer | 9998 | error |
-|  | setplayer | 9998 | error |
-|  | DrawRinkOverlays | 9998 | error |
-| src/c/043_5E16D_engine_skating/EvadePlayers.c | avdgoal | 9998 | error |
-| src/c/043_5E16D_engine_skating/doplayeracc.c | doplayeracc | 9998 | error |
-| src/c/044_5FB03_game_state_saveload/SaveGameState.c | LoadGameState | 9998 | error |
-| src/c/046_644A8_engine_display/CanFillLineSlot.c | CanFillLineSlot | 9998 | error |
-|  | FillDressedSlots | 9998 | error |
-| src/c/046_644A8_engine_display/PickForLineSlot.c | PickForLineSlot | 9998 | error |
-| src/c/046_644A8_engine_display/RemoveFromLines.c | RemoveFromLines | 9998 | error |
-| src/c/046_644A8_engine_display/updatereplay.c | updatereplay | 9998 | error |
-| src/c/050_6B093_joystick_calibration/JoystickCalScreen.c | JoystickCalScreen | 9998 | error |
-| src/c/051_6C2F9_database_save/RunEditRosters.c | SelectRosterTeam | 9998 | error |
-| src/c/052_6D2F8_create_player/CreateFreeAgent.c | CreateFreeAgent | 9998 | error |
-| src/c/052_6D2F8_create_player/EditRosters.c | EditRosters | 9998 | error |
-| src/c/052_6D2F8_create_player/EditSkaterRating.c | EditSkaterRating | 9998 | error |
-|  | EditGoalieRating | 9998 | error |
-| src/c/052_6D2F8_create_player/MoveToOtherRoster.c | MoveToOtherRoster | 9998 | error |
-| src/c/052_6D2F8_create_player/SelectMatchingPlayers.c | SelectMatchingPlayers | 9998 | error |
-| src/c/052_6D2F8_create_player/SwapSelectedPlayers.c | SwapSelectedPlayers | 9998 | error |
-| src/c/054_737AA_line_editor_rosters/DbLineEditorLoop.c | DbLineEditorLoop | 9998 | error |
-| src/c/054_737AA_line_editor_rosters/GameLineEditorLoop.c | GameLineEditorLoop | 9998 | error |
-| src/c/054_737AA_line_editor_rosters/ShowRosterStats.c | ShowRosterStats | 9998 | error |
-| src/c/055_78346_team_select/DrawGameLineJerseys.c | DrawGameLineJerseys | 9998 | error |
-| src/c/055_78346_team_select/MenuSaveDefaultLines.c | MenuSaveDefaultLines | 9998 | error |
-|  | MenuSaveTheseLines | 9998 | error |
-|  | MenuGameShowPlayerStats | 9998 | error |
-| src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c | ReassignCtlPlayer | 9998 | error |
-|  | ControlsDlgLoop | 9998 | error |
-| src/c/057_7DC8B_gadgets_replay/DrawGadgetButton.c | InstantReplay | 9998 | error |
-| src/c/057_7DC8B_gadgets_replay/ReplaySaveHilight.c | ReplaySaveHilight | 9998 | error |
-| src/c/058_7F724_highlights/SelectHilight.c | SelectHilight | 9998 | error |
-| src/c/059_8034B_settings_lockerroom/DrawPanel3D.c | DrawLockerJersey | 9998 | error |
-| src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c | LockerRoomLoop | 9998 | error |
-| src/c/061_83459_speech/ShutdownSpeech.c | QueueSpeechClip | 9998 | error |
-| src/c/064_86696_season_playoffs/POCreateSchedule.c | POInitSchedule | 9998 | error |
-| src/c/064_86696_season_playoffs/PlayoffTreeMenu.c | PlayoffTreeMenu | 9998 | error |
-| src/c/066_8BEDB_asm_helpers/PlayMVI.c | PlayMVI | 9998 | error |
+| src/c/052_6D2F8_create_player/CreateFreeAgent.c | CreateFreeAgent | 0 | size 9/9 |
+| src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c | LockerRoomLoop | 0 | tail 0/0 |
+| src/c/064_86696_season_playoffs/POCreateSchedule.c | POInitSchedule | 0 | tail 0/0 |
+| src/c/040_53294_engine_physics_ai/PassLaneChk.c | PassLaneChk | 2 | size 2/2 |
+|  | NetCollide | 41 | register 17/35 |
+|  | checkpuckcoll | 73 | register 60/60 |
+| src/c/055_78346_team_select/DrawGameLineJerseys.c | DrawGameLineJerseys | 11 | register 2/4 |
+| src/c/040_53294_engine_physics_ai/checkplcoll.c | checkplcoll | 13 | slot 6/6 |
+| src/c/066_8BEDB_asm_helpers/PlayMVI.c | PlayMVI | 13 | register 6/13 |
+| src/c/051_6C2F9_database_save/RunEditRosters.c | SelectRosterTeam | 14 | size 7/9 |
+| src/c/040_53294_engine_physics_ai/checkwallcoll.c | checkwallcoll | 15 | slot 10/16 |
+| src/c/055_78346_team_select/MenuSaveDefaultLines.c | MenuGameShowPlayerStats | 16 | register 6/9 |
+|  | MenuSaveDefaultLines | 17 | register 11/13 |
+|  | MenuSaveTheseLines | 19 | register 11/13 |
+| src/c/050_6B093_joystick_calibration/JoystickCalScreen.c | JoystickCalScreen | 18 | register 14/17 |
+| src/c/040_53294_engine_physics_ai/checkcx.c | checkcx | 20 | register 19/19 |
+| src/c/046_644A8_engine_display/CanFillLineSlot.c | FillDressedSlots | 20 | slot 12/12 |
+|  | CanFillLineSlot | 31 | register 13/30 |
+| src/c/046_644A8_engine_display/PickForLineSlot.c | PickForLineSlot | 20 | register 7/13 |
+| src/c/054_737AA_line_editor_rosters/ShowRosterStats.c | ShowRosterStats | 20 | register 8/8 |
+| src/c/046_644A8_engine_display/updatereplay.c | updatereplay | 22 | register 12/21 |
+| src/c/057_7DC8B_gadgets_replay/DrawGadgetButton.c | InstantReplay | 22 | register 10/13 |
+| src/c/040_53294_engine_physics_ai/checkgoalp.c | checkgoalp | 27 | register 25/27 |
+| src/c/052_6D2F8_create_player/MoveToOtherRoster.c | MoveToOtherRoster | 27 | register 9/13 |
+| src/c/052_6D2F8_create_player/EditSkaterRating.c | EditGoalieRating | 28 | size 16/28 |
+|  | EditSkaterRating | 30 | size 19/32 |
+| src/c/059_8034B_settings_lockerroom/DrawPanel3D.c | DrawLockerJersey | 29 | register 10/10 |
+| src/c/040_53294_engine_physics_ai/checkcheck.c | checkcheck | 32 | register 20/30 |
+| src/c/057_7DC8B_gadgets_replay/ReplaySaveHilight.c | ReplaySaveHilight | 34 | register 32/33 |
+| src/c/044_5FB03_game_state_saveload/SaveGameState.c | LoadGameState | 37 | size 17/33 |
+| src/c/046_644A8_engine_display/RemoveFromLines.c | RemoveFromLines | 40 | register 28/32 |
+| src/c/040_53294_engine_physics_ai/passtoa0.c | passtoa0 | 48 | register 26/48 |
+| src/c/052_6D2F8_create_player/SwapSelectedPlayers.c | SwapSelectedPlayers | 48 | register 23/35 |
+| src/c/054_737AA_line_editor_rosters/DbLineEditorLoop.c | DbLineEditorLoop | 64 | size 6/7 |
+| src/c/054_737AA_line_editor_rosters/GameLineEditorLoop.c | GameLineEditorLoop | 74 | slot 13/26 |
+| src/c/052_6D2F8_create_player/EditRosters.c | EditRosters | 108 | register 77/89 |
+| src/c/064_86696_season_playoffs/PlayoffTreeMenu.c | PlayoffTreeMenu | 126 | register 61/129 |
+| src/c/043_5E16D_engine_skating/EvadePlayers.c | avdgoal | 155 | size 95/183 |
 
 ## Offered to StaticEck2026
 
 These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
 
-### `src/c/001_10010_main_startup/FadePalette.c`
+### `src/c/023_2FDD1_misc_dialogs/DrawListItem.c`
 
-- FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
-- FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) (clamp reload)
-- FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+DrawListItems is in this file (score 0, tail 0/0) and comes with it.
+- DrawListItems 0->0 (2026-10-24, abdulahmad, GA) matches under GA and under LA; unmarked because it short-jumps into DrawListItem. -od scores 47. Not marked.
+- DrawListItem 11->11 (2026-10-24, Mhopkinsinc, GA) w in place gives the EXE's case 1
+- DrawListItem 6->6 (2026-10-24, Mhopkinsinc, GA) (right alignment; DrawListItems still waits for it)
+- DrawListItem 6->6 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawListItem 6->6 (2026-10-24, abdulahmad, GA) LA also 6; -od 72. In-place case 1 already tried under GA (raises w into a tie with y). No new shape.
+- DrawListItem 6->6 (2026-10-24, StaticEck2026, GA) regsolve on in-place case 1 (y / w parameter swap skipped); on it: split y increment (12, y 11 ties x), 3 other split forms (12-13), 5 statement orders (30-32)
 
-### `src/c/002_1167B_gamesave_io/GameLoop.c`
+### `src/c/037_4842A_engine_player_logic/SkateToSpot.c`
 
-- GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
-- GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) unchanged
-- GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) unchanged
-
-### `src/c/002_1167B_gamesave_io/PickAwardWinners.c`
-
-- PickAwardWinners 5->5 (2026-10-24, Mhopkinsinc, GA) two temporaries tie at savings 20 and the wrong one picks first (losses byte into eax plus an lea).
-- PickAwardWinners 5->5 (2026-10-24, Mhopkinsinc, GA) (denominator registers)
-- PickAwardWinners 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
-ShowAwardScreens is in this file (score 9998, error) and comes with it.
-- ShowAwardScreens 31->31 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
-- ShowAwardScreens 31->19 (2026-10-24, Mhopkinsinc, GA) (`PickAwardWinners.c`): the title x step as a separate `x += 0x50;` statement fixes both title calls' argument evaluation order. Left: the goalie shots row
-- ShowAwardScreens 19->19 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
-- DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) dl / ebx where the EXE has dh / ecx
-- DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) (register cycle)
-- DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
-
-### `src/c/004_13320_asset_loading/PlacePlayersAtStart.c`
-
-- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) (global-value reuse). These have now had a Claude and a Codex lane pass back to back; the shapes tried are in `docs/UNSURE.md`
-- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-
-### `src/c/004_13320_asset_loading/ResetGameVars.c`
-
-- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SkateToSpot 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SkateToSpot 5->2 (2026-10-24, Mhopkinsinc, GA) : the `vtoa` result into d first
+- SkateToSpot 2->2 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SkateToSpot 2->2 (2026-10-24, Mhopkinsinc, GA) regsolve on the chained stop (0/3 votes, no swap improved); chained stop + one of: nothing 42, ayp without t 68, != sign test 35, HIBYTE==0 42, facedir sum swapped 42, Xvel = Xvel - Xvel/4 42, vtoa no casts 39, !(adx>=8||ady>=8) 30, 0xF2 > ary 42, SPA == axp 42, inverted+!= 24, inverted+no-cast 38, !=+no-cast 32; split + != 71, split + inverted 11, split + both 74; nothing kept
 
 ### `src/c/006_150C6_scoreboard_gfx/RunDemoGame.c`
 
-TitleScreen is in this file (score 9998, error) and comes with it.
+TitleScreen is in this file (score 3, size 2/2) and comes with it.
 - TitleScreen 13->13 (2026-10-24, Mhopkinsinc, GA) unchanged
 - TitleScreen 13->13 (2026-10-24, Mhopkinsinc, GA) (slots and the dead copy)
 - TitleScreen 12->2 (2026-10-24, Mhopkinsinc, GA) (`RunDemoGame.c`): the remaining wait goes through a new local (`left = due - i; SetTickDeadline(left);`)
@@ -235,89 +251,44 @@ TitleScreen is in this file (score 9998, error) and comes with it.
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) (divisor scheduling)
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
 
-### `src/c/014_1CC3D_frontend_labels/DrawSprite.c`
+### `src/c/033_40183_trades/TradePlayers.c`
 
-- DrawSprite 78->66 (2026-10-24, Mhopkinsinc, GA) (integer inputs, short edge arithmetic, the palette read uncached)
-- DrawSprite 66->66 (2026-10-24, Mhopkinsinc, GA) unchanged
-- DrawSprite 66->66 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TradePlayers 3->3 (2026-10-24, StaticEck2026, GA) regsolve (only a nm savings bump: ESCALATE, not made); pass-2 index order analysed (inline / nm-first re-measured 4); permute seed 2505 (260 new candidates)
 
-### `src/c/014_1CC3D_frontend_labels/SetupStatsSourceMenu.c`
+### `src/c/034_41B80_schedule/SimPlayoffRound1.c`
 
-- SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
+SimPlayoffRound2 is in this file (score 3, size 2/2) and comes with it.
+- SimPlayoffRound2 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SimPlayoffRound2 22->11 (2026-10-24, Mhopkinsinc, GA) (named score bytes, scalar order)
+- SimPlayoffRound2 11->3 (2026-10-24, Mhopkinsinc, GA) (the same zeroing loop; only the away score byte loaded into dh is left)
+- SimPlayoffRound2 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SimPlayoffRound2 3->3 (2026-10-24, StaticEck2026, GA) regsolve (nothing); unsigned wins on draft / inline / home-only (3 / 22 / 7); regdump vs SimPlayoffRound3 tie order; permute seed 2506 (321 candidates
+SimPlayoffRound1 is in this file (score 9, slot 6/9) and comes with it.
+- SimPlayoffRound1 27->27 (2026-10-24, Mhopkinsinc, GA) .
+- SimPlayoffRound1 28->16 (2026-10-24, Mhopkinsinc, GA) and SimPlayoffRound2 22 -> 11 (named score bytes, scalar order)
+- SimPlayoffRound1 16->16 (2026-10-24, Mhopkinsinc, GA) (a permute find with an `(unsigned short)` cast reached 14 and was rejected as a no-op cast)
+- SimPlayoffRound1 16->9 (2026-10-24, Mhopkinsinc, GA) 
+- SimPlayoffRound1 9->9 (2026-10-24, StaticEck2026, GA) regsolve (nothing); slotdump of the s / rdfh homes; Round2 and five other declaration orders (9-19); permute seed 2506 (321 candidates
+- SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
 
-### `src/c/015_1D6E8_menu_system/RunMenu.c`
+### `src/c/002_1167B_gamesave_io/PickAwardWinners.c`
 
-RunMenu is in this file (score 9998, error) and comes with it.
-- RunMenu 146->146 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunMenu 146->146 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunMenu 146->82 (2026-10-24, Mhopkinsinc, GA) (the EXE size): its frame struct as plain locals; inside one struct the store `sel[level] = item` could alias `level`
-- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
-
-### `src/c/016_20016_easn_stats/EasnGoalieStatsScreen.c`
-
-- EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
-- EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) (tail layout)
-- EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
-
-### `src/c/017_21CDE_player_stats/LeadersScreen.c`
-
-- LeadersScreen 123->84 (2026-10-24, Mhopkinsinc, GA) : an empty `default: break;` closes the column switch
-- LeadersScreen 84->84 (2026-10-24, Mhopkinsinc, GA) unchanged
-- LeadersScreen 84->84 (2026-10-24, Mhopkinsinc, GA) (the kfh / pfh slots)
-
-### `src/c/017_21CDE_player_stats/SkaterStatsCard.c`
-
-- SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) (byte promotion)
-- SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
-
-### `src/c/017_21CDE_player_stats/TeamStatsScreen.c`
-
-- TeamStatsScreen 132->123 (2026-10-24, Mhopkinsinc, GA) (dead-local reuse; every scalar stack slot now as in the EXE)
-- TeamStatsScreen 123->123 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-- TeamStatsScreen 123->123 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
-
-### `src/c/019_2970A_league_schedule/TreeSeriesWinner.c`
-
-- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
-- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
-- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) (every -od compile lays out locals, then the return temporary, then the parameters; the EXE has the return temporary first)
-- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
-
-### `src/c/021_2B7B7_file_dialogs/SelectSavedFile.c`
-
-- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-
-### `src/c/023_2FDD1_misc_dialogs/DrawListItem.c`
-
-- DrawListItem 11->11 (2026-10-24, Mhopkinsinc, GA) w in place gives the EXE's case 1
-- DrawListItem 6->6 (2026-10-24, Mhopkinsinc, GA) (right alignment; DrawListItems still waits for it)
-- DrawListItem 6->6 (2026-10-24, Mhopkinsinc, GA) unchanged
-- DrawListItem 6->6 (2026-10-24, abdulahmad, GA) LA also 6; -od 72. In-place case 1 already tried under GA (raises w into a tie with y). No new shape.
-DrawListItems is in this file (score 9998, error) and comes with it.
-- DrawListItems 0->0 (2026-10-24, abdulahmad, GA) matches under GA and under LA; unmarked because it short-jumps into DrawListItem. -od scores 47. Not marked.
-
-### `src/c/023_2FDD1_misc_dialogs/ListDialog.c`
-
-- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) the remaining stack-slot differences only improve in the warm compiler state; nothing reproduces it fresh.
-- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) (stack reloads)
-- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) (needs two count changes at once)
-- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
-
-### `src/c/024_31AB5_main_desk/MainDeskLoop.c`
-
-- MainDeskLoop 72->67 (2026-10-24, Mhopkinsinc, GA) (a scoped int size in the action block)
-- MainDeskLoop 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
-- MainDeskLoop 67->67 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (first sprite size in r); level alone as a plain int (rest in s) after s / after ptr / after depth 132 first_pick, after oldmy 106, last 103 (slots move); nothing kept
+- PickAwardWinners 5->5 (2026-10-24, Mhopkinsinc, GA) two temporaries tie at savings 20 and the wrong one picks first (losses byte into eax plus an lea).
+- PickAwardWinners 5->5 (2026-10-24, Mhopkinsinc, GA) (denominator registers)
+- PickAwardWinners 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
+- PickAwardWinners 5->5 (2026-10-24, StaticEck2026, GA) regsolve (nothing); award flags cleared by a loop through pts / v / mine / pct (same __STOSB, tie unchanged) or f.i (59)
+- DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) dl / ebx where the EXE has dh / ecx
+- DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) (register cycle)
+- DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
+- ShowAwardScreens 31->31 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
+- ShowAwardScreens 31->19 (2026-10-24, Mhopkinsinc, GA) (`PickAwardWinners.c`): the title x step as a separate `x += 0x50;` statement fixes both title calls' argument evaluation order. Left: the goalie shots row
+- ShowAwardScreens 19->19 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
 
 ### `src/c/026_3377C_rink_tiles/BlitTileMap.c`
 
@@ -326,27 +297,24 @@ DrawListItems is in this file (score 9998, error) and comes with it.
 - BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) (its slots need x's loop-weighted count 101 or less, i.e. one inner-loop reference where the code has two)
 - BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
 
-### `src/c/027_33FFD_calendar/DrawCalendarDay.c`
+### `src/c/001_10010_main_startup/FadePalette.c`
 
-- DrawCalendarDay 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
-- DrawCalendarDay 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+- FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) (clamp reload)
+- FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
 
-### `src/c/028_35FB9_import_export/PlayLeagueGame.c`
+### `src/c/017_21CDE_player_stats/SkaterStatsCard.c`
 
-- PlayLeagueGame 28->28 (2026-10-24, Mhopkinsinc, GA) unchanged
-- PlayLeagueGame 28->28 (2026-10-24, Mhopkinsinc, GA) unchanged
-- PlayLeagueGame 28->28 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) (byte promotion)
+- SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
 
-### `src/c/029_380E9_league_setup/BuildStandingsGrid.c`
+### `src/c/023_2FDD1_misc_dialogs/ListDialog.c`
 
-- BuildStandingsGrid 41->41 (2026-10-24, Mhopkinsinc, GA) unchanged
-- BuildStandingsGrid 41->41 (2026-10-24, Mhopkinsinc, GA) unchanged
-
-### `src/c/030_3A9AA_database_merge/ExportTeamToFloppy.c`
-
-- ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) the remaining stack-slot differences only improve in the warm compiler state; nothing reproduces it fresh.
+- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) (stack reloads)
+- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) (needs two count changes at once)
+- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
 
 ### `src/c/032_3DC2C_roster_jersey/ExecuteTrade.c`
 
@@ -354,12 +322,6 @@ DrawListItems is in this file (score 9998, error) and comes with it.
 - ExecuteTrade 15->14 (2026-10-24, Mhopkinsinc, GA) : traded and err declared before the frame struct give sel its home slot; only traded / kb stay swapped (all 5,040 orders tried). The result stays `int` (the result-type rule)
 - ExecuteTrade 7->7 (2026-10-24, Mhopkinsinc, GA) (no single count change; probably one temporary more or fewer in the original)
 - ExecuteTrade 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
-
-### `src/c/032_3DC2C_roster_jersey/FixJerseyConflict.c`
-
-- FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
-- FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
-- FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) (slotdump: the EXE's slots need one fewer loop-weighted reference to e and pal, or one more to tr)
 
 ### `src/c/033_40183_trades/CopyHumanTeamDBs.c`
 
@@ -369,11 +331,24 @@ DrawListItems is in this file (score 9998, error) and comes with it.
 - CopyHumanTeamDBs 9->9 (2026-10-24, Mhopkinsinc, GA) unchanged
 - CopyHumanTeamDBs 9->9 (2026-10-24, Mhopkinsinc, GA) regsolve (0/1 votes, nothing predicted); skip tests as one || 9, which test inverted with body nested 9, zero as plain int first/last/block-local 13, while (!r && s.retry) 14, s.which != -1 10; nothing kept
 
-### `src/c/033_40183_trades/TradePlayers.c`
+### `src/c/034_41B80_schedule/SeriesLength.c`
 
-- TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
-- TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
-- TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) (block layout of the shared return)
+
+### `src/c/030_3A9AA_database_merge/ExportTeamToFloppy.c`
+
+- ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/016_20016_easn_stats/EasnGoalieStatsScreen.c`
+
+- EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) (tail layout)
+- EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- EasnGoalieStatsScreen 12->12 (2026-10-24, StaticEck2026, GA) EasnSkaterStatsScreen added in address order (skater 12; GA keeps the earlier copy, goalie jumps back: 22 -115 bytes); goalie first, ternaries, if swap, EasnTeamStatsScreen / EasnStandingsScreen in the file (no forward merge)
 
 ### `src/c/034_41B80_schedule/CreateNewLeague.c`
 
@@ -388,44 +363,32 @@ DrawListItems is in this file (score 9998, error) and comes with it.
 - RandomizeSchedule 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
 - RandomizeSchedule 14->14 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (j = k + 1 for the second count); regsolve: 0/0 votes, nothing predicted, no swap improved; regdump / cdiff only (EXE keeps both counts in err's dead edx); no new natural append form left to try; nothing kept
 
-### `src/c/034_41B80_schedule/SeriesLength.c`
+### `src/c/004_13320_asset_loading/PlacePlayersAtStart.c`
 
-- SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) (block layout of the shared return)
+- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) (global-value reuse). These have now had a Claude and a Codex lane pass back to back; the shapes tried are in `docs/UNSURE.md`
+- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
 
-### `src/c/034_41B80_schedule/SimPlayoffRound1.c`
+### `src/c/021_2B7B7_file_dialogs/SelectSavedFile.c`
 
-SimPlayoffRound1 is in this file (score 9998, error) and comes with it.
-- SimPlayoffRound1 27->27 (2026-10-24, Mhopkinsinc, GA) .
-- SimPlayoffRound1 28->16 (2026-10-24, Mhopkinsinc, GA) and SimPlayoffRound2 22 -> 11 (named score bytes, scalar order)
-- SimPlayoffRound1 16->16 (2026-10-24, Mhopkinsinc, GA) (a permute find with an `(unsigned short)` cast reached 14 and was rejected as a no-op cast)
-- SimPlayoffRound1 16->9 (2026-10-24, Mhopkinsinc, GA) 
-SimPlayoffRound2 is in this file (score 9998, error) and comes with it.
-- SimPlayoffRound2 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SimPlayoffRound2 22->11 (2026-10-24, Mhopkinsinc, GA) (named score bytes, scalar order)
-- SimPlayoffRound2 11->3 (2026-10-24, Mhopkinsinc, GA) (the same zeroing loop; only the away score byte loaded into dh is left)
-- SimPlayoffRound2 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
+- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
 
-### `src/c/036_47C31_engine_init/FadeOutPalCycle.c`
+### `src/c/032_3DC2C_roster_jersey/FixJerseyConflict.c`
 
-- assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+- FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
+- FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
+- FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) (slotdump: the EXE's slots need one fewer loop-weighted reference to e and pal, or one more to tr)
 
-### `src/c/037_4842A_engine_player_logic/SkateToSpot.c`
+### `src/c/037_4842A_engine_player_logic/assgoalie.c`
 
-- SkateToSpot 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SkateToSpot 5->2 (2026-10-24, Mhopkinsinc, GA) : the `vtoa` result into d first
-- SkateToSpot 2->2 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SkateToSpot 2->2 (2026-10-24, Mhopkinsinc, GA) regsolve on the chained stop (0/3 votes, no swap improved); chained stop + one of: nothing 42, ayp without t 68, != sign test 35, HIBYTE==0 42, facedir sum swapped 42, Xvel = Xvel - Xvel/4 42, vtoa no casts 39, !(adx>=8||ady>=8) 30, 0xF2 > ary 42, SPA == axp 42, inverted+!= 24, inverted+no-cast 38, !=+no-cast 32; split + != 71, split + inverted 11, split + both 74; nothing kept
-
-### `src/c/037_4842A_engine_player_logic/StarCompare.c`
-
-- StarCompare 81->81 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
-- StarCompare 81->81 (2026-10-24, Mhopkinsinc, GA) . Each newest UNSURE bullet (inside the function's entry; `docs/unsure_tried.csv` rerun) gives the first difference and the savings that block it.
+assgoalie is in this file (score 21, size 12/22) and comes with it.
+- assgoalie 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assgoalie 25->21 (2026-10-24, Mhopkinsinc, GA) (a separate int distance and short depth)
+- assgoalie 21->21 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
 
 ### `src/c/037_4842A_engine_player_logic/assbench.c`
 
@@ -433,14 +396,93 @@ SimPlayoffRound2 is in this file (score 9998, error) and comes with it.
 - assbench 22->22 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
 - assbench 22->22 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
 
-### `src/c/037_4842A_engine_player_logic/assgoalie.c`
+### `src/c/004_13320_asset_loading/ResetGameVars.c`
 
-assgoalie is in this file (score 9998, error) and comes with it.
-- assgoalie 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assgoalie 25->21 (2026-10-24, Mhopkinsinc, GA) (a separate int distance and short depth)
-- assgoalie 21->21 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/028_35FB9_import_export/PlayLeagueGame.c`
+
+- PlayLeagueGame 28->28 (2026-10-24, Mhopkinsinc, GA) unchanged
+- PlayLeagueGame 28->28 (2026-10-24, Mhopkinsinc, GA) unchanged
+- PlayLeagueGame 28->28 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/019_2970A_league_schedule/TreeSeriesWinner.c`
+
+- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) (every -od compile lays out locals, then the return temporary, then the parameters; the EXE has the return temporary first)
+- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/027_33FFD_calendar/DrawCalendarDay.c`
+
+- DrawCalendarDay 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawCalendarDay 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/029_380E9_league_setup/BuildStandingsGrid.c`
+
+- BuildStandingsGrid 41->41 (2026-10-24, Mhopkinsinc, GA) unchanged
+- BuildStandingsGrid 41->41 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/014_1CC3D_frontend_labels/SetupStatsSourceMenu.c`
+
+- SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/036_47C31_engine_init/FadeOutPalCycle.c`
+
+- assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/002_1167B_gamesave_io/GameLoop.c`
+
+- GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
+- GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) unchanged
+- GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/014_1CC3D_frontend_labels/DrawSprite.c`
+
+- DrawSprite 78->66 (2026-10-24, Mhopkinsinc, GA) (integer inputs, short edge arithmetic, the palette read uncached)
+- DrawSprite 66->66 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawSprite 66->66 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/024_31AB5_main_desk/MainDeskLoop.c`
+
+- MainDeskLoop 72->67 (2026-10-24, Mhopkinsinc, GA) (a scoped int size in the action block)
+- MainDeskLoop 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
+- MainDeskLoop 67->67 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (first sprite size in r); level alone as a plain int (rest in s) after s / after ptr / after depth 132 first_pick, after oldmy 106, last 103 (slots move); nothing kept
+
+### `src/c/037_4842A_engine_player_logic/StarCompare.c`
+
+- StarCompare 81->81 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
+- StarCompare 81->81 (2026-10-24, Mhopkinsinc, GA) . Each newest UNSURE bullet (inside the function's entry; `docs/unsure_tried.csv` rerun) gives the first difference and the savings that block it.
+
+### `src/c/015_1D6E8_menu_system/RunMenu.c`
+
+RunMenu is in this file (score 82, register 38/82) and comes with it.
+- RunMenu 146->146 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunMenu 146->146 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunMenu 146->82 (2026-10-24, Mhopkinsinc, GA) (the EXE size): its frame struct as plain locals; inside one struct the store `sel[level] = item` could alias `level`
+- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
+- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/017_21CDE_player_stats/LeadersScreen.c`
+
+- LeadersScreen 123->84 (2026-10-24, Mhopkinsinc, GA) : an empty `default: break;` closes the column switch
+- LeadersScreen 84->84 (2026-10-24, Mhopkinsinc, GA) unchanged
+- LeadersScreen 84->84 (2026-10-24, Mhopkinsinc, GA) (the kfh / pfh slots)
+
+### `src/c/017_21CDE_player_stats/TeamStatsScreen.c`
+
+- TeamStatsScreen 132->123 (2026-10-24, Mhopkinsinc, GA) (dead-local reuse; every scalar stack slot now as in the EXE)
+- TeamStatsScreen 123->123 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
+- TeamStatsScreen 123->123 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
 
 ## Escalations — Abdul (lane T)
 
