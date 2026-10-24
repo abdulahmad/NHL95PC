@@ -2907,3 +2907,46 @@ TradePlayers,,"(2026-10-24, lane 1b batch 8): the first label as `strcat(s.msg1,
 TradePlayers,,"the second lookup before the second ""Show "" copy (5), both lookups before their copies (8)",8,ga
 assreffollow,,"(2026-10-24, lane 1b batch 8), all with the d index and `^` unless noted: `int d` declared before `Player *c` (6",,ga
 assreffollow,,"with the plain index and `^` 10), `c = SortCords + d` with `(c->pflags & 0x80 ? 1 : 0)` (6), `((*pucky < 0) != 0)` (15), `(*pucky < 0 ? 1 : 0)` on the second only (12), `d < 0` for the carrier test (44), `p->pflags &= ~2` (6), `gameclock == 0 && clockticks[0] == 0` (6), `(... ^ ...) != 0` (6), `== 0x80` for the first boolean (10), `SortCords[d].pflags` without c in the test (21), `^ ... != 0` with the plain index (19)",19,ga
+EditTextField,,"(2026-10-24, lane 1a batch 8): blink local declared before / after key, after ins, after i, `c == 0` (73 each)",73 each,ga
+EditTextField,,"`for (editpos = 0; buf[editpos]; editpos++) ;` (67, +1), `editpos = editpos + 1` in the End loop (67)",67,ga
+EditTextField,,"Backspace / typing tails as their own copies (67, kept for fewer labels)","67, kept for fewer labels",ga
+EditTextField,,"the filters as one negated ternary condition `!((flags & 8) ? ... : (flags & 0x10) ? ... : ...)` (75, +6)","75, +6",ga
+EditTextField,,"one permute run (449 candidates, best 52 at size +11 with two `short` casts, rejected: not the EXE size)","449 candidates, best 52 at size +11 with two `short` casts, rejected: not the EXE size",ga
+EditTextField,,"the whole typing tail (store, increment, DrawEditText, DrawEditCursor, goto) in both arms",,ga
+EditTextField,,"with or without else (77, +35)","77, +35",ga
+EditTextField,,"on the 62 version the last filter as one condition `key < 0x20 || key > 0x7A || maxlen <= editpos` (62), as one positive negated condition with the flags test (62)",62,ga
+EditTextField,,"the flags test as `if (!(...)) goto poll;` (62), everything in one condition (68, +17), `editpos >= maxlen` (62)",62,ga
+RunMenu,,on the 82 version: level / h declarations swapped (104),104,ga
+RunMenu,,"the close loop as `for (i = depth; i > level; i--)` (100), depth++ after the Norm call (164), `depth = i + 1` there (165), both with the for loop (183)",183,ga
+RunMenu,,"the reselect Norm through `menus[level][item]` on the struct version (152). Tried (2026-10-24, lane 1a batch 8): one permute run (705 candidates, best 137 only with the first close loop's `s.pos[i][1] = 0; s.pos[i][0] = s.pos[i][1];` read-back split, which earlier passes rejected)","705 candidates, best 137 only with the first close loop's `s.pos[i][1] = 0; s.pos[i][0] = s.pos[i][1];` read-back split, which earlier passes rejected",ga
+RunMenu,,its other steps by hand on all three functions: bits reused as size (153),153,ga
+RunMenu,,"the struct s declared after w (146), r declared in the action block (146), bits reuse + s after w (149), + r scoped (149), s after w + r scoped (146), all three + the read-back split (137",,ga
+RunMenu,,RunTeamPickMenu 212 / RunPlayerPickMenu 158 unchanged in every one),,ga
+GameSummaryScreen,,"(2026-10-24, lane 1a batch 8): one permute run (513 candidates",,ga
+GameSummaryScreen,,"best 230 only at size +60 through `short j` and three loop rewrites (do / goto-bottom / while), rejected: a type change and further from the EXE size)",,ga
+GameSummaryScreen,type:j:short,`short j`,tried (docs/UNSURE.md),ga
+SportsDesk,,"(2026-10-24, lane 1a batch 8): the MouseSetPos order fix (354)",354,ga
+SportsDesk,,with h / savex / savey moved into each other's declaration lines (372: the names' list positions moved too),372: the names' list positions moved too,ga
+SportsDesk,,"300 random orders of the nine address-taken scalars (mx, my, btn, savey, level, h, w, item, savex) among their own lines on the fix (best 361)",best 361,ga
+SportsDesk,,the scroll stores from sub_B2E1B's result (455,,ga
+SportsDesk,,"on the 303 version 386 at +13). The model search over declaration orders (1a_declsearch.py, slotdump's sorts) does not predict these slots (slot reuse)",,ga
+SportsDesk,,do not trust it here,,ga
+RunTeamPickMenu,,"(2026-10-24, lane 1a batch 8): the RunMenu shapes above (212 in all eight)",212 in all eight,ga
+RunTeamPickMenu,,the frame struct flattened into plain locals as for RunMenu (1638 before the slots),1638 before the slots,ga
+RunTeamPickMenu,,with an exhaustive sweep of the five arrays' order (best 350) and a random sweep of 400 scalar orders on that (best 281),best 281,ga
+RunTeamPickMenu,,"only level, or level and item, out of the struct at every scalar declaration position (304-310)",304-310,ga
+LeadersScreen,,"(2026-10-24, lane 1a batch 8): the record read plus the team check as an inner `do { if (read(...) != 0x34) goto done; } while (key.c[0] >= 0x1A);` (84, kfh count unchanged), as an inner `for (;;) { if (read != 0x34) goto done; if (key.c[0] < 0x1A) break; }` (84), as `while (read(...) == 0x34) { if (key.c[0] < 0x1A) break; }` (86, +29)","86, +29",ga
+LeadersScreen,,"declaration order of the nine arrays (model search with slotdump's sorts found an order, but the real compile moved i: the names' ids do not follow the model",,ga
+LeadersScreen,,600 real compiles of random array / all orders,,ga
+LeadersScreen,,"with kfh-then-pfh close: best 84, those that fix kfh / pfh move y (100) or i",,ga
+LeadersScreen,,"with the EXE's pfh-then-kfh close: best 86, fixed kfh / pfh at 89 (d220) or 100)",,ga
+LeadersScreen,,"the goalie teamgp test as `== 0` (84), `!(tg && gp * 100 / tg >= 0x1E)` spelled on teamgp (85), `teamgp[k] ? gp * 100 / teamgp[k] < 0x1E : 1` (184)",184,ga
+LeadersScreen,,a ternary value `< 0x1E` (122),122,ga
+LeadersScreen,,the index as `*(unsigned char *)&key` (84),84,ga
+LeadersScreen,,the team-check skip as `goto next` to a label on the read (84),84,ga
+LeadersScreen,,"the read + team check as a `do / while` before the inner `for (;;)` (461), as a `while (read(...) == 0x34) { if (key.c[0] < 0x1A) goto got; } goto done;` (120), either or both `for (;;)` as `while (1)` (84). Hint (from EditTextField's probes, interval analysis): the EXE's kfh count fits the read block being in a loop of its own whose header is not the block the goalie / skater `continue`s go back to (read + team check at depth 2",,ga
+LeadersScreen,,"the rest at depth 1: kfh 102, pfh 42)",,ga
+LeadersScreen,,none of the shapes above made that header distinct,,ga
+RunPlayerPickMenu,,"(2026-10-24, lane 1a batch 8): only the RunMenu shapes above (no effect on it: 158 in all eight",,ga
+RunPlayerPickMenu,,"unchanged by RunMenu's flattening). Not tried: flattening its remaining struct (item, level, pick, my, mx",,ga
+RunPlayerPickMenu,,"the PHILITE macro reads s. members, so it needs editing too)",,ga
