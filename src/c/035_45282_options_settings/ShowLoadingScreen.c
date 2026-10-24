@@ -2,9 +2,7 @@
    memory (> 222E0h) load the LOAD bank (str_LoadPic) (from the CD when listed there), take its Pal23 palette and build two
    rotated copies of entries 1-8Fh (by 30h and 60h entries) for the palette cycle, draw LoadPic at 100,75, start
    LoadScreenPalTick on the timer and fade loadpals up to the palette one step per two ticks; loadscreenon = 1.
-   DRAFT (10.0 GA, 582 vs 584): the rotation index j doubles as the fade loop's done flag (esi), the art goes
-   through its own local. Left: palcyclelock = 0 shares the done flag's zero (xor esi, esi); the EXE zeroes ecx
-   for it and then esi for the flag. */
+ */
 #include "nhl95.h"
 
 void ShowLoadingScreen(void)
@@ -21,7 +19,7 @@ void ShowLoadingScreen(void)
     int k;
 
     if (loadscreenon) return;
-    sub_8FFB0(loadscreenon, 0x100, loadpals);
+    sub_8FFB0(0, 0x100, loadpals);
     FadePalStep(1, loadpals, 8);
     sub_B4BA8();
     sub_B392C(0);

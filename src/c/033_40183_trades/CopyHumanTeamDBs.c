@@ -7,6 +7,8 @@
 
 void ExportTeamToFloppy(char *dir, char *ext, char *ext2, int t, unsigned char *teams, int full, int a);
 
+/* DRAFT (10.0 GA): 20 differing, exact size. A plain current-team local keeps the number across
+   sprintf / strcpy; the remaining register picks and zero stores differ. */
 /* CopyHumanTeamDBs (41516, PC only): give each human team of the league in dir (teams +17h == 1; only team which
    when which is not negative) its own copy of the league databases, named by the team number (".%02d" into
    str_extxx). A team played on another computer (+18h == 2) that has not exported yet (+16h bit 0 clear) gets
@@ -36,6 +38,7 @@ int CopyHumanTeamDBs(char *dir, unsigned char *teams, int which)
         int t;
         int zero;
     } s;
+    int t;
     int err;
     int r;
     int i;
@@ -48,9 +51,10 @@ int CopyHumanTeamDBs(char *dir, unsigned char *teams, int which)
     for (s.t = 0; s.t < 0x1A && !err; s.t++) {
         if (s.teams[s.t * 30 + 0x17] != 1) continue;
         if (s.which >= 0 && s.which != s.t) continue;
-        sprintf(s.msg, (char *)str_extnum, s.t);
+        t = s.t;
+        sprintf(s.msg, (char *)str_extnum, t);
         strcpy((char *)str_extxx, s.msg);
-        if (s.teams[s.t * 30 + 0x18] == 2 && !(s.teams[s.t * 30 + 0x16] & 1)) {
+        if (s.teams[t * 30 + 0x18] == 2 && !(s.teams[t * 30 + 0x16] & 1)) {
             do {
                 s.retry = 0;
                 tp = s.teams + s.t * 30;
