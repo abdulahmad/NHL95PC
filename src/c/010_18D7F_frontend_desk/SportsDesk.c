@@ -23,12 +23,12 @@ int sub_8F98F(char *path);  /* music library: load a song (register arguments) *
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song (register arguments) */
 int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last call */
 
-/* DRAFT under 10.0 GA: 402 differing instructions (4,254 vs 4,567 bytes). The playoff result's arguments are
-   computed before the call, as the EXE does (ternaries in a stack-argument call gave the whole function a biased
-   ebp frame), and the scalars are plain locals in the order tools/slot_solver.py found (the EXE has them at the
-   top of the frame, 0x404 bytes; a frame struct put them under the arrays). Left: the arrays' and a few scalars'
-   slots, 8 bytes of frame (m and at spilled), the menu-branch code. The retail speech timer compares the routine
-   address. */
+/* DRAFT under 10.0 GA: 353 differing instructions (4,219 vs 4,567 bytes). The frame is the retail 404h:
+   the menu-item offset is computed in place, and m is formed only in the dropdown path after the drawing calls.
+   Zero chains store the higher indices first, as in the EXE, and the playoff comparisons use its >= bounds.
+   Plain scalar declarations follow tools/slot_solver.py. Left: some stack slots, the overtime / conference
+   argument shapes and the combined menu-action / submenu branches. The retail speech timer compares the
+   routine address. */
 /* SportsDesk (1935D, PC only): the sports desk of a game (mode 0: paused in the game, 1: intermission, 2: after
    the game): the menu labels and title of the mode, the replay item only when a replay is recorded; fade in the
    EADESK<mode> art and palette, the pause music (when music is on and none plays), and the desk menu bar (six
@@ -53,22 +53,20 @@ void SportsDesk(int mode)
     MenuItem *menus[4];
     int depth;
     int oldmx;
-    int at;
     int ptr;
     int autoret;
     int timeout;
     int savex;
     int oldmy;
     int speech;
-    int mx;
-    int my;
-    int savey;
-    int btn;
-    int level;
     int item;
+    int btn;
+    int savey;
+    int level;
+    int h;
     int w;
     int r;
-    int h;
+    int mx;
     int bank;
     unsigned char *src;
     int i;
@@ -76,6 +74,7 @@ void SportsDesk(int mode)
     MenuItem *m;
     int winner;
     int ot;
+    int my;
     int conf;
     int rnd;
 
@@ -105,17 +104,17 @@ void SportsDesk(int mode)
     sub_8E9E8(txt);
     sub_8EA18(s1font);
     if (mode == 2) {
-        if (schedgameidx > 0x443) PaOpenBank();
+        if (schedgameidx >= 0x444) PaOpenBank();
         menus[0] = (MenuItem *)unk_CEC4F;
         nitems[0] = 3;
     } else {
         menus[0] = (MenuItem *)unk_CEB8F;
         nitems[0] = 6;
     }
-    menus[3] = menus[2] = menus[1] = 0;
-    bg[3] = bg[2] = bg[1] = bg[0] = 0;
-    sel[3] = sel[2] = sel[1] = sel[0] = 0;
-    pos[0][1] = pos[0][0] = 0;
+    menus[1] = menus[2] = menus[3] = 0;
+    bg[0] = bg[1] = bg[2] = bg[3] = 0;
+    sel[0] = sel[1] = sel[2] = sel[3] = 0;
+    pos[0][0] = pos[0][1] = 0;
     ptrsize = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
     ptr = sub_8CCA8((char *)str_Pointer2, ptrsize, 0x20);
     *(Hdr17 *)ptr = *(Hdr17 *)pointerspr;
@@ -139,15 +138,15 @@ void SportsDesk(int mode)
     ClearInputQueue();
     if (mode == 1 && ctl1team[0] < 0 && ctl2team < 0) autoret = 1;
     TicksSinceLastCall();
-    if (mode == 2 && schedgameidx > 0x443) {
+    if (mode == 2 && schedgameidx >= 0x444) {
         if (hmtmstruct.tmscore > awtmstruct.tmscore) winner = HomeTeam;
         else winner = VisTeam;
         ot = curperiod > 3 ? -1 : 0;
         if (teamconf[HomeTeam] != teamconf[VisTeam]) conf = 3;
         else conf = (teamconf[HomeTeam] | teamconf[VisTeam]) % 2 + 1;
         rnd = 1;
-        if (schedgameidx > 0x47B) rnd = 2;
-        if (schedgameidx > 0x497) rnd = 3;
+        if (schedgameidx >= 0x47C) rnd = 2;
+        if (schedgameidx >= 0x498) rnd = 3;
         PaPlayoffResult(winner, (schedgameidx - 0x444) % 7 + 1, conf, rnd, ot, byte_CCCA0);
         byte_CCCA0 = 0;
     }
@@ -216,38 +215,36 @@ void SportsDesk(int mode)
                 sel[i] = 0;
                 if (bg[i]) {
                     sub_903F0(bg[i], pos[i][0], pos[i][1]);
-                    pos[i][1] = pos[i][0] = 0;
+                    pos[i][0] = pos[i][1] = 0;
                     FreeMemBlock(bg[i]);
                 }
             }
             depth = 0;
-            menus[3] = menus[2] = menus[1] = 0;
-            bg[3] = bg[2] = bg[1] = bg[0] = 0;
-            sel[3] = sel[2] = sel[1] = 0;
-            nitems[3] = nitems[2] = nitems[1] = 0;
+            menus[1] = menus[2] = menus[3] = 0;
+            bg[0] = bg[1] = bg[2] = bg[3] = 0;
+            sel[1] = sel[2] = sel[3] = 0;
+            nitems[1] = nitems[2] = nitems[3] = 0;
         } else {
-            at = item * sizeof(MenuItem);
-            m = (MenuItem *)((char *)menus[level] + at);
-            if ((*(int *)((char *)menus[level] + at + 0x14)) && item == sel[level]) {
+            if ((*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x14)) && item == sel[level]) {
                 sub_903F0(ptr, oldmx, oldmy);
                 for (i = depth; i > 0; i--) {
                     sel[i] = 0;
                     if (bg[i]) {
                         sub_903F0(bg[i], pos[i][0], pos[i][1]);
-                        pos[i][1] = pos[i][0] = 0;
+                        pos[i][0] = pos[i][1] = 0;
                         FreeMemBlock(bg[i]);
                     }
                 }
                 depth = 0;
                 dword_DC88C = mx;
                 dword_DC888 = my;
-                r = ((int (*)(void))(*(int *)((char *)menus[level] + at + 0x14)))();
+                r = ((int (*)(void))(*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x14)))();
                 mx = dword_DC88C;
                 my = dword_DC888;
-                menus[3] = menus[2] = menus[1] = 0;
-                bg[3] = bg[2] = bg[1] = bg[0] = 0;
-                sel[3] = sel[2] = sel[1] = 0;
-                nitems[3] = nitems[2] = nitems[1] = 0;
+                menus[1] = menus[2] = menus[3] = 0;
+                bg[0] = bg[1] = bg[2] = bg[3] = 0;
+                sel[1] = sel[2] = sel[3] = 0;
+                nitems[1] = nitems[2] = nitems[3] = 0;
                 if (r == 1 || r == 5) {
                     ClearInputQueue();
                     InputRemove();
@@ -292,14 +289,14 @@ void SportsDesk(int mode)
                 }
                 MouseSetPos(oldmx, oldmy);
                 ClearInputQueue();
-            } else if ((*(int *)((char *)menus[level] + at + 0x14)) || (*(int *)((char *)menus[level] + at + 0x18))) {
+            } else if ((*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x14)) || (*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x18))) {
                 sub_903F0(ptr, oldmx, oldmy);
                 if (depth != level) {
                     for (i = depth; i > level; i--) {
                         sel[i] = 0;
                         if (bg[i]) {
                             sub_903F0(bg[i], pos[i][0], pos[i][1]);
-                            pos[i][1] = pos[i][0] = 0;
+                            pos[i][0] = pos[i][1] = 0;
                             FreeMemBlock(bg[i]);
                             bg[i] = 0;
                             menus[i] = 0;
@@ -312,9 +309,10 @@ void SportsDesk(int mode)
                 DrawMenuItemSel((struct MenuItem *)&menus[i][sel[i]], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
                 sel[i] = item;
                 DrawMenuItemNorm((struct MenuItem *)&menus[i][item], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
-                if (!(*(int *)((char *)menus[level] + at + 0x14))) {
+                if (!(*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x14))) {
+                    m = &menus[level][item];
                     depth = i + 1;
-                    menus[depth] = (MenuItem *)(*(int *)((char *)menus[level] + at + 0x18));
+                    menus[depth] = (MenuItem *)(*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x18));
                     pos[depth][0] = (depth == 1 ? m->x1 : m->x2) + pos[depth - 1][0];
                     nitems[depth] = m->pad;
                     pos[depth][1] = (depth == 1 ? m->y2 : m->y1) + pos[depth - 1][1];
