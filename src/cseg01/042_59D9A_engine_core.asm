@@ -612,6 +612,10 @@ add eax, edx	; 5A338
 mov edi, 3	; 5A33A
 jmp short getlinee_sum	; 5A33F
 %endif ; C
+; C: src/c/042_59D9A_engine_core/calcpuckcross.c
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/calcpuckcross.inc"
+%else
 calcpuckcross:
 push dword 20h	; 5A341
 call __CHK	; 5A346
@@ -699,6 +703,7 @@ pop edx	; 5A421
 pop ecx	; 5A422
 pop ebx	; 5A423
 ret	; 5A424
+%endif ; C
 ; C: src/c/042_59D9A_engine_core/calcpuckcross.c (GetHot)
 %ifdef CBUILD
 %include "c/042_59D9A_engine_core/calcpuckcross.GetHot.inc"
@@ -3009,6 +3014,10 @@ jmp near calcpuckcross_ret5	; 5C00B
 %endif ; C
 ; StartPer: setupice, ResetClock, no controlled players, center faceoff, InitCoachModes,
 ; then DoGameFrame.
+; C: src/c/042_59D9A_engine_core/calcpuckcross.c (StartPer)
+%ifdef CBUILD
+%include "c/042_59D9A_engine_core/calcpuckcross.StartPer.inc"
+%else
 StartPer:
 push dword 18h	; 5C010
 call __CHK	; 5C015
@@ -3103,6 +3112,7 @@ mov word [fadeinpending], 1	; 5C1A2
 add dword [rinkscrollx], 3E8h	; 5C1AB
 add dword [rinkscrolly], 3E8h	; 5C1B5
 jmp near calcpuckcross_ret5	; 5C1BF
+%endif ; C
 ; C: src/c/042_59D9A_engine_core/DoGameFrame.c
 %ifdef CBUILD
 %include "c/042_59D9A_engine_core/DoGameFrame.inc"
