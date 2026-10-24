@@ -3414,6 +3414,45 @@ OpenSpeechBank,,permlog_b12off.csv),,ga
 OpenSpeechBank,,"only one of the two changes: int type alone 43, int nsamples alone 42",,ga
 OpenSpeechBank,type:nsamples:int,`int nsamples`,tried (docs/UNSURE.md),ga
 DrawListItems,,shapes listed in docs/UNSURE.md (not itemized),,ga
+POSeedTeams,,"(2026-10-24, lane 1 batch 13, GA, split base): same-conference probes with the slot first (33), `++i` / `--i` / 15 (33)",33,ga
+POSeedTeams,,"the HomeTeam probe as a while loop (47), `teamconf[X] == -slots[i]` in either count loop (39), `slots[i] ^= slots[a]` for step 2 (28, moves the prologue), step 3 as `^=` (26, moves the prologue)","26, moves the prologue",ga
+POSeedTeams,,the last loop with the slot first (33),33,ga
+PenGoalStuff,,"(2026-10-24, lane 1 batch 13, GA): the jersey address with the row first `*(n * 0x27 + ot->tmroster + 5)`, `(n * 0x27 + 5)[ot->tmroster]`, `*(n * 0x27 + (ot->tmroster + 5))`",,ga
+PenGoalStuff,,"the status store as `*(n * 0x27 + ot->tmroster) = 7` with it (all 19: canonicalized), `*(unsigned char *)(n * 0x27 + (int)ot->tmroster + 5)` (29)",29,ga
+PenGoalStuff,,"second pass: `++st->tmppg`, `!(st->tmap > ot->tmap)`, `++n` in the shift loop",,ga
+PenGoalStuff,,"the box test as `!(ot->tmpdst[n] & 0x4000)`, `!side` for the first argument (all 19)",all 19,ga
+PenGoalStuff,,the roster status store before the tmpdst store (22),22,ga
+PassRecOneTimer,,"(2026-10-24, lane 1 batch 13, GA): on the 34 base `d *= d; d += c * c` / `d = d + c * c` (40), `c * c + d * d` (34), `0 - regd0.w` (34), int c alone (40, size +2), int c with the steps (34, +2), int c declared first (40, +2), int c with steps and the aim cast (39)",39,ga
+PassRecOneTimer,,on the 32 base: `t = t * *puckvy >> 16` with `(short)t + *pucky` either order (38),38,ga
+PassRecOneTimer,,"the product inline in c (48, +4), Ypos first / `regd1.w + (Ypos - *pucky)` (33), c without its cast (48), `0 - regd0.w` (32), regd0 first in d (34), d without its cast (46), `<< 1` table indexes (32), `-regd0.w & 7` mirror (31, +8)","31, +8",ga
+PassRecOneTimer,,"the negation as a ternary (42) or `*= -1` (32, +1)","32, +1",ga
+PassRecOneTimer,,second pass on the 32 base: the blade y distance as `c = (short)(regd1.w + HIWORD(p->Ypos)); c = (short)(c - *pucky);` (33),33,ga
+PassRecOneTimer,,"the same with the first step unnarrowed (37), `c -= *pucky; c = (short)c;` (39), `(short)c * (short)c` in d (32)",32,ga
+puckfaceoff,,"(2026-10-24, lane 1 batch 13, GA): the three goto removals (29, kept)","29, kept",ga
+puckfaceoff,,"the goto done tail written out (73), `int side = k;` (29), side declared at the top (29), `(cont1team | cont2team) != 0` (29), word_CBC44 tested first (36)",36,ga
+ChkScorerMilestone,,"(2026-10-24, lane 1 batch 13, GA): second-assist `pts = g + GOALS` (36), its p as `word_DF644[t * 128 + 2]` and/or the first assist's as `[t * 128 + 1]` (35-36, same 8 instructions), p as a byte read `((unsigned char *)word_DF644)[t * 256]` (171) or `(short)(unsigned char)word_DF644[...]` (171), `p <= 0x18` (38), byte_E024D as `byte_E024C[t * 2 + 1]` (35, same 8), t with `? 1 : 0` (171), `g + sum == 1` (36), sum in two statements (52-55), `sum += g` (55), what unsigned char (177), sum short (178), hat trick `pts = 3` (36)",36,ga
+ChkScorerMilestone,,the first-assist sum through g as in the second (168),168,ga
+ChkScorerMilestone,,the second through pts only (170),170,ga
+ChkScorerMilestone,,"on the sum-inline base: g first / middle (125), `g + (...)` (35), sum assigned in the condition (35), `sum += g` (55), `p <= 0x18` (37)",37,ga
+ChkScorerMilestone,,"the indexed second-assist p (34), `pts = 3` (35), `pts = REC + pts` at L74 (35)",35,ga
+ChkScorerMilestone,,"permute.py 5 min from the sum-inline base (641 candidates, best 33 only with two (short) casts)",,ga
+ReplayStep,,"(2026-10-24, lane 1 batch 13, GA): the sound test as `replayplay != last` (46), as a nested `if (sound) { if (last != replayplay) ... }` (46), `recbpr == replayplay` (51)",51,ga
+CanBlockShot,,"(2026-10-24, lane 1 batch 13, GA): side and k from `(p->pflags & pfgoal) ? 1 : 0` (42), `12 + (...)` (42), g indexed directly without k (62), `(p->SCnum < 6) == (s < 6)` for the shooter test (55), `if ((k = *puckc) >= 0) ;` (55)",55,ga
+InProgress,,"(2026-10-24, lane 1 batch 13, GA): for (;;) with continue / break (88, kept)","88, kept",ga
+InProgress,,"the same without the volatile (87), `word_CBC44[0]` through an array extern (87)",87,ga
+puckfaceoff2,,"(2026-10-24, lane 1 batch 13, GA): `p->temp5--;` as its own statement (92)",92,ga
+puckfaceoff2,,the -1 chain as four statements each from the previous global (92),92,ga
+puckfaceoff2,,"the text-line chain the same way (92), `(k = --p->temp5) > 0` (68, +1 byte, ESCALATE)","68, +1 byte, ESCALATE",ga
+puckfaceoff2,,"second pass: `(p->temp5 = p->temp5 - 1) > 0` (92), `(p->temp5 -= 1) > 0` (92), `--p->temp5 >= 1` (93)",93,ga
+puckfaceoff2,,the first test split into two nested ifs (92),92,ga
+POAfterGame,,"(2026-10-24, lane 1 batch 13, GA): `ctl2team > -1` in the n = 2 test (67), `!(ctl1team[0] < 0 && ctl2team < 0)` (67)",67,ga
+POAfterGame,,"the n = 2 test nested in an else with `n = 0` first (76), `ctl2team <= -1` in the xor (66), `(n = xor) == 0 && (...)` as one else-if (84)",84,ga
+POAfterGame,,"the unsigned shift above (67), `f.aw = f.hw = 0` split either order (67 / 69)",67 / 69,ga
+POAfterGame,,"permute.py 5 min (449 candidates, best 46 only through seven stacked transforms including a char cast, two added temporaries and a chain merge against the EXE's store order",,ga
+POAfterGame,,not kept),,ga
+DrawRinkSideObjects,,"(2026-10-24, lane 1 batch 13, GA): the marker player index in its own short j (173, size +5",,ga
+DrawRinkSideObjects,,"declared first 194, +11)",,ga
+DrawRinkSideObjects,,"the clamp as `0x140 - vy - 0xA8` (132, +10)","132, +10",ga
 DrawAwardsSummary,,the three-team test as a switch on `awardwinners[k * 52]` (cases 2 / 18h / 19h then default,,ga
 DrawAwardsSummary,,"with and without the last break, or default first: 21-24, Watcom compiles it as a range test)",,ga
 DrawAwardsSummary,,"a per-file `/* cflags: */` sweep (-os, -ot, -ol, -ol+, -or, -oa, -oi, -oe, -oc, -om, -3r, -4r) (12 or worse)",12 or worse,ga
