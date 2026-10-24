@@ -3001,6 +3001,21 @@ SelectMatchingPlayers,,"under GA (only the add association is left): `(char *)(i
 SelectMatchingPlayers,,new: `&(i * 27)[falist + 8]` (8),8,ga
 RosterPanelClick,,(time,,ga
 RosterPanelClick,,the lists above cover the toggle spellings),,ga
+CanFillLineSlot,type:result:int,`int result`,tried (docs/UNSURE.md),ga
+CanFillLineSlot,type:st:char,`char st`,tried (docs/UNSURE.md),ga
+checkcx,,"an extra use `+ (d - d)` in the cross product (76, size +4), o->Xvel's update through the position difference instead of dx (65), `dvx * d` in regd0's product (23)",23,ga
+checkcx,,"permute.py 6 min (200 candidates, nothing below 20)","200 candidates, nothing below 20",ga
+checkcheck,,"the penalty bool through odds (`odds = randomd0(2) != 0; AddPenalty(p, odds + 0xB)`: 42) or rel (35), dir reused for the facedir difference of the boarding test (62)",62,ga
+checkcheck,,"permute.py 6 min (897 candidates: best 29 only with `(short)` / `(unsigned short)` casts on the pflags test, not kept",,ga
+checkcheck,,`(rel << 1)` alone 32),,ga
+checkgoalp,,d reused for the radius tests and the divisor: `d = y - wcradiusy; if (d >= 34)` (36),36,ga
+checkgoalp,,plus `d = y; if (wcradiusy + d < -34)` (37),37,ga
+checkgoalp,,plus `d = wcradiusx` for the x test (43),43,ga
+checkgoalp,,"plus `d = len` for both divisions (42: d rises to 12, ties p, takes EBX), `d = len` alone (30, size +7)","30, size +7",ga
+checkgoalp,,"permute.py 6 min (321 candidates, nothing)","321 candidates, nothing",ga
+RemoveFromLines,,"no r (the byte read again in the index: 76), `signed char r` (43), `hmroster[r * 0x27 + side * 0x444]` in both loops (58)",58,ga
+RemoveFromLines,type:r:signed_char,`signed char r`,tried (docs/UNSURE.md),ga
+NetCollide,,"gy by if / else (72), dir assigned inside both direction tests (41, same code), dy against the gy ternary written again (74), scaled_y dropped (49)",49,ga
 CreatePlayoffs,,"the plain-local splits listed above moved other slots. Lane 2b batch 2 (10.0 GA): permute.py once (385 candidates): its best (10) swaps the postate+69h / +61h stores, against the EXE's store order (rejected). Nothing else tried",,ga
 POHandleElimination,,the simulate path as a nested `if (MessageBox(...)) { ... }` without the goto / save label (7,,ga
 POHandleElimination,,the same cross-jump),,ga
@@ -3068,3 +3083,26 @@ DbLineEditorLoop,,"m used as `m->on1` (370, 78 after declsearch), m assigned ins
 DbLineEditorLoop,,"no itemoffset / m (`menus[level][item].on1` / `.on2`: 254, 69 after declsearch: the EXE's level * 4 / item * 32 order, but the select branch's second DrawMenuItemNorm loads pos[level][0] into esi and reuses the stored item in eax for sel[level], EXE eax and a fresh read",,ga
 DbLineEditorLoop,,"permute.py from it 513 candidates, best 66)",,ga
 POAfterGame,,"(time). The controller-side code differs in register-cycle picks and in where the zeros come from: the EXE stores ctl2side = 0 as `xor edi, ebp` (w ^ ctl2team, known equal) and zeroes eax with `xor eax, eax` before the s[2] byte load, ours `xor eax, edx` from the equal ctl1team / ctl2team compare",,ga
+passtoa0,,sp short alone (73,,ga
+passtoa0,,"the products still narrowed), `r = vx * vx + vy * vy - sp * sp; s.k = r` with sp short (85), `(long)` on the squares (48, no change)","48, no change",ga
+passtoa0,,"the sum and the difference in two statements through r (83), `-(sp * sp) + ...` (53)",53,ga
+passtoa0,,"the speed through r (89), vx / vy as plain short locals outside the struct (115, products still narrowed)","115, products still narrowed",ga
+doshot,,"the radius product's operands swapped (canonicalized, 47)","canonicalized, 47",ga
+doshot,,"the sum through t or the product through t (56), `0x10 - sp + (passspeed >> 4)` (87)",87,ga
+doshot,,q replaced by the dead sp (64,,ga
+doshot,,"with the r + r form 76: q's copies then match), by the dead gy (86), by the dead int e (159), q as int (79)",79,ga
+doshot,type:q:int,q as int,tried (docs/UNSURE.md),ga
+checkpuckcoll,,(every role split is listed above),,ga
+setplayer,,"`gameclock < (short)(PerTimeTotal >> 1)` (98), `gameclock < PerTimeTotal / 2` (108)",108,ga
+setplayer,,"permute.py once on the new version (330 candidates: best 81 with td loaded after the zero stores and operand swaps of the rating sums, rejected: the EXE loads td first)","330 candidates: best 81 with td loaded after the zero stores and operand swaps of the rating sums, rejected: the EXE loads td first",ga
+LoadGameState,,"the goalie address as `i / 3 * 18 + i % 3 * 6`, `(i / 3 * 9 + i % 3 * 3) * 2`, terms swapped, shifts, `i % 3 * 6`",,ga
+LoadGameState,,"a 2-D array, `(short *)` indexing",,ga
+LoadGameState,,a braced body (37-57),37-57,ga
+LoadGameState,,"the skater row as `i / 25 * 400`, `(i / 25 * 25 + i % 25) * 16`, terms swapped",,ga
+LoadGameState,,a 2-D array (37-51),37-51,ga
+LoadGameState,,the photo bit as `x = x | ...` either order (114),114,ga
+LoadGameState,,the frame index operands swapped (37),37,ga
+LoadGameState,,"`id = o->id = *p` (43), `id = *p` (37), `o->first = byte_CCE00[id]` (46), `&((LRinkObj *)word_DEE94)[i]` (37)",37,ga
+LoadGameState,,"the hud copies indexed, `for (i = 0, pl = SortCords; ...)` (111), `OOlistpos[i] = OOlist[i] = i` (47), `pl = &SortCords[i]` (44)",44,ga
+LoadGameState,,the ovl test operands swapped (45),45,ga
+DrawRinkSideObjects,,"the vy test as `0x140 - vy - 0xA8` (175), `0x140 - (0xA8 + vy)` (118, no change), `0x140 - (vy + 0xA8) > y` (165), y read before x (120), `f = k - k` for the zero (156)",156,ga

@@ -65,6 +65,9 @@ void changeplayer(Player *p, short cont)
     }
 }
 
+/* DRAFT (10.0 GA, 93 differing, same size): the late-period test as `gameclock < PerTimeTotal >> 1` loads the
+   half period first as the EXE does. Left: the team pointer t in esi (EXE ecx), and with it the byte temporaries
+   and the pflags xor (EXE `movzx esi, dl`); see docs/UNSURE.md. */
 /* setplayer (5B2C5, 93G setplayer; ends in changeplayer_ret5): bring roster player n of p's team onto the ice and
    set its ratings. A player coming from the penalty box (tmpdst >= 0) or the bench (-2) is given the enter
    assignment (0Ah / 9; assinsert) and unlocked; the slot becomes -1 (on the ice) and the roster status 4. Skaters
@@ -114,7 +117,7 @@ void setplayer(Player *p, short n)
             }
         }
         rg.hm.b = !(p->pflags & 0x40) ? (td[0x2DE] > 6 ? 2 : td[0x2DE] >= 4) : (td[0x2DF] > 6 ? 2 : td[0x2DF] >= 4) - 2;
-        if (gsp > 2 || gsp == 2 && PerTimeTotal >> 1 > gameclock) {
+        if (gsp > 2 || gsp == 2 && gameclock < PerTimeTotal >> 1) {
             short df;
 
             df = hmscore[0] - awscore;
