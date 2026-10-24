@@ -3358,3 +3358,43 @@ checkcheck,,"(2026-10-24, lane T) and not kept",,ga
 checkcheck,type:dir:int,`int dir`,tried (docs/UNSURE.md),ga
 OpenSpeechBank,,"(2026-10-24, lane T). Frame declaration order left as it is",,ga
 DrawListItems,,shapes listed in docs/UNSURE.md (not itemized),,ga
+CalendarScreen,,"(2026-10-24, lane 1 batch 13): k as `oldd + monthfirstday_m1[...] - 1` (319), `... - 1 + oldd` (320), `oldd - 1 + ...` (319), `... + (oldd - 1)` (319), `oldd + (... - 1)` (320)",320,ga
+CalendarScreen,,the compare as `calselmonth == oldm && calselday != oldd` (319),319,ga
+CalendarScreen,,`oldd = calselday;` before `oldm = calselmonth;` (319) (all on the 319 base),all on the 319 base,ga
+CalendarScreen,,"on the 258 base: clip locals x1, y1, x2, y2 in both clips (608, +12)","608, +12",ga
+CalendarScreen,,"with col = k % 7 / row = k / 7 too (479, +8)","479, +8",ga
+EditTextField,,"(2026-10-24, lane 1 batch 13): the End loop increment as `editpos += 1`, `editpos = editpos + 1`, `++editpos`, braces, `buf[editpos] != 0` (36 each), `for (; buf[editpos]; editpos++)` (39)",39,ga
+EditTextField,,"blink / timeout spellings `if (timeout) if (TickDeadlinePassed())`, `editcuron = c == 0`, `c ? 0 : 1`, `timeout != 0 && ... != 0` (36 each), `TickDeadlinePassed() == 1` (40), `timeout > 0` (37)",37,ga
+EditTextField,,"casts `(unsigned short)` on TickDeadlinePassed() (37), `!c` (38), c (37)",37,ga
+EditTextField,,"the End loop index / byte / increment / `editpos = 0` (36-43), DrawEditCursor's flags (38)",38,ga
+EditTextField,,the 4F00 / 4700 key compares (43),43,ga
+EditTextField,,"one permute run (577 candidates, best the timeout cast above)","577 candidates, best the timeout cast above",ga
+PostGameToTeamDb,,"(2026-10-24, lane 1 batch 13): `else if (awscore > hmscore[0])` (132, +7), `if (awscore < hmscore[0])` (134), both (134), `else if (hmscore[0] != awscore)` (138), `*hmscore` in the compares / arm (130), `hmtmstruct.tmscore` / `awtmstruct.tmscore` for the compares",,ga
+PostGameToTeamDb,,"the arms or all (130 each), `short h = hmscore[0]` for the compare and arm 2 (177",,ga
+PostGameToTeamDb,,"with the flip 176), `score = hmscore[0]` before the compare and `score++` in arm 2 (158, +8)","158, +8",ga
+PostGameToTeamDb,,the flip in both the record and the goalie-decision chains (130),130,ga
+GameSummaryScreen,,under GA,,ga
+GameSummaryScreen,,"the rest only savings bumps or dropped temporaries (not compiled). Tried (2026-10-24, lane 1 batch 13): roster index as `hmroster[side * 0x444 + f.k * 0x27]` (287",,ga
+GameSummaryScreen,,"the same code: Watcom orders the sum itself), `f.linetab[side][0x28 + f.i]`, `(f.linetab[side] + f.i)[0x28]`, both with the roster order (287 each",,ga
+GameSummaryScreen,,the same code),,ga
+GameSummaryScreen,,"f.i as a plain int local everywhere (member kept as padding: 327, frame +4",,ga
+GameSummaryScreen,,"i spills, and the extras loop still compares in memory and adds the slot, so a plain index does not give the EXE's test-load reuse)",,ga
+GameSummaryScreen,,"the page init as `f.goals[1] = f.goals[0] = 0`, `f.nperiods = f.i = f.nshown = 0`, both, one five-way chain (287 each",,ga
+GameSummaryScreen,,"period as a plain `unsigned char` local (the struct member kept as padding): the shots loop then loads it into ebp at its test (`movzx ebp, byte [period]`) and reuses it after sprintf / fputchar / PrintShadowText for both `f.prds[period - 1]` reads as the EXE does, and the size gap drops from +38 to +9, but the frame grows by 4 (7F4h) and the score is 298 (not kept",,ga
+GameSummaryScreen,,without the padding member 300 by first_pick),,ga
+GameSummaryScreen,,"all eight byte members (period, home, last, first, vis, penalties, scored, pcount",,ga
+GameSummaryScreen,,first / last as the parameters themselves) as plain locals 311 (+9,,ga
+GameSummaryScreen,,"with padding members 301 by first_pick), and declsearch --conflicts on that gives 3 of 7 byte slots. So the EXE's period (and likely the other frame-struct scalars) is a plain local, and the frame struct is what blocks the reuse: next step is a frame without the struct for those scalars with a declaration order that keeps 7F0h",,ga
+GameSummaryScreen,,one permute run (449 candidates,,ga
+GameSummaryScreen,,"best 253 at size +40 only through an unsigned char cast plus a chain merge and two loop rewrites (do / while), rejected: a cast and loop rewrites against the EXE layout)",,ga
+SimulateGame,,"(2026-10-24, lane 1 batch 13): declsearch (720 orders, no gain)","720 orders, no gain",ga
+SimulateGame,,"the rate / score swap (566, kept), score moved before rate at rate's line (612, +33), rate moved after score (640)",640,ga
+SimulateGame,,"err / periodlen declaration swap (566, no change: not a tie), tick / shotv swap (588, +33)","588, +33",ga
+SimulateGame,,"the key read through a new `int key` in both key loops (557 at size +43, not kept: 39 bytes further from the EXE size), in the skater loop only (661), through v in both (645, +52",,ga
+SimulateGame,,also dead-variable reuse),,ga
+SportsDesk,,under GA on the 552 base and not retried) and the conference operands (L152-L154),L152-L154,ga
+SportsDesk,,+92A r kept in esi where the EXE keeps it at [esp+3DCh] and compares in memory (L235 onward),L235 onward,ga
+SportsDesk,,"the dropdown's `depth = i + 1` store placed before the menus[depth] load (EXE `lea edx, [edi+1]` / `mov [depth], edx` after it, L327)","EXE `lea edx, [edi+1]` / `mov [depth], edx` after it, L327",ga
+SportsDesk,,the miss arm's tail (EXE keeps its own sub_91400 call and pushes and joins the no-click path at the sub_91370 call,,ga
+SportsDesk,,"C cross-jumps the whole tail: the 55 missing bytes). Savings (regdump, before): i 2201 ESI, depth 201, m 130, oldmx / oldmy 96, ptr 74, speech 71 memory, src 121 EDX, r 14 ESI. Tried (2026-10-24, lane 1 batch 13): the flip (kept), declsearch orders (kept), inverted ternaries (kept",,ga
+SportsDesk,,"x only 214, y only 212)",,ga
