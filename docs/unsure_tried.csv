@@ -3045,6 +3045,44 @@ PlayMVI,,the frame as a plain local in each position (46),46,ga
 PlayMVI,,"permute.py once on the 18 base (321 candidates, nothing better)","321 candidates, nothing better",ga
 ReplaySaveHilight,,(time),,ga
 DrawLockerJersey,,(time),,ga
+POSeedTeams,,"(time). Lane 2b batch 3 (10.0 GA): 22, unchanged. regdump: k 820 (EDX), slots 269 (ESI), i 245 (EBX), n 62 (EDX), c 24 (ECX)",,ga
+POSeedTeams,,a 3 (memory),,ga
+POSeedTeams,,the swapped HomeTeam / VisTeam compare loads and the swap-step loads are short-lived temporaries outside the loops (savings ties). The split swap step alone is 33,,ga
+POSeedTeams,,with `(short)i` in the VisTeam count 11. Tried on the split base: `if (a > i)` (33,,ga
+POSeedTeams,,"22 on the draft), `!(i >= a)` (33), `-c + 4` (36), `(int)randomd0(3)` and `(short)randomd0(...)` for c (33), `slots[a = --i] = HomeTeam` (35)",35,ga
+POSeedTeams,,"index spellings in either count loop: `i & -1`, `i * 1`, `i | 0`, `i ^ 0`, `i + 0`, `i - 0`, `i << 0`, `(int)(long)i`, `(i)` (33: folded), `(int)(unsigned)i`, `(int)(unsigned long)i` (44-46), `k = i` (29-32), `n + i - n` (25 VisTeam, 31 HomeTeam), `(short)(int)i` / `(int)(short)(int)i` (11 VisTeam, 16 HomeTeam)","11 VisTeam, 16 HomeTeam",ga
+LoadGameRoster,,"(time). Lane 2b batch 3 (10.0 GA): 21, unchanged. regdump: the & 0xFF base has 69 conflicts (the draft 68: the byte value t7 in DL, savings 20, replaces the draft's lea temporary), and the first team test's product and s.i temporaries are savings-30 ties, so the unstable sort hands them out the other way. Tried: the loop-1 value as `& 0xFFFF`, `& 0xFFFFFF`, `& 0x1FF`, `(unsigned)s.i & 0xFF`, `0xFF & s.i`, `& (unsigned char)0xFF`, `(short)s.i & 0xFF`, `(short)(s.i & 0xFF)` (all the & 0xFF code, 25, +4), `& 0xFFFFFFFF`, `| 0`, `(char)(short)`, `(unsigned char)(unsigned short)` (the draft's code, 21), `gmrosterslot[s.i * 22] = s.i & 0xFF` without n (26, +7)","26, +7",ga
+LoadGameRoster,,"on the & 0xFF base: open() split from its test, read() inside the test, `lseek(fh, 0L, 0) != 0`",,ga
+LoadGameRoster,,"a `(char)0` store, else instead of continue, sprintf without the cast, loop 1 with `s.i++` in the body, dead stores `z = 0` / `k = 0` / `n = 0` (dropped by the compiler) (all 25), `== -1` for the open test (27), `<= -1` for the team test (26)",26,ga
+ReplaySaveHilight,,"(time). Lane 2b batch 3 (10.0 GA): 35 -> 34 (commit d6e8254): the size as `w = [2]; w *= [3]; n = w + 0x11;` with a new int w gives the EXE's `imul edx, eax`",,ga
+ReplaySaveHilight,,"n is still folded into w's edx (EXE `lea ecx, [edx+11h]` / `push ecx`",,ga
+ReplaySaveHilight,,"regdump lists no conflict for n, ox / oy are savings 20 each in ECX / ESI). Tried: the product into r / ox / oy / unused / x / y with n = that + 0x11, and n as the product with the sum into those (35-64)",35-64,ga
+ReplaySaveHilight,,ox as the size in four spellings (36-37),36-37,ga
+ReplaySaveHilight,,w and h both named (35),35,ga
+ReplaySaveHilight,,"a w for the first factor only (35), h only (37)",37,ga
+ReplaySaveHilight,,"the w product with the sum into ox / oy / unused (36-40), n *= with the sum into ox (36), unused *= (38)",38,ga
+ReplaySaveHilight,,"permute.py from the w base (449 candidates: best 29 only with `(unsigned char)` / `(short)` casts on gadgetptrx at L85, not equivalent)",,ga
+SwapSelectedPlayers,,"s.na declared `volatile int` in the struct (57), `*(volatile int *)&s.na` in the first test or in all three tests (50)",50,ga
+SwapSelectedPlayers,,"the first index through a (92), both indexes swapped (114)",114,ga
+SwapSelectedPlayers,,the second index through j (59),59,ga
+SwapSelectedPlayers,,the first through j (69),69,ga
+SwapSelectedPlayers,,"on the 49 base: `a = 0; b = 0;` (48), `b = 0; a = 0;` (49), `nb - s.na ||` (54), `nb - s.na || ga - gb` (60), `s.na != nb` (49), b declared before a (49)",49,ga
+SwapSelectedPlayers,,"permute.py from the 48 base (321 candidates, nothing better)","321 candidates, nothing better",ga
+EditSkaterRating,,"(time). Finding: the compared products (`v >= (*s.minp + 5) * 5`, `v <= (*maxp + 5) * 5`) and the s.old store already compile to the EXE's shape (load and sum in one register",,ga
+EditSkaterRating,,the product in another),,ga
+EditSkaterRating,,"only the pushed products differ (C `lea edx, [eax+5]` with the product in eax, EXE `add eax, 5` with the product in ebx)","C `lea edx, [eax+5]` with the product in eax, EXE `add eax, 5` with the product in ebx",ga
+EditSkaterRating,,"plus the `(short)` max product (`imul eax, eax, 5 / cwde`). DrawShootsField's matched `PrintFmt1(..., (rec[i] + 5) * 5)` push has the EXE's shape because its byte is loaded into ebx, not eax",,ga
+EditGoalieRating,,(time),,ga
+EditGoalieRating,,see the EditSkaterRating finding above (only the pushed products differ),,ga
+DbLineEditorLoop,,with a new reason: tools/wccre/declsearch.py now redoes the frame after such a change,,ga
+DbLineEditorLoop,,"261 before it), then the declsearch.py --conflicts order: every local in its EXE slot",,ga
+DbLineEditorLoop,,"the same size, and the pointer size product and the jersey loop's i reload became the EXE's by themselves. Left: the EXE computes level * 4 before the itemoffset store. Tried first on the 92 base: the size factors through the dead k / j in either order (1742-1744), `r *=` / `r +=` steps (1746), one factor in k (1716-1717), `r = [2] + 1; k = [3] + 1; r = r * k + 0x11` (1745) (frame moves)",,ga
+DbLineEditorLoop,,"permute.py 321 candidates. On the 64 base: `else ... = lines[i]` (630), FindRosterSlot inline (635)",635,ga
+DbLineEditorLoop,,"the offset assigned inside the 0x14 test (64, same code)","64, same code",ga
+DbLineEditorLoop,,"m used as `m->on1` (370, 78 after declsearch), m assigned inside with `m->on1` (370) or with `m->on2` too (662)",662,ga
+DbLineEditorLoop,,"no itemoffset / m (`menus[level][item].on1` / `.on2`: 254, 69 after declsearch: the EXE's level * 4 / item * 32 order, but the select branch's second DrawMenuItemNorm loads pos[level][0] into esi and reuses the stored item in eax for sel[level], EXE eax and a fresh read",,ga
+DbLineEditorLoop,,"permute.py from it 513 candidates, best 66)",,ga
+POAfterGame,,"(time). The controller-side code differs in register-cycle picks and in where the zeros come from: the EXE stores ctl2side = 0 as `xor edi, ebp` (w ^ ctl2team, known equal) and zeroes eax with `xor eax, eax` before the s[2] byte load, ours `xor eax, edx` from the equal ctl1team / ctl2team compare",,ga
 passtoa0,,sp short alone (73,,ga
 passtoa0,,"the products still narrowed), `r = vx * vx + vy * vy - sp * sp; s.k = r` with sp short (85), `(long)` on the squares (48, no change)","48, no change",ga
 passtoa0,,"the sum and the difference in two statements through r (83), `-(sp * sp) + ...` (53)",53,ga
