@@ -2626,3 +2626,24 @@ GameStatsScreen,,"(2026-10-24, lane 1a batch 4): only the plain form again with 
 TeamStatsScreen,,"(2026-10-24, lane 1a batch 4): case 3 stored directly as `statssortkeys[i] = t ? (... * 1000 + t / 2) / t : 0;` (126, size +2: case 3 then merges with case 2's store, not case 4's)","126, size +2: case 3 then merges with case 2's store, not case 4's",ga
 TeamStatsScreen,,"the same with `: t` (126), cases 2 and 3 with `: t` (126), case 4 through x (123, same)","123, same",ga
 LoadTeamRoster,,"(2026-10-24, lane 1a batch 4): `hmroster + i * 39 + team * 1092` (70, +4), `hmroster + (team * 1092 + i * 39)` / `hmroster + (i * 39 + team * 1092)` / `&hmroster[team * 1092 + i * 39]` / `&hmroster[i * 39 + team * 1092]` / `p = hmroster; p += team * 1092 + i * 39;` (all 142, +17), `p = hmroster + i * 39; p += team * 1092;` (72), `p = hmroster + team * 1092; p += i * 39;` and `p = hmroster; p += team * 1092; p += i * 39;` (70, +4)","70, +4",ga
+PlayLeagueGame,,"(2026-10-24, lane 1b batch 5): the struct cut after fhinfo with the 11 upper members (bank, fhsched1, again, side, pwfail, game, pal (renamed firstpal), ok, picked, pal2, retry) as plain locals, then tools/slot_solver.py (3 rounds, 1168 candidates: side scoped into its block plus a declaration permutation): 53 -> 34 differing, 4083 bytes",,ga
+PlayLeagueGame,,"again, pwfail, ok, picked, pal2 and retry reach the EXE's slots, but bank and firstpal share one slot (their live ranges, L288-290 and L159-162, do not overlap, so Watcom reuses it) where the EXE has bank at 68h and pal at 80h, and fhsched1 / side / game stay off by one slot. So in the original bank and pal do not share a slot: their lifetimes overlap, or one of them lives elsewhere (a struct",,ga
+PlayLeagueGame,,an address-taken local). Variant kept as scratch only,,ga
+BuildStandingsGrid,,"(2026-10-24, lane 1b batch 5): all those",,ga
+DrawCalendarDay,,"(2026-10-24, lane 1b batch 5): the legend x or y through the dead register parameter `unused` (185 / 168, +15 bytes)","185 / 168, +15 bytes",ga
+DrawTradeScreen,,"(2026-10-24, lane 1b batch 5): c1 / c2 declaration orders (at the top, both orders, in the loop block), t / c1 / c2 / tm scopes, `int *tm = teams` initializer, `side * 0x1C0 + 5`, `spal = pal = ...`",,ga
+DrawTradeScreen,,"the stats shapes through the globals without shape (natural, same 12), half of that each way, bank assigned inside the sub_B30B4 argument (24), c1 or c2 passed inline (44 / 22), `char` c1 or c2, `cols[1 + i * 22]`, `(cols + 1)[i * 22]`, `cols[22 * i + 1]`, `tradebtnx[2 * i]`, `4 * tm[t]`, `*(tm + t)`, `(unsigned char *)(traderemap1[t] + 0x90)` (all 12)",all 12,ga
+DrawTradeScreen,,permute.py 5 min on the new base (385 candidates,,ga
+DrawTradeScreen,,"only a swap of the second DrawDlgFrame with the pal allocation flips the tie, against the EXE order, rejected)",,ga
+DrawTradeScreen,,"a second permute.py run limited to code-neutral transforms (swapdecl, movedecl, scope, commute, zero, cmpflip, incdec, chain, forchain, temp, lvinline, inplace, opassign, mulshift, shiftstmt, swap, tempadd, ternary, ifswap: 259 candidates, exhausted, nothing below 12)","swapdecl, movedecl, scope, commute, zero, cmpflip, incdec, chain, forchain, temp, lvinline, inplace, opassign, mulshift, shiftstmt, swap, tempadd, ternary, ifswap: 259 candidates, exhausted, nothing below 12",ga
+assthreestars,,"(2026-10-24, lane 1b batch 5): permute.py 5 min (321 candidates, nothing better than 44)","321 candidates, nothing better than 44",ga
+MainDeskLoop,,"(2026-10-24, lane 1b batch 5): those three frames",,ga
+MainDeskLoop,,"on the plain base the item address as `s.menus[level] + s.item`, `s.item + s.menus[level]` (for m and / or the on1 call), `(MenuItem *)((int)s.menus[level] + s.item * 32)` and product first (141), `m = s.menus[level]; m = &m[s.item];` (114)",114,ga
+MainDeskLoop,,"the call through m (252), `short` result, oldmx / mx and m declaration moves (75-103)",75-103,ga
+MainDeskLoop,,the 23 other orders of the four plain declarations (103-136 before slot_solver),103-136 before slot_solver,ga
+MainDeskLoop,,"permute.py 5 min on the plain base (577 candidates, best 61 only with an `(unsigned char)` cast that truncates a coordinate argument plus a short result: rejected)",,ga
+MainDeskLoop,rettype:short,short` result,tried (docs/UNSURE.md),ga
+MainDeskLoop,rettype:short,a short result,tried (docs/UNSURE.md),ga
+StarCompare,,"(2026-10-24, lane 1b batch 5): permute.py 5 min on the current draft (769 candidates, best 56 at the same 26-byte gap: commute / pa-pb swapdecl / operand swaps, as in batches 2 and 3",,ga
+assrefgoalpa,,"(2026-10-24, lane 1b batch 5): the product as `(0xE8 - (int)*pucky) * (p->temp3 - *puckx)` and `(0xE8 - *(short *)pucky) * ...` (70)",70,ga
+assrefgoalpa,,"the sign test with `(int)*pucky` (67, no change), both (70), `-(*pucky - 0xE8) * ...` (120)",120,ga
