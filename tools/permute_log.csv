@@ -416710,3 +416710,580 @@ date,func,file,transform,sha1,score,sizediff,match,first,cc
 2026-10-24,assbench,src/c/037_4842A_engine_player_logic/assbench.c,cast:44:5:char > cast:41:3:int > cmpflip:39 > commute:31:==,d755fcc4918287ba,7,1,0,20,ga
 2026-10-24,assbench,src/c/037_4842A_engine_player_logic/assbench.c,cast:44:5:char > cast:41:3:int > cmpflip:39 > chain:18:split,259cb4baeae3acc1,31,8,0,0,ga
 2026-10-24,assbench,src/c/037_4842A_engine_player_logic/assbench.c,cast:44:5:char > cast:41:3:int > cmpflip:39 > tempadd:34:rhs,9c295735dfe05e17,9,5,0,20,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,base,7f84cfd107209ad1,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b,3237295e5af54b9c,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,zero:28:ne0,536cec386a462806,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swap:37:0,fcb17afbeac9d773,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,reuse:a:gb,e410c7a97c5ac4d5,61,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,commute:66:+,ca6b54424a6f43fc,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,type:nb:signed_char,f47fa0f6927d9fa2,70,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,opassign:65:0:split,5bb35a4afdc59453,87,14,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,chain:44:split2,39064ca28729571c,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,movedecl:ib:1,77b17d79916fd3b6,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,cast:71:9:char,31f07353b7ed9b81,74,24,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,scope:q@0,673912e240d742dc,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapstmt:74,c9e303be26751b59,78,5,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,tempadd:64:+,38cdf2bc5384ecc2,61,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,incdec:26:forpre,d5a4a958fcf566f1,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,loop:26:gotobot,6630a00d0c6c966b,51,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,forchain:26:merge,0573332c7b4a8b63,51,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:ib:j,74b262bc6379505e,58,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,zero:46:ne0,0a9d2be1af71175c,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swap:34:1,b31c61eabf80baed,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,reuse:ia:b,98670ee5b172f719,114,34,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,commute:66:+,802316eb0eb1a416,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,type:na:unsigned_short,dae8d55fd135a506,114,51,0,14,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,opassign:57:0:split,3b1b83f53043b8f1,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,chain:23:split,e2424caf9e18a76c,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,movedecl:a:10,1a5a87cd345bffc6,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,cast:38:2:int,37963840e27c1797,,,,,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,scope:ib@0,a9d576195e317d36,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapstmt:76,2f6144fe9813f129,54,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,tempadd:52:rhs,1f57abd761ed4a49,64,15,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,incdec:45:forpre,4e593e1e9fb01ad7,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,loop:30:while,042c4ff57922e636,62,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:s:nb,f69049deba134ad9,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,zero:27:ne0,293a524347148238,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swap:72:6,e8b2eeb5104f0eb1,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,reuse:ib:nb,765d85629c08d84d,50,2,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,commute:36:!=,1b1f962959e4162e,51,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,type:i:unsigned_short,51c77000dab05881,146,99,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,opassign:64:0:split,60f2eec33c30c45a,60,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,chain:44:split,a15eaf0764e97b6f,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,movedecl:p:8,946d2a4881152e6a,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,cast:66:19:char,7d7be452ff1c097a,52,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,scope:j@0,6c16ea7a9a06cf42,57,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapstmt:65,59c77bbd6760d2a5,70,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,tempadd:66:+,cfe85adc128f524c,76,13,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,incdec:58:forpre,4b15a109c9795cad,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,loop:58:gototop,87398d019e85b884,54,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:j:a,b274e3b130738413,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,zero:51:ne0,e13451a4a4bd520c,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swap:80:2,bcf0a5b6c0aa439d,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,reuse:ib:gb,938d28fdfd51ad52,58,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,commute:37:!=,fcb17afbeac9d773,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,type:na:unsigned,92a8146bff88e5fc,51,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,opassign:66:0:split,a160f5ef739b7fa1,54,10,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,chain:23:split3,f5fcdcc1cd2ba743,52,8,0,24,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,movedecl:p:5,a20ce2b78888b7ed,57,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,cast:64:18:unsigned_char,251554d9879be426,52,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,scope:p@0,ddca6d8a7cc89628,57,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapstmt:71,db8b3447b8d65a29,64,12,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,tempadd:72:rhs,8f14d81c45dbc06e,,,,,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,incdec:54:pre,f4d9ebc014152609,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,loop:30:ifdo,e85a0972f18088d7,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:nb:ga,a500a5c2adec57f8,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,zero:31:ne0,95a8c31dc8723d24,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swap:58:0,79788a05cd7843a5,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > zero:51:ne0,9d941a7d57786824,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > commute:65:+,197034ec62052a5d,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > scope:ia@0,f0a34d616b7d850e,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > swap:58:0,2e7fa0b5184337da,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > swapdecl:s:nb,7f0107c0fafe9424,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3,a6d6419d3bb1ded7,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > reuse:ib:b,c95ecd8ceed873e0,50,2,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > movedecl:ga:6,55cda8a2dbe4debb,58,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > tempadd:60:+,0ca88f7e14a8ca52,59,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > cast:79:4:unsigned_char,267b0a0d888c800d,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > incdec:30:forpre,b0ada92ae4b4e634,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > loop:45:do,0ee3a4797e024c49,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > type:j:short,38e28d0d8d2082f0,75,5,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > forchain:26:merge,eff16e2940b65550,50,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > opassign:71:0:split,18b829eee1418524,55,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > swapstmt:72,fc48e3f65750d6f9,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > zero:28:ne0,b8581a669f2b978c,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > commute:64:+,39d19e5b9c380b0f,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > scope:q@0,b2df321833cb6f41,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > swap:34:1,026b997e14284363,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > swapdecl:p:q,fc93ad2e03b4c1e4,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split,ea63c17e4705b193,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > reuse:ib:ga,361af3c41ab17723,61,10,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > movedecl:ia:7,bbdfef961782b84d,57,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > tempadd:65:+,a98e57d78c24d6de,61,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > cast:41:11:unsigned_short,8a1fd04bdfe1e7bb,52,1,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > incdec:49:pre,b854f79487c19647,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > loop:45:while,239d5916c30dd8d1,53,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > type:i:unsigned_short,72e304cd76baa609,134,99,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > opassign:66:0:split,d4e946bcf9c79b53,55,10,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > swapstmt:71,e0e513db40782862,63,12,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > zero:32:ne0,25a88e2d78f04753,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > commute:79:==,c14bbf7efa4b2e70,51,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > scope:p@0,601f77d6c139429e,58,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > swap:72:6,1df0fac969e7a7da,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > swapdecl:ia:ib,c3ff8054e2edb532,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:23:split3,190c05fc8c0d6eb1,51,8,0,24,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > reuse:ia:b,0e512c191631c6e7,114,34,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > movedecl:nb:8,8901bf5698c7aace,58,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > tempadd:65:+,ceeac4853041c91b,61,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > cast:64:19:char,ebae7c32428949b0,49,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > incdec:49:op1,2818ac1e1c1857bd,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > loop:26:gototop,caa18e27124ef746,53,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > type:nb:unsigned_char,c7a6c2cc62389933,73,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > opassign:57:0:split,2b61651201ecc88f,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > swapstmt:73,63329edf41460020,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > zero:27:ne0,8bbd8a83b0e775f1,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > commute:36:!=,c76b0c6071a0902a,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > scope:j@0,f19935461e0c2836,58,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > swap:65:16,405f3a3c91544641,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > swapdecl:j:b,c72e05c625fb8566,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:23:split2,6801df43d2cd9117,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > reuse:ia:gb,a355a6169c671df5,106,33,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > movedecl:ga:10,02f1ff28708b52da,57,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > tempadd:64:+,a625669881bb57ed,59,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > cast:75:3:char,1af6f543c2f22333,54,18,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > incdec:26:forpre,b7dfb64c906cb610,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > loop:30:gotobot,21a6bb916f9e563c,58,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > type:pad:signed_char,b5da8483e18a0887,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > opassign:64:0:split,d9d2bc292c3ea181,61,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > swapstmt:65,aaa7b325f766634d,69,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > zero:46:ne0,61f18cfb9c6c40d6,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > commute:34:!=,026b997e14284363,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > scope:ib@0,fd1d28a52b168c79,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > commute:36:!=,30b69a188b92d249,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapdecl:b:a,dbf60863e0973957,51,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:nb:signed_char,b4ebb4d5cbd81df7,72,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > loop:46:do,9c1cb73d47457293,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > cast:73:9:unsigned_char,94a171ec7b4f6549,89,29,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > zero:28:ne0,6a3d58c1149b2cdd,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > forchain:46:merge,72252f0fcecf25ae,49,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > incdec:79:forpre,ecb01b24120e7cd4,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > scope:q@0,2fe3d9ed39397b88,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > reuse:ib:gb,c6391a6c97ebb05d,56,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > chain:23:split,6ee1c912f140318f,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > tempadd:61:+,3701c8b47b3d2c07,58,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swap:83:0,027338e1b0f28524,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > opassign:65:0:split,62172a73f25d5d97,62,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > movedecl:q:8,3866d63743e9253f,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapstmt:85,3001879e5ba5724d,52,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > commute:60:+,d754c11f06931035,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapdecl:a:p,05b8152dacd86d2f,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ia:short,31a08d1e89d298fb,138,26,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > loop:30:do,989157f2e2aedffc,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > cast:41:13:none,d1b158eb1ccc44e6,,,,,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > zero:31:ne0,56c0023beeda2acd,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > forchain:26:merge,3a2ba60aa272d651,49,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > incdec:50:op1,c61214a6fb6ae991,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > scope:ia@0,a32bc1555535a1d4,51,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > reuse:b:nb,5b39793e01384e36,55,2,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > chain:23:split3,ac4c3b546c70b341,50,8,0,24,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > tempadd:67:+,1cd10ead9e9b97bc,60,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swap:81:2,f1777db009b4f024,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > opassign:72:0:split,1490b739b5628a53,54,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > movedecl:p:3,525becb4041ffdad,56,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapstmt:72,23d3cb169ec06233,62,12,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > commute:38:!=,0a259601a51bcae4,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapdecl:gb:i,edd951cf4c2a0c08,51,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:gb:unsigned,bf515a3f2e8f23b6,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > loop:30:while,56dd37c9e30d8f84,60,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > cast:61:14:unsigned_short,ab3a671e409f03d0,70,3,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > zero:47:ne0,a73ecd679c7de30e,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > incdec:30:forpre,593a7da7c9e1d383,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > scope:ib@0,aee5f5f2ed39b717,51,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > reuse:ia:gb,f84a7f42dc74cb78,107,33,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > chain:24:mergeab,834c364aef040e70,50,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > tempadd:53:rhs,f3a7775eb3badd00,62,15,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swap:34:1,49e5aec26e74b167,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > opassign:71:0:split,1135f7a3c8a2a920,55,18,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > movedecl:ib:11,d801ff293a51030a,59,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapstmt:68,12b2da467bddb104,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > commute:65:+,6ac1d511f4ea7540,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapdecl:i:ia,d3cc7ff2a6cc8dfd,59,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:short,7641e37bda79ec9d,116,38,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > loop:26:gototop,a0b00283015a6251,52,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > cast:71:6:char,0920de10c8f8e0dc,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > zero:27:ne0,b6138fcfb0bf66d6,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > incdec:26:forpre,84f517e9061a1ba8,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > scope:p@0,cabe2c3241e4efaf,59,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > reuse:ib:b,f8c2d77559eef9d3,51,2,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > chain:44:mergeba,f95d8188865e5fff,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > tempadd:65:+,f87ff4d1741b3248,58,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swap:80:0,938b467e16346b23,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > opassign:58:0:split,24e2fbaf77f0f09d,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > movedecl:ib:9,43294a95e34f6bf5,59,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapstmt:66,89f0af836ab318cc,68,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > commute:80:==,938b467e16346b23,50,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapdecl:s:nb,aea4da0b78769477,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapdecl:p:q,ce82952231b44dde,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > zero:32:ne0,c94e52a870dd4e01,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > cast:70:9:char,9e5c10d16501533c,78,24,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > chain:24:mergeba,12ac8ab7231694bb,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > opassign:66:0:split,676652b467e170d4,89,14,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapstmt:44,fc9b560f7915a5f5,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swap:37:0,42323d63b1ec6e59,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > tempadd:60:+,fbe82771a1859426,60,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:b:short,7e0ba970e9d3b23f,61,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > incdec:55:pre,f0e18d66ff0601d8,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > reuse:ia:b,97c4c3e9f23f5853,114,34,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > scope:j@0,6b48781a7ccbd85f,59,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > movedecl:i:11,5f6b4ad5aae18fb8,59,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > commute:66:+,0aea6c993f2a8303,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > loop:30:gototop,8b63d7cf90bd23f5,60,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapdecl:nb:ga,462d7692ab1ba093,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > zero:52:ne0,20428eb5810105d4,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > cast:79:1:unsigned_char,7aa8a7227eae2fe2,62,9,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > chain:23:split2,4479ec579c2d440f,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > opassign:70:0:split,43171e92cf9dba80,57,12,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapstmt:23,dd410da92883f055,52,8,0,22,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swap:78:2,1ed7de95a91f03c3,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > tempadd:66:+,16e0e937fcba68fe,60,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:nb:unsigned,1500b4585d291f89,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > incdec:46:forpre,529fafa869d84728,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > reuse:b:gb,d93bb96ba9ceeddf,63,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > movedecl:j:0,64d0bdb194944ccb,51,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > commute:66:+,0cdbc93d00346cbb,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > loop:59:gototop,5c587131ddc71ab2,52,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapdecl:ib:j,77a0f8951fc336ad,56,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > cast:46:1:char,227d1699566520b9,51,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > opassign:67:0:split,d80227430f2b45bb,56,10,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapstmt:73,edce3bc4c795711c,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swap:73:6,1c43c199a8ed27fe,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > tempadd:67:+,a8c9a02bf45b8130,74,13,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ga:unsigned,4e96b21501d60c94,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > incdec:55:op1,7857170a60e6b572,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > reuse:ib:a,a51fa0fe57bced76,48,2,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > movedecl:j:10,9ef4aa5a3a7a47c3,51,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > commute:36:!=,e5cfd71d4c6dbad3,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > loop:26:while,87e5ec20aa17ab7d,52,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapdecl:j:b,8d1e0d04859d7405,51,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > cast:70:6:unsigned_char,cfeb804e438c0b6f,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapstmt:67,cd37cce475170980,49,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swap:67:5,85d50f46abbc8c1e,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > tempadd:65:+,b4b23ab867a73b5e,59,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char,05caa0354827e428,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > incdec:59:forpre,5e2ab7734c487b3d,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > reuse:ia:ga,1b97cfa524a4cc54,88,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > movedecl:ia:9,d12c2055935e9633,59,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > commute:67:+,40a033e4e92e8854,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > loop:46:ifdo,a71a8235d486dd02,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapdecl:ga:gb,07cf2a29cc77f71d,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > cast:47:2:unsigned_char,494c15dd580273ea,54,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapstmt:77,aff893c817d87b04,52,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swap:59:0,0ff1d16013d2d062,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > tempadd:66:+,57522ec325e01448,60,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:na:char,0c8765206275caf5,116,44,0,14,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > incdec:82:forpre,b0a6c2fcb232ad2c,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > reuse:ib:nb,c2a81b4c2e9bc934,48,2,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > movedecl:b:3,fd84ae3444eb3449,59,10,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > commute:37:!=,42323d63b1ec6e59,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > loop:30:ifdo,70e96f8b999c0c12,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > swapdecl:ia:ib,4bd4e8631592bf46,48,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > incdec:55:op1,988c54ef3a3e1c24,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > zero:52:ne0,582834edb091a740,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > forchain:26:merge,f98b5d9a59b30c82,44,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > chain:23:split2,007bee68328c78f5,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > tempadd:60:+,e447ce1fa9106166,55,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > swapdecl:ia:ib,2e768c248c2f21ca,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > cast:67:18:int,9952df955a803dc6,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > type:nb:unsigned_char,04c07cb7a39362a2,73,15,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > opassign:66:0:split,bff6f0ff312126c5,59,5,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > loop:46:gotobot,23bf7a1dd907aaea,44,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > commute:67:+,e17ad41b93dcf2c9,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > swap:67:5,18815860dd6ce00a,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > movedecl:ib:11,16a924c7cd48cad5,48,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > swapstmt:64,bed460da90cfbf37,81,12,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > reuse:ia:gb,0dfd770ce8a3ec86,74,26,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0,2f7ff37065abd34b,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > incdec:79:forpre,b8d4b4c41ae64cd1,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > zero:27:ne0,6a8c4df4e03d294a,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > forchain:46:merge,4c92f21eaca6253c,44,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > chain:23:split3,a0c8f58c80b5bc0b,45,4,0,24,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > tempadd:66:+,89b031249239f11b,55,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > swapdecl:ib:j,d4a059ec79992799,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > cast:67:19:unsigned_char,f410381bcd7eadc8,45,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > type:i:signed_char,1b27b646ac4e7054,257,75,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > opassign:70:0:split,addf638042530be5,56,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > loop:30:do,6fbde6be6437c80f,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > commute:36:!=,c9b65cb69024b8f9,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > swap:73:6,96abcd7f67290f22,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > movedecl:a:3,e9218071bd8c0bd9,51,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > swapstmt:23,50ba22dfd9e85b92,47,4,0,22,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > reuse:ia:a,4a4071cd9ae253e4,81,28,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:j@0,54fbd4b4d7503bd7,51,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > incdec:82:forpre,f48fbacb891e8199,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > zero:31:ne0,e37d4bb751ab050c,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > chain:24:mergeba,21d54737d37c75be,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > tempadd:53:rhs,59c6dfbc1f87ed83,69,7,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > swapdecl:gb:i,396d8feb7e424e17,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > cast:65:14:unsigned_short,6dcc04636fbadd23,63,1,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > type:gb:unsigned_short,fcb861f1a5304ae0,65,16,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > opassign:67:0:split,014542d669df3dc8,66,5,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > loop:30:while,62b9acdc04a7397c,55,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > commute:60:+,22846cd2d6bfd451,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > swap:80:0,cc200b826c5b18ba,45,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > movedecl:b:0,fd5cda7d9e2c6ef5,51,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > swapstmt:73,e46e1e0d9bf56f5e,44,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > reuse:a:gb,4a6aafc478fd366e,57,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:p@0,de30eb5eed63a402,51,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > incdec:46:forpre,a3ff3b75d5514db3,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > zero:32:ne0,3fd7bc34901ad761,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > chain:44:mergeab,a07e8df5dead3f48,42,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > tempadd:61:+,7cd44b3be33335f4,59,1,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > swapdecl:a:p,fa0c677ebfbe4362,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > cast:37:1:char,36338728df9e08d3,55,3,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > type:i:unsigned_char,20ef506661545fa9,259,81,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > opassign:58:0:split,779ec4770e4d2e3d,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > loop:30:ifdo,5652af2439102aed,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > commute:80:==,cc200b826c5b18ba,45,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > swap:83:0,3e5b59d7c5a5f947,45,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > movedecl:nb:10,75c20d8b1b69c03f,51,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > swapstmt:67,2df98a2b065f83e2,44,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > reuse:a:nb,2f63addde714d3af,49,0,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:q@0,ec40f1046bd8f992,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > incdec:30:forpre,fb6491c4adebf1f0,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > zero:28:ne0,20c7e58efe3eb6f3,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swapstmt:67,cd0edc9f2b23d42d,57,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > cast:68:19:unsigned_char,923735f8336bcbb9,42,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swap:58:0,374fabab599b3a7c,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > incdec:83:forpre,ec3315c256333f8e,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > loop:58:ifdo,66eaf8744ed180c1,48,18,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > type:i:char,142fd99db372315b,246,82,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:51:ne0,480022127e50c40f,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > chain:43:mergeab,85cdf0e0db1f1eda,41,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > movedecl:i:7,d5df676dc1d8a674,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > commute:81:==,fb607acbdee10d96,42,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > tempadd:74:rhs,644564584b9efaf3,,,,,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > scope:q@0,8b2351f6549b353c,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swapdecl:s:nb,a53fccee22d475b1,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > reuse:b:gb,a9b9047d87d8a426,60,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > opassign:68:0:split,2ed6eabb71aceea9,63,5,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > forchain:45:merge,2019c6b8c26b9e81,41,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swapstmt:65,8eaf750195fdde42,78,12,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > cast:61:13:unsigned_char,dbfdb4bbf2d95a38,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swap:81:0,fb607acbdee10d96,42,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > incdec:49:pre,4c769c025b0f48f2,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > loop:45:while,0dddb29499a7f908,44,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > type:b:short,700dc5b73b9ae06a,66,1,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:27:ne0,17f35116edccf5c8,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > chain:22:split3,c8f81eef65cfbd77,42,4,0,24,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > movedecl:q:7,fc43b02ad98c1f27,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > commute:35:!=,4f1797e2466acda8,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > tempadd:47:rhs,6ae865db027f25dd,69,7,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > scope:p@0,abf8b9964a45d56b,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swapdecl:j:b,65ffdb1f039b6923,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > reuse:ia:gb,50cd4e2c7b84d925,74,26,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > opassign:67:0:split,34036e4438122940,56,5,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > forchain:25:merge,c7fcf81e91ec1dbf,41,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swapstmt:69,02cbb15977410a19,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > cast:78:6:short,a7b0c85ea3982d09,59,1,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swap:35:1,4f1797e2466acda8,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > incdec:45:forpre,071f11bb49de98c9,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > loop:29:do,90b335e465976445,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > type:pad:unsigned,e977b630d564aab3,61,4,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0,7f92f7f89bd3ef7e,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > chain:23:mergeab,b6d4d2c6dce8dba4,42,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > movedecl:ga:7,a80f0d972e9676a0,51,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > commute:67:+,bba27d7c2a6bf7ce,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > tempadd:66:+,5035eafa4c142c84,57,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > scope:j@0,2b8327605b44d9da,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swapdecl:gb:i,81a65a387e398f49,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > reuse:a:nb,58e6f587f5fc42ce,49,0,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > opassign:71:0:split,973d148d9aebaf47,59,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swapstmt:75,3da6a5383436ebca,41,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > cast:26:2:unsigned_char,b002f0c99c3896ac,63,34,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swap:36:0,89349744ba41c5f9,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > incdec:49:op1,30da8c2b70e28aa0,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > loop:25:while,e78a52126776b2ce,44,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > type:b:unsigned,b428aa486b9f6d46,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:30:ne0,3760e32055e44646,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > chain:22:split,ce9295fef69459c2,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > movedecl:j:4,3404428dff25e776,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > commute:67:+,f2c2a1218320f926,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > tempadd:68:+,5ea07f20e880e553,50,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > scope:ia@0,6e1bb94643d2e5b3,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swapdecl:p:q,7bc61e490fe76771,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > reuse:ia:ga,7202fce0e7670706,50,7,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > opassign:73:0:split,b9c528c62a0efee3,49,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > swapstmt:73,aa4e44f4539850b2,54,0,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > cast:84:1:unsigned_char,b56d47b91dfd337c,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > zero:27:ne0,51a3da90f4cc5977,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > scope:p@0,063c12e3cda1341a,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > opassign:66:0:split,9900f9632a8959cb,59,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > movedecl:ga:6,0d1b65d91bcd795e,51,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > chain:22:split,617946b59126fc94,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > cast:62:4:short,fae55dba85ebb67a,42,7,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:79:2,5abc1d52d7ffe37c,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > commute:37:!=,56faf90cf133f067,41,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > tempadd:62:+,7bbb4cdfedf9aa49,56,1,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > type:ib:char,5f2b0cd38f84c0fb,40,7,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swapdecl:p:q,9b5b7eba0f75ccd7,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > loop:25:ifdo,d1225a2b97b11703,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > incdec:49:pre,016995b94ef8dbf1,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > forchain:25:merge,a52673c293b320cf,41,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > reuse:ia:b,e6aac69ea8f0df2c,82,28,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swapstmt:66,6cb7fd992f16c3ae,63,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > zero:30:ne0,b96ccc4dafcb7a09,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > scope:ia@0,a530d382cbc8f2f2,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > opassign:67:0:split,233f35b02b015048,56,5,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > movedecl:gb:0,e8f11c3e94bdc2d7,48,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > chain:22:split2,5fcec1292c35510f,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > cast:66:5:char,bc10c6f01ee17529,64,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0,bf76e5b40f60fd7a,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > commute:68:+,e0f9401d593c2c0f,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > tempadd:67:+,1080b7c77c291a6e,52,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > type:a:unsigned_short,09cebcd767a262e5,58,5,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swapdecl:nb:ga,9775c21d668a1cc8,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > loop:25:gototop,9c87f8c257b7870d,44,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > incdec:58:forpre,ecfb7f54779f6c5a,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > forchain:45:merge,417a2e298e0bc5a7,41,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > reuse:ia:ga,938c2d99aeb26846,50,7,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swapstmt:65,b50dc2a4b3fc4898,78,12,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > zero:51:ne0,834faecc717e309e,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > scope:q@0,1ee8eae2d9b15c7f,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > opassign:72:0:split,0d2540e1e8540a74,50,20,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > movedecl:p:6,b8c59fb9f58ab3f0,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > chain:43:mergeba,66693e63ae9ed7b1,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > cast:66:19:unsigned_short,c4310d0873857f4b,42,7,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:35:1,b62a7ab17f449040,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > commute:84:==,a16d66560c6cf157,42,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > tempadd:66:+,f84dc24354524f66,62,1,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > type:b:unsigned,f61451e88444e057,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swapdecl:j:b,6bb4ea5432ac0bcf,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > loop:29:do,cac472ff67547cc0,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > incdec:83:forpre,aa5690bc3c85288e,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > reuse:a:gb,4b056cfa266f5db5,57,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swapstmt:68,6f18bf480acc2b13,41,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > zero:26:ne0,a012b21c4a47b3f8,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > scope:j@0,2d0205161881458a,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > opassign:71:0:split,ad8217c2871748a2,59,8,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > movedecl:ia:0,a0df34a9d38cdd48,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > chain:22:split3,da36237bb6ea5ed5,42,4,0,24,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > cast:52:4:short,f1e2d81c8790e2b0,86,36,0,14,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:68:5,8831f1411eb6931f,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > commute:66:+,5d828a166f0a1027,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > tempadd:68:+,6e9e4717994faa48,54,1,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > type:ga:signed_char,9a20fc954c8a64a0,100,48,0,14,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swapdecl:ia:j,39536290420e42c7,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > loop:29:while,1b5553d4f05553ce,52,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > incdec:49:op1,a67621b15035cc11,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > reuse:b:gb,90caf43d24ac2b0c,60,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swapstmt:86,92e7c98758db0439,44,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > zero:46:ne0,6787a6d0967e46ae,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > opassign:57:0:split,c8b078c42ff786fa,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:68:5:unsigned_char,644c8ef5bf8dac02,55,5,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swapdecl:j:b,3543f5a240eedfdb,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > scope:p@0,eab951a7fc1b4b22,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > type:i:unsigned,510b298300c98bb6,70,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > loop:58:gototop,c4aa0e3a808ef862,,,,,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > movedecl:i:6,cd6d63d595a2c92b,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swap:82:2,fb635d1ca4dd0923,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > chain:22:split2,4ef7de1dc32f0577,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > commute:67:+,1bf5bc1a3f8db5cc,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swapstmt:23,86912b3bbf959768,42,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > zero:27:ne0,b7d94f58b844c3ad,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > reuse:ia:nb,18e19fbd26d05b41,81,28,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > forchain:45:merge,5297c7961a8a03f0,41,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > opassign:66:0:split,e2e8bb948337f573,59,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > incdec:49:pre,0bdb60ea016f3ee2,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > tempadd:52:rhs,b869e5cebb8f75e9,66,7,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:58:3:char,74577a57b0321fe7,49,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swapdecl:nb:ga,ea173e111c7aa546,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > scope:ia@0,83c043b67f530064,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > type:pad:unsigned_short,57898108900dca05,61,4,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > loop:29:ifdo,45289a98fadd7d28,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > movedecl:q:3,f3a36c806f49e21f,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swap:84:0,6b0fb3017e11b3ce,42,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > chain:23:mergeab,bf18d68bf6425409,42,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > commute:62:+,43e62ccd7b9437a4,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swapstmt:76,505134d1e7b84faa,59,17,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > zero:30:ne0,3b2443171305a8ad,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > reuse:a:nb,f54043a38eba5e00,49,0,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > forchain:25:merge,be8f17ffce57a0c8,41,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > opassign:72:0:split,8b48b3e114aeaca3,50,20,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > incdec:54:op1,415533d7ae4a917d,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > tempadd:67:+,10a4369817fe4f22,52,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:84:1:unsigned_char,daaa1ba81af42e89,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swapdecl:a:p,929942ac8f6cda08,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > scope:j@0,96b3e0cf0d2933d2,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > type:ia:unsigned,3cb46d413d2cf643,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > loop:58:while,7220c65573588427,44,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > movedecl:j:2,dd1d9c3c02dc487c,48,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swap:31:0,852743c557ce13bd,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > chain:43:mergeba,8bfd0fa25b3662b9,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > commute:35:!=,dd1d66184a5ead0e,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swapstmt:69,eb3959a1110d5caf,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > zero:51:ne0,4a25991146b0ad27,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > reuse:ia:a,bec4be23254655c4,82,28,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > opassign:73:0:split,5af3c7f3725e4fe5,49,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > incdec:25:forpre,9d78cf60c57d93b1,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > tempadd:68:+,c2b8aa014b084875,50,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:52:4:unsigned_char,187112a8d98464ed,86,36,0,14,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swapdecl:ia:j,79658359b77f02e3,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > scope:q@0,a52466c4557f673b,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > type:i:short,a2a245f2b927279d,133,85,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > loop:29:while,86a57ae12e5bbbd9,52,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > movedecl:gb:6,70b94b030112e3bb,51,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swap:74:6,8e094eea9617fda5,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > chain:22:split3,2af8e9884c89de8e,42,4,0,24,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > commute:37:!=,f8e74f6446b56ccd,41,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swapstmt:68,22ea4b5a671443cc,41,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > zero:26:ne0,ce90cc79ed2202c3,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > reuse:b:gb,df8d9c8cd0e1d1e5,60,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > opassign:57:0:split,2395f1bbea438e35,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > incdec:49:op1,1d503a3ddf978d1a,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > tempadd:67:+,e637d0b35f78ade0,52,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short,ae4d72e333708a2c,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > swapdecl:ga:gb,f9d5074653cedca4,48,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > forchain:25:merge,b9c706d7f48b628b,41,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > scope:q@0,6ef99db3f8b3386c,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > commute:37:!=,8225f8b644b7e9c5,41,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > chain:22:split,5002d398dee73e1c,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > swap:31:0,f5796addec9f74fa,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > loop:45:gotobot,b843ee8f4fcdfbef,41,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > type:j:signed_char,701a9e43eb8b8990,87,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > cast:84:4:unsigned_char,41c3d5c656cac6c7,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > movedecl:b:3,a1cf36b3a8af9b00,48,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > swapdecl:j:b,505bcd260b16ceed,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > opassign:68:0:split,dcbd528fe907dc64,55,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > tempadd:74:rhs,a173696f65528b6a,,,,,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > swapstmt:69,355dd2f740031a28,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > incdec:54:op1,0b17a25d634e10c7,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > reuse:a:nb,e079dc236ef4c566,49,0,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > zero:26:ne0,5855f073f8c39ebf,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > forchain:45:merge,b882ebbb80c03867,41,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > scope:p@0,0ae929a13a49621b,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > commute:36:!=,b950c9cbfb2fee0a,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > chain:43:mergeab,99f1b200e060932c,41,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > swap:33:1,3258c4d0cd879889,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > loop:58:do,bf97b7f617470c5d,44,1,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > type:i:unsigned_short,b3143b9f430294cd,143,101,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > cast:25:1:char,fcafcb716d29a183,43,6,0,37,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > movedecl:p:7,2d5aacfd9d52a7eb,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > swapdecl:a:p,8416f70d03be1ff1,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > opassign:57:0:split,6ac9f720340d1101,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > tempadd:61:+,77b6aff4904cf6a3,52,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > swapstmt:75,a427e191fac64558,41,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > incdec:58:forpre,52dc4707fcb3b4c2,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > reuse:b:nb,ab4af0b10ccd4985,52,0,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > zero:27:ne0,2c6e5ca0506a070f,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > scope:j@0,7219859bf30501e7,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > commute:66:+,3e44c56fb19dff70,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > chain:22:split3,34036cf952fa6768,42,4,0,24,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > swap:81:0,a1beb0b46e65766b,42,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > loop:58:gototop,73c0652aa7572e98,,,,,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > type:i:unsigned,343a6dec973b6c9e,70,8,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > cast:84:7:int,2b03f9540cf82510,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > movedecl:ga:5,371f735923f4788e,51,2,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > swapdecl:nb:ga,7bc5788a8386d99b,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > opassign:67:0:split,b69456b498795510,67,13,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > tempadd:68:+,7a92428553fdd5fd,50,4,0,31,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > swapstmt:74,09f0a398d4db6ef8,41,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > incdec:54:pre,8435e5e2a7a1b6fe,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > reuse:ia:a,2f87404fafb107d4,82,28,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > zero:30:ne0,419dfdc18a262d2f,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > scope:ia@0,7a85029c227d1406,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > commute:67:+,435ad6bcd48ab58d,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > chain:43:mergeba,3a9ef5e84d8ca2c7,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > swap:68:5,160b44bf1135ff6b,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > loop:45:gototop,f9819351888530db,44,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > type:pad:unsigned_char,40082581d4d48d80,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > cast:68:19:char,f56188d647f3903b,42,6,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > movedecl:b:10,477b5f9e30a5c6a9,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > swapdecl:ia:j,89b035d9e12fb5a0,43,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > opassign:72:0:split,d87715e33b77eed6,50,20,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > tempadd:47:rhs,20fc9f622b1fd254,69,7,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > swapstmt:76,8e86491c13ee73b5,59,17,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > incdec:80:forpre,dd40060b5eab8d7b,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > reuse:ia:b,def815cb9c5179c5,82,28,0,0,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > zero:51:ne0,35e248d8aa280c01,40,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > commute:84:==,236ccb2f1bd39f45,42,4,0,97,ga
+2026-10-24,SwapSelectedPlayers,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,swapdecl:a:b > chain:44:split3 > type:ib:signed_char > scope:ib@0 > zero:31:ne0 > swap:58:0 > cast:71:9:short > chain:22:split2,546f6dc41f24afce,40,4,0,97,ga
