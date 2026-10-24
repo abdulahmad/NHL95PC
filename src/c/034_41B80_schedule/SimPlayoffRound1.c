@@ -471,10 +471,14 @@ int SeedPlayoffRound3(int buf, int games, int fh, int tm, int *human)
 /* SimPlayoffRound3: the same for the 2 conference finals (sched + 1F8h). Each game of a series not yet played (score byte +4 = FFh)
  is simulated (SimulateGame, schedule slot s * 7 + 0x498 + game, mode 2) and the winner (more goals: +4 vs +5) counted
  once a team has won len 2 + 1 (SeriesLength) the remaining games are blanked (FFh). The win counts index
- by the series' first game's teams. Returns 0. */
+ by the series' first game's teams. Returns 0.
+ DRAFT (10.0 GA, 3 differing): the first team byte through the byte local k puts the slot sum last among the
+ tied temporaries, as in the EXE, so every register after it matches; left: k is loaded into al and widened into
+ ecx (EXE `xor ecx, ecx` / `mov cl, [esi+2]`). */
 int SimPlayoffRound3(int sched, int rwfh, int rdfh, char *dir, char *ext)
 {
     int wins[26];
+    unsigned char k;
     int s;
     int i;
     int len;
@@ -485,7 +489,8 @@ int SimPlayoffRound3(int sched, int rwfh, int rdfh, char *dir, char *ext)
     len = SeriesLength(g);
     for (s = 0; s < 2; s++, g += 0x2A) {
         for (i = 0; i < len; i++) {
-            if (wins[g[2]] == len / 2 + 1 || wins[g[3]] == len / 2 + 1) {
+            k = g[2];
+            if (wins[k] == len / 2 + 1 || wins[g[3]] == len / 2 + 1) {
                 g[i * 6 + 5] = 0xFF;
                 g[i * 6] = g[i * 6 + 1] = g[i * 6 + 2] = g[i * 6 + 3] = g[i * 6 + 4] = g[i * 6 + 5];
             } else {
