@@ -133,6 +133,50 @@ Measured 2026-10-24: still 11 under 10.0 GA, same size. LA scores 44. `/* cflags
 order is already the EXE's. The `int type` / `short c` shape that emits the EXE type-byte code is
 already in UNSURE and moves the frame (best 20). Not retried.
 
+## Tie-breaker copies and dead-variable reuse (lane 2 and lane 1, 2026-10-24)
+
+Lane agents logged these as `ESCALATE, not marked` in `docs/draft_history.csv`. Each committed draft (or patch)
+compiles to the EXE bytes only through an extra variable whose one job is to change a register tie:
+
+| function | file (lane) | shape | score with / without |
+| --- | --- | --- | --- |
+| CreateFreeAgent | `052_6D2F8_create_player/CreateFreeAgent.c` (2) | `carsize = careerdb_size + 0x2C; s.sizes[1] = carsize;`, a temporary on one of six parallel size stores | 0 / 5 |
+| POInitSchedule | `064_86696_season_playoffs/POCreateSchedule.c` (2) | `sched = po + 0x1998; g = sched;` (sched is used for nothing else) and `day` in one of the two twin date loops | 0 / 6 |
+| LockerRoomLoop | `059_8034B_settings_lockerroom/LockerRoomScreen.c` (2) | `n = hm + 1; hm = n % 0x1A;` through n, dead since the pointer block; a new int instead scores 23 | 0 / 2 |
+| wallcoll | `040_53294_engine_physics_ai/dopass.c` (1) | the limit through the sound short s or t (dead), with goto slow removed; patch only, the committed draft is clean | 0 / 11 |
+| PassLaneChk | `040_53294_engine_physics_ai/PassLaneChk.c` (2) | p's y through an int py that only breaks a savings tie (committed; still 2 differing) | 2 / 17 |
+
+Why a copy works: the register allocator sorts conflicts by savings with an unstable Shell sort, so when temporaries
+tie (CreateFreeAgent: the goalie loop's index pair and byte tie at savings 30 / 20 with about ten others), adding
+or removing any conflict anywhere in the function reorders the tie ([WCC_INTERNALS.md](WCC_INTERNALS.md)). The
+lanes found that one extra int anywhere in CreateFreeAgent's size block gives the match. So the copy proves the
+original had a different number of temporaries somewhere, not where. The asymmetry (one of six parallel stores,
+one of two twin loops, a pointer copied once into another) argues against these being the original lines.
+
+**Ruling (Abdul, 2026-10-24):** as recommended below. The copies are out of the committed drafts (CreateFreeAgent 5,
+POInitSchedule 6, LockerRoomLoop 23, PassLaneChk 17; wallcoll was committed clean), and AGENTS.md lists
+tie-breaker copies with the ESCALATE shapes. The tagged-match alternative is not adopted.
+
+**Recommended ruling:**
+- Do not mark CreateFreeAgent, POInitSchedule or PassLaneChk with a pass-through copy: a local that only holds a
+  value for one store, or only seeds another variable, is a tie-breaker like a no-op cast. Keep the clean draft
+  committed with the copy described in its comment (as the lanes did), and take it out of the committed C where
+  it is still there (CreateFreeAgent, POInitSchedule, PassLaneChk): a draft should hold the best natural shape.
+- Do not mark LockerRoomLoop or wallcoll with dead-variable reuse: it is on the AGENTS.md ESCALATE list, and a
+  fresh local for the same value does not match (LockerRoomLoop 23), so the reuse is the tie-breaker, not the
+  original's style.
+- A copy is acceptable when the value is used more than once or the variable has a role of its own in the
+  function (a loop pointer, a result tested later), the same as any natural local.
+- Lead for all five: the tie moves with the conflict count, so a natural difference elsewhere (a statement the
+  draft folds that the original kept separate, a temporary the original needed and the draft does not) can give
+  the same order. Look with `tools/wccre/regdump.py` at which conflicts tie, and look for real shape differences
+  in the rest of the function before adding locals.
+
+**Alternative for Abdul (policy, not applied):** accept tie-breaker copies as tagged matches: mark them, with a
+`/* TIEBREAK: ... */` comment on the copy, and have c_progress count them separately so they can be revisited.
+This moves the count by four now (CreateFreeAgent, POInitSchedule, LockerRoomLoop, wallcoll) at the cost of
+code that is known not to be the original's.
+
 ## Compiler version and per-file flags
 
 Not an escalation. The four largest drafts, scored with no source edit:

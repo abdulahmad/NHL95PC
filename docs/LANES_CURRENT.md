@@ -15,10 +15,9 @@ Segments 001-037. Work every draft in these files; do not take a file from the o
 | src/c/013_1BBCC_key_team_db/LoadTeamRoster.c | LoadTeamRoster | 51 | register 20/28 |
 | src/c/029_380E9_league_setup/LeagueTeamSelect.c | LeagueTeamSelect | 53 | size 34/55 |
 | src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c | TradeScreenLoop | 88 | register 38/51 |
-| src/c/028_35FB9_import_export/PostGameToTeamDb.c | PostGameToTeamDb | 130 | register 57/128 |
-| src/c/022_2D346_game_setup/GameSummaryScreen.c | GameSummaryScreen | 287 | register 182/268 |
-| src/c/010_18D7F_frontend_desk/SportsDesk.c | SportsDesk | 303 | size 130/294 |
-| src/c/027_33FFD_calendar/CalendarScreen.c | CalendarScreen | 319 | register 134/318 |
+| src/c/028_35FB9_import_export/PostGameToTeamDb.c | PostGameToTeamDb | 129 | register 57/127 |
+| src/c/010_18D7F_frontend_desk/SportsDesk.c | SportsDesk | 192 | register 107/194 |
+| src/c/027_33FFD_calendar/CalendarScreen.c | CalendarScreen | 258 | register 134/257 |
 | src/c/035_45282_options_settings/SimulateGame.c | SimulateGame | 624 | register 358/621 |
 
 ## Offered to Mhopkinsinc
@@ -483,6 +482,14 @@ RunMenu is in this file (score 82, register 38/82) and comes with it.
 - TeamStatsScreen 132->123 (2026-10-24, Mhopkinsinc, GA) (dead-local reuse; every scalar stack slot now as in the EXE)
 - TeamStatsScreen 123->123 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
 - TeamStatsScreen 123->123 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
+
+### `src/c/022_2D346_game_setup/GameSummaryScreen.c`
+
+- GameSummaryScreen 320->320 (2026-10-24, Mhopkinsinc, GA) . For GameSummaryScreen two real source differences were found but not committed (each alone or together scores worse, 389 / 393): the other-games reads as `othergames[f.i * 2]` (exact in that region) and `k` living in the frame slot the dr
+- GameSummaryScreen 320->287 (2026-10-24, Mhopkinsinc, GA) : the frame index
+- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
+- GameSummaryScreen 287->372 (2026-10-24, abdulahmad, LA) no source change. GA is 287, size +38.
+- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) roster index side * 0x444 + f.k * 0x27 (287, same code); linetab[side][0x28 + f.i] / (linetab[side] + f.i)[0x28], each also with the roster order (287, same code); f.i as plain local 327 (+4 frame, extras loop unchanged); page init chained goals / chained ints / both / five-way chain (287, same code); period as plain local (pad kept) 298 (+9, frame +4); all 8 byte members as plain locals 311 (+9); declsearch --conflicts nothing to move on the base, 3 of 7 byte slots on the all-bytes version; one permute run 449 candidates best 253 (+40) via cast:334 unsigned_char + chain + two loop rewrites (rejected); regsolve: only the tried d10 / d100 swap, savings bumps and temporary drops
 
 ## Escalations — Abdul (lane T)
 

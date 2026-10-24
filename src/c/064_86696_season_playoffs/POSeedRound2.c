@@ -58,8 +58,6 @@ void DrawPlayoffTree(void);
 void CountSeriesWins(int *tree, int *wins, int mode);  /* 27C34 */
 extern PlayoffName savenamedefault;  /* 86616: "." and zeros, the default name */
 
-/* DRAFT: 2,037 bytes as in the EXE, 34 differing lines (register picks, the bank store, the epilogue);
-   see docs/UNSURE.md. */
 /* CreatePlayoffs (86696, PC only; ends in POSeedRound2_x): start a new playoff. Keep and set the dialog colours,
    keep the exhibition mode state, fade the palette out and draw the EMBSCUP background (dword_C65AC when loaded),
    fade the EMBPAL palette in and ask for the playoff name (up to 8 characters, colour 3 white meanwhile). With a
@@ -70,9 +68,17 @@ extern PlayoffName savenamedefault;  /* 86616: "." and zeros, the default name *
    background, seed the teams (POSeedTeams), copy the seven databases, make the schedule (POCreateSchedule), write
    the mode state, rebuild the saved game labels and stats menu and point the menu actions at the playoff screens.
    On an error say so and remove the directory. At the end fade the TEMP2 palette in, restore the exhibition mode
-   state and the dialog colours. No arguments; result 2. */
+   state and the dialog colours. No arguments; result 2.
+   The buffers and the MessageBox position are one frame struct; the saved colours, the second EMBSCUP bank and
+   the two 3-byte palette entries are plain locals, declared in the order that gives the EXE's slots. The cancel
+   code (free both banks, r = 1) is written in both places that give up; Watcom cross-jumps the two copies. */
 int CreatePlayoffs(void)
 {
+    int fill;
+    unsigned char orgb[3];
+    unsigned char rgb[3];
+    int bg;
+    int fg;
     struct {
         int seeds[16];
         char ft[0x2C];
@@ -82,15 +88,10 @@ int CreatePlayoffs(void)
         int btn;
         int y;
         int x;
-        int bank2;
-        int fill;
-        int lite;
-        int bg;
-        int shade;
-        int fg;
-        unsigned char rgb[4];
-        unsigned char orgb[4];
     } s;
+    int lite;
+    int shade;
+    int bank2;
     int p;
     int pal;
     int bank;
@@ -98,11 +99,11 @@ int CreatePlayoffs(void)
     int i;
 
     s.name = savenamedefault;
-    s.fill = boxfillcolor;
-    s.lite = boxlitecolor;
-    s.shade = boxshadecolor;
-    s.fg = dlgtextfg;
-    s.bg = dlgtextbg;
+    fill = boxfillcolor;
+    lite = boxlitecolor;
+    shade = boxshadecolor;
+    fg = dlgtextfg;
+    bg = dlgtextbg;
     boxfillcolor = 0x41;
     boxlitecolor = 0x40;
     boxshadecolor = 0x42;
@@ -127,42 +128,47 @@ int CreatePlayoffs(void)
     FadePalStep(0, (unsigned char *)sub_B30B4(bank, (char *)str_BangPal) + 0x10, 0x10);
     sub_8E9C0(0x40, 0x41);
     SetDialogColors(0x41, 0x40, 0x42, 0x40, 0x43);
-    s.rgb[0] = s.rgb[1] = s.rgb[2] = 0x3F;
-    sub_8FFB0(3, 1, s.orgb);
-    sub_B4B88(3, 1, s.rgb);
+    rgb[0] = rgb[1] = rgb[2] = 0x3F;
+    sub_8FFB0(3, 1, orgb);
+    sub_B4B88(3, 1, rgb);
     r = TextInputDialog((char *)str_PleaseEnterNewPlay, s.name.c, 8, 0x36, 0, 0, 0, 0, 5);
-    sub_B4B88(3, 1, s.orgb);
+    sub_B4B88(3, 1, orgb);
     sub_B2DCA(&s.btn, &s.x, &s.y);
-    if (r == 0x1B || !s.name.c[0]) goto cancel;
-    postate[0] = 1;
-    *(int *)((char *)postate + 0x51) = 0xC;
-    *(int *)((char *)postate + 0x55) = 0x15;
-    *(unsigned short *)((char *)postate + 0x59) &= 0x8000;
-    *(unsigned short *)((char *)postate + 0x59) |= 0x79FF;
-    if (ctlavailmask & 2) *(int *)((char *)postate + 0x65) = 2;
-    else if (ctlavailmask & 4) *(int *)((char *)postate + 0x65) = 4;
-    else if (ctlavailmask & 8) *(int *)((char *)postate + 0x65) = 8;
-    else if (ctlavailmask & 1) *(int *)((char *)postate + 0x65) = 1;
-    else *(int *)((char *)postate + 0x65) = 0x10;
-    if (*(int *)((char *)postate + 0x65) != 0x10) *(int *)((char *)postate + 0x5D) = 0xC;
-    else *(int *)((char *)postate + 0x5D) = -1;
-    *(int *)((char *)postate + 0x69) = 0x10;
-    *(int *)((char *)postate + 0x61) = -2;
-    *(int *)((char *)postate + 0x6D) = r = 0;
-    *(int *)((char *)postate + 0x71) = 1;
-    LoadModeState(postate);
-    strcat(s.name.c, (char *)str_PO);
-    if (!unknown_libname_1(s.name.c, 0x10, s.ft)) {
-        if ((r = !MessageBox(-1, -1, (char *)msg_POExists, 2, (int)btn_LeagueExists, 2, (int)&s.x, (int)&s.y, -1)) != 0)
-            goto cancel;
-        DeleteDir(s.name.c);
+    if (r == 0x1B || !s.name.c[0]) {
+        FreeMemBlock(bank);
+        FreeMemBlock(pal);
+        r = 1;
+    } else {
+        postate[0] = 1;
+        *(int *)((char *)postate + 0x51) = 0xC;
+        *(int *)((char *)postate + 0x55) = 0x15;
+        *(unsigned short *)((char *)postate + 0x59) &= 0x8000;
+        *(unsigned short *)((char *)postate + 0x59) |= 0x79FF;
+        if (ctlavailmask & 2) *(int *)((char *)postate + 0x65) = 2;
+        else if (ctlavailmask & 4) *(int *)((char *)postate + 0x65) = 4;
+        else if (ctlavailmask & 8) *(int *)((char *)postate + 0x65) = 8;
+        else if (ctlavailmask & 1) *(int *)((char *)postate + 0x65) = 1;
+        else *(int *)((char *)postate + 0x65) = 0x10;
+        if (*(int *)((char *)postate + 0x65) != 0x10) *(int *)((char *)postate + 0x5D) = 0xC;
+        else *(int *)((char *)postate + 0x5D) = -1;
+        *(int *)((char *)postate + 0x69) = 0x10;
+        *(int *)((char *)postate + 0x61) = -2;
+        *(int *)((char *)postate + 0x6D) = 0;
+        r = 0;
+        *(int *)((char *)postate + 0x71) = 1;
+        LoadModeState(postate);
+        strcat(s.name.c, (char *)str_PO);
+        if (!unknown_libname_1(s.name.c, 0x10, s.ft)) {
+            if ((r = !MessageBox(-1, -1, (char *)msg_POExists, 2, (int)btn_LeagueExists, 2, (int)&s.x, (int)&s.y,
+                    -1)) == 0) {
+                DeleteDir(s.name.c);
+            } else {
+                FreeMemBlock(bank);
+                FreeMemBlock(pal);
+                r = 1;
+            }
+        }
     }
-    goto named;
-cancel:
-    FreeMemBlock(bank);
-    FreeMemBlock(pal);
-    r = 1;
-named:
     if (!r) {
         strcpy((char *)&curleague, s.name.c);
         strcpy((char *)&leaguedbfmt, s.name.c);
@@ -188,9 +194,9 @@ named:
                 FadePalStep(1, (unsigned char *)pal, 0x10);
                 if (!dword_C65AC) {
                     MakePath(s.path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)str_Embscup, 0);
-                    s.bank2 = sub_8E83C(s.path, 0);
-                    sub_9121C(sub_B30B4(s.bank2, (char *)str_Bkgd));
-                    FreeMemBlock(s.bank2);
+                    bank2 = sub_8E83C(s.path, 0);
+                    sub_9121C(sub_B30B4(bank2, (char *)str_Bkgd));
+                    FreeMemBlock(bank2);
                 } else {
                     sub_9121C(sub_B30B4(dword_C65AC, (char *)str_Bkgd));
                 }
@@ -238,11 +244,11 @@ named:
     FadePalStep(1, (unsigned char *)pal, 0x10);
     FreeMemBlock(pal);
     LoadModeState(exhstate);
-    boxfillcolor = s.fill;
-    boxlitecolor = s.lite;
-    boxshadecolor = s.shade;
-    dlgtextfg = s.fg;
-    dlgtextbg = s.bg;
+    boxfillcolor = fill;
+    boxlitecolor = lite;
+    boxshadecolor = shade;
+    dlgtextfg = fg;
+    dlgtextbg = bg;
     return 2;
 }
 

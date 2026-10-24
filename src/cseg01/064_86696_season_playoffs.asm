@@ -44,6 +44,10 @@ global CreatePlayoffs, POSeedTeams, POPickConfTeams, POCreateSchedule, POCreateS
 global POInitSchedule, SeriesWinner, POSeriesScore, POSeedRound2, POSeedConfFinals, POSeedFinal, POSimSeriesTeamWins, POSimSeries
 global POPreSimRound1, POPreSimRound2, POPreSimConfFinals, POHandleElimination, POSimSeriesTo, POAfterGame, LoadScheduleDB, SaveScheduleDB
 global PlayoffModeLoop, POReturnZero, POHiliteSlot, PlayoffTreeMenu, DrawPlayoffTree, SetSideControls, WriteCurModeState, ClearPlayerFromLines
+; C: src/c/064_86696_season_playoffs/POSeedRound2.c (CreatePlayoffs)
+%ifdef CBUILD
+%include "c/064_86696_season_playoffs/POSeedRound2.CreatePlayoffs.inc"
+%else
 CreatePlayoffs:
 push dword 0F8h	; 86696
 call __CHK	; 8669B
@@ -572,6 +576,7 @@ mov dword [dlgtextbg], eax	; 86E76
 mov eax, 2	; 86E7B
 add esp, 0C8h	; 86E80
 jmp near POSeedRound2_x	; 86E86
+%endif ; C
 POSeedTeams:
 push dword 20h	; 86E8B
 call __CHK	; 86E90
