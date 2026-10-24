@@ -14,15 +14,15 @@ void doinput(Player *p, int pad);  /* 504DA: pad 0 for controller 1, 2 for contr
 . For the goal lines y = +E8h and -E8h: puckcross[0] = x where the puck crosses (bounced
  off the side boards at +-A0h), puckcross[1] = frames until it crosses (dy * 1000h puckvy); [1] = -1 when it
  will not cross (no y velocity, moving away, or out of range).
- DRAFT (10.0 GA, 3 differing, same size): x declared in the crossing block and the first bounce as
- `side + side - x` (side's savings 71 -> 81, tied with pc, so side takes ecx and pc esi as in the EXE).
- Left: both bounce results are copied with `mov ebx, edx` where the EXE has the 16-bit `mov bx, dx`. */
+ t is a Reg68 local, a 68k data register (93G findpc's d0): both quotients go to t.l and the crossing x is
+ worked on t.w, so a bounce stores only the low word (the EXE's 16-bit `mov bx, dx`). Both bounces add
+ side twice, as 93G's `add.w d1, d0` pair. */
 void calcpuckcross(void)
 {
     short *pc;
     int goaly;
     short side;
-    int t;
+    Reg68 t;
     int dy;
     short i;
 
@@ -32,19 +32,17 @@ void calcpuckcross(void)
     for (i = 0; i < 2; goaly = -goaly, i++, pc += 2) {
         dy = (short)(goaly - *pucky);
         if (*puckvy != 0) {
-            t = (dy << 12) / *puckvy;
-            if (t >= 0 && t < 0x10000) {
-                pc[1] = t;                      /* time until crossing in frames */
-                t = *puckvx * dy / *puckvy;
-                if (t < 0x10000) {
-                    short x;
-
-                    x = t + *puckx;
-                    if (x >= 0xA0) x = side + side - x;     /* bounce off the side boards */
+            t.l = (dy << 12) / *puckvy;
+            if (t.l >= 0 && t.l < 0x10000) {
+                pc[1] = t.l;                    /* time until crossing in frames */
+                t.l = *puckvx * dy / *puckvy;
+                if (t.l < 0x10000) {
+                    t.w += *puckx;
+                    if (t.w >= 0xA0) t.w = side + side - t.w;   /* bounce off the side boards */
                     side = -side;
-                    if (x <= side) x = side * 2 - x;
+                    if (t.w <= side) t.w = side + side - t.w;
                     side = -side;
-                    pc[0] = x;
+                    pc[0] = t.w;
                     continue;
                 }
             }
