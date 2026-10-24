@@ -43,8 +43,10 @@ typedef struct {
 #define FWDPL(s, k) f.t[s]->fwd[FWD(s, fline)][k]
 #define DEFPL(s, k) f.t[s]->def[DEF(s, dline)][k]
 
-/* DRAFT under Watcom 10.0 GA: 572 differing instructions, 9,872 vs 9,868 bytes.
-   Allocation-loop indexing, scalar slots and later register choices remain. */
+/* DRAFT under Watcom 10.0 GA: 566 differing instructions, 9,872 vs 9,868 bytes. score[2] is declared before
+   rate[2] (their slots then match the EXE; declsearch cannot read them). Allocation-loop indexing (i * 4 kept
+   in ebp where the EXE keeps i), the err / periodlen and tick / shotv slots (not a tie: their declaration
+   swap changes nothing or is worse) and later register choices remain. */
 /* SimulateGame (452C5, PC only): play one schedule game without graphics, a minute at a time, and post it to the
    in-memory league databases. Both teams are read (rdfh: the 4Ch-byte record, its season or playoff block is not
    used afterwards; rwfh: the team record), and every dressed player's key, career and season records are found
@@ -109,12 +111,12 @@ int SimulateGame(char *dir, char *ext, int n, unsigned char *game, int rwfh, int
     int shotv;
     unsigned char prevsk[2];        /* skaters on the ice the minute before */
     int err;
-    unsigned char rate[2];          /* penalty rate divisor (180) */
+    unsigned char score[2];         /* goals this game */
     unsigned char dline;            /* index into simdorder */
     int tick;
     int penv;
     int i;
-    unsigned char score[2];         /* goals this game */
+    unsigned char rate[2];          /* penalty rate divisor (180) */
     unsigned char fline;            /* index into simfwdorder */
     unsigned char goalie[2];        /* the goalie in net (0-2) */
     unsigned char skaters[2];       /* skaters on the ice (5 minus those in the box) */

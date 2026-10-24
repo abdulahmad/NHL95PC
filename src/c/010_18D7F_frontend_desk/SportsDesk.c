@@ -23,15 +23,19 @@ int sub_8F98F(char *path);  /* music library: load a song (register arguments) *
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song (register arguments) */
 int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last call */
 
-/* DRAFT under 10.0 GA: 303 differing instructions, the EXE size (4,567 bytes). The frame is the retail 404h:
+/* DRAFT under 10.0 GA: 192 differing instructions, 4,512 of 4,567 bytes. The frame is the retail 404h:
    the menu-item offset is computed in place, and m is formed only in the submenu path after the drawing calls.
    A click on an item with an action runs it when it is the selected one and otherwise moves the selection; an
    item with a submenu opens it: two separate arms, each closing the deeper dropdowns itself, as in the EXE (the
    submenu arm's last DrawMenuItemNorm cross-jumps into the selection arm's). Zero chains store the higher
    indices first, as in the EXE, and the playoff comparisons use its >= bounds. sub_B2DCA returns the buttons
-   and the pointer x and y, which MouseSetPos gets back in that order. The declaration order of the arrays and
-   scalars was searched with real compiles and tools/slot_solver.py. Left: stack slots (oldmx / oldmy, autoret,
-   timeout, speech, ptr), register picks, the overtime / conference argument shapes. The retail speech timer
+   and the pointer x and y, which MouseSetPos gets back in that order. A hit (MenuHitTest) is the if arm and a
+   miss the else arm, so the miss block sits at the end of the function as in the EXE; the dropdown ternaries
+   test depth != 1. The declaration order of the arrays and scalars comes from real-compile sweeps,
+   tools/slot_solver.py and tools/wccre/declsearch.py (--conflicts). Left: stack slots (oldmy, autoret,
+   timeout, speech, ptr), register picks, the overtime / conference argument shapes, r kept in a register (the EXE keeps
+   it on the stack), and the miss arm's tail: the EXE keeps its own sub_91400 call and pushes and joins the
+   no-click path only at sub_91370 (55 bytes), where C cross-jumps the whole tail. The retail speech timer
    compares the routine address. */
 /* SportsDesk (1935D, PC only): the sports desk of a game (mode 0: paused in the game, 1: intermission, 2: after
    the game): the menu labels and title of the mode, the replay item only when a replay is recorded; fade in the
@@ -46,31 +50,31 @@ int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last ca
    reloads the game (DeskReloadGame). mode: 0, 1 or 2. No result. */
 void SportsDesk(int mode)
 {
-    unsigned char pal[0x300];
-    unsigned char txt[0x40];
-    int nitems[4];
-    int pos[4][2];
-    int ptrsize;
-    int bg[4];
-    int sel[4];
-    char path[0x20];
     MenuItem *menus[4];
-    int conf;
-    int oldmx;
-    int ptr;
-    int depth;
-    int timeout;
-    int level;
-    int oldmy;
-    int speech;
-    int item;
-    int my;
-    int h;
-    int savey;
-    int w;
+    unsigned char txt[0x40];
+    char path[0x20];
+    int bg[4];
+    int ptrsize;
+    int nitems[4];
     int btn;
-    int r;
+    unsigned char pal[0x300];
+    int savex;
+    int conf;
+    int timeout;
+    int oldmx;
+    int depth;
+    int speech;
+    int savey;
+    int oldmy;
+    int level;
+    int item;
     int mx;
+    int pos[4][2];
+    int ptr;
+    int w;
+    int sel[4];
+    int r;
+    int my;
     int bank;
     unsigned char *src;
     int i;
@@ -78,7 +82,7 @@ void SportsDesk(int mode)
     MenuItem *m;
     int winner;
     int ot;
-    int savex;
+    int h;
     int autoret;
     int rnd;
 
@@ -213,22 +217,7 @@ void SportsDesk(int mode)
             continue;
         }
         autoret = 0;
-        if (!MenuHitTest(mx, my, menus, depth, nitems, &pos[0][0], &level, &item)) {
-            sub_903F0(ptr, oldmx, oldmy);
-            for (i = depth; i > 0; i--) {
-                sel[i] = 0;
-                if (bg[i]) {
-                    sub_903F0(bg[i], pos[i][0], pos[i][1]);
-                    pos[i][0] = pos[i][1] = 0;
-                    FreeMemBlock(bg[i]);
-                }
-            }
-            depth = 0;
-            menus[1] = menus[2] = menus[3] = 0;
-            bg[0] = bg[1] = bg[2] = bg[3] = 0;
-            sel[1] = sel[2] = sel[3] = 0;
-            nitems[1] = nitems[2] = nitems[3] = 0;
-        } else {
+        if (MenuHitTest(mx, my, menus, depth, nitems, &pos[0][0], &level, &item)) {
             if ((*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x14))) {
                 if (item == sel[level]) {
                     sub_903F0(ptr, oldmx, oldmy);
@@ -339,8 +328,8 @@ void SportsDesk(int mode)
                 menus[depth] = (MenuItem *)(*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x18));
                 m = &menus[level][item];
                 nitems[depth] = m->pad;
-                pos[depth][0] = (depth == 1 ? m->x1 : m->x2) + pos[depth - 1][0];
-                pos[depth][1] = (depth == 1 ? menus[level][item].y2 : menus[level][item].y1) + pos[depth - 1][1];
+                pos[depth][0] = (depth != 1 ? m->x2 : m->x1) + pos[depth - 1][0];
+                pos[depth][1] = (depth != 1 ? menus[level][item].y1 : menus[level][item].y2) + pos[depth - 1][1];
                 i = depth;
                 w = menus[i][nitems[i] - 1].x2 - menus[i][0].x1 + 1;
                 h = menus[i][nitems[i] - 1].y2 - menus[i][0].y1 + 1;
@@ -355,6 +344,21 @@ void SportsDesk(int mode)
             } else {
                 sub_903F0(ptr, oldmx, oldmy);
             }
+        } else {
+            sub_903F0(ptr, oldmx, oldmy);
+            for (i = depth; i > 0; i--) {
+                sel[i] = 0;
+                if (bg[i]) {
+                    sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                    pos[i][0] = pos[i][1] = 0;
+                    FreeMemBlock(bg[i]);
+                }
+            }
+            depth = 0;
+            menus[1] = menus[2] = menus[3] = 0;
+            bg[0] = bg[1] = bg[2] = bg[3] = 0;
+            sel[1] = sel[2] = sel[3] = 0;
+            nitems[1] = nitems[2] = nitems[3] = 0;
         }
         sub_91400(ptr, mx, my);
         sub_91370(pointerspr, mx, my);
