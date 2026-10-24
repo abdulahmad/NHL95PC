@@ -164,8 +164,9 @@ int SeedPlayoffRound1(int *seeds, unsigned char *sched, int fh, int games, unsig
  is simulated (SimulateGame, schedule slot s * 7 + 0x444 + game, mode 2) and the winner (more goals: +4 vs +5) counted
  once a team has won len 2 + 1 (SeriesLength) the remaining games are blanked (FFh). The win counts index
  by the series' first game's teams. Returns 0.
- DRAFT (10.0 GA, 16 differing): named byte scores and scalar order i, s, len, g improve the temporary
- picks. Left: rdfh / series-counter slots, the winning-length compare, slot sum, and score compare. */
+ DRAFT (10.0 GA, 9 differing): a plain win-count zeroing loop gives the original winning-length
+ compare and slot-sum registers. Left: rdfh / series-counter slots and the away score loaded into dh
+ instead of compared in memory. */
 int SimPlayoffRound1(int sched, int rwfh, int rdfh, char *dir, char *ext)
 {
     int wins[26];
@@ -177,7 +178,7 @@ int SimPlayoffRound1(int sched, int rwfh, int rdfh, char *dir, char *ext)
     unsigned char away;
 
     g = (unsigned char *)sched;
-    __STOSD(wins, 0, 26);
+    for (i = 0; i < 26; i++) wins[i] = 0;
     len = SeriesLength(g);
     for (s = 0; s < 8; s++, g += 0x2A) {
         for (i = 0; i < len; i++) {

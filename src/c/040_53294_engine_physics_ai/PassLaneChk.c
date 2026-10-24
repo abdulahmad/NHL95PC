@@ -1,6 +1,9 @@
 /* Engine physics AI: is the pass lane to a team-mate open; NetCollide and puckstick (matched) end in its pops. */
-/* DRAFT (PassLaneChk): 344 vs 346. The direction is kept in oy (dead by then) and the x gap in dy, as the
- original; left is inc esi where the original does lea eax,[esi+1] for the wrap (see docs/UNSURE.md). */
+/* DRAFT (PassLaneChk, 10.0 GA, 2 differing, same size): the direction is kept in oy (dead by then) and the x gap
+ in dy, as the original; the wrap goes through y (`y = oy + 1`, the EXE's lea eax,[esi+1]). p's y passes through
+ an int py first: that copy only breaks the savings tie of the two ABS temporaries of ABS(y) <= ABS(oy) (edi /
+ ebp as in the EXE; any one extra copy does it), so it is a lead, not evidence. Left: the y - 4Eh lea comes after
+ the sum's sub 4Eh (EXE before it); see docs/UNSURE.md. */
 #define PassLaneChk PassLaneChk_decl
 #define checkpuckcoll checkpuckcoll_decl
 #define imul32 imul32_decl
@@ -145,13 +148,14 @@ int PassLaneChk(Player *p, Player *o)
     int y;
     int oy;
     int dy;
-    int wrapped;
+    int py;
 
     side = (p->pflags & pfgoal) != 0;
     if (p->position == 0) return 0;
     if (LaneOpen()) return 0;
     oy = o->Ypos >> 16;
-    y = p->Ypos >> 16;
+    py = p->Ypos >> 16;
+    y = py;
     if (side) limit = 0x4E;
     else limit = -0x4E;
     if ((y > limit) ^ side) return 0;
@@ -165,7 +169,7 @@ int PassLaneChk(Player *p, Player *o)
         if (o->Yvel > 0) return 0;
         if (p->Yvel > 0) return 0;
     }
-    if (((HIBYTE(o->Yvel) + oy - 0x4E) ^ (y - 0x4E)) < 0) return 0;
+    if (((y - 0x4E) ^ (HIBYTE(o->Yvel) + oy - 0x4E)) < 0) return 0;
     dy = oy - y;
     if (dy < 0) dy = -dy;
     if (dy > 0x3C) return 0;
@@ -175,8 +179,8 @@ int PassLaneChk(Player *p, Player *o)
     oy = vtoa(W(o->Xvel), W(o->Yvel));
     if (oy == 8) oy = W(o->facedir);
     oy -= vtoa((short)(HIWORD(p->Xpos) - HIWORD(o->Xpos)), (short)(HIWORD(p->Ypos) - HIWORD(o->Ypos)));
-    wrapped = oy + 1;
-    if ((wrapped & 7) >= 3) return 0;
+    y = oy + 1;
+    if ((y & 7) >= 3) return 0;
     return 1;
 }
 
