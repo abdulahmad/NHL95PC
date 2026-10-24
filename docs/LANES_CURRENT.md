@@ -264,19 +264,36 @@ DrawRinkSideObjects is in this file (score 118, register 54/64) and comes with i
 - passtoa0 48->48 (2026-10-24, StaticEck2026, GA) the EXE sign-extends vx / vy for k; Watcom narrows those products because `s.k` is a short.
 - passtoa0 48->48 (2026-10-24, StaticEck2026, GA) k products still narrowed: >> 0, (int) casts, -(sp * sp) first (48-53)
 
+### `src/c/054_737AA_line_editor_rosters/DbLineEditorLoop.c`
+
+- DbLineEditorLoop 92->64 (2026-10-24, StaticEck2026, GA) The jersey numbers are an if / else of two stores (`else nums.slot[i] = 100;`)
+- DbLineEditorLoop 64->64 (2026-10-24, StaticEck2026, GA) without itemoffset the EXE's `level * 4` / `item * 32` order comes out
+- DbLineEditorLoop 64->64 (2026-10-24, StaticEck2026, GA) dead m with the offset assigned inside it (64); m dropped (64); m for the on1 test (370)
+
+### `src/c/054_737AA_line_editor_rosters/GameLineEditorLoop.c`
+
+- GameLineEditorLoop 110->74 (2026-10-24, StaticEck2026, GA) (26 aligned)
+- GameLineEditorLoop 74->74 (2026-10-24, StaticEck2026, GA) blk's split temporaries take w's slot.
+- GameLineEditorLoop 74->74 (2026-10-24, StaticEck2026, GA) bank loads in their own local bk (74, same code); w / h in the submenu block (369-440, frame +4)
+
+### `src/c/043_5E16D_engine_skating/EvadePlayers.c`
+
+- avdgoal 155->155 (2026-10-24, StaticEck2026, GA) declsearch reaches at most 5 of its 9 EXE slots
+- avdgoal 155->155 (2026-10-24, StaticEck2026, GA) goalie index as the dword at +F8h >> 16 with int g (232, declsearch 222; short g 190): matches the EXE's load but g takes edx
+
 ## Lane 2 — StaticEck2026 (StaticEck)
 
 Segments 038-066. Work every draft in these files; do not take a file from the other lists.
 
 | C file | Function | Score | Cause |
 |---|---|---:|---|
+| src/c/040_53294_engine_physics_ai/PassLaneChk.c | checkpuckcoll | 0 | tail 0/0 |
+|  | PassLaneChk | 17 | register 7/9 |
+|  | NetCollide | 27 | register 7/12 |
 | src/c/052_6D2F8_create_player/CreateFreeAgent.c | CreateFreeAgent | 5 | size 9/13 |
 | src/c/064_86696_season_playoffs/POCreateSchedule.c | POInitSchedule | 6 | register 3/3 |
 | src/c/066_8BEDB_asm_helpers/PlayMVI.c | PlayMVI | 6 | slot 6/6 |
 | src/c/050_6B093_joystick_calibration/JoystickCalScreen.c | JoystickCalScreen | 11 | register 4/4 |
-| src/c/040_53294_engine_physics_ai/PassLaneChk.c | PassLaneChk | 17 | register 7/9 |
-|  | NetCollide | 27 | register 7/12 |
-|  | checkpuckcoll | 73 | register 60/60 |
 | src/c/046_644A8_engine_display/updatereplay.c | updatereplay | 22 | register 12/21 |
 | src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c | LockerRoomLoop | 23 | register 2/2 |
 | src/c/052_6D2F8_create_player/EditSkaterRating.c | EditGoalieRating | 28 | size 16/28 |
@@ -285,11 +302,8 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 | src/c/046_644A8_engine_display/RemoveFromLines.c | RemoveFromLines | 36 | register 24/28 |
 | src/c/044_5FB03_game_state_saveload/SaveGameState.c | LoadGameState | 37 | size 17/33 |
 | src/c/052_6D2F8_create_player/SwapSelectedPlayers.c | SwapSelectedPlayers | 48 | register 23/35 |
-| src/c/054_737AA_line_editor_rosters/DbLineEditorLoop.c | DbLineEditorLoop | 64 | size 6/7 |
-| src/c/054_737AA_line_editor_rosters/GameLineEditorLoop.c | GameLineEditorLoop | 74 | slot 13/26 |
 | src/c/052_6D2F8_create_player/EditRosters.c | EditRosters | 108 | register 77/89 |
 | src/c/064_86696_season_playoffs/PlayoffTreeMenu.c | PlayoffTreeMenu | 126 | register 61/129 |
-| src/c/043_5E16D_engine_skating/EvadePlayers.c | avdgoal | 155 | size 95/183 |
 
 ## Offered to StaticEck2026
 
@@ -311,6 +325,7 @@ DrawListItems is in this file (score 0, tail 0/0) and comes with it.
 - SkateToSpot 5->2 (2026-10-24, Mhopkinsinc, GA) : the `vtoa` result into d first
 - SkateToSpot 2->2 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SkateToSpot 2->2 (2026-10-24, Mhopkinsinc, GA) regsolve on the chained stop (0/3 votes, no swap improved); chained stop + one of: nothing 42, ayp without t 68, != sign test 35, HIBYTE==0 42, facedir sum swapped 42, Xvel = Xvel - Xvel/4 42, vtoa no casts 39, !(adx>=8||ady>=8) 30, 0xF2 > ary 42, SPA == axp 42, inverted+!= 24, inverted+no-cast 38, !=+no-cast 32; split + != 71, split + inverted 11, split + both 74; nothing kept
+- SkateToSpot 2->2 (2026-10-24, StaticEck2026, GA) separate short spa1 for the animation pair (no axp reuse) with chained / split stop, 4 positions (25-126); permute.py 9 min from the chained stop, seed 2707 (1378 candidates, best 2 only by re-splitting); assrefwhistle.c as compile context (2); nothing kept
 
 ### `src/c/006_150C6_scoreboard_gfx/RunDemoGame.c`
 
@@ -371,6 +386,7 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
 - BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) (its slots need x's loop-weighted count 101 or less, i.e. one inner-loop reference where the code has two)
 - BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
+- BlitTileMap 5->5 (2026-10-24, StaticEck2026, GA) LoadRink as compile context (5, same slots); nothing kept
 
 ### `src/c/001_10010_main_startup/FadePalette.c`
 
@@ -392,6 +408,7 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) (stack reloads)
 - ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) (needs two count changes at once)
 - ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ListDialog 7->7 (2026-10-24, StaticEck2026, GA) DrawListItem.c as compile context (13: cross-jumps into their epilogue, which the EXE does not); nothing kept
 
 ### `src/c/032_3DC2C_roster_jersey/ExecuteTrade.c`
 
@@ -399,6 +416,7 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - ExecuteTrade 15->14 (2026-10-24, Mhopkinsinc, GA) : traded and err declared before the frame struct give sel its home slot; only traded / kb stay swapped (all 5,040 orders tried). The result stays `int` (the result-type rule)
 - ExecuteTrade 7->7 (2026-10-24, Mhopkinsinc, GA) (no single count change; probably one temporary more or fewer in the original)
 - ExecuteTrade 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ExecuteTrade 7->7 (2026-10-24, StaticEck2026, GA) team records as a typed struct (7); handle stores split / reversed (7 / 9); *s.keya, *teams forms (7); TradeShowStats + FixJerseyConflict (+ BuildTradeRoster) as compile context (7); result stays int; nothing kept
 
 ### `src/c/033_40183_trades/CopyHumanTeamDBs.c`
 
@@ -407,6 +425,7 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - CopyHumanTeamDBs 20->7 (2026-10-24, Mhopkinsinc, GA) (the exported team entry through its own block-local pointer; now 2 bytes short)
 - CopyHumanTeamDBs 9->9 (2026-10-24, Mhopkinsinc, GA) unchanged
 - CopyHumanTeamDBs 9->9 (2026-10-24, Mhopkinsinc, GA) regsolve (0/1 votes, nothing predicted); skip tests as one || 9, which test inverted with body nested 9, zero as plain int first/last/block-local 13, while (!r && s.retry) 14, s.which != -1 10; nothing kept
+- CopyHumanTeamDBs 9->9 (2026-10-24, StaticEck2026, GA) zero member unsigned / long / unsigned long / void * NULL, retry unsigned (9); team-byte tests as pointer-sum / deref forms (9), tp before the 0x18 test (22); MsgCopyingDatabases as compile context (9); nothing kept
 
 ### `src/c/034_41B80_schedule/SeriesLength.c`
 
@@ -442,6 +461,7 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - RandomizeSchedule 15->14 (2026-10-24, Mhopkinsinc, GA) 
 - RandomizeSchedule 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
 - RandomizeSchedule 14->14 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (j = k + 1 for the second count); regsolve: 0/0 votes, nothing predicted, no swap improved; regdump / cdiff only (EXE keeps both counts in err's dead edx); no new natural append form left to try; nothing kept
+- RandomizeSchedule 14->14 (2026-10-24, StaticEck2026, GA) SeriesLength / UpdatePlayoffSeries + SeriesLength as compile context (14); draft keeps the dead-j second count (ESCALATE: dead-variable reuse; clean k + 1 is 15); nothing kept
 
 ### `src/c/004_13320_asset_loading/PlacePlayersAtStart.c`
 
@@ -455,12 +475,21 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SelectSavedFile 15->15 (2026-10-24, StaticEck2026, GA) LoadFileDlgShapes.c as compile context (19: cross-jumps into an earlier epilogue; t << 2 still hoisted); nothing kept
 
 ### `src/c/032_3DC2C_roster_jersey/FixJerseyConflict.c`
 
 - FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
 - FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
 - FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) (slotdump: the EXE's slots need one fewer loop-weighted reference to e and pal, or one more to tr)
+- FixJerseyConflict 19->16 (2026-10-24, StaticEck2026, GA) TradeShowStats (EXE's previous function) compiled first as a compile-context copy: tr / pal get the EXE slots (kept); in that state: compare operands swapped (18), s.i != k (16), record-index sum / [i + 0x13] forms, nested if, pointer rows (16)
+
+### `src/c/004_13320_asset_loading/ResetGameVars.c`
+
+- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ResetGameVars 25->20 (2026-10-24, StaticEck2026, GA) IndexPhotoBank compiled first as a compile-context copy: the EXE's jmp IndexPhotoBank_x tail (kept); whole address-order run of segment 004 files (20); constant scheduling from +133 unchanged
 
 ### `src/c/037_4842A_engine_player_logic/assgoalie.c`
 
@@ -468,6 +497,7 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - assgoalie 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assgoalie 25->21 (2026-10-24, Mhopkinsinc, GA) (a separate int distance and short depth)
 - assgoalie 21->21 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assgoalie 21->21 (2026-10-24, StaticEck2026, GA) ClampYPosition / assgoalietopuck + ClampYPosition as compile context (21); nothing kept
 - assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
 
@@ -476,12 +506,6 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - assbench 22->22 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assbench 22->22 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
 - assbench 22->22 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-
-### `src/c/004_13320_asset_loading/ResetGameVars.c`
-
-- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
 
 ### `src/c/028_35FB9_import_export/PlayLeagueGame.c`
 
@@ -495,6 +519,7 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
 - TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) (every -od compile lays out locals, then the return temporary, then the parameters; the EXE has the return temporary first)
 - TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TreeSeriesWinner 35->35 (2026-10-24, StaticEck2026, GA) cflags -d2 (44, +36, same slots), -od -d1 (35), -od -d2 (44), -d1 (98); LoadPlayoffModeTree as compile context (35); nothing kept
 
 ### `src/c/027_33FFD_calendar/DrawCalendarDay.c`
 
