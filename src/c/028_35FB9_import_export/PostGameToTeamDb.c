@@ -1,6 +1,8 @@
 /* Import / export: posting a played game to a team's databases. */
-/* DRAFT under 10.0 GA: 2,346 vs 2,342 bytes, 130 differing instructions. The loop index is a plain local, so
-   Watcom turns the played-flags loop into a __STOSB fill as in the EXE; rec / res / score slots still differ. */
+/* DRAFT under 10.0 GA: 2,346 vs 2,342 bytes, 129 differing instructions. The loop index is a plain local, so
+   Watcom turns the played-flags loop into a __STOSB fill as in the EXE; the visitors-win arm tests !side first
+   (the EXE's je / jmp into the home-win arm's increments). Left: i / j / res / score slots (no declaration order
+   gives them), the visitors-win score reloads hmscore where the EXE reuses ax (cwde). */
 #define PostGameToTeamDb PostGameToTeamDb_decl
 #define WriteTeamRec WriteTeamRec_decl
 #define ReadGSummaryRec ReadGSummaryRec_decl
@@ -94,8 +96,8 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
         } else if (hmscore[0] < awscore) {
             score = hmscore[0] + 1;
             res = 1;
-            if (side) rec[1]++;
-            else rec[2]++;
+            if (!side) rec[2]++;
+            else rec[1]++;
         } else {
             res = -1;
             rec[3]++;
