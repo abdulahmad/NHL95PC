@@ -264,19 +264,36 @@ DrawRinkSideObjects is in this file (score 118, register 54/64) and comes with i
 - passtoa0 48->48 (2026-10-24, StaticEck2026, GA) the EXE sign-extends vx / vy for k; Watcom narrows those products because `s.k` is a short.
 - passtoa0 48->48 (2026-10-24, StaticEck2026, GA) k products still narrowed: >> 0, (int) casts, -(sp * sp) first (48-53)
 
+### `src/c/054_737AA_line_editor_rosters/DbLineEditorLoop.c`
+
+- DbLineEditorLoop 92->64 (2026-10-24, StaticEck2026, GA) The jersey numbers are an if / else of two stores (`else nums.slot[i] = 100;`)
+- DbLineEditorLoop 64->64 (2026-10-24, StaticEck2026, GA) without itemoffset the EXE's `level * 4` / `item * 32` order comes out
+- DbLineEditorLoop 64->64 (2026-10-24, StaticEck2026, GA) dead m with the offset assigned inside it (64); m dropped (64); m for the on1 test (370)
+
+### `src/c/054_737AA_line_editor_rosters/GameLineEditorLoop.c`
+
+- GameLineEditorLoop 110->74 (2026-10-24, StaticEck2026, GA) (26 aligned)
+- GameLineEditorLoop 74->74 (2026-10-24, StaticEck2026, GA) blk's split temporaries take w's slot.
+- GameLineEditorLoop 74->74 (2026-10-24, StaticEck2026, GA) bank loads in their own local bk (74, same code); w / h in the submenu block (369-440, frame +4)
+
+### `src/c/043_5E16D_engine_skating/EvadePlayers.c`
+
+- avdgoal 155->155 (2026-10-24, StaticEck2026, GA) declsearch reaches at most 5 of its 9 EXE slots
+- avdgoal 155->155 (2026-10-24, StaticEck2026, GA) goalie index as the dword at +F8h >> 16 with int g (232, declsearch 222; short g 190): matches the EXE's load but g takes edx
+
 ## Lane 2 — StaticEck2026 (StaticEck)
 
 Segments 038-066. Work every draft in these files; do not take a file from the other lists.
 
 | C file | Function | Score | Cause |
 |---|---|---:|---|
+| src/c/040_53294_engine_physics_ai/PassLaneChk.c | checkpuckcoll | 0 | tail 0/0 |
+|  | PassLaneChk | 17 | register 7/9 |
+|  | NetCollide | 27 | register 7/12 |
 | src/c/052_6D2F8_create_player/CreateFreeAgent.c | CreateFreeAgent | 5 | size 9/13 |
 | src/c/064_86696_season_playoffs/POCreateSchedule.c | POInitSchedule | 6 | register 3/3 |
 | src/c/066_8BEDB_asm_helpers/PlayMVI.c | PlayMVI | 6 | slot 6/6 |
 | src/c/050_6B093_joystick_calibration/JoystickCalScreen.c | JoystickCalScreen | 11 | register 4/4 |
-| src/c/040_53294_engine_physics_ai/PassLaneChk.c | PassLaneChk | 17 | register 7/9 |
-|  | NetCollide | 27 | register 7/12 |
-|  | checkpuckcoll | 73 | register 60/60 |
 | src/c/046_644A8_engine_display/updatereplay.c | updatereplay | 22 | register 12/21 |
 | src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c | LockerRoomLoop | 23 | register 2/2 |
 | src/c/052_6D2F8_create_player/EditSkaterRating.c | EditGoalieRating | 28 | size 16/28 |
@@ -285,11 +302,8 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 | src/c/046_644A8_engine_display/RemoveFromLines.c | RemoveFromLines | 36 | register 24/28 |
 | src/c/044_5FB03_game_state_saveload/SaveGameState.c | LoadGameState | 37 | size 17/33 |
 | src/c/052_6D2F8_create_player/SwapSelectedPlayers.c | SwapSelectedPlayers | 48 | register 23/35 |
-| src/c/054_737AA_line_editor_rosters/DbLineEditorLoop.c | DbLineEditorLoop | 64 | size 6/7 |
-| src/c/054_737AA_line_editor_rosters/GameLineEditorLoop.c | GameLineEditorLoop | 74 | slot 13/26 |
 | src/c/052_6D2F8_create_player/EditRosters.c | EditRosters | 108 | register 77/89 |
 | src/c/064_86696_season_playoffs/PlayoffTreeMenu.c | PlayoffTreeMenu | 126 | register 61/129 |
-| src/c/043_5E16D_engine_skating/EvadePlayers.c | avdgoal | 155 | size 95/183 |
 
 ## Offered to StaticEck2026
 
