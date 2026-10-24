@@ -1,7 +1,8 @@
 /* Game frame: a highlight run of the game engine. */
-/* DRAFT under 10.0 GA: 51 differing instructions, 3,334 vs 3,325 bytes. Saved score-pointer allocation is
-   correct and r now has the EXE's spill slot (k doubled before the call); left: pl in esi (EXE ebx) with the
-   for loop's jump to its test, the r / sgameover slot order, zero registers and CrowdNoiseUpdate's movsx. */
+/* DRAFT under 10.0 GA: 14 differing instructions, same size (3,325 bytes). The faceoff-spot loop takes pl before
+   the for (no jump to the test) and doubles k into the dead j (the EXE's lea esi, [edx+edx], so pl gets ebx);
+   left: the scroll sum of the second sub_6AF97 argument and the hudhundstep sum load in the other registers, and
+   CrowdNoiseUpdate(j) passes j with mov eax, esi (EXE movsx eax, si). See docs/UNSURE.md. */
 #define StartHL2 StartHL2_decl
 #define SprSortVert SprSortVert_decl
 #define SprSort SprSort_decl
@@ -32,11 +33,11 @@ void MusicChanReset2(void);
 int StartHL2(int home, int vis, int *hsc, int *asc, int period)
 {
     short save[0x44];
-    LineTab awl;
     LineTab hml;
-    int opts;
+    LineTab awl;
     short sgameover;
     short sgmode2;
+    int opts;
     short r;
     short *p;
     short *q;
@@ -150,13 +151,14 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     word_DF746 = -1;
     word_DF744 = -1;
     resetplstuff();
-    for (pl = SortCords, i = 0; i < 0xC; i++, pl++) {
+    pl = SortCords;
+    for (i = 0; i < 0xC; i++, pl++) {
         k = (pl->pflags & 0x80 ? 0 : 6) + pl->position;
-        k *= 2;
+        j = k + k;
         r = randomd0(0x14) - 10;
-        HIWORD(pl->Xpos) = dword_CD9A0[k] + r;
+        HIWORD(pl->Xpos) = dword_CD9A0[k * 2] + r;
         t = pl->position == 0;
-        HIWORD(pl->Ypos) = (randomd0(pl->position == 0 ? 4 : 0x14) - t ? 4 : 0xA) + dword_CD9A0[k + 1];
+        HIWORD(pl->Ypos) = (randomd0(pl->position == 0 ? 4 : 0x14) - t ? 4 : 0xA) + dword_CD9A0[j + 1];
         pl->Xvel = pl->Yvel = 0;
         pl->facedir = vtoa((short)(*puckx - HIWORD(pl->Xpos)), (short)(*pucky - HIWORD(pl->Ypos)));
     }
