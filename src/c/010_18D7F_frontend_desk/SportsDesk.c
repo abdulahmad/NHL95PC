@@ -23,7 +23,7 @@ int sub_8F98F(char *path);  /* music library: load a song (register arguments) *
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song (register arguments) */
 int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last call */
 
-/* DRAFT under 10.0 GA: 207 differing instructions, 4,512 of 4,567 bytes. The frame is the retail 404h:
+/* DRAFT under 10.0 GA: 192 differing instructions, 4,512 of 4,567 bytes. The frame is the retail 404h:
    the menu-item offset is computed in place, and m is formed only in the submenu path after the drawing calls.
    A click on an item with an action runs it when it is the selected one and otherwise moves the selection; an
    item with a submenu opens it: two separate arms, each closing the deeper dropdowns itself, as in the EXE (the
@@ -32,8 +32,8 @@ int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last ca
    and the pointer x and y, which MouseSetPos gets back in that order. A hit (MenuHitTest) is the if arm and a
    miss the else arm, so the miss block sits at the end of the function as in the EXE; the dropdown ternaries
    test depth != 1. The declaration order of the arrays and scalars comes from real-compile sweeps,
-   tools/slot_solver.py and tools/wccre/declsearch.py. Left: stack slots (oldmx / oldmy, autoret, timeout,
-   speech, ptr), register picks, the overtime / conference argument shapes, r kept in a register (the EXE keeps
+   tools/slot_solver.py and tools/wccre/declsearch.py (--conflicts). Left: stack slots (oldmy, autoret,
+   timeout, speech, ptr), register picks, the overtime / conference argument shapes, r kept in a register (the EXE keeps
    it on the stack), and the miss arm's tail: the EXE keeps its own sub_91400 call and pushes and joins the
    no-click path only at sub_91370 (55 bytes), where C cross-jumps the whole tail. The retail speech timer
    compares the routine address. */
@@ -60,17 +60,17 @@ void SportsDesk(int mode)
     unsigned char pal[0x300];
     int savex;
     int conf;
-    int oldmx;
-    int ptr;
-    int depth;
     int timeout;
+    int oldmx;
+    int depth;
+    int speech;
     int savey;
     int oldmy;
-    int speech;
     int level;
     int item;
-    int pos[4][2];
     int mx;
+    int pos[4][2];
+    int ptr;
     int w;
     int sel[4];
     int r;
