@@ -411,7 +411,7 @@ StopIfFree,4A80E,36,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_
 a2offsides,4DCDD,116,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/a2offsides.c,matched,,
 a2touchpuck,4DE14,400,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/a2touchpuck.c,matched,,
 ass_pc_slot20,49460,344,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/ass_pc_slot20.c,matched,"register allocation: side flag kept in ecx (EXE edx), so the first path lookup indexes differently; logic complete",
-assbench,4B12C,827,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assbench.c,nonmatching,,register 21/22
+assbench,4B12C,827,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assbench.c,nonmatching,,register 6/8
 assbenchside,49BC2,283,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assbenchside.c,matched,,
 assboxenter,499D8,490,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assboxenter.c,matched,,
 asscenterd,4A53A,290,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/asscenterd.c,matched,,

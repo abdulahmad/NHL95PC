@@ -331,6 +331,7 @@ TitleScreen is in this file (score 3, size 2/2) and comes with it.
 - TitleScreen 13->13 (2026-10-24, Mhopkinsinc, GA) (slots and the dead copy)
 - TitleScreen 12->2 (2026-10-24, Mhopkinsinc, GA) (`RunDemoGame.c`): the remaining wait goes through a new local (`left = due - i; SetTickDeadline(left);`)
 - TitleScreen 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TitleScreen 3->3 (2026-10-24, StaticEck2026, GA) the PlayMVI wait (own elapsed local el, SetTickDeadline(due - el), no left) with one- and two-argument decoders (27-70); declsearch --conflicts on it (mispredicted, 78); ESCALATE: the committed draft keeps the left tie-breaker copy
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) (divisor scheduling)
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -360,6 +361,7 @@ SimPlayoffRound1 is in this file (score 9, slot 6/9) and comes with it.
 - SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
+- SeedPlayoffRound3 14->14 (2026-10-24, StaticEck2026, GA) c2 folded into c1 for the second conference, c1 = a = chain order, compare flip (all 14); i / k / a new j as a game-slot or date loop counter (64-102)
 
 ### `src/c/002_1167B_gamesave_io/PickAwardWinners.c`
 
@@ -414,6 +416,13 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - ExecuteTrade 7->7 (2026-10-24, Mhopkinsinc, GA) (no single count change; probably one temporary more or fewer in the original)
 - ExecuteTrade 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ExecuteTrade 7->7 (2026-10-24, StaticEck2026, GA) team records as a typed struct (7); handle stores split / reversed (7 / 9); *s.keya, *teams forms (7); TradeShowStats + FixJerseyConflict (+ BuildTradeRoster) as compile context (7); result stays int; nothing kept
+
+### `src/c/037_4842A_engine_player_logic/assbench.c`
+
+- assbench 22->22 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assbench 22->22 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
+- assbench 22->22 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
+- assbench 22->8 (2026-10-24, StaticEck2026, GA) goto seated replaced by one if (temp1 != 64h) block; the y distance in its own short dy, which gives the EXE widening without the no-op & 0xFF masks (both removed); the count as d = --p->temp1 (dx as in the EXE); context copy of assepen (no change); permute twice (best 7 only with no-op casts, rejected)
 
 ### `src/c/033_40183_trades/CopyHumanTeamDBs.c`
 
@@ -507,17 +516,12 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
 
-### `src/c/037_4842A_engine_player_logic/assbench.c`
-
-- assbench 22->22 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assbench 22->22 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-- assbench 22->22 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-
 ### `src/c/028_35FB9_import_export/PlayLeagueGame.c`
 
 - PlayLeagueGame 28->28 (2026-10-24, Mhopkinsinc, GA) unchanged
 - PlayLeagueGame 28->28 (2026-10-24, Mhopkinsinc, GA) unchanged
 - PlayLeagueGame 28->28 (2026-10-24, Mhopkinsinc, GA) unchanged
+- PlayLeagueGame 28->28 (2026-10-24, StaticEck2026, GA) goto done replaced by an if (s.ok) block around the game loop (same code)
 
 ### `src/c/019_2970A_league_schedule/TreeSeriesWinner.c`
 
@@ -540,11 +544,13 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 
 - DrawCalendarDay 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
 - DrawCalendarDay 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawCalendarDay 38->38 (2026-10-24, StaticEck2026, GA) compile-context copy of LoadCrestsPalette before it (no change); no natural legend form for the dx reuse
 
 ### `src/c/029_380E9_league_setup/BuildStandingsGrid.c`
 
 - BuildStandingsGrid 41->41 (2026-10-24, Mhopkinsinc, GA) unchanged
 - BuildStandingsGrid 41->41 (2026-10-24, Mhopkinsinc, GA) unchanged
+- BuildStandingsGrid 41->41 (2026-10-24, StaticEck2026, GA) compile-context copy of AskExportToFloppy before it (no change)
 
 ### `src/c/014_1CC3D_frontend_labels/SetupStatsSourceMenu.c`
 
@@ -556,6 +562,7 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 
 - assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assthreestars 44->44 (2026-10-24, StaticEck2026, GA) compile-context copy of ass_pc_slot20 (no change); the slot / pos pass-through copies written in place (47 / 46 / both 257): ESCALATE: the committed draft keeps two tie-breaker copies (slot, pos)
 
 ### `src/c/002_1167B_gamesave_io/GameLoop.c`
 
@@ -568,6 +575,7 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - DrawSprite 78->66 (2026-10-24, Mhopkinsinc, GA) (integer inputs, short edge arithmetic, the palette read uncached)
 - DrawSprite 66->66 (2026-10-24, Mhopkinsinc, GA) unchanged
 - DrawSprite 66->66 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawSprite 66->66 (2026-10-24, StaticEck2026, GA) compile-context copy of LoadScoreboardGfx before it (no change)
 
 ### `src/c/024_31AB5_main_desk/MainDeskLoop.c`
 
@@ -579,6 +587,7 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 
 - StarCompare 81->81 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
 - StarCompare 81->81 (2026-10-24, Mhopkinsinc, GA) . Each newest UNSURE bullet (inside the function's entry; `docs/unsure_tried.csv` rerun) gives the first difference and the savings that block it.
+- StarCompare 67->67 (2026-10-24, StaticEck2026, GA) the EXE-size eb / sb = rb[0] + rb[1] shape re-measured (182, regdump ties b / tb at 10 and pa / pb at 7); compile-context copy of StarEligible (no change)
 
 ### `src/c/015_1D6E8_menu_system/RunMenu.c`
 
