@@ -306,6 +306,12 @@ SportsDesk,abdulahmad,2026-10-24,LA,303,310,"no source change. GA -od scores 103
 SimulateGame,abdulahmad,2026-10-24,LA,627,702,"no source change. GA is 627, size +3."
 CalendarScreen,abdulahmad,2026-10-24,LA,319,539,"no source change. GA is 319, size +24."
 GameSummaryScreen,abdulahmad,2026-10-24,LA,287,372,"no source change. GA is 287, size +38."
+TradePlayers,StaticEck2026,2026-10-24,GA,3,3,"regsolve (only a nm savings bump: ESCALATE, not made); pass-2 index order analysed (inline / nm-first re-measured 4); permute seed 2505 (260 new candidates)"
+SimPlayoffRound2,StaticEck2026,2026-10-24,GA,3,3,regsolve (nothing); unsigned wins on draft / inline / home-only (3 / 22 / 7); regdump vs SimPlayoffRound3 tie order; permute seed 2506 (321 candidates, no gain)
+SimPlayoffRound1,StaticEck2026,2026-10-24,GA,9,9,regsolve (nothing); slotdump of the s / rdfh homes; Round2 and five other declaration orders (9-19); permute seed 2506 (321 candidates, no gain)
+PickAwardWinners,StaticEck2026,2026-10-24,GA,5,5,"regsolve (nothing); award flags cleared by a loop through pts / v / mine / pct (same __STOSB, tie unchanged) or f.i (59)"
+DrawListItem,StaticEck2026,2026-10-24,GA,6,6,"regsolve on in-place case 1 (y / w parameter swap skipped); on it: split y increment (12, y 11 ties x), 3 other split forms (12-13), 5 statement orders (30-32)"
+EasnGoalieStatsScreen,StaticEck2026,2026-10-24,GA,12,12,"EasnSkaterStatsScreen added in address order (skater 12; GA keeps the earlier copy, goalie jumps back: 22 -115 bytes); goalie first, ternaries, if swap, EasnTeamStatsScreen / EasnStandingsScreen in the file (no forward merge)"
 checkgoal,Mhopkinsinc,2026-10-24,GA,8,1,"gotos removed: nested tests with side as fall-through and a duplicated wall exit (4); wall tests as two early-return ifs (1, committed); bounce on that structure: short / unsigned short z (14-17), x = -y (17), y = -y; x = y (6), x = y = -y (6), p->Zvel = -y >> 1 (18), x = z >> 1 short/int z (18-19), z = y; x = -z (14), z = y; z = -z (14), x = z = -y (1 int, 14 short); flag zero split / reload / Zpos else (4); regsolve: no reorder"
 SetRosterTeamMenus,Mhopkinsinc,2026-10-24,GA,11,11,"regdump / regsolve (only a savings bump of i, dead-variable reuse); one i for both halves (28); d <<= 3 before the stores (11); (int)0 stores (11); i declared first (11)"
 RosterPanelClick,Mhopkinsinc,2026-10-24,GA,9,9,"regdump / regsolve (no reorder predicted); permute.py 5 min, 321 candidates, best base 9"
