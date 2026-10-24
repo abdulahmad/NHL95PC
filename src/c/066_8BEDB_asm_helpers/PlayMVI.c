@@ -56,7 +56,7 @@ void __cdecl sub_1B92E(int stream, int chunk);          /* cdstream: release a c
 void sub_1ACF1(int dec);
 void __cdecl sub_1B18B(int stream);
 void sub_8FB8E(int song, int handle, int a, int b);
-int __cdecl GetTicks(void);                              /* timer library: stack arguments, clobbers eax / ecx / edx */
+int __cdecl GetTicks(void);                              /* timer library (stack arguments, as SetTickDeadline) */
 
 /* DRAFT: 733 vs 732 under 10.0 GA (13 differing; sub_1B002 / sub_1AD16 take the chunk in edx, GetTicks is the
    cdecl timer library): the decoded frame is spilled to a slot of its own (frame 34h, EXE 30h re-reads s.frame);
