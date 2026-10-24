@@ -33,9 +33,13 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3);
 int TeamFromMouse(int x, int y, int *idx);  /* 26B5A */
 void __cdecl sub_90F38(int x, int y, int w, int h, int col);  /* graphics library: xor a box */
 
-/* DRAFT under 10.0 GA: 2,075 bytes as the EXE, 146 differing instructions. The submenu branch reads the
-   clicked item in place (the EXE keeps &menus[level][item] for on2, pad and x, and reloads it for y after the
-   pos store); the pointer-size product, the first close loop's stores and later registers still differ. */
+/* DRAFT under 10.0 GA: 2,075 bytes as the EXE, 82 differing instructions. The menu state is plain locals (in
+   one frame struct a store to sel[level] could alias level, so level was reloaded where the EXE keeps it in a
+   register), in a declaration order found by sweeping it with real compiles and tools/slot_solver.py. The
+   submenu branch reads the clicked item in place (the EXE keeps &menus[level][item] for on2, pad and x, and
+   reloads it for y after the pos store). Left: the pointer-size product (`lea ebx, [eax+1]` vs `inc ebx`),
+   the level / h slots swapped, the submenu close loop's jump to its test, depth++ placed after the second
+   DrawMenuItemNorm in the EXE, the reselect arm's Norm cross-jump and register picks. */
 /* RunMenu (1D6E8, PC only; owner of RunMenu_ret4): run a menu bar of n items in the colours col1-col3 until an
    action returns 1. Save the screen under the pointer (POINTERM block, the pointer bitmap's size plus one) and
    centre the pointer on the bar. Then follow the mouse: a click on an item with an action runs it on the second
@@ -45,44 +49,42 @@ void __cdecl sub_90F38(int x, int y, int w, int h, int col);  /* graphics librar
    Result: 0. */
 int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
 {
-    struct {
-        int pos[4][2];
-        int sel[4];
-        MenuItem *menus[4];
-        int bg[4];
-        int nitems[4];
-        int item;
-        int level;
-        int my;
-        int mx;
-    } s;
-    int w;
-    int h;
-    int ptr;
-    int oldmx;
+    int sel[4];
+    int pos[4][2];
+    MenuItem *menus[4];
+    int bg[4];
+    int nitems[4];
+    int my;
+    unsigned char *e;
     int oldmy;
-    int depth;
+    int ptr;
+    int h;
+    int mx;
     int size;
+    int depth;
+    MenuItem *m;
+    int level;
+    int oldmx;
     int i;
     int bits;
+    int item;
     int r;
-    unsigned char *e;
-    MenuItem *m;
+    int w;
 
     depth = 0;
-    s.menus[0] = bar;
-    s.nitems[0] = n;
-    s.menus[1] = s.menus[2] = s.menus[3] = 0;
-    s.bg[0] = s.bg[1] = s.bg[2] = s.bg[3] = 0;
-    s.sel[0] = s.sel[1] = s.sel[2] = s.sel[3] = 0;
-    s.pos[0][0] = s.pos[0][1] = 0;
+    menus[0] = bar;
+    nitems[0] = n;
+    menus[1] = menus[2] = menus[3] = 0;
+    bg[0] = bg[1] = bg[2] = bg[3] = 0;
+    sel[0] = sel[1] = sel[2] = sel[3] = 0;
+    pos[0][0] = pos[0][1] = 0;
     size = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
     ptr = sub_8CCA8((char *)str_PointerMenu, size, 0x20);
     *(MenuHdr17 *)ptr = *(MenuHdr17 *)pointerspr;
     ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
-    s.mx = oldmx = (s.menus[0]->x1 + s.menus[0]->x2) / 2;
-    s.my = oldmy = (s.menus[0]->y1 + s.menus[0]->y2) / 2;
+    mx = oldmx = (menus[0]->x1 + menus[0]->x2) / 2;
+    my = oldmy = (menus[0]->y1 + menus[0]->y2) / 2;
     sub_91400(ptr, oldmx, oldmy);
     sub_91370(pointerspr, oldmx, oldmy);
     sub_B2E1B(0, 0, 0x280, 0x1E0);
@@ -92,120 +94,120 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
     for (;;) {
         bits = 0;
         while ((e = GetInputEvent()) != 0) {
-            bits = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(e, &s.mx, &s.my);
+            bits = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(e, &mx, &my);
             if (bits & 2) break;
         }
         if (!(bits & 2)) {
-            if (s.mx == oldmx && s.my == oldmy) continue;
+            if (mx == oldmx && my == oldmy) continue;
             sub_903F0(ptr, oldmx, oldmy);
-            sub_91400(ptr, s.mx, s.my);
-            sub_91370(pointerspr, s.mx, s.my);
-            oldmy = s.my;
-            oldmx = s.mx;
+            sub_91400(ptr, mx, my);
+            sub_91370(pointerspr, mx, my);
+            oldmx = mx;
+            oldmy = my;
             continue;
         }
-        if (MenuHitTest(s.mx, s.my, s.menus, depth, s.nitems, &s.pos[0][0], &s.level, &s.item)) {
-            m = &s.menus[s.level][s.item];
+        if (MenuHitTest(mx, my, menus, depth, nitems, &pos[0][0], &level, &item)) {
+            m = &menus[level][item];
             if (m->on1) {
-                if (s.item == s.sel[s.level]) {
+                if (item == sel[level]) {
                     sub_903F0(ptr, oldmx, oldmy);
                     for (i = 3; i >= 0; i--) {
-                        if (s.bg[i]) {
-                            sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                            s.pos[i][0] = s.pos[i][1] = 0;
-                            FreeMemBlock(s.bg[i]);
+                        if (bg[i]) {
+                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            pos[i][0] = pos[i][1] = 0;
+                            FreeMemBlock(bg[i]);
                         }
                     }
                     depth = 0;
-                    r = ((int (*)(void))s.menus[s.level][s.item].on1)();
-                    s.menus[1] = s.menus[2] = s.menus[3] = 0;
-                    s.bg[0] = s.bg[1] = s.bg[2] = s.bg[3] = 0;
-                    s.sel[1] = s.sel[2] = s.sel[3] = 0;
-                    s.nitems[1] = s.nitems[2] = s.nitems[3] = 0;
+                    r = ((int (*)(void))menus[level][item].on1)();
+                    menus[1] = menus[2] = menus[3] = 0;
+                    bg[0] = bg[1] = bg[2] = bg[3] = 0;
+                    sel[1] = sel[2] = sel[3] = 0;
+                    nitems[1] = nitems[2] = nitems[3] = 0;
                     if (r == 1) {
                         FreeMemBlock(ptr);
                         return 0;
                     }
                     MouseSetPos(oldmx, oldmy);
-                    s.mx = oldmx;
-                    s.my = oldmy;
+                    mx = oldmx;
+                    my = oldmy;
                     ClearInputQueue();
                 } else {
                     sub_903F0(ptr, oldmx, oldmy);
-                    DrawMenuItemSel((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
-                        s.pos[s.level][1], col1, col2, col3);
-                    s.sel[s.level] = s.item;
-                    DrawMenuItemNorm((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
-                        s.pos[s.level][1], col1, col2, col3);
+                    DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
+                        pos[level][1], col1, col2, col3);
+                    sel[level] = item;
+                    DrawMenuItemNorm((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
+                        pos[level][1], col1, col2, col3);
                 }
             } else if (m->on2) {
                 sub_903F0(ptr, oldmx, oldmy);
-                if (depth != s.level) {
+                if (depth != level) {
                     i = depth;
                     do {
-                        s.sel[i] = 0;
-                        if (s.bg[i]) {
-                            sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                            s.pos[i][0] = s.pos[i][1] = 0;
-                            FreeMemBlock(s.bg[i]);
-                            s.bg[i] = 0;
-                            s.menus[i] = 0;
-                            s.nitems[i] = 0;
+                        sel[i] = 0;
+                        if (bg[i]) {
+                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            pos[i][0] = pos[i][1] = 0;
+                            FreeMemBlock(bg[i]);
+                            bg[i] = 0;
+                            menus[i] = 0;
+                            nitems[i] = 0;
                         }
                         i--;
-                    } while (i > s.level);
-                    depth = s.level;
+                    } while (i > level);
+                    depth = level;
                 }
                 i = depth;
-                DrawMenuItemSel((struct MenuItem *)&s.menus[i][s.sel[i]], s.pos[i][0], s.pos[i][1], col1, col2, col3);
-                s.sel[i] = s.item;
+                DrawMenuItemSel((struct MenuItem *)&menus[i][sel[i]], pos[i][0], pos[i][1], col1, col2, col3);
+                sel[i] = item;
                 depth++;
-                DrawMenuItemNorm((struct MenuItem *)&s.menus[i][s.item], s.pos[i][0], s.pos[i][1], col1, col2, col3);
-                s.menus[depth] = (MenuItem *)s.menus[s.level][s.item].on2;
-                s.nitems[depth] = s.menus[s.level][s.item].pad;
-                s.pos[depth][0] = (depth != 1 ? s.menus[s.level][s.item].x2 : s.menus[s.level][s.item].x1) + s.pos[depth - 1][0];
-                s.pos[depth][1] = (depth != 1 ? s.menus[s.level][s.item].y1 : s.menus[s.level][s.item].y2) + s.pos[depth - 1][1];
-                w = s.menus[depth][s.nitems[depth] - 1].x2 - s.menus[depth][0].x1 + 1;
-                h = s.menus[depth][s.nitems[depth] - 1].y2 - s.menus[depth][0].y1 + 1;
-                s.bg[depth] = sub_8CCA8((char *)str_menubuff, w * h + 0x11, 0x20);
-                *(MenuHdr17 *)s.bg[depth] = *(MenuHdr17 *)pointerspr;
-                ((short *)s.bg[depth])[2] = w;
-                ((short *)s.bg[depth])[3] = h;
-                sub_91400(s.bg[depth], s.pos[depth][0], s.pos[depth][1]);
-                DrawMenuDropdown(s.menus[depth], s.nitems[depth], s.pos[depth][0], s.pos[depth][1], col1, col2,
+                DrawMenuItemNorm((struct MenuItem *)&menus[i][item], pos[i][0], pos[i][1], col1, col2, col3);
+                menus[depth] = (MenuItem *)menus[level][item].on2;
+                nitems[depth] = menus[level][item].pad;
+                pos[depth][0] = (depth != 1 ? menus[level][item].x2 : menus[level][item].x1) + pos[depth - 1][0];
+                pos[depth][1] = (depth != 1 ? menus[level][item].y1 : menus[level][item].y2) + pos[depth - 1][1];
+                w = menus[depth][nitems[depth] - 1].x2 - menus[depth][0].x1 + 1;
+                h = menus[depth][nitems[depth] - 1].y2 - menus[depth][0].y1 + 1;
+                bg[depth] = sub_8CCA8((char *)str_menubuff, w * h + 0x11, 0x20);
+                *(MenuHdr17 *)bg[depth] = *(MenuHdr17 *)pointerspr;
+                ((short *)bg[depth])[2] = w;
+                ((short *)bg[depth])[3] = h;
+                sub_91400(bg[depth], pos[depth][0], pos[depth][1]);
+                DrawMenuDropdown(menus[depth], nitems[depth], pos[depth][0], pos[depth][1], col1, col2,
                     col3);
-                s.sel[depth] = 0;
-                DrawMenuItemNorm((struct MenuItem *)s.menus[depth], s.pos[depth][0], s.pos[depth][1], col1, col2,
+                sel[depth] = 0;
+                DrawMenuItemNorm((struct MenuItem *)menus[depth], pos[depth][0], pos[depth][1], col1, col2,
                     col3);
             } else {
                 sub_903F0(ptr, oldmx, oldmy);
-                DrawMenuItemSel((struct MenuItem *)&s.menus[s.level][s.sel[s.level]], s.pos[s.level][0],
-                    s.pos[s.level][1], col1, col2, col3);
-                s.sel[s.level] = s.item;
-                DrawMenuItemNorm((struct MenuItem *)&s.menus[s.level][s.item], s.pos[s.level][0], s.pos[s.level][1],
+                DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
+                    pos[level][1], col1, col2, col3);
+                sel[level] = item;
+                DrawMenuItemNorm((struct MenuItem *)&menus[level][item], pos[level][0], pos[level][1],
                     col1, col2, col3);
             }
         } else {
             sub_903F0(ptr, oldmx, oldmy);
             for (i = 3; i >= 0; i--) {
-                if (s.bg[i]) {
-                    sub_903F0(s.bg[i], s.pos[i][0], s.pos[i][1]);
-                    s.pos[i][0] = s.pos[i][1] = 0;
-                    FreeMemBlock(s.bg[i]);
+                if (bg[i]) {
+                    sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                    pos[i][0] = pos[i][1] = 0;
+                    FreeMemBlock(bg[i]);
                 }
             }
             depth = 0;
-            s.menus[1] = s.menus[2] = s.menus[3] = 0;
-            s.bg[0] = s.bg[1] = s.bg[2] = s.bg[3] = 0;
-            s.sel[1] = s.sel[2] = s.sel[3] = 0;
-            s.nitems[1] = s.nitems[2] = s.nitems[3] = 0;
+            menus[1] = menus[2] = menus[3] = 0;
+            bg[0] = bg[1] = bg[2] = bg[3] = 0;
+            sel[1] = sel[2] = sel[3] = 0;
+            nitems[1] = nitems[2] = nitems[3] = 0;
         }
         sub_91400(ptr, oldmx, oldmy);
         sub_903F0(ptr, oldmx, oldmy);
-        sub_91400(ptr, s.mx, s.my);
-        sub_91370(pointerspr, s.mx, s.my);
-        oldmx = s.mx;
-        oldmy = s.my;
+        sub_91400(ptr, mx, my);
+        sub_91370(pointerspr, mx, my);
+        oldmx = mx;
+        oldmy = my;
     }
 }
 

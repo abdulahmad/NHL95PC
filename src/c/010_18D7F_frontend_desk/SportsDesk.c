@@ -23,12 +23,16 @@ int sub_8F98F(char *path);  /* music library: load a song (register arguments) *
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song (register arguments) */
 int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last call */
 
-/* DRAFT under 10.0 GA: 353 differing instructions (4,219 vs 4,567 bytes). The frame is the retail 404h:
-   the menu-item offset is computed in place, and m is formed only in the dropdown path after the drawing calls.
-   Zero chains store the higher indices first, as in the EXE, and the playoff comparisons use its >= bounds.
-   Plain scalar declarations follow tools/slot_solver.py. Left: some stack slots, the overtime / conference
-   argument shapes and the combined menu-action / submenu branches. The retail speech timer compares the
-   routine address. */
+/* DRAFT under 10.0 GA: 303 differing instructions, the EXE size (4,567 bytes). The frame is the retail 404h:
+   the menu-item offset is computed in place, and m is formed only in the submenu path after the drawing calls.
+   A click on an item with an action runs it when it is the selected one and otherwise moves the selection; an
+   item with a submenu opens it: two separate arms, each closing the deeper dropdowns itself, as in the EXE (the
+   submenu arm's last DrawMenuItemNorm cross-jumps into the selection arm's). Zero chains store the higher
+   indices first, as in the EXE, and the playoff comparisons use its >= bounds. sub_B2DCA returns the buttons
+   and the pointer x and y, which MouseSetPos gets back in that order. The declaration order of the arrays and
+   scalars was searched with real compiles and tools/slot_solver.py. Left: stack slots (oldmx / oldmy, autoret,
+   timeout, speech, ptr), register picks, the overtime / conference argument shapes. The retail speech timer
+   compares the routine address. */
 /* SportsDesk (1935D, PC only): the sports desk of a game (mode 0: paused in the game, 1: intermission, 2: after
    the game): the menu labels and title of the mode, the replay item only when a replay is recorded; fade in the
    EADESK<mode> art and palette, the pause music (when music is on and none plays), and the desk menu bar (six
@@ -44,27 +48,27 @@ void SportsDesk(int mode)
 {
     unsigned char pal[0x300];
     unsigned char txt[0x40];
-    char path[0x20];
+    int nitems[4];
     int pos[4][2];
     int ptrsize;
     int bg[4];
     int sel[4];
-    int nitems[4];
+    char path[0x20];
     MenuItem *menus[4];
-    int depth;
+    int conf;
     int oldmx;
     int ptr;
-    int autoret;
+    int depth;
     int timeout;
-    int savex;
+    int level;
     int oldmy;
     int speech;
     int item;
-    int btn;
-    int savey;
-    int level;
+    int my;
     int h;
+    int savey;
     int w;
+    int btn;
     int r;
     int mx;
     int bank;
@@ -74,8 +78,8 @@ void SportsDesk(int mode)
     MenuItem *m;
     int winner;
     int ot;
-    int my;
-    int conf;
+    int savex;
+    int autoret;
     int rnd;
 
     depth = 0;
@@ -85,7 +89,7 @@ void SportsDesk(int mode)
     SetScreenTitle(mode + 3);
     if (ReplayIsEmpty()) off_CEF23 = 0;
     else off_CEF23 = (int)DeskGoToReplay;
-    sub_B2DCA(&btn, &savey, &savex);
+    sub_B2DCA(&btn, &savex, &savey);
     escrequest = 0;
     joysampling = 0;
     if (mode == 0) {
@@ -225,71 +229,93 @@ void SportsDesk(int mode)
             sel[1] = sel[2] = sel[3] = 0;
             nitems[1] = nitems[2] = nitems[3] = 0;
         } else {
-            if ((*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x14)) && item == sel[level]) {
-                sub_903F0(ptr, oldmx, oldmy);
-                for (i = depth; i > 0; i--) {
-                    sel[i] = 0;
-                    if (bg[i]) {
-                        sub_903F0(bg[i], pos[i][0], pos[i][1]);
-                        pos[i][0] = pos[i][1] = 0;
-                        FreeMemBlock(bg[i]);
+            if ((*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x14))) {
+                if (item == sel[level]) {
+                    sub_903F0(ptr, oldmx, oldmy);
+                    for (i = depth; i > 0; i--) {
+                        sel[i] = 0;
+                        if (bg[i]) {
+                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            pos[i][0] = pos[i][1] = 0;
+                            FreeMemBlock(bg[i]);
+                        }
                     }
-                }
-                depth = 0;
-                dword_DC88C = mx;
-                dword_DC888 = my;
-                r = ((int (*)(void))(*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x14)))();
-                mx = dword_DC88C;
-                my = dword_DC888;
-                menus[1] = menus[2] = menus[3] = 0;
-                bg[0] = bg[1] = bg[2] = bg[3] = 0;
-                sel[1] = sel[2] = sel[3] = 0;
-                nitems[1] = nitems[2] = nitems[3] = 0;
-                if (r == 1 || r == 5) {
+                    depth = 0;
+                    dword_DC88C = mx;
+                    dword_DC888 = my;
+                    r = ((int (*)(void))(*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x14)))();
+                    mx = dword_DC88C;
+                    my = dword_DC888;
+                    menus[1] = menus[2] = menus[3] = 0;
+                    bg[0] = bg[1] = bg[2] = bg[3] = 0;
+                    sel[1] = sel[2] = sel[3] = 0;
+                    nitems[1] = nitems[2] = nitems[3] = 0;
+                    if (r == 1 || r == 5) {
+                        ClearInputQueue();
+                        InputRemove();
+                        sub_8EA00(txt);
+                        sub_B2E1B(0, 0, 0x280, 0x1E0);
+                        deferpending = 0;
+                        MouseSetPos(savex, savey);
+                        sub_8FFB0(0, 0x100, pal);
+                        if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
+                        if (r == 1 && musicon && gameopts.speech) {
+                            MusicChanReset();
+                            SayNowBack();
+                        }
+                        FadePalStep(1, pal, 0x14);
+                        if (r != 1) gameresult = 2;
+                        SetScreenTitle(gamemode);
+                        if (ptr) FreeMemBlock(ptr);
+                        if (musicon && songdata) {
+                            while (!sub_8FC8A(musicslot, 3));
+                            sub_8D2F0(songdata);
+                            songdata = 0;
+                        }
+                        if (r == 1) DeskReloadGame();
+                        if (r == 1 && musicon && gameopts.speech) {
+                            while (SpeechBusy());
+                            FreeNowBack();
+                        }
+                        return;
+                    }
+                    if (r == 2) {
+                        sub_8FFB0(0, 0x100, pal);
+                        FadePalStep(1, pal, 0x10);
+                        sub_1BAF3(700000);
+                        MakePath(path, fileoncd[0x64 + mode] == 1 ? (char *)cddriveptr : 0, (char *)unk_DC890, 0);
+                        bank = sub_8E83C(path, 0);
+                        sub_9061C(sub_B30B4(bank, (char *)str_Desk));
+                        src = (unsigned char *)sub_B30B4(bank, (char *)str_Pal5) + 0x10;
+                        for (i = 0; i < 0x300; i++) pal[i] = src[i];
+                        FreeMemBlock(bank);
+                        DrawMenuBar(menus[0], nitems[0], 0xFA, 0xF9, 0xF8);
+                        FadePalStep(0, pal, 0x10);
+                    }
+                    MouseSetPos(oldmx, oldmy);
                     ClearInputQueue();
-                    InputRemove();
-                    sub_8EA00(txt);
-                    sub_B2E1B(0, 0, 0x280, 0x1E0);
-                    deferpending = 0;
-                    MouseSetPos(savex, savey);
-                    sub_8FFB0(0, 0x100, pal);
-                    if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
-                    if (r == 1 && musicon && gameopts.speech) {
-                        MusicChanReset();
-                        SayNowBack();
+                } else {
+                    sub_903F0(ptr, oldmx, oldmy);
+                    if (depth != level) {
+                        for (i = depth; i > level; i--) {
+                            sel[i] = 0;
+                            if (bg[i]) {
+                                sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                pos[i][0] = pos[i][1] = 0;
+                                FreeMemBlock(bg[i]);
+                                bg[i] = 0;
+                                menus[i] = 0;
+                                nitems[i] = 0;
+                            }
+                        }
+                        depth = level;
                     }
-                    FadePalStep(1, pal, 0x14);
-                    if (r != 1) gameresult = 2;
-                    SetScreenTitle(gamemode);
-                    if (ptr) FreeMemBlock(ptr);
-                    if (musicon && songdata) {
-                        while (!sub_8FC8A(musicslot, 3));
-                        sub_8D2F0(songdata);
-                        songdata = 0;
-                    }
-                    if (r == 1) DeskReloadGame();
-                    if (r == 1 && musicon && gameopts.speech) {
-                        while (SpeechBusy());
-                        FreeNowBack();
-                    }
-                    return;
+                    DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0], pos[level][1], 0xFA, 0xF9,
+                        0xF8);
+                    sel[level] = item;
+                    DrawMenuItemNorm((struct MenuItem *)&menus[level][item], pos[level][0], pos[level][1], 0xFA, 0xF9, 0xF8);
                 }
-                if (r == 2) {
-                    sub_8FFB0(0, 0x100, pal);
-                    FadePalStep(1, pal, 0x10);
-                    sub_1BAF3(700000);
-                    MakePath(path, fileoncd[0x64 + mode] == 1 ? (char *)cddriveptr : 0, (char *)unk_DC890, 0);
-                    bank = sub_8E83C(path, 0);
-                    sub_9061C(sub_B30B4(bank, (char *)str_Desk));
-                    src = (unsigned char *)sub_B30B4(bank, (char *)str_Pal5) + 0x10;
-                    for (i = 0; i < 0x300; i++) pal[i] = src[i];
-                    FreeMemBlock(bank);
-                    DrawMenuBar(menus[0], nitems[0], 0xFA, 0xF9, 0xF8);
-                    FadePalStep(0, pal, 0x10);
-                }
-                MouseSetPos(oldmx, oldmy);
-                ClearInputQueue();
-            } else if ((*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x14)) || (*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x18))) {
+            } else if ((*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x18))) {
                 sub_903F0(ptr, oldmx, oldmy);
                 if (depth != level) {
                     for (i = depth; i > level; i--) {
@@ -309,25 +335,23 @@ void SportsDesk(int mode)
                 DrawMenuItemSel((struct MenuItem *)&menus[i][sel[i]], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
                 sel[i] = item;
                 DrawMenuItemNorm((struct MenuItem *)&menus[i][item], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
-                if (!(*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x14))) {
-                    m = &menus[level][item];
-                    depth = i + 1;
-                    menus[depth] = (MenuItem *)(*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x18));
-                    pos[depth][0] = (depth == 1 ? m->x1 : m->x2) + pos[depth - 1][0];
-                    nitems[depth] = m->pad;
-                    pos[depth][1] = (depth == 1 ? m->y2 : m->y1) + pos[depth - 1][1];
-                    i = depth;
-                    w = menus[i][nitems[i] - 1].x2 - menus[i][0].x1 + 1;
-                    h = menus[i][nitems[i] - 1].y2 - menus[i][0].y1 + 1;
-                    bg[i] = sub_8CCA8((char *)str_Menubuff3, w * h + 0x11, 0x20);
-                    *(Hdr17 *)bg[i] = *(Hdr17 *)pointerspr;
-                    ((short *)bg[i])[2] = w;
-                    ((short *)bg[i])[3] = h;
-                    sub_91400(bg[i], pos[i][0], pos[i][1]);
-                    DrawMenuDropdown(menus[i], nitems[i], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
-                    sel[i] = 0;
-                    DrawMenuItemNorm((struct MenuItem *)menus[i], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
-                }
+                depth = i + 1;
+                menus[depth] = (MenuItem *)(*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x18));
+                m = &menus[level][item];
+                nitems[depth] = m->pad;
+                pos[depth][0] = (depth == 1 ? m->x1 : m->x2) + pos[depth - 1][0];
+                pos[depth][1] = (depth == 1 ? menus[level][item].y2 : menus[level][item].y1) + pos[depth - 1][1];
+                i = depth;
+                w = menus[i][nitems[i] - 1].x2 - menus[i][0].x1 + 1;
+                h = menus[i][nitems[i] - 1].y2 - menus[i][0].y1 + 1;
+                bg[i] = sub_8CCA8((char *)str_Menubuff3, w * h + 0x11, 0x20);
+                *(Hdr17 *)bg[i] = *(Hdr17 *)pointerspr;
+                ((short *)bg[i])[2] = w;
+                ((short *)bg[i])[3] = h;
+                sub_91400(bg[i], pos[i][0], pos[i][1]);
+                DrawMenuDropdown(menus[i], nitems[i], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
+                sel[i] = 0;
+                DrawMenuItemNorm((struct MenuItem *)menus[i], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
             } else {
                 sub_903F0(ptr, oldmx, oldmy);
             }
