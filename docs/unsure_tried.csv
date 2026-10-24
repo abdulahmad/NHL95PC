@@ -2965,3 +2965,39 @@ checkob,,"the far-side test as `goto` into the first loop's found block with the
 checkob,,"the loop as a goto loop (9) or a while loop (9) with the limit on the left, `!((o->Ypos >> 16) <= extra + 0x4E)` (23), `!(o->position < 0 || extra + 0x4E >= Y)` (5). With the limit on the left Watcom hoists `lea ecx, [ebx+4Eh]` into the loop preheader",,ga
 checkob,,the first loop's negated limit is not hoisted,,ga
 doplayeracc,,"`(unsigned short)vy + (unsigned short)*pucky` (5), `vy + *(unsigned short *)pucky` (5), `dy = *pucky; dy = vy + dy;` (17), `dy = *pucky; dy -= y; dy += vy;` (19)",19,ga
+OpenSpeechBank,,"per-module Swap16 declarations `unsigned short Swap16(unsigned)` / `short Swap16(unsigned)` (32), `int Swap16()` / `int Swap16(int)` (11), `short Swap16(short)` (44)",44,ga
+ReassignCtlPlayer,,"on the short-n base: px in two statements `px = *puckvx >> 8; px += *puckx;` (21), `px = px + *puckx` (21), `px = *puckx; px += *puckvx >> 8` (33), px and py both split (33)",33,ga
+ReassignCtlPlayer,type:n:short,`short n`,tried (docs/UNSURE.md),ga
+CreatePlayoffs,,"(time). Note: the EXE stores bank2 before `add esp, 8` at the same frame slot ([esp+0B0h] at push depth 8 = [esp+0A8h])",[esp+0B0h] at push depth 8 = [esp+0A8h],ga
+CreatePlayoffs,,the store of a plain local rather than a struct member,,ga
+CreatePlayoffs,,the plain-local splits listed above moved other slots,,ga
+POInitSchedule,,an `int *tp = (int *)po` copy pointer (67),67,ga
+POInitSchedule,,the date test as `>= 0x1F` (8),8,ga
+POInitSchedule,,"the clear loop's `g += 6` in its body (8), `t[n] = teams[i]; n += 1` (6), `((int *)teams)[i]`, `++i`, `0x11 + i % 7 * 2` / `0x10 + i % 7 * 2` (6)",6,ga
+POInitSchedule,,"permute.py 6 min, seed 7 (321 candidates, best 6)","321 candidates, best 6",ga
+MenuSaveDefaultLines,,"(MenuSaveDefaultLines, MenuSaveTheseLines, MenuGameShowPlayerStats",,ga
+MenuSaveDefaultLines,,time),,ga
+SelectRosterTeam,,the second clear as `((MenuItem20 **)roster2divmenus)[div * 8][slot]` (17: slot is then shifted in place in ebp),17: slot is then shifted in place in ebp,ga
+SelectRosterTeam,,the DivMenu form for the second clear (17) or both (17),17,ga
+SelectRosterTeam,,the pointer form for the first clear only (14) or both (17),17,ga
+JoystickCalScreen,,"the puck as its own struct member s.puck (25, +28) or a plain int local (28, +7) instead of reusing s.shape",,ga
+InstantReplay,,"the first sub_6AF97 call's arguments as `-((bgscrollx << 3) + scrollx), -((bgscrolly << 3) + scrolly)` (29), `-(scrollx + (bgscrollx << 3)), -((bgscrolly << 3) + scrolly)` (32), `-(scrollx + (bgscrollx << 3)), ...` (25), `-(bgscrolly << 3) - scrolly` (24), `-scrolly - (bgscrolly << 3)` (28), `-(bgscrollx << 3) - scrollx` (34) (retried after the move: the file context changed the scores)",,ga
+InstantReplay,,"permute.py 6 min in the file, seed 13 (321 candidates, best 22)","321 candidates, best 22",ga
+CreateFreeAgent,,"`s.key[0x13] = s.key[3] = 0`, `strlen(s.input) == 0`, `CreatePlayerLoop(s.key) > 0` (7, +1)","7, +1",ga
+CreateFreeAgent,,the position test as `!(c == 'C' || c == 'L' || c == 'R' || c == 'D') != 0` (5) or with a third `!= 0` (12),12,ga
+CreateFreeAgent,,"the kind arms inverted (6) or as one ternary store (20), `&s.key[0x30]` for the memset, `(unsigned char)k` for the jersey",,ga
+CreateFreeAgent,,the goalie index through a block-local int or signed char j (5),5,ga
+CreateFreeAgent,,the off_D0A04 + 3 base in dp (18),18,ga
+CreateFreeAgent,,the skater or the goalie copy as a do-while (5),5,ga
+QueueSpeechClip,,"the size sum through a new `unsigned need` local without the kind local (7) and with it (9), through the dead off (23)",23,ga
+QueueSpeechClip,,the final store through s reused as the queue pointer with s->kind tested in place (10),10,ga
+QueueSpeechClip,,the bank check through bank reloaded from speechbank (17),17,ga
+DrawGameLineJerseys,,(time,,ga
+DrawGameLineJerseys,,no new shape),,ga
+SelectHilight,,(no new shape beyond the lists above,,ga
+SelectHilight,,"the FreeMemBlock pushes are reload temporaries, eax / edx in the EXE, esi / ebp here",,ga
+SelectHilight,,a register-cycle position),,ga
+SelectMatchingPlayers,,"under GA (only the add association is left): `(char *)(i * 27 + falist + 8)`, `(char *)(i * 27 + falist) + 8`, `&(i * 27 + falist)[8]` (all 11, +1)","all 11, +1",ga
+SelectMatchingPlayers,,new: `&(i * 27)[falist + 8]` (8),8,ga
+RosterPanelClick,,(time,,ga
+RosterPanelClick,,the lists above cover the toggle spellings),,ga
