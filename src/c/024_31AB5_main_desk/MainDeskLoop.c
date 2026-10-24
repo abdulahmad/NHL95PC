@@ -32,12 +32,11 @@ int sub_8F98F(char *path);
 void sub_8FB8E(int song, int handle, int a, int b);
 int PreGameScreen(int home, int vis);
 
-/* DRAFT (10.0 GA): 72 differing, same 3,158 bytes; kept for its pop / ret tail (MainDeskLoop_x, which
-   LoadModeState, WriteModeState and MenuNewExhibition use). The first pointer-sprite size goes through the
-   (still unused) r so the multiply is finished before `push 20h`, which also gives oldmx / oldmy the EXE's
-   slots; the dropdown reset chains store pos[i][1] first. Left: the second size (after the item action, r
-   live) still pushes 20h first, and the selected item's redraw reloads s.level where the EXE keeps it in edx
-   (a store into s.sel may alias s.level in one frame struct); see docs/UNSURE.md. */
+/* DRAFT (10.0 GA): 67 differing, same 3,158 bytes; kept for its pop / ret tail (MainDeskLoop_x, which
+   LoadModeState, WriteModeState and MenuNewExhibition use). Both pointer-sprite sizes are computed before the
+   allocation arguments are pushed; the second uses a local scoped to the action branch. The submenu lookup
+   precedes the depth increment. Left: the selected item's redraw reloads s.level where the EXE keeps it in edx
+   (a store into s.sel may alias s.level in one frame struct), plus register picks; see the lane batch notes. */
 /* MainDeskLoop (31AB5, PC only; owner of MainDeskLoop_x / MainDeskLoop_x2): the main desk screen. Reset the
    menu state (the menu bar, mainmenubar, with three items; no dropdowns open), centre the mouse on the bar, set
    the side controls, the EASN stats callbacks and the menu pointer bitmap, pick and load the desk song
@@ -146,6 +145,7 @@ int MainDeskLoop(void)
             m = &s.menus[s.level][s.item];
             if (m->on1) {
                 if (s.item == s.sel[s.level]) {
+                    int size;
                     sub_903F0(ptr, oldmx, oldmy);
                     for (i = depth; i > 0; i--) {
                         s.sel[i] = 0;
@@ -160,8 +160,8 @@ int MainDeskLoop(void)
                     keepdesksong = 0;
                     r = ((int (*)(int *))s.menus[s.level][s.item].on1)(&s.fh);
                     FileClose(&s.fh);
-                    ptr = sub_8CCA8((char *)str_Pointer7,
-                        (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11, 0x20);
+                    size = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
+                    ptr = sub_8CCA8((char *)str_Pointer7, size, 0x20);
                     *(Hdr17 *)ptr = *(Hdr17 *)pointerspr;
                     ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
                     ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
@@ -257,8 +257,8 @@ int MainDeskLoop(void)
                 DrawMenuItemSel((struct MenuItem *)&s.menus[i][s.sel[i]], s.pos[i][0], s.pos[i][1], 0xFA, 0xF9, 0xF8);
                 s.sel[i] = s.item;
                 DrawMenuItemNorm((struct MenuItem *)&s.menus[i][s.item], s.pos[i][0], s.pos[i][1], 0xFA, 0xF9, 0xF8);
-                depth = i + 1;
                 m = &s.menus[s.level][s.item];
+                depth = i + 1;
                 s.menus[depth] = (MenuItem *)m->on2;
                 s.nitems[depth] = m->pad;
                 s.pos[depth][0] = (depth == 1 ? m->x1 : m->x2) + s.pos[depth - 1][0];

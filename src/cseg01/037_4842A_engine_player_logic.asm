@@ -696,6 +696,10 @@ pop ebx	; 48AC6
 ret	; 48AC7
 ; PickThreeStars: PC three stars. Empties startm/starpl, records the winner (gwgteam, gwgplayer = its team field 2Eh)
 ; when the scores differ, then fills the 3 stars from the qsorted players (StarCompare) with AddStar.
+; C: src/c/036_47C31_engine_init/FadeOutPalCycle.c (PickThreeStars)
+%ifdef CBUILD
+%include "c/036_47C31_engine_init/FadeOutPalCycle.PickThreeStars.inc"
+%else
 PickThreeStars:
 push dword 0F4h	; 48AC8
 call __CHK	; 48ACD
@@ -1033,6 +1037,7 @@ cmp di, byte 3	; 48F02
 jge short PickThreeStars.20	; 48F06
 inc ecx	; 48F08
 jmp short PickThreeStars.19	; 48F09
+%endif ; C
 ; StartThreeStars: PC end-of-game set-up for the three-stars ceremony (assthreestars, asstab 15h): PickThreeStars,
 ; clears the clock line-change signal state, stops the clock, empties the penalty boxes and places the players.
 ; C: src/c/036_47C31_engine_init/FadeOutPalCycle.c (StartThreeStars)
