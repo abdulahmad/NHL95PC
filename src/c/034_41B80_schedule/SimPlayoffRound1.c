@@ -163,14 +163,18 @@ int SeedPlayoffRound1(int *seeds, unsigned char *sched, int fh, int games, unsig
 /* SimPlayoffRound1: simulate the 8 first-round series (7 games, 2Ah bytes each) of the playoff schedule sched. Each game of a series not yet played (score byte +4 = FFh)
  is simulated (SimulateGame, schedule slot s * 7 + 0x444 + game, mode 2) and the winner (more goals: +4 vs +5) counted
  once a team has won len 2 + 1 (SeriesLength) the remaining games are blanked (FFh). The win counts index
- by the series' first game's teams. Returns 0. */
+ by the series' first game's teams. Returns 0.
+ DRAFT (10.0 GA, 16 differing): named byte scores and scalar order i, s, len, g improve the temporary
+ picks. Left: rdfh / series-counter slots, the winning-length compare, slot sum, and score compare. */
 int SimPlayoffRound1(int sched, int rwfh, int rdfh, char *dir, char *ext)
 {
     int wins[26];
-    int s;
     int i;
+    int s;
     int len;
     unsigned char *g;
+    unsigned char home;
+    unsigned char away;
 
     g = (unsigned char *)sched;
     __STOSD(wins, 0, 26);
@@ -182,7 +186,9 @@ int SimPlayoffRound1(int sched, int rwfh, int rdfh, char *dir, char *ext)
                 g[i * 6] = g[i * 6 + 1] = g[i * 6 + 2] = g[i * 6 + 3];
             } else {
                 if (g[i * 6 + 4] == 0xFF) SimulateGame(dir, ext, s * 7 + 0x444 + i, g + i * 6, rwfh, rdfh, 2);
-                wins[g[i * 6 + 4] > g[i * 6 + 5] ? g[i * 6 + 2] : g[i * 6 + 3]]++;
+                home = g[i * 6 + 4];
+                away = g[i * 6 + 5];
+                wins[home > away ? g[i * 6 + 2] : g[i * 6 + 3]]++;
             }
         }
     }
