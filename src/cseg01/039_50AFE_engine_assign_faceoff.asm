@@ -2863,6 +2863,10 @@ pop ecx	; 52FAD
 pop ebx	; 52FAE
 ret	; 52FAF
 %endif ; C
+; C: src/c/039_50AFE_engine_assign_faceoff/assrefpenshot.c
+%ifdef CBUILD
+%include "c/039_50AFE_engine_assign_faceoff/assrefpenshot.inc"
+%else
 assrefpenshot:
 push dword 10h	; 52FB0
 call __CHK	; 52FB5
@@ -3091,3 +3095,4 @@ pop edx	; 53290
 pop ecx	; 53291
 pop ebx	; 53292
 ret	; 53293
+%endif ; C
