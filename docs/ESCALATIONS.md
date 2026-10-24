@@ -68,6 +68,10 @@ differing, same size (the EXE does the `i++` of the PenBuf scan before the compa
 `PenBuf[i++ * 2] == 0` and marked as its own block: chkprogress is done (no hand-asm). `LoadRosterList_fa` (4)
 and `LoadRosterList_team` (17) are unchanged: the team piece keeps its own epilogue in C, while the EXE jumps to
 `RunEditRosters_ret5` (segment 051), so both pieces need RunEditRosters in the same C file before they can match.
+Matched the same day: RunEditRosters is compiled first in ShellSortBytes.c as a compile-context copy (it stays
+matched in RunEditRosters.c; c_progress counts the copy as context), the team clear as `i = 0; for (; i < 0x1C;
+i++)` and `menu_r1_tofa = 0` on side 0. Both pieces are marked as their own blocks: LoadRosterList is done, no
+hand-asm. cc.py's TextTargets now names a tail in a context copy from another segment by that segment's label.
 
 ## EditTextField and LeadersScreen, goto
 
