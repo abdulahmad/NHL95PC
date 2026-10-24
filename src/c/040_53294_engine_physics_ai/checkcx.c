@@ -17,9 +17,9 @@ void checkcheck(Player *a, Player *b, short force);
  clock runs, team-mates that bump turn: when the hit comes from where a player is heading (temp3 / temp4, or
  standing still facing it), temp2 (low byte) = that direction + 2 and doplayeracc, for p unless pflags bit 3
  and then for pl the same way (its test reads p's velocity, as the EXE does). No result.
- DRAFT (10.0 GA, 1023 vs 1024): locals t, dvy, dx, dvx give the EXE's stack slots. Left: the puckc pointer
- in eax (EXE edx) and the bounce's sign-extended gaps: the EXE extends d into ebx and dx into edi, C extends
- d in place (edi) and dx into ebx; see docs/UNSURE.md. */
+ DRAFT (10.0 GA, 18 differing, 1023 vs 1024): locals t, dvy, dx, dvx give the EXE's stack slots; the cross
+ term is `d * dvx - dx * dvy`. Left: the puckc pointer in eax (EXE edx) and the bounce's sign-extended gaps:
+ the EXE extends d into ebx and dx into edi, C extends d in place (edi) and dx into ebx; see docs/UNSURE.md. */
 void checkcx(Player *p, short x, short d, short pl)
 {
     int t;
@@ -59,7 +59,7 @@ void checkcx(Player *p, short x, short d, short pl)
     }
     regd4.w = regd1.w;
     if ((signed char)collflag < 0) return;
-    regd0.l = d * dvx - dvy * dx;
+    regd0.l = d * dvx - dx * dvy;
     word_E03B8 = regd0.l >> 4;
     regd0.w = p->weight + 0x8C;
     regd1.w = o->weight + 0x8C;
