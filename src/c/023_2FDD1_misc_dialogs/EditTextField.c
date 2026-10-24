@@ -19,15 +19,17 @@ int TickDeadlinePassed(void);
 void __cdecl sub_B3D46(int n);
 int sub_B3D64(void);
 
-/* DRAFT under 10.0 GA: 66 differing, the EXE size. Each key arm ends in its own DrawEditCursor (and
+/* DRAFT under 10.0 GA: 62 differing, 4 bytes long. Each key arm ends in its own DrawEditCursor (and
    DrawEditText) and a jump to the poll; Watcom merges those tails into the EXE's shared ones after register
    allocation, and the direct jumps give the arms the poll loop's weight, so the insert flag (savings 311) now
    outranks timeout (199) and idle (198) and takes EBP. x is dead after editx is stored and holds the insert
    flag (C_MATCHING: dead parameter reuse), so x and the flag share EBP as in the EXE; the blink state is its
-   own local (EDX). The poll at the bottom with its two targets (idle, key handlers) is still built with gotos.
-   Left: the short-lived temporaries of the key chain and the cursor arms take other registers than the EXE's
-   (timeout push edx vs eax, key compares ebx / eax vs edx / ecx), so the End arm's zero does not cross-jump
-   into its loop store; the typing arm reloads flags and editpos where the EXE keeps them. */
+   own local (EDX). The typed key is stored in each insert-mode arm (the EXE loads editpos in both arms, the
+   insert loop's test value reused, before the shared tail). The poll at the bottom with its two targets (idle,
+   key handlers) is still built with gotos. Left: the short-lived temporaries of the key chain and the cursor
+   arms take other registers than the EXE's (timeout push edx vs eax, key compares ebx / eax vs edx / ecx), so
+   the End arm's zero does not cross-jump into its loop store; the letter filter loads the key into edx (EXE
+   eax), and the last filter then reloads the flags byte into bl (4 bytes) where the EXE keeps dl. */
 /* EditTextField (3170D, PC only): edit the text buf (maxlen characters) in a field w wide at x, y. Draws the text
    and a blinking cursor (DrawEditText / DrawEditCursor, editpos ...); left / right / home / end move the cursor,
    Ins toggles insert mode (a full-height cursor), Del and Backspace delete, and other keys are typed in when flags
@@ -141,10 +143,11 @@ otherkey:
         DrawEditCursor(flags);
         if (!x) {
             if (!buf[editpos]) buf[editpos + 1] = 0;
+            buf[editpos] = key;
         } else {
             for (i = maxlen - 2; i >= editpos; i--) buf[i + 1] = buf[i];
+            buf[editpos] = key;
         }
-        buf[editpos] = key;
         if (maxlen > editpos) editpos++;
         DrawEditText(flags);
         DrawEditCursor(flags);
