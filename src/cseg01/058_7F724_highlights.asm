@@ -19,6 +19,10 @@ extern str_F12, str_F3, str_F4, unk_C3470, str_star, msg_NoHilights, hmteamrec
 extern gamepal, unknown_libname_1, unknown_libname_2, VisTeam, awteamrec
 global HilightSaveToDlg, SaveHilight, NudgeRinkScroll, CmpInt, TeamFromHiName, FormatHilightDesc, SelectHilight, ViewHilights
 global PlayHilight
+; C: src/c/057_7DC8B_gadgets_replay/DrawGadgetButton.c (HilightSaveToDlg)
+%ifdef CBUILD
+%include "c/057_7DC8B_gadgets_replay/DrawGadgetButton.HilightSaveToDlg.inc"
+%else
 HilightSaveToDlg:
 push dword 80h	; 7F724
 call __CHK	; 7F729
@@ -268,6 +272,7 @@ call sub_91964	; 7FA00
 add esp, byte 0Ch	; 7FA05
 add esp, byte 50h	; 7FA08
 jmp near DrawGadgetButton_ret	; 7FA0B
+%endif ; C
 ; C: src/c/058_7F724_highlights/SaveHilight.c
 %ifdef CBUILD
 %include "c/058_7F724_highlights/SaveHilight.inc"
