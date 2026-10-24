@@ -1,0 +1,4 @@
+# Renames for the next progress run. One rename per line, in the tools/rename_symbol.py --batch format:
+#   OLD NEW [{key=value,...}] evidence text
+# A line starting with # is a comment. Lane PRs append lines here and do not rename in the tree.
+# The progress workflow applies this file and then leaves only this header.

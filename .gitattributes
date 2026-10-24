@@ -1,2 +1,3 @@
 tools/permute_log.csv merge=union
 docs/unsure_tried.csv merge=union
+docs/draft_history.csv merge=union
