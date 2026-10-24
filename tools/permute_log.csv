@@ -387806,3 +387806,837 @@ date,func,file,transform,sha1,score,sizediff,match,first,cc
 2026-10-24,DrawListItem,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,paramtype:6:unsigned_char > swap:5:3 > opassign:5:0:split > swap:5:5 > opassign:16:0:split > cast:10:2:short,2c8d1290eed92926,13,0,0,79,ga
 2026-10-24,DrawListItem,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,paramtype:6:unsigned_char > swap:5:3 > opassign:5:0:split > swap:5:5 > opassign:16:0:split > paramtype:8:unsigned_short,844afb5d6a110244,11,0,0,53,ga
 2026-10-24,DrawListItem,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,paramtype:6:unsigned_char > swap:5:3 > opassign:5:0:split > swap:5:5 > opassign:16:0:split > cast:8:4:unsigned_short,f1f8baa63914ca5a,26,0,0,20,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,base,e476cde355721353,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,movedecl:g:1,8042780d4b7a770a,25,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,commute:18:==,3df27b1ed1c8f028,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,incdec:13:forpre,72efc6db4b2775ca,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,rettype:unsigned_short,d83773c7a7fcb7fc,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,temp:away:inline,3475e2c8c549a574,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,type:i:unsigned_char,289853ac5c3f9989,38,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:21:10:int,fc5cc67b931a5a5e,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swapstmt:19,956e0407e7f54587,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,loop:12:gototop,a6682aaa17ddcbe0,26,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swap:16:9,58dcbd6f1db44d8b,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,opassign:12:3:split,af9850e50c36738a,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,tempadd:16:rhs,62273e91061fd7c5,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,paramtype:2:char,9e15dc2f9dd41b20,29,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swapdecl:wins:i,e61da19b38cc73f9,20,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,movedecl:away:3,22523eca7c41d143,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,rettype:char,2d362636b6f94ff3,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,type:home:short,d38547f5686dda9a,32,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:21:11:short,ceaea3f8ca16bf2d,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swapstmt:9,8a7d44e77586c2f0,18,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,loop:12:while,15084e6935530875,26,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swap:18:11,4bca4a9a6282d636,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,paramtype:2:unsigned_char,597c977791c59a89,29,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swapdecl:home:away,c307413385b906ad,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,movedecl:i:3,810bd6e7638cd197,17,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,rettype:unsigned_char,4179148d29c8b137,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,type:away:unsigned,ecde051c1da349c0,31,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:16:18:unsigned_char,7d64e1f181ffa77a,70,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,loop:13:while,f913dd7945ad6bf5,20,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swap:21:16,ffc9fa455e8d6a55,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,paramtype:2:short,b143f0762dbefb08,25,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swapdecl:g:home,1b2ed268897f29bd,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,movedecl:home:0,9b654d7e9364122e,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,rettype:short,3713bd3f9bb9d072,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,type:away:short,ded0ecdc85c20545,29,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short,134e25bd02c32c5f,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,loop:12:do,1bd27f5edc049e05,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swap:16:24,32d79f778b6c8afc,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,paramtype:1:char,463681c5350f8535,29,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swapdecl:i:s,7c0e0761fdfd1396,17,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,movedecl:s:6,de589167c1e6a62d,27,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,type:i:unsigned_short,ee72a0c3dd87e933,53,0,0,0,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:21:6:unsigned_char,bff06ecec69167ad,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,loop:12:ifdo,4815e57dc3d5d032,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swap:18:5,9dc4258efe4e044b,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,paramtype:2:unsigned,ffffeff6d58cc58d,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swapdecl:len:g,35fa093c00b803d0,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,movedecl:g:2,7b4b0677b9dcd391,25,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,type:s:char,20d447b02c12e3ab,34,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:6:int,09c3e45ec0d38657,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,loop:13:gototop,5c1508e9dd40b07f,20,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swap:14:1,ebf9b6d70ec64c02,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,paramtype:0:short,56777173ac430c5a,22,0,0,13,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swapdecl:s:len,94a66db99ea91ec8,25,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,movedecl:g:6,fe9a9bbb210e7a58,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,type:i:char,e65a342ad4ce8021,38,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:21:17:short,73b066838267a7b1,32,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,loop:13:ifdo,e84769ee84f5aa2c,19,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swap:19:4,4fa29cc4ffc9f196,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,paramtype:1:unsigned,19c32d089375a976,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,movedecl:home:1,3881ff5936043f80,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,type:len:unsigned_char,970b12b6356ba73a,26,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:7:short,fbd92dbec1c37837,19,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,loop:13:gotobot,3a0c0a326a7e2c2a,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,swap:21:9,64c8d6fffae43e36,16,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swapdecl:home:away,55e55cd054c0d392,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > loop:13:do,66b50c3cd41cdd33,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > commute:18:==,b63e08ac8bb105c7,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > opassign:12:3:split,9c42501d830097ae,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > temp:away:inline,830e0ac9efb1aad0,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > incdec:13:forpre,dffcf42723c2f728,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:s:0,1d2277b343bdcc72,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > tempadd:16:rhs,e3c37bac44b0ebe9,23,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:0:signed_char,4ae2062589229d3c,18,0,0,13,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > rettype:short,84c396ba2a1f149c,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:home:int,950d7da9e61803f2,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:18:0,b63e08ac8bb105c7,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swapstmt:19,ee5b1e656899929c,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:16:19:unsigned_short,d1a72a479c5accfe,30,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swapdecl:g:home,6f2751c2a8fc852a,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > loop:13:while,508f285da8ec4f2b,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:home:1,4c1cbaed668e986a,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:1:unsigned_short,091fb90f4d681f5f,28,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > rettype:unsigned_short,5a6c2d3249fc15b4,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:away:char,32af3b26385b6c9c,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:18:11,1ffb80e739e183bc,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swapstmt:9,3caebec623664b8a,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:18:5:short,7b4c480007cbccf2,37,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swapdecl:s:len,6da71a8c43d408f8,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > loop:13:ifdo,bf591784e2a26fbb,19,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:i:4,2752f55618d6d1f7,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:2:char,92b402edf58cf881,21,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > rettype:unsigned_char,4ceeafc5837f2ffe,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:i:unsigned_short,2fcfb688329afed7,54,0,0,0,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:18:3,1f4b7561da61896f,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:20:6:char,37e124de3985c12d,57,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swapdecl:wins:i,5a8a39e9f2ced877,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > loop:12:while,9fe83b7ff2b1329c,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:len:5,a5eb13c4487458e8,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:0:short,655eeae00eebf60f,18,0,0,13,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > rettype:char,f5e2eef30492ede6,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:away:int,2ec6e7c2bc13fb3d,20,0,0,63,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17,d64a4b3197f8ae2d,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:20:5:int,25742c6cf6820e80,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swapdecl:len:g,3cdb6619b370d9f8,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > loop:12:do,d2dd96292f46b7b1,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:home:3,5cbb4c3ab4c95909,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:2:short,b5efd5f8e12baaf4,23,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:away:unsigned_short,c908d71be9493aaf,29,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:14:12,0070cc2e94b45a86,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:16:18:short,01ed42ad8bea7815,32,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swapdecl:i:s,8c6ffe6710c4fa38,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > loop:13:gototop,34919bef4c638121,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:away:3,3346d53662613a56,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:1:unsigned_char,a401c2801f6a75b4,29,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:i:short,fd7e0027010e5b24,52,0,0,0,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:20:4,fbcd3b7ce3573b16,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:18:18:unsigned_short,6c13b364bc9484e2,27,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > loop:12:gototop,a283e3e2c1c79b49,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:s:5,747b6a6fbb0b8416,19,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:1:short,f4f6d30bf1584d88,28,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:home:unsigned_short,ccf693f821962c0d,30,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:14:7,87d2ba7db362bdb7,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:18:5:unsigned_short,f454d957e3e8edac,28,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > loop:12:ifdo,9d1ceef26472b302,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:s:4,7ebc49ef836ec17c,19,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:1:char,c10f9a0086001e65,29,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:away:unsigned,aa984e6b020e8379,19,0,0,63,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:14:18,f9155759aa15b43c,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swapdecl:g:home,89d9608020a6c552,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > commute:18:==,adda1618c3af7ed4,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > rettype:char,e75247ff6261ecfd,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > cast:14:8:short,142dd402d2824f6f,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > incdec:13:forpre,0b022ceb02ca0bbc,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > opassign:12:3:split,34af4395f12cbaa7,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > movedecl:away:4,2f169978110ef21e,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > loop:12:do,7f1a0485fc4a0f9d,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swap:16:9,24f563390d9d9620,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swapstmt:9,756dadd072a13e6b,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > paramtype:0:short,6a044d74a97276e7,18,0,0,13,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > type:s:unsigned_short,e9dbd9699a8f4c04,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > tempadd:16:rhs,7fa7cd4de4e8b85e,23,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > temp:away:inline,53872852ae693b17,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swapdecl:s:len,25d1e403d0022a1c,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > rettype:short,aa4784f2dd9ee758,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > cast:16:25:int,d549e137e0d2135f,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > movedecl:away:0,36a5a0317ec077dc,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > loop:12:gototop,552d9885d8000b7e,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swap:21:16,3a38bdeaf021b534,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swapstmt:19,a7b152bf2dd9798f,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > paramtype:2:char,72a0bff39a5b482f,21,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > type:len:unsigned_char,9ed5adf114c6c97f,24,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swapdecl:i:s,ab675d56106e46c2,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > rettype:unsigned_char,c4f17c103760e84e,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > cast:14:8:unsigned_short,376a1e6ad56ec397,29,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > movedecl:s:0,ffef382352704bfb,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > loop:12:ifdo,02b71c23d6bf5666,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swap:16:24,b9a59135ac1096ed,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > paramtype:0:unsigned_char,79e6a551360b7946,18,0,0,13,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > type:len:char,fae471d5cfcb800b,24,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swapdecl:len:g,f30abfd22c32e87c,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > rettype:unsigned_short,f67f7b817b7a6994,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > cast:16:22:unsigned_char,684ca0bfe6c0aa5d,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > movedecl:i:3,3d4026c6e53d0a9b,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > loop:12:gotobot,007255b3d3a666a4,19,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swap:18:4,80076a5b975e3d94,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > paramtype:1:signed_char,a4c3cf7f32aa4a75,28,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > type:len:unsigned,022e98b7d3681eb1,39,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swapdecl:wins:i,e5b450174ec17d7f,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > cast:16:4:short,72b28028ec290100,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > movedecl:away:1,81925211de53bbcf,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > loop:12:while,6b0273da88300c9c,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swap:18:11,dac8e0a3ac12e523,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > paramtype:2:unsigned_char,b886da6a15011388,21,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > type:away:short,c214d546776c567e,25,0,0,26,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swapdecl:home:away,1b5d8f31034091fe,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > cast:14:13:char,cbe498bc5d7da73b,35,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > movedecl:g:0,2eb3c0775f79e157,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > loop:13:do,89ab14415d748025,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swap:18:3,11e4bdd06228b0cb,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > paramtype:1:unsigned_char,202291b4f7041a9b,29,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > type:i:signed_char,8f4527538871f88e,42,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > cast:15:4:unsigned_short,10e18de5db08dba5,35,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > movedecl:away:2,2f463572134dbfd9,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > loop:13:gototop,4ccf7a3d1c7ef469,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swap:18:5,a83d1a0aa573a70f,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > paramtype:0:char,849a99bc75d121a7,18,0,0,13,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > type:away:signed_char,0e113479df55f863,22,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > cast:14:7:short,7784a509f20f7a66,20,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > movedecl:home:1,81c43d648251a7e4,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > loop:13:while,7d742b00d84d2750,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > swap:14:1,3376bac0facee9f7,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:17 > paramtype:2:short,f7b480570bb0e402,23,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:home:2,1756dfc8c98e64c2,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > loop:12:gotobot,af55f64006d73fa1,19,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:s:signed_char,9f967c40b2009619,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:1:signed_char,c1e5ac02bc42f70b,28,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:21:16,c8e66f3bf3faab23,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:16:24:unsigned_char,0495cad921c5e283,95,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:len:6,14cebc9fa0f5c376,17,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > loop:13:gotobot,94f97c19206c015e,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:s:unsigned_short,b8296184a8ee503f,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:1:unsigned,8e45ae9914f79e0d,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:18:4,bb85822f923b8278,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:16:9:char,15124b854b69c561,90,0,0,26,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:i:6,3e583d84f495496d,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:home:short,b5280fb1c038422d,25,0,0,26,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:0:unsigned,dd59cd6b8ee4462a,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:9,fc5fc144d013b4b3,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:18:18:char,7cfae127d61d9ae7,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:g:1,fbdec344888a39b6,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:i:char,5b21f899a59f3c9d,43,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:2:unsigned_char,f06968c1cfe4ad29,21,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:18:5,2c40458e9a4b1d8d,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:17:short,a9916320d262bd40,22,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:len:0,92d7bc06c88285c0,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:s:char,653e7b62071f1a1b,27,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:2:signed_char,8dad97ecd07cdc88,22,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:15:3,2e416fb07218c9ba,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:14:4:char,f3290932457cf2f0,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:away:2,5f2b71b55246e671,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:i:unsigned_char,02c074cc11a25181,43,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:0:unsigned_char,62c403c8927901ad,18,0,0,13,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:16:24,f963173c57684fa8,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:11:short,a612576b2290203b,27,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:away:0,dced62c77fbb87e3,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:len:unsigned_char,8604789e3ed16655,24,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:0:char,5c17f19ce077e96a,18,0,0,13,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:14:1,cef1917c456ba78a,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char,55dd4f41ea3c3126,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:away:4,ac6abf899d1ea9e9,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:home:unsigned,85ec84bae89d12f3,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:2:unsigned_short,e7ecc85f910bc514,22,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:19:4,aea569543452ef07,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:15:4:int,9771af07f19b13a5,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:g:0,ee96ede9638a0b83,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:home:char,2e67b4de9f8f91ba,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:2:unsigned,62252bbdc81ea5f3,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > swap:21:9,5fe23aa62d54d6f4,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:19:2:unsigned_short,2ff7137f331e5da3,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:s:6,dbfde1f73915b4f6,20,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:len:unsigned,9d04bddc50ffcaf1,39,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > paramtype:0:unsigned_short,f0df118a59edd4ee,18,0,0,13,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:16:26:short,221fbc0f5ac94ba7,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:home:0,2c63accfed80b291,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:s:unsigned_char,d49595c68dc89cbc,27,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:18:1:short,db18ad23c95e63c0,35,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:g:2,f854652f496e6441,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:s:unsigned,737775fbb6cf3eb7,20,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:20:6:unsigned_short,e7551adaa1ef7cc1,32,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:away:1,240e1463eae9025f,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:away:signed_char,d22f3dc3a9451916,22,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:18:4:unsigned_char,d4a2283f9d8f735f,76,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:g:6,1efc1f53d931ca2a,17,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > type:len:unsigned_short,b7851d529d4bffe9,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:16:25:unsigned_char,c0e156fa29678ebb,96,0,0,26,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > movedecl:i:3,dc3ec5fbd6c222ca,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > opassign:12:3:split,bc02ba1945075ba5,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > incdec:13:forpre,4b6eedebc5970517,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > loop:13:gototop,d86d5786741253f7,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swap:18:11,5cca31093eefc211,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > temp:away:inline,be0b832bfab49906,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > cast:18:5:unsigned_short,a82f25e30daef874,28,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:s:4,3a1d7ef9706fad6d,19,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > type:i:char,a175b45f4c3f5d53,43,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swapstmt:9,c38e582556518f00,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > rettype:char,142931b1e5e703f1,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > commute:18:==,f68f8aece6dd1705,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swapdecl:s:len,a447c3222a1d49bf,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > paramtype:0:short,8665c047758eb754,18,0,0,13,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > tempadd:16:rhs,5f75850fac21b1e5,23,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > loop:13:gotobot,6510c683a492d780,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swap:21:17,22d514ffc94fe831,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > cast:15:3:unsigned_char,bde5e70e6b22ac2f,61,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:g:0,91c04ffa6e9b178f,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > type:away:unsigned,e004ecfb04356302,19,0,0,63,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swapstmt:19,ab70c495b7108824,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > rettype:short,4a6a951f2628e937,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swapdecl:i:s,a2c894aa0647b255,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > paramtype:2:signed_char,50271d84221eb067,22,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > loop:13:do,4f3959e81684956f,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swap:21:10,8c6506253d847274,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > cast:16:24:unsigned_short,6f35fb2d93dda103,37,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:2,ab808b2f05ae2925,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > type:i:short,92bffb7e657a192b,52,0,0,0,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > rettype:unsigned_char,db1bb124a3ac88b3,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swapdecl:wins:i,90be628dda54075c,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > paramtype:1:char,ee50f2503f6be136,29,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > loop:12:do,e0f3e7f12f9bd79f,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swap:14:18,09dae07734e1fb01,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > cast:16:24:short,092c8f9d113dbca2,35,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:i:3,f3678763ce33058e,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > type:home:unsigned_short,3946daa2d46037c9,30,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > rettype:unsigned_short,2843db90469d5b82,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swapdecl:home:away,95e758567a018b7b,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > paramtype:1:unsigned,975aaed797a9f83c,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > loop:13:ifdo,b21b37f3d42a420e,19,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swap:16:24,964f34d3b4e291f7,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > cast:16:22:char,ad7a5282040b7f4a,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0,af99a3988bd55a0d,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > type:i:unsigned_short,c856cf70b4d3a8db,54,0,0,0,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swapdecl:len:g,ce5dab460af06c4d,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > paramtype:0:unsigned_char,a1571fb075fae3f5,18,0,0,13,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > loop:13:while,08db99636e38f0c2,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swap:15:3,206e25a776084c5c,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > cast:18:6:unsigned_char,5e103e37c29fd807,28,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:s:5,1deb68516ef1920d,19,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > type:i:signed_char,83711a100f8ddb1c,42,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swapdecl:g:home,61a4156c08fda8a9,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > paramtype:1:signed_char,15c0b74aec630e48,28,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > loop:12:while,71dfc74a7162417f,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swap:16:9,d45399a6249c13ad,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > cast:18:13:int,1bf5ea59bd85f012,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:g:1,5377b7e615db4d1a,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > type:len:char,de333f28d179e1fc,24,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > paramtype:1:short,6ebad40b91b727e2,28,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > loop:12:ifdo,beafc3baee0b5788,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > swap:14:12,28de59f2cfb775da,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > cast:16:26:unsigned_short,7433bf97b285c479,27,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:s:6,2ebc640e83a4460d,20,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > type:len:unsigned,c60e341ceac325fb,39,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > tempadd:16:rhs,a25e4f8c348c7ff2,23,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > temp:away:inline,fd2c3c001d98741a,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > rettype:char,eb268c7b7a179470,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > commute:18:==,428042139cf004b0,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > type:home:short,cc6c604dbfa14c6b,27,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > cast:21:19:unsigned_short,4a9eba85aa823394,23,0,0,63,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swap:18:11,57c1597b5c3b1a19,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > movedecl:g:2,32d05e603e9ae886,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > paramtype:1:unsigned_short,a952f8fef8902e0b,28,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > loop:12:do,0843cd87cecd4b66,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swapstmt:19,9c142326cdba4126,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swapdecl:len:g,69b05e0b3e6afc04,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > opassign:12:3:split,223919e5c775c2bd,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > incdec:13:forpre,c38078bc7274a65f,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > scope:home@0,7c2add8a657f7063,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > rettype:unsigned_char,61e4ccd7537496f6,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > type:home:signed_char,f56b29fc3c5387fe,23,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > cast:14:4:short,77809939ad6343e3,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swap:19:4,7cf95a3733d56dbb,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > movedecl:home:3,c125a0491303d4b4,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > paramtype:1:char,84f29224eda11c7e,29,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > loop:12:gototop,610bbee7fd9565bf,25,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swapstmt:9,42aa1978a0b0d104,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swapdecl:s:len,7991f3fde909e48c,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > scope:home@1,fe31a45f684fdd11,17,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > rettype:unsigned_short,99668ea7f1cd0e80,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > type:i:unsigned_short,7e181b05a2dd0321,66,0,0,0,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > cast:16:11:int,9fd47e11fe1c95eb,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swap:14:1,fb4e85f4c0c79cbd,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > movedecl:i:5,e5cc3ba4387d6a90,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > paramtype:0:short,a832cbda45e805c4,18,0,0,13,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > loop:13:do,75ce0224b846f9f2,16,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swapdecl:g:away,a106ab780b6d479b,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > scope:home@2,9c000e1a966e7e57,17,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > rettype:short,120880f796712e35,,,,,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > type:len:short,860e7ed216b37501,24,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > cast:14:9:int,ad07c6e89fa064e6,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swap:18:4,1910c19cbabd8b4c,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > movedecl:away:1,e13d58d89a4dfb0b,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > paramtype:2:unsigned_char,628721d7aae7b7b4,21,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > loop:13:ifdo,ff1e4f8eb15f829a,19,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swapdecl:wins:i,163abfe0f984d1e6,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > type:away:signed_char,e5cbdc24064bb8bb,22,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > cast:18:4:unsigned_char,bfc6c2585dd6b20d,56,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swap:14:7,422c75b9b6f9711a,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > movedecl:g:0,0338daf98964047a,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > paramtype:2:short,3973ce90c6c1b87f,19,0,0,22,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > loop:12:gotobot,8545562d82eb79e9,19,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swapdecl:home:wins,d7ecfe906930f3a9,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > type:home:int,de63515272e221dd,30,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > cast:14:19:int,5beff6639b5db715,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swap:16:9,7044c15bddaace3e,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > movedecl:len:1,9cda33fb3ad55296,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > paramtype:2:char,f0816409d9227b28,21,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > loop:13:gotobot,635661cf8582d821,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swapdecl:i:s,bdfc122df2b17371,26,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > type:i:unsigned,4448975607d718c4,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > cast:14:7:unsigned_char,5e279f5abcd38b7c,17,0,0,63,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > swap:20:4,8981c8fbe547135e,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > movedecl:g:3,3235fa5c15405dc5,15,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > paramtype:1:unsigned,8b44ee1443e646d0,14,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > loop:13:while,13d50a892925d3d1,18,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > type:home:unsigned,05f303c0ddaadd00,29,0,0,18,ga
+2026-10-24,SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,cast:18:16:unsigned_short > cast:21:7:unsigned_char > movedecl:home:0 > cast:14:20:short,bee6ac340613a3f4,40,0,0,22,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,base,8416b79559fc39b0,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:69:!=,ae55b6a770821dfb,90,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:145:8,35a0db3adc9d348d,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:click:ptrart,9c259591c68b721f,108,0,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,lvinline:c2,297499f49f9b6905,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,temp:c2:inline,d5fcfaba270f8787,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,opassign:241:0:split,87f24ef6ffade9f3,118,16,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:84:8:char,addd18795ea39eb4,282,29,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cmpflip:199,607faad53d07220d,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:64:goto,1f1cc90a5a17c766,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:mx:1:after,347c169cd1f55309,311,29,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,incdec:136:pre,cb97363a53f88779,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:55,603ffa9ab71f97cf,92,0,0,320,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:49:split,4ece886d156c7f08,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:i:16,61bfdb9dc4ef0e79,283,0,0,54,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,tempadd:73:-,7bb5e9e60c2a9c37,294,16,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:237:5:shl,5479fd792fc5fd36,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:ptrart:cursor,e3a52e39ae28bccf,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,zero:260:not,f9a6b9af90975dfb,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:level:unsigned_char,252d74aa19ccf982,395,8,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,shiftstmt:232:7:out,bca078127a815637,250,29,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:116:!=,a7431880ccb9b86d,92,2,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:242:6,8dfa676017baed4c,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:mx:ptrart,ad7b66363aa4e6af,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,temp:k:inline,ba6e8f6fe240a3ed,291,0,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:143:14:unsigned_char,a6e742271f0bbf11,285,16,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cmpflip:178,53557939fe12ec8b,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:117:gototop,3a0980ed19559236,96,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:r:1:last,646333fd00ee3425,374,5,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,incdec:136:op1,86bc99a873fe97e6,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:56,f9da756572e96370,95,3,0,340,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:49:split2,1e792e991c996827,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:ptrart:6,f2bf89dab15efe5d,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,tempadd:137:rhs,ffc3b4901f66d14e,378,12,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:50:7:mul,8870d760d50f8b1b,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:sel:bg,5220304c65325b1c,119,0,0,180,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,zero:119:ne0,3e10f09119390d69,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:oldmy:unsigned_char,0654663cb09203c8,944,72,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,shiftstmt:233:9:out,b23da0efbbbae781,252,28,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:67:&,ac7288660b8282ff,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:50:16,ff82d218a8ba69aa,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:click:w,d65e201ad42e17ec,407,25,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:144:12:unsigned_short,7ef717df073e139a,245,34,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cmpflip:214,58888735926ace5f,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:231:gotobot,5a5cb610c913db4e,98,3,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:my:1:last,b6195d5a7ea2eca2,331,35,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,incdec:82:forpre,62bd47c554d7689b,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:252,36818d0f32e3115c,91,5,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:48:split2,94d4d00164bfd388,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:flag:2,0a98cbd732f76d8b,212,0,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,tempadd:59:-,48ce7928543d41cf,238,1,0,194,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:233:6:shl,5b15a4518dbe366b,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:flag:ptrart,28be2b8c8efc2ecd,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,zero:200:eq0,d674c22a537f9aa6,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:ptrart:signed_char,2dc74f29084b1291,428,83,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:139:!=,f1bb83647d7bc07f,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:143:2,3d65a34398af2ba2,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:cursor:col1,afb6b3dcfead7d6f,453,26,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:180:2:unsigned_short,8678c7014bf38d07,89,3,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cmpflip:240,333693e803313836,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:231:while,cf8cc620216a58c2,101,2,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:oldmx:1:last,3e4640c7d35f796c,101,26,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,incdec:117:forpre,c2b0388d523586f6,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:73,51ca04070a967c86,99,32,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:85:split,a964935ef362c689,305,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:col2:char,cb21e55fab9a8055,469,59,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:169:split3,f456dde1fb7c8bcc,259,23,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,tempadd:218:rhs,c11e4fb3f8596e7c,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:cursor:item,65dfbb92224f1e8d,469,37,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cmpflip:270,c96b852e14a14e9f,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:201:!=,426a7d7e27678b9a,100,2,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:50:5,ea1f1c6321ea5671,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:item:h,fe8dd2f2332ea9dd,101,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:depth:1:last,bc9437bad31af169,336,0,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,zero:268:not,d13040ad1a6eea8b,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:54,f47605a6ab6d3628,378,11,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:107:6:unsigned_short,0ed20bdb0377ade1,272,0,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:col3:2,8389186ec02d6aac,167,0,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:237:10:shl,6e9376416c154ec8,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:82:do,58e51f0cfabd9166,159,13,0,490,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,incdec:231:forpre,840ebcb1b06af1bd,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:ptrart:unsigned,e1dbcbd2d9b3b596,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:226:split,dfdce7edd87ec6f9,225,19,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,tempadd:263:-,9cbb8be35a7e89fc,333,16,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:click:col1,227fa95a5e984903,1909,25,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:200:==,26ab705d30d45054,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:243:0,3141523c701d9c97,90,2,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:col3:col2,84a8f047aaff1fea,101,0,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:oldmy:1:after,182edfdd20c828c0,103,32,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,zero:183:ne0,e88d063a8510ce0d,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:169,b9159e2c905fb152,100,3,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:103:2:char,ba3e007de7a41910,105,1,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:ptr:11,89a45276f4ea0cb5,270,0,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl,aa0bb54ecfb763b1,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:166:gotobot,37fd3a4e824c979b,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,incdec:166:forpre,db189e77c1951822,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:bits:unsigned_char,d8589ee4a67fba0a,109,0,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:125:mergeab,690907219db4bc7d,197,1,0,320,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,tempadd:203:rhs,4af14e42bdc0afbe,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:my:k,57d3c90850c36a4c,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:68:&,1cbcf7b674041fc6,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:232:3,9479b7678db25e4f,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:bits:k,a61a6fe062bdd26c,152,0,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:depth:2:after,989009c804c77385,439,1,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,zero:230:ne0,5534c57f88241302,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:48,41883824c86e62f1,92,0,0,218,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:142:1:char,410bd0e1fd97c6da,279,15,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:oldmx:5,16745b4bda2e361f,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:237:10:add,a092884f594849d8,256,35,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:231:ifdo,aff24e93c66c6f8d,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:r:unsigned_short,1ed81379295178db,138,34,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:226:split2,82372bfd61669744,230,59,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,tempadd:189:+,f2d51e987ecfd8bf,315,3,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:w:ptrart,82620d013ea377f3,143,0,0,180,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!=,4a8895fa078cb569,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:50:3,93f5f32cd2510b33,93,2,0,248,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:col1:ptr,e787c4f48bfd84aa,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:depth:1:after,ad271cc1e9aee45e,411,0,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,zero:83:ne0,d95ba87df228717d,88,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:36,e1d12ed9187dc2bd,90,0,0,47,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:261:8:char,d35f7d337a646d92,232,26,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:col3:21,0261bc07e9534715,109,0,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:237:5:add,036f07d2e1ab2261,254,31,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:117:while,312ca6aeded27adb,96,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:r:short,622717ddb861bb67,138,34,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:206:mergeab,f770c12c377a0bf3,138,40,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,tempadd:182:+,e908aa4ff890edb2,314,0,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:click:col2,ae8296dcbddb218c,1908,25,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:69:!=,d4ead36d9d9b66ee,90,0,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > zero:183:ne0,3e0217674eeb84f8,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:c1:c2,c72f766e5e1f28c4,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:166:ifdo,f7ab2e8a900031ff,221,37,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > temp:c2:inline,1294e4a78e526c5a,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:level:0,eab083b94c053929,226,4,0,54,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > shiftstmt:233:9:out,66205558673bd410,247,24,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > lvinline:c2,dcb45652f8467d80,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:232:8:char,f2982ff1ea0f9ddb,216,6,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > incdec:136:pre,8f0bbc42049d9f23,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:68:&,96077680e5a000b8,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:r:2:last,4776433fbb55d90c,410,24,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > mulshift:237:10:shl,790446ca9b903de0,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:232:3,083c099d7b5cb92b,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:cursor:depth,bb7b3067134df507,1905,21,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > opassign:241:0:split,72518bc57eee25c1,113,12,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:c1:unsigned_short,6a7c94dd4b76f169,298,0,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cmpflip:199,8b70e1e8b4315396,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:221:mergeba,98ccb4f749d869ac,110,27,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > tempadd:59:-,a758501481a82a59,233,5,0,194,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:56,ee84b0ffc75c840c,90,1,0,340,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > zero:119:ne0,913bf2fd91748fdc,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:level:item,4e734454095ed3bc,113,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:117:gototop,1ca2f4874640c1d2,91,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > temp:k:inline,46cf6b293c04c907,286,4,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:ptr:25,4dd10b9d6584ece5,147,4,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > shiftstmt:232:7:out,9cc9e78a1494f239,245,25,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:261:2:unsigned_char,df67399f1224922e,193,21,0,320,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > incdec:231:forpre,84954b5b3ab41f9b,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:200:!=,4c1b8333cbad90fc,87,10,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:r:2:after,39b1f81ef0084106,410,24,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > mulshift:237:5:add,3c21be0d9ffc12d2,249,27,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:143:2,c4f89c7b57f9e22f,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:w:ptrart,abf1b65f4379e92b,138,4,0,180,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:bits:char,afe1daae1b57f557,104,4,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cmpflip:240,443a668de72ba049,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:49:split2,54fccf7d4ff89805,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > tempadd:182:+,c876efce48aad3c2,309,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:55,d0d5d9f0b21ff38f,87,4,0,320,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > zero:268:not,9776c3bfa6fa4483,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:pos:picked,2856fbd2263b90a7,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:166:while,cd3ae2f06d944212,89,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:h:6,b961c908071b2971,154,4,0,320,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:51:2:short,497503bbc663dd84,113,0,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > incdec:117:forpre,503e9b7674564e86,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:80:==,1529946120207ca0,180,105,0,490,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:oldmy:1:last,361eb6c34a004d30,98,28,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > mulshift:237:10:add,41701e53956e371a,251,31,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:50:5,e9d7c72dc7a9154c,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:cursor:ptrart,b21def5b90d24db5,89,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:r:short,cabe6e590cf59de4,137,36,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cmpflip:270,cb45e1e6349c9aae,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:169:split2,ca6901ce4b742801,252,19,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > tempadd:203:rhs,7536dc1fc7be2d58,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:44,757a53e39d865dfe,87,4,0,174,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > zero:83:ne0,2fcad51e8e645f65,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:p:c1,e07ca9c4c4184cbf,154,5,0,180,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:166:do,51383aa9b38d9c4f,149,16,0,490,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:col2:8,235f1b84395089e9,140,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:110:4:char,28fd82214419f827,216,16,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > incdec:136:op1,41d61e39583ffb58,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:97:==,facdfd01905a52e1,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:oldmx:1:after,4d2b50c831a5549e,96,22,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > mulshift:233:6:shl,67480034f3b920bc,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:178:8,41139cae7f6ce212,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:203:9,f84f5a4b60e91469,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:194,f90f9dc78d3bcf46,85,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:69:6:unsigned_char,b758e7c9318a1b76,111,11,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:mx:1:after,b4d3f3dd13f1162a,307,25,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > incdec:166:forpre,ca82fa6387719b11,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > mulshift:237:5:shl,d78619a8d5d48049,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:bits:signed_char,a44efebb235b5965,104,4,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > zero:167:ne0,cc50150fa4fcd64e,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:e:p,5758d88e7e468112,103,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cmpflip:178,df6d003c79a8a2b3,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > tempadd:189:+,519273ce01062115,310,7,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:cursor:k,2a17dec81aea1389,634,25,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:231:while,67747b954feeb0be,96,6,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:69:!=,8802b8fd503a220f,85,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:246:split3,e502498b5e7e8096,252,10,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:bits:28,88d5bba04ca5017a,161,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:144:2,b22f0a4995502850,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:36,3e77aac62e44e635,85,4,0,47,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:51:2:char,f61d66e90ab83b1c,113,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:depth:2:after,e151fb8bf8f447db,435,5,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > incdec:82:forpre,0fccce9c152237e5,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > mulshift:145:10:shl,ad088065460e04f7,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:item:unsigned_char,29ea93d6b9bf413a,453,20,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > zero:260:not,3c6b5b5cd1fe0272,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:my:level,79cdcf39a85d7d3d,112,4,0,349,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cmpflip:214,fa5ad5e1995a0e59,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > tempadd:73:-,b632dcdca299ca06,289,12,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:click:col3,a5ae23fda3b9e3ce,1907,21,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:64:goto,57b37e6566f19b86,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:67:&,4bfe7e0e7403fcb2,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:85:split3,379a52482c256355,300,16,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:r:23,781c2987ef113aee,283,4,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:50:16,6aecb86b85c57f50,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:95,5fd3566d5b8e64b8,89,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:57:2:char,48a29442d4814092,108,1,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:r:1:last,98e0bcf038c261d3,370,9,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > mulshift:50:7:mul,237247922b3685d6,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:k:signed_char,a1d12b77e7f2aa55,322,0,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > zero:79:ne0,feb7aef7713005af,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:bits:k,3d3263c3f495e11b,147,4,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > tempadd:263:-,dc15a77d75219db1,328,12,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:h:ptrart,66dacb75af513734,140,4,0,180,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:231:gototop,60286bd1f2fe2b28,96,6,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:200:==,27be33ccbaef1d28,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:48:split3,d658fc258b9a094c,85,4,0,218,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:my:27,392809e7af85e448,227,4,0,194,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:185:1,67103905e7997133,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:148,b1834f1da094ce49,91,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:57:2:int,511056323085febe,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:depth:1:last,3a1e7aa87e17f615,332,4,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:w:unsigned,2163edb17f1b6930,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > zero:230:ne0,37ed01480d79f6b8,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:bg:flag,6dcd335a8f639a3c,182,4,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > tempadd:137:rhs,c8bb79e3affaf970,373,16,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:w:bits,70c0a8257aed2544,368,42,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:166:gotobot,438aac0d8b21fe2a,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:215:!=,8311287d3fcbf738,99,11,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:211:split3,84f4ad93950d868e,256,54,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:c2:4,cc9d2b604def2e52,288,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:184:0,e42a56c0b8d23315,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:49,c040098fd767fbf3,229,87,0,224,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:129:2:short,218ec82ec04b7948,190,1,0,320,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:my:1:after,05b4e060c8b9d257,319,31,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:click:unsigned_short,fd9748b9c65c9d82,442,28,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:my:k,14e0a03f6d2478c5,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:117:while,f8e1b704d9720965,91,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:185:5,99548f7eae28f32d,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:46,c0ab0a673e672cff,128,4,0,180,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:k:char,46fef97bf6a99907,322,2,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:141:!=,8ec9cdeedc04406b,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:oldmy:mx,e88b3982948e25d5,112,4,0,320,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > tempadd:218:rhs,a5cde0b37f050ffb,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:depth:2:last,452082d9b2d4fe8c,326,5,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > zero:66:ne0,83842c7b6db34aa3,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:item:2,7af408aba4029e86,239,4,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:145:13:short,fda9b8d25f023f3b,299,17,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:125:mergeba,a5169adcce1af535,192,3,0,320,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:mx:ptrart,80b5f5c8eadc6fa0,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:117:gotobot,f2f34040b7ec66a9,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:40:0,317f1fa2cb67968d,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:264,35959af24fd378ed,100,34,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:my:signed_char,3aeb0d46a518e473,323,43,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:201:!=,fcec87f89b33ffa1,95,6,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:flag:ptrart,64950e47d0fe5d52,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:r:1:after,22a9004133c0a4fc,370,9,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > zero:200:eq0,4ef17addd73be86b,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:c1:12,ad7fab1f25ae4ef1,292,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:147:6:unsigned_char,a950ef13caafa133,239,23,0,320,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:125:mergeab,87b3f75bd6581862,192,3,0,320,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:h:k,b9aa90dcf25b9cf9,615,84,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:231:gotobot,bb25f44c04d7bb1e,93,1,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:145:8,bd339c501d71ce17,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:124,d99e1bf9125b23c5,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:w:unsigned_short,54c9e551b812c208,341,11,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:182:+,d65d462712f39f47,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:ptr:click,444d6fabad510236,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:r:3:last,d6d110817309c14c,440,12,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:h:1,ec72a2ac7cc30f64,176,4,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:133:4:short,e5894b1f0251ecbc,224,3,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:49:split3,96aad1b90dcf121f,85,4,0,224,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:click:depth,9f623b4ecf40c191,1909,22,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:82:while,b72fae0646f24af4,87,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:248:0,5517b689b6a76328,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:169,e4f906397d80afe9,95,1,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:i:unsigned_short,c15d0d374b415363,772,1201,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:116:!=,555435fd551424e0,87,2,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:click:depth,b50fde26ef745982,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:oldmx:1:last,3c7cf8d9e8976188,96,22,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:e:18,bfb71cdabecddb4c,312,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:116:2:unsigned_short,fa5f3278f7f2ae12,211,25,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:85:split,560fecf9301dd38d,300,0,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:click:h,b2769a0e24f0bc3c,396,19,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:231:ifdo,eb79c4581a178823,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:242:2,16692e4ec814e801,85,7,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:221,ccf17c4021afec67,97,18,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:col3:signed_char,9453e6449ae8086e,473,46,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:214:==,71b0ef7a8d99361b,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:r:e,8df6ecd800977d20,97,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:oldmy:1:after,99920ec7718a532c,98,28,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:h:18,49966d5a3c8956fc,146,4,0,180,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:242:9:short,417abd51bf72285f,206,8,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:121:mergeba,08a5aaca0b4183d6,189,3,0,320,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:cursor:col3,4428020cfaa86122,457,22,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:82:gotobot,032e9fef5032e2c8,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:242:6,4c9d947686a1c0f1,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:174,faf5f38a2b358d26,89,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:depth:unsigned_char,735cc3960693488d,515,33,0,28,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:69:!=,d11e0430aa93a50b,85,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:189:+,1a7715550d9abfda,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:218:9,cee407f4fa37f6f0,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:193,bd48d08b9c2412c1,87,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:r:3:after,fce22c825f63c9e8,390,11,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:flag:short,3337d874f56ed5af,199,2,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:item:h,3f231dc06d0f46e6,96,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:81:2:unsigned_char,a463f4cd570388de,280,7,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:r:9,1650f5cee5de917b,290,4,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:h:bits,dba78c5c5b612cd7,346,43,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:231:do,24115cd7ff500683,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:226:split,a590f6840853482c,220,15,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:243:==,0b3a7fe7d30e3762,85,2,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:50:3,0be804016e40e4d8,88,2,0,248,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:33,59eb29ea529fa1dd,88,4,0,28,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:mx:1:last,19b6a3210071153f,325,25,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:c1:short,c7968a99b5f6c3f7,298,0,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3,5a5377a151be336a,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:73:6:int,513caaf3222507c4,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:c2:3,5c90025b46cee28d,288,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:cursor:bits,c80bf93d2a2fb0b1,1901,13,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:62:while1,ba8d537c75c54ea2,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:226:split2,f1312429026c9329,225,55,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > commute:139:!=,35078141080626e1,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:233:6,971106424e291cc2,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:175,3263d996f53ea22d,89,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:my:1:last,db1bead06acb62da,327,31,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:mx:unsigned_char,ce5076a1c3479e41,354,32,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:k:r,c5bb24ae26a746fe,283,4,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:242:9:int,1eeb156fef210937,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:col1:9,15f9828c145181bc,128,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:click:col1,265a3bfcde196d21,1907,21,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:117:do,864d0aacec967846,98,2,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:169:split,6aba41c3209b008f,216,17,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:145:9,68b8a201c6e5e8a1,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:35,553f44f3430a515e,85,4,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:depth:1:after,8f0eb09a5e2da87d,407,4,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:oldmy:signed_char,7e649c437a85a794,945,77,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:col3:col2,c4123bc9a26b73f0,96,4,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:103:2:unsigned_char,c6bcd68e97740771,100,3,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:my:22,9c421abdd29ea987,203,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:cursor:level,415cc665189c538c,465,33,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:82:ifdo,94bbc5d93efbfc22,220,29,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:221:mergeab,3ac48cd437e27206,135,65,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:243:0,0b3a7fe7d30e3762,85,2,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:103,d2c5317d15cd7e11,87,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:depth:3:after,0cf4fb6e6f79e768,84,7,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:oldmy:unsigned_short,e600e4ed42f271d1,940,88,0,30,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:col2:col1,1345eca2f8a62bd4,97,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:189:4:short,1daa6600e3ab901b,219,3,0,320,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:col3:22,a1c98b5b12512fbb,104,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:cursor:col2,4ee3ae9ca2e490e0,454,22,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:82:gototop,0c87e963bfd5c1c2,87,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:206:mergeab,81adc56b11101db7,133,36,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:54:6,bd56ad8531cd0f2a,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:217,4116bb4bd6f382a6,430,5,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > split:depth:3:last,df6ed8f70ef96bda,84,7,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:col3:unsigned_char,a42185c8fa2241ee,470,53,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:depth:bits,1a61bdc5af04b377,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:50:8:unsigned_char,70470aeac0f9ebb1,90,8,0,188,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:c2:17,a426d79c46458cc6,214,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:cursor:item,1abc4ad6d98ec837,465,33,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:117:ifdo,18d423e37255278f,100,3,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:85:split2,a22119e68bcb6506,298,16,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:50:2,903f614acefa5473,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > swap:145:8,b8fa79d1a4225551,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > incdec:231:forpre,cb428645c263f25b,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > temp:k:inline,d5c03668f7fbbee0,286,4,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > swapstmt:181,be36ebfa5534e59a,86,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > cast:107:5:unsigned_short,0f999890a3727243,143,23,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > type:bits:short,21b57c2d77893cc0,108,4,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > split:oldmx:1:last,bb0877b2e1aa5f92,96,22,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > cmpflip:214,c58c3ed61b95a79f,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > movedecl:flag:29,d1aca12775aaabe9,226,5,0,40,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > swapdecl:depth:bits,3a3404041afd3f02,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > opassign:241:0:split,f1cef8456ee9c11c,113,12,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > lvinline:c2,bf4b7c78004fc31c,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > tempadd:137:rhs,df8d847192d5a3c9,373,16,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > zero:83:ne0,314b994035eecf57,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > mulshift:233:6:shl,b41c40c0043a9814,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > commute:200:!=,4707fedb5bf6223d,87,10,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > reuse:click:col1,05f73a3b75993b6b,1906,21,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > loop:62:while1,8fb6bec21b0467ca,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > shiftstmt:233:9:out,d4590d3da94f2a57,247,24,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > chain:85:split2,d192d36f017da49e,293,16,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > swap:40:0,a8cebe1a2fcc391e,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > incdec:136:pre,8cd11b6d05d616ae,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > temp:c2:inline,93509233dc2f0186,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > swapstmt:36,e5d43884ea4bf670,85,4,0,47,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > cast:140:4:int,e9a2f2e68639c6e8,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > type:depth:unsigned_char,125992fc960bc207,505,33,0,28,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > split:mx:1:after,0421bb90cdc9f86e,304,25,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > cmpflip:178,c7eb0358cfef8bf7,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > movedecl:my:26,ac9c927416fe38fc,250,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > swapdecl:bits:k,f2dc84e7192c4b09,147,4,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > tempadd:218:rhs,da62e258c65bdf2c,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > zero:66:ne0,112156c4728633a7,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > mulshift:237:5:shl,db4c4603ad692b43,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > commute:69:!=,75151e7df8907757,85,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > reuse:h:ptrart,4e100dc4a2b5c8e3,140,4,0,180,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > loop:117:do,8d2417e7ebb1f6c2,98,2,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > shiftstmt:232:7:out,1511418f69dcf81c,245,25,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > chain:49:split3,1c620596d1302e11,85,4,0,224,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > swap:232:3,126da12a3d7d8f7f,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > incdec:82:forpre,c1cadabb11c4f68f,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > swapstmt:194,d5b04af53af83d52,85,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > cast:58:2:unsigned_short,99c9ffc656e55345,297,0,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > type:cursor:short,236cf6adb7bfa204,403,55,0,0,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > split:r:1:after,702caf4115859c2f,84,9,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > cmpflip:199,ae2bbee25e5bde67,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > movedecl:ptrart:20,30bf4f873a9ad444,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > swapdecl:level:item,bc7bfefdc9caa97a,113,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > tempadd:203:rhs,0832858838549d74,,,,,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > zero:260:not,90cf7dbd82ea6f53,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > mulshift:237:5:add,fcf1c86911269cd4,249,27,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > commute:200:==,9f4319d1476f0233,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > reuse:click:ptrart,2bc6243903c8411f,103,4,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > loop:117:ifdo,7963743ab92cafb8,100,3,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > chain:221:mergeab,9d91647fb3fbbff8,135,65,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > swap:54:6,71d5274806c81f9a,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > incdec:117:forpre,cdc62a8da3b060dc,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > swapstmt:179,7b82866326fe5354,85,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > cast:265:2:unsigned_short,4bad608021e91f3e,111,34,0,33,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > type:depth:unsigned_short,663fcfb05f4c8f35,502,44,0,54,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > split:depth:3:last,9b6159a5ff92539a,84,7,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > cmpflip:270,b998582b49c03fb2,83,4,0,470,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > movedecl:click:26,006bafb0dcfc3585,147,4,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > swapdecl:menus:nitems,a1db40bf925b343f,130,4,0,171,ga
+2026-10-24,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:cursor:col3 > tempadd:182:+,8d1363545fb1a779,309,4,0,33,ga
