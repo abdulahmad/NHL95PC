@@ -2878,6 +2878,10 @@ mov word [ovlstep], ax	; 6659F
 add esp, byte 10h	; 665A5
 jmp near checkwindow_popebp	; 665A8
 %endif ; C
+; C: src/c/046_644A8_engine_display/checkwindow.c (DrawTextOverlay)
+%ifdef CBUILD
+%include "c/046_644A8_engine_display/checkwindow.DrawTextOverlay.inc"
+%else
 DrawTextOverlay:
 push dword 60h	; 665AD
 call __CHK	; 665B2
@@ -3504,6 +3508,7 @@ mov dword [spritedrawcount], edi	; 66DC7
 call sub_6AB7C	; 66DCD
 add esp, byte 30h	; 66DD2
 jmp near checkwindow_popebp	; 66DD5
+%endif ; C
 ; C: src/c/046_644A8_engine_display/CloseTextOverlay.c
 %ifdef CBUILD
 %include "c/046_644A8_engine_display/CloseTextOverlay.inc"
