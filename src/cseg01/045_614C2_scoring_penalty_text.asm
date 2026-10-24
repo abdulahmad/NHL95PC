@@ -2945,6 +2945,10 @@ pop esi	; 637B2
 pop edx	; 637B3
 ret	; 637B4
 %endif ; C
+; C: src/c/045_614C2_scoring_penalty_text/checkfornewpen.c
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/checkfornewpen.inc"
+%else
 checkfornewpen:
 push dword 10h	; 637B5
 call __CHK	; 637BA
@@ -3048,6 +3052,7 @@ pop edx	; 63926
 pop ecx	; 63927
 pop ebx	; 63928
 ret	; 63929
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/releasepl.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/releasepl.inc"

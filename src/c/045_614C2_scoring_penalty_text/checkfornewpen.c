@@ -7,22 +7,22 @@
  (SetPA 1Ch) - else the ref signals (refsignal 28h, banner timer 50h with a banner up); then stop play for it
  (Stop4Pen). A penalty not yet counted (player bit 7) gets marked, the countdown Pencntdwn raised to its delay
  (pendelaytab x 32; 140h with word_CBEC6; a penalty shot (5) when penshotstart takes byte_C9111 byte_C9146)
- and word_CC0B0 raised to its box time (byte_C9142 x 32). */
+ and word_CC0B0 raised to its box time (byte_C9142 x 32). pen is read in the body, not in the loop test, so pen
+ (one loop reference fewer) falls below i, which keeps dx; the marked flag and the puck owner are read in place. */
 void checkfornewpen(void)
 {
     short i;
     signed char pen;
     signed char pl;
-    signed char c;
     short t;
 
     if (sflags & 0x80 || word_CBC44) return;
-    for (i = word_CBC44; (pen = PenBuf[i * 2]) != 0; i++) {
+    for (i = word_CBC44; PenBuf[i * 2] != 0; i++) {
+        pen = PenBuf[i * 2];
         pl = PenBuf_pl[i * 2];
         if (!(gmode & 4)) {
             if (penmintab[pen]) {
-                c = *(signed char *)puckc;
-                if (c < 0 || (c < 6) ^ (pl < 6)) {
+                if (*puckc < 0 || (*puckc < 6) ^ (pl < 6)) {
                     if (!(gmode & 8)) {
                         gmode |= 8;
                         SetPA(0x1C);
