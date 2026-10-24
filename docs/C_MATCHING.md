@@ -129,6 +129,17 @@ functions into `calcpuckcross_ret5/6` and `changeplayer_ret5`: the original was 
 * `cdiff.py File.c --func F` compares one function of the file; `c_progress.py` lists one row per marked block and
   one `nonmatching` row per unmarked function (notes key `c_file` or `c_file:Func` in the csv).
 
+### Split functions, piece by piece (`tools/splice.py`)
+
+A split function (entry after the function that falls into it, body pieces `F_*` where it was defined) is one asm
+block per piece, so each piece is marked on its own (`cc.py mark File.c --func F_piece`) and the others stay asm.
+`cc.anchor` places a piece by a public inside it, else by the branches that reach it (`cc.flow_anchor`: each public
+of the object is aligned with its asm by mnemonics and every aligned branch into the piece votes), else by the
+nearest public. The flow rule keeps a piece measurable when a draft before it has the wrong size (chkprogress_go
+after the InProgress draft, 2 bytes long). `python3 tools/splice.py File.c F` lists F's pieces with their place in
+the object, their differing instructions and which are C; `--diff` prints the differing rows, `--mark` marks the
+pieces that match. The function counts as matched once every piece is marked.
+
 ## Hand-written asm (status `asm`)
 
 `python3 tools/find_handasm.py [--list]` scans the game segments (001-066, libraries excluded) and writes

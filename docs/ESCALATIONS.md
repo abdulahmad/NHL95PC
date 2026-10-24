@@ -61,6 +61,13 @@ i < n; i++)` scores 30 and the entry stops matching. Not kept. `chkprogress` ent
 reads another function (nominal 206 bytes, score 62). No body edit to try until a splice places
 that piece.
 
+Splice (2026-10-24, lane T): `tools/splice.py FILE.c FUNC` places each piece by the branches that reach it
+(`cc.flow_anchor`), scores it, and `--mark` marks the pieces that match while the rest stays asm, in the EXE
+layout. `chkprogress_go` sits at +58E in the object (the InProgress draft before it is 2 bytes long): 5
+differing, same size (the EXE does the `i++` of the PenBuf scan before the compare). `LoadRosterList_fa` (4)
+and `LoadRosterList_team` (17) are unchanged: the team piece keeps its own epilogue in C, while the EXE jumps to
+`RunEditRosters_ret5` (segment 051), so both pieces need RunEditRosters in the same C file before they can match.
+
 ## EditTextField and LeadersScreen, goto
 
 `EditTextField` (`src/c/023_2FDD1_misc_dialogs/EditTextField.c`, lane 1) is 36 differing, cause
