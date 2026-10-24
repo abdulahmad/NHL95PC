@@ -129,11 +129,32 @@ The slot order is not the count order. The size sort is a Shell sort over the wh
 behind mf (65th, count 3). But it is a fixed function of the use-count order, so changing one count moves the
 slots in a way that can be computed.
 
-**Why declaration order can only swap tied pairs.** Declaration order changes the order in which the names come
-into the use-count sort, not their counts. Names with a conflict come out ordered by count whatever their input
-order, so only names with equal counts can trade places: in TeamRosterScreen m / n (63), idx / gs (60) and
-pfh / kfh (42) are the only pairs that five declaration orders flipped. To move a slot, change the count: how
-often, and inside how many loops, the variable is referenced.
+**Names with a conflict: declaration order only reorders ties.** Declaration order changes the order in which
+the names come into the use-count sort, not their counts. Names with a conflict come out ordered by count
+whatever their input order, so only names with equal counts can trade places: in TeamRosterScreen m / n (63),
+idx / gs (60) and pfh / kfh (42) are the only pairs that five declaration orders flipped. The ties include the
+temporaries, though, and the size sort is unstable over the whole list, so a reordered tie can still move
+other slots: a declaration order found by declsearch.py (below) gives TeamRosterScreen's n, idx and gs their
+EXE slots and matches the function. When no order does, change the count: how often, and inside how many
+loops, the variable is referenced.
+
+**Names without a conflict follow declaration order.** Arrays, structures and address-taken scalars have no
+conflict, so the use-count sort orders them by id. The ids of a block's locals fall in declaration order (the
+first declared gets the highest), and their entries sit in the sort's input in that order too. Their slots
+therefore depend on the declaration order alone, through the size sort. LeagueTeamSelect's ten address-taken
+scalars and every slot of TradeScreenLoop came from a declaration order (lane 1b batch 7). A variable's other
+entries (the 2-byte part of an int passed as a short, an array's element parts) keep their place in the input
+and share its slot.
+
+`python3 tools/wccre/declsearch.py src/c/<seg>/<File>.c FUNC [--conflicts] [--write]` searches those orders.
+It reads each local's EXE slot from a -d1 compile aligned with the EXE, scores orders without compiling (the
+Python sorts plus a copy of the hand-out), and confirms the best with an emulator compile and a fresh cc.py
+compile. By default it moves only the names in memory without a conflict. --conflicts also moves the spilled
+names with one: only their ties move, a move can change registers when a register allocation runs between two
+use-count sorts, and the tool confirms one order per such tie order. TeamRosterScreen matched with --conflicts
+(rec, mf, gstat, prec, y, sstat, path, fh, kfh, pfh, n, kf, state, gs, idx, m). In ExecuteTrade no order of
+traded, s and kb works: kb (count 60) takes the top slot ahead of traded (12), and the EXE has them the other
+way round.
 
 `python3 tools/wccre/slotdump.py src/c/<seg>/<File>.c [--func NAME] [--count NAME=N ...]` prints, per function,
 the names with a slot in hand-out order with their size, count, position after each sort, location and slot,
