@@ -285,11 +285,10 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 | C file | Function | Score | Cause |
 |---|---|---:|---|
 | src/c/040_53294_engine_physics_ai/PassLaneChk.c | checkpuckcoll | 0 | tail 0/0 |
-|  | PassLaneChk | 17 | register 7/9 |
-|  | NetCollide | 27 | register 7/12 |
+|  | PassLaneChk | 12 | register 9/11 |
+|  | NetCollide | 22 | register 7/7 |
 | src/c/052_6D2F8_create_player/CreateFreeAgent.c | CreateFreeAgent | 5 | size 9/13 |
 | src/c/064_86696_season_playoffs/POCreateSchedule.c | POInitSchedule | 6 | register 3/3 |
-| src/c/066_8BEDB_asm_helpers/PlayMVI.c | PlayMVI | 6 | slot 6/6 |
 | src/c/050_6B093_joystick_calibration/JoystickCalScreen.c | JoystickCalScreen | 11 | register 4/4 |
 | src/c/046_644A8_engine_display/updatereplay.c | updatereplay | 22 | register 12/21 |
 | src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c | LockerRoomLoop | 23 | register 2/2 |
