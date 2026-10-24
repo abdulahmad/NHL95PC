@@ -153,6 +153,10 @@ lanes found that one extra int anywhere in CreateFreeAgent's size block gives th
 original had a different number of temporaries somewhere, not where. The asymmetry (one of six parallel stores,
 one of two twin loops, a pointer copied once into another) argues against these being the original lines.
 
+**Ruling (Abdul, 2026-10-24):** as recommended below. The copies are out of the committed drafts (CreateFreeAgent 5,
+POInitSchedule 6, LockerRoomLoop 23, PassLaneChk 17; wallcoll was committed clean), and AGENTS.md lists
+tie-breaker copies with the ESCALATE shapes. The tagged-match alternative is not adopted.
+
 **Recommended ruling:**
 - Do not mark CreateFreeAgent, POInitSchedule or PassLaneChk with a pass-through copy: a local that only holds a
   value for one store, or only seeds another variable, is a tie-breaker like a no-op cast. Keep the clean draft

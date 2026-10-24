@@ -1,10 +1,10 @@
 /* Schedule: playoff series length. */
-/* DRAFT: 116 vs 116. The loop, the jump table, and every case body match. The shared
- `mov eax, esi / pop esi / pop edx / pop ecx / ret` is emitted after `mov esi, 5` (ja and the other
- returns jump forward to +57). The EXE falls out of `mov esi, 1` into that epilogue at +39 and the
- later cases jump back. Do not retry: Watcom sinks this multi-predecessor return onto the first
- conditional fall-through (the best-of-5 arm), and a return glued to case 0 is either folded to
- `mov eax, 1` or jumped to an epilogue at the end. */
+/* DRAFT: 116 vs 116, 10 differing, structured (no labels). A plain switch with each length a ternary and
+ the best-of-7 case before the four-or-five case: Watcom cross-jumps the shared `mov esi, 3 / 5 / 7` tails,
+ so every case body and every jump table target is the EXE's. Left: the shared `mov eax, esi / pop esi /
+ pop edx / pop ecx / ret` is at the end (the last case falls into it); the EXE falls out of `mov esi, 1`
+ into it at +39 and the later cases jump back. A return after case 1 (`default: return len;`) still leaves
+ the epilogue at the end; `return len` in every case folds the constants (`mov eax, 3`). See UNSURE. */
 #include "nhl95.h"
 
 /* SeriesLength: how many games a series record s (7 games, 6 bytes each) is played to. Count games until a
@@ -24,40 +24,24 @@ int SeriesLength(unsigned char *s)
         if (p[n * 6] == 0xFF) break;
         n++;
     } while (n < 7);
-    switch (n - 1) {
-    default:
-        goto done;
-    case 0:
-        goto one;
+    switch (n) {
     case 1:
-        goto three;
+        len = 1;
+        break;
     case 2:
-        goto n3;
+        len = 3;
+        break;
     case 3:
-        goto n4;
-    case 4:
-        goto n4;
-    case 5:
-        goto n7;
+        len = SeriesWinner(p, 5) < 0 ? 3 : 5;
+        break;
     case 6:
-        goto n7;
+    case 7:
+        len = 7;
+        break;
+    case 4:
+    case 5:
+        len = SeriesWinner(p, 7) < 0 ? 5 : 7;
+        break;
     }
-one:
-    len = 1;
-done:
     return len;
-three:
-    len = 3;
-    goto done;
-n3:
-    if (SeriesWinner(p, 5) < 0) goto three;
-    goto five;
-n4:
-    if (SeriesWinner(p, 7) < 0) goto five;
-n7:
-    len = 7;
-    goto done;
-five:
-    len = 5;
-    goto done;
 }

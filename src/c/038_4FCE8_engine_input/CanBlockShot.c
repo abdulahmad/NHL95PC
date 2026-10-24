@@ -215,12 +215,16 @@ one:
    passspeed shotspd / 2 + 1Eh, frame 4, team one-timers +1 at +18h, crowd +64h, a2touchpuck, doshot,
    PassCompleted, assexit). Not winding up yet, with the wait between -10 and 16h and p in the attacking zone
    (y 46h toward the net, or joystick controlled): count a try at team +16h and start the wind-up toward the net
-   from where the puck will be (Findhittype: E2Bh, else DD3h). p: the receiver. No result. */
+   from where the puck will be (Findhittype: E2Bh, else DD3h). p: the receiver. No result.
+   DRAFT (10.0 GA, 32 differing, same size): c is an int like d, both narrowed with (short) where they are
+   assigned. Left: the mirrored blade x is negated in esi (EXE ecx), the blade y distance is 16-bit memory ops
+   (EXE loads the three words and adds / subtracts in 32 bits, then cwde) and the aim y narrows t before the
+   ternary (EXE after it); see docs/UNSURE.md. */
 void PassRecOneTimer(Player *p)
 {
     int t;
     int d;
-    short c;
+    int c;
 
     if (*puckc >= 0 || (t = ((signed char *)&p->temp1)[1]) < -0x19) {
         if (*puckc == p->SCnum) PassCompleted(p);
@@ -278,7 +282,7 @@ void PassRecOneTimer(Player *p)
     t = (short)((((signed char *)&p->temp1)[1] + 0xA) << 4);
     d = -(short)((*puckvx * t >> 16) + *puckx);
     t = (short)(t * *puckvy >> 16);
-    c = ((p->pflags & 0x80) ? 0xE8 : -0xE8) - (t + *pucky);
+    c = (short)(((p->pflags & 0x80) ? 0xE8 : -0xE8) - (t + *pucky));
     if (Findhittype(p, vtoa((short)d, c))) SetSPA(p, 0xE2B);
     else SetSPA(p, 0xDD3);
 }

@@ -80,9 +80,9 @@ int POCreateSchedule(int *teams, char *dir)
    past day 30), pair each conference's teams (teamconf 3, then 0Ch) 1-8, 2-7, 3-6 and 4-5 into its four series
    (POSetSeriesTeams), and clear the 31h later games (+1AE8h: no date, teams FFh). po: the schedule; teams: the
    16 seeds. No result.
-   DRAFT (GA, ESCALATE): compiles to the EXE bytes, not marked. sched and day are two extra copies (permute.py
-   tempadd) whose only job is to break the savings-30 tie of the seed copy loop's index and value temporaries
-   (without them: index copy in eax, value in edx; EXE edx and eax). Dead copies, not evidence; see
+   DRAFT (GA): 6 differing, same size. Only the seed copy loop differs: index copy in eax and value in edx (EXE
+   edx and eax), a savings-30 tie. Tie-breaker (ruled 2026-10-24, docs/ESCALATIONS.md): two extra copies (`sched = po + 0x1998; g = sched;`
+   and `day` for the second loop's date) give the EXE bytes; not kept, they only reorder the tie. See
    docs/UNSURE.md. */
 void POInitSchedule(unsigned char *po, int *teams)
 {
@@ -90,12 +90,9 @@ void POInitSchedule(unsigned char *po, int *teams)
     int n;
     unsigned char *g;
     int t[8];
-    int day;
-    unsigned char *sched;
 
     for (i = 0; i < 16; i++) ((int *)po)[i] = teams[i];
-    sched = po + 0x1998;
-    g = sched;
+    g = po + 0x1998;
     for (i = 0; i < 0x1C; i++) {
         g[i * 6] = 4;
         g[i * 6 + 1] = i % 7 * 2 + 0x11;
@@ -107,8 +104,7 @@ void POInitSchedule(unsigned char *po, int *teams)
     g = po + 0x1A40;
     for (i = 0; i < 0x1C; i++) {
         g[i * 6] = 4;
-        day = i % 7 * 2 + 0x10;
-        g[i * 6 + 1] = day;
+        g[i * 6 + 1] = i % 7 * 2 + 0x10;
         if (g[i * 6 + 1] > 0x1E) {
             g[i * 6]++;
             g[i * 6 + 1] -= 0x1E;
