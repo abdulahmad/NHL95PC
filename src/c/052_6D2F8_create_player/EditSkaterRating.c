@@ -4,11 +4,14 @@
 typedef struct { char c[0x14]; } Msg20;
 
 /* DRAFT: both functions are the original size (777, 754) with every statement in place; EditSkaterRating owns
-   the EditSkaterRating_tail return that EditGoalieRating jumps into. Every pushed displayed rating and the two
-   unit updates go through the dead v (`v = (*p + 5) * 5`): the EXE computes each of them in v's register (ebx,
-   the sum left in the load register), where a plain argument put the product in eax. Left: the min pointer is
-   loaded into eax (EXE edx, after clearing eax), which lets the &byte_D0F94 / &byte_D0FE0 constant stay in edx
-   for p, and the s.old and compare products take other registers (see docs/UNSURE.md). */
+   the EditSkaterRating_tail return that EditGoalieRating jumps into. Every displayed rating is a plain
+   (*p + 5) * 5 (72 / 66 differing under 10.0 GA). Left: the pushed products (range min and max, the answer, both
+   InputDialog limits) and the two unit updates. The product temporaries (savings 60) pick before the sums (30) and
+   take eax, so the sum goes to a new register (`lea ebx, [eax+5]`); the EXE leaves the sum in the load register
+   and computes every product in v's register (ebx). Pushing each product through the dead v
+   (`v = (*p + 5) * 5`, as `*field -= (v = ...) - s.old`) gives 30 / 28, but that is dead-variable reuse
+   (ESCALATE, not kept). Also left: the min pointer is loaded into eax (EXE edx, after clearing eax), which lets
+   the &byte_D0F94 / &byte_D0FE0 constant stay in edx for p. See docs/UNSURE.md. */
 /* EditSkaterRating (6FC60, PC only): a click at *x / *y on the create-player screen's skater ratings (15 rows of
    0Dh pixels from y 12Ah, rows 8-14 in a second column 136h to the right; the value cell spans C8h-E4h). Row 0
    (shoots) asks left or right; another row asks for a new value (shown as (r + 5) * 5) between its minimum
@@ -48,20 +51,20 @@ int EditSkaterRating(int *x, int *y, int *field)
             *(Msg20 *)s.msg = *(Msg20 *)str_EnterANewRating;
             msglines[0] = (int)s.msg;
             maxp = unk_D0FBC + i;
-            sprintf(s.range, (char *)str_RatingRange, v = (*(s.minp = unk_D0FA8 + i) + 5) * 5, off_D0880[i], v = (*maxp + 5) * 5);
+            sprintf(s.range, (char *)str_RatingRange, (*(s.minp = unk_D0FA8 + i) + 5) * 5, off_D0880[i], (*maxp + 5) * 5);
             msglines[1] = (int)s.range;
             p = &byte_D0F94 + i;
             if (i == 0) {
                 AskLeftRight(p, (char *)str_ShootsLeftOrRight);
             } else {
-                sprintf(s.ans, (char *)str_fmtpd, v = (*p + 5) * 5);
+                sprintf(s.ans, (char *)str_fmtpd, (*p + 5) * 5);
                 s.old = (*p + 5) * 5;
-                v = (unsigned char)InputDialog(msglines, 2, s.ans, 2, 0x1C, -1, v = (*s.minp + 5) * 5, v = (*maxp + 5) * 5, 0);
+                v = (unsigned char)InputDialog(msglines, 2, s.ans, 2, 0x1C, -1, (*s.minp + 5) * 5, (*maxp + 5) * 5, 0);
                 if (v != 0xFF && v >= (*s.minp + 5) * 5 && v <= (*maxp + 5) * 5) {
                     nv = v / 5 - 5;
                     if (v < s.old) {
                         *p = nv;
-                        if (i != 0 && i != 3 && i != 0xD) *field += s.old - (v = (*p + 5) * 5);
+                        if (i != 0 && i != 3 && i != 0xD) *field += s.old - (*p + 5) * 5;
                     } else {
                         int d;
 
@@ -69,7 +72,7 @@ int EditSkaterRating(int *x, int *y, int *field)
                         if (i != 0 && i != 3 && i != 0xD) {
                             if (d <= *field) {
                                 *p = nv;
-                                *field -= (v = (*p + 5) * 5) - s.old;
+                                *field -= (*p + 5) * 5 - s.old;
                             } else {
                                 msglines[0] = (int)str_NotEnoughRatingUnits;
                                 MessageBox(-1, -1, (char *)msglines, 1, 0, 0, (int)x, (int)y, -1);
@@ -123,26 +126,26 @@ int EditGoalieRating(int *x, int *y, int *field)
             *(Msg20 *)s.msg = *(Msg20 *)str_EnterANewRating;
             msglines[0] = (int)s.msg;
             maxp = unk_D1000 + i;
-            sprintf(s.range, (char *)str_RatingRange, v = (*(s.minp = unk_D0FF0 + i) + 5) * 5, off_D09DB[i], v = (*maxp + 5) * 5);
+            sprintf(s.range, (char *)str_RatingRange, (*(s.minp = unk_D0FF0 + i) + 5) * 5, off_D09DB[i], (*maxp + 5) * 5);
             msglines[1] = (int)s.range;
             p = &byte_D0FE0 + i;
             if (i == 0) {
                 AskLeftRight(p, (char *)str_GloveHandLeftOr);
             } else {
-                sprintf(s.ans, (char *)str_fmtpd, v = (*p + 5) * 5);
+                sprintf(s.ans, (char *)str_fmtpd, (*p + 5) * 5);
                 s.old = (*p + 5) * 5;
-                v = (unsigned char)InputDialog(msglines, 2, s.ans, 2, 0x1C, -1, v = (*s.minp + 5) * 5, v = (*maxp + 5) * 5, 0);
+                v = (unsigned char)InputDialog(msglines, 2, s.ans, 2, 0x1C, -1, (*s.minp + 5) * 5, (*maxp + 5) * 5, 0);
                 if (v != 0xFF && v >= (*s.minp + 5) * 5 && v <= (*maxp + 5) * 5) {
                     nv = v / 5 - 5;
                     if (v < s.old) {
                         *p = nv;
-                        if (i != 0 && i != 8) *field += s.old - (v = (*p + 5) * 5);
+                        if (i != 0 && i != 8) *field += s.old - (*p + 5) * 5;
                     } else {
                         d = v - s.old;
                         if (i != 0 && i != 8) {
                             if (d <= *field) {
                                 *p = nv;
-                                *field -= (v = (*p + 5) * 5) - s.old;
+                                *field -= (*p + 5) * 5 - s.old;
                             } else {
                                 msglines[0] = (int)str_NotEnoughRatingUnits;
                                 MessageBox(-1, -1, (char *)msglines, 1, 0, 0, (int)x, (int)y, -1);
