@@ -306,3 +306,4 @@ SportsDesk,abdulahmad,2026-10-24,LA,303,310,"no source change. GA -od scores 103
 SimulateGame,abdulahmad,2026-10-24,LA,627,702,"no source change. GA is 627, size +3."
 CalendarScreen,abdulahmad,2026-10-24,LA,319,539,"no source change. GA is 319, size +24."
 GameSummaryScreen,abdulahmad,2026-10-24,LA,287,372,"no source change. GA is 287, size +38."
+chkprogress,abdulahmad,2026-10-24,GA,5,0,"chkprogress_go placed by tools/splice.py (flow anchor, was 62 by the public anchor): the PenBuf scan as `PenBuf[i++ * 2] == 0` (EXE increments before the compare). Marked chkprogress_go; entry already marked with PenaltyManager."
