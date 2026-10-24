@@ -23,8 +23,10 @@ int sub_8F98F(char *path);  /* music library: load a song (register arguments) *
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song (register arguments) */
 int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last call */
 
-/* DRAFT under 10.0 GA: 632 differing instructions (3,523 vs 4,567 bytes). The frame-pointer choice, stack accesses
-   and shared menu-branch layout still differ. The retail speech timer compares the routine address. */
+/* DRAFT under 10.0 GA: 531 differing instructions (4,298 vs 4,567 bytes). The playoff result's arguments are
+   computed before the call, as the EXE does (ternaries in a stack-argument call gave the whole function a biased
+   ebp frame). Left: the frame layout (the EXE has s at the top of the frame, 0x404 bytes) and the menu-branch
+   code. The retail speech timer compares the routine address. */
 /* SportsDesk (1935D, PC only): the sports desk of a game (mode 0: paused in the game, 1: intermission, 2: after
    the game): the menu labels and title of the mode, the replay item only when a replay is recorded; fade in the
    EADESK<mode> art and palette, the pause music (when music is on and none plays), and the desk menu bar (six
@@ -72,13 +74,18 @@ void SportsDesk(int mode)
     int i;
     unsigned char *e;
     MenuItem *m;
+    int winner;
+    int ot;
+    int conf;
+    int rnd;
 
     s.depth = 0;
     s.autoret = 0;
     s.timeout = 0x5DC;
     SetModeMenuLabels(gamemode);
     SetScreenTitle(mode + 3);
-    off_CEF23 = ReplayIsEmpty() ? 0 : (int)DeskGoToReplay;
+    if (ReplayIsEmpty()) off_CEF23 = 0;
+    else off_CEF23 = (int)DeskGoToReplay;
     sub_B2DCA(&s.btn, &s.savey, &s.savex);
     escrequest = 0;
     joysampling = 0;
@@ -133,9 +140,15 @@ void SportsDesk(int mode)
     if (mode == 1 && ctl1team[0] < 0 && ctl2team < 0) s.autoret = 1;
     TicksSinceLastCall();
     if (mode == 2 && schedgameidx > 0x443) {
-        PaPlayoffResult(awtmstruct.tmscore < hmtmstruct.tmscore ? HomeTeam : VisTeam, (schedgameidx - 0x444) % 7 + 1,
-                        teamconf[HomeTeam] == teamconf[VisTeam] ? (teamconf[HomeTeam] | teamconf[VisTeam]) % 2 + 1 : 3,
-                        schedgameidx > 0x497 ? 3 : schedgameidx > 0x47B ? 2 : 1, curperiod > 3 ? -1 : 0, byte_CCCA0);
+        if (hmtmstruct.tmscore > awtmstruct.tmscore) winner = HomeTeam;
+        else winner = VisTeam;
+        ot = curperiod > 3 ? -1 : 0;
+        if (teamconf[HomeTeam] != teamconf[VisTeam]) conf = 3;
+        else conf = (teamconf[HomeTeam] | teamconf[VisTeam]) % 2 + 1;
+        rnd = 1;
+        if (schedgameidx > 0x47B) rnd = 2;
+        if (schedgameidx > 0x497) rnd = 3;
+        PaPlayoffResult(winner, (schedgameidx - 0x444) % 7 + 1, conf, rnd, ot, byte_CCCA0);
         byte_CCCA0 = 0;
     }
     s.speech = 0xB4;
