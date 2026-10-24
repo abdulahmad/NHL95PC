@@ -3472,3 +3472,20 @@ SportsDesk,,"C cross-jumps the whole tail: the 55 missing bytes). Savings (regdu
 SportsDesk,,"x only 214, y only 212)",,ga
 SimPlayoffRound2,,"regdump of the inline compare against SimPlayoffRound3 (matched): in Round3 an EDX temporary (t76) sorts ahead of the len / 2 + 1 temporary t23, in Round2 the slot sum t49 and ECX temporaries come first, so the inline shape needs another 300-savings tie order. permute.py seed 2506 (321 new candidates, best = the draft)","321 new candidates, best = the draft",ga
 SimPlayoffRound1,,"Round2's declaration order (wins, home, away, s, i, len, g: 11), home / away before s (11), wins last (19), s / i / len / g orders with the bytes last (9, 9), i / len / s (16). permute.py seed 2506 (321 new candidates, best = the draft)","321 new candidates, best = the draft",ga
+EditSkaterRating,,on EditGoalieRating (same shape),same shape,ga
+PlayoffTreeMenu,,"the close-all loop run on depth itself (`for (; depth >= 0; depth--)` with the pos stores in either order, chained, or as a while loop: 343-364",,ga
+PlayoffTreeMenu,,the frame changes,,ga
+PlayoffTreeMenu,,"declsearch --conflicts after it 317, +60 bytes), `if (depth) { i = depth; for (; ...` (126",,ga
+PlayoffTreeMenu,,the same code),,ga
+PlayoffTreeMenu,,the same as a while loop (128),128,ga
+checkpuckcoll,,(every role split is listed above). Lane 2 2_b8 (10.0 GA): 73 -> 0,,ga
+checkpuckcoll,,"the EXE bytes (commit 9a4ca1e), not marked. The stick-spot half size (`w = ABS(regd0.w)`) and the body box size (`w = 8` / `0x10`) are their own local w, declared after h: s keeps only the reach (savings 12), v (13) now outranks it and takes esi as in the EXE (w declared at the other three places: 84",,ga
+checkpuckcoll,,"w for the half size only 73, for the box size only 99). The goto chains are nested ifs (the skater stick's two tests as `if (regd0.ul <= regd1.ul) { if (frame < 430h || frame > 44Fh || regd0.ul <= 24h) { puckstick; return; } }`",,ga
+checkpuckcoll,,"the one-condition form scores 20) and `goto hit` is a second `puckbody(pk, p); return;` (Watcom cross-jumps it): no goto left. ESCALATE (dead-variable reuse): the dead height h is reused for the body frame (`h = p->frame`)",,ga
+checkpuckcoll,,"a local of its own for the frame or for the height scores 99 at every declaration place. v also carries the speed, |dy| and the box limit",,ga
+DbLineEditorLoop,,"the dead m with the offset assigned inside it (`m = (MenuItem *)((char *)menus[level] + (itemoffset = item * sizeof(MenuItem)));`, 64",,ga
+DbLineEditorLoop,,the same code),,ga
+DbLineEditorLoop,,"the dead m dropped (64), that m used for the on1 test (370)",370,ga
+EditRosters,,the other-item / last-item DrawMenuItemNorm with item / sel[level] in all three combinations (108,,ga
+EditRosters,,the same code: Watcom forwards the store),,ga
+EditRosters,,"permute.py 705 candidates (best 106 = the move-mode `oldmx = mx` before sub_91370 plus the close-all loop as a do loop: the EXE jumps to that loop's test, rejected)","best 106 = the move-mode `oldmx = mx` before sub_91370 plus the close-all loop as a do loop: the EXE jumps to that loop's test, rejected",ga
