@@ -517,8 +517,10 @@ void assreffollow(Player *p)
 {
     Player *c;
     int d;
+    short target;
 
-    c = &SortCords[*puckc];
+    d = *puckc;
+    c = &SortCords[d];
     if (p->pflags & 0x20) return;
     if (!gameclock && !clockticks[0]) {
         doplayeracc(p, 8);
@@ -530,13 +532,16 @@ void assreffollow(Player *p)
     }
     if ((*puckx < 0 ? -*puckx : *puckx) < 0x32 && (*pucky < 0 ? -*pucky : *pucky) > 0xAC
         && (*pucky < 0 ? -*pucky : *pucky) < 0xE8) {
-        p->temp3 = HIWORD(p->Xpos) > 0 ? 0x46 : -0x46;
+        target = HIWORD(p->Xpos) > 0 ? 0x46 : -0x46;
+        p->temp3 = target;
         p->temp4 = *pucky > 0 ? 0xED : -0xED;
-    } else if ((*pucky < 0 ? -*pucky : *pucky) > 0x62 && (*puckc < 0 || ((c->pflags & 0x80) != 0) != (*pucky < 0))) {
-        p->temp3 = HIWORD(p->Xpos) > 0 ? 0x78 : -0x78;
+    } else if ((*pucky < 0 ? -*pucky : *pucky) > 0x62 && (*puckc < 0 || ((c->pflags & 0x80) != 0) ^ (*pucky < 0))) {
+        target = HIWORD(p->Xpos) > 0 ? 0x78 : -0x78;
+        p->temp3 = target;
         p->temp4 = *pucky > 0 ? 0xE8 : -0xE8;
     } else {
-        p->temp3 = HIWORD(p->Xpos) > 0 ? 0x90 : -0x90;
+        target = HIWORD(p->Xpos) > 0 ? 0x90 : -0x90;
+        p->temp3 = target;
         d = HIWORD(p->Ypos);
         d -= camy;
         if (d < 0) d = -d;
