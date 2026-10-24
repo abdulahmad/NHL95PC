@@ -2753,3 +2753,51 @@ assreffollow,,final temp3/temp4 read through dead d or fresh int/short target,,g
 assreffollow,,d += -camy,,ga
 assreffollow,,Xpos high word through dead d in each target branch or all three. All >=6 scored,,ga
 assreffollow,,retain baseline,,ga
+EditTextField,type:ins:unsigned_short,`unsigned short ins`,tried (docs/UNSURE.md),ga
+EditTextField,,"(2026-10-24, lane 1a batch 6): shared clear/redraw gotos on baseline (106), explicit bottom poll with these tails (162), int ins with each (158/154)",158/154,ga
+EditTextField,,"Backspace/typing extruded after blink (110 unsigned, 102 int), idle block moved last too (117/109)",117/109,ga
+EditTextField,,"inner for with PollKey in init/step and boolean/explicit comparison condition (164 unsigned, 208 int",,ga
+EditTextField,,one emulator compile failed with transient FileNotFoundError for its private /tmp/emucc directory),,ga
+EditTextField,,"blink state in dead i or x on baseline (126/135), on int/extruded version (116/71)",116/71,ga
+EditTextField,,"register int ins on baseline/extruded (158/102, qualifier has no savings effect). Removed unused cursor label and unreachable goto from kept version",,ga
+EditTextField,,same 71. Both builds MATCH,,ga
+RunMenu,,"(2026-10-24, lane 1a batch 6): allocation size through dead n/r/i instead of size (175/146/175)",175/146/175,ga
+RunMenu,,explicit common draw_selected tail for reselect and plain-item branches (233),233,ga
+RunMenu,,plus retail oldmx-before-oldmy stores (230),230,ga
+RunMenu,,plus retail close for and depth=i+1 after Norm (326),326,ga
+RunMenu,,scoped short *sprite for size only (146),146,ga
+RunMenu,,named width/height fields in packed 17-byte MenuHdr17 for sprite reads (146). Every variant rechecked all three menu functions,,ga
+RunMenu,,partners unchanged. No changes retained,,ga
+GameSummaryScreen,,"(2026-10-24, lane 1a batch 6): explicitly requested starting combination of direct byte indices plus frame k",,ga
+GameSummaryScreen,,"saved goal pointer (352), split n=pgoals",,ga
+GameSummaryScreen,,"n+=season (398), branch-specific n+=season (402), season via dead j (392), block unsigned-short season temporary (346), product-first RECKEY integer address (352)",352,ga
+GameSummaryScreen,,"goal count through j/side/crest/bank/homeScore, inline vs split (420/426,347/345,351/287,347/287,352/346",,ga
+GameSummaryScreen,,crest split kept),,ga
+GameSummaryScreen,,"goalcopy with plain whole-function k or separate plain event k (355/361, frame gains four bytes)","355/361, frame gains four bytes",ga
+GameSummaryScreen,,extras player byte through int address or explicit pointer sum,,ga
+GameSummaryScreen,,with either roster sum order (302/352 before count reuse,,ga
+GameSummaryScreen,,"on kept version int address 295), new extras offset local for key read (294) and reused for roster index (294)",294,ga
+GameSummaryScreen,,period count/pointer cached around pure PRDS loop (297). Both builds MATCH,,ga
+GameSummaryScreen,,"no casts/type/return/header hacks, no permute run",,ga
+SportsDesk,,"(2026-10-24, lane 1a batch 6): no at with m formed inside dropdown before depth=i+1 (397, frame fixed), block-scoped m there (472), m formed before on1 re-test (460)",460,ga
+SportsDesk,,slot_solver four rounds (397 -> 363,,ga
+SportsDesk,,"only my/btn moves and mx/item,h swaps retained, no statement swaps)",,ga
+SportsDesk,,"zero-chain order (357), bg/sel declaration swap (394), both (392), >= comparisons alone (359), resets/bounds with wrong array swap (388), conference read once via dead bank or fresh homeconf on that base (399/377)",399/377,ga
+SportsDesk,,all arrays in one frame aggregate on six bases (387/382/383/398/401/412),387/382/383/398/401/412,ga
+SportsDesk,,"chains + >= without array swap (353 kept), conference via bank or homeconf on kept base (364/399). Callback store at +058 has BOTH relocation entries (off_CEF23 and DeskGoToReplay), so cdiff's ! there is the known two-fixup display trap, no source/type change needed. Both builds MATCH. Final slot_solver pass (two-round limit): round 1 tried 998 candidates",,ga
+SportsDesk,,353 -> 351 only via swapstmt:159,,ga
+SportsDesk,,moving autoret=0 after sub_903F0 against the EXE order,,ga
+SportsDesk,,"rejected and interrupted during round 2, no changes retained",,ga
+RunTeamPickMenu,,"(2026-10-24, lane 1a batch 6): TEAMBYTE as pointer to 2-D 26-byte rows (212), as packed 26-byte record conf field (212), as (order*13)*2 (212), as (order*13 << 1) (416: first highlight region fixed, later allocation worse), product-first integer pointer sum (273). All three functions checked after each change",,ga
+RunTeamPickMenu,,partners unchanged. No changes retained,,ga
+LeadersScreen,,"(2026-10-24, lane 1a batch 6): retail close order pfh then kfh (88",,ga
+LeadersScreen,,the baseline happens to match close-slot bytes because handles are swapped),,ga
+LeadersScreen,,close order plus swapped handle declarations (92),92,ga
+LeadersScreen,,close-order slot_solver two rounds (no gain,,ga
+LeadersScreen,,all candidate statement swaps rejected/not kept),,ga
+LeadersScreen,,goalie teamgp into dead mf/kf/j/i with new close order (104/90/191/135),104/90/191/135,ga
+LeadersScreen,,"grouping n,pfh,kfh or just pfh,kfh in a frame struct (180/304). No changes retained",,ga
+RunPlayerPickMenu,,"(2026-10-24, lane 1a batch 6): allocation size through dead n/r/i (209/175/209)",209/175/209,ga
+RunPlayerPickMenu,,scoped short *sprite for size only (158),158,ga
+RunPlayerPickMenu,,"named width/height fields in packed 17-byte MenuHdr17 for sprite reads (158). Every change in this file rechecked RunMenu, RunPlayerPickMenu, RunTeamPickMenu",,ga
+RunPlayerPickMenu,,other functions unchanged. No changes retained,,ga
