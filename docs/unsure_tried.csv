@@ -3129,3 +3129,28 @@ doshot,,"on the r + r variant: `dx = randomd0(r + r) - r + dx`, `dx = dx + (rand
 doshot,,the f-in-division change (65). On the base: dividing by dist with no f (109),109,ga
 doshot,,"the lift, where the EXE converts passspeed (ebp) and dist (ecx) once for both terms: (unsigned) on both uses of dist and passspeed (59), on dist only (88), `(int)` casts (59-88), commuted constants (45), passspeed through f or e, dist through t or f, or both (64-114)",64-114,ga
 puckfaceoff2,,"the countdown as the else arm of the pflags test instead of after the early return (92, size +3)","92, size +3",ga
+ExportTeamToFloppy,,"(2026-10-24, lane 1b batch 9): filename dot-position result through new unsigned end or dead team/full/check, first strcmp result through new diff or dead check. All six retain baseline code/diff",,ga
+CreateNewLeague,,"(2026-10-24, lane 1b batch 9): block-local deletion-name pointer, block-local state pointer, named unsigned DiskFreeBytes result, input-name/cancel test expressed with negated conjunction. All remain baseline",,ga
+SkateToSpot,,"(2026-10-24, lane 1b batch 9): chained stop combined with first adx through t, first ady through t, ary through t, final vtoa result through t before assigning d, block-local short turn for final facedir addition, and goal-line Y target through t. No retained change",,ga
+ExecuteTrade,,"(2026-10-24, lane 1b batch 9): declsearch --conflicts (no match",,ga
+ExecuteTrade,,reports model misprediction for two candidates),,ga
+ExecuteTrade,,"skater-key table pointer for first/second/both reads, shared other-row index, shared row pointer (76-126 differing)",76-126 differing,ga
+ExecuteTrade,,"one-use database-name, first/second team-record team, close-handle and line-table temporaries (baseline or worse). Result stays int",,ga
+CopyHumanTeamDBs,,"(2026-10-24, lane 1b batch 9): which through dead which parameter, new selected local, current t",,ga
+CopyHumanTeamDBs,,final zero via memset or dead r,,ga
+CopyHumanTeamDBs,,"common cleanup label and early cleanup return. Zero moved outside error test scored 11 at exact size but violates EXE statement order, rejected. No retained change",,ga
+RandomizeSchedule,,"(2026-10-24, lane 1b batch 9): count-clear loop using i or j (16, +2)","16, +2",ga
+RandomizeSchedule,,"separate named count per append (14 exact), together with clear loop (45,+4)","45,+4",ga
+RandomizeSchedule,,"shared list pointer (59,+64), cached count store followed by in-place increment (106,+4). Preserved list store before count increment. No retained changes",,ga
+SimPlayoffRound2,,"(2026-10-24, lane 1b batch 9): away as pointer-to-score",,ga
+SimPlayoffRound2,,"in-place away with int/byte comparison-result local, local/dead-sched game offset, home assignment inside comparison, int/byte winner temporary, home reused as winner team, and named call-argument slot/game pointers. Best alternative 7 (length threshold picks move)",,ga
+SimPlayoffRound2,,retained baseline,,ga
+SeedPlayoffRound3,,"(2026-10-24, lane 1b batch 9): separate block-local error for each of four ReadTeamRec branches, singly/all (14 unchanged)",14 unchanged,ga
+SeedPlayoffRound3,,"fresh int/unsigned slot in each game loop, multiply-by-3 then double/add2, or multiply-by-6 then add2 (75/81). Regdump: explicit triple slot gains 70 but takes EBX/EDX, shifting the corresponding product temps and other picks",,ga
+SeedPlayoffRound3,,"rejected. No win-count clearing call exists here, so the zeroing-loop lead does not apply. No retained changes",,ga
+SimPlayoffRound1,,"(2026-10-24, lane 1b batch 9): fill loop over i/s (9), loop with away inline or both scores inline (42/28), separate fill index (16), read/write handle and dir copies on loop base (29/29/30)",29/29/30,ga
+SimPlayoffRound1,,declsearch --conflicts before/after loop (no slot solution). Both builds MATCH,,ga
+SimPlayoffRound1,,UpdateSeasonSchedule context untouched,,ga
+BlitTileMap,,"(2026-10-24, lane 1b batch 9): declsearch --conflicts (no declaration order reaches dimension slots)",,ga
+BlitTileMap,,"shared x+col through c or dead x0 before the flip branch, each alone and with shared y+row through r plus doubled-row subtraction (61/70/45/40 differing). Sharing changes structural/register layout",,ga
+BlitTileMap,,retained baseline,,ga
