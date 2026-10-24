@@ -3303,3 +3303,30 @@ TradePlayers,,a separate msg pointer through the first / second / both label con
 TradePlayers,,a named teams pointer for the first / second / both city indices (3),3,ga
 TradePlayers,,"the width max through r initialized from x / y (9 / +2, 8 / +0). None improved",,ga
 TradePlayers,,no source change,,ga
+PickAwardWinners,,"(2026-10-24, lane 1a batch 10): else-local games initialized from losses then +=wins or =wins+games, as int (26 both), short (35 both), unsigned short (36 both)",36 both,ga
+PickAwardWinners,,none retained,,ga
+DrawAwardsSummary,,"(2026-10-24, lane 1a batch 10): dead k reused as full winner-record address for FitPlayerName and later team reads (27)",27,ga
+DrawAwardsSummary,,plain buffer/counter instead of frame struct (15),15,ga
+DrawAwardsSummary,,y=k*19 then y+=8Ch (18),18,ga
+DrawAwardsSummary,,block-local suffix selected by if/else before one strcat (12). No source retained,,ga
+EasnGoalieStatsScreen,,"(2026-10-24, lane 1a batch 10): both second-path drive tests as switch(fileoncd) case1/default in both orders (15 each)",15 each,ga
+EasnGoalieStatsScreen,,second-path selection in for(;;) with a break after each branch (12). No source retained,,ga
+PlacePlayersAtStart,,"(2026-10-24, lane 1a batch 10): reran regdump/slotdump/first_pick/full cdiff and read full history",,ga
+PlacePlayersAtStart,,"no unlisted natural source change justified by these memory-reload differences, so did not repeat GA negate/cast/boolean/alias shapes. No source retained",,ga
+ShowAwardScreens,,"(2026-10-24, lane 1a batch 10): dead key reused as full shots-row y (71), byte*8 then +=y (81), byte then *=8 then +=y (84). No source retained",,ga
+EditTextField,,"(2026-10-24, lane 1a batch 10): on current source, fully structured poll-init/step for loop with goto/break exits (112,+35 /124,+29), explicit poll/break inner loop (125,+15 /116,+3), bottom-step while with goto/break exits (113,+28 /125,+22)","113,+28 /125,+22",ga
+EditTextField,,"wrap existing ordered blocks in for/do with ordinary returns as continue (62,+4 both, OMF identical), finished jumps as break (62,+4, retained)","62,+4, retained",ga
+EditTextField,,"inline late typing block (127,+27), inline idle block (70,+7), so four layout jumps retained",,ga
+EditTextField,,dead i/c/w/y for input timeout (62 each),62 each,ga
+EditTextField,,"letter value through dead i (36,+1, retained) or c (70,+0)","70,+0",ga
+EditTextField,,filter flags cached as uchar/int (62 both),62 both,ga
+EditTextField,,dispatch key through fresh dispatch or dead c/w/y (36 each),36 each,ga
+EditTextField,,"lower-case-only i via assignment (62) or nested if (67,+21), upper-case-only i via assignment (62). Both builds MATCH",,ga
+ShowCredits,,"(2026-10-24, lane 1a batch 10): copy unk_C4E30 from saved pal rather than p (7,+2)","7,+2",ga
+ShowCredits,,credit art through dead i (4),4,ga
+ShowCredits,,bank name through dead s (4). No shape improved scheduling,,ga
+FadePalette,,"(2026-10-24, lane 1a batch 10): reran regdump/slotdump/cdiff and inspected full source history",,ga
+FadePalette,,"no unlisted natural clamp shape justified by this diagnosis, so did not repeat earlier GA clamp/volatile/copy/switch shapes. No source retained",,ga
+SkaterStatsCard,,"(2026-10-24, lane 1a batch 10): fresh block lookup index int/signed char/short with direct product (9,+3 each)","9,+3 each",ga
+SkaterStatsCard,,"fresh block lookup address as unsigned-char pointer or int with direct product (9,+3 each). No source retained",,ga
+DrawListItem,,"(2026-10-24, lane 1a batch 10), on A: rectangle y postincrement (31), width -=4 inside rectangle arguments (29), y increment in each switch arm/default (33), final PrintMenuText duplicated in arms/default (48), case-1 fputchar result through dead c/fontheight/top/idx before w-=result (34 each). No source retained",,ga

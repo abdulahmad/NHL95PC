@@ -19,17 +19,13 @@ int TickDeadlinePassed(void);
 void __cdecl sub_B3D46(int n);
 int sub_B3D64(void);
 
-/* DRAFT under 10.0 GA: 62 differing, 4 bytes long. Each key arm ends in its own DrawEditCursor (and
-   DrawEditText) and a jump to the poll; Watcom merges those tails into the EXE's shared ones after register
-   allocation, and the direct jumps give the arms the poll loop's weight, so the insert flag (savings 311) now
-   outranks timeout (199) and idle (198) and takes EBP. x is dead after editx is stored and holds the insert
-   flag (C_MATCHING: dead parameter reuse), so x and the flag share EBP as in the EXE; the blink state is its
-   own local (EDX). The typed key is stored in each insert-mode arm (the EXE loads editpos in both arms, the
-   insert loop's test value reused, before the shared tail). The poll at the bottom with its two targets (idle,
-   key handlers) is still built with gotos. Left: the short-lived temporaries of the key chain and the cursor
-   arms take other registers than the EXE's (timeout push edx vs eax, key compares ebx / eax vs edx / ecx), so
-   the End arm's zero does not cross-jump into its loop store; the letter filter loads the key into edx (EXE
-   eax), and the last filter then reloads the flags byte into bl (4 bytes) where the EXE keeps dl. */
+/* DRAFT under 10.0 GA: 36 differing, 937 vs 936 bytes. Reuse the dead copy-loop index i for the
+   letter-filter value (C_MATCHING: dead-local reuse), which keeps that value in EAX and fixes most
+   cursor/typing temporaries. x still holds the insert state after editx is stored. Each key arm has its
+   own cursor/redraw tail; Watcom merges them after allocation and preserves the required loop weights.
+   The outer loop uses continue/break. Four jumps retain the EXE's poll entry, idle/input dispatch and
+   late Backspace/typing block; embedding those blocks in structured arms changes the EXE layout.
+   Left: timeout/key-chain register picks, the End loop's shared store and a flags-byte reload. */
 /* EditTextField (3170D, PC only): edit the text buf (maxlen characters) in a field w wide at x, y. Draws the text
    and a blinking cursor (DrawEditText / DrawEditCursor, editpos ...); left / right / home / end move the cursor,
    Ins toggles insert mode (a full-height cursor), Del and Backspace delete, and other keys are typed in when flags
@@ -54,106 +50,108 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
     DrawEditCursor(flags);
     SetTickDeadline(timeout);
     sub_B3D46(4);
-    goto poll;
-idle_wait:
-    if (idle) idle();
-    goto poll;
-input:
-    SetTickDeadline(timeout);
-    if (key == 0xD) goto finished;
-    if (key == 0x1B && (flags & 4)) goto finished;
-    if (key == 0x4D00) {
-        if (!buf[editpos]) goto poll;
-        DrawEditCursor(flags);
-        if (maxlen > editpos) editpos = editpos + 1;
-        DrawEditCursor(flags);
+    for (;;) {
         goto poll;
-    } else if (key == 0x4B00) {
-        DrawEditCursor(flags);
-        if (editpos) editpos = editpos - 1;
-        DrawEditCursor(flags);
-        goto poll;
-    } else if (key == 0x4700) {
-        DrawEditCursor(flags);
-        editpos = 0;
-        DrawEditCursor(flags);
-        goto poll;
-    } else if (key == 0x4F00) {
-        DrawEditCursor(flags);
-        editpos = 0;
-        while (buf[editpos]) editpos++;
-        DrawEditCursor(flags);
-        goto poll;
-    } else if (key == 0x5200) {
-        DrawEditCursor(flags);
-        if (!x) {
-            x = 1;
-            editcurw = byte_D42C3;
-        } else {
-            x = 0;
-            editcurw = 1;
+    idle_wait:
+        if (idle) idle();
+        continue;
+    input:
+        SetTickDeadline(timeout);
+        if (key == 0xD) break;
+        if (key == 0x1B && (flags & 4)) break;
+        if (key == 0x4D00) {
+            if (!buf[editpos]) continue;
+            DrawEditCursor(flags);
+            if (maxlen > editpos) editpos = editpos + 1;
+            DrawEditCursor(flags);
+            continue;
+        } else if (key == 0x4B00) {
+            DrawEditCursor(flags);
+            if (editpos) editpos = editpos - 1;
+            DrawEditCursor(flags);
+            continue;
+        } else if (key == 0x4700) {
+            DrawEditCursor(flags);
+            editpos = 0;
+            DrawEditCursor(flags);
+            continue;
+        } else if (key == 0x4F00) {
+            DrawEditCursor(flags);
+            editpos = 0;
+            while (buf[editpos]) editpos++;
+            DrawEditCursor(flags);
+            continue;
+        } else if (key == 0x5200) {
+            DrawEditCursor(flags);
+            if (!x) {
+                x = 1;
+                editcurw = byte_D42C3;
+            } else {
+                x = 0;
+                editcurw = 1;
+            }
+            DrawEditCursor(flags);
+            continue;
+        } else if (key == 0x5300) {
+            if (maxlen <= editpos || !buf[editpos]) continue;
+            DrawEditCursor(flags);
+            for (i = editpos; i < maxlen; i++) buf[i] = buf[i + 1];
+            buf[maxlen - 1] = 0;
+            DrawEditText(flags);
+            DrawEditCursor(flags);
+        } else goto otherkey;
+    poll:
+        key = PollKey();
+        if (!key) {
+            if (!sub_B3D64()) goto idle_wait;
+            key = 0;
         }
+        if (key) goto input;
+        sub_B3D46(4);
+        c = editcuron;
+        editcuron = 1;
         DrawEditCursor(flags);
-        goto poll;
-    } else if (key == 0x5300) {
-        if (maxlen <= editpos || !buf[editpos]) goto poll;
-        DrawEditCursor(flags);
-        for (i = editpos; i < maxlen; i++) buf[i] = buf[i + 1];
-        buf[maxlen - 1] = 0;
-        DrawEditText(flags);
-        DrawEditCursor(flags);
-    } else goto otherkey;
-poll:
-    key = PollKey();
-    if (!key) {
-        if (!sub_B3D64()) goto idle_wait;
-        key = 0;
+        editcuron = !c;
+        if (timeout && TickDeadlinePassed()) break;
+        continue;
+    otherkey:
+        if (key == 8) {
+            if (!editpos) continue;
+            DrawEditCursor(flags);
+            editpos--;
+            for (i = editpos; i < maxlen; i++) buf[i] = buf[i + 1];
+            buf[maxlen - 1] = 0;
+            DrawEditText(flags);
+            DrawEditCursor(flags);
+            continue;
+        } else {
+            if (flags & 8) {
+                if (!(key >= '0' && key <= '9')) continue;
+            } else if (flags & 0x10) {
+                i = key;
+                if (!(i == ' ' || (i >= 'A' && i <= 'Z') || (i >= 'a' && i <= 'z'))) continue;
+            } else {
+                if (key < 0x20 || key > 0x7A) continue;
+                if (maxlen <= editpos) continue;
+                if (!(flags & 1) || ((flags & 1) &&
+                    (((signed char *)byte_C4B6C)[(unsigned char)(key + 1)] & 0xE0))) {
+                    /* This key passes the character-class filter. */
+                } else continue;
+            }
+            DrawEditCursor(flags);
+            if (!x) {
+                if (!buf[editpos]) buf[editpos + 1] = 0;
+                buf[editpos] = key;
+            } else {
+                for (i = maxlen - 2; i >= editpos; i--) buf[i + 1] = buf[i];
+                buf[editpos] = key;
+            }
+            if (maxlen > editpos) editpos++;
+            DrawEditText(flags);
+            DrawEditCursor(flags);
+            continue;
+        }
     }
-    if (key) goto input;
-    sub_B3D46(4);
-    c = editcuron;
-    editcuron = 1;
-    DrawEditCursor(flags);
-    editcuron = !c;
-    if (timeout && TickDeadlinePassed()) goto finished;
-    goto poll;
-otherkey:
-    if (key == 8) {
-        if (!editpos) goto poll;
-        DrawEditCursor(flags);
-        editpos--;
-        for (i = editpos; i < maxlen; i++) buf[i] = buf[i + 1];
-        buf[maxlen - 1] = 0;
-        DrawEditText(flags);
-        DrawEditCursor(flags);
-        goto poll;
-    } else {
-        if (flags & 8) {
-            if (!(key >= '0' && key <= '9')) goto poll;
-        } else if (flags & 0x10) {
-            if (!(key == ' ' || (key >= 'A' && key <= 'Z') || (key >= 'a' && key <= 'z'))) goto poll;
-        } else {
-            if (key < 0x20 || key > 0x7A) goto poll;
-            if (maxlen <= editpos) goto poll;
-            if (!(flags & 1) || ((flags & 1) &&
-                (((signed char *)byte_C4B6C)[(unsigned char)(key + 1)] & 0xE0))) {
-                /* This key passes the character-class filter. */
-            } else goto poll;
-        }
-        DrawEditCursor(flags);
-        if (!x) {
-            if (!buf[editpos]) buf[editpos + 1] = 0;
-            buf[editpos] = key;
-        } else {
-            for (i = maxlen - 2; i >= editpos; i--) buf[i + 1] = buf[i];
-            buf[editpos] = key;
-        }
-        if (maxlen > editpos) editpos++;
-        DrawEditText(flags);
-        DrawEditCursor(flags);
-        goto poll;
-    }
-finished:
     DrawEditCursor(flags);
     return key;
 }
