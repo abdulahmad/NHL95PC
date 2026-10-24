@@ -26,13 +26,14 @@ int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin,
 int sub_8F98F(char *path);  /* music library: load a song */
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song */
 
-/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 6,016 of 6,040 bytes, 258
+/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 6,007 of 6,040 bytes, 233
    differing under 10.0 GA. Every call is in place and the prologue matches (dir pushed, ext in edi, team in
    ebp). Found under GA: DrawMenuBar(calmenubar, 3, ...) written with the constants (the EXE keeps them in esi
-   / edi from the menus[0] / nitems[0] stores), the dropdown origin as `depth != 1 ? x2 : x1`. The arrays and
-   scalars are declared in tools/wccre/declsearch.py's order (with --conflicts: 30 of 34 slots). Left: the
-   slots of day, i, ngames and shown; oldm / oldd in edi / esi (EXE esi / edi; savings 200 / 300); the
-   day box clips (the EXE computes k % 7 and k / 7 first, then the four sub_B4BC4 arguments in the order x1,
+   / edi from the menus[0] / nitems[0] stores), the dropdown origin as `depth != 1 ? x2 : x1`, the day index
+   in steps (`k = monthfirstday_m1[m]; k += d; k--;`: the EXE's `movzx esi, byte` / `add esi, edi` / `dec
+   esi`, which also puts oldm / oldd in esi / edi). The arrays and scalars are declared in
+   tools/wccre/declsearch.py's order (with --conflicts: 29 of 34 slots). Left: the slots of c1, day, i,
+   ngames and selgame; the day box clips (the EXE computes k % 7 and k / 7 first, then the four sub_B4BC4 arguments in the order x1,
    y1, x2, y2 into registers before the pushes); the event pointer copied into two registers; the
    DrawMenuItemNorm tail shared from another branch. The (int) compare of day with monthdays reloads day as
    the EXE does. */
@@ -53,43 +54,43 @@ void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play
    the calendar. */
 int CalendarScreen(char *dir, char *ext, int team)
 {
-    unsigned char games[113][6];
     short gameidx[113];
-    MenuItem *menus[3];
-    int crests[0x1A];
-    int fh;
-    int bg[3];
-    int btn;
-    int oldmx;
-    unsigned char remap[0x300];  /* 300h bytes in the frame; only the first 100h are the identity remap */
     int h;
-    int mx;
-    int nitems[3];
-    int my;
-    char path[0x20];
-    short today;
-    int w;
-    int item;
-    int pos[3][2];
-    int oldmy;
-    int level;
-    int hdr;
-    int logos;
-    short ngames;
-    int c3;
-    int c1;
-    int c2;
-    int unused;  /* DrawCalendarDay's third argument: never set (the EXE passes the slot at 7A8h) */
-    int ptr;
-    short newsel;
-    int font;
-    int depth;
-    short firstgame;
-    int sel[3];
-    short i;
-    short day;
+    int fh;
     short selgame;
+    int ptr;
+    int btn;
+    short day;
+    int c1;
+    short ngames;
+    int oldmx;
+    unsigned char games[113][6];
+    unsigned char remap[0x300];  /* 300h bytes in the frame; only the first 100h are the identity remap */
+    int depth;
+    short i;
+    char path[0x20];
+    int logos;
+    int mx;
+    short today;
+    int my;
+    int pos[3][2];
+    int hdr;
+    short firstgame;
+    int c3;
+    int unused;  /* DrawCalendarDay's third argument: never set (the EXE passes the slot at 7A8h) */
+    short newsel;
+    int level;
+    int font;
+    int item;
+    int crests[0x1A];
     short shown;
+    int w;
+    int bg[3];
+    int c2;
+    int oldmy;
+    int sel[3];
+    MenuItem *menus[3];
+    int nitems[3];
     short r;
     short tmonth;
     int bits;
@@ -380,13 +381,17 @@ int CalendarScreen(char *dir, char *ext, int team)
                                 sub_B4BA8();
                                 DrawMenuBar(calmenubar, 3, c1, c2, c3);
                                 if (oldm == calselmonth && oldd != calselday) {
-                                    k = monthfirstday_m1[calselmonth] + oldd - 1;
+                                    k = monthfirstday_m1[calselmonth];
+                                    k += oldd;
+                                    k--;
                                     sub_B4BC4(calcolx[k % 7] - 2, calcolx[k % 7] + 0x4D, calrowy[k / 7] - 2,
                                         calrowy[k / 7] + 0x3F);
                                     DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font,
                                         calendarshapes);
                                 }
-                                k = monthfirstday_m1[calselmonth] + calselday - 1;
+                                k = monthfirstday_m1[calselmonth];
+                                k += calselday;
+                                k--;
                                 sub_B4BC4(calcolx[k % 7] - 2, calcolx[k % 7] + 0x4D, calrowy[k / 7] - 2,
                                     calrowy[k / 7] + 0x3F);
                                 DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font, calendarshapes);

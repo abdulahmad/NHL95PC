@@ -1,8 +1,10 @@
 /* Import / export: posting a played game to a team's databases. */
-/* DRAFT under 10.0 GA: 2,346 vs 2,342 bytes, 129 differing instructions. The loop index is a plain local, so
+/* DRAFT under 10.0 GA: 2,341 vs 2,342 bytes, 122 differing instructions. The loop index is a plain local, so
    Watcom turns the played-flags loop into a __STOSB fill as in the EXE; the visitors-win arm tests !side first
-   (the EXE's je / jmp into the home-win arm's increments). Left: i / j / res / score slots (no declaration order
-   gives them), the visitors-win score reloads hmscore where the EXE reuses ax (cwde). */
+   (the EXE's je / jmp into the home-win arm's increments). The skater and goalie keys have their own local (key)
+   rather than k (the goal count / stat offset), declared in tools/wccre/declsearch.py's order (6 of 9 slots).
+   Left: i / j / score slots, the visitors-win score reloads hmscore where the EXE reuses ax (cwde); k still
+   serves as the goal count and the stat offsets (separate locals for those grow the frame). */
 #define PostGameToTeamDb PostGameToTeamDb_decl
 #define WriteTeamRec WriteTeamRec_decl
 #define ReadGSummaryRec ReadGSummaryRec_decl
@@ -45,17 +47,18 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
     } f;
     unsigned short *gs;
     short *ss;
-    int ngames;
+    unsigned char gk[2];
     short *st;
     int r;
-    unsigned char gk[2];
-    int sideofs;
-    int i;
+    int ngames;
     unsigned char *rec;
+    int i;
+    int sideofs;
     int res;
     int score;
     int j;
     int k;
+    int key;
     int goalieslot;
     int scratchslot;
 
@@ -167,9 +170,9 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
         i++;
     } while (i < 8);
     for (i = 0; i < 0x19 && !r; i++) {
-        k = *(int *)(f.team + 0x4C + i * 4);
-        if (k != -1) {
-            r = ReadKeyRec(f.fkey, f.key, k);
+        key = *(int *)(f.team + 0x4C + i * 4);
+        if (key != -1) {
+            r = ReadKeyRec(f.fkey, f.key, key);
             if (!r) r = ReadSeasonRec(f.fseason, f.srec, *(int *)(f.key + 0x2C));
             if (!r && f.played[i]) {
                 k = side * 0x190 + i * 16;
@@ -195,9 +198,9 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
         i++;
     } while (i < 2);
     for (i = 0; i < 3 && !r; i++) {
-        k = *(int *)(f.team + 0xB0 + i * 4);
-        if (k != -1) {
-            r = ReadKeyRec(f.fkey, f.key, k);
+        key = *(int *)(f.team + 0xB0 + i * 4);
+        if (key != -1) {
+            r = ReadKeyRec(f.fkey, f.key, key);
             if (!r) r = ReadGoalieSeasonRec(f.fseason, f.grec, *(int *)(f.key + 0x2C));
             if (!r && f.played[i + 0x19]) {
                 k = side * 18 + i * 6;
