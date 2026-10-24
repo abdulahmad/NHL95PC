@@ -2697,6 +2697,10 @@ pop ecx	; 479E6
 pop ebx	; 479E7
 ret	; 479E8
 %endif ; C
+; C: src/c/035_45282_options_settings/ShowLoadingScreen.c
+%ifdef CBUILD
+%include "c/035_45282_options_settings/ShowLoadingScreen.inc"
+%else
 ShowLoadingScreen:
 push dword 934h	; 479E9
 call __CHK	; 479EE
@@ -2876,3 +2880,4 @@ pop edx	; 47C2D
 pop ecx	; 47C2E
 pop ebx	; 47C2F
 ret	; 47C30
+%endif ; C

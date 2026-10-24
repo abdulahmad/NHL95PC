@@ -1,11 +1,10 @@
 /* Engine player logic: the goalie's assignment and the assignments that end in its exit (assnearest,
    assrefsignal, assrefgoalpa). */
-/* DRAFT: assgoalie same size, 25 differing under 10.0 GA (x and y are reused for the post distance and the
-   far-side y, as in the EXE; the vecdist result is declared in its own block). Left: the vecdist result
-   (`mov edx, eax` in the EXE), the SortCords loop's puckdist load (di in the EXE), the setl copy of the carrier
-   side test and the epilogue (`pop ebp; jmp ass_popx`); see docs/UNSURE.md. assgoalie ends in ass_popx
-   (assrefwhistle.c), so its match belongs in assrefwhistle.c between asspenalty and CountPuckThreat; the draft
-   sits in its own file so the matched blocks there stay as they are. */
+/* DRAFT: assgoalie 21 differing under 10.0 GA. The int vecdist result and the short incremented depth
+   give the EXE's EDX result copy and increment. Left: the SortCords loop's puckdist load (DI in the EXE),
+   the carrier-side boolean widening, later register picks and the external ass_popx epilogue.
+   assgoalie ends in ass_popx (assrefwhistle.c), so its match belongs in assrefwhistle.c between asspenalty
+   and CountPuckThreat; the draft stays here with the functions that use its exit. */
 #define imul32 imul32_decl
 #define PostGoalEvent PostGoalEvent_decl
 #define ChkScorerMilestone ChkScorerMilestone_decl
@@ -190,11 +189,13 @@ angle:
     ClampYPosition(p);
     {
         int dist;
+        short depth;
 
         dist = vecdist(regd0.w, regd1.w);
         if (dist >= 0x1E) {
-            dist++;
-            regd2.w = dist;
+            depth = dist;
+            depth++;
+            regd2.w = depth;
             if (ABS(*pucky) < 0x74 && ShotLaneOpen()) {
                 regd4.w = 0x14;
                 if (sflags & 8) regd4.w = 0x1C;

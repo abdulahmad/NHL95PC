@@ -1353,6 +1353,10 @@ pop ebp	; 3EDA4
 pop edi	; 3EDA5
 pop esi	; 3EDA6
 ret 4	; 3EDA7
+; C: src/c/032_3DC2C_roster_jersey/TradeDone.c
+%ifdef CBUILD
+%include "c/032_3DC2C_roster_jersey/TradeDone.inc"
+%else
 TradeDone:
 push dword 2Ch	; 3EDAA
 call __CHK	; 3EDAF
@@ -1478,6 +1482,7 @@ mov dword [traderesult], 1	; 3EF16
 add esp, byte 10h	; 3EF20
 pop esi	; 3EF23
 ret 14h	; 3EF24
+%endif ; C
 ; C: src/c/032_3DC2C_roster_jersey/TradeCancel.c
 %ifdef CBUILD
 %include "c/032_3DC2C_roster_jersey/TradeCancel.inc"

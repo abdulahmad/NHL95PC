@@ -1,8 +1,4 @@
 /* Engine player logic: shoot assignment. */
-/* DRAFT: 246 vs 248. The pfna clear is `and bl, 0FDh` (the original copies bl to ah first). The word at
- +4Ch decremented in place (as temp2) gives the EXE's di and its saved edi. Do not retry a separate byte
- local for the flag (that moved the and into al), nor `p->pflags = p->pflags & ...`, an unsigned char cast
- on either side, `^= pfna`, `!= 0` on the test, or `else if` after the pfalock test. */
 #define assshoot assshootDecl
 #include "nhl95.h"
 #undef assshoot
@@ -31,14 +27,11 @@ void assshoot(Player *p)
     if (--*(short *)((char *)p + 0x4C) < 0) *(short *)((char *)p + 0x4C) = 0;
     if (HIWORD(p->Ypos) < 0) y = -(p->Ypos >> 16);
     else y = p->Ypos >> 16;
-    if (y < 0x9E) {
-        if (HIWORD(p->Ypos) < 0) y = -(p->Ypos >> 16);
-        else y = p->Ypos >> 16;
-        if (y > 0x53 && *(int *)((char *)p->optmptr + 0x3E) < 0x24
-            && *(short *)((char *)p + 0x4C) == 0 && randomd0(0x14) == 0) {
-            *(short *)((char *)p + 0x4C) = 0x12C;
-            *(unsigned char *)&regd1 |= 0x10;
-        } else *(unsigned char *)&regd1 &= 0xAF;
+    if (y < 0x9E && (y = HIWORD(p->Ypos) < 0 ? -(p->Ypos >> 16) : p->Ypos >> 16) > 0x53
+        && *(int *)((char *)p->optmptr + 0x3E) < 0x24
+        && *(short *)((char *)p + 0x4C) == 0 && randomd0(0x14) == 0) {
+        *(short *)((char *)p + 0x4C) = 0x12C;
+        *(unsigned char *)&regd1 |= 0x10;
     } else *(unsigned char *)&regd1 &= 0xAF;
     ShotMode(p);
 }

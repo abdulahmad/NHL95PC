@@ -96,13 +96,62 @@ So to move a variable to another register: change the savings order (how often a
 used), not the declaration order, unless regdump shows the two tied. Example: in the DrawListItem draft, x (11) and
 w (9) choose before y (6) and take ESI / EDI; the EXE has y in EDI and w in EBP, so in the original y outranked w.
 
-## Stack slots
+## Stack slots (tools/wccre/slotdump.py)
 
-Memory for temporaries (and locals that need it) is laid out after `Names[N_TEMP]` is sorted with
-`TempAllocBefore` (+53EDE), the same unstable Shell sort: temporaries used as far-pointer halves first, then by
-**size ascending** (shorts before ints: the "-od puts short locals above int locals" rule), then the parts of one
-variable by offset. Equal sizes keep the unstable sort's order. A temporary whose live range does not overlap
-an earlier one's reuses its slot (`ReUsableStack`).
+After register allocation the names that need memory (locals left in memory, spilled temporaries, arrays and
+structures) get their slots from the order of `Names[N_TEMP]` (+7E778), the list of all variables and
+temporaries. The list is sorted three times, always with the same unstable Shell sort (`SortList` +64FC3 /
+`ShellSort` +64F44):
+
+1. **By use count** (comparator +57A0B, called at +57AE7; once per function, twice in some, e.g. PreGameScreen).
+   Just before the sort, +57A5B walks every instruction and, for each operand and result that is a variable or
+   temporary, adds a loop-weighted 1 (+4F998, the weight of the block; a reference inside TeamRosterScreen's
+   loops counts 10) to its conflict's +14, the savings field. The count is taken on the instruction stream before
+   the final register substitution, so `n++` still counts n twice. Order: names with a conflict first, by count
+   **descending** (unsigned); names without a conflict (arrays, structures, other names that were never
+   register candidates) after them, by id (+24) descending; names with temp flag 100h (+2B bit 0) last. The conflicts are rebuilt between
+   two such sorts (their memory reused), so the counts are recomputed for the second.
+2. **By size** (`TempAllocBefore` +53EDE, in `AssignOtherLocals` +53E4D): temp flag 200h (+2B bit 1, far-pointer
+   halves) first, then **size ascending** (shorts before ints: the "-od puts short locals above int locals"
+   rule), then the parts of one variable by offset descending. It sorts the list down to `LastTemp` (+7E798).
+
+`AssignOtherLocals` then hands out the slots in that final order, **from the top of the frame down**. A name
+whose live range does not overlap an earlier name's reuses that slot (`ReUsableStack`): in PreGameScreen t158
+and t231 share [esp+63Ch]. The location (+20) is a negative offset from the top of the locals: with an esp
+frame the slot is [esp + frame + location] at push depth 0, the frame being `CurrProc` (+7E764) +2C + +30 +
++0C; a parameter homed by a `push` after the `sub esp` gets its location only at the prologue (+4D0B6:
+TeamRosterScreen's team is [esp+0]). With an ebp frame (-od) the location is the [ebp-n] offset itself. Under -od
+`AssignOtherLocals` runs once per statement block and each run sorts only the names new since the last one, so
+the slots follow the blocks.
+
+The slot order is not the count order. The size sort is a Shell sort over the whole list (in TeamRosterScreen
+225 names), and equal sizes do not keep their order: gs leaves the use-count sort 10th and the size sort 106th,
+behind mf (65th, count 3). But it is a fixed function of the use-count order, so changing one count moves the
+slots in a way that can be computed.
+
+**Why declaration order can only swap tied pairs.** Declaration order changes the order in which the names come
+into the use-count sort, not their counts. Names with a conflict come out ordered by count whatever their input
+order, so only names with equal counts can trade places: in TeamRosterScreen m / n (63), idx / gs (60) and
+pfh / kfh (42) are the only pairs that five declaration orders flipped. To move a slot, change the count: how
+often, and inside how many loops, the variable is referenced.
+
+`python3 tools/wccre/slotdump.py src/c/<seg>/<File>.c [--func NAME] [--count NAME=N ...]` prints, per function,
+the names with a slot in hand-out order with their size, count, position after each sort, location and slot,
+and checks a Python copy of the three sorts against the compiler's lists. `--count NAME=N` compiles again with
+the count written into the conflict before each use-count sort and shows the slots the compiler then hands out
+next to the compiled ones (the Python copy's prediction from the first compile's lists is checked against it).
+TeamRosterScreen's n has 63 references; with 50:
+
+```
+  name    size  count conf  use1  size location slot       |  use1  size location slot
+  m          4     63  yes     7    46       -8 [esp+408h] |     7    46       -8 [esp+408h]
+  n          4     63  yes     8    47      -12 [esp+404h] |    11   107      -32 [esp+3F0h]  *
+  idx        4     60  yes     9    48      -16 [esp+400h] |     8    47      -12 [esp+404h]  *
+  gs         4     60  yes    10   106      -32 [esp+3F0h] |     9    48      -16 [esp+400h]  *
+```
+
+n [esp+3F0h], idx 404h, gs 400h are the EXE's slots: the original has one loop-weighted reference to n fewer
+than the draft (any count from 43 to 60 gives the same slots).
 
 ## The compiler state: one field the compiler never sets
 

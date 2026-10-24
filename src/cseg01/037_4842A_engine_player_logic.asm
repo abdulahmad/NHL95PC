@@ -6598,6 +6598,10 @@ call check4check	; 4D3EB
 add esp, byte 0Ch	; 4D3F0
 jmp near assgoalie_popebp	; 4D3F3
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/assshoot.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assshoot.inc"
+%else
 assshoot:
 push dword 14h	; 4D3F8
 call __CHK	; 4D3FD
@@ -6696,6 +6700,7 @@ pop ecx	; 4D4ED
 pop ebx	; 4D4EE
 assshoot_ret:
 ret	; 4D4EF
+%endif ; C
 ; C: src/c/037_4842A_engine_player_logic/assshoot.c (assfaceoff)
 %ifdef CBUILD
 %include "c/037_4842A_engine_player_logic/assshoot.assfaceoff.inc"
