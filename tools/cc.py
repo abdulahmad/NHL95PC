@@ -423,12 +423,46 @@ def anchor(src, r, func, start, end):
     at = [(n, label_addr(asm, n)) for n in r['pubs']]
     at = [(n, a) for n, a in at if a is not None]
     inside = [(a - start, n, a) for n, a in at if start <= a < end]
+    if not inside:
+        # a piece the object does not hold at the EXE's distance from a public (chkprogress_go after the draft
+        # InProgress, which is 2 bytes long): placed by the branches that reach it
+        f = flow_anchor(src, r, start, end)
+        if f is not None: return f
     before = [(start - a, n, a) for n, a in at if a < start]
     after = [(a - end, n, a) for n, a in at if a >= end]
     pick = min(inside) if inside else min(before + after) if before or after else None
     if pick is None: raise SystemExit('%s: no public of the object to place %s by (asm %s)' % (src, func, os.path.relpath(asm, ROOT)))
     _, n, a = pick
     return r['pubs'][n] - (a - start)
+
+def flow_anchor(src, r, start, end):
+    """the object offset of a piece [start, end) of a split function, from control flow: each public of the object is
+    aligned with its asm range by mnemonics (difflib), and every aligned branch whose original target lies in the
+    piece votes for its compiled target less the target's offset in the piece (chkprogress's `jge chkprogress_go`,
+    LoadRosterList's `jmp LoadRosterList_faloop`). The answer when all votes agree, else None. Needs capstone."""
+    try:
+        from capstone import Cs, CS_ARCH_X86, CS_MODE_32
+    except ImportError:
+        return None
+    import difflib
+    md = Cs(CS_ARCH_X86, CS_MODE_32)
+    def dest(i):
+        if (i.mnemonic.startswith('j') or i.mnemonic == 'call') and i.op_str.startswith('0x'): return int(i.op_str, 16)
+    text = r['text']; pubs = sorted(r['pubs'].items(), key=lambda x: x[1]); votes = set()
+    for k, (n, o) in enumerate(pubs):
+        try: s, e = asm_range(src, n)
+        except (SystemExit, StopIteration): continue
+        if s is None or s < 0 or e <= s: continue
+        C = list(md.disasm(text[o:pubs[k + 1][1] if k + 1 < len(pubs) else len(text)], o))
+        try: O = list(md.disasm(original_bytes(s, e - s), s))
+        except (SystemExit, OSError): continue
+        sm = difflib.SequenceMatcher(None, [i.mnemonic for i in C], [i.mnemonic for i in O], autojunk=False)
+        for tag, i1, i2, j1, j2 in sm.get_opcodes():
+            if tag != 'equal': continue
+            for ci, oi in zip(C[i1:i2], O[j1:j2]):
+                ct, ot = dest(ci), dest(oi)
+                if ct is not None and ot is not None and start <= ot < end: votes.add(ct - (ot - start))
+    return votes.pop() if len(votes) == 1 else None
 
 def label_addr(asm, name):
     L = open(asm).read().split('\n')
