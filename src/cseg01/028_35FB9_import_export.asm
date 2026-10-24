@@ -2268,6 +2268,10 @@ pop ecx	; 37EA3
 pop ebx	; 37EA4
 ret	; 37EA5
 %endif ; C
+; C: src/c/028_35FB9_import_export/HighlightGridCell.c
+%ifdef CBUILD
+%include "c/028_35FB9_import_export/HighlightGridCell.inc"
+%else
 HighlightGridCell:
 push dword 48h	; 37EA6
 call __CHK	; 37EAB
@@ -2378,6 +2382,7 @@ pop edi	; 37FB6
 pop esi	; 37FB7
 pop ecx	; 37FB8
 ret	; 37FB9
+%endif ; C
 ; C: src/c/028_35FB9_import_export/DrawTeamGrid.c
 %ifdef CBUILD
 %include "c/028_35FB9_import_export/DrawTeamGrid.inc"

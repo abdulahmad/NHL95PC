@@ -120,6 +120,10 @@ pop ecx	; 484D7
 pop ebx	; 484D8
 ret	; 484D9
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/assintroline.c
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assintroline.inc"
+%else
 assintroline:
 push dword 14h	; 484DA
 call __CHK	; 484DF
@@ -351,6 +355,7 @@ pop edx	; 48785
 pop ecx	; 48786
 pop ebx	; 48787
 ret	; 48788
+%endif ; C
 ; AddStar: PC three stars. eax = list index (0-2), edx = team, ebx = player. Stores (team, player) in startm/starpl
 ; unless the pair is already in the first eax entries. Returns 1 if added, 0 if a duplicate.
 ; C: src/c/037_4842A_engine_player_logic/AddStar.c
