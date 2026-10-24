@@ -3106,6 +3106,57 @@ LoadGameState,,"`id = o->id = *p` (43), `id = *p` (37), `o->first = byte_CCE00[i
 LoadGameState,,"the hud copies indexed, `for (i = 0, pl = SortCords; ...)` (111), `OOlistpos[i] = OOlist[i] = i` (47), `pl = &SortCords[i]` (44)",44,ga
 LoadGameState,,the ovl test operands swapped (45),45,ga
 DrawRinkSideObjects,,"the vy test as `0x140 - vy - 0xA8` (175), `0x140 - (0xA8 + vy)` (118, no change), `0x140 - (vy + 0xA8) > y` (165), y read before x (120), `f = k - k` for the zero (156)",156,ga
+OpenSpeechBank,,"the type-byte shape found on 2026-10-22 (`int type; short c; c = type & 0xFF; type = (unsigned short)type >> 8;`, 43) with tools/wccre/declsearch.py --conflicts after it (20: w3, nsamples, size, fh, got, w1, type",,ga
+OpenSpeechBank,,"the hand sweep's best). The EXE has the int type at [esp+18h] above the short nsamples at [esp+14h], which the size sort (shorts above ints) does not give two plain locals",,ga
+EditSkaterRating,,"plus the `(short)` max product (`imul eax, eax, 5 / cwde`). DrawShootsField's matched `PrintFmt1(..., (rec[i] + 5) * 5)` push has the EXE's shape because its byte is loaded into ebx, not eax. Lane 2b batch 4 (10.0 GA): improved 57 -> 30 (commit ec192ca",,ga
+EditSkaterRating,,the same 777 bytes): every pushed displayed rating (range min and max,,ga
+EditSkaterRating,,"the answer, both InputDialog limits) and the two unit updates go through the dead v (`v = (*p + 5) * 5`). regdump of the old draft: v 140 -> EBX",,ga
+EditSkaterRating,,the products t88-t102 60 -> EAX,,ga
+EditSkaterRating,,the sums 30 -> EDX,,ga
+EditSkaterRating,,"the EXE computes every one of those products in v's ebx with the sum left in the load register. The refund lost its (short) cast and shift spelling (the EXE has no movsx). Left: the min pointer is loaded into eax (EXE edx after `xor eax, eax`), so the &byte_D0F94 constant stays in edx for p (the EXE stores it as an immediate and loads it again), and the s.old / compare sums take ebx / edi (EXE edx). Tried: v on each subset of the five pushes (32 combinations, best four of five 43)","32 combinations, best four of five 43",ga
+EditSkaterRating,,the refund as `s.old - (*p + 5) * 5` (48),48,ga
+EditSkaterRating,,"with the shift spelling (43), `(short)(s.old - (*p + 5) * 5)` (44), `*field = *field + ...` (59)",59,ga
+EditSkaterRating,,"the raise as `v = (*p + 5) * 5 - s.old` (39), v as its own statement (35)",35,ga
+EditSkaterRating,,"after the change: the min pointer as `(s.minp = ..., v = ...)`, `(s.minp = ...)[0]`, `&unk_D0FA8[i]` (30), minp a plain local (40 with a pad member, 55 without), old a plain local (32-33), s.old through nv (66) or a function-scope d (35) or a block int t (25",,ga
+EditSkaterRating,,"the goalie 26, but its own line stays wrong",,ga
+EditSkaterRating,,not kept),,ga
+EditSkaterRating,,"permute.py 449 candidates (22 only with `(unsigned char)s.old`, not equivalent",,ga
+EditSkaterRating,,plus an if / do loop and a temporary: rejected),,ga
+EditGoalieRating,,see the EditSkaterRating finding above (only the pushed products differ). Lane 2b batch 4 (10.0 GA): improved 58 -> 28 (commit ec192ca,,ga
+EditGoalieRating,,the same 754 bytes) with the skater twin's v products,,ga
+EditGoalieRating,,what is left is the same as there (the min pointer in eax,,ga
+EditGoalieRating,,the &byte_D0FE0 constant kept in edx,,ga
+EditGoalieRating,,the s.old / compare sums). Tried: s.old through a block int t (26,,ga
+EditGoalieRating,,"not kept, as in the skater)",,ga
+PlayoffTreeMenu,,"the close-all head as `if ((i = depth) != 0) for (; ...)`, `i = depth; if (i)`, `if (i = depth)` (126, size +33: the copy goes but the test's jump layout inverts)","126, size +33: the copy goes but the test's jump layout inverts",ga
+PlayoffTreeMenu,,"the resets swapped (126) or chained (276, +89",,ga
+PlayoffTreeMenu,,"declsearch after it 174, +32",,ga
+PlayoffTreeMenu,,"on the 156 base 189, declsearch 170)",,ga
+ControlsDlgLoop,,the wait for a click as an inner `for (;;)` that breaks on `(btn & 2) || (btn & 4)`,,ga
+ControlsDlgLoop,,with the no-button restore,,ga
+ControlsDlgLoop,,"the draw: label and the redraw inside it (145, but the EXE size, 1,206: the 0x42 branch then reloads side as the EXE does)","145, but the EXE size, 1,206: the 0x42 branch then reloads side as the EXE does",ga
+ControlsDlgLoop,,"the same with `if (mx != ox || my != oy) { ... }` inside (145). The restore's oy push still takes ebx (EXE edi). regdump has no pass with those push temporaries (pass 26: t34 500 EAX, t190 / t189 300, save 45 BP, side 21 memory)","pass 26: t34 500 EAX, t190 / t189 300, save 45 BP, side 21 memory",ga
+DbLineEditorLoop,,on that base: a dead `m = &menus[level][item]` or `m = menus[level]` (69: dead stores are dropped),69: dead stores are dropped,ga
+DbLineEditorLoop,,"the tests through m (`m->on1` / `m->on2`, 514: frame), `!= 0` tests, `(menus[level] + item)->on1`, `(*(menus + level))[item].on1` (69), `sel[level] == item` (102), `!(item != sel[level])` (79)",79,ga
+DbLineEditorLoop,,the select-item Norm with `&menus[level][item]` (69),69,ga
+DbLineEditorLoop,,"the other-item Norm with item (70), both (70)",70,ga
+DbLineEditorLoop,,the else-if as `else { if ... }` (69),69,ga
+DbLineEditorLoop,,a dead `r = item * 32` (304),304,ga
+DbLineEditorLoop,,"on the 64 base: `itemoffset = sizeof(MenuItem) * item`, `item << 5`, `(int)&((MenuItem *)0)[item]`, `item * (int)sizeof(MenuItem)`, `m = menus[level]` first (all 64",,ga
+DbLineEditorLoop,,"the same code), `itemoffset = item; itemoffset *= sizeof(MenuItem);` (70)",70,ga
+DbLineEditorLoop,,the offset as a pointer difference (469),469,ga
+EditRosters,,sel[level] in the select-item path too (struct base 183) or only there (162),162,ga
+EditRosters,,"the two-store resets as `pos[i][1] = 0; pos[i][0] = pos[i][1];` (115), only the three chains (119)",119,ga
+EditRosters,,the close-all loop as a while loop (112),112,ga
+EditRosters,,on the locals base either select draw with item or sel[level] (108,,ga
+EditRosters,,the same code),,ga
+POAfterGame,,"(time). The controller-side code differs in register-cycle picks and in where the zeros come from: the EXE stores ctl2side = 0 as `xor edi, ebp` (w ^ ctl2team, known equal) and zeroes eax with `xor eax, eax` before the s[2] byte load, ours `xor eax, edx` from the equal ctl1team / ctl2team compare. Lane 2b batch 4 (10.0 GA): improved 100 -> 67 (commit 72b9bac, same size): the w == ctl2team branch tests `s[2] == w`, as the w == ctl1team branch does. Tried on the 100 base: `ctl2team == ctl1team[0]` in the first test (127), `ctl1team[0] == w` (100), `ctl1team[0] == s[2]` (100), `s[2] == ctl1team[0]` in the second branch (98), `w == ctl2team` in the first test (110)",110,ga
+POAfterGame,,"on the 67 base: the first branch `s[2] == w` (95), `s[2] == ctl2team` (72), `w == ctl2team` in its test (77",,ga
+POAfterGame,,"with `s[2] == w` 105), `ctl2team == ctl1team[0]` (69), `!=` for the xor (76), idx declared after gn or j (67)",67,ga
+POAfterGame,,"permute.py 385 candidates (55 only with `(char)ctl2team == -1`, not equivalent, 70 without it",,ga
+POAfterGame,,"the f.hw / f.aw chain split 67, `ctl2side = ctl1side[0] = 0` 66 against the EXE's store order, `s = s + 0x2A` 67",,ga
+POAfterGame,,an n temporary: not kept),,ga
+SelectHilight,,"a register-cycle position). Lane 2b batch 4 (10.0 GA): 7 unchanged. Tried: the ListDialog result stored to *idx as its own statement before `if (*idx < 0)` (78, +24), `if (multi != 0)` (7)",7,ga
 wallcoll,,"the friction v through t or s (30, size +3)","30, size +3",ga
 wallcoll,,"the limit through t (11, no gain) or v (21)",21,ga
 wallcoll,,the board-sound t through s (25),25,ga
@@ -3129,6 +3180,59 @@ doshot,,"on the r + r variant: `dx = randomd0(r + r) - r + dx`, `dx = dx + (rand
 doshot,,the f-in-division change (65). On the base: dividing by dist with no f (109),109,ga
 doshot,,"the lift, where the EXE converts passspeed (ebp) and dist (ecx) once for both terms: (unsigned) on both uses of dist and passspeed (59), on dist only (88), `(int)` casts (59-88), commuted constants (45), passspeed through f or e, dist through t or f, or both (64-114)",64-114,ga
 puckfaceoff2,,"the countdown as the else arm of the pflags test instead of after the early return (92, size +3)","92, size +3",ga
+SelectSavedFile,,"(2026-10-24, lane 1a batch 9): exceptional table as one-pointer struct records, integer byte-address sum, byte-array lvalue address, and in-place t *= sizeof(char*) only in exceptional arms (all 15,+4, fresh emulator). All still hoist the shared scale. No source change",,ga
+ResetGameVars,,"(2026-10-24, lane 1a batch 9): zero groups via just-stored penshotmode/shotontarget globals and CwdExciteLvl from shotontarget (26,+1), overlay/text zeros via just-stored bannermsg/textline5 (25), short zero for initial penalty/shot stores plus CwdExciteLvl from shotontarget (26,+1). Fresh emulator. Baseline unchanged",,ga
+TitleScreen,,"(2026-10-24, lane 1a batch 9): two-argument decoders plus declsearch --conflicts --write (37 -> 11, all slot differences)","37 -> 11, all slot differences",ga
+TitleScreen,,"remove left and declsearch --all (best model 12/13, confirmed 72",,ga
+TitleScreen,,no better),,ga
+TitleScreen,,"new natural mask-pixels pointer, fps intermediate, scoped bitmap copy and delay step on two-argument base (11 each)",11 each,ga
+TitleScreen,,int/long elapsed intermediate before MVIf timing test (34 each,,ga
+TitleScreen,,initial misplaced C89 declarations failed and were moved to function scope). Baseline restored. declsearch correctly reports some model mispredictions after conflicts change,,ga
+TitleScreen,,bmp's coalesced frame temporary remains outside its declared-local target set,,ga
+TreeSeriesWinner,,"(2026-10-24, lane 1a batch 9): declsearch --conflicts (all 6 orders, no improvement",,ga
+TreeSeriesWinner,,"47 per-block size sorts, model warns only first is chained)",,ga
+TreeSeriesWinner,,"register qualifier individually on away/i/home, all locals, all parameters, or both (35 each)",35 each,ga
+TreeSeriesWinner,,declarations initializing home then away (46),46,ga
+TreeSeriesWinner,,"with i first (42), and initializing home with away declared first (35)",35,ga
+TreeSeriesWinner,,"i/home/away in a natural state struct (48). All fresh -od emulator compiles, no changes retained",,ga
+SetupStatsSourceMenu,,"(2026-10-24, lane 1a batch 9): meaningful unchecked local assigned in each branch, unsigned/signed char (42), int (37 but 1047 bytes and mov eax,2 in every branch, less faithful to the byte loads)","37 but 1047 bytes and mov eax,2 in every branch, less faithful to the byte loads",ga
+SetupStatsSourceMenu,,"function-initialized unsigned/signed char (60,+33), int (63,+31). Fresh emulator plus real compile on int branch form",,ga
+SetupStatsSourceMenu,,baseline restored because score reduction hides worse constant-load structure,,ga
+GameLoop,,"(2026-10-24, lane 1a batch 9): raw ResetInputSampling result through dead n, dead i, or fresh ticks before frameaccum += value*6 (all 62)",all 62,ga
+GameLoop,,commuted product-plus-frameaccum (62),62,ga
+GameLoop,,n loaded then *=6 before sum (73). Fresh emulator. No improvement retained,,ga
+GameLoop,,shared HandleHotKey_ret still needs owner module,,ga
+DrawSprite,,"(2026-10-24, lane 1a batch 9): flip homing via dead x1/y1 (77,+1 each), r (70,+1), i (72,+6), unused parameter (69,+1)","69,+1",ga
+DrawSprite,,"mirror calculation using dead x directly (110,+14)","110,+14",ga
+DrawSprite,,"s.mode initialized before flip copy (68,+3). Fresh emulator. No change retained",,ga
+GameStatsScreen,,"(2026-10-24, lane 1a batch 9): plain name row plus col through m/x/bank, alone or also name product (86/115,112/109,113/110)","86/115,112/109,113/110",ga
+GameStatsScreen,,"dead col for width (106,+4)","106,+4",ga
+GameStatsScreen,,"module-only move (14,+0)","14,+0",ga
+GameStatsScreen,,"fresh width plus m for col (125, both single/staged half-width), or name product (11 retained / 34 staged)",11 retained / 34 staged,ga
+GameStatsScreen,,fresh width alone (40),40,ga
+GameStatsScreen,,"with percentage multiply/divide stages (28), minutes copy then divide (38), or both time loads through m before x (35). Slotdump confirms EXE slots on retained form. Both builds MATCH",,ga
+TeamStatsScreen,,"(2026-10-24, lane 1a batch 9): guarded product/numerator/quotient through dead x in both cases3/4 (218,+23 /220,+18 /231,+52)","218,+23 /220,+18 /231,+52",ga
+TeamStatsScreen,,"guarded fresh product scoped to each if (216,+1), switch (207,+1), loop (209,+1)","209,+1",ga
+TeamStatsScreen,,"ternary with product assignment scoped to switch (130,+3) or loop (126,+4)","126,+4",ga
+TeamStatsScreen,,"declsearch --conflicts on switch form (5 confirmed orders, best129,+9, all slots correct, division tail still duplicated)","5 confirmed orders, best129,+9, all slots correct, division tail still duplicated",ga
+TeamStatsScreen,,"explicit shared-divide label following EXE statement order using switch product/dead x/w/e (138,+16 /188,+29 /181,+19 /185,+19)","138,+16 /188,+29 /181,+19 /185,+19",ga
+TeamStatsScreen,,"column key pointers via dead p or new keyptr, pointer-add / integer-address forms (193,+10 /162,+3 /168,+33 /179,+4). All fresh emulator",,ga
+TeamStatsScreen,,no improvement retained,,ga
+LoadTeamRoster,,"(2026-10-24, lane 1a batch 9): stats byte pointer via dead p/fresh stats (107,+15 /127,+22)","107,+15 /127,+22",ga
+LoadTeamRoster,,"jersey stores via p (106,+9)","106,+9",ga
+LoadTeamRoster,,initial rating/all substitutions also altered invalid-ID path and were rejected for uninitialized p (187/188,,ga
+LoadTeamRoster,,"corrected valid-ID-only variant123,+56)",,ga
+LoadTeamRoster,,"flat stats struct51,-4 retained, 2-D records62,+1",,ga
+LoadTeamRoster,,"struct with explicit byte base87,+13, staged base114,+10, direct byte-address row62,+1, row byte base67,+1. Removing unused base stays51",,ga
+LoadTeamRoster,,retained source removes it. Both builds MATCH,,ga
+ListDialog,,"(2026-10-24, lane 1a batch 9), fresh emulator: best11 plain copy + declsearch --conflicts (no better, confirmed 15)","no better, confirmed 15",ga
+ListDialog,,bg/bg2/both as byte pointers (11),11,ga
+ListDialog,,bg2 copied after header/first draw/input clear (210/205/206),210/205/206,ga
+ListDialog,,"lh in three arithmetic stages (222,+11), multiplication then addition (27,+2)","27,+2",ga
+ListDialog,,bh copy then increment (15),15,ga
+ListDialog,,header manipulation through dead sz (18),18,ga
+ListDialog,,"bh computed before by and reused in by (20,+8). No improvement retained",,ga
+ListDialog,,original struct restored,,ga
 ExportTeamToFloppy,,"(2026-10-24, lane 1b batch 9): filename dot-position result through new unsigned end or dead team/full/check, first strcmp result through new diff or dead check. All six retain baseline code/diff",,ga
 CreateNewLeague,,"(2026-10-24, lane 1b batch 9): block-local deletion-name pointer, block-local state pointer, named unsigned DiskFreeBytes result, input-name/cancel test expressed with negated conjunction. All remain baseline",,ga
 SkateToSpot,,"(2026-10-24, lane 1b batch 9): chained stop combined with first adx through t, first ady through t, ary through t, final vtoa result through t before assigning d, block-local short turn for final facedir addition, and goal-line Y target through t. No retained change",,ga

@@ -27,6 +27,10 @@ dd PreGameScreen_awaylines
 dd PreGameScreen_play
 dd PreGameScreen_cancel
 dd PreGameScreen_homelines
+; C: src/c/020_29F18_arena_logos/PreGameScreen.c
+%ifdef CBUILD
+%include "c/020_29F18_arena_logos/PreGameScreen.inc"
+%else
 PreGameScreen:
 push dword 6A0h	; 29F28
 call __CHK	; 29F2D
@@ -891,6 +895,7 @@ pop esi	; 2ABDB
 pop ecx	; 2ABDC
 pop ebx	; 2ABDD
 ret	; 2ABDE
+%endif ; C
 ; C: src/c/020_29F18_arena_logos/TonightsGameScreen.c
 %ifdef CBUILD
 %include "c/020_29F18_arena_logos/TonightsGameScreen.inc"

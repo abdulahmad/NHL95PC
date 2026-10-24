@@ -1,11 +1,16 @@
 /* Key and team database: load one team's skaters and goalies. */
-/* DRAFT (10.0 GA): 68 differing instructions, 1044 vs 1041 bytes. Reuse the dead goalie
-   lineup local for each stored stats word before adding its partner; this gives the EXE's
-   copy/load/add order and fixes both spill slots. Left: roster pointer registers, the
-   DEB74 byte-offset shape, and the shared OpenPlayerDBs_x exit. */
+/* DRAFT (10.0 GA): 51 differing instructions, 1037 vs 1041 bytes. A four-int stats-record view
+   gives the skater roster pointer and stored-word copies the EXE's ebx register. Left: team-index
+   temporary registers, the totals offset (sum then shift rather than separately scaled terms),
+   goalie roster/lineup registers, and the shared OpenPlayerDBs_x exit. */
 #define LoadTeamRoster LoadTeamRoster_decl
 #include "nhl95.h"
 #undef LoadTeamRoster
+
+typedef struct {
+    int first, first_total;
+    int second, second_total;
+} RosterStats;
 
 /* LoadTeamRoster: read one team's 25 skaters and 3 goalies into the roster. mode 0 and 2 rate each
  player from the overall bytes; any other mode copies the lineup slot. The exit jumps to OpenPlayerDBs_x. */
@@ -15,7 +20,6 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
     int i;
     int line;
     int gline;
-    int base;
     unsigned char *p;
 
     for (i = 0; i < 25; i++) {
@@ -46,16 +50,15 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
             *(struct { unsigned char b[20]; } *)(unk_DACA0 + team * 500 + i * 20) =
                 *(struct { unsigned char b[20]; } *)(buf + 0xC4);
             if ((mode & 6) == 0) {
-                base = team * 100 + i * 4;
                 if (((unsigned char *)&gameopts)[1] & 2) {
-                    gline = dword_DEB74[base] = *(unsigned short *)(buf + 0xC0);
-                    dword_DEB78[base] = gline + *(unsigned short *)(buf + 0xC2);
-                    gline = dword_DEB7C[base] = *(unsigned short *)(buf + 0x6E);
-                    dword_DEB80[base] = gline + *(unsigned short *)(buf + 0x70);
+                    gline = ((RosterStats *)dword_DEB74)[team * 25 + i].first = *(unsigned short *)(buf + 0xC0);
+                    ((RosterStats *)dword_DEB74)[team * 25 + i].first_total = gline + *(unsigned short *)(buf + 0xC2);
+                    gline = ((RosterStats *)dword_DEB74)[team * 25 + i].second = *(unsigned short *)(buf + 0x6E);
+                    ((RosterStats *)dword_DEB74)[team * 25 + i].second_total = gline + *(unsigned short *)(buf + 0x70);
                 } else {
-                    dword_DEB78[base] = dword_DEB74[base] = 0;
-                    gline = dword_DEB7C[base] = *(unsigned short *)(buf + 0x80);
-                    dword_DEB80[base] = gline + *(unsigned short *)(buf + 0x82);
+                    ((RosterStats *)dword_DEB74)[team * 25 + i].first_total = ((RosterStats *)dword_DEB74)[team * 25 + i].first = 0;
+                    gline = ((RosterStats *)dword_DEB74)[team * 25 + i].second = *(unsigned short *)(buf + 0x80);
+                    ((RosterStats *)dword_DEB74)[team * 25 + i].second_total = gline + *(unsigned short *)(buf + 0x82);
                 }
             }
         } else {

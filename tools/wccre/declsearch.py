@@ -58,7 +58,7 @@ NOLOC = sd.NO_LOCATION
 def parse(text, func):
     """(params, [(block's brace line, [(first line, last line, name)])]): FUNC's parameters and the declarations
     at the top of each block of its body that can move: one name, no initializer, or a structure defined in place
-    (`struct {` ... `} name;`)"""
+    (`struct {` ... `} name;`, on one line or several)"""
     lines = text.split('\n'); b0, b1 = permute.body(lines, func)
     k = b0
     while not re.match(r'^[A-Za-z_].*\b%s\s*\(' % re.escape(func), lines[k]): k -= 1
@@ -82,6 +82,10 @@ def parse(text, func):
             if permute.is_decl(s):
                 if '=' not in t and ',' not in t and not re.match(r'(static|extern|typedef)\b', t):
                     blocks.setdefault(stack[-1][0], []).append((k, k, DECL_NAME.search(t).group(1)))
+                continue
+            m = re.match(r'(struct|union)\s*(\w+\s*)?\{[^{}]*\}\s*([A-Za-z_]\w*)\s*(?:\[[^\]]*\]\s*)*;$', t)
+            if m:
+                blocks.setdefault(stack[-1][0], []).append((k, k, m.group(3)))
                 continue
             if re.match(r'(struct|union)\s*(\w+\s*)?\{$', t):
                 j, depth = k, 0
