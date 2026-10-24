@@ -3331,3 +3331,28 @@ SkaterStatsCard,,"(2026-10-24, lane 1a batch 10): fresh block lookup index int/s
 SkaterStatsCard,,"fresh block lookup address as unsigned-char pointer or int with direct product (9,+3 each). No source retained",,ga
 DrawListItem,,"(2026-10-24, lane 1a batch 10), on A: rectangle y postincrement (31), width -=4 inside rectangle arguments (29), y increment in each switch arm/default (33), final PrintMenuText duplicated in arms/default (48), case-1 fputchar result through dead c/fontheight/top/idx before w-=result (34 each). No source retained",,ga
 checkcheck,type:dir:int,dir as int,46 +3 under GA; not kept,ga
+POInitSchedule,swapdecl:t:,"declaration orders of i, n, g, e, t",tried (docs/UNSURE.md),la
+POInitSchedule,,"day in both loops (10), n for the day (46 / 49)",46 / 49,ga
+POInitSchedule,,a second pointer h for the second conference (37),37,ga
+POInitSchedule,,"the seed copy as pointer arithmetic, `*(int *)(po + i * 4)`, `i[(int *)po]`, unsigned index (all 6)",all 6,ga
+CreateFreeAgent,,"the goalie copy index spelled `*(idx + sp)`, `idx[sp]`, `k[pal]` (all canonicalized: 5)",all canonicalized: 5,ga
+CreateFreeAgent,,"a new source pointer instead of reusing the dead pal (5, same code: a cleaner shape), sp at function scope (5), byte_D0FE0 indexed in place (9, +2)","9, +2",ga
+QueueSpeechClip,,"no kind local, `s->kind` tested in place (7: the kind test matches",,ga
+QueueSpeechClip,,the first queue store gets an index copy in eax),,ga
+QueueSpeechClip,,the last store through the SPEECHQ macro (with kind 7,,ga
+QueueSpeechClip,,"without 20, both stores 23)",,ga
+QueueSpeechClip,,the load / place calls inverted (14),14,ga
+QueueSpeechClip,,"permute.py tempadd / temps / inplace / lvinline (27 new candidates, best the base)","27 new candidates, best the base",ga
+checkob,,"a block-scoped `int lim` assigned in the loop and tested on the left (5: hoisted, so a loop-local copy is hoisted too), `register int extra` with the limit on the left (5)",5,ga
+checkob,,a separate signed char counter for the far-side loop (5),5,ga
+checkob,,"the comma `(y = Y, lim = extra + 0x4E, lim < y)` (20)",20,ga
+checkob,,"permute.py tempadd / temps / inplace / lvinline 4 min (251 candidates, best the base)","251 candidates, best the base",ga
+SelectHilight,,"FreeMemBlock prototyped with a void * or char * argument in this file and called without the int casts (7, same)","7, same",ga
+SelectHilight,,"permute.py tempadd / temps / inplace / lvinline 4 min (247 candidates, best the base)","247 candidates, best the base",ga
+SelectMatchingPlayers,,"`(char *)falist + i * 27 + 8`, `(char *)(falist + i * 27 + 8)`, `i * 27 + (char *)falist + 8` (all 11, +1), k = falist + i * 27 then `k + 8` / `&k[8]` (30, +3), SplitPlayerName prototyped with an unsigned char * name and `&falist[i * 27 + 8]` (7) or `falist + i * 27 + 8` (11)",11,ga
+LoadRosterList,,"(2026-10-24, lane T): `n = 0x1C; for (i = 0; i < n; i++)` on that clear (30",,ga
+LoadRosterList,,the entry stops matching),,ga
+checkcheck,,"(2026-10-24, lane T) and not kept",,ga
+checkcheck,type:dir:int,`int dir`,tried (docs/UNSURE.md),ga
+OpenSpeechBank,,"(2026-10-24, lane T). Frame declaration order left as it is",,ga
+DrawListItems,,shapes listed in docs/UNSURE.md (not itemized),,ga
