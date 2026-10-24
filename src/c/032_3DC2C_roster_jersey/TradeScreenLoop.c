@@ -43,18 +43,17 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
         sub_91FE0(art, mx - 0x1C, my - 0x20);                                                                     \
     }
 
-/* DRAFT (first pass from Ghidra): same size (3,943 bytes), 183 differing under 10.0 GA, most of them stack slots
-   (the submenu path's position reset as two stores moved most slots into place; the submenu path written with
-   depth and `depth++` instead of a k copy, as PlayoffTreeMenu, and the new item drawn as menus[depth][sel[depth]]
-   brought the size back). Under GA a struct of the six arrays plus w, h, item, level, my, mx, oldmy, oldmx and flag (i, as the loop
-   counter, plain) gives the EXE's slots (235 differing), but 3,983 bytes: stores into the struct's arrays make
-   Watcom reload level and item, and w / h from it; the EXE caches them. The
+/* DRAFT (first pass from Ghidra): same size (3,943 bytes), 51 differing under 10.0 GA, every stack slot the EXE's
+   (the submenu path's position reset as two stores; the submenu path written with depth and `depth++` instead of
+   a k copy, as PlayoffTreeMenu, and the new item drawn as menus[depth][sel[depth]] brought the size back). The
    EXE's frame (ebp biased by -72h): picked -9Ah, pos -42h, bg -22h, sel -12h, nitems -2, menus +0Eh, then w, h,
    item, level, my, mx, oldmy, oldmx, flag, i, ptrart, cursor, a cursor * 16h temp, col3, col2, col1, ptr, depth *
-   8 and depth * 4 temps, click, depth (+6Eh). As plain locals the arrays and scalars land in other slots (the
-   orders tried: bg / sel / menus / nitems and col2 / col3 / col1 were the closest); as a frame struct with that
-   layout the members are reloaded and the event pointer spills bits (1,382 differ). The event is also copied to
-   esi as well as ecx, as in DrawShootsField. */
+   8 and depth * 4 temps, click, depth (+6Eh). The arrays and the address-taken scalars have no register
+   conflict, so their slots follow their declaration order through Watcom's size sort (docs/WCC_INTERNALS.md
+   "Stack slots"): the order below, found with slotdump's Python copy of the sorts, gives all of them. Left:
+   DRAGJERSEY's colour bytes in dh / dl and its jersey index (the EXE adds the doubled cursor offset first, ours
+   folds it into `[edx+eax*2]`), the dropdown close loop's bg[i] registers, the cursor load into edi, and the
+   event copied to esi as well as ecx, as in DrawShootsField. */
 /* TradeScreenLoop (3EF89, PC only): the trade screen's loop, RunMenu's menu engine with the trade screen added.
    Clear the four trade buttons' players (picked, 16h bytes each: position, jersey number, ...), draw the screen
    (DrawTradeScreen), save the screen under the hand pointer (POINTER block, the Pntr2 art's size plus one) and
@@ -72,22 +71,22 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
 int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slots, MenuItem *bar, int bank, int font,
     int n)
 {
-    int bg[4];
-    int sel[4];
+    int i;
     MenuItem *menus[4];
     int nitems[4];
+    int oldmx;
     int pos[4][2];
     TrEntry picked[4];
-    int w;
-    int h;
-    int item;
-    int level;
-    int my;
-    int mx;
     int oldmy;
+    int mx;
+    int my;
+    int level;
+    int item;
+    int h;
+    int w;
+    int sel[4];
+    int bg[4];
     int flag;
-    int oldmx;
-    int i;
     int ptrart;
     int cursor;
     int col3;
