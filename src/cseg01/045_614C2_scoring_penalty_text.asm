@@ -2725,6 +2725,10 @@ pop edx	; 63471
 pop ecx	; 63472
 pop ebx	; 63473
 ret	; 63474
+; C: src/c/045_614C2_scoring_penalty_text/InProgress.c (chkprogress_go)
+%ifdef CBUILD
+%include "c/045_614C2_scoring_penalty_text/InProgress.chkprogress_go.inc"
+%else
 chkprogress_go:
 mov di, word [refsignal]	; 63475
 dec edi	; 6347C
@@ -2775,6 +2779,7 @@ pop esi	; 6353F
 pop edx	; 63540
 pop ebx	; 63541
 ret	; 63542
+%endif ; C
 ; C: src/c/045_614C2_scoring_penalty_text/Stop4Pen.c
 %ifdef CBUILD
 %include "c/045_614C2_scoring_penalty_text/Stop4Pen.inc"
