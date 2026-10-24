@@ -3045,3 +3045,26 @@ PlayMVI,,the frame as a plain local in each position (46),46,ga
 PlayMVI,,"permute.py once on the 18 base (321 candidates, nothing better)","321 candidates, nothing better",ga
 ReplaySaveHilight,,(time),,ga
 DrawLockerJersey,,(time),,ga
+passtoa0,,sp short alone (73,,ga
+passtoa0,,"the products still narrowed), `r = vx * vx + vy * vy - sp * sp; s.k = r` with sp short (85), `(long)` on the squares (48, no change)","48, no change",ga
+passtoa0,,"the sum and the difference in two statements through r (83), `-(sp * sp) + ...` (53)",53,ga
+passtoa0,,"the speed through r (89), vx / vy as plain short locals outside the struct (115, products still narrowed)","115, products still narrowed",ga
+doshot,,"the radius product's operands swapped (canonicalized, 47)","canonicalized, 47",ga
+doshot,,"the sum through t or the product through t (56), `0x10 - sp + (passspeed >> 4)` (87)",87,ga
+doshot,,q replaced by the dead sp (64,,ga
+doshot,,"with the r + r form 76: q's copies then match), by the dead gy (86), by the dead int e (159), q as int (79)",79,ga
+doshot,type:q:int,q as int,tried (docs/UNSURE.md),ga
+checkpuckcoll,,(every role split is listed above),,ga
+setplayer,,"`gameclock < (short)(PerTimeTotal >> 1)` (98), `gameclock < PerTimeTotal / 2` (108)",108,ga
+setplayer,,"permute.py once on the new version (330 candidates: best 81 with td loaded after the zero stores and operand swaps of the rating sums, rejected: the EXE loads td first)","330 candidates: best 81 with td loaded after the zero stores and operand swaps of the rating sums, rejected: the EXE loads td first",ga
+LoadGameState,,"the goalie address as `i / 3 * 18 + i % 3 * 6`, `(i / 3 * 9 + i % 3 * 3) * 2`, terms swapped, shifts, `i % 3 * 6`",,ga
+LoadGameState,,"a 2-D array, `(short *)` indexing",,ga
+LoadGameState,,a braced body (37-57),37-57,ga
+LoadGameState,,"the skater row as `i / 25 * 400`, `(i / 25 * 25 + i % 25) * 16`, terms swapped",,ga
+LoadGameState,,a 2-D array (37-51),37-51,ga
+LoadGameState,,the photo bit as `x = x | ...` either order (114),114,ga
+LoadGameState,,the frame index operands swapped (37),37,ga
+LoadGameState,,"`id = o->id = *p` (43), `id = *p` (37), `o->first = byte_CCE00[id]` (46), `&((LRinkObj *)word_DEE94)[i]` (37)",37,ga
+LoadGameState,,"the hud copies indexed, `for (i = 0, pl = SortCords; ...)` (111), `OOlistpos[i] = OOlist[i] = i` (47), `pl = &SortCords[i]` (44)",44,ga
+LoadGameState,,the ovl test operands swapped (45),45,ga
+DrawRinkSideObjects,,"the vy test as `0x140 - vy - 0xA8` (175), `0x140 - (0xA8 + vy)` (118, no change), `0x140 - (vy + 0xA8) > y` (165), y read before x (120), `f = k - k` for the zero (156)",156,ga
