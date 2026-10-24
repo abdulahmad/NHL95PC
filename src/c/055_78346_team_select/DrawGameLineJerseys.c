@@ -1,16 +1,16 @@
 /* DrawGameLineJerseys - game line editor: draw the 28h line slot jerseys (MakeJerseyShape with nums[i] in the team's colours, byte_D11BC byte_D12DE through jerseyremap) at lineslotx/y, then for the 1Ch dressed players (gmroster, 16h bytes each) print "<num> <name>" in the colour of their roster status (side's roster, 27h bytes per player, 444h per team): 1 C2h, 2 FCh before the game C2h, 3-4 C3h, 5-6 and 8 C2h, 7 unchanged; stops at the first empty status.
-   DRAFT (10.0 GA, 11 differing, +4): the status is read in place in the test and the switch (Watcom keeps it in
-   dl), and case 2 is a ternary. Left: the jersey loop loads nums into edx and widens nums[i] with `and edx, 0FFh`,
-   the EXE loads nums into eax and clears edx first (`xor edx, edx / mov dl, [esi+eax]`). */
+   The status is read in place in the test and the switch (Watcom keeps it in dl), and case 2 is a ternary. The
+   declaration order (i and col before the colour bytes, c2 before c1) gives the nums[i] address temporary eax
+   (`xor edx, edx / mov dl, [esi+eax]`) and the side / c2 / c1 byte slots +24h / +28h / +2Ch. */
 #include "nhl95.h"
 
 void DrawGameLineJerseys(unsigned char *nums, int art, unsigned char side)
 {
     char buf[32];
-    unsigned char c2;
-    unsigned char c1;
     int i;
     int col;
+    unsigned char c2;
+    unsigned char c1;
 
     c1 = byte_D11BC[(side ? VisTeam : HomeTeam) * 4];
     c1 = jerseyremap[c1];

@@ -34,6 +34,10 @@ dd DrawGameLineJerseys_st0
 dd DrawGameLineJerseys_st0
 dd DrawGameLineJerseys_join
 dd DrawGameLineJerseys_st0
+; C: src/c/055_78346_team_select/DrawGameLineJerseys.c
+%ifdef CBUILD
+%include "c/055_78346_team_select/DrawGameLineJerseys.inc"
+%else
 DrawGameLineJerseys:
 push dword 58h	; 78366
 call __CHK	; 7836B
@@ -176,6 +180,7 @@ pop edi	; 784FC
 pop esi	; 784FD
 pop ecx	; 784FE
 ret	; 784FF
+%endif ; C
 ; C: src/c/055_78346_team_select/DrawLineEditorScreen.c
 %ifdef CBUILD
 %include "c/055_78346_team_select/DrawLineEditorScreen.inc"
