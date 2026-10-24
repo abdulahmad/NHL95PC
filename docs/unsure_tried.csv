@@ -3668,6 +3668,18 @@ SkateToSpot,,"the spa1 block running to the end (8), d block-local (92)",92,ga
 SkateToSpot,,"the vtoa and facedir step as one statement (31), vtoa arguments without casts (84), spa2 declared after d (78)",78,ga
 SkateToSpot,,the chained stop on the block form (122),122,ga
 SkateToSpot,,"permute.py from the block form (321 candidates, best 8)","321 candidates, best 8",ga
+ReassignCtlPlayer,,"(2026-10-24, lane 1 batch 14), on the old base: `pl != ...` with every combination of short n, py order, px order and the cast (11-18)",11-18,ga
+ReassignCtlPlayer,,"on the new base: 65 orders of py / best / px with pl at each position (9 best), 66 single moves of team / pnum / p / n / dx / d / bestd (9), px / py / dx / d scoped (9-19), px as `(px - X) * (px - X)` without dx (21), px in two or three statements (20 / 33), both px and py split (36)",36,ga
+DrawRinkOverlays,,"(2026-10-24, lane 1 batch 14): *puckc read in place instead of c (the StartPer pattern) in the ys[2] test (81), in the carrier marker (87), both without c (86, +2), each of those with the ternary clamp (103 / 86 +1 / 87 +11)",103 / 86 +1 / 87 +11,ga
+DrawRinkOverlays,,"for the number block (EXE `cmp word [esi+6Ah], 0Ch` in memory, then *puckc and a fresh SCnum load into dx",,ga
+DrawRinkOverlays,,"C loads SCnum into bx once): `s < 0xC` (74), s in the three compares (91), both (88), `q->SCnum == *puckc` first (73), `s < 6` for the team flag (124)",124,ga
+DrawRinkOverlays,,97 single declaration moves of i / s / x / y / fl / q / c / z (none below 73),none below 73,ga
+setplayer,,"(2026-10-24, lane 1 batch 14): 49 single declaration moves of rg / t / td / r / q / v / d / as (all 93)",all 93,ga
+checkob,,"(2026-10-24, lane 1 batch 14): extra as a Reg68 union local (`extra.l`, limit right 2, limit left 5: still hoisted), `extra + 0x4E < (short)(o->Ypos >> 16)` (12)",12,ga
+checkob,,"the same with the first loop's Y as `(short)` too (12), `(short)(o->Ypos >> 16) > extra + 0x4E` (14)",14,ga
+SelectHilight,,"(2026-10-24, lane 1 batch 14), all 7: `tbl[i] = &strs[i * 0x51]`, `strcpy(&strs[i * 0x51], ...)`, both, `marks[0][i] = 0`, `0x9652 * i`, `marks[0]` as the ListDialog argument, `n * sizeof(char *)`, `i * 0x51 + strs` in either statement",,ga
+SelectHilight,,"permute.py 5 min (321 candidates, exhausted, best the base). The matched sibling ChooseLeagueController (the same allocate / ListDialog / free pattern) pushes its two frees from edi / ebp, so it gives no shape hint",,ga
+SelectMatchingPlayers,,shapes listed in docs/UNSURE.md (not itemized),,ga
 POInitSchedule,,"a 6-byte game struct for g in the three loops (`g[i].m` / `g[i].d`, `g++` in the clear loop: 6)","`g[i].m` / `g[i].d`, `g++` in the clear loop: 6",ga
 POInitSchedule,,the seed copy through a struct cast with an int seeds[16] member (6),6,ga
 POInitSchedule,,the seed copy as a do-while (6),6,ga

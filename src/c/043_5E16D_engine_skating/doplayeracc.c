@@ -10,7 +10,8 @@
  noturn0. Otherwise turn facedir by ftab times $300 - speed (at least $180, regd4; reversed backwards), with a
  turn animation (left / right from the ftab sign and attribute bit 3; the referee his own) above speed 20, then
  accelerate (playeracc) facing facedir (flipped by 4 backwards) above speed 2. Speed squared >> 16 is regd3.
- No result. */
+ No result. The puck's y lead is one expression, `*pucky + HIBYTE(*puckvy) - y`: Watcom spills the byte to
+ [esp] and adds *pucky from a register, as the EXE. */
 void doplayeracc(Player *p, short dir)
 {
     short spa;
@@ -19,7 +20,6 @@ void doplayeracc(Player *p, short dir)
     short y, dy;
     short t;
     int xv, yv;
-    short vy;
 
     if (p->position == 0) {
         goalieacc(p, dir);
@@ -33,7 +33,7 @@ void doplayeracc(Player *p, short dir)
     } else spa = SPAglide;
     dir &= 0xF;
     if (dir > 7) {
-        if (dir == 9 && (xv = p->Xvel, (p->Yvel | xv))) {    /* the comma loads Xvel first, as the EXE */
+        if (dir == 9 && (p->Xvel | p->Yvel)) {
             dostop(p);
             return;
         }
@@ -44,9 +44,7 @@ void doplayeracc(Player *p, short dir)
     if (*puckc == p->SCnum) goto clrrev;
     dx = *puckx - HIWORD(p->Xpos);
     y = HIWORD(p->Ypos);
-    vy = HIBYTE(*puckvy);
-    dy = vy + *pucky;
-    dy -= y;
+    dy = *pucky + HIBYTE(*puckvy) - y;
     if (!(p->pflags & pfgoal)) {
         dx = -dx;
         y = -y;
