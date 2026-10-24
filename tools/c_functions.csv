@@ -186,12 +186,12 @@ CmpTeamPP,2312D,394,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpTeamS
 CmpTeamPK,232B7,384,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpTeamStandings.c,matched,"draft (in CmpTeamStandings.c, kept first so the shared epilogue stays in CmpTeamPK): same ratio slot swap as CmpTeamPP. See UNSURE.",
 CmpTeamPenalties,23437,352,017_21CDE_player_stats,src/c/017_21CDE_player_stats/CmpTeamStandings.c,matched,,
 GoalieStatsCard,22581,2141,017_21CDE_player_stats,src/c/017_21CDE_player_stats/GoalieStatsCard.c,matched,,
-LeadersScreen,25B24,3782,017_21CDE_player_stats,src/c/017_21CDE_player_stats/LeadersScreen.c,nonmatching,"first pass (Ghidra): 3,561 of 3,782 bytes",register 51/77
+LeadersScreen,25B24,3782,017_21CDE_player_stats,src/c/017_21CDE_player_stats/LeadersScreen.c,nonmatching,"first pass (Ghidra): 3,561 of 3,782 bytes",register 23/39
 PlayerFromMouseY,24453,143,017_21CDE_player_stats,src/c/017_21CDE_player_stats/PlayerFromMouseY.c,matched,,
 SkaterStatsCard,21CDE,2211,017_21CDE_player_stats,src/c/017_21CDE_player_stats/SkaterStatsCard.c,nonmatching,,size 2/3
 TeamFromMouse,26B5A,1318,017_21CDE_player_stats,src/c/017_21CDE_player_stats/TeamFromMouse.c,matched,,
 TeamRosterScreen,244E2,3170,017_21CDE_player_stats,src/c/017_21CDE_player_stats/TeamRosterScreen.c,matched,"draft (own file): 3169 vs 3170, 37 lines (spilled scalar slot order, one copy register pick). See docs/UNSURE.md.",
-TeamStatsScreen,235BE,3733,017_21CDE_player_stats,src/c/017_21CDE_player_stats/TeamStatsScreen.c,nonmatching,"draft (own file): 3742 vs 3733, 172 lines (scalar slots, shared key tails). See docs/UNSURE.md.",size 52/99
+TeamStatsScreen,235BE,3733,017_21CDE_player_stats,src/c/017_21CDE_player_stats/TeamStatsScreen.c,nonmatching,"draft (own file): 3742 vs 3733, 172 lines (scalar slots, shared key tails). See docs/UNSURE.md.",size 40/72
 CountSeriesWins,27C34,872,018_27080_standings_playoffs,src/c/018_27080_standings_playoffs/CountSeriesWins.c,matched,"draft: 904 vs 872, -od. Argument homes, i at ebp-10h and the 3Ch frame match. sched is at ebp-0Ch and the game pointer at ebp-8 (original ebp-8 and ebp-4). Do not drop the game-byte pointer; the frame shrinks to 38h.",
 HighlightTreeSlot,2785F,868,018_27080_standings_playoffs,src/c/018_27080_standings_playoffs/HighlightTreeSlot.c,matched,,
 MoveTreeHighlight,27BC3,113,018_27080_standings_playoffs,src/c/018_27080_standings_playoffs/MoveTreeHighlight.c,matched,,
@@ -401,7 +401,7 @@ GoalieToPuckVec,4B467,130,037_4842A_engine_player_logic,src/c/037_4842A_engine_p
 MoveInDir,49260,153,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/MoveInDir.c,matched,,
 NextPathPoint,4F99B,84,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/NextPathPoint.c,matched,,
 SetLCmode,4D9FC,59,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/SetLCmode.c,matched,,
-SkateToSpot,4E292,1160,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/SkateToSpot.c,nonmatching,,size 2/2
+SkateToSpot,4E292,1160,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/SkateToSpot.c,nonmatching,,register 5/8
 StarCompare,4883B,653,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StarCompare.c,nonmatching,"draft: 619 vs 653. The *a%25 remainder is stored at esp+4 and the second point total takes ebp (original keeps that index in ebp and the total at esp+8). Frame is 0Ch not 10h. Do not retry register, an inner block, or a one-element array for that total.",register 33/65
 StarEligible,487D9,98,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StarEligible.c,matched,registers: asm copies pl to ecx and builds side*256 in edx / pl in ebx for the tmpdst read; C uses ebx/edx swapped (2 bytes),
 StartFaceoffLineChange,4DA37,68,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/StartFaceoffLineChange.c,matched,,
@@ -411,7 +411,7 @@ StopIfFree,4A80E,36,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_
 a2offsides,4DCDD,116,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/a2offsides.c,matched,,
 a2touchpuck,4DE14,400,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/a2touchpuck.c,matched,,
 ass_pc_slot20,49460,344,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/ass_pc_slot20.c,matched,"register allocation: side flag kept in ecx (EXE edx), so the first path lookup indexes differently; logic complete",
-assbench,4B12C,827,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assbench.c,nonmatching,,register 6/8
+assbench,4B12C,827,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assbench.c,nonmatching,,register 4/6
 assbenchside,49BC2,283,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assbenchside.c,matched,,
 assboxenter,499D8,490,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/assboxenter.c,matched,,
 asscenterd,4A53A,290,037_4842A_engine_player_logic,src/c/037_4842A_engine_player_logic/asscenterd.c,matched,,
