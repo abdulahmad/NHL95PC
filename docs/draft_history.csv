@@ -314,7 +314,7 @@ doplayeracc,StaticEck2026,2026-10-24,GA,5,5,"regsolve.py: nothing predicted (a f
 CreateFreeAgent,StaticEck2026,2026-10-24,GA,5,2,"regsolve.py: no named-variable vote. permute.py tempadd: the career size through an extra int copy, EXE bytes (the 2 are msglines false positives; trial mark MATCH). Natural KB / cluster / pointer forms 5-12. ESCALATE: tie-breaker copy, not marked."
 QueueSpeechClip,StaticEck2026,2026-10-24,GA,6,6,"No kind local (7), SPEECHQ macro stores (7-23), inverted calls (14); permute.py tempadd/temps 27 candidates."
 POInitSchedule,StaticEck2026,2026-10-24,GA,6,0,"permute.py tempadd: sched and day copies give the EXE bytes (trial mark MATCH); natural day / pointer forms 10-49. ESCALATE: tie-breaker copies, not marked."
-assrefpenshot,StaticEck2026,2026-10-24,GA,7,0,"match: the puck stop as one chain ending in the puckvz store (7 -> 5), then (r - facedir) & 7 without the unsigned char cast."
+assrefpenshot,StaticEck2026,2026-10-24,GA,7,0,"match: the puck stop as one chain ending in the puckvz store (7 -> 5), then (r - facedir) & 7 without the unsigned char cast; the ten gotos of the old draft replaced by returns and one guarded block with the skate tail last (still the EXE bytes, no goto)."
 SelectMatchingPlayers,StaticEck2026,2026-10-24,GA,7,7,"Base-first address spellings (11-30), SplitPlayerName with an unsigned char * name (7-11)."
 SelectHilight,StaticEck2026,2026-10-24,GA,7,7,FreeMemBlock with a pointer prototype (7); permute.py tempadd/temps 247 candidates.
 changeplayer,StaticEck2026,2026-10-24,GA,10,10,regsolve.py: predicted swaps already tried. Skip / && / store order forms (10-12); permute.py tempadd/temps 68 candidates.
