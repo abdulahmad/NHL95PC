@@ -58,9 +58,9 @@ void __cdecl sub_1B18B(int stream);
 void sub_8FB8E(int song, int handle, int a, int b);
 int __cdecl GetTicks(void);                              /* timer library (stack arguments, as SetTickDeadline) */
 
-/* DRAFT: 733 vs 732 under 10.0 GA (13 differing; sub_1B002 / sub_1AD16 take the chunk in edx, GetTicks is the
-   cdecl timer library): the decoded frame is spilled to a slot of its own (frame 34h, EXE 30h re-reads s.frame);
-   see docs/UNSURE.md. */
+/* DRAFT: 732 vs 732 under 10.0 GA (6 differing; sub_1B002 / sub_1AD16 take the chunk in edx, GetTicks is the
+   cdecl timer library): the locals are plain ints and x / y the parameters' own slots; five of them tie at use
+   count 21 (bad, x, y, nframes, delay) and x / nframes / y land in each other's slots; see docs/UNSURE.md. */
 /* PlayMVI (8BEDB, PC only): play the movie file path at x / y through the cdstream reader (493E0h-byte buffer,
    2000h chunks) and the cmv_player decoder, after letting the reader prime for 96h ticks. Per chunk: 'MVIh'
    sets up the decoder, clears the 228 x 176 picture, loads its palette and the frame delay (100 / rate);
@@ -71,88 +71,82 @@ int __cdecl GetTicks(void);                              /* timer library (stack
    the end of the file, else 0. */
 int PlayMVI(char *path, int x, int y)
 {
-    struct {
-        int frame;
-        int chunk;
-        unsigned id;
-        int delay;
-        int nframes;
-        int y;
-        int x;
-        int bad;
-        int stream;
-        int t0;
-        int ends;
-        int due;
-    } s;
+    int frame;
+    int delay;
+    unsigned id;
+    int bad;
+    int nframes;
+    int chunk;
+    int stream;
+    int t0;
+    int ends;
+    int due;
     int key;
     int dec;
     int n;
     int el;
 
-    s.x = x;
-    s.y = y;
     ClearInputQueue();
     sub_B4BA8();
-    s.stream = sub_1B0F3(0x493E0, 0x2000, 0x20);
-    sub_1B1C2(s.stream, path);
+    stream = sub_1B0F3(0x493E0, 0x2000, 0x20);
+    sub_1B1C2(stream, path);
     dec = sub_1AC25();
     SetTickDeadline(0x96);
     while (!TickDeadlinePassed()) sub_1B2A7();
-    s.delay = 10;
-    s.nframes = n = 0;
+    delay = 10;
+    nframes = n = 0;
     GetTicks();
     key = 0;
-    s.bad = 0;
-    s.due = 0;
-    s.t0 = GetTicks();
-    s.ends = 0;
+    bad = 0;
+    due = 0;
+    t0 = GetTicks();
+    ends = 0;
     sub_1B2A7();
     do {
-        s.chunk = sub_1B8AC(s.stream);
-        if (s.chunk == -1) {
-            key = s.chunk;
-        } else if (s.chunk) {
-            switch (s.id = ReadBE32((signed char *)s.chunk)) {
+        chunk = sub_1B8AC(stream);
+        if (chunk == -1) {
+            key = chunk;
+        } else if (chunk) {
+            switch (id = ReadBE32((signed char *)chunk)) {
             case 0x4D564966:
                 if (n > 1) {
-                    s.due += s.delay;
-                    s.frame = sub_1B002(dec, s.chunk);
-                    if (GetTicks() - s.t0 < s.due) sub_910E0(s.frame, s.x, s.y);
-                    if (!s.ends && n == s.nframes) {
-                        if (musicon && (el = songdata) != 0) sub_8FB8E(el, musichandle, 3, 0x7F);
-                        s.t0 = GetTicks();
+                    due += delay;
+                    frame = sub_1B002(dec, chunk);
+                    if (GetTicks() - t0 < due) sub_910E0(frame, x, y);
+                    if (!ends && n == nframes) {
+                        if (musicon && songdata) sub_8FB8E(songdata, musichandle, 3, 0x7F);
+                        t0 = GetTicks();
                     }
                     n--;
                 }
                 break;
             case 0x4D564968:
-                sub_1AD16(dec, s.chunk);
-                s.nframes = n = sub_1B092(dec);
-                sub_90D20(s.x, s.y, 0xE4, 0xB0, 0);
+                sub_1AD16(dec, chunk);
+                nframes = n = sub_1B092(dec);
+                sub_90D20(x, y, 0xE4, 0xB0, 0);
                 sub_B4B88(sub_1B0C9(dec), sub_1B0D7(dec), (unsigned char *)sub_1B0E5(dec));
-                s.delay = 100 / sub_1B0BB(dec);
+                delay = 100 / sub_1B0BB(dec);
                 break;
             case 0x4D564965:
-                s.ends++;
+                ends++;
                 break;
             default:
-                s.bad = 1;
+                bad = 1;
                 break;
             }
-            sub_1B92E(s.stream, s.chunk);
+            sub_1B92E(stream, chunk);
             sub_1B2A7();
-            if (s.id == 0x4D564966 && (el = GetTicks() - s.t0) < s.due) {
-                SetTickDeadline(s.due - el);
+            if (id == 0x4D564966 && (el = GetTicks() - t0) < due) {
+                SetTickDeadline(due - el);
                 while (!TickDeadlinePassed() && !key) key = AnyInputPressed();
             }
         } else {
             sub_1B2A7();
         }
         if (!key) key = AnyInputPressed();
-    } while (!key && !s.bad && s.ends != 3);
+    } while (!key && !bad && ends != 3);
     sub_1ACF1(dec);
-    sub_1B18B(s.stream);
+    sub_1B18B(stream);
     if (musicon && songdata) {
         while (!key && !sub_8FC8A(musicslot, 3)) key = WaitClickTimeout(10);
         sub_8FCDF(musichandle, 3, 0x50);
