@@ -97,6 +97,10 @@ The segment naming queue in [SEGMENT_AGENT.md](SEGMENT_AGENT.md) is **complete**
 * `tools/auto_names.py` lists what is still unnamed in a segment.
 * `tools/update_symbols.py` regenerates `src/inc/symbols.inc`.
 
+## AI assistance
+
+This project is AI-assisted. The work is directed by a strict ruleset and curated by hand, with the aim of producing correctly labelled and commented code that matches the spirit of what the original source code would have been. We can't guarantee it's perfect, and ultimately this will always be a work in progress. If you see something that needs fixing, raise an issue, or even better, raise a PR.
+
 ## Credits
 
 Thanks to **chaos**, **StaticEck** and **McMarkis** for help with the disassemblies.
