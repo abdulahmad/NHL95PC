@@ -3331,6 +3331,21 @@ SkaterStatsCard,,"(2026-10-24, lane 1a batch 10): fresh block lookup index int/s
 SkaterStatsCard,,"fresh block lookup address as unsigned-char pointer or int with direct product (9,+3 each). No source retained",,ga
 DrawListItem,,"(2026-10-24, lane 1a batch 10), on A: rectangle y postincrement (31), width -=4 inside rectangle arguments (29), y increment in each switch arm/default (33), final PrintMenuText duplicated in arms/default (48), case-1 fputchar result through dead c/fontheight/top/idx before w-=result (34 each). No source retained",,ga
 checkcheck,type:dir:int,dir as int,46 +3 under GA; not kept,ga
+POHandleElimination,,"(2026-10-24, lane 1 batch 12): the branches as `switch (mode) { case 1: ... break; default: ... }` (13) and with an added `case 0:` (19)",19,ga
+POHandleElimination,,the champion fix as `if (pochampion != -1) ; else` (13),13,ga
+wallcoll,,"(2026-10-24, lane 1 batch 12) with lim: lim declared first / middle / last / in the dword_CCC2C block (35 each before re-tuning), all 32 operand orders of the regd2 / regd3 pair (best 12), of the puck pair (best 11) and of the player pair (14 at best), all 24 orders of t, s, v, lim (11)",11,ga
+wallcoll,,the limit through v (22),22,ga
+wallcoll,,the sound arms as `> 0xA` first / else-if (31),31,ga
+dopass,,"(2026-10-24, lane 1 batch 12): `dx * dx + (dy * dy + (!d ? 0 : 0x10000))` (27), `(!d ? 0 : 0x10000) + dy * dy + dx * dx` (26), `dy * dy + (!d ? 0 : 0x10000) + dx * dx` (26), `dx * dx + (!d ? 0 : 0x10000) + dy * dy` (27), `(!d ? 0 : 0x10000) + (dx * dx + dy * dy)` (17)",17,ga
+LoadGameRoster,,"(2026-10-24, lane 1 batch 12): `gmrosterslot[(n = s.i * 11) * 2] = s.i` (21), `unsigned n` (25), `n = 11 * s.i; gmrosterslot[2 * n]` (21), loop 1 with `s.i++;` in the body and `while (s.i < 0x1C)` (21)",21,ga
+LoadGameRoster,type:n:unsigned,`unsigned n`,tried (docs/UNSURE.md),ga
+doshot,,"(2026-10-24, lane 1 batch 12): each of sp, r, dist, z, q, e, f, gy moved to every declaration position (82 orders, best 45, no change)","82 orders, best 45, no change",ga
+checkgoal,,"(2026-10-24, lane 1 batch 12) on the goto-free structure: short z (17/14), unsigned short z (17), unsigned z (4 before the wall fix), `x = -y` (17), `y = -y; x = y` (6), `x = y = -y` (6), `p->Zvel = -y >> 1` (18), short z with `x = z >> 1` (19), `x = (z = -y) >> 1` (19), `p->Zvel = z >> 1` (19), int z with `x = z >> 1` (18), short z `z = y; x = -z` (14), short z `x = z = -y` (14), int z `x = z = -y` (1, same), short z `z = y; z = -z` (14)",14,ga
+checkgoal,,"flag zero: `onetimerflag = 0; shotongoal = onetimerflag` (4), split stores (4), Zpos test as `== 0xD ; else` (4), one early return for the regd3 test only (4). A short z is always coalesced into x (bx) and drops the edx copy",,ga
+RosterPanelClick,,"(2026-10-24, lane 1 batch 12): regsolve",,ga
+RosterPanelClick,,"permute.py 5 min (321 candidates, best base 9",,ga
+RosterPanelClick,,permlog_b12off.csv),,ga
+SetRosterTeamMenus,,"(2026-10-24, lane 1 batch 12): one function-level i for both halves (28), `d <<= 3` before the stores (11), `(int)0` handler stores (11), i declared first (11)",11,ga
 SkateToSpot,,"(2026-10-24, lane 1 batch 12), each with the chained stop: alone (42), ayp without t (68), `!=` for the Yvel sign test (35), `HIBYTE(p->temp2) == 0` (42), `(p->facedir + (d < 5 ? 1 : -1)) & 7` (42), `p->Xvel = p->Xvel - p->Xvel / 4` (42), vtoa arguments without casts (39)",39,ga
 SkateToSpot,,"the stop test as `!(adx >= 8 || ady >= 8)` (30), `0xF2 > ary` (42), `p->SPA == axp` (42), inverted test + `!=` (24, size +4: the stop and the first B2h bytes match, then `cmp` vs EXE `xor` for the `!=` and slot swaps of t / ayp), inverted test + no-cast vtoa (38), `!=` + no-cast vtoa (32)",32,ga
 SkateToSpot,,split stop with `!=` (71),71,ga
@@ -3357,4 +3372,9 @@ LoadRosterList,,the entry stops matching),,ga
 checkcheck,,"(2026-10-24, lane T) and not kept",,ga
 checkcheck,type:dir:int,`int dir`,tried (docs/UNSURE.md),ga
 OpenSpeechBank,,"(2026-10-24, lane T). Frame declaration order left as it is",,ga
+OpenSpeechBank,,"(2026-10-24, lane 1 batch 12) on the 17 shape: moving each of i, off, pos, c, cnt to every declaration position (52 orders, all 17), OFFD / SLOTD for the 0x0E / 0x12 / 0x1A / 0x22 stores (17), `cnt = Swap16(w3)` for the w3 store (23)",23,ga
+OpenSpeechBank,,"permute.py 5 min on that base (321 candidates, best base 17",,ga
+OpenSpeechBank,,permlog_b12off.csv),,ga
+OpenSpeechBank,,"only one of the two changes: int type alone 43, int nsamples alone 42",,ga
+OpenSpeechBank,type:nsamples:int,`int nsamples`,tried (docs/UNSURE.md),ga
 DrawListItems,,shapes listed in docs/UNSURE.md (not itemized),,ga

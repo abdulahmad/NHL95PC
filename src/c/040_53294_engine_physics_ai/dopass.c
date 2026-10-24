@@ -299,16 +299,23 @@ void doshot(Player *p)
    impact 0Ah or more, not dword_CCC2C) plays B1h, the speed across is quartered and at least 3E8h back; with
    dword_CCC2C set (a goal-net hit) a player stopped at the side posts (|old x| 18h) or past the net's back keeps
    its old position on that axis. Then dword_CCC2C and an upward Zvel clear. No result. */
+/* DRAFT (10.0 GA, 11 differing, same size): no goto (each board-sound arm calls sfx itself; Watcom merges the two
+   calls) and the goal-net y limit in its own lim. Left: the puck branch's Yvel sum lands in eax (EXE edx), a tie
+   of the unstable sort. With the limit in the dead sound short s (or t) instead of lim, and the puck branch's
+   products as `regd0.w * regd3.w - regd1.w * regd2.w` / `regd1.w * regd3.w + regd0.w * regd2.w` and the regd3
+   sum as `regd0.w * p->Xvel + regd1.w * p->Yvel`, it compiles to the EXE bytes, but that is dead-variable reuse
+   (ESCALATE); see docs/UNSURE.md. */
 void wallcoll(Player *p)
 {
     short t;
     short s;
     short v;
+    short lim;
 
     p->Wallcos = regd0.w;
     p->Wallsin = regd1.w;
     regd2.w = -(short)((regd0.w * p->Yvel - p->Xvel * regd1.w) >> 8);
-    regd3.w = (regd0.w * p->Xvel + regd1.w * p->Yvel) >> 8;
+    regd3.w = (p->Xvel * regd0.w + p->Yvel * regd1.w) >> 8;
     if (p->SCnum == 0xE) {
         gmode2 &= 0xEF;
         passplayer = -1;
@@ -324,27 +331,28 @@ void wallcoll(Player *p)
                 t = (regd2.w >> 10) + 4;
                 if (t < 0) t = 0;
                 if ((unsigned short)HIWORD(p->Zpos) <= 0xA) {
-                    if (*puckc >= 0) goto slow;
-                    s = t % 3;
-                    if (s == 2) s = 0x95;
-                    else if (s == 1) s = 0x7B;
-                    else s = 0xAD;
+                    if (*puckc < 0) {
+                        s = t % 3;
+                        if (s == 2) s = 0x95;
+                        else if (s == 1) s = 0x7B;
+                        else s = 0xAD;
+                        sfx(s);
+                    }
                 } else {
                     s = randomd0(3);
                     if (s == 0) s = 0xAF;
                     else if (s == 1) s = 0xA5;
                     else s = 0xA7;
+                    sfx(s);
                 }
-                sfx(s);
             }
         }
-slow:
         v = regd3.w >> 6;
         regd3.w -= v;
         v >>= 1;
         regd3.w -= v;
-        p->Xvel = (regd0.w * regd3.w - regd2.w * regd1.w) >> 8;
-        p->Yvel = (regd1.w * regd3.w + regd0.w * regd2.w) >> 8;
+        p->Xvel = (regd0.w * regd3.w - regd1.w * regd2.w) >> 8;
+        p->Yvel = (regd1.w * regd3.w + regd2.w * regd0.w) >> 8;
         if (*puckc < 0 || ABS(*pucky) > 0xE8) EndPenaltyShot();
         shotongoal = onetimerflag = 0;
     } else {
@@ -362,8 +370,8 @@ slow:
                 p->Xvel = 0;
                 HIWORD(p->Xpos) = HIWORD(p->OldXpos);
             }
-            s = HIWORD(p->OldYpos) < 0 ? -0xEC : 0xEC;
-            if (HIWORD(p->OldYpos) > s + 0xA && p->Yvel < 0 || HIWORD(p->OldYpos) < s - 6 && p->Yvel > 0) {
+            lim = HIWORD(p->OldYpos) < 0 ? -0xEC : 0xEC;
+            if (HIWORD(p->OldYpos) > lim + 0xA && p->Yvel < 0 || HIWORD(p->OldYpos) < lim - 6 && p->Yvel > 0) {
                 p->Yvel = 0;
                 HIWORD(p->Ypos) = HIWORD(p->OldYpos);
             }
