@@ -129,6 +129,13 @@ functions into `calcpuckcross_ret5/6` and `changeplayer_ret5`: the original was 
 * `cdiff.py File.c --func F` compares one function of the file; `c_progress.py` lists one row per marked block and
   one `nonmatching` row per unmarked function (notes key `c_file` or `c_file:Func` in the csv).
 
+### Per-module compiler flags (segments 051-052 checked)
+
+The roster code of segments 051-052 (RosterPanelClick, SetRosterTeamMenus, SelectRosterTeam) keeps a dead index
+register and indexes twice where C folds the address. A flag scan (2026-10-24) rules out a module flag there: with
+the default flags all 42 matched functions of the two segments match; `-od` keeps 0, `-os` 7, `-ot` 14, `-or` 6,
+`-oa` 30, `-ol` 15, `-s` 2, `-3r` 9, `-4r` 35, and `-oi` changes nothing. Only segments 017-019 use `-od`.
+
 ### Split functions, piece by piece (`tools/splice.py`)
 
 A split function (entry after the function that falls into it, body pieces `F_*` where it was defined) is one asm
