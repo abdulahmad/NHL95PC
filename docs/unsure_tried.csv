@@ -2530,3 +2530,34 @@ StarCompare,,shapes listed in docs/UNSURE.md (not itemized),,ga
 assrefgoalpa,,"(2026-10-24, lane 1b batch 3): explicit x delta or puckx through fresh int dx/dead ok after c=constant-pucky, y factor through dx/ok then multiply (first crossing/both)",,ga
 assrefgoalpa,,named endy/pucky/both for crossing test and divide,,ga
 assrefgoalpa,,"with/without split c product (first/both). Best fresh y-factor first 63 differing but2112 bytes and no EBP, not a clear improvement, reverted",,ga
+EditTextField,,"(2026-10-24, lane 1a batch 3): the poll as an inner `for (; (key = PollKey()) != 0 || !sub_B3D64(); )` with `if (!key) { idle; continue; }` or an if / else body and gotos for Enter / Esc (166)",166,ga
+EditTextField,,an inner `for (;;)` with `if (!(key = PollKey())) { if (!sub_B3D64()) { idle; continue; } key = 0; } if (!key) break;` (168),168,ga
+EditTextField,,"a fully goto-built loop in the EXE's block order (`goto poll; wait: idle; goto poll; keyin: handlers; poll: ...`, 173, size +26: the Backspace / typing arms stay before the poll)","`goto poll; wait: idle; goto poll; keyin: handlers; poll: ...`, 173, size +26: the Backspace / typing arms stay before the poll",ga
+EditTextField,,the handlers and the blink as the two arms of one `if (key)` / `if (!key)` after the idle while (171 / 110),171 / 110,ga
+EditTextField,,the End loop as `for (editpos = 0; buf[editpos]; ) editpos++` (110),110,ga
+EditTextField,,the rotated inner for with the typing arm ending in its own `DrawEditCursor(flags); continue;` (162: the typing arm keeps the shared DrawEditText),162: the typing arm keeps the shared DrawEditText,ga
+RunMenu,,"(2026-10-24, lane 1a batch 3): the close loop as `for (i = depth; i > s.level; i--)` (164: the EXE's jump to the test and loop layout, but every temp in the loop body moves one register in the cycle: zero for sel[i] in eax vs EXE ebp, level for the test in ebp vs ecx, and the menus[i] / nitems[i] zeros swap), also as `s.level < i`, `--i`",,ga
+RunMenu,,"the decrement in the body, `depth = i` after it (all 164)",all 164,ga
+RunMenu,,"for + depth++ after the second DrawMenuItemNorm (250), + the three pos chains as separate [1] / [0] stores (164), + m declared in the loop (164 / 268)",164 / 268,ga
+RunMenu,,permute.py twice on the for version (best 111 only with a loop-carried variable split of oldmx / oldmy and the loop turned back into if + do / while,,ga
+RunMenu,,with safe transforms 133 only by moving `oldmy = s.my` between the redraw calls against the EXE's statement order plus the read-back form `s.pos[i][1] = 0; s.pos[i][0] = s.pos[i][1];`,,ga
+RunMenu,,rejected,,ga
+RunMenu,,permlog_1a_b3.csv),,ga
+RunMenu,scope:m@,m declared in the loop,tried (docs/UNSURE.md),ga
+GameSummaryScreen,,"(2026-10-24, lane 1a batch 3): those two (alone and together), and the doubled index for only one of the two reads (366 each)",366 each,ga
+SportsDesk,,"(2026-10-24, lane 1a batch 3): only the overtime flag through a local (629, frame stays biased)","629, frame stays biased",ga
+SportsDesk,,the four arguments with `ot = 0; if (curperiod > 3) ot = -1;` (566 vs 552 for the ternary),566 vs 552 for the ternary,ga
+SportsDesk,,the winner / overtime in the dead i / r (592),592,ga
+SportsDesk,,"scalars in reverse declaration order (432, base for the solver) and in struct order (437)",437,ga
+SportsDesk,,"without m, reading `((MenuItem *)((char *)menus[level] + at))->` in place (485)",485,ga
+SportsDesk,,"without at (439 before the solver, 455 after), m as `&menus[level][item]` with m->on1 / on2 reads (472)",472,ga
+RunTeamPickMenu,,"(2026-10-24, lane 1a batch 3): the tree-close zeros as three separate stores (467), as `s.bg[i] = 0; s.nitems[i] = (int)(s.menus[i] = 0);` (461), as `s.nitems[i] = s.bg[i] = 0; s.menus[i] = 0;` (464): every other spelling of that chain reshuffles the whole function",,ga
+LeadersScreen,,"(2026-10-24, lane 1a batch 3): the headers as a 2-D table `((char *(*)[5])off_C6C40)[cat][k]` (gives the EXE's esi CSE for the first three, but 166-169: the statsfromleague index temp of the first MakePath moves from eax to ebx, one byte longer, and the y / sp / j slots shuffle)","gives the EXE's esi CSE for the first three, but 166-169: the statsfromleague index temp of the first MakePath moves from eax to ebx, one byte longer, and the y / sp / j slots shuffle",ga
+LeadersScreen,,"`case 0: case 1: case 2:` with the default last, before it, or first",,ga
+LeadersScreen,,"with and without the default (178-181, table from 0 but the i slot moves)","178-181, table from 0 but the i slot moves",ga
+LeadersScreen,,"cases 0-2 + default + 2-D headers, then tools/slot_solver.py (n declared after sp: all seven slots right, but 125: the same eax -> ebx index temp)","n declared after sp: all seven slots right, but 125: the same eax -> ebx index temp",ga
+LeadersScreen,,`default:` alone gives 84 (kept),,ga
+LeadersScreen,,"teamgp tests as `!(tg && gp * 100 / tg >= 0x1E)` (85, both parts 131), two ifs (84), `(gp *= 100)` (192)",192,ga
+LeadersScreen,,the index through `((unsigned char *)key.c)[0]` (84),84,ga
+LeadersScreen,,"one permute run (321 candidates, no gain, permlog_1a_b3.csv)","321 candidates, no gain, permlog_1a_b3.csv",ga
+RunPlayerPickMenu,,"(2026-10-24, lane 1a batch 3): only read and diagnosed (the RunMenu.c changes tried for RunMenu and RunTeamPickMenu left it at 158)",the RunMenu.c changes tried for RunMenu and RunTeamPickMenu left it at 158,ga
