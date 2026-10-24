@@ -3538,6 +3538,52 @@ SportsDesk,,"C cross-jumps the whole tail: the 55 missing bytes). Savings (regdu
 SportsDesk,,"x only 214, y only 212)",,ga
 SimPlayoffRound2,,"regdump of the inline compare against SimPlayoffRound3 (matched): in Round3 an EDX temporary (t76) sorts ahead of the len / 2 + 1 temporary t23, in Round2 the slot sum t49 and ECX temporaries come first, so the inline shape needs another 300-savings tie order. permute.py seed 2506 (321 new candidates, best = the draft)","321 new candidates, best = the draft",ga
 SimPlayoffRound1,,"Round2's declaration order (wins, home, away, s, i, len, g: 11), home / away before s (11), wins last (19), s / i / len / g orders with the bytes last (9, 9), i / len / s (16). permute.py seed 2506 (321 new candidates, best = the draft)","321 new candidates, best = the draft",ga
+EditSkaterRating,,on EditGoalieRating (same shape),same shape,ga
+PlayoffTreeMenu,,"the close-all loop run on depth itself (`for (; depth >= 0; depth--)` with the pos stores in either order, chained, or as a while loop: 343-364",,ga
+PlayoffTreeMenu,,the frame changes,,ga
+PlayoffTreeMenu,,"declsearch --conflicts after it 317, +60 bytes), `if (depth) { i = depth; for (; ...` (126",,ga
+PlayoffTreeMenu,,the same code),,ga
+PlayoffTreeMenu,,the same as a while loop (128),128,ga
+checkpuckcoll,,(every role split is listed above). Lane 2 2_b8 (10.0 GA): 73 -> 0,,ga
+checkpuckcoll,,"the EXE bytes (commit 9a4ca1e), not marked. The stick-spot half size (`w = ABS(regd0.w)`) and the body box size (`w = 8` / `0x10`) are their own local w, declared after h: s keeps only the reach (savings 12), v (13) now outranks it and takes esi as in the EXE (w declared at the other three places: 84",,ga
+checkpuckcoll,,"w for the half size only 73, for the box size only 99). The goto chains are nested ifs (the skater stick's two tests as `if (regd0.ul <= regd1.ul) { if (frame < 430h || frame > 44Fh || regd0.ul <= 24h) { puckstick; return; } }`",,ga
+checkpuckcoll,,"the one-condition form scores 20) and `goto hit` is a second `puckbody(pk, p); return;` (Watcom cross-jumps it): no goto left. ESCALATE (dead-variable reuse): the dead height h is reused for the body frame (`h = p->frame`)",,ga
+checkpuckcoll,,"a local of its own for the frame or for the height scores 99 at every declaration place. v also carries the speed, |dy| and the box limit",,ga
+DbLineEditorLoop,,"the dead m with the offset assigned inside it (`m = (MenuItem *)((char *)menus[level] + (itemoffset = item * sizeof(MenuItem)));`, 64",,ga
+DbLineEditorLoop,,the same code),,ga
+DbLineEditorLoop,,"the dead m dropped (64), that m used for the on1 test (370)",370,ga
+EditRosters,,the other-item / last-item DrawMenuItemNorm with item / sel[level] in all three combinations (108,,ga
+EditRosters,,the same code: Watcom forwards the store),,ga
+EditRosters,,"permute.py 705 candidates (best 106 = the move-mode `oldmx = mx` before sub_91370 plus the close-all loop as a do loop: the EXE jumps to that loop's test, rejected)","best 106 = the move-mode `oldmx = mx` before sub_91370 plus the close-all loop as a do loop: the EXE jumps to that loop's test, rejected",ga
+SelectSavedFile,,"LoadFileDlgShapes.c (the EXE's previous functions, ending in DeleteSavedGame) compiled first as compile context (19 at the EXE size only because SelectSavedFile then cross-jumps into an earlier epilogue",,ga
+SelectSavedFile,,the `t << 2` hoist stays),,ga
+SkateToSpot,,the animation pair through a new `short spa1` instead of reusing axp (the draft's reuse of the dead axp),,ga
+SkateToSpot,,"with the chained stop (25-87) and with the split stop (25-126), declared first / before spa2 / after spa2 / last",,ga
+SkateToSpot,,"the chained stop's reload temporary only reorders the savings-3 ties (regdump: p 128 -> 130, t43 / t42 / t48 / t13 take EDI)","regdump: p 128 -> 130, t43 / t42 / t48 / t13 take EDI",ga
+SkateToSpot,,"permute.py 9 min from the chained stop (seed 2707, 1378 candidates",,ga
+SkateToSpot,,best 2 only by splitting the chain again),,ga
+SkateToSpot,,the assrefwhistle.c functions (the EXE's previous ones) compiled first as compile context (2),2,ga
+ResetGameVars,,"the whole address-order run (IndexPhotoBank, LoadPhotoBankF.c, LoadTransparentRinkEndOverlay.c, LoadGameGfx.c, PlacePlayersAtStart.c, SetupGame.c, SetupDemoGame.c) and IndexPhotoBank + SetupGame + SetupDemoGame (20 each: the constant scheduling from +133 does not move)",20 each: the constant scheduling from +133 does not move,ga
+ExecuteTrade,,"the team records as a typed struct (hdr[4Ch], keys[19h], gkeys[3], lines at +BCh / +ECh) with the accesses through its members (7)",7,ga
+ExecuteTrade,,"`s.tfh = -1; s.kfh = -1;` (7), `s.kfh = -1; s.tfh = -1;` and `s.tfh = s.kfh = -1` (9)",9,ga
+ExecuteTrade,,"`*s.keya = teams[1]` / `*s.keyb`, `HomeTeam = *teams`, `ReadTeamRec(..., *teams)` (7 each)",7 each,ga
+ExecuteTrade,,"TradeShowStats + FixJerseyConflict, also with BuildTradeRoster, compiled first as compile context (7)",7,ga
+CopyHumanTeamDBs,,"the zero member as unsigned / long / unsigned long / void * (`= NULL`), retry unsigned (9 each)",9 each,ga
+CopyHumanTeamDBs,,"the team-byte tests as `(s.teams + s.t * 30)[0x17]`, `*(s.teams + s.t * 30 + 0x17)`, `(s.teams + t * 30)[0x18]` / `[0x16]`, `*(s.teams + t * 30 + 0x18)` forms and both (9 each), tp computed before the 0x18 / 0x16 tests (22)",22,ga
+CopyHumanTeamDBs,,MsgCopyingDatabases (the EXE's previous function) compiled first as a compile-context copy (9),9,ga
+RandomizeSchedule,,"SeriesLength, and UpdatePlayoffSeries + SeriesLength, compiled first as compile-context copies (the EXE's previous functions",,ga
+RandomizeSchedule,,14 each). The committed draft still has the dead-j reuse for the second count (ESCALATE shape),,ga
+RandomizeSchedule,,the clean `s.count[v] = k + 1` is 15,,ga
+TreeSeriesWinner,,"debug options in place of / with -od (`/* cflags: -d2 */` 44, size +36, same slots",,ga
+TreeSeriesWinner,,`-od -d1` 35,,ga
+TreeSeriesWinner,,`-od -d2` 44,,ga
+TreeSeriesWinner,,"`-d1` 98), LoadPlayoffModeTree (the EXE's previous function) compiled first as compile context (35)",35,ga
+BlitTileMap,,"LoadRink (the EXE's previous function) compiled first as a compile-context copy (5, same slots)","5, same slots",ga
+assgoalie,,"ClampYPosition, and assgoalietopuck + ClampYPosition (the EXE's previous functions), compiled first as compile context (21 each)",21 each,ga
+FixJerseyConflict,,"in the new state (new reason: the compiler state changed): `s.key[k][1] == s.key[s.i][1]` (18), `s.i != k` (16), both (18), `*(int *)(tr + s.i * 4 + 0x4C)`, `((int *)tr)[s.i + 0x13]`",,ga
+FixJerseyConflict,,"the nested if, `(*(s.key + s.i))[1] == (*(s.key + k))[1]` (16 each)",16 each,ga
+ListDialog,,DrawListItem.c (DrawListItem / DrawListItems,,ga
+ListDialog,,"the EXE's previous functions) compiled first with the frame-struct draft (13: ListDialog then cross-jumps into their epilogue, which the EXE does not, so the exact size is a coincidence)","13: ListDialog then cross-jumps into their epilogue, which the EXE does not, so the exact size is a coincidence",ga
 FillDressedSlots,,`(short)CanFillLineSlot(...) == 0` (20),20,ga
 FillDressedSlots,,"the lt ternary with a cast per arm (20), lt by default plus an if (23), `++*(short *)dword_E9F16` (20)",20,ga
 FillDressedSlots,,the dressed count before the flag store (22),22,ga

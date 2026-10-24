@@ -121,18 +121,6 @@ doshot is in this file (score 45, register 33/43) and comes with it.
 - OpenSpeechBank 11->11 (2026-10-24, abdulahmad, GA) (short)Swap16(w1) and a block unsigned short s both 11. LA 44. -od 218. Frame order left as it is. int type / short c already in UNSURE (best 20).
 - OpenSpeechBank 11->11 (2026-10-24, Mhopkinsinc, GA) int nsamples with Swap16((short)nsamples) + int type / short c / (unsigned short)type >> 8 (41), declsearch --conflicts order (17: every slot and the type byte match, the w1 / w3 / ReadBE24 call-result stores differ); int type alone (43), int nsamples alone (42); i / off / pos / c / cnt moved to every position (17); OFFD / SLOTD spellings (17); cnt for w3 (23); permute.py 5 min on the 17 base (best 17); regsolve: only a cnt savings bump
 
-### `src/c/064_86696_season_playoffs/POSeedRound2.c`
-
-- CreatePlayoffs 11->11 (2026-10-24, StaticEck2026, GA) unchanged
-- CreatePlayoffs 11->11 (2026-10-24, StaticEck2026, GA) permute's 10 swaps two stores against the EXE's order
-- CreatePlayoffs 11->11 (2026-10-24, abdulahmad, GA) known ebx/edx and ecx/ebx sites plus jmp vs POSeedRound2_x. POSeedRound2 still 0. No source edit. -od not applied to the file.
-- POSeedTeams 22->22 (2026-10-24, StaticEck2026, GA) unchanged
-- POSeedTeams 22->22 (2026-10-24, StaticEck2026, GA) the else arm needs one more temporary in the register cycle.
-POAfterGame is in this file (score 67, register 30/43) and comes with it.
-- POAfterGame 100->100 (2026-10-24, StaticEck2026, GA) looked at; the differences are register-cycle picks.
-- POAfterGame 100->67 (2026-10-24, StaticEck2026, GA) (same size). The `w == ctl2team` branch tests `s[2] == w`
-- POAfterGame 67->67 (2026-10-24, abdulahmad, GA) scored only, same size. No source edit.
-
 ### `src/c/040_53294_engine_physics_ai/checkplcoll.c`
 
 - checkplcoll 13->13 (2026-10-24, StaticEck2026, GA) the size sort puts the short parameter in the top slot.
@@ -167,8 +155,10 @@ MenuSaveTheseLines is in this file (score 19, register 11/13) and comes with it.
 
 - PenGoalStuff 19->19 (2026-10-24, StaticEck2026, GA) looked at
 - PenGoalStuff 19->19 (2026-10-24, StaticEck2026, GA) the roster pointer ties the jersey value at savings 2.
+- PenGoalStuff 19->19 (2026-10-24, Mhopkinsinc, GA) ++tmppg / !(a > b) / ++n / tmpdst & 0x4000 / !side 19; status store first 22; jersey address row first *(n * 0x27 + ot->tmroster + 5) / (n * 0x27 + 5)[ot->tmroster] / *(n * 0x27 + (ot->tmroster + 5)) / with the status store row first (19 each); int sum *(unsigned char *)(n * 0x27 + (int)ot->tmroster + 5) 29; regsolve only an m +1 bump; note: the draft reuses n three ways (dead-variable reuse, ESCALATE shape already in the draft)
 InProgress is in this file (score 88, register 70/83) and comes with it.
 - InProgress 88->88 (2026-10-24, StaticEck2026, GA) register picks after +102.
+- InProgress 88->88 (2026-10-24, Mhopkinsinc, GA) for (;;) loop with continue / break instead of goto again / goto signal (88, byte-identical, committed: gotos removed); without the volatile 87 (hoisted into cx); word_CBC44[0] via a local array extern 87; declsearch --conflicts 24 orders no pen / pnum fix; slotdump: pnum count >= 20 (now 8) or pen 7 (now 44) gives the EXE slots; regsolve no prediction; volatile in vars.h not done (9 other files)
 
 ### `src/c/040_53294_engine_physics_ai/checkcx.c`
 
@@ -177,8 +167,8 @@ InProgress is in this file (score 88, register 70/83) and comes with it.
 
 ### `src/c/046_644A8_engine_display/CanFillLineSlot.c`
 
-FillDressedSlots is in this file (score 20, slot 12/12) and comes with it.
 - FillDressedSlots 20->20 (2026-10-24, StaticEck2026, GA) slots only. No count change or declaration order reaches the EXE's.
+- FillDressedSlots 20->20 (2026-10-24, StaticEck2026, GA) python resort of every r / i / slot / side use count within +-6: no combination gives the EXE slot order; lt / cast / count shapes (20-25)
 - CanFillLineSlot 31->31 (2026-10-24, StaticEck2026, GA) pl / st / sidev tie at savings 3
 - CanFillLineSlot 31->31 (2026-10-24, StaticEck2026, GA) goto-free returns 37 / 42 / 53; regsolve (0/1, only a savings bump)
 
@@ -204,6 +194,22 @@ FillDressedSlots is in this file (score 20, slot 12/12) and comes with it.
 - InstantReplay 22->22 (2026-10-24, StaticEck2026, GA) the EXE does not keep 0 / 1 in registers across calls.
 - InstantReplay 22->22 (2026-10-24, StaticEck2026, GA) closing stores split / chained crowd stores / crowdsmooth = crowdlevel: all 22
 
+### `src/c/064_86696_season_playoffs/POSeedRound2.c`
+
+- POSeedTeams 22->22 (2026-10-24, StaticEck2026, GA) unchanged
+- POSeedTeams 22->22 (2026-10-24, StaticEck2026, GA) the else arm needs one more temporary in the register cycle.
+- POSeedTeams 22->22 (2026-10-24, Mhopkinsinc, GA) split swap base slots[a] = slots[a] ^ slots[i] (33: compare + VisTeam store eax/edx left); on it: same-conference probes slot first 33, ++i / --i / 15 33, while probe 47, teamconf == -slots 39, step 2 slots[i] ^= slots[a] 28, step 3 ^= 26, last loop slot first 33; regsolve no prediction on draft and split base
+POAfterGame is in this file (score 67, register 30/43) and comes with it.
+- POAfterGame 100->100 (2026-10-24, StaticEck2026, GA) looked at; the differences are register-cycle picks.
+- POAfterGame 100->67 (2026-10-24, StaticEck2026, GA) (same size). The `w == ctl2team` branch tests `s[2] == w`
+- POAfterGame 67->67 (2026-10-24, abdulahmad, GA) scored only, same size. No source edit.
+- POAfterGame 67->67 (2026-10-24, Mhopkinsinc, GA) ctl2team > -1 67; !(a < 0 && b < 0) 67; nested n = 0 else 76; ctl2team <= -1 in the xor 66; (n = xor) == 0 && (...) 84; (unsigned) >> 31 xor 67 (fixes clearing loop 1, not the EXE's setl); f.aw / f.hw split 67 / 69; regsolve no prediction; permute 5 min 449 candidates best 46 via char cast + two tempadds + chain merge (rejected)
+
+### `src/c/040_53294_engine_physics_ai/checkgoalp.c`
+
+- checkgoalp 27->27 (2026-10-24, StaticEck2026, GA) p picks first (12) and takes esi.
+- checkgoalp 27->27 (2026-10-24, StaticEck2026, GA) p picks first (12) and takes esi; SCnum test as !(<12 || ==16), (short) radius sum, regd stores swapped (28-29)
+
 ### `src/c/052_6D2F8_create_player/MoveToOtherRoster.c`
 
 - MoveToOtherRoster 27->27 (2026-10-24, StaticEck2026, GA) register cycle in the free-agent arm.
@@ -213,27 +219,50 @@ FillDressedSlots is in this file (score 20, slot 12/12) and comes with it.
 
 puckfaceoff is in this file (score 29, size 15/28) and comes with it.
 - puckfaceoff 29->29 (2026-10-24, StaticEck2026, GA) the operand swap changes the load order
+- puckfaceoff 29->29 (2026-10-24, Mhopkinsinc, GA) goto lines -> if (gameopts.linechanges) block and goto next x2 -> continue (29, byte-identical, committed); goto done tail written out 73; int side = k 29; side at top 29; (c1 | c2) != 0 29; word_CBC44 first 36; regsolve only o +1 / side +100 bumps
 - puckfaceoff2 92->92 (2026-10-24, StaticEck2026, GA) read only.
 - puckfaceoff2 92->92 (2026-10-24, StaticEck2026, GA) the EXE's `-1` chain makes register copies that no probe of the chain reproduces.
+- puckfaceoff2 92->92 (2026-10-24, Mhopkinsinc, GA) ESCALATE: dead store (k = --p->temp5) > 0 scores 68 (2830 vs 2834; the -1 chain gets the EXE's register copies; patch b13_puckfaceoff2_escalate.diff); p->temp5-- as a statement 92; -1 chain as four statements 92; text-line chain as statements 92; regsolve only bumps
+
+### `src/c/059_8034B_settings_lockerroom/DrawPanel3D.c`
+
+- DrawLockerJersey 29->29 (2026-10-24, StaticEck2026, GA) a nested-table index register.
+- DrawLockerJersey 29->29 (2026-10-24, StaticEck2026, GA) mirror-image nested-table temporaries (tie order); file-local char * name tables (29)
 
 ### `src/c/038_4FCE8_engine_input/CanBlockShot.c`
 
-PassRecOneTimer is in this file (score 34, size 11/21) and comes with it.
+PassRecOneTimer is in this file (score 32, size 11/19) and comes with it.
 - PassRecOneTimer 34->34 (2026-10-24, StaticEck2026, GA) the mirrored-x temporary (savings 3) loses a tie.
+- PassRecOneTimer 34->32 (2026-10-24, Mhopkinsinc, GA) (second pass on 32: y distance split narrowed 33 / unnarrowed 37 / -= then cast 39 / (short)c squares 32); int c + c = (short)(aim y) (32, committed); d *= d; d += c * c 40; c * c + d * d 34; 0 - regd0.w 34 / 32; int c alone 40 (+2); int c + steps 34 (+2); int c first 40; on 32: t unnarrowed + (short)t at use 38; product inline 48; Ypos first / paren 33; c no cast 48; regd0 first 34; d no cast 46; << 1 indexes 32; -x & 7 mirror 31 (+8); ternary negation 42; *= -1 32 (+1); regsolve d +1 bump only
 - CanBlockShot 42->42 (2026-10-24, StaticEck2026, GA) unchanged
 - CanBlockShot 42->42 (2026-10-24, StaticEck2026, GA) `s` gets ax
+- CanBlockShot 42->42 (2026-10-24, Mhopkinsinc, GA) side / k via ? 1 : 0 42; 12 + (...) 42; g direct without k 62; (SCnum < 6) == (s < 6) 55; (k = *puckc) >= 0 55; regsolve no prediction; note: the draft reuses the dead side for the goalie distance (ESCALATE shape already in the draft)
+
+### `src/c/040_53294_engine_physics_ai/checkcheck.c`
+
+- checkcheck 32->32 (2026-10-24, StaticEck2026, GA) v (30) is one of about 40 tied conflicts. Permute's 29 needs no-op casts
+- checkcheck 32->32 (2026-10-24, abdulahmad, GA) LA do-not-retry shape int dir scores 46, size +3. Not kept.
+- checkcheck 32->32 (2026-10-24, StaticEck2026, GA) goto-free form (same object, committed); checking compare flipped (34), penalty ternary (31, +3)
 
 ### `src/c/045_614C2_scoring_penalty_text/ChkScorerMilestone.c`
 
 - ChkScorerMilestone 36->36 (2026-10-24, StaticEck2026, GA) unchanged
 - ChkScorerMilestone 36->36 (2026-10-24, StaticEck2026, GA) a register-cycle `lea`.
+- ChkScorerMilestone 36->36 (2026-10-24, Mhopkinsinc, GA) sum = DEB7C + DEB74 + g; if (sum == 1) (35: fixes the second-assist row temps, spills t * 400 at L71; not kept); second-assist pts = g + GOALS 36; p via word_DF644[t * 128 + 2/1] 34-36 (same 8 instructions); byte reads of p 171; p <= 0x18 37-38; byte_E024C[t * 2 + 1] 35; t ? 1 : 0 171; g + sum 36; sum in two statements / += 52-55; what unsigned char 177; sum short 178; pts = 3 35-36; first assist through g 168; second without g 170; g first / middle in the sum 125; sum in the condition 35; pts = REC + pts 35; regsolve no tie swap (g / pts +1 bumps only); permute 5 min 641 candidates best 33 with two (short) casts
 
 ### `src/c/046_644A8_engine_display/ReplayStep.c`
 
 - ReplayStep 46->46 (2026-10-24, StaticEck2026, GA) read
 - ReplayStep 46->46 (2026-10-24, StaticEck2026, GA) the frame advance goes through ebp in the EXE; every remaining shape is already listed in UNSURE.
+- ReplayStep 46->46 (2026-10-24, Mhopkinsinc, GA) sound test replayplay != last 46; nested if (sound) { if (last != replayplay) } 46; recbpr == replayplay 51; regsolve only last / start +100 bumps
 DrawRinkSideObjects is in this file (score 118, register 54/64) and comes with it.
 - DrawRinkSideObjects 118->118 (2026-10-24, StaticEck2026, GA) register cycle from the edge clamps on.
+- DrawRinkSideObjects 118->118 (2026-10-24, Mhopkinsinc, GA) marker index in its own short j 173 (+5), declared first 194 (+11); clamp 0x140 - vy - 0xA8 132 (+10); regsolve no prediction; note: f holds frame / index / edge flags (dead-variable reuse already in the draft)
+
+### `src/c/040_53294_engine_physics_ai/passtoa0.c`
+
+- passtoa0 48->48 (2026-10-24, StaticEck2026, GA) the EXE sign-extends vx / vy for k; Watcom narrows those products because `s.k` is a short.
+- passtoa0 48->48 (2026-10-24, StaticEck2026, GA) k products still narrowed: >> 0, (int) casts, -(sp * sp) first (48-53)
 
 ## Lane 2 — StaticEck2026 (StaticEck)
 
@@ -243,22 +272,18 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 |---|---|---:|---|
 | src/c/052_6D2F8_create_player/CreateFreeAgent.c | CreateFreeAgent | 5 | size 9/13 |
 | src/c/064_86696_season_playoffs/POCreateSchedule.c | POInitSchedule | 6 | register 3/3 |
+| src/c/066_8BEDB_asm_helpers/PlayMVI.c | PlayMVI | 6 | slot 6/6 |
 | src/c/050_6B093_joystick_calibration/JoystickCalScreen.c | JoystickCalScreen | 11 | register 4/4 |
-| src/c/066_8BEDB_asm_helpers/PlayMVI.c | PlayMVI | 13 | register 6/13 |
 | src/c/040_53294_engine_physics_ai/PassLaneChk.c | PassLaneChk | 17 | register 7/9 |
-|  | NetCollide | 41 | register 17/35 |
+|  | NetCollide | 27 | register 7/12 |
 |  | checkpuckcoll | 73 | register 60/60 |
 | src/c/046_644A8_engine_display/updatereplay.c | updatereplay | 22 | register 12/21 |
 | src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c | LockerRoomLoop | 23 | register 2/2 |
-| src/c/040_53294_engine_physics_ai/checkgoalp.c | checkgoalp | 27 | register 25/27 |
 | src/c/052_6D2F8_create_player/EditSkaterRating.c | EditGoalieRating | 28 | size 16/28 |
 |  | EditSkaterRating | 30 | size 19/32 |
-| src/c/059_8034B_settings_lockerroom/DrawPanel3D.c | DrawLockerJersey | 29 | register 10/10 |
-| src/c/040_53294_engine_physics_ai/checkcheck.c | checkcheck | 32 | register 20/30 |
 | src/c/057_7DC8B_gadgets_replay/ReplaySaveHilight.c | ReplaySaveHilight | 34 | register 32/33 |
+| src/c/046_644A8_engine_display/RemoveFromLines.c | RemoveFromLines | 36 | register 24/28 |
 | src/c/044_5FB03_game_state_saveload/SaveGameState.c | LoadGameState | 37 | size 17/33 |
-| src/c/046_644A8_engine_display/RemoveFromLines.c | RemoveFromLines | 40 | register 28/32 |
-| src/c/040_53294_engine_physics_ai/passtoa0.c | passtoa0 | 48 | register 26/48 |
 | src/c/052_6D2F8_create_player/SwapSelectedPlayers.c | SwapSelectedPlayers | 48 | register 23/35 |
 | src/c/054_737AA_line_editor_rosters/DbLineEditorLoop.c | DbLineEditorLoop | 64 | size 6/7 |
 | src/c/054_737AA_line_editor_rosters/GameLineEditorLoop.c | GameLineEditorLoop | 74 | slot 13/26 |

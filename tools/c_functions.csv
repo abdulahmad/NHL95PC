@@ -459,7 +459,7 @@ lineinput,4FD8E,383,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CanBlock
 OppInReach,5033D,144,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CanBlockShot.c,matched,"draft (CanBlockShot.c): 139 vs 144, offset register. See UNSURE.",
 asspassrec,50F3F,362,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CanBlockShot.c,matched,,
 CanBlockShot,4FFEE,847,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CanBlockShot.c,nonmatching,"draft (owner of CanBlockShot_ret5/6): unsolved xor eax,edx return. See UNSURE.",register 23/41
-PassRecOneTimer,50B55,775,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CanBlockShot.c,nonmatching,,size 11/21
+PassRecOneTimer,50B55,775,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CanBlockShot.c,nonmatching,,size 11/19
 CenterMouse,50ADE,32,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/CenterMouse.c,matched,,
 Readjoy1,50A05,127,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/Readjoy1.c,matched,registers: asm keeps the held buttons in eax and does regd1 = held & changed in ecx (saves ecx); C reuses eax/ebx; Readjoy2 is the clone (shared tail),
 Readjoy2,50A84,90,038_4FCE8_engine_input,src/c/038_4FCE8_engine_input/Readjoy1.c,matched,,
@@ -503,7 +503,7 @@ MarkTwoLinePlayers,55C6F,185,040_53294_engine_physics_ai,src/c/040_53294_engine_
 puckstick,57483,1003,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,matched,,
 checkpuckcoll,5428A,1570,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft: 1570 vs 1570 in PassLaneChk.c, every statement in place. The EXE keeps reach / half size / box size in edi and speed / |dy| / box limit in esi; the draft swaps them (the variable with more uses gets esi). See docs/UNSURE.md.",register 60/60
 PassLaneChk,54C09,346,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft: 344 vs 346. The side copy is mov esi,edi (original mov edx,edi), so the team-mate y stays in edx. The other gap is inc esi versus lea eax,[esi+1]. Do not retry: declaring limit first produced movzx edi; declaring oy before side did not move the copy to edx.",register 7/9
-NetCollide,5601D,702,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft (PassLaneChk.c): 714 vs 700, first pass. See UNSURE.",register 17/35
+NetCollide,5601D,702,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PassLaneChk.c,nonmatching,"draft (PassLaneChk.c): 714 vs 700, first pass. See UNSURE.",register 7/12
 PuckCheckColl,548AC,228,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/PuckCheckColl.c,matched,,
 ScatterPass,54D63,145,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ScatterPass.c,matched,,
 SetShotMode,5786E,140,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/SetShotMode.c,matched,"draft: vtoa result copied to edx before the regd0 store; asm stores ax then movsx edx,ax after word_C90A6",
@@ -698,7 +698,7 @@ PickExtraSkater,653BE,368,046_644A8_engine_display,src/c/046_644A8_engine_displa
 PickForLineSlot,64E60,1142,046_644A8_engine_display,src/c/046_644A8_engine_display/PickForLineSlot.c,nonmatching,,register 7/13
 PickGoalie,652D6,232,046_644A8_engine_display,src/c/046_644A8_engine_display/PickGoalie.c,matched,,
 RefillLineSlots,6552E,158,046_644A8_engine_display,src/c/046_644A8_engine_display/RefillLineSlots.c,matched,registers: asm keeps from in edi and the side*25 base in ebx; C spills from to the stack (8-byte frame),
-RemoveFromLines,655CC,807,046_644A8_engine_display,src/c/046_644A8_engine_display/RemoveFromLines.c,nonmatching,"draft: 811 vs 807, register choices (r, zero temps, pnum cache). See UNSURE.",register 28/32
+RemoveFromLines,655CC,807,046_644A8_engine_display,src/c/046_644A8_engine_display/RemoveFromLines.c,nonmatching,"draft: 811 vs 807, register choices (r, zero temps, pnum cache). See UNSURE.",register 24/28
 ReplayFirstFrame,67581,31,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayFirstFrame.c,matched,,
 ReplayPrevFrame,675A0,54,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayPrevFrame.c,matched,,
 ReplayRecordReset,67564,29,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayRecordReset.c,matched,,
@@ -1010,12 +1010,12 @@ POPreSimConfFinals,8803B,91,064_86696_season_playoffs,src/c/064_86696_season_pla
 POPreSimRound1,87F85,91,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POPreSimRound1.c,matched,,
 POPreSimRound2,87FE0,91,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POPreSimRound2.c,matched,,
 POReturnZero,89B5C,13,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POReturnZero.c,matched,,
+CreatePlayoffs,86696,2037,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeedRound2.c,matched,"draft: 2037 same size, 34 lines: register picks (the second dword_C65AC test in ecx, EXE ebx; dword_D2884 zeroed from ebx, EXE edx), the second EMBSCUP bank stored after add esp (EXE before), the epilogue (POSeedRound2_x). See docs/UNSURE.md.",
 POSeedRound2,87863,720,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeedRound2.c,matched,"draft: 736 vs 720 (best of 5). The frame, the eight-score scan, both date fills and __STOSD match. Each SeriesWinner result is copied mov edx, eax before the home byte, so the byte lands in eax and the compare is swapped (16 bytes). Do not retry named unsigned chars for the scan, one int for both the day remainder and the home byte (spills to sub esp, 34h), or assigning the home byte to k, the filter counter that lives in edx.",
 POSeedConfFinals,87B33,363,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeedRound2.c,matched,in POSeedRound2.c with the other seeding functions: Watcom then puts the shared exit in POSeedRound2_x as in the EXE (found by tools/module_try.py),
 POSeedFinal,87C9E,188,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeedRound2.c,matched,after POSeedConfFinals in POSeedRound2.c; it cross-jumps into POSeedConfFinals_pair (found by tools/module_try.py),
 PlayoffModeLoop,89268,2292,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeedRound2.c,matched,,
 DrawPlayoffTree,8A652,4617,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeedRound2.c,matched,"draft: 4616 vs 4617, only the first seed loop differs (i and the playofftree read in eax / edx, swapped). See docs/UNSURE.md.",
-CreatePlayoffs,86696,2037,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeedRound2.c,nonmatching,"draft: 2037 same size, 34 lines: register picks (the second dword_C65AC test in ecx, EXE ebx; dword_D2884 zeroed from ebx, EXE edx), the second EMBSCUP bank stored after add esp (EXE before), the epilogue (POSeedRound2_x). See docs/UNSURE.md.",size 7/12
 POSeedTeams,86E8B,555,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeedRound2.c,nonmatching,"draft (POSeedRound2.c, ends in POSeedConfFinals_x): same size (555); the conference compare loads VisTeam first and the first swap step slots[i] first. See docs/UNSURE.md.",register 12/15
 POAfterGame,8873C,2678,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeedRound2.c,nonmatching,"draft: 2668 vs 2678, 100 lines: needs one variable for the first loop counter and the series winner (p spilled with push eax) and the k -= m clearing loop; left: an extra mov edx, eax after SeriesWinner, the one / two human test registers, controller side register picks. See docs/UNSURE.md.",register 30/43
 POSeriesScore,877E9,122,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeriesScore.c,matched,"registers/layout: asm returns through one exit (result in ecx), keeps *aw+1 in ebp on one arm and inc edi on the other; C merges the two arms",
@@ -1026,7 +1026,7 @@ SetSideControls,8B85B,212,064_86696_season_playoffs,src/c/064_86696_season_playo
 WriteCurModeState,8B92F,62,064_86696_season_playoffs,src/c/064_86696_season_playoffs/WriteCurModeState.c,matched,,
 CoachCutScene,8BC15,710,065_8BAAF_allfiles_coach,src/c/065_8BAAF_allfiles_coach/CoachCutScene.c,matched,,
 InitFileLocations,8BAAF,358,065_8BAAF_allfiles_coach,src/c/065_8BAAF_allfiles_coach/InitFileLocations.c,matched,,
-PlayMVI,8BEDB,732,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/PlayMVI.c,nonmatching,,register 6/13
+PlayMVI,8BEDB,732,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/PlayMVI.c,nonmatching,,slot 6/6
 SelectScreenBM SelectRinkBM,8C1C2,53,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/SelectScreenBM.c,matched,,
 stub_8C1B7,8C1B7,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C1B7.c,matched,,
 stub_8C1F7,8C1F7,11,066_8BEDB_asm_helpers,src/c/066_8BEDB_asm_helpers/stub_8C1F7.c,matched,,
