@@ -189,23 +189,22 @@ int PassLaneChk(Player *p, Player *o)
    he is snapped to the net edge for his facing (offset tables word_CCBEC, word_CCBFC, word_CCBCC, word_CCBDC;
    mirrored by the x-flip attribute bit 3), stopped, and the bump SPA for that side is returned (F0Fh, F55h,
    F9Bh / FE1h). p: the player; dir: his direction. Result: the new SPA, or his SPA when nothing changes.
-   DRAFT (10.0 GA): 32 score differing, same size: only the two ABS temporaries of the side test (ecx / edx
-   swapped) and the gx / dy stack slots. The result is an int (FallDown keeps it in a short): the EXE's widened
+   DRAFT (10.0 GA): 22 score differing, same size: only the two ABS temporaries of the side test (ecx / edx
+   swapped); ux declared before gy gives the EXE's gx / dy slots (permute.py movedecl). The result is an int (FallDown keeps it in a short): the EXE's widened
    SPA read. No goto: the cases nest under dist >= 18h and fall through to the kept SPA, and the two post
    blocks share one `return 0xFE1` (the EXE keeps the second block's FE1 and the first block's F9B). The first
    x-flip comparison is materialized by a doubled comparison, as in the EXE (the C_MATCHING materialized-bool
    pattern). The direction tests read dir + 2 & 7 / dir + 1 & 7 / dir - 1 without storing them back (dir ebp, gy
-   edi as in the EXE). Tie-breaker (ESCALATE, not kept): uy through a copy (`scaled_y = dy << 8; uy = scaled_y
-   / dist >> 2;`) gives the EXE's gx / dy slots (22); slotdump: one more gx reference or one fewer dy reference
-   would too. */
+   edi as in the EXE). The single-use copy `scaled_y = dy << 8; uy = scaled_y / dist >> 2;` of the old draft is
+   out (a tie-breaker; it gave the same slots). */
 int NetCollide(Player *p, int dir)
 {
     int gx;
     int dy;
     int dx;
+    int ux;
     int gy;
     int dist;
-    int ux;
     int uy;
 
     gx = HIWORD(p->Xpos) >= 0 ? 0x60 : -0x60;
