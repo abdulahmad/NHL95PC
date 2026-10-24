@@ -238,6 +238,11 @@ typedef struct LRinkObj {
 } LRinkObj;
 typedef struct { int d[2]; } Rec8;
 
+/* DRAFT (10.0 GA, 37 differing, same size): id an int, the five globals the EXE stores as dwords
+   (word_DEF84 / word_DEF88 / word_CC10C / penshotfox / penshotfoy) written through int casts, the stats records
+   copied with `*q++` (Rec16) and `*r++` (a separate Rec6 pointer for the goalie records), penhome declared before
+   penaway: fh is in ebp and the record pointer in memory as in the EXE. Left: one-slot register-cycle shifts
+   (the photo-bit mask, the object frame index, the skater row temporary); see docs/UNSURE.md. */
 /* LoadGameState (60612, PC only; ends in SaveGameState_popx): read back what SaveGameState wrote to the open
    saved-game file fh (each read failing is fatal: str_ErrLoadGame, the first str_ErrSaveGame): the controller
    sides, the 17 sort objects, both team structures and line tables, the three 80h-byte blocks of packed words
@@ -250,15 +255,16 @@ typedef struct { int d[2]; } Rec8;
 int LoadGameState(int fh)
 {
     char buf[0x80];
-    char penaway[0x40];
     char penhome[0x40];
+    char penaway[0x40];
     int n;
     int i;
     short *p;
-    short *q;
+    Rec16 *q;
+    Rec6 *r;
 
     LRinkObj *o;
-    short id;
+    int id;
     Player *pl;
 
     if (FileReadAt(fh, ctl1side, -1, 4)) FatalError((char *)str_ErrSaveGame);
@@ -356,8 +362,8 @@ int LoadGameState(int fh)
     *(short *)((char *)&lcreqchoice + 2) = *p++;
     savedmousex = *p++;
     savedmousey = *p++;
-    word_DEF84 = *p++;
-    word_DEF88 = *p++;
+    *(int *)&word_DEF84 = *p++;
+    *(int *)&word_DEF88 = *p++;
     curperiod = *p++;
     lldispodd = *p++;
     dword_E9AB6 = *p++;
@@ -425,9 +431,9 @@ int LoadGameState(int fh)
     penshotpnum = *p++;
     penshotteam = *p++;
     penshotctl = *p++;
-    word_CC10C = *p++;
-    penshotfox = *p++;
-    penshotfoy = *p++;
+    *(int *)&word_CC10C = *p++;
+    *(int *)&penshotfox = *p++;
+    *(int *)&penshotfoy = *p++;
     penshotmode = *p++;
     penshotstart = *p++;
     penshottimer = *p++;
@@ -453,16 +459,13 @@ int LoadGameState(int fh)
             n = 0x80;
             if (i >= 0x30) n = 0x44;
             if (FileReadAt(fh, buf, -1, n)) FatalError((char *)str_ErrLoadGame);
-            q = (short *)buf;
+            q = (Rec16 *)buf;
         }
-        *(Rec16 *)((char *)dword_DB088 + i / 25 * 25 * 16 + i % 25 * 16) = *(Rec16 *)q;
-        q += 8;
+        *(Rec16 *)((char *)dword_DB088 + i / 25 * 25 * 16 + i % 25 * 16) = *q++;
         n -= 0x10;
     } while (++i < 0x32);
-    for (i = 0; i < 6; i++) {
-        *(Rec6 *)((char *)unk_DC240 + i / 3 * 9 * 2 + i % 3 * 3 * 2) = *(Rec6 *)q;
-        q += 3;
-    }
+    r = (Rec6 *)q;
+    for (i = 0; i < 6; i++) *(Rec6 *)((char *)unk_DC240 + i / 3 * 9 * 2 + i % 3 * 3 * 2) = *r++;
     if (pad1dev[0] == 1 || pad2dev == 1) MouseSetPos(0xA0, 0x64);
     switch (gamemode) {
     case 0:
