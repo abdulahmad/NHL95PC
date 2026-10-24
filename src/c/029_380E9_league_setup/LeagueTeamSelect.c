@@ -28,15 +28,17 @@ int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin,
 int sub_8F98F(char *path);  /* music library: load a song */
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song */
 
-/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 5,872 of 5,888 bytes, 55
+/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 5,893 vs 5,888 bytes, 50
    differing under 10.0 GA. Every call is in place and the frame size matches. Found under GA: the dropdown
    close loops' position reset as two stores (`pos[i][0] = 0; pos[i][1] = 0;`; the chained form shifts every
    slot), the arrays declared menus, bg, nitems, the origin ternaries as `depth != 1 ? x2 : x1`, and the
    address-taken scalars declared among the arrays as below: they have no register conflict, so their slots
    follow their declaration order through Watcom's size sort (docs/WCC_INTERNALS.md "Stack slots"); this order
-   gives the EXE's h, item, level, w, my, mx, oldmy, oldmx, hit, fh upward from 220h. Left: the sprite-size
+   gives the EXE's h, item, level, w, my, mx, oldmy, oldmx, hit, fh upward from 220h. The last branch's
+   DrawMenuItemNorm reads the item back as sel[level] (the EXE reloads it there). Left: the sprite-size
    product's registers (L165), the bg[i] register in the FreeMemBlock loop, the two ClearInputQueue tails
-   merged and the DrawMenuItemNorm tail shared from another branch (the EXE keeps the last branch's copy). */
+   merged, and the first select copy: the EXE keeps item in eax from the sel[level] store and jumps into the
+   last copy's call; C reloads item and keeps its own call. */
 /* LeagueTeamSelect (38B4F, PC only): the league setup team grid. Set the text state and the identity colour
    remap, then build the 4 x 7 grid of team numbers by division: the default order (divisionteams) for a new
    league (mode bit 0), else the standings read from the league's teams database (BuildStandingsGrid). Unless
@@ -284,7 +286,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
                     DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0], pos[level][1],
                         c40, c41, c42);
                     sel[level] = item;
-                    DrawMenuItemNorm((struct MenuItem *)&menus[level][item], pos[level][0], pos[level][1],
+                    DrawMenuItemNorm((struct MenuItem *)&menus[level][sel[level]], pos[level][0], pos[level][1],
                         c40, c41, c42);
                 }
             } else {
