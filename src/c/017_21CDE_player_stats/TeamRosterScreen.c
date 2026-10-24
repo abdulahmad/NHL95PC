@@ -1,6 +1,6 @@
 /* Player stats: a team's roster stats screen. */
-/* DRAFT: 3,170 bytes, size exact; 23 differing instructions under Watcom 10.0 GA.
-   Remaining differences are spilled scalar slots and the skater record source register. */
+/* The locals' declaration order gives the EXE's stack slots (mf after rec, the state buffer after kf; found with
+   tools/wccre/declsearch.py --conflicts: GA's size sort is unstable over the whole name list). */
 #define TeamRosterScreen TeamRosterScreen_decl
 #define PrintShadowText PrintShadowText_decl
 #define PrintFmt1 PrintFmt1_decl
@@ -35,7 +35,7 @@ int j___close(int fh);  /* CRT close thunk */
 int TeamRosterScreen(int team)
 {
     unsigned char rec[0x2E8];
-    char state[0x40];
+    int mf;
     unsigned char gstat[0x36];
     unsigned char prec[0x34];
     int y;
@@ -46,7 +46,7 @@ int TeamRosterScreen(int team)
     int pfh;
     int n;
     int kf;
-    int mf;
+    char state[0x40];
     unsigned short *gs;
     int idx;
     int m;
