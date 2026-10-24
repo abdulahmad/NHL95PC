@@ -1257,10 +1257,6 @@ pop ebp	; 3ECA8
 pop edi	; 3ECA9
 pop esi	; 3ECAA
 ret 0Ch	; 3ECAB
-; C: src/c/032_3DC2C_roster_jersey/TradeHitTest.c
-%ifdef CBUILD
-%include "c/032_3DC2C_roster_jersey/TradeHitTest.inc"
-%else
 TradeHitTest:
 push dword 14h	; 3ECAE
 call __CHK	; 3ECB3
@@ -1357,7 +1353,6 @@ pop ebp	; 3EDA4
 pop edi	; 3EDA5
 pop esi	; 3EDA6
 ret 4	; 3EDA7
-%endif ; C
 ; C: src/c/032_3DC2C_roster_jersey/TradeDone.c
 %ifdef CBUILD
 %include "c/032_3DC2C_roster_jersey/TradeDone.inc"

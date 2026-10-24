@@ -7,7 +7,8 @@
  3Ah by 28h, stride 8) writes the button into out[slot], or when slot is negative writes slot/2 and
  sets flag to -1. A point in the roster columns (y at least 1Dh, under byte_D42C3 * 28 rows) writes
  the side (x past BEh) into slot and the row + 64h into out[slot]. Returns 1 for a hit.
- The button edges are read in place, and each branch sets hit (Watcom merges the two stores into one). */
+ DRAFT (10.0 GA, 21 differing, same size): the roster test reads byte_D42C3 in place as the EXE does; x, y and
+ the button edge sit in edi / ebp / esi where the EXE has esi / edi / ebp. See docs/UNSURE.md. */
 int TradeHitTest(int x, int y, int *out, int *slot, int *flag)
 {
     int hit;
@@ -20,19 +21,19 @@ int TradeHitTest(int x, int y, int *out, int *slot, int *flag)
     x += 4;
     if (x > 0xBE && x < 0x1C0) {
         for (i = 0; i < 4; i++) {
-            if (x < tradebtnx[i * 2]) continue;
-            if (x >= tradebtnx[i * 2] + 0x3A) continue;
+            e = tradebtnx[i * 2];
+            if (x < e) continue;
+            e += 0x3A;
+            if (x >= e) continue;
             if (y < tradebtny[i * 2]) continue;
             if (y >= tradebtny[i * 2] + 0x28) continue;
-            if (*slot >= 0) {
-                out[*slot] = i;
-                hit = 1;
-            } else {
+            if (*slot >= 0) out[*slot] = i;
+            else {
                 *slot = i / 2;
                 out[*slot] = i;
                 *flag = -1;
-                hit = 1;
             }
+            hit = 1;
         }
     } else if (y >= 0x1D) {
         if (y < byte_D42C3 * 28 + 0x1D) {
