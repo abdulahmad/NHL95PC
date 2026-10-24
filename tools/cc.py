@@ -553,7 +553,11 @@ class TextTargets:
             masked = set(range(jmps[0] + 1, jmps[0] + 5)) if jmps and e == jmps[0] + 5 else set()
             for f in fx: masked.update(range(f['off'], f['off'] + 4))
             tail = b''.join(b'.' if i in masked else re.escape(text[i:i + 1]) for i in range(t, e))
-        ga = label_addr(self.asm, g)
+        ga = label_addr(self.asm, g); gasm = self.asm
+        if ga is None and g != c_paths(self.src)[1]:
+            # a compile-context copy of a function of another segment (RunEditRosters in ShellSortBytes.c, so that
+            # LoadRosterList's pieces jump to its epilogue as in the EXE): its own segment's label
+            gasm = c_paths(self.src, g)[2]; ga = label_addr(gasm, g)
         if not tail or ga is None:
             raise SystemExit('%s: %s branches to %s+%X (_TEXT+%X), not a marked block nor a shared ret tail' % (self.src, func, g, t - go, t))
         later = [o for n, o in pubs if o > go]
@@ -608,10 +612,10 @@ class TextTargets:
         if len(hits) != 1:
             raise SystemExit('%s: %s branches to the tail %s of %s; found %d times in the original %s' % (self.src, func, text[t:t + 16].hex(), g, len(hits), g))
         ta = ga + hits[0]
-        if func != '?' and c_paths(self.src, func)[2] != self.asm:
+        if func != '?' and c_paths(self.src, func)[2] != gasm:
             # the branch is in a block marked in another asm file (FreeLeagueDbsMem in 051 ending in the draft
             # BuildFreeAgentList's tail in 050): name the tail by the nearest global label of the draft's segment
-            gl = [(n, x) for n, x in global_labels(self.asm).items() if x <= ta]
+            gl = [(n, x) for n, x in global_labels(gasm).items() if x <= ta]
             if gl:
                 n, x = max(gl, key=lambda v: v[1])
                 return ('%s+0%Xh' % (n, ta - x) if ta != x else n), ta
