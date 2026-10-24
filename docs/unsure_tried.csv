@@ -3453,6 +3453,33 @@ POAfterGame,,not kept),,ga
 DrawRinkSideObjects,,"(2026-10-24, lane 1 batch 13, GA): the marker player index in its own short j (173, size +5",,ga
 DrawRinkSideObjects,,"declared first 194, +11)",,ga
 DrawRinkSideObjects,,"the clamp as `0x140 - vy - 0xA8` (132, +10)","132, +10",ga
+DrawAwardsSummary,,the three-team test as a switch on `awardwinners[k * 52]` (cases 2 / 18h / 19h then default,,ga
+DrawAwardsSummary,,"with and without the last break, or default first: 21-24, Watcom compiles it as a range test)",,ga
+DrawAwardsSummary,,"a per-file `/* cflags: */` sweep (-os, -ot, -ol, -ol+, -or, -oa, -oi, -oe, -oc, -om, -3r, -4r) (12 or worse)",12 or worse,ga
+PlacePlayersAtStart,,"a per-file `/* cflags: */` sweep (-os, -ot, -ol, -ol+, -or, -oa, -oi, -oe, -oc, -om, -3r, -4r), -on, -ou, -ei, -zc, -oas, -oat, -oar: none brings back the EXE's reloads of regd4 / regd1 (best 15)",best 15,ga
+ShowAwardScreens,,"a per-file `/* cflags: */` sweep (-os, -ot, -ol, -ol+, -or, -oa, -oi, -oe, -oc, -om, -3r, -4r): none fixes the goalie shots row (best 19",,ga
+ShowAwardScreens,,-oa 27),,ga
+SeriesLength,,(all with the ternary bodies): the case orders 1-2-3-45-67 (123 bytes,,ga
+SeriesLength,,"the 7s not merged), 2-3-45-67-1, 67-45-3-2-1, 1-67-45-3-2, 2-1-3-45-67, 3-45-67-2-1",,ga
+SeriesLength,,with and without the last break and with a default first or last (10-30),10-30,ga
+SeriesLength,,"a return after case 1 (`case 1: len = 1; default: return len;`), `default: return len; case 1: len = 1; return len;`, and `case 1: len = 1; return len;` with all 24 orders of the other cases ending in break or in `return len` (144 variants): `return len` in every case pulls the epilogue after case 1 exactly as in the EXE but folds the other returns to `mov eax, 3` etc. with their own epilogues (15, +6)","15, +6",ga
+SeriesLength,,"case 1's own return with breaks elsewhere gives `mov eax, 1` and a second epilogue (7, +2)","7, +2",ga
+SeriesLength,,the default return with breaks leaves it at the end (10). The goto form with the return label right after case 1 (`default: done: return len;`,,ga
+SeriesLength,,"the cases jumping back) also leaves it at the end (10). Also a per-file `/* cflags: */` sweep (-os, -ot, -ol, -ol+, -or, -oa, -oi, -oe, -oc, -om, -3r, -4r) (10 or worse) and permute.py on the structured draft (seed 2607, 321 candidates, best 10)","seed 2607, 321 candidates, best 10",ga
+ShowCredits,,"the y argument as its own block-local statement before the call (`int ry = rand() % 8 + 0x6A;`, and `ry = rand() % 8` with `ry + 0x6A` in the call: both 4",,ga
+ShowCredits,,"the divisor load stays before the `sar`, so the late load is not the shared-constant CSE of the one expression)",,ga
+ShowCredits,,"`0x85 + rand() % 8, 0x6A + rand() % 8` (4)",4,ga
+ShowCredits,,"per-module sub_91370 prototypes with short / unsigned short / unsigned char / signed char (14-18) or unsigned (4) coordinates, and unprototyped (4)",4,ga
+ShowCredits,,"a per-file `/* cflags: */` sweep (-os, -ot, -ol, -ol+, -or, -oa, -oi, -oe, -oc, -om, -3r, -4r), -on, -ou, -ei, -zc (best 4: -4r 6, -ot / -oa 8",,ga
+ShowCredits,,the rest 4 or worse),,ga
+FadePalette,,"a per-file `/* cflags: */` sweep (-os, -ot, -ol, -ol+, -or, -oa, -oi, -oe, -oc, -om, -3r, -4r), -on, -ou, -ei, -zc: none drops the `cmp ebx, 2` (best 7",,ga
+FadePalette,,"-ot 8 / +2 duplicates the SetFullPalette tail, which the EXE shares)",,ga
+SkaterStatsCard,,that v form,,ga
+SkaterStatsCard,,"the same through a new int / short w declared at each of the eight positions (9 / 17), `v = t.attrp[...]; v = (v + 5) * 5` (15, +5), `v = t.attrp[...] + 5` with `(short)(v * 5)` in the call (17)",17,ga
+SkaterStatsCard,,"the assignment inside the call (9), `v = 5 * (rating + 5)`, `*(t.attrp + idx)`, `idx[t.attrp]`",,ga
+SkaterStatsCard,,"the index as `*(int *)(off_C6A99 + i) >> 24` (all 7), `rating * 5 + 25` (12)",12,ga
+SkaterStatsCard,,"permute.py from the v form (seed 2606, 321 candidates, best 9)","seed 2606, 321 candidates, best 9",ga
+SkaterStatsCard,,"a per-file `/* cflags: */` sweep (-os, -ot, -ol, -ol+, -or, -oa, -oi, -oe, -oc, -om, -3r, -4r) (best 7)",best 7,ga
 MenuSaveTheseLines,,"separately (the batch 2 MenuSaveDefaultLines shapes apply to both). Lane 2 2_b6 (10.0 GA): unchanged (19). regsolve: named votes 0/1 (t -> ECX wanted, has EDX), nothing predicted, no declaration swap improved",,ga
 checkplcoll,,"gives. slotdump: x size 2 count 21, y size 4 count 21",,ga
 SelectRosterTeam,,"a `MenuItem20 *m` local (declared last) for the second clear only (`m = (MenuItem20 *)roster2divmenus[div * 8]; m[slot].handler = 0;`, 17) or for both clears (15)",15,ga

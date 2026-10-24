@@ -1,5 +1,7 @@
 /* Database merge: exporting a human team's league to the floppy. */
-/* DRAFT: 1925 vs 1929 bytes, every instruction but three register picks; see docs/UNSURE.md. */
+/* DRAFT: 1925 vs 1929 bytes, every instruction but three register picks; see docs/UNSURE.md. The export
+   and the force-export message are the two arms of one if / else (the same code as the old labelled jumps:
+   Watcom puts the else arm last and shares the MessageBox tail). */
 #define ExportTeamToFloppy ExportTeamToFloppy_decl
 #define ReadLeagueTeamEntry ReadLeagueTeamEntry_decl
 #define MsgCopyingDatabases MsgCopyingDatabases_decl
@@ -116,76 +118,80 @@ int ExportTeamToFloppy(char *dir, char *ext, char *ext2, int team, unsigned char
             FileClose(&s.fhp);
         } while (!s.done && !err);
     }
-    if (err) goto done;
-    if (!full && (t[0x16] != 1 || t[0x16] != s.entry[0x16])) goto force;
-    MsgCopyingDatabases(teams + s.team * 30);
-    for (s.i = 0; s.i < 7 && !err; s.i++) {
-        strcpy(s.path, (char *)&str_floppydrv);
-        strcpy(s.name, (char *)leaguedbnames[s.i]);
-        DeleteFiles(s.path, s.name, (char *)str_wildcard);
-    }
-    strcpy(s.path, (char *)&str_floppydrv);
-    strcpy(s.name, (char *)str_PINFO);
-    DeleteFiles(s.path, s.name, (char *)str_wildcard);
-    strcpy(s.path, (char *)&str_floppydrv);
-    strcpy(s.name, (char *)str_PLAYER);
-    DeleteFiles(s.path, s.name, (char *)str_ID);
-    for (s.i = 0; s.i < 7 && !err; s.i++) {
-        err = CopyFile((char *)leaguedbnames[s.i], s.ext, s.ext2, dir, (char *)&str_floppydrv);
-        if (!err) err = CopyFile((char *)leaguedbnames[s.i], (char *)str_extDB, (char *)str_extDB, dir, (char *)&str_floppydrv);
-    }
-    if (!err) err = CopyFile((char *)str_PINFO, (char *)str_extDB, (char *)str_extDB, dir, (char *)&str_floppydrv);
     if (!err) {
-        MakePath(s.path, dir, (char *)str_GAME4, (char *)str_SET2);
-        MakePath(s.name, (char *)&str_floppydrv, (char *)str_GAME4, (char *)str_SET2);
-        err = CopyGameSettings(s.path, s.name);
+        if (full || (t[0x16] == 1 && t[0x16] == s.entry[0x16])) {
+            MsgCopyingDatabases(teams + s.team * 30);
+            for (s.i = 0; s.i < 7 && !err; s.i++) {
+                strcpy(s.path, (char *)&str_floppydrv);
+                strcpy(s.name, (char *)leaguedbnames[s.i]);
+                DeleteFiles(s.path, s.name, (char *)str_wildcard);
+            }
+            strcpy(s.path, (char *)&str_floppydrv);
+            strcpy(s.name, (char *)str_PINFO);
+            DeleteFiles(s.path, s.name, (char *)str_wildcard);
+            strcpy(s.path, (char *)&str_floppydrv);
+            strcpy(s.name, (char *)str_PLAYER);
+            DeleteFiles(s.path, s.name, (char *)str_ID);
+            for (s.i = 0; s.i < 7 && !err; s.i++) {
+                err = CopyFile((char *)leaguedbnames[s.i], s.ext, s.ext2, dir, (char *)&str_floppydrv);
+                if (!err)
+                    err = CopyFile((char *)leaguedbnames[s.i], (char *)str_extDB, (char *)str_extDB, dir,
+                                   (char *)&str_floppydrv);
+            }
+            if (!err)
+                err = CopyFile((char *)str_PINFO, (char *)str_extDB, (char *)str_extDB, dir, (char *)&str_floppydrv);
+            if (!err) {
+                MakePath(s.path, dir, (char *)str_GAME4, (char *)str_SET2);
+                MakePath(s.name, (char *)&str_floppydrv, (char *)str_GAME4, (char *)str_SET2);
+                err = CopyGameSettings(s.path, s.name);
+            }
+            (*(int *)(t + 0x1A))++;
+            t[0x16] = 2;
+            t[0x18] |= 2;
+            if (!err) {
+                MakePath(s.path, (char *)&str_floppydrv, (char *)str_PLAYER, (char *)str_extID);
+                err = FileCreate(s.path, &s.fh3);
+            }
+            if (!err) {
+                s.tb = s.team;
+                err = FileWriteAt(s.fh3, &s.tb, 0, 1);
+            }
+            if (!err) err = FileWriteAt(s.fh3, t, -1, 0xB);
+            if (!err) err = FileWriteAt(s.fh3, dir, -1, 0xD);
+            if (!err) err = FileWriteAt(s.fh3, t + 0x1A, -1, 4);
+            FileClose(&s.fh3);
+            if (!err) {
+                MakePath(s.path, (char *)&str_floppydrv, (char *)str_PINFO, (char *)str_extDB);
+                err = FileOpenWrite(s.path, &s.fhp);
+            }
+            if (!err) {
+                s.zero = 0;
+                err = FileWriteAt(s.fhp, &s.zero, 0x13, 2);
+            }
+            if (!err) err = WriteLeagueTeamEntry(s.fhp, t, s.team);
+            FileClose(&s.fhp);
+            if (!err) {
+                MakePath(s.path, dir, (char *)str_PINFO, (char *)str_extDB);
+                err = FileOpenRW(s.path, &s.fh2);
+            }
+            if (!err) err = WriteLeagueTeamEntry(s.fh2, t, s.team);
+            RestoreDialogBg();
+            if (err) {
+            t[0x16] = 1;
+            t[0x18] |= 1;
+            WriteLeagueTeamEntry(s.fh2, t, s.team);
+            sub_B2DCA(&s.i, &s.my, &s.mx);
+            MessageBox(-1, -1, (char *)exporterrmsg, 2, 0, 0, (int)&s.my, (int)&s.mx, -1);
+            }
+        } else {
+            strcpy(s.lname, dir);
+            s.lname[_fstrcspn(s.lname, (char *)&str_dot)] = 0;
+            forceexportmsg[0] = (int)s.lname;
+            forceexportmsg[2] = (int)t;
+            sub_B2DCA(&s.i, &s.my, &s.mx);
+            MessageBox(-1, -1, (char *)forceexportmsg, 3, 0, 0, (int)&s.my, (int)&s.mx, -1);
+        }
     }
-    (*(int *)(t + 0x1A))++;
-    t[0x16] = 2;
-    t[0x18] |= 2;
-    if (!err) {
-        MakePath(s.path, (char *)&str_floppydrv, (char *)str_PLAYER, (char *)str_extID);
-        err = FileCreate(s.path, &s.fh3);
-    }
-    if (!err) {
-        s.tb = s.team;
-        err = FileWriteAt(s.fh3, &s.tb, 0, 1);
-    }
-    if (!err) err = FileWriteAt(s.fh3, t, -1, 0xB);
-    if (!err) err = FileWriteAt(s.fh3, dir, -1, 0xD);
-    if (!err) err = FileWriteAt(s.fh3, t + 0x1A, -1, 4);
-    FileClose(&s.fh3);
-    if (!err) {
-        MakePath(s.path, (char *)&str_floppydrv, (char *)str_PINFO, (char *)str_extDB);
-        err = FileOpenWrite(s.path, &s.fhp);
-    }
-    if (!err) {
-        s.zero = 0;
-        err = FileWriteAt(s.fhp, &s.zero, 0x13, 2);
-    }
-    if (!err) err = WriteLeagueTeamEntry(s.fhp, t, s.team);
-    FileClose(&s.fhp);
-    if (!err) {
-        MakePath(s.path, dir, (char *)str_PINFO, (char *)str_extDB);
-        err = FileOpenRW(s.path, &s.fh2);
-    }
-    if (!err) err = WriteLeagueTeamEntry(s.fh2, t, s.team);
-    RestoreDialogBg();
-    if (!err) goto done;
-    t[0x16] = 1;
-    t[0x18] |= 1;
-    WriteLeagueTeamEntry(s.fh2, t, s.team);
-    sub_B2DCA(&s.i, &s.my, &s.mx);
-    MessageBox(-1, -1, (char *)exporterrmsg, 2, 0, 0, (int)&s.my, (int)&s.mx, -1);
-    goto done;
-force:
-    strcpy(s.lname, dir);
-    s.lname[_fstrcspn(s.lname, (char *)&str_dot)] = 0;
-    forceexportmsg[0] = (int)s.lname;
-    forceexportmsg[2] = (int)t;
-    sub_B2DCA(&s.i, &s.my, &s.mx);
-    MessageBox(-1, -1, (char *)forceexportmsg, 3, 0, 0, (int)&s.my, (int)&s.mx, -1);
-done:
     FileClose(&s.fh2);
     return err;
 }
