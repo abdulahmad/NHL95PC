@@ -3001,6 +3001,21 @@ SelectMatchingPlayers,,"under GA (only the add association is left): `(char *)(i
 SelectMatchingPlayers,,new: `&(i * 27)[falist + 8]` (8),8,ga
 RosterPanelClick,,(time,,ga
 RosterPanelClick,,the lists above cover the toggle spellings),,ga
+CanFillLineSlot,type:result:int,`int result`,tried (docs/UNSURE.md),ga
+CanFillLineSlot,type:st:char,`char st`,tried (docs/UNSURE.md),ga
+checkcx,,"an extra use `+ (d - d)` in the cross product (76, size +4), o->Xvel's update through the position difference instead of dx (65), `dvx * d` in regd0's product (23)",23,ga
+checkcx,,"permute.py 6 min (200 candidates, nothing below 20)","200 candidates, nothing below 20",ga
+checkcheck,,"the penalty bool through odds (`odds = randomd0(2) != 0; AddPenalty(p, odds + 0xB)`: 42) or rel (35), dir reused for the facedir difference of the boarding test (62)",62,ga
+checkcheck,,"permute.py 6 min (897 candidates: best 29 only with `(short)` / `(unsigned short)` casts on the pflags test, not kept",,ga
+checkcheck,,`(rel << 1)` alone 32),,ga
+checkgoalp,,d reused for the radius tests and the divisor: `d = y - wcradiusy; if (d >= 34)` (36),36,ga
+checkgoalp,,plus `d = y; if (wcradiusy + d < -34)` (37),37,ga
+checkgoalp,,plus `d = wcradiusx` for the x test (43),43,ga
+checkgoalp,,"plus `d = len` for both divisions (42: d rises to 12, ties p, takes EBX), `d = len` alone (30, size +7)","30, size +7",ga
+checkgoalp,,"permute.py 6 min (321 candidates, nothing)","321 candidates, nothing",ga
+RemoveFromLines,,"no r (the byte read again in the index: 76), `signed char r` (43), `hmroster[r * 0x27 + side * 0x444]` in both loops (58)",58,ga
+RemoveFromLines,type:r:signed_char,`signed char r`,tried (docs/UNSURE.md),ga
+NetCollide,,"gy by if / else (72), dir assigned inside both direction tests (41, same code), dy against the gy ternary written again (74), scaled_y dropped (49)",49,ga
 CreatePlayoffs,,"the plain-local splits listed above moved other slots. Lane 2b batch 2 (10.0 GA): permute.py once (385 candidates): its best (10) swaps the postate+69h / +61h stores, against the EXE's store order (rejected). Nothing else tried",,ga
 POHandleElimination,,the simulate path as a nested `if (MessageBox(...)) { ... }` without the goto / save label (7,,ga
 POHandleElimination,,the same cross-jump),,ga
