@@ -15,15 +15,11 @@ Segments 001-037. Work every draft in these files; do not take a file from the o
 | src/c/022_2D346_game_setup/GameSummaryScreen.c | GameSummaryScreen | 9998 | error |
 | src/c/022_2D346_game_setup/UpdateOtherScores.c | GameStatsScreen | 9998 | error |
 | src/c/023_2FDD1_misc_dialogs/EditTextField.c | EditTextField | 9998 | error |
-| src/c/024_31AB5_main_desk/MainDeskLoop.c | MainDeskLoop | 9998 | error |
 | src/c/027_33FFD_calendar/CalendarScreen.c | CalendarScreen | 9998 | error |
 | src/c/028_35FB9_import_export/PostGameToTeamDb.c | PostGameToTeamDb | 9998 | error |
 | src/c/029_380E9_league_setup/LeagueTeamSelect.c | LeagueTeamSelect | 9998 | error |
 | src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c | TradeScreenLoop | 9998 | error |
-| src/c/033_40183_trades/CopyHumanTeamDBs.c | CopyHumanTeamDBs | 9998 | error |
-| src/c/034_41B80_schedule/RandomizeSchedule.c | RandomizeSchedule | 9998 | error |
 | src/c/035_45282_options_settings/SimulateGame.c | SimulateGame | 9998 | error |
-| src/c/037_4842A_engine_player_logic/SkateToSpot.c | SkateToSpot | 9998 | error |
 
 ## Offered to Mhopkinsinc
 
@@ -47,20 +43,25 @@ puckfaceoff is in this file (score 9998, error) and comes with it.
 
 - checkgoal 8->8 (2026-10-24, StaticEck2026, GA) unchanged
 - checkgoal 8->8 (2026-10-24, StaticEck2026, GA) the three zero stores get eax where the EXE uses ecx / edx / edi.
+- checkgoal 8->1 (2026-10-24, Mhopkinsinc, GA) gotos removed: nested tests with side as fall-through and a duplicated wall exit (4); wall tests as two early-return ifs (1, committed); bounce on that structure: short / unsigned short z (14-17), x = -y (17), y = -y; x = y (6), x = y = -y (6), p->Zvel = -y >> 1 (18), x = z >> 1 short/int z (18-19), z = y; x = -z (14), z = y; z = -z (14), x = z = -y (1 int, 14 short); flag zero split / reload / Zpos else (4); regsolve: no reorder
 
 ### `src/c/040_53294_engine_physics_ai/dopass.c`
 
 dopass is in this file (score 9998, error) and comes with it.
 - dopass 17->17 (2026-10-24, StaticEck2026, GA) the 10000h ternary takes distance_score's register.
+- dopass 17->17 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (only a dx savings bump); sum orders with the ternary: dx*dx + (dy*dy + T) (27), T + dy*dy + dx*dx (26), dy*dy + T + dx*dx (26), dx*dx + T + dy*dy (27), T + (dx*dx + dy*dy) (17); exit needs checkob.c (not moved)
 - shotdiradj 23->23 (2026-10-24, StaticEck2026, GA) cross as a plain local moves the frame.
 - shotdiradj 23->23 (2026-10-24, StaticEck2026, GA) five spellings of the `dist = 1` store.
+- shotdiradj 23->23 (2026-10-24, Mhopkinsinc, GA) regsolve (only a g savings bump); |a| test as if / else (23), with passdir ternary (40), ternary alone (40), inverted test passdir 0 last (28), braced dist = 1 (23)
 doshot is in this file (score 9998, error) and comes with it.
 - doshot 47->47 (2026-10-24, StaticEck2026, GA) and passtoa0: not reached.
 - doshot 47->47 (2026-10-24, StaticEck2026, GA) `randomd0(r + r)` gives the EXE's radius code but swaps the dx / snd slots
 - doshot 47->45 (2026-10-24, StaticEck2026, GA) (`dopass.c`). `*puckvx = dx * (passspeed * 59) / (f = dist);` puts the EXE's `movsx ebp
+- doshot 45->45 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (dist / e / t only through savings bumps); sp / r / dist / z / q / e / f / gy each moved to every declaration position (82 orders, best 45)
 wallcoll is in this file (score 9998, error) and comes with it.
 - wallcoll 16->16 (2026-10-24, StaticEck2026, GA) unchanged
 - wallcoll 16->11 (2026-10-24, StaticEck2026, GA) (`dopass.c`). The player branch's y limit goes through the dead sound short `s` instead of its own `lim` (a permute.py find)
+- wallcoll 11->11 (2026-10-24, Mhopkinsinc, GA) ESCALATE: dead-variable reuse (limit through the sound short s or t), scores 0 with goto slow removed (sfx in each arm, 6) and the puck Xvel product as regd1.w * regd2.w (0), patch b12_wallcoll_escalate.diff; committed the clean shape: no goto, own short lim (35), regd3 sum p->Xvel * regd0.w + p->Yvel * regd1.w (12), puck Yvel regd2.w * regd0.w (11); 32 operand orders per product pair (best 11-14); 24 decl orders of t / s / v / lim (11); limit via v (22); sound arms reordered (31); regsolve: no reorder
 
 ### `src/c/045_614C2_scoring_penalty_text/ChkScorerMilestone.c`
 
@@ -85,27 +86,32 @@ DrawRinkSideObjects is in this file (score 9998, error) and comes with it.
 
 - RosterPanelClick 9->9 (2026-10-24, StaticEck2026, GA) unchanged
 - RosterPanelClick 9->9 (2026-10-24, StaticEck2026, GA) unchanged
+- RosterPanelClick 9->9 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder predicted); permute.py 5 min, 321 candidates, best base 9
 
 ### `src/c/052_6D2F8_create_player/SetRosterTeamMenus.c`
 
 - SetRosterTeamMenus 11->11 (2026-10-24, StaticEck2026, GA) unchanged
 - SetRosterTeamMenus 11->11 (2026-10-24, StaticEck2026, GA) no new shape beyond UNSURE.
+- SetRosterTeamMenus 11->11 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (only a savings bump of i, dead-variable reuse); one i for both halves (28); d <<= 3 before the stores (11); (int)0 stores (11); i declared first (11)
 
 ### `src/c/054_737AA_line_editor_rosters/LoadGameRoster.c`
 
 - LoadGameRoster 21->21 (2026-10-24, StaticEck2026, GA) unchanged
 - LoadGameRoster 21->21 (2026-10-24, StaticEck2026, GA) a tie in the unstable sort. `& 0xFF` fixes loop 1
+- LoadGameRoster 21->21 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder predicted); n assigned in the index (21); unsigned n (25); 11 * s.i / 2 * n (21); s.i++ in the loop body (21)
 
 ### `src/c/061_83459_speech/OpenSpeechBank.c`
 
 - OpenSpeechBank 11->11 (2026-10-24, StaticEck2026, GA) .
 - OpenSpeechBank 11->11 (2026-10-24, StaticEck2026, GA) the EXE has the int `type` above the short `nsamples`
 - OpenSpeechBank 11->11 (2026-10-24, abdulahmad, GA) (short)Swap16(w1) and a block unsigned short s both 11. LA 44. -od 218. Frame order left as it is. int type / short c already in UNSURE (best 20).
+- OpenSpeechBank 11->11 (2026-10-24, Mhopkinsinc, GA) int nsamples with Swap16((short)nsamples) + int type / short c / (unsigned short)type >> 8 (41), declsearch --conflicts order (17: every slot and the type byte match, the w1 / w3 / ReadBE24 call-result stores differ); int type alone (43), int nsamples alone (42); i / off / pos / c / cnt moved to every position (17); OFFD / SLOTD spellings (17); cnt for w3 (23); permute.py 5 min on the 17 base (best 17); regsolve: only a cnt savings bump
 
 ### `src/c/064_86696_season_playoffs/POHandleElimination.c`
 
 - POHandleElimination 13->13 (2026-10-24, StaticEck2026, GA) unchanged
 - POHandleElimination 13->13 (2026-10-24, StaticEck2026, GA) the cross-jumped RestoreDialogBg call.
+- POHandleElimination 13->13 (2026-10-24, Mhopkinsinc, GA) goto save removed: simulate path nested under if (MessageBox(...) != 0) (13, same code, committed); switch (mode) case 1 / default (13), with case 0 (19); champion fix as empty if / else (13)
 
 ### `src/c/064_86696_season_playoffs/POSeedRound2.c`
 
@@ -307,6 +313,12 @@ DrawListItems is in this file (score 9998, error) and comes with it.
 - ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) (needs two count changes at once)
 - ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
 
+### `src/c/024_31AB5_main_desk/MainDeskLoop.c`
+
+- MainDeskLoop 72->67 (2026-10-24, Mhopkinsinc, GA) (a scoped int size in the action block)
+- MainDeskLoop 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
+- MainDeskLoop 67->67 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (first sprite size in r); level alone as a plain int (rest in s) after s / after ptr / after depth 132 first_pick, after oldmy 106, last 103 (slots move); nothing kept
+
 ### `src/c/026_3377C_rink_tiles/BlitTileMap.c`
 
 - BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -349,6 +361,14 @@ DrawListItems is in this file (score 9998, error) and comes with it.
 - FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
 - FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) (slotdump: the EXE's slots need one fewer loop-weighted reference to e and pal, or one more to tr)
 
+### `src/c/033_40183_trades/CopyHumanTeamDBs.c`
+
+- CopyHumanTeamDBs 21->21 (2026-10-24, Mhopkinsinc, GA) unchanged
+- CopyHumanTeamDBs 21->20 (2026-10-24, Mhopkinsinc, GA) (the team number cached across calls)
+- CopyHumanTeamDBs 20->7 (2026-10-24, Mhopkinsinc, GA) (the exported team entry through its own block-local pointer; now 2 bytes short)
+- CopyHumanTeamDBs 9->9 (2026-10-24, Mhopkinsinc, GA) unchanged
+- CopyHumanTeamDBs 9->9 (2026-10-24, Mhopkinsinc, GA) regsolve (0/1 votes, nothing predicted); skip tests as one || 9, which test inverted with body nested 9, zero as plain int first/last/block-local 13, while (!r && s.retry) 14, s.which != -1 10; nothing kept
+
 ### `src/c/033_40183_trades/TradePlayers.c`
 
 - TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -360,6 +380,13 @@ DrawListItems is in this file (score 9998, error) and comes with it.
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) (the `xor bl, bl` byte zero is picked after register allocation, so no declaration order moves it)
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/034_41B80_schedule/RandomizeSchedule.c`
+
+- RandomizeSchedule 15->15 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
+- RandomizeSchedule 15->14 (2026-10-24, Mhopkinsinc, GA) 
+- RandomizeSchedule 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RandomizeSchedule 14->14 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (j = k + 1 for the second count); regsolve: 0/0 votes, nothing predicted, no swap improved; regdump / cdiff only (EXE keeps both counts in err's dead edx); no new natural append form left to try; nothing kept
 
 ### `src/c/034_41B80_schedule/SeriesLength.c`
 
@@ -387,6 +414,13 @@ SimPlayoffRound2 is in this file (score 9998, error) and comes with it.
 
 - assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+
+### `src/c/037_4842A_engine_player_logic/SkateToSpot.c`
+
+- SkateToSpot 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SkateToSpot 5->2 (2026-10-24, Mhopkinsinc, GA) : the `vtoa` result into d first
+- SkateToSpot 2->2 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SkateToSpot 2->2 (2026-10-24, Mhopkinsinc, GA) regsolve on the chained stop (0/3 votes, no swap improved); chained stop + one of: nothing 42, ayp without t 68, != sign test 35, HIBYTE==0 42, facedir sum swapped 42, Xvel = Xvel - Xvel/4 42, vtoa no casts 39, !(adx>=8||ady>=8) 30, 0xF2 > ary 42, SPA == axp 42, inverted+!= 24, inverted+no-cast 38, !=+no-cast 32; split + != 71, split + inverted 11, split + both 74; nothing kept
 
 ### `src/c/037_4842A_engine_player_logic/StarCompare.c`
 
