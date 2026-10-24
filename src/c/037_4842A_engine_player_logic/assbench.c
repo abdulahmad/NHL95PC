@@ -1,9 +1,9 @@
 /* Engine player logic: going to the bench. */
-/* DRAFT (10.0 GA, 13 differing, 825 vs 827): no goto (the body before the seated part is one `if (temp1 != 64h)`
+/* DRAFT (10.0 GA, 8 differing, 829 vs 827): no goto (the body before the seated part is one `if (temp1 != 64h)`
    block) and no masks: the y distance in its own short dy gives both swap tests the EXE widening `mov edx, eax /
-   and edx, 0FFh`. Left: the count d in ax and its +8 in edx (EXE dx / `mov esi, edx / add esi, 8`), so temp3 is
-   loaded into si (EXE cx) and facedir into cx (EXE dx); the seated roster store loads tmroster into edx (EXE moves
-   the index to edx and loads the pointer into eax). See docs/UNSURE.md. */
+   and edx, 0FFh`; the count as `d = --p->temp1` puts it in dx as in the EXE. Left: the count's copy for the
+   `+= 8` is made before the `test dx, dx / jge` in eax (EXE after it, `mov esi, edx / add esi, 8`), so temp3 is
+   loaded into si (EXE cx) and facedir into cx (EXE dx). See docs/UNSURE.md. */
 #include "nhl95.h"
 
 /* assbench (4B12C; 93G logic93 / 94G assign94 assbench "player a3 should go to bench", PC version): not while
@@ -56,8 +56,7 @@ void assbench(Player *p)
             return;
         }
         if (p->position == 0) ((unsigned char *)p)[0x48] |= 3;
-        d = p->temp1 - 1;
-        p->temp1 = d;
+        d = --p->temp1;
         if (d < 0) {
             p->temp1 += 8;
             dy = HIWORD(p->Ypos) - p->temp4;
