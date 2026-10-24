@@ -3579,6 +3579,35 @@ SimulateGame,,"(2026-10-24, lane 1 batch 14): the four allocation-loop forms abo
 SimulateGame,,the same code),,ga
 SportsDesk,,"(2026-10-24, lane 1 batch 14): the motion path as `if (mx != oldmx || my != oldmy) { ... } continue;` (192, same code)","192, same code",ga
 SportsDesk,,"the click handling as the else arm of `if (!(btn & 2))` with the tail inside it (192, same code), r declared in the hit-arm block (412), short r (432), r as btn (above, ESCALATE)",,ga
+SelectSavedFile,,"LoadFileDlgShapes.c (the EXE's previous functions, ending in DeleteSavedGame) compiled first as compile context (19 at the EXE size only because SelectSavedFile then cross-jumps into an earlier epilogue",,ga
+SelectSavedFile,,the `t << 2` hoist stays),,ga
+SkateToSpot,,the animation pair through a new `short spa1` instead of reusing axp (the draft's reuse of the dead axp),,ga
+SkateToSpot,,"with the chained stop (25-87) and with the split stop (25-126), declared first / before spa2 / after spa2 / last",,ga
+SkateToSpot,,"the chained stop's reload temporary only reorders the savings-3 ties (regdump: p 128 -> 130, t43 / t42 / t48 / t13 take EDI)","regdump: p 128 -> 130, t43 / t42 / t48 / t13 take EDI",ga
+SkateToSpot,,"permute.py 9 min from the chained stop (seed 2707, 1378 candidates",,ga
+SkateToSpot,,best 2 only by splitting the chain again),,ga
+SkateToSpot,,the assrefwhistle.c functions (the EXE's previous ones) compiled first as compile context (2),2,ga
+ResetGameVars,,"the whole address-order run (IndexPhotoBank, LoadPhotoBankF.c, LoadTransparentRinkEndOverlay.c, LoadGameGfx.c, PlacePlayersAtStart.c, SetupGame.c, SetupDemoGame.c) and IndexPhotoBank + SetupGame + SetupDemoGame (20 each: the constant scheduling from +133 does not move)",20 each: the constant scheduling from +133 does not move,ga
+ExecuteTrade,,"the team records as a typed struct (hdr[4Ch], keys[19h], gkeys[3], lines at +BCh / +ECh) with the accesses through its members (7)",7,ga
+ExecuteTrade,,"`s.tfh = -1; s.kfh = -1;` (7), `s.kfh = -1; s.tfh = -1;` and `s.tfh = s.kfh = -1` (9)",9,ga
+ExecuteTrade,,"`*s.keya = teams[1]` / `*s.keyb`, `HomeTeam = *teams`, `ReadTeamRec(..., *teams)` (7 each)",7 each,ga
+ExecuteTrade,,"TradeShowStats + FixJerseyConflict, also with BuildTradeRoster, compiled first as compile context (7)",7,ga
+CopyHumanTeamDBs,,"the zero member as unsigned / long / unsigned long / void * (`= NULL`), retry unsigned (9 each)",9 each,ga
+CopyHumanTeamDBs,,"the team-byte tests as `(s.teams + s.t * 30)[0x17]`, `*(s.teams + s.t * 30 + 0x17)`, `(s.teams + t * 30)[0x18]` / `[0x16]`, `*(s.teams + t * 30 + 0x18)` forms and both (9 each), tp computed before the 0x18 / 0x16 tests (22)",22,ga
+CopyHumanTeamDBs,,MsgCopyingDatabases (the EXE's previous function) compiled first as a compile-context copy (9),9,ga
+RandomizeSchedule,,"SeriesLength, and UpdatePlayoffSeries + SeriesLength, compiled first as compile-context copies (the EXE's previous functions",,ga
+RandomizeSchedule,,14 each). The committed draft still has the dead-j reuse for the second count (ESCALATE shape),,ga
+RandomizeSchedule,,the clean `s.count[v] = k + 1` is 15,,ga
+TreeSeriesWinner,,"debug options in place of / with -od (`/* cflags: -d2 */` 44, size +36, same slots",,ga
+TreeSeriesWinner,,`-od -d1` 35,,ga
+TreeSeriesWinner,,`-od -d2` 44,,ga
+TreeSeriesWinner,,"`-d1` 98), LoadPlayoffModeTree (the EXE's previous function) compiled first as compile context (35)",35,ga
+BlitTileMap,,"LoadRink (the EXE's previous function) compiled first as a compile-context copy (5, same slots)","5, same slots",ga
+assgoalie,,"ClampYPosition, and assgoalietopuck + ClampYPosition (the EXE's previous functions), compiled first as compile context (21 each)",21 each,ga
+FixJerseyConflict,,"in the new state (new reason: the compiler state changed): `s.key[k][1] == s.key[s.i][1]` (18), `s.i != k` (16), both (18), `*(int *)(tr + s.i * 4 + 0x4C)`, `((int *)tr)[s.i + 0x13]`",,ga
+FixJerseyConflict,,"the nested if, `(*(s.key + s.i))[1] == (*(s.key + k))[1]` (16 each)",16 each,ga
+ListDialog,,DrawListItem.c (DrawListItem / DrawListItems,,ga
+ListDialog,,"the EXE's previous functions) compiled first with the frame-struct draft (13: ListDialog then cross-jumps into their epilogue, which the EXE does not, so the exact size is a coincidence)","13: ListDialog then cross-jumps into their epilogue, which the EXE does not, so the exact size is a coincidence",ga
 FillDressedSlots,,`(short)CanFillLineSlot(...) == 0` (20),20,ga
 FillDressedSlots,,"the lt ternary with a cast per arm (20), lt by default plus an if (23), `++*(short *)dword_E9F16` (20)",20,ga
 FillDressedSlots,,the dressed count before the flag store (22),22,ga

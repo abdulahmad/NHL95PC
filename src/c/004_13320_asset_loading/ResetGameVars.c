@@ -1,10 +1,12 @@
 /* ResetGameVars: clear the in-game clocks, line-change slots, penalty and banner state, then
    start the period. Each photo-bank crowd slot gets a fresh timer. A keyboard pad recentres
    the mouse.
-   DRAFT: 657 vs 657 (10.0 GA). Plain constants: Watcom itself reuses the -1 / 0 registers
-   (xor ch, dh for textline5). Left: the -1 copy into ecx comes after ovlstep (EXE before
-   bannermsg), and the EXE zeroes esi before penshotmode and eax before shotontarget, then
-   writes CwdExciteLvl from xor eax, esi (here xor esi, esi / si). */
+   DRAFT: 656 vs 657 (10.0 GA, 20 differing). The EXE ends in `jmp IndexPhotoBank_x`, so IndexPhotoBank is
+   compiled first here as a compile-context copy (matched in IndexPhotoBank.c): Watcom then jumps to its
+   epilogue as in the EXE. Plain constants: Watcom itself reuses the -1 / 0 registers (xor ch, dh for
+   textline5). Left: the -1 copy into ecx comes after ovlstep (EXE before bannermsg), and the EXE zeroes
+   esi before penshotmode and eax before shotontarget, then writes CwdExciteLvl from xor eax, esi (here
+   xor esi, esi / si); the later zero registers follow. */
 #define ResetGameVars ResetGameVars_decl
 #include "nhl95.h"
 #undef ResetGameVars
@@ -12,6 +14,23 @@
 void __STOSB(void *p, int v, int n);
 #pragma aux __STOSB "__STOSB" parm [eax] [edx] [ecx];
 #pragma aux randomd0 modify [eax ecx];
+
+/* Compile context (matched in IndexPhotoBank.c): IndexPhotoBank: look up the 50 photos of photo bank b
+ (entries named "%04d", numbered from b * 50) in the bank (sub_B30BB) and store their pointers in photoptrs,
+ up to the 1134 photos. */
+void IndexPhotoBank(int b)
+{
+    char name[12];
+    int n;
+    int i;
+
+    n = b * 50;
+    for (i = 0; i < 50; i++) {
+        sprintf(name, (char *)str_04d, n);
+        photoptrs[n] = sub_B30BB(photobanks[b], name);
+        if (++n >= 1134) break;
+    }
+}
 
 void ResetGameVars(void)
 {
