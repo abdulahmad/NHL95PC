@@ -43,7 +43,7 @@ typedef struct {
 #define FWDPL(s, k) f.t[s]->fwd[FWD(s, fline)][k]
 #define DEFPL(s, k) f.t[s]->def[DEF(s, dline)][k]
 
-/* DRAFT under Watcom 10.0 GA: 592 differing instructions, 9,872 vs 9,868 bytes.
+/* DRAFT under Watcom 10.0 GA: 572 differing instructions, 9,872 vs 9,868 bytes.
    Allocation-loop indexing, scalar slots and later register choices remain. */
 /* SimulateGame (452C5, PC only): play one schedule game without graphics, a minute at a time, and post it to the
    in-memory league databases. Both teams are read (rdfh: the 4Ch-byte record, its season or playoff block is not
@@ -104,28 +104,28 @@ int SimulateGame(char *dir, char *ext, int n, unsigned char *game, int rwfh, int
         int pimrate[2];                 /* penalty rate (scaled penalty minutes; 1000 per penalty taken) */
         int npairs;
     } f;
-    int err;
-    int ot;
-    int periodlen;
-    int tick;
-    int bestpen;
     int bestshot;
+    int ot;
     int shotv;
+    unsigned char prevsk[2];        /* skaters on the ice the minute before */
+    int err;
+    unsigned char rate[2];          /* penalty rate divisor (180) */
+    unsigned char dline;            /* index into simdorder */
+    int tick;
     int penv;
     int i;
-    int j;
     unsigned char score[2];         /* goals this game */
-    unsigned char prevsk[2];        /* skaters on the ice the minute before */
-    unsigned char rate[2];          /* penalty rate divisor (180) */
-    unsigned char skaters[2];       /* skaters on the ice (5 minus those in the box) */
-    unsigned char goalie[2];        /* the goalie in net (0-2) */
-    int k;
-    unsigned char dline;            /* index into simdorder */
     unsigned char fline;            /* index into simfwdorder */
+    unsigned char goalie[2];        /* the goalie in net (0-2) */
+    unsigned char skaters[2];       /* skaters on the ice (5 minus those in the box) */
+    int j;
+    int k;
+    unsigned char nassists;
+    int bestpen;
+    int periodlen;
     unsigned char scorer;
     unsigned char assist1;
     unsigned char pl;               /* the chosen player */
-    unsigned char nassists;
     unsigned short *rec;            /* the chosen player's season or playoff stats */
     unsigned short *g;
     unsigned char slot;

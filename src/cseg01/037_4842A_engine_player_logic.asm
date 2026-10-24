@@ -7706,6 +7706,10 @@ pop edx	; 4E0BA
 pop ebx	; 4E0BB
 ret	; 4E0BC
 %endif ; C
+; C: src/c/037_4842A_engine_player_logic/assrefwhistle.c (assreffollow)
+%ifdef CBUILD
+%include "c/037_4842A_engine_player_logic/assrefwhistle.assreffollow.inc"
+%else
 assreffollow:
 push dword 18h	; 4E0BD
 call __CHK	; 4E0C2
@@ -7866,6 +7870,7 @@ mov ax, word [byte ebx+temp4]	; 4E27E
 mov word [regd1], ax	; 4E282
 mov edx, EvadePlayers	; 4E288
 jmp near asswingd_skateto	; 4E28D
+%endif ; C
 SkateToSpot:
 push dword 2Ch	; 4E292
 call __CHK	; 4E297

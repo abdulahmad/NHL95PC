@@ -7,6 +7,8 @@
 
 int WriteKeyRec(int fh, void *rec, long pos);
 
+/* DRAFT: 19 differing instructions under 10.0 GA, 825 vs 827 bytes. Plain palette and key pointers
+   fix the palette store/call registers; tr/pal slots and the two row-index computations still differ. */
 /* FixJerseyConflict (3E055, PC only): make sure player k of the team record tr wears a jersey number nobody else
    on the team has. Read the team's 1Ch key records (34h bytes each; record numbers at tr +4Ch); while another
    player has k's number (byte 1), say so (str_TheJerseyNumber2d2 with the team name tr +1Ah, in the DONEPAL
@@ -22,12 +24,12 @@ int FixJerseyConflict(int fh, int k, unsigned char *tr)
         int x;
         int y;
         int i;
-        int pal;
-        unsigned char *e;
     } s;
-    unsigned char rgb[3];
+    unsigned char *e;
     int err;
+    unsigned char rgb[3];
     int bad;
+    int pal;
 
     err = 0;
     for (s.i = 0; s.i < 0x1C && !err; s.i++) err = ReadKeyRec(fh, s.key[s.i], ((int *)(tr + 0x4C))[s.i]);
@@ -37,8 +39,8 @@ int FixJerseyConflict(int fh, int k, unsigned char *tr)
         for (s.i = 0; s.i < 0x1C && !bad; s.i++)
             if (k != s.i && s.key[s.i][1] == s.key[k][1]) bad = -1;
         if (bad) {
-            s.pal = sub_8CCA8((char *)str_Donepal, 0xC, 0x20);
-            sub_8FFB0(0xFB, 4, (unsigned char *)s.pal);
+            pal = sub_8CCA8((char *)str_Donepal, 0xC, 0x20);
+            sub_8FFB0(0xFB, 4, (unsigned char *)pal);
             rgb[0] = 0x18;
             rgb[1] = 0;
             rgb[2] = 0;
@@ -55,20 +57,20 @@ int FixJerseyConflict(int fh, int k, unsigned char *tr)
             rgb[1] = 0x3B;
             rgb[2] = 0x3B;
             sub_B4B88(0xFE, 1, rgb);
-            s.e = s.key[k];
-            strcpy(s.name, (char *)s.e + 3);
+            e = s.key[k];
+            strcpy(s.name, (char *)e + 3);
             strcat(s.name, (char *)&str_space);
-            strcat(s.name, (char *)s.e + 0x13);
+            strcat(s.name, (char *)e + 0x13);
             sprintf(s.msg, (char *)str_TheJerseyNumber2d2, s.key[k][1], tr + 0x1A);
             jerseymsg = (int)s.msg;
             sub_B2DCA(&s.i, &s.y, &s.x);
             MessageBox(-1, -1, (char *)&jerseymsg, 1, 0, 0, (int)&s.y, (int)&s.x, -1);
-            sub_B4B88(0xFB, 4, (unsigned char *)s.pal);
-            FreeMemBlock(s.pal);
+            sub_B4B88(0xFB, 4, (unsigned char *)pal);
+            FreeMemBlock(pal);
             sprintf(s.msg, (char *)str_EnterJerseyNumberFor, s.name);
             s.num[0] = 0;
             s.key[k][1] = TextInputDialog(s.msg, s.num, 2, 0x16, -1, 1, 0x63, 0, 0);
-            err = WriteKeyRec(fh, s.e, ((int *)(tr + 0x4C))[k]);
+            err = WriteKeyRec(fh, e, ((int *)(tr + 0x4C))[k]);
         }
     } while (bad && !err);
     return err;
