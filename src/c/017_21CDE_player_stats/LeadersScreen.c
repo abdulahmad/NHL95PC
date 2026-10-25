@@ -90,7 +90,7 @@ int LeadersScreen(int cat)
             gp = !statsplayoffs ? W(&gs, 0) : W(&gs, 0x16);
             if (!gp) continue;
             if (cat == 8 || cat == 10) {
-                if (!teamgp[(unsigned char)key.c[0]] || gp * 100 / teamgp[(unsigned char)key.c[0]] < 0x1E) continue;
+                if (!teamgp[key.c[0]] || gp * 100 / teamgp[key.c[0]] < 0x1E) continue;
             } else if (cat == 9) {
                 if ((!statsplayoffs ? W(&gs, 2) : W(&gs, 0x18)) <= 0) continue;
             }
@@ -114,7 +114,7 @@ int LeadersScreen(int cat)
         gp = !statsplayoffs ? W(&ss, 0) : W(&ss, 0x12);
         if (!gp) continue;
         if ((cat == 5 || cat == 7) &&
-            (!teamgp[(unsigned char)key.c[0]] || gp * 100 / teamgp[(unsigned char)key.c[0]] < 0x50)) continue;
+            (!teamgp[key.c[0]] || gp * 100 / teamgp[key.c[0]] < 0x50)) continue;
         ((SStat *)statsskaterbuf)[n] = ss;
         if (cat == 7) {
             j = !statsplayoffs ? W(&ss, 0xE) : W(&ss, 0x20);
@@ -182,12 +182,12 @@ int LeadersScreen(int cat)
             key = ((PRec *)statsplayerbuf)[j];
             sprintf((char *)printfbuf, (char *)str_C2, (signed char)key.c[2]);
             PrintShadowText(0xA, y, (char *)printfbuf);
-            if ((unsigned char)key.c[1] < 100) PrintFmt1(0x32, y, (char *)str_fmt2d, (unsigned char)key.c[1]);
+            if (key.c[1] < 100) PrintFmt1(0x32, y, (char *)str_fmt2d, key.c[1]);
             FitPlayerName((char *)printfbuf, key.c + 3, key.c + 0x13, 0xA0);
             PrintShadowText(0x50, y, (char *)printfbuf);
             MakePath(path, (char *)&statsleague, (char *)statsteamdbs[0], 0);
             fh = open(path, 0x200);
-            lseek(fh, (unsigned char)key.c[0] * 0x4C, 0);
+            lseek(fh, key.c[0] * 0x4C, 0);
             read(fh, trec, 0x27);
             j___close(fh);
             PrintShadowText(0xFA, y, (char *)trec + 0x1A);
