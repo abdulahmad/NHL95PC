@@ -175,6 +175,7 @@ RunMenu is in this file (score 6, register 5/6) and comes with it.
 - RunPlayerPickMenu 158->158 (2026-10-24, StaticEck2026, GA) remaining frame struct as plain locals (382, no slot search); not kept
 - RunPlayerPickMenu 158->104 (2026-10-25, StaticEck2026, GA) remaining frame struct as plain locals + declsearch --conflicts (109, all 17 slots, EXE size), depth++ (105), reselect Norm through sel[level] in both arms (104); tieorder 10 min inconclusive
 - RunPlayerPickMenu 104->104 (2026-10-25, StaticEck2026, GA) close-loop pos chain (136, 104 with oldmy / oldmx / ptr redeclared: EXE zero registers there, name-search loops shift), tieorder --savings 300,200,2 (100 forced), restricted permute 834 candidates (94 only against the EXE's store order: rejected); unchanged
+- RunPlayerPickMenu 104->103 (2026-10-25, StaticEck2026, GA) bits local to the loop body + declsearch --conflicts (103); PHILITE as if / else with a call per arm (190-218 after slots) or into k (154), PREC through k / if-else / 0x34 first / array index (104-903), r / m scoped, size first, i / k last, k as record index (119 after declsearch); tieorder 8 min on 103: nothing
 - RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
 - RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
 - RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -183,6 +184,7 @@ RunMenu is in this file (score 6, register 5/6) and comes with it.
 - RunTeamPickMenu 212->212 (2026-10-25, StaticEck2026, GA) struct version: depth++ (212), depth++ with on2 in place before m (229); not kept
 - RunTeamPickMenu 212->196 (2026-10-25, StaticEck2026, GA) frame struct as plain locals + declsearch --conflicts with oldmx / oldmy swapped by hand (all 18 slots, 392), first reselect Norm through sel[level], depth++ with on2 in place before m (227), permute: statsteamorder[i] == pick (196); tieorder 191 / 192 forced (not a tie order alone); permute finds with a short return type / (short) cast / call moved against the EXE's order rejected
 - RunTeamPickMenu 196->181 (2026-10-25, StaticEck2026, GA) highlight half as a ternary like its row + declsearch --conflicts (all 18 slots, 181); TEAMBYTE spellings (struct, short table, *13*2, ptr arithmetic: same code), tree-close zero chain as stores (446), row / ternary inversions (206-235), size product spellings (181-183); tieorder 10 min on 181: nothing
+- RunTeamPickMenu 181->181 (2026-10-25, StaticEck2026, GA) tree-close pos zeros chained + declsearch --conflicts (254-275), size declaration sweep (181 best where it is); unchanged
 
 ### `src/c/034_41B80_schedule/CreateNewLeague.c`
 
