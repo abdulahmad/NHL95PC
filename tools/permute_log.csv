@@ -427929,3 +427929,452 @@ date,func,file,transform,sha1,score,sizediff,match,first,cc
 2026-10-24,POSeedTeams,src/c/064_86696_season_playoffs/POSeedRound2.c,cast:29:7:short > opassign:32:0:split > cast:19:2:unsigned_short,9063db36cb30750b,15,0,0,171,ga
 2026-10-24,POSeedTeams,src/c/064_86696_season_playoffs/POSeedRound2.c,cast:29:7:short > opassign:32:0:split > cast:10:1:char,cf56b90186db3029,16,0,0,75,ga
 2026-10-24,POSeedTeams,src/c/064_86696_season_playoffs/POSeedRound2.c,cast:29:7:short > opassign:32:0:split > cast:19:4:short,c95be2449a8fddb7,11,0,0,248,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,base,917f47a080b78b56,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,opassign:48:0:split,9160d16c294bb3b9,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swap:21:2,e21f35ae1042f677,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,cast:17:8:char,bf2b09b494823b12,15,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,loop:9:goto,ce82e07f7d8ef4b5,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,type:copy:unsigned,4380b1fbc47895db,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swapstmt:7,de5ad5305b3688e5,15,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,incdec:59:pre,b843eacc6e298bd1,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,zero:34:ne0,e4fa953fb91c238a,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:23:rhs,927b42f54244ff06,13,8,0,20,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,ternary:34:q,5ed9433741119283,17,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,commute:12:==,4be6054a32c4381b,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,mulshift:16:3:mul,cc4d135742b10ec8,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,cmpflip:13,733fcd366c149587,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,ifswap:14,9e0f803ff6f246e2,18,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,chain:5:split,7e64592ea1412133,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,opassign:37:0:split,db111c03ba923c1d,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swap:46:2,7891dc725f0431f7,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,cast:25:5:unsigned_short,41b7636688d82f1d,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,loop:9:while1,52fd2ea0ca9bc25d,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,type:copy:unsigned,c5deb13bb116d293,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swapstmt:6,aaae07b98c604d5a,15,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,incdec:59:op1,99a1224cab16b7db,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,zero:3:ne0,e2a506551dc05ec8,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:28:rhs,1f8b4e52d8315329,15,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,ternary:14:q,c20c458dece32edd,17,0,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,commute:39:+,6feca82562bf58c5,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,ifswap:45,762d0e1c2a1739d9,20,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,chain:5:split3,6b2576849326f01b,15,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,opassign:53:0:split,bca7ccfa0641a6f0,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swap:12:5,4be6054a32c4381b,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,cast:12:6:int,8258b37b18ccd88e,13,11,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,type:dir:unsigned_char,e4746c737182b255,24,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swapstmt:19,227f4a2b0dbbb45b,16,3,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,zero:30:eq0,00918f601aa24161,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs,5c6d5b1ad0cb475b,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,ternary:45:q,e6edc8c76fb8588d,16,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,commute:30:==,898517eeda2bfc68,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,ifswap:34,127d5f62dc05ffde,20,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,chain:5:split2,8639a27606f49909,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,opassign:54:0:split,b3359b7cb5a80a15,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swap:13:0,733fcd366c149587,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,cast:39:3:unsigned_char,ab4b92ad0b2dd60a,15,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,type:copy:unsigned_short,5e4c7cf86be1f95a,14,11,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swapstmt:39,1b1b769d53b1d21a,15,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,zero:45:ne0,4ccd57a9599fe99a,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:16:rhs,3ae9ed9df69b9e18,26,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,commute:14:&,cad40399cf386469,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,opassign:38:0:split,b36d19975d36c715,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swap:17:5,9f919e972a7c9da6,15,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,cast:23:4:unsigned_short,1d48a1a209f179c6,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,type:dir:unsigned_char,d7bd43e8fb2bf738,24,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swapstmt:4,cfe1bb5705376960,15,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:16:+,b4c5566564c4a3d7,15,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,commute:21:&,e21f35ae1042f677,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,opassign:49:0:split,4ab826a20eb25ee7,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swap:30:0,898517eeda2bfc68,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,cast:12:4:unsigned_short,7b8cd9d7e42a18dc,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,type:dir:unsigned_short,6cf3e6f7b7f52b4d,21,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swapstmt:5,c9305ee530f0cbbe,22,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:39:rhs,34824e4d8163de80,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,commute:16:+,35a4c75832452376,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,opassign:18:0:split,fdad750eb5ff5f8d,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,swap:35:2,c10ccd69098f360b,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,cast:35:4:char,bd15e1d3887f6017,19,1,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > zero:47:ne0,7fce5a28da5c1e76,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swap:18:5,231dc255c9216465,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > chain:6:split2,27ddddedb9dc2005,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > opassign:39:0:split,89c4481decd4eaa1,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > commute:18:+,231dc255c9216465,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > tempadd:18:rhs,636eb3bbb2933fc1,33,0,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cmpflip:15,d5fea963e0d6f11f,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > ifswap:16,0d3b37073e1e1571,17,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swapdecl:p:_t0,b93dec053ebbee42,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > loop:10:while1,7d95072109c19f25,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > incdec:61:pre,ad655c3928e02b24,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > scope:_t0@0,75bed3a4dc47bf92,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:31:5:none,394e1f9599b63c9c,20,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swapstmt:5,96e7a08f78b7c2cd,14,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > mulshift:18:3:mul,f8daa2dd8bad3e1c,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:signed_char,8c128eeeb001bd1a,15,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > temp:_t0:inline,19a2fb9799c6f1fb,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > ternary:47:q,ef1b62ff9d273bbf,17,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > zero:32:eq0,74ae9957e568b215,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swap:48:2,f19768c2235338a0,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > chain:6:split,eeb450f227b6a34d,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > opassign:56:0:split,e830c42eb098dec6,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > commute:16:&,f4fb9f1ad04ea2e5,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > tempadd:59:rhs,c5892698163c534d,14,9,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > ifswap:47,8c3b7837a5d90e87,19,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > loop:10:goto,d9d980da62ba8bc3,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > incdec:61:op1,7a9547ca5fd0786c,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:31:10:char,b4563f18aa852577,18,9,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swapstmt:41,2676bc4ced6350b7,14,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:copy:unsigned_short,8345969f63b63c46,13,12,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > ternary:36:q,7233ccec68bb288d,17,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > zero:4:ne0,d5fb5124182a0f02,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swap:32:0,d6930babd2af5889,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > chain:6:split3,cf8c7ece907efd57,14,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > opassign:55:0:split,03e9062340119680,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > commute:23:&,3a7b4fde4a30f96c,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > tempadd:18:+,3c5fd152aabaea67,14,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > ifswap:36,0a6b05bcb1bf417c,19,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:49:2:unsigned_char,69c17df9a706804b,14,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swapstmt:8,954681ac92623d3b,14,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:copy:unsigned_short,5e22a9693ba5c7df,13,12,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > ternary:16:q,826ad1bf3dbbc72a,16,1,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > zero:36:ne0,f606ede710690e32,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swap:14:5,f4d8606ac516cfc5,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > opassign:50:0:split,188fd93b2080f6a7,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > commute:41:+,710bf6c99e52b27e,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > tempadd:30:rhs,2915b31b8e319141,14,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:30:3:unsigned_char,1833b7d8fccd19de,14,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swapstmt:21,3ef54172295e8487,16,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:dir:unsigned,6004cc1c76917409,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swap:23:0,3449654538e18210,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > opassign:20:0:split,09c2951a11890279,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > commute:14:==,f4d8606ac516cfc5,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > tempadd:41:+,45047ffd2f43eb37,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:48:4:unsigned_short,2527680a0cd548e8,22,4,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swapstmt:6,9fb70900260ea1ed,21,11,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:copy:short,fc71d6558e62b9d5,13,9,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swap:14:3,5a7911c792e795a0,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > opassign:51:0:split,29b925a9373e97ea,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > commute:32:==,d6930babd2af5889,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > tempadd:41:rhs,45047ffd2f43eb37,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:38:2:short,b0d6182e326d71ec,13,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swapstmt:52,77e5a925fd0c919b,21,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:copy:unsigned_char,066c780ad37efcdc,14,12,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:31:3:char,d281cd4767858422,13,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > tempadd:11:rhs,dab08fa9cbe20714,14,9,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swap:37:2,1befb06c7bf69354,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short,47549a48ff634da4,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swapstmt:24,2039ee10966796f9,15,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > opassign:40:0:split,00ffa924463c566a,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:14:6:short,14eaf7660da87628,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > tempadd:25:rhs,d87e047e7add0f5b,20,13,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swap:19:5,0962ee54ce1fe146,22,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:dir:signed_char,1e9f150d3758cb49,23,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > swapstmt:7,66c6da1cdf7c1a98,14,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:16:4:char,325acba1925da67a,14,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > tempadd:19:rhs,63754c32ef7aa9c1,15,1,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:unsigned_short,381e24aba0d9184e,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:22:5:short,f130125a004669b2,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > tempadd:24:rhs,2b9ec4126e377ab2,20,13,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:copy:unsigned,bd4f4e2b3f81cc4f,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:31:3:unsigned_short,e878105f48ae4f83,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:copy:char,7c8cc6830728c098,14,12,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:31:7:unsigned_char,a219be9f51fe312c,19,6,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:dir:unsigned_short,fe54a229ba7774d5,26,9,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:31:7:unsigned_short,b6d8a0e4d4d07d38,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:dir:unsigned_short,29270940db177b96,29,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:38:2:int,98e51f1b4c3b3a6a,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:dir:unsigned_char,4992fbecf4aa988e,23,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:48:2:unsigned_short,00407a29ee1e6680,22,4,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:unsigned,4b0f66ee0ca62a12,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:22:3:char,9de7f7493de3dc54,13,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:dir:char,0f04e49f79b20e8a,23,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:14:6:unsigned_short,1e3c04d23b02f596,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:copy:short,da1a686ad0cb0982,13,9,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:37:4:short,ae1991dc5016e01f,25,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:copy:char,c8c0c660a6a1cb59,14,12,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:40:2:unsigned_char,79d850df72b08945,13,12,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:dir:char,5fe146652289969b,23,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:48:2:short,e222009284c21eda,22,0,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:copy:signed_char,684cb18ad540823c,14,9,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:36:2:int,868716649a011353,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:dir:unsigned,4d608cd940015380,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:21:5:unsigned_char,b85551eb5593426d,28,12,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:copy:unsigned,395d971aea7d0580,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:19:6:unsigned_char,d3c55acd014fbad2,14,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:copy:signed_char,fddf2222c2afe5e4,14,9,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:25:4:char,223f58c0cd5a8b7b,20,12,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:char,233b92cbd0fc2dcb,15,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:14:4:int,739d0a73d88ab69c,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:dir:signed_char,8285005a77875221,23,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:17:4:unsigned_char,74a529b7020e55ba,14,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:unsigned_char,fce1dfcc5bf586fa,15,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:48:3:unsigned_short,029589d597d26eb2,22,4,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:dir:short,19d0840534018ec7,30,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:18:6:char,476b71fd281d98a0,14,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:copy:unsigned_char,73558c57691cdc5a,14,12,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:19:5:char,c0b81a085f5700d7,16,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:dir:short,5734ba03c058c69f,27,8,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:16:4:short,4ce8e9bda34219c4,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:dir:unsigned_char,465ffad7979ef999,23,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:48:6:char,f05470946ab3b2f3,14,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:25:4:int,855e898f800e8867,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:28:5:int,b817ccfc3fb2e4a8,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:19:8:char,84f96fdcc8c31389,14,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:38:2:char,9ebe6fa0f9492250,14,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:28:3:short,ac160c88b8f8f9d9,,,,,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > cast:36:2:unsigned_short,bd846bc5680963b9,14,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:dir:short,0b05c5d75089bc94,25,10,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:31:12:unsigned_short,f4b600122b17876f,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > incdec:61:pre,957e3656db14827e,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > ternary:36:q,774f93e972acafe9,15,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15,e66c5ca9c6926e4b,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swapstmt:52,8e87f89deccd7b34,19,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > chain:6:split3,912e3b01b952f78e,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > mulshift:18:3:mul,3dfbbd57ddb1b8d1,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swapdecl:p:_t0,1078b802369e9a29,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > commute:23:&,491684016b7010ea,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > ifswap:47,80c3098a664ccf26,17,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swap:14:3,eda857298289ef57,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > tempadd:18:rhs,cb4bf2e4a9c7573f,31,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > loop:10:while1,b9468f7120acc6fa,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > scope:_t0@0,3c1eee231cba2722,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > zero:47:ne0,2953dad52c4acf13,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > opassign:56:0:split,17b5739282a4fdef,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:dir:short,5246e619b4af29ec,28,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:21:3:unsigned_short,985ba84de4d4d7e3,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > incdec:61:op1,952f1360c5ef3d85,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > ternary:16:q,f8b08b95f5924c8b,14,1,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swapstmt:6,2e032fb58a3c5ad8,19,9,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > chain:6:split,63a9edc7099c426f,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > commute:14:==,782d63694b63e998,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > ifswap:36,76481129568cfb5d,17,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swap:48:2,e0ea7124cdfee3a2,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > tempadd:19:rhs,d96a2857f1cf3553,13,1,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > loop:10:goto,9517d4cd33014faa,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > zero:4:ne0,90ba821d9e66d92c,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > opassign:51:0:split,42fa5317e5329da2,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:copy:unsigned,881da7bf0ea141bf,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:31:10:short,064f963cd4d873af,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > ternary:47:q,46f49a0b06fb03fd,15,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swapstmt:41,f73ad61cde4a46d7,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > chain:6:split2,5e40b4355de8be8a,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > commute:16:&,fdfcde50608f4192,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > ifswap:16,8bd770cc7edb4cea,15,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swap:23:0,ac32dff40ec44c63,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > tempadd:18:+,4c034d1c19d9e277,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > zero:32:eq0,e89412705a780e9b,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > opassign:39:0:split,8343351f7ad4ae60,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:copy:short,7651eb12ec3a02c8,11,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:38:2:char,276150ce261b9090,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swapstmt:5,2dc57d0b4a0b04f0,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > commute:41:+,958ec6b4b2a2b135,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swap:32:0,2391fd5f1adf8013,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > tempadd:41:rhs,0aa77c83bf54cbd6,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > zero:36:ne0,4f8e34df0e53ac5f,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > opassign:20:0:split,67e3f7594799663e,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:copy:unsigned_short,4ec0103b0c54cc0c,11,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:19:8:unsigned_char,5fc7ec103d6769f3,12,3,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swapstmt:8,06d5e17fee0b8008,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > commute:32:==,2391fd5f1adf8013,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swap:15:0,e66c5ca9c6926e4b,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > tempadd:30:rhs,e0aa65264603f93b,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > opassign:55:0:split,c855c709fdcd7c7e,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:dir:char,523629ecf4b3c7a1,21,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:14:3:int,74edba6dd3c99094,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swapstmt:21,efd05a9b715503b4,14,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > commute:18:+,8e895e0fd7a9e336,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swap:23:2,491684016b7010ea,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > tempadd:24:rhs,50c469e5b53b4bf6,18,11,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > opassign:50:0:split,5ff2c5c9e7e10656,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:copy:signed_char,b4c3518fd58b8363,12,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > loop:10:while1,69430be785b3e1ec,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > ternary:36:q,a4e17dac989a3dbc,15,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > zero:4:ne0,7185e31a0c4565ea,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > chain:6:split2,38a1b27c1727d74b,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > cast:40:2:unsigned_short,be79b72bd5e084f6,11,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > type:copy:short,eb51cc7a59f62e7d,11,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swapstmt:21,7ad5d9ce6f55eaab,14,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > commute:14:==,c26fffd6548fcc61,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > ifswap:47,9f469cb50c8bb280,17,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swap:14:3,fbd2517f8f2bd608,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > temp:_t0:inline,db71425816ae2825,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > mulshift:18:3:mul,18295b93fd18ebcb,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > tempadd:25:rhs,04bba289c1eda06d,18,11,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > opassign:55:0:split,1c5dbb92a2bd1955,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > scope:_t0@0,38dce33b73a572b4,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swapdecl:p:_t0,6f395b5cf36d2337,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > incdec:61:pre,752d9860839dcbd8,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > loop:10:goto,7a47f65aa06ad3f1,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > ternary:47:q,ddd004acf08c3e3e,15,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > zero:47:ne0,3394bf5adf49e06d,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > chain:6:split3,4ef5be8a987d4a5a,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > cast:37:6:unsigned_short,d42b259fe51ee4f2,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > type:_t0:unsigned,169d64dab7c6a315,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swapstmt:5,1cf20a35e006f880,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > commute:23:&,7ad21bc1bbf69ae6,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > ifswap:16,8c4bd93a11f59810,15,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swap:16:0,51dc2b234b956c23,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > tempadd:11:rhs,95f51f3610b6da57,12,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > opassign:51:0:split,fd47d6a9dc9728e1,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > incdec:61:op1,25fec97f224a95cd,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > ternary:16:q,dedc90e5cf53572d,14,1,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > zero:36:ne0,7ffb27cd0e12acb2,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > chain:6:split,45085de0880029a9,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > cast:23:1:char,88a001859ff7b11d,15,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > type:_t0:char,ee860f77c0ee7756,15,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swapstmt:7,9f5175b23302cd1d,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > commute:41:+,91152de01e0fe0a8,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > ifswap:36,e085772da467b527,17,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swap:37:2,f66ddd8e456ad168,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > tempadd:41:+,1d9e2b5f2b3a909b,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > opassign:40:0:split,7758ebd429d7d9bc,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > zero:32:eq0,27ce34b6ebf799f3,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > cast:32:1:unsigned_char,14f3dd9b627644e3,15,1,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > type:dir:unsigned_char,b381a9f2550bd95b,21,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swapstmt:8,a7953cee9156a1ad,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > commute:32:==,41389e287b9b3f0a,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swap:23:2,7ad21bc1bbf69ae6,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > tempadd:30:rhs,8fb32406b3304074,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > opassign:56:0:split,19602cf3886b95d2,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > cast:48:4:short,882f253d4390367d,20,2,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > type:copy:char,cf4aa43e82f4b228,12,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swapstmt:24,05ebf7d0d5c11ce9,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > commute:18:+,ca72909a769a057a,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swap:19:5,4f55312d6b48cd26,20,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > tempadd:41:rhs,1d9e2b5f2b3a909b,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > opassign:39:0:split,c25ab65706aeb42f,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > cast:17:4:short,8a619db749376ded,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > type:copy:unsigned_short,331fb52d6215db3d,11,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swapstmt:41,7dfbbfbd2569918e,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > commute:16:&,51dc2b234b956c23,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > swap:23:0,9e7579e936091037,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > tempadd:24:rhs,220ee39845ae21c5,18,11,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > opassign:20:0:split,0732e5600fc662e0,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cmpflip:15 > cast:12:2:char,9bbbd726456ccd19,12,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swap:19:5,b0666ddb26160f2d,20,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swapstmt:24,2762955e7045c8ef,13,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:30:3:unsigned_short,8f8da404144c2219,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > tempadd:11:rhs,8048fda9c60325f4,12,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > opassign:40:0:split,4e72162bcbc37f4d,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:copy:signed_char,138f46cf8ce34e8a,12,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swap:37:2,70285dd5a56021bf,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > swapstmt:7,49a5368fa8683414,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:40:2:short,9f7e95181a31ff76,11,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > tempadd:59:rhs,545552159d6e4bca,12,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:dir:char,f8b7e9ab7aaba477,21,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:15:1:int,1c12f9c26605decd,19,5,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > tempadd:25:rhs,0ad71187cdaaa695,18,11,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:copy:unsigned_char,bc3b38933dcf5129,12,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:28:3:char,e1ae2e8b5b28f47b,,,,,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:dir:signed_char,1216c45d675eb16f,21,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:31:17:unsigned_short,6e0af169b76bfdb5,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:dir:unsigned_short,44745bd3ba2cb85b,27,9,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:22:3:char,b9c1ceadb89aec28,11,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:copy:char,86eaa04d9d940c25,12,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:24:4:unsigned_char,fbf0348dac7f4b94,18,10,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:copy:unsigned,7ddae016d1558894,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:31:14:unsigned_short,5006db5e5cf26768,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:dir:unsigned,7c6e2fae0c9f4eb9,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:37:2:char,31dcfb6be381fe54,16,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:copy:unsigned_short,4e19a4e19cbe728a,11,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:41:3:unsigned_char,eab1f82ba6764ee8,12,3,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:copy:char,8de19347f3848cf9,12,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:28:5:short,a97ec6ee6a0440e0,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:dir:unsigned,adc9e0485fd90d12,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:21:3:int,5672ddf54f284559,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:dir:unsigned_char,c1f161873a7b8b6c,21,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:38:2:unsigned_char,c612a8cdb396a647,12,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:dir:signed_char,6ae23ad02db78747,21,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:40:2:unsigned_char,c9fdb8aca43f2c78,11,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:copy:unsigned_char,9f3c4e26a197a218,12,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:37:3:unsigned_char,6a5e216914a7ebe6,16,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:copy:short,ed1e4d0de6c5cf97,11,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:12:2:int,1944edb18bd8148d,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:dir:unsigned_short,5b5e3478236d9fcf,24,11,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:22:3:unsigned_char,f776cc3bdfa65ecb,11,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > type:dir:unsigned_char,8b006d30b7e36aa4,21,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:41:3:short,fddc7f5726c81d42,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:19:6:int,cb316f450c418ad8,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:27:3:short,459df98b042355dd,,,,,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:58:3:unsigned_short,ae534d867b2648c3,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:37:6:int,7e9f40cef4b0688b,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:31:10:int,31ea3090c2a1fc8c,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:37:2:int,62befa77d37b83aa,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:37:4:char,6060b1f41d2aa1e9,16,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:31:17:unsigned_char,0bdb31139ba88fbc,17,5,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:18:4:unsigned_char,325ffcb5bc78f69d,13,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:28:5:unsigned_char,a6b5ac5b4f6ef563,12,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:21:3:short,24fd127eac39d781,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:25:4:unsigned_short,ddeebce39f01cdd1,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:49:2:unsigned_short,2234a5bebc31e545,12,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:18:6:unsigned_char,5488e0d20ed758a5,12,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:32:1:int,76b555b9117d6257,17,5,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:31:7:short,7793fc6a38158ded,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:23:3:int,f3b63d5e89235a66,16,11,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:37:3:char,2ec93d6f519c0e50,16,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:14:3:unsigned_char,dd6fc27579aadc2d,12,0,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:14:3:short,788f7fbd8d077836,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:23:2:char,a961b4305eefb580,15,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:27:3:unsigned_char,5b68ccb6b95de781,,,,,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:51:2:unsigned_char,4f440e5335b61594,11,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:38:2:unsigned_short,77f7b58d95dc0ef3,12,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:41:4:unsigned_char,0f7a64c1783c701b,11,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:37:6:short,5663daa172136a61,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:36:2:unsigned_char,1f80f8ff5f831dff,12,3,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:13:3:unsigned_short,5ce1d922ecae421f,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:23:3:unsigned_short,faaee3f04d75b553,15,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:48:4:unsigned_char,54ceef01038370d6,16,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:51:2:unsigned_short,2d9389e316862c0b,11,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:21:3:unsigned_char,4ef5c1ba5dcd296d,11,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:24:4:int,89911d8a43e87ff2,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:23:1:unsigned_short,e61182465d2597c4,30,13,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:40:2:char,af37d050b8d18b87,11,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:31:5:unsigned_char,7e6c4c9eced43859,17,4,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:22:5:unsigned_char,6ffcb474a491432a,26,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:23:2:short,54c27c5d58e0c806,30,13,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:47:2:unsigned_short,b2e711fd0b7dbfc9,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:15:1:char,82c49354f19a23c0,18,11,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:15:1:unsigned_char,9320c91eed71c372,18,11,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:25:4:char,ceb5e154a83b1d5c,18,10,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:22:5:unsigned_short,050dbaa6423cb0f9,26,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:12:2:char,0281ab70e9341ed0,12,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:19:8:char,814615911ba52fc2,12,3,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:27:5:unsigned_char,3eaaa1b55b3e31e3,12,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:23:2:unsigned_char,8f356122be667255,15,8,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:19:3:char,437be46436002704,11,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:30:3:int,eaf624c5566e4397,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:22:5:char,eb9451da19bf8e14,26,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:23:2:int,cf485b6ae719dd03,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:23:5:int,bd27600f48a664c4,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:48:4:short,2b55a9d8e4ee9a70,20,2,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:37:2:unsigned_short,df37a15dc5fe48b2,23,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:23:3:char,3a5a69afb2a9aed7,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:48:6:unsigned_short,89e6df130587e1e4,12,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:31:3:unsigned_short,ef324e8a6bc15e21,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:18:5:int,153b7302ad82606b,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:22:5:short,5ae30904c896e3eb,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:52:3:unsigned_char,4343e6be4f4b0622,11,6,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:18:3:short,79266937876e472a,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:38:2:short,585565a606ccdc92,11,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:14:6:unsigned_char,a445ca6f17047605,11,7,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:48:2:short,d21750a3dded2702,20,2,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:27:5:unsigned_short,5541a98b5d07679a,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:48:4:unsigned_short,21ec868a34ef5243,20,2,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:16:3:char,08fbf96ffa703eba,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:31:12:none,b2a1c0089a6d986c,18,2,0,11,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:31:3:int,4e73c7834546e300,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:41:4:unsigned_short,affc5d0142926c98,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:49:2:short,a840b2f97acafdf0,11,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:19:3:unsigned_short,8c4fee0d557897a1,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:52:3:short,db7cb1d5e882d662,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:48:3:int,913b392a53a058f7,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:21:5:unsigned_char,1fe3ecf657b4d500,26,10,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:37:4:unsigned_char,1a2475eadd24720b,16,2,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:17:4:unsigned_short,947922260cc2d77a,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:23:5:char,2a7534320816dd14,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:41:4:int,4a2f37f33d5de0f9,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:58:3:short,5005542655bcbe6c,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:58:3:char,9a88a4c0e64bf71d,12,5,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:16:1:int,692404947264a9ec,16,11,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:19:8:unsigned_short,ae409b42aa16668a,14,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:13:3:short,733e5e5ecbb1738b,10,4,0,0,ga
+2026-10-25,PlacePlayersAtStart,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,tempadd:11:rhs > type:_t0:short > cast:19:5:unsigned_char,e86799ed181117bd,14,2,0,0,ga
