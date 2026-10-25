@@ -4077,3 +4077,15 @@ DbLineEditorLoop,,"on the no-itemoffset base after declsearch --conflicts: a dea
 POAfterGame,,"(2026-10-24, lane 1 batch 18): plain locals instead of the frame struct (114 after declsearch)",114 after declsearch,ga
 POAfterGame,,"the n test as a switch (76), `(ctl1team[0] < 0) != (ctl2team < 0)` (76), `f.ret = 1; return f.ret;` for the early exit (68), ctl2team / ctl2side spelled ctl1team[1] / ctl1side[1] everywhere in the function (67",,ga
 POAfterGame,,the same code: still loaded into ecx),,ga
+ShowAwardScreens,,"the skater pct as a ternary (27), `if (!s[7]) pct = 0; else ...` (24), `pct = 0;` first (32), `(s[7] / 2 + s[1] * 1000)` (105), `(short)s[8]` for the plus / minus (19)",19,ga
+ShowAwardScreens,,"the row pointer steps as `ss + 0xB` / `gs + 9` (19), pct also holding the goalie save percentage (`pct = s[10];` 95) or the GAA (94, both 111). The team-award arms are separate in the EXE (no shared name pointer)",,ga
+SimPlayoffRound1,,"the blank chain in one statement (12), i or g declared first (4, 4)","4, 4",ga
+SimPlayoffRound1,,"declsearch --all (120 orders, best 4)","120 orders, best 4",ga
+BlitTileMap,,"tile as short (23, +4), as short through `((short *)shape)[row * width + col]` (32, +2)","32, +2",ga
+BlitTileMap,type:tile:short,tile as short,tried (docs/UNSURE.md),ga
+SkaterStatsCard,,on the v form: the portrait column digit in a new int col declared at each of the nine places or in the portrait block (9 / 14: v's L185 conflict does not move),9 / 14: v's L185 conflict does not move,ga
+SkaterStatsCard,,"the index from a new extern signed char table at C6A9C instead of `off_C6A99[i + 3]` (9: same IR), attrp / attr as char (9)",9,ga
+SkaterStatsCard,,the rating loop's `t.y += 0xD` in the for increment (11),11,ga
+SkaterStatsCard,,an `if (0)` statement after the product (9),9,ga
+DrawListItem,,case 2 before case 1 (18),18,ga
+DrawListItem,,"an empty default (6), shape A with case 2 first (31), shape A as an if / else if chain (24). The y / w tie stays a parameter-order tie (no split live range of either)",,ga
