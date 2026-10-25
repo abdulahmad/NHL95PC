@@ -178,13 +178,21 @@ These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain a
 
 ### `src/c/037_4842A_engine_player_logic/assgoalie.c`
 
-assgoalie is in this file (score 18, size 12/18) and comes with it.
+assgoalie is in this file (score 13, size 9/12) and comes with it.
 - assgoalie 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assgoalie 25->21 (2026-10-24, Mhopkinsinc, GA) (a separate int distance and short depth)
 - assgoalie 21->21 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assgoalie 21->21 (2026-10-24, StaticEck2026, GA) ClampYPosition / assgoalietopuck + ClampYPosition as compile context (21); nothing kept
 - assgoalie 21->21 (2026-10-25, StaticEck2026, GA) tieorder 8 min (21); forced t334 ahead of t69 in the savings-2 run (setl widening, 17; no natural edit); puckvy / SetSPA index / L283 order not ties; 11 gotos remain (ESCALATE: goto, not markable)
 - assgoalie 21->18 (2026-10-25, StaticEck2026, GA) gotos 11 -> 2: skate / stop exits in place in both blocks (18), post target repeated (21), exits to move as if / else nesting (18); poke / dive block in both arms 188, move tail repeated 146; tieorder 6 min (18). ESCALATE: goto (2 left: the other-half exit to move, goto angle)
+- assgoalie 18->18 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py --minutes 10 (no earlier cache): 202 forced orders, 18, inconclusive, no cache written
+- assgoalie 18->18 (2026-10-25, StaticEck2026, GA) tools/wccre/targetsearch.py --minutes 30 (0 tie / slot targets): stopped after 70 candidates once the hand variants below changed the base; best movedecl ay after pc (14)
+- assgoalie 18->16 (2026-10-25, StaticEck2026, GA) save-stance offsets as *puckx + (*puckvx >> 10) - HIWORD(p->Xpos) and the same for y (16, kept: puckvy pointer in eax); x alone 18, y alone 16, HIWORD subtraction first 33, (p->Xpos >> 16) 18
+- assgoalie 16->13 (2026-10-25, StaticEck2026, GA) ay declared after pc (13, kept: carrier-side widening mov edx, eax / and edx, 0FFh); ay first 34, after q 16, after x / y / ok / a 16, last 53; then x offset in either order 13, subtraction first 24, (p->Xpos >> 16) 13, both offsets in the old order 14
+- assgoalie 13->13 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py --minutes 10 on the new base: 188 orders, 13, inconclusive; again with --max-run 130 (savings-3 / -2 runs included): 205 orders, 13, inconclusive
+- assgoalie 13->13 (2026-10-25, StaticEck2026, GA) tools/wccre/targetsearch.py --minutes 30 on the new base: 423 candidates (0 targets), best text 36 (7 other): regd1.w = regd1.w - (... + ...) in move plus q in the loop block; not kept
+- assgoalie 13->13 (2026-10-25, StaticEck2026, GA) hand: move Y offset with HIWORD(p->Ypos) 51, both offsets with HIWORD 59, X offset Xpos first 17; a == 8 as a ternary 144, inverted if 40, 48h flag test == 0 13; no new goto-free shape (ESCALATE: goto, 2 left)
+- assgoalie 18->13 (2026-10-25, StaticEck2026, GA) batch assgoalie: save-stance offsets puck position first, ay declared after pc; left the puckvx pointer register, the move Y hotspot load order, the ass_popx epilogue. ESCALATE: goto (2: the other-half exit to move, goto angle)
 - assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assrefgoalpa 67->67 (2026-10-25, StaticEck2026, GA) tieorder 8 min (67); a1 / a2 / side orders forced (67-105, a1 last 77 at size +0, still no push ebp)
