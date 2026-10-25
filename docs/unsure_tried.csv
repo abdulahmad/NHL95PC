@@ -4250,6 +4250,12 @@ assgoalie,,the three other arm orders (225 / 281 / 334),225 / 281 / 334,ga
 assgoalie,,"the move tail repeated at the other-half exit (146: not cross-jumped), `if (regd2.w <= 7) { playeracc(p, regd2.w); return; } StopNA(p);` at the end (26), tools/wccre/tieorder.py on the new base (2-job copy, --max-run 40, 6 minutes, 124 orders: 18), `regd1.w = regd1.w - (((signed char *)p)[0x0F] + (p->Ypos >> 16))` and its split form on the new base (76)",76,ga
 assrefgoalpa,,on that base: the first product as `(0xE8 - *pucky) * (p->temp3 - *puckx)` (67-69),67-69,ga
 assrefgoalpa,,"the second as `(p->temp3 - *puckx) * (-0xE8 - *pucky)` (61 but 3 bytes short, not kept), both swapped (64, 3 bytes short), `regd0.w = *puckx + c` in the first crossing (112-115, still `add ecx, eax`), `regd0.w = c; regd0.w += *puckx;` (67-71, two stores)","67-71, two stores",ga
+SelectSavedFile,,"tools/wccre/tieorder.py --minutes 10 (pass 0: 33 conflicts, runs 5 x 5, 24 x 3, 2 x 2",,ga
+SelectSavedFile,,"pass 1: 5 conflicts, 2 x 6, 3 x 5",,ga
+SelectSavedFile,,"258 swap orders + 133 single edits, best 15, inconclusive)",,ga
+SelectSavedFile,,"tools/wccre/targetsearch.py --minutes 30 (1615 candidates, 0 tie targets",,ga
+SelectSavedFile,,"the two slot targets name / path already met, best 15 = the committed text)",,ga
+SelectSavedFile,,"(tools/probe.py standalone) the else arm as `allstars[t - 0x18]` on a table starting at ASW (teamabbrevs + 0x68, which folds to off_C5441's address: off_C5441 is not a separate table but the ASW / ASE entries indexed by t), and `t <= 0x17` (cmp 17h / jg): both still hoist `t << 2`",,ga
 RunMenu,,tools/wccre/tieorder.py --minutes 10 (it read a complete build/tieorder cache for the current text: 6 -> 3 forced,,ga
 RunMenu,,"the stage 2 move of w / h to just older than t199 in the creation order, which sets the size product's savings-2 run, t33 EAX -> EBX",,ga
 RunMenu,,the L113 t71 / t72 swap of batch 19 is not in it),,ga
