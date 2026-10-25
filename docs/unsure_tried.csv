@@ -3811,6 +3811,28 @@ assthreestars,,"a compile-context copy of ass_pc_slot20 (the EXE's previous func
 DrawSprite,,"a compile-context copy of LoadScoreboardGfx (the EXE's previous function) before it (66, no change). Reading: the EXE re-reads s.flip from its slot (`cmp word [esp+18h], 0`) and reuses ecx for the mode zero, as for an address-taken short (no copy propagation of the homed flip)",,ga
 DrawSprite,,nothing compiled on that,,ga
 StarCompare,,"a compile-context copy of StarEligible (the EXE's previous function) before it (67, no change)","67, no change",ga
+ReplaySaveHilight,,"`n = 0x11; n += w;` (38), `n = w; n += 0x11;` (39), `w + 0x11` in the call without n (35), `n = 0x11 + w` (34)",34,ga
+PassLaneChk,,"on that base: limit as a ternary or inline in the compare, side as `? 1 : 0`, `side ^ (...)`, `!= side` (16), `ABS(oy) >= ABS(y)` (14), `!p->position`",,ga
+PassLaneChk,,the Yvel pairs with `||` / `side &&`,,ga
+PassLaneChk,,"the second Yvel block as `else` (19), `0 - dy`, `ABS(dy) > 0x3C` / `ABS(dx-gap) > 0x28` (15)",15,ga
+PassLaneChk,,the x gap as two statements (26),26,ga
+PassLaneChk,,the gaps without dy (`ABS(oy - y) > 0x3C` 10,,ga
+PassLaneChk,,"the x gap inline 7 but it drops the EXE's `mov esi, eax` copy, both 22), oy for the y gap (25, 42 for both)","25, 42 for both",ga
+PassLaneChk,,"the stores inside the tests, `>= 0x29` (17)",17,ga
+PassLaneChk,,"the second vtoa's arguments spelled `(int)(short)`, `(short)((short)a - (short)b)`, `(short)(unsigned short)`, `((short *)p)[1] - ...`, `-b + a`, `(int)` on either operand (all 15",,ga
+PassLaneChk,,without the x argument's `(short)` 8 but the 16-bit sub goes: not equivalent code),,ga
+PassLaneChk,,"the result through y (19), `if ((oy = vtoa(...)) == 8)`, facedir read directly (15)",15,ga
+PassLaneChk,,"the wrap in a comma test, `else return 1` and `if (... < 3) return 1; return 0;` (25), `y = oy - vtoa(...); y = y + 1` (30)",30,ga
+PassLaneChk,,permute.py on that base (all its candidates already logged from an earlier run),,ga
+NetCollide,,`if (dist < 0x18) return p->SPA;` with the rest un-nested (22),22,ga
+NetCollide,,"the first x-flip test as `!(...) == 1`, `(...) == 1`, `? 0 : 1`, `(!(...)) != 0`",,ga
+NetCollide,,"a nested if (all 22), `((... != 0) ^ 1)` (28)",28,ga
+SwapSelectedPlayers,type:ib:signed_char,`signed char ib`,tried (docs/UNSURE.md),ga
+checkpuckcoll,,"a local of its own for the frame or for the height scores 99 at every declaration place. v also carries the speed, |dy| and the box limit. Lane 2 2_b11 (10.0 GA): still the EXE bytes only with the reuse (0). regdump: the reused h has savings 15 (height 10 + frame 5) and picks dx before v (13) and s (12)",12,ga
+checkpuckcoll,,"with a short fr of its own, h (10) picks after them and takes ax (99). An emulator sweep of every role split of the seven short roles (speed, |dy|, height, frame, stick half size, body box size, box limit",,ga
+checkpuckcoll,,"235 conflict-free splits, declared in first-use order, s keeping the reach): only the committed split scores 0",,ga
+checkpuckcoll,,"the best with the height and the frame apart is 42 (speed, |dy| and box size in one variable), every role in its own variable 108. Also tried: fr declared at three other places (99), fr also for the skater stick's frame test (99), p->frame read in place of fr (261). No natural form found",,ga
+checkpuckcoll,,stays ESCALATE (dead-variable reuse),,ga
 updatereplay,,"`p = SortCords; for (i = 0; ...)` on the packing or the position loop (22), `for (i = 0, p = SortCords; ...)` (24), `recbpr = recbpr + 4` (35, +10), `*((short *)recbpr)++` for camy / crowdlevel (29, +1), `lastsfx = -1; replaysfx = -1;` (22)",22,ga
 RemoveFromLines,,"on the short-j base: unsigned short j (63), j declared first (59)",59,ga
 RemoveFromLines,,"the counting loops on j (109, +5)","109, +5",ga
