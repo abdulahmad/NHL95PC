@@ -150,7 +150,7 @@ CmpPoints,1FB7F,272,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/CmpPoints.
 InitMenuRemap,1FAA7,117,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/InitMenuRemap.c,matched,draft: asm calls __STOSB for the 15h-byte clear (inline memset helper); default-flag memset calls memset_,
 LoadShapeByTag,1FDFE,392,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/LoadShapeByTag.c,matched,"392 vs 392. The index, the directory byte count, and the shape pointer stay in edi; the file position stays in esi. The original uses esi for the index and the shape pointer, and edi for the file position. The width*height size is imul ebp, eax / add ebp, 11h. The original is imul eax, edx / lea ebp, [eax+11h]. Declaring pos before bytes, declaring i first, naming the product, and adding 11h through a char pointer did not change either. A memcpy/memcmp pragma that clobbers edi spilled dir (407 bytes). Do not retry those.",
 MakeStatsTitle,1FF86,144,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/LoadShapeByTag.c,matched,,
-RunMenu,1D6E8,2075,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/RunMenu.c,nonmatching,"draft (owner of RunMenu_ret4): 2024 vs 2075, 305 lines. See docs/UNSURE.md.",register 38/82
+RunMenu,1D6E8,2075,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/RunMenu.c,nonmatching,"draft (owner of RunMenu_ret4): 2024 vs 2075, 305 lines. See docs/UNSURE.md.",register 38/72
 RunTeamPickMenu,1DF03,3731,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/RunMenu.c,nonmatching,"draft in RunMenu.c: same size, 459 lines (the EXE rotates the menu loop). See docs/UNSURE.md.",register 137/179
 RunPlayerPickMenu,1ED96,3345,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/RunMenu.c,nonmatching,draft in RunMenu.c: 2945 vs 3345 (C gets a biased ebp frame). See docs/UNSURE.md.,register 119/145
 TextPrintf TextPrintf2,1FB1C,99,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/TextPrintf.c,matched,,
@@ -256,7 +256,7 @@ LoadModeState,327A1,892,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MainDeskLo
 WriteModeState,32B1D,385,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MainDeskLoop.c,matched,,
 MenuNewExhibition,32DA9,587,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MainDeskLoop.c,matched,,
 MenuLeagueSettings,332F6,167,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MainDeskLoop.c,matched,,
-MainDeskLoop,31AB5,3158,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MainDeskLoop.c,nonmatching,,size 40/76
+MainDeskLoop,31AB5,3158,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MainDeskLoop.c,nonmatching,,size 36/67
 MenuExit,3270B,16,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MenuExit.c,matched,,
 SaveModeState,3271B,134,024_31AB5_main_desk,src/c/024_31AB5_main_desk/SaveModeState.c,matched,,
 DemoSetupStub,3371C,11,025_32DA9_temp_files,src/c/025_32DA9_temp_files/DemoSetupStub.c,matched,,
