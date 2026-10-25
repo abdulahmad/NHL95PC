@@ -2,6 +2,7 @@
  * prefix and the environment through selectors. The host fills in the same variables for a flat process and then runs the
  * C library start-up (__InitRtns, __CMain) as the original does. */
 #include "host.h"
+#include "audio.h"
 
 extern uint8_t byte_D4D06, byte_D4D07, byte_D4D0F, byte_D4D10;
 extern uint16_t word_D4CE4, word_D4D04, word_D4D0D, loc_90048;
@@ -17,8 +18,13 @@ static void build_environment(const char *program)
     extern char **environ;
     static const char *const pass[] = { "PATH", "TEMP", "TMP", "NO87", "BLASTER", "ULTRASND", "ULTRADIR", "NHL95_SOUND", 0 };
     int i;
+    const char *none = getenv("NHL95_SOUND");
     for (i = 0; pass[i]; i++) {
         const char *v = getenv(pass[i]);
+        if (!v && !(none && !strcmp(none, "none"))) {      /* the game's drivers find the emulated cards through these */
+            if (!strcmp(pass[i], "BLASTER")) v = DEFAULT_BLASTER;
+            if (!strcmp(pass[i], "ULTRASND")) v = DEFAULT_ULTRASND;
+        }
         if (v) p += sprintf(p, "%s=%s", pass[i], v) + 1;
     }
     (void)environ;

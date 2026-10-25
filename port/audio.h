@@ -7,6 +7,11 @@
  * thread without an audio device) with the audio lock held; port reads and writes from the game thread take the same lock. */
 typedef void (*audio_render_fn)(int32_t *stereo, int frames, int rate);
 
+/* Where the emulated cards are when the host does not set BLASTER / ULTRASND; the game is given the same values (cstart.c), since its
+ * drivers look for the cards there. */
+#define DEFAULT_BLASTER "A220 I7 D1 T3"
+#define DEFAULT_ULTRASND "240,1,1,5,5"
+
 void audio_init(void);
 void audio_add_source(audio_render_fn fn);
 void audio_lock(void);

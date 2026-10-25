@@ -47,15 +47,37 @@ static void detect_cpu(void)
 }
 
 #ifdef _WIN32
-/* __setenvp_ builds the environment table by loading FS and ES with the DOS/4GW environment selector. FS must keep pointing at the
- * Windows thread information block, so the table stays empty (the game only reads a few optional sound variables from it). */
+/* __setenvp_ builds the environment table (environ, dword_D5444, and a flag byte per entry, dword_D5448) by reading the environment
+ * block through FS and ES loaded with the DOS/4GW environment selector. FS must keep pointing at the Windows thread information
+ * block, so the host builds the same table from the flat block. The sound drivers find the cards through BLASTER and ULTRASND
+ * there. Nothing in the game adds variables, so the table can stay in static storage. */
 extern char __setenvp_[];
+extern uint32_t dword_D4D09, dword_D5444, dword_D5448;
+
+void host_setenvp(void)
+{
+    static char *env[65];
+    static uint8_t flags[64];
+    char *p = (char *)dword_D4D09;
+    int n = 0;
+    if (dword_D5444) return;
+    for (; *p && n < 64; p += strlen(p) + 1) env[n++] = p;
+    env[n] = 0;
+    dword_D5444 = (uint32_t)env;
+    dword_D5448 = (uint32_t)flags;
+}
+
+/* the original keeps every register */
+__attribute__((naked)) static void setenvp_entry(void)
+{
+    __asm__ volatile("pushal\n\tcall _host_setenvp\n\tpopal\n\tret");
+}
 #endif
 
 void install_overrides(void)
 {
 #ifdef _WIN32
-    patch_bytes(__setenvp_, "\xC3", 1);
+    patch_jmp(__setenvp_, setenvp_entry);
 #endif
     patch_jmp(sub_B3F50, detect_cpu);
     patch_jmp(sub_9D352, init_fpu_flags);
@@ -64,4 +86,5 @@ void install_overrides(void)
     patch_jmp(sub_8DF70, video_fill_vesa_tables);      /* the VESA probe (the game ran an external program for it) */
     stub_zero(sub_B3E98);       /* save the text mode and the BIOS data area */
     stub_zero(sub_B3ED8);       /* restore them */
+    install_flag_traps();
 }

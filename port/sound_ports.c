@@ -25,7 +25,8 @@ void sound_init(void)
     int gb = 0x240, gd1 = 1, gd2 = 1, gi1 = 5, gi2 = 5;
     audio_init();
     if (none && !strcmp(none, "none")) return;
-    if (!blaster) blaster = "A220 I7 D1 T3";
+    if (!blaster) blaster = DEFAULT_BLASTER;
+    if (!ultra) ultra = DEFAULT_ULTRASND;
     sb_b = hexopt(blaster, 'A', 0x220, 16);
     irq = hexopt(blaster, 'I', 7, 10);
     dma = hexopt(blaster, 'D', 1, 10);
