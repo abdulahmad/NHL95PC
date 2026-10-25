@@ -61,3 +61,4 @@ tools/fm95_check.json
 # assembler error files (contain disassembly)
 *.err
 ref
+run-nhl95.sh

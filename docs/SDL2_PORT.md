@@ -31,6 +31,7 @@ addresses as signed numbers) and at most 32 MB each (the EA memory manager takes
 ## Build and run
 
 ```
+# or just: linux/setup.sh /path/to/game/files
 sudo dpkg --add-architecture i386 && sudo apt update
 sudo apt install gcc-multilib libsdl2-dev:i386 nasm make python3
 make sdl2
