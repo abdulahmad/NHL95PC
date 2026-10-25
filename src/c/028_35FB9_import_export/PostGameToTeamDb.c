@@ -1,8 +1,9 @@
 /* Import / export: posting a played game to a team's databases. */
-/* DRAFT under 10.0 GA: 2,341 vs 2,342 bytes, 122 differing instructions. The loop index is a plain local, so
+/* DRAFT under 10.0 GA: 2,341 vs 2,342 bytes, 115 differing instructions. The loop index is a plain local, so
    Watcom turns the played-flags loop into a __STOSB fill as in the EXE; the visitors-win arm tests !side first
    (the EXE's je / jmp into the home-win arm's increments). The skater and goalie keys have their own local (key)
-   rather than k (the goal count / stat offset), declared in tools/wccre/declsearch.py's order (6 of 9 slots).
+   rather than k (the goal count / stat offset), declared in tools/wccre/declsearch.py's order (6 of 9 slots), with
+   j before res (tools/wccre/tieorder.py's real-compiled declaration move).
    Left: i / j / score slots, the visitors-win score reloads hmscore where the EXE reuses ax (cwde); k still
    serves as the goal count and the stat offsets (separate locals for those grow the frame). */
 #define PostGameToTeamDb PostGameToTeamDb_decl
@@ -54,9 +55,9 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
     unsigned char *rec;
     int i;
     int sideofs;
+    int j;
     int res;
     int score;
-    int j;
     int k;
     int key;
     int goalieslot;
