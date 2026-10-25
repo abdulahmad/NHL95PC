@@ -535,7 +535,7 @@ checkob,53F8C,424,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/
 checkplcoll,58CE2,229,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkplcoll.c,nonmatching,stack slots: asm spills x (word) at [esp] and y at [esp+4]; C swaps the two slots; rest matches,slot 6/6
 checkwallcoll,582C9,481,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkwallcoll.c,nonmatching,"draft: 470 vs 481. xlim reloads in edx (original ecx). The x test negates that limit in ecx and compares dx with cx; the original negates it in edx, reloads x, and compares with regd4 in memory. Do not retry: non-volatile limits sign-extend the radii and spill y. Declaring ylim before xlim swaps the two stack slots.",slot 10/16
 deflect,57A3E,90,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/deflect.c,matched,,
-dopass,54DF4,858,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/dopass.c,nonmatching,,register 10/17
+dopass,54DF4,858,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/dopass.c,nonmatching,,register 6/13
 shotdiradj,57A98,371,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/dopass.c,nonmatching,,register 15/22
 doshot,57C0B,1145,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/dopass.c,nonmatching,"same size, 58 differing lines: EXE spills the divisor 3 (frame one dword larger); see docs/UNSURE.md",register 33/43
 wallcoll,587D3,940,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/dopass.c,nonmatching,"same size, 8 differing lines (two are the owner-tail jumps); see docs/UNSURE.md",register 4/8
@@ -700,7 +700,7 @@ PickExtraSkater,653BE,368,046_644A8_engine_display,src/c/046_644A8_engine_displa
 PickForLineSlot,64E60,1142,046_644A8_engine_display,src/c/046_644A8_engine_display/PickForLineSlot.c,nonmatching,,register 7/13
 PickGoalie,652D6,232,046_644A8_engine_display,src/c/046_644A8_engine_display/PickGoalie.c,matched,,
 RefillLineSlots,6552E,158,046_644A8_engine_display,src/c/046_644A8_engine_display/RefillLineSlots.c,matched,registers: asm keeps from in edi and the side*25 base in ebx; C spills from to the stack (8-byte frame),
-RemoveFromLines,655CC,807,046_644A8_engine_display,src/c/046_644A8_engine_display/RemoveFromLines.c,nonmatching,"draft: 811 vs 807, register choices (r, zero temps, pnum cache). See UNSURE.",register 24/28
+RemoveFromLines,655CC,807,046_644A8_engine_display,src/c/046_644A8_engine_display/RemoveFromLines.c,nonmatching,"draft: 811 vs 807, register choices (r, zero temps, pnum cache). See UNSURE.",slot 42/54
 ReplayFirstFrame,67581,31,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayFirstFrame.c,matched,,
 ReplayPrevFrame,675A0,54,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayPrevFrame.c,matched,,
 ReplayRecordReset,67564,29,046_644A8_engine_display,src/c/046_644A8_engine_display/ReplayRecordReset.c,matched,,
@@ -769,8 +769,8 @@ DrawGloveField,6FB35,179,052_6D2F8_create_player,src/c/052_6D2F8_create_player/D
 CreatePlayerLoop,704A6,572,052_6D2F8_create_player,src/c/052_6D2F8_create_player/DrawShootsField.c,matched,"draft (DrawShootsField.c): 590 vs 572, p spilled / event in two registers. See UNSURE.",
 EditRosters,6E089,2604,052_6D2F8_create_player,src/c/052_6D2F8_create_player/EditRosters.c,nonmatching,"draft (own file): 2581 vs 2604, 382 lines (register picks). See docs/UNSURE.md.",register 77/89
 EditRostersReturn,6D5BB,21,052_6D2F8_create_player,src/c/052_6D2F8_create_player/EditRostersReturn.c,matched,,
-EditSkaterRating,6FC60,777,052_6D2F8_create_player,src/c/052_6D2F8_create_player/EditSkaterRating.c,nonmatching,"draft: same size (777), every statement in place; the (r + 5) * 5 temporaries take other registers. See docs/UNSURE.md.",size 19/32
-EditGoalieRating,6FF69,754,052_6D2F8_create_player,src/c/052_6D2F8_create_player/EditSkaterRating.c,nonmatching,"draft (EditSkaterRating.c, ends in EditSkaterRating_tail): same size (754); the skater twin's register picks. See docs/UNSURE.md.",size 16/28
+EditSkaterRating,6FC60,777,052_6D2F8_create_player,src/c/052_6D2F8_create_player/EditSkaterRating.c,nonmatching,"draft: same size (777), every statement in place; the (r + 5) * 5 temporaries take other registers. See docs/UNSURE.md.",register 45/74
+EditGoalieRating,6FF69,754,052_6D2F8_create_player,src/c/052_6D2F8_create_player/EditSkaterRating.c,nonmatching,"draft (EditSkaterRating.c, ends in EditSkaterRating_tail): same size (754); the skater twin's register picks. See docs/UNSURE.md.",register 46/67
 ErrorScreenWait,6EAB5,480,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ErrorScreenWait.c,matched,,
 FindPlayer,71961,1451,052_6D2F8_create_player,src/c/052_6D2F8_create_player/FindPlayer.c,matched,,
 LoadTempDatabases,710D8,388,052_6D2F8_create_player,src/c/052_6D2F8_create_player/LoadTempDatabases.c,matched,,
