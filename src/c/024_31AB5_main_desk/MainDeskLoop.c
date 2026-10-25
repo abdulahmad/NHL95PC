@@ -32,13 +32,6 @@ int sub_8F98F(char *path);
 void sub_8FB8E(int song, int handle, int a, int b);
 int PreGameScreen(int home, int vis);
 
-/* DRAFT (10.0 GA): 15 differing, same 3,158 bytes; kept for its pop / ret tail (MainDeskLoop_x, which
-   LoadModeState, WriteModeState and MenuNewExhibition use). The frame is plain locals (no frame struct), in the
-   declaration order declsearch --conflicts gives for the EXE's slots (no stack operand differs). Both pointer-bitmap
-   setups compute the size into a block-local int before the allocation arguments are pushed. The submenu branch
-   is RunMenu's: depth++ before reading on2 in place, m formed after it for pad and x, y read in place, the
-   ternaries `depth != 1 ? x2 : x1`. Left: &menus[level][item] (item << 5 in eax vs EXE edx), i in esi vs EXE
-   edi in the submenu branch, the miss branch's pos stores in the other order; see docs/UNSURE.md. */
 /* MainDeskLoop (31AB5, PC only; owner of MainDeskLoop_x / MainDeskLoop_x2): the main desk screen. Reset the
    menu state (the menu bar, mainmenubar, with three items; no dropdowns open), centre the mouse on the bar, set
    the side controls, the EASN stats callbacks and the menu pointer bitmap, pick and load the desk song
@@ -49,28 +42,27 @@ int PreGameScreen(int home, int vis);
    moves the selection, a click outside closes the dropdowns. No arguments. Result: 0. */
 int MainDeskLoop(void)
 {
-    char path[0x10];
     int mx;
     int my;
     int fh;
-    int bg[4];
+    char path[0x10];
+    int oldmx;
     int level;
-    int sel[4];
     int item;
     int h;
-    int ptr;
-    int pos[4][2];
     int w;
-    int oldmy;
-    MenuItem *menus[4];
-    int oldmx;
-    int nitems[4];
+    int sel[4];
     int depth;
+    int pos[4][2];
+    MenuItem *menus[4];
+    int ptr;
+    int oldmy;
+    int bg[4];
+    int nitems[4];
     int i;
     int bits;
     int r;
     int bank;
-    int slot;
     int newsong;
     unsigned char *e;
     unsigned char *pal;
@@ -182,9 +174,7 @@ int MainDeskLoop(void)
                         sub_B4BA8();
                         if (!keepdesksong && musicon && songdata) {
                             sub_8FCDF(musichandle, 3, 0x46);
-                            do
-                                slot = musicslot;
-                            while (sub_8FC8A(slot, 3) == 0);
+                            while (sub_8FC8A(musicslot, 3) == 0);
                             sub_8D2F0(songdata);
                             songdata = 0;
                         } else {
@@ -234,10 +224,10 @@ int MainDeskLoop(void)
                         }
                         depth = level;
                     }
-                    DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
+                    DrawMenuItemSel(&menus[level][sel[level]], pos[level][0],
                         pos[level][1], 0xFA, 0xF9, 0xF8);
                     sel[level] = item;
-                    DrawMenuItemNorm((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
+                    DrawMenuItemNorm(&menus[level][sel[level]], pos[level][0],
                         pos[level][1], 0xFA, 0xF9, 0xF8);
                 }
             } else if (m->on2) {
@@ -257,9 +247,9 @@ int MainDeskLoop(void)
                     depth = level;
                 }
                 i = depth;
-                DrawMenuItemSel((struct MenuItem *)&menus[i][sel[i]], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
+                DrawMenuItemSel(&menus[i][sel[i]], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
                 sel[i] = item;
-                DrawMenuItemNorm((struct MenuItem *)&menus[i][item], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
+                DrawMenuItemNorm(&menus[i][item], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
                 depth++;
                 menus[depth] = (MenuItem *)menus[level][item].on2;
                 m = &menus[level][item];
@@ -276,7 +266,7 @@ int MainDeskLoop(void)
                 sub_91400(bg[i], pos[i][0], pos[i][1]);
                 DrawMenuDropdown(menus[i], nitems[i], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
                 sel[i] = 0;
-                DrawMenuItemNorm((struct MenuItem *)menus[i], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
+                DrawMenuItemNorm(menus[i], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
             } else {
                 sub_903F0(ptr, oldmx, oldmy);
             }
@@ -286,8 +276,7 @@ int MainDeskLoop(void)
                 sel[i] = 0;
                 if (bg[i]) {
                     sub_903F0(bg[i], pos[i][0], pos[i][1]);
-                    pos[i][0] = 0;
-                    pos[i][1] = pos[i][0];
+                    pos[i][0] = pos[i][1] = 0;
                     FreeMemBlock(bg[i]);
                 }
             }
