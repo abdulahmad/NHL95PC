@@ -4341,6 +4341,38 @@ ReassignCtlPlayer,,permlog_ts_ReassignCtlPlayer.csv retains all candidate shapes
 ReassignCtlPlayer,,generated rvalue-address compiler errors and out-of-range constant warnings were skipped by permute,,ga
 ReassignCtlPlayer,type:dx:short,dx as short,tried (docs/UNSURE.md),ga
 ReassignCtlPlayer,type:best:int,best as int,tried (docs/UNSURE.md),ga
+SelectRosterTeam,,split division shift 14,,ga
+SelectRosterTeam,,bounded for scan 14,,ga
+SelectRosterTeam,,scan condition combined 14,,ga
+SelectRosterTeam,,unsigned side 14,,ga
+SelectRosterTeam,,unsigned div 14,,ga
+SelectRosterTeam,,unsigned slot 14,,ga
+SelectRosterTeam,,callback for both restores 14,,ga
+SelectRosterTeam,,division and slot scaled for clears 20,,ga
+SelectRosterTeam,,zero before edit branch 16,,ga
+SelectRosterTeam,,named slot byte offset 18,,ga
+SelectRosterTeam,,scoped slot byte offset 18,,ga
+SelectRosterTeam,,named menu table index 14,,ga
+SelectRosterTeam,,scoped menu table index 14,,ga
+SelectRosterTeam,,both named byte offsets 18,,ga
+SelectRosterTeam,,shared edit callback 14,,ga
+SelectRosterTeam,,shared freeagent callback 14,,ga
+SelectRosterTeam,,division row scan pointer 59,,ga
+SelectRosterTeam,,switch previous team 14,,ga
+SelectRosterTeam,,switch division four 14,,ga
+SelectRosterTeam,,ternary division four 14,,ga
+SelectRosterTeam,,switch edit side 14,,ga
+SelectRosterTeam,,separate old team tests 19,,ga
+SelectRosterTeam,,scale division index only 22,,ga
+SelectRosterTeam,,scale slot index only 18,,ga
+SelectRosterTeam,,scale slot bytes only 23,,ga
+SelectRosterTeam,,typed selection argument 23,,ga
+SelectRosterTeam,,division items array type 14,,ga
+SelectRosterTeam,,typed shared division tables 37,,ga
+SelectRosterTeam,,named slot with division struct 18,,ga
+SelectRosterTeam,,"permute.py 5 min on switch(old) form: 321 compiled, 308 s, best 14 base",,ga
+SelectRosterTeam,,full transform paths and scores in /home/mhopkins/tmp/u/np/permlog_ts_SelectRosterTeam.csv. Original restored,,ga
+SelectRosterTeam,,both make and make CBUILD=0 MATCH. No ESCALATE find or tool failure,,ga
 checkplcoll,,register short x parameter: 13,,ga
 checkplcoll,,register int y parameter: 13,,ga
 checkplcoll,,const short x parameter: 13,,ga
