@@ -152,7 +152,7 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 | C file | Function | Score | Cause |
 |---|---|---:|---|
-| src/c/064_86696_season_playoffs/PlayoffTreeMenu.c | PlayoffTreeMenu | 61 | slot 52/61 |
+| src/c/064_86696_season_playoffs/PlayoffTreeMenu.c | PlayoffTreeMenu | 60 | slot 52/60 |
 
 ## Offered to StaticEck2026
 
@@ -167,6 +167,7 @@ RunMenu is in this file (score 6, register 5/6) and comes with it.
 - RunMenu 82->82 (2026-10-24, StaticEck2026, GA) the submenu depth copy through its own int k instead of i (82, same code), drawing through level (271)
 - RunMenu 82->72 (2026-10-25, StaticEck2026, GA) declsearch --conflicts on the plain locals (72, all 15 slots); tieorder before 79 forced, after 72
 - RunMenu 72->6 (2026-10-25, StaticEck2026, GA) sub_91400(ptr, oldmx, oldmy) at the end of both the hit and the miss branch (40), close loop as for (i = depth; i > level; i--) (10), depth++ after the second Norm (6); tieorder forced 0 (t71 / t72 and the size-product savings-2 run): product spellings, block-local size, w / h for the product, m spellings, declsearch confirms, permute.py 321 (6-173); kept 6
+- RunMenu 6->6 (2026-10-25, StaticEck2026, GA) MainDeskLoop shapes: m formed after on2 (declsearch 16; tieorder 12), + i = depth dropdown (same), + block-local size (16), w / h block-local (18); unchanged
 - RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
 - RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
 - RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -180,6 +181,7 @@ RunMenu is in this file (score 6, register 5/6) and comes with it.
 - RunTeamPickMenu 212->212 (2026-10-25, StaticEck2026, GA) frame struct as plain locals + declsearch --conflicts (889 by permute.py, 17 of 18 slots; not kept)
 - RunTeamPickMenu 212->212 (2026-10-25, StaticEck2026, GA) struct version: depth++ (212), depth++ with on2 in place before m (229); not kept
 - RunTeamPickMenu 212->196 (2026-10-25, StaticEck2026, GA) frame struct as plain locals + declsearch --conflicts with oldmx / oldmy swapped by hand (all 18 slots, 392), first reselect Norm through sel[level], depth++ with on2 in place before m (227), permute: statsteamorder[i] == pick (196); tieorder 191 / 192 forced (not a tie order alone); permute finds with a short return type / (short) cast / call moved against the EXE's order rejected
+- RunTeamPickMenu 196->181 (2026-10-25, StaticEck2026, GA) highlight half as a ternary like its row + declsearch --conflicts (all 18 slots, 181); TEAMBYTE spellings (struct, short table, *13*2, ptr arithmetic: same code), tree-close zero chain as stores (446), row / ternary inversions (206-235), size product spellings (181-183); tieorder 10 min on 181: nothing
 
 ### `src/c/034_41B80_schedule/CreateNewLeague.c`
 
