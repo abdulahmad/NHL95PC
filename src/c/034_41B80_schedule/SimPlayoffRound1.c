@@ -164,9 +164,9 @@ int SeedPlayoffRound1(int *seeds, unsigned char *sched, int fh, int games, unsig
  is simulated (SimulateGame, schedule slot s * 7 + 0x444 + game, mode 2) and the winner (more goals: +4 vs +5) counted
  once a team has won len 2 + 1 (SeriesLength) the remaining games are blanked (FFh). The win counts index
  by the series' first game's teams. Returns 0.
- DRAFT (10.0 GA, 9 differing): a plain win-count zeroing loop gives the original winning-length
- compare and slot-sum registers. Left: rdfh / series-counter slots and the away score loaded into dh
- instead of compared in memory. */
+ DRAFT (10.0 GA, 4 differing, exact size): a plain win-count zeroing loop gives the original winning-length
+ compare and slot-sum registers, and the winner counted by an if / else (as in SimPlayoffRound2) the in-place
+ score compare. Left: the rwfh / rdfh parameter homes are swapped (+68h / +70h). */
 int SimPlayoffRound1(int sched, int rwfh, int rdfh, char *dir, char *ext)
 {
     int wins[26];
@@ -174,8 +174,6 @@ int SimPlayoffRound1(int sched, int rwfh, int rdfh, char *dir, char *ext)
     int s;
     int len;
     unsigned char *g;
-    unsigned char home;
-    unsigned char away;
 
     g = (unsigned char *)sched;
     for (i = 0; i < 26; i++) wins[i] = 0;
@@ -187,9 +185,8 @@ int SimPlayoffRound1(int sched, int rwfh, int rdfh, char *dir, char *ext)
                 g[i * 6] = g[i * 6 + 1] = g[i * 6 + 2] = g[i * 6 + 3];
             } else {
                 if (g[i * 6 + 4] == 0xFF) SimulateGame(dir, ext, s * 7 + 0x444 + i, g + i * 6, rwfh, rdfh, 2);
-                home = g[i * 6 + 4];
-                away = g[i * 6 + 5];
-                wins[home > away ? g[i * 6 + 2] : g[i * 6 + 3]]++;
+                if (g[i * 6 + 4] > g[i * 6 + 5]) wins[g[i * 6 + 2]]++;
+                else wins[g[i * 6 + 3]]++;
             }
         }
     }
