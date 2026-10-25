@@ -4143,3 +4143,9 @@ ShowCredits,,Watcom does not cross-jump them into the EXE's code),,ga
 FadePalette,,"the clamp as if / else storing steps in each arm (`if (steps > 2) steps = 2; else steps = steps;`, 10, +8)",,ga
 FadePalette,,"the same through c (dead-variable reuse, 10, +8), through i then one store (7: dead reuse plus a copy, not kept)","7: dead reuse plus a copy, not kept",ga
 ListDialog,,"the mark test's `((!marks || flags[cur]) ? 1 : 0)` as a plain condition or as a nested if (15, +13 each): the ternary stays",,ga
+RunMenu,,"w / h (or one of them) holding the pointer bitmap's sizes for the product (119-173, they are memory variables), size inlined into the call (84)",84,ga
+RunMenu,,"the product operands commuted (7), `0x11 +` first (6)",6,ga
+RunMenu,,"a block-local size as in MainDeskLoop (82, after declsearch --conflicts 6), `m = menus[level] + item` (6)",6,ga
+RunMenu,,"the on1 / on2 tests through `menus[level][item]` without m (129), declsearch --conflicts --confirm 8 on the committed order (6 at best), permute.py 321 candidates (6)",6,ga
+RunMenu,temp:size:inline,size inlined,tried (docs/UNSURE.md),ga
+RunTeamPickMenu,,"the MainDeskLoop / RunMenu submenu shape on the struct version: depth++ for depth = i + 1 (212), and depth++ with on2 read in place before m (229). Not reached: the plain-locals version's 18th slot (oldmy)",,ga
