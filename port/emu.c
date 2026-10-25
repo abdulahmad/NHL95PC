@@ -1,12 +1,73 @@
 /* Decode and emulate the privileged instructions the game executes (int n, in, out, cli, sti). */
 #include "host.h"
 
-/* Is the instruction at ip one that traps (int n, in, out, ins, outs, cli, sti)? */
+/* Is the instruction at ip one that traps (int n, in, out, ins, outs, cli, sti, and the int3 that replaces pushf / popf)? */
 int traps(const uint8_t *ip)
 {
     while (*ip == 0x66 || *ip == 0xF3 || *ip == 0xF2) ip++;
     return *ip == 0xCD || *ip == 0xFA || *ip == 0xFB || (*ip >= 0xE4 && *ip <= 0xE7) || (*ip >= 0xEC && *ip <= 0xEF) ||
-           (*ip >= 0x6C && *ip <= 0x6F);
+           (*ip >= 0x6C && *ip <= 0x6F) || *ip == 0xCC;
+}
+
+/* ---- pushf / popf ----
+ * The game's interrupt flag is vif. The drivers save it with pushf, cli and restore it with popf, but in a user process popf
+ * leaves IF alone without trapping, so the restore would be lost and interrupts would stay off. Each pushf / popf of the game's
+ * code (flagops.h, from the sources) is replaced by int3 and emulated with vif in place of IF. */
+static const struct { uint32_t addr; uint8_t kind; } flagops[] = {
+#include "flagops.h"
+};
+#define NFLAGOPS (int)(sizeof flagops / sizeof *flagops)
+#define GAME_ADDR(orig) ((uint8_t *)sub_10000 + ((orig) - 0x10000))
+
+void install_flag_traps(void)
+{
+    static const uint8_t first[4] = { 0x9C, 0x9D, 0x66, 0x66 };
+    int i, n = 0;
+    for (i = 0; i < NFLAGOPS; i++) {
+        uint8_t *p = GAME_ADDR(flagops[i].addr);
+        if (p[0] != first[flagops[i].kind] || (flagops[i].kind >= 2 && p[1] != (flagops[i].kind == 2 ? 0x9C : 0x9D))) continue;
+        p[0] = 0xCC;
+        n++;
+    }
+    if (n != NFLAGOPS) fprintf(stderr, "pushf/popf: %d of %d found in the code\n", n, NFLAGOPS);
+}
+
+/* the instruction an int3 at ip replaced, or -1 */
+static int flagop_kind(const uint8_t *ip)
+{
+    uint32_t orig = (uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000;
+    int lo = 0, hi = NFLAGOPS - 1;
+    while (lo <= hi) {
+        int mid = (lo + hi) / 2;
+        if (flagops[mid].addr == orig) return flagops[mid].kind;
+        if (flagops[mid].addr < orig) lo = mid + 1; else hi = mid - 1;
+    }
+    return -1;
+}
+
+#define FLAGS_POPPED 0xCD5u                   /* CF PF AF ZF SF DF OF: what popf may change in a user process, besides IF */
+
+static int emulate_flagop(ctx_t *c, uint8_t *ip)
+{
+    int kind = flagop_kind(ip);
+    uint32_t efl = R(c, EFL), v;
+    switch (kind) {
+    case 0:
+        R(c, ESP) -= 4;
+        *(uint32_t *)R(c, ESP) = (efl & ~0x10200u) | (vif ? 0x200 : 0);
+        return 1;
+    case 2:
+        R(c, ESP) -= 2;
+        *(uint16_t *)R(c, ESP) = (uint16_t)((efl & ~0x200u) | (vif ? 0x200 : 0));
+        return 2;
+    case 1: case 3:
+        if (kind == 1) { v = *(uint32_t *)R(c, ESP); R(c, ESP) += 4; }
+        else { v = *(uint16_t *)R(c, ESP); R(c, ESP) += 2; }
+        R(c, EFL) = (efl & ~FLAGS_POPPED) | (v & FLAGS_POPPED);
+        vif = (v >> 9) & 1;
+        return kind == 1 ? 1 : 2;
+    }
+    return 0;
 }
 
 /* ---- the first 64 KB ----
@@ -131,6 +192,8 @@ int emulate_privileged(ctx_t *c, uint8_t *ip)
     }
     op = ip[n];
     switch (op) {
+    case 0xCC:
+        return n ? 0 : emulate_flagop(c, ip);
     case 0xCD:
         return dos_int(c, ip[n + 1]) ? n + 2 : 0;
     case 0xFA: irq_set_enabled(c, 0); return n + 1;                 /* cli */

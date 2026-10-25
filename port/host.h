@@ -61,6 +61,7 @@ void plat_sleep_ms(int ms);
 /* privileged instructions the game executes (emu.c) */
 int emulate_privileged(ctx_t *c, uint8_t *ip);
 int traps(const uint8_t *ip);
+void install_flag_traps(void);                         /* pushf / popf of the game become int3 (emulated with vif) */
 int emulate_low_memory(ctx_t *c, uint8_t *ip);         /* an access below 0x10000: continue through a trampoline */
 int accesses_low_memory(ctx_t *c, uint8_t *ip);
 /* software interrupts: DOS, BIOS, DPMI, mouse (dos.c) */

@@ -17,6 +17,12 @@ static void trap(int sig, siginfo_t *si, void *uc)
     int len;
     /* the game may leave the direction and alignment-check flags set; the C library must not see them */
     __asm__ volatile("cld\n pushf\n andl $0xFFFBFFFF, (%%esp)\n popf" ::: "cc", "memory");
+    if (sig == SIGTRAP && IN_GAME_CODE(ip - 1) && ip[-1] == 0xCC) {   /* an int3 that replaced pushf / popf */
+        ip--;
+        R(c, EIP) = (uintptr_t)ip;
+        len = emulate_privileged(c, ip);
+        if (len > 0) { R(c, EIP) += len; return; }
+    }
     if (sig == SIGSEGV && si->si_code == SI_KERNEL) {
         len = emulate_privileged(c, ip);
         if (len > 0) {

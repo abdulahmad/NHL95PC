@@ -20,8 +20,13 @@ static LONG CALLBACK veh(EXCEPTION_POINTERS *ep)
     uint8_t *ip = (uint8_t *)c->Eip;
     DWORD es = c->SegEs;
     int len;
+    if (code == EXCEPTION_BREAKPOINT) {             /* an int3 that replaced pushf / popf: continue from its address */
+        ip = (uint8_t *)ep->ExceptionRecord->ExceptionAddress;
+        c->Eip = (DWORD)ip;
+    }
     if (!IN_GAME_CODE(ip)) return EXCEPTION_CONTINUE_SEARCH;
-    if (code != EXCEPTION_PRIV_INSTRUCTION && code != EXCEPTION_ACCESS_VIOLATION && code != EXCEPTION_ILLEGAL_INSTRUCTION)
+    if (code != EXCEPTION_PRIV_INSTRUCTION && code != EXCEPTION_ACCESS_VIOLATION && code != EXCEPTION_ILLEGAL_INSTRUCTION &&
+        code != EXCEPTION_BREAKPOINT)
         return EXCEPTION_CONTINUE_SEARCH;
     __asm__ volatile("cld");
     c->EFlags &= ~0x40000u;

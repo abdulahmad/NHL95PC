@@ -11,15 +11,19 @@ volatile int vif = 1;                   /* the game's interrupt flag (cli / sti)
 volatile uint8_t isr_active;
 static volatile unsigned pit_divisor = 0x10000;
 
-/* Entered by the handler's iret: re-enable delivery and continue at the interrupted address (it is on the stack). */
+/* Entered by the handler's iret: re-enable delivery and continue at the interrupted address (it is on the stack). The iret
+ * restores the interrupt flag the interrupted code had, which was set (an interrupt is only taken then): the game's interrupt flag
+ * is vif, which the CPU's iret does not touch, so the stub sets it (the Sound Blaster handler ends with cli). */
 #ifdef _WIN32
 #define ISR_FLAG "_isr_active"
+#define VIF "_vif"
 #else
 #define ISR_FLAG "isr_active"
+#define VIF "vif"
 #endif
 __attribute__((naked)) static void irq_return_stub(void)
 {
-    __asm__ volatile("movb $0, " ISR_FLAG "\n\tret");
+    __asm__ volatile("movl $1, " VIF "\n\tmovb $0, " ISR_FLAG "\n\tret");
 }
 
 /* The interrupt controllers: the mask registers (21h, A1h) and the initialisation words the game may write. */
@@ -65,6 +69,7 @@ int irq_try_deliver(ctx_t *c)
     R(c, ESP) = (uint32_t)sp;
     R(c, EIP) = pm_vec[vec].off;
     isr_active = 1;
+    vif = 0;                            /* an interrupt gate clears IF */
     return 1;
 }
 
@@ -89,7 +94,7 @@ void irq_poll(void)
 /* called from the trap handler for cli / sti */
 void irq_set_enabled(ctx_t *c, int on)
 {
-    (void)c;
+    TRACE("%s at %08x\n", on ? "sti" : "cli", (unsigned)R(c, EIP));
     vif = on;
 }
 
