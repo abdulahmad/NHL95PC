@@ -255,7 +255,7 @@ def cross_search(a, src, func, work, passes0, tie_plan, tie_best, t0):
                 print('      %-8s use %s' % ('', ' | '.join(u_[:4]) or '-'))
 
 
-def explain(p, order, runs, show=12):
+def explain(p, order, runs, show=12, origins=None):
     """which single change to the pre-sort list makes the Shell sort produce the needed order: one more conflict
     (savings s) created at a point of the function, or one conflict fewer. The pre-sort list is newest first (each
     conflict is prepended when created), so a position is a point in creation order, between two conflicts that
@@ -279,12 +279,12 @@ def explain(p, order, runs, show=12):
         return moved
 
     lab = {c['conf']: label(c) for c in before}
-    hits = flip_hits(before, check)
-    explain_print(hits, before, lab, show)
-    return set(lab[before[h[3][0]]['conf']] for h in hits if h[1] == 'move')
+    hits = flip_hits(before, check, origins)
+    explain_print(hits, before, lab, show, origins)
+    return set(lab[before[h[3][0]]['conf']] for h in hits if h[1] == 'move' and not is_temp(before[h[3][0]]))
 
 
-def flip_hits(before, check):
+def flip_hits(before, check, origins=None):
     hits = []
     for s in sorted(set(c['savings'] for c in before)):
         for q in range(len(before) + 1):
@@ -300,10 +300,21 @@ def flip_hits(before, check):
         rest = before[:q] + before[q + 1:]
         ok = [q2 for q2 in range(len(rest) + 1) if q2 != q and check(rest[:q2] + [c] + rest[q2:]) is not None]
         if ok: hits.append((0, 'move', c['savings'], (q, ok)))
+    # a temporary of the live-information walk at another place inside its block's part of the list (irdump.py
+    # built_order: a statement or operand order in that block that changes where it is last used)
+    blk = lambda c: (origins or {}).get(c.get('label'), '').split(':')[0]
+    for q, c in enumerate(before):
+        b = blk(c)
+        if not b.startswith('B') or not (c['label'][0] == 't' and c['label'][1:].isdigit()): continue
+        rest = before[:q] + before[q + 1:]
+        same = [q2 for q2 in range(len(rest) + 1) if q2 != q and ((q2 < len(rest) and blk(rest[q2]) == b) or (q2 and blk(rest[q2 - 1]) == b))]
+        ok = [q2 for q2 in same if check(rest[:q2] + [c] + rest[q2:]) is not None]
+        if ok: hits.append((0, 'move', c['savings'], (q, ok)))
     return hits
 
 
-def explain_print(hits, before, lab, show):
+def explain_print(hits, before, lab, show, origins=None):
+    at = lambda c: ' (%s)' % origins[label(c)] if origins and label(c) in origins else ''
     if not hits:
         print('  no single added or dropped conflict gives this order (needs two or more changes)'); return
     print('  single changes that give the needed order (other tie runs left in order first):')
@@ -312,16 +323,16 @@ def explain_print(hits, before, lab, show):
         if kind == 'move':
             q, ok = q
             rest = [x for x in before if x is not before[q]]
-            where = ', '.join('just older than %s' % (lab[rest[q2 - 1]['conf']] if q2 else '(newest)') for q2 in ok[:4])
-            print('    %s at another place in creation order (now %s): %s%s' % (
-                lab[before[q]['conf']], 'just older than %s' % lab[before[q - 1]['conf']] if q else 'newest', where,
+            where = ', '.join('just older than %s%s' % ((lab[rest[q2 - 1]['conf']], at(rest[q2 - 1])) if q2 else ('(newest)', '')) for q2 in ok[:4])
+            print('    %s%s at another place in creation order (now %s): %s%s' % (
+                lab[before[q]['conf']], at(before[q]), 'just older than %s' % lab[before[q - 1]['conf']] if q else 'newest', where,
                 ' ... (%d places)' % len(ok) if len(ok) > 4 else ''))
             continue
-        newer = lab.get(before[q - 1]['conf']) if q > 0 else '(start)'
+        newer = lab.get(before[q - 1]['conf']) + at(before[q - 1]) if q > 0 else '(start)'
         if kind == 'drop':
-            what = 'without %s (savings %d)' % (lab[before[q]['conf']], s)
+            what = 'without %s%s (savings %d)' % (lab[before[q]['conf']], at(before[q]), s)
         else:
-            older = lab.get(before[q]['conf']) if q < len(before) else '(end)'
+            older = lab.get(before[q]['conf']) + at(before[q]) if q < len(before) else '(end)'
             what = 'one more conflict of savings %d, created after %s and before %s' % (s, older, newer)
         print('    %s%s' % (what, '' if not moved else '  [%d other run(s) reorder]' % moved))
     if len(hits) > show: print('    ... %d more' % (len(hits) - show))
@@ -472,7 +483,11 @@ def main():
                 d_, u_ = info.get(lab, ([], []))
                 print('    %-8s def %s' % (lab, ' | '.join(d_[:2]) or '-'))
                 print('    %-8s use %s' % ('', ' | '.join(u_[:3]) or '-'))
-        edit_names |= explain(p0, order, runs[k])
+        try:
+            origins = irdump.built_origins(src, func, k)
+        except Exception:
+            origins = {}
+        edit_names |= explain(p0, order, runs[k], origins=origins)
     if edit_names:
         real = real_moves(src, func, edit_names, work, base)
         print('declaration moves of %s, compiled for real:' % ', '.join(sorted(edit_names)))
