@@ -72,211 +72,211 @@ void assgoalie(Player *p)
         } else {
             regd0.w = x;
         }
-        goto move;
-    }
-    if (ABS(x) > 0x34 || y >= 0xEF || y < 0xB3) {
-        regd0.w = x >= 0 ? 4 : -4;
-        regd1.w = p->pflags & 0x80 ? -0xC4 : 0xC4;
-        skateto(p, 0);
-        return;
-    }
-    if (!(p->pflags2 & 2) && !(p->pflags & 0x20)) SetSPA(p, *puckc == p->SCnum ? 0x99 : 1);
-    if (gmode & 1) return;
-    if (p->temp5 >= 0) {
-        if (*puckc == p->SCnum) {
-            if (y < 0x9B) p->temp5 = 0;
-            if (--p->temp5 < 0) AddPenalty2(p, 4);
-        } else {
-            p->temp5 = -1;
-        }
-    }
-    if (p->pflags2 & 2) return;
-    if (--p->temp1 >= 0) {
-        regd2.w = ((signed char *)p)[0x28];
-        if (regd2.w > 7) StopNA(p);
-        else playeracc(p, regd2.w);
-        return;
-    }
-    p->temp1 = p->aidef / 3;
-    if (!(p->pflags & 8)) {
-        regd1.w = *pucky ^ HIWORD(p->Ypos);
-        if (regd1.w < 0) {
-            regd0.w = 0;
-            regd2.w = p->pflags & 0x80 ? -0xD4 : 0xD4;
-            goto move;
-        }
-        p->temp4--;
-        if (*puckc == p->SCnum) {
-            if (p->temp5 < 0) p->temp5 = 0x5A;
-            p->temp4 = -1;
-            if (p->temp5 < 0x5A && !randomd0(4)) {
-                q = &SortCords[p->SCnum < 6 ? 6 : 0];
-                for (k = 0; k < 6; k++, q++) {
-                    if (!(q->pflags2 & 4) && q->position > 0 && q->puckdist < 0x23 && q->puckdist < 0x14) {
-                        p->pflags |= 0x20;
-                        p->pflags2 |= 2;
-                        SetSPA(p, 0x1135);
-                        return;
-                    }
-                }
-                threat = 1;
-                if (chk4pass(p)) return;
-            }
-            goto angle;
-        }
-    }
-    regd0.w = *puckx - HIWORD(p->Xpos);
-    regd1.w = *pucky - HIWORD(p->Ypos);
-    if (*puckc >= 0) {
-        if (*puckc >= 0 && (p->SCnum < 6) ^ (*puckc < 6) && *(short *)((char *)p + 0x4A) == 0
-            && randomd0(0x100) < 0xA && p->puckdist < 0x23 && ABS(*pucky) < 0xE9) {
-            p->facedir = vtoa(regd0.w, regd1.w);
-            p->pflags |= 0x20;
-            p->pflags2 |= 2;
-            SetSPA(p, 0x1095);
-            *(short *)((char *)p + 0x4A) = 0xF0;
-            return;
-        }
     } else {
-        if (p->temp4 == 0 && p->puckdist < 0x2D && ABS(*pucky) < 0xE9
-            && *(int *)((char *)p->optmptr + 0x3E) < 0x3C && randomd0(0x100) < 0xA) {
-            p->facedir = vtoa(regd0.w, regd1.w);
-            p->nopuck = 8;
-            p->pflags |= 0x20;
-            p->pflags2 |= 2;
-            SetSPA(p, 0x181);
-            *(short *)((char *)p + 0x4A) = 0x168;
-            CROWDUP();
+        if (ABS(x) > 0x34 || y >= 0xEF || y < 0xB3) {
+            regd0.w = x >= 0 ? 4 : -4;
+            regd1.w = p->pflags & 0x80 ? -0xC4 : 0xC4;
+            skateto(p, 0);
             return;
         }
-    }
-angle:
-    pc = puckcross;
-    regd3.w = 0xE4;
-    regd4.w = 0xE8;
-    if (p->pflags & 0x80) {
-        regd3.w = -0xE4;
-        regd4.w = -0xE8;
-        pc += 2;
-    }
-    if (ABS(HIWORD(p->Ypos)) > 0xE4) {
-        regd0.w = regd2.w = 0;
-        if (ABS(HIWORD(p->Xpos)) <= 0x30) regd0.w = HIWORD(p->Xpos) < 0 ? -0xA0 : 0xA0;
-        goto move;
-    }
-    regd0.w = *puckx;
-    regd1.w = *pucky;
-    ClampYPosition(p);
-    regd0.w = vtoa(regd0.w, regd1.w);
-    regd1.w = p->facedir;
-    if ((regd0.w -= regd1.w) != 0) {
-        regd0.w = ((-regd0.w & 4) >> 1) - 1;
-        if (!(1 << regd1.w & 0x42)) {
-            regd1.w += regd0.w;
-        } else {
-            regd1.w += regd0.w;
-            if ((!(p->pflags & 0x80) ? 0x83 : 0x38) & 1 << regd1.w) {
-                regd0.w = -regd0.w;
-                regd1.w += regd0.w * 2;
-            }
-        }
-        regd1.w &= 7;
-        p->facedir = regd1.w;
-    }
-    regd0.w = 0xE0;
-    if (ABS(*pucky) > 0xBB) regd0.w -= 0x40;
-    regd1.w = regd0.w;
-    regd0.w = *puckx + (imul32(*puckvx, regd0.w) >> 16);
-    regd1.w = *pucky + (imul32(*puckvy, regd1.w) >> 16);
-    ClampYPosition(p);
-    {
-        int dist;
-        short depth;
-
-        dist = vecdist(regd0.w, regd1.w);
-        if (dist >= 0x1E) {
-            depth = dist;
-            depth++;
-            regd2.w = depth;
-            if (ABS(*pucky) < 0x74 && ShotLaneOpen()) {
-                regd4.w = 0x14;
-                if (sflags & 8) regd4.w = 0x1C;
+        if (!(p->pflags2 & 2) && !(p->pflags & 0x20)) SetSPA(p, *puckc == p->SCnum ? 0x99 : 1);
+        if (gmode & 1) return;
+        if (p->temp5 >= 0) {
+            if (*puckc == p->SCnum) {
+                if (y < 0x9B) p->temp5 = 0;
+                if (--p->temp5 < 0) AddPenalty2(p, 4);
             } else {
-                regd4.w = 0x12;
-                if (sflags & 8) regd4.w = 0x1A;
+                p->temp5 = -1;
             }
-            regd1.w = regd1.w * regd4.w / regd2.w;
-            regd4.w += 8;
-            regd0.w = regd0.w * regd4.w / regd2.w;
         }
-    }
-    regd2.w = regd1.w += regd3.w;
-    y = (*puckvy >> 9) + *pucky;
-    if (*puckc < 0 && ABS(*pucky) < 0xE8 && ABS(HIWORD(p->Ypos)) > 0x74 && p->puckdist < 0x1E
-        && ABS(y) > ABS(HIWORD(p->Ypos)))
-        ok = 0;
-    if (!ok || (unsigned short)pc[1] < 0x23) {
-        x = pc[0];
-        if (ok && ABS(x) >= 0x19) {
-            if (*puckc < 0 && !(iflags & 4) && ABS(*puckx) >= 0x44 && ABS(*puckvy) >= 0x3800 && ABS(*pucky) >= 0x98
-                && (p->pflags & 0x80 ? -*puckvy : *puckvy) >= -0x190 && *(int *)((char *)p->tmptr + 0x3E) >= 0x132
-                && *(int *)((char *)p->optmptr + 0x3E) >= 0x132) {
-                assinsert(p, 0xF);
+        if (p->pflags2 & 2) return;
+        if (--p->temp1 >= 0) {
+            regd2.w = ((signed char *)p)[0x28];
+            if (regd2.w > 7) StopNA(p);
+            else playeracc(p, regd2.w);
+            return;
+        }
+        p->temp1 = p->aidef / 3;
+        if (!(p->pflags & 8)) {
+            regd1.w = *pucky ^ HIWORD(p->Ypos);
+            if (regd1.w < 0) {
+                regd0.w = 0;
+                regd2.w = p->pflags & 0x80 ? -0xD4 : 0xD4;
+                goto move;
+            }
+            p->temp4--;
+            if (*puckc == p->SCnum) {
+                if (p->temp5 < 0) p->temp5 = 0x5A;
+                p->temp4 = -1;
+                if (p->temp5 < 0x5A && !randomd0(4)) {
+                    q = &SortCords[p->SCnum < 6 ? 6 : 0];
+                    for (k = 0; k < 6; k++, q++) {
+                        if (!(q->pflags2 & 4) && q->position > 0 && q->puckdist < 0x23 && q->puckdist < 0x14) {
+                            p->pflags |= 0x20;
+                            p->pflags2 |= 2;
+                            SetSPA(p, 0x1135);
+                            return;
+                        }
+                    }
+                    threat = 1;
+                    if (chk4pass(p)) return;
+                }
+                goto angle;
+            }
+        }
+        regd0.w = *puckx - HIWORD(p->Xpos);
+        regd1.w = *pucky - HIWORD(p->Ypos);
+        if (*puckc >= 0) {
+            if (*puckc >= 0 && (p->SCnum < 6) ^ (*puckc < 6) && *(short *)((char *)p + 0x4A) == 0
+                && randomd0(0x100) < 0xA && p->puckdist < 0x23 && ABS(*pucky) < 0xE9) {
+                p->facedir = vtoa(regd0.w, regd1.w);
+                p->pflags |= 0x20;
+                p->pflags2 |= 2;
+                SetSPA(p, 0x1095);
+                *(short *)((char *)p + 0x4A) = 0xF0;
                 return;
             }
         } else {
-            x -= HIWORD(p->Xpos);
-            if (x < 0) x = -x;
-            x -= 8;
-            if (x > 0x10) x = 0x10;
-            if (x < 0) x = 0;
-            x >>= 2;
-            ay = ABS(HIWORD(p->Ypos));
-            if (y < 0) y = -y;
-            if (y > ay) x += 4;
-            if (ok && (p->puckdist > 0x19 || ABS(*pucky) > 0xE8)
-                && ((unsigned short)pc[1] >= x + 0xC || ABS(*pucky) > 0xE9)) {
-                regd0.w = pc[0];
-                if (ABS(*pucky) > 0xDC) regd0.w = *puckx > 0 ? 0x18 : -0x18;
-            } else if (*puckc != p->SCnum && ABS(*puckx) < 0x64 && *(short *)puckz < 0x14) {
-                p->Xvel >>= 1;
-                p->Yvel >>= 1;
-                if (!(((unsigned char *)p)[0x48] & 2)) {
-                    regd0.w = (*puckvx >> 10) + *puckx - HIWORD(p->Xpos);
-                    regd1.w = (*puckvy >> 10) + *pucky - HIWORD(p->Ypos);
-                    a = vtoa(regd0.w, regd1.w);
-                    if (a == 8) regd3.w = 0;
-                    else regd3.w = (a - p->facedir) & 7;
-                } else {
-                    regd3.w = (p->puckdir - p->facedir) & 7;
-                }
-                if (regd3.w == 4 && ABS(*puckvy) + ABS(*puckvx) <= 0x1200) {
-                    regd0.w = 8;
-                } else {
-                    if (regd3.w == 0 || regd3.w == 4) {
-                        a = p->facedir;
-                        if (a == 0) regd3.w = regd0.w >= 0 ? 1 : 7;
-                        else if (a == 4) regd3.w = regd0.w >= 0 ? 7 : 1;
-                        else if (a == 1 || a == 5) regd3.w = ABS(regd0.w) >= ABS(regd1.w) ? 1 : 7;
-                        else if (a == 3 || a == 7) regd3.w = ABS(regd0.w) >= ABS(regd1.w) ? 7 : 1;
-                        else regd3.w = randomd0(2);
-                    }
-                    regd0.w = dword_E03AE >> 0x12;
-                    if (p->attribute & 8) regd0.w = regd0.w == 0;
-                    if (regd3.w >= 4) regd3.w = 7 - regd3.w;
-                    if (regd3.w >= 2 && *(short *)puckz < 0xA && *(short *)puckvz < 0x800) {
-                        regd0.w += 6;
-                    } else if (*(short *)puckz < 8 && *(short *)puckvz < 0x800) {
-                        regd0.w += 4;
-                        if ((unsigned short)pc[1] >= 9 && p->facedir != 2 && p->facedir != 6 && *puckc >= 0) regd0.w -= 2;
-                    }
-                }
+            if (p->temp4 == 0 && p->puckdist < 0x2D && ABS(*pucky) < 0xE9
+                && *(int *)((char *)p->optmptr + 0x3E) < 0x3C && randomd0(0x100) < 0xA) {
+                p->facedir = vtoa(regd0.w, regd1.w);
+                p->nopuck = 8;
                 p->pflags |= 0x20;
                 p->pflags2 |= 2;
-                SetSPA(p, ((short *)dword_CCA5A)[regd0.w + 1]);
+                SetSPA(p, 0x181);
+                *(short *)((char *)p + 0x4A) = 0x168;
                 CROWDUP();
-                regd0.w = pc[0];
-                if (ABS(*pucky) > 0xDC) regd0.w = *puckx > 0 ? 0x18 : -0x18;
+                return;
+            }
+        }
+    angle:
+        pc = puckcross;
+        regd3.w = 0xE4;
+        regd4.w = 0xE8;
+        if (p->pflags & 0x80) {
+            regd3.w = -0xE4;
+            regd4.w = -0xE8;
+            pc += 2;
+        }
+        if (ABS(HIWORD(p->Ypos)) > 0xE4) {
+            regd0.w = regd2.w = 0;
+            if (ABS(HIWORD(p->Xpos)) <= 0x30) regd0.w = HIWORD(p->Xpos) < 0 ? -0xA0 : 0xA0;
+        } else {
+            regd0.w = *puckx;
+            regd1.w = *pucky;
+            ClampYPosition(p);
+            regd0.w = vtoa(regd0.w, regd1.w);
+            regd1.w = p->facedir;
+            if ((regd0.w -= regd1.w) != 0) {
+                regd0.w = ((-regd0.w & 4) >> 1) - 1;
+                if (!(1 << regd1.w & 0x42)) {
+                    regd1.w += regd0.w;
+                } else {
+                    regd1.w += regd0.w;
+                    if ((!(p->pflags & 0x80) ? 0x83 : 0x38) & 1 << regd1.w) {
+                        regd0.w = -regd0.w;
+                        regd1.w += regd0.w * 2;
+                    }
+                }
+                regd1.w &= 7;
+                p->facedir = regd1.w;
+            }
+            regd0.w = 0xE0;
+            if (ABS(*pucky) > 0xBB) regd0.w -= 0x40;
+            regd1.w = regd0.w;
+            regd0.w = *puckx + (imul32(*puckvx, regd0.w) >> 16);
+            regd1.w = *pucky + (imul32(*puckvy, regd1.w) >> 16);
+            ClampYPosition(p);
+            {
+                int dist;
+                short depth;
+
+                dist = vecdist(regd0.w, regd1.w);
+                if (dist >= 0x1E) {
+                    depth = dist;
+                    depth++;
+                    regd2.w = depth;
+                    if (ABS(*pucky) < 0x74 && ShotLaneOpen()) {
+                        regd4.w = 0x14;
+                        if (sflags & 8) regd4.w = 0x1C;
+                    } else {
+                        regd4.w = 0x12;
+                        if (sflags & 8) regd4.w = 0x1A;
+                    }
+                    regd1.w = regd1.w * regd4.w / regd2.w;
+                    regd4.w += 8;
+                    regd0.w = regd0.w * regd4.w / regd2.w;
+                }
+            }
+            regd2.w = regd1.w += regd3.w;
+            y = (*puckvy >> 9) + *pucky;
+            if (*puckc < 0 && ABS(*pucky) < 0xE8 && ABS(HIWORD(p->Ypos)) > 0x74 && p->puckdist < 0x1E
+                && ABS(y) > ABS(HIWORD(p->Ypos)))
+                ok = 0;
+            if (!ok || (unsigned short)pc[1] < 0x23) {
+                x = pc[0];
+                if (ok && ABS(x) >= 0x19) {
+                    if (*puckc < 0 && !(iflags & 4) && ABS(*puckx) >= 0x44 && ABS(*puckvy) >= 0x3800 && ABS(*pucky) >= 0x98
+                        && (p->pflags & 0x80 ? -*puckvy : *puckvy) >= -0x190 && *(int *)((char *)p->tmptr + 0x3E) >= 0x132
+                        && *(int *)((char *)p->optmptr + 0x3E) >= 0x132) {
+                        assinsert(p, 0xF);
+                        return;
+                    }
+                } else {
+                    x -= HIWORD(p->Xpos);
+                    if (x < 0) x = -x;
+                    x -= 8;
+                    if (x > 0x10) x = 0x10;
+                    if (x < 0) x = 0;
+                    x >>= 2;
+                    ay = ABS(HIWORD(p->Ypos));
+                    if (y < 0) y = -y;
+                    if (y > ay) x += 4;
+                    if (ok && (p->puckdist > 0x19 || ABS(*pucky) > 0xE8)
+                        && ((unsigned short)pc[1] >= x + 0xC || ABS(*pucky) > 0xE9)) {
+                        regd0.w = pc[0];
+                        if (ABS(*pucky) > 0xDC) regd0.w = *puckx > 0 ? 0x18 : -0x18;
+                    } else if (*puckc != p->SCnum && ABS(*puckx) < 0x64 && *(short *)puckz < 0x14) {
+                        p->Xvel >>= 1;
+                        p->Yvel >>= 1;
+                        if (!(((unsigned char *)p)[0x48] & 2)) {
+                            regd0.w = (*puckvx >> 10) + *puckx - HIWORD(p->Xpos);
+                            regd1.w = (*puckvy >> 10) + *pucky - HIWORD(p->Ypos);
+                            a = vtoa(regd0.w, regd1.w);
+                            if (a == 8) regd3.w = 0;
+                            else regd3.w = (a - p->facedir) & 7;
+                        } else {
+                            regd3.w = (p->puckdir - p->facedir) & 7;
+                        }
+                        if (regd3.w == 4 && ABS(*puckvy) + ABS(*puckvx) <= 0x1200) {
+                            regd0.w = 8;
+                        } else {
+                            if (regd3.w == 0 || regd3.w == 4) {
+                                a = p->facedir;
+                                if (a == 0) regd3.w = regd0.w >= 0 ? 1 : 7;
+                                else if (a == 4) regd3.w = regd0.w >= 0 ? 7 : 1;
+                                else if (a == 1 || a == 5) regd3.w = ABS(regd0.w) >= ABS(regd1.w) ? 1 : 7;
+                                else if (a == 3 || a == 7) regd3.w = ABS(regd0.w) >= ABS(regd1.w) ? 7 : 1;
+                                else regd3.w = randomd0(2);
+                            }
+                            regd0.w = dword_E03AE >> 0x12;
+                            if (p->attribute & 8) regd0.w = regd0.w == 0;
+                            if (regd3.w >= 4) regd3.w = 7 - regd3.w;
+                            if (regd3.w >= 2 && *(short *)puckz < 0xA && *(short *)puckvz < 0x800) {
+                                regd0.w += 6;
+                            } else if (*(short *)puckz < 8 && *(short *)puckvz < 0x800) {
+                                regd0.w += 4;
+                                if ((unsigned short)pc[1] >= 9 && p->facedir != 2 && p->facedir != 6 && *puckc >= 0) regd0.w -= 2;
+                            }
+                        }
+                        p->pflags |= 0x20;
+                        p->pflags2 |= 2;
+                        SetSPA(p, ((short *)dword_CCA5A)[regd0.w + 1]);
+                        CROWDUP();
+                        regd0.w = pc[0];
+                        if (ABS(*pucky) > 0xDC) regd0.w = *puckx > 0 ? 0x18 : -0x18;
+                    }
+                }
             }
         }
     }
