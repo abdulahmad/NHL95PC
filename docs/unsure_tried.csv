@@ -4019,6 +4019,19 @@ DrawSprite,,"the s.flip member left unused (89, +17): the EXE's `cmp word [esp+1
 EditTextField,,"goto-free loops on the current draft: a flat `for (;;) { key = PollKey(); if (!key) { if (!sub_B3D64()) { if (idle) idle(); continue; } key = 0; } if (key) { handlers (Backspace / typing as the chain's last else); continue; } blink }` (107, +16)","107, +16",ga
 EditTextField,,"the same with the idle as an inner `while (!(key = PollKey())) { if (sub_B3D64()) break; if (idle) idle(); }` (105, +22)","105, +22",ga
 EditTextField,,"an inner `while ((key = PollKey()) != 0 || !sub_B3D64()) { if (!key) { idle; continue; } handlers }` (132, +13)","132, +13",ga
+SkaterStatsCard,,"on the v form (fresh compiles): attrp as a plain local declared first / last (14 / 19), s.attr indexed directly (14), `5 * (x + 5)`, `[3 + i]`, `((signed char *)off_C6A99 + 3)[i]`, `(5 + x) * 5`, `*(t.attrp + idx)`",,ga
+SkaterStatsCard,,an `(int)` cast,,ga
+SkaterStatsCard,,the index as `*(int *)((char *)off_C6A99 + i) >> 24` (all 9),all 9,ga
+SkaterStatsCard,,"the same with a `(signed char)` cast (10, +6), `v = x + 5; v *= 5;` (15, +5)","15, +5",ga
+PickAwardWinners,,the zero test operands swapped (9),9,ga
+PickAwardWinners,,"the pct test as a ternary (9), as `wins || losses ? ... : 0` (13), `wins + losses == 0` (29), `pct = 0;` then `if (wins || losses)` (7), pts split as `pts = wins * 2; pts += ties;` (34)",34,ga
+SimPlayoffRound2,,"on the inline compare: g assigned after the zeroing loop (34), g assigned inside the SeriesLength call (34)",34,ga
+ShowAwardScreens,,"pct as a block local of the skater loop body (27), of the skater arm (27), of the winner else arm (23), of the k loop body (23)",23,ga
+ShowAwardScreens,,each fixes nothing and moves the ss / gs homes,,ga
+BlitTileMap,,"with it: a tile-map pointer local declared after col / tile (`short *map`, `map[row * width + col]`: 29 / 29",,ga
+BlitTileMap,,`unsigned char *map`: 15 / 17),,ga
+BlitTileMap,,the bitmap base `*(int *)(rinktilebm + 2Ch) + 10h` as a local declared after col / tile (69 / 69),69 / 69,ga
+DrawListItem,,"`x += (w -= fputchar(text)) - 4;` (29), case 2 as `w -= fputchar(text); x += w / 2;` with A (40), `x = w - 4 + x` (29), `x -= 4 - w` (34), `x += w + -4` (29)",29,ga
 LeagueTeamSelect,,"(2026-10-24, lane 1 batch 19): permute.py (449 candidates in 185 s): best 49 (+3) is the product factor swap `([3] + 1) * (([2] << 2) + 4)`",,ga
 LeagueTeamSelect,,"with the EXE registers (`inc eax` / `add edx, 4` / `imul eax, edx`) but the two adds in the other order, and the swap is already listed under GA (101 at the 102 state): not kept",,ga
 LeagueTeamSelect,,`0x11 + product` (50),50,ga
@@ -4077,3 +4090,34 @@ TeamStatsScreen,,"with the statssortkeys[i] index `i * 4` still hoisted above th
 RunTeamPickMenu,,"the RunMenu fix: the frame struct s as plain locals plus declsearch --conflicts (17 of 18 slots, oldmy off by one): 889 by permute.py's measure (177 by classify_diff)",177 by classify_diff,ga
 RunTeamPickMenu,,the first difference (+186,,ga
 RunTeamPickMenu,,"the team-record index `add edx, edx` vs the EXE's `[edx+eax*2+0Dh]`, one byte) is the same in both. Not kept",,ga
+POInitSchedule,,"(2026-10-24, lane 1 batch 20): `6 * i` for `i * 6` in the first",,ga
+POInitSchedule,,"the second or both date loops, `*(g + i * 6 [+ 1])` pointer forms in either or both, `g[i * 6 + 0]` in either, `++g[i * 6]` in either, `i * 3 * 2` in either, `g = &po[0x1998]` / `&po[0x1A40]` (all 6: none changes the conflict count, 48)","all 6: none changes the conflict count, 48",ga
+JoystickCalScreen,,"(2026-10-24, lane 1 batch 20): back and prev declared in the if block, prev only, back only, every local in the if block, declaration orders s/prev/back, back/s/prev, prev/back/s, back/prev/s, prev/s/back, scalars before the arrays (all 11: named locals' conflicts are created in a fixed order: s, back, prev, then the parameters reversed)","all 11: named locals' conflicts are created in a fixed order: s, back, prev, then the parameters reversed",ga
+JoystickCalScreen,,"`s.cur = sub_B3464(); s.cur >>= shift;` (12, +7)","12, +7",ga
+JoystickCalScreen,,`if ((s.cur = sub_B3464() >> shift) & 0x30) break;` (11),11,ga
+JoystickCalScreen,,`sub_B39D0() != 0` (11),11,ga
+JoystickCalScreen,,`(unsigned)sub_B3464() >> shift` (12),12,ga
+JoystickCalScreen,,`+ sizeof(Hdr17)` for 0x11 (11),11,ga
+JoystickCalScreen,swapdecl:s:,declaration orders s,tried (docs/UNSURE.md),ga
+PenGoalStuff,,"(2026-10-24, lane 1 batch 20): without m (19, committed)","19, committed",ga
+PenGoalStuff,,"without other_side (four spellings above, 28-32)","four spellings above, 28-32",ga
+NetCollide,,"(2026-10-24, lane 1 batch 20): every single declaration move (36 orders: 22-37)",36 orders: 22-37,ga
+NetCollide,,"`ux = (dx << 8) / dist; ux >>= 2;` for ux (40), uy (40), both (32)",32,ga
+NetCollide,,"three-step `ux = dx << 8; ux /= dist; ux >>= 2;` for ux (36), uy (78), both (69)",69,ga
+NetCollide,,`ux = dx << 8; ux = ux / dist >> 2;` both (75),75,ga
+NetCollide,,`dx <<= 8; dy <<= 8;` in place (98),98,ga
+NetCollide,,gy before dx (62),62,ga
+NetCollide,,"`if ((dist = vecdist(dx, dy)) >= 0x18)` (22)",22,ga
+NetCollide,,`0x18 <= dist` (22),22,ga
+ShowAwardScreens,,"the skater pct as a ternary (27), `if (!s[7]) pct = 0; else ...` (24), `pct = 0;` first (32), `(s[7] / 2 + s[1] * 1000)` (105), `(short)s[8]` for the plus / minus (19)",19,ga
+ShowAwardScreens,,"the row pointer steps as `ss + 0xB` / `gs + 9` (19), pct also holding the goalie save percentage (`pct = s[10];` 95) or the GAA (94, both 111). The team-award arms are separate in the EXE (no shared name pointer)",,ga
+SimPlayoffRound1,,"the blank chain in one statement (12), i or g declared first (4, 4)","4, 4",ga
+SimPlayoffRound1,,"declsearch --all (120 orders, best 4)","120 orders, best 4",ga
+BlitTileMap,,"tile as short (23, +4), as short through `((short *)shape)[row * width + col]` (32, +2)","32, +2",ga
+BlitTileMap,type:tile:short,tile as short,tried (docs/UNSURE.md),ga
+SkaterStatsCard,,on the v form: the portrait column digit in a new int col declared at each of the nine places or in the portrait block (9 / 14: v's L185 conflict does not move),9 / 14: v's L185 conflict does not move,ga
+SkaterStatsCard,,"the index from a new extern signed char table at C6A9C instead of `off_C6A99[i + 3]` (9: same IR), attrp / attr as char (9)",9,ga
+SkaterStatsCard,,the rating loop's `t.y += 0xD` in the for increment (11),11,ga
+SkaterStatsCard,,an `if (0)` statement after the product (9),9,ga
+DrawListItem,,case 2 before case 1 (18),18,ga
+DrawListItem,,"an empty default (6), shape A with case 2 first (31), shape A as an if / else if chain (24). The y / w tie stays a parameter-order tie (no split live range of either)",,ga
