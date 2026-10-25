@@ -308,6 +308,7 @@ checkob — register 1/2, owner StaticEck2026
 - checkob 2->2 (2026-10-24, abdulahmad, GA) lane T batch: the far-side test as `(o->Ypos >> 16) > 0x4E + extra` (2), `0x4E + extra < (o->Ypos >> 16)` (5), HIWORD(o->Ypos) in the loop (2), `(y = o->Ypos >> 16) > extra + 0x4E` (2), `(o->Ypos >> 16) - extra > 0x4E` (3), both far-side tests as >> 16 with the limit on the left (11). Nothing kept.
 - checkob 2->2 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (operand flip only); probe.py hoist study (limit on the left is hoisted when Y is a sar / sub temporary in the same block, not when Y is memory, a memory add, a named y from an earlier block or the limit is negated); Reg68 union extra.l (limit right 2, left 5 hoisted); diagnostic: no far-side pucky test leaves the lea in the loop (15), pucky test without extra hoists (12); extra + 0x4E < (short)Y (12), both loops (short)Y (12), (short)Y > lim (14)
 - checkob 2->2 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: no tie order improves on the baseline (282 orders): the differences are not in a tie
+- checkob 2->2 (2026-10-25, abdulahmad, GA) lane T: the far-side limit on the left with a named y (the EXE compares lim, y without hoisting the lea): `extra + 0x4E < (y = o->Ypos >> 16)`, `0x4E + extra < (y = ...)`, `extra + 0x4E < (y = HIWORD(o->Ypos))`, `(y = extra + 0x4E) < (o->Ypos >> 16)`, `extra + 0x4E < o->Ypos >> 16`: all 5 (the lea is hoisted). Nothing kept.
 
 ### `src/c/006_150C6_scoreboard_gfx/RunDemoGame.c`
 
@@ -318,6 +319,7 @@ TitleScreen — size 2/2, owner Mhopkinsinc
 - TitleScreen 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
 - TitleScreen 3->3 (2026-10-24, StaticEck2026, GA) the PlayMVI wait (own elapsed local el, SetTickDeadline(due - el), no left) with one- and two-argument decoders (27-70); declsearch --conflicts on it (mispredicted, 78); ESCALATE: the committed draft keeps the left tie-breaker copy
 - TitleScreen 3->3 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool) on the two-argument version without left (21, slots only): forced memory-conflict orders change no slot (slots are not from the conflict sort); ESCALATE: the committed draft keeps the left tie-breaker copy
+- TitleScreen 3->3 (2026-10-25, abdulahmad, GA) lane T: the two-argument decoders (as matched PlayMVI: sub_1B002(dec, chunk), sub_1AD16(dec, chunk)) without the left tie-breaker copy: 21, all slots; countsolve.py: stream / mask (22) and chunk / id (20) ties the other way; declsearch.py --conflicts then gives 11, all slots, 12 of 13 locals in their EXE slot (declaration order pal, ends, mask, path, first, id, due, delay, bmp, t0, chunk, stream, bank). Left: bmp at -40 (EXE -36) behind t136 (the frame result, count 20) in the size sort; no count of bmp, t136 or chunk moves it. Committed draft (left copy, 3) kept.
 ShowCredits — size 2/2, owner Mhopkinsinc
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) (divisor scheduling)
@@ -325,6 +327,7 @@ ShowCredits — size 2/2, owner Mhopkinsinc
 - ShowCredits 4->4 (2026-10-24, StaticEck2026, GA) the y argument as its own block-local statement (int ry, full or raw remainder), the + operands swapped, per-module sub_91370 prototypes (short / ushort / uchar / schar / unsigned / unprototyped), a cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r and more): best 4
 - ShowCredits 4->4 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): savings 300 / 200 / 60 / 40 / 20 and pass-1 runs climbed (56 orders): 4, no tie cause
 - ShowCredits 4->4 (2026-10-25, StaticEck2026, GA) each MakePath ternary as if / else with a call per arm (17-22)
+- ShowCredits 4->4 (2026-10-25, abdulahmad, GA) lane T: read only; the first rand() % 8 (the y argument, evaluated first) schedules mov ecx, 8 before sar edx, 1Fh; the second matches. No new shape tried (argument, prototype and flag variants already logged).
 
 ### `src/c/033_40183_trades/TradePlayers.c`
 
@@ -335,6 +338,7 @@ TradePlayers — register 2/2, owner Mhopkinsinc
 - TradePlayers 3->3 (2026-10-24, StaticEck2026, GA) regsolve (only a nm savings bump: ESCALATE, not made); pass-2 index order analysed (inline / nm-first re-measured 4); permute seed 2505 (260 new candidates)
 - TradePlayers 3->3 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool) 30 min: 650 of 669 tie swaps + 435 single-edit orders, best 3; forced index temps t156 / t166 in the savings-3 run and the pass-1 swap (3), ahead of nm (3-4, savings change): no tie cause
 - TradePlayers 3->3 (2026-10-25, StaticEck2026, GA) width max as if / else with the chained store per arm (5-7, +3), clamp of s.y then one store (5, +12)
+- TradePlayers 3->3 (2026-10-25, abdulahmad, GA) lane T: the city name inline in the first strcat only (4), the second only (4), both (4). Nothing kept.
 
 ### `src/c/034_41B80_schedule/SimPlayoffRound1.c`
 
@@ -396,6 +400,7 @@ POInitSchedule — register 3/3, owner StaticEck2026
 - POInitSchedule 6->6 (2026-10-24, Mhopkinsinc, GA) after tieorder: needed t8 before t10 / t7; sort replay of all single edits forced: none 0 (best 7: one more conflict between t16 and t13; po created first 8; one fewer second-loop temporary 10), two changes needed; 6 * i (first / second / both) 6, *(g + i * 6) pointer forms (first / second / both) 6, g[i * 6 + 0] 6, ++g[i * 6] 6, i * 3 * 2 6, g = &po[...] 6
 - POInitSchedule 6->6 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: a tie order gives the EXE bytes (182 orders): pass 0 savings-30 run: sorted t51 t80 t10 t116 t16 t84 t114 t8 t34 t55 t7, needed t51 t80 t8 t116 t16 t84 t114 t10 t34 t55 t7 (t10 EAX -> EDX, t8 EDX -> EAX, t7 EAX -> EDX)
 - POInitSchedule 6->6 (2026-10-25, abdulahmad, GA) lane T: tiesearch.py focused on L94-120 (30 min, 669 candidates): best 10 (all register-only), 7 of 9 swaps left; the explanation: t10 (po + i * 4) must sit just older than t7 or t8 just older than t10 in B2 (L94), i.e. the teams[i] address last used after the po[i] one
+- POInitSchedule 6->6 (2026-10-25, abdulahmad, GA) lane T: the L94 copy as `*((int *)po + i) = teams[i]`, `((int *)po)[i] = *(teams + i)`, `*(int *)(po + i * 4) = teams[i]`, and L97 as `g[6 * i] = 4`, `*(g + i * 6) = 4`: all 6 (the IR does not change: the store's address is always the last reference). Nothing kept.
 
 ### `src/c/001_10010_main_startup/FadePalette.c`
 
@@ -406,6 +411,7 @@ FadePalette — register 2/3, owner Mhopkinsinc
 - FadePalette 7->7 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -ol+ -or -oa -oi -oe -oc -om -3r -4r -on -ou -ei -zc): best 7, the clamp still compares ebx
 - FadePalette 7->7 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): all tie runs climbed and cross moves (7 / 36): no tie cause
 - FadePalette 7->7 (2026-10-25, StaticEck2026, GA) clamp as if / else storing steps per arm (10, +8); through c or i (dead-variable reuse, 7-10, not kept)
+- FadePalette 7->7 (2026-10-25, abdulahmad, GA) lane T: the only difference is the clamp (the EXE reloads steps from its home [esp] into ecx, C compares the incoming ebx); 2 < steps ? 2 : steps (7), steps >= 3 ? 2 : steps (8), steps <= 2 ? steps : 2 (9), palfadedin != 0 (7). Nothing kept.
 
 ### `src/c/017_21CDE_player_stats/SkaterStatsCard.c`
 
@@ -417,6 +423,7 @@ SkaterStatsCard — size 2/3, owner Mhopkinsinc
 - SkaterStatsCard 7->7 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): committed draft inconclusive (best 7); the v form without the byte rating (9) forced to 0 by the lookup address t386 first in the savings-30 run (needs one more conflict among the L185 temporaries; declaration moves 9); v-form spellings and attrp as a plain local (9-19); nothing kept
 - SkaterStatsCard 7->7 (2026-10-25, StaticEck2026, GA) pre-sort probe of the v form (window between the lookup address and the * 5 result; v's L185 part is a split conflict just outside it); portrait digit in a new col at nine places / the block (9 / 14); table symbol at C6A9C (9); char attrp / attr (9); for-increment row step (11); nothing kept
 - SkaterStatsCard 7->7 (2026-10-25, StaticEck2026, GA) lseek ternary as if / else (25-35), hand label as one ternary call (19 / v form 10), pct ternary (same IR), EMB MakePath if / else (14), combinations (14-42)
+- SkaterStatsCard 7->7 (2026-10-25, abdulahmad, GA) lane T: the v form without rating (9, +3; tieorder with conflict origins: 0 when one more conflict sits next to the lookup address t386 among the L185 temporaries). L185 as 5 * (x + 5), (5 + x) * 5, [3 + i], (off_C6A99 + 3)[i], *(t.attrp + ...): 9; v = x + 5; v *= 5 (15); v = x; v += 5; v *= 5 (25); v short / unsigned short with or without the call cast, inline in the call (17-18); v = x * 5 + 25 (8, size 0): the lookup gets edx as in the EXE, only the arithmetic differs (lea ecx, [esi+19h]). Nothing kept.
 
 ### `src/c/023_2FDD1_misc_dialogs/ListDialog.c`
 
@@ -428,6 +435,7 @@ ListDialog — size 6/7, owner Mhopkinsinc
 - ListDialog 7->7 (2026-10-24, StaticEck2026, GA) DrawListItem.c as compile context (13: cross-jumps into their epilogue, which the EXE does not); nothing kept
 - ListDialog 7->7 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): every swap of every tie run gives 7 (no tie order explains the draft)
 - ListDialog 7->7 (2026-10-25, StaticEck2026, GA) mark test ternary (? 1 : 0) as a plain condition or nested if (15)
+- ListDialog 7->7 (2026-10-25, abdulahmad, GA) lane T: the plain-locals version (struct members as ints in reverse order, title / align parameters, e in the input-loop block) rebuilt: 11, size 0, all slots. countsolve.py + slotdump --count: the call-result temporary of `bg2 = bg = sub_8CCA8(...)` (t104, count 6) must rank below lh and title, and title (4) above lh (4) in their tie: t104 3 with title 3 gives bh -56, lh -60, title -64, t104 -68 = the EXE (compiler confirmed). bh first with by = (0x1E0 - bh) / 2 (20, +8); declsearch --conflicts (15); bg = ...; bg2 = bg / bg2 = ...; bg = bg2 / bg = bg2 = ... and the header / sub_91400 uses through bg2 (all 11: Watcom folds the copies into one temporary). Committed struct draft (7, +12) kept.
 
 ### `src/c/032_3DC2C_roster_jersey/ExecuteTrade.c`
 
