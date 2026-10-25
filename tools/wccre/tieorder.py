@@ -389,6 +389,7 @@ def main():
             for s, e in rr:
                 for i in range(s, e):
                     for j in range(i + 1, e):
+                        if round_best and round_best[0][0] == 0: break
                         if time.time() - t0 > 0.6 * budget: complete = False; break
                         pl = {kk: v[:] for kk, v in best_plan.items()}
                         pl[k][i], pl[k][j] = pl[k][j], pl[k][i]
@@ -425,6 +426,7 @@ def main():
                          if w.startswith('move '))
     if a.cross and best[0] > 0:
         cross_search(a, src, func, work, passes0, best_plan, best, t0)
+    if best[0] == 0 and best[2]: complete = True     # a byte match ends the search: nothing left to find
     if complete:
         os.makedirs(os.path.dirname(cache), exist_ok=True)
         json.dump(dict(sha1=h, best=list(best), plan={str(k): v for k, v in best_plan.items()}, complete=True,
