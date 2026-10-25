@@ -4,7 +4,9 @@
  * so the handler returns through a small stub (which clears the in-service flag) back to the interrupted instruction. */
 #include "host.h"
 
-static volatile uint32_t pending;
+static volatile uint32_t pending;               /* bit n: IRQ n is raised (0-15) */
+static volatile uint32_t pic_mask = 0xFFFC;     /* bit n set: IRQ n masked; the BIOS leaves the timer and keyboard on */
+static int pic_icw[2], pic_icw_left[2];
 volatile int vif = 1;                   /* the game's interrupt flag (cli / sti) */
 volatile uint8_t isr_active;
 static volatile unsigned pit_divisor = 0x10000;
@@ -20,9 +22,30 @@ __attribute__((naked)) static void irq_return_stub(void)
     __asm__ volatile("movb $0, " ISR_FLAG "\n\tret");
 }
 
+/* The interrupt controllers: the mask registers (21h, A1h) and the initialisation words the game may write. */
+uint32_t pic_in(unsigned port)
+{
+    if (port == 0x21) return pic_mask & 0xFF;
+    if (port == 0xA1) return (pic_mask >> 8) & 0xFF;
+    return 0;                                   /* in-service and request registers: nothing in service */
+}
+
+void pic_out(unsigned port, uint32_t val)
+{
+    int chip = port >= 0xA0;
+    if ((port & 1) == 0) {
+        if (val & 0x10) { pic_icw[chip] = 1; pic_icw_left[chip] = 1 + ((val & 2) ? 0 : 1) + (val & 1); }   /* ICW1: ICW2, ICW3, ICW4 follow */
+        return;                                 /* OCW2 / OCW3: end of interrupt, register select */
+    }
+    if (pic_icw_left[chip] > 0) { pic_icw_left[chip]--; return; }
+    if (chip) pic_mask = (pic_mask & 0x00FF) | ((val & 0xFF) << 8);
+    else pic_mask = (pic_mask & 0xFF00) | (val & 0xFF);
+    TRACE("PIC mask %04x\n", (unsigned)pic_mask);
+}
+
 int irq_deliverable(void)
 {
-    return vif && !isr_active && pending;
+    return vif && !isr_active && (pending & ~pic_mask);
 }
 
 int irq_try_deliver(ctx_t *c)
@@ -30,8 +53,8 @@ int irq_try_deliver(ctx_t *c)
     int irq, vec;
     uint32_t *sp;
     if (!irq_deliverable()) return 0;
-    irq = __builtin_ctz(pending);
-    vec = irq == 0 ? 8 : 9;
+    irq = __builtin_ctz(pending & ~pic_mask);
+    vec = irq < 8 ? 8 + irq : 0x70 + irq - 8;
     __sync_fetch_and_and(&pending, ~(1u << irq));
     if (!pm_vec[vec].off) return 0;
     sp = (uint32_t *)R(c, ESP) - 4;

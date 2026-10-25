@@ -37,11 +37,17 @@ done
 ls "$OUT"/src/cseg01/*.asm "$OUT"/src/dseg02/*.asm | xargs -P 8 -I{} sh -c \
     'nasm -O0 -f win32 --gprefix _ -I '"$OUT"'/src/inc/ {} -o '"$OUT"'/obj/$(basename $(dirname {}))_$(basename {} .asm).o'
 
+sh port/fetch-deps.sh
+# Munt (the MT-32 emulator) needs a C++ compiler: mingw-w64's g++ (gcc-mingw-w64-i686 plus g++-mingw-w64-i686)
+CXXW=${CXXW:-i686-w64-mingw32-g++}
+CXX=$CXXW AR=${ARW:-i686-w64-mingw32-ar} sh port/munt-build.sh build/munt-win "-static"
+
 CC=${CC:-i686-w64-mingw32-gcc}
 command -v "$CC" >/dev/null 2>&1 || CC=gcc
 $CC -O1 -g -mstackrealign -Wall -Wno-format-truncation -DSDL_MAIN_HANDLED $SDL_CFLAGS \
-    -o "$OUT/hockey-win32.exe" port/host.c port/emu.c port/ports.c port/dos.c port/video.c port/input.c port/irq.c port/cstart.c \
+    -o "$OUT/hockey-win32.exe" port/host.c port/emu.c port/ports.c port/dos.c port/video.c port/input.c port/irq.c port/audio.c port/dma.c port/speaker.c port/opl.c port/sb.c port/mpu.c port/gus.c port/sound_ports.c \
+    port/soundtest.c port/third_party/nuked-opl3/opl3.c -DHAVE_MUNT -Ibuild/munt-win/inc -Iport/third_party/munt/mt32emu/src port/cstart.c \
     port/overrides.c port/plat_win.c $(ls "$OUT"/obj/cseg01_*.o) $(ls "$OUT"/obj/dseg02_*.o) \
-    $SDL_LIBS -static-libgcc -Wl,--subsystem,console
+    build/munt-win/libmt32emu.a $SDL_LIBS -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lm -Wl,--subsystem,console
 cp "$SDL_DLL" "$OUT/"
 echo "built $OUT/hockey-win32.exe (run it in the game's folder, or set NHL95_ROOT)"

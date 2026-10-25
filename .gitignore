@@ -63,3 +63,4 @@ tools/fm95_check.json
 ref
 run-nhl95.sh
 SDL2-*/
+port/third_party/
