@@ -4019,6 +4019,10 @@ DrawSprite,,"the s.flip member left unused (89, +17): the EXE's `cmp word [esp+1
 EditTextField,,"goto-free loops on the current draft: a flat `for (;;) { key = PollKey(); if (!key) { if (!sub_B3D64()) { if (idle) idle(); continue; } key = 0; } if (key) { handlers (Backspace / typing as the chain's last else); continue; } blink }` (107, +16)","107, +16",ga
 EditTextField,,"the same with the idle as an inner `while (!(key = PollKey())) { if (sub_B3D64()) break; if (idle) idle(); }` (105, +22)","105, +22",ga
 EditTextField,,"an inner `while ((key = PollKey()) != 0 || !sub_B3D64()) { if (!key) { idle; continue; } handlers }` (132, +13)","132, +13",ga
+SkaterStatsCard,,"on the v form (fresh compiles): attrp as a plain local declared first / last (14 / 19), s.attr indexed directly (14), `5 * (x + 5)`, `[3 + i]`, `((signed char *)off_C6A99 + 3)[i]`, `(5 + x) * 5`, `*(t.attrp + idx)`",,ga
+SkaterStatsCard,,an `(int)` cast,,ga
+SkaterStatsCard,,the index as `*(int *)((char *)off_C6A99 + i) >> 24` (all 9),all 9,ga
+SkaterStatsCard,,"the same with a `(signed char)` cast (10, +6), `v = x + 5; v *= 5;` (15, +5)","15, +5",ga
 PickAwardWinners,,the zero test operands swapped (9),9,ga
 PickAwardWinners,,"the pct test as a ternary (9), as `wins || losses ? ... : 0` (13), `wins + losses == 0` (29), `pct = 0;` then `if (wins || losses)` (7), pts split as `pts = wins * 2; pts += ties;` (34)",34,ga
 SimPlayoffRound2,,"on the inline compare: g assigned after the zeroing loop (34), g assigned inside the SeriesLength call (34)",34,ga
