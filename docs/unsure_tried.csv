@@ -4327,3 +4327,84 @@ checkplcoll,,"32-bit coordinate struct local used in both loops, initialized aft
 checkplcoll,,signed char y rejected because it narrows the coordinate,,ga
 checkplcoll,,"coordinate struct before guards retained, both fields used in both loops",,ga
 checkplcoll,,"permute 5 min budget, natural ordering/scope/expression/loop families only, historical log seeded: 339 compiled in 161 s, best 10 base, no match",,ga
+checkwallcoll,,int block net index: net = 12,,ga
+checkwallcoll,,if (equal) net = 13 scores 63,,ga
+checkwallcoll,,int block net index: net = 13,,ga
+checkwallcoll,,if (not equal) net = 12 scores 63,,ga
+checkwallcoll,,net += equal scores 62,,ga
+checkwallcoll,,net -= not-equal scores 62,,ga
+checkwallcoll,,if (equal) ++net scores 63,,ga
+checkwallcoll,,short block net index: net = 12,,ga
+checkwallcoll,,if (equal) net = 13 scores 53,,ga
+checkwallcoll,,short block net index: net = 13,,ga
+checkwallcoll,,if (not equal) net = 12 scores 53,,ga
+checkwallcoll,,net += equal scores 56,,ga
+checkwallcoll,,net -= not-equal scores 56,,ga
+checkwallcoll,,if (equal) ++net scores 53,,ga
+checkwallcoll,,unsigned char block net index: net = 12,,ga
+checkwallcoll,,if (equal) net = 13 scores 54,,ga
+checkwallcoll,,unsigned char block net index: net = 13,,ga
+checkwallcoll,,if (not equal) net = 12 scores 54,,ga
+checkwallcoll,,if (equal) ++net scores 54,,ga
+checkwallcoll,,inline net index 13 - (ry0 != word_E03B8) scores 15,,ga
+checkwallcoll,,inline inverted ternary ry0 != word_E03B8 ? 12 : 13 scores 42,,ga
+checkwallcoll,,inline 12 + (ry0 == word_E03B8 ? 1 : 0) scores 15,,ga
+checkwallcoll,,inline (ry0 == word_E03B8) != 0 ? 13 : 12 scores 19,,ga
+checkwallcoll,,corner negated y bound recomputed as ylim - 64 scores 17,,ga
+checkwallcoll,,corner negated x bound recomputed as xlim - 64 scores 19,,ga
+checkwallcoll,,both corner negated bounds recomputed from limits scores 21,,ga
+checkwallcoll,,corner y negation uses -ry0 scores 15,,ga
+checkwallcoll,,wall-vector zero arm wraps the remaining wall tests scores 15,,ga
+checkwallcoll,,both bottom limit negations moved into comparisons scores 28,,ga
+checkwallcoll,,signed char block net = equal ? 13 : 12 scores 51,,ga
+checkwallcoll,,signed char block net = 13 - not-equal scores 56,,ga
+checkwallcoll,,unsigned short block net = equal ? 13 : 12 scores 54,,ga
+checkwallcoll,,unsigned short block net = 13 - not-equal scores 59,,ga
+checkwallcoll,,signed char block net index: net = 12,,ga
+checkwallcoll,,signed char block net index: net = 13,,ga
+checkwallcoll,,dist declared inside corner collision block scores 19,,ga
+checkwallcoll,,ternary net index plus dist declared before limits scores 42,,ga
+checkwallcoll,,ternary net index plus dist declared after limits scores 42,,ga
+checkwallcoll,,ternary net index plus corner-scoped dist scores 42,,ga
+checkwallcoll,,ternary net index plus initialized xlim then ylim declarations scores 38,,ga
+checkwallcoll,,ternary net index plus xlim declaration initializer scores 42,,ga
+checkwallcoll,,ternary net index plus ylim declaration initializer scores 49,,ga
+checkwallcoll,,ternary net index plus vecdist result used through regd3.w (dist removed) scores 19,,ga
+checkwallcoll,,ternary/no-dist pointer form SortCords + ternary scores 19,,ga
+checkwallcoll,,ternary/no-dist pointer form ternary + SortCords scores 19,,ga
+checkwallcoll,,ternary/no-dist pointer form (Player *)((int)SortCords + (ternary << 7)) scores 19,,ga
+checkwallcoll,,ternary/no-dist pointer form (Player *)((ternary << 7) + (int)SortCords) scores 19,,ga
+checkwallcoll,,ternary/no-dist pointer form (Player *)((int)SortCords + ternary * 128) scores 19,,ga
+checkwallcoll,,ternary/no-dist pointer form (Player *)(ternary * 128 + (int)SortCords) scores 19,,ga
+checkwallcoll,,"ternary/no-dist declaration order ylim, xlim, ry0 scores 19",,ga
+checkwallcoll,,"ternary/no-dist declaration order ry0, ylim, xlim scores 19",,ga
+checkwallcoll,,"ternary/no-dist declaration order ry0, xlim, ylim scores 15",,ga
+checkwallcoll,,"ternary/no-dist declaration order xlim, ylim, ry0 scores 15",,ga
+checkwallcoll,,"ternary/no-dist declaration order xlim, ry0, ylim scores 15",,ga
+checkwallcoll,,ternary/no-dist plus word_E03B8 assignment then ry0 load scores 19,,ga
+checkwallcoll,,ternary/no-dist plus ry0 assignment then word_E03B8 store scores 19,,ga
+checkwallcoll,,ternary/no-dist plus initialized xlim then ylim declarations scores 15,,ga
+checkwallcoll,,ternary/no-dist plus regd1.w = x followed by -= regd4.w scores 43,,ga
+checkwallcoll,,ternary/no-dist plus regd0.w = y followed by -= word_E03B8 scores 20. Committed natural size/codegen improvement fdbe826e: ternary selects net 12/13 so add precedes shift,,ga
+checkwallcoll,,"distance stays in regd3.w, removing the narrowed local",,ga
+checkwallcoll,,"declarations xlim, ylim, ry0 retain xlim slot. Both make and make CBUILD=0 MATCH. Function remains unmarked. No new ESCALATE find",,ga
+checkwallcoll,swapdecl:ylim:,"declaration order ylim, xlim, ry0",tried (docs/UNSURE.md),ga
+checkwallcoll,movedecl:xlim:,"declaration order ylim, xlim, ry0",tried (docs/UNSURE.md),ga
+checkwallcoll,swapdecl:xlim:,"declaration order ylim, xlim, ry0",tried (docs/UNSURE.md),ga
+checkwallcoll,movedecl:ry0:,"declaration order ylim, xlim, ry0",tried (docs/UNSURE.md),ga
+checkwallcoll,movedecl:ry0:,"declaration order ry0, ylim, xlim",tried (docs/UNSURE.md),ga
+checkwallcoll,swapdecl:ylim:,"declaration order ry0, ylim, xlim",tried (docs/UNSURE.md),ga
+checkwallcoll,movedecl:xlim:,"declaration order ry0, ylim, xlim",tried (docs/UNSURE.md),ga
+checkwallcoll,swapdecl:xlim:,"declaration order ry0, ylim, xlim",tried (docs/UNSURE.md),ga
+checkwallcoll,movedecl:ry0:,"declaration order ry0, xlim, ylim",tried (docs/UNSURE.md),ga
+checkwallcoll,movedecl:xlim:,"declaration order ry0, xlim, ylim",tried (docs/UNSURE.md),ga
+checkwallcoll,swapdecl:xlim:,"declaration order ry0, xlim, ylim",tried (docs/UNSURE.md),ga
+checkwallcoll,swapdecl:ylim:,"declaration order ry0, xlim, ylim",tried (docs/UNSURE.md),ga
+checkwallcoll,movedecl:xlim:,"declaration order xlim, ylim, ry0",tried (docs/UNSURE.md),ga
+checkwallcoll,swapdecl:xlim:,"declaration order xlim, ylim, ry0",tried (docs/UNSURE.md),ga
+checkwallcoll,swapdecl:ylim:,"declaration order xlim, ylim, ry0",tried (docs/UNSURE.md),ga
+checkwallcoll,movedecl:ry0:,"declaration order xlim, ylim, ry0",tried (docs/UNSURE.md),ga
+checkwallcoll,movedecl:xlim:,"declaration order xlim, ry0, ylim",tried (docs/UNSURE.md),ga
+checkwallcoll,swapdecl:xlim:,"declaration order xlim, ry0, ylim",tried (docs/UNSURE.md),ga
+checkwallcoll,movedecl:ry0:,"declaration order xlim, ry0, ylim",tried (docs/UNSURE.md),ga
+checkwallcoll,swapdecl:ylim:,"declaration order xlim, ry0, ylim",tried (docs/UNSURE.md),ga
