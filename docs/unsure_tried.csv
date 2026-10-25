@@ -4235,3 +4235,8 @@ RunPlayerPickMenu,,"the picked record's index through k (109), its offset throug
 RunPlayerPickMenu,,an if / else into k (903,,ga
 RunPlayerPickMenu,,"all three single-use copies anyway), `0x34 * PREC(pick)` (104), `((PlayerRec52 *)statsplayerbuf)[PREC(pick)]` (104), r local to the action block (104), m local to the hit block (324, slots not followed), size declared first (153), i or k declared last (299, slots not followed), k as the record index with `k * 0x34` in the four name searches' sums (138",,ga
 RunPlayerPickMenu,,"declsearch 119: the first search's goalie loop takes the EXE's registers, its skater loop and the PREC copy flip instead)",,ga
+assgoalie,,"the poke / dive block written in both arms, `if (*puckc == p->SCnum) {...} else {D}` plus `else {D}` for the shooter flag (188: the inner copy keeps the puckc pointer in edx)",188: the inner copy keeps the puckc pointer in edx,ga
+assgoalie,,the three other arm orders (225 / 281 / 334),225 / 281 / 334,ga
+assgoalie,,"the move tail repeated at the other-half exit (146: not cross-jumped), `if (regd2.w <= 7) { playeracc(p, regd2.w); return; } StopNA(p);` at the end (26), tools/wccre/tieorder.py on the new base (2-job copy, --max-run 40, 6 minutes, 124 orders: 18), `regd1.w = regd1.w - (((signed char *)p)[0x0F] + (p->Ypos >> 16))` and its split form on the new base (76)",76,ga
+assrefgoalpa,,on that base: the first product as `(0xE8 - *pucky) * (p->temp3 - *puckx)` (67-69),67-69,ga
+assrefgoalpa,,"the second as `(p->temp3 - *puckx) * (-0xE8 - *pucky)` (61 but 3 bytes short, not kept), both swapped (64, 3 bytes short), `regd0.w = *puckx + c` in the first crossing (112-115, still `add ecx, eax`), `regd0.w = c; regd0.w += *puckx;` (67-71, two stores)","67-71, two stores",ga
