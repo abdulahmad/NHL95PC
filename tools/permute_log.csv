@@ -430925,3 +430925,452 @@ date,func,file,transform,sha1,score,sizediff,match,first,cc
 2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:16:+ + swapstmt:41,d4eb3424021368d4,3,1,0,24,ga
 2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,movedecl:c:2 + opassign:81:0:split,d51215e4b17777a8,1,1,0,24,ga
 2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:26:0:split + scope:z@0,7b5d1f85a885dc01,20,1,0,24,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,base,213df2121c2a65fa,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swapdecl:pl:n,02f8fe1d1b78d520,13,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,scope:dx@1,32d6b70504d1fed7,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char,c4bda03da155a303,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cmpflip:33,5fb09e66555cbc58,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,zero:13:ne0,3a66b1bbae33bf9c,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,ifswap:29,01c2567ff946a1b5,14,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swap:27:2,217698c98e5ef27f,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,split:best:1:last,383a14d0b0086664,30,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,ternary:29:q,6d50f0fc6437d612,20,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,incdec:46:pre,394c9ec36aa93a21,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,commute:30:+,1360b1f48c75a39c,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swapstmt:14,372fdad144800c97,11,0,0,23,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,loop:32:while1,b856adea2a0e8ed2,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,paramtype:0:unsigned_short,6c6a2190e17d8c2a,12,0,0,19,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,type:best:char,244ce8cca50f2391,47,0,0,0,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,reuse:pl:px,53d30710e2c979d0,47,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,movedecl:n:10,416b7fddc8d577be,13,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swapdecl:dx:d,1ac31ab2e7aa117e,11,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,scope:dx@2,de4ef11ce9821b57,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:26:3:short,e13782145151b833,25,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cmpflip:38,831b30d1b7abbd73,11,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,zero:49:eq0,48d4436704846853,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swap:36:2,fbdc803c5ba62253,13,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,split:bestd:1:last,ba649f6d79b06dba,53,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,incdec:46:op1,330f3a1236c48234,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,commute:50:!=,26c046b3f5a9ff12,10,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swapstmt:26,c33670a19c83f9fd,23,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,loop:32:goto,8770c06cc2874c79,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,paramtype:0:unsigned_char,2b61999d2014dd36,14,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,type:d:unsigned,25fd9b6e70be975c,10,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,reuse:pl:py,987fee114872ce0f,49,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,movedecl:pl:8,53283f6c4d16ea8c,13,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swapdecl:pnum:py,ca115e12e9604c90,11,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,scope:pl@0,e136f2c549e586d5,19,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:33:14:unsigned_short,912fd512c47e7c89,22,0,0,72,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swap:29:0,a112d55cdb0c0c82,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,split:best:1:after,6f77496388c9df35,11,0,0,51,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,commute:33:&,ba01bd853db05c65,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swapstmt:41,510d6a7e62896ea3,10,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,paramtype:0:unsigned,b3f319f6ac6fab48,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,type:py:signed_char,916f5aff7ec82ad8,13,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,movedecl:bestd:8,37e0783db51c8756,15,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swapdecl:n:dx,0fda21248e3d2949,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,scope:px@0,0d48a42eecb23c6c,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:26:2:char,74296b3379449b1e,35,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swap:37:0,bd107c53ce02882c,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,split:bestd:1:after,ba649f6d79b06dba,53,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,commute:49:==,5a924e208cb2e62d,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swapstmt:17,09ba379fc881f907,11,0,0,35,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,paramtype:0:signed_char,6d40844f7780d6fc,14,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,type:px:signed_char,6b9b86a23cba2131,13,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,movedecl:bestd:4,be56560db21a0a66,34,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swapdecl:p:pl,bf0d6ed585f93059,13,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,scope:bestd@0,6510cb42a43a3896,19,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:35:6:int,6198428a45aa12ac,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swap:25:10,fb9beb2d931dc3f5,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,commute:33:&,813ee98645cac834,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swapstmt:27,ea7ca0a1071ddf84,11,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,paramtype:0:char,ea0eda04a571fef3,14,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,type:best:unsigned_short,30eebc8cd6afc7f7,44,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,movedecl:py:10,7ed2c02ca1057628,30,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,swapdecl:py:best,35fd72a186892653,9,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,scope:pl@2,4471a275ad2690d6,19,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:33:7:unsigned_short,54f596f6ae4d4fa5,22,0,0,72,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > scope:pl@2,87f4ded1ca92e4c4,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > commute:33:&,232966f38703ae9f,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > cmpflip:38,beccc36747a4d4e0,10,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:py:8,793836f258064d69,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > cast:42:2:char,b375be7af4f09be5,32,0,0,0,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > loop:32:goto,e89f05950c68786b,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > ifswap:29,8175ce20216ae381,13,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > ternary:29:q,c2f376ed50850fbc,26,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > reuse:pl:px,a1ceb867fcd9a7be,49,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swap:25:6,3ea2d217972bd3c7,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > type:px:int,4a2276f192050789,19,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > split:best:1:last,cc2b7c10ac44bebb,36,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > paramtype:0:char,b9a034ea607d899b,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > incdec:46:pre,478a6c0074d1c488,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swapdecl:d:bestd,f60879d7e6eaf671,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swapstmt:17,ab5d8b5231e51c0d,10,0,0,35,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > zero:49:eq0,9bc12bb286aad747,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > scope:pl@1,6d8621ffecacca5c,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > commute:52:!=,b62a9ffa5c6d770c,10,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > cmpflip:33,98263fa3a2a8ba9b,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5,3f38f38b6457e9f6,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > cast:36:8:short,cd6abfb697b69d53,23,0,0,72,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > loop:32:while1,b52df55a5875fa93,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > reuse:pl:py,fb696a3ab07538d7,50,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swap:27:2,5703292753fafe1a,10,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > type:best:unsigned_char,7b3cfa8ed5d1a196,34,0,0,0,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > split:bestd:1:after,bff0e4e262de4cdb,50,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > paramtype:0:signed_char,8d792326eb25163f,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > incdec:46:op1,cabbd73b7223c499,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swapdecl:py:best,6779f6818f94349d,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swapstmt:26,15fe4363ee4f33ff,20,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > zero:13:ne0,4669e029375ef2fc,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > scope:n@0,7b9078aa77dd3f29,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > commute:49:==,8db3d078edde1b1e,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:pnum:5,fa411b6577a8abab,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > cast:34:6:unsigned_short,65256a1a81a1b7e8,,,,,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swap:24:6,0c24538e66a684a0,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > type:bestd:unsigned_char,e3d7308cf391a2c3,53,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > split:best:1:after,eda8d4ab27e6259d,11,0,0,51,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > paramtype:0:short,8c401c4fc0587fd7,11,0,0,19,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swapdecl:dx:d,860b710831afb40d,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swapstmt:14,12cbe1580bebf829,10,0,0,23,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > scope:dx@1,9652b2abaa0507aa,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > commute:33:&,c2257f4042c2e90e,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:best:7,4bab2d0cf734bc28,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > cast:26:2:short,49b2e83bd8e0631c,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swap:20:0,0eca882d34caa0f9,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > type:pl:char,340e2749522339fd,36,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > split:bestd:1:last,bff0e4e262de4cdb,50,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > paramtype:0:unsigned_char,68ef1820d76a3f2a,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swapdecl:pnum:py,a8207b2778003350,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swapstmt:27,240b22d3f81a153b,10,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > scope:py@0,0e541f5c67f55270,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > commute:30:+,9265c724066d51c1,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:n:5,3db278e3cbc4e780,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > cast:33:3:int,6203dd975b249509,18,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swap:21:0,0c0ebececa0110db,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > type:pl:unsigned_short,8c8273712adf8523,33,0,0,0,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > paramtype:0:unsigned,19b127da18c29d54,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swapdecl:n:dx,d4ee81829d8c1a4e,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > swapstmt:41,fbfe613032bb2a81,10,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > scope:d@2,67cdf1a6c22876be,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:team:2,c26b0045dcb0c785,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > cast:36:3:unsigned_char,c79819758778ddcb,68,0,0,0,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > reuse:pl:px,9f390848d5e7eb22,49,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:best:int,d6908fd38fe01875,30,0,0,51,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > paramtype:0:unsigned_char,1d440cd427d8166d,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > ifswap:29,6fa6874476e746a2,9,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cmpflip:38,98fda4a51f4f53e3,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:team:pnum,ad5c4c24793ab91a,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapstmt:41,5169fc34134a5e97,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:team:7,e2d8069b4e263c2c,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:26:2,b53360f58af404b8,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > loop:32:goto,ec4d58b0d88ca7ce,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:50:6:unsigned_char,1faf47bf18a0ca27,13,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > ternary:29:q,cfec71443628c162,32,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > commute:33:&,5998f6ee3f617473,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:op1,730e989206b17353,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:pl@3,1fc7727bfc2964ce,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > split:bestd:1:after,88cab965b420ed23,52,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > zero:49:eq0,44ad58e0ae6c6ce1,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > reuse:pl:py,5b24cbb642f748d3,50,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:px:unsigned,869a53b7b9a7b835,19,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > paramtype:0:unsigned_short,3d61e80fa7994e46,7,0,0,19,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cmpflip:33,9fedc2dbda71b531,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:dx:bestd,ca832cae4ce3e67a,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapstmt:27,c78be5dda268de31,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:pnum:10,e14ac2305332d32b,31,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:25:10,6362dd2a7b3e046f,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > loop:32:while1,3d63678fd5225296,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:27:2:unsigned_char,c09bafc29eba8caf,21,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > commute:33:&,51f2a575222f752f,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre,16ebf0292d8662ab,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:pl@0,bf284b8dcc537a7d,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > split:best:1:last,0583604020f216a1,32,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > zero:13:ne0,977f66d8b895bb6f,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:py:unsigned,a4e19bfcd60f7b76,24,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > paramtype:0:unsigned,3645b42050e4d34c,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:pnum:py,a921581bbbaec064,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapstmt:26,ae0253c9cc914a51,19,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:n:6,052e70363546bab8,9,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:24:10,fe2f393205930db3,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:50:1:unsigned_char,a0135a8ebc948b4d,22,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > commute:52:!=,770bbc71af73c923,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:bestd@0,114a6829ace97c09,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > split:bestd:1:last,88cab965b420ed23,52,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:n:unsigned_short,e10771c283d222ae,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > paramtype:0:short,3dd5469b67d9a02c,7,0,0,19,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:p:pl,88a2df0c8bd8e722,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapstmt:17,f091cfb1cf4639b1,6,0,0,35,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:team:6,7d3553b8d016c30a,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:24:6,b0d0f9af6c4b6e9e,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:50:6:unsigned_short,8e195987c87e76ea,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > commute:49:==,dc83211bcb2ad904,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:dx@1,c6c13b07919ccd2b,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > split:best:1:after,1854e4f7f294b184,7,0,0,51,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:dx:signed_char,4e276e98c0f8832a,28,0,0,0,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > paramtype:0:signed_char,7494ecb19e847f28,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:px:d,4220f263eb37e400,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapstmt:14,6ef34698820b63af,6,0,0,23,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:pl:2,508147e476d707fd,16,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:24:2,9bff21d92c409b86,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:33:14:short,e4f1a555efaccf7e,23,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > commute:30:+,cb8fcd68091527a8,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:pl@1,53940062dc8716cb,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:best:char,5c9ee53ac0411abe,34,0,0,0,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > paramtype:0:char,c33a365ff1b556b1,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:best:px,9880bacc34415135,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > cmpflip:38,f9502394d1a4a633,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > scope:d@0,979591a55b82af01,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > ifswap:29,f18bc0ed265387da,9,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > ternary:29:q,61cc3579acb4089c,32,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > type:n:unsigned_char,7e13c033bc66d42a,7,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swapstmt:17,f5c3fa3adb2593aa,6,0,0,35,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > movedecl:d:3,4ef4cc61cefbfc1a,31,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > zero:49:eq0,fae13c7c610a69f3,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > commute:49:==,d1b06b6a47f53c18,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swap:37:0,2a471ae4acf5a9f7,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swapdecl:team:pnum,e979c96737f67947,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > loop:32:while1,758f503db50530ef,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > reuse:pl:py,55ed2e98abbe32a6,50,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > split:bestd:1:after,a0b5ee1c3ff97cec,52,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > cast:52:4:unsigned_short,6cf5307190edd358,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > paramtype:0:char,b01c2f650409f802,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > cmpflip:33,f3e1c1c1839fa8ce,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > scope:bestd@0,cd04845e4f200a18,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > type:bestd:char,0b48b6a5b7472c4a,53,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swapstmt:27,714721891b00c5c6,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > movedecl:pnum:3,b6e983a8e29fdd24,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > zero:13:ne0,3aa4eaa4b00fcebd,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > commute:30:+,9f5316fa687e1db0,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swap:21:0,7616e1c227ccbf43,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swapdecl:pnum:py,3639be16c6ac4cc9,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > loop:32:goto,fdedbb6cd79e40c2,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > reuse:pl:px,2aa9134901af279a,49,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > split:best:1:after,f811de1d8f97b232,7,0,0,51,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > cast:50:2:short,17ea8c2014649779,15,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > paramtype:0:signed_char,a2bf72fee11102dc,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > scope:pl@1,670fca517a340c45,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > type:best:char,cfae6b58b255b04d,34,0,0,0,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swapstmt:26,d6a42ccfe90b3c3d,19,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > movedecl:pnum:5,8952f0b254a96be9,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > commute:33:&,9dc71c34d405151a,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swap:20:0,7bd3b14ddd20b19a,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swapdecl:d:p,643f4c8ba2fcda87,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > split:best:1:last,ac33fa521f51a292,32,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > cast:39:2:char,941694e5d3b6cce1,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > paramtype:0:unsigned_char,821190d4e4dd7f85,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > scope:pl@2,02d7ea995ed8500b,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > type:bestd:short,6009f888f64600df,42,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swapstmt:14,4477fa6e0c952943,6,0,0,23,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > movedecl:pnum:7,849ee2f167f30ed6,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > commute:33:&,7cd7e13e8e68d94f,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swap:50:0,c1e9bfeaa352a2b6,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swapdecl:py:best,69950af4f943d48f,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > split:bestd:1:last,a0b5ee1c3ff97cec,52,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > cast:33:15:int,e50cb9203e281e2c,19,0,0,72,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > paramtype:0:short,6e192268804bca60,7,0,0,19,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > scope:dx@1,265eb7fa8d596840,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > type:px:unsigned_short,6af4b358571eb10e,7,0,0,72,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swapstmt:41,7230a089c4996ceb,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > movedecl:px:8,328a00b2613ec806,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > commute:52:!=,d6a05372b29a4407,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swap:33:14,7cd7e13e8e68d94f,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swapdecl:n:dx,9811890f272717b8,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > cast:27:4:unsigned_short,504974bd36c30b04,27,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > paramtype:0:unsigned_short,7950392e49846f7f,7,0,0,19,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > scope:px@0,f4b12a48e5e3a374,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > type:d:char,7d15682cd3fd5958,68,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > movedecl:px:10,8a3a4abd0cce9c65,31,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swap:52:0,d6a05372b29a4407,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > incdec:46:pre > swapdecl:dx:bestd,cb0b92e89093c807,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:bestd:signed_char,7d8fcd72315df37c,53,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:px@0,aa07dff925809f4f,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:best:1,3ca0ccf5125638fb,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:50:0,467271f6e3af574c,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:n:dx,f73821ba4500f78f,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:52:6:int,4293957a39344a28,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:best:unsigned_char,2a7e5cfbee96a38d,34,0,0,0,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:d@0,d7e2c6814485909b,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:dx:6,edf25579f4228820,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:21:0,9f962e80c975745c,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best,077a8d93fb5d43ba,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:33:8:unsigned_short,4a49fe458d3d19d7,23,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:best:signed_char,dd7ec52634269c53,54,0,0,0,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:dx@0,565bd8cd64889b7a,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:team:4,3c480e1c5afbabad,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:37:0,6587d8380554c1b2,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:pl:n,8a783fb93d5d47d8,9,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:52:4:unsigned_short,5be6f989db5207c2,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:n:char,ac456410985a7a30,7,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:n@0,1116eb9e5b500004,16,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:n:0,91f5a958d1d0b6e4,16,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:29:0,2b71bc96694268a9,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:d:p,7be8ebc895c136d7,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:35:2:short,75c22e0e9058a0ec,42,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:d:unsigned_short,3b6b389e21b3e86f,39,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:py@0,f74c441b3a8bf23e,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:team:9,09a044a10150df18,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:20:0,ed50066a6db82346,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:35:3:char,97269cb9353aec8d,13,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:d:short,fb21ebbfaba2ccca,37,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:pl@2,65f463c9f94fca21,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:n:4,63162b692bf7e3ae,16,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:27:2,ce96fef167a5444c,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:33:14:int,b0a62fbe348c960b,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:dx:unsigned_short,dfc1b0c1f32d1d28,28,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:dx@2,b5f4b5e2732ae535,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:best:8,aefd1c388e2f4f64,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:25:6,970b2b86362414e7,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:33:7:unsigned_char,9b0c5011367debb7,15,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:dx:unsigned_char,dfa0a886b6b1e47e,28,0,0,0,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > scope:d@1,a4123fdaa1f94986,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:p:10,355b501366476114,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:40:0,bfa2fd8a97e6e880,5,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:52:2:char,4d5bb0f0ea032390,32,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:n:int,2415a3f6aa86ed58,12,0,0,72,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:dx:3,9b9de645f50bbc7d,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:36:2,3c68a905b5f3eaf4,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:38:2:short,8c5186a4498aa3f2,34,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:bestd:char,0300795e5c87497e,53,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:p:0,b22de8e46b973361,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swap:25:2,88844cb305ce73bf,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:52:6:unsigned_char,48b9cd479d510776,13,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:n:signed_char,bd0f36b932746089,7,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:px:1,24a1fb97aa8c9d2f,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:38:2:unsigned_short,505f5ab19641051f,33,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:n:unsigned_char,7bb5500abf307f61,7,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:pnum:8,4d7be78f562b5579,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:27:4:unsigned_char,58569a922549c1ca,27,0,0,65,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:pl:char,86fbb16d724462ec,36,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:pnum:5,a34898bd48d85e3a,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:36:2:short,db920308fd208214,36,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > type:bestd:unsigned_char,d335f6d3188aa17e,53,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > movedecl:bestd:4,74ff5d947f12d1e0,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > cast:34:6:unsigned_char,353d8dfa6292b4a2,,,,,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > scope:dx@1,961c2fb6bf1d0e19,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > split:bestd:1:last,8fde4bf237b7504f,52,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > type:bestd:signed_char,182c94e6d719957b,53,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > incdec:46:op1,a4675b4e50b211b7,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > reuse:pl:py,dfeccc0826a67497,50,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > ternary:29:q,62207a2945406798,32,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > cmpflip:38,c5c73d2f1a5857d8,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > zero:49:eq0,0af6895a8a44b397,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > paramtype:0:unsigned_short,7f2be37b4e7ff681,7,0,0,19,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > cast:40:2:short,2b4db34e09bb95ba,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > ifswap:29,f19976e90344d826,9,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > movedecl:team:10,e3f38a69f70bed2d,31,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swapstmt:27,3d5864e31d8c510b,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > commute:33:&,5e6326e1c31d7c8c,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swapdecl:team:pnum,32b005aad839f2ef,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > loop:32:while1,b86dfc4755e7790e,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:33:2,fbe122616298fc63,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > scope:pl@2,136e53b473ffafd7,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > split:bestd:1:after,8fde4bf237b7504f,52,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > type:d:unsigned_short,382a1d45192ac0e6,39,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > reuse:pl:px,1adf8e40bd3a63a9,49,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > cmpflip:33,fbe122616298fc63,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > zero:13:ne0,05b565a5cf10ccf6,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > paramtype:0:char,da73791071f9c796,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > cast:34:6:short,ddd70e293abaa93e,,,,,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > movedecl:team:9,bd0bee9daa7e7188,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swapstmt:26,2bdcbe7a5ebe9bfa,19,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > commute:52:!=,013213e3a549161d,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swapdecl:dx:bestd,b67cd319a8ffa972,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > loop:32:goto,ce78a021094d1862,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:24:10,6a09036289a75918,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > scope:d@0,058d3b2d94093463,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > split:best:1:after,41e3ce186722eb75,7,0,0,51,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > type:pl:int,5b6ab0b55d740286,37,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > paramtype:0:unsigned_char,661a1bf3364bff46,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > cast:33:8:unsigned_char,bd737909115176d1,15,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > movedecl:team:3,fc9331758127a2e5,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swapstmt:41,ba38407d201589f9,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > commute:33:&,854572e62fe764d1,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swapdecl:py:px,b4490630bb76806e,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:27:2,f136f87dbc7ff080,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > scope:dx@2,ff9c449821d44035,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > split:best:1:last,8df2d0a3cf379d74,32,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > type:best:int,182634b2aac40fd8,30,0,0,51,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > paramtype:0:signed_char,007c05c42559d5a1,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > cast:34:3:short,574d858268b09aaf,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > movedecl:team:6,6fee3a16a4b20fe2,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swapstmt:17,a0a7e4ec83bec255,6,0,0,35,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > commute:49:==,b4e6c4d0a8170804,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swapdecl:n:dx,f976138f90f9c5d8,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2,f2d7e7d7c1fcdb1b,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > scope:d@2,50a738f3c41ff597,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > type:bestd:unsigned_char,14f922a61b58927a,53,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > paramtype:0:short,4737e0bfc2cd281e,7,0,0,19,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > cast:50:6:char,c9bc8f20f428629c,13,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > movedecl:n:10,f41220661af006b9,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swapstmt:14,4177286b68d61866,6,0,0,23,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > commute:30:+,9044d2002ddf8a35,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swapdecl:p:pl,d68c56062012b2a5,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:50:0,0adc61b0a4979ec4,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > scope:pl@3,ce99c9f43d575d4b,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > type:pl:signed_char,9a693b820bcaf63a,34,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > paramtype:0:unsigned,bbfa20dfd4c42acb,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > cast:36:5:int,cde88251c3dfa1c9,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > reuse:pl:px,e5fcf30b5bee93bb,49,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > cast:42:2:unsigned_short,ead621185182180a,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > ternary:29:q,6cf724564597a395,32,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > commute:33:&,63705c123c380982,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > cmpflip:33,e345363bb67ce1c4,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swap:33:2,e345363bb67ce1c4,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > loop:32:while1,539d8bfb9117b7bb,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > incdec:46:pre,400e01c8110b3fde,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swapdecl:n:dx,e7243ae80b68a306,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swapstmt:41,962adfeb943108c4,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > scope:pl@3,5425b98163002d9d,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > zero:49:eq0,5353e81dbcec5919,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > type:dx:short,523832a5a1849db7,27,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > split:bestd:1:last,1c3630a42f364272,52,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > movedecl:n:6,7ce776ce6456e428,9,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > ifswap:29,f950f55ab4cfaa14,9,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > paramtype:0:signed_char,7ab4ffd6250ffb5b,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > reuse:pl:py,606d5de68c74a77f,50,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > cast:35:2:unsigned_short,ffee0db8792dd741,38,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > commute:33:&,7aa6f099ce7993f5,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > cmpflip:38,aa258cd8225062b7,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swap:33:14,7aa6f099ce7993f5,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > loop:32:goto,78a323cf74892159,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > incdec:46:op1,c3bc588d946a35d4,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swapdecl:pl:n,b1108a2b7d9ffd4b,9,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swapstmt:27,74720ef4e02b1943,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > scope:d@1,7c5007d533e08c15,14,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > zero:13:ne0,424ab64cad2881dc,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > type:d:unsigned_short,37105e9de027c2e6,39,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > split:best:1:after,cb3f1737859f2b23,7,0,0,51,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > movedecl:team:9,4bb05f705f499199,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > paramtype:0:unsigned_short,7d70c5f66ceefc52,7,0,0,19,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > cast:33:7:int,d15ac4fef2d66797,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > commute:52:!=,c3015ce2c4ff23ba,6,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swap:25:10,d6e88b5bade4eb01,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swapdecl:py:px,46e83d4ded2b8ca3,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swapstmt:14,fb6341ffc93a7ec8,6,0,0,23,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > scope:n@0,f3327af44334e85c,19,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > type:py:signed_char,7d49ea0cd1a8c8ef,7,0,0,72,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > split:best:1:last,c35833f7e11d6c70,32,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > movedecl:bestd:4,4a7eae52cb4c698b,11,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > paramtype:0:unsigned,80740d13ad54d432,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > cast:35:4:int,af1338451c7fa9ed,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > commute:49:==,bf232c3075e2ec20,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swap:33:8,63705c123c380982,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swapdecl:dx:bestd,f08316d5c68f27d0,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swapstmt:17,69696a7ed6797f18,6,0,0,35,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > scope:dx@2,b5d206483a291ebb,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > type:n:unsigned_char,a8c2cf45df938c91,7,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > split:bestd:1:after,1c3630a42f364272,52,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > movedecl:team:10,6bbd34f97361c60b,31,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > paramtype:0:short,c79694b3bfd796db,7,0,0,19,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > cast:36:3:int,02dea2ea68e34af0,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > commute:30:+,a81b42b6765f058c,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swap:36:2,ee315abdcfadcc77,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swapdecl:pnum:best,2f8087148484d0be,8,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swapstmt:26,06d47eabb2001bb9,19,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > scope:py@0,eb5627ecadb035c7,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > type:dx:unsigned_char,e9781c12e9744483,28,0,0,0,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > movedecl:n:5,04fcac0a2cace41f,9,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > paramtype:0:unsigned_char,19742494407f5a64,18,0,0,15,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > cast:34:6:unsigned_char,8795bcce38cfcc10,,,,,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swap:24:10,4f526431e24df084,4,0,0,59,ga
+2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swapdecl:p:pl,6781b6d72a3bef32,4,0,0,59,ga
