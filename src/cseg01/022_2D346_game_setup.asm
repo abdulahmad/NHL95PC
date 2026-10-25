@@ -2366,6 +2366,10 @@ pop esi	; 2F5EB
 pop ecx	; 2F5EC
 ret	; 2F5ED
 %endif ; C
+; C: src/c/022_2D346_game_setup/UpdateOtherScores.c (GameStatsScreen)
+%ifdef CBUILD
+%include "c/022_2D346_game_setup/UpdateOtherScores.GameStatsScreen.inc"
+%else
 GameStatsScreen:
 push dword 3A4h	; 2F5EE
 call __CHK	; 2F5F3
@@ -2991,3 +2995,4 @@ call FreeMemBlock	; 2FDC2
 add esp, byte 4	; 2FDC7
 mov esp, ebp	; 2FDCA
 jmp near UpdateOtherScores_x	; 2FDCC
+%endif ; C
