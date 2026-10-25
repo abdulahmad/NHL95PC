@@ -259,10 +259,10 @@ static int int21(ctx_t *c)
         else flags = (AL(c) & 3) == 0 ? O_RDONLY : (AL(c) & 3) == 1 ? O_WRONLY : O_RDWR;
         fd = open(path, flags | O_BINARY, 0666);
         TRACE("open %s -> %d\n", path, fd);
-        if (fd < 0) dos_error(c, errno); else { SETAX(c, fd); SET_CF(c, 0); }
+        if (fd < 0) dos_error(c, errno); else { R(c, EAX) = (uint32_t)fd; SET_CF(c, 0); }   /* DOS/4GW returns the handle zero-extended in EAX */
         return 1;
     }
-    case 0x3E: if (R(c, EBX) > 4) close(R(c, EBX)); SET_CF(c, 0); return 1;
+    case 0x3E: if (R(c, EBX) > 2) close(R(c, EBX)); SET_CF(c, 0); return 1;
     case 0x3F: {
         ssize_t n = read(R(c, EBX), (void *)R(c, EDX), R(c, ECX));
         if (n < 0) dos_error(c, errno); else { SETAX(c, n); R(c, EAX) = n; SET_CF(c, 0); }
