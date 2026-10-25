@@ -232,7 +232,7 @@ DrawEditCursor,314B4,229,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/Dra
 DrawEditText,31599,372,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawEditCursor.c,matched,"draft (DrawEditCursor.c): same size (372), dot width in edi (original ebp). See docs/UNSURE.md.",
 DrawListItem,302B9,227,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,nonmatching,"registers: y / w in ebp / edi (EXE edi / ebp); DrawListItems short-jumps into its exit, mark as one block",size 5/6
 DrawListItems,3039C,95,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,nonmatching,"compiles to the original 95 bytes, but it branches into DrawListItem+DEh, so it cannot be marked until DrawListItem is.",tail 0/0
-EditTextField,3170D,936,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/EditTextField.c,nonmatching,,register 31/35
+EditTextField,3170D,936,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/EditTextField.c,nonmatching,,size 4/7
 GrowToButton,30F5F,85,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButton.c,matched,same blocks; original keeps w in edx and v in ecx (then edx / eax in the second half); this draft moves w to ecx. 10-min cap,
 GrowToButtons,30FB4,95,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/GrowToButtons.c,matched,registers: asm sums in edx and builds each width in esi; C swaps them,
 ListDialog,303FB,1513,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/ListDialog.c,nonmatching,,size 6/7
