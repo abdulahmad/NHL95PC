@@ -4204,3 +4204,23 @@ PlayoffTreeMenu,,"`m = &menus[level][item]` for the on1 / on2 tests (157, +19)",
 PlayoffTreeMenu,,"m for pad / x2 / x1 in the submenu path, as MainDeskLoop (178, +21)","178, +21",ga
 PlayoffTreeMenu,,"the select-item Norm address as `menus[level] + sel[level]` or `sel[level] + menus[level]` in the first or the last path (60 each, same code)","60 each, same code",ga
 PlayoffTreeMenu,,"`i = level` for the first select-item path (292, +36)","292, +36",ga
+DrawCalendarDay,,"the games loop's `y = d / 7;` before `x = d % 7;` (27, against the EXE: its first idiv gives the remainder, `mov edi, edx`, then the quotient",,ga
+DrawCalendarDay,,rejected),,ga
+DrawCalendarDay,,`dy = 1 + calrowy[dy]` (27),27,ga
+DrawCalendarDay,,movedecl of g / sel on top (42 / 39),42 / 39,ga
+PostGameToTeamDb,,the skater loop's `ss[7] +=` statement moved one down (109),109,ga
+PostGameToTeamDb,,with it rec declared first (106),106,ga
+PostGameToTeamDb,,"r declared after ngames / gs / ss (101 each, size +11, 2,353 vs 2,342: a register reshuffle, slots unchanged",,ga
+PostGameToTeamDb,,not kept),,ga
+PostGameToTeamDb,,"rec declared after r (101, size +11)","101, size +11",ga
+SportsDesk,,`sel[i] = 0;` after the dropdown's DrawMenuItemNorm (186,,ga
+SportsDesk,,"it satisfies the swap but goes against the EXE, which stores sel[i] = 0 between DrawMenuDropdown and DrawMenuItemNorm",,ga
+SportsDesk,,rejected),,ga
+SportsDesk,,the submenu close loop `for (i = depth; i > level; i--)` as do / while (197),197,ga
+SportsDesk,,the other loops as do / while (189-421),189-421,ga
+SportsDesk,,store chains and statement swaps near L125-L131 (190-192),190-192,ga
+FixJerseyConflict,,"the rgb store chains `rgb[2] = rgb[1] = 0;` and `rgb[1] = rgb[0] = 0x3B;` (16, 2 swaps)","16, 2 swaps",ga
+FixJerseyConflict,,declaration moves of bad / e / err / pal (16),16,ga
+FixJerseyConflict,,`0x4C + tr` (16),16,ga
+FixJerseyConflict,,`0x1C > s.i` (16),16,ga
+FixJerseyConflict,,while (1) with a break for the do-while (16),16,ga
