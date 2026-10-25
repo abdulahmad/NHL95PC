@@ -4250,6 +4250,20 @@ assgoalie,,the three other arm orders (225 / 281 / 334),225 / 281 / 334,ga
 assgoalie,,"the move tail repeated at the other-half exit (146: not cross-jumped), `if (regd2.w <= 7) { playeracc(p, regd2.w); return; } StopNA(p);` at the end (26), tools/wccre/tieorder.py on the new base (2-job copy, --max-run 40, 6 minutes, 124 orders: 18), `regd1.w = regd1.w - (((signed char *)p)[0x0F] + (p->Ypos >> 16))` and its split form on the new base (76)",76,ga
 assrefgoalpa,,on that base: the first product as `(0xE8 - *pucky) * (p->temp3 - *puckx)` (67-69),67-69,ga
 assrefgoalpa,,"the second as `(p->temp3 - *puckx) * (-0xE8 - *pucky)` (61 but 3 bytes short, not kept), both swapped (64, 3 bytes short), `regd0.w = *puckx + c` in the first crossing (112-115, still `add ecx, eax`), `regd0.w = c; regd0.w += *puckx;` (67-71, two stores)","67-71, two stores",ga
+SelectSavedFile,,"tools/wccre/tieorder.py --minutes 10 (pass 0: 33 conflicts, runs 5 x 5, 24 x 3, 2 x 2",,ga
+SelectSavedFile,,"pass 1: 5 conflicts, 2 x 6, 3 x 5",,ga
+SelectSavedFile,,"258 swap orders + 133 single edits, best 15, inconclusive)",,ga
+SelectSavedFile,,"tools/wccre/targetsearch.py --minutes 30 (1615 candidates, 0 tie targets",,ga
+SelectSavedFile,,"the two slot targets name / path already met, best 15 = the committed text)",,ga
+SelectSavedFile,,"(tools/probe.py standalone) the else arm as `allstars[t - 0x18]` on a table starting at ASW (teamabbrevs + 0x68, which folds to off_C5441's address: off_C5441 is not a separate table but the ASW / ASE entries indexed by t), and `t <= 0x17` (cmp 17h / jg): both still hoist `t << 2`",,ga
+RunMenu,,tools/wccre/tieorder.py --minutes 10 (it read a complete build/tieorder cache for the current text: 6 -> 3 forced,,ga
+RunMenu,,"the stage 2 move of w / h to just older than t199 in the creation order, which sets the size product's savings-2 run, t33 EAX -> EBX",,ga
+RunMenu,,the L113 t71 / t72 swap of batch 19 is not in it),,ga
+RunMenu,,"tools/wccre/targetsearch.py --minutes 30 (7 tie swaps from that cache, all at L87-L90: the menus loads before the bar / n / pointerspr loads and the header stores",,ga
+RunMenu,,"15 slot targets, all already met",,ga
+RunMenu,,"baseline 6 differing, 1 neither register nor slot, i.e. the `lea ebx, [eax+1]` / `inc ebx` of the size product, 3 swaps unmet): 376 candidates in one beam round (movedecl 265, swapstmt 35, chain 16, loop 15, swapdecl 14, swap 10, commute 9, incdec 5, zero 4, temp 1), none below 6 differing or 3 unmet, best text the committed one",,ga
+RunMenu,,by hand `m = item + menus[level]` for the hit test's m (6,,ga
+RunMenu,,"the same code). Savings of the tied conflicts as in the batch 19 / 27 notes (the size-product temps t30-t35 and size at 2, t71 / t72 at 20)","the size-product temps t30-t35 and size at 2, t71 / t72 at 20",ga
 PlacePlayersAtStart,,"tools/wccre/tieorder.py --minutes 10 on the old shape (172 forced orders, 13) and on the ternary shape (172, 12): not a tie (2 x 80, 2 x 40, 7 x 30 runs)","2 x 80, 2 x 40, 7 x 30 runs",ga
 PlacePlayersAtStart,,"tools/wccre/targetsearch.py --minutes 30 (1837 candidates, no tie or slot targets): best text negates regd1 before regd0 (14, 6 other: regd1 then goes to memory but regd0 through a register, against the EXE order, rejected)","14, 6 other: regd1 then goes to memory but regd0 through a register, against the EXE order, rejected",ga
 PlacePlayersAtStart,,"`0x16u` / `0x16L` constants (13), `(unsigned short *)` table loads (13), `word_CBE8C[regd4.w + 1]` for regd1 (12, same differences)","12, same differences",ga
@@ -4268,3 +4282,81 @@ assgoalie,,"the move Y offset with HIWORD(p->Ypos) 51, both with HIWORD 59",,ga
 assgoalie,,the X with Xpos first 17,,ga
 assgoalie,,"`a == 8` as a ternary 144, as an inverted if 40",,ga
 assgoalie,,the 48h flag test as `== 0` 13,,ga
+checkgoal,,"bounce y load then y >= 0 early return, int z: 1 differing, size +1",,ga
+checkgoal,,"bounce y load then y >= 0 early return, short z: 14 differing, size -2",,ga
+checkgoal,,"OLDZ < 0xD normal-body first / bounce else, int z: 30 differing, size +1",,ga
+checkgoal,,"OLDZ < 0xD normal-body first / bounce else, short z: 36 differing, size -2",,ga
+checkgoal,,p->Zvel = -y,,ga
+checkgoal,,"p->Zvel >>= 1 after loaded-y test: 16 differing, size -4",,ga
+checkgoal,,"short x negate then x /= 2 and store: 17 differing, size +1",,ga
+checkgoal,,short z = -y,,ga
+checkgoal,,z >>= 1,,ga
+checkgoal,,"p->Zvel = z, no x copy: 16 differing, size -4",,ga
+checkgoal,,"same short velocity negate/halve/store with z scoped to OLDZ block: 16 differing, size -4",,ga
+checkgoal,,"short z for load, sign test, negate, compound halve and store: 16 differing, size -4",,ga
+checkgoal,,"OLDZ >= 0xD bounce if / normal else, shared function end, int z: 1 differing, size +1",,ga
+checkgoal,,"OLDZ >= 0xD bounce if / normal else, shared function end, short z: 14 differing, size -2",,ga
+checkgoal,,"velocity load before Zpos restore, int z: 3 differing, size +1",,ga
+checkgoal,,"velocity load before Zpos restore, short z: 16 differing, size -2",,ga
+checkgoal,,"permute.py 5 min budget on bounce early-return int-z form, natural transforms only: 321 candidates in 127 s, best 1 differing, size +1, no match",,ga
+checkgoal,,"full log ~/tmp/u/np/permlog_ts_checkgoal.csv. Register evidence: baseline x savings 17 BX, y 11 AX, z 2 AX, conversion t14 2 EDX, q 5 ECX, c 3 CL",,ga
+checkgoal,,"early-return short z removes the conversion conflict (35 -> 34 conflicts), final negate is in EBX, q 5 moves to EDX and c 3 to DL. Baseline restored",,ga
+checkgoal,,both make and make CBUILD=0 MATCH. No ESCALATE find,,ga
+checkgoal,,no persistent tool problem,,ga
+ReassignCtlPlayer,,independent int dy for vertical difference: 33,,ga
+ReassignCtlPlayer,,scoped int dy for vertical difference: 33,,ga
+ReassignCtlPlayer,,distance output d declared inside eligibility arm: 19,,ga
+ReassignCtlPlayer,,comma sequencing px and py initializers: 9,,ga
+ReassignCtlPlayer,,dx as short coordinate difference: 44,,ga
+ReassignCtlPlayer,,best as int player result: 29,,ga
+ReassignCtlPlayer,,side truth test in final branch: 9,,ga
+ReassignCtlPlayer,,combined pnum comparison and restoration using pnum: 77,,ga
+ReassignCtlPlayer,,signed X high word as arithmetic shift: 9,,ga
+ReassignCtlPlayer,,signed Y high word as arithmetic shift: 9,,ga
+ReassignCtlPlayer,,both high words as arithmetic shifts: 9,,ga
+ReassignCtlPlayer,,assignment expression of selected player in comparison: 11,,ga
+ReassignCtlPlayer,,incremental dx subtraction from px: 33,,ga
+ReassignCtlPlayer,,incremental vertical subtraction from py: 34,,ga
+ReassignCtlPlayer,,both coordinate differences computed incrementally: 47,,ga
+ReassignCtlPlayer,,independent dy with incremental dx subtraction: 38,,ga
+ReassignCtlPlayer,,independent dy with incremental dy subtraction: 33,,ga
+ReassignCtlPlayer,,best rereads player field after eligibility comparison: 18,,ga
+ReassignCtlPlayer,,other controller compares player field read in place: 21,,ga
+ReassignCtlPlayer,,player field reread for comparison and selected store: 29,,ga
+ReassignCtlPlayer,,carrier uses cached player number before distance calculation: 42,,ga
+ReassignCtlPlayer,,named vertical difference and compound distance accumulation: 20,,ga
+ReassignCtlPlayer,,register storage for px: 9,,ga
+ReassignCtlPlayer,,register storage for py: 9,,ga
+ReassignCtlPlayer,,register storage for best: 9,,ga
+ReassignCtlPlayer,,"register storage for px,py: 9",,ga
+ReassignCtlPlayer,,"register storage for px,py,best: 9",,ga
+ReassignCtlPlayer,,const team and pnum source pointers: 9,,ga
+ReassignCtlPlayer,,read-only player iteration pointer: 9,,ga
+ReassignCtlPlayer,,"permute 5 min jobs 4: no match, 449 compiled in 272 s, best 4 same size, cast:50:2:char > movedecl:d:5",,ga
+ReassignCtlPlayer,,every logged score below 9 contains the cast,,ga
+ReassignCtlPlayer,,best patch adds (char)c1playernum[0] only in the c1 final comparison and moves int d before p,,ga
+ReassignCtlPlayer,,fresh first_pick has 3 differences at +162/+164/+169 (byte load/compare replaces EXE word comparison),byte load/compare replaces EXE word comparison,ga
+ReassignCtlPlayer,,"cast rejected as an unsupported asymmetric narrowing, saved to ts_ReassignCtlPlayer_ReassignCtlPlayer_escalate.diff",,ga
+ReassignCtlPlayer,,permlog_ts_ReassignCtlPlayer.csv retains all candidate shapes and scores,,ga
+ReassignCtlPlayer,,generated rvalue-address compiler errors and out-of-range constant warnings were skipped by permute,,ga
+ReassignCtlPlayer,type:dx:short,dx as short,tried (docs/UNSURE.md),ga
+ReassignCtlPlayer,type:best:int,best as int,tried (docs/UNSURE.md),ga
+checkplcoll,,register short x parameter: 13,,ga
+checkplcoll,,register int y parameter: 13,,ga
+checkplcoll,,const short x parameter: 13,,ga
+checkplcoll,,short y parameter under GA: test equal-sized parameter homes: 13,,ga
+checkplcoll,,int x with explicit signed-short normalization on entry (new reason: narrow home within a 4-byte name): 17,,ga
+checkplcoll,,int x with signed-short normalization after guards: 16,,ga
+checkplcoll,,checkcx unprototyped declaration: default argument promotion of x: 13,,ga
+checkplcoll,,checkcx per-file int x parameter declaration: 13,,ga
+checkplcoll,,checkcx per-file all-int value parameters: 13,,ga
+checkplcoll,,long y parameter under GA: 13,,ga
+checkplcoll,,signed char y parameter under GA: 11,,ga
+checkplcoll,,unsigned short y parameter under GA: 13,,ga
+checkplcoll,,"32-bit coordinate array local used in both loops, initialized before guards: 10",,ga
+checkplcoll,,"32-bit coordinate array local used in both loops, initialized after guards: 15",,ga
+checkplcoll,,"32-bit coordinate struct local used in both loops, initialized before guards: 10",,ga
+checkplcoll,,"32-bit coordinate struct local used in both loops, initialized after guards: 15",,ga
+checkplcoll,,signed char y rejected because it narrows the coordinate,,ga
+checkplcoll,,"coordinate struct before guards retained, both fields used in both loops",,ga
+checkplcoll,,"permute 5 min budget, natural ordering/scope/expression/loop families only, historical log seeded: 339 compiled in 161 s, best 10 base, no match",,ga
