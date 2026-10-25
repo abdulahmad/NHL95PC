@@ -13,7 +13,6 @@
 6 0 RunMenu src/c/015_1D6E8_menu_system/RunMenu.c
 7 0 ExecuteTrade src/c/032_3DC2C_roster_jersey/ExecuteTrade.c
 7 0 SelectHilight src/c/058_7F724_highlights/SelectHilight.c
-7 0 SelectMatchingPlayers src/c/052_6D2F8_create_player/SelectMatchingPlayers.c
 7 3 FadePalette src/c/001_10010_main_startup/FadePalette.c
 7 3 SkaterStatsCard src/c/017_21CDE_player_stats/SkaterStatsCard.c
 7 12 ListDialog src/c/023_2FDD1_misc_dialogs/ListDialog.c
