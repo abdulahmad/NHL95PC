@@ -4157,3 +4157,11 @@ ShowCredits,,Watcom does not cross-jump them into the EXE's code),,ga
 FadePalette,,"the clamp as if / else storing steps in each arm (`if (steps > 2) steps = 2; else steps = steps;`, 10, +8)",,ga
 FadePalette,,"the same through c (dead-variable reuse, 10, +8), through i then one store (7: dead reuse plus a copy, not kept)","7: dead reuse plus a copy, not kept",ga
 ListDialog,,"the mark test's `((!marks || flags[cur]) ? 1 : 0)` as a plain condition or as a nested if (15, +13 each): the ternary stays",,ga
+PostGameToTeamDb,,the three sideofs moves,,ga
+PostGameToTeamDb,,"h block-scoped, at every top-level declaration place, before rec[0]++",,ga
+PostGameToTeamDb,,declsearch --conflicts / --all with h,,ga
+SimulateGame,,"int / char * / void * elements, `*(f.t + i)`, `*(void **)((char *)f.t + i * 4)`, `*&f.t[i]`, `[(unsigned)i]` / `[(short)i]` / `[(long)i]`, `++i`, `i = i + 1`, while with i++ last, do / while (++i < 2), `f.ps[i++]` in the last store (while, for without a step, do / while)",,ga
+SimulateGame,,"a byte store `f.b[i] = 0` before the first call, after the first store, or last (the last one only turns the step into `lea ebx, [eax+1]`), unused labels between the stores",,ga
+SimulateGame,,in the function,,ga
+SimulateGame,,"a separate counter s for the allocation loop, block-scoped (1113, size +19) or declared at the top after i / bestshot / homeScore / j / err (956-968, size +12 to +16",,ga
+SimulateGame,,the frame changes),,ga

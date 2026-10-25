@@ -649,3 +649,5 @@ TradePlayers,StaticEck2026,2026-10-25,GA,3,3,"width max as if / else with the ch
 FadePalette,StaticEck2026,2026-10-25,GA,7,7,"clamp as if / else storing steps per arm (10, +8); through c or i (dead-variable reuse, 7-10, not kept)"
 ShowCredits,StaticEck2026,2026-10-25,GA,4,4,"each MakePath ternary as if / else with a call per arm (17-22)"
 ListDialog,StaticEck2026,2026-10-25,GA,7,7,"mark test ternary (? 1 : 0) as a plain condition or nested if (15)"
+PostGameToTeamDb,StaticEck2026,2026-10-25,GA,105,105,"tieorder's sideofs moves compiled (before gs / after gs / first: 154 each); short h home score for the compares and arm 2 (EXE cwde chain; slots move): block 132, top-level places 113-132, before rec[0]++ 134; declsearch --conflicts / --all on the 113 (best 113); slotdump --count: rec >= 349 gives all six EXE slots on that shape"
+SimulateGame,StaticEck2026,2026-10-25,GA,566,566,"probe of the allocation loop (spilled i): element types, pointer forms, index casts, ++i / i = i + 1, while / do loops, f.ps[i++], byte store of i before / after / last, labels: all shl i, 2; separate counter s block-scoped (1113) or top-level (956-968)"
