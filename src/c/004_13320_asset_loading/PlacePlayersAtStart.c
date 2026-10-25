@@ -1,11 +1,13 @@
 /* Asset loading: opening spots. */
-/* DRAFT: 539 vs 534 (13 differing). The assignment number is passed straight to assinsert
- (add eax, 16h / movsx edx, ax), but the setcc is widened with xor ah, ah (original and eax, 0FFh).
- The map negate is an if / else with the store in each arm (the arms join at the store, so the word
- is reloaded as in the original). The far-spot mirror negates regd1 in ecx (original neg word
- [regd1]), so the loop count is in si, esi is saved and the cookie is 14h. Tried for the mirror:
- 0 - x, x *= -1, the two loads swapped, !(...) test, the position stores in both arms, ternaries;
- for the number: (int) / (short) casts, a short n, n += 16h, 16h + (...), a ternary, if / else. */
+/* DRAFT: 540 vs 534 (12 differing). The assignment number is a ternary passed straight to
+ assinsert (sete al / and eax, 0FFh / add eax, 16h / movsx edx, ax, as in PenShotAssign; the
+ (regd1.w == 4) + 16h sum was widened with xor ah, ah). The map negate is an if / else with the
+ store in each arm (the arms join at the store, so the word is reloaded as in the original). The
+ far-spot mirror negates regd1 in ecx (original neg word [regd1]: the table value still in ax is
+ reused), so the loop count is in si, esi is saved and the cookie is 14h. Tried for the mirror:
+ 0 - x, x *= -1, the two loads swapped, !(...) test, the position stores in both arms, ternaries,
+ a comma expression, != pfgoal / ~pflags tests, an empty then-arm; tie orders (tieorder) and
+ targetsearch: none. Negating regd1 before regd0 puts regd1 in memory (against the EXE order). */
 #include "nhl95.h"
 
 /* PlacePlayersAtStart: with dword_CC0EC clear, forceteams and drop the puck and the
@@ -30,7 +32,7 @@ void PlacePlayersAtStart(void)
     do {
         p->temp5 = -100;
         regd1.w = p->position;
-        assinsert(p, (regd1.w == 4) + 0x16);
+        assinsert(p, regd1.w == 4 ? 0x17 : 0x16);
         if (regd1.w >= 0) {
             if (p->pflags & pfteam) regd4.w = -awtmap;
             else regd4.w = -hmtmap[0];
