@@ -1,14 +1,17 @@
 /* Engine player logic: the goalie's assignment and the assignments that end in its exit (assnearest,
    assrefsignal, assrefgoalpa). */
-/* DRAFT: assgoalie 18 differing under 10.0 GA. The int vecdist result and the short incremented depth
+/* DRAFT: assgoalie 13 differing under 10.0 GA. The int vecdist result and the short incremented depth
    give the EXE's EDX result copy and increment; the skate / stop exits written in place in both blocks
    (`if (regd2.w > 7) StopNA(p); else playeracc(p, regd2.w);`, cross-jumped by Watcom) and the post target
    repeated in the far-side block replace three gotos, and the other exits to move are if / else nesting.
+   ay declared after pc gives the EXE's carrier-side widening (`mov edx, eax` / `and edx, 0FFh`), and the
+   save-stance offsets written `*puckx + (*puckvx >> 10) - ...` its puckvy pointer in eax.
    Two gotos are left (ESCALATE): the puck-in-the-other-half exit to move and the jump to angle. The poke /
    dive block is entered from the shooter test and from the carrier test, and that exit skips the angle code,
    so no nesting gives this flow without repeating code; the poke / dive block written in both arms (188) and
-   the move tail repeated at the exit (146) are not cross-jumped back. Left: the carrier-side boolean widening,
-   the puckvx / puckvy pointer registers of the save-stance move and the external ass_popx epilogue.
+   the move tail repeated at the exit (146) are not cross-jumped back. Left: the puckvx pointer register of
+   the save-stance move (eax, EXE edx), the load order of the Y hotspot sum in move and the external ass_popx
+   epilogue.
    assgoalie ends in ass_popx (assrefwhistle.c), so its match belongs in assrefwhistle.c between asspenalty
    and CountPuckThreat; the draft stays here with the functions that use its exit. */
 #define imul32 imul32_decl
@@ -44,10 +47,10 @@ void assgoalie(Player *p)
 {
     Player *q;
     short *pc;
+    int ay;
     int x;
     int y;
     int ok;
-    int ay;
     int a;
     short k;
 
@@ -242,8 +245,8 @@ void assgoalie(Player *p)
                         p->Xvel >>= 1;
                         p->Yvel >>= 1;
                         if (!(((unsigned char *)p)[0x48] & 2)) {
-                            regd0.w = (*puckvx >> 10) + *puckx - HIWORD(p->Xpos);
-                            regd1.w = (*puckvy >> 10) + *pucky - HIWORD(p->Ypos);
+                            regd0.w = *puckx + (*puckvx >> 10) - HIWORD(p->Xpos);
+                            regd1.w = *pucky + (*puckvy >> 10) - HIWORD(p->Ypos);
                             a = vtoa(regd0.w, regd1.w);
                             if (a == 8) regd3.w = 0;
                             else regd3.w = (a - p->facedir) & 7;
