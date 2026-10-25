@@ -4064,3 +4064,16 @@ DbLineEditorLoop,,"on the no-itemoffset base after declsearch --conflicts: a dea
 POAfterGame,,"(2026-10-24, lane 1 batch 18): plain locals instead of the frame struct (114 after declsearch)",114 after declsearch,ga
 POAfterGame,,"the n test as a switch (76), `(ctl1team[0] < 0) != (ctl2team < 0)` (76), `f.ret = 1; return f.ret;` for the early exit (68), ctl2team / ctl2side spelled ctl1team[1] / ctl1side[1] everywhere in the function (67",,ga
 POAfterGame,,the same code: still loaded into ecx),,ga
+BuildStandingsGrid,,"the second sort loop as `for (i = 2; ...)` (42), `k = 1 + j` in either sort (41), `s.p = s.t[n] + s.w[n] * 2` (41)",41,ga
+MainDeskLoop,,"slot block-local in the stop-song block / the r == 2 block, slot dropped (`while (sub_8FC8A(musicslot, 3) == 0);`), each 62 after declsearch",,ga
+MainDeskLoop,,"the callback as `(menus[level] + item)->on1` (62), through m (395)",395,ga
+MainDeskLoop,,the Sel / Norm addresses as `menus[level] + sel[level]` (62 each),62 each,ga
+MainDeskLoop,,"Norm through `&menus[level][item]` (61, but the EXE reloads sel[level]: not kept)","61, but the EXE reloads sel[level]: not kept",ga
+TeamStatsScreen,,"the frame struct f as plain locals with declsearch --conflicts (164, +62: the arrays reach no EXE slot, 10 of 17",,ga
+TeamStatsScreen,,the struct layout is the EXE's),,ga
+TeamStatsScreen,,"the key ternaries as if / else: all three cases (171, +3), cases 3 and 4 (175, size +0",,ga
+TeamStatsScreen,,"declsearch 141, size +0",,ga
+TeamStatsScreen,,"with the statssortkeys[i] index `i * 4` still hoisted above the case jump where the EXE indexes in each case), case 2 / 3 / 4 alone (156 / 131 / 206), `if (!t) ... = 0; else` (172), `s` as if / else (293)",293,ga
+RunTeamPickMenu,,"the RunMenu fix: the frame struct s as plain locals plus declsearch --conflicts (17 of 18 slots, oldmy off by one): 889 by permute.py's measure (177 by classify_diff)",177 by classify_diff,ga
+RunTeamPickMenu,,the first difference (+186,,ga
+RunTeamPickMenu,,"the team-record index `add edx, edx` vs the EXE's `[edx+eax*2+0Dh]`, one byte) is the same in both. Not kept",,ga
