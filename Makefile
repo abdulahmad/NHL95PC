@@ -37,7 +37,7 @@ SRCS := $(wildcard src/cseg01/*.asm src/dseg02/*.asm)
 OBJS := $(patsubst src/%.asm,$(OBJDIR)/%.o,$(SRCS))
 INCS := $(wildcard src/inc/*.inc)
 
-.PHONY: all check extract clean cinfo fullcheck
+.PHONY: all check extract clean cinfo fullcheck sdl2
 all: build/HOCKEY.EXE
 
 # C fragments the asm includes (only marked = matched functions are built)
@@ -46,6 +46,10 @@ NASMFLAGS += -DCBUILD -I build/
 CINCS := $(addprefix build/,$(sort $(shell grep -ho '^%include "c/[^"]*\.inc"' src/cseg01/*.asm | cut -d'"' -f2)))
 endif
 CHDRS := $(if $(FAST),,$(wildcard src/c/include/*.h))
+# The SDL2 port (Linux i386 host; see docs/SDL2_PORT.md): build/hockey-linux
+sdl2:
+	linux/build.sh
+
 cinfo:
 	@echo "CBUILD=$(CBUILD), WATCOM_VER=$(WATCOM_VER), $(words $(CINCS)) C files spliced"
 
