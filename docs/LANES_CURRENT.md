@@ -10,8 +10,17 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 
 | Claimed function | By | Until |
 |---|---|---|
+| EditTextField | StaticEck's Claude (lane 2) | 2026-10-26 |
 | SkateToSpot | Abdul's Claude (lane T) | 2026-10-26 |
 | checkcx | Abdul's Claude (lane T) | 2026-10-26 |
+
+**StaticEck's Claude (lane 2)** to Abdul, 2026-10-25 19:45 UTC (`docs/board/2026-10-25-1945-staticeck.md`)
+
+> EditTextField has no gotos now and is 7 off (the DRAFT PR from lane2/EditTextField). Question for an
+> ESCALATIONS ruling: commit b04f5a2 on that branch compiles to the EXE bytes when the dead parameter x
+> holds the insert state after `editx = x;` (dead-variable reuse). With its own `int ins` the parameters x and
+> w tie at savings 3 and w takes EBP (the EXE has x in EBP): 7 differing, a one-swap tie that no declaration
+> move or targetsearch edit reaches. Accept the x reuse (then b04f5a2 can be marked), or keep looking?
 
 **StaticEck's Claude (lane 2)** to Abdul, Mark, 2026-10-25 18:35 UTC (`docs/board/2026-10-25-1835-staticeck.md`)
 
@@ -180,6 +189,18 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
 
+### `src/c/023_2FDD1_misc_dialogs/EditTextField.c`
+
+- EditTextField 110->106 (2026-10-24, Mhopkinsinc, GA) : the End-key scan as a top-tested `editpos = 0; while (buf[editpos]) editpos++;` (the EXE's loop shape)
+- EditTextField 106->71 (2026-10-24, Mhopkinsinc, GA) : the poll placed after the cursor handlers and the Backspace / typing blocks after the blink path
+- EditTextField 71->62 (2026-10-24, Mhopkinsinc, GA) (two commits; now 4 bytes long, was +29): each key arm ends in its own `DrawEditCursor(flags); goto poll;` (Watcom merges the tails into the EXE's shared ones, and the direct jumps raise the insert flag's savings 41 -
+- EditTextField 62->36 (2026-10-24, Mhopkinsinc, GA) (21 gotos -> 4)
+- EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) ESCALATE: (unsigned short)timeout in the blink-path timeout test 25 (size +2; cmp word vs EXE cmp dword, an extra temporary fixes the SetTickDeadline / key-chain registers); End loop increment as += 1 / = +1 / ++x / braces / != 0 (36), for loop (39); timeout test spellings nested if / != 0 (36), == 1 (40), > 0 (37); editcuron = c == 0 / ternary (36); casts on TickDeadlinePassed / !c / c / End loop / editpos = 0 / DrawEditCursor flags / 4F00 and 4700 compares (36-43); regsolve no prediction; one permute run (577 candidates)
+- EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) unsigned char c 38; short c 38; editcuron = c ^ 1 40; 1 - c 41; (key = PollKey()) == 0 36; no key = 0 store 24 (9 bytes short, key chain then exact, shift moves to the cursor arms); sub_B3D64() == 0 36; separate editcurw / editcuron stores 36 / 38; x = 0 first 38; editpos = x = 0 39; Enter / Esc breaks as one || 36
+- EditTextField 36->36 (2026-10-25, StaticEck2026, GA) goto-free loops on the current draft: flat for (;;) with the poll first and the late arms as the chain's last else (107, +16), inner idle while (105, +22), inner while ((key = PollKey()) || !sub_B3D64()) (132, +13); ESCALATE: the draft keeps four gotos, dead i for the letter value and the dead parameter x for the insert state
+- EditTextField 36->0 (2026-10-25, StaticEck2026, GA) goto-free: poll as inner while (!(key = PollKey())) { if (sub_B3D64()) { key = 0; break; } idle } plus early if (!key) { blink; continue; } (30, +3; all 4 gotos gone), letter filter on key instead of the dead i (0, EXE bytes, commit b04f5a2); ESCALATE: dead parameter x holds the insert state (dead-variable reuse), not marked; grid of other goto-free poll / dispatch shapes 41-133
+- EditTextField 0->7 (2026-10-25, StaticEck2026, GA) own int ins instead of x (7: x / w tie at savings 3, w takes EBP), committed as the natural draft; tieorder 10 min: the x / w swap gives 0; targetsearch 30 min 1685 candidates, none meets it; block-scoped c / i, !c spellings, idle / poll / incdec / compare spellings 7-35
+
 ### `src/c/037_4842A_engine_player_logic/assgoalie.c`
 
 assgoalie is in this file (score 13, size 9/12) and comes with it.
@@ -201,16 +222,6 @@ assgoalie is in this file (score 13, size 9/12) and comes with it.
 - assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assrefgoalpa 67->67 (2026-10-25, StaticEck2026, GA) tieorder 8 min (67); a1 / a2 / side orders forced (67-105, a1 last 77 at size +0, still no push ebp)
 - assrefgoalpa 67->64 (2026-10-25, StaticEck2026, GA) both sign tests temp4 first (64, size -1); first product constant first 67-69, second product swapped 61 at -3 bytes, regd0 = *puckx + c 112-115, regd0 = c; regd0 += *puckx 67-71
-
-### `src/c/023_2FDD1_misc_dialogs/EditTextField.c`
-
-- EditTextField 110->106 (2026-10-24, Mhopkinsinc, GA) : the End-key scan as a top-tested `editpos = 0; while (buf[editpos]) editpos++;` (the EXE's loop shape)
-- EditTextField 106->71 (2026-10-24, Mhopkinsinc, GA) : the poll placed after the cursor handlers and the Backspace / typing blocks after the blink path
-- EditTextField 71->62 (2026-10-24, Mhopkinsinc, GA) (two commits; now 4 bytes long, was +29): each key arm ends in its own `DrawEditCursor(flags); goto poll;` (Watcom merges the tails into the EXE's shared ones, and the direct jumps raise the insert flag's savings 41 -
-- EditTextField 62->36 (2026-10-24, Mhopkinsinc, GA) (21 gotos -> 4)
-- EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) ESCALATE: (unsigned short)timeout in the blink-path timeout test 25 (size +2; cmp word vs EXE cmp dword, an extra temporary fixes the SetTickDeadline / key-chain registers); End loop increment as += 1 / = +1 / ++x / braces / != 0 (36), for loop (39); timeout test spellings nested if / != 0 (36), == 1 (40), > 0 (37); editcuron = c == 0 / ternary (36); casts on TickDeadlinePassed / !c / c / End loop / editpos = 0 / DrawEditCursor flags / 4F00 and 4700 compares (36-43); regsolve no prediction; one permute run (577 candidates)
-- EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) unsigned char c 38; short c 38; editcuron = c ^ 1 40; 1 - c 41; (key = PollKey()) == 0 36; no key = 0 store 24 (9 bytes short, key chain then exact, shift moves to the cursor arms); sub_B3D64() == 0 36; separate editcurw / editcuron stores 36 / 38; x = 0 first 38; editpos = x = 0 39; Enter / Esc breaks as one || 36
-- EditTextField 36->36 (2026-10-25, StaticEck2026, GA) goto-free loops on the current draft: flat for (;;) with the poll first and the late arms as the chain's last else (107, +16), inner idle while (105, +22), inner while ((key = PollKey()) || !sub_B3D64()) (132, +13); ESCALATE: the draft keeps four gotos, dead i for the letter value and the dead parameter x for the insert state
 
 ### `src/c/002_1167B_gamesave_io/GameLoop.c`
 
