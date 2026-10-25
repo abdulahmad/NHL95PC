@@ -4264,3 +4264,41 @@ PlacePlayersAtStart,,"`0x16u` / `0x16L` constants (13), `(unsigned short *)` tab
 PlacePlayersAtStart,,"the mirror as a comma expression, `!= pfgoal` (16), `~p->pflags & pfgoal` (17)",17,ga
 PlacePlayersAtStart,,an empty then-arm,,ga
 PlacePlayersAtStart,,an empty else (12 each),12 each,ga
+ReassignCtlPlayer,,independent int dy for vertical difference: 33,,ga
+ReassignCtlPlayer,,scoped int dy for vertical difference: 33,,ga
+ReassignCtlPlayer,,distance output d declared inside eligibility arm: 19,,ga
+ReassignCtlPlayer,,comma sequencing px and py initializers: 9,,ga
+ReassignCtlPlayer,,dx as short coordinate difference: 44,,ga
+ReassignCtlPlayer,,best as int player result: 29,,ga
+ReassignCtlPlayer,,side truth test in final branch: 9,,ga
+ReassignCtlPlayer,,combined pnum comparison and restoration using pnum: 77,,ga
+ReassignCtlPlayer,,signed X high word as arithmetic shift: 9,,ga
+ReassignCtlPlayer,,signed Y high word as arithmetic shift: 9,,ga
+ReassignCtlPlayer,,both high words as arithmetic shifts: 9,,ga
+ReassignCtlPlayer,,assignment expression of selected player in comparison: 11,,ga
+ReassignCtlPlayer,,incremental dx subtraction from px: 33,,ga
+ReassignCtlPlayer,,incremental vertical subtraction from py: 34,,ga
+ReassignCtlPlayer,,both coordinate differences computed incrementally: 47,,ga
+ReassignCtlPlayer,,independent dy with incremental dx subtraction: 38,,ga
+ReassignCtlPlayer,,independent dy with incremental dy subtraction: 33,,ga
+ReassignCtlPlayer,,best rereads player field after eligibility comparison: 18,,ga
+ReassignCtlPlayer,,other controller compares player field read in place: 21,,ga
+ReassignCtlPlayer,,player field reread for comparison and selected store: 29,,ga
+ReassignCtlPlayer,,carrier uses cached player number before distance calculation: 42,,ga
+ReassignCtlPlayer,,named vertical difference and compound distance accumulation: 20,,ga
+ReassignCtlPlayer,,register storage for px: 9,,ga
+ReassignCtlPlayer,,register storage for py: 9,,ga
+ReassignCtlPlayer,,register storage for best: 9,,ga
+ReassignCtlPlayer,,"register storage for px,py: 9",,ga
+ReassignCtlPlayer,,"register storage for px,py,best: 9",,ga
+ReassignCtlPlayer,,const team and pnum source pointers: 9,,ga
+ReassignCtlPlayer,,read-only player iteration pointer: 9,,ga
+ReassignCtlPlayer,,"permute 5 min jobs 4: no match, 449 compiled in 272 s, best 4 same size, cast:50:2:char > movedecl:d:5",,ga
+ReassignCtlPlayer,,every logged score below 9 contains the cast,,ga
+ReassignCtlPlayer,,best patch adds (char)c1playernum[0] only in the c1 final comparison and moves int d before p,,ga
+ReassignCtlPlayer,,fresh first_pick has 3 differences at +162/+164/+169 (byte load/compare replaces EXE word comparison),byte load/compare replaces EXE word comparison,ga
+ReassignCtlPlayer,,"cast rejected as an unsupported asymmetric narrowing, saved to ts_ReassignCtlPlayer_ReassignCtlPlayer_escalate.diff",,ga
+ReassignCtlPlayer,,permlog_ts_ReassignCtlPlayer.csv retains all candidate shapes and scores,,ga
+ReassignCtlPlayer,,generated rvalue-address compiler errors and out-of-range constant warnings were skipped by permute,,ga
+ReassignCtlPlayer,type:dx:short,dx as short,tried (docs/UNSURE.md),ga
+ReassignCtlPlayer,type:best:int,best as int,tried (docs/UNSURE.md),ga
