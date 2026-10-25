@@ -4270,6 +4270,27 @@ PlacePlayersAtStart,,"`0x16u` / `0x16L` constants (13), `(unsigned short *)` tab
 PlacePlayersAtStart,,"the mirror as a comma expression, `!= pfgoal` (16), `~p->pflags & pfgoal` (17)",17,ga
 PlacePlayersAtStart,,an empty then-arm,,ga
 PlacePlayersAtStart,,an empty else (12 each),12 each,ga
+checkgoal,,"bounce y load then y >= 0 early return, int z: 1 differing, size +1",,ga
+checkgoal,,"bounce y load then y >= 0 early return, short z: 14 differing, size -2",,ga
+checkgoal,,"OLDZ < 0xD normal-body first / bounce else, int z: 30 differing, size +1",,ga
+checkgoal,,"OLDZ < 0xD normal-body first / bounce else, short z: 36 differing, size -2",,ga
+checkgoal,,p->Zvel = -y,,ga
+checkgoal,,"p->Zvel >>= 1 after loaded-y test: 16 differing, size -4",,ga
+checkgoal,,"short x negate then x /= 2 and store: 17 differing, size +1",,ga
+checkgoal,,short z = -y,,ga
+checkgoal,,z >>= 1,,ga
+checkgoal,,"p->Zvel = z, no x copy: 16 differing, size -4",,ga
+checkgoal,,"same short velocity negate/halve/store with z scoped to OLDZ block: 16 differing, size -4",,ga
+checkgoal,,"short z for load, sign test, negate, compound halve and store: 16 differing, size -4",,ga
+checkgoal,,"OLDZ >= 0xD bounce if / normal else, shared function end, int z: 1 differing, size +1",,ga
+checkgoal,,"OLDZ >= 0xD bounce if / normal else, shared function end, short z: 14 differing, size -2",,ga
+checkgoal,,"velocity load before Zpos restore, int z: 3 differing, size +1",,ga
+checkgoal,,"velocity load before Zpos restore, short z: 16 differing, size -2",,ga
+checkgoal,,"permute.py 5 min budget on bounce early-return int-z form, natural transforms only: 321 candidates in 127 s, best 1 differing, size +1, no match",,ga
+checkgoal,,"full log ~/tmp/u/np/permlog_ts_checkgoal.csv. Register evidence: baseline x savings 17 BX, y 11 AX, z 2 AX, conversion t14 2 EDX, q 5 ECX, c 3 CL",,ga
+checkgoal,,"early-return short z removes the conversion conflict (35 -> 34 conflicts), final negate is in EBX, q 5 moves to EDX and c 3 to DL. Baseline restored",,ga
+checkgoal,,both make and make CBUILD=0 MATCH. No ESCALATE find,,ga
+checkgoal,,no persistent tool problem,,ga
 ReassignCtlPlayer,,independent int dy for vertical difference: 33,,ga
 ReassignCtlPlayer,,scoped int dy for vertical difference: 33,,ga
 ReassignCtlPlayer,,distance output d declared inside eligibility arm: 19,,ga
