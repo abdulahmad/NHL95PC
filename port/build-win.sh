@@ -40,7 +40,10 @@ ls "$OUT"/src/cseg01/*.asm "$OUT"/src/dseg02/*.asm | xargs -P 8 -I{} sh -c \
 sh port/fetch-deps.sh
 # Munt (the MT-32 emulator) needs a C++ compiler: mingw-w64's g++ (gcc-mingw-w64-i686 plus g++-mingw-w64-i686)
 CXXW=${CXXW:-i686-w64-mingw32-g++}
-CXX=$CXXW AR=${ARW:-i686-w64-mingw32-ar} sh port/munt-build.sh build/munt-win "-static"
+command -v "$CXXW" >/dev/null 2>&1 || CXXW=g++
+ARW=${ARW:-i686-w64-mingw32-ar}
+command -v "$ARW" >/dev/null 2>&1 || ARW=ar           # MSYS2 MINGW32 has only ar
+CXX=$CXXW AR=$ARW sh port/munt-build.sh build/munt-win "-static"
 
 CC=${CC:-i686-w64-mingw32-gcc}
 command -v "$CC" >/dev/null 2>&1 || CC=gcc
