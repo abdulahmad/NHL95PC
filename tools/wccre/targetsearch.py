@@ -13,15 +13,17 @@ search scores each candidate by the targets the compiler-side tools found, read 
 
 Score, best first: byte match; differences that are neither register nor slot (an edit may not add real code
 differences); unmet targets (swaps unsatisfied + names out of their EXE slot); differing instructions; size.
-The edits are permute.py's natural transforms only (tiesearch.NATURAL: declaration order and scope, statement and
-operand order, comparison form, loop form, ...); never a new copy, a cast or a signature change (AGENTS.md).
+The edits are permute.py's natural transforms (tiesearch.NATURAL: declaration order and scope, statement and
+operand order, comparison form, loop form, ...) and rewrites.py's expression rewrites (merge / split an
+assignment, reassociate, reuse or recompute a value, swap aliases), which change the temporaries and use counts
+the targets depend on; never a new copy, a cast or a signature change (AGENTS.md).
 The search keeps the best --beam texts at each step and expands each of them, so it can cross a step that costs
 a little before the targets move. A byte match is confirmed with a fresh DOSBox compile; --write-match writes it.
 Every candidate is logged to build/targetsearch/FUNC.csv; the best text goes to build/targetsearch/."""
 import argparse, csv, json, hashlib, os, random, sys, tempfile, time
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(ROOT, 'tools'))
-import irdump, emucc, cc, permute, declsearch, countsolve, tiesearch, slotdump as sd
+import irdump, emucc, cc, permute, declsearch, countsolve, tiesearch, rewrites, slotdump as sd
 
 
 def compile_both(src, func, obj):
@@ -127,7 +129,8 @@ def main():
     while time.time() - t0 < a.minutes * 60 and best[0][0]:
         pool = []
         for key, text, path in beam:
-            nb = [x for x in permute.neighbours(text, func, tiesearch.NATURAL) if permute.fsha(x[1], func) not in seen]
+            nb = [x for x in permute.neighbours(text, func, tiesearch.NATURAL) + rewrites.neighbours(text, func)
+                  if permute.fsha(x[1], func) not in seen]
             rnd.shuffle(nb)
             for name, t in nb:
                 if time.time() - t0 > a.minutes * 60: break
