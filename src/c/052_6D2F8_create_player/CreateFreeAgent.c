@@ -1,11 +1,8 @@
 /* Create player: making a new free agent. */
-/* DRAFT (10.0 GA): 1963 vs 1963 (5 differing); see docs/UNSURE.md. The cluster size written sectors * bytes
-   loads sectors first as the EXE; sp declared in the block that copies the ratings; the jersey number in k (the
-   later loop counter: no dead copy); the goalie ratings copied through sp (the attribute record) and gp (the
-   source table). Left: the goalie loop's index and byte temporaries in ebx / dl (EXE edx / bl), a tie in the
-   unstable sort that one more early conflict reorders. Tie-breakers (ESCALATE, not kept): the career size through
-   an extra copy (`carsize = careerdb_size + 0x2C; s.sizes[1] = carsize;`); the goalie source through the dead pal
-   with a counter j of its own for one of the two copy loops (EXE bytes; with gp instead of pal it is 5 again). */
+/* Matched (10.0 GA): the cluster size written sectors * bytes loads sectors first as the EXE; sp declared in the
+   block that copies the ratings; the jersey number in k (the later loop counter: no dead copy); the goalie
+   ratings copied through sp (the attribute record) and gp (the source table); i declared after c, next to k
+   (that declaration order gives the goalie loop's index / byte temporaries the EXE's tie order, edx / bl). */
 #define CreateFreeAgent CreateFreeAgent_decl
 #define RandomizeNewRatings RandomizeNewRatings_decl
 #define MessageBox MessageBox_decl
@@ -52,12 +49,12 @@ void CreateFreeAgent(int a, int *mx, int *my)
     } s;
     int csize;
     int n;
-    int i;
     int kind;
     int err;
     unsigned char *pal;
     unsigned char *pal2;
     char c;
+    int i;
     int k;
     unsigned char *dp;
 

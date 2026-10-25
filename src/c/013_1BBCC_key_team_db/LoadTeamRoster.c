@@ -1,10 +1,14 @@
 /* Key and team database: load one team's skaters and goalies. */
-/* DRAFT (10.0 GA): 49 differing instructions, 1042 vs 1041 bytes. A four-int stats-record view
+/* DRAFT (10.0 GA): 46 differing instructions, 1042 vs 1041 bytes. A four-int stats-record view
    gives the skater roster pointer and stored-word copies the EXE's ebx register; indexed as
    `((RosterStats *)dword_DEB74 + team * 25)[i]` the totals offset is team * 400 plus i * 16 as in
    the EXE and the team-index scratch takes edx; the jersey bytes are indexed i * 39 + team * 1092.
+   The cleared totals are two separate stores (the team * 25 sum then adds into eax as in the EXE;
+   the chained `= 0` keeps the EXE's `mov edx, esi` between the two stores but not that sum).
    Left: the i * 39 / team * 1092 temporaries (the EXE computes i * 39 first and spills it to
-   [esp+0FCh]), goalie roster/lineup registers, and the shared OpenPlayerDBs_x exit. */
+   [esp+0FCh]; jersey indexed team * 1092 + i * 39 gives that order but i * 39 then takes edi:
+   both temporaries tie at savings 30), the zero copy into edx, the goalie lineup registers, and
+   the shared OpenPlayerDBs_x exit. */
 #define LoadTeamRoster LoadTeamRoster_decl
 #include "nhl95.h"
 #undef LoadTeamRoster
@@ -58,7 +62,8 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
                     gline = ((RosterStats *)dword_DEB74 + team * 25)[i].second = *(unsigned short *)(buf + 0x6E);
                     ((RosterStats *)dword_DEB74 + team * 25)[i].second_total = gline + *(unsigned short *)(buf + 0x70);
                 } else {
-                    ((RosterStats *)dword_DEB74 + team * 25)[i].first_total = ((RosterStats *)dword_DEB74 + team * 25)[i].first = 0;
+                    ((RosterStats *)dword_DEB74 + team * 25)[i].first = 0;
+                    ((RosterStats *)dword_DEB74 + team * 25)[i].first_total = 0;
                     gline = ((RosterStats *)dword_DEB74 + team * 25)[i].second = *(unsigned short *)(buf + 0x80);
                     ((RosterStats *)dword_DEB74 + team * 25)[i].second_total = gline + *(unsigned short *)(buf + 0x82);
                 }

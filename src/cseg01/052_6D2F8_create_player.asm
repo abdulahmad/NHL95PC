@@ -4511,6 +4511,10 @@ mov eax, dword [byte esp+010h]	; 706D6
 add esp, byte 1Ch	; 706DA
 jmp near DrawShootsField_pop	; 706DD
 %endif ; C
+; C: src/c/052_6D2F8_create_player/CreateFreeAgent.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/CreateFreeAgent.inc"
+%else
 CreateFreeAgent:
 push dword 20Ch	; 706E2
 call __CHK	; 706E7
@@ -4997,6 +5001,7 @@ pop edi	; 70E89
 pop esi	; 70E8A
 pop ecx	; 70E8B
 ret	; 70E8C
+%endif ; C
 ; C: src/c/052_6D2F8_create_player/MoveToFreeAgents.c
 %ifdef CBUILD
 %include "c/052_6D2F8_create_player/MoveToFreeAgents.inc"
