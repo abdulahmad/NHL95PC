@@ -430611,3 +430611,317 @@ date,func,file,transform,sha1,score,sizediff,match,first,cc
 2026-10-25,RunPlayerPickMenu,src/c/015_1D6E8_menu_system/RunMenu.c,swapstmt:147 > swapstmt:136 > chain:32:split2 > swapstmt:139 > swapstmt:149 > movedecl:oldmx:12 > commute:74:==,edbef86efa9f8b88,96,2,0,106,ga
 2026-10-25,RunPlayerPickMenu,src/c/015_1D6E8_menu_system/RunMenu.c,swapstmt:147 > swapstmt:136 > chain:32:split2 > swapstmt:139 > swapstmt:149 > movedecl:oldmx:12 > swapdecl:m:size,2c7eb1ebdf947186,171,2,0,41,ga
 2026-10-25,RunPlayerPickMenu,src/c/015_1D6E8_menu_system/RunMenu.c,swapstmt:147 > swapstmt:136 > chain:32:split2 > swapstmt:139 > swapstmt:149 > movedecl:oldmx:12 > movedecl:m:5,6ed2aad2310f5948,312,2,0,41,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,base,d1dfe1a9f1371b6c,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,temp:z:inline,d74156f8561e60a7,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,movedecl:c:2,1e26f309ffacea69,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,zero:43:bool,b4d4b1cb5ed03ce3,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:43:0,7e52bacd937bb1a2,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:16:+,53930a5c7dec1120,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:30,02e2aa45a4a0767a,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapdecl:c:q,d7dba1ce8053aa69,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,chain:94:split2,f26ca15ac43f19de,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:12,aba3e9e91a82694b,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,scope:z@0,daba861003efe79a,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,inplace:z,3b021dd41d9f27c8,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,incdec:69:pre,56d64889b56d1a3e,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:39:0:split,2d31bdea1857c52e,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,movedecl:z:0,5eddc26be3903772,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:63:0,eb0749bff7285822,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:63:&,eb0749bff7285822,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:101,ce44db70cdafb9f7,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapdecl:q:z,64894bc15b39eab5,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,chain:94:split,bb235b3fd47125f9,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:103,c6f9a066e680aa0c,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,scope:q@0,e3645229b6ec7cdc,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,incdec:69:op1,cc7c451a183542b7,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:84:0:split,f118a3f309975e53,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:51:0,16e2b60c42225ba0,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:11:+,e1e13e7c8497a98a,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:64,56bcf98c52a3bdb0,9,18,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,chain:94:split3,4d3886e94c0dc5c6,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:70,836a8a2e60ee79a5,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:78:0:split,a36eed764fd9c2f6,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:5:0,ff1519a132ab083b,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:6:!=,3346ded362ad449a,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:36,b33a9328e1e047f8,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:53,02ebc81585ec8e3d,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:52:0:split,47c3ffcfd46d6ebc,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:39:0,6cdb74a756bb492f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:43:!=,7e52bacd937bb1a2,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:93,5c70b04363d876f9,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:82,7e2f834b2e125ac2,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:81:0:split,2e098c740fb4092d,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:57:5,84dd11ece5c85ab2,6,3,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:38:&,0f70defe9b76c68f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:48,f4199f4b8604a851,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:39,6cdb74a756bb492f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:31:0:split,44a3183602ef869b,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:44:0,0f7a0cf4b04e7c3d,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:79:&,e56eb0dd0e3f1fff,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:35,687c52a3feef1881,12,7,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:19,ae7c0e83c7b4cc6a,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:10:0:split,28c4032fa2531348,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:53:0,02ebc81585ec8e3d,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:104,1b11356d09cec9e2,11,14,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:55,8bbcd8cc497a4afd,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:15:0:split,17b83e92a780a3a9,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:6:0,3346ded362ad449a,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:15,26c355ad7b56872c,6,10,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:33,5eab1b774bbe7e26,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:48:0:split,4d9e7585646de535,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:12:0,aba3e9e91a82694b,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:100,4a93db1b8504ab8c,5,0,0,160,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:80,0d38587430768c86,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:26:0:split,71a26cb90a928db2,20,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0,2d444bd9ec4c2de5,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:10,7f3cf762bbe29ab0,6,10,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:23,e1657ff9166e5214,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapdecl:c:q,ae8234e3b8d9011b,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapstmt:45,998caedc4fd40c2d,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > inplace:z,eb7a62aae6b8cb4a,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > incdec:69:op1,f97195c70c515d14,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > chain:94:split2,6b6007b7e2758797,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swap:88:0,7bd04c8eac1165fa,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > zero:43:bool,cf53e0fe22b32e48,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > opassign:15:0:split,496aaeb3b84c8632,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > temp:z:inline,778a856c8ccadc8d,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > scope:q@0,e16701b741e45f09,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0,207669519a60caec,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > commute:63:&,f9bb749e07d1bc73,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > cmpflip:53,214c28ca142e6500,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapdecl:q:z,afa666ed5472a90f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapstmt:64,c18af16963f43f51,9,18,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > incdec:69:pre,ecdca7cb7680429d,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > chain:94:split,4234289174a79a03,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swap:55:0,039d20609c371e70,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > opassign:10:0:split,f61f9dd6f9a2a20e,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > scope:z@0,6617326b6a16b0f9,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:c:2,dafb8973cf7d0b96,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > commute:43:!=,5eaaadd5c49fe3ee,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > cmpflip:80,e5964f2b41360472,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapstmt:48,4163e52fce30e7e3,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > chain:94:split3,31ca38ac52f6d1c8,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swap:68:0,f75ab5c32db3363c,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > opassign:78:0:split,f2950625455858f5,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > commute:79:&,ddaf6fb644f38ae6,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > cmpflip:103,c151f5fcf725a369,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapstmt:21,d9047fa12bb418a7,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swap:53:0,214c28ca142e6500,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > opassign:81:0:split,7135a5e5232acac2,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > commute:6:!=,8c1b4f5a07917671,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > cmpflip:19,a35e7031bc3b9319,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapstmt:93,b4c45e0357e58f5a,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swap:5:0,36d6daa0d3dff929,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > opassign:26:0:split,d97cdbe65c1a237c,20,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > commute:11:+,0e8f93addfb55808,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > cmpflip:39,6e0277b49650e4c0,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapstmt:41,15c5d508e2af52cf,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swap:57:5,91487788e4dbd3ef,6,3,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > opassign:84:0:split,9d9a06a275b420d2,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > commute:38:&,353688973ee704f4,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > cmpflip:12,fe78cfd9eb52d397,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapstmt:30,69864166bab9c0cb,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swap:14:0,3982941d7ee89f0f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > opassign:48:0:split,3007edd081abccad,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > commute:16:+,363ca9c30da9376b,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > cmpflip:44,1a0883cfc7177284,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapstmt:10,dc1fc11ca8c89c86,6,10,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swap:72:0,3e2cbf8a72c5011e,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > opassign:52:0:split,2edb97e692c720bf,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > cmpflip:33,54d6b185804d6277,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapstmt:100,c388820e6c360b26,5,0,0,160,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swap:12:0,fe78cfd9eb52d397,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > opassign:31:0:split,27fbb96c1a7a54e3,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > cmpflip:23,e1367a51cb47affd,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapstmt:58,c5c7e0ce6790fec9,9,18,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swap:51:0,34a1be9b735a99f3,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > opassign:39:0:split,883aab254f782c1a,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > cmpflip:70,a18d0b1a36fbf5da,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swapstmt:36,80fb23d80f1f0fe6,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > swap:70:0,a18d0b1a36fbf5da,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > cmpflip:14,3982941d7ee89f0f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:10,241456d740123e3a,6,10,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapdecl:c:q,749b6c3c71a15af7,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > zero:43:bool,c12b844dbfd75689,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:38:2,0a94a7e2fa434845,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > chain:94:split3,a94a6ad5a2ee329f,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > opassign:84:0:split,62a46a01a872d62f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:53,e1a0837e5467fae2,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > commute:11:+,cd1cf73f296d08c5,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > scope:q@0,ff3bfbd1f35adc7c,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > incdec:69:pre,79383cd6766f2037,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:45,461125eb8cb903fe,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:43:0,15e6179f94160ba0,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > chain:94:split2,dddc0e816210947a,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > opassign:78:0:split,fbf267406410ec42,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:82,cf7909331b85bdc4,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > commute:6:!=,50d61226a0ceb827,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > incdec:69:op1,8041caeebf914ba4,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:35,d58a6de98e596cc1,12,7,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:6:0,50d61226a0ceb827,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > chain:94:split,a43814aa2fe6719c,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > opassign:26:0:split,f34dc9536aed9217,20,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:19,75da25b6a0bd240a,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > commute:79:&,2e7a47978e45566c,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:34,b66204222ba98886,11,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:88:0,88beccc60a9d1312,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > opassign:52:0:split,70be85b4b5bacb1f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:70,c6ce26a9d49c0e28,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > commute:38:&,0a94a7e2fa434845,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:100,6b023475ddb9002f,5,0,0,160,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:70:0,c6ce26a9d49c0e28,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > opassign:48:0:split,fc190404bf7a160d,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:103,3c71155e6b5b1dad,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > commute:16:+,d930326ee64fc5c6,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:30,788d1107b9ce082a,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:63:0,e4247b6078e74e05,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > opassign:39:0:split,57df533a638daf7f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:44,592cc13cf0364eb6,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > commute:43:!=,15e6179f94160ba0,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:31,85c43ec6ad05646e,14,7,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:68:0,bb7e48d21ade85ec,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > opassign:10:0:split,c8005f521ddb4f15,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:80,7ddbc6faf65718ba,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > commute:63:&,e4247b6078e74e05,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:15,65a4d09f3f2f5f80,6,10,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:57:0,7eb095b680e629fd,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > opassign:15:0:split,e549fe3cfadddafb,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:12,a50d245a2ffcfcf5,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:48,8bd8fcdf4bd593fa,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:12:0,a50d245a2ffcfcf5,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > opassign:31:0:split,05ac9f82d32a2449,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:72,568c2b94328d5aa5,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:58,e378c60fc378b727,9,18,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:72:0,568c2b94328d5aa5,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > opassign:81:0:split,7ab2cf77efade1f3,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:33,788671248950d03b,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:41,938d0ea68086e81a,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:55:0,11fd54b37929eefe,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:23,8d23340d18143423,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:36,67fcc47b52892732,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:57:5,538c37297ecbb3c5,6,3,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:17,f5478c66aa6b724c,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swapstmt:104,195b1c73c7896179,11,14,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > swap:5:0,b73799cb6d0a4658,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:20:0 > movedecl:z:0 > cmpflip:39,e1ba8223d62e0282,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:68:0,787c023a8b7f09cf,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:41,5561401223de85a2,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:72,4e30383f94c863ff,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:14:0,3acfdd0244df8588,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:34,52ec0a3caeacad24,11,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:17,0a24edd8f314e621,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:72:0,4e30383f94c863ff,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:58,90727d7aca5cb3ca,9,18,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:14,3acfdd0244df8588,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:88:0,a10b1efbed68aaa1,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:21,ad847b51ba868356,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:57:0,d924aeb9998882fe,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:31,d305d20ec59faa84,14,7,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:45,f6ebc4b8225dc5b0,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,movedecl:z:0 + incdec:69:op1,e3435777cec0523e,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:30 + opassign:81:0:split,459dfdf54b9c6031,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,movedecl:z:0 + zero:43:bool,09df2d3feb0c4eec,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:72 + chain:94:split,9cb9254d01af1a7d,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:11:+ + commute:43:!=,31e7e826c0ad9ae5,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,incdec:69:op1 + zero:43:bool,2e64bbdcea1beff8,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,movedecl:c:2 + inplace:z,5f0c2db71bef118d,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapdecl:q:z + commute:43:!=,9ab55b9658925cdb,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:14:0 + movedecl:c:2,92d0d6ac4d5a50ad,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:15:0:split + opassign:26:0:split,332f0f2711274458,20,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:16:+ + cmpflip:55,2033938263dfb90d,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapdecl:q:z + cmpflip:55,b028bda410649a2c,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:43:0 + swapdecl:c:q,bafe37d3b27478e5,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,inplace:z + opassign:82:0:split,47bdbf5c72559b6c,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:14:0 + scope:z@0,a32bdfa691b2a113,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:80 + chain:94:split2,20edc1105d1523c7,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,chain:94:split3 + swapstmt:10,038a6b1bd8aeef09,8,10,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:39 + cmpflip:82,b594581be265d4b6,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,zero:43:bool + incdec:69:pre,e7f3ea312d5ea2b9,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,zero:43:bool + commute:6:!=,c43c429978f3b1e3,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,scope:q@0 + temp:z:inline,31572e7a4e87ab3c,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:63:& + cmpflip:39,6a91d18977473c0f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:81:0:split + inplace:z,f4e1473e0eda9038,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,temp:z:inline + scope:q@0,31572e7a4e87ab3c,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,incdec:69:op1 + chain:94:split,9598098cf59981c6,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,chain:94:split2 + temp:z:inline,1e2766676f118df7,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,scope:z@0 + opassign:53:0:split,ec542889e95b7702,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:14 + movedecl:z:0,515e0266e2168c24,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:23 + incdec:69:op1,39acf76973001c82,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:58 + inplace:z,63d3be9c392879c3,22,15,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:39:0 + inplace:z,6dac55e115ae1545,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,incdec:69:op1 + cmpflip:82,e5dbd3ffb8266e8f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,inplace:z + swapdecl:c:q,5f0c2db71bef118d,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:48 + incdec:69:op1,26b43f54b7f5d14c,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,inplace:z + scope:q@0,19b784c2c24eeb29,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:53 + swapdecl:c:q,b5eb5e08df172375,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,incdec:69:pre + chain:94:split,81a3acf91f0b5b3d,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:15:0:split + inplace:z,67d29cf7a604a647,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,temp:z:inline + chain:92:split3,69a063a72c36fe53,16,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,chain:94:split2 + zero:43:bool,d3cacdaf0ac91876,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,scope:z@0 + commute:5:!=,1c63a59c40f29b08,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:34 + commute:79:&,7816eb44d85d31dd,11,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:11:+ + movedecl:z:0,4a1ede9a2c570940,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:72 + swap:51:0,6739325c4e1a6235,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:16:+ + opassign:81:0:split,68d0ae747a8a1ec6,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:6:!= + temp:z:inline,ef08c4db2e391494,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,chain:94:split2 + movedecl:c:2,6287be7614418183,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,inplace:z + chain:92:split3,7ccc5e322dd9ebdb,16,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:84:0:split + chain:94:split,faa7fba62c442c44,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,temp:z:inline + zero:41:bool,f3123ab3cb1e9d7c,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapdecl:c:q + commute:16:+,683be9007200975f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,inplace:z + zero:41:bool,1e7ed09226f7b97b,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:43:!= + cmpflip:19,782218e5b2485457,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,scope:q@0 + commute:44:!=,3bb5a4cc487f8591,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,movedecl:z:0 + swapstmt:36,cf3ad839f85324dc,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,incdec:69:op1 + scope:z@0,2a597222597dac03,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:36 + chain:94:split,7e1d5f9bbedf63d3,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,zero:43:bool + commute:63:&,6a8460bb3446dc80,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,zero:43:bool + inplace:z,1e7ed09226f7b97b,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,temp:z:inline + swapstmt:56,0d31e0c77b83b492,22,15,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:63:& + temp:z:inline,7d588e778bff1dd1,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapdecl:c:q + cmpflip:103,9be1d58a6f1b5073,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapdecl:q:z + commute:11:+,de3bf6759f5ae43f,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,inplace:z + incdec:67:pre,5c849afa1dad5ebb,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,scope:z@0 + zero:44:bool,e7f31a38013ca632,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:81:0:split + commute:6:!=,e1cb4be037d26981,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:12:0 + zero:43:bool,0faec10bfe7948bd,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:30 + inplace:z,9c60f536098422e5,16,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:79:& + swapdecl:c:q,8f7a31b391691575,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,scope:q@0 + scope:z@0,49bb78a2bcaa6dbb,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:26:0:split + movedecl:z:0,92f7d9246cb7d42a,20,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:43:!= + scope:q@0,3bb5a4cc487f8591,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:39 + swapdecl:q:z,df31c15db92eb2ca,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:70 + inplace:z,365fb6f49db616e7,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,incdec:69:op1 + temp:z:inline,275454abe14a9a73,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,incdec:69:op1 + swapdecl:c:q,97342cd7c1775771,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,chain:94:split3 + swapdecl:c:q,519deb71768d2714,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,inplace:z + commute:15:+,0a47b805ebdfb187,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:43:!= + incdec:69:op1,9d3a9971c3b636dd,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:55:0 + scope:z@0,84d7ce95ad517665,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:80 + incdec:69:op1,976e9e065cea94ca,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,zero:43:bool + cmpflip:55,dd04cf8c04172b3b,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,temp:z:inline + swapstmt:43,e5c42bb035f25743,16,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:31 + cmpflip:53,a00198866c768a72,14,7,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,movedecl:z:0 + opassign:81:0:split,5b87f0f1f69adcae,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:58 + zero:43:bool,836078efa3e5ce46,9,18,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,chain:94:split + swap:63:0,404de2ca9da63d12,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,movedecl:z:0 + swap:57:0,62e73d5ad9905d94,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,movedecl:z:0 + cmpflip:70,e75d87fc85dff2b3,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:52:0:split + incdec:69:pre,7598b8c85b3799b6,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,temp:z:inline + commute:36:&,e55bea48ee8753a1,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:64 + swapdecl:q:z,191614a2027b4342,9,18,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:48:0:split + swapdecl:c:q,9b4a10ce39bc9537,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:10 + opassign:26:0:split,823f2b5cf59d4628,25,10,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:64 + zero:43:bool,39aac5854ea01710,9,18,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:79:& + cmpflip:82,5a3666d1bdc00d61,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,zero:43:bool + swapstmt:45,e488cbf44441cb19,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:38:& + inplace:z,d9f59044410f53db,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:38:& + swap:6:0,0dfa8cd745d61093,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,cmpflip:33 + cmpflip:70,32e89f2343b4c3a7,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,temp:z:inline + cmpflip:37,f22c1e59e1ddf868,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swapstmt:41 + swapdecl:q:z,10e495988c14c480,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,inplace:z + cmpflip:70,caea16be8513ca6b,14,2,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,swap:55:0 + scope:q@0,aedb2800e0b46f1a,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,commute:16:+ + swapstmt:41,d4eb3424021368d4,3,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,movedecl:c:2 + opassign:81:0:split,d51215e4b17777a8,1,1,0,24,ga
+2026-10-25,checkgoal,src/c/040_53294_engine_physics_ai/checkgoal.c,opassign:26:0:split + scope:z@0,7b5d1f85a885dc01,20,1,0,24,ga
