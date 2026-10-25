@@ -75,18 +75,12 @@ These files are in lane 2 by segment. StaticEck2026 made two consecutive no-gain
 - checkgoal 1->1 (2026-10-24, Mhopkinsinc, GA) x = y; x = -x; x >>= 1 (3, -2 bytes); x = -y; x >>= 1 (3); short z copy (3); short z x = z >> 1 (worse); y = -y; x = y; x >>= 1 (3); x = y; x = -x; p->Zvel = x >> 1 (5, size 0); int z = -p->Zvel (1); test p->Zvel < 0 with z = -p->Zvel (worse); x = -p->Zvel; x >>= 1 (14); int z p->Zvel = x >> 1 (20); int z z = y; z = -z (12); block int (1); p->Zvel = x >>= 1 (1 / 14); y load split from test (1); z = -(unsigned short)y (2, +3); permute.py 4 min on goto-free draft (321, base)
 - checkgoal 1->1 (2026-10-25, abdulahmad, GA) lane T diagnosis: short z (`z = -y; x = z; x >>= 1`) gives z the register of y (AX, -2 bytes: the EXE keeps z in edx, apart from y); tieorder.py on that version (10 min): no tie order fixes it (size stays -2). Nothing kept.
 
-### `src/c/052_6D2F8_create_player/SelectMatchingPlayers.c`
-
-- SelectMatchingPlayers 7->7 (2026-10-24, StaticEck2026, GA) the add order of the address.
-- SelectMatchingPlayers 7->7 (2026-10-24, StaticEck2026, GA) Base-first address spellings (11-30), SplitPlayerName with an unsigned char * name (7-11).
-- SelectMatchingPlayers 7->7 (2026-10-24, abdulahmad, GA) lane T batch: the name as a 1Bh-byte record field `((FaEntry *)falist)[i].name` (head[8], name[19]) gives the EXE's add order (base, then 8) but swaps product / base registers (11, +1; a savings-30 tie, regdump); same with `->name`, `&...name[0]`, unsigned name, falist declared `FaEntry *` in the file (all 11); permute.py 10 min from the record base, natural transforms only (321, best 11). Nothing kept.
-- SelectMatchingPlayers 7->7 (2026-10-24, Mhopkinsinc, GA) regsolve (nothing); EXE association with falist left: (char *)(falist + i * 27) + 8, FARec record [i].name / (i + p)->name / i[p].name, FARow 2-D, &(i * 27)[falist] + 8, (char *)(i * 27 + falist) + 8 (all 11: product / falist registers swapped); int sums with (int)falist in three orders and (char *)(i * 27) + (int)falist + 8 (17, falist folded), &((char *)(i * 27))[(int)falist + 8] (23); permute.py 4 min on the falist + i * 27 base (385, best 10 with a cast, rejected); probe: the loop alone gives the EXE adds with (char *)(falist + i * 27) + 8; on that base 23 orders of f / l / i / k and k scoped (11)
-
 ### `src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c`
 
 - ReassignCtlPlayer 10->10 (2026-10-24, StaticEck2026, GA) the EXE's counter is a `short`. With it the draft scores 14
 - ReassignCtlPlayer 10->10 (2026-10-24, StaticEck2026, GA) permute.py tempadd/temps/inplace/lvinline 78 candidates, best the base.
 - ReassignCtlPlayer 10->9 (2026-10-24, Mhopkinsinc, GA) short n + py = (*puckvy >> 8) + *pucky + pl != (side ? ...) + pl declared before n + no (short) cast on *puckc: 9 (all registers right; best / px slots swapped, slotdump needs px count 14 / 15 / 21); combinations on the old base 11-18; 65 py / best / px orders x pl positions (9), 66 other moves (9), scoped decls (9-19), (px - X) squared without dx (21), px split in 2 / 3 statements (20 / 33), px and py split (36)
+- ReassignCtlPlayer 9->9 (2026-10-25, Mhopkinsinc, GA) ESCALATE: tieorder 10 min: 221 forced orders, 9->9, inconclusive; targetsearch 30 min: 599 candidates, best 9, 0 other differences, 2 slot targets unmet; countsolve: py 11 at -4 correct, best 15 at -12 needs -8, px 11 at -8 needs -12; px count 0-6/14-15/21-30 predicts 3 of 3 EXE slots, compiler confirms px=14 and py=10 with px=1 or 21; regdump and irdump read; declsearch --conflicts: all 6 modeled orders fail, confirmation scores 11; independent int dy for vertical difference: 33; scoped int dy for vertical difference: 33; distance output d declared inside eligibility arm: 19; comma sequencing px and py initializers: 9; dx as short coordinate difference: 44; best as int player result: 29; side truth test in final branch: 9; combined pnum comparison and restoration using pnum: 77; signed X high word as arithmetic shift: 9; signed Y high word as arithmetic shift: 9; both high words as arithmetic shifts: 9; assignment expression of selected player in comparison: 11; incremental dx subtraction from px: 33; incremental vertical subtraction from py: 34; both coordinate differences computed incrementally: 47; independent dy with incremental dx subtraction: 38; independent dy with incremental dy subtraction: 33; best rereads player field after eligibility comparison: 18; other controller compares player field read in place: 21; player field reread for comparison and selected store: 29; carrier uses cached player number before distance calculation: 42; named vertical difference and compound distance accumulation: 20; register storage for px: 9; register storage for py: 9; register storage for best: 9; register storage for px,py: 9; register storage for px,py,best: 9; const team and pnum source pointers: 9; read-only player iteration pointer: 9; permute 5 min jobs 4: no match, 449 compiled in 272 s, best 4 same size, cast:50:2:char > movedecl:d:5; every logged score below 9 contains the cast; best patch adds (char)c1playernum[0] only in the c1 final comparison and moves int d before p; fresh first_pick has 3 differences at +162/+164/+169 (byte load/compare replaces EXE word comparison); cast rejected as an unsupported asymmetric narrowing, saved to ts_ReassignCtlPlayer_ReassignCtlPlayer_escalate.diff; permlog_ts_ReassignCtlPlayer.csv retains all candidate shapes and scores; generated rvalue-address compiler errors and out-of-range constant warnings were skipped by permute; both make and make CBUILD=0 MATCH; source restored, no commit
 
 ### `src/c/040_53294_engine_physics_ai/checkplcoll.c`
 
@@ -207,14 +201,6 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 ## Offered to StaticEck2026
 
 These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
-
-### `src/c/021_2B7B7_file_dialogs/SelectSavedFile.c`
-
-- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SelectSavedFile 15->15 (2026-10-24, StaticEck2026, GA) LoadFileDlgShapes.c as compile context (19: cross-jumps into an earlier epilogue; t << 2 still hoisted); nothing kept
-- SelectSavedFile 15->15 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool), 6 min: 320 forced orders, best 15 (part of the 24 x 3 run not reached)
 
 ### `src/c/037_4842A_engine_player_logic/assgoalie.c`
 
@@ -667,6 +653,16 @@ RandomizeSchedule — register 7/7, owner Mhopkinsinc
 - RandomizeSchedule 14->14 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (j = k + 1 for the second count); regsolve: 0/0 votes, nothing predicted, no swap improved; regdump / cdiff only (EXE keeps both counts in err's dead edx); no new natural append form left to try; nothing kept
 - RandomizeSchedule 14->14 (2026-10-24, StaticEck2026, GA) SeriesLength / UpdatePlayoffSeries + SeriesLength as compile context (14); draft keeps the dead-j second count (ESCALATE: dead-variable reuse; clean k + 1 is 15); nothing kept
 - RandomizeSchedule 14->14 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): committed best 10 (+5), clean s.count[v] = k + 1 (15) best 13 (+2), no order gives 0; separate count local for the v append (15); ESCALATE: the committed draft keeps the dead-j second count
+
+### `src/c/021_2B7B7_file_dialogs/SelectSavedFile.c`
+
+SelectSavedFile — size 14/18, owner Mhopkinsinc
+- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SelectSavedFile 15->15 (2026-10-24, StaticEck2026, GA) LoadFileDlgShapes.c as compile context (19: cross-jumps into an earlier epilogue; t << 2 still hoisted); nothing kept
+- SelectSavedFile 15->15 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool), 6 min: 320 forced orders, best 15 (part of the 24 x 3 run not reached)
+- SelectSavedFile 15->15 (2026-10-25, StaticEck2026, GA) tieorder.py --minutes 10: 392 forced orders, best 15 (inconclusive); targetsearch.py --minutes 30: 1615 candidates, best 15 (the committed text; 0 tie targets, slots already met); probe: else arm as allstars[t - 0x18] on a table at ASW (t << 2 still hoisted), t <= 0x17 (still hoisted, cmp 17h / jg); nothing kept
 
 ### `src/c/032_3DC2C_roster_jersey/FixJerseyConflict.c`
 
