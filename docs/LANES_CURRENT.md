@@ -159,14 +159,6 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
 
-### `src/c/034_41B80_schedule/CreateNewLeague.c`
-
-- CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
-- CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) (the `xor bl, bl` byte zero is picked after register allocation, so no declaration order moves it)
-- CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
-- CreateNewLeague 12->12 (2026-10-24, StaticEck2026, GA) structured draft (no goto): the name test guards the body as one if block, same code; cflags sweep (12 or worse); the same lgstate+4 zero is xor dh, dh in the matched DeleteSavedGame and xor ah, ah at 3D0C1 (a post-allocation cycle pick)
-- CreateNewLeague 12->12 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool), 10 min: 432 forced orders, best 12 (the 18 x 2 run not reached)
-
 ### `src/c/021_2B7B7_file_dialogs/SelectSavedFile.c`
 
 - SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -286,6 +278,7 @@ TitleScreen — size 2/2, owner Mhopkinsinc
 - TitleScreen 3->3 (2026-10-24, StaticEck2026, GA) the PlayMVI wait (own elapsed local el, SetTickDeadline(due - el), no left) with one- and two-argument decoders (27-70); declsearch --conflicts on it (mispredicted, 78); ESCALATE: the committed draft keeps the left tie-breaker copy
 - TitleScreen 3->3 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool) on the two-argument version without left (21, slots only): forced memory-conflict orders change no slot (slots are not from the conflict sort); ESCALATE: the committed draft keeps the left tie-breaker copy
 - TitleScreen 3->3 (2026-10-25, abdulahmad, GA) lane T: the two-argument decoders (as matched PlayMVI: sub_1B002(dec, chunk), sub_1AD16(dec, chunk)) without the left tie-breaker copy: 21, all slots; countsolve.py: stream / mask (22) and chunk / id (20) ties the other way; declsearch.py --conflicts then gives 11, all slots, 12 of 13 locals in their EXE slot (declaration order pal, ends, mask, path, first, id, due, delay, bmp, t0, chunk, stream, bank). Left: bmp at -40 (EXE -36) behind t136 (the frame result, count 20) in the size sort; no count of bmp, t136 or chunk moves it. Committed draft (left copy, 3) kept.
+- TitleScreen 3->3 (2026-10-25, abdulahmad, GA) lane T: targetsearch.py (new tool) on the two-argument version without left, declsearch order applied (11, all slots; 13 slot targets, 1 unmet: bmp behind the frame temporary): 731 natural candidates in 40 min, best 11. Committed draft (3) kept.
 ShowCredits — size 2/2, owner Mhopkinsinc
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) (divisor scheduling)
@@ -422,6 +415,7 @@ SkaterStatsCard — size 2/3, owner Mhopkinsinc
 - SkaterStatsCard 7->7 (2026-10-25, StaticEck2026, GA) pre-sort probe of the v form (window between the lookup address and the * 5 result; v's L185 part is a split conflict just outside it); portrait digit in a new col at nine places / the block (9 / 14); table symbol at C6A9C (9); char attrp / attr (9); for-increment row step (11); nothing kept
 - SkaterStatsCard 7->7 (2026-10-25, StaticEck2026, GA) lseek ternary as if / else (25-35), hand label as one ternary call (19 / v form 10), pct ternary (same IR), EMB MakePath if / else (14), combinations (14-42)
 - SkaterStatsCard 7->7 (2026-10-25, abdulahmad, GA) lane T: the v form without rating (9, +3; tieorder with conflict origins: 0 when one more conflict sits next to the lookup address t386 among the L185 temporaries). L185 as 5 * (x + 5), (5 + x) * 5, [3 + i], (off_C6A99 + 3)[i], *(t.attrp + ...): 9; v = x + 5; v *= 5 (15); v = x; v += 5; v *= 5 (25); v short / unsigned short with or without the call cast, inline in the call (17-18); v = x * 5 + 25 (8, size 0): the lookup gets edx as in the EXE, only the arithmetic differs (lea ecx, [esi+19h]). Nothing kept.
+- SkaterStatsCard 7->7 (2026-10-25, abdulahmad, GA) lane T: targetsearch.py (new tool) on the v form without rating (9; tieorder target: the L185 lookup address ahead of 6 other savings-30 temporaries, plus 2 slots): 1200 natural candidates in 45 min, best 9, all 7 targets unmet. Nothing kept.
 
 ### `src/c/023_2FDD1_misc_dialogs/ListDialog.c`
 
@@ -434,6 +428,7 @@ ListDialog — size 6/7, owner Mhopkinsinc
 - ListDialog 7->7 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): every swap of every tie run gives 7 (no tie order explains the draft)
 - ListDialog 7->7 (2026-10-25, StaticEck2026, GA) mark test ternary (? 1 : 0) as a plain condition or nested if (15)
 - ListDialog 7->7 (2026-10-25, abdulahmad, GA) lane T: the plain-locals version (struct members as ints in reverse order, title / align parameters, e in the input-loop block) rebuilt: 11, size 0, all slots. countsolve.py + slotdump --count: the call-result temporary of `bg2 = bg = sub_8CCA8(...)` (t104, count 6) must rank below lh and title, and title (4) above lh (4) in their tie: t104 3 with title 3 gives bh -56, lh -60, title -64, t104 -68 = the EXE (compiler confirmed). bh first with by = (0x1E0 - bh) / 2 (20, +8); declsearch --conflicts (15); bg = ...; bg2 = bg / bg2 = ...; bg = bg2 / bg = bg2 = ... and the header / sub_91400 uses through bg2 (all 11: Watcom folds the copies into one temporary). Committed struct draft (7, +12) kept.
+- ListDialog 7->7 (2026-10-25, abdulahmad, GA) lane T: targetsearch.py (new tool) on the plain-locals version (11, all slots; 21 slot targets, 2 unmet: bh / lh behind the allocation temporary): 1300 natural candidates in 45 min, best 11 (no edit moved bh or lh). The needed change (fewer references to the bg2 = bg = sub_8CCA8 result, title before lh) is not among the natural transforms. Nothing kept.
 
 ### `src/c/032_3DC2C_roster_jersey/ExecuteTrade.c`
 
@@ -592,6 +587,16 @@ EasnGoalieStatsScreen — size 9/13, owner Mhopkinsinc
 - EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
 - EasnGoalieStatsScreen 12->12 (2026-10-24, StaticEck2026, GA) EasnSkaterStatsScreen added in address order (skater 12; GA keeps the earlier copy, goalie jumps back: 22 -115 bytes); goalie first, ternaries, if swap, EasnTeamStatsScreen / EasnStandingsScreen in the file (no forward merge)
 - EasnGoalieStatsScreen 12->12 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): not in a tie (12); the cross-function tail merge is the cause
+
+### `src/c/034_41B80_schedule/CreateNewLeague.c`
+
+CreateNewLeague — register 2/2, owner Mhopkinsinc
+- CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) (the `xor bl, bl` byte zero is picked after register allocation, so no declaration order moves it)
+- CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- CreateNewLeague 12->12 (2026-10-24, StaticEck2026, GA) structured draft (no goto): the name test guards the body as one if block, same code; cflags sweep (12 or worse); the same lgstate+4 zero is xor dh, dh in the matched DeleteSavedGame and xor ah, ah at 3D0C1 (a post-allocation cycle pick)
+- CreateNewLeague 12->12 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool), 10 min: 432 forced orders, best 12 (the 18 x 2 run not reached)
+- CreateNewLeague 12->12 (2026-10-25, StaticEck2026, GA) tieorder.py 10 min (409 forced orders, best 12, inconclusive); targetsearch.py 30 min (1218 natural candidates, best 12, best text = the draft); `int sz` in its if (!err) block (12); the byte registers DH / CH / BL are picked after the dumped allocation passes (irdump pass 1: zeros still mov mem, 0, flag read DL): no reset loop gives final bh, no human-count loop ch, both bl (EXE dh)
 
 ### `src/c/064_86696_season_playoffs/POHandleElimination.c`
 
