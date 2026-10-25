@@ -223,7 +223,7 @@ GameSummaryScreen,2D35A,8023,022_2D346_game_setup,src/c/022_2D346_game_setup/Gam
 PickOtherGames,2F2B1,294,022_2D346_game_setup,src/c/022_2D346_game_setup/PickOtherGames.c,matched,,
 PrintClampedText,2F580,110,022_2D346_game_setup,src/c/022_2D346_game_setup/PrintClampedText.c,matched,,
 UpdateOtherScores,2F3D7,425,022_2D346_game_setup,src/c/022_2D346_game_setup/UpdateOtherScores.c,matched,,
-GameStatsScreen,2F5EE,2019,022_2D346_game_setup,src/c/022_2D346_game_setup/UpdateOtherScores.c,nonmatching,,register 4/5
+GameStatsScreen,2F5EE,2019,022_2D346_game_setup,src/c/022_2D346_game_setup/UpdateOtherScores.c,matched,,
 AskDatabaseChoice,2FDD1,120,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/AskDatabaseChoice.c,matched,"draft: addresses built in edx, asm uses eax",
 CritErrHandler,3149D,23,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/CritErrHandler.c,matched,,
 DlgReturnZero,2FED2,13,023_2FDD1_misc_dialogs,src/c/023_2FDD1_misc_dialogs/DlgReturnZero.c,matched,,
@@ -759,7 +759,7 @@ CheckTeamLines,6ED8F,501,052_6D2F8_create_player,src/c/052_6D2F8_create_player/C
 ComparePlayerEntry,6D78B,98,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ComparePlayerEntry.c,matched,,
 CopyRoster1Rec,6DE4C,50,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CopyRoster1Rec.c,matched,,
 CountSelected,6DA88,59,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CountSelected.c,matched,original keeps the list pointer in edx and the count in eax; this draft swaps them. 10-min cap,
-CreateFreeAgent,706E2,1963,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CreateFreeAgent.c,nonmatching,,size 9/13
+CreateFreeAgent,706E2,1963,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CreateFreeAgent.c,matched,,
 CreatePlayerNop,6FA72,11,052_6D2F8_create_player,src/c/052_6D2F8_create_player/CreatePlayerNop.c,matched,,
 DeleteTempDatabases,7125C,215,052_6D2F8_create_player,src/c/052_6D2F8_create_player/DeleteTempDatabases.c,matched,,
 DrawCreatePlayer,7025B,587,052_6D2F8_create_player,src/c/052_6D2F8_create_player/DrawCreatePlayer.c,matched,,
@@ -925,7 +925,7 @@ LoadSettingsShapes,8034B,434,059_8034B_settings_lockerroom,src/c/059_8034B_setti
 LockerHitTest,81520,79,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerHitTest.c,matched,,
 LockerRoomScreen,80830,628,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c,matched,,
 DrawLockerRoom,80AA4,2684,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c,matched,,
-LockerRoomLoop,81C4E,2060,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c,nonmatching,,register 2/2
+LockerRoomLoop,81C4E,2060,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c,matched,,
 MenuSoundSettings,82579,163,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/MenuSoundSettings.c,matched,the EXE does not save edx (only ebx/ecx/esi/edi/ebp) though cdecl calls clobber it; C pushes edx too - some callee pragma differs,
 RedrawSoundCardOpts,82805,281,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/RedrawSoundCardOpts.c,matched,,
 SetModeMenuLabels,805C4,190,059_8034B_settings_lockerroom,src/c/059_8034B_settings_lockerroom/SetModeMenuLabels.c,matched,,
@@ -1023,7 +1023,7 @@ POAfterGame,8873C,2678,064_86696_season_playoffs,src/c/064_86696_season_playoffs
 POSeriesScore,877E9,122,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSeriesScore.c,matched,"registers/layout: asm returns through one exit (result in ecx), keeps *aw+1 in ebp on one arm and inc edi on the other; C merges the two arms",
 POSetSeriesTeams,87520,131,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSetSeriesTeams.c,matched,original keeps s in eax and ORs the flags into ecx; this draft moves s to ecx. 10-min cap,
 POSimSeriesTo,88625,279,064_86696_season_playoffs,src/c/064_86696_season_playoffs/POSimSeriesTo.c,matched,,
-PlayoffTreeMenu,89BD2,2688,064_86696_season_playoffs,src/c/064_86696_season_playoffs/PlayoffTreeMenu.c,nonmatching,"draft (own file): 2820 vs 2688, 619 lines (register picks from the pointer block on). See docs/UNSURE.md.",register 61/129
+PlayoffTreeMenu,89BD2,2688,064_86696_season_playoffs,src/c/064_86696_season_playoffs/PlayoffTreeMenu.c,nonmatching,"draft (own file): 2820 vs 2688, 619 lines (register picks from the pointer block on). See docs/UNSURE.md.",slot 52/61
 SetSideControls,8B85B,212,064_86696_season_playoffs,src/c/064_86696_season_playoffs/SetSideControls.c,matched,,
 WriteCurModeState,8B92F,62,064_86696_season_playoffs,src/c/064_86696_season_playoffs/WriteCurModeState.c,matched,,
 CoachCutScene,8BC15,710,065_8BAAF_allfiles_coach,src/c/065_8BAAF_allfiles_coach/CoachCutScene.c,matched,,
