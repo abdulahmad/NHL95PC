@@ -4250,6 +4250,14 @@ assgoalie,,the three other arm orders (225 / 281 / 334),225 / 281 / 334,ga
 assgoalie,,"the move tail repeated at the other-half exit (146: not cross-jumped), `if (regd2.w <= 7) { playeracc(p, regd2.w); return; } StopNA(p);` at the end (26), tools/wccre/tieorder.py on the new base (2-job copy, --max-run 40, 6 minutes, 124 orders: 18), `regd1.w = regd1.w - (((signed char *)p)[0x0F] + (p->Ypos >> 16))` and its split form on the new base (76)",76,ga
 assrefgoalpa,,on that base: the first product as `(0xE8 - *pucky) * (p->temp3 - *puckx)` (67-69),67-69,ga
 assrefgoalpa,,"the second as `(p->temp3 - *puckx) * (-0xE8 - *pucky)` (61 but 3 bytes short, not kept), both swapped (64, 3 bytes short), `regd0.w = *puckx + c` in the first crossing (112-115, still `add ecx, eax`), `regd0.w = c; regd0.w += *puckx;` (67-71, two stores)","67-71, two stores",ga
+RunMenu,,tools/wccre/tieorder.py --minutes 10 (it read a complete build/tieorder cache for the current text: 6 -> 3 forced,,ga
+RunMenu,,"the stage 2 move of w / h to just older than t199 in the creation order, which sets the size product's savings-2 run, t33 EAX -> EBX",,ga
+RunMenu,,the L113 t71 / t72 swap of batch 19 is not in it),,ga
+RunMenu,,"tools/wccre/targetsearch.py --minutes 30 (7 tie swaps from that cache, all at L87-L90: the menus loads before the bar / n / pointerspr loads and the header stores",,ga
+RunMenu,,"15 slot targets, all already met",,ga
+RunMenu,,"baseline 6 differing, 1 neither register nor slot, i.e. the `lea ebx, [eax+1]` / `inc ebx` of the size product, 3 swaps unmet): 376 candidates in one beam round (movedecl 265, swapstmt 35, chain 16, loop 15, swapdecl 14, swap 10, commute 9, incdec 5, zero 4, temp 1), none below 6 differing or 3 unmet, best text the committed one",,ga
+RunMenu,,by hand `m = item + menus[level]` for the hit test's m (6,,ga
+RunMenu,,"the same code). Savings of the tied conflicts as in the batch 19 / 27 notes (the size-product temps t30-t35 and size at 2, t71 / t72 at 20)","the size-product temps t30-t35 and size at 2, t71 / t72 at 20",ga
 PlacePlayersAtStart,,"tools/wccre/tieorder.py --minutes 10 on the old shape (172 forced orders, 13) and on the ternary shape (172, 12): not a tie (2 x 80, 2 x 40, 7 x 30 runs)","2 x 80, 2 x 40, 7 x 30 runs",ga
 PlacePlayersAtStart,,"tools/wccre/targetsearch.py --minutes 30 (1837 candidates, no tie or slot targets): best text negates regd1 before regd0 (14, 6 other: regd1 then goes to memory but regd0 through a register, against the EXE order, rejected)","14, 6 other: regd1 then goes to memory but regd0 through a register, against the EXE order, rejected",ga
 PlacePlayersAtStart,,"`0x16u` / `0x16L` constants (13), `(unsigned short *)` table loads (13), `word_CBE8C[regd4.w + 1]` for regd1 (12, same differences)","12, same differences",ga
