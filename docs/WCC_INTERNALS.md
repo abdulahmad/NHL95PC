@@ -117,10 +117,38 @@ runs it changed (sorted and needed order, with each conflict's register before a
 give the needed order, and the instructions that change. A forced order is a target: reach it with a natural edit,
 never with a tie-breaker copy (AGENTS.md). Results are cached in build/tieorder/ by the source's sha1.
 
-Validation (2026-10-24): CreateFreeAgent (5): swapping t237 / t239 in its savings-30 run gives the EXE bytes (the
-goalie copy loop's index and byte); TeamGridHitTest before its match (12): forced orders reach 4 (the rest are two
-stack slots), and the real-compile stage finds `team` declared last (the committed fix) and five equivalent moves,
-each 0; GetHot before its match: no tie runs (its fix, dropping a temporary, changes savings), reported as such.
+The search climbs swaps inside the runs first (it finds a target order fast), forces the orders of single edits
+only when that stalls, then compiles the implicated declaration moves for real. `--cross N` also lets a conflict
+move N places past conflicts of other savings (what a savings change would do) and reports which conflict must
+outrank which, by how much, with the uses that make up each side's savings. For each moved temporary the report
+says where it comes from (irdump.py, below).
+
+Validation (2026-10-24):
+
+* CreateFreeAgent (5): t239 (`sp + t238`, the goalie copy's destination address, L158) must sort before t237
+  (`pal + k`, its source): 0 differing.
+* POInitSchedule (6): t8 (`teams + i*4`) must sort before t10 (`po + i*4`) in the seed copy (L94): 0 differing.
+* TeamGridHitTest before its match (12): forced orders reach 4 (the other 4 are stack slots); the real-compile stage
+  finds `team` declared last, the committed fix, and five equivalent moves, each 0.
+* DrawGameLineJerseys (11): found `c2` (or `c1`) declared last, 0 differing, the same day lane 1 matched it by
+  declaration order.
+* GetHot before its match: no tie runs (its fix, dropping a temporary, changes savings); reported as such.
+* checkob, TradePlayers, calcpuckcross, FadePalette: no tie order within 10 minutes (operand order, savings or
+  16-bit differences).
+
+### The code generator's IR (tools/wccre/irdump.py)
+
+`python3 tools/wccre/irdump.py src/c/<seg>/<File>.c FUNC [--pass N]` prints the function's instructions as register
+allocation sees them: per block (with its loop depth) one line per instruction, `L<source line>  result = opcode
+operands  :type`, then every conflict in allocation order with its savings, register, definitions and uses
+(block:line, `*` per loop level). It shows what each `tN` is (`t13 = add nums, i`), the order the optimizer left the
+statements in, and which uses weight each savings. GA layouts, from Open Watcom's `bld/cg/h` read against memory:
+instruction +0 prev, +4 next, +20 source line (u16), +22 opcode, +30 result, +38 type class, +3F operand count, +44
+operands; block +0 the list sentinel, +24 itself, +28 next block, +2C previous, +50 loop depth, +52 id; name +4
+class (0 constant +10 value, 1 memory +14 symbol, 2 temp +14 symbol / +24 id, 3 register +C set, 4 indexed +C
+index, +10 offset, +14 base). GA's opcode numbers are not Open Watcom's (GA has fewer): identified so far 00 nop,
+01 add, 03 sub, 05 mul, 07 div, 08 mod, 09 and, 0A or, 0B xor, 0C shr, 0D shl, 11 neg, 12 not, 24 convert, 26 mov,
+28 lea, 2A push, 2C parm, 2E / 2F bit test, 30-35 compares (== != > <= < >=), 36 call.
 
 ## Stack slots (tools/wccre/slotdump.py)
 
