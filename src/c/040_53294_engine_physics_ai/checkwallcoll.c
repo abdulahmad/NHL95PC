@@ -1,11 +1,10 @@
 /* Engine physics AI: wall collision. */
-/* DRAFT (10.0 GA, 15 differing, 485 vs 481): the limits are short locals, so `0xA0 - wcradiusx` is the
-   EXE's narrowed `mov dx, [wcradiusx] / sub eax, edx` (no inline asm); declared ylim, ry0, xlim for the EXE
-   registers. No goto: the corner and goal-mouth tests are two conditions with the negation in the second
-   compare (`y >= (word_E03B8 = -word_E03B8)`), the same code as the old goto chain. Left: x's home and ylim
-   swap stack slots ([esp] / [esp+8]), and the goal-mouth net index: Watcom folds
-   `&SortCords[0x0C + (ry0 == word_E03B8)]` into `shl edx, 7 / add edx, 600h / add edx, SortCords` where the
-   EXE adds 0Ch before the shift and adds SortCords from a register. See docs/UNSURE.md. */
+/* DRAFT (10.0 GA, 15 differing, 482 vs 481): short limits preserve the EXE's narrowed radius loads.
+   The distance is kept in regd3.w, and selecting net 12 or 13 with a ternary keeps the 0Ch addition
+   before the index shift, as in the EXE (three bytes closer than the additive-boolean index).
+   Left: x's home and ylim swap stack slots ([esp] / [esp+8]). The net offset is built in edx instead
+   of eax: an extra mov edx, eax precedes the mask, and the SortCords base is added as an immediate
+   instead of mov edx, SortCords / add edx, eax. See docs/UNSURE.md. */
 #include "nhl95.h"
 
 #define W(v) (*(int *)((char *)&(v) - 2) >> 16)
@@ -17,10 +16,9 @@
  is built from the nearest boards and wallcollb runs. */
 void checkwallcoll(Player *p, short x, short y)
 {
+    short xlim;
     short ylim;
     short ry0;
-    short xlim;
-    int dist;
 
     xlim = 0xA0 - wcradiusx;
     ylim = 0x108 - wcradiusy;
@@ -30,16 +28,15 @@ void checkwallcoll(Player *p, short x, short y)
         if (x < regd4.w || x > (regd4.w = -regd4.w)) {
             regd1.w = x - regd4.w;
             regd0.w = y - word_E03B8;
-            dist = vecdist(W(regd0), W(regd1));
-            regd3.w = dist;
+            regd3.w = vecdist(W(regd0), W(regd1));
             regd1.w = -regd1.w;
-            if ((short)dist >= 0x40) {
-                regd0.w = (W(regd0) << 8) / (short)dist;
-                regd1.w = (W(regd1) << 8) / (short)dist;
+            if (regd3.w >= 0x40) {
+                regd0.w = (W(regd0) << 8) / regd3.w;
+                regd1.w = (W(regd1) << 8) / regd3.w;
                 wallcollb(p);
             }
         } else
-            checkgoal(p, &SortCords[0x0C + (ry0 == word_E03B8)], x, y);
+            checkgoal(p, &SortCords[ry0 == word_E03B8 ? 0x0D : 0x0C], x, y);
     }
     regd0.w = p->Wallsin | p->Wallcos;
     if (regd0.w != 0) return;
