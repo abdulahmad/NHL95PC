@@ -4256,3 +4256,17 @@ SelectSavedFile,,"258 swap orders + 133 single edits, best 15, inconclusive)",,g
 SelectSavedFile,,"tools/wccre/targetsearch.py --minutes 30 (1615 candidates, 0 tie targets",,ga
 SelectSavedFile,,"the two slot targets name / path already met, best 15 = the committed text)",,ga
 SelectSavedFile,,"(tools/probe.py standalone) the else arm as `allstars[t - 0x18]` on a table starting at ASW (teamabbrevs + 0x68, which folds to off_C5441's address: off_C5441 is not a separate table but the ASW / ASE entries indexed by t), and `t <= 0x17` (cmp 17h / jg): both still hoist `t << 2`",,ga
+RunMenu,,tools/wccre/tieorder.py --minutes 10 (it read a complete build/tieorder cache for the current text: 6 -> 3 forced,,ga
+RunMenu,,"the stage 2 move of w / h to just older than t199 in the creation order, which sets the size product's savings-2 run, t33 EAX -> EBX",,ga
+RunMenu,,the L113 t71 / t72 swap of batch 19 is not in it),,ga
+RunMenu,,"tools/wccre/targetsearch.py --minutes 30 (7 tie swaps from that cache, all at L87-L90: the menus loads before the bar / n / pointerspr loads and the header stores",,ga
+RunMenu,,"15 slot targets, all already met",,ga
+RunMenu,,"baseline 6 differing, 1 neither register nor slot, i.e. the `lea ebx, [eax+1]` / `inc ebx` of the size product, 3 swaps unmet): 376 candidates in one beam round (movedecl 265, swapstmt 35, chain 16, loop 15, swapdecl 14, swap 10, commute 9, incdec 5, zero 4, temp 1), none below 6 differing or 3 unmet, best text the committed one",,ga
+RunMenu,,by hand `m = item + menus[level]` for the hit test's m (6,,ga
+RunMenu,,"the same code). Savings of the tied conflicts as in the batch 19 / 27 notes (the size-product temps t30-t35 and size at 2, t71 / t72 at 20)","the size-product temps t30-t35 and size at 2, t71 / t72 at 20",ga
+PlacePlayersAtStart,,"tools/wccre/tieorder.py --minutes 10 on the old shape (172 forced orders, 13) and on the ternary shape (172, 12): not a tie (2 x 80, 2 x 40, 7 x 30 runs)","2 x 80, 2 x 40, 7 x 30 runs",ga
+PlacePlayersAtStart,,"tools/wccre/targetsearch.py --minutes 30 (1837 candidates, no tie or slot targets): best text negates regd1 before regd0 (14, 6 other: regd1 then goes to memory but regd0 through a register, against the EXE order, rejected)","14, 6 other: regd1 then goes to memory but regd0 through a register, against the EXE order, rejected",ga
+PlacePlayersAtStart,,"`0x16u` / `0x16L` constants (13), `(unsigned short *)` table loads (13), `word_CBE8C[regd4.w + 1]` for regd1 (12, same differences)","12, same differences",ga
+PlacePlayersAtStart,,"the mirror as a comma expression, `!= pfgoal` (16), `~p->pflags & pfgoal` (17)",17,ga
+PlacePlayersAtStart,,an empty then-arm,,ga
+PlacePlayersAtStart,,an empty else (12 each),12 each,ga

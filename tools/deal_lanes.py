@@ -9,6 +9,10 @@ offered, with its whole C file and its history, to the other contributor. A draf
 attempts from each contributor, and no newer tool that applies to its cause, goes on the Escalations
 list for Abdul (lane T). The result is a pure function of the history, the cause column and the tool
 dates, so running it again on the same tree rewrites the same file.
+
+The board (docs/board/*.md, one message per file: From / To / Date / Claims / Releases headers, then the text)
+goes at the top: the active claims (a function claimed and not released, until its date) and the newest
+messages in full, so every agent sees them when it reads this file before a batch.
 """
 import argparse, csv, os, subprocess, sys
 from collections import defaultdict
@@ -148,6 +152,60 @@ def file_table(files, ranked):
     return lines
 
 
+BOARD = os.path.join(ROOT, 'docs/board')
+BOARD_SHOW = 6
+
+
+def board_messages():
+    """[(file name, {header: value}, text)] of docs/board, oldest first (the names start with the UTC date)"""
+    out = []
+    if not os.path.isdir(BOARD): return out
+    for fn in sorted(os.listdir(BOARD)):
+        if not fn.endswith('.md') or fn.lower() == 'readme.md': continue
+        head, _, body = open(os.path.join(BOARD, fn)).read().partition('\n\n')
+        hdr = {}
+        for ln in head.split('\n'):
+            k, sep, v = ln.partition(':')
+            if sep: hdr[k.strip().lower()] = v.strip()
+        out.append((fn, hdr, body.strip()))
+    return out
+
+
+def board_claims(msgs):
+    """{function: (who, until)} still claimed: the last claim of each function, unless a later message of the
+    same sender releases it (a claim past its date is shown as expired)"""
+    claims = {}
+    for fn, hdr, body in msgs:
+        who = hdr.get('from', fn)
+        for part in [x.strip() for x in hdr.get('releases', '').split(',') if x.strip()]:
+            claims.pop(part.split()[0], None)
+        for part in [x.strip() for x in hdr.get('claims', '').split(',') if x.strip()]:
+            w = part.split()
+            claims[w[0]] = (who, w[-1] if len(w) >= 3 and w[1] == 'until' else '?')
+    return claims
+
+
+def board_section(msgs):
+    out = ['## Board', '',
+           'Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do not touch the C file of a '
+           'function someone else has claimed.', '']
+    claims = board_claims(msgs)
+    if claims:
+        out += ['| Claimed function | By | Until |', '|---|---|---|']
+        out += ['| %s | %s | %s |' % (f, w, u) for f, (w, u) in sorted(claims.items())]
+        out.append('')
+    if not msgs:
+        out += ['(no messages)', '']
+    for fn, hdr, body in list(reversed(msgs))[:BOARD_SHOW]:
+        out += ['**%s** to %s, %s (`docs/board/%s`)' % (hdr.get('from', '?'), hdr.get('to', 'all'),
+                                                       hdr.get('date', fn[:15]), fn), '']
+        out += ['> ' + ln if ln else '>' for ln in body.split('\n')]
+        out.append('')
+    if len(msgs) > BOARD_SHOW:
+        out += ['%d older message(s) in `docs/board/`.' % (len(msgs) - BOARD_SHOW), '']
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--history', default=os.path.join(ROOT, 'docs/draft_history.csv'))
@@ -207,6 +265,7 @@ def main():
            '(lane 2). A file whose owner has two consecutive no-gain attempts under GA on one of its drafts is '
            'offered whole to the other contributor, history attached. A draft with two no-gain attempts from each '
            'contributor, and no newer tool for its cause, is an escalation for Abdul (lane T).', '']
+    out += board_section(board_messages())
     for lane in (1, 2):
         login, name = OWNERS[lane]
         out += ['## Lane %d — %s (%s)' % (lane, login, name), '',
