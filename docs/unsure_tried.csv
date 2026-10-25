@@ -3873,6 +3873,24 @@ checkwallcoll,,"`word_E03B8 = 0x40 - ylim; ry0 = word_E03B8;` (15), `ry0 = 0x40 
 checkwallcoll,,"the Wallsin / Wallcos test as one condition or `if (regd0.w)` (15), `y > (ylim = -ylim)` (21), `x > (xlim = -xlim)` (22), `regd3.w = (short)dist` (15), `regd1.w = 0 - regd1.w` (15), `short dist` with or without its casts (39), `regd3.w = dist = vecdist(...)` (58)",58,ga
 checkwallcoll,,the regd0 gap before the regd1 gap (22). state_scan: no warm-state difference,,ga
 checkwallcoll,type:dist:short,`short dist`,tried (docs/UNSURE.md),ga
+SetupStatsSourceMenu,,an empty `default: break;` last or first in the switch,,ga
+SetupStatsSourceMenu,,"the src fallback as nested ifs or as one `?:` chain (all 42), `y = 0x11;` before the layout loop (44)",44,ga
+SetupStatsSourceMenu,,the `n == 4` test inverted with the arms swapped (49),49,ga
+SetupStatsSourceMenu,,permute.py (0 new candidates: every transform already logged),0 new candidates: every transform already logged,ga
+GameLoop,,"permute.py from the 62 (200 new candidates, transforms used up, no gain)","200 new candidates, transforms used up, no gain",ga
+TeamStatsScreen,,the frame arrays as plain locals (164,,ga
+TeamStatsScreen,,"declsearch --conflicts best 10 of 17 slots, 172: no order gives the EXE's west / east / teams / order layout)",,ga
+TeamStatsScreen,,"permute.py from the 91 (577 candidates, transforms used up: 84 only with `s[3] + (s[1] + s[1])` in one of the twin rows, rejected as before",,ga
+TeamStatsScreen,,"`i << 1` for the schedule index alone 91, both index stores 91)",,ga
+TeamStatsScreen,,both twin rows as `s[3] + (s[1] + s[1])` (148) or `s[3] + s[1] * 2` (141),141,ga
+GameSummaryScreen,,"the goal count in a block-local `int goals` (346, as in 2x_b9), then declsearch --conflicts (nothing to move: every local is in the frame struct or a register",,ga
+GameSummaryScreen,,goals and crest both have savings 1200 -> ESI,,ga
+GameSummaryScreen,,the 346 come from reordered savings 400 / 500 temporary ties),,ga
+GameSummaryScreen,,on the block-local form `f.nperiods = f.goals[0] = 0;` (342),342,ga
+GameSummaryScreen,,"the skip-to-period-end `for` as a `while` (332), both (328)",328,ga
+GameSummaryScreen,,permute.py from the 346 (641 candidates: best 248 only with an `(unsigned char)f.i` cast,,ga
+GameSummaryScreen,,"an `unsigned first` parameter and a moved `y =` statement, rejected)",,ga
+GameSummaryScreen,type:first:unsigned,`unsigned first`,tried (docs/UNSURE.md),ga
 ReplaySaveHilight,,"`n = 0x11; n += w;` (38), `n = w; n += 0x11;` (39), `w + 0x11` in the call without n (35), `n = 0x11 + w` (34)",34,ga
 PassLaneChk,,"on that base: limit as a ternary or inline in the compare, side as `? 1 : 0`, `side ^ (...)`, `!= side` (16), `ABS(oy) >= ABS(y)` (14), `!p->position`",,ga
 PassLaneChk,,the Yvel pairs with `||` / `side &&`,,ga

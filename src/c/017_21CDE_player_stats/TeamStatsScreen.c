@@ -1,9 +1,11 @@
 /* Player stats: the team stats pages. */
-/* DRAFT (10.0 GA): 99 differing, 3720 vs 3733 bytes; no dead-variable reuse. The power-play key is stored
+/* DRAFT (10.0 GA): 91 differing, 3720 vs 3733 bytes; no dead-variable reuse. The power-play key is stored
    directly, the division-leader swaps go through a block-local k, the first conference header indexes with
-   statsplayoffs != 0 in place, and the scalar declarations are in the order tools/wccre/declsearch.py
-   --conflicts found (7 of 10 slots as in the EXE; fh / koff / recsize rotate). Left: those three slots, the
-   key-switch shared divide / store tails, the column-switch offset hoisting and row register picks. */
+   statsplayoffs != 0 in place, the conference split counters start as `w = e = i = 0` (the EXE clears i, e,
+   w in that order), and the scalar declarations are in the order tools/wccre/declsearch.py --conflicts found
+   (7 of 10 slots as in the EXE; fh / koff / recsize rotate). Left: those three slots, the penalty-killing
+   key's result register (edx, EXE eax with the t == 0 path storing t), the column-switch offset hoisting and
+   row register picks (y kept in edi across strnicmp in the EXE). */
 #define TeamStatsScreen TeamStatsScreen_decl
 #define PrintShadowText PrintShadowText_decl
 #define PrintFmt1 PrintFmt1_decl
@@ -120,7 +122,7 @@ int TeamStatsScreen(int page)
                 }
             } else {
                 qsort(f.order, n, 4, (int (*)(const void *, const void *))teamsortfns[page]);
-                for (i = e = w = 0; i < n; i++) {
+                for (w = e = i = 0; i < n; i++) {
                     if (teamconf[f.teams[f.order[i]]] == 3) f.west[w++] = f.order[i];
                     else f.east[e++] = f.order[i];
                 }
@@ -146,7 +148,7 @@ int TeamStatsScreen(int page)
             }
         } else {
             qsort(f.order, n, 4, (int (*)(const void *, const void *))teamsortfns[page]);
-            for (i = e = w = 0; i < 0x10; i++) {
+            for (w = e = i = 0; i < 0x10; i++) {
                 if (teamconf[f.teams[f.order[i]]] == 3) f.west[w++] = f.order[i];
                 else f.east[e++] = f.order[i];
             }

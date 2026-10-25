@@ -1,6 +1,10 @@
 /* Game save / IO: the in-game main loop. */
-/* DRAFT: 1668 vs 1673 bytes before the exit, 348 of 395 instructions, first pass; see docs/UNSURE.md. Its match
-   belongs in HandleHotKey.c, whose HandleHotKey_ret tail it uses. */
+/* DRAFT (10.0 GA): 61 differing, 1685 vs 1678 bytes (own epilogue; the EXE jumps to HandleHotKey_ret, so a
+   match belongs in HandleHotKey.c); no goto. Each exit is `sub_1B982(); return;` (Watcom merges the calls into
+   one, and the period-end demo exit keeps its own `gameresult = 1` as in the EXE). The two `gameresult == 2`
+   exits come out as `jne` over a `jmp` where the EXE has one `je` to the exit (a goto shape would give that).
+   Left: the register cycle one step behind the EXE from frameaccum on (edi / ebp, ...), the Esc demomode test
+   (the EXE loads it into edx and stores that known zero as joysampling = 0). See docs/UNSURE.md. */
 #define sub_90354 sub_90354_decl
 #define sub_9035C sub_9035C_decl
 #define TicksSinceLastCall TicksSinceLastCall_decl
@@ -108,7 +112,8 @@ void GameLoop(void)
                 if (demomode) {
                     FadePalette(1, gamepal, 0x10);
                     gameresult = 2;
-                    goto out;
+                    sub_1B982();
+                    return;
                 }
                 joysampling_save = joysampling;
                 joysampling = 0;
@@ -127,7 +132,10 @@ void GameLoop(void)
                 FadePalette(1, savepal, 0x10);
                 SetScreenSize(0x280, 0x1E0);
                 SportsDesk(0);
-                if (gameresult == 2) goto out;
+                if (gameresult == 2) {
+                    sub_1B982();
+                    return;
+                }
                 SetScreenSize(0x140, 0xC8);
                 if (pad1dev[0] == 1 || pad2dev == 1) MouseSetPos(savedmousex, savedmousey);
                 fadeinpending = 1;
@@ -158,10 +166,14 @@ void GameLoop(void)
         if (demomode) {
             FadePalette(1, gamepal, 0x10);
             gameresult = 1;
-            goto out;
+            sub_1B982();
+            return;
         }
         PeriodOver();
-        if (gameresult == 2) goto out;
+        if (gameresult == 2) {
+                    sub_1B982();
+                    return;
+                }
         if (!gameover) {
             SelectScreenBM();
             PaPreloadClips(teamabbrevs[HomeTeam], teamabbrevs[VisTeam]);
@@ -183,6 +195,5 @@ void GameLoop(void)
     StartThreeStars();
     PostGameDesk();
     gameresult = 1;
-out:
     sub_1B982();
 }
