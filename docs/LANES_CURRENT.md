@@ -211,6 +211,20 @@ RunMenu is in this file (score 6, register 5/6) and comes with it.
 - SelectSavedFile 15->15 (2026-10-24, StaticEck2026, GA) LoadFileDlgShapes.c as compile context (19: cross-jumps into an earlier epilogue; t << 2 still hoisted); nothing kept
 - SelectSavedFile 15->15 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool), 6 min: 320 forced orders, best 15 (part of the 24 x 3 run not reached)
 
+### `src/c/037_4842A_engine_player_logic/assgoalie.c`
+
+assgoalie is in this file (score 18, size 12/18) and comes with it.
+- assgoalie 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assgoalie 25->21 (2026-10-24, Mhopkinsinc, GA) (a separate int distance and short depth)
+- assgoalie 21->21 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assgoalie 21->21 (2026-10-24, StaticEck2026, GA) ClampYPosition / assgoalietopuck + ClampYPosition as compile context (21); nothing kept
+- assgoalie 21->21 (2026-10-25, StaticEck2026, GA) tieorder 8 min (21); forced t334 ahead of t69 in the savings-2 run (setl widening, 17; no natural edit); puckvy / SetSPA index / L283 order not ties; 11 gotos remain (ESCALATE: goto, not markable)
+- assgoalie 21->18 (2026-10-25, StaticEck2026, GA) gotos 11 -> 2: skate / stop exits in place in both blocks (18), post target repeated (21), exits to move as if / else nesting (18); poke / dive block in both arms 188, move tail repeated 146; tieorder 6 min (18). ESCALATE: goto (2 left: the other-half exit to move, goto angle)
+- assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assrefgoalpa 67->67 (2026-10-25, StaticEck2026, GA) tieorder 8 min (67); a1 / a2 / side orders forced (67-105, a1 last 77 at size +0, still no push ebp)
+- assrefgoalpa 67->64 (2026-10-25, StaticEck2026, GA) both sign tests temp4 first (64, size -1); first product constant first 67-69, second product swapped 61 at -3 bytes, regd0 = *puckx + c 112-115, regd0 = c; regd0 += *puckx 67-71
+
 ### `src/c/004_13320_asset_loading/ResetGameVars.c`
 
 - ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -218,18 +232,6 @@ RunMenu is in this file (score 6, register 5/6) and comes with it.
 - ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ResetGameVars 25->20 (2026-10-24, StaticEck2026, GA) IndexPhotoBank compiled first as a compile-context copy: the EXE's jmp IndexPhotoBank_x tail (kept); whole address-order run of segment 004 files (20); constant scheduling from +133 unchanged
 - ResetGameVars 20->20 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): not in a tie (20)
-
-### `src/c/037_4842A_engine_player_logic/assgoalie.c`
-
-assgoalie is in this file (score 21, size 12/22) and comes with it.
-- assgoalie 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assgoalie 25->21 (2026-10-24, Mhopkinsinc, GA) (a separate int distance and short depth)
-- assgoalie 21->21 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assgoalie 21->21 (2026-10-24, StaticEck2026, GA) ClampYPosition / assgoalietopuck + ClampYPosition as compile context (21); nothing kept
-- assgoalie 21->21 (2026-10-25, StaticEck2026, GA) tieorder 8 min (21); forced t334 ahead of t69 in the savings-2 run (setl widening, 17; no natural edit); puckvy / SetSPA index / L283 order not ties; 11 gotos remain (ESCALATE: goto, not markable)
-- assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assrefgoalpa 67->67 (2026-10-25, StaticEck2026, GA) tieorder 8 min (67); a1 / a2 / side orders forced (67-105, a1 last 77 at size +0, still no push ebp)
 
 ### `src/c/019_2970A_league_schedule/TreeSeriesWinner.c`
 
