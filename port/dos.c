@@ -154,10 +154,15 @@ static int find_next(ctx_t *c, struct find *f)
 
 /* ---- DOS memory (below 1 MB) ----
  * DOS/4GW lets a flat program reach conventional memory at its physical address. The host maps 0x10000-0xFFFFF the same way (the
- * VGA window at 0xA0000 is plain memory that the video code presents) and hands out real-mode buffers from 0x20000-0x8FFFF. */
+ * VGA window at 0xA0000 is plain memory that the video code presents) and hands out real-mode buffers from 0x20000-0x9FFFF.
+ * Every block gets the same selector (the flat data selector), so a free cannot name its block: it gives back the most recent one.
+ * That is how the game uses it: it takes the largest block and the rest, then frees the rest so that the sound driver's DMA
+ * buffer fits. */
 #define DOS_POOL_LO 0x20000u
-#define DOS_POOL_HI 0x90000u
+#define DOS_POOL_HI 0xA0000u
 static uint32_t dos_next = DOS_POOL_LO;
+static uint32_t dos_blocks[64];         /* start of each block still allocated, in order */
+static int dos_nblocks;
 
 int map_low_memory(void)
 {
@@ -219,13 +224,20 @@ static int int31(ctx_t *c)
         R(c, ECX) = (R(c, ECX) & ~0xFFFFu); R(c, EDX) = (R(c, EDX) & ~0xFFFFu); SET_CF(c, 0); return 1;
     case 0x0100: {                                  /* allocate DOS memory: BX paragraphs -> AX segment, DX selector */
         uint32_t bytes = (R(c, EBX) & 0xFFFF) * 16;
-        if (dos_next + bytes > DOS_POOL_HI) { SETAX(c, 8); R(c, EBX) = (DOS_POOL_HI - dos_next) / 16; SET_CF(c, 1); return 1; }
+        if (dos_next + bytes > DOS_POOL_HI || dos_nblocks == 64) {
+            SETAX(c, 8); R(c, EBX) = (R(c, EBX) & ~0xFFFFu) | (DOS_POOL_HI - dos_next) / 16; SET_CF(c, 1); return 1;
+        }
+        TRACE("DOS memory %05x, %u bytes\n", (unsigned)dos_next, (unsigned)bytes);
         SETAX(c, dos_next >> 4);
         { uint16_t ds; __asm__ volatile("mov %%ds, %0" : "=r"(ds)); R(c, EDX) = (R(c, EDX) & ~0xFFFFu) | ds; }
+        dos_blocks[dos_nblocks++] = dos_next;
         dos_next += (bytes + 15) & ~15u;
         SET_CF(c, 0); return 1;
     }
-    case 0x0101: SET_CF(c, 0); return 1;            /* free DOS memory: the pool is never reused */
+    case 0x0101:                                    /* free DOS memory: the most recent block */
+        if (dos_nblocks) dos_next = dos_blocks[--dos_nblocks];
+        TRACE("DOS memory free -> next %05x\n", (unsigned)dos_next);
+        SET_CF(c, 0); return 1;
     case 0x0200: R(c, ECX) = (R(c, ECX) & ~0xFFFFu); R(c, EDX) = (R(c, EDX) & ~0xFFFFu); SET_CF(c, 0); return 1;
     case 0x0201: SET_CF(c, 0); return 1;
     case 0x0204: R(c, ECX) = (R(c, ECX) & ~0xFFFFu) | (R(c, CS) & 0xFFFF); R(c, EDX) = pm_vec[R(c, EBX) & 0xFF].off ? pm_vec[R(c, EBX) & 0xFF].off : (uint32_t)old_vector_stub; SET_CF(c, 0); return 1;
