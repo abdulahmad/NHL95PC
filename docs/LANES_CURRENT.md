@@ -321,9 +321,7 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 | C file | Function | Score | Cause |
 |---|---|---:|---|
-| src/c/052_6D2F8_create_player/CreateFreeAgent.c | CreateFreeAgent | 5 | size 9/13 |
-| src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c | LockerRoomLoop | 23 | register 2/2 |
-| src/c/064_86696_season_playoffs/PlayoffTreeMenu.c | PlayoffTreeMenu | 126 | register 61/129 |
+| src/c/064_86696_season_playoffs/PlayoffTreeMenu.c | PlayoffTreeMenu | 61 | slot 52/61 |
 
 ## Offered to StaticEck2026
 
@@ -448,15 +446,6 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) (block layout of the shared return)
 - SeriesLength 10->10 (2026-10-24, StaticEck2026, GA) structured draft (no goto): switch with ternary lengths, case 6/7 before 4/5 so Watcom cross-jumps the 3/5/7 tails as in the EXE; 162 case-order / return-placement variants (return after case 1, returns in every case: epilogue lands after case 1 but the constants fold); goto form with the return after case 1 (10); cflags sweep; permute.py (321, best 10)
 
-### `src/c/022_2D346_game_setup/UpdateOtherScores.c`
-
-- GameStatsScreen 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
-- GameStatsScreen 20->20 (2026-10-24, Mhopkinsinc, GA) (its match also needs the move into `UpdateOtherScores.c`)
-- GameStatsScreen 20->20 (2026-10-24, Mhopkinsinc, GA) (its slots already match; register picks, and its match belongs in `UpdateOtherScores.c` for the shared exit)
-- GameStatsScreen 20->11 (2026-10-24, Mhopkinsinc, GA) 
-- GameStatsScreen 11->11 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (m holds the name offset); regsolve (m->EDX wanted, only a savings bump); name pointer without m: int sum product first 40, int sum whole 40, product first + 1A 40, hmteamrec + 1A + product 33, &hmteamrec[...] 39, int sum then name += 1A 34; nothing kept
-- GameStatsScreen 11->11 (2026-10-24, Mhopkinsinc, GA) clean name (no m reuse) 40; + percentage ternary 42 (name block exact, m splits into savings-30 conflicts, minutes ebx/ecx swapped); + m = TS28; m = m*100/TS26 52; + m = TS28*100; m /= TS26 28; + m = TS28; m *= 100; m /= TS26 21; else m = 0 54; y first 53; label loop without x 42 (17 with m name); seven name pointer spellings 33-40
-
 ### `src/c/030_3A9AA_database_merge/ExportTeamToFloppy.c`
 
 - ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -554,6 +543,7 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - EditTextField 62->36 (2026-10-24, Mhopkinsinc, GA) (21 gotos -> 4)
 - EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) ESCALATE: (unsigned short)timeout in the blink-path timeout test 25 (size +2; cmp word vs EXE cmp dword, an extra temporary fixes the SetTickDeadline / key-chain registers); End loop increment as += 1 / = +1 / ++x / braces / != 0 (36), for loop (39); timeout test spellings nested if / != 0 (36), == 1 (40), > 0 (37); editcuron = c == 0 / ternary (36); casts on TickDeadlinePassed / !c / c / End loop / editpos = 0 / DrawEditCursor flags / 4F00 and 4700 compares (36-43); regsolve no prediction; one permute run (577 candidates)
 - EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) unsigned char c 38; short c 38; editcuron = c ^ 1 40; 1 - c 41; (key = PollKey()) == 0 36; no key = 0 store 24 (9 bytes short, key chain then exact, shift moves to the cursor arms); sub_B3D64() == 0 36; separate editcurw / editcuron stores 36 / 38; x = 0 first 38; editpos = x = 0 39; Enter / Esc breaks as one || 36
+- EditTextField 36->36 (2026-10-25, StaticEck2026, GA) goto-free loops on the current draft: flat for (;;) with the poll first and the late arms as the chain's last else (107, +16), inner idle while (105, +22), inner while ((key = PollKey()) || !sub_B3D64()) (132, +13); ESCALATE: the draft keeps four gotos, dead i for the letter value and the dead parameter x for the insert state
 
 ### `src/c/029_380E9_league_setup/BuildStandingsGrid.c`
 
@@ -574,13 +564,6 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) unchanged
 - GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) unchanged
 - GameLoop 62->61 (2026-10-24, StaticEck2026, GA) goto-free: each goto out as sub_1B982(); return; (61, size +7: own epilogue and jne-over-jmp at the gameresult == 2 exits; the demo exit keeps its own gameresult = 1 store as in the EXE); permute.py 200 candidates (transforms used up)
-
-### `src/c/014_1CC3D_frontend_labels/DrawSprite.c`
-
-- DrawSprite 78->66 (2026-10-24, Mhopkinsinc, GA) (integer inputs, short edge arithmetic, the palette read uncached)
-- DrawSprite 66->66 (2026-10-24, Mhopkinsinc, GA) unchanged
-- DrawSprite 66->66 (2026-10-24, Mhopkinsinc, GA) unchanged
-- DrawSprite 66->66 (2026-10-24, StaticEck2026, GA) compile-context copy of LoadScoreboardGfx before it (no change)
 
 ### `src/c/024_31AB5_main_desk/MainDeskLoop.c`
 
@@ -610,6 +593,7 @@ RunMenu is in this file (score 82, register 38/82) and comes with it.
 - TradeScreenLoop 183->51 (2026-10-24, Mhopkinsinc, GA) (the EXE size): every stack slot as in the EXE
 - TradeScreenLoop 88->88 (2026-10-24, Mhopkinsinc, GA) jersey byte as traderoster 2-D TrEntry .c[1] 87 (same code, displacement only), row pointer TrEntry 87, flat TrEntry on tradejersey 274, 2-D TrEntry on tradejersey 88, 2-D bytes 88, cursor * 11 * 2 first 90, (tradejersey + cursor term)[side term] 90, pointer sum cursor first 90, block-local int index cursor first 141 / side first 139 / two steps 320 / cursor only 232; nothing kept
 - TradeScreenLoop 88->88 (2026-10-24, Mhopkinsinc, GA) slots[click] for *p in the click<2 arm / click<4 arm / both, in the flag 0xFF test and the cursor compare: 88 each (same code); jersey index (tradeside * 28 + cursor) * 0x16 274 (+38); regsolve: c1/c2 tie (200/200), r +100 ahead of p only by a savings bump
+- TradeScreenLoop 88->88 (2026-10-25, StaticEck2026, GA) jersey index spellings: traderoster[... + 1] (87, displacement only), (tradejersey + side * 0x268)[cursor * 0x16] (88), cursor * 11 * 2 side first (88), cursor * 11 << 1 (218); permute.py 270 candidates (best 83 at +4, the known commute)
 
 ### `src/c/017_21CDE_player_stats/TeamStatsScreen.c`
 
@@ -706,6 +690,15 @@ assthreestars — size 22/43, owner Mhopkinsinc
 - assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assthreestars 44->44 (2026-10-24, StaticEck2026, GA) compile-context copy of ass_pc_slot20 (no change); the slot / pos pass-through copies written in place (47 / 46 / both 257): ESCALATE: the committed draft keeps two tie-breaker copies (slot, pos)
 - assthreestars 44->56 (2026-10-25, StaticEck2026, GA) tie-breaker copies slot / pos out (ruling): q from slot, int pn = q->pnum = starpl[..] with setplayer's real short prototype (EXE movsx edi, al / movsx edx, di), 41 declaration orders; short pn 48 (16-bit compare, not the EXE's); permute 29 only with code-changing transforms (if / else position, chain split, pflags2 moved: rejected)
+
+### `src/c/014_1CC3D_frontend_labels/DrawSprite.c`
+
+DrawSprite — register 65/66, owner Mhopkinsinc
+- DrawSprite 78->66 (2026-10-24, Mhopkinsinc, GA) (integer inputs, short edge arithmetic, the palette read uncached)
+- DrawSprite 66->66 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawSprite 66->66 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawSprite 66->66 (2026-10-24, StaticEck2026, GA) compile-context copy of LoadScoreboardGfx before it (no change)
+- DrawSprite 66->66 (2026-10-25, StaticEck2026, GA) flip as a short parameter read in place (no s.flip copy): slot kept as padding (89), dropped (95), member unused (89)
 
 ### `src/c/037_4842A_engine_player_logic/StarCompare.c`
 
