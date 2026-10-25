@@ -4042,3 +4042,25 @@ LoadTeamRoster,type:line:short,`short line`,tried (docs/UNSURE.md),ga
 LoadTeamRoster,type:gline:short,`short gline`,tried (docs/UNSURE.md),ga
 PostGameToTeamDb,,"(2026-10-24, lane 1 batch 19): slotdump --count on i (20, 25, 29), j (360, 400), score (26, 29, 30, 35), score 32 with j 33 or i 347: none gives the EXE's j / score / i order (i moves to 3F8h only with a count near 20, and then j / res / rec / score are off), so the slot order needs a different name list, not one count",,ga
 PostGameToTeamDb,,"a probe of the three-arm score chain alone (`hmscore[0] + 1`, `1 + hmscore[0]`, `else if (awscore > hmscore[0])`) reloads in every arm (no cwde in any)",,ga
+POSeedTeams,,"(2026-10-24, lane 1 batch 18): `n = -1, i = 0` in both count loops (26), in the HomeTeam loop (24) or the VisTeam loop (24) only, n = -1 as a statement before the VisTeam loop (24)",24,ga
+POSeedTeams,,"the VisTeam count as `if (... != slots[i]) continue; n++;` (22, same code)","22, same code",ga
+POSeedTeams,,"permute.py 4 min (385 candidates, best 11 = the cast above, rejected)","385 candidates, best 11 = the cast above, rejected",ga
+PenGoalStuff,,"(2026-10-24, lane 1 batch 18): taking the reuse out: a new short k for the box player (36, frame differs from +0), new k and j (110)",110,ga
+PenGoalStuff,,a new short j for the shift counter only (25: the first loop's PenBuf copy swaps edx / esi and the +1B1 difference stays),25: the first loop's PenBuf copy swaps edx / esi and the +1B1 difference stays,ga
+PenGoalStuff,,"m used for all three minute tests (43, size +4) or for -1 and 5 (20, size +4)","20, size +4",ga
+PenGoalStuff,,"without the single-use m (`penmintab[PenBuf[i * 2]] == -1` in place, m dropped): the same code, 19, and regsolve then predicts nothing (no tie swap, bump or dropped temporary), so the +1B1 pick is not a savings-order miss (patch ~/tmp/u/np/b18_PenGoalStuff_no_m.diff, not committed: same score)","patch ~/tmp/u/np/b18_PenGoalStuff_no_m.diff, not committed: same score",ga
+ChkScorerMilestone,,"(2026-10-24, lane 1 batch 18): `pts = g + ASSISTS(t, p)` in the scorer block (36), `g = g + REC(dword_DEB74, ...)` at L71 (36), `pts = pts + REC(dword_DEB78, ...)` at L74 (36), `pts = 1` for the first goal (168), tools/scope_decls.py (only sum can move: sum in the fullot blocks 26-27 by its measure, as written 23)","only sum can move: sum in the fullot blocks 26-27 by its measure, as written 23",ga
+InProgress,,"(2026-10-24, lane 1 batch 18), all with a plain short: as is (92)",92,ga
+InProgress,,"the loop-back test as one `((sflags & 0x80) || word_CBC44) && pen != 7` (92), as `if (!(sflags & 0x80) && !word_CBC44) break; if (pen != 7) continue;` (92)",92,ga
+InProgress,,an explicit break inside the mins == 0 arm (92),92,ga
+InProgress,,every one keeps the pre-header load,,ga
+GameLineEditorLoop,,"(2026-10-24, lane 1 batch 18): the else-branch Norm address as `menus[level] + sel[level]` and `sel[level] + menus[level]` (74), `h * w + 0x11` (75), `x2 + 1 - x1` for w / h (128)",128,ga
+GameLineEditorLoop,,"the size through r (165, also dead-variable reuse)","165, also dead-variable reuse",ga
+DbLineEditorLoop,,"as a check, 69 after declsearch --conflicts, size +3) now differs at +0B2 (the size product: inc eax / inc edx / imul eax, edx vs lea ebx, [eax+1] / lea eax, [edx+1] / imul eax, ebx) and +9B4 (the else branch's DrawMenuItemNorm after sel[level] = item: ours keeps item in eax and puts pos[level][0] in esi",,ga
+DbLineEditorLoop,,"the EXE loads pos[level][0] into eax, re-reads sel[level] into esi and cross-jumps into the other-item tail at +6FC). savings: 550 conflicts in pass 1 (j 61200, k 6900, bits 1200, oldmx 519)","j 61200, k 6900, bits 1200, oldmx 519",ga
+DbLineEditorLoop,,"regsolve on the no-itemoffset form: no tie swap, savings bump or dropped temporary predicts a better order, no compiled declaration swap improves. Tried (2026-10-24, lane 1 batch 18): on the 64 base the on1 test as `itemoffset + (char *)menus[level] + 0x14` (64), as `((MenuItem *)((char *)menus[level] + itemoffset))->on1` (64)",64,ga
+DbLineEditorLoop,,"the offset assigned inside the test with the offset operand first (64), `unsigned int itemoffset` (64), `m = menus[level]` used as the test base with itemoffset (320, size +10)","320, size +10",ga
+DbLineEditorLoop,,"on the no-itemoffset base after declsearch --conflicts: a dead `m = &menus[level][item]` (69), m used for both tests (382)",382,ga
+POAfterGame,,"(2026-10-24, lane 1 batch 18): plain locals instead of the frame struct (114 after declsearch)",114 after declsearch,ga
+POAfterGame,,"the n test as a switch (76), `(ctl1team[0] < 0) != (ctl2team < 0)` (76), `f.ret = 1; return f.ret;` for the early exit (68), ctl2team / ctl2side spelled ctl1team[1] / ctl1side[1] everywhere in the function (67",,ga
+POAfterGame,,the same code: still loaded into ecx),,ga
