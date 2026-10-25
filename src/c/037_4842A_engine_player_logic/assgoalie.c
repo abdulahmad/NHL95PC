@@ -3,10 +3,12 @@
 /* DRAFT: assgoalie 18 differing under 10.0 GA. The int vecdist result and the short incremented depth
    give the EXE's EDX result copy and increment; the skate / stop exits written in place in both blocks
    (`if (regd2.w > 7) StopNA(p); else playeracc(p, regd2.w);`, cross-jumped by Watcom) and the post target
-   repeated in the angle block replace three gotos, and the late exits to move are nested if / else blocks.
-   Left: the carrier-side boolean widening, the puckvx /
-   puckvy pointer registers of the save-stance move, the remaining gotos to move and angle, and the external
-   ass_popx epilogue.
+   repeated in the far-side block replace three gotos, and the other exits to move are if / else nesting.
+   Two gotos are left (ESCALATE): the puck-in-the-other-half exit to move and the jump to angle. The poke /
+   dive block is entered from the shooter test and from the carrier test, and that exit skips the angle code,
+   so no nesting gives this flow without repeating code; the poke / dive block written in both arms (188) and
+   the move tail repeated at the exit (146) are not cross-jumped back. Left: the carrier-side boolean widening,
+   the puckvx / puckvy pointer registers of the save-stance move and the external ass_popx epilogue.
    assgoalie ends in ass_popx (assrefwhistle.c), so its match belongs in assrefwhistle.c between asspenalty
    and CountPuckThreat; the draft stays here with the functions that use its exit. */
 #define imul32 imul32_decl
