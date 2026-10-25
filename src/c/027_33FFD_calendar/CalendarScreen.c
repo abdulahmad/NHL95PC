@@ -26,15 +26,17 @@ int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin,
 int sub_8F98F(char *path);  /* music library: load a song */
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song */
 
-/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 6,007 of 6,040 bytes, 233
+/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 6,009 of 6,040 bytes, 220
    differing under 10.0 GA. Every call is in place and the prologue matches (dir pushed, ext in edi, team in
    ebp). Found under GA: DrawMenuBar(calmenubar, 3, ...) written with the constants (the EXE keeps them in esi
    / edi from the menus[0] / nitems[0] stores), the dropdown origin as `depth != 1 ? x2 : x1`, the day index
    in steps (`k = monthfirstday_m1[m]; k += d; k--;`: the EXE's `movzx esi, byte` / `add esi, edi` / `dec
    esi`, which also puts oldm / oldd in esi / edi). The arrays and scalars are declared in
-   tools/wccre/declsearch.py's order (with --conflicts: 29 of 34 slots). Left: the slots of c1, day, i,
-   ngames and selgame; the day box clips (the EXE computes k % 7 and k / 7 first, then the four sub_B4BC4 arguments in the order x1,
-   y1, x2, y2 into registers before the pushes); the event pointer copied into two registers; the
+   tools/wccre/declsearch.py's order (with --conflicts: 30 of 34 slots). The day box clips compute x1, y1,
+   x2, y2 into block-scoped locals before the call, so the four values are in registers before the pushes
+   as in the EXE. Left: the slots of day, i, ngames and selgame; in the clips the EXE does both divisions
+   first (k % 7 kept in ebx, `mov ecx, 7` for k / 7, then k % 7 * 4 in esi) where ours divides again
+   for y1; the event pointer copied into two registers; the
    DrawMenuItemNorm tail shared from another branch. The (int) compare of day with monthdays reloads day as
    the EXE does. */
 /* CalendarScreen (34821, PC only): the season calendar of a league team. Fade out (stopping the music), show the
@@ -60,7 +62,7 @@ int CalendarScreen(char *dir, char *ext, int team)
     short selgame;
     int ptr;
     int btn;
-    short day;
+    int logos;
     int c1;
     short ngames;
     int oldmx;
@@ -69,18 +71,18 @@ int CalendarScreen(char *dir, char *ext, int team)
     int depth;
     short i;
     char path[0x20];
-    int logos;
-    int mx;
+    short day;
     short today;
+    int mx;
     int my;
     int pos[3][2];
     int hdr;
     short firstgame;
-    int c3;
     int unused;  /* DrawCalendarDay's third argument: never set (the EXE passes the slot at 7A8h) */
     short newsel;
-    int level;
     int font;
+    int level;
+    int c3;
     int item;
     int crests[0x1A];
     short shown;
@@ -384,16 +386,28 @@ int CalendarScreen(char *dir, char *ext, int team)
                                     k = monthfirstday_m1[calselmonth];
                                     k += oldd;
                                     k--;
-                                    sub_B4BC4(calcolx[k % 7] - 2, calcolx[k % 7] + 0x4D, calrowy[k / 7] - 2,
-                                        calrowy[k / 7] + 0x3F);
+                                    {
+                                        int x1, y1, x2, y2;
+                                        x1 = calcolx[k % 7] - 2;
+                                        y1 = calrowy[k / 7] - 2;
+                                        x2 = calcolx[k % 7] + 0x4D;
+                                        y2 = calrowy[k / 7] + 0x3F;
+                                        sub_B4BC4(x1, x2, y1, y2);
+                                    }
                                     DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font,
                                         calendarshapes);
                                 }
                                 k = monthfirstday_m1[calselmonth];
                                 k += calselday;
                                 k--;
-                                sub_B4BC4(calcolx[k % 7] - 2, calcolx[k % 7] + 0x4D, calrowy[k / 7] - 2,
-                                    calrowy[k / 7] + 0x3F);
+                                {
+                                    int x1, y1, x2, y2;
+                                    x1 = calcolx[k % 7] - 2;
+                                    y1 = calrowy[k / 7] - 2;
+                                    x2 = calcolx[k % 7] + 0x4D;
+                                    y2 = calrowy[k / 7] + 0x3F;
+                                    sub_B4BC4(x1, x2, y1, y2);
+                                }
                                 DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font, calendarshapes);
                                 sub_B4BC4(0, 0x280, 0, 0x1E0);
                             }
