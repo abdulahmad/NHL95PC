@@ -4019,3 +4019,48 @@ DrawSprite,,"the s.flip member left unused (89, +17): the EXE's `cmp word [esp+1
 EditTextField,,"goto-free loops on the current draft: a flat `for (;;) { key = PollKey(); if (!key) { if (!sub_B3D64()) { if (idle) idle(); continue; } key = 0; } if (key) { handlers (Backspace / typing as the chain's last else); continue; } blink }` (107, +16)","107, +16",ga
 EditTextField,,"the same with the idle as an inner `while (!(key = PollKey())) { if (sub_B3D64()) break; if (idle) idle(); }` (105, +22)","105, +22",ga
 EditTextField,,"an inner `while ((key = PollKey()) != 0 || !sub_B3D64()) { if (!key) { idle; continue; } handlers }` (132, +13)","132, +13",ga
+LeagueTeamSelect,,"(2026-10-24, lane 1 batch 19): permute.py (449 candidates in 185 s): best 49 (+3) is the product factor swap `([3] + 1) * (([2] << 2) + 4)`",,ga
+LeagueTeamSelect,,"with the EXE registers (`inc eax` / `add edx, 4` / `imul eax, edx`) but the two adds in the other order, and the swap is already listed under GA (101 at the 102 state): not kept",,ga
+LeagueTeamSelect,,`0x11 + product` (50),50,ga
+LeagueTeamSelect,,"`sel[level] = item` embedded in the Norm call index, first copy (474, +17) or last copy (256, +17)","256, +17",ga
+LeagueTeamSelect,,"a fresh local s for item (store and index) declared at the top or in the else block (50 each, same code)","50 each, same code",ga
+LeagueTeamSelect,,`size` declared after e / pal / copy (170-266),170-266,ga
+CalendarScreen,,"(2026-10-24, lane 1 batch 19): block-scoped x1..y2 in both clips (224, kept), first clip only (227)",227,ga
+CalendarScreen,,"block-scoped col / row with the call arguments inline (232, +19 bytes short of 33)","232, +19 bytes short of 33",ga
+CalendarScreen,,"block-scoped col, row, x1..y2 (233, either declaration order), first clip only (230)",230,ga
+CalendarScreen,,"col only with x1..y2 (224, col folds into the shl index)","224, col folds into the shl index",ga
+CalendarScreen,,"row only with x1..y2 (224, 17 bytes short: both divisions first as in the EXE but in the other order, k / 7 first)","224, 17 bytes short: both divisions first as in the EXE but in the other order, k / 7 first",ga
+CalendarScreen,,col / row with x1 / x2 as `*(int *)((char *)calcolx + col * 4)` (233),233,ga
+LoadTeamRoster,,"(2026-10-24, lane 1 batch 19): else store i * 39 + team * 1092 with jersey i-first (49) / team-first (62)",62,ga
+LoadTeamRoster,,"p as `hmroster + (i * 39 + team * 1092)` + else reversed (85, +18)","85, +18",ga
+LoadTeamRoster,,"a 39-byte roster struct view `((RosterRec (*)[28])hmroster)[team][i].jersey` for the jersey stores (60), also for the else store (60), `((RosterRec *)(hmroster + team * 1092))[i]` (60)",60,ga
+LoadTeamRoster,,"on the jersey team-first form: p reversed (60), lineup as `[team * 128 + i + 1]` (65), goalie jersey reversed (62), `short line` (98), mode stores reversed (77), lineup stores reversed (62), `-line * 2` (62), chained totals (62), split zero stores (59), `39 * i` (62), split zero stores + else reversed (59)",59,ga
+LoadTeamRoster,,`1092 * team` (49),49,ga
+LoadTeamRoster,,"on the kept form: chained `first_total = (first = w) + w2` for all three totals (46), goalie jersey reversed (46), `short gline` (92), goalie lineup as `(dword_DF6C2 + team * 64)`, `(short (*)[128])` 2-D (also for the skater line), `team * 256` (46 each)",46 each,ga
+LoadTeamRoster,,"permute.py 4 min (321 candidates, best 49 base)","321 candidates, best 49 base",ga
+LoadTeamRoster,type:line:short,`short line`,tried (docs/UNSURE.md),ga
+LoadTeamRoster,type:gline:short,`short gline`,tried (docs/UNSURE.md),ga
+PostGameToTeamDb,,"(2026-10-24, lane 1 batch 19): slotdump --count on i (20, 25, 29), j (360, 400), score (26, 29, 30, 35), score 32 with j 33 or i 347: none gives the EXE's j / score / i order (i moves to 3F8h only with a count near 20, and then j / res / rec / score are off), so the slot order needs a different name list, not one count",,ga
+PostGameToTeamDb,,"a probe of the three-arm score chain alone (`hmscore[0] + 1`, `1 + hmscore[0]`, `else if (awscore > hmscore[0])`) reloads in every arm (no cwde in any)",,ga
+POSeedTeams,,"(2026-10-24, lane 1 batch 18): `n = -1, i = 0` in both count loops (26), in the HomeTeam loop (24) or the VisTeam loop (24) only, n = -1 as a statement before the VisTeam loop (24)",24,ga
+POSeedTeams,,"the VisTeam count as `if (... != slots[i]) continue; n++;` (22, same code)","22, same code",ga
+POSeedTeams,,"permute.py 4 min (385 candidates, best 11 = the cast above, rejected)","385 candidates, best 11 = the cast above, rejected",ga
+PenGoalStuff,,"(2026-10-24, lane 1 batch 18): taking the reuse out: a new short k for the box player (36, frame differs from +0), new k and j (110)",110,ga
+PenGoalStuff,,a new short j for the shift counter only (25: the first loop's PenBuf copy swaps edx / esi and the +1B1 difference stays),25: the first loop's PenBuf copy swaps edx / esi and the +1B1 difference stays,ga
+PenGoalStuff,,"m used for all three minute tests (43, size +4) or for -1 and 5 (20, size +4)","20, size +4",ga
+PenGoalStuff,,"without the single-use m (`penmintab[PenBuf[i * 2]] == -1` in place, m dropped): the same code, 19, and regsolve then predicts nothing (no tie swap, bump or dropped temporary), so the +1B1 pick is not a savings-order miss (patch ~/tmp/u/np/b18_PenGoalStuff_no_m.diff, not committed: same score)","patch ~/tmp/u/np/b18_PenGoalStuff_no_m.diff, not committed: same score",ga
+ChkScorerMilestone,,"(2026-10-24, lane 1 batch 18): `pts = g + ASSISTS(t, p)` in the scorer block (36), `g = g + REC(dword_DEB74, ...)` at L71 (36), `pts = pts + REC(dword_DEB78, ...)` at L74 (36), `pts = 1` for the first goal (168), tools/scope_decls.py (only sum can move: sum in the fullot blocks 26-27 by its measure, as written 23)","only sum can move: sum in the fullot blocks 26-27 by its measure, as written 23",ga
+InProgress,,"(2026-10-24, lane 1 batch 18), all with a plain short: as is (92)",92,ga
+InProgress,,"the loop-back test as one `((sflags & 0x80) || word_CBC44) && pen != 7` (92), as `if (!(sflags & 0x80) && !word_CBC44) break; if (pen != 7) continue;` (92)",92,ga
+InProgress,,an explicit break inside the mins == 0 arm (92),92,ga
+InProgress,,every one keeps the pre-header load,,ga
+GameLineEditorLoop,,"(2026-10-24, lane 1 batch 18): the else-branch Norm address as `menus[level] + sel[level]` and `sel[level] + menus[level]` (74), `h * w + 0x11` (75), `x2 + 1 - x1` for w / h (128)",128,ga
+GameLineEditorLoop,,"the size through r (165, also dead-variable reuse)","165, also dead-variable reuse",ga
+DbLineEditorLoop,,"as a check, 69 after declsearch --conflicts, size +3) now differs at +0B2 (the size product: inc eax / inc edx / imul eax, edx vs lea ebx, [eax+1] / lea eax, [edx+1] / imul eax, ebx) and +9B4 (the else branch's DrawMenuItemNorm after sel[level] = item: ours keeps item in eax and puts pos[level][0] in esi",,ga
+DbLineEditorLoop,,"the EXE loads pos[level][0] into eax, re-reads sel[level] into esi and cross-jumps into the other-item tail at +6FC). savings: 550 conflicts in pass 1 (j 61200, k 6900, bits 1200, oldmx 519)","j 61200, k 6900, bits 1200, oldmx 519",ga
+DbLineEditorLoop,,"regsolve on the no-itemoffset form: no tie swap, savings bump or dropped temporary predicts a better order, no compiled declaration swap improves. Tried (2026-10-24, lane 1 batch 18): on the 64 base the on1 test as `itemoffset + (char *)menus[level] + 0x14` (64), as `((MenuItem *)((char *)menus[level] + itemoffset))->on1` (64)",64,ga
+DbLineEditorLoop,,"the offset assigned inside the test with the offset operand first (64), `unsigned int itemoffset` (64), `m = menus[level]` used as the test base with itemoffset (320, size +10)","320, size +10",ga
+DbLineEditorLoop,,"on the no-itemoffset base after declsearch --conflicts: a dead `m = &menus[level][item]` (69), m used for both tests (382)",382,ga
+POAfterGame,,"(2026-10-24, lane 1 batch 18): plain locals instead of the frame struct (114 after declsearch)",114 after declsearch,ga
+POAfterGame,,"the n test as a switch (76), `(ctl1team[0] < 0) != (ctl2team < 0)` (76), `f.ret = 1; return f.ret;` for the early exit (68), ctl2team / ctl2side spelled ctl1team[1] / ctl1side[1] everywhere in the function (67",,ga
+POAfterGame,,the same code: still loaded into ecx),,ga
