@@ -4171,3 +4171,13 @@ RunMenu,,"a block-local size as in MainDeskLoop (82, after declsearch --conflict
 RunMenu,,"the on1 / on2 tests through `menus[level][item]` without m (129), declsearch --conflicts --confirm 8 on the committed order (6 at best), permute.py 321 candidates (6)",6,ga
 RunMenu,temp:size:inline,size inlined,tried (docs/UNSURE.md),ga
 RunTeamPickMenu,,"the MainDeskLoop / RunMenu submenu shape on the struct version: depth++ for depth = i + 1 (212), and depth++ with on2 read in place before m (229). Not reached: the plain-locals version's 18th slot (oldmy)",,ga
+RunTeamPickMenu,,the sel[level] Norm alone (393),393,ga
+RunTeamPickMenu,,permute.py on 227 (705 candidates: 185 only with a short return type and a (short) cast,,ga
+RunTeamPickMenu,,"190 with the read-back pos split), restricted permute on 196 (373 candidates: 195 only by moving sub_91370 after the oldmx store, against the EXE's order)","373 candidates: 195 only by moving sub_91370 after the oldmx store, against the EXE's order",ga
+RunPlayerPickMenu,,the submenu close loop's pos stores as the chain `pos[i][0] = pos[i][1] = 0` (136: oldmx / oldmy slots swapped,,ga
+RunPlayerPickMenu,,"with oldmy / oldmx / ptr redeclared 104: the close loop's zero registers become the EXE's, xor ecx for bg / nitems and `xor ebp, esi` for menus, but the name-search loops shift instead)",,ga
+RunPlayerPickMenu,,declsearch --conflicts on it (16 of 17,,ga
+RunPlayerPickMenu,,the same oldmx / oldmy vote problem as RunTeamPickMenu),,ga
+RunPlayerPickMenu,,"tieorder --savings 300,200,2 on that version (12 min, 104 -> 100: the name-search temps t149-t179 and t158-t176, not a tie order alone)","12 min, 104 -> 100: the name-search temps t149-t179 and t158-t176, not a tie order alone",ga
+RunPlayerPickMenu,,"restricted permute.py on both versions (321 and 513 candidates: 94 only by moving `sel[i] = item` after DrawMenuItemNorm and `pos[i][0] = 0` after FreeMemBlock, against the EXE's store order",,ga
+RunPlayerPickMenu,,`pos[0][1] = 0; pos[0][0] = 0;` alone 104),,ga
