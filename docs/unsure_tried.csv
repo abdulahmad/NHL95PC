@@ -4165,3 +4165,9 @@ SimulateGame,,"a byte store `f.b[i] = 0` before the first call, after the first 
 SimulateGame,,in the function,,ga
 SimulateGame,,"a separate counter s for the allocation loop, block-scoped (1113, size +19) or declared at the top after i / bestshot / homeScore / j / err (956-968, size +12 to +16",,ga
 SimulateGame,,the frame changes),,ga
+RunMenu,,"w / h (or one of them) holding the pointer bitmap's sizes for the product (119-173, they are memory variables), size inlined into the call (84)",84,ga
+RunMenu,,"the product operands commuted (7), `0x11 +` first (6)",6,ga
+RunMenu,,"a block-local size as in MainDeskLoop (82, after declsearch --conflicts 6), `m = menus[level] + item` (6)",6,ga
+RunMenu,,"the on1 / on2 tests through `menus[level][item]` without m (129), declsearch --conflicts --confirm 8 on the committed order (6 at best), permute.py 321 candidates (6)",6,ga
+RunMenu,temp:size:inline,size inlined,tried (docs/UNSURE.md),ga
+RunTeamPickMenu,,"the MainDeskLoop / RunMenu submenu shape on the struct version: depth++ for depth = i + 1 (212), and depth++ with on2 read in place before m (229). Not reached: the plain-locals version's 18th slot (oldmy)",,ga

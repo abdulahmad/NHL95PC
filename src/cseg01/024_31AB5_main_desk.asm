@@ -18,6 +18,10 @@ extern sub_91400, FatalError, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_
 extern EasnSkaterStatsScreen, EasnGoalieStatsScreen, EasnStandingsMenu, str_fee2, str_fee3, str_fee4, scrpitch, VisTeam
 global MainDeskLoop_x, MainDeskLoop_x2
 global MainDeskLoop, MenuExit, SaveModeState, LoadModeState, WriteModeState, CopyGameSettings
+; C: src/c/024_31AB5_main_desk/MainDeskLoop.c
+%ifdef CBUILD
+%include "c/024_31AB5_main_desk/MainDeskLoop.inc"
+%else
 MainDeskLoop:
 push dword 0CCh	; 31AB5
 call __CHK	; 31ABA
@@ -909,6 +913,7 @@ pop edx	; 32707
 pop ecx	; 32708
 pop ebx	; 32709
 ret	; 3270A
+%endif ; C
 ; C: src/c/024_31AB5_main_desk/MenuExit.c
 %ifdef CBUILD
 %include "c/024_31AB5_main_desk/MenuExit.inc"
