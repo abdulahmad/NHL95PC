@@ -4282,6 +4282,8 @@ ResetGameVars,,"warm compiler fills 0x10-0x7F (20). Finding (tools/probe.py bise
 ResetGameVars,,"textlines al then ah), so the 0 / -1 constants are per-store temporaries that the scoreboarder merges",,ga
 ResetGameVars,,with the crowd-slot loop present they all take ebx (ours) where the EXE gives esi / eax. Cutting the tail after curperiod or from __STOSB on changes nothing. So the cause is how the loop's registers steer the constant temporaries' later register choice (not a savings tie),,ga
 ResetGameVars,,lane T question,,ga
+TreeSeriesWinner,,"(slots unchanged, 35 each): parameters renamed (series / sched, rnd, flag) and every local renamed (no name / hash dependence), `const unsigned char *s`, no prototype in scope (protos.h declares `int round`), implicit int return (prototype and K&R definitions), `signed int` / `unsigned int` spellings",,ga
+TreeSeriesWinner,,"the same file under 10.0 LA (35, same slots)","35, same slots",ga
 ReassignCtlPlayer,,independent int dy for vertical difference: 33,,ga
 ReassignCtlPlayer,,scoped int dy for vertical difference: 33,,ga
 ReassignCtlPlayer,,distance output d declared inside eligibility arm: 19,,ga
