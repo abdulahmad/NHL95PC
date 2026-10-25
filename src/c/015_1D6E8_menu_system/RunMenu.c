@@ -137,10 +137,10 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                     ClearInputQueue();
                 } else {
                     sub_903F0(ptr, oldmx, oldmy);
-                    DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
+                    DrawMenuItemSel(&menus[level][sel[level]], pos[level][0],
                         pos[level][1], col1, col2, col3);
                     sel[level] = item;
-                    DrawMenuItemNorm((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
+                    DrawMenuItemNorm(&menus[level][sel[level]], pos[level][0],
                         pos[level][1], col1, col2, col3);
                 }
             } else if (m->on2) {
@@ -160,9 +160,9 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                     depth = level;
                 }
                 i = depth;
-                DrawMenuItemSel((struct MenuItem *)&menus[i][sel[i]], pos[i][0], pos[i][1], col1, col2, col3);
+                DrawMenuItemSel(&menus[i][sel[i]], pos[i][0], pos[i][1], col1, col2, col3);
                 sel[i] = item;
-                DrawMenuItemNorm((struct MenuItem *)&menus[i][item], pos[i][0], pos[i][1], col1, col2, col3);
+                DrawMenuItemNorm(&menus[i][item], pos[i][0], pos[i][1], col1, col2, col3);
                 depth++;
                 menus[depth] = (MenuItem *)menus[level][item].on2;
                 nitems[depth] = menus[level][item].pad;
@@ -178,14 +178,14 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                 DrawMenuDropdown(menus[depth], nitems[depth], pos[depth][0], pos[depth][1], col1, col2,
                     col3);
                 sel[depth] = 0;
-                DrawMenuItemNorm((struct MenuItem *)menus[depth], pos[depth][0], pos[depth][1], col1, col2,
+                DrawMenuItemNorm(menus[depth], pos[depth][0], pos[depth][1], col1, col2,
                     col3);
             } else {
                 sub_903F0(ptr, oldmx, oldmy);
-                DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
+                DrawMenuItemSel(&menus[level][sel[level]], pos[level][0],
                     pos[level][1], col1, col2, col3);
                 sel[level] = item;
-                DrawMenuItemNorm((struct MenuItem *)&menus[level][item], pos[level][0], pos[level][1],
+                DrawMenuItemNorm(&menus[level][item], pos[level][0], pos[level][1],
                     col1, col2, col3);
             }
             sub_91400(ptr, oldmx, oldmy);
