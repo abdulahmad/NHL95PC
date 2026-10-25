@@ -158,6 +158,29 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
 
+### `src/c/015_1D6E8_menu_system/RunMenu.c`
+
+RunMenu is in this file (score 6, register 5/6) and comes with it.
+- RunMenu 146->146 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunMenu 146->146 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunMenu 146->82 (2026-10-24, Mhopkinsinc, GA) (the EXE size): its frame struct as plain locals; inside one struct the store `sel[level] = item` could alias `level`
+- RunMenu 82->82 (2026-10-24, StaticEck2026, GA) the submenu depth copy through its own int k instead of i (82, same code), drawing through level (271)
+- RunMenu 82->72 (2026-10-25, StaticEck2026, GA) declsearch --conflicts on the plain locals (72, all 15 slots); tieorder before 79 forced, after 72
+- RunMenu 72->6 (2026-10-25, StaticEck2026, GA) sub_91400(ptr, oldmx, oldmy) at the end of both the hit and the miss branch (40), close loop as for (i = depth; i > level; i--) (10), depth++ after the second Norm (6); tieorder forced 0 (t71 / t72 and the size-product savings-2 run): product spellings, block-local size, w / h for the product, m spellings, declsearch confirms, permute.py 321 (6-173); kept 6
+- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunPlayerPickMenu 158->158 (2026-10-24, StaticEck2026, GA) remaining frame struct as plain locals (382, no slot search); not kept
+- RunPlayerPickMenu 158->104 (2026-10-25, StaticEck2026, GA) remaining frame struct as plain locals + declsearch --conflicts (109, all 17 slots, EXE size), depth++ (105), reselect Norm through sel[level] in both arms (104); tieorder 10 min inconclusive
+- RunPlayerPickMenu 104->104 (2026-10-25, StaticEck2026, GA) close-loop pos chain (136, 104 with oldmy / oldmx / ptr redeclared: EXE zero registers there, name-search loops shift), tieorder --savings 300,200,2 (100 forced), restricted permute 834 candidates (94 only against the EXE's store order: rejected); unchanged
+- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
+- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunTeamPickMenu 212->212 (2026-10-24, StaticEck2026, GA) frame struct as plain locals (1638) + declsearch --conflicts (17 of 18 slots, 889); not kept
+- RunTeamPickMenu 212->212 (2026-10-25, StaticEck2026, GA) frame struct as plain locals + declsearch --conflicts (889 by permute.py, 17 of 18 slots; not kept)
+- RunTeamPickMenu 212->212 (2026-10-25, StaticEck2026, GA) struct version: depth++ (212), depth++ with on2 in place before m (229); not kept
+- RunTeamPickMenu 212->196 (2026-10-25, StaticEck2026, GA) frame struct as plain locals + declsearch --conflicts with oldmx / oldmy swapped by hand (all 18 slots, 392), first reselect Norm through sel[level], depth++ with on2 in place before m (227), permute: statsteamorder[i] == pick (196); tieorder 191 / 192 forced (not a tie order alone); permute finds with a short return type / (short) cast / call moved against the EXE's order rejected
+
 ### `src/c/034_41B80_schedule/CreateNewLeague.c`
 
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -389,29 +412,6 @@ BlitTileMap — slot 4/5, owner Mhopkinsinc
 - BlitTileMap 5->5 (2026-10-24, StaticEck2026, GA) LoadRink as compile context (5, same slots); nothing kept
 - BlitTileMap 5->5 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): - (row + row) (8) forced t34 before t35 in the savings-200 run gives the EXE row (4, only height / width homes); explain: one more conflict near tile; map pointer local (15-29), bitmap base local (69)
 - BlitTileMap 5->5 (2026-10-25, StaticEck2026, GA) pre-sort probe: locals created in declaration order except tile (one block); tile as short (23), short tile through a short map index (32)
-
-### `src/c/015_1D6E8_menu_system/RunMenu.c`
-
-RunMenu — register 5/6, owner Mhopkinsinc
-- RunMenu 146->146 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunMenu 146->146 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunMenu 146->82 (2026-10-24, Mhopkinsinc, GA) (the EXE size): its frame struct as plain locals; inside one struct the store `sel[level] = item` could alias `level`
-- RunMenu 82->82 (2026-10-24, StaticEck2026, GA) the submenu depth copy through its own int k instead of i (82, same code), drawing through level (271)
-- RunMenu 82->72 (2026-10-25, StaticEck2026, GA) declsearch --conflicts on the plain locals (72, all 15 slots); tieorder before 79 forced, after 72
-- RunMenu 72->6 (2026-10-25, StaticEck2026, GA) sub_91400(ptr, oldmx, oldmy) at the end of both the hit and the miss branch (40), close loop as for (i = depth; i > level; i--) (10), depth++ after the second Norm (6); tieorder forced 0 (t71 / t72 and the size-product savings-2 run): product spellings, block-local size, w / h for the product, m spellings, declsearch confirms, permute.py 321 (6-173); kept 6
-RunPlayerPickMenu — register 83/98, owner Mhopkinsinc
-- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunPlayerPickMenu 158->158 (2026-10-24, StaticEck2026, GA) remaining frame struct as plain locals (382, no slot search); not kept
-- RunPlayerPickMenu 158->104 (2026-10-25, StaticEck2026, GA) remaining frame struct as plain locals + declsearch --conflicts (109, all 17 slots, EXE size), depth++ (105), reselect Norm through sel[level] in both arms (104); tieorder 10 min inconclusive
-RunTeamPickMenu — register 137/179, owner Mhopkinsinc
-- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunTeamPickMenu 212->212 (2026-10-24, StaticEck2026, GA) frame struct as plain locals (1638) + declsearch --conflicts (17 of 18 slots, 889); not kept
-- RunTeamPickMenu 212->212 (2026-10-25, StaticEck2026, GA) frame struct as plain locals + declsearch --conflicts (889 by permute.py, 17 of 18 slots; not kept)
-- RunTeamPickMenu 212->212 (2026-10-25, StaticEck2026, GA) struct version: depth++ (212), depth++ with on2 in place before m (229); not kept
 
 ### `src/c/064_86696_season_playoffs/POCreateSchedule.c`
 
