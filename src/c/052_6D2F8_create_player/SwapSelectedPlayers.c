@@ -18,11 +18,13 @@ void FixJerseyNumber(int side, int i);
    jersey numbers (FixJerseyNumber) and clear (64h) every line slot (+BCh, 30h bytes) of either team that held
    the moved player. Then mark the database dirty and reload and redraw both lists. mode: the menu argument, not
    used; x, y: where the message box goes.
-   DRAFT (GA): 859 vs 861, 48 differing. nb, ga, gb declared in that order give the EXE's count registers (edx,
-   ebp, eax); the swap loop's second list index reuses a, so b takes the EXE's ecx in the selection loop. The
-   first `nb != s.na` loads s.na into esi (EXE compares memory) and makes a's zero `xor edx, esi` (EXE a in eax,
-   and the second index in ecx where a has edx), and the key-number swaps index EAF7C scaled (EXE `ecx = slot *
-   4`). See docs/UNSURE.md. */
+   DRAFT (GA): 853 vs 861 bytes, 48 differing (the reuse draft: 859 bytes, 48). nb, ga, gb declared in that
+   order give the EXE's count registers (edx, ebp, eax). The swap loop's second list index is its own int ib (the
+   older draft reused the dead a for it, also 48 but ESCALATE: dead-variable reuse); b declared before a and the
+   two zeros as separate stores (`a = 0; b = 0;`) keep 48 with ib (`b = a = 0` 51, `a = b = 0` 50). Left: a / b
+   tie at savings 61 and take edx / ecx (EXE a in eax), the first `nb != s.na` loads s.na into esi (EXE compares
+   memory) and makes a zero from it, and the key-number swaps index EAF7C scaled (EXE `ecx = slot * 4`). See
+   docs/UNSURE.md. */
 void SwapSelectedPlayers(int *mode, int *x, int *y)
 {
     struct {
@@ -40,9 +42,10 @@ void SwapSelectedPlayers(int *mode, int *x, int *y)
     int gb;
     int i;
     int ia;
+    int ib;
     int j;
-    int a;
     int b;
+    int a;
     unsigned char *p;
     unsigned char *q;
 
@@ -67,7 +70,8 @@ void SwapSelectedPlayers(int *mode, int *x, int *y)
         MessageBox(-1, -1, (char *)msglines, 2, 0, 0, (int)x, (int)y, -1);
         return;
     }
-    b = a = 0;
+    a = 0;
+    b = 0;
     for (i = 0; i < 0x1C; i++) {
         if (rostersel[i]) {
             s.slota[a] = rosterslot[i * 27];
@@ -91,13 +95,13 @@ void SwapSelectedPlayers(int *mode, int *x, int *y)
         ((int *)(dword_EAF7C + 0x4C))[s.slotb[i]] ^= ((int *)(rosterteamrec[0] + 0x4C))[s.slota[i]];
         ((int *)(rosterteamrec[0] + 0x4C))[s.slota[i]] ^= ((int *)(dword_EAF7C + 0x4C))[s.slotb[i]];
         ia = s.idxa[i];
-        a = s.idxb[i];
-        rosterslot[ia * 27] ^= byte_EAC86[a * 27];
-        byte_EAC86[a * 27] ^= rosterslot[ia * 27];
-        rosterslot[ia * 27] ^= byte_EAC86[a * 27];
+        ib = s.idxb[i];
+        rosterslot[ia * 27] ^= byte_EAC86[ib * 27];
+        byte_EAC86[ib * 27] ^= rosterslot[ia * 27];
+        rosterslot[ia * 27] ^= byte_EAC86[ib * 27];
         s.tmp = *(RosterEnt *)(rosterlist + ia * 27);
-        *(RosterEnt *)(rosterlist + ia * 27) = *(RosterEnt *)(unk_EAC84 + a * 27);
-        *(RosterEnt *)(unk_EAC84 + a * 27) = s.tmp;
+        *(RosterEnt *)(rosterlist + ia * 27) = *(RosterEnt *)(unk_EAC84 + ib * 27);
+        *(RosterEnt *)(unk_EAC84 + ib * 27) = s.tmp;
         FixJerseyNumber(0, ia);
         FixJerseyNumber(1, s.idxb[i]);
         p = (unsigned char *)rosterteamrec[0] + 0xBC;

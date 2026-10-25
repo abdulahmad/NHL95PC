@@ -1,8 +1,11 @@
 /* Player stats: the team stats pages. */
-/* DRAFT (10.0 GA): 132 -> 123 differing, 3737 vs 3733 bytes. Reuse koff for the
-   first conference-header index and dead x for the power-play key. All scalar
-   spill slots now agree (slot_solver: zero mismatches). Left: key-switch shared
-   divide/store tails, column-switch offset hoisting and row register picks. */
+/* DRAFT (10.0 GA): 91 differing, 3720 vs 3733 bytes; no dead-variable reuse. The power-play key is stored
+   directly, the division-leader swaps go through a block-local k, the first conference header indexes with
+   statsplayoffs != 0 in place, the conference split counters start as `w = e = i = 0` (the EXE clears i, e,
+   w in that order), and the scalar declarations are in the order tools/wccre/declsearch.py --conflicts found
+   (7 of 10 slots as in the EXE; fh / koff / recsize rotate). Left: those three slots, the penalty-killing
+   key's result register (edx, EXE eax with the t == 0 path storing t), the column-switch offset hoisting and
+   row register picks (y kept in edi across strnicmp in the EXE). */
 #define TeamStatsScreen TeamStatsScreen_decl
 #define PrintShadowText PrintShadowText_decl
 #define PrintFmt1 PrintFmt1_decl
@@ -44,21 +47,21 @@ int TeamStatsScreen(int page)
         char state[0x40];
         char path[0x20];
     } f;
-    unsigned char *sched;
     int x;
+    unsigned char *sched;
     int koff;
     int recsize;
     int fh;
     int n;
     int rank;
-    int y;
     int t;
+    int y;
     int i;
     int w;
     int e;
     unsigned char *s;
-    unsigned char *p;
     int mf;
+    unsigned char *p;
     int kf;
 
     statsteamrecs = (unsigned char *)sub_8CCA8((char *)str_Teams, 0x7B8, 0x20);
@@ -100,8 +103,7 @@ int TeamStatsScreen(int page)
             case 3:
                 if (((unsigned short *)s)[4] > ((unsigned short *)s)[5]) ((unsigned short *)s)[5] = ((unsigned short *)s)[4];
                 t = ((unsigned short *)s)[5];
-                x = t ? (((unsigned short *)s)[4] * 1000 + t / 2) / t : 0;
-                statssortkeys[i] = x;
+                statssortkeys[i] = t ? (((unsigned short *)s)[4] * 1000 + t / 2) / t : 0;
                 break;
             case 4:
                 t = s[0];
@@ -120,29 +122,33 @@ int TeamStatsScreen(int page)
                 }
             } else {
                 qsort(f.order, n, 4, (int (*)(const void *, const void *))teamsortfns[page]);
-                for (i = e = w = 0; i < n; i++) {
+                for (w = e = i = 0; i < n; i++) {
                     if (teamconf[f.teams[f.order[i]]] == 3) f.west[w++] = f.order[i];
                     else f.east[e++] = f.order[i];
                 }
                 if ((teamdivflags[f.west[0]] | teamdivflags[f.west[1]]) != 3) {
+                    int k;
+
                     for (i = 2; i < 0xC; i++)
                         if ((teamdivflags[f.west[0]] | teamdivflags[f.west[i]]) == 3) break;
-                    w = f.west[i];
+                    k = f.west[i];
                     for (; i >= 2; i--) f.west[i] = f.west[i - 1];
-                    f.west[1] = w;
+                    f.west[1] = k;
                 }
                 if ((teamdivflags[f.east[0]] | teamdivflags[f.east[1]]) != 0xC) {
+                    int k;
+
                     for (i = 2; i < 0xC; i++)
                         if ((teamdivflags[f.east[0]] | teamdivflags[f.east[i]]) == 0xC) break;
-                    e = f.east[i];
+                    k = f.east[i];
                     for (; i >= 2; i--) f.east[i] = f.east[i - 1];
-                    f.east[1] = e;
+                    f.east[1] = k;
                 }
                 n = 0xE;
             }
         } else {
             qsort(f.order, n, 4, (int (*)(const void *, const void *))teamsortfns[page]);
-            for (i = e = w = 0; i < 0x10; i++) {
+            for (w = e = i = 0; i < 0x10; i++) {
                 if (teamconf[f.teams[f.order[i]]] == 3) f.west[w++] = f.order[i];
                 else f.east[e++] = f.order[i];
             }
@@ -187,8 +193,7 @@ int TeamStatsScreen(int page)
             y = 0x73;
             PrintShadowText(0xEC, y, (char *)str_GP4);
             PrintShadowText(0x21C, y, (char *)str_GP4);
-            koff = statsplayoffs != 0;
-            PrintShadowText(0x114, y, (char *)*(int *)(koff * 4 + page * 16 + (int)teamcolhdrs));
+            PrintShadowText(0x114, y, (char *)*(int *)((statsplayoffs != 0) * 4 + page * 16 + (int)teamcolhdrs));
             PrintShadowText(0x244, y, (char *)((int (*)[4])teamcolhdrs)[page][statsplayoffs != 0]);
         } else {
             PrintShadowText(0x154, y, (char *)str_GP4);

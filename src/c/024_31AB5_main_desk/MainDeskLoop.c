@@ -33,10 +33,11 @@ void sub_8FB8E(int song, int handle, int a, int b);
 int PreGameScreen(int home, int vis);
 
 /* DRAFT (10.0 GA): 67 differing, same 3,158 bytes; kept for its pop / ret tail (MainDeskLoop_x, which
-   LoadModeState, WriteModeState and MenuNewExhibition use). Both pointer-sprite sizes are computed before the
-   allocation arguments are pushed; the second uses a local scoped to the action branch. The submenu lookup
-   precedes the depth increment. Left: the selected item's redraw reloads s.level where the EXE keeps it in edx
-   (a store into s.sel may alias s.level in one frame struct), plus register picks; see the lane batch notes. */
+   LoadModeState, WriteModeState and MenuNewExhibition use). Both pointer-bitmap setups compute the size into a
+   block-local int before the allocation arguments are pushed (the first one no longer reuses the dead r). The
+   submenu lookup precedes the depth increment. Left: the selected item's redraw reloads s.level where the EXE
+   keeps it in edx (a store into s.sel may alias s.level in one frame struct), plus register picks; see the lane
+   batch notes. */
 /* MainDeskLoop (31AB5, PC only; owner of MainDeskLoop_x / MainDeskLoop_x2): the main desk screen. Reset the
    menu state (the menu bar, mainmenubar, with three items; no dropdowns open), centre the mouse on the bar, set
    the side controls, the EASN stats callbacks and the menu pointer bitmap, pick and load the desk song
@@ -97,11 +98,14 @@ int MainDeskLoop(void)
     goaliestatscb = (int)EasnGoalieStatsScreen;
     standingscb = (int)EasnStandingsScreen;
     standingsmenucb = (int)EasnStandingsMenu;
-    r = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
-    ptr = sub_8CCA8((char *)str_Pointer7, r, 0x20);
-    *(Hdr17 *)ptr = *(Hdr17 *)pointerspr;
-    ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
-    ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
+    {
+        int size;
+        size = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
+        ptr = sub_8CCA8((char *)str_Pointer7, size, 0x20);
+        *(Hdr17 *)ptr = *(Hdr17 *)pointerspr;
+        ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
+        ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
+    }
     if (musicon && !songdata) {
         if (desksongalt) {
             MakePath(s.path, fileoncd[0x1DB] == 1 ? (char *)cddriveptr : 0, (char *)str_Maindesk, (char *)str_Iff8);

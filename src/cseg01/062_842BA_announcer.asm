@@ -196,6 +196,10 @@ add esp, byte 8	; 84413
 pop ecx	; 84416
 ret	; 84417
 %endif ; C
+; C: src/c/061_83459_speech/ShutdownSpeech.c (QueueSpeechClip)
+%ifdef CBUILD
+%include "c/061_83459_speech/ShutdownSpeech.QueueSpeechClip.inc"
+%else
 QueueSpeechClip:
 push dword 54h	; 84418
 call __CHK	; 8441D
@@ -295,6 +299,7 @@ mov eax, 1	; 8452C
 .7:
 add esp, byte 38h	; 84531
 jmp near ShutdownSpeech_ret6	; 84534
+%endif ; C
 ; C: src/c/061_83459_speech/ShutdownSpeech.c (LoadClipSlot)
 %ifdef CBUILD
 %include "c/061_83459_speech/ShutdownSpeech.LoadClipSlot.inc"

@@ -3662,6 +3662,55 @@ NetCollide,rettype:int,an int result,tried (docs/UNSURE.md),ga
 checkcheck,,`p->checking < randomd0(rel)` (34),34,ga
 checkcheck,,"the penalty as `randomd0(2) != 0 ? 0xC : 0xB` (31, +3, other code)","31, +3, other code",ga
 checkcheck,,"an `(int)` on the bool (32, no-op cast)","32, no-op cast",ga
+POHandleElimination,,the exit is not all that is left,,ga
+POHandleElimination,,"the cross-jumped call is (UNSURE: in POCreateSchedule.c the same single difference). Not a register draft (no regdump lead). Tried (2026-10-24, lane 1 batch 15): reviewed the earlier shapes only (goto save, plain else block, pochampion test spellings, fade-in in both branches, switch forms, empty if / else)",,ga
+POHandleElimination,,"no new natural shape that keeps the two calls apart in the timebox. Lead for later: the EXE keeps both identical `call RestoreDialogBg` tails, so at common-tail time the two blocks must have differed (a different callee declaration or call form in one branch, or a jump that did not yet target +499)","a different callee declaration or call form in one branch, or a jump that did not yet target +499",ga
+wallcoll,,"(2026-10-24, lane 1 batch 15): `int lim` at the top or in the dword_CCC2C block (44, size +2",,ga
+wallcoll,,"with the ESCALATE patch's product orders 28), no lim with the ternary written inline twice (42",,ga
+wallcoll,,"with the patch's product orders 27), short lim with the patch's product orders (35)",35,ga
+wallcoll,type:lim:int,`int lim`,tried (docs/UNSURE.md),ga
+dopass,,"(2026-10-24, lane 1 batch 15) without distance_score: `dx * dx + dy * dy + T` (17, same as with the copy), `dy * dy + dx * dx + T` (19), `T + dx * dx + dy * dy` (25), `dx * dx + (dy * dy + T)` (24), `dx * dx + T + dy * dy` (25), `T + dy * dy + dx * dx` (25), `dx * dx + dy * dy + (d ? 0x10000 : 0)` (18)",18,ga
+dopass,,"on `T + (dx * dx + dy * dy)`: `(d ? 0x10000 : 0)` (16), `(d == 0 ? 0 : 0x10000)` (15), `(d != 0 ? 0x10000 : 0)` (16), `T + (dy * dy + dx * dx)` (17)",17,ga
+dopass,,"no-target branch without the dx / dy reuse: products straight into s.t with passspeed (68), `s.t /= 0xBB8` (68)",68,ga
+dopass,,"a speed local sp (85), dx kept for the speed only (51)",51,ga
+dopass,,with the copy,,ga
+dopass,,the products straight into s.t (34),34,ga
+dopass,,puckvz declared `short *` or `unsigned char *` in the file (15),15,ga
+dopass,,"dy before dx (15), d first (39), target last (18)",18,ga
+LoadGameRoster,,"(2026-10-24, lane 1 batch 15): `gmrosterslot[n + n]` (21), `gmrosterslot[2 * n]` (21), `gmroster[n * 2 + 2]` (21), `k = s.i; n = k * 11; ... = k` (40)",40,ga
+LoadGameRoster,,"the product in k (26), in a block-local j (24, size 0, loop 1 unchanged), no product local `[s.i * 11 * 2]` (26) or `[(s.i * 11) << 1]` (24, size 0, loop 1 unchanged)","24, size 0, loop 1 unchanged",ga
+doshot,,"(2026-10-24, lane 1 batch 15): r read directly for q (`q = r >> 1; ... q = r / 3;`, 109: the frame changes), `randomd0(r + r)` without t (65)",65,ga
+doshot,,"a separate int k for the r copy with f only for dist, k at the end / after f / before e / before f (84-90",,ga
+doshot,,also without t 61-99: the frame size changes),,ga
+checkgoal,,"(2026-10-24, lane 1 batch 15): `x = y; x = -x; x >>= 1` (3, size -2), `x = -y; x >>= 1` (3, size -2), short z `z = -y; x = z; x >>= 1` (3, -2), short z `x = z >> 1` (movsx + 32-bit sar, worse), `y = -y; x = y; x >>= 1` (3, -2), `x = y; x = -x; p->Zvel = x >> 1` (5, size 0: ebx / edx swapped and a 32-bit sar), int z `z = -p->Zvel` with y still the test (1, same), test as `p->Zvel < 0` with `z = -p->Zvel` (cmp word [mem] + int reload, worse), `x = -p->Zvel; x >>= 1` (14), int z with `p->Zvel = x >> 1` (20), int z `z = y; z = -z` (12), block-scoped int for -y (1, same), `z = -y; x = z; p->Zvel = x >>= 1` (1, same), `x = -y; p->Zvel = x >>= 1` (14), y load split from the test (1, same), `z = -(unsigned short)y` (2, +3)","2, +3",ga
+checkgoal,,"permute.py 4 min on the goto-free draft (321 compiled, best base)","321 compiled, best base",ga
+RosterPanelClick,,"(2026-10-24, lane 1 batch 15): falistsel declared `unsigned char *` / `char *` in the file only (#define trick) with `falistsel[row] = ~falistsel[row]` or through fa (9)",9,ga
+RosterPanelClick,,"with `falistsel[row] ^= 0xFF` (9, xor byte [edi+eax])","9, xor byte [edi+eax]",ga
+RosterPanelClick,,with `falistsel[dword_EBCA4 + row]` twice (16),16,ga
+RosterPanelClick,,"`fa[dword_EBCA4 + row]` twice without `row +=` (16), `row = dword_EBCA4 + row` (9), mixed-type load or store `((char *)fa)[row]` / `((signed char *)fa)[row]` (9), `fa[row] = fa[row] ^ 0xFF` (9)",9,ga
+SetRosterTeamMenus,,"(2026-10-24, lane 1 batch 15): function-level i in the first half and a block i around the second search and stores (11), `d *= 8` before the two zero stores (11), `team == 100` spelling (11)",11,ga
+OpenSpeechBank,,"(2026-10-24, lane 1 batch 15): no cnt (51",,ga
+OpenSpeechBank,,34 after declsearch),,ga
+OpenSpeechBank,,"the three loop bounds as `BANKW(0x3B91)` (the short the EXE reads, 17",,ga
+OpenSpeechBank,,"without cnt 44), `lseek(fh, SLOTD(off, 0x12) + 6, 0)` (32), `!speechinit` / `if (BANKD(0x3B78))` (11), `size = Swap16(size); size -= 5;` (19)",19,ga
+SkateToSpot,,"spa1 block-local with axp at function scope (14), spa1 and spa2 both in that block (146), spa2 in the spa1 block after / before spa1 (85 / 81), spa1 at function scope with axp block-local (after ary 77, first 65)","after ary 77, first 65",ga
+SkateToSpot,,"the axp block also holding t / ayp / ary (all 48 orders and subsets with axp, 22-40 and worse)","all 48 orders and subsets with axp, 22-40 and worse",ga
+SkateToSpot,,"the spa1 block running to the end (8), d block-local (92)",92,ga
+SkateToSpot,,"the vtoa and facedir step as one statement (31), vtoa arguments without casts (84), spa2 declared after d (78)",78,ga
+SkateToSpot,,the chained stop on the block form (122),122,ga
+SkateToSpot,,"permute.py from the block form (321 candidates, best 8)","321 candidates, best 8",ga
+ReassignCtlPlayer,,"(2026-10-24, lane 1 batch 14), on the old base: `pl != ...` with every combination of short n, py order, px order and the cast (11-18)",11-18,ga
+ReassignCtlPlayer,,"on the new base: 65 orders of py / best / px with pl at each position (9 best), 66 single moves of team / pnum / p / n / dx / d / bestd (9), px / py / dx / d scoped (9-19), px as `(px - X) * (px - X)` without dx (21), px in two or three statements (20 / 33), both px and py split (36)",36,ga
+DrawRinkOverlays,,"(2026-10-24, lane 1 batch 14): *puckc read in place instead of c (the StartPer pattern) in the ys[2] test (81), in the carrier marker (87), both without c (86, +2), each of those with the ternary clamp (103 / 86 +1 / 87 +11)",103 / 86 +1 / 87 +11,ga
+DrawRinkOverlays,,"for the number block (EXE `cmp word [esi+6Ah], 0Ch` in memory, then *puckc and a fresh SCnum load into dx",,ga
+DrawRinkOverlays,,"C loads SCnum into bx once): `s < 0xC` (74), s in the three compares (91), both (88), `q->SCnum == *puckc` first (73), `s < 6` for the team flag (124)",124,ga
+DrawRinkOverlays,,97 single declaration moves of i / s / x / y / fl / q / c / z (none below 73),none below 73,ga
+setplayer,,"(2026-10-24, lane 1 batch 14): 49 single declaration moves of rg / t / td / r / q / v / d / as (all 93)",all 93,ga
+checkob,,"(2026-10-24, lane 1 batch 14): extra as a Reg68 union local (`extra.l`, limit right 2, limit left 5: still hoisted), `extra + 0x4E < (short)(o->Ypos >> 16)` (12)",12,ga
+checkob,,"the same with the first loop's Y as `(short)` too (12), `(short)(o->Ypos >> 16) > extra + 0x4E` (14)",14,ga
+SelectHilight,,"(2026-10-24, lane 1 batch 14), all 7: `tbl[i] = &strs[i * 0x51]`, `strcpy(&strs[i * 0x51], ...)`, both, `marks[0][i] = 0`, `0x9652 * i`, `marks[0]` as the ListDialog argument, `n * sizeof(char *)`, `i * 0x51 + strs` in either statement",,ga
+SelectHilight,,"permute.py 5 min (321 candidates, exhausted, best the base). The matched sibling ChooseLeagueController (the same allocate / ListDialog / free pattern) pushes its two frees from edi / ebp, so it gives no shape hint",,ga
+SelectMatchingPlayers,,shapes listed in docs/UNSURE.md (not itemized),,ga
 POInitSchedule,,"a 6-byte game struct for g in the three loops (`g[i].m` / `g[i].d`, `g++` in the clear loop: 6)","`g[i].m` / `g[i].d`, `g++` in the clear loop: 6",ga
 POInitSchedule,,the seed copy through a struct cast with an int seeds[16] member (6),6,ga
 POInitSchedule,,the seed copy as a do-while (6),6,ga
@@ -3734,7 +3783,83 @@ assbench,,the x distance through d or a new short dx (13 on the d = temp1 - 1 fo
 assbench,,through d with --temp1 48),,ga
 assbench,,"permute.py twice (897 + 641 candidates: best 11 / 7 only with no-op casts, `(unsigned char)-1` on the newpos chain and `(char)0xFD` on the pflags mask",,ga
 assbench,,rejected),,ga
+assbench,,"on the 8: d block-local, `p->temp1--; d = p->temp1;`, `0 > d` (all 8), `d <= -1` (10), `if ((p->temp1 = d = p->temp1 - 1) < 0)` and `d = p->temp1 - 1; if ((p->temp1 = d) < 0)` (15)",15,ga
+assbench,,"on `!(d >= 0)`: `= d + 8`, `d += 8; p->temp1 = d;`, `p->temp1--; d = p->temp1;`, d / dy declarations swapped (all 6), `d = p->temp1 - 1; p->temp1 = d;` (11: the count then has the EXE's instruction shape, load / dec / store / test / copy / add 8, but d in ax and the sum in edx, EXE dx / esi, and the seated roster store moves), that with `= d + 8` (17)",17,ga
+assbench,,with `d < 0` (13),13,ga
+assbench,,"with d first / tm first / dy first, `d = p->temp1; d--;`, `--d`, `-1 + p->temp1` (all 11), d int (19), no d (`!(--p->temp1 >= 0)`, 31)",,ga
+assbench,,"permute.py from the 6 (321 candidates, transforms used up, best 6)","321 candidates, transforms used up, best 6",ga
+MainDeskLoop,,"one function-scope int size for both sites, declared after ptr / r / m (95 / 99 / 95)",95 / 99 / 95,ga
+TeamStatsScreen,,each of the three natural shapes alone and in pairs before the slot search (126-176: the header index through the 2-D array cast 173,,ga
+TeamStatsScreen,,"the swaps through a function-scope k 147, block-local k 176)",,ga
+TeamStatsScreen,,"permute.py from the 100 (577 candidates: 95 only with `(s[1] + s[1]) + s[3]` in one of the two twin rows and one operand swap in one of two twin reads, rejected as asymmetric)",,ga
+RunMenu,,"the submenu branch's copy of depth through its own int k instead of the loop counter i (declared first, after i, last: 82 each",,ga
+RunMenu,,the same code),,ga
+RunMenu,,the branch drawing through level instead of the copy (271),271,ga
+RunTeamPickMenu,,the frame struct s as plain locals in struct order (1638,,ga
+RunTeamPickMenu,,"the slots scattered), then tools/wccre/declsearch.py --conflicts (best order sel, w, nitems, menus, mx, bg, pick, cur, level, h, oldmx, item, ptr, my, hit, oldmy, depth, pos: 17 of 18 slots as in the EXE, oldmy -16 vs EXE -12",,ga
+RunTeamPickMenu,,"889, first difference +0D5)",,ga
+LeadersScreen,,the while with the arms as if / else (115),115,ga
+LeadersScreen,,the team test nesting the rest (115),115,ga
+LeadersScreen,,"the cat tests inside if / else (115), `for (; read(...) == 0x34;)` (186), `for (;;) { if (read(...) != 0x34) break; ...}` (126",,ga
+LeadersScreen,,skater arm first 385),,ga
+LeadersScreen,,the skater arm first in the while (473),473,ga
+LeadersScreen,,"the nested loops kept with `while ((r = read(...)) == 0x34)` and `if (r != 0x34) break;` after it (90, size +25)","90, size +25",ga
+LeadersScreen,,permute.py twice (385 candidates from the while form: 45,,ga
+LeadersScreen,,295 from the 45: no gain),,ga
+RunPlayerPickMenu,,"the remaining frame struct s (the address-taken scalars and the arrays) as plain locals in struct order (382, no slot search)","382, no slot search",ga
 assthreestars,,"a compile-context copy of ass_pc_slot20 (the EXE's previous function) right before it (44, no change)","44, no change",ga
 DrawSprite,,"a compile-context copy of LoadScoreboardGfx (the EXE's previous function) before it (66, no change). Reading: the EXE re-reads s.flip from its slot (`cmp word [esp+18h], 0`) and reuses ecx for the mode zero, as for an address-taken short (no copy propagation of the homed flip)",,ga
 DrawSprite,,nothing compiled on that,,ga
 StarCompare,,"a compile-context copy of StarEligible (the EXE's previous function) before it (67, no change)","67, no change",ga
+SetupStatsSourceMenu,,an empty `default: break;` last or first in the switch,,ga
+SetupStatsSourceMenu,,"the src fallback as nested ifs or as one `?:` chain (all 42), `y = 0x11;` before the layout loop (44)",44,ga
+SetupStatsSourceMenu,,the `n == 4` test inverted with the arms swapped (49),49,ga
+SetupStatsSourceMenu,,permute.py (0 new candidates: every transform already logged),0 new candidates: every transform already logged,ga
+GameLoop,,"permute.py from the 62 (200 new candidates, transforms used up, no gain)","200 new candidates, transforms used up, no gain",ga
+TeamStatsScreen,,the frame arrays as plain locals (164,,ga
+TeamStatsScreen,,"declsearch --conflicts best 10 of 17 slots, 172: no order gives the EXE's west / east / teams / order layout)",,ga
+TeamStatsScreen,,"permute.py from the 91 (577 candidates, transforms used up: 84 only with `s[3] + (s[1] + s[1])` in one of the twin rows, rejected as before",,ga
+TeamStatsScreen,,"`i << 1` for the schedule index alone 91, both index stores 91)",,ga
+TeamStatsScreen,,both twin rows as `s[3] + (s[1] + s[1])` (148) or `s[3] + s[1] * 2` (141),141,ga
+GameSummaryScreen,,"the goal count in a block-local `int goals` (346, as in 2x_b9), then declsearch --conflicts (nothing to move: every local is in the frame struct or a register",,ga
+GameSummaryScreen,,goals and crest both have savings 1200 -> ESI,,ga
+GameSummaryScreen,,the 346 come from reordered savings 400 / 500 temporary ties),,ga
+GameSummaryScreen,,on the block-local form `f.nperiods = f.goals[0] = 0;` (342),342,ga
+GameSummaryScreen,,"the skip-to-period-end `for` as a `while` (332), both (328)",328,ga
+GameSummaryScreen,,permute.py from the 346 (641 candidates: best 248 only with an `(unsigned char)f.i` cast,,ga
+GameSummaryScreen,,"an `unsigned first` parameter and a moved `y =` statement, rejected)",,ga
+GameSummaryScreen,type:first:unsigned,`unsigned first`,tried (docs/UNSURE.md),ga
+ReplaySaveHilight,,"`n = 0x11; n += w;` (38), `n = w; n += 0x11;` (39), `w + 0x11` in the call without n (35), `n = 0x11 + w` (34)",34,ga
+PassLaneChk,,"on that base: limit as a ternary or inline in the compare, side as `? 1 : 0`, `side ^ (...)`, `!= side` (16), `ABS(oy) >= ABS(y)` (14), `!p->position`",,ga
+PassLaneChk,,the Yvel pairs with `||` / `side &&`,,ga
+PassLaneChk,,"the second Yvel block as `else` (19), `0 - dy`, `ABS(dy) > 0x3C` / `ABS(dx-gap) > 0x28` (15)",15,ga
+PassLaneChk,,the x gap as two statements (26),26,ga
+PassLaneChk,,the gaps without dy (`ABS(oy - y) > 0x3C` 10,,ga
+PassLaneChk,,"the x gap inline 7 but it drops the EXE's `mov esi, eax` copy, both 22), oy for the y gap (25, 42 for both)","25, 42 for both",ga
+PassLaneChk,,"the stores inside the tests, `>= 0x29` (17)",17,ga
+PassLaneChk,,"the second vtoa's arguments spelled `(int)(short)`, `(short)((short)a - (short)b)`, `(short)(unsigned short)`, `((short *)p)[1] - ...`, `-b + a`, `(int)` on either operand (all 15",,ga
+PassLaneChk,,without the x argument's `(short)` 8 but the 16-bit sub goes: not equivalent code),,ga
+PassLaneChk,,"the result through y (19), `if ((oy = vtoa(...)) == 8)`, facedir read directly (15)",15,ga
+PassLaneChk,,"the wrap in a comma test, `else return 1` and `if (... < 3) return 1; return 0;` (25), `y = oy - vtoa(...); y = y + 1` (30)",30,ga
+PassLaneChk,,permute.py on that base (all its candidates already logged from an earlier run),,ga
+NetCollide,,`if (dist < 0x18) return p->SPA;` with the rest un-nested (22),22,ga
+NetCollide,,"the first x-flip test as `!(...) == 1`, `(...) == 1`, `? 0 : 1`, `(!(...)) != 0`",,ga
+NetCollide,,"a nested if (all 22), `((... != 0) ^ 1)` (28)",28,ga
+SwapSelectedPlayers,type:ib:signed_char,`signed char ib`,tried (docs/UNSURE.md),ga
+checkpuckcoll,,"a local of its own for the frame or for the height scores 99 at every declaration place. v also carries the speed, |dy| and the box limit. Lane 2 2_b11 (10.0 GA): still the EXE bytes only with the reuse (0). regdump: the reused h has savings 15 (height 10 + frame 5) and picks dx before v (13) and s (12)",12,ga
+checkpuckcoll,,"with a short fr of its own, h (10) picks after them and takes ax (99). An emulator sweep of every role split of the seven short roles (speed, |dy|, height, frame, stick half size, body box size, box limit",,ga
+checkpuckcoll,,"235 conflict-free splits, declared in first-use order, s keeping the reach): only the committed split scores 0",,ga
+checkpuckcoll,,"the best with the height and the frame apart is 42 (speed, |dy| and box size in one variable), every role in its own variable 108. Also tried: fr declared at three other places (99), fr also for the skater stick's frame test (99), p->frame read in place of fr (261). No natural form found",,ga
+checkpuckcoll,,stays ESCALATE (dead-variable reuse),,ga
+updatereplay,,"`p = SortCords; for (i = 0; ...)` on the packing or the position loop (22), `for (i = 0, p = SortCords; ...)` (24), `recbpr = recbpr + 4` (35, +10), `*((short *)recbpr)++` for camy / crowdlevel (29, +1), `lastsfx = -1; replaysfx = -1;` (22)",22,ga
+RemoveFromLines,,"on the short-j base: unsigned short j (63), j declared first (59)",59,ga
+RemoveFromLines,,"the counting loops on j (109, +5)","109, +5",ga
+RemoveFromLines,,"the goalie / extra-skater loops on j (101, +3), r2 declared before j with an int r (64, +3), declsearch --conflicts (both orders 59), permute.py 577 candidates (best 25 only with `*lt++ == (char)pnum` in the extra-skater loop",,ga
+RemoveFromLines,,a no-op cast: rejected),,ga
+EditSkaterRating,,"permute.py 577 candidates on the natural form (best 59 only with non-equivalent casts, `(char)((*maxp + 5) * 5)`, `(short)v / 5`, `(unsigned char)((*p + 5) * 5)`",,ga
+EditSkaterRating,,plus an if / do loop: rejected),,ga
+EditGoalieRating,,separately,,ga
+EditRosters,,"`(bits & 2) == 0` (108), `sel[i] = 0; nitems[i] = 0;` in the RosterPanelClick reset (183, +31)","183, +31",ga
+EditRosters,,"the on2 draws through depth instead of `i = depth` (108), `-1 == editrosters_exit` (108)",108,ga
+LoadGameState,,"(natural statement shapes, 37 unless noted): `p = (short *)buf + 1` (34, size +6: other code), `n = 0; i = 0;` (37), `i = 0; n = 0;` (39), `n = n - 0x10`, `&SortCords[i]` for the sort-object reads, `(char *)&hmtmstruct + (i << 8)`, `crowdlevel = *p++; crowdsmooth = crowdlevel;`, `o->ts = *++p; p++;`, `n = i >= 0x30 ? 0x44 : 0x80` (86)",86,ga
+LoadGameState,,"the mouse test as if / else-if, o->frame before o->first (40), `p = p + 2` after the seed, `(Rec6 *)(char *)q`, `&SortCords[6]` for awtmsort",,ga

@@ -1,9 +1,4 @@
 /* Engine player logic: going to the bench. */
-/* DRAFT (10.0 GA, 8 differing, 829 vs 827): no goto (the body before the seated part is one `if (temp1 != 64h)`
-   block) and no masks: the y distance in its own short dy gives both swap tests the EXE widening `mov edx, eax /
-   and edx, 0FFh`; the count as `d = --p->temp1` puts it in dx as in the EXE. Left: the count's copy for the
-   `+= 8` is made before the `test dx, dx / jge` in eax (EXE after it, `mov esi, edx / add esi, 8`), so temp3 is
-   loaded into si (EXE cx) and facedir into cx (EXE dx). See docs/UNSURE.md. */
 #include "nhl95.h"
 
 /* assbench (4B12C; 93G logic93 / 94G assign94 assbench "player a3 should go to bench", PC version): not while
@@ -19,9 +14,8 @@
    it he skates there (EvadePC, none for a goalie or during a stoppage). p: the player. No result. */
 void assbench(Player *p)
 {
-    Team *tm;
     short dy;
-    short d;
+    Team *tm;
 
     if (p->pflags & 0x20) return;
     if (p->temp1 != 0x64) {
@@ -56,8 +50,8 @@ void assbench(Player *p)
             return;
         }
         if (p->position == 0) ((unsigned char *)p)[0x48] |= 3;
-        d = --p->temp1;
-        if (d < 0) {
+        --p->temp1;
+        if (p->temp1 < 0) {
             p->temp1 += 8;
             dy = HIWORD(p->Ypos) - p->temp4;
             regd0.w = HIWORD(p->Xpos) - p->temp3;
