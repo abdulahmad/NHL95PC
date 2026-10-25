@@ -1,8 +1,11 @@
 /* Engine player logic: the goalie's assignment and the assignments that end in its exit (assnearest,
    assrefsignal, assrefgoalpa). */
-/* DRAFT: assgoalie 21 differing under 10.0 GA. The int vecdist result and the short incremented depth
-   give the EXE's EDX result copy and increment. Left: the SortCords loop's puckdist load (DI in the EXE),
-   the carrier-side boolean widening, later register picks and the external ass_popx epilogue.
+/* DRAFT: assgoalie 18 differing under 10.0 GA. The int vecdist result and the short incremented depth
+   give the EXE's EDX result copy and increment; the skate / stop exits written in place in both blocks
+   (`if (regd2.w > 7) StopNA(p); else playeracc(p, regd2.w);`, cross-jumped by Watcom) and the post target
+   repeated in the angle block replace three gotos. Left: the carrier-side boolean widening, the puckvx /
+   puckvy pointer registers of the save-stance move, the remaining gotos to move and angle, and the external
+   ass_popx epilogue.
    assgoalie ends in ass_popx (assrefwhistle.c), so its match belongs in assrefwhistle.c between asspenalty
    and CountPuckThreat; the draft stays here with the functions that use its exit. */
 #define imul32 imul32_decl
@@ -64,7 +67,6 @@ void assgoalie(Player *p)
     if (y > 0xE4) {
         regd2.w = 0;
         if (ABS(x) <= 0x30) {
-post:
             regd0.w = HIWORD(p->Xpos) < 0 ? -0xA0 : 0xA0;
         } else {
             regd0.w = x;
@@ -90,9 +92,8 @@ post:
     if (p->pflags2 & 2) return;
     if (--p->temp1 >= 0) {
         regd2.w = ((signed char *)p)[0x28];
-        if (regd2.w <= 7) goto skate;
-stop:
-        StopNA(p);
+        if (regd2.w > 7) StopNA(p);
+        else playeracc(p, regd2.w);
         return;
     }
     p->temp1 = p->aidef / 3;
@@ -159,8 +160,8 @@ angle:
     }
     if (ABS(HIWORD(p->Ypos)) > 0xE4) {
         regd0.w = regd2.w = 0;
-        if (ABS(HIWORD(p->Xpos)) > 0x30) goto move;
-        goto post;
+        if (ABS(HIWORD(p->Xpos)) <= 0x30) regd0.w = HIWORD(p->Xpos) < 0 ? -0xA0 : 0xA0;
+        goto move;
     }
     regd0.w = *puckx;
     regd1.w = *pucky;
@@ -286,9 +287,8 @@ move:
         if (ABS(regd0.w) < k && ABS(regd1.w) < k) regd0.w = regd1.w = 0;
     }
     regd2.w = ((signed char *)p)[0x28] = vtoa(regd0.w, regd1.w);
-    if (regd2.w > 7) goto stop;
-skate:
-    playeracc(p, regd2.w);
+    if (regd2.w > 7) StopNA(p);
+    else playeracc(p, regd2.w);
 }
 
 /* assnearest (4CD4B; 93G assnearest, PC version; ends in assgoalie_popebp): the player nearest the puck. A new
