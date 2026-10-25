@@ -3925,6 +3925,29 @@ EditRosters,,"`(bits & 2) == 0` (108), `sel[i] = 0; nitems[i] = 0;` in the Roste
 EditRosters,,"the on2 draws through depth instead of `i = depth` (108), `-1 == editrosters_exit` (108)",108,ga
 LoadGameState,,"(natural statement shapes, 37 unless noted): `p = (short *)buf + 1` (34, size +6: other code), `n = 0; i = 0;` (37), `i = 0; n = 0;` (39), `n = n - 0x10`, `&SortCords[i]` for the sort-object reads, `(char *)&hmtmstruct + (i << 8)`, `crowdlevel = *p++; crowdsmooth = crowdlevel;`, `o->ts = *++p; p++;`, `n = i >= 0x30 ? 0x44 : 0x80` (86)",86,ga
 LoadGameState,,"the mouse test as if / else-if, o->frame before o->first (40), `p = p + 2` after the seed, `(Rec6 *)(char *)q`, `&SortCords[6]` for awtmsort",,ga
+DrawCalendarDay,,block-local hx with the one-step sums (54,,ga
+DrawCalendarDay,,"declsearch 50, hx / hy still edi / esi), block-local hx and hy in both orders (110 / 122)",110 / 122,ga
+DrawCalendarDay,,the day loop's dx / dy block-local with a function-scope hx (89),89,ga
+DrawCalendarDay,,"the Away y as `hy + 0xC` in the call (110), hy set before hx (50), hy in two steps as well (57)",57,ga
+DrawCalendarDay,,the two-step hx at function scope (61,,ga
+DrawCalendarDay,,"declsearch 40). Left: the day loop divisor 7 (ecx for both divisions, EXE esi then ecx)",,ga
+DrawCalendarDay,,the game day index register,,ga
+DrawCalendarDay,,the selection sum,,ga
+assthreestars,,"both copies written in place (257, sub esp 8)","257, sub esp 8",ga
+assthreestars,,"with the position as if / else (263), `q = &SortCords[p->temp3 = ...]` (257), slot through q with pos in place (53)",53,ga
+assthreestars,,"a short pn with the int prototype (48, but `cmp dx, 19h` where the EXE compares 32 bits",,ga
+assthreestars,,pn first / middle / last 48,,ga
+assthreestars,,"an int pn with the int prototype 57), pl reused for the player number (61)",61,ga
+assthreestars,,"the int pn with the short prototype in 41 declaration orders (best 56, committed)","best 56, committed",ga
+assthreestars,,"permute.py, natural families, on it (385 candidates: 29 only with the position ternary as if / else",,ga
+assthreestars,,"the newpos / newpnum chain split and pflags2 moved after setplayer, against the EXE's code",,ga
+assthreestars,,q declared last alone or with the if / else 56,,ga
+assthreestars,,"with the chain split too 30, frame and first announcement then as in the EXE: the rest is tie order). Left: pn eax / side ecx (EXE edi / esi) and a second spill slot (sub esp, 8)","sub esp, 8",ga
+TeamStatsScreen,,the frame arrays as plain locals (164,,ga
+TeamStatsScreen,,"declsearch --conflicts best 10 of 17 slots, 172: no order gives the EXE's west / east / teams / order layout)",,ga
+TeamStatsScreen,,"permute.py from the 91 (577 candidates, transforms used up: 84 only with `s[3] + (s[1] + s[1])` in one of the twin rows, rejected as before",,ga
+TeamStatsScreen,,"`i << 1` for the schedule index alone 91, both index stores 91)",,ga
+TeamStatsScreen,,both twin rows as `s[3] + (s[1] + s[1])` (148) or `s[3] + s[1] * 2` (141),141,ga
 CanFillLineSlot,,"(2026-10-24, lane 1 batch 17, GA): the no-op `(short)side` / `(short)player` casts dropped (31, same code",,ga
 CanFillLineSlot,,not committed alone),,ga
 CanFillLineSlot,,"the row block dropped with sidev only (`hmroster[sidev * 0x444 + player * 39]`: 41, player * 39 then CSEs into pos",,ga

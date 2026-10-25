@@ -1,6 +1,8 @@
 /* Calendar: one month of the team's schedule. */
-/* DRAFT: 38 differing under 10.0 GA, 1,675 vs 1,684 bytes. Reusing dx for the legend's x
-   fixes the legend registers. Left: the day numbers' divisor 7 in ecx (EXE esi, then ecx), game-day
+/* DRAFT: 32 differing under 10.0 GA, 1,675 vs 1,684 bytes. The Home / Away legend has its own block-local x
+   (hx), set in two steps per branch (`hx = calcolx[0]; hx += 7;`): that gives hx the savings to choose before hy
+   and the EXE's legend registers (esi / edi) without reusing the day loop's dx; declaration order from
+   tools/wccre/declsearch.py --conflicts. Left: the day numbers' divisor 7 in ecx (EXE esi, then ecx), game-day
    index, selection sum and temporary stack slots in the selection frame. See docs/UNSURE.md. */
 #define DrawCalendarDay DrawCalendarDay_decl
 #define sub_913D0 sub_913D0_decl
@@ -22,14 +24,14 @@ void DrawCalendarDay(int month, int *crests, int unused, unsigned char *games, i
                      int bank)
 {
     char state[0x40];
-    char name[0x20];
     char score[0x10];
-    int boxb;
+    char name[0x20];
+    unsigned char *g;
     int boxr;
     int x2;
     int box;
     int opp;
-    unsigned char *g;
+    int boxb;
     int sel;
     int y2;
     int dx;
@@ -56,18 +58,24 @@ void DrawCalendarDay(int month, int *crests, int unused, unsigned char *games, i
     sub_8E9E8(state);
     sub_8EA18(font);
     fontcolor = 0xC0;
-    if (monthfirstday[month]) {
-        dx = calcolx[0] + 7;
-        hy = calrowy[0] + 5;
-    } else {
-        dx = calcolx[6] + 7;
-        hy = calrowy[5] + 5;
+    {
+        int hx;
+
+        if (monthfirstday[month]) {
+            hx = calcolx[0];
+            hx += 7;
+            hy = calrowy[0] + 5;
+        } else {
+            hx = calcolx[6];
+            hx += 7;
+            hy = calrowy[5] + 5;
+        }
+        fontcolor = 0xB6;
+        sub_91964((char *)str_Home, hx, hy);
+        fontcolor = 0xB7;
+        hy += 0xC;
+        sub_91964((char *)str_Away, hx, hy);
     }
-    fontcolor = 0xB6;
-    sub_91964((char *)str_Home, dx, hy);
-    fontcolor = 0xB7;
-    hy += 0xC;
-    sub_91964((char *)str_Away, dx, hy);
     for (i = 0; i < monthdays[month]; ) {
         d = monthfirstday[month] + i;
         dx = d % 7;
