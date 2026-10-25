@@ -1,14 +1,15 @@
 /* Season playoffs: the playoff tree screen's menu loop. */
-/* DRAFT: 2,723 vs 2,688 bytes, 126 differing under 10.0 GA; see docs/UNSURE.md. Plain locals instead of the
+/* DRAFT: 2,690 vs 2,688 bytes, 67 differing under 10.0 GA; see docs/UNSURE.md. Plain locals instead of the
    frame struct (a store into one of the struct's arrays made Watcom reload the others and every member after
    each call; the EXE keeps the pointer block in ebp and &menus[level][item] in eax). The submenu path uses
    depth itself and `depth++` (the EXE caches it in esi and increments it in place), and the two select-item
-   paths draw &menus[level][sel[level]] after the store (the EXE reloads sel[level]). The declaration order is
-   tools/wccre/declsearch.py --conflicts' (12 of 20 locals in their EXE slot). Left: the scalar slots of tree,
-   slot, slot2, w, h, depth, oldmx and ptr (the EXE upward from A0h: level, item, mx, my, ptr, oldmx, depth, h,
-   w, slot2, slot, tree, oldmy), the close-all loop's counter copy and pos reset order, the last
-   select-item copy (the EXE jumps into the first one's call) and the loop end (the EXE jumps into the move
-   path's sub_91400 call). */
+   paths draw &menus[level][sel[level]] after the store (the EXE reloads sel[level]). The close-all loop resets
+   pos[i] chained and bg[i], menus[i], nitems[i] as three stores (i then outranks i * 4 and takes esi as in the
+   EXE; the cross-jumps come back). The declaration order is tools/wccre/declsearch.py --conflicts' (12 of 20
+   locals in their EXE slot). Left: the scalar slots of depth, oldmx, oldmy, ptr, slot, slot2, tree and w (the
+   EXE upward from A0h: level, item, mx, my, ptr, oldmx, depth, h, w, slot2, slot, tree, oldmy), the second
+   pointer-block size (`lea` where the EXE has `inc` / `add`, +2 bytes) and the submenu path's registers (depth
+   in edi and depth + 1 in esi; the EXE keeps both in esi). */
 #define PlayoffTreeMenu PlayoffTreeMenu_decl
 #define MenuHitTest MenuHitTest_decl
 #define POHiliteSlot POHiliteSlot_decl
@@ -41,27 +42,27 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
    the highlight put back. bar / n / col1-col3: as RunMenu; series: the highlighted series. Result: 1 or 0. */
 int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int series)
 {
-    MenuItem *menus[4];
-    unsigned char pal[12];
-    int nitems[4];
-    int ptr;
-    int pos[4][2];
-    char path[0x20];
-    int bg[4];
-    int oldmx;
-    int oldmy;
-    int size;
-    int mx;
-    int my;
     int h;
-    int level;
-    int tree;
-    int item;
-    int sel[4];
+    int oldmx;
     int slot2;
-    int slot;
-    int depth;
+    unsigned char pal[12];
     int w;
+    int bg[4];
+    int ptr;
+    int oldmy;
+    int mx;
+    int size;
+    int tree;
+    int my;
+    MenuItem *menus[4];
+    int nitems[4];
+    char path[0x20];
+    int level;
+    int slot;
+    int sel[4];
+    int pos[4][2];
+    int item;
+    int depth;
     int i;
     int bits;
     int r;
@@ -240,10 +241,11 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                 for (i = depth; i >= 0; i--) {
                     if (bg[i]) {
                         sub_903F0(bg[i], pos[i][0], pos[i][1]);
-                        pos[i][0] = 0;
-                        pos[i][1] = 0;
+                        pos[i][0] = pos[i][1] = 0;
                         FreeMemBlock(bg[i]);
-                        nitems[i] = (int)(menus[i] = (MenuItem *)(bg[i] = 0));
+                        bg[i] = 0;
+                        menus[i] = 0;
+                        nitems[i] = 0;
                     }
                 }
                 depth = 0;
