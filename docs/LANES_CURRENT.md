@@ -531,6 +531,13 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - PlayLeagueGame 28->28 (2026-10-24, Mhopkinsinc, GA) unchanged
 - PlayLeagueGame 28->28 (2026-10-24, StaticEck2026, GA) goto done replaced by an if (s.ok) block around the game loop (same code)
 
+### `src/c/027_33FFD_calendar/DrawCalendarDay.c`
+
+- DrawCalendarDay 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawCalendarDay 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawCalendarDay 38->38 (2026-10-24, StaticEck2026, GA) compile-context copy of LoadCrestsPalette before it (no change); no natural legend form for the dx reuse
+- DrawCalendarDay 38->32 (2026-10-25, StaticEck2026, GA) dx reuse out: block-local legend hx set in two steps per branch (hx = calcolx[0]; hx += 7;) plus declsearch --conflicts; block-local hx / hy one-step (50-122), two-step hx at function scope (40), hy two-step too (57)
+
 ### `src/c/019_2970A_league_schedule/TreeSeriesWinner.c`
 
 - TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -548,12 +555,6 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) ESCALATE: (unsigned short)timeout in the blink-path timeout test 25 (size +2; cmp word vs EXE cmp dword, an extra temporary fixes the SetTickDeadline / key-chain registers); End loop increment as += 1 / = +1 / ++x / braces / != 0 (36), for loop (39); timeout test spellings nested if / != 0 (36), == 1 (40), > 0 (37); editcuron = c == 0 / ternary (36); casts on TickDeadlinePassed / !c / c / End loop / editpos = 0 / DrawEditCursor flags / 4F00 and 4700 compares (36-43); regsolve no prediction; one permute run (577 candidates)
 - EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) unsigned char c 38; short c 38; editcuron = c ^ 1 40; 1 - c 41; (key = PollKey()) == 0 36; no key = 0 store 24 (9 bytes short, key chain then exact, shift moves to the cursor arms); sub_B3D64() == 0 36; separate editcurw / editcuron stores 36 / 38; x = 0 first 38; editpos = x = 0 39; Enter / Esc breaks as one || 36
 
-### `src/c/027_33FFD_calendar/DrawCalendarDay.c`
-
-- DrawCalendarDay 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
-- DrawCalendarDay 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
-- DrawCalendarDay 38->38 (2026-10-24, StaticEck2026, GA) compile-context copy of LoadCrestsPalette before it (no change); no natural legend form for the dx reuse
-
 ### `src/c/029_380E9_league_setup/BuildStandingsGrid.c`
 
 - BuildStandingsGrid 41->41 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -566,12 +567,6 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SetupStatsSourceMenu 42->42 (2026-10-24, StaticEck2026, GA) default: break last / first, the src fallback as nested ifs or a ?: chain (42), y = 0x11 before the loop (44), the n == 4 test inverted (49); permute.py (0 new candidates)
-
-### `src/c/036_47C31_engine_init/FadeOutPalCycle.c`
-
-- assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assthreestars 44->44 (2026-10-24, StaticEck2026, GA) compile-context copy of ass_pc_slot20 (no change); the slot / pos pass-through copies written in place (47 / 46 / both 257): ESCALATE: the committed draft keeps two tie-breaker copies (slot, pos)
 
 ### `src/c/002_1167B_gamesave_io/GameLoop.c`
 
@@ -593,12 +588,6 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - MainDeskLoop 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
 - MainDeskLoop 67->67 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (first sprite size in r); level alone as a plain int (rest in s) after s / after ptr / after depth 132 first_pick, after oldmy 106, last 103 (slots move); nothing kept
 - MainDeskLoop 67->67 (2026-10-24, StaticEck2026, GA) dead-variable reuse of r for the first pointer size removed at the same score: block-local int size; function-scope size after ptr / r / m (95-99)
-
-### `src/c/037_4842A_engine_player_logic/StarCompare.c`
-
-- StarCompare 81->81 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
-- StarCompare 81->81 (2026-10-24, Mhopkinsinc, GA) . Each newest UNSURE bullet (inside the function's entry; `docs/unsure_tried.csv` rerun) gives the first difference and the savings that block it.
-- StarCompare 67->67 (2026-10-24, StaticEck2026, GA) the EXE-size eb / sb = rb[0] + rb[1] shape re-measured (182, regdump ties b / tb at 10 and pa / pb at 7); compile-context copy of StarEligible (no change)
 
 ### `src/c/015_1D6E8_menu_system/RunMenu.c`
 
@@ -629,6 +618,7 @@ RunMenu is in this file (score 82, register 38/82) and comes with it.
 - TeamStatsScreen 123->123 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
 - TeamStatsScreen 123->99 (2026-10-24, StaticEck2026, GA) dead-variable reuses removed (x power-play key stored directly, w / e swaps through a block-local k, koff header index in place: 131), declsearch --conflicts (100), permute p after mf (99; 95 only with asymmetric twin-row rewrites, rejected)
 - TeamStatsScreen 99->91 (2026-10-24, StaticEck2026, GA) `for (w = e = i = 0; ...)` in both conference splits (91; e = w = i 95, w = e = 0 before the for 96); declsearch --conflicts (no better order); the frame arrays as plain locals (164, declsearch best 172); permute.py 577 candidates (84 only with an asymmetric twin-row rewrite, rejected); both twin rows rewritten (141-148)
+- TeamStatsScreen 91->91 (2026-10-25, StaticEck2026, GA) column keys as statssortkeys[t] (koff dropped): the EXE's t * 4 hoist into the dispatch and every slot right, but the key-switch store tie flips (113); e before w (101), s last (92, +21); permute on the 113 (705: 91 only with ifswap / goto loops, rejected) and natural families on the 101 (best 92); not committed
 
 ## Escalations — Abdul (lane T)
 
@@ -708,6 +698,22 @@ LoadGameRoster — size 2/3, owner StaticEck2026
 - LoadGameRoster 21->21 (2026-10-24, StaticEck2026, GA) a tie in the unstable sort. `& 0xFF` fixes loop 1
 - LoadGameRoster 21->21 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder predicted); n assigned in the index (21); unsigned n (25); 11 * s.i / 2 * n (21); s.i++ in the loop body (21)
 - LoadGameRoster 21->21 (2026-10-24, Mhopkinsinc, GA) gmrosterslot[n + n] (21); [2 * n] (21); gmroster[n * 2 + 2] (21); k = s.i copy (40); product in k (26); product in a block-local j (24, size 0, loop 1 unchanged); no product local [s.i * 11 * 2] (26) / [(s.i * 11) << 1] (24, loop 1 unchanged)
+
+### `src/c/036_47C31_engine_init/FadeOutPalCycle.c`
+
+assthreestars — size 22/43, owner Mhopkinsinc
+- assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
+- assthreestars 44->44 (2026-10-24, StaticEck2026, GA) compile-context copy of ass_pc_slot20 (no change); the slot / pos pass-through copies written in place (47 / 46 / both 257): ESCALATE: the committed draft keeps two tie-breaker copies (slot, pos)
+- assthreestars 44->56 (2026-10-25, StaticEck2026, GA) tie-breaker copies slot / pos out (ruling): q from slot, int pn = q->pnum = starpl[..] with setplayer's real short prototype (EXE movsx edi, al / movsx edx, di), 41 declaration orders; short pn 48 (16-bit compare, not the EXE's); permute 29 only with code-changing transforms (if / else position, chain split, pflags2 moved: rejected)
+
+### `src/c/037_4842A_engine_player_logic/StarCompare.c`
+
+StarCompare — register 33/65, owner Mhopkinsinc
+- StarCompare 81->81 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
+- StarCompare 81->81 (2026-10-24, Mhopkinsinc, GA) . Each newest UNSURE bullet (inside the function's entry; `docs/unsure_tried.csv` rerun) gives the first difference and the savings that block it.
+- StarCompare 67->67 (2026-10-24, StaticEck2026, GA) the EXE-size eb / sb = rb[0] + rb[1] shape re-measured (182, regdump ties b / tb at 10 and pa / pb at 7); compile-context copy of StarEligible (no change)
+- StarCompare 67->67 (2026-10-25, StaticEck2026, GA) on the EXE-size eb shape: short-index rows (182), ds at function scope in three places (145-195), one-sum byte rows (199), sa != eb (135), ternary result (171)
 
 ### `src/c/022_2D346_game_setup/GameSummaryScreen.c`
 
