@@ -20,7 +20,7 @@ the targets depend on; never a new copy, a cast or a signature change (AGENTS.md
 The search keeps the best --beam texts at each step and expands each of them, so it can cross a step that costs
 a little before the targets move. A byte match is confirmed with a fresh DOSBox compile; --write-match writes it.
 Every candidate is logged to build/targetsearch/FUNC.csv; the best text goes to build/targetsearch/."""
-import argparse, csv, json, hashlib, os, random, sys, tempfile, time
+import argparse, csv, json, hashlib, os, random, re, sys, tempfile, time
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(ROOT, 'tools'))
 import irdump, emucc, cc, permute, declsearch, countsolve, tiesearch, rewrites, slotdump as sd
@@ -114,7 +114,8 @@ def main():
         miss = tiesearch.unsatisfied(passes, pairs)
         if W:
             cl = countsolve.compiled_slots(g, W) if g else {}
-            miss += sum(1 for v, w in W.items() if cl.get(v) != w)
+            gone = set(W) - set(re.findall(r'[A-Za-z_]\w*', text))     # a name an edit removed is no target
+            miss += sum(1 for v, w in W.items() if v not in gone and cl.get(v) != w)
         return (0 if s[2] else 1, other, miss, s[0], abs(s[1])), s
 
     text0 = open(src).read()

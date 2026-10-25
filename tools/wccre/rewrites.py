@@ -12,6 +12,7 @@ change exactly that, on simple assignment statements (`lhs = expr;`, `lhs op= ex
   reuse     w = E; ... x = ... E ...;   ->  x = ... w ...;      (E's names and w not written between)
   recompute w = E; ... x = ... w ...;   ->  x = ... (E) ...;    (one read at a time)
   alias     a = b = E; ... a ...        ->  ... b ...           (one read at a time, either way round)
+  commute   a op b -> b op a for + * & | ^ inside a right side (permute's commute does not reach every operand)
 
 All of them keep the computed values (no new variable, no cast, no signature change: AGENTS.md); the compiler
 decides whether the code changes. Each yields (description, new text) like permute.py's transforms, so
@@ -420,7 +421,22 @@ def r_alias(lines, b0, b1, lt):
                     yield 'alias:%d:%s>%s:%d' % (j - b0, x, y, n), L
 
 
-REWRITES = [('merge', r_merge), ('split', r_split), ('assoc', r_assoc), ('reuse', r_reuse),
+def r_commute(lines, b0, b1, lt):
+    """a op b -> b op a for + * & | ^ anywhere in a simple assignment's right side (a + b - c -> b + a - c)"""
+    for k in range(b0 + 1, b1):
+        a = statement(lines[k], lt)
+        if not a: continue
+        n = 0
+        for path, node in subtrees(a[3]):
+            node = unpar(node)
+            if node[0] == 'bin' and node[1] in ('+', '*', '&', '|', '^') and not (has_effect(node[2]) and has_effect(node[3])):
+                new = (a[0], a[1], a[2], replace(a[3], path, ('bin', node[1], unpar(node[3]), unpar(node[2]))), a[4])
+                L = list(lines); L[k] = text_of(new)
+                yield 'commute:%d:%d' % (k - b0, n), L
+                n += 1
+
+
+REWRITES = [('merge', r_merge), ('commute', r_commute), ('split', r_split), ('assoc', r_assoc), ('reuse', r_reuse),
             ('recompute', r_recompute), ('alias', r_alias)]
 
 
