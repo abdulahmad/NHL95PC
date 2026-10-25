@@ -374,6 +374,7 @@ SimPlayoffRound1 — slot 4/4, owner Mhopkinsinc
 - SimPlayoffRound1 9->9 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): inline compare (28) with Round2's forced tie order leaves 10, only the rwfh / rdfh / dir / s homes
 - SimPlayoffRound1 9->4 (2026-10-25, StaticEck2026, GA) winner counted by if / else as in SimPlayoffRound2 (4: only the rwfh / rdfh parameter homes); one-statement blank chain (12); i / g first (4); declsearch --all (4); slotdump count probes (none)
 - SimPlayoffRound1 4->4 (2026-10-25, StaticEck2026, GA) continue instead of else (4), inverted condition with swapped arms (27), ++ / += 1 (4), flipped score compare (7), <= with swapped increments (9), slot sum order and &g[i * 6] (4)
+- SimPlayoffRound1 6->6 (2026-10-25, abdulahmad, GA) lane T: countsolve.py: the parameters rwfh / dir / rdfh tie at 101; rdfh must outrank dir and rwfh (e.g. dir and rwfh 100, or rdfh 102 relative to both) for the EXE slots (compiler confirmed, 4 of 4): one more loop reference to rdfh, or one fewer to the other two. Nothing changed in the file.
 SeedPlayoffRound3 — register 8/13, owner Mhopkinsinc
 - SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -408,6 +409,7 @@ BlitTileMap — slot 4/5, owner Mhopkinsinc
 - BlitTileMap 5->5 (2026-10-24, StaticEck2026, GA) LoadRink as compile context (5, same slots); nothing kept
 - BlitTileMap 5->5 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): - (row + row) (8) forced t34 before t35 in the savings-200 run gives the EXE row (4, only height / width homes); explain: one more conflict near tile; map pointer local (15-29), bitmap base local (69)
 - BlitTileMap 5->5 (2026-10-25, StaticEck2026, GA) pre-sort probe: locals created in declaration order except tile (one block); tile as short (23), short tile through a short map index (32)
+- BlitTileMap 5->5 (2026-10-25, abdulahmad, GA) lane T: countsolve.py: width's count 101 (its def + col < width at loop depth 2) -> 106+ or 0-11 gives height / width their EXE slots (compiler confirmed, 4 of 4); the 5th difference is the row doubling. An outer-loop reference that costs no code is the target: `if (width > 0)` / `if (width)` before the col loop (24, 471 bytes) and `row < height && width` (467 bytes) add code. Nothing kept.
 
 ### `src/c/064_86696_season_playoffs/POCreateSchedule.c`
 
@@ -463,6 +465,7 @@ ExecuteTrade — slot 7/7, owner Mhopkinsinc
 - ExecuteTrade 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ExecuteTrade 7->7 (2026-10-24, StaticEck2026, GA) team records as a typed struct (7); handle stores split / reversed (7 / 9); *s.keya, *teams forms (7); TradeShowStats + FixJerseyConflict (+ BuildTradeRoster) as compile context (7); result stays int; nothing kept
 - ExecuteTrade 7->7 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): every swap of the runs at savings 80 (ka / kb), 70, 40, 20, 6 gives 7; result stays int
+- ExecuteTrade 7->7 (2026-10-25, abdulahmad, GA) lane T: countsolve.py (new tool): kb 60 -> 4-11 gives kb its EXE slot (confirmed), but traded then lands at -8 (EXE -4): a third name holds the top slot, no count set of the locals alone fixes it. Nothing changed in the file.
 
 ### `src/c/058_7F724_highlights/SelectHilight.c`
 
@@ -653,6 +656,7 @@ FillDressedSlots — slot 12/12, owner StaticEck2026
 - FillDressedSlots 20->20 (2026-10-24, StaticEck2026, GA) slots only. No count change or declaration order reaches the EXE's.
 - FillDressedSlots 20->20 (2026-10-24, StaticEck2026, GA) python resort of every r / i / slot / side use count within +-6: no combination gives the EXE slot order; lt / cast / count shapes (20-25)
 - FillDressedSlots 20->20 (2026-10-24, Mhopkinsinc, GA) size-sort replay (one / two names deleted or inserted): EXE order needs a 1-byte no-conflict temp, or t4 and t72 gone; CanFillLineSlot short + no cast 18 (CanFillLineSlot 31 -> 34, not kept); == 0 / || first two tests / || count tests / nested if / k braces / 0x12 <= 20; early return r 23; > -1 49; short form: i += 1 / 0 <= / 0x19 > / second return 18; declsearch --conflicts short form none
+- FillDressedSlots 20->20 (2026-10-25, abdulahmad, GA) lane T: countsolve.py (new tool): the EXE slots need the parameter slot to rank below every local with a count above 2 (its count 11, a loop reference) and i (41) above r (43): slot 0-2 with i 44+ gives all four slots, confirmed by a compile with those counts injected. Nothing changed in the file.
 CanFillLineSlot — register 13/30, owner StaticEck2026
 - CanFillLineSlot 31->31 (2026-10-24, StaticEck2026, GA) pl / st / sidev tie at savings 3
 - CanFillLineSlot 31->31 (2026-10-24, StaticEck2026, GA) goto-free returns 37 / 42 / 53; regsolve (0/1, only a savings bump)
