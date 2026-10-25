@@ -159,23 +159,6 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
 
-### `src/c/034_41B80_schedule/CreateNewLeague.c`
-
-- CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
-- CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) (the `xor bl, bl` byte zero is picked after register allocation, so no declaration order moves it)
-- CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
-- CreateNewLeague 12->12 (2026-10-24, StaticEck2026, GA) structured draft (no goto): the name test guards the body as one if block, same code; cflags sweep (12 or worse); the same lgstate+4 zero is xor dh, dh in the matched DeleteSavedGame and xor ah, ah at 3D0C1 (a post-allocation cycle pick)
-- CreateNewLeague 12->12 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool), 10 min: 432 forced orders, best 12 (the 18 x 2 run not reached)
-
-### `src/c/004_13320_asset_loading/PlacePlayersAtStart.c`
-
-- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) (global-value reuse). These have now had a Claude and a Codex lane pass back to back; the shapes tried are in `docs/UNSURE.md`
-- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- PlacePlayersAtStart 15->15 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r -on -ou -ei -zc and combinations): best 15, the regd4 / regd1 reloads stay folded
-- PlacePlayersAtStart 15->15 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): every swap of every tie run gives 15 (not in a tie)
-- PlacePlayersAtStart 15->13 (2026-10-25, StaticEck2026, GA) map negate ternary as if / else with the regd4 store per arm (the EXE's reload); mirror stores per arm / ternaries / !() (13-27), assinsert if / else (16), loop decrement forms (13); tieorder 323 orders (13); permute 449 best 10 only via a tie-breaker copy (ESCALATE, not committed)
-
 ### `src/c/021_2B7B7_file_dialogs/SelectSavedFile.c`
 
 - SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -578,6 +561,21 @@ OpenSpeechBank — size 8/11, owner StaticEck2026
 - OpenSpeechBank 11->11 (2026-10-24, Mhopkinsinc, GA) int nsamples with Swap16((short)nsamples) + int type / short c / (unsigned short)type >> 8 (41), declsearch --conflicts order (17: every slot and the type byte match, the w1 / w3 / ReadBE24 call-result stores differ); int type alone (43), int nsamples alone (42); i / off / pos / c / cnt moved to every position (17); OFFD / SLOTD spellings (17); cnt for w3 (23); permute.py 5 min on the 17 base (best 17); regsolve: only a cnt savings bump
 - OpenSpeechBank 11->11 (2026-10-24, Mhopkinsinc, GA) regsolve (no named votes, no prediction); cnt copy removed (51; 34 with declsearch --conflicts order; nsamples store goes direct, w1 still copied); loop bounds as BANKW(0x3B91) (17; 44 without cnt); lseek(fh, SLOTD(off, 0x12) + 6, 0) (32); !speechinit / if (BANKD(0x3B78)) (11); size = Swap16(size); size -= 5 (19)
 
+### `src/c/004_13320_asset_loading/PlacePlayersAtStart.c`
+
+PlacePlayersAtStart — register 6/15, owner Mhopkinsinc
+- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) (global-value reuse). These have now had a Claude and a Codex lane pass back to back; the shapes tried are in `docs/UNSURE.md`
+- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- PlacePlayersAtStart 15->15 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r -on -ou -ei -zc and combinations): best 15, the regd4 / regd1 reloads stay folded
+- PlacePlayersAtStart 15->15 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): every swap of every tie run gives 15 (not in a tie)
+- PlacePlayersAtStart 15->13 (2026-10-25, StaticEck2026, GA) map negate ternary as if / else with the regd4 store per arm (the EXE's reload); mirror stores per arm / ternaries / !() (13-27), assinsert if / else (16), loop decrement forms (13); tieorder 323 orders (13); permute 449 best 10 only via a tie-breaker copy (ESCALATE, not committed)
+- PlacePlayersAtStart 13->13 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py --minutes 10 (committed shape): 172 forced orders, best 13, not a tie (2 x 80, 2 x 40, 7 x 30 runs)
+- PlacePlayersAtStart 13->12 (2026-10-25, StaticEck2026, GA) assignment number as the ternary regd1.w == 4 ? 0x17 : 0x16 (and eax, 0FFh as PenShotAssign's ternary; committed), != 4 ? 0x16 : 0x17 and p->position forms (12 each); 0x16u / 0x16L (13), (unsigned short *) table loads (13), word_CBE8C[regd4.w + 1] (12, same diffs)
+- PlacePlayersAtStart 12->12 (2026-10-25, StaticEck2026, GA) mirror as a comma expression, empty then-arm, empty else (12), != pfgoal (16), ~p->pflags & pfgoal (17)
+- PlacePlayersAtStart 12->12 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py --minutes 10 (ternary shape): 172 forced orders, best 12, not a tie
+- PlacePlayersAtStart 12->12 (2026-10-25, StaticEck2026, GA) tools/wccre/targetsearch.py --minutes 30: 1837 candidates (0 tie / slot targets), best text negates regd1 before regd0 (14, 6 other; against the EXE order, rejected)
+
 ### `src/c/016_20016_easn_stats/EasnGoalieStatsScreen.c`
 
 EasnGoalieStatsScreen — size 9/13, owner Mhopkinsinc
@@ -586,6 +584,16 @@ EasnGoalieStatsScreen — size 9/13, owner Mhopkinsinc
 - EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
 - EasnGoalieStatsScreen 12->12 (2026-10-24, StaticEck2026, GA) EasnSkaterStatsScreen added in address order (skater 12; GA keeps the earlier copy, goalie jumps back: 22 -115 bytes); goalie first, ternaries, if swap, EasnTeamStatsScreen / EasnStandingsScreen in the file (no forward merge)
 - EasnGoalieStatsScreen 12->12 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): not in a tie (12); the cross-function tail merge is the cause
+
+### `src/c/034_41B80_schedule/CreateNewLeague.c`
+
+CreateNewLeague — register 2/2, owner Mhopkinsinc
+- CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) (the `xor bl, bl` byte zero is picked after register allocation, so no declaration order moves it)
+- CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- CreateNewLeague 12->12 (2026-10-24, StaticEck2026, GA) structured draft (no goto): the name test guards the body as one if block, same code; cflags sweep (12 or worse); the same lgstate+4 zero is xor dh, dh in the matched DeleteSavedGame and xor ah, ah at 3D0C1 (a post-allocation cycle pick)
+- CreateNewLeague 12->12 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool), 10 min: 432 forced orders, best 12 (the 18 x 2 run not reached)
+- CreateNewLeague 12->12 (2026-10-25, StaticEck2026, GA) tieorder.py 10 min (409 forced orders, best 12, inconclusive); targetsearch.py 30 min (1218 natural candidates, best 12, best text = the draft); `int sz` in its if (!err) block (12); the byte registers DH / CH / BL are picked after the dumped allocation passes (irdump pass 1: zeros still mov mem, 0, flag read DL): no reset loop gives final bh, no human-count loop ch, both bl (EXE dh)
 
 ### `src/c/064_86696_season_playoffs/POHandleElimination.c`
 
