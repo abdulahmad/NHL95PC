@@ -67,14 +67,6 @@ Segments 001-037. Work every draft in these files; do not take a file from the o
 
 These files are in lane 2 by segment. StaticEck2026 made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
 
-### `src/c/040_53294_engine_physics_ai/checkgoal.c`
-
-- checkgoal 8->8 (2026-10-24, StaticEck2026, GA) unchanged
-- checkgoal 8->8 (2026-10-24, StaticEck2026, GA) the three zero stores get eax where the EXE uses ecx / edx / edi.
-- checkgoal 8->1 (2026-10-24, Mhopkinsinc, GA) gotos removed: nested tests with side as fall-through and a duplicated wall exit (4); wall tests as two early-return ifs (1, committed); bounce on that structure: short / unsigned short z (14-17), x = -y (17), y = -y; x = y (6), x = y = -y (6), p->Zvel = -y >> 1 (18), x = z >> 1 short/int z (18-19), z = y; x = -z (14), z = y; z = -z (14), x = z = -y (1 int, 14 short); flag zero split / reload / Zpos else (4); regsolve: no reorder
-- checkgoal 1->1 (2026-10-24, Mhopkinsinc, GA) x = y; x = -x; x >>= 1 (3, -2 bytes); x = -y; x >>= 1 (3); short z copy (3); short z x = z >> 1 (worse); y = -y; x = y; x >>= 1 (3); x = y; x = -x; p->Zvel = x >> 1 (5, size 0); int z = -p->Zvel (1); test p->Zvel < 0 with z = -p->Zvel (worse); x = -p->Zvel; x >>= 1 (14); int z p->Zvel = x >> 1 (20); int z z = y; z = -z (12); block int (1); p->Zvel = x >>= 1 (1 / 14); y load split from test (1); z = -(unsigned short)y (2, +3); permute.py 4 min on goto-free draft (321, base)
-- checkgoal 1->1 (2026-10-25, abdulahmad, GA) lane T diagnosis: short z (`z = -y; x = z; x >>= 1`) gives z the register of y (AX, -2 bytes: the EXE keeps z in edx, apart from y); tieorder.py on that version (10 min): no tie order fixes it (size stays -2). Nothing kept.
-
 ### `src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c`
 
 - ReassignCtlPlayer 10->10 (2026-10-24, StaticEck2026, GA) the EXE's counter is a `short`. With it the draft scores 14
@@ -286,6 +278,16 @@ NetCollide — register 7/7, owner StaticEck2026
 - NetCollide 22->22 (2026-10-24, Mhopkinsinc, GA) after tieorder: needed t21 (|ux|) before t20 (|uy|); sort replay forced: ~50 single edits give 0, all a named variable (dy / dx / dir / p) created at another point or without dir, no temporary add / drop (32-35); 36 single declaration moves 22-37; ux / uy split into >>= 2: ux 40, uy 40, both 32; three-step /= split: ux 36, uy 78, both 69; ux = dx << 8 then / dist >> 2 both 75; dx <<= 8 in place 98; gy before dx 62; dist assigned in the test 22; 0x18 <= dist 22
 - NetCollide 22->22 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: a tie order gives the EXE bytes (100 orders): pass 0 savings-3 run: sorted t63 t20 t52 dx t36 t29 t49 t46 t38 t21 t17 dy t60 t19, needed t21 t20 t52 dx t36 t29 t49 t46 t38 t63 t17 dy t60 t19 (t20 EDX -> ECX, t21 ECX -> EDX)
 - NetCollide 22->22 (2026-10-25, abdulahmad, GA) lane T: tieorder explanation with conflict origins: the savings-3 run needs t21 (the |ux| of L230, defined in B12 / B13, used in B14) ahead of t63 (L268 index shl); no single added, dropped or moved conflict gives it (two or more changes)
+
+### `src/c/040_53294_engine_physics_ai/checkgoal.c`
+
+checkgoal — size 1/1, owner StaticEck2026
+- checkgoal 8->8 (2026-10-24, StaticEck2026, GA) unchanged
+- checkgoal 8->8 (2026-10-24, StaticEck2026, GA) the three zero stores get eax where the EXE uses ecx / edx / edi.
+- checkgoal 8->1 (2026-10-24, Mhopkinsinc, GA) gotos removed: nested tests with side as fall-through and a duplicated wall exit (4); wall tests as two early-return ifs (1, committed); bounce on that structure: short / unsigned short z (14-17), x = -y (17), y = -y; x = y (6), x = y = -y (6), p->Zvel = -y >> 1 (18), x = z >> 1 short/int z (18-19), z = y; x = -z (14), z = y; z = -z (14), x = z = -y (1 int, 14 short); flag zero split / reload / Zpos else (4); regsolve: no reorder
+- checkgoal 1->1 (2026-10-24, Mhopkinsinc, GA) x = y; x = -x; x >>= 1 (3, -2 bytes); x = -y; x >>= 1 (3); short z copy (3); short z x = z >> 1 (worse); y = -y; x = y; x >>= 1 (3); x = y; x = -x; p->Zvel = x >> 1 (5, size 0); int z = -p->Zvel (1); test p->Zvel < 0 with z = -p->Zvel (worse); x = -p->Zvel; x >>= 1 (14); int z p->Zvel = x >> 1 (20); int z z = y; z = -z (12); block int (1); p->Zvel = x >>= 1 (1 / 14); y load split from test (1); z = -(unsigned short)y (2, +3); permute.py 4 min on goto-free draft (321, base)
+- checkgoal 1->1 (2026-10-25, abdulahmad, GA) lane T diagnosis: short z (`z = -y; x = z; x >>= 1`) gives z the register of y (AX, -2 bytes: the EXE keeps z in edx, apart from y); tieorder.py on that version (10 min): no tie order fixes it (size stays -2). Nothing kept.
+- checkgoal 1->1 (2026-10-25, Mhopkinsinc, GA) tieorder 10 min: 1 -> 1 after 395 forced orders, no tie order found (inconclusive); targetsearch 30 min: 1134 candidates, best 1 other difference, 0 tie swaps and 0 slot targets, best.diff empty; bounce y load then y >= 0 early return, int z: 1 differing, size +1; bounce y load then y >= 0 early return, short z: 14 differing, size -2; OLDZ < 0xD normal-body first / bounce else, int z: 30 differing, size +1; OLDZ < 0xD normal-body first / bounce else, short z: 36 differing, size -2; p->Zvel = -y; p->Zvel >>= 1 after loaded-y test: 16 differing, size -4; short x negate then x /= 2 and store: 17 differing, size +1; short z = -y; z >>= 1; p->Zvel = z, no x copy: 16 differing, size -4; same short velocity negate/halve/store with z scoped to OLDZ block: 16 differing, size -4; short z for load, sign test, negate, compound halve and store: 16 differing, size -4; OLDZ >= 0xD bounce if / normal else, shared function end, int z: 1 differing, size +1; OLDZ >= 0xD bounce if / normal else, shared function end, short z: 14 differing, size -2; velocity load before Zpos restore, int z: 3 differing, size +1; velocity load before Zpos restore, short z: 16 differing, size -2; permute.py 5 min budget on bounce early-return int-z form, natural transforms only: 321 candidates in 127 s, best 1 differing, size +1, no match; full log ~/tmp/u/np/permlog_ts_checkgoal.csv
 
 ### `src/c/040_53294_engine_physics_ai/checkob.c`
 
