@@ -4256,3 +4256,15 @@ PlacePlayersAtStart,,"`0x16u` / `0x16L` constants (13), `(unsigned short *)` tab
 PlacePlayersAtStart,,"the mirror as a comma expression, `!= pfgoal` (16), `~p->pflags & pfgoal` (17)",17,ga
 PlacePlayersAtStart,,an empty then-arm,,ga
 PlacePlayersAtStart,,an empty else (12 each),12 each,ga
+assgoalie,,"tools/wccre/tieorder.py --minutes 10 on the old base (202 orders, 18) and on the new one (188 orders, 13",,ga
+assgoalie,,with --max-run 130,,ga
+assgoalie,,"the savings-3 / -2 runs of 115 / 120 included, 205 orders, 13): all inconclusive, no cache",,ga
+assgoalie,,"tools/wccre/targetsearch.py --minutes 30 on the new base (423 candidates, no tie or slot targets: best text 36 with 7 other",,ga
+assgoalie,,the Y offset as `regd1.w = regd1.w - (...)` plus q in the loop block),,ga
+assgoalie,,the y offset alone swapped 16,,ga
+assgoalie,,"the x alone 18, both with the HIWORD subtraction first 33 / 24 (x only), `(p->Xpos >> 16)` there 13-18",,ga
+assgoalie,,"ay first 34, after q 16, after x / y / ok / a 16, last 53",,ga
+assgoalie,,"the move Y offset with HIWORD(p->Ypos) 51, both with HIWORD 59",,ga
+assgoalie,,the X with Xpos first 17,,ga
+assgoalie,,"`a == 8` as a ternary 144, as an inverted if 40",,ga
+assgoalie,,the 48h flag test as `== 0` 13,,ga
