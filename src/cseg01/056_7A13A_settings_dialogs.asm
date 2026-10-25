@@ -4808,6 +4808,10 @@ pop ecx	; 7D6AE
 pop ebx	; 7D6AF
 ret	; 7D6B0
 %endif ; C
+; C: src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c (ControlsDlgLoop)
+%ifdef CBUILD
+%include "c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.ControlsDlgLoop.inc"
+%else
 ControlsDlgLoop:
 push dword 44h	; 7D6B1
 call __CHK	; 7D6B6
@@ -5177,6 +5181,7 @@ jmp near ControlsDlgLoop.19	; 7DB58
 mov edi, dword [byte esp+014h]	; 7DB5D
 push edi	; 7DB61
 jmp near ControlsDlgLoop.5	; 7DB62
+%endif ; C
 ; C: src/c/056_7A13A_settings_dialogs/SetCtlTeams.c
 %ifdef CBUILD
 %include "c/056_7A13A_settings_dialogs/SetCtlTeams.inc"
