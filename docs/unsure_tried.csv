@@ -4308,3 +4308,22 @@ ReassignCtlPlayer,,permlog_ts_ReassignCtlPlayer.csv retains all candidate shapes
 ReassignCtlPlayer,,generated rvalue-address compiler errors and out-of-range constant warnings were skipped by permute,,ga
 ReassignCtlPlayer,type:dx:short,dx as short,tried (docs/UNSURE.md),ga
 ReassignCtlPlayer,type:best:int,best as int,tried (docs/UNSURE.md),ga
+checkplcoll,,register short x parameter: 13,,ga
+checkplcoll,,register int y parameter: 13,,ga
+checkplcoll,,const short x parameter: 13,,ga
+checkplcoll,,short y parameter under GA: test equal-sized parameter homes: 13,,ga
+checkplcoll,,int x with explicit signed-short normalization on entry (new reason: narrow home within a 4-byte name): 17,,ga
+checkplcoll,,int x with signed-short normalization after guards: 16,,ga
+checkplcoll,,checkcx unprototyped declaration: default argument promotion of x: 13,,ga
+checkplcoll,,checkcx per-file int x parameter declaration: 13,,ga
+checkplcoll,,checkcx per-file all-int value parameters: 13,,ga
+checkplcoll,,long y parameter under GA: 13,,ga
+checkplcoll,,signed char y parameter under GA: 11,,ga
+checkplcoll,,unsigned short y parameter under GA: 13,,ga
+checkplcoll,,"32-bit coordinate array local used in both loops, initialized before guards: 10",,ga
+checkplcoll,,"32-bit coordinate array local used in both loops, initialized after guards: 15",,ga
+checkplcoll,,"32-bit coordinate struct local used in both loops, initialized before guards: 10",,ga
+checkplcoll,,"32-bit coordinate struct local used in both loops, initialized after guards: 15",,ga
+checkplcoll,,signed char y rejected because it narrows the coordinate,,ga
+checkplcoll,,"coordinate struct before guards retained, both fields used in both loops",,ga
+checkplcoll,,"permute 5 min budget, natural ordering/scope/expression/loop families only, historical log seeded: 339 compiled in 161 s, best 10 base, no match",,ga
