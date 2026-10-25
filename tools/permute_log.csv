@@ -425735,3 +425735,273 @@ date,func,file,transform,sha1,score,sizediff,match,first,cc
 2026-10-24,DrawLockerJersey,src/c/059_8034B_settings_lockerroom/DrawPanel3D.c,swapdecl:i:k > movedecl:f:1 > swap:64:25 > loop:25:gotobot,fc433969c19a6c7b,30,0,0,229,ga
 2026-10-24,DrawLockerJersey,src/c/059_8034B_settings_lockerroom/DrawPanel3D.c,swapdecl:i:k > movedecl:f:1 > swap:64:25 > swapdecl:src:k,20f758df69fddbb9,29,0,0,519,ga
 2026-10-24,DrawLockerJersey,src/c/059_8034B_settings_lockerroom/DrawPanel3D.c,swapdecl:i:k > movedecl:f:1 > swap:64:25 > incdec:51:forpre,8c9bef5c82f231fa,29,0,0,519,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:141:!=,915bbdc20eebd601,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:232:7:unsigned_char,58f1cdc1bd7ed2bc,231,29,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:c2:19,5f285e881a97590b,275,0,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:62:while1,d36c56debfdac35c,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:179,b8626d6768cad592,90,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:cursor:ptrart,ad5e655011a818ad,94,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:121:mergeab,40e7a809d7e218fa,196,1,0,320,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:211:5:int,522b83386404dc7d,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:col1:5,47a8e690bb9f467d,179,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:43,9fd18203e60fde92,92,0,0,165,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:depth:3:last,04d38a0e5ff34195,89,3,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:233:6,b8faa0f6eb5af34a,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:click:depth,5e7e9128db2fffe7,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:200:!=,2306c58ac52b1fd6,92,6,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:261:6:unsigned_short,74aa647fdea9ec9d,216,32,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:e:17,a1fee0f9d5e3eb69,317,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:64:while1,1e87a5a034da47b0,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:45,502b3680f3e10c04,233,0,0,185,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:oldmx:1:after,6111527a41d8cedb,101,26,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:cursor:w,706dce63f056a082,415,25,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:depth:bits,a4ef22d96bb0c21e,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:level:short,bc9f231328727a96,395,18,0,30,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:243:6:unsigned_short,ef2fb5e48cc37c33,211,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:col2:6,0ac774d5d3ce2221,132,0,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:231:do,0bbd42b249e06ace,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:col2:17,a8c6a2b96f5eedb6,101,0,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:cursor:col3,55e5db1512ad8c55,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,zero:79:ne0,b596c85bc176e98b,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:r:3:after,58a5e3b795d6f8dc,394,15,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:34,14d012b464144bce,90,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:67:4:unsigned_char,c78249647d8ac7f8,117,1,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:cursor:depth,89bc5a0e6f1ee698,1907,25,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:242:2,84cb7ff097f16936,90,3,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:cursor:unsigned_short,821b5ce99c3f2aa0,410,67,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:246:split2,f9de191256b1062e,232,22,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:depth:30,f450c6fd78eeec46,301,1,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:depth:2:last,0264391132d4d8ff,330,1,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:102,03f0bb97d0290a3b,99,3,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:165:2:unsigned_short,656ba008ad05df41,202,6,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:50:2,cb89219e1b44eede,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:211:split3,a847d6a6e837e4d0,261,58,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:c2:23,5ecd9c5ce57c87d8,246,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:e:p,75c01f27638762db,108,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,zero:66:ne0,d33e9cc2caee617a,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:97:==,c667993e2bbb45dc,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:r:3:last,897b72890c51e8fc,444,16,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:190:3:char,4a242c85c7c395e6,118,1,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:mx:k,2584434875b698a8,,,,,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:178:8,f84e9e466cf22311,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:cursor:unsigned,1f3549823cc71a02,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:166:do,b500755141f23eb7,154,20,0,490,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:246:split3,26af6e2c6c87817c,257,14,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:cursor:9,6eb14251d2d845e9,119,0,0,180,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:k:r,b4b3843e3a62e1b3,288,0,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:214:==,121e90e9c1231ebe,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:mx:1:last,187c25d50e67a796,329,29,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:221:4:short,575c8b7a1a175e46,225,30,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:cursor:col3,4001c1828cdc866c,461,26,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:oldmx:unsigned_short,a27a47ec6dbe097f,517,78,0,30,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:211:split2,2afe3990b820956e,232,59,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:ptr:3,1de7fc862f204e58,178,0,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:r:e,29989ded4040171a,102,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:215:!=,e4e50ad4a0e3de22,89,12,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > chain:169:split,4b0e4d30f379a91e,221,21,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > incdec:231:forpre,d8f42bf5a10794af,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > mulshift:50:7:mul,1a1ede372aa82190,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > type:bits:unsigned_char,750caf2a8cfbd1df,109,0,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > swap:50:2,8cf4e44757b78c94,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > movedecl:col3:14,f0d29b8d9924aa18,127,0,0,180,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > temp:k:inline,88a889f21ee8f93b,291,0,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > lvinline:c2,7a1874fe014ac24b,,,,,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > swapstmt:175,486a193e4b3a6279,94,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > commute:243:==,dc8f1542f4e3d0f4,90,2,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > opassign:241:0:split,69757eb7c9d8d5a5,118,16,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > split:depth:1:after,76c89763de919468,411,0,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > tempadd:59:-,2bfb7ee80f0b328e,238,1,0,194,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > loop:231:do,4aea9fc6493cd064,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > shiftstmt:232:7:out,eca4ac014244f8c4,250,29,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > zero:230:ne0,b3399d0e12de26e6,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > cast:84:10:unsigned_char,c68bd68b37e941bb,145,12,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > cmpflip:199,4a3fe41b008c0fec,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > swapdecl:k:r,f9e995d31b0be3ec,288,0,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > reuse:click:ptrart,f16cdd3f53017bba,108,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > chain:49:split2,b6a77038c23a7cfb,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > incdec:117:forpre,1f8a54cb20be5f04,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > mulshift:145:11:mul,0de0fa3dd359d5d3,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > type:h:char,f6d20e9902afd92f,358,11,0,30,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > swap:54:6,93c4f8113c269db9,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > movedecl:e:3,ee9d6f861799943f,307,0,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > temp:c2:inline,3cae1a9594ce3337,,,,,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > swapstmt:264,a6e53601a8165632,105,38,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > commute:69:!=,9cd573700f45f56e,90,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > split:oldmx:1:last,6d3ae291c84c727d,101,26,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > tempadd:263:-,ac2632e9644ad005,333,16,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > loop:166:while,2a41a59e9ba6ffd6,94,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > shiftstmt:145:11:out,36e123cb7e745308,360,19,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > zero:260:not,31ce9bc290e171dd,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > cast:58:2:char,f8fa949dd7d206c4,296,3,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > cmpflip:270,290fc117b20d3fa7,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > swapdecl:col2:col1,88eb343654b5826b,102,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > reuse:w:ptrart,ad8198352e628846,143,0,0,180,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > chain:211:split2,0ade4f9e663c8243,232,59,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > incdec:136:op1,ad164e7cddf11da7,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > mulshift:237:5:shl,0302ff7c4be6597e,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > type:k:unsigned,39c031d30b934abf,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > swap:178:8,a6123b7e4050d8f9,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > movedecl:p:16,79f875da354b0f46,307,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > swapstmt:34,ff5cc03c5612a0d5,90,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > commute:215:!=,e3b5d2c4601dabd6,89,12,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > split:mx:1:after,ec8a8db99eeec7e4,311,29,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > tempadd:189:+,a95adade41319790,315,3,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > loop:82:while,ac6c52cbb55a7ecb,92,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > shiftstmt:233:9:out,b2018bf0332e90a5,252,28,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > zero:200:eq0,84e5a0584b4373c5,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > cast:237:11:int,8370b68ba1bd41ce,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > cmpflip:178,692efb71b5ca5454,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > swapdecl:bits:k,f3c3178c368bea90,152,0,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > reuse:cursor:bits,38be710eb39efb1b,1903,17,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > chain:246:split,1dd7f7e8ce5d03b0,224,18,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > incdec:82:forpre,ba635594a2830c3f,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > mulshift:233:6:shl,73c0085e027c4cc5,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > type:item:unsigned,a520fd408ded3fec,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > swap:145:8,707613574854b77a,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > movedecl:col3:3,0c74886b1064a33c,165,0,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > swapstmt:232,7b37b6e81bddc364,442,26,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > commute:182:+,de192dfce527e3c2,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,mulshift:145:10:shl > split:r:2:after,b8468ff9dca299f7,414,28,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:h:char,a144c58402512686,358,11,0,30,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:70:6:unsigned_char,8875134ac9c4f0c8,275,0,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:82:while,c0d5860bab0826a3,92,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:e:6,cb1e940d0730cf76,291,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:w:k,ea9232238458489a,587,80,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:ptr:click,b1066cc74645aaaa,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:144:2,3099e7e370999682,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:my:unsigned,186e1ee26cfeff3b,92,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:235:10:unsigned_char,c32758dde9594ce3,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,zero:167:ne0,46ddc1ec935593b4,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:r:1:after,553ac00e890eb7e1,374,5,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:k:22,7228c618401d80d7,301,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:col2:col1,dbeb0a0767c54f78,102,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:125:mergeba,a93e18b07e7db46f,197,1,0,320,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:189:+,b3d1e1bd1c312b33,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:185:5,345f6bb1ea56a40b,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:flag:short,502a949078546d7d,204,2,0,30,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:71:6:char,8edc11a6a1b2a3a8,284,0,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:r:2:after,745e6b4aeb3afed0,414,28,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:82:ifdo,0b8a81d73c84442b,225,33,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:c2:12,0ce7735b425bea19,297,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:cursor:k,1bf9bbf53443e478,639,29,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:193,bdcbd6effe064e24,92,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:121:mergeba,312a7f05b7b0d487,194,1,0,320,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:oldmx:short,743089d52a3796c7,494,73,0,30,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:58:8:char,3b19071c13f0e57c,328,7,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:oldmy:1:last,76808de0921a667f,103,32,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:166:gototop,6751a6db289980a5,94,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:k:16,4e6439fb2393a8c9,274,0,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:click:level,b95038b039430c76,531,21,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:263,492f7f0c521b8a7a,103,32,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:48:split3,1f0b78ac43e8b98d,90,0,0,218,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:182:+,555dab3425cefb42,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swap:145:9,118bfef4caf09277,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,type:col2:unsigned_short,be7d22466cb53528,472,49,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:235:3:short,1f42902693d4b080,88,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,split:depth:3:after,303960a78ab69a7a,89,3,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,loop:166:ifdo,b5af6bbd46dd9acd,226,41,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:r:2,4f7988cea2254c99,301,0,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:bits:ptrart,83c80adfc5eef0d6,108,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:95,600d3f1214141271,94,0,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapdecl:p:c1,79ed4a6b28846d30,159,1,0,180,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,chain:226:split3,0eafa957610ad654,268,56,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,cast:145:3:unsigned_short,1b118e6a25d10a2f,239,7,0,320,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,movedecl:c1:6,8690b6654a73e873,297,0,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,reuse:click:depth,566b6f5053b58ae4,1911,26,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,swapstmt:264,c548723f6fe2c471,105,38,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:71:6:short,54853c06d01faefe,279,8,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:94,3a06e353b05538ff,89,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:col3:28,99afa0bef1671041,160,4,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:click:level,ec3e012bba0504e1,527,17,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:oldmx:unsigned,cf40645b89257c53,90,4,0,371,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:233:9:unsigned_char,09a7d65f08b73627,226,25,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:206,2a0f920f440d8684,91,3,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:c1:16,febf286ce01dfe40,214,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:c2:unsigned_short,773316bb6768926a,298,0,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:237:5:char,13f7b846ff7b5421,206,3,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:c1:27,b3369504bad7aa8e,216,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:my:unsigned_short,3f302a6bdacf840f,345,49,0,30,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:211:split,ebf4e35d69be5806,218,15,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:178:9:short,b6bebf4dfd5ab218,111,14,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:col1:ptr,a6a68f31807c51b7,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:cursor:28,efae94246c1cc979,147,4,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:click:w,2cbf2309559a7043,403,21,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:232,e0f84e4e934c251d,438,22,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:click:10,9b26f4c5883a6e76,265,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:206:mergeba,176624a9d781cd36,118,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:181:4:int,3b34eb85b454d872,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:bits:unsigned_char,7faf21bd9e9f9d70,104,4,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:166:gototop,527a7c75a2bf912f,89,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:181,a9586ff04396b003,86,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:c1:5,16010d95a1868f01,288,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:242:7:int,faf60a5987c09940,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:h:char,fe1940e4b6bb9431,353,15,0,30,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:82:do,ec2c9430e745d4d1,154,9,0,490,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:p:15,6fc7aada6de93734,260,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:226:split3,e89c0f5fc00e19a3,263,52,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:118:3:short,ad4209e36a96d018,233,12,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:ptr:unsigned,f3a45cce91ac6a0b,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:col1:6,9640f54f62d59db3,134,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:50:17:unsigned_short,a085d27a1439c43d,87,4,0,191,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:bits:k,a5add5397eec423d,262,5,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:60,76e9234c0264aeaf,85,4,0,418,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:ptr:27,ac454d91ba86e6b9,147,4,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:49:split,65461a277f2e261b,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:261:3:unsigned_char,20cf029a66ad761e,211,28,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:104,9cbfe183e0691bef,85,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:i:unsigned,2d71e661068184ca,334,1285,0,90,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:my:ptrart,82de48fc2f32b3d0,,,,,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:cursor:22,eb8918c9c700e6d9,104,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:261:5:int,ded07cbe62d82e99,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:57,8dba60f833133e79,90,4,0,346,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:depth:char,c07349299eb1f7c5,515,33,0,28,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:click:ptrart,21c9d4fcb09c81d0,103,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:cursor:13,6a1e5768ff2256c1,235,4,0,180,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:263:2:char,21961eec477c23ca,108,15,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:43,0c7b0d0c9ad6b0a6,87,4,0,165,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:oldmy:short,236f1d52b8943ca9,945,85,0,30,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:bits:29,2a9c6ef41ca19bb2,264,5,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:73:4:int,ee593537313dba58,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:179,1c824ef66ab13864,85,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:r:11,e347ac8c911d950b,276,4,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:142:1:unsigned_short,c8d7f00fcfe21dae,274,12,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapdecl:ptrart:cursor,943349b35b1ff23d,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:54,6db748afe58f5635,374,7,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:col3:unsigned_short,6e54eceba8549d67,474,41,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > loop:62:goto,341826721deee1ba,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:col2:7,ef305fd6882e775f,280,4,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:124:mergeba,b57da3f86572c123,192,3,0,320,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:178:14:char,9a21b2e022b076bd,279,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:192,183237a18a3bc15e,85,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:cursor:w,c9b14507f864aac0,411,21,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:c1:unsigned,274680106ef98a44,299,2,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:246:split,427633fff5ae9a9f,219,14,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:71:2:unsigned_short,ab2c4caeb426c613,283,11,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:252,4cc1e9667a42f3f3,86,9,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:c1:15,2aebb5589d11d529,214,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:col2:short,3b8c4eecea4f2f46,468,54,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:69:5:unsigned_char,0ad82b3b45b72853,110,11,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:c2:1,b575db779b92c530,256,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:c1:char,146bec3e9a56d2d0,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swap:53:6,c8dbd269881f53a1,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:114:4:char,a167cec948256aee,224,21,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:c2:18,2a4005d456541b93,247,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:cursor:col1,b1eeeeb2a0c13d4c,449,22,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:click:unsigned,e117eb351a153aa0,85,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:211:split2,cb7537e268daf18d,227,55,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:83:2:int,53a3f2037d8fc4ee,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:48,edce1bdfe65b1709,87,4,0,218,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:click:17,cafba57006c36e78,103,4,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:cursor:h,94fe60f750fe0a79,404,19,0,0,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:ptrart:unsigned,85e9673c24609226,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:185:8:unsigned_short,dc6e7557e69e995d,231,7,0,33,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:74,a3fdb9f1709f4c46,96,34,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:e:14,5b9f10d335d291bb,238,4,0,40,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > reuse:mx:k,3b7637d8bdc486cc,,,,,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:item:unsigned_short,8724482fd4e6227f,453,28,0,30,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:147:8:int,c9835eb5a44dcb45,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > swapstmt:45,ed8e17bdf06e3c7e,228,4,0,185,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > type:level:short,a665c507dde619da,390,14,0,30,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > chain:246:split2,ec67e8621fe5eb0f,227,18,0,171,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > cast:231:1:int,ccb69c952136cbbd,83,4,0,470,ga
+2026-10-25,TradeScreenLoop,src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c,commute:216:!= > movedecl:p:22,1444a369097ac28b,297,4,0,33,ga

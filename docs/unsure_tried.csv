@@ -4013,3 +4013,9 @@ NetCollide,,"the post blocks' `ux -= 6` / `ux += 6` folded into the store, `gx +
 PlayoffTreeMenu,,"the three stores without the pos chain (238, +13)","238, +13",ga
 PlayoffTreeMenu,,"with the pos stores swapped (236, +13), in the order nitems / menus / bg (238, +13)","238, +13",ga
 PlayoffTreeMenu,,"`menus[++depth] = ...`, `++depth;`, `depth += 1;` (67, no change), `&menus[depth][sel[depth]]` for L204 (67), w / h as `x2 + 1 - x1` (72, +20)","72, +20",ga
+DrawSprite,,"flip as a `short` parameter read in place (no s.flip copy) with its struct slot kept as padding (89, +17)","89, +17",ga
+DrawSprite,,"the slot dropped (95, +17)","95, +17",ga
+DrawSprite,,"the s.flip member left unused (89, +17): the EXE's `cmp word [esp+18h], 0` is not a spilled short parameter",,ga
+EditTextField,,"goto-free loops on the current draft: a flat `for (;;) { key = PollKey(); if (!key) { if (!sub_B3D64()) { if (idle) idle(); continue; } key = 0; } if (key) { handlers (Backspace / typing as the chain's last else); continue; } blink }` (107, +16)","107, +16",ga
+EditTextField,,"the same with the idle as an inner `while (!(key = PollKey())) { if (sub_B3D64()) break; if (idle) idle(); }` (105, +22)","105, +22",ga
+EditTextField,,"an inner `while ((key = PollKey()) != 0 || !sub_B3D64()) { if (!key) { idle; continue; } handlers }` (132, +13)","132, +13",ga
