@@ -1,5 +1,5 @@
 /* Settings: locker room screen; DrawLockerRoom follows it (it ends in LockerStub, this file's epilogue),
-   and LockerRoomLoop (draft) ends there too. */
+   and LockerRoomLoop ends there too. */
 #define LockerRoomScreen LockerRoomScreen_decl
 #define LockerRoomLoop LockerRoomLoop_decl
 #define sub_912C8 sub_912C8_decl
@@ -248,17 +248,16 @@ void DrawLockerRoom(void)
    abbreviations into the matchup string, points the controllers at their sides' teams and writes the mode state;
    7 (Cancel) and event bit 4 leave without that. Leaving fades the music and the palette, frees the block and
    waits for the song to stop. Result: 0 after OK, else 3.
-   DRAFT (10.0 GA): same size, one register left: case 4's dword_D2150[vis] goes into eax where the EXE uses ebx.
-   Tie-breaker (ruled 2026-10-24, docs/ESCALATIONS.md): case 0 / 3's first step in league mode through the dead n gives the EXE bytes (a new
-   int scores 23); not kept, dead-variable reuse that only reorders the tie.
-   The home steps' second try is written with hm (hm == vis there, and Watcom uses vis's register for it); with vis, Watcom hoists (vis + 1Bh) % 1Ch and (vis + 19h) % 1Ah, which the visitor
-   steps share, above the jump table. Lane 2 2_b7: `hm++; hm %= 0x1A;` for that step also gives the EXE bytes, but only
-   with `(int)HomeTeam` / `(int)VisTeam` casts on the two controller ternaries (no-op casts, ESCALATE; 29 without
-   them, 25 as if / else). See docs/UNSURE.md. */
+   Matched (10.0 GA): the controller teams as if / else with a store each (the EXE converts each side's short
+   in its own arm and cross-jumps the shared `sar` / store; the plain ternary converts once after the join) and
+   hm, vis declared first (that order gives case 4's team index the EXE's tie order, ebx). The home steps'
+   second try is written with hm (hm == vis there, and Watcom uses vis's register for it); with vis, Watcom
+   hoists (vis + 1Bh) % 1Ch and (vis + 19h) % 1Ah, which the visitor steps share, above the jump table. */
 int LockerRoomLoop(void)
 {
-    char *p;
+    int hm;
     int vis;
+    char *p;
     int bm;
     int ox;
     int oy;
@@ -267,7 +266,6 @@ int LockerRoomLoop(void)
     int btn;
     int hit;
     unsigned char buf[0x300];
-    int hm;
     int n;
     unsigned char *ev;
 
@@ -374,8 +372,14 @@ int LockerRoomLoop(void)
                             str_LAAtMTL[2] = ' ';
                         }
                     }
-                    if (ctl1team[0] >= 0) ctl1team[0] = ctl1side[0] == 0 ? (int)HomeTeam : (int)VisTeam;
-                    if (ctl2team >= 0) ctl2team = ctl2side == 0 ? (int)HomeTeam : (int)VisTeam;
+                    if (ctl1team[0] >= 0) {
+                        if (ctl1side[0] == 0) ctl1team[0] = HomeTeam;
+                        else ctl1team[0] = VisTeam;
+                    }
+                    if (ctl2team >= 0) {
+                        if (ctl2side == 0) ctl2team = HomeTeam;
+                        else ctl2team = VisTeam;
+                    }
                     WriteCurModeState();
                     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
                     sub_8FFB0(0, 0x100, buf);

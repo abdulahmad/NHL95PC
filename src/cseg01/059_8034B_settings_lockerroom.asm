@@ -1975,6 +1975,10 @@ dd LockerRoomLoop_n4
 dd LockerRoomLoop_n1
 dd LockerRoomLoop_n6
 dd LockerRoomLoop_n7
+; C: src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c (LockerRoomLoop)
+%ifdef CBUILD
+%include "c/059_8034B_settings_lockerroom/LockerRoomScreen.LockerRoomLoop.inc"
+%else
 LockerRoomLoop:
 push dword 348h	; 81C4E
 call __CHK	; 81C53
@@ -2537,6 +2541,7 @@ add esp, byte 4	; 8244A
 xor ebp, ebp	; 8244D
 mov dword [songdata], ebp	; 8244F
 jmp near LockerRoomLoop_n7.3	; 82455
+%endif ; C
 ; C: src/c/059_8034B_settings_lockerroom/DrawSelBoxOn.c
 %ifdef CBUILD
 %include "c/059_8034B_settings_lockerroom/DrawSelBoxOn.inc"
