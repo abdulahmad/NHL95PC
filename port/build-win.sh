@@ -37,6 +37,11 @@ done
 ls "$OUT"/src/cseg01/*.asm "$OUT"/src/dseg02/*.asm | xargs -P 8 -I{} sh -c \
     'nasm -O0 -f win32 --gprefix _ -I '"$OUT"'/src/inc/ {} -o '"$OUT"'/obj/$(basename $(dirname {}))_$(basename {} .asm).o'
 
+sh port/fetch-deps.sh
+# Munt (the MT-32 emulator) needs a C++ compiler: mingw-w64's g++ (gcc-mingw-w64-i686 plus g++-mingw-w64-i686)
+CXXW=${CXXW:-i686-w64-mingw32-g++}
+CXX=$CXXW AR=${ARW:-i686-w64-mingw32-ar} sh port/munt-build.sh build/munt-win "-static"
+
 CC=${CC:-i686-w64-mingw32-gcc}
 command -v "$CC" >/dev/null 2>&1 || CC=gcc
 # DOS memory (0x10000-0xFFFFF) must be free, but Windows fills it before main runs. Linked at 0x10000 with ld's default script plus an
@@ -46,8 +51,10 @@ $CC -Wl,--verbose 2>/dev/null | sed -n '/^======/,/^======/p' | sed '1d;$d' | se
     > "$OUT/lowmem.ld"
 grep -q '^  \.lowmem' "$OUT/lowmem.ld" || { echo "could not add .lowmem to the linker script" >&2; exit 1; }
 $CC -O1 -g -mstackrealign -Wall -Wno-format-truncation -DSDL_MAIN_HANDLED $SDL_CFLAGS \
-    -o "$OUT/hockey-win32.exe" port/host.c port/emu.c port/ports.c port/dos.c port/video.c port/input.c port/irq.c port/cstart.c \
+    -o "$OUT/hockey-win32.exe" port/host.c port/emu.c port/ports.c port/dos.c port/video.c port/input.c port/irq.c port/audio.c port/dma.c port/speaker.c port/opl.c port/sb.c port/mpu.c port/gus.c port/sound_ports.c \
+    port/soundtest.c port/third_party/nuked-opl3/opl3.c -DHAVE_MUNT -Ibuild/munt-win/inc -Iport/third_party/munt/mt32emu/src port/cstart.c \
     port/overrides.c port/plat_win.c $(ls "$OUT"/obj/cseg01_*.o) $(ls "$OUT"/obj/dseg02_*.o) \
-    $SDL_LIBS -static-libgcc -Wl,--subsystem,console -Wl,--disable-dynamicbase -Wl,--image-base=0x10000 -Wl,-T,"$OUT/lowmem.ld"
+    build/munt-win/libmt32emu.a $SDL_LIBS -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lm -Wl,--subsystem,console \
+    -Wl,--disable-dynamicbase -Wl,--image-base=0x10000 -Wl,-T,"$OUT/lowmem.ld"
 cp "$SDL_DLL" "$OUT/"
 echo "built $OUT/hockey-win32.exe (run it in the game's folder, or set NHL95_ROOT)"

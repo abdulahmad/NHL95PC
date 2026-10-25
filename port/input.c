@@ -119,13 +119,11 @@ void input_poll(void)
 
 uint32_t input_port_in(unsigned port)
 {
-    static unsigned toggle;
     switch (port) {
     case 0x60:
         if (qhead != qtail) { last_scan = queue[qhead]; qhead = (qhead + 1) % QSIZE; if (qhead != qtail) irq_raise(1); }
         return last_scan;
     case 0x64: return qhead != qtail ? 1 : 0;
-    case 0x61: return (++toggle & 1) << 4;      /* the refresh bit toggles */
     case 0x201: return 0xFF;                    /* no joystick: no button, axes never time out */
     }
     return 0xFF;

@@ -2,6 +2,8 @@
  * this program. Instructions that only DOS or the PC hardware could execute (int n, in, out, cli, sti) fault; the platform layer
  * hands them to the emulation here. The main thread owns SDL: window, events, timer ticks. */
 #include "host.h"
+#include "audio.h"
+void sound_init(void);
 #include <SDL.h>
 
 int trace_on;
@@ -36,7 +38,9 @@ int main(int argc, char **argv)
     SDL_SetMainReady();
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO) < 0) { fprintf(stderr, "SDL_Init: %s\n", SDL_GetError()); return 1; }
     video_init();
+    sound_init();
     if (map_low_memory()) fprintf(stderr, "cannot map DOS memory below 1 MB\n");
+    if (getenv("NHL95_SOUNDTEST")) { extern int soundtest(void); return soundtest(); }
     plat_make_image_writable();
     install_overrides();
     plat_install_traps();
@@ -52,6 +56,7 @@ int main(int argc, char **argv)
             next_tick += 1000000000LL / irq_pit_hz();
             if (now - next_tick > 200000000) next_tick = now;
         }
+        audio_pump();
         irq_poll();
         plat_sleep_ms(1);
     }

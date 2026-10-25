@@ -76,3 +76,25 @@ with an SDL2 mixer), joystick (SDL game controller instead of port 201h), the CD
    they belong in C functions of `src/c` that are compiled for the host (the byte-exact build keeps the matched originals). Rollback needs the
    whole game state in one block: the game's data segment is a single contiguous region, so it can be saved and restored once the input
    sampling is separated from the frame step.
+
+## Sound
+
+The sound hardware is emulated at the I/O-port level, so the game's own drivers (PC speaker, AdLib, Sound Blaster, MT-32 on an
+MPU-401, Gravis UltraSound) run unchanged and the device you pick in the game's sound setup is the device that plays.
+
+| Device | Emulation |
+| --- | --- |
+| PC speaker | PIT channel 2 + port 61h square wave (`speaker.c`) |
+| AdLib / Sound Blaster FM | [Nuked-OPL3](https://github.com/nukeykt/Nuked-OPL3) with the OPL timers (`opl.c`) |
+| Sound Blaster / Pro | DSP, mixer, 8237 DMA, PIC IRQs; single-cycle, auto-init and direct 8-bit output (`sb.c`, `dma.c`) |
+| Roland MT-32 | MPU-401 UART port + [Munt](https://github.com/munt/munt) (`mpu.c`) |
+| Gravis UltraSound | GF1: 32 voices, 1 MB RAM, ramps, loops, timers, DMA upload (`gus.c`) |
+
+* `port/fetch-deps.sh` (run by the build scripts) clones Nuked-OPL3 and Munt into `port/third_party` (both LGPL, not committed).
+* **MT-32 needs the ROM images** `MT32_CONTROL.ROM` and `MT32_PCM.ROM`, which are not distributed. Put them in the game folder, in
+  `roms/`, or point `NHL95_MT32_ROMS` at their folder. Without them the MT-32 choice is silent.
+* Hardware settings default to `BLASTER=A220 I7 D1 T3`, MPU-401 at 330h and `ULTRASND=240,1,1,5,5`; set those variables on the
+  host to change them. `NHL95_SOUND=none` disables all sound hardware.
+* `NHL95_WAV=file.wav` records the mix. `NHL95_SOUNDTEST=1` drives AdLib, Sound Blaster and the GUS through their ports and exits,
+  printing PASS/FAIL (useful without the game's data files).
+* Not yet verified against the game itself (the data files aren't in the repository): in particular the GUS and MT-32 paths.
