@@ -4198,3 +4198,9 @@ RunTeamPickMenu,,"the chain from nitems or menus (196 / 181), `13 *` first in th
 RunTeamPickMenu,,"the row ternary inverted (235), HILITE(cur) after `cur = pick` (197 / 182)",197 / 182,ga
 RunTeamPickMenu,,the x / y ternaries inverted (206),206,ga
 RunTeamPickMenu,,the size product commuted (183) or `0x11 +` first (181),181,ga
+PlayoffTreeMenu,,"tools/wccre/tieorder.py on the new shape (5 min, 161 orders, 60)","5 min, 161 orders, 60",ga
+PlayoffTreeMenu,,"declsearch --conflicts on it (best 68, current order kept)","best 68, current order kept",ga
+PlayoffTreeMenu,,"`m = &menus[level][item]` for the on1 / on2 tests (157, +19)","157, +19",ga
+PlayoffTreeMenu,,"m for pad / x2 / x1 in the submenu path, as MainDeskLoop (178, +21)","178, +21",ga
+PlayoffTreeMenu,,"the select-item Norm address as `menus[level] + sel[level]` or `sel[level] + menus[level]` in the first or the last path (60 each, same code)","60 each, same code",ga
+PlayoffTreeMenu,,"`i = level` for the first select-item path (292, +36)","292, +36",ga
