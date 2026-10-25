@@ -10,12 +10,16 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 
 | Claimed function | By | Until |
 |---|---|---|
-| ResetGameVars | StaticEck's Claude (lane 2) | 2026-10-26 |
-| SelectSavedFile | StaticEck's Claude (lane 2) | 2026-10-26 |
 | SkateToSpot | Abdul's Claude (lane T) | 2026-10-26 |
-| TreeSeriesWinner | StaticEck's Claude (lane 2) | 2026-10-26 |
-| assgoalie | StaticEck's Claude (lane 2) | 2026-10-26 |
 | checkcx | Abdul's Claude (lane T) | 2026-10-26 |
+
+**StaticEck's Claude (lane 2)** to Abdul, Mark, 2026-10-25 18:35 UTC (`docs/board/2026-10-25-1835-staticeck.md`)
+
+> Lane 2 finished its drafts under 50 with tieorder then targetsearch: PlacePlayersAtStart 13 -> 12 (#177),
+> assgoalie 18 -> 13 (#198, 2 gotos left), no change on RunMenu 6, CreateNewLeague 12, SelectSavedFile 15,
+> ResetGameVars 20, TreeSeriesWinner 35 (notes in UNSURE). Questions for lane T in those notes: CreateNewLeague's
+> byte registers are picked after the passes the tools hook; ResetGameVars' constants take registers steered by
+> an earlier loop; TreeSeriesWinner's -od parameter homes follow register order (eax, ebx, edx).
 
 **StaticEck's Claude (lane 2)** to Abdul, Mark, 2026-10-25 15:40 UTC (`docs/board/2026-10-25-1540-staticeck.md`)
 
@@ -197,22 +201,6 @@ assgoalie is in this file (score 13, size 9/12) and comes with it.
 - assrefgoalpa 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assrefgoalpa 67->67 (2026-10-25, StaticEck2026, GA) tieorder 8 min (67); a1 / a2 / side orders forced (67-105, a1 last 77 at size +0, still no push ebp)
 - assrefgoalpa 67->64 (2026-10-25, StaticEck2026, GA) both sign tests temp4 first (64, size -1); first product constant first 67-69, second product swapped 61 at -3 bytes, regd0 = *puckx + c 112-115, regd0 = c; regd0 += *puckx 67-71
-
-### `src/c/004_13320_asset_loading/ResetGameVars.c`
-
-- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ResetGameVars 25->20 (2026-10-24, StaticEck2026, GA) IndexPhotoBank compiled first as a compile-context copy: the EXE's jmp IndexPhotoBank_x tail (kept); whole address-order run of segment 004 files (20); constant scheduling from +133 unchanged
-- ResetGameVars 20->20 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): not in a tie (20)
-
-### `src/c/019_2970A_league_schedule/TreeSeriesWinner.c`
-
-- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
-- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
-- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) (every -od compile lays out locals, then the return temporary, then the parameters; the EXE has the return temporary first)
-- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
-- TreeSeriesWinner 35->35 (2026-10-24, StaticEck2026, GA) cflags -d2 (44, +36, same slots), -od -d1 (35), -od -d2 (44), -d1 (98); LoadPlayoffModeTree as compile context (35); nothing kept
 
 ### `src/c/023_2FDD1_misc_dialogs/EditTextField.c`
 
@@ -724,6 +712,18 @@ InProgress — register 70/83, owner StaticEck2026
 - InProgress 88->88 (2026-10-24, Mhopkinsinc, GA) ESCALATE: file-local volatile still the only shape that keeps the loop test in memory; plain short: as is (92), one && test (92), break-first form (92), explicit break in the mins == 0 arm (92), all with the pre-header mov cx, [word_CBC44] (loop-invariant motion; the EXE cycle has no call and only direct stores)
 - InProgress 88->88 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: the best tie order gives 72 (430 orders): pass 0 savings-9 run: sorted t54 t146 t113 t64 t99, needed t54 t99 t113 t64 t146 (t64 EBX -> EDI, t99 EBX -> EDI); real-compiled declaration moves: best 88 (declare pl before pen)
 
+### `src/c/004_13320_asset_loading/ResetGameVars.c`
+
+ResetGameVars — register 14/19, owner Mhopkinsinc
+- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ResetGameVars 25->20 (2026-10-24, StaticEck2026, GA) IndexPhotoBank compiled first as a compile-context copy: the EXE's jmp IndexPhotoBank_x tail (kept); whole address-order run of segment 004 files (20); constant scheduling from +133 unchanged
+- ResetGameVars 20->20 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): not in a tie (20)
+- ResetGameVars 20->20 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py --minutes 10 afresh (stale cache removed): 2 forced orders, not a tie (20)
+- ResetGameVars 20->20 (2026-10-25, StaticEck2026, GA) tools/wccre/targetsearch.py --minutes 30: 1307 candidates (0 tie / slot targets), best text = committed draft (20)
+- ResetGameVars 20->20 (2026-10-25, StaticEck2026, GA) __STOSB as a fill loop: short x16 with i at function scope / own block (20, same code), char x32 (38 / 28); randomd0 pragma modify none / [eax] / exact [eax ecx] (20), [eax ecx edx] (29); __STOSB modify exact [eax ecx] (21); warm fills 0x10-0x7F (20); probe bisection: the crowd-slot loop steers the per-store constant temporaries to ebx
+
 ### `src/c/046_644A8_engine_display/CanFillLineSlot.c`
 
 FillDressedSlots — slot 12/12, owner StaticEck2026
@@ -850,6 +850,19 @@ CanBlockShot — register 23/41, owner StaticEck2026
 - CanBlockShot 42->42 (2026-10-24, StaticEck2026, GA) `s` gets ax
 - CanBlockShot 42->42 (2026-10-24, Mhopkinsinc, GA) side / k via ? 1 : 0 42; 12 + (...) 42; g direct without k 62; (SCnum < 6) == (s < 6) 55; (k = *puckc) >= 0 55; regsolve no prediction; note: the draft reuses the dead side for the goalie distance (ESCALATE shape already in the draft)
 - CanBlockShot 42->42 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: no tie order improves on the baseline (35 orders): the differences are not in a tie
+
+### `src/c/019_2970A_league_schedule/TreeSeriesWinner.c`
+
+TreeSeriesWinner — slot 34/34, owner Mhopkinsinc
+- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) (every -od compile lays out locals, then the return temporary, then the parameters; the EXE has the return temporary first)
+- TreeSeriesWinner 35->35 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TreeSeriesWinner 35->35 (2026-10-24, StaticEck2026, GA) cflags -d2 (44, +36, same slots), -od -d1 (35), -od -d2 (44), -d1 (98); LoadPlayoffModeTree as compile context (35); nothing kept
+- TreeSeriesWinner 35->35 (2026-10-25, StaticEck2026, GA) tools/wccre/countsolve.py: no use-count sort under -od (nothing in memory has a count)
+- TreeSeriesWinner 35->35 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py --minutes 10: 5 forced orders, best 35, not a tie
+- TreeSeriesWinner 35->35 (2026-10-25, StaticEck2026, GA) tools/wccre/targetsearch.py --minutes 30: 0 tie / slot targets, 1375 candidates, best 35 (best text = committed draft)
+- TreeSeriesWinner 35->35 (2026-10-25, StaticEck2026, GA) params renamed (series; sched / rnd / flag) and all locals renamed (35, same slots), const unsigned char *s (35), no prototype in scope (35), implicit int return prototype and K&R (35 each), signed int / unsigned int spellings (35), 10.0 LA compile (35, same slots); EXE homes params in register order eax / ebx / edx
 
 ### `src/c/045_614C2_scoring_penalty_text/ChkScorerMilestone.c`
 
