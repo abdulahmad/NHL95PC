@@ -702,3 +702,6 @@ PlacePlayersAtStart,StaticEck2026,2026-10-25,GA,13,12,"assignment number as the 
 PlacePlayersAtStart,StaticEck2026,2026-10-25,GA,12,12,"mirror as a comma expression, empty then-arm, empty else (12), != pfgoal (16), ~p->pflags & pfgoal (17)"
 PlacePlayersAtStart,StaticEck2026,2026-10-25,GA,12,12,"tools/wccre/tieorder.py --minutes 10 (ternary shape): 172 forced orders, best 12, not a tie"
 PlacePlayersAtStart,StaticEck2026,2026-10-25,GA,12,12,"tools/wccre/targetsearch.py --minutes 30: 1837 candidates (0 tie / slot targets), best text negates regd1 before regd0 (14, 6 other; against the EXE order, rejected)"
+ResetGameVars,StaticEck2026,2026-10-25,GA,20,20,"tools/wccre/tieorder.py --minutes 10 afresh (stale cache removed): 2 forced orders, not a tie (20)"
+ResetGameVars,StaticEck2026,2026-10-25,GA,20,20,"tools/wccre/targetsearch.py --minutes 30: 1307 candidates (0 tie / slot targets), best text = committed draft (20)"
+ResetGameVars,StaticEck2026,2026-10-25,GA,20,20,"__STOSB as a fill loop: short x16 with i at function scope / own block (20, same code), char x32 (38 / 28); randomd0 pragma modify none / [eax] / exact [eax ecx] (20), [eax ecx edx] (29); __STOSB modify exact [eax ecx] (21); warm fills 0x10-0x7F (20); probe bisection: the crowd-slot loop steers the per-store constant temporaries to ebx"

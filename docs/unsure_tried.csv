@@ -4264,3 +4264,15 @@ PlacePlayersAtStart,,"`0x16u` / `0x16L` constants (13), `(unsigned short *)` tab
 PlacePlayersAtStart,,"the mirror as a comma expression, `!= pfgoal` (16), `~p->pflags & pfgoal` (17)",17,ga
 PlacePlayersAtStart,,an empty then-arm,,ga
 PlacePlayersAtStart,,an empty else (12 each),12 each,ga
+ResetGameVars,,tools/wccre/tieorder.py --minutes 10 afresh (stale cache removed,,ga
+ResetGameVars,,"2 forced orders, 20: not a tie)",,ga
+ResetGameVars,,"tools/wccre/targetsearch.py --minutes 30 (1307 candidates, 0 tie / slot targets, best text = the committed draft, 20)","1307 candidates, 0 tie / slot targets, best text = the committed draft, 20",ga
+ResetGameVars,,"the __STOSB call written as the fill loop Watcom turns into it (`for (i = 0; i < 16; i++) word_E9B2C[i] = 0;`, i at function scope or in its own block: 20",,ga
+ResetGameVars,,the same code,,ga
+ResetGameVars,,the 32-byte char loop: 38 / 28),,ga
+ResetGameVars,,"randomd0 pragma modify none / [eax] / exact [eax ecx] (20), [eax ecx edx] (29)",29,ga
+ResetGameVars,,__STOSB modify exact [eax ecx] (21),21,ga
+ResetGameVars,,"warm compiler fills 0x10-0x7F (20). Finding (tools/probe.py bisection): with the function cut after CwdExciteLvl (no crowd-slot loop, no tail) each penalty-shot / shot zero gets its own constant temporary in a different register (esi, edi, ebp, ebx",,ga
+ResetGameVars,,"textlines al then ah), so the 0 / -1 constants are per-store temporaries that the scoreboarder merges",,ga
+ResetGameVars,,with the crowd-slot loop present they all take ebx (ours) where the EXE gives esi / eax. Cutting the tail after curperiod or from __STOSB on changes nothing. So the cause is how the loop's registers steer the constant temporaries' later register choice (not a savings tie),,ga
+ResetGameVars,,lane T question,,ga
