@@ -5628,6 +5628,10 @@ pop edi	; 7168C
 pop esi	; 7168D
 pop ecx	; 7168E
 ret	; 7168F
+; C: src/c/052_6D2F8_create_player/SelectMatchingPlayers.c
+%ifdef CBUILD
+%include "c/052_6D2F8_create_player/SelectMatchingPlayers.inc"
+%else
 SelectMatchingPlayers:
 push dword 34h	; 71690
 call __CHK	; 71695
@@ -5780,6 +5784,7 @@ pop edi	; 71839
 pop esi	; 7183A
 pop ecx	; 7183B
 ret	; 7183C
+%endif ; C
 SetRosterTeamMenus:
 push dword 14h	; 7183D
 call __CHK	; 71842
