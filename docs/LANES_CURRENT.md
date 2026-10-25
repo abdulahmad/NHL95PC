@@ -304,86 +304,6 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
 
-### `src/c/023_2FDD1_misc_dialogs/DrawListItem.c`
-
-DrawListItems is in this file (score 0, tail 0/0) and comes with it.
-- DrawListItems 0->0 (2026-10-24, abdulahmad, GA) matches under GA and under LA; unmarked because it short-jumps into DrawListItem. -od scores 47. Not marked.
-- DrawListItem 11->11 (2026-10-24, Mhopkinsinc, GA) w in place gives the EXE's case 1
-- DrawListItem 6->6 (2026-10-24, Mhopkinsinc, GA) (right alignment; DrawListItems still waits for it)
-- DrawListItem 6->6 (2026-10-24, Mhopkinsinc, GA) unchanged
-- DrawListItem 6->6 (2026-10-24, abdulahmad, GA) LA also 6; -od 72. In-place case 1 already tried under GA (raises w into a tie with y). No new shape.
-- DrawListItem 6->6 (2026-10-24, StaticEck2026, GA) regsolve on in-place case 1 (y / w parameter swap skipped); on it: split y increment (12, y 11 ties x), 3 other split forms (12-13), 5 statement orders (30-32)
-
-### `src/c/006_150C6_scoreboard_gfx/RunDemoGame.c`
-
-TitleScreen is in this file (score 3, size 2/2) and comes with it.
-- TitleScreen 13->13 (2026-10-24, Mhopkinsinc, GA) unchanged
-- TitleScreen 13->13 (2026-10-24, Mhopkinsinc, GA) (slots and the dead copy)
-- TitleScreen 12->2 (2026-10-24, Mhopkinsinc, GA) (`RunDemoGame.c`): the remaining wait goes through a new local (`left = due - i; SetTickDeadline(left);`)
-- TitleScreen 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
-- TitleScreen 3->3 (2026-10-24, StaticEck2026, GA) the PlayMVI wait (own elapsed local el, SetTickDeadline(due - el), no left) with one- and two-argument decoders (27-70); declsearch --conflicts on it (mispredicted, 78); ESCALATE: the committed draft keeps the left tie-breaker copy
-- ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) (divisor scheduling)
-- ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ShowCredits 4->4 (2026-10-24, StaticEck2026, GA) the y argument as its own block-local statement (int ry, full or raw remainder), the + operands swapped, per-module sub_91370 prototypes (short / ushort / uchar / schar / unsigned / unprototyped), a cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r and more): best 4
-
-### `src/c/033_40183_trades/TradePlayers.c`
-
-- TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
-- TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
-- TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
-- TradePlayers 3->3 (2026-10-24, StaticEck2026, GA) regsolve (only a nm savings bump: ESCALATE, not made); pass-2 index order analysed (inline / nm-first re-measured 4); permute seed 2505 (260 new candidates)
-
-### `src/c/034_41B80_schedule/SimPlayoffRound1.c`
-
-SimPlayoffRound2 is in this file (score 3, size 2/2) and comes with it.
-- SimPlayoffRound2 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SimPlayoffRound2 22->11 (2026-10-24, Mhopkinsinc, GA) (named score bytes, scalar order)
-- SimPlayoffRound2 11->3 (2026-10-24, Mhopkinsinc, GA) (the same zeroing loop; only the away score byte loaded into dh is left)
-- SimPlayoffRound2 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SimPlayoffRound2 3->3 (2026-10-24, StaticEck2026, GA) regsolve (nothing); unsigned wins on draft / inline / home-only (3 / 22 / 7); regdump vs SimPlayoffRound3 tie order; permute seed 2506 (321 candidates
-SimPlayoffRound1 is in this file (score 9, slot 6/9) and comes with it.
-- SimPlayoffRound1 27->27 (2026-10-24, Mhopkinsinc, GA) .
-- SimPlayoffRound1 28->16 (2026-10-24, Mhopkinsinc, GA) and SimPlayoffRound2 22 -> 11 (named score bytes, scalar order)
-- SimPlayoffRound1 16->16 (2026-10-24, Mhopkinsinc, GA) (a permute find with an `(unsigned short)` cast reached 14 and was rejected as a no-op cast)
-- SimPlayoffRound1 16->9 (2026-10-24, Mhopkinsinc, GA) 
-- SimPlayoffRound1 9->9 (2026-10-24, StaticEck2026, GA) regsolve (nothing); slotdump of the s / rdfh homes; Round2 and five other declaration orders (9-19); permute seed 2506 (321 candidates
-- SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
-- SeedPlayoffRound3 14->14 (2026-10-24, StaticEck2026, GA) c2 folded into c1 for the second conference, c1 = a = chain order, compare flip (all 14); i / k / a new j as a game-slot or date loop counter (64-102)
-
-### `src/c/002_1167B_gamesave_io/PickAwardWinners.c`
-
-- PickAwardWinners 5->5 (2026-10-24, Mhopkinsinc, GA) two temporaries tie at savings 20 and the wrong one picks first (losses byte into eax plus an lea).
-- PickAwardWinners 5->5 (2026-10-24, Mhopkinsinc, GA) (denominator registers)
-- PickAwardWinners 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
-- PickAwardWinners 5->5 (2026-10-24, StaticEck2026, GA) regsolve (nothing); award flags cleared by a loop through pts / v / mine / pct (same __STOSB, tie unchanged) or f.i (59)
-- DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) dl / ebx where the EXE has dh / ecx
-- DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) (register cycle)
-- DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
-- DrawAwardsSummary 12->12 (2026-10-24, StaticEck2026, GA) the three-team test as a switch on the team byte (21-24, range test); cflags sweep (12 or worse)
-ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
-- ShowAwardScreens 31->31 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
-- ShowAwardScreens 31->19 (2026-10-24, Mhopkinsinc, GA) (`PickAwardWinners.c`): the title x step as a separate `x += 0x50;` statement fixes both title calls' argument evaluation order. Left: the goalie shots row
-- ShowAwardScreens 19->19 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
-- ShowAwardScreens 19->19 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r): best 19
-
-### `src/c/026_3377C_rink_tiles/BlitTileMap.c`
-
-- BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
-- BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
-- BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) (its slots need x's loop-weighted count 101 or less, i.e. one inner-loop reference where the code has two)
-- BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
-- BlitTileMap 5->5 (2026-10-24, StaticEck2026, GA) LoadRink as compile context (5, same slots); nothing kept
-
-### `src/c/001_10010_main_startup/FadePalette.c`
-
-- FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
-- FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) (clamp reload)
-- FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
-- FadePalette 7->7 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -ol+ -or -oa -oi -oe -oc -om -3r -4r -on -ou -ei -zc): best 7, the clamp still compares ebx
-
 ### `src/c/017_21CDE_player_stats/SkaterStatsCard.c`
 
 - SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -584,6 +504,106 @@ RunMenu is in this file (score 82, register 38/82) and comes with it.
 ## Escalations — Abdul (lane T)
 
 Two no-gain attempts by each contributor, and no newer tool for the cause. Do not keep trying these until Abdul rules in `docs/ESCALATIONS.md`.
+
+### `src/c/023_2FDD1_misc_dialogs/DrawListItem.c`
+
+DrawListItems — tail 0/0, owner Mhopkinsinc
+- DrawListItems 0->0 (2026-10-24, abdulahmad, GA) matches under GA and under LA; unmarked because it short-jumps into DrawListItem. -od scores 47. Not marked.
+DrawListItem — size 5/6, owner Mhopkinsinc
+- DrawListItem 11->11 (2026-10-24, Mhopkinsinc, GA) w in place gives the EXE's case 1
+- DrawListItem 6->6 (2026-10-24, Mhopkinsinc, GA) (right alignment; DrawListItems still waits for it)
+- DrawListItem 6->6 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawListItem 6->6 (2026-10-24, abdulahmad, GA) LA also 6; -od 72. In-place case 1 already tried under GA (raises w into a tie with y). No new shape.
+- DrawListItem 6->6 (2026-10-24, StaticEck2026, GA) regsolve on in-place case 1 (y / w parameter swap skipped); on it: split y increment (12, y 11 ties x), 3 other split forms (12-13), 5 statement orders (30-32)
+- DrawListItem 6->6 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): in-place case 1 (29) forced y before w + t23 before t30: 2; new c = w - 4 form (11) forced y before w: 2 (no shared add); y / w is parameter order; 5 more case-1 spellings (29-40)
+
+### `src/c/006_150C6_scoreboard_gfx/RunDemoGame.c`
+
+TitleScreen — size 2/2, owner Mhopkinsinc
+- TitleScreen 13->13 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TitleScreen 13->13 (2026-10-24, Mhopkinsinc, GA) (slots and the dead copy)
+- TitleScreen 12->2 (2026-10-24, Mhopkinsinc, GA) (`RunDemoGame.c`): the remaining wait goes through a new local (`left = due - i; SetTickDeadline(left);`)
+- TitleScreen 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TitleScreen 3->3 (2026-10-24, StaticEck2026, GA) the PlayMVI wait (own elapsed local el, SetTickDeadline(due - el), no left) with one- and two-argument decoders (27-70); declsearch --conflicts on it (mispredicted, 78); ESCALATE: the committed draft keeps the left tie-breaker copy
+- TitleScreen 3->3 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool) on the two-argument version without left (21, slots only): forced memory-conflict orders change no slot (slots are not from the conflict sort); ESCALATE: the committed draft keeps the left tie-breaker copy
+ShowCredits — size 2/2, owner Mhopkinsinc
+- ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) (divisor scheduling)
+- ShowCredits 4->4 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ShowCredits 4->4 (2026-10-24, StaticEck2026, GA) the y argument as its own block-local statement (int ry, full or raw remainder), the + operands swapped, per-module sub_91370 prototypes (short / ushort / uchar / schar / unsigned / unprototyped), a cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r and more): best 4
+- ShowCredits 4->4 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): savings 300 / 200 / 60 / 40 / 20 and pass-1 runs climbed (56 orders): 4, no tie cause
+
+### `src/c/033_40183_trades/TradePlayers.c`
+
+TradePlayers — register 2/2, owner Mhopkinsinc
+- TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TradePlayers 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
+- TradePlayers 3->3 (2026-10-24, StaticEck2026, GA) regsolve (only a nm savings bump: ESCALATE, not made); pass-2 index order analysed (inline / nm-first re-measured 4); permute seed 2505 (260 new candidates)
+- TradePlayers 3->3 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool) 30 min: 650 of 669 tie swaps + 435 single-edit orders, best 3; forced index temps t156 / t166 in the savings-3 run and the pass-1 swap (3), ahead of nm (3-4, savings change): no tie cause
+
+### `src/c/034_41B80_schedule/SimPlayoffRound1.c`
+
+SimPlayoffRound2 — size 2/2, owner Mhopkinsinc
+- SimPlayoffRound2 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SimPlayoffRound2 22->11 (2026-10-24, Mhopkinsinc, GA) (named score bytes, scalar order)
+- SimPlayoffRound2 11->3 (2026-10-24, Mhopkinsinc, GA) (the same zeroing loop; only the away score byte loaded into dh is left)
+- SimPlayoffRound2 3->3 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SimPlayoffRound2 3->3 (2026-10-24, StaticEck2026, GA) regsolve (nothing); unsigned wins on draft / inline / home-only (3 / 22 / 7); regdump vs SimPlayoffRound3 tie order; permute seed 2506 (321 candidates
+- SimPlayoffRound2 3->3 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): inline compare (22) forced t23 before t76 (300) and t47 before t22 (200) gives the EXE bytes (0); explain: an added conflict + a parameter creation-order move, no declaration move; inline with g after the zero loop / in the SeriesLength call (34 / 34)
+SimPlayoffRound1 — slot 6/9, owner Mhopkinsinc
+- SimPlayoffRound1 27->27 (2026-10-24, Mhopkinsinc, GA) .
+- SimPlayoffRound1 28->16 (2026-10-24, Mhopkinsinc, GA) and SimPlayoffRound2 22 -> 11 (named score bytes, scalar order)
+- SimPlayoffRound1 16->16 (2026-10-24, Mhopkinsinc, GA) (a permute find with an `(unsigned short)` cast reached 14 and was rejected as a no-op cast)
+- SimPlayoffRound1 16->9 (2026-10-24, Mhopkinsinc, GA) 
+- SimPlayoffRound1 9->9 (2026-10-24, StaticEck2026, GA) regsolve (nothing); slotdump of the s / rdfh homes; Round2 and five other declaration orders (9-19); permute seed 2506 (321 candidates
+- SimPlayoffRound1 9->9 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): inline compare (28) with Round2's forced tie order leaves 10, only the rwfh / rdfh / dir / s homes
+SeedPlayoffRound3 — register 8/13, owner Mhopkinsinc
+- SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SeedPlayoffRound3 14->14 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
+- SeedPlayoffRound3 14->14 (2026-10-24, StaticEck2026, GA) c2 folded into c1 for the second conference, c1 = a = chain order, compare flip (all 14); i / k / a new j as a game-slot or date loop counter (64-102)
+- SeedPlayoffRound3 14->14 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool) 22 min (292 swaps, 195 single-edit orders): best 14; forced result-before-base and the other savings-20 / 70 orders (14 each); only a cross move t221 ahead of t104 (10, savings change)
+
+### `src/c/002_1167B_gamesave_io/PickAwardWinners.c`
+
+PickAwardWinners — size 7/7, owner Mhopkinsinc
+- PickAwardWinners 5->5 (2026-10-24, Mhopkinsinc, GA) two temporaries tie at savings 20 and the wrong one picks first (losses byte into eax plus an lea).
+- PickAwardWinners 5->5 (2026-10-24, Mhopkinsinc, GA) (denominator registers)
+- PickAwardWinners 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
+- PickAwardWinners 5->5 (2026-10-24, StaticEck2026, GA) regsolve (nothing); award flags cleared by a loop through pts / v / mine / pct (same __STOSB, tie unchanged) or f.i (59)
+- PickAwardWinners 5->5 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): forced t80 (sum) before t77 (losses byte) in the savings-20 run gives the EXE bytes (0); explain: no declaration move (all 5); zero-test swap / ternaries / sum test / pct = 0 first / pts split (7-34)
+DrawAwardsSummary — register 8/8, owner Mhopkinsinc
+- DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) dl / ebx where the EXE has dh / ecx
+- DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) (register cycle)
+- DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- DrawAwardsSummary 12->12 (2026-10-24, StaticEck2026, GA) the three-team test as a switch on the team byte (21-24, range test); cflags sweep (12 or worse)
+- DrawAwardsSummary 12->12 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool) 12 min (148 of 288 swaps, 80 single-edit orders) + the 100 / 40 / 20 runs climbed: 12, no tie cause
+ShowAwardScreens — register 3/4, owner Mhopkinsinc
+- ShowAwardScreens 31->31 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
+- ShowAwardScreens 31->19 (2026-10-24, Mhopkinsinc, GA) (`PickAwardWinners.c`): the title x step as a separate `x += 0x50;` statement fixes both title calls' argument evaluation order. Left: the goalie shots row
+- ShowAwardScreens 19->19 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
+- ShowAwardScreens 19->19 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r): best 19
+- ShowAwardScreens 19->19 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): forced t281 (byte << 3) before t280 (byte) in the savings-200 run gives the EXE bytes (0); declaration moves all 19; pct block-local in four scopes (23-27)
+
+### `src/c/026_3377C_rink_tiles/BlitTileMap.c`
+
+BlitTileMap — slot 4/5, owner Mhopkinsinc
+- BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
+- BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
+- BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) (its slots need x's loop-weighted count 101 or less, i.e. one inner-loop reference where the code has two)
+- BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
+- BlitTileMap 5->5 (2026-10-24, StaticEck2026, GA) LoadRink as compile context (5, same slots); nothing kept
+- BlitTileMap 5->5 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): - (row + row) (8) forced t34 before t35 in the savings-200 run gives the EXE row (4, only height / width homes); explain: one more conflict near tile; map pointer local (15-29), bitmap base local (69)
+
+### `src/c/001_10010_main_startup/FadePalette.c`
+
+FadePalette — register 2/3, owner Mhopkinsinc
+- FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) (clamp reload)
+- FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- FadePalette 7->7 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -ol+ -or -oa -oi -oe -oc -om -3r -4r -on -ou -ei -zc): best 7, the clamp still compares ebx
+- FadePalette 7->7 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): all tie runs climbed and cross moves (7 / 36): no tie cause
 
 ### `src/c/037_4842A_engine_player_logic/SkateToSpot.c`
 
