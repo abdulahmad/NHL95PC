@@ -1,11 +1,12 @@
 /* Import / export: posting a played game to a team's databases. */
-/* DRAFT under 10.0 GA: 2,341 vs 2,342 bytes, 115 differing instructions. The loop index is a plain local, so
+/* DRAFT under 10.0 GA: 2,345 vs 2,342 bytes, 108 differing instructions. The loop index is a plain local, so
    Watcom turns the played-flags loop into a __STOSB fill as in the EXE; the visitors-win arm tests !side first
    (the EXE's je / jmp into the home-win arm's increments). The skater and goalie keys have their own local (key)
-   rather than k (the goal count / stat offset), declared in tools/wccre/declsearch.py's order (6 of 9 slots), with
-   j before res (tools/wccre/tieorder.py's real-compiled declaration move).
-   Left: i / j / score slots, the visitors-win score reloads hmscore where the EXE reuses ax (cwde); k still
-   serves as the goal count and the stat offsets (separate locals for those grow the frame). */
+   rather than k (the goal count / stat offset). The tie goalies read the team structures' tmgoalie / tmlines
+   (the EXE loads the line pointer); the locals are declared in tools/wccre/declsearch.py's order.
+   Left: rec / res / score slots, the away tie goalie's index in eax where the EXE has edx (movsx edx, ax), the
+   visitors-win score reloads hmscore where the EXE reuses ax (cwde); k still serves as the goal count and the
+   stat offsets (separate locals for those grow the frame). */
 #define PostGameToTeamDb PostGameToTeamDb_decl
 #define WriteTeamRec WriteTeamRec_decl
 #define ReadGSummaryRec ReadGSummaryRec_decl
@@ -32,6 +33,12 @@ int ReadGSummaryRec(int fh, void *rec, int n);  /* 147FF */
    the schedule index; gdir: the game summary directory. Result: 0, or the first file error. */
 int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *gdir)
 {
+    int ngames;
+    unsigned short *gs;
+    short *ss;
+    unsigned char *rec;
+    short *st;
+    int r;
     struct {
         unsigned char team[0x2E8];
         unsigned char grec[0x38];
@@ -46,13 +53,7 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
         int fkey;
         int fteam;
     } f;
-    unsigned short *gs;
-    short *ss;
     unsigned char gk[2];
-    short *st;
-    int r;
-    int ngames;
-    unsigned char *rec;
     int i;
     int sideofs;
     int j;
@@ -136,8 +137,8 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
         }
     }
     if (res < 0) {
-        gk[0] = ((unsigned char *)hmtmlines[0])[(hmtmgoalie[0] & 1) + 0x24];
-        gk[1] = ((unsigned char *)awtmlines)[(awtmgoalie & 1) + 0x24];
+        gk[0] = hmtmstruct.tmlines[(hmtmstruct.tmgoalie & 1) + 0x24];
+        gk[1] = awtmstruct.tmlines[(awtmstruct.tmgoalie & 1) + 0x24];
     } else {
         if (!r) r = ReadGSummaryRec(f.fgsum, f.gsum, 0);
         if (!r) {
