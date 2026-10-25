@@ -514,7 +514,7 @@ Sweepcheck,532A2,27,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_a
 ToFixed,53294,14,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/ToFixed.c,matched,,
 TryBlockShot,534BB,124,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/TryBlockShot.c,matched,"registers only: original p in ecx, n in ebx, gmode2 temp in edx; this draft p in ebx, n in edx. 10-min cap",
 checkagr,5369F,238,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkagr.c,matched,,
-checkcheck,5382C,1209,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkcheck.c,nonmatching,,register 20/30
+checkcheck,5382C,1209,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkcheck.c,nonmatching,,register 20/29
 checkcoll,580F5,468,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkcoll.c,matched,"draft: 479 vs 468. x is saved in edi and y in esi. The original saves x in esi and y in edi, so the swap needs a third mov. Do not retry: short parameters, or copying x then y into locals (saves ebp, cookie 18h).",
 checkcx,58DC7,1024,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkcx.c,nonmatching,,register 17/17
 checkgoal,584AA,809,040_53294_engine_physics_ai,src/c/040_53294_engine_physics_ai/checkgoal.c,nonmatching,"draft: 809 vs 809, 192/203 instructions; bounce temp and zero registers. See UNSURE.",size 1/1
