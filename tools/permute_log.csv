@@ -431060,3 +431060,671 @@ date,func,file,transform,sha1,score,sizediff,match,first,cc
 2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > cast:34:6:unsigned_char,8795bcce38cfcc10,,,,,ga
 2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swap:24:10,4f526431e24df084,4,0,0,59,ga
 2026-10-25,ReassignCtlPlayer,src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c,cast:50:2:char > movedecl:d:5 > swapdecl:py:best > swap:25:2 > swapdecl:p:pl,6781b6d72a3bef32,4,0,0,59,ga
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,base,19436d1fc57fe0bb,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:9:==,1c4229a3d4280db1,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:i:unsigned_short,a59cad10c76b24b0,17,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:d:signed_char,3eeb638e9c770b37,19,8,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:i:unsigned,646701863ac4a045,21,7,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:2:char,20b51ac38f7057fd,13,6,0,22,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cmpflip:6,6d1ada197f010070,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:i:signed_char,1c2925a6800da64a,40,12,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:d:char,0bed908107d98dcd,23,6,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:pl:signed_char,76c823f490585330,16,6,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned,3ccd4390de97aa27,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:13:op1,565756078f3b13fe,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,movedecl:i:2,23db7ee1055ceec2,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:2:unsigned_short,90ff881472569ee3,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,movedecl:pl:0,8102c615e7ee4dd7,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:pl:char,832927b5ea033f17,18,4,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:5:&,53f6621ed8f11956,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:d:unsigned_char,553172afd830c51c,23,6,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:i:char,338ed9028be1caee,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapdecl:i:d,8ee52eaeb4458fed,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:2:unsigned,b5255a8b19d16954,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:2:signed_char,ca255bda56ec8b6b,11,6,0,22,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:pl:unsigned_short,6500abf8d596bf10,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapstmt:12,6595f33bf28e4d27,15,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned_char,dde00ede7d8bdf72,15,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:char,1269c6694681e06e,15,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapdecl:d:pl,567855ffabd4ce1a,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned_short,16d9303f3f67dd29,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:pl:int,d8e2e37b25702080,16,0,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:16:==,c9fbe951b05e30fb,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:2:unsigned_char,40f0a2e52fbb14d0,13,6,0,22,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:i:int,1bccd9bba0dbec8c,21,7,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:2:short,7674ab2170fd9b5d,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:d:int,7ca597a32766070b,21,2,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:pl:unsigned,ad395d912b732eca,16,0,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:6:!=,100cbeb379ce9697,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,zero:16:eq0,2e1b6981494f85be,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:13:pre,8f7d2198c904ded7,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int,44dd2005266a6ab2,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:d:unsigned,88d558b81eb754b7,23,2,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:pl:unsigned_char,895fc72021d21393,18,4,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:i:unsigned_char,2709199a24fd49ae,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:signed_char,b736769ca4d7032d,15,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:d:unsigned_short,86e0e104f5046496,15,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned_char + type:pl:unsigned_short,dc8194b2ed846f91,15,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapstmt:12 + type:pl:unsigned_short,537b96857eb81066,15,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:pl:unsigned_short + incdec:13:op1,9191a93f51c69461,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapdecl:i:d + type:d:unsigned,b2620ae7465b12e8,23,2,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:16:== + paramtype:1:signed_char,edf2c310f309f71e,15,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:2:unsigned_char + type:d:int,c591b1cc027dcb73,20,8,0,22,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,type:d:signed_char + paramtype:2:char,08ac393837923623,16,6,0,22,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapdecl:i:d + type:i:unsigned,02c5d2662413980b,21,7,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,movedecl:pl:0 + paramtype:1:unsigned,b9eb4e6ae033b0a9,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cmpflip:6 + paramtype:1:unsigned,d90b7545450d975b,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:2:signed_char + type:pl:int,53e5b798941353c7,14,8,0,22,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapdecl:d:pl + swapdecl:i:pl,8102c615e7ee4dd7,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:2:short + paramtype:1:int,0521580753b7beab,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned + commute:9:==,babe90affc7c53b6,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:2:short + type:i:unsigned_short,eaf0a01ba7ec96bf,17,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,zero:16:eq0 + type:pl:char,c0bb31519615d4c5,18,4,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:9:== + commute:16:==,2f2e80500df3a558,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:2:signed_char + type:d:signed_char,4a2cffa6a4231ade,16,6,0,22,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:5:& + paramtype:1:unsigned_char,4c78444ae148b6a2,15,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:5:& + type:i:signed_char,6caee58486dbdb14,40,12,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:13:pre + paramtype:1:unsigned_short,d61e5543d0db334b,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > incdec:13:op1,4c1de3ec593e2010,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:pl:unsigned_short,c4f9108b809dc3d4,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > paramtype:2:char,1382a76c1137788d,14,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > commute:16:==,7c0bfc43d993233d,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:i:unsigned_short,0fd06bd507310b54,12,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:i:unsigned_char,e1c3bad22901c39d,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > paramtype:2:unsigned_char,2989a790128e489f,14,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:pl:signed_char,a031276f37f2a90d,11,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > paramtype:2:signed_char,9a29b90985b03de2,12,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:pl:unsigned,5d8777f0f6c6a8d7,11,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > paramtype:2:unsigned_short,13026bfee79cea54,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:d:unsigned_short,11bc0cafade448b0,10,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:i:char,fe11caf043cac297,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > paramtype:2:short,6aff060e85cae04d,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > zero:16:eq0,2a0fab87a77186a9,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:d:unsigned,f1872846e65ae817,24,3,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:pl:unsigned_char,1aa31073963f5c3f,13,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2,cac925385e50a2b5,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:i:signed_char,048c1a4f44ccafab,40,12,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:pl:int,316691487f384851,11,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > swapstmt:12,052a3a0b1d0bd4db,10,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > swapdecl:i:d,a0837df9064ccabd,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > swapdecl:d:pl,485133a94e673494,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > commute:5:&,78ab8b94a9365296,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:d:char,cea6b77d3798d4dc,20,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:i:unsigned,d6f49a89bb933b2c,25,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > paramtype:2:unsigned,951955d7eacb8c3e,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:i:int,4c51d6b169112d90,25,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > commute:6:!=,386c0bda232e5ad4,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:pl:char,4b23fb07827f7a8f,13,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:d:signed_char,63aa400914c41753,16,7,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > incdec:13:pre,99d05242e1a045d4,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:d:unsigned_char,6e60adb07605d17a,20,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:d:int,0e69d24fe0af4ed1,22,3,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:d:unsigned_short + paramtype:1:unsigned_short,b79876c3cf973aa5,15,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > paramtype:1:unsigned_char + type:pl:unsigned,da9fde0825d960f5,18,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > cmpflip:6 + type:i:char,1f3ba00ef68e7232,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > zero:16:eq0 + commute:5:&,bd401b6d1b5cdf87,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > swapstmt:12 + commute:16:==,c643db760e558de8,10,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > swapstmt:12 + type:i:int,38401bf2aff2b664,27,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > paramtype:2:unsigned_short + paramtype:2:unsigned,951955d7eacb8c3e,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:pl:0 + incdec:13:op1,0aa9c2341e492eea,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > paramtype:2:unsigned + type:i:unsigned,fe4df99627b19467,25,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:pl:unsigned_short + paramtype:2:char,5275dcdda0e34e7a,14,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:d:signed_char + paramtype:1:unsigned_char,ed571b0b9e0b5c38,21,11,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > paramtype:2:short + type:d:signed_char,becec5a2cf9a32a8,17,6,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:i:signed_char + paramtype:1:unsigned_char,8a894b8b5d4831a9,40,9,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:pl:unsigned_char + type:i:unsigned_short,03babe3b252ca882,17,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:i:unsigned_char + type:i:signed_char,048c1a4f44ccafab,40,12,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:i:unsigned + incdec:13:pre,2171460df17a617b,25,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:i:int + type:pl:signed_char,cf76951b37004046,27,16,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:pl:char + type:pl:signed_char,a031276f37f2a90d,11,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:d:unsigned + paramtype:2:unsigned_short,ef2256caadc78ec9,22,9,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:d:signed_char + swapstmt:12,c065514eef6cea4c,18,7,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > swapdecl:i:d + type:d:unsigned_char,a3c637032175f1c0,20,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:d:unsigned_char + type:d:char,cea6b77d3798d4dc,20,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:pl:unsigned_char + paramtype:1:unsigned_short,882dfea5b0616419,18,4,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:d:unsigned_char + paramtype:2:signed_char,d0c65f7b8ffe0b91,21,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:pl:signed_char + paramtype:2:unsigned_char,b2a612301b96fbec,17,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > swapdecl:i:d + incdec:13:op1,0f9ff79b2614b1ef,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 + paramtype:1:int,672a81988d70d2c7,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > zero:16:eq0 + type:d:unsigned,4e02d11b9c3051c4,24,3,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > type:i:unsigned + swapdecl:d:pl,77de181e1274a2da,25,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > commute:6:!= + movedecl:pl:0,2f51e87fb4e05078,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:d:char,886365db54878e65,20,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:2:unsigned_short,f61a24d1b5ad4fd7,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:i:char,fa7b132fbaee09ac,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1,adc329e17c04ef1e,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:d:unsigned_short,50c5029175a3edc1,10,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > swapstmt:12,130ee24d0ea88f7d,10,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:1:unsigned_short,be5fb0c70c715def,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:pl:signed_char,c1fca30c58d152db,11,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > cmpflip:6,a5d6f6c5d3c7b7f2,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:pl:char,3ef6ae178a417d0f,13,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > commute:5:&,32dcb5393421fed4,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:2:unsigned_char,7e723ff252b2cc19,14,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:1:char,fc0f95b13affe259,15,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:pl:unsigned_char,9e7e8e8e4d85ed09,13,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:pl:unsigned_short,e4f03065e2c200ad,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > swapdecl:d:pl,8ec52f0f03316600,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:pre,4802b7b2216d58d6,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > commute:6:!=,a49a0adf59527a62,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:1:unsigned_char,447d7263e486baff,15,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:i:signed_char,e0177ca98ba2e6b0,40,12,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:2:unsigned,a8bd99aa3a0e325b,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:2:char,3d82c24a8454b0b7,14,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > commute:9:==,b5b06a2a14305d14,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:i:unsigned_short,141fefb5e91dea37,12,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:d:signed_char,286541202e141d87,16,7,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > commute:16:==,0082aec704dd2600,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:1:signed_char,2428291b61e08ad8,15,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:d:unsigned_char,80fbe72a67e0a8ad,20,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:i:int,eea7090869d49508,25,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:d:int,e9f49e30759160f8,22,3,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:pl:unsigned,3500e7f093e700aa,11,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:d:unsigned,925539874576263e,24,3,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > zero:16:eq0,5850a3e3fef6b53a,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:i:unsigned,141cadc1f8af49f9,25,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:2:short,e82d4f3d44c65bc3,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:2:signed_char,eaeac199c3a4c1f0,12,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:pl:int,301ab3dbceb36328,11,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:i:unsigned_char,2eed6922537f0a05,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > swapdecl:pl:i + type:i:unsigned_char,4db62f576fb928fd,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > commute:16:== + paramtype:2:short,e2042d8b1802ebbf,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:i:unsigned_char + type:pl:unsigned_short,7e004a6c6684ecb3,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:d:int + paramtype:1:unsigned_char,8392641a5e2e22fe,26,7,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:d:unsigned_short + paramtype:2:short,e4311e308575c040,10,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:i:unsigned + paramtype:1:signed_char,b3b4cb272b0dc692,23,8,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 + type:pl:unsigned_char,5688cb938920fea6,13,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:2:unsigned_short + paramtype:1:short,2492a9fbdaf0e7ef,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:d:unsigned_short + commute:6:!=,21f4b095113f67ef,10,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:i:int + swapstmt:12,3c27aecffebef674,27,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:pl:int + type:i:unsigned,d30220d9ec936318,25,10,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:1:signed_char + cmpflip:6,7476ada7ec95126c,15,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:2:short + type:i:int,0f8dcc0a64f5f6af,16,6,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:1:int + type:pl:int,a853a780ef7afc7f,11,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:2:signed_char + commute:6:!=,8f2e725a0815033f,12,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > swapdecl:d:pl + paramtype:1:short,2c54a78c5b807c49,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:1:int + type:d:unsigned,63a350918b7758fc,24,3,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > movedecl:d:2 + paramtype:2:unsigned_short,c987fe99f2f4e6bc,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > commute:9:== + swapdecl:d:pl,ca519ffe7a898854,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:d:unsigned + type:pl:unsigned_char,7932cb3bcea30389,28,5,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:i:int + movedecl:d:2,f460d42f0535ae7a,25,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:1:signed_char + type:pl:unsigned_short,c8cbdf2bacd95bc0,15,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:i:unsigned + type:i:signed_char,e0177ca98ba2e6b0,40,12,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > type:pl:int + commute:6:!=,9660ee77133ef475,11,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:1:unsigned_char + swapstmt:12,0406cbc5ef69a488,17,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > paramtype:1:char + type:i:char,4c527270c576055a,37,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:1:char,3835608b6066ad04,15,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:1:int,c90863aec615e243,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > commute:6:!=,7e145239c1081fbb,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:i:char,a10f06ff5501c96a,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:1:unsigned_short,c6c2a93bec85b4ef,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:1:signed_char,13958cdb1c8eae49,15,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:short,2b760ff3abc9a6a8,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:i:unsigned,f2345e6c633a8744,25,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:signed_char,e76f2de639c76fd0,12,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > swapstmt:12,e4f7d3de6ac103dd,10,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:d:unsigned_short,c48ddb65da65dcc0,10,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned,39eb273d813f4e85,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:d:unsigned,80a930b850b840b1,24,3,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:pl:int,acfc7b45d39b4846,11,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:d:int,74de9e4be94a49a3,22,3,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > commute:16:==,e988e241ad3afe61,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > commute:9:==,c1054b0b720b56ab,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:d:unsigned_char,53ef6aeedcb3b716,20,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:i:unsigned_char,7b3416fff295f953,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:pl:unsigned,45c843ae708bd787,11,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:pl:char,24551656911656a8,13,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:d:char,5967fac5bf1ddee2,20,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > cmpflip:6,3e0351bb1e245081,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:1:unsigned_char,6c9d34d55e1f7e2c,15,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:i:int,74f8ad03c7d6bcfd,25,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_char,42cd47669a518a85,14,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:1:short,bf229d01e3101315,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:i:signed_char,2755fee1c2d9cd06,40,12,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > commute:5:&,ead30c0d1c139f42,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short,f48d3a4992d81496,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > zero:16:eq0,c05afb2eadd4be29,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > swapdecl:d:pl,4f1aaefc6e34a7ab,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:i:unsigned_short,927f1243b82e2d66,12,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:char,48f504f46b9e8d25,14,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:pl:signed_char,399374d79bbf5746,11,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:pl:unsigned_short,a37cd4114a1141b4,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:d:signed_char,d2d42cc1d3ac5734,16,7,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:short + type:d:signed_char,8469b55fa571a655,17,6,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:i:signed_char + commute:5:&,93a8f48bef98a617,40,12,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > swapdecl:d:pl + paramtype:2:short,99b8df9f6d3d6894,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:1:unsigned_char + type:pl:unsigned,fa1037c57911212d,18,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > zero:16:eq0 + type:i:signed_char,a1d6ad0650a6e301,40,12,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:pl:int + type:d:unsigned_short,8f83c2d93a547dea,13,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > swapdecl:d:pl + type:pl:int,ae4ac7fb49fc1d06,11,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:char + type:d:int,68e0b566ab770818,21,7,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:d:signed_char + commute:16:==,4430c0f165739fd4,16,7,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:pl:unsigned + type:d:unsigned_short,ce23a57515027c71,13,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:i:int + type:i:char,a10f06ff5501c96a,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned + commute:16:==,cf4e421c6ef32e85,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:i:char + type:pl:unsigned_char,5fe2a0559cdcdd65,41,8,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:pl:int + cmpflip:6,60fafb0a2957c604,11,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > commute:6:!= + paramtype:1:unsigned_char,82cf5349b1f2e1e9,15,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > swapdecl:d:pl + paramtype:1:signed_char,52efecc42162de75,15,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:i:unsigned_char + paramtype:1:int,4f164e1fe0ad16cc,36,10,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > movedecl:d:2 + type:i:int,847eb32a2ddb246a,25,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:i:unsigned + paramtype:2:signed_char,bb6c2e8b4c710a95,20,0,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > movedecl:d:2 + type:pl:unsigned_short,61e8ea288172e28e,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:d:unsigned + type:d:int,74de9e4be94a49a3,22,3,0,13,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > swapdecl:d:pl + paramtype:2:unsigned_short,8c8551106a148f30,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > commute:9:== + movedecl:d:2,256ac926a883a395,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > commute:9:== + type:d:unsigned_char,7cc7d2db9c2c30bf,20,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:d:unsigned_char + movedecl:d:2,bc4e641a2b944ef4,20,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0,e6c47251c2b3b99a,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > type:pl:unsigned + type:i:unsigned_char,ffcc3b0591b43a75,39,12,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > movedecl:i:0,0caa6159831f3c5f,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:1:signed_char,2de5554654527583,15,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:1:short,ac6816ade1d37410,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:d:int,c33f73e592cbf6c5,20,9,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > incdec:13:post,2a5783f8f4631bbb,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:pl:int,2bed6e478a915c62,11,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:1:unsigned_char,fb7c363e7c63430e,15,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:i:char,dd0835e67d087c38,33,14,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:i:signed_char,802c911b2bb9c14e,36,16,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:d:char,4561582600861ed6,21,4,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:d:unsigned_char,1038afd37c2b6f7b,21,4,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:2:char,4fe8e11a69e87381,14,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > commute:5:&,c9768710120917ac,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:2:unsigned_char,95203c4959dfa4c4,14,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:d:signed_char,928bc9ecca06a818,17,6,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:d:unsigned,22b87283aa4f1df6,22,9,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:pl:char,3af85316b4d22b72,13,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:1:char,856f40e5ca04d566,15,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:2:signed_char,85149ad2fde0cb0f,12,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:pl:unsigned_char,a933a950b51a1358,13,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > swapdecl:d:pl,dc5bdf24592b94f4,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > movedecl:d:2,074b64fe20dbc6e3,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > commute:9:==,a32d7da4a5bd1a35,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:i:unsigned_short,6cca2aa2052f3ccb,12,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > commute:6:!=,ad470916127c68b0,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:1:int,3afc41e1bd063173,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:pl:unsigned_short,b0145f1861106b88,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > cmpflip:6,67d6cd6795cfbc2a,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:d:unsigned_short,a08aa3b009439aed,10,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:2:unsigned,10599aaac650bf2c,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:pl:unsigned,3a911f81aa43b828,11,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:i:int,369c13d9733698c1,16,6,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > swapdecl:pl:i,7364c63ce5780657,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:i:unsigned,d4fa53b7613da598,16,6,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:2:short,31602224dd347be8,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:pl:signed_char,3a7f9d8ad9f7f2b1,11,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:i:unsigned_char,7de28dca80f27942,33,14,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > swapstmt:12,f620324c98ddcae7,10,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:1:unsigned_short,088b1bc512a7ed8d,13,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:d:unsigned + type:i:char,e9c39d8aed515ac0,48,20,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > commute:9:== + type:d:unsigned_char,8ed550b90ee9fc66,21,4,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:d:unsigned_char + type:d:char,4561582600861ed6,21,4,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:d:unsigned + paramtype:2:signed_char,c472bf05897be798,23,9,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:d:int + swapdecl:d:pl,2b9d91d2925d0689,20,9,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > swapstmt:12 + paramtype:1:unsigned_short,302f8c255ae4c1f4,15,2,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:1:short + type:pl:char,21646fb8dae46be1,18,4,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:pl:int + paramtype:1:char,59cc84f8f8b30671,18,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > movedecl:d:2 + type:pl:unsigned_char,4901a906110f60ad,13,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:1:char + type:pl:signed_char,e14a77649c68abc8,18,9,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:pl:signed_char + type:pl:unsigned_short,b0145f1861106b88,8,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:pl:char + movedecl:d:2,f3402547687406f3,13,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > swapdecl:pl:i + type:i:int,7486041f25f414d9,16,6,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:1:char + paramtype:2:char,abf3265ac6438910,18,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > swapdecl:d:pl + type:d:unsigned_short,54da285c3c869462,10,1,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:i:unsigned + type:pl:char,84ce0bea230869b2,20,8,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:1:signed_char + type:d:unsigned_short,29b988508cda9cf5,17,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > movedecl:d:2 + paramtype:2:unsigned_char,42360615d045f7b3,14,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > paramtype:2:int + type:i:unsigned,62c8fa4fbd945b74,25,12,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:pl:signed_char + swapdecl:pl:i,57af3e616d6a8f7f,11,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > incdec:13:post + paramtype:1:unsigned_char,836e7de2da2ae2b0,15,5,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:pl:unsigned_char + type:d:char,8921099d19534585,26,6,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:i:char + type:i:unsigned_char,7de28dca80f27942,33,14,0,16,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > type:d:unsigned_char + zero:16:not,9f0b1dfa9d222dc4,21,4,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:unsigned > movedecl:i:2 > incdec:13:op1 > paramtype:2:unsigned_short + zero:16:eq0 > incdec:13:post + paramtype:1:signed_char,ce4e80e91bc20d8c,15,3,0,18,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:19:6:char,b8c88b3ac72981f5,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:19:0,1c671a848aa58fdc,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,split:pl:1:after,829dfcbd25bbf2fc,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:17:goto,aa73549ef5dcfb00,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:11:5:unsigned_char,9b558ba423d7a646,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,split:pl:1:last,829dfcbd25bbf2fc,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:17:while1,f6721c4d9de3826f,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:12:5:unsigned_short,cf91ef1e58c60acf,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:11:0,3199c2d50081d411,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,split:i:1:last,93d79d3d1ba7b19e,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:20:5:unsigned_char,11b8d115b73441f5,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,split:i:1:after,4649a37f68655550,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:11:5:short,7a5bc5cc9cff6141,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:18:6:short,8922caa9f94bc097,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:11:10:unsigned_char,5ce5d691cf264c8e,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:6:2:short,4e2960b1ac66be74,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:18:2:none,d777fc879c22c4d6,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:19:8:short,2613b8d33aa8df95,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:9:1:short,26023223c57fd9c6,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:11:1:int,acd6cd14551438dd,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:11:10:char,5d660974ce70d51f,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cast:10:2:none,cfbabba6cf8a8d62,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > swapstmt:12,e7bd01cb0f575eb9,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > loop:17:while1,bf03290d47307b98,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > incdec:13:pre,9cd798183a68a76f,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > swap:5:0,a99d71216f915432,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:pl:unsigned,c967289bbd49b601,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > paramtype:2:char,10cfa305012fe822,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > split:i:1:after,2cb934f93aad8caf,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > swapdecl:d:pl,d3b6f915eb2c4bdf,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:11:10:int,a69920466c238c4a,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > zero:16:eq0,47f83d72fe8544bf,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cmpflip:6,3c97a392fefeb604,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > commute:6:!=,41c32da3b4eb6add,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > loop:17:goto,f470ebccf9501bcd,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > incdec:13:op1,f5b7780c4652db88,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > swap:6:5,41c32da3b4eb6add,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:d:unsigned_short,200234a6a412c59f,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > split:pl:1:after,b25560b1b2844306,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > swapdecl:i:d,6f5e58494d3990d0,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > movedecl:pl:0,1779ce91926ca9f0,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:5:1:char,6a86d731ad4c46a7,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > commute:9:==,c7dbbec792920d77,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > swap:11:0,776ca25b90c52551,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:i:unsigned_char,02c39d0b39f31379,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > paramtype:2:signed_char,7ba36f72161d133d,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > split:pl:1:last,b25560b1b2844306,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:10:5:char,697286e2eedc6b0e,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > commute:16:==,cc0fac7ae926c42e,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > swap:6:1,3c97a392fefeb604,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:i:int,ba0e8edb8295b2a5,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > paramtype:2:unsigned,05566f474164e980,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > split:i:1:last,f668a79e135f1ff3,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:11:4:short,fa9271b218571024,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > commute:5:&,a99d71216f915432,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > swap:19:0,1c397844ae7683a4,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:pl:unsigned_char,09e9b34b9783a9a7,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > paramtype:2:unsigned_short,e1021a4126af6492,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:12:4:unsigned_short,748d00c6ee153a7c,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:pl:unsigned_short,d18d129d6cbe490d,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > paramtype:2:unsigned_char,ab6d4bdf3dc25be3,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:19:8:unsigned_short,c1e92bb8930dd4b7,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:d:char,e1746520e8bc48aa,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:10:2:unsigned_char,bfdfabc2f13aabaf,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:i:char,692c038d3cd65c9e,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:12:5:short,5be787a77c248b22,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:d:signed_char,4cc2692385c3faf1,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:18:2:unsigned_short,61a6c3c7649ec922,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:d:unsigned,3b760126237ebf33,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:11:4:unsigned_char,e3b8de77cc2b2bfe,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:i:unsigned_short,899b69e1fde05b57,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:11:9:unsigned_short,3f346c34944f1bfd,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:d:int,158844ca142bbe91,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:7:4:char,2cad870e1949ed90,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:i:signed_char,935c7017b104026a,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:15:4:int,5cf1a1db2a04c3c5,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:pl:char,849b7535923c218e,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:19:6:unsigned_char,b1e41ac8dbb75fc3,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:pl:int,21322375839b73f1,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:12:5:unsigned_short,4d5844d60a4842c9,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:i:unsigned,807ef14cc1b435c1,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:19:5:char,2d59b7d1fbb63f47,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > type:d:unsigned_char,324135fe8bece1b1,,,,,
+2026-10-21,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,paramtype:1:int > cast:19:1:unsigned_short,e86865c41199ad22,,,,,
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,base,fe99eb91fafd3a0f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cmpflip:9,36c557feca94829c,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:8:0,29730fcc317e2c44,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,zero:19:eq0,3d12e8f25b05bb1e,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:op1,1a2a010100784807,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapstmt:15,56556db6337cbed9,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:9:!=,e24eb4177022a08f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:goto,7059ff75860b7934,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0,aec21ef482a50fa4,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:pre,55f32cbd5684df8a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:12:==,a450860f099a8613,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:while1,574d6a5f772250df,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:9:1,36c557feca94829c,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:&,29730fcc317e2c44,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:9:5,e24eb4177022a08f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:==,0f49a284b8e477f8,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:22:0,10539fda86f2f75b,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:while1 + swapstmt:15,c34dd534ad06e963,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:pre + swap:8:0,9a34c4b047e88570,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:pre + cmpflip:9,f51a53ada7c0b863,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapstmt:15 + loop:20:while1,c34dd534ad06e963,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:while1 + swap:9:1,56b10a929f27094e,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,zero:19:eq0 + loop:20:while1,6c13288f38dcfb5f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:pre + swapstmt:15,5046ba7fe4e88492,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,zero:19:eq0 + incdec:16:pre,6523192de62c0b53,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:while1 + commute:12:==,285f2320965f4a43,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cmpflip:9 + swapstmt:15,b62b35fe96611da6,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:9:1 + incdec:16:op1,4fc88c42eaad6c80,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + zero:19:eq0,0de9ae2ea218af20,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:8:0 + loop:20:while1,1b75879e34ff64a0,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:op1 + commute:19:==,7d84da4769ecbdc2,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapstmt:15 + zero:19:eq0,67af39ec2a9c3ce5,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:op1,dc86840824b972b2,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:22:0 + commute:19:==,7bede2703c153ca8,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:9:5 + zero:19:eq0,17203edc67d52a7d,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:goto + zero:19:eq0,9d82aa830e51bcb2,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:while1 + swap:22:0,d695b3c533c84883,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== + cmpflip:9,b1b4d97bd95014b4,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,zero:19:eq0 + swap:22:0,3643b603e77c851b,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== + loop:20:goto,873289f21f3cfaf8,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:goto + cmpflip:9,d7b6fd8d5e869ca5,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:while1 + zero:19:eq0,6c13288f38dcfb5f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapstmt:15 + swap:22:0,26a783a76cef4238,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + zero:19:eq0,c64585691886eefc,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:while1 + zero:20:ne0,0593ba87285ad565,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:12:== + cmpflip:9,f95da126643fd73b,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:op1 + commute:9:!=,40f17ff68418b4f9,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:12:== + swap:9:1,f95da126643fd73b,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:goto + swap:14:0,d94d1d5d599b32fb,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cmpflip:9 + incdec:16:op1,4fc88c42eaad6c80,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:op1 + loop:20:goto,42c96edabf2fe2d3,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + loop:20:while1,1b75879e34ff64a0,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cmpflip:9 + loop:20:goto,d7b6fd8d5e869ca5,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:9:1 + swapstmt:15,b62b35fe96611da6,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + loop:20:goto,089533772669a0ce,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapstmt:15 + cmpflip:9,b62b35fe96611da6,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:9:!= + cmpflip:9,1467fa423fcd7093,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapstmt:15 + loop:20:goto,5096ad10cc052dc7,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:9:1 + swap:14:0,aea41aa6db79233a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > loop:20:while1,04ce93a70db7efeb,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:12:==,425bc30103b9a0d9,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > incdec:16:pre,14e165fe73c2470f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swapstmt:15,3034d999b049b59c,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swap:14:0,203de875d71e234c,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:9:!=,28e571baafa048a5,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swap:8:0,f3c2c15e440d989f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:8:&,f3c2c15e440d989f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swap:9:5,28e571baafa048a5,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > incdec:16:op1 + cmpflip:9,c454ff6a50ae0c7c,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swap:14:0 + incdec:16:pre,b1558a4e9b788908,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:9:!= + incdec:16:pre,39bd3e0ec4679066,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > incdec:16:op1 + commute:12:==,59fce7b7c71310d8,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swapstmt:15 + loop:20:goto,9b3cdf2c059024ae,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swapstmt:15 + swap:9:1,d3de9b88b92cf209,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:9:!= + swap:9:1,5a845b4d536dc0a6,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > incdec:16:op1 + opassign:16:0:split,222f5686df2efd68,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > incdec:16:pre + swap:14:0,b1558a4e9b788908,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:8:& + incdec:16:pre,1c90981b332107a2,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > loop:20:while1 + loop:20:do,a262f5907c6fe3da,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:12:== + cmpflip:9,0529aaa00d72a666,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > cmpflip:9 + swap:8:0,868d2d8e0134e4c9,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > loop:20:goto + cmpflip:9,1e9e1bcc36367f9c,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > incdec:16:pre + swap:8:0,1c90981b332107a2,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:9:!= + swap:14:0,c51b63d1a55803d4,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:8:& + loop:20:while1,3c87097cc314128a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swapstmt:15 + commute:8:&,8ca1a582c89274d2,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > loop:20:goto + swapstmt:15,9b3cdf2c059024ae,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swap:9:5 + swapstmt:15,48ef680329691dff,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > incdec:16:pre + commute:12:==,6aa16e572eba1787,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > incdec:16:pre + swap:9:1,02d0438db2b87623,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > cmpflip:9 + commute:9:!=,5a845b4d536dc0a6,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > cmpflip:9 + loop:20:while1,16c3c27900969044,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > incdec:16:pre + swapstmt:15,f4c65775c32edf9a,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > cmpflip:9 + incdec:16:op1,c454ff6a50ae0c7c,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > loop:20:goto + commute:8:&,3cb76788d04df7e8,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swap:9:5 + cmpflip:9,5a845b4d536dc0a6,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:9:!= + commute:12:==,4cfded55d354c2d2,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:9:!= + commute:8:&,1adb9dccf035e141,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > loop:20:while1 + cmpflip:9,16c3c27900969044,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swap:14:0 + cmpflip:9,7fd33109b8f5d81b,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swap:9:1 + commute:12:==,0529aaa00d72a666,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > cmpflip:9 + swap:9:5,5a845b4d536dc0a6,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swap:14:0 + swapstmt:15,ea06ee155db7576d,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:12:== + loop:20:goto,a2056dea2b1d6b93,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swapstmt:15 + cmpflip:9,d3de9b88b92cf209,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > incdec:16:op1 + swap:9:5,35b9fe7d45f2909f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swap:8:0 + cmpflip:9,868d2d8e0134e4c9,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:9:!= + incdec:16:op1,35b9fe7d45f2909f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > commute:8:& + loop:20:goto,3cb76788d04df7e8,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > swapstmt:15 + loop:20:while1,7996155fb27a1fba,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:19:== > loop:20:goto + swap:9:1,1e9e1bcc36367f9c,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:while1 + swap:14:0,09aa2563aadb3e52,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:8:0 + cmpflip:9,0b29b4cb96d54aa4,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:op1 + opassign:16:0:split,b6cf40cc7c1333bb,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + commute:12:==,41075b3aaae675ed,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:9:5 + loop:20:goto,460ed6240c87596a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,zero:19:eq0 + cmpflip:9,740ee3f71927a497,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:op1 + swapstmt:15,554d4fc8d989b6aa,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:12:== + incdec:16:pre,2d07f6bcaf6a9ab4,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:12:== + swapstmt:15,4ec37335f49e9303,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:pre + loop:20:goto,bb6bc6e070eb13d2,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + swapstmt:15,5e5fc5b774a2f4d4,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,zero:19:eq0 + swap:9:1,740ee3f71927a497,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:9:5 + loop:20:while1,06041273babbc6b5,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:9:!= + swapstmt:15,06947664c5a72896,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cmpflip:9 + zero:19:eq0,740ee3f71927a497,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:while1 + loop:20:ifdo,fb15aa794655454b,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:while1 + commute:9:!=,06041273babbc6b5,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,zero:19:eq0 + incdec:16:op1,1204ab2227ece713,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cmpflip:9 + commute:8:&,0b29b4cb96d54aa4,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre,61c240bb684d2f25,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cmpflip:9 + swap:8:0,0b29b4cb96d54aa4,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + swap:22:0,4c0c0209a6d59261,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:22:0 + commute:12:==,877a2ccf6698158a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:op1 + zero:19:eq0,1204ab2227ece713,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapstmt:15 + commute:12:==,4ec37335f49e9303,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:op1 + commute:8:&,65ed4dc7414d9e8d,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + swap:14:0,6d36f67d6f2f3e89,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapstmt:15 + incdec:15:op1,554d4fc8d989b6aa,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:goto + swap:22:0,b2d7605aa824c846,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:9:5 + swapstmt:15,06947664c5a72896,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapstmt:15 + swap:14:0,bc246616f368eadd,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swapstmt:15 + commute:9:!=,06947664c5a72896,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:9:1 + zero:19:eq0,740ee3f71927a497,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + swap:22:0,15e700f07fa3e7fe,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:goto + swap:9:5,460ed6240c87596a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:while1 + incdec:16:op1,4e63f9dbda8b47dc,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,zero:19:eq0 + commute:12:==,f5ae484447e05fc9,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:8:0 + swap:9:1,0b29b4cb96d54aa4,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:12:== + zero:19:eq0,f5ae484447e05fc9,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:pre + commute:12:==,2d07f6bcaf6a9ab4,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > commute:9:!=,cf2a0954d785ffae,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > zero:19:eq0,69923ec169f94217,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > cmpflip:9,6a73e985e0e22621,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swapstmt:15,325647a3e54ca4b3,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > loop:20:goto,aee7f0ff5217600a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:9:1,6a73e985e0e22621,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > commute:8:&,a64e1c03ec84ca41,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > loop:20:while1,e885c6c6ffae84fd,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:22:0,8c04ae0e18769055,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > commute:12:==,d00e684090649ca7,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:8:0,a64e1c03ec84ca41,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:9:5,cf2a0954d785ffae,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > commute:12:== + commute:9:!=,bf7dd260cd82bbf7,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swapstmt:15 + swap:9:1,ca1639a029fc50f9,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > loop:20:goto + cmpflip:9,15737a46dfe6b38a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > commute:12:== + commute:8:&,39f9291f8e9ba4b6,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swapstmt:15 + commute:9:!=,12663295b72a0c5d,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:22:0 + swapstmt:15,829691caf8d4dfe6,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > cmpflip:9 + loop:20:goto,15737a46dfe6b38a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swapstmt:15 + cmpflip:9,ca1639a029fc50f9,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > incdec:16:post + swap:9:5,e07f41f47606772d,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > cmpflip:9 + zero:19:eq0,a6edd1fd98b79045,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:9:5 + loop:20:while1,c2913b9a49e88b25,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > cmpflip:9 + commute:9:!=,aa20b860bbc93b72,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > loop:20:while1 + loop:20:do,3aa048522ff461f3,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:22:0 + zero:19:eq0,c226efebfc1fb30f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > commute:8:& + swap:9:1,97031b77b5651346,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swapstmt:15 + loop:20:goto,09c76f685b166efe,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > incdec:16:post + commute:9:!=,e07f41f47606772d,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > loop:20:while1 + swap:9:1,7d394db67c2fa063,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:8:0 + zero:19:eq0,4c47ccdb76697701,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > loop:20:while1 + swapstmt:15,3d35cc43b4851267,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:9:1 + swap:22:0,c43ad2167447b433,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > zero:19:eq0 + swap:9:5,3c661c42e821d646,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > cmpflip:9 + swapstmt:15,ca1639a029fc50f9,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > loop:20:while1 + cmpflip:9,7d394db67c2fa063,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > zero:19:eq0 + swapstmt:15,163577fc0eba7de4,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > loop:20:goto + swap:22:0,d91623b625047663,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > commute:8:& + loop:20:goto,d86db2d484be7a83,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > commute:19:== + loop:20:goto,1708e1e079382886,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > commute:9:!= + swap:8:0,55781369db073ca2,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > cmpflip:9 + loop:20:while1,7d394db67c2fa063,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > cmpflip:9 + commute:19:==,501db3e6cd1f5d0a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:8:0 + swap:9:1,97031b77b5651346,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > loop:20:while1 + zero:19:eq0,48aa02e29b848ac0,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:9:1 + swapstmt:15,ca1639a029fc50f9,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > commute:19:== + loop:20:while1,2b728a4e8aeb0e34,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:8:0 + loop:20:while1,683d6f07e270ce02,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:14:0 + incdec:16:pre > swap:8:0 + swapstmt:15,c2b9bc6d7697f6db,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,loop:20:while1 + loop:20:do,771f8d68a135f556,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:22:0 + cmpflip:9,d9258a628dc44a42,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,cmpflip:9 + swap:22:0,d9258a628dc44a42,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:9:!= + swap:8:0,050c35bf267d3363,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:9:!= + commute:8:&,050c35bf267d3363,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:9:1 + swap:22:0,d9258a628dc44a42,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,incdec:16:pre + loop:20:while1,a4b3c30f93e7a4d2,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:9:5 + incdec:16:pre,d9253488cfc091e2,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:22:0 + swap:9:5,6b94b5ea93d4c831,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:9:!= + commute:12:==,537c9de4714668e0,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!=,050c35bf267d3363,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:12:==,9f75747892eabcc1,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,swap:22:0 + incdec:16:pre,35e269c0b96be791,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > cmpflip:9,6420e6d4a20e2b17,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > incdec:16:pre,67b30f5bd3bc2285,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swap:9:1,6420e6d4a20e2b17,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swapstmt:15,64bec1d0ddd74275,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > commute:12:==,7d824be6f63ff0c6,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > zero:19:eq0,310ef9c0c5b96645,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > loop:20:while1,c406da9de948fa1f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > incdec:16:op1,2d84ee5e0525804a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swap:22:0,3c20b491eaf517e8,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > loop:20:goto,0721757e7279921d,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swap:14:0,fbe001ecec420f90,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > incdec:16:op1 + cmpflip:9,93f97e14585afd78,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > incdec:16:op1 + swapstmt:15,fdf9a2933779025d,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > loop:20:goto + zero:19:eq0,f7001017060fb38e,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > cmpflip:9 + swapstmt:15,7a528ec0e7ed60d7,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swap:22:0 + zero:19:eq0,2ee887aba51be6be,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > loop:20:while1 + swapstmt:15,39db8bb7d8ba7bd3,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swap:9:1 + zero:19:eq0,45462d55afb1b5d3,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > commute:19:== + loop:20:goto,b504e6b802f3c95b,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swap:22:0 + incdec:16:pre,3821f02c029afd05,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > loop:20:while1 + zero:20:ne0,9c157b729b5fdf33,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > cmpflip:9 + zero:19:eq0,45462d55afb1b5d3,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swap:14:0 + cmpflip:9,d87c185dc8e4448f,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > commute:19:== + swap:9:1,c91b3cf62f4b3f19,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > commute:12:== + swapstmt:15,e11c1ecc7d851704,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > incdec:16:op1 + commute:19:==,fe7a63b3c63f76af,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > loop:20:while1 + swap:14:0,6afc00a95fb83fd5,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swapstmt:15 + cmpflip:9,7a528ec0e7ed60d7,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > zero:19:eq0 + cmpflip:9,45462d55afb1b5d3,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > incdec:16:pre + loop:20:goto,caf027f720e49943,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swapstmt:15 + commute:19:==,dd86388c946f577f,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > loop:20:goto + swapstmt:15,e42d66d6b848e073,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > loop:20:while1 + zero:19:eq0,d27d6b3753321b2c,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swapstmt:15 + loop:20:goto,e42d66d6b848e073,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > incdec:16:pre + zero:19:eq0,32e0f83d6b8d595a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swapstmt:15 + loop:20:while1,39db8bb7d8ba7bd3,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > zero:19:eq0 + incdec:16:pre,32e0f83d6b8d595a,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > commute:12:== + cmpflip:9,eb2a7eff1fbc9d87,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > commute:19:== + swapstmt:15,dd86388c946f577f,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > loop:20:while1 + cmpflip:9,026ed38422d1628c,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > cmpflip:9 + incdec:16:pre,a33e82585aacb4ae,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swapstmt:15 + incdec:15:op1,fdf9a2933779025d,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > loop:20:while1 + incdec:16:op1,91b43d5d93e2e785,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > zero:19:eq0 + loop:20:while1,d27d6b3753321b2c,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > incdec:16:pre + swapstmt:15,ec04f1ae50a9c03d,12,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > loop:20:while1 + incdec:16:pre,f49212ee5fca8a62,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > cmpflip:9 + loop:20:while1,026ed38422d1628c,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > zero:19:eq0 + incdec:16:op1,5651876df831a64d,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swap:9:1 + loop:20:while1,026ed38422d1628c,10,2,0,18,ga
+2026-10-25,checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,commute:8:& + commute:9:!= > swapstmt:15 + swap:14:0,a56f5e225f923241,12,2,0,18,ga
