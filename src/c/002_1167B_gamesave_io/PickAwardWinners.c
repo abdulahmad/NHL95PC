@@ -1,7 +1,7 @@
 /* Awards module across segments 002-004: season winners, award screens and ceremony. */
 /* Keep these four functions in address order: AwardsCeremony shares PickAwardWinners_x across segments.
-   PickAwardWinners, ShowAwardScreens and DrawAwardsSummary remain unmarked drafts; their code gives Watcom
-   the module layout needed to merge AwardsCeremony's epilogue into PickAwardWinners.
+   PickAwardWinners and DrawAwardsSummary remain unmarked drafts (ShowAwardScreens is marked in 003); their
+   code gives Watcom the module layout needed to merge AwardsCeremony's epilogue into PickAwardWinners.
    Three of the award-9 sums read one word into a block int first: that is the EXE's load order. */
 /* DRAFT (PickAwardWinners, 10.0 GA): 2 bytes longer, every other instruction the EXE's (the locals declared err, v,
    mine, g, pct, st, pts and the two `mine` sums reordered). Left: the win percentage divisor loads the losses byte
@@ -274,9 +274,9 @@ typedef struct { char c[25]; } Str25;
    winner's goalie (type 0: GP, Min, GAA m:ss, W, L, T, SO in the season row, EN, shots, save percentage) or
    skater stats (type 1: GP, G, A, Pt, PIM, +/-, PPG, SHG, shots, shooting percentage); the award's two title
    lines at the bottom, a palette fade in and out (PALMEM). Result: the last WaitClickTimeout answer. */
-/* DRAFT (10.0 GA): 19 scored differing, 2367 vs 2367 bytes. Increment x before the column-title call:
-   Watcom sinks the increment after argument setup, giving the EXE title evaluation order in both loops.
-   Left: the goalie shots row computes y + byte_D42C3 * 8 in eax / lea instead of edx / add. */
+/* Matched (10.0 GA): x is incremented before each column-title call (Watcom sinks the increment after the
+   argument setup: the EXE's title order), and the two team-name copies are if / else with a strcpy per arm
+   (Watcom cross-jumps the arms; as ternaries the conflict order puts the goalie shots row in eax / lea). */
 int ShowAwardScreens(void)
 {
     char buf[0x2C];
@@ -303,12 +303,14 @@ int ShowAwardScreens(void)
         sub_9061C(sub_9035C(bank, 1));
         y = 0x76;
         if (awardtype[k] == 2) {
-            strcpy(buf, k == 0xA ? (char *)cupteam : (char *)presidentsteam);
+            if (k == 0xA) strcpy(buf, (char *)cupteam);
+            else strcpy(buf, (char *)presidentsteam);
             if (!strnicmp(buf, (char *)str_ANA, 3)) {
                 x = 0x1FE - (fputchar((char *)str_MightyDucks) >> 1);
                 PrintShadowText(x, y, (char *)str_MightyDucks);
             } else {
-                strcpy(buf, k == 0xA ? (char *)cupteam + 5 : (char *)presidentsteam + 5);
+                if (k == 0xA) strcpy(buf, (char *)cupteam + 5);
+                else strcpy(buf, (char *)presidentsteam + 5);
                 if (!strnicmp(buf, (char *)str_Cal, 3) || !strnicmp(buf, (char *)str_Flo, 3))
                     strcat(buf, (char *)unk_C03C4);
                 else
