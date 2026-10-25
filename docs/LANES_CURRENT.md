@@ -21,6 +21,26 @@ Segments 001-037. Work every draft in these files; do not take a file from the o
 
 These files are in lane 2 by segment. StaticEck2026 made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
 
+### `src/c/040_53294_engine_physics_ai/PassLaneChk.c`
+
+checkpuckcoll is in this file (score 0, tail 0/0) and comes with it.
+- checkpuckcoll 73->73 (2026-10-24, StaticEck2026, GA) s (19) outranks v (13).
+- checkpuckcoll 73->0 (2026-10-24, StaticEck2026, GA) half size and box size in their own local w (declared last) so v (13) outranks s (12); goto chains as nested ifs, goto hit as a second puckbody/return; the EXE bytes, not marked. ESCALATE: dead-variable reuse (dead height h reused for the body frame; own local for either role 99)
+- checkpuckcoll 0->0 (2026-10-24, StaticEck2026, GA) all 235 conflict-free role splits of the seven short roles (emulator): only the committed one is 0, height and frame apart best 42, every role its own 108; fr declarations / stick-test fr (99). ESCALATE: dead-variable reuse (h for the body frame), not marked
+- PassLaneChk 4->4 (2026-10-24, StaticEck2026, GA) a lead for next time. The wrap through y gives the EXE's `lea eax
+- PassLaneChk 4->4 (2026-10-24, StaticEck2026, GA) not retried; UNSURE already lists the lead's shapes.
+- PassLaneChk 4->2 (2026-10-24, StaticEck2026, GA) 
+- PassLaneChk 2->2 (2026-10-24, StaticEck2026, GA) regsolve.py: nothing predicted. Without py 17; a named byte for the materialized y > limit (17-31). ESCALATE: the committed py copy is a tie-breaker.
+- PassLaneChk 2->17 (2026-10-24, abdulahmad, GA) tie-breaker copy py removed (ruling: docs/ESCALATIONS.md, AGENTS.md); y read directly.
+- PassLaneChk 17->12 (2026-10-24, StaticEck2026, GA) the x gap in its own dx (ABS pair as the EXE without the py copy); left dx in eax and the lea order; || merges, dir local, dx spellings (9-36), permute.py 449 (best 10 only with a tempadd copy)
+- PassLaneChk 12->12 (2026-10-24, StaticEck2026, GA) x gap through dy with the side test's xor sum first: 15, only the ABS(y) / ABS(oy) pair (savings 3) off, lea order and sum registers right; sort replay wants one more late conflict; limit / side / gap / vtoa-argument / wrap spellings on that base 7-42 (the 7 and 8 drop EXE instructions); permute.py (logged)
+- PassLaneChk 12->12 (2026-10-25, StaticEck2026, GA) on the 15 base (x gap through dy, xor sum first): strict sort replay (one more conflict among t23-t31 or between the ABS temporaries); a result local r (8) and a short above (10) fix the ABS pair but swap the sum and change code; vtoa-result / x / ox / argument locals, sum or y - 4Eh locals, gaps through y or limit (11-77)
+- NetCollide 41->41 (2026-10-24, StaticEck2026, GA) dir (13) outranks gy (8); the EXE has gy in edi.
+- NetCollide 41->27 (2026-10-24, StaticEck2026, GA) dir + k tests without storing dir back (dir ebp, gy edi as the EXE) and the first post block's unflipped return first; left: ABS temporaries, the FE1 tail, the SPA read (int result 25: ESCALATE wrong-type question, not kept; gy if / else 20 drops the EXE ternary copy, not kept; permute 321)
+- NetCollide 27->22 (2026-10-24, StaticEck2026, GA) int result (header; FallDown still matches), no goto (nested under dist >= 18h), one shared return 0xFE1 (EXE tails), the single-use scaled_y copy removed (ESCALATE: a tie-breaker) and ux declared before gy (permute.py movedecl: the EXE slots); left the ABS pair (ABS spellings 16-22, permute 449)
+- NetCollide 22->22 (2026-10-24, StaticEck2026, GA) sort replay of the savings-5 ABS pair (one more late conflict or one fewer of uy / gy); early return for dist < 18h (22), x-flip test spellings (22-28)
+- NetCollide 22->22 (2026-10-25, StaticEck2026, GA) strict sort replay: no single added conflict keeps the named locals; named ABS locals (42-54), ABS through dead dx / dy / dist (39-45), chained Xvel / Yvel zeroing (28-55), the post blocks' ux -= 6 / += 6 folded (32-55)
+
 ### `src/c/040_53294_engine_physics_ai/checkgoal.c`
 
 - checkgoal 8->8 (2026-10-24, StaticEck2026, GA) unchanged
@@ -32,6 +52,7 @@ These files are in lane 2 by segment. StaticEck2026 made two consecutive no-gain
 
 - checkob 2->2 (2026-10-24, StaticEck2026, GA) Watcom hoists the far-side limit's `lea` out of the loop.
 - checkob 2->2 (2026-10-24, StaticEck2026, GA) regsolve.py: an operand flip, nothing predicted. Block-scoped lim, register extra, a second counter, a comma copy (5-20); permute.py tempadd/temps/inplace/lvinline 251 candidates.
+- checkob 2->2 (2026-10-24, abdulahmad, GA) lane T batch: the far-side test as `(o->Ypos >> 16) > 0x4E + extra` (2), `0x4E + extra < (o->Ypos >> 16)` (5), HIWORD(o->Ypos) in the loop (2), `(y = o->Ypos >> 16) > extra + 0x4E` (2), `(o->Ypos >> 16) - extra > 0x4E` (3), both far-side tests as >> 16 with the limit on the left (11). Nothing kept.
 - checkob 2->2 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (operand flip only); probe.py hoist study (limit on the left is hoisted when Y is a sar / sub temporary in the same block, not when Y is memory, a memory add, a named y from an earlier block or the limit is negated); Reg68 union extra.l (limit right 2, left 5 hoisted); diagnostic: no far-side pucky test leaves the lea in the loop (15), pucky test without extra hoists (12); extra + 0x4E < (short)Y (12), both loops (short)Y (12), (short)Y > lim (14)
 
 ### `src/c/064_86696_season_playoffs/POCreateSchedule.c`
@@ -47,6 +68,7 @@ These files are in lane 2 by segment. StaticEck2026 made two consecutive no-gain
 
 - SelectMatchingPlayers 7->7 (2026-10-24, StaticEck2026, GA) the add order of the address.
 - SelectMatchingPlayers 7->7 (2026-10-24, StaticEck2026, GA) Base-first address spellings (11-30), SplitPlayerName with an unsigned char * name (7-11).
+- SelectMatchingPlayers 7->7 (2026-10-24, abdulahmad, GA) lane T batch: the name as a 1Bh-byte record field `((FaEntry *)falist)[i].name` (head[8], name[19]) gives the EXE's add order (base, then 8) but swaps product / base registers (11, +1; a savings-30 tie, regdump); same with `->name`, `&...name[0]`, unsigned name, falist declared `FaEntry *` in the file (all 11); permute.py 10 min from the record base, natural transforms only (321, best 11). Nothing kept.
 - SelectMatchingPlayers 7->7 (2026-10-24, Mhopkinsinc, GA) regsolve (nothing); EXE association with falist left: (char *)(falist + i * 27) + 8, FARec record [i].name / (i + p)->name / i[p].name, FARow 2-D, &(i * 27)[falist] + 8, (char *)(i * 27 + falist) + 8 (all 11: product / falist registers swapped); int sums with (int)falist in three orders and (char *)(i * 27) + (int)falist + 8 (17, falist folded), &((char *)(i * 27))[(int)falist + 8] (23); permute.py 4 min on the falist + i * 27 base (385, best 10 with a cast, rejected); probe: the loop alone gives the EXE adds with (char *)(falist + i * 27) + 8; on that base 23 orders of f / l / i / k and k scoped (11)
 
 ### `src/c/058_7F724_highlights/SelectHilight.c`
@@ -72,34 +94,49 @@ DrawRinkOverlays is in this file (score 73, register 50/72) and comes with it.
 setplayer is in this file (score 93, register 86/92) and comes with it.
 - setplayer 93->93 (2026-10-24, Mhopkinsinc, GA) regdump (t 14 takes esi with ecx and esi both free when it chooses: a GiveBestReg pick, not a savings miss); first_pick review; 49 single declaration moves (all 93)
 
-### `src/c/055_78346_team_select/DrawGameLineJerseys.c`
+### `src/c/050_6B093_joystick_calibration/JoystickCalScreen.c`
 
-- DrawGameLineJerseys 11->11 (2026-10-24, StaticEck2026, GA) unchanged
-- DrawGameLineJerseys 11->11 (2026-10-24, StaticEck2026, GA) regsolve (0/1 votes, nothing compiled); permute.py tempadd/temps/inplace/chain/scope/commute/opassign/shiftstmt/forchain/ifswap/temp: no unlogged candidate
+- JoystickCalScreen 17->17 (2026-10-24, StaticEck2026, GA) .
+- JoystickCalScreen 17->11 (2026-10-24, StaticEck2026, GA) the draws index with s.cur and prev = s.cur after them (EXE reloads s.cur into esi), size now exact; left the size product: factor orders / casts / reads 10-11, puck int local 11
+- JoystickCalScreen 11->11 (2026-10-24, StaticEck2026, GA) header copy as a struct copy instead of the inline #pragma aux (same code); loop compare / test / ternary spellings (11-36); the factor temporaries tie at savings 2
+- JoystickCalScreen 11->11 (2026-10-24, StaticEck2026, GA) pairsim: t55 before t54 needs one more early conflict or one fewer later one; ten natural spellings left the conflict count at 34 (all 11)
 
 ### `src/c/040_53294_engine_physics_ai/checkplcoll.c`
 
 - checkplcoll 13->13 (2026-10-24, StaticEck2026, GA) the size sort puts the short parameter in the top slot.
 - checkplcoll 13->13 (2026-10-24, StaticEck2026, GA) int x probe 8 (only the home store dword vs the EXE word; wrong type, not kept)
+- checkplcoll 13->13 (2026-10-24, Mhopkinsinc, GA) regdump / slotdump (x size 2 and y size 4, both savings 22 / count 21: the size sort hands x the top slot); K&R definition with the prototype hidden 13, K&R with a file prototype (Player *, int, int) 13, K&R with an unprototyped declaration 13
 
 ### `src/c/051_6C2F9_database_save/RunEditRosters.c`
 
 - SelectRosterTeam 14->14 (2026-10-24, StaticEck2026, GA) .
 - SelectRosterTeam 14->14 (2026-10-24, StaticEck2026, GA) regsolve (0/0); MenuItem20 *m local for the second clear 17, both clears 15
+- SelectRosterTeam 14->14 (2026-10-24, abdulahmad, GA) lane T batch: read only (second clear folds the table load into the dead index register; rosterisfa zero in cl vs bh). Compiler flag scan over segments 051-052: default flags keep all 42 matched; -od 0, -os 7, -ot 14, -or 6, -oa 30, -ol 15, -s 2, -3r 9, -4r 35 kept, -oi no change: no module flag.
+- SelectRosterTeam 14->14 (2026-10-24, Mhopkinsinc, GA) regdump (second-pass temporaries, not a savings order); state_scan no warm difference; ->handler pointer-plus form for the second clear or both 14, side == 0 14, ternary side 14, item[0] 14, *(rosterisfa + side) 14, editlines if/else inverted 19 or braced 14, (unsigned char)0xFF compare 14, slot before div 16, divisionteams[div*7+slot] 14, int-array [slot*8+5] 14, 8*div 14, d = 3 14; permute.py 5 min 321 candidates best 14
 
 ### `src/c/040_53294_engine_physics_ai/checkwallcoll.c`
 
 - checkwallcoll 15->15 (2026-10-24, StaticEck2026, GA) no count change or declaration order gives x the top slot.
 - checkwallcoll 15->15 (2026-10-24, StaticEck2026, GA) committed goto-free (assignment in the second compare, same bytes); comma conditions 8 (+20), other goto-free forms 17-69; slotdump count grid (EXE slots need x 7 / ylim 8 / xlim 7-8 or similar); 12 net index spellings 15-42; ry0 dropped 28-68
+- checkwallcoll 15->15 (2026-10-24, Mhopkinsinc, GA) regdump / slotdump (x count 7 sorted below xlim / ylim 6); block net index unsigned 51 / short 54 / unsigned char 55 / unsigned short 55 / int n += 0x0C 41 (add not folded, x / y roles swap) / Player *g 53; ry0 from the global 15, ry0 first 64, 0x40 - ylim twice 15, regd4 before ylim 24, Wallsin test forms 15, y > (ylim = -ylim) 21, x > (xlim = -xlim) 22, (short)dist 15, 0 - regd1.w 15, short dist 39, regd3.w = dist = vecdist 58, regd0 gap first 22
 
 ### `src/c/055_78346_team_select/MenuSaveDefaultLines.c`
 
 - MenuGameShowPlayerStats 16->16 (2026-10-24, StaticEck2026, GA) s gets edx (savings 3)
 - MenuGameShowPlayerStats 16->16 (2026-10-24, StaticEck2026, GA) regsolve (0/1 votes, only a savings bump)
+- MenuGameShowPlayerStats 16->16 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (s savings 3 in a tie with ~14 temporaries, nothing predicted); 24 declaration orders of pal/buf/i/s 16-20, s in a block 16, ++i 16, chained redraw clear 16, zero chain split 20, category ternary 23, !(s < 0) 16, (s = *sel) > -1 17, status test inverted 23, (hmroster + side*0x444)[...] 16, s*11*2 16, slot local 28; permute.py 5 min 385 candidates (best 13 only with a value-changing (char) cast on a sprintf pointer, rejected)
 - MenuSaveDefaultLines 17->17 (2026-10-24, StaticEck2026, GA) / MenuSaveTheseLines 19: the lseek result copies are one register-cycle slot off.
 - MenuSaveDefaultLines 17->17 (2026-10-24, StaticEck2026, GA) regsolve (0/1 votes, nothing predicted); permute.py non-cast families: no candidates in this file
+- MenuSaveDefaultLines 17->17 (2026-10-24, Mhopkinsinc, GA) regdump (r 2 ECX: only the third-lseek piece left, t 3 EDX); third-lseek test nested if 17, side == 0 / != 0 17, r != t * 0x2E8 53 (probe), read / third lseek / write assigned in the condition 17 each, third lseek and write both 17, t as file position for the second lseek 17 / both lseeks 27 / ternary 23
 MenuSaveTheseLines is in this file (score 19, register 11/13) and comes with it.
 - MenuSaveTheseLines 19->19 (2026-10-24, StaticEck2026, GA) regsolve (0/1 votes, nothing predicted)
+- MenuSaveTheseLines 19->19 (2026-10-24, Mhopkinsinc, GA) regdump (same r / t savings as MenuSaveDefaultLines); 120 declaration orders of i/j/fh/r/t all 19; t as file position for the second lseek 19 / both lseeks 27 / ternary 30
+
+### `src/c/040_53294_engine_physics_ai/checkcx.c`
+
+- checkcx 20->20 (2026-10-24, StaticEck2026, GA) two sign-extension temporaries tie at savings 5.
+- checkcx 20->20 (2026-10-24, StaticEck2026, GA) regsolve (0/1, only a savings bump); pflags casts dropped 24-28, one cast on the xor 59, puckc[0] 20
+- checkcx 20->18 (2026-10-24, Mhopkinsinc, GA) committed d * dvx - dx * dvy 18; dvy declared after o (11 of 120 declaration orders) 16 at 1025 bytes (bounce fixed, L39 eax/edx and vtoa edi/ebx swapped; not committed), on it d * d + dx * dx 14 (against EXE order, rejected); 120 orders again with the old cross term or L45 dvx * dx 18 best; L45 orders 21-26, dvx * d - dx * dvy 21, L70-L75 operand orders 18 / 50, L39 reversed 22-24, gap or velocity statements swapped 28 / 30, puckc SCnum order 22, 0x14 <= regd4.w 18, regd4.w > 0x13 17, regd1.w = regd0.w + regd1.w 18, vtoa args uncast 25, dx + 4 & 7 16, facedir compare orders 16 / 18, ABS as two compares 73, dx = dx - x 16, regd0.l >= 0x101 17; permute.py 5 min 385 candidates best 16
 
 ### `src/c/045_614C2_scoring_penalty_text/InProgress.c`
 
@@ -109,11 +146,6 @@ MenuSaveTheseLines is in this file (score 19, register 11/13) and comes with it.
 InProgress is in this file (score 88, register 70/83) and comes with it.
 - InProgress 88->88 (2026-10-24, StaticEck2026, GA) register picks after +102.
 - InProgress 88->88 (2026-10-24, Mhopkinsinc, GA) for (;;) loop with continue / break instead of goto again / goto signal (88, byte-identical, committed: gotos removed); without the volatile 87 (hoisted into cx); word_CBC44[0] via a local array extern 87; declsearch --conflicts 24 orders no pen / pnum fix; slotdump: pnum count >= 20 (now 8) or pen 7 (now 44) gives the EXE slots; regsolve no prediction; volatile in vars.h not done (9 other files)
-
-### `src/c/040_53294_engine_physics_ai/checkcx.c`
-
-- checkcx 20->20 (2026-10-24, StaticEck2026, GA) two sign-extension temporaries tie at savings 5.
-- checkcx 20->20 (2026-10-24, StaticEck2026, GA) regsolve (0/1, only a savings bump); pflags casts dropped 24-28, one cast on the xor 59, puckc[0] 20
 
 ### `src/c/046_644A8_engine_display/CanFillLineSlot.c`
 
@@ -126,11 +158,13 @@ InProgress is in this file (score 88, register 70/83) and comes with it.
 
 - PickForLineSlot 20->20 (2026-10-24, StaticEck2026, GA) declsearch fixes the slots
 - PickForLineSlot 20->20 (2026-10-24, StaticEck2026, GA) regsolve (0/0, nothing predicted)
+- PickForLineSlot 20->20 (2026-10-24, Mhopkinsinc, GA) regsolve (nothing predicted); slotdump --count start=2/4/5 gives the EXE slots, pos 5-9 and counts of i/p/tab/list/side/slot do not; start = i = X 68, start = X; i = X 20, start as second-scan iterator 74, second scan as for 78, int start 66, unsigned start 66, signed char start 23, C2 list as &X[side*25] 20, D test order swapped 24, D list test swapped 24, D result in condition 20
 
 ### `src/c/054_737AA_line_editor_rosters/ShowRosterStats.c`
 
 - ShowRosterStats 20->20 (2026-10-24, StaticEck2026, GA) three temporary-register picks.
 - ShowRosterStats 20->20 (2026-10-24, StaticEck2026, GA) goalie slot read forms 20-36, test spellings 20-33, playoff record term orders under GA 20-22, goalie row forms 20-30
+- ShowRosterStats 20->20 (2026-10-24, Mhopkinsinc, GA) regsolve (operand flips, not a savings order); goalieplr 0x19 + i 20, goalie key copy [0x19 + i] 20, (PRec *)buf + 0x19 49, order store first 20, idx assigned in the row index 20, (signed char)p[2] 20, playoff ternary inverted 27, s += 9 32, frame struct after 1-4 scalars 20 / 5-10 scalars 30
 
 ### `src/c/046_644A8_engine_display/updatereplay.c`
 
@@ -195,6 +229,13 @@ PassRecOneTimer is in this file (score 32, size 11/19) and comes with it.
 - checkcheck 32->32 (2026-10-24, abdulahmad, GA) LA do-not-retry shape int dir scores 46, size +3. Not kept.
 - checkcheck 32->32 (2026-10-24, StaticEck2026, GA) goto-free form (same object, committed); checking compare flipped (34), penalty ternary (31, +3)
 
+### `src/c/057_7DC8B_gadgets_replay/ReplaySaveHilight.c`
+
+- ReplaySaveHilight 35->35 (2026-10-24, StaticEck2026, GA) looked at only.
+- ReplaySaveHilight 35->34 (2026-10-24, StaticEck2026, GA) `w = [2]; w *= [3]; n = w + 0x11;` gives the EXE's `imul edx
+- ReplaySaveHilight 34->34 (2026-10-24, StaticEck2026, GA) push temporaries one register ahead of the EXE cycle; if / else instead of the early return (34)
+- ReplaySaveHilight 34->34 (2026-10-24, StaticEck2026, GA) size sum spellings n = 0x11; n += w (38), n = w; n += 0x11 (39), w + 0x11 in the call (35), 0x11 + w (34)
+
 ### `src/c/045_614C2_scoring_penalty_text/ChkScorerMilestone.c`
 
 - ChkScorerMilestone 36->36 (2026-10-24, StaticEck2026, GA) unchanged
@@ -219,6 +260,12 @@ DrawRinkSideObjects is in this file (score 118, register 54/64) and comes with i
 
 - passtoa0 48->48 (2026-10-24, StaticEck2026, GA) the EXE sign-extends vx / vy for k; Watcom narrows those products because `s.k` is a short.
 - passtoa0 48->48 (2026-10-24, StaticEck2026, GA) k products still narrowed: >> 0, (int) casts, -(sp * sp) first (48-53)
+
+### `src/c/052_6D2F8_create_player/SwapSelectedPlayers.c`
+
+- SwapSelectedPlayers 50->48 (2026-10-24, StaticEck2026, GA) The swap loop's second index reuses a
+- SwapSelectedPlayers 48->48 (2026-10-24, StaticEck2026, GA) ESCALATE: the committed draft reuses the dead a for the swap loop's second index; a natural int ib scores 51 / 56
+- SwapSelectedPlayers 48->48 (2026-10-24, StaticEck2026, GA) natural own int ib committed (b declared before a, a = 0; b = 0;), replacing the dead-a reuse; ib orders / zero chains 50-59; permute.py 577 (40 only with signed char ib: movsx, rejected)
 
 ### `src/c/046_644A8_engine_display/RemoveFromLines.c`
 
@@ -266,14 +313,8 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 | C file | Function | Score | Cause |
 |---|---|---:|---|
-| src/c/040_53294_engine_physics_ai/PassLaneChk.c | checkpuckcoll | 0 | tail 0/0 |
-|  | PassLaneChk | 12 | register 9/11 |
-|  | NetCollide | 22 | register 7/7 |
 | src/c/052_6D2F8_create_player/CreateFreeAgent.c | CreateFreeAgent | 5 | size 9/13 |
-| src/c/050_6B093_joystick_calibration/JoystickCalScreen.c | JoystickCalScreen | 11 | register 4/4 |
 | src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c | LockerRoomLoop | 23 | register 2/2 |
-| src/c/057_7DC8B_gadgets_replay/ReplaySaveHilight.c | ReplaySaveHilight | 34 | register 32/33 |
-| src/c/052_6D2F8_create_player/SwapSelectedPlayers.c | SwapSelectedPlayers | 48 | register 23/35 |
 | src/c/064_86696_season_playoffs/PlayoffTreeMenu.c | PlayoffTreeMenu | 126 | register 61/129 |
 
 ## Offered to StaticEck2026
@@ -352,14 +393,6 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) (its slots need x's loop-weighted count 101 or less, i.e. one inner-loop reference where the code has two)
 - BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
 - BlitTileMap 5->5 (2026-10-24, StaticEck2026, GA) LoadRink as compile context (5, same slots); nothing kept
-
-### `src/c/037_4842A_engine_player_logic/assbench.c`
-
-- assbench 22->22 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assbench 22->22 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-- assbench 22->22 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-- assbench 8->6 (2026-10-24, StaticEck2026, GA) from lane2x/batch8's draft; the count test as !(d >= 0) (facedir in dx as the EXE); d block-local, 0 > d, d <= -1, assignment in the test, d = p->temp1 - 1 forms (11-17), d int, no d; permute 321 (best 6)
-- assbench 22->8 (2026-10-24, StaticEck2026, GA) goto seated replaced by one if (temp1 != 64h) block; the y distance in its own short dy, which gives the EXE widening without the no-op & 0xFF masks (both removed); the count as d = --p->temp1 (dx as in the EXE); context copy of assepen (no change); permute twice (best 7 only with no-op casts, rejected)
 
 ### `src/c/001_10010_main_startup/FadePalette.c`
 
@@ -524,6 +557,7 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SetupStatsSourceMenu 42->42 (2026-10-24, StaticEck2026, GA) default: break last / first, the src fallback as nested ifs or a ?: chain (42), y = 0x11 before the loop (44), the n == 4 test inverted (49); permute.py (0 new candidates)
 
 ### `src/c/036_47C31_engine_init/FadeOutPalCycle.c`
 
@@ -531,18 +565,12 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assthreestars 44->44 (2026-10-24, StaticEck2026, GA) compile-context copy of ass_pc_slot20 (no change); the slot / pos pass-through copies written in place (47 / 46 / both 257): ESCALATE: the committed draft keeps two tie-breaker copies (slot, pos)
 
-### `src/c/017_21CDE_player_stats/LeadersScreen.c`
-
-- LeadersScreen 123->84 (2026-10-24, Mhopkinsinc, GA) : an empty `default: break;` closes the column switch
-- LeadersScreen 84->84 (2026-10-24, Mhopkinsinc, GA) unchanged
-- LeadersScreen 84->84 (2026-10-24, Mhopkinsinc, GA) (the kfh / pfh slots)
-- LeadersScreen 84->45 (2026-10-24, StaticEck2026, GA) goto done removed: one while (read(...) == 0x34) loop, goalie part an if block ending in continue (115), permute moved gs after gp (45); if / else, nesting, for and break forms (115-473), nested loops with a result flag r (90); permute twice
-
 ### `src/c/002_1167B_gamesave_io/GameLoop.c`
 
 - GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
 - GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) unchanged
 - GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) unchanged
+- GameLoop 62->61 (2026-10-24, StaticEck2026, GA) goto-free: each goto out as sub_1B982(); return; (61, size +7: own epilogue and jne-over-jmp at the gameresult == 2 exits; the demo exit keeps its own gameresult = 1 store as in the EXE); permute.py 200 candidates (transforms used up)
 
 ### `src/c/014_1CC3D_frontend_labels/DrawSprite.c`
 
@@ -592,16 +620,7 @@ RunMenu is in this file (score 82, register 38/82) and comes with it.
 - TeamStatsScreen 123->123 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
 - TeamStatsScreen 123->123 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
 - TeamStatsScreen 123->99 (2026-10-24, StaticEck2026, GA) dead-variable reuses removed (x power-play key stored directly, w / e swaps through a block-local k, koff header index in place: 131), declsearch --conflicts (100), permute p after mf (99; 95 only with asymmetric twin-row rewrites, rejected)
-
-### `src/c/022_2D346_game_setup/GameSummaryScreen.c`
-
-- GameSummaryScreen 320->320 (2026-10-24, Mhopkinsinc, GA) . For GameSummaryScreen two real source differences were found but not committed (each alone or together scores worse, 389 / 393): the other-games reads as `othergames[f.i * 2]` (exact in that region) and `k` living in the frame slot the dr
-- GameSummaryScreen 320->287 (2026-10-24, Mhopkinsinc, GA) : the frame index
-- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-- GameSummaryScreen 287->372 (2026-10-24, abdulahmad, LA) no source change. GA is 287, size +38.
-- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) roster index side * 0x444 + f.k * 0x27 (287, same code); linetab[side][0x28 + f.i] / (linetab[side] + f.i)[0x28], each also with the roster order (287, same code); f.i as plain local 327 (+4 frame, extras loop unchanged); page init chained goals / chained ints / both / five-way chain (287, same code); period as plain local (pad kept) 298 (+9, frame +4); all 8 byte members as plain locals 311 (+9); declsearch --conflicts nothing to move on the base, 3 of 7 byte slots on the all-bytes version; one permute run 449 candidates best 253 (+40) via cast:334 unsigned_char + chain + two loop rewrites (rejected); regsolve: only the tried d10 / d100 swap, savings bumps and temporary drops
-- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) whole frame struct as plain locals in struct order (first/last as parameters, pads dropped) 561 (size -32, frame 7ECh vs 7F0h); declsearch --conflicts on that best 23 of 44 slots 544 (permute.py 637), frame gap stays; the EXE frame is GA's size-ascending order, so plain locals look original but one scalar the EXE spills is registered in C
-- GameSummaryScreen 287->287 (2026-10-24, StaticEck2026, GA) goal count through its own int goals instead of the dead crest (block-local or function scope: 346 each); not kept, the dead-variable reuse stays (ESCALATE: dead-variable reuse)
+- TeamStatsScreen 99->91 (2026-10-24, StaticEck2026, GA) `for (w = e = i = 0; ...)` in both conference splits (91; e = w = i 95, w = e = 0 before the for 96); declsearch --conflicts (no better order); the frame arrays as plain locals (164, declsearch best 172); permute.py 577 candidates (84 only with an asymmetric twin-row rewrite, rejected); both twin rows rewritten (141-148)
 
 ## Escalations — Abdul (lane T)
 
@@ -623,6 +642,7 @@ RosterPanelClick — size 7/8, owner StaticEck2026
 - RosterPanelClick 9->9 (2026-10-24, StaticEck2026, GA) unchanged
 - RosterPanelClick 9->9 (2026-10-24, StaticEck2026, GA) unchanged
 - RosterPanelClick 9->9 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder predicted); permute.py 5 min, 321 candidates, best base 9
+- RosterPanelClick 9->9 (2026-10-24, abdulahmad, GA) lane T batch: the falistsel toggle without the fa local, cast in place as unsigned char (13) or char (13), indexed by `dword_EBCA4 + row` (10). Nothing kept.
 - RosterPanelClick 9->9 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder); falistsel as unsigned char * / char * in the file (#define trick) direct or through fa (9), with ^= 0xFF (9, xor byte [edi+eax]), with falistsel[dword_EBCA4 + row] twice (16); fa[dword_EBCA4 + row] twice (16); row = dword_EBCA4 + row (9); mixed char / signed char load or store casts (9); fa[row] = fa[row] ^ 0xFF (9)
 
 ### `src/c/040_53294_engine_physics_ai/dopass.c`
@@ -680,3 +700,15 @@ LoadGameRoster — size 2/3, owner StaticEck2026
 - LoadGameRoster 21->21 (2026-10-24, StaticEck2026, GA) a tie in the unstable sort. `& 0xFF` fixes loop 1
 - LoadGameRoster 21->21 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder predicted); n assigned in the index (21); unsigned n (25); 11 * s.i / 2 * n (21); s.i++ in the loop body (21)
 - LoadGameRoster 21->21 (2026-10-24, Mhopkinsinc, GA) gmrosterslot[n + n] (21); [2 * n] (21); gmroster[n * 2 + 2] (21); k = s.i copy (40); product in k (26); product in a block-local j (24, size 0, loop 1 unchanged); no product local [s.i * 11 * 2] (26) / [(s.i * 11) << 1] (24, loop 1 unchanged)
+
+### `src/c/022_2D346_game_setup/GameSummaryScreen.c`
+
+GameSummaryScreen — register 182/268, owner Mhopkinsinc
+- GameSummaryScreen 320->320 (2026-10-24, Mhopkinsinc, GA) . For GameSummaryScreen two real source differences were found but not committed (each alone or together scores worse, 389 / 393): the other-games reads as `othergames[f.i * 2]` (exact in that region) and `k` living in the frame slot the dr
+- GameSummaryScreen 320->287 (2026-10-24, Mhopkinsinc, GA) : the frame index
+- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
+- GameSummaryScreen 287->372 (2026-10-24, abdulahmad, LA) no source change. GA is 287, size +38.
+- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) roster index side * 0x444 + f.k * 0x27 (287, same code); linetab[side][0x28 + f.i] / (linetab[side] + f.i)[0x28], each also with the roster order (287, same code); f.i as plain local 327 (+4 frame, extras loop unchanged); page init chained goals / chained ints / both / five-way chain (287, same code); period as plain local (pad kept) 298 (+9, frame +4); all 8 byte members as plain locals 311 (+9); declsearch --conflicts nothing to move on the base, 3 of 7 byte slots on the all-bytes version; one permute run 449 candidates best 253 (+40) via cast:334 unsigned_char + chain + two loop rewrites (rejected); regsolve: only the tried d10 / d100 swap, savings bumps and temporary drops
+- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) whole frame struct as plain locals in struct order (first/last as parameters, pads dropped) 561 (size -32, frame 7ECh vs 7F0h); declsearch --conflicts on that best 23 of 44 slots 544 (permute.py 637), frame gap stays; the EXE frame is GA's size-ascending order, so plain locals look original but one scalar the EXE spills is registered in C
+- GameSummaryScreen 287->287 (2026-10-24, StaticEck2026, GA) goal count through its own int goals instead of the dead crest (block-local or function scope: 346 each); not kept, the dead-variable reuse stays (ESCALATE: dead-variable reuse)
+- GameSummaryScreen 287->287 (2026-10-24, StaticEck2026, GA) block-local int goals for the goal count (346) + declsearch --conflicts (nothing to move); on it a chained nperiods / goals[0] clear (342), the skip loop as while (332), both (328); permute.py 641 candidates from the 346 (best 248 only with an (unsigned char) cast, an unsigned parameter and a moved statement, rejected); ESCALATE: dead-variable reuse (crest) stays in the committed draft
