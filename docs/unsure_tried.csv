@@ -4540,3 +4540,7 @@ checkwallcoll,movedecl:xlim:,"declaration order xlim, ry0, ylim",tried (docs/UNS
 checkwallcoll,swapdecl:xlim:,"declaration order xlim, ry0, ylim",tried (docs/UNSURE.md),ga
 checkwallcoll,movedecl:ry0:,"declaration order xlim, ry0, ylim",tried (docs/UNSURE.md),ga
 checkwallcoll,swapdecl:ylim:,"declaration order xlim, ry0, ylim",tried (docs/UNSURE.md),ga
+EditTextField,,"on the ins version: block-scoped c (7), block-scoped i per loop (12-35), `c ? 0 : 1`, `c == 0`, `sub_B3D64() != 0`, `idle != 0`, `(*idle)()`, `(key = PollKey()) == 0`, `ins == 0`, `editpos++` / `--` / `= +- 1` spellings in the arms, `++editpos` in the End loop, `timeout != 0 && ... != 0`, `buf[editpos] == 0` in Del (7 each), `editcurw` store before `ins = 1` (9)",9,ga
+EditTextField,,"targetsearch 30 min (1685 candidates, none meets the tie). Goto-free grid on the 36 draft's handlers (poll x dispatch, each as for (;;) / while (1) / do-while alike): if/else poll arms with the blink as the if (key) else (47, +2)","47, +2",ga
+EditTextField,,"the blink after an if (key) handler block (74, +14), `if (sub_B3D64()) key = 0; else idle` (68-106)",68-106,ga
+EditTextField,,"a rotated `for (; !(key = PollKey()); )` poll (41, +4)","41, +4",ga
