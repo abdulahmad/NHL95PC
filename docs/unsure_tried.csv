@@ -4121,6 +4121,20 @@ SkaterStatsCard,,the rating loop's `t.y += 0xD` in the for increment (11),11,ga
 SkaterStatsCard,,an `if (0)` statement after the product (9),9,ga
 DrawListItem,,case 2 before case 1 (18),18,ga
 DrawListItem,,"an empty default (6), shape A with case 2 first (31), shape A as an if / else if chain (24). The y / w tie stays a parameter-order tie (no split live range of either)",,ga
+PostGameToTeamDb,,"the away lookup as `(awtmstruct.tmgoalie & 1)[awtmstruct.tmlines + 0x24]`, `*((... & 1) + tmlines + 0x24)`, `tmlines[0x24 + (... & 1)]`, `(tmlines + 0x24)[... & 1]`, awtmgoalie with awtmstruct.tmlines (125 each",,ga
+PostGameToTeamDb,,the index stays in eax),,ga
+PostGameToTeamDb,,the old awtmlines cast for the away one only (133),133,ga
+PostGameToTeamDb,,declsearch --conflicts on the 105 (best 105),best 105,ga
+SimulateGame,,"the twelve stores as `*(f.X + i) = ...` (566, same code), `i = 0; do { ...; i++; } while (i < 2);` with the step as the body's last statement (566, same code)","566, same code",ga
+SimulateGame,,the loop indexed by j (581: j's slot,,ga
+SimulateGame,,"the same shl) and by k (1346, k leaves EBX)","1346, k leaves EBX",ga
+SportsDesk,,under GA on the 552 base only,,ga
+SportsDesk,,"its retry on the current base needs Abdul's or the owner's go). Tried: the overtime if / else above (424, +232: setle kept, every register reshuffles)","424, +232: setle kept, every register reshuffles",ga
+SportsDesk,,"the conference or as `teamconf[VisTeam] | teamconf[HomeTeam]` (192, size 2 bytes nearer",,ga
+SportsDesk,,the else arm still reloads one teamconf where the EXE ors the two compared registers),,ga
+SportsDesk,,the conference compare as `teamconf[VisTeam] != teamconf[HomeTeam]` (194),194,ga
+SportsDesk,,the ptrsize product as `(h + 1) * (w + 1)` (194,,ga
+SportsDesk,,"the EXE's lea ebx, [eax+1] / lea eax, [edx+1] / imul eax, ebx keeps the loaded halves), each of the three MakePath cddriveptr ternaries as an if / else with a call per arm (335 / 416 / 400, larger code: the ternaries are original)","335 / 416 / 400, larger code: the ternaries are original",ga
 PlacePlayersAtStart,,on the new shape: the inverted map test (18),18,ga
 PlacePlayersAtStart,,"the negate after a plain if / else load (20, +12)","20, +12",ga
 PlacePlayersAtStart,,"the mirror with the two position stores in both arms (18 / 21 with the arms swapped), `!(p->pflags & pfgoal)` (13)",13,ga

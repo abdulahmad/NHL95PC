@@ -17,9 +17,9 @@ SetupControllers,10712,344,001_10010_main_startup,src/c/001_10010_main_startup/S
 WaitKeyRelease,11161,46,001_10010_main_startup,src/c/001_10010_main_startup/WaitKeyRelease.c,matched,,
 main_,10094,1588,001_10010_main_startup,src/c/001_10010_main_startup/main_.c,matched,,
 GameLoop,1167B,1678,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/GameLoop.c,nonmatching,,register 39/50
+ShowAwardScreens,12849,2367,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/PickAwardWinners.c,matched,"same size, 67 differing lines; marked with --seg 003 when it matches; see docs/UNSURE.md",
 AwardsCeremony,13320,1351,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/PickAwardWinners.c,matched,,
 PickAwardWinners,1205D,2028,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/PickAwardWinners.c,nonmatching,draft: 2028 vs 2028; three of the six award-9 sums load their first two words in the other order. Owner of PickAwardWinners_x. See docs/UNSURE.md.,size 7/7
-ShowAwardScreens,12849,2367,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/PickAwardWinners.c,nonmatching,"same size, 67 differing lines; marked with --seg 003 when it matches; see docs/UNSURE.md",register 3/4
 DrawAwardsSummary,13188,408,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/PickAwardWinners.c,nonmatching,,register 8/8
 ReplayIsEmpty,12034,41,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/ReplayIsEmpty.c,matched,,
 assinsert,12011,35,002_1167B_gamesave_io,src/c/002_1167B_gamesave_io/assinsert.c,matched,,
@@ -31,7 +31,7 @@ ReloadGameGfx,13BB4,197,004_13320_asset_loading,src/c/004_13320_asset_loading/Lo
 LoadPhotoBankF,138D2,141,004_13320_asset_loading,src/c/004_13320_asset_loading/LoadPhotoBankF.c,matched,,
 LoadPlayerPhotos,1395F,208,004_13320_asset_loading,src/c/004_13320_asset_loading/LoadPhotoBankF.c,matched,,
 LoadTransparentRinkEndOverlay,13A2F,98,004_13320_asset_loading,src/c/004_13320_asset_loading/LoadTransparentRinkEndOverlay.c,matched,,
-PlacePlayersAtStart,13C79,534,004_13320_asset_loading,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,nonmatching,"draft: 535 vs 534. The assignment number is lea edx,[eax+16h] where the original adds 16h in eax. The map negate is cwde instead of a reload. The mirror negates regd1 in ecx. The loop count is in si, so esi is saved (cookie 14h). Do not retry an int sum for that add, or n += 0x16.",size 9/18
+PlacePlayersAtStart,13C79,534,004_13320_asset_loading,src/c/004_13320_asset_loading/PlacePlayersAtStart.c,nonmatching,"draft: 535 vs 534. The assignment number is lea edx,[eax+16h] where the original adds 16h in eax. The map negate is cwde instead of a reload. The mirror negates regd1 in ecx. The loop count is in si, so esi is saved (cookie 14h). Do not retry an int sum for that add, or n += 0x16.",size 7/16
 IndexPhotoBank,13867,107,004_13320_asset_loading,src/c/004_13320_asset_loading/ResetGameVars.c,context,compile context; matched in src/c/004_13320_asset_loading/IndexPhotoBank.c,
 ResetGameVars,14056,657,004_13320_asset_loading,src/c/004_13320_asset_loading/ResetGameVars.c,nonmatching,"draft: 654 vs 657 beside IndexPhotoBank. The clears through word_CBEC2 match, and xor esi, esi before the penshot dwords matches. mov ecx, edx sits between ovlstep and ovlseq (original is before all three -1 word stores). The shot dwords skip xor eax, eax, and CwdExciteLvl is mov word, si instead of xor eax, esi / mov word, ax. Do not retry an address-taken copy, moving textline5 ahead of the banner stores, or n2 = neg.",register 14/19
 SetupDemoGame,13FA7,175,004_13320_asset_loading,src/c/004_13320_asset_loading/SetupDemoGame.c,matched,,
@@ -150,7 +150,7 @@ CmpPoints,1FB7F,272,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/CmpPoints.
 InitMenuRemap,1FAA7,117,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/InitMenuRemap.c,matched,draft: asm calls __STOSB for the 15h-byte clear (inline memset helper); default-flag memset calls memset_,
 LoadShapeByTag,1FDFE,392,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/LoadShapeByTag.c,matched,"392 vs 392. The index, the directory byte count, and the shape pointer stay in edi; the file position stays in esi. The original uses esi for the index and the shape pointer, and edi for the file position. The width*height size is imul ebp, eax / add ebp, 11h. The original is imul eax, edx / lea ebp, [eax+11h]. Declaring pos before bytes, declaring i first, naming the product, and adding 11h through a char pointer did not change either. A memcpy/memcmp pragma that clobbers edi spilled dir (407 bytes). Do not retry those.",
 MakeStatsTitle,1FF86,144,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/LoadShapeByTag.c,matched,,
-RunMenu,1D6E8,2075,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/RunMenu.c,nonmatching,"draft (owner of RunMenu_ret4): 2024 vs 2075, 305 lines. See docs/UNSURE.md.",register 38/82
+RunMenu,1D6E8,2075,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/RunMenu.c,nonmatching,"draft (owner of RunMenu_ret4): 2024 vs 2075, 305 lines. See docs/UNSURE.md.",register 38/72
 RunTeamPickMenu,1DF03,3731,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/RunMenu.c,nonmatching,"draft in RunMenu.c: same size, 459 lines (the EXE rotates the menu loop). See docs/UNSURE.md.",register 137/179
 RunPlayerPickMenu,1ED96,3345,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/RunMenu.c,nonmatching,draft in RunMenu.c: 2945 vs 3345 (C gets a biased ebp frame). See docs/UNSURE.md.,register 119/145
 TextPrintf TextPrintf2,1FB1C,99,015_1D6E8_menu_system,src/c/015_1D6E8_menu_system/TextPrintf.c,matched,,
@@ -256,7 +256,7 @@ LoadModeState,327A1,892,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MainDeskLo
 WriteModeState,32B1D,385,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MainDeskLoop.c,matched,,
 MenuNewExhibition,32DA9,587,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MainDeskLoop.c,matched,,
 MenuLeagueSettings,332F6,167,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MainDeskLoop.c,matched,,
-MainDeskLoop,31AB5,3158,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MainDeskLoop.c,nonmatching,,size 40/76
+MainDeskLoop,31AB5,3158,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MainDeskLoop.c,nonmatching,,size 36/67
 MenuExit,3270B,16,024_31AB5_main_desk,src/c/024_31AB5_main_desk/MenuExit.c,matched,,
 SaveModeState,3271B,134,024_31AB5_main_desk,src/c/024_31AB5_main_desk/SaveModeState.c,matched,,
 DemoSetupStub,3371C,11,025_32DA9_temp_files,src/c/025_32DA9_temp_files/DemoSetupStub.c,matched,,
@@ -290,7 +290,7 @@ DrawTeamGridName,37C53,279,028_35FB9_import_export,src/c/028_35FB9_import_export
 HighlightGridCell,37EA6,276,028_35FB9_import_export,src/c/028_35FB9_import_export/HighlightGridCell.c,matched,register / stack slots of the 8 frame corner temporaries differ; logic matches,
 MakeTeamDbFmt,36207,102,028_35FB9_import_export,src/c/028_35FB9_import_export/MakeTeamDbFmt.c,matched,,
 PlayLeagueGame,36B93,4095,028_35FB9_import_export,src/c/028_35FB9_import_export/PlayLeagueGame.c,nonmatching,"first pass (Ghidra): 4,095 of 4,095 bytes, 28 differing (an extra mov edx, eax after FileOpenRW; the opponent pick register)",register 22/29
-PostGameToTeamDb,3626D,2342,028_35FB9_import_export,src/c/028_35FB9_import_export/PostGameToTeamDb.c,nonmatching,"draft (own file): 2421 vs 2342, 291 lines (one more spill slot, the result in edx). See docs/UNSURE.md.",register 55/119
+PostGameToTeamDb,3626D,2342,028_35FB9_import_export,src/c/028_35FB9_import_export/PostGameToTeamDb.c,nonmatching,"draft (own file): 2421 vs 2342, 291 lines (one more spill slot, the result in edx). See docs/UNSURE.md.",register 47/94
 RestoreGridCellBg,37E5B,75,028_35FB9_import_export,src/c/028_35FB9_import_export/RestoreGridCellBg.c,matched,,
 SaveGridCellBg,37D6A,241,028_35FB9_import_export,src/c/028_35FB9_import_export/SaveGridCellBg.c,matched,,
 TeamGridHitTest,37B92,193,028_35FB9_import_export,src/c/028_35FB9_import_export/TeamGridHitTest.c,matched,team declared last (found by tools/permute.py),
