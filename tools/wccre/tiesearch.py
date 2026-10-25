@@ -15,6 +15,9 @@ chain edits that move the right temporaries before the bytes change.
 * The edits: permute.py's natural transforms only (declaration order and scope, statement order, operand order,
   comparison form, ++/--, chains, ?:, if order, loop form, compound assignment, shift statements, one-use
   temporaries inlined). Never a new copy, a cast, or a signature change (AGENTS.md).
+* The focus: edits within a line of the needed swaps' temporaries (their signatures' source lines, as in the
+  baseline) are compiled first, and when one of them improves the score the rest are not compiled (a tie inside a
+  block follows where its temporaries are last used there: irdump.py, "conflict list as built").
 * The climb: from the best text, every neighbour is compiled (one emulator compile each) and scored as
   (byte match first, differences that are not register-only, unsatisfied swaps, differing instructions), so an
   edit may not add a real code difference while it moves the temporaries; the best improvement is taken, with sideways
@@ -103,6 +106,26 @@ def labels_of(src, func, work):
     return {k: [c['label'] for c in p['confs']] for k, p, blocks in holder['d'].dumps}
 
 
+def focus_lines(pairs):
+    """the C source lines the needed swaps are about (their temporaries' signatures start with L<line>)"""
+    out = set()
+    for a, b, k in pairs:
+        for sig in (a, b):
+            m = re.match(r'L(\d+) ', sig)
+            if m: out.add(int(m.group(1)))
+    return out
+
+
+def touched(text, cand):
+    """1-based lines of text that cand changes (a moved statement touches both places)"""
+    import difflib
+    a, b = text.split('\n'), cand.split('\n')
+    out = set()
+    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
+        if op != 'equal': out.update(range(i1 + 1, max(i2, i1 + 1) + 1))
+    return out
+
+
 def nonregister(cand, obj, func, src):
     """aligned differences that are not register-only (operands, sizes, branches, slots): an edit must not add
     any, the register ones are what the tie order fixes"""
@@ -132,7 +155,8 @@ def main():
     outdir = os.path.join(ROOT, 'build', 'tiesearch'); os.makedirs(outdir, exist_ok=True)
     pairs = target_pairs(src, func, work)
     if not pairs: raise SystemExit('no needed swaps: nothing to search for')
-    print('%s %s: %d needed swap(s)' % (src, func, len(pairs)))
+    focus = focus_lines(pairs)
+    print('%s %s: %d needed swap(s), focus on lines %s' % (src, func, len(pairs), ' '.join(map(str, sorted(focus))) or '-'))
     for p_ in pairs[:8]: print('  %s  before  %s' % (p_[0], p_[1]))
     rnd = random.Random(a.seed)
     cand = os.path.join(work, os.path.basename(src))
@@ -157,10 +181,14 @@ def main():
     while time.time() - t0 < a.minutes * 60 and best[0][0]:
         nb = [x for x in permute.neighbours(text, func, NATURAL) if permute.fsha(x[1], func) not in seen]
         rnd.shuffle(nb)
+        near = lambda t: any(abs(l - f) <= 1 for l in touched(text, t) for f in focus)
+        nb.sort(key=lambda x: not near(x[1]))         # the focused edits first (stable: shuffled inside)
+        nfocus = sum(1 for x in nb if near(x[1]))
         if not nb: print('no unvisited neighbours'); break
         step = None; side = []
-        for name, t in nb:
+        for i, (name, t) in enumerate(nb):
             if time.time() - t0 > a.minutes * 60: break
+            if step and i >= nfocus: break        # the focused edits gave an improvement: take it
             seen.add(permute.fsha(t, func))
             r = evaluate(t); n += 1
             if r is None: continue
