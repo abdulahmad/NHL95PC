@@ -72,6 +72,13 @@ DrawRinkOverlays is in this file (score 73, register 50/72) and comes with it.
 setplayer is in this file (score 93, register 86/92) and comes with it.
 - setplayer 93->93 (2026-10-24, Mhopkinsinc, GA) regdump (t 14 takes esi with ecx and esi both free when it chooses: a GiveBestReg pick, not a savings miss); first_pick review; 49 single declaration moves (all 93)
 
+### `src/c/050_6B093_joystick_calibration/JoystickCalScreen.c`
+
+- JoystickCalScreen 17->17 (2026-10-24, StaticEck2026, GA) .
+- JoystickCalScreen 17->11 (2026-10-24, StaticEck2026, GA) the draws index with s.cur and prev = s.cur after them (EXE reloads s.cur into esi), size now exact; left the size product: factor orders / casts / reads 10-11, puck int local 11
+- JoystickCalScreen 11->11 (2026-10-24, StaticEck2026, GA) header copy as a struct copy instead of the inline #pragma aux (same code); loop compare / test / ternary spellings (11-36); the factor temporaries tie at savings 2
+- JoystickCalScreen 11->11 (2026-10-24, StaticEck2026, GA) pairsim: t55 before t54 needs one more early conflict or one fewer later one; ten natural spellings left the conflict count at 34 (all 11)
+
 ### `src/c/055_78346_team_select/DrawGameLineJerseys.c`
 
 - DrawGameLineJerseys 11->11 (2026-10-24, StaticEck2026, GA) unchanged
@@ -195,6 +202,13 @@ PassRecOneTimer is in this file (score 32, size 11/19) and comes with it.
 - checkcheck 32->32 (2026-10-24, abdulahmad, GA) LA do-not-retry shape int dir scores 46, size +3. Not kept.
 - checkcheck 32->32 (2026-10-24, StaticEck2026, GA) goto-free form (same object, committed); checking compare flipped (34), penalty ternary (31, +3)
 
+### `src/c/057_7DC8B_gadgets_replay/ReplaySaveHilight.c`
+
+- ReplaySaveHilight 35->35 (2026-10-24, StaticEck2026, GA) looked at only.
+- ReplaySaveHilight 35->34 (2026-10-24, StaticEck2026, GA) `w = [2]; w *= [3]; n = w + 0x11;` gives the EXE's `imul edx
+- ReplaySaveHilight 34->34 (2026-10-24, StaticEck2026, GA) push temporaries one register ahead of the EXE cycle; if / else instead of the early return (34)
+- ReplaySaveHilight 34->34 (2026-10-24, StaticEck2026, GA) size sum spellings n = 0x11; n += w (38), n = w; n += 0x11 (39), w + 0x11 in the call (35), 0x11 + w (34)
+
 ### `src/c/045_614C2_scoring_penalty_text/ChkScorerMilestone.c`
 
 - ChkScorerMilestone 36->36 (2026-10-24, StaticEck2026, GA) unchanged
@@ -219,6 +233,12 @@ DrawRinkSideObjects is in this file (score 118, register 54/64) and comes with i
 
 - passtoa0 48->48 (2026-10-24, StaticEck2026, GA) the EXE sign-extends vx / vy for k; Watcom narrows those products because `s.k` is a short.
 - passtoa0 48->48 (2026-10-24, StaticEck2026, GA) k products still narrowed: >> 0, (int) casts, -(sp * sp) first (48-53)
+
+### `src/c/052_6D2F8_create_player/SwapSelectedPlayers.c`
+
+- SwapSelectedPlayers 50->48 (2026-10-24, StaticEck2026, GA) The swap loop's second index reuses a
+- SwapSelectedPlayers 48->48 (2026-10-24, StaticEck2026, GA) ESCALATE: the committed draft reuses the dead a for the swap loop's second index; a natural int ib scores 51 / 56
+- SwapSelectedPlayers 48->48 (2026-10-24, StaticEck2026, GA) natural own int ib committed (b declared before a, a = 0; b = 0;), replacing the dead-a reuse; ib orders / zero chains 50-59; permute.py 577 (40 only with signed char ib: movsx, rejected)
 
 ### `src/c/046_644A8_engine_display/RemoveFromLines.c`
 
@@ -270,10 +290,7 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 |  | PassLaneChk | 12 | register 9/11 |
 |  | NetCollide | 22 | register 7/7 |
 | src/c/052_6D2F8_create_player/CreateFreeAgent.c | CreateFreeAgent | 5 | size 9/13 |
-| src/c/050_6B093_joystick_calibration/JoystickCalScreen.c | JoystickCalScreen | 11 | register 4/4 |
 | src/c/059_8034B_settings_lockerroom/LockerRoomScreen.c | LockerRoomLoop | 23 | register 2/2 |
-| src/c/057_7DC8B_gadgets_replay/ReplaySaveHilight.c | ReplaySaveHilight | 34 | register 32/33 |
-| src/c/052_6D2F8_create_player/SwapSelectedPlayers.c | SwapSelectedPlayers | 48 | register 23/35 |
 | src/c/064_86696_season_playoffs/PlayoffTreeMenu.c | PlayoffTreeMenu | 126 | register 61/129 |
 
 ## Offered to StaticEck2026
