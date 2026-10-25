@@ -149,6 +149,15 @@ def main():
             (v1, k1), (v2, k2) = reps[i], reps[j]
             if v1 == v2: continue
             pairs.append((hits(locations_with(model, {v1: k1, v2: k2}), W), {v1: k1, v2: k2}))
+    if not pairs:
+        # no single change helps (a tie that needs two names moved): small steps of two names at once
+        steps = [(v, cnt[v] + d) for v in cnt for d in (-10, -1, 1, 10) if cnt[v] + d >= 0]
+        for i in range(len(steps)):
+            for j in range(i + 1, len(steps)):
+                (v1, k1), (v2, k2) = steps[i], steps[j]
+                if v1 == v2: continue
+                h = hits(locations_with(model, {v1: k1, v2: k2}), W)
+                if h > h0: pairs.append((h, {v1: k1, v2: k2}))
     pairs.sort(key=lambda x: -x[0])
     if pairs and pairs[0][0] > (best1[0][0] if best1 else h0):
         print('pairs:')
