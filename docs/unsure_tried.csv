@@ -4235,6 +4235,16 @@ RunPlayerPickMenu,,"the picked record's index through k (109), its offset throug
 RunPlayerPickMenu,,an if / else into k (903,,ga
 RunPlayerPickMenu,,"all three single-use copies anyway), `0x34 * PREC(pick)` (104), `((PlayerRec52 *)statsplayerbuf)[PREC(pick)]` (104), r local to the action block (104), m local to the hit block (324, slots not followed), size declared first (153), i or k declared last (299, slots not followed), k as the record index with `k * 0x34` in the four name searches' sums (138",,ga
 RunPlayerPickMenu,,"declsearch 119: the first search's goalie loop takes the EXE's registers, its skater loop and the PREC copy flip instead)",,ga
+RunMenu,,"tools/wccre/tieorder.py (2 compile jobs) 15 min: 6 -> 3 forced (stage 1 swaps 6, cut by time at 153 of 206 orders",,ga
+RunMenu,,"stage 2: w and h moved to just older than t199 in the creation order, which fixes the pointer-size product's register, t33 EAX -> EBX in its savings-2 run, and reorders the savings-3 / 4 runs of L87-L90)",,ga
+RunMenu,,"again with --max-run 12 and 40 min: 6 -> 3, 558 edit orders, cut by time, nothing cached",,ga
+RunMenu,,"a scratch driver (tieorder's stage 2 to its first gain, then swaps in every run with no max-run, 50 min) also 3, no single swap from that order improves. The batch 19 order with t71 / t72 swapped (0 forced) was not found again. tools/wccre/tiesearch.py --minutes 30 toward the 3 order: 7 needed swaps (L89 / L90 header-store and menus loads before bar / n / pointerspr loads, L84 an `add _, 1` before a `cnv [t29]`), baseline 3 unsatisfied, 417 candidates in 30 min (one climb round, one sideways step), best 6: the only candidates with 2 unsatisfied are against real code (chain merges at L101 / L102 210, swapstmt L114 194, do loop L45 221)","chain merges at L101 / L102 210, swapstmt L114 194, do loop L45 221",ga
+RunTeamPickMenu,,tools/wccre/tieorder.py 15 min (2 compile jobs): 181 -> 181 (245 orders,,ga
+RunTeamPickMenu,,"stage 1 cut by time at 155), no cache, so tools/wccre/tiesearch.py has no target",,ga
+RunTeamPickMenu,,stopped,,ga
+RunPlayerPickMenu,,tools/wccre/tieorder.py 15 min (2 compile jobs): 103 -> 103 (253 orders,,ga
+RunPlayerPickMenu,,"stage 1 cut by time at 155), no cache, so tools/wccre/tiesearch.py has no target",,ga
+RunPlayerPickMenu,,stopped,,ga
 assgoalie,,"the poke / dive block written in both arms, `if (*puckc == p->SCnum) {...} else {D}` plus `else {D}` for the shooter flag (188: the inner copy keeps the puckc pointer in edx)",188: the inner copy keeps the puckc pointer in edx,ga
 assgoalie,,the three other arm orders (225 / 281 / 334),225 / 281 / 334,ga
 assgoalie,,"the move tail repeated at the other-half exit (146: not cross-jumped), `if (regd2.w <= 7) { playeracc(p, regd2.w); return; } StopNA(p);` at the end (26), tools/wccre/tieorder.py on the new base (2-job copy, --max-run 40, 6 minutes, 124 orders: 18), `regd1.w = regd1.w - (((signed char *)p)[0x0F] + (p->Ypos >> 16))` and its split form on the new base (76)",76,ga
