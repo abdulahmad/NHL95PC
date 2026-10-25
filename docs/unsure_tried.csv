@@ -4121,3 +4121,25 @@ SkaterStatsCard,,the rating loop's `t.y += 0xD` in the for increment (11),11,ga
 SkaterStatsCard,,an `if (0)` statement after the product (9),9,ga
 DrawListItem,,case 2 before case 1 (18),18,ga
 DrawListItem,,"an empty default (6), shape A with case 2 first (31), shape A as an if / else if chain (24). The y / w tie stays a parameter-order tie (no split live range of either)",,ga
+PlacePlayersAtStart,,on the new shape: the inverted map test (18),18,ga
+PlacePlayersAtStart,,"the negate after a plain if / else load (20, +12)","20, +12",ga
+PlacePlayersAtStart,,"the mirror with the two position stores in both arms (18 / 21 with the arms swapped), `!(p->pflags & pfgoal)` (13)",13,ga
+PlacePlayersAtStart,,the mirror as two ternaries (27),27,ga
+PlacePlayersAtStart,,"the assignment number as if / else with two assinsert calls (16), `(p->position == 4) + 0x16` (13)",13,ga
+PlacePlayersAtStart,,"a short / int n for it (13 / 14), `--regd2.w != 0` and the decrement as its own statement (13), `-regd1.l` (13)",13,ga
+PlacePlayersAtStart,,"tools/wccre/tieorder.py (2 jobs, --max-run 40, 6 minutes): every swap of the 2 x 80 / 2 x 40 / 7 x 30 / 26 x 20 runs plus 129 single-edit orders (323 forced orders): 13, no tie order explains the mirror or the setcc",,ga
+PlacePlayersAtStart,,"permute.py seed 2717 (449 candidates): best 10 (+4) only with a tie-breaker copy (`short _t0 = -100; p->temp5 = _t0;`, ESCALATE, not committed)","`short _t0 = -100; p->temp5 = _t0;`, ESCALATE, not committed",ga
+SeedPlayoffRound3,,each SetSeriesTeams if / else as one call with two ternary arguments (137 / 144),137 / 144,ga
+SeedPlayoffRound3,,the arms swapped under `!=` (21 / 21),21 / 21,ga
+SeedPlayoffRound3,,the second conference's ReadTeamRec result stored before its test (14),14,ga
+SimPlayoffRound1,,the blanking arm ending in continue instead of the else (4),4,ga
+SimPlayoffRound1,,"the condition inverted with the arms swapped (27), `++wins[...]` / `+= 1` (4)",4,ga
+SimPlayoffRound1,,"the score compare written `g[i * 6 + 5] < g[i * 6 + 4]` (7), `<=` with the increments swapped (9), `0x444 + s * 7 + i` (4), `&g[i * 6]` (4)",4,ga
+SeriesLength,,"in the structured switch: the two SeriesWinner ternaries as if / else, either sense, each or both (10 / 14, +2), `len = 5 / 7;` first then a one-armed if (11-18, +2 to +9). The epilogue stays at the end",,ga
+TradePlayers,,"the label width max as if / else with the chained store in each arm (`<` or `>`, 5, +3), inverted (7, +3)","7, +3",ga
+TradePlayers,,"the chain split per arm (5, +3), `if (s.y < s.x) s.y = s.x;` then one store (5, +12). The EXE's max is the ternary",,ga
+ShowCredits,,"each MakePath ternary of the function as if / else with a call per arm (L597 17, L611 18, L621 18, L636 22",,ga
+ShowCredits,,Watcom does not cross-jump them into the EXE's code),,ga
+FadePalette,,"the clamp as if / else storing steps in each arm (`if (steps > 2) steps = 2; else steps = steps;`, 10, +8)",,ga
+FadePalette,,"the same through c (dead-variable reuse, 10, +8), through i then one store (7: dead reuse plus a copy, not kept)","7: dead reuse plus a copy, not kept",ga
+ListDialog,,"the mark test's `((!marks || flags[cur]) ? 1 : 0)` as a plain condition or as a nested if (15, +13 each): the ternary stays",,ga

@@ -12,6 +12,10 @@ extern sub_8FFB0, sub_9035C, sub_9061C, sub_B30B4, GetTicks, str_MightyDucks, un
 extern str_GP, str_W, str_L, str_T, str_SO, str_EN, str_G, str_A
 extern str_Pt, str_fmtpd, cupteam, presidentsteam, treeteamnames
 global ShowAwardScreens, DrawAwardsSummary
+; C: src/c/002_1167B_gamesave_io/PickAwardWinners.c (ShowAwardScreens)
+%ifdef CBUILD
+%include "c/002_1167B_gamesave_io/PickAwardWinners.ShowAwardScreens.inc"
+%else
 ShowAwardScreens:
 push dword 6Ch	; 12849
 call __CHK	; 1284E
@@ -755,6 +759,7 @@ jne near ShowAwardScreens.1	; 13178
 mov eax, edi	; 1317E
 add esp, byte 40h	; 13180
 jmp near PickAwardWinners_x	; 13183
+%endif ; C
 DrawAwardsSummary:
 push dword 4Ch	; 13188
 call __CHK	; 1318D
