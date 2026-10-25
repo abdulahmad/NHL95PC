@@ -1,16 +1,20 @@
 /* Season playoffs: the playoff tree screen's menu loop. */
-/* DRAFT: 2,688 bytes as the EXE, 61 differing under 10.0 GA; see docs/UNSURE.md. Plain locals instead of the
+/* DRAFT: 2,688 bytes as the EXE, 60 differing under 10.0 GA; see docs/UNSURE.md. Plain locals instead of the
    frame struct (a store into one of the struct's arrays made Watcom reload the others and every member after
-   each call; the EXE keeps the pointer block in ebp and &menus[level][item] in eax). The submenu path uses
-   depth itself and `depth++` (the EXE caches it in esi and increments it in place), and the two select-item
-   paths draw &menus[level][sel[level]] after the store (the EXE reloads sel[level]). The close-all loop resets
-   pos[i] chained and bg[i], menus[i], nitems[i] as three stores (i then outranks i * 4 and takes esi as in the
-   EXE; the cross-jumps come back). The declaration order is tools/wccre/declsearch.py --conflicts' with ptr
-   moved before sel (tools/wccre/tieorder.py: depth's two index temporaries then tie the EXE's way, `inc esi`).
-   Left: the scalar slots of depth, oldmx, oldmy, ptr, slot, slot2, tree and w (the EXE upward from A0h: level,
-   item, mx, my, ptr, oldmx, depth, h, w, slot2, slot, tree, oldmy), the second pointer-block size (`lea` where
-   the EXE has `inc` / `add`), &menus[depth][item]'s shift register (L204) and the close-all loop's FreeMemBlock
-   argument (the EXE reloads bg[i] after the pos stores, as if bg and pos could alias). */
+   each call; the EXE keeps the pointer block in ebp and &menus[level][item] in eax). The submenu path draws the
+   two items through `i = depth` and counts depth up after the second DrawMenuItemNorm (as RunMenu; the EXE
+   caches depth in esi and increments it in place; this also gives the EXE's `inc` / `add` in the second
+   pointer-block size and its &menus[depth][item] registers; a second `i = depth` before the dropdown size, as
+   MainDeskLoop, compiles the same), and
+   the two select-item paths draw &menus[level][sel[level]] after the store (the EXE reloads sel[level]). The
+   close-all loop resets pos[i] chained and bg[i], menus[i], nitems[i] as three stores (i then outranks i * 4 and
+   takes esi as in the EXE; the cross-jumps come back). The declaration order is tools/wccre/declsearch.py
+   --conflicts' with ptr moved before sel (tools/wccre/tieorder.py: depth's two index temporaries then tie the
+   EXE's way, `inc esi`). Left: the scalar slots of depth, oldmx, oldmy, ptr, slot, slot2, tree, w and the
+   depth * 8 temporary (the EXE upward from 9Ch: item, level, my, mx, depth * 8, ptr, oldmx, depth, h, w, slot2,
+   slot, tree, oldmy), and the two select-item paths' DrawMenuItemNorm address (each has the other's registers:
+   the EXE's first path `esi = sel << 5 / edx = menus / add esi, edx`, its last `ecx = sel << 5 / esi = menus /
+   add esi, ecx`). */
 #define PlayoffTreeMenu PlayoffTreeMenu_decl
 #define MenuHitTest MenuHitTest_decl
 #define POHiliteSlot POHiliteSlot_decl
@@ -184,10 +188,10 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                     ClearInputQueue();
                 } else {
                     sub_903F0(ptr, oldmx, oldmy);
-                    DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
+                    DrawMenuItemSel(&menus[level][sel[level]], pos[level][0],
                         pos[level][1], col1, col2, col3);
                     sel[level] = item;
-                    DrawMenuItemNorm((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
+                    DrawMenuItemNorm(&menus[level][sel[level]], pos[level][0],
                         pos[level][1], col1, col2, col3);
                 }
             } else if (menus[level][item].on2) {
@@ -206,11 +210,10 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                     }
                     depth = level;
                 }
-                DrawMenuItemSel((struct MenuItem *)&menus[depth][sel[depth]], pos[depth][0], pos[depth][1], col1, col2,
-                    col3);
-                sel[depth] = item;
-                DrawMenuItemNorm((struct MenuItem *)&menus[depth][item], pos[depth][0], pos[depth][1], col1, col2,
-                    col3);
+                i = depth;
+                DrawMenuItemSel(&menus[i][sel[i]], pos[i][0], pos[i][1], col1, col2, col3);
+                sel[i] = item;
+                DrawMenuItemNorm(&menus[i][item], pos[i][0], pos[i][1], col1, col2, col3);
                 depth++;
                 menus[depth] = (MenuItem *)menus[level][item].on2;
                 nitems[depth] = menus[level][item].pad;
@@ -226,14 +229,14 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                 DrawMenuDropdown(menus[depth], nitems[depth], pos[depth][0], pos[depth][1], col1, col2,
                     col3);
                 sel[depth] = 0;
-                DrawMenuItemNorm((struct MenuItem *)menus[depth], pos[depth][0], pos[depth][1], col1, col2,
+                DrawMenuItemNorm(menus[depth], pos[depth][0], pos[depth][1], col1, col2,
                     col3);
             } else {
                 sub_903F0(ptr, oldmx, oldmy);
-                DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
+                DrawMenuItemSel(&menus[level][sel[level]], pos[level][0],
                     pos[level][1], col1, col2, col3);
                 sel[level] = item;
-                DrawMenuItemNorm((struct MenuItem *)&menus[level][sel[level]], pos[level][0], pos[level][1],
+                DrawMenuItemNorm(&menus[level][sel[level]], pos[level][0], pos[level][1],
                     col1, col2, col3);
             }
         } else {
