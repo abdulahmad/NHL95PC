@@ -507,10 +507,11 @@ typedef struct { char c[0x34]; } PlayerRec52;
     sel[1] = sel[2] = sel[3] = 0; \
     nitems[1] = nitems[2] = nitems[3] = 0
 
-/* DRAFT under 10.0 GA: 3,345 bytes as the EXE, 104 differing. The highlight row is computed into k before the
+/* DRAFT under 10.0 GA: 3,345 bytes as the EXE, 103 differing. The highlight row is computed into k before the
    sub_90F38 call: with the ternary inside the pushed arguments Watcom gave the function a biased ebp frame (and
-   20 bytes of spills). The menu state is plain locals, as in RunMenu, in the order declsearch --conflicts finds
-   for the EXE's slots (all 17 as in the EXE). Both reselect arms draw the new item through sel[level] (the EXE
+   20 bytes of spills); as an if / else with a call per arm the constant pushes move ahead of the row (the EXE
+   computes the row first). The menu state is plain locals, as in RunMenu, in the order declsearch --conflicts
+   finds for the EXE's slots (all 17 as in the EXE); bits is local to the loop body, as in RunTeamPickMenu. Both reselect arms draw the new item through sel[level] (the EXE
    cross-jumps the last arm into the first after the pushes, once the registers agree); depth++ before the
    dropdown. Left: register picks from the size product on (the name-search loops, the StrPrefixDiffers address
    sums, the item kept in eax after `sel[i] = item`); see docs/UNSURE.md. */
@@ -524,25 +525,24 @@ typedef struct { char c[0x34]; } PlayerRec52;
 int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
 {
     int w;
-    MenuItem *menus[4];
     int h;
+    MenuItem *menus[4];
     int mx;
     int my;
     int pick;
+    int nitems[4];
+    int depth;
+    int level;
     int pos[4][2];
     int ptr;
-    int nitems[4];
-    int item;
     int oldmy;
-    int depth;
-    int sel[4];
-    int level;
     int oldmx;
+    int sel[4];
     int cur;
+    int item;
     int bg[4];
     int i;
     int k;
-    int bits;
     int r;
     unsigned char *e;
     MenuItem *m;
@@ -589,6 +589,8 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
     ((void (*)(void))mousepollfn)();
     ClearInputQueue();
     for (;;) {
+        int bits;
+
         bits = 0;
         while ((e = GetInputEvent()) != 0) {
             bits = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(e, &mx, &my);
