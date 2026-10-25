@@ -122,8 +122,7 @@ void GameStatsScreen(void)
         shape = sub_B30B4(logos, (char *)crestnames[s.teams[i]]);
         sub_913D0(shape, i ? 0x212 : 0x40, 0x4E);
         col = i * 455;
-        m = i * 0x2E8;
-        name = (char *)hmteamrec + m + 0x1A;
+        name = (char *)hmteamrec + i * 0x2E8 + 0x1A;
         width = fputchar(name) >> 1;
         cx = col + 0x49;
         PrintShadowText(cx - width, 0x8A, name);
@@ -138,8 +137,7 @@ void GameStatsScreen(void)
         PrintClampedText(cx - (fputchar(s.buf) >> 1), 0xF8, s.buf);
         x = TS(8);
         m = x / 60;
-        x %= 60;
-        sprintf(s.buf, (char *)str_D02d2, m, x);
+        sprintf(s.buf, (char *)str_D02d2, m, x % 60);
         PrintClampedText(cx - (fputchar(s.buf) >> 1), 0x110, s.buf);
         sprintf(s.buf, (char *)str_D7, TS(6));
         PrintClampedText(cx - (fputchar(s.buf) >> 1), 0x128, s.buf);
@@ -153,8 +151,7 @@ void GameStatsScreen(void)
         PrintClampedText(cx - (fputchar(s.buf) >> 1), 0x188, s.buf);
         x = TS(0xE);
         m = x / 60;
-        x %= 60;
-        sprintf(s.buf, (char *)str_D02d2, m, x);
+        sprintf(s.buf, (char *)str_D02d2, m, x % 60);
         PrintClampedText(cx - (fputchar(s.buf) >> 1), 0x1A0, s.buf);
         m = 0;
         y = 0x1B8;
