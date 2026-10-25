@@ -189,6 +189,7 @@ These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain a
 - FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) unchanged
 - FixJerseyConflict 20->20 (2026-10-24, Mhopkinsinc, GA) (slotdump: the EXE's slots need one fewer loop-weighted reference to e and pal, or one more to tr)
 - FixJerseyConflict 19->16 (2026-10-24, StaticEck2026, GA) TradeShowStats (EXE's previous function) compiled first as a compile-context copy: tr / pal get the EXE slots (kept); in that state: compare operands swapped (18), s.i != k (16), record-index sum / [i + 0x13] forms, nested if, pointer rows (16)
+- FixJerseyConflict 16->16 (2026-10-25, StaticEck2026, GA) tieorder: forced 12 (t12 before t106, needs two changes; e / err moves 16); swapped scan compare only swaps the loads; declsearch --conflicts all 6 orders (16)
 
 ### `src/c/004_13320_asset_loading/ResetGameVars.c`
 
@@ -243,14 +244,6 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) unchanged
 - GameLoop 62->61 (2026-10-24, StaticEck2026, GA) goto-free: each goto out as sub_1B982(); return; (61, size +7: own epilogue and jne-over-jmp at the gameresult == 2 exits; the demo exit keeps its own gameresult = 1 store as in the EXE); permute.py 200 candidates (transforms used up)
 - GameLoop 61->61 (2026-10-25, StaticEck2026, GA) tieorder 5 min (61); no conflict gets EDI / EBP: frameaccum load picked after the conflict allocation
-
-### `src/c/024_31AB5_main_desk/MainDeskLoop.c`
-
-- MainDeskLoop 72->67 (2026-10-24, Mhopkinsinc, GA) (a scoped int size in the action block)
-- MainDeskLoop 67->67 (2026-10-24, Mhopkinsinc, GA) unchanged
-- MainDeskLoop 67->67 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (first sprite size in r); level alone as a plain int (rest in s) after s / after ptr / after depth 132 first_pick, after oldmy 106, last 103 (slots move); nothing kept
-- MainDeskLoop 67->67 (2026-10-24, StaticEck2026, GA) dead-variable reuse of r for the first pointer size removed at the same score: block-local int size; function-scope size after ptr / r / m (95-99)
-- MainDeskLoop 67->62 (2026-10-25, StaticEck2026, GA) frame struct as plain locals + declsearch --conflicts (62, all slots); tieorder forced 50 (t153 / t152 callback 58, + t281 / t280 54); slot block-local / dropped (62); callback and Sel / Norm address spellings (61-395, not kept)
 
 ### `src/c/028_35FB9_import_export/PostGameToTeamDb.c`
 
@@ -404,6 +397,29 @@ BlitTileMap — slot 4/5, owner Mhopkinsinc
 - BlitTileMap 5->5 (2026-10-24, StaticEck2026, GA) LoadRink as compile context (5, same slots); nothing kept
 - BlitTileMap 5->5 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): - (row + row) (8) forced t34 before t35 in the savings-200 run gives the EXE row (4, only height / width homes); explain: one more conflict near tile; map pointer local (15-29), bitmap base local (69)
 - BlitTileMap 5->5 (2026-10-25, StaticEck2026, GA) pre-sort probe: locals created in declaration order except tile (one block); tile as short (23), short tile through a short map index (32)
+
+### `src/c/015_1D6E8_menu_system/RunMenu.c`
+
+RunMenu — register 5/6, owner Mhopkinsinc
+- RunMenu 146->146 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunMenu 146->146 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunMenu 146->82 (2026-10-24, Mhopkinsinc, GA) (the EXE size): its frame struct as plain locals; inside one struct the store `sel[level] = item` could alias `level`
+- RunMenu 82->82 (2026-10-24, StaticEck2026, GA) the submenu depth copy through its own int k instead of i (82, same code), drawing through level (271)
+- RunMenu 82->72 (2026-10-25, StaticEck2026, GA) declsearch --conflicts on the plain locals (72, all 15 slots); tieorder before 79 forced, after 72
+- RunMenu 72->6 (2026-10-25, StaticEck2026, GA) sub_91400(ptr, oldmx, oldmy) at the end of both the hit and the miss branch (40), close loop as for (i = depth; i > level; i--) (10), depth++ after the second Norm (6); tieorder forced 0 (t71 / t72 and the size-product savings-2 run): product spellings, block-local size, w / h for the product, m spellings, declsearch confirms, permute.py 321 (6-173); kept 6
+RunPlayerPickMenu — register 83/98, owner Mhopkinsinc
+- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunPlayerPickMenu 158->158 (2026-10-24, StaticEck2026, GA) remaining frame struct as plain locals (382, no slot search); not kept
+- RunPlayerPickMenu 158->104 (2026-10-25, StaticEck2026, GA) remaining frame struct as plain locals + declsearch --conflicts (109, all 17 slots, EXE size), depth++ (105), reselect Norm through sel[level] in both arms (104); tieorder 10 min inconclusive
+RunTeamPickMenu — register 137/179, owner Mhopkinsinc
+- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
+- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RunTeamPickMenu 212->212 (2026-10-24, StaticEck2026, GA) frame struct as plain locals (1638) + declsearch --conflicts (17 of 18 slots, 889); not kept
+- RunTeamPickMenu 212->212 (2026-10-25, StaticEck2026, GA) frame struct as plain locals + declsearch --conflicts (889 by permute.py, 17 of 18 slots; not kept)
+- RunTeamPickMenu 212->212 (2026-10-25, StaticEck2026, GA) struct version: depth++ (212), depth++ with on2 in place before m (229); not kept
 
 ### `src/c/064_86696_season_playoffs/POCreateSchedule.c`
 
@@ -826,26 +842,6 @@ StarCompare — register 33/65, owner Mhopkinsinc
 - StarCompare 81->81 (2026-10-24, Mhopkinsinc, GA) . Each newest UNSURE bullet (inside the function's entry; `docs/unsure_tried.csv` rerun) gives the first difference and the savings that block it.
 - StarCompare 67->67 (2026-10-24, StaticEck2026, GA) the EXE-size eb / sb = rb[0] + rb[1] shape re-measured (182, regdump ties b / tb at 10 and pa / pb at 7); compile-context copy of StarEligible (no change)
 - StarCompare 67->67 (2026-10-25, StaticEck2026, GA) on the EXE-size eb shape: short-index rows (182), ds at function scope in three places (145-195), one-sum byte rows (199), sa != eb (135), ternary result (171)
-
-### `src/c/015_1D6E8_menu_system/RunMenu.c`
-
-RunMenu — register 38/72, owner Mhopkinsinc
-- RunMenu 146->146 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunMenu 146->146 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunMenu 146->82 (2026-10-24, Mhopkinsinc, GA) (the EXE size): its frame struct as plain locals; inside one struct the store `sel[level] = item` could alias `level`
-- RunMenu 82->82 (2026-10-24, StaticEck2026, GA) the submenu depth copy through its own int k instead of i (82, same code), drawing through level (271)
-- RunMenu 82->72 (2026-10-25, StaticEck2026, GA) declsearch --conflicts on the plain locals (72, all 15 slots); tieorder before 79 forced, after 72
-RunPlayerPickMenu — register 119/145, owner Mhopkinsinc
-- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunPlayerPickMenu 158->158 (2026-10-24, StaticEck2026, GA) remaining frame struct as plain locals (382, no slot search); not kept
-RunTeamPickMenu — register 137/179, owner Mhopkinsinc
-- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-- RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RunTeamPickMenu 212->212 (2026-10-24, StaticEck2026, GA) frame struct as plain locals (1638) + declsearch --conflicts (17 of 18 slots, 889); not kept
-- RunTeamPickMenu 212->212 (2026-10-25, StaticEck2026, GA) frame struct as plain locals + declsearch --conflicts (889 by permute.py, 17 of 18 slots; not kept)
 
 ### `src/c/032_3DC2C_roster_jersey/TradeScreenLoop.c`
 
