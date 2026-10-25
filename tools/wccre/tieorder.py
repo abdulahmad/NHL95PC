@@ -438,9 +438,11 @@ def main():
     if a.cross and best[0] > 0:
         cross_search(a, src, func, work, passes0, best_plan, best, t0)
     if best[0] == 0 and best[2]: complete = True     # a byte match ends the search: nothing left to find
-    if complete:
+    if complete or best[0] < base[0]:
+        # an incomplete search still saves an order that improves (targetsearch.py / tiesearch.py read it); only a
+        # complete one is reused to skip the search
         os.makedirs(os.path.dirname(cache), exist_ok=True)
-        json.dump(dict(sha1=h, best=list(best), plan={str(k): v for k, v in best_plan.items()}, complete=True,
+        json.dump(dict(sha1=h, best=list(best), plan={str(k): v for k, v in best_plan.items()}, complete=complete,
                        names=sorted(edit_names)), open(cache, 'w'))
     print('result: %d -> %d differing after %d forced orders in %.0f s%s' % (
         base[0], best[0], n, time.time() - t0, ' (a tie order gives the EXE bytes)' if best[0] == 0 and best[2] else ''))

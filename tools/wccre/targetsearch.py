@@ -13,15 +13,19 @@ search scores each candidate by the targets the compiler-side tools found, read 
 
 Score, best first: byte match; differences that are neither register nor slot (an edit may not add real code
 differences); unmet targets (swaps unsatisfied + names out of their EXE slot); differing instructions; size.
-The edits are permute.py's natural transforms only (tiesearch.NATURAL: declaration order and scope, statement and
-operand order, comparison form, loop form, ...); never a new copy, a cast or a signature change (AGENTS.md).
-The search keeps the best --beam texts at each step and expands each of them, so it can cross a step that costs
+The edits are permute.py's natural transforms (tiesearch.NATURAL: declaration order and scope, statement and
+operand order, comparison form, loop form, ...) and rewrites.py's expression rewrites (merge / split an
+assignment, reassociate, reuse or recompute a value, swap aliases), which change the temporaries and use counts
+the targets depend on; never a new copy, a cast or a signature change (AGENTS.md).
+A rewrite that leaves the score as it was is followed at once by its own rewrites (--lookahead of them), so a
+neutral step that enables a gain (recompute, then merge) is judged by what it leads to; on equal scores rewrites
+rank first. The search keeps the best --beam texts at each step and expands each of them, so it can cross a step that costs
 a little before the targets move. A byte match is confirmed with a fresh DOSBox compile; --write-match writes it.
 Every candidate is logged to build/targetsearch/FUNC.csv; the best text goes to build/targetsearch/."""
-import argparse, csv, json, hashlib, os, random, sys, tempfile, time
+import argparse, csv, json, hashlib, os, random, re, sys, tempfile, time
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(ROOT, 'tools'))
-import irdump, emucc, cc, permute, declsearch, countsolve, tiesearch, slotdump as sd
+import irdump, emucc, cc, permute, declsearch, countsolve, tiesearch, rewrites, slotdump as sd
 
 
 def compile_both(src, func, obj):
@@ -85,6 +89,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('src'); ap.add_argument('func')
     ap.add_argument('--minutes', type=float, default=60); ap.add_argument('--beam', type=int, default=3)
+    ap.add_argument('--lookahead', type=int, default=40, help='rewrites tried right after a neutral rewrite (default 40)')
     ap.add_argument('--seed', type=int, default=1); ap.add_argument('--write-match', action='store_true')
     a = ap.parse_args()
     os.chdir(ROOT)
@@ -112,7 +117,8 @@ def main():
         miss = tiesearch.unsatisfied(passes, pairs)
         if W:
             cl = countsolve.compiled_slots(g, W) if g else {}
-            miss += sum(1 for v, w in W.items() if cl.get(v) != w)
+            gone = set(W) - set(re.findall(r'[A-Za-z_]\w*', text))     # a name an edit removed is no target
+            miss += sum(1 for v, w in W.items() if v not in gone and cl.get(v) != w)
         return (0 if s[2] else 1, other, miss, s[0], abs(s[1])), s
 
     text0 = open(src).read()
@@ -127,20 +133,33 @@ def main():
     while time.time() - t0 < a.minutes * 60 and best[0][0]:
         pool = []
         for key, text, path in beam:
-            nb = [x for x in permute.neighbours(text, func, tiesearch.NATURAL) if permute.fsha(x[1], func) not in seen]
+            rw = set(x[1] for x in rewrites.neighbours(text, func))
+            nb = [x for x in permute.neighbours(text, func, tiesearch.NATURAL) + rewrites.neighbours(text, func)
+                  if permute.fsha(x[1], func) not in seen]
             rnd.shuffle(nb)
-            for name, t in nb:
+            todo = [(name, t, path, 0) for name, t in nb]
+            while todo:
+                name, t, base_path, depth = todo.pop(0)
                 if time.time() - t0 > a.minutes * 60: break
+                if depth and permute.fsha(t, func) in seen: continue
                 seen.add(permute.fsha(t, func))
                 r = evaluate(t); n += 1
                 if r is None: continue
-                w.writerow([time.strftime('%Y-%m-%d'), func, ' > '.join(path + [name]), r[1][0], r[0][1], r[0][2], r[1][2]])
+                p_ = base_path + [name]
+                w.writerow([time.strftime('%Y-%m-%d'), func, ' > '.join(p_), r[1][0], r[0][1], r[0][2], r[1][2]])
                 log.flush()
-                pool.append((r[0], t, path + [name]))
+                is_rw = depth > 0 or t in rw
+                pool.append((r[0], 0 if is_rw else 1, t, p_))
                 if r[0][0] == 0: break
+                # a rewrite that leaves the score as it was (or better) may enable another: look one step further
+                # at once, so the neutral step is judged by what it leads to
+                if is_rw and depth == 0 and r[0] <= key:
+                    kids = [x for x in rewrites.neighbours(t, func) if permute.fsha(x[1], func) not in seen][:a.lookahead]
+                    todo[0:0] = [(kn, kt, p_, 1) for kn, kt in kids]
             if pool and min(pool)[0][0] == 0: break
         if not pool: print('no unvisited neighbours'); break
-        pool.sort(key=lambda x: x[0])
+        pool.sort(key=lambda x: (x[0], x[1]))          # on a tie, rewrites first
+        pool = [(k_, t_, p_) for k_, _, t_, p_ in pool]
         beam = pool[:a.beam]
         if beam[0][0] < best[0]: best = beam[0]
         print('  %5d candidates %5.0f s: best %d differing (%d other), %d unmet  [%s]' % (
