@@ -5,8 +5,10 @@
 #define assthreestars assthreestars_decl
 #define PreGameIntro PreGameIntro_decl
 #define StarCompare StarCompare_decl
+#define setplayer setplayer_decl
 #include "nhl95.h"
 #undef StarCompare
+#undef setplayer
 #undef ThreeStarsLoop
 #undef PickThreeStars
 #undef StartThreeStars
@@ -26,6 +28,7 @@ void FadeOutPalCycle(void);
 void PreGameIntro(void);
 int StartPreGame(int skip);
 int StarCompare(const void *a, const void *b);
+void setplayer(Player *p, short n);  /* 5B2C5 (changeplayer.c) */
 
 /* FadeOutPalCycle: end the loading screen palette cycle: step all 3 loadpals palettes down to black (one level
  per 2 ticks, the cycle locked while changing them), then remove the LoadScreenPalTick timer and clear
@@ -457,11 +460,15 @@ void StartThreeStars(void)
     else sub_8F633();
 }
 
-/* DRAFT: same size under 10.0 GA, 44 differing. The team abbreviation index goes through the int w first, so
-   the jersey is recomputed after FormatPlayerName as in the EXE; the star's side, object slot and position each
-   have their own local. Left, in the first announcement only: the EXE spills roster + 7 to a frame slot
-   (sub esp, 4) for FormatPlayerName where this builds it in ecx (lea), and it sums the jersey index before the
-   load (add eax, ebx / xor ebx, ebx). See docs/UNSURE.md. */
+/* DRAFT: same size under 10.0 GA, 56 differing; no pass-through copy. The team abbreviation index goes through the
+   int w first, so the jersey is recomputed after FormatPlayerName as in the EXE. In the bring-out part the slot
+   indexes SortCords directly (the EXE does not reload temp3) and the star's player number is kept in an int pn
+   (`pn = q->pnum = starpl[..]`: the EXE's movsx edi, al / cmp edi, 19h) that goes to setplayer, declared here
+   with its real short parameter (changeplayer.c; protos.h has int): movsx edx, di as in the EXE. The earlier 44
+   held two tie-breaker copies (`slot = ...; p->temp3 = slot;` with q from temp3, and `pos = ...; q->position =
+   pos;`, ESCALATE). Left: register ties (pn eax, side ecx where the EXE has edi / esi), and in the first
+   announcement the EXE spills roster + 7 to a frame slot (sub esp, 4); this spills two temporaries in the second
+   (sub esp, 8). See docs/UNSURE.md. */
 /* assthreestars (495B8, PC only; ends in PreGameIntro_popebp): asstab 15h, the referee's part in the three stars.
    Wait while the overlay runs its first 10h ticks or its 258h-267h stretch. A new assignment (bit 1): "EA Sports"
    on the third text line, the third star first (temp1 2), a pause of 14h-27h ticks (DCh more with speech and music
@@ -474,13 +481,13 @@ void StartThreeStars(void)
    9). p: the referee. No result. */
 void assthreestars(Player *p)
 {
-    Player *q;
     int tm;
-    int pl;
-    int w;
-    int side;
     int slot;
-    int pos;
+    int side;
+    int pn;
+    Player *q;
+    int w;
+    int pl;
 
     if (ovltimer != -1 && (ovltimer < 0x10 || ovltimer >= 0x258 && ovltimer < 0x268)) return;
     if (p->pflags & 2) {
@@ -528,17 +535,16 @@ void assthreestars(Player *p)
     if (p->temp2 < 0) return;
     slot = (startm[p->temp1 * 2] != 0) + 5;
     p->temp3 = slot;
-    q = &SortCords[p->temp3];
+    q = &SortCords[slot];
     side = (q->pflags & 0x40) != 0;
     crowdlevel = side ? 0x2BC : 0x5DC;
-    q->pnum = starpl[p->temp1 * 2];
-    pos = q->pnum < 0x19 ? 4 : 0;
-    q->position = pos;
+    pn = q->pnum = starpl[p->temp1 * 2];
+    q->position = pn < 0x19 ? 4 : 0;
     q->temp1 = 0;
     q->newpos = q->newpnum = -1;
-    hmtmpde[side * 0x80 + q->pnum] = 0x300;
+    hmtmpde[side * 0x80 + pn] = 0x300;
     p->pflags2 &= 0xFB;
-    setplayer(q, q->pnum);
+    setplayer(q, pn);
     assreplace(q, 0);
     assinsert(q, 0x1D);
     assinsert(q, 0x14);

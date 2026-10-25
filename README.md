@@ -5,7 +5,7 @@
 ## 🚧 Current Status
 
 - McMarkis is working on the C decompilation.
-- <!-- nhl95-readme-count:start -->968 of 1084 functions matched.<!-- nhl95-readme-count:end -->
+- <!-- nhl95-readme-count:start -->972 of 1084 functions matched.<!-- nhl95-readme-count:end -->
 - Names come from 93G first, then 94G.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
