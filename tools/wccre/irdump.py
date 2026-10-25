@@ -20,8 +20,21 @@ GA layouts (image 10.0 GA, checked against Open Watcom bld/cg/h/inslist.h, block
   name         +0 next, +4 class (0 constant, 1 memory, 2 temp, 3 register, 4 indexed), +5 type class, +8 size;
                constant +10 value; memory +14 front-end symbol (u16); temp +14 symbol (0: a cg temporary), +24 id;
                register +C register set; indexed +C index name, +10 constant offset, +14 base name
-GA opcode numbers differ from Open Watcom's (GA has fewer opcodes); OPS lists the ones identified so far."""
+GA opcode numbers differ from Open Watcom's (GA has fewer opcodes); OPS lists the ones identified so far.
+
+The conflict list as built (before the savings sort) follows the conflicts, front to back, each with where it was
+created (AddConflictNode +4FFB9 prepends, so the last created is at the front):
+  global   the walk of the temporary names list (+57A5B): every name used in more than one block when it runs,
+           newest name first, so in the list oldest first (parameters, then locals, then temporaries by id)
+  Bn:Ll    the live-information walk (+58BF0 area, through NameConflict +50136): blocks first to last, each
+           block's instructions last to first, result before operands (an indexed operand gives its index
+           temporary); so in the list the blocks run last to first and, inside a block, by first reference
+           while walking backwards (roughly forward order of last use). A later run of the walk (after
+           instructions are split: memory-to-memory moves, constant divisors) adds only the new temporaries,
+           in front of all others."""
 import argparse, os, struct, sys
+from unicorn import UC_HOOK_CODE
+from unicorn import x86_const as X
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(ROOT, 'tools'))
 import regdump, regsolve, emucc, cc
@@ -31,13 +44,27 @@ OPS = {0x00: 'nop', 0x01: 'add', 0x03: 'sub', 0x05: 'mul', 0x07: 'div', 0x08: 'm
        0x34: 'if<', 0x35: 'if>=',
        0x11: 'neg', 0x12: 'not', 0x24: 'cnv', 0x28: 'lea', 0x2A: 'push', 0x2C: 'parm', 0x2E: 'tst<>', 0x2F: 'tst==',
        0x36: 'call'}
+ADD_CONFLICT, NAME_CONFLICT = 0x4FFB9, 0x50136   # AddConflictNode (eax: the name), NameConflict
+GLOBAL_WALK_RET, LOCAL_WALK_RET = 0x57A8C, 0x500F1   # their return addresses: the names-list walk, NameConflict
 TYPES = ['u1', 'i1', 'u2', 'i2', 'u4', 'i4', 'u8', 'i8', 'cp', 'pt', '--', 'fs', 'fd', 'fl']
 
 
 class IRDump(regsolve.Capture):
     def __init__(self, emu, func, want_pass=None):
         self.func, self.want_pass, self.fpass, self.dumps = func, want_pass, 0, []
+        self.created, self.cur_ins = [], 0
         regsolve.Capture.__init__(self, emu)
+        B = regdump.B
+        self.uc.hook_add(UC_HOOK_CODE, self.on_add_conflict, begin=B + ADD_CONFLICT, end=B + ADD_CONFLICT)
+        self.uc.hook_add(UC_HOOK_CODE, self.on_name_conflict, begin=B + NAME_CONFLICT, end=B + NAME_CONFLICT)
+
+    def on_name_conflict(self, uc, addr, size, _):
+        self.cur_ins = self.emu.r(X.UC_X86_REG_EBX)      # NameConflict(name eax, block edx, instruction ebx)
+
+    def on_add_conflict(self, uc, addr, size, _):
+        if self.proc_name() != self.func: return
+        ret = self.u32(self.emu.r(X.UC_X86_REG_ESP)) - regdump.B
+        self.created.append((self.emu.r(X.UC_X86_REG_EAX), 'global' if ret == GLOBAL_WALK_RET else self.cur_ins if ret == LOCAL_WALK_RET else 'other'))
 
     def on_sorted(self, uc, addr, size, _):
         regsolve.Capture.on_sorted(self, uc, addr, size, _)
@@ -45,6 +72,7 @@ class IRDump(regsolve.Capture):
         k = self.fpass; self.fpass += 1
         if self.want_pass is not None and k != self.want_pass: return
         p = self.passes[-1]
+        p['created'], self.created = self.created, []
         self.dumps.append((k, p, self.walk(p)))
 
     # ---- names
@@ -123,6 +151,20 @@ def conflict_info(src, func, want_pass=0):
     return out
 
 
+def built_origins(src, func, want_pass=0):
+    """{conflict label: where it was created} for FUNC's allocation pass (built_order; one emulator compile)"""
+    import tempfile
+    holder = {}
+    def setup(emu): holder['d'] = IRDump(emu, func, want_pass)
+    tmp = tempfile.mktemp(suffix='.obj')
+    emucc.compile_c(src, tmp, cc.src_flags(src), setup=setup)
+    if os.path.exists(tmp): os.remove(tmp)
+    d = holder.get('d')
+    if not d or not d.dumps: return {}
+    k, p, blocks = d.dumps[0]
+    return {c['label']: o for c, o in built_order(p, blocks)}
+
+
 def opname(op):
     return OPS.get(op, 'op%02X' % op)
 
@@ -172,6 +214,22 @@ def main():
             g = '-' if r is None else r if isinstance(r, str) else ('memory' if r == 0 else regdump.regname(r))
             f = lambda l: ' '.join('B%d:L%d%s' % (b_, l_, '*' * d_) for b_, l_, d_ in l[:8]) + (' ...' if len(l) > 8 else '')
             print('  %-10s %6d %-7s def %-24s use %s' % (lab, c['savings'], g, f(defs.get(lab, [])), f(uses.get(lab, []))))
+        print('-- conflict list as built (front to back, before the sort): where each was created')
+        print('  ' + '  '.join('%s %s' % (c['label'], o) for c, o in built_order(p, blocks)))
+
+
+def built_order(p, blocks):
+    """[(conflict, origin)] in the pre-sort list order: origin 'global', 'Bn:Ll' (the live-information walk, at
+    that instruction) or '-' (created before this function's walk was hooked)"""
+    where, line = {}, 0
+    for b in blocks:
+        for r in b['rows']:
+            if r['line']: line = r['line']
+            where[r['addr']] = 'B%d:L%d' % (b['index'], line)
+    origin = {}
+    for name, o in p.get('created', []):
+        origin[name] = o if isinstance(o, str) else where.get(o, 'B?')
+    return [(c, origin.get(c['name'], '-')) for c in p.get('before', [])]
 
 
 if __name__ == '__main__':

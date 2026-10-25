@@ -24,6 +24,7 @@ These files are in lane 2 by segment. StaticEck2026 made two consecutive no-gain
 - checkgoal 8->8 (2026-10-24, StaticEck2026, GA) the three zero stores get eax where the EXE uses ecx / edx / edi.
 - checkgoal 8->1 (2026-10-24, Mhopkinsinc, GA) gotos removed: nested tests with side as fall-through and a duplicated wall exit (4); wall tests as two early-return ifs (1, committed); bounce on that structure: short / unsigned short z (14-17), x = -y (17), y = -y; x = y (6), x = y = -y (6), p->Zvel = -y >> 1 (18), x = z >> 1 short/int z (18-19), z = y; x = -z (14), z = y; z = -z (14), x = z = -y (1 int, 14 short); flag zero split / reload / Zpos else (4); regsolve: no reorder
 - checkgoal 1->1 (2026-10-24, Mhopkinsinc, GA) x = y; x = -x; x >>= 1 (3, -2 bytes); x = -y; x >>= 1 (3); short z copy (3); short z x = z >> 1 (worse); y = -y; x = y; x >>= 1 (3); x = y; x = -x; p->Zvel = x >> 1 (5, size 0); int z = -p->Zvel (1); test p->Zvel < 0 with z = -p->Zvel (worse); x = -p->Zvel; x >>= 1 (14); int z p->Zvel = x >> 1 (20); int z z = y; z = -z (12); block int (1); p->Zvel = x >>= 1 (1 / 14); y load split from test (1); z = -(unsigned short)y (2, +3); permute.py 4 min on goto-free draft (321, base)
+- checkgoal 1->1 (2026-10-25, abdulahmad, GA) lane T diagnosis: short z (`z = -y; x = z; x >>= 1`) gives z the register of y (AX, -2 bytes: the EXE keeps z in edx, apart from y); tieorder.py on that version (10 min): no tie order fixes it (size stays -2). Nothing kept.
 
 ### `src/c/052_6D2F8_create_player/SelectMatchingPlayers.c`
 
@@ -167,12 +168,14 @@ RunMenu is in this file (score 6, register 5/6) and comes with it.
 - RunMenu 82->82 (2026-10-24, StaticEck2026, GA) the submenu depth copy through its own int k instead of i (82, same code), drawing through level (271)
 - RunMenu 82->72 (2026-10-25, StaticEck2026, GA) declsearch --conflicts on the plain locals (72, all 15 slots); tieorder before 79 forced, after 72
 - RunMenu 72->6 (2026-10-25, StaticEck2026, GA) sub_91400(ptr, oldmx, oldmy) at the end of both the hit and the miss branch (40), close loop as for (i = depth; i > level; i--) (10), depth++ after the second Norm (6); tieorder forced 0 (t71 / t72 and the size-product savings-2 run): product spellings, block-local size, w / h for the product, m spellings, declsearch confirms, permute.py 321 (6-173); kept 6
+- RunMenu 6->6 (2026-10-25, StaticEck2026, GA) MainDeskLoop shapes: m formed after on2 (declsearch 16; tieorder 12), + i = depth dropdown (same), + block-local size (16), w / h block-local (18); unchanged
 - RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
 - RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
 - RunPlayerPickMenu 158->158 (2026-10-24, Mhopkinsinc, GA) unchanged
 - RunPlayerPickMenu 158->158 (2026-10-24, StaticEck2026, GA) remaining frame struct as plain locals (382, no slot search); not kept
 - RunPlayerPickMenu 158->104 (2026-10-25, StaticEck2026, GA) remaining frame struct as plain locals + declsearch --conflicts (109, all 17 slots, EXE size), depth++ (105), reselect Norm through sel[level] in both arms (104); tieorder 10 min inconclusive
 - RunPlayerPickMenu 104->104 (2026-10-25, StaticEck2026, GA) close-loop pos chain (136, 104 with oldmy / oldmx / ptr redeclared: EXE zero registers there, name-search loops shift), tieorder --savings 300,200,2 (100 forced), restricted permute 834 candidates (94 only against the EXE's store order: rejected); unchanged
+- RunPlayerPickMenu 104->103 (2026-10-25, StaticEck2026, GA) bits local to the loop body + declsearch --conflicts (103); PHILITE as if / else with a call per arm (190-218 after slots) or into k (154), PREC through k / if-else / 0x34 first / array index (104-903), r / m scoped, size first, i / k last, k as record index (119 after declsearch); tieorder 8 min on 103: nothing
 - RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
 - RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
 - RunTeamPickMenu 212->212 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -180,6 +183,8 @@ RunMenu is in this file (score 6, register 5/6) and comes with it.
 - RunTeamPickMenu 212->212 (2026-10-25, StaticEck2026, GA) frame struct as plain locals + declsearch --conflicts (889 by permute.py, 17 of 18 slots; not kept)
 - RunTeamPickMenu 212->212 (2026-10-25, StaticEck2026, GA) struct version: depth++ (212), depth++ with on2 in place before m (229); not kept
 - RunTeamPickMenu 212->196 (2026-10-25, StaticEck2026, GA) frame struct as plain locals + declsearch --conflicts with oldmx / oldmy swapped by hand (all 18 slots, 392), first reselect Norm through sel[level], depth++ with on2 in place before m (227), permute: statsteamorder[i] == pick (196); tieorder 191 / 192 forced (not a tie order alone); permute finds with a short return type / (short) cast / call moved against the EXE's order rejected
+- RunTeamPickMenu 196->181 (2026-10-25, StaticEck2026, GA) highlight half as a ternary like its row + declsearch --conflicts (all 18 slots, 181); TEAMBYTE spellings (struct, short table, *13*2, ptr arithmetic: same code), tree-close zero chain as stores (446), row / ternary inversions (206-235), size product spellings (181-183); tieorder 10 min on 181: nothing
+- RunTeamPickMenu 181->181 (2026-10-25, StaticEck2026, GA) tree-close pos zeros chained + declsearch --conflicts (254-275), size declaration sweep (181 best where it is); unchanged
 
 ### `src/c/034_41B80_schedule/CreateNewLeague.c`
 
@@ -268,16 +273,6 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - GameLoop 62->61 (2026-10-24, StaticEck2026, GA) goto-free: each goto out as sub_1B982(); return; (61, size +7: own epilogue and jne-over-jmp at the gameresult == 2 exits; the demo exit keeps its own gameresult = 1 store as in the EXE); permute.py 200 candidates (transforms used up)
 - GameLoop 61->61 (2026-10-25, StaticEck2026, GA) tieorder 5 min (61); no conflict gets EDI / EBP: frameaccum load picked after the conflict allocation
 
-### `src/c/028_35FB9_import_export/PostGameToTeamDb.c`
-
-- PostGameToTeamDb 130->130 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-- PostGameToTeamDb 130->129 (2026-10-24, Mhopkinsinc, GA) visitors-win arm as if (!side) rec[2]++; else rec[1]++ (129, kept: EXE je/jmp); else if (awscore > hmscore[0]) 132; if (awscore < hmscore[0]) 134; both 134; else if (!=) 138; *hmscore 130; hmtmstruct.tmscore / awtmstruct.tmscore spellings 130; short h cached home score 177 (176 with flip); score = hmscore[0] then score++ 158; flip in both chains 130; regsolve only savings bumps; declsearch --conflicts 21360 orders best 5 of 9 slots (134-136)
-- PostGameToTeamDb 129->122 (2026-10-24, Mhopkinsinc, GA) k roles as separate locals: key only 137 (+1) then declsearch --conflicts --write 122 (kept, size +1); goal count only 293; offsets only 288; count+key 318; count+offsets 318; key+offsets 329; all three 329 (frame grows); regsolve after: k->EDI, r->EAX, ss->EDX only by savings bumps
-- PostGameToTeamDb 122->122 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (k->EDI, r->EAX, ss->EDX only by savings bumps); slotdump --count i 20 / 25 / 29, j 360 / 400, score 26 / 29 / 30 / 35, score 32 + j 33, score 32 + i 347: no count gives the EXE j / score / i slots; probe of the score chain alone: every arm reloads (no cwde), arm 2 as 1 + hmscore[0] and else if (awscore > hmscore[0]) the same
-- PostGameToTeamDb 122->122 (2026-10-25, Mhopkinsinc, GA) tieorder.py --minutes 20: the best tie order gives 121 (662 orders): pass 0 savings-80 run: sorted t256 t254 key, needed t256 key t254 (t254 ECX -> EAX); real-compiled declaration moves: best 115 (declare j before res)
-- PostGameToTeamDb 122->105 (2026-10-25, StaticEck2026, GA) j before res (tieorder's move, 115, kept); tie goalies through hmtmstruct / awtmstruct .tmgoalie / .tmlines (125) + declsearch --conflicts order (108, kept; i / j EXE slots); sideofs before key (tieorder on the 108, 105, kept); away tie-goalie spellings: index[ptr], *(i + p + 24h), 24h + i, (p + 24h)[i], awtmgoalie with tmlines (125 each, index stays in eax), old awtmlines cast (133)
-- PostGameToTeamDb 105->105 (2026-10-25, StaticEck2026, GA) tieorder's sideofs moves compiled (before gs / after gs / first: 154 each); short h home score for the compares and arm 2 (EXE cwde chain; slots move): block 132, top-level places 113-132, before rec[0]++ 134; declsearch --conflicts / --all on the 113 (best 113); slotdump --count: rec >= 349 gives all six EXE slots on that shape
-
 ### `src/c/010_18D7F_frontend_desk/SportsDesk.c`
 
 - SportsDesk 632->402 (2026-10-24, Mhopkinsinc, GA) (two commits). The biased ebp frame came from the ternaries inside the `PaPlayoffResult(...)` call's arguments (as HANDOFF item 29 suspected): the winner
@@ -330,6 +325,7 @@ NetCollide — register 7/7, owner StaticEck2026
 - NetCollide 22->22 (2026-10-25, StaticEck2026, GA) strict sort replay: no single added conflict keeps the named locals; named ABS locals (42-54), ABS through dead dx / dy / dist (39-45), chained Xvel / Yvel zeroing (28-55), the post blocks' ux -= 6 / += 6 folded (32-55)
 - NetCollide 22->22 (2026-10-24, Mhopkinsinc, GA) after tieorder: needed t21 (|ux|) before t20 (|uy|); sort replay forced: ~50 single edits give 0, all a named variable (dy / dx / dir / p) created at another point or without dir, no temporary add / drop (32-35); 36 single declaration moves 22-37; ux / uy split into >>= 2: ux 40, uy 40, both 32; three-step /= split: ux 36, uy 78, both 69; ux = dx << 8 then / dist >> 2 both 75; dx <<= 8 in place 98; gy before dx 62; dist assigned in the test 22; 0x18 <= dist 22
 - NetCollide 22->22 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: a tie order gives the EXE bytes (100 orders): pass 0 savings-3 run: sorted t63 t20 t52 dx t36 t29 t49 t46 t38 t21 t17 dy t60 t19, needed t21 t20 t52 dx t36 t29 t49 t46 t38 t63 t17 dy t60 t19 (t20 EDX -> ECX, t21 ECX -> EDX)
+- NetCollide 22->22 (2026-10-25, abdulahmad, GA) lane T: tieorder explanation with conflict origins: the savings-3 run needs t21 (the |ux| of L230, defined in B12 / B13, used in B14) ahead of t63 (L268 index shl); no single added, dropped or moved conflict gives it (two or more changes)
 
 ### `src/c/040_53294_engine_physics_ai/checkob.c`
 
@@ -424,6 +420,7 @@ POInitSchedule — register 3/3, owner StaticEck2026
 - POInitSchedule 6->6 (2026-10-24, StaticEck2026, GA) sort replay against the 2_b5 match: one temporary fewer in the second date loop plus one more near the first; 126 single and 64 paired equivalent date-loop spellings (all 48 conflicts, best 6)
 - POInitSchedule 6->6 (2026-10-24, Mhopkinsinc, GA) after tieorder: needed t8 before t10 / t7; sort replay of all single edits forced: none 0 (best 7: one more conflict between t16 and t13; po created first 8; one fewer second-loop temporary 10), two changes needed; 6 * i (first / second / both) 6, *(g + i * 6) pointer forms (first / second / both) 6, g[i * 6 + 0] 6, ++g[i * 6] 6, i * 3 * 2 6, g = &po[...] 6
 - POInitSchedule 6->6 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: a tie order gives the EXE bytes (182 orders): pass 0 savings-30 run: sorted t51 t80 t10 t116 t16 t84 t114 t8 t34 t55 t7, needed t51 t80 t8 t116 t16 t84 t114 t10 t34 t55 t7 (t10 EAX -> EDX, t8 EDX -> EAX, t7 EAX -> EDX)
+- POInitSchedule 6->6 (2026-10-25, abdulahmad, GA) lane T: tiesearch.py focused on L94-120 (30 min, 669 candidates): best 10 (all register-only), 7 of 9 swaps left; the explanation: t10 (po + i * 4) must sit just older than t7 or t8 just older than t10 in B2 (L94), i.e. the teams[i] address last used after the po[i] one
 
 ### `src/c/001_10010_main_startup/FadePalette.c`
 
@@ -571,6 +568,7 @@ JoystickCalScreen — register 4/4, owner StaticEck2026
 - JoystickCalScreen 11->11 (2026-10-24, StaticEck2026, GA) pairsim: t55 before t54 needs one more early conflict or one fewer later one; ten natural spellings left the conflict count at 34 (all 11)
 - JoystickCalScreen 11->11 (2026-10-24, Mhopkinsinc, GA) after tieorder: needed t55 before t54 (any order with it gives 0); sort replay: without t45 / t66 / t68 or one more savings-3 conflict before t54 / t56 / t59 / t42 / t37 each force 0; back+prev / prev / back / all locals in the if block 11, five declaration orders of s / back / prev 11, scalars first 11, s.cur split >>= 12 (+7), assignment in the 0x30 test 11, sub_B39D0() != 0 11, (unsigned) shift 12, sizeof(Hdr17) 11
 - JoystickCalScreen 11->11 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: a tie order gives the EXE bytes (92 orders): pass 0 savings-2 run: sorted t95 t67 t99 t54 t20 t57 t93 t91 t56 t55, needed t55 t67 t99 t54 t20 t57 t93 t91 t56 t95 (t54 EAX -> EDX, t55 EDX -> EAX)
+- JoystickCalScreen 11->11 (2026-10-25, abdulahmad, GA) lane T: tieorder explanation with conflict origins: the savings-2 run needs t55 (the u16 read multiplied at L59) ahead of t95 (lea pal at L51); no single added, dropped or moved conflict gives it (two or more changes)
 
 ### `src/c/052_6D2F8_create_player/SetRosterTeamMenus.c`
 
@@ -642,6 +640,7 @@ PenGoalStuff — register 2/4, owner StaticEck2026
 - PenGoalStuff 19->19 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve again (pointer and jersey temps tie at savings 2; only an m +1 bump); n reuse taken out: short k for the box player (36), k and j (110), j for the shift counter only (25, +1B1 unchanged); m for all three minute tests (43) or two (20); without the single-use m (19, same code; regsolve then predicts nothing)
 - PenGoalStuff 19->19 (2026-10-24, Mhopkinsinc, GA) after tieorder: needed t65 (row offset n * 27h) before t79 (jersey byte), no single edit gives it (replay forced 18-32); single-use m removed (19, same code; not committed: InProgress.c is now an escalation); other_side removed: side == 0 ? 28, !side ? 28, side > 0 ? hm : aw 32, side != 0 ? 31 (all +4); n reuse (three roles) still in the draft
 - PenGoalStuff 19->19 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: a tie order gives the EXE bytes (90 orders): pass 0 savings-3 run: sorted t8 t79 t10 t67 t80 t75 t65 t62, needed t8 t65 t10 t67 t80 t75 t79 t62 (t75 EDX -> ESI)
+- PenGoalStuff 19->19 (2026-10-25, abdulahmad, GA) lane T: tiesearch.py (focused, 30 min, 584 candidates): best 19, 1 of 2 swaps left. tieorder explanation with conflict origins: t65 (n * 0x27 at L334, reused at L336) must sit in the list as if its last use were at L334 (just older than t98); spellings of L334 / L336 that keep the reuse change nothing (19): (ot->tmroster + 5)[n * 0x27], 5 + n * 0x27, 0x27 * n at L334 / L336 / both, (&ot->tmroster[n * 0x27])[5]
 InProgress — register 70/83, owner StaticEck2026
 - InProgress 88->88 (2026-10-24, StaticEck2026, GA) register picks after +102.
 - InProgress 88->88 (2026-10-24, Mhopkinsinc, GA) for (;;) loop with continue / break instead of goto again / goto signal (88, byte-identical, committed: gotos removed); without the volatile 87 (hoisted into cx); word_CBC44[0] via a local array extern 87; declsearch --conflicts 24 orders no pen / pnum fix; slotdump: pnum count >= 20 (now 8) or pen 7 (now 44) gives the EXE slots; regsolve no prediction; volatile in vars.h not done (9 other files)
@@ -854,6 +853,18 @@ TeamStatsScreen — size 40/68, owner Mhopkinsinc
 - TeamStatsScreen 99->91 (2026-10-24, StaticEck2026, GA) `for (w = e = i = 0; ...)` in both conference splits (91; e = w = i 95, w = e = 0 before the for 96); declsearch --conflicts (no better order); the frame arrays as plain locals (164, declsearch best 172); permute.py 577 candidates (84 only with an asymmetric twin-row rewrite, rejected); both twin rows rewritten (141-148)
 - TeamStatsScreen 91->91 (2026-10-25, StaticEck2026, GA) column keys as statssortkeys[t] (koff dropped): the EXE's t * 4 hoist into the dispatch and every slot right, but the key-switch store tie flips (113); e before w (101), s last (92, +21); permute on the 113 (705: 91 only with ifswap / goto loops, rejected) and natural families on the 101 (best 92); not committed
 - TeamStatsScreen 91->91 (2026-10-25, StaticEck2026, GA) tieorder 5 min (91); frame struct flattened + declsearch (164, +62); key ternaries as if / else: all 171, cases 3-4 175 at size +0 (declsearch 141), single cases 131-206, negated 172; s as if / else 293
+
+### `src/c/028_35FB9_import_export/PostGameToTeamDb.c`
+
+PostGameToTeamDb — register 47/94, owner Mhopkinsinc
+- PostGameToTeamDb 130->130 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
+- PostGameToTeamDb 130->129 (2026-10-24, Mhopkinsinc, GA) visitors-win arm as if (!side) rec[2]++; else rec[1]++ (129, kept: EXE je/jmp); else if (awscore > hmscore[0]) 132; if (awscore < hmscore[0]) 134; both 134; else if (!=) 138; *hmscore 130; hmtmstruct.tmscore / awtmstruct.tmscore spellings 130; short h cached home score 177 (176 with flip); score = hmscore[0] then score++ 158; flip in both chains 130; regsolve only savings bumps; declsearch --conflicts 21360 orders best 5 of 9 slots (134-136)
+- PostGameToTeamDb 129->122 (2026-10-24, Mhopkinsinc, GA) k roles as separate locals: key only 137 (+1) then declsearch --conflicts --write 122 (kept, size +1); goal count only 293; offsets only 288; count+key 318; count+offsets 318; key+offsets 329; all three 329 (frame grows); regsolve after: k->EDI, r->EAX, ss->EDX only by savings bumps
+- PostGameToTeamDb 122->122 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (k->EDI, r->EAX, ss->EDX only by savings bumps); slotdump --count i 20 / 25 / 29, j 360 / 400, score 26 / 29 / 30 / 35, score 32 + j 33, score 32 + i 347: no count gives the EXE j / score / i slots; probe of the score chain alone: every arm reloads (no cwde), arm 2 as 1 + hmscore[0] and else if (awscore > hmscore[0]) the same
+- PostGameToTeamDb 122->122 (2026-10-25, Mhopkinsinc, GA) tieorder.py --minutes 20: the best tie order gives 121 (662 orders): pass 0 savings-80 run: sorted t256 t254 key, needed t256 key t254 (t254 ECX -> EAX); real-compiled declaration moves: best 115 (declare j before res)
+- PostGameToTeamDb 122->105 (2026-10-25, StaticEck2026, GA) j before res (tieorder's move, 115, kept); tie goalies through hmtmstruct / awtmstruct .tmgoalie / .tmlines (125) + declsearch --conflicts order (108, kept; i / j EXE slots); sideofs before key (tieorder on the 108, 105, kept); away tie-goalie spellings: index[ptr], *(i + p + 24h), 24h + i, (p + 24h)[i], awtmgoalie with tmlines (125 each, index stays in eax), old awtmlines cast (133)
+- PostGameToTeamDb 105->105 (2026-10-25, StaticEck2026, GA) tieorder's sideofs moves compiled (before gs / after gs / first: 154 each); short h home score for the compares and arm 2 (EXE cwde chain; slots move): block 132, top-level places 113-132, before rec[0]++ 134; declsearch --conflicts / --all on the 113 (best 113); slotdump --count: rec >= 349 gives all six EXE slots on that shape
+- PostGameToTeamDb 105->105 (2026-10-25, StaticEck2026, GA) Python slot-order count search on the h shape (no natural single / pair count change gives the EXE slots; rec 349+ or j 23-29 with rec 2-13 only); second loop index for loop subsets (31 variants, 116-304); key spellings int-array / &f.team[...] / (i + 0x13) * 4 (same code); key read twice without key local (126-157, EXE shl but in place); stat row pointer ps (125-151); h shape: st in place 113, score = h in tie arm 123, st as its own pointer 169
 
 ### `src/c/022_2D346_game_setup/GameSummaryScreen.c`
 

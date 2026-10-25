@@ -81,8 +81,8 @@ What decides a variable's register:
    would need around calls when the variable must also live in memory (its address is taken, or it is used in
    another block and memory is needed). Conflicts are given registers in **descending savings**: the variable
    with the most (loop-weighted) uses chooses first.
-2. **Ties are ordered by an unstable sort.** The conflict list is built by prepending (newest first) and then
-   Shell-sorted (gap = gap / 2 + adjust, adjust alternating 0 / 1). Equal savings keep no fixed relative order:
+2. **Ties are ordered by an unstable sort.** The conflict list is built by prepending (newest first; the build
+   order is below) and then Shell-sorted (gap = gap / 2 + adjust, adjust alternating 0 / 1). Equal savings keep no fixed relative order:
    where two tied variables end up depends on the list's length and on every other entry. This is why
    declaration order "works" only sometimes, and why an unrelated statement that adds or removes a temporary
    can move two other variables' registers (the "one-slot register-cycle shift" of several UNSURE entries).
@@ -95,6 +95,30 @@ What decides a variable's register:
 So to move a variable to another register: change the savings order (how often and where in loops each one is
 used), not the declaration order, unless regdump shows the two tied. Example: in the DrawListItem draft, x (11) and
 w (9) choose before y (6) and take ESI / EDI; the EXE has y in EDI and w in EBP, so in the original y outranked w.
+
+### How the conflict list is built (the order before the sort)
+
+`AddConflictNode` (+4FFB9, eax the name; nodes of 58h bytes from the free list at +7F450) prepends to the list at
++7E794. Two walks call it (found 2026-10-25 by hooking it; `irdump.py` prints the result as "conflict list as
+built", with each conflict's origin):
+
+* **The names walk** (+57A5B, returns to +57A8C) goes through the temporary names list (+7E778, newest name
+  first) and gives a conflict to every name flagged as used in more than one block (+18 bit 1) at that point.
+  These end up at the **back** of the list, oldest first: the parameters in order, then the locals, then the
+  code generator temporaries by id. "Used in more than one block" is judged on the IR when the walk runs, so a
+  temporary that is local in the final IR (POInitSchedule's t49, t78) can still be here.
+* **The live-information walk** (calls `NameConflict` +50136, returning to +500F1 inside +500DE) goes through
+  the blocks first to last and, inside each block, the instructions **last to first** (it follows +0), the result
+  before the operands (an indexed operand or result gives its index temporary). Each name met for the first time
+  gets a conflict. So in the list the blocks run last to first, and inside a block the temporaries are in the
+  order of their last reference, earliest first.
+* A later run of the same walk, after instructions are split (a memory-to-memory move through a new temporary, a
+  constant divisor loaded into one), adds only those new temporaries, which therefore sit at the **front**.
+
+So a tie between two temporaries of one block follows where their last uses are inside the block; a statement or
+operand order there moves them, and a temporary added or removed anywhere shifts every later position (the Shell
+sort's gaps depend on the length). tieorder.py's explanation now prints each conflict's origin (block and line)
+and also tries every temporary at another place inside its own block's part of the list.
 
 ### The tie order a draft needs (tools/wccre/tieorder.py)
 
@@ -227,6 +251,22 @@ TeamRosterScreen's n has 63 references; with 50:
 
 n [esp+3F0h], idx 404h, gs 400h are the EXE's slots: the original has one loop-weighted reference to n fewer
 than the draft (any count from 43 to 60 gives the same slots).
+
+`python3 tools/wccre/countsolve.py src/c/<seg>/<File>.c FUNC` asks the reverse question: which use counts give the
+locals (and the parameters the hand-out places) their EXE slots. It reads the EXE slots as declsearch.py does,
+replays every count of every name in memory with a conflict through declsearch's model of the sorts and the
+hand-out (no compile), then pairs of the best single changes, and confirms the best count sets with a compile that
+writes the counts into the conflicts (slotdump's --count). A count is a target position in the use-count sort,
+not necessarily a literal edit: any change that puts the name between the same neighbours works (a reference
+more or less, one inside or outside a loop, or a tie broken the other way). Validation (2026-10-25):
+
+* ExecuteTrade (7, all slots): kb 60 -> 4-11 puts kb in its EXE slot (compiler agrees); traded then lands at -8,
+  not -4, so a third name holds the top slot: not a count fix alone.
+* FillDressedSlots (20, 12 slots): slot (a parameter, 11) -> 0-2 together with i 41 -> 44+ gives i, slot, r and
+  side their EXE slots, confirmed by the compiler (4 of 4). Read as: in the original, slot ranks below every
+  local with a count above 2 and i above r (43). slot's only reference is the CanFillLineSlot call in the loop,
+  so the target is the order, not that count.
+* TitleScreen (committed draft, 3): every local already in its EXE slot (the remaining differences are not slots).
 
 ## The compiler state: one field the compiler never sets
 

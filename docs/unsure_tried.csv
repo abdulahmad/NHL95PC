@@ -4224,3 +4224,14 @@ FixJerseyConflict,,declaration moves of bad / e / err / pal (16),16,ga
 FixJerseyConflict,,`0x4C + tr` (16),16,ga
 FixJerseyConflict,,`0x1C > s.i` (16),16,ga
 FixJerseyConflict,,while (1) with a break for the do-while (16),16,ga
+RunTeamPickMenu,,"the tree-close loop's pos zeros as the chain `pos[i][0] = pos[i][1] = 0` followed by tools/wccre/declsearch.py --conflicts (445 before the slots, its three orders 254-275 with all 18 slots)","445 before the slots, its three orders 254-275 with all 18 slots",ga
+RunTeamPickMenu,,the size declaration at every place in the list (181 only where it is,,ga
+RunTeamPickMenu,,"225-636 elsewhere, slots not followed). tools/wccre/tiesearch.py is not in this tree",,ga
+RunPlayerPickMenu,,the highlight PHILITE as an if / else with a sub_90F38 call per arm (236,,ga
+RunPlayerPickMenu,,"declsearch --conflicts 216-218 with oldmx / oldmy swapped, by hand 190-210: Watcom pushes the constant arguments before the row",,ga
+RunPlayerPickMenu,,"the EXE computes the row first), as an if / else assigning k (376",,ga
+RunPlayerPickMenu,,declsearch 154),,ga
+RunPlayerPickMenu,,"the picked record's index through k (109), its offset through k (228)",228,ga
+RunPlayerPickMenu,,an if / else into k (903,,ga
+RunPlayerPickMenu,,"all three single-use copies anyway), `0x34 * PREC(pick)` (104), `((PlayerRec52 *)statsplayerbuf)[PREC(pick)]` (104), r local to the action block (104), m local to the hit block (324, slots not followed), size declared first (153), i or k declared last (299, slots not followed), k as the record index with `k * 0x34` in the four name searches' sums (138",,ga
+RunPlayerPickMenu,,"declsearch 119: the first search's goalie loop takes the EXE's registers, its skater loop and the PREC copy flip instead)",,ga
