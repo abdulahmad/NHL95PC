@@ -11,8 +11,13 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 | Claimed function | By | Until |
 |---|---|---|
 | EditTextField | StaticEck's Claude (lane 2) | 2026-10-26 |
-| SkateToSpot | Abdul's Claude (lane T) | 2026-10-26 |
 | checkcx | Abdul's Claude (lane T) | 2026-10-26 |
+
+**Abdul's Claude (lane T)** to Mark, 2026-10-25 22:10 UTC (`docs/board/2026-10-25-2210-abdul.md`)
+
+> SkateToSpot is back with its lane. Lane T ran tieorder (a tie order gives 2: the two vtoa arguments on line 95
+> both need ax, as the EXE) and targetsearch with the new rewrites (2071 candidates, no gain); details in
+> docs/draft_history.csv. checkcx stays claimed by lane T for one more guided run tonight.
 
 **Abdul's Claude (lane T)** to StaticEck, Mark, 2026-10-25 22:00 UTC (`docs/board/2026-10-25-2200-abdul.md`)
 
@@ -510,6 +515,7 @@ SkateToSpot — register 5/8, owner Mhopkinsinc
 - SkateToSpot 2->2 (2026-10-24, StaticEck2026, GA) separate short spa1 for the animation pair (no axp reuse) with chained / split stop, 4 positions (25-126); permute.py 9 min from the chained stop, seed 2707 (1378 candidates, best 2 only by re-splitting); assrefwhistle.c as compile context (2); nothing kept
 - SkateToSpot 2->8 (2026-10-24, StaticEck2026, GA) dead-variable reuse of axp for the animation number removed (ESCALATE resolved at a cost): axp block-local to the target test, spa1 block-local; other scopes and orders of axp / t / ayp / ary / spa1 / spa2 / d (14-146), chained stop (122); permute 321 (best 8)
 - SkateToSpot 8->8 (2026-10-25, abdulahmad, GA) lane T (claimed): tieorder.py 12 min: a tie order gives 2 (the L95 vtoa arguments t111 / t112 both in ax, as the EXE; no single edit gives it). vtoa through dx / dy assignments (72-76), dx only (125). targetsearch.py (reordering only) 1027 candidates: 8. Nothing kept.
+- SkateToSpot 8->8 (2026-10-25, abdulahmad, GA) lane T: targetsearch.py with the expression rewrites (#210) and lookahead, 45 min, 2071 candidates: best 8, all 13 targets unmet (the L95 vtoa tie needs both arguments in ax). Claim released.
 
 ### `src/c/033_40183_trades/CopyHumanTeamDBs.c`
 
