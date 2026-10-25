@@ -33,12 +33,12 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3);
 int TeamFromMouse(int x, int y, int *idx);  /* 26B5A */
 void __cdecl sub_90F38(int x, int y, int w, int h, int col);  /* graphics library: xor a box */
 
-/* DRAFT under 10.0 GA: 2,075 bytes as the EXE, 82 differing instructions. The menu state is plain locals (in
+/* DRAFT under 10.0 GA: 2,075 bytes as the EXE, 72 differing instructions. The menu state is plain locals (in
    one frame struct a store to sel[level] could alias level, so level was reloaded where the EXE keeps it in a
-   register), in a declaration order found by sweeping it with real compiles and tools/slot_solver.py. The
+   register), in the declaration order declsearch --conflicts finds for the EXE's slots (all as in the EXE). The
    submenu branch reads the clicked item in place (the EXE keeps &menus[level][item] for on2, pad and x, and
    reloads it for y after the pos store). Left: the pointer-size product (`lea ebx, [eax+1]` vs `inc ebx`),
-   the level / h slots swapped, the submenu close loop's jump to its test, depth++ placed after the second
+   the submenu close loop's jump to its test, depth++ placed after the second
    DrawMenuItemNorm in the EXE, the reselect arm's Norm cross-jump and register picks. */
 /* RunMenu (1D6E8, PC only; owner of RunMenu_ret4): run a menu bar of n items in the colours col1-col3 until an
    action returns 1. Save the screen under the pointer (POINTERM block, the pointer bitmap's size plus one) and
@@ -50,20 +50,20 @@ void __cdecl sub_90F38(int x, int y, int w, int h, int col);  /* graphics librar
 int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
 {
     int sel[4];
-    int pos[4][2];
-    MenuItem *menus[4];
-    int bg[4];
-    int nitems[4];
-    int my;
-    unsigned char *e;
     int oldmy;
     int ptr;
+    MenuItem *menus[4];
+    int nitems[4];
     int h;
+    unsigned char *e;
     int mx;
-    int size;
+    int pos[4][2];
     int depth;
-    MenuItem *m;
+    int bg[4];
+    int size;
     int level;
+    MenuItem *m;
+    int my;
     int oldmx;
     int i;
     int bits;
