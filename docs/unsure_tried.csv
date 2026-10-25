@@ -4380,6 +4380,59 @@ checkplcoll,,"32-bit coordinate struct local used in both loops, initialized aft
 checkplcoll,,signed char y rejected because it narrows the coordinate,,ga
 checkplcoll,,"coordinate struct before guards retained, both fields used in both loops",,ga
 checkplcoll,,"permute 5 min budget, natural ordering/scope/expression/loop families only, historical log seeded: 339 compiled in 161 s, best 10 base, no match",,ga
+checkcx,swapdecl:o:,declaration orders of t / dvy / dx / dvx / o,tried (docs/UNSURE.md),ga
+checkcx,,"under GA), 0 tie swaps and 4 slot targets all met",,ga
+checkcx,,"countsolve not run (all four slots already match). Left: first_pick +19F ours mov eax,[puckc] vs EXE mov edx,[puckc], +1A4 ours movsx ax,byte [eax] vs EXE [edx], L56 puckc test",,ga
+checkcx,,"+1EF ours movsx edi,di vs EXE movsx ebx,di, +1FE ours mov ebx,[esp+0xA] vs EXE edi, L62 regd0.l = d * dvx - dx * dvy (then bounce products). first_pick counts 17 differing register instructions",,ga
+checkcx,,"permute score is 18 with the one-byte size mismatch (1023 vs 1024). Savings o 79 ECX, p 68 ESI, dx 18 memory, d 6 DI",,ga
+checkcx,,"t58/t49/t47/t85 all 5, needs t47 before t49 rather than t49 before t47. Tried: separate short direction at function scope: 98 differing, size delta 40",,ga
+checkcx,,"separate short direction in tail block: 98 differing, size delta 40",,ga
+checkcx,,"separate int direction at function scope: 134 differing, size delta 41",,ga
+checkcx,,"separate int direction in tail block: 134 differing, size delta 41",,ga
+checkcx,,"short t for velocity result: 78 differing, size delta 10",,ga
+checkcx,,short t plus separate direction (first helper omitted declaration,,ga
+checkcx,,compile failed): compile failed,,ga
+checkcx,,"int t scoped around bounce: 18 differing, size delta 1",,ga
+checkcx,,"dvy then dvx in collision-resolution block: 46 differing, size delta 1",,ga
+checkcx,,"t/dvy/dvx in collision-resolution block: 46 differing, size delta 1",,ga
+checkcx,,"dvx then dvy in collision-resolution block: 36 differing, size delta 1",,ga
+checkcx,,"short t plus separate short direction, declaration corrected: 94 differing, size delta 54",,ga
+checkcx,,"initialize o in its existing declaration: 18 differing, size delta 1",,ga
+checkcx,,"initialized o declared before t: 84 differing, size delta 22",,ga
+checkcx,,"dvx assignment split into load and subtraction: 40 differing, size delta 5",,ga
+checkcx,,"dvy assignment split into load and subtraction: 26 differing, size delta 2",,ga
+checkcx,,"dx gap split into load and subtraction: 34 differing, size delta 3",,ga
+checkcx,,"d gap split into load and subtraction: 26 differing, size delta 1",,ga
+checkcx,,"include neighbour Xvel in t assignment: 56 differing, size delta 6",,ga
+checkcx,,"include neighbour Yvel in t assignment: 61 differing, size delta 4",,ga
+checkcx,,"add neighbour Xvel to t before store: 77 differing, size delta 19",,ga
+checkcx,,"add neighbour Yvel to t before store: 91 differing, size delta 21",,ga
+checkcx,,"split both relative-velocity assignments: 87 differing, size delta 9",,ga
+checkcx,,"split both coordinate-gap assignments: 52 differing, size delta 7",,ga
+checkcx,,"ygap top: 23 differing, size delta 4",,ga
+checkcx,,"ygap scope: 23 differing, size delta 4",,ga
+checkcx,,"xgap top: 23 differing, size delta 1",,ga
+checkcx,,"xgap scope: 23 differing, size delta 1",,ga
+checkcx,,"ygap xgap top: 20 differing, size delta 1",,ga
+checkcx,,"ygap xgap scope: 20 differing, size delta 1",,ga
+checkcx,,"xgap ygap top: 20 differing, size delta 1",,ga
+checkcx,,"xgap ygap scope: 20 differing, size delta 1",,ga
+checkcx,,"merge initial flag early returns: 18 differing, size delta 1",,ga
+checkcx,,"merge initial flag/SCnum early returns: 18 differing, size delta 1",,ga
+checkcx,,"merge clock/team early returns: 18 differing, size delta 1",,ga
+checkcx,,"chain regd1.l = regd0.l = quotient: 18 differing, size delta 1",,ga
+checkcx,,"assign cross term to regd0 inside word_E03B8 shift: 18 differing, size delta 1",,ga
+checkcx,,"mass sum as denominator assignment expression: 40 differing, size delta 1",,ga
+checkcx,,"t assignment inside p Xvel sum: 63 differing, size delta 6",,ga
+checkcx,,"t assignment inside p Yvel sum: 56 differing, size delta 7",,ga
+checkcx,,"reread p weight for mass sum: 26 differing, size delta 5",,ga
+checkcx,,"reread p weight for ratio numerator: 33 differing, size delta 0",,ga
+checkcx,,"test word_E9B28 instead of just-stored regd4.w: 19 differing, size delta 1",,ga
+checkcx,,"named int impulse used for both regd0/regd1 stores: 83 differing, size delta 10",,ga
+checkcx,,"permute.py --minutes 5 --jobs 4 from bounce-t scope: exhausted 321 compiled candidates in 125 s, best 18 (size delta 1), no match",,ga
+checkcx,,"permlog_ts_checkcx.csv contains every generated transform and score. The explicit widened gap locals were bounce-only, each read repeatedly, unlike the earlier full-function int-gap drafts. No ESCALATE find. Tool limitation: supplied targetsearch searched 0 tie swaps despite tieorder finding a 2-difference order",,ga
+checkcx,,build/tieorder cache was not supplied in this worktree. Permute rejected generated address-of-rvalue candidates with E1030 and continued. Both make and make CBUILD=0 end MATCH after restoring the exact baseline,,ga
+checkcx,,worktree clean,,ga
 checkwallcoll,,int block net index: net = 12,,ga
 checkwallcoll,,if (equal) net = 13 scores 63,,ga
 checkwallcoll,,int block net index: net = 13,,ga
