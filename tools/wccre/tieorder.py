@@ -42,8 +42,8 @@ class Forcer(regsolve.Capture):
     """regsolve's capture (every pass, its function, pre-sort list, registers given); for FUNC's passes listed in
     plan ({occurrence: order of indices into the sorted list}) the sorted list is relinked in that order first."""
 
-    def __init__(self, emu, func, plan):
-        self.func, self.plan, self.occ, self.mismatch = func, plan, 0, []
+    def __init__(self, emu, func, plan, cross=False):
+        self.func, self.plan, self.occ, self.mismatch, self.cross = func, plan, 0, [], cross
         self.sig = {}
         regsolve.Capture.__init__(self, emu)
 
@@ -59,7 +59,7 @@ class Forcer(regsolve.Capture):
             self.sig[k] = sav
             order = self.plan.get(k)
             if order is not None:
-                if len(order) != len(nodes) or tuple(sav[i] for i in order) != sav:
+                if len(order) != len(nodes) or (not self.cross and tuple(sav[i] for i in order) != sav):
                     self.mismatch.append(k)
                 else:
                     new = [nodes[i] for i in order]
@@ -70,11 +70,11 @@ class Forcer(regsolve.Capture):
         regsolve.Capture.on_sorted(self, uc, addr, size, _)
 
 
-def compile_forced(src, func, plan, obj):
+def compile_forced(src, func, plan, obj, cross=False):
     holder = {}
 
     def setup(emu):
-        holder['d'] = Forcer(emu, func, plan)   # regdump hooks on_sorted at +569B4 (AFTER_SORT)
+        holder['d'] = Forcer(emu, func, plan, cross)   # regdump hooks on_sorted at +569B4 (AFTER_SORT)
 
     ok, out, emu = emucc.compile_c(src, obj, cc.src_flags(src), setup=setup)
     return ok, out, holder.get('d')
@@ -194,6 +194,67 @@ def real_moves(src, func, names, work, base):
     return out
 
 
+def cross_search(a, src, func, work, passes0, tie_plan, tie_best, t0):
+    """moves of single conflicts up to --cross places past conflicts of other savings, hill-climbed from the best
+    tie order; reports which conflict must outrank which and the uses that make up their savings (irdump)"""
+    plan = {k: list(range(len(p['confs']))) for k, p in enumerate(passes0)}
+    plan.update({k: v[:] for k, v in tie_plan.items()})
+    best = tie_best; t1 = time.time(); n = 0; seen = set()
+
+    def score_plan(pl):
+        key = tuple((k, tuple(v)) for k, v in sorted(pl.items()))
+        if key in seen: return None
+        seen.add(key)
+        obj = os.path.join(work, 'x.obj')
+        ok, out, d = compile_forced(src, func, pl, obj, cross=True)
+        if not ok or d.mismatch: return None
+        try: return permute.score(src, obj, func, src)
+        except (SystemExit, Exception): return None
+
+    improved = True
+    while improved and best[0] > 0 and time.time() - t1 < a.minutes * 60:
+        improved = False; rb = None
+        for k, order in plan.items():
+            for i in range(len(order)):
+                for j in range(max(0, i - a.cross), min(len(order), i + a.cross + 1)):
+                    if j == i or time.time() - t1 > a.minutes * 60: continue
+                    o = order[:]; x = o.pop(i); o.insert(j, x)
+                    pl = {kk: v[:] for kk, v in plan.items()}; pl[k] = o
+                    r = score_plan(pl); n += 1
+                    if r is not None and permute.key(r) < permute.key(best) and (rb is None or permute.key(r) < permute.key(rb[0])):
+                        rb = (r, pl)
+        if rb:
+            best, plan = rb; improved = True
+            print('  cross: %4d candidates: best %d differing (size %+d)' % (n, best[0], best[1]), flush=True)
+    print('cross (savings) search: %d -> %d differing after %d forced orders%s' % (
+        tie_best[0], best[0], n, ' (EXE bytes)' if best[0] == 0 and best[2] else ''))
+    try:
+        import irdump
+    except Exception:
+        irdump = None
+    for k, order in sorted(plan.items()):
+        confs = passes0[k]['confs']
+        pos = {c: q for q, c in enumerate(order)}
+        pairs = [(x, y) for x in range(len(confs)) for y in range(len(confs))
+                 if confs[x]['savings'] < confs[y]['savings'] and pos[x] < pos[y]]
+        if not pairs: continue
+        info = irdump.conflict_info(src, func, k) if irdump else {}
+        print('pass %d: savings order needed (now has fewer savings -> must outrank):' % k)
+        shown = set()
+        for x, y in sorted(pairs, key=lambda p: confs[p[1]]['savings'] - confs[p[0]]['savings'])[:8]:
+            cx, cy = confs[x], confs[y]
+            print('  %-10s %5d  must outrank %-10s %5d  (needs at least %d more, or %s %d fewer)' % (
+                label(cx), cx['savings'], label(cy), cy['savings'], cy['savings'] - cx['savings'] + 1,
+                label(cy), cy['savings'] - cx['savings'] + 1))
+            for c in (cx, cy):
+                lab = label(c)
+                if lab in shown or not info: continue
+                shown.add(lab)
+                d_, u_ = info.get(lab, ([], []))
+                print('      %-8s def %s' % (lab, ' | '.join(d_[:3]) or '-'))
+                print('      %-8s use %s' % ('', ' | '.join(u_[:4]) or '-'))
+
+
 def explain(p, order, runs, show=12):
     """which single change to the pre-sort list makes the Shell sort produce the needed order: one more conflict
     (savings s) created at a point of the function, or one conflict fewer. The pre-sort list is newest first (each
@@ -271,6 +332,9 @@ def main():
     ap.add_argument('src'); ap.add_argument('func')
     ap.add_argument('--minutes', type=float, default=15); ap.add_argument('--pass', dest='only', type=int)
     ap.add_argument('--max-run', type=int, default=24, help='skip tie runs longer than this')
+    ap.add_argument('--cross', type=int, default=0, help='when no tie order matches: also move a conflict up to N '
+                    'places past conflicts of other savings (what a savings change would do) and report the needed '
+                    'savings differences')
     a = ap.parse_args()
     os.chdir(ROOT)
     src, func = a.src, a.func
@@ -359,6 +423,8 @@ def main():
         print('  stage 2 (single edits, %d orders): best %d differing' % (len(scored), best[0]), flush=True)
         edit_names = set(w.split()[1] for key_, r, k, o, what in scored if r[0] <= best[0] < base[0] for w in what
                          if w.startswith('move '))
+    if a.cross and best[0] > 0:
+        cross_search(a, src, func, work, passes0, best_plan, best, t0)
     if complete:
         os.makedirs(os.path.dirname(cache), exist_ok=True)
         json.dump(dict(sha1=h, best=list(best), plan={str(k): v for k, v in best_plan.items()}, complete=True,
