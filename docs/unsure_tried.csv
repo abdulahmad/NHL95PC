@@ -4077,6 +4077,25 @@ DbLineEditorLoop,,"on the no-itemoffset base after declsearch --conflicts: a dea
 POAfterGame,,"(2026-10-24, lane 1 batch 18): plain locals instead of the frame struct (114 after declsearch)",114 after declsearch,ga
 POAfterGame,,"the n test as a switch (76), `(ctl1team[0] < 0) != (ctl2team < 0)` (76), `f.ret = 1; return f.ret;` for the early exit (68), ctl2team / ctl2side spelled ctl1team[1] / ctl1side[1] everywhere in the function (67",,ga
 POAfterGame,,the same code: still loaded into ecx),,ga
+POInitSchedule,,"(2026-10-24, lane 1 batch 20): `6 * i` for `i * 6` in the first",,ga
+POInitSchedule,,"the second or both date loops, `*(g + i * 6 [+ 1])` pointer forms in either or both, `g[i * 6 + 0]` in either, `++g[i * 6]` in either, `i * 3 * 2` in either, `g = &po[0x1998]` / `&po[0x1A40]` (all 6: none changes the conflict count, 48)","all 6: none changes the conflict count, 48",ga
+JoystickCalScreen,,"(2026-10-24, lane 1 batch 20): back and prev declared in the if block, prev only, back only, every local in the if block, declaration orders s/prev/back, back/s/prev, prev/back/s, back/prev/s, prev/s/back, scalars before the arrays (all 11: named locals' conflicts are created in a fixed order: s, back, prev, then the parameters reversed)","all 11: named locals' conflicts are created in a fixed order: s, back, prev, then the parameters reversed",ga
+JoystickCalScreen,,"`s.cur = sub_B3464(); s.cur >>= shift;` (12, +7)","12, +7",ga
+JoystickCalScreen,,`if ((s.cur = sub_B3464() >> shift) & 0x30) break;` (11),11,ga
+JoystickCalScreen,,`sub_B39D0() != 0` (11),11,ga
+JoystickCalScreen,,`(unsigned)sub_B3464() >> shift` (12),12,ga
+JoystickCalScreen,,`+ sizeof(Hdr17)` for 0x11 (11),11,ga
+JoystickCalScreen,swapdecl:s:,declaration orders s,tried (docs/UNSURE.md),ga
+PenGoalStuff,,"(2026-10-24, lane 1 batch 20): without m (19, committed)","19, committed",ga
+PenGoalStuff,,"without other_side (four spellings above, 28-32)","four spellings above, 28-32",ga
+NetCollide,,"(2026-10-24, lane 1 batch 20): every single declaration move (36 orders: 22-37)",36 orders: 22-37,ga
+NetCollide,,"`ux = (dx << 8) / dist; ux >>= 2;` for ux (40), uy (40), both (32)",32,ga
+NetCollide,,"three-step `ux = dx << 8; ux /= dist; ux >>= 2;` for ux (36), uy (78), both (69)",69,ga
+NetCollide,,`ux = dx << 8; ux = ux / dist >> 2;` both (75),75,ga
+NetCollide,,`dx <<= 8; dy <<= 8;` in place (98),98,ga
+NetCollide,,gy before dx (62),62,ga
+NetCollide,,"`if ((dist = vecdist(dx, dy)) >= 0x18)` (22)",22,ga
+NetCollide,,`0x18 <= dist` (22),22,ga
 ShowAwardScreens,,"the skater pct as a ternary (27), `if (!s[7]) pct = 0; else ...` (24), `pct = 0;` first (32), `(s[7] / 2 + s[1] * 1000)` (105), `(short)s[8]` for the plus / minus (19)",19,ga
 ShowAwardScreens,,"the row pointer steps as `ss + 0xB` / `gs + 9` (19), pct also holding the goalie save percentage (`pct = s[10];` 95) or the GAA (94, both 111). The team-award arms are separate in the EXE (no shared name pointer)",,ga
 SimPlayoffRound1,,"the blank chain in one statement (12), i or g declared first (4, 4)","4, 4",ga
