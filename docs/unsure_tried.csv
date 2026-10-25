@@ -3845,3 +3845,15 @@ EditRosters,,"`(bits & 2) == 0` (108), `sel[i] = 0; nitems[i] = 0;` in the Roste
 EditRosters,,"the on2 draws through depth instead of `i = depth` (108), `-1 == editrosters_exit` (108)",108,ga
 LoadGameState,,"(natural statement shapes, 37 unless noted): `p = (short *)buf + 1` (34, size +6: other code), `n = 0; i = 0;` (37), `i = 0; n = 0;` (39), `n = n - 0x10`, `&SortCords[i]` for the sort-object reads, `(char *)&hmtmstruct + (i << 8)`, `crowdlevel = *p++; crowdsmooth = crowdlevel;`, `o->ts = *++p; p++;`, `n = i >= 0x30 ? 0x44 : 0x80` (86)",86,ga
 LoadGameState,,"the mouse test as if / else-if, o->frame before o->first (40), `p = p + 2` after the seed, `(Rec6 *)(char *)q`, `&SortCords[6]` for awtmsort",,ga
+PassLaneChk,,"on the 15 base: the second vtoa result in its own local d (declared first or last), `oy = oy - vtoa(...)`, `y = oy - vtoa(...) + 1` (all 15, no new conflict), `y = 1 + oy - vtoa(...)` (17)",17,ga
+PassLaneChk,,the sum or y - 4Eh in its own local (17),17,ga
+PassLaneChk,,the result as if / else into r (18),18,ga
+PassLaneChk,,the facing vtoa in a local d copied to oy (39),39,ga
+PassLaneChk,,"p's x and / or o's x as named int x / ox before the x gap, every declaration place (x 15, ox 19: copies fold away)","x 15, ox 19: copies fold away",ga
+PassLaneChk,,"the second vtoa's arguments in named locals a / b (short 15-23, int 15-17",,ga
+PassLaneChk,,int b only 11 but it drops the 16-bit sub),,ga
+PassLaneChk,,an int / char / unsigned char above with `^` or `!=` (15-40),15-40,ga
+PassLaneChk,,the y gap and / or the x gap through y or limit instead of dy (15-77),15-77,ga
+NetCollide,,"the ABS values in named locals ay / ax, either or both, at four declaration places (42-54)",42-54,ga
+NetCollide,,"the ABS values through the dead dx / dy or dist (39-45, dead-variable reuse anyway), `p->Xvel = p->Yvel = 0;` chained in the first, second or both blocks, either order (28-55)",28-55,ga
+NetCollide,,"the post blocks' `ux -= 6` / `ux += 6` folded into the store, `gx + (ux - 6)`, `gx + (ux -= 6)` (32-55)",32-55,ga
