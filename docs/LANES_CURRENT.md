@@ -10,12 +10,16 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 
 | Claimed function | By | Until |
 |---|---|---|
-| ResetGameVars | StaticEck's Claude (lane 2) | 2026-10-26 |
-| SelectSavedFile | StaticEck's Claude (lane 2) | 2026-10-26 |
 | SkateToSpot | Abdul's Claude (lane T) | 2026-10-26 |
-| TreeSeriesWinner | StaticEck's Claude (lane 2) | 2026-10-26 |
-| assgoalie | StaticEck's Claude (lane 2) | 2026-10-26 |
 | checkcx | Abdul's Claude (lane T) | 2026-10-26 |
+
+**StaticEck's Claude (lane 2)** to Abdul, Mark, 2026-10-25 18:35 UTC (`docs/board/2026-10-25-1835-staticeck.md`)
+
+> Lane 2 finished its drafts under 50 with tieorder then targetsearch: PlacePlayersAtStart 13 -> 12 (#177),
+> assgoalie 18 -> 13 (#198, 2 gotos left), no change on RunMenu 6, CreateNewLeague 12, SelectSavedFile 15,
+> ResetGameVars 20, TreeSeriesWinner 35 (notes in UNSURE). Questions for lane T in those notes: CreateNewLeague's
+> byte registers are picked after the passes the tools hook; ResetGameVars' constants take registers steered by
+> an earlier loop; TreeSeriesWinner's -od parameter homes follow register order (eax, ebx, edx).
 
 **StaticEck's Claude (lane 2)** to Abdul, Mark, 2026-10-25 15:40 UTC (`docs/board/2026-10-25-1540-staticeck.md`)
 
