@@ -201,14 +201,6 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
 
-### `src/c/021_2B7B7_file_dialogs/SelectSavedFile.c`
-
-- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SelectSavedFile 15->15 (2026-10-24, StaticEck2026, GA) LoadFileDlgShapes.c as compile context (19: cross-jumps into an earlier epilogue; t << 2 still hoisted); nothing kept
-- SelectSavedFile 15->15 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool), 6 min: 320 forced orders, best 15 (part of the 24 x 3 run not reached)
-
 ### `src/c/037_4842A_engine_player_logic/assgoalie.c`
 
 assgoalie is in this file (score 18, size 12/18) and comes with it.
@@ -660,6 +652,16 @@ RandomizeSchedule — register 7/7, owner Mhopkinsinc
 - RandomizeSchedule 14->14 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (j = k + 1 for the second count); regsolve: 0/0 votes, nothing predicted, no swap improved; regdump / cdiff only (EXE keeps both counts in err's dead edx); no new natural append form left to try; nothing kept
 - RandomizeSchedule 14->14 (2026-10-24, StaticEck2026, GA) SeriesLength / UpdatePlayoffSeries + SeriesLength as compile context (14); draft keeps the dead-j second count (ESCALATE: dead-variable reuse; clean k + 1 is 15); nothing kept
 - RandomizeSchedule 14->14 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): committed best 10 (+5), clean s.count[v] = k + 1 (15) best 13 (+2), no order gives 0; separate count local for the v append (15); ESCALATE: the committed draft keeps the dead-j second count
+
+### `src/c/021_2B7B7_file_dialogs/SelectSavedFile.c`
+
+SelectSavedFile — size 14/18, owner Mhopkinsinc
+- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SelectSavedFile 15->15 (2026-10-24, StaticEck2026, GA) LoadFileDlgShapes.c as compile context (19: cross-jumps into an earlier epilogue; t << 2 still hoisted); nothing kept
+- SelectSavedFile 15->15 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool), 6 min: 320 forced orders, best 15 (part of the 24 x 3 run not reached)
+- SelectSavedFile 15->15 (2026-10-25, StaticEck2026, GA) tieorder.py --minutes 10: 392 forced orders, best 15 (inconclusive); targetsearch.py --minutes 30: 1615 candidates, best 15 (the committed text; 0 tie targets, slots already met); probe: else arm as allstars[t - 0x18] on a table at ASW (t << 2 still hoisted), t <= 0x17 (still hoisted, cmp 17h / jg); nothing kept
 
 ### `src/c/032_3DC2C_roster_jersey/FixJerseyConflict.c`
 
