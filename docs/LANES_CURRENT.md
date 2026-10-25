@@ -304,80 +304,13 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
 
-### `src/c/017_21CDE_player_stats/SkaterStatsCard.c`
-
-- SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) (byte promotion)
-- SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SkaterStatsCard 7->7 (2026-10-24, StaticEck2026, GA) lookup inlined into the call gives the EXE's xor eax / mov al load but an imul product (17); v = (lookup + 5) * 5 without the byte rating (9: the address temporary loses a savings-30 tie and takes eax); new w at each declaration position, in-place v forms, index spellings; permute.py from the v form (321, best 9); cflags sweep
-
-### `src/c/023_2FDD1_misc_dialogs/ListDialog.c`
-
-- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) the remaining stack-slot differences only improve in the warm compiler state; nothing reproduces it fresh.
-- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) (stack reloads)
-- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) (needs two count changes at once)
-- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ListDialog 7->7 (2026-10-24, StaticEck2026, GA) DrawListItem.c as compile context (13: cross-jumps into their epilogue, which the EXE does not); nothing kept
-
-### `src/c/032_3DC2C_roster_jersey/ExecuteTrade.c`
-
-- ExecuteTrade 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ExecuteTrade 15->14 (2026-10-24, Mhopkinsinc, GA) : traded and err declared before the frame struct give sel its home slot; only traded / kb stay swapped (all 5,040 orders tried). The result stays `int` (the result-type rule)
-- ExecuteTrade 7->7 (2026-10-24, Mhopkinsinc, GA) (no single count change; probably one temporary more or fewer in the original)
-- ExecuteTrade 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ExecuteTrade 7->7 (2026-10-24, StaticEck2026, GA) team records as a typed struct (7); handle stores split / reversed (7 / 9); *s.keya, *teams forms (7); TradeShowStats + FixJerseyConflict (+ BuildTradeRoster) as compile context (7); result stays int; nothing kept
-
-### `src/c/033_40183_trades/CopyHumanTeamDBs.c`
-
-- CopyHumanTeamDBs 21->21 (2026-10-24, Mhopkinsinc, GA) unchanged
-- CopyHumanTeamDBs 21->20 (2026-10-24, Mhopkinsinc, GA) (the team number cached across calls)
-- CopyHumanTeamDBs 20->7 (2026-10-24, Mhopkinsinc, GA) (the exported team entry through its own block-local pointer; now 2 bytes short)
-- CopyHumanTeamDBs 9->9 (2026-10-24, Mhopkinsinc, GA) unchanged
-- CopyHumanTeamDBs 9->9 (2026-10-24, Mhopkinsinc, GA) regsolve (0/1 votes, nothing predicted); skip tests as one || 9, which test inverted with body nested 9, zero as plain int first/last/block-local 13, while (!r && s.retry) 14, s.which != -1 10; nothing kept
-- CopyHumanTeamDBs 9->9 (2026-10-24, StaticEck2026, GA) zero member unsigned / long / unsigned long / void * NULL, retry unsigned (9); team-byte tests as pointer-sum / deref forms (9), tp before the 0x18 test (22); MsgCopyingDatabases as compile context (9); nothing kept
-
-### `src/c/034_41B80_schedule/SeriesLength.c`
-
-- SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) unchanged
-- SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) (block layout of the shared return)
-- SeriesLength 10->10 (2026-10-24, StaticEck2026, GA) structured draft (no goto): switch with ternary lengths, case 6/7 before 4/5 so Watcom cross-jumps the 3/5/7 tails as in the EXE; 162 case-order / return-placement variants (return after case 1, returns in every case: epilogue lands after case 1 but the constants fold); goto form with the return after case 1 (10); cflags sweep; permute.py (321, best 10)
-
-### `src/c/030_3A9AA_database_merge/ExportTeamToFloppy.c`
-
-- ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
-- ExportTeamToFloppy 11->11 (2026-10-24, StaticEck2026, GA) structured draft (no goto): one if (!err) block with the export and its error message as the then arm and the force-export message as the else arm, same code as the goto draft (the force arm first: 74)
-
-### `src/c/016_20016_easn_stats/EasnGoalieStatsScreen.c`
-
-- EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
-- EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) (tail layout)
-- EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
-- EasnGoalieStatsScreen 12->12 (2026-10-24, StaticEck2026, GA) EasnSkaterStatsScreen added in address order (skater 12; GA keeps the earlier copy, goalie jumps back: 22 -115 bytes); goalie first, ternaries, if swap, EasnTeamStatsScreen / EasnStandingsScreen in the file (no forward merge)
-
 ### `src/c/034_41B80_schedule/CreateNewLeague.c`
 
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) (the `xor bl, bl` byte zero is picked after register allocation, so no declaration order moves it)
 - CreateNewLeague 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
 - CreateNewLeague 12->12 (2026-10-24, StaticEck2026, GA) structured draft (no goto): the name test guards the body as one if block, same code; cflags sweep (12 or worse); the same lgstate+4 zero is xor dh, dh in the matched DeleteSavedGame and xor ah, ah at 3D0C1 (a post-allocation cycle pick)
-
-### `src/c/034_41B80_schedule/RandomizeSchedule.c`
-
-- RandomizeSchedule 15->15 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
-- RandomizeSchedule 15->14 (2026-10-24, Mhopkinsinc, GA) 
-- RandomizeSchedule 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
-- RandomizeSchedule 14->14 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (j = k + 1 for the second count); regsolve: 0/0 votes, nothing predicted, no swap improved; regdump / cdiff only (EXE keeps both counts in err's dead edx); no new natural append form left to try; nothing kept
-- RandomizeSchedule 14->14 (2026-10-24, StaticEck2026, GA) SeriesLength / UpdatePlayoffSeries + SeriesLength as compile context (14); draft keeps the dead-j second count (ESCALATE: dead-variable reuse; clean k + 1 is 15); nothing kept
-
-### `src/c/004_13320_asset_loading/PlacePlayersAtStart.c`
-
-- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) (global-value reuse). These have now had a Claude and a Codex lane pass back to back; the shapes tried are in `docs/UNSURE.md`
-- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
-- PlacePlayersAtStart 15->15 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r -on -ou -ei -zc and combinations): best 15, the regd4 / regd1 reloads stay folded
+- CreateNewLeague 12->12 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool), 10 min: 432 forced orders, best 12 (the 18 x 2 run not reached)
 
 ### `src/c/021_2B7B7_file_dialogs/SelectSavedFile.c`
 
@@ -385,6 +318,7 @@ These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain a
 - SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SelectSavedFile 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SelectSavedFile 15->15 (2026-10-24, StaticEck2026, GA) LoadFileDlgShapes.c as compile context (19: cross-jumps into an earlier epilogue; t << 2 still hoisted); nothing kept
+- SelectSavedFile 15->15 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool), 6 min: 320 forced orders, best 15 (part of the 24 x 3 run not reached)
 
 ### `src/c/032_3DC2C_roster_jersey/FixJerseyConflict.c`
 
@@ -399,6 +333,7 @@ These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain a
 - ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ResetGameVars 25->25 (2026-10-24, Mhopkinsinc, GA) unchanged
 - ResetGameVars 25->20 (2026-10-24, StaticEck2026, GA) IndexPhotoBank compiled first as a compile-context copy: the EXE's jmp IndexPhotoBank_x tail (kept); whole address-order run of segment 004 files (20); constant scheduling from +133 unchanged
+- ResetGameVars 20->20 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): not in a tie (20)
 
 ### `src/c/037_4842A_engine_player_logic/assgoalie.c`
 
@@ -605,6 +540,35 @@ FadePalette — register 2/3, owner Mhopkinsinc
 - FadePalette 7->7 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -ol+ -or -oa -oi -oe -oc -om -3r -4r -on -ou -ei -zc): best 7, the clamp still compares ebx
 - FadePalette 7->7 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): all tie runs climbed and cross moves (7 / 36): no tie cause
 
+### `src/c/017_21CDE_player_stats/SkaterStatsCard.c`
+
+SkaterStatsCard — size 2/3, owner Mhopkinsinc
+- SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) (byte promotion)
+- SkaterStatsCard 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SkaterStatsCard 7->7 (2026-10-24, StaticEck2026, GA) lookup inlined into the call gives the EXE's xor eax / mov al load but an imul product (17); v = (lookup + 5) * 5 without the byte rating (9: the address temporary loses a savings-30 tie and takes eax); new w at each declaration position, in-place v forms, index spellings; permute.py from the v form (321, best 9); cflags sweep
+- SkaterStatsCard 7->7 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): committed draft inconclusive (best 7); the v form without the byte rating (9) forced to 0 by the lookup address t386 first in the savings-30 run (needs one more conflict among the L185 temporaries; declaration moves 9); v-form spellings and attrp as a plain local (9-19); nothing kept
+
+### `src/c/023_2FDD1_misc_dialogs/ListDialog.c`
+
+ListDialog — size 6/7, owner Mhopkinsinc
+- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) the remaining stack-slot differences only improve in the warm compiler state; nothing reproduces it fresh.
+- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) (stack reloads)
+- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) (needs two count changes at once)
+- ListDialog 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ListDialog 7->7 (2026-10-24, StaticEck2026, GA) DrawListItem.c as compile context (13: cross-jumps into their epilogue, which the EXE does not); nothing kept
+- ListDialog 7->7 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): every swap of every tie run gives 7 (no tie order explains the draft)
+
+### `src/c/032_3DC2C_roster_jersey/ExecuteTrade.c`
+
+ExecuteTrade — slot 7/7, owner Mhopkinsinc
+- ExecuteTrade 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ExecuteTrade 15->14 (2026-10-24, Mhopkinsinc, GA) : traded and err declared before the frame struct give sel its home slot; only traded / kb stay swapped (all 5,040 orders tried). The result stays `int` (the result-type rule)
+- ExecuteTrade 7->7 (2026-10-24, Mhopkinsinc, GA) (no single count change; probably one temporary more or fewer in the original)
+- ExecuteTrade 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ExecuteTrade 7->7 (2026-10-24, StaticEck2026, GA) team records as a typed struct (7); handle stores split / reversed (7 / 9); *s.keya, *teams forms (7); TradeShowStats + FixJerseyConflict (+ BuildTradeRoster) as compile context (7); result stays int; nothing kept
+- ExecuteTrade 7->7 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): every swap of the runs at savings 80 (ka / kb), 70, 40, 20, 6 gives 7; result stays int
+
 ### `src/c/037_4842A_engine_player_logic/SkateToSpot.c`
 
 SkateToSpot — register 5/8, owner Mhopkinsinc
@@ -615,6 +579,17 @@ SkateToSpot — register 5/8, owner Mhopkinsinc
 - SkateToSpot 2->2 (2026-10-24, StaticEck2026, GA) separate short spa1 for the animation pair (no axp reuse) with chained / split stop, 4 positions (25-126); permute.py 9 min from the chained stop, seed 2707 (1378 candidates, best 2 only by re-splitting); assrefwhistle.c as compile context (2); nothing kept
 - SkateToSpot 2->8 (2026-10-24, StaticEck2026, GA) dead-variable reuse of axp for the animation number removed (ESCALATE resolved at a cost): axp block-local to the target test, spa1 block-local; other scopes and orders of axp / t / ayp / ary / spa1 / spa2 / d (14-146), chained stop (122); permute 321 (best 8)
 
+### `src/c/033_40183_trades/CopyHumanTeamDBs.c`
+
+CopyHumanTeamDBs — register 6/7, owner Mhopkinsinc
+- CopyHumanTeamDBs 21->21 (2026-10-24, Mhopkinsinc, GA) unchanged
+- CopyHumanTeamDBs 21->20 (2026-10-24, Mhopkinsinc, GA) (the team number cached across calls)
+- CopyHumanTeamDBs 20->7 (2026-10-24, Mhopkinsinc, GA) (the exported team entry through its own block-local pointer; now 2 bytes short)
+- CopyHumanTeamDBs 9->9 (2026-10-24, Mhopkinsinc, GA) unchanged
+- CopyHumanTeamDBs 9->9 (2026-10-24, Mhopkinsinc, GA) regsolve (0/1 votes, nothing predicted); skip tests as one || 9, which test inverted with body nested 9, zero as plain int first/last/block-local 13, while (!r && s.retry) 14, s.which != -1 10; nothing kept
+- CopyHumanTeamDBs 9->9 (2026-10-24, StaticEck2026, GA) zero member unsigned / long / unsigned long / void * NULL, retry unsigned (9); team-byte tests as pointer-sum / deref forms (9), tp before the 0x18 test (22); MsgCopyingDatabases as compile context (9); nothing kept
+- CopyHumanTeamDBs 9->9 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): every swap of every tie run gives 9 (not in a tie)
+
 ### `src/c/052_6D2F8_create_player/RosterPanelClick.c`
 
 RosterPanelClick — size 7/8, owner StaticEck2026
@@ -623,6 +598,24 @@ RosterPanelClick — size 7/8, owner StaticEck2026
 - RosterPanelClick 9->9 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder predicted); permute.py 5 min, 321 candidates, best base 9
 - RosterPanelClick 9->9 (2026-10-24, abdulahmad, GA) lane T batch: the falistsel toggle without the fa local, cast in place as unsigned char (13) or char (13), indexed by `dword_EBCA4 + row` (10). Nothing kept.
 - RosterPanelClick 9->9 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder); falistsel as unsigned char * / char * in the file (#define trick) direct or through fa (9), with ^= 0xFF (9, xor byte [edi+eax]), with falistsel[dword_EBCA4 + row] twice (16); fa[dword_EBCA4 + row] twice (16); row = dword_EBCA4 + row (9); mixed char / signed char load or store casts (9); fa[row] = fa[row] ^ 0xFF (9)
+
+### `src/c/034_41B80_schedule/SeriesLength.c`
+
+SeriesLength — size 8/10, owner Mhopkinsinc
+- SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SeriesLength 10->10 (2026-10-24, Mhopkinsinc, GA) (block layout of the shared return)
+- SeriesLength 10->10 (2026-10-24, StaticEck2026, GA) structured draft (no goto): switch with ternary lengths, case 6/7 before 4/5 so Watcom cross-jumps the 3/5/7 tails as in the EXE; 162 case-order / return-placement variants (return after case 1, returns in every case: epilogue lands after case 1 but the constants fold); goto form with the return after case 1 (10); cflags sweep; permute.py (321, best 10)
+- SeriesLength 10->10 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): not in a tie (10); the epilogue placement is the cause
+
+### `src/c/030_3A9AA_database_merge/ExportTeamToFloppy.c`
+
+ExportTeamToFloppy — register 4/9, owner Mhopkinsinc
+- ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ExportTeamToFloppy 11->11 (2026-10-24, Mhopkinsinc, GA) unchanged
+- ExportTeamToFloppy 11->11 (2026-10-24, StaticEck2026, GA) structured draft (no goto): one if (!err) block with the export and its error message as the then arm and the force-export message as the else arm, same code as the goto draft (the force arm first: 74)
+- ExportTeamToFloppy 11->11 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): every swap of every tie run (incl. 33 x 30) gives 11 (not in a tie)
 
 ### `src/c/040_53294_engine_physics_ai/dopass.c`
 
@@ -664,6 +657,15 @@ OpenSpeechBank — size 8/11, owner StaticEck2026
 - OpenSpeechBank 11->11 (2026-10-24, Mhopkinsinc, GA) int nsamples with Swap16((short)nsamples) + int type / short c / (unsigned short)type >> 8 (41), declsearch --conflicts order (17: every slot and the type byte match, the w1 / w3 / ReadBE24 call-result stores differ); int type alone (43), int nsamples alone (42); i / off / pos / c / cnt moved to every position (17); OFFD / SLOTD spellings (17); cnt for w3 (23); permute.py 5 min on the 17 base (best 17); regsolve: only a cnt savings bump
 - OpenSpeechBank 11->11 (2026-10-24, Mhopkinsinc, GA) regsolve (no named votes, no prediction); cnt copy removed (51; 34 with declsearch --conflicts order; nsamples store goes direct, w1 still copied); loop bounds as BANKW(0x3B91) (17; 44 without cnt); lseek(fh, SLOTD(off, 0x12) + 6, 0) (32); !speechinit / if (BANKD(0x3B78)) (11); size = Swap16(size); size -= 5 (19)
 
+### `src/c/016_20016_easn_stats/EasnGoalieStatsScreen.c`
+
+EasnGoalieStatsScreen — size 9/13, owner Mhopkinsinc
+- EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) (tail layout)
+- EasnGoalieStatsScreen 12->12 (2026-10-24, Mhopkinsinc, GA) unchanged
+- EasnGoalieStatsScreen 12->12 (2026-10-24, StaticEck2026, GA) EasnSkaterStatsScreen added in address order (skater 12; GA keeps the earlier copy, goalie jumps back: 22 -115 bytes); goalie first, ternaries, if swap, EasnTeamStatsScreen / EasnStandingsScreen in the file (no forward merge)
+- EasnGoalieStatsScreen 12->12 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): not in a tie (12); the cross-function tail merge is the cause
+
 ### `src/c/064_86696_season_playoffs/POHandleElimination.c`
 
 POHandleElimination — size 6/7, owner StaticEck2026
@@ -671,6 +673,25 @@ POHandleElimination — size 6/7, owner StaticEck2026
 - POHandleElimination 13->13 (2026-10-24, StaticEck2026, GA) the cross-jumped RestoreDialogBg call.
 - POHandleElimination 13->13 (2026-10-24, Mhopkinsinc, GA) goto save removed: simulate path nested under if (MessageBox(...) != 0) (13, same code, committed); switch (mode) case 1 / default (13), with case 0 (19); champion fix as empty if / else (13)
 - POHandleElimination 13->13 (2026-10-24, Mhopkinsinc, GA) looked at only: the cross-jumped RestoreDialogBg call is the blocker; compile-context copy of POCreateSchedule not tried (the exit is not all that is left); no new natural shape in the timebox
+
+### `src/c/034_41B80_schedule/RandomizeSchedule.c`
+
+RandomizeSchedule — register 7/7, owner Mhopkinsinc
+- RandomizeSchedule 15->15 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
+- RandomizeSchedule 15->14 (2026-10-24, Mhopkinsinc, GA) 
+- RandomizeSchedule 14->14 (2026-10-24, Mhopkinsinc, GA) unchanged
+- RandomizeSchedule 14->14 (2026-10-24, Mhopkinsinc, GA) draft already has a dead-variable reuse (j = k + 1 for the second count); regsolve: 0/0 votes, nothing predicted, no swap improved; regdump / cdiff only (EXE keeps both counts in err's dead edx); no new natural append form left to try; nothing kept
+- RandomizeSchedule 14->14 (2026-10-24, StaticEck2026, GA) SeriesLength / UpdatePlayoffSeries + SeriesLength as compile context (14); draft keeps the dead-j second count (ESCALATE: dead-variable reuse; clean k + 1 is 15); nothing kept
+- RandomizeSchedule 14->14 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): committed best 10 (+5), clean s.count[v] = k + 1 (15) best 13 (+2), no order gives 0; separate count local for the v append (15); ESCALATE: the committed draft keeps the dead-j second count
+
+### `src/c/004_13320_asset_loading/PlacePlayersAtStart.c`
+
+PlacePlayersAtStart — size 9/18, owner Mhopkinsinc
+- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) (global-value reuse). These have now had a Claude and a Codex lane pass back to back; the shapes tried are in `docs/UNSURE.md`
+- PlacePlayersAtStart 15->15 (2026-10-24, Mhopkinsinc, GA) unchanged
+- PlacePlayersAtStart 15->15 (2026-10-24, StaticEck2026, GA) cflags sweep (-os -ot -ol -or -oa -oi -oe -oc -om -3r -4r -on -ou -ei -zc and combinations): best 15, the regd4 / regd1 reloads stay folded
+- PlacePlayersAtStart 15->15 (2026-10-25, StaticEck2026, GA) tools/wccre/tieorder.py (new tool): every swap of every tie run gives 15 (not in a tie)
 
 ### `src/c/045_614C2_scoring_penalty_text/InProgress.c`
 
