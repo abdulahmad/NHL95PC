@@ -197,7 +197,7 @@ static void dump_frame(int w, int h)
     for (i = 0; i < w * h; i += 7) hash = hash * 31 + argb[i];
     if (hash == last_hash) return;
     last_hash = hash;
-    snprintf(name, sizeof name, "%s/frame_%05d.ppm", dir, written++);
+    snprintf(name, sizeof name, "%s/frame_%05d_%07dms.ppm", dir, written++, (int)(SDL_GetTicks()));
     f = fopen(name, "wb");
     if (!f) return;
     fprintf(f, "P6\n%d %d\n255\n", w, h);

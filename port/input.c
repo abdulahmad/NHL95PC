@@ -91,10 +91,49 @@ static void key_event(SDL_Scancode s, int down)
     irq_raise(1);
 }
 
+/* NHL95_KEYS="ms:Key[/hold] ...": presses keys at given times after start (SDL key names, hold in ms, default 100), for testing
+ * without a display, e.g. NHL95_KEYS="9000:Return 12000:Down 12500:Return 20000:Up/2000" */
+static struct { int64_t at; SDL_Scancode key; int down; } script[256];
+static int script_n, script_pos;
+
+static void script_load(void)
+{
+    const char *s = getenv("NHL95_KEYS");
+    char name[64];
+    long at, hold;
+    int len, i, j;
+    while (s && *s && script_n < 254) {
+        hold = 100;
+        if (sscanf(s, " %ld:%63[^/ ]%n", &at, name, &len) < 2) break;
+        s += len;
+        if (*s == '/') { hold = strtol(s + 1, (char **)&s, 10); }
+        SDL_Scancode k = SDL_GetScancodeFromName(name);
+        if (k == SDL_SCANCODE_UNKNOWN) { fprintf(stderr, "NHL95_KEYS: unknown key %s\n", name); continue; }
+        script[script_n].at = at * 1000000LL; script[script_n].key = k; script[script_n++].down = 1;
+        script[script_n].at = (at + hold) * 1000000LL; script[script_n].key = k; script[script_n++].down = 0;
+    }
+    for (i = 1; i < script_n; i++)                      /* by time */
+        for (j = i; j > 0 && script[j].at < script[j - 1].at; j--) {
+            __typeof__(script[0]) t = script[j]; script[j] = script[j - 1]; script[j - 1] = t;
+        }
+}
+
+static void script_poll(void)
+{
+    static int64_t start;
+    if (!start) { start = plat_now_ns(); script_load(); }
+    while (script_pos < script_n && plat_now_ns() - start >= script[script_pos].at) {
+        TRACE("NHL95_KEYS: %s %s\n", SDL_GetScancodeName(script[script_pos].key), script[script_pos].down ? "down" : "up");
+        key_event(script[script_pos].key, script[script_pos].down);
+        script_pos++;
+    }
+}
+
 /* main thread */
 void input_poll(void)
 {
     SDL_Event e;
+    script_poll();
     while (SDL_PollEvent(&e)) {
         switch (e.type) {
         case SDL_QUIT: quit_requested = 1; break;
@@ -140,7 +179,10 @@ int input_mouse(ctx_t *c)
 {
     switch (R(c, EAX) & 0xFFFF) {
     case 0x00: R(c, EAX) = (R(c, EAX) & ~0xFFFFu) | 0xFFFF; R(c, EBX) = (R(c, EBX) & ~0xFFFFu) | 2; return 1;
-    case 0x01: case 0x02: case 0x04: case 0x0A: case 0x0C: case 0x10: case 0x13: case 0x1A: return 1;
+    case 0x01: case 0x02: case 0x0A: case 0x0C: case 0x10: case 0x13: case 0x1A: return 1;
+    case 0x04:                                  /* set the position: the keyboard moves the game's pointer this way */
+        mouse_x = R(c, ECX) & 0xFFFF; mouse_y = R(c, EDX) & 0xFFFF;
+        return 1;
     case 0x03:
         R(c, EBX) = (R(c, EBX) & ~0xFFFFu) | mouse_buttons;
         R(c, ECX) = (R(c, ECX) & ~0xFFFFu) | mouse_x; R(c, EDX) = (R(c, EDX) & ~0xFFFFu) | mouse_y;
