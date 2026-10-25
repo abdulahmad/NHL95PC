@@ -1,15 +1,16 @@
 /* Season playoffs: the playoff tree screen's menu loop. */
-/* DRAFT: 2,690 vs 2,688 bytes, 67 differing under 10.0 GA; see docs/UNSURE.md. Plain locals instead of the
+/* DRAFT: 2,688 bytes as the EXE, 61 differing under 10.0 GA; see docs/UNSURE.md. Plain locals instead of the
    frame struct (a store into one of the struct's arrays made Watcom reload the others and every member after
    each call; the EXE keeps the pointer block in ebp and &menus[level][item] in eax). The submenu path uses
    depth itself and `depth++` (the EXE caches it in esi and increments it in place), and the two select-item
    paths draw &menus[level][sel[level]] after the store (the EXE reloads sel[level]). The close-all loop resets
    pos[i] chained and bg[i], menus[i], nitems[i] as three stores (i then outranks i * 4 and takes esi as in the
-   EXE; the cross-jumps come back). The declaration order is tools/wccre/declsearch.py --conflicts' (12 of 20
-   locals in their EXE slot). Left: the scalar slots of depth, oldmx, oldmy, ptr, slot, slot2, tree and w (the
-   EXE upward from A0h: level, item, mx, my, ptr, oldmx, depth, h, w, slot2, slot, tree, oldmy), the second
-   pointer-block size (`lea` where the EXE has `inc` / `add`, +2 bytes) and the submenu path's registers (depth
-   in edi and depth + 1 in esi; the EXE keeps both in esi). */
+   EXE; the cross-jumps come back). The declaration order is tools/wccre/declsearch.py --conflicts' with ptr
+   moved before sel (tools/wccre/tieorder.py: depth's two index temporaries then tie the EXE's way, `inc esi`).
+   Left: the scalar slots of depth, oldmx, oldmy, ptr, slot, slot2, tree and w (the EXE upward from A0h: level,
+   item, mx, my, ptr, oldmx, depth, h, w, slot2, slot, tree, oldmy), the second pointer-block size (`lea` where
+   the EXE has `inc` / `add`), &menus[depth][item]'s shift register (L204) and the close-all loop's FreeMemBlock
+   argument (the EXE reloads bg[i] after the pos stores, as if bg and pos could alias). */
 #define PlayoffTreeMenu PlayoffTreeMenu_decl
 #define MenuHitTest MenuHitTest_decl
 #define POHiliteSlot POHiliteSlot_decl
@@ -48,7 +49,6 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
     unsigned char pal[12];
     int w;
     int bg[4];
-    int ptr;
     int oldmy;
     int mx;
     int size;
@@ -59,6 +59,7 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
     char path[0x20];
     int level;
     int slot;
+    int ptr;
     int sel[4];
     int pos[4][2];
     int item;
