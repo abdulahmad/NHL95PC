@@ -252,6 +252,22 @@ TeamRosterScreen's n has 63 references; with 50:
 n [esp+3F0h], idx 404h, gs 400h are the EXE's slots: the original has one loop-weighted reference to n fewer
 than the draft (any count from 43 to 60 gives the same slots).
 
+`python3 tools/wccre/countsolve.py src/c/<seg>/<File>.c FUNC` asks the reverse question: which use counts give the
+locals (and the parameters the hand-out places) their EXE slots. It reads the EXE slots as declsearch.py does,
+replays every count of every name in memory with a conflict through declsearch's model of the sorts and the
+hand-out (no compile), then pairs of the best single changes, and confirms the best count sets with a compile that
+writes the counts into the conflicts (slotdump's --count). A count is a target position in the use-count sort,
+not necessarily a literal edit: any change that puts the name between the same neighbours works (a reference
+more or less, one inside or outside a loop, or a tie broken the other way). Validation (2026-10-25):
+
+* ExecuteTrade (7, all slots): kb 60 -> 4-11 puts kb in its EXE slot (compiler agrees); traded then lands at -8,
+  not -4, so a third name holds the top slot: not a count fix alone.
+* FillDressedSlots (20, 12 slots): slot (a parameter, 11) -> 0-2 together with i 41 -> 44+ gives i, slot, r and
+  side their EXE slots, confirmed by the compiler (4 of 4). Read as: in the original, slot ranks below every
+  local with a count above 2 and i above r (43). slot's only reference is the CanFillLineSlot call in the loop,
+  so the target is the order, not that count.
+* TitleScreen (committed draft, 3): every local already in its EXE slot (the remaining differences are not slots).
+
 ## The compiler state: one field the compiler never sets
 
 wcc386 can compile the same source differently after other programs in the same DOSBox session, and after
