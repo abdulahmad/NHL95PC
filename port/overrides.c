@@ -7,7 +7,7 @@ extern uint32_t dword_D305C, dword_D3060;
 extern uint8_t byte_D3064, byte_D3068;
 extern uint8_t byte_D4B9C, byte_D51DC;
 
-static void patch_bytes(void *at, const void *bytes, size_t n)
+void patch_bytes(void *at, const void *bytes, size_t n)
 {
     memcpy(at, bytes, n);
 }
@@ -46,8 +46,17 @@ static void detect_cpu(void)
     byte_D3064 = 1;
 }
 
+#ifdef _WIN32
+/* __setenvp_ builds the environment table by loading FS and ES with the DOS/4GW environment selector. FS must keep pointing at the
+ * Windows thread information block, so the table stays empty (the game only reads a few optional sound variables from it). */
+extern char __setenvp_[];
+#endif
+
 void install_overrides(void)
 {
+#ifdef _WIN32
+    patch_bytes(__setenvp_, "\xC3", 1);
+#endif
     patch_jmp(sub_B3F50, detect_cpu);
     patch_jmp(sub_9D352, init_fpu_flags);
     stub_zero(__hook387);       /* the Watcom floating point emulator is not needed: the host CPU has an FPU */

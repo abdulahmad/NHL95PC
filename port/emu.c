@@ -1,7 +1,7 @@
 /* Decode and emulate the privileged instructions the game executes (int n, in, out, cli, sti). */
 #include "host.h"
 
-int emulate_privileged(ucontext_t *c, uint8_t *ip)
+int emulate_privileged(ctx_t *c, uint8_t *ip)
 {
     int o16 = 0, rep = 0, n = 0;
     uint8_t op;

@@ -3,9 +3,9 @@
  * changes, and the main thread turns vram[] into an SDL texture a few dozen times a second. */
 #include "host.h"
 #include <SDL.h>
-#include <time.h>
 
 #define WINDOW ((uint8_t *)0xA0000)
+
 #define BANK 0x10000
 static uint8_t vram[0x800000];
 static uint8_t dac[256][3];
@@ -13,7 +13,7 @@ static unsigned dac_wr, dac_rd, dac_comp, dac_rcomp;
 static int cur_bank;
 static int mode_w = 640, mode_h = 480, mode_num = 0x101;
 static int disp_x, disp_y;
-static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+static SDL_mutex *lock;
 static volatile int resize_pending = 1;
 static volatile int shown_w, shown_h;
 
@@ -32,17 +32,17 @@ static void window_load(void) { memcpy(WINDOW, vram + (size_t)cur_bank * BANK, B
 
 static void set_bank(int bank)
 {
-    pthread_mutex_lock(&lock);
+    SDL_LockMutex(lock);
     window_save();
     cur_bank = bank & 0x7F;
     window_load();
-    pthread_mutex_unlock(&lock);
+    SDL_UnlockMutex(lock);
 }
 
 static void set_mode(int mode, int clear)
 {
     size_t i;
-    pthread_mutex_lock(&lock);
+    SDL_LockMutex(lock);
     for (i = 0; i < sizeof modes / sizeof *modes; i++)
         if (modes[i].mode == (mode & 0x1FF)) { mode_w = modes[i].w; mode_h = modes[i].h; mode_num = modes[i].mode; }
     if (clear) { memset(vram, 0, sizeof vram); memset(WINDOW, 0, BANK); }
@@ -51,14 +51,13 @@ static void set_mode(int mode, int clear)
     window_load();
     disp_x = disp_y = 0;
     resize_pending = 1;
-    pthread_mutex_unlock(&lock);
+    SDL_UnlockMutex(lock);
     TRACE("video mode %x: %dx%d\n", mode_num, mode_w, mode_h);
 }
 
 /* ---- ports ---- */
 uint32_t video_port_in(unsigned port)
 {
-    struct timespec ts;
     switch (port) {
     case 0x3C7: return 3;
     case 0x3C9: {
@@ -67,8 +66,7 @@ uint32_t video_port_in(unsigned port)
         return v;
     }
     case 0x3DA:                                 /* input status 1: vertical retrace for the first part of each 70 Hz frame */
-        clock_gettime(CLOCK_MONOTONIC, &ts);
-        return ((ts.tv_nsec % 14285714) < 1200000) ? 9 : 0;
+        return ((plat_now_ns() % 14285714) < 1200000) ? 9 : 0;
     }
     return 0xFF;
 }
@@ -87,7 +85,7 @@ int video_port_out(unsigned port, uint32_t val)
 }
 
 /* ---- int 10h ---- */
-int video_int10(ucontext_t *c)
+int video_int10(ctx_t *c)
 {
     unsigned ax = R(c, EAX) & 0xFFFF;
     if ((ax >> 8) == 0x4F) {
@@ -176,6 +174,7 @@ void video_window_to_game(int wx, int wy, int *gx, int *gy)
 /* ---- the main thread: window and presentation ---- */
 void video_init(void)
 {
+    lock = SDL_CreateMutex();
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE);
     if (!win) { fprintf(stderr, "SDL window: %s\n", SDL_GetError()); exit(1); }
@@ -211,7 +210,7 @@ void video_present(void)
     int w, h, x, y;
     uint32_t pal[256];
     if (!ren) return;
-    pthread_mutex_lock(&lock);
+    SDL_LockMutex(lock);
     window_save();
     w = mode_w; h = mode_h;
     for (x = 0; x < 256; x++) {
@@ -224,7 +223,7 @@ void video_present(void)
         for (x = 0; x < w; x++) dst[x] = pal[src[x]];
     }
     resize_pending = resize_pending && (w != tex_w || h != tex_h);
-    pthread_mutex_unlock(&lock);
+    SDL_UnlockMutex(lock);
     if (w != tex_w || h != tex_h) {
         if (tex) SDL_DestroyTexture(tex);
         tex = SDL_CreateTexture(ren, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, w, h);

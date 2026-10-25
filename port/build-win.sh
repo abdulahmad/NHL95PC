@@ -1,0 +1,47 @@
+#!/bin/sh
+# Build the 32-bit Windows program (build/win/hockey-win32.exe + SDL2.dll) with mingw-w64 from Linux or WSL.
+#   sudo apt install gcc-mingw-w64-i686 nasm make python3
+set -e
+cd "$(dirname "$0")/.."
+# Where SDL2 for 32-bit Windows is: SDL2_MINGW (the i686-w64-mingw32 directory of SDL2-devel-*-mingw), a copy unpacked next to the
+# repository, or the MSYS2 MINGW32 package (pkg-config).
+SDL2_MINGW=${SDL2_MINGW:-$(ls -d SDL2-*/i686-w64-mingw32 ../SDL2-*/i686-w64-mingw32 2>/dev/null | head -1)}
+if [ -n "$SDL2_MINGW" ] && [ -d "$SDL2_MINGW/include/SDL2" ]; then
+    SDL_CFLAGS="-I$SDL2_MINGW/include/SDL2"
+    SDL_LIBS="-L$SDL2_MINGW/lib -lSDL2"
+    SDL_DLL="$SDL2_MINGW/bin/SDL2.dll"
+elif pkg-config --exists sdl2 2>/dev/null; then
+    SDL_CFLAGS=$(pkg-config --cflags sdl2)
+    SDL_LIBS=$(pkg-config --libs sdl2 | sed 's/-lmingw32//; s/-lSDL2main//; s/-mwindows//')
+    SDL_DLL="$(pkg-config --variable=prefix sdl2)/bin/SDL2.dll"
+else
+    echo "SDL2 for 32-bit Windows not found: set SDL2_MINGW to the i686-w64-mingw32 directory of SDL2-devel-*-mingw, or install" >&2
+    echo "mingw-w64-i686-SDL2 in an MSYS2 MINGW32 shell" >&2
+    exit 1
+fi
+OUT=build/win
+rm -rf "$OUT/src" "$OUT/obj"
+mkdir -p "$OUT/src" "$OUT/obj"
+cp -r src/inc "$OUT/src/inc"
+
+# The sources name their sections s_<address> with ELF attributes. A Windows image may have only 96 sections, so code, data and BSS
+# are folded into .text, .data and .bss (the linker keeps the order of the objects).
+for dir in cseg01 dseg02; do
+    mkdir -p "$OUT/src/$dir"
+    for f in src/$dir/*.asm; do
+        sed -e 's/^section s_[0-9A-F]* progbits alloc exec nowrite align=1/section .text align=1/' \
+            -e 's/^section s_[0-9A-F]* progbits alloc noexec write align=1/section .data align=1/' \
+            -e 's/^section s_[0-9A-F]* nobits alloc noexec write align=1/section .bss align=1/' "$f" > "$OUT/src/$dir/$(basename "$f")"
+    done
+done
+ls "$OUT"/src/cseg01/*.asm "$OUT"/src/dseg02/*.asm | xargs -P 8 -I{} sh -c \
+    'nasm -O0 -f win32 --gprefix _ -I '"$OUT"'/src/inc/ {} -o '"$OUT"'/obj/$(basename $(dirname {}))_$(basename {} .asm).o'
+
+CC=${CC:-i686-w64-mingw32-gcc}
+command -v "$CC" >/dev/null 2>&1 || CC=gcc
+$CC -O1 -g -mstackrealign -Wall -Wno-format-truncation -DSDL_MAIN_HANDLED $SDL_CFLAGS \
+    -o "$OUT/hockey-win32.exe" port/host.c port/emu.c port/ports.c port/dos.c port/video.c port/input.c port/irq.c port/cstart.c \
+    port/overrides.c port/plat_win.c $(ls "$OUT"/obj/cseg01_*.o) $(ls "$OUT"/obj/dseg02_*.o) \
+    $SDL_LIBS -static-libgcc -Wl,--subsystem,console
+cp "$SDL_DLL" "$OUT/"
+echo "built $OUT/hockey-win32.exe (run it in the game's folder, or set NHL95_ROOT)"

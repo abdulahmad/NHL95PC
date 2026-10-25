@@ -5,7 +5,7 @@
 static int pit_state;           /* 0: next byte is the low byte of channel 0's divisor */
 static unsigned pit_lo;
 
-uint32_t port_in(ucontext_t *c, unsigned port, int size)
+uint32_t port_in(ctx_t *c, unsigned port, int size)
 {
     uint32_t v;
     (void)c;
@@ -18,7 +18,7 @@ uint32_t port_in(ucontext_t *c, unsigned port, int size)
     return v & 0xFF;
 }
 
-void port_out(ucontext_t *c, unsigned port, uint32_t val, int size)
+void port_out(ctx_t *c, unsigned port, uint32_t val, int size)
 {
     (void)c;
     if (size > 1) {                       /* word and dword writes go out as consecutive bytes (index/data register pairs) */

@@ -138,7 +138,7 @@ int input_port_out(unsigned port, uint32_t val)
 }
 
 /* int 33h, the mouse driver: position and buttons are in game screen pixels */
-int input_mouse(ucontext_t *c)
+int input_mouse(ctx_t *c)
 {
     switch (R(c, EAX) & 0xFFFF) {
     case 0x00: R(c, EAX) = (R(c, EAX) & ~0xFFFFu) | 0xFFFF; R(c, EBX) = (R(c, EBX) & ~0xFFFFu) | 2; return 1;

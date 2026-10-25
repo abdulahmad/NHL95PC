@@ -5,11 +5,19 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/statvfs.h>
 #include <time.h>
 #include <unistd.h>
-#include <sys/mman.h>
+#include <SDL.h>
+#ifdef _WIN32
+#include <io.h>
+#include <direct.h>
+#define MKDIR(p) _mkdir(p)
+#else
+#define MKDIR(p) mkdir(p, 0777)
+#endif
+#ifndef O_BINARY
+#define O_BINARY 0
+#endif
 
 void host_exit(int code)
 {
@@ -74,7 +82,7 @@ static int host_path(const char *dos, char *out, size_t n)
     return 0;
 }
 
-static void dos_error(ucontext_t *c, int err)
+static void dos_error(ctx_t *c, int err)
 {
     int code = 1;
     switch (err) {
@@ -106,7 +114,7 @@ static int wild(const char *pat, const char *name)
 }
 
 /* DTA layout used by DOS: 0x15 attribute, 0x16 time, 0x18 date, 0x1A size, 0x1E name. We keep the search slot at 0x00. */
-static int find_next(ucontext_t *c, struct find *f)
+static int find_next(ctx_t *c, struct find *f)
 {
     struct dirent *e;
     while ((e = readdir(f->dir))) {
@@ -138,24 +146,18 @@ static uint32_t dos_next = DOS_POOL_LO;
 
 int map_low_memory(void)
 {
-    void *p = mmap((void *)0x10000, 0xF0000, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED_NOREPLACE, -1, 0);
-    return p == (void *)0x10000 ? 0 : -1;
+    return plat_map_fixed(0x10000, 0xF0000) ? 0 : -1;
 }
 
 /* The EA memory manager grabs the biggest block it can get, so a machine with "32 MB" gives it a sane heap size. */
 #define DPMI_MAX_BLOCK 0x2000000u
 
-/* DPMI memory: addresses stay below 2 GB because the Watcom heap code compares them as signed numbers. */
-static uintptr_t dpmi_next = 0x10000000;
+/* The EA memory manager grabs the biggest block it can get, so a machine with "32 MB" gives it a sane heap size. */
+#define DPMI_MAX_BLOCK 0x2000000u
 
 static void *dpmi_alloc(uint32_t size)
 {
-    uint32_t len = (size + 0xFFF) & ~0xFFFu;
-    void *m;
-    if (dpmi_next + len + 0x10000 > 0x7F000000u) return MAP_FAILED;
-    m = mmap((void *)dpmi_next, len, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED_NOREPLACE, -1, 0);
-    if (m != MAP_FAILED) dpmi_next += len + 0x1000;
-    return m;
+    return size > DPMI_MAX_BLOCK ? 0 : plat_map_any(size);
 }
 
 /* ---- DPMI (int 31h) ---- */
@@ -164,7 +166,7 @@ static void *dpmi_alloc(uint32_t size)
 #define SIDI(c) ((R(c, ESI) << 16) | (R(c, EDI) & 0xFFFF))
 #define SETSIDI(c, v) do { R(c, ESI) = (R(c, ESI) & ~0xFFFFu) | ((v) >> 16); R(c, EDI) = (R(c, EDI) & ~0xFFFFu) | ((v) & 0xFFFF); } while (0)
 
-static int int31(ucontext_t *c)
+static int int31(ctx_t *c)
 {
     switch (AX(c)) {
     case 0x0006:                                    /* segment base address: flat */
@@ -192,9 +194,9 @@ static int int31(ucontext_t *c)
     }
     case 0x0501: {                                  /* allocate linear memory block */
         uint32_t size = BXCX(c);
-        void *m = size > DPMI_MAX_BLOCK ? MAP_FAILED : dpmi_alloc(size);
+        void *m = dpmi_alloc(size);
         TRACE("alloc %u -> %p\n", size, m);
-        if (m == MAP_FAILED) { SETAX(c, 0x8013); SET_CF(c, 1); return 1; }
+        if (!m) { SETAX(c, 0x8013); SET_CF(c, 1); return 1; }
         SETBXCX(c, (uint32_t)m);
         SETSIDI(c, (uint32_t)m);                    /* the handle is the address */
         SET_CF(c, 0); return 1;
@@ -203,7 +205,7 @@ static int int31(ucontext_t *c)
     case 0x0503: {                                  /* resize: a fresh block, old contents copied */
         uint32_t old = SIDI(c), size = BXCX(c);
         void *m = dpmi_alloc(size);
-        if (m == MAP_FAILED) { SETAX(c, 0x8013); SET_CF(c, 1); return 1; }
+        if (!m) { SETAX(c, 0x8013); SET_CF(c, 1); return 1; }
         memcpy(m, (void *)old, size);
         SETBXCX(c, (uint32_t)m); SETSIDI(c, (uint32_t)m); SET_CF(c, 0); return 1;
     }
@@ -212,7 +214,7 @@ static int int31(ucontext_t *c)
         if (phys + size <= 0x100000) { SETBXCX(c, phys); }
         else {
             void *m = dpmi_alloc(size);
-            if (m == MAP_FAILED) { SETAX(c, 0x8021); SET_CF(c, 1); return 1; }
+            if (!m) { SETAX(c, 0x8021); SET_CF(c, 1); return 1; }
             SETBXCX(c, (uint32_t)m);
         }
         SET_CF(c, 0); return 1;
@@ -224,7 +226,7 @@ static int int31(ucontext_t *c)
     return 0;
 }
 
-static int int21(ucontext_t *c)
+static int int21(ctx_t *c)
 {
     char path[1100];
     switch (AH(c)) {
@@ -240,14 +242,14 @@ static int int21(ucontext_t *c)
         R(c, ECX) = tm->tm_year + 1900; R(c, EDX) = ((tm->tm_mon + 1) << 8) | tm->tm_mday; SETAL(c, tm->tm_wday); return 1;
     }
     case 0x2C: {
-        struct timeval tv; gettimeofday(&tv, 0); struct tm *tm = localtime(&tv.tv_sec);
-        R(c, ECX) = (tm->tm_hour << 8) | tm->tm_min; R(c, EDX) = (tm->tm_sec << 8) | (tv.tv_usec / 10000); return 1;
+        time_t now_t = time(0); unsigned ms = SDL_GetTicks() % 1000; struct tm *tm = localtime(&now_t);
+        R(c, ECX) = (tm->tm_hour << 8) | tm->tm_min; R(c, EDX) = (tm->tm_sec << 8) | (ms / 10); return 1;
     }
     case 0x30: SETAX(c, 0x0005); R(c, EBX) = 0; R(c, ECX) = 0; return 1;      /* DOS 5.0 */
     case 0x36: {                                                /* free disk space: 4 GB of 32 KB clusters */
         SETAX(c, 64); R(c, EBX) = 60000; R(c, ECX) = 512; R(c, EDX) = 65000; return 1;
     }
-    case 0x39: host_path((char *)R(c, EDX), path, sizeof path); if (mkdir(path, 0777)) dos_error(c, errno); else SET_CF(c, 0); return 1;
+    case 0x39: host_path((char *)R(c, EDX), path, sizeof path); if (MKDIR(path)) dos_error(c, errno); else SET_CF(c, 0); return 1;
     case 0x3A: host_path((char *)R(c, EDX), path, sizeof path); if (rmdir(path)) dos_error(c, errno); else SET_CF(c, 0); return 1;
     case 0x3B: SET_CF(c, 0); return 1;
     case 0x3C: case 0x3D: {
@@ -255,7 +257,7 @@ static int int21(ucontext_t *c)
         host_path((char *)R(c, EDX), path, sizeof path);
         if (AH(c) == 0x3C) flags = O_RDWR | O_CREAT | O_TRUNC;
         else flags = (AL(c) & 3) == 0 ? O_RDONLY : (AL(c) & 3) == 1 ? O_WRONLY : O_RDWR;
-        fd = open(path, flags, 0666);
+        fd = open(path, flags | O_BINARY, 0666);
         TRACE("open %s -> %d\n", path, fd);
         if (fd < 0) dos_error(c, errno); else { SETAX(c, fd); SET_CF(c, 0); }
         return 1;
@@ -303,7 +305,7 @@ static int int21(ucontext_t *c)
         if (!finds[0].dir || !find_next(c, &finds[0])) { SETAX(c, 18); SET_CF(c, 1); } else SET_CF(c, 0);
         return 1;
     case 0x5B: host_path((char *)R(c, EDX), path, sizeof path);               /* create new file */
-        { int fd = open(path, O_RDWR | O_CREAT | O_EXCL, 0666); if (fd < 0) dos_error(c, errno); else { R(c, EAX) = fd; SET_CF(c, 0); } }
+        { int fd = open(path, O_RDWR | O_CREAT | O_EXCL | O_BINARY, 0666); if (fd < 0) dos_error(c, errno); else { R(c, EAX) = fd; SET_CF(c, 0); } }
         return 1;
     }
     return 0;
@@ -311,7 +313,7 @@ static int int21(ucontext_t *c)
 
 extern char sub_10000[];
 /* Print the words on the stack that point into the game's code: the likely callers of the routine that trapped. */
-static void backtrace_hint(ucontext_t *c)
+static void backtrace_hint(ctx_t *c)
 {
     uint32_t *sp = (uint32_t *)R(c, ESP);
     int i, n = 0;
@@ -321,7 +323,7 @@ static void backtrace_hint(ucontext_t *c)
     fprintf(stderr, "\n");
 }
 
-int dos_int(ucontext_t *c, int vec)
+int dos_int(ctx_t *c, int vec)
 {
     int ok = 0;
     TRACE("int %02xh ax=%04x bx=%08x cx=%08x dx=%08x eip=%08x\n", vec, (unsigned)AX(c), (unsigned)R(c, EBX),
