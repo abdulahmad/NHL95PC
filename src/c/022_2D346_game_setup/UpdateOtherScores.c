@@ -1,8 +1,4 @@
 /* Game setup: other-game simulation and the end-of-game team stats screen. */
-/* DRAFT (GameStatsScreen, 10.0 GA): 11 aligned differing instructions (5 first_pick), exact 2019-byte size.
-   A fresh width local leaves the half width in eax; the dead minutes local holds the name-record offset.
-   Left: that name-record multiply uses ebx where the EXE uses edx, and its result takes ebx instead of eax.
-   Keep this function with UpdateOtherScores for the shared UpdateOtherScores_x exit. */
 #define sub_913D0 sub_913D0_decl
 #define sub_8F13B sub_8F13B_decl
 #define sub_8F1FE sub_8F1FE_decl
@@ -75,6 +71,7 @@ void GameStatsScreen(void)
         char buf[0x14];
         int teams[2];
     } s;
+    int shape;
     int logos;
     int cx;
     int y;
@@ -86,7 +83,6 @@ void GameStatsScreen(void)
     char *name;
     int slot;
     int x;
-    int shape;
     int m;
     int width;
 
