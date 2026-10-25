@@ -54,7 +54,13 @@ void irq_raise(int irq)
 /* main thread, every millisecond or so */
 void irq_poll(void)
 {
+    static int64_t last;
     if (irq_deliverable()) plat_kick_game();
+    if (trace_on && plat_now_ns() - last > 2000000000LL) {
+        last = plat_now_ns();
+        fprintf(stderr, "irq state: vif=%d isr_active=%d pending=%x\n", vif, isr_active, (unsigned)pending);
+        plat_trace_game();
+    }
 }
 
 /* called from the trap handler for cli / sti */

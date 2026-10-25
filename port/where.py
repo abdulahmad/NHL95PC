@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
-"""where.py RUNTIME_EIP -- map a runtime address of build/hockey-linux to the original address and show the asm around it."""
+"""where.py RUNTIME_EIP -- map a runtime address of build/hockey-linux (or, when that is missing, build/win/hockey-win32.exe, which is
+linked at a fixed address) to the original address and show the asm around it. $NM names the nm program (default nm)."""
 import glob, os, re, subprocess, sys
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-nm = subprocess.run(['nm', os.path.join(root, 'build/hockey-linux')], capture_output=True, text=True).stdout
+exe = os.path.join(root, 'build/hockey-linux')
+if not os.path.exists(exe):
+    exe = os.path.join(root, 'build/win/hockey-win32.exe')
+nm = subprocess.run([os.environ.get('NM', 'nm'), exe], capture_output=True, text=True).stdout
 base = None
 for l in nm.split('\n'):
     p = l.split()
-    if len(p) == 3 and p[2] == 'sub_10000':
+    if len(p) == 3 and p[2] in ('sub_10000', '_sub_10000'):
         base = int(p[0], 16) - 0x10000
 a = int(sys.argv[1], 16)
 orig = a - base

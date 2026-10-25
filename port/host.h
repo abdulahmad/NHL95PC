@@ -49,15 +49,20 @@ void game_run(int argc, char **argv);      /* the game thread: C library start-u
 /* platform layer (plat_linux.c, plat_win.c) */
 void *plat_map_fixed(uintptr_t addr, size_t size);     /* read/write/execute memory at exactly addr, or NULL */
 void *plat_map_any(size_t size);                       /* below 2 GB, or NULL */
+void plat_unmap(void *addr, size_t size);              /* give back a block from plat_map_any */
 void plat_make_image_writable(void);                   /* the game patches its own code */
 void plat_install_traps(void);                         /* int, in, out, cli, sti and friends end up in emulate_privileged */
 void plat_start_game(void);                            /* start the game thread */
 void plat_kick_game(void);                             /* let the game thread take a pending interrupt */
+void plat_trace_game(void);                            /* NHL95_TRACE: print where the game thread is */
 int64_t plat_now_ns(void);
 void plat_sleep_ms(int ms);
 
 /* privileged instructions the game executes (emu.c) */
 int emulate_privileged(ctx_t *c, uint8_t *ip);
+int traps(const uint8_t *ip);
+int emulate_low_memory(ctx_t *c, uint8_t *ip);         /* an access below 0x10000: continue through a trampoline */
+int accesses_low_memory(ctx_t *c, uint8_t *ip);
 /* software interrupts: DOS, BIOS, DPMI, mouse (dos.c) */
 int dos_int(ctx_t *c, int vec);
 struct vec { uint32_t off; uint32_t sel; };

@@ -11,7 +11,7 @@ if [ -n "$SDL2_MINGW" ] && [ -d "$SDL2_MINGW/include/SDL2" ]; then
     SDL_LIBS="-L$SDL2_MINGW/lib -lSDL2"
     SDL_DLL="$SDL2_MINGW/bin/SDL2.dll"
 elif pkg-config --exists sdl2 2>/dev/null; then
-    SDL_CFLAGS=$(pkg-config --cflags sdl2)
+    SDL_CFLAGS=$(pkg-config --cflags sdl2 | sed 's/-Dmain=SDL_main//')
     SDL_LIBS=$(pkg-config --libs sdl2 | sed 's/-lmingw32//; s/-lSDL2main//; s/-mwindows//')
     SDL_DLL="$(pkg-config --variable=prefix sdl2)/bin/SDL2.dll"
 else
@@ -39,9 +39,15 @@ ls "$OUT"/src/cseg01/*.asm "$OUT"/src/dseg02/*.asm | xargs -P 8 -I{} sh -c \
 
 CC=${CC:-i686-w64-mingw32-gcc}
 command -v "$CC" >/dev/null 2>&1 || CC=gcc
+# DOS memory (0x10000-0xFFFFF) must be free, but Windows fills it before main runs. Linked at 0x10000 with ld's default script plus an
+# uninitialized section .lowmem in front of .text, the program's own image covers 0x11000-0xFFFFF: the loader maps it first.
+$CC -Wl,--verbose 2>/dev/null | sed -n '/^======/,/^======/p' | sed '1d;$d' | sed \
+    's/^  \.text  __image_base__ + ( __section_alignment__ < 0x1000 ? \. : __section_alignment__ ) :/  .lowmem __image_base__ + __section_alignment__ (NOLOAD) : { . = . + 0xEF000; }\n  .text ALIGN(__section_alignment__) :/' \
+    > "$OUT/lowmem.ld"
+grep -q '^  \.lowmem' "$OUT/lowmem.ld" || { echo "could not add .lowmem to the linker script" >&2; exit 1; }
 $CC -O1 -g -mstackrealign -Wall -Wno-format-truncation -DSDL_MAIN_HANDLED $SDL_CFLAGS \
     -o "$OUT/hockey-win32.exe" port/host.c port/emu.c port/ports.c port/dos.c port/video.c port/input.c port/irq.c port/cstart.c \
     port/overrides.c port/plat_win.c $(ls "$OUT"/obj/cseg01_*.o) $(ls "$OUT"/obj/dseg02_*.o) \
-    $SDL_LIBS -static-libgcc -Wl,--subsystem,console
+    $SDL_LIBS -static-libgcc -Wl,--subsystem,console -Wl,--disable-dynamicbase -Wl,--image-base=0x10000 -Wl,-T,"$OUT/lowmem.ld"
 cp "$SDL_DLL" "$OUT/"
 echo "built $OUT/hockey-win32.exe (run it in the game's folder, or set NHL95_ROOT)"

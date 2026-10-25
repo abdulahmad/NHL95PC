@@ -24,6 +24,8 @@ static void trap(int sig, siginfo_t *si, void *uc)
             return;
         }
     }
+    if (sig == SIGSEGV && si->si_code != SI_KERNEL && (uintptr_t)si->si_addr < 0x10000 && IN_GAME_CODE(ip) && emulate_low_memory(c, ip))
+        return;
     fprintf(stderr, "UNHANDLED sig=%d code=%d eip=%08x bytes=%02x %02x %02x %02x addr=%p eax=%08x ebx=%08x ecx=%08x edx=%08x\n",
             sig, si->si_code, (unsigned)R(c, EIP), ip[0], ip[1], ip[2], ip[3], si->si_addr, (unsigned)R(c, EAX),
             (unsigned)R(c, EBX), (unsigned)R(c, ECX), (unsigned)R(c, EDX));
@@ -74,6 +76,11 @@ void *plat_map_any(size_t size)
     return m;
 }
 
+void plat_unmap(void *addr, size_t size)
+{
+    munmap(addr, (size + 0xFFF) & ~0xFFFu);
+}
+
 static void *thread_main(void *arg)
 {
     stack_t ss;
@@ -118,6 +125,10 @@ void plat_start_game(void)
 void plat_kick_game(void)
 {
     pthread_kill(game_thread, SIGUSR1);
+}
+
+void plat_trace_game(void)
+{
 }
 
 int64_t plat_now_ns(void)

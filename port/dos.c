@@ -51,8 +51,8 @@ static const char *root(void)
     return r;
 }
 
-/* Resolve a DOS path to a host path: drop the drive, turn backslashes into slashes, match each name ignoring case. */
-static int host_path(const char *dos, char *out, size_t n)
+/* Resolve a DOS path below base: drop the drive, turn backslashes into slashes, match each name ignoring case. */
+static void resolve_in(const char *base, const char *dos, char *out, size_t n)
 {
     char tmp[512], cur[1024];
     char *p, *tok, *save;
@@ -62,7 +62,7 @@ static int host_path(const char *dos, char *out, size_t n)
     tmp[i] = 0;
     p = tmp;
     while (*p == '/') p++;
-    snprintf(cur, sizeof cur, "%s", root());
+    snprintf(cur, sizeof cur, "%s", base);
     for (tok = strtok_r(p, "/", &save); tok; tok = strtok_r(0, "/", &save)) {
         DIR *d;
         struct dirent *e;
@@ -79,6 +79,21 @@ static int host_path(const char *dos, char *out, size_t n)
         snprintf(cur, sizeof cur, "%s", next);
     }
     snprintf(out, n, "%s", cur);
+}
+
+/* A DOS path as a host path below $NHL95_ROOT. A file that is not there is looked for below $NHL95_CD (the files of the game's CD,
+ * which the game reads from the drive named in NHL.CFG), so the installed folder and the CD can stay apart. */
+static int host_path(const char *dos, char *out, size_t n)
+{
+    static const char *cd;
+    struct stat st;
+    resolve_in(root(), dos, out, n);
+    if (!cd) { cd = getenv("NHL95_CD"); if (!cd) cd = ""; }
+    if (*cd && stat(out, &st)) {
+        char alt[1100];
+        resolve_in(cd, dos, alt, sizeof alt);
+        if (!stat(alt, &st)) snprintf(out, n, "%s", alt);
+    }
     return 0;
 }
 
@@ -149,15 +164,46 @@ int map_low_memory(void)
     return plat_map_fixed(0x10000, 0xF0000) ? 0 : -1;
 }
 
-/* The EA memory manager grabs the biggest block it can get, so a machine with "32 MB" gives it a sane heap size. */
+/* The EA memory manager grabs the biggest block it can get and then grows it with _nexpand, which makes the Watcom heap add DPMI
+ * blocks until an allocation fails. On DOS the machine's memory ran out first; here the blocks are at most 32 MB and 64 MB in all. */
 #define DPMI_MAX_BLOCK 0x2000000u
+#define DPMI_TOTAL 0x4000000u
 
-/* The EA memory manager grabs the biggest block it can get, so a machine with "32 MB" gives it a sane heap size. */
-#define DPMI_MAX_BLOCK 0x2000000u
+static struct { uint32_t addr, size; } dpmi_blocks[512];
+static uint32_t dpmi_used;
 
 static void *dpmi_alloc(uint32_t size)
 {
-    return size > DPMI_MAX_BLOCK ? 0 : plat_map_any(size);
+    void *m;
+    int i;
+    if (size > DPMI_MAX_BLOCK || size > DPMI_TOTAL - dpmi_used) return 0;
+    for (i = 0; i < 512 && dpmi_blocks[i].addr; i++) ;
+    if (i == 512 || !(m = plat_map_any(size))) return 0;
+    dpmi_blocks[i].addr = (uint32_t)m;
+    dpmi_blocks[i].size = size;
+    dpmi_used += size;
+    return m;
+}
+
+/* the size of a block from dpmi_alloc (the handle is its address), or 0 */
+static uint32_t dpmi_size(uint32_t handle)
+{
+    int i;
+    for (i = 0; i < 512; i++) if (dpmi_blocks[i].addr == handle) return dpmi_blocks[i].size;
+    return 0;
+}
+
+static int dpmi_free(uint32_t handle)
+{
+    int i;
+    for (i = 0; i < 512; i++)
+        if (dpmi_blocks[i].addr == handle) {
+            plat_unmap((void *)handle, dpmi_blocks[i].size);
+            dpmi_used -= dpmi_blocks[i].size;
+            dpmi_blocks[i].addr = dpmi_blocks[i].size = 0;
+            return 1;
+        }
+    return 0;
 }
 
 /* ---- DPMI (int 31h) ---- */
@@ -189,7 +235,8 @@ static int int31(ctx_t *c)
     case 0x0500: {                                  /* free memory information */
         uint32_t *info = (uint32_t *)R(c, EDI);
         memset(info, 0xFF, 48);
-        info[0] = DPMI_MAX_BLOCK; info[1] = 0x4000; info[2] = 0x4000; info[3] = 0x4000; info[4] = 0x4000; info[5] = 0x4000;
+        info[0] = DPMI_TOTAL - dpmi_used < DPMI_MAX_BLOCK ? DPMI_TOTAL - dpmi_used : DPMI_MAX_BLOCK;
+        info[1] = info[2] = info[4] = info[5] = (DPMI_TOTAL - dpmi_used) >> 12; info[3] = DPMI_TOTAL >> 12;
         SET_CF(c, 0); return 1;
     }
     case 0x0501: {                                  /* allocate linear memory block */
@@ -201,12 +248,16 @@ static int int31(ctx_t *c)
         SETSIDI(c, (uint32_t)m);                    /* the handle is the address */
         SET_CF(c, 0); return 1;
     }
-    case 0x0502: SET_CF(c, 0); return 1;            /* free linear memory block */
+    case 0x0502:                                    /* free linear memory block */
+        TRACE("free %08x\n", (unsigned)SIDI(c));
+        if (!dpmi_free(SIDI(c))) { SETAX(c, 0x8023); SET_CF(c, 1); return 1; }
+        SET_CF(c, 0); return 1;
     case 0x0503: {                                  /* resize: a fresh block, old contents copied */
-        uint32_t old = SIDI(c), size = BXCX(c);
+        uint32_t old = SIDI(c), size = BXCX(c), old_size = dpmi_size(old);
         void *m = dpmi_alloc(size);
         if (!m) { SETAX(c, 0x8013); SET_CF(c, 1); return 1; }
-        memcpy(m, (void *)old, size);
+        memcpy(m, (void *)old, old_size < size ? old_size : size);
+        dpmi_free(old);
         SETBXCX(c, (uint32_t)m); SETSIDI(c, (uint32_t)m); SET_CF(c, 0); return 1;
     }
     case 0x0800: {                                  /* map physical memory: identity below 1 MB, a private block above */
@@ -259,10 +310,10 @@ static int int21(ctx_t *c)
         else flags = (AL(c) & 3) == 0 ? O_RDONLY : (AL(c) & 3) == 1 ? O_WRONLY : O_RDWR;
         fd = open(path, flags | O_BINARY, 0666);
         TRACE("open %s -> %d\n", path, fd);
-        if (fd < 0) dos_error(c, errno); else { SETAX(c, fd); SET_CF(c, 0); }
+        if (fd < 0) dos_error(c, errno); else { R(c, EAX) = (uint32_t)fd; SET_CF(c, 0); }   /* DOS/4GW returns the handle zero-extended in EAX */
         return 1;
     }
-    case 0x3E: if (R(c, EBX) > 4) close(R(c, EBX)); SET_CF(c, 0); return 1;
+    case 0x3E: if (R(c, EBX) > 2) close(R(c, EBX)); SET_CF(c, 0); return 1;
     case 0x3F: {
         ssize_t n = read(R(c, EBX), (void *)R(c, EDX), R(c, ECX));
         if (n < 0) dos_error(c, errno); else { SETAX(c, n); R(c, EAX) = n; SET_CF(c, 0); }
