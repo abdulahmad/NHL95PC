@@ -216,19 +216,20 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
 #define TEAMBYTE(c) (((unsigned char *)statsteambuf)[statsteamorder[c] * 26 + 0xD])
 #define HILITE(c) \
     y = TEAMBYTE(c) % 2 ? 0x14A : 0xA5; \
-    if (TEAMBYTE(c) < 2) x = 0; else x = 0x140; \
+    x = TEAMBYTE(c) < 2 ? 0 : 0x140; \
     y += ((c) < 12 ? (c) % 6 : ((c) - 12) % 7) * 13; \
     sub_90F38(x, y, 0x140, 0xD, 0x80)
 
-/* DRAFT under 10.0 GA: same size, 196 differing. The pointer moves are handled in an inner loop that breaks
+/* DRAFT under 10.0 GA: same size, 181 differing. The pointer moves are handled in an inner loop that breaks
    out on a click (Watcom then rotates it as the EXE does: input first, the tree and pointer redraw before it,
    the click's redraw cross-jumping into the inner loop's). The menu state is plain locals, as in RunMenu, in the
    order declsearch --conflicts finds for the EXE's slots (all 18 as in the EXE); the first reselect arm draws
    through sel[level] and the submenu branch counts depth up before reading on2 in place, as in RunMenu; the
-   search for the picked team after an action compares statsteamorder[i] == pick. Left: register picks from the first HILITE on (the
-   EXE indexes statsteambuf as [edx + eax*2 + 0Dh] in its first two highlights and adds the index twice in the
-   later ones, the draft the other way round; the EXE keeps the team in edi / ebp in the later row sums), the
-   tree-close loop and the merged pointer redraw at the loop end; see docs/UNSURE.md. */
+   search for the picked team after an action compares statsteamorder[i] == pick; the highlight picks its half
+   by a ternary like its row (with the if / else for x the slots and the first highlights' registers differ).
+   Left: register picks (the size product, the tree-close loop, the reselect arm's sel[level], the highlights
+   of a clicked team: the EXE keeps the team in edi / ebp) and the merged pointer redraw at the loop end; see
+   docs/UNSURE.md. */
 /* RunTeamPickMenu (1DF03, PC only; ends in RunMenu_ret4): RunMenu with a team picker under it, for the team stats
    screens. The selected team (statsteamsel) is shown by an xor bar on the standings grid (sub_90F38: the left or
    right half by its division, the row by its place) or, for the playoffs (statsplayoffs), by the tree highlight
@@ -238,24 +239,24 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
    team after it runs. bar: the items; n: their number; col1-col3: the item colours. Result: 0. */
 int RunTeamPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
 {
-    int sel[4];
     int w;
     int nitems[4];
-    MenuItem *menus[4];
+    short hit;
+    int ptr;
+    int h;
     int mx;
     int bg[4];
     int pick;
     int cur;
-    int level;
-    int h;
-    int oldmy;
-    int item;
-    int ptr;
-    int my;
-    short hit;
-    int oldmx;
-    int depth;
+    MenuItem *menus[4];
     int pos[4][2];
+    int level;
+    int item;
+    int my;
+    int oldmx;
+    int oldmy;
+    int depth;
+    int sel[4];
     int size;
     int i;
     int x;
