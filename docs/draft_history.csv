@@ -702,3 +702,7 @@ PlacePlayersAtStart,StaticEck2026,2026-10-25,GA,13,12,"assignment number as the 
 PlacePlayersAtStart,StaticEck2026,2026-10-25,GA,12,12,"mirror as a comma expression, empty then-arm, empty else (12), != pfgoal (16), ~p->pflags & pfgoal (17)"
 PlacePlayersAtStart,StaticEck2026,2026-10-25,GA,12,12,"tools/wccre/tieorder.py --minutes 10 (ternary shape): 172 forced orders, best 12, not a tie"
 PlacePlayersAtStart,StaticEck2026,2026-10-25,GA,12,12,"tools/wccre/targetsearch.py --minutes 30: 1837 candidates (0 tie / slot targets), best text negates regd1 before regd0 (14, 6 other; against the EXE order, rejected)"
+TreeSeriesWinner,StaticEck2026,2026-10-25,GA,35,35,"tools/wccre/countsolve.py: no use-count sort under -od (nothing in memory has a count)"
+TreeSeriesWinner,StaticEck2026,2026-10-25,GA,35,35,"tools/wccre/tieorder.py --minutes 10: 5 forced orders, best 35, not a tie"
+TreeSeriesWinner,StaticEck2026,2026-10-25,GA,35,35,"tools/wccre/targetsearch.py --minutes 30: 0 tie / slot targets, 1375 candidates, best 35 (best text = committed draft)"
+TreeSeriesWinner,StaticEck2026,2026-10-25,GA,35,35,"params renamed (series; sched / rnd / flag) and all locals renamed (35, same slots), const unsigned char *s (35), no prototype in scope (35), implicit int return prototype and K&R (35 each), signed int / unsigned int spellings (35), 10.0 LA compile (35, same slots); EXE homes params in register order eax / ebx / edx"

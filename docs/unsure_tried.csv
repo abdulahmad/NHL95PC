@@ -4264,3 +4264,5 @@ PlacePlayersAtStart,,"`0x16u` / `0x16L` constants (13), `(unsigned short *)` tab
 PlacePlayersAtStart,,"the mirror as a comma expression, `!= pfgoal` (16), `~p->pflags & pfgoal` (17)",17,ga
 PlacePlayersAtStart,,an empty then-arm,,ga
 PlacePlayersAtStart,,an empty else (12 each),12 each,ga
+TreeSeriesWinner,,"(slots unchanged, 35 each): parameters renamed (series / sched, rnd, flag) and every local renamed (no name / hash dependence), `const unsigned char *s`, no prototype in scope (protos.h declares `int round`), implicit int return (prototype and K&R definitions), `signed int` / `unsigned int` spellings",,ga
+TreeSeriesWinner,,"the same file under 10.0 LA (35, same slots)","35, same slots",ga
