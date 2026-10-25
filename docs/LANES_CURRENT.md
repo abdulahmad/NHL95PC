@@ -370,14 +370,6 @@ ShowAwardScreens is in this file (score 19, register 3/4) and comes with it.
 - BlitTileMap 5->5 (2026-10-24, Mhopkinsinc, GA) unchanged
 - BlitTileMap 5->5 (2026-10-24, StaticEck2026, GA) LoadRink as compile context (5, same slots); nothing kept
 
-### `src/c/037_4842A_engine_player_logic/assbench.c`
-
-- assbench 22->22 (2026-10-24, Mhopkinsinc, GA) unchanged
-- assbench 22->22 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-- assbench 22->22 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-- assbench 8->6 (2026-10-24, StaticEck2026, GA) from lane2x/batch8's draft; the count test as !(d >= 0) (facedir in dx as the EXE); d block-local, 0 > d, d <= -1, assignment in the test, d = p->temp1 - 1 forms (11-17), d int, no d; permute 321 (best 6)
-- assbench 22->8 (2026-10-24, StaticEck2026, GA) goto seated replaced by one if (temp1 != 64h) block; the y distance in its own short dy, which gives the EXE widening without the no-op & 0xFF masks (both removed); the count as d = --p->temp1 (dx as in the EXE); context copy of assepen (no change); permute twice (best 7 only with no-op casts, rejected)
-
 ### `src/c/001_10010_main_startup/FadePalette.c`
 
 - FadePalette 7->7 (2026-10-24, Mhopkinsinc, GA) unchanged
@@ -541,6 +533,7 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
 - SetupStatsSourceMenu 42->42 (2026-10-24, Mhopkinsinc, GA) unchanged
+- SetupStatsSourceMenu 42->42 (2026-10-24, StaticEck2026, GA) default: break last / first, the src fallback as nested ifs or a ?: chain (42), y = 0x11 before the loop (44), the n == 4 test inverted (49); permute.py (0 new candidates)
 
 ### `src/c/036_47C31_engine_init/FadeOutPalCycle.c`
 
@@ -548,18 +541,12 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - assthreestars 44->44 (2026-10-24, Mhopkinsinc, GA) unchanged
 - assthreestars 44->44 (2026-10-24, StaticEck2026, GA) compile-context copy of ass_pc_slot20 (no change); the slot / pos pass-through copies written in place (47 / 46 / both 257): ESCALATE: the committed draft keeps two tie-breaker copies (slot, pos)
 
-### `src/c/017_21CDE_player_stats/LeadersScreen.c`
-
-- LeadersScreen 123->84 (2026-10-24, Mhopkinsinc, GA) : an empty `default: break;` closes the column switch
-- LeadersScreen 84->84 (2026-10-24, Mhopkinsinc, GA) unchanged
-- LeadersScreen 84->84 (2026-10-24, Mhopkinsinc, GA) (the kfh / pfh slots)
-- LeadersScreen 84->45 (2026-10-24, StaticEck2026, GA) goto done removed: one while (read(...) == 0x34) loop, goalie part an if block ending in continue (115), permute moved gs after gp (45); if / else, nesting, for and break forms (115-473), nested loops with a result flag r (90); permute twice
-
 ### `src/c/002_1167B_gamesave_io/GameLoop.c`
 
 - GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) . What is left and what was tried is in `docs/UNSURE.md`
 - GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) unchanged
 - GameLoop 62->62 (2026-10-24, Mhopkinsinc, GA) unchanged
+- GameLoop 62->61 (2026-10-24, StaticEck2026, GA) goto-free: each goto out as sub_1B982(); return; (61, size +7: own epilogue and jne-over-jmp at the gameresult == 2 exits; the demo exit keeps its own gameresult = 1 store as in the EXE); permute.py 200 candidates (transforms used up)
 
 ### `src/c/014_1CC3D_frontend_labels/DrawSprite.c`
 
@@ -609,16 +596,7 @@ RunMenu is in this file (score 82, register 38/82) and comes with it.
 - TeamStatsScreen 123->123 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
 - TeamStatsScreen 123->123 (2026-10-24, Mhopkinsinc, GA) . Each has an UNSURE note saying what is left and what was tried.
 - TeamStatsScreen 123->99 (2026-10-24, StaticEck2026, GA) dead-variable reuses removed (x power-play key stored directly, w / e swaps through a block-local k, koff header index in place: 131), declsearch --conflicts (100), permute p after mf (99; 95 only with asymmetric twin-row rewrites, rejected)
-
-### `src/c/022_2D346_game_setup/GameSummaryScreen.c`
-
-- GameSummaryScreen 320->320 (2026-10-24, Mhopkinsinc, GA) . For GameSummaryScreen two real source differences were found but not committed (each alone or together scores worse, 389 / 393): the other-games reads as `othergames[f.i * 2]` (exact in that region) and `k` living in the frame slot the dr
-- GameSummaryScreen 320->287 (2026-10-24, Mhopkinsinc, GA) : the frame index
-- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
-- GameSummaryScreen 287->372 (2026-10-24, abdulahmad, LA) no source change. GA is 287, size +38.
-- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) roster index side * 0x444 + f.k * 0x27 (287, same code); linetab[side][0x28 + f.i] / (linetab[side] + f.i)[0x28], each also with the roster order (287, same code); f.i as plain local 327 (+4 frame, extras loop unchanged); page init chained goals / chained ints / both / five-way chain (287, same code); period as plain local (pad kept) 298 (+9, frame +4); all 8 byte members as plain locals 311 (+9); declsearch --conflicts nothing to move on the base, 3 of 7 byte slots on the all-bytes version; one permute run 449 candidates best 253 (+40) via cast:334 unsigned_char + chain + two loop rewrites (rejected); regsolve: only the tried d10 / d100 swap, savings bumps and temporary drops
-- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) whole frame struct as plain locals in struct order (first/last as parameters, pads dropped) 561 (size -32, frame 7ECh vs 7F0h); declsearch --conflicts on that best 23 of 44 slots 544 (permute.py 637), frame gap stays; the EXE frame is GA's size-ascending order, so plain locals look original but one scalar the EXE spills is registered in C
-- GameSummaryScreen 287->287 (2026-10-24, StaticEck2026, GA) goal count through its own int goals instead of the dead crest (block-local or function scope: 346 each); not kept, the dead-variable reuse stays (ESCALATE: dead-variable reuse)
+- TeamStatsScreen 99->91 (2026-10-24, StaticEck2026, GA) `for (w = e = i = 0; ...)` in both conference splits (91; e = w = i 95, w = e = 0 before the for 96); declsearch --conflicts (no better order); the frame arrays as plain locals (164, declsearch best 172); permute.py 577 candidates (84 only with an asymmetric twin-row rewrite, rejected); both twin rows rewritten (141-148)
 
 ## Escalations — Abdul (lane T)
 
@@ -697,3 +675,15 @@ LoadGameRoster — size 2/3, owner StaticEck2026
 - LoadGameRoster 21->21 (2026-10-24, StaticEck2026, GA) a tie in the unstable sort. `& 0xFF` fixes loop 1
 - LoadGameRoster 21->21 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (no reorder predicted); n assigned in the index (21); unsigned n (25); 11 * s.i / 2 * n (21); s.i++ in the loop body (21)
 - LoadGameRoster 21->21 (2026-10-24, Mhopkinsinc, GA) gmrosterslot[n + n] (21); [2 * n] (21); gmroster[n * 2 + 2] (21); k = s.i copy (40); product in k (26); product in a block-local j (24, size 0, loop 1 unchanged); no product local [s.i * 11 * 2] (26) / [(s.i * 11) << 1] (24, loop 1 unchanged)
+
+### `src/c/022_2D346_game_setup/GameSummaryScreen.c`
+
+GameSummaryScreen — register 182/268, owner Mhopkinsinc
+- GameSummaryScreen 320->320 (2026-10-24, Mhopkinsinc, GA) . For GameSummaryScreen two real source differences were found but not committed (each alone or together scores worse, 389 / 393): the other-games reads as `othergames[f.i * 2]` (exact in that region) and `k` living in the frame slot the dr
+- GameSummaryScreen 320->287 (2026-10-24, Mhopkinsinc, GA) : the frame index
+- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) . Details in `docs/UNSURE.md`
+- GameSummaryScreen 287->372 (2026-10-24, abdulahmad, LA) no source change. GA is 287, size +38.
+- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) roster index side * 0x444 + f.k * 0x27 (287, same code); linetab[side][0x28 + f.i] / (linetab[side] + f.i)[0x28], each also with the roster order (287, same code); f.i as plain local 327 (+4 frame, extras loop unchanged); page init chained goals / chained ints / both / five-way chain (287, same code); period as plain local (pad kept) 298 (+9, frame +4); all 8 byte members as plain locals 311 (+9); declsearch --conflicts nothing to move on the base, 3 of 7 byte slots on the all-bytes version; one permute run 449 candidates best 253 (+40) via cast:334 unsigned_char + chain + two loop rewrites (rejected); regsolve: only the tried d10 / d100 swap, savings bumps and temporary drops
+- GameSummaryScreen 287->287 (2026-10-24, Mhopkinsinc, GA) whole frame struct as plain locals in struct order (first/last as parameters, pads dropped) 561 (size -32, frame 7ECh vs 7F0h); declsearch --conflicts on that best 23 of 44 slots 544 (permute.py 637), frame gap stays; the EXE frame is GA's size-ascending order, so plain locals look original but one scalar the EXE spills is registered in C
+- GameSummaryScreen 287->287 (2026-10-24, StaticEck2026, GA) goal count through its own int goals instead of the dead crest (block-local or function scope: 346 each); not kept, the dead-variable reuse stays (ESCALATE: dead-variable reuse)
+- GameSummaryScreen 287->287 (2026-10-24, StaticEck2026, GA) block-local int goals for the goal count (346) + declsearch --conflicts (nothing to move); on it a chained nperiods / goals[0] clear (342), the skip loop as while (332), both (328); permute.py 641 candidates from the 346 (best 248 only with an (unsigned char) cast, an unsigned parameter and a moved statement, rejected); ESCALATE: dead-variable reuse (crest) stays in the committed draft
