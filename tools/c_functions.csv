@@ -781,7 +781,7 @@ RatingToFloat,6F6AD,39,052_6D2F8_create_player,src/c/052_6D2F8_create_player/Rat
 RemovePlayerFromTeam,71043,149,052_6D2F8_create_player,src/c/052_6D2F8_create_player/RemovePlayerFromTeam.c,matched,,
 FixJerseyNumber,6DCBE,398,052_6D2F8_create_player,src/c/052_6D2F8_create_player/RosterPanelClick.c,matched,"draft (RosterPanelClick.c): 399 vs 398, loop register pair. See UNSURE.",
 RosterPanelClick,6DAC3,507,052_6D2F8_create_player,src/c/052_6D2F8_create_player/RosterPanelClick.c,nonmatching,"draft: 507 vs 507. The free-agent toggle folds falistsel into edi (add edi,eax / mov al,[edi]) where the original is mov dl,[edi+eax]. A named pointer and a split byte local still fold. Do not retry fa[row] = ~fa[row] or bit = ~fa[row].",size 7/8
-SelectMatchingPlayers,71690,429,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SelectMatchingPlayers.c,nonmatching,,size 2/2
+SelectMatchingPlayers,71690,429,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SelectMatchingPlayers.c,matched,,
 SetRosterTeamMenus,7183D,292,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SetRosterTeamMenus.c,nonmatching,,size 5/8
 ShellSortBytes,6D7ED,173,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShellSortBytes.c,matched,,
 LoadRosterList_fa,6D89A,244,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShellSortBytes.c,matched,,

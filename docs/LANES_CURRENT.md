@@ -75,13 +75,6 @@ These files are in lane 2 by segment. StaticEck2026 made two consecutive no-gain
 - checkgoal 1->1 (2026-10-24, Mhopkinsinc, GA) x = y; x = -x; x >>= 1 (3, -2 bytes); x = -y; x >>= 1 (3); short z copy (3); short z x = z >> 1 (worse); y = -y; x = y; x >>= 1 (3); x = y; x = -x; p->Zvel = x >> 1 (5, size 0); int z = -p->Zvel (1); test p->Zvel < 0 with z = -p->Zvel (worse); x = -p->Zvel; x >>= 1 (14); int z p->Zvel = x >> 1 (20); int z z = y; z = -z (12); block int (1); p->Zvel = x >>= 1 (1 / 14); y load split from test (1); z = -(unsigned short)y (2, +3); permute.py 4 min on goto-free draft (321, base)
 - checkgoal 1->1 (2026-10-25, abdulahmad, GA) lane T diagnosis: short z (`z = -y; x = z; x >>= 1`) gives z the register of y (AX, -2 bytes: the EXE keeps z in edx, apart from y); tieorder.py on that version (10 min): no tie order fixes it (size stays -2). Nothing kept.
 
-### `src/c/052_6D2F8_create_player/SelectMatchingPlayers.c`
-
-- SelectMatchingPlayers 7->7 (2026-10-24, StaticEck2026, GA) the add order of the address.
-- SelectMatchingPlayers 7->7 (2026-10-24, StaticEck2026, GA) Base-first address spellings (11-30), SplitPlayerName with an unsigned char * name (7-11).
-- SelectMatchingPlayers 7->7 (2026-10-24, abdulahmad, GA) lane T batch: the name as a 1Bh-byte record field `((FaEntry *)falist)[i].name` (head[8], name[19]) gives the EXE's add order (base, then 8) but swaps product / base registers (11, +1; a savings-30 tie, regdump); same with `->name`, `&...name[0]`, unsigned name, falist declared `FaEntry *` in the file (all 11); permute.py 10 min from the record base, natural transforms only (321, best 11). Nothing kept.
-- SelectMatchingPlayers 7->7 (2026-10-24, Mhopkinsinc, GA) regsolve (nothing); EXE association with falist left: (char *)(falist + i * 27) + 8, FARec record [i].name / (i + p)->name / i[p].name, FARow 2-D, &(i * 27)[falist] + 8, (char *)(i * 27 + falist) + 8 (all 11: product / falist registers swapped); int sums with (int)falist in three orders and (char *)(i * 27) + (int)falist + 8 (17, falist folded), &((char *)(i * 27))[(int)falist + 8] (23); permute.py 4 min on the falist + i * 27 base (385, best 10 with a cast, rejected); probe: the loop alone gives the EXE adds with (char *)(falist + i * 27) + 8; on that base 23 orders of f / l / i / k and k scoped (11)
-
 ### `src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c`
 
 - ReassignCtlPlayer 10->10 (2026-10-24, StaticEck2026, GA) the EXE's counter is a `short`. With it the draft scores 14
