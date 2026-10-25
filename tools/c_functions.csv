@@ -366,12 +366,12 @@ SeriesLength,42221,116,034_41B80_schedule,src/c/034_41B80_schedule/SeriesLength.
 SetSeriesTeams,42F42,171,034_41B80_schedule,src/c/034_41B80_schedule/SetSeriesTeams.c,matched,,
 SeedPlayoffRound1,42FED,1623,034_41B80_schedule,src/c/034_41B80_schedule/SimPlayoffRound1.c,matched,,
 SeedPlayoffRound2,43757,1769,034_41B80_schedule,src/c/034_41B80_schedule/SimPlayoffRound1.c,matched,"same size, 12 differing lines: month slot, one sum order; see docs/UNSURE.md",
+SimPlayoffRound2,43E40,267,034_41B80_schedule,src/c/034_41B80_schedule/SimPlayoffRound1.c,matched,,
 SimPlayoffRound3,443B6,275,034_41B80_schedule,src/c/034_41B80_schedule/SimPlayoffRound1.c,matched,,
 SeedPlayoffFinal,444C9,733,034_41B80_schedule,src/c/034_41B80_schedule/SimPlayoffRound1.c,matched,"same size, 14 differing lines; EXE tail is UpdateSeasonSchedule_pop3 (cannot be marked here); see docs/UNSURE.md",
 SimPlayoffFinal,447A6,227,034_41B80_schedule,src/c/034_41B80_schedule/SimPlayoffRound1.c,matched,"draft: same size; team index is bl (original cl) and i+1 is lea ecx,[eax+1] (original inc eax). A while loop moved the compare above the index load. Do not retry the while.",
 UpdateSeasonSchedule,41CC4,672,034_41B80_schedule,src/c/034_41B80_schedule/SimPlayoffRound1.c,context,compile context; matched in src/c/034_41B80_schedule/UpdateSeasonSchedule.c,
-SimPlayoffRound1,43644,275,034_41B80_schedule,src/c/034_41B80_schedule/SimPlayoffRound1.c,nonmatching,,slot 6/9
-SimPlayoffRound2,43E40,267,034_41B80_schedule,src/c/034_41B80_schedule/SimPlayoffRound1.c,nonmatching,,size 2/2
+SimPlayoffRound1,43644,275,034_41B80_schedule,src/c/034_41B80_schedule/SimPlayoffRound1.c,nonmatching,,slot 4/4
 SeedPlayoffRound3,43F4B,1131,034_41B80_schedule,src/c/034_41B80_schedule/SimPlayoffRound1.c,nonmatching,"same size, first pass: EXE frame one dword larger (spilled buf + 1F8h); see docs/UNSURE.md",register 8/13
 SimScheduleDay,42631,634,034_41B80_schedule,src/c/034_41B80_schedule/SimScheduleDay.c,matched,,
 SwapInt,42F19,41,034_41B80_schedule,src/c/034_41B80_schedule/SwapInt.c,matched,,
