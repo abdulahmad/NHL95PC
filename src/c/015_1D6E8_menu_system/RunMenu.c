@@ -504,11 +504,13 @@ typedef struct { char c[0x34]; } PlayerRec52;
     sel[1] = sel[2] = sel[3] = 0; \
     nitems[1] = nitems[2] = nitems[3] = 0
 
-/* DRAFT under 10.0 GA: 3,345 bytes as the EXE, 109 differing. The highlight row is computed into k before the
+/* DRAFT under 10.0 GA: 3,345 bytes as the EXE, 104 differing. The highlight row is computed into k before the
    sub_90F38 call: with the ternary inside the pushed arguments Watcom gave the function a biased ebp frame (and
    20 bytes of spills). The menu state is plain locals, as in RunMenu, in the order declsearch --conflicts finds
-   for the EXE's slots (all 17 as in the EXE). Left: register picks from the size product on (the name-search
-   loops, the StrPrefixDiffers address sums), a tail cross-jump; see docs/UNSURE.md. */
+   for the EXE's slots (all 17 as in the EXE). Both reselect arms draw the new item through sel[level] (the EXE
+   cross-jumps the last arm into the first after the pushes, once the registers agree); depth++ before the
+   dropdown. Left: register picks from the size product on (the name-search loops, the StrPrefixDiffers address
+   sums, the item kept in eax after `sel[i] = item`); see docs/UNSURE.md. */
 /* RunPlayerPickMenu (1ED96, PC only; ends in RunMenu_ret4): RunMenu with a player picker under it, for the player
    stats screens. The selected player (statsplayer, found in the shown list by his first and last name with
    StrPrefixDiffers, goalies when the position letter is G) is shown by an xor bar (sub_90F38: skaters from row 43h,
@@ -642,7 +644,7 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                     DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
                         pos[level][1], col1, col2, col3);
                     sel[level] = item;
-                    DrawMenuItemNorm((struct MenuItem *)&menus[level][item], pos[level][0],
+                    DrawMenuItemNorm((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
                         pos[level][1], col1, col2, col3);
                 }
             } else if (m->on2) {
@@ -666,7 +668,7 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                 DrawMenuItemSel((struct MenuItem *)&menus[i][sel[i]], pos[i][0], pos[i][1], col1, col2, col3);
                 sel[i] = item;
                 DrawMenuItemNorm((struct MenuItem *)&menus[i][item], pos[i][0], pos[i][1], col1, col2, col3);
-                depth = i + 1;
+                depth++;
                 menus[depth] = (MenuItem *)menus[level][item].on2;
                 m = &menus[level][item];
                 nitems[depth] = m->pad;
@@ -689,7 +691,7 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                 DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
                     pos[level][1], col1, col2, col3);
                 sel[level] = item;
-                DrawMenuItemNorm((struct MenuItem *)&menus[level][item], pos[level][0], pos[level][1],
+                DrawMenuItemNorm((struct MenuItem *)&menus[level][sel[level]], pos[level][0], pos[level][1],
                     col1, col2, col3);
             }
         } else {
