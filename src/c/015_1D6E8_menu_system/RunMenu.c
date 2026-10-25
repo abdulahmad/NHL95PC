@@ -33,13 +33,16 @@ int RunPlayerPickMenu(MenuItem *bar, int n, int col1, int col2, int col3);
 int TeamFromMouse(int x, int y, int *idx);  /* 26B5A */
 void __cdecl sub_90F38(int x, int y, int w, int h, int col);  /* graphics library: xor a box */
 
-/* DRAFT under 10.0 GA: 2,075 bytes as the EXE, 72 differing instructions. The menu state is plain locals (in
+/* DRAFT under 10.0 GA: 2,075 bytes as the EXE, 6 differing instructions. The menu state is plain locals (in
    one frame struct a store to sel[level] could alias level, so level was reloaded where the EXE keeps it in a
    register), in the declaration order declsearch --conflicts finds for the EXE's slots (all as in the EXE). The
    submenu branch reads the clicked item in place (the EXE keeps &menus[level][item] for on2, pad and x, and
-   reloads it for y after the pos store). Left: the pointer-size product (`lea ebx, [eax+1]` vs `inc ebx`),
-   the submenu close loop's jump to its test, depth++ placed after the second
-   DrawMenuItemNorm in the EXE, the reselect arm's Norm cross-jump and register picks. */
+   reloads it for y after the pos store), closes the deeper dropdowns in a for loop (the EXE jumps to its test)
+   and counts depth up after the second DrawMenuItemNorm. Both the hit and the miss branch end in their own
+   sub_91400 (the EXE merges the two calls, so the arms of the hit branch share one push sequence and the
+   reselect arm cross-jumps into the last arm's DrawMenuItemNorm). Left: register picks, the pointer-size
+   product (`lea ebx, [eax+1]` vs `inc ebx`) and &menus[level][item] (item << 5 in eax vs EXE ebx); see
+   docs/UNSURE.md. */
 /* RunMenu (1D6E8, PC only; owner of RunMenu_ret4): run a menu bar of n items in the colours col1-col3 until an
    action returns 1. Save the screen under the pointer (POINTERM block, the pointer bitmap's size plus one) and
    centre the pointer on the bar. Then follow the mouse: a click on an item with an action runs it on the second
@@ -143,8 +146,7 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
             } else if (m->on2) {
                 sub_903F0(ptr, oldmx, oldmy);
                 if (depth != level) {
-                    i = depth;
-                    do {
+                    for (i = depth; i > level; i--) {
                         sel[i] = 0;
                         if (bg[i]) {
                             sub_903F0(bg[i], pos[i][0], pos[i][1]);
@@ -154,15 +156,14 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                             menus[i] = 0;
                             nitems[i] = 0;
                         }
-                        i--;
-                    } while (i > level);
+                    }
                     depth = level;
                 }
                 i = depth;
                 DrawMenuItemSel((struct MenuItem *)&menus[i][sel[i]], pos[i][0], pos[i][1], col1, col2, col3);
                 sel[i] = item;
-                depth++;
                 DrawMenuItemNorm((struct MenuItem *)&menus[i][item], pos[i][0], pos[i][1], col1, col2, col3);
+                depth++;
                 menus[depth] = (MenuItem *)menus[level][item].on2;
                 nitems[depth] = menus[level][item].pad;
                 pos[depth][0] = (depth != 1 ? menus[level][item].x2 : menus[level][item].x1) + pos[depth - 1][0];
@@ -187,6 +188,7 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
                 DrawMenuItemNorm((struct MenuItem *)&menus[level][item], pos[level][0], pos[level][1],
                     col1, col2, col3);
             }
+            sub_91400(ptr, oldmx, oldmy);
         } else {
             sub_903F0(ptr, oldmx, oldmy);
             for (i = 3; i >= 0; i--) {
@@ -201,8 +203,8 @@ int RunMenu(MenuItem *bar, int n, int col1, int col2, int col3)
             bg[0] = bg[1] = bg[2] = bg[3] = 0;
             sel[1] = sel[2] = sel[3] = 0;
             nitems[1] = nitems[2] = nitems[3] = 0;
+            sub_91400(ptr, oldmx, oldmy);
         }
-        sub_91400(ptr, oldmx, oldmy);
         sub_903F0(ptr, oldmx, oldmy);
         sub_91400(ptr, mx, my);
         sub_91370(pointerspr, mx, my);
