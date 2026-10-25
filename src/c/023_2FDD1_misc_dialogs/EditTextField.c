@@ -19,11 +19,13 @@ int TickDeadlinePassed(void);
 void __cdecl sub_B3D46(int n);
 int sub_B3D64(void);
 
-/* DRAFT under 10.0 GA: 0 differing (the EXE bytes), unmarked: ESCALATE, the dead parameter x holds the insert
-   state after editx is stored (dead-variable reuse). With its own int ins the parameters x and w tie (savings 3)
-   and w takes EBP where the EXE has x (7 differing at the entry). No goto: the poll is an inner
+/* DRAFT under 10.0 GA: 7 differing, same size, no goto. The poll is an inner
    `while (!(key = PollKey())) { if (sub_B3D64()) { key = 0; break; } idle }`, the blink an early
-   `if (!key) { ...; continue; }`, and Watcom's jump straightening gives the EXE's bottom poll. */
+   `if (!key) { ...; continue; }`, and Watcom's jump straightening gives the EXE's bottom poll. Left: the
+   parameters x and w tie at savings 3 and w takes EBP (the EXE has x in EBP and w at [esp]); tieorder: that
+   one swap gives the EXE bytes. With the dead parameter x as the insert state instead of ins, x's savings
+   rise and the function compiles to the EXE bytes (commit b04f5a2), but that is dead-variable reuse
+   (ESCALATE), so it is not kept. */
 /* EditTextField (3170D, PC only): edit the text buf (maxlen characters) in a field w wide at x, y. Draws the text
    and a blinking cursor (DrawEditText / DrawEditCursor, editpos ...); left / right / home / end move the cursor,
    Ins toggles insert mode (a full-height cursor), Del and Backspace delete, and other keys are typed in when flags
@@ -35,6 +37,7 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
     int key;
     int i;
     int c;
+    int ins;
 
     sub_B4BA8();
     editx = x;
@@ -44,7 +47,7 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
     editpos = 0;
     DrawEditText(flags);
     editcuron = editcurw = 1;
-    x = 0;
+    ins = 0;
     DrawEditCursor(flags);
     SetTickDeadline(timeout);
     sub_B3D46(4);
@@ -92,11 +95,11 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
             continue;
         } else if (key == 0x5200) {
             DrawEditCursor(flags);
-            if (!x) {
-                x = 1;
+            if (!ins) {
+                ins = 1;
                 editcurw = byte_D42C3;
             } else {
-                x = 0;
+                ins = 0;
                 editcurw = 1;
             }
             DrawEditCursor(flags);
@@ -133,7 +136,7 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
                 } else continue;
             }
             DrawEditCursor(flags);
-            if (!x) {
+            if (!ins) {
                 if (!buf[editpos]) buf[editpos + 1] = 0;
                 buf[editpos] = key;
             } else {
