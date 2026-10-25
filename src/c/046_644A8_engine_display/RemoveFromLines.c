@@ -8,16 +8,19 @@
    the forwards (byte_E9E4A) into word_E9F12. The table is 4 lines of 3 forwards, 3 pairs of defence, two power
    play units (2 x 5) and two penalty kill units (2 x 4) (RefillLineSlots), two goalie slots (PickGoalie) and two
    extra-skater slots (PickExtraSkater). side: the team; pnum: the roster index. No result.
-   DRAFT (10.0 GA, 36 differing, 811 vs 807): one dressed-list entry local per counting loop (r, r2: each ranks below
-   the side * 444h temporaries as in the EXE) and the defence index as `i + side * 0x19` (the EXE's add order). Left:
-   r / r2 take di (EXE ax), the loop zeros use other temporaries, and the goalie loop caches pnum in ecx (original
-   compares the stack word). See docs/UNSURE.md. */
+   DRAFT (10.0 GA, 59 differing, 811 vs 807): one dressed-list entry local per counting loop (r, r2: each ranks
+   below the side * 444h temporaries as in the EXE), the defence index as `i + side * 0x19` (the EXE's add order),
+   the line-slot counter j a short. Left: i and j swap stack slots (j's loop-weighted use count 1240 is above i's
+   668, so j gets the upper slot; the EXE has i there), r / r2 take di (EXE ax), the loop zeros use other
+   temporaries, and the goalie loop caches pnum in ecx (original compares the stack word). An int j with the
+   tests written `(short)j < 3` gives the EXE's 4-byte j slot below i and its word compares (36 differing), but
+   that is a no-op cast (ESCALATE, not kept). See docs/UNSURE.md. */
 void RemoveFromLines(short side, short pnum)
 {
     signed char *lt;
     short k;
     short i;
-    int j;
+    short j;
     short r;
     short r2;
 
@@ -39,16 +42,16 @@ void RemoveFromLines(short side, short pnum)
     }
     k = 0;
     for (i = 0; i < 4; i++)
-        for (j = 0; (short)j < 3; k++, j++)
+        for (j = 0; j < 3; k++, j++)
             if (*lt++ == pnum) RefillLineSlots(side, k, i, 4, 3);
     for (i = 0; i < 3; i++)
-        for (j = 0; (short)j < 2; k++, j++)
+        for (j = 0; j < 2; k++, j++)
             if (*lt++ == pnum) RefillLineSlots(side, k, i, 3, 2);
     for (i = 0; i < 2; i++)
-        for (j = 0; (short)j < 5; k++, j++)
+        for (j = 0; j < 5; k++, j++)
             if (*lt++ == pnum) RefillLineSlots(side, k, i, 2, 5);
     for (i = 0; i < 2; i++)
-        for (j = 0; (short)j < 4; k++, j++)
+        for (j = 0; j < 4; k++, j++)
             if (*lt++ == pnum) RefillLineSlots(side, k, i, 2, 4);
     for (i = 0; i < 2; k++, i++)
         if (*lt++ == pnum) PickGoalie(side, k, 0);
