@@ -259,6 +259,7 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - PostGameToTeamDb 129->122 (2026-10-24, Mhopkinsinc, GA) k roles as separate locals: key only 137 (+1) then declsearch --conflicts --write 122 (kept, size +1); goal count only 293; offsets only 288; count+key 318; count+offsets 318; key+offsets 329; all three 329 (frame grows); regsolve after: k->EDI, r->EAX, ss->EDX only by savings bumps
 - PostGameToTeamDb 122->122 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (k->EDI, r->EAX, ss->EDX only by savings bumps); slotdump --count i 20 / 25 / 29, j 360 / 400, score 26 / 29 / 30 / 35, score 32 + j 33, score 32 + i 347: no count gives the EXE j / score / i slots; probe of the score chain alone: every arm reloads (no cwde), arm 2 as 1 + hmscore[0] and else if (awscore > hmscore[0]) the same
 - PostGameToTeamDb 122->122 (2026-10-25, Mhopkinsinc, GA) tieorder.py --minutes 20: the best tie order gives 121 (662 orders): pass 0 savings-80 run: sorted t256 t254 key, needed t256 key t254 (t254 ECX -> EAX); real-compiled declaration moves: best 115 (declare j before res)
+- PostGameToTeamDb 122->105 (2026-10-25, StaticEck2026, GA) j before res (tieorder's move, 115, kept); tie goalies through hmtmstruct / awtmstruct .tmgoalie / .tmlines (125) + declsearch --conflicts order (108, kept; i / j EXE slots); sideofs before key (tieorder on the 108, 105, kept); away tie-goalie spellings: index[ptr], *(i + p + 24h), 24h + i, (p + 24h)[i], awtmgoalie with tmlines (125 each, index stays in eax), old awtmlines cast (133)
 
 ### `src/c/010_18D7F_frontend_desk/SportsDesk.c`
 
@@ -269,6 +270,7 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - SportsDesk 303->192 (2026-10-24, Mhopkinsinc, GA) if (MenuHitTest()) hit else miss (EXE block order; 432 alone, size -55) + declsearch order 219 + dropdown ternaries depth != 1 both 207 (x only 214, y only 212) + declsearch --conflicts 192 (kept; size -55: the miss arm's tail cross-jumps whole)
 - SportsDesk 192->192 (2026-10-24, Mhopkinsinc, GA) ESCALATE: dead-variable reuse (action result r stored in btn, the EXE slot [esp+3DCh] of btn) 237 (permute 348, size +27), with declsearch --conflicts order 183 (size +25): the miss tail splits as in the EXE (own sub_91400, jmp to the shared sub_91370 call); motion path as if-block 192 (same code); click handling as else arm with the tail inside 192 (same code); r declared in the hit-arm block 412; short r 432
 - SportsDesk 192->192 (2026-10-25, Mhopkinsinc, GA) tieorder.py --minutes 20: the best tie order gives 185 (507 orders): pass 0 savings-90 run: sorted t368 t370, needed t370 t368 (t368 ESI -> EDI, t370 EDI -> ESI); real-compiled declaration moves: best 192 (declare ptrsize before bg)
+- SportsDesk 192->192 (2026-10-25, StaticEck2026, GA) ot as if / else (424: still setle); conference or as V | H (192, size -2), compare V != H (194); ptrsize (h + 1) * (w + 1) (194); the three MakePath ternaries as a call per arm (335 / 416 / 400); t368 / t370 = depth * 8 / depth * 4 (temporary run, no declaration move)
 
 ### `src/c/035_45282_options_settings/SimulateGame.c`
 
@@ -277,6 +279,7 @@ assgoalie is in this file (score 21, size 12/22) and comes with it.
 - SimulateGame 572->566 (2026-10-24, Mhopkinsinc, GA) score[2] and rate[2] declarations swapped 566 (kept; declsearch cannot read their slots); declsearch 720 orders no gain; score before rate at rate's line 612 (+33); rate after score 640; err / periodlen swap 566 (no change); tick / shotv swap 588 (+33); key via new int key in both key loops 557 (+43, not kept), skater loop only 661; key via v 645 (+52)
 - SimulateGame 566->566 (2026-10-24, Mhopkinsinc, GA) allocation loop: plain for (i...) indexed by i 566 (same code, kept: replaces the sv dead-variable reuse), sv = i before the first store 566, do/while (++i < 2) 566, sv first with i++ 566; regsolve: only savings bumps (slot/c/best +1) predict 1 of 7
 - SimulateGame 566->566 (2026-10-25, Mhopkinsinc, GA) tieorder.py --minutes 20: no tie order found in 20 minutes (171 orders, inconclusive)
+- SimulateGame 566->566 (2026-10-25, StaticEck2026, GA) tieorder --savings 250 --pass 0 (t62 = shl i, 2: no tie order helps); stores as *(f.X + i) (566), do { ...; i++; } while (i < 2) (566), loop index j (581) / k (1346)
 
 ## Escalations — Abdul (lane T)
 
