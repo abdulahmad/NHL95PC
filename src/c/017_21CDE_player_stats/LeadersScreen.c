@@ -24,14 +24,6 @@ int j___close(int fh);  /* CRT close thunk */
 #define W(p, o) (*(unsigned short *)((char *)(p) + (o)))
 #define CMP(i, j) ((int (*)(int *, int *))leadersortfns[cat])(i, j)
 
-/* DRAFT under 10.0 GA: 45 differing, 16 bytes long; no goto. The key file is read by one top-tested
-   `while (read(...) == 0x34)` loop with the goalie part as an if block that ends in continue (Watcom lays it
-   out as the EXE: a jump to the read, the goalie tail and qsort before it), gs declared after gp (kfh / pfh
-   and the goalie teamgp register as in the EXE). The column switch ends in an empty default: case 10 then
-   jumps to the end too, its PrintFmt2 tail merges into case 7's, and Watcom moves the loop increment and the
-   code after the loop up behind case 7, as in the EXE. Left: the statsfromleague index temporaries of the two
-   MakePath calls in ebx (EXE eax), the shooting-percentage key (the EXE divides by j in memory), the jump
-   table starting at 3 (EXE 0) and the header column CSE. */
 /* LeadersScreen (25B24, PC only): the league leaders of category cat (0-7 skaters: points, goals, assists, power
    play goals, short-handed goals, penalty minutes, plus / minus, shooting percentage; 8-10 goalies: goals against
    average, wins, save percentage) for the stats screens' league (statsleague; season or league stats,
@@ -44,28 +36,28 @@ int j___close(int fh);  /* CRT close thunk */
    category. Result 0. */
 int LeadersScreen(int cat)
 {
-    int teamgp[0x1A];
     char title[0x54];
-    int order[0x14];
-    unsigned char trec[0x4C];
-    unsigned char txt[0x40];
-    unsigned short *sp;
-    int i;
-    SStat ss;
-    char path[0x20];
-    int fh;
     int n;
+    int order[0x14];
+    unsigned char txt[0x40];
+    int teamgp[0x1A];
     int y;
-    int pfh;
-    int j;
+    GStat gs;
     PRec key;
+    SStat ss;
+    int fh;
+    char path[0x20];
+    int j;
+    unsigned char trec[0x4C];
+    unsigned short *gsp;
+    int pfh;
+    unsigned short *sp;
     int recsz;
     int gp;
-    GStat gs;
+    int i;
     int kfh;
-    int kf;
     int mf;
-    unsigned short *gsp;
+    int kf;
 
     n = 0;
     statsplayerbuf = (unsigned char *)sub_8CCA8((char *)str_Keys, 0x444, 0x20);
@@ -98,7 +90,7 @@ int LeadersScreen(int cat)
             gp = !statsplayoffs ? W(&gs, 0) : W(&gs, 0x16);
             if (!gp) continue;
             if (cat == 8 || cat == 10) {
-                if (!teamgp[(unsigned char)key.c[0]] || gp * 100 / teamgp[(unsigned char)key.c[0]] < 0x1E) continue;
+                if (!teamgp[key.c[0]] || gp * 100 / teamgp[key.c[0]] < 0x1E) continue;
             } else if (cat == 9) {
                 if ((!statsplayoffs ? W(&gs, 2) : W(&gs, 0x18)) <= 0) continue;
             }
@@ -122,7 +114,7 @@ int LeadersScreen(int cat)
         gp = !statsplayoffs ? W(&ss, 0) : W(&ss, 0x12);
         if (!gp) continue;
         if ((cat == 5 || cat == 7) &&
-            (!teamgp[(unsigned char)key.c[0]] || gp * 100 / teamgp[(unsigned char)key.c[0]] < 0x50)) continue;
+            (!teamgp[key.c[0]] || gp * 100 / teamgp[key.c[0]] < 0x50)) continue;
         ((SStat *)statsskaterbuf)[n] = ss;
         if (cat == 7) {
             j = !statsplayoffs ? W(&ss, 0xE) : W(&ss, 0x20);
@@ -144,8 +136,8 @@ int LeadersScreen(int cat)
         }
         qsort(order, n, 4, (int (*)(const void *, const void *))leadersortfns[cat]);
     }
-    j___close(kfh);
     j___close(pfh);
+    j___close(kfh);
     mf = mainfont;
     kf = kaufmfont;
     sub_B4BA8();
@@ -179,23 +171,23 @@ int LeadersScreen(int cat)
         PrintShadowText(0x50, y, (char *)str_PLAYER2);
         PrintShadowText(0xFA, y, (char *)str_TEAM);
         PrintShadowText(0x172, y, (char *)str_GP6);
-        PrintShadowText(0x19A, y, (char *)off_C6C40[cat * 5]);
-        PrintShadowText(0x1CC, y, (char *)off_C6C40[cat * 5 + 1]);
-        PrintShadowText(0x1F4, y, (char *)off_C6C40[cat * 5 + 2]);
-        if (cat != 9 || statsplayoffs != 1) PrintShadowText(0x21C, y, (char *)off_C6C40[cat * 5 + 3]);
-        PrintShadowText(0x24E, y, (char *)off_C6C40[cat * 5 + 4]);
+        PrintShadowText(0x19A, y, ((char *(*)[5])off_C6C40)[cat][0]);
+        PrintShadowText(0x1CC, y, ((char *(*)[5])off_C6C40)[cat][1]);
+        PrintShadowText(0x1F4, y, ((char *(*)[5])off_C6C40)[cat][2]);
+        if (cat != 9 || statsplayoffs != 1) PrintShadowText(0x21C, y, ((char *(*)[5])off_C6C40)[cat][3]);
+        PrintShadowText(0x24E, y, ((char *(*)[5])off_C6C40)[cat][4]);
         y += 0x10;
         for (i = 0; i < n; i++) {
             j = order[i];
             key = ((PRec *)statsplayerbuf)[j];
             sprintf((char *)printfbuf, (char *)str_C2, (signed char)key.c[2]);
             PrintShadowText(0xA, y, (char *)printfbuf);
-            if ((unsigned char)key.c[1] < 100) PrintFmt1(0x32, y, (char *)str_fmt2d, (unsigned char)key.c[1]);
+            if (key.c[1] < 100) PrintFmt1(0x32, y, (char *)str_fmt2d, key.c[1]);
             FitPlayerName((char *)printfbuf, key.c + 3, key.c + 0x13, 0xA0);
             PrintShadowText(0x50, y, (char *)printfbuf);
             MakePath(path, (char *)&statsleague, (char *)statsteamdbs[0], 0);
             fh = open(path, 0x200);
-            lseek(fh, (unsigned char)key.c[0] * 0x4C, 0);
+            lseek(fh, key.c[0] * 0x4C, 0);
             read(fh, trec, 0x27);
             j___close(fh);
             PrintShadowText(0xFA, y, (char *)trec + 0x1A);
@@ -234,6 +226,7 @@ int LeadersScreen(int cat)
                 if (gsp[10] < 1000) PrintFmt1(0x21C, y, (char *)str_fmtPct0, gsp[10] % 1000);
                 else PrintFmt2(0x21C, y, (char *)str_fmtPct, gsp[10] / 1000, gsp[10] % 1000);
                 break;
+            case 0: case 1: case 2:
             default:
                 break;
             }
@@ -243,7 +236,8 @@ int LeadersScreen(int cat)
     TextGridOff();
     sub_8EA00(txt);
     if (cat == 7) FreeMemBlock((int)statssortkeys);
-    FreeMemBlock((int)(cat < 8 ? statsskaterbuf : statsgoaliebuf));
+    if (cat < 8) FreeMemBlock((int)statsskaterbuf);
+    else FreeMemBlock((int)statsgoaliebuf);
     FreeMemBlock((int)statsplayerbuf);
     return 0;
 }

@@ -129,6 +129,13 @@ functions into `calcpuckcross_ret5/6` and `changeplayer_ret5`: the original was 
 * `cdiff.py File.c --func F` compares one function of the file; `c_progress.py` lists one row per marked block and
   one `nonmatching` row per unmarked function (notes key `c_file` or `c_file:Func` in the csv).
 
+### Per-module compiler flags (segments 051-052 checked)
+
+The roster code of segments 051-052 (RosterPanelClick, SetRosterTeamMenus, SelectRosterTeam) keeps a dead index
+register and indexes twice where C folds the address. A flag scan (2026-10-24) rules out a module flag there: with
+the default flags all 42 matched functions of the two segments match; `-od` keeps 0, `-os` 7, `-ot` 14, `-or` 6,
+`-oa` 30, `-ol` 15, `-s` 2, `-3r` 9, `-4r` 35, and `-oi` changes nothing. Only segments 017-019 use `-od`.
+
 ### Split functions, piece by piece (`tools/splice.py`)
 
 A split function (entry after the function that falls into it, body pieces `F_*` where it was defined) is one asm
@@ -195,6 +202,13 @@ The learnings below were found under LA; they hold under GA unless noted.
 * **Shared epilogues across functions**: StopNA ends with `jmp EvadePlayers_popedi` (the pop/ret tail of
   EvadePlayers), so StopNA can only match in the same file as EvadePlayers.
 * **Chained assignments store right to left**: `joyqtick = joyqcount = 0` stores joyqcount first.
+* **Loop rotation**: `for (i = 0; i < 0x1C; i++)` with a constant start and a constant bound is laid out
+  bottom-tested with no jump to the test (the first test is known true). With the start in its own statement,
+  `i = 0; for (; i < 0x1C; i++)`, the loop keeps the `jmp` to the test, as the EXE's LoadRosterList team clear
+  does. A variable bound (`i < facount`) always keeps the jump.
+* **A register known to hold 0 is reused**: on a path where the test proved `side == 0`, storing the constant
+  (`menu_r1_tofa = 0`) lets Watcom keep side's register as the zero for the following stores (LoadRosterList:
+  `xor esi, esi` / `mov [..], esi`), where `= side` gives a fresh zero register.
 * **Branch layout follows the source**: the `if` arm comes first; flip the condition when the arms are swapped
   (updatePPTeamTime needed `(gmode2 & 0x40) == 0`). Small tails (`inc / ret`) are duplicated into both arms.
 * **`if ((A && B) || C) return 0` shares one epilogue**: a false A jumps to the C test, a true B jumps to
