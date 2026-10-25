@@ -19,13 +19,11 @@ int TickDeadlinePassed(void);
 void __cdecl sub_B3D46(int n);
 int sub_B3D64(void);
 
-/* DRAFT under 10.0 GA: 36 differing, 937 vs 936 bytes. Reuse the dead copy-loop index i for the
-   letter-filter value (C_MATCHING: dead-local reuse), which keeps that value in EAX and fixes most
-   cursor/typing temporaries. x still holds the insert state after editx is stored. Each key arm has its
-   own cursor/redraw tail; Watcom merges them after allocation and preserves the required loop weights.
-   The outer loop uses continue/break. Four jumps retain the EXE's poll entry, idle/input dispatch and
-   late Backspace/typing block; embedding those blocks in structured arms changes the EXE layout.
-   Left: timeout/key-chain register picks, the End loop's shared store and a flags-byte reload. */
+/* DRAFT under 10.0 GA: 0 differing (the EXE bytes), unmarked: ESCALATE, the dead parameter x holds the insert
+   state after editx is stored (dead-variable reuse). With its own int ins the parameters x and w tie (savings 3)
+   and w takes EBP where the EXE has x (7 differing at the entry). No goto: the poll is an inner
+   `while (!(key = PollKey())) { if (sub_B3D64()) { key = 0; break; } idle }`, the blink an early
+   `if (!key) { ...; continue; }`, and Watcom's jump straightening gives the EXE's bottom poll. */
 /* EditTextField (3170D, PC only): edit the text buf (maxlen characters) in a field w wide at x, y. Draws the text
    and a blinking cursor (DrawEditText / DrawEditCursor, editpos ...); left / right / home / end move the cursor,
    Ins toggles insert mode (a full-height cursor), Del and Backspace delete, and other keys are typed in when flags
@@ -51,11 +49,22 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
     SetTickDeadline(timeout);
     sub_B3D46(4);
     for (;;) {
-        goto poll;
-    idle_wait:
-        if (idle) idle();
-        continue;
-    input:
+        while (!(key = PollKey())) {
+            if (sub_B3D64()) {
+                key = 0;
+                break;
+            }
+            if (idle) idle();
+        }
+        if (!key) {
+            sub_B3D46(4);
+            c = editcuron;
+            editcuron = 1;
+            DrawEditCursor(flags);
+            editcuron = !c;
+            if (timeout && TickDeadlinePassed()) break;
+            continue;
+        }
         SetTickDeadline(timeout);
         if (key == 0xD) break;
         if (key == 0x1B && (flags & 4)) break;
@@ -99,22 +108,8 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
             buf[maxlen - 1] = 0;
             DrawEditText(flags);
             DrawEditCursor(flags);
-        } else goto otherkey;
-    poll:
-        key = PollKey();
-        if (!key) {
-            if (!sub_B3D64()) goto idle_wait;
-            key = 0;
+            continue;
         }
-        if (key) goto input;
-        sub_B3D46(4);
-        c = editcuron;
-        editcuron = 1;
-        DrawEditCursor(flags);
-        editcuron = !c;
-        if (timeout && TickDeadlinePassed()) break;
-        continue;
-    otherkey:
         if (key == 8) {
             if (!editpos) continue;
             DrawEditCursor(flags);
@@ -128,8 +123,7 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
             if (flags & 8) {
                 if (!(key >= '0' && key <= '9')) continue;
             } else if (flags & 0x10) {
-                i = key;
-                if (!(i == ' ' || (i >= 'A' && i <= 'Z') || (i >= 'a' && i <= 'z'))) continue;
+                if (!(key == ' ' || (key >= 'A' && key <= 'Z') || (key >= 'a' && key <= 'z'))) continue;
             } else {
                 if (key < 0x20 || key > 0x7A) continue;
                 if (maxlen <= editpos) continue;
