@@ -3925,6 +3925,56 @@ EditRosters,,"`(bits & 2) == 0` (108), `sel[i] = 0; nitems[i] = 0;` in the Roste
 EditRosters,,"the on2 draws through depth instead of `i = depth` (108), `-1 == editrosters_exit` (108)",108,ga
 LoadGameState,,"(natural statement shapes, 37 unless noted): `p = (short *)buf + 1` (34, size +6: other code), `n = 0; i = 0;` (37), `i = 0; n = 0;` (39), `n = n - 0x10`, `&SortCords[i]` for the sort-object reads, `(char *)&hmtmstruct + (i << 8)`, `crowdlevel = *p++; crowdsmooth = crowdlevel;`, `o->ts = *++p; p++;`, `n = i >= 0x30 ? 0x44 : 0x80` (86)",86,ga
 LoadGameState,,"the mouse test as if / else-if, o->frame before o->first (40), `p = p + 2` after the seed, `(Rec6 *)(char *)q`, `&SortCords[6]` for awtmsort",,ga
+CanFillLineSlot,,"(2026-10-24, lane 1 batch 17, GA): the no-op `(short)side` / `(short)player` casts dropped (31, same code",,ga
+CanFillLineSlot,,not committed alone),,ga
+CanFillLineSlot,,"the row block dropped with sidev only (`hmroster[sidev * 0x444 + player * 39]`: 41, player * 39 then CSEs into pos",,ga
+CanFillLineSlot,,with `(sidev = side)` in the index 34),,ga
+CanFillLineSlot,,CanFillLineSlot defined short (34),34,ga
+CanFillLineSlot,,"on the named form: the assignments inside the index (39), pl assigned before sidev (39), st in two steps (42), `!st` (38), tab after the two assignments (45)",45,ga
+CanFillLineSlot,,"the st == 2 test as two nested ifs (38), `pl * 39 + sidev * 0x444` (42), `pl + sidev * 25` (38)",38,ga
+CanFillLineSlot,,"regsolve on the named form (votes 0/1, only a savings bump of pl)","votes 0/1, only a savings bump of pl",ga
+CanFillLineSlot,,"one permute.py run on the named form (385 candidates, best 37 only with an unsigned short result",,ga
+CanFillLineSlot,,a wrong return type),,ga
+CanFillLineSlot,rettype:unsigned_short,an unsigned short result,tried (docs/UNSURE.md),ga
+FillDressedSlots,,"(2026-10-24, lane 1 batch 17, GA): CanFillLineSlot defined short with the cast dropped (18",,ga
+FillDressedSlots,,CanFillLineSlot itself 31 -> 34) and with `== 0` (18),18,ga
+FillDressedSlots,,`== 0` for the dressed byte (20),20,ga
+FillDressedSlots,,the first two tests as one `||` (20),20,ga
+FillDressedSlots,,the two count tests as one `||` (20),20,ga
+FillDressedSlots,,the first two tests as one nested `if (a && b)` (20),20,ga
+FillDressedSlots,,`if (... != 2) return r;` before the update block (23),23,ga
+FillDressedSlots,,braces on the k loop (20),20,ga
+FillDressedSlots,,`0x12 <= count` (20),20,ga
+FillDressedSlots,,`(r = list[i]) > -1` (49),49,ga
+FillDressedSlots,,"on the short form: `i += 1`, `0 <= (r = list[i])`, `0x19 > i`",,ga
+FillDressedSlots,,a second `return r` inside the update block (18 each),18 each,ga
+FillDressedSlots,,"declsearch --conflicts on the short form (r / i only, no order)",,ga
+InstantReplay,,"(2026-10-24, lane 1 batch 17, GA): `dword_C66D4 = 1; dword_C66D0 = dword_C66D4;` (22), FreeMemBlock in its own block (22)",22,ga
+InstantReplay,,the DrawFrameSprite coordinates without the `(short)` casts (22),22,ga
+InstantReplay,,the pointer test as `if (gadgetptry >= 0xA8) ; else` (22),22,ga
+InstantReplay,,regsolve (nothing),,ga
+MoveToOtherRoster,,"(2026-10-24, lane 1 batch 17, GA), all in the free-agent arm: off dropped from the jersey stores (78), `k = ...` before `off = ...` (31), `KeyDbPtr(...)[1] == p[1]` (29), `p = KeyDbPtr(key = ...)` (27)",27,ga
+MoveToOtherRoster,,"the slot store as `*(int *)(rec + 0x4C + slot * 4)` or `*((int *)(rec + 0x4C) + slot)` (27, 27), `facount > i` (40, +3), `falistsel[i] == 0` with `++nsel` (27), braces on the search loops (27), `rosterjersey[k * 27 + off]` (27), `nsel += 1` (27), `rosterstat[slot * 27 + dst * 0x2F4]` (41), `p[0] = ...` (27), `== 0x47` (27)",27,ga
+MoveToOtherRoster,,"one permute.py run (seed 1717, 321 candidates, nothing better)","seed 1717, 321 candidates, nothing better",ga
+checkgoalp,,"(2026-10-24, lane 1 batch 17, GA): d in steps `d = x; d *= d; d >>= 2;` (37: d rises to 8 and takes EAX), `d = x; d *= x; d >>= 2;` (37), `d = x; d = (d * d) >> 2;` (37)",37,ga
+checkgoalp,,"the first form with a short sc local for both SCnum tests (44, +17)","44, +17",ga
+DrawLockerJersey,,"(2026-10-24, lane 1 batch 17, GA): per-module `int` third parameter for PrintOutlinedText / PrintShadowText and an `int` fputchar argument, alone and together",,ga
+DrawLockerJersey,,with the `(char *)` casts dropped (29 each: the int / pointer casts add no temporary),29 each: the int / pointer casts add no temporary,ga
+DrawLockerJersey,,"the division title read twice instead of through s (29), `*(off_D2230 + ...)` (29)",29,ga
+DrawLockerJersey,,the title x through k (92),92,ga
+DrawLockerJersey,,"`(signed char *)(sub_B30B4(...) + 0x10)` (29), one cast on the JERSV / JERSH ternary (29), `0xA3 + (side != 0)` (29)",29,ga
+DrawLockerJersey,,"the P01 art through i (35, +49), `!gamemode` (29)",29,ga
+DrawLockerJersey,,"one permute.py run (seed 2417, 321 candidates, nothing better)","seed 2417, 321 candidates, nothing better",ga
+passtoa0,,"sp / ax declaration swap). Found: k computed through an int (`r = vx * vx + vy * vy - sp * sp; s.k = r;`) stops the narrowing (the EXE's `sar 10h` loads, 696 bytes) but reshuffles every register from +05B (83)",83,ga
+passtoa0,,either operand order gives the same code,,ga
+passtoa0,,"with sp short 85, as `s.k = r = ...` 82 (with sp short 103). r is reassigned by the root right after, so that copy is a dead-variable reuse (or",,ga
+passtoa0,,with a new int,,ga
+passtoa0,,"a single-use copy): not kept. Tried (2026-10-24, lane 1 batch 17, GA): the above, `vy * vy + vx * vx` order in each form (same scores)",same scores,ga
+passtoa0,,"the root as `if (r > 0) r = sub_93470(r); else r ^= r;` (91, size +21) or `else r = r ^ r` (91), that plus `s.k >>= 2` (84)",84,ga
+passtoa0,,regsolve,,ga
+checkcheck,,"(2026-10-24, lane 1 batch 17, GA): a per-module `AddPenalty(Player *, int)` (71, +2: ebp is no longer used), that plus `SetSPA(Player *, int)` (71), `SetSPA(Player *, int)` alone (32, +2)","32, +2",ga
+checkcheck,,"the penalty as `(randomd0(2) != 0 ? 1 : 0) + 0xB`, `(randomd0(2) ? 1 : 0) + 0xB`, `0xB + (randomd0(2) ? 1 : 0)`, `(randomd0(2) == 0 ? 0 : 1) + 0xB` (34, +3 each: the penalty site and the boarding `inc edx` then match, but the vtoa dy temporary at +079 moves from ax to bx), `randomd0(2) ? 0xC : 0xB` and `randomd0(2) == 0 ? 0xB : 0xC` (31, same as the committed one)","31, same as the committed one",ga
+checkcheck,,"on the committed form the boarding facing test as `< 3` (32), `q->facedir + 1 - p->facedir` (33), `q->facedir - (p->facedir - 1)` (32), `2 >= (...)` (31)",31,ga
 PassLaneChk,,"on the 15 base: the second vtoa result in its own local d (declared first or last), `oy = oy - vtoa(...)`, `y = oy - vtoa(...) + 1` (all 15, no new conflict), `y = 1 + oy - vtoa(...)` (17)",17,ga
 PassLaneChk,,the sum or y - 4Eh in its own local (17),17,ga
 PassLaneChk,,the result as if / else into r (18),18,ga

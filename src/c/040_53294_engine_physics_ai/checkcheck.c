@@ -7,11 +7,12 @@
 
 short FacingBoards(Player *p);
 
-/* DRAFT (10.0 GA, 1211 vs 1209): the facing difference reads p->facedir in place (the EXE's dx load) and the
+/* DRAFT (10.0 GA, 1212 vs 1209): the facing difference reads p->facedir in place (the EXE's dx load) and the
    SPA table entry is read as the top half of a dword at dword_CCC4E + 2 * rel (the EXE's `[eax*2+CCC4E]` /
-   `sar 10h`). Left: the two position gaps under 14h compute the difference in edx and copy it to eax before
-   the sign test (C computes it in eax), the chosen SPA is built in eax (EXE edx), and the later items listed
-   in docs/UNSURE.md. */
+   `sar 10h`); the 0Bh / 0Ch penalty is a ternary (the EXE's `setne al / and eax, 0FFh / add eax, 0Bh`).
+   Left: the two position gaps under 14h compute the difference in edx and copy it to eax before the sign
+   test (C computes it in eax), the chosen SPA is built in eax (EXE edx, no movsx), the boarding test's
+   facing sum is `lea eax, [edx+1]` (EXE `inc edx`), and the later items listed in docs/UNSURE.md. */
 /* checkcheck (5382C, Genesis checkcheck): players p and q are in contact (force: the impact); run it for p
    against q, then for q against p. A holding q (SPA 639h / 873h) goes to holdcheck, a B-check (589h) to Bcheck.
    A checking p (SPA 621h) marks the hit (impact 100h each in gmode bit 0), flags p (pflags 20h) and picks its
@@ -61,7 +62,7 @@ void checkcheck(Player *p, Player *q, short force)
                 if (((q->pflags & 8) != 0) ^ (rel == 0xA0)) rel = 0x78;
                 rel = ((rel - p->weight + q->weight) >> 1) - q->impact;
                 if (rel > 0 && ((gmode & 0x10) || !QuickShotChk(q) || penshotplayer >= 0) && randomd0(rel) > p->checking) {
-                    if (q->SCnum != 0x10 && checkagr(p) <= 4 && !(gmode & 0x10)) AddPenalty(p, (randomd0(2) != 0) + 0xB);
+                    if (q->SCnum != 0x10 && checkagr(p) <= 4 && !(gmode & 0x10)) AddPenalty(p, randomd0(2) != 0 ? 0xC : 0xB);
                 } else {
                     if (q->SCnum == 0x10) {
                         if (p->pflags & 8) {
