@@ -129,7 +129,7 @@ SportsDesk,1935D,4567,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/Spor
 ClearPanelPenalties,1CBD8,101,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/ClearPanelPenalties.c,matched,matched: found by tools/permute.py (the two -1 stores as one chained assignment).,
 InitGameSummary,1BEFD,434,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/InitGameSummary.c,matched,,
 LoadGameTeams,1BBCC,817,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/LoadGameTeams.c,matched,,
-LoadTeamRoster,1C3F6,1041,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,nonmatching,"926 vs 1041. Frame is sub esp,0F4h (cookie 134h); the team index is eax at esp+11Ch. team*186 is add esi,esi where the original shifts the *744 byte offset with shl eax,3. Do not retry explicit shift statements for that index.",size 17/22
+LoadTeamRoster,1C3F6,1041,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,nonmatching,"926 vs 1041. Frame is sub esp,0F4h (cookie 134h); the team index is eax at esp+11Ch. team*186 is add esi,esi where the original shifts the *744 byte offset with shl eax,3. Do not retry explicit shift statements for that index.",size 10/17
 MakeGSummaryPath,1C807,75,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/MakeGSummaryPath.c,matched,,
 OpenPlayerDBs,1C26C,394,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/OpenPlayerDBs.c,matched,,
 ReadPlayerRecs,1C0AF,445,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/ReadPlayerRecs.c,matched,,

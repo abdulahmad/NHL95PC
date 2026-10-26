@@ -98,7 +98,7 @@ Segments 001-037. Work every draft in these files; do not take a file from the o
 
 | C file | Function | Score | Cause |
 |---|---|---:|---|
-| src/c/013_1BBCC_key_team_db/LoadTeamRoster.c | LoadTeamRoster | 46 | size 17/22 |
+| src/c/013_1BBCC_key_team_db/LoadTeamRoster.c | LoadTeamRoster | 42 | size 10/17 |
 | src/c/029_380E9_league_setup/LeagueTeamSelect.c | LeagueTeamSelect | 50 | size 31/52 |
 | src/c/027_33FFD_calendar/CalendarScreen.c | CalendarScreen | 220 | register 118/221 |
 
