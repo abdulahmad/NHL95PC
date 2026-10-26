@@ -16,7 +16,10 @@ differences); unmet targets (swaps unsatisfied + names out of their EXE slot); d
 The edits are permute.py's natural transforms (tiesearch.NATURAL: declaration order and scope, statement and
 operand order, comparison form, loop form, ...) and rewrites.py's expression rewrites (merge / split an
 assignment, reassociate, reuse or recompute a value, swap aliases), which change the temporaries and use counts
-the targets depend on; never a new copy, a cast or a signature change (AGENTS.md).
+the targets depend on; never a copy of a held value, a cast or a signature change (AGENTS.md). rewrites.py's narrow
+(a new unsigned char / short local for a value only tested with a small mask) and alias16 (a 16-bit store moved past
+independent statements) are the edits StaticEck's Fable run found (#247); a declaration move of a name in a tie
+target ranks with the rewrites (the names walk lists the locals in reverse declaration order).
 A rewrite that leaves the score as it was is followed at once by its own rewrites (--lookahead of them), so a
 neutral step that enables a gain (recompute, then merge) is judged by what it leads to; on equal scores rewrites
 rank first. The search keeps the best --beam texts at each step and expands each of them, so it can cross a step that costs
@@ -95,6 +98,13 @@ def main():
     if W: print('  slots: %s' % ', '.join('%s %d' % kv for kv in sorted(W.items(), key=lambda kv: -kv[1])))
     rnd = random.Random(a.seed)
     cand = os.path.join(work, os.path.basename(src))
+    # declorder: the names walk lists the locals in reverse declaration order, so a declaration move of a name in
+    # a tie target is a rewrite toward it (ranked with the rewrites, ahead of the blind moves)
+    tnames = set(re.findall(r'\b[A-Za-z_]\w*\b', ' '.join(str(p_) for p_ in pairs)))
+
+    def decl_of_target(desc):
+        m = re.match(r'(movedecl|swapdecl):([A-Za-z_]\w*)(?::([A-Za-z_]\w*))?', desc)
+        return bool(m) and bool({m.group(2), m.group(3)} & tnames)
 
     def evaluate(text):
         open(cand, 'w').write(text)
@@ -140,7 +150,7 @@ def main():
                 p_ = base_path + [name]
                 w.writerow([time.strftime('%Y-%m-%d'), func, ' > '.join(p_), r[1][0], r[0][1], r[0][2], r[1][2]])
                 log.flush()
-                is_rw = depth > 0 or t in rw
+                is_rw = depth > 0 or t in rw or decl_of_target(name)
                 pool.append((r[0], 0 if is_rw else 1, t, p_))
                 if r[0][0] == 0: break
                 # a rewrite that leaves the score as it was (or better) may enable another: look one step further
