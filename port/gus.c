@@ -35,7 +35,9 @@ static int dma_irq, dma_tc;
 static double native_phase;
 static int cur_l, cur_r, prev_l, prev_r;
 static float vol_table[4096];
+static float pan_left[16], pan_right[16];
 static int initialised;
+static int64_t last_wave_irq_ns;           /* NHL95_TRACE: when a voice last raised its wave interrupt */
 
 static uint32_t addr_for(const struct voice *vo, uint32_t a)
 {
@@ -100,6 +102,7 @@ static void gf1_reset(void)
 static void write_reg(int reg, uint16_t d)
 {
     struct voice *vo = &v[cur_voice];
+    if (trace_on && reg < 0x10 && cur_voice < 2) TRACE("gus: %.3f v%d reg %02x = %04x\n", plat_now_ns() / 1e9, cur_voice, reg, d);
     switch (reg) {
     case 0x00: vo->wave_ctrl = (d >> 8) & 0x7F; vo->running_wave = !(vo->wave_ctrl & 3);
         vo->wave_irq = (d >> 8) & 0x80 ? 1 : 0;     /* bit 7 is the interrupt: written clear it acknowledges it, written set it raises it */
@@ -139,7 +142,19 @@ static void write_reg(int reg, uint16_t d)
             dma_advance(ch, n);
             dma_tc = 1;
             if (dma_ctrl & 0x20) { dma_irq = 1; check_irq(); }
-            TRACE("gus: dma %u bytes to %05x control %02x\n", n, dest, dma_ctrl);
+            if (trace_on) {                             /* how late was the refill, and was the half still being played? */
+                int j, playing = -1;
+                for (j = 0; j < NVOICES; j++)
+                    if (!(v[j].wave_ctrl & 3)) { uint32_t pa = addr_for(&v[j], v[j].cur); if (pa >= dest && pa < dest + n) playing = j; }
+                double sum = 0;
+                uint32_t k, same = 0;
+                static uint8_t prev_block[2048];
+                for (k = 0; k + 1 < n && k < 2046; k += 2) { int smp = (int16_t)(dram[dest + k] | (dram[dest + k + 1] << 8)); sum += (double)smp * smp; }
+                for (k = 0; k < n && k < 2048; k++) same += dram[dest + k] == prev_block[k];
+                memcpy(prev_block, dram + dest, n < 2048 ? n : 2048);
+                TRACE("gus: dma %u bytes to %05x control %02x, %.1f ms after the last wave interrupt, voice playing it: %d, block rms %.0f, %u of %u bytes as in the previous block\n",
+                      n, dest, dma_ctrl, (plat_now_ns() - last_wave_irq_ns) / 1e6, playing, sqrt(sum / (n / 2 ? n / 2 : 1)), same, n);
+            }
         }
         break;
     case 0x42: dma_start = d; break;
@@ -234,9 +249,8 @@ static void step_voice(struct voice *vo, int *l, int *r)
     if (vo->wave_ctrl & 4) s = (int16_t)(dram[a] | (dram[(a + 1) & (DRAM_SIZE - 1)] << 8));
     else s = (int8_t)dram[a] * 256;
     gain = vol_table[vo->vol >> 4];
-    ls = (int)(s * gain * (15 - vo->pan) / 15.0f);
-    rs = (int)(s * gain * (vo->pan ? vo->pan : 1) / 15.0f);
-    if (vo->pan == 0) { ls = (int)(s * gain); rs = 0; }
+    ls = (int)(s * gain * pan_left[vo->pan & 15]);          /* constant power across the 16 positions (the same law as DOSBox) */
+    rs = (int)(s * gain * pan_right[vo->pan & 15]);
     *l = ls; *r = rs;
     /* advance */
     {
@@ -250,13 +264,13 @@ static void step_voice(struct voice *vo, int *l, int *r)
                 if (vo->wave_ctrl & 0x10) { vo->wave_ctrl |= 0x40; vo->cur = vo->end - (vo->cur - vo->end); }
                 else vo->cur = vo->start + (vo->cur - vo->end);
             } else { vo->wave_ctrl |= 1; vo->running_wave = 0; vo->cur = vo->end; }
-            if (vo->wave_ctrl & 0x20) vo->wave_irq = 1;
+            if (vo->wave_ctrl & 0x20) { vo->wave_irq = 1; last_wave_irq_ns = plat_now_ns(); }
         } else if (backward && (int32_t)vo->cur <= (int32_t)vo->start) {
             if (vo->wave_ctrl & 8) {
                 if (vo->wave_ctrl & 0x10) { vo->wave_ctrl &= ~0x40; vo->cur = vo->start + (vo->start - vo->cur); }
                 else vo->cur = vo->end - (vo->start - vo->cur);
             } else { vo->wave_ctrl |= 1; vo->running_wave = 0; vo->cur = vo->start; }
-            if (vo->wave_ctrl & 0x20) vo->wave_irq = 1;
+            if (vo->wave_ctrl & 0x20) { vo->wave_irq = 1; last_wave_irq_ns = plat_now_ns(); }
         }
     }
 }
@@ -303,8 +317,9 @@ static void gus_pump_locked(void)
             sl += l; sr += r;
         }
         if (gfifo_head - gfifo_tail >= GFIFO) gfifo_tail++;       /* full: the oldest is dropped */
-        gfifo_l[gfifo_head % GFIFO] = (int16_t)(sl / 2);
-        gfifo_r[gfifo_head % GFIFO] = (int16_t)(sr / 2);
+        /* the voices are added as they are (a card does not divide): saturate instead */
+        gfifo_l[gfifo_head % GFIFO] = (int16_t)(sl > 32767 ? 32767 : sl < -32768 ? -32768 : sl);
+        gfifo_r[gfifo_head % GFIFO] = (int16_t)(sr > 32767 ? 32767 : sr < -32768 ? -32768 : sr);
         gfifo_head++;
         check_irq();
     }
@@ -345,6 +360,11 @@ void gus_init(int b, int i1, int i2, int d1, int d2)
     int i;
     base = b; irq1 = i1; irq2 = i2; dma1 = d1; dma2 = d2;
     dram = calloc(1, DRAM_SIZE);
+    for (i = 0; i < 16; i++) {                  /* position 0 is hard left, 7 the middle (both at 0.707), 15 hard right */
+        double norm = (i - 7.0) / (i < 7 ? 7 : 8), angle = (norm + 1) * 3.14159265358979 / 4;
+        pan_left[i] = (float)cos(angle);
+        pan_right[i] = (float)sin(angle);
+    }
     for (i = 0; i < 4096; i++) vol_table[i] = (float)((256 + (i & 255)) * (double)(1u << (i >> 8)) / 16777216.0);
     for (i = 0; i < NVOICES; i++) voice_reset(&v[i]);
     audio_add_source(gus_render);

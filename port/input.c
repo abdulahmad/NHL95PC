@@ -92,8 +92,9 @@ static void key_event(SDL_Scancode s, int down)
 }
 
 /* NHL95_KEYS="ms:Key[/hold] ...": presses keys at given times after start (SDL key names, hold in ms, default 100), for testing
- * without a display, e.g. NHL95_KEYS="9000:Return 12000:Down 12500:Return 20000:Up/2000" */
-static struct { int64_t at; SDL_Scancode key; int down; } script[256];
+ * without a display, e.g. NHL95_KEYS="9000:Return 12000:Down 12500:Return 20000:Up/2000". "ms:@x,y" puts the mouse at x,y (game screen
+ * pixels) and "ms:@click[/hold]" presses the left button. */
+static struct { int64_t at; SDL_Scancode key; int down; int kind, x, y; } script[256];     /* kind 0: key, 1: move the mouse, 2: left button */
 static int script_n, script_pos;
 
 static void script_load(void)
@@ -107,7 +108,18 @@ static void script_load(void)
         if (sscanf(s, " %ld:%63[^/ ]%n", &at, name, &len) < 2) break;
         s += len;
         if (*s == '/') { hold = strtol(s + 1, (char **)&s, 10); }
-        SDL_Scancode k = SDL_GetScancodeFromName(name);
+        SDL_Scancode k;
+        int mx, my;
+        if (name[0] == '@') {                           /* "@x,y": the mouse goes there (game screen pixels); "@click": the left button */
+            if (sscanf(name, "@%d,%d", &mx, &my) == 2) {
+                script[script_n].at = at * 1000000LL; script[script_n].kind = 1; script[script_n].x = mx; script[script_n++].y = my;
+            } else if (!strcmp(name, "@click")) {
+                script[script_n].at = at * 1000000LL; script[script_n].kind = 2; script[script_n++].down = 1;
+                script[script_n].at = (at + hold) * 1000000LL; script[script_n].kind = 2; script[script_n++].down = 0;
+            } else fprintf(stderr, "NHL95_KEYS: unknown command %s\n", name);
+            continue;
+        }
+        k = SDL_GetScancodeFromName(name);
         if (k == SDL_SCANCODE_UNKNOWN) { fprintf(stderr, "NHL95_KEYS: unknown key %s\n", name); continue; }
         script[script_n].at = at * 1000000LL; script[script_n].key = k; script[script_n++].down = 1;
         script[script_n].at = (at + hold) * 1000000LL; script[script_n].key = k; script[script_n++].down = 0;
@@ -123,8 +135,17 @@ static void script_poll(void)
     static int64_t start;
     if (!start) { start = plat_now_ns(); script_load(); }
     while (script_pos < script_n && plat_now_ns() - start >= script[script_pos].at) {
-        TRACE("NHL95_KEYS: %s %s\n", SDL_GetScancodeName(script[script_pos].key), script[script_pos].down ? "down" : "up");
-        key_event(script[script_pos].key, script[script_pos].down);
+        if (script[script_pos].kind == 1) {
+            mickey_x += script[script_pos].x - mouse_x; mickey_y += script[script_pos].y - mouse_y;
+            mouse_x = script[script_pos].x; mouse_y = script[script_pos].y;
+            TRACE("NHL95_KEYS: mouse %d,%d\n", mouse_x, mouse_y);
+        } else if (script[script_pos].kind == 2) {
+            if (script[script_pos].down) mouse_buttons |= 1; else mouse_buttons &= ~1;
+            TRACE("NHL95_KEYS: left button %s\n", script[script_pos].down ? "down" : "up");
+        } else {
+            TRACE("NHL95_KEYS: %s %s\n", SDL_GetScancodeName(script[script_pos].key), script[script_pos].down ? "down" : "up");
+            key_event(script[script_pos].key, script[script_pos].down);
+        }
         script_pos++;
     }
 }
