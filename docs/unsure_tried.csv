@@ -4897,3 +4897,59 @@ LoadGameState,,incdec:146:op1=30 (size difference magnitude 6). Retained only o-
 LoadGameState,,exhaustive 65536-value equivalence check passed. Final fresh DOSBox score 30,,ga
 LoadGameState,,make and make CBUILD=0 both MATCH. No ESCALATE find. No tool failure,,ga
 LoadGameState,,existing W113 pointer warnings at unrelated mode-state calls,,ga
+LoadTeamRoster,,stats int local scores 61,,ga
+LoadTeamRoster,,stats ushort local scores 76,,ga
+LoadTeamRoster,,stats int scoped scores 61,,ga
+LoadTeamRoster,,stats ushort scoped scores 76,,ga
+LoadTeamRoster,,stats scoped zero local scores 61,,ga
+LoadTeamRoster,,stats field readback scores 92,,ga
+LoadTeamRoster,,stats pointer gline scores 87,,ga
+LoadTeamRoster,,stats pointer stat scores 117,,ga
+LoadTeamRoster,,stats pointer gline jersey teamfirst scores 100,,ga
+LoadTeamRoster,,stats pointer stat jersey teamfirst scores 128,,ga
+LoadTeamRoster,,goalie index scaled scores 48,,ga
+LoadTeamRoster,,goalie index nested scores 48,,ga
+LoadTeamRoster,,goalie bytes grouped scores 45,,ga
+LoadTeamRoster,,goalie base intaddr scores 46,,ga
+LoadTeamRoster,,goalie base intaddr index scores 46,,ga
+LoadTeamRoster,,scope line scores 51,,ga
+LoadTeamRoster,,scope gline scores 65,,ga
+LoadTeamRoster,,scope both scores 62,,ga
+LoadTeamRoster,,stats and goalie scoped scores 65,,ga
+LoadTeamRoster,,goalie bytes teamfirst scores 46,,ga
+LoadTeamRoster,,goalie bytes chain i scores 45,,ga
+LoadTeamRoster,,goalie bytes chain team scores 46,,ga
+LoadTeamRoster,,goalie bytes i2 scores 45,,ga
+LoadTeamRoster,,goalie bytes team i2 scores 46,,ga
+LoadTeamRoster,,goalie bytes i nested scores 45,,ga
+LoadTeamRoster,,goalie bytes offset first scores 45,,ga
+LoadTeamRoster,,goaliebytes jersey both scores 58,,ga
+LoadTeamRoster,,goaliebytes jersey first scores 58,,ga
+LoadTeamRoster,,goaliebytes jersey second scores 45,,ga
+LoadTeamRoster,,inline lineup skater scores 95,,ga
+LoadTeamRoster,,inline lineup goalie scores 77,,ga
+LoadTeamRoster,,inline lineup both scores 83,,ga
+LoadTeamRoster,,narrowstats goaliebytes scores 75,,ga
+LoadTeamRoster,,shared lineup baseline scores 86,,ga
+LoadTeamRoster,,comma zero baseline scores 46,,ga
+LoadTeamRoster,,zero readback baseline scores 65,,ga
+LoadTeamRoster,,shared lineup goaliebytes scores 89,,ga
+LoadTeamRoster,,comma zero goaliebytes scores 45,,ga
+LoadTeamRoster,,zero readback goaliebytes scores 64,,ga
+LoadTeamRoster,,teamfirst freshstat scores 43,,ga
+LoadTeamRoster,,teamfirst scopedstat scores 43,,ga
+LoadTeamRoster,,teamfirst scopedskaterline scores 63,,ga
+LoadTeamRoster,,teamfirst scopedgoalieline scores 47,,ga
+LoadTeamRoster,,teamfirst sharedline scores 73,,ga
+LoadTeamRoster,,teamfirst season stat scores 58,,ga
+LoadTeamRoster,,teamfirst p skater branch scores 54,,ga
+LoadTeamRoster,,teamfirst p skater copyblock scores 54,,ga
+LoadTeamRoster,,teamfirst p goalie branch scores 79,,ga
+LoadTeamRoster,,teamfirst p goalie copyblock scores 79,,ga
+LoadTeamRoster,,teamfirst p both branch scores 79,,ga
+LoadTeamRoster,,teamfirst p both copyblock scores 79,,ga
+LoadTeamRoster,,freshstat skaterbytes team scores 43,,ga
+LoadTeamRoster,,freshstat skaterbytes i scores 42,,ga
+LoadTeamRoster,,teamfirst p skater branch freshstat scores 43,,ga
+LoadTeamRoster,,teamfirst p skater copyblock freshstat scores 43. Baseline savings: hoisted team * 1092 t218 and i * 39 t219 each 30 (EDI and memory),,ga
+LoadTeamRoster,,reversing skater jersey operands changes their order but exchanges those allocations. No new ESCALATE find. Both make and make CBUILD=0 MATCH. Function unmarked,,ga

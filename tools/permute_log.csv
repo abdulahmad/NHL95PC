@@ -434416,3 +434416,324 @@ date,func,file,transform,sha1,score,sizediff,match,first,cc
 2026-10-25,LoadGameState,src/c/044_5FB03_game_state_saveload/SaveGameState.c,mulshift:264:5:add,76cd8bdf9febbe9d,84,0,0,392,ga
 2026-10-25,LoadGameState,src/c/044_5FB03_game_state_saveload/SaveGameState.c,loop:275:gotobot,2876bbb3f420bb3d,35,2,0,2106,ga
 2026-10-25,LoadGameState,src/c/044_5FB03_game_state_saveload/SaveGameState.c,incdec:146:op1,82f5ce832f95ac75,30,6,0,2106,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,base,df4bca23a6575b90,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swap:72:3,2f50d19541fdf79d,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+,4db013218170bb79,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,incdec:7:forpre,1dd4800c0390d0f5,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swapdecl:i:line,15dbe3570a0840e0,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,loop:7:while,ae8963a028e26032,49,6,0,25,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,cmpflip:71,e6d6bfee8698235d,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,zero:60:eq0,064b38337ce59cc3,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,movedecl:gline:0,41927d307672a388,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swapstmt:42,bb88e5846d675935,46,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,mulshift:70:10:shl,e7d74da9d4295d61,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swap:64:3,a4db144b8e07e8e2,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:53:+,a6fac7c14ee156cd,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,incdec:51:forpre,da1aec73bc080dad,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swapdecl:line:gline,d336f7ecf321a0bd,57,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,loop:51:gotobot,4560fa66f3c82f3b,46,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,cmpflip:21,c0e9c99da42e110d,48,2,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,zero:16:eq0,e0f0baba3517e30a,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,movedecl:i:4,8f175c8bec9a07d8,72,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swapstmt:11,54c685734edce30d,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,mulshift:74:15:shl,b0aec7d1d11e1ac5,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swap:79:7,d63c0c25287a04c8,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:37:+,88469625939e6999,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swapdecl:buf:i,4603868ae2bebd0d,73,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,loop:51:while,4dd326e9f692e11b,49,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,cmpflip:17,4c27ca1b8840299e,53,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,movedecl:line:4,29e6334fad366fbe,62,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swapstmt:56,649804ea6cf48931,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,mulshift:30:12:add,b0c3e27200f9a9ae,60,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swap:36:6,e5f6f056b4ef60ee,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:68:+,cc2dc377cc5ac1fa,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swapdecl:gline:p,a141000968518730,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,loop:7:gotobot,61a8d2ae0e8b2bdb,46,6,0,25,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,cmpflip:27,5072450b0c05033c,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,movedecl:p:0,6a0b4e364c1c21aa,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swapstmt:12,f08827b0bd058e6a,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,mulshift:52:11:shl,ec9c7db74eced054,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swap:52:5,614f1c6d7a5d5f77,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:36:+,f660ad4577064bc8,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,loop:7:gototop,8694ec2c7f547f27,49,6,0,25,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,cmpflip:63,f8a543f102e90e36,47,3,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,movedecl:gline:1,65198f463ae35d8d,52,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swapstmt:55,1e322a5af23c5027,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,mulshift:70:17:mul,458ca9bdf9a9e5ff,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swap:52:0,16a6f3b486a18266,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:60:==,7b1ed22fdd65494b,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,loop:51:gototop,acb556c3aa7909ef,49,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,cmpflip:61,4a50273ebae14395,53,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,movedecl:p:2,78e34709ff8c2a4e,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swapstmt:41,e25110e77d72db21,46,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,mulshift:74:15:add,e6c5e3140b0943a0,48,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swap:70:10,b1562adcb6cb64a7,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:10:+,adc7733edf1caf98,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,loop:7:do,f7933d9de7ea447c,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,cmpflip:19,5ed6ea7b213f31c1,47,3,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,movedecl:i:3,7412b7ce94497130,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,mulshift:30:12:shl,ffef7514af331dab,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swap:61:0,4a50273ebae14395,53,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:39:+,203296aa074cffa0,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,loop:7:ifdo,57eaa3b55c9f330a,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,cmpflip:65,c001277e8b945740,48,2,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,movedecl:line:0,059b780b5b9fa205,62,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,mulshift:26:10:mul,fce6daa6c3049377,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,swap:52:4,c293d5960d3fbb33,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:9:+,56402644b5a87573,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > loop:7:ifdo,fd4d47255d3b6697,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swapdecl:gline:p,0ee28e8195ea91cd,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swapstmt:12,081aa771cff0245a,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > zero:60:eq0,2ab4cdcc22cca1cb,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > commute:64:+,2e4592323b80addf,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swap:39:4,8ce778a38601a6eb,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:74:15:shl,1404fcb4cd480e83,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > cmpflip:21,b72edf91c31ff976,48,2,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > movedecl:line:4,75d04295d951af4c,62,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > incdec:7:forpre,4e5497500b2b7eda,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > loop:51:gotobot,f893e0f26ea8ce88,46,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swapdecl:buf:i,f531dd1d07ab746e,73,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swapstmt:56,28e1697bb32401c0,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > zero:16:eq0,497979a5351424b5,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > commute:37:+,98c1319da32bb2a1,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swap:74:7,5ac33f03289da93f,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:70:17:mul,da1b282ccf692e9c,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > cmpflip:17,f9dfb5fc6ccf6cb3,53,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > movedecl:gline:0,77a5375d485e153b,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > incdec:51:forpre,320fa90900de1ec6,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > loop:7:gotobot,4b6fe5eeff5a9f11,46,6,0,25,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swapdecl:i:line,bbb04414a89bd8e4,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swapstmt:41,af6044dc8304a53d,46,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > commute:62:+,c86d64ab7fcc9669,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swap:11:3,142bfc315ed87675,58,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:30:12:add,ed3157aaed73d9db,60,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > cmpflip:63,c0ea5c147c200aee,47,3,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > movedecl:i:3,8f3369d95f3d5a47,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > loop:51:gototop,80656b38183da322,49,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swapdecl:line:gline,4d540ca1c6608d5e,57,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swapstmt:42,b9239ca7d213aef6,46,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > commute:68:+,09af5b9e9185f55c,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swap:61:0,9d28947ff63b562c,53,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl,46383f4b801ed2b7,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > cmpflip:19,1caf7218687a4f2a,47,3,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > movedecl:p:1,4cfc4224c85cf300,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > loop:51:do,beddee6e9c663530,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swapstmt:11,44ddf5bc8d90323c,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > commute:38:+,2d9764af59ac5c4e,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swap:56:3,5a7829c00f722644,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:70:10:shl,adb76cf0be9c6b59,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > cmpflip:27,26aa1c31c9eb07ef,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > movedecl:i:4,9232bf15e52dd897,72,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > loop:7:gototop,c5aca47e777729eb,49,6,0,25,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swapstmt:55,c4d433d663e66935,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > commute:53:+,e546818a68ea18c7,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swap:64:3,b45c81515e442eaa,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:70:10:add,50fe1294c6c6aadb,47,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > cmpflip:71,c3a8c20fa9a44dcf,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > movedecl:line:0,1235168b5b2cf899,62,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > loop:51:while,3515a876b7cf4c18,49,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > commute:39:+,ed3be85fd783d82b,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swap:14:2,69dd6772ebdfd76c,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:52:11:shl,bd9367ff23e9a3b8,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > cmpflip:61,9d28947ff63b562c,53,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > movedecl:gline:1,c7c159a76727aeb5,52,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > loop:7:do,11a49dcd48110d43,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > commute:55:+,ba2058a42d6dac54,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > swap:52:5,ead2cf21b258155c,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:74:15:add,3b5b2359d54a67bd,48,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > cmpflip:65,e2c405152c96f8f2,48,2,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > movedecl:p:0,ee41c4edb172db49,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > loop:51:ifdo,07fb1014dd7e5e0d,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > commute:60:==,1ac1ed470cf75f6e,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swap:37:11,f9713a324d5c181a,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > commute:60:==,3ae3a3d7f5d30655,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swapdecl:buf:i,4995f75b3b379175,73,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swapstmt:55,a871b867eb97f4b5,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > zero:16:eq0,7999d060320aef5e,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul,f2adbb5e5c06569f,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > loop:51:gotobot,67cacd3612b2fe9c,46,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > movedecl:line:0,3cf811ca2ba5ca21,62,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > cmpflip:65,8157e147a157c24f,48,2,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > incdec:51:forpre,8a71bbc741afc073,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swap:55:7,3082d1ab553ca72b,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > commute:57:+,9cad3b1753f9c4ca,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swapdecl:i:line,890461e1a4c64d63,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swapstmt:11,b02b52f1f31dd598,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > zero:60:eq0,72b1a47893896883,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:8:12:mul,0a72ccd7c29c7b73,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > loop:51:while,20834b1f9bbcea46,49,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > movedecl:gline:1,4b36efc3bdcb3c65,52,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > cmpflip:27,2e4faedc6b6c5094,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > incdec:7:forpre,2611de0af37f4279,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swap:13:2,783cf8b859f50fb0,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > commute:10:+,a5bad4552fee5778,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swapdecl:gline:p,0d27cffc8c457b56,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swapstmt:41,35ead80af5440af9,46,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:74:15:shl,4e62a437039b3c32,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > loop:7:do,4fec6716b8487cf9,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > movedecl:i:3,f87da1ba01f65373,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > cmpflip:61,8a3487e3d65653b0,53,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swap:11:3,6bbf71f013c5eb10,58,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > commute:53:+,2596dd0cf3f2912c,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swapdecl:line:gline,feb8e79745fd24ca,57,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swapstmt:12,6a32107248f25f03,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:30:12:shl,1ba287215c4aa433,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > loop:7:gototop,cdd07124059c7ab4,49,6,0,25,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > movedecl:gline:0,1a545d693b0ffff7,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > cmpflip:21,7f0c88c78050790a,48,2,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swap:8:4,cd47b3e42798cfcc,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > commute:37:+,1cba4e4ce396bfe9,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swapstmt:42,e5728c5eb05915c7,46,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:70:10:add,1e224afd1f04d00c,47,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > loop:51:gototop,3ae3132c78e51076,49,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > movedecl:p:1,08fa45dcd5682399,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > cmpflip:63,222f437b9d2e36ca,47,3,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swap:52:4,021b08b5448c0ffd,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > commute:72:+,6fdd0da5cb3b94bb,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swapstmt:56,7ad232a8aef38f48,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:30:12:add,83521dd797e081a0,60,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > loop:51:ifdo,00e46ef76496ef92,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > movedecl:line:4,7d26f36a4f59e88c,62,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > cmpflip:71,e25118271464cf5e,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swap:79:3,b886c55145e76132,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > commute:9:+,e7708843f6abf79b,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:52:11:shl,b9a2decb699589e8,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > loop:51:do,d47c13a2f48459f5,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > movedecl:p:0,702e655d9b8c1ff8,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > cmpflip:19,48e7bc866dd4f1c0,47,3,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swap:66:3,a4ca7bb69c198e13,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > commute:38:+,f344d6b825942337,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:70:17:mul,07a5795b649c01e4,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > loop:7:while,26d0f8f36c253ef7,49,6,0,25,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > movedecl:p:2,0cab556a36088a9d,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > cmpflip:17,0d99c75bbc463226,53,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > swap:37:4,91dc77e498205392,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > commute:9:+,0e2a0e147a1969d5,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > zero:16:eq0,9e14436e58b667fe,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > commute:56:+,6cd9d07a6c9a4c09,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swap:55:7,6776abb059d878ed,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swapstmt:41,6429bd5f345bd6d3,46,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > movedecl:line:0,3e6825f945bc5b65,62,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > cmpflip:27,782104b604915f97,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > incdec:7:forpre,9e01f113aba4af5d,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:10:shl,636eca56e35b0a28,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swapdecl:line:gline,b1b505833a037466,57,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > loop:7:do,2fb9ebae74b04f98,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > zero:60:eq0,f41945e1e6df4b60,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > commute:53:+,f4da59cb30749e3b,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swap:70:10,c517f523c126d7af,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swapstmt:11,f7ff2eb956d1d9e7,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > movedecl:gline:0,e183cfe42f2c4ea2,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > cmpflip:71,763cb150516d38ae,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > incdec:51:forpre,ca09d7629638e07a,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul,67fe5e6178c18c71,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swapdecl:gline:p,3e98ca8b3b190cea,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > loop:7:gototop,c75597d03440e0e1,49,6,0,25,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > commute:79:+,5348aa381407b5c2,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swap:70:5,e696e2d4cbbdb047,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swapstmt:42,8457c620f15a7c99,46,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > movedecl:line:4,722a1895e039bbe1,62,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > cmpflip:17,4ffab65033fa65c1,53,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:30:12:shl,9f4c4cdee4505631,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swapdecl:buf:i,6583212a797b57e3,73,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > loop:51:gotobot,22ded7a681050c8c,46,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > commute:74:+,12e12856a0fa0ae5,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swap:39:4,da430a48ed6b9f52,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swapstmt:12,a563f0cc78943b29,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > movedecl:p:1,e8838f5435a3a1e0,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > cmpflip:19,8be132bd692283a1,47,3,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:52:11:shl,44bbded4b8fd61e8,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swapdecl:i:line,dde91fc75b72d4fa,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > loop:51:gototop,3876a568d729ddb1,49,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > commute:9:+,a8b2e558e23867d9,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swap:62:4,c59c383d534d23e5,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swapstmt:56,d49425ada9a45fb5,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > movedecl:i:4,a42744b14afef1b3,72,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > cmpflip:21,1d313bc266a98826,48,2,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:30:12:add,a784561591649afb,60,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > loop:7:gotobot,0e4f79bbb218fdae,46,6,0,25,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > commute:43:+,de6d3f2ba945722d,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swap:57:2,37dc0cc434e9ab29,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swapstmt:55,f568454843c66581,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > movedecl:i:3,5e0a07ede567e84e,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > cmpflip:65,f790e374ce9c4913,48,2,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:26:10:shl,300c71750556fc72,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > loop:51:ifdo,d21e335bfb9f6f73,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > commute:38:+,df47d0f02ffed573,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swap:48:3,1814dff9670eec2c,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > movedecl:p:2,db49c46a64eb8b10,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > cmpflip:61,a8084b2aac11c390,53,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:8:12:mul,e9603c9dcd8a774d,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > loop:7:while,5032a79c1e15e745,49,6,0,25,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > commute:16:==,9442c94bc7c562f0,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swap:74:7,4dc446fe68dbe0d4,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > movedecl:p:0,32dd44feb7cdb94c,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > cmpflip:63,744238ff9aea1e21,47,3,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:10:add,6753ba6c3bcca50d,47,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > loop:51:while,c15af1ecfc4700fb,49,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > commute:36:+,8f78bbe34b26e8f9,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > swap:11:3,676b3dade1c7216a,58,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swapdecl:line:gline,3a05ae1bcb9fb8f9,57,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > incdec:51:forpre,ba18026722f5fa15,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > zero:16:eq0,be046d9ccf8d5d30,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > commute:74:+,d8ac90beff2c8fc8,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > movedecl:p:1,dfe5fd5d8542fa1b,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swap:8:0,15887d2c2c93a3c9,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > loop:7:gototop,577558570bb2da8c,49,6,0,25,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > mulshift:26:10:shl,5ac816e6b77d531d,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > cmpflip:63,0c8c8eaf643a9c43,47,3,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swapstmt:55,29fc8450205e4c83,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swapdecl:i:line,04a2850871b2e773,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > incdec:7:forpre,d0dc85dc6135bc24,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > zero:60:eq0,b996a93ebb165759,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > commute:70:+,66b9e86d6813641c,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > movedecl:line:0,3fabfc97d8c63b58,62,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swap:48:3,c1c6c9425d92d464,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > loop:7:do,9c14a1d0354fd463,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > mulshift:70:10:add,06a7a0a3ebe6a23c,47,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > cmpflip:65,d94f14437ee8321b,48,2,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swapstmt:42,d80a933c3bcb4796,46,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swapdecl:gline:p,44ec6a502c7e41d5,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > commute:9:+,4617574f52d8bc3f,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > movedecl:gline:0,7912065ad390dd08,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swap:72:7,84600e702f6bc37f,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > loop:51:gotobot,04922f9ceef323ea,46,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > mulshift:52:11:shl,daec7c1d7cdbc08d,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > cmpflip:71,5050e6555c100c9e,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swapstmt:12,af7c47d660b57480,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swapdecl:buf:i,670fd5de1f228f05,73,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > commute:10:+,60131c7a577db9dc,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > movedecl:p:2,f5c02495286cd128,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swap:37:4,5bb5ae34b7a2a10c,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > loop:51:while,bc8cec63519cbe59,49,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > mulshift:70:17:shl,fd52c12b371a0c8d,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > cmpflip:61,ef4103dcd204d8ff,53,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swapstmt:56,1712d700fab819b7,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > commute:57:+,36112ec9c2d85f2e,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > movedecl:line:4,fcc66291de56f736,62,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swap:68:3,ae5d560a52372407,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > loop:51:gototop,bd5fdecfa5a20a48,49,6,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > mulshift:30:12:shl,2e8725ecdb75e1f0,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > cmpflip:27,0789173ffb667e72,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swapstmt:11,eca940b18628a01c,48,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > commute:66:+,715d4f8789783eaf,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > movedecl:p:0,cc41846c24d715ca,67,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swap:62:4,bdf138d1296ec5db,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > loop:7:ifdo,c5625b8a25a86c0a,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > mulshift:74:15:add,aeb803bb15d27032,48,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > cmpflip:17,984f298fbfb6dde9,53,4,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swapstmt:41,b9bcc4d7b75afdd8,46,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > commute:72:+,a1c7251c9fd0a0ba,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > movedecl:i:3,9874c32a42b6e0af,50,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swap:55:3,af6710e8715a7f54,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > loop:7:gotobot,76f1cac2446c25fe,46,6,0,25,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > mulshift:74:15:shl,0dbc6efda0121843,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > cmpflip:19,8d8a3b471e546f7d,47,3,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > commute:56:+,bfaba14bb03f8b93,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > movedecl:gline:1,aa9f03f88bfe7912,52,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > swap:30:12,7a35d662acb705d5,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > loop:51:do,c53e4e96f74ecf91,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > mulshift:8:12:mul,46bcf31e9bdcb3a5,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > cmpflip:21,9087aa048ffe7d2d,48,2,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > commute:37:+,b51466ad845bdf74,45,1,0,56,ga
+2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > movedecl:i:4,1927422d2848278d,72,1,0,56,ga
