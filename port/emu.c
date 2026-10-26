@@ -183,10 +183,15 @@ int emulate_low_memory(ctx_t *c, uint8_t *ip)
 
 static int emulate_one(ctx_t *c, uint8_t *ip);
 
+/* the last traps and interrupt deliveries, for a debugger: ip of each trap, 0x80000000 | vector for a delivery (irq.c) */
+volatile uint32_t trap_ring[256];
+volatile unsigned trap_ring_n;
+
 int emulate_privileged(ctx_t *c, uint8_t *ip)
 {
     int64_t t0 = 0, r;
     const uint8_t *p = ip;
+    trap_ring[trap_ring_n++ & 255] = (uint32_t)(uintptr_t)ip;
     if (!stats_on) return emulate_one(c, ip);
     while (*p == 0x66 || *p == 0xF3 || *p == 0xF2) p++;
     stats_op(*p);

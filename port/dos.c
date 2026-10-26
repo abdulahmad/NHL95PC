@@ -21,6 +21,7 @@
 
 void host_exit(int code)
 {
+    TRACE("host_exit(%d) called from %p\n", code, __builtin_return_address(0));
     fflush(stdout);
     fflush(stderr);
     _exit(code);

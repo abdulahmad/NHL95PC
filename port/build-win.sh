@@ -25,13 +25,15 @@ mkdir -p "$OUT/src" "$OUT/obj"
 cp -r src/inc "$OUT/src/inc"
 
 # The sources name their sections s_<address> with ELF attributes. A Windows image may have only 96 sections, so code, data and BSS
-# are folded into .text, .data and .bss (the linker keeps the order of the objects).
+# are folded into .text and .data (the linker keeps the order of the objects). The uninitialized sections go to .data too, as
+# zeros: the game's data segment has to stay one contiguous block in the original order (a GUS table is cleared from one symbol up to
+# the next, and the first is initialized data, the second zero-filled), which separate .data and .bss sections would break.
 for dir in cseg01 dseg02; do
     mkdir -p "$OUT/src/$dir"
     for f in src/$dir/*.asm; do
         sed -e 's/^section s_[0-9A-F]* progbits alloc exec nowrite align=1/section .text align=1/' \
             -e 's/^section s_[0-9A-F]* progbits alloc noexec write align=1/section .data align=1/' \
-            -e 's/^section s_[0-9A-F]* nobits alloc noexec write align=1/section .bss align=1/' "$f" > "$OUT/src/$dir/$(basename "$f")"
+            -e 's/^section s_[0-9A-F]* nobits alloc noexec write align=1/section .data align=1/' "$f" > "$OUT/src/$dir/$(basename "$f")"
     done
 done
 ls "$OUT"/src/cseg01/*.asm "$OUT"/src/dseg02/*.asm | xargs -P 8 -I{} sh -c \

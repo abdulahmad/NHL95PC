@@ -69,6 +69,7 @@ int irq_try_deliver(ctx_t *c)
         __sync_fetch_and_and(&pending, ~(1u << irq));
     }
     if (!pm_vec[vec].off) return 0;
+    { extern volatile uint32_t trap_ring[256]; extern volatile unsigned trap_ring_n; trap_ring[trap_ring_n++ & 255] = 0x80000000u | vec; }
     if (stats_on) stats_irq(irq, 1);
     if (irq > 1) TRACE("irq %d -> vector %02x\n", irq, vec);
     sp = (uint32_t *)R(c, ESP) - 4;

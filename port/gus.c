@@ -101,7 +101,9 @@ static void write_reg(int reg, uint16_t d)
 {
     struct voice *vo = &v[cur_voice];
     switch (reg) {
-    case 0x00: vo->wave_ctrl = ((d >> 8) & 0x7F) | (vo->wave_ctrl & 0x80); vo->running_wave = !(vo->wave_ctrl & 3); break;
+    case 0x00: vo->wave_ctrl = (d >> 8) & 0x7F; vo->running_wave = !(vo->wave_ctrl & 3);
+        vo->wave_irq = (d >> 8) & 0x80 ? 1 : 0;     /* bit 7 is the interrupt: written clear it acknowledges it, written set it raises it */
+        check_irq(); break;
     case 0x01: vo->fc = d; break;
     case 0x02: vo->start = (vo->start & 0x0000FFFF) | ((uint32_t)(d & 0x1FFF) << 16); break;
     case 0x03: vo->start = (vo->start & 0xFFFF0000) | d; break;
@@ -114,7 +116,9 @@ static void write_reg(int reg, uint16_t d)
     case 0x0A: vo->cur = (vo->cur & 0x0000FFFF) | ((uint32_t)(d & 0x1FFF) << 16); break;
     case 0x0B: vo->cur = (vo->cur & 0xFFFF0000) | d; break;
     case 0x0C: vo->pan = (d >> 8) & 15; break;
-    case 0x0D: vo->vol_ctrl = ((d >> 8) & 0x7F) | (vo->vol_ctrl & 0x80); vo->running_vol = !(vo->vol_ctrl & 3); vo->ramp_counter = 0; break;
+    case 0x0D: vo->vol_ctrl = (d >> 8) & 0x7F; vo->running_vol = !(vo->vol_ctrl & 3); vo->ramp_counter = 0;
+        vo->vol_irq = (d >> 8) & 0x80 ? 1 : 0;      /* the same for the volume ramp */
+        check_irq(); break;
     case 0x0E: active_voices = ((d >> 8) & 0x3F) + 1; if (active_voices < 14) active_voices = 14; if (active_voices > 32) active_voices = 32; break;
     case 0x41: dma_ctrl = d >> 8; if (!(dma_ctrl & 1)) break;
         /* a DMA transfer of the channel's block into sample RAM */
@@ -175,9 +179,14 @@ static uint16_t read_reg(int reg)
         uint8_t r = 0xE0;                           /* bits 7 and 6 set: nothing pending */
         for (i = 0; i < NVOICES; i++)
             if (v[i].wave_irq || v[i].vol_irq) {
-                r = 0x20 | i;
-                if (!v[i].wave_irq) r |= 0x40;      /* the pending one is the ramp: the wave bit stays set */
-                if (!v[i].vol_irq) r |= 0x80;
+                r = 0xE0 | i;
+                if (v[i].wave_irq) r &= ~0x80;      /* both bits are active low: bit 7 clear = the voice's wavetable interrupt, */
+                if (v[i].vol_irq) r &= ~0x40;       /* bit 6 clear = its volume ramp interrupt */
+                /* The chip queues the interrupts and reading this register takes the reported one off the queue: the SDK's handler
+                 * does not touch the voice's own control registers to acknowledge, it reads this one and loops while the status
+                 * port (2x6) still shows a pending interrupt. */
+                v[i].wave_irq = v[i].vol_irq = 0;
+                check_irq();
                 break;
             }
         return r << 8;
@@ -295,7 +304,7 @@ uint32_t gus_in(unsigned port)
     switch (port - base) {
     case 0x006: r = irq_status(); break;
     case 0x008: timers_update(); r = tmr_status; break;
-    case 0x00A: r = 0; break;
+    case 0x00A: r = tmr_cmd_reg; break;           /* reads back what was written to base+8: the card detection of the GF1 SDK relies on it */
     case 0x102: r = cur_voice; break;
     case 0x103: r = reg_select; break;
     case 0x104: reg_data = read_reg(reg_select); r = reg_data & 0xFF; break;

@@ -35,12 +35,14 @@ addresses as signed numbers) and at most 32 MB each (the EA memory manager takes
 ```
 port/setup-win.sh                    # from Linux or WSL: installs mingw-w64 and nasm, downloads SDL2 for mingw, builds
 # or, in an MSYS2 "MINGW32" shell:
-pacman -S --needed mingw-w64-i686-gcc mingw-w64-i686-SDL2 nasm make python
+pacman -S --needed mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-pkgconf nasm make python
 port/build-win.sh
 ```
 
 The result is `build/win/hockey-win32.exe` and `SDL2.dll`. Run it in the folder with the game's data, or set `NHL95_ROOT`. A Windows image
-may have only 96 sections, so the build folds the sources' 304 sections into `.text`, `.data` and `.bss`. The program must be 32-bit:
+may have only 96 sections, so the build folds the sources' 304 sections into `.text` and `.data` (the zero-filled sections too, as zeros: the
+game's data segment has to stay one contiguous block in the original order, because the GUS driver clears a table from one symbol up to the
+next). The program must be 32-bit:
 the game's code is 32-bit and runs natively. Windows reports `int 21h` and friends as an access violation or a privileged-instruction
 exception, which the vectored handler in `plat_win.c` turns into the same emulation calls. The game's `__setenvp_` is stubbed because it
 would load FS (the thread information block) with a DOS/4GW selector. Tested under Wine only so far.
@@ -61,14 +63,24 @@ The game's data files are not in this repository. Debug helpers: `NHL95_TRACE=1`
 `NHL95_DUMP=/dir` (with `SDL_VIDEODRIVER=dummy`) writes a PPM of the screen about twice a second; `port/where.py ADDR` maps a runtime address
 to the original address and the asm around it.
 
-## State (2026-10-25)
+## State (2026-10-25, Windows, native)
 
-Works with a stub `NHL.CFG` and `ALLFILES.TXT` and no other data: C start-up, the EA memory manager, file-location setup, hooking of the
-timer and keyboard interrupts, the VESA mode set at 640x480 with bank switching, and the first asset loads (which fail on the missing files).
-Not yet seen with the real game data, so everything after the first asset load is untested.
+Runs with the real game data (`NHL95_CD` names the folder with the CD's files; the installed game folder is the current directory). Works:
+start-up, the intro (Pioneer, EA, the title movie), the front end with the menu bar driven by the keyboard (arrow keys move the pointer, Return
+clicks), File > New Exhibition Game up to the scouting report, and the attract-mode demo game. Sound: no sound, PC speaker, AdLib, Sound Blaster
+(the intro plays its digital sound from the star fade-in), MT-32 (Munt; the original MT-32 ROMs in `NHL95_MT32_ROMS`) and Gravis UltraSound
+all get through the intro to the title. Not yet checked: playing a game with the keyboard, joystick, Linux (the Windows work was not built
+there), listening quality of MT-32 and GUS (checked through recordings only), fullscreen and scaling options.
 
-Not done: sound (the game's drivers talk to the OPL, Sound Blaster, GUS and PC speaker; the plan is to replace the high-level sound calls
-with an SDL2 mixer), joystick (SDL game controller instead of port 201h), the CD-ROM and movie player, fullscreen and scaling options.
+Windows specifics found on the way: DOS memory 0x10000-0xFFFFF is part of the image (linked at 0x10000, section `.lowmem`), reads below 0x10000
+are redone on a buffer, `pushf`/`popf` of the game are `int3` (flagops.h) so that the game's interrupt flag (not the CPU's) is kept, the host
+data is read-only (`NHL95_NOROPROTECT=1` to switch that off), and a timer tick the game could not take is queued.
+
+Debugging: `NHL95_TRACE=1`, `NHL95_STATS=1` (traps, ticks, `video_present` timing), `NHL95_KEYS`, `NHL95_DUMP`, `NHL95_WAV`; `port/where.py`
+maps a runtime address (set `NM` to the nm of the toolchain). `CRASH ...` lines come from the last exception handler.
+
+Not done: joystick (SDL game controller instead of port 201h), digital audio in MT-32 mode (the game plays only music there), fullscreen and
+scaling options.
 
 ## Next steps (in the order asked for)
 

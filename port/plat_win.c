@@ -54,8 +54,42 @@ static LONG CALLBACK veh(EXCEPTION_POINTERS *ep)
     return EXCEPTION_CONTINUE_SEARCH;
 }
 
+/* A fault the emulation did not handle, in the host's own code or elsewhere: say where it is (map the address with addr2line / nm). */
+extern volatile uint8_t isr_active;
+
+static LONG WINAPI crash_filter(EXCEPTION_POINTERS *ep)
+{
+    EXCEPTION_RECORD *r = ep->ExceptionRecord;
+    CONTEXT *c = ep->ContextRecord;
+    char line[400];
+    DWORD n;
+    /* plain Win32 calls only: the C library may not work any more (a clobbered FS, a broken stack) */
+    n = wsprintfA(line, "CRASH exception %08lx at eip=%08lx, address %08lx (%s) eax=%08lx ebx=%08lx ecx=%08lx edx=%08lx esi=%08lx edi=%08lx "
+                  "ebp=%08lx esp=%08lx cs=%lx ds=%lx es=%lx fs=%lx gs=%lx vif=%d isr_active=%d\r\n",
+                  r->ExceptionCode, c->Eip, r->NumberParameters > 1 ? (unsigned long)r->ExceptionInformation[1] : 0UL,
+                  IN_GAME_CODE(c->Eip) ? "game code" : "not game code", c->Eax, c->Ebx, c->Ecx, c->Edx, c->Esi, c->Edi, c->Ebp, c->Esp,
+                  c->SegCs, c->SegDs, c->SegEs, c->SegFs, c->SegGs, vif, (int)isr_active);
+    WriteFile(GetStdHandle(STD_ERROR_HANDLE), line, n, &n, 0);
+    TerminateProcess(GetCurrentProcess(), 1);           /* not host_exit: it uses the C library */
+    return EXCEPTION_EXECUTE_HANDLER;
+}
+
+/* the same report as the last handler of the vectored chain, which sees the faults before the stack is unwound (a stack overflow or
+ * a fault inside a handler never reaches the unhandled exception filter) */
+static LONG CALLBACK crash_veh(EXCEPTION_POINTERS *ep)
+{
+    switch (ep->ExceptionRecord->ExceptionCode) {
+    case EXCEPTION_ACCESS_VIOLATION: case EXCEPTION_STACK_OVERFLOW: case EXCEPTION_ILLEGAL_INSTRUCTION: case EXCEPTION_PRIV_INSTRUCTION:
+    case EXCEPTION_INT_DIVIDE_BY_ZERO: case EXCEPTION_ARRAY_BOUNDS_EXCEEDED: case EXCEPTION_IN_PAGE_ERROR:
+        return crash_filter(ep);
+    }
+    return EXCEPTION_CONTINUE_SEARCH;
+}
+
 void plat_install_traps(void)
 {
+    SetUnhandledExceptionFilter(crash_filter);
+    AddVectoredExceptionHandler(0, crash_veh);          /* called after the one below */
     AddVectoredExceptionHandler(1, veh);
 }
 
@@ -64,9 +98,17 @@ void plat_make_image_writable(void)
     MEMORY_BASIC_INFORMATION mbi;
     uint8_t *base = (uint8_t *)GetModuleHandleA(0);
     IMAGE_NT_HEADERS *nt = (IMAGE_NT_HEADERS *)(base + ((IMAGE_DOS_HEADER *)base)->e_lfanew);
+    IMAGE_SECTION_HEADER *sec = IMAGE_FIRST_SECTION(nt);
     DWORD old;
+    int i;
     (void)mbi;
     VirtualProtect(base, nt->OptionalHeader.SizeOfImage, PAGE_EXECUTE_READWRITE, &old);
+    /* the host's read-only data (jump tables, strings, the exception tables) stays read-only: a stray write of the game then faults
+     * where it happens, instead of damaging the host (see NHL95_NOROPROTECT) */
+    if (!getenv("NHL95_NOROPROTECT"))
+        for (i = 0; i < nt->FileHeader.NumberOfSections; i++)
+            if (!(sec[i].Characteristics & (IMAGE_SCN_MEM_WRITE | IMAGE_SCN_MEM_EXECUTE)) && sec[i].Misc.VirtualSize)
+                VirtualProtect(base + sec[i].VirtualAddress, sec[i].Misc.VirtualSize, PAGE_READONLY, &old);
 }
 
 /* Windows puts the process parameters, the NLS tables and a thread stack below 1 MB before main runs, so DOS memory cannot be
