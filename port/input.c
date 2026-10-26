@@ -11,6 +11,7 @@ static uint8_t last_scan;
 static int quit_requested;
 static volatile int mouse_x, mouse_y, mouse_buttons, mickey_x, mickey_y;
 static int mouse_range_x = 640, mouse_range_y = 480;
+static int cur_relative;                        /* the mouse is captured: relative motion (see cursor_update) */
 
 /* SDL scancode (USB usage) to set 1 scancode; 0x100 = extended (E0 prefix) */
 static int xt_scancode(SDL_Scancode s)
@@ -165,12 +166,41 @@ static void script_poll(void)
     }
 }
 
+/* ---- the host's mouse pointer ----
+ * The game draws its own pointer, so while the host's pointer is inside the active window (windowed) it is hidden and shows again when
+ * it leaves or the window is not active. In play (the 320x200 screen) with the mouse chosen as a controller the mouse is captured, so
+ * that it cannot leave the window; in fullscreen it is always captured, hidden, and the game's pointer stays on the 4:3 picture. A captured
+ * mouse reports relative motion (cur_relative). When the capture ends in a window, the host's pointer is put where the game's is. */
+extern uint32_t ctl1dev, ctl2dev;               /* the game's controller choices: 1 is the mouse */
+
+static void cursor_update(void)
+{
+    static int hidden = -1;
+    int active = SDL_GetKeyboardFocus() != 0, inside = SDL_GetMouseFocus() != 0, fs = video_is_fullscreen(), mw, mh;
+    int capture, rel, hide;
+    video_mode_size(&mw, &mh);
+    capture = mw == 320 && (ctl1dev == 1 || ctl2dev == 1);
+    rel = active && (fs || capture);
+    hide = active && (fs || inside);
+    if (rel != cur_relative) {
+        SDL_SetRelativeMouseMode(rel ? SDL_TRUE : SDL_FALSE);
+        cur_relative = rel;
+        if (!rel && !fs) {                       /* back to the host's pointer: where the game's pointer is */
+            int wx, wy;
+            video_game_to_window(mouse_x, mouse_y, &wx, &wy);
+            video_warp_mouse(wx, wy);
+        }
+    }
+    if (hide != hidden) { SDL_ShowCursor(hide ? SDL_DISABLE : SDL_ENABLE); hidden = hide; }
+}
+
 /* main thread */
 void input_poll(void)
 {
     SDL_Event e;
     script_poll();
     joy_update();
+    cursor_update();
     while (SDL_PollEvent(&e)) {
         switch (e.type) {
         case SDL_QUIT: quit_requested = 1; break;
@@ -191,8 +221,20 @@ void input_poll(void)
         case SDL_KEYUP: key_event(e.key.keysym.scancode, 0); break;
         case SDL_MOUSEMOTION: {
             int gx, gy;
-            video_window_to_game(e.motion.x, e.motion.y, &gx, &gy);
-            mouse_x = gx; mouse_y = gy;
+            if (cur_relative) {                 /* captured: the game's pointer moves by the motion, scaled to the picture, and stays on it */
+                int vx, vy, vw, vh, mw, mh;
+                static float rx, ry;
+                video_view(&vx, &vy, &vw, &vh);
+                video_mode_size(&mw, &mh);
+                rx += (float)e.motion.xrel * mw / vw; ry += (float)e.motion.yrel * mh / vh;
+                gx = mouse_x + (int)rx; gy = mouse_y + (int)ry;
+                rx -= (int)rx; ry -= (int)ry;
+                mouse_x = gx < 0 ? 0 : gx >= mw ? mw - 1 : gx;
+                mouse_y = gy < 0 ? 0 : gy >= mh ? mh - 1 : gy;
+            } else {
+                video_window_to_game(e.motion.x, e.motion.y, &gx, &gy);
+                mouse_x = gx; mouse_y = gy;
+            }
             mickey_x += e.motion.xrel; mickey_y += e.motion.yrel;
             break;
         }

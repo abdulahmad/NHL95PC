@@ -194,6 +194,22 @@ void video_window_to_game(int wx, int wy, int *gx, int *gy)
     if (*gy >= mode_h) *gy = mode_h - 1;
 }
 
+void video_mode_size(int *w, int *h) { *w = mode_w; *h = mode_h; }
+
+/* a game screen position in window coordinates (the inverse of video_window_to_game) */
+void video_game_to_window(int gx, int gy, int *wx, int *wy)
+{
+    int vx, vy, vw, vh;
+    video_view(&vx, &vy, &vw, &vh);
+    *wx = vx + gx * vw / mode_w;
+    *wy = vy + gy * vh / mode_h;
+}
+
+void video_warp_mouse(int wx, int wy)
+{
+    if (win) SDL_WarpMouseInWindow(win, wx, wy);
+}
+
 /* Alt+Enter: borderless fullscreen at the desktop's resolution and back */
 static int fullscreen;
 void video_toggle_fullscreen(void)
