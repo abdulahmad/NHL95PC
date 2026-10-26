@@ -41,6 +41,27 @@ make -j8            # or ./build.sh [path/to/HOCKEY.EXE]
 
 This assembles the 304 files in `src/` (one per segment: 198 code, 106 data), links them with `tools/link_src.py`, and writes `build/HOCKEY.EXE`. It ends with `MATCH` when the result is byte-identical to the retail EXE; otherwise it fails. From the committed EXE the build takes only the three third-party stubs (DOS/16M loader, DOS/4GW kernel, Watcom wstub), the LE header fields and the fixup record order. Code, data and the fixups themselves come from `src/`. Layout, editing rules and how `src/` is regenerated (`tools/gen_src.py`): [docs/ASM_BUILD.md](docs/ASM_BUILD.md).
 
+## Running the game on a modern PC (SDL2 port)
+
+The branch `sdl2-port` runs the game's own code natively, with the DOS, BIOS, sound, video and input hardware emulated by the host
+(`port/`). Build and details: [docs/SDL2_PORT.md](docs/SDL2_PORT.md); state and open items: [docs/SDL2_HANDOFF.md](docs/SDL2_HANDOFF.md).
+`src/` is untouched, so `make` still ends with `MATCH`.
+
+* **Start**: run `hockey-win32.exe` (Windows build, `port/build-win.sh`) in the game's folder, or set `NHL95_ROOT`. It finds the game files
+  next to the program, in the parent folder, or in `NHL95_CD` (the CD's contents). No setup files needed.
+* **Video**: the 8-bit screen is drawn by OpenGL. The 320x200 play screen is enlarged 3x with nearest-neighbour, then filtered with a
+  bicubic (Catmull-Rom) filter to any window size; the 640x480 menus are filtered directly. The picture is always 4:3, centred.
+  `NHL95_FILTER=nearest|linear|cubic` changes the filter, `NHL95_NOGL=1` uses SDL's renderer. **Alt+Enter** switches between the window
+  and borderless fullscreen.
+* **Mouse**: the game's pointer is the only one shown while the Windows pointer is inside the active window; outside it, the Windows pointer
+  shows again. In play, with the mouse chosen as a controller, the mouse is captured so it cannot leave the window. In fullscreen the Windows
+  pointer is hidden and the game's pointer stays on the 4:3 picture.
+* **Sound**: none, PC speaker, AdLib, Sound Blaster, MT-32 (Munt; put `MT32_CONTROL.ROM` and `MT32_PCM.ROM` in a `roms` folder next to the
+  program) and Gravis Ultrasound (the `ULTRASND` patch folder is found next to the game or program). Choose the card in the game's setup.
+* **Joystick**: SDL game controllers answer the game port (201h) as a PC joystick.
+* **Diagnostics**: `nhl95-audio.log` is written next to the program; Ctrl+F11 captures a short audio recording; `NHL95_TRACE`, `NHL95_STATS`
+  and the other test variables are listed in [docs/SDL2_PORT.md](docs/SDL2_PORT.md).
+
 ## Byte-exact rebuild from the EXE's own parts
 
 Needs Python 3 only. Run from the repo root.
