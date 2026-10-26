@@ -170,11 +170,13 @@ static void script_poll(void)
  * own range). To make the game's pointer sit under the host's, the motion events only remember where the host's pointer is in the window
  * (win_x, win_y); the next function 0Bh reports the mickeys the game needs to get its pointer (mousex, mousey, read from its memory)
  * from where it is to there. The host's pointer is hidden only while it is over the 4:3 picture of the active window and the game is
- * drawing a pointer of its own (the glove in the 640x480 screens, the green one in play with the mouse chosen as a controller);
+ * drawing a pointer of its own (the glove in the menus, which call their pointer routine, the green one in play with the mouse chosen as a controller);
  * otherwise, in the bars, outside the window or while the window is not active, it shows. In fullscreen it stays on the picture. */
 extern int32_t mousex, mousey, dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8, dword_D3028;
 extern uint8_t pad1dev, pad2dev;                /* 1 is the mouse */
+extern char sub_B2DCA[];                        /* the menus' pointer routine: it calls function 0Bh from its first instructions */
 static volatile int win_x, win_y, win_moved;
+static volatile int64_t glove_ns;
 
 static void cursor_update(void)
 {
@@ -182,10 +184,10 @@ static void cursor_update(void)
     int active = SDL_GetKeyboardFocus() != 0, fs = video_is_fullscreen(), mw, mh, vx, vy, vw, vh, px, py, over, drawn, hide;
     video_mode_size(&mw, &mh);
     video_view(&vx, &vy, &vw, &vh);
-    video_confine_mouse(active && fs);
+    drawn = mw == 320 ? (pad1dev == 1 || pad2dev == 1) : glove_ns && plat_now_ns() - glove_ns < 300000000LL;
+    video_confine_mouse(active && (fs || (mw == 320 && drawn)));   /* in play with the mouse as controller it may not leave the picture */
     SDL_GetMouseState(&px, &py);
     over = active && SDL_GetMouseFocus() != 0 && px >= vx && px < vx + vw && py >= vy && py < vy + vh;
-    drawn = mw == 320 ? (pad1dev == 1 || pad2dev == 1) : dword_D3028 != 0;
     hide = over && drawn;
     if (hide != hidden) { SDL_ShowCursor(hide ? SDL_DISABLE : SDL_ENABLE); hidden = hide; }
 }
@@ -389,6 +391,7 @@ int input_mouse(ctx_t *c)
     case 0x07: mouse_range_x = (R(c, EDX) & 0xFFFF) + 1; return 1;
     case 0x08: mouse_range_y = (R(c, EDX) & 0xFFFF) + 1; return 1;
     case 0x0B:
+        if (*(uint32_t *)R(c, ESP) == (uint32_t)(uintptr_t)sub_B2DCA + 8) glove_ns = plat_now_ns();   /* called by the menus' pointer routine */
         if (win_moved) {
             int cx, cy;
             win_moved = 0;
